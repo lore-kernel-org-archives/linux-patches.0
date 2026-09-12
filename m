@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CB919D8BC;
-	Sat, 12 Sep 2026 10:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C6A42903B;
+	Sat, 12 Sep 2026 10:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209515; cv=none; b=uKqTm7QClFpxyqOFwAQNKydXoezgFvk2r/dNU6cUFKv4Y5YBctrEsomJc8jIICjkPtYEtOJBjkgc8UrqNNHVfgbZp/YUS1LGgNQC1zrXd3CzdExe+q4Q6RFoWOWlQNivdYARvx3OcM4NrCpmdDsB48ZTr3g0Hlg8pdDf15VYuD8=
+	t=1789209521; cv=none; b=aOU4ESCaI7b+jSCsVqlDYwZubbZn8HNEHr9WHzAr2HgCah/5xuHiQ73EIvQqglfS52KJO7tBEcOKmlWsNLrAHwIw/mCLsa4S+/xE4tAR5EQL7Kz9aNcV1jrhzkclyo7qJZt/1oYlkEEFt/gStXByK1mBb96PrUebAXjOnGyaSbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209515; c=relaxed/simple;
-	bh=T7SPrJ8gve8obyUu0Sf0Pazssm4SSat1/sOw2LqVzOE=;
+	s=arc-20240116; t=1789209521; c=relaxed/simple;
+	bh=gPIAkTdV7rahQjtvSUUT/QpMLnM97LFtycXtJvBRQsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HhZSlUi2G+5vkH3FFU31F4IcRzsKGDuuvoFiAPrfK4KiFEpZAFKae2BN8wdflQwJmFKwgfIzDPki1JSC6cusGx70/3xG+w7HkjiSaGJ7UhNQ2KfPUc9sskdSEmmeqbakWyy2RpGGjRzuSJEWxx93EczgsiNdDogud+jGeztaC4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DFPV4TW5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ut9LJ6uOoRVyPsZuSYjxxcdfofXfIZ5JYZuZkjHzoNrMubcdWMrk+UWEWzP9JwtINO9ChhJ5VI7CypKyC1ulaDNRHIDSD7mAmUlB6AF5ohmZ6Bnc1QMSSb+fy3W76V2kS6c62tU4QEOYrfMGwJvm3ahHKRTc6XeomuRVbYnEnWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bctJlUf8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DFPV4TW5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00BD81F000FF;
-	Sat, 12 Sep 2026 10:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bctJlUf8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368A61F000FF;
+	Sat, 12 Sep 2026 10:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209514;
-	bh=xVR6KWaEc6qQ7HI1jK3iehZrhulzzYAvDmjV17b/HTM=;
+	s=korg; t=1789209519;
+	bh=hXZG1t+Lbvgi3Fu8mvkENoTOHT0J765Y1lOAEhVAj20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DFPV4TW5Ikckur5L5KDyv4PiliD/p4Llbf9stk2wt4vFf+89Fkua2rq69KSlehmm9
-	 sfwFZZ2+WX46ydPquhrHuYVPAnHZdOaTGChOBdCwfbIakd4LqLJ/Ruy74An91jc39V
-	 yN6Ay3RoYWqC/t1TOp9/6QPglwOl/Ee2R/UUGi1Y=
+	b=bctJlUf8aNs7oh5xK/Gt6aHE2IVDHa809JgTqqNJKIUUaoXWQUd06JY1t73aHwBa8
+	 b3U7rWV56q3LNHTzjSMNHU5wTmKzIA/gEEnmKOl0FMs6WYriNdQ2bUftNJWlYCg/85
+	 r564h1+fSKqYw+0MSbcrcWNuSu3J8AL0bHKaMKvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Jo Van Bulck <jo.vanbulck@cs.kuleuven.be>,
+	Shukai Ni <shukai.ni@kuleuven.be>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0837/1518] tty: clear cdev pointer after cdev_add() failure
-Date: Sat, 12 Sep 2026 08:50:06 +0200
-Message-ID: <20260912065642.373561672@linuxfoundation.org>
+Subject: [PATCH 6.18 0838/1518] dm-integrity: replace forgeable discard filler with a keyed sector marker
+Date: Sat, 12 Sep 2026 08:50:07 +0200
+Message-ID: <20260912065642.396176827@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,43 +52,433 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Shukai Ni <shukai.ni@kuleuven.be>
 
-[ Upstream commit 6645856f0df3aeecd45519cb611415b4b89c2223 ]
+[ Upstream commit 68c5c42567bc462139128968ebbfadd0aefff519 ]
 
-tty_cdev_add() drops the cdev reference when cdev_add() fails, but
-leaves driver->cdevs[index] pointing to freed memory.
-tty_unregister_device() later passes that stale pointer to cdev_del(),
-causing a use-after-free.
+The discard-block check in dm_integrity_rw_tag() treats a stored tag
+of all 0xf6 bytes (DISCARD_FILLER) as proof a block was discarded and
+skips HMAC verification. allow_discards is only accepted in
+dm-integrity's standalone mode. An attacker with raw write access to
+the backing device, but without the integrity key, can stamp any block
+with an all-0xf6 tag and have it served as authentic.
 
-Clear the slot after dropping the reference.
+Add a new "allow_discards_keyed" target argument that marks discarded
+blocks with a keyed checksum of (salt || sector) instead, computed by
+integrity_discard_checksum().
 
-Fixes: c1a752ba2d6b ("tty: don't leak cdev in tty_cdev_add()")
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260731181844.11330-5-kmehltretter@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 84597a44a9d8 ("dm integrity: add optional discard support")
+Co-developed-by: Jo Van Bulck <jo.vanbulck@cs.kuleuven.be>
+Signed-off-by: Jo Van Bulck <jo.vanbulck@cs.kuleuven.be>
+Signed-off-by: Shukai Ni <shukai.ni@kuleuven.be>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/tty_io.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../admin-guide/device-mapper/dm-ima.rst      |   7 +-
+ .../device-mapper/dm-integrity.rst            |  13 ++
+ drivers/md/dm-integrity.c                     | 137 +++++++++++++++---
+ 3 files changed, 133 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
-index e2d92cf70eb78..f779f8fb138e8 100644
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -3167,8 +3167,10 @@ static int tty_cdev_add(struct tty_driver *driver, dev_t dev,
- 	driver->cdevs[index]->ops = &tty_fops;
- 	driver->cdevs[index]->owner = driver->owner;
- 	err = cdev_add(driver->cdevs[index], dev, count);
--	if (err)
-+	if (err) {
- 		kobject_put(&driver->cdevs[index]->kobj);
-+		driver->cdevs[index] = NULL;
-+	}
- 	return err;
+diff --git a/Documentation/admin-guide/device-mapper/dm-ima.rst b/Documentation/admin-guide/device-mapper/dm-ima.rst
+index a4aa50a828e00..2a3b50ffbee4e 100644
+--- a/Documentation/admin-guide/device-mapper/dm-ima.rst
++++ b/Documentation/admin-guide/device-mapper/dm-ima.rst
+@@ -424,7 +424,8 @@ section above) has the following data format for 'integrity' target.
+ 
+  target_attributes := <target_name> "," <target_version> "," <dev_name> "," <start>
+                       <tag_size> "," <mode> "," [<meta_device> ","] [<block_size> ","] <recalculate> ","
+-                      <allow_discards> "," <fix_padding> "," <fix_hmac> "," <legacy_recalculate> ","
++                      <allow_discards> "," <allow_discards_keyed> "," <fix_padding> "," <fix_hmac> ","
++                      <legacy_recalculate> ","
+                       <journal_sectors> "," <interleave_sectors> "," <buffer_sectors> ";"
+ 
+  target_name := "target_name=integrity"
+@@ -438,6 +439,7 @@ section above) has the following data format for 'integrity' target.
+  block_size := "block_size=" <N>
+  recalculate := "recalculate=" <yes_no>
+  allow_discards := "allow_discards=" <yes_no>
++ allow_discards_keyed := "allow_discards_keyed=" <yes_no>
+  fix_padding := "fix_padding=" <yes_no>
+  fix_hmac := "fix_hmac=" <yes_no>
+  legacy_recalculate := "legacy_recalculate=" <yes_no>
+@@ -455,7 +457,8 @@ section above) has the following data format for 'integrity' target.
+  dm_version=4.45.0;
+  name=integrity1,uuid=,major=253,minor=1,minor_count=1,num_targets=1;
+  target_index=0,target_begin=0,target_len=7856,target_name=integrity,target_version=1.10.0,
+- dev_name=253:0,start=0,tag_size=32,mode=J,recalculate=n,allow_discards=n,fix_padding=n,
++ dev_name=253:0,start=0,tag_size=32,mode=J,recalculate=n,allow_discards=n,
++ allow_discards_keyed=n,fix_padding=n,
+  fix_hmac=n,legacy_recalculate=n,journal_sectors=88,interleave_sectors=32768,buffer_sectors=128;
+ 
+ 
+diff --git a/Documentation/admin-guide/device-mapper/dm-integrity.rst b/Documentation/admin-guide/device-mapper/dm-integrity.rst
+index c2e18ecc065c9..9c21301423c9e 100644
+--- a/Documentation/admin-guide/device-mapper/dm-integrity.rst
++++ b/Documentation/admin-guide/device-mapper/dm-integrity.rst
+@@ -190,6 +190,19 @@ allow_discards
+ 	Allow block discard requests (a.k.a. TRIM) for the integrity device.
+ 	Discards are only allowed to devices using internal hash.
+ 
++	A discarded block is marked with a constant filler tag that anyone
++	with raw write access to the backing device can forge without the
++	key. Use allow_discards_keyed instead on new volumes.
++
++allow_discards_keyed
++	Like allow_discards, but marks a discarded block with a keyed
++	checksum of the sector number, HMAC_key(salt || sector), instead of
++	the constant filler tag, so it can't be forged without the
++	integrity key.
++
++	Not compatible with volumes that already have discarded blocks
++	marked the old way; only use on a freshly formatted volume.
++
+ fix_padding
+ 	Use a smaller padding of the tag area that is more
+ 	space-efficient. If this option is not present, large padding is
+diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
+index 46a815f20b095..e79ae49073857 100644
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -65,6 +65,7 @@
+ #define SB_VERSION_4			4
+ #define SB_VERSION_5			5
+ #define SB_VERSION_6			6
++#define SB_VERSION_7			7
+ #define SB_SECTORS			8
+ #define MAX_SECTORS_PER_BLOCK		8
+ 
+@@ -90,6 +91,7 @@ struct superblock {
+ #define SB_FLAG_FIXED_PADDING		0x8
+ #define SB_FLAG_FIXED_HMAC		0x10
+ #define SB_FLAG_INLINE			0x20
++#define SB_FLAG_DISCARD_KEYED		0x40
+ 
+ #define	JOURNAL_ENTRY_ROUNDUP		8
+ 
+@@ -276,6 +278,7 @@ struct dm_integrity_c {
+ 	bool recalculate_flag;
+ 	bool reset_recalculate_flag;
+ 	bool discard;
++	bool discard_keyed;
+ 	bool fix_padding;
+ 	bool fix_hmac;
+ 	bool legacy_recalculate;
+@@ -482,7 +485,9 @@ static void wraparound_section(struct dm_integrity_c *ic, unsigned int *sec_ptr)
+ 
+ static void sb_set_version(struct dm_integrity_c *ic)
+ {
+-	if (ic->sb->flags & cpu_to_le32(SB_FLAG_INLINE))
++	if (ic->sb->flags & cpu_to_le32(SB_FLAG_DISCARD_KEYED))
++		ic->sb->version = SB_VERSION_7;
++	else if (ic->sb->flags & cpu_to_le32(SB_FLAG_INLINE))
+ 		ic->sb->version = SB_VERSION_6;
+ 	else if (ic->sb->flags & cpu_to_le32(SB_FLAG_FIXED_HMAC))
+ 		ic->sb->version = SB_VERSION_5;
+@@ -1415,7 +1420,7 @@ static int dm_integrity_rw_tag(struct dm_integrity_c *ic, unsigned char *tag, se
+ {
+ 	unsigned int hash_offset = 0;
+ 	unsigned char mismatch_hash = 0;
+-	unsigned char mismatch_filler = !ic->discard;
++	unsigned char mismatch_filler = !ic->discard || ic->discard_keyed;
+ 
+ 	do {
+ 		unsigned char *data, *dp;
+@@ -1467,7 +1472,7 @@ static int dm_integrity_rw_tag(struct dm_integrity_c *ic, unsigned char *tag, se
+ 						}
+ 						hash_offset = 0;
+ 						mismatch_hash = 0;
+-						mismatch_filler = !ic->discard;
++						mismatch_filler = !ic->discard || ic->discard_keyed;
+ 					}
+ 				}
+ 			}
+@@ -1645,7 +1650,8 @@ static void integrity_end_io(struct bio *bio)
  }
  
+ static void integrity_sector_checksum_shash(struct dm_integrity_c *ic, sector_t sector,
+-					    const char *data, unsigned offset, char *result)
++					    const char *data, unsigned offset,
++					    unsigned int len, char *result)
+ {
+ 	__le64 sector_le = cpu_to_le64(sector);
+ 	SHASH_DESC_ON_STACK(req, ic->internal_shash);
+@@ -1674,10 +1680,12 @@ static void integrity_sector_checksum_shash(struct dm_integrity_c *ic, sector_t
+ 		goto failed;
+ 	}
+ 
+-	r = crypto_shash_update(req, data + offset, ic->sectors_per_block << SECTOR_SHIFT);
+-	if (unlikely(r < 0)) {
+-		dm_integrity_io_error(ic, "crypto_shash_update", r);
+-		goto failed;
++	if (likely(len)) {
++		r = crypto_shash_update(req, data + offset, len);
++		if (unlikely(r < 0)) {
++			dm_integrity_io_error(ic, "crypto_shash_update", r);
++			goto failed;
++		}
+ 	}
+ 
+ 	r = crypto_shash_final(req, result);
+@@ -1698,7 +1706,8 @@ static void integrity_sector_checksum_shash(struct dm_integrity_c *ic, sector_t
+ }
+ 
+ static void integrity_sector_checksum_ahash(struct dm_integrity_c *ic, struct ahash_request **ahash_req,
+-					    sector_t sector, struct page *page, unsigned offset, char *result)
++					    sector_t sector, struct page *page, unsigned offset,
++					    unsigned int len, char *result)
+ {
+ 	__le64 sector_le = cpu_to_le64(sector);
+ 	struct ahash_request *req;
+@@ -1707,6 +1716,7 @@ static void integrity_sector_checksum_ahash(struct dm_integrity_c *ic, struct ah
+ 	int r;
+ 	unsigned int digest_size;
+ 	unsigned int nbytes = 0;
++	unsigned int nents = 1 + (len ? 1 : 0);
+ 
+ 	might_sleep();
+ 
+@@ -1720,12 +1730,12 @@ static void integrity_sector_checksum_ahash(struct dm_integrity_c *ic, struct ah
+ 	ahash_request_set_callback(req, CRYPTO_TFM_REQ_MAY_SLEEP, crypto_req_done, &wait);
+ 
+ 	if (ic->sb->flags & cpu_to_le32(SB_FLAG_FIXED_HMAC)) {
+-		sg_init_table(sg, 3);
++		sg_init_table(sg, nents + 1);
+ 		sg_set_buf(s, (const __u8 *)&ic->sb->salt, SALT_SIZE);
+ 		nbytes += SALT_SIZE;
+ 		s++;
+ 	} else {
+-		sg_init_table(sg, 2);
++		sg_init_table(sg, nents);
+ 	}
+ 
+ 	if (likely(!is_vmalloc_addr(&sector_le))) {
+@@ -1738,8 +1748,10 @@ static void integrity_sector_checksum_ahash(struct dm_integrity_c *ic, struct ah
+ 	nbytes += sizeof(sector_le);
+ 	s++;
+ 
+-	sg_set_page(s, page, ic->sectors_per_block << SECTOR_SHIFT, offset);
+-	nbytes += ic->sectors_per_block << SECTOR_SHIFT;
++	if (likely(len)) {
++		sg_set_page(s, page, len, offset);
++		nbytes += len;
++	}
+ 
+ 	ahash_request_set_crypt(req, sg, result, nbytes);
+ 
+@@ -1762,11 +1774,41 @@ static void integrity_sector_checksum_ahash(struct dm_integrity_c *ic, struct ah
+ 
+ static void integrity_sector_checksum(struct dm_integrity_c *ic, struct ahash_request **ahash_req,
+ 				      sector_t sector, const char *data, unsigned offset, char *result)
++{
++	unsigned int len = ic->sectors_per_block << SECTOR_SHIFT;
++
++	if (likely(ic->internal_shash != NULL))
++		integrity_sector_checksum_shash(ic, sector, data, offset, len, result);
++	else
++		integrity_sector_checksum_ahash(ic, ahash_req, sector, (struct page *)data,
++						 offset, len, result);
++}
++
++/*
++ * Authenticated marker for a discarded block: HMAC_key(salt || sector), with
++ * no data payload. Because a real data tag's input always covers a full
++ * block, its length differs from this marker's, so the two can never
++ * collide structurally, regardless of block content.
++ */
++static void integrity_discard_checksum(struct dm_integrity_c *ic, struct ahash_request **ahash_req,
++				       sector_t sector, char *result)
+ {
+ 	if (likely(ic->internal_shash != NULL))
+-		integrity_sector_checksum_shash(ic, sector, data, offset, result);
++		integrity_sector_checksum_shash(ic, sector, NULL, 0, 0, result);
+ 	else
+-		integrity_sector_checksum_ahash(ic, ahash_req, sector, (struct page *)data, offset, result);
++		integrity_sector_checksum_ahash(ic, ahash_req, sector, NULL, 0, 0, result);
++}
++
++static void integrity_discard_fill_tags(struct dm_integrity_c *ic, struct ahash_request **ahash_req,
++					unsigned char *checksums, sector_t *sector,
++					unsigned int blocks)
++{
++	unsigned int i;
++
++	for (i = 0; i < blocks; i++) {
++		integrity_discard_checksum(ic, ahash_req, *sector, checksums + i * ic->tag_size);
++		*sector += ic->sectors_per_block;
++	}
+ }
+ 
+ static void *integrity_kmap(struct dm_integrity_c *ic, struct page *p)
+@@ -1795,6 +1837,29 @@ static void *integrity_identity(struct dm_integrity_c *ic, void *data)
+ 		return virt_to_page(data);
+ }
+ 
++static int integrity_recheck_verify_tag(struct dm_integrity_io *dio, char *checksum,
++					char *on_disk_tag, sector_t logical_sector)
++{
++	struct dm_integrity_c *ic = dio->ic;
++	int r;
++
++	if (!ic->discard_keyed)
++		return dm_integrity_rw_tag(ic, checksum, &dio->metadata_block,
++					   &dio->metadata_offset, ic->tag_size, TAG_CMP);
++
++	r = dm_integrity_rw_tag(ic, on_disk_tag, &dio->metadata_block,
++				&dio->metadata_offset, ic->tag_size, TAG_READ);
++	if (unlikely(r))
++		return r;
++
++	r = crypto_memneq(on_disk_tag, checksum, ic->tag_size);
++	if (unlikely(r)) {
++		integrity_discard_checksum(ic, &dio->ahash_req, logical_sector, checksum);
++		r = crypto_memneq(on_disk_tag, checksum, ic->tag_size);
++	}
++	return r;
++}
++
+ static noinline void integrity_recheck(struct dm_integrity_io *dio, char *checksum)
+ {
+ 	struct bio *bio = dm_bio_from_per_bio_data(dio, sizeof(struct dm_integrity_io));
+@@ -1820,6 +1885,7 @@ static noinline void integrity_recheck(struct dm_integrity_io *dio, char *checks
+ 			char *mem;
+ 			char *buffer = page_to_virt(page);
+ 			unsigned int buffer_offset;
++			char on_disk_tag[MAX_T(size_t, HASH_MAX_DIGESTSIZE, MAX_TAG_SIZE)];
+ 			int r;
+ 			struct dm_io_request io_req;
+ 			struct dm_io_region io_loc;
+@@ -1847,8 +1913,8 @@ static noinline void integrity_recheck(struct dm_integrity_io *dio, char *checks
+ 			}
+ 
+ 			integrity_sector_checksum(ic, &dio->ahash_req, logical_sector, integrity_identity(ic, buffer), buffer_offset, checksum);
+-			r = dm_integrity_rw_tag(ic, checksum, &dio->metadata_block,
+-						&dio->metadata_offset, ic->tag_size, TAG_CMP);
++			r = integrity_recheck_verify_tag(dio, checksum, on_disk_tag,
++							 logical_sector);
+ 			if (r) {
+ 				if (r > 0) {
+ 					DMERR_LIMIT("%pg: Checksum failed at sector 0x%llx",
+@@ -1914,13 +1980,18 @@ static void integrity_metadata(struct work_struct *w)
+ 			unsigned int bi_size = dio->bio_details.bi_iter.bi_size;
+ 			unsigned int max_size = likely(checksums != checksums_onstack) ? PAGE_SIZE : HASH_MAX_DIGESTSIZE;
+ 			unsigned int max_blocks = max_size / ic->tag_size;
++			sector_t sector = dio->range.logical_sector;
+ 
+-			memset(checksums, DISCARD_FILLER, max_size);
++			if (!ic->discard_keyed)
++				memset(checksums, DISCARD_FILLER, max_size);
+ 
+ 			while (bi_size) {
+ 				unsigned int this_step_blocks = bi_size >> (SECTOR_SHIFT + ic->sb->log2_sectors_per_block);
+ 
+ 				this_step_blocks = min(this_step_blocks, max_blocks);
++				if (ic->discard_keyed)
++					integrity_discard_fill_tags(ic, &dio->ahash_req, checksums,
++								    &sector, this_step_blocks);
+ 				r = dm_integrity_rw_tag(ic, checksums, &dio->metadata_block, &dio->metadata_offset,
+ 							this_step_blocks * ic->tag_size, TAG_WRITE);
+ 				if (unlikely(r)) {
+@@ -3797,6 +3868,8 @@ static void dm_integrity_resume(struct dm_target *ti)
+ 	ic->wrote_to_journal = false;
+ 
+ 	flags = ic->sb->flags & cpu_to_le32(SB_FLAG_RECALCULATING);
++	if (ic->discard_keyed)
++		flags |= cpu_to_le32(SB_FLAG_DISCARD_KEYED);
+ 	r = sync_rw_sb(ic, REQ_OP_READ);
+ 	if (r)
+ 		dm_integrity_io_error(ic, "reading superblock", r);
+@@ -3944,7 +4017,8 @@ static void dm_integrity_status(struct dm_target *ti, status_type_t type,
+ 		arg_count += ic->sectors_per_block != 1;
+ 		arg_count += !!(ic->sb->flags & cpu_to_le32(SB_FLAG_RECALCULATING));
+ 		arg_count += ic->reset_recalculate_flag;
+-		arg_count += ic->discard;
++		arg_count += ic->discard && !ic->discard_keyed;
++		arg_count += ic->discard_keyed;
+ 		arg_count += ic->mode != 'I'; /* interleave_sectors */
+ 		arg_count += ic->mode == 'J'; /* journal_sectors */
+ 		arg_count += ic->mode == 'J'; /* journal_watermark */
+@@ -3967,8 +4041,10 @@ static void dm_integrity_status(struct dm_target *ti, status_type_t type,
+ 			DMEMIT(" recalculate");
+ 		if (ic->reset_recalculate_flag)
+ 			DMEMIT(" reset_recalculate");
+-		if (ic->discard)
++		if (ic->discard && !ic->discard_keyed)
+ 			DMEMIT(" allow_discards");
++		if (ic->discard_keyed)
++			DMEMIT(" allow_discards_keyed");
+ 		if (ic->mode != 'I')
+ 			DMEMIT(" interleave_sectors:%u", 1U << ic->sb->log2_interleave_sectors);
+ 		DMEMIT(" buffer_sectors:%u", 1U << ic->log2_buffer_sectors);
+@@ -4018,6 +4094,7 @@ static void dm_integrity_status(struct dm_target *ti, status_type_t type,
+ 		DMEMIT(",recalculate=%c", (ic->sb->flags & cpu_to_le32(SB_FLAG_RECALCULATING)) ?
+ 		       'y' : 'n');
+ 		DMEMIT(",allow_discards=%c", ic->discard ? 'y' : 'n');
++		DMEMIT(",allow_discards_keyed=%c", ic->discard_keyed ? 'y' : 'n');
+ 		DMEMIT(",fix_padding=%c",
+ 		       ((ic->sb->flags & cpu_to_le32(SB_FLAG_FIXED_PADDING)) != 0) ? 'y' : 'n');
+ 		DMEMIT(",fix_hmac=%c",
+@@ -4179,6 +4256,9 @@ static int initialize_superblock(struct dm_integrity_c *ic,
+ 		get_random_bytes(ic->sb->salt, SALT_SIZE);
+ 	}
+ 
++	if (ic->discard_keyed)
++		ic->sb->flags |= cpu_to_le32(SB_FLAG_DISCARD_KEYED);
++
+ 	if (!ic->meta_dev) {
+ 		if (ic->fix_padding)
+ 			ic->sb->flags |= cpu_to_le32(SB_FLAG_FIXED_PADDING);
+@@ -4838,6 +4918,9 @@ static int dm_integrity_ctr(struct dm_target *ti, unsigned int argc, char **argv
+ 			ic->reset_recalculate_flag = true;
+ 		} else if (!strcmp(opt_string, "allow_discards")) {
+ 			ic->discard = true;
++		} else if (!strcmp(opt_string, "allow_discards_keyed")) {
++			ic->discard = true;
++			ic->discard_keyed = true;
+ 		} else if (!strcmp(opt_string, "fix_padding")) {
+ 			ic->fix_padding = true;
+ 		} else if (!strcmp(opt_string, "fix_hmac")) {
+@@ -4966,6 +5049,11 @@ static int dm_integrity_ctr(struct dm_target *ti, unsigned int argc, char **argv
+ 		ti->error = "Discard can be only used with internal hash";
+ 		goto bad;
+ 	}
++	if (ic->discard_keyed && !ic->internal_hash_alg.key) {
++		r = -EINVAL;
++		ti->error = "Keyed discard can only be used with keyed internal hash";
++		goto bad;
++	}
+ 
+ 	ic->autocommit_jiffies = msecs_to_jiffies(sync_msec);
+ 	ic->autocommit_msec = sync_msec;
+@@ -5084,7 +5172,7 @@ static int dm_integrity_ctr(struct dm_target *ti, unsigned int argc, char **argv
+ 			should_write_sb = true;
+ 	}
+ 
+-	if (!ic->sb->version || ic->sb->version > SB_VERSION_6) {
++	if (!ic->sb->version || ic->sb->version > SB_VERSION_7) {
+ 		r = -EINVAL;
+ 		ti->error = "Unknown version";
+ 		goto bad;
+@@ -5132,6 +5220,11 @@ static int dm_integrity_ctr(struct dm_target *ti, unsigned int argc, char **argv
+ 			goto bad;
+ 		}
+ 	}
++	if (!ic->discard_keyed && (ic->sb->flags & cpu_to_le32(SB_FLAG_DISCARD_KEYED))) {
++		r = -EINVAL;
++		ti->error = "Keyed discard cannot be disabled once enabled";
++		goto bad;
++	}
+ 	if (!!(ic->sb->flags & cpu_to_le32(SB_FLAG_HAVE_JOURNAL_MAC)) != !!ic->journal_mac_alg.alg_string) {
+ 		r = -EINVAL;
+ 		ti->error = "Journal mac mismatch";
+@@ -5432,7 +5525,7 @@ static void dm_integrity_dtr(struct dm_target *ti)
+ 
+ static struct target_type integrity_target = {
+ 	.name			= "integrity",
+-	.version		= {1, 14, 0},
++	.version		= {1, 15, 0},
+ 	.module			= THIS_MODULE,
+ 	.features		= DM_TARGET_SINGLETON | DM_TARGET_INTEGRITY,
+ 	.ctr			= dm_integrity_ctr,
 -- 
 2.53.0
 
