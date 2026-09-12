@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684584772B5;
-	Sat, 12 Sep 2026 11:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B19F47A0B0;
+	Sat, 12 Sep 2026 11:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213520; cv=none; b=ZPuh3sI8WYajQMmn6GODPiW/tRYFJhno9qfnI23+dQDn6RpyxhWITNmkPCYianNRO2+PZnjbRaj9Vaq2IiyWkYk5+jqdED8FKCTKL3oKYG/V89wgionJRfRe0rap5KH6jOM+3HM1xXimhiyW+4KfgZBqWP9jR7OHNjoqA8sBbdU=
+	t=1789213527; cv=none; b=XNVcAdfI/D2gB7mh9GJvAmwWvWoY8SLD5FHt8Bo4e3qnmFOdzuwq2NDjJAzUp8d2mI+DnWoH/IMPD/uu2bEP120ozkj4A4bJemPvy0aRO2WpvYXnqCiKXPsnu41cb529Su/QnuojbW1k125RN06TnIqaxMTvINX1BwMQJsEwAEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213520; c=relaxed/simple;
-	bh=AwmQbYHEhQg34wbTZP/EsGMxrkY8j5N4b+bGN5YunH8=;
+	s=arc-20240116; t=1789213527; c=relaxed/simple;
+	bh=wl3WDobWlNBAAiSW+GeLlFV9QYsTyfwJwWQaWQ0r76I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gCEf4CCKGNPqUnf9Mq8TgzVcUxNcy1+/fFNGhT/D12yXzYSVN9WUNPpzdiBnOrYf5fN+kes65v4Y9U11gmjF0ezXqaFHpBBDUI4oLh2gMJoc8alirbDynKKoLbuuaxNxa9tgFO1VkTEZihQDKN5opm78wRJCKlZJRYYIrpJiOvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eh6KSl6j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X4y/5ypT9WA/l46G+51JpY2usDmqIvezEENjREFuEvI8J2QaJbs4kR/ZEcIVQXps3djWTJeogoA/UoAvQAvbyXfvtXAYwPomVF0Hgcf3nny70+/dNncogImyP4qAOrfiX93df6PMgOOnE45iSnGe5sRoyKp8nmOW6g52DuYzv1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R1QYjPZQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eh6KSl6j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F011F00893;
-	Sat, 12 Sep 2026 11:45:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1QYjPZQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A1B1F000FF;
+	Sat, 12 Sep 2026 11:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213516;
-	bh=LAhmsO3iIidJxL2+ZWyl5+x90asQSrbgIe9bIxPI99E=;
+	s=korg; t=1789213521;
+	bh=iq51sC/2IBGvc3ty7QdlrSqjfH+G8HuSXzmO3gU6100=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Eh6KSl6jdt2boU7SSrG37xRl4TkUFcLHz0Nn/i+x2gIkPNImpvzwx0ZjCPA+omXIv
-	 rx4SMhBAWXs6eV4sP6COispR732dfsnKJhtAMUSssF04g2VT7e2kJNZOLKPnFiHvde
-	 OD9tR1ODBfdEcDo1/L2CYkkYGwOQUvD4rbSHTYKI=
+	b=R1QYjPZQ2da0xCXYvYh/itwsCEF+QLja0KoAmolxlq8hulxYi1r7nzANfMRDXjVac
+	 hFI//tRHe8D5BsUHYgVZnJz7EHbgP0PUXsCUG7y3g0ZbW6eWe+hA/3LxNg8MVLjlqm
+	 FGrIqP33tNyV5281XmmA0jB/FUCOW2L/Do8aWfuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Sourabh Jain <sourabhjain@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.12 0095/1376] powerpc/kexec_file: Fix null-ptr-def in extra size calculation
-Date: Sat, 12 Sep 2026 08:42:01 +0200
-Message-ID: <20260912065609.679058240@linuxfoundation.org>
+Subject: [PATCH 6.12 0096/1376] powerpc/kexec_file: Prevent kexec range truncation
+Date: Sat, 12 Sep 2026 08:42:02 +0200
+Message-ID: <20260912065609.700137100@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,39 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit 761eda315a6e1fda3e8e2185b28430771fb1ac29 upstream.
+commit fa40f9dbdd4af53e7445d9135b5b207eb8adf372 upstream.
 
-A static Sashiko AI review identified a potential NULL pointer
-dereference in kexec_extra_fdt_size_ppc64().
+Sashiko AI review pointed out the following issue.
 
-On platforms without any reserved memory regions,
-get_reserved_memory_ranges() can return 0 while leaving 'rmem'
-unallocated as NULL. Passing it directly leads to a kernel panic when
-evaluating 'rmem->nr_ranges'.
+The __merge_memory_ranges() function incorrectly handles overlapping
+memory ranges when merging them. Although sort_memory_ranges() sorts all
+ranges by their start address in ascending order beforehand, the merge
+logic remains defective in two ways:
 
-Add a NULL check for 'rmem' to prevent this crash.
+1. It compares the current range's start against the previous element (i-1)
+   instead of the running target index (idx)
+
+2. It unconditionally overwrites 'ranges[idx].end' with 'ranges[i].end'.
+
+This logic flaw leads to critical memory truncation when a larger memory
+range completely subsumes subsequent smaller ranges.
+
+For example, consider a sorted input array with three ranges:
+  Range A (idx=0): [0x1000 - 0x9000]
+  Range B (i=1):   [0x2000 - 0x5000] (completely inside Range A)
+  Range C (i=2):   [0x6000 - 0x8000] (completely inside Range A)
+
+1. When i=1 (Range B):
+   ranges[1].start (0x2000) <= ranges[0].end + 1 (0x9001) is TRUE.
+   The code executes: ranges[0].end = ranges[1].end, which erroneously
+   shrinks Range A's end from 0x9000 down to 0x5000.
+
+2. When i=2 (Range C):
+   ranges[2].start (0x6000) <= ranges[1].end + 1 (0x5001) is FALSE.
+   The code falls into the else block, creating a broken new range.
+
+As a result, valid memory fragments [0x5001 - 0x5fff] and [0x8001 - 0x9000]
+are completely lost from the kexec exclude lists, potentially allowing
+the crash kernel to overwrite active memory, causing data corruption
+or crashes.
+
+Fix this by ensuring the start of the current range is compared against the
+end of the active merged range (idx), and use max() to safely prevent the
+outer boundary from being truncated.
 
 Cc: stable@vger.kernel.org
-Fixes: 0d3ff067331e ("powerpc/kexec_file: fix extra size calculation for kexec FDT")
+Fixes: 180adfc532a8 ("powerpc/kexec_file: Add helper functions for getting memory ranges")
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260729012948.2797865-3-ruanjinjie@huawei.com
+Link: https://patch.msgid.link/20260729012948.2797865-4-ruanjinjie@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kexec/file_load_64.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/kexec/ranges.c |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
---- a/arch/powerpc/kexec/file_load_64.c
-+++ b/arch/powerpc/kexec/file_load_64.c
-@@ -847,7 +847,7 @@ unsigned int kexec_extra_fdt_size_ppc64(
- 		extra_size += (cpu_nodes - boot_cpu_node_count) * cpu_node_size();
+--- a/arch/powerpc/kexec/ranges.c
++++ b/arch/powerpc/kexec/ranges.c
+@@ -21,6 +21,7 @@
+ #include <linux/of.h>
+ #include <linux/slab.h>
+ #include <linux/memblock.h>
++#include <linux/minmax.h>
+ #include <linux/crash_core.h>
+ #include <asm/sections.h>
+ #include <asm/kexec_ranges.h>
+@@ -105,19 +106,16 @@ static void __merge_memory_ranges(struct
+ 	struct range *ranges;
+ 	int i, idx;
  
- 	/* Consider extra space for reserved memory ranges if any */
--	if (rmem->nr_ranges > 0)
-+	if (rmem && rmem->nr_ranges > 0)
- 		extra_size += sizeof(struct fdt_reserve_entry) * rmem->nr_ranges;
+-	if (!mem_rngs)
++	if (!mem_rngs || mem_rngs->nr_ranges <= 1)
+ 		return;
  
- 	return extra_size + kdump_extra_fdt_size_ppc64(image, cpu_nodes);
+ 	idx = 0;
+-	ranges = &(mem_rngs->ranges[0]);
++	ranges = mem_rngs->ranges;
+ 	for (i = 1; i < mem_rngs->nr_ranges; i++) {
+-		if (ranges[i].start <= (ranges[i-1].end + 1))
+-			ranges[idx].end = ranges[i].end;
++		if (ranges[i].start <= (ranges[idx].end + 1))
++			ranges[idx].end = max(ranges[idx].end, ranges[i].end);
+ 		else {
+ 			idx++;
+-			if (i == idx)
+-				continue;
+-
+ 			ranges[idx] = ranges[i];
+ 		}
+ 	}
 
 
