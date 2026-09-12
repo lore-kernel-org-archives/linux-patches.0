@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9C3306B3B;
-	Sat, 12 Sep 2026 13:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D5F327204;
+	Sat, 12 Sep 2026 13:48:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220918; cv=none; b=M6kMCNPqIHXKW2bUoocd5tPSIDImJEq3HJLjTrJ+xMTGn/MiLxTrZitqx9PzXASBKli2srhPdCGuWBGSorsmZWNFMr/0/uesDBr3ahdGHaO6vG+todTxJlF4A0dCu4S5h0gCou0gmz3AIOdeAc014io/6qWHJvwSZK9vrx8NQ+Y=
+	t=1789220922; cv=none; b=GBSedEerSKpKQwYqAzZ1JXwDpqjfqFABRlfJ7+cJJtEMFP2IJEcL3Gadurg6118O+MTLovCMfOuTZOQ5ZH8aKwpxLc/M9ffIAxqMtrzV8+Pho3OBb0aYolWGbMdFEZVufedRjhBpqqHgOql8muMiidPIpe49qh1M9rbbKvnhb/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220918; c=relaxed/simple;
-	bh=5vYDDk443isHi95yVlIm5M2V6FoAId+V2k2zWDQWj7g=;
+	s=arc-20240116; t=1789220922; c=relaxed/simple;
+	bh=IogfDEE3yeYs9u9qybl/wV7RvfOWwI9as7X+2NVmpWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bv5C9U/QBJAM3/SZ8NpgJyiVbmR1+6m01dbpaF618LBvQhRfEetMc2gZs6cvk/KNQumhhTG2iCrqcx/arbALwGvYcMRGPhG1Wi7SEM4/3bRob6ydQu/STLMfQg9fdMYhm1z6R5BEdGFyNlANIP1pnLjo7cZrfaY8VCgCdYwVKVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ovTI7koK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gIt71AZv0QAtOPjaM6gDjIGGd5Gk4xyA8yTCQYInxcD2nF4b3PMw+MExAqhPY67oRL45kzyufVvfnvLiW2n8X3fW4dcNQKBq17YRFd6oorXa4HSz6Yx2y0INjF2q8m3skAMleUnK5T9TPw8LAafHdwbw0pV1q4CjFnwCtj3ebLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJq69APk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ovTI7koK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632A61F000FF;
-	Sat, 12 Sep 2026 13:48:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJq69APk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7D21F00893;
+	Sat, 12 Sep 2026 13:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220916;
-	bh=t/VJZHeIPhyl84zfk0hqjyrIIG3n9avagGl0cN3Aylw=;
+	s=korg; t=1789220921;
+	bh=+KFqXLuZwEtu/0MQOV2bvLpqSEgFO+ZI6mMC0Byb9pA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ovTI7koKjxk8TQxPWODJBII9ZylGAnznIEKY6Dza1fkKF2INT1ihQwthxcnBIKiJP
-	 cFXisMiLwdRN5fFjuFl0o7MWMb0xC2bHj5xd4z1kvV+uaPwd7OCL9529xjQbJtNj/0
-	 hXj/KfvJ6j4BuS/BMtjou87mu6kAa9DnE1JXOpxA=
+	b=yJq69APkN7Q6nnfnCkJToupK0t21zg6R+yyUaOuzkDWU+zTMo3SNjtKNdTTACWcXD
+	 UyvSrdTbQT9E5D3ipChXgWExn0UMSlCWBOIkK+9HWokrsqo2QbpcipK8gyPSl9X+xN
+	 CBMlzPxy7T5UiSEogAuqHpWv6aKYRjsr+cJDqFhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 0276/1424] ALSA: 6fire: bound the MIDI event length from the device
-Date: Sat, 12 Sep 2026 08:45:08 +0200
-Message-ID: <20260912065613.460824510@linuxfoundation.org>
+Subject: [PATCH 6.6 0277/1424] ALSA: aloop: Check card index validity at probe
+Date: Sat, 12 Sep 2026 08:45:09 +0200
+Message-ID: <20260912065613.483986205@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,91 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit a478893b59e36cfe7d77a76b352f2db55502e879 upstream.
+commit 819b106a9fd2ef3fd8abf898b9a8e4524eca8f48 upstream.
 
-usb6fire_comm_receiver_handler() forwards a MIDI event using a length
-byte the device supplies, with no bound and no check that the transfer
-delivered that many bytes:
+aloop driver blindly trusts that the given devptr->id value is within
+the proper card index range at probe.  It's OK for the devices the
+driver itself creates at the module probe time, but if the device is
+bound manually via sysfs interface, this could be -1 as "none", and
+this leads to OOB access for index[] and other parameters.
 
-	if (!urb->status) {
-		if (rt->receiver_buffer[0] == 0x10) /* midi in event */
-			if (midi_rt)
-				midi_rt->in_received(midi_rt,
-						rt->receiver_buffer + 2,
-						rt->receiver_buffer[1]);
-	}
+Add a sanity check for the card index and warn/correct it if it's a
+value out of the range.
 
-receiver_buffer is a 64-byte kzalloc() buffer (COMM_RECEIVER_BUFSIZE), so
-only 62 bytes follow the two-byte header.  receiver_buffer[1] is a u8 the
-device chooses, so a device that answers with 0x10 and a length of 0xFF
-makes snd_rawmidi_receive() read 255 bytes starting two bytes into a
-64-byte object.  The bytes past the buffer are handed to userspace
-through the rawmidi read path.
-
-urb->actual_length is not consulted either, so a short transfer leaves
-both the type byte and the length byte at their previous values and the
-handler acts on stale data.
-
-The receiver URB is submitted from usb6fire_comm_init() at probe, so the
-read happens on plug with no user action; forwarding to userspace also
-needs a MIDI input substream open, since usb6fire_midi_in_received()
-only calls snd_rawmidi_receive() when rt->in is set.
-
-KASAN on 7.2.0-rc5 (arm64), single packet from an emulated device:
-
-  BUG: KASAN: slab-out-of-bounds in snd_rawmidi_receive
-  Read of size 255 at addr ffff000009f64682 by task bash/183
-   __asan_memcpy
-   snd_rawmidi_receive
-   usb6fire_midi_in_received [snd_usb_6fire]
-   usb6fire_comm_receiver_handler [snd_usb_6fire]
-  Allocated by task 11:
-   usb6fire_comm_init [snd_usb_6fire]
-   usb6fire_chip_probe [snd_usb_6fire]
-  The buggy address is located 2 bytes inside of
-   allocated 64-byte region [ffff000009f64680, ffff000009f646c0)
-
-Reject the event when the length exceeds the bytes that follow the
-header, and require the transfer to have delivered the header plus that
-many bytes.  The receiver URB is submitted with a 64-byte
-transfer_buffer_length, so a genuine device cannot deliver an event
-longer than those 62 bytes and nothing valid is dropped.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: c6d43ba816d1 ("ALSA: usb/6fire - Driver for TerraTec DMX 6Fire USB")
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260805013423.38175-1-baul.lee@xbow.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260806153227.1460166-2-tiwai@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/6fire/comm.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/drivers/aloop.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/sound/usb/6fire/comm.c
-+++ b/sound/usb/6fire/comm.c
-@@ -36,11 +36,14 @@ static void usb6fire_comm_receiver_handl
- 	struct midi_runtime *midi_rt = rt->chip->midi;
+--- a/sound/drivers/aloop.c
++++ b/sound/drivers/aloop.c
+@@ -1739,6 +1739,12 @@ static int loopback_probe(struct platfor
+ 	int dev = devptr->id;
+ 	int err;
  
- 	if (!urb->status) {
--		if (rt->receiver_buffer[0] == 0x10) /* midi in event */
-+		u8 len = rt->receiver_buffer[1];
++	if (dev < 0 || dev >= SNDRV_CARDS) {
++		dev_warn(&devptr->dev,
++			 "Invalid card index %d, using default 0\n", dev);
++		dev = 0;
++	}
 +
-+		if (rt->receiver_buffer[0] == 0x10 && /* midi in event */
-+		    len <= COMM_RECEIVER_BUFSIZE - 2 &&
-+		    urb->actual_length >= len + 2)
- 			if (midi_rt)
- 				midi_rt->in_received(midi_rt,
--						rt->receiver_buffer + 2,
--						rt->receiver_buffer[1]);
-+						rt->receiver_buffer + 2, len);
- 	}
- 
- 	if (!rt->chip->shutdown) {
+ 	err = snd_devm_card_new(&devptr->dev, index[dev], id[dev], THIS_MODULE,
+ 				sizeof(struct loopback), &card);
+ 	if (err < 0)
 
 
