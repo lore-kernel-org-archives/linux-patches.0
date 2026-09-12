@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48914BEE5E;
-	Sat, 12 Sep 2026 15:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003CF3BE645;
+	Sat, 12 Sep 2026 15:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226684; cv=none; b=F8N/1Kg+IK8MPpdn7F78RSDDXHvqjSc597birOSIsAGGrUY0qF10twK/NHqZKEq7faJX23HKqkv1TbT9M252PJiNR77WGKp/kuE1RmhO3zSqQv0u5/qgOWrGq/x05JQ+nVMTwPYsHpD7/e7hWr3GJcYjWCb/KBI3m9/lKUDdXkk=
+	t=1789226690; cv=none; b=RZXIuDBKw+rHoGk5hHc5t9hJjiC7kOSK6MxH2Xhr+eC97vzEBHU/fXhfVasr02T4y0lf2S6xATpxoImBlLKfoPZ0QJ5we34fj8YNThER5jj2jt3Rvq6x7RDRpvk+8Bb2zBLYHlnNObnXuxyfb7+27+YyKUp9ueqn+zhUxw+anH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226684; c=relaxed/simple;
-	bh=yAcbjMdPRihEo/v2odFkcw5Oz3+CFLmJjHddVcxeRKM=;
+	s=arc-20240116; t=1789226690; c=relaxed/simple;
+	bh=+joLuKTcySVlNMQKps5ygkrZs0hfMhUrQ+VtL4MtLok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qCD0ciGTBByqmqJm36LmeZ1ioam4TGXhDSjWHbzo2clYsPhOHZHLCPx7et6uZm1SKbvZtaQN57Q5Q4JQYqMObCYJnlraAUYB41XZr58mNbMev3gghUab5locLClrozpc4QVvmnIeZNw6/N3WBaaymYtaO1l4QF1XzBxJW7iQj1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmNOPHAH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gse+IdzmX3Ap97kRDZoOUJRkPVVZeGbyQaUS3Zx6JeJzbf2sZh033Ksdoi1GnVU6UNKgggxjnsEIifBObFYQt4u7K19+aU304Z/XnOA+QMoMtT6ZCjiKJ9Fo2u3CZGtdSyTotME7z5/Sl4eHRiJgBxWkXMYcmTVfcOr4YUGKF6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEipDDTi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmNOPHAH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD90C1F000FF;
-	Sat, 12 Sep 2026 15:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEipDDTi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4AA21F000FF;
+	Sat, 12 Sep 2026 15:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226682;
-	bh=HlMtjGMTWKjBv4A7hS7pzStxu+0CzzxQK/BbHYeDm2M=;
+	s=korg; t=1789226687;
+	bh=sacq85/Kst9vo7YBJMxVEahsdEPemcO69NWKxYmCDHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hmNOPHAHC64yMXcRjwxonA70aqMapgYcfQJZ8yviDbuSbikv9NylhNVnLVrckYb1V
-	 AXGdSyWlW7gTH6CdMoE3xjqQgLl1rwhv4QRp7SbAHk6JpRd/s9eZSNTNn2Qx1lGGyq
-	 z4IRbUexksIZohaFoO0PmqAmxI9QYs6uFICcLvEU=
+	b=JEipDDTiDz/1ahFrttlibaCn8DNTLDaj70PbZZA2hd7JlkCCKEsPh+P33SmRgyfiF
+	 35378lqSVAR7E+9Xl6Wnrf8kcRfWJxLV8ctIYiGnwOqWN4D6ZY6ik3EWyqsI6ZbXqp
+	 uuy2TRo7ISqu8lSgjBdV5mEcJJE0KQry2/YWs9hQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+de553c19cb054f174a35@syzkaller.appspotmail.com,
-	Jeffin Philip <jeffinphilip14@gmail.com>
-Subject: [PATCH 6.1 0028/1191] usb: gadget: uvc: fix dangling pointers in uvc_function_bind() and uvc_function_unbind()
-Date: Sat, 12 Sep 2026 08:45:56 +0200
-Message-ID: <20260912065548.752323053@linuxfoundation.org>
+	Guopeng Zhang <zhangguopeng@kylinos.cn>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 0011/1191] mm: memcg: stop reclaim when a limit update is superseded
+Date: Sat, 12 Sep 2026 08:45:39 +0200
+Message-ID: <20260912065548.358281085@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,55 +56,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeffin Philip <jeffinphilip14@gmail.com>
+From: Guopeng Zhang <zhangguopeng@kylinos.cn>
 
-commit bdab5605259ba5d6ff927c1a85cc83eb3ecfdacc upstream.
+commit 9477820c63cbf4d97114238f3d1ff10dfd6bee3f upstream.
 
-In uvc_function_bind() error path, we use usb_ep_free_request which
-uses uvc->control_req but does not set it to NULL afterwards. Thus,
-uvc->control_req is a dangling pointer causing a UAF. Also we do not set
-the uvc->control_buf pointer to NULL after freeing it, which is another
-dangling pointer. Fix it by setting uvc->control_req to NULL after we run
-usb_ep_free_request() and uvc->control_buf to NULL after kfree. Do the
-same for uvc_function_unbind().
+kernfs serializes file operations only per open file, so separate open
+files can update the same memory.high or memory.max file concurrently.
+Both handlers store the new limit before synchronous reclaim, but continue
+to use the writer's local target in the reclaim loop.  If another writer
+raises or removes the limit, the first writer can continue reclaiming
+toward a stale target.
 
-Reported-by: syzbot+de553c19cb054f174a35@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=de553c19cb054f174a35
-Fixes: 0f9df9393855 ("usb: gadget: uvc: fix error path in uvc_function_bind()")
-Fixes: 6d11ed76c45d ("usb: gadget: f_uvc: convert f_uvc to new function interface")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jeffin Philip <jeffinphilip14@gmail.com>
-Link: https://patch.msgid.link/20260813174311.130823-1-jeffinphilip14@gmail.com
+For memory.max, this can leave the writer looping indefinitely once
+reclaim retries are exhausted.  The OOM path sees sufficient margin under
+the current limit and returns true without killing, while the writer still
+compares usage against its stale target and records another OOM event.
+
+Check the current limit at the start of each reclaim iteration and stop if
+it no longer matches the writer's target.
+
+Reproducer:
+
+Populate a cgroup with anonymous memory and disable swapping.  Lower
+memory.max from one open file, then restore it to "max" through another
+open file after the new limit becomes visible.
+
+Without the patch, the first writer remains blocked and repeatedly
+increments the OOM event counter.  With the patch, it returns normally.
+
+This was not motivated by a reported production workload.  We found it
+through automated randomized testing for our cgroup observability work
+and reduced it to the reproducer above.
+
+Link: https://lore.kernel.org/20260724021805.1234583-1-guopeng.zhang@linux.dev
+Fixes: 8c8c383c04f6 ("mm: memcontrol: try harder to set a new memory.high")
+Fixes: b6e6edcfa405 ("mm: memcontrol: reclaim and OOM kill when shrinking memory.max below usage")
+Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Acked-by: Tao Cui <cuitao@kylinos.cn>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_uvc.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ mm/memcontrol.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/usb/gadget/function/f_uvc.c
-+++ b/drivers/usb/gadget/function/f_uvc.c
-@@ -785,9 +785,12 @@ uvc_function_bind(struct usb_configurati
- v4l2_error:
- 	v4l2_device_unregister(&uvc->v4l2_dev);
- error:
--	if (uvc->control_req)
-+	if (uvc->control_req) {
- 		usb_ep_free_request(cdev->gadget->ep0, uvc->control_req);
-+		uvc->control_req = NULL;
-+	}
- 	kfree(uvc->control_buf);
-+	uvc->control_buf = NULL;
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -6428,6 +6428,9 @@ static ssize_t memory_high_write(struct
+ 		unsigned long nr_pages = page_counter_read(&memcg->memory);
+ 		unsigned long reclaimed;
  
- 	usb_free_all_descriptors(f);
- 	return ret;
-@@ -968,7 +971,9 @@ static void uvc_function_unbind(struct u
- 	uvc->vdev_release_done = NULL;
++		if (high != READ_ONCE(memcg->memory.high))
++			break;
++
+ 		if (nr_pages <= high)
+ 			break;
  
- 	usb_ep_free_request(cdev->gadget->ep0, uvc->control_req);
-+	uvc->control_req = NULL;
- 	kfree(uvc->control_buf);
-+	uvc->control_buf = NULL;
+@@ -6476,6 +6479,9 @@ static ssize_t memory_max_write(struct k
+ 	for (;;) {
+ 		unsigned long nr_pages = page_counter_read(&memcg->memory);
  
- 	usb_free_all_descriptors(f);
- }
++		if (max != READ_ONCE(memcg->memory.max))
++			break;
++
+ 		if (nr_pages <= max)
+ 			break;
+ 
 
 
