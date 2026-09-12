@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11B8426D03;
-	Sat, 12 Sep 2026 10:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A4C34752E;
+	Sat, 12 Sep 2026 10:58:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210687; cv=none; b=Gs20Y9+Oi3bx1j4NcxuGXGGTmR+NEHiSWU9811nV3zgrxfevsg2HoG2Z4wIgrn5RMF7B3hxeKt5B2cE9N4Vp9u0TOucxzYogQpJEAtZ3G6pG0Ur7I6alrgBal+E88dXc1NpPrkHkBw6gfT4OBSC3EzFwxfIwxxU1NBs1guSmBxM=
+	t=1789210692; cv=none; b=hDl6kFLzy7p4KLq7ansEtocdbK4l1UuZJwX4nBLDP116fuxXqOShLuuQ38SssbCLFPxDVbWcc54Y1MmyqyxrzHruvD/gIg6THR5d7/KPrl7B4pyEhjAg5tDNuDb5AqpMzuF07Kc9KEgrOTwWgTOLAe6oGUXPnH6kOFNr5rHlLn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210687; c=relaxed/simple;
-	bh=FkW70XxV8YZD2gLboyw2T1KSowg4p+7tt1LYyowdspk=;
+	s=arc-20240116; t=1789210692; c=relaxed/simple;
+	bh=7RIjbty6nFeGwJ9hg9jFUvhzlvclrG2JZBRxrjPBCY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SUZTswany8YZ4R5WiEajFrr/TM9Uxq7EDw9GMJo8xIHBvLI7vO6NqyOZSgAC/SOvJ5+7vbiGTu8gVCe0j4ti3jEqPGBJ52snFfeW+GDJlXGAedgd0bHb/ZkG6qiM/5kH/s53VgANI8aSP3bUGNS1GF3w3WOYAeKWOLd+4s/M8GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bn8ceTMs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sJwsD6zZA4cVPlh9iG8nXw+hpoDKzcWFHVA99GaMsikmQHHucm60VSYSlpWhjm4sQeIZL2kaLwitlOC0Y0JJq10aqYkOfiBblfUCMWnxv7LkwwKq51+YZ2K5UsdCM2CAq3+4/2mquPA5ZyhZwFoJ4jn0RQsX/4l4BLr8apDarI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJ+mH+pk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bn8ceTMs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9C41F000FF;
-	Sat, 12 Sep 2026 10:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJ+mH+pk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8BBA1F000FF;
+	Sat, 12 Sep 2026 10:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210685;
-	bh=USSga1EiUNBj9r8aDgn0BPrDm0vEISbjN3Q26XuvTuc=;
+	s=korg; t=1789210690;
+	bh=xCvXvQ0dOviHQeIRO4EKk71BRWhQzrp6zjMZ8S8qFRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bn8ceTMs7QBjFqbN8gtVN27BZWdAQCLswKTgxdgS5a1ott3hBNtzWH3Mx53oHN40e
-	 EmhC9ZZbBcuP8lfOWCRvUSFwUSVO//+52wXg23D8EPVnhdLQZo05URa52m2alou6DA
-	 ljTLb7r+HLEeAgrmvWsYWGVSYk6jKRfNp26Nsygs=
+	b=QJ+mH+pkYEYSncnxGSgDpV2IrTK5VHxNAFT0ehBekr6oh/kojQSsegB2ULljEg75a
+	 TA8qi91isfxVYdBzJQg9NSAow2G9AcDuaOsxB1UnZ47bNRiyjTb6D+UZd6gHpsJ9BT
+	 XMdO8hKY947KTf9DT+LKp5xD9EFstI8OxMMY/P8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1077/1518] hwmon: (cros_ec) Add support for temperature thresholds
-Date: Sat, 12 Sep 2026 08:54:06 +0200
-Message-ID: <20260912065647.813197931@linuxfoundation.org>
+Subject: [PATCH 6.18 1078/1518] hwmon: Support guard() and scoped_guard for subsystem locks
+Date: Sat, 12 Sep 2026 08:54:07 +0200
+Message-ID: <20260912065647.834960998@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -46,169 +44,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit afa7c56ec447315ab38182bb9c185d8ea712c3ad ]
+[ Upstream commit d1e720c7328e046049b792d03fae093d4d3a72e4 ]
 
-Implement reading temperature thresholds through
-EC_CMD_THERMAL_GET_THRESHOLD/EC_CMD_THERMAL_SET_THRESHOLD.
+Add support for guard() and scoped_guard() for the hwmon subsystem lock
+to simplify its use.
 
-Thresholds are mapped as follows between the EC and hwmon:
-
-hwmon_temp_max       - EC_TEMP_THRESH_WARN
-hwmon_temp_crit      - EC_TEMP_THRESH_HIGH
-hwmon_temp_emergency - EC_TEMP_THRESH_HALT
-
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://lore.kernel.org/r/20260118-cros_ec-hwmon-pwm-v2-4-77eb1709b031@weissschuh.net
-[groeck: Rearrange code to no longer use unreachable() since that causes
- a hiccup with some versions of gcc and objtool]
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Stable-dep-of: 26db27364088 ("hwmon: (cros_ec) Synchronize EC access from the thermal device callbacks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/hwmon/cros_ec_hwmon.rst |  3 ++
- drivers/hwmon/cros_ec_hwmon.c         | 57 +++++++++++++++++++++++++--
- 2 files changed, 57 insertions(+), 3 deletions(-)
+ Documentation/hwmon/hwmon-kernel-api.rst | 7 ++++---
+ include/linux/hwmon.h                    | 3 +++
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/hwmon/cros_ec_hwmon.rst b/Documentation/hwmon/cros_ec_hwmon.rst
-index b7dc88d22fdae..47a85cd40937e 100644
---- a/Documentation/hwmon/cros_ec_hwmon.rst
-+++ b/Documentation/hwmon/cros_ec_hwmon.rst
-@@ -32,6 +32,9 @@ Fan readings
- Temperature readings
-     Always supported.
+diff --git a/Documentation/hwmon/hwmon-kernel-api.rst b/Documentation/hwmon/hwmon-kernel-api.rst
+index 1d7f1397a8274..9fcde32a140df 100644
+--- a/Documentation/hwmon/hwmon-kernel-api.rst
++++ b/Documentation/hwmon/hwmon-kernel-api.rst
+@@ -85,9 +85,10 @@ removal.
+ When using ``[devm_]hwmon_device_register_with_info()`` to register the
+ hardware monitoring device, accesses using the associated access functions
+ are serialised by the hardware monitoring core. If a driver needs locking
+-for other functions such as interrupt handlers or for attributes which are
+-fully implemented in the driver, hwmon_lock() and hwmon_unlock() can be used
+-to ensure that calls to those functions are serialized.
++for other functions such as interrupt handlers, attributes which are fully
++implemented in the driver, or debugfs functions, hwmon_lock() and hwmon_unlock()
++can be used to ensure that calls to those functions are serialized. Those
++functions also support guard() and scoped_guard() variants.
  
-+Temperature thresholds
-+    If supported by the EC.
-+
- PWM fan control
-     If the EC also supports setting fan PWM values and fan mode.
+ Using devm_hwmon_device_register_with_info()
+ --------------------------------------------
+diff --git a/include/linux/hwmon.h b/include/linux/hwmon.h
+index 301a83afbd663..f5330e7ae247c 100644
+--- a/include/linux/hwmon.h
++++ b/include/linux/hwmon.h
+@@ -13,6 +13,7 @@
+ #define _HWMON_H_
  
-diff --git a/drivers/hwmon/cros_ec_hwmon.c b/drivers/hwmon/cros_ec_hwmon.c
-index 9b5759e91c725..7e0fd5bbe2d75 100644
---- a/drivers/hwmon/cros_ec_hwmon.c
-+++ b/drivers/hwmon/cros_ec_hwmon.c
-@@ -28,6 +28,7 @@ struct cros_ec_hwmon_priv {
- 	const char *temp_sensor_names[EC_TEMP_SENSOR_ENTRIES + EC_TEMP_SENSOR_B_ENTRIES];
- 	u8 usable_fans;
- 	bool fan_control_supported;
-+	bool temp_threshold_supported;
- 	u8 manual_fans; /* bits to indicate whether the fan is set to manual */
- 	u8 manual_fan_pwm[EC_FAN_SPEED_ENTRIES];
- };
-@@ -102,6 +103,23 @@ static int cros_ec_hwmon_read_temp(struct cros_ec_device *cros_ec, u8 index, u8
- 	return 0;
- }
+ #include <linux/bitops.h>
++#include <linux/cleanup.h>
  
-+static int cros_ec_hwmon_read_temp_threshold(struct cros_ec_device *cros_ec, u8 index,
-+					     enum ec_temp_thresholds threshold, u32 *temp)
-+{
-+	struct ec_params_thermal_get_threshold_v1 req = {};
-+	struct ec_thermal_config resp;
-+	int ret;
-+
-+	req.sensor_num = index;
-+	ret = cros_ec_cmd(cros_ec, 1, EC_CMD_THERMAL_GET_THRESHOLD,
-+			  &req, sizeof(req), &resp, sizeof(resp));
-+	if (ret < 0)
-+		return ret;
-+
-+	*temp = resp.temp_host[threshold];
-+	return 0;
-+}
-+
- static bool cros_ec_hwmon_is_error_fan(u16 speed)
- {
- 	return speed == EC_FAN_SPEED_NOT_PRESENT || speed == EC_FAN_SPEED_STALLED;
-@@ -120,12 +138,29 @@ static long cros_ec_hwmon_temp_to_millicelsius(u8 temp)
- 	return kelvin_to_millicelsius((((long)temp) + EC_TEMP_SENSOR_OFFSET));
- }
+ struct device;
+ struct attribute_group;
+@@ -495,6 +496,8 @@ char *devm_hwmon_sanitize_name(struct device *dev, const char *name);
+ void hwmon_lock(struct device *dev);
+ void hwmon_unlock(struct device *dev);
  
-+static bool cros_ec_hwmon_attr_is_temp_threshold(u32 attr)
-+{
-+	return attr == hwmon_temp_max ||
-+	       attr == hwmon_temp_crit ||
-+	       attr == hwmon_temp_emergency;
-+}
++DEFINE_GUARD(hwmon_lock, struct device *, hwmon_lock(_T), hwmon_unlock(_T))
 +
-+static enum ec_temp_thresholds cros_ec_hwmon_attr_to_thres(u32 attr)
-+{
-+	if (attr == hwmon_temp_max)
-+		return EC_TEMP_THRESH_WARN;
-+	else if (attr == hwmon_temp_crit)
-+		return EC_TEMP_THRESH_HIGH;
-+	return EC_TEMP_THRESH_HALT;	/* attr == hwmon_temp_emergency */
-+}
-+
- static int cros_ec_hwmon_read(struct device *dev, enum hwmon_sensor_types type,
- 			      u32 attr, int channel, long *val)
- {
- 	struct cros_ec_hwmon_priv *priv = dev_get_drvdata(dev);
- 	int ret = -EOPNOTSUPP;
- 	u8 control_method;
-+	u32 threshold;
- 	u8 pwm_value;
- 	u16 speed;
- 	u8 temp;
-@@ -168,6 +203,13 @@ static int cros_ec_hwmon_read(struct device *dev, enum hwmon_sensor_types type,
- 			ret = cros_ec_hwmon_read_temp(priv->cros_ec, channel, &temp);
- 			if (ret == 0)
- 				*val = cros_ec_hwmon_is_error_temp(temp);
-+
-+		} else if (cros_ec_hwmon_attr_is_temp_threshold(attr)) {
-+			ret = cros_ec_hwmon_read_temp_threshold(priv->cros_ec, channel,
-+								cros_ec_hwmon_attr_to_thres(attr),
-+								&threshold);
-+			if (ret == 0)
-+				*val = kelvin_to_millicelsius(threshold);
- 		}
- 	}
- 
-@@ -267,8 +309,14 @@ static umode_t cros_ec_hwmon_is_visible(const void *data, enum hwmon_sensor_type
- 		if (priv->fan_control_supported && priv->usable_fans & BIT(channel))
- 			return 0644;
- 	} else if (type == hwmon_temp) {
--		if (priv->temp_sensor_names[channel])
--			return 0444;
-+		if (priv->temp_sensor_names[channel]) {
-+			if (cros_ec_hwmon_attr_is_temp_threshold(attr)) {
-+				if (priv->temp_threshold_supported)
-+					return 0444;
-+			} else {
-+				return 0444;
-+			}
-+		}
- 	}
- 
- 	return 0;
-@@ -286,7 +334,8 @@ static const struct hwmon_channel_info * const cros_ec_hwmon_info[] = {
- 			   HWMON_PWM_INPUT | HWMON_PWM_ENABLE,
- 			   HWMON_PWM_INPUT | HWMON_PWM_ENABLE,
- 			   HWMON_PWM_INPUT | HWMON_PWM_ENABLE),
--#define CROS_EC_HWMON_TEMP_PARAMS (HWMON_T_INPUT | HWMON_T_FAULT | HWMON_T_LABEL)
-+#define CROS_EC_HWMON_TEMP_PARAMS (HWMON_T_INPUT | HWMON_T_FAULT | HWMON_T_LABEL | \
-+				   HWMON_T_MAX | HWMON_T_CRIT | HWMON_T_EMERGENCY)
- 	HWMON_CHANNEL_INFO(temp,
- 			   CROS_EC_HWMON_TEMP_PARAMS,
- 			   CROS_EC_HWMON_TEMP_PARAMS,
-@@ -496,6 +545,8 @@ static int cros_ec_hwmon_probe(struct platform_device *pdev)
- 	cros_ec_hwmon_probe_temp_sensors(dev, priv, thermal_version);
- 	cros_ec_hwmon_probe_fans(priv);
- 	priv->fan_control_supported = cros_ec_hwmon_probe_fan_control_supported(priv->cros_ec);
-+	priv->temp_threshold_supported = is_cros_ec_cmd_available(priv->cros_ec,
-+								  EC_CMD_THERMAL_GET_THRESHOLD, 1);
- 	cros_ec_hwmon_register_fan_cooling_devices(dev, priv);
- 
- 	hwmon_dev = devm_hwmon_device_register_with_info(dev, "cros_ec", priv,
+ /**
+  * hwmon_is_bad_char - Is the char invalid in a hwmon name
+  * @ch: the char to be considered
 -- 
 2.53.0
 
