@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DDB2FDC30;
-	Sat, 12 Sep 2026 14:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2740F2ECD1D;
+	Sat, 12 Sep 2026 14:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222275; cv=none; b=jR2fKFZGehxSrhb+YqvN9+fFu+qS/2fy32hNSftm3FBa/KMgaZ8k0paZMNBBTAiLWNBhXt7k50bMODsjUKJp8fbq3i+QWMH6NNf26vG5iZfnMz/yAnwD5oc9aX0UlF/ssDUXhPvwJIkCPgx5iXTgmtIA4ifBHhglm3NCYAKpZo0=
+	t=1789222279; cv=none; b=iU1R0ObTqGQRgnejumm0fJN9YiR1KLNxfgv9VOf54FlF05IY5QHdf29yI/8PYB6QUrh8z9btzacLlIxuj9FeekX0b/Iri+hn8QfIeDVNBO9MCGnFzvHSxRhf6hzWUq8Od47iYdF1rd7F6X1Ljq017BaE8FiABpWO/suFL7t+uFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222275; c=relaxed/simple;
-	bh=OTf3ZNaYJx2C8zNuVHflZSyTFdCY937SMlWrr4dpNzA=;
+	s=arc-20240116; t=1789222279; c=relaxed/simple;
+	bh=X7HKMUsv6XabJTRC8oXyOlPUE9VEs48EGupcbtUeiCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HJoaUIfUloPnItLow+zJ+baliMYJu/lBG6BKT/JnhEFZxCP+H3wRjjHZ5HCvniKVXEiCM94A/KQ8jHrsnQCuMQ56KYg2LvkzdhWRyT+uiLfdH8hfGiu7AG61J8MQkXHpTLhda+u3gFw3zfxVv4BSb87WDsUFXWT5TmVo2hAIFQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3xYkefE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o/gqmuW5aEgFxrgbTrvvGgohpa2nndMx3ClapvYjEOJaSjISVyVONK92F4Y1V4bjRfA8Jy3YKRDmK8C3YOqKpz4rhssD4gJLux3xh1OqpV+Bl815AOTQoS/rc/bCgDvVOw4X8pxac/GDZ2gXr7+0e8ICrKzAGpw+GgWQcHK3tgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkxJc7Ep; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3xYkefE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2113B1F000FF;
-	Sat, 12 Sep 2026 14:11:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkxJc7Ep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 384871F000FF;
+	Sat, 12 Sep 2026 14:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222273;
-	bh=9eYTKgewxECg3i867GpsUvEA538eyLl0S1bQUj/kPgA=;
+	s=korg; t=1789222278;
+	bh=oQrRlPZzyGD0v9y2WmSoOtlP6yzcbcOa85QbmkhnVWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W3xYkefE9RY60g4sIw+2aPHrxZ1MlG7SBpp3UDRJvPipPe9btng6U/tjtZzozsE/c
-	 pPSEkAHjDEAGhE+dXiI9OZsOda31sRHiamY9u5Sg9geZr6Zdfwg2LVVYaNED+xhIcI
-	 BMtoe8uDuivZbcwBlx++LdkN7tSfyYtE/DP8LMUs=
+	b=pkxJc7EpZ6moPVap6/OGq9r/qLi32CtNwsjFGz1H/h/fFZKZONxanylSEMilfR2Jb
+	 XiiUjgJ0KGvIoOfFtQnfccymsQJXuPoaeEFSRT3fn5R6UF7HM74lrlqjJ9BSL4AY9Y
+	 JSibvGqPr2LlPw1Jn84QBcgq7lGSD7FEuE+4Hr/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0554/1424] ceph: fix BUG_ON in __ceph_build_xattrs_blob() due to stale blob size
-Date: Sat, 12 Sep 2026 08:49:46 +0200
-Message-ID: <20260912065619.710330114@linuxfoundation.org>
+Subject: [PATCH 6.6 0555/1424] batman-adv: dat: atomically update mac addresses
+Date: Sat, 12 Sep 2026 08:49:47 +0200
+Message-ID: <20260912065619.733298610@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,128 +51,217 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 0c22d9511cbde746622f8e4c11aaa63fe76d45f9 ]
+commit e6de568d3eda3e3c01c868fabd7a9535d5ee4a73 upstream.
 
-The generic/642 test-case can reproduce the kernel crash:
+When a MAC address is updated in batadv_dat_entry_add(), it is done using a
+simple copy function. A parallel reader might only see parts of this
+update. In worst case, the reader is transporting the half updated MAC
+address over the network or is creating an ARP response using it -
+poisoning the ARP cache.
 
-[40243.605254] ------------[ cut here ]------------
-[40243.605956] kernel BUG at fs/ceph/xattr.c:918!
-[40243.607142] Oops: invalid opcode: 0000 [#1] SMP PTI
-[40243.608067] CPU: 7 UID: 0 PID: 498762 Comm: kworker/7:1 Not tainted 7.0.0-rc7+ #3 PREEMPT(full)
-[40243.609700] Hardware name: QEMU Ubuntu 25.10 PC v2 (i440FX + PIIX, + 10.1 machine, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[40243.611820] Workqueue: ceph-msgr ceph_con_workfn
-[40243.612715] RIP: 0010:__ceph_build_xattrs_blob+0x1b8/0x1e0
-[40243.613731] Code: 0f 84 82 fe ff ff e9 cf 8e 56 ff 48 8d 65 e8 31 c0 5b 41 5c 41 5d 5d 31 d2 31 c9 31 f6 31 ff 45 31 c0 45 31 c9 c3 cc cc cc cc <0f> 0b 4c 8b 62 08 41 8b 85 24 07 00 00 49 83 c4 04 41 89 44 24 fc
-[40243.616888] RSP: 0018:ffffcc80c4d4b688 EFLAGS: 00010287
-[40243.617773] RAX: 0000000000010026 RBX: 0000000000000001 RCX: 0000000000000000
-[40243.618928] RDX: ffff8a773798dee0 RSI: 0000000000000000 RDI: 0000000000000000
-[40243.620158] RBP: ffffcc80c4d4b6a0 R08: 0000000000000000 R09: 0000000000000000
-[40243.621573] R10: 0000000000000000 R11: 0000000000000000 R12: ffff8a75f3b58000
-[40243.622907] R13: ffff8a75f3b58000 R14: 0000000000000080 R15: 000000000000bffd
-[40243.624054] FS:  0000000000000000(0000) GS:ffff8a787d1b4000(0000) knlGS:0000000000000000
-[40243.625331] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[40243.626269] CR2: 000072f390b623c0 CR3: 000000011c02a003 CR4: 0000000000372ef0
-[40243.627408] Call Trace:
-[40243.627839]  <TASK>
-[40243.628188]  __prep_cap+0x3fd/0x4a0
-[40243.628789]  ? do_raw_spin_unlock+0x4e/0xe0
-[40243.629474]  ceph_check_caps+0x46a/0xc80
-[40243.630094]  ? __lock_acquire+0x4a2/0x2650
-[40243.630773]  ? find_held_lock+0x31/0x90
-[40243.631347]  ? handle_cap_grant+0x79f/0x1060
-[40243.632068]  ? lock_release+0xd9/0x300
-[40243.632696]  ? __mutex_unlock_slowpath+0x3e/0x340
-[40243.633429]  ? lock_release+0xd9/0x300
-[40243.634052]  handle_cap_grant+0xcf6/0x1060
-[40243.634745]  ceph_handle_caps+0x122b/0x2110
-[40243.635415]  mds_dispatch+0x5bd/0x2160
-[40243.636034]  ? ceph_con_process_message+0x65/0x190
-[40243.636828]  ? lock_release+0xd9/0x300
-[40243.637431]  ceph_con_process_message+0x7a/0x190
-[40243.638184]  ? kfree+0x311/0x4f0
-[40243.638749]  ? kfree+0x311/0x4f0
-[40243.639268]  process_message+0x16/0x1a0
-[40243.639915]  ? sg_free_table+0x39/0x90
-[40243.640572]  ceph_con_v2_try_read+0xf58/0x2120
-[40243.641255]  ? lock_acquire+0xc8/0x300
-[40243.641863]  ceph_con_workfn+0x151/0x820
-[40243.642493]  process_one_work+0x22f/0x630
-[40243.643093]  ? process_one_work+0x254/0x630
-[40243.643770]  worker_thread+0x1e2/0x400
-[40243.644332]  ? __pfx_worker_thread+0x10/0x10
-[40243.645020]  kthread+0x109/0x140
-[40243.645560]  ? __pfx_kthread+0x10/0x10
-[40243.646125]  ret_from_fork+0x3f8/0x480
-[40243.646752]  ? __pfx_kthread+0x10/0x10
-[40243.647316]  ? __pfx_kthread+0x10/0x10
-[40243.647919]  ret_from_fork_asm+0x1a/0x30
-[40243.648556]  </TASK>
-[40243.648902] Modules linked in: overlay hctr2 libpolyval chacha libchacha adiantum libnh libpoly1305 essiv intel_rapl_msr intel_rapl_common intel_uncore_frequency_common skx_edac_common nfit kvm_intel kvm irqbypass joydev ghash_clmulni_intel aesni_intel rapl input_leds mac_hid psmouse vga16fb serio_raw vgastate floppy i2c_piix4 pata_acpi bochs qemu_fw_cfg i2c_smbus sch_fq_codel rbd dm_crypt msr parport_pc ppdev lp parport efi_pstore
-[40243.654766] ---[ end trace 0000000000000000 ]---
-
-Commit d93231a6bc8a ("ceph: prevent a client from exceeding the MDS
-maximum xattr size") moved the required_blob_size computation to before
-the __build_xattrs() call, introducing a race.
-
-__build_xattrs() releases and reacquires i_ceph_lock during execution.
-In that window, handle_cap_grant() may update i_xattrs.blob with a
-newer MDS-provided blob and bump i_xattrs.version.  When
-__build_xattrs() detects that index_version < version, it destroys and
-rebuilds the entire xattr rb-tree from the new blob, potentially
-increasing count, names_size, and vals_size.
-
-The prealloc_blob size check that follows still uses the stale
-required_blob_size computed before the rebuild, so it passes even when
-prealloc_blob is too small for the now-larger tree. After __set_xattr()
-adds one more xattr on top, __ceph_build_xattrs_blob() is called from
-the cap flush path and hits:
-
-    BUG_ON(need > ci->i_xattrs.prealloc_blob->alloc_len);
-
-Fix this by recomputing required_blob_size after __build_xattrs()
-returns, using the current tree state. Also re-validate against
-m_max_xattr_size to fall back to the sync path if the rebuilt tree now
-exceeds the MDS limit.
+atomic64_t can be used to store the 48 bit of a mac address. A reader will
+then either see the old mac address or the new one - never a mixture of
+both.
 
 Cc: stable@vger.kernel.org
-Fixes: d93231a6bc8a ("ceph: prevent a client from exceeding the MDS maximum xattr size")
-Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 2f1dfbe18507 ("batman-adv: Distributed ARP Table - implement local storage")
+[ Context ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/xattr.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ net/batman-adv/distributed-arp-table.c | 58 +++++++++++++++++---------
+ net/batman-adv/types.h                 |  2 +-
+ 2 files changed, 40 insertions(+), 20 deletions(-)
 
-diff --git a/fs/ceph/xattr.c b/fs/ceph/xattr.c
-index b9c3f000c9ffb..17da8be8423fe 100644
---- a/fs/ceph/xattr.c
-+++ b/fs/ceph/xattr.c
-@@ -1257,6 +1257,22 @@ int __ceph_setxattr(struct inode *inode, const char *name,
- 	      ceph_vinop(inode), name, ceph_cap_string(issued));
- 	__build_xattrs(inode);
+diff --git a/net/batman-adv/distributed-arp-table.c b/net/batman-adv/distributed-arp-table.c
+index 0594794e2e118..c6b7b3bece813 100644
+--- a/net/batman-adv/distributed-arp-table.c
++++ b/net/batman-adv/distributed-arp-table.c
+@@ -376,18 +376,19 @@ batadv_dat_entry_hash_find(struct batadv_priv *bat_priv, __be32 ip,
+ static void batadv_dat_entry_add(struct batadv_priv *bat_priv, __be32 ip,
+ 				 u8 *mac_addr, unsigned short vid)
+ {
++	u64 u64_mac = ether_addr_to_u64(mac_addr);
+ 	struct batadv_dat_entry *dat_entry;
+ 	int hash_added;
  
-+	/*
-+	 * __build_xattrs() may have released and reacquired i_ceph_lock,
-+	 * during which handle_cap_grant() could have replaced i_xattrs.blob
-+	 * with a newer MDS-provided blob and bumped i_xattrs.version. If that
-+	 * caused __build_xattrs() to rebuild the rb-tree from the new blob,
-+	 * count/names_size/vals_size may now be larger than when
-+	 * required_blob_size was computed above. Recompute it here so the
-+	 * prealloc_blob size check below reflects the current tree state.
-+	 */
-+	required_blob_size = __get_required_blob_size(ci, name_len, val_len);
-+	if (required_blob_size > mdsc->mdsmap->m_max_xattr_size) {
-+		doutc(cl, "sync (size too large): %d > %llu\n",
-+		      required_blob_size, mdsc->mdsmap->m_max_xattr_size);
-+		goto do_sync;
-+	}
+ 	dat_entry = batadv_dat_entry_hash_find(bat_priv, ip, vid);
+ 	/* if this entry is already known, just update it */
+ 	if (dat_entry) {
+-		if (!batadv_compare_eth(dat_entry->mac_addr, mac_addr))
+-			ether_addr_copy(dat_entry->mac_addr, mac_addr);
++		atomic64_set(&dat_entry->mac_addr, u64_mac);
 +
- 	if (!ci->i_xattrs.prealloc_blob ||
- 	    required_blob_size > ci->i_xattrs.prealloc_blob->alloc_len) {
- 		struct ceph_buffer *blob;
+ 		dat_entry->last_update = jiffies;
+ 		batadv_dbg(BATADV_DBG_DAT, bat_priv,
+ 			   "Entry updated: %pI4 %pM (vid: %d)\n",
+-			   &dat_entry->ip, dat_entry->mac_addr,
++			   &dat_entry->ip, mac_addr,
+ 			   batadv_print_vid(vid));
+ 		goto out;
+ 	}
+@@ -398,7 +399,7 @@ static void batadv_dat_entry_add(struct batadv_priv *bat_priv, __be32 ip,
+ 
+ 	dat_entry->ip = ip;
+ 	dat_entry->vid = vid;
+-	ether_addr_copy(dat_entry->mac_addr, mac_addr);
++	atomic64_set(&dat_entry->mac_addr, u64_mac);
+ 	dat_entry->last_update = jiffies;
+ 	kref_init(&dat_entry->refcount);
+ 
+@@ -414,7 +415,7 @@ static void batadv_dat_entry_add(struct batadv_priv *bat_priv, __be32 ip,
+ 	}
+ 
+ 	batadv_dbg(BATADV_DBG_DAT, bat_priv, "New entry added: %pI4 %pM (vid: %d)\n",
+-		   &dat_entry->ip, dat_entry->mac_addr, batadv_print_vid(vid));
++		   &dat_entry->ip, mac_addr, batadv_print_vid(vid));
+ 
+ out:
+ 	batadv_dat_entry_put(dat_entry);
+@@ -870,6 +871,8 @@ batadv_dat_cache_dump_entry(struct sk_buff *msg, u32 portid,
+ 			    struct netlink_callback *cb,
+ 			    struct batadv_dat_entry *dat_entry)
+ {
++	u8 mac[ETH_ALEN];
++	u64 u64_mac;
+ 	int msecs;
+ 	void *hdr;
+ 
+@@ -882,11 +885,12 @@ batadv_dat_cache_dump_entry(struct sk_buff *msg, u32 portid,
+ 	genl_dump_check_consistent(cb, hdr);
+ 
+ 	msecs = jiffies_to_msecs(jiffies - dat_entry->last_update);
++	u64_mac = atomic64_read(&dat_entry->mac_addr);
++	u64_to_ether_addr(u64_mac, mac);
+ 
+ 	if (nla_put_in_addr(msg, BATADV_ATTR_DAT_CACHE_IP4ADDRESS,
+ 			    dat_entry->ip) ||
+-	    nla_put(msg, BATADV_ATTR_DAT_CACHE_HWADDRESS, ETH_ALEN,
+-		    dat_entry->mac_addr) ||
++	    nla_put(msg, BATADV_ATTR_DAT_CACHE_HWADDRESS, ETH_ALEN, mac) ||
+ 	    nla_put_u16(msg, BATADV_ATTR_DAT_CACHE_VID, dat_entry->vid) ||
+ 	    nla_put_u32(msg, BATADV_ATTR_LAST_SEEN_MSECS, msecs)) {
+ 		genlmsg_cancel(msg, hdr);
+@@ -1162,6 +1166,8 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
+ 	struct net_device *soft_iface = bat_priv->soft_iface;
+ 	int hdr_size = 0;
+ 	unsigned short vid;
++	u8 mac[ETH_ALEN];
++	u64 u64_mac;
+ 
+ 	if (!atomic_read(&bat_priv->distributed_arp_table))
+ 		goto out;
+@@ -1189,6 +1195,9 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
+ 
+ 	dat_entry = batadv_dat_entry_hash_find(bat_priv, ip_dst, vid);
+ 	if (dat_entry) {
++		u64_mac = atomic64_read(&dat_entry->mac_addr);
++		u64_to_ether_addr(u64_mac, mac);
++
+ 		/* If the ARP request is destined for a local client the local
+ 		 * client will answer itself. DAT would only generate a
+ 		 * duplicate packet.
+@@ -1197,7 +1206,7 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
+ 		 * additional DAT answer may trigger kernel warnings about
+ 		 * a packet coming from the wrong port.
+ 		 */
+-		if (batadv_is_my_client(bat_priv, dat_entry->mac_addr, vid)) {
++		if (batadv_is_my_client(bat_priv, mac, vid)) {
+ 			ret = true;
+ 			goto out;
+ 		}
+@@ -1207,18 +1216,16 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
+ 		 * the backbone gws belonging to our backbone has claimed the
+ 		 * destination.
+ 		 */
+-		if (!batadv_bla_check_claim(bat_priv,
+-					    dat_entry->mac_addr, vid)) {
++		if (!batadv_bla_check_claim(bat_priv, mac, vid)) {
+ 			batadv_dbg(BATADV_DBG_DAT, bat_priv,
+ 				   "Device %pM claimed by another backbone gw. Don't send ARP reply!",
+-				   dat_entry->mac_addr);
++				   mac);
+ 			ret = true;
+ 			goto out;
+ 		}
+ 
+ 		skb_new = batadv_dat_arp_create_reply(bat_priv, ip_dst, ip_src,
+-						      dat_entry->mac_addr,
+-						      hw_src, vid);
++						      mac, hw_src, vid);
+ 		if (!skb_new)
+ 			goto out;
+ 
+@@ -1260,6 +1267,8 @@ bool batadv_dat_snoop_incoming_arp_request(struct batadv_priv *bat_priv,
+ 	struct batadv_dat_entry *dat_entry = NULL;
+ 	bool ret = false;
+ 	unsigned short vid;
++	u8 mac[ETH_ALEN];
++	u64 u64_mac;
+ 	int err;
+ 
+ 	if (!atomic_read(&bat_priv->distributed_arp_table))
+@@ -1287,8 +1296,11 @@ bool batadv_dat_snoop_incoming_arp_request(struct batadv_priv *bat_priv,
+ 	if (!dat_entry)
+ 		goto out;
+ 
++	u64_mac = atomic64_read(&dat_entry->mac_addr);
++	u64_to_ether_addr(u64_mac, mac);
++
+ 	skb_new = batadv_dat_arp_create_reply(bat_priv, ip_dst, ip_src,
+-					      dat_entry->mac_addr, hw_src, vid);
++					      mac, hw_src, vid);
+ 	if (!skb_new)
+ 		goto out;
+ 
+@@ -1379,6 +1391,8 @@ bool batadv_dat_snoop_incoming_arp_reply(struct batadv_priv *bat_priv,
+ 	u8 *hw_src, *hw_dst;
+ 	bool dropped = false;
+ 	unsigned short vid;
++	u8 mac[ETH_ALEN];
++	u64 u64_mac;
+ 
+ 	if (!atomic_read(&bat_priv->distributed_arp_table))
+ 		goto out;
+@@ -1407,11 +1421,17 @@ bool batadv_dat_snoop_incoming_arp_reply(struct batadv_priv *bat_priv,
+ 	 * this frame would lead to doubled receive of an ARP reply.
+ 	 */
+ 	dat_entry = batadv_dat_entry_hash_find(bat_priv, ip_src, vid);
+-	if (dat_entry && batadv_compare_eth(hw_src, dat_entry->mac_addr)) {
+-		batadv_dbg(BATADV_DBG_DAT, bat_priv, "Doubled ARP reply removed: ARP MSG = [src: %pM-%pI4 dst: %pM-%pI4]; dat_entry: %pM-%pI4\n",
+-			   hw_src, &ip_src, hw_dst, &ip_dst,
+-			   dat_entry->mac_addr,	&dat_entry->ip);
+-		dropped = true;
++	if (dat_entry) {
++		u64_mac = atomic64_read(&dat_entry->mac_addr);
++		u64_to_ether_addr(u64_mac, mac);
++
++		if (batadv_compare_eth(hw_src, mac)) {
++			batadv_dbg(BATADV_DBG_DAT, bat_priv,
++				   "Doubled ARP reply removed: ARP MSG = [src: %pM-%pI4 dst: %pM-%pI4]; dat_entry: %pM-%pI4\n",
++				   hw_src, &ip_src, hw_dst, &ip_dst,
++				   mac, &dat_entry->ip);
++			dropped = true;
++		}
+ 	}
+ 
+ 	/* Update our internal cache with both the IP addresses the node got
+diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
+index 4856cc98fc3c5..2ebc718bc3249 100644
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -2295,7 +2295,7 @@ struct batadv_dat_entry {
+ 	__be32 ip;
+ 
+ 	/** @mac_addr: the MAC address associated to the stored IPv4 */
+-	u8 mac_addr[ETH_ALEN];
++	atomic64_t mac_addr;
+ 
+ 	/** @vid: the vlan ID associated to this entry */
+ 	unsigned short vid;
 -- 
 2.53.0
 
