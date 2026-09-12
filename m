@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611EC3EFD02;
-	Sat, 12 Sep 2026 07:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498773F077C;
+	Sat, 12 Sep 2026 07:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197408; cv=none; b=cWrkzrvunUxR7k/0EP0XxKyLB1avWk0NxmXT0iEoIjoTJ31geXjjx/QddWIDxEBlMMbVTJIwwblKOAGHsEH5uGj/JK1Oi9vcs5JNLMi9+42pc0iVEC7BEO92rimtpJ8fcWG/B0iRuxRp2AFRSYDrs/4l2Qa+L4EdGySvSUuwQrU=
+	t=1789197414; cv=none; b=ZB2ddYMbUW0uoyP8toBn27jPpdbo6hwHCXeaADnlm2mz4Q9FvNWPNSNrp/Y/RdSzder2M6AEBPNBN4xI7crBv6JjmwYbYLfl0C8bCRFDdpQjBhtGtJN43F1dh08Gk4yaZRyhhONxwvGEhuHS/2NKViLoaF5RIuNOrEsb5IO4k5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197408; c=relaxed/simple;
-	bh=DIm7Ba4UzDD3im9+zI/tUbrPzxZzMIIX+WS/G8LRwAQ=;
+	s=arc-20240116; t=1789197414; c=relaxed/simple;
+	bh=7L4iVLHJL3mu6ykBi/kngzY/uZHDBdJOkSQXRnzEFA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tJw2kdfhaCq0LNIbzWNssiUVNF4sReClAHHeZsX7LZNwGVLsUH0IrEdg/u6KIpyA3Lm/say22N+4FqGE/1No4vSfxb2Aiew4S7lMKEgY0wm2sPnuATC6OV750X7bQqsiiOs+SCxlpxSMUXTPNxGv1nL5056zWNAFd+MD7PnMcSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+FjoOo5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aEnyA+PoXx0VU8O7iqYPSmvU8Me/FVX4ZGn+lSyA0GABV/mDFe9+m6CkR3SrpswNbkVjtA0p2+vUjVUPomBEmtdMCBCXCZAJtkKP0tGMIjaDpprDvTWPWYAb8Hk8XT6GKcdWVcp0f2Adlp/Em459f53KEGnCVCX93Az+GNq6aZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJbBj6jO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+FjoOo5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4ED1F000FF;
-	Sat, 12 Sep 2026 07:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJbBj6jO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C038B1F000FF;
+	Sat, 12 Sep 2026 07:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197407;
-	bh=ytkPyWqVUR9MTr/URpw6Om8u9Y1R9RjyylBwqfrKNlw=;
+	s=korg; t=1789197411;
+	bh=gCzpcyNNu8qxulzVgv3QyQ53Hw9GU6/BC6u1ak77juQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I+FjoOo5o9VYKAj3v0M9I6j3jCl/luuxSt/OkwGeCf5mEvxW3KV3AuFFUfdv4Ssp6
-	 zMYBWVsMOxyaENTN4qf+7YCfWat9MvhVMbcHXwkkXti+g+2Tl9zBqH1n8ZxY4WeS5t
-	 ZIhbSyo8OO1sND/p/TH/TLUUBogfyDI8tNpIV/0g=
+	b=pJbBj6jOG4fMnbfHkPvX9KGU/gxI3jtpvNiHOGBzBpxKzwI5kli8uddZGBQ+PD40k
+	 imCILH5JnYI/KSagXG7HdfKcpthDp1id/BW2lnsYoJO6LAS67QB5neq3hab1gcpj41
+	 S48mxBGo06S8cFILnXE9/01+P6OT7ibfNOW/f6Vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0167/1815] wifi: rtw89: debug: fix off by on in rtw89_ppdu_str()
-Date: Sat, 12 Sep 2026 08:31:57 +0200
-Message-ID: <20260912065652.927556096@linuxfoundation.org>
+Subject: [PATCH 7.2 0168/1815] wifi: rtw89: fw: correct preload field of w2 in rtw89_fw_h2c_default_cmac_tbl_be()
+Date: Sat, 12 Sep 2026 08:31:58 +0200
+Message-ID: <20260912065652.950474366@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,35 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-[ Upstream commit 1908534deb53a018580309be84a4f7dcc9cb1af3 ]
+[ Upstream commit e13cd023a4cdbbb9e58ab91e857b5e45ea753f19 ]
 
-This > comparison should be >= to avoid an out of bounds access.
+BE_CCTL_INFO_W2_PRELOAD_ENABLE is for h2c->w2, not h2c->w1.
+These will cause h2c->w1 wrong overlap by w2 and w2 not initialized.
 
-Fixes: 419ed7f4a053 ("wifi: rtw89: debug: extend bb_info with TX status and PER")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
+Fixes: c73607b3a8ef ("wifi: rtw89: fw: add CMAC H2C command to initialize default value for RTL8922D")
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/aia25i0ds3B6QF6c@stanley.mountain
+Link: https://patch.msgid.link/20260611082021.46650-1-guanwentao@uniontech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/debug.c | 2 +-
+ drivers/net/wireless/realtek/rtw89/fw.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/debug.c b/drivers/net/wireless/realtek/rtw89/debug.c
-index 8f5af873e09f5..5786120602ab0 100644
---- a/drivers/net/wireless/realtek/rtw89/debug.c
-+++ b/drivers/net/wireless/realtek/rtw89/debug.c
-@@ -4348,7 +4348,7 @@ static const char *rtw89_ppdu_str(struct rtw89_dev *rtwdev, u8 type, u8 subtype)
- 	const struct rtw89_chip_info *chip = rtwdev->chip;
- 	const struct rtw89_ppdu_info *ppdu_info;
+diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
+index d6a594b75ab20..c91e7ec8b9722 100644
+--- a/drivers/net/wireless/realtek/rtw89/fw.c
++++ b/drivers/net/wireless/realtek/rtw89/fw.c
+@@ -3729,7 +3729,7 @@ int rtw89_fw_h2c_default_cmac_tbl_be(struct rtw89_dev *rtwdev,
+ 		  le32_encode_bits(4, BE_CCTL_INFO_W1_RTS_RTY_LOWEST_RATE);
+ 	h2c->m1 = cpu_to_le32(BE_CCTL_INFO_W1_ALL);
  
--	if (type > ARRAY_SIZE(rtw89_ppdu_infos))
-+	if (type >= ARRAY_SIZE(rtw89_ppdu_infos))
- 		return "RSVD";
+-	h2c->w1 = le32_encode_bits(preld, BE_CCTL_INFO_W2_PRELOAD_ENABLE);
++	h2c->w2 = le32_encode_bits(preld, BE_CCTL_INFO_W2_PRELOAD_ENABLE);
+ 	h2c->m2 = cpu_to_le32(BE_CCTL_INFO_W2_ALL);
  
- 	ppdu_info = &rtw89_ppdu_infos[type];
+ 	h2c->m3 = cpu_to_le32(BE_CCTL_INFO_W3_ALL);
 -- 
 2.53.0
 
