@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AE63F4103;
-	Sat, 12 Sep 2026 07:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C2D379982;
+	Sat, 12 Sep 2026 07:29:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198175; cv=none; b=VDgNt7Eb0ggIRGpGF1yBHbX6y0MUUJhU4FCGWk70qmhhz32hD9c7KDYswX9PGJ4UzbGYAePkZp29cJHmjJ8QNb3lk/NTjfZyPwiae75t9HH1wPe26c9LbqaYgihJiQwijflpEnDfIHwtMEOqSCznWFQsoJXKbg1w/MHprLYdExA=
+	t=1789198180; cv=none; b=Dl7QfGqn7bN5zJvbd1sJa+ScTZGlwf8mQORTmHoC32iX9e2HVspaE8mWLij60mcLpZMjC96m8fGu0UFDTP6hRjnVcW4zbWinWa/l89omuwzWojIM+xRhDVc8vOc5gLXmTQfW+22RRuVictzbHu30LGSzEyIBRaAP2jSsHiCsu+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198175; c=relaxed/simple;
-	bh=0nslVAdRAZ3i7n79RpmhRiS4gw14Nn+6ffSmA4XLq+U=;
+	s=arc-20240116; t=1789198180; c=relaxed/simple;
+	bh=iwYok0MXXiGawq3BIgxN1xt4pPc9CQ5ZgSjk0+4oT+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qRNynO6+VgrqnwrPaEVuM2gZfFAee3xJQznwRUZw/dH42+9HgdRuqLsYc8ig03bIp0RSSQsGMWvadRcZ3YnezZs83TjRMlmU34b3ya6HWziDn+DwSXriuCSB4iMRZ9UynoGJmDxrhodd31Ix2Nk7mFRtrDl+CI5N5XjMGgEsn80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3kSvFer; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=aiRURNgdhElWLvCUltwkVk1lALUT+W5ZAJrHTGrKSdzW3GwRorG2vYGOfmF98yS7ZNi4UzTZ5kwOS7SQMjLDM6Ly1Fn0XYgggn/jNB7pj3m7D61xdDCZItcmTZ1Sq7u4KxMEq3Opkuq/P/+F7sgpnMWlfggRz0Jcc2J8ts4yHrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGbAfDuy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3kSvFer"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DCE1F000FF;
-	Sat, 12 Sep 2026 07:29:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGbAfDuy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E291F00893;
+	Sat, 12 Sep 2026 07:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198168;
-	bh=HGiLyxeNLM34tUPgDOjLrOyfOaVNvilCxf4w9ELelSU=;
+	s=korg; t=1789198173;
+	bh=pHw19jl0pvrSU0rYEbT35kf+S+eGetK6kouvVYQpLhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O3kSvFerAgdtdcXaIZBJ5h8/t74Yro5/ao2Hnabd9Wvb9M1gsrPbnLQFUUkX9XPHR
-	 w87dQsGKEAM/OozfIHHZWhrnqSv8Cb5sC7CTPYzFPJ821vxZ3fjsKx3Q83liNM/dcX
-	 mrUs3fK1FbFupJYD9gmr1vr01+UXJrCoSx2h00D0=
+	b=QGbAfDuyks0MVfmbcjumToJQbiXmuJ0YgcN4pptBM0ZPmelJpTlCwi7pz8VxXLdks
+	 DLaF3jNdM4j9qiSRNQejOB8Zpqxyz1rSXkZ7bJvshbbZNTM+E5xaEpqy2e88dfrv2i
+	 V/BU0IsUDxsi5WzlQg54RjqTUej0xeAGEp7TtsSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Marco Scardovi <scardracs@disroot.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0326/1815] usb: fix UAF when probe runs concurrent to dyn ID removal
-Date: Sat, 12 Sep 2026 08:34:36 +0200
-Message-ID: <20260912065656.585468718@linuxfoundation.org>
+Subject: [PATCH 7.2 0327/1815] platform/x86: asus-wmi: fix resource leaks on probe failure
+Date: Sat, 12 Sep 2026 08:34:37 +0200
+Message-ID: <20260912065656.608265546@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,106 +45,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: Marco Scardovi <scardracs@disroot.org>
 
-[ Upstream commit ef8154d8b52d60338c1fd8d793cd8e891c604c14 ]
+[ Upstream commit ef3daa2b84a2b8499ce9e2ce1c865dca36d39f95 ]
 
-Dynamic IDs are only guaranteed to be valid when usb_dynids_lock is held,
-as remove_id_store can free the node. Thus, make a copy in
-usb_probe_interface. Clarify the documentation that the id parameter is
-only valid during the probe.
+During driver initialization in asus_wmi_add(), various subsystems are
+registered sequentially. However, the error path labels are out of order
+relative to the registration sequence.
 
-USB serial has the same pattern, but it does not need fixing as the IDs
-cannot be removed via sysfs.
+Specifically:
+1. If asus_wmi_custom_fan_curve_init() fails, the driver jumps to
+   fail_custom_fan_curve. Because this label is placed below fail_sysfs,
+   it bypasses the cleanup calls for the input device and sysfs groups,
+   which were successfully registered before, leaking those resources.
+2. If asus_screenpad_init() fails, the driver jumps to fail_screenpad.
+   Because fail_screenpad is placed below fail_backlight, it bypasses the
+   cleanup calls for backlight and rfkill, leaking those resources.
 
-Fixes: 0c7a2b72746a ("USB: add remove_id sysfs attr for usb drivers")
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patch.msgid.link/20260707-usb_dyn_id_uaf-v2-7-632dcf3adfba@garyguo.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix these resource leaks by reordering the error path labels in
+asus_wmi_add() to match the exact reverse order of the resource
+allocations.
+
+Fixes: 0f0ac158d28f ("platform/x86: asus-wmi: Add support for custom fan curves")
+Fixes: 2c97d3e55b70 ("platform/x86: asus-wmi: add support for ASUS screenpad")
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Marco Scardovi <scardracs@disroot.org>
+Link: https://patch.msgid.link/20260617155104.10111-1-scardracs@disroot.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/driver.c | 12 ++++++++----
- include/linux/usb.h       |  3 ++-
- 2 files changed, 10 insertions(+), 5 deletions(-)
+ drivers/platform/x86/asus-wmi.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/core/driver.c b/drivers/usb/core/driver.c
-index f63004417058e..7f33fe5ba03bd 100644
---- a/drivers/usb/core/driver.c
-+++ b/drivers/usb/core/driver.c
-@@ -228,14 +228,16 @@ static void usb_free_dynids(struct usb_driver *usb_drv)
- }
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index e835779b6f5f1..c162fbdb5b106 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -5244,20 +5244,20 @@ static int asus_wmi_add(struct platform_device *pdev)
+ 	return 0;
  
- static const struct usb_device_id *usb_match_dynamic_id(struct usb_interface *intf,
--							const struct usb_driver *drv)
-+							const struct usb_driver *drv,
-+							struct usb_device_id *id_copy)
- {
- 	struct usb_dynid *dynid;
- 
- 	guard(mutex)(&usb_dynids_lock);
- 	list_for_each_entry(dynid, &drv->dynids.list, node) {
- 		if (usb_match_one_id(intf, &dynid->id)) {
--			return &dynid->id;
-+			*id_copy = dynid->id;
-+			return id_copy;
- 		}
- 	}
- 	return NULL;
-@@ -321,6 +323,7 @@ static int usb_probe_interface(struct device *dev)
- 	struct usb_interface *intf = to_usb_interface(dev);
- 	struct usb_device *udev = interface_to_usbdev(intf);
- 	const struct usb_device_id *id;
-+	struct usb_device_id id_copy;
- 	int error = -ENODEV;
- 	int lpm_disable_error = -ENODEV;
- 
-@@ -340,7 +343,7 @@ static int usb_probe_interface(struct device *dev)
- 		return error;
- 	}
- 
--	id = usb_match_dynamic_id(intf, driver);
-+	id = usb_match_dynamic_id(intf, driver, &id_copy);
- 	if (!id)
- 		id = usb_match_id(intf, driver->id_table);
- 	if (!id)
-@@ -892,6 +895,7 @@ static int usb_device_match(struct device *dev, const struct device_driver *drv)
- 		struct usb_interface *intf;
- 		const struct usb_driver *usb_drv;
- 		const struct usb_device_id *id;
-+		struct usb_device_id id_copy;
- 
- 		/* device drivers never match interfaces */
- 		if (is_usb_device_driver(drv))
-@@ -904,7 +908,7 @@ static int usb_device_match(struct device *dev, const struct device_driver *drv)
- 		if (id)
- 			return 1;
- 
--		id = usb_match_dynamic_id(intf, usb_drv);
-+		id = usb_match_dynamic_id(intf, usb_drv, &id_copy);
- 		if (id)
- 			return 1;
- 	}
-diff --git a/include/linux/usb.h b/include/linux/usb.h
-index 1da4ad1610bca..49ab8dbb885f6 100644
---- a/include/linux/usb.h
-+++ b/include/linux/usb.h
-@@ -1185,7 +1185,8 @@ extern ssize_t usb_show_dynids(struct usb_dynids *dynids, char *buf);
-  *	interface.  It may also use usb_set_interface() to specify the
-  *	appropriate altsetting.  If unwilling to manage the interface,
-  *	return -ENODEV, if genuine IO errors occurred, an appropriate
-- *	negative errno value.
-+ *	negative errno value.  The usb_device_id parameter is only valid during
-+ *	probe.
-  * @disconnect: Called when the interface is no longer accessible, usually
-  *	because its device has been (or is being) disconnected or the
-  *	driver module is being unloaded.
+ fail_wmi_handler:
++	asus_screenpad_exit(asus);
++fail_screenpad:
+ 	asus_wmi_backlight_exit(asus);
+ fail_backlight:
+ 	asus_wmi_rfkill_exit(asus);
+-fail_screenpad:
+-	asus_screenpad_exit(asus);
+ fail_rfkill:
+ 	asus_wmi_led_exit(asus);
+ fail_leds:
++fail_custom_fan_curve:
+ fail_hwmon:
+ 	asus_wmi_input_exit(asus);
+ fail_input:
+ 	asus_wmi_sysfs_exit(asus->platform_device);
+ fail_sysfs:
+-fail_custom_fan_curve:
+ fail_platform_profile_setup:
+ fail_fan_boost_mode:
+ fail_platform:
 -- 
 2.53.0
 
