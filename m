@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09334078CE;
-	Sat, 12 Sep 2026 10:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFF042D76A;
+	Sat, 12 Sep 2026 10:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209679; cv=none; b=oRFLEJ9jPm0VpNYPaOBF1WyEFUC57bV5bXJzZyFhbRIynQItQ14DplzapIgWcXQIkjBsnIkeS0xLnQSu4c/Uz28jQzOrOSsN19YdA8EDpTMhGfkKTmF6TiyzmYiB/fI64K/NatR7vS+NJ1yfJFIATHCs70maIlhIER1tLFuewWQ=
+	t=1789209686; cv=none; b=n4J7jWkznL1zX5Ts0g7aso/C3DsbA1MpNBAkvnsuUxQzmWbJJqM6785msTpaCEDGObqCHDVRfRQnrE7O89QUlM7nx5DZeTR+YlOIy8I78OtcrrazGtyiI94rcS02ZlFqAtG56+fuJXNuQ/L7ENByq9OreS/VdUQE/TZJR9vJKVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209679; c=relaxed/simple;
-	bh=JeOcYisFhUL7w1OOP1qMS6UNkAUBfGtUNjw02Ihilu0=;
+	s=arc-20240116; t=1789209686; c=relaxed/simple;
+	bh=ugHb6wtZqF/9OMMT06J+ZzhK7uSgP3monDrYyDZKcv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MkHOV8Qub5YFX6b+WO7oirKXcQ2YpuXNUiclyro0rDQFgg8xXYJOEOIp2Cj7frIu1Djc5d366wwGa+C/PRE5xxXfS+L4nUQ/ER2FBoCbucGkYqMtmFToYKtCWRV3juQfqrWFGc9h4chtGOSJF3jYGcwbj+I1GO9EbcWvHQU1Q5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBYqYZ4f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KQlL9EYLtMPqeon0uVV4mf+KJ46XITdfkqEgBrHNWUHdWbsdrgjhKQzW91WmJ9VfkJSn2AU/JZbP138qtSqsRVpNpmmYx6skUnqfnOpd42LO3vyPsev/mxoferFg3ihVVs4zh5pkcwpCKO5yrLi45SedtnyXoelU8vczvYkm8jM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Puysq3Qq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBYqYZ4f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A601F000FF;
-	Sat, 12 Sep 2026 10:41:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Puysq3Qq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879B51F000FF;
+	Sat, 12 Sep 2026 10:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209677;
-	bh=0IPS4wywvKRwayxprYHPJa9eY1Y+ImyzyR6VafOOGCM=;
+	s=korg; t=1789209682;
+	bh=UPUgGnkLsgZlVJVWn9pjGMeUl9a/O2RmIUXrp/qByXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wBYqYZ4f8o/9Y9BoNDva/u/r3ph+za2NS8GDxJxxfsis9fXwKd//dCG+hrurXdieG
-	 cSY5mp6J3nnKEoxl/5J2rm5SF+S3hgkWOnnF7+ALkRUCTuR3kYpaOwP02Kl/io6yXt
-	 BYZowDqDNOXEq4Cl+dM/B56ZxtALvvU9UxMHSR50=
+	b=Puysq3QqzNWFHYYsjK4xm04ODsR72ZrCTx1X70u4gUJMvRbgFYHp8+htG53RTMEVB
+	 +UiHKfFQCnSR+hIrq5PxTvGf3EO0LmOwvauJEpmM5t9oLR9K89JvTw0CQPY3tSa9JB
+	 /6TEV7hkYDcFV9pI3z/9mBo3UWvnruLmHx1q1NDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <include@grrlz.net>,
-	Akinbou Mita <akinobu.mita@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Christoph Lameer <cl@linux-foundation.org>,
-	Joern Engel <joern@logfs.org>,
-	Kees Cook <kees@kernel.org>,
-	Pekka Enberg <penberg@kernel.org>,
+	Calvin Owens <calvin@wbinvd.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Rodolfo Giometti <giometti@enneenne.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0868/1518] lib/string: fix memchr_inv() for large ranges
-Date: Sat, 12 Sep 2026 08:50:37 +0200
-Message-ID: <20260912065643.085392937@linuxfoundation.org>
+Subject: [PATCH 6.18 0869/1518] pps: dont try to wait for negative timeouts in PPS_FETCH
+Date: Sat, 12 Sep 2026 08:50:38 +0200
+Message-ID: <20260912065643.107865178@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -57,45 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <include@grrlz.net>
+From: Calvin Owens <calvin@wbinvd.org>
 
-[ Upstream commit c04cffb8c51618538f0c05c478a931eb6e1a806b ]
+[ Upstream commit 45217e98987a87ff2372386dbf82fd5325db28ea ]
 
-memchr_inv() takes a size_t length but counts 8 byte words in an unsigned
-int.  At 32GiB that count wraps, so the scan can quietly miss most of the
-range.
+If userspace passes a negative timeout to PPS_FETCH, it triggers a kernel
+splat from schedule_timeout():
 
-Use size_t for the word count.
+    schedule_timeout: wrong timeout value fffffffffff0bfb4
+    CPU: 17 UID: 0 PID: 4720 Comm: a.out Not tainted 7.1.0-rc5-x86-kvm-00150-g331d97e36b37 #1 PREEMPT_RT
+    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-20240910_120124-localhost 04/01/2014
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x4b/0x70
+     schedule_timeout+0xb7/0xe0
+     pps_cdev_pps_fetch.isra.0+0x93/0x150
+     pps_cdev_ioctl+0x70/0x310
+     __x64_sys_ioctl+0x7b/0xc0
+     do_syscall_64+0xb6/0xfc0
+     entry_SYSCALL_64_after_hwframe+0x4b/0x53
 
-Link: https://lore.kernel.org/20260621121133.16460-1-include@grrlz.net
-Fixes: 798248206b59 ("lib/string.c: introduce memchr_inv()")
-Signed-off-by: Bradley Morgan <include@grrlz.net>
-Cc: Akinbou Mita <akinobu.mita@gmail.com>
-Cc: Andy Shevchenko <andy@kernel.org>
-Cc: Christoph Lameer <cl@linux-foundation.org>
-Cc: Joern Engel <joern@logfs.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Pekka Enberg <penberg@kernel.org>
+Here is a trivial reproducer that works with the PPS_CLIENT_KTIMER test
+device enabled in the kernel:
+
+    #include <stdlib.h>
+    #include <fcntl.h>
+    #include <unistd.h>
+    #include <sys/ioctl.h>
+    #include <linux/pps.h>
+    #include <err.h>
+
+    int main() {
+        struct pps_fdata fdata;
+        int fd;
+
+        fd = open("/dev/pps0", O_RDWR);
+        if (fd == -1)
+            err(1, "Failed to open /dev/pps0");
+
+        fdata.timeout.sec = -1;
+        fdata.timeout.nsec = 0;
+
+        if (ioctl(fd, PPS_FETCH, &fdata))
+            err(2, "PPS_FETCH failed");
+
+        close(fd);
+        return 0;
+    }
+
+Sashiko imagines this to be some sort of security problem, which is
+obviously really silly.  But I think it is still worth fixing, so buggy
+userspace code can't trigger the splat.
+
+Silence the splat by using timespec64_to_jiffies(), which hard limits the
+timeout to LONG_MAX jiffies.  To be safe, explicitly preserve the
+-ETIMEDOUT return value userspace sees today if it passes a negative
+timeout.
+
+If you really squint, this is still a slight behavior change in that there
+are "denormalized" combinations of tv_sec and tv_nsec which used to work
+but will now return -ETIMEDOUT.  I can't imagine anybody will care about
+that...
+
+Link: https://lore.kernel.org/c5c97c3b3c9d66010382094fd538e59a38f4aacf.1781289959.git.calvin@wbinvd.org
+Fixes: eae9d2ba0cfc ("LinuxPPS: core support")
+Signed-off-by: Calvin Owens <calvin@wbinvd.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/cover.1779733602.git.calvin%40wbinvd.org?part=3
+Acked-by: Rodolfo Giometti <giometti@enneenne.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/string.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pps/pps.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/lib/string.c b/lib/string.c
-index b632c71df1a50..01c9845024b85 100644
---- a/lib/string.c
-+++ b/lib/string.c
-@@ -839,7 +839,8 @@ void *memchr_inv(const void *start, int c, size_t bytes)
- {
- 	u8 value = c;
- 	u64 value64;
--	unsigned int words, prefix;
-+	size_t words;
-+	unsigned int prefix;
+diff --git a/drivers/pps/pps.c b/drivers/pps/pps.c
+index c6b8b64782761..2e04636f43805 100644
+--- a/drivers/pps/pps.c
++++ b/drivers/pps/pps.c
+@@ -63,13 +63,19 @@ static int pps_cdev_pps_fetch(struct pps_device *pps, struct pps_fdata *fdata)
+ 		err = wait_event_interruptible(pps->queue,
+ 				ev != pps->last_ev);
+ 	else {
++		struct timespec64 ts;
+ 		unsigned long ticks;
  
- 	if (bytes <= 16)
- 		return check_bytes8(start, value, bytes);
+ 		dev_dbg(&pps->dev, "timeout %lld.%09d\n",
+ 				(long long) fdata->timeout.sec,
+ 				fdata->timeout.nsec);
+-		ticks = fdata->timeout.sec * HZ;
+-		ticks += fdata->timeout.nsec / (NSEC_PER_SEC / HZ);
++
++		if (fdata->timeout.sec < 0)
++			return -ETIMEDOUT;
++
++		ts.tv_sec = fdata->timeout.sec;
++		ts.tv_nsec = fdata->timeout.nsec;
++		ticks = timespec64_to_jiffies(&ts);
+ 
+ 		if (ticks != 0) {
+ 			err = wait_event_interruptible_timeout(
 -- 
 2.53.0
 
