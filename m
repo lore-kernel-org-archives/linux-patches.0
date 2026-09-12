@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39856346A08;
-	Sat, 12 Sep 2026 07:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65503346A08;
+	Sat, 12 Sep 2026 07:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196978; cv=none; b=imb3tx3Xyd+0JP8HlaOvXa/VQ5N3oPY5RT/FqAG/GPqRWQp5APUWCPiFR/SkwFfCae9DXgYri27e4GojSKzOMpCNaDMhIQ6ZSfB4c8pKaOe0CBouXGscZC/64RUQS7E4+lc9yp0+Vus0hXkltrZcNExyGJJp5xoWzZuixif9v6o=
+	t=1789196983; cv=none; b=aGrInHwYwQe5kio2hTiXsoZ2VAr/OkyvCb2L501Pm2ZA5UYI4o61O6ft8lFdph3GMqrM4gEd/szlT5IyVvelYEo6i96/L6KWQtfrIakpiVjagv7HUbgIGoRNa0foH2VYf5YtNgFzR9ZWSDOsLfxW/IFJci4BS3cjdlsekwU7rIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196978; c=relaxed/simple;
-	bh=3PPr/hF0eFt4AJXZf9/tiCYsJktdTZ4lGRwLKMLpsUo=;
+	s=arc-20240116; t=1789196983; c=relaxed/simple;
+	bh=/1aMngbOEeykKgZzfGIHy/UuV2n/b5YODivoEDWiK0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QawKNgY+er4DLI2/ITq3qyAQCHCKHDNfku3Bn7JSrbRohkILCebUk9IiIHJMfc7FbswR3VQkC8OgJmbWwcZiEGZJIbwH5MC5N53Q0HqudG7hQFAtjK1aPpAgPRj3i4EP1Zj4aCtWmmLUegB8i8QC9GrcS7ef0qWCahR4eZVJ9WI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ubtXA+Hy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lBtHTRl6eRkl1LXwrcdOJ5OYpZRWEXW1qGd92mJfIy4V2q9aHcQN4N/Qa4QALQG4WSpdFWX3KluyhXHzc/cOwyiP0IV+uvWnzACfdla/0JhBcoWMGzxRFiWUktdM1FIrbAPZw2uoWbr7oOEH1iiUIw5za4CHf/qEEbGlXkOeKKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEP/QbNt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubtXA+Hy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FAE1F000FF;
-	Sat, 12 Sep 2026 07:09:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEP/QbNt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035071F000FF;
+	Sat, 12 Sep 2026 07:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196976;
-	bh=26AZmQBea6Q2kk/xA9+uwDnbS9ozdwUFx+EIGyc/oaA=;
+	s=korg; t=1789196982;
+	bh=Xc3ZCiDdOUdzInIeM9/GD9DDx7GT1wKyla3rRL2r5g8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ubtXA+Hyo6aTbPRt5J6RqOWtM1Yx0gM8L+PhnOUoLHjINt3lVWx110gB6Uc5s4zQA
-	 hl0/NXhQYL1FcQ138n2Q0IG17h+DeY1OeJxWTiyuMjuEsEeUMeyCGJP1EyJ8OEeujM
-	 gEiaUY4mG6EdL3wCJivUXz4SsQtNWIG5FPOh+Fkc=
+	b=OEP/QbNtj3ZiskV/r1v30w9bc5KUv3JPwjYRLifjzT70NkEhhM4wz1eHPeWF/6Uc+
+	 gQyITiH5Q3hnA3wJX6h1bJwgxU0APjLB/BX+VFr2km52vxWE2Ry+oExuvlIwo4HVLu
+	 wsqYaiNppBJSKFKIkyXHZ3UQD0W1dM37Q3+djWas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Richard Cheng <icheng@nvidia.com>,
+	Wei Hou <wei.hou@scaleflux.com>,
+	Li Ming <ming.li@zohomail.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0075/1815] arm64: dts: imx943: Correct PCIe outbound address space configuration
-Date: Sat, 12 Sep 2026 08:30:25 +0200
-Message-ID: <20260912065650.773901280@linuxfoundation.org>
+Subject: [PATCH 7.2 0076/1815] cxl/pci: Remove incorrect mbox.valid check in cxl_pci_type3_init_mailbox()
+Date: Sat, 12 Sep 2026 08:30:26 +0200
+Message-ID: <20260912065650.797038729@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,51 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: Wei Hou <wei.hou@scaleflux.com>
 
-[ Upstream commit 6de3a7d7a4f653be4901d07425719c4e55805167 ]
+[ Upstream commit d79b81893d0cc93737e811a465b9ef9a00156fd5 ]
 
-Fix the PCIe outbound memory ranges for both pcie1 controllers on i.MX943.
+The driver's design intent is that missing or malformed component
+registers should not prevent mailbox initialization. cxl_pci_probe()
+already reflects this: the CXL_REGLOC_RBI_COMPONENT setup path only
+emits a dev_warn() and continues when component registers are absent,
+rather than returning an error.
 
-The memory window size was incorrectly set to 256MB during initial
-bring-up, but the hardware supports up to 4GB of outbound address space
-per controller.
+The check 'if (!cxlds->reg_map.device_map.mbox.valid)' violates this
+intent and is also technically incorrect for two reasons:
 
-Additionally, the ECAM region cannot be mapped as I/O space. Use a
-memory-mapped region for I/O space instead, and relocate the 1MB I/O
-region to immediately follow the memory region at offset 0xf0000000
-within each window.
+1. Wrong struct: the MEMDEV register block is enumerated into a local
+   variable 'map', not into 'cxlds->reg_map'. The device_map.mbox.valid
+   field inside cxlds->reg_map is never written by the MEMDEV probe and
+   will always read as zero regardless of actual hardware capability.
 
-Update the outbound address space layout per controller as follows:
+2. Already validated: cxl_pci_setup_regs(CXL_REGLOC_RBI_MEMDEV) calls
+   cxl_probe_regs() which explicitly checks mbox.valid and returns
+   -ENXIO if the mailbox is absent. If that check passes, the mailbox is
+   guaranteed to be present by the time cxl_pci_type3_init_mailbox() is
+   called.
 
-  - 3.5GB  64-bit prefetchable memory
-  - 256MB  32-bit non-prefetchable memory
-  - 1MB    I/O
+The value that the check actually reads is component_map.ras.valid,
+which aliases device_map.mbox.valid in the union. This is populated by
+the COMPONENT probe, not the MEMDEV probe. On devices where the
+component register BAR does not implement a CXL Component Capability
+Array (e.g. certain DCD devices), cxl_probe_component_regs() returns
+early leaving ras.valid=false. Through the union, this makes mbox.valid
+read as false, causing cxl_pci_type3_init_mailbox() to return -ENODEV
+(-19) even though the mailbox hardware is fully functional.
 
-Fixes: fa6067fd8ea7 ("arm64: dts: imx943: Add pcie1 and pcie1-ep supports")
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Remove the check. Mailbox presence has already been validated by
+cxl_pci_setup_regs(CXL_REGLOC_RBI_MEMDEV). The presence or absence of
+component registers is irrelevant to mailbox initialization.
+
+Fixes: 8d8081cecfb9 ("cxl: Move mailbox related bits to the same context")
+Reviewed-by: Richard Cheng <icheng@nvidia.com>
+Signed-off-by: Wei Hou <wei.hou@scaleflux.com>
+Reviewed-by: Li Ming <ming.li@zohomail.com>
+Link: https://patch.msgid.link/20260628155857.239866-1-wei.hou@scaleflux.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx943.dtsi | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/cxl/pci.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx943.dtsi b/arch/arm64/boot/dts/freescale/imx943.dtsi
-index ed030d4bc7bd9..cf5b3dbb47ff7 100644
---- a/arch/arm64/boot/dts/freescale/imx943.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx943.dtsi
-@@ -218,8 +218,9 @@ pcie1: pcie@4c380000 {
- 			      <0 0x4c3e0000 0 0x10000>,
- 			      <0 0x4c3c0000 0 0x4000>;
- 			reg-names = "dbi", "config", "atu", "app";
--			ranges = <0x81000000 0 0x00000000 0x8 0x8ff00000 0 0x00100000>,
--				 <0x82000000 0 0x10000000 0xa 0x10000000 0 0x80000000>;
-+			ranges = <0x43000000 0xa 0x00000000 0xa 0x00000000 0x0 0xe0000000>,
-+				 <0x82000000 0x0 0xe0000000 0xa 0xe0000000 0x0 0x10000000>,
-+				 <0x81000000 0x0 0x00000000 0xa 0xf0000000 0x0 0x00100000>;
- 			#address-cells = <3>;
- 			#size-cells = <2>;
- 			device_type = "pci";
+diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
+index 7c6faee7f85ed..3e79038a686bc 100644
+--- a/drivers/cxl/pci.c
++++ b/drivers/cxl/pci.c
+@@ -691,12 +691,6 @@ static int cxl_pci_type3_init_mailbox(struct cxl_dev_state *cxlds)
+ {
+ 	int rc;
+ 
+-	/*
+-	 * Fail the init if there's no mailbox. For a type3 this is out of spec.
+-	 */
+-	if (!cxlds->reg_map.device_map.mbox.valid)
+-		return -ENODEV;
+-
+ 	rc = cxl_mailbox_init(&cxlds->cxl_mbox, cxlds->dev);
+ 	if (rc)
+ 		return rc;
 -- 
 2.53.0
 
