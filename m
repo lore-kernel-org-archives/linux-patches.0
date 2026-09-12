@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36D33B895E;
-	Sat, 12 Sep 2026 07:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6401EB5FD;
+	Sat, 12 Sep 2026 07:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197824; cv=none; b=e8sdegcIAqU54ZLyZGo7oy0jUyZfNEWGanlLTCAGSjYZi8xjUwj3kn0F+lj4+16XNeUz+Y9yYaAGRnXSuk7AaToz+tIFTUcAqGkE6vidCRm87ScZW/LViTPDw2A5iSQwYjlPhntN4zVve+gAujxRQf+vW+Kxc/wve07ZbX53Js8=
+	t=1789197829; cv=none; b=YUqa/dFe1YVxjmtKYYVBVUy4s6//kr60t017rdyKTo+wN7XPTsf0Qpy/bk05sv2D2pc6FeKrPEk5fTWGmQ8X1Or4rjVN7DYD2nWXt54SF91jYjmYDLEV21YjajPnpDGVQAZRKaNJDyJFWU7Uk4c8e8F1+SdV2WVrkMDETR0deJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197824; c=relaxed/simple;
-	bh=ErbxfZH76A2HLU//IwUFMq4G7jRTOmdnbQeJ1aDYzbU=;
+	s=arc-20240116; t=1789197829; c=relaxed/simple;
+	bh=2BDwyjpxfqbCvBWo9NucHSJi8LLxNoe3aRN0EB6SNOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WZDtsr/MprAixdjkbmbCYVU7bHT1S4h2c6ZeA/68fs7t2wYDIQHFxYf33zYWReXKgluKAU0OzKaDGgCVjQ0IYnSfT2KxpO7pgg+4d1WN5JZxJhJ9vAy8SsFeP83zVhdxp3km+0xlWql0VvXuTd74MDwWz3AhulVxEjJoKVrSSto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1bGVDRK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZJ9hEn3+MGDfJ9HSGnBc1lgJKxpeRM53FwJJyNK4DaPRZio7bg7zkUqMRjbHDgBg1QRRzUf7RdcjGdfbxc5xQLQDPvY1PoVG7ddacmW4pZzPbsNk1U/rrmVWmzNbsO9Eh+T86h3RMxgTaK+dRxuXh+SLedefBUu95MEiorTfJkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6/cVqoY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1bGVDRK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D9A1F000FF;
-	Sat, 12 Sep 2026 07:23:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6/cVqoY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50FA1F000FF;
+	Sat, 12 Sep 2026 07:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197823;
-	bh=5tFu+68tjeZ8Pw8ZF7Xy5u+4OepYZZA5gunElJcnXNU=;
+	s=korg; t=1789197828;
+	bh=Gq1w+8fvHcJJbkhhh2UUaCHsT6hV2EuJuwiHh04bmrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U1bGVDRK3exCvGXBJkawSRWmAcgNegh0GL58f2VsHwcGXjU4+fk5Y1h1tGWnLP4Y7
-	 xeFxoQ2QiAenxl85het2CRJb5kEHkT7N4PiSLQMhFt0kNYNxrRqFpPLJ1m6OUZuNO2
-	 KyZ9cJFLSLGYu96TmQnDIILn1UnPva5tuKzZBycA=
+	b=I6/cVqoYMKUfxD9GAWiDutxh7TjT3je1kC0wfcNTnz+Jo3iPDu41y1kIiq/k6JzX6
+	 ymYOg3MWfG/0lnqWgCBmWi2qSFDN33Gd35i4qfrxpWvo8/CiZYc2dJt12tU7jGZe5d
+	 Z3T56Dhw+Y/oncYE4jEhxQuWew8VqabbWQMEmjoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herman van Hazendonk <github.com@herrie.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0254/1815] clk: qcom: gdsc: propagate gdsc_check_status() errors from gdsc_poll_status
-Date: Sat, 12 Sep 2026 08:33:24 +0200
-Message-ID: <20260912065654.942988202@linuxfoundation.org>
+Subject: [PATCH 7.2 0228/1815] staging: greybus: audio: correct sscanf() return value check
+Date: Sat, 12 Sep 2026 08:32:58 +0200
+Message-ID: <20260912065654.345971592@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,75 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herman van Hazendonk <github.com@herrie.org>
+From: Alexander A. Klimov <grandmaster@al2klimov.de>
 
-[ Upstream commit d69f0c2b8d292b4890c9f0fbe184dfc26c4de86c ]
+[ Upstream commit f883fa1a0a0212f63acb18c50e5f900301f3bb1e ]
 
-gdsc_check_status() returns negative errno when the underlying
-regmap_read() fails -- e.g. when a parent regmap dies during system
-suspend, a CSR is removed by an HW debug tool, or the bus controller
-goes into protection. gdsc_poll_status() treats the result as a plain
-boolean ("is the GDSC in the requested state?"), so any negative error
-return is truncated to "true" and the poll exits with success even
-though the rail's real state is unknown:
+manager_sysfs_add_store() passes 6 pointers to sscanf(),
+but required latter to return 7 which always failed the operation.
+I corrected it to 6.
 
-	do {
-		if (gdsc_check_status(sc, status))
-			return 0;
-	} while (ktime_us_delta(ktime_get(), start) < STATUS_POLL_TIMEOUT_US);
-
-	if (gdsc_check_status(sc, status))
-		return 0;
-
-	return -ETIMEDOUT;
-
-This silently misleads gdsc_toggle_logic() (which writes/un-writes
-SW_COLLAPSE on the strength of the poll succeeding) and the gdsc_init()
-sync path (which assumes the readback represents real silicon state).
-
-Latch the return value, propagate negative errno immediately, and only
-treat a strictly-positive value as "reached the target state". Make the
-same change in the post-timeout final check so a regmap that comes back
-after the deadline does not silently degrade to -ETIMEDOUT.
-
-Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
-Fixes: 77b1067a19b4 ("clk: qcom: gdsc: Add support for gdscs with gds hw controller")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260602140934.796697-2-github.com@herrie.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 49b9137a6002 ("staging: greybus: audio: remove redundant slot field")
+Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
+Link: https://patch.msgid.link/20260521182331.22685-1-grandmaster@al2klimov.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gdsc.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/staging/greybus/audio_manager_sysfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index f419a28f616b6..428d638657986 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -104,14 +104,21 @@ static int gdsc_hwctrl(struct gdsc *sc, bool en)
- static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
- {
- 	ktime_t start;
-+	int ret;
+diff --git a/drivers/staging/greybus/audio_manager_sysfs.c b/drivers/staging/greybus/audio_manager_sysfs.c
+index fcd518f9540cd..ff323ca8154f3 100644
+--- a/drivers/staging/greybus/audio_manager_sysfs.c
++++ b/drivers/staging/greybus/audio_manager_sysfs.c
+@@ -23,7 +23,7 @@ static ssize_t manager_sysfs_add_store(struct kobject *kobj,
+ 			desc.name, &desc.vid, &desc.pid, &desc.intf_id,
+ 			&desc.ip_devices, &desc.op_devices);
  
- 	start = ktime_get();
- 	do {
--		if (gdsc_check_status(sc, status))
-+		ret = gdsc_check_status(sc, status);
-+		if (ret < 0)
-+			return ret;
-+		if (ret)
- 			return 0;
- 	} while (ktime_us_delta(ktime_get(), start) < STATUS_POLL_TIMEOUT_US);
+-	if (num != 7)
++	if (num != 6)
+ 		return -EINVAL;
  
--	if (gdsc_check_status(sc, status))
-+	ret = gdsc_check_status(sc, status);
-+	if (ret < 0)
-+		return ret;
-+	if (ret)
- 		return 0;
- 
- 	return -ETIMEDOUT;
+ 	num = gb_audio_manager_add(&desc);
 -- 
 2.53.0
 
