@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2987B246BCD;
-	Sat, 12 Sep 2026 10:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80552246BCD;
+	Sat, 12 Sep 2026 10:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207271; cv=none; b=bh7GDiZwzZ18U9TRdmj8V3pQHM46H0le60i3ktLvmR/iBz54qMVEJU8QhbLqBJQFQx9eNW5hjl1bAqg0goXHJBy8u+0vehj4fNOFVjbRhI7MsvFxG8kr2Z1BIg+eRpn3g2nkgjCzFav1qxJMe3WHUAcUF4btsopD2rWHTdJAi6M=
+	t=1789207275; cv=none; b=nRVuuOBBwKOHW9gpg2jlU5ewoTsdZQziGRmLxvVz+eQ7tsh+wXz7n6fCJ/b6Ewa7M3psi1Odj1A805sofNpkIzUz2jPr1UGklvFc9kUsf+Jn//GckGDL5fwhJJFkiilOhs6/DIhRBCm9bTbJrTfTeOiUozNILkPLsfgMPn2UpLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207271; c=relaxed/simple;
-	bh=SVEZJupOepzKeDi0RT1q6tDunjoJSbZGrGO+3DNhBe0=;
+	s=arc-20240116; t=1789207275; c=relaxed/simple;
+	bh=lWkdNXDEJiVChXwE2ImtpM69zuGLJNXLn+glVpumBTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=myWTp39EyF60iHL4XyeKeuygFUZMIQCci2ZHoDhioFAMkaPxTEBgwlEAWTBzP4vN2gM4/LHl0Gg3LXbUB9Hp1FnaYS9ueQYr2Bhoi/UsSMfGwm/eGIcVPS1ggU2UEDz1E/kdn94MXqYqM03TP0Imz87L9F1hNyUkpFsCI7kbIuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqHiqN71; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ej0BZOMnoL0k3a2zhAeTbpWXtefdlZkUGpOFLYm5U3bAo89UqZiXQNbrRytfGHSdrQRwy89JOfrPuAcp7Uzf4jORnKuSav/O1bB6aImSwVdAlbH40kzhmVfXD/Ns1iOz3hchw4uEQIPp5RRreQTlNq0d4MyPtUu8hxGVICtU4co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yhlRehpd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqHiqN71"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3761F000FF;
-	Sat, 12 Sep 2026 10:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhlRehpd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B252D1F000FF;
+	Sat, 12 Sep 2026 10:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207269;
-	bh=vt0JZZkD02gr/BVsmyspsBWmXVbwbtPV53iqbiuVdDQ=;
+	s=korg; t=1789207274;
+	bh=7qi7uDcQu57mhbkWzXHo8NVHjoYy+Ssc5ApZZ+I72TE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AqHiqN71h+H9+i0Al6sb/dOgXR3bBAcM8+2UOex5MgPGu9DE8DJQr64SfUQIqr+hP
-	 Sl7zBfyve12oac/coHqlEpmhLviExUe8IJlIS5Qqe5pHpl0op+35EI0b7NLBSJ7wqt
-	 it/mm9KZuBKdEWHT2Rvs1B/riQazwzzIIV+OHF7Q=
+	b=yhlRehpd0IqnyGleVsQjFo+h9m5cekzJHfJJxRi6jXSV987LBudHkd+Ge9g9ob91j
+	 WDj54gfqQVPMdXYlTQvkjaWkAKU1kGswcORsW/oQfPq7V1ylo3hZ0Th7OZWl8s17oV
+	 GE8UpOFIFcWlUSZ9B/WZAH5BWLRmbPripfH9Bq6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0379/1518] firmware: arm_scmi: Quiesce notifications before teardown
-Date: Sat, 12 Sep 2026 08:42:28 +0200
-Message-ID: <20260912065632.036706837@linuxfoundation.org>
+Subject: [PATCH 6.18 0380/1518] firmware: arm_scmi: Clean up channels on setup failure
+Date: Sat, 12 Sep 2026 08:42:29 +0200
+Message-ID: <20260912065632.057931415@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,143 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 8e49055d0d495c9c07575ad8e111d9eaf0efb13f ]
+[ Upstream commit 687d67be3d87894ef12e8a164434612e0b53cfae ]
 
-scmi_notification_exit() clears and releases the notification instance,
-but transport callbacks can still deliver incoming notifications until
-the TX/RX channels are freed. During remove, an RX interrupt in that
-window can enter scmi_notify() while notification state is being torn
-down and then dereference freed memory. The same ordering exists on the
-probe error path after notification initialization.
+scmi_channels_setup() can fail after the common BASE channel or earlier
+protocol channels have already been registered in the TX/RX IDRs.
 
-The notification late-init worker has a separate lifetime issue: protocol
-event registration queues ni->init_work on the system workqueue, so
-destroying ni->notify_wq does not drain that work. If the devres group is
-released while init_work is still pending or running, the late-init worker
-can dereference the freed notification instance.
+Route this failure through the existing channel cleanup label so the
+transport channels, transport devices and IDR state created before the
+failure are released before the probe error path frees the SCMI instance
+ID.
 
-Quiesce the notification core before TX/RX channels are torn down, then
-clean up the channels before releasing the notification core resources.
-Use disable_work_sync() so future late-init queueing is rejected and any
-already queued or running late-init work has completed before channel
-teardown starts.
-
-Fixes: 1e7cbfaa66d3 ("firmware: arm_scmi: Free mailbox channels if probe fails")
+Fixes: 05a2801d8b90 ("firmware: arm_scmi: Use dedicated devices to initialize channels")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-3-3afe499d46e3@kernel.org
+Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-4-3afe499d46e3@kernel.org
 Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 13 +++++++------
- drivers/firmware/arm_scmi/notify.c | 21 +++++++++++++++++++++
- drivers/firmware/arm_scmi/notify.h |  1 +
- 3 files changed, 29 insertions(+), 6 deletions(-)
+ drivers/firmware/arm_scmi/driver.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 69f88b41e2b2d..529a4e5852e6e 100644
+index 529a4e5852e6e..74a199ca4c76c 100644
 --- a/drivers/firmware/arm_scmi/driver.c
 +++ b/drivers/firmware/arm_scmi/driver.c
-@@ -3233,7 +3233,7 @@ static int scmi_probe(struct platform_device *pdev)
- 			dev_err(dev, "%s", err_str);
- 			return 0;
- 		}
--		goto notification_exit;
-+		goto raw_mode_cleanup;
+@@ -3171,7 +3171,7 @@ static int scmi_probe(struct platform_device *pdev)
+ 	ret = scmi_channels_setup(info);
+ 	if (ret) {
+ 		err_str = "failed to setup channels\n";
+-		goto clear_ida;
++		goto clear_txrx_setup;
  	}
  
- 	mutex_lock(&scmi_list_mutex);
-@@ -3275,17 +3275,18 @@ static int scmi_probe(struct platform_device *pdev)
- 
- 	return 0;
- 
--notification_exit:
-+raw_mode_cleanup:
- 	if (IS_ENABLED(CONFIG_ARM_SCMI_RAW_MODE_SUPPORT))
- 		scmi_raw_mode_cleanup(info->raw);
--	scmi_notification_exit(&info->handle);
- clear_dev_req_notifier:
- 	blocking_notifier_chain_unregister(&scmi_requested_devices_nh,
- 					   &info->dev_req_nb);
- clear_bus_notifier:
- 	bus_unregister_notifier(&scmi_bus_type, &info->bus_nb);
- clear_txrx_setup:
-+	scmi_notification_quiesce(&info->handle);
+ 	ret = bus_register_notifier(&scmi_bus_type, &info->bus_nb);
+@@ -3287,7 +3287,6 @@ static int scmi_probe(struct platform_device *pdev)
+ 	scmi_notification_quiesce(&info->handle);
  	scmi_cleanup_txrx_channels(info);
-+	scmi_notification_exit(&info->handle);
- clear_ida:
- 	ida_free(&scmi_id, info->id);
- 
-@@ -3312,6 +3313,9 @@ static void scmi_remove(struct platform_device *pdev)
- 	blocking_notifier_chain_unregister(&scmi_requested_devices_nh,
- 					   &info->dev_req_nb);
- 
-+	/* Stop transport callbacks before tearing down notifications. */
-+	scmi_notification_quiesce(&info->handle);
-+	scmi_cleanup_txrx_channels(info);
  	scmi_notification_exit(&info->handle);
- 
- 	mutex_lock(&info->protocols_mtx);
-@@ -3324,9 +3328,6 @@ static void scmi_remove(struct platform_device *pdev)
- 
- 	bus_unregister_notifier(&scmi_bus_type, &info->bus_nb);
- 
--	/* Safe to free channels since no more users */
--	scmi_cleanup_txrx_channels(info);
--
+-clear_ida:
  	ida_free(&scmi_id, info->id);
- }
  
-diff --git a/drivers/firmware/arm_scmi/notify.c b/drivers/firmware/arm_scmi/notify.c
-index 9bf7f43ab868c..672c91197a68a 100644
---- a/drivers/firmware/arm_scmi/notify.c
-+++ b/drivers/firmware/arm_scmi/notify.c
-@@ -1706,6 +1706,25 @@ int scmi_notification_init(struct scmi_handle *handle)
- 	return -ENOMEM;
- }
- 
-+/**
-+ * scmi_notification_quiesce()  - Stop notification late initialization
-+ * @handle: The handle identifying the platform instance to quiesce
-+ *
-+ * Prevent new late-init work from being queued and wait for any already queued
-+ * or running late-init work to complete before transport channels are torn
-+ * down.
-+ */
-+void scmi_notification_quiesce(struct scmi_handle *handle)
-+{
-+	struct scmi_notify_instance *ni;
-+
-+	ni = scmi_notification_instance_data_get(handle);
-+	if (!ni)
-+		return;
-+
-+	disable_work_sync(&ni->init_work);
-+}
-+
- /**
-  * scmi_notification_exit()  - Shutdown and clean Notification core
-  * @handle: The handle identifying the platform instance to shutdown
-@@ -1717,6 +1736,8 @@ void scmi_notification_exit(struct scmi_handle *handle)
- 	ni = scmi_notification_instance_data_get(handle);
- 	if (!ni)
- 		return;
-+
-+	scmi_notification_quiesce(handle);
- 	scmi_notification_instance_data_set(handle, NULL);
- 
- 	/* Destroy while letting pending work complete */
-diff --git a/drivers/firmware/arm_scmi/notify.h b/drivers/firmware/arm_scmi/notify.h
-index 76758a736cf47..f18f98c5ab3ba 100644
---- a/drivers/firmware/arm_scmi/notify.h
-+++ b/drivers/firmware/arm_scmi/notify.h
-@@ -82,6 +82,7 @@ struct scmi_protocol_events {
- };
- 
- int scmi_notification_init(struct scmi_handle *handle);
-+void scmi_notification_quiesce(struct scmi_handle *handle);
- void scmi_notification_exit(struct scmi_handle *handle);
- int scmi_register_protocol_events(const struct scmi_handle *handle, u8 proto_id,
- 				  const struct scmi_protocol_handle *ph,
+ out_err:
 -- 
 2.53.0
 
