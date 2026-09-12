@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057BD1F91E3;
-	Sat, 12 Sep 2026 16:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686A63290D1;
+	Sat, 12 Sep 2026 16:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231162; cv=none; b=Cm/5owLNDDaJMYoUJ5zkxfiJ8oY1exiPyXB0JRmOLW5zWOSzKyXWS4IlwR1ghZ1Q2WLW0DSlTnQxcQkwgtAXEAtEBLoumlHYzZa+TWJT074PacHsrd/FOC8/P0TpEgFtzAlosbmmuNbs1qRybCtaakjIR5YYMzgyj2wkPrmcC18=
+	t=1789231166; cv=none; b=J6PWFoddk9qhXBFvqbXt1UiTksXE3ykBoMKDnt4NfWRWYei2TqVhgSGkU8EvT5rP+U/73TJL1y8DjCPi0erydmPCBPBeqdoYtaFbHfQW+BnH5yqlsPQAyWFGY5ekH7E0iDkEhgmXVhYL9LRU6/bIMBZr2qCW5DWf2H/UAIu0kIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231162; c=relaxed/simple;
-	bh=u3oDHBOjl3AIZHK3IatyT6dFPwiUelkIyq3eDZCqTxg=;
+	s=arc-20240116; t=1789231166; c=relaxed/simple;
+	bh=38KeVTzubs4kHZAjNNNGVhLk526C9T8on+W/20qTqGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y/9U1RtuCpDF66b+XMDjrwbJS72EM6Gfte9L59K2qece9BN5xIiADFyhInzJbZl/oPPq4FfQ0170m7M9TTtRclCj3luFZsaKccy40Pf+QPNrd6vpcWGI35QlTzYBPt37LQXAOY66FupmW618oeBhJR15Z7oUBrtmc7onxYLlocE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=itc2y9S8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E/GXmjZR2JBf0gJQ06lQz2utNjW/yG4A2pnQtv1tlDA2jCM2TRK3S4EOsvIq4qtXXIYJZRgP2ZLlVivoUmHWDxnC0g4O8W7vsBc36bFZFCjvexemoVHvf9RrALLIO8+kmgeagJfw0ZVswQV6doJSr8lInCNUIPx0ME4HzV67p7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mOlAyln4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itc2y9S8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58EF41F000FF;
-	Sat, 12 Sep 2026 16:39:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mOlAyln4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4249B1F000FF;
+	Sat, 12 Sep 2026 16:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231160;
-	bh=w/I5Ph+bVagbHzMPfFn5YmjPOeGd2KcrBFyD6lQ7YaA=;
+	s=korg; t=1789231165;
+	bh=iB7GfHEAZBPejuGmrKF0w9EdHer7EsAnmHIQfA9T6iY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=itc2y9S8qABpdpmVXQyQSaSrQKu/2IT9BPHL5tZpMxhTeDLmsUIFxZE+85cXJ92C9
-	 0tqqI5z4kSxWHV+j2Daf2USOu/qh/v7GWwGEjIqmIdwVENvW3s20tEXWazd7wXnZrh
-	 vdCuZH9ua/sEW86MF17vH4jSF0aQ6xWkd+xoDDrU=
+	b=mOlAyln4TN8x9q6iIdsxpdo945397o6LV5RtmOrB7Ar2N4+JUJ2xNUHJjgeqTvVD9
+	 IHzPgZ0Dm5SuZW3ttzH5S1N2pXtAmz0q1yuPuQre2qPukKZtNdI+x+IypfwILVp72w
+	 IRqXHEOah99BpSjftCQDjuoSXW448lm/GhWWWjAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0942/1191] perf stat: Fix evsel_list leak in cmd_stat
-Date: Sat, 12 Sep 2026 09:01:10 +0200
-Message-ID: <20260912065609.383416176@linuxfoundation.org>
+Subject: [PATCH 6.1 0943/1191] perf synthetic-events: Fix uninitialized pthread_join
+Date: Sat, 12 Sep 2026 09:01:11 +0200
+Message-ID: <20260912065609.406267345@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,54 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 340641a4b5fff4f4b12261c9d92169f6e2ea11f4 ]
+[ Upstream commit 54ba44db4dddc4ca06b49bae0f9d6c5861430b18 ]
 
-Fix a memory leak in cmd_stat() where evsel_list is leaked if an error
-occurs while opening the output file.
+In perf_event__synthesize_threads(), fix an uninitialized pthread_join()
+call when thread creation fails by only joining the successfully
+created threads.
 
 Assisted-by: Antigravity:gemini-3.1-pro
-Fixes: 361c99a661a7 ("perf evsel: Introduce perf_evlist")
+Fixes: 340b47f510bb ("perf top: Implement multithreading for perf_event__synthesize_threads")
 Signed-off-by: Ian Rogers <irogers@google.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-stat.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ tools/perf/util/synthetic-events.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
-index 59628fa170cac..249398953a9a3 100644
---- a/tools/perf/builtin-stat.c
-+++ b/tools/perf/builtin-stat.c
-@@ -2302,7 +2302,8 @@ int cmd_stat(int argc, const char **argv)
- 		output = fopen(output_name, mode);
- 		if (!output) {
- 			perror("failed to create output file");
--			return -1;
-+			status = -1;
-+			goto out;
- 		}
- 		clock_gettime(CLOCK_REALTIME, &tm);
- 		fprintf(output, "# started on %s\n", ctime(&tm.tv_sec));
-@@ -2311,7 +2312,8 @@ int cmd_stat(int argc, const char **argv)
- 		output = fdopen(output_fd, mode);
- 		if (!output) {
- 			perror("Failed opening logfd");
--			return -errno;
-+			status = -errno;
-+			goto out;
- 		}
+diff --git a/tools/perf/util/synthetic-events.c b/tools/perf/util/synthetic-events.c
+index cccd293b53124..2e55db810f8a3 100644
+--- a/tools/perf/util/synthetic-events.c
++++ b/tools/perf/util/synthetic-events.c
+@@ -1073,8 +1073,8 @@ int perf_event__synthesize_threads(struct perf_tool *tool,
  	}
- 
-@@ -2320,7 +2322,8 @@ int cmd_stat(int argc, const char **argv)
- 		parse_options_usage(stat_usage, stat_options, "o", 1);
- 		parse_options_usage(NULL, stat_options, "log-fd", 0);
- 		parse_options_usage(NULL, stat_options, "interval-clear", 0);
--		return -1;
-+		status = -1;
-+		goto out;
- 	}
- 
- 	stat_config.output = output;
+ 	err = 0;
+ out_join:
+-	for (i = 0; i < thread_nr; i++)
+-		pthread_join(synthesize_threads[i], NULL);
++	for (j = 0; j < i; j++)
++		pthread_join(synthesize_threads[j], NULL);
+ 	free(args);
+ free_threads:
+ 	free(synthesize_threads);
 -- 
 2.53.0
 
