@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82BA345EA2;
-	Sat, 12 Sep 2026 17:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD82547989B;
+	Sat, 12 Sep 2026 17:07:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232825; cv=none; b=lUepOOOTfmBMnvjx3YEKxN2Ryh6x2AGnkPt37+MbKgmuFzkAjbR2yQUtiEgs+HSood7sp7677pICF2fd4FxXuAQGIco2n2yArwsjpsQs7ERzBrKUH0vRegHhOHzmFGevO2DWfyjbXKxQ7DwY+Jld6HOvE7nKahkK9qb9lO9X7ks=
+	t=1789232831; cv=none; b=rCbZfCIFJ6Wyz+TcBb7QCRqQ8i0eunsb0sgbA9Sxq2rKv+4PCkhOrBtpWNucEW47ufaRJ+YnEsfGo/UuYK/drc5TsabA9C/49uAZvhZZEDobTTJBLt6bzkP7ZcLuIikCZfqZphP8zltxTZ6dq8u2L3avPB68DKssIhT4ykcO6EU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232825; c=relaxed/simple;
-	bh=degXE2tOe8hp+u18No7aG1Uso9Kgh8Q3WAqHLwj68ms=;
+	s=arc-20240116; t=1789232831; c=relaxed/simple;
+	bh=ULYjuyuUpNEZLgcGLYPpbmAf5/6DIk3f0YG1xcW2s4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TbMqzSRAWPsFmC/e45uRmULTz/RSbEywhATrU0N55Lf9m/UIELYGVvlmGCgXXj0Tlid0CqAe6w+yw3ETu69vqFk4hqmyYdc2ALJfJE7gZEuPQuE8YgjlT3sCAiVkrJ4iSq7DAy1AmJtHVXxHAMpz/VcYXJQFh2ocq1Yq1oLKgoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dB74P/Ck; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e4bksEcScYQEVw3Qv81xyEeeKW0O/+dbT9b80Ti0HmV0sT+1Ym+ZnetcjlNs2JJZdPQANaYWrsoOJV/4xZA2uRqWXizGnej5Usv8ZVj9x43d3TjzPbCSR5V0/K5wt8MzDT8eOq0LMz6Q3xu6/fUWU2WZC9e1xdbngIhN6Do+Hgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TM3u8qn4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dB74P/Ck"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E731F000FF;
-	Sat, 12 Sep 2026 17:07:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TM3u8qn4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D6A1F000FF;
+	Sat, 12 Sep 2026 17:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232824;
-	bh=HDfrxaJ2kNnPm90vqJP+Px4L3Ym+SipP1a9i+rwbRys=;
+	s=korg; t=1789232829;
+	bh=wSPMpoXj646eIYehQlB8Tm+LQtS2l54v7CRzw23MrMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dB74P/CkMwMW+WFnVCqpH4w1I7K/f07ln32lNfElxhRhKy/gzmsxTesJXbWwNEosD
-	 QH9YEJvZziz05uJuGtA17+m6UpF8DDRX5HXWOiccDLZCInx0YH67vYhI5Ad5vKIBtq
-	 YSuNqeKJZyE8q8+9VuvehwROQjGxJ05T37gqZd0w=
+	b=TM3u8qn4/Fl9KujN0nx5rlnPx8FcpMxavt1GkFpB6Oh7tOYrObDTItllkAdgOUeGC
+	 ymHGmENRi1Cd5h5FsorvcS57pAzoNGM+Q7gU8vJ36q3fWx22BPhrde1mDHI7LuvLd6
+	 PcF520Em3W24egNGtvjW9u/gsfMwHfKEq3tYWWHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Krutskih <devsec@tpz.ru>,
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.15 090/935] dm raid1: reserve space for NUL-terminator in build_constructor_string()
-Date: Sat, 12 Sep 2026 08:52:00 +0200
-Message-ID: <20260912065528.888847234@linuxfoundation.org>
+Subject: [PATCH 5.15 091/935] dm array: reject an array block whose value size is not the callers
+Date: Sat, 12 Sep 2026 08:52:01 +0200
+Message-ID: <20260912065528.911201858@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,31 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Krutskih <devsec@tpz.ru>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 73c37fe54cd056d07461b142ab0b8b81e1ef6ad8 upstream.
+commit 4538a287bdf5d0f9a379c678e5262b9f5783f547 upstream.
 
-Reserve space for the termination NUL after the maximum 20 decimal
-digits of a long long value to avoid buffer overflow in sprintf().
+array_block_check() can only compare the header against itself, so a block
+with value_size 4 and max_entries 1018 is internally consistent and passes.
+dm-cache keeps two arrays -- mappings at 8 bytes and hints at 4 -- and the
+roots for both live in the superblock. Point the mappings root at a hint
+block and __load_mappings() walks it through an info whose value size is 8,
+so element_at() strides 8 bytes over 4-byte entries and reaches offset 8160
+of a 4096-byte block.
 
-Fixes: f5db4af466e2 ("dm raid1: add userspace log")
+get_ablock() and __shadow_ablock() are the two places that hold the block
+and the caller at once. Reject there when the two value sizes disagree.
+Arrays only ever read their own blocks, so this fires on crafted metadata
+only.
+
+Fixes: 6513c29f44f2 ("dm persistent data: add transactional array")
+Suggested-by: Ming-Hung Tsai <mtsai@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Krutskih <devsec@tpz.ru>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Ming-Hung Tsai <mtsai@redhat.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-log-userspace-base.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/persistent-data/dm-array.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/md/dm-log-userspace-base.c
-+++ b/drivers/md/dm-log-userspace-base.c
-@@ -138,6 +138,7 @@ static int build_constructor_string(stru
- 		str_size += strlen(argv[i]) + 1; /* +1 for space between args */
+--- a/drivers/md/persistent-data/dm-array.c
++++ b/drivers/md/persistent-data/dm-array.c
+@@ -223,6 +223,14 @@ static int get_ablock(struct dm_array_in
+ 		return r;
  
- 	str_size += 20; /* Max number of chars in a printed u64 number */
-+	str_size++; /* For NUL-terminator */
+ 	*ab = dm_block_data(*block);
++	if (le32_to_cpu((*ab)->value_size) != info->value_type.size) {
++		DMERR_LIMIT("%s failed: value_size %u != wanted %u", __func__,
++			    le32_to_cpu((*ab)->value_size),
++			    info->value_type.size);
++		dm_tm_unlock(info->btree_info.tm, *block);
++		return -EILSEQ;
++	}
++
+ 	return 0;
+ }
  
- 	str = kzalloc(str_size, GFP_KERNEL);
- 	if (!str) {
+@@ -285,6 +293,14 @@ static int __shadow_ablock(struct dm_arr
+ 		return r;
+ 
+ 	*ab = dm_block_data(*block);
++	if (le32_to_cpu((*ab)->value_size) != info->value_type.size) {
++		DMERR_LIMIT("%s failed: value_size %u != wanted %u", __func__,
++			    le32_to_cpu((*ab)->value_size),
++			    info->value_type.size);
++		dm_tm_unlock(info->btree_info.tm, *block);
++		return -EILSEQ;
++	}
++
+ 	if (inc)
+ 		inc_ablock_entries(info, *ab);
+ 
 
 
