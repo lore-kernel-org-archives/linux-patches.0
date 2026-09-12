@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B4F3B1029;
-	Sat, 12 Sep 2026 18:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653D248F844;
+	Sat, 12 Sep 2026 18:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238157; cv=none; b=UGBpNohFBxFSszjV+6tivWD/wuhi5MHpVdT4eftHxPt/EPrYf+Wa+wg9d/HeIL8w3WdAJo6dea/+X2siBs18kbjB/gsOtNgyNFOdh7E1ZXr387XFLDMczj2OI1Ag+6upZHjQJAorZnHyEVhB/2zPg4nAyrOVP/N/pUSOfibRTrY=
+	t=1789238159; cv=none; b=b9jgiXIBw/D9UqQDmL4Uz/I91mrqTWl5zzNF2syTyVodHeiNUQ2BR+y7ROxuUNnmWepE/L9d2ytvOv091+2hl3XTLSlUCq6SRgVTZjcUk3gFVtxyOv7qLhqiblvGrHuOQ3DmKB3Mvezkn8WfmHJJuQwE7POPObwhhKjuzfP8gSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238157; c=relaxed/simple;
-	bh=6uMCDVGChAxDv3GTYu57POdVS7JbSAe93gGT9AoV9+0=;
+	s=arc-20240116; t=1789238159; c=relaxed/simple;
+	bh=Q1KAzG1H38GLYurkHt+pNcfdiMpZi+tsUoYyhiZM2dI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TzwLIxB6FlCpOlwF25S6JTsMPyvogRoWuHvvj9E4ntFSu5wrWQxXI/X258SvSu9GxCirzQexKHorRjzSMoZIDZcNiPhWdPVJH52Y8o07lF0FyIxGY2CqzGcg/9UfYIbB/mgw+iF5WYXSrhBMg3zMII0khV4Y47VbCm76hyXPVGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2fVGrDkG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K1CgaPul+Zm1xVJnVcC6R9Yr7kR2CtqkaxSj5kM/pYxd59RePg9qz+sMU6qowCGuchmMxuUC4FY4Hkly7PJmaz5vrt4K9c0bza13uSc+bI5P8cyLaWsPZQ20yZB+kUDePhkR2gf9gShYC0dkFP4rzCPxQEJ8aZ7j/zgOnj7yNVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CO9VFzLx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2fVGrDkG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB7C1F000FF;
-	Sat, 12 Sep 2026 18:35:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CO9VFzLx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 319F01F00893;
+	Sat, 12 Sep 2026 18:35:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238148;
-	bh=Jg85CbKJiETk09w+QIfLXXRFfms66asOYYYpHcbVOOA=;
+	s=korg; t=1789238153;
+	bh=dqDlrJJi6UTZ25TaRGcbpXdnW7yCRsRSNc9G1efn/q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2fVGrDkG/W9FDMpVcdxeelftfi4ej1OuG3Es/KejKWM45w9r45wmft1MVAtVWm1+6
-	 fjzBO0cW2M0nN37G6yPVrP20EjJisszAI4l4xXf5A1pm1n3LA97bPhrrQ/59BydfQM
-	 LD3JRgnjEuH3dfm5ejz046d5PKEBMIMdsoVm0lX4=
+	b=CO9VFzLxiNa7dlYrYGoaX624YxgWfMY5Xct8Syfq6O2DRp4x6AOl9t5mN2ShHESYG
+	 9Bi37+vjP+uUQXA64snEo9pO/RSUlYXPThu1JweQwRfZLsYwqCvOr2WV7gXrMyC69k
+	 2nakATp3LD6Q463rxkIxRBbnGxjNGd+frzmz2dJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Deborah Brouwer <deborah.brouwer@collabora.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 5.15 360/935] drm: fix race between partial drm_dev_register() failure and ioctl
-Date: Sat, 12 Sep 2026 08:56:30 +0200
-Message-ID: <20260912065535.063531385@linuxfoundation.org>
+	Sashiko <sashiko-dev@google.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 5.15 351/935] scsi: qla2xxx: Avoid req_q_map double-read in qla2x00_error_entry()
+Date: Sat, 12 Sep 2026 08:56:21 +0200
+Message-ID: <20260912065534.858736231@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,98 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit eb197f7d60f00d0f5b1b3505dfc86a7e36045a3e upstream.
+commit deb8abde83a799d2501f3977f6d6051000253f5e upstream.
 
-If drm_dev_register() fails after registering a minor (e.g. render minor
-registered, primary minor fails), userspace could have opened the first
-minor and entered a drm_dev_enter() critical section. Since the
-unplugged flag was never set, the ioctl proceeds while the error path
-tears down device resources.
+qla2x00_error_entry() reads ha->req_q_map[que] twice: once for the NULL
+check and again when assigning it to req. The map slot is cleared by
+qla25xx_free_req_que() (ha->req_q_map[que_id] = NULL under mq_lock)
+during queue teardown, while the response-queue interrupt that drives
+qla2x00_error_entry() is still registered (the IRQ is released later in
+qla25xx_free_rsp_que()). If the slot is set to NULL between the two
+reads, req becomes NULL and is dereferenced.
 
-Fix this by introducing drm_dev_synchronize_unplug(), which sets the
-unplugged flag and waits for the SRCU barrier, ensuring all in-flight
-drm_dev_enter() critical sections complete before cleanup proceeds; call
-it on the error path of drm_dev_register().
+Read the slot once into req and NULL-check the local before use. mq_lock
+is a mutex and cannot be taken from interrupt context, so the single
+read plus local check is the appropriate fix for the reported NULL
+dereference.
 
-Fixes: bee330f3d672 ("drm: Use srcu to protect drm_device.unplugged")
+Fixes: a6fe35c052c4 ("[SCSI] qla2xxx: Avoid invalid request queue dereference for bad response packets.")
 Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260620190648.2E9F61F000E9@smtp.kernel.org/
-Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Tested-by: Deborah Brouwer <deborah.brouwer@collabora.com>
-Link: https://patch.msgid.link/20260628145406.2107056-17-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Reported-by: Sashiko <sashiko-dev@google.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://patch.msgid.link/20260730155838.2119230-17-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_drv.c |   34 +++++++++++++++++++++++++---------
- 1 file changed, 25 insertions(+), 9 deletions(-)
+ drivers/scsi/qla2xxx/qla_isr.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_drv.c
-+++ b/drivers/gpu/drm/drm_drv.c
-@@ -448,6 +448,22 @@ void drm_dev_exit(int idx)
- }
- EXPORT_SYMBOL(drm_dev_exit);
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -3631,10 +3631,12 @@ qla2x00_error_entry(scsi_qla_host_t *vha
+ 	    "iocb type %xh with error status %xh, handle %xh, rspq id %d\n",
+ 	    pkt->entry_type, pkt->entry_status, pkt->handle, rsp->id);
  
-+/*
-+ * Mark the device as unplugged and wait for any in-flight drm_dev_enter()
-+ * critical sections to complete.
-+ */
-+static void drm_dev_synchronize_unplug(struct drm_device *dev)
-+{
-+	/*
-+	 * After synchronizing any critical read section is guaranteed to see
-+	 * the new value of ->unplugged, and any critical section which might
-+	 * still have seen the old value of ->unplugged is guaranteed to have
-+	 * finished.
-+	 */
-+	dev->unplugged = true;
-+	synchronize_srcu(&drm_unplug_srcu);
-+}
-+
- /**
-  * drm_dev_unplug - unplug a DRM device
-  * @dev: DRM device
-@@ -460,15 +476,7 @@ EXPORT_SYMBOL(drm_dev_exit);
-  */
- void drm_dev_unplug(struct drm_device *dev)
- {
--	/*
--	 * After synchronizing any critical read section is guaranteed to see
--	 * the new value of ->unplugged, and any critical section which might
--	 * still have seen the old value of ->unplugged is guaranteed to have
--	 * finished.
--	 */
--	dev->unplugged = true;
--	synchronize_srcu(&drm_unplug_srcu);
--
-+	drm_dev_synchronize_unplug(dev);
- 	drm_dev_unregister(dev);
+-	if (que >= ha->max_req_queues || !ha->req_q_map[que])
++	if (que >= ha->max_req_queues)
+ 		goto fatal;
  
- 	/* Clear all CPU mappings pointing to this device */
-@@ -887,6 +895,7 @@ int drm_dev_register(struct drm_device *
- 		goto err_minors;
+ 	req = ha->req_q_map[que];
++	if (!req)
++		goto fatal;
  
- 	dev->registered = true;
-+	dev->unplugged = false;
- 
- 	if (dev->driver->load) {
- 		ret = dev->driver->load(dev, flags);
-@@ -912,6 +921,13 @@ err_unload:
- 	if (dev->driver->unload)
- 		dev->driver->unload(dev);
- err_minors:
-+	/*
-+	 * If a minor was registered before the failure, userspace could have
-+	 * opened it and entered a drm_dev_enter() critical section. Ensure all
-+	 * such sections complete before we clean up.
-+	 */
-+	drm_dev_synchronize_unplug(dev);
-+
- 	remove_compat_control_link(dev);
- 	drm_minor_unregister(dev, DRM_MINOR_PRIMARY);
- 	drm_minor_unregister(dev, DRM_MINOR_RENDER);
+ 	if (pkt->entry_status & RF_BUSY)
+ 		res = DID_BUS_BUSY << 16;
 
 
