@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DDA418A5B;
-	Sat, 12 Sep 2026 15:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7872F41687C;
+	Sat, 12 Sep 2026 15:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225811; cv=none; b=VAcBdVpix6opcFt8eA4SPHp+A2yjCjdgfZc0qai4dzp26l/Dtp5867tqxvyaQhwGGRHVyAviincCH3p4xIpuvU0opa/OFn5lH5OpFm8Bf75CF/SVVXRbsW0E0qxhrLU3X57Hz5TmvGihJdzlKbJJDQyApbjP0xZsL9gt37kJtWM=
+	t=1789225813; cv=none; b=nyCGbq2kOGIJhqMDq+3CPIw47ku9VPhyhzPJicL9iMbE6WPpw8ANJlNuX8GRNXAfkPmtrkiWbDmep7ngywRFVxEaGGXONQD8p5c7Yz5V8E8nLAAvIarPnxuqtwkeufGb0qUOCYDqBQpGLTzoBMGUJNN3kOpuio4WOd/h0IgM7Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225811; c=relaxed/simple;
-	bh=tH+ZEx6cSAY/8HDkVrdSclx0agGG8naRYbokstIlwlg=;
+	s=arc-20240116; t=1789225813; c=relaxed/simple;
+	bh=DZpL8cUrHT+jjjHIpwqBZumG4stlz+3wEH5E5UP+JMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GTy1ExNHSyXgTLo3kIADn/CWbNxmImEkc2eM9vRQk2SnGzLKFkjUlsns5IVssKC7lSWisxdUb/bY8/Z1k4pi+2TN3cYgxHlqekJEJyxmqxKmKIvBCprOUopZOJV6cZHhLBNTNNI/mPxmXyeFiPDaXztK1Q1fBjP1WQ38EfoaH5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HaNUjmXq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l0CCKYfHPk9St6BPvCnRbBqozlqjCJ6KLy6jCbZmC/phs3HYcbitlPJAA39B8uSWVVRjLIaV3aNdqJkW8WT15tc0itbtbGt0HraEUmi/tWxHYPRKUT5umLcoJD7ILzC5mvszPjMj86+r+ijSX9mM3iMVp/2rJ+TcQGNDH0dWNZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNK7W1Pk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HaNUjmXq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D341F00893;
-	Sat, 12 Sep 2026 15:10:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNK7W1Pk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D0601F000FF;
+	Sat, 12 Sep 2026 15:10:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225803;
-	bh=MritgNIBvc4mHiOKICkgiuaWgCZ1kl6f1tgKCErksJE=;
+	s=korg; t=1789225808;
+	bh=A3l90cCPyseN3tNmSA8DiCm05fGihJc0W5+JhZ9so40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HaNUjmXqq5ZiFDosV/YsoJVN88Jm5a2as+O4sItne3ao/1TsU5Q866SjXQzWi6kMY
-	 iuHWiPGipL+4dwnR9CwbiHoleRM3gN6s9rrcdPkWkKotveBgoobxCoPY3CbFByDMHo
-	 Zr9rOkkyHR/ADgp9jfgAnzOhbU8UMXGjHEincwa8=
+	b=dNK7W1Pkx+YZ+BD+8Sz2T91Tu+wk0xxnG7ZCEr0mTsdcdyy6y7i9Pv5rdGbGgfi1S
+	 7X4iO1iaGk/45gLSz1+bavk5kE7TWD8LMk8RXsVO/Nauli/pS8+e06ghk/wpF6D7VC
+	 FLtibtnf0ZLFjVz1HjbtbPHTv6PUSK5VbNuxCJHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joas Antonio dos Santos <joasantonio108@gmail.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1270/1424] ipvs: fix integer overflow in ftp helper port/address parsing
-Date: Sat, 12 Sep 2026 09:01:42 +0200
-Message-ID: <20260912065635.719694045@linuxfoundation.org>
+Subject: [PATCH 6.6 1271/1424] vxlan: vnifilter: enforce exact length of GROUP/GROUP6 attributes
+Date: Sat, 12 Sep 2026 09:01:43 +0200
+Message-ID: <20260912065635.742630091@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,66 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit e625a9477d12baaff4025c5f9989184a907ea8fc ]
+[ Upstream commit 984f831dda31b3a18f47454cf64989f65402879e ]
 
-ip_vs_ftp_get_addrport() accumulates decimal digits into a __u16
-(hport) and into unsigned char (p[]) without checking for overflow.
-A crafted FTP PASV/EPSV response with an over-long port or address
-octet wraps the value, so the helper configures the data connection
-with a truncated port/address.
+The VXLAN VNI filter entry policy declares the GROUP/GROUP6 address
+attributes as NLA_BINARY with only a maximum length, so validate_nla()
+accepts a payload shorter than the address. The GROUP consumer reads it
+with nla_get_in_addr(), an unconditional 4-byte load, so a short
+attribute over-reads up to 3 bytes of uninitialised slab data, which are
+stored into remote_ip and echoed back via RTM_GETTUNNEL, disclosing
+kernel memory.
 
-The netfilter conntrack FTP helper had the same defect, fixed in
-commit 2b413fc689ba ("netfilter: nf_conntrack_ftp: avoid u16
-overflows"). Apply the equivalent fix here: widen the port accumulator
-to u32 and reject values above 65535, and reject address octets above
-255.
+Switch both entries to NLA_POLICY_EXACT_LEN() so the validator rejects
+any GROUP/GROUP6 that is not exactly 4 / 16 bytes; a valid address is
+always sent at full width.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: f9c4bb0b245c ("vxlan: vni filtering support on collect metadata device")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260812215341.763123-1-xmei5@asu.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_ftp.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/vxlan/vxlan_vnifilter.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_ftp.c b/net/netfilter/ipvs/ip_vs_ftp.c
-index 61d3797fb7995..b3f0d2d0e1dd2 100644
---- a/net/netfilter/ipvs/ip_vs_ftp.c
-+++ b/net/netfilter/ipvs/ip_vs_ftp.c
-@@ -103,7 +103,7 @@ static int ip_vs_ftp_get_addrport(char *data, char *data_limit,
- 	char *s, c;
- 	unsigned char p[6];
- 	char edelim;
--	__u16 hport;
-+	__u32 hport;
- 	int i = 0;
+diff --git a/drivers/net/vxlan/vxlan_vnifilter.c b/drivers/net/vxlan/vxlan_vnifilter.c
+index 272fa31ef0745..b5854aceddf9d 100644
+--- a/drivers/net/vxlan/vxlan_vnifilter.c
++++ b/drivers/net/vxlan/vxlan_vnifilter.c
+@@ -467,10 +467,8 @@ static int vxlan_vnifilter_dump(struct sk_buff *skb, struct netlink_callback *cb
+ static const struct nla_policy vni_filter_entry_policy[VXLAN_VNIFILTER_ENTRY_MAX + 1] = {
+ 	[VXLAN_VNIFILTER_ENTRY_START] = { .type = NLA_U32 },
+ 	[VXLAN_VNIFILTER_ENTRY_END] = { .type = NLA_U32 },
+-	[VXLAN_VNIFILTER_ENTRY_GROUP]	= { .type = NLA_BINARY,
+-					    .len = sizeof_field(struct iphdr, daddr) },
+-	[VXLAN_VNIFILTER_ENTRY_GROUP6]	= { .type = NLA_BINARY,
+-					    .len = sizeof(struct in6_addr) },
++	[VXLAN_VNIFILTER_ENTRY_GROUP]	= NLA_POLICY_EXACT_LEN(sizeof_field(struct iphdr, daddr)),
++	[VXLAN_VNIFILTER_ENTRY_GROUP6]	= NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),
+ };
  
- 	if (data_limit - data < plen) {
-@@ -145,7 +145,11 @@ static int ip_vs_ftp_get_addrport(char *data, char *data_limit,
- 				return -1;
- 			c = *data;
- 			if (isdigit(c)) {
--				p[i] = p[i]*10 + c - '0';
-+				unsigned int val = p[i] * 10 + c - '0';
-+
-+				if (val > 255)
-+					return -1;
-+				p[i] = val;
- 			} else if (c == ',' && i < 5) {
- 				i++;
- 				p[i] = 0;
-@@ -223,6 +227,8 @@ static int ip_vs_ftp_get_addrport(char *data, char *data_limit,
- 		if (!isdigit(*s))
- 			break;
- 		hport = hport * 10 + *s - '0';
-+		if (hport > 65535)
-+			return -1;
- 	}
- 	if (s == data_limit || !hport || *s != edelim)
- 		return -1;
+ static const struct nla_policy vni_filter_policy[VXLAN_VNIFILTER_MAX + 1] = {
 -- 
 2.53.0
 
