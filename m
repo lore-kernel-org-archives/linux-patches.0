@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512C9326938;
-	Sat, 12 Sep 2026 14:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE6F2ECD1D;
+	Sat, 12 Sep 2026 14:33:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223598; cv=none; b=bIzryLAk4YRBkifus7zXiA0CoYO5b8w1/WSJ1+Th49u2P1ghJbPUtOOqGcT6MCfVyIn0wLHg9aqXuiOzFEO73ucdcaUwVRmkTOQZg0vVRWCZv1bwGXqL0Agu71NP9shfA1+DzpiR5rYlOOa4xHBgXgqU1jIeYbahPdZHu9rV6kA=
+	t=1789223603; cv=none; b=iWtVu2ItBa0O4eUcS5LOhqtaA9KKXBY8tKUvSb9Y9W2OiYj2YPM3oq60YkOwV5SGrIIpREY0vS3uMmEJzCklPvRpdkHCMJQkhQXVnxQtPJ3GHGz2YsAdbov1Nu3s+kjDXkeqqknZ0HSAD0Ku0MacGmPyEskAQk42rgDnC++dw1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223598; c=relaxed/simple;
-	bh=umYGE6V14HwhFI5psRMQXlYgwlKlImxcA3qNdfedOeo=;
+	s=arc-20240116; t=1789223603; c=relaxed/simple;
+	bh=16S0tZxTAHFbAlteLCNIDVKVITyx7N84TCKq09l/7QI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UtZl7aU0uF8C6ObMoK11+W/QiDmuJuredtt96MIBs/I8fjI8xI5MAI/SfxL+iBwr34NSA2OAa2B63cv/33QX3INxIhEfVuckkyLB+zMXit4U+3I8tiasfyABy20XRJvbrPa1nplw2BFg20Te4RbyuyIahrp/60wem10H4gPoy/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsTZXsfW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GpaYxX2sRNmhmti+/OQ2RNcJZQgdVaL27NpDCdaemELIM3qkmukYz97Udx91q44JlMcVC9hQTF4tIL3bTpvzzDb7QCqIVLAzRnmwC5SAJmmaIm9db7h+fHcJjAk28N7O3o4sqYn5KBqE09Ayu9jC9djC2mM5alfPXRn2Y9e0NjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VBssw5zU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsTZXsfW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F27DF1F000FF;
-	Sat, 12 Sep 2026 14:33:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBssw5zU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBFE21F000FF;
+	Sat, 12 Sep 2026 14:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223596;
-	bh=KcT/irmwQQZrUD1TGNH8MaWn50+5TjqJyVzKIylaGUc=;
+	s=korg; t=1789223602;
+	bh=ZUNo6S5eaKz6CWNFbq82nOcMXSEb1oRBbQd9KZ22Qd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dsTZXsfWNE7LTzIU8Pl4o5fkRT3rNv2zb0fpHl8E1prGR7Ypawd1EX2gvoq7uZhVv
-	 RcNXT08OBpFNHD2j88oDx4hABv3nPjJktzfv5FYe/jzy4+zrvuETFocEHh+ge/h+k4
-	 FeLGbY/N0xQ/wnlGpSMtgSxoClf88s40QVpY01Fs=
+	b=VBssw5zUGzeg3AT63VmKRVaYdRKrgUF6ylbUP6WzSJBXT+tOMc3cwlIx49N/KP8Xz
+	 6aZM3JlLyLih2Bw+9KPZiA6JTTqmbMAossKF+AmM6C8ZPY0Nd9Kqvz3QBTN7CWW+ck
+	 T+BkMTGKFkKSJYVwi+86elE8fs/fS/2IpXuv4LlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viktor Malik <vmalik@redhat.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0823/1424] selftests/bpf: Silence array bounds warning in global_map_resize
-Date: Sat, 12 Sep 2026 08:54:15 +0200
-Message-ID: <20260912065625.735281024@linuxfoundation.org>
+Subject: [PATCH 6.6 0824/1424] irqchip/gic-v3-its: Prevent leak in its_vpe_irq_domain_alloc()
+Date: Sat, 12 Sep 2026 08:54:16 +0200
+Message-ID: <20260912065625.758564091@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -45,72 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Viktor Malik <vmalik@redhat.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit dcd164ec67f89e0db5ee025ee9e91280052eb737 ]
+[ Upstream commit 325ff3e78c64cd619d52b99f7c8b09a3f31e1495 ]
 
-When compiling BPF selftests with -O2, GCC reports an array bounds
-violation warning in global_map_resize test:
+When its_irq_gic_domain_alloc() fails, the following
+its_vpe_irq_domain_free() fails to invoke its_vep_teardown() for the
+corresponding interrupt, which leaks the resource.
 
-    In function ‘global_map_resize_bss_subtest’,
-        inlined from ‘test_global_map_resize’ at /bpf-next/tools/testing/selftests/bpf/prog_tests/global_map_resize.c:228:3:
-    /bpf-next/tools/testing/selftests/bpf/prog_tests/global_map_resize.c:64:33: error: array subscript 1 is above array bounds of ‘int[1]’ [-Werror=array-bounds=]
-       64 |                 skel->bss->array[i] = 1;
-          |                 ~~~~~~~~~~~~~~~~^~~
-    In file included from /bpf-next/tools/testing/selftests/bpf/prog_tests/global_map_resize.c:6:
-    ./test_global_map_resize.skel.h: In function ‘test_global_map_resize’:
-    ./test_global_map_resize.skel.h:44:21: note: while referencing ‘array’
-       44 |                 int array[1];
-          |                     ^~~~~
+Invoke its_vpe_teardown() in the error handling path to avoid the leak.
 
-This is a false positive because `array` (a BPF map) has been resized
-from within the BPF program. GCC doesn't know that so let us silence the
-warning by accessing the array via a plain pointer.
+[ tglx: Massaged change log ]
 
-Fixes: 08b089567573 ("libbpf: Selftests for resizing datasec maps")
-Signed-off-by: Viktor Malik <vmalik@redhat.com>
-Link: https://lore.kernel.org/bpf/57765bc465a27923c3c093eba222cc24d08d8c40.1784112948.git.vmalik@redhat.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: 7d75bbb4bc1ad ("irqchip/gic-v3-its: Add VPE irq domain allocation/teardown")
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20260721063241.52549-2-shikemeng@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/bpf/prog_tests/global_map_resize.c  | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-gic-v3-its.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/global_map_resize.c b/tools/testing/selftests/bpf/prog_tests/global_map_resize.c
-index 56b5baef35c8c..602ce30f1720c 100644
---- a/tools/testing/selftests/bpf/prog_tests/global_map_resize.c
-+++ b/tools/testing/selftests/bpf/prog_tests/global_map_resize.c
-@@ -23,6 +23,7 @@ static void global_map_resize_bss_subtest(void)
- 	struct bpf_map *map;
- 	const __u32 desired_sz = sizeof(skel->bss->sum) + sysconf(_SC_PAGE_SIZE) * 2;
- 	size_t array_len, actual_sz, new_sz;
-+	int *array;
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index b79a018f79dc1..53ca99b9d261f 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -4474,6 +4474,13 @@ static int its_vpe_init(struct its_vpe *vpe)
  
- 	skel = test_global_map_resize__open();
- 	if (!ASSERT_OK_PTR(skel, "test_global_map_resize__open"))
-@@ -58,10 +59,13 @@ static void global_map_resize_bss_subtest(void)
- 		goto teardown;
+ static void its_vpe_teardown(struct its_vpe *vpe)
+ {
++	/*
++	 * If vpt_page is NULL, then its_vpe_init() has failed, and
++	 * there is nothing to do as no resource has been allocated.
++	 */
++	if (vpe->vpt_page == NULL)
++		return;
++
+ 	its_vpe_db_proxy_unmap(vpe);
+ 	its_vpe_id_free(vpe->vpe_id);
+ 	its_free_pending_table(vpe->vpt_page);
+@@ -4553,8 +4560,10 @@ static int its_vpe_irq_domain_alloc(struct irq_domain *domain, unsigned int virq
+ 		irqd_set_resend_when_in_progress(irq_get_irq_data(virq + i));
+ 	}
  
- 	/* fill the newly resized array with ones,
--	 * skipping the first element which was previously set
-+	 * skipping the first element which was previously set;
-+	 * access through a plain pointer to avoid -Warray-bounds
-+	 * since the array was resized beyond its declared length.
- 	 */
-+	array = skel->bss->array;
- 	for (int i = 1; i < array_len; i++)
--		skel->bss->array[i] = 1;
-+		array[i] = 1;
+-	if (err)
++	if (err) {
++		its_vpe_teardown(vm->vpes[i]);
+ 		its_vpe_irq_domain_free(domain, virq, i);
++	}
  
- 	/* set global const values before loading */
- 	skel->rodata->pid = getpid();
+ 	return err;
+ }
 -- 
 2.53.0
 
