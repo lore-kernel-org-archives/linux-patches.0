@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C82932B126;
-	Sat, 12 Sep 2026 19:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8739338F92F;
+	Sat, 12 Sep 2026 19:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243037; cv=none; b=WCvScPEgdbKOZEhxx/oBXRull/pfZVjwzeu2ShXURBk+THWnjZQdNBNVQDnoeFOwbfsI0evuoiy556NmTrXK3eDjZSRyh4JUYzEDAlFSHbalBcsvV0ZP0tgjA7AKD279/SsszgZO6o0G5ASVxDOQq7S1LaUUg1yuye9wVGImNtg=
+	t=1789243039; cv=none; b=Yda3y120LI8zacNIBrYP4cnaYhWNdud0cvHBI1XzOdVxjqhDI+lQiKNM8NdI0zslkJzx3OGBlAR50E2qJkm6PGfblpiSfo2xavzNryf0EmRIn6Mxz0NgTXDnCVb1T2bgXJXOXHuId5FzHCwx4m4Jz1HzfL8IedOMvP9lCWVaU/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243037; c=relaxed/simple;
-	bh=PgXUT54nlCOeKFPlv2VbRBMpKkxgdkKUF1w79d8IgFE=;
+	s=arc-20240116; t=1789243039; c=relaxed/simple;
+	bh=LcrZbI/q6SBlEpCpQmD6iaRL4ZnDrfNuK9Yu6Gn3PHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oic8mhcYTYtE2e7lDccrgWvvnorhKhydb63BcgQ/7OkyN35Wu7g8Uw3vfr+UKyJLOV1N1RL/paVe9U90KqbmDcwfXz/0YUyFzc2yVK1+Wmm7twPAPAEX8JKKXE6vSkHFOT96JUn/yA7yFZIFZsFNPCa+tVlp8P5x6yi6nyQ3VC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzHAx+xN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iFQfexiCrXSVH+pTYfETV5s1FJ98ImcPMRcLsXlSupUftyqWkFFw6Mp+JRwttP2vH0fFJBHzXN9SEZ2cXzbjYHQ01xuQm7egzUdb+0jRVqPsIa2yxLZ8zZ4/oqrja12IhtF0zV92bjGawaisfc3GhasrHbHtjrsOiSM9FBmxlqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hadm0Ibh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzHAx+xN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52871F000FF;
-	Sat, 12 Sep 2026 19:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hadm0Ibh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9347D1F000FF;
+	Sat, 12 Sep 2026 19:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243035;
-	bh=ZSDpcHqykNXDjlTo+NCadvehnJBpDEVZGmWtPeIMTEg=;
+	s=korg; t=1789243038;
+	bh=xeFx6a7Ucgw8amnTAWkl4x37qqDBuLavFLRs1dfz4mA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wzHAx+xN9IaJRRMLl/GG2lrWH1Qg+C+nj/DucxG5YfnaxpVVkwvvfj2IbHm5wjIuU
-	 13eL2IpzJPqzIIMMe0YdtdGMtWjz/3qyy7phHBxqMusvHgqn+ks60+L/RNe6NjGKbT
-	 poCxcG1Tdi+/FcWCwb144DzkTd/xcwIzwLiaVq3I=
+	b=Hadm0Ibh58EvVTK0h9m4DoEU4n4JV3AETQzAw79zzKkAfFLux0f4q/l0uCOFUjRMI
+	 h0cYf/6XSYoFprhgvuyLUb5x8fO+mmmAiyiGxkhBTqM1ewgwOW+Tu9RJOjTzNfx5Er
+	 wAwhY7zhD6/xBVmnRnh54DCsxlBHBq6LeLM4mROg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Jun Piao <piaojun@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 615/798] ocfs2: synchronize heartbeat callbacks with o2net teardown
-Date: Sat, 12 Sep 2026 09:04:03 +0200
-Message-ID: <20260912065531.220298481@linuxfoundation.org>
+Subject: [PATCH 5.10 616/798] drm/sun4i: vi scaler: Fix coefficient selection
+Date: Sat, 12 Sep 2026 09:04:04 +0200
+Message-ID: <20260912065531.242528338@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -58,411 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 3e326f3bf16506873777444608e8b715aab74a7a ]
+[ Upstream commit 5c31990b21f0b535732deb2b658b78b07464f56c ]
 
-Patch series "ocfs2: harden heartbeat teardown races".
+Currently, vertical coefficients are selected based on horizontal
+scaling, which is wrong. Additionally, chroma coefficients should be
+selected based on format subsampling.
 
-This series fixes two OCFS2 heartbeat/o2net teardown races found by
-KASAN.
+Fix all that.
 
-This patch (of 2):
-
-Heartbeat callbacks stay registered while configfs local-node teardown
-enters o2net_stop_listening().  A node-down event can still run through
-o2net_disconnect_node() and o2net_set_nn_state() while teardown is
-destroying o2net_wq, so the later queue/flush operations can hit a dead
-workqueue.  KASAN has caught this as a slab-use-after-free in
-__queue_work() with the call chain:
-
-KASAN slab-use-after-free in __queue_work+0x56/0xa90
-Read of size 4
-Call trace:
-  dump_stack_lvl+0x66/0xa0
-  print_report+0xce/0x630
-  __queue_work+0x56/0xa90
-  srso_alias_return_thunk+0x5/0xfbef5
-  __virt_addr_valid+0x19f/0x330
-  kasan_report+0xe0/0x110
-  __queue_delayed_work+0x58/0x1e0
-  queue_delayed_work_on+0xb4/0xc0
-  o2net_set_nn_state+0x467/0x840
-  o2net_disconnect_node+0x7b/0xe0
-  o2net_hb_node_down_cb+0x54/0x60
-  o2hb_run_event_list+0x236/0x2d0
-  o2hb_check_slot+0xad4/0xbc0
-  lock_release+0xc8/0x290
-  o2hb_check_slot+0x9ea/0xbc0
-  trace_hardirqs_on+0x18/0x130
-  o2hb_do_disk_heartbeat+0x646/0xb30 (fs/ocfs2/cluster/heartbeat.c:1079)
-  __lock_acquire+0x466/0x2260
-  lockdep_hardirqs_on_prepare+0xea/0x1a0
-  ktime_get_with_offset+0xe9/0x230
-  o2hb_thread+0x14e/0x770
-  kthread+0x1ad/0x1f0
-  ret_from_fork+0x3c9/0x540
-  __switch_to+0x2e9/0x730
-  ret_from_fork_asm+0x1a/0x30
-Allocated by task stack:
-  kasan_save_stack+0x33/0x60
-  kasan_save_track+0x14/0x30
-  __kasan_kmalloc+0xaa/0xb0
-  __kmalloc_noprof+0x292/0x760
-  __alloc_workqueue+0x736/0xc60
-  alloc_workqueue_noprof+0xb1/0x110
-  o2net_start_listening+0xe5/0x430
-  o2nm_node_local_store+0x184/0x310
-  configfs_write_iter+0x18a/0x210
-  vfs_write+0x469/0x810
-  ksys_write+0xd2/0x170
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-Freed by task stack:
-  kasan_save_stack+0x33/0x60
-  kasan_save_track+0x14/0x30
-  kasan_save_free_info+0x3b/0x60
-  __kasan_slab_free+0x5f/0x80
-  kfree+0x313/0x590
-  rcu_core+0x4f4/0x1320
-  handle_softirqs+0x156/0x660
-
-queue_delayed_work_on
-o2net_set_nn_state
-o2net_disconnect_node
-o2net_hb_node_down_cb
-o2hb_run_event_list
-
-Keep heartbeat callbacks registered so quorum state still tracks node
-state, but stop them from driving o2net reconnect/disconnect work once
-local teardown starts. Mark the transport offline before destroying
-o2net_wq, wait for any in-flight heartbeat callback to finish, and delay
-bring-up replay until the new local node is published through
-o2nm_this_node().
-
-The replay also has to stay serialized with heartbeat callback delivery.
-Otherwise a live-node snapshot can be copied, a real hb_down callback
-can install -ENOTCONN for a peer, and the stale replay can call
-o2net_hb_node_up() for that same peer and queue reconnect work even
-though heartbeat is already down.
-
-The buggy scenario involves two paths, with each column showing the order
-within that path:
-
-local-node teardown:                 heartbeat node-down callback:
-1. configfs local-off enters         1. o2hb_run_event_list() invokes
-   o2net_stop_listening().              o2net_hb_node_down_cb().
-2. teardown heads for                2. the callback reaches
-   destroy_workqueue(o2net_wq).         o2net_disconnect_node() and
-                                        o2net_set_nn_state().
-3. teardown destroys and NULLs       3. the callback flushes or queues
-   o2net_wq.                            work through o2net_wq.
-
-Link: https://lore.kernel.org/20260624095310.763763-1-zzzccc427@gmail.com
-Link: https://lore.kernel.org/20260624095310.763763-2-zzzccc427@gmail.com
-Fixes: 98211489d414 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Assisted-by: Codex:gpt-5.5
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: b862a648de3b ("drm/sun4i: Add support for HW scaling to DE2")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
+Link: https://patch.msgid.link/263a4a41442a3c8b072b170256b72658f1b90802.1785772659.git.jernej.skrabec@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/heartbeat.c   | 43 ++++++++++++++----
- fs/ocfs2/cluster/heartbeat.h   |  5 ++
- fs/ocfs2/cluster/nodemanager.c |  4 ++
- fs/ocfs2/cluster/tcp.c         | 83 +++++++++++++++++++++++++++-------
- fs/ocfs2/cluster/tcp.h         |  1 +
- 5 files changed, 109 insertions(+), 27 deletions(-)
+ drivers/gpu/drm/sun4i/sun8i_vi_scaler.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
-index a25141493ad63..8b006f35400de 100644
---- a/fs/ocfs2/cluster/heartbeat.c
-+++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -1465,13 +1465,38 @@ void o2hb_init(void)
- 	o2hb_debug_init();
- }
- 
--/* if we're already in a callback then we're already serialized by the sem */
--static void o2hb_fill_node_map_from_callback(unsigned long *map,
--					     unsigned int bits)
-+static void __o2hb_fill_node_map(unsigned long *map, unsigned int bits)
- {
- 	bitmap_copy(map, o2hb_live_node_bitmap, bits);
- }
- 
-+void o2hb_callback_read_lock(void)
-+{
-+	down_read(&o2hb_callback_sem);
-+}
-+
-+void o2hb_callback_read_unlock(void)
-+{
-+	up_read(&o2hb_callback_sem);
-+}
-+
-+void o2hb_synchronize_callbacks(void)
-+{
-+	down_write(&o2hb_callback_sem);
-+	up_write(&o2hb_callback_sem);
-+}
-+
-+/*
-+ * Callers must already hold o2hb_callback_sem for read or write so the copy
-+ * stays serialized with callback delivery.
-+ */
-+void o2hb_fill_node_map_locked(unsigned long *map, unsigned int bits)
-+{
-+	spin_lock(&o2hb_live_lock);
-+	__o2hb_fill_node_map(map, bits);
-+	spin_unlock(&o2hb_live_lock);
-+}
-+
- /*
-  * get a map of all nodes that are heartbeating in any regions
-  */
-@@ -1479,11 +1504,9 @@ void o2hb_fill_node_map(unsigned long *map, unsigned int bits)
- {
- 	/* callers want to serialize this map and callbacks so that they
- 	 * can trust that they don't miss nodes coming to the party */
--	down_read(&o2hb_callback_sem);
--	spin_lock(&o2hb_live_lock);
--	o2hb_fill_node_map_from_callback(map, bits);
--	spin_unlock(&o2hb_live_lock);
--	up_read(&o2hb_callback_sem);
-+	o2hb_callback_read_lock();
-+	o2hb_fill_node_map_locked(map, bits);
-+	o2hb_callback_read_unlock();
- }
- EXPORT_SYMBOL_GPL(o2hb_fill_node_map);
- 
-@@ -2552,7 +2575,7 @@ int o2hb_check_node_heartbeating_no_sem(u8 node_num)
- 	unsigned long testing_map[BITS_TO_LONGS(O2NM_MAX_NODES)];
- 
- 	spin_lock(&o2hb_live_lock);
--	o2hb_fill_node_map_from_callback(testing_map, O2NM_MAX_NODES);
-+	__o2hb_fill_node_map(testing_map, O2NM_MAX_NODES);
- 	spin_unlock(&o2hb_live_lock);
- 	if (!test_bit(node_num, testing_map)) {
- 		mlog(ML_HEARTBEAT,
-@@ -2569,7 +2592,7 @@ int o2hb_check_node_heartbeating_from_callback(u8 node_num)
- {
- 	unsigned long testing_map[BITS_TO_LONGS(O2NM_MAX_NODES)];
- 
--	o2hb_fill_node_map_from_callback(testing_map, O2NM_MAX_NODES);
-+	o2hb_fill_node_map_locked(testing_map, O2NM_MAX_NODES);
- 	if (!test_bit(node_num, testing_map)) {
- 		mlog(ML_HEARTBEAT,
- 		     "node (%u) does not have heartbeating enabled.\n",
-diff --git a/fs/ocfs2/cluster/heartbeat.h b/fs/ocfs2/cluster/heartbeat.h
-index c9b25be351a11..8cbae6b2de3b0 100644
---- a/fs/ocfs2/cluster/heartbeat.h
-+++ b/fs/ocfs2/cluster/heartbeat.h
-@@ -60,6 +60,11 @@ int o2hb_register_callback(const char *region_uuid,
- 			   struct o2hb_callback_func *hc);
- void o2hb_unregister_callback(const char *region_uuid,
- 			      struct o2hb_callback_func *hc);
-+void o2hb_callback_read_lock(void);
-+void o2hb_callback_read_unlock(void);
-+void o2hb_synchronize_callbacks(void);
-+void o2hb_fill_node_map_locked(unsigned long *map,
-+			       unsigned int bits);
- void o2hb_fill_node_map(unsigned long *map,
- 			unsigned int bits);
- void o2hb_exit(void);
-diff --git a/fs/ocfs2/cluster/nodemanager.c b/fs/ocfs2/cluster/nodemanager.c
-index db08f3a6e725d..c9a239fba01b5 100644
---- a/fs/ocfs2/cluster/nodemanager.c
-+++ b/fs/ocfs2/cluster/nodemanager.c
-@@ -327,6 +327,7 @@ static ssize_t o2nm_node_local_store(struct config_item *item, const char *page,
- 	struct o2nm_node *node = to_o2nm_node(item);
- 	struct o2nm_cluster *cluster;
- 	unsigned long tmp;
-+	bool starting = false;
- 	char *p = (char *)page;
- 	ssize_t ret;
- 
-@@ -363,6 +364,7 @@ static ssize_t o2nm_node_local_store(struct config_item *item, const char *page,
- 		ret = o2net_start_listening(node);
- 		if (ret)
- 			goto out;
-+		starting = true;
- 	}
- 
- 	if (!tmp && cluster->cl_has_local &&
-@@ -375,6 +377,8 @@ static ssize_t o2nm_node_local_store(struct config_item *item, const char *page,
- 	if (node->nd_local) {
- 		cluster->cl_has_local = tmp;
- 		cluster->cl_local_node = node->nd_num;
-+		if (starting)
-+			o2net_complete_start_listening(node);
- 	}
- 
- 	ret = count;
-diff --git a/fs/ocfs2/cluster/tcp.c b/fs/ocfs2/cluster/tcp.c
-index bc1f83790d6a7..bd9a2eb244673 100644
---- a/fs/ocfs2/cluster/tcp.c
-+++ b/fs/ocfs2/cluster/tcp.c
-@@ -106,6 +106,8 @@ static struct socket *o2net_listen_sock;
-  * destroying the work queue.
-  */
- static struct workqueue_struct *o2net_wq;
-+/* Heartbeat callbacks stay registered across local-node off/on. */
-+static bool o2net_listening;
- static struct work_struct o2net_listen_work;
- 
- static struct o2hb_callback_func o2net_hb_up, o2net_hb_down;
-@@ -1687,6 +1689,19 @@ static void o2net_still_up(struct work_struct *work)
- 
- /* ------------------------------------------------------------ */
- 
-+static void o2net_hb_node_up(struct o2net_node *nn)
-+{
-+	/* ensure an immediate connect attempt */
-+	nn->nn_last_connect_attempt = jiffies -
-+		(msecs_to_jiffies(o2net_reconnect_delay()) + 1);
-+
-+	spin_lock(&nn->nn_lock);
-+	atomic_set(&nn->nn_timeout, 0);
-+	if (nn->nn_persistent_error)
-+		o2net_set_nn_state(nn, NULL, 0, 0);
-+	spin_unlock(&nn->nn_lock);
-+}
-+
- void o2net_disconnect_node(struct o2nm_node *node)
- {
- 	struct o2net_node *nn = o2net_nn_from_num(node->nd_num);
-@@ -1708,41 +1723,39 @@ void o2net_disconnect_node(struct o2nm_node *node)
- static void o2net_hb_node_down_cb(struct o2nm_node *node, int node_num,
- 				  void *data)
- {
-+	u8 this_node;
-+
- 	o2quo_hb_down(node_num);
- 
- 	if (!node)
--		return;
-+		goto out;
- 
--	if (node_num != o2nm_this_node())
-+	this_node = o2nm_this_node();
-+	if (!READ_ONCE(o2net_listening) || this_node == O2NM_MAX_NODES)
-+		goto out;
-+
-+	if (node_num != this_node)
- 		o2net_disconnect_node(node);
- 
-+out:
- 	BUG_ON(atomic_read(&o2net_connected_peers) < 0);
- }
- 
- static void o2net_hb_node_up_cb(struct o2nm_node *node, int node_num,
- 				void *data)
- {
--	struct o2net_node *nn = o2net_nn_from_num(node_num);
-+	u8 this_node;
- 
- 	o2quo_hb_up(node_num);
- 
- 	BUG_ON(!node);
- 
--	/* ensure an immediate connect attempt */
--	nn->nn_last_connect_attempt = jiffies -
--		(msecs_to_jiffies(o2net_reconnect_delay()) + 1);
-+	this_node = o2nm_this_node();
-+	if (!READ_ONCE(o2net_listening) || this_node == O2NM_MAX_NODES)
-+		return;
- 
--	if (node_num != o2nm_this_node()) {
--		/* believe it or not, accept and node heartbeating testing
--		 * can succeed for this node before we got here.. so
--		 * only use set_nn_state to clear the persistent error
--		 * if that hasn't already happened */
--		spin_lock(&nn->nn_lock);
--		atomic_set(&nn->nn_timeout, 0);
--		if (nn->nn_persistent_error)
--			o2net_set_nn_state(nn, NULL, 0, 0);
--		spin_unlock(&nn->nn_lock);
--	}
-+	if (node_num != this_node)
-+		o2net_hb_node_up(o2net_nn_from_num(node_num));
- }
- 
- void o2net_unregister_hb_callbacks(void)
-@@ -1751,6 +1764,37 @@ void o2net_unregister_hb_callbacks(void)
- 	o2hb_unregister_callback(NULL, &o2net_hb_down);
- }
- 
-+/*
-+ * Delay heartbeat-driven network work until the local node is fully published
-+ * through o2nm_this_node(), then replay the nodes that are already live while
-+ * callback delivery stays blocked.
-+ */
-+void o2net_complete_start_listening(struct o2nm_node *node)
-+{
-+	unsigned long live_nodes[BITS_TO_LONGS(O2NM_MAX_NODES)];
-+	unsigned long node_num;
-+	u8 local_node;
-+
-+	local_node = o2nm_this_node();
-+	if (WARN_ON_ONCE(local_node == O2NM_MAX_NODES))
-+		return;
-+	if (WARN_ON_ONCE(local_node != node->nd_num))
-+		return;
-+	if (WARN_ON_ONCE(!o2net_wq))
-+		return;
-+
-+	o2hb_callback_read_lock();
-+	WRITE_ONCE(o2net_listening, true);
-+	o2hb_fill_node_map_locked(live_nodes, O2NM_MAX_NODES);
-+	for_each_set_bit(node_num, live_nodes, O2NM_MAX_NODES) {
-+		if (node_num == local_node)
-+			continue;
-+
-+		o2net_hb_node_up(o2net_nn_from_num(node_num));
+diff --git a/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c b/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c
+index 7ba75011adf9f..328b84df2ee5e 100644
+--- a/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c
++++ b/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c
+@@ -891,20 +891,26 @@ static void sun8i_vi_scaler_set_coeff(struct regmap *map, u32 base,
+ 			     lan3coefftab32_left[offset + i]);
+ 		regmap_write(map, SUN8I_SCALER_VSU_YHCOEFF1(base, i),
+ 			     lan3coefftab32_right[offset + i]);
 +	}
-+	o2hb_callback_read_unlock();
-+}
++	offset = sun8i_vi_scaler_coef_index(vstep) *
++			SUN8I_VI_SCALER_COEFF_COUNT;
++	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++)
++		regmap_write(map, SUN8I_SCALER_VSU_YVCOEFF(base, i),
++			     lan2coefftab32[offset + i]);
 +
- int o2net_register_hb_callbacks(void)
- {
- 	int ret;
-@@ -2024,6 +2068,8 @@ int o2net_start_listening(struct o2nm_node *node)
- {
- 	int ret = 0;
++	offset = sun8i_vi_scaler_coef_index(hstep / format->hsub) *
++			SUN8I_VI_SCALER_COEFF_COUNT;
++	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++) {
+ 		regmap_write(map, SUN8I_SCALER_VSU_CHCOEFF0(base, i),
+ 			     ch_left[offset + i]);
+ 		regmap_write(map, SUN8I_SCALER_VSU_CHCOEFF1(base, i),
+ 			     ch_right[offset + i]);
+ 	}
+-
+-	offset = sun8i_vi_scaler_coef_index(hstep) *
++	offset = sun8i_vi_scaler_coef_index(vstep / format->vsub) *
+ 			SUN8I_VI_SCALER_COEFF_COUNT;
+-	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++) {
+-		regmap_write(map, SUN8I_SCALER_VSU_YVCOEFF(base, i),
+-			     lan2coefftab32[offset + i]);
++	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++)
+ 		regmap_write(map, SUN8I_SCALER_VSU_CVCOEFF(base, i),
+ 			     cy[offset + i]);
+-	}
+ }
  
-+	if (WARN_ON_ONCE(READ_ONCE(o2net_listening)))
-+		return -EBUSY;
- 	BUG_ON(o2net_wq != NULL);
- 	BUG_ON(o2net_listen_sock != NULL);
- 
-@@ -2055,6 +2101,9 @@ void o2net_stop_listening(struct o2nm_node *node)
- 	BUG_ON(o2net_wq == NULL);
- 	BUG_ON(o2net_listen_sock == NULL);
- 
-+	WRITE_ONCE(o2net_listening, false);
-+	o2hb_synchronize_callbacks();
-+
- 	/* stop the listening socket from generating work */
- 	write_lock_bh(&sock->sk->sk_callback_lock);
- 	sock->sk->sk_data_ready = sock->sk->sk_user_data;
-diff --git a/fs/ocfs2/cluster/tcp.h b/fs/ocfs2/cluster/tcp.h
-index 736338f45c591..953b06b4b0eef 100644
---- a/fs/ocfs2/cluster/tcp.h
-+++ b/fs/ocfs2/cluster/tcp.h
-@@ -98,6 +98,7 @@ struct o2nm_node;
- int o2net_register_hb_callbacks(void);
- void o2net_unregister_hb_callbacks(void);
- int o2net_start_listening(struct o2nm_node *node);
-+void o2net_complete_start_listening(struct o2nm_node *node);
- void o2net_stop_listening(struct o2nm_node *node);
- void o2net_disconnect_node(struct o2nm_node *node);
- int o2net_num_connected_peers(void);
+ void sun8i_vi_scaler_enable(struct sun8i_mixer *mixer, int layer, bool enable)
 -- 
 2.53.0
 
