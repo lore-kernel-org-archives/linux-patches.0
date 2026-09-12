@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A68342C4F8;
-	Sat, 12 Sep 2026 10:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235EF42DA3F;
+	Sat, 12 Sep 2026 10:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209635; cv=none; b=Xcjt2cF9rSoFh3ciTl2r5yAVutc2cKz/1fsg/jp+t1A4B+cpQK9bW0LZQHr7dGs+INlpix5zGmjhKGWXptbI9tEeL0cLrHzHxZTC0QxJ8NJnxPzOpKeErUkB73gF8W5yuhWA2ewlKTIPffXoNY6wtEIef1MYk9eCI0rGbgkuFp4=
+	t=1789209640; cv=none; b=YMxjbukbS0MvDhD34GGB5g1XxtkxgdzzMTjr/Sceg0+i1tplcNApQFmfZbJeokvrWkcuzYUuRogNBZ58vuU0FclVDEa1WmtxZ2ueOk6yAU+a3ctOr9OLHBPlshD5iTv/+E1IxuOG1tQeVL4Whrp0jRz0Gc4UnwY3dV1+AhxnR+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209635; c=relaxed/simple;
-	bh=75vezND++GnEnBC5feAu20r0zddpuBlX4xG4lmqJqgA=;
+	s=arc-20240116; t=1789209640; c=relaxed/simple;
+	bh=/4ztvvXGLhRR3I7hV7os6ZxYnbYVYcIMDG17f4sCqOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JierMgWxjaEe3klpLifV7NgNkCFYxUsHW/68ECllKeMQ+tFPeUcivIzFtaTxIs1r6G9RkkF8nmR8QNWaPKVNe42BKjigr0ZrvsSoHBnWZYz/62uMJMkrgVazfuNbuUzp5EZzcrxHgvnUeMM2vXjB9ZuAlpA9rTMrgRMLkZCA3vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dH7nZ2Ah; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J3A92ZFFhRznWlcqPFMgSXc5pGk1h+mJfd1JrRLXp9UEoc5/o0vPRAtGz33euHhEAFPxRnm6sE00zxOYzocoiAkl4TIwPvR3nHb1I3J4ZdZjM9s4/iIToj6oCnhOcegW178SrgKI/txnrXOJvg8FSoSRuLaQu0G2u+YS8E8GTmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kXAXu0SZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dH7nZ2Ah"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6768D1F000FF;
-	Sat, 12 Sep 2026 10:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kXAXu0SZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0763D1F000FF;
+	Sat, 12 Sep 2026 10:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209634;
-	bh=tuTP5vr3fkLn8Y0Krs1tybGgEFyVExOYkJjncPPLaaI=;
+	s=korg; t=1789209638;
+	bh=dRNnScmaJ6RquP8z9zZHK51FXnu0UrOZ+0QLayzo+O0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dH7nZ2Ahneq/pXxhy+/M6ddlYGyCVlC34mZy0Fq84z6URaMZi0cdoLAmzoajQSSlo
-	 6uGy6AlAiJpY/HpQrZ0cv4aTxR6rHkhVdqDzfHmhnMh1rHUfEzUcv/sYnct5SGkpss
-	 oC7mibqyjcJVcWZJgrC9MKP35tCAyZc3CcS+5eyk=
+	b=kXAXu0SZOtbZ81Tuhic1/IxAWgcOFvluqvFZNpGKjKa1i0mb8QoHVcxSibI3KarpG
+	 wbGNJlPj/mc7afIE6+vC3z4j+P/G5cfH4kmSwQXRl/gTsAQZzKij5i8QdeRc8t0UmQ
+	 ylFZCxjEI9Gb9U3SSagIVA1TMUi0NuuVEA/srcYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nilay Shroff <nilay@linux.ibm.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0860/1518] blk-cgroup: fix race between policy activation and blkg destruction
-Date: Sat, 12 Sep 2026 08:50:29 +0200
-Message-ID: <20260912065642.904311006@linuxfoundation.org>
+Subject: [PATCH 6.18 0861/1518] blk-cgroup: skip dying blkg in blkcg_activate_policy()
+Date: Sat, 12 Sep 2026 08:50:30 +0200
+Message-ID: <20260912065642.926513872@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -57,37 +57,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Zheng Qixing <zhengqixing@huawei.com>
 
-[ Upstream commit 5313d4d41739b0cb63000747c97bb1217ac45f3e ]
+[ Upstream commit 5e9220389920f33b6a804d50c548cd0cd1b04634 ]
 
-When switching an IO scheduler on a block device, blkcg_activate_policy()
-allocates blkg_policy_data (pd) for all blkgs attached to the queue.
-However, blkcg_activate_policy() may race with concurrent blkcg deletion,
-leading to use-after-free and memory leak issues.
+When switching IO schedulers on a block device, blkcg_activate_policy()
+can race with concurrent blkcg deletion, leading to a use-after-free in
+rcu_accelerate_cbs.
 
-The use-after-free occurs in the following race:
+T1:                               T2:
+                                  blkg_destroy
+                                  kill(&blkg->refcnt) // blkg->refcnt=1->0
+                                  blkg_release // call_rcu(__blkg_release)
+                                  ...
+                                  blkg_free_workfn
+                                  ->pd_free_fn(pd)
+elv_iosched_store
+elevator_switch
+...
+iterate blkg list
+blkg_get(blkg) // blkg->refcnt=0->1
+                                  list_del_init(&blkg->q_node)
+blkg_put(pinned_blkg) // blkg->refcnt=1->0
+blkg_release // call_rcu again
+rcu_accelerate_cbs // uaf
 
-T1 (blkcg_activate_policy):
-  - Successfully allocates pd for blkg1 (loop0->queue, blkcgA)
-  - Fails to allocate pd for blkg2 (loop0->queue, blkcgB)
-  - Enters the enomem rollback path to release blkg1 resources
-
-T2 (blkcg deletion):
-  - blkcgA is deleted concurrently
-  - blkg1 is freed via blkg_free_workfn()
-  - blkg1->pd is freed
-
-T1 (continued):
-  - Rollback path accesses blkg1->pd->online after pd is freed
-  - Triggers use-after-free
-
-In addition, blkg_free_workfn() frees pd before removing the blkg from
-q->blkg_list. This allows blkcg_activate_policy() to allocate a new pd
-for a blkg that is being destroyed, leaving the newly allocated pd
-unreachable when the blkg is finally freed.
-
-Fix these races by extending blkcg_mutex coverage to serialize
-blkcg_activate_policy() rollback and blkg destruction, ensuring pd
-lifecycle is synchronized with blkg list visibility.
+Fix this by checking hlist_unhashed(&blkg->blkcg_node) before getting
+a reference to the blkg. This is the same check used in blkg_destroy()
+to detect if a blkg has already been destroyed. If the blkg is already
+unhashed, skip processing it since it's being destroyed.
 
 Fixes: f1c006f1c685 ("blk-cgroup: synchronize pd_free_fn() from blkg_free_workfn() and blkcg_deactivate_policy()")
 Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
@@ -95,34 +91,26 @@ Reviewed-by: Tang Yizhou <yizhou.tang@shopee.com>
 Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Reviewed-by: Tao Cui <cuitao@kylinos.cn>
 Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Link: https://patch.msgid.link/20260802112525.3933753-3-yukuai@kernel.org
+Link: https://patch.msgid.link/20260802112525.3933753-4-yukuai@kernel.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 3 +++
- 1 file changed, 3 insertions(+)
+ block/blk-cgroup.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index a2347b5795874..36aebc5c8b7b7 100644
+index 36aebc5c8b7b7..f605df3991c38 100644
 --- a/block/blk-cgroup.c
 +++ b/block/blk-cgroup.c
-@@ -1612,6 +1612,8 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
+@@ -1623,6 +1623,8 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
  
- 	if (queue_is_mq(q))
- 		memflags = blk_mq_freeze_queue(q);
-+
-+	mutex_lock(&q->blkcg_mutex);
- retry:
- 	spin_lock_irq(&q->queue_lock);
+ 		if (blkg->pd[pol->plid])
+ 			continue;
++		if (hlist_unhashed(&blkg->blkcg_node))
++			continue;
  
-@@ -1674,6 +1676,7 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
- 
- 	spin_unlock_irq(&q->queue_lock);
- out:
-+	mutex_unlock(&q->blkcg_mutex);
- 	if (queue_is_mq(q))
- 		blk_mq_unfreeze_queue(q, memflags);
- 	if (pinned_blkg)
+ 		/* If prealloc matches, use it; otherwise try GFP_NOWAIT */
+ 		if (blkg == pinned_blkg) {
 -- 
 2.53.0
 
