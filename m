@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5AFD2F617C;
-	Sat, 12 Sep 2026 18:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365EA2F617C;
+	Sat, 12 Sep 2026 18:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238610; cv=none; b=fVyDUmKw1RpCwQkJ+o7bbC8Ng1/vmb5SmfkDJ8uBlUOicAQY6ML4qSluIWGUdfGmVDzPCb9zZy9omessFi1i3jbnnL7wK2r/Z+XRGckpclfo02wpPo6Z2O3oCflibRMlJW8ptgEGRNhiFwLwzPiobu8f4EiQn6OeM7lMs/ohLkY=
+	t=1789238615; cv=none; b=BdECm6zn76Sl7SQnPzI1osLb91QubeieN8q9Q9VB2fZTQKvgYdzEerUOcNH86JXZqRNUPXu1rjDr0rNpRALODKRzoz+6wS0lX3JethZivRG4qnztc/IK/Xn1ENHN6l6qK5dV30BGcJuxLtiaUT2u8ZCXGI7UcNB6caM3N1aujYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238610; c=relaxed/simple;
-	bh=/E13G3wVsjPMHfMFFwTf/cR7c+ik60k+1TNo4zAG5CY=;
+	s=arc-20240116; t=1789238615; c=relaxed/simple;
+	bh=1YuMV62ipWG2XG+G/3qpqApeIIXC9euenJDs6yENPcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Mg/88jPhUbh6hIV6QKe4qxRnwj0LDklfBOdI8i3X7S+lpAbCHuFoQgBLsIIdJpMQOzBipmHkuo0PxHhj0XZCKxnM1Ov3qrN51aCvDELDNYc8qapVqbKsB1Jp4e+8ba9xn/P5SZnC9n7MFub41JmkJgzM+q+rAuKd+sEM8565Vas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zANRBCgj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XvLGWx/DCbppqtX/jfXDIyLCIbKjum0KuO8EN4pLPwftFV4t+G2hNG+IPKnG6i/oIggWffRc89kTiZCwfmP+2wLhVOW8dLimCjYOnHuVMR6ko2c+PEf4lcZDkEM+Gb3o8yRUvYR8q+UKszPLYjJY9oswpYLiYwsZx5XHjn9tMYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uSR4SatE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zANRBCgj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008B21F000FF;
-	Sat, 12 Sep 2026 18:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uSR4SatE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900431F000FF;
+	Sat, 12 Sep 2026 18:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238609;
-	bh=EwnzW/kXBWrfkP0ILGcinXevciRJnR0mnlWQs3wOrWk=;
+	s=korg; t=1789238613;
+	bh=TaH7QjAQ6txjm7EU4WuxtFKnBwUI/HG9opU0jXAURNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zANRBCgjdLdgkjo69XboIFHm4JUwUQqmgTvFvWIb3cwejdhrrF+jrFM+ykSyD018R
-	 abxTh5S6zR8xcr89wrLcqgV3oFWuJoAQCjhcuEfqn0o1JnnCny3zpvHkhDRsJnzxf1
-	 61MM+SVkYspEuDhCMgd6NvxnA9CfSMrTKC2l3jkg=
+	b=uSR4SatENE+euVbAQ6EHIpg2buasLUiCvucQ+0K4oojsELtsvYJ0KZGlieS6fdgTT
+	 auS2A8EvG2NXqBJt6+iYERlV0huUBFgS0X5ZSuvVgpbtcEPSRy16e5j4/X3HTmrkLR
+	 8PPJVL3nrLRHKCeBxHLTboAJLVVl7tmkf1n+GMhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 490/935] platform/surface: acpi-notify: Check ACPI companion before use
-Date: Sat, 12 Sep 2026 08:58:40 +0200
-Message-ID: <20260912065538.056750335@linuxfoundation.org>
+Subject: [PATCH 5.15 499/935] RDMA/mlx5: Drain RCU callbacks during module teardown
+Date: Sat, 12 Sep 2026 08:58:49 +0200
+Message-ID: <20260912065538.263861975@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -45,64 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 2b3a5dabe89e330413af403246b648c1890f368f ]
+[ Upstream commit e37cdd75f8d61c1123d324ae5667ac3da562290e ]
 
-Since every platform driver can be forced to match a device that doesn't
-match its list of device IDs because of device_match_driver_override(),
-platform drivers that rely on the existence of a device's ACPI companion
-object should verify its presence.
+devx_free_subscription() can remain queued after the last DevX event file
+drops its module reference or an auxiliary driver detaches its devices.
+mlx5_ib can then unload before the callback runs.
 
-san_probe() dereferences the result of ACPI_COMPANION() when installing
-the GSBUS address space handler, so force-binding the driver to a device
-without an ACPI companion leads to a NULL pointer dereference.  The
-dereference was introduced when the probe function was switched from
-ACPI_HANDLE() to ACPI_COMPANION().
+Registration error unwind has the same risk because driver registration
+can attach existing devices before failing. Wait after all drivers have
+stopped.
 
-Check the ACPI companion against NULL and return -ENODEV when it is
-missing, like commit e4865a56d013 ("ACPI: driver: Check ACPI_COMPANION()
-against NULL during probe") does for the core ACPI platform drivers.
-
-Fixes: a9e10e587304 ("ACPI: scan: Extend acpi_walk_dep_device_list()")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Link: https://patch.msgid.link/20260706012512.524359-2-lilinmao@kylinos.cn
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 6898d1c661d7 ("RDMA/mlx5: Use RCU and direct refcounts to keep memory alive")
+Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Closes: https://lore.kernel.org/linux-rdma/20260708092316.Qb39F_B0@linutronix.de/
+Link: https://patch.msgid.link/20260709-unload-rcu-v1-2-fccd27211e5a@nvidia.com
+Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/surface/surface_acpi_notify.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/platform/surface/surface_acpi_notify.c b/drivers/platform/surface/surface_acpi_notify.c
-index 8339988d95c1b..c8f27686b5723 100644
---- a/drivers/platform/surface/surface_acpi_notify.c
-+++ b/drivers/platform/surface/surface_acpi_notify.c
-@@ -798,12 +798,16 @@ static int san_consumer_links_setup(struct platform_device *pdev)
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index c81327887f0ec..3d4eb71904bcb 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -4592,6 +4592,7 @@ static int __init mlx5_ib_init(void)
+ mp_err:
+ 	mlx5r_rep_cleanup();
+ rep_err:
++	rcu_barrier();
+ 	mlx5_ib_qp_event_cleanup();
+ qp_event_err:
+ 	destroy_workqueue(mlx5_ib_event_wq);
+@@ -4604,6 +4605,7 @@ static void __exit mlx5_ib_cleanup(void)
+ 	auxiliary_driver_unregister(&mlx5r_driver);
+ 	auxiliary_driver_unregister(&mlx5r_mp_driver);
+ 	mlx5r_rep_cleanup();
++	rcu_barrier();
  
- static int san_probe(struct platform_device *pdev)
- {
--	struct acpi_device *san = ACPI_COMPANION(&pdev->dev);
- 	struct ssam_controller *ctrl;
-+	struct acpi_device *san;
- 	struct san_data *data;
- 	acpi_status astatus;
- 	int status;
- 
-+	san = ACPI_COMPANION(&pdev->dev);
-+	if (!san)
-+		return -ENODEV;
-+
- 	ctrl = ssam_client_bind(&pdev->dev);
- 	if (IS_ERR(ctrl))
- 		return PTR_ERR(ctrl) == -ENODEV ? -EPROBE_DEFER : PTR_ERR(ctrl);
+ 	mlx5_ib_qp_event_cleanup();
+ 	destroy_workqueue(mlx5_ib_event_wq);
 -- 
 2.53.0
 
