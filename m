@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A73537AA65;
-	Sat, 12 Sep 2026 09:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF9128B4FA;
+	Sat, 12 Sep 2026 09:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204289; cv=none; b=hFSa3bL6lVHg96DM6xAh84es5Uztc+966mHYeheT3s34IU6/zKCzLdOp3ERCAuEUQeg7DDAtYYaeBf+phb1C/6wbTabYAiqwk085Xl4Z4Lp6+XDqNrL8lgSNJFa1dDrOXlgQAQ1wOGJQBKGHdD228il7tundiZSkEZVgc0JBNUE=
+	t=1789204294; cv=none; b=sEx6SiD0fbsV8vJ8oyM2JP5W3OtrmY412AeDgYM8bD9Q/TfWBhhnSxZ0Zck1UUlG4DzgsIsJlTy1q9qwrJtWwyRuSCe+1SgJ61GcWqgzfxYONMQNnwgQrX3a+Ur82b/GKp06ifR9SHsNRGNEqw3GTLcfFReM1tmvkVRsCEOJLh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204289; c=relaxed/simple;
-	bh=uPC+vL6AjDxQwz1n7t+LdHQjfv3+EPt97MXWyJ1EwGo=;
+	s=arc-20240116; t=1789204294; c=relaxed/simple;
+	bh=BGfYIAIKgT+/H40OCDlab1jb0Og858pEFtY0aocNCRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oHxh4keeBzb4Psqncb/1dXJglmhHdCi5YDc6CRROLSKnlYUi0D1Z1ugkSfWGT58TdEXY3150khpdpW4TSHUfkbhbB6Y9hLLPwhzGVN0vS2rnb2+OA4Ooz9Hj3+cxZ0q2FSsCwY4Zo/ZxqjAkZqgFyh7OWzP+hBzgpaz8rV5j774=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbvyYeVl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=isOah8d3+QmIvy7JRRXEPUh/eW+HEPe7VyzLw5T1xR8gyLW0nAJwP7AWS9Tstnug46ZwzyBb0x92WgYBSWtv9VIzl9VoslZYNgqNpaO7B4VxPduJVaJccSI9beXOGk78cBYCQ0Q4JjVjNpRFZi4cr0LhMPFSeDLi6Ra44i2Ohlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hc4Bkc/j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbvyYeVl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5791F000FF;
-	Sat, 12 Sep 2026 09:11:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hc4Bkc/j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F303A1F000FF;
+	Sat, 12 Sep 2026 09:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204288;
-	bh=gc7MRVNd84po7wjpYojUwuh9OMQNBcJa5zx7HO38En0=;
+	s=korg; t=1789204293;
+	bh=6OgAPcLGgdIInOrngw1qrP87PgViX1Z8aD1PIYprX1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fbvyYeVlwiRrZgkacrWV6wwBsx1G8a4XzXjbDIcCw5Z+Uujfmi7EXLFW3D/YJuAU7
-	 fctaT+CudBRl9UuARJ0ADf9Bk6iMOG7OI406DswwjmAfxOVMg/4cL8CeezMf16xXVi
-	 ktPL73mKFxQoxJTS0OXsrdy4MboUbUYR8Yqsd5n8=
+	b=Hc4Bkc/jRyA59+RWHxg/dbSVfYDa/pi9lO0a48cHT/Jd4/jimO43EEMKGF7G1Lb7s
+	 3SewNaTKgYI5g6scMF8/y2takPktn/AnvB/N8mAlUDKPprl0U2vwy9Kl0dsLY4U2IS
+	 cr4j3W0+1FGDuFBEhiSR+/0pMfC5ER5M0KChB6UU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Mario Rugiero <mrugiero@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1582/1815] fs/ntfs3: validate ef->size covers the records name and value
-Date: Sat, 12 Sep 2026 08:55:32 +0200
-Message-ID: <20260912065726.127445383@linuxfoundation.org>
+Subject: [PATCH 7.2 1556/1815] regulator: tps65185: wait for the IC to wake before the first I2C access
+Date: Sat, 12 Sep 2026 08:55:06 +0200
+Message-ID: <20260912065725.526631044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,88 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Mario Rugiero <mrugiero@gmail.com>
 
-[ Upstream commit c22f91d82cb9a29d22bdffdce6c803467984ad0c ]
+[ Upstream commit 44f7b876b7c6c7b3a219b7a810d3d9548df21540 ]
 
-When an EA record has a non-zero ef->size, ntfs_read_ea() only checks
-that the record fits in the remaining buffer (ea_size > bytes), not that
-ef->size is large enough to hold the record's own name_len + 1 + elength.
+The probe drives WAKEUP high with GPIOD_OUT_HIGH, enables the input
+supply, and then issues a regmap_update_bits() on INT_EN2 with no wait
+anywhere in between. The TPS65185 data sheet (TI SLVSAQ8G, February
+2011, revised September 2017), section 7.6 "Timing Requirements: Data
+Transmission", Figure 2 "Power-Up and Power-Down Timing Diagram",
+footnote 1, requires 1.8 ms minimum between the WAKEUP rising edge and
+the IC being ready to accept an I2C transaction. The driver calls no
+delay function anywhere, and nothing on that path is guaranteed to take
+that long.
 
-A crafted image can pass validation with, e.g., ef->size = 24 but
-elength = 0xffff. ntfs_get_ea() then trusts elength and copies it out of
-the undersized record, reading past the kmalloc(info->size) allocation
-and leaking heap memory to userspace via getxattr():
+On an RK3026 board the first transfer was NAKed:
 
- BUG: KASAN: slab-out-of-bounds in ntfs_get_ea (fs/ntfs3/xattr.c:302)
- Read of size 65535 at addr ffff888100794550 by task exploit
-  __asan_memcpy (mm/kasan/shadow.c:105)
-  ntfs_get_ea (fs/ntfs3/xattr.c:302)
-  ntfs_getxattr (fs/ntfs3/xattr.c:848)
-  __vfs_getxattr (fs/xattr.c:441)
-  vfs_getxattr (fs/xattr.c:474)
-  do_getxattr (fs/xattr.c:800)
-  path_getxattrat (fs/xattr.c:868)
-  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+  tps65185 0-0068: error -ENXIO: failed to enable temp irq
 
- The buggy address is located 80 bytes inside of
-  allocated 84-byte region in cache kmalloc-96
+-ENXIO here is rk3x_i2c reporting REG_INT_NAKRCV. Probe failed, so
+vposneg never registered and its consumer deferred indefinitely.
 
-Compute the size the record needs and require ef->size to cover it.
+Wait after the supply rather than at the gpiod_get(). Figure 2 times
+that 1.8 ms from a WAKEUP edge with VIN already up, whereas this driver
+asserts WAKEUP before enabling vin-supply; the data sheet does not
+describe that order, so on a board whose vin-supply is a switched
+regulator that was off, a wait placed at the gpiod_get() could elapse
+before the part had power. Waiting from whichever of the two comes last
+satisfies the specified case and is the conservative choice in the
+other.
 
-Fixes: 0e8235d28f3a ("fs/ntfs3: Check fields while reading")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+It also goes above the interrupt request rather than immediately before
+the INT_EN2 write, because that write is not necessarily the first
+transfer: tps65185_irq_thread() reads INT1 and INT2, and it is
+requested with IRQF_TRIGGER_LOW, so it can run as soon as the handler
+is installed.
+
+Tested on an ONYX BOOX C67ML (RK3026): the chip now probes, all three
+regulators register and the EPD controller comes up.
+
+Fixes: b0fc1e770194 ("regulator: Add TPS65185 driver")
+Signed-off-by: Mario Rugiero <mrugiero@gmail.com>
+Link: https://patch.msgid.link/20260815232229.68474-1-mrugiero@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/xattr.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ drivers/regulator/tps65185.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
-index 04814dd293752..6697362e655bf 100644
---- a/fs/ntfs3/xattr.c
-+++ b/fs/ntfs3/xattr.c
-@@ -146,26 +146,29 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,
- 	for (off = 0; off < size; off += ea_size) {
- 		const struct EA_FULL *ef = Add2Ptr(ea_p, off);
- 		u32 bytes = size - off;
-+		size_t need;
+diff --git a/drivers/regulator/tps65185.c b/drivers/regulator/tps65185.c
+index 1f13e4156cab1..6a3130177e7a3 100644
+--- a/drivers/regulator/tps65185.c
++++ b/drivers/regulator/tps65185.c
+@@ -5,6 +5,7 @@
  
- 		/* Check if we can use field ea->size. */
- 		if (bytes < sizeof(ef->size))
- 			goto out1;
+ #include <linux/cleanup.h>
+ #include <linux/completion.h>
++#include <linux/delay.h>
+ #include <linux/gpio/consumer.h>
+ #include <linux/i2c.h>
+ #include <linux/module.h>
+@@ -375,6 +376,11 @@ static int tps65185_probe(struct i2c_client *client)
+ 		return dev_err_probe(&client->dev, ret,
+ 				     "failed to get vin regulator\n");
  
-+		/* Check if we can use fields ef->name_len and ef->elength. */
-+		if (bytes < offsetof(struct EA_FULL, name))
-+			goto out1;
++	// TPS65185x PMIC for E Ink Vizplex Enabled Electronic Paper Display Chapter 7.6 Figure 2:
++	// "Minimum delay time between WAKEUP rising edge and IC ready to accept I2C transaction."
++	// https://www.ti.com/lit/ds/symlink/tps65185.pdf
++	usleep_range(1800, 3000);
 +
-+		/* Size needed to hold this record's name and value. */
-+		need = struct_size(ef, name,
-+				   1 + ef->name_len + le16_to_cpu(ef->elength));
-+
- 		if (ef->size) {
- 			ea_size = le32_to_cpu(ef->size);
--			if (ea_size > bytes)
-+			/* ef->size must fit the list and cover the record. */
-+			if (ea_size > bytes || ea_size < need)
- 				goto out1;
- 			continue;
- 		}
+ 	data->dev = &client->dev;
+ 	i2c_set_clientdata(client, data);
  
--		/* Check if we can use fields ef->name_len and ef->elength. */
--		if (bytes < offsetof(struct EA_FULL, name))
--			goto out1;
--
--		ea_size = ALIGN(struct_size(ef, name,
--					    1 + ef->name_len +
--						    le16_to_cpu(ef->elength)),
--				4);
-+		ea_size = ALIGN(need, 4);
- 		if (ea_size > bytes)
- 			goto out1;
- 	}
 -- 
 2.53.0
 
