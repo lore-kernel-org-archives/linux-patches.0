@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302C43FE35A;
-	Sat, 12 Sep 2026 08:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CF33FF8B0;
+	Sat, 12 Sep 2026 08:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202061; cv=none; b=k3KZvnDwmpbBGyonsCZW0GUQP/qwSUxmpEFZsKL3ifULttWgfPMGg9QCREGbnlW+UiMBywvNd24erFGhdFeQdTCwcAhwX9LR5OJf3GQvFyKOx3xDX9kPOtyTvanigX/6RGDYw9xoZYkccVHBn6c+fJ92mXQ79PfxM+N+Gm/t0Mo=
+	t=1789202066; cv=none; b=nHYUKUe8oVKspGLVFE6bz12mC0+drGXOAhD5OVExTstD971qdIO4PrJdE967w0hbLRAYrcoag0gTibfK4j39BMzVBh+Cpzp4CpU0A8+vXqYisY7MJVEbN4i902Wdd7t1zXEjU0R3W5N6WM6opVX7sKesTA235STPl2G3q0DQPbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202061; c=relaxed/simple;
-	bh=dIlKk5RkGwEGgwC/V9kJeOvrbhrKNpXzDkbKK+o5rXY=;
+	s=arc-20240116; t=1789202066; c=relaxed/simple;
+	bh=5JeekWy+DqdR3gO8dZM9UY4NoXfCUdaG/xAHdIu4kSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fYLP1Dy/MD84l0v1Ggi6Vn9V2/JPaTpaTJXzJajtvOS1OtXzNhHwCt02ySW9EBcQ4aaw3CaPmEjK91MJQHsOIBWk6UN+1zUzSGv2/7+8gMCqTSmAHaXhpj0oGVTO1P+p4OafT1L0iBWQ7V57pFzubCaNGcHtMAFgwGLC8/f8B4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w56wVa9F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KLFJw1nbKucVg5fm1jhaASaM8WEugSgUT/LvwM9KAB1neSZ8SvJ3Um2cKaGTmP9WEXw1VNXKOWETQCo0cPxWonqgXWNjSSCfy8F9vUbQy4efmYDhOtfyk3qClWJJIZP5j5GaBujBmgTHqfeyp054ZKzgE8Rjv1EwzQMK2SZZ5yU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksZbVSgU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w56wVa9F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E3C1F000FF;
-	Sat, 12 Sep 2026 08:34:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksZbVSgU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8631F00893;
+	Sat, 12 Sep 2026 08:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202056;
-	bh=D72zLi+dt877wk+6cjRlaAB6zhRNrroichEBqXtxzDA=;
+	s=korg; t=1789202060;
+	bh=cFR7bOqZeMmkxgDALB+J8sYk/5jgs/lVmfw5bEv0Zw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w56wVa9Fx6YnEB/LXMYRXcYLGgyUbdPh7BYru34CoiM4OJfftnfRZzho8E9FJvXDt
-	 mC5N1hG0AR+scav1maARiAAM49ILbFsRs07+6CLMpQWgCmpwPVy+opE/QAmIV5ggL6
-	 /djkKXmEyP7tryAHRBS4kmeFRWHADAVDeKLF27ug=
+	b=ksZbVSgUONxCqAcqg2aPhlMaZXCykNCqGcp2DtiOJkM9EviCpOkB9v4qt3Sri7XNW
+	 TtNPjfIUJNmAaCvYOCLkObBlYWi5gU+s6xxtgb6hIc6kB5ACGdKN0ME4V7ERT5jOpO
+	 DLgKvVEB3Z+I8NEBoFh3PQx/4Cv6LZzw5v8G4NEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1097/1815] thermal: hwmon: Remove hwmon class device along with its parent
-Date: Sat, 12 Sep 2026 08:47:27 +0200
-Message-ID: <20260912065714.771960747@linuxfoundation.org>
+Subject: [PATCH 7.2 1124/1815] perf c2c: Clean up registered formats on c2c_hists__init() and c2c_hists__reinit() failure
+Date: Sat, 12 Sep 2026 08:47:54 +0200
+Message-ID: <20260912065715.406546121@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,217 +54,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 2b57e24d34b2dfc43c81942bb359d6315bf302fb ]
+[ Upstream commit 6d421f609bba7b0b1a11741ec4b19feadfd27051 ]
 
-The current code creates one hwmon device per thermal zone type and that
-device is registered under the first thermal zone of the given type.
+When c2c_hists__init() or c2c_hists__reinit() calls hpp_list__parse()
+and it fails partway through, format structures registered via
+perf_hpp_list__column_register() and perf_hpp_list__register_sort_field()
+are left on the hpp_list.
 
-That turns out to be problematic when the thermal zone holding the
-hwmon device is removed.
+In c2c_hists__init(), only one of the callers, c2c_he__alloc_hists(),
+handled this with perf_hpp__reset_output_field(), while perf_c2c_report()
+did not, leaking the partially registered entries.
 
-For example, say that there are two ACPI thermal zones on a system
+In c2c_hists__reinit(), neither perf_c2c_report() nor resort_cl_cb()
+clean up on failure.
 
- /sys/devices/virtual/thermal/thermal_zone0/
- /sys/devices/virtual/thermal/thermal_zone1/
+Fix by adding cleanup inside both functions themselves, so all callers
+are protected, and remove the now redundant reset in c2c_he__alloc_hists().
 
-The current code registers a hwmon class device for thermal_zone0 only:
-
- /sys/devices/virtual/thermal/thermal_zone0/hwmon0/
-
-because the type is "acpitz" for both of them, but it adds a sysfs
-attribute that belongs to thermal_zone1 under it:
-
- /sys/devices/virtual/thermal/thermal_zone0/hwmon0/temp2_input
-
-There is also
-
- /sys/devices/virtual/thermal/thermal_zone0/hwmon0/temp1_input
-
-which belongs to thermal_zone0.
-
-When thermal_zone0 is removed, say because the ACPI thermal driver is
-unbound from the underlying platform device, thermal_remove_hwmon_sysfs()
-skips the removal of hwmon0 because of the temp2_input attribute
-belonging to thermal_zone1 which effectively prevents thermal_zone0
-removal from making progress.
-
-Address this by making thermal_remove_hwmon_sysfs() remove the entire
-hwmon class device interface for the given thermal zone type when the
-thermal zone device holding it is removed.
-
-To prevent races with thermal_add_hwmon_sysfs() that may interfere
-with this, carry out the entire addition and removal of hwmon sysfs
-interfaces for thermal zones under thermal_hwmon_list_lock.
-
-Also adjust the layout of the labels in thermal_add_hwmon_sysfs() to
-the current kernel coding style to align with the new "unlock" label.
-
-Link: https://lore.kernel.org/linux-pm/20260402021828.16556-1-liujia6264@gmail.com/
-Fixes: f6b6b52ef7a5 ("thermal_hwmon: Pass the originating device down to hwmon_device_register_with_info")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Link: https://patch.msgid.link/5094738.GXAFRqVoOG@rafael.j.wysocki
+Fixes: 78b275437873 ("perf c2c report: Add sample processing")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Assisted-by: Claude:claude-opus-4.6
+Assisted-by: Opencode:mimo-v2.5-free
+Assisted-by: Opencode:DeepSeek-V4-Flash-free
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_hwmon.c | 87 +++++++++++++--------------------
- 1 file changed, 34 insertions(+), 53 deletions(-)
+ tools/perf/builtin-c2c.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/thermal/thermal_hwmon.c b/drivers/thermal/thermal_hwmon.c
-index ec73d03a1e60a..45ce21914df86 100644
---- a/drivers/thermal/thermal_hwmon.c
-+++ b/drivers/thermal/thermal_hwmon.c
-@@ -95,34 +95,12 @@ thermal_hwmon_lookup_by_type(const struct thermal_zone_device *tz)
- 	struct thermal_hwmon_device *hwmon;
- 	char type[THERMAL_NAME_LENGTH];
+diff --git a/tools/perf/builtin-c2c.c b/tools/perf/builtin-c2c.c
+index 160b82694d391..bc16a57e09274 100644
+--- a/tools/perf/builtin-c2c.c
++++ b/tools/perf/builtin-c2c.c
+@@ -229,7 +229,6 @@ he__get_c2c_hists(struct hist_entry *he,
  
--	mutex_lock(&thermal_hwmon_list_lock);
- 	list_for_each_entry(hwmon, &thermal_hwmon_list, node) {
- 		strscpy(type, tz->type);
- 		strreplace(type, '-', '_');
--		if (!strcmp(hwmon->type, type)) {
--			mutex_unlock(&thermal_hwmon_list_lock);
-+		if (!strcmp(hwmon->type, type))
- 			return hwmon;
--		}
- 	}
--	mutex_unlock(&thermal_hwmon_list_lock);
--
--	return NULL;
--}
--
--/* Find the temperature input matching a given thermal zone */
--static struct thermal_hwmon_temp *
--thermal_hwmon_lookup_temp(const struct thermal_hwmon_device *hwmon,
--			  const struct thermal_zone_device *tz)
--{
--	struct thermal_hwmon_temp *temp;
--
--	mutex_lock(&thermal_hwmon_list_lock);
--	list_for_each_entry(temp, &hwmon->tz_list, hwmon_node)
--		if (temp->tz == tz) {
--			mutex_unlock(&thermal_hwmon_list_lock);
--			return temp;
--		}
--	mutex_unlock(&thermal_hwmon_list_lock);
- 
- 	return NULL;
- }
-@@ -138,7 +116,9 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 	struct thermal_hwmon_device *hwmon;
- 	struct thermal_hwmon_temp *temp;
- 	int new_hwmon_device = 1;
--	int result;
-+	int result = 0;
-+
-+	mutex_lock(&thermal_hwmon_list_lock);
- 
- 	hwmon = thermal_hwmon_lookup_by_type(tz);
- 	if (hwmon) {
-@@ -147,8 +127,10 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 	}
- 
- 	hwmon = kzalloc_obj(*hwmon);
--	if (!hwmon)
--		return -ENOMEM;
-+	if (!hwmon) {
-+		result = -ENOMEM;
-+		goto unlock;
-+	}
- 
- 	INIT_LIST_HEAD(&hwmon->tz_list);
- 	strscpy(hwmon->type, tz->type, THERMAL_NAME_LENGTH);
-@@ -196,24 +178,24 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 		temp->temp_crit_present = true;
- 	}
- 
--	mutex_lock(&thermal_hwmon_list_lock);
- 	if (new_hwmon_device)
- 		list_add_tail(&hwmon->node, &thermal_hwmon_list);
- 	list_add_tail(&temp->hwmon_node, &hwmon->tz_list);
--	mutex_unlock(&thermal_hwmon_list_lock);
- 
--	return 0;
-+	goto unlock;
- 
-- unregister_input:
-+unregister_input:
- 	device_remove_file(hwmon->device, &temp->temp_input.attr);
-- free_temp_mem:
-+free_temp_mem:
- 	kfree(temp);
-- unregister_name:
-+unregister_name:
- 	if (new_hwmon_device)
- 		hwmon_device_unregister(hwmon->device);
-- free_mem:
-+free_mem:
- 	if (new_hwmon_device)
- 		kfree(hwmon);
-+unlock:
-+	mutex_unlock(&thermal_hwmon_list_lock);
- 
- 	return result;
- }
-@@ -221,8 +203,11 @@ EXPORT_SYMBOL_GPL(thermal_add_hwmon_sysfs);
- 
- void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz)
+ 	ret = c2c_hists__init(hists, sort, nr_header_lines, env);
+ 	if (ret) {
+-		perf_hpp__reset_output_field(&hists->list);
+ 		c2c_he->hists = NULL;
+ 		free(hists);
+ 		return NULL;
+@@ -2147,6 +2146,8 @@ static int c2c_hists__init(struct c2c_hists *hists,
+ 			   int nr_header_lines,
+ 			   struct perf_env *env)
  {
-+	struct thermal_hwmon_temp *temp, *entry;
- 	struct thermal_hwmon_device *hwmon;
--	struct thermal_hwmon_temp *temp;
-+	bool unregister;
++	int ret;
 +
-+	guard(mutex)(&thermal_hwmon_list_lock);
+ 	__hists__init(&hists->hists, &hists->list);
  
- 	hwmon = thermal_hwmon_lookup_by_type(tz);
- 	if (unlikely(!hwmon)) {
-@@ -231,29 +216,25 @@ void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz)
- 		return;
- 	}
+ 	/*
+@@ -2159,7 +2160,13 @@ static int c2c_hists__init(struct c2c_hists *hists,
+ 	/* Overload number of header lines.*/
+ 	hists->list.nr_header_lines = nr_header_lines;
  
--	temp = thermal_hwmon_lookup_temp(hwmon, tz);
--	if (unlikely(!temp)) {
--		/* Should never happen... */
--		dev_dbg(&tz->device, "temperature input lookup failed!\n");
--		return;
--	}
-+	unregister = hwmon->device->parent == &tz->device;
- 
--	device_remove_file(hwmon->device, &temp->temp_input.attr);
--	if (temp->temp_crit_present)
--		device_remove_file(hwmon->device, &temp->temp_crit.attr);
-+	list_for_each_entry_safe_reverse(temp, entry, &hwmon->tz_list, hwmon_node) {
-+		if (!unregister && temp->tz != tz)
-+			continue;
- 
--	mutex_lock(&thermal_hwmon_list_lock);
--	list_del(&temp->hwmon_node);
--	kfree(temp);
--	if (!list_empty(&hwmon->tz_list)) {
--		mutex_unlock(&thermal_hwmon_list_lock);
--		return;
-+		device_remove_file(hwmon->device, &temp->temp_input.attr);
-+		if (temp->temp_crit_present)
-+			device_remove_file(hwmon->device, &temp->temp_crit.attr);
+-	return hpp_list__parse(&hists->list, /*output=*/NULL, sort, env);
++	ret = hpp_list__parse(&hists->list, /*output=*/NULL, sort, env);
 +
-+		list_del(&temp->hwmon_node);
-+		kfree(temp);
- 	}
--	list_del(&hwmon->node);
--	mutex_unlock(&thermal_hwmon_list_lock);
- 
--	hwmon_device_unregister(hwmon->device);
--	kfree(hwmon);
-+	if (unregister) {
-+		list_del(&hwmon->node);
-+		hwmon_device_unregister(hwmon->device);
-+		kfree(hwmon);
-+	}
++	/* Unregister any formats added before the failure point */
++	if (ret)
++		perf_hpp__reset_output_field(&hists->list);
++
++	return ret;
  }
- EXPORT_SYMBOL_GPL(thermal_remove_hwmon_sysfs);
  
+ static int c2c_hists__reinit(struct c2c_hists *c2c_hists,
+@@ -2167,8 +2174,16 @@ static int c2c_hists__reinit(struct c2c_hists *c2c_hists,
+ 			     const char *sort,
+ 			     struct perf_env *env)
+ {
++	int ret;
++
+ 	perf_hpp__reset_output_field(&c2c_hists->list);
+-	return hpp_list__parse(&c2c_hists->list, output, sort, env);
++	ret = hpp_list__parse(&c2c_hists->list, output, sort, env);
++
++	/* Unregister any formats added before the failure point */
++	if (ret)
++		perf_hpp__reset_output_field(&c2c_hists->list);
++
++	return ret;
+ }
+ 
+ #define DISPLAY_LINE_LIMIT  0.001
 -- 
 2.53.0
 
