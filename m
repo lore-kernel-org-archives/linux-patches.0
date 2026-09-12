@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F983AEF51;
-	Sat, 12 Sep 2026 12:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1A547ACE4;
+	Sat, 12 Sep 2026 12:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215225; cv=none; b=aXiLJxf4Ep993+WCBhho4emLy/qzZKVgz+k8jZw+JxSuY028exUJPX1sJ9HPBwHsGOWlEGE3tItaq1xBW+5jHa77SpDCqquFZ2imArvnWNOGxEQzDxzw7ZKOvOVRKdSjZP0TfdcikIZzv2mAab14+XnNBvWweBbjlfvO0ygxmsg=
+	t=1789215228; cv=none; b=Z+zUvW4FWeSp/HouF7rEC0cOxHYU4/z5Qea0MTGrRwGiVT9ZvnTYgzDJcnfUUyI4at6CH7O3m9fLIKnIbMf3MycA1RwrxioK6WSl6cR90O25X1kEVT5VfaN7DUqGhc5cUsDTCNx0S97hzG64TsRKY5QxZ5xaVQjR87sxTFssEFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215225; c=relaxed/simple;
-	bh=l4GmOOrpheDtfjS/h04DjlXk0+NVMhj1hqOLl1G/hHQ=;
+	s=arc-20240116; t=1789215228; c=relaxed/simple;
+	bh=8W9aowCK9sb93e0L+whKwrEK6Y5wXAlD+Hu6IdE2i1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k+BH0s5mlRWdZPf+FSk0y4ysZ+vu9VBWKnwDGfJdh1lC/da61OdSP7t3HhWnXot9M00aKJnGmB5JTfrO98fgrYL4k2TeNX6ihm4Qz6UhCVVTZIfQO17XLpzrYRXt2LOPQmxNbkwCFtcaZ1oE7fSDANphNKNVbjvgvdZqvqI29gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=odGs7+FW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=evhHG/NIQlj5db0ZO8H03FK/KpVR6CWX7rWDIpRpMQUq7ZdiSrgEWIB8b+shP9atJ4w1JpifWa/yfA0q+wKgyvQ/AwbvEWmE/5q0TdDo9A7yGdJhdcQi2Ak32gifjfmxMqQcQU0YRBMG9djn6SnIIl93++zBqS/K/Y/soCx0sAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/EskN/6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odGs7+FW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EBDF1F000FF;
-	Sat, 12 Sep 2026 12:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/EskN/6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD6B1F00893;
+	Sat, 12 Sep 2026 12:13:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215221;
-	bh=ej0HNcRyZnBxdtJm7duudU694fNoYHMOvrJE/xj3/mw=;
+	s=korg; t=1789215226;
+	bh=oTmz3var/SOeoXsnstA/NKMpKiPZbhBLvRwvw1MPkXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=odGs7+FWMWC55xg5a7jXjgmKT2+80uNEpfOfhfwO5SEPycBgKslv6bvtrvyPmCRhb
-	 OWKCVuZiqy31kBBkuvDHuGKO3dBdJ9n/B1urj10Uc16G2dirySGHxO5YncaVqgGqVI
-	 1SKkQoraRDM3+PtNfzVUMtQAZZhmiD7px5Z/gejo=
+	b=U/EskN/6f+Kkw78hK/ifx0GcNpNwvzV1+hEaqQvuBNs/VmvYUdAT/dN0q1nGXyNUs
+	 5fMsYLsUNvOTgmtNIxv7jfuEKvwButT0R2cBdH4AX9Pn3F7OVDSfvK8TbHkAWytLY5
+	 iH6o25mKL0MNCwKCmCrvBUYJvI1mYr3cMPfKMPXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Johan Hovold <johan@kernel.org>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Rob Herring <robh@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Grant Grundler <grundler@chromium.org>,
+	Oliver Neukum <oneukum@suse.com>,
+	Yajun Deng <yajun.deng@linux.dev>,
+	Douglas Anderson <dianders@chromium.org>,
+	linux-usb@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0487/1376] usb: gadget: aspeed_udc: check endpoint DMA allocation
-Date: Sat, 12 Sep 2026 08:48:33 +0200
-Message-ID: <20260912065618.391793932@linuxfoundation.org>
+Subject: [PATCH 6.12 0488/1376] USB: make single lock for all usb dynamic id lists
+Date: Sat, 12 Sep 2026 08:48:34 +0200
+Message-ID: <20260912065618.414639873@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,143 +58,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 97cee53a94be3bd4fd8fbed6071bd2f32dad1ab1 ]
+[ Upstream commit 0b3144da31f855fce652303f588416a60991bdef ]
 
-ast_udc_probe() allocates a coherent DMA buffer used as the backing store
-for endpoint buffers. ast_udc_init_ep() derives per-endpoint buffer
-pointers from udc->ep0_buf, so a failed allocation is dereferenced during
-probe.
+There are a number of places where we accidentally pass in a constant
+structure to later cast it off to a dynamic one, and then attempt to
+grab a lock on it, which is not a good idea.  To help resolve this, move
+the dynamic id lock out of the dynamic id structure for the driver and
+into one single lock for all USB dynamic ids.  As this lock should never
+have any real contention (it's only every accessed when a device is
+added or removed, which is always serialized) there should not be any
+difference except for some memory savings.
 
-Check the allocation before endpoint setup. The existing probe error path
-called ast_udc_remove(), which unregisters the gadget unconditionally and
-is not safe before usb_add_gadget_udc() succeeds. Add a local cleanup
-helper for probe failures so pre-registration failures only unwind the
-resources that were actually initialized.
+Note, this just converts the existing use of the dynamic id lock to the
+new static lock, there is one place that is accessing the dynamic id
+list without grabbing the lock, that will be fixed up in a follow-on
+change.
 
-This was found by a local static analysis checker for unchecked allocator
-returns while scanning Linux 6.16. The change was checked by applying it
-to current mainline and by running checkpatch. I do not have access to
-Aspeed UDC hardware, so no runtime testing was performed.
-
-Fixes: 055276c13205 ("usb: gadget: add Aspeed ast2600 udc driver")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Link: https://patch.msgid.link/20260610121022.3-1-ruoyuw560@gmail.com
+Cc: Johan Hovold <johan@kernel.org>
+Cc: Herve Codina <herve.codina@bootlin.com>
+Cc: Rob Herring <robh@kernel.org>
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Cc: Grant Grundler <grundler@chromium.org>
+Cc: Oliver Neukum <oneukum@suse.com>
+Cc: Yajun Deng <yajun.deng@linux.dev>
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: linux-usb@vger.kernel.org
+Link: https://lore.kernel.org/r/2024111322-kindly-finalist-d247@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: ef8154d8b52d ("usb: fix UAF when probe runs concurrent to dyn ID removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/aspeed_udc.c | 50 ++++++++++++++++++-----------
- 1 file changed, 32 insertions(+), 18 deletions(-)
+ drivers/usb/common/common.c     |  3 +++
+ drivers/usb/core/driver.c       | 15 +++++----------
+ drivers/usb/serial/bus.c        |  4 +---
+ drivers/usb/serial/usb-serial.c |  4 +---
+ include/linux/usb.h             |  2 +-
+ 5 files changed, 11 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/aspeed_udc.c b/drivers/usb/gadget/udc/aspeed_udc.c
-index f4781e611aaa2..efcceb886bb40 100644
---- a/drivers/usb/gadget/udc/aspeed_udc.c
-+++ b/drivers/usb/gadget/udc/aspeed_udc.c
-@@ -1434,25 +1434,12 @@ static void ast_udc_init_hw(struct ast_udc_dev *udc)
- 	ast_udc_write(udc, 0, AST_UDC_EP0_CTRL);
- }
+diff --git a/drivers/usb/common/common.c b/drivers/usb/common/common.c
+index b7bea1015d7c1..871cf199b6bf1 100644
+--- a/drivers/usb/common/common.c
++++ b/drivers/usb/common/common.c
+@@ -415,6 +415,9 @@ EXPORT_SYMBOL_GPL(usb_of_get_companion_dev);
+ struct dentry *usb_debug_root;
+ EXPORT_SYMBOL_GPL(usb_debug_root);
  
--static void ast_udc_remove(struct platform_device *pdev)
-+static void ast_udc_cleanup(struct platform_device *pdev)
++DEFINE_MUTEX(usb_dynids_lock);
++EXPORT_SYMBOL_GPL(usb_dynids_lock);
++
+ static int __init usb_common_init(void)
  {
- 	struct ast_udc_dev *udc = platform_get_drvdata(pdev);
- 	unsigned long flags;
- 	u32 ctrl;
+ 	usb_debug_root = debugfs_create_dir("usb", NULL);
+diff --git a/drivers/usb/core/driver.c b/drivers/usb/core/driver.c
+index 0c3f12daac79e..bc3c00580238d 100644
+--- a/drivers/usb/core/driver.c
++++ b/drivers/usb/core/driver.c
+@@ -95,9 +95,9 @@ ssize_t usb_store_new_id(struct usb_dynids *dynids,
+ 		}
+ 	}
  
--	usb_del_gadget_udc(&udc->gadget);
--	if (udc->driver) {
--		/*
--		 * This is broken as only some cleanup is skipped, *udev is
--		 * freed and the register mapping goes away. Any further usage
--		 * probably crashes. Also the device is unbound, so the skipped
--		 * cleanup is never catched up later.
--		 */
--		dev_alert(&pdev->dev,
--			  "Driver is busy and still going away. Fasten your seat belts!\n");
--		return;
--	}
--
- 	spin_lock_irqsave(&udc->lock, flags);
+-	spin_lock(&dynids->lock);
++	mutex_lock(&usb_dynids_lock);
+ 	list_add_tail(&dynid->node, &dynids->list);
+-	spin_unlock(&dynids->lock);
++	mutex_unlock(&usb_dynids_lock);
  
- 	/* Disable upstream port connection */
-@@ -1472,6 +1459,26 @@ static void ast_udc_remove(struct platform_device *pdev)
- 	udc->ep0_buf = NULL;
+ 	retval = driver_attach(driver);
+ 
+@@ -160,7 +160,7 @@ static ssize_t remove_id_store(struct device_driver *driver, const char *buf,
+ 	if (fields < 2)
+ 		return -EINVAL;
+ 
+-	spin_lock(&usb_driver->dynids.lock);
++	guard(mutex)(&usb_dynids_lock);
+ 	list_for_each_entry_safe(dynid, n, &usb_driver->dynids.list, node) {
+ 		struct usb_device_id *id = &dynid->id;
+ 
+@@ -171,7 +171,6 @@ static ssize_t remove_id_store(struct device_driver *driver, const char *buf,
+ 			break;
+ 		}
+ 	}
+-	spin_unlock(&usb_driver->dynids.lock);
+ 	return count;
  }
  
-+static void ast_udc_remove(struct platform_device *pdev)
-+{
-+	struct ast_udc_dev *udc = platform_get_drvdata(pdev);
-+
-+	usb_del_gadget_udc(&udc->gadget);
-+	if (udc->driver) {
-+		/*
-+		 * This is broken as only some cleanup is skipped, *udev is
-+		 * freed and the register mapping goes away. Any further usage
-+		 * probably crashes. Also the device is unbound, so the skipped
-+		 * cleanup is never catched up later.
-+		 */
-+		dev_alert(&pdev->dev,
-+			  "Driver is busy and still going away. Fasten your seat belts!\n");
-+		return;
-+	}
-+
-+	ast_udc_cleanup(pdev);
-+}
-+
- static int ast_udc_probe(struct platform_device *pdev)
+@@ -220,12 +219,11 @@ static void usb_free_dynids(struct usb_driver *usb_drv)
  {
- 	enum usb_device_speed max_speed;
-@@ -1524,6 +1531,12 @@ static int ast_udc_probe(struct platform_device *pdev)
- 					  AST_UDC_NUM_ENDPOINTS,
- 					  &udc->ep0_buf_dma, GFP_KERNEL);
+ 	struct usb_dynid *dynid, *n;
  
-+	if (!udc->ep0_buf) {
-+		clk_disable_unprepare(udc->clk);
-+		rc = -ENOMEM;
-+		goto err;
-+	}
-+
- 	udc->gadget.speed = USB_SPEED_UNKNOWN;
- 	udc->gadget.max_speed = USB_SPEED_HIGH;
- 	udc->creq = udc->reg + AST_UDC_SETUP0;
-@@ -1553,20 +1566,20 @@ static int ast_udc_probe(struct platform_device *pdev)
- 	udc->irq = platform_get_irq(pdev, 0);
- 	if (udc->irq < 0) {
- 		rc = udc->irq;
--		goto err;
-+		goto err_cleanup;
+-	spin_lock(&usb_drv->dynids.lock);
++	guard(mutex)(&usb_dynids_lock);
+ 	list_for_each_entry_safe(dynid, n, &usb_drv->dynids.list, node) {
+ 		list_del(&dynid->node);
+ 		kfree(dynid);
  	}
- 
- 	rc = devm_request_irq(&pdev->dev, udc->irq, ast_udc_isr, 0,
- 			      KBUILD_MODNAME, udc);
- 	if (rc) {
- 		dev_err(&pdev->dev, "Failed to request interrupt\n");
--		goto err;
-+		goto err_cleanup;
- 	}
- 
- 	rc = usb_add_gadget_udc(&pdev->dev, &udc->gadget);
- 	if (rc) {
- 		dev_err(&pdev->dev, "Failed to add gadget udc\n");
--		goto err;
-+		goto err_cleanup;
- 	}
- 
- 	dev_info(&pdev->dev, "Initialized udc in USB%s mode\n",
-@@ -1574,9 +1587,10 @@ static int ast_udc_probe(struct platform_device *pdev)
- 
- 	return 0;
- 
-+err_cleanup:
-+	ast_udc_cleanup(pdev);
- err:
- 	dev_err(&pdev->dev, "Failed to udc probe, rc:0x%x\n", rc);
--	ast_udc_remove(pdev);
- 
- 	return rc;
+-	spin_unlock(&usb_drv->dynids.lock);
  }
+ 
+ static const struct usb_device_id *usb_match_dynamic_id(struct usb_interface *intf,
+@@ -233,14 +231,12 @@ static const struct usb_device_id *usb_match_dynamic_id(struct usb_interface *in
+ {
+ 	struct usb_dynid *dynid;
+ 
+-	spin_lock(&drv->dynids.lock);
++	guard(mutex)(&usb_dynids_lock);
+ 	list_for_each_entry(dynid, &drv->dynids.list, node) {
+ 		if (usb_match_one_id(intf, &dynid->id)) {
+-			spin_unlock(&drv->dynids.lock);
+ 			return &dynid->id;
+ 		}
+ 	}
+-	spin_unlock(&drv->dynids.lock);
+ 	return NULL;
+ }
+ 
+@@ -1076,7 +1072,6 @@ int usb_register_driver(struct usb_driver *new_driver, struct module *owner,
+ 	new_driver->driver.owner = owner;
+ 	new_driver->driver.mod_name = mod_name;
+ 	new_driver->driver.dev_groups = new_driver->dev_groups;
+-	spin_lock_init(&new_driver->dynids.lock);
+ 	INIT_LIST_HEAD(&new_driver->dynids.list);
+ 
+ 	retval = driver_register(&new_driver->driver);
+diff --git a/drivers/usb/serial/bus.c b/drivers/usb/serial/bus.c
+index d200e2c29a8ff..2fea1b1db4a26 100644
+--- a/drivers/usb/serial/bus.c
++++ b/drivers/usb/serial/bus.c
+@@ -136,12 +136,11 @@ static void free_dynids(struct usb_serial_driver *drv)
+ {
+ 	struct usb_dynid *dynid, *n;
+ 
+-	spin_lock(&drv->dynids.lock);
++	guard(mutex)(&usb_dynids_lock);
+ 	list_for_each_entry_safe(dynid, n, &drv->dynids.list, node) {
+ 		list_del(&dynid->node);
+ 		kfree(dynid);
+ 	}
+-	spin_unlock(&drv->dynids.lock);
+ }
+ 
+ const struct bus_type usb_serial_bus_type = {
+@@ -157,7 +156,6 @@ int usb_serial_bus_register(struct usb_serial_driver *driver)
+ 	int retval;
+ 
+ 	driver->driver.bus = &usb_serial_bus_type;
+-	spin_lock_init(&driver->dynids.lock);
+ 	INIT_LIST_HEAD(&driver->dynids.list);
+ 
+ 	retval = driver_register(&driver->driver);
+diff --git a/drivers/usb/serial/usb-serial.c b/drivers/usb/serial/usb-serial.c
+index 2ee0b64b8be0a..c78ff40b1e5f8 100644
+--- a/drivers/usb/serial/usb-serial.c
++++ b/drivers/usb/serial/usb-serial.c
+@@ -706,14 +706,12 @@ static const struct usb_device_id *match_dynamic_id(struct usb_interface *intf,
+ {
+ 	struct usb_dynid *dynid;
+ 
+-	spin_lock(&drv->dynids.lock);
++	guard(mutex)(&usb_dynids_lock);
+ 	list_for_each_entry(dynid, &drv->dynids.list, node) {
+ 		if (usb_match_one_id(intf, &dynid->id)) {
+-			spin_unlock(&drv->dynids.lock);
+ 			return &dynid->id;
+ 		}
+ 	}
+-	spin_unlock(&drv->dynids.lock);
+ 	return NULL;
+ }
+ 
+diff --git a/include/linux/usb.h b/include/linux/usb.h
+index 049b012638bea..06eb0a62895d3 100644
+--- a/include/linux/usb.h
++++ b/include/linux/usb.h
+@@ -1132,8 +1132,8 @@ static inline int usb_make_path(struct usb_device *dev, char *buf, size_t size)
+ /* ----------------------------------------------------------------------- */
+ 
+ /* Stuff for dynamic usb ids */
++extern struct mutex usb_dynids_lock;
+ struct usb_dynids {
+-	spinlock_t lock;
+ 	struct list_head list;
+ };
+ 
 -- 
 2.53.0
 
