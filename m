@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E880F221F26;
-	Sat, 12 Sep 2026 11:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A923A0B36;
+	Sat, 12 Sep 2026 11:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210977; cv=none; b=AjDMwAl0/P8sNONEHu/t97rLEyvPK8ahbNbfS7Se9QYna2NgdeMuVVbce7xqn5JRcxv52yWqfpp0Q/5o6cSfXD5tl9dxT+vqGDplaS26xKYaWKDX/5geXusrCU9Eapov2q4rQ4eQW/TN17AdHINjoMfcZNqgZUIlhq+3eywHOnA=
+	t=1789210981; cv=none; b=uW2aBR9xHgJkucHXV6wnRZblV7NqlRwkcsv7tONEqB6rc9TiehAKnnQL/36i5DEi286F0KvBfvJJxrTMXfPOWyjMXYoNXl4J/hn21secy8YnqbZTr9arkpmA/hlJuqy1GlNvusESiRJUvAT1abSsFRmTKbZHu/HzZBcmLRM5rM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210977; c=relaxed/simple;
-	bh=IRg3h3kbnHpTD+WoSjUzj9BQ5QMEHSn3LC9YYcK/NEw=;
+	s=arc-20240116; t=1789210981; c=relaxed/simple;
+	bh=QqS8I8h3hE2FeCOzUuh3Ui4Ss/daGe5zyqMe6z7Fgvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mtDBrU8nLPGFO+6vRdMxgpknYT8RfVeo1kVN7merC2+dsqSWz4Q8r+Y7L/dP80yYlLIQP3B3I8sEIJtN3cAmkkHV0FT4wlpf0HIhnPOJpbHHZxk98At2100VLMp9QMKMgyHWH8HZVNqd1Z3y4BVjAigmGDT/sp4pnK8X+bUh2C4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBDaQrEF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IxaAyfaOwBEqCDHxUoTGeHFKrzvEJ8gOmwDerjp3Iq5TgZwwuyRlOc5XfyLVogv7FRDlnTFk0BKVuDDvFEdM/PqNoZjS5iAMfagtP0PsEvEGBCHSKgqizH6QfwwgX9d7cK0YHSw27apBfM6snbgFncz9ieusoIMLp0IObnyU4eI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZsMFEQt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBDaQrEF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B161F000FF;
-	Sat, 12 Sep 2026 11:02:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZsMFEQt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9481F000FF;
+	Sat, 12 Sep 2026 11:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210975;
-	bh=QT8IkzF1kJi1Z5TbrrjKdDr9mHayzo/8+r0D/fHeFps=;
+	s=korg; t=1789210980;
+	bh=HYzt2aeP6B6h5698wXdgYfZYDeRVqeEdmO5Exzb19Qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NBDaQrEFUsQOxe4IVL+NsWf2qIlEZo0BR10RSbGxfOt7KJU8sbJrnsJaSjBFFjJmK
-	 TRiIpQ+1+X4Z2S3Rupu151UjcoOIbePup3TT1iYOOwDdijWicbt2hJVLOU8FM17FaT
-	 VW3D+0IxAf8d1Xz8A68X8VwBT1Zc1aO/QwpFab88=
+	b=ZZsMFEQtkHvyaal8Q0LbNbsWobK8MYtW9z6Igu69OzIEniosAiWahoxd3TvkTFi92
+	 sP6zl6ffnBFhwRAHGFN9F+U+2HJej9nRBtnmJupXzmstxMbUNv0SDMzjcidoQtEtU8
+	 iBhKbByc6cHR7BsEMFRsLXQV1E/bXn/EV+JZlEsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+72eddfbadda3e3928e72@syzkaller.appspotmail.com,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1135/1518] RDMA/cma: Fix WARNING in res_to_rt
-Date: Sat, 12 Sep 2026 08:55:04 +0200
-Message-ID: <20260912065649.134882198@linuxfoundation.org>
+	Przemyslaw Korba <przemyslaw.korba@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.18 1136/1518] ice: fall back to SBQ when LL PHY timer interface times out
+Date: Sat, 12 Sep 2026 08:55:05 +0200
+Message-ID: <20260912065649.156031924@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,88 +54,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Przemyslaw Korba <przemyslaw.korba@intel.com>
 
-[ Upstream commit c6d1ec4fbe56492bb88987d577f04a5fb6955f26 ]
+[ Upstream commit 6959fbdc940f62d8eef2a171d3a3342d7c248855 ]
 
-syzbot reported a WARN_ON(!res->dev) in res_to_rt() triggered via
-addr_handler() during asynchronous address resolution:
+The low-latency (LL) PHY timer interface relies on a tight, atomic poll
+of the PF_SB_ATQBAL register with a 2ms timeout. After an NVM update /
+EMPR, FW may need significantly longer than 2ms to start responding to
+ATQBAL commands. The first PHY adjust or incval write issued by
+ice_ptp_rebuild_owner() fails with -ETIMEDOUT.
 
-"
-WARNING: drivers/infiniband/core/restrack.c:138 at res_to_rt+0x1c4/0x230
-CPU#1: kworker/u8:4/59
-Modules linked in:
-CPU: 1 UID: 0 PID: 59 Comm: kworker/u8:4 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Compute Engine, BIOS Google 07/24/2026
-Workqueue: ib_addr process_one_req
-RIP: 0010:res_to_rt+0x1c4/0x230 drivers/infiniband/core/restrack.c:138
-RSP: 0018:ffffc9000201f850 EFLAGS: 00010293
-RAX: ffffffff88d00ce5 RBX: ffff88807f0fd4f8 RCX: ffff88801e6e0000
-RDX: 0000000000000000 RSI: ffffffff8fd996f0 RDI: 0000000000000003
-RBP: 0000000000000000 R08: ffff88801e6e0000 R09: 000000000000000a
-R10: 0000000000000009 R11: 0000000000000000 R12: dffffc0000000000
-R13: 1ffff1100fe1fa9f R14: 0000000000000000 R15: 0000000000000003
-FS:  0000000000000000(0000) GS:ffff888125012000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00001d559c3d2000 CR3: 0000000077c4c000 CR4: 00000000003526f0
-Call Trace:
- <TASK>
- rdma_restrack_add+0x5a/0x8a0 drivers/infiniband/core/restrack.c:236
- addr_handler+0x41a/0x5a0 drivers/infiniband/core/cma.c:3534
- process_one_req+0x2eb/0x540 drivers/infiniband/core/addr.c:624
- process_one_work kernel/workqueue.c:3375 [inline]
- process_scheduled_works+0xc4e/0x1630 kernel/workqueue.c:3458
- worker_thread+0xa47/0xfb0 kernel/workqueue.c:3539
- kthread+0x388/0x470 kernel/kthread.c:436
- ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
- </TASK>
-"
+Fix this by falling back to the existing SBQ-based PHY register write
+path when LL times out. This makes sure PTP is initialized when FW takes
+longer than expected to come back online.
 
-In addr_handler(), cma_acquire_dev_by_src_ip() is called to populate
-id_priv->cma_dev and bind the associated ib_device to id_priv->id.device.
-If cma_acquire_dev_by_src_ip() returns an error (non-zero status), the ID
-remains unassociated with any RDMA device.
+Steps to reproduce:
+./nvmupdate64e -if devlink -f
+Update E810 card with nvmupdate64e, and observe dmesg errors:
+  Failed to write PHC increment value, status -110
+  PTP reset failed, error: -110 (-ETIMEDOUT)
 
-Previously, rdma_restrack_add(&id_priv->res) was invoked unconditionally
-even when cma_acquire_dev_by_src_ip() failed, passing a resource with a
-NULL dev pointer and triggering the WARN_ON assertion in res_to_rt().
-
-Fix this by only adding the resource to restrack when acquiring the device
-succeeds.
-
-Reported-by: syzbot+72eddfbadda3e3928e72@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=72eddfbadda3e3928e72
-Tested-by: syzbot+72eddfbadda3e3928e72@syzkaller.appspotmail.com
-Fixes: cb5cd0ea4eb3 ("RDMA/core: Add CM to restrack after successful attachment to a device")
-
-Link: https://patch.msgid.link/r/20260810220123.191696-1-yanjun.zhu@linux.dev
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: ef9a64c07294 ("ice: implement low latency PHY timer updates")
+Signed-off-by: Przemyslaw Korba <przemyslaw.korba@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cma.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 38 +++++++++++----------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
-index 648acc2222cf5..a73a879706c4f 100644
---- a/drivers/infiniband/core/cma.c
-+++ b/drivers/infiniband/core/cma.c
-@@ -3523,10 +3523,12 @@ static void addr_handler(int status, struct sockaddr *src_addr,
- 	memcpy(addr, src_addr, rdma_addr_size(src_addr));
- 	if (!status && !id_priv->cma_dev) {
- 		status = cma_acquire_dev_by_src_ip(id_priv);
--		if (status)
-+		if (status) {
- 			pr_debug_ratelimited("RDMA CM: ADDR_ERROR: failed to acquire device. status %d\n",
- 					     status);
--		rdma_restrack_add(&id_priv->res);
-+		} else {
-+			rdma_restrack_add(&id_priv->res);
-+		}
- 	} else if (status) {
- 		pr_debug_ratelimited("RDMA CM: ADDR_ERROR: failed to resolve IP. status %d\n", status);
- 	}
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
+index 99bf38cf352a2..f67e53c5dc87f 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
+@@ -4771,15 +4771,12 @@ static int ice_ptp_prep_phy_adj_ll_e810(struct ice_hw *hw, s32 adj)
+ 				       !FIELD_GET(REG_LL_PROXY_H_EXEC, val),
+ 				       10, REG_LL_PROXY_H_TIMEOUT_US, false, hw,
+ 				       REG_LL_PROXY_H);
+-	if (err) {
+-		ice_debug(hw, ICE_DBG_PTP, "Failed to prepare PHY timer adjustment using low latency interface\n");
+-		spin_unlock_irq(&params->atqbal_wq.lock);
+-		return err;
+-	}
+-
+ 	spin_unlock_irq(&params->atqbal_wq.lock);
+ 
+-	return 0;
++	if (err)
++		ice_debug(hw, ICE_DBG_PTP, "Failed to prepare PHY timer adjustment using low latency interface\n");
++
++	return err;
+ }
+ 
+ /**
+@@ -4800,8 +4797,12 @@ static int ice_ptp_prep_phy_adj_e810(struct ice_hw *hw, s32 adj)
+ 	u8 tmr_idx;
+ 	int err;
+ 
+-	if (hw->dev_caps.ts_dev_info.ll_phy_tmr_update)
+-		return ice_ptp_prep_phy_adj_ll_e810(hw, adj);
++	if (hw->dev_caps.ts_dev_info.ll_phy_tmr_update) {
++		err = ice_ptp_prep_phy_adj_ll_e810(hw, adj);
++		if (err != -ETIMEDOUT)
++			return err;
++		ice_debug(hw, ICE_DBG_PTP, "LL adj timed out, falling back to SBQ\n");
++	}
+ 
+ 	tmr_idx = hw->func_caps.ts_func_info.tmr_index_owned;
+ 
+@@ -4864,15 +4865,12 @@ static int ice_ptp_prep_phy_incval_ll_e810(struct ice_hw *hw, u64 incval)
+ 				       !FIELD_GET(REG_LL_PROXY_H_EXEC, val),
+ 				       10, REG_LL_PROXY_H_TIMEOUT_US, false, hw,
+ 				       REG_LL_PROXY_H);
+-	if (err) {
+-		ice_debug(hw, ICE_DBG_PTP, "Failed to prepare PHY timer increment using low latency interface\n");
+-		spin_unlock_irq(&params->atqbal_wq.lock);
+-		return err;
+-	}
+-
+ 	spin_unlock_irq(&params->atqbal_wq.lock);
+ 
+-	return 0;
++	if (err)
++		ice_debug(hw, ICE_DBG_PTP, "Failed to prepare PHY timer increment using low latency interface\n");
++
++	return err;
+ }
+ 
+ /**
+@@ -4890,8 +4888,12 @@ static int ice_ptp_prep_phy_incval_e810(struct ice_hw *hw, u64 incval)
+ 	u8 tmr_idx;
+ 	int err;
+ 
+-	if (hw->dev_caps.ts_dev_info.ll_phy_tmr_update)
+-		return ice_ptp_prep_phy_incval_ll_e810(hw, incval);
++	if (hw->dev_caps.ts_dev_info.ll_phy_tmr_update) {
++		err = ice_ptp_prep_phy_incval_ll_e810(hw, incval);
++		if (err != -ETIMEDOUT)
++			return err;
++		ice_debug(hw, ICE_DBG_PTP, "LL incval timed out, falling back to SBQ\n");
++	}
+ 
+ 	tmr_idx = hw->func_caps.ts_func_info.tmr_index_owned;
+ 	low = lower_32_bits(incval);
 -- 
 2.53.0
 
