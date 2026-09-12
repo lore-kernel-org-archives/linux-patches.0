@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB57225393E;
-	Sat, 12 Sep 2026 07:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841DC25393E;
+	Sat, 12 Sep 2026 07:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199771; cv=none; b=Fxqe5vSLj0PXmAqIfoy6dElWn+FRMGRzteMZHmKUIgjpD2TTILHH7rjeuKUMN0AYnc1NuXnSC9Ruy9KNrzsECgAi73/lOENDd/NHkUi3OIkVXj22C1wRHt2v4UsS3h5FT7E4fVfQMQ9aAsonvgEdEYT0uTmndobQDgW/2E4vaso=
+	t=1789199776; cv=none; b=neqBgqSEHhj5iVOj4gUSjYz1xH2lb4MZhqdrXIVfPcGO57OPSeDtNILI062yTsH/jOG8x/T0SFmHcl8WXAxa8Qh7k6mhyQ5oKHW1pwALCrHpmsCM7Hen9K2K2sHgGatTgK1NYX6InEmB4fgubEvGlnkqGlKhL7KCuE99kjnaoqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199771; c=relaxed/simple;
-	bh=tPFHGuAlvexv3aUFHEzBGXlZarHDcjkukWEWfGzwces=;
+	s=arc-20240116; t=1789199776; c=relaxed/simple;
+	bh=phqXpva2DkXfrK6pir9Kai+5HY+de3yX8EDN0IO4KfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jfrSkbuTYTjTvjYb9IZlL9XhXZT6YRrr1YtyuHuRjl6eLk6DwXv1Ax53BD+EFoy93BXWvBj9zoBTqQXQYgmOaEYdDYE0MW6XhP4L+WByEc3YWjwbXdqJArIH96psfZRHNvUJbMMjAD4jLqvZo7lTeSTOh/iMybqbf1wcSfPHYOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZfesY+D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VWfMzOOQr0IguzCR9b8cO6isTlXv45PeCePH+wd+zRK75znPslLthsc9zYWSPZ+GNN5Qy+C7qVnkDahre0BHMxRj9MMXlRGbZmgTh+oa3Tv7M1Sk+rHlBXfkm70blLXvyGz6BQ0yMO2/R+YEZbSO0UnyR1ng9SJcL15pY2Og/Z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rRFhLKfZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZfesY+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749DA1F000FF;
-	Sat, 12 Sep 2026 07:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRFhLKfZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61CEA1F000FF;
+	Sat, 12 Sep 2026 07:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199770;
-	bh=EEHmuoi2iInaUWX/FOCgPPAKqe/Xvb8uT10keZGKQA0=;
+	s=korg; t=1789199775;
+	bh=cIIRSVuR8wM5Qj50BNkD+hb9os8lPE+qqcq8hVdChew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KZfesY+D17q1hcJTKSNukI7pf3DyF1MWdbF0YcdMEmFLJ65U5Val/rUh4Nv96i9Ca
-	 6Cq8m7ZB1vTThvW4gNhqeCVkJjq3ymaBdnXxHcUELvkdPAiPNT9oNkjTJmBA6nt1/p
-	 5HbbuAfPs6rNYZJWmKANURzlAlNlz1Rp56PM0lLw=
+	b=rRFhLKfZNc9MUebH8DdbY7NNRrsDPBqkm2JkKjERFaIrIIs1rjBCESB1qlRXJvV3n
+	 ZQOXzMoVIIJR7xKJnohJjNQ0wQjQstQZvf7hTOOzN6puf5+cXE8oE73ds5xeXjKyj+
+	 KJT3aipCyNk/F3hBOWUCZSaSTV8WAoW+OzBiD4fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Yixun Lan <dlan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0654/1815] power: reset: reboot-mode: Remove devres based allocations
-Date: Sat, 12 Sep 2026 08:40:04 +0200
-Message-ID: <20260912065704.232449627@linuxfoundation.org>
+Subject: [PATCH 7.2 0655/1815] riscv: dts: spacemit: improve RTL8211F PHY configuration on K3 Pico-ITX board
+Date: Sat, 12 Sep 2026 08:40:05 +0200
+Message-ID: <20260912065704.257188659@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,120 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+From: Aurelien Jarno <aurelien@aurel32.net>
 
-[ Upstream commit 42326d59391cf287bf21224f3fdca528be31ece2 ]
+[ Upstream commit e0c1145f4c8ea0515b32e0b9620412528a4312b1 ]
 
-Devres APIs are intended for use in drivers, where the managed lifetime
-of resources is tied directly to the driver attach/detach cycle.
+Vendor kernel enabled ALDPS (Advanced Link Down Power Saving) on the
+RTL8211F PHY to save power when link down.
 
-To ensure correct lifetime handling, avoid using devres-based
-allocations in the reboot-mode and explicitly handle allocation and
-cleanup of resources.
+Vendor kernel also disabled the 125MHz clkout clock signal, and indeed
+the schematics confirms that it only goes to a test point (TP14), so
+let's do the same.
 
-Fixes: cfaf0a90789a ("power: reset: reboot-mode: Expose sysfs for registered reboot_modes")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202607191025.h6bQp891-lkp@intel.com/
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260724-arm-psci-system_reset2-vendor-reboots-v24-1-ed5125785ef6@oss.qualcomm.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+Tested-by: Yixun Lan <dlan@kernel.org>
+Reviewed-by: Yixun Lan <dlan@kernel.org>
+Link: https://patch.msgid.link/20260623204431.498700-6-aurelien@aurel32.net
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+Stable-dep-of: a225e19a4cc4 ("riscv: dts: spacemit: Add enough deassert time for the PHY on PICO ITX")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/reset/reboot-mode.c | 30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/power/reset/reboot-mode.c b/drivers/power/reset/reboot-mode.c
-index d20e44db05325..af00c00eceee7 100644
---- a/drivers/power/reset/reboot-mode.c
-+++ b/drivers/power/reset/reboot-mode.c
-@@ -10,6 +10,7 @@
- #include <linux/list.h>
- #include <linux/module.h>
- #include <linux/of.h>
-+#include <linux/property.h>
- #include <linux/reboot.h>
- #include <linux/reboot-mode.h>
- #include <linux/slab.h>
-@@ -168,10 +169,11 @@ static int reboot_mode_create_device(struct reboot_mode_driver *reboot)
-  */
- int reboot_mode_register(struct reboot_mode_driver *reboot)
- {
--	struct mode_info *info;
-+	struct mode_info *info = NULL;
- 	struct property *prop;
- 	struct device_node *np = reboot->dev->of_node;
- 	size_t len = strlen(PREFIX);
-+	u32 magic;
- 	int ret;
- 
- 	INIT_LIST_HEAD(&reboot->head);
-@@ -180,22 +182,22 @@ int reboot_mode_register(struct reboot_mode_driver *reboot)
- 		if (strncmp(prop->name, PREFIX, len))
- 			continue;
- 
--		info = devm_kzalloc(reboot->dev, sizeof(*info), GFP_KERNEL);
-+		if (device_property_read_u32(reboot->dev, prop->name, &magic)) {
-+			dev_dbg(reboot->dev, "reboot mode %s without magic number\n",
-+				prop->name);
-+			continue;
-+		}
-+
-+		info = kzalloc_obj(*info, GFP_KERNEL);
- 		if (!info) {
- 			ret = -ENOMEM;
- 			goto error;
- 		}
- 
--		if (of_property_read_u32(np, prop->name, &info->magic)) {
--			dev_err(reboot->dev, "reboot mode %s without magic number\n",
--				info->mode);
--			devm_kfree(reboot->dev, info);
--			continue;
--		}
--
-+		info->magic = magic;
- 		info->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
- 		if (!info->mode) {
--			ret =  -ENOMEM;
-+			ret = -ENOMEM;
- 			goto error;
- 		} else if (info->mode[0] == '\0') {
- 			kfree_const(info->mode);
-@@ -206,6 +208,7 @@ int reboot_mode_register(struct reboot_mode_driver *reboot)
- 		}
- 
- 		list_add_tail(&info->list, &reboot->head);
-+		info = NULL;
- 	}
- 
- 	reboot->reboot_notifier.notifier_call = reboot_mode_notify;
-@@ -218,6 +221,7 @@ int reboot_mode_register(struct reboot_mode_driver *reboot)
- 	return 0;
- 
- error:
-+	kfree(info);
- 	reboot_mode_unregister(reboot);
- 	return ret;
- }
-@@ -261,12 +265,16 @@ static inline void reboot_mode_unregister_device(struct reboot_mode_driver *rebo
- int reboot_mode_unregister(struct reboot_mode_driver *reboot)
- {
- 	struct mode_info *info;
-+	struct mode_info *next;
- 
- 	unregister_reboot_notifier(&reboot->reboot_notifier);
- 	reboot_mode_unregister_device(reboot);
- 
--	list_for_each_entry(info, &reboot->head, list)
-+	list_for_each_entry_safe(info, next, &reboot->head, list) {
-+		list_del(&info->list);
- 		kfree_const(info->mode);
-+		kfree(info);
-+	}
- 
- 	return 0;
- }
+diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+index 509cebc0c9568..1b535226e3ce0 100644
+--- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
++++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+@@ -196,6 +196,8 @@ phy0: phy@1 {
+ 			reset-gpios = <&gpio 0 15 GPIO_ACTIVE_LOW>;
+ 			reset-assert-us = <10000>;
+ 			reset-deassert-us = <10000>;
++			realtek,aldps-enable;
++			realtek,clkout-disable;
+ 		};
+ 	};
+ };
 -- 
 2.53.0
 
