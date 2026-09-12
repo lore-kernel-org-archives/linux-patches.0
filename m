@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C84364059;
-	Sat, 12 Sep 2026 08:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089B135AC1E;
+	Sat, 12 Sep 2026 08:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201702; cv=none; b=bhoctsE3XFI3NMLnZWHrAFs+QTNLichiBvvQKnj5FthkCKO7uSVQHaN8wekiHJPAe14j3GrIZHTEuk4JZ3gy9LU4sAc2K/ljf4Wm7DLZm7tESg8EYiFb0c7CmzxWiD9F1F/Q5EBGalOor2EMGh2JDlBWGUTG6jrZImApe7HZkVY=
+	t=1789201707; cv=none; b=TDS/k82e2+GfyiZr1ilCazCDJ6KBCmbqQsxY9OcRkcNKpcnhfTJecgeRdmiC2kUTfoTAB6Rpz5bjpTiIk1pAa6F+xyFnXdtLx6YcsTzeeyyrMlpqUPtBrs74e1ln6MdanT+e44//hCGzZS8U/WVGVX4Iy6ZjEPCyLaXSf586PKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201702; c=relaxed/simple;
-	bh=nlxiQe3eiE0UOEpcuBdT8WcdeSR7mVXXBgVnLVmSHXw=;
+	s=arc-20240116; t=1789201707; c=relaxed/simple;
+	bh=xYOpjGhMwWqLNGp06gQEFeBCwPBz33QbzFyp3RFaeTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IrmIuCXLaUsKG8INrwARBQ+nDA4I2EvdZJTdJCJ1vzBkjQbUlHoF6BopRHYs7UK00H0Vx2TZoLDnLBmD1fi8diFvXFSBF1LwoyvVwAncVuUE450Uzo7hhiRj9ajn7DJUEoosl53CsGpjza2fEhXNYlm4kMpCE8kFeJ9tjszb640=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvVtxIp1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SOIYZ7Os0DoHUc7QlWpzcStISvIVugUYyFw9SkpC6Lqs8DeePG/DDIUi2zHMp4CaUQ6RPlWcVbXHlfHyLm7NpwVLSmSztBNi5k9UR1y0pfF+dP38F9LR6nUvDFpaJFB963RyZcBOl/vYqf2rSxsIs8I51fHqkLOeSs3pa7YAuBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6AD0/bY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvVtxIp1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3FE31F000FF;
-	Sat, 12 Sep 2026 08:28:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6AD0/bY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF71A1F000FF;
+	Sat, 12 Sep 2026 08:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201701;
-	bh=A9ACAwbTrCtt10kDPfDtpd8ZFNuR3KCi+zaAeBzy3aI=;
+	s=korg; t=1789201705;
+	bh=JQC3DdKBWw59btshGP5DZrwxx+rP8ZLuwGPNiZ7m4pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TvVtxIp1inqKXk9TuKFCTNbzJ8tw8qu12QtFIroyCudxg4Ua8hyPIvhf/X9lxZKpY
-	 9RkeldLlgVUcx2I7SJeffFo2ZP6pbSM4W8GJgL3qTAzk5SqMHMTrCbWp1+sL9+95Ss
-	 43hmFimvoo4xKC33fwA216hhCM43Tws+NfqGNkvE=
+	b=I6AD0/bYv5zkhfbOeasagU3Pnragb+5/hrp2Kv4DM9gug1GTfnNlQ29DiR9jKKNxU
+	 sCdDwt4Igf1UWHku73/Z00QKiQCJ9i2OBiQOOUvF7lHHljMPlMlCHHuVlV6DsN5YEw
+	 gv4PiuHsPJD4dTJF6Pkp9sus+0fAXMaSns2agiwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Ai Chao <aichao@kylinos.cn>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1008/1815] HID: synchronize input before cleaning up a failed probe
-Date: Sat, 12 Sep 2026 08:45:58 +0200
-Message-ID: <20260912065712.672136316@linuxfoundation.org>
+Subject: [PATCH 7.2 1009/1815] HID: i2c-hid: Fix "(null)" output when reading report descriptor fails
+Date: Sat, 12 Sep 2026 08:45:59 +0200
+Message-ID: <20260912065712.695049418@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,45 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Ai Chao <aichao@kylinos.cn>
 
-[ Upstream commit 207853d46f7ef2e28042344a1468da8754c3ddbf ]
+[ Upstream commit 8da0f0951deec9f0728ed2d9c54ded1c344b7542 ]
 
-hid_device_io_start() allows reports to run concurrently with probe. If
-the probe subsequently fails, __hid_device_probe() releases driver
-resources and clears hdev->driver without first excluding those report
-callbacks.
+When i2c-hid fails to read the HID report descriptor during device
+initialization, the error message prints as:
 
-For example, a report may enter hidraw_report_event() while the failure
-path frees the associated hidraw object, leading to a use-after-free when
-the report takes the object's list lock.
+  hid (null): reading report descriptor failed
 
-Stop input before performing failed-probe cleanup. This reacquires
-driver_input_lock and waits for any report callback already in progress.
+The HID device name is set in hid_add_device() after calling
+hdev->ll_driver->parse(), so when i2c_hid_parse() fails and calls
+hid_err(), the device name has not been set yet, resulting in "(null)"
+output.
 
-Fixes: c849a6143bec ("HID: Separate struct hid_device's driver_lock into two locks.")
-Reported-by: syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9eebf5f6544c5e873858
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Use dev_err(&client->dev, ...) instead of hid_err(hid, ...) because
+the I2C client device is fully initialized with a proper name, providing
+meaningful error messages for debugging.
+
+Before: hid (null): reading report descriptor failed
+After:  i2c_hid i2c-TPD0001:00: reading report descriptor failed
+
+Fixes: 4a200c3b9a40 ("HID: i2c-hid: introduce HID over i2c specification implementation")
+
+Signed-off-by: Ai Chao <aichao@kylinos.cn>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/i2c-hid/i2c-hid-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 5add6c9f2807a..14a06ab435a23 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -2856,6 +2856,8 @@ static int __hid_device_probe(struct hid_device *hdev, struct hid_driver *hdrv)
- 	 */
- 
- 	if (ret) {
-+		if (hdev->io_started)
-+			hid_device_io_stop(hdev);
- 		devres_release_group(&hdev->dev, hdev->devres_group_id);
- 		hid_close_report(hdev);
- 		hdev->driver = NULL;
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 3adb16366e939..0e725a0f0abee 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -792,7 +792,7 @@ static int i2c_hid_parse(struct hid_device *hid)
+ 					    ihid->hdesc.wReportDescRegister,
+ 					    rdesc, rsize);
+ 		if (ret) {
+-			hid_err(hid, "reading report descriptor failed\n");
++			dev_err(&client->dev, "reading report descriptor failed\n");
+ 			goto out;
+ 		}
+ 	}
 -- 
 2.53.0
 
