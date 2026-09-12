@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DCB364038;
-	Sat, 12 Sep 2026 08:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBF3345CCE;
+	Sat, 12 Sep 2026 08:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203494; cv=none; b=AtvDnBkKUYTYKdTICzybJwFrojYcJHzce+57loxC8osT4ca4hugD70pleS6oJySlJGaeSto4BFN6B+nwqqRYt5jeLmvciffX5W0OBXG4MDGf5EiGPvzvWwght7lN/sbFIlPTYqfFk7LAggwSjIHM2niJ/FKE84cnHyPUzyRSlFc=
+	t=1789203499; cv=none; b=Ij10vT3E0rjDk0ZRQZMSb4Igc0tlReD9bznjnxji9ICfZ/24BllTb/KCYhZc1bCJTYSAqkDBkJaRWzR7pQrS8LgsZTnsc/ykAs8zFQeeApXGy8CH5YjlIuinqncB+gKo3+h/2IYfgoCKaYBDBGBVVEroltv9xqCfRlnef58YU7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203494; c=relaxed/simple;
-	bh=FJ2J6liEVTU3yOgD8DXzTrMM4xeF4zNGqSm9yTJ7OtA=;
+	s=arc-20240116; t=1789203499; c=relaxed/simple;
+	bh=i2TJn3K1ujOfKx+edZC0hnSQ0eIORtPd8+yQKe6j/JM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QOF7qRo9wC7/uIGMmoxwhJicRgPFMxdwexv6eKsw0F6h82W9Yrb1GqajCRdJkFVJCHzZ0xv2lDx+/MFbsz2SVlHNINGch3ZAjf85i9cXPQHpwL9Xe8xsPie7frK+9+9E6Nki9SPTfWC+JZMtJUIp/iM8daukEBZvahiRm9Wx6J4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FCnZC64v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FQuHLlQxqQGIuo2OTuajZS8OA64Ya5VOfC2m5jXZzyey1PGNLFCJCFQ50L9UP2xN5nTASgUJZoGeMq49wtWBEJ/vmtrkgDGUdUGp24Yg/rSbaG080UpiyX4LKvGAw1bYdy7h//sw5FT11REzVXFEDJbI1zR22CPLqB4gJLc87qE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rfZmzqnj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FCnZC64v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2F41F00893;
-	Sat, 12 Sep 2026 08:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfZmzqnj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E7A1F000FF;
+	Sat, 12 Sep 2026 08:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203492;
-	bh=aSXqKNlCZgN2OWxzh1cNjz2HcH/Fj/xAsRdqjgCCyI8=;
+	s=korg; t=1789203497;
+	bh=/jMuX3F2mB+PvB+PPDqDBgsaagaz4m2r6WWQBcvctyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FCnZC64vts7fM5Q9Bxqdr2rHK4lmf0XsvvyBVuY0QDDbtmFAKntDBR6DFMknR6//R
-	 rHbG4oXRU5xN/TdXaQbXmh06X3djZzynjRtKCfX9sfIEYNwGqQEPtviQEbJADRKzJe
-	 YmWalfwu13DMHj3zP9Mk0YAemMJEXbcXcbdR2/CQ=
+	b=rfZmzqnjavENNpZcwqPTxaiYaBqcigvQHe/U9uu1qmGG3LwJGzTZm6GGpAzLy0rl+
+	 9J60HX+XN4yRbJstiyu4M9OpXQFwXV4H0bDGAlUO1Ibmjs1Rd2AfWu0lLDnX77kzTy
+	 hqb0hAmeM9AFhS9lTh5HcZF4i4Y05fFkkp6H/hgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Song Liu <song@kernel.org>,
+	Joe Lawrence <joe.lawrence@redhat.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1377/1815] ubi: Fix rollback for explicit UBI device numbers
-Date: Sat, 12 Sep 2026 08:52:07 +0200
-Message-ID: <20260912065721.353411410@linuxfoundation.org>
+Subject: [PATCH 7.2 1378/1815] objtool/klp: Fix vmlinux .klp.symid link error for .no_trim_symbol symbols
+Date: Sat, 12 Sep 2026 08:52:08 +0200
+Message-ID: <20260912065721.376372594@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,47 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 5b0a6b554e12a97f9771a9a9f4ea1f5457373c73 ]
+[ Upstream commit 3a83d9cd3d0e66c0ef99ce84f972ed26f50c990f ]
 
-ubi_init_attach() rolls back module initialization failures by scanning
-ubi_devices[0..i-1], where i is the mtd= parameter index. That assumes
-the parameter index matches the UBI device number.
+Testing klp-build with arm64 produced the following linker error during
+the original kernel build:
 
-That assumption is not true when mtd= specifies an explicit ubi_num. A
-successfully attached device can be stored at a higher ubi_devices[]
-slot, and a later failure can miss it during rollback.
+  `__notrim.1' referenced in section `.klp.symid' of vmlinux.o: defined in discarded section `.no_trim_symbol' of vmlinux.o
 
-Scan the full ubi_devices[] array and detach by the actual array index,
-matching the way UBI devices are stored.
+symbol_get() puts a static __notrim[] in .no_trim_symbol, which GCC
+names __notrim.1, __notrim.2, etc.  Two or more built-in translation
+units calling symbol_get() thus produce duplicate names, resulting in
+corresponding .klp.symid references which trigger the above error.
 
-Fixes: 83ff59a06663 ("UBI: support ubi_num on mtd.ubi command line")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Add .no_trim_symbol to the discarded section list so its symbols don't
+get symids.
+
+Note this issue is not specific to arm64: it just needs two built-in
+symbol_get() callers.  arm64 trips over it easily because it has KVM
+always compiled in vmlinux, whereas on x86 it's typically a module.
+
+Fixes: 029223d30162 ("objtool/klp: Add .klp.symid for sympos disambiguation")
+Acked-by: Song Liu <song@kernel.org>
+Acked-by: Joe Lawrence <joe.lawrence@redhat.com>
+Link: https://patch.msgid.link/5a3cc4cded743167dd0878220201d80f7e48e5d7.1786138493.git.jpoimboe@kernel.org
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/build.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/objtool/klp-symid.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
-index 674ad87809df0..90c5c83d90e3b 100644
---- a/drivers/mtd/ubi/build.c
-+++ b/drivers/mtd/ubi/build.c
-@@ -1317,10 +1317,10 @@ static int __init ubi_init_attach(void)
- 	return 0;
+diff --git a/tools/objtool/klp-symid.c b/tools/objtool/klp-symid.c
+index cf188cdfa6079..21d8708013aba 100644
+--- a/tools/objtool/klp-symid.c
++++ b/tools/objtool/klp-symid.c
+@@ -31,6 +31,7 @@
+ static const char * const discarded_secs[] = {
+ 	".discard",
+ 	".modinfo",
++	".no_trim_symbol",
+ 	"__tracepoint_check",
+ };
  
- out_detach:
--	for (k = 0; k < i; k++)
-+	for (k = 0; k < UBI_MAX_DEVICES; k++)
- 		if (ubi_devices[k]) {
- 			mutex_lock(&ubi_devices_mutex);
--			ubi_detach_mtd_dev(ubi_devices[k]->ubi_num, 1);
-+			ubi_detach_mtd_dev(k, 1);
- 			mutex_unlock(&ubi_devices_mutex);
- 		}
- 	return err;
 -- 
 2.53.0
 
