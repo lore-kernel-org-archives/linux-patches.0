@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2063254A8;
-	Sat, 12 Sep 2026 13:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC83328635;
+	Sat, 12 Sep 2026 13:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220896; cv=none; b=boEl3k5Qd+kSlgvhQQnPb8ZzTjPKi+3oNcvj0QxefccsXyZoz+blnQAPc3NcyOFqP4pwxpq1cYJLBKybvA47wv5YmP3QF5NEBsO5FtwaBZ6NnXri28h5sn+6pLWh/gC+H+DwhuIe4llJA4Dfp0CfXHUYXFbDLSWNXV8vKnJ7y2g=
+	t=1789220900; cv=none; b=X850Q1nh2zLU1H2n+ezFn5qs2BIpOVJrcRupDhXhzezjxktJwmzxQYiZE9Crt+t+OvRm76Bc13j2riMgOKRIClFI3sligPvMcX4g4gFOqVXtgik7CfggJ72YDTzfW5ynWjPH5y6lJU+c/QyIOnm0PvfJ5Fh2b3wWbZRK1d0td28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220896; c=relaxed/simple;
-	bh=+tEdMvG+lY1bcsR2vRN0byn/CIVlpaVOs1NQV8yypbQ=;
+	s=arc-20240116; t=1789220900; c=relaxed/simple;
+	bh=xHZ5RbaeeL91b+irKNiFcabNsPDXn+1gS0i/u/4qyjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rGFkaVO5Jg3Ka9ZwlQpPfPmsEDn3Aa4qRO+askRXUiX+9HcjGyZV+/h7OaDfWOefa+O+OFrM+AGVlmjdbH5WpNnbpeUbSCcpCPh22kP4PNNRRdgQD0fdiLH5EFFvaZzSujbMCtEPzPaNPywp8l5EEWgY3ILbx9TfZe0biQfCg1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WV0fYGxa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A1Rli0azmHUWFP7v/8CAH4WHHTBVGYr4JpcL+7Q6LOdnjaMBF0YGXMI09mHhppCF7/nDUYi3ITLnEC//NEgsiRk9Pj38Rmw/JEFZjvCGkaBSzk2P4VQYF/jL3A/flE8hc6YCuBcYMrUxjLkEH7IWOu/YooQwo5aLMZGHZvbNKmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AkgavOh6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WV0fYGxa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F010F1F000FF;
-	Sat, 12 Sep 2026 13:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AkgavOh6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278321F00893;
+	Sat, 12 Sep 2026 13:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220892;
-	bh=RMI2CLTgoNa3bvOmVbhIw50Ce/0tXMR98vTKyqmj8NY=;
+	s=korg; t=1789220896;
+	bh=Qio/uTkzaWcmPULO6psxxicsFgs3BOIVUPiJh5gq6yM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WV0fYGxaET6usQ4kdDB4xpCP/MaBxGosNDYy0uBM8xRAdgaJKnRf0DyUwtHupHehM
-	 WiolAs1kgNp9ekwX0wqn5DzagGLHjFWqzaoC1L6Mrbvmnf04N2/orUQbBGoPluXNQ4
-	 BSNX21Js+WHcWANH6BTEhyoDpG8ZtSQDYuaUXK0E=
+	b=AkgavOh6/qrln7TEXRDrzdYLm2HcFv+jROS255NpbnYZyIliihGD3vGqPH7MNqY2h
+	 Sk7iz4iqfP0iAC2AF6GKJ5deHGfmJIh5huEu4X/YYrDg2hWbsTWdQkDEKz8Gv/8+cX
+	 Grakq65k467sRcQwbylT2PYfXT3AIxhBmfNJYCvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0254/1424] xdp: fix zero-copy frame layout
-Date: Sat, 12 Sep 2026 08:44:46 +0200
-Message-ID: <20260912065612.968045633@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 0272/1424] net: cap advertised IP tunnel headroom
+Date: Sat, 12 Sep 2026 08:45:04 +0200
+Message-ID: <20260912065613.366128034@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,65 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 71283aaa6c65b3cec84caf1dc78560985737641f upstream.
+commit 6b222adeb9340306e2ff97127c76117abb9b3df8 upstream.
 
-xdp_convert_zc_to_xdp_frame() clones an XSK packet into an order-0 page
-and advertises PAGE_SIZE as its frame size.  It allows the copied frame
-to occupy the page tail needed by skb_shared_info and records zero
-headroom even when metadata separates the frame header from packet data.
-An AF_XDP zero-copy packet redirected through cpumap can therefore make
-the skb overlap skb_shared_info or place it beyond the allocated page.
+IP tunnel devices derive their advertised needed_headroom from lower
+output devices. A stack of user-created devices can make the derived
+value larger than the 16-bit skb header offsets can represent. Once IP
+output reserves it, skb head expansion can wrap those offsets.
 
-Limit the copied layout to SKB_WITH_OVERHEAD(PAGE_SIZE) and include the
-metadata length in frame headroom.  Redirect callers already handle a
-NULL conversion result.
+The runtime transmit path already caps a growing needed_headroom at 512.
+Apply the same cap when tunnel configuration publishes needed_headroom
+derived from a lower output device.
 
-BUG: KASAN: slab-out-of-bounds in skb_gro_receive
-Write of size 4 at addr ffff88800cf37004 by task cpumap/1/map:1/146
-Call Trace:
- skb_gro_receive (net/core/gro.c:174)
- udp_gro_receive (net/ipv4/udp_offload.c:812)
- inet_gro_receive (net/ipv4/af_inet.c:1539)
- dev_gro_receive (net/core/gro.c:515)
- gro_receive_skb (net/core/gro.c:633)
- cpu_map_kthread_run (kernel/bpf/cpumap.c:395)
- kthread (kernel/kthread.c:436)
- ret_from_fork (arch/x86/kernel/process.c:164)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:255)
-Kernel panic - not syncing: KASAN: panic_on_warn set ...
+Capping the advertised value is safe: IP tunnel transmit still expands
+the skb when a packet needs more headroom. A nonsensical stacked
+configuration can therefore incur an extra reallocation, but it cannot
+publish an unbounded reservation to upper layers.
 
-Fixes: b0d1beeff2a9 ("xdp: implement convert_to_xdp_frame for MEM_TYPE_ZERO_COPY")
+Fixes: 1a37e412a022 ("net: Use 16bits for *_headers fields of struct skbuff")
 Cc: stable@vger.kernel.org
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20260818154516.793517-1-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/ba04a1fd6bfae2377607fad5d8f80f7eb80fd4c4.1786542637.git.zhilinz@nebusec.ai
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/xdp.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/ip_tunnels.h |   11 +++++++++--
+ net/ipv4/ip_tunnel.c     |    2 +-
+ net/ipv6/ip6_gre.c       |    7 +++++--
+ net/ipv6/ip6_tunnel.c    |    7 +++++--
+ net/ipv6/sit.c           |    2 +-
+ 5 files changed, 21 insertions(+), 8 deletions(-)
 
---- a/net/core/xdp.c
-+++ b/net/core/xdp.c
-@@ -549,7 +549,7 @@ struct xdp_frame *xdp_convert_zc_to_xdp_
- 		   xdp->data - xdp->data_meta;
- 	totsize = xdp->data_end - xdp->data + metasize;
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -492,8 +492,7 @@ struct metadata_dst *iptunnel_metadata_r
+ int skb_tunnel_check_pmtu(struct sk_buff *skb, struct dst_entry *encap_dst,
+ 			  int headroom, bool reply);
  
--	if (sizeof(*xdpf) + totsize > PAGE_SIZE)
-+	if (sizeof(*xdpf) + totsize > SKB_WITH_OVERHEAD(PAGE_SIZE))
- 		return NULL;
+-static inline void ip_tunnel_adj_headroom(struct net_device *dev,
+-					  unsigned int headroom)
++static inline unsigned int ip_tunnel_limit_headroom(unsigned int headroom)
+ {
+ 	/* we must cap headroom to some upperlimit, else pskb_expand_head
+ 	 * will overflow header offsets in skb_headers_offset_update().
+@@ -503,6 +502,14 @@ static inline void ip_tunnel_adj_headroo
+ 	if (headroom > max_allowed)
+ 		headroom = max_allowed;
  
- 	page = dev_alloc_page();
-@@ -566,7 +566,7 @@ struct xdp_frame *xdp_convert_zc_to_xdp_
++	return headroom;
++}
++
++static inline void ip_tunnel_adj_headroom(struct net_device *dev,
++					  unsigned int headroom)
++{
++	headroom = ip_tunnel_limit_headroom(headroom);
++
+ 	if (headroom > READ_ONCE(dev->needed_headroom))
+ 		WRITE_ONCE(dev->needed_headroom, headroom);
+ }
+--- a/net/ipv4/ip_tunnel.c
++++ b/net/ipv4/ip_tunnel.c
+@@ -316,7 +316,7 @@ static int ip_tunnel_bind_dev(struct net
+ 		mtu = min(tdev->mtu, IP_MAX_MTU);
+ 	}
  
- 	xdpf->data = addr + metasize;
- 	xdpf->len = totsize - metasize;
--	xdpf->headroom = 0;
-+	xdpf->headroom = metasize;
- 	xdpf->metasize = metasize;
- 	xdpf->frame_sz = PAGE_SIZE;
- 	xdpf->mem.type = MEM_TYPE_PAGE_ORDER0;
+-	dev->needed_headroom = t_hlen + hlen;
++	dev->needed_headroom = ip_tunnel_limit_headroom(t_hlen + hlen);
+ 	mtu -= t_hlen + (dev->type == ARPHRD_ETHER ? dev->hard_header_len : 0);
+ 
+ 	if (mtu < IPV4_MIN_MTU)
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -1150,8 +1150,11 @@ static void ip6gre_tnl_link_config_route
+ 			return;
+ 
+ 		if (rt->dst.dev) {
+-			dev->needed_headroom = rt->dst.dev->hard_header_len +
+-					       t_hlen;
++			unsigned int headroom;
++
++			headroom = rt->dst.dev->hard_header_len + t_hlen;
++			headroom = ip_tunnel_limit_headroom(headroom);
++			dev->needed_headroom = headroom;
+ 
+ 			if (set_mtu) {
+ 				int mtu = rt->dst.dev->mtu - t_hlen;
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -1504,8 +1504,11 @@ static void ip6_tnl_link_config(struct i
+ 			tdev = __dev_get_by_index(t->net, p->link);
+ 
+ 		if (tdev) {
+-			dev->needed_headroom = tdev->hard_header_len +
+-				tdev->needed_headroom + t_hlen;
++			unsigned int headroom;
++
++			headroom = tdev->hard_header_len + tdev->needed_headroom;
++			headroom += t_hlen;
++			dev->needed_headroom = ip_tunnel_limit_headroom(headroom);
+ 			mtu = min_t(unsigned int, tdev->mtu, IP6_MAX_MTU);
+ 
+ 			mtu = mtu - t_hlen;
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -1133,7 +1133,7 @@ static void ipip6_tunnel_bind_dev(struct
+ 		WRITE_ONCE(dev->mtu, mtu);
+ 		hlen = tdev->hard_header_len + tdev->needed_headroom;
+ 	}
+-	dev->needed_headroom = t_hlen + hlen;
++	dev->needed_headroom = ip_tunnel_limit_headroom(t_hlen + hlen);
+ }
+ 
+ static void ipip6_tunnel_update(struct ip_tunnel *t, struct ip_tunnel_parm *p,
 
 
