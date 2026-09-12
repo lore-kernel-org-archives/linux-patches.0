@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171A747C11A;
-	Sat, 12 Sep 2026 12:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB882397922;
+	Sat, 12 Sep 2026 12:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217151; cv=none; b=SlOXlvdu+Gb9M9MIVzIwY0L/YGNwKwq6XwZsuwHbJiEkbZgjw8Z4Ugd8/S8UImhzp7ZY0wSCK+P5l411XZ67shmdfksxlhCbC341H7JwUuTg+YXjuMmpy5W7PUNue/uhG6AP/kbp59JqdmguFYJLHj3ZjyDFklqvqwxECe04uA8=
+	t=1789217155; cv=none; b=MhrOy7H5eeSH1QxLfGLCsSITRVK2LuyrOcEUfZ8ZjdbP0kymcuRuyYRiAMD7LnbcthgyqC5u6GZJ9fJmh89WoehI/WCf91XOalADohc8/lZY+G6t7RcgS5XZ/tfkhkpkJM/n2FmItz/HUsg+yLsgwUwxCrF4igEfKgr/LYGCzfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217151; c=relaxed/simple;
-	bh=L+0yH+Ge5wyVMpeOJEYQUWW+2i3C8cYrYiASRIZ+/YQ=;
+	s=arc-20240116; t=1789217155; c=relaxed/simple;
+	bh=/kRY33Q4vB21/jmw12JlnhNI0phl0lfh9b2XEutAWj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u6SuAe3P6R2Sl4gwE0K0GGBFMN9TpFpp9qhSDFGRHtJK7rG8Gr/MRhJFPfb0wp983HqfxVe/iNNF2sAkKhf8uHMtDXxxh1zVQnSmXO+UEbguoVpThQpez2Uf6CVkT42H8OQlrTb5+AG9ABi1WejWXSQiCjTl9g4znO/cSdcwFw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPRdOKjv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TZyGClpNlT1sjOZdxlEwwzNDWLkbdKEnGYztVkU6ZGQgwYq9ivRTkf9ek2W3GIQ96c2e2JXT8yn/m5Ktm5bjlMMLK4/zoQbFFkEKkTk+yzopDxDFWfPo3Ge3KINXmHVLIGZzpkZS2zuxzSMjZlm3dkvex9Q3DNmVddf0T2RJvkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=daISG2XA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPRdOKjv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA921F000FF;
-	Sat, 12 Sep 2026 12:45:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="daISG2XA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23651F000FF;
+	Sat, 12 Sep 2026 12:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217150;
-	bh=yGifr3KM3dEkU/hMAZczoUx9XZQ1Q403o0zaUmWsUKA=;
+	s=korg; t=1789217154;
+	bh=BRHkP/TvQFnvITl/VB4Y7vpwPfkGFhOuvCxSvdZnmEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BPRdOKjvh0Otzime/n0S5/qGBjgci8d4vR8hQmY0pXF5if5saM2WI4kiKDDxCmaH+
-	 nGzZ9Zle2kOcwimv0Ry/vqXzKygx/JKhAKrtvhvfZkGrPIsYKodHtrEBiug4nnK2tY
-	 t/bFjg6bvq8h8KBv02BYKTgioiTwqBndtv4fd3fM=
+	b=daISG2XAULdbNXfVg2QtOHqupVmiyxplXqkHfzpbd1+k2Q+J3a0MnOPN+bOe0k0PQ
+	 atXbmeOzons3nBG7sHpW6DJWTcJz5NTt85iqq9SYNMJjxqVG/EQVQlEspjEfyjDr/G
+	 sm8O65cHFXk4l3SdjCgj0Ph2ee4sCV/3bWaCef3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0838/1376] wifi: mt76: mt7915: unlink TWT flow if the MCU rejects the agreement
-Date: Sat, 12 Sep 2026 08:54:24 +0200
-Message-ID: <20260912065626.226179219@linuxfoundation.org>
+Subject: [PATCH 6.12 0839/1376] wifi: mt76: mt7915: fix double hif2 init on the non-WED path
+Date: Sat, 12 Sep 2026 08:54:25 +0200
+Message-ID: <20260912065626.249040774@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,38 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 16a04441eab0dcd4d7126a6f66b370adbf28f96d ]
+[ Upstream commit 3ae8ad277e2819a281b0e36b55633c8515c16ce7 ]
 
-The flow is added to dev->twt_list before sending the agreement to the
-firmware, but the error path leaves it linked while flowid_mask is
-never set. The flow slot can then be reused and memset while still on
-the list, corrupting twt_list, and station removal leaves a dangling
-entry behind that mt7915_mac_twt_sched_list_add() later walks.
+mt7915_pci_init_hif2() was called unconditionally and again inside the
+WED-inactive branch. The helper increments the global hif_idx, writes the
+PCIe RECOG_ID register and takes a get_device() reference via
+mt7915_pci_get_hif2(), while removal only drops one reference. On non-WED
+dual-hif hardware this double-incremented hif_idx, wrote RECOG_ID twice and
+leaked a device reference. Only the call inside the WED-inactive branch is
+correct; drop the unconditional one. hif2 is already initialised to NULL.
 
-Fixes: 3782b69d03e7 ("mt76: mt7915: introduce mt7915_mac_add_twt_setup routine")
-Link: https://patch.msgid.link/20260724124813.3961474-17-nbd@nbd.name
+Fixes: cacdd67812c6 ("mt76: mt7915: add mt7915_mmio_probe() as a common probing function")
+Link: https://patch.msgid.link/20260727150434.1778520-2-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/mac.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/pci.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-index b058a38a88cf2..bd8bd74f0336d 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-@@ -2371,8 +2371,10 @@ void mt7915_mac_add_twt_setup(struct ieee80211_hw *hw,
- 	}
- 	flow->tsf = le64_to_cpu(twt_agrt->twt);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
+index 07b0a5766eab7..5a0c9eeb2c4e2 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
+@@ -135,7 +135,6 @@ static int mt7915_pci_probe(struct pci_dev *pdev,
  
--	if (mt7915_mcu_twt_agrt_update(dev, msta->vif, flow, MCU_TWT_AGRT_ADD))
-+	if (mt7915_mcu_twt_agrt_update(dev, msta->vif, flow, MCU_TWT_AGRT_ADD)) {
-+		list_del(&flow->list);
- 		goto unlock;
-+	}
+ 	mdev = &dev->mt76;
+ 	mt7915_wfsys_reset(dev);
+-	hif2 = mt7915_pci_init_hif2(pdev);
  
- 	setup_cmd = TWT_SETUP_CMD_ACCEPT;
- 	dev->twt.table_mask |= BIT(table_id);
+ 	ret = mt7915_mmio_wed_init(dev, pdev, true, &irq);
+ 	if (ret < 0)
 -- 
 2.53.0
 
