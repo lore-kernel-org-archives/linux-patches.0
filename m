@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C406472F6C;
-	Sat, 12 Sep 2026 11:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093101A9F83;
+	Sat, 12 Sep 2026 11:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212878; cv=none; b=YAbIxVHPjpzVER8DCT1eoFOYetwA4pczQZwJUDSsNWr9Olzb/nZMXe+Uk34V1iNFH7FcTFkIaKyehpFjqBRWAdcDgrYYY5nc0sBE2eI+B4MAGaYJ1J3On2JDuQFM3uOo+vBStcG+z1r/qMtE2ylcQrZJ8DKidEvAJ/7cxNlSbBs=
+	t=1789212883; cv=none; b=G782Nx9dhm3o0sZdYZkYrn7JfMaYgitF5ENSqJlOV7KlRPPccCy7Qc5A39UqWg1NXwbLLdzh76edQGTcuU0KgOmkuZ+dT48XFOOulz1al6yIcNvu0rPyyRuMR2JJNeLlwhXphmfeyhCQVr/Zq+4yYHO9IAXlTmGtebyVs6pT+CM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212878; c=relaxed/simple;
-	bh=xbaRQFFf8CG+9qYWI5A6iSBl/Krh/wZb9CP56XD4jFY=;
+	s=arc-20240116; t=1789212883; c=relaxed/simple;
+	bh=SZMavDb/Dk6J0TlAY6hyZs+QUiVlb2Ey0TCrOMbQLR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RSv0ZA3MD6w5jbdX6rscfuPh9VodJ10Ywv2sTehI6zIiBOkmoevEDPGomPJWhaHouh0ttpVkYtNqKNEiFibgFA2elA/BgeQ+YQb81rvGonhKt7EiB1XZzN8xZdPnHsl43i5WrTbbj0fr1j8CVAvwASSDFCJ7Xqc3o06TEMVBIvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmRnUu6p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Odmqgne1ayWMezlzoI6hafGRg8kxCnsMUiJV2fS+aAk7Y3qqh6Mv2zdY7HKqn83pLVeDri/6fFqtfXqx93nSSgNHPudngwKqNAufn+QIHtxBJd3Zbf4RVNftAhEfqO6I6rIeZwqyxZmAWPb3nfDCjA81mbmDPcMSxlh9E8SlJK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gRrS8ihZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmRnUu6p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358D91F00898;
-	Sat, 12 Sep 2026 11:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gRrS8ihZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2EB1F00893;
+	Sat, 12 Sep 2026 11:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212876;
-	bh=nLOcsrrepT1h5P/Zh4b3rzJ+VAC/GZXMPWBGAruKSnY=;
+	s=korg; t=1789212881;
+	bh=yATWPh5yjFjOCBEDGxs+Ube8fBfykRsKLhLtJ/xKtYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wmRnUu6pD3fGBkI0JPuqllYZ3lrCDdDC2GBeMS7zgnSvEiH9jpudrYXN5969XNVYz
-	 xLyIrkY9ioSDBtHY0cCqHguvhmuzvqxg9slV4gKFslWRYCXjOVQe+m2tGG2/1XDtCw
-	 orLKUupNX2M52MMqhU3iSxyR/8IDrCdC4fK+NNu4=
+	b=gRrS8ihZJ1DhkrI3NJ0FPi7Z3ukElMyQ89e6nFyOB/vmsjoUihPQJyjxpAWC/Y10+
+	 k1aMin8jku2op8h3/G3UV76XYzjn04gmV3m2ew4lZA+/zj7CNSIc2Rmvs8HGPCQqzY
+	 ZGFDpQzEzx5Eqd86GKHEVkO7uIFmDFuXq4qCr1qI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1514/1518] ACPI: processor: Add cpuidle driver check in acpi_processor_register_idle_driver()
-Date: Sat, 12 Sep 2026 09:01:23 +0200
-Message-ID: <20260912065657.815330561@linuxfoundation.org>
+Subject: [PATCH 6.12 0001/1376] net: skbuff: dont skb_tx_error() the source skb in skb_zerocopy()
+Date: Sat, 12 Sep 2026 08:40:27 +0200
+Message-ID: <20260912065607.576800157@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
-References: <20260912065623.398859879@linuxfoundation.org>
+In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
+References: <20260912065607.535295758@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,56 +49,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>
+From: Norbert Szetei <norbert@doyensec.com>
 
-[ Upstream commit 66c62e6773c54ce5233eb21c6d48999c3747bd13 ]
+[ Upstream commit 8ece906150128d5ec2462aabcc978c568433eca4 ]
 
-Commit 7a8c994cbb2d ("ACPI: processor: idle: Optimize ACPI idle
-driver registration") moved the ACPI idle driver registration to
-acpi_processor_driver_init(), but it didn't check whether a cpuidle
-driver was already registered.
+skb_zerocopy() copies frags from @from into @to. On an
+skb_orphan_frags() failure it calls skb_tx_error(@from), a destructive
+operation on the source skb the copy helper does not own. That completes
+@from's zerocopy uarg and clears SKBFL_ALL_ZEROCOPY, including the
+SKBFL_SHARED_FRAG page-ownership marker.
 
-For example, on Intel platforms, if the intel_idle driver is already
-loaded, the code would still evaluate the _CST object in the ACPI
-table and attempt to register the acpi_idle driver. This registration
-would fail with -EBUSY due to the existing check in cpuidle_register_driver.
+Both callers already report the failure on their own drop path.
+nfnetlink_queue does it at nla_put_failure, and Open vSwitch does it in
+the flow-miss drop arm of ovs_dp_process_packet(), so nothing is lost by
+dropping it here.
 
-Add a check at the beginning of acpi_processor_register_idle_driver()
-to avoid unnecessary _CST evaluate and potential registration failures.
+On Open vSwitch's OVS_ACTION_ATTR_USERSPACE path the skb is not freed on
+this error: do_execute_actions() ignores output_userspace()'s return
+value and, unless the upcall was the last action, keeps forwarding the
+same skb through the flow's remaining actions. The uarg is completed
+while that skb is still in flight, telling the producer its buffers are
+free, and SKBFL_SHARED_FRAG is cleared on an skb the rest of the stack
+still handles. That flag is what makes esp_input() call skb_cow_data()
+instead of decrypting in place, so a later local ESP delivery can
+decrypt over frags the skb does not own privately.
 
-Fixes: 7a8c994cbb2d ("ACPI: processor: idle: Optimize ACPI idle driver registration")
-Signed-off-by: Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>
-Link: https://patch.msgid.link/20260608190359.3254-1-TonyWWang-oc@zhaoxin.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Leave error reporting to the callers.
+
+Fixes: 36d5fe6a0007 ("core, nfqueue, openvswitch: Orphan frags in skb_zerocopy and handle errors")
+Cc: stable@vger.kernel.org
+Suggested-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/6E3A780D-FB87-421F-9964-B1D457D7D106@doyensec.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ 7.2 and earlier do not have the put_page() call on the error path ]
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_idle.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/core/skbuff.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index ce07505a8de69..5c6f736ba3b52 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -1371,6 +1371,15 @@ void acpi_processor_register_idle_driver(void)
- 	int ret = -ENODEV;
- 	int cpu;
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index a3d329b2ccfd0..ca861bd6db148 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -3847,10 +3847,9 @@ skb_zerocopy(struct sk_buff *to, struct sk_buff *from, int len, int hlen)
  
-+	/*
-+	 * If a cpuidle driver is already registered, there is no need to
-+	 * evaluate _CST or attempt to register the ACPI idle driver.
-+	 */
-+	if (cpuidle_get_driver()) {
-+		pr_debug("cpuidle driver %pS already registered.\n", cpuidle_get_driver());
-+		return;
-+	}
+ 	skb_len_add(to, len + plen);
+ 
+-	if (unlikely(skb_orphan_frags(from, GFP_ATOMIC))) {
+-		skb_tx_error(from);
++	if (unlikely(skb_orphan_frags(from, GFP_ATOMIC)))
+ 		return -ENOMEM;
+-	}
 +
- 	acpi_processor_update_max_cstate();
+ 	skb_zerocopy_clone(to, from, GFP_ATOMIC);
  
- 	/*
+ 	for (i = 0; i < skb_shinfo(from)->nr_frags; i++) {
 -- 
 2.53.0
 
