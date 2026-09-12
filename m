@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C3E490BFA;
-	Sat, 12 Sep 2026 18:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6414486424;
+	Sat, 12 Sep 2026 18:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237360; cv=none; b=SzfyCW8PozsByvlEekpZv73/gMEOu3TRzWEslfU9WveDMS6dGa1hBiYkKN2AJ1QemlYFkfRkQf39k7kVFwYhaBVM0jjm0h/PF3sTkFahXGqqXchHYxxGb1XQsAw+IMR1y4sC0qTMK+CYiBbBBg5UJarfGqzTdWfB8u5ZyBiYNDU=
+	t=1789237366; cv=none; b=VzZro1KF5tFXnZiL0YBC5+ziEuSoj+0IzUWdIISLSArzs3++Vx6E0zeOWykjdOKhECkhwFNXDuRoXzSOrmZ/X1X79PRzQQw7AUmMp67yUVNVcuyvcSyNFNx5RtjW6S0h+04T58d8JYUIc6x+BrI7V/m1/ls5NXzol+39sAdQlWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237360; c=relaxed/simple;
-	bh=kQPAe4P7M3PtRYVHL4RdvUL87AQjOghpjTavZ68E0Uo=;
+	s=arc-20240116; t=1789237366; c=relaxed/simple;
+	bh=wosPMcwctvaOWJfImqDfoi3KeV9wwyNU0mEBzkGOlUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E7kdiw1XCd75AudW9XN7+hnoWW9CnJz6KVX7nK4daRbnKrXGeU29J0SOVKiLiK1IAlvxDfriuYI0zBVoAwiNVM/5OePRdN61ahu8VbG78oPb6PP/FUze9aeCB71RhRG0jPqUdqeXZJU3gDDcNA/sO6E+Kl4JNH3SzzAdKW5VT/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9oSwMBm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tntkQTFyacWzgDuMbNhvvWfBWGgN3iiWYo5GYE4U2uAmuuc5N0YXBS8G0pyENEtKlnSv6TpmFYAtA/aVux+daBqwGGERRsAn2STbXBv+R1YguWef3hUaIZj9YvyFw+T4ffec6rQ9T3m5AYDaNFbLkODkKZ0L4aJypcFGVa4Spd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHmfuDvt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9oSwMBm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D8821F000FF;
-	Sat, 12 Sep 2026 18:22:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHmfuDvt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5112A1F00899;
+	Sat, 12 Sep 2026 18:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237356;
-	bh=ikFlYQx6+apEDCfRaiqpdpFyyf4ZtRGivknaB6lVgVU=;
+	s=korg; t=1789237361;
+	bh=Xsz+rqkfZdpwTCXl2DUHeO0vROLrO/b+uuHo4eRecmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V9oSwMBmUgBjuaLmmzko3afeCwEhgDgrcDRGFvUKO7Hu4JfP06Rm5VQlRwt+/TvrH
-	 OzvQCz8y2LIIrsAA1rqda8MjrDE32dB+f8fHSGC6ldTY/OljgWMvsYOWp56BUgsels
-	 ptXWpOegznfsfdJxh/JMsuvUSVlvflzoF17RcZ48=
+	b=GHmfuDvt06hhoBDuaWNeKixmiZ5f65p070IHvgvSUDYhG92x3Kvh01OL8pNs0ddIY
+	 iTh1lSqyHnBcQuaPvCeAjiR7XAKtCvXmWEGdj1rtUgrVJGSDTiqL/cZdmD7I0R68tx
+	 rKbND2D36XcV3aYjiRv1233qDjI/JKNsznI7C8E8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fd6ef980cf1c722be639@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Jeffin Philip <jeffinphilip14@gmail.com>
-Subject: [PATCH 5.15 242/935] usb: gadget: fix null pointer dereference in usb_put_function_instance()
-Date: Sat, 12 Sep 2026 08:54:32 +0200
-Message-ID: <20260912065532.375707014@linuxfoundation.org>
+	Tomasz Figa <tfiga@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>
+Subject: [PATCH 5.15 216/935] platform/chrome: sensorhub: Fix dropped timestamp events and log spam
+Date: Sat, 12 Sep 2026 08:54:06 +0200
+Message-ID: <20260912065531.778690904@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,37 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeffin Philip <jeffinphilip14@gmail.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit 6e74ac5c596fd246e37eadfc354567179ccbe9aa upstream.
+commit 9a3f43b30373c61477d0d3ab52946c05f9492bf9 upstream.
 
-usb_put_function_instance() attempts to dereference fd inside fi struct
-to get mod in uvc_alloc_inst() error path. However, fd is not allocated
-until later in try_get_usb_function_instance() after allocating fi in
-uvc_alloc_inst() and thus guranteed to be null in error path. Fix this
-by adding a null check for fi->fd that returns if fd is null.
+Commit 833740a2333c ("platform/chrome: sensorhub: Bound the EC-reported
+sensor number") evaluated the `sensor_num` against the bounds limit even
+for timestamp events.  A timestamp event typically has a `sensor_num` of
+0xff [1], causing the driver to flag it as invalid and skip to the next
+event.
 
-Reported-by: syzbot+fd6ef980cf1c722be639@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fd6ef980cf1c722be639
-Fixes: 0062f6e56f70 ("usb: gadget: add a forward pointer from usb_function to its "instance"")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jeffin Philip <jeffinphilip14@gmail.com>
-Link: https://patch.msgid.link/20260816061712.15547-1-jeffinphilip14@gmail.com
+As a result, we'd see a flooding of "Invalid sensor number 255 from EC"
+warning logs and these timestamp events were being dropped.
+
+Move the bounds-check into cros_ec_sensor_ring_process_event() and
+evaluate it only after standalone timestamp events have already been
+processed and returned early.
+
+[1] https://crrev.com/219ca6ef82ba266da788b673ee4ad50bd3ea1285/common/motion_sense_fifo.c#427
+
+Fixes: 833740a2333c ("platform/chrome: sensorhub: Bound the EC-reported sensor number")
+Reviewed-by: Tomasz Figa <tfiga@chromium.org>
+Link: https://lore.kernel.org/r/20260715024454.4127571-1-tzungbi@kernel.org
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/functions.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/chrome/cros_ec_sensorhub_ring.c |   27 ++++++++++++-----------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
---- a/drivers/usb/gadget/functions.c
-+++ b/drivers/usb/gadget/functions.c
-@@ -70,7 +70,7 @@ void usb_put_function_instance(struct us
- {
- 	struct module *mod;
+--- a/drivers/platform/chrome/cros_ec_sensorhub_ring.c
++++ b/drivers/platform/chrome/cros_ec_sensorhub_ring.c
+@@ -436,6 +436,21 @@ cros_ec_sensor_ring_process_event(struct
+ 						  fifo_timestamp,
+ 						  *current_timestamp,
+ 						  now);
++
++		/*
++		 * A standalone timestamp event typically has a sensor_num of
++		 * 0xff.  Return early here to prevent it from hitting the
++		 * bounds check below and spamming the logs.
++		 */
++		return false;
++	}
++
++	/* Skip event if sensor_num from EC is out of bounds. */
++	if (in->sensor_num >= sensorhub->sensor_num) {
++		dev_warn_ratelimited(sensorhub->dev,
++				     "Invalid sensor number %u from EC\n",
++				     in->sensor_num);
++		return false;
+ 	}
  
--	if (!fi)
-+	if (!fi || !fi->fd)
- 		return;
+ 	if (in->flags & MOTIONSENSE_SENSOR_FLAG_ODR) {
+@@ -463,10 +478,6 @@ cros_ec_sensor_ring_process_event(struct
+ 		return true;
+ 	}
  
- 	mod = fi->fd->mod;
+-	if (in->flags & MOTIONSENSE_SENSOR_FLAG_TIMESTAMP)
+-		/* If we just have a timestamp, skip this entry. */
+-		return false;
+-
+ 	/* Regular sample */
+ 	out->sensor_id = in->sensor_num;
+ 	trace_cros_ec_sensorhub_data(in->sensor_num,
+@@ -851,14 +862,6 @@ static void cros_ec_sensorhub_ring_handl
+ 
+ 		for (in = sensorhub->resp->fifo_read.data, j = 0;
+ 		     j < number_data; j++, in++) {
+-			/* Skip event if sensor_num from EC is out of bounds. */
+-			if (in->sensor_num >= sensorhub->sensor_num) {
+-				dev_warn_ratelimited(sensorhub->dev,
+-						     "Invalid sensor number %u from EC\n",
+-						     in->sensor_num);
+-				continue;
+-			}
+-
+ 			if (cros_ec_sensor_ring_process_event(
+ 						sensorhub, fifo_info,
+ 						fifo_timestamp,
 
 
