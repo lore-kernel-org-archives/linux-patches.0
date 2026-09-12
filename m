@@ -1,121 +1,174 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7C73B0AE9
-	for <patches@lists.linux.dev>; Sat, 12 Sep 2026 18:07:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FEC38F64D;
+	Sat, 12 Sep 2026 18:14:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789236463; cv=none; b=fllSMV5AKA9LLbhh7sG+Pvd2XWD9Kj+xs3o58EE/bSP/iDJ9GKYoQ4wIQHRz8ALwsv209eHGjiK9sdrlAW9q5ytgDuPDZ7DJoSzWRKOYfeAdBI/sfggMmenszDOI6NRd7A9kyHoLMYoMUPVjCBUqpxd4RfcCerKR537jzqSW/hw=
+	t=1789236874; cv=none; b=NhFUYR+B2NjBdYWmrwc1VYRp2Oib1Y999u8K05xpa5XNwDbImTqd8MzU0r7jMqAFt1jMM0U6SXwIGnrn+C14BfU4Xw1aC4gCJZVM3UktMDdWuLSdRi8Sd5NDJvHEgJ9fVQK4LkSbhTMLkld74+NeSVUmr0a6s1HLHMUIFnuujvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789236463; c=relaxed/simple;
-	bh=zA711oX0ET3D0sK9sLm0XigEYQE1bQOhStZUxrik4Dg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VsKIc3MNd1xu3ert8MAhMrPYXbAFf/+pzu6R6N6bKRL8H3u+C7y0Lr+uWoWA+gKWta/EOqOncHIPJs3OErEQU6g9QC3ey9qjeIiJD7qCdtjUsWc66Xgnhs9ns4GdrnkNOPHYzNDmvTvvhOaRd7ausENWkrLDufhhcxU00UKa+xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZTACFnct; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tE1iDEQa; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1789236874; c=relaxed/simple;
+	bh=zr1GYbsoyhKyY+sHxlLbyXgxYn7uCz1mcHY9ToI3n2o=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=WfJww3LwnO03O+EysIFvGPYQ0+BaoRaatIQ8412eggzz6U/CVgNHHODxkmjD80Rgjl5SpUeWQAoKxVqlz+hCtkFXHCu6H3Jb1w2MSr42zK/ydAQ+JJRg/OJWYI91sH04T8tNu3l7zROkvjJGTDAm2uQMULMJIaNeo2YgK2QQWUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZmkaQgWW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZTACFnct";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tE1iDEQa"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 6F31A1D00060;
-	Sat, 12 Sep 2026 14:07:39 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Sat, 12 Sep 2026 14:07:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1789236459;
-	 x=1789322859; bh=7gIQihy6tyE+Q+xCQxRWgrIZXoNFX+R2j3iieKJ0g8c=; b=
-	ZTACFnctjLSK4l3PszRsEoCtFQ08q9TjyvL3177Hny5Sttu6fvHMpBbHk01wPlzH
-	BptFiYv+o4OFykJKXCntz7L18mplNzcT6usokcBv2EgZezVPofGgzpArRVcNSB3F
-	8QQQoXTmOehCuiSzsTS7/Do9r793YHGlHiNiOH8RBo1sO1QDyQbOM0D79byFUP4k
-	pMJhH+GF4BLz7uQrxiDiJfEMo6ZzS0/alOKbwhF7Sj/Zl9ud1rqqHHZv82eMaAEY
-	+csQu7v9WWoF9Vdj8Akv1oYbeaigyJNciU3oRMu45Es7CyaIP8IzaCzSu2KKkYgO
-	PUojxDW1A/Wt0/GadY8D/Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1789236459; x=
-	1789322859; bh=7gIQihy6tyE+Q+xCQxRWgrIZXoNFX+R2j3iieKJ0g8c=; b=t
-	E1iDEQaSILlld2eMjUDMaob1NS7qQaHr9byrnDb9ju5lPfAoqbdXI2ZDFIpBb30h
-	KiiqkXOXSV3EWhIXzhZrmOybYvcqp+64Di5M5EN5EaQR3ShKgF/Sw5aRHYv5NQuZ
-	p98tX2YbJKbazBqFkycY5jm8UdMfUSq2PytUo9SS1fsRseyHJRsDWvb7IR8CQv6w
-	vRpsafX7A2CDyZjLXXoa+6XXqNyOYPrwr3apOlup9E9F6H/nyOcbnD6zbyOaTPIL
-	IcVcjIKl+vQ6Trhqn8tKJChkhNWt2ncAwUHiZWiiiShNcVwnUqfKGlP1dM1qPNgF
-	mYfuUtCPqZ5iziThz3SoA==
-X-ME-Sender: <xms:6pSlarR43I_4z4bD_kVTTC39pM39mLoYY8jbeAsBAS0euLwzemYKkQ>
-    <xme:6pSlaoprRI_As9ZEJIke7f_6tUwsbzUaFB3UehQXM_T_WcolnlSdwxjnEAKwoQboI
-    O-dbI-_UJzzIdsFJUX5yDvwOb_bg4_3QxNKjCd7Fw1Sz1GpvfuYPg>
-X-ME-Received: <xmr:6pSlasWsC1Hlp2s3yLStBnRHRmrRsM0Oxc_qbLOzoYKI-TsS-XwdSBGcJ3PMzSr1mnoSWNYIsr8XvifX1f6x_wZ_E3QvQTuj>
-X-ME-Proxy-Cause: dmFkZTEfZw3tp7pu28EdwD/ARQ1pPl7y9MJlS0o/SlSVRbBdiMwpuY069Fd9ErgcgNHBYt
-    6vqoSl5CuFA6UFL0Wt8GYnJ1XNE22wAMP24P1PkVjMsvVeIjcVhTCaSlWey50j+fdCNhJ1
-    LToD5plm2vg2gEiwDbbWMu+f8asbkQfOx08CCHCvtS8xpS8PlrpuSgDPAZHpQZVch7e84K
-    DVlnG7rHP/rdIc15sQLybBxnD4zV65mUz3xPjLbgSivyLYEl/yKHAhwM51HwBvKqUjswXK
-    0LMRhH4RCWwFfKFaHf9D+gMLNhfXULUeqUFQ1o0CcJ/uQtSedboNeobqqqg/KvAqQ+Ugak
-    8qEA9A8tYQYRJZrksCaI24FGdvo0QYsZ5L3x/aJ2Gx5oFPsyvoRr6LeHz9sTBsVjeWRxqP
-    YiXp44oOj5TlSVRepCDdY5j9alYKC299iC/0H6qXD++biovFnP0UQxUMSsjoUHgaeefwsn
-    IBF214wJeXcdqZIY8/dgg0q/J4iSX5nKgw5TIuzggK3z7WjKll2KczYKquIhE+a02oQTZa
-    cAq3an2jZX0Fg7Gg5wSp2xI8WMkVA9+STpvY9iD+qxOJs4iJGJm6e41am8+lMeq/aSxqzk
-    ueQhgfSlI/gK/BG/fZf7FU93lmZpWI/xmr+avZWb7REgTo0kbSMQut5CmixA
-X-ME-Proxy: <xmx:6pSlau93QG5lt8v9PdlR9BjSUyADhq2uVTBgBxqU2p0EQsPZGsaC-Q>
-    <xmx:6pSlasaD8yqZpO6pwqR8idYy87RfuSSjil5BzAyNeB51Aex_kb5p-w>
-    <xmx:6pSlaueV9gCREZztRXSAXUws-ZZ3PJdkuev6Orqzc9crfJdJ685xzg>
-    <xmx:6pSlaup-aYBvyagatdQMUptptDeLacx_0ujwObhL7oRy7og4fuHlWg>
-    <xmx:65Slaq75Lgr1sRPCydUckoxuNJKZy1k6VzuwuI5QX3er8bz_-9AUmLqG>
-Feedback-ID: i6289494f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 12 Sep 2026 14:07:35 -0400 (EDT)
-Message-ID: <78328020-83f9-4a4b-b7db-892ed028b7ba@pobox.com>
-Date: Sat, 12 Sep 2026 11:07:34 -0700
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZmkaQgWW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06611F000FF;
+	Sat, 12 Sep 2026 18:14:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1789236872;
+	bh=Xs05vHPM5MoOsCQC9eR5qcLpZs5gxaGV2B+FgCMh/7E=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=ZmkaQgWWDQHw73Q3iHYCcCdTOgk5fwIcYgYe8AjpGFrJGN1Ji3uWZNnN/eF2IWODY
+	 sCZFZr2BU9m2TsYKjxRne6WLscK2DEg4FlL1hlMNJXURqGlojd93yFvaJfDBwYiQTN
+	 rKcyJzBOoMIP88fDCgKOmU2cEQWVrsrSV1C1mTTU=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 5.15 144/935] nvme-tcp: reject a read that transferred too few bytes
+Date: Sat, 12 Sep 2026 08:52:54 +0200
+Message-ID: <20260912065530.123456300@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
+References: <20260912065526.833703348@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 000/935] 5.15.221-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260912065526.833703348@linuxfoundation.org>
-Content-Language: en-US
-From: "Barry K. Nathan" <barryn@pobox.com>
-In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 9/11/26 11:50 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.221 release.
-> There are 935 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Mon, 14 Sep 2026 06:54:17 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.221-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
-Tested on an amd64 laptop (Lenovo ThinkPad T14 Gen 1). Working well,
-no regressions observed.
+------------------
 
-Tested-by: Barry K. Nathan <barryn@pobox.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
--- 
--Barry K. Nathan  <barryn@pobox.com>
+commit 7fa3f73f6c8ddc5f0425b50fb2a626a782ef7d12 upstream.
+
+nvme_tcp_recv_data() completes a request once the current C2HData PDU
+has been consumed. Nothing compares the total bytes received against
+the length the command asked for: struct nvme_tcp_request has no
+receive-side counter, queue->data_remaining is per queue, and
+blk_mq_end_request() completes for blk_rq_bytes(rq) unconditionally
+with no residual concept anywhere above.
+
+A controller can therefore answer a 4096-byte read with 512 bytes and
+have it reported as a complete read; user space then gets 4096 bytes of
+which 3584 are whatever was already in the page. I reproduced that with
+a test target.
+
+Count the bytes received and refuse to complete a successful read whose
+count does not match, at the two NVME_TCP_F_DATA_SUCCESS paths and in
+nvme_tcp_process_nvme_cqe(). The success test shifts req->status right
+by one, because the driver keeps the wire value there and shifts it on
+completion, so the check must see what the completion path will see.
+Only REQ_OP_READ is checked, because there the length comes from the
+sectors the request covers; a passthrough command is built by its
+submitter, which picks both command and buffer, so the kernel has
+nothing to compare against.
+
+Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/nvme/host/tcp.c |   34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
+
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -90,6 +90,7 @@ struct nvme_tcp_request {
+ 
+ 	struct bio		*curr_bio;
+ 	struct iov_iter		iter;
++	u32			data_recvd;
+ 
+ 	/* send state */
+ 	size_t			offset;
+@@ -525,6 +526,29 @@ static void nvme_tcp_error_recovery(stru
+ 	queue_work(nvme_reset_wq, &to_tcp_ctrl(ctrl)->err_work);
+ }
+ 
++/*
++ * NVMe has no short read: a read that completes successfully must
++ * have transferred everything it asked for.
++ */
++static bool nvme_tcp_data_in_short(struct nvme_tcp_queue *queue,
++				   struct request *rq)
++{
++	struct nvme_tcp_request *req = blk_mq_rq_to_pdu(rq);
++
++	if (le16_to_cpu(req->status) >> 1)
++		return false;
++	if (req_op(rq) != REQ_OP_READ || !req->data_len)
++		return false;
++	if (likely(req->data_recvd == req->data_len))
++		return false;
++
++	dev_err(queue->ctrl->ctrl.device,
++		"queue %d tag %#x short data-in: got %u of %u\n",
++		nvme_tcp_queue_id(queue), rq->tag,
++		req->data_recvd, req->data_len);
++	return true;
++}
++
+ static int nvme_tcp_process_nvme_cqe(struct nvme_tcp_queue *queue,
+ 		struct nvme_completion *cqe)
+ {
+@@ -544,6 +568,9 @@ static int nvme_tcp_process_nvme_cqe(str
+ 	if (req->status == cpu_to_le16(NVME_SC_SUCCESS))
+ 		req->status = cqe->status;
+ 
++	if (unlikely(nvme_tcp_data_in_short(queue, rq)))
++		return -EPROTO;
++
+ 	if (!nvme_try_complete_req(rq, req->status, cqe->result))
+ 		nvme_complete_rq(rq);
+ 	queue->nr_cqe++;
+@@ -800,6 +827,7 @@ static int nvme_tcp_recv_data(struct nvm
+ 		*len -= recv_len;
+ 		*offset += recv_len;
+ 		queue->data_remaining -= recv_len;
++		req->data_recvd += recv_len;
+ 	}
+ 
+ 	if (!queue->data_remaining) {
+@@ -808,6 +836,8 @@ static int nvme_tcp_recv_data(struct nvm
+ 			queue->ddgst_remaining = NVME_TCP_DIGEST_LENGTH;
+ 		} else {
+ 			if (pdu->hdr.flags & NVME_TCP_F_DATA_SUCCESS) {
++				if (unlikely(nvme_tcp_data_in_short(queue, rq)))
++					return -EPROTO;
+ 				nvme_tcp_end_request(rq,
+ 						le16_to_cpu(req->status));
+ 				queue->nr_cqe++;
+@@ -856,6 +886,9 @@ static int nvme_tcp_recv_ddgst(struct nv
+ 					pdu->command_id);
+ 		struct nvme_tcp_request *req = blk_mq_rq_to_pdu(rq);
+ 
++		if (unlikely(nvme_tcp_data_in_short(queue, rq)))
++			return -EPROTO;
++
+ 		nvme_tcp_end_request(rq, le16_to_cpu(req->status));
+ 		queue->nr_cqe++;
+ 	}
+@@ -2403,6 +2436,7 @@ static blk_status_t nvme_tcp_setup_cmd_p
+ 	req->status = cpu_to_le16(NVME_SC_SUCCESS);
+ 	req->offset = 0;
+ 	req->data_sent = 0;
++	req->data_recvd = 0;
+ 	req->pdu_len = 0;
+ 	req->pdu_sent = 0;
+ 	req->data_len = blk_rq_nr_phys_segments(rq) ?
+
+
