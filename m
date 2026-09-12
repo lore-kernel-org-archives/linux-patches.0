@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D671FBEA6;
-	Sat, 12 Sep 2026 16:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2263288B9;
+	Sat, 12 Sep 2026 16:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231112; cv=none; b=ifSwUrwtXgQh/jsPm8pTauBwC9q8xs9fkKFz4Dl5hG1dCAqulYplvaavOny83Ub6MMLkwWHHvZkGcjKEQS/YzoXsW4iIBOn5PKIxyY41Fvc72VjEUNrwtZ1mKnb3N4SxKLoecVTpyfd5ixaImzCaV823JWATaFS7/ymvsGbrs0g=
+	t=1789231118; cv=none; b=E8vVuW9y9ooJXjGFr18WxkunONSrHocSm9qb43NC5elcwBpQXDKDciKQCOWT2j9uS4hEJXPYCjM6IbelDZDKtF/cZ0aXFKQbGq0NRzFFkRss3Dr0lKbeX3mhYfVNalc5nRJktKZUWA+F53wF/lhnnmiqvCUOqiKAjXaqj3gBEqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231112; c=relaxed/simple;
-	bh=MOzRpMSl6WrH3bIaZj+6HM1C6QXpSz5W/qHAyXftymE=;
+	s=arc-20240116; t=1789231118; c=relaxed/simple;
+	bh=le52Ye5Mba/b0XzWqIkhilofcTFDwoqZt14d997V0S8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hjSBJRQvD9lONJfRj2XQ1Kl7tQoyjfaaagjG3oqOyXBAh44vWF4pbJ5y8D01JeKzRMmbL2cMoT54bjsIQGwFx2h4IfUCwY70AVonRU4R8PbodEwvAoJdQ3nkCapaHuExnYc1ZFlnmgx/2iGtddNa/Vn224/LCeHcTAKQi4oL0pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cm1THRLk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UDlJXKo2t0aRlILq48qMwXmtXI2bEt/PL0KMX4w5xXMmxRpF+Fp+QiCNB+48l1wJjGS7FyCzaLwQqqBI+2JVII+Bm65WiSNXrD4A4Grr2XYfgB5rAfq6V7whCdo/0uBHsPwyn8JJOSZxvcOPQWG29aRcOzeDcZngcXcX+t+GSMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wu8v803H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cm1THRLk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C84E1F000FF;
-	Sat, 12 Sep 2026 16:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wu8v803H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30641F000FF;
+	Sat, 12 Sep 2026 16:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231111;
-	bh=8FUASymNnaXdeVnhdlymnyIc9/vwmLddeSl0SSXQtxQ=;
+	s=korg; t=1789231116;
+	bh=3bvvncDOv48u0lgBV+gP297/5r8A/1N4mbDuUscICVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cm1THRLknxl5Lp1ayWQoXVE0isjBgJ8qN3CgMRcesnUZcvE50gqRXA5TD2EbKsFuh
-	 Jd8nkYMug6+8hPHNp5tnEP9EyhGofiuIlWnBqAPqZsD7fJBZJtFY813xi1wgXr05bt
-	 eBj1SAzWf6sFUBh33MteC96TAIZCUn/KsVkA2lFQ=
+	b=wu8v803HpfNUT9x+YroYsMxI5V1MawQWo7j6zpdNSPGDzjc2P9ZD+++Ytlb5o/xYM
+	 d4ls/6cqG4QCTMxODtxnIQrhlqThRmsVIPO4wpu+T2Li4djkfFPyMk1jJq+zASQ0z7
+	 6yfiO3mLXZnPcMbctpeuSwXDqLW+kkaeAO+eTzgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Nikhil Gautam <nikhilgtr@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0933/1191] Bluetooth: MSFT: validate evt_prefix_len against the response length
-Date: Sat, 12 Sep 2026 09:01:01 +0200
-Message-ID: <20260912065609.183539452@linuxfoundation.org>
+Subject: [PATCH 6.1 0934/1191] iio: light: gp2ap002: Fix unbalanced runtime PM on repeated event writes
+Date: Sat, 12 Sep 2026 09:01:02 +0200
+Message-ID: <20260912065609.206361507@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,71 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Nikhil Gautam <nikhilgtr@gmail.com>
 
-[ Upstream commit 0079e1a944634ab2dc1c7cdec1144486d096407e ]
+[ Upstream commit 579c049b4cb6fc72ce2c505fc5334540be0efcd3 ]
 
-read_supported_features() only checks that the response covers the fixed
-part of struct msft_rp_read_supported_features, which is 11 bytes:
+The IIO core does not filter duplicate writes to the event enable
+attribute, so writing the same value twice invokes
+write_event_config() twice. Enabling twice leaks a runtime PM
+reference, preventing the device from ever suspending again;
+disabling twice underflows the usage count and triggers a
+"Runtime PM usage count underflow" warning.
 
-	if (skb->len < sizeof(*rp)) {
-		bt_dev_err(hdev, "MSFT supported features length mismatch");
-		goto failed;
-	}
+Bail out early when the requested state matches the current state.
+While at it, switch to pm_runtime_resume_and_get() so a failed
+resume is propagated to userspace instead of silently marking the
+event enabled.
 
-evt_prefix[] is a flexible array member and rp->evt_prefix_len is an
-unvalidated u8 taken straight out of that response, so
-
-	msft->evt_prefix = kmemdup(rp->evt_prefix, rp->evt_prefix_len,
-				   GFP_KERNEL);
-
-copies up to 255 bytes from a reply that may have carried none of them.
-What is copied is data the controller never sent, and it is then used to
-match incoming vendor events in msft_vendor_evt().
-
-This is not an out-of-bounds access. An skb data allocation always has
-at least SKB_DATA_ALIGN(sizeof(struct skb_shared_info)) bytes past the
-payload, which is more than the 255 byte maximum, so the read stays
-inside the allocation and KASAN does not report it. It is still a read
-of bytes the host was never given, with the length fully controlled by
-the controller.
-
-Reject a response that is too short for the prefix it declares.
-
-Verified with an emulated controller over /dev/vhci on a KASAN kernel,
-with vhci made to advertise an MSFT opcode the way btintel, btqca, btmtk
-and btrtl do unconditionally. A reply of exactly 11 bytes declaring
-evt_prefix_len = 255 reaches kmemdup and copies 255 bytes
-("skb->len=11 evt_prefix_len=255", with the copied buffer dumped); since
-the reply ends at the fixed part, all 255 come from past the end of the
-response. No KASAN report is produced, as expected from the allocation
-slack described above. With this patch the response is rejected with
-"MSFT event prefix length mismatch" and msft->evt_prefix is left unset.
-
-Fixes: 145373cb1b1f ("Bluetooth: Add framework for Microsoft vendor extension")
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 97d642e23037c ("iio: light: Add a driver for Sharp GP2AP002x00F")
+Signed-off-by: Nikhil Gautam <nikhilgtr@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/msft.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/iio/light/gp2ap002.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
-index 39c7fc8c5a17e..c27e137a23475 100644
---- a/net/bluetooth/msft.c
-+++ b/net/bluetooth/msft.c
-@@ -139,6 +139,11 @@ static bool read_supported_features(struct hci_dev *hdev,
- 	if (rp->sub_opcode != MSFT_OP_READ_SUPPORTED_FEATURES)
- 		goto failed;
- 
-+	if (skb->len < sizeof(*rp) + rp->evt_prefix_len) {
-+		bt_dev_err(hdev, "MSFT event prefix length mismatch");
-+		goto failed;
-+	}
+diff --git a/drivers/iio/light/gp2ap002.c b/drivers/iio/light/gp2ap002.c
+index 45c3128ec2fc8..dca2ddd9a7639 100644
+--- a/drivers/iio/light/gp2ap002.c
++++ b/drivers/iio/light/gp2ap002.c
+@@ -343,6 +343,10 @@ static int gp2ap002_write_event_config(struct iio_dev *indio_dev,
+ 				       int state)
+ {
+ 	struct gp2ap002 *gp2ap002 = iio_priv(indio_dev);
++	int ret;
 +
- 	if (rp->evt_prefix_len > 0) {
- 		msft->evt_prefix = kmemdup(rp->evt_prefix, rp->evt_prefix_len,
- 					   GFP_KERNEL);
++	if (state == gp2ap002->enabled)
++		return 0;
+ 
+ 	if (state) {
+ 		/*
+@@ -350,14 +354,17 @@ static int gp2ap002_write_event_config(struct iio_dev *indio_dev,
+ 		 * already) and reintialize the sensor by using runtime_pm
+ 		 * callbacks.
+ 		 */
+-		pm_runtime_get_sync(gp2ap002->dev);
+-		gp2ap002->enabled = true;
++		ret = pm_runtime_resume_and_get(gp2ap002->dev);
++		if (ret)
++			return ret;
++
+ 	} else {
+ 		pm_runtime_mark_last_busy(gp2ap002->dev);
+ 		pm_runtime_put_autosuspend(gp2ap002->dev);
+-		gp2ap002->enabled = false;
+ 	}
+ 
++	gp2ap002->enabled = state;
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
