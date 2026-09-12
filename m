@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6187A32B125;
-	Sat, 12 Sep 2026 16:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180BF32B125;
+	Sat, 12 Sep 2026 16:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230357; cv=none; b=JpiIIH9HMIxa4+V27Rq+H7qTYWa8abuGnina8UDAsdhhY+g7DRWmj5Zi2szsrnZlfTlMcu7V4avuNUgiIOBaYoI2l3OJJuXpvKrBajtb4vNld02RA500Yt0ATjbtuSowb3EyHLOA3+65Yg/5KXRB+FlCeYrnzHkhjEN2vDs1Pqk=
+	t=1789230362; cv=none; b=plM42yCAeXCiCXxan0X8JnWsyizQB3UDPqhJtABGBWnGt+frdEVXWB+I4nUPBMuW1z/6kJCNun2RdH9EHL3roMevYPL8XjGFeM3ArHnp4y3aBrRmPVh5OxECp3gsA6u+bN7a0Nl2P+xF8o7lIiCUYwo3fCW50EZNkvb41Agdbaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230357; c=relaxed/simple;
-	bh=lT+4YDxtw0evGCBacg9AMlAXFNl/0U27WsGuvNQSnlg=;
+	s=arc-20240116; t=1789230362; c=relaxed/simple;
+	bh=JGZos2b48S4qSRLL7YrQN4fYa0Qdrj4tyxWOOVrveDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oDRPIu0J6OqFgLaES0uTzq4sbf/mTTzQLtJ4PVWOMxNZn+3zMw/GRR+xtm8BWs4oVIVG7conYaJMDldq3BstsgPNL1I1LYEuRm8rSZeKFxneIkpTj3MonaYyfwnfjWEaXtXablvOjVYQzMq3Tjk15sRQt3xKW+Z5XeXk9Sy+2es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=stKO0xwy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lKkhdxc3Q7dgB589Z2QJVLzKcYzVz+nXyxY1So4Hz6rLQLFzvRr7lrdBEABjFgt86Uoq45c+17CEltAozlkvGv9evRq297/XmaHxRDCDbLFNXXtOz3elaw0IHA4Fiabbz51nMktCUNSlcPKzSZ68Rfn92X1nIo/4HkTRUrjQd4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BNGgeiRn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="stKO0xwy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E5F1F000FF;
-	Sat, 12 Sep 2026 16:25:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BNGgeiRn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063811F000FF;
+	Sat, 12 Sep 2026 16:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230356;
-	bh=HOcj4C6NefObCTV1glgf7471eKdYM2mnD4YPYALnA08=;
+	s=korg; t=1789230361;
+	bh=qr9KftMXyy4BhkrNWgoLsRmR4aCBsvTNcfZBEoBG1OQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=stKO0xwyBEEr9+NAmx4EUc96JxOsZEzPkRW9SDGBBQc0ChpxAmoGdGQ3UCf+cpkOm
-	 5eYuaeZf0NYbgIN4FLGvPrBJS8JwNXLpQNgW8LeyMz+MBfJWOx168LrTQA0LNAeZ7Y
-	 JwAbepO+MWWM4WZd2ZOjCMOskYzreWyAOL6U+DIQ=
+	b=BNGgeiRn0obv9n5lwWnLrocirXUtVrS8MEsfWJoCgDHFj3C3oQZ7hqpMRuUSNsaRD
+	 RcTio/imlFwa9YvzsVugHRrV6qeBfhjFQdMWDkjlqQx9AoI//Xzk1Eb5Tdv/lZKGwO
+	 beVsDataYUESilWd82coRmEiJ73nTJ1DXWbCvm6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cae54346a70bbceeff2c@syzkaller.appspotmail.com,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0740/1191] nilfs2: fix infinite loop in nilfs_clean_segments()
-Date: Sat, 12 Sep 2026 08:57:48 +0200
-Message-ID: <20260912065604.903337216@linuxfoundation.org>
+Subject: [PATCH 6.1 0776/1191] arm64: dts: qcom: sm8150: Fix the PCIe iommu-map entries
+Date: Sat, 12 Sep 2026 08:58:24 +0200
+Message-ID: <20260912065605.705295750@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,50 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Crofts <joshua.crofts1@gmail.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit ce5a5ad1a8330a2fcfdd9ec2ab341be739e89a18 ]
+[ Upstream commit d2e56fb42e3d10d7e711063cdc00523ddb31d544 ]
 
-syzbot reported a hung task in nilfs_transaction_begin(). This occurs
-because the cleaner ioctl falls into an infinite loop if
-nilfs_segctor_construct() repeatedly returns -EROFS (e.g. the device
-is remounted as read-only after an I/O error).
+The IOMMU provider apps_smmu uses '#iommu-cells = <2>', but the PCIe
+iommu-map entries specify only one cell for the SID, omitting the SID
+mask. This went unnoticed until the OF core started warning with commit
+ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps"):
 
-Currently in nilfs_clean_segments(), if err is non-zero, it logs the
-error and sleeps but doesn't abort when it encounters a terminal error
-like -EROFS. This causes the thread to loop forever.
+  iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
 
-Fix this by breaking out of the loop if nilfs_segctor_construct()
-returns -EROFS. This matches the behaviour in
-nilfs_segctor_write_out(), which also handles -EROFS.
+So fix the entries to match the provider's '#iommu-cells' property.
 
-Reported-by: syzbot+cae54346a70bbceeff2c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cae54346a70bbceeff2c
-Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
-Assisted-by: gemini:gemini-3.1-pro
-Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: a1c86c680533 ("arm64: dts: qcom: sm8150: Add PCIe nodes")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260730-iommu-map-fix-v1-6-83405d37ba41@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/segment.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
-index 12e55e9c698a9..a412abdfbbf3e 100644
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -2552,6 +2552,10 @@ int nilfs_clean_segments(struct super_block *sb, struct nilfs_argv *argv,
- 			break;
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 9168173dd0e3e..1ea6a09b57bc2 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -1810,8 +1810,8 @@ pcie0: pci@1c00000 {
+ 				      "slave_q2a",
+ 				      "tbu";
  
- 		nilfs_warn(sb, "error %d cleaning segments", err);
-+
-+		if (unlikely(err == -EROFS))
-+			goto out_unlock;
-+
- 		set_current_state(TASK_INTERRUPTIBLE);
- 		schedule_timeout(sci->sc_interval);
- 	}
+-			iommu-map = <0x0   &apps_smmu 0x1d80 0x1>,
+-				    <0x100 &apps_smmu 0x1d81 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1d80 0x0 0x1>,
++				    <0x100 &apps_smmu 0x1d81 0x0 0x1>;
+ 
+ 			resets = <&gcc GCC_PCIE_0_BCR>;
+ 			reset-names = "pci";
+@@ -1912,8 +1912,8 @@ pcie1: pci@1c08000 {
+ 			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+ 			assigned-clock-rates = <19200000>;
+ 
+-			iommu-map = <0x0   &apps_smmu 0x1e00 0x1>,
+-				    <0x100 &apps_smmu 0x1e01 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1e00 0x0 0x1>,
++				    <0x100 &apps_smmu 0x1e01 0x0 0x1>;
+ 
+ 			resets = <&gcc GCC_PCIE_1_BCR>;
+ 			reset-names = "pci";
 -- 
 2.53.0
 
