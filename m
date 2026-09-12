@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF4A28B4FA;
-	Sat, 12 Sep 2026 08:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A4620ED;
+	Sat, 12 Sep 2026 08:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203007; cv=none; b=Cg0yOCE+Qhk7wVLg/GRxYiOC3GN+unBah+3kB3HvTdP2Dr7Dm1leT41tLyXRGwYD6EGOch6qWOep6MK8j20XKWFLcm6VLIoE71AFe+uB0xBfDZEKxlQZuZmaUtTxQ5VjFmmVBb5dZJnFCPw4IYovek6K1Icb/x4CCpVt105GbQw=
+	t=1789203012; cv=none; b=O8xvymhyamCiUCjwBE5U8/ZoiAzA9okCCc/keMxqP7GZ1WESeEsOjX5DfMxaD8BZp/uUvm1truwNTsFw3E8z84tw99qvdOl3edVQQvwbpy9LXhkEerZ7GFsulb6ifYKYacLOfimUDZ2ce/ZaB6KyeOPNdyXm10pjS0ryJFAcGd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203007; c=relaxed/simple;
-	bh=89IBUhJcYjHj0y49pNcjLgMU49EBeWaP+Ix7qbZHa2g=;
+	s=arc-20240116; t=1789203012; c=relaxed/simple;
+	bh=Zn/hxpbUwb0EDXXNie3gRGMz2e1OKZWZ/9BYc6HXFXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKFdoB3Fu8C/hKyB/mFqYRDzr7AvU0XMw7MK9HESPZAEQ7HqpQoLeYE7znkFJZ4TK6jmP5iC9HpCVnDuzMfPmE1/eCSqKKg6x3j9cB4BWwn5o3mJMaRRaoT76SWAKehgoilV4jA5u6Ly99JEJujANt/CU/eihKwi1bQeGKBYoYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0r3OSana; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RJ4Y9CDZdLzynBy9Hg02KN/JyzR5SOEYo+G1g8rAj08FXdPoWuiFQTFxC2mx3SO3W/ih6NXOiiaZB/2qkcWyKOEXk+tuNH8Tj3gbXHSa8bCeXw0pHulBbDQIQ7nhEUaoIJXwIJdwxJzW68SlNeyy9gPpjgDzGcN9xxOxu4Bsqmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDJt6Y1p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0r3OSana"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD171F000FF;
-	Sat, 12 Sep 2026 08:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDJt6Y1p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24DC21F000FF;
+	Sat, 12 Sep 2026 08:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203006;
-	bh=O6/jFjSUQq/LM3Uxx++7iENyp+x6vhh//3rhhD/V9no=;
+	s=korg; t=1789203010;
+	bh=d2OLgJxklJT5F9iOq5mXphhjp15evySqcGqca8ykZRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0r3OSanafrsWil5ZXqm+9p+CQCGeTxIu9DjXeqLafYBMY86m/s2WlML3Ulut+BPdc
-	 9/bAuCCBGOYmNmBv8px4NpJLlyxQW48iWivDC5uvMJYcmd+vfHT4tLOzWU2CWr+GLN
-	 hGlJax5itf+Xj30WV8sYV+m9GF98v2jOzIUnrRbg=
+	b=iDJt6Y1piLU1N4KhTKeFCCMVVaFSdoZDHnr8vsVVDhS9XOfcphGN/dyGReiAclGsC
+	 TJnY3GZdi43b1NHSs7/G9/8i8HX1mrkzpuEREFsqKX36IObKPNyEqm0wN1iVfcTu2m
+	 0KujVTdODWYfXztZ9KoLpq1wkmYXdMXzV/Q4pWiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
 	Guixin Liu <kanie@linux.alibaba.com>,
-	Zhengrong Li <zhengrong_li@linux.alibaba.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1318/1815] nvmet: fix Reservation Register Replace for unregistered host with IEKEY
-Date: Sat, 12 Sep 2026 08:51:08 +0200
-Message-ID: <20260912065719.964723932@linuxfoundation.org>
+Subject: [PATCH 7.2 1319/1815] nvmet: propagate percpu_ref_init() failure in nvmet_ns_enable()
+Date: Sat, 12 Sep 2026 08:51:09 +0200
+Message-ID: <20260912065719.988680730@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,93 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengrong Li <zhengrong_li@linux.alibaba.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 0a96b9e440331bffbf049f80d7e5c96417d37e36 ]
+[ Upstream commit 751709592d2626eaa8dc17ef8137796758a3c37f ]
 
-When a host sends a Reservation Register command with RREGA=Replace
-and IEKEY=1 without being previously registered, nvmet returns
-Reservation Conflict.
+The return value of percpu_ref_init() is discarded. At this point ret is
+0 from the preceding successful steps, so when the allocation inside
+percpu_ref_init() fails the code jumps to the out_pr_exit cleanup chain
+which ends with "return ret", i.e. reports success. The configfs enable
+store then tells userspace the namespace was enabled even though it was
+not and its backing device has already been torn down.
 
-The NVMe specification states:
+Capture the return value so the failure is propagated.
 
-  "A host may replace its reservation key without regard to its
-   registration status or current reservation key value by setting
-   the Ignore Existing Key (IEKEY) bit to '1' in the Reservation
-   Register command."
-
-Fix nvmet_pr_replace() to add a new registrant when the host is not
-found in the registrant list and IEKEY is set with a non-zero NRKEY.
-If IEKEY is set but NRKEY is zero, return Invalid Field since there
-is no valid reservation key to register.
-
-Tested with nvme-cli against nvmet-tcp:
-
-  # no prior registration
-  nvme resv-register /dev/nvmeXn1 -n 1 --rrega=2 --iekey --nrkey=0x9999
-
-  Before: RESERVATION_CONFLICT (0x4083)
-  After:  success, registrant created with rkey 0x9999
-
-Fixes: 5a47c2080a73 ("nvmet: support reservation feature")
+Fixes: 408232680707 ("nvmet: Fix crash when a namespace is disabled")
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Guixin Liu <kanie@linux.alibaba.com>
-Signed-off-by: Zhengrong Li <zhengrong_li@linux.alibaba.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/pr.c | 27 +++++++++++++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+ drivers/nvme/target/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/pr.c b/drivers/nvme/target/pr.c
-index c71ae46244ffc..7d937093b2262 100644
---- a/drivers/nvme/target/pr.c
-+++ b/drivers/nvme/target/pr.c
-@@ -355,9 +355,15 @@ static u16 nvmet_pr_replace(struct nvmet_req *req,
- 	u16 status = NVME_SC_RESERVATION_CONFLICT | NVME_STATUS_DNR;
- 	struct nvmet_ctrl *ctrl = req->sq->ctrl;
- 	struct nvmet_pr *pr = &req->ns->pr;
--	struct nvmet_pr_registrant *reg;
-+	struct nvmet_pr_registrant *reg, *new = NULL;
- 	u64 nrkey = le64_to_cpu(d->nrkey);
- 
-+	if (ignore_key && nrkey) {
-+		new = kzalloc_obj(*new);
-+		if (!new)
-+			return NVME_SC_INTERNAL;
-+	}
-+
- 	down(&pr->pr_sem);
- 	list_for_each_entry_rcu(reg, &pr->registrant_list, entry) {
- 		if (uuid_equal(&reg->hostid, &ctrl->hostid)) {
-@@ -365,9 +371,26 @@ static u16 nvmet_pr_replace(struct nvmet_req *req,
- 				status = nvmet_pr_update_reg_attr(pr, reg,
- 						nvmet_pr_update_reg_rkey,
- 						&nrkey);
--			break;
-+			goto free_data;
-+		}
-+	}
-+
-+	if (ignore_key) {
-+		if (!nrkey) {
-+			status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
-+			goto free_data;
- 		}
-+		INIT_LIST_HEAD(&new->entry);
-+		new->rkey = nrkey;
-+		uuid_copy(&new->hostid, &ctrl->hostid);
-+		list_add_tail_rcu(&new->entry, &pr->registrant_list);
-+		status = NVME_SC_SUCCESS;
-+		goto out;
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 7e565a84d341a..48a9a07f0f624 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -610,7 +610,8 @@ int nvmet_ns_enable(struct nvmet_ns *ns)
+ 			goto out_dev_put;
  	}
-+
-+free_data:
-+	kfree(new);
-+out:
- 	up(&pr->pr_sem);
- 	return status;
- }
+ 
+-	if (percpu_ref_init(&ns->ref, nvmet_destroy_namespace, 0, GFP_KERNEL))
++	ret = percpu_ref_init(&ns->ref, nvmet_destroy_namespace, 0, GFP_KERNEL);
++	if (ret)
+ 		goto out_pr_exit;
+ 
+ 	nvmet_ns_changed(subsys, ns->nsid);
 -- 
 2.53.0
 
