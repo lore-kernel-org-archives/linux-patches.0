@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DCECA6F;
-	Sat, 12 Sep 2026 11:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD72CA6F;
+	Sat, 12 Sep 2026 11:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211542; cv=none; b=hHgLrTlLNupm0TEUxhcR05lrrDHqEY+msbz3qfh2NxorWI8PSsUlPVwELW/yFK9zoWsFbJFA2tVjd43bE75aWj0xBOWq5r4kfvRTAQcg/G91owcO7QJoXDbs5vViTD6I3oKNwPJ9+lVgva3kPP8605IrKtd1TKDlS3foAUmPPNg=
+	t=1789211547; cv=none; b=qrKFM9SBLa4QHIupLFA7Yvj0SGLu+TFzq/FDrQnUUyRAp1s0X2P0wIN8+6FF8vwMCmX+6thdmllsn2rWMy6ePhyOSNhoKMLuTVD8xcOieOESJIm5U2k4bq4MLdi8n+yE6IWjFlaTLpMeEY6vqrC2XWaHe84A5rvR23VYiTPSBSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211542; c=relaxed/simple;
-	bh=ZnHO68nG9zvh1kbYPs5z41BQ1WQ5V7Y8EsWZakCFJB4=;
+	s=arc-20240116; t=1789211547; c=relaxed/simple;
+	bh=fKsIIjYHxtgUh+xGOoq8NDIitdl872ZkdPUM+7MJysA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LX4TTCOVFgl/cPhFKrySEUtAE7UY0l9BCt8Mv46uqV8fUHwSGLxKOHQ76jSyU599HX7Ur/qUtdL2Fz9cHnV/YUu3CSofmXR8sQLpiWVhbGbqY1fpiLg3akZx/992rKzlb6OhOCz+j7t7ee3zkLGFI4gok7AmfQ9Zjd9UpCC/RN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7x4Anpt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LGXTDoxzu4asgCmiiHzflFN8DSBKgRX3PTPYcLU/0W7edNVtDh8WnHvRHHnavIKi94BVMlkS2ltRJN6WK/1DSuqVBhMcF9FgFgIDCwJyqTGXePSUS7IGT6yMH13xB2YgXlg75qd//yps5jv7I2XmvSoPCjY1CxZGgVBnsenV+gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDu1KWav; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7x4Anpt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF3571F000FF;
-	Sat, 12 Sep 2026 11:12:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDu1KWav"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078691F000FF;
+	Sat, 12 Sep 2026 11:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211541;
-	bh=QViN8MlSKIfrOHDyuoJxahwr2/gQqxg1FBizDJDd4xg=;
+	s=korg; t=1789211546;
+	bh=iROFyW8nELZh8hqWGeEnCf3BijzamJDbEYrrjBj8guE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r7x4AnptwSgtN+MVInPkqTMn9+g+e3Ci58Xy4XkbgGDZjS5dU677mDdxjHB10FJ4f
-	 XjOPH8zgVz/8xI9O2R5O23MjYpZFeGcdpFXFYw2WVN+lGuoOCBq6BxTBNWv5yIX5OO
-	 vTkkB9Dr+Z6dp6m6Go4vv3vik20ERBFD2sMvJzgo=
+	b=ZDu1KWavHfuwuuscrrobu0JyaznnliMZMaZYg7r1jf8UulIZIAb+QFeQJi8KBnIsG
+	 X5sV0E4qvcWdbagdUXnTCxCW0qB3EuDCitUGVqH/qqh9LNxvzFyAXvrrl2hlzkvZ/4
+	 L7og2bQoxTxwJf5esXkys6bdmoyIQLNYnBxxlMQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Onur=20=C3=96zkan?= <work@onurozkan.dev>,
+	Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>,
 	Brian Masney <bmasney@redhat.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1253/1518] clk: devres: fix cleanup in devm_clk_get_optional_enabled_with_rate()
-Date: Sat, 12 Sep 2026 08:57:02 +0200
-Message-ID: <20260912065651.855544414@linuxfoundation.org>
+Subject: [PATCH 6.18 1254/1518] clk: ti: mux: resolve parent clocks by DT index, not by name
+Date: Sat, 12 Sep 2026 08:57:03 +0200
+Message-ID: <20260912065651.878451427@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -46,73 +46,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Onur Özkan <work@onurozkan.dev>
+From: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
 
-[ Upstream commit 0d4d262c1664365e17e0a5ba2ab79f4db484b44e ]
+[ Upstream commit 667f420c09f1417c9f07798e32432c901915209d ]
 
-devm_clk_get_optional_enabled_with_rate() registers its cleanup action
-before setting the clock rate. If setting the rate fails, it attempts to
-disable and unprepare a clock that was never enabled. This issue was
-spotted while reviewing "rust: clk: add devres-managed clks" [1].
+Resolve parent clocks by their index into the device tree "clocks"
+property rather than matching names as strings. Name-based matching is
+fragile because a clock's "clock-output-names" value in its provider
+node can differ from the name used to reference it in a consumer node,
+and because names must be globally unique across all clock providers.
 
-Register the cleanup action only after successfully preparing and enabling
-the clock.
+On AM335x, this caused broken clock trees where some clocks failed to
+enable because their parents could not be found.
 
-[1]: https://lore.kernel.org/rust-for-linux/20260706-clk-type-state-v5-3-67c5f326a16c@collabora.com
+Replace of_clk_parent_fill() with a clk_parent_data array that sets
+.index to the array position.
 
-Fixes: 9934a1bd45b2 ("clk: provide devm_clk_get_optional_enabled_with_rate()")
-Signed-off-by: Onur Özkan <work@onurozkan.dev>
+Fixes: ec7aa25fa483 ("ARM: dts: Use clock-output-names for am3")
+Signed-off-by: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
 Reviewed-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-devres.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/clk/ti/mux.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/clk/clk-devres.c b/drivers/clk/clk-devres.c
-index 5368d92d9b399..09fd5e8fb72c4 100644
---- a/drivers/clk/clk-devres.c
-+++ b/drivers/clk/clk-devres.c
-@@ -99,6 +99,11 @@ struct clk *devm_clk_get_optional_enabled(struct device *dev, const char *id)
- }
- EXPORT_SYMBOL_GPL(devm_clk_get_optional_enabled);
+diff --git a/drivers/clk/ti/mux.c b/drivers/clk/ti/mux.c
+index d6d247ff2be59..6f7a138c24b1a 100644
+--- a/drivers/clk/ti/mux.c
++++ b/drivers/clk/ti/mux.c
+@@ -119,7 +119,7 @@ const struct clk_ops ti_clk_mux_ops = {
+ };
  
-+static void devm_clk_disable_unprepare(void *data)
-+{
-+	clk_disable_unprepare(data);
-+}
-+
- struct clk *devm_clk_get_optional_enabled_with_rate(struct device *dev,
- 						    const char *id,
- 						    unsigned long rate)
-@@ -106,8 +111,7 @@ struct clk *devm_clk_get_optional_enabled_with_rate(struct device *dev,
+ static struct clk *_register_mux(struct device_node *node, const char *name,
+-				 const char * const *parent_names,
++				 const struct clk_parent_data *parent_data,
+ 				 u8 num_parents, unsigned long flags,
+ 				 struct clk_omap_reg *reg, u8 shift, u32 mask,
+ 				 s8 latch, u8 clk_mux_flags, u32 *table)
+@@ -136,7 +136,7 @@ static struct clk *_register_mux(struct device_node *node, const char *name,
+ 	init.name = name;
+ 	init.ops = &ti_clk_mux_ops;
+ 	init.flags = flags;
+-	init.parent_names = parent_names;
++	init.parent_data = parent_data;
+ 	init.num_parents = num_parents;
+ 
+ 	/* struct clk_mux assignments */
+@@ -167,24 +167,26 @@ static void of_mux_clk_setup(struct device_node *node)
  	struct clk *clk;
- 	int ret;
+ 	struct clk_omap_reg reg;
+ 	unsigned int num_parents;
+-	const char **parent_names;
++	struct clk_parent_data *parent_data;
+ 	const char *name;
+ 	u8 clk_mux_flags = 0;
+ 	u32 mask = 0;
+ 	u32 shift = 0;
+ 	s32 latch = -EINVAL;
+ 	u32 flags = CLK_SET_RATE_NO_REPARENT;
++	int i;
  
--	clk = __devm_clk_get(dev, id, clk_get_optional, NULL,
--			     clk_disable_unprepare);
-+	clk = devm_clk_get_optional(dev, id);
- 	if (IS_ERR(clk))
- 		return ERR_CAST(clk);
+ 	num_parents = of_clk_get_parent_count(node);
+ 	if (num_parents < 2) {
+ 		pr_err("mux-clock %pOFn must have parents\n", node);
+ 		return;
+ 	}
+-	parent_names = kcalloc(num_parents, sizeof(char *), GFP_KERNEL);
+-	if (!parent_names)
+-		goto cleanup;
++	parent_data = kcalloc(num_parents, sizeof(*parent_data), GFP_KERNEL);
++	if (!parent_data)
++		return;
  
-@@ -119,6 +123,10 @@ struct clk *devm_clk_get_optional_enabled_with_rate(struct device *dev,
- 	if (ret)
- 		goto out_put_clk;
+-	of_clk_parent_fill(node, parent_names, num_parents);
++	for (i = 0; i < num_parents; i++)
++		parent_data[i].index = i;
  
-+	ret = devm_add_action_or_reset(dev, devm_clk_disable_unprepare, clk);
-+	if (ret)
-+		goto out_put_clk;
-+
- 	return clk;
+ 	if (ti_clk_get_reg_addr(node, 0, &reg))
+ 		goto cleanup;
+@@ -207,7 +209,7 @@ static void of_mux_clk_setup(struct device_node *node)
+ 	mask = (1 << fls(mask)) - 1;
  
- out_put_clk:
+ 	name = ti_dt_clk_name(node);
+-	clk = _register_mux(node, name, parent_names, num_parents,
++	clk = _register_mux(node, name, parent_data, num_parents,
+ 			    flags, &reg, shift, mask, latch, clk_mux_flags,
+ 			    NULL);
+ 
+@@ -215,7 +217,7 @@ static void of_mux_clk_setup(struct device_node *node)
+ 		of_clk_add_provider(node, of_clk_src_simple_get, clk);
+ 
+ cleanup:
+-	kfree(parent_names);
++	kfree(parent_data);
+ }
+ CLK_OF_DECLARE(mux_clk, "ti,mux-clock", of_mux_clk_setup);
+ 
 -- 
 2.53.0
 
