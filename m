@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7C83382CB;
-	Sat, 12 Sep 2026 19:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DAB43176EE;
+	Sat, 12 Sep 2026 19:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242156; cv=none; b=Mwn+KFZea0IesQYLjJBOrS/a0yhtuVPdNWQ+30YZrXs+S6F9kyptX7K2Nd6yMg3rG26wbAL2h5O7ujE/IRhSPf0pehRko0A0uwgyVjel5cKFVDTc3+fT/39gmUqzGFTMvbrQxYSo5umFbhCpVZMqb8Ec4zqTgiO9zK4XJ963S0M=
+	t=1789242159; cv=none; b=Q2jiVeB7UEpS5dHNsg9qUz/aJjcpJrHf4LZK2E+aRH6CLJEB1ap5qXKvIXyOH/TDEp9+k5fptD7pUMGh7VsRhaSsF4eAGkl/xat1MhvhJruQPVmubcCkJOwNCUJYBTs3RzHF76+PFgPxiaXaBOd6P4QScOvZp/zDkyXfK8c+8zA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242156; c=relaxed/simple;
-	bh=IGeg8OJl7iH8JLEsKoA+9F9QMIIowC7sWUZIYeFaXvk=;
+	s=arc-20240116; t=1789242159; c=relaxed/simple;
+	bh=ajrNJff9YFNvZUPkA67VtrLmHgQ4IzETAtvpjMICkf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dyAWID12prwyyeQcmqWl6PuTAjut0ASVj43rCksIO2KsgoCXK036usMGoxiBdAWv3iymQ/E0HpO4q6iQsqr1ruevJqmOiWJ4LUb9r1aT/8myugtcbOItAeRxolPNFIVbGaDnkHc1HRxTU4EG1e3Utx7w+gMf/EJNF8NYwj1vZyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6M7nZ/r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ofjznNvH4H7sOtyALjE5Ah/fVQtt+5lPvDZwFRb0S1oiRfb7ibNOH92NDYit088t8Dzkfhc4siVq2rKYqPBF1X2g3ou3CqJ78jzmNJ3nSwX2i9mgPQ1fgmwUBBhOCdWB4OaecfqQ3vXA0rU0Y41o0krXtlfMtNyHok0U+Ga1kK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TUmCMvfy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6M7nZ/r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5C41F000FF;
-	Sat, 12 Sep 2026 19:42:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TUmCMvfy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97FB21F000FF;
+	Sat, 12 Sep 2026 19:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242155;
-	bh=p9SmMlLG0oUktHHGUshXzqn/bLq7PM36qEltE15e/ww=;
+	s=korg; t=1789242158;
+	bh=jHqrjiwS1KGXM94OHwAgnXK8AVjWjadEiIMOu57Bt+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b6M7nZ/rmRWbnhun0N68hQhkXvihZg08qZrgkyy8LPaPC7ZkO84PNdr6TiDtzJyQ6
-	 +fOA7tucVpi0VjUP/3wYPisLOnrfaO/AFP3IateQZ2tFgRUr6eBH4Z9S5Y9rG/F4it
-	 p7qbwnYNzAepzDzYmk8z14Rr929jihsLXZwHi1dM=
+	b=TUmCMvfyJsyv4M+e2xCHkzyXb+wZUCUG3hTo1d43upxC9Qkh53lbsEt8Mn6L0mmvF
+	 0x/mAhpx/BP6WbScUjcJJOG36Pqa70bYXzZkSu95/O0aKH8cj3uM8enffQ2E81eEe+
+	 gYdRSJB2fnefju1Z0bkKyXXApq9zZ53pOiKfOjEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 5.10 305/798] scsi: qla2xxx: Bound rsp_info_len to avoid OOB sense-data read
-Date: Sat, 12 Sep 2026 08:58:53 +0200
-Message-ID: <20260912065524.150904788@linuxfoundation.org>
+Subject: [PATCH 5.10 306/798] scsi: qla2xxx: Avoid req_q_map double-read in qla2x00_error_entry()
+Date: Sat, 12 Sep 2026 08:58:54 +0200
+Message-ID: <20260912065524.173360865@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,70 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-commit ca6d880d6c70cb7946e7b3e05d7285f271b6d99e upstream.
+commit deb8abde83a799d2501f3977f6d6051000253f5e upstream.
 
-In qla2x00_status_entry(), the FWI2 status path advances sense_data and
-shrinks par_sense_len by rsp_info_len:
+qla2x00_error_entry() reads ha->req_q_map[que] twice: once for the NULL
+check and again when assigning it to req. The map slot is cleared by
+qla25xx_free_req_que() (ha->req_q_map[que_id] = NULL under mq_lock)
+during queue teardown, while the response-queue interrupt that drives
+qla2x00_error_entry() is still registered (the IRQ is released later in
+qla25xx_free_rsp_que()). If the slot is set to NULL between the two
+reads, req becomes NULL and is dereferenced.
 
-	if (IS_FWI2_CAPABLE(ha)) {
-		sense_data += rsp_info_len;
-		par_sense_len -= rsp_info_len;
-	}
+Read the slot once into req and NULL-check the local before use. mq_lock
+is a mutex and cannot be taken from interrupt context, so the single
+read plus local check is the appropriate fix for the reported NULL
+dereference.
 
-rsp_info_len is a 32-bit value taken directly from the target's FCP
-response (sf.rsp_data_len), while par_sense_len is the IOCB data area
-size (28 bytes for 24xx, 60 bytes for 29xx). A hostile or buggy target
-reporting an rsp_info_len larger than par_sense_len makes the unsigned
-subtraction underflow to a huge value and advances sense_data out of
-bounds.
-
-The underflowed par_sense_len then defeats the cap in
-qla2x00_handle_sense():
-
-	if (sense_len > par_sense_len)
-		sense_len = par_sense_len;
-	memcpy(cp->sense_buffer, sense_data, sense_len);
-
-so the memcpy reads up to SCSI_SENSE_BUFFERSIZE bytes from the
-out-of-bounds sense_data pointer, leaking adjacent response-ring/heap
-memory into the command's sense buffer.
-
-Clamp rsp_info_len to par_sense_len before the subtraction so
-par_sense_len can never underflow and sense_data stays within the IOCB
-data area. The fix sits before the comp_status switch, covering both
-qla2x00_handle_sense() call sites.
-
-Fixes: 5544213be7b4 ("[SCSI] qla2xxx: Correct extended sense-data handling.")
+Fixes: a6fe35c052c4 ("[SCSI] qla2xxx: Avoid invalid request queue dereference for bad response packets.")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-16-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-17-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_isr.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/scsi/qla2xxx/qla_isr.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/drivers/scsi/qla2xxx/qla_isr.c
 +++ b/drivers/scsi/qla2xxx/qla_isr.c
-@@ -3006,6 +3006,18 @@ qla2x00_status_entry(scsi_qla_host_t *vh
- 	if (scsi_status & SS_RESPONSE_INFO_LEN_VALID) {
- 		/* Sense data lies beyond any FCP RESPONSE data. */
- 		if (IS_FWI2_CAPABLE(ha)) {
-+			/*
-+			 * A hostile or buggy target may report an
-+			 * rsp_info_len larger than the IOCB data area.
-+			 * Clamp it so the par_sense_len subtraction cannot
-+			 * underflow and walk sense_data out of bounds.
-+			 */
-+			if (rsp_info_len > par_sense_len) {
-+				ql_log(ql_log_warn, fcport->vha, 0x3107,
-+				       "Truncating bogus rsp_info_len 0x%x to 0x%x.\n",
-+				       rsp_info_len, par_sense_len);
-+				rsp_info_len = par_sense_len;
-+			}
- 			sense_data += rsp_info_len;
- 			par_sense_len -= rsp_info_len;
- 		}
+@@ -3325,10 +3325,12 @@ qla2x00_error_entry(scsi_qla_host_t *vha
+ 	    "iocb type %xh with error status %xh, handle %xh, rspq id %d\n",
+ 	    pkt->entry_type, pkt->entry_status, pkt->handle, rsp->id);
+ 
+-	if (que >= ha->max_req_queues || !ha->req_q_map[que])
++	if (que >= ha->max_req_queues)
+ 		goto fatal;
+ 
+ 	req = ha->req_q_map[que];
++	if (!req)
++		goto fatal;
+ 
+ 	if (pkt->entry_status & RF_BUSY)
+ 		res = DID_BUS_BUSY << 16;
 
 
