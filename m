@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13443806C6;
-	Sat, 12 Sep 2026 07:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AC537204A;
+	Sat, 12 Sep 2026 07:14:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197264; cv=none; b=TNxGWKinye1ob7HcAHzAkTiSYZuFE7qh6xrAN/tCPmPGSfOjsDrDm6999AnZ4OpaecQuY+wmZAeVBLUeKIosRvA3OZGTepFOE7sOsADTY+/aZfFzR02os2JsO/w9bMU6WkxQcT2oDHAmgfe4ivXs05wTtXLD3UAvtrgCoQLugsg=
+	t=1789197267; cv=none; b=rdT8vcTzzWK6/dJwVd+ksCMts3s5gGilSOo6R37SaUSidQACykI881MO1Ti5UMDxMnS4O6XtNorv9mu3j+v5+YvR2zSnN6UAOJOOeK0+Hovd2AP0rYXSxpyWtWEBV6cCKpBWvB8R7tYDEhTV6hmIkRiZ1Yyu58llZmrexKvpCRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197264; c=relaxed/simple;
-	bh=xOFBCaq4FZ17UUuKx4tWVBCg241WD18b85erCp/dFxQ=;
+	s=arc-20240116; t=1789197267; c=relaxed/simple;
+	bh=zfk4iLkXeUQYdeJY2B6hQIs9w98IGbpOPzkS55RPEKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bUrLLPOd0mxKz3Tij4qi/MOgKkUY+EfnMzW2JlugNmCcv5WPg33eI065mYOax9ddpB/4PNcZgMw/WRx20hTKBJRzGAC7AYfNjOyAWmv+FUaGqJ8VHWNalKFLdCq9YJlzHPqtQXbJxnZssNMpfoAJZfy88HUGBQv5wD4v2mUDDr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oM9NLQVx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AjmJb220omvmD7gDe/olSVPiuav+b4rNn91oYxLj6k5XEFtIDEWucgb9KJqEs5yHztyG7gtrZ1Hngp8PPs4dttNGTTQdXY33C3BF3Gwg7Drc5HybjE+Z4jiY2RqhADihYps6w7LaS8TS3xIBKjp3QgnxM+0qhJ4sr/TqUAyjbpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eiGCscV8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oM9NLQVx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C209B1F000FF;
-	Sat, 12 Sep 2026 07:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eiGCscV8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6AF1F000FF;
+	Sat, 12 Sep 2026 07:14:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197263;
-	bh=15kugHcC4BF2wPE4UuknllUEkXuPs6RDDs1zUV+Ohfg=;
+	s=korg; t=1789197266;
+	bh=laDLqYPtN8iEdpIHIEN+528UD0h0IZPtmOsXV3VK21w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oM9NLQVxNbem6FIGhNY/V6aSHjqFI7mh4Nf2hzGI9DCdYQcZ7dmbk0oBbSD/tfyDh
-	 D+tetaN5sbGoJ4SLbwYKt2ucp1LqQSZzvFZuBOMLAB2dBG+l00DjvUPXAejsHGctF5
-	 yJnqPtK71KwXDnsVZz5FKHcl3QcXIEcR3vR+R79g=
+	b=eiGCscV8phNRmcHue3SYk7/J78wTH1O5t7rRpBoXO33snCZC/z3gz6vKuVm7m0jbK
+	 1z0xoCymKavKyW8jg92PlREs15KoF7iegmLO7yJWx4d0j22w2a+a6vy0szbQKl0oSA
+	 tVWqUc94U4U+cth+mEIxs2nFnkVGxWajjKo0qcuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Peng Fan <peng.fan@nxp.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0095/1815] arm64: dts: freescale: imx95-toradex-smarc: add alias for lpuart5
-Date: Sat, 12 Sep 2026 08:30:45 +0200
-Message-ID: <20260912065651.240154353@linuxfoundation.org>
+Subject: [PATCH 7.2 0096/1815] arm64: dts: imx8mp-ab2: Enable MU2 for DSP communication
+Date: Sat, 12 Sep 2026 08:30:46 +0200
+Message-ID: <20260912065651.263663009@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,39 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 3385e2f77182469940c136b9eeedf01f27b7441f ]
+[ Upstream commit b1b6c1c4d3c63d8097c933009bdb618d1be18305 ]
 
-Add alias for lpuart5 so the UART gets a stable line number.
-Without this alias, the lpuart driver fails:
+Enable the MU2 (Message Unit 2) node on the i.MX8MP Audio Board v2.
+MU2 is required for inter-processor communication between the
+application CPU and the HiFi4 DSP, allowing DSP firmware to exchange
+control and status messages with the Linux host.
 
-  fsl-lpuart 42590000.serial: failed to get alias id, errno -19
+Without this change, the DSP driver cannot establish the message
+channel and DSP audio processing is non-functional.
 
-This prevents the Bluetooth controller connected to this UART from
-working.
-
-Fixes: 104a391bb6ff ("arm64: dts: freescale: imx95-toradex-smarc: Enable bluetooth on lpuart5")
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Acked-by: Peng Fan <peng.fan@nxp.com>
+Fixes: bf68c18150efc ("arm64: dts: imx8mp-ab2: add support for NXP i.MX8MP audio board (version 2)")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx95-toradex-smarc.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/freescale/imx8mp-ab2.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx95-toradex-smarc.dtsi b/arch/arm64/boot/dts/freescale/imx95-toradex-smarc.dtsi
-index 7d760470201fa..a6c5398a81e3c 100644
---- a/arch/arm64/boot/dts/freescale/imx95-toradex-smarc.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx95-toradex-smarc.dtsi
-@@ -24,6 +24,7 @@ aliases {
- 		serial1 = &lpuart1;
- 		serial2 = &lpuart6;
- 		serial3 = &lpuart3;
-+		serial4 = &lpuart5;
- 	};
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-ab2.dts b/arch/arm64/boot/dts/freescale/imx8mp-ab2.dts
+index 443e4fd5b9bfc..285bf79864ebd 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-ab2.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-ab2.dts
+@@ -775,6 +775,10 @@ &micfil {
+ 	status = "okay";
+ };
  
- 	chosen {
++&mu2 {
++	status = "okay";
++};
++
+ &pwm1 {
+ 	pinctrl-0 = <&pinctrl_pwm1>;
+ 	pinctrl-names = "default";
 -- 
 2.53.0
 
