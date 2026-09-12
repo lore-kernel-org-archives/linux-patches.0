@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A5E2F531B;
-	Sat, 12 Sep 2026 12:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF072F617C;
+	Sat, 12 Sep 2026 12:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215597; cv=none; b=iit/dw2Nw8BdNUGqXtikPq7GX88QMwD/pzlMKajAv/+Tao3sU/5StQ4SyiPw3fTZUWQXPpdK15Lgc7Fmb2H3HvHuxrMAZfEQsz2i4+MBkKpRFnyg6kC95woNfkt6MOlhRnSXFd/xeAdmqXAwEX/RkxQfuxhZuX4jVx3zqCksOo8=
+	t=1789215602; cv=none; b=EaMRXpLvC9FzfWAA1JCdFeup3zHaauyZtoc6IbTq0oi6Ay8hOw19gZIZDLjd3uqu8hXC6j/Rwj/dxewmXjyIxL67a1wOC0MRtyt6MK9ej6aJyKr4ExfujbYolCXk+s1AV0lDAR6ee8YbLxBOFeMC0K3ln07xvcyCie23bq1xI2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215597; c=relaxed/simple;
-	bh=YcP5/h3r2oF0sZvoRLXnf99HqDpvYl54a1zI/hhtxPs=;
+	s=arc-20240116; t=1789215602; c=relaxed/simple;
+	bh=2T55zjMWaIhifd6DwLaONUKsmeYnoB0lgLZRMTvDPio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTSKMGAtw55ZI8K7scWWZ/oYhPOtkwVI7JqnT+bUjwfYs7whHAsHzeLhaGPoJ5iumeKrVBduvmSspBvHMSVCBSVSm1zaVvsFTPP9tARpnIyXgBqYqIbXhy3A24kBM/H/mwZ/6vwcsObQxGB3pczvtXaBglf+92FrlLMtdUbi2KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IHQxVPSc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BisERkvTEo2dMHLEFNIr8+rxoHiyK1+Kcfo3ElOLQswBsEOAU5QmLBk1mM/g5+r9J+NJ/BCUbhY2QU161LlVG7sX/XXRtQdrEpnyLWYjCB6BBMZoEkKwJa4uJm0AquvhlY5tjF3zu0aAQ/p4rMDnKc/5Mh8oIj43dWdaVatCa+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SjNHziQh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IHQxVPSc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF01F1F000FF;
-	Sat, 12 Sep 2026 12:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SjNHziQh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313341F00893;
+	Sat, 12 Sep 2026 12:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215596;
-	bh=TiC3sbQ6BwP/1VqFN3SgqC2AJMfmd1KNahv5Irvnsy0=;
+	s=korg; t=1789215601;
+	bh=lo2fgAHpKFJm/18m83dCjjkJbG2MSL2+ZzRwZSYn34A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IHQxVPSch9Nx7pNwYOe/l2l6NJtuaswhaJ2XSAxs9p7H9XmPVG5Jv9sTbHf7213U4
-	 UoLQqpBKQnHzXTe/VQFHJye74XFSx4nIDj5xiXr/tPi2jmhn989Zq8g4wj6Ffq74cx
-	 gB/lqJVXrUGlU96Y/MXVH96XKw0lmFPeF2LAdC7U=
+	b=SjNHziQhn/fF720F5MBGBS/lrvqEEI+YMaXveId3XorEKlbOgC4kFuCXKtObZqSfr
+	 t+mclviqQHTGyrTpPZ/iAubV1suOwMI3OobagvsuCmjiURri78TAo7plmipKlf/Y3E
+	 0arAYQ+hTIzBFkMJdAdQaAnx0ouy0E2ttSFyGy64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0521/1376] rpmsg: glink: remove duplicate code for rpmsg device remove
-Date: Sat, 12 Sep 2026 08:49:07 +0200
-Message-ID: <20260912065619.148127033@linuxfoundation.org>
+Subject: [PATCH 6.12 0512/1376] RDMA/hfi1: Free RX data on late probe failure
+Date: Sat, 12 Sep 2026 08:48:58 +0200
+Message-ID: <20260912065618.948361807@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,115 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 112766cdf2e5ea0a0f72b0304d57a6f74c066670 ]
+[ Upstream commit 8e17e101e04a3dc062e2719da57ff78c1c060632 ]
 
-rpmsg device remove code is duplicated in at-least 2-3 places, add a
-helper function to remove this duplicated code.
+hfi1_init_dd() allocates the shared AIP/VNIC RX support before returning.
+If hfi1_init() or hfi1_register_ib_device() later fails, init_one() tears
+down the device data without calling hfi1_free_rx(). This leaks netdev_rx
+and its dummy netdev.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250822100043.2604794-3-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 5a5a48e788e0 ("rpmsg: glink: fix deadlock in endpoint destroy during driver detach")
+Free the RX support after IB unregistration and before postinit_cleanup(),
+as done on normal device removal.
+
+Fixes: 4730f4a6c6b2 ("IB/hfi1: Activate the dummy netdev")
+Link: https://patch.msgid.link/20260708-clean-init-one-hfi1-v1-7-b9e9641268a5@nvidia.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/qcom_glink_native.c | 43 ++++++++++++-------------------
- 1 file changed, 16 insertions(+), 27 deletions(-)
+ drivers/infiniband/hw/hfi1/init.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index c2d39a3bcea7e..9d4fee6409423 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1395,11 +1395,23 @@ static int qcom_glink_announce_create(struct rpmsg_device *rpdev)
- 	return 0;
- }
- 
-+static void qcom_glink_remove_rpmsg_device(struct qcom_glink *glink, struct glink_channel *channel)
-+{
-+	struct rpmsg_channel_info chinfo;
-+
-+	if (channel->rpdev) {
-+		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
-+		chinfo.src = RPMSG_ADDR_ANY;
-+		chinfo.dst = RPMSG_ADDR_ANY;
-+		rpmsg_unregister_device(glink->dev, &chinfo);
-+	}
-+	channel->rpdev = NULL;
-+}
-+
- static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
- {
- 	struct glink_channel *channel = to_glink_channel(ept);
- 	struct qcom_glink *glink = channel->glink;
--	struct rpmsg_channel_info chinfo;
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&channel->recv_lock, flags);
-@@ -1407,14 +1419,7 @@ static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
- 	spin_unlock_irqrestore(&channel->recv_lock, flags);
- 
- 	/* Decouple the potential rpdev from the channel */
--	if (channel->rpdev) {
--		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
--		chinfo.src = RPMSG_ADDR_ANY;
--		chinfo.dst = RPMSG_ADDR_ANY;
--
--		rpmsg_unregister_device(glink->dev, &chinfo);
--	}
--	channel->rpdev = NULL;
-+	qcom_glink_remove_rpmsg_device(glink, channel);
- 
- 	qcom_glink_send_close_req(glink, channel);
- }
-@@ -1704,7 +1709,6 @@ static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
- 
- static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
- {
--	struct rpmsg_channel_info chinfo;
- 	struct glink_channel *channel;
- 	unsigned long flags;
- 
-@@ -1720,14 +1724,7 @@ static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
- 	/* cancel pending rx_done work */
- 	cancel_work_sync(&channel->intent_work);
- 
--	if (channel->rpdev) {
--		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
--		chinfo.src = RPMSG_ADDR_ANY;
--		chinfo.dst = RPMSG_ADDR_ANY;
--
--		rpmsg_unregister_device(glink->dev, &chinfo);
--	}
--	channel->rpdev = NULL;
-+	qcom_glink_remove_rpmsg_device(glink, channel);
- 
- 	qcom_glink_send_close_ack(glink, channel);
- 
-@@ -1741,7 +1738,6 @@ static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
- 
- static void qcom_glink_rx_close_ack(struct qcom_glink *glink, unsigned int lcid)
- {
--	struct rpmsg_channel_info chinfo;
- 	struct glink_channel *channel;
- 	unsigned long flags;
- 
-@@ -1763,14 +1759,7 @@ static void qcom_glink_rx_close_ack(struct qcom_glink *glink, unsigned int lcid)
- 	spin_unlock_irqrestore(&glink->idr_lock, flags);
- 
- 	/* Decouple the potential rpdev from the channel */
--	if (channel->rpdev) {
--		strscpy(chinfo.name, channel->name, sizeof(chinfo.name));
--		chinfo.src = RPMSG_ADDR_ANY;
--		chinfo.dst = RPMSG_ADDR_ANY;
--
--		rpmsg_unregister_device(glink->dev, &chinfo);
--	}
--	channel->rpdev = NULL;
-+	qcom_glink_remove_rpmsg_device(glink, channel);
- 
- 	kref_put(&channel->refcount, qcom_glink_channel_release);
- }
+diff --git a/drivers/infiniband/hw/hfi1/init.c b/drivers/infiniband/hw/hfi1/init.c
+index e84616bc4fa99..d6331f90222d8 100644
+--- a/drivers/infiniband/hw/hfi1/init.c
++++ b/drivers/infiniband/hw/hfi1/init.c
+@@ -1678,6 +1678,7 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 			hfi1_device_remove(dd);
+ 		if (!ret)
+ 			hfi1_unregister_ib_device(dd);
++		hfi1_free_rx(dd);
+ 		postinit_cleanup(dd);
+ 		if (initfail)
+ 			ret = initfail;
 -- 
 2.53.0
 
