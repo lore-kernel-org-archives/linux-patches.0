@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A26A47DD57;
-	Sat, 12 Sep 2026 13:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542B84BEE2A;
+	Sat, 12 Sep 2026 13:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219696; cv=none; b=D5VKlTLWCEnX6EG+Trk+8UuCXcUtj4NWWdbpsOLxKa7MQqvVsSY7uY4WrEaxXJLOo6ZpuVSkBgz5w06ayMvThb6xhABSzQafHr0DE7a/r9sLzbKVRfAQtLaqZGuJLMXXh2i098gt/XK3Hpq4UJ4FTnGD/6iu9e4XT6FmdkhKq30=
+	t=1789219701; cv=none; b=Ul+cY/puH1kW8H3gY0tbJjkzksWlswbHjuBLGlfX7qO1A6Bo5YkL5QiqDR/1+s62msaQn+prZIT6F7j6h+TYx4U/DQR5PtZomuYZz/0wVB2iJP3vyODuw4cbB/Dq9Na0mxZmAylktIruNWVIROzW9JI9wQgBgwiZ6SVFpx4qbys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219696; c=relaxed/simple;
-	bh=d9Uq8R0qJuMvPJIQfeV62IWWzgjxcF2dG466aLBUK3k=;
+	s=arc-20240116; t=1789219701; c=relaxed/simple;
+	bh=Y1LMB61hlotoR5vFKCKkt+ies4kip7bSj3mfYbc1WFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HLXdUbUg1nUDrbDxGe9u+iVT9tNXFCSsT97BCX9oSR1KFs2bP2GLlW5fYUXy8VD8nj1IiWNf2+e3F7IY/vMzCmI2SZUKSCaVP4moajaXrs7o30LZKP7O+Kpu28uU1rbVvHFeSzv6tKnjSVSkPEsX6MK+hY+8nWmSge6Lt17JrB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvzX9OZr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PZZOqhjXmioxG27CVUzN1TWRW2n9wNQfcCKIN+DutEmNUuo63tgHRvSy2/IMa8RHtv6JW/pdAbWa+VIlK9K6Ba4zhunDh88Lg0LYmA52BYCZx+9a2iqaMGhDZMlP1bjEkscP1odtNXbbvia8VuE/QGLd8KhOaFy3UsPlXjK/iQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LmSJfe2x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvzX9OZr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A22E1F000FF;
-	Sat, 12 Sep 2026 13:28:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LmSJfe2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 319CD1F000FF;
+	Sat, 12 Sep 2026 13:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219695;
-	bh=AxLsdCVgMhlgMONsU4t/6V9GJROKDcx9sPsoUW56Xlo=;
+	s=korg; t=1789219699;
+	bh=hAgoYJop3zKZQWEZBGMeR46jYxQx2TC/vsGxC5TrLpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cvzX9OZr0fT4rN2YZFXrHwwbomdT3Vw29h7siqyl2h0DmS5tK0z1fMcvyDAz9Ciq1
-	 eSBjynXCp053n4rpGMv/4sjl218g42ajbxkSuMzThkpHoJymsiqeAaD84JpMmFi+MB
-	 1h+I5edn1spa3GXEYFIWb3wVqeXjB0AN0wgypxAI=
+	b=LmSJfe2xrpPajlqSl9TqBvJH9/xuRuvB0gqFamZARwHlMZlBgIjy3j2vcMub90As/
+	 ZkMJUL5nzH3gTqfX3gpr/sQ89Wg2wv6NBELtV0C3GzClBUFgdm6voWdLpvVZFVC9UG
+	 YFOfmM/Y4Qojw4L24ho6PWUlJztHkAyHw612slG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5f8f3acdee1ec7a7ef7b@syzkaller.appspotmail.com,
+	syzbot+8fa95c41eafbc9d2ff6f@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.com>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0006/1424] ALSA: aloop: Fix racy access at PCM trigger
-Date: Sat, 12 Sep 2026 08:40:38 +0200
-Message-ID: <20260912065607.431382832@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>
+Subject: [PATCH 6.6 0007/1424] ALSA: aloop: Fix peer runtime UAF during format-change stop
+Date: Sat, 12 Sep 2026 08:40:39 +0200
+Message-ID: <20260912065607.453739860@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -46,126 +48,142 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 826af7fa62e347464b1b4e0ba2fe19a92438084f ]
+[ Upstream commit e5c33cdc6f402eab8abd36ecf436b22c9d3a8aff ]
 
-The PCM trigger callback of aloop driver tries to check the PCM state
-and stop the stream of the tied substream in the corresponding cable.
-Since both check and stop operations are performed outside the cable
-lock, this may result in UAF when a program attempts to trigger
-frequently while opening/closing the tied stream, as spotted by
-fuzzers.
+loopback_check_format() may stop the capture side when playback starts
+with parameters that no longer match a running capture stream. Commit
+826af7fa62e3 ("ALSA: aloop: Fix racy access at PCM trigger") moved
+the peer lookup under cable->lock, but the actual snd_pcm_stop() still
+runs after dropping that lock.
 
-For addressing the UAF, this patch changes two things:
-- It covers the most of code in loopback_check_format() with
-  cable->lock spinlock, and add the proper NULL checks.  This avoids
-  already some racy accesses.
-- In addition, now we try to check the state of the capture PCM stream
-  that may be stopped in this function, which was the major pain point
-  leading to UAF.
+A concurrent close can clear the capture entry from cable->streams[] and
+detach or free its runtime while the playback trigger path still holds a
+stale peer substream pointer.
 
-Reported-by: syzbot+5f8f3acdee1ec7a7ef7b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/69783ba1.050a0220.c9109.0011.GAE@google.com
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260203141003.116584-1-tiwai@suse.de
+Keep a per-cable count of in-flight peer stops before dropping
+cable->lock, and make free_cable() wait for those stops before
+detaching the runtime. This preserves the existing behavior while
+making the peer runtime lifetime explicit.
+
+Reported-by: syzbot+8fa95c41eafbc9d2ff6f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=8fa95c41eafbc9d2ff6f
+Fixes: 597603d615d2 ("ALSA: introduce the snd-aloop module for the PCM loopback")
+Cc: stable@vger.kernel.org
+Suggested-by: Takashi Iwai <tiwai@suse.com>
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260424-alsa-aloop-peer-stop-uaf-v2-1-94e68101db8a@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ Karl Mehltretter: dropped the access-mode comparison and notification
-  (462494565c27, e299a9fd433f, cdac6e1f7164). ]
+[ used scoped_guard(spinlock_irq) instead of guard(spinlock_irq) ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[ Karl Mehltretter: 6.12.y commit 03f52a9c1704 applies to 6.1.y/6.6.y
+  unchanged; identical patch-id. ]
 Assisted-by: LLM
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/aloop.c | 58 +++++++++++++++++++++++++------------------
- 1 file changed, 34 insertions(+), 24 deletions(-)
+ sound/drivers/aloop.c | 44 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 30 insertions(+), 14 deletions(-)
 
 diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
-index a38e602b4fc60..67bbadcec02b0 100644
+index 67bbadcec02b0..64870381d66ec 100644
 --- a/sound/drivers/aloop.c
 +++ b/sound/drivers/aloop.c
-@@ -319,35 +319,41 @@ static int loopback_snd_timer_close_cable(struct loopback_pcm *dpcm)
+@@ -98,6 +98,9 @@ struct loopback_ops {
+ struct loopback_cable {
+ 	spinlock_t lock;
+ 	struct loopback_pcm *streams[2];
++	/* in-flight peer stops running outside cable->lock */
++	atomic_t stop_count;
++	wait_queue_head_t stop_wait;
+ 	struct snd_pcm_hardware hw;
+ 	/* flags */
+ 	unsigned int valid;
+@@ -347,8 +350,11 @@ static int loopback_check_format(struct loopback_cable *cable, int stream)
+ 				return 0;
+ 			if (stream == SNDRV_PCM_STREAM_CAPTURE)
+ 				return -EIO;
+-			else if (cruntime->state == SNDRV_PCM_STATE_RUNNING)
++			else if (cruntime->state == SNDRV_PCM_STATE_RUNNING) {
++				/* close must not free the peer runtime below */
++				atomic_inc(&cable->stop_count);
+ 				stop_capture = true;
++			}
+ 		}
  
- static int loopback_check_format(struct loopback_cable *cable, int stream)
- {
-+	struct loopback_pcm *dpcm_play, *dpcm_capt;
- 	struct snd_pcm_runtime *runtime, *cruntime;
- 	struct loopback_setup *setup;
- 	struct snd_card *card;
-+	bool stop_capture = false;
- 	int check;
- 
--	if (cable->valid != CABLE_VALID_BOTH) {
--		if (stream == SNDRV_PCM_STREAM_PLAYBACK)
--			goto __notify;
--		return 0;
--	}
--	runtime = cable->streams[SNDRV_PCM_STREAM_PLAYBACK]->
--							substream->runtime;
--	cruntime = cable->streams[SNDRV_PCM_STREAM_CAPTURE]->
--							substream->runtime;
--	check = runtime->format != cruntime->format ||
--		runtime->rate != cruntime->rate ||
--		runtime->channels != cruntime->channels;
--	if (!check)
--		return 0;
--	if (stream == SNDRV_PCM_STREAM_CAPTURE) {
--		return -EIO;
--	} else {
--		snd_pcm_stop(cable->streams[SNDRV_PCM_STREAM_CAPTURE]->
--					substream, SNDRV_PCM_STATE_DRAINING);
--	      __notify:
--		runtime = cable->streams[SNDRV_PCM_STREAM_PLAYBACK]->
--							substream->runtime;
--		setup = get_setup(cable->streams[SNDRV_PCM_STREAM_PLAYBACK]);
--		card = cable->streams[SNDRV_PCM_STREAM_PLAYBACK]->loopback->card;
-+	scoped_guard(spinlock_irqsave, &cable->lock) {
-+		dpcm_play = cable->streams[SNDRV_PCM_STREAM_PLAYBACK];
-+		dpcm_capt = cable->streams[SNDRV_PCM_STREAM_CAPTURE];
-+
-+		if (cable->valid != CABLE_VALID_BOTH) {
-+			if (stream == SNDRV_PCM_STREAM_CAPTURE || !dpcm_play)
-+				return 0;
-+		} else {
-+			if (!dpcm_play || !dpcm_capt)
-+				return -EIO;
-+			runtime = dpcm_play->substream->runtime;
-+			cruntime = dpcm_capt->substream->runtime;
-+			if (!runtime || !cruntime)
-+				return -EIO;
-+			check = runtime->format != cruntime->format ||
-+				runtime->rate != cruntime->rate ||
-+				runtime->channels != cruntime->channels;
-+			if (!check)
-+				return 0;
-+			if (stream == SNDRV_PCM_STREAM_CAPTURE)
-+				return -EIO;
-+			else if (cruntime->state == SNDRV_PCM_STATE_RUNNING)
-+				stop_capture = true;
-+		}
-+
-+		setup = get_setup(dpcm_play);
-+		card = dpcm_play->loopback->card;
-+		runtime = dpcm_play->substream->runtime;
- 		if (setup->format != runtime->format) {
- 			snd_ctl_notify(card, SNDRV_CTL_EVENT_MASK_VALUE,
- 							&setup->format_id);
-@@ -364,6 +370,10 @@ static int loopback_check_format(struct loopback_cable *cable, int stream)
- 			setup->channels = runtime->channels;
+ 		setup = get_setup(dpcm_play);
+@@ -371,8 +377,11 @@ static int loopback_check_format(struct loopback_cable *cable, int stream)
  		}
  	}
-+
-+	if (stop_capture)
-+		snd_pcm_stop(dpcm_capt->substream, SNDRV_PCM_STATE_DRAINING);
-+
+ 
+-	if (stop_capture)
++	if (stop_capture) {
+ 		snd_pcm_stop(dpcm_capt->substream, SNDRV_PCM_STATE_DRAINING);
++		if (atomic_dec_and_test(&cable->stop_count))
++			wake_up(&cable->stop_wait);
++	}
+ 
  	return 0;
  }
+@@ -1004,24 +1013,29 @@ static void free_cable(struct snd_pcm_substream *substream)
+ 	struct loopback *loopback = substream->private_data;
+ 	int dev = get_cable_index(substream);
+ 	struct loopback_cable *cable;
++	struct loopback_pcm *dpcm;
++	bool other_alive;
  
+ 	cable = loopback->cables[substream->number][dev];
+ 	if (!cable)
+ 		return;
+-	if (cable->streams[!substream->stream]) {
+-		/* other stream is still alive */
+-		spin_lock_irq(&cable->lock);
+-		cable->streams[substream->stream] = NULL;
+-		spin_unlock_irq(&cable->lock);
+-	} else {
+-		struct loopback_pcm *dpcm = substream->runtime->private_data;
+ 
+-		if (cable->ops && cable->ops->close_cable && dpcm)
+-			cable->ops->close_cable(dpcm);
+-		/* free the cable */
+-		loopback->cables[substream->number][dev] = NULL;
+-		kfree(cable);
++	scoped_guard(spinlock_irq, &cable->lock) {
++		cable->streams[substream->stream] = NULL;
++		other_alive = cable->streams[!substream->stream];
+ 	}
++
++	/* Pair with the stop_count increment in loopback_check_format(). */
++	wait_event(cable->stop_wait, !atomic_read(&cable->stop_count));
++	if (other_alive)
++		return;
++
++	dpcm = substream->runtime->private_data;
++	if (cable->ops && cable->ops->close_cable && dpcm)
++		cable->ops->close_cable(dpcm);
++	/* free the cable */
++	loopback->cables[substream->number][dev] = NULL;
++	kfree(cable);
+ }
+ 
+ static int loopback_jiffies_timer_open(struct loopback_pcm *dpcm)
+@@ -1216,6 +1230,8 @@ static int loopback_open(struct snd_pcm_substream *substream)
+ 			goto unlock;
+ 		}
+ 		spin_lock_init(&cable->lock);
++		atomic_set(&cable->stop_count, 0);
++		init_waitqueue_head(&cable->stop_wait);
+ 		cable->hw = loopback_pcm_hardware;
+ 		if (loopback->timer_source)
+ 			cable->ops = &loopback_snd_timer_ops;
 -- 
 2.53.0
 
