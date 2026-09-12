@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398D031618C;
-	Sat, 12 Sep 2026 15:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D17275AEB;
+	Sat, 12 Sep 2026 15:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227275; cv=none; b=UWewQTqZXum7zHhCdS69BSjJGsb6pbD5t9F3+TaN9+/4VC6f9yMf2Zp89GScxRfa/YdzNYFwD2vutpm3y0AUfJo4rmHPiTulWIG+yn+/+tehoqQLLX833dzihvh3WEU89OQxsmbLJZ8q3ql0WEyx8mIzQnA3BM2CURekBRcRIis=
+	t=1789227280; cv=none; b=SHbNacEO6/r5IRB6/jXDThLGwayck5DS9SutRmBhrwqM5F8V1xJlvupIz0bBewGmcVzXD3AdvneZM/Vpf6XrJgPGRCQnCD6nzm2dcm8pe7UFeTw06OY9xKTQ8jCUcAYME4LuQKI601LJFkDgZtFE4tsanQ79oK+ekHpB7XlAv04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227275; c=relaxed/simple;
-	bh=7vHTtoXvwnimYcFZJNse3tcbfsxJbO2DlV0edZK4lSM=;
+	s=arc-20240116; t=1789227280; c=relaxed/simple;
+	bh=88j5UyKqcN5MjHFL3t6B99qL3kZfJplXJ8Fy99bJxNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HOK6R8EqpBJwxELR9ufpp9d0lCVR+YEjzswkyxaljfeyoHn0LnATfbmSspopH37bGdZpIySJ22xsCmAXBVXH9UqnG2+5dWpHnocZDK/DBkbdqsFpuS9EzRiEUR3/gDwLqQReOZHYgG8AmeSk9vSiHAN/vBaGSKNErLubPFjCmnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uh0nafLF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AmqRl4YR/uzM8KB/f5V7iLI/KQBLVtZw9Rq8cQP0gzJs8rTpk54uaEpp9gpiD82xqeB/zaUUL3B7gvAQbU5RIh9NTH0JtMA87YXLYnlPLULft9RMmwycksovdbJgjR/aGzDt6m5CNs0a9/2YOtL7mIXPvH41WG7Sx3es7Kq63QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MlXWidue; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uh0nafLF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC351F000FF;
-	Sat, 12 Sep 2026 15:34:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MlXWidue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38221F000FF;
+	Sat, 12 Sep 2026 15:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227274;
-	bh=qHoKZelFQUly62cXQ+EgEVDNODJxYd5ZpUqq4/buCHE=;
+	s=korg; t=1789227279;
+	bh=aXxyAa1F1wCok2huXWViEIx4j6wYDo3KbhELsduTo7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uh0nafLF3q5I7VCIKitHMfCTkQSc/Yp6PToaOM25mUVTHIRLGqpq9bjJpUQsYlyCm
-	 JikBBnUhnqilg9FAYW7ueMBSxllTdpN5S/YAAJyJ1g4RyFCreteGlI5OU6iAmNkgYU
-	 t0eJGe5I+g55poALkAAq431k4y79tbQpUCyc8MPU=
+	b=MlXWidue+lzQVgkcrI0cZfVpeNGCltzYUOu3m6pO7+0MNSGOG1RWq4m4h2GJw5YeW
+	 RcJjpHMQrxtpQv7bQuXZTNQX4KMp1XCPaBbxA1oz1nDYWy6WyGf3eYynl5bMBHUdM3
+	 G3105/UzuE9XaQyfUuq6MLbrc0AbiEfWirNN/5I8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 0145/1191] regulator: as3722_get_regulator_dt_data: fix premature of_node_put leaving dangling of_node pointer
-Date: Sat, 12 Sep 2026 08:47:53 +0200
-Message-ID: <20260912065551.458505771@linuxfoundation.org>
+	Ilya Krutskih <devsec@tpz.ru>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.1 0106/1191] dm raid1: reserve space for NUL-terminator in build_constructor_string()
+Date: Sat, 12 Sep 2026 08:47:14 +0200
+Message-ID: <20260912065550.566592976@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,36 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Ilya Krutskih <devsec@tpz.ru>
 
-commit f9324d670ae0b88cbfb0aa48fcaefa5baeb8da4c upstream.
+commit 73c37fe54cd056d07461b142ab0b8b81e1ef6ad8 upstream.
 
-In as3722_get_regulator_dt_data(), of_get_child_by_name() acquires a
-reference on np, which is then assigned to pdev->dev.of_node. The
-function immediately calls of_node_put(np), releasing the reference and
-leaving pdev->dev.of_node as a dangling pointer.
+Reserve space for the termination NUL after the maximum 20 decimal
+digits of a long long value to avoid buffer overflow in sprintf().
 
-Remove the of_node_put(np) call to let the device hold the reference.
-
+Fixes: f5db4af466e2 ("dm raid1: add userspace log")
 Cc: stable@vger.kernel.org
-Fixes: bc407334e9a6 ("regulator: as3722: add regulator driver for AMS AS3722")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260626160150.54291-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Ilya Krutskih <devsec@tpz.ru>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/as3722-regulator.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/md/dm-log-userspace-base.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/regulator/as3722-regulator.c
-+++ b/drivers/regulator/as3722-regulator.c
-@@ -600,7 +600,6 @@ static int as3722_get_regulator_dt_data(
+--- a/drivers/md/dm-log-userspace-base.c
++++ b/drivers/md/dm-log-userspace-base.c
+@@ -138,6 +138,7 @@ static int build_constructor_string(stru
+ 		str_size += strlen(argv[i]) + 1; /* +1 for space between args */
  
- 	ret = of_regulator_match(&pdev->dev, np, as3722_regulator_matches,
- 			ARRAY_SIZE(as3722_regulator_matches));
--	of_node_put(np);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "Parsing of regulator node failed: %d\n",
- 			ret);
+ 	str_size += 20; /* Max number of chars in a printed u64 number */
++	str_size++; /* For NUL-terminator */
+ 
+ 	str = kzalloc(str_size, GFP_KERNEL);
+ 	if (!str) {
 
 
