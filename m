@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B453325726;
-	Sat, 12 Sep 2026 13:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED8F191F93;
+	Sat, 12 Sep 2026 13:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221222; cv=none; b=SgT8ZaX80FaoRCgo382xs8GrhGBDGQCmMnx41EUWIEN3NnJzkBxSk4jqfLnysAbpekbggBBVWvboGSrs2m2kpps1nwESHtin46PsmZdr7n1JDhvsLxDPsYUEEykBqnQHZGFBrsb5FoNpislOoqu8WocxF6cDhTd/MezvuZrwt3U=
+	t=1789221227; cv=none; b=RpwdSVFI3Nm0lKhzQcmj3vjTAJPLsVg98aYbOZ4iyw4TiAJxWZCtjiQmp4gNnVudar8l7DsFek0FHGnW2EKFvxF+e5Kl/UOv2I4vK8SPfCmz9N3CF4i+tTTOpCVfztHpdeakCoZlRfn1hsWWNAHUHxN8vJeWbI51lAZvNPNZLBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221222; c=relaxed/simple;
-	bh=ex4D25SHmjU4CcomSvr1VC7ZCGaUq9NTg6QPqMndP8E=;
+	s=arc-20240116; t=1789221227; c=relaxed/simple;
+	bh=oFyKJ6jmVQKsul+wgf6R+t2cf6ZHmvvYjNZDzXgpYdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rtfYM0rOX5oGjNdr+EVunx3gd6jeC3zAw4QyWMekBmc3CXkg438CBItDig/KXrVyio6GZvDTQYqg31tMsas8sCotdKlbW8OjPhXabk7wy/h6jOFp0FQiANGZdQ5MQ2VN/nI1klJGH/aPzM1wzwkXy659tc0uVkLGf3u4WXkiCmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rk/RP1bC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mAEqwzJrmlx0I4PPRK/vZnMMuu4+nHrw66H71zALf0RyA1frFjfX+r2PcfJOmAkuMdiz8MIfxsSYuHSo9ATu8giem7EKq/pRgyp25qkk+0q9xWXxnnuOIj3jYOa8QE3NBAH2BYQwfFqRf+8+ulncdWioFN/Ss38ldPNYL9vtV+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w0Jx7CwO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rk/RP1bC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D2E91F00893;
-	Sat, 12 Sep 2026 13:53:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w0Jx7CwO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FBEC1F000FF;
+	Sat, 12 Sep 2026 13:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221216;
-	bh=BcF6IaIGlgGZF5qard51g4Tb/MNPAVvMEkB2+niP/qU=;
+	s=korg; t=1789221221;
+	bh=/NtxDvQC/01wB5LlCOq6NRPp8hrzOycKI/NtprfAIfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rk/RP1bCVnYpIOC0igEEf/vRBWd7rlD7tox+XkRmpKv3a4gLeNB56W8Hyx9UKc6jq
-	 1I5tNXqyWHYcZcAbB7kYFL6gGJhZFVHtrMyUjQE810SGAT0ayHwRnLfajkLuNhKVw1
-	 LfCY4ZJkz8yz9vlcLwMPZDFFOgc6vYkBueNEld9w=
+	b=w0Jx7CwOgUjO1Efd+bUVViOXz0mhyXuYtcW+cfZ0XnhJEYwc1dJ3c9JOxn7HbCjdZ
+	 XZbpX8R8sM8LxyYySmMWbcL6wRvL+oiS6KgB0qA59NpolAPBDlCsNu7c+eIhGaSQb+
+	 l/mnffP8Vt8u9tPJkut82ExT4+yhiSKmxYHK2RjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Can Peng <pengcan@kylinos.cn>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 6.6 0336/1424] thermal/drivers/imx: Disable clock on runtime resume failure
-Date: Sat, 12 Sep 2026 08:46:08 +0200
-Message-ID: <20260912065614.810008301@linuxfoundation.org>
+	Daniel Lezcano <daniel.lezcano@kernel.org>
+Subject: [PATCH 6.6 0337/1424] thermal/drivers/qoriq: Disable clock on resume failure
+Date: Sat, 12 Sep 2026 08:46:09 +0200
+Message-ID: <20260912065614.832157487@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,56 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Can Peng <pengcan@kylinos.cn>
 
-commit bcc6d886e5006a4656901d2d7fb6a215c96068a0 upstream.
+commit fcbf9964b67a6d6704c50ed28daa24c3b164f01c upstream.
 
-imx_thermal_runtime_resume() enables the thermal clock before
-powering up the sensor and enabling measurements.
+qoriq_tmu_resume() enables the TMU clock before clearing the
+power-down bit and enabling monitoring.
 
-If either regmap_write() fails, the function returns with the clock
+If either register update fails, the function returns with the clock
 still enabled. This leaves the clock enable count unbalanced after a
-failed runtime resume.
+failed resume.
 
 Disable the clock on those failure paths before returning the error.
 
-Fixes: 4cf2ddf16e17 ("thermal/drivers/imx: Implement runtime PM support")
+Fixes: 51904045d4aa ("thermal: qoriq: Add clock operations")
 Cc: stable@vger.kernel.org
 Signed-off-by: Can Peng <pengcan@kylinos.cn>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260722084909.463437-1-pengcan@kylinos.cn
+Link: https://patch.msgid.link/20260722075625.452684-1-pengcan@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/imx_thermal.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/thermal/qoriq_thermal.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/thermal/imx_thermal.c
-+++ b/drivers/thermal/imx_thermal.c
-@@ -851,12 +851,12 @@ static int __maybe_unused imx_thermal_ru
- 	ret = regmap_write(map, socdata->sensor_ctrl + REG_CLR,
- 			   socdata->power_down_mask);
- 	if (ret)
--		return ret;
+--- a/drivers/thermal/qoriq_thermal.c
++++ b/drivers/thermal/qoriq_thermal.c
+@@ -380,11 +380,20 @@ static int __maybe_unused qoriq_tmu_resu
+ 	if (data->ver > TMU_VER1) {
+ 		ret = regmap_clear_bits(data->regmap, REGS_TMR, TMR_CMD);
+ 		if (ret)
+-			return ret;
++			goto disable_clk;
+ 	}
+ 
+ 	/* Enable monitoring */
+-	return regmap_update_bits(data->regmap, REGS_TMR, TMR_ME, TMR_ME);
++	ret = regmap_update_bits(data->regmap, REGS_TMR, TMR_ME, TMR_ME);
++	if (ret)
 +		goto disable_clk;
- 
- 	ret = regmap_write(map, socdata->sensor_ctrl + REG_SET,
- 			   socdata->measure_temp_mask);
- 	if (ret)
--		return ret;
-+		goto disable_clk;
- 
- 	/*
- 	 * According to the temp sensor designers, it may require up to ~17us
-@@ -865,6 +865,11 @@ static int __maybe_unused imx_thermal_ru
- 	usleep_range(20, 50);
- 
- 	return 0;
++
++	return 0;
 +
 +disable_clk:
-+	clk_disable_unprepare(data->thermal_clk);
++	clk_disable_unprepare(data->clk);
 +
 +	return ret;
  }
  
- static const struct dev_pm_ops imx_thermal_pm_ops = {
+ static SIMPLE_DEV_PM_OPS(qoriq_tmu_pm_ops,
 
 
