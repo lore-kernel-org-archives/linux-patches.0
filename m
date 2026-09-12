@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82FE11A6816;
-	Sat, 12 Sep 2026 12:47:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C291829D288;
+	Sat, 12 Sep 2026 12:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217263; cv=none; b=J8xszDSyqtybbuu6sqt8WOVr+Sdzn00gs7VDBXtI0vzDruDKtAXCgqZiskmGcXsK+pzXQjkD8rMr+52y5exiHKm2sRaVxxDx0WyjM8B+8fBBIB8oI70+2FLw3szrK0i+AQP6ehOvmfKYX2Y/42Oc+OA0qFvJQRBzGZojIcBloXc=
+	t=1789217268; cv=none; b=N7CvKg0endj2XgerzEzbMvT1VdZ0AWxFPOAZcqPWZ52lG+fQJ8S7mN/cK6x2qGzsXyIbsqbf35dOdWnySyKWiQJaCtYuwD+ko8S/qoEsHaR98UIAQDRkwGMrOP62z11fkK3tMIVXcBlt7g0gC0AM0YqCE7UUAKFCdUKDj6ZkMFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217263; c=relaxed/simple;
-	bh=95sML7XQE4zp+acifnTUBq5Ka2UglDwH2YaGb6PHIcI=;
+	s=arc-20240116; t=1789217268; c=relaxed/simple;
+	bh=tqZ9n2txXkSzcajPEIAZaci5PuqHF5d3Pd2ueYeYXJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=McIf2+LH9w6OEZjIZ+dQKBB400tmZBvXpq6YgEpKAOcmEqNMqx475ZDvO2SSL5UiVGGAHY6Oa1gt2k1Bry9cN5pIF7bGYL9s+J5VUUd8gQsgp0x+J6+3HYGicUOCmEvjHHUMSL0NssEJRdVcjE9KQ4EWqCk4bB8jY3KjeTIwBsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7jh7c1d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BJfuLvPRfcXnb6vKXkzvmrbYnqkElBhLVJywbOZ459Ov/N69eFgv/IAunKxx5UancaUwgzemZ3NbINgI7YsFRH+XW0LJjl5lG/lpn5JPtz40mjDNOEPNQFTZ2THELjzRs5/36QJ22Irn1xDpps5b79R7sLJLyjUhOhSQqUg7Ezs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kIb8GUMT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7jh7c1d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ADA41F000FF;
-	Sat, 12 Sep 2026 12:47:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kIb8GUMT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712141F000FF;
+	Sat, 12 Sep 2026 12:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217262;
-	bh=00i1Bmx/6W9BNfksVLtQGZVqDY53T75dYLQ6wW8BXCU=;
+	s=korg; t=1789217267;
+	bh=idgC2ElOpSD8L/bey6qtjVeqs36c3FrRTf/Au5R4Ky8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x7jh7c1dBBFC6ICzjCuy7DJlicB0H/eLMSGO3lFzYV4RuzYDNvbULBH2wW3yJXr3R
-	 05Uu35tIktyOXiMjPd75BnI9b/prLYnBl2CF8K2Qd3BKf8w1oKgFQRmAS44e0z4Uxk
-	 0+sS0Z58aylNRemQ+wwVhjE2MMyjyu3/CoV2N9PE=
+	b=kIb8GUMTB2GsoY59C42d1g6zXlNbBWVLGU7V3m9hRU6MkQj9PVT0MdORsTMnW1F82
+	 mMzTfh5nJBf1An9I4cEaCDzeeIuxzGJiUz4YXblGOkeWYXIy3dvs9FUUZ9Ej9Raejk
+	 45rF8LP34jhBSZzzig3osK9zQaW+9qdXAHLeKJDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cheng Xu <chengyou@linux.alibaba.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0905/1376] RDMA/erdma: Hold CQ references when processing EQ events
-Date: Sat, 12 Sep 2026 08:55:31 +0200
-Message-ID: <20260912065627.737399483@linuxfoundation.org>
+Subject: [PATCH 6.12 0906/1376] RDMA/erdma: Hold QP references for AE and CM processing
+Date: Sat, 12 Sep 2026 08:55:32 +0200
+Message-ID: <20260912065627.759569139@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,162 +53,136 @@ Content-Transfer-Encoding: 8bit
 
 From: Cheng Xu <chengyou@linux.alibaba.com>
 
-[ Upstream commit 98df2aee1459ee1c62c70cbe9b370d2a532aea36 ]
+[ Upstream commit a52eeff32024f190b3bdc99088c7becccd4fa60b ]
 
-EQ handlers look up CQs from dev->cq_xa and invoke CQ completion or
-error callbacks outside the xarray lock. erdma_destroy_cq() can erase the
-CQ from the xarray and free its queue buffer and doorbell record while a
-previously scheduled EQ handler is still using the CQ.
+AE QP fatal events and iWARP CM paths load QPs from dev->qp_xa
+and then use or reference them outside the xarray lock.
+erdma_destroy_qp() can drop the destroy-path reference and free QP
+resources while such a lookup is in flight.
 
-Add a CQ refcount and take a reference under the xarray lock with
-refcount_inc_not_zero(). Remove the CQ from the xarray before dropping
-the destroy-path reference, then wait for in-flight EQ users before
-releasing CQ resources.
+Add erdma_qp_get_by_qpn() to acquire a kref under the xarray
+lock with kref_get_unless_zero(). Remove the QP from the xarray
+before dropping the destroy-path reference so no new lookup can acquire
+it while destruction waits for existing users.
 
 Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
 Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
-Link: https://patch.msgid.link/20260730124357.12976-1-chengyou@linux.alibaba.com
+Link: https://patch.msgid.link/20260730124357.12976-2-chengyou@linux.alibaba.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_eq.c    |  6 ++++--
- drivers/infiniband/hw/erdma/erdma_verbs.c | 12 +++++++++--
- drivers/infiniband/hw/erdma/erdma_verbs.h | 25 +++++++++++++++++++++--
- 3 files changed, 37 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/erdma/erdma_cm.c    |  6 ++----
+ drivers/infiniband/hw/erdma/erdma_eq.c    |  3 ++-
+ drivers/infiniband/hw/erdma/erdma_verbs.c |  6 +++++-
+ drivers/infiniband/hw/erdma/erdma_verbs.h | 15 +++++++++++++++
+ 4 files changed, 24 insertions(+), 6 deletions(-)
 
+diff --git a/drivers/infiniband/hw/erdma/erdma_cm.c b/drivers/infiniband/hw/erdma/erdma_cm.c
+index e0acc185e7193..f0c8ebf62a057 100644
+--- a/drivers/infiniband/hw/erdma/erdma_cm.c
++++ b/drivers/infiniband/hw/erdma/erdma_cm.c
+@@ -1021,10 +1021,9 @@ int erdma_connect(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 	if (laddr->sa_family != AF_INET || raddr->sa_family != AF_INET)
+ 		return -EAFNOSUPPORT;
+ 
+-	qp = find_qp_by_qpn(dev, params->qpn);
++	qp = erdma_qp_get_by_qpn(dev, params->qpn);
+ 	if (!qp)
+ 		return -ENOENT;
+-	erdma_qp_get(qp);
+ 
+ 	ret = sock_create(AF_INET, SOCK_STREAM, IPPROTO_TCP, &s);
+ 	if (ret < 0)
+@@ -1154,10 +1153,9 @@ int erdma_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 		return -ECONNRESET;
+ 	}
+ 
+-	qp = find_qp_by_qpn(dev, params->qpn);
++	qp = erdma_qp_get_by_qpn(dev, params->qpn);
+ 	if (!qp)
+ 		return -ENOENT;
+-	erdma_qp_get(qp);
+ 
+ 	down_write(&qp->state_lock);
+ 	if (qp->attrs.iwarp.state > ERDMA_QPS_IWARP_RTR) {
 diff --git a/drivers/infiniband/hw/erdma/erdma_eq.c b/drivers/infiniband/hw/erdma/erdma_eq.c
-index 5610e7f4c6bf7..6bffbc1b543be 100644
+index 6bffbc1b543be..e4161e85422c6 100644
 --- a/drivers/infiniband/hw/erdma/erdma_eq.c
 +++ b/drivers/infiniband/hw/erdma/erdma_eq.c
-@@ -52,7 +52,7 @@ void erdma_aeq_event_handler(struct erdma_dev *dev)
- 		if (FIELD_GET(ERDMA_AEQE_HDR_TYPE_MASK,
- 			      le32_to_cpu(aeqe->hdr)) == ERDMA_AE_TYPE_CQ_ERR) {
- 			cqn = le32_to_cpu(aeqe->event_data0);
--			cq = find_cq_by_cqn(dev, cqn);
-+			cq = erdma_cq_get_by_cqn(dev, cqn);
- 			if (!cq)
- 				continue;
- 
-@@ -62,6 +62,7 @@ void erdma_aeq_event_handler(struct erdma_dev *dev)
- 			if (cq->ibcq.event_handler)
- 				cq->ibcq.event_handler(&event,
- 						       cq->ibcq.cq_context);
-+			erdma_cq_put(cq);
+@@ -65,7 +65,7 @@ void erdma_aeq_event_handler(struct erdma_dev *dev)
+ 			erdma_cq_put(cq);
  		} else {
  			qpn = le32_to_cpu(aeqe->event_data0);
- 			qp = find_qp_by_qpn(dev, qpn);
-@@ -157,7 +158,7 @@ void erdma_ceq_completion_handler(struct erdma_eq_cb *ceq_cb)
- 		poll_cnt++;
- 		cqn = FIELD_GET(ERDMA_CEQE_HDR_CQN_MASK, READ_ONCE(*ceqe));
+-			qp = find_qp_by_qpn(dev, qpn);
++			qp = erdma_qp_get_by_qpn(dev, qpn);
+ 			if (!qp)
+ 				continue;
  
--		cq = find_cq_by_cqn(dev, cqn);
-+		cq = erdma_cq_get_by_cqn(dev, cqn);
- 		if (!cq)
- 			continue;
- 
-@@ -166,6 +167,7 @@ void erdma_ceq_completion_handler(struct erdma_eq_cb *ceq_cb)
- 
- 		if (cq->ibcq.comp_handler)
- 			cq->ibcq.comp_handler(&cq->ibcq, cq->ibcq.cq_context);
-+		erdma_cq_put(cq);
+@@ -75,6 +75,7 @@ void erdma_aeq_event_handler(struct erdma_dev *dev)
+ 			if (qp->ibqp.event_handler)
+ 				qp->ibqp.event_handler(&event,
+ 						       qp->ibqp.qp_context);
++			erdma_qp_put(qp);
+ 		}
  	}
  
- 	notify_eq(&ceq_cb->eq);
 diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
-index 3a65cbe5839ad..c9d454813b1f0 100644
+index c9d454813b1f0..057efff532b4f 100644
 --- a/drivers/infiniband/hw/erdma/erdma_verbs.c
 +++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
-@@ -1278,6 +1278,7 @@ int erdma_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
- 	struct erdma_dev *dev = to_edev(ibcq->device);
- 	struct erdma_ucontext *ctx = rdma_udata_to_drv_context(
+@@ -1321,6 +1321,7 @@ int erdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
  		udata, struct erdma_ucontext, ibucontext);
+ 	struct erdma_cmdq_destroy_qp_req req;
+ 	union erdma_mod_qp_params params;
 +	unsigned long flags;
  	int err;
- 	struct erdma_cmdq_destroy_cq_req req;
  
-@@ -1292,6 +1293,13 @@ int erdma_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
- 				       "failed to destroy CQ %u: %d\n",
- 				       cq->cqn, err);
+ 	down_write(&qp->state_lock);
+@@ -1348,6 +1349,10 @@ int erdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
+ 				       "failed to destroy QP %u: %d\n",
+ 				       QP_ID(qp), err);
  
-+	xa_lock_irqsave(&dev->cq_xa, flags);
-+	__xa_erase(&dev->cq_xa, cq->cqn);
-+	xa_unlock_irqrestore(&dev->cq_xa, flags);
++	xa_lock_irqsave(&dev->qp_xa, flags);
++	__xa_erase(&dev->qp_xa, QP_ID(qp));
++	xa_unlock_irqrestore(&dev->qp_xa, flags);
 +
-+	erdma_cq_put(cq);
-+	wait_for_completion(&cq->free);
-+
- 	if (rdma_is_kernel_res(&cq->ibcq.res)) {
- 		dma_free_coherent(&dev->pdev->dev, cq->depth << CQE_SHIFT,
- 				  cq->kern_cq.qbuf, cq->kern_cq.qbuf_dma_addr);
-@@ -1302,8 +1310,6 @@ int erdma_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
- 		put_mtt_entries(dev, &cq->user_cq.qbuf_mem);
- 	}
+ 	erdma_qp_put(qp);
+ 	wait_for_completion(&qp->safe_free);
  
--	xa_erase(&dev->cq_xa, cq->cqn);
--
+@@ -1361,7 +1366,6 @@ int erdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
+ 
+ 	if (qp->cep)
+ 		erdma_cep_put(qp->cep);
+-	xa_erase(&dev->qp_xa, QP_ID(qp));
+ 
  	return 0;
  }
- 
-@@ -1932,6 +1938,8 @@ int erdma_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
- 	cq->ibcq.cqe = depth;
- 	cq->depth = depth;
- 	cq->assoc_eqn = attr->comp_vector + 1;
-+	refcount_set(&cq->refcount, 1);
-+	init_completion(&cq->free);
- 
- 	ret = xa_alloc_cyclic(&dev->cq_xa, &cq->cqn, cq,
- 			      XA_LIMIT(1, dev->attrs.max_cq - 1),
 diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.h b/drivers/infiniband/hw/erdma/erdma_verbs.h
-index f9408ccc8bad0..22ceb5fe7ca2a 100644
+index 22ceb5fe7ca2a..a752bf7c4c1ec 100644
 --- a/drivers/infiniband/hw/erdma/erdma_verbs.h
 +++ b/drivers/infiniband/hw/erdma/erdma_verbs.h
-@@ -7,6 +7,9 @@
- #ifndef __ERDMA_VERBS_H__
- #define __ERDMA_VERBS_H__
- 
-+#include <linux/completion.h>
-+#include <linux/refcount.h>
-+
- #include "erdma.h"
- 
- /* RDMA Capability. */
-@@ -341,6 +344,8 @@ struct erdma_cq {
- 
- 	u32 depth;
- 	u32 assoc_eqn;
-+	refcount_t refcount;
-+	struct completion free;
- 
- 	union {
- 		struct erdma_kcq_info kern_cq;
-@@ -355,9 +360,25 @@ static inline struct erdma_qp *find_qp_by_qpn(struct erdma_dev *dev, int id)
+@@ -360,6 +360,21 @@ static inline struct erdma_qp *find_qp_by_qpn(struct erdma_dev *dev, int id)
  	return (struct erdma_qp *)xa_load(&dev->qp_xa, id);
  }
  
--static inline struct erdma_cq *find_cq_by_cqn(struct erdma_dev *dev, int id)
-+static inline struct erdma_cq *erdma_cq_get_by_cqn(struct erdma_dev *dev,
++static inline struct erdma_qp *erdma_qp_get_by_qpn(struct erdma_dev *dev,
 +						   int id)
 +{
-+	struct erdma_cq *cq;
++	struct erdma_qp *qp;
 +	unsigned long flags;
 +
-+	xa_lock_irqsave(&dev->cq_xa, flags);
-+	cq = xa_load(&dev->cq_xa, id);
-+	if (cq && !refcount_inc_not_zero(&cq->refcount))
-+		cq = NULL;
-+	xa_unlock_irqrestore(&dev->cq_xa, flags);
++	xa_lock_irqsave(&dev->qp_xa, flags);
++	qp = xa_load(&dev->qp_xa, id);
++	if (qp && !kref_get_unless_zero(&qp->ref))
++		qp = NULL;
++	xa_unlock_irqrestore(&dev->qp_xa, flags);
 +
-+	return cq;
++	return qp;
 +}
 +
-+static inline void erdma_cq_put(struct erdma_cq *cq)
+ static inline struct erdma_cq *erdma_cq_get_by_cqn(struct erdma_dev *dev,
+ 						   int id)
  {
--	return (struct erdma_cq *)xa_load(&dev->cq_xa, id);
-+	if (refcount_dec_and_test(&cq->refcount))
-+		complete(&cq->free);
- }
- 
- void erdma_qp_get(struct erdma_qp *qp);
 -- 
 2.53.0
 
