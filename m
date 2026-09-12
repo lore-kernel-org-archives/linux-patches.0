@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58F44BEE22;
-	Sat, 12 Sep 2026 12:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D13214A84;
+	Sat, 12 Sep 2026 12:33:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216422; cv=none; b=CfWLpBbvfSH9vy3VrpiMQegPD14ATjV+kLBlWC1I0aDdJVYMcoft6y2YVFzHDpQwW8+lWTzxtKeniR05ClsjNdrvEoZtnmhkWE5qTQAiTvsr5Z2CZjP0Y0Lxf985wLHFPzkHL/zRryJpXmnBPFys5cKfFg/tgJRuJnIlPpprt3k=
+	t=1789216427; cv=none; b=DRjbwvkripYCZ3Kw7I5jYMNeUiulunRtL37UOzRm4EYN616JFofa7t17TFfArzcmYiTmYvlVWAChRO5RTBC4TT/vkoQ4PIY+Vlqkqb03Tekg2dyfrMPL97zjhQnf26P72SscTZo19RnMjjFtZkuIYHcuIicpuo7sOiksvMQod8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216422; c=relaxed/simple;
-	bh=FYURk0RfadZRvlJnqCho//qLnwtLmifkhZEtvqRXWNA=;
+	s=arc-20240116; t=1789216427; c=relaxed/simple;
+	bh=GD+izeFr7dc/CgASmJpJi5UhtdajKCTyN0AWv1BslU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YQ5qvn45d45/oVEqe3+sMuU9HUQFmpWvXO9O1EPh7WwfCy3hqtalP1ifDIdJ2oXqm8eJy67VVNwhmnuyM6uTCBSkUdvyKTDSh6xtltJa5nkHPUZilgRLL2FSRbhCLrMYnzivEZY1SUQp2og9dT8ny6bnhVOm1hyxOdhcjRXFh5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6OT6/v5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DCa7a/uFhDBDRlQG12HeVtfFmv64AbZHk3g7HMtJScqRYAJ+dJAKDHmXXXTcoMXlwS5WeLVbhYcC3xicwfvQ+gNiZfnh4CseTQuGhsjBsJF/JP100/E4z/LFEVti4AT6PpBk1Hu8RM9ZM83+AiwOZoUAw5uQAwH5vy6kgAAQwpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rnnimgqi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6OT6/v5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BE41F000FF;
-	Sat, 12 Sep 2026 12:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rnnimgqi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F2031F000FF;
+	Sat, 12 Sep 2026 12:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216421;
-	bh=hevLmbdfhx58AbQBimS2rr1U4lLTBFpnWUnUMFAyVvs=;
+	s=korg; t=1789216426;
+	bh=8A1C2g2Nuh+SgrzniGzbzvYtqk+CgORt2rkyMohd4kE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B6OT6/v5MdOZyqDqTjf4IPdhkJ6Coq4L9ws8bCmFwnHOqS/CjSP80R8R3DbXrOwrZ
-	 xhRO0hv3n1vPqDvGrbO6fGy+rke+utByZ7IHRfedylxVydLcrNTS6dvIokcwJemXsa
-	 WEhSHK3la4Kt/objA4SkYxJnufElVGB+UxzbJsDk=
+	b=rnnimgqi8rYMS0agDMSHCopnq7gA+lNc2cNflEHdRHpohmOoZ2DQFU/NNtXm++9cZ
+	 u0tJElP6Ds6vOfvspalIebus61yLqdZEPSv1WzcIaKf5fzyo/iQunLM85gA6/9RFnB
+	 3op8V8jzSPxRTf7LC9UkmH5cJeM2ayzYUX2Aps/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Tariq <alitariq45892@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0732/1376] PCI: starfive: Fix unchecked pm_runtime_get_sync() in probe
-Date: Sat, 12 Sep 2026 08:52:38 +0200
-Message-ID: <20260912065623.861017898@linuxfoundation.org>
+Subject: [PATCH 6.12 0733/1376] platform/chrome: cros_ec_debugfs: Clean up console log on probe failure
+Date: Sat, 12 Sep 2026 08:52:39 +0200
+Message-ID: <20260912065623.882939713@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,52 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Tariq <alitariq45892@gmail.com>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit aaae917990623a6ca6b638557056606a1ae4a8d6 ]
+[ Upstream commit 5d187600c4603b8f7812b12ce359a11ad7a7fd3a ]
 
-pm_runtime_get_sync() is called in starfive_pcie_probe() without
-checking its return value. If runtime resume fails, the driver
-proceeds to configure PCIe hardware through regmap_update_bits(),
-enable clocks and resets, and power on the PHY, even though the
-device may not actually be powered.
+Add a dedicated error label for failures after successful console log
+setup.
 
-pm_runtime_get_sync() also increments the usage counter even when
-resume fails, which would leave the counter unbalanced if this
-error path were later handled without additional cleanup.
-
-Switch to pm_runtime_resume_and_get(), which balances the usage
-counter internally on failure, and bail out of probe before any
-hardware is touched if resume does not succeed.
-
-Tested on StarFive VisionFive 2 v1.2A board.
-
-Fixes: 6168efbebace ("PCI: starfive: Enable controller runtime PM before probing host bridge")
-Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260718153352.661930-1-alitariq45892@gmail.com
+Fixes: d90fa2c64d59 ("platform/chrome: cros_ec: Poll EC log on EC panic")
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Link: https://lore.kernel.org/r/c00974953a1b952f51f0f021d7f9fad134159909.1785320940.git.getshell@seu.edu.cn
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/plda/pcie-starfive.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/platform/chrome/cros_ec_debugfs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/plda/pcie-starfive.c b/drivers/pci/controller/plda/pcie-starfive.c
-index d859c14eb1e23..aeaebe9cd3608 100644
---- a/drivers/pci/controller/plda/pcie-starfive.c
-+++ b/drivers/pci/controller/plda/pcie-starfive.c
-@@ -405,7 +405,11 @@ static int starfive_pcie_probe(struct platform_device *pdev)
- 		return ret;
+diff --git a/drivers/platform/chrome/cros_ec_debugfs.c b/drivers/platform/chrome/cros_ec_debugfs.c
+index 839154c46e46c..ef93b34c7dd07 100644
+--- a/drivers/platform/chrome/cros_ec_debugfs.c
++++ b/drivers/platform/chrome/cros_ec_debugfs.c
+@@ -525,7 +525,7 @@ static int cros_ec_debugfs_probe(struct platform_device *pd)
+ 	ret = blocking_notifier_chain_register(&ec->ec_dev->panic_notifier,
+ 					       &debug_info->notifier_panic);
+ 	if (ret)
+-		goto remove_debugfs;
++		goto cleanup_console_log;
  
- 	pm_runtime_enable(&pdev->dev);
--	pm_runtime_get_sync(&pdev->dev);
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
-+	if (ret < 0) {
-+		pm_runtime_disable(&pdev->dev);
-+		return dev_err_probe(dev, ret, "failed to resume device\n");
-+	}
+ 	ec->debug_info = debug_info;
  
- 	plda->host_ops = &sf_host_ops;
- 	plda->num_events = PLDA_MAX_EVENT_NUM;
+@@ -533,6 +533,8 @@ static int cros_ec_debugfs_probe(struct platform_device *pd)
+ 
+ 	return 0;
+ 
++cleanup_console_log:
++	cros_ec_cleanup_console_log(debug_info);
+ remove_debugfs:
+ 	debugfs_remove_recursive(debug_info->dir);
+ 	return ret;
 -- 
 2.53.0
 
