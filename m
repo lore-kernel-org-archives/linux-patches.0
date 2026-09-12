@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F2F309F08;
-	Sat, 12 Sep 2026 15:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD3E309F08;
+	Sat, 12 Sep 2026 15:49:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228159; cv=none; b=Vq/RhCS9JzjXaQBrEjI4s6n9J3P9gBBeYcRaMUEodbhyMNU16fsNxb2wIkvLQ5NBMPKowftdXt6sJoPU0L1x5WYos8QaBrYqzU3mnEzgMkzciscNHVKWhcStwwtYg1EKhtdmkxEcTQvArcwOI7DCca0phBaDyHGvADlaEUc9hts=
+	t=1789228163; cv=none; b=qPL1wUROo/rd3am1YYLhsVloAaYOj+cGQvUZHLJHaCuwyOS+tAKK6vzrUJ11mJUJmeRGhGODanaGoZ0yKaL+hudTK+XaLJIRPLcreEZfeEPbP4cwXz1llGsXIO4mmLLKj3EUgCi0KFKW8Kze9AwIWhaSPFZoqIsm4qr3rHOYmug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228159; c=relaxed/simple;
-	bh=ANA6/LjZdy0ReRYkc4aaYR0QSugn4vcR2wjDhVt5Q5g=;
+	s=arc-20240116; t=1789228163; c=relaxed/simple;
+	bh=H0imJUBm7X9TQRcnOsLO3V8v2WjdFymjgHJfp5lhJek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=go7IRtwH3b9/uvFpGMUQfG6iDPAK5syV5wd8Smx24MS913ODUVB+MPAsiWNZl3iN/f4cpglrck0kkjUv130LNVmHjR4ZNGcIlU5Oz+7Eg9eYRgUpYY5E0wl64bmKb2wPT1rfBcKrUyPFBhsO6YZO5FVLVnUEoTgLf8IvUjhl3Yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2C7LJ5hR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D5R5m4Bx14H+nlzzZYB8hkGN9zHORrXqlqXfkbONcBjhVK5s/4s7BcI4GYQF01nzNUzxRIGu5As4gJVm22shMRMmG9YhBScMXXX9nkBpyu5k+dzCc4UTx9KJnCMRZ2FtzcY4nfmAPmbyavLGOHeyRapaNTHG6TKQ1w81kwiV9ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKLAe7WO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2C7LJ5hR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6DD1F000FF;
-	Sat, 12 Sep 2026 15:49:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKLAe7WO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4CB1F000FF;
+	Sat, 12 Sep 2026 15:49:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228157;
-	bh=4jr9cgbWRbb2wd4MWt3hvHnBucQom0yMLBRdidUIMC4=;
+	s=korg; t=1789228161;
+	bh=I/+m4L9BkzOYN8soFEdQqqNO3NAebeZGwMQG+odaHtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2C7LJ5hRtV621ODqFImoGW6WVXfg3GbmQWSyE1k0YEqQmu75Jfbclhjix7V5/pZGS
-	 Cv2TiG891i79nacAdxP0LMC7iZzKSmWScEYJ0hwKxOmco00AeuUtJlrE9kEIgV1cDi
-	 wKqVtJsD0Y2vCh2UF2MGyo7i7elrDaqzuyQKN1yI=
+	b=WKLAe7WO08QZQy9JooH+3tgfRQwjhKxiQ1jcVjYCskpJhAcZaJDhVkSZAe16Wodnr
+	 N67ZuAFNS4juSzdD9MG7Vf6lZRAuYyaEk+lzuKW8kZSOq5OjHRSxLHZPyVh48V7vRl
+	 EOak/as3gn3zhds2uxq6HLJZAz83mrN9feMx7B2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Kai <yaokai34@huawei.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.1 0286/1191] futex: Prevent rcuwait use-after-free during requeue PI
-Date: Sat, 12 Sep 2026 08:50:14 +0200
-Message-ID: <20260912065554.655309329@linuxfoundation.org>
+	Wei Jie Law <98lawweijie@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.1 0287/1191] HID: rmi: fix OOB access with undersized RMI reports
+Date: Sat, 12 Sep 2026 08:50:15 +0200
+Message-ID: <20260912065554.677662241@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,98 +50,202 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Kai <yaokai34@huawei.com>
+From: Wei Jie Law <98lawweijie@gmail.com>
 
-commit a3b8d46fe401cba3a5c46dea610e6eb3dc15370e upstream.
+commit 4956993bb3befdf791d71a4952d8d13bcfd44c7b upstream.
 
-On PREEMPT_RT, FUTEX_CMP_REQUEUE_PI can trigger a KASAN report
-(slab-out-of-bounds) in futex_requeue_pi_complete() invocation of
-rcuwait_wake_up().
+The hid-rmi driver sizes its writeReport/readReport buffer purely from
+the report descriptor supplied by the device, with no minimum bound:
 
-The futex_q used by futex_wait_requeue_pi() is allocated on the waiter's
-stack. An early wakeup can race with a PI requeue as follows:
+	data->input_report_size  = hid_report_len(input_report);
+	data->output_report_size = hid_report_len(output_report);
+	alloc_size = data->output_report_size + data->input_report_size;
+	data->writeReport = devm_kzalloc(&hdev->dev, alloc_size, GFP_KERNEL);
+	data->readReport = data->writeReport + data->output_report_size;
 
-        waiter                          requeue task
-        ------                          ------------
-futex_wait_requeue_pi()
-  futex_do_wait()
-    schedule()
-                                       futex_requeue
-                                         futex_proxy_trylock_atomic()
-                                           futex_requeue_pi_prepare()
-                                            Q_REQUEUE_PI_NONE -> Q_REQUEUE_PI_IN_PROGRESS
-* timeout/ signal wakes waiter *
-  futex_requeue_pi_wakeup_sync()
-   Q_REQUEUE_PI_IN_PROGRESS -> Q_REQUEUE_PI_WAIT
-                                           requeue_pi_wake_futex
-                                             futex_requeue_pi_complete()
-                                               cmpxchg Q_REQUEUE_PI_WAIT -> Q_REQUEUE_PI_LOCKED
-    rcuwait_wait_event()
-      if (atomic_read(&q->requeue_state) != Q_REQUEUE_PI_WAIT)
-       break /* no schedule() */
+but then reads and writes fixed offsets into it.  A device declaring a
+1-byte output and a 1-byte input report makes hid_report_len() return 2
+for each, so alloc_size is 4, while rmi_set_page() -- reached
+unconditionally at probe time through rmi_input_configured() -- stores
+writeReport[4] and rmi_hid_read_block() stores writeReport[0..5].  Since
+readReport lives at writeReport + output_report_size, those stores also
+corrupt the window the next reply is parsed out of.
 
- /* q.pi_state->owner == current */
- futex_private_hash_put()
- /* return from syscall */
-                                              rcuwait_wake_up(&q->requeue_wait)
-                                                /* q is gone */
+The read path is worse: the copy length comes from readReport[1], which
+the device fills in and can be up to 255, and the copy starts at
+&readReport[2] with no regard for input_report_size, so it runs past the
+end of the allocation into adjacent slab objects.  This does not even
+need a lying device -- rmi_f01_probe() issues a fixed 21-byte register
+read, so any device declaring an input report smaller than 23 bytes
+reads out of bounds even when it answers truthfully.  Those bytes become
+the register values the RMI core acts on: rmi_f01_probe() prints them to
+the kernel log as the product id and exports them through the mode 0444
+sysfs attribute of the same name, and rmi_driver_set_irq_bits() sends
+them back to the device as the interrupt mask, so an undersized report
+descriptor leaks heap contents both to unprivileged userspace and to the
+device itself.
 
-futex_requeue_pi_complete() publishes Q_REQUEUE_PI_LOCKED before
-calling rcuwait_wake_up(). The waiter observes this state in
-rcuwait_wait_event() before invoking schedule() in rcuwait_wait_event().
-Here, the waiter is free leave the syscall before requeue task can
-complete the wake.
+The write path has no bound either: rmi_hid_write_block() copies an
+unbounded len to &writeReport[4], and the largest caller a device can
+drive at probe time is rmi_driver_set_irq_bits(), whose length is
+derived from the interrupt source counts the device declares in its Page
+Description Table.
 
-To address this race skip rcuwait_wake_up() in the Q_REQUEUE_PI_LOCKED
-case.
-This state is only published by requeue_pi_wake_futex(), which saves
-q->task before futex_requeue_pi_complete() and wakes the waiter via
-wake_up_state().
+Finally, the read loop cannot terminate on a zero-length reply: such a
+reply copies nothing and advances neither bytes_read nor bytes_needed,
+and because a reply did arrive the one second wait_event_timeout() does
+not fire either, so a device answering 0 forever keeps the loop running
+inside the probe worker with page_mutex held.  khungtaskd does not
+notice, because every reply wakes the task.
 
-This wake is intended to wake the waiter from its futex_do_wait() sleep.
-If the waiter is still sleeping there, it can not get into the
-Q_REQUEUE_PI_WAIT state (and require this removed wake).
-Should the waiter be woken up from futex_do_wait() by other means (as in
-this example) and sleep in futex_requeue_pi_wakeup_sync() then the
-wake_up_state() from requeue_pi_wake_futex() will wake it, too.
-Should the waiter task terminate before wake_up_state() had a chance to
-wake the task then the task pointer does not become invalid because the
-futex_hash_bucket::lock is held and the task pointer is RCU protected.
+Reject reports too small for what the driver builds -- 6 output bytes
+for the write reports and 3 input bytes for the read handshake -- at
+probe time, clamp the write and the read copy to the report sizes the
+device declared, and treat a zero-length reply as an error.  A device
+refused this way is started as an ordinary HID device, like one that
+does not carry the RMI report ids at all.
 
-[bigeasy: Updated comment and commit message]
+RMI_DEVICE must not be left set in device_flags on that path, because
+rmi_input_configured() would then run the RMI setup and reach
+rmi_set_page(), which writes the writeReport buffer the refusal just
+skipped allocating.  The bit can arrive set: rmi_probe() copies
+id->driver_data into device_flags before the report checks, and a bind
+through the new_id sysfs attribute can supply driver_data with
+RMI_DEVICE (BIT(0)) set.  Strip the bit where driver_data is copied, so
+RMI_DEVICE keeps meaning exactly "this probe validated the reports"; the
+three jumps to start that predate this patch are covered as well.
 
-Fixes: 07d91ef510fb1 ("futex: Prevent requeue_pi() lock nesting issue on RT")
-Signed-off-by: Yao Kai <yaokai34@huawei.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+The error path also clears RMI_READ_DATA_PENDING on its way out, because
+that flag is what the wait at the top of the loop tests: leaving it set
+would make every later wait_event_timeout() return immediately on the
+stale reply and kill the read path for the rest of the device's life.
+
+Clamping does not regress working hardware: the read loop already
+handles a reply carrying fewer bytes than requested, and a write longer
+than the output report was overrunning the buffer already.
+
+Verified on v6.12.69 and on v6.12.105 built with CONFIG_KASAN=y and
+booted kasan_multi_shot, whose hid-rmi.c is identical to mainline here.
+An emulated RMI4 device driven over /dev/uhid, and the same device again
+over dummy_hcd plus raw-gadget, give identical results:
+
+  BUG: KASAN: slab-out-of-bounds in rmi_hid_read_block+0x409/0x750 [hid_rmi]
+  Read of size 21 at addr ffff88800bf33bba by task kworker/0:3/285
+   __asan_memcpy+0x23/0x60
+   rmi_hid_read_block+0x409/0x750 [hid_rmi]
+   rmi_f01_probe+0x5dd/0x1dc0 [rmi_core]
+
+  BUG: KASAN: slab-out-of-bounds in rmi_hid_write_block+0x1a9/0x350 [hid_rmi]
+  Write of size 35 at addr ffff88810a2b24ac by task kworker/1:10/666
+   __asan_memcpy+0x3c/0x60
+   rmi_hid_write_block+0x1a9/0x350 [hid_rmi]
+   rmi_driver_set_irq_bits+0x1f6/0x4d0 [rmi_core]
+   rmi_driver_probe+0x636/0xbf0 [rmi_core]
+   rmi_input_configured+0x184/0x2e0 [hid_rmi]
+   rmi_probe+0x952/0xcf0 [hid_rmi]
+
+and, for the zero-length reply, a probe worker left in D state in
+rmi_hid_read_block() after 225 replies at 200 ms intervals.
+
+After this change the undersized descriptor is refused at probe with
+"rmi reports too small (out=2 in=2)", the oversized read and write are
+both rejected, the zero-length reply fails the read with -EIO while
+later reads on the same device keep working, and a device declaring
+reports large enough for a 21-byte register read still probes normally
+and reports its real product id.  A device bound through new_id with
+RMI_DEVICE in its driver_data no longer reaches rmi_set_page() with an
+unallocated writeReport either.
+
+Link: https://lore.kernel.org/linux-input/20260822121007.153988-1-98lawweijie@gmail.com/
+Link: https://lore.kernel.org/linux-input/00a489f38b240624dcb5a4bae36a53fcba9cfb47.1787549195.git.98lawweijie@gmail.com/
+Link: https://lore.kernel.org/linux-input/20260824122708.76168-1-98lawweijie@gmail.com/
+Link: https://lore.kernel.org/linux-input/20260825060954.104890-1-98lawweijie@gmail.com/
+Fixes: 9fb6bf02e3ad ("HID: rmi: introduce RMI driver for Synaptics touchpads")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260901135453.3121948-3-bigeasy@linutronix.de
+Assisted-by: Claude:claude-opus-5
+Assisted-by: GLM:glm-5.3
+Signed-off-by: Wei Jie Law <98lawweijie@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/futex/requeue.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/hid/hid-rmi.c |   46 +++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 43 insertions(+), 3 deletions(-)
 
---- a/kernel/futex/requeue.c
-+++ b/kernel/futex/requeue.c
-@@ -147,8 +147,16 @@ static inline void futex_requeue_pi_comp
- 	} while (!atomic_try_cmpxchg(&q->requeue_state, &old, new));
+--- a/drivers/hid/hid-rmi.c
++++ b/drivers/hid/hid-rmi.c
+@@ -235,7 +235,23 @@ static int rmi_hid_read_block(struct rmi
+ 				break;
+ 			}
  
- #ifdef CONFIG_PREEMPT_RT
--	/* If the waiter interleaved with the requeue let it know */
--	if (unlikely(old == Q_REQUEUE_PI_WAIT))
+-			read_input_count = data->readReport[1];
++			read_input_count = min_t(int, data->readReport[1],
++						 data->input_report_size - 2);
++			if (!read_input_count) {
++				/*
++				 * A zero length reply advances neither
++				 * bytes_read nor bytes_needed, and because a
++				 * reply did arrive the wait above does not
++				 * time out either, so a device answering 0
++				 * forever would spin here indefinitely with
++				 * page_mutex held.
++				 */
++				hid_warn(hdev, "%s: zero-length read reply\n",
++					 __func__);
++				clear_bit(RMI_READ_DATA_PENDING, &data->flags);
++				ret = -EIO;
++				break;
++			}
+ 			memcpy(buf + bytes_read, &data->readReport[2],
+ 				min(read_input_count, bytes_needed));
+ 
+@@ -271,6 +287,11 @@ static int rmi_hid_write_block(struct rm
+ 			goto exit;
+ 	}
+ 
++	if (len + 4 > data->output_report_size) {
++		ret = -EINVAL;
++		goto exit;
++	}
++
+ 	data->writeReport[0] = RMI_WRITE_REPORT_ID;
+ 	data->writeReport[1] = len;
+ 	data->writeReport[2] = addr & 0xFF;
+@@ -668,8 +689,16 @@ static int rmi_probe(struct hid_device *
+ 		return ret;
+ 	}
+ 
+-	if (id->driver_data)
+-		data->device_flags = id->driver_data;
 +	/*
-+	 * The waiter in futex_requeue_pi_wakeup_sync() can interleave with the
-+	 * wake below: It will assign Q_REQUEUE_PI_IN_PROGRESS and here it will
-+	 * be updated to Q_REQUEUE_PI_LOCKED (locked = 1). The rcuwait_wait_event()
-+	 * will already read Q_REQUEUE_PI_LOCKED and skip the schedule() invocation,
-+	 * leading to an access of futex_q::requeue_wait after the waiter returned.
-+	 * In this case only we skip the wake here and rely on following wake in
-+	 * requeue_pi_wake_futex() to perform the wake if needed.
++	 * RMI_DEVICE can only mean "this probe validated the RMI reports and
++	 * allocated writeReport": every bail-out to start below skips that
++	 * allocation, and device_flags left carrying RMI_DEVICE from
++	 * driver_data would send rmi_input_configured() into rmi_set_page()
++	 * with writeReport still NULL.  A bind through the new_id sysfs
++	 * attribute can supply driver_data with the bit set, so do not let
++	 * driver_data grant it.
 +	 */
-+	if (unlikely(old == Q_REQUEUE_PI_WAIT) && new != Q_REQUEUE_PI_LOCKED)
- 		rcuwait_wake_up(&q->requeue_wait);
- #endif
- }
++	data->device_flags = id->driver_data & ~RMI_DEVICE;
+ 
+ 	/*
+ 	 * Check for the RMI specific report ids. If they are misisng
+@@ -698,6 +727,17 @@ static int rmi_probe(struct hid_device *
+ 
+ 	data->output_report_size = hid_report_len(output_report);
+ 
++	/*
++	 * The write reports built by this driver occupy 6 bytes and the read
++	 * handshake looks at the first 3 bytes of an input report, so refuse
++	 * to drive a device whose reports cannot hold them.
++	 */
++	if (data->output_report_size < 6 || data->input_report_size < 3) {
++		hid_err(hdev, "rmi reports too small (out=%u in=%u)\n",
++			data->output_report_size, data->input_report_size);
++		goto start;
++	}
++
+ 	data->device_flags |= RMI_DEVICE;
+ 	alloc_size = data->output_report_size + data->input_report_size;
+ 
 
 
