@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA697418A5B;
-	Sat, 12 Sep 2026 15:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B12418A5B;
+	Sat, 12 Sep 2026 15:28:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226915; cv=none; b=iQbtkK8YUGyJlNdhNsMi2S6EQU6GIq1Yj0qFJb+pR0zxJHXKVn/A2MWt5eDC7kLGDcUi2ewvViOTd4SymCS7zO39QDuh77E7iLulLKLmMJ5s/M7G/rsmt+AWTU9YZZ13OUWTuThR5IbZ/d2XUNjIhEbTDiyAbPHowNGEFf/K8jA=
+	t=1789226921; cv=none; b=KgIiQrtlBoHS+S7Z2eebs4G76eyhoYbQciGwsGnesh2mD4oKVm3u/EQFpcmao1yRKLb+2dc9VlKlTgbV7iW+/h9zPOwq3piXtwZzm82eLhOkTG29tmIMJSE+Wde13fCKWOj5uM5HA8OPn8VVnbObLcSA5j5psGWU/vm2X69t9lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226915; c=relaxed/simple;
-	bh=7jzyrpcrmLY1lpIc0DZ+SBFEqS+/hdm6Gx+vUwWTB8w=;
+	s=arc-20240116; t=1789226921; c=relaxed/simple;
+	bh=Ig+iQT6J3gNcFeJUIgOh2TAuL48+N1+H0GmgQKHTR7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YzfsjGUE+FDcf/YXN9WadQ6S5Gl7AvH8F7dFzFaEiqSn4D7oYu7KiPuzYqHeqEuIZ0s2CCOyzV9GvuIuKvUk+om+c/YZ7geUCzA19gj8CwtWYUp/QuSNLwpA9atbjeF5X75PV1bDZywZRlc+5LeyyVxfJdXGManA4Hir9lA03Tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meNuVU6d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p7U1tLw3pyU5Chj25zDfw58jrWawnLV3npgP812T6fOrybRzSXPnB06p50yoHZ4IT61QXFAwBH3nZFJSITgpwMagTI+SOy012BnqB1W+z+yqY7GCnRpTW8hTkE54jhxsPIfZ334O1xyzoEwW67eUtPHKaf+3lQoshwawR6iboos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fn09v+Fg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meNuVU6d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8891F000FF;
-	Sat, 12 Sep 2026 15:28:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fn09v+Fg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E1C1F000FF;
+	Sat, 12 Sep 2026 15:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226913;
-	bh=+4QzuxEQcKCSGlD7QAzkhViMezd+qT2h5kA2u6lfVro=;
+	s=korg; t=1789226919;
+	bh=lgK5X5Qn8fBIJF1+xHrwa5CCG6FaehvW/9053jXd4EE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=meNuVU6daoL8RgWGDwgziNAZMfYJ9ocTKpRGb9eQA49eItunDFYC4LsQ1ny5bz0p9
-	 Z8W2NCOII0TAGtmnCyRG2rLzW0Ct5iGoxlzyjOeLK8YxL4uWK6E+lAFHBNxAf7qANb
-	 e6oQLNMXy22xJkZFjacX3M4xloC4aYl4DFqfvXvw=
+	b=Fn09v+Fg98nbLUvNSM1qumlNKgUAU38jJT9dKUDloR9ExdhzuH13/qvMz/WGAYhPX
+	 h1LxDZlJyPKHoAWgVXmfYkvWek0LeE3nxNCn8aIojjpQyjd3nPkn4JdfNsfridt2Lb
+	 iVAl3VVWDL8KdCF+aeYD5sE9WEmgRmkr4jHgwVks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.1 0057/1191] nfsd: reject reclaim LOCK after RECLAIM_COMPLETE
-Date: Sat, 12 Sep 2026 08:46:25 +0200
-Message-ID: <20260912065549.429998876@linuxfoundation.org>
+	Samuel Page <sam@bynar.io>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.1 0075/1191] fs/ntfs3: fix info-leak on partial LZNT decompress in ni_read_frame()
+Date: Sat, 12 Sep 2026 08:46:43 +0200
+Message-ID: <20260912065549.849390782@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,45 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Samuel Page <sam@bynar.io>
 
-commit 2327ba1d9546727a35b17888777e991f68a9b305 upstream.
+commit 35d1ea92c7d946e2ebdbe36cdb2c969c8704bebd upstream.
 
-nfsd4_lock() only checks the namespace-wide grace flag when deciding
-whether to accept a reclaim LOCK. It does not check the per-client
-NFSD4_CLIENT_RECLAIM_COMPLETE bit. An NFSv4.1+ client that has
-already sent RECLAIM_COMPLETE can submit lk_reclaim=1 while grace is
-still active (e.g. lockd holds the grace list open), and the server
-accepts it instead of returning NFS4ERR_NO_GRACE as required by
-RFC 8881 section 18.51.3.
+ni_read_frame() decompresses an LZNT $DATA frame into the vmapped target
+pages and then trusts decompress_lznt()'s return value:
 
-The OPEN path already enforces both tiers: the grace check plus the
-per-client RECLAIM_COMPLETE check in nfs4_check_open_reclaim(). Add
-the equivalent per-client check to the LOCK path.
+  unc_size = decompress_lznt(frame_ondisk, ondisk_size, frame_mem,
+                             frame_size);
+  if ((ssize_t)unc_size < 0)        err = unc_size;
+  else if (!unc_size || unc_size > frame_size)  err = -EINVAL;
 
-Fixes: 3b3e7b72239a ("nfsd: reject reclaim request when client has already sent RECLAIM_COMPLETE")
+decompress_lznt() stops as soon as the compressed stream is exhausted
+(e.g. a zero chunk header) and returns the number of bytes it actually
+wrote, which may be far less than frame_size. The bytes between unc_size
+and frame_size are never written. The only memset() that follows zeroes
+the region beyond i_valid; when the frame lies entirely within the file's
+valid size that memset() does not run, so the gap retains whatever was in
+the just-vmapped pages. All pages are then marked uptodate and returned
+to userspace, disclosing uninitialized (recently-freed) kernel page
+memory. A crafted compressed file whose stream decompresses to only a few
+bytes leaks the remainder of every frame on a plain read(2), which is
+enough to recover kernel pointers and defeat KASLR.
+
+Zero the [unc_size, frame_size) tail immediately after a successful LZNT
+decompress so the remainder reads back as zero.
+
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-[ cel: Correct the RFC citations in the commit message ]
-Link: https://patch.msgid.link/20260611-nfsd-testing-v2-14-5b90e276f2d9@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Assisted-by: Bynario AI
+Signed-off-by: Samuel Page <sam@bynar.io>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/ntfs3/frecord.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -7618,6 +7618,9 @@ nfsd4_lock(struct svc_rqst *rqstp, struc
- 	status = nfserr_no_grace;
- 	if (!locks_in_grace(net) && lock->lk_reclaim)
- 		goto out;
-+	if (lock->lk_reclaim &&
-+	    test_bit(NFSD4_CLIENT_RECLAIM_COMPLETE, &cstate->clp->cl_flags))
-+		goto out;
- 
- 	if (lock->lk_reclaim)
- 		fl_flags |= FL_RECLAIM;
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -2781,6 +2781,15 @@ int ni_read_frame(struct ntfs_inode *ni,
+ 			err = unc_size;
+ 		else if (!unc_size || unc_size > frame_size)
+ 			err = -EINVAL;
++		else if (unc_size < frame_size) {
++			/*
++			 * Partial decompress: zero the [unc_size, frame_size)
++			 * tail.  decompress_lznt() leaves it untouched, so
++			 * without this the freshly vmapped pages would expose
++			 * uninitialized kernel memory to userspace.
++			 */
++			memset(frame_mem + unc_size, 0, frame_size - unc_size);
++		}
+ 	}
+ 	if (!err && valid_size < frame_vbo + frame_size) {
+ 		size_t ok = valid_size - frame_vbo;
 
 
