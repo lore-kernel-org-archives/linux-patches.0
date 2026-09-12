@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1AE38398F;
-	Sat, 12 Sep 2026 18:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E25C38398F;
+	Sat, 12 Sep 2026 18:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237148; cv=none; b=dCDyDeEg6lLwuKRV4duQDKJ++LNTfvAoRomAgY1S2S28BK5N1LBozr+HIJ7N+xQJwz4S0oRRRQW+ttEHcaztZOjre7Si8a71oQKUuATSiQbn8g38aoATyjUKOz513Q9kYLbG60xJfvKOrFPfZPxsZ6fGMSYrX0Kfd9dQQ0ru8eY=
+	t=1789237154; cv=none; b=pu7OR4H/ygj9EkJgemnc7arQm3/5iymW1lFhkqek71wxitM/5eHkIBSvXuNkg3+MNZVEx9NVxKQBw2pZsicafbn8NZRjzFGufm6uH66wSGyyGdkjFBPVyavNatdJUEgP6mf9VIDXSKXHOdbNmIWTYHJuIcTkfxrJGyAu1iQmQ4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237148; c=relaxed/simple;
-	bh=Y9pWfQOH1mB4P2FAkNT6tvSzsVPrhzFi4K+mQoWpl6o=;
+	s=arc-20240116; t=1789237154; c=relaxed/simple;
+	bh=NqW1GlZ6ev74tu+4lm6bpJi9DA7vUiA1Rz3NgHRLf0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYyRROvkDLCEbnjvfZABVSqjEPxow8Su/oNTsVDI6qIjhOz8O9+qu7BofJu9cwP71LENCkVv8PCBrMYJ78FQky6k7oEV39nvLpH3s/u/3foWTZrxWl5pVsGYGKEuUj2A1GNH2qRR3rSxAfx21YscMWW1SM/3jYMuJ7xRbr/Yd5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8RhhTZ1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gvSeYdhQ/wCp2klqvQVe+BZwMeSIyRE1K4U4pml9C2J0KC5kJmQBzdKYTtGNZXYTrmcPIjMvIPhc2BwOuGRwttY81peHCt63qKv6BxfnSa2pfYUBBx1pVaJ482bsYhHikmYl7wt+83DaAZgorDKukPbJXAXKtPhIfhshRPlsFfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2fab4QlC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8RhhTZ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5D91F000FF;
-	Sat, 12 Sep 2026 18:19:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2fab4QlC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9F31F000FF;
+	Sat, 12 Sep 2026 18:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237147;
-	bh=qtNjrHvoxGb9heBd70BDfQ0uFWuhHJw/c0b4dbGhKYA=;
+	s=korg; t=1789237152;
+	bh=KVaNYMfQt0yyL1kVWezLpYX1QLPXqVWdNhMAgKwn3ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e8RhhTZ1FG+vri4hc72FLO7dIrChD/KABPQ23hpyaAijISEEmIpgV5p/wukkxMYJ6
-	 oCdw+LeoVIRbp0gcWNQZZ0FCN6snfeX6T0DHqCQ/VQTJTHW1DMT7q7vRB4gAJB4fob
-	 rWAfBBgOWWgKu5r/j9Ou6ayWWPRMS16/nPASZ9GM=
+	b=2fab4QlCrMLLFYfNveqzOdNvN72jHcJPSGbjJwumk+CQAvkgX5bScZ69FArVV0kvG
+	 fjX1UsGW5gfntVUnl/YzzAGpdIRbO4IoabqWfOoMX/Iz0/KKpzulWy6ePPn/DXswRY
+	 aTYW1sRB991zjG0TQopfOxsW2N+hxBlW3zOyoxtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junzhe Yu <junzheyu1@gmail.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.15 199/935] dm-stats: fix a crash if allocation of per-cpu data fails
-Date: Sat, 12 Sep 2026 08:53:49 +0200
-Message-ID: <20260912065531.379732209@linuxfoundation.org>
+Subject: [PATCH 5.15 200/935] dm-switch: use WRITE_ONCE() in switch_region_table_write()
+Date: Sat, 12 Sep 2026 08:53:50 +0200
+Message-ID: <20260912065531.401544780@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,42 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-commit cc87e26d9cce22061dc21e51e11afef29dbbc36a upstream.
+commit c7391ebe33162c7962b313caea4d8e6b0bc2a671 upstream.
 
-If "dm_kvzalloc(percpu_alloc_size, cpu_to_node(cpu))" fails, the code
-jumps to the "out" label and calls dm_stat_free. dm_stat_free does
-"for_each_possible_cpu(cpu) { dm_kvfree(s->stat_percpu[cpu][0].histogram,
-s->histogram_alloc_size);", which crashes with NULL pointer dereference
-if s->stat_percpu[cpu] is NULL.
+switch_region_table_read() accesses the region table with READ_ONCE()
+and is called from the lockless switch_map() IO path. However,
+switch_region_table_write() stores to the same array with a plain
+assignment. This results in an inconsistent access pattern for a
+lockless shared variable and may trigger data race reports.
 
-This commit fixes the bug by testing s->stat_percpu[cpu] for NULL before
-using it.
+Use WRITE_ONCE() to pair with the existing READ_ONCE() in
+switch_region_table_read().
 
-Reported-by: Junzhe Yu <junzheyu1@gmail.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: fd2ed4d25270 ("dm: add statistics support")
 Cc: stable@vger.kernel.org
+Fixes: 99eb1908e643 ("dm switch: factor out switch_region_table_read")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-stats.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/md/dm-switch.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-stats.c
-+++ b/drivers/md/dm-stats.c
-@@ -175,8 +175,10 @@ static void dm_stat_free(struct rcu_head
- 	kfree(s->program_id);
- 	kfree(s->aux_data);
- 	for_each_possible_cpu(cpu) {
--		dm_kvfree(s->stat_percpu[cpu][0].histogram, s->histogram_alloc_size);
--		dm_kvfree(s->stat_percpu[cpu], s->percpu_alloc_size);
-+		if (s->stat_percpu[cpu]) {
-+			dm_kvfree(s->stat_percpu[cpu][0].histogram, s->histogram_alloc_size);
-+			dm_kvfree(s->stat_percpu[cpu], s->percpu_alloc_size);
-+		}
- 	}
- 	dm_kvfree(s->stat_shared[0].tmp.histogram, s->histogram_alloc_size);
- 	dm_kvfree(s, s->shared_alloc_size);
+--- a/drivers/md/dm-switch.c
++++ b/drivers/md/dm-switch.c
+@@ -183,7 +183,7 @@ static void switch_region_table_write(st
+ 	pte = sctx->region_table[region_index];
+ 	pte &= ~((((region_table_slot_t)1 << sctx->region_table_entry_bits) - 1) << bit);
+ 	pte |= (region_table_slot_t)value << bit;
+-	sctx->region_table[region_index] = pte;
++	WRITE_ONCE(sctx->region_table[region_index], pte);
+ }
+ 
+ /*
 
 
