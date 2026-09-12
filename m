@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C446246BCD;
-	Sat, 12 Sep 2026 10:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFE2299920;
+	Sat, 12 Sep 2026 10:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207376; cv=none; b=GhdzX8tDwuB3aYRE70XtDTFOkfJvkOwv1GWF0qXfjjiCAJ4AA5LXM7r4RdY/vpG0b5Zgg/UmitcZQd5XuVSW4llxyGGm9TxhKfnmWzF06xSLLxGQd20MV5/vxXnBniK/R1FGQvzUTtPFJsKy6+tQv3AiCvdkcN06DDFMv8GSZDk=
+	t=1789207381; cv=none; b=C/0rMO6nWOV6sa+X0tYPV9y6dbLEqXAUslkrlKuW0umFo1nle9PgpAS0wNy0mAMw13mlr+itRZiMwCYMpIDQpbWyocBjCAXfrHEd0EylFdfG5QASIb/oI2+cSuMHndDyGY9VOIwI42DRHsBgbkiJSfFmHeAGxTmXsJySzlVmMO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207376; c=relaxed/simple;
-	bh=r5b5RoSvoQtV4IVI69ENzbPj3wTPov6VzwwITEl+xSs=;
+	s=arc-20240116; t=1789207381; c=relaxed/simple;
+	bh=H9KqQnZkj8/Jczm0uhW4Hp6Hl9eg/z1NmgIW5E5L9EM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pb7Ewo32iIAQEGEGbyd8lWFd++WYo9UHsi22eHFJSvCAwQbQSJqUfvub6L1O57VGuo0dOJriq3QfnQNnnI2ZX9HxPrY2XwifrQkzAucNXAWpLH2n6lz3i4AG13Su7iwovtNtOyoj0pTt6aG2mQMLgbU5Vq/+gmls3SSJFaeQxbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JMWtQHrD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JMaQwJIunJQ89W5XVTlwrWf1SXa886ktrPKrqBRbRj9D5BW8556e894vgOXgprAvy8Dev6bZj2aWSh+LZJOYvuKbAeoEJDwi5YKL0rBANagWKGYKXESpLizHVdh9RoAenCy10huR/QGJ+4rOqtO/C/tpww+kugtd7yfbw7WlJjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9Kh2YpS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMWtQHrD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E838F1F000FF;
-	Sat, 12 Sep 2026 10:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9Kh2YpS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A721F000FF;
+	Sat, 12 Sep 2026 10:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207375;
-	bh=BN/8sw7ZqfKjf6U9JktGkT8CQHHa1eJTialJgTmU+GE=;
+	s=korg; t=1789207379;
+	bh=um5CpGLIrQ/x28h1s0f0QZ4s1VlCf2xoNdCd0DAu7Lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JMWtQHrDfOHd0Jjva6W2Vaa/bqdJOWuph9cikXL9rZWRD1QsNMsbWbUBMdkqjuaCf
-	 2kkDiI90aGOfiGQUIOsTw/ZBRHfmdmS5922mb004PBRLkwai12FeDyCjpyDDzz51lU
-	 Kk4Llmi58ao3P8OT80efbKoV5OsLSWjXEQTnfzgs=
+	b=t9Kh2YpSz1WFAevU8MMn8e2CHOaWvzLiaeRQi291gU/O6Ovo9a0GTMtNCPi9CE2sM
+	 rXBviWv2jEiU+LN9H0ZsGTHKjWBY9R+jJyigtvoRkgVF1BWBoWNnqrMw/wZ6ZyUIOX
+	 qwfXe52c+q28yBYuUPZWP2Xj0jIYwlcDDSRLOLwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingshuang Fu <fuqingshuang@kylinos.cn>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Biren Pandya <birenpandya@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0399/1518] irqchip/renesas-irqc: Fix generic interrupt chip leak on remove
-Date: Sat, 12 Sep 2026 08:42:48 +0200
-Message-ID: <20260912065632.483273610@linuxfoundation.org>
+Subject: [PATCH 6.18 0400/1518] media: i2c: rdacm21: Fix missing media_entity_cleanup()
+Date: Sat, 12 Sep 2026 08:42:49 +0200
+Message-ID: <20260912065632.505082636@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,47 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingshuang Fu <fuqingshuang@kylinos.cn>
+From: Biren Pandya <birenpandya@gmail.com>
 
-[ Upstream commit 616dd89d81ad9a3cf1cfff4088a4c43e4e00d6ba ]
+[ Upstream commit 04c053379c3a33460b581953c4f5b36de39439ac ]
 
-The driver allocates domain generic chips probe. However, on driver
-removal, the generic chips are not automatically freed when the interrupt
-domain is removed because the domain flags do not include
-IRQ_DOMAIN_FLAG_DESTROY_GC.
+The driver misses calling media_entity_cleanup() on the probe error path
+and during remove, leaking resources if probe fails after entity
+initialization or when the driver is unloaded.
 
-This causes both the domain generic chips structure and the associated
-generic chips to be leaked. Additionally, the generic chips remain on the
-global list and may later be accessed by generic interrupt chip suspend,
-resume, or shutdown callbacks after the driver has been removed,
-potentially resulting in a use-after-free and kernel crash.
+Fix this by adding media_entity_cleanup() to the rdacm21_probe() error
+handling path and to rdacm21_remove().
 
-Fix the resource leak by setting IRQ_DOMAIN_FLAG_DESTROY_GC on the
-interrupt domain; this lets the interrupt domain core automatically
-release all generic chips when irq_domain_remove() is invoked, removing
-the need for manual cleanup calls in error paths and remove callback.
-
-Fixes: 99c221df33fbfa1b ("irqchip/renesas-irqc: Move over to nested generic chip")
-Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260708100846.506314-1-fffsqian@163.com
+Fixes: a59f853b3b4b ("media: i2c: Add driver for RDACM21 camera module")
+Signed-off-by: Biren Pandya <birenpandya@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-renesas-irqc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/i2c/rdacm21.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-renesas-irqc.c b/drivers/irqchip/irq-renesas-irqc.c
-index a20a6471b0e48..1ff3535a4617f 100644
---- a/drivers/irqchip/irq-renesas-irqc.c
-+++ b/drivers/irqchip/irq-renesas-irqc.c
-@@ -176,6 +176,7 @@ static int irqc_probe(struct platform_device *pdev)
- 		goto err_runtime_pm_disable;
- 	}
+diff --git a/drivers/media/i2c/rdacm21.c b/drivers/media/i2c/rdacm21.c
+index bcab462708c70..ece8a410e7ced 100644
+--- a/drivers/media/i2c/rdacm21.c
++++ b/drivers/media/i2c/rdacm21.c
+@@ -588,10 +588,12 @@ static int rdacm21_probe(struct i2c_client *client)
  
-+	p->irq_domain->flags |= IRQ_DOMAIN_FLAG_DESTROY_GC;
- 	ret = irq_alloc_domain_generic_chips(p->irq_domain, p->number_of_irqs,
- 					     1, "irqc", handle_level_irq,
- 					     0, 0, IRQ_GC_INIT_NESTED_LOCK);
+ 	ret = v4l2_async_register_subdev(&dev->sd);
+ 	if (ret)
+-		goto error_free_ctrls;
++		goto error_entity_cleanup;
+ 
+ 	return 0;
+ 
++error_entity_cleanup:
++	media_entity_cleanup(&dev->sd.entity);
+ error_free_ctrls:
+ 	v4l2_ctrl_handler_free(&dev->ctrls);
+ error:
+@@ -606,6 +608,7 @@ static void rdacm21_remove(struct i2c_client *client)
+ 
+ 	v4l2_async_unregister_subdev(&dev->sd);
+ 	v4l2_ctrl_handler_free(&dev->ctrls);
++	media_entity_cleanup(&dev->sd.entity);
+ 	i2c_unregister_device(dev->isp);
+ }
+ 
 -- 
 2.53.0
 
