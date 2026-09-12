@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912A9383C88;
-	Sat, 12 Sep 2026 19:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17DFB2D9792;
+	Sat, 12 Sep 2026 19:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239830; cv=none; b=l+bYTjfV4lzaLlJ0rWVpPOg+kMKDRyQRLI0ttAZ+QlCaflgN1/DptK4djVc0lgP31J80MS0N0LokAm5gWy7jm3G0tnZU37UcbF84I+okwffHIKeTvZIM0BPQpgO7DmumvOxK7p7YtIJUd287z6QJkjWRgpHI8I0uAmXsuCjEWu4=
+	t=1789239835; cv=none; b=UXy1xi3I1GxV/jPxFkQ973HrTteuzPVsUQBc/U29SuwL2XZQ0bIzeoCjQWCn95/kCZnmUZiYvvRdG5gB5HvjQDWUpv7DHa1cKZfCHY4msI7EJKvrmXhtPjLrFHfuBKJH+HlCaxGkmqmYcm3PRRV3tcr0WSibQ89O1S5ns1EeKsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239830; c=relaxed/simple;
-	bh=Qn/3qGGmUseC5PR6a6BLCaSBSyHqpBnREvbNEHszhY0=;
+	s=arc-20240116; t=1789239835; c=relaxed/simple;
+	bh=jgcutgFVkydFl/IIWSBU3gQOjFLVuZoQsu3mQEE7+A8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I+iS5G8hMwm0fICsnK/U+RHpC/j2sMSYn/lzDnJQb8ZxY142iV6jPUOFzME9ma0Hh+No1vGl9Xt5ZP4snDNtkLRRSYB7i5/S6sMehkwnGmqBwPeBg2b2cp0mOYjN5NgSO/VRb7u9oEbDNrwHxKrjVcT2XkN3+L7vUPi9l+t/q5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmtoO7RF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tTm62xPS2Huafiupq1P32l7vHF222YwKkmgv1tblq421jXw409IP0qZeWHNFbmIL93VFDxsoRITRfr17UkcLEPepEhVLlXE4NpevDetFBIn2pBUhRNlo+2rSEgtjnvN81dhrLEqS2CRbUSjhG+rGaM6c2MTRACMTYpVNUFoLdKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Al940sGE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmtoO7RF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 654E21F000FF;
-	Sat, 12 Sep 2026 19:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Al940sGE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FDE61F000FF;
+	Sat, 12 Sep 2026 19:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239829;
-	bh=TmdsaoyZt+p7HC888vez2SjIVun1WeH5IrFnfBle+Ww=;
+	s=korg; t=1789239833;
+	bh=LcGuMc/R0m8XjHf/9dALGjH1n92UFUZYnpLXGegTtCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cmtoO7RF43FZWXTmdPx0GnLC8066b0/+mIJheUYnzpptQ5WjN9+z+QV/rFYKKq+Xq
-	 UK3OoZaXzKvoS7jTzeX3toF+dq/KRh7g3yhJ1I5tokiAcccM8Zs9SMDqXY2+gvY7Nh
-	 +fxml0sEiJXJoY5CLnCP6qSASPVA3c223sChjp3M=
+	b=Al940sGE1yQVLd5+2oQEvNExNz+WCrwSvXqHcBiYumNY68+eBQ9kWF8l4+zW7jhmW
+	 X34Ve9RpZzln/4bWHArG9EPdO5ng+mVhXo1nwDzxyBgjlqIGlLeFp+tczmTWENh7S4
+	 qIYf2X4Y2juDUuDPvUknWhheOfQHtYMgdMtDwQmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@arm.com>,
 	Mike Leach <mike.leach@linaro.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 744/935] coresight: etm4x: Cleanup TRCIDR5 register accesses
-Date: Sat, 12 Sep 2026 09:02:54 +0200
-Message-ID: <20260912065543.898069857@linuxfoundation.org>
+Subject: [PATCH 5.15 745/935] coresight: Change syncfreq to be a u8
+Date: Sat, 12 Sep 2026 09:02:55 +0200
+Message-ID: <20260912065543.920768307@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,81 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@arm.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 028e5460915afd4a3067e380eb4d03cb4500acdc ]
+[ Upstream commit 10d4dbdc8fbce586b17be07b8138e025381453dd ]
 
-This is a no-op change for style and consistency and has no effect on
-the binary output by the compiler. In sysreg.h fields are defined as
-the register name followed by the field name and then _MASK. This
-allows for grepping for fields by name rather than using magic numbers.
+TRCSYNCPR.PERIOD is the only functional part of TRCSYNCPR and it only
+has 5 valid bits so it can be stored in a u8.
 
-Signed-off-by: James Clark <james.clark@arm.com>
 Reviewed-by: Mike Leach <mike.leach@linaro.org>
-Link: https://lore.kernel.org/r/20220304171913.2292458-6-james.clark@arm.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Tested-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20251128-james-cs-syncfreq-v8-1-4d319764cc58@linaro.org
 Stable-dep-of: 1674d9bff807 ("coresight: etm4x: fix underflow for usage of (nrseqstate - 1)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../hwtracing/coresight/coresight-etm4x-core.c | 18 ++++++------------
- drivers/hwtracing/coresight/coresight-etm4x.h  |  7 +++++++
- 2 files changed, 13 insertions(+), 12 deletions(-)
+ drivers/hwtracing/coresight/coresight-etm4x.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index 4d4319fd49623..96cbead6049b9 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -1251,26 +1251,20 @@ static void etm4_init_arch_data(void *info)
- 
- 	etmidr5 = etm4x_relaxed_read32(csa, TRCIDR5);
- 	/* NUMEXTIN, bits[8:0] number of external inputs implemented */
--	drvdata->nr_ext_inp = BMVAL(etmidr5, 0, 8);
-+	drvdata->nr_ext_inp = FIELD_GET(TRCIDR5_NUMEXTIN_MASK, etmidr5);
- 	/* TRACEIDSIZE, bits[21:16] indicates the trace ID width */
--	drvdata->trcid_size = BMVAL(etmidr5, 16, 21);
-+	drvdata->trcid_size = FIELD_GET(TRCIDR5_TRACEIDSIZE_MASK, etmidr5);
- 	/* ATBTRIG, bit[22] implementation can support ATB triggers? */
--	if (BMVAL(etmidr5, 22, 22))
--		drvdata->atbtrig = true;
--	else
--		drvdata->atbtrig = false;
-+	drvdata->atbtrig = !!(etmidr5 & TRCIDR5_ATBTRIG);
- 	/*
- 	 * LPOVERRIDE, bit[23] implementation supports
- 	 * low-power state override
- 	 */
--	if (BMVAL(etmidr5, 23, 23) && (!drvdata->skip_power_up))
--		drvdata->lpoverride = true;
--	else
--		drvdata->lpoverride = false;
-+	drvdata->lpoverride = (etmidr5 & TRCIDR5_LPOVERRIDE) && (!drvdata->skip_power_up);
- 	/* NUMSEQSTATE, bits[27:25] number of sequencer states implemented */
--	drvdata->nrseqstate = BMVAL(etmidr5, 25, 27);
-+	drvdata->nrseqstate = FIELD_GET(TRCIDR5_NUMSEQSTATE_MASK, etmidr5);
- 	/* NUMCNTR, bits[30:28] number of counters available for tracing */
--	drvdata->nr_cntr = BMVAL(etmidr5, 28, 30);
-+	drvdata->nr_cntr = FIELD_GET(TRCIDR5_NUMCNTR_MASK, etmidr5);
- 	etm4_cs_lock(drvdata, csa);
- 	cpu_detect_trace_filtering(drvdata);
- }
 diff --git a/drivers/hwtracing/coresight/coresight-etm4x.h b/drivers/hwtracing/coresight/coresight-etm4x.h
-index 8321b92d93091..f68ef25756b35 100644
+index f68ef25756b35..11bf212a69078 100644
 --- a/drivers/hwtracing/coresight/coresight-etm4x.h
 +++ b/drivers/hwtracing/coresight/coresight-etm4x.h
-@@ -161,6 +161,13 @@
- #define TRCIDR4_NUMCIDC_MASK			GENMASK(27, 24)
- #define TRCIDR4_NUMVMIDC_MASK			GENMASK(31, 28)
- 
-+#define TRCIDR5_NUMEXTIN_MASK			GENMASK(8, 0)
-+#define TRCIDR5_TRACEIDSIZE_MASK		GENMASK(21, 16)
-+#define TRCIDR5_ATBTRIG				BIT(22)
-+#define TRCIDR5_LPOVERRIDE			BIT(23)
-+#define TRCIDR5_NUMSEQSTATE_MASK		GENMASK(27, 25)
-+#define TRCIDR5_NUMCNTR_MASK			GENMASK(30, 28)
-+
- /*
-  * System instructions to access ETM registers.
-  * See ETMv4.4 spec ARM IHI0064F section 4.3.6 System instructions
+@@ -780,7 +780,6 @@ struct etmv4_config {
+ 	u32				eventctrl1;
+ 	u32				stall_ctrl;
+ 	u32				ts_ctrl;
+-	u32				syncfreq;
+ 	u32				ccctlr;
+ 	u32				bb_ctrl;
+ 	u32				vinst_ctrl;
+@@ -788,6 +787,7 @@ struct etmv4_config {
+ 	u32				vissctlr;
+ 	u32				vipcssctlr;
+ 	u8				seq_idx;
++	u8				syncfreq;
+ 	u32				seq_ctrl[ETM_MAX_SEQ_STATES];
+ 	u32				seq_rst;
+ 	u32				seq_state;
 -- 
 2.53.0
 
