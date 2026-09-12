@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A143AFD15;
-	Sat, 12 Sep 2026 09:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4905624CEEA;
+	Sat, 12 Sep 2026 09:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205489; cv=none; b=Lt+r3h8wXIqCS4exVVPHyqss8Iy5y5tyqXOz2SDFOssANmvV/9ByTGjE3r0X4ugfjm8Dyz/mWC0FzXTBSgDDH698cmUaE15efwtBJShN/jsO/QPbEUN0dV0juS5UKUCx1k2XIzGi13Y+6lNAsD9cFQiaqI6yaBgulCVL7rAKF3o=
+	t=1789205493; cv=none; b=aLsDkD/yvIteQxWbj1C2PBDz5n4SrwZFm2Rz2ie8OS20Ykvp1RN1Pip1F8lUizOGHCazjTr0qUYAXA13LNDoi8YjqIGWCvHr2OAf7Levuuh16vCyQLkL5x+NJGtYAX+zCy5fAT6DBEKNc+OjDCS9V8Q2/nCJg61JUnuDYha+v54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205489; c=relaxed/simple;
-	bh=/10YaKQ2hbNdCFR9qjNWyWC/yC9r9CZilf7HZLtS0XA=;
+	s=arc-20240116; t=1789205493; c=relaxed/simple;
+	bh=XDg7l0ExrJrSh/90+Pm53h9rGDu46McW/GozsV+4xVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tyj4eurjYcTPGMTAZgxUDiIDo45zpQFvBokoEgnu0C1XQooybchhx0q6gC0/GTPCIxTcmI1+0WBiylNw1JQV20ctCXO958afYTBI3C/M8oC1FgghziDBKhb+6SXFwstRzYQjfNYmn3fm4q4ekCzKmd2SFhuMXHFERmqzpgMyFOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VgboCRyY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cyozxaIap/bIUEVSYjfWpVwUQys6AOLEgbd9yU0oQI/L07Y7FA3nLvMEbN6So2BnPNT9f30PkOdsnnIJ4crVay8eViYjEcwKXtsqHqQLoZ9dRNuxV5Qoesiu01Iul1/YapI/U27FEL9aDvV9u/gMFtsOInVls6xoeXgMsGMcTh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1sOF26fS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgboCRyY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65561F000FF;
-	Sat, 12 Sep 2026 09:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sOF26fS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671721F000FF;
+	Sat, 12 Sep 2026 09:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205487;
-	bh=2CqCyaI+pKGe9DsIen1UOS/RkRgJueOCsYA93+r5uFo=;
+	s=korg; t=1789205492;
+	bh=jVIVqdQQb8uBz3kAingvOwfxx3+wEociDnuI+fK26M0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VgboCRyYmWnBdw9qs0VtX1F8u3oiN8gnQiuS77ZqVzgLDXzQiR+PvPGaa6rjPwE+i
-	 EWl0969qhQO6FPMQxAQS8NoWFjyEPYYRhxy6Rx7PcoYAtIDe2iUM3v0DXV5qe3y4SR
-	 v9i2Hv5o76rdwtRcpZlIvpt4q/UHxq5DmlhjWzTg=
+	b=1sOF26fSuRuhZv0gk3uZuG6MnwhsQEjFiElAuSKDYHRjLDyZVSeQdsNt4fi1PsT4s
+	 iL+ArTMUKv59QlgMXCz42SurwyyICp5mhDLL0A1ln8pphDiBkXFlT82/TV8sPBpAGw
+	 SseCHUjnmf//wU87aeOgzTtH0Jtw9tpIaTIrjK4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0013/1518] net/mlx5e: SHAMPO, Always calculate page size
-Date: Sat, 12 Sep 2026 08:36:22 +0200
-Message-ID: <20260912065623.717126683@linuxfoundation.org>
+Subject: [PATCH 6.18 0014/1518] nvme: fold nvme_config_discard() into nvme_update_disk_info()
+Date: Sat, 12 Sep 2026 08:36:23 +0200
+Message-ID: <20260912065623.739704952@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,154 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Caleb Sander Mateos <csander@purestorage.com>
 
-[ Upstream commit dff1c3164a69284ac9fedb1c25d4c008139e9fb8 ]
+[ Upstream commit 9110b85244f142ca4bcaea27be408c778d3c48d0 ]
 
-Adapt the rx path in SHAMPO mode to calculate page size based on
-configured page_shift when dealing with payload data.
+The choice of what queue limits are set in nvme_update_disk_info() vs.
+nvme_config_discard() seems a bit arbitrary. A subsequent commit will
+compute the discard_granularity limit using struct nvme_id_ns, which is
+only passed to nvme_update_disk_info() currently. So move the logic in
+nvme_config_discard() to nvme_update_disk_info(). Replace several
+instances of ns->ctrl in nvme_update_disk_info() with the ctrl variable
+brought from nvme_config_discard().
 
-This is necessary as an upcoming patch will add support for using
-different page sizes.
-
-This change has no functional changes.
-
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260223204155.1783580-9-tariqt@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-
-Backport to 6.18: preserve the XDP fragment accounting fix from
-7d7342a18fadc ("net/mlx5e: RX, Fix XDP multi-buf frag counting for
-striding RQ"). Keep new_nr_frags and the original frag_page endpoint;
-only replace PAGE_SIZE with page_size in the truesize adjustment.
-Reintroducing the old frag_page rewind would break page reference
-accounting for fragments consumed by XDP.
-
-Retain the page-size calculations and SHAMPO space-check changes so
-e2466392a0b8496000e12181cb1ee1535eb0da25 ("net/mlx5e: do not HW-GRO
-coalesce small frames") applies without modification. No functions
-are added.
-
-Stable-dep-of: e2466392a0b8 ("net/mlx5e: do not HW-GRO coalesce small frames")
+Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 3838e80fcfb3 ("nvme: skip the zoned limits update if the zone info query failed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rx.c |   34 +++++++++++++++---------
- 1 file changed, 22 insertions(+), 12 deletions(-)
+ drivers/nvme/host/core.c |   43 +++++++++++++++++++------------------------
+ 1 file changed, 19 insertions(+), 24 deletions(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-@@ -2014,11 +2014,14 @@ mlx5e_shampo_fill_skb_data(struct sk_buf
- 			   struct mlx5e_frag_page *frag_page,
- 			   u32 data_bcnt, u32 data_offset)
- {
-+	u32 page_size = BIT(rq->mpwqe.page_shift);
-+
- 	net_prefetchw(skb->data);
- 
- 	do {
- 		/* Non-linear mode, hence non-XSK, which always uses PAGE_SIZE. */
--		u32 pg_consumed_bytes = min_t(u32, PAGE_SIZE - data_offset, data_bcnt);
-+		u32 pg_consumed_bytes = min_t(u32, page_size - data_offset,
-+					      data_bcnt);
- 		unsigned int truesize = pg_consumed_bytes;
- 
- 		mlx5e_add_skb_frag(rq, skb, frag_page, data_offset,
-@@ -2039,6 +2042,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struc
- 	u16 headlen = min_t(u16, MLX5E_RX_MAX_HEAD, cqe_bcnt);
- 	struct mlx5e_frag_page *head_page = frag_page;
- 	struct mlx5e_xdp_buff *mxbuf = &rq->mxbuf;
-+	u32 page_size = BIT(rq->mpwqe.page_shift);
- 	u32 frag_offset    = head_offset;
- 	u32 byte_cnt       = cqe_bcnt;
- 	struct skb_shared_info *sinfo;
-@@ -2084,9 +2088,9 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struc
- 		linear_hr = skb_headroom(skb);
- 		linear_data_len = headlen;
- 		linear_frame_sz = MLX5_SKB_FRAG_SZ(skb_end_offset(skb));
--		if (unlikely(frag_offset >= PAGE_SIZE)) {
-+		if (unlikely(frag_offset >= page_size)) {
- 			frag_page++;
--			frag_offset -= PAGE_SIZE;
-+			frag_offset -= page_size;
- 		}
- 	}
- 
-@@ -2098,7 +2102,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struc
- 	while (byte_cnt) {
- 		/* Non-linear mode, hence non-XSK, which always uses PAGE_SIZE. */
- 		pg_consumed_bytes =
--			min_t(u32, PAGE_SIZE - frag_offset, byte_cnt);
-+			min_t(u32, page_size - frag_offset, byte_cnt);
- 
- 		if (test_bit(MLX5E_RQ_STATE_SHAMPO, &rq->state))
- 			truesize += pg_consumed_bytes;
-@@ -2135,7 +2139,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struc
- 		new_nr_frags = sinfo->nr_frags;
- 		nr_frags_free = old_nr_frags - new_nr_frags;
- 		if (unlikely(nr_frags_free))
--			truesize -= (nr_frags_free - 1) * PAGE_SIZE +
-+			truesize -= (nr_frags_free - 1) * page_size +
- 				ALIGN(pg_consumed_bytes,
- 				      BIT(rq->mpwqe.log_stride_sz));
- 
-@@ -2349,15 +2353,16 @@ mlx5e_shampo_flush_skb(struct mlx5e_rq *
- 	rq->hw_gro_data->skb = NULL;
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1882,26 +1882,6 @@ static bool nvme_init_integrity(struct n
+ 	return true;
  }
  
--static bool
--mlx5e_hw_gro_skb_has_enough_space(struct sk_buff *skb, u16 data_bcnt)
-+static bool mlx5e_hw_gro_skb_has_enough_space(struct sk_buff *skb,
-+					      u16 data_bcnt,
-+					      u32 page_size)
+-static void nvme_config_discard(struct nvme_ns *ns, struct queue_limits *lim)
+-{
+-	struct nvme_ctrl *ctrl = ns->ctrl;
+-
+-	if (ctrl->dmrsl && ctrl->dmrsl <= nvme_sect_to_lba(ns->head, UINT_MAX))
+-		lim->max_hw_discard_sectors =
+-			nvme_lba_to_sect(ns->head, ctrl->dmrsl);
+-	else if (ctrl->oncs & NVME_CTRL_ONCS_DSM)
+-		lim->max_hw_discard_sectors = UINT_MAX;
+-	else
+-		lim->max_hw_discard_sectors = 0;
+-
+-	lim->discard_granularity = lim->logical_block_size;
+-
+-	if (ctrl->dmrl)
+-		lim->max_discard_segments = ctrl->dmrl;
+-	else
+-		lim->max_discard_segments = NVME_DSM_MAX_RANGES;
+-}
+-
+ static bool nvme_ns_ids_equal(struct nvme_ns_ids *a, struct nvme_ns_ids *b)
  {
- 	int nr_frags = skb_shinfo(skb)->nr_frags;
- 
--	if (PAGE_SIZE >= GRO_LEGACY_MAX_SIZE)
-+	if (page_size >= GRO_LEGACY_MAX_SIZE)
- 		return skb->len + data_bcnt <= GRO_LEGACY_MAX_SIZE;
+ 	return uuid_equal(&a->uuid, &b->uuid) &&
+@@ -2084,6 +2064,7 @@ static bool nvme_update_disk_info(struct
+ 		struct queue_limits *lim)
+ {
+ 	struct nvme_ns_head *head = ns->head;
++	struct nvme_ctrl *ctrl = ns->ctrl;
+ 	u32 bs = 1U << head->lba_shift;
+ 	u32 atomic_bs, phys_bs, io_opt = 0;
+ 	bool valid = true;
+@@ -2118,11 +2099,26 @@ static bool nvme_update_disk_info(struct
+ 	lim->physical_block_size = min(phys_bs, atomic_bs);
+ 	lim->io_min = phys_bs;
+ 	lim->io_opt = io_opt;
+-	if ((ns->ctrl->quirks & NVME_QUIRK_DEALLOCATE_ZEROES) &&
+-	    (ns->ctrl->oncs & NVME_CTRL_ONCS_DSM))
++	if ((ctrl->quirks & NVME_QUIRK_DEALLOCATE_ZEROES) &&
++	    (ctrl->oncs & NVME_CTRL_ONCS_DSM))
+ 		lim->max_write_zeroes_sectors = UINT_MAX;
  	else
--		return PAGE_SIZE * nr_frags + data_bcnt <= GRO_LEGACY_MAX_SIZE;
-+		return page_size * nr_frags + data_bcnt <= GRO_LEGACY_MAX_SIZE;
+-		lim->max_write_zeroes_sectors = ns->ctrl->max_zeroes_sectors;
++		lim->max_write_zeroes_sectors = ctrl->max_zeroes_sectors;
++
++	if (ctrl->dmrsl && ctrl->dmrsl <= nvme_sect_to_lba(ns->head, UINT_MAX))
++		lim->max_hw_discard_sectors =
++			nvme_lba_to_sect(ns->head, ctrl->dmrsl);
++	else if (ctrl->oncs & NVME_CTRL_ONCS_DSM)
++		lim->max_hw_discard_sectors = UINT_MAX;
++	else
++		lim->max_hw_discard_sectors = 0;
++
++	lim->discard_granularity = lim->logical_block_size;
++
++	if (ctrl->dmrl)
++		lim->max_discard_segments = ctrl->dmrl;
++	else
++		lim->max_discard_segments = NVME_DSM_MAX_RANGES;
+ 	return valid;
  }
  
- static void mlx5e_handle_rx_cqe_mpwrq_shampo(struct mlx5e_rq *rq, struct mlx5_cqe64 *cqe)
-@@ -2366,18 +2371,19 @@ static void mlx5e_handle_rx_cqe_mpwrq_sh
- 	u16 header_index	= mlx5e_shampo_get_cqe_header_index(rq, cqe);
- 	u32 wqe_offset		= be32_to_cpu(cqe->shampo.data_offset);
- 	u16 cstrides		= mpwrq_get_cqe_consumed_strides(cqe);
--	u32 data_offset		= wqe_offset & (PAGE_SIZE - 1);
- 	u32 cqe_bcnt		= mpwrq_get_cqe_byte_cnt(cqe);
- 	u16 wqe_id		= be16_to_cpu(cqe->wqe_id);
--	u32 page_idx		= wqe_offset >> PAGE_SHIFT;
- 	u16 head_size		= cqe->shampo.header_size;
- 	struct sk_buff **skb	= &rq->hw_gro_data->skb;
- 	bool flush		= cqe->shampo.flush;
- 	bool match		= cqe->shampo.match;
-+	u32 page_size = BIT(rq->mpwqe.page_shift);
- 	struct mlx5e_rq_stats *stats = rq->stats;
- 	struct mlx5e_rx_wqe_ll *wqe;
- 	struct mlx5e_mpw_info *wi;
- 	struct mlx5_wq_ll *wq;
-+	u32 data_offset;
-+	u32 page_idx;
+@@ -2387,7 +2383,6 @@ static int nvme_update_ns_info_block(str
+ 	if (!nvme_update_disk_info(ns, id, &lim))
+ 		capacity = 0;
  
- 	wi = mlx5e_get_mpw_info(rq, wqe_id);
- 	wi->consumed_strides += cstrides;
-@@ -2393,7 +2399,11 @@ static void mlx5e_handle_rx_cqe_mpwrq_sh
- 		goto mpwrq_cqe_out;
- 	}
- 
--	if (*skb && (!match || !(mlx5e_hw_gro_skb_has_enough_space(*skb, data_bcnt)))) {
-+	data_offset = wqe_offset & (page_size - 1);
-+	page_idx = wqe_offset >> rq->mpwqe.page_shift;
-+	if (*skb &&
-+	    !(match && mlx5e_hw_gro_skb_has_enough_space(*skb, data_bcnt,
-+							 page_size))) {
- 		match = false;
- 		mlx5e_shampo_flush_skb(rq, cqe, match);
- 	}
+-	nvme_config_discard(ns, &lim);
+ 	if (IS_ENABLED(CONFIG_BLK_DEV_ZONED) &&
+ 	    ns->head->ids.csi == NVME_CSI_ZNS)
+ 		nvme_update_zone_info(ns, &lim, &zi);
 
 
