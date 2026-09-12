@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB03E3939B3;
-	Sat, 12 Sep 2026 18:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157F73A7F47;
+	Sat, 12 Sep 2026 18:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239145; cv=none; b=pFm4XFdm5jWirmq+yboDzgUg1N4PH1tc4rFJI0gVJpL21FDeNcX10GqevkLb589TfuhY41yWneo1T2kWmwq6E9IcnJetRF3lLib8E1fMve6d6rGSuA/3wagELTCvWMrsH25GrDkIjwKtEytd+f9fwyDXx0dYFEsBQyRlPRK5ASc=
+	t=1789239150; cv=none; b=PlPSd1Y1Mp4tFd6BkXd2amSjmdghmMPzr3Pw2um4GrovGsjQZXjXxlqDA0ww8zuOi2TmDRkGh0g2NsQsKQZoPa4eaxTGVOCD6BEqD6/9fGIkTVD2lSnnBLpMq/wkl7+Ou36cvvMVgFO8qaifk1nXnFeVI6Dj7J8ziTcXWefxLMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239145; c=relaxed/simple;
-	bh=hSIsbA4EUAQBlqjUlFMD83xLf7Djjs42r7NXTTIqyhM=;
+	s=arc-20240116; t=1789239150; c=relaxed/simple;
+	bh=LtTkOLjyQdgzR4UE8UL+/omcmrfkbkeP8wCkuxagYns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qct52toxX2iAr+WnZg/eIB4PB2X9i3t9NShkxFzkJyHjL1xiWtSdoNxnj7ZGngWwEP+C8L53xexINRCKEjEVVa2QU9NagmJ+eXlCKXrUC3q+t/sX2DSaDzKbzjPl3qJvfNzV2DMPOr0xUk9xuMxg+L+Ci816GExx8RlTPOOymNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqX3wHsy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NV+ZoeAsiJIo+bRIuica9qiqE7bg7awZAYERrXssBmJK7abuui0f6yzn9Kdyzao7gLW8RasLZjsIW0qQXOslNWGJJu/didZ0kb9wbiSkfsoGLStxu+dTzM4Rf9Fassx8St8DkMvLDr3SHjS+Hp0eGuypd7AYwLKJIOyu3pF3jJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q4YWpR/m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqX3wHsy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D80551F000FF;
-	Sat, 12 Sep 2026 18:52:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q4YWpR/m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF281F000FF;
+	Sat, 12 Sep 2026 18:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239143;
-	bh=Ux/dl344mZBf7GZODsxzyo4pl8NkcHN7c50obfb/y6A=;
+	s=korg; t=1789239149;
+	bh=yLQEF7rKfQUQ+25FJVhl7OoTvv23jhDZT3ZVb0NO1a4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lqX3wHsy2vYaMqXVFg2CfcNbbHGpEbUrBjvGSmoRJdZpuxNcv4BH/RoFW/bsLSy+t
-	 2cNeYx0SpBGe4/yKXCOBBEU0D0vMa4gHYp4E1oHwoWkbziC/2G4Y22uJwU2XFbxaCC
-	 zvniviRllOke3gEt+uoJWoLRZD/enO5ku0ZjPdIU=
+	b=Q4YWpR/mOg8gO6tC2ZFonONtZ7W6GNIBG+HO5bLoLReq4jnHzHtqFWBlvS/xlztbx
+	 pt4BAOzBVkQEAlj/vktdJB8Efj+95BZH7EPoo91psQGQ+E2y6pN+NXjid4LfTMdkvD
+	 FwLzyy9TKPFH32BlTg08MiYp592P0+PD5Ws5kW3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Babanpreet Singh <bbnpreetsingh@gmail.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 605/935] w1: ds2482: Fix signedness bug in ds2482_w1_triplet()
-Date: Sat, 12 Sep 2026 09:00:35 +0200
-Message-ID: <20260912065540.718606500@linuxfoundation.org>
+Subject: [PATCH 5.15 606/935] remoteproc: Use unbounded workqueue for recovery work
+Date: Sat, 12 Sep 2026 09:00:36 +0200
+Message-ID: <20260912065540.741695536@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,60 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Babanpreet Singh <bbnpreetsingh@gmail.com>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
 
-[ Upstream commit 4d3721b204f961e905714954ff95633337b768e3 ]
+[ Upstream commit cab8300b5621a54aa25306ff800c27fa5a4632d7 ]
 
-ds2482_wait_1wire_idle() returns the status register value (0..255) on
-success, or a negative value on I2C failure: -1 when selecting the
-status register fails, or a negative errno from i2c_smbus_read_byte().
+There could be a scenario when there is too much load on a core
+(n number of tasks which is affined) or in a case when multiple
+rproc subsystem is going for recovery, they queue their recovery
+work to one core so even though subsystem are independent their
+recovery will be delayed if one of the subsystem recovery work
+is taking more time in completing.
 
-ds2482_w1_triplet() feeds that result into "return (status >> 5);"
-without checking for errors, and the function returns u8. For a
-negative status the arithmetic shift keeps the sign and the u8
-truncation fabricates a triplet result whose meaning depends on the
-errno value: -1 and -EIO happen to become 0xff, whose set low bits make
-w1_search() abort, but -ETIMEDOUT (-110 >> 5 = -4) becomes 0xfc -
-"devices responded on both branches, wrote 1" - and -EOPNOTSUPP
-(-95 >> 5 = -3) becomes 0xfd - "only the zero branch responded".
-w1_search() then continues the ROM search with a fabricated direction
-bit instead of aborting, and the corrupted id is either rejected by the
-ROM CRC (existing device missed) or registers a phantom slave.
+If we make this queue unbounded, the recovery work could be picked
+on any cpu. This patch is trying to address this.
 
-The function already defines an in-band error value: status is
-initialized to (3 << 5), which decodes to 3 (both branch bits set, "no
-device responded") and makes w1_search() terminate the search when
-sending the triplet command fails. Decode a negative status to the same
-value.
-
-Found by smatch:
-drivers/w1/masters/ds2482.c:314 ds2482_w1_triplet() warn: signedness bug returning '(-67108864)'
-
-Fixes: baf12ae29ab4 ("[PATCH] W1: Add the DS2482 I2C-to-w1 bridge driver.")
-Assisted-by: Claude:claude-sonnet-5
-Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
-Link: https://patch.msgid.link/20260714041011.7-1-bbnpreetsingh@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/1650367554-15510-1-git-send-email-quic_mojha@quicinc.com
+Stable-dep-of: 74ee3b2f5767 ("remoteproc: Prevent crash handling to race with rproc_del()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/w1/masters/ds2482.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/remoteproc/remoteproc_core.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/w1/masters/ds2482.c b/drivers/w1/masters/ds2482.c
-index 6c962e88501c0..50451ba345efb 100644
---- a/drivers/w1/masters/ds2482.c
-+++ b/drivers/w1/masters/ds2482.c
-@@ -312,6 +312,10 @@ static u8 ds2482_w1_triplet(void *data, u8 dbit)
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index 685eb84182f62..7c3383807aa9c 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -59,6 +59,7 @@ static int rproc_release_carveout(struct rproc *rproc,
  
- 	mutex_unlock(&pdev->access_lock);
+ /* Unique indices for remoteproc devices */
+ static DEFINE_IDA(rproc_dev_index);
++static struct workqueue_struct *rproc_recovery_wq;
  
-+	/* On bus error, decode to 3 (no device responded) to abort the search */
-+	if (status < 0)
-+		status = 3 << 5;
-+
- 	/* Decode the status */
- 	return (status >> 5);
+ static const char * const rproc_crash_names[] = {
+ 	[RPROC_MMUFAULT]	= "mmufault",
+@@ -2760,8 +2761,7 @@ void rproc_report_crash(struct rproc *rproc, enum rproc_crash_type type)
+ 	dev_err(&rproc->dev, "crash detected in %s: type %s\n",
+ 		rproc->name, rproc_crash_to_string(type));
+ 
+-	/* Have a worker handle the error; ensure system is not suspended */
+-	queue_work(system_freezable_wq, &rproc->crash_handler);
++	queue_work(rproc_recovery_wq, &rproc->crash_handler);
  }
+ EXPORT_SYMBOL(rproc_report_crash);
+ 
+@@ -2810,6 +2810,13 @@ static void __exit rproc_exit_panic(void)
+ 
+ static int __init remoteproc_init(void)
+ {
++	rproc_recovery_wq = alloc_workqueue("rproc_recovery_wq",
++						WQ_UNBOUND | WQ_FREEZABLE, 0);
++	if (!rproc_recovery_wq) {
++		pr_err("remoteproc: creation of rproc_recovery_wq failed\n");
++		return -ENOMEM;
++	}
++
+ 	rproc_init_sysfs();
+ 	rproc_init_debugfs();
+ 	rproc_init_cdev();
+@@ -2823,9 +2830,13 @@ static void __exit remoteproc_exit(void)
+ {
+ 	ida_destroy(&rproc_dev_index);
+ 
++	if (!rproc_recovery_wq)
++		return;
++
+ 	rproc_exit_panic();
+ 	rproc_exit_debugfs();
+ 	rproc_exit_sysfs();
++	destroy_workqueue(rproc_recovery_wq);
+ }
+ module_exit(remoteproc_exit);
+ 
 -- 
 2.53.0
 
