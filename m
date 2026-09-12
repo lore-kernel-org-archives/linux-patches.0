@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C893B2F617C;
-	Sat, 12 Sep 2026 18:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680103ACEFB;
+	Sat, 12 Sep 2026 18:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238659; cv=none; b=C1/OTim4BbeUU6siEcv3cDoU2gmgZwBIICG4s2jnXh+8LOcmWqQUo03GH06HUTy5w/ge5qa5GokIidSx0oSZzXURodBAc+liIbB09hWtwzLpjMOhpMYNLF8B4sndnHhPGpuU3FV8krbUzrJ/J0ENIfZFErI2ErynFqiV4G4eujY=
+	t=1789238664; cv=none; b=cy35Smnn9Cq9dpMB9kb8maFGJGk/CEsvOEU2gcDsLC6fePMV5zDoGQ5Z94fTQ8amud7yA5TbRjmsBeQz0omkMvhhKY7Az3iJaCsd/35LJaoPKdJbM49pmn+aqza90631eQWzvRC+oWa/H1vyBHcWQweJeJOYfIWxwkmcOI+dJeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238659; c=relaxed/simple;
-	bh=QUgL3yI4xPGZJ8wdqDohGIySZzULZyXCXhqMFo3ffpg=;
+	s=arc-20240116; t=1789238664; c=relaxed/simple;
+	bh=dllTVOeh9UEXo35389tO0IxPexP5rrbJ+uLwelGIBys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tFyWPZqhkC8IQ6uqZNNvEQHenV4pOCfCB/hFAhdwUlCaR0sjah33QHoH5dCuQ2vLuyoMf2eaU6iRBQX8QmRmNq56dI+ux73hns9ilfDIyHwvhCWOjoZnuDGqW+suPVmNBCLgOf0vFNDAuOISJsLpIf1OCvG2Kj7ON2aji/73KWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LfnzQVuY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WvGlxdZ/78DW+rKUWkxzJ91E5gtjkKkcD151qnz+lIHVSzN4a3c4QtgwPMCo4KKqpm9SCeAGKWUuDTTBPwvkoAgHPmJkiR0PPNo4v7Er2AD7hzHaCt1EGsXrkLfCWR1eExwVx2XARNJgE5vpouaezk/sxxmEVV7YcqT/dis9LIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rVd+fHiS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LfnzQVuY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDDA41F000FF;
-	Sat, 12 Sep 2026 18:44:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rVd+fHiS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4331F000FF;
+	Sat, 12 Sep 2026 18:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238658;
-	bh=31s1oGi4fLpgbo2Lahj3woJsjalUajkVhK3sxOPu3yk=;
+	s=korg; t=1789238663;
+	bh=+LbuinYzoAwTKXeL1SIWE/2VDFDVbAVbMFPQEO73Rv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LfnzQVuYT9pWKoMfHMVsK2VZQCunJuAjqqyvcOKBzO2wg+TR+/GVG60CvQWfqlYkC
-	 gwLbvBzu/YAK2KpkamNCBpHekte2A4U8lmkov/HGZEhDhNjtNNeYEC10h1Q2rz21cS
-	 6UhRFfEKl7DMHOQgXGO1jlr7XlOVpIT1nwL1DrAI=
+	b=rVd+fHiSpg0zG3uVrDoSbiQ7plsqcriMZIap7ditomusZQc270WQFw+nJYHFLAdnx
+	 gvYFOYfOWzN5cytrbPLjvC9Go9I33dAwTKxzU+Lx/lcuCZE7+DZgezpPr6EjJsN8v6
+	 cBlKLeHNOmhnqD6Vj2RUVov2HpXOm/UTZfPOiITk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Fei Shao <fshao@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 508/935] RDMA/hfi1: Free RX data on late probe failure
-Date: Sat, 12 Sep 2026 08:58:58 +0200
-Message-ID: <20260912065538.469749469@linuxfoundation.org>
+Subject: [PATCH 5.15 491/935] usb: mtu3: allow system suspend during active gadget connection
+Date: Sat, 12 Sep 2026 08:58:41 +0200
+Message-ID: <20260912065538.079582245@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,39 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Fei Shao <fshao@chromium.org>
 
-[ Upstream commit 8e17e101e04a3dc062e2719da57ff78c1c060632 ]
+[ Upstream commit e69027c25361b6044c7928715667586cc5469063 ]
 
-hfi1_init_dd() allocates the shared AIP/VNIC RX support before returning.
-If hfi1_init() or hfi1_register_ib_device() later fails, init_one() tears
-down the device data without calling hfi1_free_rx(). This leaks netdev_rx
-and its dummy netdev.
+When operating in gadget mode connected to a USB host, system suspend
+fails with -EBUSY because active peripheral connections block suspend
+entry.
 
-Free the RX support after IB unregistration and before postinit_cleanup(),
-as done on normal device removal.
+Fix this by restricting the -EBUSY check to runtime autosuspend
+(PMSG_IS_AUTO). For system suspend (!PMSG_IS_AUTO), perform soft
+disconnect to disconnect from the bus and allow MAC sleep.
 
-Fixes: 4730f4a6c6b2 ("IB/hfi1: Activate the dummy netdev")
-Link: https://patch.msgid.link/20260708-clean-init-one-hfi1-v1-7-b9e9641268a5@nvidia.com
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 427c66422e14 ("usb: mtu3: support suspend/resume for device mode")
+Signed-off-by: Fei Shao <fshao@chromium.org>
+Link: https://patch.msgid.link/20260626082218.2750459-2-fshao@chromium.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/init.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/mtu3/mtu3_core.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/init.c b/drivers/infiniband/hw/hfi1/init.c
-index 02e2efd180a10..1a3930c2db7e5 100644
---- a/drivers/infiniband/hw/hfi1/init.c
-+++ b/drivers/infiniband/hw/hfi1/init.c
-@@ -1678,6 +1678,7 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 			hfi1_device_remove(dd);
- 		if (!ret)
- 			hfi1_unregister_ib_device(dd);
-+		hfi1_free_rx(dd);
- 		postinit_cleanup(dd);
- 		if (initfail)
- 			ret = initfail;
+diff --git a/drivers/usb/mtu3/mtu3_core.c b/drivers/usb/mtu3/mtu3_core.c
+index 3ea5145a842b1..9cc031057b5cf 100644
+--- a/drivers/usb/mtu3/mtu3_core.c
++++ b/drivers/usb/mtu3/mtu3_core.c
+@@ -1030,9 +1030,14 @@ int ssusb_gadget_suspend(struct ssusb_mtk *ssusb, pm_message_t msg)
+ 	if (!mtu->gadget_driver)
+ 		return 0;
+ 
+-	if (mtu->connected)
++	/* Prevent runtime suspend when active connection exists */
++	if (mtu->connected && PMSG_IS_AUTO(msg))
+ 		return -EBUSY;
+ 
++	/* Perform soft disconnect for system suspend */
++	if (mtu->softconnect && !PMSG_IS_AUTO(msg))
++		mtu3_dev_on_off(mtu, 0);
++
+ 	mtu3_dev_suspend(mtu);
+ 	synchronize_irq(mtu->irq);
+ 
+@@ -1048,5 +1053,9 @@ int ssusb_gadget_resume(struct ssusb_mtk *ssusb, pm_message_t msg)
+ 
+ 	mtu3_dev_resume(mtu);
+ 
++	/* Restore soft connect for system resume */
++	if (mtu->softconnect && !PMSG_IS_AUTO(msg))
++		mtu3_dev_on_off(mtu, 1);
++
+ 	return 0;
+ }
 -- 
 2.53.0
 
