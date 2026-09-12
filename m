@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2717356742;
-	Sat, 12 Sep 2026 12:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB4623BD03;
+	Sat, 12 Sep 2026 12:14:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215266; cv=none; b=r9XqB6bzhyT8kN3cQh2YpGieswUuw8JXH+Oy45IafjN9sapRkH36VDlr7ieNtNM6Zwp7+uFG0dHNaVZKo6V00j27WFIPsr8ahdYtpvzs3XOeSf9D8PF7vFOvcDfz229zBLCle4ja2fI2YDVAIYYfZvcMVhuCeHv4N6N5Et3IWBA=
+	t=1789215273; cv=none; b=tPGvskfSubJi/wsBaw1MhBQ/hEhcWhL6Pv8PvMOXmX8m3APcuYDxxFnNP1SridNVnS7dMQxjekKZk44Nwtd2xUfsocw/7rGC4aeS7+Zbl8BJPvoYJswrzfsdSiKaYAlgkhgIwZzm3K6JYkzNr2B4gxMPSsDyE1as8GqHmNdbA+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215266; c=relaxed/simple;
-	bh=EmoVBmVi/w6Pmhe542GSztHmQ4dioRXNK3XUHbFMf4A=;
+	s=arc-20240116; t=1789215273; c=relaxed/simple;
+	bh=5n0+l5WDqMGizGgWAAyBaITF58TcQryKCNgT4kBV6So=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cop1tQmlMThV8o65lqQ5zuUzARKHzKP/djAzF+XX0JmkvCip7nUtKGbmGA8C3SPpbgCM5joLp5h4iddTTkc+6wx5nu3lCcwKExFxgIpXOCuH6ZQshCRBDfT71TekgdFYGsWUoOGuM++UK63yQATxTxK2aMQSQZY1mjvvCmdOLDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KoPaJDpF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bo3/BFln86cHd5355HsdAPjdDSVIwS269kpN7u5Dox4/14N6eTy+wXgoPlHGt7s/jQdbBB487u//KwFhM4Fn385b96OZKeO+FnmCo6Or7/CZ3kWQe2grpOLXEKATczQMRsu4f3TakWiw81y49PnaBZtjhUzd4b1rPLcNhFxrkRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IYHS+9CD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KoPaJDpF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C411F000FF;
-	Sat, 12 Sep 2026 12:14:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYHS+9CD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13AE1F000FF;
+	Sat, 12 Sep 2026 12:14:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215264;
-	bh=yZ6fD6Fr4fMtRIpGFHYmY0IKDKfR8M+gfNYG+HhB/Mw=;
+	s=korg; t=1789215269;
+	bh=iEQlOQDZjVWBRk+jcHrXDEnnSCkTNKIzt38AYZueG1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KoPaJDpF15LVR9SY/47MqprWawJYNX+388C3UnP3aP5iXp3LGM5ngjiv5a9ZK0jQh
-	 WhrDFS1hdX4KMCAsdVCU5lq04xq+oKyJcfXoRwGAKJEWgVYWh06lC9MgJCFNcgDg9P
-	 8L6OxxC8S0zGFLYeZIEVOnw22xy2fvp1kY/q/g1s=
+	b=IYHS+9CDig5btbuGq/8OqGNjeVu6Ug649PEHlSq9vV23KoKu3k5V6I5jMGAubvHjE
+	 NC0kJFQBQzQwuwU8aDu3hB6Ij+B9Dy2ZmjoJho+jGTOSQglZ8miJsNI91iI4eAS9T4
+	 heYP78LDGJm7hnRhEbFJp8o61DJ8Xa7AEPBs9Vtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Mladek <pmladek@suse.com>,
-	Andrew Murray <amurray@thegoodpenguin.co.uk>,
-	John Ogness <john.ogness@linutronix.de>,
+	Yu Peng <pengyu@kylinos.cn>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0469/1376] printk: Introduce console_flush_one_record
-Date: Sat, 12 Sep 2026 08:48:15 +0200
-Message-ID: <20260912065617.985172247@linuxfoundation.org>
+Subject: [PATCH 6.12 0496/1376] perf metricgroup: Fix metric expression copy leaks
+Date: Sat, 12 Sep 2026 08:48:42 +0200
+Message-ID: <20260912065618.593536365@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,221 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Murray <amurray@thegoodpenguin.co.uk>
+From: Yu Peng <pengyu@kylinos.cn>
 
-[ Upstream commit 741ea7aa95dd9ac77f861e7d0961d8d231ac8448 ]
+[ Upstream commit ef3af1df4f3372bd8ad47619452a283048b3bc8d ]
 
-console_flush_all prints all remaining records to all usable consoles
-whilst its caller holds console_lock. This can result in large waiting
-times for those waiting for console_lock especially where there is a
-large volume of records or where the console is slow (e.g. serial).
+metricgroup__copy_metric_events() allocates a new metric expression and
+duplicates metric_name before linking the expression into the destination
+metric event.
 
-Let's extract the parts of this function which print a single record
-into a new function named console_flush_one_record. This can later
-be used for functions that will release and reacquire console_lock
-between records.
+Free new_expr when strdup() fails, and free the duplicated metric_name on
+the later error paths.
 
-This commit should not change existing functionality.
-
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Andrew Murray <amurray@thegoodpenguin.co.uk>
-Reviewed-by: John Ogness <john.ogness@linutronix.de>
-Link: https://patch.msgid.link/20251020-printk_legacy_thread_console_lock-v3-1-00f1f0ac055a@thegoodpenguin.co.uk
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Stable-dep-of: 36630cafbeed ("printk: Fix possible console use-after-free")
+Fixes: b85a4d61d302 ("perf metric: Allow modifiers on metrics")
+Signed-off-by: Yu Peng <pengyu@kylinos.cn>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/printk/printk.c | 158 ++++++++++++++++++++++++++---------------
- 1 file changed, 99 insertions(+), 59 deletions(-)
+ tools/perf/util/metricgroup.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index 9434460cff640..464227c82b08d 100644
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -3104,6 +3104,99 @@ static inline void printk_kthreads_check_locked(void) { }
+diff --git a/tools/perf/util/metricgroup.c b/tools/perf/util/metricgroup.c
+index 4dff3e925a47b..6d6bfcebb97a8 100644
+--- a/tools/perf/util/metricgroup.c
++++ b/tools/perf/util/metricgroup.c
+@@ -1814,8 +1814,10 @@ int metricgroup__copy_metric_events(struct evlist *evlist, struct cgroup *cgrp,
+ 			new_expr->metric_expr = old_expr->metric_expr;
+ 			new_expr->metric_threshold = old_expr->metric_threshold;
+ 			new_expr->metric_name = strdup(old_expr->metric_name);
+-			if (!new_expr->metric_name)
++			if (!new_expr->metric_name) {
++				free(new_expr);
+ 				return -ENOMEM;
++			}
  
- #endif /* CONFIG_PRINTK */
- 
-+
-+/*
-+ * Print out one record for each console.
-+ *
-+ * @do_cond_resched is set by the caller. It can be true only in schedulable
-+ * context.
-+ *
-+ * @next_seq is set to the sequence number after the last available record.
-+ * The value is valid only when there is at least one usable console and all
-+ * usable consoles were flushed.
-+ *
-+ * @handover will be set to true if a printk waiter has taken over the
-+ * console_lock, in which case the caller is no longer holding the
-+ * console_lock. Otherwise it is set to false.
-+ *
-+ * @any_usable will be set to true if there are any usable consoles.
-+ *
-+ * Returns true when there was at least one usable console and a record was
-+ * flushed. A returned false indicates there were no records to flush for any
-+ * of the consoles. It may also indicate that there were no usable consoles,
-+ * the context has been lost or there is a panic suitation. Regardless the
-+ * reason, the caller should assume it is not useful to immediately try again.
-+ *
-+ * Requires the console_lock.
-+ */
-+static bool console_flush_one_record(bool do_cond_resched, u64 *next_seq, bool *handover,
-+				     bool *any_usable)
-+{
-+	struct console_flush_type ft;
-+	bool any_progress = false;
-+	struct console *con;
-+	int cookie;
-+
-+	printk_get_console_flush_type(&ft);
-+
-+	cookie = console_srcu_read_lock();
-+	for_each_console_srcu(con) {
-+		short flags = console_srcu_read_flags(con);
-+		u64 printk_seq;
-+		bool progress;
-+
-+		/*
-+		 * console_flush_one_record() is only responsible for
-+		 * nbcon consoles when the nbcon consoles cannot print via
-+		 * their atomic or threaded flushing.
-+		 */
-+		if ((flags & CON_NBCON) && (ft.nbcon_atomic || ft.nbcon_offload))
-+			continue;
-+
-+		if (!console_is_usable(con, flags, !do_cond_resched))
-+			continue;
-+		*any_usable = true;
-+
-+		if (flags & CON_NBCON) {
-+			progress = nbcon_legacy_emit_next_record(con, handover, cookie,
-+								 !do_cond_resched);
-+			printk_seq = nbcon_seq_read(con);
-+		} else {
-+			progress = console_emit_next_record(con, handover, cookie);
-+			printk_seq = con->seq;
-+		}
-+
-+		/*
-+		 * If a handover has occurred, the SRCU read lock
-+		 * is already released.
-+		 */
-+		if (*handover)
-+			return false;
-+
-+		/* Track the next of the highest seq flushed. */
-+		if (printk_seq > *next_seq)
-+			*next_seq = printk_seq;
-+
-+		if (!progress)
-+			continue;
-+		any_progress = true;
-+
-+		/* Allow panic_cpu to take over the consoles safely. */
-+		if (panic_on_other_cpu())
-+			goto abandon;
-+
-+		if (do_cond_resched)
-+			cond_resched();
-+	}
-+	console_srcu_read_unlock(cookie);
-+
-+	return any_progress;
-+
-+abandon:
-+	console_srcu_read_unlock(cookie);
-+	return false;
-+}
-+
- /*
-  * Print out all remaining records to all consoles.
-  *
-@@ -3129,77 +3222,24 @@ static inline void printk_kthreads_check_locked(void) { }
-  */
- static bool console_flush_all(bool do_cond_resched, u64 *next_seq, bool *handover)
- {
--	struct console_flush_type ft;
- 	bool any_usable = false;
--	struct console *con;
- 	bool any_progress;
--	int cookie;
- 
- 	*next_seq = 0;
- 	*handover = false;
- 
- 	do {
--		any_progress = false;
-+		any_progress = console_flush_one_record(do_cond_resched, next_seq, handover,
-+							&any_usable);
- 
--		printk_get_console_flush_type(&ft);
--
--		cookie = console_srcu_read_lock();
--		for_each_console_srcu(con) {
--			short flags = console_srcu_read_flags(con);
--			u64 printk_seq;
--			bool progress;
-+		if (*handover)
-+			return false;
- 
--			/*
--			 * console_flush_all() is only responsible for nbcon
--			 * consoles when the nbcon consoles cannot print via
--			 * their atomic or threaded flushing.
--			 */
--			if ((flags & CON_NBCON) && (ft.nbcon_atomic || ft.nbcon_offload))
--				continue;
--
--			if (!console_is_usable(con, flags, !do_cond_resched))
--				continue;
--			any_usable = true;
--
--			if (flags & CON_NBCON) {
--				progress = nbcon_legacy_emit_next_record(con, handover, cookie,
--									 !do_cond_resched);
--				printk_seq = nbcon_seq_read(con);
--			} else {
--				progress = console_emit_next_record(con, handover, cookie);
--				printk_seq = con->seq;
--			}
--
--			/*
--			 * If a handover has occurred, the SRCU read lock
--			 * is already released.
--			 */
--			if (*handover)
--				return false;
--
--			/* Track the next of the highest seq flushed. */
--			if (printk_seq > *next_seq)
--				*next_seq = printk_seq;
--
--			if (!progress)
--				continue;
--			any_progress = true;
--
--			/* Allow panic_cpu to take over the consoles safely. */
--			if (panic_on_other_cpu())
--				goto abandon;
--
--			if (do_cond_resched)
--				cond_resched();
--		}
--		console_srcu_read_unlock(cookie);
-+		if (panic_on_other_cpu())
-+			return false;
- 	} while (any_progress);
- 
- 	return any_usable;
--
--abandon:
--	console_srcu_read_unlock(cookie);
--	return false;
- }
- 
- static void __console_flush_and_unlock(void)
+ 			new_expr->metric_unit = old_expr->metric_unit;
+ 			new_expr->runtime = old_expr->runtime;
+@@ -1827,6 +1829,7 @@ int metricgroup__copy_metric_events(struct evlist *evlist, struct cgroup *cgrp,
+ 				alloc_size = sizeof(*new_expr->metric_refs);
+ 				new_expr->metric_refs = calloc(nr + 1, alloc_size);
+ 				if (!new_expr->metric_refs) {
++					zfree(&new_expr->metric_name);
+ 					free(new_expr);
+ 					return -ENOMEM;
+ 				}
+@@ -1843,6 +1846,7 @@ int metricgroup__copy_metric_events(struct evlist *evlist, struct cgroup *cgrp,
+ 			alloc_size = sizeof(*new_expr->metric_events);
+ 			new_expr->metric_events = calloc(nr + 1, alloc_size);
+ 			if (!new_expr->metric_events) {
++				zfree(&new_expr->metric_name);
+ 				zfree(&new_expr->metric_refs);
+ 				free(new_expr);
+ 				return -ENOMEM;
+@@ -1853,6 +1857,7 @@ int metricgroup__copy_metric_events(struct evlist *evlist, struct cgroup *cgrp,
+ 				evsel = old_expr->metric_events[idx];
+ 				evsel = evlist__find_evsel(evlist, evsel->core.idx);
+ 				if (evsel == NULL) {
++					zfree(&new_expr->metric_name);
+ 					zfree(&new_expr->metric_events);
+ 					zfree(&new_expr->metric_refs);
+ 					free(new_expr);
 -- 
 2.53.0
 
