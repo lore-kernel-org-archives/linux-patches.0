@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED98A477E21;
-	Sat, 12 Sep 2026 15:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D7A345EA7;
+	Sat, 12 Sep 2026 15:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228168; cv=none; b=IVpMAThf9IasYGbxubkkK9ig19a6QiLl/qnBnFb4rWz0BL1CqbGs9kBUlB+vdHrDbs6hdoYJltccfwIvoG+BuAH9LMPgIpAsXRqRNPDy9HeaU4TsYowfB0jPTHmXEa7ZEt06+hmc9bcyoEHhhWioI5MM8E0S/9m0pU47482O8xc=
+	t=1789228172; cv=none; b=rHdZVxMiYqgBFt4YfuVrPw9wsZmLV1aBQ/DGmmASi0xGekaOenCVdCT8vL24VlmOmKBaGt9glqVjjwCcSz4GLsZk3mxUj9LAEzR+56ZJYUZMPFBpxLuI0cFqAv9F1QqWnixubXwILx2ODgLrmzCJwfbsN/S02PBn8uc91Sza6+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228168; c=relaxed/simple;
-	bh=8SveBbwUTnbh37Jlf8PeXs+GHi+AjJ+XYEL72botaGQ=;
+	s=arc-20240116; t=1789228172; c=relaxed/simple;
+	bh=TgB/W+sNaFdI6baVe96aLe3enfEEApkfi5sTlSVrBiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p4Ss7LWBRk5EOZLQ6HI5/AYPOGlmcLNTbRSxm+6Cx3WCib1U6+kR+iKAClZ/Z52otHnH/I/ISEqe3UJOWhIANC74O+3zqKKTHlHMCVeLk3pdjxKOLb9rPljGYQAMXA5k6CTWY5YeUWONsQAtWemd5qnQZYjrhsa5Ar3e40DP97M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Rt08IOa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H0Ph+P5YMhhgV4cQ6wiYrf74xGHbYHri0EC61wJj3ZtLVrW75KnXI3aXp0RCeaN5Jx7xXr9JEo7hIt/9pJXChPbr31dcoyXkJr5v79PLiRSaTHNlHigaXjdYyGPTN58b8YU30fGid7KpDu87wPuGpsC7OUYhlcElzXTYPrwqlYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVEN19V5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Rt08IOa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5251F000FF;
-	Sat, 12 Sep 2026 15:49:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVEN19V5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE4231F000FF;
+	Sat, 12 Sep 2026 15:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228165;
-	bh=yeHky+qI5opFzdf2zlIO63xWLtvN1CrDXgr7V0yIRLM=;
+	s=korg; t=1789228170;
+	bh=jS7V6cpzTXtf67oKPiip5AVXPe+dAfiltVKUkI1hegE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Rt08IOaXPv65naIJnSVSV1ToEGUZIA1NfQgP3Z3TOWA44jpNmeiSIwbrqAD49rbq
-	 9MdT8IRRF0QhbssVN1g5M6r5LgQz9ZKkMHXkCT9figmVqRrRAahNAOifLuZCHWkME2
-	 S3oidYlMqicFnW3Pe3Qey4HeYAiUOp4nZhakLwg0=
+	b=cVEN19V5LZ8KDhKDF7sX3zQusoBimMfc28EuR+WtR4NuDT7f4SIr9Y8Vzc6jz69U9
+	 Xvw1QT/ZSa0YHezbh40Es6XrwmY5n2Nz2OxCMYmuE+1d3UsCBqskHw4nwxjToKB2/t
+	 z0TEmgMiWE9fz7wwNTOUHLxFGm5AYUyIQ54mS3/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.1 0288/1191] HID: wacom: validate report length in wacom_intuos_pro2_bt_irq
-Date: Sat, 12 Sep 2026 08:50:16 +0200
-Message-ID: <20260912065554.700475563@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.1 0289/1191] dm: fix race when loading and unloading a table
+Date: Sat, 12 Sep 2026 08:50:17 +0200
+Message-ID: <20260912065554.723112971@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,92 +49,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit a8e04f3f894ccb52cfcd7e60125a9f35da4a616d upstream.
+commit 5380c7f6335cc6d77eb77d065105e81155c4d9d3 upstream.
 
-wacom_intuos_pro2_bt_irq() receives the wire report length in `len`
-but never consults it before parsing. After the report-id gate it
-unconditionally calls wacom_intuos_pro2_bt_pen() and then, selected by
-features.type, a fixed chain of sub-parsers, none of which receive
-`len`:
+If the userspace calls two concurrent table load ioctls and one of them
+succeeds and the other fails, there is a race condition because
+dm_setup_md_queue walks &md->table_devices without any lock. If the walk
+races with dm_table_destroy -> free_devices -> dm_put_table_device, there
+is access to invalid memory.
 
-	wacom_intuos_pro2_bt_pen(wacom);
-	if (type == INTUOSP2_BT || type == INTUOSP2S_BT) {
-		wacom_intuos_pro2_bt_touch(wacom);
-		wacom_intuos_pro2_bt_pad(wacom);
-		wacom_intuos_pro2_bt_battery(wacom);
-	} else {
-		wacom_intuos_gen3_bt_pad(wacom);
-		wacom_intuos_gen3_bt_battery(wacom);
-	}
+Fix this race by extending the lock over the list walk.
 
-Each sub-parser dereferences wacom->data at fixed offsets. The furthest
-byte touched on each branch is:
-
-  INTUOSP2_BT / INTUOSP2S_BT: wacom_intuos_pro2_bt_pad() reads data[285]
-	(the touchring byte), so the report must be at least 286 bytes;
-  INTUOSHT3_BT ("gen3"): wacom_intuos_gen3_bt_battery() reads data[45],
-	so the report must be at least 46 bytes.
-
-features.type is selected from the VID/PID id_table entry and
-wacom_setup_device_quirks() force-registers the pen/pad/touch inputs
-for that type independent of the report descriptor, so a malicious or
-malfunctioning paired/spoofed Bluetooth peripheral can advertise that
-VID/PID and send an undersized report that still satisfies the
-data[0] == 0x80/0x81 gate. The driver then reads past the received
-report and forwards the bytes to userspace via evdev (MSC_SERIAL /
-ABS_MISC / ABS_WHEEL on the pen and pad input nodes), an out-of-bounds
-read with a concrete userspace read-back channel, and a true
-out-of-bounds read on transports whose backing buffer is sized to the
-(small) report descriptor rather than a fixed-size staging buffer.
-
-This is the same class of bug commit 2f1763f62909 ("HID: wacom: fix
-out-of-bounds read in wacom_intuos_bt_irq") already hardened in the
-sibling wacom_intuos_bt_irq(), which guards each report id against its
-minimum length before parsing.
-
-Guard wacom_intuos_pro2_bt_irq() the same way: before parsing, reject
-reports shorter than the furthest offset the selected branch actually
-dereferences, warn, and bail out. Because the whole pen/touch/pad/
-battery chain runs unconditionally per branch, a single up-front check
-against the maximum offset (286 bytes for INTUOSP2_BT/INTUOSP2S_BT,
-46 bytes for the gen3 branch) bounds every sub-parser. Returning 0 on
-a short report also skips those calls for the same malformed report,
-which is the safe, conservative behavior.
-
-Fixes: 4922cd26f03c ("HID: wacom: Support 2nd-gen Intuos Pro's Bluetooth classic interface")
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Assisted-by: AuditCode-AI:2026.07
-Acked-by: Jason Gerecke <jason.gerecke@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_wac.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/md/dm.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -1591,6 +1591,19 @@ static int wacom_intuos_pro2_bt_irq(stru
- 		return 0;
- 	}
- 
-+	if (wacom->features.type == INTUOSP2_BT ||
-+	    wacom->features.type == INTUOSP2S_BT) {
-+		if (len < 286) {
-+			dev_warn(wacom->pen_input->dev.parent,
-+				 "Pro2 BT report too short: %zu bytes\n", len);
-+			return 0;
-+		}
-+	} else if (len < 46) {
-+		dev_warn(wacom->pen_input->dev.parent,
-+			 "Pro2 BT report too short: %zu bytes\n", len);
-+		return 0;
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -2349,9 +2349,10 @@ int dm_setup_md_queue(struct mapped_devi
+ 	 */
+ 	mutex_lock(&md->table_devices_lock);
+ 	r = add_disk(md->disk);
+-	mutex_unlock(&md->table_devices_lock);
+-	if (r)
++	if (r) {
++		mutex_unlock(&md->table_devices_lock);
+ 		return r;
 +	}
+ 
+ 	/*
+ 	 * Register the holder relationship for devices added before the disk
+@@ -2362,18 +2363,21 @@ int dm_setup_md_queue(struct mapped_devi
+ 		if (r)
+ 			goto out_undo_holders;
+ 	}
++	mutex_unlock(&md->table_devices_lock);
+ 
+ 	r = dm_sysfs_init(md);
+ 	if (r)
+-		goto out_undo_holders;
++		goto lock_out_undo_holders;
+ 
+ 	md->type = type;
 +
- 	wacom_intuos_pro2_bt_pen(wacom);
- 	if (wacom->features.type == INTUOSP2_BT ||
- 	    wacom->features.type == INTUOSP2S_BT) {
+ 	return 0;
+ 
++lock_out_undo_holders:
++	mutex_lock(&md->table_devices_lock);
+ out_undo_holders:
+ 	list_for_each_entry_continue_reverse(td, &md->table_devices, list)
+ 		bd_unlink_disk_holder(td->dm_dev.bdev, md->disk);
+-	mutex_lock(&md->table_devices_lock);
+ 	del_gendisk(md->disk);
+ 	mutex_unlock(&md->table_devices_lock);
+ 	return r;
 
 
