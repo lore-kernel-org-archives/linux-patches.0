@@ -1,44 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E596A23BD06;
-	Sat, 12 Sep 2026 14:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1083B2FDC30;
+	Sat, 12 Sep 2026 14:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224736; cv=none; b=u46IxjbSm4Rhy5GAW3AX95i9I+i7zu78mZT32Lx3be5/1NSDTUcw7lw0sg3jq9hIoDTN9uDj/qxmfpINPz68B7BqhbpT3dpg/KYUxJei4Y/sd0mDuSC4xUwatD0CBqXKu/kuuZgfswneDhI3/g2C8RCz8sRVMHVMwp7CVLjspb4=
+	t=1789224741; cv=none; b=i6BfZYm8BBHiz5K/+oIfnPSHFeiqwxO4exIfa9ogwoUzyx5/Du50qV2+7fGOlGb3uP7jzSctHSGZvMs0y6x3+96gwzC2FaCYr0J7dsI7NYflZKfCIr/rb/QcTvY7lIAoyP50/SWiRO97OFfREwNvdMcx56EgYw55qfKyU2XgtTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224736; c=relaxed/simple;
-	bh=2661ApUYsmvk2GBcubs7cv/+IpFqJPE+4M9F3tp+fX4=;
+	s=arc-20240116; t=1789224741; c=relaxed/simple;
+	bh=bbv+tUdldgUwlcVjheuxdwVqbAo0q7eVTc5tpx1McMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=upfnJzjh16OCYCAygivShkcsHa7+BSYlJSBfxintUmWIA/6/lsc/bQIE+ZviLqoA0ME6KRio/RZGB1JUUvnrXXYZbhwIjuZyy0+2MSeJ9Qbtp/xyzmojnTpmkolulHmAzq5VH3Rgi3m2IThMbUXpNA5E+ZMGw9bxfeOi8E4T9qM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fgx6kwmN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rx0/sAzQaCX843QARjhWI7hSAyrPDSf+sLkTUEl+KS+VrXezGR6isIGnxCA8YiqHf3gGandr7nnFr3jCBMlyzS3SWJSPS/B8hLUNHYGZLEXouwBIvAgpkx6PQD8p9TkmijUVJEGTUS8mSsElF0X8nbApUbPZAuos4cq4HB3oVqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjszKrzS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fgx6kwmN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0CC81F000FF;
-	Sat, 12 Sep 2026 14:52:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjszKrzS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84EDF1F00893;
+	Sat, 12 Sep 2026 14:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224734;
-	bh=NgDCUq2Hnp9t7zRNxQ5Bw1bkzC50soLD1KNIsho1aaI=;
+	s=korg; t=1789224739;
+	bh=BZzXNUxtBeTJMSw9mhCx8oJzxqmOAgZfINRMIhl6SeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fgx6kwmNdVX+eSUtBj03APcGH7j0qdYqiGzoqRAcJ5GINcjME+wJ6unMnKwgONnXc
-	 n15wjRQkSBGRb1/V3a4ytE+NDdZ3ZxG4Rg2QSXGGLUZbe48sXUM2U9oLtthg2H2YA5
-	 FE+/O2sdweKMdwSlSu9HIAIaCgjCc/KaJKUQgu40=
+	b=yjszKrzS4vKsY94ARZ1WEIi84zJCzjxneapCK42j3JFLXlu1ZCEIXVDXnZIKT73Kt
+	 ZkQ03GQEHHgg5tD/hvO1wSq/fDBm+xzxIkhl/Eal5uuRfEyTKSW0HQ8jSWxg06s4Me
+	 sxbSX4QkW2r4YElzfomWUiy6VtsOfKm2LJEpgPSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donet Tom <donettom@linux.ibm.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Li Wang <liwang@redhat.com>,
+	Aruna Ramakrishna <aruna.ramakrishna@oracle.com>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	David Hildenbrand <david@redhat.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Joey Gouly <joey.gouly@arm.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Keith Lucas <keith.lucas@oracle.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
 	Shuah Khan <shuah@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1055/1424] selftests/mm: add new test cases to the migration test
-Date: Sat, 12 Sep 2026 08:58:07 +0200
-Message-ID: <20260912065630.932097150@linuxfoundation.org>
+Subject: [PATCH 6.6 1056/1424] ksm_tests: skip hugepage test when Transparent Hugepages are disabled
+Date: Sat, 12 Sep 2026 08:58:08 +0200
+Message-ID: <20260912065630.954889331@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -57,177 +62,243 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donet Tom <donettom@linux.ibm.com>
+From: Li Wang <liwang@redhat.com>
 
-[ Upstream commit 901083d8f5c55dc125834bbc5ac1720014e66758 ]
+[ Upstream commit fdc3bc3497946c6b416a17628907581657102e60 ]
 
-Added three new test cases to the migration tests:
+Some systems (e.g.  minimal or real-time kernels) may not enable
+Transparent Hugepages (THP), causing MADV_HUGEPAGE to return EINVAL.  This
+patch introduces a runtime check using the existing THP sysfs interface
+and skips the hugepage merging test (`-H`) when THP is not available.
 
-1. Shared anon THP migration test
-This test will mmap shared anon memory, madvise it to
-MADV_HUGEPAGE, then do migration entry testing. One thread
-will move pages back and forth between nodes whilst other
-threads try and access them.
+To avoid those failures:
 
-2. Private anon hugetlb migration test
-This test will mmap private anon hugetlb memory and then
-do the migration entry testing.
+  # -----------------------------
+  # running ./ksm_tests -H -s 100
+  # -----------------------------
+  # ksm_tests: MADV_HUGEPAGE: Invalid argument
+  # [FAIL]
+  not ok 1 ksm_tests -H -s 100 # exit=2
 
-3. Shared anon hugetlb migration test
-This test will mmap shared anon hugetlb memory and then
-do the migration entry testing.
+  # --------------------
+  # running ./khugepaged
+  # --------------------
+  # Reading PMD pagesize failed# [FAIL]
+  not ok 1 khugepaged # exit=1
 
-Test results
-============
- # ./tools/testing/selftests/mm/migration
- TAP version 13
- 1..6
- # Starting 6 tests from 1 test cases.
- #  RUN           migration.private_anon ...
- #            OK  migration.private_anon
- ok 1 migration.private_anon
- #  RUN           migration.shared_anon ...
- #            OK  migration.shared_anon
- ok 2 migration.shared_anon
- #  RUN           migration.private_anon_thp ...
- #            OK  migration.private_anon_thp
- ok 3 migration.private_anon_thp
- #  RUN           migration.shared_anon_thp ...
- #            OK  migration.shared_anon_thp
- ok 4 migration.shared_anon_thp
- #  RUN           migration.private_anon_htlb ...
- #            OK  migration.private_anon_htlb
- ok 5 migration.private_anon_htlb
- #  RUN           migration.shared_anon_htlb ...
- #            OK  migration.shared_anon_htlb
- ok 6 migration.shared_anon_htlb
- # PASSED: 6 / 6 tests passed.
- # Totals: pass:6 fail:0 xfail:0 xpass:0 skip:0 error:0
- #
+  # --------------------
+  # running ./soft-dirty
+  # --------------------
+  # TAP version 13
+  # 1..15
+  # ok 1 Test test_simple
+  # ok 2 Test test_vma_reuse dirty bit of allocated page
+  # ok 3 Test test_vma_reuse dirty bit of reused address page
+  # Bail out! Reading PMD pagesize failed# Planned tests != run tests (15 != 3)
+  # # Totals: pass:3 fail:0 xfail:0 xpass:0 skip:0 error:0
+  # [FAIL]
+  not ok 1 soft-dirty # exit=1
+  # SUMMARY: PASS=0 SKIP=0 FAIL=1
 
-Link: https://lkml.kernel.org/r/20241219102720.4487-1-donettom@linux.ibm.com
-Signed-off-by: Donet Tom <donettom@linux.ibm.com>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+  # -------------------
+  # running ./migration
+  # -------------------
+  # TAP version 13
+  # 1..3
+  # # Starting 3 tests from 1 test cases.
+  # #  RUN           migration.private_anon ...
+  # #            OK  migration.private_anon
+  # ok 1 migration.private_anon
+  # #  RUN           migration.shared_anon ...
+  # #            OK  migration.shared_anon
+  # ok 2 migration.shared_anon
+  # #  RUN           migration.private_anon_thp ...
+  # # migration.c:196:private_anon_thp:Expected madvise(ptr, TWOMEG, MADV_HUGEPAGE) (-1) == 0 (0)
+  # # private_anon_thp: Test terminated by assertion
+  # #          FAIL  migration.private_anon_thp
+  # not ok 3 migration.private_anon_thp
+  # # FAILED: 2 / 3 tests passed.
+  # # Totals: pass:2 fail:1 xfail:0 xpass:0 skip:0 error:0
+  # [FAIL]
+  not ok 1 migration # exit=1
+
+It's true that CONFIG_TRANSPARENT_HUGEPAGE=y is explicitly enabled in
+tools/testing/selftests/mm/config, so ideally the runtime environment
+should also support THP.
+
+However, in practice, we've found that on some systems:
+
+- THP is disabled at boot time (transparent_hugepage=never)
+- Or manually disabled via sysfs
+- Or unavailable in RT kernels, containers, or minimal CI environments
+
+In these cases, the test will fail with EINVAL on madvise(MADV_HUGEPAGE),
+even though the kernel config is correct.
+
+To make the test suite more robust and avoid false negatives, this patch
+adds a runtime check for /sys/kernel/mm/transparent_hugepage/enabled.
+
+If THP is not available, the hugepage test (-H) is skipped with a clear
+message.
+
+Link: https://lkml.kernel.org/r/20250624032748.393836-1-liwang@redhat.com
+Signed-off-by: Li Wang <liwang@redhat.com>
+Cc: Aruna Ramakrishna <aruna.ramakrishna@oracle.com>
+Cc: Bagas Sanjaya <bagasdotme@gmail.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
 Cc: David Hildenbrand <david@redhat.com>
-Cc: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Cc: Joey Gouly <joey.gouly@arm.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Keith Lucas <keith.lucas@oracle.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
 Cc: Shuah Khan <shuah@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: 15828a150c58 ("selftests/mm: fix ksm NUMA merge test for systems with memoryless NUMA nodes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/migration.c | 99 ++++++++++++++++++++++++++
- 1 file changed, 99 insertions(+)
+ tools/testing/selftests/mm/khugepaged.c   |  5 +++++
+ tools/testing/selftests/mm/ksm_tests.c    |  6 ++++++
+ tools/testing/selftests/mm/migration.c    |  8 ++++++++
+ tools/testing/selftests/mm/soft-dirty.c   |  9 ++++++++-
+ tools/testing/selftests/mm/thp_settings.c | 11 +++++++++++
+ tools/testing/selftests/mm/thp_settings.h |  2 ++
+ 6 files changed, 40 insertions(+), 1 deletion(-)
 
+diff --git a/tools/testing/selftests/mm/khugepaged.c b/tools/testing/selftests/mm/khugepaged.c
+index 56d4480e8d3cb..25def60201fea 100644
+--- a/tools/testing/selftests/mm/khugepaged.c
++++ b/tools/testing/selftests/mm/khugepaged.c
+@@ -1190,6 +1190,11 @@ int main(int argc, char **argv)
+ 		.read_ahead_kb = 0,
+ 	};
+ 
++	if (!thp_is_enabled()) {
++		printf("Transparent Hugepages not available\n");
++		return KSFT_SKIP;
++	}
++
+ 	parse_test_type(argc, argv);
+ 
+ 	setbuf(stdout, NULL);
+diff --git a/tools/testing/selftests/mm/ksm_tests.c b/tools/testing/selftests/mm/ksm_tests.c
+index b748c48908d9d..faa3d053994df 100644
+--- a/tools/testing/selftests/mm/ksm_tests.c
++++ b/tools/testing/selftests/mm/ksm_tests.c
+@@ -15,6 +15,7 @@
+ #include "../kselftest.h"
+ #include <include/vdso/time64.h>
+ #include "vm_util.h"
++#include "thp_settings.h"
+ 
+ #define KSM_SYSFS_PATH "/sys/kernel/mm/ksm/"
+ #define KSM_FP(s) (KSM_SYSFS_PATH s)
+@@ -555,6 +556,11 @@ static int ksm_merge_hugepages_time(int merge_type, int mapping, int prot,
+ 	unsigned long scan_time_ns;
+ 	int pagemap_fd, n_normal_pages, n_huge_pages;
+ 
++	if (!thp_is_enabled()) {
++		printf("Transparent Hugepages not available\n");
++		return KSFT_SKIP;
++	}
++
+ 	map_size *= MB;
+ 	size_t len = map_size;
+ 
 diff --git a/tools/testing/selftests/mm/migration.c b/tools/testing/selftests/mm/migration.c
-index 877ee32d04c82..d0854ecb139a6 100644
+index d0854ecb139a6..0faeead0113bb 100644
 --- a/tools/testing/selftests/mm/migration.c
 +++ b/tools/testing/selftests/mm/migration.c
-@@ -200,4 +200,103 @@ TEST_F_TIMEOUT(migration, private_anon_thp, 2*RUNTIME)
- 		ASSERT_EQ(pthread_cancel(self->threads[i]), 0);
- }
+@@ -5,6 +5,8 @@
+  */
  
-+/*
-+ * migration test with shared anon THP page
-+ */
+ #include "../kselftest_harness.h"
++#include "thp_settings.h"
 +
-+TEST_F_TIMEOUT(migration, shared_anon_thp, 2*RUNTIME)
-+{
-+	pid_t pid;
-+	uint64_t *ptr;
-+	int i;
+ #include <strings.h>
+ #include <pthread.h>
+ #include <numa.h>
+@@ -181,6 +183,9 @@ TEST_F_TIMEOUT(migration, private_anon_thp, 2*RUNTIME)
+ 	uint64_t *ptr;
+ 	int i;
+ 
++	if (!thp_is_enabled())
++		SKIP(return, "Transparent Hugepages not available");
 +
-+	if (self->nthreads < 2 || self->n1 < 0 || self->n2 < 0)
-+		SKIP(return, "Not enough threads or NUMA nodes available");
+ 	if (self->nthreads < 2 || self->n1 < 0 || self->n2 < 0)
+ 		SKIP(return, "Not enough threads or NUMA nodes available");
+ 
+@@ -210,6 +215,9 @@ TEST_F_TIMEOUT(migration, shared_anon_thp, 2*RUNTIME)
+ 	uint64_t *ptr;
+ 	int i;
+ 
++	if (!thp_is_enabled())
++		SKIP(return, "Transparent Hugepages not available");
 +
-+	ptr = mmap(NULL, 2 * TWOMEG, PROT_READ | PROT_WRITE,
-+		MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-+	ASSERT_NE(ptr, MAP_FAILED);
+ 	if (self->nthreads < 2 || self->n1 < 0 || self->n2 < 0)
+ 		SKIP(return, "Not enough threads or NUMA nodes available");
+ 
+diff --git a/tools/testing/selftests/mm/soft-dirty.c b/tools/testing/selftests/mm/soft-dirty.c
+index 7095b95d19ae2..bfc2cb06af4eb 100644
+--- a/tools/testing/selftests/mm/soft-dirty.c
++++ b/tools/testing/selftests/mm/soft-dirty.c
+@@ -6,8 +6,10 @@
+ #include <stdint.h>
+ #include <malloc.h>
+ #include <sys/mman.h>
 +
-+	ptr = (uint64_t *) ALIGN((uintptr_t) ptr, TWOMEG);
-+	ASSERT_EQ(madvise(ptr, TWOMEG, MADV_HUGEPAGE), 0);
-+
-+	memset(ptr, 0xde, TWOMEG);
-+	for (i = 0; i < self->nthreads - 1; i++) {
-+		pid = fork();
-+		if (!pid) {
-+			prctl(PR_SET_PDEATHSIG, SIGHUP);
-+			/* Parent may have died before prctl so check now. */
-+			if (getppid() == 1)
-+				kill(getpid(), SIGHUP);
-+			access_mem(ptr);
-+		} else {
-+			self->pids[i] = pid;
-+		}
+ #include "../kselftest.h"
+ #include "vm_util.h"
++#include "thp_settings.h"
+ 
+ #define PAGEMAP_FILE_PATH "/proc/self/pagemap"
+ #define TEST_ITERATIONS 10000
+@@ -78,8 +80,13 @@ static void test_hugepage(int pagemap_fd, int pagesize)
+ {
+ 	char *map;
+ 	int i, ret;
+-	size_t hpage_len = read_pmd_pagesize();
+ 
++	if (!thp_is_enabled()) {
++		ksft_test_result_skip("Transparent Hugepages not available\n");
++		return;
 +	}
 +
-+	ASSERT_EQ(migrate(ptr, self->n1, self->n2), 0);
-+	for (i = 0; i < self->nthreads - 1; i++)
-+		ASSERT_EQ(kill(self->pids[i], SIGTERM), 0);
-+}
++	size_t hpage_len = read_pmd_pagesize();
+ 	if (!hpage_len)
+ 		ksft_exit_fail_msg("Reading PMD pagesize failed");
+ 
+diff --git a/tools/testing/selftests/mm/thp_settings.c b/tools/testing/selftests/mm/thp_settings.c
+index 577eaab6266fd..38f70155bfbf1 100644
+--- a/tools/testing/selftests/mm/thp_settings.c
++++ b/tools/testing/selftests/mm/thp_settings.c
+@@ -381,3 +381,14 @@ unsigned long thp_shmem_supported_orders(void)
+ {
+ 	return __thp_supported_orders(true);
+ }
 +
-+/*
-+ * migration test with private anon hugetlb page
-+ */
-+TEST_F_TIMEOUT(migration, private_anon_htlb, 2*RUNTIME)
++bool thp_is_enabled(void)
 +{
-+	uint64_t *ptr;
-+	int i;
++	if (access(THP_SYSFS, F_OK) != 0)
++		return false;
 +
-+	if (self->nthreads < 2 || self->n1 < 0 || self->n2 < 0)
-+		SKIP(return, "Not enough threads or NUMA nodes available");
++	int mode = thp_read_string("enabled", thp_enabled_strings);
 +
-+	ptr = mmap(NULL, TWOMEG, PROT_READ | PROT_WRITE,
-+		MAP_PRIVATE | MAP_ANONYMOUS | MAP_HUGETLB, -1, 0);
-+	ASSERT_NE(ptr, MAP_FAILED);
-+
-+	memset(ptr, 0xde, TWOMEG);
-+	for (i = 0; i < self->nthreads - 1; i++)
-+		if (pthread_create(&self->threads[i], NULL, access_mem, ptr))
-+			perror("Couldn't create thread");
-+
-+	ASSERT_EQ(migrate(ptr, self->n1, self->n2), 0);
-+	for (i = 0; i < self->nthreads - 1; i++)
-+		ASSERT_EQ(pthread_cancel(self->threads[i]), 0);
++	/* THP is considered enabled if it's either "always" or "madvise" */
++	return mode == 1 || mode == 3;
 +}
+diff --git a/tools/testing/selftests/mm/thp_settings.h b/tools/testing/selftests/mm/thp_settings.h
+index 876235a23460c..079a58a662b0e 100644
+--- a/tools/testing/selftests/mm/thp_settings.h
++++ b/tools/testing/selftests/mm/thp_settings.h
+@@ -84,4 +84,6 @@ void thp_set_read_ahead_path(char *path);
+ unsigned long thp_supported_orders(void);
+ unsigned long thp_shmem_supported_orders(void);
+ 
++bool thp_is_enabled(void);
 +
-+/*
-+ * migration test with shared anon hugetlb page
-+ */
-+TEST_F_TIMEOUT(migration, shared_anon_htlb, 2*RUNTIME)
-+{
-+	pid_t pid;
-+	uint64_t *ptr;
-+	int i;
-+
-+	if (self->nthreads < 2 || self->n1 < 0 || self->n2 < 0)
-+		SKIP(return, "Not enough threads or NUMA nodes available");
-+
-+	ptr = mmap(NULL, TWOMEG, PROT_READ | PROT_WRITE,
-+		MAP_SHARED | MAP_ANONYMOUS | MAP_HUGETLB, -1, 0);
-+	ASSERT_NE(ptr, MAP_FAILED);
-+
-+	memset(ptr, 0xde, TWOMEG);
-+	for (i = 0; i < self->nthreads - 1; i++) {
-+		pid = fork();
-+		if (!pid) {
-+			prctl(PR_SET_PDEATHSIG, SIGHUP);
-+			/* Parent may have died before prctl so check now. */
-+			if (getppid() == 1)
-+				kill(getpid(), SIGHUP);
-+			access_mem(ptr);
-+		} else {
-+			self->pids[i] = pid;
-+		}
-+	}
-+
-+	ASSERT_EQ(migrate(ptr, self->n1, self->n2), 0);
-+	for (i = 0; i < self->nthreads - 1; i++)
-+		ASSERT_EQ(kill(self->pids[i], SIGTERM), 0);
-+}
-+
- TEST_HARNESS_MAIN
+ #endif /* __THP_SETTINGS_H__ */
 -- 
 2.53.0
 
