@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61ECD2DE702;
-	Sat, 12 Sep 2026 13:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C918478E25;
+	Sat, 12 Sep 2026 13:38:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220333; cv=none; b=nYVUTdGr/HrB80pB4FfMLQealudb5RgBVoU8tJfSC/9AtL24INlaSHCb+g2G+0dAAhvVrnddwKsjEBVkJVkzM7g0axvLAS7dCOCi45V54CpT71oYvwyKLBxcmp1T68E8GYguCCchd3nTDCun87kNFZUJyrN7V8bXfBBDfhzwrQ0=
+	t=1789220338; cv=none; b=bQ/vqsSsqKLxGslXlKMOM6faZZQksadFQ2Mo2A2H1wLt9VkkboYkVzCNQCyBtsZ3syGb4ZMyLl8rRh78sgMECGxM41jW1nj63aGrsR/Z6Byn/3rqS+wM3sb+nkC3JPoMpYCmpEnj/xPrdBPnEX6RO5wOl4g/aJ7WUkRolk3mcM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220333; c=relaxed/simple;
-	bh=e1G2AUtvpro4rQvz8hulLN1oa7M0kWbhlG+6ZspBoBU=;
+	s=arc-20240116; t=1789220338; c=relaxed/simple;
+	bh=kJCa1tCoa4fwIKaxGyLYmxUIp1GSIKE2ocZLWi7zqQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QysnLV6Pt+hZw+m+wM0/ywzVeEc9ghFoHu8p4z3ZPITi1py8td8y8Rs4hFazZltDQ09nZSwKC9ZUiHXV/Swlt8P/uT1VUbaR2USWypygrR3Gm6LwDfE+eDAo7CBjvJd9yLyBhG+jxZGFGPf5Br2mliGJ0JioyIp5FdvdtmGKxgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gajNVXGx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eb0+VMdXb0mg5FhQ2KSe1kZgy17BmB4jGjVVPBv52/BQDZhiAtf1SpEPxPtIaYYC9dS2fE5LCarXRX5GdciS7yMrABaSGMeSFzTFXuoZWPVg5iGktYA3/9WbcVoTeRRkdGK9Ud2IbAsYiaAWRxPhcw6iPWT6hAh6FzG6dZc6SoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NgOG/6yO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gajNVXGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 018161F000FF;
-	Sat, 12 Sep 2026 13:38:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NgOG/6yO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067A41F000FF;
+	Sat, 12 Sep 2026 13:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220332;
-	bh=NkOG3XbgzktWooXgTgHKCV4HwxIHLzMu09+m84KTY0w=;
+	s=korg; t=1789220337;
+	bh=si71Y7q35IvgtiiQwvcfAS1YeI3F2EWCttSbi8V3mEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gajNVXGxFtm+GMy/VpiBwKcHIpjSnldC6ZiLwB4IfZ76YnUcs+hUd2fYQ1c7zMuOT
-	 Tr+QraUIWwZO3M5iMlSomTOUi3iKRCS9eF59mZRAkl3IWxM9o/LNAPcGFfKa6lGAQ0
-	 e/D3jcqW8bCCKaItbVuRUhMMIlVKT8ox70CSGPS0=
+	b=NgOG/6yObdJN2TzT2mrlYqc6UylelCUzf9+ijVQJAimpGQLFQcLy3gQ/1p01L77wT
+	 /wetd49aSWkgrZ4la6Dgn6Bc9tUSO7xvGU5QBjecTQxn+TAv45t9iXGMiiCMsjy/hy
+	 kM8z7zygJdOakKmqA65KrBbKrSoUfaweoHzuL/o8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 0154/1424] SUNRPC: Check svc pool percpu counter allocation
-Date: Sat, 12 Sep 2026 08:43:06 +0200
-Message-ID: <20260912065610.745375877@linuxfoundation.org>
+	Christoph Zwerschke <cito@online.de>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 0119/1424] Bluetooth: btusb: Add ASUS USB-BT600 for Realtek 8761CU
+Date: Sat, 12 Sep 2026 08:42:31 +0200
+Message-ID: <20260912065609.967852849@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,119 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Christoph Zwerschke <cito@online.de>
 
-commit 43e11e164704dde975c9edb370de1a06bec67270 upstream.
+commit 6f0624b4427e38c3bb63a951c536cf8adaee1238 upstream.
 
-__svc_create() initializes three per-pool percpu_counter stats and
-ignores every return value. On SMP, percpu_counter_init() fails when
-__alloc_percpu_gfp() cannot satisfy the allocation, leaving the failed
-counter with fbc->counters == NULL and its embedded raw_spinlock_t,
-list_head, and count never initialized. __svc_create() returns the
-half-constructed svc_serv to nfsd, lockd, or the NFS callback service
-anyway.
+Add the vendor/product ID (0x0b05, 0x1d70) to the usb_device_id table for
+the Realtek RTL8761CU-based ASUS USB-BT600 adapter. It binds via the
+generic Bluetooth class today, so BTUSB_REALTEK is never set and the
+rtl8761cu firmware is not loaded, leaving the controller non-functional.
+With the entry the driver loads rtl_bt/rtl8761cu_fw.bin (already shipped by
+linux-firmware) and the adapter works (tested: A2DP and ASHA).
 
-Once that service is live, the hot-path increments in
-svc_xprt_enqueue(), svc_handle_xprt(), and
-svc_pool_wake_idle_thread() reach a counter whose backing pointer is
-NULL. The pointer is a per-cpu offset, so the access does not fault:
-it resolves to offset zero of the current CPU's per-cpu area and
-silently corrupts whatever variable lives there. A
-/proc/fs/nfsd/pool_stats read walks the same NULL per-cpu storage and
-returns garbage, and on CONFIG_DEBUG_SPINLOCK or lockdep it splats on
-the never-initialized lock.
+Similar to commit bc597f0cc44f
+("Bluetooth: btusb: Add TP-Link UB600 for Realtek 8761BUV").
 
-Creating the broken service requires a percpu allocation failure during
-RPC server startup, so it is reachable only by a local administrator
-under memory pressure or fault injection; a remote peer cannot induce
-the bad state on its own.
+Device info from /sys/kernel/debug/usb/devices:
 
-Check each percpu_counter_init() return value in __svc_create() and
-fail when an allocation fails, unwinding the counters already set up
-in the current pool and in every pool initialized before it. A
-discrete percpu_counter_destroy() per counter at teardown frees each
-per-cpu allocation exactly once.
+T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 23 Spd=12   MxCh= 0
+D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0b05 ProdID=1d70 Rev= 2.00
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Controller
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
 
-Fixes: ccf08bed6e7a ("SUNRPC: Replace pool stats with per-CPU variables")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260530-tier2-local-v2-2-5a0fd532db57@oracle.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Christoph Zwerschke <cito@online.de>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svc.c |   45 +++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 39 insertions(+), 6 deletions(-)
+ drivers/bluetooth/btusb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -476,6 +476,35 @@ __svc_init_bc(struct svc_serv *serv)
- }
- #endif
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -750,6 +750,8 @@ static const struct usb_device_id quirks
+ 	/* Additional Realtek 8761CU Bluetooth devices */
+ 	{ USB_DEVICE(0x0b05, 0x1bef), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0b05, 0x1d70), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
  
-+static int svc_pool_init_counters(struct svc_pool *pool)
-+{
-+	int err;
-+
-+	err = percpu_counter_init(&pool->sp_messages_arrived, 0, GFP_KERNEL);
-+	if (err)
-+		return err;
-+	err = percpu_counter_init(&pool->sp_sockets_queued, 0, GFP_KERNEL);
-+	if (err)
-+		goto err_sockets;
-+	err = percpu_counter_init(&pool->sp_threads_woken, 0, GFP_KERNEL);
-+	if (err)
-+		goto err_threads;
-+	return 0;
-+
-+err_threads:
-+	percpu_counter_destroy(&pool->sp_sockets_queued);
-+err_sockets:
-+	percpu_counter_destroy(&pool->sp_messages_arrived);
-+	return err;
-+}
-+
-+static void svc_pool_destroy_counters(struct svc_pool *pool)
-+{
-+	percpu_counter_destroy(&pool->sp_messages_arrived);
-+	percpu_counter_destroy(&pool->sp_sockets_queued);
-+	percpu_counter_destroy(&pool->sp_threads_woken);
-+}
-+
- /*
-  * Create an RPC service
-  */
-@@ -540,12 +569,18 @@ __svc_create(struct svc_program *prog, s
- 		INIT_LIST_HEAD(&pool->sp_all_threads);
- 		spin_lock_init(&pool->sp_lock);
- 
--		percpu_counter_init(&pool->sp_messages_arrived, 0, GFP_KERNEL);
--		percpu_counter_init(&pool->sp_sockets_queued, 0, GFP_KERNEL);
--		percpu_counter_init(&pool->sp_threads_woken, 0, GFP_KERNEL);
-+		if (svc_pool_init_counters(pool))
-+			goto out_err;
- 	}
- 
- 	return serv;
-+
-+out_err:
-+	while (i--)
-+		svc_pool_destroy_counters(&serv->sv_pools[i]);
-+	kfree(serv->sv_pools);
-+	kfree(serv);
-+	return NULL;
- }
- 
- /**
-@@ -618,9 +653,7 @@ svc_destroy(struct kref *ref)
- 	for (i = 0; i < serv->sv_nrpools; i++) {
- 		struct svc_pool *pool = &serv->sv_pools[i];
- 
--		percpu_counter_destroy(&pool->sp_messages_arrived);
--		percpu_counter_destroy(&pool->sp_sockets_queued);
--		percpu_counter_destroy(&pool->sp_threads_woken);
-+		svc_pool_destroy_counters(pool);
- 	}
- 	kfree(serv->sv_pools);
- 	kfree(serv);
+ 	/* Additional Realtek 8821AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
 
 
