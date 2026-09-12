@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71066299920;
-	Sat, 12 Sep 2026 12:46:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB32E299920;
+	Sat, 12 Sep 2026 12:46:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217166; cv=none; b=kja/eV6j7rHDr3kZysDva4FRd41i8ukWzfu80kKv4sZzsbi+OiGcNgi1Sziy7JchqBaPgHeFPYQlVHXT6/gy2XSxoxsaKzGGMouqO/DjP9YUopjwWWwQAS7x1p39ZNy+sLSVySddrit03FkkJt5aanFAui2YT5uBrx/kxKi5Va8=
+	t=1789217170; cv=none; b=M0v5LJW3FCkzLscfQqjf/RlVgKBAR7ChooQxJZF4ZhCHevVL3HTq91ZTJjkHx/6137AAcWi7L+Sva/349Cthym1BNByOxGeeOFVX3mIdjOZhiW82NPiGwCwsQuTlnglByeGnEf/KG2uQm0equ63qvJP4A4wB+6D/gGoO3mH+OZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217166; c=relaxed/simple;
-	bh=HIvDzCOUl1Rc02ky7tQlFUSeLUeOVXhAu0PM3ngUCmg=;
+	s=arc-20240116; t=1789217170; c=relaxed/simple;
+	bh=V/IveVoaw2jk5glFHTKjw8WERAztZC5KoyBf/P3b8gk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SH72n/C8tRPhOOySiKVceGZLlhw7J3PTQoz2aBn1BEuwtCTTmZjJzCuuaKAD2xP/gUQl5TlgCmGTsJdk/HBi79L2L1tF2RgWMRj4PfVn2U+trpDhk/f1SQvnGCdLfx3lcYX9j406rroxqeFRVf6qA5tCQZlRSfW6Ig9+6WSXUD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NiAJZwyL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n209AL5G4IOqfnYcLv4I4GPtJIHN2oVojnqz+qvDqQOz4new+i7JFOS4sBO8Ecxa1ewf+Lsb1ta/Ouk69qwRwQTRXMchNpeFSa1axFUecbj7n3+0J4Et3W75HLcuPldd113iJ/pN5ikARLUoxE5cdPwwv1hSSbTSEb6XOqE7poE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBzbgdGK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NiAJZwyL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1B51F000FF;
-	Sat, 12 Sep 2026 12:46:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBzbgdGK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC051F000FF;
+	Sat, 12 Sep 2026 12:46:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217165;
-	bh=M9kqPnNgxDy0DVRFPC9+pQ7fJd4UvycoxE0RyS9hoHE=;
+	s=korg; t=1789217169;
+	bh=Im4rfwqH0rZlSWxer9VQ9KuZiBWkIPPFGjoQ2Z98+gQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NiAJZwyLFG+afI9CK0uQeA5ocjNbCnXGbTAo389B+l/jysFnbVf9n5foS9Y2N+vta
-	 A3/OHY463vtGri+3K3zKcSo4gW5RnfeD6qMlaMGO5FJKspsmFVsqrLdmyc8mr+BJZt
-	 QdiO3M+kL6Pq7NtHSICp6EkgoW/H83IIvmQeyTF4=
+	b=yBzbgdGKP+6Qk/3EhFD2VWBZgTVg3kT+Xo1Tt4yMiD5nMgwRm7KgOj9oGAfaV4rfN
+	 ihsXIUOdcB/sgJNMuFlmchsUHSWZQSAbG3LFY+IwTeVhjKlfUlLlPpVB9LTZN8XJU1
+	 shPyT5E8JSpz5I8H+hDGtPhU/LDvkjZbLthaNi8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0841/1376] wifi: mt76: mt7915: release hif2 reference on probe IRQ failure
-Date: Sat, 12 Sep 2026 08:54:27 +0200
-Message-ID: <20260912065626.292364403@linuxfoundation.org>
+Subject: [PATCH 6.12 0842/1376] wifi: mt76: mt7996: fix reg addr remap when addr is 0
+Date: Sat, 12 Sep 2026 08:54:28 +0200
+Message-ID: <20260912065626.313701921@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,51 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
 
-[ Upstream commit 8370aebd26a9dfa2e0de665e3ab504c0e97ee730 ]
+[ Upstream commit eb906eeff2d1e84b628dc210dada325269c71383 ]
 
-The hif2 reference obtained by mt7915_pci_init_hif2() is only released on
-error paths that key off dev->hif2, which is not assigned until after the
-IRQ setup. If pci_alloc_irq_vectors() or the primary devm_request_irq()
-fails, the reference leaks. Drop it explicitly on those paths via
-mt7915_put_hif2().
+When addr is less than the hardcoded threshold in __mt7996_reg_addr,
+it indicates that remapping is unnecessary.
+Currently, the flow remaps address 0x0 to MT_HIF_REMAP_BASE_L2,
+which is incorrect.
+To address this, modify __mt7996_reg_addr to return INVALID_REG_ADDR
+if the address is not below the hardcoded value or is not present in
+the mt7996_reg_map array.
+Additionally, update the remap condition to check if addr is equal to
+INVALID_REG_ADDR.
 
-Fixes: f68d67623dec ("mt76: mt7915: add Wireless Ethernet Dispatch support")
-Link: https://patch.msgid.link/20260727150434.1778520-4-nbd@nbd.name
+Fixes: 3687854d3e7e ("wifi: mt76: mt7996: add locking for accessing mapped registers")
+Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+Link: https://patch.msgid.link/20260727150434.1778520-5-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/pci.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mmio.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
-index 5a0c9eeb2c4e2..c24f1b12f064f 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
-@@ -144,16 +144,20 @@ static int mt7915_pci_probe(struct pci_dev *pdev,
- 		hif2 = mt7915_pci_init_hif2(pdev);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
+index bffee73b780cb..01d4b54a1acc6 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
+@@ -17,6 +17,8 @@
+ static bool wed_enable;
+ module_param(wed_enable, bool, 0644);
  
- 		ret = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES);
--		if (ret < 0)
-+		if (ret < 0) {
-+			mt7915_put_hif2(hif2);
- 			goto free_device;
-+		}
- 
- 		irq = pdev->irq;
++#define INVALID_REG_ADDR	0xffffffff
++
+ static const struct __base mt7996_reg_base[] = {
+ 	[WF_AGG_BASE]		= { { 0x820e2000, 0x820f2000, 0x830e2000 } },
+ 	[WF_ARB_BASE]		= { { 0x820e3000, 0x820f3000, 0x830e3000 } },
+@@ -183,7 +185,7 @@ static u32 __mt7996_reg_addr(struct mt7996_dev *dev, u32 addr)
+ 		return dev->reg.map[i].mapped + ofs;
  	}
  
- 	ret = devm_request_irq(mdev->dev, irq, mt7915_irq_handler,
- 			       IRQF_SHARED, KBUILD_MODNAME, dev);
--	if (ret)
-+	if (ret) {
-+		mt7915_put_hif2(hif2);
- 		goto free_wed_or_irq_vector;
-+	}
+-	return 0;
++	return INVALID_REG_ADDR;
+ }
  
- 	/* master switch of PCIe tnterrupt enable */
- 	mt76_wr(dev, MT_PCIE_MAC_INT_ENABLE, 0xff);
+ static u32 __mt7996_reg_remap_addr(struct mt7996_dev *dev, u32 addr)
+@@ -212,7 +214,7 @@ void mt7996_memcpy_fromio(struct mt7996_dev *dev, void *buf, u32 offset,
+ {
+ 	u32 addr = __mt7996_reg_addr(dev, offset);
+ 
+-	if (addr) {
++	if (addr != INVALID_REG_ADDR) {
+ 		memcpy_fromio(buf, dev->mt76.mmio.regs + addr, len);
+ 		return;
+ 	}
+@@ -228,7 +230,7 @@ static u32 mt7996_rr(struct mt76_dev *mdev, u32 offset)
+ 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
+ 	u32 addr = __mt7996_reg_addr(dev, offset), val;
+ 
+-	if (addr)
++	if (addr != INVALID_REG_ADDR)
+ 		return dev->bus_ops->rr(mdev, addr);
+ 
+ 	spin_lock_bh(&dev->reg_lock);
+@@ -243,7 +245,7 @@ static void mt7996_wr(struct mt76_dev *mdev, u32 offset, u32 val)
+ 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
+ 	u32 addr = __mt7996_reg_addr(dev, offset);
+ 
+-	if (addr) {
++	if (addr != INVALID_REG_ADDR) {
+ 		dev->bus_ops->wr(mdev, addr, val);
+ 		return;
+ 	}
+@@ -258,7 +260,7 @@ static u32 mt7996_rmw(struct mt76_dev *mdev, u32 offset, u32 mask, u32 val)
+ 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
+ 	u32 addr = __mt7996_reg_addr(dev, offset);
+ 
+-	if (addr)
++	if (addr != INVALID_REG_ADDR)
+ 		return dev->bus_ops->rmw(mdev, addr, mask, val);
+ 
+ 	spin_lock_bh(&dev->reg_lock);
 -- 
 2.53.0
 
