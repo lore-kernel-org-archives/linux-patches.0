@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4A4353A75;
-	Sat, 12 Sep 2026 11:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A4C353A75;
+	Sat, 12 Sep 2026 11:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212727; cv=none; b=VuJeCwwuKu5GYCFPE4ckys/S1qtK/DCdw09FQdJNSILCafkOHWltvgMa3QJ7Gk7Lq1SejihS4xwP64Zc8QYMuIiXzrhNYu4PfdnkwE8qzxWB5Ze8KvCgWk4zplZev7dJ8uuOuPMqfqV+Lj0RY4pJkmLiGt2tA29q3+xYFSxrj8g=
+	t=1789212732; cv=none; b=dvhvtqu+IMxz+lG+JMNXn3qeS3MbDFE/t7PtU1km8kEgMfZwmozJT4c8ptAnsz85PK+r4YKRAc1FH9+v87gGUBlac8lqck2eCeJVtfdWee2ir0IDb8AxeCSxXjEFo+UD4s5UhDkz28Cj4v6C7IwyVVp6Z3c31CsKH7ZdhlCat50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212727; c=relaxed/simple;
-	bh=7vQX96095SbAW8Aoso1QfYieOi8JDL2X3V7I41/pfTY=;
+	s=arc-20240116; t=1789212732; c=relaxed/simple;
+	bh=wLHro7qXp1TCqT/GR7tRJ2KmyXzQXA10f+25XMrAke0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UXovIJVBFHmz6kekL7Rq30U++E06K8iX03ivNpzWMNzY7khH56xmfSil465Ntl7CCEHXTnOvbwir+J/WVC/3BxOYa6r2A7dtJf7SgVfM6k7F9PX8D5KhXSCcLSdZ5hOjsY+SWQIC3lHkpVe+8GTgxKbRykQ8r/c1PTGKKgoT65Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SfMvRW19; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dCU45x1gcwy4SRJqDKwYV9T5lWXwF0uINaREMkfKHhHcV5LAjgAUvoqWPLbf6o87LxyVXch702q3HyVwNBxXDpldOcw1/znMsKARY6eX6+FIIH3F9+kjFTVMNAed9388208JLMwDbUeATr/voIgsMc/if4oUTLvlSvzRvX42H6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LqdosQ45; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SfMvRW19"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32801F00898;
-	Sat, 12 Sep 2026 11:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LqdosQ45"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E0B1F000FF;
+	Sat, 12 Sep 2026 11:32:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212726;
-	bh=oV6rvbb8Vtyd3SbjvpBDQHn6EjnvlsN/mDAjiDFoICA=;
+	s=korg; t=1789212730;
+	bh=L3lbQhGrmp8xJMcz/4ayqizsvO5djO0L+7go/hG6CWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SfMvRW19S5ftoICdo1iw0BV16hH2WV/5ksWlnNtdYc/aYtMzLCh4fGC/timvWPfgB
-	 TEPxk7W1+rhqoHFKX/ve9zY9NsqKYFve6r5YH6lAYP/5atnuXjkbzv6s9wMTRWQu6v
-	 V6XUwaT0X+ihT6Ue2+KljY0gSkqbYeT+1xoAYo24=
+	b=LqdosQ45W7JFKhBDcyvHnoVYgji+krosfBmDIY7zDnSVUuw5uLTs+kqeCC03nIWhY
+	 snCYIIp0EM64pJB3qAaco690tNBe5BtqXzWTGQb21vS6uDob1Fj7GYAesv6mw3eunG
+	 bvqTQPoomntXGUD+xTfI0XTbuAAjkpcUXsdUNhHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Ott <sebott@redhat.com>,
+	Matthew Wilcox <willy@infradead.org>,
 	Keith Busch <kbusch@kernel.org>,
+	Yu Kuai <yukuai@fnnas.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1495/1518] blk-mq-dma: always initialize dma state
-Date: Sat, 12 Sep 2026 09:01:04 +0200
-Message-ID: <20260912065657.381517094@linuxfoundation.org>
+Subject: [PATCH 6.18 1496/1518] block: fix merging data-less bios
+Date: Sat, 12 Sep 2026 09:01:05 +0200
+Message-ID: <20260912065657.404386461@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -55,34 +56,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit a0750fae73c55112ea11a4867bee40f11e679405 ]
+[ Upstream commit fd9ecd005252b595fd02ff7fcc4056251027404d ]
 
-Ensure the dma state is initialized when we're not using the contiguous
-iova, otherwise the caller may be using a stale state from a previous
-request that could use the coalesed iova allocation.
+The data segment gaps the block layer tracks doesn't apply to bio's that
+don't have data. Skip calculating this to fix a NULL pointer access.
 
 Fixes: 2f6b2565d43cdb5 ("block: accumulate memory segment gaps per bio")
-Reported-by: Sebastian Ott <sebott@redhat.com>
-Tested-by: Sebastian Ott <sebott@redhat.com>
+Reported-by: Matthew Wilcox <willy@infradead.org>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Yu Kuai <yukuai@fnnas.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq-dma.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/blk-merge.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/block/blk-mq-dma.c b/block/blk-mq-dma.c
-index 94d3461b5bc8e..b7c26599f6b05 100644
---- a/block/blk-mq-dma.c
-+++ b/block/blk-mq-dma.c
-@@ -193,6 +193,7 @@ static bool blk_dma_map_iter_start(struct request *req, struct device *dma_dev,
- 	if (blk_can_dma_map_iova(req, dma_dev) &&
- 	    dma_iova_try_alloc(dma_dev, state, vec.paddr, total_len))
- 		return blk_rq_dma_map_iova(req, dma_dev, state, iter, &vec);
-+	memset(state, 0, sizeof(*state));
- 	return blk_dma_map_direct(req, dma_dev, iter, &vec);
- }
+diff --git a/block/blk-merge.c b/block/blk-merge.c
+index c2f47522be856..5d895c7898984 100644
+--- a/block/blk-merge.c
++++ b/block/blk-merge.c
+@@ -748,6 +748,9 @@ u8 bio_seg_gap(struct request_queue *q, struct bio *prev, struct bio *next,
+ {
+ 	struct bio_vec pb, nb;
+ 
++	if (!bio_has_data(prev))
++		return 0;
++
+ 	gaps_bit = min_not_zero(gaps_bit, prev->bi_bvec_gap_bit);
+ 	gaps_bit = min_not_zero(gaps_bit, next->bi_bvec_gap_bit);
  
 -- 
 2.53.0
