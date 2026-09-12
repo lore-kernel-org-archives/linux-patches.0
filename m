@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45D23F99F4;
-	Sat, 12 Sep 2026 08:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266D33A1690;
+	Sat, 12 Sep 2026 08:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201981; cv=none; b=iH9likTjwRGGSvv3thUvngiwqfPvHExn5vCXMLH13JYP6WXSKSpv+/SCgVsBev9N34rf+Trj+6qcgUEla/IRJbQjrsjIOVbmcOdtqE8EmiGdWaOa7N2fluW7+C1mNNd3BIyWsh6hJblZZCjuIZlP21KXW0XCIuNjFzWYtSCudLk=
+	t=1789201985; cv=none; b=ODmK8F4CRnqD5jbeM8HMdys7eT0GICQ94BVAwV111JvlqvbWUizlSnHW8jMzk8mQpLy4NU/UhvSTo9Q78Evbmx5d4OMyZXG5Sq6FrLacGE4ob929fahkO5Qztj9jrROQvSlK7g4MD5trQXtp734+XRjxoELt6a9e/VJPceFI8no=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201981; c=relaxed/simple;
-	bh=UvOIIB1HO9KWqYcPEExzJQfvkQLa8e3UtrNph+zM7Yo=;
+	s=arc-20240116; t=1789201985; c=relaxed/simple;
+	bh=o9WrUvB0mhaSVJxYbw7DOIEVJOK3sVR+qMhwZtHoy9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dINAr9V9GQy7mqk51AOXeHGqTGWgE3N9t3e4RNYYsDGZihfbdlaAk/Gj0AOG8d6cb2k3vMG9fsq9wvRJ8qWxAL8tfZOi8YyG9SY3ul8g7CyLRym+6F7RD7sP0W2p05vy9spCEMNbG6JKCHtjYxRccBIBNSKt6poE2eyjGKmQc+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCo5+yUj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z5lA8xR1TxXl5waHcPOK08oy2a+CVwrogYjx2VkpReaUt8wBjSNQof461JGe/w8MVh0uuct5cY9+bwSc9NSRmRpAS/sDC43h/40Ziju/qkDXM5BDQBFHUMFaB0NJQ5dLTNMdd7AN+Rq4Edrun4Z41PbWpTSXE7N77NNE9UqG3qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YgJYvNW6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCo5+yUj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BFFF1F000FF;
-	Sat, 12 Sep 2026 08:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YgJYvNW6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4AF1F000FF;
+	Sat, 12 Sep 2026 08:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201979;
-	bh=vWEtJ4DyfPP//iWU6xZhxpp5nJ/YX8conjBkE4MH2ig=;
+	s=korg; t=1789201984;
+	bh=IfrXr6t3G1qfHxn0nCq86fyiaeBbzxiQgtaUqb493uI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RCo5+yUjIamqofc8fChYbQz3oUBMzuqCr/aATW9JCS2V4iyjyLom5ccBgerKAjntT
-	 hlk/yEz5V/fh+ABaCDj/YFLswGM+ohkQd8LQDCNJSjnKaxo+RtfbhXtFE8fwHIoWe3
-	 MB319djeNrVUboI4xEhN1IDEzg5S6vJVshFKgNzk=
+	b=YgJYvNW6oPJvOegK/hxrU6hMLDHgfJRzfSwsOHiD8XsgXUOHjYTkQ4+Tyjg8I+ttT
+	 kEs4++Db250WipcR/GKaBkNjdrhXSIqn717pxeZ95H/pGzP/8By3LMefixo3UlZLTF
+	 lfxqItTe4NBpx5aL6MWdIFVxExqGzqCKIoNbk6CA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
-	Qi Xi <xiqi2@huawei.com>,
-	Xie Yuanbin <xieyuanbin1@huawei.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Farhan Ali <alifm@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1109/1815] ARM: 9485/1: mm: acquire mmap write lock around show_pte() for user faults
-Date: Sat, 12 Sep 2026 08:47:39 +0200
-Message-ID: <20260912065715.053206018@linuxfoundation.org>
+Subject: [PATCH 7.2 1110/1815] vfio/pci: Avoid mapping BARs for devices with non-mappable BARs
+Date: Sat, 12 Sep 2026 08:47:40 +0200
+Message-ID: <20260912065715.077302196@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,79 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xie Yuanbin <xieyuanbin1@huawei.com>
+From: Farhan Ali <alifm@linux.ibm.com>
 
-[ Upstream commit 1039bffd6ae9c75b42b7d148d6c1106134107b66 ]
+[ Upstream commit 6edd69813b2d8c30c24a86052065a5dbf390a3cd ]
 
-When CONFIG_DEBUG_USER=y, and cmdline "user_debug=31" is set,
-a user fault may trigger show_pte() without any lock.
-If another thread in the same process concurrently calls munmap(),
-the page table pages may be freed while show_pte() is still traversing
-them, causing a use-after-free in show_pte().
+vfio_pci_core_map_bars() calls pci_iomap() to set up BAR resources, but not
+all devices support having their BARs mapped by the CPU. The
+non_mappable_bars flag indicates that a PCI device's BARs cannot be
+accessed by the CPU. The ISM device on s390 is one such device. The BAR
+size for an ISM device is 256 TiB, and attempting to map the BAR will lead
+to warnings:
 
-If CONFIG_ARM_LPAE=y, this may cause a kernel panic if the pages table
-of PMD are freed when show_pte() is running.
+vmalloc_node_range for size 281474976714752 failed: Address range
+restricted to 0x2110bab00000 - 0x21903ab00000
 
-Acquire mmap_write_lock() around show_pte() for user faults to fix the
-contention.
+Use pdev->non_mappable_bars to skip pci_iomap() for such devices. This flag
+is set by the PCI core at enumeration time and already serves the same
+purpose in vfio_pci_probe_mmaps().
 
-For user faults, additionally restrict that show_pte() is called only
-when the addr is a user-space address (addr < TASK_SIZE). This is because
-the lock of tsk->mm only protects the virtual memory of user address space,
-furthermore, dumping the page tables of a kernel-space address for user
-faults is unnecessary and may have security implications.
-
-Keep everything unchanged for kernel faults, because the kernel is
-already in the "oops" state, acquiring a lock may risk a deadlock.
-
-Co-developed-by: Qi Xi <xiqi2@huawei.com>
-
-Fixes: 6d021b724481 ("ARM: dump pgd, pmd and pte states on unhandled data abort faults")
-Link: https://lore.kernel.org/20260716014022.2823-1-xieyuanbin1@huawei.com
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Qi Xi <xiqi2@huawei.com>
-Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Fixes: 05f2a68b407a ("vfio/pci: Set up BAR resources and maps in vfio_pci_core_enable()")
+Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Link: https://lore.kernel.org/r/20260729181116.1373-1-alifm@linux.ibm.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/fault.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/vfio/pci/vfio_pci_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
-index c686775035325..0a09d4ff77185 100644
---- a/arch/arm/mm/fault.c
-+++ b/arch/arm/mm/fault.c
-@@ -181,7 +181,11 @@ __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
- 		pr_err("8<--- cut here ---\n");
- 		pr_err("%s: unhandled page fault (%d) at 0x%08lx, code 0x%03x\n",
- 		       tsk->comm, sig, addr, fsr);
--		show_pte(KERN_ERR, tsk->mm, addr);
-+		if (likely(addr < TASK_SIZE)) {
-+			mmap_write_lock(tsk->mm);
-+			show_pte(KERN_ERR, tsk->mm, addr);
-+			mmap_write_unlock(tsk->mm);
-+		}
- 		show_regs(regs);
- 	}
- #endif
-@@ -639,7 +643,15 @@ do_DataAbort(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- 	pr_alert("8<--- cut here ---\n");
- 	pr_alert("Unhandled fault: %s (0x%03x) at 0x%08lx\n",
- 		inf->name, fsr, addr);
--	show_pte(KERN_ALERT, current->mm, addr);
-+	if (likely(user_mode(regs))) {
-+		if (addr < TASK_SIZE) {
-+			mmap_write_lock(current->mm);
-+			show_pte(KERN_ALERT, current->mm, addr);
-+			mmap_write_unlock(current->mm);
-+		}
-+	} else {
-+		show_pte(KERN_ALERT, current->mm, addr);
-+	}
+diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
+index 3f11a9624b9c0..6a184588ff234 100644
+--- a/drivers/vfio/pci/vfio_pci_core.c
++++ b/drivers/vfio/pci/vfio_pci_core.c
+@@ -554,6 +554,9 @@ static void vfio_pci_core_map_bars(struct vfio_pci_core_device *vdev)
  
- 	arm_notify_die("", regs, inf->sig, inf->code, (void __user *)addr,
- 		       fsr, 0);
+ 		vdev->barmap[bar] = IOMEM_ERR_PTR(-ENODEV);
+ 
++		if (pdev->non_mappable_bars)
++			continue;
++
+ 		if (!pci_resource_len(pdev, i))
+ 			continue;
+ 
 -- 
 2.53.0
 
