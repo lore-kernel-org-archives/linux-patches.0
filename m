@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7603148DA;
-	Sat, 12 Sep 2026 07:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7F237F313;
+	Sat, 12 Sep 2026 07:52:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199572; cv=none; b=ueJ+YrbjfitlIs4M6UXgp8O/P5kN5J/MCPt6B2KgaAWXZvWeBdvQ6UzyKNnkqRSx8Lx1Ot8KMozzkEuKn06n8NJuQInK8WEhY39rKRNFdmU+wiUn24/Or6bblD1e8FuZ+jdl5zF5bjBKHGHhtQSVApIUceJmocfuk50YbPHFcfQ=
+	t=1789199577; cv=none; b=jobuWmSxWHCNsHjK/AlNuU54WmJvtMprVam9N7UmTq7vnonZkVLC5n18VzSeZkEgTzdVV1tAtbNb9GmtKQexqOeLUBmrTSMuiA+DWlg2wh981Of6aCl6Zjf6vw7oESvUXcmgCqGG1AETl+JuERUVin9vjPbEppWkXihG74wCflQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199572; c=relaxed/simple;
-	bh=SxEByLxA2VocoMNKORGCHEaVjuYgK8DB7/VcsnAujr0=;
+	s=arc-20240116; t=1789199577; c=relaxed/simple;
+	bh=i4Cu8mU1c0+yLFBqZg4OYx7n13lNd5CAeNbvqFn3pvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K2uvIDIOzlnGh1sG0u5xn8w1iXnKLCZuECdyGmTYqcFUXpKQMcljRu8sCcwaLmn9F4z6ivTmEVFjyrPk2RDr6wtumgDdE+q8PlWi7/P0P6qLAoMnliPhzss4S93qELNdbZU4oukKhgiB0Rt2OMwIBKz2ie8lUtSCIGUU8siyWsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nghtdu5q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tyuo7LqyaF3et4wraEew1bir9LsCniw+iDJyEdpZMZsrU/dzdGJ37oIl26kDjJMejH6zWFNV4upDxMy4cP3fCLjtEqkC6yBobUSk+OqdjsODV+o/6OncKEaafYwfFhFDT98hrRgFGqgcYOv4kUNEGl10mcbUYE5AeZD01rxq2Ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZfcyG7q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nghtdu5q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD9B1F000FF;
-	Sat, 12 Sep 2026 07:52:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZfcyG7q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADCD01F000FF;
+	Sat, 12 Sep 2026 07:52:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199571;
-	bh=j9qVGcZ8fUa5QrRS3AWOhQpJUr7oJGq3WDxi2l3ixvs=;
+	s=korg; t=1789199575;
+	bh=Xzc5QV8zvdrsFfjFYdNxPp6bW0gHcOnY7R3sF605vGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nghtdu5qx3iGOivrsGJrcK4WG2S5U95aax4l0LN5J+rq3sh/RD17kFkbLol/nT9L3
-	 oRJaJZGhnq0FSj8qR1WeemLozW9eEFPlOwOAmL9T9k31/6Uim2iSgme6uSDOl5GwrW
-	 SdI+MP8d84p6jhxo/PuSotAzHygmi2FtAXEIexFU=
+	b=jZfcyG7qm5m1HT3lus++OpG0/jpr2NS+3cHa7a9RQyyq7ikGM1o5m9+yb3ZasLcth
+	 XZfoh6Wcjs2VyMX0f+K5NeUxyBrRXbQeaEu+V1jxAaCuN/TeWjX2HB69e+/ZhGVrLr
+	 mm1w8KRM7Sc5pXsnECY0T4Wl+KqtrG0lx1xusthQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Yang <3497809730@qq.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Andreas Dilger <adilger@dilger.ca>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0612/1815] ext4: fix buffer_head leak in ext4_init_orphan_info
-Date: Sat, 12 Sep 2026 08:39:22 +0200
-Message-ID: <20260912065703.249061749@linuxfoundation.org>
+Subject: [PATCH 7.2 0613/1815] ext4: check dir entry fits before reading the hash trailer in ext4_search_dir()
+Date: Sat, 12 Sep 2026 08:39:23 +0200
+Message-ID: <20260912065703.272188091@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,67 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 05704335803b69c1bfa8637b7ada942bf2ee8a41 ]
+[ Upstream commit c7e6b863d298f56522d0d08554bbea7f142e6588 ]
 
-ext4_init_orphan_info() reads orphan file blocks with ext4_bread()
-and stores the returned buffer_head in oi->of_binfo[i].ob_bh.
+For casefolded encrypted directories ext4 stores an 8-byte hash trailer
+after the name (EXT4_DIRENT_HASHES()), at an offset derived from
+de->name_len.  On the sb_no_casefold_compat_fallback() path ext4_match()
+reads that trailer, but ext4_search_dir()'s by-hand pre-check only tests
+de->name + de->name_len <= dlimit, which proves the name fits, not the
+rounded trailer.  A crafted entry whose name ends at the block boundary
+passes the check while EXT4_DIRENT_HASHES(de) lands past the block end,
+so ext4_match() reads out of bounds on an ordinary lookup.  KASAN reports
+it as a use-after-free when the page after the directory block holds a
+freed object:
 
-If ext4_bread() succeeds but the orphan block magic or checksum
-validation fails, the function jumps to out_free. However, the old
-out_free loop starts releasing buffers from i - 1, so the current
-buffer_head at index i is skipped.
+  BUG: KASAN: use-after-free in ext4_match (fs/ext4/namei.c:1435)
+  Read of size 4 at addr ffff888010458000 by task exploit
+  Call Trace:
+   ext4_match (fs/ext4/namei.c:1435)
+   ext4_search_dir (fs/ext4/namei.c:1470)
+   __ext4_find_entry (fs/ext4/namei.c:1268 fs/ext4/namei.c:1632)
+   ext4_lookup (fs/ext4/namei.c:1703 fs/ext4/namei.c:1769)
+   ...
+   filename_lookup (fs/namei.c:2842)
+   vfs_statx (fs/stat.c:353)
+   __do_sys_newfstatat (fs/stat.c:538)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
 
-This leaks the buffer_head reference obtained by ext4_bread() on the
-bad magic and bad checksum error paths.
+Require, for hash-in-dirent directories, that the whole entry including
+the rounded trailer fits before calling ext4_match().  This is the same
+bound ext4_check_dir_entry() already enforces via ext4_dir_rec_len(), so
+no well-formed entry is rejected.  The other caller, ext4_find_dest_de(),
+runs ext4_check_dir_entry() first and is unaffected.
 
-Fix this by tracking the number of successfully read buffer_heads and
-releasing exactly those buffer_heads on the error path.
-
-Fixes: 02f310fcf47f ("ext4: Speedup ext4 orphan inode handling")
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
+Fixes: 471fbbea7ff7 ("ext4: handle casefolding with encryption")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/tencent_B38798612A159E21450ECF959016371B0807@qq.com
+Link: https://patch.msgid.link/20260709184101.441348-1-xmei5@asu.edu
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/orphan.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/ext4/namei.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ext4/orphan.c b/fs/ext4/orphan.c
-index 64ea476242338..7095ba1564f65 100644
---- a/fs/ext4/orphan.c
-+++ b/fs/ext4/orphan.c
-@@ -572,6 +572,7 @@ int ext4_init_orphan_info(struct super_block *sb)
- 	int i, j;
- 	int ret;
- 	int free;
-+	int loaded = 0;
- 	__le32 *bdata;
- 	int inodes_per_ob = ext4_inodes_per_orphan_block(sb);
- 	struct ext4_orphan_block_tail *ot;
-@@ -613,6 +614,7 @@ int ext4_init_orphan_info(struct super_block *sb)
- 			ret = -EIO;
- 			goto out_free;
- 		}
-+		loaded++;
- 		ot = ext4_orphan_block_tail(sb, oi->of_binfo[i].ob_bh);
- 		if (le32_to_cpu(ot->ob_magic) != EXT4_ORPHAN_BLOCK_MAGIC) {
- 			ext4_error(sb, "orphan file block %d: bad magic", i);
-@@ -635,8 +637,10 @@ int ext4_init_orphan_info(struct super_block *sb)
- 	iput(inode);
- 	return 0;
- out_free:
--	for (i--; i >= 0; i--)
--		brelse(oi->of_binfo[i].ob_bh);
-+	while (loaded > 0) {
-+		loaded--;
-+		brelse(oi->of_binfo[loaded].ob_bh);
-+	}
- 	kvfree(oi->of_binfo);
- out_put:
- 	iput(inode);
+diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
+index cc49ae04a6f64..3b9740c1c16d8 100644
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -1467,6 +1467,8 @@ int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,
+ 		/* this code is executed quadratically often */
+ 		/* do minimal checking `by hand' */
+ 		if (de->name + de->name_len <= dlimit &&
++		    (!ext4_hash_in_dirent(dir) ||
++		     (char *)de + ext4_dir_rec_len(de->name_len, dir) <= dlimit) &&
+ 		    ext4_match(dir, fname, de)) {
+ 			/* found a match - just to be sure, do
+ 			 * a full check */
 -- 
 2.53.0
 
