@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE0B2264A6;
-	Sat, 12 Sep 2026 10:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B1C275AEB;
+	Sat, 12 Sep 2026 10:22:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208571; cv=none; b=pwNZ3BQVMgWWgItzc2FhwoXFxFNOz1F3GLpL1JoC7J+SMwV7J6NXS1QnyD/TAWL9G2gjZl8jAJ7EepNaLLMC6Eid/W/nbZfU5WgI+nu3nbC+oPHwfVzyH62a2jD8hPmci7PRad6os2a4HJJ7J1rNt2nFWR7fhQVjoQtwRIO5fkg=
+	t=1789208575; cv=none; b=WDrdyEOlD2ouHTcli6txNnVH0tIcnpiSARVnEofV70H6sHXwZs/ifFOyQvxkF21Uvp4yhDCdgtKxbs48zBHYrFPQ3elZnfG0bfp1WrT9Z36pNM3kR08On/dre7vp+JNKGzS7QFLC9IGEI6MacbaoZodWxIdWZBIHhdwf+nUm61E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208571; c=relaxed/simple;
-	bh=hVnRqdo2LGQBBdvzr6v6Z4s6t9wqKJuLcZWzIgRFT6M=;
+	s=arc-20240116; t=1789208575; c=relaxed/simple;
+	bh=vSQlXRlnFbz7FGBWnsTAnKw5dOpXUqe4nUKeVV5eqq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bUKB4fUWcY9NeMjam32n9yPiFwhI0cv/ePIYjJFw5lxlx61mtNPzs4nHT7C4CLio+gr5sntLKrBj+Hi7ErVkpBGwIxRjE5HLTmve7zAhKYs6BhhD6iC+Od5ZqeCmUNi4t0l3DAjQ9p70KFwAROEqnc2XTXLTdMTsR5a2k5vUJD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUiVegYy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZkpaQGMZYWmGnDH83Q/692xfyLKkHL5aRvVF7Q8mqI0n/S4uYOSOfW0kzg73nX7PV9mL7EpMnXoLmv1osesjMF0hDkVFmG//bGSODXU315W6qrZe2REKnL6IMJXZsTasHTFUDjakhOQbsO3jTFaRWGojYVfLjzfeAk8A3UnJ/xE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YRQvuDuc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUiVegYy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D9E1F00893;
-	Sat, 12 Sep 2026 10:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRQvuDuc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E001F00898;
+	Sat, 12 Sep 2026 10:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208569;
-	bh=8vtxcHeeRpjvt5KmgWPFBotstkqCUPLZaNQoqOxFO2Q=;
+	s=korg; t=1789208574;
+	bh=k9JWa6pHX+qMVKj/qh6ZGYv9o4k3nejJEl5QVqTHL1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IUiVegYyaCFNHK33aOdxXCccu9SXz01stzx9+g111+xiLT9V4nYlmKjkqN53oBJEu
-	 /37us2NV3UhNTqs0uPGacZh/fO5Vmsr4d8SXPZa9KcEqGTH+Pr636FQCtURL0wcQKI
-	 ACo3WQ43ZqkJ+ZqSjq1df7bz/pZbpCVFal58qlmo=
+	b=YRQvuDucjO3NS6tcmsFlHYubaxi1oED0dNMSSEAOoKJAhQqsqPTYMObyTucirJQWm
+	 pva2e6hN+UFjlI3G1PjAoxUyFMQR0j204rP37wmHBwUeMl6IZTGmknOc3b8/6I27lZ
+	 iBaWwQIKp3pnCuptVmsjksA+toj614/UrGw+Guck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0642/1518] s390: Add stackprotector support
-Date: Sat, 12 Sep 2026 08:46:51 +0200
-Message-ID: <20260912065637.953323737@linuxfoundation.org>
+Subject: [PATCH 6.18 0602/1518] iommu/tegra241-cmdqv: Synchronize the error ISR against VINTF (de)init
+Date: Sat, 12 Sep 2026 08:46:11 +0200
+Message-ID: <20260912065637.040560625@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,592 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit f5730d44e05efb43a5cb64e5eb04e24994bbb50f ]
+[ Upstream commit a491be376abd1c80a314cdd658632c85cd660b73 ]
 
-Stackprotector support was previously unavailable on s390 because by
-default compilers generate code which is not suitable for the kernel:
-the canary value is accessed via thread local storage, where the address
-of thread local storage is within access registers 0 and 1.
+A user VINTF is torn down by tegra241_cmdqv_deinit_vintf(), which runs from
+the destroy callback and from the init-failure unwind in the alloc handler.
+It clears the cmdqv->vintfs[] slot and lets the iommufd core free it, but
+nothing serializes that against the error interrupt: tegra241_cmdqv_isr()
+reads cmdqv->vintfs[idx] and dereferences the vintf. A concurrent error can
+make the ISR read a slot mid-clear (a NULL deref) or use a vintf which is
+about to be freed (a use-after-free).
 
-Using those registers also for the kernel would come with a significant
-performance impact and more complicated kernel entry/exit code, since
-access registers contents would have to be exchanged on every kernel entry
-and exit.
+deinit_vintf() also returns idx to the IDA before clearing the slot, so a
+concurrent create that reuses idx can publish its new vintf into the slot,
+only for this teardown to erase it again with the stale NULL store.
 
-With the upcoming gcc 16 release new compiler options will become available
-which allow to generate code suitable for the kernel. [1]
+On the other end, tegra241_cmdqv_init_vintf() publishes a new vintf with a
+plain store to the cmdqv->vintfs[] slot, and the ISR dereferences fields of
+a published vintf such as vintf->base. A plain store gives no ordering on a
+weakly-ordered CPU, and a stale VINTF_ERR_MAP bit on a reused idx can make
+the ISR pick a vintf the moment it is published, before its fields are set
+or tegra241_vintf_hw_init() runs.
 
-Compiler option -mstack-protector-guard=global instructs gcc to generate
-stackprotector code that refers to a global stackprotector canary value via
-symbol __stack_chk_guard. Access to this value is guaranteed to occur via
-larl and lgrl instructions.
+The cmdqv->vintfs[0] slot stays NULL until tegra241_cmdqv_init_structures()
+first creates VINTF0, so the slot 0 read needs the same NULL check.
 
-Furthermore, compiler option -mstack-protector-guard-record generates a
-section containing all code addresses that reference the canary value.
+Publish every slot with an smp_store_release(), and read each slot in the
+ISR with an smp_load_acquire() under a NULL check, so the ISR always sees
+a fully built vintf or NULL. Also make deinit_vintf() clear the slot, and
+synchronize_irq() prior to returning idx to the IDA, so no vintf is freed
+under a running handler and no reused idx is clobbered.
 
-To allow for per task canary values the instructions which load the address
-of __stack_chk_guard are patched so they access a lowcore field instead: a
-per task canary value is available within the task_struct of each task, and
-is written to the per-cpu lowcore location on each context switch.
-
-Also add sanity checks and debugging option to be consistent with other
-kernel code patching mechanisms.
-
-Full debugging output can be enabled with the following kernel command line
-options:
-
-debug_stackprotector
-bootdebug
-ignore_loglevel
-earlyprintk
-dyndbg="file stackprotector.c +p"
-
-Example debug output:
-
-stackprot: 0000021e402d4eda: c010005a9ae3 -> c01f00070240
-
-where "<insn address>: <old insn> -> <new insn>".
-
-[1] gcc commit 0cd1f03939d5 ("s390: Support global stack protector")
-
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Stable-dep-of: dc161efb6df8 ("s390/vdso: Pass --eh-frame-hdr to the linker")
+Fixes: 4dc0d12474f9 ("iommu/tegra241-cmdqv: Add user-space use support")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/Kconfig                           |   4 +
- arch/s390/Makefile                          |   4 +
- arch/s390/boot/Makefile                     |   1 +
- arch/s390/boot/boot.h                       |   4 +
- arch/s390/boot/ipl_parm.c                   |   6 +
- arch/s390/boot/stackprotector.c             |   6 +
- arch/s390/boot/startup.c                    |   8 +
- arch/s390/include/asm/arch-stackprotector.h |  25 ++++
- arch/s390/include/asm/lowcore.h             |   3 +-
- arch/s390/include/asm/stackprotector.h      |  16 ++
- arch/s390/kernel/Makefile                   |   2 +-
- arch/s390/kernel/asm-offsets.c              |   4 +
- arch/s390/kernel/entry.S                    |   8 +-
- arch/s390/kernel/module.c                   |   9 ++
- arch/s390/kernel/smp.c                      |   3 +
- arch/s390/kernel/stackprotector.c           | 156 ++++++++++++++++++++
- arch/s390/kernel/vdso64/Makefile            |   1 +
- arch/s390/kernel/vmlinux.lds.S              |  13 ++
- 18 files changed, 269 insertions(+), 4 deletions(-)
- create mode 100644 arch/s390/boot/stackprotector.c
- create mode 100644 arch/s390/include/asm/arch-stackprotector.h
- create mode 100644 arch/s390/include/asm/stackprotector.h
- create mode 100644 arch/s390/kernel/stackprotector.c
+ .../iommu/arm/arm-smmu-v3/tegra241-cmdqv.c    | 37 +++++++++++++++++--
+ 1 file changed, 33 insertions(+), 4 deletions(-)
 
-diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
-index 8a42762cc2b1b..97a522dcb2b25 100644
---- a/arch/s390/Kconfig
-+++ b/arch/s390/Kconfig
-@@ -69,6 +69,9 @@ config CC_HAS_ASM_AOR_FORMAT_FLAGS
- 	  Clang versions before 19.1.0 do not support A,
- 	  O, and R inline assembly format flags.
- 
-+config CC_HAS_STACKPROTECTOR_GLOBAL
-+	def_bool $(cc-option, -mstack-protector-guard=global -mstack-protector-guard-record)
-+
- config S390
- 	def_bool y
- 	#
-@@ -244,6 +247,7 @@ config S390
- 	select HAVE_SAMPLE_FTRACE_DIRECT_MULTI
- 	select HAVE_SETUP_PER_CPU_AREA
- 	select HAVE_SOFTIRQ_ON_OWN_STACK
-+	select HAVE_STACKPROTECTOR if CC_HAS_STACKPROTECTOR_GLOBAL
- 	select HAVE_SYSCALL_TRACEPOINTS
- 	select HAVE_VIRT_CPU_ACCOUNTING
- 	select HAVE_VIRT_CPU_ACCOUNTING_IDLE
-diff --git a/arch/s390/Makefile b/arch/s390/Makefile
-index f41b8c5c4e560..a205c929e6630 100644
---- a/arch/s390/Makefile
-+++ b/arch/s390/Makefile
-@@ -89,6 +89,10 @@ ifdef CONFIG_EXPOLINE
-   aflags-y += -DCC_USING_EXPOLINE
- endif
- 
-+ifeq ($(CONFIG_STACKPROTECTOR),y)
-+  KBUILD_CFLAGS += -mstack-protector-guard=global -mstack-protector-guard-record
-+endif
-+
- ifdef CONFIG_FUNCTION_TRACER
-   ifeq ($(call cc-option,-mfentry -mnop-mcount),)
-     # make use of hotpatch feature if the compiler supports it
-diff --git a/arch/s390/boot/Makefile b/arch/s390/boot/Makefile
-index 1768424a1824f..a1e719a79d38c 100644
---- a/arch/s390/boot/Makefile
-+++ b/arch/s390/boot/Makefile
-@@ -33,6 +33,7 @@ obj-$(CONFIG_RANDOMIZE_BASE)	+= kaslr.o
- obj-y	+= $(if $(CONFIG_KERNEL_UNCOMPRESSED),,decompressor.o) info.o
- obj-$(CONFIG_KERNEL_ZSTD) += clz_ctz.o
- obj-$(CONFIG_KMSAN) += kmsan.o
-+obj-$(CONFIG_STACKPROTECTOR) += stackprotector.o
- obj-all := $(obj-y) piggy.o syms.o
- 
- targets	:= bzImage section_cmp.boot.data section_cmp.boot.preserved.data $(obj-y)
-diff --git a/arch/s390/boot/boot.h b/arch/s390/boot/boot.h
-index 37d5b097ede5f..61a205b489fb0 100644
---- a/arch/s390/boot/boot.h
-+++ b/arch/s390/boot/boot.h
-@@ -28,6 +28,10 @@ struct vmlinux_info {
- 	unsigned long invalid_pg_dir_off;
- 	unsigned long alt_instructions;
- 	unsigned long alt_instructions_end;
-+#ifdef CONFIG_STACKPROTECTOR
-+	unsigned long stack_prot_start;
-+	unsigned long stack_prot_end;
-+#endif
- #ifdef CONFIG_KASAN
- 	unsigned long kasan_early_shadow_page_off;
- 	unsigned long kasan_early_shadow_pte_off;
-diff --git a/arch/s390/boot/ipl_parm.c b/arch/s390/boot/ipl_parm.c
-index f584d7da29cb2..6bc950b92be76 100644
---- a/arch/s390/boot/ipl_parm.c
-+++ b/arch/s390/boot/ipl_parm.c
-@@ -3,6 +3,7 @@
- #include <linux/init.h>
- #include <linux/ctype.h>
- #include <linux/pgtable.h>
-+#include <asm/arch-stackprotector.h>
- #include <asm/abs_lowcore.h>
- #include <asm/page-states.h>
- #include <asm/machine.h>
-@@ -294,6 +295,11 @@ void parse_boot_command_line(void)
- 				cmma_flag = 0;
- 		}
- 
-+#ifdef CONFIG_STACKPROTECTOR
-+		if (!strcmp(param, "debug_stackprotector"))
-+			stack_protector_debug = 1;
-+#endif
-+
- #if IS_ENABLED(CONFIG_KVM)
- 		if (!strcmp(param, "prot_virt")) {
- 			rc = kstrtobool(val, &enabled);
-diff --git a/arch/s390/boot/stackprotector.c b/arch/s390/boot/stackprotector.c
-new file mode 100644
-index 0000000000000..68494940c12ac
---- /dev/null
-+++ b/arch/s390/boot/stackprotector.c
-@@ -0,0 +1,6 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#define boot_fmt(fmt)	"stackprot: " fmt
-+
-+#include "boot.h"
-+#include "../kernel/stackprotector.c"
-diff --git a/arch/s390/boot/startup.c b/arch/s390/boot/startup.c
-index 3fbd25b9498f3..f77067dfc2a84 100644
---- a/arch/s390/boot/startup.c
-+++ b/arch/s390/boot/startup.c
-@@ -20,6 +20,9 @@
- #include <asm/uv.h>
- #include <asm/abs_lowcore.h>
- #include <asm/physmem_info.h>
-+#include <asm/stacktrace.h>
-+#include <asm/asm-offsets.h>
-+#include <asm/arch-stackprotector.h>
- #include "decompressor.h"
- #include "boot.h"
- #include "uv.h"
-@@ -477,6 +480,10 @@ static void kaslr_adjust_vmlinux_info(long offset)
- 	vmlinux.invalid_pg_dir_off += offset;
- 	vmlinux.alt_instructions += offset;
- 	vmlinux.alt_instructions_end += offset;
-+#ifdef CONFIG_STACKPROTECTOR
-+	vmlinux.stack_prot_start += offset;
-+	vmlinux.stack_prot_end += offset;
-+#endif
- #ifdef CONFIG_KASAN
- 	vmlinux.kasan_early_shadow_page_off += offset;
- 	vmlinux.kasan_early_shadow_pte_off += offset;
-@@ -622,6 +629,7 @@ void startup_kernel(void)
- 	__apply_alternatives((struct alt_instr *)_vmlinux_info.alt_instructions,
- 			     (struct alt_instr *)_vmlinux_info.alt_instructions_end,
- 			     ALT_CTX_EARLY);
-+	stack_protector_apply_early(text_lma);
- 
- 	/*
- 	 * Save KASLR offset for early dumps, before vmcore_info is set.
-diff --git a/arch/s390/include/asm/arch-stackprotector.h b/arch/s390/include/asm/arch-stackprotector.h
-new file mode 100644
-index 0000000000000..953627259e91f
---- /dev/null
-+++ b/arch/s390/include/asm/arch-stackprotector.h
-@@ -0,0 +1,25 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+
-+#ifndef _ASM_S390_ARCH_STACKPROTECTOR_H
-+#define _ASM_S390_ARCH_STACKPROTECTOR_H
-+
-+extern unsigned long __stack_chk_guard;
-+extern int stack_protector_debug;
-+
-+void __stack_protector_apply_early(unsigned long kernel_start);
-+int __stack_protector_apply(unsigned long *start, unsigned long *end, unsigned long kernel_start);
-+
-+static inline void stack_protector_apply_early(unsigned long kernel_start)
-+{
-+	if (IS_ENABLED(CONFIG_STACKPROTECTOR))
-+		__stack_protector_apply_early(kernel_start);
-+}
-+
-+static inline int stack_protector_apply(unsigned long *start, unsigned long *end)
-+{
-+	if (IS_ENABLED(CONFIG_STACKPROTECTOR))
-+		return __stack_protector_apply(start, end, 0);
-+	return 0;
-+}
-+
-+#endif /* _ASM_S390_ARCH_STACKPROTECTOR_H */
-diff --git a/arch/s390/include/asm/lowcore.h b/arch/s390/include/asm/lowcore.h
-index d9c853db9a40b..50ffe75adeb47 100644
---- a/arch/s390/include/asm/lowcore.h
-+++ b/arch/s390/include/asm/lowcore.h
-@@ -100,7 +100,8 @@ struct lowcore {
- 
- 	/* Save areas. */
- 	__u64	save_area[8];			/* 0x0200 */
--	__u8	pad_0x0240[0x0280-0x0240];	/* 0x0240 */
-+	__u64	stack_canary;			/* 0x0240 */
-+	__u8	pad_0x0248[0x0280-0x0248];	/* 0x0248 */
- 	__u64	save_area_restart[1];		/* 0x0280 */
- 
- 	__u64	pcpu;				/* 0x0288 */
-diff --git a/arch/s390/include/asm/stackprotector.h b/arch/s390/include/asm/stackprotector.h
-new file mode 100644
-index 0000000000000..0497850103dd9
---- /dev/null
-+++ b/arch/s390/include/asm/stackprotector.h
-@@ -0,0 +1,16 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+
-+#ifndef _ASM_S390_STACKPROTECTOR_H
-+#define _ASM_S390_STACKPROTECTOR_H
-+
-+#include <linux/sched.h>
-+#include <asm/current.h>
-+#include <asm/lowcore.h>
-+
-+static __always_inline void boot_init_stack_canary(void)
-+{
-+	current->stack_canary = get_random_canary();
-+	get_lowcore()->stack_canary = current->stack_canary;
-+}
-+
-+#endif /* _ASM_S390_STACKPROTECTOR_H */
-diff --git a/arch/s390/kernel/Makefile b/arch/s390/kernel/Makefile
-index c949ed394e72f..6e37afb7187a2 100644
---- a/arch/s390/kernel/Makefile
-+++ b/arch/s390/kernel/Makefile
-@@ -67,7 +67,7 @@ obj-$(CONFIG_KEXEC_CORE)	+= machine_kexec.o relocate_kernel.o
- obj-$(CONFIG_VMCORE_INFO)	+= vmcore_info.o
- obj-$(CONFIG_UPROBES)		+= uprobes.o
- obj-$(CONFIG_JUMP_LABEL)	+= jump_label.o
--
-+obj-$(CONFIG_STACKPROTECTOR)	+= stackprotector.o
- obj-$(CONFIG_KEXEC_FILE)	+= machine_kexec_file.o kexec_image.o
- obj-$(CONFIG_KEXEC_FILE)	+= kexec_elf.o
- obj-$(CONFIG_CERT_STORE)	+= cert_store.o
-diff --git a/arch/s390/kernel/asm-offsets.c b/arch/s390/kernel/asm-offsets.c
-index a8915663e917f..cfe27f6579e33 100644
---- a/arch/s390/kernel/asm-offsets.c
-+++ b/arch/s390/kernel/asm-offsets.c
-@@ -21,6 +21,9 @@ int main(void)
- 	OFFSET(__TASK_stack, task_struct, stack);
- 	OFFSET(__TASK_thread, task_struct, thread);
- 	OFFSET(__TASK_pid, task_struct, pid);
-+#ifdef CONFIG_STACKPROTECTOR
-+	OFFSET(__TASK_stack_canary, task_struct, stack_canary);
-+#endif
- 	BLANK();
- 	/* thread struct offsets */
- 	OFFSET(__THREAD_ksp, thread_struct, ksp);
-@@ -139,6 +142,7 @@ int main(void)
- 	OFFSET(__LC_CURRENT_PID, lowcore, current_pid);
- 	OFFSET(__LC_LAST_BREAK, lowcore, last_break);
- 	/* software defined ABI-relevant lowcore locations 0xe00 - 0xe20 */
-+	OFFSET(__LC_STACK_CANARY, lowcore, stack_canary);
- 	OFFSET(__LC_DUMP_REIPL, lowcore, ipib);
- 	OFFSET(__LC_VMCORE_INFO, lowcore, vmcore_info);
- 	OFFSET(__LC_OS_INFO, lowcore, os_info);
-diff --git a/arch/s390/kernel/entry.S b/arch/s390/kernel/entry.S
-index 55139e4786c23..114f25e9cf23f 100644
---- a/arch/s390/kernel/entry.S
-+++ b/arch/s390/kernel/entry.S
-@@ -162,9 +162,13 @@ SYM_FUNC_START(__switch_to_asm)
- 	stg	%r3,__LC_CURRENT(%r13)		# store task struct of next
- 	stg	%r15,__LC_KERNEL_STACK(%r13)	# store end of kernel stack
- 	lg	%r15,__THREAD_ksp(%r1,%r3)	# load kernel stack of next
--	aghi	%r3,__TASK_pid
--	mvc	__LC_CURRENT_PID(4,%r13),0(%r3)	# store pid of next
-+	aghik	%r4,%r3,__TASK_pid
-+	mvc	__LC_CURRENT_PID(4,%r13),0(%r4) # store pid of next
- 	ALTERNATIVE "nop", "lpp _LPP_OFFSET(%r13)", ALT_FACILITY(40)
-+#ifdef CONFIG_STACKPROTECTOR
-+	lg	%r3,__TASK_stack_canary(%r3)
-+	stg	%r3,__LC_STACK_CANARY(%r13)
-+#endif
- 	lmg	%r6,%r15,__SF_GPRS(%r15)	# load gprs of next task
- 	BR_EX	%r14
- SYM_FUNC_END(__switch_to_asm)
-diff --git a/arch/s390/kernel/module.c b/arch/s390/kernel/module.c
-index 91e207b503943..cd438a75ab239 100644
---- a/arch/s390/kernel/module.c
-+++ b/arch/s390/kernel/module.c
-@@ -22,12 +22,14 @@
- #include <linux/bug.h>
- #include <linux/memory.h>
- #include <linux/execmem.h>
-+#include <asm/arch-stackprotector.h>
- #include <asm/alternative.h>
- #include <asm/nospec-branch.h>
- #include <asm/facility.h>
- #include <asm/ftrace.lds.h>
- #include <asm/set_memory.h>
- #include <asm/setup.h>
-+#include <asm/asm-offsets.h>
- 
- #if 0
- #define DEBUGP printk
-@@ -527,6 +529,13 @@ int module_finalize(const Elf_Ehdr *hdr,
- 		    (str_has_prefix(secname, ".s390_return")))
- 			nospec_revert(aseg, aseg + s->sh_size);
- 
-+		if (IS_ENABLED(CONFIG_STACKPROTECTOR) &&
-+		    (str_has_prefix(secname, "__stack_protector_loc"))) {
-+			rc = stack_protector_apply(aseg, aseg + s->sh_size);
-+			if (rc)
-+				break;
-+		}
-+
- #ifdef CONFIG_FUNCTION_TRACER
- 		if (!strcmp(FTRACE_CALLSITE_SECTION, secname)) {
- 			ret = module_alloc_ftrace_hotpatch_trampolines(me, s);
-diff --git a/arch/s390/kernel/smp.c b/arch/s390/kernel/smp.c
-index 70df4ca5d4436..49ec8c03536a1 100644
---- a/arch/s390/kernel/smp.c
-+++ b/arch/s390/kernel/smp.c
-@@ -281,6 +281,9 @@ static void pcpu_attach_task(int cpu, struct task_struct *tsk)
- 	lc->hardirq_timer = tsk->thread.hardirq_timer;
- 	lc->softirq_timer = tsk->thread.softirq_timer;
- 	lc->steal_timer = 0;
-+#ifdef CONFIG_STACKPROTECTOR
-+	lc->stack_canary = tsk->stack_canary;
-+#endif
+diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+index 3c4465289b44a..c9f6729c98588 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
++++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+@@ -339,6 +339,13 @@ static void tegra241_vintf0_handle_error(struct tegra241_vintf *vintf)
+ 	}
  }
  
- static void pcpu_start_fn(int cpu, void (*func)(void *), void *data)
-diff --git a/arch/s390/kernel/stackprotector.c b/arch/s390/kernel/stackprotector.c
-new file mode 100644
-index 0000000000000..d4e40483f0088
---- /dev/null
-+++ b/arch/s390/kernel/stackprotector.c
-@@ -0,0 +1,156 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#ifndef pr_fmt
-+#define pr_fmt(fmt)	"stackprot: " fmt
-+#endif
-+
-+#include <linux/export.h>
-+#include <linux/uaccess.h>
-+#include <linux/printk.h>
-+#include <asm/abs_lowcore.h>
-+#include <asm/sections.h>
-+#include <asm/machine.h>
-+#include <asm/asm-offsets.h>
-+#include <asm/arch-stackprotector.h>
-+
-+#ifdef __DECOMPRESSOR
-+
-+#define DEBUGP		boot_debug
-+#define EMERGP		boot_emerg
-+#define PANIC		boot_panic
-+
-+#else /* __DECOMPRESSOR */
-+
-+#define DEBUGP		pr_debug
-+#define EMERGP		pr_emerg
-+#define PANIC		panic
-+
-+#endif /* __DECOMPRESSOR */
-+
-+int __bootdata_preserved(stack_protector_debug);
-+
-+unsigned long __stack_chk_guard;
-+EXPORT_SYMBOL(__stack_chk_guard);
-+
-+struct insn_ril {
-+	u8 opc1 : 8;
-+	u8 r1	: 4;
-+	u8 opc2 : 4;
-+	u32 imm;
-+} __packed;
-+
 +/*
-+ * Convert a virtual instruction address to a real instruction address. The
-+ * decompressor needs to patch instructions within the kernel image based on
-+ * their virtual addresses, while dynamic address translation is still
-+ * disabled. Therefore a translation from virtual kernel image addresses to
-+ * the corresponding physical addresses is required.
-+ *
-+ * After dynamic address translation is enabled and when the kernel needs to
-+ * patch instructions such a translation is not required since the addresses
-+ * are identical.
++ * The CMDQV error interrupt is edge-triggered, so a pending VINTF error fires
++ * this ISR once and does not re-assert. An unacked guest therefore cannot
++ * storm the host. The HW latches and forwards each new error event on its
++ * own, so an already-set ERR_MAP bit does not suppress the interrupt for a
++ * new error.
 + */
-+static struct insn_ril *vaddress_to_insn(unsigned long vaddress)
-+{
-+#ifdef __DECOMPRESSOR
-+	return (struct insn_ril *)__kernel_pa(vaddress);
-+#else
-+	return (struct insn_ril *)vaddress;
-+#endif
-+}
-+
-+static unsigned long insn_to_vaddress(struct insn_ril *insn)
-+{
-+#ifdef __DECOMPRESSOR
-+	return (unsigned long)__kernel_va(insn);
-+#else
-+	return (unsigned long)insn;
-+#endif
-+}
-+
-+#define INSN_RIL_STRING_SIZE (sizeof(struct insn_ril) * 2 + 1)
-+
-+static void insn_ril_to_string(char *str, struct insn_ril *insn)
-+{
-+	u8 *ptr = (u8 *)insn;
-+	int i;
-+
-+	for (i = 0; i < sizeof(*insn); i++)
-+		hex_byte_pack(&str[2 * i], ptr[i]);
-+	str[2 * i] = 0;
-+}
-+
-+static void stack_protector_dump(struct insn_ril *old, struct insn_ril *new)
-+{
-+	char ostr[INSN_RIL_STRING_SIZE];
-+	char nstr[INSN_RIL_STRING_SIZE];
-+
-+	insn_ril_to_string(ostr, old);
-+	insn_ril_to_string(nstr, new);
-+	DEBUGP("%016lx: %s -> %s\n", insn_to_vaddress(old), ostr, nstr);
-+}
-+
-+static int stack_protector_verify(struct insn_ril *insn, unsigned long kernel_start)
-+{
-+	char istr[INSN_RIL_STRING_SIZE];
-+	unsigned long vaddress, offset;
-+
-+	/* larl */
-+	if (insn->opc1 == 0xc0 && insn->opc2 == 0x0)
-+		return 0;
-+	/* lgrl */
-+	if (insn->opc1 == 0xc4 && insn->opc2 == 0x8)
-+		return 0;
-+	insn_ril_to_string(istr, insn);
-+	vaddress = insn_to_vaddress(insn);
-+	if (__is_defined(__DECOMPRESSOR)) {
-+		offset = (unsigned long)insn - kernel_start + TEXT_OFFSET;
-+		EMERGP("Unexpected instruction at %016lx/%016lx: %s\n", vaddress, offset, istr);
-+		PANIC("Stackprotector error\n");
-+	} else {
-+		EMERGP("Unexpected instruction at %016lx: %s\n", vaddress, istr);
-+	}
-+	return -EINVAL;
-+}
-+
-+int __stack_protector_apply(unsigned long *start, unsigned long *end, unsigned long kernel_start)
-+{
-+	unsigned long canary, *loc;
-+	struct insn_ril *insn, new;
-+	int rc;
-+
-+	/*
-+	 * Convert LARL/LGRL instructions to LLILF so register R1 contains the
-+	 * address of the per-cpu / per-process stack canary:
-+	 *
-+	 * LARL/LGRL R1,__stack_chk_guard => LLILF R1,__lc_stack_canary
-+	 */
-+	canary = __LC_STACK_CANARY;
-+	if (machine_has_relocated_lowcore())
-+		canary += LOWCORE_ALT_ADDRESS;
-+	for (loc = start; loc < end; loc++) {
-+		insn = vaddress_to_insn(*loc);
-+		rc = stack_protector_verify(insn, kernel_start);
-+		if (rc)
-+			return rc;
-+		new = *insn;
-+		new.opc1 = 0xc0;
-+		new.opc2 = 0xf;
-+		new.imm = canary;
-+		if (stack_protector_debug)
-+			stack_protector_dump(insn, &new);
-+		s390_kernel_write(insn, &new, sizeof(*insn));
-+	}
-+	return 0;
-+}
-+
-+#ifdef __DECOMPRESSOR
-+void __stack_protector_apply_early(unsigned long kernel_start)
-+{
-+	unsigned long *start, *end;
-+
-+	start = (unsigned long *)vmlinux.stack_prot_start;
-+	end = (unsigned long *)vmlinux.stack_prot_end;
-+	__stack_protector_apply(start, end, kernel_start);
-+}
-+#endif
-diff --git a/arch/s390/kernel/vdso64/Makefile b/arch/s390/kernel/vdso64/Makefile
-index d8f0df7428096..49ad8dfc7c790 100644
---- a/arch/s390/kernel/vdso64/Makefile
-+++ b/arch/s390/kernel/vdso64/Makefile
-@@ -32,6 +32,7 @@ KBUILD_CFLAGS_64 := $(filter-out -mno-pic-data-is-text-relative,$(KBUILD_CFLAGS_
- KBUILD_CFLAGS_64 := $(filter-out -munaligned-symbols,$(KBUILD_CFLAGS_64))
- KBUILD_CFLAGS_64 := $(filter-out -fno-asynchronous-unwind-tables,$(KBUILD_CFLAGS_64))
- KBUILD_CFLAGS_64 += -m64 -fPIC -fno-common -fno-builtin -fasynchronous-unwind-tables
-+KBUILD_CFLAGS_64 += -fno-stack-protector
- ldflags-y := -shared -soname=linux-vdso64.so.1 \
- 	     --hash-style=both --build-id=sha1 -T
+ static irqreturn_t tegra241_cmdqv_isr(int irq, void *devid)
+ {
+ 	struct tegra241_cmdqv *cmdqv = (struct tegra241_cmdqv *)devid;
+@@ -361,16 +368,27 @@ static irqreturn_t tegra241_cmdqv_isr(int irq, void *devid)
  
-diff --git a/arch/s390/kernel/vmlinux.lds.S b/arch/s390/kernel/vmlinux.lds.S
-index 9289e9e535c70..c5040caa8e1aa 100644
---- a/arch/s390/kernel/vmlinux.lds.S
-+++ b/arch/s390/kernel/vmlinux.lds.S
-@@ -150,6 +150,15 @@ SECTIONS
- 		*(.altinstr_replacement)
+ 	/* Handle VINTF0 and its LVCMDQs */
+ 	if (vintf_map & BIT_ULL(0)) {
+-		tegra241_vintf0_handle_error(cmdqv->vintfs[0]);
++		struct tegra241_vintf *vintf0;
++
+ 		vintf_map &= ~BIT_ULL(0);
++
++		/* NULL until tegra241_cmdqv_init_structures() publishes it */
++		vintf0 = smp_load_acquire(&cmdqv->vintfs[0]);
++		if (vintf0)
++			tegra241_vintf0_handle_error(vintf0);
  	}
  
-+#ifdef CONFIG_STACKPROTECTOR
-+	. = ALIGN(8);
-+	.stack_prot_table : {
-+		__stack_prot_start = .;
-+		KEEP(*(__stack_protector_loc))
-+		__stack_prot_end = .;
-+	}
-+#endif
+ 	/* Handle other user VINTFs and their LVCMDQs */
+ 	while (vintf_map) {
+ 		unsigned long idx = __ffs64(vintf_map);
++		struct tegra241_vintf *vintf;
+ 
+-		tegra241_vintf_user_handle_error(cmdqv->vintfs[idx]);
+ 		vintf_map &= ~BIT_ULL(idx);
 +
- 	/*
- 	 * Table with the patch locations to undo expolines
- 	*/
-@@ -258,6 +267,10 @@ SECTIONS
- 		QUAD(invalid_pg_dir)
- 		QUAD(__alt_instructions)
- 		QUAD(__alt_instructions_end)
-+#ifdef CONFIG_STACKPROTECTOR
-+		QUAD(__stack_prot_start)
-+		QUAD(__stack_prot_end)
-+#endif
- #ifdef CONFIG_KASAN
- 		QUAD(kasan_early_shadow_page)
- 		QUAD(kasan_early_shadow_pte)
++		/* The slot may be published or torn down (NULL'd) concurrently */
++		vintf = smp_load_acquire(&cmdqv->vintfs[idx]);
++		if (vintf)
++			tegra241_vintf_user_handle_error(vintf);
+ 	}
+ 
+ 	return IRQ_HANDLED;
+@@ -734,8 +752,18 @@ tegra241_vintf_alloc_lvcmdq(struct tegra241_vintf *vintf, u16 lidx)
+ static void tegra241_cmdqv_deinit_vintf(struct tegra241_cmdqv *cmdqv, u16 idx)
+ {
+ 	kfree(cmdqv->vintfs[idx]->lvcmdqs);
++	/*
++	 * Clear the slot and drain any in-flight ISR before returning idx to
++	 * the IDA, so a concurrent create that reuses idx cannot have its
++	 * freshly published VINTF erased here. A plain WRITE_ONCE() suffices
++	 * since clearing the slot publishes no data. This also covers the
++	 * init-failure unwind, which reaches deinit_vintf() without the
++	 * destroy callback.
++	 */
++	WRITE_ONCE(cmdqv->vintfs[idx], NULL);
++	if (cmdqv->irq > 0)
++		synchronize_irq(cmdqv->irq);
+ 	ida_free(&cmdqv->vintf_ids, idx);
+-	cmdqv->vintfs[idx] = NULL;
+ }
+ 
+ static int tegra241_cmdqv_init_vintf(struct tegra241_cmdqv *cmdqv, u16 max_idx,
+@@ -761,7 +789,8 @@ static int tegra241_cmdqv_init_vintf(struct tegra241_cmdqv *cmdqv, u16 max_idx,
+ 		return -ENOMEM;
+ 	}
+ 
+-	cmdqv->vintfs[idx] = vintf;
++	/* Pairs with the smp_load_acquire() in tegra241_cmdqv_isr() */
++	smp_store_release(&cmdqv->vintfs[idx], vintf);
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
