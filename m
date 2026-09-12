@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F48345CCE;
-	Sat, 12 Sep 2026 15:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BFD31E84B;
+	Sat, 12 Sep 2026 15:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227469; cv=none; b=SPsoskw4KTDsBEvLcAZMbus8IgLlePEwzaZ4MxpZ/RtOKrV2LYEViXbuuiKXZdn4gyxnn6nSYEePYtox3DZqTiEtUIssxs5nPTS42tfzg+xgYDCqNOVZgOgvHbrM2bCBkdYAnBkZ3jr2M94YVZyV92jhmFJkbMMAQ/QyxcrbMTw=
+	t=1789227475; cv=none; b=DTD21P42Gbp6dbPvuposRuFfq4XB/bcj5HwAzWTC+9OA2lD9bzd0/cTVDKQmk4pd2MjJzGt27xYOIZsBl596udW9v+3nZyvpdTrDBj/vdh8qbmw55qU0zPPO9AdieC6bwMUp7lwjIjDGW36Xd0twiieWTEguHURd5nYxdVTnfRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227469; c=relaxed/simple;
-	bh=q6mqFfq1gNgnxhfFJx0t+VyK6EWW7IV4/aEYtjOPvyY=;
+	s=arc-20240116; t=1789227475; c=relaxed/simple;
+	bh=7nT0i/RBgTsG3nJQd8NBCmBAlpZdkAJOGRkTKvXxPfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKesyxgY6Afnh+jgEzwo6XehstrEHfQq9cbgFeZgzl7HuTFkvH5n6B8Tuvz8ajeQYTu0LvRqCbNtkKFcy/emyxnSWC//HC2QS9by96p3ARHqzDMr7q/MohVIh6Bl4lckFWOO8vWXMARVAIDYSFYirZdxcXflwY9GhMzbCRA2ssI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFEjbrU3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rdGltuaSd5B0Cf909UXud1dR5UFXuii3C/wANb0hlLdEMnoulda+7DfPY5JOv7D/2W2L92iguDvkAE7GPKV1aVNDrcaPhhxRs3SZcgQxtb66wyssMZ5h/14KB0CEvjkvxv7dvawttXWf104vGwYFpjIX05vvsVBNt/jB4Jyag2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MrbaFCQI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFEjbrU3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D3B1F000FF;
-	Sat, 12 Sep 2026 15:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MrbaFCQI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC421F000FF;
+	Sat, 12 Sep 2026 15:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227468;
-	bh=eKVSnIDh10IXG4CEGn7Ccajj343bS6jYHjGdN6ebJns=;
+	s=korg; t=1789227472;
+	bh=rgDudpwgEYqyRygxBZTLLdtfUkeHC3FrRmLTkQDNg+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YFEjbrU3boE7BrFPD8qXsZUEK6atJy3QzVJfT5uuOqbxbGOEo7LiaLkyPO4BQnA5e
-	 KSdOu+Dv1C0dmRZrFDtLFhcdANKcot9z+caY5ZxNGI0ux9CDxUAuPH0YsUUjgcMfqT
-	 ScLw7bG3oKR/MtvlvJJI4YImQM07TLh0mgd4CCdI=
+	b=MrbaFCQI1qNbGQfrwv5qtLymneYI7Fng1SIgvccR0DUHWmGXOAgZupV9MLOFzM0Qy
+	 UG3Ky0+iy+UtTeJb40XTe4VfuuTG9/1e1CW3Mzily++uXMwe16ZGEqhIAhNsr4PNEh
+	 7+345+FNtU9zHumCDcccDGOrV8eEZTWJn/iiroQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Jun Piao <piaojun@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 0150/1191] ocfs2: bound namelen in dlm_migrate_request_handler
-Date: Sat, 12 Sep 2026 08:47:58 +0200
-Message-ID: <20260912065551.573631162@linuxfoundation.org>
+	Ronald Claveau <linux-kernel-dev@aliel.fr>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.1 0186/1191] PCI: meson: Fix GPIO state while requesting PERST#
+Date: Sat, 12 Sep 2026 08:48:34 +0200
+Message-ID: <20260912065552.390983156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -57,98 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Ronald Claveau <linux-kernel-dev@aliel.fr>
 
-commit ea5b5609305a8437bc955a0834a530c12246d78f upstream.
+commit 40fb390cbcc11797c44c16dabdf763ec87643671 upstream.
 
-Patch series "ocfs2/dlm: bound peer-controlled lengths in the o2dlm".
+Meson devicetree defines the PERST# GPIO as 'reset' GPIO.  Commit
+4d3186a525b3 ("PCI: amlogic: Fix reset assertion via gpio descriptor")
+inverted the PERST# assertion logic to use proper GPIO descriptor semantics
+and moved the polarity configuration to the device tree as GPIO_ACTIVE_LOW.
+However, the initial PERST# GPIO state "GPIOD_OUT_LOW" was not updated
+accordingly.
 
-The o2dlm receive handlers trust u8 length and count fields from the wire
-without bounding them, so a node in a DLM domain can corrupt or panic any
-other node with a malformed message.  Three defects:
+This results in the enumeration failure of the endpoint devices as
+PERST# would get deasserted while requesting the GPIO even before
+power and REFCLK becomes stable.
 
-  - dlm_migrate_request_handler() passes migrate->namelen unchecked to
-    dlm_init_mle(), which memcpy()s it into the 32-byte mname[] of an
-    o2dlm_mle slab object: a heap out-of-bounds write of up to ~215
-    attacker-controlled bytes.
+Without this fix:
 
-  - dlm_mig_lockres_handler() passes mres->lockname_len unchecked to
-    dlm_init_lockres(), which memcpy()s it into the 32-byte o2dlm_lockname
-    slab object: a heap out-of-bounds write of up to ~223 bytes.
+  ahci 0000:01:00.0: enabling device (0000 -> 0002)
+  ahci 0000:01:00.0: SSS flag set, parallel bus scan disabled
+  ahci 0000:01:00.0: Controller reset failed (0xffffffff)
+  ahci 0000:01:00.0: probe with driver ahci failed with error -5
 
-  - the same handler trusts mres->num_locks without checking that the
-    message is large enough to hold that many entries, so
-    dlm_process_recovery_data() walks mres->ml[] past the kmalloc(data_len)
-    copy and trips a BUG_ON (an out-of-bounds read ending in a panic).
+With this fix:
 
-The other o2dlm receive handlers already reject an oversized name; the
-migration and recovery handlers have omitted it since the DLM was added
-(see the Fixes tags).  Patch 1 bounds namelen; patch 2 validates
-lockname_len, num_locks, and the payload size.  Conforming recovery and
-migration traffic is unaffected.
+  ahci 0000:01:00.0: enabling device (0000 -> 0002)
+  ahci 0000:01:00.0: AHCI vers 0001.0300, 32 command slots, 6 Gbps, SATA mode
+  ahci 0000:01:00.0: 1/1 ports implemented (port mask 0x1)
+  ahci 0000:01:00.0: flags: 64bit ncq led clo only pio ccc
 
-o2net authenticates peers only by the DLM domain key, so any node that has
-joined the domain -- including a compromised or malicious member -- can
-send these messages.  There is no local trigger; the attacker must already
-be a member of the cluster.
+Change the GPIO request flag from GPIOD_OUT_LOW to GPIOD_OUT_HIGH to get
+the right behaviour.
 
-Each sink was confirmed under KASAN with an out-of-tree module mirroring
-it exactly -- a kmem_cache/kmalloc of the real destination size, then the
-same unclamped memcpy/loop: slab-out-of-bounds Write for the two writes,
-Read for the recovery walk, and a panic.  A userspace AddressSanitizer
-build faults identically under -m32 and -m64.  Scrubbed logs are available
-on request.
-
-I reported this privately to security@kernel.org and the ocfs2 maintainers
-on 2026-06-20; with no response after the standard embargo period I am
-posting the fix publicly.  I have no embargo requirement.
-
-
-This patch (of 2):
-
-A node receiving a DLM_MIGRATE_REQUEST message trusts the peer-supplied
-name length (migrate->namelen) without bounding it.  dlm_init_mle() then
-copies that many bytes into the fixed DLM_LOCKID_NAME_MAX-byte mname[]
-array of an o2dlm_mle slab object, so a malformed message from a cluster
-peer overflows the slab object by up to ~215 bytes: a heap out-of-bounds
-write of attacker-controlled data, reachable by any node in the domain.
-
-Reject an oversized name, the way dlm_master_request_handler() and the
-other o2dlm receive handlers already do; the migration handler omits the
-check entirely.  Conforming messages are unaffected.
-
-Link: https://lore.kernel.org/20260629-b4-disp-94fb6521-v1-0-6953bcc0421f@proton.me
-Link: https://lore.kernel.org/20260629-b4-disp-94fb6521-v1-1-6953bcc0421f@proton.me
-Fixes: 6714d8e86bf4 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4d3186a525b3 ("PCI: amlogic: Fix reset assertion via gpio descriptor")
+Signed-off-by: Ronald Claveau <linux-kernel-dev@aliel.fr>
+[mani: CCed stable and commit log]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260616-fix-meson-pcie-reset-gpio-v1-1-fca404b4c8be@aliel.fr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/dlm/dlmmaster.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/pci/controller/dwc/pci-meson.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ocfs2/dlm/dlmmaster.c
-+++ b/fs/ocfs2/dlm/dlmmaster.c
-@@ -3112,6 +3112,12 @@ int dlm_migrate_request_handler(struct o
+--- a/drivers/pci/controller/dwc/pci-meson.c
++++ b/drivers/pci/controller/dwc/pci-meson.c
+@@ -415,7 +415,7 @@ static int meson_pcie_probe(struct platf
+ 		return PTR_ERR(mp->phy);
+ 	}
  
- 	name = migrate->name;
- 	namelen = migrate->namelen;
-+	if (namelen > DLM_LOCKID_NAME_MAX) {
-+		mlog(ML_ERROR, "%s: invalid name length %u in migrate request\n",
-+		     dlm->name, namelen);
-+		ret = -EINVAL;
-+		goto leave;
-+	}
- 	hash = dlm_lockid_hash(name, namelen);
- 
- 	/* preallocate.. if this fails, abort */
+-	mp->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
++	mp->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(mp->reset_gpio)) {
+ 		dev_err(dev, "get reset gpio failed\n");
+ 		return PTR_ERR(mp->reset_gpio);
 
 
