@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8FF2BDC0E;
-	Sat, 12 Sep 2026 11:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0126830DEA6;
+	Sat, 12 Sep 2026 11:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212437; cv=none; b=JWrsCO69tvQaIt/dx/HM2ARHfpLWWNpxPoStExTt+pckgo00Ay31PrLJB5kJ1PnaEPVOfKoLyYe51tF7S0Eu6tQ3xhsszPYAASSJ6KULhyLeeQfrzS0VBsmbD8ijguuIyZ1S/1VKPhxPJ4B1JaS8LQI0oDnEFHLJRnOPXpeEeaE=
+	t=1789212442; cv=none; b=hJgOZvaIsCRBQCcPPq1m0BZA0N2mH/CHu4BAu3Ryw5rmtnUd3A7sqUei6aOIrqIn3keNNZ2ZB/+NB1xpzslUPhfUPj+8c+mllPb8tg/tyoBQXC+eQXLw016cP0tinDnTTfjVd/8CZ/pZXTckPffPU0Gyz/JwGdGPeVXckWQGvcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212437; c=relaxed/simple;
-	bh=7uzCMhMqWt8TJlKH2BxYjwQ4wq/bdZsRURR5Pa6LTlQ=;
+	s=arc-20240116; t=1789212442; c=relaxed/simple;
+	bh=FGSHnqeYeSf6DvVmLQTuEMe6DhpRJMZks21Z0sD8Ysw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G+HzTGOgM7Vd0twg0BKO0Cy6GsdwEdG5mJX4MWkj3/X9g7Sz1wfFweTO1BgWCcwO3hLBUZkBGdjD3/T+b5acK7ujM0WRqVgX0EfB4DAOig1xF944Y6MByYYkcSzOBIVC6/mtQq4furRc+DTN0thOFgoE1RUzqORJF7ledy8vhl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAmh03Vt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XzSw1r3dpYZeIM8yDkiUkf/ESFfrnvigd/Bk/JoexQN/An57iTTJt0aPugmZaKyun7+28zFoxdZ/uBkl6k2AU6++xMO8zowQD7bg+9jA4ATz/q0O3gHReJQtzbWwL/JIv2+22ps5NqF9DdrC+0T+h3l53zK5h2nBuB0ZFvh6CpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p3yLQPoA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAmh03Vt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C374C1F000FF;
-	Sat, 12 Sep 2026 11:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p3yLQPoA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05ECC1F000FF;
+	Sat, 12 Sep 2026 11:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212435;
-	bh=6CQtYI2aRcy6Tj9KrAcKYqHkbEDQQ2vx6hX2XgrbiFU=;
+	s=korg; t=1789212440;
+	bh=fOEOFTUZgBPgpBoVIZZO16KpRKLzsglHy3qGVGhxyx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CAmh03VteZYpZyZSs++03sbUSr1wn0iUYi1eQFeviI7jZYECgs+z+lLBC91ix7ZKp
-	 po5kwTEym2dG68Gf6n/PdfRflEzjUO2Q3U4kaBRIgaqSB/lh3C9BpQnyyBoFsLSpJk
-	 d9/e3Z2xQ0ZHiUZ2e6dA/l/RglgPk8/9vtmACCW4=
+	b=p3yLQPoAAjqDphV0iHr3EFy7rq6y+MjGClAwVdlG59N1linuBcaiqoIkzEPaZK1M9
+	 CM9tCwZ1Aqp1MKuBHe//SEXABjdgX64C5up6BKFcKoyJCcbBZbzktb2P5ordonH0wt
+	 EDiR9bSNLtdDd48t02hean8qoCrvE5tCnws5Bm+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abaci <abaci@linux.alibaba.com>,
-	Yifei Chu <Chuyf26@linux.alibaba.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1437/1518] net/smc: release the internal TCP sock on IPPROTO_SMC socket creation failure
-Date: Sat, 12 Sep 2026 09:00:06 +0200
-Message-ID: <20260912065656.061286359@linuxfoundation.org>
+Subject: [PATCH 6.18 1438/1518] net: wangxun: use BIT_ULL() to prevent shift overflow on 32-bit archs
+Date: Sat, 12 Sep 2026 09:00:07 +0200
+Message-ID: <20260912065656.084963788@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,90 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifei Chu <Chuyf26@linux.alibaba.com>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-[ Upstream commit cec261b0b4c5c0b044165303198d10ffcdf3414c ]
+[ Upstream commit 63c885688f38a757947d7050b1ee4171215269ce ]
 
-IPPROTO_SMC sockets create an internal TCP sock ("clcsock") from the
-proto->init hook. When socket creation fails after proto->init has
-run - e.g. a cgroup BPF program attached to BPF_CGROUP_INET_SOCK_CREATE
-denies the socket - sk_common_release() only invokes sk_prot->destroy
-if it is set, but neither smc_inet_prot nor smc_inet6_prot defines it,
-and smc_destruct() returns early unless sk_state is SMC_CLOSED. As a
-result, every failing socket(AF_INET, SOCK_STREAM, IPPROTO_SMC) call
-leaks one tcp_sock, so an unprivileged task able to attach a deny-all
-BPF_CGROUP_INET_SOCK_CREATE program to its own cgroup can grow kernel
-memory unboundedly.
+The macros TXGBE_INTR_MISC() and WX_INTR_Q() rely on the standard BIT()
+macro to generate interrupt masks based on the queue vector index.
 
-Add a .destroy hook to both protos that releases the clcsock via
-smc_clcsock_release(). smc_sk_init() hashes the sock into the smc
-hashinfo before the clcsock is created, and smc_diag dumps walk that
-hash dereferencing smc->clcsock without taking clcsock_release_lock,
-while sk_common_release() calls .destroy before .unhash. Unhash the
-sock before releasing the clcsock, as __smc_release() does, so a
-concurrent dump cannot observe the release; the second unhash in
-sk_common_release() is a no-op.
+On 32-bit architectures, BIT() evaluates to a 32-bit `unsigned long`.
+Since the number of queue vectors can be up to 63 on txgbe devices,
+performing a left shift of 32 or more results in an integer overflow
+and undefined behavior. This causes incorrect interrupt masking and
+unmasking logic for both the queue and miscellaneous interrupts on
+32-bit systems.
 
-Fixes: d25a92ccae6b ("net/smc: Introduce IPPROTO_SMC")
-Reported-by: Abaci <abaci@linux.alibaba.com>
-Assisted-by: abaci:qwen3.8-max
-Signed-off-by: Yifei Chu <Chuyf26@linux.alibaba.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/178753843966.342810.566471390946765094@linux.alibaba.com
+Fix this by replacing BIT() with BIT_ULL() in these macros. This
+ensures that the bitwise shift is always performed safely on a 64-bit
+`unsigned long long` type, regardless of the underlying architecture.
+
+Fixes: e37546ad1f9b ("net: wangxun: revert the adjustment of the IRQ vector sequence")
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Link: https://patch.msgid.link/45F5565CE6AC4329+20260824072119.48399-1-jiawenwu@trustnetic.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_inet.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/net/ethernet/wangxun/libwx/wx_type.h    | 2 +-
+ drivers/net/ethernet/wangxun/txgbe/txgbe_type.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/smc/smc_inet.c b/net/smc/smc_inet.c
-index a94084b4a498e..520b666fdd8fa 100644
---- a/net/smc/smc_inet.c
-+++ b/net/smc/smc_inet.c
-@@ -15,13 +15,16 @@
+diff --git a/drivers/net/ethernet/wangxun/libwx/wx_type.h b/drivers/net/ethernet/wangxun/libwx/wx_type.h
+index 0788cf57e3d4a..d66ea92aceade 100644
+--- a/drivers/net/ethernet/wangxun/libwx/wx_type.h
++++ b/drivers/net/ethernet/wangxun/libwx/wx_type.h
+@@ -1400,7 +1400,7 @@ struct wx {
+ };
  
- #include "smc_inet.h"
- #include "smc.h"
-+#include "smc_close.h"
+ #define WX_INTR_ALL (~0ULL)
+-#define WX_INTR_Q(i) BIT((i))
++#define WX_INTR_Q(i) BIT_ULL((i))
  
- static int smc_inet_init_sock(struct sock *sk);
-+static void smc_inet_destroy_sock(struct sock *sk);
+ /* register operations */
+ #define wr32(a, reg, value)	writel((value), ((a)->hw_addr + (reg)))
+diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h b/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
+index 4d77da720eba1..70f89a42b0b30 100644
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
+@@ -302,7 +302,7 @@ struct txgbe_fdir_filter {
+ #define TXGBE_DEFAULT_RX_WORK           128
+ #endif
  
- static struct proto smc_inet_prot = {
- 	.name		= "INET_SMC",
- 	.owner		= THIS_MODULE,
- 	.init		= smc_inet_init_sock,
-+	.destroy	= smc_inet_destroy_sock,
- 	.hash		= smc_hash_sk,
- 	.unhash		= smc_unhash_sk,
- 	.release_cb	= smc_release_cb,
-@@ -68,6 +71,7 @@ static struct proto smc_inet6_prot = {
- 	.name		= "INET6_SMC",
- 	.owner		= THIS_MODULE,
- 	.init		= smc_inet_init_sock,
-+	.destroy	= smc_inet_destroy_sock,
- 	.hash		= smc_hash_sk,
- 	.unhash		= smc_unhash_sk,
- 	.release_cb	= smc_release_cb,
-@@ -116,6 +120,18 @@ static int smc_inet_init_sock(struct sock *sk)
- 	return smc_create_clcsk(net, sk, sk->sk_family);
- }
+-#define TXGBE_INTR_MISC(A)    BIT((A)->num_q_vectors)
++#define TXGBE_INTR_MISC(A)    BIT_ULL((A)->num_q_vectors)
+ #define TXGBE_INTR_QALL(A)    (TXGBE_INTR_MISC(A) - 1)
  
-+static void smc_inet_destroy_sock(struct sock *sk)
-+{
-+	/* The sock is hashed and smc_diag dumps dereference smc->clcsock
-+	 * without clcsock_release_lock, while sk_common_release() calls
-+	 * .destroy before .unhash. Unhash first, as __smc_release() does,
-+	 * so no dump can observe the clcsock being released; the second
-+	 * unhash is a no-op.
-+	 */
-+	sk->sk_prot->unhash(sk);
-+	smc_clcsock_release(smc_sk(sk));
-+}
-+
- int __init smc_inet_init(void)
- {
- 	int rc;
+ #define TXGBE_MAX_EITR        GENMASK(11, 3)
 -- 
 2.53.0
 
