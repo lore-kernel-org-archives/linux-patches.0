@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8115192D8A;
-	Sat, 12 Sep 2026 07:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47408192D8A;
+	Sat, 12 Sep 2026 07:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197994; cv=none; b=Suv1o+FHij3Qqwdihp1ENMK+J6M+3Op1aDkjpLMKcB9JOR4A3r7uPG3EM9ZenJZZR4dDDGZBCKu+aDfGJXGLfx+lErNhRLIldxqTOed1MrdgHJnNgcOhLomSfkLUijunoUz3zUpnI8I0sQ5YIoiuXamFYo822kfJRUq9JaBUO48=
+	t=1789197998; cv=none; b=Z6xd+Y85TAZhmzhDVAVX6nkXZn2zYDt5dfHt8WgKyeI+Sneug6vQFuBPh5DRfb757oMbZzU3OCgBRLtvsali4mfX6uvPIvS6Jso4dRHqxjDLztKwhsUAlu1BSi4Ixb9OpWTPTLseanqAae3wDn4iGMfAotdMXneHgYsB4bFWKoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197994; c=relaxed/simple;
-	bh=ukui0skWxiDgTR3d9pqzWNqd9RtjlTDd6UieXXdcwVg=;
+	s=arc-20240116; t=1789197998; c=relaxed/simple;
+	bh=t1HkcIMAb0pWhbT3CLy0LvAZxOX4ySyYc9Jnuy6FSBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1eXDg0oVplWnriwE+WChI0mCiffd6G8fqZbZiZc4/pvUPcBbib8GynK9FeuDPDW+umIbU0u3jUuzkpNha+bg4QpuoXHahdT58749z0/l/RcQUSS/XvZsod6VxedsIuQURm+StShrFOXywGoIMvv6QncdBTCYGhX8ZCKb58kcOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2D19uB3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kvNTgQ6zK7zCcEW6vnhXVvC4nLxEt1VMfJ9GfIpwYBQKAXj5UmACqYQMfLoLSbF/n5CPureYcHEKM6mugGXiX68tumXmVGtmkKSGH7yL0MgO+zNcSr7N2UESgFJThZeUIOK/4VHh5Kt4y6nKkx1YKBid2KSF/0ZZeWUfNVcoBmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jNqOtUEa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2D19uB3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD06B1F000FF;
-	Sat, 12 Sep 2026 07:26:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jNqOtUEa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02BD01F000FF;
+	Sat, 12 Sep 2026 07:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197992;
-	bh=QfDUtaRUiXmFpn8L+Sdw48Xj1PIecrQokWkz/QNGSq8=;
+	s=korg; t=1789197997;
+	bh=qSmbKsOyDIYDh07zq+anGC24djscxLA/5WvMj6M4be8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C2D19uB36/JWcAzY7igRZbCnKF/XOjk9KwmJ10j/NFJYhw99NWVb02mPwTJs2INB6
-	 ZoN/NGDvON+l/VayFeLt6iJb7E1zAwtiw+F4vM1qHOklCGXM3wPihmn5bSIGgb5Uk1
-	 7V3fKAc9m8Hzez4MiCWEj1dkIFg7CzKgXNrnInN0=
+	b=jNqOtUEaZ2ADWpk98u8oqIRMdQj5bWK8Uo9x3pr1HLRJQG466uzzuwnmCxjXO9E9N
+	 67QW3OtfsZSzgm3H+LmLzJ55LhpoLeIw8YZq9u1bz5hTNfViFjeFhoV4nzcZOo4bi1
+	 SOSmk87KgzZXyR0dNrIQvR6Bu1s7ZaD0KcOSa1B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Slavin Liu <220245772@seu.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0290/1815] arm64: dts: mediatek: tungsten-smarc: Remove unnecessary cells
-Date: Sat, 12 Sep 2026 08:34:00 +0200
-Message-ID: <20260912065655.765954931@linuxfoundation.org>
+Subject: [PATCH 7.2 0273/1815] usb: gadget: r8a66597: avoid double free of ep0_req in probe error path
+Date: Sat, 12 Sep 2026 08:33:43 +0200
+Message-ID: <20260912065655.377089020@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,43 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit dee885034faf7c9b265987407ab303b464ed0058 ]
+[ Upstream commit 41d541e3718db01668a4cd29815ee4b3b55f76d2 ]
 
-Remove unnecessary address and size cells from both the disp_dsi0
-and the xhci2's ethernet usb device subnode to fix a dtbs_check
-warning for avoid_unnecessary_addr_size.
+If usb_add_gadget_udc() fails, r8a66597_probe() jumps to err_add_udc
+and frees ep0_req, then falls through to clean_up2 where ep0_req is
+freed again when it is non-NULL.
 
-Fixes: 9fda4a8a479f ("arm64: dts: mediatek: add device tree for Tungsten 510 board")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Remove the redundant free from err_add_udc and keep the cleanup in
+clean_up2 so the request is released exactly once.
+
+Fixes: 776976a67ae2 ("usb: gadget: r8a66597-udc: cleanup error path")
+Issue found using a prototype static analysis tool
+and confirmed by code review.
+
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Signed-off-by: Slavin Liu <220245772@seu.edu.cn>
+Link: https://patch.msgid.link/20260624140908.1282-1-getshell@seu.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8390-tungsten-smarc.dtsi | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/usb/gadget/udc/r8a66597-udc.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8390-tungsten-smarc.dtsi b/arch/arm64/boot/dts/mediatek/mt8390-tungsten-smarc.dtsi
-index 9f5a0ec563e8c..8256279c56299 100644
---- a/arch/arm64/boot/dts/mediatek/mt8390-tungsten-smarc.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8390-tungsten-smarc.dtsi
-@@ -265,8 +265,6 @@ &disp_pwm0 {
- };
+diff --git a/drivers/usb/gadget/udc/r8a66597-udc.c b/drivers/usb/gadget/udc/r8a66597-udc.c
+index e7a5d8553c0ea..d190e16d43fc0 100644
+--- a/drivers/usb/gadget/udc/r8a66597-udc.c
++++ b/drivers/usb/gadget/udc/r8a66597-udc.c
+@@ -1951,7 +1951,6 @@ static int r8a66597_probe(struct platform_device *pdev)
+ 	return 0;
  
- &disp_dsi0 {
--	#address-cells = <1>;
--	#size-cells = <0>;
- 	status = "okay";
- 
- 	ports {
-@@ -1049,8 +1047,6 @@ &xhci2 {
- 	ethernet@1 {
- 		compatible = "usb424,7850";
- 		reg = <1>;
--		#address-cells = <1>;
--		#size-cells = <0>;
- 
- 		mdio {
- 			#address-cells = <1>;
+ err_add_udc:
+-	r8a66597_free_request(&r8a66597->ep[0].ep, r8a66597->ep0_req);
+ clean_up2:
+ 	if (r8a66597->pdata->on_chip)
+ 		clk_disable_unprepare(r8a66597->clk);
 -- 
 2.53.0
 
