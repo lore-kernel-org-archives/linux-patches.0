@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4F7274B46;
-	Sat, 12 Sep 2026 18:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17C9274B46;
+	Sat, 12 Sep 2026 18:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237605; cv=none; b=TISgN2D3w4TBcabrCl9HT6rPk09OgMdpNReJqGpYLlouz/rQBJ5ad61JcW5Jj6N5vEUt1oC9HnDiu0KvJSj5pKtSOyQlqbgEvhAzjPV0sTlRuwE8riPyH0D+xUX7nD6wBhySSqLYEfozqfDXk91/MaVLhg6iESEhb6ZK9se8Uzs=
+	t=1789237610; cv=none; b=n/y48IuTiaCmzGJ6yCGCDK8wxqdf5W48BP/vkHPMfcAS81uMvZj2+faIRnNdLGmaXPgqQp+yZ5br1vXMdW6ipitNkg0DaMTUWScpjTdaj8XYNwGfvoHGi2SPUBC20QCvAw5z2EIorZxP0cJiKWuFnzLKIL+zxUlZMdVlC6zJiVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237605; c=relaxed/simple;
-	bh=03epeRrOMtVlQtIEg7DR80XETwuf+8tGY5+3a6uwAIU=;
+	s=arc-20240116; t=1789237610; c=relaxed/simple;
+	bh=+R0m6cFGvLR+AlvSTANoiHNHyEPDK+vEzhtv3VmfnVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CrLm+TBgC/oACSRx17RA3JKV9K4HqF2YK/Oe0h10dDcQaYKEm8EK6MfavYu40bwzlXpzOGrVkDJowA5kbO6/BxO6jC8zGO8QdEhaVeARcYXMql2ZXpdUHBaoD7h9nziYDX3ps0NgJXuV2meUbkxFBMCPYk4zADzlSaNxbPZVDpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Byyig8UR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=arDn23j5+MzSdPLtP9HOx7x87/U9S7xZfGn1X0CnmHFtOz3kX0W1Kr/VIu3boGbBOVqgs1G6pb2txhCKNVco7n77h5UactYw4SZfW8Y9UacCV6XAlVDhoYmOTkfqz4hc23xthBpak9CsVhLxcUsiK+Jf1PBCr+W2z89ORyl3ywQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Csi56U9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Byyig8UR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 819C91F000FF;
-	Sat, 12 Sep 2026 18:26:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Csi56U9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E001F000FF;
+	Sat, 12 Sep 2026 18:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237604;
-	bh=NJpa4zxxSPbYYdJeXwI8TmaG+dUsv4ZACxa8Tp54b9Y=;
+	s=korg; t=1789237609;
+	bh=jlirC2FfJl9yiK9EaCbf6IW8SQzC3gEKPcXWX81MxRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Byyig8URBP13PRw1wVPdBQyhwhHYzC0+8NkqADiTPnEN47rJpGEMUlIjSx3mVXVsW
-	 MxgLko/zkOPjaEMk7vsHTV+sCLlzh8+rD4N1ZmaRW7FANEap8avsubnsqWxPArIE+3
-	 1/MTMvF011Iq31AfanMXI9nWzQuZ4QCW+l6Lob74=
+	b=1Csi56U9FnCM15W6GMBtmaMxrhvMU5wKxLmZlUJWDh1Ipht+yVthFHRaO/9GSqlZ1
+	 lEBDIvqe9SqnBI/Q8pT8zFMnSEuNPJISUjvsRd+SW92ES20Uh/IKdPRMWiciyRwsFz
+	 V6irxI+OxxQDflVzSYEj3q+FxlvR8pWsQ5xNcbIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moksh Panicker <mokshpanicker.7@gmail.com>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 5.15 291/935] iio: chemical: atlas-sensor: fix PM reference leak in buffer postenable
-Date: Sat, 12 Sep 2026 08:55:21 +0200
-Message-ID: <20260912065533.486832147@linuxfoundation.org>
+Subject: [PATCH 5.15 292/935] iio: chemical: sgp30: Handle IAQ thread creation failure
+Date: Sat, 12 Sep 2026 08:55:22 +0200
+Message-ID: <20260912065533.509186020@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,42 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moksh Panicker <mokshpanicker.7@gmail.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-commit bcd3f72e26314edfce7eaf8d7160b3119c7b7fed upstream.
+commit 1135d6875d2dbda3f6ec718f3421a6ce4378bd63 upstream.
 
-atlas_buffer_postenable() acquires a runtime PM reference with
-pm_runtime_resume_and_get() but returns the result of
-atlas_set_interrupt() directly. If atlas_set_interrupt() fails,
-the runtime PM reference is leaked and the device can never
-autosuspend.
+kthread_run() can fail and return an error pointer, but sgp_probe() stores
+it and returns success, so the device is registered without its IAQ thread
+and sgp_remove() later passes the error pointer to kthread_stop(). Return
+the error from probe instead.
 
-Add pm_runtime_put_autosuspend() on the error path to balance
-the reference.
-
-Fixes: 0e4f336f50de ("iio: chemical: atlas-sensor: Balance runtime pm + pm_runtime_resume_and_get()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Moksh Panicker <mokshpanicker.7@gmail.com>
+Fixes: ce514124161a ("iio: chemical: sgp30: Support Sensirion SGP30/SGPC3 sensors")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/atlas-sensor.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/iio/chemical/sgp30.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/iio/chemical/atlas-sensor.c
-+++ b/drivers/iio/chemical/atlas-sensor.c
-@@ -414,7 +414,11 @@ static int atlas_buffer_postenable(struc
- 	if (ret)
- 		return ret;
+--- a/drivers/iio/chemical/sgp30.c
++++ b/drivers/iio/chemical/sgp30.c
+@@ -548,6 +548,9 @@ static int sgp_probe(struct i2c_client *
  
--	return atlas_set_interrupt(data, true);
-+	ret = atlas_set_interrupt(data, true);
-+	if (ret)
-+		pm_runtime_put_autosuspend(&data->client->dev);
-+
-+	return ret;
+ 	data->iaq_thread = kthread_run(sgp_iaq_threadfn, data,
+ 				       "%s-iaq", data->client->name);
++	if (IS_ERR(data->iaq_thread))
++		return dev_err_probe(dev, PTR_ERR(data->iaq_thread),
++				     "failed to start IAQ thread\n");
+ 
+ 	return 0;
  }
- 
- static int atlas_buffer_predisable(struct iio_dev *indio_dev)
 
 
