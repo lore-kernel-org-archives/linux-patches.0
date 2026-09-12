@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99528477298;
-	Sat, 12 Sep 2026 13:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F332D23A6;
+	Sat, 12 Sep 2026 13:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219539; cv=none; b=hswo6Yw4KCylhmqsSvKgJ6ZXrCweP8Q/CO2PoYHgtFfXKfdIwaSuSkvhpEdBOH11aDuzie+rxtW8pEArctjvOF8kvkSzZXtNBg5uF0/ZijbTvfKoHDs5H1Oy+MiADvCqLoEojMh7qGa6FhkhTrWV1wkHqfC6e1L3PNOBTTgvAsg=
+	t=1789219544; cv=none; b=kAUTc8B/UIi3gwz3L2PuCoHpTxmErkyY4ExLDFEGpHlAo36xCUr6snRLGYjl16kwV82PiaZFsA6MHNJ7wWavN+zEMecHR4BmDrPUGLkoY6gMv+W8bqA1wniBXpeBjTNZgl+LS0ak4ZchDfOU1k6Y2TOgIapXqAir4iZiNYd9r2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219539; c=relaxed/simple;
-	bh=XGc83mNOJxM7mLnG6GJVED9IMeOdrTdUKcnZpIZ87g0=;
+	s=arc-20240116; t=1789219544; c=relaxed/simple;
+	bh=7PapSkT0EHdZRW2m7HD3sWzW+6pcd9CtN6WWUwHyV/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Srx8UO4OmQG/zXKbwZXQQ9NpMF32uJcM6dL7p33pNsnba/h0gnZmFzTSp6bR6FRlD994T7bED9uoMvXXyH6ocZhWNLpXXLhx3zcIU+GN1WQh+s6616xJVtsMiYTFxA+wp92EwzQwKpd0l9DNogzntGv6Gy2QHt7VPu4oJGIMvIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMq/j12i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BdvvpfUbXYDcPwerL4MUCwIYLuoz4KS2B2YbX2hTyfTFA2JVgP2Hi3/5Z3jN6hxDObx6xZGRO7R6QiToQHpmEIhR64pv1BVwequ9dvG2mFkpmYzikURLr27/U4D4tDAZ3lh0gbLTullvg7UW7ZQsRJnELwaQdJGQ/CjsEztVQ4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTmgOpA4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMq/j12i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF191F000FF;
-	Sat, 12 Sep 2026 13:25:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTmgOpA4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CDF1F00898;
+	Sat, 12 Sep 2026 13:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219538;
-	bh=35Cr26jsgbfN/uFcpNtTN/jXyP/LJa8gcf91TvIVi+0=;
+	s=korg; t=1789219543;
+	bh=XcU9rhXJlQiIZy5zcWKao/P6IwmXlIjfL79rCm25l1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aMq/j12ipwZgqkyKqy9n2ulULQ3qmB1vpqt7yYDHak3173F9ndsQLVytQftb4807V
-	 ieFRM5TeOrOjhr86B4sXnurEmlJac4G8t59d9frT31PC7GWN871uBn3/5d8swbyl0I
-	 ebMfFMKrqr9RVJ2MoI91Hjw4xf7mQbWg9CGCi6ao=
+	b=iTmgOpA4VkbaHYA4L1q0jgQRq/sFEu76lcGblK6a890XurEXcZBPGQEJCcBzremqq
+	 5f1JHutzb/GItnrV8nCS6MSO32+1tXcuOAtDb/iU+SL0d4ykckdh0Bd3xYo9rEUjTR
+	 KkJdaG87x01I1V7nPotfiQddpJwkL3IKh56AWuhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1370/1376] net_sched: add back BH safety to tcf_lock
-Date: Sat, 12 Sep 2026 09:03:16 +0200
-Message-ID: <20260912065638.068092082@linuxfoundation.org>
+	John Kacur <jkacur@redhat.com>,
+	Luis Goncalves <lgoncalv@redhat.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Quentin Monnet <qmo@kernel.org>,
+	Tomas Glozar <tglozar@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.12 1371/1376] tools/build: Use SYSTEM_BPFTOOL for system bpftool
+Date: Sat, 12 Sep 2026 09:03:17 +0200
+Message-ID: <20260912065638.090976541@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,89 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tomas Glozar <tglozar@redhat.com>
 
-[ Upstream commit 3016024d7514e953cb3a6715ce29799373512eb4 ]
+commit 814d051ebed40b27285ab3c5e2454bd01a0f9631 upstream.
 
-Jamal reported that we had to use BH safety after all,
-because stats can be updated from BH handler.
+The feature test for system bpftool uses BPFTOOL as the variable to set
+its path, defaulting to just "bpftool" if not set by the user.
 
-Fixes: 3133d5c15cb5 ("net_sched: remove BH blocking in eight actions")
-Fixes: 53df77e78590 ("net_sched: act_skbmod: use RCU in tcf_skbmod_dump()")
-Fixes: e97ae742972f ("net_sched: act_tunnel_key: use RCU in tunnel_key_dump()")
-Fixes: 48b5e5dbdb23 ("net_sched: act_vlan: use RCU in tcf_vlan_dump()")
-Reported-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Closes: https://lore.kernel.org/netdev/CAM0EoMmhq66EtVqDEuNik8MVFZqkgxFbMu=fJtbNoYD7YXg4bA@mail.gmail.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20250901092608.2032473-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This conflicts with selftests and a few other utilities, which expect
+BPFTOOL to be set to the in-tree bpftool path by default. For example,
+bpftool selftests fail to build:
+
+$ make -C tools/testing/selftests/bpf/
+make: Entering directory '/home/tglozar/dev/linux/tools/testing/selftests/bpf'
+
+make: *** No rule to make target 'bpftool', needed by '/home/tglozar/dev/linux/tools/testing/selftests/bpf/tools/include/vmlinux.h'.  Stop.
+make: Leaving directory '/home/tglozar/dev/linux/tools/testing/selftests/bpf'
+
+Fix the problem by renaming the variable used for system bpftool from
+BPFTOOL to SYSTEM_BPFTOOL, so that the new usage does not conflict with
+the existing one of BPFTOOL.
+
+Cc: John Kacur <jkacur@redhat.com>
+Cc: Luis Goncalves <lgoncalv@redhat.com>
+Link: https://lore.kernel.org/20250326004018.248357-1-tglozar@redhat.com
+Fixes: 8a635c3856dd ("tools/build: Add bpftool-skeletons feature test")
+Closes: https://lore.kernel.org/linux-kernel/5df6968a-2e5f-468e-b457-fc201535dd4c@linux.ibm.com/
+Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Suggested-by: Quentin Monnet <qmo@kernel.org>
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_skbmod.c     | 4 ++--
- net/sched/act_tunnel_key.c | 4 ++--
- net/sched/act_vlan.c       | 4 ++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ tools/build/feature/Makefile   |    2 +-
+ tools/scripts/Makefile.include |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/act_skbmod.c b/net/sched/act_skbmod.c
-index e0e4019aa9c0b..caa3cdfd2d3dd 100644
---- a/net/sched/act_skbmod.c
-+++ b/net/sched/act_skbmod.c
-@@ -198,7 +198,7 @@ static int tcf_skbmod_init(struct net *net, struct nlattr *nla,
- 	p->flags = lflags;
- 	p->action = parm->action;
- 	if (ovr)
--		spin_lock(&d->tcf_lock);
-+		spin_lock_bh(&d->tcf_lock);
- 	/* Protected by tcf_lock if overwriting existing action. */
- 	goto_ch = tcf_action_set_ctrlact(*a, parm->action, goto_ch);
- 	p_old = rcu_dereference_protected(d->skbmod_p, 1);
-@@ -212,7 +212,7 @@ static int tcf_skbmod_init(struct net *net, struct nlattr *nla,
+--- a/tools/build/feature/Makefile
++++ b/tools/build/feature/Makefile
+@@ -427,7 +427,7 @@ $(OUTPUT)test-libpfm4.bin:
+ 	$(BUILD) -lpfm
  
- 	rcu_assign_pointer(d->skbmod_p, p);
- 	if (ovr)
--		spin_unlock(&d->tcf_lock);
-+		spin_unlock_bh(&d->tcf_lock);
+ $(OUTPUT)test-bpftool-skeletons.bin:
+-	$(BPFTOOL) version | grep '^features:.*skeletons' \
++	$(SYSTEM_BPFTOOL) version | grep '^features:.*skeletons' \
+ 		> $(@:.bin=.make.output) 2>&1
+ ###############################
  
- 	if (p_old)
- 		kfree_rcu(p_old, rcu);
-diff --git a/net/sched/act_tunnel_key.c b/net/sched/act_tunnel_key.c
-index bcb13823165b9..0134def61ddc6 100644
---- a/net/sched/act_tunnel_key.c
-+++ b/net/sched/act_tunnel_key.c
-@@ -537,11 +537,11 @@ static int tunnel_key_init(struct net *net, struct nlattr *nla,
- 	params_new->tcft_enc_metadata = metadata;
+--- a/tools/scripts/Makefile.include
++++ b/tools/scripts/Makefile.include
+@@ -95,7 +95,7 @@ endif
+ CC_NO_CLANG := $(shell $(CC) -dM -E -x c /dev/null | grep -Fq "__clang__"; echo $$?)
  
- 	params_new->action = parm->action;
--	spin_lock(&t->tcf_lock);
-+	spin_lock_bh(&t->tcf_lock);
- 	goto_ch = tcf_action_set_ctrlact(*a, parm->action, goto_ch);
- 	params_new = rcu_replace_pointer(t->params, params_new,
- 					 lockdep_is_held(&t->tcf_lock));
--	spin_unlock(&t->tcf_lock);
-+	spin_unlock_bh(&t->tcf_lock);
- 	tunnel_key_release_params(params_new);
- 	if (goto_ch)
- 		tcf_chain_put_by_act(goto_ch);
-diff --git a/net/sched/act_vlan.c b/net/sched/act_vlan.c
-index b46f980f3b2ae..a74621797d695 100644
---- a/net/sched/act_vlan.c
-+++ b/net/sched/act_vlan.c
-@@ -253,10 +253,10 @@ static int tcf_vlan_init(struct net *net, struct nlattr *nla,
- 	}
+ # Some tools require bpftool
+-BPFTOOL		?= bpftool
++SYSTEM_BPFTOOL	?= bpftool
  
- 	p->action = parm->action;
--	spin_lock(&v->tcf_lock);
-+	spin_lock_bh(&v->tcf_lock);
- 	goto_ch = tcf_action_set_ctrlact(*a, parm->action, goto_ch);
- 	p = rcu_replace_pointer(v->vlan_p, p, lockdep_is_held(&v->tcf_lock));
--	spin_unlock(&v->tcf_lock);
-+	spin_unlock_bh(&v->tcf_lock);
- 
- 	if (goto_ch)
- 		tcf_chain_put_by_act(goto_ch);
--- 
-2.53.0
-
+ ifeq ($(CC_NO_CLANG), 1)
+ EXTRA_WARNINGS += -Wstrict-aliasing=3
 
 
