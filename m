@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732E8369D56;
-	Sat, 12 Sep 2026 09:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4749E1D514E;
+	Sat, 12 Sep 2026 09:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206480; cv=none; b=OMY6UP/8yrrTTYlghah7CbE2xUDyfpRVj8zO/bU1Ss6GOjLsYGXsCK+2rXyIiVe9kp/p1SsTkp7tvnTmg7lnfstTlLxnOkb1CdEVGVj3Y7P8OeQqfr5CND3iTP1b/kL70dW6Xyp54dpBjt2fsnEiTqFiaIjrbNASnqIAcpwlO7M=
+	t=1789206485; cv=none; b=j6CsIiyX0JLN1n+0MYa8shlRhcUN/PInn/NSmHG6WwJG+fX535U3vOeLB3uw4MbZGlmdvZ/73EDnurF3l5Zl5L1+ovtyQ0Wzx8rQr2eczHeprzR6LLLmlTh0Lf3inT/X9pDHzCKF93K8nRryKVOAspt2akSPs60rAA+5XA1MZ4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206480; c=relaxed/simple;
-	bh=pvASy00h3vEF6eDM5YwgPPQG5EcRN8k/4fahxS8u9nI=;
+	s=arc-20240116; t=1789206485; c=relaxed/simple;
+	bh=p+2YCxE1DalYyImy7PcRCzUQALMhiBvXOZ47Dhp0vcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ax0IAynoNCsmsEIER8VdpVBXle+1SeGxQSW4XhHbueL4lYYr4Z29rjcdUJNFA6ROMwB/qWDB0BYyqrehusiaJJ8JbRgT5vaM5is1bDoY/DMHCywxj8KX5TyT8Cixmsqj29mANcGu9wewHgqwBKhlIM0XF9WE6v/AXrg0b0FSk9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2Nl5afg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hf6nET8rn2NiJi7mdiLmmIgZfQI5qxOevjDz2Pm4UCDpUJIAygz9zTIRpGdFXZX9eNSi2fZYXgrcBKRGztHlobpK6hdnxXKaF/p0aidJMV1FCxo4CzBx8AQfRnuMjS8xjgeIY6JLY3Ru+E8HNu+VleKEzLmARQTkZT64T1rhiQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmXTkkSD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2Nl5afg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24FCB1F000FF;
-	Sat, 12 Sep 2026 09:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmXTkkSD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105141F000FF;
+	Sat, 12 Sep 2026 09:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206479;
-	bh=UG3rlDO8v5Appf0Q0DffwyxMM8+9HHM38TMoyHXOBZw=;
+	s=korg; t=1789206484;
+	bh=zF5uY0FrBVBIR4B7B+BA0b4NcouM8sI/U3JtNCWGiTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T2Nl5afgkCwgpl9p99dIZ3aT2zXntiBFR99a9REyCtBD2gGirJCxuhPtNAABqXUTx
-	 Q6dxhkM61jy7JxulblYgqqdZnIYPnWAmc0cYrhdV/pa/A0eOf7nbn5q7nBY2kG2gF8
-	 aCfunf042IQgZNYY6b20KoxZZj/Smavyp0aUE7M0=
+	b=cmXTkkSDKDwRPr9lXWafiCwimHOzLfQOuo5kfnW0TdjO7laXjLbrS1QieZR6Ng6f1
+	 FdKc7izB5uGljRkdu9e4YMGcmSXQnl0imN8YVGEY57PjS+SJyR7nEpqSkOwvkSUJpl
+	 6/PThjyjVrY42zKvQkPCt64mRRx/QLTiv3hFyiBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	"Kevin Hilman (TI)" <khilman@baylibre.com>,
+	Haowen Tu <tuhaowen@uniontech.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0215/1518] bus: ti-sysc: Fix /chosen node reference leak
-Date: Sat, 12 Sep 2026 08:39:44 +0200
-Message-ID: <20260912065628.353738357@linuxfoundation.org>
+Subject: [PATCH 6.18 0216/1518] PM: sleep: Fix off-by-one in wakelocks number limit check
+Date: Sat, 12 Sep 2026 08:39:45 +0200
+Message-ID: <20260912065628.376645430@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,64 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Haowen Tu <tuhaowen@uniontech.com>
 
-[ Upstream commit 6342de0aed216b6df460b492ddb532b3e0ed16f1 ]
+[ Upstream commit 6058646587dded0ce0ba91bd5a6afbf14fe42055 ]
 
-sysc_init_stdout_path() gets the /chosen node with
-of_find_node_by_path() to read stdout-path. The function then overwrites
-the local node pointer with the stdout-path lookup result, or exits on
-error, without dropping the /chosen reference.
+CONFIG_PM_WAKELOCKS_LIMIT is documented as the maximum number of
+user-space wakeup sources, but the limit check is performed before
+the counter is incremented and only rejects new wakeup sources when the
+current number is greater than the limit. This allows one extra wakeup
+source to be created.
 
-Keep the /chosen node in a separate variable and put it after the
-stdout-path value has been used for the lookup. The successful stdout
-node lookup remains referenced by the cached stdout_path pointer.
+Reject new wakeup sources once the counter has reached the limit.
 
-Fixes: 3bb37c8e6e6a ("bus: ti-sysc: Handle stdout-path for debug console")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20260615200540.770205-1-dbgh9129@gmail.com
-Signed-off-by: Kevin Hilman (TI) <khilman@baylibre.com>
+Fixes: b86ff9820fd5 ("PM / Sleep: Add user space interface for manipulating wakeup sources, v3")
+Signed-off-by: Haowen Tu <tuhaowen@uniontech.com>
+[ rjw: Subject edits ]
+Link: https://patch.msgid.link/20260624053839.2150567-1-tuhaowen@uniontech.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/ti-sysc.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ kernel/power/wakelock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
-index 610354ce7f8f0..5c096eb3f4279 100644
---- a/drivers/bus/ti-sysc.c
-+++ b/drivers/bus/ti-sysc.c
-@@ -682,6 +682,7 @@ static struct device_node *stdout_path;
+diff --git a/kernel/power/wakelock.c b/kernel/power/wakelock.c
+index 4e941999a53ba..5c2a248cf249a 100644
+--- a/kernel/power/wakelock.c
++++ b/kernel/power/wakelock.c
+@@ -63,7 +63,7 @@ static unsigned int number_of_wakelocks;
  
- static void sysc_init_stdout_path(struct sysc *ddata)
+ static inline bool wakelocks_limit_exceeded(void)
  {
-+	struct device_node *chosen;
- 	struct device_node *np = NULL;
- 	const char *uart;
+-	return number_of_wakelocks > CONFIG_PM_WAKELOCKS_LIMIT;
++	return number_of_wakelocks >= CONFIG_PM_WAKELOCKS_LIMIT;
+ }
  
-@@ -691,15 +692,18 @@ static void sysc_init_stdout_path(struct sysc *ddata)
- 	if (stdout_path)
- 		return;
- 
--	np = of_find_node_by_path("/chosen");
--	if (!np)
-+	chosen = of_find_node_by_path("/chosen");
-+	if (!chosen)
- 		goto err;
- 
--	uart = of_get_property(np, "stdout-path", NULL);
--	if (!uart)
-+	uart = of_get_property(chosen, "stdout-path", NULL);
-+	if (!uart) {
-+		of_node_put(chosen);
- 		goto err;
-+	}
- 
- 	np = of_find_node_by_path(uart);
-+	of_node_put(chosen);
- 	if (!np)
- 		goto err;
- 
+ static inline void increment_wakelocks_number(void)
 -- 
 2.53.0
 
