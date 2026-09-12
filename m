@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5C938B15B;
-	Sat, 12 Sep 2026 18:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F71E38B15B;
+	Sat, 12 Sep 2026 18:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238055; cv=none; b=NDGtv9sVNacsrOkKJODmcCkH43yeaZ6cS2PmfwD8e3xHzXLkHCvM9xypXGp6cNa+VZWmhuqmG7nFLq1NTlj8zaJ9+vfeAMyZexHbB7CEgI13AIff5p6WnUAso1MzZdJHEV1+akbU2AZVWs3ADawjnNPQImtYFgZrcQLHr7pnCBk=
+	t=1789238060; cv=none; b=AtWMhdy9PejSwPMwmY3Y3MIJmdVHC/48lKGIhQUqB51kXh59myCvVL3BMtMYJd6ZR0JhaWfWWAJC6FfqknDISPUKymrWavQ/bBPCRILUEJ5DN/kBBgRxDLZw04N8l+tJLe6MiN9XxsKfJZ4gAH/2UZTC3YaoVWpgKcvNlHBwWP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238055; c=relaxed/simple;
-	bh=btgOOYcgfZsz8WPW8LYvR40WgGR7kCGTSWbRifTzKmo=;
+	s=arc-20240116; t=1789238060; c=relaxed/simple;
+	bh=dl0zrgp07tmBSv9HZqyn9bUp9c1XsEcl7l5kNvKIqz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f6zar6yIC57imos6LMO3VB/3fpREN2XK7O+3gdCMO7wNLdvFhlubQXH1hSbTZJTFZ+YgEpT/k+6h8KDmuex8rg6OBK72UzyfGS/MipibIpf19COaD3ZRVzaTcPVAwMgSbPTGdPhUblqO0h0jOAWvwMQrUq1aE7JJx0fLMg5Qpt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UDxju7Xk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nYXZ+8Pmd9lapH0e1z/Bap2tncasjseh3rvhMFYMAtw8S8JulXQbSUlXcxRtc3QMEmNOFO2AtW1r0A33vkR+UCYOpmCaMWvjHW1FaTc4GCa2/hI7GN3pzT6jTPqCWRTopoIaFGFeTnl+yf4fpYvakTk2pfrG6ffM2geikThOg4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=beq0ReOO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UDxju7Xk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4601F000FF;
-	Sat, 12 Sep 2026 18:34:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="beq0ReOO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E111F000FF;
+	Sat, 12 Sep 2026 18:34:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238054;
-	bh=7Yrli/LOyqpzDun+DpDWsy0EQ3LGOVt7+bFkxfguHn8=;
+	s=korg; t=1789238059;
+	bh=1ogh+tiFwy32rSgPnLK8s3tmfGR+A360if/APJObTzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UDxju7XkQg3lWGlDmiDhswAQAi1PWF7uXqsqKZ+e9meUcVN+X/OPq4aAGkMnBncNU
-	 6AMMSfxegmFWauPajq/fGBYG6kx/OVw4iPgCChBPyK52ykA+b6Z9qh17fBSK7ehVjE
-	 rxs+SAsoFXvRRc3PhGxLINUJjs9DUbEBvMhma6FA=
+	b=beq0ReOOp7xWaehBwSp5v+AIe3djE44q9vFkSS//hYKaJnMErJYdMETMru3lk01mj
+	 xfpm8JAm2Gi1ai09mDiZ3RL5CQHfhDGM3AiMuqT8QBU1vhpL9aI8XkUb16fxcJsmwE
+	 X2fm5bTJpRKd2TZOAEs+Jk6YHVKhLOVRIMIywx4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Sun <2022090917019@std.uestc.edu.cn>,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jian Shen <shenjian15@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 383/935] bpf: Fix same-register dst/src OOB read and pointer leak in sock_ops
-Date: Sat, 12 Sep 2026 08:56:53 +0200
-Message-ID: <20260912065535.604629487@linuxfoundation.org>
+Subject: [PATCH 5.15 384/935] net: hns3: dont auto enable misc vector
+Date: Sat, 12 Sep 2026 08:56:54 +0200
+Message-ID: <20260912065535.626740726@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -57,82 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit 10f86a2a5c91fc4c4d001960f1c21abe52545ef6 ]
+[ Upstream commit 98b1e3b27734139c76295754b6c317aa4df6d32e ]
 
-When a BPF sock_ops program accesses ctx fields with dst_reg == src_reg,
-the SOCK_OPS_GET_SK() and SOCK_OPS_GET_FIELD() macros fail to zero the
-destination register in the !fullsock / !locked_tcp_sock path.
+Currently, there is a time window between misc irq enabled
+and service task inited. If an interrupte is reported at
+this time, it will cause warning like below:
 
-Both macros borrow a temporary register to check is_fullsock /
-is_locked_tcp_sock when dst_reg == src_reg, because dst_reg holds the
-ctx pointer. When the check is false (e.g., TCP_NEW_SYN_RECV state with
-a request_sock), dst_reg should be zeroed but is not, leaving the stale
-ctx pointer:
+[   16.324639] Call trace:
+[   16.324641]  __queue_delayed_work+0xb8/0xe0
+[   16.324643]  mod_delayed_work_on+0x78/0xd0
+[   16.324655]  hclge_errhand_task_schedule+0x58/0x90 [hclge]
+[   16.324662]  hclge_misc_irq_handle+0x168/0x240 [hclge]
+[   16.324666]  __handle_irq_event_percpu+0x64/0x1e0
+[   16.324667]  handle_irq_event+0x80/0x170
+[   16.324670]  handle_fasteoi_edge_irq+0x110/0x2bc
+[   16.324671]  __handle_domain_irq+0x84/0xfc
+[   16.324673]  gic_handle_irq+0x88/0x2c0
+[   16.324674]  el1_irq+0xb8/0x140
+[   16.324677]  arch_cpu_idle+0x18/0x40
+[   16.324679]  default_idle_call+0x5c/0x1bc
+[   16.324682]  cpuidle_idle_call+0x18c/0x1c4
+[   16.324684]  do_idle+0x174/0x17c
+[   16.324685]  cpu_startup_entry+0x30/0x6c
+[   16.324687]  secondary_start_kernel+0x1a4/0x280
+[   16.324688] ---[ end trace 6aa0bff672a964aa ]---
 
- - SOCK_OPS_GET_SK: dst_reg retains the ctx pointer, passes NULL checks
-   as PTR_TO_SOCKET_OR_NULL, and can be used as a bogus socket pointer,
-   leading to stack-out-of-bounds access in helpers like
-   bpf_skc_to_tcp6_sock().
+So don't auto enable misc vector when request irq..
 
- - SOCK_OPS_GET_FIELD: dst_reg retains the ctx pointer which the
-   verifier believes is a SCALAR_VALUE, leaking a kernel pointer.
-
-Fix both macros by:
- - Changing JMP_A(1) to JMP_A(2) in the fullsock path to skip the
-   added instruction.
- - Adding BPF_MOV64_IMM(si->dst_reg, 0) after the temp register
-   restore in the !fullsock path, placed after the restore because
-   dst_reg == src_reg means we need src_reg intact to read ctx->temp.
-
-Fixes: fd09af010788 ("bpf: sock_ops ctx access may stomp registers in corner case")
-Fixes: 84f44df664e9 ("bpf: sock_ops sk access may stomp registers when dst_reg = src_reg")
-Reported-by: Quan Sun <2022090917019@std.uestc.edu.cn>
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Reported-by: Dongliang Mu <dzm91@hust.edu.cn>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Closes: https://lore.kernel.org/bpf/6fe1243e-149b-4d3b-99c7-fcc9e2f75787@std.uestc.edu.cn/T/#u
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20260407022720.162151-2-jiayuan.chen@linux.dev
+Fixes: 7be1b9f3e99f ("net: hns3: make hclge_service use delayed workqueue")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Link: https://patch.msgid.link/20250106143642.539698-5-shaojijie@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ .../net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c  | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 6c81daf9efc9d..f51e3940a2fe9 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -9723,10 +9723,11 @@ static u32 sock_ops_convert_ctx_access(enum bpf_access_type type,
- 				      si->dst_reg, si->dst_reg,		      \
- 				      offsetof(OBJ, OBJ_FIELD));	      \
- 		if (si->dst_reg == si->src_reg)	{			      \
--			*insn++ = BPF_JMP_A(1);				      \
-+			*insn++ = BPF_JMP_A(2);				      \
- 			*insn++ = BPF_LDX_MEM(BPF_DW, reg, si->src_reg,	      \
- 				      offsetof(struct bpf_sock_ops_kern,      \
- 				      temp));				      \
-+			*insn++ = BPF_MOV64_IMM(si->dst_reg, 0);	      \
- 		}							      \
- 	} while (0)
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index 4fcb08684ee09..5834aa7e181a5 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -6,6 +6,7 @@
+ #include <linux/etherdevice.h>
+ #include <linux/init.h>
+ #include <linux/interrupt.h>
++#include <linux/irq.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/netdevice.h>
+@@ -3559,7 +3560,7 @@ static int hclge_misc_irq_init(struct hclge_dev *hdev)
+ 	snprintf(hdev->misc_vector.name, HNAE3_INT_NAME_LEN, "%s-misc-%s",
+ 		 HCLGE_NAME, pci_name(hdev->pdev));
+ 	ret = request_irq(hdev->misc_vector.vector_irq, hclge_misc_irq_handle,
+-			  0, hdev->misc_vector.name, hdev);
++			  IRQF_NO_AUTOEN, hdev->misc_vector.name, hdev);
+ 	if (ret) {
+ 		hclge_free_vector(hdev, 0);
+ 		dev_err(&hdev->pdev->dev, "request misc irq(%d) fail\n",
+@@ -11906,12 +11907,13 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
  
-@@ -9760,10 +9761,11 @@ static u32 sock_ops_convert_ctx_access(enum bpf_access_type type,
- 				      si->dst_reg, si->src_reg,		      \
- 				      offsetof(struct bpf_sock_ops_kern, sk));\
- 		if (si->dst_reg == si->src_reg)	{			      \
--			*insn++ = BPF_JMP_A(1);				      \
-+			*insn++ = BPF_JMP_A(2);				      \
- 			*insn++ = BPF_LDX_MEM(BPF_DW, reg, si->src_reg,	      \
- 				      offsetof(struct bpf_sock_ops_kern,      \
- 				      temp));				      \
-+			*insn++ = BPF_MOV64_IMM(si->dst_reg, 0);	      \
- 		}							      \
- 	} while (0)
+ 	hclge_init_rxd_adv_layout(hdev);
  
+-	/* Enable MISC vector(vector0) */
+-	hclge_enable_vector(&hdev->misc_vector, true);
+-
+ 	hclge_state_init(hdev);
+ 	hdev->last_reset_time = jiffies;
+ 
++	/* Enable MISC vector(vector0) */
++	enable_irq(hdev->misc_vector.vector_irq);
++	hclge_enable_vector(&hdev->misc_vector, true);
++
+ 	dev_info(&hdev->pdev->dev, "%s driver initialization finished.\n",
+ 		 HCLGE_DRIVER_NAME);
+ 
+@@ -12311,7 +12313,7 @@ static void hclge_uninit_ae_dev(struct hnae3_ae_dev *ae_dev)
+ 
+ 	/* Disable MISC vector(vector0) */
+ 	hclge_enable_vector(&hdev->misc_vector, false);
+-	synchronize_irq(hdev->misc_vector.vector_irq);
++	disable_irq(hdev->misc_vector.vector_irq);
+ 
+ 	/* Disable all hw interrupts */
+ 	hclge_config_mac_tnl_int(hdev, false);
 -- 
 2.53.0
 
