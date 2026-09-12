@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A03B3C13E3;
-	Sat, 12 Sep 2026 07:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA6E37204A;
+	Sat, 12 Sep 2026 07:11:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197059; cv=none; b=Pqhd3UqMfXbtHqXHqDXVmtqcrFCC/l8P85NQnNoiDPMInbXdY8FXrzKn9QKrT152FbJpnnNtOI5Z8FvBFVmIifhvnH2D2fNOhBmKT7GX9EcHVZUo/ZB06go8+2AHyPdbYZawYzWgMMxpg5lryNLYKIui73IzXXy0F4uZEinghxQ=
+	t=1789197063; cv=none; b=IMjM/6oxxg7FCXSdR4Dkf+7eCFXi0aRH3Z8IhvxcBwYK3hSdO1pPIMTY6+3PJJr66XPZJA85BWs/akgXy0qGFYe9rlmuXXxpylDZQidHQXToNgt+E1FV5EeJJ4YMEHRzOkuA4lMJjxDMxML90OzyVvl0dtmxxi5txmwGYl7YH6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197059; c=relaxed/simple;
-	bh=5cNtmPwg2v7hbqZetFvWeuXhbpKeYNPj+GZ2ZqS5QvI=;
+	s=arc-20240116; t=1789197063; c=relaxed/simple;
+	bh=tSOG7Ep18TLs8xi16bdCcDPg6vOYzYLRSiQQznHnn24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JPpRlr+9RWaVkXlTYuk7YMG2J72Wjw0/hBGhhkw8G80TItZNuJa5egvn6mszNwmmFILQSI2WL8psk2mgwbCrrBrx/ivAb/6BYAMK34I0ZqTAU21PLjby6ExTG9ntPSGOmfJDJ7iYGSqd+C+xDFPhHJ2PuVPG00UHsnlweW4HXck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UIbeJuXY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j1KCdKAgkyHbsgDX0bqis/q+BrTiWeJYwYCmjlgV/U5lNxFPqfnZHrSFUoZSN7euCXfuDzMd+SiFrLm+ka+gPLgTc8mNjLxqDfQYK4HukDRuGcCS5eIw5M3LE7yarVY8KUTj7/jUhRqw4YVu1GVt95Qkr5xDx/HudqGXpj+Eqvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dg42rC/x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UIbeJuXY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBA91F00893;
-	Sat, 12 Sep 2026 07:10:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dg42rC/x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD451F000FF;
+	Sat, 12 Sep 2026 07:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197057;
-	bh=Op2k5HUjf2SHRNvHe1D30e4jWZ9Nbw9exyvAnwIDYwM=;
+	s=korg; t=1789197062;
+	bh=TvNWCCJ+7aKwws44acJ9XLl/6P3S1Abt0gzau5XE02M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UIbeJuXYPj9SbNIcWZId0erhMjxHXy5InCfL/meSoIZ98jab0mjxRB40pKu29YkfM
-	 PRpwnH9k6Qq5fIhMOfDq828nLvHqjCl4SEE22ay3l1KiA5Ax34u6lgy4AVX8flP+gO
-	 9IUMxa7+Yck2n8ku9jvVX/zXQv6+jPGMEVwovP1I=
+	b=dg42rC/xqQJ8aY0nHwZadbDZUz4hLdK33KAVaaSI+MZ/BZOlb8pOUVHXMKQquI1at
+	 ghz846rGgUgD1zEwUBTPKxqXkRBYXOuAPoYzu/5lrKIpNT8v1wWiaufG0GBIApdrfY
+	 h9hAJw84DKbJSUDvL2uRHsJHjESgfJJlQpZJ5tfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Daniel Stone <daniel@fooishbar.org>,
+	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
+	Daniel Stone <daniels@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0049/1815] drm/v3d: Clear queue->active_job when v3d_fence_create() fails
-Date: Sat, 12 Sep 2026 08:29:59 +0200
-Message-ID: <20260912065650.170981652@linuxfoundation.org>
+Subject: [PATCH 7.2 0050/1815] drm/display: hdmi-state-helper: Try subsampling in mode_valid
+Date: Sat, 12 Sep 2026 08:30:00 +0200
+Message-ID: <20260912065650.193621063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,188 +48,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
 
-[ Upstream commit 25a1669907512e927fab9ad4d4fb74ff57f63cd9 ]
+[ Upstream commit f532dc0ea55a25dd24a79442fd0348da09b04b72 ]
 
-The run_job() callbacks for BIN, RENDER, TFU and CSD assign the incoming
-job to queue->active_job before calling v3d_fence_create(). If
-v3d_fence_create() fails, the callback returns NULL without clearing
-active_job, leaving a dangling pointer.
+drm_hdmi_connector_mode_valid assumes modes are only valid if they work
+with RGB. The reality is more complex however: YCbCr 4:2:0
+chroma-subsampled modes only require half the pixel clock that the same
+mode would require in RGB.
 
-Create a failure path in all run_job() callbacks that clears the active
-job before returning NULL. The BIN path takes queue->queue_lock around the
-clear as it races against v3d_overflow_mem_work(); RENDER, TFU and CSD
-paths have no concurrent reader, so the clear is lock-free.
+This leads to drm_hdmi_connector_mode_valid rejecting perfectly valid
+420-only or 420-also modes.
 
-Fixes: a783a09ee76d ("drm/v3d: Refactor job management.")
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Link: https://patch.msgid.link/20260604-v3d-sched-misc-fixes-v4-2-c068f5bf5ccf@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Fix this by checking whether the mode is 420-capable first. If so, then
+proceed by checking it with DRM_OUTPUT_COLOR_FORMAT_YCBCR420 so long as
+the connector has legalized 420, otherwise error out. If the mode is not
+420-capable, check with RGB as was previously always the case.
+
+Fixes: 47368ab437fd ("drm/display: hdmi: add generic mode_valid helper")
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Daniel Stone <daniel@fooishbar.org>
+Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+Link: https://patch.msgid.link/20260609-color-format-v17-9-35739b5782cc@collabora.com
+Signed-off-by: Daniel Stone <daniels@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c | 60 +++++++++++++++++++--------------
- 1 file changed, 34 insertions(+), 26 deletions(-)
+ drivers/gpu/drm/display/drm_hdmi_state_helper.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/v3d/v3d_sched.c b/drivers/gpu/drm/v3d/v3d_sched.c
-index bea46298b69e8..663561ee8d818 100644
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -189,15 +189,11 @@ static struct dma_fence *v3d_bin_job_run(struct drm_sched_job *sched_job)
- 	struct v3d_dev *v3d = job->base.v3d;
- 	struct v3d_queue_state *queue = &v3d->queue[V3D_BIN];
- 	struct drm_device *dev = &v3d->drm;
--	struct dma_fence *fence;
-+	struct dma_fence *fence = NULL;
- 	unsigned long irqflags;
- 
--	if (unlikely(job->base.base.s_fence->finished.error)) {
--		spin_lock_irqsave(&queue->queue_lock, irqflags);
--		queue->active_job = NULL;
--		spin_unlock_irqrestore(&queue->queue_lock, irqflags);
--		return NULL;
--	}
-+	if (unlikely(job->base.base.s_fence->finished.error))
-+		goto out_clean_job;
- 
- 	/* Lock required around bin_job update vs
- 	 * v3d_overflow_mem_work().
-@@ -214,7 +210,7 @@ static struct dma_fence *v3d_bin_job_run(struct drm_sched_job *sched_job)
- 
- 	fence = v3d_fence_create(v3d, V3D_BIN);
- 	if (IS_ERR(fence))
--		return NULL;
-+		goto out_clean_job;
- 
- 	if (job->base.irq_fence)
- 		dma_fence_put(job->base.irq_fence);
-@@ -242,6 +238,12 @@ static struct dma_fence *v3d_bin_job_run(struct drm_sched_job *sched_job)
- 	V3D_CORE_WRITE(0, V3D_CLE_CT0QEA, job->end);
- 
- 	return fence;
+diff --git a/drivers/gpu/drm/display/drm_hdmi_state_helper.c b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
+index cae0d85fb4407..a3aee41385548 100644
+--- a/drivers/gpu/drm/display/drm_hdmi_state_helper.c
++++ b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
+@@ -910,8 +910,21 @@ drm_hdmi_connector_mode_valid(struct drm_connector *connector,
+ 			      const struct drm_display_mode *mode)
+ {
+ 	unsigned long long clock;
++	enum drm_output_color_format fmt;
 +
-+out_clean_job:
-+	spin_lock_irqsave(&queue->queue_lock, irqflags);
-+	queue->active_job = NULL;
-+	spin_unlock_irqrestore(&queue->queue_lock, irqflags);
-+	return fence;
- }
++	if (drm_mode_is_420_only(&connector->display_info, mode)) {
++		if (connector->ycbcr_420_allowed)
++			fmt = DRM_OUTPUT_COLOR_FORMAT_YCBCR420;
++		else
++			return MODE_NO_420;
++	} else if (drm_mode_is_420_also(&connector->display_info, mode) &&
++		   connector->ycbcr_420_allowed) {
++		fmt = DRM_OUTPUT_COLOR_FORMAT_YCBCR420;
++	} else {
++		fmt = DRM_OUTPUT_COLOR_FORMAT_RGB444;
++	}
  
- static struct dma_fence *v3d_render_job_run(struct drm_sched_job *sched_job)
-@@ -249,12 +251,10 @@ static struct dma_fence *v3d_render_job_run(struct drm_sched_job *sched_job)
- 	struct v3d_render_job *job = to_render_job(sched_job);
- 	struct v3d_dev *v3d = job->base.v3d;
- 	struct drm_device *dev = &v3d->drm;
--	struct dma_fence *fence;
-+	struct dma_fence *fence = NULL;
+-	clock = drm_hdmi_compute_mode_clock(mode, 8, DRM_OUTPUT_COLOR_FORMAT_RGB444);
++	clock = drm_hdmi_compute_mode_clock(mode, 8, fmt);
+ 	if (!clock)
+ 		return MODE_ERROR;
  
--	if (unlikely(job->base.base.s_fence->finished.error)) {
--		v3d->queue[V3D_RENDER].active_job = NULL;
--		return NULL;
--	}
-+	if (unlikely(job->base.base.s_fence->finished.error))
-+		goto out_clean_job;
- 
- 	v3d->queue[V3D_RENDER].active_job = &job->base;
- 
-@@ -268,7 +268,7 @@ static struct dma_fence *v3d_render_job_run(struct drm_sched_job *sched_job)
- 
- 	fence = v3d_fence_create(v3d, V3D_RENDER);
- 	if (IS_ERR(fence))
--		return NULL;
-+		goto out_clean_job;
- 
- 	if (job->base.irq_fence)
- 		dma_fence_put(job->base.irq_fence);
-@@ -289,6 +289,10 @@ static struct dma_fence *v3d_render_job_run(struct drm_sched_job *sched_job)
- 	V3D_CORE_WRITE(0, V3D_CLE_CT1QEA, job->end);
- 
- 	return fence;
-+
-+out_clean_job:
-+	v3d->queue[V3D_RENDER].active_job = NULL;
-+	return fence;
- }
- 
- static struct dma_fence *
-@@ -297,18 +301,16 @@ v3d_tfu_job_run(struct drm_sched_job *sched_job)
- 	struct v3d_tfu_job *job = to_tfu_job(sched_job);
- 	struct v3d_dev *v3d = job->base.v3d;
- 	struct drm_device *dev = &v3d->drm;
--	struct dma_fence *fence;
-+	struct dma_fence *fence = NULL;
- 
--	if (unlikely(job->base.base.s_fence->finished.error)) {
--		v3d->queue[V3D_TFU].active_job = NULL;
--		return NULL;
--	}
-+	if (unlikely(job->base.base.s_fence->finished.error))
-+		goto out_clean_job;
- 
- 	v3d->queue[V3D_TFU].active_job = &job->base;
- 
- 	fence = v3d_fence_create(v3d, V3D_TFU);
- 	if (IS_ERR(fence))
--		return NULL;
-+		goto out_clean_job;
- 
- 	if (job->base.irq_fence)
- 		dma_fence_put(job->base.irq_fence);
-@@ -336,6 +338,10 @@ v3d_tfu_job_run(struct drm_sched_job *sched_job)
- 	V3D_WRITE(V3D_TFU_ICFG(v3d->ver), job->args.icfg | V3D_TFU_ICFG_IOC);
- 
- 	return fence;
-+
-+out_clean_job:
-+	v3d->queue[V3D_TFU].active_job = NULL;
-+	return fence;
- }
- 
- static struct dma_fence *
-@@ -344,13 +350,11 @@ v3d_csd_job_run(struct drm_sched_job *sched_job)
- 	struct v3d_csd_job *job = to_csd_job(sched_job);
- 	struct v3d_dev *v3d = job->base.v3d;
- 	struct drm_device *dev = &v3d->drm;
--	struct dma_fence *fence;
-+	struct dma_fence *fence = NULL;
- 	int i, csd_cfg0_reg;
- 
--	if (unlikely(job->base.base.s_fence->finished.error)) {
--		v3d->queue[V3D_CSD].active_job = NULL;
--		return NULL;
--	}
-+	if (unlikely(job->base.base.s_fence->finished.error))
-+		goto out_clean_job;
- 
- 	/* The HW interprets a workgroup size of 0 as 65536; however, the
- 	 * user-space driver exposes a maximum of 65535. Therefore, a 0 in
-@@ -368,7 +372,7 @@ v3d_csd_job_run(struct drm_sched_job *sched_job)
- 
- 	fence = v3d_fence_create(v3d, V3D_CSD);
- 	if (IS_ERR(fence))
--		return NULL;
-+		goto out_clean_job;
- 
- 	if (job->base.irq_fence)
- 		dma_fence_put(job->base.irq_fence);
-@@ -395,6 +399,10 @@ v3d_csd_job_run(struct drm_sched_job *sched_job)
- 	V3D_CORE_WRITE(0, csd_cfg0_reg, job->args.cfg[0]);
- 
- 	return fence;
-+
-+out_clean_job:
-+	v3d->queue[V3D_CSD].active_job = NULL;
-+	return fence;
- }
- 
- static void
 -- 
 2.53.0
 
