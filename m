@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D5E3A16AA;
-	Sat, 12 Sep 2026 19:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBDC481A81;
+	Sat, 12 Sep 2026 19:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240340; cv=none; b=awA1IqTr4ri7bsPiUyVsjro6QNFrFzBWknZ4R+iDNyV/IAYYgNTflnP7nPARofktD6mzd90CzdBQqgDL/Ib2YC31iqDirDZdxfWa9KhqDYZKOrPrhp2sy6kjGJ77i+21C81nIMT1wv8vJxRBgDGorLTnkwIC08/Lx68/VuPIj8E=
+	t=1789240345; cv=none; b=qcmWKUciP4FvtygaeHn1SLhTdXuKTTLyMVHYc6/dYT1fRx7A8D00i51iKze7CLvlNUavRTx4Xt9hRkLbaYyeF2ScwLcVKnR/gIdLuYQBlFOYWh1t0OePl+OobAEFlhIEx8N0K+h/0TYpdhvTRh6ML7aowi7kGNcWUXtv+azgi2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240340; c=relaxed/simple;
-	bh=BU8JbVHktovhZLoEnI92kxosMHmSEHeWYZhNbR6HUu8=;
+	s=arc-20240116; t=1789240345; c=relaxed/simple;
+	bh=P3XM05Ng96AMTaLYPLV8BiASewK5IMgNVbUbHvQv2pI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M670QJL6rM/PiBXsIs+fCv1sc5HOQTfydzmO+ykkm97dFSMRHjfvKrluHQdDK3hChF/PexuqtRLEfQW+o3KX6RGuwSGkXwY/DMooiZ1vH8vwhgHC+vvy1w1X52Aq4/ljYAxSKNxCpr5ZAO1mbBgglImT1tZCztpBdeR97aOSYuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jP3ku+hO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aPy+Z/kYg+LJbwmqmSjA2uLvLgHvkRGJLhll8IM7DotNSsSBzJbTCHo5PRmqHy48bXBEqp06kUqgyfZl4Tv5Qs7D2WmLVm0aoxC29Pxl9hVJ44m6q8cHnrl76jjypywrWdDiAWjYC1joecucAM03yhm3LVbEYlM2K/h0Z6kfJ1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nytis+Vw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jP3ku+hO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF6D1F000FF;
-	Sat, 12 Sep 2026 19:12:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nytis+Vw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27CB81F00898;
+	Sat, 12 Sep 2026 19:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240339;
-	bh=fQV3dj+2tD9PtD4jclvuvU4zMjteO4Y5otJ165ywX/o=;
+	s=korg; t=1789240344;
+	bh=lVo//3qyRR+8uZREMDmEyMKx7URBUEApoqY0tb+Rys0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jP3ku+hOHgYyKvhhWS3It4T3e/giH2eSJTrj85PD2fV0eg0cEiMHvRUADOaeDnhuI
-	 6Iv2KRVN5f7VacrCM7OziR67yPdrPtYG0ijOfrTRsuKAC584Qviewypd62X5R6Sf4B
-	 Awiox/wax4cGMmm9D9zayyG7ktIeR/3OfJV/ppvM=
+	b=nytis+VwEX+e0CXTqafsm5AYobxWKHzt6mr8RH4RP35PiJB4nionJWJ+GimGcByCY
+	 I2mQzLePDBdF6x449drwTqSn+dy949l98xGn8J5msRUKquqFIYdr7/AXL960gvcJHS
+	 9109EBRbEqIwUbJR579x2xpe08K48zkT7f3wgvLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 847/935] cuse: wait for pending RCU callbacks on module exit
-Date: Sat, 12 Sep 2026 09:04:37 +0200
-Message-ID: <20260912065546.255566127@linuxfoundation.org>
+Subject: [PATCH 5.15 848/935] fs/ntfs3: fix out-of-bounds read in read_log_rec_buf()
+Date: Sat, 12 Sep 2026 09:04:38 +0200
+Message-ID: <20260912065546.278701262@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,69 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 4deb3edead0c0e172cc7349e8855d741d3c5e162 ]
+[ Upstream commit de603b9d377fab57a5e6432fa84a9f36b32c1636 ]
 
-Since commit 053fc4f755ad ("fuse: fix UAF in rcu pathwalks"),
-fuse_conn_put() frees the fuse_conn through call_rcu() rather than
-synchronously.  For cuse, fc->release is cuse_fc_release(), which
-lives in the cuse module.  If the module is removed before the RCU
-grace period ends, the callback jumps into freed module memory:
+read_log_rec_buf() copies a log record into a caller buffer starting at
 
-      userspace / module unload      |        RCU softirq
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- close(/dev/cuse)                    |
-  cuse_channel_release()             |
-   fuse_dev_release()                |
-    fuse_conn_put(fch->conn)         |
-     call_rcu(delayed_release) ------+---> callback queued
-                                     |
- rmmod cuse                          |
-  cuse_exit()                        |
-   cuse_channel_destroy()            |
-   ...                               |
-   return                            |
-                                     |
- <module text freed>                 |
-                                     |  rcu_do_batch()
-                                     |   delayed_release()
-                                     |    fc->release()
-                                     |     -> cuse_fc_release()
-                                     |        ^^^ freed text!
+	u32 off = lsn_to_page_off(log, lsn) + log->record_header_len;
 
-The freed module text is unmapped by vfree(), so the jump into the
-stale callback triggers a page-fault Oops.  If the virtual address
-is subsequently reused, the callback could execute unrelated code
-(undefined behaviour).
+log->record_header_len (and log->data_off, used for the following pages)
+comes verbatim from the on-disk restart area and is only checked for
+8-byte alignment in is_rst_area_valid(), so off can exceed
+log->page_size. "tail = log->page_size - off" then underflows and
+memcpy() reads past the page_size-sized buffer returned by
+read_log_page(), spilling adjacent slab memory into the replay buffer.
 
-Fix this by calling rcu_barrier() in cuse_exit() so that any pending
-fuse_conn release callback completes before the module is removed.
+This is reachable by mounting a crafted NTFS image:
 
-Fixes: 053fc4f755ad ("fuse: fix UAF in rcu pathwalks")
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+ BUG: KASAN: slab-out-of-bounds in read_log_rec_buf+0x216/0x580
+ Read of size 64 at addr ffff88800a877ff8 by task exploit/127
+  read_log_rec_buf fs/ntfs3/fslog.c:2299
+  log_replay fs/ntfs3/fslog.c:4216
+  ntfs_loadlog_and_replay fs/ntfs3/fsntfs.c:324
+  ntfs_fill_super fs/ntfs3/super.c:1392
+  get_tree_bdev_flags fs/super.c:1694
+  __x64_sys_mount fs/namespace.c:4360
+ The buggy address is located 4088 bytes to the right of
+ the 4096-byte region [ffff88800a876000, ffff88800a877000)
+
+Reject an in-page offset outside the current page before the copy.
+
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Assisted-by: Claude:claude-opus-4-8
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+[almaz.alexandrovich@paragon-software.com: replaced the >= sign with >]
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/cuse.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/ntfs3/fslog.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fuse/cuse.c b/fs/fuse/cuse.c
-index d10d58c730dd2..698a69eced17b 100644
---- a/fs/fuse/cuse.c
-+++ b/fs/fuse/cuse.c
-@@ -646,6 +646,11 @@ static void __exit cuse_exit(void)
- {
- 	misc_deregister(&cuse_miscdev);
- 	class_destroy(cuse_class);
-+	/*
-+	 * Wait for pending call_rcu() callbacks that call back into
-+	 * this module via fc->release (cuse_fc_release).
-+	 */
-+	rcu_barrier();
- }
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index d0f2fa1a6f91d..f9a7e17031b04 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -2303,7 +2303,15 @@ static int read_log_rec_buf(struct ntfs_log *log,
+ 	 */
+ 	for (;;) {
+ 		bool usa_error;
+-		u32 tail = log->page_size - off;
++		u32 tail;
++
++		/* off comes from the on-disk restart area; bound it. */
++		if (off > log->page_size) {
++			err = -EINVAL;
++			goto out;
++		}
++
++		tail = log->page_size - off;
  
- module_init(cuse_init);
+ 		if (tail >= data_len)
+ 			tail = data_len;
 -- 
 2.53.0
 
