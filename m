@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E5F429CD0;
-	Sat, 12 Sep 2026 11:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452FA3DD51A;
+	Sat, 12 Sep 2026 11:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211124; cv=none; b=dHzwRKW1ki5sL3GlXehvIF2nqHY2ElY2hNkGdd2ezCeZtkCJPUcXNf6ZgrShrZIgvk4GT/RKOFp/1t8ssKup+eUG7wbqhJZb0lHggdgCl4rr0Hp9K3R1fY8xtXOtfBm/gY0uyx08Tal3+C3SE4VpU7h2TslNG/0ffjTSNv7oL6k=
+	t=1789211129; cv=none; b=YWlAeBIuuDZZEne7Q/Sh6UMuGzFxqHgaksfemES3f/hwXAZNyLOyoZK9WXeXmoeL2PR5hdl4A/ZmXUEVZm71+YjzJkhuCyKja49WJeoKQPxx31kt0i7FkMKCt1AmxgyeXZ8Ibu/g9Iubs6I8+fWekch3Jg2zfld1m0ARhGJcie0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211124; c=relaxed/simple;
-	bh=DhSdSLAaRniJcmiJWtsN0dj4IB28MIX2zvCVcaPsnBs=;
+	s=arc-20240116; t=1789211129; c=relaxed/simple;
+	bh=Y/ou90K6FgU1abAkX6Vat0YmvA4HvtJ1MD4fdDXTzx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UU+7es6Py0V3xUhZ5+sPyi2Q+XzBwC1yMfO7980ygyw5qbJ66cgUM/V+nyBChFEI0u7RzZ89zg3tVV5ekCkK6VxyI1+cYxF/3LBDSPSK0YtAYxn9u01dIR7se0kqZMQq3e4c8D3tky7A/K0EhBDZTfF5jJqdKW/cRH8RN89Zg50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqaaKHqr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MYalGe5/pRy9CojlQqon8u1eferLMQ+GTU4Lq93/8VPR/J3oPw1XtSsQRge1yupx8VOuLFAqMOp0jnZQdJ+FMHbSeC4f6qGER0EOTGfQD9UAopEnX6LqMjZIhlF+9Iu8+EMC7xCvd6cPbTYTEZYIAY0F901WnV42v8VeG8yDbmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JP27xKKI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqaaKHqr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0468B1F000FF;
-	Sat, 12 Sep 2026 11:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JP27xKKI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C491F000FF;
+	Sat, 12 Sep 2026 11:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211123;
-	bh=D3uaFUDDBqL3U4nsKdasebs8a1pAR1WXjhT+0yjpjlc=;
+	s=korg; t=1789211128;
+	bh=E8dDVlzdjMlKB03XZmbGjVaUsP7gN3aOE2Badr2uPbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FqaaKHqrraZlMiN6z/d/XOp16o4g3WiZYsbvPyjn9QiOnbsxMUKgn9TZMvW84hKbK
-	 rCP12l4loERFdT4tppQRP6BZmwjv+7gZkrZ0Xhx2xlgJmINbW9/XHIJgBzfjB+ytRD
-	 eJSQNy00JxNE3929Xp0i4IXkXwig80fvDlF7ICLM=
+	b=JP27xKKI+aG8joH+58ghXXdBheq1cYVarvDZnpYtlR+jSapwXq36D3djWG6xhbR7A
+	 HMQ3KCwPfryCOWK/3B5ZYzuwyFdRReX9zhVFzsHjQaIXy0a9DpNrmnRU5me9woqxuZ
+	 5B4BL+qGOZlHwfnCGmVlY3oe57jINMgPpn7ypBko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Henrik Grimler <henrik.grimler@axis.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1149/1518] firewire: core: add KUnit test skeleton for node tree
-Date: Sat, 12 Sep 2026 08:55:18 +0200
-Message-ID: <20260912065649.449320687@linuxfoundation.org>
+Subject: [PATCH 6.18 1167/1518] power: supply: bq27xxx: bq27z561: fix invalid AverageEnergy address
+Date: Sat, 12 Sep 2026 08:55:36 +0200
+Message-ID: <20260912065649.864418440@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,100 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Henrik Grimler <henrik.grimler@axis.com>
 
-[ Upstream commit 1f9b65cf57081035547b4d3ca1805df20892e9db ]
+[ Upstream commit 2da28b059e0ddcd2e1956eeae383246207965573 ]
 
-Some issues have been reported in node tree management. Refactoring
-the topology-related code in the core is required. Adding unit tests
-would help ensure that the refactoring does not introduce regressions.
+bq27z561 currently uses the AveragePower reg, 0x22, for reading both
+AveragePower and AvailableEnergy. The technical reference manual does
+not mention AvailableEnergy, and it does not make sense to read a
+cumulative, always positive, property like AvailableEnergy from a rate
+property like AveragePower. Set REG_AE as invalid to fix it.
 
-This commit adds a KUnit test skeleton for this purpose.
-
-Link: https://lore.kernel.org/r/20260810064119.410324-2-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Stable-dep-of: 05bfb1327dc5 ("firewire: core: fix memory leak in error path of build_tree()")
+Fixes: 6f24ff97e323 ("power: supply: bq27xxx_battery: Add the BQ27Z561 Battery monitor")
+Signed-off-by: Henrik Grimler <henrik.grimler@axis.com>
+Link: https://patch.msgid.link/20260811-bq27z746-v1-5-3a4fa38205cc@axis.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/.kunitconfig     |  1 +
- drivers/firewire/Kconfig          | 15 +++++++++++++++
- drivers/firewire/core-topology.c  |  4 ++++
- drivers/firewire/node-tree-test.c | 19 +++++++++++++++++++
- 4 files changed, 39 insertions(+)
- create mode 100644 drivers/firewire/node-tree-test.c
+ drivers/power/supply/bq27xxx_battery.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firewire/.kunitconfig b/drivers/firewire/.kunitconfig
-index 21b7e9eef63d1..7406acb004782 100644
---- a/drivers/firewire/.kunitconfig
-+++ b/drivers/firewire/.kunitconfig
-@@ -6,3 +6,4 @@ CONFIG_FIREWIRE_KUNIT_DEVICE_ATTRIBUTE_TEST=y
- CONFIG_FIREWIRE_KUNIT_PACKET_SERDES_TEST=y
- CONFIG_FIREWIRE_KUNIT_SELF_ID_SEQUENCE_HELPER_TEST=y
- CONFIG_FIREWIRE_KUNIT_OHCI_SERDES_TEST=y
-+CONFIG_FIREWIRE_KUNIT_NODE_TREE_TEST=y
-diff --git a/drivers/firewire/Kconfig b/drivers/firewire/Kconfig
-index a5f5e250223a1..b5abe00accc9d 100644
---- a/drivers/firewire/Kconfig
-+++ b/drivers/firewire/Kconfig
-@@ -81,6 +81,21 @@ config FIREWIRE_KUNIT_SELF_ID_SEQUENCE_HELPER_TEST
- 	  For more information on KUnit and unit tests in general, refer
- 	  to the KUnit documentation in Documentation/dev-tools/kunit/.
- 
-+config FIREWIRE_KUNIT_NODE_TREE_TEST
-+	tristate "KUnit tests for node tree" if !KUNIT_ALL_TESTS
-+	depends on FIREWIRE && KUNIT
-+	default KUNIT_ALL_TESTS
-+	help
-+	  This builds the KUnit tests for node tree.
-+
-+	  KUnit tests run during boot and output the results to the debug
-+	  log in TAP format (https://testanything.org/). Only useful for
-+	  kernel devs running KUnit test harness and are not for inclusion
-+	  into a production build.
-+
-+	  For more information on KUnit and unit tests in general, refer
-+	  to the KUnit documentation in Documentation/dev-tools/kunit/.
-+
- config FIREWIRE_OHCI
- 	tristate "OHCI-1394 controllers"
- 	depends on PCI && FIREWIRE
-diff --git a/drivers/firewire/core-topology.c b/drivers/firewire/core-topology.c
-index ed3ae8cdb0cdb..45c71327c3c3d 100644
---- a/drivers/firewire/core-topology.c
-+++ b/drivers/firewire/core-topology.c
-@@ -505,3 +505,7 @@ void fw_core_handle_bus_reset(struct fw_card *card, int node_id, int generation,
- 	}
- }
- EXPORT_SYMBOL(fw_core_handle_bus_reset);
-+
-+#ifdef CONFIG_FIREWIRE_KUNIT_NODE_TREE_TEST
-+#include "node-tree-test.c"
-+#endif
-diff --git a/drivers/firewire/node-tree-test.c b/drivers/firewire/node-tree-test.c
-new file mode 100644
-index 0000000000000..fca71dd99b25f
---- /dev/null
-+++ b/drivers/firewire/node-tree-test.c
-@@ -0,0 +1,19 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+//
-+// node-tree-test.c - An application of Kunit to test node tree.
-+//
-+// Copyright (c) 2026 Takashi Sakamoto
-+//
-+// This file can not be built independently since it is intentionally included in core-topology.c.
-+
-+#include <kunit/test.h>
-+
-+static struct kunit_case node_tree_test_cases[] = {
-+	{}
-+};
-+
-+static struct kunit_suite node_tree_test_suite = {
-+	.name = "firewire-node-tree",
-+	.test_cases = node_tree_test_cases,
-+};
-+kunit_test_suite(node_tree_test_suite);
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index dab655a1cc20d..01c9ec1116fa0 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -495,7 +495,7 @@ static u8
+ 		[BQ27XXX_REG_RC] = 0x10,
+ 		[BQ27XXX_REG_FCC] = 0x12,
+ 		[BQ27XXX_REG_CYCT] = 0x2a,
+-		[BQ27XXX_REG_AE] = 0x22,
++		[BQ27XXX_REG_AE] = INVALID_REG_ADDR,
+ 		[BQ27XXX_REG_SOC] = 0x2c,
+ 		[BQ27XXX_REG_DCAP] = 0x3c,
+ 		[BQ27XXX_REG_AP] = 0x22,
 -- 
 2.53.0
 
