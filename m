@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9587472777;
-	Sat, 12 Sep 2026 12:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD6547AF61;
+	Sat, 12 Sep 2026 12:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214472; cv=none; b=JQiwZt9JCotRbe7Z8VQaImppWxZvyunse28QAokIwhwEw6Yl2/LsQy5ejyihuGg6Pju5Y5/TEqF2CPFN7yfDmdiv2sW/D3U3mHPyustdKJKA7fm08Rb3az/SSxgFKddytkTfbP9piT9wX4XGAtRuy7TAXOR+ZqvNh06wOhCO9vI=
+	t=1789214479; cv=none; b=abMtkC1VKJMZupebY35pH62WlWzSVPp6E9ZmcrCe2PLDDhuY1D2Mk3GDNhf2yL0AOqB0pjrUlAjGgNbFtySzTae87U6/2RbC+UZL/9kRpyffoJaymqLpTLFivYIZdqB3CJghMAvwHN874KCvrVSb8MgTavi9v7MJk5ZSnLIKqLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214472; c=relaxed/simple;
-	bh=B7oVZYIcsN52QoL7kIJ+9w5fU+hIqyAixSBXa4251P4=;
+	s=arc-20240116; t=1789214479; c=relaxed/simple;
+	bh=XezHXrDflC3jGQ9rydagSMmzE0/46Xb4x0vb7iqUz0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SGz+oSv3rI4mLSOnCPeKIyp1UF5VurwmktPWF4LVYUwqt/9gGz8vbDZ4My9pk/ynJwTjujEA495CVSEQPEO0d8FYfl5c3RoWSjisF4SPe4fnndcw1DEXJgsdJSmn9LXLXUcXOUh8k5nt0iElLgzihEW+TGXuepF2KJ8UYu+h6Z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TG14FIWX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c7CPUQuWfsYFMw5UCEKynfDWh1vFjwG3VqtJjrm5bKNy28uATZ4uomQ3QP89qB5G0LHVeyfeMmIcASzlCZfXBPlVIsopYLU0cxcvdbnxRUKyE4ErZgqFH+o018WOcfILThGn811Uf8UzFeSGd94QjrIrRtEpNWn5vhovPGvyjk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKjUeG6D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TG14FIWX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96CBC1F000FF;
-	Sat, 12 Sep 2026 12:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKjUeG6D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51421F000FF;
+	Sat, 12 Sep 2026 12:01:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214471;
-	bh=+w1gP/pfYWWjNAS+ZUtl7GC9pTUKjiwItIqDdhu9jBo=;
+	s=korg; t=1789214477;
+	bh=fRsHpMup3QqszBAphLGCCIq0ho9SMaakUeoLM4ANvTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TG14FIWX/wTFT3FRJ9mNtkf9Dnp/xupc389PuXMT2QpgOJ4CayJBnYOSjbGK05GF6
-	 Og05WQsIHR0zk8gFYXqmiL0L22TcUCZqpKWGONLk2hK2uy7hfFm8nwPTIHE5bWrwFe
-	 QCFIukTEoFj+Lj0xYPQkDApagVl2i2TblutB//8Y=
+	b=IKjUeG6DI2OCEE2XUje/pQzIwLUIvl0PmlFn7ud7tVKzI6ZgdoVC7np1uMhLbgz0u
+	 p09YYP1w9bujHfPHiFYfH+st74KC0d69jI3ri2KzVKZWLQBXvHw0y3Fjc+5RFdzNrr
+	 NX/Po47gIMO1rIrCw9XYzF/wOQCoe4IefqFCKoGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kazuki Hanai <hnkz.64@gmail.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0290/1376] nvmet-auth: Synchronize timeout work during SQ teardown
-Date: Sat, 12 Sep 2026 08:45:16 +0200
-Message-ID: <20260912065614.009517949@linuxfoundation.org>
+Subject: [PATCH 6.12 0291/1376] mm/damon/vaddr: drop last same folio access check optimization
+Date: Sat, 12 Sep 2026 08:45:17 +0200
+Message-ID: <20260912065614.032266605@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,85 +51,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kazuki Hanai <hnkz.64@gmail.com>
+From: SJ Park <sj@kernel.org>
 
-[ Upstream commit eaa948c0e19b1bb2d93262207bca0c3d19cc3406 ]
+[ Upstream commit 831846078caa14b7d00b2ccca8b8fe522afe3204 ]
 
-nvmet_auth_sq_free() cancels auth_expired_work with
-cancel_delayed_work(). If the work has already started, cancellation does
-not wait for the callback. Transport teardown can consequently free or
-reuse the queue containing struct nvmet_sq while
-nvmet_auth_expired_work() still accesses that SQ.
+The optimization can race when multiple kdamonds are running.  Meanwhile,
+the impact of the optimization is quite doubtful.  Just remove it.
 
-Add a teardown-specific helper that synchronously drains the delayed work
-before freeing authentication state, and use it from nvmet_sq_destroy().
-Keep the non-synchronous helper for in-band authentication state cleanup,
-where the SQ owner remains alive.
+The user impact of the issue should be quite trivial.  After all, the race
+can happen only when the user intentionally setup DAMON in the way.  Even
+if it happens, it would be rare and only degrade the best-effort
+monitoring results.  No critical consequences like kernel panic or memory
+corruption happen.
 
-Fixes: 1a70200f404a ("nvmet-auth: expire authentication sessions")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kazuki Hanai <hnkz.64@gmail.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Kazuki Hanai <hnkz.64@gmail.com>
+The race possibility was discovered [1] by Sashiko.
+
+Link: https://lore.kernel.org/20260715031002.108504-4-sj@kernel.org
+Link: https://lore.kernel.org/20260621204050.10993-1-sj@kernel.org [1]
+Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.15.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/auth.c  | 6 ++++++
- drivers/nvme/target/core.c  | 2 +-
- drivers/nvme/target/nvmet.h | 2 ++
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ mm/damon/vaddr.c | 34 ++++++----------------------------
+ 1 file changed, 6 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
-index b47d675232d2d..38d1ced21f532 100644
---- a/drivers/nvme/target/auth.c
-+++ b/drivers/nvme/target/auth.c
-@@ -241,6 +241,12 @@ void nvmet_auth_sq_free(struct nvmet_sq *sq)
- 	sq->dhchap_skey = NULL;
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 52e5c244bd021..089ee23e07de7 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -429,8 +429,6 @@ static void damon_va_prepare_access_checks(struct damon_ctx *ctx)
  }
  
-+void nvmet_auth_sq_destroy(struct nvmet_sq *sq)
-+{
-+	cancel_delayed_work_sync(&sq->auth_expired_work);
-+	nvmet_auth_sq_free(sq);
-+}
-+
- void nvmet_destroy_auth(struct nvmet_ctrl *ctrl)
- {
- 	ctrl->shash_id = 0;
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index ce85b57832603..6267c6d576db9 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -812,7 +812,7 @@ void nvmet_sq_destroy(struct nvmet_sq *sq)
- 	wait_for_completion(&sq->confirm_done);
- 	wait_for_completion(&sq->free_done);
- 	percpu_ref_exit(&sq->ref);
--	nvmet_auth_sq_free(sq);
-+	nvmet_auth_sq_destroy(sq);
+ struct damon_young_walk_private {
+-	/* size of the folio for the access checked virtual memory address */
+-	unsigned long *folio_sz;
+ 	bool young;
+ };
  
- 	/*
- 	 * we must reference the ctrl again after waiting for inflight IO
-diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
-index 17a63bc7d80c0..25bba2d097626 100644
---- a/drivers/nvme/target/nvmet.h
-+++ b/drivers/nvme/target/nvmet.h
-@@ -737,6 +737,7 @@ u8 nvmet_setup_auth(struct nvmet_ctrl *ctrl);
- void nvmet_auth_sq_init(struct nvmet_sq *sq);
- void nvmet_destroy_auth(struct nvmet_ctrl *ctrl);
- void nvmet_auth_sq_free(struct nvmet_sq *sq);
-+void nvmet_auth_sq_destroy(struct nvmet_sq *sq);
- int nvmet_setup_dhgroup(struct nvmet_ctrl *ctrl, u8 dhgroup_id);
- bool nvmet_check_auth_status(struct nvmet_req *req);
- int nvmet_auth_host_hash(struct nvmet_req *req, u8 *response,
-@@ -761,6 +762,7 @@ static inline void nvmet_auth_sq_init(struct nvmet_sq *sq)
- }
- static inline void nvmet_destroy_auth(struct nvmet_ctrl *ctrl) {};
- static inline void nvmet_auth_sq_free(struct nvmet_sq *sq) {};
-+static inline void nvmet_auth_sq_destroy(struct nvmet_sq *sq) {};
- static inline bool nvmet_check_auth_status(struct nvmet_req *req)
+@@ -466,7 +464,6 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 					mmu_notifier_test_young(walk->mm,
+ 						addr))
+ 			priv->young = true;
+-		*priv->folio_sz = HPAGE_PMD_SIZE;
+ 		folio_put(folio);
+ huge_out:
+ 		spin_unlock(ptl);
+@@ -488,7 +485,6 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 	if (pte_young(ptent) || !folio_test_idle(folio) ||
+ 			mmu_notifier_test_young(walk->mm, addr))
+ 		priv->young = true;
+-	*priv->folio_sz = folio_size(folio);
+ 	folio_put(folio);
+ out:
+ 	pte_unmap_unlock(pte, ptl);
+@@ -517,7 +513,6 @@ static int damon_young_hugetlb_entry(pte_t *pte, unsigned long hmask,
+ 	if (pte_young(entry) || !folio_test_idle(folio) ||
+ 	    mmu_notifier_test_young(walk->mm, addr))
+ 		priv->young = true;
+-	*priv->folio_sz = huge_page_size(h);
+ 
+ 	folio_put(folio);
+ 
+@@ -535,11 +530,9 @@ static const struct mm_walk_ops damon_young_ops = {
+ 	.walk_lock = PGWALK_RDLOCK,
+ };
+ 
+-static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
+-		unsigned long *folio_sz)
++static bool damon_va_young(struct mm_struct *mm, unsigned long addr)
  {
- 	return true;
+ 	struct damon_young_walk_private arg = {
+-		.folio_sz = folio_sz,
+ 		.young = false,
+ 	};
+ 
+@@ -556,29 +549,18 @@ static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
+  * r	the region to be checked
+  */
+ static void __damon_va_check_access(struct mm_struct *mm,
+-				struct damon_region *r, bool same_target,
++				struct damon_region *r,
+ 				struct damon_attrs *attrs)
+ {
+-	static unsigned long last_addr;
+-	static unsigned long last_folio_sz = PAGE_SIZE;
+-	static bool last_accessed;
++	bool accessed;
+ 
+ 	if (!mm) {
+ 		damon_update_region_access_rate(r, false, attrs);
+ 		return;
+ 	}
+ 
+-	/* If the region is in the last checked page, reuse the result */
+-	if (same_target && (ALIGN_DOWN(last_addr, last_folio_sz) ==
+-				ALIGN_DOWN(r->sampling_addr, last_folio_sz))) {
+-		damon_update_region_access_rate(r, last_accessed, attrs);
+-		return;
+-	}
+-
+-	last_accessed = damon_va_young(mm, r->sampling_addr, &last_folio_sz);
+-	damon_update_region_access_rate(r, last_accessed, attrs);
+-
+-	last_addr = r->sampling_addr;
++	accessed = damon_va_young(mm, r->sampling_addr);
++	damon_update_region_access_rate(r, accessed, attrs);
+ }
+ 
+ static unsigned int damon_va_check_accesses(struct damon_ctx *ctx)
+@@ -587,16 +569,12 @@ static unsigned int damon_va_check_accesses(struct damon_ctx *ctx)
+ 	struct mm_struct *mm;
+ 	struct damon_region *r;
+ 	unsigned int max_nr_accesses = 0;
+-	bool same_target;
+ 
+ 	damon_for_each_target(t, ctx) {
+ 		mm = damon_get_mm(t);
+-		same_target = false;
+ 		damon_for_each_region(r, t) {
+-			__damon_va_check_access(mm, r, same_target,
+-					&ctx->attrs);
++			__damon_va_check_access(mm, r, &ctx->attrs);
+ 			max_nr_accesses = max(r->nr_accesses, max_nr_accesses);
+-			same_target = true;
+ 		}
+ 		if (mm)
+ 			mmput(mm);
 -- 
 2.53.0
 
