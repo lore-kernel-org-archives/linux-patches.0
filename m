@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D02528B517;
-	Sat, 12 Sep 2026 08:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7659A369D72;
+	Sat, 12 Sep 2026 08:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200464; cv=none; b=gVebh1/EJLq7tsMn0hAGabah2tfGhbogUg15GSGKHk5JHVA5s0/AGJIwJ/ZG+KfBlU+BnZRJP37kqF+as+zxGyR3jHL3ufsrGxYPcKRdng+k7pAxqwCPgJSgOpY1SLNdeqpvYJw2HsR3l/ZvM9UcDIAcdlJWJAEvcRrX5NwZ5H8=
+	t=1789200469; cv=none; b=U0qO6+T2mvBUFEWx2ZYfWr3YGXRUhpGNZ5vnm7YYtlDiF2KwCXT0h7PRpPCqWgZbz2ChJApTHpLVr44Ge3h3kDy8FQomO935gnx1n/LZGBPnH2nF4czbNMENv+9FO0Tw3QHgTMCQYlHaPcqRIQ7tBIVHy5V1bjZZZIVoFrV8Skk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200464; c=relaxed/simple;
-	bh=GKnnyyvWZvIo9Q/BuExsqS0sSQnYiDcACv4cVnkXWrU=;
+	s=arc-20240116; t=1789200469; c=relaxed/simple;
+	bh=1z/BcY6RelhApVdnRCzTqPHu4c1o+Ycuhf+kpCRrOts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ecSU0dBVsrtKR7F2gz2xJUnBj2/6xNG9dWIJfmD54r/bgFOr28e0oKHEkFVDz84NrpXNHfsKaC4iwkOQEGryIMCJF8MzRUrlh/UNJpEz1ghB+fWBs55lXxP0CumrOsWryZRTQ0ZS2ilVQDPTzKUpcWnWQjd32HX7w8mfupVJbfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lOCFrGNI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EoNsO8hYuZ7CHGTXGPxtpa5fwtIw5Ia1rsRZeY+TJVWP/a9GJzhpigX5K6eDFYotJvm2yelOwi6nDeMbNkpwuHYN4mBB0thppi6L2ZZ7hBbB9uFAXmrxkcq9RyTeRrRFp3JdZHlq8OXS/WXZaEnkuSHSU+9Ef9lWs0cldn+ED9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvVye21b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lOCFrGNI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 816271F000FF;
-	Sat, 12 Sep 2026 08:07:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvVye21b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA461F000FF;
+	Sat, 12 Sep 2026 08:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200463;
-	bh=quqFeSQAXIBJkouyEhIuTr5WxbGIPTnITDOQY6xauYU=;
+	s=korg; t=1789200468;
+	bh=vZjE9+SeLPjYF76CONjfs75DoJri5j9kX436tkTw0SU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lOCFrGNIf+zTdvW72F1htED3NGj8SIManbIlH+YhRJ/frZkEJhh7k4LzlrpT6hErJ
-	 cgDf2JWbXnJtNobaMlCKIW6uklpM2Y8RbbbMrYVtNXvN0JPLFUfvqxaocChvOpx0so
-	 EfipyyMWJf8tTrWCrewBK13PjH4Ab/dBArs6GAcA=
+	b=uvVye21bp048iTQIUPPSWYunM/UTUxJpyOqR5D7DVyPPFdpwUBMtaIxiiaohda0mW
+	 aDXcRP2inJd4mygMhbK5GCYyLXtkLBXOUveqeTR/8HYlODnqNhkizg3J2KOGI5Gpiq
+	 Sm2yHTBJ3hnjQtQQ4lBVXSwEsvDjBpYU3JdNlpig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Dawid=20Wro=CC=81bel?= <me@dawidwrobel.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0795/1815] arm64: dts: qcom: sm8250-xiaomi-elish: correct the board ID
-Date: Sat, 12 Sep 2026 08:42:25 +0200
-Message-ID: <20260912065707.572547434@linuxfoundation.org>
+Subject: [PATCH 7.2 0796/1815] arm64: dts: qcom: kaanapali: Fix the PCIe iommu-map entries
+Date: Sat, 12 Sep 2026 08:42:26 +0200
+Message-ID: <20260912065707.596641608@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -47,49 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dawid Wróbel <me@dawidwrobel.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 299731d4fbeaaa141ce2e8226ca00cb30d6ab647 ]
+[ Upstream commit 35eda0e5f87d52ed9f015f8a44155e8ab2ad9c5a ]
 
-elish declares the same qcom,msm-id and qcom,board-id pair as
-sm8250-sony-xperia-edo.dtsi, so a bootloader choosing between appended
-device trees cannot tell the two boards apart.
+The IOMMU provider apps_smmu uses '#iommu-cells = <2>', but the PCIe
+iommu-map entries specify only one cell for the SID, omitting the SID
+mask. This went unnoticed until the OF core started warning with commit
+ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps"):
 
-0x10008 is Sony's value. The downstream device tree for this board,
-elish-sm8250-overlay.dts, uses qcom,board-id = <47 0>, i.e. platform
-type 0x2f.
+  iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
 
-Fixes: a41b617530bf ("arm64: dts: qcom: sm8250: Add device tree for Xiaomi Mi Pad 5 Pro")
-Signed-off-by: Dawid Wróbel <me@dawidwrobel.com>
+So fix the entries to match the provider's '#iommu-cells' property.
+
+Fixes: 2eeb5767d53f ("arm64: dts: qcom: Introduce Kaanapali SoC")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260730-elish-board-id-v1-1-92f99e9722ec@dawidwrobel.com
+Link: https://lore.kernel.org/r/20260730-iommu-map-fix-v1-1-83405d37ba41@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/kaanapali.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-index 51b57c697a753..3d48467c52c99 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-@@ -28,7 +28,7 @@ / {
+diff --git a/arch/arm64/boot/dts/qcom/kaanapali.dtsi b/arch/arm64/boot/dts/qcom/kaanapali.dtsi
+index 7aa9653bd456e..011fb00beb0ea 100644
+--- a/arch/arm64/boot/dts/qcom/kaanapali.dtsi
++++ b/arch/arm64/boot/dts/qcom/kaanapali.dtsi
+@@ -2310,8 +2310,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
  
- 	/* required for bootloader to select correct board */
- 	qcom,msm-id = <QCOM_ID_SM8250 0x20001>; /* SM8250 v2.1 */
--	qcom,board-id = <0x10008 0>;
-+	qcom,board-id = <0x2f 0>;
+ 			operating-points-v2 = <&pcie0_opp_table>;
  
- 	aliases {
- 		serial0 = &uart6;
+-			iommu-map = <0 &apps_smmu 0x1400 0x1>,
+-				    <0x100 &apps_smmu 0x1401 0x1>;
++			iommu-map = <0 &apps_smmu 0x1400 0x0 0x1>,
++				    <0x100 &apps_smmu 0x1401 0x0 0x1>;
+ 
+ 			interrupt-map = <0 0 0 1 &intc 0 0 GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH>,
+ 					<0 0 0 2 &intc 0 0 GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH>,
 -- 
 2.53.0
 
