@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D671425CF5;
-	Sat, 12 Sep 2026 11:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD3742885F;
+	Sat, 12 Sep 2026 11:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213262; cv=none; b=YAHZjdzfe8CRQUSePjwJ6c+BGVTUeRmmfRmtOoBHE6I+8Szru6YQtANxJXQxBiSDDqQ06quR3htUh6FIDFrdRHf7yPUdT8bZKNiyCgrVsxMRLoXA9/Y8sCp5tBa5qaV956GegIePaxnq6sXPkOVr+UltYNWfIRukyrJ/Yx8c0yA=
+	t=1789213267; cv=none; b=ji5Yi9oKaYL6ODggcBn/xZi1MSBsi9USDT8tjnR34uru/sfzsAtK2TOwq/5W6Llxd6SmNd0OlPweiRq6viUoMBUwypngOo6bLD+1Wpe0Pyn6FSBylY5r1DBhPBE96mxD0xylA9AmeBm6HQrb2A/V71GfUk/3Y6uljeIWS1t1SvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213262; c=relaxed/simple;
-	bh=Lf6ReJE8d/dQ0PV0NqI8c7VRllBCjwCwfiw8mXmkraY=;
+	s=arc-20240116; t=1789213267; c=relaxed/simple;
+	bh=Jcmm/FPKGJ0DLMQNyVYTW5yKFnoC51SUBlHZjnmvgMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PxEcUm1JWOGSxA8j/Uqb0bogMCiHZVGwLMMJIi9sm5QVPvIWrXRQJpwz073JFXEIPGEFyhDvu6TYnKDfdXsZ+6UvGL2Qz454nOCYlpevG+542F7ZQq2McprXKDHKD8QM0EaYWMF8t08VQ7dbWgt1GG1mpaPe7P3L4WoJOHnJ3/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I49Of3XF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fODS+EV1EAaXCzn8Au7hrNSU0I+x7OERCBUF2eRHKQtPD8wSkYY7MiOwvlHc9Z6CaQFjeTlE2CPKp8lShK85suXcPtcRPNYxAcl5DeFLaBXaunKThp0Qa8T1KM1XLDHvHCOoUAKUVjQPVMOzYN3JxnT/gwOyOphk9xyQbJ1d378=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPfw6qMw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I49Of3XF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9974F1F000FF;
-	Sat, 12 Sep 2026 11:40:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPfw6qMw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 862621F000FF;
+	Sat, 12 Sep 2026 11:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213260;
-	bh=5eMfOoB99X0W5RVZ+fYNQvXk4JLDC/awRIf0AtuZNDs=;
+	s=korg; t=1789213265;
+	bh=DzNjz3diR6djxRiM+1JGSCLVGzlz9AUJz/WPL09VwOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I49Of3XF5N+MFsctz4/3OWAASQ5mYYaDYxMjhMaDqoCflxHNDa9q2L/3YgXpgMnfo
-	 EZN7p7bAcd2ZYUL19QUbYz6hanUlueu4ilNKV+KT/nOE3fYySvmlecguSQ/LE8cfGu
-	 vlcVaw//2HhfWg5by+cVWwF33bW6rXOl0wv0J53Q=
+	b=TPfw6qMw00ThwCvJrEB/6I1Lu49nppk2ZEjlZ2ZoPlsNsg0ztoneqZX4P/88kKgDa
+	 GJpAqmlq8T40rlTPEhkSAqWbz73UpM+3jeo3Tlg96mrHU1ZoddgDpOGy9hvhRvYIth
+	 wsqdF4dgZUt5Arv3ZyjrA3Qo+8+ignOY7fBIyZFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+225231fce6755d40d078@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 0084/1376] ALSA: pcm: Fix race between non-atomic ops and trigger-start
-Date: Sat, 12 Sep 2026 08:41:50 +0200
-Message-ID: <20260912065609.431805676@linuxfoundation.org>
+	SJ Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 0049/1376] mm/damon/core-kunit: check region count before testing in split_at()
+Date: Sat, 12 Sep 2026 08:41:15 +0200
+Message-ID: <20260912065608.651349126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,56 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: SJ Park <sj@kernel.org>
 
-commit acac7b5e07349a9d10d78873afb4b93cd1dc721f upstream.
+commit 9b18ef3c3aa1ce24176e340061caf15fa2742564 upstream.
 
-We protect the races of the concurrent state transitions between
-atomic PCM ops, but the checks between the non-atomic ops (hw_params,
-hw_free and prepare) and the atomic ops aren't perfect; there is a
-check of the conflicting PCM state at the beginning of hw_params & co,
-but the atomic PCM ops can be still issued during the non-atomic PCM
-operations.  An example such scenario is that a thread A re-issues the
-PREPARE or HW_PARAMS for the already prepared stream, while another
-thread B triggers the PCM start in the middle of the prepare
-operation.  Although this usually doesn't lead to much serious issues,
-it can give some inconsistency as reported by syzkaller (such as
-ODEBUG warning).
+damon_test_split_at() test next region that is assumed to be created by
+damon_split_region_at() invocation.  But the split might fail.  In this
+case, the succeeding test may dereference invalid pointers returned by
+damon_next_region().
 
-There are various atomic PCM ops, and basically the only problem is
-the PCM start as it operates from the PREPARED state.  Other trigger
-commands (stop, etc) are for the running or the other special state,
-hence they are filtered as pre-condition.
+The invalid pointer may not cause a really bad user impact, because of the
+implementation detail.  It would only read wrong contents in the belonging
+damon_target struct.  Depending on the future change of the offset from
+the link header to the accessing field, this could also be really
+dangerous, though.  Still, the realistic user impact would be limited.  It
+would affect only test run setups.
 
-This patch is for preventing the PCM trigger-start during the non-
-atomic operations in order to address the problems above.
-Fortunately, the hw_params, hw_free and prepare operations call
-snd_pcm_buffer_access_lock(), and this can be used for checking the
-concurrent operations at the PCM trigger -- which sets the
-runtime->buffer_accessing to a negative (if possible), so the PCM
-trigger just needs to check the runtime->buffer_accessing value; if
-it's negative, it means the concurrent non-atomic PCM ops is running.
+Fix it by testing if the number of regions was also changed as expected
+and exit early for the failure.
 
-Reported-by: syzbot+225231fce6755d40d078@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/6a8f0de8.1d9ded08.62e62.00b5.GAE@google.com
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260828115542.3999-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The issue was discovered [1] by Sashiko.
+
+Link: https://lore.kernel.org/20260718001442.87129-3-sj@kernel.org
+Link: https://lore.kernel.org/20260714142352.100478-1-sj@kernel.org [1]
+Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: <stable@vger.kernel.org> # 5.15.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/pcm_native.c |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/damon/tests/core-kunit.h |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -1441,6 +1441,8 @@ static int snd_pcm_pre_start(struct snd_
- 	struct snd_pcm_runtime *runtime = substream->runtime;
- 	if (runtime->state != SNDRV_PCM_STATE_PREPARED)
- 		return -EBADFD;
-+	if (atomic_read(&runtime->buffer_accessing) < 0)
-+		return -EBADFD; /* during hw_params, hw_free or prepare */
- 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
- 	    !snd_pcm_playback_data(substream))
- 		return -EPIPE;
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -166,6 +166,10 @@ static void damon_test_split_at(struct k
+ 	r->last_nr_accesses = 15;
+ 	damon_add_region(r, t);
+ 	damon_split_region_at(t, r, 25);
++	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
++	if (damon_nr_regions(t) != 2)
++		goto out;
++
+ 	KUNIT_EXPECT_EQ(test, r->ar.start, 0ul);
+ 	KUNIT_EXPECT_EQ(test, r->ar.end, 25ul);
+ 
+@@ -177,6 +181,7 @@ static void damon_test_split_at(struct k
+ 	KUNIT_EXPECT_EQ(test, r->nr_accesses, r_new->nr_accesses);
+ 	KUNIT_EXPECT_EQ(test, r->last_nr_accesses, r_new->last_nr_accesses);
+ 
++out:
+ 	damon_free_target(t);
+ 	damon_destroy_ctx(c);
+ }
 
 
