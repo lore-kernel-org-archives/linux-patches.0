@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A82365A0B;
-	Sat, 12 Sep 2026 09:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD5E37FF46;
+	Sat, 12 Sep 2026 09:09:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204188; cv=none; b=jz7uIfXW6C+6+giOfxwvYnPapFcrRYe9RY5RfAyJMEvjuHKt+aV3x7wFPInLfZ1T2RzRwVB4P26dKq59DOROa5Qycb69McgEaWNWQCO5YmuzLcBS1H+fsYb4yxDSKJwyCZlzFRtOnAZQlxJ8U/CnTf0edZI7cFEsLdOOgJ4N6nk=
+	t=1789204194; cv=none; b=kLq51vbbB49QtD/Vr4Xbcw/zuxeX/54oHjTI5iHvoYmiOUDmzun+LVg/OEM2MweCcLBe2L/Zda61hWGMFNrH17onwyiopUM1ee/Ajc3A2mj/C1rhayS+qMpfhcenayltYmiwOnWLOS4zsiLtAwl1S06kX73Q/jg53k00/spvRxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204188; c=relaxed/simple;
-	bh=X40qk/ddFowRz+xyv1U3iKAfNijfVtw9pp+SvEagcSM=;
+	s=arc-20240116; t=1789204194; c=relaxed/simple;
+	bh=wV+OIosVPezhnZs4SMqaIq7YPoL1B0uGukHFyQlR8Cg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p2ClwOYoRqEx7kVEyYn6JqHmVL6lO8i2ei1A/TkTY0FPLhdn/SrmDlV215R0kPGDD8Kx0m66igGG5gBH0dcn90upEDN9/NPrMf4C4a3Zoy+8jnzolKfrPH21GtwsRP1LEQVbci7FChqTosmYBDpATPDLZZLNmWfrSngHsh3aQn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ike2bBQi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LKzPUMRlcRAnn+PjtcVC4V8NeafZBC/xZST6H/+VIp1tGJw3lAizjDi9+xD+1O5Az1kJYAV5xmxGJ27izhJnBwDQWErCMgdLZBstGSAaRE0mM5WDWz45gfpdG2+laFKd2izoi7a7g5STK/8cnetTBKJ3Wp8VXtsG+Y66h4j4rcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBmwblzN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ike2bBQi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688251F000FF;
-	Sat, 12 Sep 2026 09:09:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBmwblzN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAE31F000FF;
+	Sat, 12 Sep 2026 09:09:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204187;
-	bh=0KK78DtxUEqbMPMW0JV+fxBElY2vug3plH+C46CuS9Q=;
+	s=korg; t=1789204192;
+	bh=u5HfijQqVUC9SjHSFmVtdp9jUZ7Gvp47ib9YCyCcQmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ike2bBQi2qp7zZ4Q3nrF2i8uofFZOS9ZMsYo54nKIDSmIF+KYD+Cxm8CmTGRG9ZNE
-	 OuX81IdGvh0sD2StDAm3wgLOSvaBVRd6ttdDJS/0zH5gbxh9oGTF3zX45c5XsASPVI
-	 q7yzqRbh5rUG7ABu53SSKmPrKeJMW3xhthVSDXI8=
+	b=hBmwblzNxqaVrvWNwOtkVgsAuvk8eMibKOyG1Wo84IZ/4tQrEPbjRLXSq7muHksor
+	 n9jDfuFYeq+wJVuvy/9n0NT4i4twUtshV7cNlZHEmrFrJEd/8KUgmzGtVE/B7eahUS
+	 CVIbe04sQnm/8bPvPJN5/+J1WD/1qwxWuBLKievU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Onur=20=C3=96zkan?= <work@onurozkan.dev>,
-	Brian Masney <bmasney@redhat.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Eric Joyner <eric.joyner@amd.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1554/1815] clk: devres: fix cleanup in devm_clk_get_optional_enabled_with_rate()
-Date: Sat, 12 Sep 2026 08:55:04 +0200
-Message-ID: <20260912065725.479032971@linuxfoundation.org>
+Subject: [PATCH 7.2 1563/1815] ionic: add missing dma_rmb() after the completion publish check
+Date: Sat, 12 Sep 2026 08:55:13 +0200
+Message-ID: <20260912065725.686397000@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,73 +47,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Onur Özkan <work@onurozkan.dev>
+From: Eric Joyner <eric.joyner@amd.com>
 
-[ Upstream commit 0d4d262c1664365e17e0a5ba2ab79f4db484b44e ]
+[ Upstream commit 621f44af8c5b373de2b2e19a4a8db9e45c3c659a ]
 
-devm_clk_get_optional_enabled_with_rate() registers its cleanup action
-before setting the clock rate. If setting the rate fails, it attempts to
-disable and unprepare a clock that was never enabled. This issue was
-spotted while reviewing "rust: clk: add devres-managed clks" [1].
+Each completion service routine tests a device-written publish flag and
+then reads the rest of the descriptor with nothing ordering those loads.
+A control dependency does not order loads, so a weakly ordered CPU may
+satisfy the payload reads from a cache line state observed before the
+flag became valid. Add the barrier to all four completion paths.
 
-Register the cleanup action only after successfully preparing and enabling
-the clock.
-
-[1]: https://lore.kernel.org/rust-for-linux/20260706-clk-type-state-v5-3-67c5f326a16c@collabora.com
-
-Fixes: 9934a1bd45b2 ("clk: provide devm_clk_get_optional_enabled_with_rate()")
-Signed-off-by: Onur Özkan <work@onurozkan.dev>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 1d062b7b6f64 ("ionic: Add basic adminq support")
+Fixes: 0f3154e6bcb3 ("ionic: Add Tx and Rx handling")
+Fixes: 77ceb68e29cc ("ionic: Add notifyq support")
+Signed-off-by: Eric Joyner <eric.joyner@amd.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260811195039.1315045-2-eric.joyner@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-devres.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/pensando/ionic/ionic_main.c | 4 ++++
+ drivers/net/ethernet/pensando/ionic/ionic_txrx.c | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/clk/clk-devres.c b/drivers/clk/clk-devres.c
-index 994d5bc5168be..697d102449c10 100644
---- a/drivers/clk/clk-devres.c
-+++ b/drivers/clk/clk-devres.c
-@@ -99,6 +99,11 @@ struct clk *devm_clk_get_optional_enabled(struct device *dev, const char *id)
- }
- EXPORT_SYMBOL_GPL(devm_clk_get_optional_enabled);
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_main.c b/drivers/net/ethernet/pensando/ionic/ionic_main.c
+index 6e6f3ed07271b..10501be9ef956 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_main.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_main.c
+@@ -269,6 +269,8 @@ bool ionic_notifyq_service(struct ionic_cq *cq)
+ 	if ((s64)(eid - lif->last_eid) <= 0)
+ 		return false;
  
-+static void devm_clk_disable_unprepare(void *data)
-+{
-+	clk_disable_unprepare(data);
-+}
++	dma_rmb();
 +
- struct clk *devm_clk_get_optional_enabled_with_rate(struct device *dev,
- 						    const char *id,
- 						    unsigned long rate)
-@@ -106,8 +111,7 @@ struct clk *devm_clk_get_optional_enabled_with_rate(struct device *dev,
- 	struct clk *clk;
- 	int ret;
+ 	lif->last_eid = eid;
  
--	clk = __devm_clk_get(dev, id, clk_get_optional, NULL,
--			     clk_disable_unprepare);
-+	clk = devm_clk_get_optional(dev, id);
- 	if (IS_ERR(clk))
- 		return ERR_CAST(clk);
+ 	dev_dbg(lif->ionic->dev, "notifyq event:\n");
+@@ -314,6 +316,8 @@ bool ionic_adminq_service(struct ionic_cq *cq)
+ 	if (!color_match(comp->color, cq->done_color))
+ 		return false;
  
-@@ -119,6 +123,10 @@ struct clk *devm_clk_get_optional_enabled_with_rate(struct device *dev,
- 	if (ret)
- 		goto out_put_clk;
- 
-+	ret = devm_add_action_or_reset(dev, devm_clk_disable_unprepare, clk);
-+	if (ret)
-+		goto out_put_clk;
++	dma_rmb();
 +
- 	return clk;
+ 	/* check for empty queue */
+ 	if (q->tail_idx == q->head_idx)
+ 		return false;
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
+index 73998d61593a9..c3bcfdd1a1405 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
+@@ -739,6 +739,8 @@ static bool __ionic_rx_service(struct ionic_cq *cq, struct bpf_prog *xdp_prog)
+ 	if (!color_match(comp->pkt_type_color, cq->done_color))
+ 		return false;
  
- out_put_clk:
++	dma_rmb();
++
+ 	/* check for empty queue */
+ 	if (q->tail_idx == q->head_idx)
+ 		return false;
+@@ -1254,6 +1256,8 @@ static bool ionic_tx_service(struct ionic_cq *cq,
+ 	if (!color_match(comp->color, cq->done_color))
+ 		return false;
+ 
++	dma_rmb();
++
+ 	/* clean the related q entries, there could be
+ 	 * several q entries completed for each cq completion
+ 	 */
 -- 
 2.53.0
 
