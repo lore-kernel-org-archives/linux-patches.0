@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E28F38DC72;
-	Sat, 12 Sep 2026 16:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443A238DC72;
+	Sat, 12 Sep 2026 16:07:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229262; cv=none; b=kXYqHX56iQo2E5pqGFgX0u0gusiUM3Fy8BXHh+e/urSj7ta//0km+hFNvYQJo74yFJipQgSzglZ8+L9CTq6vefMYZFKFn9qBP9NlG7yu8bZ29xguL1mGBLqgmRtRYHP6Mxz2W/9QWq7RbRYeflJsFNaYFBdoT5Boq5pYI0a6Ubg=
+	t=1789229270; cv=none; b=gumS2CiNI1RGQDbMjTE8gdm2ZPOLKTo8R2xyyjw68hXCrx1tuLtm5gpZao3pawMylv+2VVXYnAik0Xtcq/WKIJwklh5Ic0wJ2kBRyt81u5tj78fNecO7G4qsD28RbBWxJcHb/yr2B4/uvcx9UIa2tJ+hlqsI7f5mWF4G02ERdyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229262; c=relaxed/simple;
-	bh=GG7GM/FMfnCsMy2VLGrNOuWN2l7/OcWxV9wFflT01PM=;
+	s=arc-20240116; t=1789229270; c=relaxed/simple;
+	bh=Lzpjzp5LIY3Bhq+uA4gz1LFS4tln9SwR4ZGCKZbVtfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EqYkIIGB5L6I+RgArglHMGqVWzk0LZ0C9JQsyAc8xz++VWd0fEL6hWCjVY+vmmnoeDIKjIY3eG0ADPBJCLFAEwo1IAl9rR+r+HE18UBafL65D2vTcdzZ4MYEzwsnqBvtPAcP9SxveX2mNE9x6Ph1if9D88XH/+PR/1tqz1PawWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVkLTAlr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MdFsiDvyNSvZOj77Bi45aIzTPkPmlq3HGbvmdTmjsqgpmmY+d0tEaF5dy/VTE4Jl4CRhd/HhhgeWM3u5ag6mvsFu/7Zz+ua8PjU8k+w3joymExqYblL17uXhvgc9pwFt3pKLig+ev1UQ0gFsG1CQTkAMuhEsB2xMPYdPoDX0sFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSbW7ti0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVkLTAlr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2F71F000FF;
-	Sat, 12 Sep 2026 16:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSbW7ti0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36FA1F000FF;
+	Sat, 12 Sep 2026 16:07:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229259;
-	bh=idihaHdRJ7ujBfA7xojLlvxquw872VaUkR8+Ho39j0o=;
+	s=korg; t=1789229265;
+	bh=inYWV6/csa1E10bJb796ounyghm1TxvnWKcQESsfy7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hVkLTAlr5qsSrc52okZ361PqGMb21TE7xjxs7/dzdFNyVgAKWE8xpWJG+lL4JO7+B
-	 KjHkdPVmh7+2v5URmz3C2wgmwYh71XpXB33EGiGs8e8f2ROJh2zToB5Nh4naBDiW53
-	 c5xwgNe5DLH8TjVsDxjP2GbimyA8kTik43wRKLLw=
+	b=OSbW7ti0UY5sXny64BFOBWDF5t+lqc3jj62JfwW+7ssnWbpA3PjKDCyN7R78eCYIC
+	 ywGQ8Vk5Nl+e/VW4AKEpwWnr2B9FyujXAu9Y8zHhWAbhTncAjffuDP0X8Nj1U1Ct/6
+	 7VmuVuEYJZSFYKO1TLrugKAN7YBcAk1URNei0vQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herman van Hazendonk <github.com@herrie.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Hisam Mehboob <hisamshar@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0552/1191] clk: qcom: gdsc: propagate gdsc_check_status() errors from gdsc_poll_status
-Date: Sat, 12 Sep 2026 08:54:40 +0200
-Message-ID: <20260912065600.642599978@linuxfoundation.org>
+Subject: [PATCH 6.1 0512/1191] selftests/rseq: Replace glibc-specific __GNUC_PREREQ with portable check
+Date: Sat, 12 Sep 2026 08:54:00 +0200
+Message-ID: <20260912065559.750546131@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,75 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herman van Hazendonk <github.com@herrie.org>
+From: Hisam Mehboob <hisamshar@gmail.com>
 
-[ Upstream commit d69f0c2b8d292b4890c9f0fbe184dfc26c4de86c ]
+[ Upstream commit d7b2769f8dba3e5f40d2a8a11988812d51160b17 ]
 
-gdsc_check_status() returns negative errno when the underlying
-regmap_read() fails -- e.g. when a parent regmap dies during system
-suspend, a CSR is removed by an HW debug tool, or the bus controller
-goes into protection. gdsc_poll_status() treats the result as a plain
-boolean ("is the GDSC in the requested state?"), so any negative error
-return is truncated to "true" and the poll exits with success even
-though the rail's real state is unknown:
+Building the rseq selftests against musl libc fails because musl's
+<features.h> does not provide the glibc-specific __GNUC_PREREQ macro:
 
-	do {
-		if (gdsc_check_status(sc, status))
-			return 0;
-	} while (ktime_us_delta(ktime_get(), start) < STATUS_POLL_TIMEOUT_US);
+  error: missing binary operator before token '('
 
-	if (gdsc_check_status(sc, status))
-		return 0;
+Replace __GNUC_PREREQ(11, 1) with an equivalent check using __GNUC__
+and __GNUC_MINOR__ directly.  This pattern is portable across all C
+library implementations and is already used elsewhere in the tools/
+tree (e.g., tools/include/linux/string.h).
 
-	return -ETIMEDOUT;
+This also allows removing the #include <features.h>, which was only
+needed for __GNUC_PREREQ.
 
-This silently misleads gdsc_toggle_logic() (which writes/un-writes
-SW_COLLAPSE on the strength of the poll succeeding) and the gdsc_init()
-sync path (which assumes the readback represents real silicon state).
-
-Latch the return value, propagate negative errno immediately, and only
-treat a strictly-positive value as "reached the target state". Make the
-same change in the post-timeout final check so a regmap that comes back
-after the deadline does not silently degrade to -ETIMEDOUT.
-
-Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
-Fixes: 77b1067a19b4 ("clk: qcom: gdsc: Add support for gdscs with gds hw controller")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260602140934.796697-2-github.com@herrie.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 886ddfba933f ("selftests/rseq: Introduce thread pointer getters")
+Signed-off-by: Hisam Mehboob <hisamshar@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260618193724.589113-2-hisamshar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gdsc.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ tools/testing/selftests/rseq/rseq-x86-thread-pointer.h | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index bb6d39572d7ff..bad3343e30bb6 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -102,14 +102,21 @@ static int gdsc_hwctrl(struct gdsc *sc, bool en)
- static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
+diff --git a/tools/testing/selftests/rseq/rseq-x86-thread-pointer.h b/tools/testing/selftests/rseq/rseq-x86-thread-pointer.h
+index d3133587d9968..5a29d6bec51f4 100644
+--- a/tools/testing/selftests/rseq/rseq-x86-thread-pointer.h
++++ b/tools/testing/selftests/rseq/rseq-x86-thread-pointer.h
+@@ -8,13 +8,11 @@
+ #ifndef _RSEQ_X86_THREAD_POINTER
+ #define _RSEQ_X86_THREAD_POINTER
+ 
+-#include <features.h>
+-
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+ 
+-#if __GNUC_PREREQ (11, 1)
++#if __GNUC__ > 11 || (__GNUC__ == 11 && __GNUC_MINOR__ >= 1)
+ static inline void *rseq_thread_pointer(void)
  {
- 	ktime_t start;
-+	int ret;
- 
- 	start = ktime_get();
- 	do {
--		if (gdsc_check_status(sc, status))
-+		ret = gdsc_check_status(sc, status);
-+		if (ret < 0)
-+			return ret;
-+		if (ret)
- 			return 0;
- 	} while (ktime_us_delta(ktime_get(), start) < TIMEOUT_US);
- 
--	if (gdsc_check_status(sc, status))
-+	ret = gdsc_check_status(sc, status);
-+	if (ret < 0)
-+		return ret;
-+	if (ret)
- 		return 0;
- 
- 	return -ETIMEDOUT;
+ 	return __builtin_thread_pointer();
 -- 
 2.53.0
 
