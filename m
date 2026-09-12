@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6417352003;
-	Sat, 12 Sep 2026 09:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD0335F602;
+	Sat, 12 Sep 2026 09:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203831; cv=none; b=X0IyBu4hMewlYFGavEguOHNw6vmqJb3WBSRkvml4wfh+suZffL6mCMlp+MfSrSSBJI3PpGbDQzkEiIsT/Y9lYgvhocjuWADFQ6oUvRjmZkdqJWrK06PpQFm/DIenh0lVkyOnMeYTAOwrFHj4yxeVcNMXkkE5dYzMky7qDDrjgFU=
+	t=1789203837; cv=none; b=rSVuU1+CugUCI3UuC8qB+n/yLiSoKASX1MjoHfYdGQ/7MDYTergEN5/dOhEyJk9preivm+HyEPxXfzcRD95lmwVV+ncraB02b2/Wbg1EBbB6M23vcW+zt2na6beLuTW09a/lwnEeQMTFeyrMPwMvahVohhQMa7E9zpUiiTzjmJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203831; c=relaxed/simple;
-	bh=zEo3fKO8op4aUJzI/mlHrhUFfZxsLmq6GokqZJrqB1g=;
+	s=arc-20240116; t=1789203837; c=relaxed/simple;
+	bh=yFqnkrrDG+oboy3Ux9HJcbFSP1mW+eN23yI3vcBemgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F0+d6XPMJTPwCfb6HFqIW3plX5iAEZ21CFONlb/7FZ40D92claBcXRg7Ig8W2DScRGDs+APg3VWMKGvgWWWWOQ6Zu1YrZ3q3R9gbL8iyEnXGiVniX2L3gtrKacSL0VcQ4kCsgXhfyQLyGqkfo3sKQ4eG5ym84HiAV5/ws+jAh5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lb3mjfLP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mKNf9A2eGpKHZwD5V/xvM/vkA49hEyNZJr4d3Ufr9pDpPSnnHYD7g/x4vqkSf2BthPhAuI80MB+hh9XQPEGb4LawM9vuu8RE0gRhknVFP/ZmXTWoiUcRX2CPrPOeuV9DdDKigN82qh/xJGUL0N69B9m9AD5UTX+j21BW4CpTaOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wm7vO147; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lb3mjfLP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 715511F000FF;
-	Sat, 12 Sep 2026 09:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wm7vO147"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D151F000FF;
+	Sat, 12 Sep 2026 09:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203830;
-	bh=YAdQnzh7KodtMZemJLeXBGGrdD+TuXtDiHnjHw76Z/s=;
+	s=korg; t=1789203835;
+	bh=idG9wmP53rkArGT+tsIEmJpvVzxW7JnmIu0R/jK2XK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lb3mjfLPz/UKlY7HnhPpEy0j8fGmKsStJaHHVVWNPac1dTS4dgTrjkjDfS4lDSxkw
-	 SSmDp+Lu7CCbdRUkjTUXxRlymFp++GDSe6Gyu2tnsNWwiBlOdbpu5GAV6nzxDpd3jt
-	 uyKexUFAJzZSIZjJwyuugk0EPORVjaqPaFQPDAs0=
+	b=wm7vO147caZ7liEJO2zbwj197E16LeNfG2VBa4ngQNGryUFzKNibIjCLcUMA4D5iX
+	 UTTkIXeLnfKsqqVSidWr0itot9UjlMbrGRAP/qRBlT1OmW1XK/8bodJKNb/f7toK0F
+	 w6rnO8hX1fJCRSdw0WQTG/6hjgB8e8E1BJR2J2Qg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tejun Heo <tj@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1488/1815] blk-iolatency: clear delay state when freeing policy data
-Date: Sat, 12 Sep 2026 08:53:58 +0200
-Message-ID: <20260912065723.936609274@linuxfoundation.org>
+Subject: [PATCH 7.2 1489/1815] blk-iocost: clear delay state when freeing policy data
+Date: Sat, 12 Sep 2026 08:53:59 +0200
+Message-ID: <20260912065723.960825181@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,59 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Usama Arif <usama.arif@linux.dev>
 
-[ Upstream commit 8935bf22c0a0db517a7f72f7097300e05dd852f5 ]
+[ Upstream commit 97cb95d2148835ae86ff916b145aef332d40439d ]
 
-io.latency can throttle a group which has no latency target of its own.
-When a sibling misses its target, check_scale_change() scales down its
-peers, and a peer that reaches queue depth one gets blkcg_use_delay()
-called on it on every further scale-down, even with min_lat_nsec == 0.
+iocg_kick_delay() turns sufficiently large debt into an explicit
+block-cgroup delay with blkcg_set_delay(), setting blkg->use_delay to
+-1 and incrementing blkcg->congestion_count.  Clearing it again depends
+on iocg_kick_delay() running from the period timer, the waitq timer or
+the issue path.
 
-iolatency_pd_offline() resets the target through
-iolatency_set_min_lat_nsec(), which clears the delay only on a nonzero
-to zero transition, so it never clears such a peer.  Freeing the policy
-data then leaves blkg->use_delay set and blkcg->congestion_count
-elevated with nothing left that can drop it.
+ioc_pd_free() removes the iocg from active_iocgs and cancels its waitq
+timer, and no further bios can arrive, so once it has run nothing is
+left which can reduce the debt and clear the delay.  The blkcg stays
+marked congested for the rest of its life.
 
 blk_cgroup_congested() then returns true for every task in that cgroup
-and its descendants for as long as the cgroup lives: page_cache_sync_ra()
-cuts readahead to a single page, page_cache_async_ra() skips it
-altogether, and __folio_throttle_swaprate() takes swap_avail_lock and
-schedules a throttle on anonymous folio allocation.
+and its descendants: page_cache_sync_ra() cuts readahead to a single
+page, page_cache_async_ra() skips it altogether, and
+__folio_throttle_swaprate() takes swap_avail_lock and schedules a
+throttle on anonymous folio allocation.
 
-Clear the delay in iolatency_pd_free().  By then bio-held blkg
-references have drained, or the queue is frozen for policy
-deactivation, so check_scale_change() cannot re-arm it.  The free
-callback can also see policy data which was never attached to a blkg,
-hence the pd->blkg check.
+Clear it explicitly, after the list removal and the synchronous
+hrtimer_cancel() so that neither timer processing nor an I/O path can
+re-arm it.  The free callback can also see policy data which was never
+attached to a blkg, hence the pd->blkg check.
 
-Fixes: d70675121546 ("block: introduce blk-iolatency io controller")
+Fixes: 7caa47151ab2 ("blkcg: implement blk-iocost")
 Signed-off-by: Usama Arif <usama.arif@linux.dev>
 Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20260814165712.510132-2-usama.arif@linux.dev
+Link: https://patch.msgid.link/20260814165712.510132-3-usama.arif@linux.dev
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iolatency.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ block/blk-iocost.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/block/blk-iolatency.c b/block/blk-iolatency.c
-index 9eb69010c34e6..2caa79a008ad1 100644
---- a/block/blk-iolatency.c
-+++ b/block/blk-iolatency.c
-@@ -1043,6 +1043,15 @@ static void iolat_release(struct rcu_head *rcu)
- 
- static void iolatency_pd_free(struct blkg_policy_data *pd)
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index b60625613e095..64b92aa3e5d48 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -3063,6 +3063,7 @@ static void iocg_release(struct rcu_head *rcu)
+ static void ioc_pd_free(struct blkg_policy_data *pd)
  {
+ 	struct ioc_gq *iocg = pd_to_iocg(pd);
 +	struct blkcg_gq *blkg = pd_to_blkg(pd);
-+
-+	/*
-+	 * Groups throttled as collateral have min_lat_nsec == 0, so
-+	 * iolatency_pd_offline() leaves their delay set.  Drop it here, where
-+	 * no in-flight bio can re-arm it via check_scale_change().
-+	 */
+ 	struct ioc *ioc = iocg->ioc;
+ 	unsigned long flags;
+ 
+@@ -3085,6 +3086,12 @@ static void ioc_pd_free(struct blkg_policy_data *pd)
+ 		hrtimer_cancel(&iocg->waitq_timer);
+ 	}
+ 
++	/* off ->active_iocgs and timer gone, so nothing can re-arm the delay */
++	iocg->delay = 0;
++	iocg->indelay_since = 0;
 +	if (blkg)
 +		blkcg_clear_delay(blkg);
- 	call_rcu(&pd->rcu_head, iolat_release);
++
+ 	call_rcu(&pd->rcu_head, iocg_release);
  }
  
 -- 
