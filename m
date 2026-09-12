@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0414F4BEE32;
-	Sat, 12 Sep 2026 11:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBB3299920;
+	Sat, 12 Sep 2026 11:16:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211790; cv=none; b=hKj9ravNKRZZeSFeoTEYAt37g0/Lr5qIsxM36UHTaAt7PjeWJS6D0ZADugl1Ur9rrsuT6VLnFyyrzkQE2HALR2T3QkKx8EoJU7kI6WEvBohxrVkUv0YFOczXXKi1kH5Xathv0fITRLLl9bFbQXU0n7q0RUH3yHRTy6eS/XlVg7U=
+	t=1789211795; cv=none; b=kCH24DLsMlGyErUSAtpqhM9M9wqYi/wKfBbKb4TFFgNJVwWBqnEjNqKIYNGKaJr5RP8YOgE1KczjZsmaAIakueaft7+nStovTdF2yYZoFhIFioXdLHpeacSe2RxZozPdla27CFjnwVNxfeiKyTzKO4DfJOv9B28lE/CedneJiXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211790; c=relaxed/simple;
-	bh=UpwH2ob8aIEZ/D0RQehyPSL1SFECtdUO8dzJkqH0bYs=;
+	s=arc-20240116; t=1789211795; c=relaxed/simple;
+	bh=7qcT2WPyZqvgydS7wi64L97PBeagHVSjsMfRjAsG0ug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MBnnVW+1ROA95C5c/zF94E0zYzfjiocGdr3xUNK3Xbl+BPzivGdxaQDkm7y7dY1Ycw/swOQE9ZgD/9Uf9zCBJsTQgpUIxuzaKJt/Ry4aDNdD7Q0ZAc9qWZJLHZLxjrIlFDvjj5vpkJ/XuVTbYOTPb1sS57KwaRp37egM+MyXx8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13qUr1AQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XO9vkARXj+ekVAricf82iePHFQLr9YuymW7bME+xkCNpfVflDJHCl2OwMRbhW9SKwAZFR8uCVrSrFMV0Mvu17LHx2A8fXYFdTn8o/LhDLMJ0huQDgYy7RAZA4oNyokdXveKHfiiiE1BM7XMPmnRgVMhoH718LqPmxfW2K2m6biI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNE0mY/O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13qUr1AQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1F81F000FF;
-	Sat, 12 Sep 2026 11:16:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNE0mY/O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DC61F000FF;
+	Sat, 12 Sep 2026 11:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211788;
-	bh=wP/RpsXvNY4X2UAHrwHh31nF3SSiaCSubEd5478APTo=;
+	s=korg; t=1789211794;
+	bh=D4yvvIb4821jOnPtwZGdFBamHCYW7RkveXK/9GTnmkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=13qUr1AQ+h7rDLPUgH22IQSqrnNN8NNIXSHDMxdvBBSdyG16kQ5AMz/tXRXHn80Li
-	 LRx3o00zaiOHWdn1x0ngw5R/ou6oDt1YSVApkviyvmVrPjIFDbnXt/UTIPjrr2bn6Z
-	 olBdNcbRGQ0I7/6cc33QAq6q40O87TOjTJmHzieA=
+	b=gNE0mY/Os+ybt7kCcGfH0awxAY8OVsAPH4Fc9PfdsfSAmy5gPCheT5yEVYkcK+2yR
+	 ir2fjA8h1pfwoxS91BSs61ren5XlgOVk6Fp0DvFlr3YM5O9QjNTuDyP6W/rmSxz0+K
+	 YfagGOqQwszaJ0DEe3tyuNcUkmsYNh4lOacJzUB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Michal Simek <michal.simek@amd.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1286/1518] platform/x86: hp-bioscfg: fix password encoding bounds check
-Date: Sat, 12 Sep 2026 08:57:35 +0200
-Message-ID: <20260912065652.605815770@linuxfoundation.org>
+Subject: [PATCH 6.18 1304/1518] rtc: zynqmp: Return optional clock lookup errors
+Date: Sat, 12 Sep 2026 08:57:53 +0200
+Message-ID: <20260912065653.022010218@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,59 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit e213939ed9e6e6badf7aa48c4c8dd9a9cdf00615 ]
+[ Upstream commit 5904c4109554582ce8ded6a4dcfede48b21dbe4d ]
 
-The password PSWD_ENCODINGS parser reads password_obj[elem + pos_values]
-while copying the supported password encodings from the ACPI package.
+devm_clk_get_optional() returns NULL when the optional clock is absent,
+but returns an ERR_PTR when the clock provider lookup fails.  Probe
+currently keeps the ERR_PTR and then passes it to clk_get_rate().
 
-The outer loop only guarantees that elem is within password_obj_count.
-The encoding count is bounded by MAX_ENCODINGS_SIZE, but that does not
-guarantee that the ACPI package contains enough entries for all
-elem + pos_values accesses.
+Return the lookup error instead.  A truly absent optional clock still
+reaches the existing calibration fallback through clk_get_rate(NULL).
 
-A malformed package can therefore declare a non-zero encoding count
-without providing enough string objects, causing the parser to read past
-the ACPI package array and pass an out-of-bounds string pointer and
-length to hp_convert_hexstr_to_str().
-
-Add the same computed-index bounds check used by the other offset-based
-package parsing loops before reading password_obj[elem + pos_values].
-
-Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260708090937.740435-1-lgs201920130244@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Fixes: 07dcc6f9c762 ("rtc: zynqmp: Add calibration set and get support")
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Link: https://patch.msgid.link/20260624055524.38522-1-pengpeng@iscas.ac.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/rtc/rtc-zynqmp.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-index 3c7fbb1a87e2c..6b94f90bea07a 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-@@ -353,6 +353,11 @@ static int hp_populate_password_elements_from_package(union acpi_object *passwor
- 		case PSWD_ENCODINGS:
- 			size = min_t(u32, password_data->encodings_size, MAX_ENCODINGS_SIZE);
- 			for (pos_values = 0; pos_values < size; pos_values++) {
-+				if (elem + pos_values >= password_obj_count) {
-+					pr_err("Error elem-objects package is too small\n");
-+					return -EINVAL;
-+				}
-+
- 				ret = hp_convert_hexstr_to_str(password_obj[elem + pos_values].string.pointer,
- 							       password_obj[elem + pos_values].string.length,
- 							       &str_value, &value_len);
+diff --git a/drivers/rtc/rtc-zynqmp.c b/drivers/rtc/rtc-zynqmp.c
+index 856bc1678e7d3..bf2ecd0dfe238 100644
+--- a/drivers/rtc/rtc-zynqmp.c
++++ b/drivers/rtc/rtc-zynqmp.c
+@@ -335,10 +335,9 @@ static int xlnx_rtc_probe(struct platform_device *pdev)
+ 
+ 	/* Getting the rtc info */
+ 	xrtcdev->rtc_clk = devm_clk_get_optional(&pdev->dev, "rtc");
+-	if (IS_ERR(xrtcdev->rtc_clk)) {
+-		if (PTR_ERR(xrtcdev->rtc_clk) != -EPROBE_DEFER)
+-			dev_warn(&pdev->dev, "Device clock not found.\n");
+-	}
++	if (IS_ERR(xrtcdev->rtc_clk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(xrtcdev->rtc_clk),
++				     "Failed to get rtc clock\n");
+ 	xrtcdev->freq = clk_get_rate(xrtcdev->rtc_clk);
+ 	if (!xrtcdev->freq) {
+ 		ret = of_property_read_u32(pdev->dev.of_node, "calibration",
 -- 
 2.53.0
 
