@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFDF369224;
-	Sat, 12 Sep 2026 08:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44985369224;
+	Sat, 12 Sep 2026 08:53:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203183; cv=none; b=elcdjCCg+dC0Q0lRx0Z83igs/PNebzhnx7Y6It4V1KPwy9Yyo5BqnHTdPiz1ukOpXyOTcClZSfcfqlWhLHxmnFsn1bqiD9e8HQbHxmjNgepnT72xzOQVOFjGYmu+iw21a8jvu3MMryv5LCEHjDZMQbu2dA0btEe3bVOJMZAeFYk=
+	t=1789203188; cv=none; b=hDvL5o5+iMUN6xs4RpNoTVVVYvJekIvPb2qmQTOWztpuj+39Ea9RQPwFuGIqGv6ETJ9JUX5BbPMvKF7sLjMjsqf7QXbyxcKvFhJZBe8JE1zBSRLzGmrTZJ+2q+u6mwLBnmC6rWgbOTR2lRtbVLJNuoRGC1f2c3nFVdUmVSk+vmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203183; c=relaxed/simple;
-	bh=+YjomD+PVnDcO4D7mWXJdVM+M9OTzChpK9kRQdUzmLs=;
+	s=arc-20240116; t=1789203188; c=relaxed/simple;
+	bh=vVtcchnlcUFoMRin6SOJL1BKEcoiAjv+cg0rLyWyIx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iL1USBFAmYFIkCho9lVZ+bZKdq93m0u29g5DrjUL0ljJ9g/VpJWVPBlax83mFQZnXlMxpBR6Al6ahsOuGfYAenykC3NWoEPBKaeRLhut/UZArLNNwvI9GFWu3fnawXQa9jQXT4X0VtkP5NYHQcxtuqg0amx6zwUO9J379F1weWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEEFSdAR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TV5TrrAltQBC/vx8FCqi16hWnyt6WVWrCEeDpI37F7mz6a530e0m6JV5XIl2Etgc8rpQIEDGkIDNgsy6LoX8/WoF+UZr2lEUyAL+VEQ5+CpP/PpuuQW79O3/ayd3oQwXL/u5NTBq85aHgbTCbRFqsZD+4GKOe3yfxd09uMNkoco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZJRKP5v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEEFSdAR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE141F000FF;
-	Sat, 12 Sep 2026 08:53:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZJRKP5v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD281F000FF;
+	Sat, 12 Sep 2026 08:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203182;
-	bh=o7J7A/qvlMLgMoVtC2inCjbETZtNP8EHlkNY6rpXyh4=;
+	s=korg; t=1789203187;
+	bh=xhptrD/zrYeJ9c9SW+HD3fm5katavAbsSgkNdf7mRnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JEEFSdAR5gnlsu+8+VcA6SYuTOlZvNIgA+FVltOilrpWmjH5Xu6mJvL18uCdR+Ug4
-	 IdTY8N0RBlxHqGRXmzhd8DJDAKWL442Sht1BzYq4TnyffyXoykEljD3g4AGlItXkiy
-	 alXU0nUlNYJo60/q8mO0H/8Wo4JcOFuo9XmK96nc=
+	b=MZJRKP5ve6CDCxf/piXog9q1ba/GfrXNr0VYONqo7TWo2vWNkR+nhDioqiYqVJrKx
+	 9LZIJhy1IH1raUA1bVCaBD7Pey70aXSIMsUeXWMFNR5x+9Puwg6wqd9EyjylE9x/a8
+	 nStseB201XrJwybLrHzE3+PAbNGa2t1c2IK8vDBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
 	Simon Horman <horms@kernel.org>,
 	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1355/1815] nfc: llcp: bound SNL TLV parsing to the skb and add length checks
-Date: Sat, 12 Sep 2026 08:51:45 +0200
-Message-ID: <20260912065720.837021934@linuxfoundation.org>
+Subject: [PATCH 7.2 1356/1815] nfc: pn533: hold a reference to the request skb during send_frame
+Date: Sat, 12 Sep 2026 08:51:46 +0200
+Message-ID: <20260912065720.860601376@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,116 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Yinhao Hu <dddddd@hust.edu.cn>
 
-[ Upstream commit f4c7f37f0ab990952539dc68d931d65c3657600a ]
+[ Upstream commit 47792358a624ea066455ef86b744159928cd7716 ]
 
-nfc_llcp_recv_snl() walked the SNL TLV list using a u16 offset/length
-pair derived from skb->len, without bounding reads to the actual skb
-data. Three problems followed:
+__pn533_send_async() publishes the command and then calls
+dev->phy_ops->send_frame(). Once dev->cmd is set, an incoming frame
+can be matched to this command: the I2C threaded IRQ runs
+pn533_recv_frame(), which queues cmd_complete_work, and
+pn533_send_async_complete() frees cmd->req with consume_skb().
 
-  - For a short frame (skb->len < LLCP_HEADER_SIZE), tlv_len underflowed.
-  - The per-TLV header (type, length) was read without checking that two
-    bytes remained.
-  - A declared TLV length could run past the end of the buffer, and an
-    SDREQ with length == 0 made "service_name_len = length - 1" underflow
-    (size_t), driving an out-of-bounds read in the following strncmp() /
-    nfc_llcp_sock_from_sn(). The SDRES case likewise read tlv[2]/tlv[3]
-    without a length check.
+On the I2C transport, pn533_i2c_send_frame() still dereferences the same
+skb after i2c_master_send() returns, so a completion that races the
+send can free the skb while the transport is still using it.
 
-A nearby NFC device can reach this without authentication; LLCP link
-activation happens automatically after NFC-DEP.
+The request skb is owned by the command object and may be freed by
+command completion at any time after dev->cmd is published, so the
+transport send path must not assume it stays alive. Hold a temporary
+reference to the request skb across the send_frame() call so the
+transport always sees a live skb even if completion races the send.
+Add a pn533_send_cmd_frame() helper and use it from all three send
+paths.
 
-Walk the TLV list by pointer, bounded by skb_tail_pointer() over the
-linear skb data, and validate each TLV declared length before use. Add
-explicit length checks for SDREQ (>= 1) and SDRES (exactly 2).
-
-Found by 0sec automated security-research tooling (https://0sec.ai).
-
-Fixes: 19cfe5843e86 ("NFC: Initial SNL support")
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Fixes: 9815c7cf22da ("NFC: pn533: Separate physical layer from the core implementation")
+Signed-off-by: Yinhao Hu <dddddd@hust.edu.cn>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260609202543.42282-1-doruk@0sec.ai
+Link: https://patch.msgid.link/20260626073434.3977525-1-dddddd@hust.edu.cn
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/llcp_core.c | 29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ drivers/nfc/pn533/pn533.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
-index 6ae0d64c17b93..cac1b5487064d 100644
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -1288,10 +1288,9 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
- {
- 	struct nfc_llcp_sock *llcp_sock;
- 	u8 dsap, ssap, type, length, tid, sap;
--	const u8 *tlv;
--	u16 tlv_len, offset;
-+	const u8 *tlv, *tlv_end;
- 	const char *service_name;
--	size_t service_name_len;
-+	int service_name_len;
- 	struct nfc_llcp_sdp_tlv *sdp;
- 	HLIST_HEAD(llc_sdres_list);
- 	size_t sdres_tlvs_len;
-@@ -1307,22 +1306,34 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
- 		return;
- 	}
+diff --git a/drivers/nfc/pn533/pn533.c b/drivers/nfc/pn533/pn533.c
+index 6db9ec90f594b..76081a99b4501 100644
+--- a/drivers/nfc/pn533/pn533.c
++++ b/drivers/nfc/pn533/pn533.c
+@@ -434,6 +434,18 @@ static int pn533_send_async_complete(struct pn533 *dev)
+ 	return rc;
+ }
  
-+	/*
-+	 * Walk the SNL TLV list in the linear part of the skb only,
-+	 * bounded by skb_tail_pointer(). Each TLV needs a two-byte
-+	 * header (type, length) and its declared length must fit before
-+	 * the end; this also keeps the walk safe for very short frames.
-+	 */
- 	tlv = &skb->data[LLCP_HEADER_SIZE];
--	tlv_len = skb->len - LLCP_HEADER_SIZE;
--	offset = 0;
-+	tlv_end = skb_tail_pointer(skb);
- 	sdres_tlvs_len = 0;
- 
--	while (offset < tlv_len) {
-+	while (tlv + 2 < tlv_end) {
- 		type = tlv[0];
- 		length = tlv[1];
- 
-+		if (tlv + 2 + length > tlv_end)
-+			break;
++static int pn533_send_cmd_frame(struct pn533 *dev, struct pn533_cmd *cmd)
++{
++	struct sk_buff *req = cmd->req;
++	int rc;
 +
- 		switch (type) {
- 		case LLCP_TLV_SDREQ:
-+			if (length < 1)
-+				break;
++	skb_get(req);
++	dev->cmd = cmd;
++	rc = dev->phy_ops->send_frame(dev, req);
++	dev_kfree_skb(req);
++	return rc;
++}
 +
- 			tid = tlv[2];
- 			service_name = (char *) &tlv[3];
- 			service_name_len = length - 1;
+ static int __pn533_send_async(struct pn533 *dev, u8 cmd_code,
+ 			      struct sk_buff *req,
+ 			      pn533_send_async_complete_t complete_cb,
+@@ -458,8 +470,7 @@ static int __pn533_send_async(struct pn533 *dev, u8 cmd_code,
+ 	mutex_lock(&dev->cmd_lock);
  
--			pr_debug("Looking for %.16s\n", service_name);
-+			pr_debug("Looking for %.*s\n", service_name_len,
-+				 service_name);
+ 	if (!dev->cmd_pending) {
+-		dev->cmd = cmd;
+-		rc = dev->phy_ops->send_frame(dev, req);
++		rc = pn533_send_cmd_frame(dev, cmd);
+ 		if (rc) {
+ 			dev->cmd = NULL;
+ 			goto error;
+@@ -529,8 +540,7 @@ static int pn533_send_cmd_direct_async(struct pn533 *dev, u8 cmd_code,
  
- 			if (service_name_len == strlen("urn:nfc:sn:sdp") &&
- 			    !strncmp(service_name, "urn:nfc:sn:sdp",
-@@ -1382,6 +1393,9 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
- 			break;
+ 	pn533_build_cmd_frame(dev, cmd_code, req);
  
- 		case LLCP_TLV_SDRES:
-+			if (length != 2)
-+				break;
-+
- 			mutex_lock(&local->sdreq_lock);
+-	dev->cmd = cmd;
+-	rc = dev->phy_ops->send_frame(dev, req);
++	rc = pn533_send_cmd_frame(dev, cmd);
+ 	if (rc < 0) {
+ 		dev->cmd = NULL;
+ 		kfree(cmd);
+@@ -569,8 +579,7 @@ static void pn533_wq_cmd(struct work_struct *work)
  
- 			pr_debug("LLCP_TLV_SDRES: searching tid %d\n", tlv[2]);
-@@ -1410,7 +1424,6 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
- 			break;
- 		}
+ 	mutex_unlock(&dev->cmd_lock);
  
--		offset += length + 2;
- 		tlv += length + 2;
- 	}
- 
+-	dev->cmd = cmd;
+-	rc = dev->phy_ops->send_frame(dev, cmd->req);
++	rc = pn533_send_cmd_frame(dev, cmd);
+ 	if (rc < 0) {
+ 		dev->cmd = NULL;
+ 		dev_kfree_skb(cmd->req);
 -- 
 2.53.0
 
