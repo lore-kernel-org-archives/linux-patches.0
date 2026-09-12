@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11123369224;
-	Sat, 12 Sep 2026 08:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DD5344DB5;
+	Sat, 12 Sep 2026 08:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203389; cv=none; b=TJ9szvi2poNg2/l5BJ2b1MTgi4b3PoLv35mcJa8MIDupTXP/2CIydjeIyurzc7MU5i5H9/RZlgM35Ylcy6vfjojshT0LSjL+vABVHnEat8cvPu+i8bIFTXskUHFQZsSkL176Ug6gCuF1s2XeI3o6xFsB9gz9vCL+7PMyzJJTcqM=
+	t=1789203393; cv=none; b=tCHQ1AHIdWyiiyy/fwPdH3XMZA89kM3h1nltrpkjeET7Y1MVyhVrXcPxHi9kNjguImeLHfYZgG4s1oZSDUTj+pKn71NOZlQF1ZgYcTB8EVExa6g9oNezuksj0I4Vyaq0VEMMAG6beWgR9xEeTN76CwZsLm/KEz2wu1YpJjz2Pq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203389; c=relaxed/simple;
-	bh=cckaiUirXtKD0XQXA8MUUIetx+9Qi0e8eRGKX0wi4j4=;
+	s=arc-20240116; t=1789203393; c=relaxed/simple;
+	bh=qLLXYIOAfNtD1PoKoP13um5uLRvPKZpLEpuoB/XhXiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NDujciGEjVU1/bINZvDd/jrsWrT+L+ASPV85rWUOrTxQWQC5F425jPWe2n1WbYRUky6xg/RusRTwdNdT38zN+jRDOUjo756c7CK5e4m2zNC1N8E4SFzM1FB0OdUa5jpKoHhnNc/ls25XS1w5o1aFXW6IOOWJwJVeAZa40jdbHAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/9OWf1l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=n33FENSFj2bLyHLiDLDE8BhUnWhRxueJz53K7l4/EHmtYMTjhJMGs+RfXE+uVVZYDXI1EvcMtrTVs9LuklF5syzAV7sowTyL7h7zhnHuAIiW682WC9csCFnYyzeXk2A129fJ8oZbqXZHo7nHQdnesIyFn5WC8Z3PjZV7IcQFmXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Crmq+SRn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/9OWf1l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFEBB1F000FF;
-	Sat, 12 Sep 2026 08:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Crmq+SRn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD591F000FF;
+	Sat, 12 Sep 2026 08:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203387;
-	bh=EmL9jBc7Ke9pUqwjnn/ck0nEbBZk2fDWTxtDnqnpXXk=;
+	s=korg; t=1789203392;
+	bh=vsCuFS2YXsI4SIplLv3dGPjM6/Cc0ovm8aI1xgjb7V4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L/9OWf1lxHAYS5BFVuDLho5zT+SS0RCqomXdI50azCZDtXlLbt1tgrQVyMYqsnQn8
-	 IHilwj/87a1CdA+BnK86l4Epx936H31UdTnkDH9cxW9KKsigUAy1tlyKJPlSKD5B+K
-	 JLqArrbz5EmkI9Fzk63bM8KmS8oaJmtWTKTUwQpE=
+	b=Crmq+SRnJFNnvxbf9ZDCzPECtFz+U/Kr/Y4UeJA0eU47b7Fd/lg5XEkUUW7ZHVJTE
+	 R/aeT5fZpx2PF4BYiItvkjJYB6LUwjP+VgOYixKFSxTgyNYnYmKMy37irKdxS+gpDj
+	 PhQgCA4um3WmxARGQkHI3QsWGMLHmg8PV92M1/a0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junjie Cao <junjie.cao@linux.dev>,
+	Julian Braha <julianbraha@gmail.com>,
 	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	=?UTF-8?q?Duje=20Mihanovi=C4=87?= <duje@dujemihanovic.xyz>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1398/1815] backlight: aw99706: Validate all DT property values consistently
-Date: Sat, 12 Sep 2026 08:52:28 +0200
-Message-ID: <20260912065721.844678388@linuxfoundation.org>
+Subject: [PATCH 7.2 1399/1815] backlight: ktd2801: Fix unmet dependency on GPIOLIB
+Date: Sat, 12 Sep 2026 08:52:29 +0200
+Message-ID: <20260912065721.867871590@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,95 +48,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junjie Cao <junjie.cao@linux.dev>
+From: Julian Braha <julianbraha@gmail.com>
 
-[ Upstream commit 3d142b19b09ea62d6e9a33d46d1b858b3ad05707 ]
+[ Upstream commit 5859fa79c7d85d0c242a9a1ffb40bab9732d4ef1 ]
 
-The lookup helpers for dim-mode and ramp-ctl take a shortcut when
-lookup_tbl is NULL: they accept any u32 value without range-checking
-and return success unconditionally. Out-of-range values get silently
-truncated by regmap_update_bits instead of triggering the dev_warn +
-default-fallback path that the other properties use.
+LEDS_EXPRESSWIRE depends on GPIOLIB, so its selector, BACKLIGHT_KTD2801
+also needs to ensure GPIOLIB is enabled. Otherwise:
 
-Add a field-width check for the NULL-table case so that values
-exceeding the register field maximum are rejected the same way a
-table-lookup miss is.
+WARNING: unmet direct dependencies detected for LEDS_EXPRESSWIRE
+  Depends on [n]: NEW_LEDS [=n] && GPIOLIB [=n]
+  Selected by [y]:
+  - BACKLIGHT_KTD2801 [=y] && HAS_IOMEM [=y] && BACKLIGHT_CLASS_DEVICE [=y]
 
-The switching frequency table has a second hole: reserved slots use 0
-as their marker, so "awinic,sw-freq-hz = <0>" matches slot 0 and
-programs a reserved encoding. Make the reserved marker U32_MAX and
-skip such slots during lookup.
+This unmet dependency was found by kconfirm, a static analysis tool for
+Kconfig.
 
-While here, also switch the error returns to -EINVAL for consistency.
-
-Fixes: 147b38a5ad06 ("backlight: aw99706: Add support for Awinic AW99706 backlight")
-Signed-off-by: Junjie Cao <junjie.cao@linux.dev>
+Fixes: d95963e309bc ("backlight: ktd2801: Depend on GPIOLIB")
+Signed-off-by: Julian Braha <julianbraha@gmail.com>
 Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
-Link: https://patch.msgid.link/20260804030255.1934470-3-junjie.cao@intel.com
+Acked-by: Duje Mihanović <duje@dujemihanovic.xyz>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://patch.msgid.link/20260719024902.151710-1-julianbraha@gmail.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/aw99706.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/video/backlight/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/backlight/aw99706.c b/drivers/video/backlight/aw99706.c
-index 9ac8ba50a9ea7..c4a66b59ecf13 100644
---- a/drivers/video/backlight/aw99706.c
-+++ b/drivers/video/backlight/aw99706.c
-@@ -60,7 +60,7 @@
- #define AW99706_MTPLDOSEL_REG			0x1E
- #define AW99706_MTPRUN_REG			0x1F
+diff --git a/drivers/video/backlight/Kconfig b/drivers/video/backlight/Kconfig
+index 7aa1c4b21111f..39cb7dfb9c0fc 100644
+--- a/drivers/video/backlight/Kconfig
++++ b/drivers/video/backlight/Kconfig
+@@ -193,7 +193,7 @@ config BACKLIGHT_KTD253
  
--#define RESV	0
-+#define RESV	U32_MAX
- 
- /* Boost switching frequency table, in Hz */
- static const u32 aw99706_sw_freq_tbl[] = {
-@@ -94,17 +94,19 @@ static int aw99706_dt_property_lookup(const struct aw99706_dt_prop *prop,
- 	int i;
- 
- 	if (!prop->lookup_tbl) {
-+		if (dt_val > (prop->mask >> __ffs(prop->mask)))
-+			return -EINVAL;
- 		*val = dt_val;
- 		return 0;
- 	}
- 
- 	for (i = 0; i < prop->tbl_size; i++)
--		if (prop->lookup_tbl[i] == dt_val)
-+		if (prop->lookup_tbl[i] != RESV && prop->lookup_tbl[i] == dt_val)
- 			break;
- 
- 	*val = i;
- 
--	return i == prop->tbl_size ? -1 : 0;
-+	return i == prop->tbl_size ? -EINVAL : 0;
- }
- 
- #define MIN_ILED_MAX	5000
-@@ -116,11 +118,14 @@ aw99706_dt_property_iled_max_convert(const struct aw99706_dt_prop *prop,
- 				     u32 dt_val, u8 *val)
- {
- 	if (dt_val > MAX_ILED_MAX || dt_val < MIN_ILED_MAX)
--		return -1;
-+		return -EINVAL;
-+
-+	if ((dt_val - MIN_ILED_MAX) % STEP_ILED_MAX)
-+		return -EINVAL;
- 
- 	*val = (dt_val - MIN_ILED_MAX) / STEP_ILED_MAX;
- 
--	return (dt_val - MIN_ILED_MAX) % STEP_ILED_MAX;
-+	return 0;
- }
- 
- static const struct aw99706_dt_prop aw99706_dt_props[] = {
+ config BACKLIGHT_KTD2801
+ 	tristate "Backlight Driver for Kinetic KTD2801"
+-	depends on GPIOLIB || COMPILE_TEST
++	depends on GPIOLIB
+ 	select LEDS_EXPRESSWIRE
+ 	help
+ 	  Say Y to enable the backlight driver for the Kinetic KTD2801 1-wire
 -- 
 2.53.0
 
