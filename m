@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BA141B8C6;
-	Sat, 12 Sep 2026 15:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1D742882B;
+	Sat, 12 Sep 2026 15:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225767; cv=none; b=f22/Bv0zx+q7Qb7wkIk1gy2qBxC1C6uP/YlNLu7HdojdLeabCvGUPvwrKv34KPVG0epAVLc/EW5dLzjPQqx0GdWaCitVo1DqOXri4LFUdnHLliaqLbYmw/6Af2lvkHVA/NqfJU8BUZUFBaCMPCLykX4oV1FWRLyInZXGqHPZbQo=
+	t=1789225775; cv=none; b=Sqm7Y44wRgArdnYsqfMvIqy1kjYEy9z0sn3inKszKIF2blJTlR807fA4Dd3CyPrjoULu21TYJnt4vgqWBH2Ex+m20o4wc3s5qq8zwgjorFB/j4F2ENk3s/+NoF8iJNwRPpPgNXSFGVqP/eiueDBWfOJZhm8ngjKzF0Y9j07PhH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225767; c=relaxed/simple;
-	bh=QtJM7tGB7Ly8IvJ5e5oUAenPMWErFS027g5sJ+1wQLk=;
+	s=arc-20240116; t=1789225775; c=relaxed/simple;
+	bh=9CjwSSlSHEx/vYRL+bh8lIwSdlL+DtHrM20V6HXvQ4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APSm5kIy5ZIpq8Eclilu2uVphOZUOZh/Ch9Y/BDk6crCzT1u4REk636Ru7RNVvC1ewS2bQt1di5oSQsoSvyOPqyD4ZZsmvJU+yeN1lusZm6Z/bQ1VSFarTHtDfb/YaGyegA77q/UFNihACvWXyF15jo9FcMwgSNtozRPrER8/Uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzGYZZDL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BrdOoDjJI1+J7MUcaCIZb8elZNDauZsu5r3xxd7eCTERn1WF5h5oUjKKnvuNL4SCU6Wm6GGnS+ofdL3G1aMA5ST8BojZhj82rUSBqYUY0j+TPwQ3mTW4c5KC5EZBJLwWLUUnfERwsQP7HdbtcC4tXZ56KsApJONsHtENKscNFbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7VjxvPk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzGYZZDL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F018E1F000FF;
-	Sat, 12 Sep 2026 15:09:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7VjxvPk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0FE41F00898;
+	Sat, 12 Sep 2026 15:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225763;
-	bh=jODLMbjp7ZX+QH8ejHWuCnCr4RwKAOaF1PDN+cbKzG0=;
+	s=korg; t=1789225768;
+	bh=ltO2Dhkv9GCMCrH0QQf1doklWsWvmXFk/khcCEodsUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lzGYZZDLRp4bYPOJ8P93DE70lEjxVQBIpo66OVWHGjqry6PN1+sc/3FrmeleaCfly
-	 ArFywZKlT9VCFNVYPLhi15oHUziuCDhAfw5TUS6yYZs5fGq6irUL/DHTlX+GPakyua
-	 Mpar64/Vx1BToMpGP5j2in4fsjgdApFxD3h1Z+a4=
+	b=m7VjxvPkItxu9OB+VQyYv6aL11nz1/6nZ1lKsywF86HHiFr10WxeFBU1jQ0+bBzPe
+	 Kootpm8L3oOImF7SLalVtrCq6zvH52PBQM/oUD1PxEzoNhndxBreyHCD0IvzN7eM4B
+	 4XXVkqSgVvZEEWHxPV2IgdEYWZPfwXuEKO8XwEpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Simon Horman <horms@kernel.org>,
+	Sechang Lim <rhkrqnwk98@gmail.com>,
+	Junseo Lim <zirajs7@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1263/1424] octeontx2-af: initialize lmac_bmap in rvu_mcs_set_lmac_bmap()
-Date: Sat, 12 Sep 2026 09:01:35 +0200
-Message-ID: <20260912065635.565225678@linuxfoundation.org>
+Subject: [PATCH 6.6 1264/1424] net: kcm: Hold RCU read lock while running BPF parser
+Date: Sat, 12 Sep 2026 09:01:36 +0200
+Message-ID: <20260912065635.587867363@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,44 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Junseo Lim <zirajs7@gmail.com>
 
-[ Upstream commit 4b92a3710d4a1d850ed6421c773e735cdca69b07 ]
+[ Upstream commit b0346dd64e4905291cc9c479f2e6cf1884ced4e6 ]
 
-rvu_mcs_set_lmac_bmap() declares lmac_bmap without initializing it and
-only sets bits for valid lmacs with set_bit(), which ORs into the word
-without clearing it first. Bits for invalid or skipped ports keep
-whatever was on the stack, and the garbage is stored into
-mcs->hw->lmac_bmap.
+kcm_parse_func_strparser() calls bpf_prog_run_pin_on_cpu() which
+prevents CPU migration, but does not establish an RCU read-side
+critical section. Consequently, BPF map operations can trigger
+WARN_ON_ONCE(!bpf_rcu_lock_held()) when called from the KCM strparser
+program.
 
-Initialize lmac_bmap to 0 so only valid lmacs are marked.
+Hold the RCU read lock while running the program.
 
-Found with Clang's -Wconditional-uninitialized.
-
-Fixes: ca7f49ff8846 ("octeontx2-af: cn10k: Introduce driver for macsec block.")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260812060730.6181-1-kmehltretter@gmail.com
+Fixes: 9b73896a81dc ("kcm: Use stream parser")
+Reported-by: Sechang Lim <rhkrqnwk98@gmail.com>
+Signed-off-by: Junseo Lim <zirajs7@gmail.com>
+Link: https://patch.msgid.link/20260813035136.106167-1-zirajs7@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/kcm/kcmsock.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c b/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c
-index d39d86e694ccf..006d3258fd4e6 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c
-@@ -854,7 +854,7 @@ int rvu_mbox_handler_mcs_ctrl_pkt_rule_write(struct rvu *rvu,
- static void rvu_mcs_set_lmac_bmap(struct rvu *rvu)
- {
- 	struct mcs *mcs = mcs_get_pdata(0);
--	unsigned long lmac_bmap;
-+	unsigned long lmac_bmap = 0;
- 	int cgx, lmac, port;
+diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
+index a47afaaea2a13..93b1c499d76d1 100644
+--- a/net/kcm/kcmsock.c
++++ b/net/kcm/kcmsock.c
+@@ -5,6 +5,7 @@
+  * Copyright (c) 2016 Tom Herbert <tom@herbertland.com>
+  */
  
- 	for (port = 0; port < mcs->hw->lmac_cnt; port++) {
++#include <linux/rcupdate.h>
+ #include <linux/bpf.h>
+ #include <linux/errno.h>
+ #include <linux/errqueue.h>
+@@ -389,7 +390,9 @@ static int kcm_parse_func_strparser(struct strparser *strp, struct sk_buff *skb)
+ 	struct bpf_prog *prog = psock->bpf_prog;
+ 	int res;
+ 
++	rcu_read_lock();
+ 	res = bpf_prog_run_pin_on_cpu(prog, skb);
++	rcu_read_unlock();
+ 	return res;
+ }
+ 
 -- 
 2.53.0
 
