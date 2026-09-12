@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AEE344DB5;
-	Sat, 12 Sep 2026 08:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1DF369990;
+	Sat, 12 Sep 2026 08:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203236; cv=none; b=XywifJ9+KGXq1zAfWhEz196fCeVgWVXL+gUXcrBgUaqt2G8HYhJvF5qlLGopqyqrP9ky/31cZ/CY1F7Hg/Mv9pBx5Xvv/ojg/Zg5JfYm+9ei7QGueFY3YMEHwSU+poIJfx0MvE3sEUAAv5CsvHUu0uwpSQpB6huWUNtJiATpZiY=
+	t=1789203242; cv=none; b=nkBCEo4Vn0k4Bbu3UIEydrPr/jDn/nEsltW2NsCfcSAu+IJp5Jmh9LJc6L2M40iRPS0GT6xP6zkMcQYoaDW28lBagtr0MWF0uT99dmdhSmQn5gMlr64VCKqiwaKULJpwZUUmXrxs7yOn/b1GDi2plZ/jADkODa8U870u8dfRKeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203236; c=relaxed/simple;
-	bh=d+5HLuK8kD/CgMglT1Zs2Rzs93Wj05RwWjMCSD4ytds=;
+	s=arc-20240116; t=1789203242; c=relaxed/simple;
+	bh=YZYCoTDUQ2eOg095rew2+yPAvjKx/SycODzNjK2wG98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=srHsmdWeDU7KtRLB6bfusFwtmuJ5sBPzd125/8Sv6SHbG33/JKPCYCqUL/M0sOPRmowWp9UARM4x6oFerWxyQomfd075lA49gL+nECKak+cfNE/Yk+oamcC8LMw5Ddqewk8dj89leF9rEytgU/JrS9glZNuNXe8zve6EbDl0XOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZFy51Dq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MWj5qcliLiYdGu/8eJP1t0yKLnhfVWOAWOb7uf7rU+VXqhOnwPCRkdhLoKgLQ+upkM+h1dw7Qs6xe6GdcCWtvgXJsvZT2I2/Ko84gPkWtJGDaZQnU7jHeoMoRtA1jTK+qIs16ANDuuhHPOO/qAKTGHKN9ZqWbhjW291XIIg/1NQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3apBcQg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZFy51Dq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F37831F000FF;
-	Sat, 12 Sep 2026 08:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3apBcQg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042DD1F000FF;
+	Sat, 12 Sep 2026 08:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203235;
-	bh=myIJ09wO9sciF4f8m2JUkJP9v1o8nF9OSZJg1tHtRmc=;
+	s=korg; t=1789203240;
+	bh=wbF4dPpKH08Zgj6lrAviV5a/HdFQN1fdPSyUI4801rQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zZFy51DqlikGJQ2ct+HPdD8ZVgsn00W1QJEAEThOW8oA1GHb1Rl0DkE7gmdPIbGTT
-	 98Bv+ldIhm23ghGJ+1e6f8pnbZE+tbJhANRAFItfOocDZawLrD8p4bhpYWd9obA7Go
-	 S74NBnKiWYMPKEpA+DX25I1z94x3ZwoJuhJ11EzE=
+	b=b3apBcQgOKjjendVZbqoceJHwVoDnnfRv41kGCtkwKI1nLnNOMUNZ7E2mBQEAWUk3
+	 cjo54tDt57nYgmX4zXrkGjlJqZl/XTZybthvR61+Qr/BEsv6A9zoIaX9lbtm1aKQee
+	 xc1GSigWV2Kc3++ihbUoPA4tFtyG0aQLGBUbxWws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1365/1815] dmaengine: qcom-bam-dma: fix autosuspend cleanup during removal
-Date: Sat, 12 Sep 2026 08:51:55 +0200
-Message-ID: <20260912065721.074685108@linuxfoundation.org>
+Subject: [PATCH 7.2 1366/1815] RDMA/cxgb4: Free debugfs on registration failure
+Date: Sat, 12 Sep 2026 08:51:56 +0200
+Message-ID: <20260912065721.098459713@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,47 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit a50184171235045d96104811414b25cf5338cf86 ]
+[ Upstream commit fe5c16bb6252dea6025b748257ddc3b2665495b0 ]
 
-bam_dma_probe() calls pm_runtime_use_autosuspend(), but
-bam_dma_remove() does not call the matching
-pm_runtime_dont_use_autosuspend() when removing the device.
+c4iw_alloc() creates the per-device debugfs tree (dev->debugfs_root via
+setup_debugfs()), but it is removed only in c4iw_remove(), not in
+c4iw_dealloc().  When RDMA device registration fails, the registration
+worker's err_dealloc_ctx path calls c4iw_dealloc() directly, bypassing
+c4iw_remove(), so the debugfs dentries leak and outlive the freed
+c4iw_dev.
 
-If the autosuspend delay is set to a negative value while autosuspend
-is enabled, the runtime PM core increments usage_count to prevent
-runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
-during teardown, this reference is not dropped and usage_count remains
-unbalanced.
+Move debugfs_remove_recursive() into c4iw_dealloc() so every path that
+frees ctx->dev also removes its debugfs tree.
 
-Add the missing pm_runtime_dont_use_autosuspend() call before forcing
-the device into runtime suspend during removal.
-
-This issue was found by manual code inspection.
-
-Fixes: 7d2545599f5b ("dmaengine: qcom-bam-dma: Add pm_runtime support")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260808110642.2770355-1-lgs201920130244@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 49ea0c036ede ("RDMA/iw_cxgb4: cleanup device debugfs entries on ULD remove")
+Link: https://patch.msgid.link/r/20260806130128.465460-2-fanwu01@zju.edu.cn
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/qcom/bam_dma.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/cxgb4/device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index 1bb26af0405f3..05a3b1f9e0c23 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -1401,6 +1401,7 @@ static void bam_dma_remove(struct platform_device *pdev)
- 	struct bam_device *bdev = platform_get_drvdata(pdev);
- 	u32 i;
+diff --git a/drivers/infiniband/hw/cxgb4/device.c b/drivers/infiniband/hw/cxgb4/device.c
+index c1815972aecff..24ac9871ce67c 100644
+--- a/drivers/infiniband/hw/cxgb4/device.c
++++ b/drivers/infiniband/hw/cxgb4/device.c
+@@ -933,6 +933,7 @@ static void c4iw_rdev_close(struct c4iw_rdev *rdev)
  
-+	pm_runtime_dont_use_autosuspend(&pdev->dev);
- 	pm_runtime_force_suspend(&pdev->dev);
+ void c4iw_dealloc(struct uld_ctx *ctx)
+ {
++	debugfs_remove_recursive(ctx->dev->debugfs_root);
+ 	c4iw_rdev_close(&ctx->dev->rdev);
+ 	WARN_ON(!xa_empty(&ctx->dev->cqs));
+ 	WARN_ON(!xa_empty(&ctx->dev->qps));
+@@ -957,7 +958,6 @@ static void c4iw_remove(struct uld_ctx *ctx)
+ 	if (!ctx->dev)
+ 		return;
  
- 	of_dma_controller_free(pdev->dev.of_node);
+-	debugfs_remove_recursive(ctx->dev->debugfs_root);
+ 	c4iw_unregister_device(ctx->dev);
+ 	c4iw_dealloc(ctx);
+ }
 -- 
 2.53.0
 
