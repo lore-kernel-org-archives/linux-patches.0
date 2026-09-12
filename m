@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9F43630AC;
-	Sat, 12 Sep 2026 14:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1809343893;
+	Sat, 12 Sep 2026 14:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224298; cv=none; b=VHzp1nI/vEVv+6VYepJ9Qt/zJIZxcIVQhBHB/S0febVIqO73HsiE8jw3s1sa312Tz0IPWr6bDCOCWqpn9AvlRzN8kOr6V7i51vt/zsbtsKP2iWYbhAU0pPenvkDzP67HbPxQRc/3U5F3ejmV3gwVkKrsnbIJ/2yq7zZd+DqmAAU=
+	t=1789224302; cv=none; b=nwWoPny4IHDwVULSo7ovs5/n4TbuSY9fVdhZHEGhmWfQsxsJKirhc5ms0+yRhXfK0oeVXpmoFyo1bNkk9vw7iqeVrCz0EuZqkIqQTMV8212hOkd/JsfBCknTEPM1z0HBPyTHWhtJbRB1+WCTdpyfxFAQ+4WZ3XiV0k2Q4rulu8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224298; c=relaxed/simple;
-	bh=yYyIa7/lJRb4HNId/Y3YDI3MXXN97L3yDG/GTiNj+DY=;
+	s=arc-20240116; t=1789224302; c=relaxed/simple;
+	bh=3SfEX8bzoG3EU9CjnWJHEdahtl7+i9tKoTzpUrFNL0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g1ObdYBCTielzRkxKmGK6T2mO1Nw/lX4UxLFo9a8kcsOokDbgquaqJ+9Pq6Q2mHS9CXfPRrKzZi3pMhgUuL2J5Nc7xgDsslMyzLMktoUJkgIcklxhStpauMbC4iesJqsP5Ljr/XALYUatvqM9jrh3Y9RXcul7I24U9jqNpfIpe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehn8KoRb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V3nkfk3MxAxPo+Vxa+P9RfKZa6XvZFBzqbTKnswRUifShCcA1tWwqoAPuDzidym4cd2u3o84Ud38OopKijb/muXPLfbQuFT8BYzG0gWPUQa414iMBsqLhf8Z83SYC20w2FnpcFUv6MFecLTK1Mloln+mAihwSCOhIvXYjVlb6G8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dOt3bUQA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehn8KoRb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02301F000FF;
-	Sat, 12 Sep 2026 14:44:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOt3bUQA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28DC1F000FF;
+	Sat, 12 Sep 2026 14:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224294;
-	bh=N6F1AekQILWmYo3tQBldv/LDNPRjWFUaqPi/kjjII+4=;
+	s=korg; t=1789224300;
+	bh=wf+dfM2m8XHEZe8/L5unIIisvOG04edRtDj/TkhWU/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ehn8KoRbn5/L4vuYFRHGfPzoxDuFoDVt+9prfG0LVMRTmIwvaEBJ6tCQZ6FpVgMSl
-	 Jk7dgomtW+JmliXY8JnBVDjI2fQGaldGxAM+rGih2DXTPKYOln6UgOkAiesagC9yU5
-	 elw0d/kQRSWizyhjHn5b+0PQTJ/iFltaGeAXr/tA=
+	b=dOt3bUQAEYs4BCYxcLvHU165mvrQCvHEUBpi+wTsQO+V1H+E7EJK5mAcNzQkvdL7A
+	 qN88ziNIzxHP/GfEmKvlfNUYWYCyaM8N1qLRNboZTj+/k/oghGQWiAfTWK9cDlsubT
+	 V65Ddcgk9ugVTJhmz27mO0RxUuQOdgwK+gACCS6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Waiman Long <longman@redhat.com>,
+	Dmitry Ilvokhin <d@ilvokhin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0965/1424] i3c: master: Fix device_register() error path
-Date: Sat, 12 Sep 2026 08:56:37 +0200
-Message-ID: <20260912065628.923146990@linuxfoundation.org>
+Subject: [PATCH 6.6 0966/1424] locking/lockdep: Fix NULL pointer dereference in __lock_set_class()
+Date: Sat, 12 Sep 2026 08:56:38 +0200
+Message-ID: <20260912065628.945669667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,52 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
 
-[ Upstream commit 74be657d98a8d684c0475f3cbd450ef2a30ffc73 ]
+[ Upstream commit 7577e00b9ab506202b9f1a33de3cc8cc6413a4db ]
 
-When device_register() fails in i3c_master_register_new_i3c_devs(),
-put_device() is called to drop the reference taken by
-device_register().  That drops the last reference, so the device's
-release callback i3c_device_release() runs and frees the i3c_device.
+register_lock_class() can return NULL when the lock class pool is
+exhausted, graph_lock() fails, or key validation fails. However,
+__lock_set_class() uses the return value directly in pointer arithmetic
+without a NULL check:
 
-Two problems follow from that:
+  class = register_lock_class(lock, subclass, 0);
+  hlock->class_idx = class - lock_classes;
 
-i3c_device_release() does WARN_ON(i3cdev->desc), so it warns because
-desc->dev->desc still points back at the descriptor.  Clear it before
-calling put_device().
+If class is NULL, this computes a wild offset that corrupts
+hlock->class_idx. The subsequent reacquire_held_locks() call will
+invoke hlock_class() with this corrupted index, leading to a NULL or
+out-of-bounds pointer dereference.
 
-After put_device() frees the i3c_device, desc->dev is left pointing at
-freed memory, so clear desc->dev as well.  That prevents, for example,
-i3c_master_unregister_i3c_devs() seeing desc->dev as non-NULL and
-dereferencing it.
+Add the missing NULL check, consistent with how __lock_acquire() already
+handles this case at the same call site.
 
-Reported-by: sashiko-bot@kernel.org
-Link: https://lore.kernel.org/linux-i3c/20260701203053.8F3971F000E9@smtp.kernel.org/
-Fixes: cab63f6488761 ("i3c: Fix potential refcount leak in i3c_master_register_new_i3c_devs")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260702183644.60827-1-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 64aa348edc61 ("lockdep: lock_set_subclass - reset a held lock's subclass")
+Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Dmitry Ilvokhin <d@ilvokhin.com>
+Link: https://patch.msgid.link/h2kfw43n4527x6mgi2lwpz2rieqnfzgictpv4wr5nyfjkc47co@2r5vz4uz44db
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 2 ++
+ kernel/locking/lockdep.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index a87be01e83ab1..330f87c65bff4 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -1648,7 +1648,9 @@ i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
- 		if (ret) {
- 			dev_err(&master->dev,
- 				"Failed to add I3C device (err = %d)\n", ret);
-+			desc->dev->desc = NULL;
- 			put_device(&desc->dev->dev);
-+			desc->dev = NULL;
- 		}
- 	}
- }
+diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
+index 9419a79e8833f..b16e699cee9fe 100644
+--- a/kernel/locking/lockdep.c
++++ b/kernel/locking/lockdep.c
+@@ -5331,6 +5331,8 @@ __lock_set_class(struct lockdep_map *lock, const char *name,
+ 			      lock->wait_type_outer,
+ 			      lock->lock_type);
+ 	class = register_lock_class(lock, subclass, 0);
++	if (!class)
++		return 0;
+ 	hlock->class_idx = class - lock_classes;
+ 
+ 	curr->lockdep_depth = i;
 -- 
 2.53.0
 
