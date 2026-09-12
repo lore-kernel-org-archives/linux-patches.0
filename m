@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8740344DB5;
-	Sat, 12 Sep 2026 08:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94862E718B;
+	Sat, 12 Sep 2026 08:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203226; cv=none; b=lrHMp+iLMLjDZOvVbrehVpMztIoCF9bcRj5zrbAvCnIyvwG9OzT1cFVxnURGRhHFGNSkF7jPdiiG00gVyAPbbkjkV8T80vYzCHY3yguCI0b054MJ8FXSl4/ywO8iKc4SaEN2FZf3LLvM9HFzyN/1Hj8LaGZgHi54Dh7Ck9R4Doc=
+	t=1789203232; cv=none; b=r33a51x/n1B3Iigb/cTu8KBynctFE/P5sgrKw9ekT+JJPCgORafdRj7g7HOFDsHLDqph50jedSDNXMogMqu7dRUCIuR+HbceZBjSpdqdxNlNl2EQHdAmtacIu8UTqQ81o7PQrk9gqqyzieNpgcRcivOZT06eHBUL+HS+tOgH95k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203226; c=relaxed/simple;
-	bh=H7CWkHhXD2nVcrJ/G4ncDN90snrUcs9t7k4kDvmbLoc=;
+	s=arc-20240116; t=1789203232; c=relaxed/simple;
+	bh=hMjHj0LVbWK6cMDQgSqdCQ3fV+cgqRHRtvIMnfmo47o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nq/TFI/K5PlkRjxr+u5TWA0s/V38vOPrUDqyEfPaKSFViCwbo4XSJG6SenFG+TRWQ2R0g2Fuh4AbnVPttg2qaS28bDAEM3T+evEEI8kmPBp4HBMvvrIikPmtpfdiFkpREgK8WAFE681Vl8KodKanl7Lmc3farLFzr1VO1ZSfJLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPf62TEL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JSYczrpXkspetx/wCMnLGjrmYg8yawmsq7QEBIphvGsoj1QOlBz2XRaK8Ha6SvkIR76ZSdDrSwGNyKmv8VrNRzBACrLgT6VcmDQBuSLhewRCQ98rZmOsECERS4j3t1sZ6C10OUmvTz1EUQHlkgG/wsqNZoxRLpDdG9bHj7FxQDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XI9bl9b4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPf62TEL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFDA1F000FF;
-	Sat, 12 Sep 2026 08:53:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XI9bl9b4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623951F000FF;
+	Sat, 12 Sep 2026 08:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203225;
-	bh=pxC2c+t7Z4j1jzGr7eLlkGCgSAkh7SEgs5RLkRDn0/k=;
+	s=korg; t=1789203230;
+	bh=4Ed48PcyodmwPQg+Jf6wm0SGACViE7MJX6dSHfjKCCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hPf62TELXoIEdT13KSNmx1wOFDb6WRIB6pQkoqtavtENdiV7ntwHV0Svxe759vRWx
-	 aqblwxFxVTcA1ZaRqJUtpUbCHTjTXkiOZDwBiCeBvK4vP/32U2qL7yy+XoNktdlTyC
-	 LXmpt6KXcMpJfufz1INkLxFO7KDVcqqN81df43ZE=
+	b=XI9bl9b4NkpekrGVhZ0KOAlpD9Z04Ze2uX8P22kkhkxyjiHxL/tH6Y/34FyL4olzJ
+	 bKClnhq7Mfci1xwoL3FYWm8oxGW/iPHOqX/Z72zEK6FiAHM3L4MM+3QCR5qyIci3qU
+	 HlqdQIlYtGe/+5BFFw2qpgpQqDXfHsQZeh85MY+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1328/1815] selftests: drv-net: so_txtime: only send test traffic to sch_etf
-Date: Sat, 12 Sep 2026 08:51:18 +0200
-Message-ID: <20260912065720.200412964@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Niederpr=C3=BCm?= <dubito@online.de>,
+	Simon Wright <simon@symple.nz>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Diederik de Haas <diederik@cknow-tech.com>
+Subject: [PATCH 7.2 1364/1815] phy: rockchip: samsung-hdptx: Handle uncommitted PHY config changes
+Date: Sat, 12 Sep 2026 08:51:54 +0200
+Message-ID: <20260912065721.049038685@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,107 +50,211 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit ef3d6cca02c8a7b6465fb1691823524b86d1cb99 ]
+[ Upstream commit aec3e4ce25da4ed37bbbfedcbb7107ae9428b183 ]
 
-The ETF qdiscs drops traffic without a socket or txtime. Even with
-parameter skip_sock_check regular traffic is affected by ETF.
+Any changes to the PHY link rate and/or color depth done via the HDMI
+PHY configuration API are not immediately programmed into the hardware,
+but are delayed until the PHY usage count gets incremented from 0 to 1,
+that is when it is powered on or when the PLL clock exposed through
+the CCF API is prepared, whichever comes first.
 
-This test ran fine when run manually in a pure software environment.
-But with drv-net across two hosts tests fail as early as when calling
-cfg.remote.deploy due to effectively losing connectivity.
+Since the clock might remain in prepared state after subsequent PHY
+config changes, the programming can also be triggered via
+clk_ops.set_rate().  However, from the clock consumer perspective (i.e.
+VOP2 display controller), the (pixel) clock rate doesn't vary with bpc,
+as that is handled internally by the PHY and reflected in the TDMS
+character rate only.
 
-Isolate the intended test traffic:
-- mark that with SO_MARK 100
-- install a regular permissive root prio qdisc for background traffic
-- install the ETF qdisc as leaf
-- install a filter that only directs SO_MARK 100 traffic to this leaf
+As a consequence, changing the bpc while preserving the modeline may
+lead to out-of-sync issues between CCF and HDMI PHY config state,
+because the .set_rate() callback is not invoked when clock rate remains
+constant.  This may also happen when the PHY PLL has been pre-programmed
+by an external entity, e.g. the bootloader, which is actually a
+regression introduced by the recent FRL-related changes.
 
-Technically other high prio traffic will map onto this leaf based on
-ToS band mapping too. But that is immaterial in practice.
+Introduce a pll_config_dirty flag to keep track of uncommitted PHY
+config changes and use it in clk_ops.determine_rate() to invalidate the
+current clock rate (as known by CCF) and, consequently, ensure those
+changes are programmed into hardware via clk_ops.set_rate().
 
-Fixes: 5c6baef3885c ("selftests: drv-net: convert so_txtime to drv-net")
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260808160129.890119-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Moreover, proceed with a similar fix in phy_ops.power_on() callback, to
+handle the scenario where the CCF API is not used due to operating in
+FRL mode, while the clock is still in a prepared state and thus
+preventing rk_hdptx_phy_consumer_get() to apply the updated PHY
+configuration.
+
+Fixes: de5dba833118 ("phy: rockchip: samsung-hdptx: Add HDMI 2.1 FRL support")
+Fixes: 9d0ec51d7c22 ("phy: rockchip: samsung-hdptx: Add high color depth management")
+Tested-by: Thomas Niederprüm <dubito@online.de>
+Tested-by: Simon Wright <simon@symple.nz>
+Tested-by: Diederik de Haas <diederik@cknow-tech.com>  # NanoPC-T6 LTS
+Reviewed-by: Andy Yan <andy.yan@rock-chips.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://patch.msgid.link/20260811-hdptx-clk-fixes-v6-5-75bca0ee5753@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/drivers/net/config       |  2 ++
- tools/testing/selftests/drivers/net/so_txtime.py | 16 +++++++++++++---
- 2 files changed, 15 insertions(+), 3 deletions(-)
+ .../phy/rockchip/phy-rockchip-samsung-hdptx.c | 84 +++++++++++--------
+ 1 file changed, 48 insertions(+), 36 deletions(-)
 
-diff --git a/tools/testing/selftests/drivers/net/config b/tools/testing/selftests/drivers/net/config
-index f3933cf3e6be6..b6989c7d3d9d1 100644
---- a/tools/testing/selftests/drivers/net/config
-+++ b/tools/testing/selftests/drivers/net/config
-@@ -8,6 +8,7 @@ CONFIG_NET_ACT_SKBEDIT=m
- CONFIG_NET_CLS_ACT=y
- CONFIG_NET_CLS_BPF=y
- CONFIG_NET_CLS_FLOWER=m
-+CONFIG_NET_CLS_FW=m
- CONFIG_NET_CLS_MATCHALL=m
- CONFIG_NETCONSOLE=m
- CONFIG_NETCONSOLE_DYNAMIC=y
-@@ -17,6 +18,7 @@ CONFIG_NETKIT=y
- CONFIG_NET_SCH_ETF=m
- CONFIG_NET_SCH_FQ=m
- CONFIG_NET_SCH_INGRESS=y
-+CONFIG_NET_SCH_PRIO=m
- CONFIG_PPP=y
- CONFIG_PPPOE=y
- CONFIG_VLAN_8021Q=m
-diff --git a/tools/testing/selftests/drivers/net/so_txtime.py b/tools/testing/selftests/drivers/net/so_txtime.py
-index adf6c848d6d80..9fbc0278d28bc 100755
---- a/tools/testing/selftests/drivers/net/so_txtime.py
-+++ b/tools/testing/selftests/drivers/net/so_txtime.py
-@@ -27,7 +27,7 @@ def test_so_txtime(cfg, clockid, ipver, args_tx, args_rx, expect_success):
-     cmd_addr = f"-S {cfg.addr_v[ipver]} -D {cfg.remote_addr_v[ipver]}"
-     cmd_args = f"-{ipver} -c {clockid} -t {tstart} {cmd_addr}"
-     cmd_rx = f"{cfg.bin_remote} {cmd_args} {args_rx} -r"
--    cmd_tx = f"{cfg.bin_local} {cmd_args} {args_tx}"
-+    cmd_tx = f"{cfg.bin_local} -m 100 {cmd_args} {args_tx}"
+diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
+index d7d8414fdddd6..c24e7f2841703 100644
+--- a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
++++ b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
+@@ -413,6 +413,7 @@ struct rk_hdptx_phy {
  
-     expect_fail = not expect_success
-     if slow_machine:
-@@ -45,7 +45,7 @@ def _qdisc_setup(ifname, qdisc, optargs=""):
-     """
-     orig = tc(f"qdisc show dev {ifname} root", json=True)[0].get("kind", None)
-     defer(tc, f"qdisc replace dev {ifname} root {orig}")
--    tc(f"qdisc replace dev {ifname} root {qdisc} {optargs}")
-+    tc(f"qdisc replace dev {ifname} root handle 1: {qdisc} {optargs}")
+ 	/* clk provider */
+ 	struct clk_hw hw;
++	bool pll_config_dirty;
+ 	bool restrict_rate_change;
  
+ 	atomic_t usage_count;
+@@ -1260,13 +1261,19 @@ static int rk_hdptx_tmds_ropll_cmn_config(struct rk_hdptx_phy *hdptx)
  
- def _test_variants_fq():
-@@ -96,11 +96,21 @@ def _test_variants_etf():
- def test_so_txtime_etf(cfg, ipver, args_tx, args_rx, expect_fail):
-     """Run all variants of etf tests."""
-     cfg.require_ipver(ipver)
+ static int rk_hdptx_pll_cmn_config(struct rk_hdptx_phy *hdptx)
+ {
++	int ret;
 +
-+    # root qdisc for background traffic (e.g., bkg())
-+    _qdisc_setup(cfg.ifname, "prio")
+ 	if (hdptx->hdmi_cfg.rate <= HDMI20_MAX_RATE)
+-		return rk_hdptx_tmds_ropll_cmn_config(hdptx);
++		ret = rk_hdptx_tmds_ropll_cmn_config(hdptx);
++	else if (hdptx->hdmi_cfg.rate == FRL_8G4L_RATE)
++		ret = rk_hdptx_frl_lcpll_ropll_cmn_config(hdptx);
++	else
++		ret = rk_hdptx_frl_lcpll_cmn_config(hdptx);
+ 
+-	if (hdptx->hdmi_cfg.rate == FRL_8G4L_RATE)
+-		return rk_hdptx_frl_lcpll_ropll_cmn_config(hdptx);
++	if (!ret)
++		hdptx->pll_config_dirty = false;
+ 
+-	return rk_hdptx_frl_lcpll_cmn_config(hdptx);
++	return ret;
+ }
+ 
+ static int rk_hdptx_frl_lcpll_mode_config(struct rk_hdptx_phy *hdptx)
+@@ -1347,25 +1354,22 @@ static int rk_hdptx_phy_consumer_get(struct rk_hdptx_phy *hdptx)
+ 		return 0;
+ 
+ 	ret = regmap_read(hdptx->grf, GRF_HDPTX_STATUS, &status);
+-	if (ret)
+-		goto dec_usage;
+-
+-	if (status & HDPTX_O_PLL_LOCK_DONE)
+-		dev_warn(hdptx->dev, "PLL locked by unknown consumer!\n");
++	if (ret) {
++		atomic_dec(&hdptx->usage_count);
++		return ret;
++	}
+ 
+ 	if (mode == PHY_MODE_DP) {
+ 		rk_hdptx_dp_reset(hdptx);
+ 	} else {
+-		ret = rk_hdptx_pll_cmn_config(hdptx);
+-		if (ret)
+-			goto dec_usage;
++		/*
++		 * Ignore PLL config errors at this point as pll_config_dirty
++		 * was not reset and, therefore, operation will be retried.
++		 */
++		rk_hdptx_pll_cmn_config(hdptx);
+ 	}
+ 
+ 	return 0;
+-
+-dec_usage:
+-	atomic_dec(&hdptx->usage_count);
+-	return ret;
+ }
+ 
+ static int rk_hdptx_phy_consumer_put(struct rk_hdptx_phy *hdptx, bool force)
+@@ -1700,13 +1704,18 @@ static int rk_hdptx_phy_power_on(struct phy *phy)
+ 		if (ret)
+ 			rk_hdptx_phy_consumer_put(hdptx, true);
+ 	} else {
+-		regmap_write(hdptx->grf, GRF_HDPTX_CON0,
+-			     HDPTX_MODE_SEL << 16 | FIELD_PREP(HDPTX_MODE_SEL, 0x0));
++		if (hdptx->pll_config_dirty)
++			ret = rk_hdptx_pll_cmn_config(hdptx);
 +
-+    # leaf ETF qdisc only for intended packets
-     try:
--        _qdisc_setup(cfg.ifname, "etf", "clockid CLOCK_TAI delta 400000")
-+        etf_args = "clockid CLOCK_TAI delta 400000"
-+        tc(f"qdisc add dev {cfg.ifname} parent 1:1 handle 10: etf {etf_args}")
-     except Exception as e:
-         raise KsftSkipEx("tc does not support qdisc etf. skipping") from e
++		if (!ret) {
++			regmap_write(hdptx->grf, GRF_HDPTX_CON0,
++				     HDPTX_MODE_SEL << 16 | FIELD_PREP(HDPTX_MODE_SEL, 0x0));
  
-+    # redirect mark 100 to leaf
-+    filter_args = "protocol all handle 100 fw flowid 1:1"
-+    tc(f"filter add dev {cfg.ifname} parent 1: {filter_args}")
+-		if (hdptx->hdmi_cfg.mode == PHY_HDMI_MODE_FRL)
+-			ret = rk_hdptx_frl_lcpll_mode_config(hdptx);
+-		else
+-			ret = rk_hdptx_tmds_ropll_mode_config(hdptx);
++			if (hdptx->hdmi_cfg.mode == PHY_HDMI_MODE_FRL)
++				ret = rk_hdptx_frl_lcpll_mode_config(hdptx);
++			else
++				ret = rk_hdptx_tmds_ropll_mode_config(hdptx);
++		}
+ 
+ 		if (ret)
+ 			rk_hdptx_phy_consumer_put(hdptx, true);
+@@ -2081,7 +2090,10 @@ static int rk_hdptx_phy_configure(struct phy *phy, union phy_configure_opts *opt
+ 			dev_err(hdptx->dev, "invalid hdmi params for phy configure\n");
+ 		} else {
+ 			hdptx->restrict_rate_change = true;
+-			dev_dbg(hdptx->dev, "%s rate=%llu bpc=%u\n", __func__,
++			hdptx->pll_config_dirty = true;
 +
-     test_so_txtime(cfg, "tai", ipver, args_tx, args_rx, expect_fail)
++			dev_dbg(hdptx->dev, "%s %s rate=%llu bpc=%u\n", __func__,
++				hdptx->hdmi_cfg.mode ? "FRL" : "TMDS",
+ 				hdptx->hdmi_cfg.rate, hdptx->hdmi_cfg.bpc);
+ 		}
  
+@@ -2338,8 +2350,19 @@ static int rk_hdptx_phy_clk_determine_rate(struct clk_hw *hw,
+ {
+ 	struct rk_hdptx_phy *hdptx = to_rk_hdptx_phy(hw);
  
+-	if (hdptx->hdmi_cfg.mode == PHY_HDMI_MODE_FRL)
+-		return hdptx->hdmi_cfg.rate;
++	/*
++	 * Invalidate current clock rate to ensure rk_hdptx_phy_clk_set_rate()
++	 * will be invoked to commit PLL configuration.
++	 */
++	if (hdptx->pll_config_dirty) {
++		req->rate = 0;
++		return 0;
++	}
++
++	if (hdptx->hdmi_cfg.mode == PHY_HDMI_MODE_FRL) {
++		req->rate = hdptx->hdmi_cfg.rate;
++		return 0;
++	}
+ 
+ 	/*
+ 	 * FIXME: Temporarily allow altering TMDS char rate via CCF.
+@@ -2371,17 +2394,6 @@ static int rk_hdptx_phy_clk_set_rate(struct clk_hw *hw, unsigned long rate,
+ 				     unsigned long parent_rate)
+ {
+ 	struct rk_hdptx_phy *hdptx = to_rk_hdptx_phy(hw);
+-	unsigned long long link_rate = rate;
+-
+-	if (hdptx->hdmi_cfg.mode != PHY_HDMI_MODE_FRL)
+-		link_rate = DIV_ROUND_CLOSEST_ULL(rate * hdptx->hdmi_cfg.bpc, 8);
+-
+-	/* Revert any unlikely link rate change since determine_rate() */
+-	if (hdptx->hdmi_cfg.rate != link_rate) {
+-		dev_warn(hdptx->dev, "Reverting unexpected rate change from %llu to %llu\n",
+-			 link_rate, hdptx->hdmi_cfg.rate);
+-		hdptx->hdmi_cfg.rate = link_rate;
+-	}
+ 
+ 	/*
+ 	 * The link rate would be normally programmed in HW during
 -- 
 2.53.0
 
