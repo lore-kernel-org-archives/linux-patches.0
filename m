@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2AC13793CA;
-	Sat, 12 Sep 2026 18:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35833ACEFB;
+	Sat, 12 Sep 2026 18:23:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237414; cv=none; b=R/z7qzqB/eUVP0+c5aIipZcP1x00EVBHGV0+sSvcXmxjtn78TFAPuwb854bJ8aXkThb+D8nITk/itnxnA5nmZf7DU1vlw9whdsUrDmN1WPXBmd0NYRzgfoe2PFt61AC6z0KNDILpnx0zflbeR9UMR0RFoko6ZQ54Hpcaf426Ljs=
+	t=1789237420; cv=none; b=DB9h1uS9SpZwqTiL4dcQVlEp8Wt5/ffdW7CmYyartnsdiw3HEjQ40OtQVrgkPalqlSxDjXDwVBph+o/M48UN/zR70Q3O9wfcUjS3bbCxIhXICImgOsG5L17kIWIt3AjEKiq2OJcmJ0xsTZR9it5U+ZdQ3z8QA1rVR9upkKhGfeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237414; c=relaxed/simple;
-	bh=2IABv9Of7yUdk6BmDk24hkuTiZqHQYRnK/28Wy5IDMU=;
+	s=arc-20240116; t=1789237420; c=relaxed/simple;
+	bh=AHOPZ2M9u6lIbhb3MJHaPbOGsBYu8YMr+FehiBXvT9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T65Ser3Pg1uEOEyKAruV9M3VNQBKdYRqamFfj8QJJQ+2N54o/RPuLysGNDeUHug0taQgcHtKPZCthAVLGqVH+tfrSShFUc3fSooPf40+Ps9A7hNlWqBTLIcDVphIU6bB9xor3FsF5oFyqXHOBC56+iLKC2NdN36g8L7k6mPlTHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VA0ggcm2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HVa43hKpLPhYEt21udWxrzNFMqqxQY0nXqTjLRv085DHp6buEzhnPL/UGfuNpf0G5mVR5/eKMBhY3ku8hqj17N/KbqRfgKClxhrQS3BEZL1iGCuWdAIFKzCrLhG3vZ5Xug66PViuY7AiRmbh/6Wv7nFy6TN0+yYkuJB7Zu1rLfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPByvtMl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VA0ggcm2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B241F000FF;
-	Sat, 12 Sep 2026 18:23:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPByvtMl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34A51F000FF;
+	Sat, 12 Sep 2026 18:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237413;
-	bh=YZzLI5ClrhDWYf520JoZg/Gq++gMWHXFEXFwIENkDZQ=;
+	s=korg; t=1789237418;
+	bh=ay7vJ2reDAI90zG05iMyzry1bpJP6fjlQIPbOMNgjeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VA0ggcm2LmsUhioepwDUgZ3pmCtfGx3T53NR51drnOW4ph6PpjCSvrwWyblgnBif/
-	 +SsByWSVV1QQ/7RhEUxvqMPrPDGBY5w70aNCmwrteMC5KwgIfREFGpQpEvZX5wxQ6C
-	 a0ryS1Xyaq7MtouIhHX0E1fpTSFU2G167DbnZoyw=
+	b=BPByvtMlcD7Maabq4RaqsYJTi1eAEupqW2t7WEk0L630c2U+liJTXimgxxq9RDEPt
+	 2fDiomQG9BTR514tdv4RS++i/9srYvrTAZuMUp+k+VEPeGQoPcyOMfenSbq7NyW8Gt
+	 BUjU2LKhtK9eIMAG/CLioDsrqIVdzK45Q0nb1AF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Norbert Szetei <norbert@doyensec.com>,
-	Jongmin Jang <payload.jang@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 217/935] net: skbuff: dont touch shared zerocopy state in skb_tx_error()
-Date: Sat, 12 Sep 2026 08:54:07 +0200
-Message-ID: <20260912065531.800429464@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Koichiro Den <den@valinux.co.jp>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.15 253/935] dmaengine: dw-edma: Initialize IRQ data before requesting IRQs
+Date: Sat, 12 Sep 2026 08:54:43 +0200
+Message-ID: <20260912065532.628800252@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -54,66 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit f66bdb1cc0fcd227a062378f8be0b5873aa5600a ]
+commit 647217abea849d3d45f8cb0b8ee5b78d50f26985 upstream.
 
-skb_tx_error() completes the zerocopy uarg and clears
-SKBFL_ALL_ZEROCOPY, and skb_zcopy_downgrade_managed() clears
-SKBFL_MANAGED_FRAG_REFS. Both live in skb_shinfo(), which every clone
-shares, while the caller only owns the reference it is about to drop.
-Through a clone it tells the producer its pages are free and drops
-SKBFL_SHARED_FRAG for an skb that is still in flight.
+dw_edma_irq_request() passes struct dw_edma_irq to request_irq() before
+dw_edma_channel_setup() fills the back pointer. A shared interrupt can
+therefore enter the handler with dw_irq->dw still NULL, leading to a
+NULL pointer dereference.
 
-Open vSwitch reaches this with a non-last OVS_ACTION_ATTR_RECIRC:
-clone_execute() sends a skb_clone() into ovs_dp_process_packet() while
-do_execute_actions() keeps forwarding the original, and skb_clone()
-does not privatise the frags here -- skb_orphan_frags() returns early
-on SKBFL_DONT_ORPHAN. A flow miss on the clone then strips the marker
-from the packet still being forwarded, and a later local ESP delivery
-decrypts in place over frags it does not own privately.
+Set the back pointer before installing each handler.
 
-Skip it for a cloned skb. Nothing is lost: skb_release_data() clears
-the zerocopy state once the last reference to the shared data goes.
-
-Fixes: 25121173f7b1 ("skb: api to report errors for zero copy skbs")
+Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
 Cc: stable@vger.kernel.org
-Suggested-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Tested-by: Jongmin Jang <payload.jang@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/CFAB292A-674B-4C14-BB2C-BB8830AD5659@doyensec.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ There was no 'if' on 5.x as there is no skb_zcopy_downgrade_managed(). ]
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Link: https://patch.msgid.link/20260721062815.4117887-5-den@valinux.co.jp
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/dma/dw-edma/dw-edma-core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 6281cfed03bb2..83ad581b12fa9 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -889,10 +889,14 @@ EXPORT_SYMBOL(skb_dump);
-  *
-  *	Report xmit error if a device callback is tracking this skb.
-  *	skb must be freed afterwards.
-+ *
-+ *	Does nothing for a cloned skb: the zerocopy state lives in
-+ *	skb_shinfo(), which the clones share.
-  */
- void skb_tx_error(struct sk_buff *skb)
- {
--	skb_zcopy_clear(skb, true);
-+	if (skb && !skb_cloned(skb))
-+		skb_zcopy_clear(skb, true);
- }
- EXPORT_SYMBOL(skb_tx_error);
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -794,7 +794,6 @@ static int dw_edma_channel_setup(struct
+ 		else
+ 			irq->rd_mask |= BIT(j);
  
--- 
-2.53.0
-
+-		irq->dw = dw;
+ 		memcpy(&chan->msi, &irq->msi, sizeof(chan->msi));
+ 
+ 		dev_vdbg(dev, "MSI:\t\tChannel %s[%u] addr=0x%.8x%.8x, data=0x%.8x\n",
+@@ -889,6 +888,7 @@ static int dw_edma_irq_request(struct dw
+ 	if (chip->nr_irqs == 1) {
+ 		/* Common IRQ shared among all channels */
+ 		irq = chip->ops->irq_vector(dev, 0);
++		dw->irq[0].dw = dw;
+ 		err = request_irq(irq, dw_edma_interrupt_common,
+ 				  IRQF_SHARED, dw->name, &dw->irq[0]);
+ 		if (err) {
+@@ -914,6 +914,7 @@ static int dw_edma_irq_request(struct dw
+ 
+ 		for (i = 0; i < (*wr_alloc + *rd_alloc); i++) {
+ 			irq = chip->ops->irq_vector(dev, i);
++			dw->irq[i].dw = dw;
+ 			err = request_irq(irq,
+ 					  i < *wr_alloc ?
+ 						dw_edma_interrupt_write :
 
 
