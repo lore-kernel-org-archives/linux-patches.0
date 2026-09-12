@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1103F4078E8;
-	Sat, 12 Sep 2026 09:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4350837F8BC;
+	Sat, 12 Sep 2026 09:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207015; cv=none; b=UUP9QZKTHGDGN9qFwD+rxCMZokbottnRD4LM/4ZLisC0hYwKjDRqPp57wIESrqcinrGBcy23bqGIL/ELo+33yfy56Ln5Mpa+TMJOlmtlWBOwH4WCfWJ0bJfYGnC7Bt507ut2R4nFbZf7ZGU6rTU3u8EDpBlHtxmDNo8U8CJkk+o=
+	t=1789207018; cv=none; b=motYZcdklk20woZYm2z6VcvW26+Bsywt5mxyB3B1Hgk77QGnvGRbbEky+u4yxs8qLV2w+E49NtekdjZ0j6mJHa11vOQtEvSFNmtB3DoiJnBNGtFHzYlvX9mMUHjdI3P/zyzoWNk+olNFnnWDKOUHhoKQ7/wjw0HJWogYwr2mi1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207015; c=relaxed/simple;
-	bh=azRvoqV+Ba5Av49pMHsjDEg6pxpCmIJc+hebZEXBZzQ=;
+	s=arc-20240116; t=1789207018; c=relaxed/simple;
+	bh=tfD+2ZhSF7DCbQ7xaMKVhkKosZnCX7VR48xHqmlYCaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QzOruc28HrddBIFbTINrusjhu0INt0A7P3Kpi26/2xuKfj6BH711L1VxwR5Fdqz17p85fNU1xQPY1eiNjuguyKUiz/zNonHPWFmMv1nXLH1cW2R1bBWhS4dk9MmXjYzmtshOQD07FPiMSnUGAq48nFj1fp/0ZYgPJKAvAUdgjXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bro0i7l9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BdE5aBtOB/qh7QkgjOnmQgd8Um6kL83hyQFBOJTFaczPWS2SyKpSYo/fJ4/FKv/F9l7qzADL79QUEg4Bi2UJSZhN1QdFaZtN7D5gQsrr8JOHu/tBqbvE07kfipzzDR0iLrBWgA/h1+2CmI5E448GKe0gn7N6df7A2phXPn4tHkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AienhIAO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bro0i7l9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E9A1F000FF;
-	Sat, 12 Sep 2026 09:56:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AienhIAO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8DD1F000FF;
+	Sat, 12 Sep 2026 09:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207012;
-	bh=e3VYoiDO9scwIl5/PkFOvft9Nb98maoknfXN2qXmxuQ=;
+	s=korg; t=1789207017;
+	bh=k0AQPF2v0BrOWpiA8O3oppqrqvELU4/altA2NWeb9MI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bro0i7l90IXoFjw1MzWPpowVgh9x2QRbxFV+3YtP4LswrTsiV5VVaHvxhY4Zz6oCO
-	 7Pek0ykO4EFEXFl/YvMhd0ZBHOnU2tx3WlVfuiUOpAXHYcJcLpvmrSA9Ki9yEfC1mg
-	 ef7EzcCXo+V+gT+IeUoQ/yyu8+pUzHmR2BjY6Cus=
+	b=AienhIAOK3kPr8RD2sFeTg7LrJVxTORS3upVUVczXdykpLPXKNYIOZxK1ILyR7u1s
+	 ZIS1qh3KGDN3JBr+PJDNqcUE+HVgj2sSAQzSGBhJf5gKzmanexmgTH5JGnfxR1waQ8
+	 g+ZA/SjB9Voqhg67O0+01k51O47G4OHO41+u9Np4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Wang <wei.w.wang@hotmail.com>,
-	Yongwei Xu <xuyongwei@open-hieco.net>,
-	Vasant Hegde <vasant.hegde@amd.com>,
+	Fu Hao <fuhao@open-hieco.net>,
+	Tingyin Duan <tingyin.duan@gmail.com>,
 	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0282/1518] iommu/amd: Prevent SB IOAPIC from overriding IVRS validation errors
-Date: Sat, 12 Sep 2026 08:40:51 +0200
-Message-ID: <20260912065629.861480312@linuxfoundation.org>
+Subject: [PATCH 6.18 0283/1518] iommu/amd: Add support for Hygon family 18h model 4h IOAPIC
+Date: Sat, 12 Sep 2026 08:40:52 +0200
+Message-ID: <20260912065629.884338121@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,65 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Wang <wei.w.wang@hotmail.com>
+From: Fu Hao <fuhao@open-hieco.net>
 
-[ Upstream commit 854056480f9217568e3ab5edd81a9347a173ea79 ]
+[ Upstream commit 5beda8cadb1f072140e58b1edb7604444a42d955 ]
 
-The check_ioapic_information() function validates IOAPICs against the
-IVRS table to safely disable Interrupt Remapping (IR) if the BIOS provides
-a broken topology.
+The SB IOAPIC is on the device 0xb from Hygon family 18h model 4h.
 
-Currently, the validation loop contains a bug: If an unmapped secondary
-IOAPIC is encountered, 'ret' is set to false. But if the Southbridge (SB)
-IOAPIC is enumerated after it in the MADT, the loop overwrites 'ret' to
-true.
-
-This bypasses the validation failure and leaves IR enabled. When devices
-attached to the unmapped secondary IOAPIC fire interrupts, the IOMMU drops
-them due to the missing Requestor ID, leading to localized device hangs.
-
-Fix this by initializing 'ret' to true and only toggling it to false
-upon encountering a validation error, ensuring failures are never erased.
-
-Fixes: c2ff5cf5294b ("iommu/amd: Work around wrong IOAPIC device-id in IVRS table")
-Signed-off-by: Wei Wang <wei.w.wang@hotmail.com>
-Tested-by: Yongwei Xu <xuyongwei@open-hieco.net>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Fu Hao <fuhao@open-hieco.net>
+Tested-by: Tingyin Duan <tingyin.duan@gmail.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Stable-dep-of: 04fee302fac7 ("iommu/amd: Fix false positive in SB IOAPIC IVRS validation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/init.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 69170146d4421..20b1cc2159332 100644
+index 20b1cc2159332..bf8b114386884 100644
 --- a/drivers/iommu/amd/init.c
 +++ b/drivers/iommu/amd/init.c
-@@ -3103,7 +3103,7 @@ static bool __init check_ioapic_information(void)
- 	int idx;
+@@ -3096,6 +3096,9 @@ static void __init free_iommu_resources(void)
+ /* SB IOAPIC is always on this device in AMD systems */
+ #define IOAPIC_SB_DEVID		((0x00 << 8) | PCI_DEVFN(0x14, 0))
  
- 	has_sb_ioapic = false;
--	ret           = false;
-+	ret           = true;
- 
- 	/*
- 	 * If we have map overrides on the kernel command line the
-@@ -3123,7 +3123,6 @@ static bool __init check_ioapic_information(void)
++/* SB IOAPIC for Hygon family 18h model 4h is on the device 0xb */
++#define IOAPIC_SB_DEVID_FAM18H_M4H	((0x00 << 8) | PCI_DEVFN(0xb, 0))
++
+ static bool __init check_ioapic_information(void)
+ {
+ 	const char *fw_bug = FW_BUG;
+@@ -3121,7 +3124,12 @@ static bool __init check_ioapic_information(void)
+ 			pr_err("%s: IOAPIC[%d] not in IVRS table\n",
+ 				fw_bug, id);
  			ret = false;
- 		} else if (devid == IOAPIC_SB_DEVID) {
+-		} else if (devid == IOAPIC_SB_DEVID) {
++		} else if (devid == IOAPIC_SB_DEVID ||
++			   (boot_cpu_data.x86_vendor == X86_VENDOR_HYGON &&
++			    boot_cpu_data.x86 == 0x18 &&
++			    boot_cpu_data.x86_model >= 0x4 &&
++			    boot_cpu_data.x86_model <= 0xf &&
++			    devid == IOAPIC_SB_DEVID_FAM18H_M4H)) {
  			has_sb_ioapic = true;
--			ret           = true;
  		}
  	}
- 
-@@ -3137,6 +3136,7 @@ static bool __init check_ioapic_information(void)
- 		 * device id for the IOAPIC in the system.
- 		 */
- 		pr_err("%s: No southbridge IOAPIC found\n", fw_bug);
-+		ret = false;
- 	}
- 
- 	if (!ret)
 -- 
 2.53.0
 
