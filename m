@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0B21C5799;
-	Sat, 12 Sep 2026 18:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113591C5799;
+	Sat, 12 Sep 2026 18:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239467; cv=none; b=hpHDM1QFrN9b5wuDSzaMIy9iHLJf7nXcqHarl8buTI5h1as2AEtuGC17/9IdrgyTg8A30aJSxMeB2FBL/n5SoL74jYrAx7xGK8h0S86H1vaF9GuvhPwunK55ZrXBQgHzScuqJ1O2byewXRbCUiaotlcHbuo3QIjlKmMPFvikDww=
+	t=1789239472; cv=none; b=WTp7XSKxLQFne7I1GzRmBaavNnFVFEJbcaCssbejonfYnNDgyCIdhf+rcgRFXrNLJ4WoNNKh3ePsVCi/Q67OmjEq5ZWfQqdJgbvk+8PtV4tMWTMo+eC3lGdHwIf15vJdaZc+A0oZM61+3thnNIbDNb4jAL74rFwpbFaVfIwz304=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239467; c=relaxed/simple;
-	bh=Z5lqfnZQxE5384s/DD4i3LaKgv/tsYbLuBIRc01Kn2U=;
+	s=arc-20240116; t=1789239472; c=relaxed/simple;
+	bh=V42hUA7Djq23040evskazARU/CdIdOoDTAi569vXHVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cboNdMUtGT1Btlg9dPPyPEEfQfG3XCf/83WruPZumS0/6m2640JYd66YlLRQTej5MOHMDB8X0DbmsPrljqKdCYbsQdlntMinCURPOUwKrsZV35u6BOf5IGuyyBcd4nJGLD//QuH4mRuZxDYCVvYkd/mlv2K5kw7rPEGzgjwFDx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UqH2lakK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qCKCbQvegknzf5sb78qTrnPqKCJvSrU1fjW5Y15uUfo5PCFVDdYDk9/h+b5E1Cx5JfNA2OQJgDqKzcyQO4+iB3eI1QWzv6AOPFcjvxWW2FfYC8ecyxF0a4CXSxaaxz9Awrih/n/6px9Xk8k9diyLAxDCz5xGIeIgyQw5cYRrvgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zva1DrPQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UqH2lakK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33BD1F000FF;
-	Sat, 12 Sep 2026 18:57:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zva1DrPQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185691F000FF;
+	Sat, 12 Sep 2026 18:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239465;
-	bh=BjsIb++eRy0RblsldUSepf8zD8rLvvoGvUm6sq4wZgA=;
+	s=korg; t=1789239471;
+	bh=SOpqHn/ehi6EFME+TBJbYIS0aQckXTid3LYGeomQoZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UqH2lakKLBp1H0Un1M1kOz5Y63InBCFHTOk8vAADYlcRD5YIExYd74LTl0aa5Hst1
-	 5UfU7VpxnzIWiEM0gfL79KbRClYHLarC84B2CHPEKvgQ4amsbkkQjbdhGlr0DN4ued
-	 FR29O5itO22vvC3OikYweT44oxoIgmNvH0NnGcss=
+	b=Zva1DrPQf/DsP2DFGP+I1UUG5aoelCloT9b6GjWZKRsVx5yZTL4CB9kGcWLc8i3tB
+	 VuUtLVFahac4JUI6FsP34vc+MDZY3+RRrtYt9kAyNX5/DrOnu6RWBYOlEcq/H39PBg
+	 UEGDtYz9x1G/8yMGOj61ihKAIx2clN15ancTi/I4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gou Hao <gouhao@uniontech.com>,
-	jiazhenyuan <jiazhenyuan@uniontech.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 668/935] powerpc/smp: add NULL guard for cause_ipi in smp_muxed_ipi_message_pass
-Date: Sat, 12 Sep 2026 09:01:38 +0200
-Message-ID: <20260912065542.162238484@linuxfoundation.org>
+Subject: [PATCH 5.15 669/935] MIPS: ptrace: Fix syscall skipping via PTRACE_SYSCALL
+Date: Sat, 12 Sep 2026 09:01:39 +0200
+Message-ID: <20260912065542.186757406@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -46,53 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gou Hao <gouhao@uniontech.com>
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 
-[ Upstream commit 5aabc192702defb8950e7c81b05c3f4ca8ee43ec ]
+[ Upstream commit 5475c03fa25f31cfd5f8c7e552f8d10347bbaad9 ]
 
-smp_muxed_ipi_message_pass() calls smp_ops->cause_ipi() without
-checking whether it has been set.
+If tracer wanted to skip a syscall return value was always
+overwritten with -ENOSYS. Fix this by checking against original
+syscall number and only return -ENOSYS, if it is negative.
 
-On platforms using muxed IPI (e.g. powernv/pseries), smp_ops->cause_ipi
-is initialized to NULL in the static smp_ops and only assigned during
-the platform smp_probe() handler.  If the IPI subsystem fails to
-initialize -- for example when xive_init_ipis() fails and
-xive_smp_probe() returns an error -- the probe handler returns early
-and cause_ipi is never set.  Any subsequent IPI send (e.g.
-arch_smp_send_reschedule()) would dereference the NULL pointer.
-
-Add a NULL check to avoid the crash in that situation.
-
-Fixes: 23d72bfd8f9f ("powerpc: Consolidate ipi message mux and demux")
-Signed-off-by: Gou Hao <gouhao@uniontech.com>
-Reviewed-by: jiazhenyuan <jiazhenyuan@uniontech.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260727104215.184786-6-gouhao@uniontech.com
+Fixes: b6318a903d06 ("MIPS/ptrace: Pick up ptrace/seccomp changed syscalls")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/smp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/mips/kernel/ptrace.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/smp.c b/arch/powerpc/kernel/smp.c
-index 2b8a5309fb4a5..9e3d9a3c8db4f 100644
---- a/arch/powerpc/kernel/smp.c
-+++ b/arch/powerpc/kernel/smp.c
-@@ -296,6 +296,9 @@ void smp_muxed_ipi_set_message(int cpu, int msg)
- 
- void smp_muxed_ipi_message_pass(int cpu, int msg)
+diff --git a/arch/mips/kernel/ptrace.c b/arch/mips/kernel/ptrace.c
+index dd454b429ff73..d051d351e5a01 100644
+--- a/arch/mips/kernel/ptrace.c
++++ b/arch/mips/kernel/ptrace.c
+@@ -1312,8 +1312,12 @@ long arch_ptrace(struct task_struct *child, long request,
+  */
+ asmlinkage long syscall_trace_enter(struct pt_regs *regs)
  {
-+	if (!smp_ops->cause_ipi)
-+		return;
++	long syscall;
 +
- 	smp_muxed_ipi_set_message(cpu, msg);
+ 	user_exit();
  
- 	/*
++	syscall = current_thread_info()->syscall;
++
+ 	if (test_thread_flag(TIF_SYSCALL_TRACE)) {
+ 		if (tracehook_report_syscall_entry(regs))
+ 			return -1;
+@@ -1349,7 +1353,7 @@ asmlinkage long syscall_trace_enter(struct pt_regs *regs)
+ 	 * Negative syscall numbers are mistaken for rejected syscalls, but
+ 	 * won't have had the return value set appropriately, so we do so now.
+ 	 */
+-	if (current_thread_info()->syscall < 0)
++	if (syscall < 0)
+ 		syscall_set_return_value(current, regs, -ENOSYS, 0);
+ 	return current_thread_info()->syscall;
+ }
 -- 
 2.53.0
 
