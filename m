@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673AF3DB31A;
-	Sat, 12 Sep 2026 12:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC15047D440;
+	Sat, 12 Sep 2026 12:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217860; cv=none; b=FBp4SIvT6xzI0DP8SyxPaeVAG+6WqCDKADDNTcx4uW0HT+ZaNpcKgsdU4ir3mQ36RH8QG7A3DacjoL6N9DIvD93BH/aFv4FSXrxjXI2q/ZqEPQMY4rLhD7oNXKoVuc0UFyIKPowV5tZ1TPMkgKBS50eC5eW5nLtbAgMLLHKgfwU=
+	t=1789217866; cv=none; b=h6B/mQc7OCmGRLmWtJw3ltbHSayDMtQIm8mYTwrJ07RQm4PpfbYsX8udQDUlZ5UNtczhErha02llsvdBaewSsQVGEnbfy8mjuykkSG5+4ZK7Ee0VJRB9lo6C+skXYg9s3qxnxOqtObcgXo8Av4Xf1phMcT9rZ9u3O2PGDPd+pyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217860; c=relaxed/simple;
-	bh=AFLADaO8uJaHlJK+sqMmXzrZ2MztsTdcEB/dwfTfnUE=;
+	s=arc-20240116; t=1789217866; c=relaxed/simple;
+	bh=WWpkuSjUcpTNPbRlEvnjmirNvTvwsUxlkAEbd2A7jH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LDOIG2/iIJoZ5HnYAbSAK/5n2X5GE+nTEhC51CVm6QVHPjI4PDc7zyA4u8RopJq1eGtbRAHyI9769Cmk6bDEYl83ckRAM2AFzLLNCeVGT/FOEXocqIVKdYFrnfT9JFnYtyOk46Vu3TDH0xohVvRC7igqn5gx57yXeqrXn7qmDlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZ7ruH+f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pt2LhpAgfwHW9EtRxOQjwm/aVNx1pjpcTexoWrQST+c6FbjNC3QuWPX/Rqp5GQHDJU5IbXCX16ZnyG+HS4M9T1z9M6IbBzKO7CADxqZyL8Wc8RA+WnBI+XRSpi+mW1x7++/U40So9+SxiqCCEopx8uKGOQkvHZRomKmZS2tk1kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUGdtLsg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZ7ruH+f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B9A51F000FF;
-	Sat, 12 Sep 2026 12:57:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUGdtLsg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD031F000FF;
+	Sat, 12 Sep 2026 12:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217859;
-	bh=hlUswyyzri479YWOi4DgLLmsR+seb8ByrKif41vJfMw=;
+	s=korg; t=1789217864;
+	bh=P6RgV2y4hZCh8HgTTdMVRnBAxjmOg6TJ7+kpzs99POk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WZ7ruH+fM649AlESTZ3sV0b53hHox+fGzuIDIgV3mAxRVoE9ROwrFXhxm8aSnaxk+
-	 agXime7BE4GTvNQgirsj0/5scPTtEQvaXwtRGE9mTEfaWyx8ZshZOtLH8go+xmY2uh
-	 Rrp/8QW3Rgntuk8ETmQD/Aur2cZJ5++li0HD1Yec=
+	b=fUGdtLsgNTVobjp6EdEA6mM8xgSygnda9BjVaUHmDPt5unHb3XBa2y+cQ6xRXEp/p
+	 w8dp39QedKkXFA78G2F7XTNNOMzzg4D1IYvFJKTL4dcoT1rSQWjihGi7jh+P1dlAKl
+	 gvanwfjwsF5LeQOYAh9ig06GfDv5qC4KXivkl3II=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1027/1376] m68k: Fix backtraces for non-running tasks
-Date: Sat, 12 Sep 2026 08:57:33 +0200
-Message-ID: <20260912065630.452491701@linuxfoundation.org>
+Subject: [PATCH 6.12 1028/1376] xdrgen: Rename "enum yada" types as just "yada"
+Date: Sat, 12 Sep 2026 08:57:34 +0200
+Message-ID: <20260912065630.474394807@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,49 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 09f71dbeb287e367beea56d9ac8a3d356ef5e02a ]
+[ Upstream commit 6e853dcd2d3d6f796597c1042340a2de0ce2469f ]
 
-When no stack pointer is supplied, show_stack() starts at thread.esp0.
-This is the saved userspace register frame, not where a task was switched
-out. For kernel threads it points to the zeroed frame created by
-copy_thread(), so sched_show_task() prints no useful backtrace.
+This simplifies the generated C code and makes way for supporting
+big-endian XDR enums.
 
-Use thread.ksp for non-current tasks. It is saved by switch_to() and is
-already used by __get_wchan(). For current, start at the current stack
-frame, as is already done when no task is supplied.
-
-Tested on qemu-system-m68k -M virt using SysRq-t. All task dumps contained
-resolved frames.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://patch.msgid.link/20260723041055.47289-1-kmehltretter@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: d4ca0b0a6c62 ("xdrgen: Do not declare union XDR functions in the definitions header")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/kernel/traps.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/net/sunrpc/xdrgen/templates/C/enum/declaration/close.j2 | 4 ++--
+ tools/net/sunrpc/xdrgen/templates/C/enum/decoder/enum.j2      | 2 +-
+ tools/net/sunrpc/xdrgen/templates/C/enum/definition/close.j2  | 1 +
+ tools/net/sunrpc/xdrgen/templates/C/enum/encoder/enum.j2      | 2 +-
+ tools/net/sunrpc/xdrgen/xdr_ast.py                            | 4 ----
+ 5 files changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/arch/m68k/kernel/traps.c b/arch/m68k/kernel/traps.c
-index 53d0cf343d90f..c871916ea80f3 100644
---- a/arch/m68k/kernel/traps.c
-+++ b/arch/m68k/kernel/traps.c
-@@ -936,8 +936,8 @@ void show_stack(struct task_struct *task, unsigned long *stack,
- 	int i;
+diff --git a/tools/net/sunrpc/xdrgen/templates/C/enum/declaration/close.j2 b/tools/net/sunrpc/xdrgen/templates/C/enum/declaration/close.j2
+index ab1e576c95318..d1405c7c5354a 100644
+--- a/tools/net/sunrpc/xdrgen/templates/C/enum/declaration/close.j2
++++ b/tools/net/sunrpc/xdrgen/templates/C/enum/declaration/close.j2
+@@ -1,4 +1,4 @@
+ {# SPDX-License-Identifier: GPL-2.0 #}
  
- 	if (!stack) {
--		if (task)
--			stack = (unsigned long *)task->thread.esp0;
-+		if (task && task != current)
-+			stack = (unsigned long *)task->thread.ksp;
- 		else
- 			stack = (unsigned long *)&stack;
- 	}
+-bool xdrgen_decode_{{ name }}(struct xdr_stream *xdr, enum {{ name }} *ptr);
+-bool xdrgen_encode_{{ name }}(struct xdr_stream *xdr, enum {{ name }} value);
++bool xdrgen_decode_{{ name }}(struct xdr_stream *xdr, {{ name }} *ptr);
++bool xdrgen_encode_{{ name }}(struct xdr_stream *xdr, {{ name }} value);
+diff --git a/tools/net/sunrpc/xdrgen/templates/C/enum/decoder/enum.j2 b/tools/net/sunrpc/xdrgen/templates/C/enum/decoder/enum.j2
+index 341d829afeda9..6482984f1cb71 100644
+--- a/tools/net/sunrpc/xdrgen/templates/C/enum/decoder/enum.j2
++++ b/tools/net/sunrpc/xdrgen/templates/C/enum/decoder/enum.j2
+@@ -8,7 +8,7 @@ bool
+ {% else %}
+ static bool __maybe_unused
+ {% endif %}
+-xdrgen_decode_{{ name }}(struct xdr_stream *xdr, enum {{ name }} *ptr)
++xdrgen_decode_{{ name }}(struct xdr_stream *xdr, {{ name }} *ptr)
+ {
+ 	u32 val;
+ 
+diff --git a/tools/net/sunrpc/xdrgen/templates/C/enum/definition/close.j2 b/tools/net/sunrpc/xdrgen/templates/C/enum/definition/close.j2
+index 9e62344a976aa..a07586cbee179 100644
+--- a/tools/net/sunrpc/xdrgen/templates/C/enum/definition/close.j2
++++ b/tools/net/sunrpc/xdrgen/templates/C/enum/definition/close.j2
+@@ -1,2 +1,3 @@
+ {# SPDX-License-Identifier: GPL-2.0 #}
+ };
++typedef enum {{ name }} {{ name }};
+diff --git a/tools/net/sunrpc/xdrgen/templates/C/enum/encoder/enum.j2 b/tools/net/sunrpc/xdrgen/templates/C/enum/encoder/enum.j2
+index bd0a770e50f24..67245b9a914d2 100644
+--- a/tools/net/sunrpc/xdrgen/templates/C/enum/encoder/enum.j2
++++ b/tools/net/sunrpc/xdrgen/templates/C/enum/encoder/enum.j2
+@@ -8,7 +8,7 @@ bool
+ {% else %}
+ static bool __maybe_unused
+ {% endif %}
+-xdrgen_encode_{{ name }}(struct xdr_stream *xdr, enum {{ name }} value)
++xdrgen_encode_{{ name }}(struct xdr_stream *xdr, {{ name }} value)
+ {
+ 	return xdr_stream_encode_u32(xdr, value) == XDR_UNIT;
+ }
+diff --git a/tools/net/sunrpc/xdrgen/xdr_ast.py b/tools/net/sunrpc/xdrgen/xdr_ast.py
+index dbd3fcf9c9576..f5788a5585a9f 100644
+--- a/tools/net/sunrpc/xdrgen/xdr_ast.py
++++ b/tools/net/sunrpc/xdrgen/xdr_ast.py
+@@ -15,7 +15,6 @@ this_module = sys.modules[__name__]
+ excluded_apis = []
+ header_name = "none"
+ public_apis = []
+-enums = set()
+ structs = set()
+ pass_by_reference = set()
+ 
+@@ -294,8 +293,6 @@ class ParseToAst(Transformer):
+         c_classifier = ""
+         if isinstance(children[0], _XdrIdentifier):
+             name = children[0].symbol
+-            if name in enums:
+-                c_classifier = "enum "
+             if name in structs:
+                 c_classifier = "struct "
+             return _XdrDefinedType(
+@@ -320,7 +317,6 @@ class ParseToAst(Transformer):
+     def enum(self, children):
+         """Instantiate one _XdrEnum object"""
+         enum_name = children[0].symbol
+-        enums.add(enum_name)
+ 
+         i = 0
+         enumerators = []
 -- 
 2.53.0
 
