@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDAF8343889;
-	Sat, 12 Sep 2026 10:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83393B71DA;
+	Sat, 12 Sep 2026 10:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209207; cv=none; b=pQJY2UH/U1v+AL1xdJ/D/DuS/jRC6sTxwYQVVKKLkdY5Um3rGx5jfZT6CX9BGfVOghu1rcHTJxJjegJ3A+cIArtQ7D5J2uwDj14U0mqZqSTDfxutbXxJNb///Nufv+D5x+CDXAleF/KmpkJyMz4I5cp/N8z+/cyf3vTlGi/NRY0=
+	t=1789209212; cv=none; b=mBuLJB7eUtKlWBPdfUIfE3UVidyrsMDcZMImx3+a5TIWKUrp4byIY7ZR4QolbZafkGz9yv8v8fCnmj64qQiCP3OBj6DbD8mtwZF+LyXRE83EryKW0KGlT1cn5v7XO4IKKb4zu8mvjcWbALikChnLAtz6Hw9IU1CqdSATRG+cmhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209207; c=relaxed/simple;
-	bh=qayj8jbE3pDQCKcB348aU9d9pv4T1Fdf4lTlJkbgFfc=;
+	s=arc-20240116; t=1789209212; c=relaxed/simple;
+	bh=thAMMS8aU8M8Rx5FPh0aUDwKIJur3gdtslEYzvor/gM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bAymeKwjR0MrlIljJxh7UPgkoSB92QJnKmfP5+ov9j58KrK1IfVG8FJDTPrGx7Uw5fA7kYDb2cNupFlwVvBjlm9R8Zgg+78LTORNfqgdFh6UGb4smcwkKEgMCU7w9giDd9bbYRYam2QgXGoMX7bzFsCkgD9Q3WPgqA1VqKXwCps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldH5ws3R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d63A7Gw+uS0n/+XPrbppQxpyTcxFf19Uc0siBGzJx8UExvNevLF9iSoM9w/n+pox59k5zk1D0WCIkdR3BgY/1xkVMxeCjVFD2O/rDwrUO/9L8DwyLVJ/lWnc7q7w2SJ6jIHWsPSAMtRukhvytgFzEHk3a/TUHHizkMzQpxECjek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6SUpMku; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldH5ws3R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C208B1F000FF;
-	Sat, 12 Sep 2026 10:33:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6SUpMku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B621F000FF;
+	Sat, 12 Sep 2026 10:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209206;
-	bh=pHZr7uPaHLzJZi4HMh01iwB4pzeZgWoi/MEaFp0oBZo=;
+	s=korg; t=1789209211;
+	bh=MOhTi/b/X5JPFmVgAVj+D5wFzrQyyLWQ2Je7BYBwk+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ldH5ws3RhoclXkxSnSN/NKkjtv2xdqhU1nhootibZqvScPdDgrWZclr/LNqUgAMV8
-	 egbHmMvW03elhfp507pMvxFK0s+WMHF2XwYdfap5Sfwje9Zyjjc05HJEGRMhG2Qg3Z
-	 YtfhZznFNzpY8e+4QLmQqDaEQL9HWjV4DFveanvg=
+	b=T6SUpMkuMwzdYCLBsH8Bcjs1IAlPVueYIiqY46uqpjHOo45IoZAtZPeZy8/velfqB
+	 YxmWjauj3SazNurCmp6HzO/Km6cZSvyijs3HeLf/m5QcJMrG18DascMxkF7wRaCczZ
+	 zoRYNNHRQLyZE5ZjLEznGe4W5ptp86ww2b9b+uOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Rex Lu <rex.lu@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0773/1518] wifi: ath11k: fix leak in ath11k_service_ready_ext_event()
-Date: Sat, 12 Sep 2026 08:49:02 +0200
-Message-ID: <20260912065640.922435973@linuxfoundation.org>
+Subject: [PATCH 6.18 0738/1518] wifi: mt76: fix RX data queuing of RRO 3.0
+Date: Sat, 12 Sep 2026 08:48:27 +0200
+Message-ID: <20260912065640.129754098@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,42 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+From: Rex Lu <rex.lu@mediatek.com>
 
-[ Upstream commit 0293be2212d319d59589082461abf2a9b626cd1c ]
+[ Upstream commit 86897f106669c07eea4c34b54c3268d448d41426 ]
 
-Currently, during ath11k_service_ready_ext_event() processing,
-svc_rdy_ext.mac_phy_caps can be allocated during TLV parsing. This is a
-temporary allocation that is freed on the success path, but not on the
-error path. If parsing succeeds far enough to allocate mac_phy_caps and
-then fails on a later TLV, the allocation leaks. So free the allocation
-on the error path.
+For RRO 3.0, RX data released from a RRO data queue should be put to
+the indicator queue. The frames are processed and completed in the
+context of the indicator queue NAPI, which only polls skbs queued on
+the MT_RXQ_RRO_IND list; frames queued under the data queue id are
+left sitting on that list until the data queue NAPI happens to run,
+stalling and reordering RX data.
 
-Compile tested only.
-
-Fixes: 5b90fc760db5 ("ath11k: fix wmi service ready ext tlv parsing")
-Assisted-by: Claude:claude-sonnet-4-6
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260727-ath11k_service_ready_ext_event-memleak-v1-1-e8373d27bdd1@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: b1e58e137b61 ("wifi: mt76: mt7996: Introduce RRO MSDU callbacks")
+Signed-off-by: Rex Lu <rex.lu@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20260722082610.2699628-1-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/mediatek/mt76/mac80211.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index e5583cc78ba09..3305ec66ddbf2 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -5077,6 +5077,7 @@ static int ath11k_service_ready_ext_event(struct ath11k_base *ab,
- 	return 0;
+diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
+index 030e9103283f3..2d8cd627ef4c6 100644
+--- a/drivers/net/wireless/mediatek/mt76/mac80211.c
++++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
+@@ -886,6 +886,7 @@ static void mt76_rx_release_amsdu(struct mt76_phy *phy, enum mt76_rxq_id q)
+ 	struct sk_buff *skb = phy->rx_amsdu[q].head;
+ 	struct mt76_rx_status *status = (struct mt76_rx_status *)skb->cb;
+ 	struct mt76_dev *dev = phy->dev;
++	struct mt76_queue *rxq = &dev->q_rx[q];
  
- err:
-+	kfree(svc_rdy_ext.mac_phy_caps);
- 	ath11k_wmi_free_dbring_caps(ab);
- 	return ret;
+ 	phy->rx_amsdu[q].head = NULL;
+ 	phy->rx_amsdu[q].tail = NULL;
+@@ -914,6 +915,13 @@ static void mt76_rx_release_amsdu(struct mt76_phy *phy, enum mt76_rxq_id q)
+ 			return;
+ 		}
+ 	}
++
++	/* RRO 3.0 data queue skbs are processed and completed in the context
++	 * of the indicator queue NAPI, which only polls its own skb list
++	 */
++	if (mt76_queue_is_wed_rro_data(rxq) && dev->hwrro_mode == MT76_HWRRO_V3)
++		q = MT_RXQ_RRO_IND;
++
+ 	__skb_queue_tail(&dev->rx_skb[q], skb);
  }
+ 
 -- 
 2.53.0
 
