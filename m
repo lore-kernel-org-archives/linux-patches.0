@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C2543542F8;
-	Sat, 12 Sep 2026 07:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069504BEE54;
+	Sat, 12 Sep 2026 07:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198327; cv=none; b=u3+nHaADUJr8LCNwAmjoS9F5I5VpMdFdvr3tQf2qJ1lwJtgA03+1HLNZ0ieTvs89mFDyQT6yGlW+ZBD6wex9eMYAdLpmZANgznjvPh5JLTHd2M7Eene19Le8QDuh+fdC2NYF773C2qGWvyenwCbzhtwg07W3QuFyilhkwrQiH/g=
+	t=1789198332; cv=none; b=TQ5zJHYghuXg0RYiScv4yvF+7Jdlt9NeH6AaS55uRJt0zMrgJOLvnEt0CnmlyGMmRznNBE5HgS2EEZNX99SEsMuyiuUgZIFOaYqOb3d0tfa+9jE5XFs2ceN+oVo8rE4rJsNhndAY1Bog8scMh4HntSU2oW+o3dZ4xMf5/9wsFxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198327; c=relaxed/simple;
-	bh=OHh/nd2pCXn7JaU3c40X/6TONhQXvOVs06m3g5aajv8=;
+	s=arc-20240116; t=1789198332; c=relaxed/simple;
+	bh=9JmG5ioZySSbZ//GpSubCHasaJt4RpPt91LPlCDXfiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N+I3KYm6Wj/XxGi+ibqKScOGqxIiBgiKU3p6hqiewzAb2mHoXowVvga99LtAGpEE3pQz3q4LrEK6BsLcKDghFLsm6yu2gvq45RL35Vw/kl31K1z+YwdTcptlbwjz8kV/t7Mr5+WIPV5NfUybb+tfvUPtxxwtljEXy/7b6QI59e8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uIMyJJ8j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g6hsvNHaH9nrvkdNDjmM3VJtbbx+gcOt7di7vaW7X8wV1ecya5E7hMMZ9HZb2RCjZhwPiuP4z8m14ITe6YTe6qUpfX2TW26CjO49VEVAsmGsAVhBIY7r5D1JxIF7g/V45RrcWh18YSSc4P0DcDys70C26FabohsBpVxOZu60t9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ti1R93HV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uIMyJJ8j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD2A1F000FF;
-	Sat, 12 Sep 2026 07:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ti1R93HV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 984681F000FF;
+	Sat, 12 Sep 2026 07:32:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198325;
-	bh=MINzVqQW+1kiSHlJKpIxHWRuBO2GDoOS/q+hJiE8frA=;
+	s=korg; t=1789198330;
+	bh=YBrnFTLTZx7bAhMbmuwkDBTYKgqRZDsHAQAM3rDqddw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uIMyJJ8jR5ehkRBNSZ7kjwV5qAZwRAtsNQktvv4TGpmLMiAnALabXT4vhIp0YahBl
-	 2oBG01FfZA/4E70RKRVDSchsdPQOYODOOogup3nEQBRWysokUx+X05BBOiHVppEjDr
-	 IyvnTWulocOBz0psUH+VPQpot0gJXe+OLHIo8q74=
+	b=Ti1R93HV75/irA6gqsb7PT1ovVl3cfZ0+AETXMZ7mcUpQLtsH+zYtCE26eTS5wEq9
+	 KsunmEPjcJPfB+G09xMy6yktZ2KR+r2OJc/d57NHljZhCae9eZxcY+xBAslqcRJRPR
+	 QUyjqWFXqGzaDz766mioCeNMrPUTEYuBKaDyJPUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Ming <a0yami@mailbox.org>,
+	Maher Azzouzi <maherazz04@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0320/1815] usb: gadget: uac: validate rate list length before storing
-Date: Sat, 12 Sep 2026 08:34:30 +0200
-Message-ID: <20260912065656.449212169@linuxfoundation.org>
+Subject: [PATCH 7.2 0356/1815] esp: do not unref managed frag pages in esp_ssg_unref()
+Date: Sat, 12 Sep 2026 08:35:06 +0200
+Message-ID: <20260912065657.265537642@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,142 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Ming <a0yami@mailbox.org>
+From: Maher Azzouzi <maherazz04@gmail.com>
 
-[ Upstream commit 844d83d5964b87919b958ff48405188c6ddae9cc ]
+[ Upstream commit 21697720ff43b8dfa25b8e8d9ca7f56f4597fc80 ]
 
-UAC1 and UAC2 configfs rate-list attributes parse a comma-separated
-list of sampling rates and store each parsed value in fixed-size arrays.
-The arrays have UAC_MAX_RATES entries, but the store paths do not check
-that the input contains at most that many tokens before writing through
-opts->name##s[i++].
+esp_ssg_unref() releases the page references held on the source
+scatterlist after the AEAD operation completes.  It calls
+skb_page_unref() on every frag page for an out-of-place transform
+(req->src != req->dst), and in the error path of esp_output_tail()
+(already_unref == true) on the request's own scatterlist.
 
-Writing more than ten rates therefore writes past the end of the
-p_srates[] or c_srates[] array in struct f_uac1_opts or struct
-f_uac2_opts.
+This is wrong when the skb carries managed frags
+(SKBFL_MANAGED_FRAG_REFS).  Managed frags are owned by a zerocopy ubuf
+and the skb does not hold a per-frag page reference; io_uring SEND_ZC
+with a registered buffer attaches the bvec pages this way via
+io_sg_from_iter().  The rest of the stack honours this invariant:
+skb_release_data() skips the per-frag unref when SKBFL_MANAGED_FRAG_REFS
+is set, and skb_zcopy_managed() is the guard used at the other unref
+sites.
 
-With CONFIG_UBSAN_BOUNDS enabled, writing an 11-entry rate list to the
-UAC1 p_srate attribute reports:
+esp_ssg_unref() is missing that guard, so for a managed-frag skb it
+drops a page reference the skb never acquired.  This can underflow the
+page reference count and free a page that is still in use.
 
-  UBSAN: array-index-out-of-bounds
-  drivers/usb/gadget/function/f_uac1.c:1669:1
-  index 10 is out of range for type 'int [10]'
-  __ubsan_handle_out_of_bounds.cold
-  f_uac1_opts_p_srate_store
-  configfs_write_iter
-  vfs_write
-  ksys_write
-  do_syscall_64
+Guard the function with skb_zcopy_managed() so both unref paths are
+skipped for managed-frag skbs, matching skb_release_data().
 
-The same reproducer against the UAC2 p_srate attribute reports:
-
-  UBSAN: array-index-out-of-bounds
-  drivers/usb/gadget/function/f_uac2.c:2087:1
-  index 10 is out of range for type 'int [10]'
-  __ubsan_handle_out_of_bounds.cold
-  f_uac2_opts_p_srate_store
-  configfs_write_iter
-  vfs_write
-  ksys_write
-  do_syscall_64
-
-Reject additional tokens once UAC_MAX_RATES entries have been parsed.
-Also keep the original kstrdup() pointer for kfree(), because strsep()
-advances the parsing cursor. Freeing the advanced cursor leaks the
-original buffer on successful parses and can free an interior pointer on
-some error paths.
-
-Fixes: 695d39ffc2b5 ("usb: gadget: f_uac1: Support multiple sampling rates")
-Fixes: a7339e4f5788 ("usb: gadget: f_uac2: Support multiple sampling rates")
-Signed-off-by: Qing Ming <a0yami@mailbox.org>
-Link: https://patch.msgid.link/20260519143319.147494-1-a0yami@mailbox.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cac2661c53f3 ("esp4: Avoid skb_cow_data whenever possible")
+Fixes: 03e2a30f6a27 ("esp6: Avoid skb_cow_data whenever possible")
+Signed-off-by: Maher Azzouzi <maherazz04@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_uac1.c | 13 +++++++++----
- drivers/usb/gadget/function/f_uac2.c | 13 +++++++++----
- 2 files changed, 18 insertions(+), 8 deletions(-)
+ net/ipv4/esp4.c | 7 +++++++
+ net/ipv6/esp6.c | 7 +++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/drivers/usb/gadget/function/f_uac1.c b/drivers/usb/gadget/function/f_uac1.c
-index 85c502e98f577..7a81cd176abd3 100644
---- a/drivers/usb/gadget/function/f_uac1.c
-+++ b/drivers/usb/gadget/function/f_uac1.c
-@@ -1594,7 +1594,8 @@ static ssize_t f_uac1_opts_##name##_store(struct config_item *item,	\
- 					  const char *page, size_t len)	\
- {									\
- 	struct f_uac1_opts *opts = to_f_uac1_opts(item);		\
--	char *split_page = NULL;					\
-+	char *buf = NULL;						\
-+	char *split_page;						\
- 	int ret = -EINVAL;						\
- 	char *token;							\
- 	u32 num;							\
-@@ -1608,18 +1609,22 @@ static ssize_t f_uac1_opts_##name##_store(struct config_item *item,	\
- 									\
- 	i = 0;								\
- 	memset(opts->name##s, 0x00, sizeof(opts->name##s));		\
--	split_page = kstrdup(page, GFP_KERNEL);				\
-+	buf = kstrdup(page, GFP_KERNEL);				\
-+	split_page = buf;						\
- 	while ((token = strsep(&split_page, ",")) != NULL) {		\
- 		ret = kstrtou32(token, 0, &num);			\
- 		if (ret)						\
- 			goto end;					\
--									\
-+		if (i >= UAC_MAX_RATES) {				\
-+			ret = -EINVAL;					\
-+			goto end;					\
-+		}							\
- 		opts->name##s[i++] = num;				\
- 		ret = len;						\
- 	};								\
- 									\
- end:									\
--	kfree(split_page);						\
-+	kfree(buf);							\
- 	mutex_unlock(&opts->lock);					\
- 	return ret;							\
- }									\
-diff --git a/drivers/usb/gadget/function/f_uac2.c b/drivers/usb/gadget/function/f_uac2.c
-index 897787d0803c1..d8cf710085a05 100644
---- a/drivers/usb/gadget/function/f_uac2.c
-+++ b/drivers/usb/gadget/function/f_uac2.c
-@@ -2012,7 +2012,8 @@ static ssize_t f_uac2_opts_##name##_store(struct config_item *item,	\
- 					  const char *page, size_t len)	\
- {									\
- 	struct f_uac2_opts *opts = to_f_uac2_opts(item);		\
--	char *split_page = NULL;					\
-+	char *buf = NULL;						\
-+	char *split_page;						\
- 	int ret = -EINVAL;						\
- 	char *token;							\
- 	u32 num;							\
-@@ -2026,18 +2027,22 @@ static ssize_t f_uac2_opts_##name##_store(struct config_item *item,	\
- 									\
- 	i = 0;								\
- 	memset(opts->name##s, 0x00, sizeof(opts->name##s));		\
--	split_page = kstrdup(page, GFP_KERNEL);				\
-+	buf = kstrdup(page, GFP_KERNEL);				\
-+	split_page = buf;						\
- 	while ((token = strsep(&split_page, ",")) != NULL) {		\
- 		ret = kstrtou32(token, 0, &num);			\
- 		if (ret)						\
- 			goto end;					\
--									\
-+		if (i >= UAC_MAX_RATES) {				\
-+			ret = -EINVAL;					\
-+			goto end;					\
-+		}							\
- 		opts->name##s[i++] = num;				\
- 		ret = len;						\
- 	};								\
- 									\
- end:									\
--	kfree(split_page);						\
-+	kfree(buf);							\
- 	mutex_unlock(&opts->lock);					\
- 	return ret;							\
- }									\
+diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
+index dfc81ee969ae0..fa1710e27e505 100644
+--- a/net/ipv4/esp4.c
++++ b/net/ipv4/esp4.c
+@@ -104,6 +104,13 @@ static void esp_ssg_unref(struct xfrm_state *x, void *tmp, struct sk_buff *skb,
+ 	struct aead_request *req;
+ 	struct scatterlist *sg;
+ 
++	/* Managed frags are owned by the zerocopy ubuf; the skb holds no
++	 * per-frag page reference, so we must not drop one here.  Mirrors
++	 * the SKBFL_MANAGED_FRAG_REFS handling in skb_release_data().
++	 */
++	if (skb_zcopy_managed(skb))
++		return;
++
+ 	if (x->props.flags & XFRM_STATE_ESN)
+ 		extralen += sizeof(struct esp_output_extra);
+ 
+diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
+index 296b57926abb9..7d216b9c59f04 100644
+--- a/net/ipv6/esp6.c
++++ b/net/ipv6/esp6.c
+@@ -121,6 +121,13 @@ static void esp_ssg_unref(struct xfrm_state *x, void *tmp, struct sk_buff *skb,
+ 	struct aead_request *req;
+ 	struct scatterlist *sg;
+ 
++	/* Managed frags are owned by the zerocopy ubuf; the skb holds no
++	 * per-frag page reference, so we must not drop one here.  Mirrors
++	 * the SKBFL_MANAGED_FRAG_REFS handling in skb_release_data().
++	 */
++	if (skb_zcopy_managed(skb))
++		return;
++
+ 	if (x->props.flags & XFRM_STATE_ESN)
+ 		extralen += sizeof(struct esp_output_extra);
+ 
 -- 
 2.53.0
 
