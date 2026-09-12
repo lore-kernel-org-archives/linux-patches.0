@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF85833AD88;
-	Sat, 12 Sep 2026 09:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E568D3542F8;
+	Sat, 12 Sep 2026 09:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204897; cv=none; b=OUYxWVFRh5pfKhoo8fZ8eBfQpldhKUpBFGcrUXp/FEs39wHuEfUeQajSbMGTDnGcMrkpDp8IES4ME8FFKLU6X4JsoLZZqx+BE4x0k+4QVx5OG+6hlpVdMqGJmDvZ/l9ImMeGr1ja/rp67bQo2KSo0VCe84MeC6+jWtDtALiO+UA=
+	t=1789204902; cv=none; b=qgSIL1Ixp1HxGDuW+mIaUWSgn6S4EhQKjkW6MJHry17buGILuUZpmFSK7YIuvScGV/T+oKZJi9WSh5+e3Z1/csyEV/JGo6urqLOb4lbpS7ShEfnvmolGtE2XYfW2FomjJuzz6v6DGCSdi1Ln/am8FCVGJx3pU2J6X7rPfsYYHN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204897; c=relaxed/simple;
-	bh=VBds0XS6WSXNfdpX67iEID/6mZVipbYY2n2BaP5BL2k=;
+	s=arc-20240116; t=1789204902; c=relaxed/simple;
+	bh=VmDI5enPnl8dpbe/Vr0wp+xs26lHEpvRWkQjA71Mnc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cTD9Ih71iGV9TvISOqBiTyW1ATmJBA7gyhUGg3AxGV5SF3vyQROuDDKJONn81GuinIy+Rdm1vhza2kD1NIw+0gd2NZZ9S4SU7T8t5ytPREk8hfpver151Bzzjxy2Gc1qQHb+B5sTVofpTTRD9GwxRKzUEgdJkhvtoLeBQ2ur9Bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9LJ3IjK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ifT7fiCGTbGi5gXJNpdULSPhkNHuAcNU73KsAkfJ2QwK/jplonWirAzojQbcGSW7nC1ohzx6/75WlHypUu+PQ5GIrC92QJQzLtcgN0Cg8V1JAumXEqtF+unc1RWjXsvR4mO8obkKltGgavOQbT7FEHkicuuUtTXEcGMTthmQ4RI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VK/6uGi/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9LJ3IjK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD651F00893;
-	Sat, 12 Sep 2026 09:21:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VK/6uGi/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B66E11F000FF;
+	Sat, 12 Sep 2026 09:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204895;
-	bh=qVHYs1P1mvg10N9H5k2h135RTZRl0K/B5D87w8gGjYA=;
+	s=korg; t=1789204900;
+	bh=DU74uBN8XQ4OOgpH4dPPrUM9dg0CtMbHNE7yhfKGubE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f9LJ3IjKSFSJAQ7B42dc6yba+9ueQduQ5DaqmW79ve0sFAKUDOujNgRz8eNtx4zDz
-	 MfSu6rLaq/t2JllxDhL2NSkJcv2fXtJHZRRrB0lr3IHnNEi3KKQKGhCeKxqIPdPpqU
-	 yYh6phV5HDXsL2+0Gh/E8v57oG4OuTqnMEitEhwU=
+	b=VK/6uGi/ee+boGDSsjo2VTMiq9UOhwbYDIyk26Lq0Yt9uRAbncWOAu5KpG5nnxwSw
+	 Zw83z7z38y0ewyOyxlHdSo30TcPsJN95AeyV3O114ninhO3/Pup1n/xPi3sRbAWZuf
+	 7ZwiDC8gXbjr2upsmaqkl/D/NNPja7ArdpTTwAfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <xiang@kernel.org>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Bernd Schubert <bernd@bsbernd.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1708/1815] erofs: Fix EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS default logic
-Date: Sat, 12 Sep 2026 08:57:38 +0200
-Message-ID: <20260912065729.074588173@linuxfoundation.org>
+Subject: [PATCH 7.2 1709/1815] fuse: invalidate the correct range after O_APPEND direct write
+Date: Sat, 12 Sep 2026 08:57:39 +0200
+Message-ID: <20260912065729.098519383@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,67 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit ab74edaeb1ae7c7194e79007e6afdfe788111a3f ]
+[ Upstream commit 26d7e1f5c407b5859122b5cd47d7ebbf4b4c1cd2 ]
 
-When NR_CPUS is less than 16, or when SMP is disabled, the default value
-of 16 is invalid.
+fuse_direct_write_iter() captures pos before generic_write_checks(),
+which moves ki_pos to EOF for O_APPEND writes:
 
-While actual configuration picks up a sensible and valid default
-(NR_CPUS or 1), "make savedefconfig" will still write a line like
+  fuse_direct_write_iter()
+  {
+      pos = iocb->ki_pos;           /* 0 (user-supplied)       */
+      generic_write_checks();       /* ki_pos -> EOF           */
+      fuse_direct_io();             /* writes at EOF, correct  */
+      invalidate(pos, pos + res);   /* [0, res) -- wrong       */
+  }
 
-    CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS=1
+The post-write invalidation targets a stale range instead of the
+actual written range at EOF.
 
-to the defconfig file, even if that matches the sensible default.
+This can cause data inconsistency when the file size is not
+page-aligned.  The tail page straddling EOF has a valid portion
+before EOF that concurrent readers can fault back in during the
+DIO write window:
 
-Avoid needlessly enlarging the defconfig files, and reduce churn for
-updating them, by specifying valid defaults depending on SMP and
-NR_CPUS.
+  Tail page (file size X not page-aligned):
 
-While at it, make the prompt depend on SMP, as there is no point in
-asking the user about the maximum number of decompression streams if
-there is only one valid answer.
+    page_start         X (EOF)   page_end
+    |--- valid data ----|-- stale --|
 
-Fixes: c9b47e6b23114e93 ("erofs: cap LZMA stream pool size")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <xiang@kernel.org>
+  CPU0 (O_APPEND DIO writer)    CPU1 (buffered reader)
+  --------------------------    ----------------------
+  invalidate [X, X+len)
+    tail page evicted
+  FUSE_WRITE in flight ...
+                                read [page_start, X)
+                                  tail page re-faulted
+                                  [X, page_end) = stale
+  FUSE_WRITE completes
+  i_size = X + len
+  invalidate [0, len)  <- WRONG
+    tail page still cached
+                                read [X, X+len)
+                                  hits stale tail page
+                                  returns old data
+
+Fix by reading pos back from iocb->ki_pos after generic_write_checks(),
+as generic_file_direct_write() does.
+
+Also fix a typo in the comment ("may have" -> "may have competed").
+
+Fixes: 2b0408d0284f ("fuse: invalidate page cache after DIO and async DIO writes")
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Reviewed-by: Bernd Schubert <bernd@bsbernd.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/Kconfig | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/fuse/file.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/erofs/Kconfig b/fs/erofs/Kconfig
-index 2dfc313588d28..37495e95a78d9 100644
---- a/fs/erofs/Kconfig
-+++ b/fs/erofs/Kconfig
-@@ -132,11 +132,13 @@ config EROFS_FS_ZIP_LZMA
- 	  Say N if you want to disable LZMA compression support.
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index e7b2a839f0814..5820def81d9f5 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -1801,13 +1801,14 @@ static ssize_t fuse_direct_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ {
+ 	struct inode *inode = file_inode(iocb->ki_filp);
+ 	struct address_space *mapping = inode->i_mapping;
+-	loff_t pos = iocb->ki_pos;
+ 	ssize_t res;
+ 	bool exclusive;
  
- config EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS
--	int "EROFS LZMA default maximum decompression streams"
-+	int "EROFS LZMA default maximum decompression streams" if SMP
- 	depends on EROFS_FS_ZIP_LZMA
- 	range 1 NR_CPUS if SMP
- 	range 1 1 if !SMP
--	default 16
-+	default 16 if SMP && NR_CPUS >= 16
-+	default NR_CPUS if SMP
-+	default 1
- 	help
- 	  By default EROFS allocates one LZMA decompression stream per CPU.
- 	  Each stream can hold a dictionary of up to 8 MiB taken from the
-@@ -144,7 +146,7 @@ config EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS
- 	  of memory.  This caps the default; the lzma_streams module parameter
- 	  still overrides it.
- 
--	  If unsure, keep the default of 16.
-+	  If unsure, keep the suggested default (16 or lower).
- 
- config EROFS_FS_ZIP_DEFLATE
- 	bool "EROFS DEFLATE compressed data support"
+ 	fuse_dio_lock(iocb, from, &exclusive);
+ 	res = generic_write_checks(iocb, from);
+ 	if (res > 0) {
++		loff_t pos = iocb->ki_pos;
++
+ 		task_io_account_write(res);
+ 		if (!is_sync_kiocb(iocb)) {
+ 			res = fuse_direct_IO(iocb, from);
+@@ -1822,7 +1823,7 @@ static ssize_t fuse_direct_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 			/*
+ 			 * As in generic_file_direct_write(), invalidate after
+ 			 * write, to invalidate read-ahead cache that may have
+-			 * with the write.
++			 * competed with the write.
+ 			 */
+ 			invalidate_inode_pages2_range(mapping,
+ 				pos >> PAGE_SHIFT,
 -- 
 2.53.0
 
