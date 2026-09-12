@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B1937AA65;
-	Sat, 12 Sep 2026 07:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F47A340A57;
+	Sat, 12 Sep 2026 07:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199836; cv=none; b=DTRw3llMQBGZbHco4xgynGkF7DizhJRet1O9ZyTuk7C0NyDAtLC2B/Og2rYYi8MEFdldKdxvvJz2THKSMiNlTZM+Vjj0Uc5yQ8Uu0elfboARP2i6VyeETSo/PkuFKzvOmvEqBOqVdH2yosgfPCTpVilKtXcW9ZTrjjW9raas/bI=
+	t=1789199841; cv=none; b=WUkgYUGFMGpn2uHr9OjER7mMS1gzo2IyliypFhiOJZloZYSUDw4+telmK5hJ0EklET+EB1Jo8X3T9dqqr2Pu2mXQsmT7jbxW5TYJAnbeLXtUxX9TWc4MLQmFfav4RgReqqo7Ary6QiZdfZX4HtqnZxG9J2lwLSuP47Qi9iGgPP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199836; c=relaxed/simple;
-	bh=te1WoRr77PUgnTD1Iv0PFhP7OnVbbPTpyDryZdXYNuI=;
+	s=arc-20240116; t=1789199841; c=relaxed/simple;
+	bh=ticPJfvO/tTXQcS/jtF8ZsiVauXY6TD1GQ7qgp9xgyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HnTLG7bmbFR4EN5ZwAQLwAxUd6RvTfNrmusSbeYuXw+cUxEPjIPLH0paB/RT/nx8OcNxycmMRbH3VESE1Q0fhV6NlqHT/stbDbWnIEeqx/tSUUP5zosUaJUjxMywakEnFaSjQH17yDF5/erE9QTsE7iqyKYmbNyEgFNNugUR4mE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRiiYlCN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jU6RcqeZtYx8wTtcZ1cuFI3oOi10JvhyJb+BS0Bxg9gi3hSskwbhovEM4c+cS5blJLcLWEwdleyQzTjUobpq3hxhP8K9EeOcaJNF0KH8pVEE2Ez9zoellWVoaVdaAhYzd2hmUsGcNKbO8gbQ8HLI+S3J6+KrLGGswjht9N5RqKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VWpdrTI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRiiYlCN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3291F00893;
-	Sat, 12 Sep 2026 07:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VWpdrTI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477131F000FF;
+	Sat, 12 Sep 2026 07:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199834;
-	bh=bhEX1rZRPTVjN7dZXbXidxWSk4qEUuXx3A2mczFZtz8=;
+	s=korg; t=1789199839;
+	bh=k47MsXHlOigKzJ6MMbG+tMm76oWQd+rg7WRK0d7ZCNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uRiiYlCN+GdKtQQYRalFyh5PPUVXmsvYzGZY9knIom/ZUv3sONGex9MQYXkWT5SMA
-	 mCNWTVGbnjoXZnztWGXKVjcbruFtVlmx/5NhtL9dGl+YRLRLyowIHb5xdgm52cG/UC
-	 K/SCR43A23sSfAUYshlNcAVhBtR9IrNHEXee119A=
+	b=1VWpdrTI/5RUkE746CebDjkcuuRdQKg+pb8+yFOalkd3QXQ5Lszdy+v/zkJFL+uZ9
+	 e/ib6AZwaw8u/knEhMaBO5uqVfPmaBfiHXm+rQJCKebI9duTX0DxyerW26tbKVaf/7
+	 uLOAQDbv3iAmTMzOqRVqfS1LZ/+3r4M7R+O280nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Wu <weiming3@asu.edu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Kohei Enju <enju.kohei@fujitsu.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0639/1815] fs/ntfs3: fix out-of-bounds read of INDEX_ROOT in reparse/objid init
-Date: Sat, 12 Sep 2026 08:39:49 +0200
-Message-ID: <20260912065703.882821324@linuxfoundation.org>
+Subject: [PATCH 7.2 0666/1815] arm64: RSI: fix field-spanning write warning in attestation token init
+Date: Sat, 12 Sep 2026 08:40:16 +0200
+Message-ID: <20260912065704.519298557@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,72 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Wu <weiming3@asu.edu>
+From: Kohei Enju <enju.kohei@fujitsu.com>
 
-[ Upstream commit 2064bc663f89e61b8681c1fb9d1ce445de72063d ]
+[ Upstream commit 221049874b6a78c7d87bc826581b0695cd338e2b ]
 
-ntfs_reparse_init() and ntfs_objid_init() parse the index root of the
-$Extend/$Reparse and $Extend/$ObjId metafiles (the INDEX_ROOT attributes
-named $R and $O). They read its type and rule fields through
-resident_data(), which does not check that the resident attribute is
-large enough to hold them.
+The challenge is passed in registers a1 through a8. However, copying to
+&regs.a1 makes FORTIFY treat the destination as the single a1 field,
+resulting in a field-spanning write warning. [1]
 
-mi_enum_attr() accepts a resident attribute with data_off == asize and
-data_size == 0. For such an attribute placed last in its MFT record,
-resident_data() returns a pointer to the end of the record_size buffer,
-so reading root->type / root->rule reads past the allocation.
+Overlay the SMCCC register structure with an RSI-specific argument
+layout and copy the challenge into an explicit 64-byte array. This keeps
+the existing a1-a8 argument encoding while giving the copy a correctly
+sized destination object.
 
-Use resident_data_ex(attr, sizeof(struct INDEX_ROOT)) and bail out when
-it returns NULL, as ntfs_security_init() already does for $SDH / $SII.
+[1]
+memcpy: detected field-spanning write (size 64) of single field "&regs.a1" at ./arch/arm64/include/asm/rsi_cmds.h:119 (size 8)
+WARNING: ./arch/arm64/include/asm/rsi_cmds.h:119 at rsi_attestation_token_init+0xdc/0xf8 [arm_cca_guest], CPU#0: cat/3314
 
-The attribute is only parsed while mounting a crafted image, so this
-needs CAP_SYS_ADMIN.
-
- BUG: KASAN: slab-out-of-bounds in ntfs_reparse_init (fs/ntfs3/fsntfs.c:2306)
- Read of size 4 at addr ffff88801219dc00 by task mount
-  ntfs_reparse_init (fs/ntfs3/fsntfs.c:2306)
-  ntfs_fill_super (fs/ntfs3/super.c:1604)
-  get_tree_bdev_flags (fs/super.c:1703)
-  vfs_get_tree (fs/super.c:1758)
-  path_mount (fs/namespace.c:4131)
-  __x64_sys_mount (fs/namespace.c:4360)
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Wu <weiming3@asu.edu>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: b880a80011f5 ("arm64: rsi: Add RSI definitions")
+Signed-off-by: Kohei Enju <enju.kohei@fujitsu.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fsntfs.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/include/asm/rsi_cmds.h | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
-index bc7469d0a34d4..7c4db816c43d3 100644
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -2302,8 +2302,8 @@ int ntfs_reparse_init(struct ntfs_sb_info *sbi)
- 		goto out;
- 	}
+diff --git a/arch/arm64/include/asm/rsi_cmds.h b/arch/arm64/include/asm/rsi_cmds.h
+index 2c8763876dfb7..c1fab41f671ec 100644
+--- a/arch/arm64/include/asm/rsi_cmds.h
++++ b/arch/arm64/include/asm/rsi_cmds.h
+@@ -88,6 +88,14 @@ static inline long rsi_set_addr_range_state(phys_addr_t start,
+ 	return res.a0;
+ }
  
--	root_r = resident_data(attr);
--	if (root_r->type != ATTR_ZERO ||
-+	root_r = resident_data_ex(attr, sizeof(struct INDEX_ROOT));
-+	if (!root_r || root_r->type != ATTR_ZERO ||
- 	    root_r->rule != NTFS_COLLATION_TYPE_UINTS) {
- 		err = -EINVAL;
- 		goto out;
-@@ -2340,8 +2340,8 @@ int ntfs_objid_init(struct ntfs_sb_info *sbi)
- 		goto out;
- 	}
++#define RSI_ATTEST_CHALLENGE_MIN_SIZE	32
++#define RSI_ATTEST_CHALLENGE_MAX_SIZE	64
++
++struct rsi_attestation_token_init_args {
++	unsigned long fid;
++	u8 challenge[RSI_ATTEST_CHALLENGE_MAX_SIZE];
++};
++
+ /**
+  * rsi_attestation_token_init - Initialise the operation to retrieve an
+  * attestation token.
+@@ -109,18 +117,21 @@ static inline long rsi_set_addr_range_state(phys_addr_t start,
+ static inline long
+ rsi_attestation_token_init(const u8 *challenge, unsigned long size)
+ {
+-	struct arm_smccc_1_2_regs regs = { 0 };
++	union {
++		struct arm_smccc_1_2_regs regs;
++		struct rsi_attestation_token_init_args init;
++	} args = { 0 };
  
--	root = resident_data(attr);
--	if (root->type != ATTR_ZERO ||
-+	root = resident_data_ex(attr, sizeof(struct INDEX_ROOT));
-+	if (!root || root->type != ATTR_ZERO ||
- 	    root->rule != NTFS_COLLATION_TYPE_UINTS) {
- 		err = -EINVAL;
- 		goto out;
+-	/* The challenge must be at least 32bytes and at most 64bytes */
+-	if (!challenge || size < 32 || size > 64)
++	if (!challenge || size < RSI_ATTEST_CHALLENGE_MIN_SIZE ||
++	    size > RSI_ATTEST_CHALLENGE_MAX_SIZE)
+ 		return -EINVAL;
+ 
+-	regs.a0 = SMC_RSI_ATTESTATION_TOKEN_INIT;
+-	memcpy(&regs.a1, challenge, size);
+-	arm_smccc_1_2_smc(&regs, &regs);
++	args.init.fid = SMC_RSI_ATTESTATION_TOKEN_INIT;
++	memcpy(args.init.challenge, challenge, size);
++	arm_smccc_1_2_smc(&args.regs, &args.regs);
+ 
+-	if (regs.a0 == RSI_SUCCESS)
+-		return regs.a1;
++	if (args.regs.a0 == RSI_SUCCESS)
++		return args.regs.a1;
+ 
+ 	return -EINVAL;
+ }
 -- 
 2.53.0
 
