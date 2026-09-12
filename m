@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC75345749;
-	Sat, 12 Sep 2026 16:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5B6F4F1;
+	Sat, 12 Sep 2026 16:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232149; cv=none; b=sHNm7Wdv382vweqoBN1ZuMirYqGcno/uWXLe91TvDP8cKvkWF+WFpaioE2gS/cskbzsRr72CqoNovrzjfUdzLNyxl8IhEiZ6VmhZWi88yRfrrxfV1Ndi87rBVSJgD2N+4G0Za5ys3plFfLNVeAaD/VgXlz1PuMRYsKncWkzVOSY=
+	t=1789232155; cv=none; b=uLx+pjL8fEJqAljC0rGt5ZkBErMoo9he9yqcHz9/21atPvdXykFjmDjOb1Pj+N4YzneX6W/QvR63oqdq6lW2zitx2Kj06UX7qcXbClT40zx1Af8Ra/716a/yMxN+RSElUNwjJ/h35fAqCKkoZaKINyd3fZoH7zRCxOgvy9IV2FQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232149; c=relaxed/simple;
-	bh=n/KLXP8rPvwBgJaYFGrEdd5dfAgurm7oGlxsUVOt7yo=;
+	s=arc-20240116; t=1789232155; c=relaxed/simple;
+	bh=KWM0BmkD2x5USwb5dDFgdYbRyv35bf8hUi4BSePf2hA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OI1k/2ivYHcNp7GRTJx72kRKtb2YpaA5b9flReQ2X4tf7l7lQvyy1fXvMm3USL9J/9lguewKaAm7eeB2bPPu0zMUe2YzhCVNJznr4uEvZFZ8fbZVON23CK479SH+vsRsC/gIbh1XtVTgQFEYG+tHVW95kz/HzimhVaPttvCIFmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sg43rXkj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aBFCmwl0CMNtiQogk6LHSC/ji/RfI2GuFrLaYFKwFcEifbyiawQpULhpiIo81JVMFTC/Fwz8fpF93bgkwNVDvde2WOQv11dQV36ge7naXNcE7spZsy4eyPszB2p51wWIvpqRJGF1R6/xBXrSVf9rcl+iKDUDg0eor376BzrkYUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3X9qKkO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sg43rXkj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024571F000FF;
-	Sat, 12 Sep 2026 16:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3X9qKkO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F78D1F000FF;
+	Sat, 12 Sep 2026 16:55:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232148;
-	bh=qZ2gFRnnicYtX36VWiMtdfHLzFg6spQTT82mO+qvZrE=;
+	s=korg; t=1789232153;
+	bh=K1ilyGfAVptOrvQkLH1O1jI0Tefk1flyJF9/H0xPrKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sg43rXkjbGhNIg3AkhztXFCmqqTRV2QCsB5rgRRL328F33s2SiOpX4KCIrqLeTg8i
-	 4DXKFSj8LGQTfuKlkkoSgkswxb1gZXZyAnmgoovKBgPC4UuABqOdAfm6hCV5SNSCxK
-	 JNYAM74Ok9VBqAeZnwscWfkK5UI2tqIeaBqRBNB4=
+	b=S3X9qKkOYhA8YT7zLaQetTC37NaYp1Dm2IUXx3Rw5pVLdMd9zA0JI8fVWIkGiVm4M
+	 Y+SCVIAtETwOd0WM64Sz6lST8h10xq5rbDTEZNXuHyJPs2p4T2x+k8ko/3cxTqUg6J
+	 wQ7m2SRLtcP5Nql5mMo0D+5iI9k12GyAnO7gwlkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	vega@nebusec.ai,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1106/1191] net/sched: sch_codel: clamp default mtu to avoid disabling CoDel
-Date: Sat, 12 Sep 2026 09:03:54 +0200
-Message-ID: <20260912065612.994202803@linuxfoundation.org>
+Subject: [PATCH 6.1 1142/1191] perf/x86/amd/uncore: Fix the return value of amd_uncore_df_event_init() on error
+Date: Sat, 12 Sep 2026 09:04:30 +0200
+Message-ID: <20260912065613.801468852@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,52 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Sandipan Das <sandipan.das@amd.com>
 
-[ Upstream commit 6439461f1618ae176c048673ad28bdb6c68efbfc ]
+[ Upstream commit 01439286514ce9d13b8123f8ec3717d7135ff1d6 ]
 
-codel_init() sets q->params.mtu = psched_mtu(qdisc_dev(sch)) without
-clamping. A device with a huge MTU (e.g. dummy with max_mtu == 0
-accepting MTU 2147483634) makes psched_mtu() return 0x80000000. In
-codel_should_drop() the test "*backlog <= params->mtu" then compares
-the backlog against ~2 GiB; with the default sch->limit of
-DEFAULT_CODEL_LIMIT (1000) packets the backlog can never reach it, so
-the test is always true and CoDel is silently and completely disabled
-i.e no drops, no ECN marking, codel degrades to a tail-drop FIFO.
-codel_change() never updates params.mtu, so the init path is the only
-place to clamp it. Constrain to [256, 1 << 20], matching the fq_codel
-bound; 256 is a sane floor that only makes CoDel slightly more willing
-to act on very small queues, which is the safe direction.
+If amd_uncore_event_init() fails, return an error irrespective of the
+pmu_version. Setting hwc->config should be safe even if there is an
+error so use this opportunity to simplify the code.
 
-Conditions to recreate the bug: a device whose MTU (plus
-hard_header_len) wraps psched_mtu() into the sign bit (e.g. a dummy
-device with max_mtu == 0 accepting MTU 2147483634). Requires
-CAP_NET_ADMIN in a user namespace.
+Closes: https://lore.kernel.org/all/aTaI0ci3vZ44lmBn@stanley.mountain/
 
-Fixes: 76e3cc126bb2 ("codel: Controlled Delay AQM")
-Reported-by: vega@nebusec.ai
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260822195509.112717-4-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: d6389d3ccc13 ("perf/x86/amd/uncore: Refactor uncore management")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/076935e23a70335d33bd6e23308b75ae0ad35ba2.1765268667.git.sandipan.das@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_codel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/events/amd/uncore.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/net/sched/sch_codel.c b/net/sched/sch_codel.c
-index 0dfdc8b656995..c05be1eeea566 100644
---- a/net/sched/sch_codel.c
-+++ b/net/sched/sch_codel.c
-@@ -228,7 +228,7 @@ static int codel_init(struct Qdisc *sch, struct nlattr *opt,
- 	codel_params_init(&q->params);
- 	codel_vars_init(&q->vars);
- 	codel_stats_init(&q->stats);
--	q->params.mtu = psched_mtu(qdisc_dev(sch));
-+	q->params.mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, 1 << 20);
+diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
+index cc84ed9cc63af..33ccd42328207 100644
+--- a/arch/x86/events/amd/uncore.c
++++ b/arch/x86/events/amd/uncore.c
+@@ -546,14 +546,11 @@ static int amd_uncore_df_event_init(struct perf_event *event)
+ 	struct hw_perf_event *hwc = &event->hw;
+ 	int ret = amd_uncore_event_init(event);
  
- 	if (opt) {
- 		int err = codel_change(sch, opt, extack);
+-	if (ret || pmu_version < 2)
+-		return ret;
+-
+ 	hwc->config = event->attr.config &
+ 		      (pmu_version >= 2 ? AMD64_PERFMON_V2_RAW_EVENT_MASK_NB :
+ 					  AMD64_RAW_EVENT_MASK_NB);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int amd_uncore_df_add(struct perf_event *event, int flags)
 -- 
 2.53.0
 
