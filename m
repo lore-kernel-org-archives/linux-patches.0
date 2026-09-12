@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57ED02D739C;
-	Sat, 12 Sep 2026 15:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D543AC17;
+	Sat, 12 Sep 2026 15:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226017; cv=none; b=XjOzY3KnUCgbnZXSFXsu+PB+nw4UTe/GtlOBvX0nlQmNZmvMPf88Wtq4ymKSf85tXYVFMLUfCkI8kjRfPh4TI6W6Con3dtwJeRb3CcM+Pb3DBBihY99FV0Hr1cTQa/otzuBQh0H5XcJA9oeV+nKqlrEgKWf+YZy6PyWh1s2JlJI=
+	t=1789226022; cv=none; b=k/9lXJ1jnKHj/MhfN7CyNmeMsPPVitXHwsBjqupHQcTVWQKcH9MYA9emUry7uYnJ/ApuymmK7Ye/P/pDQHL+oXMb8NEeCrgXz/qK3oYyEUeX3fd7g/4FUj2Ra2zr3tz5GAOeHVWe+yT8WTslIqYkNr8j/gXnW1Yn7n4vhko06do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226017; c=relaxed/simple;
-	bh=omvxH7oIW2CwcwYfcMZauVopXRbFESjGQc6J6xpSuuo=;
+	s=arc-20240116; t=1789226022; c=relaxed/simple;
+	bh=oidabuqHJRUQ5IwaJvSaHiRN9tRV/2W85uIznqDUU78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZhkYQFPpChqI4284e0DGi6mwfQfj63ybiL3EApX8iA3zF2RWcHAcgrhK29GTld5y0EyHKuYdZB9DCIygMRUcRIfREPoFshGl1TckMnehUEfT5z1dJToN+1/9EvolPDvmf/rFkETre38zIG3OGKXof4k7i921qHsGN9vDUyz7shE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNffgMeS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y1mWPSRFrXMDiJrc6L96/GB8qapW8hpBg+ErqUjaDn+qJWkUJbQGHIhaoWA9m9D3eDayIZCirmy6fx8yLStwzt7AlvYBER+EZNPmfysYC3SqTKD/ubccaE2QgScjQkmJEnNQ0Zc8M+dVhyO6kKnfF8UUP1AGXd6D/wzfjHay5/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QM/+KQsm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNffgMeS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94981F000FF;
-	Sat, 12 Sep 2026 15:13:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QM/+KQsm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1271B1F000FF;
+	Sat, 12 Sep 2026 15:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226016;
-	bh=yF7tK56Oh4fKBCwVvsikVzmf1vcAwDb5Ge/yzmOx1ko=;
+	s=korg; t=1789226021;
+	bh=E3eBy4p+Mm9YStd1JVdO02ImWe0n5Dc8woShitwwMVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XNffgMeSht8wg3yaETz6+0cFr/hgfH1W/GYU3FsBInoM6Gh4pPydQEovSflxVdG3x
-	 GQ2eSwQa7dU+gpTU0LW5PuFDfLZz2bZ/A6eVSqsHNazjrCTBciLC639jGEBt5PyxYS
-	 Tuy2dE1FE4l/VWE0Te44wcSLhiNPsghgL1QOMjXg=
+	b=QM/+KQsmN93AR6iOtWJogtRqKljkhB184WyZ1XuYyoxaIvnvj7MsWCD5f4gMba4/r
+	 b2D4rEJG2U++dWPta+lq2AFTXn64eWfqXCKh/Pnc7B6PYtCnp/9OsmTruuqRHPhEmt
+	 pnaCyyIclHYAwcxdSdqpRQF2MmurGkWrP0iXLhzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1314/1424] i2c: ocores: Disable clock on failed resume
-Date: Sat, 12 Sep 2026 09:02:26 +0200
-Message-ID: <20260912065636.688636416@linuxfoundation.org>
+Subject: [PATCH 6.6 1315/1424] rtc: gamecube: check return value of devm_rtc_register_device()
+Date: Sat, 12 Sep 2026 09:02:27 +0200
+Message-ID: <20260912065636.710077700@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,49 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-[ Upstream commit 43eb13f13385a1e7251978a1977ac61b99edef01 ]
+[ Upstream commit ca45cfa74370644d371b552bef57938c19e3c80c ]
 
-ocores_i2c_resume() enables the controller clock before reinitializing
-the hardware. If the clock rate changed while the device was suspended,
-ocores_init() may reject the resulting prescaler. The callback then
-returns an error with the clock still enabled, while the controller
-itself remains disabled.
+gamecube_rtc_probe() ignored the return value of
+devm_rtc_register_device() and always returned success. Propagate the
+error so probe fails when RTC registration fails.
 
-Disable and unprepare the clock when ocores_init() fails so the failed
-resume path balances the successful clk_prepare_enable() call.
-
-This issue was found by a static analysis checker and confirmed by manual
-source review.
-
-Fixes: e961a094afe0 ("i2c: ocores: add common clock support")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Max Filippov <jcmvbkbc@gmail.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260813153155.3953577-1-ruoyuw560@gmail.com
+Fixes: 86559400b3ef ("rtc: gamecube: Add a RTC driver for the GameCube, Wii and Wii U")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Link: https://patch.msgid.link/20260731080458.417532-1-gonglinkai@kylinos.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-ocores.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-gamecube.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-ocores.c b/drivers/i2c/busses/i2c-ocores.c
-index 350ccfbe86340..30168990f30e0 100644
---- a/drivers/i2c/busses/i2c-ocores.c
-+++ b/drivers/i2c/busses/i2c-ocores.c
-@@ -768,7 +768,11 @@ static int ocores_i2c_resume(struct device *dev)
- 	rate = clk_get_rate(i2c->clk) / 1000;
- 	if (rate)
- 		i2c->ip_clock_khz = rate;
--	return ocores_init(dev, i2c);
-+	ret = ocores_init(dev, i2c);
-+	if (ret)
-+		clk_disable_unprepare(i2c->clk);
-+
-+	return ret;
+diff --git a/drivers/rtc/rtc-gamecube.c b/drivers/rtc/rtc-gamecube.c
+index 045d5d45ab4b0..889028cecf4a5 100644
+--- a/drivers/rtc/rtc-gamecube.c
++++ b/drivers/rtc/rtc-gamecube.c
+@@ -355,9 +355,7 @@ static int gamecube_rtc_probe(struct platform_device *pdev)
+ 	rtc->range_max = U32_MAX;
+ 	rtc->ops = &gamecube_rtc_ops;
+ 
+-	devm_rtc_register_device(rtc);
+-
+-	return 0;
++	return devm_rtc_register_device(rtc);
  }
  
- static DEFINE_NOIRQ_DEV_PM_OPS(ocores_i2c_pm,
+ static const struct of_device_id gamecube_rtc_of_match[] = {
 -- 
 2.53.0
 
