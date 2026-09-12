@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4FA3264D4;
-	Sat, 12 Sep 2026 15:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D7B202F71;
+	Sat, 12 Sep 2026 15:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228059; cv=none; b=PtRhBwu//oYwwtvW88IdqP5Rv4cDE3Jm8M0W3ihmc4B+O7VmeDsgM3wdkKuw3JcA0agG2+YDzVw1ACCbbD9sBT6yKEPJ5YsabknrSGsQxtO62eeaDjTZ7fLm31hJ+1kCG76pBJgEd1mGbs563wWuWWk6p8nCbjEyzcm2WTT8fK4=
+	t=1789228063; cv=none; b=Y21gYyqrzWCJbUFqrW2XcU0ZCdzzEEyUThIJhU4XVCCM5GNGYHW5BFVlN+gDMW+QOUJAhe3ZfTuiyl4F6LbcmYqskW08jOMwgARI9B6vz3sBKUj7x4MI1TMrbuFnhwi2sUjMfPBhtSLbhuCMcs2OVofz6bkRgFFSlxLMI3VW6hQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228059; c=relaxed/simple;
-	bh=XuIxVFD/0XIVIw4FqaqxHtzJKqjOYkBRvFHCSiMQK9A=;
+	s=arc-20240116; t=1789228063; c=relaxed/simple;
+	bh=BlpVqyo7DKssXzG93UzoRB8LDsN8e7RHuGWzuUQPboE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PJWi+R/msAt+JhZFNRW9nHBwAQYXt1U1z4CVdbTLxGQunCdo9zyprDoNn+RnEpDJyM1uSSStF4oECVvAC909ifXoOwX5mWl3c+a/oUbdNXcINYGqKiwsXMr+GE6w1kbXxP+YqjpgIuW8uqe5HJiPGCMi6qEk8CtF3sjfv2Av9EM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kUc6ue16; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rjco0WCnGxOksLYhieLFILWQNZwVuiT004MhL8G6b7BD+gCNE0G3pkYCpjDyuyu3VdhcJN2twRSXwwL4qVmh36WngObnCmKWTrpzfnl1C40OaAo/552z8qNDYBhLZN1rNZVlYVDZXJ1jMavzc7B8M1K1gFWCijr+xzis/Ynme2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KIA1jfGx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kUc6ue16"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E931F000FF;
-	Sat, 12 Sep 2026 15:47:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KIA1jfGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839FE1F000FF;
+	Sat, 12 Sep 2026 15:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228057;
-	bh=IrWk/BHJ5WuOdnQA/yDxBndSYo1v9O08t5fitDEoiOQ=;
+	s=korg; t=1789228062;
+	bh=JSK28NVJE1ysKwFw86QyOeVNTIecwcDisaaefCnbR5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kUc6ue16LzsiGCdYDOvsqeelLQmIK9lcZXdvEPaa+s7YLrHSKO9Uyo+7rFwZoMxU7
-	 KkVMMq0H6RzTSq5EQXfmwM8agv8ct6mgCBRf47Eojug1Ax+vzIhGB4sRy549uSN3Hd
-	 k8PHJOuxUOt6JmUOjGLZwMqRM2/S3co6eeJIEGbc=
+	b=KIA1jfGx4uqo8mJ5Q05n/o28GTHRTXzJD97mylqdD3hW9qzh4Z27OUcitWCZx3PAE
+	 IHi/Bf9Taz35giKodkqMqlnzt60V/NB2uCOjQDhRRc45uU03+XwV0gy4ebIGG9y1Fg
+	 U7wn2AGGqYehx7fWabOjdHQECYjNhm3iJK1sjWQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivam Kumar <kumar.shivam43666@gmail.com>,
 	Sagi Grimberg <sagi@grimberg.me>,
+	Shivam Kumar <kumar.shivam43666@gmail.com>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 0308/1191] nvmet-tcp: fix out-of-bounds write when receiving an over-long PDU
-Date: Sat, 12 Sep 2026 08:50:36 +0200
-Message-ID: <20260912065555.149419073@linuxfoundation.org>
+Subject: [PATCH 6.1 0309/1191] nvmet-tcp: reject unsolicited H2CData PDUs
+Date: Sat, 12 Sep 2026 08:50:37 +0200
+Message-ID: <20260912065555.172472325@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,50 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Shivam Kumar <kumar.shivam43666@gmail.com>
 
-commit 14cc5a7e77731497d5bea70f3bb05df7eda982e4 upstream.
+commit db62b35cbca052860c519cbcabe7650708528738 upstream.
 
-nvmet_tcp_try_recv_pdu() reads a PDU header into the fixed 128-byte
-queue->pdu union, then computes the remaining payload length as
+nvmet_tcp_handle_h2c_data_pdu() accepts an H2CData PDU after only checking
+that its TTAG is a valid in-range command index and that the command's
+data buffers are mapped. It never checks that the target has actually
+solicited that data by sending an R2T for the command.
 
-	queue->left = hdr->hlen - queue->offset + hdgst;
+A remote host can abuse this. It submits a write command that takes the
+R2T path and, before the target transmits the R2T, sends an H2CData PDU
+for that command's tag. The data completes the command early, and when
+the command then fails synchronously (e.g. a length mismatch caught by
+nvmet_check_transfer_len()), it is completed a second time. Each
+completion calls nvmet_tcp_queue_response(), so the same command is added
+to queue->resp_list twice while it is still linked; the second llist_add()
+makes the node point to itself (lentry->next == lentry).
 
-and reads that many more bytes into &queue->pdu + queue->offset, without
-ever bounding the result against sizeof(queue->pdu).
+nvmet_tcp_process_resp_list() then walks that self-referential node and
+adds the command to resp_send_list twice. With CONFIG_DEBUG_LIST this
+trips the "list_add double add" check (kernel BUG); without it the loop
+never terminates and the nvmet_tcp workqueue wedges (soft-lockup). It is
+remotely triggerable and needs no authentication on an allow_any_host
+subsystem.
 
-A struct nvme_tcp_icreq_pdu is itself 128 bytes, exactly the size of the
-union. Once a header digest has been negotiated (hdgst = 4), a second
-ICReq passes the hlen == nvmet_tcp_pdu_size() check but yields
-queue->left = 128 - 8 + 4 = 124, so bytes 8..132 are written into the
-128-byte buffer -- 4 bytes past its end, over queue->hdr_digest and
-queue->data_digest. Those bytes are attacker-controlled (an ICReq
-carries no digest), and the duplicate ICReq is only rejected later,
-after the overflow. A remote unauthenticated host can thus corrupt
-kernel memory adjacent to the receive buffer.
-
-Reject any PDU whose declared length would read past the end of
-queue->pdu before the second recv.
+Track whether an R2T has been transmitted for a command and reject an
+H2CData PDU that arrives before it. The flag is cleared on command reuse
+(nvmet_tcp_get_cmd() zeroes cmd->flags) and stays set across the multiple
+H2CData PDUs of a single solicited transfer.
 
 Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
 Cc: stable@vger.kernel.org
 Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/tcp.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/nvme/target/tcp.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 --- a/drivers/nvme/target/tcp.c
 +++ b/drivers/nvme/target/tcp.c
-@@ -1192,6 +1192,8 @@ recv:
- 		}
+@@ -61,6 +61,7 @@ enum nvmet_tcp_recv_state {
  
- 		queue->left = hdr->hlen - queue->offset + hdgst;
-+		if (queue->left > sizeof(queue->pdu) - queue->offset)
-+			return -EPROTO;
- 		goto recv;
+ enum {
+ 	NVMET_TCP_F_INIT_FAILED = (1 << 0),
++	NVMET_TCP_F_R2T_SENT	= (1 << 1),
+ };
+ 
+ struct nvmet_tcp_cmd {
+@@ -722,6 +723,7 @@ static int nvmet_try_send_r2t(struct nvm
+ 		return -EAGAIN;
+ 
+ 	cmd->queue->snd_cmd = NULL;
++	cmd->flags |= NVMET_TCP_F_R2T_SENT;
+ 	return 1;
+ }
+ 
+@@ -997,6 +999,12 @@ static int nvmet_tcp_handle_h2c_data_pdu
+ 		cmd = &queue->connect;
  	}
  
++	if (unlikely(!(cmd->flags & NVMET_TCP_F_R2T_SENT))) {
++		pr_err("queue %d: unsolicited H2CData (ttag %u)\n",
++		       queue->idx, data->ttag);
++		goto err_proto;
++	}
++
+ 	if (le32_to_cpu(data->data_offset) != cmd->rbytes_done) {
+ 		pr_err("ttag %u unexpected data offset %u (expected %u)\n",
+ 			data->ttag, le32_to_cpu(data->data_offset),
 
 
