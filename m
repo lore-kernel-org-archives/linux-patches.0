@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C9C3749E3;
-	Sat, 12 Sep 2026 16:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4E94BEE43;
+	Sat, 12 Sep 2026 16:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230488; cv=none; b=BHnp7SuDpnEbzFSXpmfl075VBlWvHzR3R/A5a0lF4+aPdI6Uqr2W6+82BGSmuud1owsXKCAcDghV11xiFPPFQWvXm/n1cX5MeZYabRmywbWp+aJ6IB/VRpR0isV7W5Mpfkz03ID+UEiVnfxHqWky9HrXHKOXpRxdaDB14vTjkBE=
+	t=1789230493; cv=none; b=sXEdnfhoxlTCj4V2ek1KxIV6UwczuIQnfpM6mCii6UOiKhPP54ulrZnX+Ddgj8E1f0wrxbndiN8vdaaoajPYcdckZop4zD7g9BE6X+EbjkNTVitJOr33A7Db+/RUm9C8u1jsNYJ5AcnAynlH1x3dKprBsgGgxfsrZH7jTwj6EjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230488; c=relaxed/simple;
-	bh=yCmWvEJYhG9AQjzHUZ+iksKi+wqnGsveLaianlookA4=;
+	s=arc-20240116; t=1789230493; c=relaxed/simple;
+	bh=CZkyDIRZiJ1Bc/5baqXbjNuC4BbaKcOQ80qGJpmm6Ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/Rq4CN+GVHSTSzdHz0mCgXbG5nMf3/UAdhCSrLDh3uFBIesso5yU+DoXebgnoYRjr8tZoX1QvMVmxSsAZTBqbTPNXBp1t27zjrK6egNB6mQfxCKZ7wpLEPR18dT4dXKkZOwdabMdmkp4/EeB5CzjMm7+7l2rekejRhmiWrO3HE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFbwnMut; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ILTVVG/nwMTZgbh97sT51M0dwN2gdoVDzQqPNN+Co5mR+ER7XVt2955+17XRrP+HkTjc/EKTr74g25/uGa1V8FqrDanWzooROTwBMNcsWEJ+4aXHdOjfuhpNi5K1dH4WXpc0lukCYU990eV4viK2fKloLPFA4gLUIgqyoZ7lbDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=prrcuQAV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFbwnMut"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB851F000FF;
-	Sat, 12 Sep 2026 16:28:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="prrcuQAV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7DD01F000FF;
+	Sat, 12 Sep 2026 16:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230486;
-	bh=JsTznI4FcGAJHrFbyBeieNgO3/F4NVWak7NUGd0ofEM=;
+	s=korg; t=1789230492;
+	bh=IR52/G8731hbEq8bH5x9HpfKdeBdgJrpxmEIKmPK9GE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jFbwnMut5dwvhWqmbKpUESKwhrQLiT2xc7vXrd5G9HHVXHWd5UmEVvXnRM/KUuZRf
-	 BLJBh8beU4Zbbabyg+i4q2U76HdG9zk5Bda96S/jJvoZngppIqlDzbv3jdXBg1wHDi
-	 u8QiphUzUy/Pl0k2WuRLkFL1wqO1wP2gUCL2aZgo=
+	b=prrcuQAVZomNzXbE6SXIm2XiR9MFvZ7kAu9mB81Ft6ooU/eeOFzJL7naoxN4AmNZ0
+	 I37jpfB5KrpWy7MdsepCiud6qDXxZFIZamwd/LDbnzw4piZy/gFqImbcOoK5b0VTPP
+	 irfEqrynqNlLSx5lPdiryJwrmS3rchHF1z6oMLlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Leo Yan <leo.yan@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0804/1191] wifi: mt76: mt7915: use little-endian for bss_info_ra wire fields
-Date: Sat, 12 Sep 2026 08:58:52 +0200
-Message-ID: <20260912065606.330423353@linuxfoundation.org>
+Subject: [PATCH 6.1 0805/1191] perf: arm_spe: Make wakeup range check overflow safe
+Date: Sat, 12 Sep 2026 08:58:53 +0200
+Message-ID: <20260912065606.351641281@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,59 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 04280d0a56be4264720e7b205daaa332c715e5ec ]
+[ Upstream commit fcc5eaea2d234162dfb8258372dd897bc2a1b862 ]
 
-train_up_high_thres, train_up_rule_rssi and low_traffic_thres were
-declared as host-native short in a firmware-facing TLV and assigned
-host-order constants, so on a big-endian host the firmware received
-byte-swapped rate-adaptation thresholds. Declare them __le16 and convert
-with cpu_to_le16().
+The current code checks whether the wakeup point is in the current
+writable range by comparing it with handle->head + handle->size.
 
-Fixes: e57b7901469f ("mt76: add mac80211 driver for MT7915 PCIe-based chipsets")
-Link: https://patch.msgid.link/20260724124813.3961474-12-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+The perf AUX head is a monotonically increasing index, so that addition
+can overflow when head is close to ULONG_MAX. In that case, a wakeup
+point which is still inside the free space range can be missed.
+
+Use unsigned subtraction to compare the distance from head to wakeup
+against the handle->size. This can dismiss the issue when addition
+overflow.
+
+This is unlikely to happen in practice, but the change makes the
+watermark check logically correct.
+
+Fixes: d5d9696b0380 ("drivers/perf: Add support for ARMv8.2 Statistical Profiling Extension")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/mcu.c | 6 +++---
- drivers/net/wireless/mediatek/mt76/mt7915/mcu.h | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/perf/arm_spe_pmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-index ce4e69e04111e..c273785f93b9e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-@@ -499,9 +499,9 @@ mt7915_mcu_bss_ra_tlv(struct sk_buff *skb, struct ieee80211_vif *vif,
- 	ra->rx_streams = max_nss;
- 	ra->algo = 4;
- 	ra->train_up_rule = 2;
--	ra->train_up_high_thres = 110;
--	ra->train_up_rule_rssi = -70;
--	ra->low_traffic_thres = 2;
-+	ra->train_up_high_thres = cpu_to_le16(110);
-+	ra->train_up_rule_rssi = cpu_to_le16(-70);
-+	ra->low_traffic_thres = cpu_to_le16(2);
- 	ra->phy_cap = cpu_to_le32(0xfdf);
- 	ra->interval = cpu_to_le32(500);
- 	ra->fast_interval = cpu_to_le32(100);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.h b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.h
-index cd1edf553fc17..be2d5349b6389 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.h
-@@ -297,9 +297,9 @@ struct bss_info_ra {
- 	u8 antenna_idx;
- 	u8 train_up_rule;
- 	u8 rsv[3];
--	unsigned short train_up_high_thres;
--	short train_up_rule_rssi;
--	unsigned short low_traffic_thres;
-+	__le16 train_up_high_thres;
-+	__le16 train_up_rule_rssi;
-+	__le16 low_traffic_thres;
- 	__le16 max_phyrate;
- 	__le32 phy_cap;
- 	__le32 interval;
+diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
+index 815bf2e2dffa4..c9b5ac48d5e31 100644
+--- a/drivers/perf/arm_spe_pmu.c
++++ b/drivers/perf/arm_spe_pmu.c
+@@ -459,7 +459,7 @@ static u64 __arm_spe_pmu_next_off(struct perf_output_handle *handle)
+ 	 * the page boundary following it. Keep the tail boundary if
+ 	 * that's lower.
+ 	 */
+-	if (handle->wakeup < (handle->head + handle->size) && head <= wakeup)
++	if ((handle->wakeup - handle->head) < handle->size && head <= wakeup)
+ 		limit = min(limit, round_up(wakeup, PAGE_SIZE));
+ 
+ 	if (limit > head)
 -- 
 2.53.0
 
