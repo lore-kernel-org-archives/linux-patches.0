@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53AF3D9DC0;
-	Sat, 12 Sep 2026 11:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0567E2D0C75;
+	Sat, 12 Sep 2026 11:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214246; cv=none; b=W5ZaAJZblReFNh6L1sh2z772ZhaIAIMJkD4D44QiLxfdV5rbNw/7NHZMFDViSKx6o9BRDpntsydSWClaxAaknrG0smrvHMWX1mvGZNc0OOY6YMklJtBW3VAKMmd/vmeF46fGQFWpk9KRJ/d/I+301ajBdr8uUyeBKPG3bRqh7TA=
+	t=1789214252; cv=none; b=TK7oqXdTsZotx3CJj0ol1IOtOqVNd5OHUfA5EmeFf+InfqU4Uea4dyZy1REr9kats8Db18F3ZX6cp0/RZowzQPJnUg/7ONowI9SgTL5Bn8rIWPYSjntG2vzEC112ORk54rs/rXWDMVYS4N7eH+7l2nO/coPGPR2NQ3pNbpt+Pas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214246; c=relaxed/simple;
-	bh=SyRa36/jhvJUqa3kDQ17ydVTrBY9hOWz1WTB50+cZtA=;
+	s=arc-20240116; t=1789214252; c=relaxed/simple;
+	bh=L7KjX4fjriHfpVma3l6rTmn7klZv5+Bp+h34LGAsl5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QkyFOwG39dlZ0RHyG9iDZCWj03zB/n0+CmSiOnBLZQvLuMnq5Y8NgjJfMxzJ+zjCzDXF5jZMByVmUjaS9T+6Bcidrtn5E0k44Rq2d0dheV3+N8c20MbudUEW99IuyHkR68QTlR4pwgFxGF8hJZ/CLu+G8ZvOJ5X0FHmlAkR/7wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vp3qMSLz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tmy176C6MumSF4RcDavn7oQ2PX/RvvUchjhjSn/xNnzAncMXTt9vYr+ENqBqziIgaHRlbhU9hgsMRaVNrJejo3Bm1k/WZ//MdMWm3g2iW/1h4q68LFiY9MY637diDke6dUgZU3lBWjtwxaV5nfaY1KvxEkyR5oVJNaPTELZ1dRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=esm9aBL7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vp3qMSLz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F611F000FF;
-	Sat, 12 Sep 2026 11:57:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="esm9aBL7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D511F000FF;
+	Sat, 12 Sep 2026 11:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214245;
-	bh=5oouWxmQBM46J7M1iXI6SgFbtL9iSS1N8SMHvXqfnus=;
+	s=korg; t=1789214250;
+	bh=6u/cgGKDR0Kv9CQ09T8gVlpzgh2YTgpMx3F82Tj/mlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vp3qMSLzkje+KbHSOpmPf0Oqv8EHsRl6p2UdjmqXHlR2MfEtGYrRiYtxKU2VG4iXm
-	 YhyxFijbIyFqD355sY6peC8lnWkf0K6OizCcwxPjqyhU3R2wTeHi4DUD1eAM09ydtL
-	 z1VIJspU+liFmk3C/z7Tl9zjczeCwRVlbLMdaQ44=
+	b=esm9aBL7idqHNu/S0fiUDo+5e3uLk44e+bffzAa2K9KVxRhAjOhUSIZDQukB1suWB
+	 waFF33BCL6OQMAvx1Ge5a8s5BMjQWzhw2aPVwsxunpaTlPY0wvwh/JMNYNSZz8HdWe
+	 FRkx14WbGJ4lIyKCUkTSZbZZc9/2wunLJumIiXjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable@kernel.org,
 	Chao Yu <chao@kernel.org>,
-	Chen Changcheng <chenchangcheng@kylinos.cn>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.12 0256/1376] f2fs: fix valid block count leak on data block allocation failure
-Date: Sat, 12 Sep 2026 08:44:42 +0200
-Message-ID: <20260912065613.244572685@linuxfoundation.org>
+Subject: [PATCH 6.12 0257/1376] f2fs: fix to zero post-EOF data when extending file size
+Date: Sat, 12 Sep 2026 08:44:43 +0200
+Message-ID: <20260912065613.266435190@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,46 +51,265 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Changcheng <chenchangcheng@kylinos.cn>
+From: Chao Yu <chao@kernel.org>
 
-commit 0f9af07ecc1ab486038373db6ae0436c5d674b19 upstream.
+commit 5eced87b7d19dbc76ebdddaf322046f9ac582fcb upstream.
 
-In __allocate_data_block(), when allocating a new data block
-(dn->data_blkaddr == NULL_ADDR), inc_valid_block_count() is
-called first to increment total_valid_block_count and i_blocks.
-If the subsequent f2fs_allocate_data_block() fails, the function
-returns the error directly without rolling back the
-already-incremented block counts, causing a permanent leak.
+generic/794  4s ... - output mismatch (see /share/git/fstests/results//generic/794.out.bad)
+#    --- tests/generic/794.out   2026-06-12 08:46:32.766426241 +0800
+#    +++ /share/git/fstests/results//generic/794.out.bad 2026-07-05 18:32:55.000000000 +0800
+#    @@ -1,4 +1,16 @@
+#     QA output created by 794
+#     append_write
+#    +FAIL: non-zero data in gap [4080,4096) after shutdown+remount
+#    +000000 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a  >ZZZZZZZZZZZZZZZZ<
+#    +*
+#    +001000
+#     truncate_up
+#    ...
+#    (Run 'diff -u /share/git/fstests/tests/generic/794.out /share/git/fstests/results//generic/794.out.bad'  to see the entire diff)
+Ran: generic/794
+Failures: generic/794
+Failed 1 of 1 tests
 
-Fix this by calling dec_valid_block_count() to undo the
-increment before returning the error. The condition
-old_blkaddr == NULL_ADDR precisely identifies the case where
-inc_valid_block_count() was called.
+Steps of generic/794:
+1. write 4096 bytes to file w/ 0x5a
+2. use fiemap to get PBA of first block in file
+3. truncate file to 4080
+4. umount; write 4096 bytes to file w/ 0x5a directly via PBA; mount
+5. extend filesize via
+   a) append 4096 from offset 4096, or
+   b) truncate 8192, or
+   c) fallocate 4096 from offset 4096
+6. verify the gap is zeroed in memory [4080,4096)
+7. sync range 4096 from offset 4096; shutdown -f (flush meta before shutdown)
+8. umount; mount; verify [4080,4096) is zeroed or not.
 
-Fixes: 7d009e048d7c ("f2fs: fix to handle segment allocation failure correctly")
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+When extending file size (e.g. via truncate, fallocate, or write) across an
+unaligned EOF boundary, we need to ensure that post-EOF data in the partial
+page is zeroed out in pagecache and marked dirty, then writeback the cache to
+persist zeroed data before committing inode w/ updated i_size.
+
+This help to prevent stale disk data beyond the previous EOF from being exposed
+after remounting or crash recovery.
+
+Since f2fs is a LFS filesystem, we only support direct write via PBA in pinfile,
+and pinfile has section-aligned filesize, so in Android, there should no problem,
+but for other usage in different environment, let's fix this w/ fsync_mode=strict
+mount option.
+
+Cc: stable@kernel.org
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/f2fs/file.c |  100 +++++++++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 84 insertions(+), 16 deletions(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -1454,8 +1454,11 @@ static int __allocate_data_block(struct
- 	old_blkaddr = dn->data_blkaddr;
- 	err = f2fs_allocate_data_block(sbi, NULL, old_blkaddr,
- 				&dn->data_blkaddr, &sum, seg_type, NULL);
--	if (err)
-+	if (err) {
-+		if (old_blkaddr == NULL_ADDR)
-+			dec_valid_block_count(sbi, dn->inode, count);
- 		return err;
-+	}
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -35,16 +35,52 @@
+ #include <trace/events/f2fs.h>
+ #include <uapi/linux/f2fs.h>
  
- 	if (GET_SEGNO(sbi, old_blkaddr) != NULL_SEGNO)
- 		f2fs_invalidate_internal_cache(sbi, old_blkaddr);
+-static void f2fs_zero_post_eof_page(struct inode *inode,
+-					loff_t new_size, bool lock)
++static int fill_zero(struct inode *inode, pgoff_t index,
++					loff_t start, loff_t len);
++
++static int do_zero_post_eof_page(struct inode *inode, loff_t new_size)
++{
++	loff_t old_size = i_size_read(inode);
++	unsigned int offset, len;
++	pgoff_t index;
++	int err;
++
++	offset = old_size & (PAGE_SIZE - 1);
++
++	if (!offset)
++		return 0;
++
++	len = min_t(loff_t, PAGE_SIZE - offset, new_size - old_size);
++	index = old_size >> PAGE_SHIFT;
++
++	if (f2fs_has_inline_data(inode)) {
++		/* data post eof should be always zero */
++		if (new_size <= MAX_INLINE_DATA(inode))
++			return 0;
++		err = f2fs_convert_inline_inode(inode);
++		if (err)
++			return err;
++	}
++
++	err = fill_zero(inode, index, offset, len);
++	if (err)
++		return err;
++	return filemap_write_and_wait_range(inode->i_mapping,
++				old_size, old_size + len - 1);
++}
++
++static int f2fs_zero_post_eof_page(struct inode *inode,
++					loff_t new_size, bool lock, bool writeback)
+ {
+ 	loff_t old_size = i_size_read(inode);
++	bool strict =
++		F2FS_OPTION(F2FS_I_SB(inode)).fsync_mode == FSYNC_MODE_STRICT;
+ 
+ 	if (old_size >= new_size)
+-		return;
++		return 0;
+ 
+-	if (mapping_empty(inode->i_mapping))
+-		return;
++	if (!strict && mapping_empty(inode->i_mapping))
++		return 0;
+ 
+ 	if (lock)
+ 		filemap_invalidate_lock(inode->i_mapping);
+@@ -52,6 +88,16 @@ static void f2fs_zero_post_eof_page(stru
+ 	truncate_inode_pages_range(inode->i_mapping, old_size, new_size - 1);
+ 	if (lock)
+ 		filemap_invalidate_unlock(inode->i_mapping);
++
++	if (!writeback || !strict)
++		return 0;
++	/*
++	 * In fsync_mode=strict, when we expand an unaligned EOF size, we
++	 * should zero post EOF data and writeback the data immediately,
++	 * so that it can avoid exposing stale data after metadata flush
++	 * and POR.
++	 */
++	return do_zero_post_eof_page(inode, new_size);
+ }
+ 
+ static vm_fault_t f2fs_filemap_fault(struct vm_fault *vmf)
+@@ -122,7 +168,10 @@ static vm_fault_t f2fs_vm_page_mkwrite(s
+ 
+ 	f2fs_bug_on(sbi, f2fs_has_inline_data(inode));
+ 
+-	f2fs_zero_post_eof_page(inode, (folio->index + 1) << PAGE_SHIFT, true);
++	err = f2fs_zero_post_eof_page(inode,
++		(folio->index + 1) << PAGE_SHIFT, true, false);
++	if (err)
++		goto out_pagefault;
+ 
+ 	file_update_time(vmf->vma->vm_file);
+ 	filemap_invalidate_lock_shared(inode->i_mapping);
+@@ -179,7 +228,7 @@ static vm_fault_t f2fs_vm_page_mkwrite(s
+ 
+ out_sem:
+ 	filemap_invalidate_unlock_shared(inode->i_mapping);
+-
++out_pagefault:
+ 	sb_end_pagefault(inode->i_sb);
+ out:
+ 	ret = vmf_fs_error(err);
+@@ -1097,8 +1146,12 @@ int f2fs_setattr(struct mnt_idmap *idmap
+ 		f2fs_down_write(&fi->i_gc_rwsem[WRITE]);
+ 		filemap_invalidate_lock(inode->i_mapping);
+ 
+-		if (attr->ia_size > old_size)
+-			f2fs_zero_post_eof_page(inode, attr->ia_size, false);
++		if (attr->ia_size > old_size) {
++			err = f2fs_zero_post_eof_page(inode,
++				attr->ia_size, false, true);
++			if (err)
++				goto err_out;
++		}
+ 		truncate_setsize(inode, attr->ia_size);
+ 
+ 		if (attr->ia_size <= old_size)
+@@ -1107,6 +1160,7 @@ int f2fs_setattr(struct mnt_idmap *idmap
+ 		 * do not trim all blocks after i_size if target size is
+ 		 * larger than i_size.
+ 		 */
++err_out:
+ 		filemap_invalidate_unlock(inode->i_mapping);
+ 		f2fs_up_write(&fi->i_gc_rwsem[WRITE]);
+ 		if (err)
+@@ -1217,7 +1271,9 @@ static int f2fs_punch_hole(struct inode
+ 	if (ret)
+ 		return ret;
+ 
+-	f2fs_zero_post_eof_page(inode, offset + len, true);
++	ret = f2fs_zero_post_eof_page(inode, offset + len, true, false);
++	if (ret)
++		return ret;
+ 
+ 	pg_start = ((unsigned long long) offset) >> PAGE_SHIFT;
+ 	pg_end = ((unsigned long long) offset + len) >> PAGE_SHIFT;
+@@ -1502,7 +1558,9 @@ static int f2fs_do_collapse(struct inode
+ 	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
+ 	filemap_invalidate_lock(inode->i_mapping);
+ 
+-	f2fs_zero_post_eof_page(inode, offset + len, false);
++	ret = f2fs_zero_post_eof_page(inode, offset + len, false, false);
++	if (ret)
++		goto out_unlock;
+ 
+ 	f2fs_lock_op(sbi);
+ 	f2fs_drop_extent_tree(inode);
+@@ -1510,6 +1568,7 @@ static int f2fs_do_collapse(struct inode
+ 	ret = __exchange_data_block(inode, inode, end, start, nrpages - end, true);
+ 	f2fs_unlock_op(sbi);
+ 
++out_unlock:
+ 	filemap_invalidate_unlock(inode->i_mapping);
+ 	f2fs_up_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
+ 	return ret;
+@@ -1631,7 +1690,9 @@ static int f2fs_zero_range(struct inode
+ 	if (ret)
+ 		return ret;
+ 
+-	f2fs_zero_post_eof_page(inode, offset + len, true);
++	ret = f2fs_zero_post_eof_page(inode, offset + len, true, false);
++	if (ret)
++		return ret;
+ 
+ 	pg_start = ((unsigned long long) offset) >> PAGE_SHIFT;
+ 	pg_end = ((unsigned long long) offset + len) >> PAGE_SHIFT;
+@@ -1765,7 +1826,9 @@ static int f2fs_insert_range(struct inod
+ 	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
+ 	filemap_invalidate_lock(mapping);
+ 
+-	f2fs_zero_post_eof_page(inode, offset + len, false);
++	ret = f2fs_zero_post_eof_page(inode, offset + len, false, false);
++	if (ret)
++		goto out_unlock;
+ 	truncate_pagecache(inode, offset);
+ 
+ 	while (!ret && idx > pg_start) {
+@@ -1781,6 +1844,7 @@ static int f2fs_insert_range(struct inod
+ 					idx + delta, nr, false);
+ 		f2fs_unlock_op(sbi);
+ 	}
++out_unlock:
+ 	filemap_invalidate_unlock(mapping);
+ 	f2fs_up_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
+ 	if (ret)
+@@ -1823,7 +1887,9 @@ static int f2fs_expand_inode_data(struct
+ 	if (err)
+ 		return err;
+ 
+-	f2fs_zero_post_eof_page(inode, offset + len, true);
++	err = f2fs_zero_post_eof_page(inode, offset + len, true, true);
++	if (err)
++		return err;
+ 
+ 	f2fs_balance_fs(sbi, true);
+ 
+@@ -4839,8 +4905,10 @@ static ssize_t f2fs_write_checks(struct
+ 	if (err)
+ 		return err;
+ 
+-	f2fs_zero_post_eof_page(inode,
+-		iocb->ki_pos + iov_iter_count(from), true);
++	err = f2fs_zero_post_eof_page(inode,
++		iocb->ki_pos + iov_iter_count(from), true, true);
++	if (err)
++		return err;
+ 	return count;
+ }
+ 
 
 
