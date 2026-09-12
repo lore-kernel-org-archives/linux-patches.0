@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47B0366052;
-	Sat, 12 Sep 2026 12:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17852366052;
+	Sat, 12 Sep 2026 12:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216029; cv=none; b=rPuUVx6wOj0sVyYEL692p9yWOdVg3VhMlDA4CK9HjvDk37IgZFdECxPxVkqrCPAxqM/7VVDfDEhCJHUIwyNlTG+Ej4yzhAuiqWlewQ27QkFqW2b6PMcc0eGdNYdfxtoK5SRYd/3wGJMdcJ9dQKks6yZFqk3a1FWe6W9Ol2PTwmg=
+	t=1789216035; cv=none; b=QKqrXcv14Q597Sa3XIO14k3aA/wh7NFzJ3L8u4ONP9kkVhRrgobxn4EZVK+ZtBmC+dgbdDXPJ6SeFkNEq7frWyA2ILSNsJIkOSdj5hUJhvgJR0gyTcGShCnwAYGm/D51Vgm1i/I6Vg2mvJ8RmXeClBTpxyKFlqMAxkD/Qef4fhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216029; c=relaxed/simple;
-	bh=ZF4GhyC77xdMO03Y1iYV/aPBoWreVJtxbrD6KKpQk5I=;
+	s=arc-20240116; t=1789216035; c=relaxed/simple;
+	bh=5fSerMzM4l2xEEv45x7mqIcOSBHQKc2TwB3iawkxU8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aaAYDZT9bTAgpUn+Pgt5YV+1iOzhSFjsy69Ew0Q3Yjb0QkO9IGHw8tzZvi4vbWQSJR/kmLDy0Qxca5S1KRZC1WYGYgMbMA+TK+l3k5pdH1wHxCZgfBr0jt6WQaeLaxq7sgi79or4pwdECVkbO49xp8lV0Jp7i/FIL49c9KQYEKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeVGMLlW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P7uKwBzPYrQz83XzAyOh+0xWwGMqK6Hv5ZE6M0mT5waMM2GaApOGO2yuiLnYNlMEHFzOZINeCjzUZHkiwUlquO/mlGghZXjGIRro/NdJdgzfPV41/wcc6pOEm22JTw+xbbhy8UH3QXZF2j1jI6xNYGf6m24BVk7JiEG3+LAzHlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+vdWHAT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeVGMLlW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F73B1F000FF;
-	Sat, 12 Sep 2026 12:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+vdWHAT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C0F1F000FF;
+	Sat, 12 Sep 2026 12:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216028;
-	bh=/dBs/VBqCz26ykXTkqO8713/W7jJPUw47vveaoMtpUI=;
+	s=korg; t=1789216034;
+	bh=99iVOhWFkMAd0HrpyA/ZIeufIGW2Er1h3DxqlTxijE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LeVGMLlWXciH+QLfnsPpZODNTuCrlpqDa7gk/HoB1/Y8fkLU7mmE/BFdsKlU3/8Ky
-	 vxG+LrSeyDq9R2gmxQz08apul2sikt9ThqKKytuxlFNMHrFZEC2x3KjG6q7TrnvIg8
-	 inygNQ7DayU9/ySG5stm97e5XfqtaBWhTz/f9Ems=
+	b=c+vdWHATIbrOV257M1R0qzGT6Glnhu8vSVuK1/kqgoyadMxaf6NIHB/xVBoHqYl40
+	 VVyFcXz6d+uxpok0B568d1PEU5b1bPCaUv/XKlhweLj6q2iN3D3+eSdsyygXslvjmn
+	 UBYjYsNGxpmpz3OXVi0DtcZrnCh4VUNmHCJIVFxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0610/1376] kcsan: avoid unintended access checking in NMIs
-Date: Sat, 12 Sep 2026 08:50:36 +0200
-Message-ID: <20260912065621.136184253@linuxfoundation.org>
+Subject: [PATCH 6.12 0611/1376] arm64: dts: imx8-ss-audio: Fix LPCG clock indices for ASRC0
+Date: Sat, 12 Sep 2026 08:50:37 +0200
+Message-ID: <20260912065621.158978496@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,58 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit a8488ecbd7ba44d65b912dfe88a73f438eba2447 ]
+[ Upstream commit 8563591f76ca02c1a6fd70ce986df1d0dde8d249 ]
 
-If a watcher deliberately disables interrupts (either by user choice, or
-because we're dealing with a scoped reordered access) to avoid detecting
-any data races in interrupts, NMIs are still able to fire.
+The LPCG clock indices for ASRC0 and AUD_PLL_DIV0 are swapped. The ASRC0
+LPCG provides only IMX_LPCG_CLK_4, so update the ASRC0 clock consumer to
+use IMX_LPCG_CLK_4 instead of the non-existent IMX_LPCG_CLK_0.
 
-When we set up a watchpoint on a scoped reordered access, we disabled
-interrupts because the same CPU cannot observe reordering of its own
-accesses. To ensure we observe no false positives from NMIs, disable
-access checking for interrupt contexts as well.
+Likewise, the AUD_PLL_DIV0 LPCG provides only IMX_LPCG_CLK_0, so update its
+clock consumer to use IMX_LPCG_CLK_0 instead of the non-existent
+IMX_LPCG_CLK_4.
 
-Fixes: 69562e4983d9 ("kcsan: Add core support for a subset of weak memory modeling")
-Signed-off-by: Marco Elver <elver@google.com>
+Fixes: 5125617c7a4d3 ("arm64: dts: imx8qxp: add asrc[0,1], esai0, spdif0 and sai[4,5]")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kcsan/core.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8-ss-audio.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/kcsan/core.c b/kernel/kcsan/core.c
-index 8a7baf4e332e3..2db82661cd60a 100644
---- a/kernel/kcsan/core.c
-+++ b/kernel/kcsan/core.c
-@@ -585,8 +585,14 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type, unsigned
- 	 * information is lost if dirtied by KCSAN.
- 	 */
- 	kcsan_save_irqtrace(current);
--	if (!interrupt_watcher)
-+	if (!interrupt_watcher) {
- 		local_irq_save(irq_flags);
-+		/*
-+		 * NMIs can still fire, disable checking for all interrupt
-+		 * contexts.
-+		 */
-+		raw_cpu_ptr(&kcsan_cpu_ctx)->disable_count++;
-+	}
- 
- 	watchpoint = insert_watchpoint((unsigned long)ptr, size, is_write);
- 	if (watchpoint == NULL) {
-@@ -699,8 +705,10 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type, unsigned
- 	atomic_long_dec(&kcsan_counters[KCSAN_COUNTER_USED_WATCHPOINTS]);
- 
- out_unlock:
--	if (!interrupt_watcher)
-+	if (!interrupt_watcher) {
-+		raw_cpu_ptr(&kcsan_cpu_ctx)->disable_count--;
- 		local_irq_restore(irq_flags);
-+	}
- 	kcsan_restore_irqtrace(current);
- 	ctx->disable_scoped--;
- 
+diff --git a/arch/arm64/boot/dts/freescale/imx8-ss-audio.dtsi b/arch/arm64/boot/dts/freescale/imx8-ss-audio.dtsi
+index ff5df0fed9e96..741a311614ddb 100644
+--- a/arch/arm64/boot/dts/freescale/imx8-ss-audio.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8-ss-audio.dtsi
+@@ -124,10 +124,10 @@ asrc0: asrc@59000000 {
+ 		compatible = "fsl,imx8qm-asrc";
+ 		reg = <0x59000000 0x10000>;
+ 		interrupts = <GIC_SPI 372 IRQ_TYPE_LEVEL_HIGH>;
+-		clocks = <&asrc0_lpcg IMX_LPCG_CLK_0>,
+-			 <&asrc0_lpcg IMX_LPCG_CLK_0>,
+-			 <&aud_pll_div0_lpcg IMX_LPCG_CLK_4>,
+-			 <&aud_pll_div1_lpcg IMX_LPCG_CLK_4>,
++		clocks = <&asrc0_lpcg IMX_LPCG_CLK_4>,
++			 <&asrc0_lpcg IMX_LPCG_CLK_4>,
++			 <&aud_pll_div0_lpcg IMX_LPCG_CLK_0>,
++			 <&aud_pll_div1_lpcg IMX_LPCG_CLK_0>,
+ 			 <&acm IMX_ADMA_ACM_AUD_CLK0_SEL>,
+ 			 <&acm IMX_ADMA_ACM_AUD_CLK1_SEL>,
+ 			 <&clk_dummy>,
 -- 
 2.53.0
 
