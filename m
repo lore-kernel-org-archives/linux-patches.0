@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9D44D5A1;
-	Sat, 12 Sep 2026 07:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA40364943;
+	Sat, 12 Sep 2026 07:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198543; cv=none; b=mPQkCikbzFYshHlzr0B+J8uS2/zEloOKzGMUANWcseRFZKxJNLKbklBZtEwSj+5RCgoBXVEDZtnEIhZYr52DGKZdryOkCX04WnokbEIHufK1XehIMfkcD45+W0luXX91gHDy/eunp1vDTd9QHPFoAHc6DupV5bk9Z/9puiimO74=
+	t=1789198549; cv=none; b=iDjA4sv5xh8f5kGnk80SZRAGZqUhCnrG8oM6pkvr42h6odeueZxx/9DvEm5aPX6+t2rYnat6xmSyvMyPGh8v/nl/7l4UguOgbplBWmuvjlU7g59Wv6PGOSWYt8VEiy/A95kI4qrNpqAZdRp/TNWZOSDuKmRBP2hGySUdIfRgE8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198543; c=relaxed/simple;
-	bh=AU8h3zCq0LrCsEbUH3J/RB3Rh89yE2qJIoQ9mZtHe34=;
+	s=arc-20240116; t=1789198549; c=relaxed/simple;
+	bh=8taxEcWe3MUt1gIW82AHkAM3765EneNjQTfhmAM/F7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kcLpYoJHMpaqJurwQvCITy7NHBks9h4i+fKn461iU+jV1RlCgR1ZyK8VpTMN8ysdQrxY/myq8SfBbhoPZ/4xca4ELp2D9k/CuLdSXiKKzSnLWFyrUOHJSzG9iqAiAnpjD4Faub4CzPIHbsokc0MfSIeEL2wrYqhkb0RBN5KmzrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCUrnWwA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UyMl1b+kFxR+FSqO0RHuL08viByG+aiyTUXWbWNgZMSNLhGAORDcwzWl+GFf5OYFDskAfIwRslpyG1uzRbKC0++E16g8SZkhbiAkJKVnZnb6EessB9tlP8B9yyUjSX5bq0ZhFMgpJ/kijw9sclr1nIZNSynEa3l7IsdMSCShpVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqUS1u6w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCUrnWwA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B351F000FF;
-	Sat, 12 Sep 2026 07:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqUS1u6w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1877F1F000FF;
+	Sat, 12 Sep 2026 07:35:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198542;
-	bh=Tn4yb7PeO5dxFI7tSICdl5NwiIxG0c8q3a0fTLYO6OY=;
+	s=korg; t=1789198547;
+	bh=Qt6SVOCwzi56esvWaymxCTc6qqU0Wzax8wuts4BojQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HCUrnWwAKFytLOFffug+r4+9WDQMPDjbueFcsfu0ZhlhPLzJmJIF3xfGj1PqZqEIP
-	 gTAUbVu63auYp5d/OOHhVENsaA0o2rEhwiG5iJQFfViGBeqcxUM2NX+RUsrEjWgwBk
-	 8Pn6HCyfirWYilynLUTSj9Dmyn0bhzRdZI1fNEK0=
+	b=QqUS1u6wwpcyQ1NHYcPwvsTpxHec7n2pCfrr/NTuUvZHxFQCI5oyBvPfd3SsSnAuP
+	 NOKwnum05ImaOWJfOngchGrzf+F7gEq5gNj8+21c2tPezxEcAPHMg9+9tlTwWZVTcQ
+	 yeY2djJVwxKaBfeqiaIWb2mqYYL3gx0i+uisY8ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0401/1815] firmware: arm_scmi: Protect device request lookup with RCU
-Date: Sat, 12 Sep 2026 08:35:51 +0200
-Message-ID: <20260912065658.309415568@linuxfoundation.org>
+Subject: [PATCH 7.2 0366/1815] isofs: fix out-of-bounds page array access on empty zisofs block
+Date: Sat, 12 Sep 2026 08:35:16 +0200
+Message-ID: <20260912065657.493608012@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,49 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit e6a0e7a49d83e4fa4e1db68d74f99282eb97aa49 ]
+[ Upstream commit 68d4d3e78150c7ed7d1195af63ad1e6ace30c661 ]
 
-The SCMI device request notifier looks up protocol OF nodes from the
-active_protocols IDR. The IDR lookup can run concurrently with protocol
-activation while probe is still registering protocols and creating their
-SCMI devices.
+zisofs_uncompress_block()'s empty-block fast path returns
+pcount << PAGE_SHIFT, ignoring the incoming poffset, unlike the
+decompression path which returns bytes produced relative to poffset.
+zisofs_fill_pages() uses that return to advance its page cursor, so when
+the zisofs block size is below PAGE_SIZE and a sub-page block leaves
+poffset partway into a page, a following empty block over-counts and
+advances pages[] one element past its end, after which
+"if (poffset && *pages)" reads pages[1] out of bounds.  rock.c only
+rejects a block-size shift > 17, so a crafted "ZF" Rock Ridge record can
+set it below PAGE_SHIFT; the bug is reached by an ordinary read() of a
+compressed file on such a mounted ISO9660 image.
 
-Wrap the lookup in an RCU read-side critical section as required by the
-IDR API for lockless readers.
+Return the byte count relative to poffset and zero only
+[poffset, PAGE_SIZE) of the first page, matching the decompression path.
+The page-aligned case (poffset == 0) is unaffected.
 
-Fixes: 53b8c25df708 ("firmware: arm_scmi: Add common notifier helpers")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-9-3afe499d46e3@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+  BUG: KASAN: slab-out-of-bounds in zisofs_read_folio (fs/isofs/compress.c:290)
+  Read of size 8 at addr ffff88800f5eac48 by task exploit/142
+   zisofs_read_folio (fs/isofs/compress.c:290)
+   read_pages (mm/readahead.c:184)
+   ...
+   filemap_read (mm/filemap.c:2814)
+   vfs_read (fs/read_write.c:574)
+   __x64_sys_pread64 (fs/read_write.c:769)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  The buggy address is located 0 bytes to the right of the
+  allocated 8-byte region in the kmalloc-8 cache
+
+Fixes: 59bc055211b8 ("zisofs: Implement reading of compressed files when PAGE_CACHE_SIZE > compress block size")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260712234150.3213467-1-xmei5@asu.edu
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/isofs/compress.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index f607557c04ad2..a2871dca24dce 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -33,6 +33,7 @@
- #include <linux/of.h>
- #include <linux/platform_device.h>
- #include <linux/processor.h>
-+#include <linux/rcupdate.h>
- #include <linux/refcount.h>
- #include <linux/slab.h>
- #include <linux/xarray.h>
-@@ -2958,7 +2959,9 @@ static int scmi_device_request_notifier(struct notifier_block *nb,
- 	struct scmi_device_id *id_table = data;
- 	struct scmi_info *info = req_nb_to_scmi_info(nb);
+diff --git a/fs/isofs/compress.c b/fs/isofs/compress.c
+index 397568b9c7e7d..3fda92358e225 100644
+--- a/fs/isofs/compress.c
++++ b/fs/isofs/compress.c
+@@ -65,12 +65,14 @@ static loff_t zisofs_uncompress_block(struct inode *inode, loff_t block_start,
+ 	/* Empty block? */
+ 	if (block_size == 0) {
+ 		for ( i = 0 ; i < pcount ; i++ ) {
++			unsigned int off = i ? 0 : poffset;
++
+ 			if (!pages[i])
+ 				continue;
+-			memzero_page(pages[i], 0, PAGE_SIZE);
++			memzero_page(pages[i], off, PAGE_SIZE - off);
+ 			SetPageUptodate(pages[i]);
+ 		}
+-		return ((loff_t)pcount) << PAGE_SHIFT;
++		return (((loff_t)pcount) << PAGE_SHIFT) - poffset;
+ 	}
  
-+	rcu_read_lock();
- 	np = idr_find(&info->active_protocols, id_table->protocol_id);
-+	rcu_read_unlock();
- 	if (!np)
- 		return NOTIFY_DONE;
- 
+ 	/* Because zlib is not thread-safe, do all the I/O at the top. */
 -- 
 2.53.0
 
