@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74C62DC321;
-	Sat, 12 Sep 2026 15:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A314F2DC321;
+	Sat, 12 Sep 2026 15:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226517; cv=none; b=clyblO2t8NNuEDSdj8MZ+aCGxpcsNK3IvOlvl5Fh/Uvkic3mq0Iq+B7QVngi0RujLC+TBYKuxgtl8OMrpmNIXdLc3YxctHKbG8p0rF8WbWH1U+d66BAycUYib3Zjq47Xh4GHhzw/xQxe7dEwkrv1o5VUWwDMsSgp1VBPg+3dSbo=
+	t=1789226521; cv=none; b=oSvOKxlEfPU6SgMnz/CfjbsSui7macKRzJEmQQjKVUe7jw2oIZvbYVTOd7fTUfFRVy9qJDNeS40WQ2QWBvicKWW3426xRKosXxzJsiKieB6WqrAqGDmt75NyEbsv1k2HJv1gZgQ6NgZU1DpK8EYPkdiNbeA7hAYJxdVKnr4PjdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226517; c=relaxed/simple;
-	bh=AlT+DzvSRr7mmya+qyN5d8nPgkXgNNYXlxf0e7S0Kwk=;
+	s=arc-20240116; t=1789226521; c=relaxed/simple;
+	bh=qTyQVGsp1aXJldqbUyI384CZVNumRaGzeAlZhPIJA50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o3T2OP65+dA86A2yZJjVa+fDwMO6AMKow5Ri3DZH8PLovO0K1akL5JPN7qVETMxViR0yua7UeGC5480Ylfv0uJWPZdY9EBEMxt33wmmMHm89fpxGEb7W5DEma/dP/uX54qoW5OK9bc7+j/YYylbGS2faVTT1I/ffmuRFDgf6IRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lT8cYJUJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BK/akeD1kGq5JQMRvmfMn8Ky3swH3Dn55NSaUviT6kCdA1rrUNOyw7CKIP/v3SkT3F6URDVcXOGfn9flyYrknrWuySugBJlNh3u8barLe0neFUSSagu4sQ8OVdyVr4ovRtZbvxtCsxbbZCOBzuVDCYauZ4y7TsHtBK2uB0CDkAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ew3uqkzh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lT8cYJUJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE48D1F000FF;
-	Sat, 12 Sep 2026 15:21:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ew3uqkzh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B4C1F000FF;
+	Sat, 12 Sep 2026 15:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226515;
-	bh=ECOzkcWMlLtH3AOFm3nhfL0xb9zLU503dnbBPW9HEuw=;
+	s=korg; t=1789226520;
+	bh=6VztjjzOcB1On+8BIBIn/hmJdA2HE9/wwxWetVNi66A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lT8cYJUJ8JgnpcErGiDqJk3VxcCjMFDU2XM6nf35Ii+UPma09rPPfRrWJLdcN665L
-	 z00qrJKjeGOf7w/EdTqnNgvny9bx8TjZkOqfup3/jBhKQH7AGS1Hr4a2InAkLSeSsr
-	 GzGXcb17sFSuHRxnM1FgyX5/R478OD7WLHYZC92E=
+	b=ew3uqkzhSnNeZtXK6CqpYkirVZNZV19wb8GizOIZUv+3FROf04x7PDl6KGwyXaS/a
+	 kcxSs8ar6IsQyEJB40T0gVZ2FI9ONfnrMBfhenfdpBj/qpJK4S5otkmNkVILnnmLst
+	 xrV6BVxFp2f8yfy8LUnE61QovWEAyoKMAeB+aO+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1419/1424] ALSA: control: Fix unannotated kfree() cleanup
-Date: Sat, 12 Sep 2026 09:04:11 +0200
-Message-ID: <20260912065639.037383617@linuxfoundation.org>
+	John Kacur <jkacur@redhat.com>,
+	Luis Goncalves <lgoncalv@redhat.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Quentin Monnet <qmo@kernel.org>,
+	Tomas Glozar <tglozar@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.6 1420/1424] tools/build: Use SYSTEM_BPFTOOL for system bpftool
+Date: Sat, 12 Sep 2026 09:04:12 +0200
+Message-ID: <20260912065639.060068096@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,44 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Tomas Glozar <tglozar@redhat.com>
 
-[ Upstream commit 14d811467f6592aa0e685730e66b5f9123287468 ]
+commit 814d051ebed40b27285ab3c5e2454bd01a0f9631 upstream.
 
-The recent conversion to the automatic kfree() forgot to mark a
-variable with __free(kfree), leading to memory leaks.  Fix it.
+The feature test for system bpftool uses BPFTOOL as the variable to set
+its path, defaulting to just "bpftool" if not set by the user.
 
-Fixes: 1052d9882269 ("ALSA: control: Use automatic cleanup of kfree()")
-Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Closes: https://lore.kernel.org/r/c1e2ef3c-164f-4840-9b1c-f7ca07ca422a@alu.unizg.hr
-Message-ID: <20240320062722.31325-1-tiwai@suse.de>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This conflicts with selftests and a few other utilities, which expect
+BPFTOOL to be set to the in-tree bpftool path by default. For example,
+bpftool selftests fail to build:
+
+$ make -C tools/testing/selftests/bpf/
+make: Entering directory '/home/tglozar/dev/linux/tools/testing/selftests/bpf'
+
+make: *** No rule to make target 'bpftool', needed by '/home/tglozar/dev/linux/tools/testing/selftests/bpf/tools/include/vmlinux.h'.  Stop.
+make: Leaving directory '/home/tglozar/dev/linux/tools/testing/selftests/bpf'
+
+Fix the problem by renaming the variable used for system bpftool from
+BPFTOOL to SYSTEM_BPFTOOL, so that the new usage does not conflict with
+the existing one of BPFTOOL.
+
+Cc: John Kacur <jkacur@redhat.com>
+Cc: Luis Goncalves <lgoncalv@redhat.com>
+Link: https://lore.kernel.org/20250326004018.248357-1-tglozar@redhat.com
+Fixes: 8a635c3856dd ("tools/build: Add bpftool-skeletons feature test")
+Closes: https://lore.kernel.org/linux-kernel/5df6968a-2e5f-468e-b457-fc201535dd4c@linux.ibm.com/
+Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Suggested-by: Quentin Monnet <qmo@kernel.org>
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/control.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/build/feature/Makefile   |    2 +-
+ tools/scripts/Makefile.include |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/core/control.c b/sound/core/control.c
-index 3eca2ff89ab42..784867f29f0b0 100644
---- a/sound/core/control.c
-+++ b/sound/core/control.c
-@@ -1275,12 +1275,12 @@ static int snd_ctl_elem_read(struct snd_card *card,
- static int snd_ctl_elem_read_user(struct snd_card *card,
- 				  struct snd_ctl_elem_value __user *_control)
- {
--	struct snd_ctl_elem_value *control;
-+	struct snd_ctl_elem_value *control __free(kfree) = NULL;
- 	int result;
+--- a/tools/build/feature/Makefile
++++ b/tools/build/feature/Makefile
+@@ -403,7 +403,7 @@ $(OUTPUT)test-libpfm4.bin:
+ 	$(BUILD) -lpfm
  
- 	control = memdup_user(_control, sizeof(*control));
- 	if (IS_ERR(control))
--		return PTR_ERR(control);
-+		return PTR_ERR(no_free_ptr(control));
+ $(OUTPUT)test-bpftool-skeletons.bin:
+-	$(BPFTOOL) version | grep '^features:.*skeletons' \
++	$(SYSTEM_BPFTOOL) version | grep '^features:.*skeletons' \
+ 		> $(@:.bin=.make.output) 2>&1
+ ###############################
  
- 	result = snd_ctl_elem_read(card, control);
- 	if (result < 0)
--- 
-2.53.0
-
+--- a/tools/scripts/Makefile.include
++++ b/tools/scripts/Makefile.include
+@@ -95,7 +95,7 @@ endif
+ CC_NO_CLANG := $(shell $(CC) -dM -E -x c /dev/null | grep -Fq "__clang__"; echo $$?)
+ 
+ # Some tools require bpftool
+-BPFTOOL		?= bpftool
++SYSTEM_BPFTOOL	?= bpftool
+ 
+ ifeq ($(CC_NO_CLANG), 1)
+ EXTRA_WARNINGS += -Wstrict-aliasing=3
 
 
