@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FFD1F91E3;
-	Sat, 12 Sep 2026 16:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA93C4BEE2C;
+	Sat, 12 Sep 2026 16:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232049; cv=none; b=SlHMxvcfTIP09Ck/Z6vbMPSFQUpkkkhMdS+pozJxmwkx9tADkEqr3NEYP2U/l1Rb5qYUEFCPxyMzGKoLYRcOLaGYnKj+dHidBTKy0+Ia8G3iJMKm/tqOTwZtZvukxLrQ2AHsD+Hm2S4iuhiGyjuvB/stUXFCnKvJI6xQ1U0bVWc=
+	t=1789232055; cv=none; b=ERTyDtJ6pjsTJVnmJ7MI5X0tbqBF7zJLkOeWGqfZhpkyNjdi23BlkBfuumaSuM72U2KpBuawXHLtJo4p1eWyYpaSo7CXSX4HZVeqJ65FAa3HUqJfx4w75tLwpeP3Q88yrQtddn315LN8Y8JmWWppbrc/yrBHlBFKHj1H8K06UTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232049; c=relaxed/simple;
-	bh=ZMTsnuapRXmGWf/SBkTUNPE7iOOwqi4/Y6iGkEJmeZU=;
+	s=arc-20240116; t=1789232055; c=relaxed/simple;
+	bh=WhY6AKWjOJSJFD/y98KXQlXmE01ziliotASbJ/CbHHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VJFBBIXzQdb2xykFxY2IK3pamzKRt4EpFZDCaP7pIW1PzH8jZ3Ofqvsvf+gY9tQ48fVsJqgNKmFxxrv4C4m0VYvR/ShZwHP6Ik/2VyYw3Vc1coDl0untNDP8fLg9YshRp4XtGeoTbWqOz4leHgPdtHVSIIDlZftzDgibfDBPazc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YU2QfLhx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C/83c2cEUZtmwpRlC6fKohkvRGSZVr0QFyplW7Sq9dwryHCTAFOSvJmSlBY0VG9x4rsfaEJIYkhHk1BGpbqVbK5FQmjvBUJ/mUh+ZFaYhgtWsJdLafMMMj6gxYxJtFgweY7M8Rm9IYZou6dTAXPnP5InIZQ9AhEbey3D/I9/uV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N7Uw12bd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YU2QfLhx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28FA91F000FF;
-	Sat, 12 Sep 2026 16:54:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7Uw12bd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A7B1F000FF;
+	Sat, 12 Sep 2026 16:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232048;
-	bh=7kvoMRl/kty/b3VFcpF5Q9Njd8JXqkMO5dkBSpRX9q0=;
+	s=korg; t=1789232053;
+	bh=M+IWWTSn0fUaQl6KrsK/Crk+6lqngaNI4j0GA0bpw28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YU2QfLhxkDyStaYDR38AJ+sNstosakQzR3E9rQGl5MuYlEdGRjJYs/+WmUm5zl3RV
-	 D6kWl9D5S+CHjNE/AvIvLVQQcPT4uwfBh2imh86LV+PnHCQnp6DoVjQh2umkkJRgMx
-	 WeH2oIEWw4MwBXMv9cNL17JWGmMKxhjcwQI8hNho=
+	b=N7Uw12bdSPLpeWvpXVotadcs0jjD/35W4mAMCF5RTvi5GXiFdlCjUpa2+iDE3XGkH
+	 Us1qJ8K00C4bQmpC6jiQ1wBhvdMYwQMruNNshG4ZwLYPZOfDs5R0iOBvRcCJAlV1Ov
+	 V8N++W8dZdfj0e3aDXaVunUcr6Zjf5n3QUE6PwdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1123/1191] netfilter: x_tables: replace pr_{info,err}() by pr_info_ratelimited()
-Date: Sat, 12 Sep 2026 09:04:11 +0200
-Message-ID: <20260912065613.376808871@linuxfoundation.org>
+Subject: [PATCH 6.1 1124/1191] ALSA: control: Make snd_ctl_find_id() argument const
+Date: Sat, 12 Sep 2026 09:04:12 +0200
+Message-ID: <20260912065613.398570635@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,103 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 793d9eda4821f75b5f7cc9e6a870b72a58b44c2b ]
+[ Upstream commit 6723670a483501497dc339ae37676525245a913a ]
 
-Several xtables extension still use pr_err() or pr_info() without
-ratelimit.
+The id object passed to snd_ctl_find_id() is only read, and we can
+mark it with const gracefully.
 
-For xt_cgroup, while at this, remove redundant "xt_cgroup:" prefix
-since pr_fmt is already set on.
-
-Fixes: c38c4597e4bf ("netfilter: implement xt_cgroup cgroup2 path match")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://lore.kernel.org/r/20230718141304.1032-9-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 74e3b979ce8b ("ALSA: control: Don't add invalid kcontrols to LED layer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_cgroup.c | 12 ++++++------
- net/netfilter/xt_hl.c     |  4 ++--
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ include/sound/control.h | 2 +-
+ sound/core/control.c    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/xt_cgroup.c b/net/netfilter/xt_cgroup.c
-index b182b9e0882b6..d9943c4f5ee4d 100644
---- a/net/netfilter/xt_cgroup.c
-+++ b/net/netfilter/xt_cgroup.c
-@@ -23,7 +23,7 @@ MODULE_DESCRIPTION("Xtables: process control group matching");
- MODULE_ALIAS("ipt_cgroup");
- MODULE_ALIAS("ip6t_cgroup");
+diff --git a/include/sound/control.h b/include/sound/control.h
+index cc3dcc6cfb0f2..e61b749bf2041 100644
+--- a/include/sound/control.h
++++ b/include/sound/control.h
+@@ -141,7 +141,7 @@ int snd_ctl_rename_id(struct snd_card * card, struct snd_ctl_elem_id *src_id, st
+ void snd_ctl_rename(struct snd_card *card, struct snd_kcontrol *kctl, const char *name);
+ int snd_ctl_activate_id(struct snd_card *card, struct snd_ctl_elem_id *id, int active);
+ struct snd_kcontrol *snd_ctl_find_numid(struct snd_card * card, unsigned int numid);
+-struct snd_kcontrol *snd_ctl_find_id(struct snd_card * card, struct snd_ctl_elem_id *id);
++struct snd_kcontrol *snd_ctl_find_id(struct snd_card *card, const struct snd_ctl_elem_id *id);
  
--#define NET_CLS_CLASSID_INVALID_MSG "xt_cgroup: classid invalid without net_cls cgroups\n"
-+#define NET_CLS_CLASSID_INVALID_MSG "classid invalid without net_cls cgroups\n"
+ int snd_ctl_create(struct snd_card *card);
  
- static int cgroup_mt_check_v0(const struct xt_mtchk_param *par)
+diff --git a/sound/core/control.c b/sound/core/control.c
+index 41b178ac25d87..54b9aa5dd9865 100644
+--- a/sound/core/control.c
++++ b/sound/core/control.c
+@@ -829,7 +829,7 @@ EXPORT_SYMBOL(snd_ctl_find_numid);
+  *
+  */
+ struct snd_kcontrol *snd_ctl_find_id(struct snd_card *card,
+-				     struct snd_ctl_elem_id *id)
++				     const struct snd_ctl_elem_id *id)
  {
-@@ -33,7 +33,7 @@ static int cgroup_mt_check_v0(const struct xt_mtchk_param *par)
- 		return -EINVAL;
- 
- 	if (!IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
--		pr_info(NET_CLS_CLASSID_INVALID_MSG);
-+		pr_info_ratelimited(NET_CLS_CLASSID_INVALID_MSG);
- 		return -EINVAL;
- 	}
- 
-@@ -49,7 +49,7 @@ static int cgroup_mt_check_v1(const struct xt_mtchk_param *par)
- 		return -EINVAL;
- 
- 	if (!info->has_path && !info->has_classid) {
--		pr_info("xt_cgroup: no path or classid specified\n");
-+		pr_info_ratelimited("no path or classid specified\n");
- 		return -EINVAL;
- 	}
- 
-@@ -59,7 +59,7 @@ static int cgroup_mt_check_v1(const struct xt_mtchk_param *par)
- 	}
- 
- 	if (info->has_classid && !IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
--		pr_info(NET_CLS_CLASSID_INVALID_MSG);
-+		pr_info_ratelimited(NET_CLS_CLASSID_INVALID_MSG);
- 		return -EINVAL;
- 	}
- 
-@@ -89,7 +89,7 @@ static int cgroup_mt_check_v2(const struct xt_mtchk_param *par)
- 		return -EINVAL;
- 
- 	if (!info->has_path && !info->has_classid) {
--		pr_info("xt_cgroup: no path or classid specified\n");
-+		pr_info_ratelimited("no path or classid specified\n");
- 		return -EINVAL;
- 	}
- 
-@@ -99,7 +99,7 @@ static int cgroup_mt_check_v2(const struct xt_mtchk_param *par)
- 	}
- 
- 	if (info->has_classid && !IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
--		pr_info(NET_CLS_CLASSID_INVALID_MSG);
-+		pr_info_ratelimited(NET_CLS_CLASSID_INVALID_MSG);
- 		return -EINVAL;
- 	}
- 
-diff --git a/net/netfilter/xt_hl.c b/net/netfilter/xt_hl.c
-index 4a12a757ecbf8..59e93d97b5072 100644
---- a/net/netfilter/xt_hl.c
-+++ b/net/netfilter/xt_hl.c
-@@ -28,7 +28,7 @@ static int ttl_mt_check(const struct xt_mtchk_param *par)
- 	const struct ipt_ttl_info *info = par->matchinfo;
- 
- 	if (info->mode > IPT_TTL_GT) {
--		pr_err("Unknown TTL match mode: %d\n", info->mode);
-+		pr_info_ratelimited("Unknown TTL match mode: %d\n", info->mode);
- 		return -EINVAL;
- 	}
- 
-@@ -59,7 +59,7 @@ static int hl_mt6_check(const struct xt_mtchk_param *par)
- 	const struct ip6t_hl_info *info = par->matchinfo;
- 
- 	if (info->mode > IP6T_HL_GT) {
--		pr_err("Unknown Hop Limit match mode: %d\n", info->mode);
-+		pr_info_ratelimited("Unknown Hop Limit match mode: %d\n", info->mode);
- 		return -EINVAL;
- 	}
+ 	struct snd_kcontrol *kctl;
  
 -- 
 2.53.0
