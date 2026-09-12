@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C7A37F8B2;
-	Sat, 12 Sep 2026 09:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD08208D0;
+	Sat, 12 Sep 2026 09:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206295; cv=none; b=a2/IXGY3J8NJfBrnF2UqFZKnTvdya5hHL9HOAwi9C4hfjfoDkgC/Zg3JaoiJKLnsI1ZxHC0tSYVtZfRMqwZCq5VkyPNAaH4iibRnbY370prG3O7fJAelbMC/p3eBBEuTTUrZg2eedxSBufsNzp/tdL78GOFOi0BY1Wi2w0P+YnE=
+	t=1789206299; cv=none; b=i5p/D280IeXhuugScMDXiMJwKI8/mRqCHzLHoh/gOktMXPUr9ieoTnlV2t/6vCx2YSUi+lMgMAubDlO+zyrYvZ+lZnmOqRaRzq7IUwm28e5tMNSbpEtx0t/GXjVK7zYqNo4K0XqUFc3f7y3c0cSAxne8pAouU2kqm60IE0y/12E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206295; c=relaxed/simple;
-	bh=caDEQS29551wHibKxcxvwLP9pZ6DB4E/hUvUqIMp+8Q=;
+	s=arc-20240116; t=1789206299; c=relaxed/simple;
+	bh=AyHtMIbdf7iDEOBgJCsOhatncDfVRYBmTpN7FqXDeLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YaErEQSKt7vmt7exxkN3AQI+OGS6icaHhY5ARE0LuLfEzikBF/MId+zrDpK9CLPTZAa3qbujGaSJHj7eu1JNU6/FOjGMFbkKwuMQPbf/Mbzz3b/82ZnnY9nsBW6ix8WYiE/XiK+X6Y8lEzJ2XaoFCO5AhmvuO+v8kIl0Bfsd/tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+kfLU6o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tl9pcmsraFsRQ0ghv8dVecbXomrWo4FKCaBHqLb5SX9u4HMk7hgAlHj0YqEqUADHxanK9fXK8jGtm6mRpTM8sp7o7RmVfCSUuYJUwH/NMtH2Z2AkckS3RoP9hmdnojstdRQ6KpIUR2IvsJ3N6c3fNnn5H7gZYcrg/nqYlNioWes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0wgvI1v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+kfLU6o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19FF1F000FF;
-	Sat, 12 Sep 2026 09:44:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0wgvI1v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0116F1F000FF;
+	Sat, 12 Sep 2026 09:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206293;
-	bh=yR64M/2lr1voBeB78KUPgq72OesDjzVPg9leAtLHtAg=;
+	s=korg; t=1789206297;
+	bh=cIDKnCjqsDSCHZ+BAiQCWykECHT0FIWmjv3LKdPFgUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J+kfLU6o34bP57+xGHpW9FvGriS9R9n1e+hQCHORfq5CKK3Gr74EJIP3rjSK/0mP9
-	 D+3Xeor4aCWv1xV4az8FdusvLcuEhZBbKMYwXd7I33zAa3bT2GjsGsINkwqLxP49vK
-	 tDXxKU5mAgjYlkA7S3P4iPDkr76Sw6L9766bQRYU=
+	b=z0wgvI1vZKYcVgZmkx5ftnVoXTPSyCW3IJPKB7FoodQJOdef0GbsnqjrWvWK54l+K
+	 iSZlHd6R0OxlgcfYdgu/JN5tYwLFpjK9WSMLWNyKMmD7s8VsSZr0xuHrGqgH4UGOAe
+	 KuogqyXtrsMwUEHHIKMEsnTdODjt7Lvo/onrByxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Yuan Liu <yuan1.liu@intel.com>,
+	Israel Batista <linux@israelbatista.dev.br>,
+	David Hildenbrand <david@redhat.com>,
 	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Omar Sandoval <osandov@osandov.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0140/1518] mm/mm_init: fix incorrect node_spanned_pages
-Date: Sat, 12 Sep 2026 08:38:29 +0200
-Message-ID: <20260912065626.662278345@linuxfoundation.org>
+Subject: [PATCH 6.18 0176/1518] mm: convert memory block states (MEM_*) macros to enum
+Date: Sat, 12 Sep 2026 08:39:05 +0200
+Message-ID: <20260912065627.473768333@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,103 +56,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Yang <richard.weiyang@gmail.com>
+From: Israel Batista <linux@israelbatista.dev.br>
 
-[ Upstream commit 7783dcd79ae9c4aa48bc47bd4275772445dc4b2a ]
+[ Upstream commit 1a4f70f6851a1916c4f0e52731c7ecfe99bf36e6 ]
 
-Current node_spanned_pages is got as a summation of all zone's spanned page
-in calculate_node_totalpages(). Generally this is good, but if we use
-kernelcore=mirror, it is would be wrong.
+Patch series "mm: Convert memory block states (MEM_*) macros to enums", v2.
 
-Without kernelcore=mirror:
+The MEM_* constants indicating the state of a memory block are currently
+defined as macros, meaning their definitions will be omitted from the
+debuginfo on most kernel builds.  This makes it harder for debuggers to
+correctly map the block state at runtime, which can be quite useful when
+analysing errors related to memory hot plugging and unplugging with tools
+such as drgn.
 
-    The test machine has below memory layout:
+Converting the constants to an enum ensures the correct information is
+emitted by the compiler and available for the debugger, without needing to
+hard-code them into the debugger and track their changes.
 
-      memory[0x0]     [0x0000000000001000-0x000000000009efff], 0x000000000009e000 bytes on node 0 flags: 0x0
-      memory[0x1]     [0x0000000000100000-0x00000000bffdefff], 0x00000000bfedf000 bytes on node 0 flags: 0x0
-      memory[0x2]     [0x0000000100000000-0x00000001bfffffff], 0x00000000c0000000 bytes on node 0 flags: 0x0
+This patch series aims to replace the current macros with a newly created
+enum named memory_block_state, while also taking advantage of the compile
+time guarantees that we get when using enums.
 
-    And the Zone range is:
+The first patch does the conversion of the macros to an enum, while the
+2nd and 3rd patches use this enum to clean up some type declarations and
+make sure that only valid values are used.
 
-      DMA      [mem 0x0000000000001000-0x0000000000ffffff]
-      DMA32    [mem 0x0000000001000000-0x00000000ffffffff]
-      Normal   [mem 0x0000000100000000-0x00000001bfffffff]
+This patch (of 3):
 
-    Then we see, with spanned_pages printed:
+Converting the MEM_* constants from macros to an enum ensures that their
+values will be correctly emitted in the debug symbols, making it easier to
+trace the meaning of each value when debugging with tools such as drgn,
+without the need to hard-code the values.
 
-      On node 0 spanned_pages: 1835007 totalpages: 1572733
+Since the values are mutually exclusive and they are not exposed directly
+to userspace, I also dropped the misleading pattern (1<<X) that made it
+look like they were combinable flags.
 
-With kernelcore=mirror:
-
-    The test machine has below memory layout:
-
-      memory[0x0]     [0x0000000000001000-0x000000000009efff], 0x000000000009e000 bytes on node 0 flags: 0x2
-      memory[0x1]     [0x0000000000100000-0x00000000bffdefff], 0x00000000bfedf000 bytes on node 0 flags: 0x2
-      memory[0x2]     [0x0000000100000000-0x000000013fffffff], 0x0000000040000000 bytes on node 0 flags: 0x2
-      memory[0x3]     [0x0000000140000000-0x00000001bfffffff], 0x0000000080000000 bytes on node 0 flags: 0x0
-
-    And the Zone range is:
-
-      DMA      [mem 0x0000000000001000-0x0000000000ffffff]
-      DMA32    [mem 0x0000000001000000-0x00000000ffffffff]
-      Normal   [mem 0x0000000100000000-0x00000001bfffffff]
-      Device   empty
-    Movable zone start for each node
-      Node 0: 0x0000000140000000
-
-    Then we see, with spanned_pages printed:
-
-      On node 0 spanned_pages: 2359295 totalpages: 1572733
-
-The total range of memory on node 0 doesn't change, but the spanned_pages
-becomes much larger.
-
-The reason is when kernelcore=mirror is specified, the range of Zone Normal
-and Zone Movable would overlap. So the overlapped range would be calculated
-twice.
-
-A wrong node_spanned_pages would effect defer_init(), since each
-zone_end_pfn is less than pgdat_end_pfn().
-
-As we already passed in node_start_pfn and node_end_pfn, fix this by get it
-from (node_start_pfn - node_end_pfn) directly.
-
-Fixes: 342332e6a925 ("mm/page_alloc.c: introduce kernelcore=mirror option")
-Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
-Cc: Yuan Liu <yuan1.liu@intel.com>
-Link: https://patch.msgid.link/20260622022403.16375-1-richard.weiyang@gmail.com
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Link: https://lkml.kernel.org/r/20251029195617.2210700-1-linux@israelbatista.dev.br
+Link: https://lkml.kernel.org/r/20251029195617.2210700-2-linux@israelbatista.dev.br
+Signed-off-by: Israel Batista <linux@israelbatista.dev.br>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Omar Sandoval <osandov@osandov.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 2ebce860bdd7 ("mm/mm_init: handle alloc_percpu failure in free_area_init_core_hotplug")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mm_init.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/linux/memory.h | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/mm/mm_init.c b/mm/mm_init.c
-index 5789ad8ba9b6d..4ed5b09f4eb4f 100644
---- a/mm/mm_init.c
-+++ b/mm/mm_init.c
-@@ -1351,7 +1351,7 @@ static void __init calculate_node_totalpages(struct pglist_data *pgdat,
- 						unsigned long node_start_pfn,
- 						unsigned long node_end_pfn)
- {
--	unsigned long realtotalpages = 0, totalpages = 0;
-+	unsigned long realtotalpages = 0;
- 	enum zone_type i;
+diff --git a/include/linux/memory.h b/include/linux/memory.h
+index 0c214256216f6..f4e358477c6a7 100644
+--- a/include/linux/memory.h
++++ b/include/linux/memory.h
+@@ -64,6 +64,18 @@ struct memory_group {
+ 	};
+ };
  
- 	for (i = 0; i < MAX_NR_ZONES; i++) {
-@@ -1381,11 +1381,10 @@ static void __init calculate_node_totalpages(struct pglist_data *pgdat,
- 		zone->present_early_pages = real_size;
- #endif
++enum memory_block_state {
++	/* These states are exposed to userspace as text strings in sysfs */
++	MEM_ONLINE,		/* exposed to userspace */
++	MEM_GOING_OFFLINE,	/* exposed to userspace */
++	MEM_OFFLINE,		/* exposed to userspace */
++	MEM_GOING_ONLINE,
++	MEM_CANCEL_ONLINE,
++	MEM_CANCEL_OFFLINE,
++	MEM_PREPARE_ONLINE,
++	MEM_FINISH_OFFLINE,
++};
++
+ struct memory_block {
+ 	unsigned long start_section_nr;
+ 	unsigned long state;		/* serialized by the dev->lock */
+@@ -89,16 +101,6 @@ int arch_get_memory_phys_device(unsigned long start_pfn);
+ unsigned long memory_block_size_bytes(void);
+ int set_memory_block_size_order(unsigned int order);
  
--		totalpages += spanned;
- 		realtotalpages += real_size;
- 	}
- 
--	pgdat->node_spanned_pages = totalpages;
-+	pgdat->node_spanned_pages = node_end_pfn - node_start_pfn;
- 	pgdat->node_present_pages = realtotalpages;
- 	pr_debug("On node %d totalpages: %lu\n", pgdat->node_id, realtotalpages);
- }
+-/* These states are exposed to userspace as text strings in sysfs */
+-#define	MEM_ONLINE		(1<<0) /* exposed to userspace */
+-#define	MEM_GOING_OFFLINE	(1<<1) /* exposed to userspace */
+-#define	MEM_OFFLINE		(1<<2) /* exposed to userspace */
+-#define	MEM_GOING_ONLINE	(1<<3)
+-#define	MEM_CANCEL_ONLINE	(1<<4)
+-#define	MEM_CANCEL_OFFLINE	(1<<5)
+-#define	MEM_PREPARE_ONLINE	(1<<6)
+-#define	MEM_FINISH_OFFLINE	(1<<7)
+-
+ struct memory_notify {
+ 	/*
+ 	 * The altmap_start_pfn and altmap_nr_pages fields are designated for
 -- 
 2.53.0
 
