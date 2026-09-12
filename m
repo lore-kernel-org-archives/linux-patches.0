@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AF633F5A9;
-	Sat, 12 Sep 2026 13:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532FC3328FC;
+	Sat, 12 Sep 2026 13:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221325; cv=none; b=J2ASoPZprgxqIekTGdQqBaMPn+8ayvbVwrBQm2al2x+yvOy/VYxtD7Exm8y8vlvTnlzEypm5kV1/JQ5evoiO+cxZM4GWyfLb+M1OxBDEfl5pcwH0zZlmAENu1TNmfs7MmY3uoG/xLuHmoQDEftqMp6tUD0wOrfcdjTC1q/4/ESE=
+	t=1789221331; cv=none; b=snvX46Z56xTGjaVUObWvP8lmN37i2TCawRISPOTo0NMlkoHeaiSpo2XKCyfBOlyZDeTgqfW+PuO+cal4/vD7MKNpmeQAkNY0ywQm+Yr+qKsjTs6oVYIqQPnaIh8C5eVcl3N73CXTrzmBSLu4mJMwSt7tAF/ZFJ1AsFzjO/t/pp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221325; c=relaxed/simple;
-	bh=pehyrTvG1Cyk8tTYWWro/fcsGV1CfBHZQLHDw5RjprY=;
+	s=arc-20240116; t=1789221331; c=relaxed/simple;
+	bh=X34NoUNSLJ9aQDanLR4MJP399oBYcSY8z9RGdNJjs4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O7srTMHw6cTrcxx/zCsqNn28Dyq8+CFe73XQql849YgVZ0/vadE4m2xzKDRkyjmqfKgBwA9XCOfXyP5QC1lB6Zz4byJOFQUrIq9fMwaI2pLZS5dHp62B+5uga/noxBXEiNlcb5Um8AuSMYbngdoJ7JJBOB9tpTs6ytjNU8XeWCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q7VEv+nQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h4aKeVgVJzs2Etye1sOg/kXlIlo0Vj45sxhxNfKYqcF6qpUe12BBVUdKg5cuKdPdTFKdKtdWTBn2pvHun9jx/pyQ/nN6nZMbVudhnQLDxftIIF4CMTQwn0nOMXVPGjPgLBqWUJ/100a/bGyuW52Z8p9ANhR0ei4chndxvlmrIuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3t2j6Ww; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q7VEv+nQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8415C1F00893;
-	Sat, 12 Sep 2026 13:55:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3t2j6Ww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23AD81F000FF;
+	Sat, 12 Sep 2026 13:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221318;
-	bh=DHjdEdlW6SlnkphFTMxP/ZFK+HOx2wYWjkz7SM3NtxI=;
+	s=korg; t=1789221323;
+	bh=W494NoMUxhCofPF0Urk+/AFnYZwpRcP2ZU7qlQBn50s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q7VEv+nQA9TGF9qkotCwFBOWQTfQyruWCcHBBuDtLifoq6rQgF9rvv9y70XGhqj7G
-	 Gz/F3fmZ7GF6Q4BXNfZbCtoJfd2+L/SblU61kr6Hq7w87ChT0hcBhmSrIYh3/Hvhm7
-	 OyzKlsqZdSr5s4yhBcrNDh+9I+TJ1zYxXqZqa2SQ=
+	b=Y3t2j6WwIE6Y+Io6ALRTm9/HcOSehwHoCsos9N0HvMZQSb0DgtPIwrp0mkOQStLFh
+	 ck7+IStNfR7kqAfheoHDT/N60mjsFTbLeI07pIxOnZL8twCixUX0CDHbBDC4NVSyqX
+	 PrHrr4RECkxz1kOw9oorAwGc+NcL2oIxnrZRQ3nU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hajo Noerenberg <hajo-linux-ide@noerenberg.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Pali Rohar <pali@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.6 0359/1424] ata: ahci: work around lost interrupts on Marvell 88SE61xx
-Date: Sat, 12 Sep 2026 08:46:31 +0200
-Message-ID: <20260912065615.329870578@linuxfoundation.org>
+	syzbot+5ebeb3089ea6439c37be@syzkaller.appspotmail.com,
+	Bradley Morgan <brads@mainlining.org>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 6.6 0360/1424] ima: Check for ERR_PTR from dentry_path() in validate_hash_algo()
+Date: Sat, 12 Sep 2026 08:46:32 +0200
+Message-ID: <20260912065615.351814105@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,128 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hajo Noerenberg <hajo-linux-ide@noerenberg.de>
+From: Bradley Morgan <brads@mainlining.org>
 
-commit dc3565a4ae538e584e5e63b3b3cd1eaf502593c1 upstream.
+commit 8861f6d5c0678a7c5089c7b272509fc5931b8437 upstream.
 
-ahci_single_level_irq_intr() services the ports first and clears the
-global HOST_IRQ_STAT afterwards, as recommended by AHCI 1.1 section
-10.6.2.  The Marvell 88SE6111/6121/6145 family stops reporting interrupts
-for a port when HOST_IRQ_STAT is cleared while PxIS still holds bits:
-PxIS keeps its content, HOST_IRQ_STAT reads back as 0, the port is never
-looked at again, and the command in flight only ends in a timeout.
+dentry_path() returns ERR_PTR(-ENAMETOOLONG) when the path exceeds the
+buffer. validate_hash_algo() passes the result straight to
+integrity_audit_msg() without checking. ERR_PTR is not NULL, so
+integrity_audit_message() sees a valid pointer and calls strlen() on
+it, which faults:
 
-Measured on a Seagate Blackarmor NAS440 (Marvell 88F6281 Kirkwood,
-88SE6121 rev B2 behind PCIe) by polling the AHCI registers from userspace
-while an IDENTIFY was outstanding:
+    BUG: unable to handle page fault for address: ffffffffffffffdc
+    RIP: 0010:strlen+0x30/0xa0
+    Call Trace:
+     audit_log_untrustedstring+0x19/0x30
+     integrity_audit_message+0x366/0x4f0
+     ima_inode_setxattr+0x512/0x5f0
 
-  t=303.046  irqs 127  PxIS 0x00000000  PxCI 0x00000001
-             IDENTIFY issued
-  t=303.057  irqs 128  PxIS 0x00000020  PxCI 0x00000000
-             CI cleared, DPS set, one interrupt taken
-             ... PxIS stays 0x00000020, HOST_IRQ_STAT stays 0 ...
-  t~308.05   qc timeout after 5000 msecs
+Check for IS_ERR() and use NULL instead, which makes the audit message
+skip the name= field instead of crashing.
 
-The command had completed - PxCI was clear and PxIS had DPS set - so
-ahci_qc_complete() would have completed it.  It never got the chance
-because the handler read HOST_IRQ_STAT as 0 and returned IRQ_NONE.
-
-Marvell's own driver for these chips clears the two registers in the
-opposite order and says so ("clear global before channel"), and
-ahci_xgene handles its broken edge latch the same way.  Since the
-reordering costs at most one spurious interrupt per valid one on
-conforming controllers, do it in a private interrupt handler selected for
-board_ahci_mv instead of changing libahci for everyone.
-
-With this applied, SATA-2 and SATA-3 disks work at 3.0 Gbps on the
-88SE6121 without the drive-side 1.5 Gbps jumper that was needed before.
-Time from link up to a successful IDENTIFY:
-
-  WDC WD5000AADS-00S9B0  port 0    7 ms  (never identified before)
-  WDC WD3202ABYS-01B7A0  port 1   28 ms
-  WDC WD30EFRX-68EUZN0   port 1  200 ms  (3 TB, HPA detection ok)
-
-Only the 88SE6121 was tested; board_ahci_mv also covers the 88SE6145,
-which Marvell's driver treats identically.
-
-Fixes: cd70c26617f4 ("[libata] AHCI: Add support for Marvell AHCI-like chips (initially 6145)")
+Fixes: 4f2946aa0c45 ("IMA: introduce a new policy option func=SETXATTR_CHECK")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-ide/db6b48b7-d69a-564b-24f0-75fbd6a9e543@noerenberg.de/
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216094
-Signed-off-by: Hajo Noerenberg <hajo-linux-ide@noerenberg.de>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Acked-by: Pali Rohar <pali@kernel.org>
-Link: https://lore.kernel.org/r/20260831124303.920391-1-hajo-linux-ide@noerenberg.de
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reported-by: syzbot+5ebeb3089ea6439c37be@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/6a8f89e5.1d9ded08.62e62.00bf.GAE@google.com/
+Signed-off-by: Bradley Morgan <brads@mainlining.org>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/ahci.c |   49 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+ security/integrity/ima/ima_appraise.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -1647,6 +1647,51 @@ static irqreturn_t ahci_thunderx_irq_han
- }
- #endif
+--- a/security/integrity/ima/ima_appraise.c
++++ b/security/integrity/ima/ima_appraise.c
+@@ -754,6 +754,8 @@ static int validate_hash_algo(struct den
+ 		return -EACCES;
  
-+/*
-+ * The Marvell 88SE6111/6121/6145 ("Thor") family stops reporting interrupts
-+ * for a port when HOST_IRQ_STAT is cleared while PxIS still holds bits: PxIS
-+ * keeps its content, HOST_IRQ_STAT reads back as 0, the port is never looked
-+ * at again and the command in flight only ends in a timeout.  On a 88SE6121
-+ * this makes every SATA-2 or SATA-3 disk fail to IDENTIFY, while SATA-1 disks
-+ * happen to win the race often enough to work.
-+ *
-+ * Clearing the host status before servicing the ports avoids it.  Marvell's
-+ * own driver for these chips does the same and says so ("clear global before
-+ * channel"), and ahci_xgene handles its broken edge latch the same way.  The
-+ * price is at most one spurious interrupt per valid one, which is why this is
-+ * not the generic behaviour - see AHCI 1.1 section 10.6.2.
-+ *
-+ * Link: https://bugzilla.kernel.org/show_bug.cgi?id=216094
-+ */
-+static irqreturn_t ahci_mv_irq_handler(int irq, void *dev_instance)
-+{
-+	struct ata_host *host = dev_instance;
-+	struct ahci_host_priv *hpriv = host->private_data;
-+	void __iomem *mmio = hpriv->mmio;
-+	unsigned int rc;
-+	u32 irq_stat, irq_masked;
-+
-+	irq_stat = readl(mmio + HOST_IRQ_STAT);
-+	if (!irq_stat)
-+		return IRQ_NONE;
-+
-+	irq_masked = irq_stat & hpriv->port_map;
-+
-+	spin_lock(&host->lock);
-+
-+	/*
-+	 * Use the unmasked value to clear the interrupt, as a spurious pending
-+	 * event on a dummy port might cause a screaming IRQ.
-+	 */
-+	writel(irq_stat, mmio + HOST_IRQ_STAT);
-+
-+	rc = ahci_handle_port_intr(host, irq_masked);
-+
-+	spin_unlock(&host->lock);
-+
-+	return IRQ_RETVAL(rc);
-+}
-+
- static void ahci_remap_check(struct pci_dev *pdev, int bar,
- 		struct ahci_host_priv *hpriv)
- {
-@@ -1890,6 +1935,10 @@ static int ahci_init_one(struct pci_dev
- 		return -ENOMEM;
- 	hpriv->flags |= (unsigned long)pi.private_data;
+ 	path = dentry_path(dentry, pathbuf, PATH_MAX);
++	if (IS_ERR(path))
++		path = NULL;
  
-+	/* the Marvell "Thor" family needs HOST_IRQ_STAT cleared first */
-+	if (board_id == board_ahci_mv)
-+		hpriv->irq_handler = ahci_mv_irq_handler;
-+
- 	/* MCP65 revision A1 and A2 can't do MSI */
- 	if (board_id == board_ahci_mcp65 &&
- 	    (pdev->revision == 0xa1 || pdev->revision == 0xa2))
+ 	integrity_audit_msg(AUDIT_INTEGRITY_DATA, d_inode(dentry), path,
+ 			    "set_data", errmsg, -EACCES, 0);
 
 
