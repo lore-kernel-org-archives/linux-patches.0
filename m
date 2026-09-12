@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9574078E8;
-	Sat, 12 Sep 2026 09:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2C335F5F7;
+	Sat, 12 Sep 2026 09:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207142; cv=none; b=ncNMmyio5sNeywk/s7LFfuLr8/U2KQ/viCpzJt8E/tR4hOZkdKs+0W2JlM2WhJbPv8cffqiiMJXgmiOoVmcd+PovH1iL5oeIs0oybA21yBc1PnsMB2jr4c8T6rTTp17hzLDpMU9MKudAjQn2Ii2OcBs4LDY99njPbHkpbE1arP8=
+	t=1789207148; cv=none; b=rNlP2Y0DHTyU0y+pZPW9ToHAXxLgX/jXsU5EXhNC4VjxmwG/OOPWb9uqAEBJmKlQjWHvNSoLk9AuDQehsbntbBy8RcUdvQ0bLSyKui2nnppBnxbTnieYi432nOzcIk/4858rG5N44GigFAzi4iZL6VGUAdDzOAUBie51gOk0SgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207142; c=relaxed/simple;
-	bh=j8fIcRtCLWKPeCJF3+qjblPTxHZxYnJaXYcOoFdNe/Q=;
+	s=arc-20240116; t=1789207148; c=relaxed/simple;
+	bh=LCiC+FjIU/Cese/2reit5aHGy2ITh3agbyNa4Yx3yKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n1qh3vgBIH4g34zFFy77Qi8obRWgzv86/STQeJUBNihTwL7BWBb+04x2ZwQHZu6YoH6uhR6J+LZM/f9+T2aQ4O0eP4UA1RzVQ33RLYOGvm9RBC6h7+u3018c5p1dxhpELvJQSVus3x/dJ2Z7HkR8R9eexe4YVdLiPRkNbrpjptY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeBX+7BE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LDt94XnEzSV0yjbiDO2daRbSupqBrEy3eTj/VkM7iV4qPnzTrN2fqAjHIDQAmSvGClMD9Q7mRi6MFOu4Ox2CtuKklxT6jyQc6Rjsb8xF90SQ3oQlLMDUdVI7iBC5YXe3dpJHX/Gc5/SK9tUpIB0A/vM83eKr8w0tHmzizM3x/5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dqxbayUn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeBX+7BE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A05F1F000FF;
-	Sat, 12 Sep 2026 09:58:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqxbayUn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B081F000FF;
+	Sat, 12 Sep 2026 09:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207141;
-	bh=rbCt5QBu18j8uRGa7BrBbeoNZfo+OjR/lhUbGZU1myo=;
+	s=korg; t=1789207146;
+	bh=UB+ppGq2emRD91uPTrqKKU6ugSBtF7LdxjJVt9uTBFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IeBX+7BEiCllzN18LZUwRuKmPn4RGGbsl2hxLp/S5S0rijbbniY6pNNdlKUEN0rgV
-	 6qi96pgwKhlDsEWiCcr51eoKjs05JJtUZe4nhAA021XvXat7hhc5xXf5wlRIQWmt9P
-	 E5bwcDaLdB52785Ac7IfdG/fpkC2Phv1Lq2KVtNo=
+	b=dqxbayUnEasNkfeq7an18u9ofdYri341uPdpWGsHHeW7GHJe31FHOig6Zs5e7hWuf
+	 qm48xUKsdau+zNeQOMJaj96u6akzXP8yeRPNb0qH3JbfujFZa9t2NNVQPepitRHTZH
+	 tYYYpEp9q3uCnVQnngclQ8mf0X7QCI84Gxh0gs48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Stefan Wahren <wahrenst@gmx.net>,
+	Sean Rhodes <sean@starlabs.systems>,
 	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0351/1518] pmdomain: bcm: bcm2835: handle genpd provider registration errors
-Date: Sat, 12 Sep 2026 08:42:00 +0200
-Message-ID: <20260912065631.414880128@linuxfoundation.org>
+Subject: [PATCH 6.18 0352/1518] misc: rtsx_usb: avoid USB I/O in runtime autosuspend
+Date: Sat, 12 Sep 2026 08:42:01 +0200
+Message-ID: <20260912065631.438138628@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,45 +51,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Sean Rhodes <sean@starlabs.systems>
 
-[ Upstream commit a1d9d3b958d69a13783613304f524f489fecdd1f ]
+[ Upstream commit 483c948324a3823871c004560a92545759d3253c ]
 
-bcm2835_power_probe() initializes all power domains and then registers
-the onecell genpd provider, but ignores of_genpd_add_provider_onecell()
-failures. Probe can therefore return success even though no provider was
-published.
+The runtime autosuspend callback currently queries card status and
+clears OCP by issuing USB register accesses. This can run from the
+USB runtime-PM path itself, which is the wrong place to start more
+device I/O.
 
-Check the provider registration return value and jump to the existing
-cleanup path on failure.
+Keep a cached copy of the card-status bits from normal status reads
+instead. During runtime autosuspend, use that cached value only to
+preserve the existing Memory Stick autosuspend deferral.
 
-Fixes: 670c672608a1 ("soc: bcm: bcm2835-pm: Add support for power domains under a new binding.")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
+Do not treat raw SD_CD as an autosuspend blocker, because tray-based
+SD readers can assert SD_CD with an empty tray. A real SD card is
+protected by the SD/MMC child runtime-PM usage once powered.
+
+Also stop clearing OCP from the runtime autosuspend callback, so the
+callback does not issue USB commands.
+
+Fixes: bb400d2120bd ("mfd: rtsx_usb: Defer autosuspend while card exists")
+Signed-off-by: Sean Rhodes <sean@starlabs.systems>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pmdomain/bcm/bcm2835-power.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/misc/cardreader/rtsx_usb.c | 26 ++++++++++++++++++++------
+ include/linux/rtsx_usb.h           |  3 +++
+ 2 files changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pmdomain/bcm/bcm2835-power.c b/drivers/pmdomain/bcm/bcm2835-power.c
-index f2472f1e17521..f3df1198ec7e2 100644
---- a/drivers/pmdomain/bcm/bcm2835-power.c
-+++ b/drivers/pmdomain/bcm/bcm2835-power.c
-@@ -675,7 +675,12 @@ static int bcm2835_power_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto fail;
+diff --git a/drivers/misc/cardreader/rtsx_usb.c b/drivers/misc/cardreader/rtsx_usb.c
+index 1830e9ed25216..a127744918f42 100644
+--- a/drivers/misc/cardreader/rtsx_usb.c
++++ b/drivers/misc/cardreader/rtsx_usb.c
+@@ -312,6 +312,9 @@ int rtsx_usb_get_card_status(struct rtsx_ucr *ucr, u16 *status)
+ 	if (ret < 0)
+ 		return ret;
  
--	of_genpd_add_provider_onecell(dev->parent->of_node, &power->pd_xlate);
-+	ret = of_genpd_add_provider_onecell(dev->parent->of_node,
-+					    &power->pd_xlate);
-+	if (ret) {
-+		dev_err_probe(dev, ret, "failed to add genpd provider\n");
-+		goto fail;
-+	}
- 
- 	dev_info(dev, "Broadcom BCM2835 power domains driver");
++	ucr->card_status_cache = *status;
++	ucr->card_status_valid = true;
++
  	return 0;
+ }
+ EXPORT_SYMBOL_GPL(rtsx_usb_get_card_status);
+@@ -623,6 +626,7 @@ static int rtsx_usb_probe(struct usb_interface *intf,
+ {
+ 	struct usb_device *usb_dev = interface_to_usbdev(intf);
+ 	struct rtsx_ucr *ucr;
++	u16 status;
+ 	int ret;
+ 
+ 	dev_dbg(&intf->dev,
+@@ -659,6 +663,9 @@ static int rtsx_usb_probe(struct usb_interface *intf,
+ 	if (ret)
+ 		goto out_init_fail;
+ 
++	/* Prime cached status for runtime autosuspend decisions. */
++	rtsx_usb_get_card_status(ucr, &status);
++
+ 	/* initialize USB SG transfer timer */
+ 	timer_setup(&ucr->sg_timer, rtsx_usb_sg_timed_out, 0);
+ 
+@@ -713,22 +720,29 @@ static int rtsx_usb_suspend(struct usb_interface *intf, pm_message_t message)
+ 	struct rtsx_ucr *ucr =
+ 		(struct rtsx_ucr *)usb_get_intfdata(intf);
+ 	u16 val = 0;
++	bool valid = false;
+ 
+ 	dev_dbg(&intf->dev, "%s called with pm message 0x%04x\n",
+ 			__func__, message.event);
+ 
+ 	if (PMSG_IS_AUTO(message)) {
+ 		if (mutex_trylock(&ucr->dev_mutex)) {
+-			rtsx_usb_get_card_status(ucr, &val);
++			valid = ucr->card_status_valid;
++			if (valid)
++				val = ucr->card_status_cache;
+ 			mutex_unlock(&ucr->dev_mutex);
+ 
+-			/* Defer the autosuspend if card exists */
+-			if (val & (SD_CD | MS_CD)) {
++			/*
++			 * Do not issue USB commands from runtime autosuspend.
++			 * Raw SD_CD is not authoritative on tray-based readers,
++			 * while a real SD card is protected by the SD/MMC child
++			 * runtime-PM reference once the card is powered. Keep
++			 * the historical Memory Stick autosuspend deferral when
++			 * the cached status says MS media is present.
++			 */
++			if (valid && (val & MS_CD)) {
+ 				device_for_each_child(&intf->dev, NULL, rtsx_usb_resume_child);
+ 				return -EAGAIN;
+-			} else {
+-				/* if the card does not exists, clear OCP status */
+-				rtsx_usb_write_register(ucr, OCPCTL, MS_OCP_CLEAR, MS_OCP_CLEAR);
+ 			}
+ 		} else {
+ 			/* There is an ongoing operation*/
+diff --git a/include/linux/rtsx_usb.h b/include/linux/rtsx_usb.h
+index 276b509c03e36..0fc5a74700a8b 100644
+--- a/include/linux/rtsx_usb.h
++++ b/include/linux/rtsx_usb.h
+@@ -61,6 +61,9 @@ struct rtsx_ucr {
+ 
+ 	struct timer_list	sg_timer;
+ 	struct mutex		dev_mutex;
++
++	u16			card_status_cache;
++	bool			card_status_valid;
+ };
+ 
+ /* buffer size */
 -- 
 2.53.0
 
