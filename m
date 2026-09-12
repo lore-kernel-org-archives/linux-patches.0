@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531D4299920;
-	Sat, 12 Sep 2026 10:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43996427F89;
+	Sat, 12 Sep 2026 10:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208172; cv=none; b=NztfCTCYw/d4rpgjJQCH6YKM1skWFr5vcT8sQFoMNfVcMxu+1Gi7KVnQfqDKiQdMs3wo6P9hD7zGRre5nlpQF/a3ES2GMUc2wqDQ2mn4huTUODzyHXLzpKhPS82xUTLIKK9lrMHqwMyHCe+VRyhber+k4WkN/SR+xSwKP9EteNk=
+	t=1789208176; cv=none; b=bPtXv06GvtlJXFtreAKr3Q16D+ncCNWyyAotwfp9v36GtFKDgOmIKs4/+kd4tIuJwVbDf8qrcCzfEu7cdcbvQpgxYI/qarcvrUFGZ/CFa15KZIA3gB+f7GAr1NQ9V2RyzHtBCphonWT00+eq3/C2rtbDJrMRrmTFgeRpBf0rVY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208172; c=relaxed/simple;
-	bh=j0J2+bEWzBU8Pf4PTsvYzky1irnH0/hLCvQD3JwINY8=;
+	s=arc-20240116; t=1789208176; c=relaxed/simple;
+	bh=qMqatK73xihFKicj5UlMIq65FkfakV5tG18Rq7cg9NQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kj0UwMN6Say1rDWWBRW2tQ6DSzI6ImjB7DAvWMda3oPNQjODGbvPtKr1fAEc8B+o5UWfmiuI7vyXKUy/eob2ddseS6ecdm0Rp7kGaquaBG0U+r5Spzg8Luyd0Ty6qHMf6JTCf9crzVRNIyPqhIQFWpxYXCzhAk/he0B59xws8NI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hifG67Rv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NBrAFW1YII/MZEmgs9J9VorV/G0t0VLBq3Nquq3c7akiTapgaDIxbE/vak/ZVXWRj6Axbtv6TiX64aBoYuSiKbCermQqLJ0JQ/3aj1gq5KibUWqgKpPGaYrdyIzl2MPqjshcHVzBLFQTkWHfeG8GUfzyD2N8iNxtqmBng124zqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QEt7SBoa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hifG67Rv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE541F000FF;
-	Sat, 12 Sep 2026 10:16:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEt7SBoa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F345B1F000FF;
+	Sat, 12 Sep 2026 10:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208168;
-	bh=gV3Rs8Y1F6346RqdNrRcsKBlIg3yxdivwZg18D/gLZk=;
+	s=korg; t=1789208174;
+	bh=p3kQkr3E11Y3xMTqpixokzmhNvLouzQ1T793W0D7CAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hifG67RvMXn5RlrKnVS4ETRz6hmBH8Upkj+RMzjjnL8/vDsEwfKdDosCy/nfWrj68
-	 4DzAHAVZmQq3/Dss7z0oBYYb4Ynef8iN61EVyKROelbnoL99GZKlqpsoB6Rec+YKoW
-	 WWecbzuPsJ7yC3k0z3Orsu/2dTG26l51CGidQj3c=
+	b=QEt7SBoaHtDvYGCNsY2rb+U+BkEyOVlqxkoWa7PRX4v4O0gN40xljBqDTKaqWlggC
+	 vfAMk0dhf3PE2VPK/thRpNfiONpF2R5i32ETVuWAaHx0NFFejMQjedaZRyAlxDgKwd
+	 VlMRa4g28yeRuVIcLdNi/CXToe6j1ps+0402NFbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Wu <weiming3@asu.edu>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0564/1518] netfilter: nf_nat_sip: rewind offset when NAT shrinks the packet
-Date: Sat, 12 Sep 2026 08:45:33 +0200
-Message-ID: <20260912065636.191249685@linuxfoundation.org>
+Subject: [PATCH 6.18 0565/1518] fs/ntfs3: fix out-of-bounds read of INDEX_ROOT in reparse/objid init
+Date: Sat, 12 Sep 2026 08:45:34 +0200
+Message-ID: <20260912065636.212776657@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,50 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Weiming Wu <weiming3@asu.edu>
 
-[ Upstream commit 16aecbe3036f6097c26b51b12e4c1cf207769690 ]
+[ Upstream commit 2064bc663f89e61b8681c1fb9d1ce445de72063d ]
 
-sashiko says:
- If map_addr() changes the packet length, such as when the public NAT IP
- string is shorter or longer than the internal IP, coff will still point to
- the offset relative to the pre-mangled packet.
- If the packet shrinks, coff could overshoot the correct position,
- potentially causing the next ct_sip_parse_header_uri() call to silently
- skip bytes and miss subsequent Contact headers. Could this lead to a
- failure to NAT those subsequent headers and leak internal network details?
+ntfs_reparse_init() and ntfs_objid_init() parse the index root of the
+$Extend/$Reparse and $Extend/$ObjId metafiles (the INDEX_ROOT attributes
+named $R and $O). They read its type and rule fields through
+resident_data(), which does not check that the resident attribute is
+large enough to hold them.
 
-Fixes: c978cd3a9371 ("[NETFILTER]: nf_nat_sip: translate all Contact headers")
-Assisted-by: Claude:claude-sonnet-4-6
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+mi_enum_attr() accepts a resident attribute with data_off == asize and
+data_size == 0. For such an attribute placed last in its MFT record,
+resident_data() returns a pointer to the end of the record_size buffer,
+so reading root->type / root->rule reads past the allocation.
+
+Use resident_data_ex(attr, sizeof(struct INDEX_ROOT)) and bail out when
+it returns NULL, as ntfs_security_init() already does for $SDH / $SII.
+
+The attribute is only parsed while mounting a crafted image, so this
+needs CAP_SYS_ADMIN.
+
+ BUG: KASAN: slab-out-of-bounds in ntfs_reparse_init (fs/ntfs3/fsntfs.c:2306)
+ Read of size 4 at addr ffff88801219dc00 by task mount
+  ntfs_reparse_init (fs/ntfs3/fsntfs.c:2306)
+  ntfs_fill_super (fs/ntfs3/super.c:1604)
+  get_tree_bdev_flags (fs/super.c:1703)
+  vfs_get_tree (fs/super.c:1758)
+  path_mount (fs/namespace.c:4131)
+  __x64_sys_mount (fs/namespace.c:4360)
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Wu <weiming3@asu.edu>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_nat_sip.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/ntfs3/fsntfs.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
-index a1c41defaf22d..6b00c81084fe2 100644
---- a/net/netfilter/nf_nat_sip.c
-+++ b/net/netfilter/nf_nat_sip.c
-@@ -267,12 +267,17 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
- 				       SIP_HDR_CONTACT, &in_header,
- 				       &matchoff, &matchlen,
- 				       &addr, &port) > 0) {
-+		int old_len = skb->len, delta;
-+
- 		if (!map_addr(skb, protoff, dataoff, dptr, datalen,
- 			      matchoff, matchlen,
- 			      &addr, port)) {
- 			nf_ct_helper_log(skb, ct, "cannot mangle contact");
- 			return NF_DROP;
- 		}
-+
-+		delta = (int)skb->len - old_len;
-+		coff += delta;
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index 83df92df1ee0c..5e3506815c279 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -2293,8 +2293,8 @@ int ntfs_reparse_init(struct ntfs_sb_info *sbi)
+ 		goto out;
  	}
  
- 	if (!map_sip_addr(skb, protoff, dataoff, dptr, datalen, SIP_HDR_FROM) ||
+-	root_r = resident_data(attr);
+-	if (root_r->type != ATTR_ZERO ||
++	root_r = resident_data_ex(attr, sizeof(struct INDEX_ROOT));
++	if (!root_r || root_r->type != ATTR_ZERO ||
+ 	    root_r->rule != NTFS_COLLATION_TYPE_UINTS) {
+ 		err = -EINVAL;
+ 		goto out;
+@@ -2331,8 +2331,8 @@ int ntfs_objid_init(struct ntfs_sb_info *sbi)
+ 		goto out;
+ 	}
+ 
+-	root = resident_data(attr);
+-	if (root->type != ATTR_ZERO ||
++	root = resident_data_ex(attr, sizeof(struct INDEX_ROOT));
++	if (!root || root->type != ATTR_ZERO ||
+ 	    root->rule != NTFS_COLLATION_TYPE_UINTS) {
+ 		err = -EINVAL;
+ 		goto out;
 -- 
 2.53.0
 
