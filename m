@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7494F4746A9;
-	Sat, 12 Sep 2026 11:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2029D47ACC9;
+	Sat, 12 Sep 2026 11:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213945; cv=none; b=G6OM8sepu4WC6aeFcdqQBD5Dk21/BOGNFmC/o7VV+d1MoQp6AazlmXfmtNd1M2VNyt7Rn6dqDxO9ljZr7LZmscyELBW8Buo43bgoeyiuY1yc6taDyx7xsFGQKCmDJBijXcnKA+HflQOyJnZotx15+aN4EPPb/pBz9jLp6vmEli4=
+	t=1789213949; cv=none; b=bP8Dj9+rWPHjpPnf0Z+KaAOiWkLQDyzhwrvK8JB3gRChhlz7+FTCy8zLVHXSfb1dpM8MlsFELdfRLfcAKlAa9fRcD9mjjDDXwLm5DpQ41xLVajgStNUjM0isMU0dRxsxR1S29upBT4hsmnSSFyc6nNWvcWfHlh91MgJQNAeJWiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213945; c=relaxed/simple;
-	bh=DQJgKxcs2wv3JmRXIr1wdne7Q1P5zyoHSfuokfrxEjA=;
+	s=arc-20240116; t=1789213949; c=relaxed/simple;
+	bh=FQctphwuFESEWlDOQLfgROQUdHWPU+HWUCJDVvtqOsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gIM+Xg/qlnLC4antQcr7SDsY+Ci0oC+g7e2A2GO96caLCAzZPTExhhsw3+JTOw7K5CjYqDuB1Egb4XQvphpyGhr+w69Yta7Y16VYZKi0unq8GyJpySPz1Hec19babj6OzJBdGIPRgWCfjwumi/zBBUnoCcO+6K0Zi1tK38j4sHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVw+LB4w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B2UxKYfBB1R/Sk944BFQGXHszjIltjRLB/KcNuuYBZIuISKyvAacL7VALhoJIFdSClhbVniC83Utjkcw7TrqTluu+v39idHpA5QzED/PlM6BSRSPm4Rcgu7MH15e1fgU65VSNYdpj8hmFylEx9JIbEl6XZQ1dAnfHivRDGQEhJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRN3n2qH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVw+LB4w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29FC1F00893;
-	Sat, 12 Sep 2026 11:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRN3n2qH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1391F000FF;
+	Sat, 12 Sep 2026 11:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213939;
-	bh=aNQPPYekKMRSG2CKxkmJGSqtVklNXLFdYLupqyj6FGs=;
+	s=korg; t=1789213945;
+	bh=QqxEkXYBUvjFYGWht7xR72s/WIaS5gpNNJ8LkBtyoNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yVw+LB4wZ+pbM3wnzvG+EheA8lXwkjnCU6Ee19AMxPWS3hki1+PxP9l3II72vFrDa
-	 Y4br0XsNCjh7lTHtLRYAPW/9WQh8uUwqphzJS7iU5+XeaENTc55tr3tbuFrAaVQSz1
-	 2P8xdqTwgegP0iVn6AuWVrr1PBCtIN1fwtFk4Q9o=
+	b=wRN3n2qHrkC2wkd72Ep1BKF22yLGyf5bRjzYMyRhogMKmgoUYCDVEWNMgkWfEKyUO
+	 tv7LLYE/esotoLa+9RlDY7U1DnN7BaJp3d5SZ1LibZfcplvddsuZ54TY17GJHkAIii
+	 SA5GJOas53W2wGhlPlQFXQdgjq5FRtwX0Y5lPrtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 0187/1376] media: cobalt: Avoid freeing ALSA private data twice
-Date: Sat, 12 Sep 2026 08:43:33 +0200
-Message-ID: <20260912065611.719157370@linuxfoundation.org>
+	Nilesh Javali <njavali@marvell.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 6.12 0223/1376] scsi: qla2xxx: Fix Name Server logout detection on FWI2 adapters
+Date: Sat, 12 Sep 2026 08:44:09 +0200
+Message-ID: <20260912065612.517241632@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,41 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit 3a7d6b9c4cb5ac18cbd3f1c7f8c7b159c42ba0b1 upstream.
+commit eb137255fd7aa834c4d639ae7b5e9e8ecf3a4fb2 upstream.
 
-snd_cobalt_card_create() stores cobsc in sc->private_data and installs
-snd_cobalt_card_private_free() as sc->private_free. From that point,
-snd_card_free(sc) releases cobsc through the ALSA card cleanup path.
+In the CS_PORT_LOGGED_OUT case of qla2x00_chk_ms_status(), the
+FWI2-capable branch compared ms_pkt->loop_id.extended against NPH_SNS to
+decide whether the Name Server had logged out. On FWI2 and later
+adapters the response is a ct_entry_24xx / ct_entry_24xx_ext, where
+loop_id.extended (via the legacy ms_iocb_entry_t view) aliases offset 8,
+which is comp_status, not nport_handle (offset 10). As this code runs
+under CS_PORT_LOGGED_OUT, the field read back 0x29 (CS_PORT_LOGGED_OUT)
+and the comparison against NPH_SNS (0x7fc) was always false.
 
-If cobalt_alsa_init() fails after snd_cobalt_card_create(), the
-err_exit_free path calls snd_card_free(sc) and then kfree(cobsc). That
-second free releases the same object again.
+As a result the driver never recognized a Name Server logout on FWI2/
+29xx adapters: it returned the generic QLA_FUNCTION_FAILED instead of
+QLA_NOT_LOGGED_IN and skipped setting LOOP_RESYNC_NEEDED /
+LOCAL_LOOP_UPDATE, so the fabric rediscovery triggered by an SNS logout
+did not happen.
 
-Remove the explicit kfree(cobsc) and leave ownership with the ALSA card.
+Read nport_handle from the ct_entry_24xx layout (offset 10) instead.
+nport_handle is at the same offset in ct_entry_24xx and
+ct_entry_24xx_ext, so a single cast covers 24xx-class and 29xx. The
+non-FWI2 branch keeps using loop_id.extended, which is correct for the
+ms_iocb_entry_t response on those adapters.
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
-
-Fixes: 85756a069c55 ("[media] cobalt: add new driver")
+Fixes: b98ae0d748db ("scsi: qla2xxx: Fix name server relogin")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260723050413.3897522-48-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/cobalt/cobalt-alsa-main.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_gs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/pci/cobalt/cobalt-alsa-main.c
-+++ b/drivers/media/pci/cobalt/cobalt-alsa-main.c
-@@ -135,7 +135,6 @@ int cobalt_alsa_init(struct cobalt_strea
- err_exit_free:
- 	if (sc != NULL)
- 		snd_card_free(sc);
--	kfree(cobsc);
- err_exit:
- 	return ret;
- }
+--- a/drivers/scsi/qla2xxx/qla_gs.c
++++ b/drivers/scsi/qla2xxx/qla_gs.c
+@@ -157,8 +157,8 @@ qla2x00_chk_ms_status(scsi_qla_host_t *v
+ 			break;
+ 		case CS_PORT_LOGGED_OUT:
+ 			if (IS_FWI2_CAPABLE(ha)) {
+-				if (le16_to_cpu(ms_pkt->loop_id.extended) ==
+-				    NPH_SNS)
++				if (le16_to_cpu(((struct ct_entry_24xx *)
++				    ms_pkt)->nport_handle) == NPH_SNS)
+ 					lid_is_sns = true;
+ 			} else {
+ 				if (le16_to_cpu(ms_pkt->loop_id.extended) ==
 
 
