@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A04C4BEE5E;
-	Sat, 12 Sep 2026 15:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CCE3AC17;
+	Sat, 12 Sep 2026 15:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225503; cv=none; b=puibUWv1SiDRIODFLanZIqSMROHm4zTVNAA+ByVCDR17EnVJuSa4PZtpUcduBq7ntihtzVOv+dVSIEUGXCtCjnmpc0PFrh7sIPYE/+cpzm2p2mfSC5eXKsHgeEbkRkgDFKjNwuIsopZC9aM1WueqgvE5J7ShltC3jCysSsp9bDs=
+	t=1789225508; cv=none; b=dqlTtSao5mDbatOVIsrzlg8p9iofUfbbf0b4J0Jc9DQiqH1rzRyKzEOCaagGGKm/bdfM/jxgr3BXtMnzCIhgF6RcKy6/CjXBIMftLCZ3T9VUznGheLs9T/AWCWHuVZNyHU7fc3vq4OUSd+ZS63nqMzQrunyt/cMXBtPRy3jcBw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225503; c=relaxed/simple;
-	bh=M77cA4b1YZdcUiOl/XJTP7TXaVoO+K1D/FXv0n870TY=;
+	s=arc-20240116; t=1789225508; c=relaxed/simple;
+	bh=8qasm//TYFpGmfIGeK4ZbqE7PdvrZVKjb8ISx/GcZuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TJIVJl+OO04//odGJGJoGyjo7GDM2VnlwM/IXXR99O6+XKPZP/FG60KbDb/HMv0ADYe/tHuBINz30QiB3duMsyjJ+gsNGT8jyzhGmcse6PM0JAhB+tNRD7B3jtuBaD8lJEWmaBMCC3QOdRLnGFy+ASC0WoxO9SRbhK2zTgiMX84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CicALNPe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GdR2ZD9no/vC/8AkmWLmO+iwLBWyAXmvv5playZeA1ytJ2inUzvQzIb0WBvVL7wqLukBAjjrxLvZIosUpUBdU0Z81fXDy7pLI3InY18c1qaDpYmFbJxCY32MJ1d2hxPyBTXKjPJhKnHg+Lw/7/PlhcN7G1+c+CWWpyxSfPBbvtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X8ymHSgO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CicALNPe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019411F000FF;
-	Sat, 12 Sep 2026 15:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8ymHSgO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FED1F000FF;
+	Sat, 12 Sep 2026 15:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225502;
-	bh=Y42Z+oKcmPQTMWPEx0JjkEwmY2FJTjsEgDD3zk+9szM=;
+	s=korg; t=1789225507;
+	bh=SLT5Un++VJekTh51aSg5Fi8gQsR1h0rRO7+IJO5IBC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CicALNPee+8ZmWsU+JJ0okhgRjjg5t4kGUG0WvHumCKZrlPamkmuNHJc6Z/A3jRfp
-	 7akJHKLTPuYu9hXCy9kkhervyoeyITNkP7rcmJH2337cgsijKSj8xPIdmtWmWF7dZO
-	 N0Kr5CGr/RoSE5kuYJLzL+y873QZCaMsbzf5IJHs=
+	b=X8ymHSgOwkQ/4Mzsp0vZ2ua9QUzRJ7Dn05A+FnsDEgWfYFvdRiikMixB7m+jb2IpE
+	 8H9QtkFo3SSMGB820yrZ+EDD89JhZ5tBzBWBwPlNH750mJNmY/xwlSYNzYpNyhpqd5
+	 El7CEZhstEjLnnApGXG6MIPPBktaHjG7BDPquzsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	Yuejie Shi <syjcnss@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1210/1424] Squashfs: check block offset is not negative
-Date: Sat, 12 Sep 2026 09:00:42 +0200
-Message-ID: <20260912065634.384469190@linuxfoundation.org>
+Subject: [PATCH 6.6 1211/1424] selftests/bpf: Fix for veristat file/prog filters processing
+Date: Sat, 12 Sep 2026 09:00:43 +0200
+Message-ID: <20260912065634.407188661@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,48 +51,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phillip Lougher <phillip@squashfs.org.uk>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit e300eb5002925b29be803d2661af07266cfa267e ]
+[ Upstream commit 98d309ec8189fd91698d1a72946c3d888270c57e ]
 
-If a negative offset is read off disk (for example the offset into the
-decompressed fragment block), this will cause squashfs_copy_data() to
-perform an out of bounds access.
+At the moment veristat filtering behaves unexpectedly for the
+following filter expression:
 
-Fix by checking if offset is negative, and returning 0.  This matches
-existing behaviour where an offset beyond the block returns 0 bytes
-copied.
+  -f !file/prog
 
-To trigger this out of bounds access requires a crafted Squashfs
-filesystem and CAP_SYS_ADMIN to mount it.  Unprivileged users will not be
-able to mount such a filesystem, but once mounted, an unprivileged user
-can trigger the out of bounds access by reading the crafted file with the
-negative offset.
+The expression rejects all programs with name 'prog', and all programs
+in a file with name 'file'. This commit fixes the expression to
+exclude only a program 'prog' from a file 'file'. Additionally,
+the commit makes empty filters like '-f ""' or '-f "/"' and error.
+Here is the filtering behaviour compared old versus new:
 
-Link: https://lore.kernel.org/20260807162951.672510-1-phillip@squashfs.org.uk
-Fixes: f400e12656ab ("Squashfs: cache operations")
-Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
-Reported-by: Yuejie Shi <syjcnss@gmail.com>
-Closes: https://lore.kernel.org/all/20260803032735.81785-1-syjcnss@gmail.com/
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+| filter   | file | prog | old verdict | new verdict |
+|----------+------+------+-------------+-------------|
+| !foo     | foo  | bar  | skipped     | skipped     |
+| !foo     | bar  | foo  | skipped     | skipped     |
+| !foo     | bar  | bar  | processed   | processed   |
+| !foo/bar | foo  | bar  | skipped     | skipped     |
+| !foo/bar | foo  | buz  | skipped     | processed   | (!)
+| !foo/bar | bar  | bar  | skipped     | processed   | (!)
+| !foo/    | foo  | bar  | skipped     | skipped     |
+| !foo/    | bar  | bar  | processed   | processed   |
+| !/bar    | foo  | bar  | skipped     | skipped     |
+| !/bar    | foo  | foo  | processed   | processed   |
+| !/       | foo  | bar  | processed   | error       | (!)
+| !        | foo  | bar  | processed   | error       | (!)
+|----------+------+------+-------------+-------------|
+| foo      | foo  | bar  | processed   | processed   |
+| foo      | bar  | foo  | processed   | processed   |
+| foo      | bar  | bar  | skipped     | skipped     |
+| foo/bar  | foo  | bar  | processed   | processed   |
+| foo/bar  | foo  | buz  | skipped     | skipped     |
+| foo/bar  | bar  | bar  | skipped     | skipped     |
+| foo/     | foo  | bar  | processed   | processed   |
+| foo/     | bar  | bar  | skipped     | skipped     |
+| /bar     | foo  | bar  | processed   | processed   |
+| /bar     | foo  | foo  | skipped     | skipped     |
+| /        | foo  | bar  | processed   | error       | (!)
+|          | foo  | bar  | skipped     | error       | (!)
+
+Fixes: 10b1b3f3e56a ("selftests/bpf: consolidate and improve file/prog filtering in veristat")
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260811-veristat-filter-fix-v2-1-6c234c4cd6ef@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/squashfs/cache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/veristat.c | 76 +++++++++++++++++---------
+ 1 file changed, 49 insertions(+), 27 deletions(-)
 
-diff --git a/fs/squashfs/cache.c b/fs/squashfs/cache.c
-index 25bf038b880ab..2091af7416327 100644
---- a/fs/squashfs/cache.c
-+++ b/fs/squashfs/cache.c
-@@ -295,7 +295,7 @@ int squashfs_copy_data(void *buffer, struct squashfs_cache_entry *entry,
- {
- 	int remaining = length;
+diff --git a/tools/testing/selftests/bpf/veristat.c b/tools/testing/selftests/bpf/veristat.c
+index fab89a84119f8..d64fdb7d6c584 100644
+--- a/tools/testing/selftests/bpf/veristat.c
++++ b/tools/testing/selftests/bpf/veristat.c
+@@ -385,6 +385,40 @@ static bool is_bpf_obj_file(const char *path) {
+ 	return err == 0;
+ }
  
--	if (length == 0)
-+	if (length == 0 || offset < 0)
- 		return 0;
- 	else if (buffer == NULL)
- 		return min(length, entry->length - offset);
++/* Exact filter match */
++static bool name_filter_matches(struct filter *f, const char *filename, const char *prog_name)
++{
++	if (f->any_glob)
++		return glob_matches(filename, f->any_glob) ||
++		       (prog_name && glob_matches(prog_name, f->any_glob));
++	if (f->file_glob && f->prog_glob)
++		return prog_name &&
++		       glob_matches(filename, f->file_glob) &&
++		       glob_matches(prog_name, f->prog_glob);
++	if (f->file_glob)
++		return glob_matches(filename, f->file_glob);
++	if (f->prog_glob)
++		return prog_name && glob_matches(prog_name, f->prog_glob);
++	return false;
++}
++
++/* Check if the filter does not outright reject the file name */
++static bool name_filter_may_match(struct filter *f, const char *filename)
++{
++	if (f->file_glob)
++		return glob_matches(filename, f->file_glob);
++	/*
++	 * If we don't know program name yet, any_glob filter
++	 * has to assume that current BPF object file might be
++	 * relevant; we'll check again later on after opening
++	 * BPF object file, at which point program name will
++	 * be known finally.
++	 */
++	if (f->any_glob || f->prog_glob)
++		return true;
++	return false;
++}
++
+ static bool should_process_file_prog(const char *filename, const char *prog_name)
+ {
+ 	struct filter *f;
+@@ -392,16 +426,7 @@ static bool should_process_file_prog(const char *filename, const char *prog_name
+ 
+ 	for (i = 0; i < env.deny_filter_cnt; i++) {
+ 		f = &env.deny_filters[i];
+-		if (f->kind != FILTER_NAME)
+-			continue;
+-
+-		if (f->any_glob && glob_matches(filename, f->any_glob))
+-			return false;
+-		if (f->any_glob && prog_name && glob_matches(prog_name, f->any_glob))
+-			return false;
+-		if (f->file_glob && glob_matches(filename, f->file_glob))
+-			return false;
+-		if (f->prog_glob && prog_name && glob_matches(prog_name, f->prog_glob))
++		if (f->kind == FILTER_NAME && name_filter_matches(f, filename, prog_name))
+ 			return false;
+ 	}
+ 
+@@ -411,24 +436,15 @@ static bool should_process_file_prog(const char *filename, const char *prog_name
+ 			continue;
+ 
+ 		allow_cnt++;
+-		if (f->any_glob) {
+-			if (glob_matches(filename, f->any_glob))
+-				return true;
+-			/* If we don't know program name yet, any_glob filter
+-			 * has to assume that current BPF object file might be
+-			 * relevant; we'll check again later on after opening
+-			 * BPF object file, at which point program name will
+-			 * be known finally.
+-			 */
+-			if (!prog_name || glob_matches(prog_name, f->any_glob))
+-				return true;
+-		} else {
+-			if (f->file_glob && !glob_matches(filename, f->file_glob))
+-				continue;
+-			if (f->prog_glob && prog_name && !glob_matches(prog_name, f->prog_glob))
+-				continue;
++		if (prog_name && name_filter_matches(f, filename, prog_name))
++			return true;
++		/*
++		 * If there is no prog_name and the file name is not blocked by
++		 * the filter, allow to open the file. Afterwards there would be
++		 * a second refining query with prog_name set.
++		 */
++		if (!prog_name && name_filter_may_match(f, filename))
+ 			return true;
+-		}
+ 	}
+ 
+ 	/* if there are no file/prog name allow filters, allow all progs,
+@@ -571,6 +587,12 @@ static int append_filter(struct filter **filters, int *cnt, const char *str)
+ 		}
+ 	}
+ 
++	if ((!f->any_glob && !f->file_glob && !f->prog_glob) ||
++	    (f->any_glob && strcmp(f->any_glob, "") == 0)) {
++		fprintf(stderr, "Invalid filter: '%s'\n", str);
++		return -EINVAL;
++	}
++
+ 	*cnt += 1;
+ 	return 0;
+ }
 -- 
 2.53.0
 
