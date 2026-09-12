@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35964431A51;
-	Sat, 12 Sep 2026 10:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB2442E420;
+	Sat, 12 Sep 2026 10:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209720; cv=none; b=Ib2v078NtGYufdJC/+sqnmu/f02KZ7oNm2WH2VLhy6KTuovBBrxA1P5oqCdANYT3jWm54nozX2kKKuTptdRy6IFdVjkLyyJ4zIsT5cN10EmJrt9bYUDBm25+CrrfKcWRBOmJ17ifaLlqy19/Yy9IxyP9WpBaO7L+qa+gpnBfB9c=
+	t=1789209730; cv=none; b=hHHlRz4kGwLOmDNpzBCqa7NWEpCCn5J+fUM2Sl2T6rk4YO6rrIL+WR1nh6wqcpPVze/kd2ps++yTXRlaNBn3Ijdo86Kxgj1M4Ragvrc4bmXmNh+CtCf88dcykDasaS0ll5ZsgSJ0wC/yoO27P8RUVppBmRD7HdmJQB7i868dzEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209720; c=relaxed/simple;
-	bh=QOsX6uelCj/i81NqRLrtFNvLGZDzlsjZ2fcZBad4fUk=;
+	s=arc-20240116; t=1789209730; c=relaxed/simple;
+	bh=5A7wU7UGXO5zt+BTprZCGXRC2dsex/5zOqisKPxpKoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m9jS35sHKY/uUB2TTi9yKeftf2vWe22UzV1gYzoJezfuRh9HF1QwavFvCqGa/mUkL7yURUX91f5cPuSEQZlQ+USfRIUqpKlflJpO2bUDw7FOKP1DRqvF1RxqtHjY6ca9/kzwOEV2GcZ/ZhVoeYUXCKiCBZ1b4F2Z1q7hLTzN5ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MA1ZSATu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kdxjJRqV+HqqZSeDBsvUc13cBZjysDwc3Qec9QiRElfoRlvhQlAvU0Y/PBQ/B1lcXYbKfYFJT6pc92t2rtFNyQEggaUcZxXouiIINbJI0gszgClbuEg+hW2ZU90NYAvYKC3OaLfAEkSCIbRQE0SU8R1rCZOYGYRb3FiL1loPGjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2+YUkk7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MA1ZSATu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5C51F00893;
-	Sat, 12 Sep 2026 10:41:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2+YUkk7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FFFD1F00898;
+	Sat, 12 Sep 2026 10:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209715;
-	bh=pVCaPIowCqHYVxjX1CkHhjAutx938wNI7Te24OO0u3o=;
+	s=korg; t=1789209720;
+	bh=e8Zgf22M1+hH9hcud3Rn3sWJ7RCcZt51MFaOtjEm1lA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MA1ZSATuV7vSVyePsubBjsYDqqL1h9NoAjCJPIpHKd+PxwvGU52n1R4YdTh+KWMS0
-	 Se94VwMGS6PYSzwNU9lCIJT0Ah2SPrdY8nYwz0nNSGuI/817K1EpPi6MJmtPX/h1kW
-	 LMuiGTvGui3rLSyvSF/MUE4DwfGEVqvCh10/fOW0=
+	b=S2+YUkk7E7dFkGNHwneeqdKVahCdO35X/btg2iADSNmCyKjmodVSTGHeEpvGUfGgL
+	 2/SV2LpNyw/RSmD4XsX0nPqm2NgXbJnv5e7uMSUOZ0EQrNZbmRsYVS0CupmaQGK0FC
+	 teFNuiAVTPrODLs8ssR+6P/l5uw7RpE7Lc93PZ2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Titouan Ameline de Cadeville <titouan.ameline@gmail.com>,
+	Julius Werner <jwerner@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0835/1518] serial: amba-pl011: unprepare console clock on unregister
-Date: Sat, 12 Sep 2026 08:50:04 +0200
-Message-ID: <20260912065642.329450692@linuxfoundation.org>
+Subject: [PATCH 6.18 0826/1518] firmware: google: Add bounds checks in coreboot_table_populate()
+Date: Sat, 12 Sep 2026 08:49:55 +0200
+Message-ID: <20260912065642.125122839@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,62 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Titouan Ameline de Cadeville <titouan.ameline@gmail.com>
 
-[ Upstream commit 7f93da9d78d433c37836d85de475c5d884ad58ed ]
+[ Upstream commit 7b1a1af4556a4f95ef273e91435fe804cbfcd223 ]
 
-pl011_console_setup() calls clk_prepare() on the UART clock, but the
-console provides no matching teardown, so the clock is never unprepared
-when the console is unregistered -- via the sysfs "console" attribute or
-a driver unbind. Each re-registration prepares the clock again, leaking
-one prepare reference per cycle.
+coreboot_table_populate() iterates over firmware-provided table entries
+with no validation that the entries stay within the mapped memory
+region.  A corrupt table with a large `entry->size` advances `ptr_entry`
+past the mapped region, causing an out-of-bounds read on the next
+iteration.
 
-Even where preparing the clock has no hardware effect, the stale
-reference leaves the clock framework's prepare count unbalanced. For
-providers with prepare/unprepare operations or runtime-PM integration,
-it may also retain resources after the console is unregistered.
+Add a check before dereferencing `ptr_entry` to ensure the entry header
+is readable, and a second check after reading `entry->size` to ensure
+the full entry stays within the mapped region.
 
-Add a console .exit() callback that clk_unprepare()s the clock,
-balancing the clk_prepare() in pl011_console_setup().
+Pass `len` from coreboot_table_probe() into coreboot_table_populate() to
+make the mapped region size available for validation.
 
-Fixes: 4b4851c65d92 ("clk: amba-pl011: convert to clk_prepare()/clk_unprepare()")
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260724213348.77418-2-kmehltretter@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Titouan Ameline de Cadeville <titouan.ameline@gmail.com>
+Reviewed-by: Julius Werner <jwerner@chromium.org>
+Link: https://lore.kernel.org/r/20260426214739.117131-1-titouan.ameline@gmail.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Stable-dep-of: a58a57a1076f ("firmware: coreboot: Validate table bounds")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/amba-pl011.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/firmware/google/coreboot_table.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
-index 9bfccb0213836..66a6d336255bd 100644
---- a/drivers/tty/serial/amba-pl011.c
-+++ b/drivers/tty/serial/amba-pl011.c
-@@ -2475,6 +2475,15 @@ static int pl011_console_setup(struct console *co, char *options)
- 	return uart_set_options(&uap->port, co, baud, parity, bits, flow);
+diff --git a/drivers/firmware/google/coreboot_table.c b/drivers/firmware/google/coreboot_table.c
+index 882db32e51be9..f212b84ee2f93 100644
+--- a/drivers/firmware/google/coreboot_table.c
++++ b/drivers/firmware/google/coreboot_table.c
+@@ -101,16 +101,20 @@ void coreboot_driver_unregister(struct coreboot_driver *driver)
  }
+ EXPORT_SYMBOL(coreboot_driver_unregister);
  
-+static int pl011_console_exit(struct console *co)
-+{
-+	struct uart_amba_port *uap = amba_ports[co->index];
+-static int coreboot_table_populate(struct device *dev, void *ptr)
++static int coreboot_table_populate(struct device *dev, void *ptr, resource_size_t len)
+ {
+ 	int i, ret;
+ 	void *ptr_entry;
+ 	struct coreboot_device *device;
+ 	struct coreboot_table_entry *entry;
+ 	struct coreboot_table_header *header = ptr;
++	void *ptr_end;
+ 
++	ptr_end = ptr + len;
+ 	ptr_entry = ptr + header->header_bytes;
+ 	for (i = 0; i < header->table_entries; i++) {
++		if (ptr_entry + sizeof(*entry) > ptr_end)
++			return -EINVAL;
+ 		entry = ptr_entry;
+ 
+ 		if (entry->size < sizeof(*entry)) {
+@@ -118,6 +122,9 @@ static int coreboot_table_populate(struct device *dev, void *ptr)
+ 			return -EINVAL;
+ 		}
+ 
++		if (ptr_entry + entry->size > ptr_end)
++			return -EINVAL;
 +
-+	clk_unprepare(uap->clk);
-+
-+	return 0;
-+}
-+
- /**
-  *	pl011_console_match - non-standard console matching
-  *	@co:	  registering console
-@@ -2628,6 +2637,7 @@ static struct console amba_console = {
- 	.name		= "ttyAMA",
- 	.device		= uart_console_device,
- 	.setup		= pl011_console_setup,
-+	.exit		= pl011_console_exit,
- 	.match		= pl011_console_match,
- 	.write_atomic	= pl011_console_write_atomic,
- 	.write_thread	= pl011_console_write_thread,
+ 		device = kzalloc(sizeof(device->dev) + entry->size, GFP_KERNEL);
+ 		if (!device)
+ 			return -ENOMEM;
+@@ -183,7 +190,7 @@ static int coreboot_table_probe(struct platform_device *pdev)
+ 	if (!ptr)
+ 		return -ENOMEM;
+ 
+-	ret = coreboot_table_populate(dev, ptr);
++	ret = coreboot_table_populate(dev, ptr, len);
+ 
+ 	memunmap(ptr);
+ 
 -- 
 2.53.0
 
