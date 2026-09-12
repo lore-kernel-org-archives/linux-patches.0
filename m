@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7A1CA6F;
-	Sat, 12 Sep 2026 10:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133D62D7380;
+	Sat, 12 Sep 2026 10:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208344; cv=none; b=cTE4xFf6SQxN78Y74iCt90cDpNtiUiNmXnOKUxDdMfuPEnj0QLFntutq8eAU5Igvg1yu76HTHCzIynVVioCTLNHRDnMFsHh8aq27y++0IMhGGdRpugCZQ6yojr6QwrSa5o1ahSfIz589RsGVpheussDOyp7M4ESGrQ0JVK2GsX4=
+	t=1789208350; cv=none; b=DC6GaAi9m74pYi2iQMfLJfN0+JkyVVpbY/XSIgzq8Y52fd3QW2ifwpbhCv1yoLehtH25ShheS6WUZ32E4rIPoa4I3qioOpEmE0V59Okl0xLvluWdlbeNjr4MRo6x9HDA3Nm2gz6aOl+Mkc8ZzGQnctRHV8tPWOdkLIspI3gP3KY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208344; c=relaxed/simple;
-	bh=GAFoZ11nzZIFPinD3S4RKhIhbFB1pu1tU4oOmJE5kuQ=;
+	s=arc-20240116; t=1789208350; c=relaxed/simple;
+	bh=u76ipuOUZomELg4D83r2UfbXa7ivv4G9bNO9lZRiTco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JzTFu/ZtXH9E2oZsVdFhaCNAmSsT2PXUvRLWYfXBjZwh3/O0lJxv0buib53izS6abAMmt2piCk/zRm0HKzoYMPEuQnvEgRqNO91/NJkgXvf5dBFvHKjrGbmhig4LEGI7VwzMvfxYO0+GSSZacSty2+x7+BAXitNQuf47FkTdbkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E+wp2Hw9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kTodU2KQGDfR8WD8kjY/qCTiWMkVZb5BeUeXpjnSpICj5kVJajwGFxO3j2y+UfFL0OqvZwzwhfLef82qWMjkYKlhso36GLCvsZfURUahUX9w8P7kyWEQ4m87avlQKTYUSZB2gqMoOxIT8r3XqWCGYUdwXUGM8C87zQgzzNr9LFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rr/67byB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E+wp2Hw9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ECC01F000FF;
-	Sat, 12 Sep 2026 10:19:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rr/67byB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA181F000FF;
+	Sat, 12 Sep 2026 10:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208343;
-	bh=Sx9ejGr6yN0bgOnt4NXDLNrnbg5IKU+m27ui9+dYH0Q=;
+	s=korg; t=1789208348;
+	bh=QQOyVeqTYDTWKGX9dWbpve0ueOYECj/PDlX5BqlVN7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E+wp2Hw9RMohnhNMgKE/ehIjjLR19UirjFvZbBNfmoElcchqp+J6OE3xsymDAtyXP
-	 0AUTTMmJ44L2HMkYw5xw3kGtHGuxTh6PC2gUs2+XChUXc7ifdP8HyHTusWLnq5hMxj
-	 dmZHtPK5AlC8FPcWgyEjJ2jcTE/uDTOE/DWzkcFU=
+	b=rr/67byBnZBoaKrbgQFCpp5FDZNRpo8QDU6BwRJ0qt0HdbnrVGDaSqjHNUsTwMeNY
+	 ZOIMz/PjIfcjHilaiHpYotFtZjzWzkGnwn+TOmgaV7ybABfuM6YoAQuMhta19n2Sm+
+	 nDkpk57T8bque+AbXbRpnYBDXTblIG1Ju7blw06Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	Yixun Lan <dlan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0596/1518] remoteproc: core: Attach rproc asynchronously in rproc_add() path via schedule_work()
-Date: Sat, 12 Sep 2026 08:46:05 +0200
-Message-ID: <20260912065636.907662395@linuxfoundation.org>
+Subject: [PATCH 6.18 0555/1518] riscv: dts: spacemit: k1: Split gmac_clk_ref into independent pinctrl groups
+Date: Sat, 12 Sep 2026 08:45:24 +0200
+Message-ID: <20260912065635.992862647@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,96 +51,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+From: Junhui Liu <junhui.liu@pigmoral.tech>
 
-[ Upstream commit 026a3fada43261e403c6c4d9bda9501547e3f108 ]
+[ Upstream commit 8270311d70fdf36bc8aab1e52b554e654a8839ff ]
 
-Unlike the remoteproc firmware load path where rproc_add() call
-rproc_auto_boot_callback() asynchronously and ignores the return value of
-rproc_boot(), the attach path calls rproc_boot() synchronously and
-propagates its return value back to rproc_add(). This means a failure
-during rproc_attach() causes rproc_add() to fail and triggers resource
-release, removing the remoteproc from sysfs and making it unavailable for
-recovery or further boot attempts.
+The gmac_clk_ref signal is optional for the GMAC controller and is not
+strictly required for all hardware designs. The pins for gmac0_clk_ref
+(GPIO 45) and gmac1_clk_ref (GPIO 46) may also be used as GPIOs for
+other functions even when the Ethernet controller is active.
 
-Align the remoteproc attach path with the firmware load path by
-introducing attach_work and scheduling rproc_boot() asynchronously via
-schedule_work(). This keeps the remoteproc registered and available in
-sysfs even if the initial attach attempt fails, and avoids blocking
-rproc_add() on the attach result.
+Split the refclk pins into independent pinctrl groups so boards can
+request them only when the reference clock path is actually needed.
 
-Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260623-rproc-attach-issue-v3-1-8e24310707ce@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 74ee3b2f5767 ("remoteproc: Prevent crash handling to race with rproc_del()")
+Among the already mainlined boards, BPI-F3, Jupiter and MusePi Pro have
+optional hardware paths for the GMAC refclk pins. BPI-F3 and Jupiter
+route both GMAC refclk pins to the PHYs through NC/0R option resistors,
+while MusePi Pro only does so for GMAC0. Keep referencing the new
+clk-ref pinctrl groups on these boards so the optional hardware paths
+remain usable if the option resistors are populated.
+
+OrangePi R2S has no publicly available schematic, so also keep the
+clk-ref groups there to preserve the previous pinmux behavior.
+
+Fixes: 60775f28cfb7 ("riscv: dts: spacemit: Add Ethernet support for K1")
+Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+Reviewed-by: Yixun Lan <dlan@kernel.org>
+Link: https://patch.msgid.link/20260712-bpi-cm6-v3-2-8d1e2045179d@pigmoral.tech
+Signed-off-by: Yixun Lan <dlan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_core.c | 20 ++++++++++++--------
- include/linux/remoteproc.h           |  2 ++
- 2 files changed, 14 insertions(+), 8 deletions(-)
+ .../boot/dts/spacemit/k1-bananapi-f3.dts      |  4 ++--
+ .../boot/dts/spacemit/k1-milkv-jupiter.dts    |  4 ++--
+ .../riscv/boot/dts/spacemit/k1-musepi-pro.dts |  2 +-
+ .../boot/dts/spacemit/k1-orangepi-r2s.dts     |  4 ++--
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  | 24 +++++++++++++++----
+ 5 files changed, 27 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index 321ec76d20521..9a2208a2ffbca 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1678,18 +1678,21 @@ static void rproc_auto_boot_callback(const struct firmware *fw, void *context)
- 	release_firmware(fw);
- }
- 
-+static void rproc_attach_work(struct work_struct *work)
-+{
-+	struct rproc *rproc = container_of(work, struct rproc, attach_work);
+diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+index a58192ba67b2c..b2c40bae60945 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+@@ -46,7 +46,7 @@ &eth0 {
+ 	phy-handle = <&rgmii0>;
+ 	phy-mode = "rgmii-id";
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&gmac0_cfg>;
++	pinctrl-0 = <&gmac0_cfg>, <&gmac0_clk_ref_cfg>;
+ 	rx-internal-delay-ps = <0>;
+ 	tx-internal-delay-ps = <0>;
+ 	status = "okay";
+@@ -69,7 +69,7 @@ &eth1 {
+ 	phy-handle = <&rgmii1>;
+ 	phy-mode = "rgmii-id";
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&gmac1_cfg>;
++	pinctrl-0 = <&gmac1_cfg>, <&gmac1_clk_ref_cfg>;
+ 	rx-internal-delay-ps = <0>;
+ 	tx-internal-delay-ps = <250>;
+ 	status = "okay";
+diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+index a01f69f202e37..695af4919b94a 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+@@ -26,7 +26,7 @@ &eth0 {
+ 	phy-handle = <&rgmii0>;
+ 	phy-mode = "rgmii-id";
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&gmac0_cfg>;
++	pinctrl-0 = <&gmac0_cfg>, <&gmac0_clk_ref_cfg>;
+ 	rx-internal-delay-ps = <0>;
+ 	tx-internal-delay-ps = <0>;
+ 	status = "okay";
+@@ -49,7 +49,7 @@ &eth1 {
+ 	phy-handle = <&rgmii1>;
+ 	phy-mode = "rgmii-id";
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&gmac1_cfg>;
++	pinctrl-0 = <&gmac1_cfg>, <&gmac1_clk_ref_cfg>;
+ 	rx-internal-delay-ps = <0>;
+ 	tx-internal-delay-ps = <250>;
+ 	status = "okay";
+diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
+index 29e333b670cf0..42efc8c1a5818 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
+@@ -48,7 +48,7 @@ &emmc {
+ &eth0 {
+ 	phy-handle = <&rgmii0>;
+ 	phy-mode = "rgmii-id";
+-	pinctrl-0 = <&gmac0_cfg>;
++	pinctrl-0 = <&gmac0_cfg>, <&gmac0_clk_ref_cfg>;
+ 	pinctrl-names = "default";
+ 	rx-internal-delay-ps = <0>;
+ 	tx-internal-delay-ps = <0>;
+diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+index 58098c4a2aabd..312d5bc860722 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+@@ -37,7 +37,7 @@ &eth0 {
+ 	phy-handle = <&rgmii0>;
+ 	phy-mode = "rgmii-id";
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&gmac0_cfg>;
++	pinctrl-0 = <&gmac0_cfg>, <&gmac0_clk_ref_cfg>;
+ 	rx-internal-delay-ps = <0>;
+ 	tx-internal-delay-ps = <0>;
+ 	status = "okay";
+@@ -60,7 +60,7 @@ &eth1 {
+ 	phy-handle = <&rgmii1>;
+ 	phy-mode = "rgmii-id";
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&gmac1_cfg>;
++	pinctrl-0 = <&gmac1_cfg>, <&gmac1_clk_ref_cfg>;
+ 	rx-internal-delay-ps = <0>;
+ 	tx-internal-delay-ps = <250>;
+ 	status = "okay";
+diff --git a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+index aff19c86d5ff3..48c4b41311646 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+@@ -27,8 +27,16 @@ gmac0-pins {
+ 				 <K1_PADCONF(11, 1)>,	/* gmac0_tx_en */
+ 				 <K1_PADCONF(12, 1)>,	/* gmac0_mdc */
+ 				 <K1_PADCONF(13, 1)>,	/* gmac0_mdio */
+-				 <K1_PADCONF(14, 1)>,	/* gmac0_int_n */
+-				 <K1_PADCONF(45, 1)>;	/* gmac0_clk_ref */
++				 <K1_PADCONF(14, 1)>;	/* gmac0_int_n */
 +
-+	rproc_boot(rproc);
-+}
++			bias-pull-up = <0>;
++			drive-strength = <21>;
++		};
++	};
 +
- static int rproc_trigger_auto_boot(struct rproc *rproc)
- {
- 	int ret;
++	gmac0_clk_ref_cfg: gmac0-clk-ref-cfg {
++		gmac0-clk-ref-pins {
++			pinmux = <K1_PADCONF(45, 1)>;	/* gmac0_clk_ref */
  
--	/*
--	 * Since the remote processor is in a detached state, it has already
--	 * been booted by another entity.  As such there is no point in waiting
--	 * for a firmware image to be loaded, we can simply initiate the process
--	 * of attaching to it immediately.
--	 */
--	if (rproc->state == RPROC_DETACHED)
--		return rproc_boot(rproc);
-+	if (rproc->state == RPROC_DETACHED) {
-+		schedule_work(&rproc->attach_work);
-+		return 0;
-+	}
+ 			bias-pull-up = <0>;
+ 			drive-strength = <21>;
+@@ -51,8 +59,16 @@ gmac1-pins {
+ 				 <K1_PADCONF(40, 1)>,	/* gmac1_tx_en */
+ 				 <K1_PADCONF(41, 1)>,	/* gmac1_mdc */
+ 				 <K1_PADCONF(42, 1)>,	/* gmac1_mdio */
+-				 <K1_PADCONF(43, 1)>,	/* gmac1_int_n */
+-				 <K1_PADCONF(46, 1)>;	/* gmac1_clk_ref */
++				 <K1_PADCONF(43, 1)>;	/* gmac1_int_n */
++
++			bias-pull-up = <0>;
++			drive-strength = <21>;
++		};
++	};
++
++	gmac1_clk_ref_cfg: gmac1-clk-ref-cfg {
++		gmac1-clk-ref-pins {
++			pinmux = <K1_PADCONF(46, 1)>;	/* gmac1_clk_ref */
  
- 	/*
- 	 * We're initiating an asynchronous firmware loading, so we can
-@@ -2520,6 +2523,7 @@ struct rproc *rproc_alloc(struct device *dev, const char *name,
- 	INIT_LIST_HEAD(&rproc->dump_segments);
- 
- 	INIT_WORK(&rproc->crash_handler, rproc_crash_handler_work);
-+	INIT_WORK(&rproc->attach_work, rproc_attach_work);
- 
- 	rproc->state = RPROC_OFFLINE;
- 
-diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
-index b4795698d8c2a..580d324a1e8ff 100644
---- a/include/linux/remoteproc.h
-+++ b/include/linux/remoteproc.h
-@@ -526,6 +526,7 @@ enum rproc_features {
-  * @subdevs: list of subdevices, to following the running state
-  * @notifyids: idr for dynamically assigning rproc-wide unique notify ids
-  * @index: index of this rproc device
-+ * @attach_work: workqueue for attaching rproc
-  * @crash_handler: workqueue for handling a crash
-  * @crash_cnt: crash counter
-  * @recovery_disabled: flag that state if recovery was disabled
-@@ -568,6 +569,7 @@ struct rproc {
- 	struct list_head subdevs;
- 	struct idr notifyids;
- 	int index;
-+	struct work_struct attach_work;
- 	struct work_struct crash_handler;
- 	unsigned int crash_cnt;
- 	bool recovery_disabled;
+ 			bias-pull-up = <0>;
+ 			drive-strength = <21>;
 -- 
 2.53.0
 
