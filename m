@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0087C2EEE60;
-	Sat, 12 Sep 2026 14:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7C0274B46;
+	Sat, 12 Sep 2026 14:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224780; cv=none; b=G4spzb1DHm7nd6sAZ1WV54CrWoHwYHcr4mU/H+ueb5d3GCLYdZ2QSWodmISVEYFqrkr1zXryvFMORT235xxWV4EwdHOXjZIV59y+YcULYwlpO0qdVGMDAnueNX3Ex3yFJdx28dPrNA4FF5m3xUtpwuTEjDZp0lEzaSXJgts5Id4=
+	t=1789224785; cv=none; b=mAikNZ6l/DjovUFHchtscOdUYNdfQ3p4HntMhxxYkkto6w7Qvxgg2z+jwrd3AhtLOuEzQukHW6QWlhjLq7bH+wV+UrtQwdNCrxOZIsOsI1K1R14k6LRD9Sx0EErdqSkZ4+VZoQljpmhV72ACnqQr40SV4Tlf+4caOsCT2mtMuHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224780; c=relaxed/simple;
-	bh=xhQiNs6vwn0/rQZn/XOOwC/KeKBaGmTYhre0uHAbd4A=;
+	s=arc-20240116; t=1789224785; c=relaxed/simple;
+	bh=LltDxxm0XnoNNWGEITsrZ3bVlhvUnEaiTKIhXpNUBdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AcCAOc0NwDJjKpVz627vNVEv54Y3S6GDM2ZnsqdsbZ3oPCon3bMx6WJM9PzuSdb3KbQvKySJ/P8VzdPD2tLHO/KRitJvLd8ej99TLGPDddqyN7Inul2fQ+Uvudtq/I1FzjeUIy9VM7exq7xSX7OmMBMmAmxUrKhIN7sDch8FwRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LcAKm2YL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rJGWVmvN1Dp15zuPrMoLrjcpvbLfBeKvNl0IOevX+gKeyF01n6uBiFDMP1CF+ZL6U5B2EZCkc8/LmvvK3YfqiphQQApHfDajgpivme55S04CpJ9oQzg169KnpvKqF+iqQuN2x0T+NxVjM9B2flpv3I4G5ayrbZ5QqkiBw3Jr9X4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtQfew3A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LcAKm2YL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0AE51F000FF;
-	Sat, 12 Sep 2026 14:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtQfew3A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE3271F000FF;
+	Sat, 12 Sep 2026 14:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224778;
-	bh=Jw2i4BU6xD932B3GxcqwEChgj4I31ADLRWdLUmGhRIk=;
+	s=korg; t=1789224783;
+	bh=Yq/0mr1LHmuh7MFsi3OX9jw4hM7miVCV49qUWbRP8hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LcAKm2YL+09ZENK1OW2uXI/Nv3xvjBNmVMNrtKBk9BJfAmdGvhzk+bXPTuBC2WAop
-	 dTTtsg2CDtbr7RJ9IB4Dk4LgeThY3o8WkVzYpdXOpPijcERNUkqMMFbe8zphtZ555R
-	 pVJA44NmKJONOi/RYf4tLgzX5f5sz83UuvK9vgio=
+	b=CtQfew3AM4DMeBwAe1TwSuwcUUZyWTmmDVbjjyIO+NVgjoxejVUkwg93srB73OsBU
+	 rrFfRMdJ8swfFZy0LqCw/IpeWAMOdoiiYAckY3sQfYPWgQUTrTPC0wYISl69mPc/sA
+	 LIF32UqV+U2rqMCXBEaFo/pTR/WWO9iKKixOWGbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Xu <chengyou@linux.alibaba.com>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Bart Van Assche <bvanassche@acm.org>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1063/1424] RDMA/erdma: Hold CQ references when processing EQ events
-Date: Sat, 12 Sep 2026 08:58:15 +0200
-Message-ID: <20260912065631.109550026@linuxfoundation.org>
+Subject: [PATCH 6.6 1064/1424] RDMA/srp: fix heap information leak on a truncated SRP_CRED_REQ
+Date: Sat, 12 Sep 2026 08:58:16 +0200
+Message-ID: <20260912065631.132108767@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,164 +52,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Xu <chengyou@linux.alibaba.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-[ Upstream commit 98df2aee1459ee1c62c70cbe9b370d2a532aea36 ]
+[ Upstream commit 961ac0f0c5e414abdd6b33fae84b311d9fde0bd0 ]
 
-EQ handlers look up CQs from dev->cq_xa and invoke CQ completion or
-error callbacks outside the xarray lock. erdma_destroy_cq() can erase the
-CQ from the xarray and free its queue buffer and doorbell record while a
-previously scheduled EQ handler is still using the CQ.
+srp_recv_done() passes wc->byte_len to srp_process_rsp(). It passes
+nothing to srp_process_cred_req() and srp_process_aer_req(), which read
+fixed-size fields from the receive buffer without checking that those
+fields were received.
 
-Add a CQ refcount and take a reference under the xarray lock with
-refcount_inc_not_zero(). Remove the CQ from the xarray before dropping
-the destroy-path reference, then wait for in-flight EQ users before
-releasing CQ resources.
+The buffer size is max_ti_iu_len, which comes from the login response
+and is not validated. A target that advertises 8 and then sends an
+8-byte SRP_CRED_REQ makes the initiator read req->tag from beyond the
+end of the buffer. req->tag is copied into the SRP_CRED_RSP and sent
+back, so those bytes reach the target. SRP_AER_REQ behaves the same way
+and also reads req->lun.
 
-Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
-Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
-Link: https://patch.msgid.link/20260730124357.12976-1-chengyou@linux.alibaba.com
+The leak is 8 bytes per response. max_ti_iu_len also decides which slab
+cache the buffer comes from. With 8 the buffer is a kmalloc-8 object and
+the read is entirely outside it:
+
+  BUG: KASAN: slab-out-of-bounds in srp_recv_done+0x172b/0x1aa0
+  Read of size 8 at addr ffff888104714da8 by task kworker/u8:3/50
+   which belongs to the cache kmalloc-8 of size 8
+  The buggy address is located 0 bytes to the right of
+   allocated 8-byte region [ffff888104714da0, ffff888104714da8)
+
+Without KASAN the returned bytes are whatever is next in the slab. One
+run returned ".strtab".
+
+rsp->data[3] in srp_process_rsp() has the same problem: only
+resp_data_len is checked before it is read.
+
+Drop a request that is shorter than the structure being parsed, and
+check byte_len before the tsk_mgmt read.
+
+Fixes: bb12588a38e6 ("IB/srp: Implement SRP_CRED_REQ and SRP_AER_REQ")
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Link: https://patch.msgid.link/20260729093203.1503201-1-yhlee@isslab.korea.ac.kr
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_eq.c    |  6 ++++--
- drivers/infiniband/hw/erdma/erdma_verbs.c | 12 +++++++++--
- drivers/infiniband/hw/erdma/erdma_verbs.h | 25 +++++++++++++++++++++--
- 3 files changed, 37 insertions(+), 6 deletions(-)
+ drivers/infiniband/ulp/srp/ib_srp.c | 45 +++++++++++++++++++----------
+ 1 file changed, 30 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma_eq.c b/drivers/infiniband/hw/erdma/erdma_eq.c
-index 364bddbadd37a..3fec9cd18afaf 100644
---- a/drivers/infiniband/hw/erdma/erdma_eq.c
-+++ b/drivers/infiniband/hw/erdma/erdma_eq.c
-@@ -52,7 +52,7 @@ void erdma_aeq_event_handler(struct erdma_dev *dev)
- 		if (FIELD_GET(ERDMA_AEQE_HDR_TYPE_MASK,
- 			      le32_to_cpu(aeqe->hdr)) == ERDMA_AE_TYPE_CQ_ERR) {
- 			cqn = le32_to_cpu(aeqe->event_data0);
--			cq = find_cq_by_cqn(dev, cqn);
-+			cq = erdma_cq_get_by_cqn(dev, cqn);
- 			if (!cq)
- 				continue;
- 
-@@ -62,6 +62,7 @@ void erdma_aeq_event_handler(struct erdma_dev *dev)
- 			if (cq->ibcq.event_handler)
- 				cq->ibcq.event_handler(&event,
- 						       cq->ibcq.cq_context);
-+			erdma_cq_put(cq);
+diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
+index ce1505a8ee8d8..13eddbe0841aa 100644
+--- a/drivers/infiniband/ulp/srp/ib_srp.c
++++ b/drivers/infiniband/ulp/srp/ib_srp.c
+@@ -1943,7 +1943,8 @@ static void srp_process_rsp(struct srp_rdma_ch *ch, struct srp_rsp *rsp,
+ 		ch->req_lim += be32_to_cpu(rsp->req_lim_delta);
+ 		if (rsp->tag == ch->tsk_mgmt_tag) {
+ 			ch->tsk_mgmt_status = -1;
+-			if (be32_to_cpu(rsp->resp_data_len) >= 4)
++			if (be32_to_cpu(rsp->resp_data_len) >= 4 &&
++			    byte_len >= sizeof(*rsp) + 4)
+ 				ch->tsk_mgmt_status = rsp->data[3];
+ 			complete(&ch->tsk_mgmt_done);
  		} else {
- 			qpn = le32_to_cpu(aeqe->event_data0);
- 			qp = find_qp_by_qpn(dev, qpn);
-@@ -142,7 +143,7 @@ void erdma_ceq_completion_handler(struct erdma_eq_cb *ceq_cb)
- 		poll_cnt++;
- 		cqn = FIELD_GET(ERDMA_CEQE_HDR_CQN_MASK, READ_ONCE(*ceqe));
- 
--		cq = find_cq_by_cqn(dev, cqn);
-+		cq = erdma_cq_get_by_cqn(dev, cqn);
- 		if (!cq)
- 			continue;
- 
-@@ -151,6 +152,7 @@ void erdma_ceq_completion_handler(struct erdma_eq_cb *ceq_cb)
- 
- 		if (cq->ibcq.comp_handler)
- 			cq->ibcq.comp_handler(&cq->ibcq, cq->ibcq.cq_context);
-+		erdma_cq_put(cq);
- 	}
- 
- 	notify_eq(&ceq_cb->eq);
-diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
-index 64faac3c99b1b..066144ae3b248 100644
---- a/drivers/infiniband/hw/erdma/erdma_verbs.c
-+++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
-@@ -1228,6 +1228,7 @@ int erdma_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
- 	struct erdma_dev *dev = to_edev(ibcq->device);
- 	struct erdma_ucontext *ctx = rdma_udata_to_drv_context(
- 		udata, struct erdma_ucontext, ibucontext);
-+	unsigned long flags;
- 	int err;
- 	struct erdma_cmdq_destroy_cq_req req;
- 
-@@ -1239,6 +1240,13 @@ int erdma_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
- 	if (err)
- 		return err;
- 
-+	xa_lock_irqsave(&dev->cq_xa, flags);
-+	__xa_erase(&dev->cq_xa, cq->cqn);
-+	xa_unlock_irqrestore(&dev->cq_xa, flags);
-+
-+	erdma_cq_put(cq);
-+	wait_for_completion(&cq->free);
-+
- 	if (rdma_is_kernel_res(&cq->ibcq.res)) {
- 		dma_free_coherent(&dev->pdev->dev,
- 				  WARPPED_BUFSIZE(cq->depth << CQE_SHIFT),
-@@ -1248,8 +1256,6 @@ int erdma_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
- 		put_mtt_entries(dev, &cq->user_cq.qbuf_mem);
- 	}
- 
--	xa_erase(&dev->cq_xa, cq->cqn);
--
- 	return 0;
+@@ -2043,13 +2044,20 @@ static int srp_response_common(struct srp_rdma_ch *ch, s32 req_delta,
  }
  
-@@ -1658,6 +1664,8 @@ int erdma_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
- 	cq->ibcq.cqe = depth;
- 	cq->depth = depth;
- 	cq->assoc_eqn = attr->comp_vector + 1;
-+	refcount_set(&cq->refcount, 1);
-+	init_completion(&cq->free);
- 
- 	ret = xa_alloc_cyclic(&dev->cq_xa, &cq->cqn, cq,
- 			      XA_LIMIT(1, dev->attrs.max_cq - 1),
-diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.h b/drivers/infiniband/hw/erdma/erdma_verbs.h
-index eb9c0f92fb6f0..10b9b8a5f6a8b 100644
---- a/drivers/infiniband/hw/erdma/erdma_verbs.h
-+++ b/drivers/infiniband/hw/erdma/erdma_verbs.h
-@@ -7,6 +7,9 @@
- #ifndef __ERDMA_VERBS_H__
- #define __ERDMA_VERBS_H__
- 
-+#include <linux/completion.h>
-+#include <linux/refcount.h>
-+
- #include "erdma.h"
- 
- /* RDMA Capability. */
-@@ -261,6 +264,8 @@ struct erdma_cq {
- 
- 	u32 depth;
- 	u32 assoc_eqn;
-+	refcount_t refcount;
-+	struct completion free;
- 
- 	union {
- 		struct erdma_kcq_info kern_cq;
-@@ -275,9 +280,25 @@ static inline struct erdma_qp *find_qp_by_qpn(struct erdma_dev *dev, int id)
- 	return (struct erdma_qp *)xa_load(&dev->qp_xa, id);
- }
- 
--static inline struct erdma_cq *find_cq_by_cqn(struct erdma_dev *dev, int id)
-+static inline struct erdma_cq *erdma_cq_get_by_cqn(struct erdma_dev *dev,
-+						   int id)
-+{
-+	struct erdma_cq *cq;
-+	unsigned long flags;
-+
-+	xa_lock_irqsave(&dev->cq_xa, flags);
-+	cq = xa_load(&dev->cq_xa, id);
-+	if (cq && !refcount_inc_not_zero(&cq->refcount))
-+		cq = NULL;
-+	xa_unlock_irqrestore(&dev->cq_xa, flags);
-+
-+	return cq;
-+}
-+
-+static inline void erdma_cq_put(struct erdma_cq *cq)
+ static void srp_process_cred_req(struct srp_rdma_ch *ch,
+-				 struct srp_cred_req *req)
++				 struct srp_cred_req *req, u32 byte_len)
  {
--	return (struct erdma_cq *)xa_load(&dev->cq_xa, id);
-+	if (refcount_dec_and_test(&cq->refcount))
-+		complete(&cq->free);
+-	struct srp_cred_rsp rsp = {
+-		.opcode = SRP_CRED_RSP,
+-		.tag = req->tag,
+-	};
+-	s32 delta = be32_to_cpu(req->req_lim_delta);
++	struct srp_cred_rsp rsp = { .opcode = SRP_CRED_RSP };
++	s32 delta;
++
++	if (byte_len < sizeof(*req)) {
++		shost_printk(KERN_ERR, ch->target->scsi_host, PFX
++			     "dropping truncated SRP_CRED_REQ (%u bytes received, %zu expected)\n",
++			     byte_len, sizeof(*req));
++		return;
++	}
++
++	rsp.tag = req->tag;
++	delta = be32_to_cpu(req->req_lim_delta);
+ 
+ 	if (srp_response_common(ch, delta, &rsp, sizeof(rsp)))
+ 		shost_printk(KERN_ERR, ch->target->scsi_host, PFX
+@@ -2057,14 +2065,21 @@ static void srp_process_cred_req(struct srp_rdma_ch *ch,
  }
  
- void erdma_qp_get(struct erdma_qp *qp);
+ static void srp_process_aer_req(struct srp_rdma_ch *ch,
+-				struct srp_aer_req *req)
++				struct srp_aer_req *req, u32 byte_len)
+ {
+ 	struct srp_target_port *target = ch->target;
+-	struct srp_aer_rsp rsp = {
+-		.opcode = SRP_AER_RSP,
+-		.tag = req->tag,
+-	};
+-	s32 delta = be32_to_cpu(req->req_lim_delta);
++	struct srp_aer_rsp rsp = { .opcode = SRP_AER_RSP };
++	s32 delta;
++
++	if (byte_len < sizeof(*req)) {
++		shost_printk(KERN_ERR, target->scsi_host, PFX
++			     "dropping truncated SRP_AER_REQ (%u bytes received, %zu expected)\n",
++			     byte_len, sizeof(*req));
++		return;
++	}
++
++	rsp.tag = req->tag;
++	delta = be32_to_cpu(req->req_lim_delta);
+ 
+ 	shost_printk(KERN_ERR, target->scsi_host, PFX
+ 		     "ignoring AER for LUN %llu\n", scsilun_to_int(&req->lun));
+@@ -2106,11 +2121,11 @@ static void srp_recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 		break;
+ 
+ 	case SRP_CRED_REQ:
+-		srp_process_cred_req(ch, iu->buf);
++		srp_process_cred_req(ch, iu->buf, wc->byte_len);
+ 		break;
+ 
+ 	case SRP_AER_REQ:
+-		srp_process_aer_req(ch, iu->buf);
++		srp_process_aer_req(ch, iu->buf, wc->byte_len);
+ 		break;
+ 
+ 	case SRP_T_LOGOUT:
 -- 
 2.53.0
 
