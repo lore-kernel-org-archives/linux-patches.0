@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E508E423A72;
-	Sat, 12 Sep 2026 12:57:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753103DB31A;
+	Sat, 12 Sep 2026 12:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217824; cv=none; b=ixWijO4644/x8zuLUiiwoQ1sh5ZJlDNFw5jkWpcwz9vyCOMEfURzALMULFWsExl6nCoy1tTz4SqWyIxGK/QTr0hj4M9ONZBd9Ytq9aQFxGoz09TNOLask0jVmmjg8pB4odAWR9cOjQWteaAd+Cwfvhd0jzYlXy2dCpkEtqQXwVE=
+	t=1789217828; cv=none; b=CjuRYPYBbyALRlkWS+3M/1hzaoCyxgPC3TteU5jFEvUUa8UdmvE4A5pJFZofvmO/xO1tOmT78KOEOSrKWcZtcNbswcn6ChOtG4mqqRhM/RugLHhYLjOgACrL3saCM1/krmUM9zyCn0NTRTNcl3SYNbpoc1+NJwHln20BUx0hWZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217824; c=relaxed/simple;
-	bh=2gB+BEcb4f1kDqlgbNGeErXZ9PcLNP+3zD4bQNlu8Cc=;
+	s=arc-20240116; t=1789217828; c=relaxed/simple;
+	bh=jJVg8MbrQ/vhCvzq6cg4GFAqZqVSNaBHy7o/2TYbdfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pQVAylRIU5zlUgmbfHtnZ6HPC/D0S2205rEScJ761p2MLBbUUNb4hYPvEpPGhw28teKQReLBS5C95+FIPv4XrHurKyX0d/1Zj5G3HKz2GvkZh6GfpEXp1I+vNOify0tlszQFDntIIEj2EbJjeimlAMHltpHQq4pWDkkuLim9Y3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWsNm5PI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FQlaGXvbB3Z3V31qTcG+ZzA/2thkF/pl9hjQb4rCwjmjcYBIBNvjzqlH5w7izIEZ0hrW/jeap8LXqfgvZYG7xH/TaqqriMhSetl/L66DeWqwbSBDqemZkwAiOnQmr6j7L7fJQeKfGv3n2mxzZEz3CNLSIc03rZcJ0DYCg50Dn8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1K2txOg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWsNm5PI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 294F81F000FF;
-	Sat, 12 Sep 2026 12:57:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1K2txOg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B381F000FF;
+	Sat, 12 Sep 2026 12:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217822;
-	bh=9i8A4IcrW51VM/99FCPt8DcYQBfZS3N/RVo8aA0ltIM=;
+	s=korg; t=1789217827;
+	bh=WIrV04yfoMYU+8cd4A6nf/TS2tSrRMKOj0+9IE4vjkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iWsNm5PIqCkTmpYrWydVbEkufUJeEIEfnC3CmjeX4uHy4FbV2eUcbFEeT6OzrOLwg
-	 IwzaC1y0e2Ge2cLGyK/Elxjzpt+0utdnVNUwPbNafZxMfkGNfd/3IEZequwgBykOR0
-	 kQZnjzt61lJ3GB4pDi4jB9BfpZx1QNd/EjR1TgvU=
+	b=Q1K2txOg9nvUx5Pn4/o8MGzkwZJt1kYxF6L0tVsPBlZg//XvUGxr5hkR3PKogWf1d
+	 RWMTnRQGc/958zpvmIN0VuNrPvGSP+v1lpXFb0DUEkTIg9+n6tBvxuW0IgTgUazm77
+	 EI48K8scEBzokugojBodgun88Wal/XEFn0bSfK7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1016/1376] perf test: Support dynamic test suites with setup callback and private data
-Date: Sat, 12 Sep 2026 08:57:22 +0200
-Message-ID: <20260912065630.208395734@linuxfoundation.org>
+Subject: [PATCH 6.12 0976/1376] scsi: core: Pass a struct scsi_driver to scsi_{,un}register_driver()
+Date: Sat, 12 Sep 2026 08:56:42 +0200
+Message-ID: <20260912065629.319751353@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,103 +47,202 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 8c8d61c38d8e1755a4325f8acb396137bbd5371a ]
+[ Upstream commit 7d42bcea57ae139e2ed754425cc5fc44e260c890 ]
 
-Add void *priv to struct test_case to allow passing per-test context.
-Add int (*setup)(struct test_suite *) to struct test_suite to allow
-dynamic generation of test cases. Update build_suites() to invoke the
-setup callback for each suite if present, ensuring dynamic cases are
-available before listing or running.
+This aligns with what other subsystems do, reduces boilerplate a bit for
+device drivers and is less error prone.
 
-Assisted-by: Gemini-CLI:Google Gemini 3
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 44e82c4d2ff3 ("perf test: Fix skiplist leak in cmd_test")
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/ac17fdea58e384cb514c639306d48ce0005820b0.1766133330.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: bb31844d88b7 ("scsi: sd: Fix special_vec mempool leak when scsi_alloc_sgtables() fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/builtin-test.c | 17 ++++++++++++++++-
- tools/perf/tests/tests.h        |  2 ++
- 2 files changed, 18 insertions(+), 1 deletion(-)
+ drivers/scsi/ch.c          | 4 ++--
+ drivers/scsi/scsi_sysfs.c  | 4 +++-
+ drivers/scsi/sd.c          | 4 ++--
+ drivers/scsi/ses.c         | 4 ++--
+ drivers/scsi/sr.c          | 4 ++--
+ drivers/scsi/st.c          | 4 ++--
+ drivers/ufs/core/ufshcd.c  | 4 ++--
+ include/scsi/scsi_driver.h | 4 ++--
+ 8 files changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
-index 6d464e636be48..122f82e495ae7 100644
---- a/tools/perf/tests/builtin-test.c
-+++ b/tools/perf/tests/builtin-test.c
-@@ -651,10 +651,21 @@ static struct test_suite **build_suites(void)
- 	for (size_t i = 0, j = 0; i < ARRAY_SIZE(suites); i++, j = 0)	\
- 		while ((suite = suites[i][j++]) != NULL)
+diff --git a/drivers/scsi/ch.c b/drivers/scsi/ch.c
+index fa07a6f54003e..f2b63e4b9b99e 100644
+--- a/drivers/scsi/ch.c
++++ b/drivers/scsi/ch.c
+@@ -1014,7 +1014,7 @@ static int __init init_ch_module(void)
+ 		       SCSI_CHANGER_MAJOR);
+ 		goto fail1;
+ 	}
+-	rc = scsi_register_driver(&ch_template.gendrv);
++	rc = scsi_register_driver(&ch_template);
+ 	if (rc < 0)
+ 		goto fail2;
+ 	return 0;
+@@ -1028,7 +1028,7 @@ static int __init init_ch_module(void)
  
--	for_each_suite(t)
-+	for_each_suite(t) {
-+		if (t->setup) {
-+			int ret = t->setup(t);
+ static void __exit exit_ch_module(void)
+ {
+-	scsi_unregister_driver(&ch_template.gendrv);
++	scsi_unregister_driver(&ch_template);
+ 	unregister_chrdev(SCSI_CHANGER_MAJOR, "ch");
+ 	class_unregister(&ch_sysfs_class);
+ 	idr_destroy(&ch_index_idr);
+diff --git a/drivers/scsi/scsi_sysfs.c b/drivers/scsi/scsi_sysfs.c
+index e669768a7a5bf..7f69f0613c08c 100644
+--- a/drivers/scsi/scsi_sysfs.c
++++ b/drivers/scsi/scsi_sysfs.c
+@@ -1609,8 +1609,10 @@ void scsi_remove_target(struct device *dev)
+ }
+ EXPORT_SYMBOL(scsi_remove_target);
+ 
+-int __scsi_register_driver(struct device_driver *drv, struct module *owner)
++int __scsi_register_driver(struct scsi_driver *sdrv, struct module *owner)
+ {
++	struct device_driver *drv = &sdrv->gendrv;
 +
-+			if (ret < 0) {
-+				errno = -ret;
-+				return NULL;
-+			}
-+		}
- 		num_suites++;
-+	}
+ 	drv->bus = &scsi_bus_type;
+ 	drv->owner = owner;
  
- 	result = calloc(num_suites + 1, sizeof(struct test_suite *));
-+	if (!result)
-+		return NULL;
+diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+index ab5cf8460aca5..929d3c37879e5 100644
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -4378,7 +4378,7 @@ static int __init init_sd(void)
+ 		goto err_out_class;
+ 	}
  
- 	for (int pass = 1; pass <= 2; pass++) {
- 		for_each_suite(t) {
-@@ -714,6 +725,8 @@ int cmd_test(int argc, const char **argv)
- 	argc = parse_options_subcommand(argc, argv, test_options, test_subcommands, test_usage, 0);
- 	if (argc >= 1 && !strcmp(argv[0], "list")) {
- 		suites = build_suites();
-+		if (!suites)
-+			return errno ? -errno : -ENOMEM;
- 		ret = perf_test__list(stdout, suites, argc - 1, argv + 1);
- 		free(suites);
- 		return ret;
-@@ -743,6 +756,8 @@ int cmd_test(int argc, const char **argv)
- 	rlimit__bump_memlock();
+-	err = scsi_register_driver(&sd_template.gendrv);
++	err = scsi_register_driver(&sd_template);
+ 	if (err)
+ 		goto err_out_driver;
  
- 	suites = build_suites();
-+	if (!suites)
-+		return errno ? -errno : -ENOMEM;
- 	ret = __cmd_test(suites, argc, argv, skiplist);
- 	free(suites);
+@@ -4405,7 +4405,7 @@ static void __exit exit_sd(void)
+ 
+ 	SCSI_LOG_HLQUEUE(3, printk("exit_sd: exiting sd driver\n"));
+ 
+-	scsi_unregister_driver(&sd_template.gendrv);
++	scsi_unregister_driver(&sd_template);
+ 	mempool_destroy(sd_page_pool);
+ 
+ 	class_unregister(&sd_disk_class);
+diff --git a/drivers/scsi/ses.c b/drivers/scsi/ses.c
+index 7e1f085ad350a..23d93cb110a6c 100644
+--- a/drivers/scsi/ses.c
++++ b/drivers/scsi/ses.c
+@@ -920,7 +920,7 @@ static int __init ses_init(void)
+ 	if (err)
+ 		return err;
+ 
+-	err = scsi_register_driver(&ses_template.gendrv);
++	err = scsi_register_driver(&ses_template);
+ 	if (err)
+ 		goto out_unreg;
+ 
+@@ -933,7 +933,7 @@ static int __init ses_init(void)
+ 
+ static void __exit ses_exit(void)
+ {
+-	scsi_unregister_driver(&ses_template.gendrv);
++	scsi_unregister_driver(&ses_template);
+ 	scsi_unregister_interface(&ses_interface);
+ }
+ 
+diff --git a/drivers/scsi/sr.c b/drivers/scsi/sr.c
+index 803fc9c132298..3b71fee9cf3c7 100644
+--- a/drivers/scsi/sr.c
++++ b/drivers/scsi/sr.c
+@@ -994,7 +994,7 @@ static int __init init_sr(void)
+ 	rc = register_blkdev(SCSI_CDROM_MAJOR, "sr");
+ 	if (rc)
+ 		return rc;
+-	rc = scsi_register_driver(&sr_template.gendrv);
++	rc = scsi_register_driver(&sr_template);
+ 	if (rc)
+ 		unregister_blkdev(SCSI_CDROM_MAJOR, "sr");
+ 
+@@ -1003,7 +1003,7 @@ static int __init init_sr(void)
+ 
+ static void __exit exit_sr(void)
+ {
+-	scsi_unregister_driver(&sr_template.gendrv);
++	scsi_unregister_driver(&sr_template);
+ 	unregister_blkdev(SCSI_CDROM_MAJOR, "sr");
+ }
+ 
+diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
+index 3e982c166baf9..62d1ed02f7e8b 100644
+--- a/drivers/scsi/st.c
++++ b/drivers/scsi/st.c
+@@ -4510,7 +4510,7 @@ static int __init init_st(void)
+ 		goto err_class;
+ 	}
+ 
+-	err = scsi_register_driver(&st_template.gendrv);
++	err = scsi_register_driver(&st_template);
+ 	if (err)
+ 		goto err_chrdev;
+ 
+@@ -4526,7 +4526,7 @@ static int __init init_st(void)
+ 
+ static void __exit exit_st(void)
+ {
+-	scsi_unregister_driver(&st_template.gendrv);
++	scsi_unregister_driver(&st_template);
+ 	unregister_chrdev_region(MKDEV(SCSI_TAPE_MAJOR, 0),
+ 				 ST_MAX_TAPE_ENTRIES);
+ 	class_unregister(&st_sysfs_class);
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 98bf5bc6f383e..bcbe478bc4032 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -10935,7 +10935,7 @@ static int __init ufshcd_core_init(void)
+ 
+ 	ufs_debugfs_init();
+ 
+-	ret = scsi_register_driver(&ufs_dev_wlun_template.gendrv);
++	ret = scsi_register_driver(&ufs_dev_wlun_template);
+ 	if (ret)
+ 		ufs_debugfs_exit();
  	return ret;
-diff --git a/tools/perf/tests/tests.h b/tools/perf/tests/tests.h
-index 7119d1372538a..b98b5a6e90ca7 100644
---- a/tools/perf/tests/tests.h
-+++ b/tools/perf/tests/tests.h
-@@ -37,12 +37,14 @@ struct test_case {
- 	const char *skip_reason;
- 	test_fnptr run_case;
- 	bool exclusive;
-+	void *priv;
- };
+@@ -10944,7 +10944,7 @@ static int __init ufshcd_core_init(void)
+ static void __exit ufshcd_core_exit(void)
+ {
+ 	ufs_debugfs_exit();
+-	scsi_unregister_driver(&ufs_dev_wlun_template.gendrv);
++	scsi_unregister_driver(&ufs_dev_wlun_template);
+ }
  
- struct test_suite {
- 	const char *desc;
- 	struct test_case *test_cases;
- 	void *priv;
-+	int (*setup)(struct test_suite *suite);
- };
+ module_init(ufshcd_core_init);
+diff --git a/include/scsi/scsi_driver.h b/include/scsi/scsi_driver.h
+index c0e89996bdb3f..40aba9a9349a6 100644
+--- a/include/scsi/scsi_driver.h
++++ b/include/scsi/scsi_driver.h
+@@ -25,9 +25,9 @@ struct scsi_driver {
  
- #define DECLARE_SUITE(name) \
+ #define scsi_register_driver(drv) \
+ 	__scsi_register_driver(drv, THIS_MODULE)
+-int __scsi_register_driver(struct device_driver *, struct module *);
++int __scsi_register_driver(struct scsi_driver *, struct module *);
+ #define scsi_unregister_driver(drv) \
+-	driver_unregister(drv);
++	driver_unregister(&(drv)->gendrv);
+ 
+ extern int scsi_register_interface(struct class_interface *);
+ #define scsi_unregister_interface(intf) \
 -- 
 2.53.0
 
