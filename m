@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E72235358;
-	Sat, 12 Sep 2026 07:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E1928B4FA;
+	Sat, 12 Sep 2026 07:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199611; cv=none; b=cGdajE7Kp7AT+TgVZpSetYTsWMNAq2b1lEaYElT4Vt/lECaLXzk1Rb7obNyPuVhLKAs98LQ0w64KpcNwaqOxuZD4W4oa+JepQDt2UR/Ndjp/diM19y31N0qVGMek2Ko/5pUTA+duWvt9ZL/hQn0gsG1vKr4TQqIHG4sUlYyhrYk=
+	t=1789199615; cv=none; b=UHJLdaA3xhI2L5vO3tKJvjuoTmbqLQtBge1AhdsH+/8dBS/H7ARi8XGuh5DYmXaIetMzDNsQ3/DNqUpUU+NYiO8BgHcsUe4kKu3IyyUNyiYVCwApmgYcPdZu1Nb0SNPSixL1MyYqAUKvEzsQmZylsseHB/I4x8X4e299w5FI1ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199611; c=relaxed/simple;
-	bh=CgB6B4DmXasrpSQEMKwapJ+E4K3+gT2gaj+dJj9aeE4=;
+	s=arc-20240116; t=1789199615; c=relaxed/simple;
+	bh=agw+eRXeEpLB4TiV/eVNi+cux5i0FyboDVP6YDFM6rU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R08UdU7yORHESdHPZs1lLAMXjcq9M7qez8Fpd4gmA973pbb+6DdIFbo/KBk2d75cK4fX65sBH0hGChJQgoh01L6e1ROlk+mhiCkq0rOWTLLlXpsY1tgQdJ8G4knAad7z9CY0sQtXnw1FYWinzwt1mSsAdAGEM5u61gWz0oBhz7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/7cpY8h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rOgSTMK4etFW2s0mRVu/8ODkmYxmzEGuESr8cODRuSx+WGGgHAlUvsLEBZQlfvPi2KUX6uXWC9WNRZ5kZb0o/6BccQRTORHIdlh4RAUq4bhXrTExkTOn1AuFtK75PR1Euo94JdLmlQrpxPnV+5VzUPp4oFAnlry7zrT6l1URAmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gtU0kM1t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/7cpY8h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C612F1F000FF;
-	Sat, 12 Sep 2026 07:53:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtU0kM1t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39151F000FF;
+	Sat, 12 Sep 2026 07:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199609;
-	bh=VeAFwHxY2AMSGinv1I+j67YIp3zUyWhoIJ0erLPkVBc=;
+	s=korg; t=1789199614;
+	bh=8c8hj/ZsvA5LE7lm8zIcDgMWaxHdIBY/UBolqtHO5wE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s/7cpY8h67txSXtXX0iw7L59Q54Yi4L5bM8s/TGRtLTuPj/Q4uUl3pAvhg28BhxPh
-	 otv4PF514L1nDpQ2AgrfCpv4Tz31oYBxk9fOtHKa95UZXFAh/ead+LlVcjox6jQycy
-	 qxon9ym5fKgyf7MtOgEB7KD9DPm0Fo/WXHzm52k0=
+	b=gtU0kM1tmrGibQIhZ1yk1ruT9RqND5UdCXpZ2p1Gzy/6/xmI2eir4dhnBfI5n3+2x
+	 bOPKTAC0QTpfgQgA+iDOfAH7YQRJIxcsp/nKgrCb91zj365LeGwOAlLUEehH84u3c7
+	 usrERyeLCXn0j4fhfjX3eTVXYc2BrRK2Lemwz5jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Gerald Yang <gerald.yang@canonical.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0620/1815] firmware: arm_scmi: Roll back partial protocol table registration
-Date: Sat, 12 Sep 2026 08:39:30 +0200
-Message-ID: <20260912065703.435556433@linuxfoundation.org>
+Subject: [PATCH 7.2 0594/1815] ext4: clear stale xarray tags on folios skipped during writeback
+Date: Sat, 12 Sep 2026 08:39:04 +0200
+Message-ID: <20260912065702.827637493@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,78 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Gerald Yang <gerald.yang@canonical.com>
 
-[ Upstream commit 2224b622260ba590ab56ea1585d6bf7610be25b2 ]
+[ Upstream commit ec524aae479b4b2078c47492b90ec21200bce434 ]
 
-scmi_protocol_table_register() can leave earlier requests registered when
-a later entry in the same ID table fails. Each request retains a pointer
-to the driver's ID table, so a failed module load can leave a dangling
-pointer after the module storage is released.
+In data=journal mode, the writeback thread can hit the
+WARN_ON_ONCE(sb_rdonly(sb)) in ext4_journal_check_start() while the
+superblock is being remounted read-only during reboot:
 
-Unrequest only the successfully registered prefix, in reverse order,
-before returning the failure. Leave the failed entry and the remaining
-entries untouched because matching requests can be owned by another
-driver.
+Workqueue: writeback wb_workfn (flush-253:0)
+RIP: 0010:ext4_journal_check_start+0x8b/0xd0
+Call Trace:
+  __ext4_journal_start_sb+0x3c/0x1e0
+  mpage_prepare_extent_to_map+0x4af/0x580
+  ext4_do_writepages+0x3c0/0x1080
+  ext4_writepages+0xc8/0x1a0
+  do_writepages+0xc4/0x180
+  __writeback_single_inode+0x45/0x2f0
+  writeback_sb_inodes+0x26b/0x5d0
+  __writeback_inodes_wb+0x54/0x100
+  wb_writeback+0x1ac/0x320
+  wb_workfn+0x394/0x470
 
-Fixes: 2858f6e5f064 ("firmware: arm_scmi: Add multiple protocols registration support")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20260722173521.2184378-1-sudeep.holla@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+And followed by the warning:
+EXT4-fs warning (device vda1): ext4_evict_inode:195: inode #6263:
+comm (sd-umount): data will be lost
+
+This issue is not reproduced every time, but frequently.
+The reproduction step is to create a VM with 8 CPUs, 16G memory and
+setup data=journal:
+sudo tune2fs -o journal_data /dev/vda1
+Run fio:
+rm -f fiotest
+fio --name=fiotest --rw=randwrite --bs=4k --runtime=6 --ioengine=libaio
+--iodepth=256 --numjobs=8 --filename=fiotest --filesize=30G
+--group_reporting
+Reboot the VM, and check the console output from:
+virsh console testvm
+
+But there is no dirty inode, folio_clear_dirty_for_io clears PG_dirty
+but leaves tags PAGECACHE_TAG_DIRTY and PAGECACHE_TAG_TOWRITE set which
+are only cleared by __folio_start_writeback.
+In data=journal mode, jbd2 checkpoints the journalled data to its final
+location and clears its own dirty flag without touching folio PG_dirty
+or xarray dirty flags.
+The commit f4a2b42e7891 ("ext4: fix stale xarray tags after writeback")
+fixes when PG_dirty is still set but there is no dirty page.
+Another case is PG_dirty is cleared, but PAGECACHE_TAG_DIRTY and
+PAGECACHE_TAG_TOWRITE is still set. In this case, writeback thread
+checks clean folio and skips it in mpage_prepare_extent_to_map:
+if (!folio_test_dirty(folio) ||
+    ...
+        folio_unlcok(folio);
+	continue
+
+And never reaches ext4_bio_write_folio where the commit f4a2b42e7891
+clears the stale xarray tags. Print debug logs after the filesystem
+is remounted read-only:
+writepages RDONLY nrpages=2048 dirtytag=1 wbtag=0 towrite=1 sync=0
+And all folios are actually clean:
+folio idx=3 dirty=0 wb=0 checked=0 dirtybuf=0 jbddirty=0 mapped=1
+...
+
+We need to clear the xarray stale tags for such clean folios by
+cycling them through writeback in the skip path, the same way
+f4a2b42e7891 does in ext4_bio_write_folio.
+
+Fixes: dff4ac75eeee ("ext4: move keep_towrite handling to ext4_bio_write_page()")
+Signed-off-by: Gerald Yang <gerald.yang@canonical.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260625160127.162272-1-gerald.yang@canonical.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/bus.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ fs/ext4/inode.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
-index cdaea09d96114..d520910eb2515 100644
---- a/drivers/firmware/arm_scmi/bus.c
-+++ b/drivers/firmware/arm_scmi/bus.c
-@@ -135,17 +135,6 @@ static int scmi_protocol_device_request(const struct scmi_device_id *id_table)
- 	return ret;
- }
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 9cf0a8a212970..61c3fce38d889 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -2695,13 +2695,25 @@ static int mpage_prepare_extent_to_map(struct mpage_da_data *mpd)
+ 			 * page is already under writeback and we are not doing
+ 			 * a data integrity writeback, skip the page
+ 			 */
+-			if (!folio_test_dirty(folio) ||
+-			    (folio_test_writeback(folio) &&
+-			     (mpd->wbc->sync_mode == WB_SYNC_NONE)) ||
++			if ((folio_test_writeback(folio) &&
++			    mpd->wbc->sync_mode == WB_SYNC_NONE) ||
+ 			    unlikely(folio->mapping != mapping)) {
+ 				folio_unlock(folio);
+ 				continue;
+ 			}
++			/*
++			 * If the folio is clean, skip writing it back.
++			 * Cycle the folio through the writeback state
++			 * though, to clear stale xarray tags.
++			 */
++			if (!folio_test_dirty(folio)) {
++				if (!folio_test_writeback(folio)) {
++					__folio_start_writeback(folio, false);
++					folio_end_writeback(folio);
++				}
++				folio_unlock(folio);
++				continue;
++			}
  
--static int scmi_protocol_table_register(const struct scmi_device_id *id_table)
--{
--	int ret = 0;
--	const struct scmi_device_id *entry;
--
--	for (entry = id_table; entry->name && ret == 0; entry++)
--		ret = scmi_protocol_device_request(entry);
--
--	return ret;
--}
--
- /**
-  * scmi_protocol_device_unrequest  - Helper to unrequest a device
-  *
-@@ -191,6 +180,26 @@ static void scmi_protocol_device_unrequest(const struct scmi_device_id *id_table
- 	}
- }
- 
-+static int scmi_protocol_table_register(const struct scmi_device_id *id_table)
-+{
-+	const struct scmi_device_id *entry;
-+	int ret;
-+
-+	for (entry = id_table; entry->name; entry++) {
-+		ret = scmi_protocol_device_request(entry);
-+		if (ret)
-+			goto err_unrequest;
-+	}
-+
-+	return 0;
-+
-+err_unrequest:
-+	while (entry != id_table)
-+		scmi_protocol_device_unrequest(--entry);
-+
-+	return ret;
-+}
-+
- static void
- scmi_protocol_table_unregister(const struct scmi_device_id *id_table)
- {
+ 			folio_wait_writeback(folio);
+ 			BUG_ON(folio_test_writeback(folio));
 -- 
 2.53.0
 
