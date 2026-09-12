@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3065432B102;
-	Sat, 12 Sep 2026 14:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC393328FC;
+	Sat, 12 Sep 2026 14:25:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223097; cv=none; b=T8Adur7hNoFg8krADmJgVk76Geyp1vFCFTfEw53WnuyE3pZe6l8tyD5LEmT0K1z08aZFVmVSAmrJSFpWgKhs3dlnOFMY65ONQqKn4PD7JaA7yOsyilburNr+6NsUq7po9nz/Tb3MdNja0htG1NvNryEYpzj6p2FA9cNIODxEQH0=
+	t=1789223101; cv=none; b=RJ8pZWEiUbT+maF82J+N7cp9EFo4ft52x/Glx2tgd+zdbnKBluuNsF4lHPK1mIVPJ/HILOouOYnF+5HOnRbWsnZN6IqKJoREBilCanoTWps5B83FnWsCgAc5rMyEyhkW7HcRADGngOp3wUJcqdJ5fWdpczuzeSOVBegeT+S5sok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223097; c=relaxed/simple;
-	bh=6okdQrm4IfzrA4G9PsPUb6E5Alzs71089EcjraSFTJ8=;
+	s=arc-20240116; t=1789223101; c=relaxed/simple;
+	bh=v+ciPlxegh6AKfuXgCy0eXoete3lYgOtp3NqfrLSpSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kf4goiQB4k6qlofMj6J3mRQE+fVD/avhKfp45+6qa8NgRHmqpu3cE+ipQnSJ6XNIW3/hCAs5hDo0KHAwGwIQgwbkueg0uYWudhcE4rk9Sqst/gX95T2aGSad58NEq7RZzwohFgy/B/NZgtLvfVRFvX+bvT4zxc9hqHRazcVC67c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZKV/WoB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ay51BolOOhRITjtcpnSBVUuNlfjgXMCKXOtdWTKFk+V7eGokaMApQJ+qnKXh8Fv9hcRmiQ4NrR+6iwRtE1lnFvC4a5AAp/q7SD2NShwSShJ1yz1e2JU4n8N8WeW32eJip2seayZXxccb5Ufsp+QwICDZ5m0nSpESyxVKFSVZABw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/klA6Mf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZKV/WoB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3941F000FF;
-	Sat, 12 Sep 2026 14:24:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/klA6Mf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A33E1F000FF;
+	Sat, 12 Sep 2026 14:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223096;
-	bh=5ApWRDmlyI9JoIAlIPypNzg+HYeeYDb+cIeF30x5Ono=;
+	s=korg; t=1789223100;
+	bh=wG6oVW+lVoeT9E5VQUsCMEBQpIRU04gMGHif9Syp9vI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EZKV/WoBoyPrhD+KXP75Mqa23KtMrZKavGSmBQNf+q4CrKx8RPt3YAne4ALmhPs9b
-	 Xjq0CM4pBIMinh1Q04kNn/F3OufFGG9ChuWwwLY2jqdEKJpZ+ZN5dBFwUn4QNzbVNK
-	 M+1Aftb4mH9nZxm9ARF+W9isao1W4etUxDtlp8+k=
+	b=U/klA6MfmFJya8TXn97QZVsPYOSZJNrgQgv6Oq1SUGHL198xuUNbzeRZNNDj/ArsT
+	 Hz1jWEjOOmMEGfNsWnxDyoTuTnO0LDC4LiFkccqi8v0mzT9rmYF/FQ6lTXtuiJ3nnn
+	 797tr95U4G23Kz73Tk5HqzV1/BIx9TRCEx6snX50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0718/1424] RDMA/core: Wait for RCU callbacks before unloading ib_core
-Date: Sat, 12 Sep 2026 08:52:30 +0200
-Message-ID: <20260912065623.373295328@linuxfoundation.org>
+Subject: [PATCH 6.6 0719/1424] RDMA/mlx5: Drain RCU callbacks during module teardown
+Date: Sat, 12 Sep 2026 08:52:31 +0200
+Message-ID: <20260912065623.395576132@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,38 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 7d75592114d1664623c8cf191a12b38052c04483 ]
+[ Upstream commit e37cdd75f8d61c1123d324ae5667ac3da562290e ]
 
-put_gid_ndev() is queued with call_rcu() and implemented in ib_core.
-Stopping the workqueues does not drain callbacks already queued, so RCU
-could invoke it after the module code has been unloaded.
+devx_free_subscription() can remain queued after the last DevX event file
+drops its module reference or an auxiliary driver detaches its devices.
+mlx5_ib can then unload before the callback runs.
 
-synchronize_rcu() does not wait for callbacks. Wait for them after all
-producers have stopped.
+Registration error unwind has the same risk because driver registration
+can attach existing devices before failing. Wait after all drivers have
+stopped.
 
-Fixes: 943bd984b108 ("RDMA/core: Allow detaching gid attribute netdevice for RoCE")
+Fixes: 6898d1c661d7 ("RDMA/mlx5: Use RCU and direct refcounts to keep memory alive")
 Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Closes: https://lore.kernel.org/linux-rdma/20260708092316.Qb39F_B0@linutronix.de/
-Link: https://patch.msgid.link/20260709-unload-rcu-v1-1-fccd27211e5a@nvidia.com
+Link: https://patch.msgid.link/20260709-unload-rcu-v1-2-fccd27211e5a@nvidia.com
 Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/device.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/mlx5/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
-index 1a241864b7b54..820ce7bd38075 100644
---- a/drivers/infiniband/core/device.c
-+++ b/drivers/infiniband/core/device.c
-@@ -2913,6 +2913,7 @@ static void __exit ib_core_cleanup(void)
- 	/* Make sure that any pending umem accounting work is done. */
- 	destroy_workqueue(ib_wq);
- 	destroy_workqueue(ib_unreg_wq);
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index 10422dee6db81..57f0f9a6e8e5d 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -4603,6 +4603,7 @@ static int __init mlx5_ib_init(void)
+ mp_err:
+ 	mlx5r_rep_cleanup();
+ rep_err:
 +	rcu_barrier();
- 	WARN_ON(!xa_empty(&clients));
- 	WARN_ON(!xa_empty(&devices));
- }
+ 	mlx5_ib_qp_event_cleanup();
+ qp_event_err:
+ 	destroy_workqueue(mlx5_ib_event_wq);
+@@ -4615,6 +4616,7 @@ static void __exit mlx5_ib_cleanup(void)
+ 	auxiliary_driver_unregister(&mlx5r_driver);
+ 	auxiliary_driver_unregister(&mlx5r_mp_driver);
+ 	mlx5r_rep_cleanup();
++	rcu_barrier();
+ 
+ 	mlx5_ib_qp_event_cleanup();
+ 	destroy_workqueue(mlx5_ib_event_wq);
 -- 
 2.53.0
 
