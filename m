@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016AD3C1F46;
-	Sat, 12 Sep 2026 09:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19A838AC92;
+	Sat, 12 Sep 2026 09:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204396; cv=none; b=gLT3CI66gW3nApMkEv03L5KScxsiGnpWET916dGCsEZjdnmtNg+fLkTaEkG9zZIpq0XkacKqhBqSvnhv5ZYejnLNiKOscDpIpglEIDSXyzn7yNEpApzaOFJ8eY3K6XWnvZgBvYzBE8GuWVar+oHcSHNXn3N9CvRubNmeA1mao6I=
+	t=1789204401; cv=none; b=TviGIGwTP2zd7osRE1Ndedg2tQn+e3KtWHnLHc8BW0E+uU0Lqc8dh7jy5I9mfUeI3cUTOHXjlmaiqJeu7GHW62zAkkHIXTJOrmvv+z2i0+Ek2nNHtbSe8+gq+PDlCyOwLwHzJdljQ3mpHn05K0BV8PUi1x8USxqeCm3VBojXonM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204396; c=relaxed/simple;
-	bh=YETLdw03DRvcUWYSJIIoW55/DkqVeMIisrV0hmh0Yq8=;
+	s=arc-20240116; t=1789204401; c=relaxed/simple;
+	bh=czc5V36fV8lowgR9Wa2aexw/+BjS0uyKcURU45OMQ54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z2V3BRmERkUM/DnccmohEiWSFrBdC4nR0TmVn4kWzbprlN/d7WN0kL1qq3ZNv55qTRvSxqtDf5UzhyM39bizTt7uD/Znw8OQkME6/frK+rHux4jecJ5snuzVQkfLsNZlxzz1EAdhbRH18X3MLp8w3yAnDtByQKe2LzuHCmZvQ+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KtX3LKri; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Oxfxaj4lUL7kY29fq+ebktSC+ApRwkP4fGxq6zfX3q9wrNKjypl4pBp/J/86H9AGiYNzMItkxP/bVCxO3MsI3i07+JBAISyMA9slzhPK93Hqqb7Z43aZUdWz269iuIac2xHv/zPb5jHlzYl2jNqvsgzJSyVIcI28jS57gKcT/yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhQU1XmJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KtX3LKri"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03111F000FF;
-	Sat, 12 Sep 2026 09:13:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhQU1XmJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41751F000FF;
+	Sat, 12 Sep 2026 09:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204394;
-	bh=g0vQcPcIZphokElmGvmI3CnfFxgA89wgWbX4T4Y/jfk=;
+	s=korg; t=1789204399;
+	bh=/Sh3F+6eCJ0NQTJE+5tWCC/9QagKrKL/DAxS2fRdp5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KtX3LKria2f1KrANo9Fo5G0/JgrHLy+58HtHuLL0zw+x7EuqobPsLwwiwPa7Z+1il
-	 e8yI3aprm67t6yrszdGUPSxACZ+T5ggShhf5aOtcaFb6ZeL2OydoP67HwtZcgFFWwm
-	 0TPZJBoy4r+hb4bhxBOtmi7quTwi2FQnO0z3Sv+w=
+	b=fhQU1XmJEAkS0ZgYWnQSRrQW7sS6/ytMHdBPqwm9w0EAh6bEMvE/cTfMRFnIZionT
+	 Uuj52a3HpO//q09CSC2GqDic0ioECRwCAZsgFnAbcT4bUyYrXc/VB1QU9tIVM5XWVR
+	 MYnlHp4KRLZurCEQ859wx4uy790QL97FZOKcytsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Wei Fang <wei.fang@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1561/1815] drm/xe: tests: fix error message in xe_migrate_sanity_test()
-Date: Sat, 12 Sep 2026 08:55:11 +0200
-Message-ID: <20260912065725.640048952@linuxfoundation.org>
+Subject: [PATCH 7.2 1562/1815] ptp: netc: skip PEROUT disable if channel is not enabled
+Date: Sat, 12 Sep 2026 08:55:12 +0200
+Message-ID: <20260912065725.664247553@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,38 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 3d318fe4e99a627aa3c2980699e2e9f13ad18516 ]
+[ Upstream commit 273480bb836e515353f30a1e70b21a2382de666e ]
 
-This is supposed to print the error code but there is a copy and
-paste bug so it prints "bo" instead of "err".
+When userspace calls ioctl(PTP_PEROUT_REQUEST) with period = 0 to disable
+a PEROUT channel that is not enabled, the driver incorrectly enters the
+disable path. Since the channel's struct netc_pp was previously zeroed,
+pp->alarm_id evaluates to 0, causing priv->fs_alarm_bitmap &= ~BIT(0) to
+silently revoke the alarm 0 allocation from whichever channel is actively
+using it. This can cause two channels conflict over the same hardware
+alarm configuration and corrupt their periodic output signals.
 
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Link: https://patch.msgid.link/an1tu0z3T-qX1ogn@stanley.mountain
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit 28a4198c52a1468fc1b620a9837557ea1dc1766d)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Therefore, guard the disable path with a check on pp->enabled and return
+early if the channel is not enabled.
+
+Fixes: 671e266835b8 ("ptp: netc: add periodic pulse output support")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/message/20260809031908.46EBF1F00A3A%40smtp.kernel.org
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20260811083614.3589967-1-wei.fang@oss.nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/tests/xe_migrate.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/ptp/ptp_netc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/tests/xe_migrate.c b/drivers/gpu/drm/xe/tests/xe_migrate.c
-index 3c1be809be82d..f10d9513747b4 100644
---- a/drivers/gpu/drm/xe/tests/xe_migrate.c
-+++ b/drivers/gpu/drm/xe/tests/xe_migrate.c
-@@ -198,8 +198,7 @@ static void xe_migrate_sanity_test(struct xe_migrate *m, struct kunit *test,
+diff --git a/drivers/ptp/ptp_netc.c b/drivers/ptp/ptp_netc.c
+index 1c20d7efab929..59db08e189e6e 100644
+--- a/drivers/ptp/ptp_netc.c
++++ b/drivers/ptp/ptp_netc.c
+@@ -482,6 +482,9 @@ static int net_timer_enable_perout(struct netc_timer *priv,
  
- 	err = xe_bo_vmap(bo);
- 	if (err) {
--		KUNIT_FAIL(test, "Failed to vmap our pagetables: %li\n",
--			   PTR_ERR(bo));
-+		KUNIT_FAIL(test, "Failed to vmap our pagetables: %d\n", err);
- 		return;
- 	}
- 
+ 		netc_timer_enable_periodic_pulse(priv, channel);
+ 	} else {
++		if (!pp->enabled)
++			goto unlock_spinlock;
++
+ 		netc_timer_disable_periodic_pulse(priv, channel);
+ 		priv->fs_alarm_bitmap &= ~BIT(pp->alarm_id);
+ 		memset(pp, 0, sizeof(*pp));
 -- 
 2.53.0
 
