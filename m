@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA615475F;
-	Sat, 12 Sep 2026 15:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D7220ED;
+	Sat, 12 Sep 2026 15:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225481; cv=none; b=fysqOoUNVbzpZTUH9KfivoSUfB0NQWTYwiovilfn1PQFm27VDvtqVeizkDxRrCv8Y6I3+T+JyMMxpaksfygQ1qXygfVZh5nsqjbcrxbj+m1FgEfWTXC07lZB26QuNaW3i3rGdXzvCII6yQX9vkeGun96bqHJz748LX/Ych6/GSw=
+	t=1789225485; cv=none; b=TZdgFQcljrMS02jH5prTiR3XgPNJSHhPU/g6MRJuro2VR6MUMwlWS5iVLzzyZdhbJzObUf07UQKxAQPjdiZ88MdPqFE1hoVIu1zD8Twz7ESKq7avoVZg6Ua75B5FO0cPlyZO9KZhHM62UuBNEWuqPG+Lt/ociPx9D3XAGELzNSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225481; c=relaxed/simple;
-	bh=gDbcp2e4OnXq7qz/5v/CoBOxqzmq9X+amsVwT80LvHs=;
+	s=arc-20240116; t=1789225485; c=relaxed/simple;
+	bh=BISf/1yphaCgTxX9eXK4o8W7GsPbgxrXhI2zqe4QJI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nuyy4hck/V39OpVJrpBH/PVAhpqKRNDSNdJg4UThMNDr+mWdUsJczZkrG5mIsPRaIFI+ANFS1bXZHlOsNS6OER0VqEZbliFlWvGCz9E7Khcw0Akgv3GAi+pYXxp+uxaaimvWmJoeK4/kLMJfckvwFckFOUKWACy5bPKcseexa3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mo2UKA2h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=reST5BrG7BC2ue1bLDNZvtjBZhhLJqkw+Zd5LVV4l/RvqKX/qxTWzExZq0OvynQdga9PSiUS4BFGfRu3CWbMgjScKmR+/KzXI0lIpCJBdNUgBjNvmKH1H7RkqRe9x7cS4npYRHUh9CF8YiV5hX1QHBVmmHgm/Y5wnIzHa7asUQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LU2TrlRt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mo2UKA2h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29761F000FF;
-	Sat, 12 Sep 2026 15:04:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LU2TrlRt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74D4B1F000FF;
+	Sat, 12 Sep 2026 15:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225478;
-	bh=b7+yeuAURf1NQyzIXFpVTWrbYWyHhwqtE63Nh8pU8m4=;
+	s=korg; t=1789225483;
+	bh=nqXokxmYPrk30A/tCNfmr2n5dpiSVYTdGpPeOPfqvBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mo2UKA2hnoZ6riiDldxBw9/0MjyVqn+AeENYACjO5bM8M2HcAnvIxWLpCx0J6iRQv
-	 Ffzc2u3knQUDLRGw2u4z2mszg3y8uKA2/YTLGyM0IAO5+j0A4BrvwwMj9gPSNzz3pm
-	 f6959iXL2Y91e+lZKIzKTz/YPSgX/4MUdAy40qv4=
+	b=LU2TrlRtWM865rYUTlxY/WHvIKTb0P5ALwSZEdmj1WhGN52M+cREGz8OxqRgZI3SR
+	 lqNwXG6llpoTSlXZuz0Xy/5Fdcgov7i1kFtBS+8JGK+uZiegMwFlBqWcBsvLG1BLYK
+	 449vPHa/NM50qvJ6nIxk8+5ep9SgZlNDr7Dwpe4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <jkeeping@inmusicbrands.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Bijan Tabatabai <btabatabai@wisc.edu>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1206/1424] ALSA: seq: midi: Serialize input teardown with event_input
-Date: Sat, 12 Sep 2026 09:00:38 +0200
-Message-ID: <20260912065634.292808449@linuxfoundation.org>
+Subject: [PATCH 6.6 1207/1424] x86/pkeys: Fix pkey_alloc() return value when pkeys are not supported
+Date: Sat, 12 Sep 2026 09:00:39 +0200
+Message-ID: <20260912065634.315417064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,156 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Bijan Tabatabai <btabatabai@wisc.edu>
 
-[ Upstream commit 403f7f3ad3808a0096d84cf228fab68dc253fd9d ]
+[ Upstream commit dee87e09b0dd63da9b1e1876167ccae37842dfd0 ]
 
-snd_midi_input_event() must not be running while a rawmidi substream is
-closing, since this can lead to the trigger state becoming out-of-step
-through this sequence in snd_rawmidi_input_trigger():
+The man page for pkey_alloc(2) specifies that it should return -1 with
+the errno set to ENOSPC when pkeys are not supported [1]. However, on
+x86 pkey_alloc() sets errno to EINVAL when called for the first time
+on a CPU that does not support pkeys.
 
-	snd_rawmidi_input_trigger(up=0)
-					snd_midi_input_event()
-					 -> snd_rawmidi_kernel_read()
-					     -> snd_rawmidi_input_trigger(up=1)
-	  -> cancel_work_sync()
+The root cause of this is the x86 implementation of mm_pkey_alloc() not
+directly checking if pkeys are supported. It only checks if all the
+pkeys have been allocated by comparing the allocation map against
+all_pkeys_mask. When OSPKE is not enabled, init_new_context() skips the
+initialization of the allocation map, leaving it as 0, while
+all_pkeys_mask is 1. mm_pkey_alloc() interprets this as there being a
+pkey available and it returns pkey 0. Then, pkey_alloc() fails with
+-EINVAL from arch_set_user_pkey_access() instead of returning -ENOSPC.
+Subsequent calls to pkey_alloc() do return -ENOSPC because pkey 0 is
+left marked as allocated.
 
-which ends with the underlying device being active unexpectedly.
+Change mm_pkey_alloc() to directly check if OSPKE is enabled, and
+return -1 if it is not, which causes pkey_alloc() to return -ENOSPC. The
+arm64 and powerpc implementations of mm_pkey_alloc() already do this
+check.
 
-When this is called from close_substream(), further input can re-trigger
-the input event leaving it running after rawmidi_release_priv() has set
-rfile->rmidi to NULL which leads to:
+[1] https://man7.org/linux/man-pages/man2/pkey_alloc.2.html
 
-	Unable to handle kernel NULL pointer dereference at virtual address 00000000000000b0
-	Call trace:
-	 snd_midi_input_event+0x3c/0x134 [snd_seq_midi] (P)
-	 snd_rawmidi_input_event_work+0x1c/0x2c
-	 process_one_work+0x150/0x3a4
-	 worker_thread+0x190/0x318
+[ dhansen: use arch_pkeys_enabled() to follow arm ]
 
-Apply a similar approach to commit ef7607ab1c8ad ("ALSA: seq: midi:
-Serialize output teardown with event_input") which fixed the same issue
-in the output direction, but updated to use RCU following Takashi Iwai's
-proposed follow-on patch [1].
-
-With this change in place, midisynth_unsubscribe() clears the input file
-so snd_midi_input_event() will not re-trigger the stream and will be
-quiesced by the cancel_work_sync() in snd_rawmidi_input_trigger().
-
-[1] https://lore.kernel.org/linux-sound/20260813144224.753399-1-tiwai@suse.de/
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Link: https://patch.msgid.link/20260813150810.795393-1-jkeeping@inmusicbrands.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: e8c24d3a23a4 ("x86/pkeys: Allocation/free syscalls")
+Signed-off-by: Bijan Tabatabai <btabatabai@wisc.edu>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Link: https://patch.msgid.link/20260716220604.26452-1-bijan311@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_midi.c | 37 +++++++++++++++++++++++++++++++------
- 1 file changed, 31 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/pkeys.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/core/seq/seq_midi.c b/sound/core/seq/seq_midi.c
-index 50e39b34f5ac5..2006313dc9255 100644
---- a/sound/core/seq/seq_midi.c
-+++ b/sound/core/seq/seq_midi.c
-@@ -42,6 +42,8 @@ struct seq_midisynth {
- 	struct snd_rawmidi *rmidi;
- 	int device;
- 	int subdevice;
-+	struct snd_rawmidi_substream __rcu *input_substream;
-+	snd_use_lock_t input_use_lock;	/* in-flight event_input users */
- 	struct snd_rawmidi_file input_rfile;
- 	snd_use_lock_t output_use_lock;	/* in-flight event_input users */
- 	struct snd_rawmidi_substream __rcu *output_substream;
-@@ -76,6 +78,14 @@ static void snd_midi_input_event(struct snd_rawmidi_substream *substream)
- 	msynth = runtime->private_data;
- 	if (msynth == NULL)
- 		return;
-+
-+	scoped_guard(rcu) {
-+		if (rcu_dereference(msynth->input_substream) != substream)
-+			return;
-+
-+		snd_use_lock_use(&msynth->input_use_lock);
-+	}
-+
- 	memset(&ev, 0, sizeof(ev));
- 	while (runtime->avail > 0) {
- 		res = snd_rawmidi_kernel_read(substream, buf, sizeof(buf));
-@@ -95,6 +105,8 @@ static void snd_midi_input_event(struct snd_rawmidi_substream *substream)
- 			memset(&ev, 0, sizeof(ev));
- 		}
- 	}
-+
-+	snd_use_lock_free(&msynth->input_use_lock);
- }
+diff --git a/arch/x86/include/asm/pkeys.h b/arch/x86/include/asm/pkeys.h
+index 2e6c04d8a45b4..32d327609cc41 100644
+--- a/arch/x86/include/asm/pkeys.h
++++ b/arch/x86/include/asm/pkeys.h
+@@ -89,6 +89,9 @@ int mm_pkey_alloc(struct mm_struct *mm)
+ 	u16 all_pkeys_mask = ((1U << arch_max_pkey()) - 1);
+ 	int ret;
  
- static int dump_midi(struct snd_rawmidi_substream *substream, const char *buf, int count)
-@@ -177,6 +189,7 @@ static int snd_seq_midisynth_new(struct seq_midisynth *msynth,
- 	msynth->card = card;
- 	msynth->device = device;
- 	msynth->subdevice = subdevice;
-+	snd_use_lock_init(&msynth->input_use_lock);
- 	snd_use_lock_init(&msynth->output_use_lock);
- 	return 0;
- }
-@@ -187,28 +200,31 @@ static int midisynth_subscribe(void *private_data, struct snd_seq_port_subscribe
- 	int err;
- 	struct seq_midisynth *msynth = private_data;
- 	struct snd_rawmidi_runtime *runtime;
-+	struct snd_rawmidi_file rfile = {};
- 	struct snd_rawmidi_params params;
- 
- 	/* open midi port */
- 	err = snd_rawmidi_kernel_open(msynth->rmidi, msynth->subdevice,
- 				      SNDRV_RAWMIDI_LFLG_INPUT,
--				      &msynth->input_rfile);
-+				      &rfile);
- 	if (err < 0) {
- 		pr_debug("ALSA: seq_midi: midi input open failed!!!\n");
- 		return err;
- 	}
--	runtime = msynth->input_rfile.input->runtime;
-+	runtime = rfile.input->runtime;
- 	memset(&params, 0, sizeof(params));
- 	params.avail_min = 1;
- 	params.buffer_size = input_buffer_size;
--	err = snd_rawmidi_input_params(msynth->input_rfile.input, &params);
-+	err = snd_rawmidi_input_params(rfile.input, &params);
- 	if (err < 0) {
--		snd_rawmidi_kernel_release(&msynth->input_rfile);
-+		snd_rawmidi_kernel_release(&rfile);
- 		return err;
- 	}
- 	snd_midi_event_reset_encode(msynth->parser);
- 	runtime->event = snd_midi_input_event;
- 	runtime->private_data = msynth;
-+	msynth->input_rfile = rfile;
-+	rcu_assign_pointer(msynth->input_substream, rfile.input);
- 	snd_rawmidi_kernel_read(msynth->input_rfile.input, NULL, 0);
- 	return 0;
- }
-@@ -218,10 +234,19 @@ static int midisynth_unsubscribe(void *private_data, struct snd_seq_port_subscri
- {
- 	int err;
- 	struct seq_midisynth *msynth = private_data;
-+	struct snd_rawmidi_file rfile;
- 
--	if (snd_BUG_ON(!msynth->input_rfile.input))
-+	rcu_assign_pointer(msynth->input_substream, NULL);
-+	synchronize_rcu();
-+	snd_use_lock_sync(&msynth->input_use_lock);
++	if (!arch_pkeys_enabled())
++		return -1;
 +
-+	rfile = msynth->input_rfile;
-+	msynth->input_rfile = (struct snd_rawmidi_file){};
-+
-+	if (snd_BUG_ON(!rfile.input))
- 		return -EINVAL;
--	err = snd_rawmidi_kernel_release(&msynth->input_rfile);
-+
-+	err = snd_rawmidi_kernel_release(&rfile);
- 	return err;
- }
- 
+ 	/*
+ 	 * Are we out of pkeys?  We must handle this specially
+ 	 * because ffz() behavior is undefined if there are no
 -- 
 2.53.0
 
