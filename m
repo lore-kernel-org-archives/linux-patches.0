@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1653750D6;
-	Sat, 12 Sep 2026 09:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3EC3208D0;
+	Sat, 12 Sep 2026 09:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205896; cv=none; b=HZkTu7nqX6pMq1fIGLN0ThSxArspUPR0sLAPlB3NbjrHrjIdkPzEiAFcY8BG46SlAq8o6g7pB6k61auuMJjnhqtjhmBJZsFANiAn9bnnJ22MuBfrOpx8QfvqwTiSMAPf8byQ1raltBwYkJP/VvxFpCV1M77lV39zmS8O473hNlM=
+	t=1789205900; cv=none; b=klfU2sulHJtKOnpRo+HU6DnEG0v7kd9akyWt9zHAW0kBB1QnIlDQwKLOjIsiT5hF8rYRlzU5ULZxmdAOzDWl9M9Hvnp8i6YXs6UHFGYeKexZDyWBxgrUnJCIb4fjAf9vrKKKiXYKKX6hbW2+xlKfyKKe0Ex6ZFe5Zfkr6ZRi2is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205896; c=relaxed/simple;
-	bh=bh+2AQdiglpma9tUZj65ujr06+uYr1pW+QYnihssQuM=;
+	s=arc-20240116; t=1789205900; c=relaxed/simple;
+	bh=hdHzlCalMgDW8HpbCB9ZTTmvw8eUSkiJ9bws3eVhilM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eTfC34dOy9cOZrNArCpGvLbREhi6iqSctowJ9N1yQOAb+F8E9g/COr2wQ1MyyrV4O9+HX4JoeakCwC5jCM88867wSBhp2awYcJtgpKE7Es6QFjRIaI89PiP/NLXK6JBseXacK/rB6SKqSn3eezm5QSOtH8yG+LwSDQfeI3YRGVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4fzZkSz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bx5RIMshSyZ62G/IYujISkpDLmODe2GtxdFhbz3W5wQW3073K5sEnwkljK3qgvSg2+tnGsOA6pbu6EXU1FcBjH+MsELLRBRJeWjKwfkZoNSvrPT5l3Uhsy9P9nsdgKr5HZJsgsYLxDoecti7VdYpeGeANESmx75n3BrRtrI64vM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QmwCSVf3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4fzZkSz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8525C1F000FF;
-	Sat, 12 Sep 2026 09:38:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmwCSVf3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB34F1F000FF;
+	Sat, 12 Sep 2026 09:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205894;
-	bh=BT2MowRkUfFdSndi9us/oj3t7RAbAqajiDnPQk2ghO8=;
+	s=korg; t=1789205899;
+	bh=x/MOUtvrJKcQYTvcj3flHlkontubyTO8F9RnSpWqyvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A4fzZkSzxSOOhRCcDz7RTg2bSk6JFTt/MkUpUGaW1opj+8goKLUmf3luTWLADQV6d
-	 5cKLib4JvJ0atyMakTq3A6ou/QOHu42ex9A8Dyl+utWyFRHIagF58yhz+NWf7PI5xk
-	 dXgW+3PaPdD00iHrZcKsn6haZCuJSIkYmPhnfbG4=
+	b=QmwCSVf3r9hXzLmp87KMhtba+Ra5xxFy8G9Q2BTuJv97t1eSS3P0g+heGwDm1YPy+
+	 5MR+MBIPNI0QlU76Y0wLYIWFeGxa556VX7pyIZQE3mPz6D/7k9L4oJvVQWklFQ8Lp2
+	 yS8y0jxX/sc7H1UgGxjCg+65cqnkKmT9LxIJ5fvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	sashiko-bot@kernel.org,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0052/1518] i2c: qcom-cci: fix autosuspend cleanup
-Date: Sat, 12 Sep 2026 08:37:01 +0200
-Message-ID: <20260912065624.620868298@linuxfoundation.org>
+Subject: [PATCH 6.18 0053/1518] tracing: Take trace_array reference when opening options file
+Date: Sat, 12 Sep 2026 08:37:02 +0200
+Message-ID: <20260912065624.644270574@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,74 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit f98d4986482151a835b521a734722fe8dc5ca37d ]
+[ Upstream commit f2951ebd15c36a1ea4820a7f0cbb0b5f1c028b73 ]
 
-cci_probe() calls pm_runtime_use_autosuspend(), but the remove path
-does not call the matching pm_runtime_dont_use_autosuspend() before
-disabling runtime PM.
+The options files do not take the trace_array reference for the options
+they represent. This could cause a use-after-free kernel crash if one of
+these files is opened by one task and another task removes the instance
+that the option is for. Because it doesn't take a reference upon opening,
+it will not stop the removal which will free the options descriptor that
+is being used.
 
-If the autosuspend delay is set to a negative value while autosuspend
-is enabled, the runtime PM core increments usage_count to prevent
-runtime suspend. Without undoing the autosuspend setting during
-teardown, this reference is not dropped and usage_count remains
-unbalanced.
+As the options are somewhat dynamic in their creation at boot up, each
+file represents a flag in the trace_array. The trace_array has an array of
+indexes to represent each of these flags that is stored in the
+trace_flags_index array. The address of the index array element is used to
+pass to the inode->i_private pointer. Then that element is read which
+holds the index (which represents the flag) and then the index is used to
+calculate the trace_array descriptor from its trace_flags_index array.
 
-Use devm_pm_runtime_set_active_enabled() to manage the runtime PM
-state. Its managed cleanup disables autosuspend and runtime PM and
-restores the suspended state on probe failure and driver removal.
-Remove the now redundant manual runtime PM cleanup.
+One issue is that the index element can not be referenced until the
+trace_array's reference is taken. To handle this, create a new helper
+function called: trace_array_options_get() that will iterate all the
+existing trace_arrays in the ftrace_trace_arrays list (under the
+trace_types_lock), and compare the passed in address of the index element
+with the entire array of the trace_array's trace_flags_index array.
+If it matches, then up the corresponding trace_array's reference and
+return.
 
-This issue was found by manual code inspection.
-
-Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Cc: <stable@vger.kernel.org> # v5.8+
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260812094425.3515179-1-lgs201920130244@gmail.com
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260902121918.5a9e9d1b@gandalf.local.home
+Fixes: 577b785f55168 ("tracing: add tracer dependent options to options directory")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/linux-trace-kernel/20260828135858.2AC501F000E9@smtp.kernel.org/
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+[ replaced the unavailable __trace_array_get(tr) call with tr->ref++ and return 0. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-qcom-cci.c |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ kernel/trace/trace.c |   69 ++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 65 insertions(+), 4 deletions(-)
 
---- a/drivers/i2c/busses/i2c-qcom-cci.c
-+++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -599,9 +599,11 @@ static int cci_probe(struct platform_dev
- 	cci_init(cci);
- 
- 	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
-+	ret = devm_pm_runtime_set_active_enabled(dev);
-+	if (ret)
-+		goto disable_clocks;
-+
- 	pm_runtime_use_autosuspend(dev);
--	pm_runtime_set_active(dev);
--	pm_runtime_enable(dev);
- 
- 	for (i = 0; i < cci->data->num_masters; i++) {
- 		if (!cci->master[i].cci)
-@@ -617,8 +619,6 @@ static int cci_probe(struct platform_dev
- 	return 0;
- 
- error_i2c:
--	pm_runtime_disable(dev);
--	pm_runtime_dont_use_autosuspend(dev);
- 
- 	for (--i ; i >= 0; i--) {
- 		if (cci->master[i].cci) {
-@@ -644,9 +644,6 @@ static void cci_remove(struct platform_d
- 			cci_halt(cci, i);
- 		}
- 	}
--
--	pm_runtime_disable(&pdev->dev);
--	pm_runtime_set_suspended(&pdev->dev);
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9393,11 +9393,72 @@ trace_options_core_write(struct file *fi
+ 	return cnt;
  }
  
- static const struct cci_data cci_v1_data = {
++/*
++ * The tr_index is the address of a trace_array->trace_flags_index[]
++ * element that holds the index of the trace flag. But since the
++ * trace_array reference has not been taken yet, it cannot be referenced
++ * as it could have been freed by a rmdir of the instance the trace_array
++ * represents.
++ *
++ * Search the list of trace_arrays and compare the tr_index to the
++ * address of the entire trace_array trace_flags_index array for each
++ * trace_array in the list. If one is matched, then take the reference
++ * and return it. If not, the trace_array no longer exits.
++ */
++static int trace_array_options_get(void *tr_index)
++{
++	struct trace_array *tr;
++	int ret;
++
++	ret = security_locked_down(LOCKDOWN_TRACEFS);
++	if (ret)
++		return ret;
++
++	if (tracing_disabled)
++		return -ENODEV;
++
++	guard(mutex)(&trace_types_lock);
++	list_for_each_entry(tr, &ftrace_trace_arrays, list) {
++		if (tr_index >= (void *)&tr->trace_flags_index[0] &&
++		    tr_index < (void *)&tr->trace_flags_index[TRACE_FLAGS_MAX_SIZE]) {
++			tr->ref++;
++			return 0;
++		}
++	}
++	return -ENODEV;
++}
++
++static int trace_options_open(struct inode *inode, struct file *filp)
++{
++	void *tr_index = inode->i_private;
++
++	if (trace_array_options_get(tr_index) < 0)
++		return -ENODEV;
++
++	filp->private_data = tr_index;
++
++	return 0;
++}
++
++static int trace_options_release(struct inode *inode, struct file *filp)
++{
++	void *tr_index = filp->private_data;
++	struct trace_array *tr;
++	unsigned int index;
++
++	get_tr_index(tr_index, &tr, &index);
++
++	trace_array_put(tr);
++
++	return 0;
++}
++
+ static const struct file_operations trace_options_core_fops = {
+-	.open = tracing_open_generic,
+-	.read = trace_options_core_read,
+-	.write = trace_options_core_write,
+-	.llseek = generic_file_llseek,
++	.open		= trace_options_open,
++	.read		= trace_options_core_read,
++	.write		= trace_options_core_write,
++	.llseek		= generic_file_llseek,
++	.release	= trace_options_release,
+ };
+ 
+ struct dentry *trace_create_file(const char *name,
 
 
