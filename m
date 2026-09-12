@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B0823BD03;
-	Sat, 12 Sep 2026 15:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062E5309EEB;
+	Sat, 12 Sep 2026 15:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225665; cv=none; b=B3DM8iBeCwnaSuM1omsKlL7gbndl7mJK7QdUOWsUxBCAgXFl8eAlPD3fJbSP/esFrHMdW1tzW109iAfb0bCXf+kAo4VBb21oIxqp5xkJYO1x8FtQQiJcpuc3oOhcNbpvJTrzWypmlLfs7zsj5tMB2rv9a/O3/9dwiBiHdMW+DyM=
+	t=1789225670; cv=none; b=n9x8bg2fS6+P7InBzwC5/p+N9CMf49LeJUpGpsHdTwGRgQBlA+AaVpIebnMSpAjgvTZDoV7kWIZx6VIDejs4DL7uBkQihuc3ScAqT9ADhNaEvce2K84orlRCpEcshg3DrUW/Ty0LSx3qt11Mv1Ofqs/cHGPjnFCuz1dc/RRrdyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225665; c=relaxed/simple;
-	bh=bvcoiBOJD7ysL9ggLDZOuazNgYtvUjKWSuAu2OaMxQg=;
+	s=arc-20240116; t=1789225670; c=relaxed/simple;
+	bh=7sweXULRf3gGwy5MuiAzGc4vRutOLPHWpcUDf/k5OXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QYRHwPA1oJap8AhglmDRGvzCadpeeA/uyhHZaYgLGpG/+TfMsZsWyZAPN9M/U+O38P79LtmyZo0RT9OW31XdRfE5efCCf087pLRf3Iem1VvT6HA5gAQos2nrzpRXAOPQ4c43zkI5Hv/pe2Vk4ZWhM1ra66AKsosWuWfHGCpVt/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NWtd3uPu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZZYKIZm1LkUWstoG8JLlWNY9otiWGWKcaVtHENBWCo8yDQjZMlksR9OO2/oggoq2foWrxlIZyxKarIRvLJEGsX/oxAn+bRlx2kgRFZuZoD+mu/DYH2xESRjHI2QQXqXPAQ4C6zZWcCK0N2BA4xJyOKJQqaXYVkzKmsDYfuMFybo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/am7Ok6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NWtd3uPu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB2D1F000FF;
-	Sat, 12 Sep 2026 15:07:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/am7Ok6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78381F00893;
+	Sat, 12 Sep 2026 15:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225663;
-	bh=m/v/hkMZifgEWkUBDx9o1uUfbLWVDXg0R9DjSpPWUj8=;
+	s=korg; t=1789225668;
+	bh=mt6EvckXBHqCO3+VPRaKgq1iRfxQWBEldq2KNKzkItM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NWtd3uPudTE/6jT6BOPPeIGujK6tvFZR0XMZTMt/MwSh8iEro/Fu0DPIw/pvsWS4J
-	 iCotrAlmznSBRn71xDWqBUoAY1eMFbcQcOCv7vplxjNMmycbIiHxeoGV/+Ha2G3pe+
-	 2S4PwCtCJUuTJ9IAOZ/co1+8/EvlWDKNYsUThkLU=
+	b=N/am7Ok6fOHXNbE9cLm56GL31EyDWHL5nfCGWmjfyw9wCrJ80Aap2yzHaWTCr2hQV
+	 sUVj3q34ZPL2IQLZlzZzOrOfbZH42ct1dxiZGfvu4JCN7zScbJiWs6+rQfQsRWkp6M
+	 x7U4tloYeBZgMBuCXNJXJg1YpOIOIB+CDIrryh8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marius Cristea <marius.cristea@microchip.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Huisong Li <lihuisong@huawei.com>,
+	Adam Young <admiyo@os.amperecomputing.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1245/1424] hwmon: (emc1403) Drop hysteresis for low limit temperature
-Date: Sat, 12 Sep 2026 09:01:17 +0200
-Message-ID: <20260912065635.164798679@linuxfoundation.org>
+Subject: [PATCH 6.6 1228/1424] mailbox: pcc: Always map the shared memory communication address
+Date: Sat, 12 Sep 2026 09:01:00 +0200
+Message-ID: <20260912065634.782729397@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,124 +53,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marius Cristea <marius.cristea@microchip.com>
+From: Sudeep Holla <sudeep.holla@arm.com>
 
-[ Upstream commit 75f2c0b3690702c90863c2e138cb5520670845ea ]
+[ Upstream commit fa362ffafa51b08cf8e2fcca38e056332f6b9b05 ]
 
-Remove the hysteresis for low temperature limit, in hardware
-the hysteresis is applied only to the maxim limit and the
-critical limit temperature.
+Currently the shared memory communication address was mapped by the
+mailbox client drivers leading to all sorts of inconsistencies.
 
-Fixes: 54392ce4446e3 ("hwmon: (emc1403) Add support for min_hyst attributes")
-Signed-off-by: Marius Cristea <marius.cristea@microchip.com>
-Link: https://lore.kernel.org/r/20260813-emc1403_remove_min_hyst-v1-1-43a0d05d9f49@microchip.com
-[groeck: Updated subject]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+It also has resulted in the inconsistent attributes used while mapping
+the shared memory regions.
+
+In order to remove/eliminate any issues, let us ensures the shared
+memory address is always mapped and unmapped when the PCC channels are
+requested and release.
+
+We need to map them as the ACPI PCCT associates these shared memory
+with each channel subspace and may need use the status or the flags in
+the headers of those shared memory communication address regions to
+manage the transport/channel.
+
+Note, until all the drivers using PCC start using this mapped shmem,
+there might be double mapping of the shared memory address. This
+shouldn't have any impact on existing mbox client drivers.
+
+Since there are no users of pcc_chan_ioremap() and also it is mapped
+by default, we can stop exporting it and merge the functionality into
+pcc_mbox_request_channel().
+
+Acked-by: Huisong Li <lihuisong@huawei.com>
+Tested-by: Huisong Li <lihuisong@huawei.com>
+Tested-by: Adam Young <admiyo@os.amperecomputing.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Stable-dep-of: 3360b088175d ("mailbox: pcc: Fix command timeout due to missed interrupt")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/hwmon/emc1403.rst |  8 ++++----
- drivers/hwmon/emc1403.c         | 27 +++++++++++----------------
- 2 files changed, 15 insertions(+), 20 deletions(-)
+ drivers/mailbox/pcc.c | 29 +++++++++--------------------
+ include/acpi/pcc.h    |  5 -----
+ 2 files changed, 9 insertions(+), 25 deletions(-)
 
-diff --git a/Documentation/hwmon/emc1403.rst b/Documentation/hwmon/emc1403.rst
-index 57f833b1a800e..ebf2435a76a62 100644
---- a/Documentation/hwmon/emc1403.rst
-+++ b/Documentation/hwmon/emc1403.rst
-@@ -71,10 +71,10 @@ and EMC14x8 support eight sensors (one internal, seven external).
+diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
+index 1d4191cb91380..890a187fb63c7 100644
+--- a/drivers/mailbox/pcc.c
++++ b/drivers/mailbox/pcc.c
+@@ -372,6 +372,7 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
+ struct pcc_mbox_chan *
+ pcc_mbox_request_channel(struct mbox_client *cl, int subspace_id)
+ {
++	struct pcc_mbox_chan *pcc_mchan;
+ 	struct pcc_chan_info *pchan;
+ 	struct mbox_chan *chan;
+ 	int rc;
+@@ -390,7 +391,14 @@ pcc_mbox_request_channel(struct mbox_client *cl, int subspace_id)
+ 	if (rc)
+ 		return ERR_PTR(rc);
  
- The chips implement three limits for each sensor: low (tempX_min), high
- (tempX_max) and critical (tempX_crit.) The chips also implement an
--hysteresis mechanism which applies to all limits. The relative difference
--is stored in a single register on the chip, which means that the relative
--difference between the limit and its hysteresis is always the same for
--all three limits.
-+hysteresis mechanism which applies to high and critical limits. The relative
-+difference is stored in a single register on the chip, which means that the
-+relative difference between the limit and its hysteresis is always the same
-+for high and critical limits.
- 
- This implementation detail implies the following:
- 
-diff --git a/drivers/hwmon/emc1403.c b/drivers/hwmon/emc1403.c
-index ad4fc64824bc4..288d540ebabf2 100644
---- a/drivers/hwmon/emc1403.c
-+++ b/drivers/hwmon/emc1403.c
-@@ -304,10 +304,9 @@ static int emc1403_get_hyst(struct thermal_data *data, int channel,
- 	ret = regmap_read(data->regmap, 0x21, &hyst);
- 	if (ret < 0)
- 		return ret;
--	if (map == temp_min)
--		*val = limit + hyst * 1000;
--	else
--		*val = limit - hyst * 1000;
+-	return &pchan->chan;
++	pcc_mchan = &pchan->chan;
++	pcc_mchan->shmem = acpi_os_ioremap(pcc_mchan->shmem_base_addr,
++					   pcc_mchan->shmem_size);
++	if (pcc_mchan->shmem)
++		return pcc_mchan;
 +
-+	*val = limit - hyst * 1000;
-+
- 	return 0;
++	mbox_free_channel(chan);
++	return ERR_PTR(-ENXIO);
  }
+ EXPORT_SYMBOL_GPL(pcc_mbox_request_channel);
  
-@@ -323,9 +322,6 @@ static int emc1403_temp_read(struct thermal_data *data, u32 attr, int channel, l
- 	case hwmon_temp_input:
- 		ret = emc1403_get_temp(data, channel, ema1403_temp_map[attr], val);
- 		break;
--	case hwmon_temp_min_hyst:
--		ret = emc1403_get_hyst(data, channel, temp_min, val);
--		break;
- 	case hwmon_temp_max_hyst:
- 		ret = emc1403_get_hyst(data, channel, temp_max, val);
- 		break;
-@@ -494,7 +490,6 @@ static umode_t emc1403_temp_is_visible(const void *_data, u32 attr, int channel)
- 	case hwmon_temp_max_alarm:
- 	case hwmon_temp_crit_alarm:
- 	case hwmon_temp_fault:
--	case hwmon_temp_min_hyst:
- 	case hwmon_temp_max_hyst:
- 		return 0444;
- 	case hwmon_temp_min:
-@@ -524,35 +519,35 @@ static umode_t emc1403_is_visible(const void *data, enum hwmon_sensor_types type
- static const struct hwmon_channel_info * const emc1403_info[] = {
- 	HWMON_CHANNEL_INFO(temp,
- 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
--			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
-+			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
- 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
- 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM,
- 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
--			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
-+			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
- 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
- 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
- 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
--			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
-+			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
- 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
- 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
- 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
--			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
-+			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
- 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
- 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
- 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
--			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
-+			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
- 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
- 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
- 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
--			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
-+			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
- 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
- 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
- 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
--			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
-+			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
- 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
- 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
- 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
--			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
-+			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
- 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
- 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT
- 			   ),
+@@ -419,25 +427,6 @@ void pcc_mbox_free_channel(struct pcc_mbox_chan *pchan)
+ }
+ EXPORT_SYMBOL_GPL(pcc_mbox_free_channel);
+ 
+-int pcc_mbox_ioremap(struct mbox_chan *chan)
+-{
+-	struct pcc_chan_info *pchan_info;
+-	struct pcc_mbox_chan *pcc_mbox_chan;
+-
+-	if (!chan || !chan->cl)
+-		return -1;
+-	pchan_info = chan->con_priv;
+-	pcc_mbox_chan = &pchan_info->chan;
+-
+-	pcc_mbox_chan->shmem = acpi_os_ioremap(pcc_mbox_chan->shmem_base_addr,
+-					       pcc_mbox_chan->shmem_size);
+-	if (!pcc_mbox_chan->shmem)
+-		return -ENXIO;
+-
+-	return 0;
+-}
+-EXPORT_SYMBOL_GPL(pcc_mbox_ioremap);
+-
+ /**
+  * pcc_send_data - Called from Mailbox Controller code. Used
+  *		here only to ring the channel doorbell. The PCC client
+diff --git a/include/acpi/pcc.h b/include/acpi/pcc.h
+index 699c1a37b8e78..0462bb9da6513 100644
+--- a/include/acpi/pcc.h
++++ b/include/acpi/pcc.h
+@@ -38,7 +38,6 @@ struct pcc_mbox_chan {
+ extern struct pcc_mbox_chan *
+ pcc_mbox_request_channel(struct mbox_client *cl, int subspace_id);
+ extern void pcc_mbox_free_channel(struct pcc_mbox_chan *chan);
+-extern int pcc_mbox_ioremap(struct mbox_chan *chan);
+ #else
+ static inline struct pcc_mbox_chan *
+ pcc_mbox_request_channel(struct mbox_client *cl, int subspace_id)
+@@ -46,10 +45,6 @@ pcc_mbox_request_channel(struct mbox_client *cl, int subspace_id)
+ 	return ERR_PTR(-ENODEV);
+ }
+ static inline void pcc_mbox_free_channel(struct pcc_mbox_chan *chan) { }
+-static inline int pcc_mbox_ioremap(struct mbox_chan *chan)
+-{
+-	return 0;
+-};
+ #endif
+ 
+ #endif /* _PCC_H */
 -- 
 2.53.0
 
