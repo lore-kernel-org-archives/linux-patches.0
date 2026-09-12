@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CC547208D;
-	Sat, 12 Sep 2026 11:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C759A429000;
+	Sat, 12 Sep 2026 11:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211494; cv=none; b=eFwYcX24ybgf9CWQUiLP/rCPVgwgS+PEyk+YJkBa+oWnr7LIMvqjoZOWDz3Z9bP7iLqgkUH9tDHdqBRNNJCV/AI4B+oK1FLZKjfE0bKPnw6ctRUQ3dpG21bvWkhBdJduQT3AvegttVYQKPDA2ZqLXuYZh5E3gibTfYuWt7hBcL8=
+	t=1789211500; cv=none; b=lU/oP0801oN16kvQpoUykxEQJeMzc8UQgFxZmq8PlbLr3Jx0HNzPMyL0lq92LyxJ3bHas7Di0iG5dHJJ5N5YT0mYKV5SNUvc4XIzYLBaVZcq3xEK3rQUbPd176E5DZv+QGD3YQz3Y7JXzin6YQhfwpmpG9i5KqpW2agXZh4MVl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211494; c=relaxed/simple;
-	bh=+bCZyYQcNnzdKeg+d4G+LGflvBbv5kDcYAOI8vrpbTk=;
+	s=arc-20240116; t=1789211500; c=relaxed/simple;
+	bh=6yrdUuzHQyREQdQkUAaEcNOxy3QvRvusJDGzHAey3Wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oAqDM68yN5KiOVyh8HSdDw+HPQLfyKdlNOf4npUSWTXNRLKlqQKTDcNqUxqTQXoUl9Zg+o+LvtklO6oEaZFOcqVPPbD5iw2ZOB4JcRbsIt4HiNUCKl0DKwe/dNmCP4x53mKXlpAMeN4jdfNhSbouBY+IJIP9mxsCjzRNg8gf6Vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Jwch+wN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DpQIl7zg9TQNsGcWBgyvHZulhzblXhMGFZBbJEoYRe+RlxyhNMV3uV3SYK+xQH1tLty6ZMrWLV25mw2iPMhsYWr3vkm63m7hEQvONBRj/LoJPRWIS9zNSr9x9YvaGtZT7i3lf3DLAGRD9ktuWoVuQO3UBZpwSnqZ7CxrYRqPFu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTMLOx7J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Jwch+wN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F9A1F000FF;
-	Sat, 12 Sep 2026 11:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTMLOx7J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342741F000FF;
+	Sat, 12 Sep 2026 11:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211493;
-	bh=tqC5XI0RRc2W2STWlvh72jFLiCiWsHRnQxmXbt9ScII=;
+	s=korg; t=1789211498;
+	bh=KeWvEzEtadshxBxbcHaRfG8VlvRmWOgPTYB5jXw0uxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Jwch+wNhyZUcIRrSq80++B4j+f45X7LMz+fDW7eP7waFjEnizoeIAUjr9GSMAN+2
-	 jA3VLDonwqxxnjSaPFRVNRE9uIdsuNi6VCTC/Ju0oQJydeD7l897Kc31qK4vEVI4rc
-	 EaKBtHL6NEWkTNu9Okop/v1unk72Zp00dqyt+HEg=
+	b=bTMLOx7JZVBYPhaSh+RThPmq01bqIBz1z1QBoy3FARZ2RWUSq728AdbcglJZxNSJN
+	 98dumoAn22OWooBQUYZ6glgOFfIh6lpZJAU+mQgLnjzwjchYilADTMBde3fpAtPYwW
+	 APnsGS+6eQmpGW1CyFpaMpGviQUts0pLgT9LUxjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Blaszczyk <michalblk@google.com>,
-	Tejun Heo <tj@kernel.org>,
+	Zhushuai Yin <yinzhushuai@huawei.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1199/1518] selftests/sched_ext: Fix flaky ddsp failure tests on busy systems
-Date: Sat, 12 Sep 2026 08:56:08 +0200
-Message-ID: <20260912065650.606555069@linuxfoundation.org>
+Subject: [PATCH 6.18 1200/1518] crypto: hisilicon/sec2 - fix CCM algorithm long packet failure
+Date: Sat, 12 Sep 2026 08:56:09 +0200
+Message-ID: <20260912065650.629932378@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,86 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Blaszczyk <michalblk@google.com>
+From: Zhushuai Yin <yinzhushuai@huawei.com>
 
-[ Upstream commit e72979d3264a87a6a2dfb44fe0f5723a17d2ef84 ]
+[ Upstream commit b82f60be50c87b3d75e207852c5ca74fa18f66cf ]
 
-The ddsp_vtimelocal_fail and ddsp_bogus_dsq_fail tests skip calling
-scx_bpf_dsq_insert_vtime() if scx_bpf_pick_idle_cpu() fails to find an idle
-CPU (returns a negative error code). On loaded systems, this results in the
-tests skipping the very assertions they are meant to verify.
+In the CCM B0 block the message-length field Q spans L bytes, where
+L (cl in the driver) is derived from the cipher IV flags byte as
+c_ivin[0] + 1. set_aead_auth_iv() hardcoded writing only the last 2
+bytes of a_ivin with cryptlen, implicitly assuming cl = 2.
 
-Eliminate this flakiness by falling back to prev_cpu if no idle CPU is
-found, ensuring the illegal dispatch operations are unconditionally
-attempted and tested.
+When cl = 3 (a shorter nonce yielding a 3-byte length field) and the
+packet is longer than 65535 bytes, cryptlen no longer fits in 2 bytes.
+The dropped high byte made the auth IV built by the driver differ from
+the one consumed by the hardware, so the software/hardware comparison
+failed and the CCM request errored out.
 
-Fixes: a5db7817af78 ("sched_ext: Add selftests")
-Signed-off-by: Michal Blaszczyk <michalblk@google.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Write the last cl bytes of a_ivin in a loop driven by the IV's CL
+value, so the length-field width always matches the algorithm
+configuration instead of assuming a fixed 2-byte field.
+
+Fixes: c16a70c1f253 ("crypto: hisilicon/sec - add new algorithm mode for AEAD")
+Signed-off-by: Zhushuai Yin <yinzhushuai@huawei.com>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../sched_ext/ddsp_bogus_dsq_fail.bpf.c       | 20 +++++++++----------
- .../sched_ext/ddsp_vtimelocal_fail.bpf.c      | 13 ++++++------
- 2 files changed, 15 insertions(+), 18 deletions(-)
+ drivers/crypto/hisilicon/sec2/sec_crypto.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c b/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
-index 6f4c3f5a1c5d9..7ef9de7b27ebf 100644
---- a/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
-+++ b/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
-@@ -14,18 +14,16 @@ s32 BPF_STRUCT_OPS(ddsp_bogus_dsq_fail_select_cpu, struct task_struct *p,
- 		   s32 prev_cpu, u64 wake_flags)
- {
- 	s32 cpu = scx_bpf_pick_idle_cpu(p->cpus_ptr, 0);
-+	if (cpu < 0)
-+		cpu = prev_cpu;
+diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+index 2d0b248c59ebd..66d76134f1dfa 100644
+--- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
++++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+@@ -96,7 +96,6 @@
+ #define IV_FLAGS_OFFSET	0x6
+ #define IV_CM_OFFSET		0x3
+ #define IV_LAST_BYTE1		1
+-#define IV_LAST_BYTE2		2
+ #define IV_LAST_BYTE_MASK	0xFF
+ #define IV_CTR_INIT		0x1
+ #define IV_BYTE_OFFSET		0x8
+@@ -1697,7 +1696,7 @@ static void set_aead_auth_iv(struct sec_ctx *ctx, struct sec_req *req)
+ 	struct sec_cipher_req *c_req = &req->c_req;
+ 	u32 data_size = aead_req->cryptlen;
+ 	u8 flage = 0;
+-	u8 cm, cl;
++	u8 cm, cl, i;
  
--	if (cpu >= 0) {
--		/*
--		 * If we dispatch to a bogus DSQ that will fall back to the
--		 * builtin global DSQ, we fail gracefully.
--		 */
--		scx_bpf_dsq_insert_vtime(p, 0xcafef00d, SCX_SLICE_DFL,
--				       p->scx.dsq_vtime, 0);
--		return cpu;
--	}
--
--	return prev_cpu;
-+	/*
-+	 * If we dispatch to a bogus DSQ that will fall back to the
-+	 * builtin global DSQ, we fail gracefully.
-+	 */
-+	scx_bpf_dsq_insert_vtime(p, 0xcafef00d, SCX_SLICE_DFL,
-+				 p->scx.dsq_vtime, 0);
-+	return cpu;
+ 	/* the specification has been checked in aead_iv_demension_check() */
+ 	cl = c_req->c_ivin[0] + 1;
+@@ -1721,15 +1720,16 @@ static void set_aead_auth_iv(struct sec_ctx *ctx, struct sec_req *req)
+ 	 * the last 32bit is counter's initial number,
+ 	 * but the nonce uses the first 16bit
+ 	 * the tail 16bit fill with the cipher length
++	 * When CL is 3, the tail 24bit fill with the cipher length.
+ 	 */
+ 	if (!c_req->encrypt)
+ 		data_size = aead_req->cryptlen - authsize;
+ 
+-	a_req->a_ivin[ctx->c_ctx.ivsize - IV_LAST_BYTE1] =
+-			data_size & IV_LAST_BYTE_MASK;
+-	data_size >>= IV_BYTE_OFFSET;
+-	a_req->a_ivin[ctx->c_ctx.ivsize - IV_LAST_BYTE2] =
++	for (i = 1; i <= cl; i++) {
++		a_req->a_ivin[ctx->c_ctx.ivsize - i] =
+ 			data_size & IV_LAST_BYTE_MASK;
++		data_size >>= IV_BYTE_OFFSET;
++	}
  }
  
- void BPF_STRUCT_OPS(ddsp_bogus_dsq_fail_exit, struct scx_exit_info *ei)
-diff --git a/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c b/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
-index e4a55027778fd..82dca4cdc0a6c 100644
---- a/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
-+++ b/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
-@@ -14,15 +14,14 @@ s32 BPF_STRUCT_OPS(ddsp_vtimelocal_fail_select_cpu, struct task_struct *p,
- 		   s32 prev_cpu, u64 wake_flags)
- {
- 	s32 cpu = scx_bpf_pick_idle_cpu(p->cpus_ptr, 0);
-+	if (cpu < 0)
-+		cpu = prev_cpu;
- 
--	if (cpu >= 0) {
--		/* Shouldn't be allowed to vtime dispatch to a builtin DSQ. */
--		scx_bpf_dsq_insert_vtime(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL,
--					 p->scx.dsq_vtime, 0);
--		return cpu;
--	}
-+	/* Shouldn't be allowed to vtime dispatch to a builtin DSQ. */
-+	scx_bpf_dsq_insert_vtime(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL,
-+				 p->scx.dsq_vtime, 0);
- 
--	return prev_cpu;
-+	return cpu;
- }
- 
- void BPF_STRUCT_OPS(ddsp_vtimelocal_fail_exit, struct scx_exit_info *ei)
+ static void sec_aead_set_iv(struct sec_ctx *ctx, struct sec_req *req)
 -- 
 2.53.0
 
