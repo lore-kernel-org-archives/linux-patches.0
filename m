@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31891288B9;
-	Sat, 12 Sep 2026 16:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA011288B9;
+	Sat, 12 Sep 2026 16:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231171; cv=none; b=WI7WzV7JUyL1+GuLYSWwFsGKoljM84FAJCj4S/RPfTca8t5FoTteh4CR3YKhfGBaiRHDMAgOaW4evAfCWFKlcQraj7eIKxsh/T6DWU2msB7I01bTA2lZXNtOLOHj9dekdZOhu4iASLX4IAiZQ9y94eXdeAq+KDzAXUzHOqYWO50=
+	t=1789231176; cv=none; b=XRl1d7ZCDpMSJ7sy9MErp4EwIiNkWU7eSe7UwU6reyx76lX7mZOb9BLGQOqRXWarENLa1Qs36Y9kBRWxRmG4V5Tp3Iox2legMmJTi0mjhfI9zhs6u80J2RFsS4nV/igVX/od2N3i8KaQKTkBnlE3Pncx2WyMh3412gd4S6JzjO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231171; c=relaxed/simple;
-	bh=9IqTc0I6xPyY2qIKa7XG5LjH2/n5MMWPTGB07UZFRR0=;
+	s=arc-20240116; t=1789231176; c=relaxed/simple;
+	bh=RLvoT5Tyj8ogIukoE77/aGuJfkGQodIbR5pBgchzluA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QY1bV1hma79s/tXs3/5gH5EVLV8DPMFWfaMJfwlaOfNM5aLzDpzPtKuQrJaz7a+RaWb83ulHhoTFE4OmJTBfkYQXCpPrD63fxRedIJCBctsv2lQL06hwecGhtKRRK1WlvCCd9LN8oklgadK7uIrWbCG1jhLxkUlVy+yovuCOwPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9ohyAG1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s+qLnDzL8zIfndMSTNuj05tZtrcfJt2fpg6NfkPGKRhj2QLBIkgWwq7u6XWeesOlCwacHXoRDT94JRlQf0dJ5U3SEkpc3Hq+yNHDFkPf3U4SP9ToQ71QmGm3TCWpBTBM39eDOrdO23B1d4QCaSm94kv4iB5N4mrA+ns9AfQkXGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1H+OVU1D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9ohyAG1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDA91F000FF;
-	Sat, 12 Sep 2026 16:39:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1H+OVU1D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18EE51F000FF;
+	Sat, 12 Sep 2026 16:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231170;
-	bh=0MKvIdcN1SPJpHg+GBVnK2ZD0mPzdgxMnKnpE2EkpVM=;
+	s=korg; t=1789231175;
+	bh=a5OtlSpa9wNolxrN9ZOrPrIjN9aJMmR2WCkERmqg2wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P9ohyAG1tNCtQTSIcv1mPRkbxlCzuWddPU18z5NclRt7qELe6cQMNweSMNmk8ny/I
-	 hvgty87nGIVckcTMTrkYSXrNn44uD7agEscw+hjiN+TDOJgRN1ldwzA0C3V/rQtTzo
-	 MTlSczbqBiEHkovnqa2/2ipRaWrR+XCNkfCMzeBg=
+	b=1H+OVU1DUrEqdp6IcHX3YNc95tqD5JVZZ8HjYWCkwVwWyE2ePrVgTz64OOX5JawTe
+	 A0Bx0L6+UO1ok9HSwBVYg2BeYmYp3P+lWTtCEs9vmU3QCvErixJLtN/o3fC71wMmYN
+	 GD2EZCIHOtUy9ij4RCw6y1vARYcIvkDe0j/UVOrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0944/1191] perf synthetic-events: Fix divide by zero in perf_event__synthesize_threads
-Date: Sat, 12 Sep 2026 09:01:12 +0200
-Message-ID: <20260912065609.427899174@linuxfoundation.org>
+Subject: [PATCH 6.1 0945/1191] fbdev: tdfxfb: fix PCI enable cleanup with pcim_enable_device()
+Date: Sat, 12 Sep 2026 09:01:13 +0200
+Message-ID: <20260912065609.449507889@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,38 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 16a12a54e9a1151a37aab74914a51b86f7f58d0e ]
+[ Upstream commit 95a627143a696f70e17be5ed3b1e733bb6724b46 ]
 
-If scandir() finds no matching tasks in /proc, n is 0. If thread_nr is > 1,
-we bypass the single-thread fast path and then clamp thread_nr to n, making
-it 0. This results in a divide by zero when calculating num_per_thread.
+tdfxfb_probe() enables the PCI device with pci_enable_device(), but
+several failure paths after that point return without disabling it. The
+framebuffer_alloc() failure path returns -ENOMEM directly, and the later
+shared out_err path releases the framebuffer and returns -ENXIO without
+balancing the PCI enable state.
 
-Handle n <= 1 early to use the single-thread fast path and prevent the
-crash.
+The successful probe path has the same imbalance because tdfxfb_remove()
+releases the framebuffer, mappings and regions, but never calls
+pci_disable_device().
 
-Fixes: 340b47f510bb ("perf top: Implement multithreading for perf_event__synthesize_threads")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Use pcim_enable_device() so the PCI device is disabled automatically on
+probe failure and driver detach.
+
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/synthetic-events.c | 2 +-
+ drivers/video/fbdev/tdfxfb.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/synthetic-events.c b/tools/perf/util/synthetic-events.c
-index 2e55db810f8a3..70a8431937c54 100644
---- a/tools/perf/util/synthetic-events.c
-+++ b/tools/perf/util/synthetic-events.c
-@@ -1027,7 +1027,7 @@ int perf_event__synthesize_threads(struct perf_tool *tool,
- 	else
- 		thread_nr = nr_threads_synthesize;
+diff --git a/drivers/video/fbdev/tdfxfb.c b/drivers/video/fbdev/tdfxfb.c
+index 5554e9ec3d005..2fa4a45c3926c 100644
+--- a/drivers/video/fbdev/tdfxfb.c
++++ b/drivers/video/fbdev/tdfxfb.c
+@@ -1384,7 +1384,7 @@ static int tdfxfb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	if (err)
+ 		return err;
  
--	if (thread_nr <= 1) {
-+	if (thread_nr <= 1 || n <= 1) {
- 		err = __perf_event__synthesize_threads(tool, process,
- 						       machine,
- 						       needs_mmap, mmap_data,
+-	err = pci_enable_device(pdev);
++	err = pcim_enable_device(pdev);
+ 	if (err) {
+ 		printk(KERN_ERR "tdfxfb: Can't enable pdev: %d\n", err);
+ 		return err;
 -- 
 2.53.0
 
