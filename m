@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D454385521;
-	Sat, 12 Sep 2026 08:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078783F58F7;
+	Sat, 12 Sep 2026 08:33:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202009; cv=none; b=KNP2HUj7kwyMAaBd+dvs5tyZmbQ4YLOuXOF9Hs9TR5DnGVtA8ESIJkS7oNpaknqBQ6nj0ltbQI1CozHL3ZR78kVnqv72Js9d4HNAU/ldcBftYCqXr/YoJuPSsql21ywr6DjL2VGluG3i/6U3yotuFlC5PxyAjiH/jKIs3VDho8E=
+	t=1789202014; cv=none; b=JxxahC1Mb5LEOruY9fSs/OQEADJIuF65HsDs+SrYT8wXfg5zJX7Oen1rUWasWovtP9Aww2qxfS+VEk24tnMFjt1nYnjaA5B3l9NRjh2Fv2jPF5Apx966jgFX5GntbNtVuW5dMB0hwz5yq5Q/MRypfNEeDvBg2VbtZTYXUSyCBf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202009; c=relaxed/simple;
-	bh=qbG46cLTFUdZEBOz1TVWlZUIoYOeTxoru6IWQGgFeJ0=;
+	s=arc-20240116; t=1789202014; c=relaxed/simple;
+	bh=crs7x1qM5W3u9RA7M6lseVZ/SJC6ZVRXGcycLG4876o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ms28oKhB10pS32ZjUumuyyeQoZxDOZOUK1LpU1yb2BGc5W/wrWGbwb2a/cau7pJSBmy35AhUTY+r6Wjw2K5LWagEeUzdpOjMi1ptNbNFgtL8/kYjELdA29lEIZcU03v32ti34schSy6Ljf0Vuy6yK1CW89n68VJ6sw1c+NzRU10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pi1v1TB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JHMFuFYpfXfTwwcRk02/VMwYZ9rYXtSPrLffbwktlC8edeBBJOzaI8XqeNX3NBlMmzPO/MPzuaWbiPieoe+ggILM3ne5SNMY3sE+QpmCsav6xUxScA7c+kq+PsYIpcN8JwFlcG66Eoe7QIWxOeHMUIwKeYs5lGlnt/5CvL4eKE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EMHrwbAM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pi1v1TB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530151F000FF;
-	Sat, 12 Sep 2026 08:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EMHrwbAM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5330B1F000FF;
+	Sat, 12 Sep 2026 08:33:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202008;
-	bh=6DqbLHu74bmzPyw+8B9pmOod2MUhhoIIxBEU5R4lsyo=;
+	s=korg; t=1789202012;
+	bh=7YXG0JVtC6VSXi0DyykrVpyJSWtVaPYwrVehctZjd6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1pi1v1TB/JkhDcRoCx7Vl9w4AtbXffTTJn3ITYC3LZ22BRAWf5A3b3y7w4kp7wUkC
-	 1EAHvZUmZ7f6HmVldic9ctDmQx4Tj978mjy2iE/USUfGbudgsq/zZy4EeYEIG3c+Xx
-	 ApYbpFAzOjKLdNzyC12Ud0DvGwRBtKdE4mlJz3jM=
+	b=EMHrwbAMryaTPZU6cLZTXxv/fVZH86P9RM9JrnEI0OixohPVrDWT7876TfIzuLrFn
+	 Gq+k+NxJfdA4Z8Q5lExBz8/pOMQMbkE5gmp6OwC9cVMc/hWvm20zO8db4qJCOH9ZGN
+	 PZJgAVZRO8vL4iiGw/rSnxBsrbNy5jiWC6nROvR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Song Liu <songliubraving@fb.com>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1114/1815] perf libbfd: Fix memory leaks and NULL fclose in BPF disassembly
-Date: Sat, 12 Sep 2026 08:47:44 +0200
-Message-ID: <20260912065715.171185141@linuxfoundation.org>
+Subject: [PATCH 7.2 1115/1815] ocfs2: synchronize heartbeat callbacks with o2net teardown
+Date: Sat, 12 Sep 2026 08:47:45 +0200
+Message-ID: <20260912065715.194111143@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -48,97 +52,417 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit fe3ab00d55aa56b4d55cbc1150448f0aadd6732c ]
+[ Upstream commit 3e326f3bf16506873777444608e8b715aab74a7a ]
 
-symbol__disassemble_bpf_libbfd() has four resource management bugs:
+Patch series "ocfs2: harden heartbeat teardown races".
 
-1. free(prog_linfo) leaks internal arrays.  bpf_prog_linfo contains
-   raw_linfo, raw_jited_linfo, nr_jited_linfo_per_func, and
-   jited_linfo_func_idx pointers that are only freed by the proper
-   destructor bpf_prog_linfo__free().
+This series fixes two OCFS2 heartbeat/o2net teardown races found by
+KASAN.
 
-2. open_memstream(&buf, &buf_size) allocates a dynamic buffer that the
-   caller must free after fclose().  The function calls fclose(s) but
-   never free(buf), leaking the stream buffer on every call.
+This patch (of 2):
 
-3. args->line = strdup(srcline) is immediately consumed by
-   disasm_line__new(args) which internally calls strdup(args->line)
-   again via annotation_line__init().  The first strdup result is then
-   overwritten by args->line = buf + prev_buf_size without being freed.
+Heartbeat callbacks stay registered while configfs local-node teardown
+enters o2net_stop_listening().  A node-down event can still run through
+o2net_disconnect_node() and o2net_set_nn_state() while teardown is
+destroying o2net_wq, so the later queue/flush operations can hit a dead
+workqueue.  KASAN has caught this as a slab-use-after-free in
+__queue_work() with the call chain:
 
-4. If open_memstream() fails, the error path jumps to 'out:' which
-   calls fclose(s) with s == NULL — undefined behavior.
+KASAN slab-use-after-free in __queue_work+0x56/0xa90
+Read of size 4
+Call trace:
+  dump_stack_lvl+0x66/0xa0
+  print_report+0xce/0x630
+  __queue_work+0x56/0xa90
+  srso_alias_return_thunk+0x5/0xfbef5
+  __virt_addr_valid+0x19f/0x330
+  kasan_report+0xe0/0x110
+  __queue_delayed_work+0x58/0x1e0
+  queue_delayed_work_on+0xb4/0xc0
+  o2net_set_nn_state+0x467/0x840
+  o2net_disconnect_node+0x7b/0xe0
+  o2net_hb_node_down_cb+0x54/0x60
+  o2hb_run_event_list+0x236/0x2d0
+  o2hb_check_slot+0xad4/0xbc0
+  lock_release+0xc8/0x290
+  o2hb_check_slot+0x9ea/0xbc0
+  trace_hardirqs_on+0x18/0x130
+  o2hb_do_disk_heartbeat+0x646/0xb30 (fs/ocfs2/cluster/heartbeat.c:1079)
+  __lock_acquire+0x466/0x2260
+  lockdep_hardirqs_on_prepare+0xea/0x1a0
+  ktime_get_with_offset+0xe9/0x230
+  o2hb_thread+0x14e/0x770
+  kthread+0x1ad/0x1f0
+  ret_from_fork+0x3c9/0x540
+  __switch_to+0x2e9/0x730
+  ret_from_fork_asm+0x1a/0x30
+Allocated by task stack:
+  kasan_save_stack+0x33/0x60
+  kasan_save_track+0x14/0x30
+  __kasan_kmalloc+0xaa/0xb0
+  __kmalloc_noprof+0x292/0x760
+  __alloc_workqueue+0x736/0xc60
+  alloc_workqueue_noprof+0xb1/0x110
+  o2net_start_listening+0xe5/0x430
+  o2nm_node_local_store+0x184/0x310
+  configfs_write_iter+0x18a/0x210
+  vfs_write+0x469/0x810
+  ksys_write+0xd2/0x170
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Freed by task stack:
+  kasan_save_stack+0x33/0x60
+  kasan_save_track+0x14/0x30
+  kasan_save_free_info+0x3b/0x60
+  __kasan_slab_free+0x5f/0x80
+  kfree+0x313/0x590
+  rcu_core+0x4f4/0x1320
+  handle_softirqs+0x156/0x660
 
-Fix by using bpf_prog_linfo__free(), initializing buf to NULL, adding
-free(buf) after fclose(s), guarding fclose() against NULL, and removing
-the redundant strdup since annotation_line__init() makes its own copy.
+queue_delayed_work_on
+o2net_set_nn_state
+o2net_disconnect_node
+o2net_hb_node_down_cb
+o2hb_run_event_list
 
-Fixes: 6987561c9e86eace ("perf annotate: Enable annotation of BPF programs")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Song Liu <songliubraving@fb.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Keep heartbeat callbacks registered so quorum state still tracks node
+state, but stop them from driving o2net reconnect/disconnect work once
+local teardown starts. Mark the transport offline before destroying
+o2net_wq, wait for any in-flight heartbeat callback to finish, and delay
+bring-up replay until the new local node is published through
+o2nm_this_node().
+
+The replay also has to stay serialized with heartbeat callback delivery.
+Otherwise a live-node snapshot can be copied, a real hb_down callback
+can install -ENOTCONN for a peer, and the stale replay can call
+o2net_hb_node_up() for that same peer and queue reconnect work even
+though heartbeat is already down.
+
+The buggy scenario involves two paths, with each column showing the order
+within that path:
+
+local-node teardown:                 heartbeat node-down callback:
+1. configfs local-off enters         1. o2hb_run_event_list() invokes
+   o2net_stop_listening().              o2net_hb_node_down_cb().
+2. teardown heads for                2. the callback reaches
+   destroy_workqueue(o2net_wq).         o2net_disconnect_node() and
+                                        o2net_set_nn_state().
+3. teardown destroys and NULLs       3. the callback flushes or queues
+   o2net_wq.                            work through o2net_wq.
+
+Link: https://lore.kernel.org/20260624095310.763763-1-zzzccc427@gmail.com
+Link: https://lore.kernel.org/20260624095310.763763-2-zzzccc427@gmail.com
+Fixes: 98211489d414 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Assisted-by: Codex:gpt-5.5
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/libbfd.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fs/ocfs2/cluster/heartbeat.c   | 43 ++++++++++++++----
+ fs/ocfs2/cluster/heartbeat.h   |  5 ++
+ fs/ocfs2/cluster/nodemanager.c |  4 ++
+ fs/ocfs2/cluster/tcp.c         | 83 +++++++++++++++++++++++++++-------
+ fs/ocfs2/cluster/tcp.h         |  1 +
+ 5 files changed, 109 insertions(+), 27 deletions(-)
 
-diff --git a/tools/perf/util/libbfd.c b/tools/perf/util/libbfd.c
-index d6c2d9807fc9c..118f973298ea8 100644
---- a/tools/perf/util/libbfd.c
-+++ b/tools/perf/util/libbfd.c
-@@ -15,6 +15,7 @@
- #ifdef HAVE_LIBBPF_SUPPORT
- #include <bpf/bpf.h>
- #include <bpf/btf.h>
-+#include <bpf/libbpf.h>
- #endif
- #include <fcntl.h>
- #include <stdio.h>
-@@ -510,7 +511,7 @@ int symbol__disassemble_bpf_libbfd(struct symbol *sym __maybe_unused,
- 	char tpath[PATH_MAX];
- 	size_t buf_size;
- 	int nr_skip = 0;
--	char *buf;
-+	char *buf = NULL;
- 	bfd *bfdf;
- 	int ret;
- 	FILE *s;
-@@ -620,7 +621,7 @@ int symbol__disassemble_bpf_libbfd(struct symbol *sym __maybe_unused,
+diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
+index 90c0313654289..f15213f2f5960 100644
+--- a/fs/ocfs2/cluster/heartbeat.c
++++ b/fs/ocfs2/cluster/heartbeat.c
+@@ -1477,13 +1477,38 @@ void o2hb_init(void)
+ 	o2hb_debug_init();
+ }
  
- 		if (!annotate_opts.hide_src_code && srcline) {
- 			args->offset = -1;
--			args->line = strdup(srcline);
-+			args->line = (char *)srcline;
- 			args->line_nr = 0;
- 			args->fileloc = NULL;
- 			args->ms->sym = sym;
-@@ -645,9 +646,12 @@ int symbol__disassemble_bpf_libbfd(struct symbol *sym __maybe_unused,
+-/* if we're already in a callback then we're already serialized by the sem */
+-static void o2hb_fill_node_map_from_callback(unsigned long *map,
+-					     unsigned int bits)
++static void __o2hb_fill_node_map(unsigned long *map, unsigned int bits)
+ {
+ 	bitmap_copy(map, o2hb_live_node_bitmap, bits);
+ }
  
- 	ret = 0;
- out:
--	free(prog_linfo);
-+	bpf_prog_linfo__free(prog_linfo);
- 	btf__free(btf);
--	fclose(s);
-+	if (s) {
-+		fclose(s);
-+		free(buf);
++void o2hb_callback_read_lock(void)
++{
++	down_read(&o2hb_callback_sem);
++}
++
++void o2hb_callback_read_unlock(void)
++{
++	up_read(&o2hb_callback_sem);
++}
++
++void o2hb_synchronize_callbacks(void)
++{
++	down_write(&o2hb_callback_sem);
++	up_write(&o2hb_callback_sem);
++}
++
++/*
++ * Callers must already hold o2hb_callback_sem for read or write so the copy
++ * stays serialized with callback delivery.
++ */
++void o2hb_fill_node_map_locked(unsigned long *map, unsigned int bits)
++{
++	spin_lock(&o2hb_live_lock);
++	__o2hb_fill_node_map(map, bits);
++	spin_unlock(&o2hb_live_lock);
++}
++
+ /*
+  * get a map of all nodes that are heartbeating in any regions
+  */
+@@ -1491,11 +1516,9 @@ void o2hb_fill_node_map(unsigned long *map, unsigned int bits)
+ {
+ 	/* callers want to serialize this map and callbacks so that they
+ 	 * can trust that they don't miss nodes coming to the party */
+-	down_read(&o2hb_callback_sem);
+-	spin_lock(&o2hb_live_lock);
+-	o2hb_fill_node_map_from_callback(map, bits);
+-	spin_unlock(&o2hb_live_lock);
+-	up_read(&o2hb_callback_sem);
++	o2hb_callback_read_lock();
++	o2hb_fill_node_map_locked(map, bits);
++	o2hb_callback_read_unlock();
+ }
+ EXPORT_SYMBOL_GPL(o2hb_fill_node_map);
+ 
+@@ -2594,7 +2617,7 @@ int o2hb_check_node_heartbeating_no_sem(u8 node_num)
+ 	unsigned long testing_map[BITS_TO_LONGS(O2NM_MAX_NODES)];
+ 
+ 	spin_lock(&o2hb_live_lock);
+-	o2hb_fill_node_map_from_callback(testing_map, O2NM_MAX_NODES);
++	__o2hb_fill_node_map(testing_map, O2NM_MAX_NODES);
+ 	spin_unlock(&o2hb_live_lock);
+ 	if (!test_bit(node_num, testing_map)) {
+ 		mlog(ML_HEARTBEAT,
+@@ -2611,7 +2634,7 @@ int o2hb_check_node_heartbeating_from_callback(u8 node_num)
+ {
+ 	unsigned long testing_map[BITS_TO_LONGS(O2NM_MAX_NODES)];
+ 
+-	o2hb_fill_node_map_from_callback(testing_map, O2NM_MAX_NODES);
++	o2hb_fill_node_map_locked(testing_map, O2NM_MAX_NODES);
+ 	if (!test_bit(node_num, testing_map)) {
+ 		mlog(ML_HEARTBEAT,
+ 		     "node (%u) does not have heartbeating enabled.\n",
+diff --git a/fs/ocfs2/cluster/heartbeat.h b/fs/ocfs2/cluster/heartbeat.h
+index 8ef8c1b9eeb76..2ca2b657583c0 100644
+--- a/fs/ocfs2/cluster/heartbeat.h
++++ b/fs/ocfs2/cluster/heartbeat.h
+@@ -58,6 +58,11 @@ int o2hb_register_callback(const char *region_uuid,
+ 			   struct o2hb_callback_func *hc);
+ void o2hb_unregister_callback(const char *region_uuid,
+ 			      struct o2hb_callback_func *hc);
++void o2hb_callback_read_lock(void);
++void o2hb_callback_read_unlock(void);
++void o2hb_synchronize_callbacks(void);
++void o2hb_fill_node_map_locked(unsigned long *map,
++			       unsigned int bits);
+ void o2hb_fill_node_map(unsigned long *map,
+ 			unsigned int bits);
+ void o2hb_exit(void);
+diff --git a/fs/ocfs2/cluster/nodemanager.c b/fs/ocfs2/cluster/nodemanager.c
+index ebdf0bdbb8c69..e08850a5d7364 100644
+--- a/fs/ocfs2/cluster/nodemanager.c
++++ b/fs/ocfs2/cluster/nodemanager.c
+@@ -326,6 +326,7 @@ static ssize_t o2nm_node_local_store(struct config_item *item, const char *page,
+ 	struct o2nm_node *node = to_o2nm_node(item);
+ 	struct o2nm_cluster *cluster;
+ 	unsigned long tmp;
++	bool starting = false;
+ 	char *p = (char *)page;
+ 	ssize_t ret;
+ 
+@@ -362,6 +363,7 @@ static ssize_t o2nm_node_local_store(struct config_item *item, const char *page,
+ 		ret = o2net_start_listening(node);
+ 		if (ret)
+ 			goto out;
++		starting = true;
+ 	}
+ 
+ 	if (!tmp && cluster->cl_has_local &&
+@@ -375,6 +377,8 @@ static ssize_t o2nm_node_local_store(struct config_item *item, const char *page,
+ 	if (node->nd_local) {
+ 		cluster->cl_has_local = tmp;
+ 		cluster->cl_local_node = node->nd_num;
++		if (starting)
++			o2net_complete_start_listening(node);
+ 	}
+ 
+ 	ret = count;
+diff --git a/fs/ocfs2/cluster/tcp.c b/fs/ocfs2/cluster/tcp.c
+index 09a1f3b77bb8b..e62c1ef8223b3 100644
+--- a/fs/ocfs2/cluster/tcp.c
++++ b/fs/ocfs2/cluster/tcp.c
+@@ -105,6 +105,8 @@ static struct socket *o2net_listen_sock;
+  * destroying the work queue.
+  */
+ static struct workqueue_struct *o2net_wq;
++/* Heartbeat callbacks stay registered across local-node off/on. */
++static bool o2net_listening;
+ static struct work_struct o2net_listen_work;
+ 
+ static struct o2hb_callback_func o2net_hb_up, o2net_hb_down;
+@@ -1692,6 +1694,19 @@ static void o2net_still_up(struct work_struct *work)
+ 
+ /* ------------------------------------------------------------ */
+ 
++static void o2net_hb_node_up(struct o2net_node *nn)
++{
++	/* ensure an immediate connect attempt */
++	nn->nn_last_connect_attempt = jiffies -
++		(msecs_to_jiffies(o2net_reconnect_delay()) + 1);
++
++	spin_lock(&nn->nn_lock);
++	atomic_set(&nn->nn_timeout, 0);
++	if (nn->nn_persistent_error)
++		o2net_set_nn_state(nn, NULL, 0, 0);
++	spin_unlock(&nn->nn_lock);
++}
++
+ void o2net_disconnect_node(struct o2nm_node *node)
+ {
+ 	struct o2net_node *nn = o2net_nn_from_num(node->nd_num);
+@@ -1713,41 +1728,39 @@ void o2net_disconnect_node(struct o2nm_node *node)
+ static void o2net_hb_node_down_cb(struct o2nm_node *node, int node_num,
+ 				  void *data)
+ {
++	u8 this_node;
++
+ 	o2quo_hb_down(node_num);
+ 
+ 	if (!node)
+-		return;
++		goto out;
+ 
+-	if (node_num != o2nm_this_node())
++	this_node = o2nm_this_node();
++	if (!READ_ONCE(o2net_listening) || this_node == O2NM_MAX_NODES)
++		goto out;
++
++	if (node_num != this_node)
+ 		o2net_disconnect_node(node);
+ 
++out:
+ 	BUG_ON(atomic_read(&o2net_connected_peers) < 0);
+ }
+ 
+ static void o2net_hb_node_up_cb(struct o2nm_node *node, int node_num,
+ 				void *data)
+ {
+-	struct o2net_node *nn = o2net_nn_from_num(node_num);
++	u8 this_node;
+ 
+ 	o2quo_hb_up(node_num);
+ 
+ 	BUG_ON(!node);
+ 
+-	/* ensure an immediate connect attempt */
+-	nn->nn_last_connect_attempt = jiffies -
+-		(msecs_to_jiffies(o2net_reconnect_delay()) + 1);
++	this_node = o2nm_this_node();
++	if (!READ_ONCE(o2net_listening) || this_node == O2NM_MAX_NODES)
++		return;
+ 
+-	if (node_num != o2nm_this_node()) {
+-		/* believe it or not, accept and node heartbeating testing
+-		 * can succeed for this node before we got here.. so
+-		 * only use set_nn_state to clear the persistent error
+-		 * if that hasn't already happened */
+-		spin_lock(&nn->nn_lock);
+-		atomic_set(&nn->nn_timeout, 0);
+-		if (nn->nn_persistent_error)
+-			o2net_set_nn_state(nn, NULL, 0, 0);
+-		spin_unlock(&nn->nn_lock);
+-	}
++	if (node_num != this_node)
++		o2net_hb_node_up(o2net_nn_from_num(node_num));
+ }
+ 
+ void o2net_unregister_hb_callbacks(void)
+@@ -1756,6 +1769,37 @@ void o2net_unregister_hb_callbacks(void)
+ 	o2hb_unregister_callback(NULL, &o2net_hb_down);
+ }
+ 
++/*
++ * Delay heartbeat-driven network work until the local node is fully published
++ * through o2nm_this_node(), then replay the nodes that are already live while
++ * callback delivery stays blocked.
++ */
++void o2net_complete_start_listening(struct o2nm_node *node)
++{
++	unsigned long live_nodes[BITS_TO_LONGS(O2NM_MAX_NODES)];
++	unsigned long node_num;
++	u8 local_node;
++
++	local_node = o2nm_this_node();
++	if (WARN_ON_ONCE(local_node == O2NM_MAX_NODES))
++		return;
++	if (WARN_ON_ONCE(local_node != node->nd_num))
++		return;
++	if (WARN_ON_ONCE(!o2net_wq))
++		return;
++
++	o2hb_callback_read_lock();
++	WRITE_ONCE(o2net_listening, true);
++	o2hb_fill_node_map_locked(live_nodes, O2NM_MAX_NODES);
++	for_each_set_bit(node_num, live_nodes, O2NM_MAX_NODES) {
++		if (node_num == local_node)
++			continue;
++
++		o2net_hb_node_up(o2net_nn_from_num(node_num));
 +	}
- 	bfd_close(bfdf);
- 	return ret;
- #else
++	o2hb_callback_read_unlock();
++}
++
+ int o2net_register_hb_callbacks(void)
+ {
+ 	int ret;
+@@ -2034,6 +2078,8 @@ int o2net_start_listening(struct o2nm_node *node)
+ {
+ 	int ret = 0;
+ 
++	if (WARN_ON_ONCE(READ_ONCE(o2net_listening)))
++		return -EBUSY;
+ 	BUG_ON(o2net_wq != NULL);
+ 	BUG_ON(o2net_listen_sock != NULL);
+ 
+@@ -2065,6 +2111,9 @@ void o2net_stop_listening(struct o2nm_node *node)
+ 	BUG_ON(o2net_wq == NULL);
+ 	BUG_ON(o2net_listen_sock == NULL);
+ 
++	WRITE_ONCE(o2net_listening, false);
++	o2hb_synchronize_callbacks();
++
+ 	/* stop the listening socket from generating work */
+ 	write_lock_bh(&sock->sk->sk_callback_lock);
+ 	sock->sk->sk_data_ready = sock->sk->sk_user_data;
+diff --git a/fs/ocfs2/cluster/tcp.h b/fs/ocfs2/cluster/tcp.h
+index a75b551d31c7b..2e86d42b5faf9 100644
+--- a/fs/ocfs2/cluster/tcp.h
++++ b/fs/ocfs2/cluster/tcp.h
+@@ -96,6 +96,7 @@ struct o2nm_node;
+ int o2net_register_hb_callbacks(void);
+ void o2net_unregister_hb_callbacks(void);
+ int o2net_start_listening(struct o2nm_node *node);
++void o2net_complete_start_listening(struct o2nm_node *node);
+ void o2net_stop_listening(struct o2nm_node *node);
+ void o2net_disconnect_node(struct o2nm_node *node);
+ int o2net_num_connected_peers(void);
 -- 
 2.53.0
 
