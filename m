@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AA9369990;
-	Sat, 12 Sep 2026 08:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FA4369990;
+	Sat, 12 Sep 2026 08:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200585; cv=none; b=PUZYUY8/LeLXgdfgtun/I67sbPb80a8c8/v/PltQXSXZwtcYuh9ba3FyOCRs/Ea2BMDhsu5wGZxyHfZJAtvzVJ/BByh2QeMrl9IRBbRdn9wWLdcitQDqRWVU31oio0msf4PZMWvlkkmQylOljFqy9bOXGjf+9mmUsvHGNBeBRrA=
+	t=1789200590; cv=none; b=inl/vukehEXNmx/yMKuWSK6NVzNk195SYnNGhwbfVGKlun1Qlx5tG+uEEGcr1+glTlYTxHM57L32hlWO1wRTM/RT9Vf7JRtgABGYL2mP716B96WerzupKnfjvyh3HwCLM6YOSCcKY35E82BWxWiL+BslBzv4diLeoFFiJnGUID4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200585; c=relaxed/simple;
-	bh=tKTRc2jGBidNDsVun+ltiNmBjlASf8hkY2llQ/4D8Yc=;
+	s=arc-20240116; t=1789200590; c=relaxed/simple;
+	bh=8n0nii7PJ5kRE9EYtp9iCQJsJUX9CRM/0KaMq43/AGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xr21QTyQDumV5PDdeUnzbeSidcVA4rLicvdQUTdvUxMPI+5YIgQgZ+r1w53KNlYRMEg67oPliK2nTx+NMjFsdNd1J86xdrGxnj+gaCekZupNzDnXajk5f3e/L+22g28f8Omb1UQ0nSPGg3WMhK0JSZe7L7U3zFRWGRkBGIXEjk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hkrCn260; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WUcEYePARh/icW02KUS/3iVYGBszP9b1NBeMpfXasrwBAfNqpOrdABhPLru9Zn3dzWug0zAX8bcduq7bpsMsggZlaMhuiblIjGX+1JhykhZFWeoHVGlBog/jW8GWEk+pKuSia4pTGEFLO95IKX7vCyctOJb5WNic2ECDd3kes80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zm9fOzbk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hkrCn260"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978721F000FF;
-	Sat, 12 Sep 2026 08:09:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zm9fOzbk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C351F000FF;
+	Sat, 12 Sep 2026 08:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200584;
-	bh=1xYb2xRomCWQyKI/wuYX+JTWyCaZWm+06qriZeMjit8=;
+	s=korg; t=1789200589;
+	bh=HNAbvN8CLQjLIQgGUr8bHUxak3HX05wxsIkoo/c1ax8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hkrCn260+z11sd5XN/v/ZpsYTe213c+q81R+Lwp6yQNbjz7Bg33qaB/9vFM65kRNH
-	 k4UlXSwGQ8RsXSk08/uLXDH5MpN/E56v2oPEYIMfVU6D9vn77udQWCuODSmTd0kAuE
-	 NDX3+ujE5UwAjdwPJtV9mJ9fleYxRyy+ihREE/AE=
+	b=zm9fOzbkO4WkyInTRHG4DjazfFV3evSckq21Dyef+qNzhQzrDUlXAoQltsfw7OB0g
+	 TZMKRjOeLbIBHrXdhaHpzZjFiEoQDwxXbMsL7aOVcEFWzp4FmqGM7kpj54kmy8wOfO
+	 5u7gD546Dy5s74UgoilWlW8xbFLfZpX5nckYMLug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Itai Handler <itai.handler@gmail.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0818/1815] power: supply: isp1704_charger: cancel work on remove
-Date: Sat, 12 Sep 2026 08:42:48 +0200
-Message-ID: <20260912065708.116326909@linuxfoundation.org>
+Subject: [PATCH 7.2 0778/1815] rcu: Mark accesses to ->rcu_urgent_qs and ->rcu_need_heavy_qs
+Date: Sat, 12 Sep 2026 08:42:08 +0200
+Message-ID: <20260912065707.173065974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,40 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Itai Handler <itai.handler@gmail.com>
 
-[ Upstream commit 60c5b8a9ef4dbc5d69bbc1a960fe55826cb3b643 ]
+[ Upstream commit 27d73e81195b395270117ff77c47be2ed9b09b12 ]
 
-The USB notifier and initial VBUS detection can schedule isp->work. The
-remove path unregisters the notifier and power supply, but does not wait
-for queued or running work before tearing down the power supply state.
+rcu_all_qs() and rcu_note_context_switch() read/clear the per-CPU
+->rcu_urgent_qs and ->rcu_need_heavy_qs flags with plain raw_cpu_read()
+and this_cpu_write(), while the RCU core clears them with WRITE_ONCE() in
+rcu_disable_urgency_upon_qs().  KCSAN flags the resulting same-CPU race:
 
-Cancel the work after unregistering the notifier. Do this before
-unregistering the power supply.
+  BUG: KCSAN: data-race in rcu_all_qs / rcu_disable_urgency_upon_qs
 
-This issue was found by a static analysis tool.
+It is benign -- the flags are advisory and rcu_all_qs() re-reads
+->rcu_urgent_qs with smp_load_acquire() before acting on it -- but these
+are the last unmarked accesses to the two flags; every other access
+already uses READ_ONCE()/WRITE_ONCE()/smp_*.  Mark them to match.  No
+functional change.
 
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Link: https://patch.msgid.link/20260728123423.781-5-getshell@seu.edu.cn
-Fixes: ec46475f3e31 ("power_supply: Add isp1704 charger detection driver")
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reproduced on a PREEMPT_NONE, CONFIG_KCSAN_INTERRUPT_WATCHER=y kernel with
+a pthreads program whose threads (two per CPU) loop reading a large file:
+
+	for (;;) {
+		int fd = open("/proc/kallsyms", O_RDONLY);
+		while (read(fd, buf, sizeof(buf)) > 0)
+			;
+		close(fd);
+	}
+
+The read()s drive cond_resched() -> rcu_all_qs() while the busy CPUs keep
+the grace period urgent, so the RCU core clears the flags concurrently.
+
+Fixes: 2dba13f0b6c2 ("rcu: Switch urgent quiescent-state requests to rcu_data structure")
+Signed-off-by: Itai Handler <itai.handler@gmail.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/isp1704_charger.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/rcu/tree_plugin.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/power/supply/isp1704_charger.c b/drivers/power/supply/isp1704_charger.c
-index 237912a922724..e329321d06dbd 100644
---- a/drivers/power/supply/isp1704_charger.c
-+++ b/drivers/power/supply/isp1704_charger.c
-@@ -482,6 +482,7 @@ static void isp1704_charger_remove(struct platform_device *pdev)
- 	struct isp1704_charger *isp = platform_get_drvdata(pdev);
+diff --git a/kernel/rcu/tree_plugin.h b/kernel/rcu/tree_plugin.h
+index 95ad967adcf3c..608f732866476 100644
+--- a/kernel/rcu/tree_plugin.h
++++ b/kernel/rcu/tree_plugin.h
+@@ -970,7 +970,7 @@ void rcu_all_qs(void)
+ {
+ 	unsigned long flags;
  
- 	usb_unregister_notifier(isp->phy, &isp->nb);
-+	cancel_work_sync(&isp->work);
- 	power_supply_unregister(isp->psy);
- 	isp1704_charger_set_power(isp, 0);
- }
+-	if (!raw_cpu_read(rcu_data.rcu_urgent_qs))
++	if (!READ_ONCE(*raw_cpu_ptr(&rcu_data.rcu_urgent_qs)))
+ 		return;
+ 	preempt_disable();  // For CONFIG_PREEMPT_COUNT=y kernels
+ 	/* Load rcu_urgent_qs before other flags. */
+@@ -978,8 +978,8 @@ void rcu_all_qs(void)
+ 		preempt_enable();
+ 		return;
+ 	}
+-	this_cpu_write(rcu_data.rcu_urgent_qs, false);
+-	if (unlikely(raw_cpu_read(rcu_data.rcu_need_heavy_qs))) {
++	WRITE_ONCE(*this_cpu_ptr(&rcu_data.rcu_urgent_qs), false);
++	if (unlikely(READ_ONCE(*this_cpu_ptr(&rcu_data.rcu_need_heavy_qs)))) {
+ 		local_irq_save(flags);
+ 		rcu_momentary_eqs();
+ 		local_irq_restore(flags);
+@@ -999,8 +999,8 @@ void rcu_note_context_switch(bool preempt)
+ 	/* Load rcu_urgent_qs before other flags. */
+ 	if (!smp_load_acquire(this_cpu_ptr(&rcu_data.rcu_urgent_qs)))
+ 		goto out;
+-	this_cpu_write(rcu_data.rcu_urgent_qs, false);
+-	if (unlikely(raw_cpu_read(rcu_data.rcu_need_heavy_qs)))
++	WRITE_ONCE(*this_cpu_ptr(&rcu_data.rcu_urgent_qs), false);
++	if (unlikely(READ_ONCE(*this_cpu_ptr(&rcu_data.rcu_need_heavy_qs))))
+ 		rcu_momentary_eqs();
+ out:
+ 	rcu_tasks_qs(current, preempt);
 -- 
 2.53.0
 
