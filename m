@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FDC3630AC;
-	Sat, 12 Sep 2026 15:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA1241B8C6;
+	Sat, 12 Sep 2026 15:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226930; cv=none; b=t93T6pcSfZDRGZNut2xkw7xXwRqBsVDso5IddfTvo/jpnsydVC+0c48Kz8zHjUBWUhFLe4ty+LBPcgDVfD7J8Dy8jIAsTG7qunfKVjK3jvAn6tqM8XrAPD5z7rNfIcjUs+w27W568EtuNYf76y1GdXJfCAUdJ0vrVTfFRvLIbLE=
+	t=1789226935; cv=none; b=PJSsNJtAl/FcRB9EL2Xo3cYu28zSmDsGkBypTCLy4XAIl+X1/LVLA57cMzzlsRGRv0ooejuZpoZHBLQ5wq0nMD9zAyXUKdl6xTLx6CyXSbLiQfPjsJZM1VFOISdDTrCgHdiuqTsNmvTKpTbrEPrZaO1Am2GD+fLOn67N4PHheRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226930; c=relaxed/simple;
-	bh=DrkDfNioRJgfdRssOKfeIQyqXel2HMZrxXxZYMb7mwA=;
+	s=arc-20240116; t=1789226935; c=relaxed/simple;
+	bh=gGUe2ks6jFUYRKRhJa6d5Rzlj3qgatZL68+8YXN2lQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eOqqYcHXuwffU1cCIfh3VCwWoqCY7LYuQMRYfIXZgbeARRhtc4StfF+e90CxRcHaDZch6StGKyWPPtPEtQS7WBJ7lCFovs1hO5KiEyhw0l4hTPzhznxv1dUyEazzjov0EhBZbhKr8XrSQkdWsHGkrvJlYsuQK8BrKwPjOFLT6oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqk0dPIw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oLHIef3s//zEsMmLWkqpLE/mXaKpLFDDjJjto89ET7bbkivZ/AbrKJDeHgwo9oqj8DpxHVSuCi4+u0YTif8+f8ZG9b+txJ78DZkLFYDAx+ov3JVVpi2hy20pztqQAq6Ri7dQGXvwRL0qqlIzQQAlt/g0hZZvN6QOpLPgqQwW5ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpGH6p3y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqk0dPIw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2FD1F000FF;
-	Sat, 12 Sep 2026 15:28:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpGH6p3y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 400A31F000FF;
+	Sat, 12 Sep 2026 15:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226928;
-	bh=/VXcLf+7Tgisrg6C7oqK/rSNAs7eJk+Z7GJ7mMtWJ1E=;
+	s=korg; t=1789226933;
+	bh=wDX1T9RzmSBhwP2WvA3XLwVNUGoTf5jUiD8AK+RRPBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tqk0dPIwDz0bR2fAXQYqbZ238pV8gGN2UH3Bf1b/qKcivslToMyOatglXzce8KqGr
-	 uzVOgEIkDsfBXbhm4qvrvGGIXvfDF3BCiYLwI7lpimUeUnYIUW8IYVHRGU/I90NiWL
-	 fxhpHLdXB2AlLCdBt2sez8Y2fg4VZmaUADTynZCU=
+	b=xpGH6p3yd5ACKItaeXMuQwVQMlUcAQFxZdd/vXLdz0r0E7J8W02COVyag3Z+gh+dx
+	 9+hpFFQNfhQ9636ONMK/gQm6jYL0upP1N9tOWTWwxNEJAIiPVsAcHO5GpoQUuIlnyh
+	 yMd2i+opIc2IJnNa6hsf6m2g0wIFqSztUl1sTLS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Yichong Chen <chenyichong@uniontech.com>,
 	Tyler Hicks <code@tyhicks.com>
-Subject: [PATCH 6.1 0077/1191] eCryptfs: bound the packet-length peek to the user buffer
-Date: Sat, 12 Sep 2026 08:46:45 +0200
-Message-ID: <20260912065549.894836195@linuxfoundation.org>
+Subject: [PATCH 6.1 0078/1191] ecryptfs: fix tag 11 packet exact-fit size check
+Date: Sat, 12 Sep 2026 08:46:46 +0200
+Message-ID: <20260912065549.919711221@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,48 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-commit 95540462e630edbc8504e9537d16453d6942d143 upstream.
+commit 8b2ec0f56f55477f547d332526c9ae2a8fabc0a5 upstream.
 
-ecryptfs_miscdev_write() accepts the minimum one-byte packet-length
-encoding, but always copies the maximum two-byte encoding from userspace
-before parsing it. A six-byte message therefore reads one byte beyond the
-submitted user buffer.
+parse_tag_11_packet() rejects a packet when the already-consumed tag and
+length bytes plus the packet body exceed the caller supplied maximum
+packet size.  The check currently adds one extra byte, even though
+*packet_size already includes the tag byte before the length is parsed.
 
-Zero-initialize the peek buffer and copy only the packet-length bytes
-present. The existing exact packet-size check still rejects truncated
-two-byte encodings after the parser determines their encoded length.
+Remove the extra byte so a tag 11 packet that exactly fits the available
+buffer is accepted while oversized packets are still rejected.
 
-Fixes: 8bf2debd5f7b ("eCryptfs: introduce device handle for userspace daemon communications")
+Fixes: 237fead61998 ("[PATCH] ecryptfs: fs/Makefile and fs/Kconfig")
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
 Signed-off-by: Tyler Hicks <code@tyhicks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ecryptfs/miscdev.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/ecryptfs/keystore.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ecryptfs/miscdev.c
-+++ b/fs/ecryptfs/miscdev.c
-@@ -357,7 +357,7 @@ ecryptfs_miscdev_write(struct file *file
- 	u32 seq;
- 	size_t packet_size, packet_size_length;
- 	char *data;
--	unsigned char packet_size_peek[ECRYPTFS_MAX_PKT_LEN_SIZE];
-+	unsigned char packet_size_peek[ECRYPTFS_MAX_PKT_LEN_SIZE] = { };
- 	ssize_t rc;
- 
- 	if (count == 0) {
-@@ -373,7 +373,8 @@ ecryptfs_miscdev_write(struct file *file
+--- a/fs/ecryptfs/keystore.c
++++ b/fs/ecryptfs/keystore.c
+@@ -1576,7 +1576,7 @@ parse_tag_11_packet(unsigned char *data,
  	}
- 
- 	if (copy_from_user(packet_size_peek, &buf[PKT_LEN_OFFSET],
--			   sizeof(packet_size_peek))) {
-+			   min_t(size_t, count - PKT_LEN_OFFSET,
-+				 sizeof(packet_size_peek)))) {
- 		printk(KERN_WARNING "%s: Error while inspecting packet size\n",
- 		       __func__);
- 		return -EFAULT;
+ 	(*packet_size) += length_size;
+ 	(*tag_11_contents_size) = (body_size - 14);
+-	if (unlikely((*packet_size) + body_size + 1 > max_packet_size)) {
++	if (unlikely((*packet_size) + body_size > max_packet_size)) {
+ 		printk(KERN_ERR "Packet size exceeds max\n");
+ 		rc = -EINVAL;
+ 		goto out;
 
 
