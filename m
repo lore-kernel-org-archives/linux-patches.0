@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8962D0C75;
-	Sat, 12 Sep 2026 12:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D903BE643;
+	Sat, 12 Sep 2026 12:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215829; cv=none; b=DM4C7TepAMrnRK4b8HoUNcQ1a7161ztNhl4z3L83re6VA16ytoSAn/z2wYi2hZvfJUDg0mZjbfhK+BQn0muB8UFF13d9pecQBugTvQfUTKFWcep8BoLREpsO9jkpfaNNA0t0NYYCGeePcngZrUZMmd9BOANNGwJDiiM8lZ00La4=
+	t=1789215834; cv=none; b=TfvPvxoNEWl5Q1AMA84unqx5YeP6Pb+qPLWRn53EFTMUds3mgJfWd66q35vhyxsowiGOwHeIn3YugBNBojNYLBNtsEfl33HJuOQqRCQo2Ky3dTusbPl5Y0IJ/nNS+qeWP5neXC79BpJhygvEvNvrdFCc5CaXHw62XZTNsUmStLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215829; c=relaxed/simple;
-	bh=2+/FB73sn3j1RtMqvoRYZpisnY3QyxlWeTUx6P1Fbsg=;
+	s=arc-20240116; t=1789215834; c=relaxed/simple;
+	bh=+s5bfV7sxBy3deByJj/vReisirENUeFx38P4hFGHmcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BITvYOmUU8Jn4CfiBW4+EcgLdXgh8XWqrnQ6aZh/WI+ApNIYRYhUxGrp+lBEOECTf+v9YD5/aSI0qoW27hud9r4Q4BEKdaq3A5yCIx/0yjLfAMfrir30G/jV5WMMgMQkUjoKKor22jVQaBPyBBHUKxAHTvRZN7ntsm4DivPn6Gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1fnwurSp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QCa6InZVtVIsbpNxzl5K78Ath6kSvT7v4aX3pMvg96WvlMDDBNkfbc1YvNKL1GLsN5JUGNWWyInA1o69YAnR1dvzy1DwgCvvp/X7s8aKFOVcSKGUIl9DfZwwBwGKCvXBp9hjtZHQVcOufcXDeh8WoHzCNmuiD9JwbOMnCJ2A9lU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAjsW4pv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1fnwurSp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 815161F000FF;
-	Sat, 12 Sep 2026 12:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAjsW4pv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4AE1F000FF;
+	Sat, 12 Sep 2026 12:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215828;
-	bh=JpmK8YeGYf6goGShSx6ZQFabdr8wzHFEEai6ceMXQ7Q=;
+	s=korg; t=1789215833;
+	bh=oy1RZZdy98FWXzEvw3XmI/EwDx8hYSu01lj3eHBL/VE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1fnwurSp+LNDqnNBS5Sq5RiDOlYpANVUOM6ix5dI0qP2Fh3TVGwyg9ii9NzcVnSz4
-	 EuiTvBEQoyHBFe6GLL0SlLhAH2ZcYbRRxTT9RjIrm0Oas9Jf+4g7X82QO5K+1VVs7m
-	 MZGpwGLrXF2pk3Xjd1g5NF7jhVBzX2XuG0y30euI=
+	b=uAjsW4pvbofaTLp2HrunRHC71+HGd+pIL6bvyvDAAnim4tWGSiatVt35EdVIIN/yC
+	 bIuX+xoMdc8Wc9ybA38U6M2PDl9Piep52gf103CGgCJIu7R5FFMSQvFnAWUkPHy2ww
+	 +EGvam3k0qdXdVCOTQv4xqcUnwASDKIPevDAWH8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Yan <jerrysteve1101@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0605/1376] arm64: dts: amlogic: meson-axg: Add missing nand_rb0 pin to nand_all_pins
-Date: Sat, 12 Sep 2026 08:50:31 +0200
-Message-ID: <20260912065621.019351229@linuxfoundation.org>
+Subject: [PATCH 6.12 0614/1376] RDMA/nldev: validate dynamic counter attribute length
+Date: Sat, 12 Sep 2026 08:50:40 +0200
+Message-ID: <20260912065621.226499935@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,39 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yan <jerrysteve1101@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 45eb76f9ab6854f79690d56d04df227429a536b8 ]
+[ Upstream commit 74f49255492a62658f36bf2578d7916f1c6ffad1 ]
 
-The nand_all_pins pinctrl node was missing the nand_rb0 (ready/busy)
-pin description, which is required for NAND controller operation.
+RDMA_NLDEV_ATTR_STAT_HWCOUNTERS is a nested attribute whose children are
+consumed directly with nla_get_u32(). The top-level policy validates only
+the container, so it does not establish the fixed shape of each child.
 
-Add it to the pinmux list.
+Require every child payload to be exactly one u32 before reading it.
 
-Fixes: be18d53c32b2 ("arm64: dts: amlogic: meson-axg: pinctrl node for NAND")
-Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://patch.msgid.link/20260624135650.727077-3-jerrysteve1101@gmail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: 3c3c1f141639 ("RDMA/nldev: Allow optional-counter status configuration through RDMA netlink")
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260720114918.70323-1-pengpeng@iscas.ac.cn
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-axg.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/nldev.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-index 4717c9666f2a5..ff05b997f6fe8 100644
---- a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-@@ -454,7 +454,8 @@ mux {
- 							 "nand_ale",
- 							 "nand_cle",
- 							 "nand_wen_clk",
--							 "nand_ren_wr";
-+							 "nand_ren_wr",
-+							 "nand_rb0";
- 						function = "nand";
- 						input-enable;
- 						bias-pull-up;
+diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+index fef11a80647c4..aa24cc9f066e9 100644
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -2093,6 +2093,11 @@ static int nldev_stat_set_counter_dynamic_doit(struct nlattr *tb[],
+ 
+ 	nla_for_each_nested(entry_attr, tb[RDMA_NLDEV_ATTR_STAT_HWCOUNTERS],
+ 			    rem) {
++		if (nla_len(entry_attr) != sizeof(u32)) {
++			ret = -EINVAL;
++			goto out;
++		}
++
+ 		index = nla_get_u32(entry_attr);
+ 		if ((index >= stats->num_counters) ||
+ 		    !(stats->descs[index].flags & IB_STAT_FLAG_OPTIONAL)) {
 -- 
 2.53.0
 
