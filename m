@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BF947126B;
-	Sat, 12 Sep 2026 11:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823BC455626;
+	Sat, 12 Sep 2026 11:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212358; cv=none; b=Bs9cr+rbhl68CJFMdZF9nRgykPUBa7Gy+Eo5jyRcaTCmFlaX8jFFSmRF7USyc/JzfQKngUZf3r9UHzzbRYj8ihuPb/qcrWzfXZIPDLkENJp/GkmwtADCiZjFPSzawfeVwqhmdKnEzfcbbIaNMPGX+EZiQ53jIrkO33QG61k32DM=
+	t=1789212365; cv=none; b=FtYdYZaudj/azG/gRI/1/HC472qfxrNNfvj4ZUGT9Ci1Amsjm2fvlVMv6yWvqVtNYjGKEEpiz56w72bxFZbHY+xTYhIezuqx1y9UqcXRXW3PMZVajIyyChY5Z0qt7vzkGhqZvstMnOl3jmSXXXTxjjSJb3Lz6usbYxLY1EftzOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212358; c=relaxed/simple;
-	bh=iiJwTamzspxIIGraAwCZXR5gPesBSZBbI/j6Axo0Hsk=;
+	s=arc-20240116; t=1789212365; c=relaxed/simple;
+	bh=nCY2mHv/zC6YvBxdiCG500pgREuSEyIS+OCLoyxcmso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KcN1YSOHF/BtGXDYCETxUWh0o6unvNUorOo4hd4hasW3azYWS04czaPPxruhIrzXL38V4qjHB+SK6rF3MEErQWDo8lvqjmYGbAXYRpV4JpDl1PrWCOibrHuCcgeoFdcsU8JMTrYMvwGM4a2FU71uVcC6+ztwJbhcwDM3wNkpMd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ia4cOp/Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kg1Hy535iVd5G7FsKcgrUVBUUyBoRLK/1mzorGW8TWhYncsLQiH55fnEUdfFJn1y8qrqqrkM/QXcJdXTlKcJNJJfO/WwxhU7qt88ZSnWyKHZtac/CE60xVXAcJ1qCN50+77QZXmxgQ7gK85s0CweKR+LTbGcdu58xA8w4hQEAQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HRGgsNi4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ia4cOp/Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C141F000FF;
-	Sat, 12 Sep 2026 11:25:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HRGgsNi4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54FEC1F000FF;
+	Sat, 12 Sep 2026 11:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212356;
-	bh=BkHvENNd7eZ1UmrfI7Qi9F7rPl6D0fLPhaRbeImgslY=;
+	s=korg; t=1789212361;
+	bh=AS5boehg2lC8Al2RrimmlEUuDCMnurbEaq5q2FnVm94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ia4cOp/YERA7jDrU6Ta9X+FwH6m3taPHWrQpkVtKHYy5Bg03hMmyQw7zRIaibDN58
-	 opJ//VG19YUqdnMgbaWTb/0GqBSqMc6xsueOKS+RXMs39U7Z15SV0/PaOurR7TN+Xr
-	 B/y3yb0pAAa1/bpeXSiBZVcIWTtELuxQg0Q/oG+U=
+	b=HRGgsNi4E63VJMi7PoFnIOmXBSJGwvKQAaoSAXORlObhtZ0uZB8Zuf/dI/fj8WNJT
+	 9MW6rou1ZuMvuBOPHCcKiC9uFLdXRhH7nbZAK2LoLOwrS3cZgATZWC3nOWRvAOnfmO
+	 LpQDi7g7ABX4YnXJIrZD2vMtxF5U66FIRHFp4/fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1418/1518] net/sched: fq: add overflow bounds to quantum and initial quantum
-Date: Sat, 12 Sep 2026 08:59:47 +0200
-Message-ID: <20260912065655.628947946@linuxfoundation.org>
+Subject: [PATCH 6.18 1419/1518] net/sched: fq_codel: clamp default quantum and mtu
+Date: Sat, 12 Sep 2026 08:59:48 +0200
+Message-ID: <20260912065655.651110291@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -55,57 +55,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 709f34f7c28dc4dd6c40343d101850f11e172312 ]
+[ Upstream commit d9ebd8f9aa8b2773235889cb903fafd61f2d8585 ]
 
-fq_init() computes quantum = 2 * psched_mtu() and initial_quantum = 10 *
-psched_mtu() with no overflow check. A device with a huge MTU (e.g. dummy
-with max_mtu == 0 accepting MTU 2147483634) makes psched_mtu() return
-0x80000000; the 2 * and 10 * multiplications wrap to 0 in 32-bit
-arithmetic, so q->quantum == 0. Then in fq_dequeue() the credit-refill
-loop adds 0 to f->credit (which stays <= 0) and goto begin loops
-forever under the qdisc lock, creating a soft lockup.
+fq_codel_init() sets q->quantum = psched_mtu(qdisc_dev(sch)) without
+clamping. A device with a huge MTU (e.g. dummy with max_mtu == 0
+accepting MTU 2147483634) makes psched_mtu() return 0x80000000, which
+overflows the signed flow->deficit to INT_MIN in fq_codel_dequeue(),
+causing an infinite loop and soft lockup. Emulate fq_codel_change()
+and constrain to [256, FQ_CODEL_QUANTUM_MAX].
 
-Clamp psched_mtu() to [1, 1 << 20] before multiplying so the product
-cannot wrap, then cap the result at 1 << 20, matching the bound already
-enforced on TCA_FQ_QUANTUM in fq_change().
+The same unclamped psched_mtu() is assigned to q->cparams.mtu a bit
+below, and fq_codel_change() never updates it. codel_should_drop()
+tests "*backlog <= params->mtu"; with mtu == 0x80000000 (~2 GiB) and
+the default 32 MiB memory_limit, the test is always true, so CoDel is
+silently and completely disabled (no drops, no ECN). Declare a single
+clamped mtu and assign both q->quantum and q->cparams.mtu from it,
+which also removes the double psched_mtu() call.
 
 Conditions to recreate the bug: a device whose MTU (plus
-hard_header_len) is large enough that 2 * psched_mtu() wraps (e.g. a
-dummy device with max_mtu == 0 accepting MTU 2147483634). Requires
+hard_header_len) wraps psched_mtu() into the sign bit (e.g. a dummy
+device with max_mtu == 0 accepting MTU 2147483634). Requires
 CAP_NET_ADMIN in a user namespace.
 
-Fixes: afe4fd062416 ("pkt_sched: fq: Fair Queue packet scheduler")
+Fixes: 4b549a2ef4be ("fq_codel: Fair Queue Codel AQM")
 Reported-by: vega@nebusec.ai
 Tested-by: Victor Nogueira <victor@mojatatu.com>
 Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260822195509.112717-2-jhs@mojatatu.com
+Link: https://patch.msgid.link/20260822195509.112717-3-jhs@mojatatu.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq.c | 6 ++++--
+ net/sched/sch_fq_codel.c | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
-index 2736d98b978dd..9df9c93ae4e4c 100644
---- a/net/sched/sch_fq.c
-+++ b/net/sched/sch_fq.c
-@@ -1170,12 +1170,14 @@ static int fq_init(struct Qdisc *sch, struct nlattr *opt,
- 		   struct netlink_ext_ack *extack)
+diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
+index c708445a649e7..3b3401dc5c6f1 100644
+--- a/net/sched/sch_fq_codel.c
++++ b/net/sched/sch_fq_codel.c
+@@ -507,6 +507,7 @@ static int fq_codel_init(struct Qdisc *sch, struct nlattr *opt,
+ 			 struct netlink_ext_ack *extack)
  {
- 	struct fq_sched_data *q = qdisc_priv(sch);
+ 	struct fq_codel_sched_data *q = qdisc_priv(sch);
 +	u32 mtu;
- 	int i, err;
+ 	int i;
+ 	int err;
  
- 	sch->limit		= 10000;
- 	q->flow_plimit		= 100;
--	q->quantum		= 2 * psched_mtu(qdisc_dev(sch));
--	q->initial_quantum	= 10 * psched_mtu(qdisc_dev(sch));
-+	mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 1, 1 << 20);
-+	q->quantum		= min_t(u32, 2 * mtu, 1 << 20);
-+	q->initial_quantum	= min_t(u32, 10 * mtu, 1 << 20);
- 	q->flow_refill_delay	= msecs_to_jiffies(40);
- 	q->flow_max_rate	= ~0UL;
- 	q->time_next_delayed_flow = ~0ULL;
+@@ -514,13 +515,14 @@ static int fq_codel_init(struct Qdisc *sch, struct nlattr *opt,
+ 	q->flows_cnt = 1024;
+ 	q->memory_limit = 32 << 20; /* 32 MBytes */
+ 	q->drop_batch_size = 64;
+-	q->quantum = psched_mtu(qdisc_dev(sch));
++	mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, FQ_CODEL_QUANTUM_MAX);
++	q->quantum = mtu;
+ 	INIT_LIST_HEAD(&q->new_flows);
+ 	INIT_LIST_HEAD(&q->old_flows);
+ 	codel_params_init(&q->cparams);
+ 	codel_stats_init(&q->cstats);
+ 	q->cparams.ecn = true;
+-	q->cparams.mtu = psched_mtu(qdisc_dev(sch));
++	q->cparams.mtu = mtu;
+ 
+ 	if (opt) {
+ 		err = fq_codel_change(sch, opt, extack);
 -- 
 2.53.0
 
