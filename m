@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A39D345CCE;
-	Sat, 12 Sep 2026 08:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0527C3630A5;
+	Sat, 12 Sep 2026 08:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203369; cv=none; b=eiQMbHpUeQDrxD6WEtbBF/8x8UGJBBEqvvP//xtKwJXoLwgkaUxkg6Lqll+Zlb1nBoAkaa6GB+k9hHjNz2PTfx1MFtTveNHRNmIEWbWWwkIY7LEI9Ay8x1/vTb4jFH/ukcueWyFR6vQr/AC/mAJhlL0PzZFfCFmmGtW3WQnRsLY=
+	t=1789203374; cv=none; b=Ij5O80izyE97qVPGuiK4JUDEQqxc7dq/krq/k8wxWXH+5MRCAyvfxO9ntbCGm4XIRO24pJcqlsOSogklddEpHNYxvJ3XjeyTrB9zS0tyXh+6Rbiz/0e86g3uZgQzg2uaEE55DszOm3xALv9howf27oxXRnNkshb/1l2W27lEw9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203369; c=relaxed/simple;
-	bh=XzFQceyhzR1ZiYt1kxph1CTFCCZKW8p8ocpz0y0loIc=;
+	s=arc-20240116; t=1789203374; c=relaxed/simple;
+	bh=NEUQV+W4Q0HW7S7ZN5tWOUP1wUkBz9k/k9D9/NoovGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y8g5Oz/GRYhnqJ7vdD58/bGGSpyZqf0L01/QLxLJ34lVBllOVC2A6vIeVdn3Bpj3wsZ5nK4M8bRHmn2YwRlTmisonvizxZwQw+0u2NAMDQtUHpTcCLcUyA4Ji95OlE0hN/3x8N3mTTLIYZzUrm/qDeFXsOusOgEXKvMLFJpxINM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YiK+IMqt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rtO8EbbG3yUpMmcZwuYI9kIKRxokJ8Rj5cQxH5uopR3eqUltYO7oGb5K2Z0pa0qDcvRL6zqb4tOUTaJMejJd9fH4l5IUhr6cTyT1caqdGa4NjH9bbgz2Wlc2tvdzf7RfgzZBQT/YT8le/kerLlXMto2uSI5N0NVu/d/96aye4HE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gv9/oT8F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YiK+IMqt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E8DB1F000FF;
-	Sat, 12 Sep 2026 08:56:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gv9/oT8F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2EA51F000FF;
+	Sat, 12 Sep 2026 08:56:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203368;
-	bh=j7N0ixmy8TpfLamCmUMXtV0VLAFUu9tW7sUCrFrXo/s=;
+	s=korg; t=1789203372;
+	bh=mLPrY1KeG1mdVo6HQBf+VIZDUlDOo3J3rIU5YuX6/uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YiK+IMqt4MjNY7HiNZPS+5lDMcid6LOZHtOhtBWYi4Oqaq21SQHcPnLc/sCQESPth
-	 bsFNEKc1Bwh353zWtGHcEk613vwbyOZTmJ8qrmJpwlephjqYdwmh2x1dx5xlxEJpGz
-	 DKy4dKziDBOhrqe0QrqFQsvJ3BN2HRTZWXBh5VmI=
+	b=Gv9/oT8Fhc7BM6YdhDBfBh6wrn/Ayt5M74+O+sEVeuT2tUmJ0QIDReFeZ+qhdOnKf
+	 SUdzrqcik/HseizH5CzUWTCCY9WIw+YspRMf36t0N5pS2ROnGrhencxqJtOl9UkQfF
+	 NNxZIRj4OG6Gpdv7ohY2GAMJ777QXtj0J3j3UEhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Anuj Gupta <anuj20.g@samsung.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1394/1815] super: fix dying superblock warning messages
-Date: Sat, 12 Sep 2026 08:52:24 +0200
-Message-ID: <20260912065721.749241040@linuxfoundation.org>
+Subject: [PATCH 7.2 1395/1815] iomap: iomap_bio_read_folio_range_sync is missing a call to bio_uninit
+Date: Sat, 12 Sep 2026 08:52:25 +0200
+Message-ID: <20260912065721.773040873@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,51 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 9ac8fd831252e52aa78399eaccc11a72f6c2af1a ]
+[ Upstream commit accb6624e383872e7703974a5d5826755fb27032 ]
 
-WARN_ON_ONCE() takes a condition, not a message. The string literals
-are always true, so the warnings still trigger but the messages are
-never printed.
+Which could leak blkg references.
 
-Use WARN_ONCE(1, ...) instead to print the messages and keep the
-once-only behavior.
-
-Found with a Coccinelle script. Clang's -Wstring-conversion also flags
-such calls but is not enabled in kernel builds.
-
-Fixes: f0cd988016f6 ("fs: massage locking helpers")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260808123802.73687-1-kmehltretter@gmail.com
+Fixes: c03cea42149d ("iomap: add initial support for writes without buffer heads")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260804124404.737145-3-hch@lst.de
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Anuj Gupta <anuj20.g@samsung.com>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/super.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/iomap/bio.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/super.c b/fs/super.c
-index ffdcc6a2e0deb..d94f3a3e988df 100644
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -2018,7 +2018,7 @@ int freeze_super(struct super_block *sb, enum freeze_holder who, const void *fre
- 	int ret;
- 
- 	if (!super_lock_excl(sb)) {
--		WARN_ON_ONCE("Dying superblock while freezing!");
-+		WARN_ONCE(1, "Dying superblock while freezing!");
- 		return -EINVAL;
+diff --git a/fs/iomap/bio.c b/fs/iomap/bio.c
+index 30ef78a66b4f0..48100c614431c 100644
+--- a/fs/iomap/bio.c
++++ b/fs/iomap/bio.c
+@@ -184,5 +184,6 @@ int iomap_bio_read_folio_range_sync(const struct iomap_iter *iter,
+ 			error = fs_bio_integrity_verify(&bio, sector, len);
+ 		fs_bio_integrity_free(&bio);
  	}
- 	atomic_inc(&sb->s_active);
-@@ -2182,7 +2182,7 @@ int thaw_super(struct super_block *sb, enum freeze_holder who,
- 	       const void *freeze_owner)
- {
- 	if (!super_lock_excl(sb)) {
--		WARN_ON_ONCE("Dying superblock while thawing!");
-+		WARN_ONCE(1, "Dying superblock while thawing!");
- 		return -EINVAL;
- 	}
- 	return thaw_super_locked(sb, who, freeze_owner);
++	bio_uninit(&bio);
+ 	return error;
+ }
 -- 
 2.53.0
 
