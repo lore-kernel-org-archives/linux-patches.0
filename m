@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7712E738A;
-	Sat, 12 Sep 2026 08:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699ED36492C;
+	Sat, 12 Sep 2026 08:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203016; cv=none; b=SWNHvo0ZrdfjLrSTQ4uQVB4MlIp1D5/CyZ4ANcXnR8P4GYQYGgEpQWsJKWffAWeMVbqUqdJXlULKQl8hTugjmwIUH6LZjWTdCnZvD2pJb7J05g9uTej/CGsexzYjCqY1GlIIOm88t9OdQ8XliZg8Mdnlku8l+G6r3P8biF0Srpc=
+	t=1789203020; cv=none; b=BX+W/ftg+kH6ohcLCODhYKEBIpuzJHuJ0S5CHIIKDznwy8HKfQ0gz3CDPnOPquK11XJTpFi3u10jmuOM3HPkJp6j6b3h7I0ORSJgtrJH1dDTzZKR6QcN3Sa10/h1KA92ZZlqqRrOwhFFZLS6gjTi3Rg6THe5VenK8zYoybi54/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203016; c=relaxed/simple;
-	bh=km4JebUWcmnrfQgO9zkR+1onq8h8DCFACiDZo6+hD1A=;
+	s=arc-20240116; t=1789203020; c=relaxed/simple;
+	bh=LM1NJHXo7uxClGP7kdsBrh7ilenhRU27PUUWAYKeL/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cvq9he5GOONYaXjehAyvwjCKHc6Vxv8vwLJf9oin953O02eL8v2KEb4M2704nsXBo2qbPZS1Kqp3FADyEDIrRN//nRtxVIRLPIXVaQ2nhTheeEJTzzakwRRNmh38761gtFlBUZ97ywzAj06iTIYzS04RWUQX4lFiz64A9W4zs4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOiFeFff; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MH/A+mOnG16IycWEoI94fA/fVWFP+tTB9IlXU93JNDA7u4DX77M8/3ebZN4j75D95M1zA9Q2Bdqhu79pzfvWB3fkcpTuQha6Bp/R20TMi2wt/4lOunQitQguiGqL4MBjGRdNbpiZAfzsEgYU3bUEeY76zMgsgJhjZs3QMuWLqQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vhdYpVjL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOiFeFff"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A0C1F000FF;
-	Sat, 12 Sep 2026 08:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vhdYpVjL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537421F000FF;
+	Sat, 12 Sep 2026 08:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203015;
-	bh=R207BBYsiJ2KeY879bIdFGnkOJhdhpKSy090AEM90c4=;
+	s=korg; t=1789203019;
+	bh=V6T42XgkNeNYHfP/jRh5h51HdPgO5fAWnec8fSPhyrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jOiFeFffoZEP2A08fbMv2JzKo4zNgHgZmJSXoFagT3SRpAbf8RvH4VCoMgatNQAcZ
-	 e4rG2ITB2RZ2cTFeChjImlB9NOwENY4nuVS6NrMTkP4iwuP7h+vfA+1mZDQ3OS1zE7
-	 VQrqdYO7sH/UPp8Pa0c5M2M/gowOu894AObLymfg=
+	b=vhdYpVjLPA8hTAKGsuUrrruCUHOtBvLPne6MpBTb+bbOunMpAn+7CTgQxIDp+1sQI
+	 x5bP0HJdUYZxWCXIYzDiy5xkjFYHmaseOVzh7NI9PMnwallh/pGXuRTWF8Xr8d5vQM
+	 yObovkUzMq+V4Ct8fhJkklI4vL1sGLd4IjZarp88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Guopeng Zhang <zhangguopeng@kylinos.cn>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1320/1815] nvme-pci: release descriptor pools on probe failure
-Date: Sat, 12 Sep 2026 08:51:10 +0200
-Message-ID: <20260912065720.013060583@linuxfoundation.org>
+Subject: [PATCH 7.2 1321/1815] cgroup/cpuset: Use WRITE_ONCE() for shared prs_err updates
+Date: Sat, 12 Sep 2026 08:51:11 +0200
+Message-ID: <20260912065720.036795759@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,45 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Guopeng Zhang <zhangguopeng@kylinos.cn>
 
-[ Upstream commit cb144c2f67128abfa5c7ba33318617d19f192156 ]
+[ Upstream commit 26d3a59e0241c3ef9f66ae1ae990f9326acbc059 ]
 
-The per-NUMA-node descriptor DMA pools are created lazily from
-nvme_init_hctx_common() once the admin tag set is allocated, but they are
-only destroyed in nvme_remove() via nvme_release_descriptor_pools(). Any
-probe failure after the admin tag set has been allocated unwinds through
-the out_disable label and nvme_pci_free_ctrl(), neither of which releases
-the pools, leaking the dma_pool objects.
+cpuset_partition_show() reads cs->prs_err without cpuset_mutex using
+READ_ONCE(). The field is documented as not lock protected, but several
+updates to live cpusets still use plain stores.
 
-Release the descriptor pools in the out_disable error path. It must not
-be added to nvme_pci_free_ctrl(), as that would double-free against
-nvme_remove() on the normal teardown path.
+Convert the remaining prs_err stores on live cpusets to WRITE_ONCE().
 
-Fixes: d977506f8863 ("nvme-pci: make PRP list DMA pools per-NUMA-node")
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 0c7f293efc87 ("cgroup/cpuset: Add cpuset.cpus.exclusive.effective for v2")
+Assisted-by: LLM
+Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/cgroup/cpuset.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 219cda2558284..664a36eed23c3 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3840,6 +3840,7 @@ static int nvme_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	nvme_dev_remove_admin(dev);
- 	nvme_dbbuf_dma_free(dev);
- 	nvme_free_queues(dev, 0);
-+	nvme_release_descriptor_pools(dev);
- out_release_iod_mempool:
- 	mempool_destroy(dev->dmavec_mempool);
- out_dev_unmap:
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 411533d1b46c8..1c6d568006688 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1548,7 +1548,7 @@ static int remote_partition_enable(struct cpuset *cs, int new_prs,
+ 	cpumask_copy(cs->effective_xcpus, tmp->new_cpus);
+ 	spin_unlock_irq(&callback_lock);
+ 	cpuset_force_rebuild();
+-	cs->prs_err = 0;
++	WRITE_ONCE(cs->prs_err, 0);
+ 
+ 	/*
+ 	 * Propagate changes in top_cpuset's effective_cpus down the hierarchy.
+@@ -1622,7 +1622,7 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *xcpus,
+ 	WARN_ON_ONCE(!cpumask_subset(cs->effective_xcpus, subpartitions_cpus));
+ 
+ 	if (cpumask_empty(excpus)) {
+-		cs->prs_err = PERR_CPUSEMPTY;
++		WRITE_ONCE(cs->prs_err, PERR_CPUSEMPTY);
+ 		goto invalidate;
+ 	}
+ 
+@@ -1637,13 +1637,13 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *xcpus,
+ 	if (adding) {
+ 		WARN_ON_ONCE(cpumask_intersects(tmp->addmask, subpartitions_cpus));
+ 		if (!capable(CAP_SYS_ADMIN))
+-			cs->prs_err = PERR_ACCESS;
++			WRITE_ONCE(cs->prs_err, PERR_ACCESS);
+ 		else if (cpumask_intersects(tmp->addmask, subpartitions_cpus) ||
+ 			 cpumask_subset(top_cpuset.effective_cpus, tmp->addmask))
+-			cs->prs_err = PERR_NOCPUS;
++			WRITE_ONCE(cs->prs_err, PERR_NOCPUS);
+ 		else if ((prs == PRS_ISOLATED) &&
+ 			 !isolated_cpus_can_update(tmp->addmask, tmp->delmask))
+-			cs->prs_err = PERR_HKEEPING;
++			WRITE_ONCE(cs->prs_err, PERR_HKEEPING);
+ 		if (cs->prs_err)
+ 			goto invalidate;
+ 	}
+@@ -2071,13 +2071,13 @@ static void compute_partition_effective_cpumask(struct cpuset *cs,
+ 		 * partition root.
+ 		 */
+ 		WARN_ON_ONCE(is_remote_partition(child));
+-		child->prs_err = 0;
++		WRITE_ONCE(child->prs_err, 0);
+ 		if (!cpumask_subset(child->effective_xcpus,
+ 				    cs->effective_xcpus))
+-			child->prs_err = PERR_INVCPUS;
++			WRITE_ONCE(child->prs_err, PERR_INVCPUS);
+ 		else if (populated &&
+ 			 cpumask_subset(new_ecpus, child->effective_xcpus))
+-			child->prs_err = PERR_NOCPUS;
++			WRITE_ONCE(child->prs_err, PERR_NOCPUS);
+ 
+ 		if (child->prs_err) {
+ 			int old_prs = child->partition_root_state;
+@@ -2381,8 +2381,10 @@ static void partition_cpus_change(struct cpuset *cs, struct cpuset *trialcs,
+ 		return;
+ 
+ 	prs_err = validate_partition(cs, trialcs);
+-	if (prs_err)
+-		trialcs->prs_err = cs->prs_err = prs_err;
++	if (prs_err) {
++		WRITE_ONCE(cs->prs_err, prs_err);
++		trialcs->prs_err = prs_err;
++	}
+ 
+ 	if (is_remote_partition(cs)) {
+ 		if (trialcs->prs_err)
+@@ -3801,7 +3803,7 @@ static void cpuset_hotplug_update_tasks(struct cpuset *cs, struct tmpmasks *tmp)
+ 	if (remote && (cpumask_empty(subpartitions_cpus) ||
+ 			(cpumask_empty(&new_cpus) &&
+ 			 partition_is_populated(cs, NULL)))) {
+-		cs->prs_err = PERR_HOTPLUG;
++		WRITE_ONCE(cs->prs_err, PERR_HOTPLUG);
+ 		remote_partition_disable(cs, tmp);
+ 		compute_effective_cpumask(&new_cpus, cs, parent);
+ 		remote = false;
 -- 
 2.53.0
 
