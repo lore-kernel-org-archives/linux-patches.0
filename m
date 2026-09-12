@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80903093A6;
-	Sat, 12 Sep 2026 14:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868EF349CF3;
+	Sat, 12 Sep 2026 14:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223466; cv=none; b=nCyNel2+3Bfmfac6Xzy7+L+DvombcRg3vAodwtZvB2o5sz1IaIWQ9M8/nNhMoD3mxrxdVFdy+Kyqg7nzsq0pKW/GRF+EZgTxETdyTwfN2Tq9QvLRoSl9VIiVt6HF2E7iHpSjZdOmb6aVOj/611CNzbKmCuAb4KBheCFAeaphKOA=
+	t=1789223470; cv=none; b=jcT5k42hqbsjrUDwJ4OPdI/7BTveJ+lhv3iH6Z+zseIDUv/Fea/rtZh8D1YQbM64mxP0mKEV+2OmQGMyFmWw1o14RfzD12SUJQLvvWFkM5EPokOmpy/WBKTo7cXTakCAcBt9D9BximS/4zXlf0NfuCN0Zsotp60StCeXk+L8XZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223466; c=relaxed/simple;
-	bh=XMyeRwinft9eKC0l6wyasLkTg79nEwjVZWK6+gmlKpo=;
+	s=arc-20240116; t=1789223470; c=relaxed/simple;
+	bh=b9+z0vMnVrgu6QDhJ564MUoa29wpwPQUjbqJ4gKc6FQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iZK53kt1oYS8fGEtFdO5+Xvm95xNLb0ktR7DGK0wyeoqYFTX6rziCoCL9goOYQ8ciHW+Cb2nhdJar1H50stTFU6yHCg7SxmVDCnbf/Ea21b17NqJZqMLN0MtPgQvhlYk0cdh4GtZDSXqwQcb5OKOVPdZvimTQNNwd78mz/cHy8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bpJGBxPT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g26/yBMQuxYDc3ol4n2BHNE2YplRSQUgibRRIIWJvM9YyIveWdpKfLmghaHM07iYpt25eynDeUQUt41NPTE9US2odZZ2uIi0Ow3UjSKdefbMGGAmjhUqa+x3gXvYR4cluzVv7dSx6LZrmqJcRpaGtyLTML7222TDk/ZMRI+j7Yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDcbkjfQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bpJGBxPT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10151F000FF;
-	Sat, 12 Sep 2026 14:31:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDcbkjfQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063211F000FF;
+	Sat, 12 Sep 2026 14:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223463;
-	bh=7fO4ypUgcfrSIk6FJwMuR9oXuGaeOhGMwBGAMIw0BfI=;
+	s=korg; t=1789223468;
+	bh=ia+uYOI9nMlG0hgx8GTbKrIorqfT1UsgVQhcksBbizo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bpJGBxPT5b+wnr1ENlHK70aWjfp5CgnKoDtgIwpD8u0veHx6XQh8t9NXHI2Vps7qV
-	 s8tvNa81MrH7BuDGgjeAk7hpP6XQnoMEOR+ErOdutvM5ylramjkOdWMtf3cWZm8M1J
-	 kVKmNT+h42UJSU3lQN6oMaJkIU6lPz0R1XYNWwPs=
+	b=vDcbkjfQzBKLLoLrYw2bhlVXFfJrqwZbbYT9sHE8kzv9/aK7zgbgW9HvwA0LKbIPp
+	 P4KG+g2j5secI/3VKy+WikWS7Rcz3+VI7VOM3CuQhE5JBstxwb/5hvz77/8E27nfrM
+	 ip/5vuaEzx4SZTgWw/+Zx3ouuCRU4ytw+CRBam7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>,
-	Samuel Thibault <samuel.thibault@ens-lyon.org>,
+	Biren Pandya <birenpandya@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0795/1424] speakup: keyhelp: guard letter_offsets possible out-of-range indexing
-Date: Sat, 12 Sep 2026 08:53:47 +0200
-Message-ID: <20260912065625.100781038@linuxfoundation.org>
+Subject: [PATCH 6.6 0769/1424] media: i2c: rdacm21: Fix missing media_entity_cleanup()
+Date: Sat, 12 Sep 2026 08:53:21 +0200
+Message-ID: <20260912065624.517751967@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -45,96 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
+From: Biren Pandya <birenpandya@gmail.com>
 
-[ Upstream commit 6a19ad4d68c95185308cd9e5d169b10a2cf236c8 ]
+[ Upstream commit 04c053379c3a33460b581953c4f5b36de39439ac ]
 
-help_init() builds letter_offsets[] by using the first byte of each
-function name as an index via `(start & 31) - 1`. If function_names are
-overridden from sysfs (root) with a name starting outside [a–z], the
-index underflows or exceeds the array, leading to OOB write.
+The driver misses calling media_entity_cleanup() on the probe error path
+and during remove, leaking resources if probe fails after entity
+initialization or when the driver is unloaded.
 
-Function names can be overridden with the following commands as root:
+Fix this by adding media_entity_cleanup() to the rdacm21_probe() error
+handling path and to rdacm21_remove().
 
-    modprobe speakup_soft
-    echo "0 _bad" > /sys/accessibility/speakup/i18n/function_names
-    # then press Insert+2 on /dev/tty
-
-This fix checks the first letter in help_init(), and if it is not in the
-[a–z] range the function returns an error to the caller. Eventually this
-error is propagated to drivers/accessibility/speakup/main.c:2217, which
-causes a bleep sound.
-
-Fixes: c6e3fd22cd53 ("Staging: add speakup to the staging directory")
-Signed-off-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
-Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Link: https://patch.msgid.link/20260531230804.254962-10-samuel.thibault@ens-lyon.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a59f853b3b4b ("media: i2c: Add driver for RDACM21 camera module")
+Signed-off-by: Biren Pandya <birenpandya@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accessibility/speakup/keyhelp.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/media/i2c/rdacm21.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/accessibility/speakup/keyhelp.c b/drivers/accessibility/speakup/keyhelp.c
-index 822ceac830683..e632c53d6246e 100644
---- a/drivers/accessibility/speakup/keyhelp.c
-+++ b/drivers/accessibility/speakup/keyhelp.c
-@@ -8,6 +8,7 @@
-  */
+diff --git a/drivers/media/i2c/rdacm21.c b/drivers/media/i2c/rdacm21.c
+index 3e22df36354fd..e8196ea737393 100644
+--- a/drivers/media/i2c/rdacm21.c
++++ b/drivers/media/i2c/rdacm21.c
+@@ -589,10 +589,12 @@ static int rdacm21_probe(struct i2c_client *client)
  
- #include <linux/keyboard.h>
-+#include <linux/ctype.h>
- #include "spk_priv.h"
- #include "speakup.h"
+ 	ret = v4l2_async_register_subdev(&dev->sd);
+ 	if (ret)
+-		goto error_free_ctrls;
++		goto error_entity_cleanup;
  
-@@ -111,7 +112,7 @@ static void say_key(int key)
- 			     spk_msg_get(MSG_KEYNAMES_START + (key - 1)));
+ 	return 0;
+ 
++error_entity_cleanup:
++	media_entity_cleanup(&dev->sd.entity);
+ error_free_ctrls:
+ 	v4l2_ctrl_handler_free(&dev->ctrls);
+ error:
+@@ -607,6 +609,7 @@ static void rdacm21_remove(struct i2c_client *client)
+ 
+ 	v4l2_async_unregister_subdev(&dev->sd);
+ 	v4l2_ctrl_handler_free(&dev->ctrls);
++	media_entity_cleanup(&dev->sd.entity);
+ 	i2c_unregister_device(dev->isp);
  }
  
--static int help_init(void)
-+static void help_init(void)
- {
- 	char start = SPACE;
- 	int i;
-@@ -120,13 +121,19 @@ static int help_init(void)
- 	state_tbl = spk_our_keys[0] + SHIFT_TBL_SIZE + 2;
- 	for (i = 0; i < num_funcs; i++) {
- 		char *cur_funcname = spk_msg_get(MSG_FUNCNAMES_START + i);
-+		char first_letter;
- 
--		if (start == *cur_funcname)
-+		first_letter = tolower(*cur_funcname);
-+
-+		/* Accept only 'a'..'z' to index letter_offsets[] safely */
-+		if (first_letter < 'a' || first_letter > 'z')
-+			continue;
-+
-+		if (start == first_letter)
- 			continue;
--		start = *cur_funcname;
-+		start = first_letter;
- 		letter_offsets[(start & 31) - 1] = i;
- 	}
--	return 0;
- }
- 
- int spk_handle_help(struct vc_data *vc, u_char type, u_char ch, u_short key)
-@@ -144,7 +151,7 @@ int spk_handle_help(struct vc_data *vc, u_char type, u_char ch, u_short key)
- 			synth_printf("%s\n", spk_msg_get(MSG_LEAVING_HELP));
- 			return 1;
- 		}
--		ch |= 32; /* lower case */
-+		ch = tolower(ch);
- 		if (ch < 'a' || ch > 'z')
- 			return -1;
- 		if (letter_offsets[ch - 'a'] == -1) {
 -- 
 2.53.0
 
