@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED6835F602;
-	Sat, 12 Sep 2026 09:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5A338AC92;
+	Sat, 12 Sep 2026 09:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203812; cv=none; b=LRGU3Lh0xLKGqsi6Uzg/BX3XluIUhn0bgptsdMwPUoaFBD3uw+tyG9s0HlQZZwoj5eOiwCdELXQFYzU6UQOjLmLnI1NBA+7yWu6gYm3myWZsjuiCM0xcGhAMeL0mLBBNxRTjJnxlFrzSN/OJ9fY3QZZsmagDJujxA3LEkSUXzs8=
+	t=1789203816; cv=none; b=tOtyRHIyGjpShfVHzqXOlnK2VcHXGD7sw3B0M8Wb4YVphThUCdAKdy7Cmi7/OhcLLr6ePDg7nGY6XIh2IO6rK6jVRxkDl/FBb8h3x8uWRAY6PTnu5WEq59hpWnWrS287PHdQbIBG23jmtlN7ffxH0k5y+DnLjRYEAY9h8DReI2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203812; c=relaxed/simple;
-	bh=H4OkFPcsk+jhRChDoL8P9zQXqU0o1J9rDOV7t5R4/Qo=;
+	s=arc-20240116; t=1789203816; c=relaxed/simple;
+	bh=J4wM8qPM/9lyDXYbtX/BTdXacLJSqxqrcdLzD2HCquM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oh1Lc55pZwgFhRtXQ77NJ15DTYxQ601au3nAzpZHosNEYEOwajFBC2zqAMCZs3+arRYMUYkkj9ZmpIuRcqvXTngM5nGMtVNXswZTk64k2Y/7UMUQlhAUqjiSHNuCpQFFSWKUoZOaTZ7hgiJJwpdaglPyBQyz8GlTsNmxGYIO1Ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nyv+uCiv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bpqth8YGTkSBVgzQX+aP1RDODB3EncJAqByNAmZN5OERFl2ogVxcJBqoT7vzAXTwWHFFFvR66Wm+NsvmJhThiYW5sTbTr8pIjRmX1Z85fkTbpTfuOy0uuDXDZthBEEUxXLwJ9xn0svmDjybD6B09Nw7JCuFLMRiyj771tbYB3jA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ih3CTlGJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nyv+uCiv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D6951F000FF;
-	Sat, 12 Sep 2026 09:03:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ih3CTlGJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630831F000FF;
+	Sat, 12 Sep 2026 09:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203810;
-	bh=Hc3A6l2FpuTHZVXVyN8XiatsQ8uJNr+zc+kw1pGYkT0=;
+	s=korg; t=1789203815;
+	bh=mXRI17Ln8ENDTm7aFLE2PmSVREyUqQXOyOt2SMH/a6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nyv+uCivGk07nLN0AOQunqQ/Y/95c9HN/E65XaTjFIqV1mqFPh5ppkN/6XXxwj6vF
-	 TAY+yFKFtPMN3CsgvbLcLXGqnGDg7kbiBlawHPCRbIkd+PhHDEq1eV0BJND9y0AAQW
-	 duaPmjO3dWzY0LLbzKQj5PunpVAIVhSMOP9yWVuY=
+	b=ih3CTlGJiW25EnDGhOuaNg7xDYV2e9RrMa40HMos85XFP4hKtTjWBWZ4rUbJC/g0G
+	 ca1tXD+jPlz/lbiJk6k+fMPr2dHYpNeskbfod2gcS3rkPzIcSJ6Dum5t0tl63dLUIV
+	 GK/hcx6KTPW335jcPhkLPkFIcIpjV1E3exR5/i8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zizhi Wo <wozizhi@huawei.com>,
 	Nilay Shroff <nilay@linux.ibm.com>,
+	Zizhi Wo <wozizhi@huawei.com>,
 	Bart Van Assche <bvanassche@acm.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1484/1815] null_blk: free zones array on device power-off
-Date: Sat, 12 Sep 2026 08:53:54 +0200
-Message-ID: <20260912065723.844096555@linuxfoundation.org>
+Subject: [PATCH 7.2 1485/1815] null_blk: reject per-device queue resize for shared tag set
+Date: Sat, 12 Sep 2026 08:53:55 +0200
+Message-ID: <20260912065723.866285921@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,90 +55,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 2a6357a9b935a34f5508618fee8a7fffbf7722a8 ]
+[ Upstream commit 1cdfe2fa62b48728a9b436fbbd3dbe4c11593e24 ]
 
-null_init_zoned_dev() allocates dev->zones when a zoned device is powered
-on, but null_del_dev() never frees it on power-off; dev->zones is only
-freed later in null_free_dev(), when the configfs directory is removed. If
-the device is powered off and then on again, null_init_zoned_dev()
-allocates a new array and overwrites the dev->zones pointer, leaking the
-previous allocation each power cycle.
+When shared_tags is enabled, null_setup_tagset() makes the device use the
+global tag_set, whose driver_data stays NULL. null_map_queues() therefore
+falls back to the module-wide g_submit_queues/g_poll_queues instead of any
+per-device value.
 
-Free dev->zones in null_del_dev() via null_free_zoned_dev() to solve it.
-And calling null_free_zoned_dev() in null_free_dev() is no longer necessary
-because every caller already invokes null_del_dev() first: via
-nullb_group_drop_item() before nullb_device_release(), in the
-null_add_dev() error path of null_create_dev(), and in null_destroy_dev().
-Remove the redundant call.
+Resizing submit_queues or poll_queues via configfs on such a device calls
+blk_mq_update_nr_hw_queues() on the shared set, shrinking
+set->nr_hw_queues.  __blk_mq_realloc_hw_ctxs() only grows the
+q->queue_hw_ctx[] allocation, so on shrink it merely exits and NULLs the
+now-excess hctx slots. null_map_queues(), however, keeps mapping CPUs with
+the unchanged g_submit_queues/g_poll_queues, so mq_map[] ends up pointing
+at those NULLed hctx slots. blk_mq_map_swqueue() then dereferences the NULL
+hctx (hctx->cpumask), crashing the kernel:
 
-And take &lock around zone_cond_store() in the two store wrappers to
-serialize dev->zones check-and-deref against its alloc/free, which already
-run under &lock. The reason there was no problem before is that only
-nullb_device_release() or null_exit() frees the dev->zones, which
-guarantees that subsequent users won't access the configfs interface.
+[  460.218374] KASAN: null-ptr-deref in range [0x0000000000000098-0x000000000000009f]
+[  460.219003] CPU: 24 UID: 0 PID: 1492 Comm: sh Not tainted 7.2.0-rc2+ #67 PREEMPT(full)
+[  460.219792] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-4.fc41 04/01/2014
+[  460.220452] RIP: 0010:blk_mq_map_swqueue+0x4db/0x1430
+......
+[  460.228977] Call Trace:
+[  460.229175]  <TASK>
+[  460.229354]  blk_mq_update_nr_hw_queues+0xd49/0x11c0
+[  460.229779]  ? __pfx_blk_mq_update_nr_hw_queues+0x10/0x10
+[  460.230200]  nullb_update_nr_hw_queues+0x1a9/0x370 [null_blk]
+[  460.230694]  nullb_device_submit_queues_store+0xd9/0x170 [null_blk]
+[  460.231190]  ? __pfx_nullb_device_submit_queues_store+0x10/0x10 [null_blk]
+[  460.231776]  ? configfs_write_iter+0x35c/0x4e0
+[  460.232122]  configfs_write_iter+0x286/0x4e0
+[  460.232460]  vfs_write+0x52d/0xd00
+[  460.232779]  ? __x64_sys_openat+0x108/0x1d0
+[  460.233106]  ? __pfx_vfs_write+0x10/0x10
+[  460.233413]  ? fdget_pos+0x1cf/0x4c0
+[  460.233745]  ? fput_close+0x133/0x190
+[  460.234038]  ? __pfx_expand_files+0x10/0x10
+[  460.234368]  ksys_write+0xfc/0x1d0
 
-Fixes: ca4b2a011948 ("null_blk: add zone support")
+Reproducer:
+modprobe null_blk shared_tags=1 submit_queues=64 poll_queues=1
+mkdir /sys/kernel/config/nullb/dev
+echo 1 > /sys/kernel/config/nullb/dev/power
+echo 1 > /sys/kernel/config/nullb/dev/submit_queues
+
+A per-device resize of a shared tag set is meaningless anyway, so reject it
+with -EINVAL in nullb_update_nr_hw_queues() when the device is bound to the
+global tag_set.
+
+Fixes: 45919fbfe1c4 ("null_blk: Enable modifying 'submit_queues' after an instance has been configured")
+Suggested-by: Nilay Shroff <nilay@linux.ibm.com>
 Assisted-by: Claude-Code:GLM-5.2
 Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
 Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260725022509.714271-6-wozizhi@huaweicloud.com
+Link: https://patch.msgid.link/20260725022509.714271-8-wozizhi@huaweicloud.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/block/null_blk/main.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index fda1ffd2a64ec..78bc0206c43fe 100644
+index 78bc0206c43fe..6494b802756b5 100644
 --- a/drivers/block/null_blk/main.c
 +++ b/drivers/block/null_blk/main.c
-@@ -579,8 +579,13 @@ static ssize_t nullb_device_zone_readonly_store(struct config_item *item,
- 						const char *page, size_t count)
- {
- 	struct nullb_device *dev = to_nullb_device(item);
-+	ssize_t ret;
+@@ -382,6 +382,15 @@ static int nullb_update_nr_hw_queues(struct nullb_device *dev,
+ 	if (!dev->nullb)
+ 		return 0;
+ 
++	/*
++	 * A shared tag_set is mapped via the module-wide queue counts, so a
++	 * per-device resize is meaningless. On shrink it would also leave
++	 * mq_map[] pointing at NULLed hctx slots, causing a NULL deref in
++	 * blk_mq_map_swqueue(). Reject it.
++	 */
++	if (dev->shared_tags)
++		return -EINVAL;
 +
-+	mutex_lock(&lock);
-+	ret = zone_cond_store(dev, page, count, BLK_ZONE_COND_READONLY);
-+	mutex_unlock(&lock);
- 
--	return zone_cond_store(dev, page, count, BLK_ZONE_COND_READONLY);
-+	return ret;
- }
- CONFIGFS_ATTR_WO(nullb_device_, zone_readonly);
- 
-@@ -588,8 +593,13 @@ static ssize_t nullb_device_zone_offline_store(struct config_item *item,
- 					       const char *page, size_t count)
- {
- 	struct nullb_device *dev = to_nullb_device(item);
-+	ssize_t ret;
- 
--	return zone_cond_store(dev, page, count, BLK_ZONE_COND_OFFLINE);
-+	mutex_lock(&lock);
-+	ret = zone_cond_store(dev, page, count, BLK_ZONE_COND_OFFLINE);
-+	mutex_unlock(&lock);
-+
-+	return ret;
- }
- CONFIGFS_ATTR_WO(nullb_device_, zone_offline);
- 
-@@ -836,7 +846,6 @@ static void null_free_dev(struct nullb_device *dev)
- 	if (!dev)
- 		return;
- 
--	null_free_zoned_dev(dev);
- 	badblocks_exit(&dev->badblocks);
- 	kfree(dev);
- }
-@@ -1777,6 +1786,7 @@ static void null_del_dev(struct nullb *nullb)
- 	}
- 
- 	put_disk(nullb->disk);
-+	null_free_zoned_dev(dev);
- 	if (nullb->tag_set == &nullb->__tag_set)
- 		blk_mq_free_tag_set(nullb->tag_set);
- 	kfree(nullb->queues);
+ 	/*
+ 	 * Make sure at least one submit queue exists.
+ 	 */
 -- 
 2.53.0
 
