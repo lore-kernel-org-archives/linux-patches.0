@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F6B47CA85;
-	Sat, 12 Sep 2026 13:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6532EA732;
+	Sat, 12 Sep 2026 13:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219123; cv=none; b=Zaoztu4+YtUyeUcMV60CqKb40aYt6wK79vIaeO2NDLi9Mk8HJ8sa/CLw7fBCIII/MZn7C+s1vxdy0XESSU6nOBIRIZGnTCdsud+P/4wGc/nNvQnxYShjVcv0OFrR19QjQZkRWva/qgnSKSV3yF8qi+VhkOuVfl602aP0ovPlMRs=
+	t=1789219128; cv=none; b=Tpi6yQHiUH9sqbj9R320oJOPvk0itmasq0/PyMU2m+Qg0pzi0d1Tp6/JZwn3Mt569Vd6tPqP5aBLpRWtovkYAeske8vc5OJo6VLQlm9xjqjKSLY+8XyorPHLZrR2WfkO0Rn0GKpbSTifUAEdJuICE4hl8Lp0+C3MTvXo+LhGGvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219123; c=relaxed/simple;
-	bh=5fvaJrgax7fjNgWqQRefHz695LKxxT47aQNqGy+9tTM=;
+	s=arc-20240116; t=1789219128; c=relaxed/simple;
+	bh=/j6j7sKe6+ZPlPrJ0GIJ/ED5hJ1786WI7f2daTxFi9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ETgHXVXjIPXPJ9t3oymGRpUjN/zbTFyW6E6BkAQT1vOKOlAB49zTwkeByVHIIZ+pknZE9FU/WyGpQtPDkqCwqMoSuj27LsBmDyNhb7E3j30k53IsYhonVCjD9IXAkQkiPu0yPq0s9FBPE7WhKkagvADJezCR5+F98rR7s9TF2tQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9Aekq7L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mSdqY5nbrWoy237GpG78aRxyp6QcRjO6tjjR1AlJriQb/W+TIbnNdp68j6+zmSXrUvDh4HvINQ6DykUmlbSyE7AR1YprTdXSWis13Dbr44IlF7a/Jo5UXNinRKiadKXOw3hFv3YNtBkdBISqIx02H+Sb2FkyCuMZRy0ZhChSWhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dXRl2Ezv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9Aekq7L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A21FA1F000FF;
-	Sat, 12 Sep 2026 13:18:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dXRl2Ezv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F491F000FF;
+	Sat, 12 Sep 2026 13:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219122;
-	bh=ZEHoVEf4SPI/IG112JU/0xQuFSsVs4I1np3U8FHcjjU=;
+	s=korg; t=1789219126;
+	bh=Kac6GcV0YUfnpxl/jxxQZ4Cpx5aTlSI5GNvp+tGUyhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w9Aekq7LeJGBgB88ehTD4rVJSx3md2OXj/Z4CXRjRJKYNVL2v/5G4StRnhneWbvZA
-	 qNyGPAIXnrACIXqARpWHDtTrQcDEQ3NfTj2UNMQ5HufbmNaiMOHC5RuTdZopGQsFOa
-	 /xeqQ0sMjzRdLwGbgrhM99fKQOMT35kvdDUc7Tgs=
+	b=dXRl2EzvNET4ULm2J7wYS2cH5kMfqo1upz/QgXBFj6TvHB09shzlGNfkiRLUgNaT5
+	 0lBKSmrdAooPNZEw8F1/H250mRqzb0CA2Ojr9Pbh35iQmqFXR2E223g1ahBnSSo9xy
+	 My1JbA0TnNDQyWs7ihimWmwonUrawscGB+ZiWLoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anshumali Gaur <agaur@marvell.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
+	co+4638111fe2a12980@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
+	Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1285/1376] octeontx2-af: fix NULL deref in NIX TM tree debugfs read path
-Date: Sat, 12 Sep 2026 09:01:51 +0200
-Message-ID: <20260912065636.177814125@linuxfoundation.org>
+Subject: [PATCH 6.12 1286/1376] net: qualcomm: rmnet: restore skb->dev on deaggregated frames
+Date: Sat, 12 Sep 2026 09:01:52 +0200
+Message-ID: <20260912065636.200402339@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,45 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anshumali Gaur <agaur@marvell.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit ec65631bd5ec251cdf67a4919fac7a3149a6e235 ]
+[ Upstream commit a66734a1c5e36525ea07e9f4547fddc51e916de3 ]
 
-rvu_dbg_nix_tm_tree_display() dereferences pfvf->sq_ctx without
-checking whether the SQ context has been allocated. Reading
-/sys/kernel/debug/octeontx2/nix/tm_tree for a NIX LF whose transmit
-queues are not set up triggers a kernel oops.
+rmnet_map_deaggregate() allocates each sub-frame with alloc_skb() and
+leaves skb->dev NULL. __rmnet_map_ingress_handler() assigns
+skb->dev = ep->egress_dev only on the data path, but a MAP command frame
+is dispatched to rmnet_map_command() before that, so rmnet_map_send_ack()
+runs netif_tx_lock(skb->dev) on a NULL device. An unprivileged user
+reaches this by unsharing a user+net namespace, creating an rmnet link
+over a tap device with INGRESS_DEAGGREGATION and INGRESS_MAP_COMMANDS,
+and writing an aggregated frame carrying a flow-control command to the
+tap fd.
 
-Guard the read path the same way rvu_dbg_nix_tm_tree_write() already
-does and return -EINVAL with a seq_file message when sq_ctx is NULL.
+Restore the assignment dropped by 378e25357ac7, so every skb leaving
+rmnet_map_deaggregate() has a valid device.
 
-Fixes: b907194a5d5b ("octeontx2-af: Add debugfs support to dump NIX TM topology")
-Signed-off-by: Anshumali Gaur <agaur@marvell.com>
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Link: https://patch.msgid.link/20260820050333.2606095-1-rkannoth@marvell.com
+  BUG: KASAN: null-ptr-deref in _raw_spin_lock (kernel/locking/spinlock.c:158)
+  Write of size 4 at addr 00000000000004b4 by task exploit/144
+  Call Trace:
+   _raw_spin_lock (kernel/locking/spinlock.c:158)
+   netif_tx_lock (net/sched/sch_generic.c:497)
+   rmnet_map_command (drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c:67)
+   rmnet_rx_handler (drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c:125)
+   __netif_receive_skb_core.constprop.0 (net/core/dev.c:6103)
+   ...
+   __netif_receive_skb_one_core (net/core/dev.c:6214)
+   netif_receive_skb (net/core/dev.c:6474)
+   tun_get_user (drivers/net/tun.c:1966)
+   tun_chr_write_iter (drivers/net/tun.c:2012)
+   vfs_write (fs/read_write.c:687)
+   ksys_write (fs/read_write.c:739)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+Fixes: 378e25357ac7 ("net: qualcomm: rmnet: Remove unnecessary device assignment")
+Reported-by: co+4638111fe2a12980@bugs.sh
+Closes: https://lore.kernel.org/netdev/ijg79FFMfIvKJbivdJEKvTO90Q9dTvyBkJck@bugs.sh/T/#u
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260820195240.1631458-1-xmei5@asu.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-index 53c2a9d6250a7..f4a4fe5f4a79e 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-@@ -1659,6 +1659,12 @@ static int rvu_dbg_nix_tm_tree_display(struct seq_file *m, void *unused)
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
+index 8471157a431be..615bf82eed51e 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
+@@ -394,6 +394,7 @@ struct sk_buff *rmnet_map_deaggregate(struct sk_buff *skb,
+ 	if (!skbn)
+ 		return NULL;
  
- 	pfvf = rvu_get_pfvf(rvu, pcifunc);
-+
-+	if (!pfvf->sq_ctx) {
-+		seq_printf(m, "SQ context is not initialized for pcifunc 0x%x\n", pcifunc);
-+		return -EINVAL;
-+	}
-+
- 	max_id = pfvf->sq_ctx->qsize;
- 
- 	memset(&aq_req, 0, sizeof(struct nix_aq_enq_req));
++	skbn->dev = skb->dev;
+ 	skb_reserve(skbn, RMNET_MAP_DEAGGR_HEADROOM);
+ 	skb_put(skbn, packet_len);
+ 	memcpy(skbn->data, skb->data, packet_len);
 -- 
 2.53.0
 
