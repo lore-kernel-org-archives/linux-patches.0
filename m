@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A064147986D;
-	Sat, 12 Sep 2026 15:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67083AC17;
+	Sat, 12 Sep 2026 15:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228253; cv=none; b=WfaP7NvM+3mB2/TcqQTllJBjNZoAtk88C2RLjyOPQDswZsUN1lgrpySJO8zvylVQCiD+18RnlKTq8T+wH6L85ms5jVOPmv+wPowpo/WDj8vACtxR+OvzfTuCM6NbygRHxmP7TRLsJZRw/O8ETW8CQdY6Z7uIWd60TVtbMwEDeXY=
+	t=1789228256; cv=none; b=ErqIlr/I0nQnwfzOgRDXCv1VA9Y05oNzPR1RH1H5Qz6Ek/7darLzl+Z/J80qXImw58x7H70QjwBt5TjPBc58qPTkzdsLQ68HqI2dTt2ocfUKPkrMYJ0WxJ7DaFkzQTyxcy1Hi4cG0x28kl2c3LWl9af6zEm15XaqdEm0k6zNDOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228253; c=relaxed/simple;
-	bh=YOh4T4JB2a3vLFChLYwjMEDVaOSqRbN4S8BlLDn/imo=;
+	s=arc-20240116; t=1789228256; c=relaxed/simple;
+	bh=hEz1j44zl18uhjW1cnDwLWtoBnM/CYiaVPp/SkPKU3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t/bOVY6t354y+jovd/bic6gNUrUJ23QBuYb0bxP0cu64kW/f0h7rOJpdmhkQ+elTtp1WptuDh+CrM8JBPmjqQG6GWT+s68cUfzdJw0KUYvV5C7umDakG0uDHVsVuIrBIUp+74P29KYoGT762lN2kSa0CKqZieaevjcW5/C9TRS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+h+2OSo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OqRzJ38eDqLZ/SMgCq8DN2qQy8bSbndld6O62K+f1HOvo1Edlo4wv8IyDwP4sLY9M3IgvIPaddjum0gTLdp+M6mOuPI1yUoek+F8JHuveqxKEf6vTzWfFZCwjGB0szlD07JW2VzudgCtyrm8RpoN5faDzVyZRIkXAWQrsJEiSbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R+ji3437; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+h+2OSo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC6A1F000FF;
-	Sat, 12 Sep 2026 15:50:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R+ji3437"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572811F000FF;
+	Sat, 12 Sep 2026 15:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228250;
-	bh=79fHxsCyRxn8qqXQf25Jy6K/4jWkYwLmeSt4h9oOA9A=;
+	s=korg; t=1789228255;
+	bh=UH5r/+DX2l9+0iPRLN4nDtu+xuBSG1RDCVpsAqHPlj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1+h+2OSoAHLhfnb/AUhGI1so8QctCSE5xwCXkFPf2obvG4mu+ib23BHU9JEkCWuWs
-	 JPp0aEAYNHRqOsDH3WYZExwMxLTxBy2IslDUYeQUv2IsXs6xawjl29EZ+iqCXvVgt4
-	 EIJlPzgigspHbfQpvIrhv50jQt6NSLpq1dV00kbs=
+	b=R+ji3437/Pyk21iL3sJCh0d3P9v6j8bu7ve42ilwOWplfP8472QTzTLUpF7iq5jCf
+	 HrFH2eRtcYH4JNqZFVZAJQ7i/k8f1foAVlxisDyhJ56teCZavvW+v4tEcCTeoQcfYu
+	 ANcHiEWGde0dBM3MgRCOfC9vVepypbr5lNDr1O+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Stable@vger.kernel.org,
+	Cong Nguyen <congnt264@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.1 0347/1191] iio: light: gp2ap002: Disable regulators on resume failure
-Date: Sat, 12 Sep 2026 08:51:15 +0200
-Message-ID: <20260912065556.023118278@linuxfoundation.org>
+Subject: [PATCH 6.1 0348/1191] iio: srf04: fix pm_runtime handling on probe error path
+Date: Sat, 12 Sep 2026 08:51:16 +0200
+Message-ID: <20260912065556.044847373@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,60 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-commit a41000ba3a230bed1e422f283486ff8f77fe0d30 upstream.
+commit a40b2e7a17f26e38ab054363c9c7cde149588357 upstream.
 
-If enabling VIO fails after VDD has been enabled, runtime resume
-returns without disabling VDD. Likewise, if device reinitialization
-fails, both supplies remain enabled. The runtime PM core keeps the
-device suspended when its resume callback fails, so the supplies must
-be restored to the suspended state.
+When pm_runtime_set_active() fails during probe, the driver logs the
+error and unregisters the IIO device, but then falls through and still
+calls pm_runtime_enable() before returning the error.
 
-Disable the supplies enabled by the callback before returning an error.
+Since probe returns an error, srf04_remove() is never called, so
+runtime PM is left enabled without a matching pm_runtime_disable().
+This leaks the enable and triggers an "Unbalanced pm_runtime_enable!"
+warning on a subsequent bind of the device.
 
-Fixes: 97d642e23037 ("iio: light: Add a driver for Sharp GP2AP002x00F")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Cc: <Stable@vger.kernel.org>
+Return the error right after unregistering the IIO device so that
+runtime PM is not enabled on the failure path.
+
+Fixes: 2251157b335b ("iio: srf04: add power management feature")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/gp2ap002.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/iio/proximity/srf04.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/light/gp2ap002.c
-+++ b/drivers/iio/light/gp2ap002.c
-@@ -672,7 +672,7 @@ static int gp2ap002_runtime_resume(struc
- 	ret = regulator_enable(gp2ap002->vio);
- 	if (ret) {
- 		dev_err(dev, "failed to enable VIO regulator in resume path\n");
--		return ret;
-+		goto out_disable_vdd;
- 	}
+--- a/drivers/iio/proximity/srf04.c
++++ b/drivers/iio/proximity/srf04.c
+@@ -335,6 +335,7 @@ static int srf04_probe(struct platform_d
+ 		if (ret) {
+ 			dev_err(data->dev, "pm_runtime_set_active: %d\n", ret);
+ 			iio_device_unregister(indio_dev);
++			return ret;
+ 		}
  
- 	msleep(20);
-@@ -680,13 +680,19 @@ static int gp2ap002_runtime_resume(struc
- 	ret = gp2ap002_init(gp2ap002);
- 	if (ret) {
- 		dev_err(dev, "re-initialization failed\n");
--		return ret;
-+		goto out_disable_vio;
- 	}
- 
- 	/* Re-activate the IRQ */
- 	enable_irq(gp2ap002->irq);
- 
- 	return 0;
-+
-+out_disable_vio:
-+	regulator_disable(gp2ap002->vio);
-+out_disable_vdd:
-+	regulator_disable(gp2ap002->vdd);
-+	return ret;
- }
- 
- static DEFINE_RUNTIME_DEV_PM_OPS(gp2ap002_dev_pm_ops, gp2ap002_runtime_suspend,
+ 		pm_runtime_enable(data->dev);
 
 
