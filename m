@@ -1,50 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2513DD51A;
-	Sat, 12 Sep 2026 12:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D902472091;
+	Sat, 12 Sep 2026 12:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214613; cv=none; b=R87E5/GQqYlB2F1Jtl2HmHVOgMoolRlrizZ51a6HlzzKGAmH6H7Zgu83tQGwVBrmZ6tkK49S9JiUYYqqgTGfSNl7ARWvqQ6B0hgVB1H+rcVpqkDg7M+s84Bb0XcDFRlFzqgUXMaYEY9yIvYRSl93Z7McPwpGZ/BTafZki3QkfzY=
+	t=1789214618; cv=none; b=UcTZ3RkLgNRYNkGjhBGBqJY7AbpdjO6pDZRxJz9wtqdsvZU5BJ37Vx67rFUMDBK1lsadX7z39uWnNnpE9qHlM0b5dYO7u88xT+U1BJJVQiUsgB/0SReq1zkkE+omxrcDKa0LkRpsrXQiXo0NTMpNVhds5ZDMhpXX5lkBOPImr4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214613; c=relaxed/simple;
-	bh=f3ZedF4vXJKmSEcLpdjHuh7DUE53KEL2gAv8/06SzRU=;
+	s=arc-20240116; t=1789214618; c=relaxed/simple;
+	bh=lgCyHf1HvvJnKFRFOXsZqIvEBMqrZRYrsx2Iam7Z/fA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UUVvjvuI0c6rdedojAu8pTo2SU/SYjmo6CneD2WIc6Z6M7XxoSJ5CDBqOFS7kzmmi1wn0ce48FWaIBxTmtrEKEEVPLpdiCw84AR/INBTZ88BeOYyFx+e8Pr5ImWKz9VnkGw2qZETSY0PVQJVEdeikm9CuhaTJvs5uT6tBWx0lyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPdte13C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LQGjcsXZf/5Kr1KNx1F2ncZwoK2OCKC3Z2j+eLej0jl2JkSZrdxpN4gLIhJMAYNoQBTHZj3HWDSwRpLmf1F/eA7vkUOINn4qscOaZ+wP3cWuqblkwjbQPbSNG2AXiIyg+gy1sAuRN9syejr5gjTWRFyCu0CB4TFvSFwY/RSyeWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISxDkBCk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPdte13C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF9981F000FF;
-	Sat, 12 Sep 2026 12:03:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISxDkBCk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F841F000FF;
+	Sat, 12 Sep 2026 12:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214612;
-	bh=rrKU/QA7de5z3HJ5w2EeHceusJWABPTI37pJXsIQsEc=;
+	s=korg; t=1789214616;
+	bh=5hwi0ZGN/Q1S3H2tjpxJkf4nH+Y/iUhyJrewhHvpYcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UPdte13C715ep1ZJlQiX1dszvElhM2lYB8TSoYxDk29iPUYvYZ76uwOmn1g33EJHy
-	 pr5ULbBwCqXgZJYf4Rh4RhQU4LWda8v2epIa6NgmEniqEtKKwZCBnE3b/4XADVrI4j
-	 S8BMubIBvEO8tq/1y4nh0GN9glsHfZRug1U5ZYN8=
+	b=ISxDkBCkA36TkpdoWbKEQDSbtovgEoeBtM5ehLc1Z3W9IzjWfATQ90/4z29dmgJYm
+	 tZzFyILJdbPS9i2n6EXgUBgR/Sf7KcvBhPQ80YVNpokMJjhfOMws1UkjhsGmxhszCG
+	 benfw8p+l3Uam+bMXPhE7eEUCj3fmSVbv+Iq6PNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	German Gomez <german.gomez@arm.com>,
 	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
 	Jiri Olsa <jolsa@kernel.org>,
 	Kan Liang <kan.liang@linux.intel.com>,
 	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Rob Herring <robh@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0361/1376] perf test brstack: Speed up running test by using tr -s instead of xargs
-Date: Sat, 12 Sep 2026 08:46:27 +0200
-Message-ID: <20260912065615.596728931@linuxfoundation.org>
+Subject: [PATCH 6.12 0362/1376] perf tests: Harden branch stack sampling test
+Date: Sat, 12 Sep 2026 08:46:28 +0200
+Message-ID: <20260912065615.619583185@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -63,76 +62,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@arm.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 3178155d292b2b5f0b9f59b3777dc52e029652ba ]
+[ Upstream commit f3061d526714ac6cc936c48e76a6eb0512c69b1a ]
 
-The brstack test runs quite slowly in software models. Part of the reason
-is "xargs -n1" is quite inefficient in replacing spaces with newlines.
+On continuous testing the perf script output can be empty, or nearly
+empty, causing tr/grep to exit and due to "set -e" the test traps and
+fails.
 
-While that's not noticeable on normal machines, it is on software models.
+Add some empty file handling that sets the test to skip and make grep
+and other text rewriting failures non-fatal by adding "|| true".
 
-Use "tr -s ' ' '\n'" instead which can do the same transformation, but is
-much faster. For comparison on an M1 Macbook Pro:
+Committer testing:
 
-  $ time seq -s ' ' 10000 | xargs -n1 > /dev/null
+  root@number:~# grep -m1 "model name" /proc/cpuinfo
+  model name	: AMD Ryzen 9 9950X3D 16-Core Processor
+  root@number:~# perf test "Check branch stack sampling"
+  104: Check branch stack sampling                                     : Ok
+  root@number:~#
+  root@number:~# perf test -vvvvvvv "Check branch stack sampling"
+  104: Check branch stack sampling:
+  --- start ---
+  test child forked, pid 396047
+   142d22-142da0 l brstack_bench
+  perf does have symbol 'brstack_bench'
+  Testing user branch stack sampling
+  Testing branch stack filtering permutation (any_call,CALL|IND_CALL|COND_CALL|SYSCALL|IRQ)
+  Testing branch stack filtering permutation (call,CALL|SYSCALL)
+  Testing branch stack filtering permutation (cond,COND)
+  Testing branch stack filtering permutation (any_ret,RET|COND_RET|SYSRET|ERET)
+  Testing branch stack filtering permutation (call,cond,CALL|SYSCALL|COND)
+  Testing branch stack filtering permutation (any_call,cond,CALL|IND_CALL|COND_CALL|IRQ|SYSCALL|COND)
+  Testing branch stack filtering permutation (cond,any_call,any_ret,COND|CALL|IND_CALL|COND_CALL|SYSCALL|IRQ|RET|COND_RET|SYSRET|ERET)
+  ---- end(0) ----
+  104: Check branch stack sampling                                     : Ok
+  root@number:~#
 
-  real    0m2.729s
-  user    0m2.009s
-  sys     0m0.914s
-  $ time seq -s ' ' 10000 | tr -s ' ' '\n' | grep '.' > /dev/null
-
-  real    0m0.002s
-  user    0m0.001s
-  sys     0m0.001s
-
-The "grep '.'" is also needed to remove any remaining blank lines.
-
-Signed-off-by: James Clark <james.clark@arm.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: German Gomez <german.gomez@arm.com>
 Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
 Cc: Kan Liang <kan.liang@linux.intel.com>
 Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20241213231312.2640687-2-robh@kernel.org
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Signed-off-by: Rob Herring <robh@kernel.org>
-[robh: Drop changing loop iterations on arm64. Squash blank line fix and redo commit msg]
+Link: https://lore.kernel.org/r/20250318161639.34446-1-irogers@google.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Stable-dep-of: 344d3aec164d ("perf tests: Fix flakiness in branch stack sampling tests")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/test_brstack.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/tests/shell/test_brstack.sh | 72 +++++++++++++++++++-------
+ 1 file changed, 52 insertions(+), 20 deletions(-)
 
 diff --git a/tools/perf/tests/shell/test_brstack.sh b/tools/perf/tests/shell/test_brstack.sh
-index 5f14d0cb013f8..e01df7581393e 100755
+index e01df7581393e..9138fa83bf36d 100755
 --- a/tools/perf/tests/shell/test_brstack.sh
 +++ b/tools/perf/tests/shell/test_brstack.sh
-@@ -30,7 +30,7 @@ test_user_branches() {
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # Check branch stack sampling
+ 
+ # SPDX-License-Identifier: GPL-2.0
+@@ -17,35 +17,50 @@ fi
+ 
+ skip_test_missing_symbol brstack_bench
+ 
++err=0
+ TMPDIR=$(mktemp -d /tmp/__perf_test.program.XXXXX)
+ TESTPROG="perf test -w brstack"
+ 
+ cleanup() {
+ 	rm -rf $TMPDIR
++	trap - EXIT TERM INT
+ }
+ 
+-trap cleanup EXIT TERM INT
++trap_cleanup() {
++	set +e
++	echo "Unexpected signal in ${FUNCNAME[1]}"
++	cleanup
++	exit 1
++}
++trap trap_cleanup EXIT TERM INT
+ 
+ test_user_branches() {
  	echo "Testing user branch stack sampling"
  
- 	perf record -o $TMPDIR/perf.data --branch-filter any,save_type,u -- ${TESTPROG} > /dev/null 2>&1
--	perf script -i $TMPDIR/perf.data --fields brstacksym | xargs -n1 > $TMPDIR/perf.script
-+	perf script -i $TMPDIR/perf.data --fields brstacksym | tr -s ' ' '\n' > $TMPDIR/perf.script
+-	perf record -o $TMPDIR/perf.data --branch-filter any,save_type,u -- ${TESTPROG} > /dev/null 2>&1
+-	perf script -i $TMPDIR/perf.data --fields brstacksym | tr -s ' ' '\n' > $TMPDIR/perf.script
++	perf record -o "$TMPDIR/perf.data" --branch-filter any,save_type,u -- ${TESTPROG} > "$TMPDIR/record.txt" 2>&1
++	perf script -i "$TMPDIR/perf.data" --fields brstacksym > "$TMPDIR/perf.script"
  
  	# example of branch entries:
  	# 	brstack_foo+0x14/brstack_bar+0x40/P/-/-/0/CALL
-@@ -59,7 +59,7 @@ test_filter() {
- 	echo "Testing branch stack filtering permutation ($test_filter_filter,$test_filter_expect)"
  
- 	perf record -o $TMPDIR/perf.data --branch-filter $test_filter_filter,save_type,u -- ${TESTPROG} > /dev/null 2>&1
--	perf script -i $TMPDIR/perf.data --fields brstack | xargs -n1 > $TMPDIR/perf.script
-+	perf script -i $TMPDIR/perf.data --fields brstack | tr -s ' ' '\n' | grep '.' > $TMPDIR/perf.script
+-	set -x
+-	grep -E -m1 "^brstack_bench\+[^ ]*/brstack_foo\+[^ ]*/IND_CALL/.*$"	$TMPDIR/perf.script
+-	grep -E -m1 "^brstack_foo\+[^ ]*/brstack_bar\+[^ ]*/CALL/.*$"	$TMPDIR/perf.script
+-	grep -E -m1 "^brstack_bench\+[^ ]*/brstack_foo\+[^ ]*/CALL/.*$"	$TMPDIR/perf.script
+-	grep -E -m1 "^brstack_bench\+[^ ]*/brstack_bar\+[^ ]*/CALL/.*$"	$TMPDIR/perf.script
+-	grep -E -m1 "^brstack_bar\+[^ ]*/brstack_foo\+[^ ]*/RET/.*$"		$TMPDIR/perf.script
+-	grep -E -m1 "^brstack_foo\+[^ ]*/brstack_bench\+[^ ]*/RET/.*$"	$TMPDIR/perf.script
+-	grep -E -m1 "^brstack_bench\+[^ ]*/brstack_bench\+[^ ]*/COND/.*$"	$TMPDIR/perf.script
+-	grep -E -m1 "^brstack\+[^ ]*/brstack\+[^ ]*/UNCOND/.*$"		$TMPDIR/perf.script
+-	set +x
+-
++	expected=(
++		"^brstack_bench\+[^ ]*/brstack_foo\+[^ ]*/IND_CALL/.*$"
++		"^brstack_foo\+[^ ]*/brstack_bar\+[^ ]*/CALL/.*$"
++		"^brstack_bench\+[^ ]*/brstack_foo\+[^ ]*/CALL/.*$"
++		"^brstack_bench\+[^ ]*/brstack_bar\+[^ ]*/CALL/.*$"
++		"^brstack_bar\+[^ ]*/brstack_foo\+[^ ]*/RET/.*$"
++		"^brstack_foo\+[^ ]*/brstack_bench\+[^ ]*/RET/.*$"
++		"^brstack_bench\+[^ ]*/brstack_bench\+[^ ]*/COND/.*$"
++		"^brstack\+[^ ]*/brstack\+[^ ]*/UNCOND/.*$"
++	)
++	for x in "${expected[@]}"
++	do
++		if ! tr -s ' ' '\n' < "$TMPDIR/perf.script" | grep -E -m1 -q "$x"
++		then
++			echo "Branches missing $x"
++			err=1
++		fi
++	done
+ 	# some branch types are still not being tested:
+ 	# IND COND_CALL COND_RET SYSCALL SYSRET IRQ SERROR NO_TX
+ }
+@@ -57,14 +72,28 @@ test_filter() {
+ 	test_filter_expect=$2
+ 
+ 	echo "Testing branch stack filtering permutation ($test_filter_filter,$test_filter_expect)"
+-
+-	perf record -o $TMPDIR/perf.data --branch-filter $test_filter_filter,save_type,u -- ${TESTPROG} > /dev/null 2>&1
+-	perf script -i $TMPDIR/perf.data --fields brstack | tr -s ' ' '\n' | grep '.' > $TMPDIR/perf.script
++	perf record -o "$TMPDIR/perf.data" --branch-filter "$test_filter_filter,save_type,u" -- ${TESTPROG}  > "$TMPDIR/record.txt" 2>&1
++	perf script -i "$TMPDIR/perf.data" --fields brstack > "$TMPDIR/perf.script"
  
  	# fail if we find any branch type that doesn't match any of the expected ones
  	# also consider UNKNOWN branch types (-)
+-	if grep -E -vm1 "^[^ ]*/($test_filter_expect|-|( *))/.*$" $TMPDIR/perf.script; then
+-		return 1
++	if [ ! -s "$TMPDIR/perf.script" ]
++	then
++		echo "Empty script output"
++		err=1
++		return
++	fi
++	# Look for lines not matching test_filter_expect ignoring issues caused
++	# by empty output
++	tr -s ' ' '\n' < "$TMPDIR/perf.script" | grep '.' | \
++	  grep -E -vm1 "^[^ ]*/($test_filter_expect|-|( *))/.*$" \
++	  > "$TMPDIR/perf.script-filtered" || true
++	if [ -s "$TMPDIR/perf.script-filtered" ]
++	then
++		echo "Unexpected branch filter in script output"
++		cat "$TMPDIR/perf.script"
++		err=1
++		return
+ 	fi
+ }
+ 
+@@ -80,3 +109,6 @@ test_filter "any_ret"	"RET|COND_RET|SYSRET|ERET"
+ test_filter "call,cond"		"CALL|SYSCALL|COND"
+ test_filter "any_call,cond"		"CALL|IND_CALL|COND_CALL|IRQ|SYSCALL|COND"
+ test_filter "cond,any_call,any_ret"	"COND|CALL|IND_CALL|COND_CALL|SYSCALL|IRQ|RET|COND_RET|SYSRET|ERET"
++
++cleanup
++exit $err
 -- 
 2.53.0
 
