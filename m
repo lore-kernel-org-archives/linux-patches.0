@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21E53382CB;
-	Sat, 12 Sep 2026 14:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C088C345EC1;
+	Sat, 12 Sep 2026 14:25:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223107; cv=none; b=ZRHiQ61kFqecRsNazP0mysZhA6z4meEi0qA04L65m0+22Ol6v/7meJbYhMlEVxjKMlmHkn1BpYqvZ7v8JakMtFjm+QnpL8KiP/rwjuNFs8oiRcE5LFV7jWueVb2IPgezKwcMFT5l77aeXPjuM2LLDN6K6Z34FPqizu2bawc4IPA=
+	t=1789223114; cv=none; b=n1F0GaiJQVha/I/O4Ln07+ohLXvc55YBOnHZNcxq+l0jwn6RP8vehtq+EX54q2kG+W1Eb6olg7BNyyMifj+Oxln/Qdc+SjsHxCMf14dDMFs16nlrrPQVCDWuWqD+Tx0MXqcVKAy95rCsI0sgch9TWP26Imb4RkzpBlgbbqqsxVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223107; c=relaxed/simple;
-	bh=7+h55i5oCWeCo144xGKjt0Xt7oJA8vyqeZxUozrOHYw=;
+	s=arc-20240116; t=1789223114; c=relaxed/simple;
+	bh=vohoXN2A2/vdQSO1FIMNsrftFo5pCuX4DNCVtP4tlOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kqTk1F7LdxmV4uyAZLyqIuKJSr+AwaZG0eL2ex743zoSehqh/BAjbT1/DKjcilkiFhRNpyYQ0nvkXttqDSQN6MqdRDWDxjkGPk1Bf5jENZQnLqmPNDhG3WWdj8bgTlgO5PaPBrs4eygM+8LcdbZqeq8P0FB1l70tZTFduOlc8P0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHU8vY91; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tuc6inZl1xRSFuhkgM1garRF5rpXxE1q+zMUc7WhXxSpZzsFRR/nYTpNZlSJDUGLMVXr671l3t6pxI39McfyVpRtW+8fJc8SmI6l126lD5FyPRw+GVtOM0N0QtMLt4E0LEq2m+lv4OxVp9nbkCVkXvwDZbS/SFQ8OENT+qAkaoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OY7rUeOF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHU8vY91"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171F91F000FF;
-	Sat, 12 Sep 2026 14:25:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OY7rUeOF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2136D1F000FF;
+	Sat, 12 Sep 2026 14:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223105;
-	bh=li1bzFv/RavvV9oZClCc+J1FsY3AJtEavmo7JZpovwE=;
+	s=korg; t=1789223110;
+	bh=R3Rcv3PLj7ExfVGxrL8X3wslx4QGyNJ32nH9L7uIQwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GHU8vY91Bzi7+WO3Di2lJyxYDv0Nbf2bK4lhoDSqPg7rqi3sNPtGU+Vlou90HqQkP
-	 dtlkj9i7BuEvNTdTWlLuljbm8CxMuvb+39tyXZ9rBocrC7u+P9Ps1GxPGgPmK9Hd7Z
-	 5dqq4h9wQEM4TtqLt7wdULWk54fgBxr8zQVASxCc=
+	b=OY7rUeOFA91yKS+xSwbxguiC2+S/PaHomEbArY13McUoOKAnL/rMUNEYgxQ0XlWRF
+	 RNqVuYwTOiHZWUvraC1qqG4lJMLXVe8CdV4x5uH2igV2SgFLTp1qpmVAh0t4fqRWFN
+	 XA5idFbxFyr9kyMsbNBlvALhtTNCape0ob1RUuwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Bambura <jenneron@postmarketos.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Steev Klimaszewski <steev@kali.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0679/1424] arm64: dts: qcom: sc8180x-lenovo-flex-5g: move pinctrl to appropriate nodes
-Date: Sat, 12 Sep 2026 08:51:51 +0200
-Message-ID: <20260912065622.506068465@linuxfoundation.org>
+Subject: [PATCH 6.6 0680/1424] arm64: dts: qcom: sc8180x: Enable the power key
+Date: Sat, 12 Sep 2026 08:51:52 +0200
+Message-ID: <20260912065622.529589680@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,124 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Bambura <jenneron@postmarketos.org>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit 0d76ffe33e5eb5b0a7bd09e4fa8a72f7f4cfbc0d ]
+[ Upstream commit 3706bcfbdb8aecdb506b80e45e2e5851044f1f28 ]
 
-Split keyboard and touchpad pinctrl nodes since they are for different
-devices and move keyboard, touchpad and touchscreen pinctrl references to
-appropriate nodes.
+No input events are generated from the pressing of the power key on
+either Primus or Flex 5G, because the device node isn't enabled.
 
-Signed-off-by: Anton Bambura <jenneron@postmarketos.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240203191200.99185-4-jenneron@postmarketos.org
+Give the power key node a label and enable this for the two devices.
+
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Tested-by: Steev Klimaszewski <steev@kali.org>
+Link: https://lore.kernel.org/r/20240812-sc8180x-pwrkey-enable-v1-1-2bcc22133774@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Stable-dep-of: d5f5c089858f ("arm64: dts: qcom: sc8180x-lenovo-flex-5g: Describe the display power net")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/qcom/sc8180x-lenovo-flex-5g.dts  | 41 +++++++++++++------
- 1 file changed, 29 insertions(+), 12 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts | 4 ++++
+ arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi         | 2 +-
+ arch/arm64/boot/dts/qcom/sc8180x-primus.dts         | 4 ++++
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts b/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
-index abc66613ccaad..0308677335f1d 100644
+index 0308677335f1d..05afc9a57e968 100644
 --- a/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
 +++ b/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
-@@ -356,7 +356,7 @@ zap-shader {
- &i2c1 {
- 	clock-frequency = <100000>;
- 
--	pinctrl-0 = <&i2c1_active>, <&i2c1_hid_active>;
-+	pinctrl-0 = <&i2c1_active>;
- 	pinctrl-names = "default";
- 
+@@ -475,6 +475,10 @@ &pcie3_phy {
  	status = "okay";
-@@ -367,13 +367,16 @@ hid@10 {
- 		hid-descr-addr = <0x1>;
- 
- 		interrupts-extended = <&tlmm 122 IRQ_TYPE_LEVEL_LOW>;
-+
-+		pinctrl-0 = <&ts_int_default>;
-+		pinctrl-names = "default";
- 	};
  };
  
- &i2c7 {
- 	clock-frequency = <100000>;
- 
--	pinctrl-0 = <&i2c7_active>, <&i2c7_hid_active>;
-+	pinctrl-0 = <&i2c7_active>;
- 	pinctrl-names = "default";
- 
++&pmc8180_pwrkey {
++	status = "okay";
++};
++
+ &pmc8180c_lpg {
  	status = "okay";
-@@ -384,6 +387,9 @@ hid@5 {
- 		hid-descr-addr = <0x20>;
- 
- 		interrupts-extended = <&tlmm 37 IRQ_TYPE_LEVEL_LOW>;
-+
-+		pinctrl-0 = <&kb_int_default>;
-+		pinctrl-names = "default";
- 	};
- 
- 	hid@2c {
-@@ -392,6 +398,9 @@ hid@2c {
- 		hid-descr-addr = <0x20>;
- 
- 		interrupts-extended = <&tlmm 24 IRQ_TYPE_LEVEL_LOW>;
-+
-+		pinctrl-0 = <&tp_int_default>;
-+		pinctrl-names = "default";
- 	};
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
+index ddc84282f1428..68af5888b034f 100644
+--- a/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
+@@ -77,7 +77,7 @@ pmc8180_0: pmic@0 {
+ 		pon: pon@800 {
+ 			compatible = "qcom,pm8916-pon";
+ 			reg = <0x0800>;
+-			pwrkey {
++			pmc8180_pwrkey: pwrkey {
+ 				compatible = "qcom,pm8941-pwrkey";
+ 				interrupts = <0x0 0x8 0x0 IRQ_TYPE_EDGE_BOTH>;
+ 				debounce = <15625>;
+diff --git a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
+index 7c92ab433ba41..0941fc6c4cf86 100644
+--- a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
++++ b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
+@@ -545,6 +545,10 @@ &pcie1_phy {
+ 	status = "okay";
  };
  
-@@ -668,14 +677,6 @@ i2c1_active: i2c1-active-state {
- 		drive-strength = <2>;
- 	};
- 
--	i2c1_hid_active: i2c1-hid-active-state {
--		pins = "gpio122";
--		function = "gpio";
--
--		bias-pull-up;
--		drive-strength = <2>;
--	};
--
- 	i2c7_active: i2c7-active-state {
- 		pins = "gpio98", "gpio99";
- 		function = "qup7";
-@@ -684,8 +685,8 @@ i2c7_active: i2c7-active-state {
- 		drive-strength = <2>;
- 	};
- 
--	i2c7_hid_active: i2c7-hid-active-state {
--		pins = "gpio37", "gpio24";
-+	kb_int_default: kb-int-default-state {
-+		pins = "gpio37";
- 		function = "gpio";
- 
- 		bias-pull-up;
-@@ -717,6 +718,22 @@ wake-n-pins {
- 		};
- 	};
- 
-+	tp_int_default: tp-int-default-state {
-+		pins = "gpio24";
-+		function = "gpio";
++&pmc8180_pwrkey {
++	status = "okay";
++};
 +
-+		bias-pull-up;
-+		drive-strength = <2>;
-+	};
-+
-+	ts_int_default: ts-int-default-state {
-+		pins = "gpio122";
-+		function = "gpio";
-+
-+		bias-pull-up;
-+		drive-strength = <2>;
-+	};
-+
- 	usbprim_sbu_default: usbprim-sbu-state {
- 		oe-n-pins {
- 			pins = "gpio152";
+ &pmc8180c_lpg {
+ 	status = "okay";
+ };
 -- 
 2.53.0
 
