@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C2447A0CD;
-	Sat, 12 Sep 2026 11:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E93947A890;
+	Sat, 12 Sep 2026 11:53:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214001; cv=none; b=lJnBAj30AhWhD2lCBHaYkvfCpZ5e/myCIultYq69om4b66nWe1cc4uC8KFG4RHKL0JoeVWrA/0Cdc81uZel3otMQJ0tz1Yc7Xr/Vu4JS+NUBKyVikjccblp71tSJraX8Ky8yYFerEspWj27+E+XYSJmdln3n3VzuWoZ4TjUCBDg=
+	t=1789214007; cv=none; b=bBkum2Trj43PxSGF/51AARqDii/jhpkk4nkE8kiM31kQnwaVJq2Wc9mHNWkaaA1qGgmjHSNc6O+8XlT3/8V1DJM+0ifEe4JpADl6Z//jNlAauEjJ82ybDGMbmK27+ItYGIK/zLmHJPHo3Mhq/nvvgbzjrY2uEzAVr8jqHMu57cI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214001; c=relaxed/simple;
-	bh=M4soXHRxpiuBdGlfJT0hLoDgc/KGZswmEtP99nF09iA=;
+	s=arc-20240116; t=1789214007; c=relaxed/simple;
+	bh=COI6Qylc2lnychsqZ/Qg5+7fU1olweERr97q3iBkb+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tntd9bpSL5B2GWAwgVg/cZjh14Z1GE4mgNJXgPVI7Xm3hezHCwal0lNkRuTWNEYDsWOaX2k14xecxAjB7pO1hU+t/jrgNi5nJtvu5hu2E6DCXat6TsJANiqWH41Vsxz2307I50ZDQvYEgYxUo5kcpj3J/IOjtSBQT0pQ45OFrQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0UwcdfJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I/9sB6upSbmjY1sn7HFCwoJIlVGpTLH53o2puVxPQKsc62ba9nL5wsQCWSEgUt+O9yA3gfCxQ0e/3Y6Y2H3+PJkIpmHXZlhfXR4nfaH0VZhvBsZ2y937QVyzxCKcomFbQt05iUJQY/abWjhicudnaZwJjka3ImY6JDPghkFBiRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBJgjLPc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0UwcdfJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3036A1F00893;
-	Sat, 12 Sep 2026 11:53:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBJgjLPc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34FCF1F000FF;
+	Sat, 12 Sep 2026 11:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213997;
-	bh=xP/D3MuAgXWFX7CjbQa8tj/CLdBxxWqvqF2lE5CxmFA=;
+	s=korg; t=1789214002;
+	bh=vtYWZL70tJ7gPw3TFw6Soe1whvajaE/8OG/AfMHUeUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m0UwcdfJJumuG8x/qtwtK6vdo50CxEmsyfKN7GHDS1rGpAWUV7+P7ra9ugRCa7EyQ
-	 OBKeTQkVsVSq93z68QvsHrEVZLnroNUNGH4hINW3LkRQpoyzdJsj1va86UVZT9Ip08
-	 zrTvxUi0MIvaL5bF8XSthMWYO3bpSv1he7XwppLw=
+	b=SBJgjLPcttb2/OT6EowYGyUFMM+Ow1AOsoOlCQ0PqR5p+gdikAe0ru+Vg0jXxbrCN
+	 rZiCe0TraMXua1NTKyE6yNncHQJAW6iJvPpT7MSIssN4O41KZHVGZtUqwavcjxiZLs
+	 AvrBy2tUQVZtXYrxyUGAEoohcgMnXS/d3HYFV3Kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Sean Young <sean@mess.org>
-Subject: [PATCH 6.12 0183/1376] media: cec: extron-da-hd-4k-plus: add sanity check
-Date: Sat, 12 Sep 2026 08:43:29 +0200
-Message-ID: <20260912065611.630298053@linuxfoundation.org>
+	Sashiko <sashiko-dev@google.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 6.12 0230/1376] scsi: qla2xxx: Serialize flash version read in reset handler
+Date: Sat, 12 Sep 2026 08:44:16 +0200
+Message-ID: <20260912065612.673817651@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,33 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil+cisco@kernel.org>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit abac9820b26b5cfcb01eb79efe2abdd0ac7e07c3 upstream.
+commit f606ed93de0c4f1e7e3618779e9fad731455314a upstream.
 
-Add check to prevent overflowing msg.msg[] in case the incoming data
-is malformed.
+The "update cache versions without reset" sysfs reset operation (0x20261)
+calls get_flash_version(), which reads hardware flash registers, without
+holding ha->optrom_mutex. The VPD update path serializes the same call
+under optrom_mutex, so this reset path can interleave its flash register
+accesses with a concurrent VPD or optrom flash operation and corrupt the
+reads.
 
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Reviewed-by: Sean Young <sean@mess.org>
-Fixes: 056f2821b631 ("media: cec: extron-da-hd-4k-plus: add the Extron DA HD 4K Plus CEC driver")
+Hold ha->optrom_mutex across the get_flash_version() call to match the
+VPD update path.
+
+Fixes: 8c2cf7d4e387 ("[SCSI] qla2xxx: Add a new interface to update versions.")
+Reported-by: Sashiko <sashiko-dev@google.com>
 Cc: stable@vger.kernel.org
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://patch.msgid.link/20260730155838.2119230-4-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_attr.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
-+++ b/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
-@@ -656,7 +656,8 @@ static void extron_process_received(stru
- 	if (!port || port->disconnected)
- 		return;
- 
--	if (len < 5 || (len - 2) % 3 || data[len - 2] != '*')
-+	if (len < 5 || ((len - 2) / 3 > sizeof(msg.msg)) ||
-+	    (len - 2) % 3 || data[len - 2] != '*')
- 		goto malformed;
- 
- 	while (*data != '*') {
+--- a/drivers/scsi/qla2xxx/qla_attr.c
++++ b/drivers/scsi/qla2xxx/qla_attr.c
+@@ -816,7 +816,9 @@ qla2x00_sysfs_write_reset(struct file *f
+ 			    "Unable to allocate memory for VPD information update.\n");
+ 			return -ENOMEM;
+ 		}
++		mutex_lock(&ha->optrom_mutex);
+ 		ha->isp_ops->get_flash_version(vha, tmp_data);
++		mutex_unlock(&ha->optrom_mutex);
+ 		vfree(tmp_data);
+ 		break;
+ 	}
 
 
