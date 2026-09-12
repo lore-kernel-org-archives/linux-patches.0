@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF07361960;
-	Sat, 12 Sep 2026 08:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1008B37CD32;
+	Sat, 12 Sep 2026 08:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200952; cv=none; b=tNSPn5p3HXS3Dwnz3JKXgu5ojIBut+7WbDViIS+2YZyLLZGEQufA9Lp/lvqQyGd2sPnCFNraWYvbC63SsAYQs2ACYMS32fYIe9ULcn1+eqxPJS6UnUd2G3w5uvUu4m+C2ifQLHRm9WjQMnT05vzTAKp5MMct7IANWijiAB16zaI=
+	t=1789200957; cv=none; b=PeMgC2Rg/CmwkN9Uwa6xU5bLLGlCQ2GdK0FVc9TpIBkIcK88A0jZd2ZK8Uq+h7rRxCUhKGbJTxmwBkcnim+6PU2k+Qfv4MhoWMJeLle8zzeOHwPyDW1vtci38ui3cVDwXbjoypp8RLKzURbwmveLym19uEBs4gNnrs6bPamK160=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200952; c=relaxed/simple;
-	bh=X4OQ1FMI/S1Gg8kHa68fagdy+LXPC2mKLqU7Vi4zggI=;
+	s=arc-20240116; t=1789200957; c=relaxed/simple;
+	bh=aQJ9hWcxUymobLKXVBjT376QnISS+Fg6Ys/c8gJ5fsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PFGMhloIX3Bi/hG7z3mLJSaBuw1Rd2zzmHzC6Jo8p7IVD+gEyCOdPWQBge57hyLVDQS91qRu8LDafGrEF/6fHKxBUwJlz7oDwAszgAMQDwZKSpsVpYyQtWgk8kU6sOvFVuWmbWTuVgKTC+0n9FpR1/UKu2Bh8G10KxEASKXwpl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJxVblzY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=htN6GncA5YErkyzZ8zCezzZNAa6+z2mRPZx1Z0QqMkCe0WfghA70sh6T1fyOiPHKUd1z0OBAcIc/fe5BtVtSIq8ePQItxNrYaz3rP4F588rj4BcKCnA6ShAyFlMsjZji21XzG6YPtc/zrDY/AIvRORmB13pAEMGgbuMjKFOqHis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OWkSUsAC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJxVblzY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38DB1F000FF;
-	Sat, 12 Sep 2026 08:15:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OWkSUsAC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E0F1F000FF;
+	Sat, 12 Sep 2026 08:15:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200951;
-	bh=sndGcYu641IIcUyYgxCLu1AKuLk9Ej/WbTf5LONCaW8=;
+	s=korg; t=1789200956;
+	bh=/27+ZYfjJpj+zsTl4i5Z8yJpmKGuMeXN77Or6IX0wDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EJxVblzYJi+NGusbaDYhYkjl2Dhh8MsuDBZPyLxzh+nVJu16c/yGaBULqKcabsTUZ
-	 aRML8VbVTX+Hsc3Zg2btVXqDUQtnSoXASjOv87LKKUBaHfEX5ZMyi4bLFrPSD8uRyc
-	 jRePpLCBK19VLWIrXMDrvYK+sfy0TuXGXYaKyuck=
+	b=OWkSUsAC3uNrM+6qsqouiGIT45aIfOOopu8SllJZzUS/A9dzl1RaWd5W4cxmoGbos
+	 mAxJ2lk5Xc8tThU5QZaftrJdCzEaJPjd3g5OoeBruGxdJXvXOMVX2Q1DG3EEy/nIBT
+	 xT9jqGq99L8Ccad1v882VxHvOyH8B0KX82AA+srs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0895/1815] wifi: mt76: mt7915: unwind state on add_interface failure
-Date: Sat, 12 Sep 2026 08:44:05 +0200
-Message-ID: <20260912065709.931236172@linuxfoundation.org>
+Subject: [PATCH 7.2 0896/1815] wifi: mt76: mt7996: hold dev->mt76.mutex while disabling tx worker in SER
+Date: Sat, 12 Sep 2026 08:44:06 +0200
+Message-ID: <20260912065709.954623656@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,55 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 2fb6480c52f611338e1b0abe5e6219be1fc9ab75 ]
+[ Upstream commit 6190db312b8230813f529f014b26247c6d9800d0 ]
 
-When mt76_wcid_alloc() fails, mt7915_add_interface() returned without
-clearing the vif_mask/omac_mask bits it had already set, without removing
-the firmware dev info added earlier, and without clearing a monitor_vif
-pointer to the vif mac80211 is about to free. mac80211 does not call
-remove_interface() for a failed add, so the indices and firmware dev
-entry leaked permanently and testmode could dereference the stale
-monitor_vif. Add a proper error unwind.
+mt7996_mac_reset_work() parked the tx worker and disabled the RX/TX NAPIs
+before taking dev->mt76.mutex. mt76_worker_disable()/_enable() are plain
+kthread park/unpark, not refcounted, and __mt76_set_channel() toggles the
+same worker and the MT76_RESET bit under the mutex. An L1 SER racing a
+channel switch could therefore have the worker unparked and MT76_RESET
+cleared while the reset path resets the DMA rings, corrupting descriptors
+or tokens. Take the mutex before disabling the worker, as mt7915 does.
 
-Fixes: b619e01380ee ("mt76: fix MBSS index condition in DBDC mode")
-Link: https://patch.msgid.link/20260724124813.3961474-4-nbd@nbd.name
+Fixes: 27015b6fbcca ("wifi: mt76: mt7996: enable full system reset support")
+Link: https://patch.msgid.link/20260724124813.3961474-5-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/main.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-index 4ed3d808654fe..d2130226de648 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-@@ -249,7 +249,7 @@ static int mt7915_add_interface(struct ieee80211_hw *hw,
- 	idx = mt76_wcid_alloc(dev->mt76.wcid_mask, mt7915_wtbl_size(dev));
- 	if (idx < 0) {
- 		ret = -ENOSPC;
--		goto out;
-+		goto err;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index 7024fadce2048..b99a48c3664ee 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -2575,6 +2575,8 @@ void mt7996_mac_reset_work(struct work_struct *work)
+ 		cancel_delayed_work_sync(&phy->mt76->mac_work);
  	}
  
- 	INIT_LIST_HEAD(&mvif->sta.rc_list);
-@@ -277,7 +277,17 @@ static int mt7915_add_interface(struct ieee80211_hw *hw,
- 	mt7915_mcu_add_sta(dev, vif, NULL, CONN_STATE_PORT_SECURE, true);
- 	rcu_assign_pointer(dev->mt76.wcid[idx], &mvif->sta.wcid);
- 
-+	mutex_unlock(&dev->mt76.mutex);
++	mutex_lock(&dev->mt76.mutex);
 +
-+	return 0;
-+
-+err:
-+	dev->mt76.vif_mask &= ~BIT_ULL(mvif->mt76.idx);
-+	phy->omac_mask &= ~BIT_ULL(mvif->mt76.omac_idx);
-+	mt7915_mcu_add_dev_info(phy, vif, false);
- out:
-+	if (phy->monitor_vif == vif)
-+		phy->monitor_vif = NULL;
- 	mutex_unlock(&dev->mt76.mutex);
+ 	mt76_worker_disable(&dev->mt76.tx_worker);
+ 	mt76_for_each_q_rx(&dev->mt76, i) {
+ 		if (mtk_wed_device_active(&dev->mt76.mmio.wed) &&
+@@ -2592,8 +2594,6 @@ void mt7996_mac_reset_work(struct work_struct *work)
+ 	}
+ 	napi_disable(&dev->mt76.tx_napi);
  
- 	return ret;
+-	mutex_lock(&dev->mt76.mutex);
+-
+ 	mt76_wr(dev, MT_MCU_INT_EVENT, MT_MCU_INT_EVENT_DMA_STOPPED);
+ 
+ 	if (mt7996_wait_reset_state(dev, MT_MCU_CMD_RESET_DONE)) {
 -- 
 2.53.0
 
