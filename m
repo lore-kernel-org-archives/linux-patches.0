@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64ADC13D53C;
-	Sat, 12 Sep 2026 19:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344F43176EE;
+	Sat, 12 Sep 2026 19:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242210; cv=none; b=Cx38fxhWRWbXx2pALUYZmsbQfbrQXOhH6PlaaKqUgoh/g5af1kz18XHMbdkuZxhb+19+n9C0XtRGjErhFEpi+umhRyYP/qklcN2wJzy+ZPdZOsRjYb8xgr39p7XVcM+CrhgjDhgts8Fg1jbIq74GMgyCyJCpI5L0fjX8Gw4PZ20=
+	t=1789242213; cv=none; b=CfG4lOYd72EKCSwbQUbGvDONLXR10CVYe84oMMWcHhc7XC0K+iZ1zpRhvOHgHwT3xqf5JEhvJ4IoLHHN/1l32/WL8I3DlDq7IJp/1OeV5rskVkmWUzAgWNe3KZ5wEvnI9DMorKbgcnCxUwojDLNQ7Efv1fKOjVBYP2eOgVBWOr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242210; c=relaxed/simple;
-	bh=TkG8r3LRu8zBF2ZyBKC5ijSQwk1g5SiqSggRG5MBQms=;
+	s=arc-20240116; t=1789242213; c=relaxed/simple;
+	bh=JRC79qRhjzyKxE4DjcXX0JNpZM3dV1gvZQlMn6JWaec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+7ru6x5exu3ghj+pEVASgcmQUUllUfivchWHkUbU89y4Ts1D9sUxNEJNiDskc6Kl5e+Z/EOFHbZfY4OENErwdRU3hde1ZrpoFnZRxbNfnOdpho9mNl9oQ72s4gvkXBYme1eoc+/9AiLeDXbB1RLthVgVJQUfP09vJt2TI/d9m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u361LjWj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DCqU0heM0mq6xFQbMZ+WLWB6PsZ51nF6XU0OVyN7ClIijMOz88bGZgak3AbKhGq5eLYSY0al0UVkQXzmCuIq3+Y1aa1a1iJqKY3PEIAU7GAwnYXTBWoOWdIomcNckVF2EBtk3LAAmyMpLppAikSuR9P5yej1/qzYhtFZLqKOw6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Al+c790c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u361LjWj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDDD1F000FF;
-	Sat, 12 Sep 2026 19:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Al+c790c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977FB1F000FF;
+	Sat, 12 Sep 2026 19:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242209;
-	bh=cq4+1iCYcdlcfkFy7tbAb9edXt/4LyCD9AlXhFDJbDo=;
+	s=korg; t=1789242212;
+	bh=/hLFrIG3LTn203/U2GCJ8Ec7lj6YyxglXMVqXk7SPo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u361LjWj24SD0OnIuqRfuJScRPejwHBpk0E4wxzMFo37w59JtZhO3VKx9SEQR3Ytu
-	 mO4y/ZMQBvRYTirQ0UWALGawxBxrT5TIGfCC+keHK4LEy0Xy4VNLzIhlI/r2hJl6FS
-	 8cEs0DfGgUvnqNKys7Qlp2Q5xZijCdWe+QaBbN1I=
+	b=Al+c790cIozWdopKyDVBuXPfYy5Iyguw0qPSTT5HkUFU/dEHjr/qYVd9O5D9WCkuS
+	 dmmtAHWhVgu3qZUdhVTYVp8Yaj7VXPNTGOrx9M5NcjQ2MvJydJsff3m1FKHxb9Ilvu
+	 axav7ZNgfjZW3Q1YvKLUxFXk5ewPtpM4eQ+BAovc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Wang Liang <wangliang74@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 323/798] net: fix NULL pointer dereference in l3mdev_l3_rcv
-Date: Sat, 12 Sep 2026 08:59:11 +0200
-Message-ID: <20260912065524.566427399@linuxfoundation.org>
+Subject: [PATCH 5.10 324/798] bridge: mrp: reject zero test interval to avoid OOM panic
+Date: Sat, 12 Sep 2026 08:59:12 +0200
+Message-ID: <20260912065524.589307281@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,64 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 0032c99e83b9ce6d5995d65900aa4b6ffb501cce ]
+[ Upstream commit fa6e24963342de4370e3a3c9af41e38277b74cf3 ]
 
-When delete l3s ipvlan:
+br_mrp_start_test() and br_mrp_start_in_test() accept the user-supplied
+interval value from netlink without validation. When interval is 0,
+usecs_to_jiffies(0) yields 0, causing the delayed work
+(br_mrp_test_work_expired / br_mrp_in_test_work_expired) to reschedule
+itself with zero delay. This creates a tight loop on system_percpu_wq
+that allocates and transmits MRP test frames at maximum rate, exhausting
+all system memory and causing a kernel panic via OOM deadlock.
 
-    ip link del link eth0 ipvlan1 type ipvlan mode l3s
+The same zero-interval issue applies to br_mrp_start_in_test_parse()
+for interconnect test frames.
 
-This may cause a null pointer dereference:
+Use NLA_POLICY_MIN(NLA_U32, 1) in the nla_policy tables for both
+IFLA_BRIDGE_MRP_START_TEST_INTERVAL and
+IFLA_BRIDGE_MRP_START_IN_TEST_INTERVAL, so zero is rejected at the
+netlink attribute parsing layer before the value ever reaches the
+workqueue scheduling code. This is consistent with how other bridge
+subsystems (br_fdb, br_mst) enforce range constraints on netlink
+attributes.
 
-    Call trace:
-     ip_rcv_finish+0x48/0xd0
-     ip_rcv+0x5c/0x100
-     __netif_receive_skb_one_core+0x64/0xb0
-     __netif_receive_skb+0x20/0x80
-     process_backlog+0xb4/0x204
-     napi_poll+0xe8/0x294
-     net_rx_action+0xd8/0x22c
-     __do_softirq+0x12c/0x354
-
-This is because l3mdev_l3_rcv() visit dev->l3mdev_ops after
-ipvlan_l3s_unregister() assign the dev->l3mdev_ops to NULL. The process
-like this:
-
-    (CPU1)                     | (CPU2)
-    l3mdev_l3_rcv()            |
-      check dev->priv_flags:   |
-        master = skb->dev;     |
-                               |
-                               | ipvlan_l3s_unregister()
-                               |   set dev->priv_flags
-                               |   dev->l3mdev_ops = NULL;
-                               |
-      visit master->l3mdev_ops |
-
-To avoid this by do not set dev->l3mdev_ops when unregister l3s ipvlan.
-
-Suggested-by: David Ahern <dsahern@kernel.org>
-Fixes: c675e06a98a4 ("ipvlan: decouple l3s mode dependencies from other modes")
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250321090353.1170545-1-wangliang74@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 20f6a05ef635 ("bridge: mrp: Rework the MRP netlink interface")
+Fixes: 7ab1748e4ce6 ("bridge: mrp: Extend MRP netlink interface for configuring MRP interconnect")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260328063000.1845376-1-xmei5@asu.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipvlan/ipvlan_l3s.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/bridge/br_mrp_netlink.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ipvlan/ipvlan_l3s.c b/drivers/net/ipvlan/ipvlan_l3s.c
-index d5b05e8032199..ca35a50bb6405 100644
---- a/drivers/net/ipvlan/ipvlan_l3s.c
-+++ b/drivers/net/ipvlan/ipvlan_l3s.c
-@@ -224,5 +224,4 @@ void ipvlan_l3s_unregister(struct ipvl_port *port)
- 
- 	dev->priv_flags &= ~IFF_L3MDEV_RX_HANDLER;
- 	ipvlan_unregister_nf_hook(read_pnet(&port->pnet));
--	dev->l3mdev_ops = NULL;
- }
+diff --git a/net/bridge/br_mrp_netlink.c b/net/bridge/br_mrp_netlink.c
+index 2a2fdf3500c5b..95f265e9cf294 100644
+--- a/net/bridge/br_mrp_netlink.c
++++ b/net/bridge/br_mrp_netlink.c
+@@ -196,7 +196,7 @@ static const struct nla_policy
+ br_mrp_start_test_policy[IFLA_BRIDGE_MRP_START_TEST_MAX + 1] = {
+ 	[IFLA_BRIDGE_MRP_START_TEST_UNSPEC]	= { .type = NLA_REJECT },
+ 	[IFLA_BRIDGE_MRP_START_TEST_RING_ID]	= { .type = NLA_U32 },
+-	[IFLA_BRIDGE_MRP_START_TEST_INTERVAL]	= { .type = NLA_U32 },
++	[IFLA_BRIDGE_MRP_START_TEST_INTERVAL]	= NLA_POLICY_MIN(NLA_U32, 1),
+ 	[IFLA_BRIDGE_MRP_START_TEST_MAX_MISS]	= { .type = NLA_U32 },
+ 	[IFLA_BRIDGE_MRP_START_TEST_PERIOD]	= { .type = NLA_U32 },
+ 	[IFLA_BRIDGE_MRP_START_TEST_MONITOR]	= { .type = NLA_U32 },
+@@ -316,7 +316,7 @@ static const struct nla_policy
+ br_mrp_start_in_test_policy[IFLA_BRIDGE_MRP_START_IN_TEST_MAX + 1] = {
+ 	[IFLA_BRIDGE_MRP_START_IN_TEST_UNSPEC]	= { .type = NLA_REJECT },
+ 	[IFLA_BRIDGE_MRP_START_IN_TEST_IN_ID]	= { .type = NLA_U32 },
+-	[IFLA_BRIDGE_MRP_START_IN_TEST_INTERVAL]	= { .type = NLA_U32 },
++	[IFLA_BRIDGE_MRP_START_IN_TEST_INTERVAL]	= NLA_POLICY_MIN(NLA_U32, 1),
+ 	[IFLA_BRIDGE_MRP_START_IN_TEST_MAX_MISS]	= { .type = NLA_U32 },
+ 	[IFLA_BRIDGE_MRP_START_IN_TEST_PERIOD]	= { .type = NLA_U32 },
+ };
 -- 
 2.53.0
 
