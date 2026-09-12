@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4398E274B46;
-	Sat, 12 Sep 2026 19:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BAFB34250E;
+	Sat, 12 Sep 2026 19:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239931; cv=none; b=Sn5xITWeA1BA6OdTsjtEZszVtPaGP+JA9dGLrTRYyTqHDgxjWV9dO8HDmkMoat84jFI61kww0j2g52WiKNo7ZWBE/WBFIDvCSzEGci6zWzEg9RgGPO9r9YlNDGri6r4E2w1DdzJP2oC2Jc6gLthWfPakwryjIkwyaX5jY8BUO/0=
+	t=1789239934; cv=none; b=aKRGRKFYTAVPV6RUZ/V6xuWJF2yyaR3vTyaeqmKplzBciHMDtZ33VFrmpHUzfZlIJcNAIBx+QFuvZ8Dqi/vJrZDqZjIHCwQo48AwidbuoznVGZ7OrODAQZBM6e9KyoxVhESBgcZCPE7/anGdmeCmcwJaXRrEyEY2gpaNDEfI5A0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239931; c=relaxed/simple;
-	bh=yRFeqJ6ey5xlRflNjjdQmt2kDgFhkrhhjQvkC0Fd4q0=;
+	s=arc-20240116; t=1789239934; c=relaxed/simple;
+	bh=dX5Hq0SEjfPEh0UHrNtR+Iq+JEE0sGg5L1jAQT1CQTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P765GSEK/xYgngZWkuuCRKLcYNeX+zkL0U3txg+GVxQZYSiH+l5hLJ3uCKGbO7SGwOzNbtK0DktDVmSdzqu+MOdkpYk7iLeTWMC5mtqa5sOZ3zxJM+rse82l1gvlsDbSd3YSdQhV8V8Lm7E1SGOyqNgQtvXqHbWDjdm5yil2gKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NSqMj2Wu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BpmrVenQvj2QLDUU/D+53taLWl4FX0vvhkqvq6fPw1cuVI6cdz+/Eb4y0LKKQ7Rh7Jd+0daaOwk90dOIYsOxA8Oktip5jsMIVrD+V5dkuQNC9ZyQMNp3UOIxLYCVJtY8y/Et8w1e7jZ4qPn6TMaCVbPMTjyZzChO29OCcpwrFMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sev7yy+R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NSqMj2Wu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE1D1F000FF;
-	Sat, 12 Sep 2026 19:05:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sev7yy+R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56221F000FF;
+	Sat, 12 Sep 2026 19:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239928;
-	bh=HrsPU5Dqk5jt/hmPtczCGeW/A73c5PJYt3H6qFvRm4g=;
+	s=korg; t=1789239932;
+	bh=GlIr297foE+DfaM3s742CP+39mPs+dq/8ILWa++cdkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NSqMj2WuvwhqcJUbiRHiF2vbJgPnTEkXC+aPcfXvt3hg4JGrXLQmUeoet6+47CVxN
-	 VkA3VCXqyRch+gMPFbQJZigrH94rmU7U8Ba8h7bdT/+bnBD9+Cakue41HI1txSEcBH
-	 ewAGeEkLDBVY9MIKWjLpDOpaGjX0b3eZ7Na1l3D4=
+	b=Sev7yy+RlHsheLyi8FEcidGFqyYO8U9NcJ34E+Nr9PPiSzbLdKh85yo0zwOShcRrM
+	 zc4bQ00SP8215/FNJmUlUSj6z8M8+3pBHzvbP5KQd5EvGZeeBpeImhdNqC19yxae8t
+	 dqkt5MVWQdguleY0Udmw42UDDjnbN8vVeYWlniNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
 	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	James Clark <james.clark@arm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Xing Zhengjun <zhengjun.xing@linux.intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 762/935] perf stat: Clear screen only if output file is a tty
-Date: Sat, 12 Sep 2026 09:03:12 +0200
-Message-ID: <20260912065544.311056963@linuxfoundation.org>
+Subject: [PATCH 5.15 763/935] perf stat: Fix evsel_list leak in cmd_stat
+Date: Sat, 12 Sep 2026 09:03:13 +0200
+Message-ID: <20260912065544.333905789@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -59,62 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 81a02c6577ecfee7056ccafbd028984d0d670c0c ]
+[ Upstream commit 340641a4b5fff4f4b12261c9d92169f6e2ea11f4 ]
 
-The --interval-clear option makes perf stat to clear the terminal at
-each interval.  But it doesn't need to clear the screen when it saves
-to a file.
+Fix a memory leak in cmd_stat() where evsel_list is leaked if an error
+occurs while opening the output file.
 
+Assisted-by: Antigravity:gemini-3.1-pro
+Fixes: 361c99a661a7 ("perf evsel: Introduce perf_evlist")
+Signed-off-by: Ian Rogers <irogers@google.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: James Clark <james.clark@arm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Xing Zhengjun <zhengjun.xing@linux.intel.com>
-Link: https://lore.kernel.org/r/20221107213314.3239159-4-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-
-to a file.  Make it fail when it's enabled with the output options.
-
-  $ perf stat -I 1 --interval-clear -o myfile true
-  --interval-clear does not work with output
-
-   Usage: perf stat [<options>] [<command>]
-
-      -o, --output <file>   output file name
-          --log-fd <n>      log output to fd, instead of stderr
-          --interval-clear  clear screen in between new interval
-
-Stable-dep-of: 340641a4b5ff ("perf stat: Fix evsel_list leak in cmd_stat")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-stat.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/perf/builtin-stat.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
-index efae2998a472f..12fc5ef1ab84f 100644
+index 12fc5ef1ab84f..5835d2992b4bc 100644
 --- a/tools/perf/builtin-stat.c
 +++ b/tools/perf/builtin-stat.c
-@@ -2303,6 +2303,14 @@ int cmd_stat(int argc, const char **argv)
+@@ -2290,7 +2290,8 @@ int cmd_stat(int argc, const char **argv)
+ 		output = fopen(output_name, mode);
+ 		if (!output) {
+ 			perror("failed to create output file");
+-			return -1;
++			status = -1;
++			goto out;
+ 		}
+ 		clock_gettime(CLOCK_REALTIME, &tm);
+ 		fprintf(output, "# started on %s\n", ctime(&tm.tv_sec));
+@@ -2299,7 +2300,8 @@ int cmd_stat(int argc, const char **argv)
+ 		output = fdopen(output_fd, mode);
+ 		if (!output) {
+ 			perror("Failed opening logfd");
+-			return -errno;
++			status = -errno;
++			goto out;
  		}
  	}
  
-+	if (stat_config.interval_clear && !isatty(fileno(output))) {
-+		fprintf(stderr, "--interval-clear does not work with output\n");
-+		parse_options_usage(stat_usage, stat_options, "o", 1);
-+		parse_options_usage(NULL, stat_options, "log-fd", 0);
-+		parse_options_usage(NULL, stat_options, "interval-clear", 0);
-+		return -1;
-+	}
-+
- 	stat_config.output = output;
+@@ -2308,7 +2310,8 @@ int cmd_stat(int argc, const char **argv)
+ 		parse_options_usage(stat_usage, stat_options, "o", 1);
+ 		parse_options_usage(NULL, stat_options, "log-fd", 0);
+ 		parse_options_usage(NULL, stat_options, "interval-clear", 0);
+-		return -1;
++		status = -1;
++		goto out;
+ 	}
  
- 	/*
+ 	stat_config.output = output;
 -- 
 2.53.0
 
