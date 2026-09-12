@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C452B373BF2;
-	Sat, 12 Sep 2026 12:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0407D37E5D1;
+	Sat, 12 Sep 2026 12:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216711; cv=none; b=CjV+7CCXJad3YgZ58FlBbJwq6mg3V56rWODdO32Nhg96MEVQS6qNlTJuCyKIrLrYciQrKYCOjA5CQrKtuluWI1QOTjBU4PLgHXyGYb4bG+AZ2ElsqrQ/eyR/yqR9qWgSx32GAVIY1TvNsR27JWsQ+LwkfLNuTH0/Dj9WjbF1RBE=
+	t=1789216717; cv=none; b=SfvN2m5ZviyGN4UzzHPj9idBIf9e4otKa495QHrsfLi5Jam5P/TsA2SO+okcp2xSOqJcFV4smooYPATM/93S9OkPGMR2yocET3+p3jvPJ+4hfsEnACRJ3CayofjubHD044T7sfapIjoXdnQTCkOuJiSRMo7iPSX+M/7HQdB4bSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216711; c=relaxed/simple;
-	bh=ANu17FUVisPXOYHHbAYv7PJbTUyCRcqU22V6dTNHBgM=;
+	s=arc-20240116; t=1789216717; c=relaxed/simple;
+	bh=a0sbBfW+WHF8SjRG2rZFV79xcwGmyPe7brmbbXY96Rc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j+lX+TOA6tqI89fwci9Th+XkLpMQxNumilofEaKh6HoCggGjX8Wtai+0BnQGw7NHny9EGmzMEv5KkL3FGZkYLZ5C+pWpF2cKCeAPjXrV2gEItWTsAFcPQp3z29z0zpV6UcLZpbDvH7B33wS4EgjP4UYG7lbR5EKrSV0zLJXGSn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADc+J+/q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bWdbCUQgfpJptoAEypAq4sOcghLI87Yu5sDVdPYl3NWHdRMetqOuBNwI7s0JPEHY3xzfMfTKdIyr3Dw0es2GQ8XNM+7gLC3Rue5OeNkTYyltfB8EwF/x+ud1GFMVpbKQp5pkjvtmQqwZloout7ZLs9KITQpLMsDNOSZOWvqhy9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0xf2XjZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADc+J+/q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CFC1F000FF;
-	Sat, 12 Sep 2026 12:38:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0xf2XjZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C711F000FF;
+	Sat, 12 Sep 2026 12:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216710;
-	bh=I6rX0fU8+DARci7xts5XtUFzCSfTaP18capOvV8CPDU=;
+	s=korg; t=1789216715;
+	bh=YFbZ+ib22WTeDmNwhFf2dBVEcstSD1JmIxe2R27YTGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ADc+J+/q+tNkc3C5oEvS+pu1wx5mtvBx2ne+zLMr6KkpRgYcH22MKNjXrX5+x0AZr
-	 N2W0Js0PAlJg1+5qMb09YU+niW7JP1zbhXIMziaX6NC6L2uKtJkFJujdOR2n3Ol0zi
-	 THFKJP/U1xlV8EcwJb8M4T28/86J8sWYLs4cf2Z8=
+	b=g0xf2XjZ/ZbdG4lB8/ZmQ+0stqWLeB8N2w7EUf3/o3O5Eow5k4k233mcD5hUAq95B
+	 cVvLQTjTd3vSISjX+HPbkoXJq+eN7A4X77f6xexLUeRjj0UQxkLfb7RC1oHwIkJNrd
+	 DJwqGkRCamndVT11McgsYp08d0KfBbok27LTM9ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0750/1376] slab: Reuse first bit for OBJEXTS_ALLOC_FAIL
-Date: Sat, 12 Sep 2026 08:52:56 +0200
-Message-ID: <20260912065624.257684514@linuxfoundation.org>
+Subject: [PATCH 6.12 0751/1376] wifi: ath12k: fix stride mismatch in mac_phy_caps_parse()
+Date: Sat, 12 Sep 2026 08:52:57 +0200
+Message-ID: <20260912065624.280119949@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,69 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 
-[ Upstream commit 7612833192d56af86061de8ab51989b75daf5b0d ]
+[ Upstream commit 4c6eb712a91fa079be6f9f1419c96e0ad2227081 ]
 
-Since the combination of valid upper bits in slab->obj_exts with
-OBJEXTS_ALLOC_FAIL bit can never happen,
-use OBJEXTS_ALLOC_FAIL == (1ull << 0) as a magic sentinel
-instead of (1ull << 2) to free up bit 2.
+Currently, in ath12k_wmi_mac_phy_caps_parse(), kzalloc() sizes the
+mac_phy_caps buffer as tot_phy_id * len, where len is clamped to
+min(firmware_len, sizeof(struct ath12k_wmi_mac_phy_caps_params)). The
+subsequent memcpy() destination advances by sizeof(full struct) per slot
+via C pointer arithmetic, not by the clamped len. When firmware sends
+short TLVs, the second and later slots are written past the end of the
+allocation.
 
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Stable-dep-of: 4c6eb712a91f ("wifi: ath12k: fix stride mismatch in mac_phy_caps_parse()")
+The reader in ath12k_pull_mac_phy_cap_svc_ready_ext() also indexes the
+buffer with full-struct pointer arithmetic, so the allocation must match
+that stride.
+
+Fix by using kzalloc_objs(), which derives the element size from the
+pointer type, making allocation size and pointer stride provably
+consistent regardless of what len the firmware provides.
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Assisted-by: Claude:claude-sonnet-4-6
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260728-mac_phy_caps_parse-stride-mismatch-v1-1-27a9c1a3fbd0@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/memcontrol.h | 10 ++++++++--
- mm/slub.c                  |  2 +-
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath12k/wmi.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
-index e1b41554a5fb3..e4c24c94b9ef0 100644
---- a/include/linux/memcontrol.h
-+++ b/include/linux/memcontrol.h
-@@ -344,17 +344,23 @@ enum page_memcg_data_flags {
- 	__NR_MEMCG_DATA_FLAGS  = (1UL << 2),
- };
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index 111b0c91d4dee..598a69f9e6df0 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -4073,14 +4073,16 @@ static int ath12k_wmi_mac_phy_caps_parse(struct ath12k_base *soc,
+ 	if (svc_rdy_ext->n_mac_phy_caps >= svc_rdy_ext->tot_phy_id)
+ 		return -ENOBUFS;
  
-+#define __OBJEXTS_ALLOC_FAIL	MEMCG_DATA_OBJEXTS
- #define __FIRST_OBJEXT_FLAG	__NR_MEMCG_DATA_FLAGS
+-	len = min_t(u16, len, sizeof(struct ath12k_wmi_mac_phy_caps_params));
+ 	if (!svc_rdy_ext->n_mac_phy_caps) {
+-		svc_rdy_ext->mac_phy_caps = kzalloc((svc_rdy_ext->tot_phy_id) * len,
+-						    GFP_ATOMIC);
++		svc_rdy_ext->mac_phy_caps =
++			kzalloc_objs(*svc_rdy_ext->mac_phy_caps,
++				     svc_rdy_ext->tot_phy_id,
++				     GFP_ATOMIC);
+ 		if (!svc_rdy_ext->mac_phy_caps)
+ 			return -ENOMEM;
+ 	}
  
- #else /* CONFIG_MEMCG */
- 
-+#define __OBJEXTS_ALLOC_FAIL	(1UL << 0)
- #define __FIRST_OBJEXT_FLAG	(1UL << 0)
- 
- #endif /* CONFIG_MEMCG */
- 
- enum objext_flags {
--	/* slabobj_ext vector failed to allocate */
--	OBJEXTS_ALLOC_FAIL = __FIRST_OBJEXT_FLAG,
-+	/*
-+	 * Use bit 0 with zero other bits to signal that slabobj_ext vector
-+	 * failed to allocate. The same bit 0 with valid upper bits means
-+	 * MEMCG_DATA_OBJEXTS.
-+	 */
-+	OBJEXTS_ALLOC_FAIL = __OBJEXTS_ALLOC_FAIL,
- 	/* the next bit after the last actual flag */
- 	__NR_OBJEXTS_FLAGS  = (__FIRST_OBJEXT_FLAG << 1),
- };
-diff --git a/mm/slub.c b/mm/slub.c
-index f3868bad83dbb..620e31869c624 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -1958,7 +1958,7 @@ static inline void handle_failed_objexts_alloc(unsigned long obj_exts,
- 	 * objects with no tag reference. Mark all references in this
- 	 * vector as empty to avoid warnings later on.
- 	 */
--	if (obj_exts & OBJEXTS_ALLOC_FAIL) {
-+	if (obj_exts == OBJEXTS_ALLOC_FAIL) {
- 		unsigned int i;
- 
- 		for (i = 0; i < objects; i++)
++	len = min_t(u16, len, sizeof(struct ath12k_wmi_mac_phy_caps_params));
+ 	memcpy(svc_rdy_ext->mac_phy_caps + svc_rdy_ext->n_mac_phy_caps, ptr, len);
+ 	svc_rdy_ext->n_mac_phy_caps++;
+ 	return 0;
 -- 
 2.53.0
 
