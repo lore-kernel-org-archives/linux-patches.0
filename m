@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2531B19D8BC;
-	Sat, 12 Sep 2026 10:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17B1427A04;
+	Sat, 12 Sep 2026 10:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208538; cv=none; b=p+ZFrqhBgPufDX7RyupF62UOo8pxTKOAHbyRwkKgNg9EI8fqas2e7eGZZvgLW3SYQQR5+78Kloj68UQ9CP5p8epWHh2cX/aOuwM6xoYm3+s6L1LMmWzk/UpOG4mCIiBLp1yAEQzOReSZVekwXty/4VsMnTlkooyRg0Zt6mVncSg=
+	t=1789208543; cv=none; b=diLPggKD7PlgLnBRspjTUu0WwQOGGipVglsmDVMOisSnafzCD+x2yeAfRt3u1Sl3GFXyIt3y8IJZCoYyc0NDg/J++CMZyUWkZYWQNb1xVKHsbQgW1OMsyNMdHXNEP3+xK6uRsPiX6SAPqCfxvFBotOSCE5q4+dkt5HSaxQfl3BI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208538; c=relaxed/simple;
-	bh=pqa60AKVbVPjddiCCwOWg5iXvBNYqKRinqZTqO8ORWc=;
+	s=arc-20240116; t=1789208543; c=relaxed/simple;
+	bh=9lfRFKLhLEV8dGtLk3rVm7nPR2jg+XsYwoVepKm4LNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G9MpB5tFKXrcvhz7TbdvPv7yAmuH4eh5e3is4n+pV2kQeUzBfsrx8XIrLTV7cp2P9SysLu/dojSojwTcscXFBYuABbhTep8ry/Y6ek8nbuyHC1Ill2h1Fv9Pmm3AsjRH/FMFdk1RIfLPeR0INP+gdNDp/PHaoStkhJMS0V7bYK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mOLjvTmf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TrZaU71GeRiRHNvNoHybvFg+GSHJjtDkwZ9EFsZhDTu8U6Vg8V8H8eyimWhwN4mtHf9Qn25dtPhji7/2YhldzZDCylY5RPnHFJUH6OKt8C3Lm2pkhZdC7vq3URUHCrdqXDfmWwUv9yfRZrVIwOmktsC+IlWeCsW0uPbyeZVFZrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWL0nmiC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mOLjvTmf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEFCA1F000FF;
-	Sat, 12 Sep 2026 10:22:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWL0nmiC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1531F00893;
+	Sat, 12 Sep 2026 10:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208529;
-	bh=JUT0mQbJAvclIYBHAqqmLHZvwt4mPi6ltsHy3stvwds=;
+	s=korg; t=1789208534;
+	bh=FP40s4eXx+qBKzQohhjl0tXf2XIqB43NxFRg/xKy06g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mOLjvTmfqv8xJ6j9vC17Zv9QxpGb5LZDm3zP+lX0MSSjfKq75WdbdGNNhLzCCbgPi
-	 cn0KLxy4eN9Am1z9l7aXGaMUE2MD/CqeDdeuM8hVwYqsqJwC2UB9q08b5w/+YWiz3o
-	 pPW9z06SFAOlWhezbOewG9VPcCEf1+/add+Sg2j0=
+	b=gWL0nmiCUwNEtoO9ORKeIAmS8npKIuROoqtPI8dcNRODStyRZLF9nhCZsqdys3NWd
+	 ApuYjm+Yqo7uVgh+YC1reBnmtyXWkqUEQh2UP4aFmAPtskX7fuWZZbQa1sQKP3M7tt
+	 excH3669asrjTbP2A9MDwZJTgecAUyzSAZ2fNM3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Tariq <alitariq45892@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Anna Maniscalco <anna.maniscalco2000@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0635/1518] PCI: starfive: Fix unchecked pm_runtime_get_sync() in probe
-Date: Sat, 12 Sep 2026 08:46:44 +0200
-Message-ID: <20260912065637.796365574@linuxfoundation.org>
+Subject: [PATCH 6.18 0636/1518] drm/msm: remove objects from evit list after pinning them
+Date: Sat, 12 Sep 2026 08:46:45 +0200
+Message-ID: <20260912065637.817918956@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,52 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Tariq <alitariq45892@gmail.com>
+From: Anna Maniscalco <anna.maniscalco2000@gmail.com>
 
-[ Upstream commit aaae917990623a6ca6b638557056606a1ae4a8d6 ]
+[ Upstream commit 83723f32cb3de23d45c1ac09241b5e0cfb32cc9b ]
 
-pm_runtime_get_sync() is called in starfive_pcie_probe() without
-checking its return value. If runtime resume fails, the driver
-proceeds to configure PCIe hardware through regmap_update_bits(),
-enable clocks and resets, and power on the PHY, even though the
-device may not actually be powered.
+Once objects are pinned they should not be kept in the evict list as
+that will cause drm_gpuvm_validate to keep ieterating a growing list of
+objects needlessly.
 
-pm_runtime_get_sync() also increments the usage counter even when
-resume fails, which would leave the counter unbalanced if this
-error path were later handled without additional cleanup.
+Once an object is pinned remove it from the list.
 
-Switch to pm_runtime_resume_and_get(), which balances the usage
-counter internally on failure, and bail out of probe before any
-hardware is touched if resume does not succeed.
-
-Tested on StarFive VisionFive 2 v1.2A board.
-
-Fixes: 6168efbebace ("PCI: starfive: Enable controller runtime PM before probing host bridge")
-Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260718153352.661930-1-alitariq45892@gmail.com
+Fixes: 2e6a8a1fe2b2 ("drm/msm: Add VM_BIND ioctl")
+Signed-off-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/742166/
+Message-ID: <20260723-evict_list_fix-v2-1-bd0725e56253@gmail.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/plda/pcie-starfive.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_gem_vma.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pci/controller/plda/pcie-starfive.c b/drivers/pci/controller/plda/pcie-starfive.c
-index 0ca39f3fa1d4f..fab44054a5de2 100644
---- a/drivers/pci/controller/plda/pcie-starfive.c
-+++ b/drivers/pci/controller/plda/pcie-starfive.c
-@@ -419,7 +419,11 @@ static int starfive_pcie_probe(struct platform_device *pdev)
- 		return ret;
+diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
+index 9016ef978be5e..701fe4a0b73c9 100644
+--- a/drivers/gpu/drm/msm/msm_gem_vma.c
++++ b/drivers/gpu/drm/msm/msm_gem_vma.c
+@@ -452,6 +452,8 @@ msm_gem_vm_bo_validate(struct drm_gpuvm_bo *vm_bo, struct drm_exec *exec)
+ 			return ret;
+ 	}
  
- 	pm_runtime_enable(&pdev->dev);
--	pm_runtime_get_sync(&pdev->dev);
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
-+	if (ret < 0) {
-+		pm_runtime_disable(&pdev->dev);
-+		return dev_err_probe(dev, ret, "failed to resume device\n");
-+	}
++	drm_gpuvm_bo_evict(vm_bo, false);
++
+ 	return 0;
+ }
  
- 	plda->host_ops = &sf_host_ops;
- 	plda->num_events = PLDA_MAX_EVENT_NUM;
 -- 
 2.53.0
 
