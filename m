@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1093F356A0D;
-	Sat, 12 Sep 2026 11:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8D14BEE32;
+	Sat, 12 Sep 2026 11:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212091; cv=none; b=riBVISRnhE5jxY4/SHFE9pf5y1zEV02CfuFmS4xqRVlqpEmoCAwksM6dElhgJ0SE9aKFxZzb8ywA7m32NXOraiP5ywJbf5WPXSynR6a9VQ+bSjfshg31A7gZdZUa1wkpcmcZLxNfyGF76Hs6jSjEntuPFKImrBghqDf9JgTPu4E=
+	t=1789212095; cv=none; b=azbp/Ld7LeOJHCMpqz6QKsmQ2SH0+tgzXNASXUm41aTy0wp/PkWuC4Ioa6tw174V0syrVZWO9XNZTlnNPzvQLLyT5YEuxpIriPo1nZPZc5Do8fg3hkbiWq+IkCcpi6PaDWlWNYOLfMfJVFm7KKjyZfWZlXHoXywSwiZjcEpMyvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212091; c=relaxed/simple;
-	bh=UGbV4/w/1gk/FFpYalxsTGOlfL4cfnF3KyDKWfX14DQ=;
+	s=arc-20240116; t=1789212095; c=relaxed/simple;
+	bh=thQSjUEkXan6MrctIcyZn9/Xyelcb28eVlSGVm2HUAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=agvskg78ZxLRK0IvxA6yt+WbgcxkJs74FpQa760WBw7asz/sqDLdIR8HGmlke8it7P6r+nNe/idLAvwgQaIB4X1GsVsdotrGhQD8/YHtoPYffpVDwO4+yPs/Tjbo4IIrhRKj6bLWsKHeX2lw6dX8cLJZhCmSa9PNj4xooqZiwrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADbiTTQX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JEw8afcilpFUPKJvekgFLjUaUTqhBXhq+NwO+QWfKN+NTR2e65TDRHLaZLcmdqzdvtAdM/jqMa/EKMpZ32RsfWNdkFTja71uN87q5ffG23RXUaYABBVIbStl5Pp9o6SGU5jI6pKD78jz83C7li2O1ZzvwhT6fFdF55z9g+OBAAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1oreiSWS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADbiTTQX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8DC71F0089A;
-	Sat, 12 Sep 2026 11:21:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oreiSWS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF491F000FF;
+	Sat, 12 Sep 2026 11:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212090;
-	bh=pmo2AfE1w8uEQEs7FgK3lE23EU/Ca81aYqBbLVkti/8=;
+	s=korg; t=1789212094;
+	bh=aYQ4iwJaNgsf17fwbhQxJzDNjkZCoHsCXImm8VmOMjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ADbiTTQXO0CxLXRHaHxcdsvBs16s8ePIecUGenJ2LpM/Bc9/VqPJ0xEyycTUCTVTN
-	 9gp21DxtMSBdbsFALoggqpj4aJQ4UZPX/i48qJZwfu6Vv6HVP89dnw4f8pEwGQxh+9
-	 zPBNCo4Nh8VBS2kF+8srbFJYvslLuzw1GKJvZ3qQ=
+	b=1oreiSWS9vpaD6qUOJ19Z4xW+5WkNqZdzIw+4EzXJyUCd2aWVFZtIiDCz/0mSPw8A
+	 BuvGh5lOVAQ4twQAaqOn2yo9fA464CJVYQPzQDuKW7dpbaL9xys3HGkPXN4BeqA0ZB
+	 CLq1zl2ab9wgwUMErkvISnYJ1allnlKG3WxQ3Tgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mahanta Jambigi <mjambigi@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1364/1518] net/smc: free stashed qentry before overwrite in REQ_ADD_LINK to ADD_LINK transition
-Date: Sat, 12 Sep 2026 08:58:53 +0200
-Message-ID: <20260912065654.392904357@linuxfoundation.org>
+Subject: [PATCH 6.18 1365/1518] net/smc: free pending qentry in smc_llc_flow_stop() before memset
+Date: Sat, 12 Sep 2026 08:58:54 +0200
+Message-ID: <20260912065654.416088005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,58 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Mahanta Jambigi <mjambigi@linux.ibm.com>
 
-[ Upstream commit 036322025d6e440cb75fc6fecbba9a16b271a2ae ]
+[ Upstream commit 5ee0ceddc7785c6dcf4a8107fef01f0414a354f4 ]
 
-When smc_llc_event_handler() transitions the local LLC flow from
-SMC_LLC_FLOW_REQ_ADD_LINK to SMC_LLC_FLOW_ADD_LINK on arrival of an ADD_LINK
-request, it calls smc_llc_flow_qentry_set() unconditionally:
+smc_llc_flow_stop() resets a flow struct with a blind memset:
 
-	if (lgr->llc_flow_lcl.type == SMC_LLC_FLOW_REQ_ADD_LINK) {
-		lgr->llc_flow_lcl.type = SMC_LLC_FLOW_ADD_LINK;
-		smc_llc_flow_qentry_set(&lgr->llc_flow_lcl, qentry);
-		...
-	}
+	spin_lock_bh(&lgr->llc_flow_lock);
+	memset(flow, 0, sizeof(*flow));
+	flow->type = SMC_LLC_FLOW_NONE;
+	spin_unlock_bh(&lgr->llc_flow_lock);
 
-A CONFIRM_LINK or ADD_LINK_CONT arriving while flow->type is
-SMC_LLC_FLOW_REQ_ADD_LINK is stashed into flow->qentry via the
-SMC_LLC_CONFIRM_LINK / SMC_LLC_ADD_LINK_CONT handler (which stores into
-flow->qentry for any non-NONE flow type).  When the subsequent ADD_LINK
-arrives, the REQ_ADD_LINK branch overwrites flow->qentry with the new pointer
-without first freeing the stashed allocation, leaking one kmalloc object.
+If flow->qentry is non-NULL at this point the pointer is overwritten without the
+allocation being freed, leaking one kmalloc object.
 
-The stashed entry has no consumer: smc_llc_wait() is only called from
-llc_add_link_work, which is not yet scheduled while the flow type remains
-REQ_ADD_LINK.  No waiter is sleeping on llc_msg_waiter at this point.
-It is safe to unconditionally free any stashed qentry before
-the overwrite.
+A late-arriving duplicate CONFIRM_LINK or ADD_LINK_CONT message can set
+flow->qentry after the legitimate message has been consumed by the waiter via
+smc_llc_flow_qentry_clr() (which NULLs the pointer but leaves flow->type
+non-zero) but before the flow completes and smc_llc_flow_stop() runs.  In that
+window the duplicate is stashed into flow->qentry, and then lost when
+smc_llc_flow_stop() zeros the struct.
 
-Call smc_llc_flow_qentry_del() before smc_llc_flow_qentry_set() in the
-REQ_ADD_LINK branch.  smc_llc_flow_qentry_del() already checks flow->qentry
-before freeing, so the normal path where no entry is stashed is a no-op.
+Call smc_llc_flow_qentry_del() inside the lock before the memset.
+smc_llc_flow_qentry_del() already checks flow->qentry before freeing, so the
+normal case where no entry is pending is a no-op.
 
-Fixes: b4ba4652b3f8 ("net/smc: extend LLC layer for SMC-Rv2")
+Fixes: 555da9af827d ("net/smc: add event-based llc_flow framework")
 Reviewed-by: Hidayath Khan <hidayath@linux.ibm.com>
 Signed-off-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Link: https://patch.msgid.link/20260818073107.466506-1-mjambigi@linux.ibm.com
+Link: https://patch.msgid.link/20260818073943.1108383-1-mjambigi@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_llc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/smc/smc_llc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/net/smc/smc_llc.c b/net/smc/smc_llc.c
-index 51937265203c8..cfc027435e5c3 100644
+index cfc027435e5c3..65cf07bb30d8d 100644
 --- a/net/smc/smc_llc.c
 +++ b/net/smc/smc_llc.c
-@@ -1945,6 +1945,8 @@ static void smc_llc_event_handler(struct smc_llc_qentry *qentry)
- 			if (lgr->llc_flow_lcl.type ==
- 					SMC_LLC_FLOW_REQ_ADD_LINK) {
- 				/* server started add_link processing */
-+				/* free any qentry stashed in REQ_ADD_LINK state */
-+				smc_llc_flow_qentry_del(&lgr->llc_flow_lcl);
- 				lgr->llc_flow_lcl.type = SMC_LLC_FLOW_ADD_LINK;
- 				smc_llc_flow_qentry_set(&lgr->llc_flow_lcl,
- 							qentry);
+@@ -341,6 +341,7 @@ int smc_llc_flow_initiate(struct smc_link_group *lgr,
+ void smc_llc_flow_stop(struct smc_link_group *lgr, struct smc_llc_flow *flow)
+ {
+ 	spin_lock_bh(&lgr->llc_flow_lock);
++	smc_llc_flow_qentry_del(flow);
+ 	memset(flow, 0, sizeof(*flow));
+ 	flow->type = SMC_LLC_FLOW_NONE;
+ 	spin_unlock_bh(&lgr->llc_flow_lock);
 -- 
 2.53.0
 
