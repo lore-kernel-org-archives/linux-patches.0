@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A41537C118;
-	Sat, 12 Sep 2026 09:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7BF208D0;
+	Sat, 12 Sep 2026 09:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204936; cv=none; b=TT2Jofw/o6gtpGaayQ/PjfkBcFpx6eqZAjJeLh1RcUhIcZ7wOvPXkv6rYt9ym/4/vfaZ06NKtPBQ44ZLtU8Vc21Z4jDCTvNodvZyQ2lMERhRVcTDipZyuoVwSMdVkntHsl1fJmh3spHhtAKMbt+PKhYRsffBfboHosbjr0nkzwg=
+	t=1789204941; cv=none; b=VnMnvqBaCqFZsnVnIKf8tcjDJ/HuGIAqoo0EQuyg76L/TMWl7LtKhaqTiOaEGxJeOJLunTg3KSHJvvQHdyXgWQ81eVjDa2+sqPYWnoQO/TC18sitmsPwP/L0qKAygVLSUBmZeE4PPLRmIIXxwk4dFgc0XBfbQwAt+PJYwwxIW/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204936; c=relaxed/simple;
-	bh=mItR3haGMbXvB02JLblrwlbBes0cgWPU+nQ8xDMkpUE=;
+	s=arc-20240116; t=1789204941; c=relaxed/simple;
+	bh=L8/Mt7kW7LiK5np310ek4vfvnbRRc/E1jAR17feNH+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pYLGtAm/r8gp/Oy5CufTPBzGRgnmMWTZDNtqLj2wOhKhlUtYO2dHtCHQu5krw2YcdJoa7IJrkcSGQ4balr/a8yfBvfsULpzMXIIwZZCAzPuQgfS3WNxSQl7Fu7Y0ce1n1EtX0FXaPz//DJkErMHWur8cAHiCjrv+2huVIc6YG8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X8dAITrq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aMHctrvPb4VJS6/AE+FxFWuj/T3GhQnVGaopqSf/Z+kkumt2RxIqNwGUtv59Ghwt9ms+Z4CKFkcSbQP4AxJMt9nps6s7kucGRnYrgXhigGpA9aGJW4vvfaJT8W90BWpHQQ7LxZeN0mQsehf5hQTdyHyS8UcLSKt0++Vr+sEYKu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQm2Q0Af; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8dAITrq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08751F000FF;
-	Sat, 12 Sep 2026 09:22:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQm2Q0Af"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4C21F000FF;
+	Sat, 12 Sep 2026 09:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204934;
-	bh=qgMIL6Jk3Hg3t8XQAbTtzw5wwXkrlRVzOWH/pwKVNPE=;
+	s=korg; t=1789204939;
+	bh=vszaRxIq+oWwYHs5BO1H5ncU/MMfdTLAIgl9HX7M1YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X8dAITrqUla7MfHq6CWEVbxyPShn8tqGjVzK1uVtUDby4NFL37l1xo/TmthSSOmiZ
-	 WAuBWwpsiB8lTiaY5nGhTJEE8lWTsNn/6ZRkBCVc52Mtjoz1lkeiBzGZ1jgUitOOFR
-	 JfzdSoMFUCn5vmcEcx2e1+JOxk6YMSLqPP0SN4Ho=
+	b=QQm2Q0Afcg9SYE+FopFh0gXjXU0cc7Dd7BmgBbR5p9p414wYdu7caas80iGmoAYNT
+	 LN4/RZ9yB80iwAmwzSyzH1j7TViaQpuKqZatjnX17UmBLHikRbT5syz+Vw1JReUlkl
+	 1UsAYWft/m69ADLYzpVQZvU1kOwIxhIM8hpznJsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b106284c2a0b7bc80cf9@syzkaller.appspotmail.com,
+	syzbot+9265e754091c2d27ea29@syzkaller.appspotmail.com,
 	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1715/1815] Bluetooth: L2CAP: access chan->conn safely in get/setsockopt
-Date: Sat, 12 Sep 2026 08:57:45 +0200
-Message-ID: <20260912065729.236070154@linuxfoundation.org>
+Subject: [PATCH 7.2 1716/1815] Bluetooth: L2CAP: reject accept queue add unless BT_LISTEN
+Date: Sat, 12 Sep 2026 08:57:46 +0200
+Message-ID: <20260912065729.260188655@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,231 +54,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit ca2c4c26498643f421d35ffe258fafbd3ed461c3 ]
+[ Upstream commit d4bfa78fd67929b62b02013c107973e0c5b7aa9a ]
 
-Since commit b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
-l2cap_chan::conn has held reference and remains non-NULL also after the
-corresponding hci_conn is deleted.  In this state accessing various
-fields eg. hci_conn::hdev is invalid, which leads to KASAN crash in
-l2cap_sock_setsockopt() access of conn->hcon->hdev.
+New sk should not be added to parent socket accept queue after last
+l2cap_sock_cleanup_listen() has run in l2cap_sock_teardown_cb() and
+state set to BT_CLOSED, as that can result to UAF on dereferencing the
+dangling parent reference.
 
-Check l2cap_chan::conn.hcon corresponds to an alive hci_conn before
-trying to use it in l2cap_sock.c.  Hold l2cap_chan_lock() in
-getsockopt/setsockopt to ensure it stays alive, and to avoid data races
-in l2cap_chan fields.
+l2cap_sock_new_connection_cb() may race with parent l2cap_chan teardown,
+due to chan->state accessed without consistent locking:
 
-Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
-Reported-by: syzbot+b106284c2a0b7bc80cf9@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=b106284c2a0b7bc80cf9
+  [Task 1]                           [Task 2]
+  l2cap_sock_release(parent)         l2cap_connect
+    l2cap_sock_shutdown                pchan = l2cap_global_chan_by_psm
+      l2cap_chan_lock(pchan)
+      l2cap_chan_close
+        l2cap_sock_teardown_cb
+          pchan->state = BT_CLOSED
+      l2cap_chan_unlock(pchan) ------> l2cap_chan_lock(pchan)
+                                       l2cap_new_connection
+                                         l2cap_sock_new_connection_cb
+      l2cap_chan_lock(pchan) <-------- l2cap_chan_unlock(pchan)
+      l2cap_sock_kill(parent)          /* bt_sk(sk)->parent dangling */
+
+Fix by adding check for sk_state == BT_LISTEN after acquiring sk lock in
+l2cap_sock_new_connection_cb().  Add lock_sock() around sk_state writes
+where missing, to avoid data races.
+
+Although the data races on pchan->state should be fixed too, this
+defensive sk_state check probably makes sense in any case.
+
+Fixes: 2ff1a41a912d ("Bluetooth: L2CAP: Fix null-ptr-deref in l2cap_sock_state_change_cb()")
+Reported-by: syzbot+9265e754091c2d27ea29@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9265e754091c2d27ea29
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Reported-by: syzbot+9265e754091c2d27ea29@syzkaller.appspotmail.com
+Tested-by: syzbot+9265e754091c2d27ea29@syzkaller.appspotmail.com
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_sock.c | 64 ++++++++++++++++++++++++++++----------
- 1 file changed, 48 insertions(+), 16 deletions(-)
+ net/bluetooth/l2cap_sock.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 4058ff50cc27a..782c94cd1bc0a 100644
+index 782c94cd1bc0a..6de131ac2340c 100644
 --- a/net/bluetooth/l2cap_sock.c
 +++ b/net/bluetooth/l2cap_sock.c
-@@ -436,11 +436,26 @@ static int l2cap_get_mode(struct l2cap_chan *chan)
- 	return -EINVAL;
+@@ -1599,6 +1599,11 @@ static int l2cap_sock_new_connection_cb(struct l2cap_chan *chan,
+ 
+ 	lock_sock(parent);
+ 
++	if (parent->sk_state != BT_LISTEN) {
++		release_sock(parent);
++		return -EINVAL;
++	}
++
+ 	/* Check for backlog size */
+ 	if (sk_acceptq_is_full(parent)) {
+ 		BT_DBG("backlog full %d", parent->sk_ack_backlog);
+@@ -1762,10 +1767,14 @@ static void l2cap_sock_state_change_cb(struct l2cap_chan *chan, int state,
+ 	if (!sk)
+ 		return;
+ 
++	lock_sock(sk);
++
+ 	sk->sk_state = state;
+ 
+ 	if (err)
+ 		sk->sk_err = err;
++
++	release_sock(sk);
  }
  
-+static struct l2cap_conn *l2cap_chan_conn(struct l2cap_chan *chan)
-+{
-+	lockdep_assert_held(&chan->lock);
+ static struct sk_buff *l2cap_sock_alloc_skb_cb(struct l2cap_chan *chan,
+@@ -1841,6 +1850,8 @@ static void l2cap_sock_resume_cb(struct l2cap_chan *chan)
+ 	if (!sk)
+ 		return;
+ 
++	lock_sock(sk);
 +
-+	/* l2cap_conn_del() sets FLAG_DEL while holding chan->lock before
-+	 * conn->hcon is deleted. If not set and conn is non-NULL, conn->hcon
-+	 * remains alive during this chan->lock critical section.
-+	 */
-+	if (test_bit(FLAG_DEL, &chan->flags))
-+		return NULL;
+ 	if (test_and_clear_bit(FLAG_PENDING_SECURITY, &chan->flags)) {
+ 		sk->sk_state = BT_CONNECTED;
+ 		chan->state = BT_CONNECTED;
+@@ -1848,6 +1859,8 @@ static void l2cap_sock_resume_cb(struct l2cap_chan *chan)
+ 
+ 	clear_bit(BT_SK_SUSPEND, &bt_sk(sk)->flags);
+ 	sk->sk_state_change(sk);
 +
-+	return chan->conn;
-+}
-+
- static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
- 				     sockopt_t *sopt)
- {
- 	struct sock *sk = sock->sk;
- 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
-+	struct l2cap_conn *conn;
- 	struct l2cap_options opts;
- 	struct l2cap_conninfo cinfo;
- 	int err = 0;
-@@ -451,6 +466,7 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
- 
- 	len = sopt->optlen;
- 
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
- 
- 	switch (optname) {
-@@ -537,9 +553,15 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
- 			break;
- 		}
- 
-+		conn = l2cap_chan_conn(chan);
-+		if (!conn) {
-+			err = -ENOTCONN;
-+			break;
-+		}
-+
- 		memset(&cinfo, 0, sizeof(cinfo));
--		cinfo.hci_handle = chan->conn->hcon->handle;
--		memcpy(cinfo.dev_class, chan->conn->hcon->dev_class, 3);
-+		cinfo.hci_handle = conn->hcon->handle;
-+		memcpy(cinfo.dev_class, conn->hcon->dev_class, 3);
- 
- 		len = min(len, sizeof(cinfo));
- 		if (copy_to_iter(&cinfo, len, &sopt->iter_out) != len)
-@@ -553,6 +575,8 @@ static int l2cap_sock_getsockopt_old(struct socket *sock, int optname,
- 	}
- 
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
-+
- 	return err;
++	release_sock(sk);
  }
  
-@@ -561,6 +585,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- {
- 	struct sock *sk = sock->sk;
- 	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
-+	struct l2cap_conn *conn;
- 	struct bt_security sec;
- 	struct bt_power pwr;
- 	int len, mode, err = 0;
-@@ -578,6 +603,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 
- 	len = sopt->optlen;
- 
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
- 
- 	switch (optname) {
-@@ -589,12 +615,14 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 			break;
- 		}
- 
-+		conn = l2cap_chan_conn(chan);
-+
- 		memset(&sec, 0, sizeof(sec));
--		if (chan->conn) {
--			sec.level = chan->conn->hcon->sec_level;
-+		if (conn) {
-+			sec.level = conn->hcon->sec_level;
- 
- 			if (sk->sk_state == BT_CONNECTED)
--				sec.key_size = chan->conn->hcon->enc_key_size;
-+				sec.key_size = conn->hcon->enc_key_size;
- 		} else {
- 			sec.level = chan->sec_level;
- 		}
-@@ -678,12 +706,14 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 		break;
- 
- 	case BT_PHY:
--		if (sk->sk_state != BT_CONNECTED) {
-+		conn = l2cap_chan_conn(chan);
-+
-+		if (sk->sk_state != BT_CONNECTED || !conn) {
- 			err = -ENOTCONN;
- 			break;
- 		}
- 
--		opt = hci_conn_get_phy(chan->conn->hcon);
-+		opt = hci_conn_get_phy(conn->hcon);
- 
- 		if (copy_to_iter(&opt, sizeof(opt), &sopt->iter_out) !=
- 		    sizeof(opt))
-@@ -719,6 +749,7 @@ static int l2cap_sock_getsockopt(struct socket *sock, int level, int optname,
- 	}
- 
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
- 	return err;
- }
- 
-@@ -749,6 +780,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
- 
- 	BT_DBG("sk %p", sk);
- 
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
- 
- 	switch (optname) {
-@@ -850,6 +882,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
- 	}
- 
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
- 	return err;
- }
- 
-@@ -913,6 +946,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 	if (level != SOL_BLUETOOTH)
- 		return -ENOPROTOOPT;
- 
-+	l2cap_chan_lock(chan);
- 	lock_sock(sk);
- 
- 	switch (optname) {
-@@ -938,11 +972,10 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 
- 		chan->sec_level = sec.level;
- 
--		if (!chan->conn)
-+		conn = l2cap_chan_conn(chan);
-+		if (!conn)
- 			break;
- 
--		conn = chan->conn;
--
- 		/* change security for LE channels */
- 		if (chan->scid == L2CAP_CID_ATT) {
- 			if (smp_conn_security(conn->hcon, sec.level)) {
-@@ -997,7 +1030,8 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 		}
- 
- 		if (opt == BT_FLUSHABLE_OFF) {
--			conn = chan->conn;
-+			conn = l2cap_chan_conn(chan);
-+
- 			/* proceed further only when we have l2cap_conn and
- 			   No Flush support in the LM */
- 			if (!conn || !lmp_no_flush_capable(conn->hcon->hdev)) {
-@@ -1083,7 +1117,8 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 		break;
- 
- 	case BT_PHY:
--		if (sk->sk_state != BT_CONNECTED) {
-+		conn = l2cap_chan_conn(chan);
-+		if (sk->sk_state != BT_CONNECTED || !conn) {
- 			err = -ENOTCONN;
- 			break;
- 		}
-@@ -1093,10 +1128,6 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 		if (err)
- 			break;
- 
--		if (!chan->conn)
--			break;
--
--		conn = chan->conn;
- 		err = hci_conn_set_phy(conn->hcon, phys);
- 		break;
- 
-@@ -1139,6 +1170,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
- 	}
- 
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
- 	return err;
- }
- 
+ static void l2cap_sock_set_shutdown_cb(struct l2cap_chan *chan)
 -- 
 2.53.0
 
