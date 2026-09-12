@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900652E7631;
-	Sat, 12 Sep 2026 16:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD4130C60F;
+	Sat, 12 Sep 2026 16:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230387; cv=none; b=AusUwjJ/fCtnRFFGrasBs+WK0d0Jj3XmNmAjhhUgu9iCPP1FSnNZ4iYXGFPwrEv4YEV3bFYe/EtMNLKOW8ATZ8BkSyXskWANujmFa8xPbn//SKdEUdGFMjvJ4sPT+2mUBnZ7O0wG+AgxobNN91WUE6C5/PSUEOo3OspIgNwOn54=
+	t=1789230392; cv=none; b=L1ylZOxiLMoHxK62qpPtP2VTak9kO0JIHQOpteu7mjED8yVpIefF6TZx8C8aJmAZxWMKJ9kjzJI6a/aOYp3S5haeO+cpicuXLFfciA6bmF5FaTlDSRuue//Vv2w5PF8EoJwETRlr0z9fK5DhS8pkWyMPtreMlRBl9AdNfjyVzlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230387; c=relaxed/simple;
-	bh=tjLe0ZHBVWLLBwCyTI4tYWxj67KnmA5Brt5MZQFraLY=;
+	s=arc-20240116; t=1789230392; c=relaxed/simple;
+	bh=BQyvaIfH28ntFzKETi1mtOrFe6cY2U+aypvDP/emdmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JpvKAF4GfYsSxJ24FI8qslUQVHafcbf+5KsAQ4UERvjddEgVP/xTO4wLqg9b9guUfsjdMkKGuBVHgNPnLBXwWCSNYQ4XY3JorRTym8NJBQQn0nZ2/nIrhJ9MFqD9IdzBXjoqasRm8ZzcG+MFP07jzE+5yn3TCPIQbyMFuEGjWQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXZP+5oI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IWv3GXE1DID9FGLKeWl8NFz5GkDVumu+5T+mzI69dcZh8yoRO4HdLCwMwwLKT72tC7RvNC6zL31qZzvKsS1UoFeTGFwn01tdF1EMK0QIn9nX1ZKgWa+bCV6+edkLQv9k10Bk7m03DxkaSis20MDNxW6vU29BnJzN7kIKBvzySyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pr5LhGg1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXZP+5oI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197DB1F000FF;
-	Sat, 12 Sep 2026 16:26:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pr5LhGg1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DE361F000FF;
+	Sat, 12 Sep 2026 16:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230386;
-	bh=efsqW79aVA0WsKqOAz3eABsRrTckjreJtPDIC1I1vpQ=;
+	s=korg; t=1789230391;
+	bh=pCtclaCnMLyUDDrBP0ATqpqmS51PJqW5QXUVlRSIZEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cXZP+5oILiunGLzOZoel4gREPfkxbdqYSfY1SZhgUkZAFojO7uUSP8S7rppz2rcFv
-	 oO5Lkoq0srPwA0o25dhKYNBcgRtwYIlJNM/lPNJXYwt5BhMkqSvGrUaNyDtd5kK0qU
-	 zdV8oUsbXVdFmoh+7XalkKcHbb6WC/txU2A4ZNS4=
+	b=Pr5LhGg1dGHmFRbnWknO8okpfiaWziLXtY5NVSCS7dypBYzokVCvCyw4u6DRn8C/V
+	 ANn5iIIHqZGB0aHb40X2RMQf2XkcZjO53ZlqQdNlhZjJcdrm9i4RrWRFd1njl7WlxA
+	 NKSPmzV8omxuObcISZJbQH90XBmHFRhO1G+BOetM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	David Lee <david.lee@trailofbits.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0781/1191] arm64: dts: qcom: sm8550: Fix the msi-map entries
-Date: Sat, 12 Sep 2026 08:58:29 +0200
-Message-ID: <20260912065605.818794691@linuxfoundation.org>
+Subject: [PATCH 6.1 0741/1191] nilfs2: prevent out-of-bounds read in super root block parsing
+Date: Sat, 12 Sep 2026 08:57:49 +0200
+Message-ID: <20260912065604.925156987@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,59 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: David Lee <david.lee@trailofbits.com>
 
-[ Upstream commit 98a953fa2f4095b9777dbf59a3ed2ac3c0bf55cb ]
+[ Upstream commit 7cb2f76a6a2ba2130b577cb8ac13e1e46c4fc689 ]
 
-While adding the GIC ITS MSI support, it was found that the msi-map entries
-needed to be swapped to receive MSIs from the endpoint.
+super-root inode metadata size is trusted before nilfs_read_inode_common().
 
-But later it was identified that the swapping was needed due to a bug in
-the Qualcomm PCIe controller driver. And since the bug is now fixed with
-commit bf79e33cdd89 ("PCI: qcom: Enable BDF to SID translation properly"),
-let's fix the msi-map entries also to reflect the actual mapping in the
-hardware.
+Reject super-root inode sizes whose computed on-disk footprint exceeds the
+filesystem block size. This prevents malformed filesystem images from
+making nilfs_read_inode_common() read past the end of the super-root block.
 
-Fixes: 114990ce3edf ("arm64: dts: qcom: sm8550: Use GIC-ITS for PCIe0 and PCIe1")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Link: https://lore.kernel.org/r/20240318-pci-bdf-sid-fix-v1-2-acca6c5d9cf1@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 16d98ee918d6 ("arm64: dts: qcom: sm8550: Fix the PCIe iommu-map entries")
+[ryusuke: clarify the commit title]
+
+Fixes: 8a9d2191e9f4 ("nilfs2: operations for the_nilfs core object")
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ fs/nilfs2/the_nilfs.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index ea03538d7f996..3a507b46c24d0 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -1416,9 +1416,8 @@ pcie0: pci@1c00000 {
- 			interconnect-names = "pcie-mem";
- 			interconnects = <&pcie_noc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>;
+diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
+index 05fdbbc63e1f5..d1891dd4a5109 100644
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -450,6 +450,12 @@ static int nilfs_store_disk_layout(struct the_nilfs *nilfs,
+ 			  nilfs->ns_inode_size);
+ 		return -EINVAL;
+ 	}
++	if (NILFS_SR_BYTES(nilfs->ns_inode_size) > nilfs->ns_blocksize) {
++		nilfs_err(nilfs->ns_sb,
++			  "too large inode size for super root: %d bytes",
++			  nilfs->ns_inode_size);
++		return -EINVAL;
++	}
  
--			/* Entries are reversed due to the unusual ITS DeviceID encoding */
--			msi-map = <0x0 &gic_its 0x1401 0x1>,
--				  <0x100 &gic_its 0x1400 0x1>;
-+			msi-map = <0x0 &gic_its 0x1400 0x1>,
-+				  <0x100 &gic_its 0x1401 0x1>;
- 			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
- 				    <0x100 &apps_smmu 0x1401 0x1>;
- 
-@@ -1522,9 +1521,8 @@ pcie1: pci@1c08000 {
- 			interconnect-names = "pcie-mem";
- 			interconnects = <&pcie_noc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI1 0>;
- 
--			/* Entries are reversed due to the unusual ITS DeviceID encoding */
--			msi-map = <0x0 &gic_its 0x1481 0x1>,
--				  <0x100 &gic_its 0x1480 0x1>;
-+			msi-map = <0x0 &gic_its 0x1480 0x1>,
-+				  <0x100 &gic_its 0x1481 0x1>;
- 			iommu-map = <0x0   &apps_smmu 0x1480 0x1>,
- 				    <0x100 &apps_smmu 0x1481 0x1>;
- 
+ 	nilfs->ns_first_ino = le32_to_cpu(sbp->s_first_ino);
+ 	if (nilfs->ns_first_ino < NILFS_USER_INO) {
 -- 
 2.53.0
 
