@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE21632B126;
-	Sat, 12 Sep 2026 18:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091A132B126;
+	Sat, 12 Sep 2026 18:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239071; cv=none; b=k0LSMFGWP1o7bNgXNTP7MsWQPtgn4nWEHe8zY+57JlXDJBbYH/dK/3WIkzV2je+30js8A/PQGSpkTxrDTB+RnjDRDhEEeJsJb8toP8zedms+nbCpvVJ9LEK8GgOzWrgnkR6irFRQ9ifilVjmbDASc3uUTj5xdqB9xBtM5/S/gs8=
+	t=1789239077; cv=none; b=EX7waYD2E6192AHbuLEyiRmhvX7c7d95vEJOnELPlYG4vWPTXOS1FKpIrFeYGVArfPcD42yt3pP6Sn2BPRDvvU7KpO1b+G4HvZ1svh7P7lzeXPoNfqvru0PetjOCWih2OpOf+k/vj4rpkot/W1Zlb47kZmzFgOZo23DgU3pm3aE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239071; c=relaxed/simple;
-	bh=V5RWlIgMn8fKHKAhQR11tumGML1fWQpI/TxKKwjO5E8=;
+	s=arc-20240116; t=1789239077; c=relaxed/simple;
+	bh=nW56mqt6HiaQFLCyyOoxiCVMpR27gJy1qBn7ZXHLNho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ADd9CUpm6IKtw9+EKxQDRgITMkstlA53Rhwwe4amtrrSp3f5j96ExEZouXm2ruDhyAHUEkM4L5JiFRn/bBVd9N5YTX6QZ3YaafZLOXaMqThqD0bLUBw5DDOVg1VsCH/2csJ0XT6jb83Ek9QFhVZnKqQgxYbR6QVMBHENWtrX4kY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rjNu5qy1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GKLLIpGp+idaNmeNeSuaB8zOOkisPE1/p9GgOtjcvGk6pYfxUZzLhyWdl9AqwZhyMT+t3vliPLLSDqsbdZMii5hB7e+7Z2CmZrNWIm2GA0tOspHyGRXHxR8JJckcHEmaBD5FsliN0nQ+nNmKU/Mw0qygEYiMHwVlR0V6qKUAv9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZwYgnjUv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rjNu5qy1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58FE1F000FF;
-	Sat, 12 Sep 2026 18:51:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZwYgnjUv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2A11F000FF;
+	Sat, 12 Sep 2026 18:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239070;
-	bh=VSroVwEFlepw7tyW6hlaLe9DXqzMC4uqr/BnvJrA8z8=;
+	s=korg; t=1789239075;
+	bh=lBS9U/a00/2QcFD9R5RMEmGhczLampfjlr7NU5E+L3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rjNu5qy1oQIQXOZj+sBpfVYWVGjQgMNTkmTk3A+zea98bbsGDRgA41ldx0hBcQkjc
-	 MjNziuij1vANSxop90YoZ/bzqazbqMDUIZ+NyUkxDsHNbWqo8KJht1MtJ3psyh2MIf
-	 npX85b1tGYk5O+39tXZbT34CoqZjDL5V93rtcXxY=
+	b=ZwYgnjUvir7ldmOsJTZ/Xd93xmg72O/WIeV73ENGkfL4k7tPkrJoWYzZRKAlyyxLF
+	 5t2x0SW5ja8WAsjIv4upS2aAKUU0qRF0saSEjPWTaXgxprAgD8qs/raeB4xCOanVy1
+	 6LN8wBYN/0DXeweJHgwXe3SkPyrPXPo8z2Dh60Og=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suyash Mahar <smahar@meta.com>,
-	Leo Yan <leo.yan@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Cosmo Chou <chou.cosmo@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 591/935] perf cs-etm: Avoid truncating AUX buffer sizes to int
-Date: Sat, 12 Sep 2026 09:00:21 +0200
-Message-ID: <20260912065540.395892172@linuxfoundation.org>
+Subject: [PATCH 5.15 592/935] leds: pca9532: Fix phantom device registration on missing hardware
+Date: Sat, 12 Sep 2026 09:00:22 +0200
+Message-ID: <20260912065540.417555689@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,107 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Cosmo Chou <chou.cosmo@gmail.com>
 
-[ Upstream commit ec99be8a31db999a4f866be74ea7db61dbb19f24 ]
+[ Upstream commit 8d6b6c05b8e33d11e3fb3203309385e1a9cceecd ]
 
-cs_etm__get_trace() returns an int, but it used to return etmq->buf_len
-on success. That value comes from auxtrace_buffer::size, which is a
-size_t. For a large AUX trace block, returning the byte count through an
-int can overflow and make a valid buffer look like a negative error.
+The initial PWM and PSC register writes in pca9532_configure() do not
+check the return values of i2c_smbus_write_byte_data(). If the I2C
+device is physically absent from the bus, the write fails with -ENXIO.
+However, the driver ignores this error and allows probe() to complete
+successfully.
 
-The callers do not need the actual byte count from cs_etm__get_trace().
-The buffer length is already stored in the etmq->buf_len. The callers
-only need to distinguish three states:
+This results in the registration of phantom LED class devices and
+gpiochips backed by non-existent hardware. Subsequent GPIO reads from
+these phantom chips return bogus values (due to -ENXIO being truncated
+to an unsigned char in pca9532_gpio_get_value()), silently corrupting
+hardware state tracking in userspace.
 
-  < 0: error
-  = 0: no more AUX buffers
-  > 0: data is available
+Propagate the I2C write failures back to probe() so the driver core
+can gracefully abort binding and release devres-managed resources.
 
-Make cs_etm__get_trace() return 0 for all non-error cases and use
-etmq->buf_len to indicate whether a new buffer was found. Then make
-cs_etm__get_data_block() return 1 whenever data is available, instead of
-returning the buffer length.
-
-Also refactor cs_etm__get_data_block() to make its return value
-semantics clearer.
-
-Reported-by: Suyash Mahar <smahar@meta.com>
-Fixes: 8224531cf5a1 ("perf cs-etm: Modularize auxtrace_buffer fetch function")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: e14fa82439d3 ("leds: Add pca9532 led driver")
+Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260715080747.1638097-1-chou.cosmo@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 46 +++++++++++++++++++++++-----------------
- 1 file changed, 26 insertions(+), 20 deletions(-)
+ drivers/leds/leds-pca9532.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index be5a2e2d226d8..20492e58792d6 100644
---- a/tools/perf/util/cs-etm.c
-+++ b/tools/perf/util/cs-etm.c
-@@ -1089,8 +1089,7 @@ cs_etm__get_trace(struct cs_etm_queue *etmq)
- 	etmq->buf_used = 0;
- 	etmq->buf_len = aux_buffer->size;
- 	etmq->buf = aux_buffer->data;
--
--	return etmq->buf_len;
-+	return 0;
- }
+diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
+index 9ddcaf2bb4ff6..b5562de6349eb 100644
+--- a/drivers/leds/leds-pca9532.c
++++ b/drivers/leds/leds-pca9532.c
+@@ -360,10 +360,14 @@ static int pca9532_configure(struct i2c_client *client,
+ 	for (i = 0; i < 2; i++)	{
+ 		data->pwm[i] = pdata->pwm[i];
+ 		data->psc[i] = pdata->psc[i];
+-		i2c_smbus_write_byte_data(client, PCA9532_REG_PWM(maxleds, i),
+-			data->pwm[i]);
+-		i2c_smbus_write_byte_data(client, PCA9532_REG_PSC(maxleds, i),
+-			data->psc[i]);
++		err = i2c_smbus_write_byte_data(client, PCA9532_REG_PWM(maxleds, i),
++						data->pwm[i]);
++		if (err < 0)
++			return err;
++		err = i2c_smbus_write_byte_data(client, PCA9532_REG_PSC(maxleds, i),
++						data->psc[i]);
++		if (err < 0)
++			return err;
+ 	}
  
- static void cs_etm__set_pid_tid_cpu(struct cs_etm_auxtrace *etm,
-@@ -1687,26 +1686,33 @@ static int cs_etm__get_data_block(struct cs_etm_queue *etmq)
- {
- 	int ret;
- 
--	if (!etmq->buf_len) {
--		ret = cs_etm__get_trace(etmq);
--		if (ret <= 0)
--			return ret;
--		/*
--		 * We cannot assume consecutive blocks in the data file
--		 * are contiguous, reset the decoder to force re-sync.
--		 */
--		ret = cs_etm_decoder__reset(etmq->decoder);
--		if (ret)
--			return ret;
-+	/* The current block is not finished */
-+	if (etmq->buf_len)
-+		return 1;
- 
--		/*
--		 * Since the decoder is reset, this causes a global trace
--		 * discontinuity. Flush all thread stacks.
--		 */
--		cs_etm__flush_all_stack(etmq);
--	}
-+	ret = cs_etm__get_trace(etmq);
-+	if (ret < 0)
-+		return ret;
-+
-+	/* No more buffer to read */
-+	if (!etmq->buf_len)
-+		return 0;
-+
-+	/*
-+	 * We cannot assume consecutive blocks in the data file
-+	 * are contiguous, reset the decoder to force re-sync.
-+	 */
-+	ret = cs_etm_decoder__reset(etmq->decoder);
-+	if (ret)
-+		return ret;
-+
-+	/*
-+	 * Since the decoder is reset, this causes a global trace
-+	 * discontinuity. Flush all thread stacks.
-+	 */
-+	cs_etm__flush_all_stack(etmq);
- 
--	return etmq->buf_len;
-+	return 1;
- }
- 
- static bool cs_etm__is_svc_instr(struct cs_etm_queue *etmq, u8 trace_chan_id,
+ 	for (i = 0; i < data->chip_info->num_leds; i++) {
 -- 
 2.53.0
 
