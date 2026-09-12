@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD8126ED46;
-	Sat, 12 Sep 2026 19:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E5D26ED46;
+	Sat, 12 Sep 2026 19:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242528; cv=none; b=ZkPISTAqZoIWaJO+GQS+o5k+XCXlMb3RJtpo9FQEDXLitpSk5WxX59vlMPdjBFrIlpuVHGw/ZL3XUXMlDzbwJwhIVjNh2Z1Ruus0HhlAsrKZIFmISsZGieqGADiWdsPcFnE99Y1pEJiJ69GrmVzxOSxDOcoYBSVmzWBWfrKosnQ=
+	t=1789242530; cv=none; b=uOtWwnzuJfDOCnf4V7cEYqmECyS/VH8xAEdvnWsQ5jiKnhoa5/GgKxadzX5QNYNFZyMMdncrs6/Q0dc0oHrHBiOXRX4M0yYeOazCy0xuHN6mRojV+Va8DJso2L4St7/MFMcBP8JNm+5+rpjKOYcpm6w2f0oFei9zfiRquMa2mDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242528; c=relaxed/simple;
-	bh=RcTPh44eYuQ8EIZBQkDS2/wakAc5tNoBVf3kWa0/1s4=;
+	s=arc-20240116; t=1789242530; c=relaxed/simple;
+	bh=KAwT9JXBVJo+fQDxhRWyNDuSQ1nZlJaSdPzZY83tMnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JpxKut7A38ODtSXNllvDbwZjNVLws8TvlT4CtaGOBQme7pCXxGQ567dl+T1oIjXp/xA5HquZ6E3JYHIBNPpHi+4Rt8FbqF+OZKvkkI2Dzs1KpLeqEV9nBP2Q590nfSwlz+6UcWCFX/EbPtTgebt0Q0othKDKmVijLgAzjfm6HcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9+p7jW+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IuzsUOsRGy/JWUCSlEAR3NyVcSHkwFj8sV1CpT8PoZs+t/2a+ijEBw6IyoOU08FeR+Yptmtos2dltcO5UDZY9VZlwUQ1JMLIw46NLIwkLCE0pD0MXyoZawtHVZAeLgQryP1ep3TxOagtZlTIYh6Eb+Oi3fZQRYG1LkFWSsf5LKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwefo3Re; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9+p7jW+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72CC01F000FF;
-	Sat, 12 Sep 2026 19:48:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwefo3Re"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A671F000FF;
+	Sat, 12 Sep 2026 19:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242526;
-	bh=5tUz7f7kLJNVZF/UIC3SHV/KMDR79Y7DbwuhJP54piU=;
+	s=korg; t=1789242529;
+	bh=VJL5if1kq8AU3qA+yXDWQeu6binTSulSuwm/HwL7/zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b9+p7jW+M6pKB5vGTyp6KBqvH8FMCV+W9RyWSxD+E1EWqCEBMW7FpUn+n+7eOSssL
-	 qQ3aLCY9rme8BArx8Iyd5X0gIQ0rLR+RkKo/Uop4X6F+n6nDhvijxg6+Y7JLVfWHiD
-	 R25dPJGgvFQYJtfH1sj0hF0lhQPWy0jzeHR6cbzE=
+	b=rwefo3Reg/TFpIbQc0BGqQ4/R11gB12dUo2OXYduyP1riKhQtHTfmqr/E575qBcx7
+	 6PehR90LCJTFqpVnTzZj3Ants1DqIb84AT0pmmLSvoTNeKzkohudbC70sPogrz3upN
+	 OW9gdEbW4b4UBYWQBzOAVBsi/DJiJjb18jwwND7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ira Weiny <ira.weiny@intel.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	David Sterba <dsterba@suse.com>,
-	Chris Mason <clm@fb.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Deepak Kumar Singh <deesin@codeaurora.org>,
+	Arun Kumar Neelakantam <aneela@codeaurora.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 436/798] iov_iter: lift memzero_page() to highmem.h
-Date: Sat, 12 Sep 2026 09:01:04 +0200
-Message-ID: <20260912065527.135350774@linuxfoundation.org>
+Subject: [PATCH 5.10 437/798] rpmsg: glink: Remove the rpmsg dev in close_ack
+Date: Sat, 12 Sep 2026 09:01:05 +0200
+Message-ID: <20260912065527.157645548@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -57,86 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ira Weiny <ira.weiny@intel.com>
+From: Arun Kumar Neelakantam <aneela@codeaurora.org>
 
-[ Upstream commit 28961998f858114e51d2ae862065b858afcfa2b2 ]
+[ Upstream commit c7c182d4447e172f87e37d6c04879b94b8635b37 ]
 
-Patch series "btrfs: Convert kmap/memset/kunmap to memzero_user()".
+Un-register and register of rpmsg driver is sending invalid open_ack
+on closed channel.
 
-Lifting memzero_user(), convert it to kmap_local_page() and then use it
-in btrfs.
+To avoid sending invalid open_ack case unregister the rpmsg device
+after receiving the local_close_ack from remote side.
 
-This patch (of 3):
-
-memzero_page() can replace the kmap/memset/kunmap pattern in other
-places in the code.  While zero_user() has the same interface it is not
-the same call and its use should be limited and some of those calls may
-be better converted from zero_user() to memzero_page().[1] But that is
-not addressed in this series.
-
-Lift memzero_page() to highmem.
-
-[1] https://lore.kernel.org/lkml/CAHk-=wijdojzo56FzYqE5TOYw2Vws7ik3LEMGj9SPQaJJ+Z73Q@mail.gmail.com/
-
-Link: https://lkml.kernel.org/r/20210309212137.2610186-1-ira.weiny@intel.com
-Link: https://lkml.kernel.org/r/20210309212137.2610186-2-ira.weiny@intel.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: David Sterba <dsterba@suse.com>
-Cc: Chris Mason <clm@fb.com>
-Cc: Josef Bacik <josef@toxicpanda.com>
-Cc: Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Stable-dep-of: 68d4d3e78150 ("isofs: fix out-of-bounds page array access on empty zisofs block")
+Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
+Signed-off-by: Arun Kumar Neelakantam <aneela@codeaurora.org>
+[bjorn: s/strlcpy/strscpy/]
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/1596086296-28529-5-git-send-email-deesin@codeaurora.org
+Stable-dep-of: 5a5a48e788e0 ("rpmsg: glink: fix deadlock in endpoint destroy during driver detach")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/highmem.h | 7 +++++++
- lib/iov_iter.c          | 8 +-------
- 2 files changed, 8 insertions(+), 7 deletions(-)
+ drivers/rpmsg/qcom_glink_native.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/include/linux/highmem.h b/include/linux/highmem.h
-index 3f61ad5fddcd9..5f7cd58db4780 100644
---- a/include/linux/highmem.h
-+++ b/include/linux/highmem.h
-@@ -413,4 +413,11 @@ static inline void memcpy_to_page(struct page *page, size_t offset,
- 	kunmap_atomic(to);
- }
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index e5e0924935b9b..02e0f09e7d787 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -1555,6 +1555,7 @@ static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
  
-+static inline void memzero_page(struct page *page, size_t offset, size_t len)
-+{
-+	char *addr = kmap_atomic(page);
-+	memset(addr + offset, 0, len);
-+	kunmap_atomic(addr);
-+}
-+
- #endif /* _LINUX_HIGHMEM_H */
-diff --git a/lib/iov_iter.c b/lib/iov_iter.c
-index 6e30113303ba6..269e85ea1bb27 100644
---- a/lib/iov_iter.c
-+++ b/lib/iov_iter.c
-@@ -5,6 +5,7 @@
- #include <linux/fault-inject-usercopy.h>
- #include <linux/uio.h>
- #include <linux/pagemap.h>
-+#include <linux/highmem.h>
- #include <linux/slab.h>
- #include <linux/vmalloc.h>
- #include <linux/splice.h>
-@@ -467,13 +468,6 @@ void iov_iter_init(struct iov_iter *i, unsigned int direction,
- }
- EXPORT_SYMBOL(iov_iter_init);
+ 		rpmsg_unregister_device(glink->dev, &chinfo);
+ 	}
++	channel->rpdev = NULL;
  
--static void memzero_page(struct page *page, size_t offset, size_t len)
--{
--	char *addr = kmap_atomic(page);
--	memset(addr + offset, 0, len);
--	kunmap_atomic(addr);
--}
--
- static inline bool allocated(struct pipe_buffer *buf)
+ 	qcom_glink_send_close_ack(glink, channel->rcid);
+ 
+@@ -1568,6 +1569,7 @@ static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
+ 
+ static void qcom_glink_rx_close_ack(struct qcom_glink *glink, unsigned int lcid)
  {
- 	return buf->ops == &default_pipe_buf_ops;
++	struct rpmsg_channel_info chinfo;
+ 	struct glink_channel *channel;
+ 	unsigned long flags;
+ 
+@@ -1585,6 +1587,16 @@ static void qcom_glink_rx_close_ack(struct qcom_glink *glink, unsigned int lcid)
+ 	channel->lcid = 0;
+ 	spin_unlock_irqrestore(&glink->idr_lock, flags);
+ 
++	/* Decouple the potential rpdev from the channel */
++	if (channel->rpdev) {
++		strscpy(chinfo.name, channel->name, sizeof(chinfo.name));
++		chinfo.src = RPMSG_ADDR_ANY;
++		chinfo.dst = RPMSG_ADDR_ANY;
++
++		rpmsg_unregister_device(glink->dev, &chinfo);
++	}
++	channel->rpdev = NULL;
++
+ 	kref_put(&channel->refcount, qcom_glink_channel_release);
+ }
+ 
 -- 
 2.53.0
 
