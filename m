@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1059A3ACA6F;
-	Sat, 12 Sep 2026 10:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140BF353EF7;
+	Sat, 12 Sep 2026 10:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207855; cv=none; b=W4OK2kymmnsjehVRHmXZYM0+YjeStvcXJAlZuXCCuhrOK1Gm+N03M2J5nDZqacpPMlIXZU4XYEqr18XNIM/RiO5Ky75crEFqNLVUDj9CFZ2w7Y3vNkXUilIsBOaNLvzb1pnHefImoFqn5LNiqtZxnZxRA//+pc1CcP8cIF9j9UY=
+	t=1789207860; cv=none; b=FZItlA+A3TVlUgPqb/o1MgeG8ACu7TMCwack2DycHgePpc1c7+Rq5YqSVYX7WAj+iFuRmXSde2kQH9jDvrs35uku0W3CbAknpL8F/bTzXXuHU4jm2HSIx9wP4S/AAxRrB8fRo3PeGehglMXXQ2A8+8UcJh8Lqm8wd+RgRCZ0b2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207855; c=relaxed/simple;
-	bh=ae8BUyf2A8YwZY/QfDLw5YeYU6MTgJGr6CcGbcTF0Bs=;
+	s=arc-20240116; t=1789207860; c=relaxed/simple;
+	bh=H5mBUUKOXfyl6sgZmBILZs9K/Nak178fWEeZNgsnvZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XRZF9df5j4k42v9ZFQxa7SCXkk/aLvUkeJ7sqt6ESwSVVaEJhHMkQS7f1rYLDA5y7xrKjJWBXiODEuvu/R2OZffeN1xLDsTPnbtlFTxWBaz5QLIj4EdozUWnZsj8qeF7klVv9c8rMeHqwgJCPsw1hAIWYZMq+GopA11k/mmj4gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R7zt9KKg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qWxAhWSUEDugulpNw9SDmIyJk9hfYyjYseprpXWpoXFLE0BQxdMhZv46AbAEVgsfzTd5ViXHK4h/JrBo6dxzDTwY8NjnQcXjRtv9JDHY7vNgEs63G2p3UuUfs/9Zr7Kd1Ti9MaxXEr+W4X4F0asH+AyKgdNM+vd5gdwIcayU3TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uu8HZX6i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R7zt9KKg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D981F000FF;
-	Sat, 12 Sep 2026 10:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uu8HZX6i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38211F000FF;
+	Sat, 12 Sep 2026 10:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207854;
-	bh=6jTL5x+E5GNxpa0mDBbYo/YNojo+GNM8GsfdAug0F5k=;
+	s=korg; t=1789207859;
+	bh=gHL9ub9rWN21zuIUgdYqk1gvbplKqZnDvwdv9IrzbqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R7zt9KKgeeU37Fmkbl9ghWcj6h+WN1ghqihF4/K8gnagNccSZhDcdi+7iygdUDkvG
-	 hrYo+bz9/drjB1JT/t7lYF9dlWl/9B2e3/XqZ1BAlPZLeq3lOSwtf/yjPTs4B3p39v
-	 u+Z+xs/H0iiQ56XhvOPfEo361ghIarapPAYvpYrA=
+	b=Uu8HZX6iCESTzQTM11m13FpCs2EY57sAlN8sHslWtT7CXlm3mZFR/IXrIGo0SDwu8
+	 vdlcXdCUtyucTueUmA5JXMUUwB6SWzMV3xPqwRos5j3EfYntkXHNGvR0MwAHDZVZT4
+	 VIlaKsnGBQtrUHSBJ+KowaFg4NZC4MOtGVamgUD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0497/1518] platform/x86: acer-wmi: reject missing gaming WMI results
-Date: Sat, 12 Sep 2026 08:44:26 +0200
-Message-ID: <20260912065634.689148725@linuxfoundation.org>
+Subject: [PATCH 6.18 0462/1518] soc: ti: knav_qmss: Remove debugfs file on teardown
+Date: Sat, 12 Sep 2026 08:43:51 +0200
+Message-ID: <20260912065633.898324238@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,50 +45,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit caf8342512c3056005f475d350eeca089c3c6623 ]
+[ Upstream commit 3c817862759913097f11467ed4ed2bbf974dabaf ]
 
-WMI_gaming_execute_u32_u64() returns success when firmware supplies
-no output object, leaving the caller output untouched. Gaming getters
-then inspect an uninitialized result value.
+knav_queue_probe() creates the global qmss debugfs file whose show
+callback reads the global knav_qdev state. knav_queue_remove() tears
+down the queue manager resources but leaves the debugfs file published.
 
-When the caller requests an output value, return -ENOMSG if firmware
-supplies no object. Preserve a NULL output pointer as the supported way
-for callers to ignore the result.
+Save the debugfs dentry in struct knav_device and remove it during
+teardown before the resources used by the show callback are released.
+While touching the debugfs_create_file() call, spell the unchanged read-
+only file mode as 0444.
 
-Fixes: 2d76708c2221 ("platform/x86: acer-wmi: use WMI calls for platform profile handling")
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Link: https://patch.msgid.link/20260701164208.8998-1-alhouseenyousef@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 41f93af900a2 ("soc: ti: add Keystone Navigator QMSS driver")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260706144706.96313-1-pengpeng@iscas.ac.cn
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/acer-wmi.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/soc/ti/knav_qmss.h       | 1 +
+ drivers/soc/ti/knav_qmss_queue.c | 7 +++++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/acer-wmi.c b/drivers/platform/x86/acer-wmi.c
-index d848afc91f87d..55b1980313542 100644
---- a/drivers/platform/x86/acer-wmi.c
-+++ b/drivers/platform/x86/acer-wmi.c
-@@ -1530,7 +1530,9 @@ static int WMI_gaming_execute_u32_u64(u32 method_id, u32 in, u64 *out)
- 		return -EIO;
+diff --git a/drivers/soc/ti/knav_qmss.h b/drivers/soc/ti/knav_qmss.h
+index 9325e8ce2e25c..bd3426a30d958 100644
+--- a/drivers/soc/ti/knav_qmss.h
++++ b/drivers/soc/ti/knav_qmss.h
+@@ -304,6 +304,7 @@ struct knav_device {
+ 	struct list_head			pools;
+ 	struct list_head			pdsps;
+ 	struct list_head			qmgrs;
++	struct dentry				*debugfs_file;
+ 	enum qmss_version			version;
+ };
  
- 	obj = result.pointer;
--	if (obj && out) {
-+	if (!obj && out) {
-+		ret = -ENOMSG;
-+	} else if (obj && out) {
- 		switch (obj->type) {
- 		case ACPI_TYPE_INTEGER:
- 			*out = obj->integer.value;
+diff --git a/drivers/soc/ti/knav_qmss_queue.c b/drivers/soc/ti/knav_qmss_queue.c
+index 3557ee5779b96..6d775a261737c 100644
+--- a/drivers/soc/ti/knav_qmss_queue.c
++++ b/drivers/soc/ti/knav_qmss_queue.c
+@@ -1868,8 +1868,9 @@ static int knav_queue_probe(struct platform_device *pdev)
+ 		goto err;
+ 	}
+ 
+-	debugfs_create_file("qmss", S_IFREG | S_IRUGO, NULL, NULL,
+-			    &knav_queue_debug_fops);
++	knav_qdev->debugfs_file =
++		debugfs_create_file("qmss", 0444, NULL, NULL,
++				    &knav_queue_debug_fops);
+ 	device_ready = true;
+ 	return 0;
+ 
+@@ -1887,6 +1888,8 @@ static void knav_queue_remove(struct platform_device *pdev)
+ 	struct knav_device *kdev = platform_get_drvdata(pdev);
+ 
+ 	device_ready = false;
++	debugfs_remove(kdev->debugfs_file);
++	kdev->debugfs_file = NULL;
+ 	knav_queue_stop_pdsps(kdev);
+ 	knav_queue_free_regions(kdev);
+ 	knav_free_queue_ranges(kdev);
 -- 
 2.53.0
 
