@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B642FFF9D;
-	Sat, 12 Sep 2026 14:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A4F2FDC30;
+	Sat, 12 Sep 2026 14:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222264; cv=none; b=JI7ZKnMiJUHXTctBvxGaz5quwFOXMZ8OoeRSF3Y3gkCGuAvHcfYRoKejIv/VRGBT39TDE5EIq9/fxBy1vtm4v28WrIzwGGZ/m4WuYKlDW+csMJQa317vXgIKGZlOL01FDfzzH3CIIcxdp1cPNkS3tl7/y1RjGm+o/BKlBAkgTrU=
+	t=1789222269; cv=none; b=CVk6TvUuzGJRQiL3RSMtiX6FvaJOYltarUWN4RJoeQ5xXokUeXI3p+eTZRCAZEIsc2TBgrV5bEPcOP8UXBGeVWw6k0q5Hue5EhJQXb5YagKeEFwVctfj6dMAJdcik7S9Y4jy7k7hq1KT7ZwA7ZEcUaLxAieUz59Wrlu8cvDEFUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222264; c=relaxed/simple;
-	bh=NxSRaHWhqv7e23NrO8plhcTjgxwqU/esrbXk/EoMYtU=;
+	s=arc-20240116; t=1789222269; c=relaxed/simple;
+	bh=jlsANdMapdiUsq4/c9EAjZh62AmLmbgtom0fu47ZdD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lFwck8mR1ouqlI6bkbmO5cxxOO3RLM2vvIjBg+pTcG/5V3izOcAsKSA/c4EaFKXFfyeGqegJlEjBWptX+22dkr0V7KgSZisIuHsHg2nuOTEzi1qk5RH6j90ns8S1wrhQqL4/R2gISxgW1azEcaDbg4stwF5dbRnXC93SA0oPN5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kAJ8FKba; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cEAugcRa1ilf1N7yTilTn9YIZzLVzSg5HoorEZssyEZm/6wx5za6i76kgkmadZ1fdB7LC1nheAAiLOLKPiifSWByMkDFSmcOAIqOFbvpiRSRzbm8dN0AADE9m7PQUicSe+ciVE90b2VjmOP7fiwJUpsWl5jRtVjswRqgpNsz7vM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DoC6dU7b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kAJ8FKba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F891F000FF;
-	Sat, 12 Sep 2026 14:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DoC6dU7b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1720D1F000FF;
+	Sat, 12 Sep 2026 14:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222263;
-	bh=MJl5vvS3QfhK6fge0P8BWdfJbgj+BQAU/I46PDz4LZk=;
+	s=korg; t=1789222268;
+	bh=y5dbfq9iNPTpWBp0DTTW/ALxqkTNnhxXE1HaUSx1mdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kAJ8FKbabrPuvqhdBdXfnK2nzFYbgceOjeBmtJg8JfaHKrV9UJmFPgIyTCTulI9bN
-	 c8KJh+QBXA+XUVFwIMqubRLClh3+zNa8lt8xGnVSBcIwdz8H/YgK2gtlXrFz300Sgw
-	 7Nls6KxVn0JWjyjsdR9aE8fiOTfZoLx8E/nlazUU=
+	b=DoC6dU7bA7ROeA1q+ZRrIZqzhaTDPAnlSilGWhy3ul+6xRh4GhG9UgBAjiesRh9CF
+	 1J2DU/reSnHJlJYi22h3on9iZKvfNodjni4Ra1C0svoDqJvp8KS1WdTAPm+Fesl8K6
+	 yW38aeKCbfKscYRNqBF65rQyxGS5hjX38VUR8ATg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akif <akif.sait111@gmail.com>,
+	Junyi Liu <moss80199@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0552/1424] ksmbd: fix use-after-free in smb2_open during durable reconnect
-Date: Sat, 12 Sep 2026 08:49:44 +0200
-Message-ID: <20260912065619.663630039@linuxfoundation.org>
+Subject: [PATCH 6.6 0553/1424] ksmbd: fix durable reconnect error path file lifetime
+Date: Sat, 12 Sep 2026 08:49:45 +0200
+Message-ID: <20260912065619.686423261@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,74 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akif <akif.sait111@gmail.com>
+From: Junyi Liu <moss80199@gmail.com>
 
-[ Upstream commit 1baff47b81f94f9231c91236aa511420d0e266b9 ]
+[ Upstream commit 3515503322f4819277091839eed46b695096aca5 ]
 
-In smb2_open, the call to ksmbd_put_durable_fd(fp) drops the reference
-to the durable file descriptor early during the durable reconnect
-process. If an error occurs subsequently (eg, ksmbd_iov_pin_rsp fails)
-or a scavenger accesses the file, it leads to a use-after-free when
-accessing fp properties (eg fp->create_time).
+After a durable reconnect succeeds, ksmbd_reopen_durable_fd() republishes
+the same ksmbd_file into the session volatile-id table. If smb2_open()
+then takes a later error path, cleanup first calls ksmbd_fd_put(work, fp)
+and then unconditionally calls ksmbd_put_durable_fd(dh_info.fp).
 
-Move the single put to the end of the function below err_out2 so fp
-stays valid until smb2_open returns.
+In this case fp and dh_info.fp are the same object. The first put drops the
+reconnect lookup reference, but the final durable put can run
+__ksmbd_close_fd(NULL, fp). Because the final close is not session-aware,
+it can free the file object without removing the volatile-id entry that was
+just published into the session table.
 
-Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
-Signed-off-by: Akif <akif.sait111@gmail.com>
+Use the session-aware put for the final reconnect drop when the reconnect
+had already succeeded and the error path is cleaning up the republished
+file. Earlier reconnect failures, before fp is assigned to dh_info.fp, keep
+using the durable-only put path.
+
+Fixes: 1baff47b81f9 ("ksmbd: fix use-after-free in smb2_open during durable reconnect")
+Signed-off-by: Junyi Liu <moss80199@gmail.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ fs/smb/server/smb2pdu.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index d97ffe3d2a710..b61b97bb21cd7 100644
+index b61b97bb21cd7..8d04f64cb0830 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -2996,29 +2996,23 @@ int smb2_open(struct ksmbd_work *work)
- 		if (dh_info.reconnected == true) {
- 			rc = smb2_check_durable_oplock(conn, share, dh_info.fp,
- 					lc, sess->user, name);
--			if (rc) {
--				ksmbd_put_durable_fd(dh_info.fp);
-+			if (rc)
- 				goto err_out2;
--			}
- 
- 			rc = ksmbd_reopen_durable_fd(work, dh_info.fp);
--			if (rc) {
--				ksmbd_put_durable_fd(dh_info.fp);
-+			if (rc)
- 				goto err_out2;
--			}
- 
- 			fp = dh_info.fp;
- 
- 			if (ksmbd_override_fsids(work)) {
- 				rc = -ENOMEM;
--				ksmbd_put_durable_fd(dh_info.fp);
- 				goto err_out2;
- 			}
- 
- 			file_info = FILE_OPENED;
- 
- 			rc = ksmbd_vfs_getattr(&fp->filp->f_path, &stat);
--			ksmbd_put_durable_fd(fp);
- 			if (rc)
- 				goto err_out2;
- 
-@@ -3788,6 +3782,9 @@ int smb2_open(struct ksmbd_work *work)
+@@ -3782,8 +3782,19 @@ int smb2_open(struct ksmbd_work *work)
  		ksmbd_debug(SMB, "Error response: %x\n", rsp->hdr.Status);
  	}
  
-+	if (dh_info.reconnected)
-+		ksmbd_put_durable_fd(dh_info.fp);
-+
+-	if (dh_info.reconnected)
+-		ksmbd_put_durable_fd(dh_info.fp);
++	if (dh_info.reconnected) {
++		/*
++		 * If reconnect succeeded, fp was republished in the
++		 * session file table.  On a later error, ksmbd_fd_put()
++		 * above drops the session reference; drop the durable
++		 * lookup reference through the same session-aware path so
++		 * final close removes the volatile id before freeing fp.
++		 */
++		if (rc && fp == dh_info.fp)
++			ksmbd_fd_put(work, dh_info.fp);
++		else
++			ksmbd_put_durable_fd(dh_info.fp);
++	}
+ 
  	kfree(name);
  	kfree(lc);
- 
 -- 
 2.53.0
 
