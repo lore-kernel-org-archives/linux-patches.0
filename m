@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6275137EFE2;
-	Sat, 12 Sep 2026 19:36:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFC52D0C94;
+	Sat, 12 Sep 2026 19:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241772; cv=none; b=VMTxJty58WGGbMI2hlJRFvqs7+FHd6wuN97UC+q1cRA1ClNH+AKb8c93teZw8YFMncVRzXmjkLyHG/ofWeD2T/Yb2Ve9qvOd6kuDmqJo4/p0wNxIaCI8U3muIwXaevrW9jS3xHKdvVtCNXtiWQfaHDRBXjruuH3fC8JC8pqthro=
+	t=1789241775; cv=none; b=MXEQ+ULKQgUmUjXAUGrxXweKa3knOY3StwzFBgARnvGr0IKt5Re1VAB97z8PEBxSa8bMMmNemty/szOYkwiJ1DVSSPA+JdaiRMHEvcz62TJIDOrs8rEZx078c0yeL4uE9Dr+sbfh5HPUlgagXi0c/GNH+g106k+KFcvELM7VrQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241772; c=relaxed/simple;
-	bh=5Z3mq7z4LktZJdBqm4a11pr0QirgYcfavg2asYJ5CLA=;
+	s=arc-20240116; t=1789241775; c=relaxed/simple;
+	bh=gETyrVMtIjD6Nvx7inT1ZWI1nCgMHClRShbe9tB/bLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VF6d/DNTTQDfdlXBDAyWyH+DCTJ05WDDWBLSqrqoT0YaN19V8qpdSNHeCK0HT5tukd+uPgQKRUfo14MTvk7tzVfj3+/vmxjRELo5zGiuAmSeOQAkEdnnrrB6gdWP040iq8H2WZ/EoCENnz6FXwN4hZ/9bvUFcpck3YSiw6fZI9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPwejQCQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KPYIZ4cCDpd8wzzq4LyxdXE6BOVyo9RgFAGW2J7AoFzM7Xfw1eBnHs6yedQlBxTRcYvObhxTeuhZNAIuTQ3dQQnQDF32r5f+FigxV+7eFKqG9KLGevzb8emKt1foFTza7w26qK98dYU7J4B/xaYPA7n14cS8+AjB2CFzucKxRi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LT8LYHGm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPwejQCQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A171F000FF;
-	Sat, 12 Sep 2026 19:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LT8LYHGm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE171F00893;
+	Sat, 12 Sep 2026 19:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241765;
-	bh=c6i5u+xdaLF0tA47bA/epuuXyJJuvYZDtqP9NOKqOwA=;
+	s=korg; t=1789241770;
+	bh=tsonptyexRUXoC2ycWs64CTHMejo9yiN1DXl2rabgyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gPwejQCQEJ9HKo6gxeHct059mUJaXHuRh4KB5GucC+mCLD+GG+QNYSiym2UzKy8ob
-	 EmsTl+YbZ0jAbj/q/JG+lb4Qda75+UtEK9fCTaGi/Di/1JFer79eJnnJ41zDZEtz3u
-	 VRx6OAXODkaPTqzCCYesIStj8b2TQEnnG7Jeiinc=
+	b=LT8LYHGmWSmCVN2DO3VnDxFHURWWK7h//8kMUDfo9A7lvdU3SyXA5Iuw7TcdoPFYz
+	 JfoqunjwnEqp4qx5kgetKHMwA1mV8TUMSEAdMGk8uWG99K9fGsfHkwHS0pIli+VTOG
+	 MciuqB58BD7f5/LQCUjvb723Jm/5PcDlK+KVy8cE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
 	Paul Moore <paul@paul-moore.com>,
 	Alexander Martyniuk <alexevgmart@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 204/798] selinux: avoid implicit conversions in services code
-Date: Sat, 12 Sep 2026 08:57:12 +0200
-Message-ID: <20260912065521.765821503@linuxfoundation.org>
+Subject: [PATCH 5.10 205/798] selinux: reject an unclaimed class value in security_get_classes()
+Date: Sat, 12 Sep 2026 08:57:13 +0200
+Message-ID: <20260912065521.791411412@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -46,180 +47,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Göttsche <cgzones@googlemail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit c50e125d057152bc68dfd5669b73611343653eb7 upstream.
+commit 22b05fec62c0fe9864cfceb52f7d0f3a34d9b1dd upstream.
 
-Use u32 as the output parameter type in security_get_classes() and
-security_get_permissions(), based on the type of the symtab nprim
-member.
+security_get_classes() sizes an array by p_classes.nprim and fills it at
+value - 1, so a class value the policy never defines leaves a NULL.
+sel_make_classes() passes every entry to sel_make_dir(), reaching the same
+d_alloc_name() dereference as the permission array. The class symbol table
+is allowed to be sparse (policydb_class_isvalid() exists to absorb that),
+but this getter builds its own array straight from the hash table and has
+no such predicate.
 
-Declare the read-only class string parameter of
-security_get_permissions() const.
+Fail the lookup when a value went unclaimed instead of handing out the
+NULL. Conforming policies define every class they declare and are
+unaffected.
 
-Avoid several implicit conversions by using the identical type for the
-destination.
-
-Use the type identical to the source for local variables.
-
-Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
-[PM: cleanup extra whitespace in subject]
+Cc: stable@vger.kernel.org
+Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
 Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/selinux/include/security.h |  4 ++--
- security/selinux/selinuxfs.c        |  7 ++++---
- security/selinux/ss/services.c      | 23 ++++++++++++-----------
- 3 files changed, 18 insertions(+), 16 deletions(-)
+ security/selinux/ss/services.c | 24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/security/selinux/include/security.h b/security/selinux/include/security.h
-index 1521460a97d4e..293a9f52d4896 100644
---- a/security/selinux/include/security.h
-+++ b/security/selinux/include/security.h
-@@ -374,9 +374,9 @@ int security_net_peersid_resolve(struct selinux_state *state,
- 				 u32 *peer_sid);
- 
- int security_get_classes(struct selinux_policy *policy,
--			 char ***classes, int *nclasses);
-+			 char ***classes, u32 *nclasses);
- int security_get_permissions(struct selinux_policy *policy,
--			     char *class, char ***perms, int *nperms);
-+			     char *class, char ***perms, u32 *nperms);
- int security_get_reject_unknown(struct selinux_state *state);
- int security_get_allow_unknown(struct selinux_state *state);
- 
-diff --git a/security/selinux/selinuxfs.c b/security/selinux/selinuxfs.c
-index 7415f49a3d81e..6fe9d0cea418e 100644
---- a/security/selinux/selinuxfs.c
-+++ b/security/selinux/selinuxfs.c
-@@ -1867,7 +1867,8 @@ static int sel_make_perm_files(struct selinux_policy *newpolicy,
- 			char *objclass, int classvalue,
- 			struct dentry *dir)
- {
--	int i, rc, nperms;
-+	u32 i, nperms;
-+	int rc;
- 	char **perms;
- 
- 	rc = security_get_permissions(newpolicy, objclass, &perms, &nperms);
-@@ -1940,8 +1941,8 @@ static int sel_make_classes(struct selinux_policy *newpolicy,
- 			    struct dentry *class_dir,
- 			    unsigned long *last_class_ino)
- {
--
--	int rc, nclasses, i;
-+	u32 i, nclasses;
-+	int rc;
- 	char **classes;
- 
- 	rc = security_get_classes(newpolicy, &classes, &nclasses);
 diff --git a/security/selinux/ss/services.c b/security/selinux/ss/services.c
-index 4008aa566f020..446df456b0f16 100644
+index 446df456b0f16..0f81c5946397c 100644
 --- a/security/selinux/ss/services.c
 +++ b/security/selinux/ss/services.c
-@@ -870,7 +870,7 @@ int security_bounded_transition(struct selinux_state *state,
- 	struct sidtab *sidtab;
- 	struct sidtab_entry *old_entry, *new_entry;
- 	struct type_datum *type;
--	int index;
-+	u32 index;
- 	int rc;
- 
- 	if (!selinux_initialized(state))
-@@ -1535,7 +1535,7 @@ static int security_context_to_sid_core(struct selinux_state *state,
- 		return -ENOMEM;
- 
- 	if (!selinux_initialized(state)) {
--		int i;
-+		u32 i;
- 
- 		for (i = 1; i < SECINITSID_NUM; i++) {
- 			const char *s = initial_sid_to_string[i];
-@@ -2869,7 +2869,6 @@ static inline int __security_genfs_sid(struct selinux_policy *policy,
- {
- 	struct policydb *policydb = &policy->policydb;
- 	struct sidtab *sidtab = policy->sidtab;
--	int len;
- 	u16 sclass;
- 	struct genfs *genfs;
- 	struct ocontext *c;
-@@ -2891,7 +2890,7 @@ static inline int __security_genfs_sid(struct selinux_policy *policy,
- 		return -ENOENT;
- 
- 	for (c = genfs->head; c; c = c->next) {
--		len = strlen(c->u.name);
-+		size_t len = strlen(c->u.name);
- 		if ((!c->v.sclass || sclass == c->v.sclass) &&
- 		    (strncmp(c->u.name, path, len) == 0))
- 			break;
-@@ -3382,7 +3381,7 @@ static int get_classes_callback(void *k, void *d, void *args)
- {
- 	struct class_datum *datum = d;
- 	char *name = k, **classes = args;
--	int value = datum->value - 1;
-+	u32 value = datum->value - 1;
- 
- 	classes[value] = kstrdup(name, GFP_ATOMIC);
- 	if (!classes[value])
-@@ -3392,7 +3391,7 @@ static int get_classes_callback(void *k, void *d, void *args)
- }
- 
- int security_get_classes(struct selinux_policy *policy,
--			 char ***classes, int *nclasses)
-+			 char ***classes, u32 *nclasses)
+@@ -3394,6 +3394,7 @@ int security_get_classes(struct selinux_policy *policy,
+ 			 char ***classes, u32 *nclasses)
  {
  	struct policydb *policydb;
- 	int rc;
-@@ -3408,7 +3407,8 @@ int security_get_classes(struct selinux_policy *policy,
- 	rc = hashtab_map(&policydb->p_classes.table, get_classes_callback,
- 			 *classes);
- 	if (rc) {
--		int i;
-+		u32 i;
-+
- 		for (i = 0; i < *nclasses; i++)
- 			kfree((*classes)[i]);
- 		kfree(*classes);
-@@ -3422,7 +3422,7 @@ static int get_permissions_callback(void *k, void *d, void *args)
- {
- 	struct perm_datum *datum = d;
- 	char *name = k, **perms = args;
--	int value = datum->value - 1;
-+	u32 value = datum->value - 1;
- 
- 	perms[value] = kstrdup(name, GFP_ATOMIC);
- 	if (!perms[value])
-@@ -3432,10 +3432,11 @@ static int get_permissions_callback(void *k, void *d, void *args)
- }
- 
- int security_get_permissions(struct selinux_policy *policy,
--			     char *class, char ***perms, int *nperms)
-+			     char *class, char ***perms, u32 *nperms)
- {
- 	struct policydb *policydb;
--	int rc, i;
 +	u32 i;
-+	int rc;
- 	struct class_datum *match;
+ 	int rc;
  
  	policydb = &policy->policydb;
-@@ -3654,7 +3655,7 @@ int selinux_audit_rule_init(u32 field, u32 op, char *rulestr, void **vrule,
- /* Check to see if the rule contains any selinux fields */
- int selinux_audit_rule_known(struct audit_krule *rule)
- {
--	int i;
-+	u32 i;
+@@ -3406,16 +3407,29 @@ int security_get_classes(struct selinux_policy *policy,
  
- 	for (i = 0; i < rule->field_count; i++) {
- 		struct audit_field *f = &rule->fields[i];
+ 	rc = hashtab_map(&policydb->p_classes.table, get_classes_callback,
+ 			 *classes);
+-	if (rc) {
+-		u32 i;
++	if (rc)
++		goto err;
+ 
+-		for (i = 0; i < *nclasses; i++)
+-			kfree((*classes)[i]);
+-		kfree(*classes);
++	/*
++	 * The class symtab may be sparse, which policydb_class_isvalid() exists
++	 * to absorb; the callback fills this array by value, so an unclaimed
++	 * one leaves a NULL that sel_make_classes() hands to sel_make_dir().
++	 */
++	for (i = 0; i < *nclasses; i++) {
++		if (!(*classes)[i]) {
++			rc = -EINVAL;
++			goto err;
++		}
+ 	}
+ 
+ out:
+ 	return rc;
++
++err:
++	for (i = 0; i < *nclasses; i++)
++		kfree((*classes)[i]);
++	kfree(*classes);
++	return rc;
+ }
+ 
+ static int get_permissions_callback(void *k, void *d, void *args)
 -- 
 2.53.0
 
