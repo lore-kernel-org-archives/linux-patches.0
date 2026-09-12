@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98DBF2E92BA;
-	Sat, 12 Sep 2026 19:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643F72E92BA;
+	Sat, 12 Sep 2026 19:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241030; cv=none; b=mKZ/oGTG7JFhZ7qJV6EPimUWgW5//LNt5dolx2VoYeEkxbW9qnxwpKxhDa35sHh29hg/JD369Gk+KeQfrbsN2VlxnmT/p58WRjntjGQKasQcHKU9LrqNv9eRQDMXkVFoP0DKsoRAUOLvkaPUTCzyu/rUsGilvtHP2upEDVrLfLc=
+	t=1789241035; cv=none; b=ig+wvOod7JmbrP/yDwRYlU5x4yCgi0aGPkfDVExK6VLPJw2cnggX29AOuhT7lRwdDdHFD78+0y2DBkZxq7lcHrmNxFHB3Hcp4rWGO4v+H3Egeh/uuedkjf8OMnJCyrDqOq9HnimyYk6j3VN+V4Pw5bIyTtwRBRLRAGytWDpzj0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241030; c=relaxed/simple;
-	bh=2e053C8uPTW9OYc50bcgDJEyudqqxmGsIjbaodd9ry8=;
+	s=arc-20240116; t=1789241035; c=relaxed/simple;
+	bh=YkP/RqJ6ylIbst0vkCeV+o1JHWF1h3MQW3m1S2l/Wa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K8qhNZstuMS/B8xKPwfLHB3UakL9ZT+Y3h5v+PlNsjkQEdvu30/tWsyNQYpY+BwUoEs9knjJWWes0tVCAEc1PmYYYPZEb4xkqN61T4rfbYICjMnlgcQFPzWLVF3GMrVmn8vSXej3qfUFVlmu+mp30r210+m4pzkV1Ix8u2bhIMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SwbgUjMM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MH4v9mnvEuwVqTFOzuJw5zuHsWTBY2gV7rcMRhizv+2mZ8uqrdKvUitVdqrfWseFzeguFDK1RZBPn4OQQ4LXwwhd7joeOh9TJZBmDtM8HdTv01XLJrV/+vL1XPpLYBZbKRj4X7QOdzA4jwOApmQwbFvVNGG9Go5bLD5l4iJzumU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fOZaeahx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SwbgUjMM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130F21F000FF;
-	Sat, 12 Sep 2026 19:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fOZaeahx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2093C1F000FF;
+	Sat, 12 Sep 2026 19:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241029;
-	bh=Ml6Wj160X9KyTPT2WSBJ417YWP+sAEuHNlgOcL+iKEU=;
+	s=korg; t=1789241034;
+	bh=NgS7ME1TSRz0dOKXl4FFlWD8lRiA14j8vLweYxFQRhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SwbgUjMMGzQ5G09LNiBSdg23VyqyANCRPlnFUH7QsmnrYNjtPGvcbdbZm2pdN1VIQ
-	 tn8nsPlee6IQEc7VEEAxkhzypnrToU0Q/pQ2jxfBzdVVWzrvKKsHXo+qBWfpXIerob
-	 P+DlrJaotBnohKHpHWqPPIplc5OW2XqDze06p5Iw=
+	b=fOZaeahxSpevSdwIk59AMb7WAqejKomkGWdb3E7Sg6feU6bCxyedU47Vd9AbxnoG+
+	 AZc+2JpPoaLMDIR2GezM7jXPqcw4Mbfcy0ybM6HKwtTWx77ztzxc+f4SBgYaFFcHGN
+	 3IQLNn0Ue/CpVf9zdtg+Ozupj9YmL3nMkacLupFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubo.li@clyso.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.10 050/798] ceph: fix UAF in __kick_flushing_caps() on cf entry freed during unlock
-Date: Sat, 12 Sep 2026 08:54:38 +0200
-Message-ID: <20260912065518.110085016@linuxfoundation.org>
+Subject: [PATCH 5.10 051/798] ceph: bound xattr value length in __build_xattrs()
+Date: Sat, 12 Sep 2026 08:54:39 +0200
+Message-ID: <20260912065518.132383757@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -45,98 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiubo Li <xiubo.li@clyso.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 7af4c4f01305b0935adf6d4301b1ec407025485d upstream.
+commit 68d541754d6cd3bb98d1fd8314f57e5eb533557d upstream.
 
-list_for_each_entry() iterates ci->i_cap_flush_list but drops
-i_ceph_lock to send cap messages.  During the unlock window,
-handle_cap_flush_ack() can acquire i_ceph_lock, detach cf entries
-with tid <= flush_tid from the list, release i_ceph_lock, and free
-them via ceph_free_cap_flush() outside any lock.  When the original
-thread reacquires i_ceph_lock and the for-loop macro advances via
-cf = list_next_entry(cf, i_list), it dereferences cf->i_list.next
-on freed memory.
+__build_xattrs() decodes the MDS-supplied xattr blob one attribute at a
+time. For each attribute it reads a 32-bit name length, advances past the
+name bytes, reads a 32-bit value length, records the value pointer, and
+advances past the value bytes. The two length fields are read with
+ceph_decode_32_safe(), but the value bytes themselves are advanced over
+with a bare "p += len" and no ceph_decode_need() check that "len" bytes
+remain in the blob.
 
-The race timeline:
+For every attribute except the last, the next iteration's
+ceph_decode_32_safe() on the following name length implicitly verifies
+that the previous value did not run past the blob end. The final
+attribute has no successor, so its decoded value length is never checked
+against the blob bounds. A malicious or compromised metadata server can
+set the last attribute's value length larger than the bytes actually
+present in the blob.
 
-  __kick_flushing_caps()              handle_cap_flush_ack()
-  -----------------------             -----------------------
-  holds i_ceph_lock        <---
-  iterates to cf (tid=10)
-  prepares FLUSH message
-  drops i_ceph_lock        <---
-  __send_cap() ── FLUSH(tid=10)
-	                              MDS sends FLUSH_ACK(tid=10)
-                           --->       acquires i_ceph_lock
-                                      cf->tid(10) <= flush_tid(10),
-                                      detaches cf from i_cap_flush_list
-                                      drops i_ceph_lock
-                                      ceph_free_cap_flush(cf) <- frees it!
-  acquires i_ceph_lock     <---
-  for-loop advances:
-    cf = list_next_entry(cf, i_list)
-      -- UAF on freed cf->i_list.next
+The blob is a dedicated kvmalloc() allocation sized to the wire length
+(ceph_buffer_new() in ceph_fill_inode()). __set_xattr() records the
+oversized length in xattr->val_len verbatim, and a later getxattr(2) runs
+memcpy(value, xattr->val, xattr->val_len) into a user-supplied buffer,
+copying bytes past the end of the allocation back to user space.
 
-The cf was just sent by __kick_flushing_caps itself via __send_cap().
-The MDS may respond with FLUSH_ACK quickly enough that
-handle_cap_flush_ack() frees cf before __kick_flushing_caps can
-finish the iteration.
-
-Fix by converting to a manual while loop: save the next pointer
-under i_ceph_lock before dropping it, then use the saved pointer
-after reacquiring, so the potentially-freed cf is never accessed again.
+Impact: a malicious metadata server discloses adjacent kernel heap bytes
+to a local user via getxattr(2) on a CephFS file. Add the missing
+ceph_decode_need() so an out-of-bounds value length on the final
+attribute fails the decode and returns -EIO instead of being stored.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: 355da1eb7a1f ("ceph: inode operations")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/caps.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/ceph/xattr.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -2513,9 +2513,14 @@ static void __kick_flushing_caps(struct
- 		}
- 	}
- 
--	list_for_each_entry(cf, &ci->i_cap_flush_list, i_list) {
--		if (cf->tid < first_tid)
-+	cf = list_first_entry(&ci->i_cap_flush_list, struct ceph_cap_flush, i_list);
-+	while (&cf->i_list != &ci->i_cap_flush_list) {
-+		struct ceph_cap_flush *next;
-+
-+		if (cf->tid < first_tid) {
-+			cf = list_next_entry(cf, i_list);
- 			continue;
-+		}
- 
- 		cap = ci->i_auth_cap;
- 		if (!(cap && cap->session == session)) {
-@@ -2525,6 +2530,7 @@ static void __kick_flushing_caps(struct
- 		}
- 
- 		first_tid = cf->tid + 1;
-+		next = list_next_entry(cf, i_list);
- 
- 		if (!cf->is_capsnap) {
- 			struct cap_msg_args arg;
-@@ -2565,6 +2571,7 @@ static void __kick_flushing_caps(struct
- 		}
- 
- 		spin_lock(&ci->i_ceph_lock);
-+		cf = next;
- 	}
- }
+--- a/fs/ceph/xattr.c
++++ b/fs/ceph/xattr.c
+@@ -715,6 +715,7 @@ start:
+ 			name = p;
+ 			p += len;
+ 			ceph_decode_32_safe(&p, end, len, bad);
++			ceph_decode_need(&p, end, len, bad);
+ 			val = p;
+ 			p += len;
  
 
 
