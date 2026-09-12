@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C157D3F23BE;
-	Sat, 12 Sep 2026 09:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A4A416842;
+	Sat, 12 Sep 2026 09:35:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205731; cv=none; b=W3D4I2Hne6tqcGTXNFCIjB2uvFHzbTUeedNlMwWoPfbJ0jMe+4qhL+QHBfFvGrdnX4DhGTjPdB3Fcm4USJUQd1u6/eufB8/UDLigRAyJzZYq3UlcDHpV0kwXflbcHjNuc2z2oKk25xXqhng9FJXxRZk5tFUP9YadUIuhGSx3i94=
+	t=1789205737; cv=none; b=HiaTZwai718sQXds6pPNdkOpsbHOglOT3zAA9Qn5YGsVKFhlfD4yIuwDMIN1ivorOvU0MWABHmRT9xec8WKnnCFrmz9JgAFt7hjtcJBDtOxHyLM4L7HfaZzOzLlN9JSqPMlyY8l3ioMQBP32Pg+VYXydqejZCtN7SY4QnxeRV3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205731; c=relaxed/simple;
-	bh=u0+AL88UC6oJilOyS3KbScJyw05/QJnlWqvUBlRBPC0=;
+	s=arc-20240116; t=1789205737; c=relaxed/simple;
+	bh=PFAoq8oE1jwAXuy5DwRdTevfoCJBs5M4Q3x7KUTlwR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uLtRZ/XGTSdAGK73iyHRe8DdxDQ0eygSMY4HlLfKQRPG1iX0wr2PJEEG8JYulpLSmmoABIhJratTE0rv7icrVclc9TbRZTDQIS9kv+pKkUtFFZ2ozRGzFbe1nvkcovebmcoSNOqFniJewhnr2NYoDj4ti71zIyTpMs5OB+bznkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzp4f42V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JsvEb4LR6Q+PnBFbW2KucdzVYrejGXTSKSua2C4Pm0iW3SuRFR8GCtD4KcZJOmFUR2vsyLkPMm6Rz9ruuH+H8t0JECl1ieft8YjcCbrDMQSnNEWRDrHcPDyYwQlyXwM2P1UlbV2NI0z3hlLWHWk7Z8gy9xQlcBizKaCJ4E7m+Fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiX557BL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzp4f42V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5D41F000FF;
-	Sat, 12 Sep 2026 09:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiX557BL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F8F1F000FF;
+	Sat, 12 Sep 2026 09:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205730;
-	bh=swflrkWAYy1g2rPty+7igXvLTAJeSDoQa2rfnNWWki8=;
+	s=korg; t=1789205736;
+	bh=GN3TCy+oFRstFgLXb+svUfFz4LXaDMQJ9Wf6ZP5dUp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dzp4f42VdxcuebeezLTBrK+4JXpbQ2jAayRSpbMP9PnRT8iO0y8lqpJYMbFuHdL5i
-	 RBtHv/F9+MDIW69VjKpxore3UvMQwit/FIDg1I4Nf5td62NYQyKYO63D0vFF5VEnnL
-	 OIMFpfP6ugcY6vgh3cFidhZ1qPjyjnv/C71I8r+0=
+	b=qiX557BL6cBEfuNva2ZI+yZ3W/xz9+vqHUS+/0a9QJlN8Eq7+buWoGPoXapm2tef2
+	 Hs0KJUNbZjJabwxSZgaBJT5rLUFbOKTCbTbnNIOoXAYBLjR7lW9MzR887Kof0ZHjcD
+	 ANyHF08GVaE0lib3K0MxeGsxrVlLRx9JLxrydJiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taimuraz Kaitmazov <taimuraz@kaitmazov.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	Imran Shaik <imran.shaik@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0062/1518] accel/amdxdna: return early from a zero-length flush
-Date: Sat, 12 Sep 2026 08:37:11 +0200
-Message-ID: <20260912065624.854679302@linuxfoundation.org>
+Subject: [PATCH 6.18 0063/1518] clk: qcom: Fix test_ctl_hi field for DEFAULT_EVO PLLs
+Date: Sat, 12 Sep 2026 08:37:12 +0200
+Message-ID: <20260912065624.878374377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,67 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taimuraz Kaitmazov <taimuraz@kaitmazov.com>
+From: Imran Shaik <imran.shaik@oss.qualcomm.com>
 
-[ Upstream commit dc14753664240cedf669623b27ae9922b0618b25 ]
+[ Upstream commit 830ead322c39c99bf972425b3c35323ec56c29de ]
 
-SYNC_BO does not constrain its size, so a request for zero bytes reaches
-drm_clflush_virt_range(), which ends with an unconditional
-clflushopt(end - 1). For an empty range that is the byte before the
-mapping, and abo->mem.kva comes from vmap(), so the access lands in the
-guard page below the vmalloc area and faults:
+CLK_ALPHA_PLL_TYPE_DEFAULT_EVO type PLLs do not have the PLL_TEST_CTL_U1
+register, so clk_alpha_pll_configure() does not program test_ctl_hi1_val
+for this PLL type.
 
-  BUG: unable to handle page fault for address: ffffd16fbbc70fff
-  #PF: supervisor read access in kernel mode
-  Oops: Oops: 0000 [#1] SMP NOPTI
-  CPU: 7 UID: 1000 Comm: sync_bo_probe
-  RIP: 0010:drm_clflush_virt_range+0x3c/0x70
-  Call Trace:
-   amdxdna_drm_sync_bo_ioctl+0x124/0x430 [amdxdna]
-   drm_ioctl+0x301/0x4c0
-   __x64_sys_ioctl+0x115/0x2f0
-   do_syscall_64+0xa6/0x3d0
+The GCC PLL configurations for QCM2290, Shikra and SM6115 wrongly use
+test_ctl_hi1_val instead of test_ctl_hi_val, deviating from the hardware
+recommended settings. Fix them to use test_ctl_hi_val.
 
-Any process that can open the render node can do this. Reproduced 3 of 3
-times on a Strix Point NPU (1022:17f0), by calling SYNC_BO with size 0 on
-an AMDXDNA_BO_SHARE object. The import arm takes the same request but
-flushes the whole scatterlist, so it survives it.
-
-Nothing needs flushing for an empty range, so answer before choosing a
-path.
-
-Fixes: e252e3f3488a ("accel/amdxdna: Revise device bo creation and free")
+Fixes: 496d1a13d405 ("clk: qcom: Add Global Clock Controller driver for QCM2290")
+Fixes: 01cf3e27824d ("clk: qcom: Add Global clock controller support on Qualcomm Shikra SoC")
+Fixes: e88c533d8a2a ("clk: qcom: gcc-sm6115: Add missing PLL config properties")
 Cc: stable@vger.kernel.org
-Signed-off-by: Taimuraz Kaitmazov <taimuraz@kaitmazov.com>
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260817230655.356785-1-taimuraz@kaitmazov.com
-[ moved the guard into amdxdna_drm_sync_bo_ioctl() because amdxdna_flush_bo() is absent. ]
+Signed-off-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260729-pll-test-ctrl-fixup-v1-1-246d79589380@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+[ Omitted gcc-shikra.c changes because the driver is absent from the target branch. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/amdxdna/amdxdna_gem.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/clk/qcom/gcc-qcm2290.c |    6 +++---
+ drivers/clk/qcom/gcc-sm6115.c  |    6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/accel/amdxdna/amdxdna_gem.c
-+++ b/drivers/accel/amdxdna/amdxdna_gem.c
-@@ -949,6 +949,9 @@ int amdxdna_drm_sync_bo_ioctl(struct drm
- 		goto put_obj;
- 	}
+--- a/drivers/clk/qcom/gcc-qcm2290.c
++++ b/drivers/clk/qcom/gcc-qcm2290.c
+@@ -116,7 +116,7 @@ static const struct alpha_pll_config gpl
+ 	.vco_mask = GENMASK(21, 20),
+ 	.main_output_mask = BIT(0),
+ 	.config_ctl_val = 0x4001055B,
+-	.test_ctl_hi1_val = 0x1,
++	.test_ctl_hi_val = 0x1,
+ };
  
-+	if (!args->size)
-+		goto unpin;
-+
- 	if (is_import_bo(abo))
- 		drm_clflush_sg(abo->base.sgt);
- 	else if (abo->mem.kva)
-@@ -958,6 +961,7 @@ int amdxdna_drm_sync_bo_ioctl(struct drm
- 	else
- 		drm_WARN(&xdna->ddev, 1, "Can not get flush memory");
+ static struct clk_alpha_pll gpll10 = {
+@@ -148,7 +148,7 @@ static const struct alpha_pll_config gpl
+ 	.vco_mask = GENMASK(21, 20),
+ 	.main_output_mask = BIT(0),
+ 	.config_ctl_val = 0x4001055B,
+-	.test_ctl_hi1_val = 0x1,
++	.test_ctl_hi_val = 0x1,
+ };
  
-+unpin:
- 	amdxdna_gem_unpin(abo);
+ static struct clk_alpha_pll gpll11 = {
+@@ -309,7 +309,7 @@ static const struct alpha_pll_config gpl
+ 	.post_div_val = 0x1 << 8,
+ 	.post_div_mask = GENMASK(11, 8),
+ 	.config_ctl_val = 0x4001055B,
+-	.test_ctl_hi1_val = 0x1,
++	.test_ctl_hi_val = 0x1,
+ };
  
- 	XDNA_DBG(xdna, "Sync bo %d offset 0x%llx, size 0x%llx\n",
+ static struct clk_alpha_pll gpll8 = {
+--- a/drivers/clk/qcom/gcc-sm6115.c
++++ b/drivers/clk/qcom/gcc-sm6115.c
+@@ -120,7 +120,7 @@ static const struct alpha_pll_config gpl
+ 	.vco_mask = GENMASK(21, 20),
+ 	.main_output_mask = BIT(0),
+ 	.config_ctl_val = 0x4001055b,
+-	.test_ctl_hi1_val = 0x1,
++	.test_ctl_hi_val = 0x1,
+ 	.test_ctl_hi_mask = 0x1,
+ };
+ 
+@@ -173,7 +173,7 @@ static const struct alpha_pll_config gpl
+ 	.vco_val = 0x2 << 20,
+ 	.vco_mask = GENMASK(21, 20),
+ 	.config_ctl_val = 0x4001055b,
+-	.test_ctl_hi1_val = 0x1,
++	.test_ctl_hi_val = 0x1,
+ 	.test_ctl_hi_mask = 0x1,
+ };
+ 
+@@ -367,7 +367,7 @@ static const struct alpha_pll_config gpl
+ 	.post_div_val = 0x1 << 8,
+ 	.post_div_mask = GENMASK(11, 8),
+ 	.config_ctl_val = 0x4001055b,
+-	.test_ctl_hi1_val = 0x1,
++	.test_ctl_hi_val = 0x1,
+ 	.test_ctl_hi_mask = 0x1,
+ };
+ 
 
 
