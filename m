@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FA547F3AD;
-	Sat, 12 Sep 2026 13:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD04418A5B;
+	Sat, 12 Sep 2026 13:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220267; cv=none; b=P/0slIpTz9FOQqk2HpLxiFCIfOz1yc55vCFS4HbhM4P8G0o52Npr6Bfg+puW78ep45pCee5M5Iw6Hfj/e45r0RlIvxILhAbxAl6QQI+Hq7BRRVv6b5xUCb01jTYgxPlwu+Ud8ijBB60kLOG7KqYOZXf1Vad+tV5YCaIGIf3SEeE=
+	t=1789220269; cv=none; b=eaxOgxkGzKYkTpoP9lCgIINTDiu9P4R8GBY/T7mVZOG4oeR6xTFRZk+NMPI2Lotr+FeLXeCyFxqKDsLc5yM0O2WNpBd2eNd1E+NrwtHUmLC31Vod25HceQo0wB5uh8t2BU34gVQQvzsXM6SR29AAXi+eQFWEVUSHuweTYz8ogPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220267; c=relaxed/simple;
-	bh=EDSYHE9num2Vb+j3JOIpcMnQyDMtel43LhB5XEoLuqM=;
+	s=arc-20240116; t=1789220269; c=relaxed/simple;
+	bh=4v3pjLzZPTT7iB50TzfIzSbb/pnHpzlUYAa9yvR16nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+DeJoYn8Yo5wynlChNtnZQT3jsYbKV7n85NHPy5NQb37MpcwiUUSPEBJUGqyzlnZuQlC4SSCzivmBfoPKfqI1Z1z8dhxNxBc5cbLt9mTodqlr7jdKglDCPuJpq0q555m4hlYC3i6khuz9YfrguZUcP+RdWYnP35MW/XJG/dY4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXW/tOf8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sprgaAkN5t9f0dUhYgOUnK2F7DnYs76qqutggO6XgT+NRrny5OZ/rXhbD3SUroWt1lylZDfGSIasBdErUiziT5Meu9Y1ZYbgfTNsO4jo62CrkmaKMGkyKlDe85wXypLDAFfg9NekSacrRnTeWdZZrYQJoFSOGb8ZetPxc7hPljw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBGp/0I2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXW/tOf8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDED1F000FF;
-	Sat, 12 Sep 2026 13:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBGp/0I2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339BA1F00893;
+	Sat, 12 Sep 2026 13:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220263;
-	bh=jnWjrdFDADxprncAF1mi+sYEqIqtn1y2LEv2VXLVnQk=;
+	s=korg; t=1789220268;
+	bh=0irIRTCSBQM2mzY+cI3BgXpFaEqG+pMVgtNws8VVSbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CXW/tOf8INjs7cE4s/ND9S7cbgjnXaAFoW2JrSgf0sOc90D7ZV0BiCy3TNg3IXB/P
-	 Vjchv39ce6C8tjTG24k5hGx4fb0o5c1GbXf1mBo8aKzFo7qd7ciHo/+K0nhm0m4f2+
-	 MlTqBw/D8glImwNJlTKQJK69xqM5YZtw7bUWGjLg=
+	b=iBGp/0I2ad6TdfFGx5gla5YoC6WyyGadiDy8JPoG/j38vDz2xzBxSCxiifRNzK8PM
+	 Dna+whhX8gY4cVxyBvH4US2cA1mjGt8weCyAcQO719Ge5E1F3DzdDjBeEt8u9qZnUy
+	 XFBURwAwWeSbGGHrK/dUfiucXkUCjADBhk4B8Sy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yuyang Huang <sigefriedhyy@gmail.com>,
+	Stefano Brivio <sbrivio@redhat.com>,
 	Ido Schimmel <idosch@nvidia.com>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 0141/1424] ip6_gre: fix hardware header length for NBMA tunnels
-Date: Sat, 12 Sep 2026 08:42:53 +0200
-Message-ID: <20260912065610.456161017@linuxfoundation.org>
+	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0142/1424] ipv6: use RCU iterator to dump route exceptions
+Date: Sat, 12 Sep 2026 08:42:54 +0200
+Message-ID: <20260912065610.478879598@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,65 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Yuyang Huang <sigefriedhyy@gmail.com>
 
-commit 505b6d296c486ef7d1274f279d4c43a172f63224 upstream.
+commit 47cdab0d51aaa9bd85f8e4904585bd5bd4df4488 upstream.
 
-ip6gre_tnl_link_config_route() accumulates the lower device's hardware
-header length into dev->hard_header_len whenever header_ops is set. This
-is incorrect for both users of header_ops.
+rt6_nh_dump_exceptions() uses hlist_for_each_entry() to iterate over
+RCU-protected exception lists. The caller holds rcu_read_lock(), but does
+not hold rt6_exception_lock, so rt6_insert_exception() can concurrently
+add an entry with hlist_add_head_rcu().
 
-ip6gretap and ip6erspan have a fixed Ethernet hardware header length.
-For an NBMA ip6gre tunnel, ip6gre_header() creates only the GRE header,
-the optional FOU or GUE header, and the outer IPv6 header. The lower
-device header is headroom needed later, not part of the tunnel device's
-hardware header.
+KCSAN reports this race (irrelevant details omitted):
 
-Keep the lower device header in needed_headroom. Set hard_header_len to
-the tunnel header length only for ARPHRD_IP6GRE devices with header_ops,
-and leave the fixed Ethernet header length unchanged for tap and erspan
-devices.
+  ==================================================================
+  BUG: KCSAN: data-race in rt6_insert_exception / rt6_nh_dump_exceptions
 
-Fixes: 832ba596494b ("net: ip6_gre: set dev->hard_header_len when using header_ops")
+  write (marked) to 0xffff8a7c44c59620 of 8 bytes by interrupt on cpu 5:
+    rt6_insert_exception+0x3bb/0x760
+    __ip6_rt_update_pmtu+0x4fe/0x750
+    ip6_sk_update_pmtu+0x19a/0x3b0
+    udpv6_err+0x3ff/0x800
+    icmpv6_notify+0x1e1/0x440
+    icmpv6_rcv+0x8c0/0xab0
+    ip6_protocol_deliver_rcu+0x616/0x840
+    ip6_input_finish+0xb9/0x160
+    ...
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+  read to 0xffff8a7c44c59620 of 8 bytes by task 549 on cpu 14:
+    rt6_nh_dump_exceptions+0xb3/0x260
+    rt6_dump_route+0x53e/0x5f0
+    fib6_dump_node+0x6d/0xf0
+    fib6_walk_continue+0x290/0x2d0
+    fib6_dump_table+0x28d/0x360
+    inet6_dump_fib+0x37d/0x620
+    rtnl_dumpit+0x7b/0xd0
+    netlink_dump+0x3ae/0x7e0
+    ...
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+  4 locks held by dumper/549:
+    ...
+    #1: (rcu_read_lock){....}-{1:3}, at: inet6_dump_fib+0x88/0x620
+    #2: (&tb->tb6_lock){+.-.}-{3:3}, at: fib6_dump_table+0x1e9/0x360
+    #3: (rcu_read_lock){....}-{1:3}, at: rt6_dump_route+0x483/0x5f0
+
+  value changed: 0xffff8a7c44e05700 -> 0xffff8a7c45d60100
+
+  Reported by Kernel Concurrency Sanitizer on:
+  CPU: 14 UID: 0 PID: 549 Comm: dumper Not tainted
+  7.2.0-rc7-virtme #38 PREEMPT(lazy)
+  ...
+
+Use hlist_for_each_entry_rcu() to safely iterate over the exception list.
+
+Fixes: 1e47b4837f3b ("ipv6: Dump route exceptions if requested")
 Cc: stable@vger.kernel.org
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Yuyang Huang <sigefriedhyy@gmail.com>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/64b46542bbe1701f07702aaa50273e2a87903db5.1786542637.git.zhilinz@nebusec.ai
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20260815084651.69477-1-sigefriedhyy@gmail.com
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_gre.c |   13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ net/ipv6/route.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -1150,13 +1150,8 @@ static void ip6gre_tnl_link_config_route
- 			return;
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -5922,7 +5922,7 @@ static int rt6_nh_dump_exceptions(struct
+ 		return 0;
  
- 		if (rt->dst.dev) {
--			unsigned short dst_len = rt->dst.dev->hard_header_len +
--						 t_hlen;
--
--			if (t->dev->header_ops)
--				dev->hard_header_len = dst_len;
--			else
--				dev->needed_headroom = dst_len;
-+			dev->needed_headroom = rt->dst.dev->hard_header_len +
-+					       t_hlen;
- 
- 			if (set_mtu) {
- 				int mtu = rt->dst.dev->mtu - t_hlen;
-@@ -1184,8 +1179,8 @@ static int ip6gre_calc_hlen(struct ip6_t
- 
- 	t_hlen = tunnel->hlen + sizeof(struct ipv6hdr);
- 
--	if (tunnel->dev->header_ops)
--		tunnel->dev->hard_header_len = LL_MAX_HEADER + t_hlen;
-+	if (tunnel->dev->header_ops && tunnel->dev->type == ARPHRD_IP6GRE)
-+		tunnel->dev->hard_header_len = t_hlen;
- 	else
- 		tunnel->dev->needed_headroom = LL_MAX_HEADER + t_hlen;
- 
+ 	for (i = 0; i < FIB6_EXCEPTION_BUCKET_SIZE; i++) {
+-		hlist_for_each_entry(rt6_ex, &bucket->chain, hlist) {
++		hlist_for_each_entry_rcu(rt6_ex, &bucket->chain, hlist) {
+ 			if (w->skip) {
+ 				w->skip--;
+ 				continue;
 
 
