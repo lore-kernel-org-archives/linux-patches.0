@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03A725B0A5;
-	Sat, 12 Sep 2026 19:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB011395AD8;
+	Sat, 12 Sep 2026 19:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240276; cv=none; b=RjUXuLyZ7zCpnbiKSFVYwa1XPB6OvwBlCzyE9Oi3loEwe2y4fC+Gjs7L11mR8OZRmtC6b12W12sQ6no8kYxhP+m6aP59gLNJIA9XUDS2h3l48Zl6oSSXKX8P4SaTfng0qO5NPZzUZb7YYNlvkBqkrBixB3RGa3TnDCUoY5+W7BY=
+	t=1789240281; cv=none; b=KuwwJ6DaW5/VADecpq9aJ9FPGnbUngTFuld4TAsCNxUCCXMlaMWhamN7KfjZxw2jRYimsJTptdP1BN5ctLUlS+oPBKolbiDxUJSqpt+MiBbhUOpP5Xu7WBsm6D0GbV5ty8CJmm8S8Xt/zdoSkI6sy75tC3DMBaDpylVmZHLvJgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240276; c=relaxed/simple;
-	bh=cUiVj+SKOakwyebMLJNq6xC5jz7xq0Bs3ZxJSDHJZQU=;
+	s=arc-20240116; t=1789240281; c=relaxed/simple;
+	bh=HBNbBptw7YJAxmiL6xTp86jwCS5yIXOFQtSMU2H98q8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QPcLQxBnu7GYvSgVCkim6ctMbeT95WyPm8SWWzsiQis8bLu+dgPkOPfcG9w36GtFOL2ACaWxgPRvTkqcNeFjgXQEEzYnTJ5yHRYFOC3jKyb1ZJORdGYNrkXVTz4ErAhjQj2tRsCTajPEwQTfHq8bVQvOCdOKFoiP1WyU0/i5mDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tegc+Lrh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BHzZJCLFBApnaXWBE7OZFKQYpxrxoruptbGyEUjfXRSd6q/QVH4mLgXFSmIGm9kjTPiXvniZ0ZPfZg27lm4Zifu7oxk3DhmKFyUw400f/7jVO2YX99/iCpRJg64O8/qXZs5pDOtl+E25WHlpIfF+57icWtfN/WOab2bxKwcpl7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qofyip2v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tegc+Lrh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B001F000FF;
-	Sat, 12 Sep 2026 19:11:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qofyip2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73731F000FF;
+	Sat, 12 Sep 2026 19:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240274;
-	bh=Fkp2YQ0Q28C04TUy4Wf+CoILW/665L+Hv3jkvvSWz6w=;
+	s=korg; t=1789240279;
+	bh=wQy+9ihzvofyDcTFnhj/9uC7W1t2BoU1qNCgsCV54II=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tegc+LrhiL+HrgDGQmBrPGmRZ40cRgZkFM+lPz2j6P5rv+j4ZwP+q/3cOfcDNqeHv
-	 Kw3Q2Q9MjNgiV/Z0TVFipuyPbjyGAsIMVFr1abHiUzoNFvh6WPczLFvtoXH9oR+W1Q
-	 8PAYxuVm24vEp8LIdWUO2R9IXFvXpQAQbSRAfbN4=
+	b=Qofyip2vjNKv3dwPLzFBr+sP1z0FfZWq5BBKZAHahCZ4vwDWDcHrkQbqCnvkjPKLC
+	 13WIcTlitD5trclbOLljWBMugBWOnlojyCKBODTBg6R7Naer8QJSnMhilP0FQQjY3w
+	 MdjhLh8LxjwgJdFd1KbMAfpqEVufP8hS7JDZ5t84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sechang Lim <rhkrqnwk98@gmail.com>,
-	Junseo Lim <zirajs7@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	tianshuo han <hantianshuo233@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 835/935] bpf: Reject negative optlen in cgroup getsockopt hook
-Date: Sat, 12 Sep 2026 09:04:25 +0200
-Message-ID: <20260912065545.975098933@linuxfoundation.org>
+Subject: [PATCH 5.15 836/935] ksmbd: limit repeated connections from clients with the same IP
+Date: Sat, 12 Sep 2026 09:04:26 +0200
+Message-ID: <20260912065545.998510042@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,48 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junseo Lim <zirajs7@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 1b5aacd5b2419b0790e955e466d389a61c79b4b1 ]
+[ Upstream commit e6bb9193974059ddbb0ce7763fa3882bd60d4dc3 ]
 
-A cgroup getsockopt BPF program can shrink ctx->optlen after the
-kernel getsockopt handler has run. The kernel-buffer variant, used by
-TCP_ZEROCOPY_RECEIVE, only rejects values larger than the original
-length.
+Repeated connections from clients with the same IP address may exhaust
+the max connections and prevent other normal client connections.
+This patch limit repeated connections from clients with the same IP.
 
-If BPF writes a negative optlen, that value is accepted and propagated
-back to the TCP getsockopt code. It can then be passed to
-copy_to_sockptr() as a size_t and trigger the hardened usercopy
-bytes > INT_MAX warning.
-
-Reject negative ctx.optlen in __cgroup_bpf_run_filter_getsockopt_kern(),
-matching the lower-bound validation already present in the sockptr-based
-getsockopt hook.
-
-Fixes: 9cacf81f8161 ("bpf: Remove extra lock_sock for TCP_ZEROCOPY_RECEIVE")
-Reported-by: Sechang Lim <rhkrqnwk98@gmail.com>
-Signed-off-by: Junseo Lim <zirajs7@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/187a4d756275aaaee5d65eecb63c1477b3b66554.1786448307.git.zirajs7@gmail.com
+Reported-by: tianshuo han <hantianshuo233@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: 39f203209671 ("smb/server: fix tree connection leak in smb2_tree_connect()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cgroup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ksmbd/connection.h    |  1 +
+ fs/ksmbd/transport_tcp.c | 17 +++++++++++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-index 3883d4cf77245..93c576a6ea8dd 100644
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -1661,7 +1661,7 @@ int __cgroup_bpf_run_filter_getsockopt_kern(struct sock *sk, int level,
- 	if (!ret)
- 		return -EPERM;
+diff --git a/fs/ksmbd/connection.h b/fs/ksmbd/connection.h
+index 2d675ab5b7156..9af95be54b22e 100644
+--- a/fs/ksmbd/connection.h
++++ b/fs/ksmbd/connection.h
+@@ -45,6 +45,7 @@ struct ksmbd_conn {
+ 	struct mutex			srv_mutex;
+ 	int				status;
+ 	unsigned int			cli_cap;
++	__be32				inet_addr;
+ 	char				*request_buf;
+ 	struct ksmbd_transport		*transport;
+ 	struct nls_table		*local_nls;
+diff --git a/fs/ksmbd/transport_tcp.c b/fs/ksmbd/transport_tcp.c
+index 28dc86dfb0301..7d03a68819b36 100644
+--- a/fs/ksmbd/transport_tcp.c
++++ b/fs/ksmbd/transport_tcp.c
+@@ -88,6 +88,7 @@ static struct tcp_transport *alloc_transport(struct socket *client_sk)
+ 		return NULL;
+ 	}
  
--	if (ctx.optlen > *optlen)
-+	if (ctx.optlen > *optlen || ctx.optlen < 0)
- 		return -EFAULT;
++	conn->inet_addr = inet_sk(client_sk->sk)->inet_daddr;
+ 	conn->transport = KSMBD_TRANS(t);
+ 	KSMBD_TRANS(t)->conn = conn;
+ 	KSMBD_TRANS(t)->ops = &ksmbd_tcp_transport_ops;
+@@ -229,6 +230,8 @@ static int ksmbd_kthread_fn(void *p)
+ {
+ 	struct socket *client_sk = NULL;
+ 	struct interface *iface = (struct interface *)p;
++	struct inet_sock *csk_inet;
++	struct ksmbd_conn *conn;
+ 	int ret;
  
- 	/* BPF programs only allowed to set retval to 0, not some
+ 	while (!kthread_should_stop()) {
+@@ -247,6 +250,20 @@ static int ksmbd_kthread_fn(void *p)
+ 			continue;
+ 		}
+ 
++		/*
++		 * Limits repeated connections from clients with the same IP.
++		 */
++		csk_inet = inet_sk(client_sk->sk);
++		down_read(&conn_list_lock);
++		list_for_each_entry(conn, &conn_list, conns_list)
++			if (csk_inet->inet_daddr == conn->inet_addr) {
++				ret = -EAGAIN;
++				break;
++			}
++		up_read(&conn_list_lock);
++		if (ret == -EAGAIN)
++			continue;
++
+ 		if (server_conf.max_connections &&
+ 		    atomic_inc_return(&active_num_conn) > server_conf.max_connections) {
+ 			pr_info_ratelimited("Limit the maximum number of connections(%u)\n",
 -- 
 2.53.0
 
