@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A712E7631;
-	Sat, 12 Sep 2026 14:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFCE733F59E;
+	Sat, 12 Sep 2026 14:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221806; cv=none; b=HCjIa6Fifm8nZaD/ue8ETtfNHhmUCKAoOOW9Ol3APfwYFq8AFf+1thEayjC1BmcP25NQBCHCJrVlCkfhqNNalt1n0T8suKp8iiHQYHW6J0oRJYe6AHzlRAv3IMD8+CzPoT9jVZYVLNU04hGV/Yv3kEbWNFzud8NghpLI0ZUQDJI=
+	t=1789221812; cv=none; b=ZU8GpQ+5Ruk9pg0FMg6os8fZDJUV1GMzG5xn86iRcDTH87dkyv1tnApJhJiyb71MpriQ7DCZfzKz2R0GiAm7WFyc4duTeMxGaHls+gpRYTxQETpvqXlIXLgaYiHlGctuF9cTqTzpCypy59sQn1jFIm5oZsaDnYExd9D4tqJ2kIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221806; c=relaxed/simple;
-	bh=aPb8i0KECXk92FNKQX/IFAVwGKfXbTM+WzK67YU04oE=;
+	s=arc-20240116; t=1789221812; c=relaxed/simple;
+	bh=jqKvrCJVxyhzMblsyOhirK0LxWxisnBlo4NCuBz9Xss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ni2PJkzu5nZmeNONjOLB0zGw/hh3lhDk5ffj5uWigo2S1za7zQlpTQ9jKLsO/zwGHTVaAyaGU97QTbHiYQeD2qi+JFfEx7mcKB4HEa9+NUhY0gr3ateClKigMxvKsnfKkG6lXsb4C6DzvCE6SWIUs4NM1cxFK/YXlaTyaTLjE5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARJ4MxJD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I2Acf1gggvF6zFTX6lGa7OkWybBFiVPA0GRY7pMxrmXxAQNZQ7umkD7CNJ3QJ7Pqq8SGJZbNhsu59OTLUlqoA9k6DH6Qlezt1w9Mi84kyBSHzNvsDJVUvXv6/9ORMt5WhjaH3YdXdtpPXDGPXY2MBDnsrkaVQXKubvGNjZEuDSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mS8uq2BZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARJ4MxJD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA16A1F000FF;
-	Sat, 12 Sep 2026 14:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mS8uq2BZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50C21F000FF;
+	Sat, 12 Sep 2026 14:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221805;
-	bh=IVF5nQcdNs7w+dYKRCo+mjsKEyUm24wSxf9/dbQOHaE=;
+	s=korg; t=1789221810;
+	bh=LR0BHWCcQEsftMyT39y989ewhocNOtWnmwj8D2OhFR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ARJ4MxJDYliL6Zu88MEUTzw7JGzlV475ERnQhENY8cOUWQv6DQAk+lUv9eStBI4RY
-	 MK+5q3PnDpQAeK7CzwVy5AX9qsSYTDYqDbCxz4rQII1jwAKhLkM2vpElwhlPhjHN1K
-	 3oJMQ8Jdeu+Ce4xYPCaB6TC7+MKmmu1fDRLLlLNw=
+	b=mS8uq2BZQFvMANNmeu1DC2sjVk6xj8pZQFaWrBn8Hqopa3p2XO+MbS40iASIfNAef
+	 qjtXIZTyhpgL+MKg0XE/lxBGwGU+QPZ/NlCTa+mUbvvW1KgjTuistTGwyPKIgOZt+3
+	 7CWI80SLJgfQ0gfpUL4pacwJQmMYVYLbwmPehLGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Sean Young <sean@mess.org>
-Subject: [PATCH 6.6 0458/1424] media: rc: sunxi-cir: Unregister rc device on probe failure
-Date: Sat, 12 Sep 2026 08:48:10 +0200
-Message-ID: <20260912065617.543806148@linuxfoundation.org>
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Valery Borovsky <vebohr@gmail.com>
+Subject: [PATCH 6.6 0459/1424] media: rtl2832_sdr: use vb2_video_unregister_device() on remove to fix DMA leak
+Date: Sat, 12 Sep 2026 08:48:11 +0200
+Message-ID: <20260912065617.565571918@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,61 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Valery Borovsky <vebohr@gmail.com>
 
-commit 479aa6fa8c50f1052f1451326ef7d4d586d340c3 upstream.
+commit dabb047c62668f280998e29117c55e41aabac336 upstream.
 
-After rc_register_device() succeeds, later probe failures must undo the
-registration with rc_unregister_device(). The current error path jumps to
-the allocation cleanup label and only calls rc_free_device(), leaving the
-rc device registration and resources created by rc_register_device()
-behind.
+rtl2832_sdr_remove() runs on USB disconnect and clears dev->udev to
+NULL before any pending streaming teardown has run. When user space
+later closes its file descriptor, vb2 calls rtl2832_sdr_stop_streaming()
+which in turn calls rtl2832_sdr_free_stream_bufs(). That helper releases
+each coherent buffer with:
 
-Add a registered-device unwind label for the IRQ lookup, IRQ request, and
-hardware initialization failure paths. Keep rc_free_device() for failures
-before rc_register_device() succeeds.
+    usb_free_coherent(dev->udev, dev->buf_size,
+                      dev->buf_list[dev->buf_num],
+                      dev->dma_addr[dev->buf_num]);
 
-Fixes: b4e3e59fb59c ("[media] rc: add sunxi-ir driver")
+usb_free_coherent() returns immediately when its dev argument is NULL,
+so every DMA stream buffer that was live at disconnect is silently
+leaked. The URBs allocated in rtl2832_sdr_alloc_urbs() outlive the
+device for the same reason.
+
+The rtl2832_sdr driver uses vb2_fop_release() in its file_operations,
+so replace video_unregister_device(&dev->vdev) with
+vb2_video_unregister_device(&dev->vdev) and move it before clearing
+dev->udev. vb2_video_unregister_device() releases the vb2 queue, which
+synchronously runs rtl2832_sdr_stop_streaming() if streaming is active,
+so URBs and coherent DMA stream buffers are freed while dev->udev is
+still valid.
+
+vb2_video_unregister_device() locks vdev->queue->lock (vb_queue_lock)
+internally, and stop_streaming() locks v4l2_lock, so the previous outer
+mutex_lock(&dev->vb_queue_lock) / mutex_lock(&dev->v4l2_lock) pair
+around the unregister sequence would self-deadlock and has been removed.
+A short v4l2_lock critical section around dev->udev = NULL remains so
+any ioctl path that still holds the file descriptor sees coherent state.
+
+Issue identified by automated review of the INV-003 series at
+https://sashiko.dev/
+
+Fixes: 771138920eaf ("[media] rtl2832_sdr: Realtek RTL2832 SDR driver module")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Sean Young <sean@mess.org>
+Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/sunxi-cir.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/media/dvb-frontends/rtl2832_sdr.c |   18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
---- a/drivers/media/rc/sunxi-cir.c
-+++ b/drivers/media/rc/sunxi-cir.c
-@@ -343,22 +343,25 @@ static int sunxi_ir_probe(struct platfor
- 	ir->irq = platform_get_irq(pdev, 0);
- 	if (ir->irq < 0) {
- 		ret = ir->irq;
--		goto exit_free_dev;
-+		goto exit_unregister_dev;
- 	}
+--- a/drivers/media/dvb-frontends/rtl2832_sdr.c
++++ b/drivers/media/dvb-frontends/rtl2832_sdr.c
+@@ -1478,14 +1478,22 @@ static void rtl2832_sdr_remove(struct pl
  
- 	ret = devm_request_irq(dev, ir->irq, sunxi_ir_irq, 0, SUNXI_IR_DEV, ir);
- 	if (ret) {
- 		dev_err(dev, "failed request irq\n");
--		goto exit_free_dev;
-+		goto exit_unregister_dev;
- 	}
+ 	dev_dbg(&pdev->dev, "\n");
  
- 	ret = sunxi_ir_hw_init(dev);
- 	if (ret)
--		goto exit_free_dev;
-+		goto exit_unregister_dev;
- 
- 	dev_info(dev, "initialized sunXi IR driver\n");
- 	return 0;
- 
-+exit_unregister_dev:
-+	rc_unregister_device(ir->rc);
+-	mutex_lock(&dev->vb_queue_lock);
++	/*
++	 * vb2_video_unregister_device() releases the vb2 queue, which
++	 * triggers rtl2832_sdr_stop_streaming() if streaming is active.
++	 * stop_streaming() uses dev->udev to free URBs and coherent DMA
++	 * stream buffers via usb_free_coherent(), so it must run before
++	 * dev->udev is cleared. vb2_video_unregister_device() locks
++	 * vb_queue_lock internally and stop_streaming() locks v4l2_lock,
++	 * so neither may be held by the caller.
++	 */
++	v4l2_device_disconnect(&dev->v4l2_dev);
++	vb2_video_unregister_device(&dev->vdev);
 +
- exit_free_dev:
- 	rc_free_device(ir->rc);
- 
+ 	mutex_lock(&dev->v4l2_lock);
+-	/* No need to keep the urbs around after disconnection */
+ 	dev->udev = NULL;
+-	v4l2_device_disconnect(&dev->v4l2_dev);
+-	video_unregister_device(&dev->vdev);
+ 	mutex_unlock(&dev->v4l2_lock);
+-	mutex_unlock(&dev->vb_queue_lock);
++
+ 	v4l2_device_put(&dev->v4l2_dev);
+ 	module_put(pdev->dev.parent->driver->owner);
+ }
 
 
