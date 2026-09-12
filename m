@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B095B367B8A;
-	Sat, 12 Sep 2026 08:59:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4656537E5F3;
+	Sat, 12 Sep 2026 08:59:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203557; cv=none; b=JPDj4vEhXX80pyfow11yJG4f1WqKuDk1Rvmnh+pYuAhmO9y44onz3KctmyXhTU42ymueP87+JFdJxb1+ZlQtZdVs5luUHYdulWfs1YyWFAH/OLarR7TU6I35LJyMZ5TiDoA8bubVGEtfSZZiF5kfO0I90ETDluQU0ccDO0xPb30=
+	t=1789203561; cv=none; b=AOaukAW5rP3307IgejapOVkae7sVKI2nXNdO0ZjQRQ3U92uIkJ3u7TuWBv38yrZGv3tcX7C11Es2syomiIm7pkbJxdh5DeJ5F3Pwtc+8D2KYF7YKVZQc5MesON8t+NN2DMXh1zatsVEDzzfB8jxxgIuJQX1nS4nAzlA1phFrJAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203557; c=relaxed/simple;
-	bh=hBNvuamdQBs0fB2qmqdSGUs7S8FLXJ6EhVTXNEXeInU=;
+	s=arc-20240116; t=1789203561; c=relaxed/simple;
+	bh=26d6rlRr1rQh0s25Itsqlnh+5k9XmXrqcDuoGRLjZbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G5gLmuCQ7rA19jeQZkiYCmI5bS27JoHE/RCn31vdSbtFCRhrVVOJSodMm9fDAWuN8fgTAgIHcgGYFAqcLZbZrsjSF1TPDP2DOhtk3JlP91i3sqXW5Xy3wxtxwtX7JBD5JtcMT6NHP7iu/8b69aNc+KPoRuUUZrbjjcml2Qw+4jI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOLMFJIC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qd/5QRdRYuy4v7g3H4LgJU7GqG0NBsG1ric2GzY5FOuViZaD4l3b9o6BZB9nbrDtLRuxZjyUwj51UOswrHjTgJtOKklJp3lDZf6HyOsyfylKvwTVAi2D0iuDfD49wr3tBMXqSCBY2KssAM0QwCPbUwJn66ZMr6K8tuteGFFN52g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4TX1gJk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOLMFJIC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A1821F000FF;
-	Sat, 12 Sep 2026 08:59:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4TX1gJk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FED1F000FF;
+	Sat, 12 Sep 2026 08:59:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203555;
-	bh=5Duzu/Aaxoo9Ix17UrgekehK0wXlNkbSHeCki9drFUY=;
+	s=korg; t=1789203560;
+	bh=iwOG66mAyDzAtgxLzdhHq7Rs9r9iZJrYVELEUdgnlxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eOLMFJICmzN+xj+t61P9eaBEh9zQSXH0C761QV058WOjrt4jCMJF63Rj4TsrlFT+k
-	 NCaPGd6+c1Ei3Zmz03qX1itYI0zimNoylXhInFbUqqeQxOpwdLk9rgjqIh2WuNSinY
-	 PpVMJd3R2mA0+C0G4a31C0oUX4lgr3/vmojKeJ9g=
+	b=s4TX1gJkQWZa/IANb9afYHO6OBKY6i1MMtrI9Kr/5w1RGdTlXyA6gmEZXj7qoIKky
+	 wIJbEikTseGriewPeh/+0eaiIwdl53oCp2+ANwqMooHmaQkATrn6iKNA0A4WchiaSf
+	 W1PfsSCK6qYChEUby73+NvKbXPqy0hcfD8dGbTjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <jkeeping@inmusicbrands.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+2626e846cd2585c9aa67@syzkaller.appspotmail.com,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1433/1815] ALSA: seq: midi: Serialize input teardown with event_input
-Date: Sat, 12 Sep 2026 08:53:03 +0200
-Message-ID: <20260912065722.657297610@linuxfoundation.org>
+Subject: [PATCH 7.2 1434/1815] nvmet: fix max_qid race between configfs and controller allocation
+Date: Sat, 12 Sep 2026 08:53:04 +0200
+Message-ID: <20260912065722.681362130@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,156 +52,245 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 403f7f3ad3808a0096d84cf228fab68dc253fd9d ]
+[ Upstream commit f1a8846e06388113dfdbb89dee005083fa9afdf9 ]
 
-snd_midi_input_event() must not be running while a rawmidi substream is
-closing, since this can lead to the trigger state becoming out-of-step
-through this sequence in snd_rawmidi_input_trigger():
+The function nvmet_subsys_attr_qid_max_store() can race against
+nvmet_alloc_ctrl() when a subsystem's max_qid limit is modified.
 
-	snd_rawmidi_input_trigger(up=0)
-					snd_midi_input_event()
-					 -> snd_rawmidi_kernel_read()
-					     -> snd_rawmidi_input_trigger(up=1)
-	  -> cancel_work_sync()
+Suppose max_qid is currently 64. If nvmet_alloc_ctrl() executes:
+ctrl->sqs = kzalloc_objs(struct nvmet_sq *, subsys->max_qid + 1);
+and at this exact point, a userspace process changes max_qid to 128,
+nvmet_subsys_attr_qid_max_store() will set the new max_qid value. It
+attempts to delete active controllers to force a reconnect, but the
+new controller won't be deleted because it hasn't been added to the
+subsys->ctrls list yet.
 
-which ends with the underlying device being active unexpectedly.
+nvmet_alloc_ctrl() then proceeds and adds the new controller to the
+subsys->ctrls list. Later, when nvmet_install_queue() is called, it
+will see max_qid set to 128, but the memory allocated for sqs is only
+sized for 64 entries. This results in a KASAN out-of-bounds warning
+and potential memory corruptions.
 
-When this is called from close_substream(), further input can re-trigger
-the input event leaving it running after rawmidi_release_priv() has set
-rfile->rmidi to NULL which leads to:
+Fix this by protecting the queue allocations and list insertion in
+nvmet_alloc_ctrl() with down_read(&nvmet_config_sem). Because
+nvmet_subsys_attr_qid_max_store() acquires down_write(&nvmet_config_sem)
+to modify the attribute, this safely prevents the configfs writer from
+modifying max_qid during controller creation.
 
-	Unable to handle kernel NULL pointer dereference at virtual address 00000000000000b0
-	Call trace:
-	 snd_midi_input_event+0x3c/0x134 [snd_seq_midi] (P)
-	 snd_rawmidi_input_event_work+0x1c/0x2c
-	 process_one_work+0x150/0x3a4
-	 worker_thread+0x190/0x318
+Copy the max_qid from the subsystem to the controller's structure
+during the allocation; ctrl->max_qid never changes as long as the
+controller remains in LIVE state, so this will prevent similar race
+conditions.
 
-Apply a similar approach to commit ef7607ab1c8ad ("ALSA: seq: midi:
-Serialize output teardown with event_input") which fixed the same issue
-in the output direction, but updated to use RCU following Takashi Iwai's
-proposed follow-on patch [1].
-
-With this change in place, midisynth_unsubscribe() clears the input file
-so snd_midi_input_event() will not re-trigger the stream and will be
-quiesced by the cancel_work_sync() in snd_rawmidi_input_trigger().
-
-[1] https://lore.kernel.org/linux-sound/20260813144224.753399-1-tiwai@suse.de/
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Link: https://patch.msgid.link/20260813150810.795393-1-jkeeping@inmusicbrands.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 3e980f5995e0 ("nvmet: expose max queues to configfs")
+Reported-by: syzbot+2626e846cd2585c9aa67@syzkaller.appspotmail.com
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_midi.c | 37 +++++++++++++++++++++++++++++++------
- 1 file changed, 31 insertions(+), 6 deletions(-)
+ drivers/nvme/target/admin-cmd.c   |  8 ++---
+ drivers/nvme/target/core.c        | 49 +++++++++++++++++--------------
+ drivers/nvme/target/fabrics-cmd.c |  2 +-
+ drivers/nvme/target/nvmet.h       |  6 ++++
+ drivers/nvme/target/pci-epf.c     |  2 +-
+ 5 files changed, 39 insertions(+), 28 deletions(-)
 
-diff --git a/sound/core/seq/seq_midi.c b/sound/core/seq/seq_midi.c
-index c2f89aee1914b..a16a5debf3391 100644
---- a/sound/core/seq/seq_midi.c
-+++ b/sound/core/seq/seq_midi.c
-@@ -42,6 +42,8 @@ struct seq_midisynth {
- 	struct snd_rawmidi *rmidi;
- 	int device;
- 	int subdevice;
-+	struct snd_rawmidi_substream __rcu *input_substream;
-+	snd_use_lock_t input_use_lock;	/* in-flight event_input users */
- 	struct snd_rawmidi_file input_rfile;
- 	snd_use_lock_t output_use_lock;	/* in-flight event_input users */
- 	struct snd_rawmidi_substream __rcu *output_substream;
-@@ -76,6 +78,14 @@ static void snd_midi_input_event(struct snd_rawmidi_substream *substream)
- 	msynth = runtime->private_data;
- 	if (msynth == NULL)
- 		return;
-+
-+	scoped_guard(rcu) {
-+		if (rcu_dereference(msynth->input_substream) != substream)
-+			return;
-+
-+		snd_use_lock_use(&msynth->input_use_lock);
-+	}
-+
- 	memset(&ev, 0, sizeof(ev));
- 	while (runtime->avail > 0) {
- 		res = snd_rawmidi_kernel_read(substream, buf, sizeof(buf));
-@@ -95,6 +105,8 @@ static void snd_midi_input_event(struct snd_rawmidi_substream *substream)
- 			memset(&ev, 0, sizeof(ev));
- 		}
- 	}
-+
-+	snd_use_lock_free(&msynth->input_use_lock);
- }
+diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
+index 3fde09b4d78aa..7764a3c0195c9 100644
+--- a/drivers/nvme/target/admin-cmd.c
++++ b/drivers/nvme/target/admin-cmd.c
+@@ -1337,7 +1337,7 @@ static u16 nvmet_set_feat_arbitration(struct nvmet_req *req)
  
- static int dump_midi(struct snd_rawmidi_substream *substream, const char *buf, int count)
-@@ -177,6 +189,7 @@ static int snd_seq_midisynth_new(struct seq_midisynth *msynth,
- 	msynth->card = card;
- 	msynth->device = device;
- 	msynth->subdevice = subdevice;
-+	snd_use_lock_init(&msynth->input_use_lock);
- 	snd_use_lock_init(&msynth->output_use_lock);
- 	return 0;
- }
-@@ -187,28 +200,31 @@ static int midisynth_subscribe(void *private_data, struct snd_seq_port_subscribe
- 	int err;
- 	struct seq_midisynth *msynth = private_data;
- 	struct snd_rawmidi_runtime *runtime;
-+	struct snd_rawmidi_file rfile = {};
- 	struct snd_rawmidi_params params;
- 
- 	/* open midi port */
- 	err = snd_rawmidi_kernel_open(msynth->rmidi, msynth->subdevice,
- 				      SNDRV_RAWMIDI_LFLG_INPUT,
--				      &msynth->input_rfile);
-+				      &rfile);
- 	if (err < 0) {
- 		pr_debug("ALSA: seq_midi: midi input open failed!!!\n");
- 		return err;
- 	}
--	runtime = msynth->input_rfile.input->runtime;
-+	runtime = rfile.input->runtime;
- 	memset(&params, 0, sizeof(params));
- 	params.avail_min = 1;
- 	params.buffer_size = input_buffer_size;
--	err = snd_rawmidi_input_params(msynth->input_rfile.input, &params);
-+	err = snd_rawmidi_input_params(rfile.input, &params);
- 	if (err < 0) {
--		snd_rawmidi_kernel_release(&msynth->input_rfile);
-+		snd_rawmidi_kernel_release(&rfile);
- 		return err;
- 	}
- 	snd_midi_event_reset_encode(msynth->parser);
- 	runtime->event = snd_midi_input_event;
- 	runtime->private_data = msynth;
-+	msynth->input_rfile = rfile;
-+	rcu_assign_pointer(msynth->input_substream, rfile.input);
- 	snd_rawmidi_kernel_read(msynth->input_rfile.input, NULL, 0);
- 	return 0;
- }
-@@ -218,10 +234,19 @@ static int midisynth_unsubscribe(void *private_data, struct snd_seq_port_subscri
+ void nvmet_execute_set_features(struct nvmet_req *req)
  {
- 	int err;
- 	struct seq_midisynth *msynth = private_data;
-+	struct snd_rawmidi_file rfile;
+-	struct nvmet_subsys *subsys = nvmet_req_subsys(req);
++	struct nvmet_ctrl *ctrl = nvmet_req_ctrl(req);
+ 	u32 cdw10 = le32_to_cpu(req->cmd->common.cdw10);
+ 	u32 cdw11 = le32_to_cpu(req->cmd->common.cdw11);
+ 	u16 status = 0;
+@@ -1359,7 +1359,7 @@ void nvmet_execute_set_features(struct nvmet_req *req)
+ 			break;
+ 		}
+ 		nvmet_set_result(req,
+-			(subsys->max_qid - 1) | ((subsys->max_qid - 1) << 16));
++			(ctrl->max_qid - 1) | ((ctrl->max_qid - 1) << 16));
+ 		break;
+ 	case NVME_FEAT_IRQ_COALESCE:
+ 		status = nvmet_set_feat_irq_coalesce(req);
+@@ -1496,7 +1496,7 @@ void nvmet_get_feat_async_event(struct nvmet_req *req)
  
--	if (snd_BUG_ON(!msynth->input_rfile.input))
-+	rcu_assign_pointer(msynth->input_substream, NULL);
-+	synchronize_rcu();
-+	snd_use_lock_sync(&msynth->input_use_lock);
+ void nvmet_execute_get_features(struct nvmet_req *req)
+ {
+-	struct nvmet_subsys *subsys = nvmet_req_subsys(req);
++	struct nvmet_ctrl *ctrl = nvmet_req_ctrl(req);
+ 	u32 cdw10 = le32_to_cpu(req->cmd->common.cdw10);
+ 	u16 status = 0;
+ 
+@@ -1536,7 +1536,7 @@ void nvmet_execute_get_features(struct nvmet_req *req)
+ 		break;
+ 	case NVME_FEAT_NUM_QUEUES:
+ 		nvmet_set_result(req,
+-			(subsys->max_qid-1) | ((subsys->max_qid-1) << 16));
++			(ctrl->max_qid-1) | ((ctrl->max_qid-1) << 16));
+ 		break;
+ 	case NVME_FEAT_KATO:
+ 		nvmet_get_feat_kato(req);
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 48a9a07f0f624..23fa90ec3c00e 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -876,7 +876,7 @@ u16 nvmet_check_cqid(struct nvmet_ctrl *ctrl, u16 cqid, bool create)
+ 	if (!ctrl->cqs)
+ 		return NVME_SC_INTERNAL | NVME_STATUS_DNR;
+ 
+-	if (cqid > ctrl->subsys->max_qid)
++	if (cqid > ctrl->max_qid)
+ 		return NVME_SC_QID_INVALID | NVME_STATUS_DNR;
+ 
+ 	if ((create && ctrl->cqs[cqid]) || (!create && !ctrl->cqs[cqid]))
+@@ -924,7 +924,7 @@ u16 nvmet_check_sqid(struct nvmet_ctrl *ctrl, u16 sqid,
+ 	if (!ctrl->sqs)
+ 		return NVME_SC_INTERNAL | NVME_STATUS_DNR;
+ 
+-	if (sqid > ctrl->subsys->max_qid)
++	if (sqid > ctrl->max_qid)
+ 		return NVME_SC_QID_INVALID | NVME_STATUS_DNR;
+ 
+ 	if ((create && ctrl->sqs[sqid]) ||
+@@ -1653,11 +1653,29 @@ struct nvmet_ctrl *nvmet_alloc_ctrl(struct nvmet_alloc_ctrl_args *args)
+ 	if (!ctrl->changed_ns_list)
+ 		goto out_free_ctrl;
+ 
+-	ctrl->sqs = kzalloc_objs(struct nvmet_sq *, subsys->max_qid + 1);
++	/*
++	 * Discovery controllers may use some arbitrary high value
++	 * in order to cleanup stale discovery sessions
++	 */
++	if (nvmet_is_disc_subsys(ctrl->subsys) && !kato)
++		kato = NVMET_DISC_KATO_MS;
 +
-+	rfile = msynth->input_rfile;
-+	msynth->input_rfile = (struct snd_rawmidi_file){};
++	/* keep-alive timeout in seconds */
++	ctrl->kato = DIV_ROUND_UP(kato, 1000);
 +
-+	if (snd_BUG_ON(!rfile.input))
- 		return -EINVAL;
--	err = snd_rawmidi_kernel_release(&msynth->input_rfile);
++	ctrl->err_counter = 0;
++	spin_lock_init(&ctrl->error_lock);
 +
-+	err = snd_rawmidi_kernel_release(&rfile);
- 	return err;
++	down_read(&nvmet_config_sem);
++	mutex_lock(&subsys->lock);
++
++	ctrl->max_qid = subsys->max_qid;
++
++	ctrl->sqs = kzalloc_objs(struct nvmet_sq *, ctrl->max_qid + 1);
+ 	if (!ctrl->sqs)
+ 		goto out_free_changed_ns_list;
+ 
+-	ctrl->cqs = kzalloc_objs(struct nvmet_cq *, subsys->max_qid + 1);
++	ctrl->cqs = kzalloc_objs(struct nvmet_cq *, ctrl->max_qid + 1);
+ 	if (!ctrl->cqs)
+ 		goto out_free_sqs;
+ 
+@@ -1670,22 +1688,6 @@ struct nvmet_ctrl *nvmet_alloc_ctrl(struct nvmet_alloc_ctrl_args *args)
+ 	}
+ 	ctrl->cntlid = ret;
+ 
+-	/*
+-	 * Discovery controllers may use some arbitrary high value
+-	 * in order to cleanup stale discovery sessions
+-	 */
+-	if (nvmet_is_disc_subsys(ctrl->subsys) && !kato)
+-		kato = NVMET_DISC_KATO_MS;
+-
+-	/* keep-alive timeout in seconds */
+-	ctrl->kato = DIV_ROUND_UP(kato, 1000);
+-
+-	ctrl->err_counter = 0;
+-	spin_lock_init(&ctrl->error_lock);
+-
+-	nvmet_start_keep_alive_timer(ctrl);
+-
+-	mutex_lock(&subsys->lock);
+ 	ret = nvmet_ctrl_init_pr(ctrl);
+ 	if (ret)
+ 		goto init_pr_fail;
+@@ -1693,6 +1695,9 @@ struct nvmet_ctrl *nvmet_alloc_ctrl(struct nvmet_alloc_ctrl_args *args)
+ 	nvmet_setup_p2p_ns_map(ctrl, args->p2p_client);
+ 	nvmet_debugfs_ctrl_setup(ctrl);
+ 	mutex_unlock(&subsys->lock);
++	up_read(&nvmet_config_sem);
++
++	nvmet_start_keep_alive_timer(ctrl);
+ 
+ 	if (args->hostid)
+ 		uuid_copy(&ctrl->hostid, args->hostid);
+@@ -1722,14 +1727,14 @@ struct nvmet_ctrl *nvmet_alloc_ctrl(struct nvmet_alloc_ctrl_args *args)
+ 	return ctrl;
+ 
+ init_pr_fail:
+-	mutex_unlock(&subsys->lock);
+-	nvmet_stop_keep_alive_timer(ctrl);
+ 	ida_free(&cntlid_ida, ctrl->cntlid);
+ out_free_cqs:
+ 	kfree(ctrl->cqs);
+ out_free_sqs:
+ 	kfree(ctrl->sqs);
+ out_free_changed_ns_list:
++	mutex_unlock(&subsys->lock);
++	up_read(&nvmet_config_sem);
+ 	kfree(ctrl->changed_ns_list);
+ out_free_ctrl:
+ 	kfree(ctrl);
+diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
+index 7cadd1c9e44cc..42d1d18116715 100644
+--- a/drivers/nvme/target/fabrics-cmd.c
++++ b/drivers/nvme/target/fabrics-cmd.c
+@@ -370,7 +370,7 @@ static void nvmet_execute_io_connect(struct nvmet_req *req)
+ 		goto out;
+ 	}
+ 
+-	if (unlikely(qid > ctrl->subsys->max_qid)) {
++	if (unlikely(qid > ctrl->max_qid)) {
+ 		pr_warn("invalid queue id (%d)\n", qid);
+ 		status = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+ 		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(qid);
+diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
+index 1645f4c818afa..7750f5b1edbb4 100644
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -265,6 +265,7 @@ struct nvmet_ctrl {
+ 
+ 	uuid_t			hostid;
+ 	u16			cntlid;
++	u16			max_qid;
+ 	u32			kato;
+ 
+ 	struct nvmet_port	*port;
+@@ -753,6 +754,11 @@ static inline struct nvmet_subsys *nvmet_req_subsys(struct nvmet_req *req)
+ 	return req->sq->ctrl->subsys;
  }
  
++static inline struct nvmet_ctrl *nvmet_req_ctrl(struct nvmet_req *req)
++{
++	return req->sq->ctrl;
++}
++
+ static inline bool nvmet_is_disc_subsys(struct nvmet_subsys *subsys)
+ {
+     return subsys->type != NVME_NQN_NVME;
+diff --git a/drivers/nvme/target/pci-epf.c b/drivers/nvme/target/pci-epf.c
+index 346a4badd6b29..803e85df50e54 100644
+--- a/drivers/nvme/target/pci-epf.c
++++ b/drivers/nvme/target/pci-epf.c
+@@ -2081,7 +2081,7 @@ static int nvmet_pci_epf_create_ctrl(struct nvmet_pci_epf *nvme_epf,
+ 	}
+ 
+ 	/* Allocate our queues, up to the maximum number. */
+-	ctrl->nr_queues = min(ctrl->tctrl->subsys->max_qid + 1, max_nr_queues);
++	ctrl->nr_queues = min(ctrl->tctrl->max_qid + 1, max_nr_queues);
+ 	ret = nvmet_pci_epf_alloc_queues(ctrl);
+ 	if (ret)
+ 		goto out_put_ctrl;
 -- 
 2.53.0
 
