@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844C52C21F7;
-	Sat, 12 Sep 2026 08:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540E535F184;
+	Sat, 12 Sep 2026 08:05:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200350; cv=none; b=TkBdSQB+eyykDRdPoDYTXUhkcbymMpirJLXQNso2didMWFbeqCTLiBQ2AW4NFeDXg4Fd0MVUpGAZOqciTZ7KiO+1eJ2wvp4MZlg2VLz2rCkO8C94e1MD9GZ2pfB/FLzkgJ5Ro3nCZI0FxgZ/WNGa+VQB1U+BgpqlVyRpq0R2lwA=
+	t=1789200355; cv=none; b=Ocm6rM6ZgTgSvZtTCyAX+LADXb28Sz95NouEUFbympL3hKVPcqaIXr2uOaGiWa21iuZ/ovQUbP/RLAubfBKXjZOdigfS39Pw5ou+34iBLHVqSoeTcaY6bMMBoIsn+3VqbvpETbF0Bq9UGG4DkJNPQNUIY8ggE0RtyFDyJiJ6Tuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200350; c=relaxed/simple;
-	bh=WTVQdLSHX2TGrrl/yXxx2YqzNoHTEEVkllE+rJTHls8=;
+	s=arc-20240116; t=1789200355; c=relaxed/simple;
+	bh=fuCVqipKN92k5e7tjGIc3EdwtREAtQBiE1gWf4Vkxpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RYvQS39uo0qDTUvM29u13QOwmSJuk6DXq55qH0GBpvFZuGZdKHBXxc7dIVtaLpsp5USb5kOMCgw1J+SQMBEcDnxHXoPtxCvJO9eZgpYRZPYNplDKSqIcF753m85gliKfaRCUzEQ1eNLAcEB9nXJuh7+CVuBIGIz22Zog5JmTjD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wTwP0mF3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iIJi2WiVX4aXd5fUHiKBBS7UQCBQ3zNazgz53AnSbzL1pcl5ImWYqv1jOqPxyHIFx/fb45RKP4SsOdBh3cZrKsre8gjUHTq4WBdxOLM7ez11gjWUxQLxEywVrUKw3UzkajrqOf0GdWXuN29vBE2FGqIHucGy3D6VxMBPTzArtig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAKwVI1y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wTwP0mF3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879311F0089A;
-	Sat, 12 Sep 2026 08:05:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAKwVI1y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A2B1F00898;
+	Sat, 12 Sep 2026 08:05:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200349;
-	bh=fO0kjGaxj1R22C6zDeugtbJfHQe8UII6hsnNBri+fNk=;
+	s=korg; t=1789200354;
+	bh=qUX5C3gn3GzpnBy5mtYRL3++vKjTNqDdzNYNC+2aMP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wTwP0mF3etgoETE0dVtp9vddl2dstqD1vOSaA3OM0WdZDiqGWsNnn98cOAhGOhywv
-	 vSud58v25CIW5n459+DewYqNzFKQc9EnWXpPZDS1uICGUhLvO1vFGOR2Od7H+5WjD7
-	 LPkUT9p7NNJ8rH4uwez4soacNbKy6DZWqRzSKwxs=
+	b=OAKwVI1yXf7u0y8QwtPr8gbni+CjtgmATSfXvyXo65lIO6+534Cptdjz573W1p/dH
+	 PlX13dGciDC4Z3gyGgs88mr+QR1zgyg64RBapExON3g4CcHVYv0yHVQQyloZK8cGSi
+	 +Ptb+VHY8qo+V0ESVCSw9P9+iCgTaiSI6UjdY0dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Cheng-Han Wu <hank20010209@gmail.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0770/1815] md: recheck spare changes before starting sync
-Date: Sat, 12 Sep 2026 08:42:00 +0200
-Message-ID: <20260912065706.983879391@linuxfoundation.org>
+Subject: [PATCH 7.2 0771/1815] selftests/zram: fix kernel_gte() for POSIX sh
+Date: Sat, 12 Sep 2026 08:42:01 +0200
+Message-ID: <20260912065707.008798503@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,104 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+From: Cheng-Han Wu <hank20010209@gmail.com>
 
-[ Upstream commit c7d34d17ea43ebc86b45d439ebb435e11ca44bca ]
+[ Upstream commit 649ba27dfac784427a01f9c95c09ecbcb88900d8 ]
 
-remove_spares() and remove_and_add_spares() modify the array's rdev
-configuration. These operations are only safe after the array has been
-suspended.
+Commit fc4eb486a59d ("selftests/zram: Skip max_comp_streams
+interface on newer kernel") added kernel_gte() to zram_lib.sh.
+The function uses the bash-specific [[ ... ]] conditional, but
+zram selftests source this file while running under /bin/sh.
 
-md_start_sync() checks whether spare configuration changes are needed
-before taking reconfig_mutex. However, the rdev state can change before
-the mutex is acquired, so the initial check can become stale. In that
-case, md_choose_sync_action() may remove or replace rdevs while normal
-I/O is still accessing them.
+On systems where /bin/sh is dash, such as Debian, the following
+test fails:
 
-The race can occur as follows:
+  dash -c '
+  kernel_major=6; kernel_minor=1; major=6; minor=0
+  if [ $kernel_major -gt $major ]; then
+      echo ok
+  elif [[ $kernel_major -eq $major && $kernel_minor -ge $minor ]]; then
+      echo ok
+  fi'
 
-raid10d          Worker                      Normal IO
-____________     _______________________     ______________________
+with:
 
-                                             raid10_write_request()
-                                             wait_blocked_dev()
-set Blocked
-set Faulty
-                                             Skip Faulty rdev
-                                             rrdev->nr_pending++
-                                             .repl_bio = bio
-                 removeable_rdev = false     .
-                 array not suspended         .
-lock mddev                                   goto err_handle
-                 lock mddev (wait)
-                 .
-update sb        .
-clear Blocked    .
-                 .
-unlock mddev     .
-                 lock mddev (acquires)
-                 remove_spares()
-                 removeable_rdev = true
+  dash: 5: [[: not found
 
-                 raid10_remove_disk()
-                 rdev = replacement
-                 replacement = NULL
-                                             rdev_dec_pending(NULL)
-                 unlock mddev                (NULL)->nr_pending--
+Use separate POSIX test expressions joined by && instead.
 
-In this case, rdev_dec_pending() is called with a NULL pointer,
-resulting in a NULL pointer dereference when attempting to decrement
-nr_pending.
-
-Fix this by suspending the array when spare configuration changes are
-needed, including for non-read-write arrays, and checking again after
-taking reconfig_mutex. If the array was not already suspended and a
-change is now needed, release the mutex, suspend the array, and
-reacquire the mutex before continuing.
-
-Fixes: bc08041b32ab ("md: suspend array in md_start_sync() if array need reconfiguration")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260628142420.1051027-1-abd.masalkhi@gmail.com?part=3
-Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-Reviewed-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/20260708112003.474537-1-abd.masalkhi@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: fc4eb486a59d ("selftests/zram: Skip max_comp_streams interface on newer kernel")
+Signed-off-by: Cheng-Han Wu <hank20010209@gmail.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ tools/testing/selftests/zram/zram_lib.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index f5cba883856ae..2a25996fe1555 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -10186,13 +10186,25 @@ static void md_start_sync(struct work_struct *ws)
- 	 * If reshape is still in progress, spares won't be added or removed
- 	 * from conf until reshape is done.
- 	 */
--	if (mddev->reshape_position == MaxSector &&
-+	if ((mddev->reshape_position == MaxSector || !md_is_rdwr(mddev)) &&
- 	    md_spares_need_change(mddev)) {
- 		suspend = true;
- 		mddev_suspend(mddev, false);
- 	}
+diff --git a/tools/testing/selftests/zram/zram_lib.sh b/tools/testing/selftests/zram/zram_lib.sh
+index 21ec1966de76c..0d44d83888f9d 100755
+--- a/tools/testing/selftests/zram/zram_lib.sh
++++ b/tools/testing/selftests/zram/zram_lib.sh
+@@ -37,7 +37,7 @@ kernel_gte()
  
- 	mddev_lock_nointr(mddev);
-+
-+	/*
-+	 * The spare configuration can change before reconfig_mutex is acquired.
-+	 * Recheck while holding the lock and suspend if needed.
-+	 */
-+	if (!suspend && (mddev->reshape_position == MaxSector || !md_is_rdwr(mddev)) &&
-+	    md_spares_need_change(mddev)) {
-+		mddev_unlock(mddev);
-+		mddev_suspend_and_lock_nointr(mddev);
-+		suspend = true;
-+	}
-+
- 	if (!md_is_rdwr(mddev)) {
- 		/*
- 		 * On a read-only array we can:
+ 	if [ $kernel_major -gt $major ]; then
+ 		return 0
+-	elif [[ $kernel_major -eq $major && $kernel_minor -ge $minor ]]; then
++	elif [ $kernel_major -eq $major ] && [ $kernel_minor -ge $minor ]; then
+ 		return 0
+ 	fi
+ 
 -- 
 2.53.0
 
