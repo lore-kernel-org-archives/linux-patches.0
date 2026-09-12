@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA37306B3B;
-	Sat, 12 Sep 2026 13:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540F022A7F6;
+	Sat, 12 Sep 2026 13:53:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221183; cv=none; b=aGenqcMs5K/Jg+ZanAPLKxK3Tu5UxnzY2OPsHSlK7MGN76Y0jxFBRLGL38mWsZFt/sp8E35EAjb7rQbl6XF3//JLJfa7WPZ0daP/VahvvkxuLEReBLMhaGwB4eIMYZnfvfPf2gQvnIGTdNky+zCGNtLH7Hsu3laA/XKmfz0KoVY=
+	t=1789221188; cv=none; b=A2thYmiI4hlIgZhEe4dM76tfYrJCSlSino06cibzXrh5U33WMP4i7jdeoJxQRDn0Yp5U9StP72J7RCsYr1mUxbIndwIV1utlxlqX0H5KVG6XF+vwr3WDMyIOxL2/Gk0Qb7HJaYF5qFphgK+6zLWtv6Nd00+817iOTk5560PU9qM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221183; c=relaxed/simple;
-	bh=Bk69ws+dbX73ExRvs2HPqByctHj6BgtYDzry14mJ8aw=;
+	s=arc-20240116; t=1789221188; c=relaxed/simple;
+	bh=TyqbQPoiW41utsOhUlQJKghXSlytzbnXX8rJVb3J1v8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pV9CQTAjDvcc15WqCSr+LyGO8VpWpdOoIQQOezUNo9wQBxDUXt/oPW3urOJX8jRhVSRX+ssVrLpJznTj+tfCx7qjzeA0GjHwlLZSQyhTj/oNa8E8VVgAVo/qwK3N/pftzrD2kM+++0QdX8aFneXi125Pos/Ej6VAZ32TBKWTDZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0m/jo0tl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U3fcmpqr3fG0IV/mvo9T+ZbpEKmafh40ePP6jHQvvZ5ji7STDHkY5H5bqdzd6zqSOnM4UsrmNgj1m7YGH/93LU+ZNmfAz3TYRrIX/aMVQxeTtnVdQGS3bzxiVedBHC2Q71oJxYJ3DPcOiI2PW3qfDE5Ll3bt3n6MNbkl+Kgq+QA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0RN7UAq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0m/jo0tl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07CF41F000FF;
-	Sat, 12 Sep 2026 13:53:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0RN7UAq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9161F000FF;
+	Sat, 12 Sep 2026 13:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221182;
-	bh=0lRyf3dPvjp9hfO3C8J3ioXs8wdKiGj7hYXUWE2R5qI=;
+	s=korg; t=1789221187;
+	bh=SmQccNkd0bKNOpSs4eC82gu4c8LsmLvqGzRz80h3ODk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0m/jo0tlssKSLJvcoAWaPQktrxlyi+01Ac1YQt6TmiY2JrG8eJA6IwVBU4LEnJdq/
-	 fh+nDpXHBbYac0rTyEZ3Ue1/BNRqUbECMZ8W61MN6gmPoKS+22zU2Swzg9culno310
-	 DoRu6ZeKc5GuRKFRV5NuY00v1Yb0oADbWmYpUuCM=
+	b=j0RN7UAq5d8hULcqbQqB/cdeEryb3EuH6lE0PrGOntdM2SZUo0fwuVwhgyeqTtP6+
+	 yu14cNNUYbXpcJvtlumS5PGWznxSMFbi0GVxV3X8WsJICqlhfhcR2o6F/2M7P5gYzk
+	 w5z4DlGhuDbUeb3hnDW1UfTia70iL3yBdX8zmbGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+2280f1cca5e6b0c353e4@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	syzbot+bbb6dad313f4aaa8da6b@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
+	Ivy Lopez <skunkolee@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 0330/1424] usb: gadget: midi2: Fix null-pointer dereference in f_midi2_free_ep_reqs
-Date: Sat, 12 Sep 2026 08:46:02 +0200
-Message-ID: <20260912065614.678160077@linuxfoundation.org>
+Subject: [PATCH 6.6 0331/1424] usb: gadget: f_midi2: fix use-after-free in string attribute show path
+Date: Sat, 12 Sep 2026 08:46:03 +0200
+Message-ID: <20260912065614.700340339@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,89 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Ivy Lopez <skunkolee@gmail.com>
 
-commit f0efaf1872949e96d213c8e910fd9517f7d7c406 upstream.
+commit fed0aa7c6eaedc6c0d4e362fc91724aa47be4a7b upstream.
 
-A null-pointer dereference occurs in f_midi2_free_ep_reqs() when attempting
-to clean up an endpoint that was never initialized.
+f_midi2_opts_str_show() takes the string lock internally, but its
+callers dereference the opts->info.<field> pointer before calling it,
+outside the lock. This races with f_midi2_opts_str_store(), which
+frees the old string under opts->lock when the attribute is written
+concurrently, the show path can read a pointer that gets freed
+before the lock inside str_show() is even taken.
 
-When configuring the MIDI 2.0 gadget via configfs and setting the block
-direction to SNDRV_UMP_DIR_INPUT, the initialization of the midi1_ep_out
-endpoint is explicitly skipped during the gadget bind phase
-(f_midi2_bind()). As a result, the usb_ep->card field remains NULL.
+Change f_midi2_opts_str_show() to take a pointer to the string field,
+matching the existing pattern in f_midi2_opts_str_store(), and
+dereference it only after the lock is held. Update all three callers
+(iface_name, block name, and the EP string option macro) accordingly.
 
-Later, when the host sets the alternate setting, f_midi2_set_alt()
-unconditionally stops both the IN and OUT endpoints by calling
-f_midi2_stop_eps(), which in turn calls f_midi2_free_ep_reqs() for both
-endpoints. When f_midi2_free_ep_reqs() is called for the uninitialized
-midi1_ep_out, it attempts to dereference usb_ep->card to determine the
-number of requests to free, leading to a crash.
-
-Fix this by using usb_ep->num_reqs instead of usb_ep->card->info.num_reqs
-in f_midi2_free_ep_reqs(). usb_ep->num_reqs is correctly set during
-f_midi2_init_ep() and remains 0 if the endpoint was never initialized,
-safely avoiding the loop. For consistency, apply the same change to
-f_midi2_alloc_ep_reqs().
-
-Oops: general protection fault, probably for non-canonical address
-0xdffffc00000000ee: 0000 [#1] SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000770-0x0000000000000777]
-...
-RIP: 0010:f_midi2_free_ep_reqs drivers/usb/gadget/function/f_midi2.c:1166
-[inline]
-RIP: 0010:f_midi2_stop_eps+0x28e/0x4d0
-drivers/usb/gadget/function/f_midi2.c:1246
-...
-Call Trace:
- <TASK>
- f_midi2_set_alt+0x11c/0xf00 drivers/usb/gadget/function/f_midi2.c:1296
- composite_setup+0x1ffd/0x3480 drivers/usb/gadget/composite.c:1933
- configfs_composite_setup+0xbd/0x100 drivers/usb/gadget/configfs.c:1877
-
-Fixes: 8b645922b223 ("usb: gadget: Add support for USB MIDI 2.0 function driver")
+Reported-by: syzbot+2280f1cca5e6b0c353e4@syzkaller.appspotmail.com
 Cc: stable <stable@kernel.org>
-Assisted-by: Gemini:gemini-3.5-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+bbb6dad313f4aaa8da6b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=bbb6dad313f4aaa8da6b
-Link: https://syzkaller.appspot.com/ai_job?id=8ce30b1a-8cf7-4e38-bcf7-1f69e6f6313f
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Closes: https://syzkaller.appspot.com/bug?extid=2280f1cca5e6b0c353e4
+Signed-off-by: Ivy Lopez <skunkolee@gmail.com>
 Reviewed-by: Takashi Iwai <tiwai@suse.de>
-Closes: https://syzkaller.appspot.com/bug?extid=01a17afb30637396955e
-Link: https://patch.msgid.link/cafe65f4-e1bb-46a3-901d-732814b861b2@mail.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260816005434.34018-1-skunkolee@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_midi2.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/function/f_midi2.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_midi2.c b/drivers/usb/gadget/function/f_midi2.c
-index a4b72a6fad8a..e0b743dfaba5 100644
 --- a/drivers/usb/gadget/function/f_midi2.c
 +++ b/drivers/usb/gadget/function/f_midi2.c
-@@ -1145,7 +1145,7 @@ static int f_midi2_alloc_ep_reqs(struct f_midi2_usb_ep *usb_ep)
- 	if (!usb_ep->reqs)
- 		return -EINVAL;
+@@ -2180,13 +2180,13 @@ end:
  
--	for (i = 0; i < midi2->info.num_reqs; i++) {
-+	for (i = 0; i < usb_ep->num_reqs; i++) {
- 		if (usb_ep->reqs[i].req)
- 			continue;
- 		usb_ep->reqs[i].req = alloc_ep_req(usb_ep->usb_ep,
-@@ -1160,10 +1160,9 @@ static int f_midi2_alloc_ep_reqs(struct f_midi2_usb_ep *usb_ep)
- /* Free allocated requests */
- static void f_midi2_free_ep_reqs(struct f_midi2_usb_ep *usb_ep)
+ /* generic show/store for string */
+ static ssize_t f_midi2_opts_str_show(struct f_midi2_opts *opts,
+-				     const char *str, char *page)
++				     const char **strp, char *page)
  {
--	struct f_midi2 *midi2 = usb_ep->card;
- 	int i;
+ 	int result = 0;
  
--	for (i = 0; i < midi2->info.num_reqs; i++) {
-+	for (i = 0; i < usb_ep->num_reqs; i++) {
- 		if (!usb_ep->reqs[i].req)
- 			continue;
- 		free_ep_req(usb_ep->usb_ep, usb_ep->reqs[i].req);
--- 
-2.55.0
-
+ 	mutex_lock(&opts->lock);
+-	if (str)
+-		result = scnprintf(page, PAGE_SIZE, "%s\n", str);
++	if (*strp)
++		result = scnprintf(page, PAGE_SIZE, "%s\n", *strp);
+ 	mutex_unlock(&opts->lock);
+ 	return result;
+ }
+@@ -2280,7 +2280,7 @@ static ssize_t f_midi2_block_opts_name_s
+ {
+ 	struct f_midi2_block_opts *opts = to_f_midi2_block_opts(item);
+ 
+-	return f_midi2_opts_str_show(opts->ep->opts, opts->info.name, page);
++	return f_midi2_opts_str_show(opts->ep->opts, &opts->info.name, page);
+ }
+ 
+ static ssize_t f_midi2_block_opts_name_store(struct config_item *item,
+@@ -2437,7 +2437,7 @@ static ssize_t f_midi2_ep_opts_##name##_
+ 					     char *page)		\
+ {									\
+ 	struct f_midi2_ep_opts *opts = to_f_midi2_ep_opts(item);	\
+-	return f_midi2_opts_str_show(opts->opts, opts->info.name, page);\
++	return f_midi2_opts_str_show(opts->opts, &opts->info.name, page);\
+ }									\
+ 									\
+ static ssize_t f_midi2_ep_opts_##name##_store(struct config_item *item,	\
+@@ -2592,7 +2592,7 @@ static ssize_t f_midi2_opts_iface_name_s
+ {
+ 	struct f_midi2_opts *opts = to_f_midi2_opts(item);
+ 
+-	return f_midi2_opts_str_show(opts, opts->info.iface_name, page);
++	return f_midi2_opts_str_show(opts, &opts->info.iface_name, page);
+ }
+ 
+ static ssize_t f_midi2_opts_iface_name_store(struct config_item *item,
 
 
