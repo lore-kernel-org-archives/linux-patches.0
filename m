@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D3C3FD956;
-	Sat, 12 Sep 2026 17:08:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABEA33993;
+	Sat, 12 Sep 2026 17:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232906; cv=none; b=oRFSj/4eoeOBHkpz07jwEUJRHC9JZOuIRFJ5GIjdWOWFSjb1mc8DqwgeiRAjOQyRb9CbR7d11oVhn5S+xGSkcDdEH4h9Lav1MNbS7803GTde2AtnR5nw5Ix9yTib0f1bLfquvOpsR+xhyrVL2Uu7y5I4jkXW+SpI2zqNNPRGa9k=
+	t=1789232911; cv=none; b=JUT/Vpa7rIS8BlqxAy0oS0bMUABdmgwjSTGjIrdx8TsrzR4r/x123KWWwyAiFVV4LUXprZcsrII6iszRAuThPxZyWRpMcQv5CQYza1OnPPb6lBEPtEpdb979BkWrx0BCfiwALpFsmepwSXo/4HKYpm0Vpej31sPzK5z64WlR2GU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232906; c=relaxed/simple;
-	bh=WLAEdU7SPqc755UuAJnxlDvDo/vCkitfzbNm2AcziK4=;
+	s=arc-20240116; t=1789232911; c=relaxed/simple;
+	bh=1rHZ+xjHLrxnbjW8REaFojk0RYCjt6p71Hr6zBJIbos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+nb2I38UAE85VS6hmhXEY3eiDSa6jyubNsiZD3z1oTKmB6teq7EIV1CEAGpkQySDrtxnYn7GoZ5t+NW+YxuDA15dfAlNLX5QS/Fwun3hOcJ6IctpjJa//HuYw7CSLogjFqCGWgTC+qM5ftczItiDqFbVMYxUFLewehz1dkAkyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R08Gkr1t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tkjX+bsnJ3/U7Us9wgQpX7vhmIwtsIQz23YBVghBYgI7hGFeFdCgth4J/RkvvzXXmWtnwxgNXHKtuIE2n7GqB+K3BqCAGy2MgZnHNRj/peQsXnXwhII9qRPjJB2DPz00lXIc+CRLZ9Jkd4avEamYf+D2kbVQSe9GGLVevWnIvLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vwewnkOB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R08Gkr1t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D614D1F000FF;
-	Sat, 12 Sep 2026 17:08:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwewnkOB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D141F000FF;
+	Sat, 12 Sep 2026 17:08:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232905;
-	bh=eueAruCu4iPJwcpk60kWNDATmg4/AevEw7hcfKnN29w=;
+	s=korg; t=1789232910;
+	bh=MVT7qhtu2RHQ2LJGAzrnEwQzvM969uE4jbJczlU+e1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R08Gkr1tF4G8zySe7uZ5U76PyAZd3xOi6USeFgPmf/iZQd5mEf50pBsXXMBdKd3uQ
-	 Fba3IidCcQ4XbgBz3+pMmx9UpazRn163yNR/3siBdtQSoON5x5jKezWjVn/ycCO33E
-	 Plgck5xNsiFjl7ugGzErdYkCQCYPiMDrLnYKr5qk=
+	b=vwewnkOBBy8+RnodEAMVvWrmDa3GEZnAtupJeYDVt3E4dh8zoRNOp1+yBGbkwOX/c
+	 Fgbw9r/UEVrVQ7HFlZQLxYTMS6bhoZd8YgaN65InU9PlW1m7F28WZXFuEjH8jizWdv
+	 8Bn1m5eoMDhfkLNIjHim+7zwqR8p41fN5rX/rq3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Varu <harshitvaru666@gmail.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 105/935] mptcp: fix uninitialized local_id in syncookie MP_JOIN reconstruction
-Date: Sat, 12 Sep 2026 08:52:15 +0200
-Message-ID: <20260912065529.228475151@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 106/935] SUNRPC: xdr_buf_trim: clamp buf->len to avoid underflow
+Date: Sat, 12 Sep 2026 08:52:16 +0200
+Message-ID: <20260912065529.249770205@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,44 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshit Varu <harshitvaru666@gmail.com>
+From: Chris Mason <clm@meta.com>
 
-commit b878dfdd12d7a5b8722a78d35e313506140ca3d9 upstream.
+commit 3f491306dcb673ff5e78e1044ba450c58978774e upstream.
 
-mptcp_token_join_cookie_init_state() restores remote_nonce, local_nonce,
-backup, join_id, token and msk from the saved cookie entry when rebuilding
-the request socket for a MP_JOIN 4th-ACK handled under SYN cookies, but it
-does not restore local_id, even though the SYN path saved it.
-subflow_ulp_clone() then reads that uninitialized field and stores it as
-the joined subflow's address-ID. Because the request-sock slab is
-SLAB_TYPESAFE_BY_RCU and not zeroed on allocation, the value is the stale
-byte of a previously freed request socket, which an off-path peer can
-influence by sending concurrent MP_JOIN SYNs. This corrupts the path
-manager's id-based subflow bookkeeping for the connection.
+xdr_buf_trim() trims `len` bytes from the tail of an xdr_buf by
+walking the tail, pages, and head iovecs.  Each per-section step
+uses min_t() so it never removes more bytes than that section
+holds, but the final accounting at the fix_len label subtracts the
+total bytes actually consumed from buf->len without any clamp:
 
-Restore subflow_req->local_id from the cookie entry, as done for the other
-fields.
+    fix_len:
+            buf->len -= (len - trim);
 
-Fixes: 9466a1ccebbe ("mptcp: enable JOIN requests even if cookies are in use")
+When the caller has set buf->len to a value smaller than the sum
+of the iov_lens, (len - trim) can exceed buf->len and the unsigned
+subtraction wraps to near UINT_MAX.  gss_krb5_unwrap_v2() reaches
+xdr_buf_trim() in exactly that state:
+
+    buf->head[0].iov_len -= GSS_KRB5_TOK_HDR_LEN + headskip;
+    buf->len = len - (GSS_KRB5_TOK_HDR_LEN + headskip);
+    xdr_buf_trim(buf, ec + GSS_KRB5_TOK_HDR_LEN + tailskip);
+
+buf->len is a small wire-derived value while the iov_lens are at
+page scale, so the per-section loops legitimately consume far more
+bytes than buf->len records.  The wrapped buf->len then propagates
+as the authoritative stream bound into every downstream XDR
+decoder.
+
+Fix by clamping the decrement so buf->len bottoms out at zero:
+
+    buf->len -= min_t(unsigned int, buf->len, len - trim);
+
+On the normal path where the iov_lens sum to buf->len, (len - trim)
+is always <= buf->len and the result is identical to before.  No
+callers change behavior outside the underflow case.
+
+Fixes: 4c190e2f913f ("sunrpc: trim off trailing checksum before returning decrypted or integrity authenticated buffer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Harshit Varu <harshitvaru666@gmail.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260815115205.197151-1-harshitvaru666@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: kres (claude-opus-4-7)
+Signed-off-by: Chris Mason <clm@meta.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260524010213.557424-4-cel@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/syncookies.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/sunrpc/xdr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/syncookies.c
-+++ b/net/mptcp/syncookies.c
-@@ -118,6 +118,7 @@ bool mptcp_token_join_cookie_init_state(
- 	subflow_req->local_nonce = e->local_nonce;
- 	subflow_req->backup = e->backup;
- 	subflow_req->remote_id = e->join_id;
-+	subflow_req->local_id = e->local_id;
- 	subflow_req->token = e->token;
- 	subflow_req->msk = msk;
- 	spin_unlock_bh(&join_entry_locks[i]);
+--- a/net/sunrpc/xdr.c
++++ b/net/sunrpc/xdr.c
+@@ -1732,7 +1732,7 @@ void xdr_buf_trim(struct xdr_buf *buf, u
+ 		trim -= cur;
+ 	}
+ fix_len:
+-	buf->len -= (len - trim);
++	buf->len -= min_t(unsigned int, buf->len, len - trim);
+ }
+ EXPORT_SYMBOL_GPL(xdr_buf_trim);
+ 
 
 
