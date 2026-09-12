@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71DE35AC1E;
-	Sat, 12 Sep 2026 08:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2AD36B924;
+	Sat, 12 Sep 2026 08:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200244; cv=none; b=U9sIOQ63nsbqK70DLyavUTFjsZuZuDgOrXp3mTle8hSG3x3ji3/5DN/1tfPTqFM7YAbKC8goecAMnDccC9df9uxWeegO1xT6D37hZY2juF1QYB20wIV+r4qln4j5a4nEtQfZlce6rg+3ev46RROF0L8apsNw9cRuymhHv4aUnN4=
+	t=1789200250; cv=none; b=dE1/hKQnCZo6TC8eR92E2BMwQnVPGY71Aq1wzKptIERdd6zAOx1nR3DmDg3PNf1dDbauRhQndejyWh30xJIw/JSvo6+2SF2xASvDE/P7a7WmRDIDKN4YOGjo5SDv75pQ9OjIzc64E8hvgUaxyXmilc1le+fuPH44Ku6QBHD+IKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200244; c=relaxed/simple;
-	bh=W8Gx5VSo3GwFBZ9Lig3kKxjsNhoT/nQt8/ZAttb+fJU=;
+	s=arc-20240116; t=1789200250; c=relaxed/simple;
+	bh=AzM+g3KAcuwn2iqzAAKI4ppO3Dso3P4HZZKnAMwhzrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IbehCozJ7jGummP5wZdMky9QelF9hiKg2CtkBgYSNG0JXUAR9cbTWayiNozAO2E8ExDNVWXNtC0owTIyXy74WHJS3l2Bmo8YUhvLAjzjn4W7TFXS8iqGZJPYpKizWthLJ55+svKKS9PW46vKFdRzBcO6KaZJvgW/k30TpWb8K8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X8UicbHZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=h27toxr6u5T/J1uEolXQTh0ypgLwbJDbBE0R/02+sG4xzhDfxQhQmEPaUPEvYApE/2MUJziLvE/byW34nxlLETTml+/KXNtRXicT1bJhkWgJgOwU0bdYXRyLiKa4da2Y6wJOYPRfr64HGvwb+Gp25B+LghleXc/LkFUO7usO+L8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNt8/lEp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8UicbHZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9491F000FF;
-	Sat, 12 Sep 2026 08:04:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNt8/lEp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C14EF1F00893;
+	Sat, 12 Sep 2026 08:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200243;
-	bh=HmUI1xkk2U2mfTq9EfrARCvNm0xqZyxPtIQcO7nfVrk=;
+	s=korg; t=1789200248;
+	bh=HpBdj0mYEmEoEUSNidxqrY8Vdonb07f+51AVdCtA7/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X8UicbHZqZXRCLF3Rjdjh7zgpLxngNVTa+BzmNqMfCYmyoTs9T/B5OGiaRCvCYq8B
-	 8LY+fmEnuGApeTDi6TldhYXVEDyq19STomgYovpqF7qGgwy/lK1f6NRBsWzfsdzRf3
-	 LQ3dHyOsFyeYlM3npQkbhxE1Ut5Cit+IqHrIcbeg=
+	b=WNt8/lEpx9lsFN+F/tJaxTcqZHh3m/v256i/UUwo6UNjFK2q36uWDsRsP+zdi2iGi
+	 K/k0tUBtKVet0vCuH6Kx47DJnutdRAHZXQBIecgdV/2hexqdh5flGYLBgJhO7HSNTv
+	 dhnEOC3DfNQbuigjDBZWqrTMph4t6uOvg51I59+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anna Maniscalco <anna.maniscalco2000@gmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0750/1815] drm/msm: remove objects from evit list after pinning them
-Date: Sat, 12 Sep 2026 08:41:40 +0200
-Message-ID: <20260912065706.512915739@linuxfoundation.org>
+Subject: [PATCH 7.2 0751/1815] media: qcom: iris: Fix bitmask test in iris_allow_cmd()
+Date: Sat, 12 Sep 2026 08:41:41 +0200
+Message-ID: <20260912065706.536688621@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,44 +47,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anna Maniscalco <anna.maniscalco2000@gmail.com>
+From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 
-[ Upstream commit 83723f32cb3de23d45c1ac09241b5e0cfb32cc9b ]
+[ Upstream commit 0ac05c4d9f1fa25d0692fb154de36bd3baf2e7ce ]
 
-Once objects are pinned they should not be kept in the evict list as
-that will cause drm_gpuvm_validate to keep ieterating a growing list of
-objects needlessly.
+iris_allow_cmd() incorrectly checks a sub‑state flag using a logical
+equality comparison. Since sub_state is a bitmask, this allows STOP to
+pass when IRIS_INST_SUB_DRAIN is set alongside other bits, violating the
+intended drain semantics. Fix this by using a proper bitmask test.
 
-Once an object is pinned remove it from the list.
-
-Fixes: 2e6a8a1fe2b2 ("drm/msm: Add VM_BIND ioctl")
-Signed-off-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/742166/
-Message-ID: <20260723-evict_list_fix-v2-1-bd0725e56253@gmail.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Fixes: d09100763bed ("media: iris: add support for drain sequence")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gem_vma.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/qcom/iris/iris_state.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-index c4cfe036066b7..7441d4a01d31d 100644
---- a/drivers/gpu/drm/msm/msm_gem_vma.c
-+++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-@@ -458,6 +458,8 @@ msm_gem_vm_bo_validate(struct drm_gpuvm_bo *vm_bo, struct drm_exec *exec)
- 			return ret;
+diff --git a/drivers/media/platform/qcom/iris/iris_state.c b/drivers/media/platform/qcom/iris/iris_state.c
+index e991f34916ec6..5552725c614ea 100644
+--- a/drivers/media/platform/qcom/iris/iris_state.c
++++ b/drivers/media/platform/qcom/iris/iris_state.c
+@@ -269,7 +269,7 @@ bool iris_allow_cmd(struct iris_inst *inst, u32 cmd)
+ 				return true;
+ 	} else if (cmd == V4L2_DEC_CMD_STOP || cmd == V4L2_ENC_CMD_STOP) {
+ 		if (vb2_is_streaming(src_q))
+-			if (inst->sub_state != IRIS_INST_SUB_DRAIN)
++			if (!(inst->sub_state & IRIS_INST_SUB_DRAIN))
+ 				return true;
  	}
- 
-+	drm_gpuvm_bo_evict(vm_bo, false);
-+
- 	return 0;
- }
  
 -- 
 2.53.0
