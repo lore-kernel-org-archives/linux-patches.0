@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DEA24CEEA;
-	Sat, 12 Sep 2026 11:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8C7221F26;
+	Sat, 12 Sep 2026 11:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211059; cv=none; b=ABwfaL0ZI8NRGRz8KUhw4j4Q7JsaYNxThAjc1YX8xveekO+O+/IK3F8pUXkcKMxP5Zo0Fd7tqTNPc82aa6YE0FlgJlNBOJpIk5q3J3nt2MOTAdnkqZx/cRGzEPhVpfzxitN4IcsOq9yspHNaKRwNUObiwzv2dM1RBeRfX4v4q6Y=
+	t=1789211064; cv=none; b=KrDml81WxBjjEw+gXdhYHUi/piggVqX0d9HgUEuMLAsTix6r+1m0NIUOkKd2L20JXPfrnWmRX87m5nSBliK2SkrgozDua9BJsubHQaens2pPq2ry6ItSboO+oHKw2Twtj/3rjFA9O0fuYZPDcZdxcAJvIQcSiWqTs8mYlkQS+vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211059; c=relaxed/simple;
-	bh=Hgn7++JON3iyGy69/gxm5wesAukCGRPwlk+R0ln7gCI=;
+	s=arc-20240116; t=1789211064; c=relaxed/simple;
+	bh=gNgEMkL4osg0BbmjzMtzkDJOlfeAH4BAC79hGkoHcjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ENRFK6L6H6C18Q18W5M2urZROfMi4jRUW/kgoySm7NxvO42bgPNKFW4jGyfTdP8NuR6m7hQBe1HxrCnyWdW7BSBBfkfPzAP7m6SH4VzhZYGFosdKxrqsaZvHVUrzomPX6WqNFi7mMBQqsnoQvEr6hU/Noo/4AJY21hTeBPwVnH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cHA+VI/a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c6s8AYen4iVwDEQHc7r3FA+QMywuB9OWgaqRlMHJH1WIdNbEXUIrR3HrNS7wZn4Z80YfQEAKLR6v6Sw7FCQ70jW51THzya4FdTs0r7Lds6w/22T26yGoGtAxhhgAZ/YewvKoMs4qexhCFFikPQLkTAxHXR233CN0cxNOfL5nsgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jcSGk53v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cHA+VI/a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 316301F000FF;
-	Sat, 12 Sep 2026 11:04:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jcSGk53v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE2B1F00893;
+	Sat, 12 Sep 2026 11:04:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211058;
-	bh=KklKgZrWxzAxljHMh7G7E2NnAJweHEhnjXqEoRoHUe4=;
+	s=korg; t=1789211062;
+	bh=UZ9T9bFh1lAiTJ2cxpgzmlL8ebP1NrMhJOXQvyiHXaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cHA+VI/aTy06a/wjaPpEQgtAz/EYaA8OSUZ1JK+h1cv9iAzbaWm018ppA0fQ6vVng
-	 19RAyVb5SRJ6DK0YkLkDPD5iHRCkvte/wNSWbTJHhd2bRRtW4HKhdZWKCfLEL6pfHz
-	 j7UgcDtx6lxu/qJ3GLX9oAlaIZSzgQ5nVCXge9jM=
+	b=jcSGk53vSlBW7PXmN3roTW27zpavkxotLJx0PPZe5+n2fHADikb60wnAiyRKd/88z
+	 bp5pXxOsXmyMkwKYfbrX9awM2sNe9eD16i9+sonNpQl21hYlzHL3FNOh3jbK85OSgy
+	 qj3j6Qcsad/hIyBQHErnTzHkLj/tRAXcUFoAJC8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boqun Feng <boqun@kernel.org>,
-	kernel test robot <lkp@intel.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Elson Roy Serrao <quic_eserrao@quicinc.com>,
+	Wesley Cheng <wesley.cheng@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1110/1518] s390/irqflags: Add out-of-line definitions of arch_local_irq_*() for KMSAN
-Date: Sat, 12 Sep 2026 08:54:39 +0200
-Message-ID: <20260912065648.561111730@linuxfoundation.org>
+Subject: [PATCH 6.18 1101/1518] phy: qualcomm: Update the QMP clamp register for V6
+Date: Sat, 12 Sep 2026 08:54:30 +0200
+Message-ID: <20260912065648.357900332@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,126 +54,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
 
-[ Upstream commit 3f7c9f9c36b47a2a5cdbc56597eddf32662ef7fa ]
+[ Upstream commit c9543cca9417d83f8ca6a8ce0a5279a3fba7a02b ]
 
-Inline KMSAN arch_local_irq_*() definitions run afoul of
--Wstatic-in-inline. Move them out-of-line. Make sure decompressor and
-non-GPL modules see the out-of-line definitions.
+QMP combo phy V6 and above use the clamp register from the PCS always on
+(AON) address space.  Update the driver accordingly.
 
-Cc: Boqun Feng <boqun@kernel.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202607131219.euJHPSJ5-lkp@intel.com/
-Suggested-by: Heiko Carstens <hca@linux.ibm.com>
-Fixes: 1b301f5f28ba ("s390/irqflags: do not instrument arch_local_irq_*() with KMSAN")
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
+Signed-off-by: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://patch.msgid.link/20251209-linux-next-12825-v8-7-42133596bda0@oss.qualcomm.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 8fd2b30d187f ("phy: qcom: qmp-combo: Drop qmp_v4_calibrate_dp_phy")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/irqflags.h | 20 +++++++++++++-------
- arch/s390/kernel/Makefile        |  1 +
- arch/s390/kernel/irqflags.c      | 28 ++++++++++++++++++++++++++++
- 3 files changed, 42 insertions(+), 7 deletions(-)
- create mode 100644 arch/s390/kernel/irqflags.c
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 38 ++++++++++++++++---
+ .../phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h    | 12 ++++++
+ .../phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h   | 12 ++++++
+ 3 files changed, 57 insertions(+), 5 deletions(-)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h
 
-diff --git a/arch/s390/include/asm/irqflags.h b/arch/s390/include/asm/irqflags.h
-index bcab456dfb803..6eb6de6a99f2d 100644
---- a/arch/s390/include/asm/irqflags.h
-+++ b/arch/s390/include/asm/irqflags.h
-@@ -37,18 +37,24 @@ static __always_inline void __arch_local_irq_ssm(unsigned long flags)
- 	asm volatile("ssm   %0" : : "Q" (flags) : "memory");
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index ec0643cecaca5..69333d7bfdb87 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -29,7 +29,10 @@
+ #include "phy-qcom-qmp-common.h"
+ 
+ #include "phy-qcom-qmp.h"
++#include "phy-qcom-qmp-pcs-aon-v6.h"
+ #include "phy-qcom-qmp-pcs-misc-v3.h"
++#include "phy-qcom-qmp-pcs-misc-v4.h"
++#include "phy-qcom-qmp-pcs-misc-v5.h"
+ #include "phy-qcom-qmp-pcs-usb-v4.h"
+ #include "phy-qcom-qmp-pcs-usb-v5.h"
+ #include "phy-qcom-qmp-pcs-usb-v6.h"
+@@ -78,6 +81,7 @@ enum qphy_reg_layout {
+ 	QPHY_PCS_AUTONOMOUS_MODE_CTRL,
+ 	QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR,
+ 	QPHY_PCS_POWER_DOWN_CONTROL,
++	QPHY_PCS_CLAMP_ENABLE,
+ 
+ 	QPHY_COM_RESETSM_CNTRL,
+ 	QPHY_COM_C_READY_STATUS,
+@@ -105,6 +109,8 @@ static const unsigned int qmp_v3_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V3_PCS_AUTONOMOUS_MODE_CTRL,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V3_PCS_LFPS_RXTERM_IRQ_CLEAR,
+ 
++	[QPHY_PCS_CLAMP_ENABLE]		= QPHY_V3_PCS_MISC_CLAMP_ENABLE,
++
+ 	[QPHY_COM_RESETSM_CNTRL]	= QSERDES_V3_COM_RESETSM_CNTRL,
+ 	[QPHY_COM_C_READY_STATUS]	= QSERDES_V3_COM_C_READY_STATUS,
+ 	[QPHY_COM_CMN_STATUS]		= QSERDES_V3_COM_CMN_STATUS,
+@@ -130,6 +136,8 @@ static const unsigned int qmp_v45_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V4_PCS_USB3_AUTONOMOUS_MODE_CTRL,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V4_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
+ 
++	[QPHY_PCS_CLAMP_ENABLE]		= QPHY_V4_PCS_MISC_CLAMP_ENABLE,
++
+ 	[QPHY_COM_RESETSM_CNTRL]	= QSERDES_V4_COM_RESETSM_CNTRL,
+ 	[QPHY_COM_C_READY_STATUS]	= QSERDES_V4_COM_C_READY_STATUS,
+ 	[QPHY_COM_CMN_STATUS]		= QSERDES_V4_COM_CMN_STATUS,
+@@ -155,6 +163,8 @@ static const unsigned int qmp_v5_5nm_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V5_PCS_USB3_AUTONOMOUS_MODE_CTRL,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V5_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
+ 
++	[QPHY_PCS_CLAMP_ENABLE]		= QPHY_V5_PCS_MISC_CLAMP_ENABLE,
++
+ 	[QPHY_COM_RESETSM_CNTRL]	= QSERDES_V5_COM_RESETSM_CNTRL,
+ 	[QPHY_COM_C_READY_STATUS]	= QSERDES_V5_COM_C_READY_STATUS,
+ 	[QPHY_COM_CMN_STATUS]		= QSERDES_V5_COM_CMN_STATUS,
+@@ -180,6 +190,8 @@ static const unsigned int qmp_v6_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V6_PCS_USB3_AUTONOMOUS_MODE_CTRL,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V6_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
+ 
++	[QPHY_PCS_CLAMP_ENABLE]		= QPHY_V6_PCS_AON_CLAMP_ENABLE,
++
+ 	[QPHY_COM_RESETSM_CNTRL]	= QSERDES_V6_COM_RESETSM_CNTRL,
+ 	[QPHY_COM_C_READY_STATUS]	= QSERDES_V6_COM_C_READY_STATUS,
+ 	[QPHY_COM_CMN_STATUS]		= QSERDES_V6_COM_CMN_STATUS,
+@@ -205,6 +217,8 @@ static const unsigned int qmp_v6_n4_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V6_PCS_USB3_AUTONOMOUS_MODE_CTRL,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V6_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
+ 
++	[QPHY_PCS_CLAMP_ENABLE]		= QPHY_V6_PCS_AON_CLAMP_ENABLE,
++
+ 	[QPHY_COM_RESETSM_CNTRL]	= QSERDES_V6_COM_RESETSM_CNTRL,
+ 	[QPHY_COM_C_READY_STATUS]	= QSERDES_V6_COM_C_READY_STATUS,
+ 	[QPHY_COM_CMN_STATUS]		= QSERDES_V6_COM_CMN_STATUS,
+@@ -1750,6 +1764,7 @@ struct qmp_combo_offsets {
+ 	u16 usb3_serdes;
+ 	u16 usb3_pcs_misc;
+ 	u16 usb3_pcs;
++	u16 usb3_pcs_aon;
+ 	u16 usb3_pcs_usb;
+ 	u16 dp_serdes;
+ 	u16 dp_txa;
+@@ -1831,6 +1846,7 @@ struct qmp_combo {
+ 	void __iomem *tx2;
+ 	void __iomem *rx2;
+ 	void __iomem *pcs_misc;
++	void __iomem *pcs_aon;
+ 	void __iomem *pcs_usb;
+ 
+ 	void __iomem *dp_serdes;
+@@ -1955,6 +1971,7 @@ static const struct qmp_combo_offsets qmp_combo_offsets_v8 = {
+ 	.usb3_serdes	= 0x1000,
+ 	.usb3_pcs_misc	= 0x1c00,
+ 	.usb3_pcs	= 0x1e00,
++	.usb3_pcs_aon	= 0x2000,
+ 	.usb3_pcs_usb	= 0x2100,
+ 	.dp_serdes	= 0x3000,
+ 	.dp_txa		= 0x3400,
+@@ -3340,6 +3357,7 @@ static void qmp_combo_enable_autonomous_mode(struct qmp_combo *qmp)
+ 	const struct qmp_phy_cfg *cfg = qmp->cfg;
+ 	void __iomem *pcs_usb = qmp->pcs_usb ?: qmp->pcs;
+ 	void __iomem *pcs_misc = qmp->pcs_misc;
++	void __iomem *pcs_aon = qmp->pcs_aon;
+ 	u32 intr_mask;
+ 
+ 	if (qmp->phy_mode == PHY_MODE_USB_HOST_SS ||
+@@ -3359,9 +3377,14 @@ static void qmp_combo_enable_autonomous_mode(struct qmp_combo *qmp)
+ 	/* Enable required PHY autonomous mode interrupts */
+ 	qphy_setbits(pcs_usb, cfg->regs[QPHY_PCS_AUTONOMOUS_MODE_CTRL], intr_mask);
+ 
+-	/* Enable i/o clamp_n for autonomous mode */
+-	if (pcs_misc)
+-		qphy_clrbits(pcs_misc, QPHY_V3_PCS_MISC_CLAMP_ENABLE, CLAMP_EN);
++	/*
++	 * Enable i/o clamp_n for autonomous mode
++	 * V6 and later versions use pcs aon clamp register
++	 */
++	if (pcs_aon)
++		qphy_clrbits(pcs_aon, cfg->regs[QPHY_PCS_CLAMP_ENABLE], CLAMP_EN);
++	else if (pcs_misc)
++		qphy_clrbits(pcs_misc, cfg->regs[QPHY_PCS_CLAMP_ENABLE], CLAMP_EN);
  }
  
--#ifdef CONFIG_KMSAN
--#define arch_local_irq_attributes noinline notrace __no_sanitize_memory __maybe_unused
-+#if defined(CONFIG_KMSAN) && !defined(__DECOMPRESSOR)
-+unsigned long arch_local_save_flags(void);
-+unsigned long arch_local_irq_save(void);
-+void arch_local_irq_enable_external(void);
-+void arch_local_irq_enable(void);
- #else
--#define arch_local_irq_attributes __always_inline
-+#define arch_local_save_flags		__arch_local_save_flags
-+#define arch_local_irq_save		__arch_local_irq_save
-+#define arch_local_irq_enable_external	__arch_local_irq_enable_external
-+#define arch_local_irq_enable		__arch_local_irq_enable
- #endif
+ static void qmp_combo_disable_autonomous_mode(struct qmp_combo *qmp)
+@@ -3369,10 +3392,13 @@ static void qmp_combo_disable_autonomous_mode(struct qmp_combo *qmp)
+ 	const struct qmp_phy_cfg *cfg = qmp->cfg;
+ 	void __iomem *pcs_usb = qmp->pcs_usb ?: qmp->pcs;
+ 	void __iomem *pcs_misc = qmp->pcs_misc;
++	void __iomem *pcs_aon = qmp->pcs_aon;
  
--static arch_local_irq_attributes unsigned long arch_local_save_flags(void)
-+static __always_inline unsigned long __arch_local_save_flags(void)
- {
- 	return __arch_local_irq_stnsm(0xff);
- }
+ 	/* Disable i/o clamp_n on resume for normal mode */
+-	if (pcs_misc)
+-		qphy_setbits(pcs_misc, QPHY_V3_PCS_MISC_CLAMP_ENABLE, CLAMP_EN);
++	if (pcs_aon)
++		qphy_setbits(pcs_aon, cfg->regs[QPHY_PCS_CLAMP_ENABLE], CLAMP_EN);
++	else if (pcs_misc)
++		qphy_setbits(pcs_misc, cfg->regs[QPHY_PCS_CLAMP_ENABLE], CLAMP_EN);
  
--static arch_local_irq_attributes unsigned long arch_local_irq_save(void)
-+static __always_inline unsigned long __arch_local_irq_save(void)
- {
- 	return __arch_local_irq_stnsm(0xfc);
- }
-@@ -58,12 +64,12 @@ static __always_inline void arch_local_irq_disable(void)
- 	arch_local_irq_save();
- }
+ 	qphy_clrbits(pcs_usb, cfg->regs[QPHY_PCS_AUTONOMOUS_MODE_CTRL],
+ 		     ARCVR_DTCT_EN | ARCVR_DTCT_EVENT_SEL | ALFPS_DTCT_EN);
+@@ -4037,6 +4063,8 @@ static int qmp_combo_parse_dt(struct qmp_combo *qmp)
+ 	qmp->serdes = base + offs->usb3_serdes;
+ 	qmp->pcs_misc = base + offs->usb3_pcs_misc;
+ 	qmp->pcs = base + offs->usb3_pcs;
++	if (offs->usb3_pcs_aon)
++		qmp->pcs_aon = base + offs->usb3_pcs_aon;
+ 	qmp->pcs_usb = base + offs->usb3_pcs_usb;
  
--static arch_local_irq_attributes void arch_local_irq_enable_external(void)
-+static __always_inline void __arch_local_irq_enable_external(void)
- {
- 	__arch_local_irq_stosm(0x01);
- }
- 
--static arch_local_irq_attributes void arch_local_irq_enable(void)
-+static __always_inline void __arch_local_irq_enable(void)
- {
- 	__arch_local_irq_stosm(0x03);
- }
-diff --git a/arch/s390/kernel/Makefile b/arch/s390/kernel/Makefile
-index 71f7837336aa1..8df143ac8ab48 100644
---- a/arch/s390/kernel/Makefile
-+++ b/arch/s390/kernel/Makefile
-@@ -71,6 +71,7 @@ obj-$(CONFIG_STACKPROTECTOR)	+= stackprotector.o
- obj-$(CONFIG_KEXEC_FILE)	+= machine_kexec_file.o kexec_image.o
- obj-$(CONFIG_KEXEC_FILE)	+= kexec_elf.o
- obj-$(CONFIG_CERT_STORE)	+= cert_store.o
-+obj-$(CONFIG_KMSAN)		+= irqflags.o
- 
- obj-$(CONFIG_PERF_EVENTS)	+= perf_event.o
- obj-$(CONFIG_PERF_EVENTS)	+= perf_cpum_cf.o perf_cpum_sf.o
-diff --git a/arch/s390/kernel/irqflags.c b/arch/s390/kernel/irqflags.c
+ 	qmp->dp_serdes = base + offs->dp_serdes;
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h
 new file mode 100644
-index 0000000000000..e192f59f8918c
+index 0000000000000..52db31a7cf22e
 --- /dev/null
-+++ b/arch/s390/kernel/irqflags.c
-@@ -0,0 +1,28 @@
-+// SPDX-License-Identifier: GPL-2.0
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h
+@@ -0,0 +1,12 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2025, Qualcomm Innovation Center, Inc. All rights reserved.
++ */
 +
-+#include <linux/export.h>
-+#include <asm/irqflags.h>
++#ifndef QCOM_PHY_QMP_PCS_AON_V6_H_
++#define QCOM_PHY_QMP_PCS_AON_V6_H_
 +
-+noinstr unsigned long arch_local_save_flags(void)
-+{
-+	return __arch_local_save_flags();
-+}
-+EXPORT_SYMBOL(arch_local_save_flags);
++/* Only for QMP V6 PHY - PCS_AON registers */
++#define QPHY_V6_PCS_AON_CLAMP_ENABLE			0x00
 +
-+noinstr unsigned long arch_local_irq_save(void)
-+{
-+	return __arch_local_irq_save();
-+}
-+EXPORT_SYMBOL(arch_local_irq_save);
++#endif
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h
+new file mode 100644
+index 0000000000000..77d04c6a1644c
+--- /dev/null
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h
+@@ -0,0 +1,12 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
++ */
 +
-+noinstr void arch_local_irq_enable_external(void)
-+{
-+	__arch_local_irq_enable_external();
-+}
-+EXPORT_SYMBOL(arch_local_irq_enable_external);
++#ifndef QCOM_PHY_QMP_PCS_MISC_V5_H_
++#define QCOM_PHY_QMP_PCS_MISC_V5_H_
 +
-+noinstr void arch_local_irq_enable(void)
-+{
-+	__arch_local_irq_enable();
-+}
-+EXPORT_SYMBOL(arch_local_irq_enable);
++/* Only for QMP V5 PHY - PCS_MISC registers */
++#define QPHY_V5_PCS_MISC_CLAMP_ENABLE			0x0c
++
++#endif
 -- 
 2.53.0
 
