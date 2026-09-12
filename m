@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6EE23BD03;
-	Sat, 12 Sep 2026 15:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0494F427FBD;
+	Sat, 12 Sep 2026 15:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226376; cv=none; b=cG4JlWaxpJzJosQ/3RnEeiUMkC7d1/zy2ksK+kiW7PsY8F7A38g8xJ02BjMKxpPxVKHywLLvVH14BV8pMz37HVDM5iVebujvpnIdhOfWQHPBGXqywM/mcIkZusBvJ8Cg1F2xETtYtdhjPzqEJcc5jlaSapUJ9rZsj4F+4cbnNKY=
+	t=1789226383; cv=none; b=rKWBmxLtObu24fFiCJDoZSxf6aG1ZRkBRxCAs2JIoldwPjspBJeQE4clO9XTNbNopa+D6EdT0vxvYoyEODVdp6cjy175lc42yTV7yO7FyKOXQ9nD6DWKyhYMCd6PSciTbhS6aa/JEmklAxnczh9/A73BXxYNhpAN0D/puzjbbjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226376; c=relaxed/simple;
-	bh=NdAxy7f9LxUxFvC7g+Qi1zMUFK42fxCVy3VeRQABBXI=;
+	s=arc-20240116; t=1789226383; c=relaxed/simple;
+	bh=UsTHKNvKkz6QEJQwUIyHaGVRV55Q1Rz8VCUOCT4uRsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DGZ23apMlZRrQzIrZ/KWK5Il7CDnkWe+CsFUPvaUrSQ/uRaLXz1ri7Pk6Qk7c6tPWHvDjM0AqvA50lK81VwfdhivcvxJHeWbj/LzBliq23THO4oSYq3POSamFaWrjNiekulHqFXwS+t1hVstBxGJQxubCDBVL/64zNiRwyejcS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCJdrIt3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BByEjD2G6NhQ+0AcGxxgWGW6Ui87L4WdoHRAuxr+1vkQn4Dl2zi7+lQOCXGyOCoV4PeNREfXJyfTNDseWVL6GZPij+lTH7O7L3nYCNEfKNi8TzpoH21/3qixdWvp38bbLdfkXdbXknCAEaRHoL3xja1TENwgngq8Cox5Ov7gJgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jq93S60l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCJdrIt3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E4491F000FF;
-	Sat, 12 Sep 2026 15:19:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jq93S60l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67A51F000FF;
+	Sat, 12 Sep 2026 15:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226374;
-	bh=NdCB1D6Q0/rL9LacCcSRaqlZKe3zQGtzmaSD7srFgw0=;
+	s=korg; t=1789226379;
+	bh=3HRbsoo7Noolfh5QyX++ZMl1MSQJz+itxUk7mspvzF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MCJdrIt3zotlLXCRGGTGRh9h8EzWR7fxdnpAT9TQRTGNyGVz9XvZVaLiE9TyqQU7Z
-	 VeXYbx5UJVChg9otaVA2rUoK+uS23z0XbsM8UhZJD75dEz3Yco+uVWZAwUleDi5ACZ
-	 nlnXE3zhu/pQyiB1gTmmlRun4Pc7qppWxax7CzCM=
+	b=jq93S60ldhbWOKSYl/dsJ4c9nscjKaJxRG8am69I4OMXLtHVIoTML/ekNrrOWyVbn
+	 v+8nFuG5yCPPqTHWHBrakOEkkKVmQTSSqtO8VUDT16wZaoYhSc24h0n4peBBYenus7
+	 sd2C2LibRrDNxgujUDuzKUsmoea9UqDa1gQu6G40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1389/1424] net: stmmac: dwmac4: Account for the primary MAC address for UC filtering
-Date: Sat, 12 Sep 2026 09:03:41 +0200
-Message-ID: <20260912065638.364680596@linuxfoundation.org>
+Subject: [PATCH 6.6 1390/1424] net: stmmac: dwxgmac: Account for the primary MAC address for UC filtering
+Date: Sat, 12 Sep 2026 09:03:42 +0200
+Message-ID: <20260912065638.388313769@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -54,35 +54,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit 82187f42c014d22520b9c3c4e2cfb519223fb29b ]
+[ Upstream commit 2739d6f9a2b8729b0d85cbe0dc93e1d68670b6f2 ]
 
 The same filter slots are used to store the main MAC address as well as
 the address for the unicast filter. Let's account for that when deciding
 whether or not to use promisc when programming the UC list in hardware.
 
-Fixes: 477286b53f55 ("stmmac: add GMAC4 core support")
+Fixes: 0efedbf11f07 ("net: stmmac: xgmac: Fix XGMAC selftests")
 Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260826140500.616466-4-maxime.chevallier@bootlin.com
+Link: https://patch.msgid.link/20260826140500.616466-5-maxime.chevallier@bootlin.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-index bdb4f527289d2..065e24054e3b2 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-@@ -684,7 +684,7 @@ static void dwmac4_set_filter(struct mac_device_info *hw,
- 	value |= GMAC_PACKET_FILTER_HPF;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
+index aab02328a6130..29863ec5526cc 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
+@@ -540,7 +540,7 @@ static void dwxgmac2_set_filter(struct mac_device_info *hw,
+ 	dwxgmac2_set_mchash(ioaddr, mc_filter, mcbitslog2);
  
  	/* Handle multiple unicast addresses */
 -	if (netdev_uc_count(dev) > hw->unicast_filter_entries) {
 +	if (netdev_uc_count(dev) + 1 > hw->unicast_filter_entries) {
- 		/* Switch to promiscuous mode if more than 128 addrs
- 		 * are required
- 		 */
+ 		value |= XGMAC_FILTER_PR;
+ 	} else {
+ 		struct netdev_hw_addr *ha;
 -- 
 2.53.0
 
