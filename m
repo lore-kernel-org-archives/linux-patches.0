@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EA230C60F;
-	Sat, 12 Sep 2026 15:07:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9FB23BD03;
+	Sat, 12 Sep 2026 15:08:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225680; cv=none; b=qjgl0erVpekZRPFNNhDkegt37oSq9o6cyd2C9FlLCLu3cJlUjKHXehaCXphJzwaXjknZSJv4AvdTM75PmxIonsjJw2zYZRCMrPuHiDWBEBtv0LutbqM124mzhuakuzJUN6NgDQufXQsb+2seiW3oyHWfqAeePpQtdpByb1CyWfI=
+	t=1789225685; cv=none; b=Lv7E2LuB9yHPFynpYDHhGfo+NWef8lXzNXZrxK4tP2hdqEjkbDEg2Gkz1Iph0omDqtPAlcDoBoudNtP3bf+VHtafNdgu/JpBUI247KxMhTj6FXOmHujLYFaFZHYPIXRL0/FOPQGVD9JhH6geqTFZZ0GBjztgE6y6Et7Z2fdNqdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225680; c=relaxed/simple;
-	bh=kUsVwH94ju+UwKO8/y8jZL3g8FaW7oQbPrvdUVXaHRA=;
+	s=arc-20240116; t=1789225685; c=relaxed/simple;
+	bh=eAS6KhFaGc81SUe+7tUOzYZID92yNECErwtv8AB+qvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DLir/WW6WHuHgXqudAMW0PH8QGfMQqZvcueJ7tjxzC84krm3AFHGBAEArw3AOMD5e9RpQC7qYSBOorl40/oygwOBrZXN3QP1+qGt2+378SdVzRCDzPGvw1Upvvp1bekrSs1Y8Kb44iJyxpjp6f0pBRvDMfCB0+dFt6Vt+EOpFqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l83OciiE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PvoU+7GBGCYDyAYeJfuU1mvdnTx1ce48tsji2LTw0TsY+fBn2r2SS42dedKjkT4jCVQoUDGyn20FFURBk45hl4LUWjK7yO2vA1fLwnuozAfm2J+0/9EuXINI7KWEAC0FufoRfEB4JYKABGswBdmFb6XrEgW4s8Rd83Diw3Jkmc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBHclpWO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l83OciiE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3171F000FF;
-	Sat, 12 Sep 2026 15:07:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBHclpWO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C1B1F000FF;
+	Sat, 12 Sep 2026 15:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225678;
-	bh=fIqsUNayI5gqZJxS+1IrT/in5nUdQgawSuoNl82rDDM=;
+	s=korg; t=1789225683;
+	bh=8dr7hk5C/Rey44AInMyCFOuvcdJWzT6v0AjpJYWJZB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l83OciiEI/yl7WpX3Kz4nPKCrLs7x7H24Za4LPt4GzTzmySys5tKw3DUnGkmLek6R
-	 wCZLzPhE1WY1IYm2IszvanwRuyROEL5+orFxaujwlyP8sTfMf4XQmfd5e5M0TvAkhM
-	 RkqpVxkAfWWDOpsEUPVxAR8eGEyLOdnzRhtNsFF8=
+	b=DBHclpWODuZslyJBf0ww+MDtmXKC6MZA7lPu453W4XNsInuUWTJlWQBDAzTsfHUuw
+	 MypspCe2wry7BQl4NsDX+U0tVUauR4Wuc02Y+cJHFtu4ObBCuD6Sucr3HjsJi2G+wv
+	 peR6vDm3R5Q0zDAeLZKhnuLIPzem92gdttvn7E8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enzo Matsumiya <ematsumiya@suse.de>,
+	Yunseong Kim <yunseong.kim@est.tech>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1247/1424] smb: server: fix leak of ksmbd_ipc_login_request_ext() returned buffer
-Date: Sat, 12 Sep 2026 09:01:19 +0200
-Message-ID: <20260912065635.208413075@linuxfoundation.org>
+Subject: [PATCH 6.6 1248/1424] ksmbd: validate ipc response length before dereferencing its fields
+Date: Sat, 12 Sep 2026 09:01:20 +0200
+Message-ID: <20260912065635.232024415@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,66 +51,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Enzo Matsumiya <ematsumiya@suse.de>
+From: Yunseong Kim <yunseong.kim@est.tech>
 
-[ Upstream commit 1c3ebf832d010c08afe1359215d4121cb1ed2de5 ]
+[ Upstream commit e9b33376bd07bca4175f7bcc2d6034ef250f8181 ]
 
-Free it unconditionally after ksmbd_alloc_user() calls.
+ipc_validate_msg() computes the expected message size by reading length
+fields out of the response buffer supplied by the userspace ksmbd daemon
+(payload_sz, session_key_len, ngroups, ...).  Those fields are read before
+the buffer is verified to be large enough to contain the struct they belong
+to, so a short response makes the read land past the end of the allocation.
 
-kmemleak splat:
-  unreferenced object 0xffff888103b83540 (size 192):
-    comm "pool-0", pid 16970, jiffies 4377290937
-    hex dump (first 32 bytes):
-      00 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00  ................
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    backtrace (crc 408ccc66):
-      __kvmalloc_node_noprof+0x730/0x920
-      handle_generic_event+0xec/0x1a0 [ksmbd]
-      genl_family_rcv_msg_doit+0xe0/0x130
-      genl_rcv_msg+0x181/0x290
-      netlink_rcv_skb+0x4f/0x100
-      genl_rcv+0x28/0x40
-      netlink_unicast+0x1e6/0x2c0
-      netlink_sendmsg+0x20a/0x450
-      ____sys_sendmsg+0x2e8/0x310
-      ___sys_sendmsg+0x78/0xc0
-      __sys_sendmsg+0x63/0xc0
-      do_syscall_64+0xa1/0x670
-      entry_SYSCALL_64_after_hwframe+0x76/0x7e
+handle_response() sizes entry->response purely from the netlink attribute
+length (nla_len()) and only guards the leading handle read, so the daemon
+can install a response as small as the kmalloc-8 object seen below.  When
+ipc_msg_send_request() then calls ipc_validate_msg() for a
+KSMBD_EVENT_RPC_REQUEST, the cast to struct ksmbd_rpc_command reads
+resp->payload_sz at offset 8 of an 8-byte allocation:
 
-Fixes: a77e0e02af1c ("ksmbd: add support for supplementary groups")
-Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
+[ 3697.841381] ==================================================================
+[ 3697.844099] BUG: KASAN: slab-out-of-bounds in ipc_msg_send_request+0x763/0x800
+[ 3697.846604] Read of size 4 at addr ffff888105f95910 by task kworker/4:3/20682
+[ 3697.849061]
+[ 3697.849801] CPU: 4 UID: 0 PID: 20682 Comm: kworker/4:3 Not tainted 7.2.0-rc3-next-20260717-virtme #117 PREEMPT(lazy)
+[ 3697.850077] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+[ 3697.850303] Workqueue: ksmbd-io handle_ksmbd_work
+[ 3697.850592] Call Trace:
+[ 3697.850794]  <TASK>
+[ 3697.850952]  __dump_stack+0x21/0x60
+[ 3697.851239]  dump_stack_lvl+0xc2/0x100
+[ 3697.851528]  print_address_description+0x77/0x200
+[ 3697.851816]  ? ipc_msg_send_request+0x763/0x800
+[ 3697.852024]  print_report+0x58/0x70
+[ 3697.852316]  kasan_report+0x117/0x150
+[ 3697.852585]  ? down_write+0x146/0x1f0
+[ 3697.852809]  ? ipc_msg_send_request+0x763/0x800
+[ 3697.853082]  ipc_msg_send_request+0x763/0x800
+[ 3697.853385]  ? __pfx_ipc_msg_send_request+0x10/0x10
+[ 3697.853604]  ? kasan_unpoison+0x48/0x70
+[ 3697.853936]  ? __pfx___up_read+0x10/0x10
+[ 3697.854221]  ksmbd_rpc_ioctl+0x380/0x520
+[ 3697.854542]  ? __pfx_ksmbd_rpc_ioctl+0x10/0x10
+[ 3697.854757]  ? kasan_unpoison+0x48/0x70
+[ 3697.854962]  ? copy_from_kernel_nofault+0x32c/0x4e0
+[ 3697.855166]  ? kasan_unpoison+0x48/0x70
+[ 3697.855416]  fsctl_pipe_transceive+0x139/0x7a0
+[ 3697.855705]  ? __pfx_copy_from_kernel_nofault+0x10/0x10
+[ 3697.855937]  ? __pfx_fsctl_pipe_transceive+0x10/0x10
+[ 3697.856388]  ? __sanitizer_cov_trace_switch+0x7b/0x140
+[ 3697.856620]  smb2_ioctl+0x1141/0x3420
+[ 3697.856994]  ? __pfx_smb2_ioctl+0x10/0x10
+[ 3697.857182]  ? get_smb2_cmd_val+0xe3/0x1c0
+[ 3697.857655]  handle_ksmbd_work+0x9ad/0x15e0
+[ 3697.858034]  ? __pfx_handle_ksmbd_work+0x10/0x10
+[ 3697.858251]  ? lock_release+0xf7/0x360
+[ 3697.858466]  ? process_scheduled_works+0x954/0x1600
+[ 3697.858698]  ? process_scheduled_works+0x954/0x1600
+[ 3697.858905]  process_scheduled_works+0xc22/0x1600
+[ 3697.859368]  ? __pfx_process_scheduled_works+0x10/0x10
+[ 3697.859637]  ? __pfx_assign_work+0x10/0x10
+[ 3697.859896]  ? lock_is_held_type+0x7b/0x110
+[ 3697.860146]  worker_thread+0x975/0xee0
+[ 3697.860524]  ? __pfx_do_raw_spin_lock+0x10/0x10
+[ 3697.860830]  ? __kthread_parkme+0x21e/0x260
+[ 3697.861105]  kthread+0x3a6/0x490
+[ 3697.861423]  ? __pfx_worker_thread+0x10/0x10
+[ 3697.861643]  ? __pfx_kthread+0x10/0x10
+[ 3697.861878]  ret_from_fork+0x55a/0xa20
+[ 3697.862194]  ? __pfx_ret_from_fork+0x10/0x10
+[ 3697.862480]  ? __pfx_kthread+0x10/0x10
+[ 3697.862714]  ret_from_fork_asm+0x1a/0x30
+[ 3697.862965]  </TASK>
+[ 3697.863039]
+[ 3697.938882] Allocated by task 20761:
+[ 3697.940257]  kasan_save_track+0x3e/0x80
+[ 3697.941782]  __kasan_kmalloc+0x72/0x90
+[ 3697.943228]  __kvmalloc_node_noprof+0x3e9/0x6a0
+[ 3697.944948]  handle_generic_event+0x59b/0x750
+[ 3697.946592]  genl_family_rcv_msg_doit+0x3d6/0x560
+[ 3697.946977]  genl_rcv_msg+0x67c/0x900
+[ 3697.947224]  netlink_rcv_skb+0x286/0x580
+[ 3697.947488]  genl_rcv+0x2d/0x80
+[ 3697.947706]  netlink_unicast+0x937/0xb70
+[ 3697.947993]  netlink_sendmsg+0x977/0xc10
+[ 3697.948268]  __sock_sendmsg+0x264/0x2d0
+[ 3697.948536]  __sys_sendto+0x4de/0x690
+[ 3697.948789]  __x64_sys_sendto+0x173/0x380
+[ 3697.949069]  do_syscall_64+0x13d/0x420
+[ 3697.949328]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[ 3697.949662]
+[ 3697.949779] The buggy address belongs to the object at ffff888105f95908
+[ 3697.949779]  which belongs to the cache kmalloc-8 of size 8
+[ 3697.950550] The buggy address is located 0 bytes to the right of
+[ 3697.950550]  allocated 8-byte region [ffff888105f95908, ffff888105f95910)
+[ 3697.951455]
+[ 3697.951574] The buggy address belongs to the physical page:
+[ 3697.951958] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff888105f951b8 pfn:0x105f95
+[ 3697.952571] flags: 0x100000000000200(workingset|node=0|zone=2)
+[ 3697.952973] page_type: f5(slab)
+[ 3697.953198] raw: 0100000000000200 ffff888100042640 ffffea0004063610 ffff888100040588
+[ 3697.953707] raw: ffff888105f951b8 00000000001c000e 00000000f5000000 0000000000000000
+[ 3697.954240] page dumped because: kasan: bad access detected
+[ 3697.954616]
+[ 3697.954734] Memory state around the buggy address:
+[ 3697.955063]  ffff888105f95800: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fa
+[ 3697.955534]  ffff888105f95880: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[ 3697.956006] >ffff888105f95900: fc 00 fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[ 3697.956477]                          ^
+[ 3697.956728]  ffff888105f95980: fc fc fc fa fc fc fc fc fc fc fc fc fc fc fc fc
+[ 3697.957202]  ffff888105f95a00: fc fc fc fc fc fa fc fc fc fc fc fc fc fc fc fc
+[ 3697.957671] ==================================================================
+
+The final "entry->msg_sz != msg_sz" comparison cannot help: the offending
+read has already happened by the time it runs.  Every case in the switch
+shares this pattern.
+
+Floor entry->msg_sz against the base struct of each event type before
+dereferencing any of its length fields.  On failure ipc_msg_send_request()
+already frees the response and returns NULL, so callers stay safe.
+
+The malformed message originates from the ksmbd.mountd daemon over genl
+netlink rather than a remote SMB client, so triggering it requires a buggy
+or compromised daemon; it is still an out-of-bounds read the validator is
+meant to prevent.
+
+Fixes: d6a6aa81eac2 ("ksmbd: validate response sizes in ipc_validate_msg()")
+Signed-off-by: Yunseong Kim <yunseong.kim@est.tech>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/auth.c             | 1 +
- fs/smb/server/mgmt/user_config.c | 1 +
- 2 files changed, 2 insertions(+)
+ fs/smb/server/transport_ipc.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/fs/smb/server/auth.c b/fs/smb/server/auth.c
-index bb8332caa9a71..e5b77d8754787 100644
---- a/fs/smb/server/auth.c
-+++ b/fs/smb/server/auth.c
-@@ -547,6 +547,7 @@ int ksmbd_krb5_authenticate(struct ksmbd_session *sess, char *in_blob,
- 		resp_ext = ksmbd_ipc_login_request_ext(resp->login_response.account);
+diff --git a/fs/smb/server/transport_ipc.c b/fs/smb/server/transport_ipc.c
+index 554a6c92a1ccb..bbe039a05b1c3 100644
+--- a/fs/smb/server/transport_ipc.c
++++ b/fs/smb/server/transport_ipc.c
+@@ -498,6 +498,9 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
+ 	{
+ 		struct ksmbd_rpc_command *resp = entry->response;
  
- 	user = ksmbd_alloc_user(&resp->login_response, resp_ext);
-+	kvfree(resp_ext);
- 	if (!user) {
- 		ksmbd_debug(AUTH, "login failure\n");
- 		retval = -ENOMEM;
-diff --git a/fs/smb/server/mgmt/user_config.c b/fs/smb/server/mgmt/user_config.c
-index e9b3a8e049668..3d7c9b6b032e9 100644
---- a/fs/smb/server/mgmt/user_config.c
-+++ b/fs/smb/server/mgmt/user_config.c
-@@ -26,6 +26,7 @@ struct ksmbd_user *ksmbd_login_user(const char *account)
- 		resp_ext = ksmbd_ipc_login_request_ext(account);
++		if (entry->msg_sz < sizeof(struct ksmbd_rpc_command))
++			return -EINVAL;
++
+ 		if (check_add_overflow(sizeof(struct ksmbd_rpc_command),
+ 				       resp->payload_sz, &msg_sz))
+ 			return -EINVAL;
+@@ -507,6 +510,9 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
+ 	{
+ 		struct ksmbd_spnego_authen_response *resp = entry->response;
  
- 	user = ksmbd_alloc_user(resp, resp_ext);
-+	kvfree(resp_ext);
- out:
- 	kvfree(resp);
- 	return user;
++		if (entry->msg_sz < sizeof(struct ksmbd_spnego_authen_response))
++			return -EINVAL;
++
+ 		msg_sz = sizeof(struct ksmbd_spnego_authen_response) +
+ 				resp->session_key_len + resp->spnego_blob_len;
+ 		break;
+@@ -515,6 +521,9 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
+ 	{
+ 		struct ksmbd_share_config_response *resp = entry->response;
+ 
++		if (entry->msg_sz < sizeof(struct ksmbd_share_config_response))
++			return -EINVAL;
++
+ 		if (resp->payload_sz) {
+ 			if (resp->payload_sz < resp->veto_list_sz)
+ 				return -EINVAL;
+@@ -529,6 +538,9 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
+ 	{
+ 		struct ksmbd_login_response_ext *resp = entry->response;
+ 
++		if (entry->msg_sz < sizeof(struct ksmbd_login_response_ext))
++			return -EINVAL;
++
+ 		if (resp->ngroups) {
+ 			if (resp->ngroups < 0 ||
+ 			    resp->ngroups > NGROUPS_MAX) {
 -- 
 2.53.0
 
