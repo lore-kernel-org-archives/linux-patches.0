@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04852FDC30;
-	Sat, 12 Sep 2026 14:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8050D284B37;
+	Sat, 12 Sep 2026 14:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222563; cv=none; b=Q/XJM+8LkkgmThk7LsHazn/SFo6phHhQp6EHKCqNJUHnKqr2RBsNa1VtVdKAxAYO1w+BgQ5ejlIoxaAdpWyo9ZQdG3AsaFsZanHjDoeoP8ni3sV+Okl14ZHoIAbiFhbj1/5NDzYTJajPfp6Z2uX7ZnXujUM0Y4gAlND24YdhYX8=
+	t=1789222565; cv=none; b=B5tBvwJoKBMSQlVwuqNGskajsiNZN7ncVSwGeRo0jKFaTawjA7wWuzbBHMX5OTYXcM04u8pYAEhE1VKluUeAgfbf7lbWYcYYO3JyhttnPUMKOX8B/e5AupGOUd058VPxm91llrz1b89kFX3Imp9YkdDtWKaUmk7Lnn02rNaO3Sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222563; c=relaxed/simple;
-	bh=QhEu5y5DTjWhGniLQDlzE0/oTW/LMC64TqdGKZjf5p4=;
+	s=arc-20240116; t=1789222565; c=relaxed/simple;
+	bh=RaEeDPOGklz5iJanagzQsEC9jytzqITYj8U+NjO5ko8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rkchJubYeyXRI3YickNsYDITMULLbLNH59SybYtPiMyX+OA0++TK0Hx0RCbUXRgS5GB/dqmuyWw4WSzZWc0UyOxZBtW1QBMI8+d/0j0vjvmCWZ10c+IeXG5kYqTraDUsWpsttq60L7y0Sfwx5wZOIkdF91QXq/N9vXesG4L1Rh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDj7vbjr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M0ODS1hVs1RaJbdHldD8fJQ9+CohZI1UfyDSjjvCagI5HgtSw19XQcY8hjHQAowBRd12eN4SQgS4u8F/hG+LShFx7eNbfPsKOj3ELBNsRywnpGSgWmZDkkaalf30h5459f6fv4qNGjLNuiNBDz4VISWEqHTqQCPMMcpLbsZjA2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMZr6rV7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDj7vbjr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C491F000FF;
-	Sat, 12 Sep 2026 14:15:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMZr6rV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211151F00893;
+	Sat, 12 Sep 2026 14:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222559;
-	bh=Ouk8UPpalYYydOXWHJTxsUejwn+PSfakjKi2xvMzdiA=;
+	s=korg; t=1789222564;
+	bh=Ub05/VXZFKgr82sXJuAmN5fjQnBIwIR8RQqtuiKS9J4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZDj7vbjrXhjhUfllL8/Ha0GwmRSgq8z6jy26JALdeAh899b0rnRu9h4Mwq+C34Oi0
-	 PKFnUbhMZC4fRiV2FSvpmg6Uy+VjVU5k0V7vFdC5Ax02KkJWx/xR5lJrbl2JDHBmID
-	 yUcy4a/oA8SOMGNhjoUaq3A7e0bn//mSZfKwqGyg=
+	b=KMZr6rV7QxQm1DUaJbMFATAqP9kraFHU1Mj73e2Oejwnvwc0ayiTnobEItSCuK1hv
+	 fT0KP7l5JP9ZUIAiBa9JkJT7W/IUoPGrI/mhX0yGmx1JZIiSCHAZgXPmMGHKr3eQ38
+	 /5H49S5VLef6EZCltODbY3g6J/CxK3/fYXc3P4t8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Richard <thomas.richard@bootlin.com>,
-	Nishanth Menon <nm@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+	Weigang He <geoffreyhe2@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0611/1424] regulator: tps6594-regulator: Fix the number of irqs for TPS65224 and TPS6594
-Date: Sat, 12 Sep 2026 08:50:43 +0200
-Message-ID: <20260912065620.974688561@linuxfoundation.org>
+Subject: [PATCH 6.6 0585/1424] ARM: imx: fix device_node refcount leak in imx_src_init()
+Date: Sat, 12 Sep 2026 08:50:17 +0200
+Message-ID: <20260912065620.393573932@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,57 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richard <thomas.richard@bootlin.com>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit 8141b6da1763b9db009e5dcf873869bb31bcef45 ]
+[ Upstream commit 936407c3563ac745cbbb9953c0cf2472128a22f4 ]
 
-The number of irqs is computed to allocate the right amount of memory for
-the irq data. An array of struct tps6594_regulator_irq_data is allocated
-one time for all the irqs. Each irq uses one cell of the array.
+imx_src_init() obtains a device_node reference via
+of_find_compatible_node() matching "fsl,imx51-src" and uses it only to
+call of_iomap(). It never releases that reference: on the success path
+the function returns at the end without of_node_put(np), leaking one
+device_node refcount on every boot of an i.MX5/6 platform.
 
-If the computed number of irqs is not correct, not allocated memory could
-be used.
+Release the reference right after of_iomap(). of_iomap() maps the
+node's registers but does not retain a reference to the device_node, so
+the node can be put once the mapping is done. The early return on a NULL
+np needs no put.
 
-Fix the	values used in the calculation for TPS6594 and TPS65224.
+Found by static analysis tool CodeQL.
 
-Fixes: 00c826525fba (regulator: tps6594-regulator: Add TI TPS65224 PMIC regulators)
-Signed-off-by: Thomas Richard <thomas.richard@bootlin.com>
-Tested-by: Nishanth Menon <nm@ti.com>
-Link: https://msgid.link/r/20240603170100.2394402-1-thomas.richard@bootlin.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 7fd28093b3ef ("regulator: tps6594: Fix device node reference leaks in multiphase loop")
+Fixes: bd3d924d71a4 ("ARM i.MX5: Add System Reset Controller (SRC) support for i.MX51 and i.MX53")
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/tps6594-regulator.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ arch/arm/mach-imx/src.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/regulator/tps6594-regulator.c b/drivers/regulator/tps6594-regulator.c
-index 4a859f4c0f835..ac53792e3fede 100644
---- a/drivers/regulator/tps6594-regulator.c
-+++ b/drivers/regulator/tps6594-regulator.c
-@@ -653,18 +653,14 @@ static int tps6594_regulator_probe(struct platform_device *pdev)
- 		}
- 	}
+diff --git a/arch/arm/mach-imx/src.c b/arch/arm/mach-imx/src.c
+index 59a8e8cc44693..f28bfb653a88f 100644
+--- a/arch/arm/mach-imx/src.c
++++ b/arch/arm/mach-imx/src.c
+@@ -171,6 +171,7 @@ void __init imx_src_init(void)
+ 	if (!np)
+ 		return;
+ 	src_base = of_iomap(np, 0);
++	of_node_put(np);
+ 	WARN_ON(!src_base);
  
--	if (tps->chip_id == LP8764) {
--		nr_buck = ARRAY_SIZE(buck_regs);
--		nr_ldo = 0;
--		nr_types = REGS_INT_NB;
--	} else if (tps->chip_id == TPS65224) {
-+	if (tps->chip_id == TPS65224) {
- 		nr_buck = ARRAY_SIZE(tps65224_buck_regs);
- 		nr_ldo = ARRAY_SIZE(tps65224_ldo_regs);
--		nr_types = REGS_INT_NB;
-+		nr_types = TPS65224_REGS_INT_NB;
- 	} else {
- 		nr_buck = ARRAY_SIZE(buck_regs);
--		nr_ldo = ARRAY_SIZE(tps6594_ldo_regs);
--		nr_types = TPS65224_REGS_INT_NB;
-+		nr_ldo = (tps->chip_id == LP8764) ? 0 : ARRAY_SIZE(tps6594_ldo_regs);
-+		nr_types = REGS_INT_NB;
- 	}
- 
- 	reg_irq_nb = nr_types * (nr_buck + nr_ldo);
+ 	/*
 -- 
 2.53.0
 
