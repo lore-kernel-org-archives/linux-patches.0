@@ -1,43 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003CF3BE645;
-	Sat, 12 Sep 2026 15:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12E93314B7;
+	Sat, 12 Sep 2026 15:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226690; cv=none; b=RZXIuDBKw+rHoGk5hHc5t9hJjiC7kOSK6MxH2Xhr+eC97vzEBHU/fXhfVasr02T4y0lf2S6xATpxoImBlLKfoPZ0QJ5we34fj8YNThER5jj2jt3Rvq6x7RDRpvk+8Bb2zBLYHlnNObnXuxyfb7+27+YyKUp9ueqn+zhUxw+anH0=
+	t=1789226694; cv=none; b=T3zXQSR5FTNVfNyQ5rhVfu6mFlDKlOp65s3z/xO9uW/uZhpyojXf9sB8d//f9XIrwjdEsc3b9Ny2URNFp4+t9jcnZ7JzxtPNeQggrJEIub/ttCGUsxdV0kRrwCIFLgqzyFAiF0uFR8gg9eY1bU09WfOp2GaQcCg8k1kq5c+uZfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226690; c=relaxed/simple;
-	bh=+joLuKTcySVlNMQKps5ygkrZs0hfMhUrQ+VtL4MtLok=;
+	s=arc-20240116; t=1789226694; c=relaxed/simple;
+	bh=mybpjVgRHnEuhOcsEMElkW97hkONWRSy5lbKc0NylAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gse+IdzmX3Ap97kRDZoOUJRkPVVZeGbyQaUS3Zx6JeJzbf2sZh033Ksdoi1GnVU6UNKgggxjnsEIifBObFYQt4u7K19+aU304Z/XnOA+QMoMtT6ZCjiKJ9Fo2u3CZGtdSyTotME7z5/Sl4eHRiJgBxWkXMYcmTVfcOr4YUGKF6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEipDDTi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EvChRiQJKwogyS7juCorE0jir3k8yp9lwlQXlysNhnjtcVAqR8l43PtmC/1bBh5wWvKURDlQeeICC5WQb2vxS1SfLnMkvwM641kZ+6yokFH9nyzb6g7fsIoLfj3XUEGAaVcZtlJTIAlv+IGEHvBgF5sneIkRFgo5anvhZofxMw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tjj5vapw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEipDDTi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4AA21F000FF;
-	Sat, 12 Sep 2026 15:24:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tjj5vapw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22461F000FF;
+	Sat, 12 Sep 2026 15:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226687;
-	bh=sacq85/Kst9vo7YBJMxVEahsdEPemcO69NWKxYmCDHE=;
+	s=korg; t=1789226692;
+	bh=glFsNqwkJcZcVfQmcC265VxDl4T9ws1mhN65xiLDbuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JEipDDTiDz/1ahFrttlibaCn8DNTLDaj70PbZZA2hd7JlkCCKEsPh+P33SmRgyfiF
-	 35378lqSVAR7E+9Xl6Wnrf8kcRfWJxLV8ctIYiGnwOqWN4D6ZY6ik3EWyqsI6ZbXqp
-	 uuy2TRo7ISqu8lSgjBdV5mEcJJE0KQry2/YWs9hQ=
+	b=tjj5vapw2DKvFj45AgenzrePGYgQ8zyb7Lpi1Bizy8jRtob+mal9lAIrhNOSQ6QKs
+	 mpF0R2u1GTXJaz8i8QkKndjHzfeKoo8A+CCrqJtwAeDM5I/5Fq1ZLr6hdGAf4e/u3l
+	 7uRO10DL9kd1VsXsAUCf4F0S353UBj3eYTFkwt2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Tao Cui <cuitao@kylinos.cn>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 0011/1191] mm: memcg: stop reclaim when a limit update is superseded
-Date: Sat, 12 Sep 2026 08:45:39 +0200
-Message-ID: <20260912065548.358281085@linuxfoundation.org>
+	Neill Kapron <nkapron@google.com>
+Subject: [PATCH 6.1 0029/1191] usb: gadget: f_fs: Prevent deadlock during ep0 read loop
+Date: Sat, 12 Sep 2026 08:45:57 +0200
+Message-ID: <20260912065548.776010657@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -56,76 +49,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guopeng Zhang <zhangguopeng@kylinos.cn>
+From: Neill Kapron <nkapron@google.com>
 
-commit 9477820c63cbf4d97114238f3d1ff10dfd6bee3f upstream.
+commit 569dd7e5dcffe1e1c6b26ca2cd3be57eb433e082 upstream.
 
-kernfs serializes file operations only per open file, so separate open
-files can update the same memory.high or memory.max file concurrently.
-Both handlers store the new limit before synchronous reclaim, but continue
-to use the writer's local target in the reclaim loop.  If another writer
-raises or removes the limit, the first writer can continue reclaiming
-toward a stale target.
+Currently, ffs_ep0_read() holds ffs->mutex when it prepares to go to
+sleep waiting for an event. When no setup events are pending, it calls
+wait_event_interruptible_exclusive_locked_irq() with the mutex still
+held. The wait macro deliberately drops the waitqueue spinlock before
+sleeping but does not drop the mutex.
 
-For memory.max, this can leave the writer looping indefinitely once
-reclaim retries are exhausted.  The OOM path sees sufficient margin under
-the current limit and returns true without killing, while the writer still
-compares usage against its stale target and records another OOM event.
+If a userspace daemon is polling ep0 via read() and the gadget is
+asynchronously torn down via configfs (e.g., echo "" > UDC), a
+deadlock can occur:
 
-Check the current limit at the start of each reclaim iteration and stop if
-it no longer matches the writer's target.
+1. The configfs teardown calls functionfs_unbind(), which queues a
+   FUNCTIONFS_UNBIND event.
+2. The daemon wakes up, consumes the event, and drops the mutex.
+3. However, if the daemon loops and immediately issues another read()
+   before exiting, it reacquires ffs->mutex and again goes into an
+   interruptible sleep.
+4. Meanwhile, functionfs_unbind() continues execution and attempts to
+   acquire ffs->mutex to tear down ep0req.
+5. The kernel deadlocks because the configfs thread is stuck in an
+   uninterruptible sleep waiting for the mutex, while the userspace
+   daemon is in an interruptible sleep holding the mutex forever
+   because no more events will arrive.
 
-Reproducer:
+To fix this, we drop both the waitqueue spinlock and ffs->mutex before
+going to sleep, and use wait_event_interruptible_exclusive() instead.
+Upon waking up, we jump back to the `retry` label to safely reacquire
+the mutex and re-evaluate the state machine. By not sleeping with
+ffs->mutex held, we natively decouple gadget teardowns (which require
+the mutex) from userspace polling.
 
-Populate a cgroup with anonymous memory and disable swapping.  Lower
-memory.max from one open file, then restore it to "max" through another
-open file after the new limit becomes visible.
-
-Without the patch, the first writer remains blocked and repeatedly
-increments the OOM event counter.  With the patch, it returns normally.
-
-This was not motivated by a reported production workload.  We found it
-through automated randomized testing for our cgroup observability work
-and reduced it to the reproducer above.
-
-Link: https://lore.kernel.org/20260724021805.1234583-1-guopeng.zhang@linux.dev
-Fixes: 8c8c383c04f6 ("mm: memcontrol: try harder to set a new memory.high")
-Fixes: b6e6edcfa405 ("mm: memcontrol: reclaim and OOM kill when shrinking memory.max below usage")
-Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Acked-by: Tao Cui <cuitao@kylinos.cn>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: ddf8abd25994 ("USB: f_fs: the FunctionFS driver")
+Cc: stable@vger.kernel.org
+Assisted-by: Antigravity:gemini-3.1-pro
+Signed-off-by: Neill Kapron <nkapron@google.com>
+Link: https://patch.msgid.link/20260724204117.4036015-1-nkapron@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/gadget/function/f_fs.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -6428,6 +6428,9 @@ static ssize_t memory_high_write(struct
- 		unsigned long nr_pages = page_counter_read(&memcg->memory);
- 		unsigned long reclaimed;
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -519,6 +519,7 @@ static ssize_t ffs_ep0_read(struct file
+ 	if (ffs_setup_state_clear_cancelled(ffs) == FFS_SETUP_CANCELLED)
+ 		return -EIDRM;
  
-+		if (high != READ_ONCE(memcg->memory.high))
-+			break;
-+
- 		if (nr_pages <= high)
++retry:
+ 	/* Acquire mutex */
+ 	ret = ffs_mutex_lock(&ffs->mutex, file->f_flags & O_NONBLOCK);
+ 	if (ret < 0)
+@@ -553,10 +554,15 @@ static ssize_t ffs_ep0_read(struct file
  			break;
+ 		}
  
-@@ -6476,6 +6479,9 @@ static ssize_t memory_max_write(struct k
- 	for (;;) {
- 		unsigned long nr_pages = page_counter_read(&memcg->memory);
- 
-+		if (max != READ_ONCE(memcg->memory.max))
-+			break;
+-		if (wait_event_interruptible_exclusive_locked_irq(ffs->ev.waitq,
+-							ffs->ev.count)) {
+-			ret = -EINTR;
+-			break;
++		if (!ffs->ev.count) {
++			spin_unlock_irq(&ffs->ev.waitq.lock);
++			mutex_unlock(&ffs->mutex);
 +
- 		if (nr_pages <= max)
- 			break;
++			if (wait_event_interruptible_exclusive(ffs->ev.waitq,
++							       ffs->ev.count))
++				return -EINTR;
++
++			goto retry;
+ 		}
  
+ 		/* unlocks spinlock */
 
 
