@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426CB4BEE32;
-	Sat, 12 Sep 2026 11:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90224BEE32;
+	Sat, 12 Sep 2026 11:21:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212106; cv=none; b=HxARUkIdcSs6VRggDu5RYO2h+vL0n2s07xIkvG8jwrbtdA0pw7RFb3Nq78dXcrGVf1vdAFIuecnc2GfK/vM/yNAg327p91sW/wpvdkEc26inVW1CZEP+iTIDsgCE7gApgZY98MOw6aqCgLrca/ziv8z8ztJmll3S2ED7SjLpCyo=
+	t=1789212110; cv=none; b=hjFvvd7yAMtaB/ISJ5NqmiXA3LxhZt+rjTEnrvk2D6jP+nX0Z61bDKQ4b9oMMD8sO/lpjoXFIxab5NpmNGDH6e3H59yAwGhcdO6AZuWkf/gV/hYvex3FRHa38zboxir6oYc5yIXcAjlkHFD6ZMrdS5m6FfV6pQKmnnRfsd5XxAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212106; c=relaxed/simple;
-	bh=fNj0HYMrnkUkZbpt13NujWFYhricqeTOSxp53sY+w/g=;
+	s=arc-20240116; t=1789212110; c=relaxed/simple;
+	bh=1M0mfJFhaf3nxCTxKso5m6DGIvnvsNgF2wsEmOB+sWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ORChnGw5vmTOen697G+CQrq5C4JBx5RxvyrnXU8UlvQCC0MJDgEc1Nsg2tlH+lE9/nPMClVTBUTrYNFmj2RkGtUlfx7YZZ40nyZushYFsSgNL0/sco9UjNwL0II8MDbqhS8TPEDKaHH0Q+rN0DUajs3VGW8TkHMjf8ztpVxcS3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xbmG3Paf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jv1kJsG+oA/YZQMMYDqoDcLARz5DtB/G6LNxoSmH40wqV/pnkqL10bqk4Ch7C27KbtKJM4xLmTjTNPgIggPIpblEggNVCny7LReygsz93q1k7qPJerjVbdf4jemeKiuUwhzZyOGjVCLb5CjGnY5yMfiz3UFrE5xdISSDZZqZvwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1EjSGh8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xbmG3Paf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7A51F00893;
-	Sat, 12 Sep 2026 11:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1EjSGh8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D9771F000FF;
+	Sat, 12 Sep 2026 11:21:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212104;
-	bh=wkTx8fon3kK6fNdigfsm2gbpQnqxj7jJTjHt3oh3whM=;
+	s=korg; t=1789212109;
+	bh=MiwRvvTAt8UxSjn/I1CtaNPc6ZBLQp0LUKoGyvQ5ZiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xbmG3PafANdSGcHa96Cx3ZXp6ObBVsmJmi2X8QjpUJk3ajILv+WIIH9/kTcO6Ee5E
-	 QVFaOZo7xg3zQ08fSvwEM7VbqHrO+aOgiSRAH/upHR4Hp9KTIipryOLVM8C3HG4YOI
-	 JOgwLh2pB0c0zqxo8NJ3+l5zRjLbSUTE2MLEPOWo=
+	b=X1EjSGh8TQLXF88rOp3c754QTWyi9EK2XRMfBS6oW4SIekUbVPsqIscLEEJ/QKgCs
+	 KX4OrP9Xa8cZq9sDl3CFJDokk2e2CR2j3S+lP5OrKVy5PxoPmNz+jhdVTztrqkmkW8
+	 s5jXZ+q4/TJy2nNVOiongzaBhtqAWto74c6haSFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Cosmo Chou <chou.cosmo@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1367/1518] NFSv4/pnfs: key the data server cache on the NFS version
-Date: Sat, 12 Sep 2026 08:58:56 +0200
-Message-ID: <20260912065654.463629012@linuxfoundation.org>
+Subject: [PATCH 6.18 1368/1518] rtc: pcf85363: Add error checking to regmap calls in probe()
+Date: Sat, 12 Sep 2026 08:58:57 +0200
+Message-ID: <20260912065654.487264939@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,143 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Cosmo Chou <chou.cosmo@gmail.com>
 
-[ Upstream commit 13c23c5cb977f66390795437fd3837887ce1fd75 ]
+[ Upstream commit 78acddfde75177a27000f076e3e828743e38877e ]
 
-nfs4_pnfs_ds_add() keys the per-net data server cache on the multipath
-address set alone, and struct nfs4_pnfs_ds records no version. That
-suffices for the files layout driver, which always connects with version
-4, but flexfiles takes its version tuple from GETDEVICEINFO per device,
-and one address can legitimately serve both NFSv3 and NFSv4.
+The probe() function ignores errors returned by regmap operations.
+If an I2C transport error occurs (e.g., -ENXIO), the driver continues
+probing and may register a non-functional RTC device.
 
-Two deviceids on one address with different ds_versions[0].version
-therefore share a single nfs4_pnfs_ds, and whichever mirror connects
-first pins ds_clp to its own version. The other one is handed that
-client anyway, so it selects rpc_call_ops for a version the connection
-does not speak, and the mismatched sequence-slot handling dereferences
-NULL.
+Propagate errors from all unchecked regmap calls in probe() using
+dev_err_probe().
 
-Add the version to the cache key so the two cannot alias, giving each
-version its own nfs4_pnfs_ds and connection while both mirrors stay
-usable. Only the major version is compared, since that is what selects
-rpc_call_ops and rpc_ops; v4.0 and v4.1 keep sharing a client. The files
-layout driver passes the 4 it already hardcodes at connect time.
-
-Fixes: d67ae825a59d ("pnfs/flexfiles: Add the FlexFile Layout Driver")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: fd9a6a13949a ("rtc: pcf85363: add support for the quartz-load-femtofarads property")
+Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
+Link: https://lore.kernel.org/linux-rtc/20260716125142.1801599-1-chou.cosmo@gmail.com/
+Link: https://patch.msgid.link/20260717193705.2003175-1-chou.cosmo@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/filelayout/filelayoutdev.c         |  3 ++-
- fs/nfs/flexfilelayout/flexfilelayoutdev.c |  3 ++-
- fs/nfs/pnfs.h                             |  3 ++-
- fs/nfs/pnfs_nfs.c                         | 14 +++++++++-----
- 4 files changed, 15 insertions(+), 8 deletions(-)
+ drivers/rtc/rtc-pcf85363.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/fs/nfs/filelayout/filelayoutdev.c b/fs/nfs/filelayout/filelayoutdev.c
-index df79aeb68db42..e13d880de581f 100644
---- a/fs/nfs/filelayout/filelayoutdev.c
-+++ b/fs/nfs/filelayout/filelayoutdev.c
-@@ -170,7 +170,8 @@ nfs4_fl_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
- 			goto out_err_free_deviceid;
- 		}
+diff --git a/drivers/rtc/rtc-pcf85363.c b/drivers/rtc/rtc-pcf85363.c
+index 540042b9eec8f..ccc7834e57599 100644
+--- a/drivers/rtc/rtc-pcf85363.c
++++ b/drivers/rtc/rtc-pcf85363.c
+@@ -426,8 +426,8 @@ static int pcf85363_probe(struct i2c_client *client)
  
--		dsaddr->ds_list[i] = nfs4_pnfs_ds_add(net, &dsaddrs, gfp_flags);
-+		dsaddr->ds_list[i] = nfs4_pnfs_ds_add(net, &dsaddrs, 4,
-+						      gfp_flags);
- 		if (!dsaddr->ds_list[i])
- 			goto out_err_drain_dsaddrs;
- 		trace_fl_getdevinfo(server, &pdev->dev_id, dsaddr->ds_list[i]->ds_remotestr);
-diff --git a/fs/nfs/flexfilelayout/flexfilelayoutdev.c b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-index c2d8a13a9dbdd..cb88c51346d99 100644
---- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-@@ -149,7 +149,8 @@ nfs4_ff_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
- 	new_ds->ds_versions = ds_versions;
- 	new_ds->ds_versions_cnt = version_count;
+ 	err = pcf85363_load_capacitance(pcf85363, client->dev.of_node);
+ 	if (err < 0)
+-		dev_warn(&client->dev, "failed to set xtal load capacitance: %d",
+-			 err);
++		return dev_err_probe(&client->dev, err,
++				     "failed to set xtal load capacitance\n");
  
--	new_ds->ds = nfs4_pnfs_ds_add(net, &dsaddrs, gfp_flags);
-+	new_ds->ds = nfs4_pnfs_ds_add(net, &dsaddrs, ds_versions[0].version,
-+				      gfp_flags);
- 	if (!new_ds->ds)
- 		goto out_err_drain_dsaddrs;
+ 	pcf85363->rtc->ops = &rtc_ops;
+ 	pcf85363->rtc->range_min = RTC_TIMESTAMP_BEGIN_2000;
+@@ -436,9 +436,16 @@ static int pcf85363_probe(struct i2c_client *client)
+ 	wakeup_source = device_property_read_bool(&client->dev,
+ 						  "wakeup-source");
+ 	if (client->irq > 0 || wakeup_source) {
+-		regmap_write(pcf85363->regmap, CTRL_FLAGS, 0);
+-		regmap_update_bits(pcf85363->regmap, CTRL_PIN_IO,
+-				   PIN_IO_INTAPM, PIN_IO_INTA_OUT);
++		err = regmap_write(pcf85363->regmap, CTRL_FLAGS, 0);
++		if (err)
++			return dev_err_probe(&client->dev, err,
++					     "failed to clear flags\n");
++
++		err = regmap_update_bits(pcf85363->regmap, CTRL_PIN_IO,
++					 PIN_IO_INTAPM, PIN_IO_INTA_OUT);
++		if (err)
++			return dev_err_probe(&client->dev, err,
++					     "failed to set interrupt pin mode\n");
+ 	}
  
-diff --git a/fs/nfs/pnfs.h b/fs/nfs/pnfs.h
-index 3db8f13d8fe4e..7b3ba2e64e6f3 100644
---- a/fs/nfs/pnfs.h
-+++ b/fs/nfs/pnfs.h
-@@ -63,6 +63,7 @@ struct nfs4_pnfs_ds {
- 	const struct net	*ds_net;
- 	struct nfs_client	*ds_clp;
- 	refcount_t		ds_count;
-+	u32			ds_version;	/* cache key, with ds_addrs */
- 	unsigned long		ds_state;
- #define NFS4DS_CONNECTING	0	/* ds is establishing connection */
- };
-@@ -417,7 +418,7 @@ void pnfs_generic_write_commit_done(struct rpc_task *task, void *data);
- void nfs4_pnfs_ds_put(struct nfs4_pnfs_ds *ds);
- struct nfs4_pnfs_ds *nfs4_pnfs_ds_add(const struct net *net,
- 				      struct list_head *dsaddrs,
--				      gfp_t gfp_flags);
-+				      u32 version, gfp_t gfp_flags);
- void nfs4_pnfs_v3_ds_connect_unload(void);
- int nfs4_pnfs_ds_connect(struct nfs_server *mds_srv, struct nfs4_pnfs_ds *ds,
- 			  struct nfs4_deviceid_node *devid, unsigned int timeo,
-diff --git a/fs/nfs/pnfs_nfs.c b/fs/nfs/pnfs_nfs.c
-index 1e291fd23d46f..5e85ea0ef5846 100644
---- a/fs/nfs/pnfs_nfs.c
-+++ b/fs/nfs/pnfs_nfs.c
-@@ -603,15 +603,17 @@ _same_data_server_addrs_locked(const struct list_head *dsaddrs1,
- }
- 
- /*
-- * Lookup DS by addresses.  nfs4_ds_cache_lock is held
-+ * Lookup DS by addresses and NFS version.  nfs4_ds_cache_lock is held
-  */
- static struct nfs4_pnfs_ds *
--_data_server_lookup_locked(const struct nfs_net *nn, const struct list_head *dsaddrs)
-+_data_server_lookup_locked(const struct nfs_net *nn,
-+			   const struct list_head *dsaddrs, u32 version)
- {
- 	struct nfs4_pnfs_ds *ds;
- 
- 	list_for_each_entry(ds, &nn->nfs4_data_server_cache, ds_node)
--		if (_same_data_server_addrs_locked(&ds->ds_addrs, dsaddrs))
-+		if (ds->ds_version == version &&
-+		    _same_data_server_addrs_locked(&ds->ds_addrs, dsaddrs))
- 			return ds;
- 	return NULL;
- }
-@@ -719,7 +721,8 @@ nfs4_pnfs_remotestr(struct list_head *dsaddrs, gfp_t gfp_flags)
-  * uncached and return cached struct nfs4_pnfs_ds.
-  */
- struct nfs4_pnfs_ds *
--nfs4_pnfs_ds_add(const struct net *net, struct list_head *dsaddrs, gfp_t gfp_flags)
-+nfs4_pnfs_ds_add(const struct net *net, struct list_head *dsaddrs, u32 version,
-+		 gfp_t gfp_flags)
- {
- 	struct nfs_net *nn = net_generic(net, nfs_net_id);
- 	struct nfs4_pnfs_ds *tmp_ds, *ds = NULL;
-@@ -738,7 +741,7 @@ nfs4_pnfs_ds_add(const struct net *net, struct list_head *dsaddrs, gfp_t gfp_fla
- 	remotestr = nfs4_pnfs_remotestr(dsaddrs, gfp_flags);
- 
- 	spin_lock(&nn->nfs4_data_server_lock);
--	tmp_ds = _data_server_lookup_locked(nn, dsaddrs);
-+	tmp_ds = _data_server_lookup_locked(nn, dsaddrs, version);
- 	if (tmp_ds == NULL) {
- 		INIT_LIST_HEAD(&ds->ds_addrs);
- 		list_splice_init(dsaddrs, &ds->ds_addrs);
-@@ -747,6 +750,7 @@ nfs4_pnfs_ds_add(const struct net *net, struct list_head *dsaddrs, gfp_t gfp_fla
- 		INIT_LIST_HEAD(&ds->ds_node);
- 		ds->ds_net = net;
- 		ds->ds_clp = NULL;
-+		ds->ds_version = version;
- 		list_add(&ds->ds_node, &nn->nfs4_data_server_cache);
- 		dprintk("%s add new data server %s\n", __func__,
- 			ds->ds_remotestr);
+ 	if (client->irq > 0) {
 -- 
 2.53.0
 
