@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8B0430311;
-	Sat, 12 Sep 2026 08:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5483B418A43;
+	Sat, 12 Sep 2026 08:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202615; cv=none; b=XbcNlCOr5YHUCTgklMvdLgUjPG2iXN2d/mdxZHL+n/5EITL4fdevNvtPaWqLyJSox5nJv+aHPt3rzvv4/nuwoi9pcsR8ctAfgiorQpjmSrsiFTi4IHbuYZN00v/RMSwPAYVLZuSQB2tamuQEEJUjfY85qLKGx/FhJfPNw5EVmSg=
+	t=1789202620; cv=none; b=IGbAZaKifvx+lh45tGAIOqqW715dP3WsioDTrrrsQ83kyN0Xs9UNn4csHa/En+crjRt1lLY4U8Ke9+imtzDMVWfziQNUa/jXlZw4VUuDxssLcRTQdnYoLR7gy61wiSt8Pz3cGMIY2aZCecl1ydLL8uHRfuPKvE79rvVhxmgZXjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202615; c=relaxed/simple;
-	bh=MuHjWsn4hdk9nekmWp/f5XCxa7+8KelKa434XPttbZE=;
+	s=arc-20240116; t=1789202620; c=relaxed/simple;
+	bh=p8nyLZBo1y89SnJ2bDCJa525uGfyW79/vKuChl6Vnuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ercTK6xT8LBo6yr/VApLyvu8lGWVtf5tL+U1Y1G5TGNaVB9qP/JHM0yIOOR0jid9yJV2DvyjpgAWuGoPWFtS3pNpizLjk0Ox9x2GoQMMJILuaFfWWx7bCjpcJHCWtR5/cx91O12Vnk8f99JbGGGtPrkiXmuunOOUgihi1xwM0TQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmbS1oR/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hUye48I18H55Cg+79h7fbSpH/LRA6q200BG0PKbHFrS0QYyqzNGYQFAGfEoqD61L0hGyoEXQ/3Qul04Mt4iboSm81fvc4sZ8M3/Hx/EByKtGdcSpDBA3hmKMDt8r67NAvjSOmlarU5hRs4cfOoXEalDsxPxuQSlUxh98Uk6zKac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TdpE11+3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmbS1oR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD3B1F0089B;
-	Sat, 12 Sep 2026 08:43:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TdpE11+3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF30A1F000FF;
+	Sat, 12 Sep 2026 08:43:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202614;
-	bh=JxnalPuIs/WUWyUq8Jlq8c1GKHJV/1ryCrpt25ZT+NM=;
+	s=korg; t=1789202618;
+	bh=AO2yM9W3R20dJ7nzE4jhzpOy+3DoueIt2/O39pGncKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xmbS1oR/6roQuypciH54TZ39tJ4/XvM+CMKY+UlQUOnIYF53xXq57TQdRikRSFfMj
-	 AzQzmxQMCpvAYrnZPCJcGI/78uBDXHEAIT84et55lDOvf8Zg6w/BGGb8Y7J7OyWUtW
-	 ivmW9pqkIkV4E8g/900yQBAq1R7DbQT3FxbwAufU=
+	b=TdpE11+3TOcjtY48h5t03CZ6EcVEgFogIxRIS4h0lzB/4KPeuefhfWnBCv4Fmc81/
+	 MKclk/275dcgbQ2mavPRSyZlED8cBXTH4oH96tztkwhE4kEYbjMYwd6t2GL0+3Jjt1
+	 jgGAQJpq+4rgaNUgfFRqxj1LGGvBMm1RDoKMGiYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1186/1815] phy: qcom: qmp-usb: Fix possible NULL-deref on early runtime suspend
-Date: Sat, 12 Sep 2026 08:48:56 +0200
-Message-ID: <20260912065716.855086060@linuxfoundation.org>
+Subject: [PATCH 7.2 1233/1815] btrfs: use aligned range for locking in extent_fiemap()
+Date: Sat, 12 Sep 2026 08:49:43 +0200
+Message-ID: <20260912065717.957894835@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,91 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 142c5593379273264474f31d5956b1a0065cd576 ]
+[ Upstream commit 681e073614515b892cacef0eeec0c761a2c2ab87 ]
 
-There is a small window where the runtime suspend callback may run
-after pm_runtime_enable() and before pm_runtime_forbid(). In this
-case, a crash occurs because runtime suspend/resume dereferences
-qmp->phy pointer, which is not yet initialized:
-        `if (!qmp->phy->init_count) {`
+The @end parameter for all extent io tree helpers is inclusive, but
+the call site in extent_fiemap() is passing an exclusive end into
+btrfs_lock_extent(), which will step into the next block unexpectedly.
 
-This can also happen if user re-enables runtime-pm via the sysfs
-attribute before qmp phy is initialized.
+Pass the inclusive end into btrfs_lock_extent() and
+btrfs_unlock_extent().
 
-Similarly to other qcom phy drivers, introduce a qmp->phy_initialized
-variable that can be used to avoid relying on the possibly uninitialized
-phy pointer.
-
-Fixes: e464a3180a43 ("phy: qcom-qmp-usb: split off the legacy USB+dp_com support")
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260722-qcom-usb-phy-fix-null-v6-6-534f7e61b9a6@oss.qualcomm.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: ac3c0d36a2a2 ("btrfs: make fiemap more efficient and accurate reporting extent sharedness")
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/btrfs/fiemap.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index c5507168e1354..bb905c437a01e 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -1434,6 +1434,8 @@ struct qmp_usb {
+diff --git a/fs/btrfs/fiemap.c b/fs/btrfs/fiemap.c
+index 6263e837093e4..929e978702c35 100644
+--- a/fs/btrfs/fiemap.c
++++ b/fs/btrfs/fiemap.c
+@@ -660,7 +660,7 @@ static int extent_fiemap(struct btrfs_inode *inode,
+ 	range_end = round_up(start + len, sectorsize);
+ 	prev_extent_end = range_start;
  
- 	enum phy_mode mode;
+-	btrfs_lock_extent(&inode->io_tree, range_start, range_end, &cached_state);
++	btrfs_lock_extent(&inode->io_tree, range_start, range_end - 1, &cached_state);
  
-+	bool phy_initialized;
-+
- 	struct phy *phy;
- 
- 	struct clk_fixed_rate pipe_clk_fixed;
-@@ -2009,6 +2011,7 @@ static int qmp_usb_power_off(struct phy *phy)
- 
- static int qmp_usb_enable(struct phy *phy)
- {
-+	struct qmp_usb *qmp = phy_get_drvdata(phy);
- 	int ret;
- 
- 	ret = qmp_usb_init(phy);
-@@ -2018,14 +2021,19 @@ static int qmp_usb_enable(struct phy *phy)
- 	ret = qmp_usb_power_on(phy);
- 	if (ret)
- 		qmp_usb_exit(phy);
-+	else
-+		qmp->phy_initialized = true;
- 
- 	return ret;
- }
- 
- static int qmp_usb_disable(struct phy *phy)
- {
-+	struct qmp_usb *qmp = phy_get_drvdata(phy);
- 	int ret;
- 
-+	qmp->phy_initialized = false;
-+
- 	ret = qmp_usb_power_off(phy);
- 	if (ret)
- 		return ret;
-@@ -2101,7 +2109,7 @@ static int __maybe_unused qmp_usb_runtime_suspend(struct device *dev)
- 
- 	dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qmp->mode);
- 
--	if (!qmp->phy->init_count) {
-+	if (!qmp->phy_initialized) {
- 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
- 		return 0;
+ 	ret = fiemap_find_last_extent_offset(inode, path, &last_extent_end);
+ 	if (ret < 0)
+@@ -840,7 +840,7 @@ static int extent_fiemap(struct btrfs_inode *inode,
  	}
-@@ -2121,7 +2129,7 @@ static int __maybe_unused qmp_usb_runtime_resume(struct device *dev)
  
- 	dev_vdbg(dev, "Resuming QMP phy, mode:%d\n", qmp->mode);
+ out_unlock:
+-	btrfs_unlock_extent(&inode->io_tree, range_start, range_end, &cached_state);
++	btrfs_unlock_extent(&inode->io_tree, range_start, range_end - 1, &cached_state);
  
--	if (!qmp->phy->init_count) {
-+	if (!qmp->phy_initialized) {
- 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
- 		return 0;
- 	}
+ 	if (ret == BTRFS_FIEMAP_FLUSH_CACHE) {
+ 		btrfs_release_path(path);
 -- 
 2.53.0
 
