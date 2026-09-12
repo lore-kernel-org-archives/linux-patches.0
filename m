@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A1E31E106;
-	Sat, 12 Sep 2026 13:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BDC30FF08;
+	Sat, 12 Sep 2026 13:56:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221374; cv=none; b=JCF9gBkssWu+ROYMta43s50wZyzUuHZFkmYjRZY2a+2ukWqOge5oqm0883SI9ugGf7xF8HkGWwiEoGJSpxWQWEQsVmtPsHDUstIdLf+ZKKd4tdxLun2HVTnHI1+CE7wJ79Pgo4VNKK+6WR1sjk00GqnUs6zG+O9W1hcpmiEoP8o=
+	t=1789221378; cv=none; b=Nr2yfVM7O8Nn8IEF1IHAsSK1ZlsA2/t9lPbrAD5ohyxNNXlVaH9XQeO6bsAtKnneKNJX/tYzaVorRikqH8zL8PzWiutNKM0eNTNc194m32SAB0gdw34NkLaJcl3F81pCcMMT8kkshRcIriPmu/29OyjxcaX8MVWteBARfqpOgxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221374; c=relaxed/simple;
-	bh=2T+6irnyvW2hMUnGKN8TW+quuF6vFsbyybUKoqIQ35w=;
+	s=arc-20240116; t=1789221378; c=relaxed/simple;
+	bh=i5wk7lMI1BIljVUqiqEkr+gEgifdmvY2QyXQr9ka8TM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CcMLq6Vi2ZDIbZT4dGLYBPR/T6EFmw37cjpgu9dJ0d1cfXfFAD9bN/6Rp798XhidZpOVD9I2lE1lkHTFOOIogLMFiD11jT8SRllAdSOf299k61aoMpGfZM9sGuGG5Iq4ULCFzOoY0L5w9qHb2ryqaokMcbj4jFAzTZXwUyop6Zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GAHur1Rt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F99GEtXIfQR8JB5IpBW2S9L8UamJVkFdqFVk3txYSaTDPy+sjSEKwaIC1/l0XRs9Y2htEPjaXdxc9OZ1JyyNuccBLF7ts8vLylsCggvq6Sur875OHRcIyhOAILRPiP2o/Y1MexYO2O65NUU0+rcE1rhQavVoF3RD6Z8YJtG5w/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yRir+/U8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAHur1Rt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CE71F000FF;
-	Sat, 12 Sep 2026 13:56:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yRir+/U8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78CA81F000FF;
+	Sat, 12 Sep 2026 13:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221371;
-	bh=jgRl3tb2bsRseJT71xBY3E3fuRStYekTYLJTG8Ckytg=;
+	s=korg; t=1789221376;
+	bh=15XQXmwaZVp4AMRgKMnhNGEts3rRQAFq0rEJvLjcq4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GAHur1RtgSVVhdTCctNQJ8AoOeAP6izCheLBbvvJM6mReyQAmFGU4XfBiSJ3LLQRd
-	 34hOsScIAXlY98xtZmWmSJBRebRJfGh9jpw+yb2xRruoWjzr2X2tCsqWpaAKRS4yzH
-	 sk3qrYQF3G6Tb7XcldiEk6jgKbaW7IVuIty/U764=
+	b=yRir+/U8a7S+8lo7Feik3h3Hj/OguVdjZkRHN4N8i7fei5l06smsIC/uE1Snjx1MB
+	 J/BcA4pHdy3zEFV+zaO5+c8COLh5aV4U5EhmGyyMMO+tPfACZU5nI4fYUHs8O0dmcY
+	 jKcfLvNxwdLclI3OSIRhOmonZ2R+ztTsqFIqL4Pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.6 0369/1424] arm64: mm: Fix the lockless page-table walk in show_pte()
-Date: Sat, 12 Sep 2026 08:46:41 +0200
-Message-ID: <20260912065615.556879615@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 0370/1424] ALSA: harmony: initialize locks before requesting IRQ
+Date: Sat, 12 Sep 2026 08:46:42 +0200
+Message-ID: <20260912065615.579188410@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,87 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit a77644d009dece1104b6fcc6e322b0e4503db0d6 upstream.
+commit 33abb7491e89285a41565670945293dda841afc4 upstream.
 
-show_pte() walks page tables locklessly and can run with interrupts
-enabled. A concurrent teardown can free a table page while it is being
-walked. It can also clear a parent entry after show_pte() checked it; the
-regular pXd_offset() helpers then reread the cleared entry and can derive a
-bogus lower-level pointer and fault again.
+snd_harmony_create() registers the IRQ before initializing h->lock and
+h->mixer_lock. A pending interrupt can invoke the handler while these
+locks are uninitialized.
 
-Use the lockless offset helpers with the saved parent entries, as
-gup_fast() does, and pass the saved PMD to pte_offset_map().
+Initialize both locks before requesting the IRQ so the handler always
+sees valid lock state.
 
-For task page tables, arm64 selects MMU_GATHER_RCU_TABLE_FREE. Disable
-local interrupts around the walk to hold off RCU-deferred table frees and
-block the tlb_remove_table_sync_one() IPI until the walk is finished.
-
-Place the IRQ guard after the header print. This does not make the output a
-consistent snapshot, but prevents the task page-table walk from
-dereferencing a released table page or deriving a pointer from a different
-parent value.
-
-Fixes: 1d18c47c735e ("arm64: MMU fault handling and page table management")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260830063411.2215691-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/fault.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ sound/parisc/harmony.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/mm/fault.c
-+++ b/arch/arm64/mm/fault.c
-@@ -15,6 +15,7 @@
- #include <linux/mm.h>
- #include <linux/hardirq.h>
- #include <linux/init.h>
-+#include <linux/irqflags.h>
- #include <linux/kasan.h>
- #include <linux/kprobes.h>
- #include <linux/uaccess.h>
-@@ -156,6 +157,9 @@ static void show_pte(unsigned long addr)
- 	pr_alert("%s pgtable: %luk pages, %llu-bit VAs, pgdp=%016lx\n",
- 		 mm == &init_mm ? "swapper" : "user", PAGE_SIZE / SZ_1K,
- 		 vabits_actual, mm_to_pgd_phys(mm));
+--- a/sound/parisc/harmony.c
++++ b/sound/parisc/harmony.c
+@@ -889,6 +889,9 @@ snd_harmony_create(struct snd_card *card
+ 		goto free_and_ret;
+ 	}
+ 		
++	spin_lock_init(&h->mixer_lock);
++	spin_lock_init(&h->lock);
 +
-+	guard(irqsave)();
-+
- 	pgdp = pgd_offset(mm, addr);
- 	pgd = READ_ONCE(*pgdp);
- 	pr_alert("[%016lx] pgd=%016llx", addr, pgd_val(pgd));
-@@ -169,25 +173,25 @@ static void show_pte(unsigned long addr)
- 		if (pgd_none(pgd) || pgd_bad(pgd))
- 			break;
+ 	err = request_irq(padev->irq, snd_harmony_interrupt, 0,
+ 			  "harmony", h);
+ 	if (err) {
+@@ -898,9 +901,6 @@ snd_harmony_create(struct snd_card *card
+ 	}
+ 	h->irq = padev->irq;
  
--		p4dp = p4d_offset(pgdp, addr);
-+		p4dp = p4d_offset_lockless(pgdp, pgd, addr);
- 		p4d = READ_ONCE(*p4dp);
- 		pr_cont(", p4d=%016llx", p4d_val(p4d));
- 		if (p4d_none(p4d) || p4d_bad(p4d))
- 			break;
- 
--		pudp = pud_offset(p4dp, addr);
-+		pudp = pud_offset_lockless(p4dp, p4d, addr);
- 		pud = READ_ONCE(*pudp);
- 		pr_cont(", pud=%016llx", pud_val(pud));
- 		if (pud_none(pud) || pud_bad(pud))
- 			break;
- 
--		pmdp = pmd_offset(pudp, addr);
-+		pmdp = pmd_offset_lockless(pudp, pud, addr);
- 		pmd = READ_ONCE(*pmdp);
- 		pr_cont(", pmd=%016llx", pmd_val(pmd));
- 		if (pmd_none(pmd) || pmd_bad(pmd))
- 			break;
- 
--		ptep = pte_offset_map(pmdp, addr);
-+		ptep = pte_offset_map(&pmd, addr);
- 		if (!ptep)
- 			break;
- 
+-	spin_lock_init(&h->mixer_lock);
+-	spin_lock_init(&h->lock);
+-
+ 	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, h, &ops);
+ 	if (err < 0)
+ 		goto free_and_ret;
 
 
