@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E3F311597;
-	Sat, 12 Sep 2026 10:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EC12737FC;
+	Sat, 12 Sep 2026 10:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208292; cv=none; b=bQzgtnNiuBwJUJTi4Gi+Uq1Cn6BM70B0TJGaxb11IcWORT6oFsDb7Toj94KgG5IJyFBc8N4W4mauPDrZiyXj0YqsOTND+8ILTSu5Y19EDd7+sewo3/mQxiHBi/sfC4WuC3s4IiyCPdq72cn37YrbSvumCtqB5UQow2dh2vAyEUs=
+	t=1789208298; cv=none; b=bzeCc3nF0/wISa+owiRH0KK9RT1pjkVqHiz35Z7l6W9tghdaN01MVTIg1+p9+9ipOXTX6e3dx2VrnPwJBYVhflfH2a64S3Gq3vL1ozV92tnXbyqC/lyUcKew1pLhlaO87/tuzDj94ixLOE9KnoewFajJMNZp2hhEJK2HHfdEEL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208292; c=relaxed/simple;
-	bh=Ya8UDeokIY0vzAMz/LAKgnE0nxruiwH0RYfeA8jhJpQ=;
+	s=arc-20240116; t=1789208298; c=relaxed/simple;
+	bh=7V5UGDHJIXVQNVan1CgYl9f9SADzpWN2eSFPKrJC0Rc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OaUFP8Bi10GqfsNVvo2Eoe7hdluTrOhUyIVoH7adGzcEM792avbOIBsECABHPAMRtt3MlWbBSU/i9s8mExdmZoyXZcOG/ke2EDKXOUXqmj1H1iSUxmFLddLGIakb1E6mKQx+lOnosbN32lEEhGyI3t3O/2UJja+KhuyUsHSuwaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3gsmelE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S1gWE3AMmN5riIrdHVxEINlQFFd9jefEfaO6mAQmq6XHGKJTLacPge0qUSanQqo2Fd704GAmKJWp1KbULc0r0P3GLen0FnD5fUqJv7zsnopOpI20xbWheHAqrXXV6rgn3CM4Q8uU2Bf7vwlcNbytoU65cfACqsi4I2f1vXvEhOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LP9mft4h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3gsmelE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F001F000FF;
-	Sat, 12 Sep 2026 10:18:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LP9mft4h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1BAD1F000FF;
+	Sat, 12 Sep 2026 10:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208291;
-	bh=hYFnar7GVAccHbXai3tHDrlO8IJEAHfRdRhRKj6Od2g=;
+	s=korg; t=1789208296;
+	bh=oJGhkRdL+b5xR6fJX432Rr03cT+LULtVj1JeoPaZG+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P3gsmelErYU8JvAXKophXyuKtesuqNQiLUZnbRZp7APnFX3bNmV/2gXYnwITYedMW
-	 vBrqfxgFqQxi0uPatNzKf49tzrjShqwER6qjcVJPLcDcaDulKI0oSas9n9FnJ4ivfm
-	 uqLl9UfXcAe7dcd4T6kDeBmIc6maSBEvptvSlBxo=
+	b=LP9mft4hb1UOksP7MlFuwuaNi86Gj9drrz46uJ2IWdrL5XisUeVXQA6WkBRHUQtLf
+	 rRcaa6cK3DXvOEP61veg+pzKduPIx7Btk1qIzzU3a24gB3BrHNqn7LeeH07QCLfJSl
+	 4tTSYN1A8xl1+iXaZCa/rqoxEg0SG60+qcm2wQ9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumeet Pawnikar <sumeet4linux@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Yichong Chen <chenyichong@uniontech.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0587/1518] powercap: intel_rapl_tpmi: Handle PMU registration failure during probe
-Date: Sat, 12 Sep 2026 08:45:56 +0200
-Message-ID: <20260912065636.706957949@linuxfoundation.org>
+Subject: [PATCH 6.18 0588/1518] isofs: release zisofs block pointer buffer head
+Date: Sat, 12 Sep 2026 08:45:57 +0200
+Message-ID: <20260912065636.729266454@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,44 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumeet Pawnikar <sumeet4linux@gmail.com>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-[ Upstream commit 9229916d59918ec9d3639e7263e1e97be638e361 ]
+[ Upstream commit 2f7dd9b86fe4076059e6a4a2a2c5d565afd76b9e ]
 
-intel_rapl_tpmi_probe() invokes rapl_package_add_pmu() but ignores its
-return value, so a PMU registration failure would leave the driver
-reporting probe success despite the PMU being absent, with no log
-trace.
+zisofs_fill_pages() reads the compressed block pointer table.  The error
+paths release the current buffer_head, the loop also releases the old
+buffer_head when it advances. However, the success path leaves the last
+buffer_head referenced. Release it before returning success.
 
-Since PMU registration is an optional auxiliary feature for perf energy
-counters, its failure should not break the primary powercap functionality.
-Check the return value and log a warning to ensure graceful degradation.
-
-Fixes: 963a9ad3c589 ("powercap: intel_rapl_tpmi: Enable PMU support")
-Signed-off-by: Sumeet Pawnikar <sumeet4linux@gmail.com>
-[ rjw: Changed the log level of the new message to "info" ]
-Link: https://patch.msgid.link/20260723172321.5960-1-sumeet4linux@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 59bc055211b8 ("zisofs: Implement reading of compressed files when PAGE_CACHE_SIZE > compress block size")
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Link: https://patch.msgid.link/20260721091152.1450622-1-chenyichong@uniontech.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/intel_rapl_tpmi.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/isofs/compress.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/powercap/intel_rapl_tpmi.c b/drivers/powercap/intel_rapl_tpmi.c
-index 34c0bd1edd61a..ee2a5e8397871 100644
---- a/drivers/powercap/intel_rapl_tpmi.c
-+++ b/drivers/powercap/intel_rapl_tpmi.c
-@@ -314,7 +314,10 @@ static int intel_rapl_tpmi_probe(struct auxiliary_device *auxdev,
- 		goto err;
+diff --git a/fs/isofs/compress.c b/fs/isofs/compress.c
+index 172faf79a259d..4500b14f802a6 100644
+--- a/fs/isofs/compress.c
++++ b/fs/isofs/compress.c
+@@ -293,6 +293,7 @@ static int zisofs_fill_pages(struct inode *inode, int full_page, int pcount,
+ 		memzero_page(*pages, poffset, PAGE_SIZE - poffset);
+ 		SetPageUptodate(*pages);
  	}
- 
--	rapl_package_add_pmu(trp->rp);
-+	ret = rapl_package_add_pmu(trp->rp);
-+	if (ret)
-+		dev_info(&auxdev->dev, "Failed to add RAPL PMU for Package%d, %d\n",
-+			info->package_id, ret);
- 
- 	auxiliary_set_drvdata(auxdev, trp);
++	brelse(bh);
+ 	return 0;
+ }
  
 -- 
 2.53.0
