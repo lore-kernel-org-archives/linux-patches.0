@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA01530C60F;
-	Sat, 12 Sep 2026 16:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B41630C60F;
+	Sat, 12 Sep 2026 16:20:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230049; cv=none; b=okDm/2m5fhYmRhJJTEMGyAC5oYV2xVdNSvK37vP5bIshFgvNiKJt7wWVksAca6uPefl+h8xe/AXalpCceCxWNX8QFgRsgRJat2syfWiD6P0UHl8gaOrgcUVvUpHECeYpDv/scbqD1qjgUx0xzxliX6OnwCLelUQ6B5LAAzbZ0Dc=
+	t=1789230053; cv=none; b=ql3ZNJgLqGMbadDF6dLbBqqUYQjYRa6T0FSLks9AyI/bnxV7bHrjUYKAEyg1n7Pp8JvO2MjfXDsPPXM1DcO94B1bFtKiSoum5mw9K61GCLYI8LkwkkOKU0x18O4p451HCLxVk50NQN43zfrSLPC7g0lnwsuAjNPtoCO97jbLPVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230049; c=relaxed/simple;
-	bh=NIUHxjfyLQd0rrsFr5KfX5SmF6oJLfXbnEmAeLgNMSY=;
+	s=arc-20240116; t=1789230053; c=relaxed/simple;
+	bh=KKT/a8VqnwJ2p8JsEJ6rIwmBXSrJ2+HeitkxTJanwnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYxQa6QjWmVSkguu6XQ01is6PoL6lfVvheFvB3XRtOj5yRYgw2qzn6wUuvrWg2L0IW9X/78TVHj0zZnkaiOEA/3sA+oJkRIW2uBoocg4AnCxtkbvbEGiKjKRKo4VJffCSGqxCs3ohcA6MDxOy5U23Zwn9Ba2XF4Q5EACZfqbyK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lx+ANxtZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C1utOxeomijbxvqwUL+wNOOlSr+gu50ADhnSJg4Cu5xz9OLxyYa4XOqp31c9+LOZH5Jg2v2eUXSAvxVYEOPUmS6QfC181ItnWLrvqZuv2UhoLw3lbUohoLEtB1iFNFWk7EuyiMqfZOMmwF3BrFfudEWFgM2m0rkVMY0aPi3Inxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9o1LYyL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lx+ANxtZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43BB1F000FF;
-	Sat, 12 Sep 2026 16:20:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9o1LYyL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4601F000FF;
+	Sat, 12 Sep 2026 16:20:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230047;
-	bh=jhtIpCK1yBG5z/Kmn1O6nMKT5gjN+CkGH2p18X3IDNU=;
+	s=korg; t=1789230052;
+	bh=BwWZt1YmytPYyrxLexIo3tWkVlyIlO2gHSZSUjip2a8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lx+ANxtZKHEoItBlFOkPWS88M2Xu7OuYe0TRa0wwbaGGP+FaOpCNvkpVBN5uTl07Z
-	 JZ5PbiPLs77i/P2/YcVBrAVh9oWtHezPxpFS83LFeveCg0HMiyHx/mcaykJEnEiCUP
-	 gx/wcqbrqS82LU64RqcUaWkaWpU4nl9sbSTy5xKI=
+	b=S9o1LYyLzSefisvYGqbC15yImAndO5SKaebcLeJKFERSy8uVXC6WMDGlarMPlzK3d
+	 HZOBqmkhaL4uwuCW13bB9xcWcrDiugwTRfu6b9jYCrn0yUvWU7jVlnMU7VZOOmnBS3
+	 2pdtVR0c5gKAX1IpoU2TOupUdNM31gSfuZ+2mN/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Yang <yangfeng@kylinos.cn>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0714/1191] selftests/bpf: Fix memory leak on subtest_states reallocation
-Date: Sat, 12 Sep 2026 08:57:22 +0200
-Message-ID: <20260912065604.315520610@linuxfoundation.org>
+Subject: [PATCH 6.1 0715/1191] pinctrl: mediatek: Use C99 initializers in PINCTRL_PIN_GROUP()
+Date: Sat, 12 Sep 2026 08:57:23 +0200
+Message-ID: <20260912065604.338471139@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,50 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Yang <yangfeng@kylinos.cn>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 06efb01c6530e9cfc247178cb96aa8adb3beaf61 ]
+[ Upstream commit bb5eace1562fcef3c7ac9d0bd3e01af1187e46d0 ]
 
-Fix memory leak in subtest_states reallocation,
-and revert subtest_num if allocation fails.
+For the better flexibility use C99 initializers in PINCTRL_PIN_GROUP().
 
-Fixes: 0925225956bb ("bpf/selftests: Add granular subtest output for prog_test")
-Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
-Link: https://lore.kernel.org/bpf/20260723085100.482147-6-yangfeng59949@163.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20231211190321.307330-3-andriy.shevchenko@linux.intel.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Stable-dep-of: 88292b7103d2 ("pinctrl: mediatek: free EINT resources on unbind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_progs.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-moore.h | 12 ++++++------
+ drivers/pinctrl/mediatek/pinctrl-paris.h | 12 ++++++------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_progs.c b/tools/testing/selftests/bpf/test_progs.c
-index 9f827139655a6..91613da36791e 100644
---- a/tools/testing/selftests/bpf/test_progs.c
-+++ b/tools/testing/selftests/bpf/test_progs.c
-@@ -404,18 +404,19 @@ bool test__start_subtest(const char *subtest_name)
- 	struct test_state *state = env.test_state;
- 	struct subtest_state *subtest_state;
- 	size_t sub_state_size = sizeof(*subtest_state);
-+	void *tmp;
- 
- 	if (env.subtest_state)
- 		test__end_subtest();
- 
- 	state->subtest_num++;
--	state->subtest_states =
--		realloc(state->subtest_states,
--			state->subtest_num * sub_state_size);
--	if (!state->subtest_states) {
-+	tmp = realloc(state->subtest_states, state->subtest_num * sub_state_size);
-+	if (!tmp) {
-+		state->subtest_num--;
- 		fprintf(stderr, "Not enough memory to allocate subtest result\n");
- 		return false;
+diff --git a/drivers/pinctrl/mediatek/pinctrl-moore.h b/drivers/pinctrl/mediatek/pinctrl-moore.h
+index e1b4b82b9d3db..36ee0021cf7ed 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-moore.h
++++ b/drivers/pinctrl/mediatek/pinctrl-moore.h
+@@ -37,12 +37,12 @@
+ 		.funcs = NULL,				\
  	}
-+	state->subtest_states = tmp;
  
- 	subtest_state = &state->subtest_states[state->subtest_num - 1];
+-#define PINCTRL_PIN_GROUP(name, id)			\
+-	{						\
+-		name,					\
+-		id##_pins,				\
+-		ARRAY_SIZE(id##_pins),			\
+-		id##_funcs,				\
++#define PINCTRL_PIN_GROUP(_name_, id)							\
++	{										\
++		.name = _name_,								\
++		.pins = id##_pins,							\
++		.num_pins = ARRAY_SIZE(id##_pins),					\
++		.data = id##_funcs,							\
+ 	}
  
+ int mtk_moore_pinctrl_probe(struct platform_device *pdev,
+diff --git a/drivers/pinctrl/mediatek/pinctrl-paris.h b/drivers/pinctrl/mediatek/pinctrl-paris.h
+index 8762ac5993292..5c4e5b74e43e2 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-paris.h
++++ b/drivers/pinctrl/mediatek/pinctrl-paris.h
+@@ -49,12 +49,12 @@
+ 			__VA_ARGS__, { } },				\
+ 	}
+ 
+-#define PINCTRL_PIN_GROUP(name, id)			\
+-	{						\
+-		name,					\
+-		id##_pins,				\
+-		ARRAY_SIZE(id##_pins),			\
+-		id##_funcs,				\
++#define PINCTRL_PIN_GROUP(_name_, id)							\
++	{										\
++		.name = _name_,								\
++		.pins = id##_pins,							\
++		.num_pins = ARRAY_SIZE(id##_pins),					\
++		.data = id##_funcs,							\
+ 	}
+ 
+ int mtk_paris_pinctrl_probe(struct platform_device *pdev);
 -- 
 2.53.0
 
