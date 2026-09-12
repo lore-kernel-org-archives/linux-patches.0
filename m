@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E8C33993;
-	Sat, 12 Sep 2026 09:14:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B393F9F3C;
+	Sat, 12 Sep 2026 09:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204460; cv=none; b=X886E0MSwNFvyMomgf3I2ehKFBKV1lkBncYz7THze8rYc1OmzShI91DwCmuTOri3iEpWB9SjDLxjqpR0KtkNaLd2SMNYEFOsUznZPOM//LQGWf00wYUtRcwV3o/qVPXRoXuRmxJi1FwE2WoNp9OAHE/0Tv8oAgdlUbOH1Ok2HsA=
+	t=1789204465; cv=none; b=aNP0oWEUyY7M0tExDzVJypV+7awaDpxlQROnTUPlxg7yKTVcZ7R6mfn9TBMCU38LqTRL07QqJ1Vyevljkx8LEjL50NTBBjxL2CTbhuh6D+QRiDOzSNerCAh6huvqW/K/Rbf4wEGXmtT5aXQcHzuk+MRHWAEZUfZGN9ydbhc2tXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204460; c=relaxed/simple;
-	bh=fL9z9NrMduHQtI171N2DZayEzm/ILnESd8YUMM51aSw=;
+	s=arc-20240116; t=1789204465; c=relaxed/simple;
+	bh=6V2CTTNMmsbP7yRkPzLPnnr7A0HNlbpfV0W2X/zQ2is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hy/2U0GdlRad4sljOGpq6cPHqWFXG2KyhNrIzESUL9hWOuBjDp4Uh5aoqF1lDecQIl0DdB2n7N3ZrOgioe1CP06DnwP7QWzGcL152hGfgQ+k17eL4JIGEEVcXmYyOjAZUxOrP6/SzG2QrOhW0Fau9UWIYkxk2Iis6oe06/raakE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GQ+e7ZEL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KQ4H2IVudrZ1o+CQwgPpT4moTmULoZcw8CyRy9geCxAmdw+wkdFFYwPN486VnNHdTptg6mEXwrHeRPrUoHFWGaz9Gs/lFWq08Rv+Qg2q2iJjWIDNR7ZIHQQ2KKZ4RxLPf06yhDaB11LWU3YSJqX3Fc6Gj4lziM77YUUv41SEgGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjmASvmU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GQ+e7ZEL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E001F000FF;
-	Sat, 12 Sep 2026 09:14:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjmASvmU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C0C1F000FF;
+	Sat, 12 Sep 2026 09:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204458;
-	bh=Q+Uo3tu3BjjpftkTTHBSzksiKP7vaRYe8DYICishD3w=;
+	s=korg; t=1789204463;
+	bh=5SpWqvTrCCKvKboOApOOf3THauG5bkI0YZWH9oo+oPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GQ+e7ZELJpJ85SlE9nBOAfLvv7ddlD3aK4CDFK0l3P32Jxlh/DFp0c6Gdeps0tmY8
-	 SWOHCaAatGSW8yRofEJWiMlp5VJjoRPy0TH/uWLSOWCejf1YOfHHqxz1XFhZzMYu61
-	 h83QZAj/l/2igAX+ScHxaKPOa2Nrur9LOfW70dUU=
+	b=PjmASvmUyQ09vli0MGSbwkYX6msKbgvRDk8GJjgyMfxUj8LSJrqcG3mVs1nt+wpk6
+	 VJHO7fCQl15t5QQRyj5Rmv72vLxWh1pSSq7HBGfQBWyr9Oua/9nhj1lPF2jdfJayRX
+	 eJW4UjHw/POUg6lWdmuVq4dAgiu0iQXvpQP5qXSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Liu <liubaolin@kylinos.cn>,
-	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1618/1815] ntfs: do not update ctime when setxattr fails
-Date: Sat, 12 Sep 2026 08:56:08 +0200
-Message-ID: <20260912065726.974782400@linuxfoundation.org>
+Subject: [PATCH 7.2 1601/1815] ntfs: validate final EA attribute size
+Date: Sat, 12 Sep 2026 08:55:51 +0200
+Message-ID: <20260912065726.575043564@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,42 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baolin Liu <liubaolin@kylinos.cn>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 60038154b40e03fdfade1eb975f0305c4c887d5e ]
+[ Upstream commit 650a2751c9ae179fe0d8e5b5194a2b1c0d09412c ]
 
-ntfs_setxattr() updates ctime and marks the inode dirty even when
-the operation fails. A failed setxattr(2) must not change file
-metadata.
+A replacement first removes the existing EA record, then adds the
+replacement.  Check the size of that final $EA stream before mutating
+the current stream.
 
-Update ctime only on success.
+This avoids committing the shortened $EA stream or $EA_INFORMATION before
+discovering that the replacement exceeds the AttrDef size limit.
 
 Fixes: fc053f05ca28 ("ntfs: add reparse and ea operations")
-Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
-Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/ea.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/ntfs/ea.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
 diff --git a/fs/ntfs/ea.c b/fs/ntfs/ea.c
-index 578ee00ea9315..25ff159dbfd38 100644
+index 0cd192752b7cd..0eba3f41c7bb9 100644
 --- a/fs/ntfs/ea.c
 +++ b/fs/ntfs/ea.c
-@@ -824,8 +824,10 @@ static int ntfs_setxattr(const struct xattr_handler *handler,
- 	mutex_unlock(&ni->mrec_lock);
+@@ -250,6 +250,14 @@ static int ntfs_set_ea(struct inode *inode, const char *name, size_t name_len,
+ 			goto out;
+ 		}
  
- out:
--	inode_set_ctime_current(inode);
--	mark_inode_dirty(inode);
-+	if (!err) {
-+		inode_set_ctime_current(inode);
-+		mark_inode_dirty(inode);
-+	}
- 	return err;
- }
++		/* Check the final $EA size before removing the old entry. */
++		if (val_size &&
++		    ntfs_attr_size_bounds_check(ni->vol, AT_EA,
++					ea_info_qsize - ea_size + new_ea_size)) {
++			err = -EFBIG;
++			goto out;
++		}
++
+ 		p_ea = (struct ea_attr *)(ea_buf + ea_off);
  
+ 		if (val_size &&
+@@ -285,6 +293,12 @@ static int ntfs_set_ea(struct inode *inode, const char *name, size_t name_len,
+ 			err = -ENODATA;
+ 			goto out;
+ 		}
++
++		if (ntfs_attr_size_bounds_check(ni->vol, AT_EA,
++					ea_info_qsize + new_ea_size)) {
++			err = -EFBIG;
++			goto out;
++		}
+ 	}
+ 	kvfree(ea_buf);
+ 
+@@ -312,8 +326,7 @@ static int ntfs_set_ea(struct inode *inode, const char *name, size_t name_len,
+ 	p_ea_info->ea_length = cpu_to_le16(ea_packed);
+ 	p_ea_info->ea_query_length = cpu_to_le32(ea_info_qsize + new_ea_size);
+ 
+-	if (ea_packed > 0xffff ||
+-	    ntfs_attr_size_bounds_check(ni->vol, AT_EA, new_ea_size)) {
++	if (ea_packed > 0xffff) {
+ 		err = -EFBIG;
+ 		goto out;
+ 	}
 -- 
 2.53.0
 
