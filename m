@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C15E345EB9;
-	Sat, 12 Sep 2026 16:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3667D345EB9;
+	Sat, 12 Sep 2026 16:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228845; cv=none; b=b+1lOOWvNxwtm+OsFIOnnwHN2nQuhTtPwsGyLuIAYgU9lC5nlbF48PXQgngIVECWuGG5LLJ6bnRPVxWCkEN4q3rixRlqHhUQB9G7ZSkWp3eaeybH80dXwLn/cVrRP4sbV57KNhUQO4xpZT9GabAL14lPyRJOKVdNFklKLtWDDug=
+	t=1789228850; cv=none; b=XL0xsCVBGCbsfT5UFdWyFYlTauTHvCroOShbZlB3PuKMg+3WtPIi1Wn/TjKtIl9Xax3svfDlJFtwwgRPpv6oMZGuPGqpVy9XxUHn5HP2wzOWXldZvzniVjTQGcPetY27t73asSfDJGaipjISnTINL63XOIQTmbmot5vvof/Zat8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228845; c=relaxed/simple;
-	bh=h/xihM+mDauujtYwiKt2W31l3sCtE5X5nAD+tUCse3I=;
+	s=arc-20240116; t=1789228850; c=relaxed/simple;
+	bh=WkKXtdrSGvQUZG+MO2+nzAfBaDLljySRWEBjwB4NelM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ka7btTY1ClQ7Q1uTUf74cYKK6ygxQOXK6OMhBzu9Z1AYNa+TC+JVHu3dN/NuGFz0Au3P/pm2zGVfplY7rU9f+s5Kzo/X4dhC7jVN07/pBNXROA1gP0ZiWvYp/yuj2TtbKPt4dCpAwLtBRuqMbpXnkFb322mvY5LeqY+STQouJfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tpc8D8d+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L4B/tA6D2qmWJg7puCdQejPqXcs2QuIGlKqwjJG9l94ogkISHIxF19xSJGKsaYk6mdaBSvLoBv1q90AmHIOnYy/skPQQgFt13eubCoiLbezMcTwNCCNtU4HkNBWEaGbafzpf/U4JCweyTniA696N4R2zjtpVxZVu2zDBFnuWLx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LcN84giG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpc8D8d+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60BA1F000FF;
-	Sat, 12 Sep 2026 16:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LcN84giG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECA551F000FF;
+	Sat, 12 Sep 2026 16:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228843;
-	bh=5mbba38Zevo8TuyBd1OwnaB2kyf1vwfCtXpDf0Q9D1U=;
+	s=korg; t=1789228848;
+	bh=0QokXj11H/I6RCWIIPuU92Qsl9V4FhcH56RnGN58WyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tpc8D8d+nZn4J1tnrfxo9lysIykGBsVhUZVzzvouaKpY6XPb4jM6o71xXnXV14pF1
-	 Oue7H9/f6s4ylilR4j5QOF8xo960nFuFqkFer3Vlu3MiRm2KZL9104DnmrdlZiXLop
-	 QjTJWZZnfh7gRCWIcKlVWzh69dAbimhNYvk75gOE=
+	b=LcN84giGnX/6vm/zjF/Ft+p8hiGI4yBiUxQihU/dNGRwne6d7qP5kXQt0NKvX5cJB
+	 uX3Gb/FqH/MuyxVkyZiweVI5NE3tJUxGGu+hRKB6sTpyR4hsGNEo+nZJLiDk7GS7GR
+	 np8IbTirAMr1gnOafsS/bF/3x3lN1uXUKNnG1BLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Mack <daniel@zonque.org>,
-	Kavan Smith <kavansmith82@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 6.1 0425/1191] drm/msm/dsi: round 6G byte clock rate to the PLL-achievable value
-Date: Sat, 12 Sep 2026 08:52:33 +0200
-Message-ID: <20260912065557.784819910@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Deborah Brouwer <deborah.brouwer@collabora.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.1 0416/1191] drm: fix race between partial drm_dev_register() failure and ioctl
+Date: Sat, 12 Sep 2026 08:52:24 +0200
+Message-ID: <20260912065557.582781042@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,75 +53,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kavan Smith <kavansmith82@gmail.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-commit 6cd33b6f4155efc20485929fd0b56bb704641db9 upstream.
+commit eb197f7d60f00d0f5b1b3505dfc86a7e36045a3e upstream.
 
-MSM8916 runtime DSI commands still go through
-msm_dsi_host_xfer_prepare(), which re-applies the link clock rate before
-enabling the link clocks. That is fine in principle, but on DSI 6G the
-requested byte clock rate often does not exactly match the DSI PHY PLL's
-realizable rate. For example, the driver can request 56250000 Hz while the
-PLL actually runs at 56246337 Hz.
+If drm_dev_register() fails after registering a minor (e.g. render minor
+registered, primary minor fails), userspace could have opened the first
+minor and entered a drm_dev_enter() critical section. Since the
+unplugged flag was never set, the ioctl proceeds while the error path
+tears down device resources.
 
-Because the requested and actual rates differ slightly, every later
-link_clk_set_rate() call is treated as a real clock change and re-locks
-the PLL. On a video-mode panel without an internal timing generator, such
-as samsung,s6d7aa0 / lsl080al03 on MSM8916, that live-clock glitch makes
-the panel lose pixel lock and visibly corrupts scanout on each runtime DCS
-command, including backlight writes.
+Fix this by introducing drm_dev_synchronize_unplug(), which sets the
+unplugged flag and waits for the SRCU barrier, ensuring all in-flight
+drm_dev_enter() critical sections complete before cleanup proceeds; call
+it on the error path of drm_dev_register().
 
-Fix this by rounding the computed 6G byte clock rate up front, before it is
-stored in msm_host->byte_clk_rate and reused by later transfers. Once the
-host carries the PLL-achievable rate instead of the idealized one,
-repeated link_clk_set_rate() calls become no-ops in the common clock
-framework and no longer re-lock the PLL.
-
-This keeps the normal transfer callback sequencing intact, preserves the
-OPP vote path in link_clk_set_rate(), and matches the fix direction
-suggested in the original 2018 discussion.
-
-Reported-by: Daniel Mack <daniel@zonque.org>
-Closes: https://lore.kernel.org/all/1a682c5b-7fc9-3aaa-120b-64b239a355a3@zonque.org/
-Fixes: 6b16f05aa39f ("drm/msm/dsi: Split clk rate setting and enable")
+Fixes: bee330f3d672 ("drm: Use srcu to protect drm_device.unplugged")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kavan Smith <kavansmith82@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/738234/
-Link: https://lore.kernel.org/r/20260707013240.681012-1-kavansmith82@gmail.com
-[DB: dropped extra chunk from the patch]
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260620190648.2E9F61F000E9@smtp.kernel.org/
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Tested-by: Deborah Brouwer <deborah.brouwer@collabora.com>
+Link: https://patch.msgid.link/20260628145406.2107056-17-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/gpu/drm/drm_drv.c |   34 +++++++++++++++++++++++++---------
+ 1 file changed, 25 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -618,12 +618,24 @@ static void dsi_calc_pclk(struct msm_dsi
- 
- int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- {
-+	long rounded_byte_clk_rate;
-+
- 	if (!msm_host->mode) {
- 		pr_err("%s: mode not set\n", __func__);
- 		return -EINVAL;
- 	}
- 
- 	dsi_calc_pclk(msm_host, is_bonded_dsi);
-+
-+	rounded_byte_clk_rate = clk_round_rate(msm_host->byte_clk,
-+					       msm_host->byte_clk_rate);
-+	if (rounded_byte_clk_rate < 0) {
-+		pr_err("%s: failed to round byte clock rate, %ld\n",
-+		       __func__, rounded_byte_clk_rate);
-+		return rounded_byte_clk_rate;
-+	}
-+
-+	msm_host->byte_clk_rate = rounded_byte_clk_rate;
- 	msm_host->esc_clk_rate = clk_get_rate(msm_host->esc_clk);
- 	return 0;
+--- a/drivers/gpu/drm/drm_drv.c
++++ b/drivers/gpu/drm/drm_drv.c
+@@ -449,6 +449,22 @@ void drm_dev_exit(int idx)
  }
+ EXPORT_SYMBOL(drm_dev_exit);
+ 
++/*
++ * Mark the device as unplugged and wait for any in-flight drm_dev_enter()
++ * critical sections to complete.
++ */
++static void drm_dev_synchronize_unplug(struct drm_device *dev)
++{
++	/*
++	 * After synchronizing any critical read section is guaranteed to see
++	 * the new value of ->unplugged, and any critical section which might
++	 * still have seen the old value of ->unplugged is guaranteed to have
++	 * finished.
++	 */
++	dev->unplugged = true;
++	synchronize_srcu(&drm_unplug_srcu);
++}
++
+ /**
+  * drm_dev_unplug - unplug a DRM device
+  * @dev: DRM device
+@@ -461,15 +477,7 @@ EXPORT_SYMBOL(drm_dev_exit);
+  */
+ void drm_dev_unplug(struct drm_device *dev)
+ {
+-	/*
+-	 * After synchronizing any critical read section is guaranteed to see
+-	 * the new value of ->unplugged, and any critical section which might
+-	 * still have seen the old value of ->unplugged is guaranteed to have
+-	 * finished.
+-	 */
+-	dev->unplugged = true;
+-	synchronize_srcu(&drm_unplug_srcu);
+-
++	drm_dev_synchronize_unplug(dev);
+ 	drm_dev_unregister(dev);
+ 
+ 	/* Clear all CPU mappings pointing to this device */
+@@ -888,6 +896,7 @@ int drm_dev_register(struct drm_device *
+ 		goto err_minors;
+ 
+ 	dev->registered = true;
++	dev->unplugged = false;
+ 
+ 	if (dev->driver->load) {
+ 		ret = dev->driver->load(dev, flags);
+@@ -913,6 +922,13 @@ err_unload:
+ 	if (dev->driver->unload)
+ 		dev->driver->unload(dev);
+ err_minors:
++	/*
++	 * If a minor was registered before the failure, userspace could have
++	 * opened it and entered a drm_dev_enter() critical section. Ensure all
++	 * such sections complete before we clean up.
++	 */
++	drm_dev_synchronize_unplug(dev);
++
+ 	remove_compat_control_link(dev);
+ 	drm_minor_unregister(dev, DRM_MINOR_PRIMARY);
+ 	drm_minor_unregister(dev, DRM_MINOR_RENDER);
 
 
