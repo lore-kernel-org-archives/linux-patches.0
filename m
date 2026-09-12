@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA6A30568E;
-	Sat, 12 Sep 2026 14:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5D7CA6F;
+	Sat, 12 Sep 2026 14:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223588; cv=none; b=HPJQZgkRl1bJu5BNNGP9xmlkGNQNPv6nMvpgLkr24B8ipNgjaD9dhbmczQDzYm5ZEUuXOu7P1vHiDgkyU4EmktK5Fg5fASTMZvhD+OCAwF1v0qviv2ZkGEvPmBD6BOhy5kJzS1VMRPlYVV4NXEu2/S8yKW6E5N6jXSl61sBsVvU=
+	t=1789223593; cv=none; b=SyKEh2Lp1q5lA+0XJGdkD+2HbqcV+bqtH9C+zPiaoEzrrUNXksT7zWDdnpeD999u3PhpASHGL+Ola2YHsQfXLqjjLMh49PQoxw0Kgt8H9+AOw17IEPCxLipGM3x+x6iDd+OCWfzMwwpqEFm5MaWRFPYGw0pKleoSw+7txbH9rZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223588; c=relaxed/simple;
-	bh=M4ufhDR1wR+GOZCFrIM/oEKXsYLqf3I4gcjeUOr48fQ=;
+	s=arc-20240116; t=1789223593; c=relaxed/simple;
+	bh=4Q8l+9lmuILAu302olEySGdDRULZY2IguNzpIcTZflg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BEc/SeZXDUBcQ/FP7cz9SLp9iLPdKJ1q3wmpHOBS7eBNjzRvzTdrfKB3XxChJPNYpbi7WdvMolGO/h+hl4Q6By2tjJx66a5bs0hoz9Rnm0mB2q6MvLXV6KY19r5rp/8QTzPnTx7/BCWQXcdi3tV0sTU11IquOZGh2bdfJ1xSdfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHVYt375; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B2i5ZjOvegDdAH9kXDc9LyUATjunY8NAmtuZztOwIyU5HQRi0ClQVV+ABxu0rNx+KWNNMqfnOnAElBAQxDb3ldqPw22BHVSttTu06Pf7/Hv7pMlCgbKmyDMKkDNR/nChbswwFWX7DbhAnmOCB1LBGxjgyU6gmSb4SnNI1q/p/j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEEx0XPB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHVYt375"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C0A61F000FF;
-	Sat, 12 Sep 2026 14:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEEx0XPB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2100E1F000FF;
+	Sat, 12 Sep 2026 14:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223587;
-	bh=6NW6fLpexxYY9XEAjZLFBPsDu8kWQizH3anPW3TfPIU=;
+	s=korg; t=1789223592;
+	bh=aF+Zn8y0z8xc0WCm1h0B8nUvhm/zzVQMeH1rNyVwEa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QHVYt3753KPRsJPbDUESuGF7AHVlfgNXHqsQnvXfVlkJzuMic1KVdrjW1QEaoXOO8
-	 qtLQLKkXKhnvSVC86oSywb/yAlGwrr9WYGVv3fnAeI3XdXqYhyO3b5sMNHb6vGNmYu
-	 tfpFD2f4yXEKfkTeXumxWvBQNRgt7fmGCO3K/B7Q=
+	b=WEEx0XPByx/JYheslXiGNrXhET2DaifxprJQb2iFh8GELau6GkMjk97P1mgyGKNS/
+	 wITkxqhHQgQnvBg21Ta86JCgkEugVB7+ZuM5ZPDrMz+i/V5j1V+cV28r2R6ai/5yPl
+	 K8y+XHQhuAPRDxCx0MdDBeBJvi/pZX8KnqiCqqT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Koichiro Den <den@valinux.co.jp>,
-	Vinod Koul <vkoul@kernel.org>,
+	Marco Elver <elver@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0813/1424] dmaengine: dw-edma: Serialize abort state updates
-Date: Sat, 12 Sep 2026 08:54:05 +0200
-Message-ID: <20260912065625.501902910@linuxfoundation.org>
+Subject: [PATCH 6.6 0822/1424] kcsan: avoid unintended access checking in NMIs
+Date: Sat, 12 Sep 2026 08:54:14 +0200
+Message-ID: <20260912065625.712559990@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,44 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Marco Elver <elver@google.com>
 
-[ Upstream commit dd80e259f65d932634e26d366570d71669ef6654 ]
+[ Upstream commit a8488ecbd7ba44d65b912dfe88a73f438eba2447 ]
 
-dw_edma_abort_interrupt() drops vc.lock before changing request and
-status. issue_pending() can acquire the lock in that small window,
-observe the old busy state, and skip starting queued descriptors. Then
-the abort handler overwrites the channel status as idle, leaving the new
-descriptors stranded for good.
+If a watcher deliberately disables interrupts (either by user choice, or
+because we're dealing with a scoped reordered access) to avoid detecting
+any data races in interrupts, NMIs are still able to fire.
 
-Keep descriptor completion and the state transition in the same critical
-section.
+When we set up a watchpoint on a scoped reordered access, we disabled
+interrupts because the same CPU cannot observe reordering of its own
+accesses. To ensure we observe no false positives from NMIs, disable
+access checking for interrupt contexts as well.
 
-Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Link: https://patch.msgid.link/20260717180639.2643243-4-den@valinux.co.jp
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 69562e4983d9 ("kcsan: Add core support for a subset of weak memory modeling")
+Signed-off-by: Marco Elver <elver@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/kcsan/core.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index e8ac14e7691e2..7e1b270738ce0 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -710,9 +710,9 @@ static void dw_edma_abort_interrupt(struct dw_edma_chan *chan)
- 		list_del(&vd->node);
- 		vchan_cookie_complete(vd);
- 	}
--	spin_unlock_irqrestore(&chan->vc.lock, flags);
- 	chan->request = EDMA_REQ_NONE;
- 	chan->status = EDMA_ST_IDLE;
-+	spin_unlock_irqrestore(&chan->vc.lock, flags);
- }
+diff --git a/kernel/kcsan/core.c b/kernel/kcsan/core.c
+index 8a7baf4e332e3..2db82661cd60a 100644
+--- a/kernel/kcsan/core.c
++++ b/kernel/kcsan/core.c
+@@ -585,8 +585,14 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type, unsigned
+ 	 * information is lost if dirtied by KCSAN.
+ 	 */
+ 	kcsan_save_irqtrace(current);
+-	if (!interrupt_watcher)
++	if (!interrupt_watcher) {
+ 		local_irq_save(irq_flags);
++		/*
++		 * NMIs can still fire, disable checking for all interrupt
++		 * contexts.
++		 */
++		raw_cpu_ptr(&kcsan_cpu_ctx)->disable_count++;
++	}
  
- static inline irqreturn_t dw_edma_interrupt_write(int irq, void *data)
+ 	watchpoint = insert_watchpoint((unsigned long)ptr, size, is_write);
+ 	if (watchpoint == NULL) {
+@@ -699,8 +705,10 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type, unsigned
+ 	atomic_long_dec(&kcsan_counters[KCSAN_COUNTER_USED_WATCHPOINTS]);
+ 
+ out_unlock:
+-	if (!interrupt_watcher)
++	if (!interrupt_watcher) {
++		raw_cpu_ptr(&kcsan_cpu_ctx)->disable_count--;
+ 		local_irq_restore(irq_flags);
++	}
+ 	kcsan_restore_irqtrace(current);
+ 	ctx->disable_scoped--;
+ 
 -- 
 2.53.0
 
