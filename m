@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827142E06E4;
-	Sat, 12 Sep 2026 12:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396BC47AF43;
+	Sat, 12 Sep 2026 12:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216925; cv=none; b=mQtdcv1jlQ/GNlZWf5DzAz2jz41+ztg3md6L5VyL5yHsmREn8C7JNQQDRewpvfQdD83P4c+okD93yMbzsvayu90aYmVLqlWFE8SoiuZrmS0cmN8xcyjeS5LHE8Goc7IVxJEfGNfo+SqQNjtFlfKqaGNFKoC2o0kwTwGdTjbybBk=
+	t=1789216931; cv=none; b=cXToK+XnadrrzFIxEAqJlSd2CNgIdDiNXYh59T5e3Vno1zaKfg86XVzH27nZ53eVFYvJ+D5H25yaRavbl8VF0A0mKUrSvKZD82OdgnQGiEAQWwT5QdP1R0ls/mGYN6XbFW36nD0hbq6nhdYikRw3ah7KvWY4uxzuGf5Qs3TbzGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216925; c=relaxed/simple;
-	bh=Oqfx/tQNPp4pY03GL9I9qG+mvb/XcIB6UONFVsG/qrQ=;
+	s=arc-20240116; t=1789216931; c=relaxed/simple;
+	bh=C6AMSJhn7byXpUiVqpaR4k1uoHr81vmm/4nm7mBNfX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FBcccdqK+YFztwTCcERt+oMIEFpM+yYLtGd1QrYCGCS56cPPg0e840Nzd9RRJACHO2tpKnng3+lJ5wAKUUtG04KZ1N/DsNjnZmw5Iqfhqu6mC9rj1cBgp3JSfAX4DGTolMPqthNEAXL+6IT/pqgSzO5FVerZ1QdNNwosTtCh8iI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0w+Acvi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ioWC5RSPFt175PfNOgVrchd7BLjlS/dfglbpdvYtAQ93SSXrBpe18jC+9mTtIqCjtQ9c0z2KQZpOEN602pY7gMRjltNiAGc9rlattpNKtLwkBmtWfRbl7y07cWSMJmII4S5u8++SdwhxbLSg0+rGLIO/xZlQcpP240Kdszwso0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evprr7P2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0w+Acvi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D97C1F000FF;
-	Sat, 12 Sep 2026 12:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evprr7P2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28541F000FF;
+	Sat, 12 Sep 2026 12:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216924;
-	bh=IZmdIcW9PZvye0dqwpDjwJN/2ikEjpseHzJF7/2ErPY=;
+	s=korg; t=1789216929;
+	bh=00GiFn74FQU5VD5hUz5eTPIYeMviNSAiOaRkMlmYCUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g0w+AcvivhLd4mYfhqQQfU63rGqMjmHVDXH1hBykm9+rXGabNXgwAZu2hyPjrlYyG
-	 SzrlgPvMmFVc9117Nd9ZPWWWv4ugQ8jdlIWW4+S7PpVBVdiEjBBjQzIY1Yi5ViOr71
-	 TEjyUWYxjHYcHI/G1GXRHpKI/qOsrjAtTu6d5yLA=
+	b=evprr7P2NkuAYF+JvjFdDFX1XblZMaFv21xOk7h8HYTyaZv5xcCA6MCau+173gHJo
+	 N0m0ZdrLVEQ148VRpX9unEJwFj2r38+90E4NPYVrwEC7zjwFTK0qJhupAr+JBCIujM
+	 SVSuVgl9qsdow/qQOS4carHbZFZLSPU7Hw3SxkD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Wilck <mwilck@suse.com>,
-	Mykola Marzhan <mykola@meshstor.io>,
-	Yu Kuai <yukuai@fygo.io>,
+	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Waiman Long <longman@redhat.com>,
+	Dmitry Ilvokhin <d@ilvokhin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0793/1376] md/raid1: create serial pool adding rdev to array with serialize_policy=1
-Date: Sat, 12 Sep 2026 08:53:39 +0200
-Message-ID: <20260912065625.210155019@linuxfoundation.org>
+Subject: [PATCH 6.12 0794/1376] locking/lockdep: Fix NULL pointer dereference in __lock_set_class()
+Date: Sat, 12 Sep 2026 08:53:40 +0200
+Message-ID: <20260912065625.231942502@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,55 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Wilck <mwilck@suse.com>
+From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
 
-[ Upstream commit 140234b2380ffb8ffb0cfc46fee0e822f43adef7 ]
+[ Upstream commit 7577e00b9ab506202b9f1a33de3cc8cc6413a4db ]
 
-The following bug has been observed with kernel 7.1.3 after adding a new
-rdev to an existing RAID1 array with serialize_policy enabled:
+register_lock_class() can return NULL when the lock class pool is
+exhausted, graph_lock() fails, or key validation fails. However,
+__lock_set_class() uses the return value directly in pointer arithmetic
+without a NULL check:
 
-  Oops: 0002 [#1]
-  CPU: 0 UID: 0 PID: 19639 Comm: ext4lazyinit Not tainted 7.1.3-1-default
-  RIP: _raw_spin_lock_irqsave+0x27/0x50
-  CR2: 0000000000004960
-  Call Trace:
-   wait_for_serialization+0xb9/0x260 [raid1]
-   raid1_make_request+0x762/0xaff [raid1]
-   md_handle_request+0x1c9/0x2e0 [md_mod]
+  class = register_lock_class(lock, subclass, 0);
+  hlock->class_idx = class - lock_classes;
 
-The raid1.c code calls wait_for_serialization() if the MD_SERIALIZE_POLICY
-is set, and wait_for_serialization assumes that rdev->serial is
-initialized. Normally this will be the case for arrays that have
-the serialize_policy sysfs attribute set to 1.
+If class is NULL, this computes a wild offset that corrupts
+hlock->class_idx. The subsequent reacquire_held_locks() call will
+invoke hlock_class() with this corrupted index, leading to a NULL or
+out-of-bounds pointer dereference.
 
-But when a new rdev is added to an existing array in bind_rdev_to_array(),
-the condition at mddev_create_serial_pool() causes creation of rdev->serial
-to be skipped. Fix it.
+Add the missing NULL check, consistent with how __lock_acquire() already
+handles this case at the same call site.
 
-Fixes: 69b00b5bb235 ("md: introduce a new struct for IO serialization")
-Signed-off-by: Martin Wilck <mwilck@suse.com>
-Reviewed-by: Mykola Marzhan <mykola@meshstor.io>
-Link: https://patch.msgid.link/20260723112741.1206836-1-mwilck@suse.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 64aa348edc61 ("lockdep: lock_set_subclass - reset a held lock's subclass")
+Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Dmitry Ilvokhin <d@ilvokhin.com>
+Link: https://patch.msgid.link/h2kfw43n4527x6mgi2lwpz2rieqnfzgictpv4wr5nyfjkc47co@2r5vz4uz44db
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/locking/lockdep.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 1f3322dfc1220..dedd8a583f7e6 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -228,7 +228,8 @@ void mddev_create_serial_pool(struct mddev *mddev, struct md_rdev *rdev)
- 	int ret = 0;
- 	unsigned int noio_flags;
+diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
+index 53c76dc71f3f5..1422a04f950d0 100644
+--- a/kernel/locking/lockdep.c
++++ b/kernel/locking/lockdep.c
+@@ -5402,6 +5402,8 @@ __lock_set_class(struct lockdep_map *lock, const char *name,
+ 			      lock->wait_type_outer,
+ 			      lock->lock_type);
+ 	class = register_lock_class(lock, subclass, 0);
++	if (!class)
++		return 0;
+ 	hlock->class_idx = class - lock_classes;
  
--	if (rdev && !rdev_need_serial(rdev) &&
-+	if (!test_bit(MD_SERIALIZE_POLICY, &mddev->flags) &&
-+	    rdev && !rdev_need_serial(rdev) &&
- 	    !test_bit(CollisionCheck, &rdev->flags))
- 		return;
- 
+ 	curr->lockdep_depth = i;
 -- 
 2.53.0
 
