@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103AD78C9C;
-	Sat, 12 Sep 2026 12:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6663178C9C;
+	Sat, 12 Sep 2026 12:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217401; cv=none; b=eQRXVXdfN6BetJG0T4zmbDesuIYMjoGvaXS8+6+/NwpS3aggVIrypo4qDl5DaeAx/V6oIcjBNzf45mPJpI+oJAy/I5XzPVeRxTUKlfxvvj89W/vcZN1bMlN1NLxed1IGiW/jUM5tLSQjv7h+UxDK8ekM3oK33nxnG9s12AesOIs=
+	t=1789217408; cv=none; b=CaR7qdcpzd4W4F3NU2K9nVe78y1Tl43Ssz6M9Wn2QWucOyyzR7jjzyOjy9px9lmPt9w8yIRAIWfSrztfgqi4hMFDzCKAqyUV1NyJy0F84OJU5FFw7eInBjTs8qsDIJIGzvDwVHRgg1xbqTEdzAkLSuOSPHN+mESfIO2FlgDYIm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217401; c=relaxed/simple;
-	bh=G+HUAXzk++/+X49ShfE2yvMhFjhFXW5zP5g2uHwyJ0k=;
+	s=arc-20240116; t=1789217408; c=relaxed/simple;
+	bh=06lsKB2n7YFdYgZly/8bP3zuC/bFrq0+sKTmoVjrzpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Olp2C0r8g64dgYBJIW5+PmdYp70j+vFNeObCI/+8Ofwd44tex6Bwt6R9/Z0MWrUfcbGv4ijPAA+Y7b8+onhN2G3nmrdkOY+5UfzCW+N7jaqPYgXKln4czsXlM/Q+B3wpUseblURty2KRDhe9jVxgQ5L4U/WvwBm4FqY+elRQowI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKSt4CJs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XtoeyE5mFCd/FqBUDiRRhzDzgQVeMuo1OEkf4r1I/LkwFHXbWjblAP7C4+m0CyJzhjiZ22gKod3+SzM/0dD4IzejHgE234mThXxqRIZyS80wNtuvHhz/r8q9ka54Woe1yytD4TZzxsPuGzDgI74xLfCQiVfm3/avTWJSLyi32o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGGUNAEp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKSt4CJs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50661F000FF;
-	Sat, 12 Sep 2026 12:49:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGGUNAEp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1CB01F000FF;
+	Sat, 12 Sep 2026 12:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217399;
-	bh=hRYoJYRtJwkl5FepHCKoUFDZr1N5CW9N63Umm2WKWdQ=;
+	s=korg; t=1789217405;
+	bh=L7XMUo8eDL6x8IwTVhuWLBy5/JAaY6BXE+mhdqDcH4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FKSt4CJs6uDbVih1U0m46A0nIUPvuJJlO8E9G6Ijcdyjj/hvnShBejJORAD2ufhks
-	 6NYs9rd3U6/klhti+G0/H2zC7vyrN/nuXOCkXCCj44gyjdGMXBrdD+W2y3utaJSot9
-	 Vckouex0ygLkFvWXDuaJT2xpKfzw/jxnknjPUW1Q=
+	b=LGGUNAEpGl+xywgU1qGBrDSqJfOphGUoUos3ztkqSLWpg3kHXqHQDPlh35lpjJ+3J
+	 eMSNuIiYxXYAOSyMEZT/Fh7dO9uSrdl+qrj9wnI+j+3BdBJeSy66gGTR9mBP1EZEby
+	 wFJ5DCV0rQ01IuUt3GGdS5IUvErsLblfaK3iMKkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0926/1376] RDMA/siw: Fix use-after-free in siw_accept()
-Date: Sat, 12 Sep 2026 08:55:52 +0200
-Message-ID: <20260912065628.203447849@linuxfoundation.org>
+Subject: [PATCH 6.12 0935/1376] mfd: rave-sp: validate received frame payload lengths
+Date: Sat, 12 Sep 2026 08:56:01 +0200
+Message-ID: <20260912065628.400192974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,48 +51,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit a9394971825933074032794a5feee5211509c774 ]
+[ Upstream commit 0be718b5451bd83865d6e2a8d750ca7886c4772a ]
 
-siw_accept() looks up the QP supplied by userspace. If that QP is
-already in RTS, the function jumps to error cleanup before associating
-the incoming CEP with it.
+A received RAVE-SP frame contains protocol data followed by a
+variant-specific one- or two-byte checksum. rave_sp_receive_frame() derives
+a checksum pointer before proving that the frame contains the checksum,
+then passes the checksum-inclusive length to handlers that index the
+command, acknowledgment ID and event-data bytes or derive a reply payload
+length.
 
-The cleanup tests whether qp->cep is non-NULL and assumes the current
-call installed the association. However, qp->cep can point to the CEP
-of an existing connection. The cleanup then drops a reference from the
-incoming cep, not qp->cep. Once the incoming endpoint loses its
-remaining references, this can free it before the subsequent cep->qp
-store, causing a use-after-free. It also clears the existing QP
-association.
+Name those protocol field offsets, prove the checksum extent before
+deriving the protocol-data length, pass only that data length to the
+handlers, and require the complete event or reply prefix before consuming
+it.
 
-Only release the association reference when qp->cep is the incoming
-CEP. This preserves an existing association and avoids accessing the
-freed endpoint.
-
-Fixes: 6c52fdc244b5 ("rdma/siw: connection management")
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Link: https://patch.msgid.link/20260801213632.1086548-1-shuangpeng.kernel@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 538ee27290fa ("mfd: Add driver for RAVE Supervisory Processor")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://lore.kernel.org/all/20260706092337.78754-1-pengpeng@iscas.ac.cn/
+Link: https://patch.msgid.link/20260720115523.99956-1-pengpeng@iscas.ac.cn
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_cm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mfd/rave-sp.c | 64 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 44 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
-index 49ff121f77fe4..bb7d909639071 100644
---- a/drivers/infiniband/sw/siw/siw_cm.c
-+++ b/drivers/infiniband/sw/siw/siw_cm.c
-@@ -1701,7 +1701,7 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 	cep->state = SIW_EPSTATE_CLOSED;
+diff --git a/drivers/mfd/rave-sp.c b/drivers/mfd/rave-sp.c
+index c1b78d127a261..05d26d92df03e 100644
+--- a/drivers/mfd/rave-sp.c
++++ b/drivers/mfd/rave-sp.c
+@@ -63,6 +63,12 @@
+ #define RAVE_SP_TX_BUFFER_SIZE				\
+ 	(RAVE_SP_STX_ETX_SIZE + 2 * RAVE_SP_RX_BUFFER_SIZE)
  
- 	siw_free_cm_id(cep);
--	if (qp->cep) {
-+	if (qp->cep == cep) {
- 		siw_cep_put(cep);
- 		qp->cep = NULL;
++enum rave_sp_frame_offset {
++	RAVE_SP_FRAME_CODE_OFFSET,
++	RAVE_SP_FRAME_ACK_ID_OFFSET,
++	RAVE_SP_FRAME_DATA_OFFSET,
++};
++
+ /**
+  * enum rave_sp_deframer_state - Possible state for de-framer
+  *
+@@ -352,7 +358,7 @@ int rave_sp_exec(struct rave_sp *sp,
+ 	int command, ret = 0;
+ 	u8 ackid;
+ 
+-	command = sp->variant->cmd.translate(data[0]);
++	command = sp->variant->cmd.translate(data[RAVE_SP_FRAME_CODE_OFFSET]);
+ 	if (command < 0)
+ 		return command;
+ 
+@@ -366,8 +372,8 @@ int rave_sp_exec(struct rave_sp *sp,
+ 	sp->reply = &reply;
+ 	mutex_unlock(&sp->reply_lock);
+ 
+-	data[0] = command;
+-	data[1] = ackid;
++	data[RAVE_SP_FRAME_CODE_OFFSET] = command;
++	data[RAVE_SP_FRAME_ACK_ID_OFFSET] = ackid;
+ 
+ 	rave_sp_write(sp, data, data_size);
+ 
+@@ -388,16 +394,23 @@ EXPORT_SYMBOL_GPL(rave_sp_exec);
+ static void rave_sp_receive_event(struct rave_sp *sp,
+ 				  const unsigned char *data, size_t length)
+ {
+-	u8 cmd[] = {
+-		[0] = rave_sp_reply_code(data[0]),
+-		[1] = data[1],
+-	};
++	unsigned long action;
++	u8 cmd[RAVE_SP_FRAME_DATA_OFFSET];
++
++	if (length < RAVE_SP_FRAME_DATA_OFFSET + 1) {
++		dev_warn(&sp->serdev->dev, "Dropping short event frame\n");
++		return;
++	}
++
++	cmd[RAVE_SP_FRAME_CODE_OFFSET] =
++		rave_sp_reply_code(data[RAVE_SP_FRAME_CODE_OFFSET]);
++	cmd[RAVE_SP_FRAME_ACK_ID_OFFSET] = data[RAVE_SP_FRAME_ACK_ID_OFFSET];
+ 
+ 	rave_sp_write(sp, cmd, sizeof(cmd));
+ 
+-	blocking_notifier_call_chain(&sp->event_notifier_list,
+-				     rave_sp_action_pack(data[0], data[2]),
+-				     NULL);
++	action = rave_sp_action_pack(data[RAVE_SP_FRAME_CODE_OFFSET],
++				     data[RAVE_SP_FRAME_DATA_OFFSET]);
++	blocking_notifier_call_chain(&sp->event_notifier_list, action, NULL);
+ }
+ 
+ static void rave_sp_receive_reply(struct rave_sp *sp,
+@@ -405,27 +418,35 @@ static void rave_sp_receive_reply(struct rave_sp *sp,
+ {
+ 	struct device *dev = &sp->serdev->dev;
+ 	struct rave_sp_reply *reply;
+-	const  size_t payload_length = length - 2;
++	size_t payload_length;
++
++	if (length < RAVE_SP_FRAME_DATA_OFFSET) {
++		dev_warn(dev, "Dropping short reply frame\n");
++		return;
++	}
++	payload_length = length - RAVE_SP_FRAME_DATA_OFFSET;
+ 
+ 	mutex_lock(&sp->reply_lock);
+ 	reply = sp->reply;
+ 
+ 	if (reply) {
+-		if (reply->code == data[0] && reply->ackid == data[1] &&
++		if (reply->code == data[RAVE_SP_FRAME_CODE_OFFSET] &&
++		    reply->ackid == data[RAVE_SP_FRAME_ACK_ID_OFFSET] &&
+ 		    payload_length >= reply->length) {
+ 			/*
+ 			 * We are relying on memcpy(dst, src, 0) to be a no-op
+ 			 * when handling commands that have a no-payload reply
+ 			 */
+-			memcpy(reply->data, &data[2], reply->length);
++			memcpy(reply->data, &data[RAVE_SP_FRAME_DATA_OFFSET],
++			       reply->length);
+ 			complete(&reply->received);
+ 			sp->reply = NULL;
+ 		} else {
+ 			dev_err(dev, "Ignoring incorrect reply\n");
+ 			dev_dbg(dev, "Code:   expected = 0x%08x received = 0x%08x\n",
+-				reply->code, data[0]);
++				reply->code, data[RAVE_SP_FRAME_CODE_OFFSET]);
+ 			dev_dbg(dev, "ACK ID: expected = 0x%08x received = 0x%08x\n",
+-				reply->ackid, data[1]);
++				reply->ackid, data[RAVE_SP_FRAME_ACK_ID_OFFSET]);
+ 			dev_dbg(dev, "Length: expected = %zu received = %zu\n",
+ 				reply->length, payload_length);
+ 		}
+@@ -439,10 +460,10 @@ static void rave_sp_receive_frame(struct rave_sp *sp,
+ 				  size_t length)
+ {
+ 	const size_t checksum_length = sp->variant->checksum->length;
+-	const size_t payload_length  = length - checksum_length;
+-	const u8 *crc_reported       = &data[payload_length];
+ 	struct device *dev           = &sp->serdev->dev;
+ 	u8 crc_calculated[RAVE_SP_CHECKSUM_SIZE];
++	const u8 *crc_reported;
++	size_t payload_length;
+ 
+ 	if (unlikely(checksum_length > sizeof(crc_calculated))) {
+ 		dev_warn(dev, "Checksum too long, dropping\n");
+@@ -457,6 +478,9 @@ static void rave_sp_receive_frame(struct rave_sp *sp,
+ 		return;
  	}
+ 
++	payload_length = length - checksum_length;
++	crc_reported = &data[payload_length];
++
+ 	sp->variant->checksum->subroutine(data, payload_length,
+ 					  crc_calculated);
+ 
+@@ -465,10 +489,10 @@ static void rave_sp_receive_frame(struct rave_sp *sp,
+ 		return;
+ 	}
+ 
+-	if (rave_sp_id_is_event(data[0]))
+-		rave_sp_receive_event(sp, data, length);
++	if (rave_sp_id_is_event(data[RAVE_SP_FRAME_CODE_OFFSET]))
++		rave_sp_receive_event(sp, data, payload_length);
+ 	else
+-		rave_sp_receive_reply(sp, data, length);
++		rave_sp_receive_reply(sp, data, payload_length);
+ }
+ 
+ static size_t rave_sp_receive_buf(struct serdev_device *serdev,
 -- 
 2.53.0
 
