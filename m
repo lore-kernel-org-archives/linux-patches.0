@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1CD47C111;
-	Sat, 12 Sep 2026 13:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E157F41A503;
+	Sat, 12 Sep 2026 13:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218728; cv=none; b=uWIjitcbBLNDORPa5KI37PsSTbkNSeQA6qS2cBlG1dSZvWr6l7tTL+vpeHvw4ex4TLNqZt0+vsew8lsmT4Okg2R9/JTYqq4Lv9Bl3RmeD7ArVctx/6uhFTVheUoT1k0pyER6PyGfjZvkicOzIAMMzs8VrThixoiieLCVRFGgK8Q=
+	t=1789218729; cv=none; b=XekEaBfeFIgOx+w0CwbxQTAJVmqap4h+BM8xD886ymFDFnN0C7+Vo8xwkV0lAFjNc1ViAEKYapOE/Su7xgelwbLtLt2/Rexbj+nZUHqBsDw0MCdJqHIsCKve00DG3xQ9FHYrP5S9jZQu7lARS/OY+Bompd7PKcn3fOFjuRaqxds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218728; c=relaxed/simple;
-	bh=dWwYPyy1/6AuJfH6QEtPlaRF2giFlV5OODgDSQqpHys=;
+	s=arc-20240116; t=1789218729; c=relaxed/simple;
+	bh=+QmSnXetPSutMjYeAGHEOdKubcfZA3o5SE+mo8peEZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H2+q+jIy2BAC7kbZifW9rOvubJZtuOqCDizKlvot7RMwjKPKU8o0if6+PMbc0Si6OSxCXjcXyruoJdWWDkC+HYIM6bSRA5QOxaT/SCM9+6LrDc7jFe4qzzsuZQ5uAKkz/HF1DlKnzp8gzLQ5yG0Kn++HEZPfLdeONPwEXnxc4vU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGgs8pKm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qMg32g9kuyKpklIQtRA93lRoesxhIVUthvrLaE6+deYRS4IWn6FFGlUNs698YtgrxdsghoJ9KP0CeO5ub76nUICPJ7fBocHaLmK0v212wG1U+yy4Qx6E4stejIL7Ij2lQF4Cl5ZdVLDIjxgfi8Ig+XE+RxAMkK3Dm4nQea2OBl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1wx6JN/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGgs8pKm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F88F1F00893;
-	Sat, 12 Sep 2026 13:11:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1wx6JN/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915591F000FF;
+	Sat, 12 Sep 2026 13:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218714;
-	bh=vrCVnireDb7833p20UTSjIqOYaB71zSbisfLa4aNhew=;
+	s=korg; t=1789218727;
+	bh=Ucd6umYwTBxofND3LD1ZR16uFf0qpwbt2fRClgZPpM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yGgs8pKmNJ6KQgvu/YkEzOPniTLwO7WTYrh+7hVDJrsnSWPiTYZePCPmRYocLXmWG
-	 LqhK0NPX5zcv26HYwpzffeKVK6bP7/13P2NQxfytNFxbsBgzfSr24quHRWqmd4ffCW
-	 BM6rD8aj/AJUFsVMnDeC3Io7wdHkDkNCen+8A4CE=
+	b=S1wx6JN/qQ/jbwmMiwpq92OjbtrahspHpPS6Cp7BKj/CDSFSU5MtjUZffON0RcA1x
+	 Te7LtqcKwr1UIWRFK0ODXsAYpA67QZPvyLdk89ycIAZNQmrlxI8Pzq5ERNYJgnPBC/
+	 kZM28WvO3P8zRaK+6/kTztXVEZSyruvvSPdAhd3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Marius Cristea <marius.cristea@microchip.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1199/1376] f2fs: fix to avoid pinfile fragment on fragment:{block, segment} mode
-Date: Sat, 12 Sep 2026 09:00:25 +0200
-Message-ID: <20260912065634.272043410@linuxfoundation.org>
+Subject: [PATCH 6.12 1161/1376] hwmon: (emc1403) Drop hysteresis for low limit temperature
+Date: Sat, 12 Sep 2026 08:59:47 +0200
+Message-ID: <20260912065633.428012734@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,172 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Marius Cristea <marius.cristea@microchip.com>
 
-[ Upstream commit 0a1703eba23707e3b2edfa2a2329352e7abc0ffa ]
+[ Upstream commit 75f2c0b3690702c90863c2e138cb5520670845ea ]
 
-pinfile fallocate() conflicts w/ mode=fragment:{block,segment} mount option,
-result in fragment blocks in pinfile, it violate semantics of pinfile
-introduced in commit f5a53edcf01e ("f2fs: support aligned pinned file").
+Remove the hysteresis for low temperature limit, in hardware
+the hysteresis is applied only to the maxim limit and the
+critical limit temperature.
 
-mkfs.f2fs -f /dev/vdb
-mount -t f2fs -o mode=fragment:block /dev/vdb /mnt/f2fs/
-dd if=/dev/zero of=/mnt/f2fs/file bs=1M count=3900
-sync
-touch /mnt/f2fs/pinfile
-f2fs_io pinfile set /mnt/f2fs/pinfile
-f2fs_io fallocate 0 0 $((1024*1024*16)) /mnt/f2fs/pinfile
-sync
-f2fs_io fiemap 0 $((1024*1024*16)) /mnt/f2fs/pinfile
-
-[Before]
-fallocate failed: No space left on device
-Fiemap: offset = 0 len = 16777216
-        logical addr.    physical addr.   length           flags
-0       0000000000000000 00000000d7200000 0000000000004000 00001000
-1       0000000000004000 00000000d7207000 0000000000001000 00001000
-2       0000000000005000 00000000d720c000 0000000000002000 00001000
-3       0000000000007000 00000000d7211000 0000000000001000 00001000
-4       0000000000008000 00000000d7214000 0000000000001000 00001000
-5       0000000000009000 00000000d7218000 0000000000001000 00001000
-6       000000000000a000 00000000d721d000 0000000000001000 00001000
-7       000000000000b000 00000000d721f000 0000000000004000 00001000
-...
-96      00000000000f1000 00000000d73e9000 0000000000004000 00001000
-97      00000000000f5000 00000000d73f1000 0000000000003000 00001000
-98      00000000000f8000 00000000d73f5000 0000000000004000 00001000
-99      00000000000fc000 00000000d73fa000 0000000000001000 00001000
-100     00000000000fd000 00000000d73ff000 0000000000001000 00001001
-
-[After]
-fallocated a file: i_size=16777216, i_blocks=32808
-Fiemap: offset = 0 len = 16777216
-        logical addr.    physical addr.   length           flags
-0       0000000000000000 0000000018a00000 0000000000400000 00001000
-1       0000000000400000 0000000019000000 0000000000400000 00001000
-2       0000000000800000 0000000032400000 0000000000200000 00001000
-3       0000000000a00000 0000000038000000 0000000000200000 00001000
-4       0000000000c00000 0000000039c00000 0000000000200000 00001000
-5       0000000000e00000 0000000044c00000 0000000000200000 00001001
-
-Let's ignore mode=fragment:{block,segment} mount option while fallocate()
-on pinfile.
-
-Fixes: 6691d940b0e0 ("f2fs: introduce fragment allocation mode mount option")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 54392ce4446e3 ("hwmon: (emc1403) Add support for min_hyst attributes")
+Signed-off-by: Marius Cristea <marius.cristea@microchip.com>
+Link: https://lore.kernel.org/r/20260813-emc1403_remove_min_hyst-v1-1-43a0d05d9f49@microchip.com
+[groeck: Updated subject]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h    | 15 +++++++++++----
- fs/f2fs/gc.c      |  2 +-
- fs/f2fs/segment.c |  8 ++++----
- fs/f2fs/super.c   |  4 ++--
- 4 files changed, 18 insertions(+), 11 deletions(-)
+ Documentation/hwmon/emc1403.rst |  8 ++++----
+ drivers/hwmon/emc1403.c         | 27 +++++++++++----------------
+ 2 files changed, 15 insertions(+), 20 deletions(-)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 57cc64a5c9d2c..095f2c2953f1d 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -3858,19 +3858,26 @@ unsigned int f2fs_usable_blks_in_seg(struct f2fs_sb_info *sbi,
- #define MIN_FRAGMENT_SIZE	1
- #define MAX_FRAGMENT_SIZE	512
+diff --git a/Documentation/hwmon/emc1403.rst b/Documentation/hwmon/emc1403.rst
+index 57f833b1a800e..ebf2435a76a62 100644
+--- a/Documentation/hwmon/emc1403.rst
++++ b/Documentation/hwmon/emc1403.rst
+@@ -71,10 +71,10 @@ and EMC14x8 support eight sensors (one internal, seven external).
  
--static inline bool f2fs_need_rand_blk(struct f2fs_sb_info *sbi)
-+static inline bool f2fs_need_rand_blk(struct f2fs_sb_info *sbi,
-+					enum log_type type)
- {
-+	if (type == CURSEG_COLD_DATA_PINNED)
-+		return false;
- 	return F2FS_OPTION(sbi).fs_mode == FS_MODE_FRAGMENT_BLK;
- }
+ The chips implement three limits for each sensor: low (tempX_min), high
+ (tempX_max) and critical (tempX_crit.) The chips also implement an
+-hysteresis mechanism which applies to all limits. The relative difference
+-is stored in a single register on the chip, which means that the relative
+-difference between the limit and its hysteresis is always the same for
+-all three limits.
++hysteresis mechanism which applies to high and critical limits. The relative
++difference is stored in a single register on the chip, which means that the
++relative difference between the limit and its hysteresis is always the same
++for high and critical limits.
  
--static inline bool f2fs_need_rand_seg(struct f2fs_sb_info *sbi)
-+static inline bool f2fs_need_rand_seg(struct f2fs_sb_info *sbi,
-+					enum log_type type)
- {
-+	if (type == CURSEG_COLD_DATA_PINNED)
-+		return false;
- 	return F2FS_OPTION(sbi).fs_mode == FS_MODE_FRAGMENT_SEG;
- }
+ This implementation detail implies the following:
  
--static inline bool f2fs_need_rand_seg_blk(struct f2fs_sb_info *sbi)
-+static inline bool f2fs_need_rand_seg_blk(struct f2fs_sb_info *sbi,
-+					enum log_type type)
- {
--	return f2fs_need_rand_blk(sbi) || f2fs_need_rand_seg(sbi);
-+	return f2fs_need_rand_blk(sbi, type) || f2fs_need_rand_seg(sbi, type);
- }
- 
- /*
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 08a978b6e0a95..49d1acd26a4c7 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -317,7 +317,7 @@ static void select_policy(struct f2fs_sb_info *sbi, int gc_type,
- 		p->max_search = sbi->max_victim_search;
- 
- 	/* let's select beginning hot/small space first. */
--	if (f2fs_need_rand_seg_blk(sbi)) {
-+	if (f2fs_need_rand_seg_blk(sbi, type)) {
- 		p->offset = get_random_u32_below(MAIN_SECS(sbi) *
- 						SEGS_PER_SEC(sbi));
- 		SIT_I(sbi)->last_victim[p->gc_mode] = p->offset;
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 7d85baa22c6ef..e3797e99271ee 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -2843,7 +2843,7 @@ static unsigned int __get_next_segno(struct f2fs_sb_info *sbi, int type)
- 
- 	sanity_check_seg_type(sbi, seg_type);
- 	if (__is_large_section(sbi)) {
--		if (f2fs_need_rand_seg_blk(sbi)) {
-+		if (f2fs_need_rand_seg_blk(sbi, type)) {
- 			unsigned int hint = GET_SEC_FROM_SEG(sbi, curseg->segno);
- 
- 			if (GET_SEC_FROM_SEG(sbi, curseg->segno + 1) != hint)
-@@ -2852,7 +2852,7 @@ static unsigned int __get_next_segno(struct f2fs_sb_info *sbi, int type)
- 					GET_SEG_FROM_SEC(sbi, hint + 1) - 1);
- 		}
- 		return curseg->segno;
--	} else if (f2fs_need_rand_seg_blk(sbi)) {
-+	} else if (f2fs_need_rand_seg_blk(sbi, type)) {
- 		return get_random_u32_below(MAIN_SECS(sbi) * SEGS_PER_SEC(sbi));
- 	}
- 
-@@ -2908,7 +2908,7 @@ static int new_curseg(struct f2fs_sb_info *sbi, int type, bool new_sec)
- 	curseg->next_segno = segno;
- 	reset_curseg(sbi, type, 1);
- 	curseg->alloc_type = LFS;
--	if (f2fs_need_rand_blk(sbi))
-+	if (f2fs_need_rand_blk(sbi, type))
- 		curseg->fragment_remained_chunk =
- 				get_random_u32_inclusive(1, sbi->max_fragment_chunk);
+diff --git a/drivers/hwmon/emc1403.c b/drivers/hwmon/emc1403.c
+index ccce948a4306e..39f69adb88c25 100644
+--- a/drivers/hwmon/emc1403.c
++++ b/drivers/hwmon/emc1403.c
+@@ -305,10 +305,9 @@ static int emc1403_get_hyst(struct thermal_data *data, int channel,
+ 	ret = regmap_read(data->regmap, 0x21, &hyst);
+ 	if (ret < 0)
+ 		return ret;
+-	if (map == temp_min)
+-		*val = limit + hyst * 1000;
+-	else
+-		*val = limit - hyst * 1000;
++
++	*val = limit - hyst * 1000;
++
  	return 0;
-@@ -3712,7 +3712,7 @@ int f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct page *page,
- 		curseg->next_blkoff = f2fs_find_next_ssr_block(sbi, curseg);
- 	} else {
- 		curseg->next_blkoff++;
--		if (f2fs_need_rand_blk(sbi))
-+		if (f2fs_need_rand_blk(sbi, type))
- 			f2fs_randomize_chunk(sbi, curseg);
- 	}
- 	if (curseg->next_blkoff >= f2fs_usable_blks_in_seg(sbi, curseg->segno))
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 59331eddca856..6bf2e0c7854c2 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -2059,9 +2059,9 @@ static int f2fs_show_options(struct seq_file *seq, struct dentry *root)
- 		seq_puts(seq, "adaptive");
- 	else if (F2FS_OPTION(sbi).fs_mode == FS_MODE_LFS)
- 		seq_puts(seq, "lfs");
--	else if (f2fs_need_rand_seg(sbi))
-+	else if (f2fs_need_rand_seg(sbi, NO_CHECK_TYPE))
- 		seq_puts(seq, "fragment:segment");
--	else if (f2fs_need_rand_blk(sbi))
-+	else if (f2fs_need_rand_blk(sbi, NO_CHECK_TYPE))
- 		seq_puts(seq, "fragment:block");
- 	seq_printf(seq, ",active_logs=%u", F2FS_OPTION(sbi).active_logs);
- 	if (test_opt(sbi, RESERVE_ROOT))
+ }
+ 
+@@ -324,9 +323,6 @@ static int emc1403_temp_read(struct thermal_data *data, u32 attr, int channel, l
+ 	case hwmon_temp_input:
+ 		ret = emc1403_get_temp(data, channel, ema1403_temp_map[attr], val);
+ 		break;
+-	case hwmon_temp_min_hyst:
+-		ret = emc1403_get_hyst(data, channel, temp_min, val);
+-		break;
+ 	case hwmon_temp_max_hyst:
+ 		ret = emc1403_get_hyst(data, channel, temp_max, val);
+ 		break;
+@@ -548,7 +544,6 @@ static umode_t emc1403_temp_is_visible(const void *_data, u32 attr, int channel)
+ 	case hwmon_temp_max_alarm:
+ 	case hwmon_temp_crit_alarm:
+ 	case hwmon_temp_fault:
+-	case hwmon_temp_min_hyst:
+ 	case hwmon_temp_max_hyst:
+ 		return 0444;
+ 	case hwmon_temp_min:
+@@ -591,35 +586,35 @@ static const struct hwmon_channel_info * const emc1403_info[] = {
+ 	HWMON_CHANNEL_INFO(chip, HWMON_C_UPDATE_INTERVAL),
+ 	HWMON_CHANNEL_INFO(temp,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT
+ 			   ),
 -- 
 2.53.0
 
