@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F99A242D65;
-	Sat, 12 Sep 2026 14:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2F7242D65;
+	Sat, 12 Sep 2026 14:23:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223014; cv=none; b=VtZKLTQtoCDIFHOsjndkXrq8Poq3x6cc5ZWqMkRkv+DfxaowP3BB/SlzHunZJaEorpGNfrAfzXMpHP+tSrzuk5tytzgWuqrm9aECA7Pz28q1iAwMXS1LjGkOEYlcBFnr3Ki0xUNRFi0ejqjJNXN1jLhBLT7i2NM4aepImYEcu8k=
+	t=1789223019; cv=none; b=I7l85IPis7pbck4LJyp1HuJMY42kK9BnUe6vzwVGwp1Pjmd9Y3wRwPy+AFjiCiRETZYpExCE5P1Dwky+VOlmegYS7Z4u0vfHmWAuDv9MWkCSNZxZP1wIPTbKcTvtMaSRqF0SSuhkIdxyVWBK5CIHvx9+ryg7h4dCA6KisU2B+gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223014; c=relaxed/simple;
-	bh=33zSpP3r82Pn2uNAN2oFq4dBeXCqjmvLUXi2oO8eZE4=;
+	s=arc-20240116; t=1789223019; c=relaxed/simple;
+	bh=/9OjfVh6grx4MA60PIrBofOi0OELR03DQfJP8o6nWc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nj8onhXsEiuzPHGp0oXm0G++DQBLZpRDLK06C3pBXwm9q6ee1+K6PZfYmtTpWSmMUNyc6g8BatEAfz89F9V/q54XkIGd+74N/+hwziysvlMEarhZmYsnh+1dxNxA3qjuPdteL9RxLnP5XBho+osVTn8u5qugFd9SSVKvL4LNdCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JofOJ4aB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q5TwMbURX5Tqbi6mlCsDPIwKufc5GVRJvTL63Eq0Pjyq8ky35NwG7NYcfOGVxZ4Se/m++iMNNy9IQLUnO5Oe/ZkxDaiH2R/JYE6qsReSP996jrhoMVeSeb+rDjw6jVaCF9AKxTqCY7RaPdT7mTy/w3NHPMgZRiIs6xmcJRqZe2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=buT2t4hb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JofOJ4aB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41EF1F000FF;
-	Sat, 12 Sep 2026 14:23:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="buT2t4hb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917421F000FF;
+	Sat, 12 Sep 2026 14:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223013;
-	bh=rjbJ4uq9avZ86ri9TecpiGKwdAg/ek0Q7DfqLwBdVCw=;
+	s=korg; t=1789223018;
+	bh=Xk2QKkmvro6rYY9czoAPP55CkYezaBOrrpnEjfhqlbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JofOJ4aB8Qsabgj9dL6Wp6kOBmMhT9lLx+Qr8KwDtXhtb4mfNmeLX75ArMYCVyuJ/
-	 GXCiF0gGQ0G8TuyuicFazaNuH2IH1cJERmMo1x8PLzZ7VwKlxcuOjN0ApHnmp0DrQ2
-	 OXE2uzXFURcz1GVKmhYVOrjD9usXRQRdRVJ8d3Q4=
+	b=buT2t4hbGdYBRyXMfsi7R5U+QPyUFrZF3sUJ4ZLPBGCZUGauZl1exRiBp4DznP/Y+
+	 v5Xv/Q0zasFF7Nc5kUzXvLA4b1HG1R1oVJUg+r/0CcDUyK3FflhcelY5M5dw+se8XA
+	 UZ2OC0CX67Yu9Sr5gHYn23nIxrDsARAIQKmUdy+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Herman van Hazendonk <github.com@herrie.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0703/1424] usb: gadget: aspeed_udc: Convert to platform remove callback returning void
-Date: Sat, 12 Sep 2026 08:52:15 +0200
-Message-ID: <20260912065623.040989519@linuxfoundation.org>
+Subject: [PATCH 6.6 0677/1424] clk: qcom: gdsc: tear down per-domain genpds in gdsc_unregister()
+Date: Sat, 12 Sep 2026 08:51:49 +0200
+Message-ID: <20260912065622.461050264@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -44,91 +46,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Herman van Hazendonk <github.com@herrie.org>
 
-[ Upstream commit 3d56e5aa6727f5055d1ad879342ad1a8acec2134 ]
+[ Upstream commit 86b23609d5e17a770d03037e53c6a443e742a6e6 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+gdsc_unregister() removes the OF provider entry and tears down the
+parent/subdomain wiring, but never calls pm_genpd_remove() on the
+individual generic_pm_domain structures registered by gdsc_init():
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+	void gdsc_unregister(struct gdsc_desc *desc)
+	{
+		struct device *dev = desc->dev;
+		size_t num = desc->num;
 
-ast_udc_remove() is one of these functions that return an error code
-after doing only a partial cleanup. Replace the core's error message by
-a more drastic one and still convert the driver to .remove_new().
-Note the only semantic change here is the changed error message.
+		gdsc_pm_subdomain_remove(desc, num);
+		of_genpd_del_provider(dev->of_node);
+	}
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20231026221701.2521483-2-u.kleine-koenig@pengutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 97cee53a94be ("usb: gadget: aspeed_udc: check endpoint DMA allocation")
+That leaves dangling entries on the global gpd_list. After a provider
+unbind/rebind cycle (deferred-probe replay during early boot, real
+module unload of a clk driver that owns GDSCs, or an OF-overlay tear-
+down) the next gdsc_init() will end up trying to re-register a name
+that is still in the list and pm_genpd_init() returns -EEXIST.
+
+While we are here, flip the order so the consumer-facing OF provider
+entry is the first thing removed -- otherwise a fresh
+of_genpd_get_from_provider() call racing with the teardown could
+attach to a domain that is mid-removal.
+
+Iterate the scs[] array and pm_genpd_remove() each registered domain
+after the subdomain links are torn down. The regulators stay devm-
+managed (devm_regulator_get_optional() in gdsc_register()), so the
+release happens automatically when the underlying device is unbound;
+just the genpd accounting needs to be undone explicitly.
+
+Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+Fixes: 45dd0e55317c ("clk: qcom: Add support for GDSCs")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260602140934.796697-4-github.com@herrie.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/aspeed_udc.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/clk/qcom/gdsc.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/udc/aspeed_udc.c b/drivers/usb/gadget/udc/aspeed_udc.c
-index 4868286574a1c..f4781e611aaa2 100644
---- a/drivers/usb/gadget/udc/aspeed_udc.c
-+++ b/drivers/usb/gadget/udc/aspeed_udc.c
-@@ -1434,15 +1434,24 @@ static void ast_udc_init_hw(struct ast_udc_dev *udc)
- 	ast_udc_write(udc, 0, AST_UDC_EP0_CTRL);
- }
- 
--static int ast_udc_remove(struct platform_device *pdev)
-+static void ast_udc_remove(struct platform_device *pdev)
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index 7d1fc7a2f678b..e564bde202e2d 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -554,10 +554,18 @@ int gdsc_register(struct gdsc_desc *desc,
+ void gdsc_unregister(struct gdsc_desc *desc)
  {
- 	struct ast_udc_dev *udc = platform_get_drvdata(pdev);
- 	unsigned long flags;
- 	u32 ctrl;
+ 	struct device *dev = desc->dev;
++	struct gdsc **scs = desc->scs;
+ 	size_t num = desc->num;
++	int i;
  
- 	usb_del_gadget_udc(&udc->gadget);
--	if (udc->driver)
--		return -EBUSY;
-+	if (udc->driver) {
-+		/*
-+		 * This is broken as only some cleanup is skipped, *udev is
-+		 * freed and the register mapping goes away. Any further usage
-+		 * probably crashes. Also the device is unbound, so the skipped
-+		 * cleanup is never catched up later.
-+		 */
-+		dev_alert(&pdev->dev,
-+			  "Driver is busy and still going away. Fasten your seat belts!\n");
-+		return;
+-	gdsc_pm_subdomain_remove(desc, num);
+ 	of_genpd_del_provider(dev->of_node);
++	gdsc_pm_subdomain_remove(desc, num);
++
++	for (i = 0; i < num; i++) {
++		if (!scs[i])
++			continue;
++		pm_genpd_remove(&scs[i]->pd);
 +	}
- 
- 	spin_lock_irqsave(&udc->lock, flags);
- 
-@@ -1461,8 +1470,6 @@ static int ast_udc_remove(struct platform_device *pdev)
- 				  udc->ep0_buf_dma);
- 
- 	udc->ep0_buf = NULL;
--
--	return 0;
  }
  
- static int ast_udc_probe(struct platform_device *pdev)
-@@ -1583,7 +1590,7 @@ MODULE_DEVICE_TABLE(of, ast_udc_of_dt_ids);
- 
- static struct platform_driver ast_udc_driver = {
- 	.probe			= ast_udc_probe,
--	.remove			= ast_udc_remove,
-+	.remove_new		= ast_udc_remove,
- 	.driver			= {
- 		.name			= KBUILD_MODNAME,
- 		.of_match_table		= ast_udc_of_dt_ids,
+ /*
 -- 
 2.53.0
 
