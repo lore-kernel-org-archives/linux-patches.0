@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D662E06E4;
-	Sat, 12 Sep 2026 12:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA10C2E06E4;
+	Sat, 12 Sep 2026 12:38:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216693; cv=none; b=iQL/eC/E7zgg7NTpTPNbLq8nS/PlVm0uunncMvRKtaZ8PpILLfOJFKI6WKvot0iVjiiHDqeigU3IAPav4NdC7KBomtAKm3I9y9ixvfq1rZxUvbmpKDj5XoZqtfmtdbhEQ/bWOsn353z4el4t6f5HhASCtopdf1sMoCEtAbhgIjQ=
+	t=1789216698; cv=none; b=UZ6IBx3FrfELXI6HaLNz8TzL4fqM+xRKhzb7dKCcWLT8fH64ZhtvKXJ/NGNtYMBzh8XB59zGFjphNgsqGLtBn2w8X3Ieo1gcw/kPMoov8hdKHXRI2f2Z/v8G1SO1P+i/uVmqmQ+V+2lBHEfuq0avKdTmWnOWWvC6toOV4QKMQoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216693; c=relaxed/simple;
-	bh=K3j2mlZfygqCYFERp8xJjjIZlOajDuOV0rmzU1wSvLw=;
+	s=arc-20240116; t=1789216698; c=relaxed/simple;
+	bh=iwaahnmnKgYsp17jTOHRPh1njUhzcORlp0VBrKopjM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=URtCUWaDF5wpv+d/O4ybGBAB09i0IS3D95pXM/V5SD1WhgaEPpW7YCQ2S+5ba6gjzl9qIZZQygwrScO12DHwqC6WLD1z22nH0B5biMPdLpPj/HUHYXXc+WVBzRPBWIb0OJP6II9udcY6xTvk1Gd0nc1oTvf+kF1ZzSxbLVN3zlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7xR7rak; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mfVb6LQIoi7LLg+5TandyQVMs59SwU6R0grJk61P6BT0fyT3xkkC7sZc1YPPT37WtATzrhhQordFR6U+8C6fZXUcVj79+D+Af/mAdGNF2X5gWesQBq1MZOc5TMJza11XX2jLHco+7bzixdqro9ld2r5WVG46oQA25fdzSp0LAG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uSyB3WeX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7xR7rak"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A88341F000FF;
-	Sat, 12 Sep 2026 12:38:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uSyB3WeX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9511D1F000FF;
+	Sat, 12 Sep 2026 12:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216692;
-	bh=j/Q7JxACYMKAisJw5PYnfZG2Kzb7lski472MU1KKDig=;
+	s=korg; t=1789216697;
+	bh=No2r/C3Tjyimo8RRtQRoACEPG5BfXyl1CqgCcE5NeFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S7xR7rakA6NfjKa4NAXGKaK+hr5wVg6DjR+T+5U86i7yL8SCgPVNGMfjpZoh4g7PF
-	 66pa9rbWd6e1byQkIoFqlPeoNSIffGWFE6xEn4eSMKU9NdfgUD2LmMQjqOcOzQ8O2Z
-	 TgFJrAzBH1gYWDfE6Fj5GCt5K6aWF5Db/GpnXink=
+	b=uSyB3WeXfiXToXnZf7XQIY/S+U21Ori9XnEVKY395lwgcjKI9dbjYW1hjKDeL2RFK
+	 06rZNYCY8se5YKTt7iztcwS9bwtikYtnM1ARc+O1QbhRvZ5Ly7crxQQEziPIdTaPpE
+	 kmt8AE8pIYzbz2ATrX0oaMZYqKqZHY1Qrbf5CPc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Petr Tesarik <ptesarik@suse.com>,
-	"Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Cheng-Han Wu <hank20010209@gmail.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0786/1376] iommu/dma: Check atomic pool allocation result directly
-Date: Sat, 12 Sep 2026 08:53:32 +0200
-Message-ID: <20260912065625.054347643@linuxfoundation.org>
+Subject: [PATCH 6.12 0747/1376] selftests/zram: fix kernel_gte() for POSIX sh
+Date: Sat, 12 Sep 2026 08:52:53 +0200
+Message-ID: <20260912065624.192297268@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -55,55 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+From: Cheng-Han Wu <hank20010209@gmail.com>
 
-[ Upstream commit af95a0ebc0a0db0762be75f51eadf770bad01aaa ]
+[ Upstream commit 649ba27dfac784427a01f9c95c09ecbcb88900d8 ]
 
-The non-blocking, non-coherent allocation path uses dma_alloc_from_pool(),
-which returns the allocated page and fills cpu_addr only on success.
+Commit fc4eb486a59d ("selftests/zram: Skip max_comp_streams
+interface on newer kernel") added kernel_gte() to zram_lib.sh.
+The function uses the bash-specific [[ ... ]] conditional, but
+zram selftests source this file while running under /bin/sh.
 
-Do not rely on cpu_addr to detect allocation failure in this path. Check
-the returned page directly before using it for the IOMMU mapping.
+On systems where /bin/sh is dash, such as Debian, the following
+test fails:
 
-Fixes: 9420139f516d ("dma-pool: fix coherent pool allocations for IOMMU mappings")
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Mostafa Saleh <smostafa@google.com>
-Reviewed-by: Petr Tesarik <ptesarik@suse.com>
-Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
-Link: https://lore.kernel.org/r/20260717180442.110954-4-aneesh.kumar@kernel.org
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+  dash -c '
+  kernel_major=6; kernel_minor=1; major=6; minor=0
+  if [ $kernel_major -gt $major ]; then
+      echo ok
+  elif [[ $kernel_major -eq $major && $kernel_minor -ge $minor ]]; then
+      echo ok
+  fi'
+
+with:
+
+  dash: 5: [[: not found
+
+Use separate POSIX test expressions joined by && instead.
+
+Fixes: fc4eb486a59d ("selftests/zram: Skip max_comp_streams interface on newer kernel")
+Signed-off-by: Cheng-Han Wu <hank20010209@gmail.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/dma-iommu.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ tools/testing/selftests/zram/zram_lib.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-index 0f0caf59023c7..059463664b418 100644
---- a/drivers/iommu/dma-iommu.c
-+++ b/drivers/iommu/dma-iommu.c
-@@ -1648,13 +1648,16 @@ void *iommu_dma_alloc(struct device *dev, size_t size, dma_addr_t *handle,
- 	}
+diff --git a/tools/testing/selftests/zram/zram_lib.sh b/tools/testing/selftests/zram/zram_lib.sh
+index 21ec1966de76c..0d44d83888f9d 100755
+--- a/tools/testing/selftests/zram/zram_lib.sh
++++ b/tools/testing/selftests/zram/zram_lib.sh
+@@ -37,7 +37,7 @@ kernel_gte()
  
- 	if (IS_ENABLED(CONFIG_DMA_DIRECT_REMAP) &&
--	    !gfpflags_allow_blocking(gfp) && !coherent)
-+	    !gfpflags_allow_blocking(gfp) && !coherent) {
- 		page = dma_alloc_from_pool(dev, PAGE_ALIGN(size), &cpu_addr,
--					       gfp, NULL);
--	else
-+					   gfp, NULL);
-+		if (!page)
-+			return NULL;
-+	} else {
- 		cpu_addr = iommu_dma_alloc_pages(dev, size, &page, gfp, attrs);
--	if (!cpu_addr)
--		return NULL;
-+		if (!cpu_addr)
-+			return NULL;
-+	}
+ 	if [ $kernel_major -gt $major ]; then
+ 		return 0
+-	elif [[ $kernel_major -eq $major && $kernel_minor -ge $minor ]]; then
++	elif [ $kernel_major -eq $major ] && [ $kernel_minor -ge $minor ]; then
+ 		return 0
+ 	fi
  
- 	*handle = __iommu_dma_map(dev, page_to_phys(page), size, ioprot,
- 			dev->coherent_dma_mask);
 -- 
 2.53.0
 
