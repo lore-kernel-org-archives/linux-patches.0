@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8EF4195DA;
-	Sat, 12 Sep 2026 09:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D013F4189B9;
+	Sat, 12 Sep 2026 09:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204055; cv=none; b=tpwoj99bGGfkoAvwGbQqNT/Ish8vG7xKT9HeYYq27oG+h3Ag9tL9fVzN4CMZNxOJ7sZKKLmaGWtY6kPiNh+lQHPJSc8lC0sM9SatB3UZPoPoaRrnFEva/Nnbm08IlfIKrlN2dzkmgcC4nEEeOQPmVjFgU272FpRiw01r93t8a+s=
+	t=1789204061; cv=none; b=S+x4D5d/AqZw4lCxErjKaTwVfifuTles11M8IdYi8jDnJT6bmGMx9jpaR2BZzQgj5k0pNzea0uEdAQxygep5mv+iHhB58UdI6yP+nroi+0FvXCCcgE3PtTI98gHy7sfaxI6qCaWTFcjbWiNnbp8O88yfVWTwoJgXwkPZl7t4bEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204055; c=relaxed/simple;
-	bh=nEOBQP+ABbbXQO6wCN4RWeaWFPrdUrHXsTRVDFzhaYg=;
+	s=arc-20240116; t=1789204061; c=relaxed/simple;
+	bh=6COwclyxigl1ek4q90rQdpFF88Ok6r25AG53VBepnPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mRFkdsvtwqvcaPvDzi8opk3cF/rGa/TU5XcbJei9BHX05N8x1fAw5DTp+5WcpIQQmJ2iRPNlvFiQK6ZKuR7YkoGVWb2L2TNb+YGjL1DXPiwxk4c4fXh4HogOv0ioSwh0oD3FsQTFniN62MSqvd6pIDmI6Nxo44SDlnbdJR8axNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6+06gms; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KwPhBGXVpcJKc1cXgnXSsDVa79uxgBABAC2bS1MLHjO6oUPUDByjv3TrSJYVDMTiV3ipJscNs3I4aXPEZbb1vPaGoIIVHub0jbunq8AZsVUQnl9FYSAj3tUvSFjalO+Ng2Xs+XGltEjM2KDzw8MFKkJzFFQb3qGwZnHjv5RRCPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udw3S6Gu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6+06gms"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4EB1F000FF;
-	Sat, 12 Sep 2026 09:07:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udw3S6Gu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 504A61F000FF;
+	Sat, 12 Sep 2026 09:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204054;
-	bh=MSE1/biUW6n53wqHfZCDU2FcyRlluFaN4Tmmi1GbqOA=;
+	s=korg; t=1789204059;
+	bh=O+zg7WuRCkJQo4KTLdGjjgORg1OhiLMRYcKvopJnczA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y6+06gmsWLBb1xyC69MBoYzPRkveA9ChJkkn6ktK/7slGfG+fHwqQ10ub/IDbuikL
-	 LYnzLRbqDErlydELI0M3NAGEht0kKDa8yH2/jgP4TXAp5pDmdSqdf1YME6xQy6xnrL
-	 h9389odtNI6O6gf9p/T37siK+NCFoFfbjnBykMfo=
+	b=udw3S6Gunv5XVQOUO7Z3Y8RRtWbFOW8koAxux/HjaiTlba5EOmOBdVwRSjsKDHLe9
+	 UdxkEcau6HY69545valj8DXci1hVggX4mvUYv93yQC/EGj98MjmtmOLslM/ezhruTK
+	 /FlomPq4DpV1ISi3oW/Sowp/Sg5MILPkhznqmavg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1534/1815] ksmbd: fix encrypted request lookup on bound channels
-Date: Sat, 12 Sep 2026 08:54:44 +0200
-Message-ID: <20260912065725.018835213@linuxfoundation.org>
+Subject: [PATCH 7.2 1535/1815] ksmbd: scope session state changes to bound connections
+Date: Sat, 12 Sep 2026 08:54:45 +0200
+Message-ID: <20260912065725.042741696@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,67 +52,196 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 2cbd4a8bf460cdf414a2d7e4912c5bcfe3d0fdc2 ]
+[ Upstream commit c50e628122aed077695669e25b842e778511a43d ]
 
-An SMB3 multichannel binding registers the secondary connection in the
-session channel list, but does not insert the session into the secondary
-connection's session xarray.
+ksmbd_all_conn_set_status() treats every connection whose transient
+binding flag is set as belonging to the target SessionId.  A logoff or
+session replacement can consequently move an unrelated connection to
+NEED_RECONNECT or NEED_SETUP.
 
-The decryption path only searches the connection-local xarray.  As a
-result, every encrypted request received on a bound channel fails with
-"Could not get decryption key".
+Pass the target session itself and select connections using either the
+connection-local session xarray or the session's permanent channel list.
+Use the same association test while waiting for requests to drain.
 
-Use the channel-aware session lookup for decryption.  Also stop using the
-temporary conn->binding flag to decide whether the global lookup is
-allowed.  Validate the permanent channel association under chann_lock
-instead.
+Serialize session-wide status changes under request_lock and do not
+overwrite EXITING or RELEASING. Protect the shutdown transition with the
+same lock so a concurrent session update cannot revive a closing
+connection.
 
 Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
+Fixes: abcc506a9a71 ("ksmbd: fix racy issue from smb2 close and logoff with multichannel")
+Fixes: c444139cb747 ("ksmbd: rewrite stop_sessions() with restartable iteration")
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/auth.c              |  2 +-
- fs/smb/server/mgmt/user_session.c | 11 +++++++++--
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ fs/smb/server/connection.c        | 37 ++++++++++++++++++++++++++-----
+ fs/smb/server/connection.h        |  6 +++--
+ fs/smb/server/mgmt/user_session.c |  8 +++----
+ fs/smb/server/smb2pdu.c           |  6 ++---
+ 4 files changed, 41 insertions(+), 16 deletions(-)
 
-diff --git a/fs/smb/server/auth.c b/fs/smb/server/auth.c
-index d51f32095adad..8bcd2a8a574e3 100644
---- a/fs/smb/server/auth.c
-+++ b/fs/smb/server/auth.c
-@@ -725,7 +725,7 @@ static int ksmbd_get_encryption_key(struct ksmbd_work *work, __u64 ses_id,
- 		 * that the command can reach the session setup handler. Other
- 		 * commands are rejected there with STATUS_NETWORK_SESSION_EXPIRED.
+diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
+index 636d6ce3386b2..37d9ab7e937ad 100644
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -304,15 +304,37 @@ void ksmbd_conn_unlock(struct ksmbd_conn *conn)
+ 	mutex_unlock(&conn->srv_mutex);
+ }
+ 
+-void ksmbd_all_conn_set_status(u64 sess_id, u32 status)
++static bool ksmbd_session_is_bound_to_conn(struct ksmbd_session *sess,
++					   struct ksmbd_conn *conn)
++{
++	bool found;
++
++	rcu_read_lock();
++	found = xa_load(&conn->sessions, sess->id) == sess;
++	rcu_read_unlock();
++	if (found)
++		return true;
++
++	down_read(&sess->chann_lock);
++	found = xa_load(&sess->ksmbd_chann_list, (long)conn);
++	up_read(&sess->chann_lock);
++	return found;
++}
++
++void ksmbd_all_conn_set_status(struct ksmbd_session *sess, u32 status)
+ {
+ 	struct ksmbd_conn *conn;
+ 	int bkt;
+ 
+ 	down_read(&conn_list_lock);
+ 	hash_for_each(conn_list, bkt, conn, hlist) {
+-		if (conn->binding || xa_load(&conn->sessions, sess_id))
+-			WRITE_ONCE(conn->status, status);
++		if (ksmbd_session_is_bound_to_conn(sess, conn)) {
++			spin_lock(&conn->request_lock);
++			if (!ksmbd_conn_exiting(conn) &&
++			    !ksmbd_conn_releasing(conn))
++				WRITE_ONCE(conn->status, status);
++			spin_unlock(&conn->request_lock);
++		}
+ 	}
+ 	up_read(&conn_list_lock);
+ }
+@@ -322,7 +344,8 @@ void ksmbd_conn_wait_idle(struct ksmbd_conn *conn)
+ 	wait_event(conn->req_running_q, atomic_read(&conn->req_running) < 2);
+ }
+ 
+-int ksmbd_conn_wait_idle_sess_id(struct ksmbd_conn *curr_conn, u64 sess_id)
++int ksmbd_conn_wait_idle_sess(struct ksmbd_conn *curr_conn,
++			      struct ksmbd_session *sess)
+ {
+ 	struct ksmbd_conn *conn;
+ 	int rc, retry_count = 0, max_timeout = 120;
+@@ -334,7 +357,7 @@ int ksmbd_conn_wait_idle_sess_id(struct ksmbd_conn *curr_conn, u64 sess_id)
+ 
+ 	down_read(&conn_list_lock);
+ 	hash_for_each(conn_list, bkt, conn, hlist) {
+-		if (conn->binding || xa_load(&conn->sessions, sess_id)) {
++		if (ksmbd_session_is_bound_to_conn(sess, conn)) {
+ 			rcount = (conn == curr_conn) ? 2 : 1;
+ 			if (atomic_read(&conn->req_running) >= rcount) {
+ 				rc = wait_event_timeout(conn->req_running_q,
+@@ -660,8 +683,10 @@ static void stop_sessions(void)
+ 		 * handler exited its receive loop for an unrelated
+ 		 * reason).
  		 */
--		sess = ksmbd_session_lookup(work->conn, ses_id);
-+		sess = ksmbd_session_lookup_all_states(work->conn, ses_id);
- 		if (sess && sess->state != SMB2_SESSION_VALID &&
- 		    (sess->state != SMB2_SESSION_EXPIRED ||
- 		     !sess->kerberos_expiry)) {
+-		if (READ_ONCE(conn->status) != KSMBD_SESS_RELEASING)
++		spin_lock(&conn->request_lock);
++		if (!ksmbd_conn_releasing(conn))
+ 			ksmbd_conn_set_exiting(conn);
++		spin_unlock(&conn->request_lock);
+ 		target = conn;
+ 		break;
+ 	}
+diff --git a/fs/smb/server/connection.h b/fs/smb/server/connection.h
+index 158feb019142f..7f7bc1f24a63d 100644
+--- a/fs/smb/server/connection.h
++++ b/fs/smb/server/connection.h
+@@ -22,6 +22,7 @@
+ #include "ksmbd_work.h"
+ 
+ struct smbdirect_buffer_descriptor_v1;
++struct ksmbd_session;
+ 
+ #define KSMBD_SOCKET_BACKLOG		16
+ 
+@@ -167,7 +168,8 @@ extern struct rw_semaphore conn_list_lock;
+ 
+ bool ksmbd_conn_alive(struct ksmbd_conn *conn);
+ void ksmbd_conn_wait_idle(struct ksmbd_conn *conn);
+-int ksmbd_conn_wait_idle_sess_id(struct ksmbd_conn *curr_conn, u64 sess_id);
++int ksmbd_conn_wait_idle_sess(struct ksmbd_conn *curr_conn,
++			      struct ksmbd_session *sess);
+ struct ksmbd_conn *ksmbd_conn_alloc(void);
+ void ksmbd_conn_free(struct ksmbd_conn *conn);
+ struct ksmbd_conn *ksmbd_conn_get(struct ksmbd_conn *conn);
+@@ -280,5 +282,5 @@ static inline void ksmbd_conn_set_releasing(struct ksmbd_conn *conn)
+ 	WRITE_ONCE(conn->status, KSMBD_SESS_RELEASING);
+ }
+ 
+-void ksmbd_all_conn_set_status(u64 sess_id, u32 status);
++void ksmbd_all_conn_set_status(struct ksmbd_session *sess, u32 status);
+ #endif /* __CONNECTION_H__ */
 diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index 01c8bfb2606bb..25220371775cf 100644
+index 25220371775cf..3273c500eff44 100644
 --- a/fs/smb/server/mgmt/user_session.c
 +++ b/fs/smb/server/mgmt/user_session.c
-@@ -535,11 +535,18 @@ struct ksmbd_session *ksmbd_session_lookup_all_states(struct ksmbd_conn *conn,
- 						      unsigned long long id)
- {
- 	struct ksmbd_session *sess;
-+	bool channel_found;
+@@ -631,17 +631,17 @@ void destroy_previous_session(struct ksmbd_conn *conn,
+ 	    memcmp(user->passkey, prev_user->passkey, user->passkey_sz))
+ 		goto out;
  
- 	sess = ksmbd_session_lookup(conn, id);
--	if (!sess && conn->binding) {
-+	if (!sess) {
- 		sess = ksmbd_session_lookup_slowpath(id);
--		if (sess && !xa_load(&sess->ksmbd_chann_list, (long)conn)) {
-+		if (!sess)
-+			return NULL;
-+
-+		down_read(&sess->chann_lock);
-+		channel_found = xa_load(&sess->ksmbd_chann_list, (long)conn);
-+		up_read(&sess->chann_lock);
-+		if (!channel_found) {
- 			ksmbd_user_session_put(sess);
- 			sess = NULL;
- 		}
+-	ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_RECONNECT);
+-	err = ksmbd_conn_wait_idle_sess_id(conn, id);
++	ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_NEED_RECONNECT);
++	err = ksmbd_conn_wait_idle_sess(conn, prev_sess);
+ 	if (err) {
+-		ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_SETUP);
++		ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_NEED_SETUP);
+ 		goto out;
+ 	}
+ 
+ 	ksmbd_destroy_file_table(prev_sess);
+ 	prev_sess->kerberos_expiry = 0;
+ 	prev_sess->state = SMB2_SESSION_EXPIRED;
+-	ksmbd_all_conn_set_status(id, KSMBD_SESS_NEED_SETUP);
++	ksmbd_all_conn_set_status(prev_sess, KSMBD_SESS_NEED_SETUP);
+ 	ksmbd_launch_ksmbd_durable_scavenger();
+ out:
+ 	up_write(&conn->session_lock);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 9492bdb99d59d..9c9af31b8d1ec 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2791,7 +2791,6 @@ int smb2_session_logoff(struct ksmbd_work *work)
+ 	struct ksmbd_session *sess = work->sess;
+ 	struct smb2_logoff_req *req;
+ 	struct smb2_logoff_rsp *rsp;
+-	u64 sess_id;
+ 	int err;
+ 
+ 	WORK_BUFFERS(work, req, rsp);
+@@ -2805,8 +2804,7 @@ int smb2_session_logoff(struct ksmbd_work *work)
+ 		smb2_set_err_rsp(work);
+ 		return -ENOENT;
+ 	}
+-	sess_id = le64_to_cpu(req->hdr.SessionId);
+-	ksmbd_all_conn_set_status(sess_id, KSMBD_SESS_NEED_RECONNECT);
++	ksmbd_all_conn_set_status(sess, KSMBD_SESS_NEED_RECONNECT);
+ 	ksmbd_conn_unlock(conn);
+ 
+ 	ksmbd_close_session_fds(work);
+@@ -2824,7 +2822,7 @@ int smb2_session_logoff(struct ksmbd_work *work)
+ 	sess->state = SMB2_SESSION_EXPIRED;
+ 	up_write(&conn->session_lock);
+ 
+-	ksmbd_all_conn_set_status(sess_id, KSMBD_SESS_NEED_SETUP);
++	ksmbd_all_conn_set_status(sess, KSMBD_SESS_NEED_SETUP);
+ 
+ 	rsp->StructureSize = cpu_to_le16(4);
+ 	err = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_logoff_rsp));
 -- 
 2.53.0
 
