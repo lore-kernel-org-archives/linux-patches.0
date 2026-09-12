@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F130F3C1D43;
-	Sat, 12 Sep 2026 07:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE13A346A08;
+	Sat, 12 Sep 2026 07:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197034; cv=none; b=MVSCLv7qFLTnjbR0SkIBbGydbMv9BBLgTHu28banPNJtq9e9oZmTq7pYZWa+ct9jzuzdQWvrIy2XxdBlL/QrXmaBCzllIE3HyYQtk9OaGgpP51ktMFxd/7f2TYRTLwLxW48nvnBsTu8YSiHol54gglN+sv01+9RKq9goJTesbCo=
+	t=1789197039; cv=none; b=KCxKhip8T+5zeMWMEg4lvCWLtoVqxZxXdzo6llWfXfGYABy5p3ywjOu9bfCX0Ex/au1oNOhURbb82G6flAZucMfMFreodg5sH5LKAbrsew5kwtcpfr3iQhIozrvAqb4wvNbqb/NT55FjBSfDvqD34nbPW6tw8VYUsbjA+cd4cnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197034; c=relaxed/simple;
-	bh=S1X5IUhTaw7KeijiefLBX9L1dSNqkJydC2iUMOr090k=;
+	s=arc-20240116; t=1789197039; c=relaxed/simple;
+	bh=76tQQBbYR0sZzrdIQ0H3Pk7xhYEfL9B6yjBQ3wpXbu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JPGjYg2WCMo0b10EGA11zAbiZQikrv6ikt4VF5vlWiPtXYswKkh+9hBZHHRLoAe62C1vDgcMnXfxqQD3yL3+Ehr8KznIADG62h+ARFXCK5eRYFfvIslyy7RyF7Vyj5kDM5GpNP8Lf7akePLAghI9wq823OwQVifdeNo+AljeGpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1x0yRQ92; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kGuJHCdSj3NrbslyQSUbZB8xzcehQm5uhqq+11xEzMolbxjLS91won/tNzARFVCVzPJqPqzJmqBDKgwHhiwsp7ojl7Xtv/s7QzTL1wz+46tPIAkYWzkpE33itk9OZqkmX5co32kvTDe9Ezi3BeoRFkugbdQ2nyQNGjIA315QNZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTaP8+Ps; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1x0yRQ92"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1061F000FF;
-	Sat, 12 Sep 2026 07:10:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTaP8+Ps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06C21F000FF;
+	Sat, 12 Sep 2026 07:10:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197032;
-	bh=fyowHnTPSpvIIGY1aFbIpo/pv4D8RzMmfrQ8pSSoOhI=;
+	s=korg; t=1789197037;
+	bh=E6errLRgXPROqO/jjXriMArHP4dVcm5iFIX25LQX3cQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1x0yRQ92M5OBbsg4J7MY38XGGURykYaBh3zi5REA383pxrO/dl6PFG43yWgnwzxMV
-	 ibaIDApJV2V+8lKVdwvFNg0dxYilnmxlV5Zt0/hFlpZQFQzcQEWaQvvuQNiK5DpbGx
-	 JLP/ICEorr1imDIgNf9m9M35yXz3d3Gkq6fkT7Y0=
+	b=QTaP8+PscK2kYA34mlcd4/IViEZmdlsXKcrmBh3fJMI0uoN8JkP2F8daKxpaljQcB
+	 dI2uS/0yZYyxxGsUr9gHUf/DA5ueoHdxqNhu5Zw3jfwVjQHk2/ukQFFC+HZRfBTG6v
+	 W7knRHgrH0eWcq5YXCzpcGP0r+wTo3yEU7OrUXGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0085/1815] clk: stm32: add missing bitfield.h header
-Date: Sat, 12 Sep 2026 08:30:35 +0200
-Message-ID: <20260912065651.002798951@linuxfoundation.org>
+Subject: [PATCH 7.2 0086/1815] ASoC: rt700-sdw: always drain jack work on remove
+Date: Sat, 12 Sep 2026 08:30:36 +0200
+Message-ID: <20260912065651.026478143@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,47 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 0bf68e8dcb843f094ed73c2c54e9fe58a7a4f774 ]
+[ Upstream commit 612ccf42acd14bb2685fa60c3495ca13e63e8989 ]
 
-It seems some ARM header includes this and the build passes there, but
-nowhere else. Note that the driver has COMPILE_TEST in depends.
+rt700_sdw_remove() drains jack_detect_work and jack_btn_check_work only
+when rt700->hw_init is true. That state bit is cleared by
+rt700_update_status() when the SoundWire slave becomes UNATTACHED, but a
+jack work item can already have been queued by rt700_interrupt_callback()
+or rt700_jack_init() while the device was initialized.
 
-Fixes: 37ae8501cdb0 ("clk: stm32: introduce clocks for STM32MP21 platfor")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Do not use hw_init as the remove-time guard for draining these work
+objects. The delayed works are initialized during rt700_init(), so remove
+can cancel them unconditionally and pair the object lifetime with the
+codec-private data lifetime instead of a mutable hardware state bit.
+
+This issue was found by our static analysis tool and then confirmed by
+manual review of the SoundWire status, interrupt and remove paths. The
+remove path should drain work based on whether the work object exists, not
+on a runtime hardware state bit that can change after the work was queued.
+
+A QEMU PoC queued jack_detect_work, simulated SDW_SLAVE_UNATTACHED, and
+then entered remove. DEBUG_OBJECTS reported an active timer/work object
+associated with the rt700 jack work path after remove skipped the cancel.
+
+This is sent as an RFC because the practical trigger depends on SoundWire
+core remove ordering after an UNATTACHED status update. If remove cannot
+run after hw_init has been cleared while jack work is still pending, this
+is a defensive lifecycle cleanup rather than a reachable race on current
+systems.
+
+Fixes: 737ee8bdf682 ("ASoC: rt700-sdw: use cancel_work_sync() in .remove as well as .suspend")
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260619122325.2504287-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/stm32/clk-stm32mp21.c | 1 +
- drivers/clk/stm32/clk-stm32mp25.c | 1 +
- 2 files changed, 2 insertions(+)
+ sound/soc/codecs/rt700-sdw.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/stm32/clk-stm32mp21.c b/drivers/clk/stm32/clk-stm32mp21.c
-index c8a37b716bd55..bdb17419908c8 100644
---- a/drivers/clk/stm32/clk-stm32mp21.c
-+++ b/drivers/clk/stm32/clk-stm32mp21.c
-@@ -4,6 +4,7 @@
-  * Author: Gabriel Fernandez <gabriel.fernandez@foss.st.com> for STMicroelectronics.
-  */
+diff --git a/sound/soc/codecs/rt700-sdw.c b/sound/soc/codecs/rt700-sdw.c
+index a451d5d1f8ab5..bb449f08e30cf 100644
+--- a/sound/soc/codecs/rt700-sdw.c
++++ b/sound/soc/codecs/rt700-sdw.c
+@@ -458,10 +458,8 @@ static void rt700_sdw_remove(struct sdw_slave *slave)
+ {
+ 	struct rt700_priv *rt700 = dev_get_drvdata(&slave->dev);
  
-+#include <linux/bitfield.h>
- #include <linux/bus/stm32_firewall_device.h>
- #include <linux/clk-provider.h>
- #include <linux/io.h>
-diff --git a/drivers/clk/stm32/clk-stm32mp25.c b/drivers/clk/stm32/clk-stm32mp25.c
-index 52f0e8a129262..eb0bc918ecee0 100644
---- a/drivers/clk/stm32/clk-stm32mp25.c
-+++ b/drivers/clk/stm32/clk-stm32mp25.c
-@@ -4,6 +4,7 @@
-  * Author: Gabriel Fernandez <gabriel.fernandez@foss.st.com> for STMicroelectronics.
-  */
+-	if (rt700->hw_init) {
+-		cancel_delayed_work_sync(&rt700->jack_detect_work);
+-		cancel_delayed_work_sync(&rt700->jack_btn_check_work);
+-	}
++	cancel_delayed_work_sync(&rt700->jack_detect_work);
++	cancel_delayed_work_sync(&rt700->jack_btn_check_work);
  
-+#include <linux/bitfield.h>
- #include <linux/bus/stm32_firewall_device.h>
- #include <linux/clk-provider.h>
- #include <linux/io.h>
+ 	pm_runtime_disable(&slave->dev);
+ }
 -- 
 2.53.0
 
