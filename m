@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E918E352032;
-	Sat, 12 Sep 2026 17:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BBB33993;
+	Sat, 12 Sep 2026 17:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232888; cv=none; b=IYGVbFReQe9twO/R8yBD3QK2+pLBzjXMOshLVnU1ej2uA/Fqfuo7Q1tmrhdxwGUjoNTXrsoFJ3Iu2rVvBDbizxGAO/y4zURm0AU9n2MuA/kbUL9GPJ1A1j3bCIZZ04czxGI4/XpFetxs9HHaUT9EbWVVXDamAO7h1/CE6gIG+lE=
+	t=1789232892; cv=none; b=KhdmJQWBT/wgo0IVzAuXHamXWpNh0YhN68jiMfQNFu22FnOGsB4yTNXxqkAYM2EK3sgVnxE0CJuLwm4JXLD029ta4875RtkT9A6DQgxo1d6RL+ywFCNObBQMYcdyHawMybw1mAfa0UcJ3OLuPxYi3oVq2A/AQP6ZXSdzRJ9IgI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232888; c=relaxed/simple;
-	bh=HNhGXStJLtrl9d44CGVSx4zAWPZPbdR6UHlGa+ix2IQ=;
+	s=arc-20240116; t=1789232892; c=relaxed/simple;
+	bh=xjTlG7OzsnRKnaOZFbVZENiinPtWRpZI3HllsHHA22k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BbhnKyarvkY0nKPfRcMjZhbNXZJa4Io5bGal8ImnkZ+ok7Gq+rBGr1GcFK97y7p20qRcWEitmwxgQwXKI7Qe0P3M3EI/pnd8a60241dFG/aw9jh4+hEPgnUm9dt0prpunfFfmdR0pzSQPhqzEpl7m06C7PwBBMBtI985CFLtfkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rqUpKvgO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AxdH7fxGzQgwtmslyV1RT8AjT4yYT86nSq9DTtT+Y+YDqOZZkF6N48Ak98rCljrgiU5cIMnFJ8J89ZpKP840OE4juIdjVwmKllO22zhX+TiTjLxkNKOWFJVcebTbqacNNkSxXSUjaoWdN5+EOs4Zt4gwBNEmFs6kl1mj0KgrJ1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HXHXML1c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rqUpKvgO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BB21F000FF;
-	Sat, 12 Sep 2026 17:08:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HXHXML1c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACBC1F000FF;
+	Sat, 12 Sep 2026 17:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232886;
-	bh=apyvkv7MPGWY1nb+6ZPSb3J/1qGnTmQOKKDTs+FExbg=;
+	s=korg; t=1789232890;
+	bh=2LRXknGNxknwI3x4oHbIGev3dLL9KD4fFKj5bshQolw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rqUpKvgORDGiSLOiI3GpQuY9ze4hmsPuhHYJmolUIvYeMTOzhoAt8N9WXD6R4lJRF
-	 yLbvdBFlHn5C/0Pq9+NkAOFHKFoTmqK0nzvo1PTCpX/p+KsRXc+6PPRmz0DJXiMqMt
-	 8QxU66pR0tkvf0YOiZBgYWUy6b+6CBfe1oKtxCjw=
+	b=HXHXML1cMgnX6uy/WLepI5SBk4MQNA3wgFRCPweU+AayNGvJ1hAp3q34b13ZonCZX
+	 zsdnyrxXdJozT71WvvYt6LzJpDqjvZYrcNvmVMmKShDcM9MWDQyy7Ar+5G56A+DYsD
+	 pY+581HZwTaQPjrSc4iAdwoOJAUJsPm8++gV+3So=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	Bryam Vargas <hexlabsecurity@proton.me>
-Subject: [PATCH 5.15 102/935] libnvdimm/labels: Prevent integer overflow in __nd_label_validate()
-Date: Sat, 12 Sep 2026 08:52:12 +0200
-Message-ID: <20260912065529.159906791@linuxfoundation.org>
+	Ramesh Adhikari <adhikari.resume@gmail.com>,
+	Coly Li <colyli@fygo.io>,
+	Yu Kuai <yukuai@fygo.io>
+Subject: [PATCH 5.15 103/935] md: do overflow check for sb->bblog_shift in super_1_load()
+Date: Sat, 12 Sep 2026 08:52:13 +0200
+Message-ID: <20260912065529.183431611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,50 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Coly Li <colyli@fygo.io>
 
-commit 037770686126155eafc44501312989e2837b9659 upstream.
+commit 35d522bd32462afcf1981dab6da8a9256c26c1e0 upstream.
 
-The on-media namespace index field nslot is a u32 read from the DIMM
-label storage area.  __nd_label_validate() bounds it against the config
-area size, but sizeof_namespace_label() returns unsigned, so the product
-nslot * label_size is evaluated in 32-bit and wraps modulo 2^32 before
-the comparison.  A crafted nslot passes the bound and is then used as the
-loop trip count in nd_label_data_init(), whose memset() walks off the end
-of the config_size buffer: an out-of-bounds write.
+In super_1_load(), sb->bblog_shift is an __u8 type value loaded from on-
+disk superblock. It is used for badblocks API badblocks_set() by the
+following sequence,
 
-The field is not trusted -- it comes from the medium, or from userspace
-via ND_CMD_SET_CONFIG_DATA.  Evaluate the product in 64-bit so the bound
-check is exact; conforming labels are unaffected.
+ 1930   rdev->badblocks.shift = sb->bblog_shift;
+ 1931   for (i = 0 ; i < (sectors << (9-3)) ; i++, bbp++) {
+ 1932           u64 bb = le64_to_cpu(*bbp);
+ 1933           int count = bb & (0x3ff);
+ 1934           u64 sector = bb >> 10;
+ 1935           sector <<= sb->bblog_shift;
+ 1936           count <<= sb->bblog_shift;
+ 1937           if (bb + 1 == 0)
+ 1938                   break;
+ 1939           if (!badblocks_set(&rdev->badblocks, sector, count, 1))
+ 1940                   return -EINVAL;
+ 1941   }
 
-The check was safe when introduced by commit 4a826c83db4e ("libnvdimm:
-namespace indices: read and validate"): it multiplied by sizeof(struct
-nd_namespace_label), a size_t, so on a 64-bit build the product did not
-wrap.  Commit 564e871aa66f ("libnvdimm, label: add v1.2 nvdimm label
-definitions") narrowed it to 32 bits when the label size became a runtime
-value read via sizeof_namespace_label().
+bb->bblog_shit is in range of 0-255, variable sector is 64bit width, for
+an invalid bb->bblog_shit, it is possible to make sector be overflowed
+by the following calculation,
+ 1935           sector <<= sb->bblog_shift;
+Then in turn when call badblocks_set() at line 1939 with the invalid
+rdev->badblocks.shift set at line 1930, may result an overflow inside
+_badblocks_clear() in block/badblocks.c.
 
-Fixes: 564e871aa66f ("libnvdimm, label: add v1.2 nvdimm label definitions")
+Although there are many places to call badblocks APIs, the non-zero
+shift value is only used in super_1_load(), other places always use 0 as
+the shift value. Therefore it is unnecessary to do a general shift value
+overflow check inside badblock API, and just check here as the caller.
+
+This may avoid unnecessary check, make the badblocks API code more simple
+and elegant.
+
+Fixes: 2699b67223ac ("md: load/store badblock list from v1.x metadata")
+Fixes: 1726c7746783 ("badblocks: improve badblocks_set() for multiple ranges handling")
 Cc: stable@vger.kernel.org
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260624-b4-disp-d8279485-v3-1-cdb6cab28b41@proton.me
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Cc: Ramesh Adhikari <adhikari.resume@gmail.com>
+Signed-off-by: Coly Li <colyli@fygo.io>
+Reviewed-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/20260720111400.2120834-1-colyli@fygo.io
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvdimm/label.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/md.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/nvdimm/label.c
-+++ b/drivers/nvdimm/label.c
-@@ -194,7 +194,7 @@ static int __nd_label_validate(struct nv
- 		}
- 
- 		nslot = __le32_to_cpu(nsindex[i]->nslot);
--		if (nslot * sizeof_namespace_label(ndd)
-+		if ((u64)nslot * sizeof_namespace_label(ndd)
- 				+ 2 * sizeof_namespace_index(ndd)
- 				> ndd->nsarea.config_size) {
- 			dev_dbg(dev, "nsindex%d nslot: %u invalid, config_size: %#x\n",
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -1746,6 +1746,13 @@ static int super_1_load(struct md_rdev *
+ 				  rdev->bb_page, REQ_OP_READ, 0, true))
+ 			return -EIO;
+ 		bbp = (__le64 *)page_address(rdev->bb_page);
++
++		/* check for badblocks api. */
++		if (sb->bblog_shift >= BITS_PER_TYPE(sector_t)) {
++			pr_err("md: %pg: bogus bblog_shift %u for badblocks.\n",
++			       rdev->bdev, sb->bblog_shift);
++			return -EINVAL;
++		}
+ 		rdev->badblocks.shift = sb->bblog_shift;
+ 		for (i = 0 ; i < (sectors << (9-3)) ; i++, bbp++) {
+ 			u64 bb = le64_to_cpu(*bbp);
 
 
