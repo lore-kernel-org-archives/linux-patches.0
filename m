@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F031538655A;
-	Sat, 12 Sep 2026 13:09:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA2737FF60;
+	Sat, 12 Sep 2026 13:09:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218591; cv=none; b=RFJ9D1qHKmYVlVuAd2bzxzec/qekCJCeqd6mtEq1jnS6h6YN51xDR74Ets7xECcN5MCUES2X2wv26V7HGzp1scAHhyAhwCFoJT1shYPKhfTViEI5H/L2vPXeNlbMWT6k/jScvW9IUhUUw9/OpF6H36OLFb3oqHa0/s+WvaU5hGI=
+	t=1789218596; cv=none; b=l6aIN4SsUVzKh7kri3x73J+mkJjgQ0GtHTDkZzcsjpTZ9cDZX7JsD1xOtQI6/FsmVKACBZYc96Sng5ZrkxTs0VYOlYzXA7feX2UfBAbAxaKQhHru2lAOpCz8leyiK4Z9E3HCEabdQy5u1lagvbYzTwLC0Xxg9IycDRMNxfOX5eY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218591; c=relaxed/simple;
-	bh=yFadao9T+1L5AxvCGm3noJgqWmuzh89/spvC7pb5pvA=;
+	s=arc-20240116; t=1789218596; c=relaxed/simple;
+	bh=quZ+a8JmQRHZva/ojtISFEgoPNGW9Yri4L7Wo1xHANo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hUFqaWCVqg/cbVt/v36Y4nsMx/IkqPvB22oMOZ9zBvHNNZkUNCCUe0+6LRgkciQt6hNkCflwV6cccD5PwuDvflDtrBgPETFxzAqL9mjTA8cRMXTQBeLxt6RQHtEPsWZUBqj1M0h1Bz6sfYsfKrDasHxA2IrXjPEcM1dOIGkqL44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+l0ezL5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y/9ODmFVV3Wzw2f+WyYKE/pD1PtI1myxmPbwFEu6BFK+gGPvYEfvQRZjvkT847an5eaAeEBiKEhXdP32SFlljQ3ot9pX/eTb1hoKf5zXMJMqhoEaTPDkZjzckqdvv0C6k1J/txynHNKhDub+uVszgfN1hcJ69CL+NWvWrb8BItw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvN6sgtb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+l0ezL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6FE1F000FF;
-	Sat, 12 Sep 2026 13:09:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvN6sgtb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8BD51F000FF;
+	Sat, 12 Sep 2026 13:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218589;
-	bh=REMIpLYTsaV205XiUgQUwgUsRiBZ5j3oh1gcN41PlMo=;
+	s=korg; t=1789218595;
+	bh=YSrtyA26s0Fh7QMCo3GU6vGC63ENQjsSGURNJvB7DlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U+l0ezL5lYVddd6zousyzYSsCQV6M7PEskFVL8krwM2x3RzPM8vuC3HVHqyGmjdiX
-	 W5CnD9eyzOqrBS1moDkJHzwUJGWFdilQe7pT0CZaQTADlYA//Vq0GWTUhUlteFfFdM
-	 mni6OJz+lpa4TnUfoaOIZeCJPpy4N/fmEVOLVQPw=
+	b=AvN6sgtb17RRdXPg1CZ0Sn+QmFQpsuVYc5ZlzWd7RRZsSxaik7n63o/zbR48/NvpQ
+	 eRfSz+4tZrXR+PlXXqk8g647KbWIOT1Yhtl99XvcDcDOfwsIEe9gfeuZyrzUdISSeV
+	 8duBJZTJwTUNvN9/2RpSWe2JThP7dRAjFu7kNfAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sechang Lim <rhkrqnwk98@gmail.com>,
-	Junseo Lim <zirajs7@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1176/1376] bpf: Reject negative optlen in cgroup getsockopt hook
-Date: Sat, 12 Sep 2026 09:00:02 +0200
-Message-ID: <20260912065633.761715790@linuxfoundation.org>
+Subject: [PATCH 6.12 1177/1376] ksmbd: disconnect on SMB3 decryption failure
+Date: Sat, 12 Sep 2026 09:00:03 +0200
+Message-ID: <20260912065633.784262963@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,48 +50,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junseo Lim <zirajs7@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 1b5aacd5b2419b0790e955e466d389a61c79b4b1 ]
+[ Upstream commit 12a6680ce59bcd431730c9f049caddb017964c64 ]
 
-A cgroup getsockopt BPF program can shrink ctx->optlen after the
-kernel getsockopt handler has run. The kernel-buffer variant, used by
-TCP_ZEROCOPY_RECEIVE, only rejects values larger than the original
-length.
+MS-SMB2 requires the server to disconnect a connection when an
+encrypted transform cannot be associated with a session or fails
+authenticated decryption. This includes an encrypted request that
+still carries a SessionId invalidated through PreviousSessionId.
 
-If BPF writes a negative optlen, that value is accepted and propagated
-back to the TCP getsockopt code. It can then be passed to
-copy_to_sockptr() as a size_t and trigger the hardened usercopy
-bytes > INT_MAX warning.
+Move the connection to EXITING and shut down its transport when
+decrypt_req() fails. Add the missing TCP shutdown callback so a receive
+blocked in kernel_recvmsg() is released; SMB Direct already provides
+the corresponding callback.
 
-Reject negative ctx.optlen in __cgroup_bpf_run_filter_getsockopt_kern(),
-matching the lower-bound validation already present in the sockptr-based
-getsockopt hook.
+Plaintext requests using an invalidated SessionId do not take this
+path and continue to receive STATUS_USER_SESSION_DELETED.
 
-Fixes: 9cacf81f8161 ("bpf: Remove extra lock_sock for TCP_ZEROCOPY_RECEIVE")
-Reported-by: Sechang Lim <rhkrqnwk98@gmail.com>
-Signed-off-by: Junseo Lim <zirajs7@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/187a4d756275aaaee5d65eecb63c1477b3b66554.1786448307.git.zirajs7@gmail.com
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cgroup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/connection.c    | 16 ++++++++++++++++
+ fs/smb/server/connection.h    |  1 +
+ fs/smb/server/server.c        |  4 +++-
+ fs/smb/server/transport_tcp.c |  6 ++++++
+ 4 files changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-index e2d352251bb71..fa2b9f033d84e 100644
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -2214,7 +2214,7 @@ int __cgroup_bpf_run_filter_getsockopt_kern(struct sock *sk, int level,
- 	if (ret < 0)
- 		return ret;
+diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
+index 6808fee63f284..c5f9705825b87 100644
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -255,6 +255,22 @@ void ksmbd_all_conn_set_status(u64 sess_id, u32 status)
+ 	up_read(&conn_list_lock);
+ }
  
--	if (ctx.optlen > *optlen)
-+	if (ctx.optlen > *optlen || ctx.optlen < 0)
- 		return -EFAULT;
++void ksmbd_conn_abort(struct ksmbd_conn *conn)
++{
++	bool shutdown = false;
++
++	spin_lock(&conn->request_lock);
++	if (!ksmbd_conn_exiting(conn) && !ksmbd_conn_releasing(conn)) {
++		ksmbd_conn_set_exiting(conn);
++		shutdown = true;
++	}
++	spin_unlock(&conn->request_lock);
++	wake_up_all(&conn->req_running_q);
++
++	if (shutdown && conn->transport->ops->shutdown)
++		conn->transport->ops->shutdown(conn->transport);
++}
++
+ void ksmbd_conn_wait_idle(struct ksmbd_conn *conn)
+ {
+ 	wait_event(conn->req_running_q, atomic_read(&conn->req_running) < 2);
+diff --git a/fs/smb/server/connection.h b/fs/smb/server/connection.h
+index 8728899d5e756..96ef441330512 100644
+--- a/fs/smb/server/connection.h
++++ b/fs/smb/server/connection.h
+@@ -166,6 +166,7 @@ struct ksmbd_conn *ksmbd_conn_alloc(void);
+ void ksmbd_conn_free(struct ksmbd_conn *conn);
+ struct ksmbd_conn *ksmbd_conn_get(struct ksmbd_conn *conn);
+ void ksmbd_conn_put(struct ksmbd_conn *conn);
++void ksmbd_conn_abort(struct ksmbd_conn *conn);
+ int ksmbd_conn_wq_init(void);
+ void ksmbd_conn_wq_destroy(void);
+ bool ksmbd_conn_lookup_dialect(struct ksmbd_conn *c);
+diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
+index 4c7924e254174..a618638875012 100644
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -170,8 +170,10 @@ static void __handle_ksmbd_work(struct ksmbd_work *work,
+ 	if (conn->ops->is_transform_hdr &&
+ 	    conn->ops->is_transform_hdr(work->request_buf)) {
+ 		rc = conn->ops->decrypt_req(work);
+-		if (rc < 0)
++		if (rc < 0) {
++			ksmbd_conn_abort(conn);
+ 			return;
++		}
+ 		work->encrypted = true;
+ 	}
  
- 	/* BPF programs can shrink the buffer, export the modifications.
+diff --git a/fs/smb/server/transport_tcp.c b/fs/smb/server/transport_tcp.c
+index d731bab985683..902a6265e323c 100644
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -467,6 +467,11 @@ static void ksmbd_tcp_disconnect(struct ksmbd_transport *t)
+ 		atomic_dec(&active_num_conn);
+ }
+ 
++static void ksmbd_tcp_shutdown(struct ksmbd_transport *t)
++{
++	kernel_sock_shutdown(TCP_TRANS(t)->sock, SHUT_RDWR);
++}
++
+ static void tcp_destroy_socket(struct socket *ksmbd_socket)
+ {
+ 	int ret;
+@@ -722,5 +727,6 @@ static const struct ksmbd_transport_ops ksmbd_tcp_transport_ops = {
+ 	.read		= ksmbd_tcp_read,
+ 	.writev		= ksmbd_tcp_writev,
+ 	.disconnect	= ksmbd_tcp_disconnect,
++	.shutdown	= ksmbd_tcp_shutdown,
+ 	.free_transport = ksmbd_tcp_free_transport,
+ };
 -- 
 2.53.0
 
