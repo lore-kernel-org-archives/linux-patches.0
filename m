@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64A8299920;
-	Sat, 12 Sep 2026 08:14:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC602737FC;
+	Sat, 12 Sep 2026 08:14:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200870; cv=none; b=Jnn7eu3Juf7l6NyUmQkFCXV4oWgdpn4qzGysopo+vvxGetjev+gN5wF7UmQ8pUjmpSxezTDjXMqWJvW5srvsodwVjT1YGO0Y3lY6F42Ts1A6C5iQ/qoapvATlK9fiusL7DV2ELxCQZV6xhD1u7+fIL9kg3P6gCq1916fPdckXLE=
+	t=1789200875; cv=none; b=Su6v5XpuH7RkTuFGdisMeN5Yv9V+gSZ92RMESsduK7lx2z7Wxtjh3tk8kBh5prhrdD22wWlqqojYMm3d5EED9BtlDvD5WGZfTMKTOZHooiwwpeRtyVesXFHX2B5dwZkxBYcerUPQKvRd+7bMjwZ3CQUlr+z79g6e9eIc/XxHTYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200870; c=relaxed/simple;
-	bh=RzMwTIdf71uVtrEcr42imrJ9nb+HKfIgyzLNTLGcFDA=;
+	s=arc-20240116; t=1789200875; c=relaxed/simple;
+	bh=EWmVmP5KCp/pisJiTE3eyfHGPf6/2K+uuW0KjpV24uU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LleQ/el9ZSTwux8KGDIrFOW94SKWwj8vksoQbmu9A0yFEu0wP3daQDmGT+sP1MRMSaKkufaa7mn7KGQhebeoOKJ0F/VhvUoFg2g/2C0DolpVHGGG8y28ZeMUelBAnrZuG3KleiZga46BJfl9175K3Pyu6X58zyUni5nWUzXEkRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pyk4uMCg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K0lRrs/5se3480W5aizsSmrS556CpUe2bZS0KqUe4C/pA74XkCLJaJ+8q9x+4XoSu0IP1it2U+1lcIo0VoZhCulWrJPDsPazapZwREvGYhJPQgXyFTbkMQnu8sauEe68/JjcBEsUK2RiBqoQm/CFs/vN91YFB9VDfhotbzt+Wkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZ+pBU6M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pyk4uMCg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6E61F000FF;
-	Sat, 12 Sep 2026 08:14:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZ+pBU6M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88DD01F00893;
+	Sat, 12 Sep 2026 08:14:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200869;
-	bh=n9GdEl7iyDiUmNDI5YY3xaCegXx6UDsnU/x1Vh9c9P0=;
+	s=korg; t=1789200874;
+	bh=ILZrP4hMNw/+ogpuRJkmWSpIbdeeE44bfV98RbgFuN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pyk4uMCga99/sARJod8frOCXEqFTs/T0DtR4XasVJjz4cCVjw4CcJiphA0B8GTV9p
-	 hor44Cnr7E1lRtI17uQGJ+rfo/BpaW1kf9RBPC0JgXfE5GUjtskrZQr1XAuxwEy7c1
-	 oY88LkTxv2grpEaxkScRF5KCGaA7946iYi1ruNNM=
+	b=gZ+pBU6MOcw6I0MQtj8FdWrKAlSP6pNuTV0lDP1lhhvxqHAi4xuN3+lTusURB7vq6
+	 NIKp5xXhmLHlA+LPdxMDuQO/7Tp/P2J+nqZL+fx7RLAWigMNbVpYQVXLzEMFFQZoJj
+	 J7h176deHmjBer2VpCQg3DdGaoq0QVqAvFlo1RRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0880/1815] wifi: mt76: mt7996: validate RX band_idx before dereferencing phys[]
-Date: Sat, 12 Sep 2026 08:43:50 +0200
-Message-ID: <20260912065709.578918113@linuxfoundation.org>
+Subject: [PATCH 7.2 0881/1815] wifi: mt76: mt7996: set MT76_MCU_RESET before waking MCU waiters on full reset
+Date: Sat, 12 Sep 2026 08:43:51 +0200
+Message-ID: <20260912065709.603202783@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,39 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 2243778a5fae8329ab5f18e7adcd7e03b911a1b7 ]
+[ Upstream commit 6469ae71e7e5d0132c934972f628f346ad0379cd ]
 
-band_idx comes from a 2-bit descriptor field (0-3) and was used directly
-to index dev->mt76.phys[] (size __MT_MAX_BAND == 3) and dereference the
-result. A corrupt or reserved descriptor value could index out of bounds
-or hit a NULL phy on parts with fewer bands. Reject invalid band indices,
-mirroring mt7996_rx_get_wcid().
+mt7996_mac_full_reset() called wake_up(&dev->mt76.mcu.wait) without first
+setting MT76_MCU_RESET. The MCU response wait condition only checks the
+response queue and that bit, so the wake-up released nobody: a thread
+blocked in an MCU command against the dead firmware (typically holding
+dev->mt76.mutex) stayed asleep until its multi-second timeout, stalling
+recovery. Set the bit before the wake-up, as mt7915 does.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Link: https://patch.msgid.link/20260722082610.2699628-6-nbd@nbd.name
+Fixes: 27015b6fbcca ("wifi: mt76: mt7996: enable full system reset support")
+Link: https://patch.msgid.link/20260722082610.2699628-7-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index b7e46ecefd995..7f915aa20367d 100644
+index 7f915aa20367d..6530fb9b45c1c 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -441,7 +441,13 @@ mt7996_mac_fill_rx(struct mt7996_dev *dev, enum mt76_rxq_id q,
- 	memset(status, 0, sizeof(*status));
+@@ -2460,6 +2460,7 @@ mt7996_mac_full_reset(struct mt7996_dev *dev)
  
- 	band_idx = FIELD_GET(MT_RXD1_NORMAL_BAND_IDX, rxd1);
-+	if (!mt7996_band_valid(dev, band_idx))
-+		return -EINVAL;
-+
- 	mphy = dev->mt76.phys[band_idx];
-+	if (!mphy)
-+		return -EINVAL;
-+
- 	phy = mphy->priv;
- 	status->phy_idx = mphy->band_idx;
+ 	dev->recovery.hw_full_reset = true;
+ 
++	set_bit(MT76_MCU_RESET, &dev->mphy.state);
+ 	wake_up(&dev->mt76.mcu.wait);
+ 	ieee80211_stop_queues(hw);
  
 -- 
 2.53.0
