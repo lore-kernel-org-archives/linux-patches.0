@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6E04BEE5E;
-	Sat, 12 Sep 2026 18:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E321E39EF1F;
+	Sat, 12 Sep 2026 18:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238404; cv=none; b=kV77RExQ82Nht0okrPCkUahZaKzfPaO+I6Xf28pd8whuCsqLqBwwRpkti8U5ME+Zz9qoZ49W5qH0NWrkaPuDEPmnoXPUK3VpV7V2QfFUCU6XG32UsAHoyU/vYBrlgWet2uep0N8xweKDFSNfE+WyW5ucWTmotI2XdzYTlXmQFPE=
+	t=1789238409; cv=none; b=teGfu5V1CJe+O1mJzBWOLLcMbQerLbsO1fBpYHW5bno/HYd7fh+KPDmq/WsVbyrREmc16fKbQba6WpcvqQ/rGRGXN749pyu+ZR9dY7olHpNcWCN7kydiVGueCT2NWoSbOFM9G4dbmwC1j0ommIamKlyOfVLuaDU5vaOYB5tDjf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238404; c=relaxed/simple;
-	bh=wKjH6NtHt8tZXxrmEE7DPDC9apR+mUK6vqHmVdqrchE=;
+	s=arc-20240116; t=1789238409; c=relaxed/simple;
+	bh=Iv+WAHY3MzA5psizpYcUL70+PGX8DrHYxwtc5VMi9t8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KoV0JbmGb2DjtywL5GY7ROJpe1qIzAgBtggWrwOoq/WG7SzzjFHYrv4PyZR8okK/aHJg2/Rn3wp7tOJubwLLe13Evo3EDD7dwkJ5CHP8vgSRQ/wgSuWfxNhl01YpwwNdNqhWRNCm8sw2az8RxKid5mlajY1Cv4gZX1bIRBAzjKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UEap1mmj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FaUas3nc8a9UTbR8ydJ3/RbDnhu8S9MskK71lQQr3LkiOODv32xZMPdPtcwQJj7sMd0sjJjqnA+dSVHBTnjBcvnIAD6lFHJ5JfuxNTnxoK2uRZUA4b7C5Xo35uh6mT+eSQwekE6fjSvnHmBuP1XYxqIi+cy3EU3mLwUGyUHXSPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjfSzzXK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEap1mmj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25CBD1F000FF;
-	Sat, 12 Sep 2026 18:39:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjfSzzXK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6581F00893;
+	Sat, 12 Sep 2026 18:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238399;
-	bh=m3yu8CG2VQCbrs1cksCPwYl5B77qMoQUpYclfMUxIi8=;
+	s=korg; t=1789238404;
+	bh=fvdePoLNk3uktG/u4T7IdX9TqSVWvmsB5aABQHPLMBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UEap1mmjrqnKO+krXBFHVbkW8elR2Yavk1B0O4+rk2hZ4NFzFNdKY42oouotHrjAs
-	 1PeKWx8GAm0h4rX9VsNfxcUPifdWeo+bDhTevBAx69KxiD47GgrPbGLDllNmNYrxUU
-	 QjckJhMUKHxdRxAlJQs4Ss+vzRsv6hHWNNfaoQLA=
+	b=CjfSzzXK/PJsJx3w47jWV9hy8jJKx4GL5nTlliKeyMn0N+XG7kU6K2wiQQdjhb+cp
+	 bxb1bBkjVDdpismlnYwHdN4Du9uFbdVXevTXuGE8x7eL8ZIaiqQJmph+kSccZxaLTX
+	 /1Be1LZ5q0fHMTInNs9AbNbJQ9Cd101y0DZTItuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yuvraj Singh Chauhan <ysinghcin@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 455/935] staging: switch to netif_napi_add_weight()
-Date: Sat, 12 Sep 2026 08:58:05 +0200
-Message-ID: <20260912065537.263397713@linuxfoundation.org>
+Subject: [PATCH 5.15 456/935] staging: octeon: fix free_irq dev_id mismatch in cvm_oct_rx_shutdown
+Date: Sat, 12 Sep 2026 08:58:06 +0200
+Message-ID: <20260912065537.286536124@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,57 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
 
-[ Upstream commit 60c85e23bed17b4e5074cb2695837244cecc827a ]
+[ Upstream commit 41db5b76eeb4cc11a1097384caba7cfc659f7293 ]
 
-netif_napi_add() will soon default to weight of 64 instead of
-requiring the user to specify that parameter. Most users already
-pass or should pass 64. Move the callers in staging to
-netif_napi_add_weight() which will keep the argument.
-This way we'll avoid a huge cross-tree conversion when
-argument is removed.
+In cvm_oct_rx_initialize(), request_irq() is called with
+&oct_rx_group[i].napi as the dev_id:
 
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/20220705225801.923601-1-kuba@kernel.org
+	request_irq(oct_rx_group[i].irq, cvm_oct_do_interrupt, 0, "Ethernet",
+							&oct_rx_group[i].napi);
+
+However, cvm_oct_rx_shutdown() passes cvm_oct_device (an array of
+struct net_device pointers) as the dev_id to free_irq():
+
+  free_irq(oct_rx_group[i].irq, cvm_oct_device);
+
+Since __free_irq() matches the action to remove by comparing
+dev_id pointers, the mismatched cookie means the IRQ handler is
+never found, triggering a WARN and leaving the IRQ line permanently
+allocated. This prevents proper driver cleanup on module removal.
+
+Fix the mismatch by passing &oct_rx_group[i].napi as the dev_id
+to free_irq(), matching what was used during request_irq().
+
+Signed-off-by: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
+Link: https://patch.msgid.link/20260212171903.1417804-1-ysinghcin@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: c0a9a8586a63 ("staging: octeon: add missing napi_disable in cvm_oct_rx_shutdown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/octeon/ethernet-rx.c | 4 ++--
- drivers/staging/qlge/qlge_main.c     | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/staging/octeon/ethernet-rx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/staging/octeon/ethernet-rx.c b/drivers/staging/octeon/ethernet-rx.c
-index 9ebd665e5d427..965330eec80a8 100644
+index 965330eec80a8..d0b43d50b83ce 100644
 --- a/drivers/staging/octeon/ethernet-rx.c
 +++ b/drivers/staging/octeon/ethernet-rx.c
-@@ -469,8 +469,8 @@ void cvm_oct_rx_initialize(void)
- 		if (!(pow_receive_groups & BIT(i)))
- 			continue;
+@@ -535,7 +535,7 @@ void cvm_oct_rx_shutdown(void)
+ 			cvmx_write_csr(CVMX_POW_WQ_INT_THRX(i), 0);
  
--		netif_napi_add(dev_for_napi, &oct_rx_group[i].napi,
--			       cvm_oct_napi_poll, rx_napi_weight);
-+		netif_napi_add_weight(dev_for_napi, &oct_rx_group[i].napi,
-+				      cvm_oct_napi_poll, rx_napi_weight);
- 		napi_enable(&oct_rx_group[i].napi);
+ 		/* Free the interrupt handler */
+-		free_irq(oct_rx_group[i].irq, cvm_oct_device);
++		free_irq(oct_rx_group[i].irq, &oct_rx_group[i].napi);
  
- 		oct_rx_group[i].irq = OCTEON_IRQ_WORKQ0 + i;
-diff --git a/drivers/staging/qlge/qlge_main.c b/drivers/staging/qlge/qlge_main.c
-index 8fcdf89da8aa9..309ef712c971f 100644
---- a/drivers/staging/qlge/qlge_main.c
-+++ b/drivers/staging/qlge/qlge_main.c
-@@ -3045,8 +3045,8 @@ static int qlge_start_rx_ring(struct qlge_adapter *qdev, struct rx_ring *rx_ring
- 		/* Inbound completion handling rx_rings run in
- 		 * separate NAPI contexts.
- 		 */
--		netif_napi_add(qdev->ndev, &rx_ring->napi, qlge_napi_poll_msix,
--			       64);
-+		netif_napi_add_weight(qdev->ndev, &rx_ring->napi,
-+				      qlge_napi_poll_msix, 64);
- 		cqicb->irq_delay = cpu_to_le16(qdev->rx_coalesce_usecs);
- 		cqicb->pkt_delay = cpu_to_le16(qdev->rx_max_coalesced_frames);
- 	} else {
+ 		netif_napi_del(&oct_rx_group[i].napi);
+ 	}
 -- 
 2.53.0
 
