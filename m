@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA2D39BFFE;
-	Sat, 12 Sep 2026 18:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734BD3B42FD;
+	Sat, 12 Sep 2026 18:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238923; cv=none; b=XUvr2mzxfiW5DRznA7fP+DrLvnf0esaQBFV46hDah15w9nqkkRI1ulvU81qvaoY2A7ghPe309uqKoBE7Vb4PLOUYa8MY9fhS1rZYU4utSVBNpQPg5wVpgo3zregFhXAvxIVvZjG1TUZa2qnKOVgW8f9xxeJJCawSGFOexdh06o8=
+	t=1789238928; cv=none; b=rVVGUcobm77tBEAxsfAF7M6d/teq4Mr/h6cNeWQYdiK5xvNWrNb7dNGI1fNyBFNO128eKUvehPNCVJzqpDLwrlcmFUf0hBNcjzN2Vc3W1GgSEzYSf0LEKSoNnac3AA8W7gIR47vGjWggo6F3djFBMUT6LEKyLlggqRZf6HK8fUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238923; c=relaxed/simple;
-	bh=yX+solLRrgDLAxmjrAZq1HYSPUltUs2xLHXFqTEilK4=;
+	s=arc-20240116; t=1789238928; c=relaxed/simple;
+	bh=Xm0Ce+5Yg5ditPmh1HAZY00naofTWX9BAKpFDMw9t0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=stO0varO2FQTyhsI4jpS7UKuc2CH6tK2mmhrpGxe2dwmaQHg6t2Mmuu0oGZOUVHHdjdTO84dlmBJPFGHUOt13kR8suHScEJQ5fOth8qpxYv4FSY/Of1Nx3BcDk/65wviQSX5k2LHj2DnP1QbXuRdTi4DVxtYRWHHupG0Q1Q/yg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAvGqsOZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iv4bQMFX5R/steIOI9smC8tS0HSGrlNMPVe5/qZx4Ay3ajD+MNtCQ1gKzGjHGPHDsM9Wb7QNw0UluWP1HqSY2/bzYyby8kcH6edmDU9BGgCKr/R0MXG2vlagiR500wt7pmUa6FuE4CtCgg9/T8lp6GGTaaG89L6Y4bjUDlUfnys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwktwNzJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAvGqsOZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE271F000FF;
-	Sat, 12 Sep 2026 18:48:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwktwNzJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9B51F000FF;
+	Sat, 12 Sep 2026 18:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238921;
-	bh=YXZ0O9iphHaajtZVDNExr/fY4iP5J9GYwyhf+pQ+8nY=;
+	s=korg; t=1789238926;
+	bh=t+N+5nSy5l4+E6iRSp+fneBEvIWyldVJsXBEFgvadic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PAvGqsOZvTCAITsJYG8y0DOl+ZZ2Da6ypz0deZG2uDRVOM/y1zQ660s/4x9lZ1aEQ
-	 W0C/MD3NYuoAE4/GfCd0hIPaPGO9CUYRSpljB2UG1a7LlF49Gr8mlfL8I6JjyofBjS
-	 ycUKvbJV8B3PFW2l6A3QaBWzaCXZLKF67FiKkFk8=
+	b=AwktwNzJdS01JatZLOgJ2ul/5mek8kWs777IvtVFuf+NO4yIYu66V1TRrmZ3m379w
+	 WixQShhekO6JzcsSawu4UdhAW9TvEvWfJ/bTtsEkWXkrPMF+7L/Lqztkha/xZvZbdY
+	 dFXYv1Hd0CSU1IqdCVkXvHaVkb59UAlQaTHMKLrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Koichiro Den <den@valinux.co.jp>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 560/935] dmaengine: dw-edma: Serialize abort state updates
-Date: Sat, 12 Sep 2026 08:59:50 +0200
-Message-ID: <20260912065539.676033762@linuxfoundation.org>
+Subject: [PATCH 5.15 561/935] dmaengine: dw-edma: Serialize channel state checks
+Date: Sat, 12 Sep 2026 08:59:51 +0200
+Message-ID: <20260912065539.698416108@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -54,42 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit dd80e259f65d932634e26d366570d71669ef6654 ]
+[ Upstream commit f7d1619f3e10c619b62c6cd6d95371b5c526c85a ]
 
-dw_edma_abort_interrupt() drops vc.lock before changing request and
-status. issue_pending() can acquire the lock in that small window,
-observe the old busy state, and skip starting queued descriptors. Then
-the abort handler overwrites the channel status as idle, leaving the new
-descriptors stranded for good.
+pause() and resume() read and update channel state without holding vc.lock,
+while the interrupt handlers update the same state under it. Take the same
+lock around those state checks so that request, status, and configured stay
+consistent.
 
-Keep descriptor completion and the state transition in the same critical
-section.
+For example, pause() can observe EDMA_ST_BUSY right before the interrupt
+handler completes the final descriptor and moves the channel to
+EDMA_ST_IDLE, and then record EDMA_REQ_PAUSE on an already idle channel. No
+further interrupt will acknowledge the request, and since issue_pending()
+requires EDMA_REQ_NONE, the channel is wedged for good: terminate_all()
+leaves the stale request behind, so even reconfiguring the channel does not
+recover it.
+
+issue_pending() already runs under vc.lock, but it tests configured before
+taking it. Move that test under the lock as well, so configured, request,
+and status are evaluated as one channel-state snapshot.
 
 Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Link: https://patch.msgid.link/20260717180639.2643243-4-den@valinux.co.jp
+Link: https://patch.msgid.link/20260717180639.2643243-6-den@valinux.co.jp
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index 8f01d79d399b1..0d63b0e4d19d9 100644
+index 0d63b0e4d19d9..4e3402e1e99f2 100644
 --- a/drivers/dma/dw-edma/dw-edma-core.c
 +++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -632,9 +632,9 @@ static void dw_edma_abort_interrupt(struct dw_edma_chan *chan)
- 		list_del(&vd->node);
- 		vchan_cookie_complete(vd);
- 	}
--	spin_unlock_irqrestore(&chan->vc.lock, flags);
- 	chan->request = EDMA_REQ_NONE;
- 	chan->status = EDMA_ST_IDLE;
-+	spin_unlock_irqrestore(&chan->vc.lock, flags);
- }
+@@ -216,6 +216,8 @@ static int dw_edma_device_pause(struct dma_chan *dchan)
+ 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+ 	int err = 0;
  
- static irqreturn_t dw_edma_interrupt(int irq, void *data, bool write)
++	guard(spinlock_irqsave)(&chan->vc.lock);
++
+ 	if (!chan->configured)
+ 		err = -EPERM;
+ 	else if (chan->status != EDMA_ST_BUSY)
+@@ -233,6 +235,8 @@ static int dw_edma_device_resume(struct dma_chan *dchan)
+ 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+ 	int err = 0;
+ 
++	guard(spinlock_irqsave)(&chan->vc.lock);
++
+ 	if (!chan->configured) {
+ 		err = -EPERM;
+ 	} else if (chan->status != EDMA_ST_PAUSE) {
+@@ -282,11 +286,9 @@ static void dw_edma_device_issue_pending(struct dma_chan *dchan)
+ 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+ 	unsigned long flags;
+ 
+-	if (!chan->configured)
+-		return;
+-
+ 	spin_lock_irqsave(&chan->vc.lock, flags);
+-	if (vchan_issue_pending(&chan->vc) && chan->request == EDMA_REQ_NONE &&
++	if (chan->configured && vchan_issue_pending(&chan->vc) &&
++	    chan->request == EDMA_REQ_NONE &&
+ 	    chan->status == EDMA_ST_IDLE) {
+ 		chan->status = EDMA_ST_BUSY;
+ 		dw_edma_start_transfer(chan);
 -- 
 2.53.0
 
