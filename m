@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77FE43B3EF;
-	Sat, 12 Sep 2026 12:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4839B343893;
+	Sat, 12 Sep 2026 12:08:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214905; cv=none; b=jR6oHsX0Iqu/uPAhVEEemr636czPJtrTg9JQ0WzVoDidbK52uS+xbldHOnbMDzM/ved0yu8mPbHJ/OjY83y4Yka64e6AnL99oA4XWlkbQBZxa1lBvS54+FIKL5OgXeD/CaXHijnre/IbHYnw3GzPKAQu8ZVwgw5tWJGDX9YQ72g=
+	t=1789214910; cv=none; b=Gs7H1HimII3OttufiyojpI5QdXQoT0iZt4jM7NTLA1ww0ZA5HssxHPclCFZIjb4hADWBBfadUVUk/fwwm3i4HjOcN6V406ofQ1w5EL2xJt6UjR7k/mwD3AOV62KONuPDrYfsbgttGjs3Fi56K7FMG3eRlN2qLfr7QsLAHKP+NKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214905; c=relaxed/simple;
-	bh=WT5kYARIAH0r37EKjMH1RGDX3oUyCgl/5ovs/1GNW+o=;
+	s=arc-20240116; t=1789214910; c=relaxed/simple;
+	bh=9Q/I8lQmMVtNVnsV+8hppFB6EKcwEFmmvZicjMuc+jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d9GLZ+LiyUZKMYUhbU9MC7mlnpZD9cAjs7cNLvn+8RvgNB7M9OVrz6uXgW18bCo5VBvnotojGiXJuK19TOes+wkMhTdgDK7LtSawptJZua2b73FTaURwpSpwQdsnY8ZsW+e9JCsYjuIO56FymcszQnzKvg/1jNyW8SIuiV6UzL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bpx/Dr1R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gfKQMbgieHTbKBUrEXE20eIE4f7iJeLicZVnBvaLhtbFSZmCmW6j+DFxkkpkqnLm02jevXACFQCqH6Hpi/0q1+ivBVYecQTlvgy8gtXkSep6UbUU4HWCe2/FwXFcXL8swBsn3ZucOYBli5zDWN91BJj1x/fF2csaPG3N0MtLb1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YaCcB3rD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bpx/Dr1R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA981F000FF;
-	Sat, 12 Sep 2026 12:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YaCcB3rD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8931F000FF;
+	Sat, 12 Sep 2026 12:08:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214904;
-	bh=7fCKPLq0dRPLbIfjAU+Yq3+Et76iC7gNevM3ZZQHWFU=;
+	s=korg; t=1789214909;
+	bh=NylGNyOY+RZMbM4YZtfEa8xEnY0iIeYNGb9WjcwCdLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bpx/Dr1RXYLFPgfwFqLk8FEXUyHb+5xXE2vUjezztvYANFxWMXRfjIEkE9nFyUDO9
-	 kEoRwl/3vtjL+yBxIzPmD0Gxu2q9+9aQ9lElESIB5aGodK3HDZg1Nn/EVNZL3UP/rw
-	 K+kNXa3lDUHb02cZ9+LMeU+eTXjOyiMgaE6KbbWM=
+	b=YaCcB3rD9/Ho1jsQoRRd71EUTIc158Duw4ZN++bQ1B/BA5JginFXGe2cyJpUpiyQZ
+	 K0Kk2KfNE9fIrCem8BdH2HkmSl3acl64E8w5MyHPewR7wmXjzuXZ9JTDVNILy+RFcJ
+	 c8Dv1OKysp/MHZW/+ABhOXe2l7ehbSTlpuDKcHiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
+	Sechang Lim <rhkrqnwk98@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0420/1376] staging: greybus: audio: correct sscanf() return value check
-Date: Sat, 12 Sep 2026 08:47:26 +0200
-Message-ID: <20260912065616.898496492@linuxfoundation.org>
+Subject: [PATCH 6.12 0380/1376] bpf,lsm: Drop bpf_prog_free from sleepable_lsm_hooks
+Date: Sat, 12 Sep 2026 08:46:46 +0200
+Message-ID: <20260912065616.018132155@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,36 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander A. Klimov <grandmaster@al2klimov.de>
+From: Sechang Lim <rhkrqnwk98@gmail.com>
 
-[ Upstream commit f883fa1a0a0212f63acb18c50e5f900301f3bb1e ]
+[ Upstream commit 2ce3f548cfc6a1fe4c53479cf8a21931cdfd51d8 ]
 
-manager_sysfs_add_store() passes 6 pointers to sscanf(),
-but required latter to return 7 which always failed the operation.
-I corrected it to 6.
+__bpf_prog_put_rcu() is the call_rcu() callback for non-sleepable programs.
+security_bpf_prog_free() called from there fires bpf_prog_free in softirq;
+if a sleepable LSM prog is attached to that hook, might_fault() BUGs:
 
-Fixes: 49b9137a6002 ("staging: greybus: audio: remove redundant slot field")
-Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
-Link: https://patch.msgid.link/20260521182331.22685-1-grandmaster@al2klimov.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  BUG: sleeping function called from invalid context
+  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 5038
+  preempt_count: 101, expected: 0
+  Call Trace:
+   <IRQ>
+   __bpf_prog_enter_sleepable+0x1cd/0x320 kernel/bpf/trampoline.c:1255
+   bpf_trampoline_6442549705+0x53/0xd7
+   security_bpf_prog_free+0xde/0x130 security/security.c:5465
+   __bpf_prog_put_rcu+0xab/0xd0 kernel/bpf/syscall.c:2365
+   rcu_do_batch kernel/rcu/tree.c:2617 [inline]
+   handle_softirqs+0x236/0x800 kernel/softirq.c:622
+   </IRQ>
+
+The call_rcu/call_rcu_tasks_trace split reflects the freed program's
+sleepability, not that of any attached observer.
+
+security_bpf_prog_free() also frees prog->aux->security, which has to stay
+after the grace period, so drop bpf_prog_free from sleepable_lsm_hooks
+rather than move the call. Non-sleepable observers still run there.
+
+Fixes: 1b67772e4e3f ("bpf,lsm: Refactor bpf_prog_alloc/bpf_prog_free LSM hooks")
+Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260701080757.1394144-1-rhkrqnwk98@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/audio_manager_sysfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/bpf_lsm.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/staging/greybus/audio_manager_sysfs.c b/drivers/staging/greybus/audio_manager_sysfs.c
-index fcd518f9540cd..ff323ca8154f3 100644
---- a/drivers/staging/greybus/audio_manager_sysfs.c
-+++ b/drivers/staging/greybus/audio_manager_sysfs.c
-@@ -23,7 +23,7 @@ static ssize_t manager_sysfs_add_store(struct kobject *kobj,
- 			desc.name, &desc.vid, &desc.pid, &desc.intf_id,
- 			&desc.ip_devices, &desc.op_devices);
- 
--	if (num != 7)
-+	if (num != 6)
- 		return -EINVAL;
- 
- 	num = gb_audio_manager_add(&desc);
+diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
+index 969a6ca362ecb..140c63a816d09 100644
+--- a/kernel/bpf/bpf_lsm.c
++++ b/kernel/bpf/bpf_lsm.c
+@@ -293,7 +293,6 @@ BTF_ID(func, bpf_lsm_bpf_map_create)
+ BTF_ID(func, bpf_lsm_bpf_map_free)
+ BTF_ID(func, bpf_lsm_bpf_prog)
+ BTF_ID(func, bpf_lsm_bpf_prog_load)
+-BTF_ID(func, bpf_lsm_bpf_prog_free)
+ BTF_ID(func, bpf_lsm_bpf_token_create)
+ BTF_ID(func, bpf_lsm_bpf_token_free)
+ BTF_ID(func, bpf_lsm_bpf_token_cmd)
 -- 
 2.53.0
 
