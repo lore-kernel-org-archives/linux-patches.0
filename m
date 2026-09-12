@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B395C4248C6;
-	Sat, 12 Sep 2026 15:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975A9345EA7;
+	Sat, 12 Sep 2026 15:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228280; cv=none; b=dDXLlcAIQ++8jgOeGYw21CK8c85qlibtisJLF2BZwDWBImYQxjPuxZF+OhFX9PfxrqFxNP1hRw5RHOfpN9uKNzwT6utbTzjUlUrjMQUvqBsOnboNq9AfZQCz2MrgZffvlPAsnPtQm8TWnZMsn7x4TB94NK10XMd0jlRjuijTNes=
+	t=1789228285; cv=none; b=YBZ1UNMHqiXIl7GyxQTe2w4mKwZhxL29eniTpT92JYsTTo63oW64QexpbP57dGzAUQ1kyvgyiim6PYGx3b9yg182dSJNcbPdi/Cbd2QQxbAXnND8HCNW5E1gp4q8Jj4vRVXG+eJiIM2N+PYQCi0nAmO8ha82V0MA2v2xP5gxcGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228280; c=relaxed/simple;
-	bh=pXCspgpTITyLV3wm9Hq63lcypdD2TO2Cp9KwMsrccI0=;
+	s=arc-20240116; t=1789228285; c=relaxed/simple;
+	bh=gewTmwftVr6OWR9rkJlwX7GEFlGZ48MPIW0uS+y9hcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ryayx8DPwhK/bDAcQRtDJjzE0/waTRwo19LIQ2p9sK6SOvMR8ARJDSQNq00BMBQ/qHUcF3i/Igu43NL6ZVeyLsqWdLwqXHKwGtoBUTNn6X0yDpqWSvoVrNBxkMjemxmIkYJC4p2zJ21yWL2lD25HUbUxl01JeTb+UR/sDO80XpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtYqdhJo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tvMr95ptw++zpPpu7orqCDG+lGHPP1Fp1t7wZ2j1BzYi3NCpcfsXPQQtoHnDuES/5hbb2G119XnnsyOeKqpe4W5j/85BGFJlm0lNP/GWnrSuBB+MiwvUTTDywiPWxStWmoh/J5huydlKdDlLmQPS+NMJoq1z8G1VDnzLzgTul34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnpw9ZgI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtYqdhJo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660071F000FF;
-	Sat, 12 Sep 2026 15:51:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnpw9ZgI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3845C1F00898;
+	Sat, 12 Sep 2026 15:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228279;
-	bh=en2iQi1CBJ5zZm/BjHB8AWp4oIaY2n0arphHtZaIn5U=;
+	s=korg; t=1789228284;
+	bh=ogBoKdMsmlmcdYwQjiESwG5V+v/I0Xp08QfcsbUjtiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QtYqdhJoycSNfUnRdEn+ouJzBsU18us1WXlRxo3yFhPgqdLsbLVA3YmN2XwQJU5wK
-	 Z9tisbdkXBWOFd/NdBBH8JLV8UWPzknCSm5u0WyoCwdr0dMecllmetKmzJS1/Oh7MA
-	 prxpM7WK54PSXgfvwXZMv9pf8eOd/47gOCvgFzV8=
+	b=vnpw9ZgIiNnhHqTztJNSItksMEnhh/tFoM+ZeQmx8fOOZlSMTOJuQN0zyifRyg3qM
+	 H29kn/2ZQ8CI7SgdyCT0dSbibJ9jLuRN+tRV8yRCfQfAs9Ps6M3Ef3lnLZrg1zKpTw
+	 TXa76WhQ/hiMPedLdj+MzxYR5kRsMKjmptm5ena4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
 	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 6.1 0353/1191] KVM: s390: Fix length check __import_wp_info()
-Date: Sat, 12 Sep 2026 08:51:21 +0200
-Message-ID: <20260912065556.158607215@linuxfoundation.org>
+Subject: [PATCH 6.1 0354/1191] KVM: s390: Fix memory leak in guest debug handling
+Date: Sat, 12 Sep 2026 08:51:22 +0200
+Message-ID: <20260912065556.180190482@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,45 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-commit 4c07680a467e2f7697245bcd11691bffb2a6f0ed upstream.
+commit 121ea1de927c8b9bfdf53c31cad27b86d5de0293 upstream.
 
-struct kvm_hw_breakpoint::len is a __u64 that is fully controlled by user
-space. This is then assigned to wp_info->len, which is an int. The bounds
-check is done on the truncated value while the allocation uses the
-untruncated one:
-
-	wp_info->len = bp_data->len;
-	[...]
-	if (wp_info->len < 0 || wp_info->len > MAX_WP_SIZE)
-		return -EINVAL;
-
-	wp_info->old_data = kmalloc(bp_data->len, GFP_KERNEL_ACCOUNT);
-
-Use the validated value for the allocation as intended. Without this
-fix userspace can trigger >4GB allocations which will fail and result
-in a WARN due to MAX_PAGE_ORDER.
+bp_data is freed only for the error case by kfree(bp_data).
+Every successful KVM_SET_GUEST_DEBUG will leak bp_data.
 
 Fixes: 27291e2165b6 ("KVM: s390: hardware support for guest debugging")
 Cc: stable@vger.kernel.org
 Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
 Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260805110455.7200-9-borntraeger@linux.ibm.com>
+Message-ID: <20260805110455.7200-5-borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/guestdbg.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/kvm/guestdbg.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/arch/s390/kvm/guestdbg.c
 +++ b/arch/s390/kvm/guestdbg.c
-@@ -184,7 +184,7 @@ static int __import_wp_info(struct kvm_v
- 	if (wp_info->len < 0 || wp_info->len > MAX_WP_SIZE)
- 		return -EINVAL;
- 
--	wp_info->old_data = kmalloc(bp_data->len, GFP_KERNEL_ACCOUNT);
-+	wp_info->old_data = kmalloc(wp_info->len, GFP_KERNEL_ACCOUNT);
- 	if (!wp_info->old_data)
- 		return -ENOMEM;
- 	/* try to backup the original value */
+@@ -271,6 +271,7 @@ int kvm_s390_import_bp_data(struct kvm_v
+ 	vcpu->arch.guestdbg.hw_bp_info = bp_info;
+ 	vcpu->arch.guestdbg.nr_hw_wp = nr_wp;
+ 	vcpu->arch.guestdbg.hw_wp_info = wp_info;
++	kfree(bp_data);
+ 	return 0;
+ error:
+ 	kfree(bp_data);
 
 
