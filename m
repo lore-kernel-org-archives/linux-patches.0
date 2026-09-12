@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97383A2576;
-	Sat, 12 Sep 2026 20:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B926D3A2576;
+	Sat, 12 Sep 2026 20:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243438; cv=none; b=sAKQBKBYdqOlX7Q+I8f4PetNa0gFjiH87SxpgPVzvmaTC+zMeMaMF6FQpshxrvhmkWDJ3kicSFrao+OJncyw41xINgT1q1CMlBnSBbqdjKSzKiEmYhnhQK7ogiO2jURdHhGiNyERpwuIgWwArQ29fX5DLzslub9CFkIrFuY6O7Y=
+	t=1789243441; cv=none; b=TC4mvDXI7fLTqVHva1Oxs6ZJUjtXFRIPLivA6Q/GWDCFUZq64YS4ZSLz9M7/VYbT/D3u9BZ2b9Dp7FFZpJX2PJIr2aBcil4VWrRnzFYkaLELWAjFyQRzWjbfekfv/UqTQdtKGf+j6po6NrQIP9V5wizTqQ1g/FU/AjMwl9zLVjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243438; c=relaxed/simple;
-	bh=koOkjHPIymx9k+GOgFDsZy1dl2nlEcyzRfXRsICLsRM=;
+	s=arc-20240116; t=1789243441; c=relaxed/simple;
+	bh=CueuJ+Q0sqg6m3k/BoUJVrIv/VvKJa51qvK08Qdccrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E45cRRxlquXD/c+vbO6AFgP/bxyiI4sOaUPd2wenjPN0H8vNd4krJ0cBGCQX0dyvrrsQEwvvzCvGjdivEYF3lnuYi2Cd186H0iujpzi0KgJm61qouKde0+jbNYTFcn0d0BtmSG1GGeLk17om8lWUpJ5GjEPZauiMcowTf1Dpdq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPsMKW3u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aP43QYLCpBLM3ON5fgprOEF0kRAJyL5anehd0fdReyyGSSOC3EZy42AvRPkij0vlGiw0K1IAmuIwboWg78gThAxMblnhO1g7jAj73airuAwOrr4H3DraME6rh74d31P6MTxdvtK5LL+FpDQoZs3PvnW/zxhlv9YOgbYv7ZFs8es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FpX4oPdv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPsMKW3u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4119D1F000FF;
-	Sat, 12 Sep 2026 20:03:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FpX4oPdv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2E21F000FF;
+	Sat, 12 Sep 2026 20:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243437;
-	bh=yHuZUYCNQu9bbB3eKwvR2XJTCILxHWhCMHDcmD2kArM=;
+	s=korg; t=1789243440;
+	bh=uRnr64DdTSa+7ivMAxfM2lE11hXEs9ypdFvSovbxiyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zPsMKW3uBSZSeqeYa/WTfrTmOn/vy8kvPpbhQPE6ImtcqURNOjyc1Sa1GRVaSoW5s
-	 DuOExgOpW9azDx3uBWEfANQ4QuKA9/pR00Pfpsozn9qzgc+rSH4sL8bJ3wuuvInfDR
-	 BnSFhtHw9YdqjgnWD7X6S874IHuz+LqOH87aMEI4=
+	b=FpX4oPdvXijJKPRlgQdKqfCoUxESNV1aDNlDyqABenkf8xTbftuYUT5EmrayHDsk7
+	 vXtz6ZGDsxODCeyxiNzSpELVdVARJi9EhRBzjOFDFOTK5oopwkUmycFSBC5YZGUf0T
+	 9C4luHTUttsJdiwlPcVH4gbdVIoCKgvV1Jw0Y3PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Abaci Robot <abaci@linux.alibaba.com>,
+	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 756/798] cifs: fix clearing stats for fastest execution of each smb2 command
-Date: Sat, 12 Sep 2026 09:06:24 +0200
-Message-ID: <20260912065534.394556548@linuxfoundation.org>
+Subject: [PATCH 5.10 757/798] net: ip6_gre: Remove the unused function ip6gre_tnl_addr_conflict()
+Date: Sat, 12 Sep 2026 09:06:25 +0200
+Message-ID: <20260912065534.417810923@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,36 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
 
-[ Upstream commit 48cab1fd5720508148673f59d8ed52c7c7fffca2 ]
+[ Upstream commit f00909e2e6fe4ac6b2420e3863a0c533fe4f15e0 ]
 
-The code to clear the 'fastest_cmd' statistics has a typo that
-repeatedly clears the stat for cmd 0, rather than iterating
-through each cmd.  Fix the typo (0->i).
+The function ip6gre_tnl_addr_conflict() is defined in the ip6_gre.c file,
+but not called elsewhere, so delete this unused function.
 
-Fixes: 433b8dd7672be ("SMB3: Track total time spent on roundtrips for each SMB3 command")
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+net/ipv6/ip6_gre.c:887:20: warning: unused function 'ip6gre_tnl_addr_conflict'.
+
+Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=2419
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20221017093540.26806-1-jiapeng.chong@linux.alibaba.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 709f34f7c28d ("net/sched: fq: add overflow bounds to quantum and initial quantum")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifs_debug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ip6_gre.c | 20 --------------------
+ 1 file changed, 20 deletions(-)
 
-diff --git a/fs/cifs/cifs_debug.c b/fs/cifs/cifs_debug.c
-index 024a358380c79..bdba0e7d8a3b6 100644
---- a/fs/cifs/cifs_debug.c
-+++ b/fs/cifs/cifs_debug.c
-@@ -506,7 +506,7 @@ static ssize_t cifs_stats_proc_write(struct file *file,
- 				atomic_set(&server->smb2slowcmd[i], 0);
- 				server->time_per_cmd[i] = 0;
- 				server->slowest_cmd[i] = 0;
--				server->fastest_cmd[0] = 0;
-+				server->fastest_cmd[i] = 0;
- 			}
- #endif /* CONFIG_CIFS_STATS2 */
- 			list_for_each(tmp2, &server->smb_ses_list) {
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index f623d3949bc42..ff4a205ae73fe 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -851,26 +851,6 @@ static inline int ip6gre_xmit_ipv6(struct sk_buff *skb, struct net_device *dev)
+ 	return 0;
+ }
+ 
+-/**
+- * ip6gre_tnl_addr_conflict - compare packet addresses to tunnel's own
+- *   @t: the outgoing tunnel device
+- *   @hdr: IPv6 header from the incoming packet
+- *
+- * Description:
+- *   Avoid trivial tunneling loop by checking that tunnel exit-point
+- *   doesn't match source of incoming packet.
+- *
+- * Return:
+- *   1 if conflict,
+- *   0 else
+- **/
+-
+-static inline bool ip6gre_tnl_addr_conflict(const struct ip6_tnl *t,
+-	const struct ipv6hdr *hdr)
+-{
+-	return ipv6_addr_equal(&t->parms.raddr, &hdr->saddr);
+-}
+-
+ static int ip6gre_xmit_other(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct ip6_tnl *t = netdev_priv(dev);
 -- 
 2.53.0
 
