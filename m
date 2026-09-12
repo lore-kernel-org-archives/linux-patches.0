@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910F347CA89;
-	Sat, 12 Sep 2026 12:43:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12695369D72;
+	Sat, 12 Sep 2026 12:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217031; cv=none; b=ITbnm6J4NmlRqiUkyYD8YYH0qyu6R5SQRftUcukgA2oOPL4KZK1i+2yccvU0e+VcZWfAF7QH+AkZvfjTdGtXSuYThujlSI0bKq48QuareiF4uUg5i5e6RNtEpQ6cwaaG81MI++SN6b0awckN3Zqc0nl6IozCkdGMvhi0dkDs0bU=
+	t=1789217037; cv=none; b=dyfBC7tetwp4QVa3e8wCkHXqsxd3O8sNI8ReYB+JOvQ7FPJzF6fLg+S9yMh1TqPUyHervZemeaVXNPy5deFABHEprpOkb7T0nXS42EqtpesfuUh72YOA8ygLJACDKOejzl1jztqiR6Fr3eqDY2dJqE0M8fTwLH3HUfGF+eiXDAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217031; c=relaxed/simple;
-	bh=DQJkNLYh01PfG174bEzMKTWHLjYMv+aLgLYdtQxTOto=;
+	s=arc-20240116; t=1789217037; c=relaxed/simple;
+	bh=GwuYqsb4QiH8KL0FTYU3bx7b1yyocqt9Uo/Ixo1vtTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z/aKHrfTFWZIdY+oUNFC2h7MD/NeDRiLt5TiTN60l0GzsW5zeQAMdjdkILYDDHmZkxhUiSnrcSNxXGf8NIpRhs5xborEFBsnfR6UDKl4VbEKiDg6/PE0B0S1B9PAHnYcegiywM0lOQwO5pOWQv5HROqq5K8SKDJJ+w0ZlLbUZB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nf0+9jDa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ikyBifqANPJ6546c1Z9/Sp6IOHmhxeqBEP1IdlIY8EvE4sdU6t8OkEslGcLGYWbdUCQ3l2jykACvgAR/BLK+lxOl24kIz6ClXeBYDYS3hBqbE4MGtc6leGuYTOQblsHewvpkh6RSso9/Fykl+k9iu8NtbxorsY94YHRQbWXVMdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cNsGzhmH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nf0+9jDa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD5F1F000FF;
-	Sat, 12 Sep 2026 12:43:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cNsGzhmH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F3C1F000FF;
+	Sat, 12 Sep 2026 12:43:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217030;
-	bh=lt5dujqCk5DbncFreFh69OprlhZ04HIKIFqEk35A3GI=;
+	s=korg; t=1789217035;
+	bh=lZILwS8Zgj8DVCsBPmVdQOIwevP/6n1man9+K5Tn/AQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nf0+9jDaWe/l5fi0K8TbI1GQirxn4icyfUgRLFKuqqsSDE89t5d2dIyYoWq2RA7TW
-	 Z7PmOrPOB8kpXhRjkFJ6s/ozUZCjZW9+l14KnKRFS8IRskAjnHY+Vit9RtrIUaq85G
-	 V8bbtlEwUPpswffpP67rnlXyn/TN8SOShC+VlQaw=
+	b=cNsGzhmHkFh5xHavlbHJozv/lQhUow16SeaDwbn1fyqgDSolvjB21QeTtsr3bYLjg
+	 J5hdZmU7iboRJtH88SqCQqF0xjclA/0Ks+KRRo1jh91PCoGRMOp8FYxChz+7p9QcjW
+	 sQiatMOZHsTJgyIQVP9jtCNGmm/JKSbE0m9btG4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0858/1376] MIPS: ptrace: Fix syscall skipping via PTRACE_SYSCALL
-Date: Sat, 12 Sep 2026 08:54:44 +0200
-Message-ID: <20260912065626.683366569@linuxfoundation.org>
+Subject: [PATCH 6.12 0859/1376] serial: amba-pl011: unprepare console clock on unregister
+Date: Sat, 12 Sep 2026 08:54:45 +0200
+Message-ID: <20260912065626.706076146@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -45,55 +44,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 5475c03fa25f31cfd5f8c7e552f8d10347bbaad9 ]
+[ Upstream commit 7f93da9d78d433c37836d85de475c5d884ad58ed ]
 
-If tracer wanted to skip a syscall return value was always
-overwritten with -ENOSYS. Fix this by checking against original
-syscall number and only return -ENOSYS, if it is negative.
+pl011_console_setup() calls clk_prepare() on the UART clock, but the
+console provides no matching teardown, so the clock is never unprepared
+when the console is unregistered -- via the sysfs "console" attribute or
+a driver unbind. Each re-registration prepares the clock again, leaking
+one prepare reference per cycle.
 
-Fixes: b6318a903d06 ("MIPS/ptrace: Pick up ptrace/seccomp changed syscalls")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Even where preparing the clock has no hardware effect, the stale
+reference leaves the clock framework's prepare count unbalanced. For
+providers with prepare/unprepare operations or runtime-PM integration,
+it may also retain resources after the console is unregistered.
+
+Add a console .exit() callback that clk_unprepare()s the clock,
+balancing the clk_prepare() in pl011_console_setup().
+
+Fixes: 4b4851c65d92 ("clk: amba-pl011: convert to clk_prepare()/clk_unprepare()")
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260724213348.77418-2-kmehltretter@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/ptrace.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/tty/serial/amba-pl011.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/mips/kernel/ptrace.c b/arch/mips/kernel/ptrace.c
-index 61503a36067e9..2016dd5e8fae0 100644
---- a/arch/mips/kernel/ptrace.c
-+++ b/arch/mips/kernel/ptrace.c
-@@ -1319,8 +1319,12 @@ long arch_ptrace(struct task_struct *child, long request,
-  */
- asmlinkage long syscall_trace_enter(struct pt_regs *regs)
- {
-+	long syscall;
-+
- 	user_exit();
- 
-+	syscall = current_thread_info()->syscall;
-+
- 	if (test_thread_flag(TIF_SYSCALL_TRACE)) {
- 		if (ptrace_report_syscall_entry(regs))
- 			return -1;
-@@ -1356,7 +1360,7 @@ asmlinkage long syscall_trace_enter(struct pt_regs *regs)
- 	 * Negative syscall numbers are mistaken for rejected syscalls, but
- 	 * won't have had the return value set appropriately, so we do so now.
- 	 */
--	if (current_thread_info()->syscall < 0)
-+	if (syscall < 0)
- 		syscall_set_return_value(current, regs, -ENOSYS, 0);
- 	return current_thread_info()->syscall;
+diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
+index 8934fbdb0cf98..3e1932a3bfbbd 100644
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -2434,6 +2434,15 @@ static int pl011_console_setup(struct console *co, char *options)
+ 	return uart_set_options(&uap->port, co, baud, parity, bits, flow);
  }
+ 
++static int pl011_console_exit(struct console *co)
++{
++	struct uart_amba_port *uap = amba_ports[co->index];
++
++	clk_unprepare(uap->clk);
++
++	return 0;
++}
++
+ /**
+  *	pl011_console_match - non-standard console matching
+  *	@co:	  registering console
+@@ -2500,6 +2509,7 @@ static struct console amba_console = {
+ 	.write		= pl011_console_write,
+ 	.device		= uart_console_device,
+ 	.setup		= pl011_console_setup,
++	.exit		= pl011_console_exit,
+ 	.match		= pl011_console_match,
+ 	.flags		= CON_PRINTBUFFER | CON_ANYTIME,
+ 	.index		= -1,
 -- 
 2.53.0
 
