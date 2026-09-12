@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42A847DFBF;
-	Sat, 12 Sep 2026 13:36:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9A3370AFD;
+	Sat, 12 Sep 2026 13:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220169; cv=none; b=VIsIOGobOT3QT60JG2/0ucnzfmCgHzWlsgPwkS/WpxikDOfF9bRKgVqAv0VtNIsIMC8JrqxjP/z+GesW9oPGZz/3wZZTxWdG5X3UMyNcsQglGpFNqCBx3bbq+x4cUi47sWJQSoPdK8B6K+qNLitiWLYSWpym/W00VOqTpUO5yRI=
+	t=1789220174; cv=none; b=b4P11rbN5rzz8KLZc8tvKkMOGNtATYVs6gpWL1DGxSYYRFYhKtBX7PRxydM/sBug58G4G70B6efbABhdIGOY9qZReOrY77SbopZcl+pF0xnbTBeOuJhqH6TkqQpJiVo9CkMlobGwZWP76yedD1Hvl7BoeGt/85CgHx5xPRPU5PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220169; c=relaxed/simple;
-	bh=OIrbqo8E2tbsHyftVWkLq3GYzfTCREgzfgUpZii+xRw=;
+	s=arc-20240116; t=1789220174; c=relaxed/simple;
+	bh=EgUFyaoMnEbjrcFesz9PIhzICCW4rC2XePmagtatSAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cCA1ykpW9F5+ETrfeaqe0gk1Iou/gtL/43rMCIkPd/rsCNe3KXVKFeR9vbGp/YxXPlwK7k00pi3BbrOmzQXs8GQFgcnO+jZJWPYCbexIP1FwilhAebvyj7V/10sr3b0OOvRmsoQeK2HoNtJA//HvcgnK0Aj54HvJzWb896P+38k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ep0hXJ+9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LjFedDLW0I0VjYXqSpkzD519ZHwH5p78RMABMS3pej7WeAuOtqHDTY7VVODJWe6MoF4nLeY8qYK2FkcJsx/CJm4h9voO5TEZfJ41k5xVnQMfqOcCIL08/fFaLP8KNvWoJW555weJzmzh+piVAaBMJpAEQNDZgzJsdzRlMdqGFDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RaQATsaw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ep0hXJ+9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA4C1F000FF;
-	Sat, 12 Sep 2026 13:36:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RaQATsaw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34AF1F000FF;
+	Sat, 12 Sep 2026 13:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220167;
-	bh=Bph1It06RIw4ew3k1+wHDAWHe0Mz7CEv4lqbWQ8dTLc=;
+	s=korg; t=1789220172;
+	bh=MluqausvSH9kp9ZMW0OCq9oswk70RhgnBRAe4NbWAJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ep0hXJ+9lmAIu6ttWs+vmfkJB89goWmfI0zPUih2jOKgbURfvilxBCtTO1ZYUlAVZ
-	 639JdtydLh4s2q1ivoYbfxSkUPhc4XkJoknJyMCpdo8jo1JPbFlxnveqQN0Oa2cVwN
-	 jTxZk34gVnVUxgWN29qu/BqcJdv4Xt/nWbeVI0yw=
+	b=RaQATsawAFf5xmeVo6QRuo4uQ0FcaGgKSRHRpxkIpJHK1e553wl1j0H/CviQ+kY1Y
+	 IAz3np4yLPggvqI0HMyzbD1u/UA17X/Jk+LcyGaTYHUty3aB1xKgbJGr3F8mn9C4+H
+	 WRaewjObycOJaBHjb51lOBk/CznaMc28Nyyve8jY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.6 0069/1424] nfsd: revoke copy-notify stateids before dropping their reference
-Date: Sat, 12 Sep 2026 08:41:41 +0200
-Message-ID: <20260912065608.851059821@linuxfoundation.org>
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.6 0116/1424] auxdisplay: charlcd: cancel backlight work on registration failure
+Date: Sat, 12 Sep 2026 08:42:28 +0200
+Message-ID: <20260912065609.901834666@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,168 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-commit 3b0c3595db99bb4bebd7c8aa8a36f3c50e411bb7 upstream.
+commit e3e3bf40916c1e810df03958cfa7ba6883cdce79 upstream.
 
-Copy-notify stateids live in the s2s_cp_stateids IDR and on their parent
-stid's sc_cp_list, pinned by a single membership reference.
-_free_cpntf_state_locked() only unlinks an entry once its refcount reaches
-zero, so any revoke path that runs while a concurrent
-find_cpntf_state()/manage_cpntf_state() holder has elevated cs_count drops
-the reference without unlinking, leaving the entry discoverable with its
-membership reference already consumed. A second revoke or a laundromat tick
-then frees it while the reader still holds the pointer -- a
-KASAN-detectable use-after-free at the reader's nfs4_put_cpntf_state().
+With CONFIG_CHARLCD_BL_FLASH, charlcd_init() schedules bl_work before
+charlcd_register() calls misc_register(). If registration fails, the
+caller frees the charlcd object while delayed work still contains its
+address.
 
-This affected all three revoke paths:
+Add charlcd_deinit() to cancel the delayed work and turn the backlight
+off. Use it for both registration rollback and normal unregistration.
 
-  - The parent-stid drain (nfs4_free_cpntf_statelist()) repeatedly called
-    _free_cpntf_state_locked() on the first list entry; a holder that had
-    bumped cs_count made it return early, so the next iteration
-    re-decremented and burned the holder's reference.
-
-  - OFFLOAD_CANCEL (manage_cpntf_state()) and laundromat expiry likewise
-    used _free_cpntf_state_locked() and could drop 2->1 without unlinking.
-
-Add revoke_cpntf_state_locked(), which unhashes the entry from the IDR and
-sc_cp_list first (deferring the final free to any holder), and use it from
-all three revoke paths. The drain now walks with list_for_each_entry_safe()
-and revokes each entry unconditionally, so it terminates in one pass per
-entry regardless of cs_count. The unhash is gated on
-!list_empty(&cps->cp_list); the idr_remove() gate matters because
-idr_alloc_cyclic() may have recycled the so_id by then. Keep
-_free_cpntf_state_locked() for the reference-holder put path only, where a
-concurrent revoke may already have unlinked the entry (its list_del_init()
-then a no-op).
-
-Fixes: 624322f1adc5 ("NFSD add COPY_NOTIFY operation")
+Fixes: 39f8ea46724e ("auxdisplay: charlcd: Extract character LCD core from misc/panel")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260710-nfsd-testing-v3-6-a0ff7db6aa3e@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   78 +++++++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 62 insertions(+), 16 deletions(-)
+ drivers/auxdisplay/charlcd.c |   21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -1063,18 +1063,66 @@ void nfs4_free_copy_state(struct nfsd4_c
- 	spin_unlock(&nn->s2s_cp_lock);
+--- a/drivers/auxdisplay/charlcd.c
++++ b/drivers/auxdisplay/charlcd.c
+@@ -594,6 +594,16 @@ static int charlcd_init(struct charlcd *
+ 	return 0;
  }
  
-+/*
-+ * Drop the parent's reference on an already-unlinked cpntf entry. If a
-+ * concurrent holder still owns a reference, its nfs4_put_cpntf_state() does
-+ * the final free.
-+ *
-+ * nn->s2s_cp_lock must be held.
-+ */
-+static void put_cpntf_state_unlinked_locked(struct nfs4_cpntf_state *cps)
++static void charlcd_deinit(struct charlcd *lcd)
 +{
-+	WARN_ON_ONCE(cps->cp_stateid.cs_type != NFS4_COPYNOTIFY_STID);
-+	WARN_ON_ONCE(!list_empty(&cps->cp_list));
++	struct charlcd_priv *priv = charlcd_to_priv(lcd);
 +
-+	if (refcount_dec_and_test(&cps->cp_stateid.cs_count))
-+		kfree(cps);
-+}
-+
-+/*
-+ * Unhash from the IDR and sc_cp_list. Gated on list_empty() to avoid
-+ * evicting a recycled so_id.
-+ */
-+static void nfsd4_unhash_cpntf_state(struct nfsd_net *nn, struct nfs4_cpntf_state *cps)
-+{
-+	lockdep_assert_held(&nn->s2s_cp_lock);
-+
-+	if (!list_empty(&cps->cp_list)) {
-+		list_del_init(&cps->cp_list);
-+		idr_remove(&nn->s2s_cp_stateids, cps->cp_stateid.cs_stid.si_opaque.so_id);
++	if (lcd->ops->backlight) {
++		cancel_delayed_work_sync(&priv->bl_work);
++		lcd->ops->backlight(lcd, CHARLCD_OFF);
 +	}
 +}
 +
-+/*
-+ * Revoke a copy-notify stateid: unlink it from the IDR and sc_cp_list first
-+ * so no new finder can discover it, then drop the membership reference. Every
-+ * revoke path (cancel, laundromat, drain) must use this rather than
-+ * _free_cpntf_state_locked(), which unlinks only at refcount zero and so could
-+ * let a second revoke free the entry under a concurrent reader.
-+ *
-+ * nn->s2s_cp_lock must be held.
-+ */
-+static void revoke_cpntf_state_locked(struct nfsd_net *nn,
-+				      struct nfs4_cpntf_state *cps)
-+{
-+	nfsd4_unhash_cpntf_state(nn, cps);
-+	put_cpntf_state_unlinked_locked(cps);
-+}
-+
- static void nfs4_free_cpntf_statelist(struct net *net, struct nfs4_stid *stid)
+ struct charlcd *charlcd_alloc(unsigned int drvdata_size)
  {
--	struct nfs4_cpntf_state *cps;
-+	struct nfs4_cpntf_state *cps, *tmp;
- 	struct nfsd_net *nn;
+ 	struct charlcd_priv *priv;
+@@ -653,8 +663,10 @@ int charlcd_register(struct charlcd *lcd
+ 		return ret;
  
- 	nn = net_generic(net, nfsd_net_id);
- 	spin_lock(&nn->s2s_cp_lock);
--	while (!list_empty(&stid->sc_cp_list)) {
--		cps = list_first_entry(&stid->sc_cp_list,
--				       struct nfs4_cpntf_state, cp_list);
--		_free_cpntf_state_locked(nn, cps);
+ 	ret = misc_register(&charlcd_dev);
+-	if (ret)
++	if (ret) {
++		charlcd_deinit(lcd);
+ 		return ret;
++	}
+ 
+ 	the_charlcd = lcd;
+ 	register_reboot_notifier(&panel_notifier);
+@@ -664,16 +676,11 @@ EXPORT_SYMBOL_GPL(charlcd_register);
+ 
+ int charlcd_unregister(struct charlcd *lcd)
+ {
+-	struct charlcd_priv *priv = charlcd_to_priv(lcd);
+-
+ 	unregister_reboot_notifier(&panel_notifier);
+ 	charlcd_puts(lcd, "\x0cLCD driver unloaded.\x1b[Lc\x1b[Lb\x1b[L-");
+ 	misc_deregister(&charlcd_dev);
+ 	the_charlcd = NULL;
+-	if (lcd->ops->backlight) {
+-		cancel_delayed_work_sync(&priv->bl_work);
+-		priv->lcd.ops->backlight(&priv->lcd, CHARLCD_OFF);
 -	}
-+	/*
-+	 * Revoke unlinks each entry before dropping the parent's reference, so
-+	 * the drain terminates in one pass per entry regardless of cs_count; a
-+	 * concurrent holder does the final kfree via nfs4_put_cpntf_state().
-+	 */
-+	list_for_each_entry_safe(cps, tmp, &stid->sc_cp_list, cp_list)
-+		revoke_cpntf_state_locked(nn, cps);
- 	spin_unlock(&nn->s2s_cp_lock);
- }
++	charlcd_deinit(lcd);
  
-@@ -6268,7 +6316,7 @@ nfs4_laundromat(struct nfsd_net *nn)
- 		cps = container_of(cps_t, struct nfs4_cpntf_state, cp_stateid);
- 		if (cps->cp_stateid.cs_type == NFS4_COPYNOTIFY_STID &&
- 				state_expired(&lt, cps->cpntf_time))
--			_free_cpntf_state_locked(nn, cps);
-+			revoke_cpntf_state_locked(nn, cps);
- 	}
- 	spin_unlock(&nn->s2s_cp_lock);
- 	nfs4_get_client_reaplist(nn, &reaplist, &lt);
-@@ -6649,16 +6697,14 @@ nfs4_check_file(struct svc_rqst *rqstp,
- out:
- 	return status;
+ 	return 0;
  }
--static void
--_free_cpntf_state_locked(struct nfsd_net *nn, struct nfs4_cpntf_state *cps)
-+
-+static void _free_cpntf_state_locked(struct nfsd_net *nn, struct nfs4_cpntf_state *cps)
- {
- 	WARN_ON_ONCE(cps->cp_stateid.cs_type != NFS4_COPYNOTIFY_STID);
--	if (!refcount_dec_and_test(&cps->cp_stateid.cs_count))
--		return;
--	list_del_init(&cps->cp_list);
--	idr_remove(&nn->s2s_cp_stateids,
--		   cps->cp_stateid.cs_stid.si_opaque.so_id);
--	kfree(cps);
-+	if (refcount_dec_and_test(&cps->cp_stateid.cs_count)) {
-+		nfsd4_unhash_cpntf_state(nn, cps);
-+		kfree(cps);
-+	}
- }
- /*
-  * A READ from an inter server to server COPY will have a
-@@ -6695,7 +6741,7 @@ __be32 manage_cpntf_state(struct nfsd_ne
- 			state = NULL;
- 			goto unlock;
- 		} else {
--			_free_cpntf_state_locked(nn, state);
-+			revoke_cpntf_state_locked(nn, state);
- 		}
- 	}
- unlock:
 
 
