@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDE533993;
-	Sat, 12 Sep 2026 16:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF893603D5;
+	Sat, 12 Sep 2026 16:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232255; cv=none; b=rVUbAFL4L7nH5+84kIn0Rluc9sK3w2+uxq0PMPTZti9vd8EIEgYBc7fiVZ6hwRJ90gbI5dFDSHu/CJ2oyIT6PJiuYGd1yWLedBqdjBo8ZRhspt0dUF3V/e1Alyrb9MwTGgccOQ68d9F4Z+CxZwvpXenc+bbJtW6uLrYGNpHZSBM=
+	t=1789232259; cv=none; b=XXq74EO2ai5/rII56L4LPnI7dkDdwWtX6MJWKEMqlfvWppG8GRg44WsVjbh9f+DUezS2lUh6TYW3O8TXy1Is+UqkGeu94ncGXnSJA3UIf8aVUr/7uSQSvKsAeFBUshWBIkiQ+crr5lfIx38w4Icfg46uafXE2ghnkjuSWgXNUGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232255; c=relaxed/simple;
-	bh=GHQqRlQ33nctM08GRdrLT62CtEImzwFNeX8f8hPzyMI=;
+	s=arc-20240116; t=1789232259; c=relaxed/simple;
+	bh=MYZ7wmCaJAyKK3UhF7d1wslAtOD409S60lh9UFnRI8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YQbOOIQpCiQacX/pz8dwkVdH7l/TEtY/0Mri/hThFX86Fe49soVZ2qHYXKnvTKSb2aw9hclfOD0uiLeSReQZIts3KSeGxGY379fquSqXksuv50SsiBAMnolPi60fmzmfjFHl5nBN48o6HOwW2NLJEGJroo3ky1+HULIXuMiAaw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHgHNzPZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bYQWvf5SMp3MerxU8nM/irC/w6Vt/nymnKrajtbF1KqI+0/KUAJ+2+fdr41RkvqzlbRo+b+tl+58nbdtL0KcT1r7rgTUcuK9VVnf/hmn3/XJweaVA2QaylrwbZXi8MhxfAu35veHzT4KsfAHl5rRoflcBZEs+cvwdve+q07ud0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUwsapaX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHgHNzPZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A854A1F000FF;
-	Sat, 12 Sep 2026 16:57:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUwsapaX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA9F1F000FF;
+	Sat, 12 Sep 2026 16:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232253;
-	bh=v9EFWfZcMQglBl9+Ws1TCnSi9vKebOcGWoLIoh5eTOw=;
+	s=korg; t=1789232258;
+	bh=BhOnhjP8jcLd3mi5ILw8bUwv4yh43UamFeu29+fg27c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RHgHNzPZuphR34WW1UdSn/bY4ieUQh+hPuSjcjdf0WwSKW8n7Ia1bRA2nFWEtWl/R
-	 J93/zLptpic+1jc9i4EnfeZhg8XRaj2SbTgKzoB2BPw+C9sxi5Zee1OxHK9CUmH5eZ
-	 lzisF93ov6xu+vsMTtcBDtQSQgrFT0mxYs8U3epI=
+	b=OUwsapaXdTGaG0jOcdTZQ93sxb0mfi/Sss6lGyw2xHMm9iCJnc7GkRENcASQs7XZ1
+	 LLVHjJZAKBCJEi5ML8wkd2cGh1JwPAEWaR/u+k+7xj9B4+MSiQawlpSrY+wzOGlCe8
+	 tp0dR1MLjRDAGamyUXYxQQPFutz4v4KQrEEha9QQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1166/1191] arm64: dts: qcom: sm8550: Mark QUPs and GPI dma-coherent
-Date: Sat, 12 Sep 2026 09:04:54 +0200
-Message-ID: <20260912065614.329705305@linuxfoundation.org>
+Subject: [PATCH 6.1 1167/1191] arm64: dts: qcom: sm8550: Fix SPMI channels size
+Date: Sat, 12 Sep 2026 09:04:55 +0200
+Message-ID: <20260912065614.350472056@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,60 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-[ Upstream commit 91fc74458d833dbc999aa04ca34c2a197711a0b6 ]
+[ Upstream commit 77dd1e50ffcba33c3195ae4fc78f354368ddacb2 ]
 
-These peripherals are DMA-coherent on 8550. Mark them as such.
-
-Interestingly enough, the I2C master hubs are not.
+The actual size of the channels registers region is 4MB, according to the
+documentation. This issue was not caught until now because the driver was
+supposed to allow same regions being mapped multiple times for supporting
+multiple buses. Thie driver is using platform_get_resource_byname() and
+devm_ioremap() towards that purpose, which intentionally avoids
+devm_request_mem_region() altogether.
 
 Fixes: ffc50b2d3828 ("arm64: dts: qcom: Add base SM8550 dtsi")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20240210-topic-1v-v1-3-fda0db38e29b@linaro.org
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Link: https://lore.kernel.org/r/20240221-dts-qcom-sm8550-fix-spmi-chnls-size-v2-1-72b5efd9dc4f@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index de74499bbfd9c..c09458cc4de94 100644
+index c09458cc4de94..a36e85c48a07f 100644
 --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -683,6 +683,7 @@ gpi_dma2: dma-controller@800000 {
- 			dma-channels = <12>;
- 			dma-channel-mask = <0x3e>;
- 			iommus = <&apps_smmu 0x436 0>;
-+			dma-coherent;
- 			status = "disabled";
- 		};
- 
-@@ -694,6 +695,7 @@ qupv3_id_1: geniqup@8c0000 {
- 			clocks = <&gcc GCC_QUPV3_WRAP_2_M_AHB_CLK>,
- 				 <&gcc GCC_QUPV3_WRAP_2_S_AHB_CLK>;
- 			iommus = <&apps_smmu 0x423 0>;
-+			dma-coherent;
- 			#address-cells = <2>;
- 			#size-cells = <2>;
- 			status = "disabled";
-@@ -998,6 +1000,7 @@ gpi_dma1: dma-controller@a00000 {
- 			dma-channels = <12>;
- 			dma-channel-mask = <0x1e>;
- 			iommus = <&apps_smmu 0xb6 0>;
-+			dma-coherent;
- 			status = "disabled";
- 		};
- 
-@@ -1011,6 +1014,7 @@ qupv3_id_0: geniqup@ac0000 {
- 			iommus = <&apps_smmu 0xa3 0>;
- 			interconnects = <&clk_virt MASTER_QUP_CORE_1 0 &clk_virt SLAVE_QUP_CORE_1 0>;
- 			interconnect-names = "qup-core";
-+			dma-coherent;
- 			#address-cells = <2>;
- 			#size-cells = <2>;
- 			status = "disabled";
+@@ -1823,7 +1823,7 @@ sram@c3f0000 {
+ 		spmi_bus: spmi@c400000 {
+ 			compatible = "qcom,spmi-pmic-arb";
+ 			reg = <0 0x0c400000 0 0x3000>,
+-			      <0 0x0c500000 0 0x4000000>,
++			      <0 0x0c500000 0 0x400000>,
+ 			      <0 0x0c440000 0 0x80000>,
+ 			      <0 0x0c4c0000 0 0x20000>,
+ 			      <0 0x0c42d000 0 0x4000>;
 -- 
 2.53.0
 
