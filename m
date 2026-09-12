@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD8419E7F7;
-	Sat, 12 Sep 2026 08:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139AB19E7F7;
+	Sat, 12 Sep 2026 08:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201131; cv=none; b=M1di99fm+8DQW95bUmamv8PhoHsZ0OthAY81mm3fCyc+aMUH9Yq4FCGpbXUSiJdgii7wu/h7d/21xA7w6rGDq/1A9Dd82scSGnhHetRvX+I7xngW3dw8HXuB/FblHYwzcWWzMBHVWZjnIbeo3+8cZQDEU7f7KfbQxrKLw+elSMU=
+	t=1789201137; cv=none; b=nOWk3iKFdNfLxy2j0bH/rynLftsCs8ZOmGfCxquiNB2lfHcJ3OMOVZAJASnDSMpnIaGcILTGWCdUYX2SI/rfFh8oSP+mLftfevWbEjgSHDkuLEAXUkQRclcAKkWCPEKsPgUkbPkkLYzcHXH1olAeQFcdZMH2x8gMQfYROy1TbvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201131; c=relaxed/simple;
-	bh=NEqRpvTRW0qsgTgclFMwM6B3kkTou8qykxvYbiwwKQE=;
+	s=arc-20240116; t=1789201137; c=relaxed/simple;
+	bh=ncBpSUFfccxaL3UQE8KXi7gsK9X2WZ4dbpUX14M9ytI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ucHvAPEux8TuqKuofruwaVtdAzpCWI52u7RsbZVrqCftAvG2irXTzSO+LLNSRwvzrt6c+WC2scyy5XbCajWsammsfwkEjRhlO0yPlyfNTF/GaQSHV1OVBzguTkILuC/Hi9F3LQSI5h+ttYO4xQcujQlr7Lqght4tN2DS1mWI2uQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rKjk2Jas; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gl9W6KlYm0NcuHpI9G9XoiBb8oVk9D8Mm5IiiZHo1tIR8IHncZPayHbY2mEY/ahaVNaWfhH7UVaFM95P4NYlr0DvbYseqmjjNZzaVR1/XZ6QktzufEBGAWDp+9zm0U7ZNnPVqPs1g2IJDKakh+9UNr63U5yNCqTdpZ+FT4Pp8sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0N6kJm3h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rKjk2Jas"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD6CD1F000FF;
-	Sat, 12 Sep 2026 08:18:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0N6kJm3h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A1F1F000FF;
+	Sat, 12 Sep 2026 08:18:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201130;
-	bh=q48Ge+bEb/C5uo8fVgUNHiQ2aWTHbMJagpweLzE39Tc=;
+	s=korg; t=1789201135;
+	bh=b21pYmAYIhVBbdh6kN8VG7NR1gt0K52ewstSXySN8nM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rKjk2JasMGGFF/9dLqn4rNVu7X2r+FaCPOTiO3/ZzD182cs25IUsPiRA2iS2LWxqO
-	 5J1k9X8hokxS4Zjxjk7xKtzCINQ5xr4kw6X+M9zqOm4S69pFXE6GeqpOg/B4ukcInW
-	 i8dI/fuFleuwAbrSY5ZoJm6bknnxUiuEHPy+8Gxo=
+	b=0N6kJm3hLBgxsunMeQQ9/IGo90/MHxt3tP/tNMVzxa5JP8XpCrXXxUobY/SP6gPj9
+	 czFHJEwIFyo04tMLeNo8CQfe2UvJEEem+jZQt2Jpg2ovFbOSAavWY1hmnfLrBo4ps+
+	 5XwBCb1nFsHZ2qUJnSw/Ue18Wf5Jb7RGsU2qdn0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0933/1815] bpf, x86: Fix trampoline stack size for 128-bit arguments
-Date: Sat, 12 Sep 2026 08:44:43 +0200
-Message-ID: <20260912065710.851136274@linuxfoundation.org>
+Subject: [PATCH 7.2 0934/1815] wifi: mt76: mt7915: unlink TWT flow if the MCU rejects the agreement
+Date: Sat, 12 Sep 2026 08:44:44 +0200
+Message-ID: <20260912065710.879651432@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,46 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 814cba835ef648e0c5eb79505c96c0493b29eea6 ]
+[ Upstream commit 16a04441eab0dcd4d7126a6f66b370adbf28f96d ]
 
-btf_distill_func_proto() accepts a function argument up to 16 bytes, so a
-128-bit scalar such as __int128 reaches the x86 trampoline with
-arg_size == 16. But the current implementation assumes an __int128
-argument only needs one register, so the register save area is
-under-allocated and save_args() overwrites adjacent stack slots.
+The flow is added to dev->twt_list before sending the agreement to the
+firmware, but the error path leaves it linked while flowid_mask is
+never set. The flow slot can then be reused and memset while still on
+the list, corrupting twt_list, and station removal leaves a dangling
+entry behind that mt7915_mac_twt_sched_list_add() later walks.
 
-Compute the register count from arg_size for all arguments to fix it.
-
-Fixes: a9c5ad31fbdc ("bpf: x86: Support in-register struct arguments in trampoline programs")
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://lore.kernel.org/bpf/20260729050204.2586457-1-yonghong.song@linux.dev
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: 3782b69d03e7 ("mt76: mt7915: introduce mt7915_mac_add_twt_setup routine")
+Link: https://patch.msgid.link/20260724124813.3961474-17-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/net/bpf_jit_comp.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mac.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index 276d076d29938..d491bdd249497 100644
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -3369,11 +3369,8 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *rw_im
- 	WARN_ON_ONCE((flags & BPF_TRAMP_F_INDIRECT) &&
- 		     (flags & ~(BPF_TRAMP_F_INDIRECT | BPF_TRAMP_F_RET_FENTRY_RET)));
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+index 1913c7613909e..31d231a033e75 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+@@ -2345,8 +2345,10 @@ void mt7915_mac_add_twt_setup(struct ieee80211_hw *hw,
+ 	}
+ 	flow->tsf = le64_to_cpu(twt_agrt->twt);
  
--	/* extra registers for struct arguments */
--	for (i = 0; i < m->nr_args; i++) {
--		if (m->arg_flags[i] & BTF_FMODEL_STRUCT_ARG)
--			nr_regs += (m->arg_size[i] + 7) / 8 - 1;
--	}
-+	for (i = 0; i < m->nr_args; i++)
-+		nr_regs += (m->arg_size[i] + 7) / 8 - 1;
+-	if (mt7915_mcu_twt_agrt_update(dev, msta->vif, flow, MCU_TWT_AGRT_ADD))
++	if (mt7915_mcu_twt_agrt_update(dev, msta->vif, flow, MCU_TWT_AGRT_ADD)) {
++		list_del(&flow->list);
+ 		goto unlock;
++	}
  
- 	/* x86-64 supports up to MAX_BPF_FUNC_ARGS arguments. 1-6
- 	 * are passed through regs, the remains are through stack.
+ 	setup_cmd = TWT_SETUP_CMD_ACCEPT;
+ 	dev->twt.table_mask |= BIT(table_id);
 -- 
 2.53.0
 
