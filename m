@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AC22BDC0E;
-	Sat, 12 Sep 2026 07:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D0D3C1D79;
+	Sat, 12 Sep 2026 07:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197915; cv=none; b=tV4fqu5RwSy7GKuiloKXk5e168ivTIIOdLajoG3VzCL7pHe6M06qF06UFF4yYgoyPzb7yVO3fJ951ENMsgC8jY55o5ma5LVQmnRLnBstb5eYX4AX6lgTLwnFlJ/NMhh5IHfTs5GXus1isEMa3Qlv9ROFTVWOaN45/cdD5fclGT0=
+	t=1789197920; cv=none; b=NKYx75AoyJprVJmYkflFy+hoxBK5ll//YgH9RGe4GR/tW38RBPzddU5MbUUH3ZH02v9lTgnM3L6WsBYxDInBlE6ZOF9N38efZOhXtlLc2AiQl2D/R/Lzaby9ty/MAtBOlFqjO3OnrdBllkxxRdThFhmMD44yTT9f+qzXQwBLTMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197915; c=relaxed/simple;
-	bh=EC4/OhD6gl3+BeSLVVxcjnz7U5a7hVyA3q0n8/NOicw=;
+	s=arc-20240116; t=1789197920; c=relaxed/simple;
+	bh=8II4ghQMx2kjwAavsaC1ei9E8fX+nyb2KIXMdVr9xKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pDwxi4LSQ+8Zw+c0vw0GGpzF7NY18gwd0JsOuEPbYPPerezoOiwSrGgBhCW3YEYPeK2TZ43/YoeDIbRf64YdHbcnRDtcvm9ZEyY562Q3SlsKIj0EbF/rwFC13T3WHmVuU3Dgvq/Jycxc14pQZFpB9q0v/KjXz+qUwGbNjK9YFuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x96iyhuL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qov6+Xx2+qTL6/oa64OQDTdg4JCLUphoWgcET/nB6lUv0R4XJEk/1lKIMfrYLsf2TnVfYz1iaQA0xUsYzNnQcCfm3iDx/qczM9HKEAdft9+/fX548B4dB0R8b2YDH02hrGgUgWezD/zLxQ/RreIz7hPdX9hjOH95xOYiMV54KLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxdhjX9J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x96iyhuL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 590291F000FF;
-	Sat, 12 Sep 2026 07:25:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxdhjX9J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A711F000FF;
+	Sat, 12 Sep 2026 07:25:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197914;
-	bh=3dBwwNZ6fhgSLaecOYxSewQUSuRbyTB2USq3TXe+zlE=;
+	s=korg; t=1789197919;
+	bh=yuT1TJsj5a7zuc5j83qX2LdF0QfW0UkcMXPnm8cOOrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x96iyhuLvNA6y93qSYUpPkZs2rbfjz/ZiqPviRIYc35GW36DW4yoVXNzZ+j9A0Kjz
-	 x5os7pzkBHQRhTPTo31ngF68uLzLAJsRANhlRfnlqcs/m72fiuH8yHwTKdU+H479e1
-	 XSifX8DjjxPuTZrLIczhguU+ErzSxXdXjqOezH94=
+	b=FxdhjX9JxfbU5gqJvoR9YqID0LcOf96/SbR8ZhLjrG+h5DeN7v0QMwAH6jBnvg780
+	 9Rw4hijzpy2nyMWrhj8yiOqrGSula1CKF+aXfYokL8g3xPS0McN2jL21wpq+M7z7FZ
+	 VZq0/PKYREewOgmknZHZoD92GRzhht+biFSO2o4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rong Zhang <i@rong.moe>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0230/1815] staging: sm750fb: Add missing Kconfig dependency
-Date: Sat, 12 Sep 2026 08:33:00 +0200
-Message-ID: <20260912065654.393070205@linuxfoundation.org>
+Subject: [PATCH 7.2 0231/1815] greybus: audio: bound the topology section sizes against the fetched size
+Date: Sat, 12 Sep 2026 08:33:01 +0200
+Message-ID: <20260912065654.415206943@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,37 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rong Zhang <i@rong.moe>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit da8fd33e7d6af4c069668c2d42234b969f706885 ]
+[ Upstream commit 33d8c7b794d2a30637c9d3fcb478f1d3222bef1e ]
 
-The sm750 frame buffer driver depends on FB_IOMEM_FOPS, but its Kconfig
-somehow misses it.
+gb_audio_gb_get_topology() fetches a topology blob of a module-supplied
+size, and gbaudio_tplg_parse_data() then walks it by adding the
+module-supplied size_dais, size_controls and size_widgets fields to
+form the control, widget and route section offsets. Those le32 sizes
+are never checked against the fetched blob, so a module reporting a
+small topology size but large section sizes makes the offsets point
+past the allocation, and parsing reads out of bounds.
 
-Fix it by making FB_SM750 select FB_IOMEM_FOPS, as other frame buffer
-drivers do.
+Reject a topology whose section sizes do not fit within the fetched
+size before it is parsed.
 
-Fixes: dc0ad215e5d8 ("staging/sm750fb: Initialize fb_ops with fbdev macros")
-Signed-off-by: Rong Zhang <i@rong.moe>
-Link: https://patch.msgid.link/20260603-sm750-fb-iomem-kconfig-v1-1-7f6a3046cce2@rong.moe
+Fixes: 184992e305f1 ("greybus: audio: Add Greybus Audio Device Class Protocol helper routines")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260616-b4-disp-4352e8b0-v1-1-3e09f62e0ad5@proton.me
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/sm750fb/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/greybus/audio_gb.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/staging/sm750fb/Kconfig b/drivers/staging/sm750fb/Kconfig
-index 08bcccdd0f1c4..25fe422f55f2c 100644
---- a/drivers/staging/sm750fb/Kconfig
-+++ b/drivers/staging/sm750fb/Kconfig
-@@ -6,6 +6,7 @@ config FB_SM750
- 	select FB_CFB_FILLRECT
- 	select FB_CFB_COPYAREA
- 	select FB_CFB_IMAGEBLIT
-+	select FB_IOMEM_FOPS
- 	help
- 	  Frame buffer driver for the Silicon Motion SM750 chip
- 	  with 2D acceleration and dual head support.
+diff --git a/drivers/staging/greybus/audio_gb.c b/drivers/staging/greybus/audio_gb.c
+index 9d8994fdb41a2..144591f1a5128 100644
+--- a/drivers/staging/greybus/audio_gb.c
++++ b/drivers/staging/greybus/audio_gb.c
+@@ -37,6 +37,19 @@ int gb_audio_gb_get_topology(struct gb_connection *connection,
+ 		return ret;
+ 	}
+ 
++	/*
++	 * The size_* fields are supplied by the module and are used by
++	 * gbaudio_tplg_parse_data() to compute offsets into the blob; make
++	 * sure the sections fit within the fetched topology, so walking it
++	 * cannot read out of bounds.
++	 */
++	if ((u64)le32_to_cpu(topo->size_dais) + le32_to_cpu(topo->size_controls) +
++	    le32_to_cpu(topo->size_widgets) + le32_to_cpu(topo->size_routes) >
++	    size - sizeof(*topo)) {
++		kfree(topo);
++		return -EINVAL;
++	}
++
+ 	*topology = topo;
+ 
+ 	return 0;
 -- 
 2.53.0
 
