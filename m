@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F19F47B439;
-	Sat, 12 Sep 2026 12:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7534429000;
+	Sat, 12 Sep 2026 12:52:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217525; cv=none; b=fG4xAgfe/Dv8PbJn4vEASkHRoO5cEDrTQ2HscTw4zczIZO6++Cw+zHY2+xP9qboxQt/r4ZxwwnEAMcRgCW5s+QAuXStEqX90oCNko3TEX7GReQE8B8g8YoEFS1x+AbS/x7kJDfhdE5NITmzXaQUkAxjW9QBVz4lxuLTKuszy7r8=
+	t=1789217529; cv=none; b=KY9hG+6QrGXZWZw4pe9UTvnyFn0yqjsgCLMxTtZtULh36ZYima6Liei760Ktyxt6d48rKjdZIFWezr9YdMYKoXeMwMSBIB/NP1jELX+ZDXx38BwPXJLv0bajPcUOD8B8tdLJhql6o3VGyRpfaQKSh2lBzNzmdPUa6blryydHMU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217525; c=relaxed/simple;
-	bh=2qlyE7d/UhI5+Cevk8W0n7upPkvEERzuOLj4qw55BVk=;
+	s=arc-20240116; t=1789217529; c=relaxed/simple;
+	bh=+Mfvvf7BNfP1R8jE4zr6QBA30WtXjruxkXz3EN/3ORE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HeeE2ZOSfCUcm9LCVH1hAkUaXuy2NuyHsq6aLhRHrg4x720rVC0nREF013CbjtRIZb41rtqhimpNGxm6EjPcgH6oleBF76YarvDxNcpVPV8s1+JRbu/GJJu/ie1obb2MYR5nvhHPQuBRuloVrUr9J7t2ARh90vAxJFeP9ZTL2Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Coc4z/rY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ka+lykjQoQAwB+E19fV+LluBxM1m0q3gv6NqpvCYMLCnmo7pYY21Gwpfski/zIY7T8WkFL0bXBuQpMJz5naUXw2e/a1usvs5cbaMUh9rU1aUrU61mOVvU+GTymDmqGUsZzXWsQF9mImwh+ySivVnGpidgdDoClExfich10zqlqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFTe7AXN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Coc4z/rY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0688B1F000FF;
-	Sat, 12 Sep 2026 12:52:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFTe7AXN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3401F000FF;
+	Sat, 12 Sep 2026 12:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217522;
-	bh=YaRFF8zLP9fg7xVh/o5DctQpkYPs30A7dDGOc5XXB5s=;
+	s=korg; t=1789217527;
+	bh=vjNZTMrhgrmJ6B4nwtCqSG8XLflGVMcOmx+JNTLf6Jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Coc4z/rY9gRAmiV8Tx4xE4zlLn50G++Jg3oLDCqabEL7F/ZRXbpUPDrCYmWiPWIHb
-	 7TiYqTJ/l3LCDDnnTTK6u7qxZ3R4N/fLy1ZoFdHtUYpLifZcXrG0BXnDnFFKINrW3Y
-	 wP41T1Sa5OxTkJFuHTD1atLCxlKHJuZoqk0ICyrA=
+	b=QFTe7AXNoSuYq3pJlsLosQ3YA8yS8fA30Bom0GbG2dcExqvzNc2Zmj5n/W/wEhNgZ
+	 DmTpV82enpN2vn5aAOJ7/zumHMynCrkdR9A0xrs3R2VRIZyXSP3TE1M56bO/+qCYX/
+	 K2plT/5r33HzIlOXbO+UDx/k5SMSuGjAGwSJSO68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bruce Johnston <bjohnsto@redhat.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Leo Yan <leo.yan@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0957/1376] md/raid1: dont set array_frozen in raid1_takeover()
-Date: Sat, 12 Sep 2026 08:56:23 +0200
-Message-ID: <20260912065628.889664108@linuxfoundation.org>
+Subject: [PATCH 6.12 0958/1376] coresight: etm4x: fix wrong check of etm4x_sspcicrn_present()
+Date: Sat, 12 Sep 2026 08:56:24 +0200
+Message-ID: <20260912065628.911643639@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,50 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bruce Johnston <bjohnsto@redhat.com>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit dc386aa0ac0a3ec06c9a3ea9b064b073fb72a916 ]
+[ Upstream commit 0e1cd4270b42a257c139165622091e1e8c7104a7 ]
 
-raid1_takeover() sets conf->array_frozen = 1 on the newly-allocated
-r1conf and nothing ever clears it, so every I/O to the array stalls
-permanently once _wait_barrier() sees it stuck at 1.
+According to Embedded Trace Macrocell Architecture Specification
+ETMv4.0 to ETM4.6 [0], TRCSSPCICR<n> is present only if all of
+the following are true:
 
-This used to be harmless: level_store() called mddev_resume() right
-after pers->run(), which called raid1_quiesce(mddev, 0) and cleared
-array_frozen back to 0 regardless of what raid1_takeover() set. Commit
-b39f35ebe86d ("md: don't quiesce in mddev_suspend()") removed that
-quiesce(mddev, 0) call, so the pre-set now sticks.
+  - TRCIDR4.NUMSSCC > n.
+  - TRCIDR4.NUMPC > 0b0000.
+  - TRCSSCSR<n>.PC == 0b1.
 
-setup_conf() already zero-initializes the new r1conf via kzalloc, so
-just don't set array_frozen here.
+Comment for etm4x_sspcicrn_present() is align with the specification.
+However, the check should use drvdata->nr_pe_cmp to check TRCIDR4.NUMPC
+not nr_pe.
 
-Same class of bug as commit 892da88d1cd9 ("md/raid10: fix a
-'conf->barrier' leakage in raid10_takeover()"), also triggered by
-b39f35ebe86d.
-
-Fixes: b39f35ebe86d ("md: don't quiesce in mddev_suspend()")
-Link: https://issues.redhat.com/browse/RHEL-191802
-Signed-off-by: Bruce Johnston <bjohnsto@redhat.com>
-Link: https://patch.msgid.link/20260803180240.1177104-1-bjohnsto@redhat.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Link: https://developer.arm.com/documentation/ihi0064/latest/ [0]
+Fixes: f6a18f354c58 ("coresight: etm4x: Handle access to TRCSSPCICRn")
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260725113645.57519-2-yeoreum.yun@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index c6ad1f97cdace..32b2eb2a169c3 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -3482,8 +3482,6 @@ static void *raid1_takeover(struct mddev *mddev)
- 		mddev->new_chunk_sectors = 0;
- 		conf = setup_conf(mddev);
- 		if (!IS_ERR(conf)) {
--			/* Array must appear to be quiesced */
--			conf->array_frozen = 1;
- 			mddev_clear_unsupported_flags(mddev,
- 				UNSUPPORTED_MDDEV_FLAGS);
- 		}
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index 05958827b3bbc..2762c1e429987 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -87,7 +87,7 @@ static int etm4_probe_cpu(unsigned int cpu);
+ static inline bool etm4x_sspcicrn_present(struct etmv4_drvdata *drvdata, int n)
+ {
+ 	return (n < drvdata->nr_ss_cmp) &&
+-	       drvdata->nr_pe &&
++	       drvdata->nr_pe_cmp &&
+ 	       (drvdata->config.ss_status[n] & TRCSSCSRn_PC);
+ }
+ 
 -- 
 2.53.0
 
