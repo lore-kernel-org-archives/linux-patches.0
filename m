@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA01D478E47;
-	Sat, 12 Sep 2026 11:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA48E2DBF75;
+	Sat, 12 Sep 2026 11:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213624; cv=none; b=DSInWanxR72YCMohde8v4WbKVYrUPN6NQW7RKYFeEJReDjmZGRkAfZ0RQyIO151D5y1PdmYcBWX9YoN6zuUT/yvXSakUdrHpcAIBdcBRcQR9E/xI4Twm6jbjXcM7jm/oO9brtG3AJrNV/iH9VecbGu4TBwomBQGj5S88QWh/jSw=
+	t=1789213627; cv=none; b=PF2UZoTjEnAQG/B87YMl9IiGkDq/Bte+cqYifpWWvDTAQbVM0yYu9P3GeufhgMCh9xksN0VVBEaDVeQRTpuQyfe+H/vXVcgJEpafmEpvpTnEoVrV29Ca+yaxW0NE6zUjKNDOGcXyhdzDmW39mVzniDII0+MheC3BFpFIk85/7y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213624; c=relaxed/simple;
-	bh=91KoelJ8sqJlsmdLsS9X48OCmEx8IjEzTKYNy8jipOs=;
+	s=arc-20240116; t=1789213627; c=relaxed/simple;
+	bh=YmpnJ4HnLO+bdbj0/+uuJxVMB/j/7gP1N28HRYMWpBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dfG6UzZAZd54OnLXA3fWTF1j/qoTgzTo/lLOPcEthKMzesKOHnV5+3PMK4j+KfziHmS2NGYlZzMlznRRm1BkflUSpwsdKtEWwGIqjAvx/X8BBlK7vnEqzm3jtewV5vrheS5QRAnFcKybKLCPbQHI0Zbf/1LctVShuZDJOR0S2mU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=llCsj98h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RiCyvXy6EHdoSBQtMburpY1cD1/8EcUslQJG3In5XkrnlapFnHhijejQcNaIY4Uw2HomVzpJ+C6vjZcZCO1j87KoWoTTS3FPgKD53dYUnJ5UVZ/St5falQcdvI1JGYaIrA5c3ubxPBGTYLzDmap0P3mbrNMeVBrJPn+FLVxWW5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RMR5xJl+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="llCsj98h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37AA1F000FF;
-	Sat, 12 Sep 2026 11:46:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMR5xJl+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D6E21F00893;
+	Sat, 12 Sep 2026 11:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213620;
-	bh=YWcAHUciJS4H19Yma2rPtxh5C08EOgFGau3S4EhuTWw=;
+	s=korg; t=1789213625;
+	bh=QrSRZjy8icJOXH/MOclo0lN3EspvNsJ89yOEvhVf9Yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=llCsj98hqvpblYDFprlHZxPtoKP7LghSVFWucn5M8cImKwcWLt+AAKU1CyVv5HDVJ
-	 RFXHfY1rpkRQfZB5XFbICZI5Hb8N8QRh8y8afF/n1EDUT26b79nWtk8ZuRcnctzjyq
-	 RtYyOJWbBOeU8ooygCGBJfoLGfgsCmDn5kAwdW1Y=
+	b=RMR5xJl+OoEMobwfOa3AJ84yQYTIP4LwB97YOwlQRcfv4pDwu0l2kSmVBo0Gfykhj
+	 3/wcZoWt9giD0G+pDUU/MsfP0zbVgUroelKH5bO9H3focWOPFANRW/btkelf0GzqPk
+	 2xz8X3R2dwyoAxCaIFymtNHXV8NI2DHdC6jr0tMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Kai Huang <kai.huang@intel.com>,
+	Michael Roth <michael.roth@amd.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 0159/1376] KVM: nVM: Ensure INVVPID is emulated on the correct physical CPU
-Date: Sat, 12 Sep 2026 08:43:05 +0200
-Message-ID: <20260912065611.094548126@linuxfoundation.org>
+Subject: [PATCH 6.12 0160/1376] KVM: x86/mmu: Fold kvm_mmu_zap_memslot() into kvm_arch_flush_shadow_memslot()
+Date: Sat, 12 Sep 2026 08:43:06 +0200
+Message-ID: <20260912065611.117116281@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,71 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 6d00e67326d831e6e610933a3800712f4ffe6ec1 upstream.
+commit 06d38eaa78fdac1cc889f261fa420eba8e9caa1a upstream.
 
-When emulating INVVPID, KVM executes INVVPID on the physical CPU using
-vpid02 (instead of the L1 assigned VPID), after doing some validations
-on the operands. However, it is possible that the physical CPU KVM
-executes INVVPID on is different from the CPU L2 is running on.
+Fold kvm_mmu_zap_memslot() into its sole caller so that its GFN range
+structure can be used to trigger guest_memfd invalidations regardless of
+whether KVM will do a partial or full zap of the MMU.
 
-For example, in the following scenario:
-- L2 runs on CPU #1 and exits to L1 (vmx->nested.vmcs02.cpu=1)
-- L1 migrates to CPU #2 and executes INVVPID
-- KVM executes INVVPID on CPU #2
-- L1 migrates back to CPU #1 and runs L2 (vmx->nested.vmcs02.cpu=1)
+No functional change intended.
 
-The TLB entries on CPU #1 are never invalidated, because INVVPID was
-executed on CPU #2, and vmcs02 never ran on a different pCPU (i.e.
-vmx_vcpu_load_vmcs() will *not* request KVM_REQ_TLB_FLUSH).
-
-Ensure that INVVPID is being executed on the same pCPU that L2 last ran
-on, and if not, fallback to clearing last_vpid=0 to trigger a full VPID
-flush on the next nested VM-Enter (as KVM will detect L1 using a
-different VPID for L2). If L2 ends up running on a different pCPU, KVM
-will flush the TLB anyway through vmx_vcpu_load_vmcs().
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Link: https://patch.msgid.link/20260616214652.2157032-4-yosry@kernel.org
+Cc: stable@vger.kernel.org # 6.12.x
+Reviewed-by: Michael Roth <michael.roth@amd.com>
+Link: https://patch.msgid.link/20260709204948.1988414-8-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ arch/x86/kvm/mmu/mmu.c |   35 +++++++++++++++--------------------
+ 1 file changed, 15 insertions(+), 20 deletions(-)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -5990,6 +5990,7 @@ static int handle_invvpid(struct kvm_vcp
- 		u64 gla;
- 	} operand;
- 	int r, gpr_index;
-+	int cpu;
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -7107,23 +7107,6 @@ out_flush:
+ 	kvm_mmu_remote_flush_or_zap(kvm, &invalid_list, flush);
+ }
  
- 	if (!(vmx->nested.msrs.secondary_ctls_high &
- 	      SECONDARY_EXEC_ENABLE_VPID) ||
-@@ -6038,11 +6039,19 @@ static int handle_invvpid(struct kvm_vcp
- 	 * and never explicitly flush vpid01.  INVVPID targets a VPID, not a
- 	 * VMCS, and so whether or not the current vmcs12 has VPID enabled is
- 	 * irrelevant (and there may not be a loaded vmcs12).
-+	 *
-+	 * If vmcs02 was last loaded on a different pCPU, then defer the flush
-+	 * by invalidating the nested VPID tracking to ensure that KVM performs
-+	 * the invalidation on the correct pCPU.
- 	 */
--	if (type == VMX_VPID_EXTENT_INDIVIDUAL_ADDR)
-+	cpu = get_cpu();
-+	if (cpu != vmx->nested.vmcs02.cpu)
-+		vmx->nested.last_vpid = 0;
-+	else if (type == VMX_VPID_EXTENT_INDIVIDUAL_ADDR)
- 		vpid_sync_vcpu_addr(nested_get_vpid02(vcpu), operand.gla);
- 	else
- 		vpid_sync_context(nested_get_vpid02(vcpu));
-+	put_cpu();
+-static void kvm_mmu_zap_memslot(struct kvm *kvm,
+-				struct kvm_memory_slot *slot)
+-{
+-	struct kvm_gfn_range range = {
+-		.slot = slot,
+-		.start = slot->base_gfn,
+-		.end = slot->base_gfn + slot->npages,
+-		.may_block = true,
+-	};
+-	bool flush;
+-
+-	write_lock(&kvm->mmu_lock);
+-	flush = kvm_unmap_gfn_range(kvm, &range);
+-	kvm_mmu_zap_memslot_pages_and_flush(kvm, slot, flush);
+-	write_unlock(&kvm->mmu_lock);
+-}
+-
+ static inline bool kvm_memslot_flush_zap_all(struct kvm *kvm)
+ {
+ 	return kvm->arch.vm_type == KVM_X86_DEFAULT_VM &&
+@@ -7133,10 +7116,22 @@ static inline bool kvm_memslot_flush_zap
+ void kvm_arch_flush_shadow_memslot(struct kvm *kvm,
+ 				   struct kvm_memory_slot *slot)
+ {
+-	if (kvm_memslot_flush_zap_all(kvm))
++	struct kvm_gfn_range range = {
++		.slot = slot,
++		.start = slot->base_gfn,
++		.end = slot->base_gfn + slot->npages,
++		.may_block = true,
++	};
++	bool flush;
++
++	if (kvm_memslot_flush_zap_all(kvm)) {
+ 		kvm_mmu_zap_all_fast(kvm);
+-	else
+-		kvm_mmu_zap_memslot(kvm, slot);
++	} else {
++		write_lock(&kvm->mmu_lock);
++		flush = kvm_unmap_gfn_range(kvm, &range);
++		kvm_mmu_zap_memslot_pages_and_flush(kvm, slot, flush);
++		write_unlock(&kvm->mmu_lock);
++	}
+ }
  
- 	/*
- 	 * Sync the shadow page tables if EPT is disabled, L1 is invalidating
+ void kvm_mmu_invalidate_mmio_sptes(struct kvm *kvm, u64 gen)
 
 
