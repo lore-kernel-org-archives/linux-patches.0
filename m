@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580CD13D53C;
-	Sat, 12 Sep 2026 19:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30ED53176EE;
+	Sat, 12 Sep 2026 19:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242193; cv=none; b=un9j2KeQ1017+vlkZQN++MoAk51B8VvY9v05blB8ZqSofDRUbeSH8PvLWXdVKViVnTK5SI8tBY9yEYrH9X1dmNFvRQ2N67kWy2Z759xMwNiZm18oxIgSQgHaJowOtctrLnlYmdQrZWaunoTPrbhcpByBmpIpnJXzPE5dCjTJQhI=
+	t=1789242196; cv=none; b=C7Q/lHcdTIxzE9za1KBAyP+X9wq9xEC4xbJfx8k/lwQl42POO36bjeBy1SwDkegeu/4xTSGRH/CGlv9TCS8bdLiDpOS+Sy9gfzrSBrvKgBL+CyldWC90IfjV02OEo4O4ylAEj3na4nxDcsA/EaZxBQHSJeLi8G3rqV9S2r+aWEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242193; c=relaxed/simple;
-	bh=J0JjTqYXn5BtDbZOx9qcF9svgUbYUazarq0SIgKSo5s=;
+	s=arc-20240116; t=1789242196; c=relaxed/simple;
+	bh=EtLHeWvGp83k8tWaJTNKHEk2X0QVGxGSyCMRIa1gJvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jiW7VsZKwuzD8fK2ND3iHnntCfwQyxb+rchKKCCwtN2G7EGwRe7XAyMVpri0/kVeKVfUaeZU6cA5Ne9B0S0bgdqFCtpx4d+O2GuG3eAHKhfbXpuLtGJ8S7mjncM4YQh4vajixEiEv1vUg4ZKMFrJ8f4OtrKzbq4QOI89UETdrKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=leI81us5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MVh0HcKUn/3tKgVQhpEIUhcHhLGrZlTbFxgp+O+qxgvpAiAIK2ldYNbss6ZBLowSk0F/i+Vfgfww0fhsit5zEaXGj+Nb9SnYy8Q1cUr3a9LzOtpcUmJSYoeAFPry2Pu6Sm5v/7/TV6PFZTynEfqqyhXy1nRLQ4fjRnhm3DKross=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aL5VPqVK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="leI81us5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11741F000FF;
-	Sat, 12 Sep 2026 19:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aL5VPqVK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D8C61F000FF;
+	Sat, 12 Sep 2026 19:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242192;
-	bh=/ehf71T+xeedqE6e3nDXgvtdlpC87wZBFPNFJmg5B7M=;
+	s=korg; t=1789242195;
+	bh=g3Z1cg0+ONxuzdft7U5/gNCUpOPb3UghWc43j/RhR34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=leI81us5QPalS47oEjDuXQ/6RTfNivyJjlN7fddI9p68PH4t/EFrr82ExD8lJ4D+T
-	 jDnEKogVBnJd7Dgxo7lFfNO1FBibB1QVTYhsb/a6cD+M/qyzsM6INae2YzbDIn48mk
-	 aSTvme+542RpZCLjgA7uIf6BkIz5ZAIoQQabHhrY=
+	b=aL5VPqVKuD9SXtpdvj19ll491UBpOikY1gHhgiJPyp2pKto9Sg5+O5Pewqh7r4GOO
+	 U6R/yFMr9m+L7SJTuSkvpMPDvR5O51CKZbR0EVkWRmnqbaWEXQVYu1YwzhwqmRIsdf
+	 9Y888By2dT+nBIVhKZLDj3s98BKbiTjn82dfm45U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Melissa Wen <mwen@igalia.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.10 317/798] drm/amd/display: avoid divide-by-zero in __is_lut_linear()
-Date: Sat, 12 Sep 2026 08:59:05 +0200
-Message-ID: <20260912065524.425761102@linuxfoundation.org>
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Melissa Wen <mwen@igalia.com>
+Subject: [PATCH 5.10 318/798] drm: Fix drm_crtc_commit leak if signaled when PAGE_FLIP_EVENT is used
+Date: Sat, 12 Sep 2026 08:59:06 +0200
+Message-ID: <20260912065524.449628567@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,44 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-commit 4f40873f8a4107df2b9c8e68c947c4fd0cd519d2 upstream.
+commit 4d4be202165e832d74849b4a68e289a2a377039c upstream.
 
-__is_lut_linear() computes the expected value of each entry with
+Commit 1c6ceeee6ebb ("drm/atomic: Fix memleak on ERESTARTSYS during
+non-blocking commits") fixed a very similar issue when the event was
+allocated by drm_atomic_helper_setup_commit() itself.
 
-	expected = i * MAX_DRM_LUT_VALUE / (size - 1);
+However, if the event is allocated in prepare_signaling(), it will also be
+set to NULL in complete_signaling(), which prevents drm_crtc_commit from
+being put in __drm_atomic_helper_crtc_destroy_state().
 
-If it is ever called with a single-entry LUT, size - 1 is zero and the
-kernel takes a divide error (#DE). A LUT with fewer than two entries
-cannot describe a linear mapping anyway, so return false early instead
-of dividing by zero.
+Dropping the reference when the event is set to NULL at
+complete_signaling() fixes the leak.
 
-Fixes: 086247a4b2fb ("drm/amd/display: Use 4096 lut entries")
+The leak can be reproduced by sending a signal to the thread using
+DRM_MODE_PAGE_FLIP_EVENT and using a sw_sync fence to cause the atomic
+ioctl to block at drm_atomic_helper_wait_for_fences(). It happened both
+with amdgpu and vkms.
+
+Fixes: 24835e442f28 ("drm: reference count event->completion")
 Cc: stable@vger.kernel.org
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 Reviewed-by: Melissa Wen <mwen@igalia.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Link: https://patch.msgid.link/20260727-drm_crtc_atomic_commit_leak-v1-1-23d9948a9d7c@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_color.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/drm_atomic_uapi.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_color.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_color.c
-@@ -104,6 +104,12 @@ static bool __is_lut_linear(const struct
- 	uint32_t expected;
- 	int delta;
- 
-+	/* A LUT with fewer than two entries can't be interpolated and would
-+	 * divide by zero below (size - 1); it can't be treated as linear.
-+	 */
-+	if (size < 2)
-+		return false;
-+
- 	for (i = 0; i < size; i++) {
- 		/* All color values should equal */
- 		if ((lut[i].red != lut[i].green) || (lut[i].green != lut[i].blue))
+--- a/drivers/gpu/drm/drm_atomic_uapi.c
++++ b/drivers/gpu/drm/drm_atomic_uapi.c
+@@ -1263,6 +1263,8 @@ static void complete_signaling(struct dr
+ 		 * to prevent a double free in drm_atomic_state_clear.
+ 		 */
+ 		if (event && (event->base.fence || event->base.file_priv)) {
++			if (crtc_state->commit && crtc_state->commit->abort_completion)
++				drm_crtc_commit_put(crtc_state->commit);
+ 			drm_event_cancel_free(dev, &event->base);
+ 			crtc_state->event = NULL;
+ 		}
 
 
