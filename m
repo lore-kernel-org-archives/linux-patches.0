@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA7F33EAF3;
-	Sat, 12 Sep 2026 16:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2B72F8E86;
+	Sat, 12 Sep 2026 16:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229489; cv=none; b=ZjfBToBS7XC8+xZjxN3dUla/mgtBtuBLg/+V1vDYXiq10LimK/QQ5G0vCfGjwgsZnqleohB6XPhIeEEq4u2J0kc6djyb2yfHsdBpx3EHkS5GLstb1hj0V+Eq1oUdr4R4L8sguAYqRhOlcvBwmZz8xtKvkvU0AMs/3oMYeJB4oOc=
+	t=1789229493; cv=none; b=tMFy2ngN7YtDVcLcZzImjk70bYZ1EHVe3TE2OPH+PANZ5z3RnXGX1BYxJtAG9yP4HZ3sAMt00RB3xqXeE2QZPY+ON47xJbKPPwL3RgKOisexWdLfZXs2RtwEGgmg1llOkh8O/A/NbQxehpetAbrr0wOACC+RYmf0cOTa9ujwjdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229489; c=relaxed/simple;
-	bh=WB12uWIicEuA9N2qhi4UztDWHmlG51jHDEiPg62V8/k=;
+	s=arc-20240116; t=1789229493; c=relaxed/simple;
+	bh=ne2QxB73CW0vc66t0/H2B8GCH4Pj8V1Rp0RoADlCVik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rytfvuWQwUibcJB3xHYcvXrTZ+8Vv3HZ+Q1mZmo/4Yr3u+HyroCfqzDDBLU7/k51p86ShED19JVK1ipSRC+WUmTpQj5DfDSnDnhKRWM/4Qgnee1Qvz/JjtHnRw9oPEJeGkxnbico8z23zZ83sP62HW49uS/8gsy4JJXREGl0bwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y2qs7hmy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=G2YrgIV5NIzjgnUxADBAXFTKYszzsppp7yg3OUshFhM7T+WhEuqjEWDIUCLR3UgSk3H05JGC2mGU8asq9rjmz8Tb2h0XPa5lkJHPVNWfjTPLZjgMIgrgQpQSSx87Kj0Ezzj+Jdn2iRUAKkc1KIjnqO5E4Rl4pt8x170Fm3FaXSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0PFCRtLC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y2qs7hmy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7F31F000FF;
-	Sat, 12 Sep 2026 16:11:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0PFCRtLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65AA1F000FF;
+	Sat, 12 Sep 2026 16:11:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229487;
-	bh=kTm5Y7uapmnNun/SWqj4lBzzxPkbQp1KM1JqK014OJ4=;
+	s=korg; t=1789229492;
+	bh=u8vVDtGxnjyyCRmD/AZYQmVs2tks9YFe85C09SZGyOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y2qs7hmyTr5KfADc13NsFoanV+ARq6gVVBbzsaZwsBzxQby11q7fVNYxTiaqjHii4
-	 733NPSs+AgiUXs2b03s86DdwW+OnOBjJWoPhSQYmVxez6uzlAT583Kqa8uzO2usevQ
-	 int1QWuKRQqTA0dGf81Ra46J2waRy9wmcJwe8hAM=
+	b=0PFCRtLCSTyQr3j6m3f5fuIpu5uPJAlGsfFFxCcJqS05V+jzXBuFAx0Rt5N8svdrd
+	 wmrKAcZTKOTg4Qu5CkaaXtZq+kaXOqcjmqNyai3TfXBoSPkk/OZqnuc/2AeWbtbNhW
+	 dRTMKk1skVgLvKg3lGBBmAlCQIApbI+TEv4iWGqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.1 0558/1191] thermal/hwmon: Do not set no_hwmon before calling thermal_add_hwmon_sysfs()
-Date: Sat, 12 Sep 2026 08:54:46 +0200
-Message-ID: <20260912065600.775997076@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0559/1191] thermal/drivers/rcar: Fix error checking in probe()
+Date: Sat, 12 Sep 2026 08:54:47 +0200
+Message-ID: <20260912065600.800008957@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -55,111 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 8f3f4ad4ad45e2e30c814de42629ef4c9688e92c ]
+[ Upstream commit dd04ad1cdabcad51e34b74b4e91b9aeb7180d05d ]
 
-The thermal->tzp->no_hwmon parameter is only used when calling
-thermal_zone_device_register().
+This code accidentally calls thermal_zone_device_enable() before checking
+whether thermal_zone_device_register_with_trips() failed.  Move the call
+until later to avoid an error pointer dereference of "priv->zone".
 
-Setting it to 'false' before calling thermal_add_hwmon_sysfs() has no
-effect.
+The driver works differently depending on if we are using OF thermal or
+not.  We use thermal_add_hwmon_sysfs() if we are using OF thermal and
+call thermal_zone_device_enable() if not.  We can share same error check
+for if either of these fail.
 
-Remove the call and again prevent the drivers to access the thermal
-internals.
+Moving the thermal_zone_device_enable() call is a bit cleaner as well.
+The original code used a three step process to cleanup:
+1. Call thermal_zone_device_unregister() to cleanup.
+2. Set priv->zone to an error pointer to preserve the error code.
+3. Set priv->zone to NULL to avoid a second call to
+   thermal_zone_device_unregister() in the rcar_thermal_remove()
+   function.
 
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se> #R-Car
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com> #Broadcom
-Acked-by: Heiko Stuebner <heiko@sntech.de> #rockchip
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: dd04ad1cdabc ("thermal/drivers/rcar: Fix error checking in probe()")
+Now we can just do a direct goto error_unregister and rcar_thermal_remove()
+handles the cleanup properly.
+
+Fixes: bbcf90c0646a ("thermal: Explicitly enable non-changing thermal zone devices")
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Link: https://patch.msgid.link/aj5WnseULiwgmlWv@stanley.mountain
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/broadcom/bcm2711_thermal.c | 1 -
- drivers/thermal/broadcom/bcm2835_thermal.c | 1 -
- drivers/thermal/rcar_gen3_thermal.c        | 1 -
- drivers/thermal/rcar_thermal.c             | 5 -----
- drivers/thermal/rockchip_thermal.c         | 1 -
- drivers/thermal/rzg2l_thermal.c            | 1 -
- 6 files changed, 10 deletions(-)
+ drivers/thermal/rcar_thermal.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/thermal/broadcom/bcm2711_thermal.c b/drivers/thermal/broadcom/bcm2711_thermal.c
-index 1f8651d15160c..ac38348cc361b 100644
---- a/drivers/thermal/broadcom/bcm2711_thermal.c
-+++ b/drivers/thermal/broadcom/bcm2711_thermal.c
-@@ -98,7 +98,6 @@ static int bcm2711_thermal_probe(struct platform_device *pdev)
- 
- 	priv->thermal = thermal;
- 
--	thermal->tzp->no_hwmon = false;
- 	return thermal_add_hwmon_sysfs(thermal);
- }
- 
-diff --git a/drivers/thermal/broadcom/bcm2835_thermal.c b/drivers/thermal/broadcom/bcm2835_thermal.c
-index 2c67841a11151..112b1ab534867 100644
---- a/drivers/thermal/broadcom/bcm2835_thermal.c
-+++ b/drivers/thermal/broadcom/bcm2835_thermal.c
-@@ -268,7 +268,6 @@ static int bcm2835_thermal_probe(struct platform_device *pdev)
- 	 * Thermal_zone doesn't enable hwmon as default,
- 	 * enable it here
- 	 */
--	tz->tzp->no_hwmon = false;
- 	err = thermal_add_hwmon_sysfs(tz);
- 	if (err)
- 		goto err_tz;
-diff --git a/drivers/thermal/rcar_gen3_thermal.c b/drivers/thermal/rcar_gen3_thermal.c
-index 8835846884d11..eac820a105587 100644
---- a/drivers/thermal/rcar_gen3_thermal.c
-+++ b/drivers/thermal/rcar_gen3_thermal.c
-@@ -524,7 +524,6 @@ static int rcar_gen3_thermal_probe(struct platform_device *pdev)
- 		}
- 		tsc->zone = zone;
- 
--		tsc->zone->tzp->no_hwmon = false;
- 		ret = thermal_add_hwmon_sysfs(tsc->zone);
- 		if (ret)
- 			goto error_unregister;
 diff --git a/drivers/thermal/rcar_thermal.c b/drivers/thermal/rcar_thermal.c
-index 61c2b8855cb8d..740250adc3d28 100644
+index 740250adc3d28..4871027013344 100644
 --- a/drivers/thermal/rcar_thermal.c
 +++ b/drivers/thermal/rcar_thermal.c
-@@ -551,11 +551,6 @@ static int rcar_thermal_probe(struct platform_device *pdev)
+@@ -536,12 +536,6 @@ static int rcar_thermal_probe(struct platform_device *pdev)
+ 						1, 0, priv,
+ 						&rcar_thermal_zone_ops, NULL, 0,
+ 						idle);
+-
+-			ret = thermal_zone_device_enable(priv->zone);
+-			if (ret) {
+-				thermal_zone_device_unregister(priv->zone);
+-				priv->zone = ERR_PTR(ret);
+-			}
+ 		}
+ 		if (IS_ERR(priv->zone)) {
+ 			dev_err(dev, "can't register thermal zone\n");
+@@ -550,11 +544,12 @@ static int rcar_thermal_probe(struct platform_device *pdev)
+ 			goto error_unregister;
  		}
  
- 		if (chip->use_of_thermal) {
--			/*
--			 * thermal_zone doesn't enable hwmon as default,
--			 * but, enable it here to keep compatible
--			 */
--			priv->zone->tzp->no_hwmon = false;
+-		if (chip->use_of_thermal) {
++		if (chip->use_of_thermal)
  			ret = thermal_add_hwmon_sysfs(priv->zone);
- 			if (ret)
- 				goto error_unregister;
-diff --git a/drivers/thermal/rockchip_thermal.c b/drivers/thermal/rockchip_thermal.c
-index 9fc375cee5a66..05f4fc05fc582 100644
---- a/drivers/thermal/rockchip_thermal.c
-+++ b/drivers/thermal/rockchip_thermal.c
-@@ -1457,7 +1457,6 @@ static int rockchip_thermal_probe(struct platform_device *pdev)
+-			if (ret)
+-				goto error_unregister;
+-		}
++		else
++			ret = thermal_zone_device_enable(priv->zone);
++		if (ret)
++			goto error_unregister;
  
- 	for (i = 0; i < thermal->chip->chn_num; i++) {
- 		rockchip_thermal_toggle_sensor(&thermal->sensors[i], true);
--		thermal->sensors[i].tzd->tzp->no_hwmon = false;
- 		error = thermal_add_hwmon_sysfs(thermal->sensors[i].tzd);
- 		if (error)
- 			dev_warn(&pdev->dev,
-diff --git a/drivers/thermal/rzg2l_thermal.c b/drivers/thermal/rzg2l_thermal.c
-index 2e0649f385060..1eff2600d8e62 100644
---- a/drivers/thermal/rzg2l_thermal.c
-+++ b/drivers/thermal/rzg2l_thermal.c
-@@ -216,7 +216,6 @@ static int rzg2l_thermal_probe(struct platform_device *pdev)
- 	}
+ 		rcar_thermal_irq_enable(priv);
  
- 	priv->zone = zone;
--	priv->zone->tzp->no_hwmon = false;
- 	ret = thermal_add_hwmon_sysfs(priv->zone);
- 	if (ret)
- 		goto err;
 -- 
 2.53.0
 
