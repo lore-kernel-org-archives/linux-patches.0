@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2B72F8E86;
-	Sat, 12 Sep 2026 16:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EE527FB37;
+	Sat, 12 Sep 2026 16:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229493; cv=none; b=tMFy2ngN7YtDVcLcZzImjk70bYZ1EHVe3TE2OPH+PANZ5z3RnXGX1BYxJtAG9yP4HZ3sAMt00RB3xqXeE2QZPY+ON47xJbKPPwL3RgKOisexWdLfZXs2RtwEGgmg1llOkh8O/A/NbQxehpetAbrr0wOACC+RYmf0cOTa9ujwjdA=
+	t=1789229498; cv=none; b=LXeC4WP5Of5ADKu4AwZF3QY1NJzgh7311AXTTloC28R4eVKfe+XFtsfcid/cYwcsOxOgzD8kD5PBZVYcj2V1AgNEt3JrYnk1iqI7ouDQ+sjJvU3NS5fx9R6OTbHAx6YBtKE146Bpq81Y+Ep4hCDieosqVIYRkBtvR1vAWj+B9AI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229493; c=relaxed/simple;
-	bh=ne2QxB73CW0vc66t0/H2B8GCH4Pj8V1Rp0RoADlCVik=;
+	s=arc-20240116; t=1789229498; c=relaxed/simple;
+	bh=rBh9ATOjL30GKlRzaWrmt3ypgXSZwc6yBo5VZLZyt0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G2YrgIV5NIzjgnUxADBAXFTKYszzsppp7yg3OUshFhM7T+WhEuqjEWDIUCLR3UgSk3H05JGC2mGU8asq9rjmz8Tb2h0XPa5lkJHPVNWfjTPLZjgMIgrgQpQSSx87Kj0Ezzj+Jdn2iRUAKkc1KIjnqO5E4Rl4pt8x170Fm3FaXSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0PFCRtLC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jbATrSx8ZIGIHBxMbwtptwqhVk5PB6wP6PJRU4tdDuCQTlj/HJ/jOro60oKE0HORibnHJl/hwIlrlKBB7b67ZtD5afIvAl9Qc/v+M5n+p91AXVwute9yJ43FyXwH6lk7atI7jQrc23cSzzj/wZHDS4ATnOrwrAz+nD6PTdhpfQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kV3buofM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0PFCRtLC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65AA1F000FF;
-	Sat, 12 Sep 2026 16:11:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kV3buofM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1104F1F000FF;
+	Sat, 12 Sep 2026 16:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229492;
-	bh=u8vVDtGxnjyyCRmD/AZYQmVs2tks9YFe85C09SZGyOE=;
+	s=korg; t=1789229497;
+	bh=T0r17OB0UfG/OEyPIuOY+wE325cJeypvbObJd2Juf2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0PFCRtLCSTyQr3j6m3f5fuIpu5uPJAlGsfFFxCcJqS05V+jzXBuFAx0Rt5N8svdrd
-	 wmrKAcZTKOTg4Qu5CkaaXtZq+kaXOqcjmqNyai3TfXBoSPkk/OZqnuc/2AeWbtbNhW
-	 dRTMKk1skVgLvKg3lGBBmAlCQIApbI+TEv4iWGqE=
+	b=kV3buofMF8LBTcyZ6pGipI2S27Ap/0uyJye383+3Mxy/9QejZFSw9heGusRd7wQGb
+	 NB9s0qlsSDK2qjrOGKKmgo5OfYjYMokUKBXFDF+XNzajz7/cURcVnt8O98XDieYr9N
+	 0crHQz6XmJBrbVepVxVt2zQkfBihMdeOkwndrJfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Dan Carpenter <error27@gmail.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Slavin Liu <220245772@seu.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0559/1191] thermal/drivers/rcar: Fix error checking in probe()
-Date: Sat, 12 Sep 2026 08:54:47 +0200
-Message-ID: <20260912065600.800008957@linuxfoundation.org>
+Subject: [PATCH 6.1 0560/1191] usb: gadget: r8a66597: avoid double free of ep0_req in probe error path
+Date: Sat, 12 Sep 2026 08:54:48 +0200
+Message-ID: <20260912065600.822557843@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -47,82 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit dd04ad1cdabcad51e34b74b4e91b9aeb7180d05d ]
+[ Upstream commit 41d541e3718db01668a4cd29815ee4b3b55f76d2 ]
 
-This code accidentally calls thermal_zone_device_enable() before checking
-whether thermal_zone_device_register_with_trips() failed.  Move the call
-until later to avoid an error pointer dereference of "priv->zone".
+If usb_add_gadget_udc() fails, r8a66597_probe() jumps to err_add_udc
+and frees ep0_req, then falls through to clean_up2 where ep0_req is
+freed again when it is non-NULL.
 
-The driver works differently depending on if we are using OF thermal or
-not.  We use thermal_add_hwmon_sysfs() if we are using OF thermal and
-call thermal_zone_device_enable() if not.  We can share same error check
-for if either of these fail.
+Remove the redundant free from err_add_udc and keep the cleanup in
+clean_up2 so the request is released exactly once.
 
-Moving the thermal_zone_device_enable() call is a bit cleaner as well.
-The original code used a three step process to cleanup:
-1. Call thermal_zone_device_unregister() to cleanup.
-2. Set priv->zone to an error pointer to preserve the error code.
-3. Set priv->zone to NULL to avoid a second call to
-   thermal_zone_device_unregister() in the rcar_thermal_remove()
-   function.
+Fixes: 776976a67ae2 ("usb: gadget: r8a66597-udc: cleanup error path")
+Issue found using a prototype static analysis tool
+and confirmed by code review.
 
-Now we can just do a direct goto error_unregister and rcar_thermal_remove()
-handles the cleanup properly.
-
-Fixes: bbcf90c0646a ("thermal: Explicitly enable non-changing thermal zone devices")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/aj5WnseULiwgmlWv@stanley.mountain
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Signed-off-by: Slavin Liu <220245772@seu.edu.cn>
+Link: https://patch.msgid.link/20260624140908.1282-1-getshell@seu.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/rcar_thermal.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ drivers/usb/gadget/udc/r8a66597-udc.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/thermal/rcar_thermal.c b/drivers/thermal/rcar_thermal.c
-index 740250adc3d28..4871027013344 100644
---- a/drivers/thermal/rcar_thermal.c
-+++ b/drivers/thermal/rcar_thermal.c
-@@ -536,12 +536,6 @@ static int rcar_thermal_probe(struct platform_device *pdev)
- 						1, 0, priv,
- 						&rcar_thermal_zone_ops, NULL, 0,
- 						idle);
--
--			ret = thermal_zone_device_enable(priv->zone);
--			if (ret) {
--				thermal_zone_device_unregister(priv->zone);
--				priv->zone = ERR_PTR(ret);
--			}
- 		}
- 		if (IS_ERR(priv->zone)) {
- 			dev_err(dev, "can't register thermal zone\n");
-@@ -550,11 +544,12 @@ static int rcar_thermal_probe(struct platform_device *pdev)
- 			goto error_unregister;
- 		}
+diff --git a/drivers/usb/gadget/udc/r8a66597-udc.c b/drivers/usb/gadget/udc/r8a66597-udc.c
+index 38e4d6b505a05..e36eacc0f4d72 100644
+--- a/drivers/usb/gadget/udc/r8a66597-udc.c
++++ b/drivers/usb/gadget/udc/r8a66597-udc.c
+@@ -1953,7 +1953,6 @@ static int r8a66597_probe(struct platform_device *pdev)
+ 	return 0;
  
--		if (chip->use_of_thermal) {
-+		if (chip->use_of_thermal)
- 			ret = thermal_add_hwmon_sysfs(priv->zone);
--			if (ret)
--				goto error_unregister;
--		}
-+		else
-+			ret = thermal_zone_device_enable(priv->zone);
-+		if (ret)
-+			goto error_unregister;
- 
- 		rcar_thermal_irq_enable(priv);
- 
+ err_add_udc:
+-	r8a66597_free_request(&r8a66597->ep[0].ep, r8a66597->ep0_req);
+ clean_up2:
+ 	if (r8a66597->pdata->on_chip)
+ 		clk_disable_unprepare(r8a66597->clk);
 -- 
 2.53.0
 
