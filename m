@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC241E5B9F;
-	Sat, 12 Sep 2026 11:15:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888112DC792;
+	Sat, 12 Sep 2026 11:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211751; cv=none; b=F5xRdW52dU4OBwQ1FG27XIA0YywRzACbMVm6kvmkQ7K9dfBd0x3SVcQValrbPb9qemyV7T6WUMnX83zC9spaMVhmOI0OY+W+wNbCl6d0q410xvh2nJX0HlqYO9l/keQ2kkcYraYDulXVVRH5fVua9a+W8fER16gHIgECdb7dOKk=
+	t=1789211756; cv=none; b=miRuocC4TFrBbatcZMJbmJ0USSAr98rXgf3tzuiJ5cGPIr9sFt8cITHIzQJUGoc4X+vI6lhmup3p4UjAICliWHHOfdXp0DX9UDU4nM81bOkI80CECjdKz9k1yWp8Ug9/Z+xuZyQpYB94Zs8opsZbDV6dRKPGr8w+Kvrxh4OhapQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211751; c=relaxed/simple;
-	bh=WR3OU8hbNh9rf4lMmsS9Y1RQ7ivO0ITK0u4KYMsPRaQ=;
+	s=arc-20240116; t=1789211756; c=relaxed/simple;
+	bh=DkUc0uS826W0t4vCfbQT5M9TIb+IpScroLobwMz7lyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CjMEYrwnF5Q2B9EXARGYqwwNKUpub7Ff5bruleQqqPw6PPxHh5EtGBDkgf3mGPLSjUdC8+P3kganozb6q+TgbeBGlAWGZU98zYC8tJvvNUmhEaCk2GJeVPQMcNitXotjIj+2AarGCf1RainJ3FD2//3m2WCNQ1t0r/iSKTGalTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z4ko2RL8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=INLiHfGajh+ijx3+tYE72npk73/ZMA6lRunUt6XtbscoqnPacqSej8B2sf8VwzI9fzI/YpC6quGsCpZI+/jO9McdEOIPO4w4E8PsLQFTs70oLcIEvTkzAqGp+Kswq3/1XmZufBZDI3goEGPYkLdiLqTjft+qKIp2MECihucWPU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SWYVSD5m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z4ko2RL8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69DD31F000FF;
-	Sat, 12 Sep 2026 11:15:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SWYVSD5m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559C11F000FF;
+	Sat, 12 Sep 2026 11:15:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211750;
-	bh=v5iSFI2K/5caEul6eklPYeilKJvxzdeSTzCQENLXGDU=;
+	s=korg; t=1789211755;
+	bh=8qLWa83iflX1tIqrwZ1dN3Can/Ct53CTxKYSyMPrX8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z4ko2RL8lNvWrJIuQtrk3Cz+FCSF3OfGLLWBqjIAPhl/wRls9wzgBD5eTihJ2HMUh
-	 X8O23YDEoOEUXrzGmfA0Fo/aLtvZHea52I/Y4EXg7fpfY0r3K/NWY+SuSVSop8Jvs+
-	 TTnTT4Jl9WrZZzcnl2Dd8OtwJXGnqpfsrCfugg3w=
+	b=SWYVSD5mV4TvZrDwEzlMIkxc3668ojXTlJONtlgtj6I4fX6As8+dttQzp1hgUk/ln
+	 v5mm3YPqb/rKfJIKTcNSkx2MXZiF1+dUHsH8b8dai+4e3Lw3fAqxkbCiefyPHeOA0x
+	 MAsL+fg3pA9HN6GSOg8YGLbJjjhTzFIbAicOjqSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yufeng Wang <wangyufeng@kylinos.cn>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	Li RongQing <lirongqing@baidu.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1296/1518] vhost/net: fix clear_user start address in VHOST_GET_FEATURES_ARRAY
-Date: Sat, 12 Sep 2026 08:57:45 +0200
-Message-ID: <20260912065652.833909475@linuxfoundation.org>
+Subject: [PATCH 6.18 1297/1518] virtio_pci: fix wrong queue index for admin vq in intx path
+Date: Sat, 12 Sep 2026 08:57:46 +0200
+Message-ID: <20260912065652.856535766@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -46,51 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yufeng Wang <wangyufeng@kylinos.cn>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 92a7b138f2453bf067628de0c5ec563cc8ad16d5 ]
+[ Upstream commit dc3f1eef9ab678c396baf5df12aba61db061aa8c ]
 
-The clear_user() call in VHOST_GET_FEATURES_ARRAY incorrectly starts
-at argp, which is the beginning of the features array, overwriting the
-data just written by copy_to_user(). It should start after the copied
-elements at argp + copied * sizeof(u64) to only zero the trailing
-unused space.
+In vp_find_vqs_intx(), the admin vq was set up using the local
+queue_idx counter instead of avq->vq_index (the actual queue index
+obtained from the device). This differs from vp_find_vqs_msix() which
+correctly uses avq->vq_index. Using the wrong index causes the admin
+virtqueue to be mapped to an incorrect hardware queue.
 
-Use size_mul() for both the offset and length calculations so the
-arithmetic stays consistent with the surrounding code and remains
-overflow-safe.
+Fix it by using avq->vq_index consistent with the msix path.
 
-Fixes: 333c515d1896 ("vhost-net: allow configuring extended features")
-Signed-off-by: Yufeng Wang <wangyufeng@kylinos.cn>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Fixes: af22bbe1f4a5 ("virtio: create admin queues alongside other virtqueues")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Message-ID: <20260629033538.2476-1-lirongqing@baidu.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260626070438.59149-1-r4o5m6e8o@163.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/net.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/virtio/virtio_pci_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/vhost/net.c b/drivers/vhost/net.c
-index 89d5438ba7af9..72bd44f2f1428 100644
---- a/drivers/vhost/net.c
-+++ b/drivers/vhost/net.c
-@@ -1778,7 +1778,8 @@ static long vhost_net_ioctl(struct file *f, unsigned int ioctl,
- 			return -EFAULT;
- 
- 		/* Zero the trailing space provided by user-space, if any */
--		if (clear_user(argp, size_mul(count - copied, sizeof(u64))))
-+		if (clear_user(argp + size_mul(copied, sizeof(u64)),
-+			       size_mul(count - copied, sizeof(u64))))
- 			return -EFAULT;
+diff --git a/drivers/virtio/virtio_pci_common.c b/drivers/virtio/virtio_pci_common.c
+index 30c6627a5ce4d..ef87e7584756e 100644
+--- a/drivers/virtio/virtio_pci_common.c
++++ b/drivers/virtio/virtio_pci_common.c
+@@ -502,7 +502,7 @@ static int vp_find_vqs_intx(struct virtio_device *vdev, unsigned int nvqs,
+ 	if (!avq_num)
  		return 0;
- 	case VHOST_SET_FEATURES_ARRAY:
+ 	sprintf(avq->name, "avq.%u", avq->vq_index);
+-	vq = vp_setup_vq(vdev, queue_idx++, vp_modern_avq_done, avq->name,
++	vq = vp_setup_vq(vdev, avq->vq_index, vp_modern_avq_done, avq->name,
+ 			 false, VIRTIO_MSI_NO_VECTOR,
+ 			 &vp_dev->admin_vq.info);
+ 	if (IS_ERR(vq)) {
 -- 
 2.53.0
 
