@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92A72D0C94;
-	Sat, 12 Sep 2026 19:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15F726299;
+	Sat, 12 Sep 2026 19:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241892; cv=none; b=IIYjdEuSMAUpUYjUNq6wBFPg4bIH3RUkV7oJHnvA0JIDslAF4iiBnR7dMFvmw2la7umTU9TgQAbtu9yEosJjDAB0syPfmXEQOefLHTHNIZzk6ORM3R4wsPhMSbD1rkaeFxNH7n1xVb75TTKCKLNdRGipZ0iToSWQJFt0mglHQ5I=
+	t=1789241897; cv=none; b=YC1oXpwA+RpuVkj15vqsHDgPa2PG14LjFwXkABVuO9viJ1eDriW/CmH1ToOErok4sYU/Wb1raCEcUWja3fpH9n26eWxRJSdqQO1s8UdzSGkoIaJMXRu3TxgDcJwuiQK/MfZ+6hgU5pcNAj9TiUyiUfpXx9h4qQkikGo16VNxER4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241892; c=relaxed/simple;
-	bh=M/fJMl3tPr5LhtC9FNUTye6pyIvgPoOMo3oyvLAz4Xw=;
+	s=arc-20240116; t=1789241897; c=relaxed/simple;
+	bh=2Lu0DCP2QP5EgAOrdB5qE+kNRmf/FUPhZYxL1OY/5LE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D7z8e6vjTNvNsXsG469HOoGhCV9+kiDRQWJLxVCD46QfTMrzimqWzqK1lhYawovA2ej/VmYvObVQwviXipudctnGWWmuy70ShPOWW3eNzQBIp4jV3LQLQj+6sK5u4NUW1ZFqhG7FmjfuQjAVDiXDiB9sET1rPVEAlX6SNU+8PRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jfk4EO4a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TYqXNnWytPhIx0rioQkvLz4dTvwICVQEdVYEEjkqvBt0Cza9EW84kpSSfJuwh9NPn7oUi4I//VENHHS9GLJ0l6zigqOLpcgZkYyGXqz4pyu89PZ3UDDo4VV2yLQG4HRH5m2zG40A6QpX+JxUIbdcvylkvijCh3ytK06KVWnBWKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9jliVrK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jfk4EO4a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813491F000FF;
-	Sat, 12 Sep 2026 19:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9jliVrK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B89511F000FF;
+	Sat, 12 Sep 2026 19:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241891;
-	bh=GNxyfKcj6cqmlSw1Tw12xD+/H15bwdbWs+ycwaRl5XY=;
+	s=korg; t=1789241896;
+	bh=un0HVn44hkNON5df55z59rD54k8zyWDHuMWs5Z7IU9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jfk4EO4a+vLQ+/F9FCDqMt3Ap4t2ai86bdjsrQnJX1s3EhJuf+6VBEznFG1bQFkpp
-	 /97TcjowFFthrwotkThlEr4dgy/gqnv+x5y1JP9vcfRurOY+Snwzry/9ENgL1Ogja4
-	 RTyxStzRhi6a/lrjPKqQZCp8uiZrGCXbGkQ85dwQ=
+	b=a9jliVrKIucZiEGorPRyxcNQL+TJEQ7U74MfCII8wnonoud9E2dbtqzwkkx2CjnBT
+	 DyOgNbRzlqjoFN32ElbGgH2mhp7WIFlardjviJLwgz82FO7/020YQPH42oZBfU8nrS
+	 KZENZNpgavMPvnqOvzlJ2x6e+kYTUjYkGBRldBxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.10 228/798] dm: fix resume-vs-remove race
-Date: Sat, 12 Sep 2026 08:57:36 +0200
-Message-ID: <20260912065522.365886167@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Koichiro Den <den@valinux.co.jp>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.10 229/798] dmaengine: dw-edma: Complete descriptors before pausing
+Date: Sat, 12 Sep 2026 08:57:37 +0200
+Message-ID: <20260912065522.390131999@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -49,39 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 44b43ec132f1cf3275ecc182d0c82f50c3c4c3d5 upstream.
+commit c154060016a9db2ac889bfdb0a3c1322f9be8ded upstream.
 
-If the user issues the resume ioctl and the remove ioctl at the same
-time, it may be possible that the device is resumed after it is suspended
-in __dm_destroy. The result is that the table is destroyed without
-calling the postsuspend method.
+If PAUSE is requested while the final burst of a descriptor is in
+flight, the DONE interrupt takes the PAUSE path without checking whether
+the descriptor has been depleted. The depleted descriptor remains on the
+issued list and the channel enters EDMA_ST_PAUSE.
 
-Dm targets expect that they may be removed only after the postsuspend
-method method was called. If we break this expectation, it can cause
-misbehavior in various targets. For example - in the dm-integrity target,
-the reboot notifier is not unregistered, leading to use-after-free.
+On resume, dw_edma_start_transfer() can select that depleted descriptor
+again even though no burst remains, leaving the channel in an invalid
+busy state.
 
-Fix this bug by refusing to resume if the device is being destroyed.
+Check for descriptor completion before acknowledging PAUSE. If there is
+no work to start on resume, leave the channel idle. Also ignore DONE
+interrupts while the channel is paused so a stale or repeated interrupt
+cannot change its state or start queued work.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
 Cc: stable@vger.kernel.org
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Link: https://patch.msgid.link/20260717180639.2643243-5-den@valinux.co.jp
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/dw-edma/dw-edma-core.c |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -2629,7 +2629,7 @@ retry:
- 	r = -EINVAL;
- 	mutex_lock_nested(&md->suspend_lock, SINGLE_DEPTH_NESTING);
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -241,7 +241,8 @@ static int dw_edma_device_resume(struct
+ 		err = -EPERM;
+ 	} else {
+ 		chan->status = EDMA_ST_BUSY;
+-		dw_edma_start_transfer(chan);
++		if (!dw_edma_start_transfer(chan))
++			chan->status = EDMA_ST_IDLE;
+ 	}
  
--	if (!dm_suspended_md(md))
-+	if (!dm_suspended_md(md) || test_bit(DMF_FREEING, &md->flags))
- 		goto out;
+ 	return err;
+@@ -521,10 +522,16 @@ static void dw_edma_done_interrupt(struc
+ 	dw_edma_v0_core_clear_done_int(chan);
  
- 	if (dm_suspended_internally_md(md)) {
+ 	spin_lock_irqsave(&chan->vc.lock, flags);
++	if (chan->status == EDMA_ST_PAUSE) {
++		spin_unlock_irqrestore(&chan->vc.lock, flags);
++		return;
++	}
++
+ 	vd = vchan_next_desc(&chan->vc);
+ 	if (vd) {
+ 		switch (chan->request) {
+ 		case EDMA_REQ_NONE:
++		case EDMA_REQ_PAUSE:
+ 			desc = vd2dw_edma_desc(vd);
+ 			if (!desc->chunks_alloc) {
+ 				dw_hdma_set_callback_result(vd,
+@@ -533,6 +540,12 @@ static void dw_edma_done_interrupt(struc
+ 				vchan_cookie_complete(vd);
+ 			}
+ 
++			if (chan->request == EDMA_REQ_PAUSE) {
++				chan->request = EDMA_REQ_NONE;
++				chan->status = EDMA_ST_PAUSE;
++				break;
++			}
++
+ 			/* Continue transferring if there are remaining chunks or issued requests.
+ 			 */
+ 			chan->status = dw_edma_start_transfer(chan) ? EDMA_ST_BUSY : EDMA_ST_IDLE;
+@@ -545,11 +558,6 @@ static void dw_edma_done_interrupt(struc
+ 			chan->status = EDMA_ST_IDLE;
+ 			break;
+ 
+-		case EDMA_REQ_PAUSE:
+-			chan->request = EDMA_REQ_NONE;
+-			chan->status = EDMA_ST_PAUSE;
+-			break;
+-
+ 		default:
+ 			break;
+ 		}
 
 
