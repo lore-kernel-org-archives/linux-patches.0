@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABAEE41F379;
-	Sat, 12 Sep 2026 10:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952C737FF46;
+	Sat, 12 Sep 2026 10:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209597; cv=none; b=qbCQcxxJ5QktcqI2il6mXWrmY5x4UxeIpdcvwaFo+pS5gWP6muz68meJQltdPPsmL65QGjh4Rr428xXMd8z4NKUYt6cJMhVDJ7rLVjBhlFaMhQhkpvMETLliaDvOoi58IYI3R/xoWtsP0UnB42sZWGIZ3NnZ6RYSiO/O3s8y2Lc=
+	t=1789209601; cv=none; b=B0XIu1h9ziv6Civg5ocjZleBu20GhLK0Wn6b1gVYFpeGUzlkV1ja1ReJpe03nyko8mKoRZ+c3hDTWJyrKnltGIDcGpUzrvomVP3AI7Ej8s582MoO4w7j8DTJpELdDyuaH5Eo4txpuS/EOsrNfGiKtuf9Yb5mlhUv2st5Y8mjaZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209597; c=relaxed/simple;
-	bh=FSqoCh5vm4AwPlbcbvuw/5b1883DktJoXlJau8CTonc=;
+	s=arc-20240116; t=1789209601; c=relaxed/simple;
+	bh=FZHMXO16OSdTUJWqGX1o+4m9RQOqOvBqMiMP+sfbPLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d3JQXpoznsdHa9ioilKJvCeME38U99VIhbrg3zTnaA1mDbg3irjCfLBPE52WaQnRci9KmVhJN3nhZTTcR22+T3bXnwrlvu7+2RXVCnR0GYaDo2tBGfBYnvWPqXaObztEZqhc49CP+r/IAnNmyl1gTv0BoAn6vEYrGnaXd1S2Ndg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFmnmqE7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WeDVS3y3tEy88JXDaPqsWZmwozUp3auBJiZ4FLfydQvXv2TQ51f6mPywCpI8GbX7S1lhj05t/RI7/1tMMOuLdBToFFGX+ejE3varL6yI+eCTB7WknKn7ahqdWqP6wW2ZA4+z1IJT9iDMHdYvBH05TZdq5XNDB3Bo9As3eEcSKEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSdIDRON; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFmnmqE7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1D71F000FF;
-	Sat, 12 Sep 2026 10:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSdIDRON"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9984E1F000FF;
+	Sat, 12 Sep 2026 10:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209595;
-	bh=l7XB18g0pOlcKf2c9UkiL5h9t5BCsyIrdCtvNO5lkGo=;
+	s=korg; t=1789209600;
+	bh=MXRwQsqNMjv3C/GglTGXUAgqL3CUvIg2ZThcM3iIbpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UFmnmqE7ZEU34jacmMPSOnHvCH/zgN5dwZlml8OPKum/YDskHgOsaoOOEqgx0sy6I
-	 +oicGclkI1cSzNuTPORZ0ORY8cwAt5vB+9cB5IYxk1MDKzp0CbyaiYMkC/QxhdCDRc
-	 ZuZMVFx0IbteNF0zlEBBdLEIwoVquTpvhdrtfqgo=
+	b=YSdIDRONqplHlOywFHtLMNkOYNgLvsO/hlbccthyE+zjiiuYwaTy1VObS569U1n8p
+	 cZ3WvRsdmMi6/CKldmqVFRdfGnm6bgSIbfuM8eemjjUd1zH8KquCANF7RUfi9pMEQV
+	 q5cPtBo0LMtsKdt3yA2wQPz+XHw8vwmdTw/IYSgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0853/1518] perf intel-bts: Fix off-by-one in auxtrace_info minimum size check
-Date: Sat, 12 Sep 2026 08:50:22 +0200
-Message-ID: <20260912065642.744839391@linuxfoundation.org>
+Subject: [PATCH 6.18 0854/1518] perf arm-spe: Reject zero nr_cpu in metadata to prevent division by zero
+Date: Sat, 12 Sep 2026 08:50:23 +0200
+Message-ID: <20260912065642.770248238@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -56,17 +56,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit b9fb8225951ce27e62a2235a71f3ab01137aaec3 ]
+[ Upstream commit d67241d43b709af4d13051bb8494892b654aba41 ]
 
-Same pattern as the Intel PT fix: min_sz is set to
-sizeof(u64) * INTEL_BTS_SNAPSHOT_MODE, but the code accesses
-auxtrace_info->priv[INTEL_BTS_SNAPSHOT_MODE], which requires at least
-INTEL_BTS_SNAPSHOT_MODE + 1 elements.
+arm_spe__alloc_metadata() reads nr_cpu from the auxtrace_info priv
+array without validation.  When a crafted perf.data provides nr_cpu=0,
+the per_cpu_sz calculation divides by zero:
 
-Use (INTEL_BTS_SNAPSHOT_MODE + 1) to ensure the highest accessed index
-is within bounds.
+  per_cpu_sz = (metadata_size - (hdr_sz * sizeof(u64))) / (*nr_cpu);
 
-Fixes: d0170af7004dce9c ("perf tools: Add Intel BTS support")
+Reject nr_cpu <= 0 early, before the division.  The caller already
+treats NULL return with metadata_ver != 1 as a parse failure.
+
+Fixes: 7842a4b6ff698 ("perf arm-spe: Support metadata version 2")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
@@ -75,22 +76,24 @@ Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/intel-bts.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/arm-spe.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/perf/util/intel-bts.c b/tools/perf/util/intel-bts.c
-index 3625c62247502..9f5f378cf7743 100644
---- a/tools/perf/util/intel-bts.c
-+++ b/tools/perf/util/intel-bts.c
-@@ -831,7 +831,7 @@ int intel_bts_process_auxtrace_info(union perf_event *event,
- 				    struct perf_session *session)
- {
- 	struct perf_record_auxtrace_info *auxtrace_info = &event->auxtrace_info;
--	size_t min_sz = sizeof(u64) * INTEL_BTS_SNAPSHOT_MODE;
-+	size_t min_sz = sizeof(u64) * (INTEL_BTS_SNAPSHOT_MODE + 1);
- 	struct intel_bts *bts;
- 	int err;
+diff --git a/tools/perf/util/arm-spe.c b/tools/perf/util/arm-spe.c
+index 71be979f50771..cc99b06e59802 100644
+--- a/tools/perf/util/arm-spe.c
++++ b/tools/perf/util/arm-spe.c
+@@ -1543,6 +1543,10 @@ static u64 **arm_spe__alloc_metadata(struct perf_record_auxtrace_info *info,
+ 	hdr_sz = ptr[ARM_SPE_HEADER_SIZE];
+ 	*nr_cpu = ptr[ARM_SPE_CPUS_NUM];
  
++	/* nr_cpu is used as a divisor below */
++	if (*nr_cpu <= 0)
++		return NULL;
++
+ 	metadata = calloc(*nr_cpu, sizeof(*metadata));
+ 	if (!metadata)
+ 		return NULL;
 -- 
 2.53.0
 
