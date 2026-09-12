@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A1537E2E7;
-	Sat, 12 Sep 2026 12:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290DC37E2E7;
+	Sat, 12 Sep 2026 12:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217008; cv=none; b=ri8bPxozu9y/jeWIYebzvKeyzPQGCl6lvjR0gGHyl+d+FA8GNQQv7bD2YLaxO/kAur4Vd8Z3kh890ksqJKC9+8o/xPOzohvo/dy7J9rurJwed5e5hGxhpcRY0iFueDegPTZg8d2rWGlP9zVS4y4Z1I8ZziH1B8A2amIvONz3xNg=
+	t=1789217012; cv=none; b=qaoUqsrVjFQ8rAlj3qdRty1FDu6tgsQ6vqIMAFFddWMX7wTYR1zrpwlHtqZQ3XLcDF6CafEryY34MtACOgMed6uDcqVRqHBH1nNxMOEiK7oAen562FyBqM0P5v2FcSdO26StfFuK2Sw+0WzD0nEULXY481J3FowbgWgU4ilfeF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217008; c=relaxed/simple;
-	bh=pxWNhGURkuZPfzkPVkRkjo9grgk9slKd9D+OZ7Qy3tU=;
+	s=arc-20240116; t=1789217012; c=relaxed/simple;
+	bh=aTGnWiWdM/vrQgwbQIqAP7w/v5otmH7SxUOgbYYzFSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FwRSBFjl8qXEaxVcc18Y6jEiV2/Bxd9/yQw8VzSTndJrHoEfl+T6gsDjK2mB6SXxvN8W+l95XqkwTeYvo3qgrvmDAeQlcbRq8H86dxxJ5c0GahFkV5FUnEOPyrP6pt3nrJF02zRspwcV/536LvHRhcQMSy0zU1k/wTMnav4uSXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXKe0ruM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aQ2kkg0iMAiZ45/KqRQHZ4IYFuD0XQFxpIpcl4QrnT35DcYtv90N96OHq4xJ+BE4f1V3mJ9LGrdlVsNYpRFoa8GG2IxSiNXbBcrfdPfKLnPyq9pfjylHIFj5oFHQfF0uD0DUr4frWvNr4kouFQk+nIhSfaFGl6+3dPSJnibXRCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTSLgGux; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXKe0ruM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD3961F000FF;
-	Sat, 12 Sep 2026 12:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTSLgGux"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC081F000FF;
+	Sat, 12 Sep 2026 12:43:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217007;
-	bh=YKgCIRFS7jruczOAh+yjd+6pYnSjDCaYHGTbxoO6hXw=;
+	s=korg; t=1789217011;
+	bh=Ri/dMTNpqa7Z8UhuPHyfq4JYK4Bz3r3gZasiGfKBvb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cXKe0ruMyLUkmMH8Tc6ajXePNaeMJQ5c1Cv8AQKIZMIHjzLP6nQqcfP7L8Gw725a2
-	 hUNxUhGWgpcwgVly+0jhgDn3FSddL2QG9WmnfkUC8ETW3QLbGsvq29CMa2Wqwa4YFc
-	 N30HseDmctQ9HyBL3cjZth/hF/WeHLnBMG7B4+18=
+	b=mTSLgGuxrlXisJkGus/P3HWnNCeBUKmfZtH5WyVjivB2uGD1CPo7/9kCHQIdFEQus
+	 7fV5OowKPAuf+xKoWvr+2xCirPtHOMnGeStYLcDyNV/jWKnoH0VIntsX0Rgb+9epxd
+	 H1y3Msd5tDRzSu9DGpCH2iNSHvVYhFfaIUrPVGF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Titouan Ameline de Cadeville <titouan.ameline@gmail.com>,
+	Julius Werner <jwerner@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0853/1376] wifi: mac80211: disconnect on CSA to channel 0
-Date: Sat, 12 Sep 2026 08:54:39 +0200
-Message-ID: <20260912065626.570044725@linuxfoundation.org>
+Subject: [PATCH 6.12 0854/1376] firmware: google: Add bounds checks in coreboot_table_populate()
+Date: Sat, 12 Sep 2026 08:54:40 +0200
+Message-ID: <20260912065626.595751899@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,80 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Titouan Ameline de Cadeville <titouan.ameline@gmail.com>
 
-[ Upstream commit cf57f0a674cc3e3cda1a789359cc1238b61b9d7d ]
+[ Upstream commit 7b1a1af4556a4f95ef273e91435fe804cbfcd223 ]
 
-The refactor for the CSA parsing erroneously equates channel
-zero and no information present, leading it to ignore a CSA
-on an AP that advertises a switch to that (invalid) channel.
-This leads to not disconnecting, which we should. For Intel
-devices, this can lead to a firmware crash.
+coreboot_table_populate() iterates over firmware-provided table entries
+with no validation that the entries stay within the mapped memory
+region.  A corrupt table with a large `entry->size` advances `ptr_entry`
+past the mapped region, causing an out-of-bounds read on the next
+iteration.
 
-Fix this by using an int type for the channel number as well
-as the opclass, and using a (negative) value that cannot be
-encoded in the element to indicate it's not present.
+Add a check before dereferencing `ptr_entry` to ensure the entry header
+is readable, and a second check after reading `entry->size` to ensure
+the full entry stays within the mapped region.
 
-Fixes: 21c3f8f95554 ("wifi: mac80211: refactor STA CSA parsing flows")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260802111213.3bc833515e40.I255c37c31ca8b0b34e351cf254e16b6071dd8fb3@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Pass `len` from coreboot_table_probe() into coreboot_table_populate() to
+make the mapped region size available for validation.
+
+Signed-off-by: Titouan Ameline de Cadeville <titouan.ameline@gmail.com>
+Reviewed-by: Julius Werner <jwerner@chromium.org>
+Link: https://lore.kernel.org/r/20260426214739.117131-1-titouan.ameline@gmail.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Stable-dep-of: a58a57a1076f ("firmware: coreboot: Validate table bounds")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/spectmgmt.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/firmware/google/coreboot_table.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/net/mac80211/spectmgmt.c b/net/mac80211/spectmgmt.c
-index 073ff9e0f3970..1bdb241e1fd5e 100644
---- a/net/mac80211/spectmgmt.c
-+++ b/net/mac80211/spectmgmt.c
-@@ -228,7 +228,7 @@ int ieee80211_parse_ch_switch_ie(struct ieee80211_sub_if_data *sdata,
+diff --git a/drivers/firmware/google/coreboot_table.c b/drivers/firmware/google/coreboot_table.c
+index 208652a8087cd..0cf613944951e 100644
+--- a/drivers/firmware/google/coreboot_table.c
++++ b/drivers/firmware/google/coreboot_table.c
+@@ -101,16 +101,20 @@ void coreboot_driver_unregister(struct coreboot_driver *driver)
+ }
+ EXPORT_SYMBOL(coreboot_driver_unregister);
+ 
+-static int coreboot_table_populate(struct device *dev, void *ptr)
++static int coreboot_table_populate(struct device *dev, void *ptr, resource_size_t len)
  {
- 	enum nl80211_band new_band = current_band;
- 	int new_freq;
--	u8 new_chan_no = 0, new_op_class = 0;
-+	int new_chan_no = -1, new_op_class = -1;
- 	struct ieee80211_channel *new_chan;
- 	struct cfg80211_chan_def new_chandef = {};
- 	const struct ieee80211_sec_chan_offs_ie *sec_chan_offs;
-@@ -257,7 +257,7 @@ int ieee80211_parse_ch_switch_ie(struct ieee80211_sub_if_data *sdata,
- 		new_op_class = ext_chansw_elem->new_operating_class;
+ 	int i, ret;
+ 	void *ptr_entry;
+ 	struct coreboot_device *device;
+ 	struct coreboot_table_entry *entry;
+ 	struct coreboot_table_header *header = ptr;
++	void *ptr_end;
  
- 		if (!ieee80211_operating_class_to_band(new_op_class, &new_band)) {
--			new_op_class = 0;
-+			new_op_class = -1;
- 			if (!unprot_action)
- 				sdata_info(sdata,
- 					   "cannot understand ECSA IE operating class, %d, ignoring\n",
-@@ -269,14 +269,14 @@ int ieee80211_parse_ch_switch_ie(struct ieee80211_sub_if_data *sdata,
++	ptr_end = ptr + len;
+ 	ptr_entry = ptr + header->header_bytes;
+ 	for (i = 0; i < header->table_entries; i++) {
++		if (ptr_entry + sizeof(*entry) > ptr_end)
++			return -EINVAL;
+ 		entry = ptr_entry;
+ 
+ 		if (entry->size < sizeof(*entry)) {
+@@ -118,6 +122,9 @@ static int coreboot_table_populate(struct device *dev, void *ptr)
+ 			return -EINVAL;
  		}
- 	}
  
--	if (!new_op_class && elems->ch_switch_ie) {
-+	if (new_op_class < 0 && elems->ch_switch_ie) {
- 		new_chan_no = elems->ch_switch_ie->new_ch_num;
- 		csa_ie->count = elems->ch_switch_ie->count;
- 		csa_ie->mode = elems->ch_switch_ie->mode;
- 	}
++		if (ptr_entry + entry->size > ptr_end)
++			return -EINVAL;
++
+ 		device = kzalloc(sizeof(device->dev) + entry->size, GFP_KERNEL);
+ 		if (!device)
+ 			return -ENOMEM;
+@@ -183,7 +190,7 @@ static int coreboot_table_probe(struct platform_device *pdev)
+ 	if (!ptr)
+ 		return -ENOMEM;
  
- 	/* nothing here we understand */
--	if (!new_chan_no)
-+	if (new_chan_no < 0)
- 		return 1;
+-	ret = coreboot_table_populate(dev, ptr);
++	ret = coreboot_table_populate(dev, ptr, len);
  
- 	/* Mesh Channel Switch Parameters Element */
-@@ -360,7 +360,8 @@ int ieee80211_parse_ch_switch_ie(struct ieee80211_sub_if_data *sdata,
- 				get_unaligned_le16(bwi->info.optional);
- 	} else if (!wide_bw_chansw_ie || !wbcs_elem_to_chandef(wide_bw_chansw_ie,
- 							       &new_chandef)) {
--		if (!ieee80211_operating_class_to_chandef(new_op_class, new_chan,
-+		if (new_op_class < 0 ||
-+		    !ieee80211_operating_class_to_chandef(new_op_class, new_chan,
- 							  &new_chandef))
- 			new_chandef = csa_ie->chanreq.oper;
- 	}
+ 	memunmap(ptr);
+ 
 -- 
 2.53.0
 
