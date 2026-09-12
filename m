@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17C938AC92;
-	Sat, 12 Sep 2026 09:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A93D3AFD15;
+	Sat, 12 Sep 2026 09:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203753; cv=none; b=A1A2N4ugK2vEzUnQQL6PF9zkfQjJVZfHH5wqTS1yKcTH/qAVzMhr4ysBizMi/3etn+U59mrLtfAxGQEnYNXqfd0u1G84nG38NLWxPPbnlZG85ptuyPkNq33VQ7LWxCRDAh0smZ4hX9gQ+UxveOhyo0lFOlvFYZIXvBEukc5n47c=
+	t=1789203758; cv=none; b=Ds2FN/gZ4x1qj8dy0JhCXS4CMKcR8JhnFKTZzFVC8C1vPgT3nim1Spa7fQa71mJZMT3knN0T7r3tonhLCfNY8nsb3tJW6AsWbCpYDW8jzlBRDD32lQ+h3vBHSKFhCLE2oSrQqO96GtvXrfVRNew2+5Z50IV8O4TEC+llcoX09us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203753; c=relaxed/simple;
-	bh=NrfxmhchG1Iopa55M4YVSLHGAqW9bNqYMiQ8Z2ibCIk=;
+	s=arc-20240116; t=1789203758; c=relaxed/simple;
+	bh=o7O9IorgzD7uAFQrGUfaZCKyqopS8nRpUl2/o7ZqoKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZtJqvXUwXQ25kn/oToM0LMxuuhYu5hOYWW4Jb/7mfZTwmYSUkgkFbycdcqVav7LtLN79taLMC3C81vmlxn1gohIjbc8oKm3nDCrCf8gK0dZ7r0HpauQl6IYGCZAv8dFiEEaQpZtPDzejg6br9FVmjHETA3PIdXQmsywzREXIUQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSbkHuKd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Zn3f9aanIdBQfDoUjS5zkrRFB+ojjKpuZb0HHr/B+tM9JPnBG7J/sWr6q2Wag65NmaP2Ue2d0Ax6E3b9G0Q444irtsZnBQ10GYL5nCkW/EeGODEH9q0Y8gWpJoV0ufk9RrO4dv7cgwR5ODgsmBALeyKA4V7xXORte9NO5m6aNmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukLAItxF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSbkHuKd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39651F000FF;
-	Sat, 12 Sep 2026 09:02:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukLAItxF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537C81F000FF;
+	Sat, 12 Sep 2026 09:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203752;
-	bh=vmncxkxMYDcbRvLd3TmnAA61Lt4rEEfvdn3w5ck9bsw=;
+	s=korg; t=1789203757;
+	bh=5I39VWYSWqSupmZrOuJrhreDzu+f/6TeskLfZZ2aZlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GSbkHuKdZ49pbVQMzGPBBithJxp4xBy2EdMZEjtoowv/f0Vtnbc6ouJyiiqkz9yd+
-	 JAPlXBWAyDHqxdO4ySjhIU+F7TeOmf82dpHa+Acq224Fk4ig5YXVtL4i6XYnUJ62qH
-	 xqCz9oFKhUilANdmvuh4Cd7bzgbqjrjutKcbYDvY=
+	b=ukLAItxF6GCJe0ahF0MUdOp0VKgZMj8AzQ9XmcRaWmfbowXseUEH6c8amx1z3CSuq
+	 gEiEvIODBBEdPZCEP/iFl6jNjrxL8mG7QySZne9AmzfQRPTgd0t4thMGBrkojGXxO3
+	 3OTE828mD4acBov0QCpnB0qOBGAr0OEa+EbLIX10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1473/1815] perf dso: Use stored fd error instead of stale errno in file_read() and file_size()
-Date: Sat, 12 Sep 2026 08:53:43 +0200
-Message-ID: <20260912065723.589435995@linuxfoundation.org>
+Subject: [PATCH 7.2 1474/1815] perf dso: Guard against cache underflow on short reads in dso_cache__memcpy()
+Date: Sat, 12 Sep 2026 08:53:44 +0200
+Message-ID: <20260912065723.612865973@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -56,27 +56,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 075d2c32353ded0fe5f3b62f4aa4e98dccb3fb29 ]
+[ Upstream commit 390a9461cd73bdd13acc0f6d763618ae1ff8fa17 ]
 
-file_read() and file_size() use ret = -errno when
-dso__data(dso)->fd is negative after try_to_open_dso() fails.  By this
-point errno has been through mutex_lock(), nsinfo__mountns_enter(), and
-multiple open() attempts inside try_to_open_dso() — it no longer
-reflects the actual open failure.  If errno happens to be 0, ret = 0
-looks like EOF rather than an error, and file_size() callers like
-dso__data_size() would then report a zero-sized file instead of
-failing.
+dso_cache__memcpy() computes cache_offset = offset - cache->offset,
+then cache_size = min(cache->size - cache_offset, size).  The RB tree
+lookup in __dso_cache__find() matches using the full
+DSO__DATA_CACHE_SIZE window, but cache->size reflects the actual pread
+return value from dso_cache__populate().
 
-dso__data(dso)->fd is always negative on failure — -errno from
-__open_dso() when no filename could be built (e.g. -EINVAL, -ENOENT),
-or -1 when do_open() itself failed — and never 0, so use it directly
-instead of reading the stale global errno.
+A short pread (e.g. near end-of-file) makes cache->size smaller than
+DSO__DATA_CACHE_SIZE.  If a subsequent access targets an offset past
+cache->offset + cache->size but within the DSO__DATA_CACHE_SIZE
+window, the cache entry is found but cache_offset exceeds cache->size.
+Since both are u64, the subtraction cache->size - cache_offset wraps
+to a large value, min() selects the caller's size, and memcpy reads
+out of bounds.
 
-No assert() or comment is needed after the assignment: the enclosing
-if (dso__data(dso)->fd < 0) already guarantees ret < 0
-[Namhyung Kim review].
+Return 0 for an offset past the valid cached data.  For a regular
+file a short pread only happens at end-of-file, so 0 is what a direct
+pread() at that offset would return: cached_io() stops its read loop
+as on EOF.  Re-reading from the backing file would not help — a
+second pread at the same offset returns the same short count.
 
-Fixes: 33bdedcea2d7 ("perf tools: Protect dso cache fd with a mutex")
+Fixes: 366df72657e0 ("perf dso: Refactor dso_cache__read()")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
 Reviewed-by: Ian Rogers <irogers@google.com>
 Assisted-by: Claude:claude-opus-4.6
@@ -84,32 +86,35 @@ Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dso.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/dso.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
-index 41bbc8f994e41..60aa77f797851 100644
+index 60aa77f797851..4dd64069c4348 100644
 --- a/tools/perf/util/dso.c
 +++ b/tools/perf/util/dso.c
-@@ -1038,7 +1038,7 @@ static ssize_t file_read(struct dso *dso, struct machine *machine,
+@@ -1014,7 +1014,20 @@ static ssize_t dso_cache__memcpy(struct dso_cache *cache, u64 offset, u8 *data,
+ 				 u64 size, bool out)
+ {
+ 	u64 cache_offset = offset - cache->offset;
+-	u64 cache_size   = min(cache->size - cache_offset, size);
++	u64 cache_size;
++
++	/*
++	 * The RB tree matches using DSO__DATA_CACHE_SIZE, but a short
++	 * pread may leave cache->size smaller.  For a regular file a
++	 * short pread only happens at end-of-file, so an offset past
++	 * the valid data is EOF: return 0, matching what a direct
++	 * pread() at that offset would return, and cached_io() then
++	 * stops its read loop.
++	 */
++	if (cache_offset >= cache->size)
++		return 0;
++
++	cache_size = min(cache->size - cache_offset, size);
  
- 	if (dso__data(dso)->fd < 0) {
- 		dso__data(dso)->status = DSO_DATA_STATUS_ERROR;
--		ret = -errno;
-+		ret = dso__data(dso)->fd;
- 		goto out;
- 	}
- 
-@@ -1160,8 +1160,8 @@ static int file_size(struct dso *dso, struct machine *machine)
- 	try_to_open_dso(dso, machine);
- 
- 	if (dso__data(dso)->fd < 0) {
--		ret = -errno;
- 		dso__data(dso)->status = DSO_DATA_STATUS_ERROR;
-+		ret = dso__data(dso)->fd;
- 		goto out;
- 	}
- 
+ 	if (out)
+ 		memcpy(data, cache->data + cache_offset, cache_size);
 -- 
 2.53.0
 
