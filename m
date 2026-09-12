@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2550637AA97;
-	Sat, 12 Sep 2026 08:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D243750D6;
+	Sat, 12 Sep 2026 08:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200861; cv=none; b=itKK7yqOphxicJBswfoesKXtMJoHUrb/CBJRSrbb1OoP7DFdfF9fwp/2lqALX1GtbrJWVsBiJ9AxdoRxb6wkm/lbyi2WLku12PD/4qw0jD7gCGNXevXec9uWNYpef1pdtSH6QOR9R3WrE1+lZb5PyjP+tAGF4kXbOISqhu+I4Ug=
+	t=1789200865; cv=none; b=khrdGV8rNHFk/4/EKjIqwS+alnxRLLsJIK4z+1NrwJYfwNTnm5FufN+NtWY55XsugQutxkPW50UsxeE+pJpz6gZzRr39OPamEaY9sXxHlXRQlX50lxjYuj2dSxtB5HExHZNT8KxOyXxlvNd4SYoolsfNwg1QHBKSdie7FrAlJyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200861; c=relaxed/simple;
-	bh=JarGNWNZm7m4NXSqKKiRJIfAS4dEURdo1gOtGP6wihE=;
+	s=arc-20240116; t=1789200865; c=relaxed/simple;
+	bh=RU31OsDq1LVffWkaMSliEvNcq6MFJsUXLQ2NJkQMSUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wn9MaZddJ4ptcFLmTO8EAiWhYdK1IrA8vmHdkzs7oqlVJBCQiHJ0/ImqjOSNnt/Xop5LEN5go3YW7I0U+In8iAgwAmI9Tyj1ISV1zvepLDvYGo1ejV2WwdMqlFvAvjk1MWt4sgrbV/d01CAHQ+ho5iCdRqhayslnmwFVA3qb4t8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwJyU230; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m73JFKwfIgQ54/y0jVKA3y90X0PcbuhhGSEB8XmcPH3TtpI1rp2V1CPV7r32t9sFnj0Neyr2X6SYweNED/v2ERLx+MPc+pFvRQGIKMJMP/zLYF13taKTzES/nYytRkv4RhRbH09AQCjcqWyMxk7guEwhO8RyM6ZyVz79XX86d48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PGNoYhq+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwJyU230"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204451F000FF;
-	Sat, 12 Sep 2026 08:14:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PGNoYhq+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B211F000FF;
+	Sat, 12 Sep 2026 08:14:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200860;
-	bh=KrpaAe1jMgfTh2/jfpShA4oU/IJmCH9NadFKbwFpgFc=;
+	s=korg; t=1789200864;
+	bh=/wqzxSIiBPVh6onYMPTfmBr4YylUcJQuFPnpmPNOACs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xwJyU230zP6GZjhugj0iXCLW4ZN5Uupzg2y1j96dpwRAGc5/v61KnkGDjaRsYO3QA
-	 la2FcniaPXq97NA7oawtRM0LXycb6D2LFiOFRRYMg82fCDO9YPllRRML08bYDHya6o
-	 RyWkEVnIvt5pj6K/O1vSJxPHyijDKYUTolZP8Y7Y=
+	b=PGNoYhq+da0pygTY/F21qaucgWq92TPX2R3i45r2tf0nqZb5r9/PShyODCC0XYDpu
+	 ooSf4xsvTrqm/OO3twKKZ5wko66KZWENsRBDh9pIVfz+qiALVLArq+pgxP6mfvLyIL
+	 XMmaoTfRMeEPAs6kuIZjOELB6hccr5ob2BGKkY2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael-CY Lee <michael-cy.lee@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0878/1815] wifi: mt76: fix non-AQL packet accounting for MLO stations
-Date: Sat, 12 Sep 2026 08:43:48 +0200
-Message-ID: <20260912065709.533774884@linuxfoundation.org>
+Subject: [PATCH 7.2 0879/1815] wifi: mt76: assign link_id when sending probe request during scan
+Date: Sat, 12 Sep 2026 08:43:49 +0200
+Message-ID: <20260912065709.556021446@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,44 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael-CY Lee <michael-cy.lee@mediatek.com>
 
-[ Upstream commit 8ae659743ba936b22ecb4620815887728e2820d6 ]
+[ Upstream commit f137fabc1313427e08af06a414d929ebd9fd37d6 ]
 
-__mt76_tx_queue_skb() overrides the wcid passed by the driver with
-sta->drv_priv, so the wcid might incorrectly be changed after TX,
-causing wcid->non_aql_packets to be counted on the wrong wcid. For
-example, on the AP side, if a station's setup link is the 5G link and
-the station uses 2G to transmit a frame, the value of non_aql_packets
-is increased on the 5G wcid but decreased on the 2G wcid. Once the
-inflated counter exceeds MT_MAX_NON_AQL_PKT, the TX scheduler
-permanently refuses to service the station.
+The link_id in info->control.flags is required by mt7996 to select the
+correct mt76_wcid for transmission.
 
-Drop the reassignment and account on the wcid used for transmission.
-This also records the actual wcid in the queue entry.
+Not assigning the link_id in info->control.flags is equivalent to
+assigning the link_id to 0, causing mt7996 to select link_id 0 for
+transmission, so probe requests sent on behalf of an MLD vif scanning
+via a different link were transmitted with the wrong per-link wcid.
 
-Fixes: e1378e5228aa ("mt76: rely on AQL for burst size limits on tx queueing")
+Fixes: 31083e38548f ("wifi: mt76: add code for emulating hardware scanning")
 Signed-off-by: Michael-CY Lee <michael-cy.lee@mediatek.com>
-Link: https://patch.msgid.link/20260722082610.2699628-4-nbd@nbd.name
+Link: https://patch.msgid.link/20260722082610.2699628-5-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/tx.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/scan.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
-index f96d9c4718535..de8af32f15e5a 100644
---- a/drivers/net/wireless/mediatek/mt76/tx.c
-+++ b/drivers/net/wireless/mediatek/mt76/tx.c
-@@ -324,10 +324,6 @@ __mt76_tx_queue_skb(struct mt76_phy *phy, int qid, struct sk_buff *skb,
- 	if (idx < 0 || !sta)
- 		return idx;
+diff --git a/drivers/net/wireless/mediatek/mt76/scan.c b/drivers/net/wireless/mediatek/mt76/scan.c
+index 7fe1b1fbb699b..325638d587c96 100644
+--- a/drivers/net/wireless/mediatek/mt76/scan.c
++++ b/drivers/net/wireless/mediatek/mt76/scan.c
+@@ -48,6 +48,7 @@ mt76_scan_send_probe(struct mt76_dev *dev, struct cfg80211_ssid *ssid)
+ 	struct mt76_phy *phy = dev->scan.phy;
+ 	struct ieee80211_tx_info *info;
+ 	struct sk_buff *skb;
++	u8 link_id;
  
--	wcid = (struct mt76_wcid *)sta->drv_priv;
--	if (!wcid->sta)
--		return idx;
--
- 	q->entry[idx].wcid = wcid->idx;
+ 	skb = ieee80211_probereq_get(phy->hw, vif->addr, ssid->ssid,
+ 				     ssid->ssid_len, req->ie_len);
+@@ -77,6 +78,10 @@ mt76_scan_send_probe(struct mt76_dev *dev, struct cfg80211_ssid *ssid)
+ 		info->flags |= IEEE80211_TX_CTL_NO_CCK_RATE;
+ 	info->control.flags |= IEEE80211_TX_CTRL_DONT_USE_RATE_MASK;
  
- 	if (!non_aql)
++	link_id = mvif->wcid ? mvif->wcid->link_id : IEEE80211_LINK_UNSPECIFIED;
++	info->control.flags &= ~IEEE80211_TX_CTRL_MLO_LINK;
++	info->control.flags |= u32_encode_bits(link_id, IEEE80211_TX_CTRL_MLO_LINK);
++
+ 	mt76_tx(phy, NULL, mvif->wcid, skb);
+ 
+ out:
 -- 
 2.53.0
 
