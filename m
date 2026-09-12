@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC2A3AF656;
-	Sat, 12 Sep 2026 20:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCD13ACA42;
+	Sat, 12 Sep 2026 20:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243506; cv=none; b=GAle6fGK4qm3CR6OWTJLQk2ZmTWqm7wkwYBgiu/tG9ZgpwaPCOK/FptySv9f+VwOMeq/+n4PrEjSQ7tWbMJSo89uASfl5SAccouu8cK5RiS23e22afpHMNsJ8ivJ5W61wBOFGDLzuqXY/f61OOmqYj3XaI5anDpVIzi/hozqmpM=
+	t=1789243508; cv=none; b=iPHBQ7dre1Ymjsz4MO6Pb2sukZJ/Nva7Uj15U4XUz2sbObSTrIeY0d+snJP5BuHxA9y9kDD8KXGl/VrKwo96VDfPujfcE12SDIXGqur76KSdCMqNiXT/UOLrn96o56tJppd/SCO0+a0guso30Gmd9GBVdtFS9TZyVukbAks0AC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243506; c=relaxed/simple;
-	bh=YVxMqb4y1oMO3X/E9tJIL/uS5NMVCsBCjoHIiUmjFU8=;
+	s=arc-20240116; t=1789243508; c=relaxed/simple;
+	bh=UHPVuOMTAG0J50tQffRY7DAufIoV2sG4Ihnvj+jSEZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pGb914dn9yHla/hF3i5W4Z7QlUW9SIyFotyoPNub5uJBaRn0R5rsQurug2NTCmAEdarBtkN3+uGDTBhxLRyfDUKYrBjAaEu+m1RkskiJCqWK1jBJzRywzb+MYizp/IeRFM1MYco2YYWaRtqWhxtDpl+qkZQuymNUJfEmoS8yyBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RG74Tih4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XvL4P2+UnQ/ojwqdeEaKd0lq09fhEE7mEau+LGDKO/rBVwdoshaWSKrpkLPMA31xyKa1ItiTjBgqT3Cgak7w5vI6P1aauiw2Difz2WfDvG+p3S7ZMgJe2yW+GUNkkMXmc/T956P1lPx97UroEg/0RhPnQr67bT6B/vmjVrPHFco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCbl7B0D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RG74Tih4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8F31F00893;
-	Sat, 12 Sep 2026 20:04:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCbl7B0D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128551F00898;
+	Sat, 12 Sep 2026 20:05:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243498;
-	bh=G662vVChKUY1wU2N32YLOi7NDB4KKBShKc/xyB0FefQ=;
+	s=korg; t=1789243501;
+	bh=w8vTxLnc3qOvM/99U8agwpAzQAY+zW3PtwcC4k1wAZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RG74Tih4tYof2q7ZaL6CqbXRj35vhC2CSAjKCMa5Gbo6bmRZvM3Tdnc7U8/1nbj9G
-	 iHww/l5ebqiCp9cmbtxrbyDaBQtUzyj1AgzfARDe77GosyEROa5fresTfn5KfpngA8
-	 580GT/3WNE/f+mftrt62GEv4SnXZMYpD738x4pJ4=
+	b=eCbl7B0DXV+lrSK4SvbxORwg7URs7mcmqoo0JA746SgjFJKkU5j/wnjuU+fzhRyJ/
+	 DqO8fnvTvNmNMruMPQcwaA+eoGeRXXAO4YAr52QkwKCuqlsrNM0k/BH2Nf14FAa5WD
+	 vDKQtpf3Y2BWcycRQFpX9RofgnfeKl06/BntakVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marino Dzalto <marino.dzalto@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 775/798] netfilter: xt_HL: add pr_fmt and checkentry validation
-Date: Sat, 12 Sep 2026 09:06:43 +0200
-Message-ID: <20260912065534.832008615@linuxfoundation.org>
+Subject: [PATCH 5.10 776/798] netfilter: x_tables: replace pr_{info,err}() by pr_info_ratelimited()
+Date: Sat, 12 Sep 2026 09:06:44 +0200
+Message-ID: <20260912065534.855122018@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,94 +50,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marino Dzalto <marino.dzalto@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 24bd5c2679caf8a228d90cafa221da4b47fd6642 ]
+[ Upstream commit 793d9eda4821f75b5f7cc9e6a870b72a58b44c2b ]
 
-Add pr_fmt to prefix log messages with the module name for
-easier debugging in dmesg.
+Several xtables extension still use pr_err() or pr_info() without
+ratelimit.
 
-Add checkentry functions for IPv4 (ttl_mt_check) and IPv6
-(hl_mt6_check) to validate the match mode at rule registration
-time, rejecting invalid modes with -EINVAL.
+For xt_cgroup, while at this, remove redundant "xt_cgroup:" prefix
+since pr_fmt is already set on.
 
-The evaluation function returns false in case the mode is
-unknown, so this is a cleanup, not a bug fix.
-
-Signed-off-by: Marino Dzalto <marino.dzalto@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: 793d9eda4821 ("netfilter: x_tables: replace pr_{info,err}() by pr_info_ratelimited()")
+Fixes: c38c4597e4bf ("netfilter: implement xt_cgroup cgroup2 path match")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_hl.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ net/netfilter/xt_cgroup.c | 12 ++++++------
+ net/netfilter/xt_hl.c     |  4 ++--
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
+diff --git a/net/netfilter/xt_cgroup.c b/net/netfilter/xt_cgroup.c
+index b182b9e0882b6..d9943c4f5ee4d 100644
+--- a/net/netfilter/xt_cgroup.c
++++ b/net/netfilter/xt_cgroup.c
+@@ -23,7 +23,7 @@ MODULE_DESCRIPTION("Xtables: process control group matching");
+ MODULE_ALIAS("ipt_cgroup");
+ MODULE_ALIAS("ip6t_cgroup");
+ 
+-#define NET_CLS_CLASSID_INVALID_MSG "xt_cgroup: classid invalid without net_cls cgroups\n"
++#define NET_CLS_CLASSID_INVALID_MSG "classid invalid without net_cls cgroups\n"
+ 
+ static int cgroup_mt_check_v0(const struct xt_mtchk_param *par)
+ {
+@@ -33,7 +33,7 @@ static int cgroup_mt_check_v0(const struct xt_mtchk_param *par)
+ 		return -EINVAL;
+ 
+ 	if (!IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
+-		pr_info(NET_CLS_CLASSID_INVALID_MSG);
++		pr_info_ratelimited(NET_CLS_CLASSID_INVALID_MSG);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -49,7 +49,7 @@ static int cgroup_mt_check_v1(const struct xt_mtchk_param *par)
+ 		return -EINVAL;
+ 
+ 	if (!info->has_path && !info->has_classid) {
+-		pr_info("xt_cgroup: no path or classid specified\n");
++		pr_info_ratelimited("no path or classid specified\n");
+ 		return -EINVAL;
+ 	}
+ 
+@@ -59,7 +59,7 @@ static int cgroup_mt_check_v1(const struct xt_mtchk_param *par)
+ 	}
+ 
+ 	if (info->has_classid && !IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
+-		pr_info(NET_CLS_CLASSID_INVALID_MSG);
++		pr_info_ratelimited(NET_CLS_CLASSID_INVALID_MSG);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -89,7 +89,7 @@ static int cgroup_mt_check_v2(const struct xt_mtchk_param *par)
+ 		return -EINVAL;
+ 
+ 	if (!info->has_path && !info->has_classid) {
+-		pr_info("xt_cgroup: no path or classid specified\n");
++		pr_info_ratelimited("no path or classid specified\n");
+ 		return -EINVAL;
+ 	}
+ 
+@@ -99,7 +99,7 @@ static int cgroup_mt_check_v2(const struct xt_mtchk_param *par)
+ 	}
+ 
+ 	if (info->has_classid && !IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
+-		pr_info(NET_CLS_CLASSID_INVALID_MSG);
++		pr_info_ratelimited(NET_CLS_CLASSID_INVALID_MSG);
+ 		return -EINVAL;
+ 	}
+ 
 diff --git a/net/netfilter/xt_hl.c b/net/netfilter/xt_hl.c
-index c1a70f8f04417..4a12a757ecbf8 100644
+index 4a12a757ecbf8..59e93d97b5072 100644
 --- a/net/netfilter/xt_hl.c
 +++ b/net/netfilter/xt_hl.c
-@@ -6,6 +6,7 @@
-  * Hop Limit matching module
-  * (C) 2001-2002 Maciej Soltysiak <solt@dns.toxicfilms.tv>
-  */
-+#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
- #include <linux/ip.h>
- #include <linux/ipv6.h>
-@@ -22,6 +23,18 @@ MODULE_LICENSE("GPL");
- MODULE_ALIAS("ipt_ttl");
- MODULE_ALIAS("ip6t_hl");
- 
-+static int ttl_mt_check(const struct xt_mtchk_param *par)
-+{
-+	const struct ipt_ttl_info *info = par->matchinfo;
-+
-+	if (info->mode > IPT_TTL_GT) {
-+		pr_err("Unknown TTL match mode: %d\n", info->mode);
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- static bool ttl_mt(const struct sk_buff *skb, struct xt_action_param *par)
- {
+@@ -28,7 +28,7 @@ static int ttl_mt_check(const struct xt_mtchk_param *par)
  	const struct ipt_ttl_info *info = par->matchinfo;
-@@ -41,6 +54,18 @@ static bool ttl_mt(const struct sk_buff *skb, struct xt_action_param *par)
- 	return false;
- }
  
-+static int hl_mt6_check(const struct xt_mtchk_param *par)
-+{
-+	const struct ip6t_hl_info *info = par->matchinfo;
-+
-+	if (info->mode > IP6T_HL_GT) {
-+		pr_err("Unknown Hop Limit match mode: %d\n", info->mode);
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- static bool hl_mt6(const struct sk_buff *skb, struct xt_action_param *par)
- {
+ 	if (info->mode > IPT_TTL_GT) {
+-		pr_err("Unknown TTL match mode: %d\n", info->mode);
++		pr_info_ratelimited("Unknown TTL match mode: %d\n", info->mode);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -59,7 +59,7 @@ static int hl_mt6_check(const struct xt_mtchk_param *par)
  	const struct ip6t_hl_info *info = par->matchinfo;
-@@ -65,6 +90,7 @@ static struct xt_match hl_mt_reg[] __read_mostly = {
- 		.name       = "ttl",
- 		.revision   = 0,
- 		.family     = NFPROTO_IPV4,
-+		.checkentry = ttl_mt_check,
- 		.match      = ttl_mt,
- 		.matchsize  = sizeof(struct ipt_ttl_info),
- 		.me         = THIS_MODULE,
-@@ -73,6 +99,7 @@ static struct xt_match hl_mt_reg[] __read_mostly = {
- 		.name       = "hl",
- 		.revision   = 0,
- 		.family     = NFPROTO_IPV6,
-+		.checkentry = hl_mt6_check,
- 		.match      = hl_mt6,
- 		.matchsize  = sizeof(struct ip6t_hl_info),
- 		.me         = THIS_MODULE,
+ 
+ 	if (info->mode > IP6T_HL_GT) {
+-		pr_err("Unknown Hop Limit match mode: %d\n", info->mode);
++		pr_info_ratelimited("Unknown Hop Limit match mode: %d\n", info->mode);
+ 		return -EINVAL;
+ 	}
+ 
 -- 
 2.53.0
 
