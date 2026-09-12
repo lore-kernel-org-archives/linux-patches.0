@@ -1,45 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081544189B9;
-	Sat, 12 Sep 2026 09:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B55341A57D;
+	Sat, 12 Sep 2026 09:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205109; cv=none; b=c+shrCLhfS9CPQAslA/ICuqBK7GPKgB9I5mN3KlKA8odqVDbK7PrECGwFrn8k33wCdy5XGeXLkIUzBRrgJsYBMuDK6OeicTaBP78cZuEZx/rvBKDKUBH4HS7b9RYJuhGSX24PwCzdITn8soWu5eSYGSRmH7u7cvOn7fokAAIcOg=
+	t=1789205116; cv=none; b=eXaXq/w+0wQlf3SCVtNH4mEwkDXUQo9XJVfhjYcm376VlIaoVgYQAIHqrJReozWNEbdmfY+JKRoKQgD9Qhb54CvzE+xZ2i412MD2jl4TdsolGyznFmcPxB43CbT6vlqHywKWArTVuHHoOnI1AFKCk/X4WJ/IY5ye0Xpv69giNeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205109; c=relaxed/simple;
-	bh=shgqGZBEjq3wtQmcwIo3CLuI6MMwOZ+hgtVjCpca5AM=;
+	s=arc-20240116; t=1789205116; c=relaxed/simple;
+	bh=fc8dFQ7UElqU9KeLM0e9UlsK4MTZl7LPrkWLJNEiQgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ipdSqBJwRe4VZhCmjCYxlK3pFov9qG5oOByaaw5kSlYNtzzWyrNF35qI+n8UHUfJiAocR1UqQZFZT77OydZxi42cwo6sJuf2ee801UKFEzAh5V5H+3gYmRK3/7N1XvCTKbJKMga5YuZIdNZq6lzriIzCWLYfhoJgNvEGPkF58Tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCbo4+tz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sDbYA3vdxB6ZVbjzdKzdA3AvlmyvPru6UvfyvTiecdqAck9dZj1bv+qEaQ5v//fyZSUmV4yeknBIiQ8Zuy7XRyHuZNK6a6Q8sRdCEE1tJZkXjUaJv4DiNcNe1g+fNUAmFA3ENUOpwtqQDOKUlG7LR3eG11/R7GAnlAmEpv2Xn/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JkxGwpeY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCbo4+tz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52211F000FF;
-	Sat, 12 Sep 2026 09:25:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JkxGwpeY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8101F000FF;
+	Sat, 12 Sep 2026 09:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205107;
-	bh=dYYcHcozJTn+DuU4rdhhSPhSZ9wGVr+kCgDsJ41RWIg=;
+	s=korg; t=1789205112;
+	bh=kKN9WFGyBjABZOoBZxVPYjy7Erg7/c60bv8iV7eqkZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eCbo4+tzjDtgWxOO3rshynqgRsBxpmLN2/ELX+oC0Cjyo6h8ILhKlbyS96JaLaxzu
-	 IDfjLgQFhFDnNTAsIwLBCXxyzcE7PIroN5LsU4M6/PsgfoZYA7gbvrDn0t1bDngdnN
-	 +HPH0qmOSrZh8uj8zzB+ZCsGMaJrr8A2YSN37YNQ=
+	b=JkxGwpeYksUyX3vg0tRD4hmsjM4dq53mUTdGJtnFNenv6ypsGFKCFJo3XHupOxLvQ
+	 bEVRgo7y8nevEqeLLBoLz/ZDNIwf/6eOofX7l4wHqzgp13RDMG1BA4z7+iT6vog0if
+	 oVqYfXpy4gPkNWTD4BGugrh280sCoYEZHFTKQhZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Usama Arif <usama.arif@linux.dev>,
-	kernel test robot <yi1.lai@intel.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Michal Hocko <mhocko@suse.com>,
-	David Hildenbrand <david@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
+	"Liam R. Howlett (Oracle)" <liam@infradead.org>,
+	Chris Mason <clm@meta.com>,
+	Chuck Lever <cel@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Breno Leitao <leitao@debian.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Joe Perches <joe@perches.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Rik van Riel <riel@surriel.com>,
+	Waiman Long <longman@redhat.com>,
+	Will Deacon <will@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1751/1815] mm/memcontrol: avoid false sharing between vmstats and events
-Date: Sat, 12 Sep 2026 08:58:21 +0200
-Message-ID: <20260912065730.091720025@linuxfoundation.org>
+Subject: [PATCH 7.2 1752/1815] maple_tree: catch race in mas_alloc_cyclic()
+Date: Sat, 12 Sep 2026 08:58:22 +0200
+Message-ID: <20260912065730.116052016@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -58,72 +62,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Usama Arif <usama.arif@linux.dev>
+From: Liam R. Howlett (Oracle) <liam@infradead.org>
 
-[ Upstream commit c1afbd5de131f5e3c4fc7559acf055f8d9d86868 ]
+[ Upstream commit 35f1342e5b893a740eff2ef9ab337bfaa63ab76d ]
 
-Moving v1 userspace eventfd handling into memcontrol-v1.c shrank struct
-vmpressure from 112 to 24 bytes when CONFIG_MEMCG_V1 is disabled.  This
-moved memory_events_local[MEMCG_SWAP_FAIL] and the hot vmstats_percpu
-pointer onto the same cacheline.
+If mas_alloc_cyclic() is called during a low memory situation, it is
+possible the lock may be dropped so reclaim can occur.  There is a window
+where some other task may allocate the same id and cause the mas_insert()
+to fail with -EEXIST.  In this scenario the function will return -EEXIST,
+which is not expected.
 
-The stress-ng mremap stressor exercises MADV_PAGEOUT with swap disabled,
-generating about 20 million MEMCG_SWAP_FAIL updates per 60-second run on a
-176-CPU test system.  Those writes bounce the line while memcg statistics
-paths load vmstats_percpu.
+Modifying the retry on mas_nomem() to re-search for a slot means that any
+race with other writes will not matter as the lock will be held between
+finding the index and writing the index.
 
-Move cgwb_list into the existing alignment gap and cacheline-align
-vmstats_percpu.  This separates the pointer from the event counters
-without increasing the size of struct mem_cgroup in the tested
-configuration.
+Moving the flag logic avoids cases where the flag is modified on drop
+lock/reacquire or when the write fails after clearing the flag.
 
-The blamed commit reduced median mremap throughput by 4.38% on the test
-system with one socket.  The patched kernel brings the performance to
-within 0.5% of the parent which is within the observed boot-to-boot spread
-(up to 1.2%).
+No existing users are exposed to this issue.
 
-Link: https://lore.kernel.org/20260817103835.2937733-1-usama.arif@linux.dev
-Fixes: ea928e9e18da ("mm/vmpressure: move v1 userspace eventfd code into memcontrol-v1.c")
-Signed-off-by: Usama Arif <usama.arif@linux.dev>
-Reported-by: kernel test robot <yi1.lai@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202608131743.c6a7dda4-lkp@intel.com
-Tested-by: kernel test robot <yi1.lai@intel.com>
-  Link: http://lore.kernel.org/aoAABX59IzUXz/Rv@ly-workstation
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Yi Lai <yi1.lai@intel.com>
+Link: https://lore.kernel.org/20260821192627.4085470-13-liam@infradead.org
+Fixes: 9b6713cc7522 ("maple_tree: Add mtree_alloc_cyclic()")
+Signed-off-by: Liam R. Howlett (Oracle) <liam@infradead.org>
+Reported-by: Chris Mason <clm@meta.com>
+Reviewed-by: Chuck Lever <cel@kernel.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Cc: Breno Leitao <leitao@debian.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Joe Perches <joe@perches.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Waiman Long <longman@redhat.com>
+Cc: Will Deacon <will@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/memcontrol.h | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ lib/maple_tree.c | 43 ++++++++++++++++++++++++-------------------
+ 1 file changed, 24 insertions(+), 19 deletions(-)
 
-diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
-index 8170bb8066a22..32621fa690ac7 100644
---- a/include/linux/memcontrol.h
-+++ b/include/linux/memcontrol.h
-@@ -270,10 +270,15 @@ struct mem_cgroup {
- #endif
- 	int kmemcg_id;
- 
--	struct memcg_vmstats_percpu __percpu *vmstats_percpu;
+diff --git a/lib/maple_tree.c b/lib/maple_tree.c
+index e52876435b77f..1a3815973add0 100644
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -3793,35 +3793,40 @@ int mas_alloc_cyclic(struct ma_state *mas, unsigned long *startp,
+ 		void *entry, unsigned long range_lo, unsigned long range_hi,
+ 		unsigned long *next, gfp_t gfp)
+ {
+-	unsigned long min = range_lo;
+-	int ret = 0;
 -
- #ifdef CONFIG_CGROUP_WRITEBACK
- 	struct list_head cgwb_list;
-+#endif
+-	range_lo = max(min, *next);
+-	ret = mas_empty_area(mas, range_lo, range_hi, 1);
+-	if ((mas->tree->ma_flags & MT_FLAGS_ALLOC_WRAPPED) && ret == 0) {
+-		mas->tree->ma_flags &= ~MT_FLAGS_ALLOC_WRAPPED;
+-		ret = 1;
+-	}
+-	if (ret < 0 && range_lo > min) {
+-		mas_reset(mas);
+-		ret = mas_empty_area(mas, min, range_hi, 1);
+-		if (ret == 0)
+-			ret = 1;
+-	}
+-	if (ret < 0)
+-		return ret;
++	int ret;
++	unsigned long min;
+ 
++	min = range_lo;
+ 	do {
++		range_lo = max(min, *next);
++		ret = mas_empty_area(mas, range_lo, range_hi, 1);
++		if (ret < 0 && range_lo > min) {
++			mas_reset(mas);
++			ret = mas_empty_area(mas, min, range_hi, 1);
++			if (ret == 0)
++				ret = 1;
++		}
++		if (ret < 0)
++			goto out;
 +
-+	/* Keep the hot per-CPU stats pointer away from memory event counters. */
-+	struct memcg_vmstats_percpu __percpu *vmstats_percpu
-+		____cacheline_aligned_in_smp;
+ 		mas_insert(mas, entry);
+ 	} while (mas_nomem(mas, gfp));
+-	if (mas_is_err(mas))
+-		return xa_err(mas->node);
+ 
++	if (mas_is_err(mas)) {
++		ret = xa_err(mas->node);
++		goto out;
++	}
 +
-+#ifdef CONFIG_CGROUP_WRITEBACK
- 	struct wb_domain cgwb_domain;
- 	struct memcg_cgwb_frn cgwb_frn[MEMCG_CGWB_FRN_CNT];
- #endif
++	if ((mas->tree->ma_flags & MT_FLAGS_ALLOC_WRAPPED) && ret == 0) {
++		mas->tree->ma_flags &= ~MT_FLAGS_ALLOC_WRAPPED;
++		ret = 1;
++	}
+ 	*startp = mas->index;
+ 	*next = *startp + 1;
+ 	if (*next == 0)
+ 		mas->tree->ma_flags |= MT_FLAGS_ALLOC_WRAPPED;
+ 
++out:
+ 	mas_destroy(mas);
+ 	return ret;
+ }
 -- 
 2.53.0
 
