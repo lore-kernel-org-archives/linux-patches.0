@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42BA37F8BC;
-	Sat, 12 Sep 2026 10:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D7E2DE702;
+	Sat, 12 Sep 2026 10:05:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207546; cv=none; b=qLSzkpipPNscyJWlYgFGfKLVzUW/+OwipJjThNTxbVYXPV1lF6K9Cj3se2bw6+JyH/PZDjTaMglGQl4ugfDF5Be/txwBgwVTPBHESHY5F1dhwmLA0CtVkcCaewa1U8ItAtHQ7UPY8XsWbKDcPHNrIt6aup/8c4dh2yLv9pvt2OE=
+	t=1789207551; cv=none; b=bGxqMuuYalOmtFZ01RMr/Fye9u0ljtQw7yRGlB9NoytlZU9vh+oNVOorSMIeRjVcY6MaTHZYiDgkAAXmv6Ddqx4awCg/rmDQlnrT/Xiy1BlG37y2S6xF0ldmqeW90sxhUhvOyXd+6yYxBTTk+GnYawB0AOS1TLtMzagdjlm8rm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207546; c=relaxed/simple;
-	bh=6OSqukEWwbSi38m7dqAVSfXf5KthCCAYlpat+yBs5Ac=;
+	s=arc-20240116; t=1789207551; c=relaxed/simple;
+	bh=mSNdNk8PAO4dJSs5dtCjYHwBfFNZBXjNrKqSOv6YDuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XhM2KcW58dIL++G0bUccmfGNJhuvGTU84pw00HHI1rsWnJ5NS4HVK4Asq0PN/8sDCd/iT96iuJSsCqpzo1c+e+PtJx/o0BnICwvkWZElsfivmCyxTEDNpGoMBZN79q3JnXuEjrHSNRrP9v18LVmSRVTDRtjTD4iY6BfvqDfAQps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTMOr7k3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pw3QECDsfwg9cB/NBYU7q42SSEwxU18PQmHwZCv1ihE+D/7vHtudvi+N5XbpY8TkOEywk4Mdv7UBpkzGkC10bgPkPzyFOcNJp0Z+6Ma6srrfHuNXF2D0+iFwMzRYx06wudAymZfNQ0txjCOQaT3QGTcN8gw3IqrBJym8qccOZKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yls+zhxK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTMOr7k3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8D91F000FF;
-	Sat, 12 Sep 2026 10:05:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yls+zhxK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C78F1F000FF;
+	Sat, 12 Sep 2026 10:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207545;
-	bh=BBoKanLo0gbc9dLBwNbsd3JewzVDOKI3Dx55WSNttk0=;
+	s=korg; t=1789207550;
+	bh=hoRKsdvZi5xsnTOE3K+ku+NvmWGJKWIAD1p3G6Vpf4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pTMOr7k3pa8RC6hIdxDfPFSEs02e6Nil6BAqxPyIdFBhhiGZx40ziC6q0QIzg8E0Y
-	 Pxonewlz1dYWUm0HI7834LDouxgd/k4ufCzhnoJnjn//wwcYSguY3wdozqlETDxJkD
-	 qUES4c3dZw2p/2jgZ4fcZpHuzsRcQY1c9taEFYrU=
+	b=yls+zhxKSwDWJ5ereEEQdl6eNHiOJ/Np/nuYy8CkuCLgVNNP81tlTgObAAg0Poyt5
+	 dtACEOJwuXXGXRmKnjU3Bja0r041W7kYxw3GWIBUZeUIWoX/Qu13CCBQ50zxoptVRz
+	 BXp3xK1wDatTZpHHwMJubu/xiB2+dMYdcOCxKjZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Pu Lehui <pulehui@huawei.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0434/1518] drm/msm: Only fini scheduler after successful init
-Date: Sat, 12 Sep 2026 08:43:23 +0200
-Message-ID: <20260912065633.267602651@linuxfoundation.org>
+Subject: [PATCH 6.18 0435/1518] bpf: Sync tail_call_reachable with callee state on entry
+Date: Sat, 12 Sep 2026 08:43:24 +0200
+Message-ID: <20260912065633.289865658@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,73 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit e2332abed2a4d3caa59052095dc16e4ce44791ea ]
+[ Upstream commit 3513ea9dab6c1a3d2dc8e6160c41f690206948b6 ]
 
-msm_ringbuffer_new() destroys a partially initialized ring through
-msm_ringbuffer_destroy() when an allocation or scheduler setup step
-fails.
+Currently in check_max_stack_depth_subprog, when the verifier enters a
+new callee branch, the local tail_call_reachable is not properly
+synchronized with the callee's state.
 
-If drm_sched_init() fails before it finishes initializing the scheduler,
-the failure path still calls drm_sched_fini(). That teardown path assumes
-the scheduler work items, lists, and workqueue state were initialized.
+Consider a main prog branching into multiple subprogs:
 
-Track successful scheduler initialization and call drm_sched_fini() only
-after drm_sched_init() returned 0.
+       subprog0 -> tailcall
+main <
+       subprog1 -> subprog2
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
+When the verifier finishes checking subprog0 and backtracks to main
+prog, the local tail_call_reachable state is left as true. As it
+proceeds to subprog1, this uncleared state leaks into the new branch,
+falsely marking subprog1 and subprog2 as tailcall reachable.
 
-Fixes: 1d8a5ca436ee ("drm/msm: Conversion to drm scheduler")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/738905/
-Message-ID: <20260709062309.4168362-1-ruoyuw560@gmail.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Fix this by explicitly syncing tail_call_reachable with the callee's
+has_tail_call state on entry. The caller's state is safely preserved and
+restored via the existing backtracking logic.
+
+Fixes: ebf7d1f508a7 ("bpf, x64: rework pro/epilogue and tailcall handling in JIT")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Link: https://patch.msgid.link/20260716120157.835937-2-pulehui@huaweicloud.com
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_ringbuffer.c | 7 ++++---
- drivers/gpu/drm/msm/msm_ringbuffer.h | 1 +
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ kernel/bpf/verifier.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
-index b2f612e5dc793..e09ec7f398d58 100644
---- a/drivers/gpu/drm/msm/msm_ringbuffer.c
-+++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
-@@ -109,9 +109,9 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
- 	ring->memptrs_iova = memptrs_iova;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 3be56a023a1bc..39f45a08ab83c 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -6728,8 +6728,8 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
+ 		if (!priv_stack_supported)
+ 			subprog[idx].priv_stack_mode = NO_PRIV_STACK;
  
- 	ret = drm_sched_init(&ring->sched, &args);
--	if (ret) {
-+	if (ret)
- 		goto fail;
--	}
-+	ring->sched_initialized = true;
+-		if (subprog[idx].has_tail_call)
+-			tail_call_reachable = true;
++		/* sync tail_call_reachable with callee state on entry */
++		tail_call_reachable = subprog[idx].has_tail_call;
  
- 	INIT_LIST_HEAD(&ring->submits);
- 	spin_lock_init(&ring->submit_lock);
-@@ -133,7 +133,8 @@ void msm_ringbuffer_destroy(struct msm_ringbuffer *ring)
- 	if (IS_ERR_OR_NULL(ring))
- 		return;
- 
--	drm_sched_fini(&ring->sched);
-+	if (ring->sched_initialized)
-+		drm_sched_fini(&ring->sched);
- 
- 	msm_fence_context_free(ring->fctx);
- 
-diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
-index d1e49f701c817..bace58a3dffbe 100644
---- a/drivers/gpu/drm/msm/msm_ringbuffer.h
-+++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
-@@ -54,6 +54,7 @@ struct msm_ringbuffer {
- 	 * The job scheduler for this ring.
- 	 */
- 	struct drm_gpu_scheduler sched;
-+	bool sched_initialized;
- 
- 	/*
- 	 * List of in-flight submits on this ring.  Protected by submit_lock.
+ 		frame++;
+ 		if (frame >= MAX_CALL_FRAMES) {
 -- 
 2.53.0
 
