@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1E622D785;
-	Sat, 12 Sep 2026 13:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B2922D785;
+	Sat, 12 Sep 2026 13:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218242; cv=none; b=BOIXgQB2BHKsFr1VFsx+ZvbqwP0hxAkvW3ikqeW6qaOtiIHiS40CjWi5TeRr2H+vPth2AsLMAG36fuM0p8NaiSwae3bqQvIBwNH53F52ZvkC5oIXV23PuxgwlzJBjGOdm2+jrpCvm+H5/z2RWS78Vm5VjiqycKtZ6sG7fhDKnRY=
+	t=1789218246; cv=none; b=G/9u6bAtrvr5Ht3cgRTOmhxMvlCwhWSrSFFddP+L/VLux5CSHKH87Ozw3JdOC0JfFpnVJ/ix/TYk/76jIDNBB/o8jOBWQY0OurFObm2lxI67ANDbv1WkGFE3GAsq8PXEJsBiGUSWZ4iTtqA1ONx8NJXKEP69QMWW8tS3/wFBAGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218242; c=relaxed/simple;
-	bh=3U2zA6Ke26UXxTQGGMNPTSwg8WutewK675DfPMKF8j0=;
+	s=arc-20240116; t=1789218246; c=relaxed/simple;
+	bh=KqgOJbCgOS50qmS2q7hAhmeDVHrwYsF7i6QkpP0xU/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gO9n8RKnbNX5M5q509dO1OsXF0ZnvDossg8mEFifc3TZ1Xj8SXBDP0W/EKt8nkWDfr+V3B88BLm9bSTc9rftFWkALudDUxqSQHPzKfuYl4tfGwbkYRtcGrur2Co6bfZLcpxuh9KPsd0SX+NWfgiXgJebWvc5u/z3/18s33DFOl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+jR15ph; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DEKkdH/kbP8hYYCSx4GuITErcJePugl/MfU7W8HFdM7mJHKgOcYokWmCnPtN1WZ0e4sZy+Q5GyQN3lD0qk+dT8qV77QmdzBvRGZPGDW8iNaX45nPcBU58fnUu4tBJFT8jLlm5XSYNYVilXEagwDQ8j2YxYblIpUrN5GlTmqGwEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kn+dKSe/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+jR15ph"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F06281F000FF;
-	Sat, 12 Sep 2026 13:03:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kn+dKSe/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9087B1F000FF;
+	Sat, 12 Sep 2026 13:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218240;
-	bh=Q45iNtx71xC+u8IOqu59ThiGYVUYI6rwGWaWq5MG1JU=;
+	s=korg; t=1789218245;
+	bh=TMlBRCMM5TenHsajlkzh87JGNmqyxxMSgQSQmKbukhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z+jR15phg8xaLpdo8r4p7zYk1ysNY/kZHTG1sJoFOFmCwa409hOpqLUb647JYr/oa
-	 ojLgRhVXd2v+cqL/frTdzv7j7lr7L9lRgLYW74GK1ggpPriZzxq+CiadWXGBaIRovo
-	 HkXMQF1H0TQjAl6tMGjM0b3TIBd/fu1ccSs5nIgo=
+	b=kn+dKSe/dKciFx5CdJ6EenbchD1SPy7BtxZcqKfZIK78eMtWAefy87fBQkUF3GP+/
+	 e8ln9hh/Kz8gP8X+OH7y93jmbpZiOdRd59+Ig9JGzgzoWjGTFQ7ahsJGoZ3hjUc2Lf
+	 a47xVYeLsIXwi/Kjgk7o1OpHK2xczv+pP2BqkjA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhenghang Xiao <kipreyyy@gmail.com>,
-	David Heidelberg <david@ixit.cz>,
+	Henrik Grimler <henrik.grimler@axis.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1067/1376] nfc: nci: fix double completion race in nci_data_exchange_complete
-Date: Sat, 12 Sep 2026 08:58:13 +0200
-Message-ID: <20260912065631.342241831@linuxfoundation.org>
+Subject: [PATCH 6.12 1103/1376] power: supply: bq27xxx: bq28z610: fix invalid AverageEnergy address
+Date: Sat, 12 Sep 2026 08:58:49 +0200
+Message-ID: <20260912065632.142243760@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,54 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenghang Xiao <kipreyyy@gmail.com>
+From: Henrik Grimler <henrik.grimler@axis.com>
 
-[ Upstream commit 8265a626cc14a48e46e6dc8c47667e72b4232ac2 ]
+[ Upstream commit e9387e9ab5121f330d313afb90430c02200f9782 ]
 
-nci_close_device() and nci_rx_work can both call
-nci_data_exchange_complete() concurrently.  After commit 4527025d440ce8
-("nfc: nci: fix circular locking dependency in nci_close_device") moved
-flush_workqueue(ndev->rx_wq) after mutex_unlock(&ndev->req_lock),
-rx_work is no longer serialized with the explicit completion call in the
-close path.  Both callers read the non-NULL callback pointer and invoke
-rawsock_data_exchange_complete(), which calls sock_put() -- but only one
-sock_hold() was taken, so the second sock_put() underflows the refcount
-and frees the socket while it is still in use.
+bq28z610 currently uses the AveragePower reg, 0x22, for reading both
+AveragePower and AvailableEnergy. The technical reference manual does
+not mention AvailableEnergy, and it does not make sense to read a
+cumulative, always positive, property like AvailableEnergy from a rate
+property like AveragePower. Set REG_AE as invalid to fix it.
 
-Replace the bare clear_bit(NCI_DATA_EXCHANGE) with
-test_and_clear_bit() so that only the first caller proceeds to invoke
-the callback.
-
-Fixes: 4527025d440c ("nfc: nci: fix circular locking dependency in nci_close_device")
-Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
-Link: https://patch.msgid.link/20260526103121.47957-1-kipreyyy@gmail.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Fixes: 707d678a5c7c ("power: supply: bq27xxx_battery: Add the BQ28z610 Battery monitor")
+Signed-off-by: Henrik Grimler <henrik.grimler@axis.com>
+Link: https://patch.msgid.link/20260811-bq27z746-v1-4-3a4fa38205cc@axis.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/data.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/power/supply/bq27xxx_battery.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/nfc/nci/data.c b/net/nfc/nci/data.c
-index 7a3fb2a397a1e..4db36cddf670e 100644
---- a/net/nfc/nci/data.c
-+++ b/net/nfc/nci/data.c
-@@ -46,11 +46,11 @@ void nci_data_exchange_complete(struct nci_dev *ndev, struct sk_buff *skb,
- 	del_timer_sync(&ndev->data_timer);
- 	clear_bit(NCI_DATA_EXCHANGE_TO, &ndev->flags);
- 
--	/* Mark the exchange as done before calling the callback.
--	 * The callback (e.g. rawsock_data_exchange_complete) may
--	 * want to immediately queue another data exchange.
--	 */
--	clear_bit(NCI_DATA_EXCHANGE, &ndev->flags);
-+	/* Claim completion atomically -- both close and rx_work may race here */
-+	if (!test_and_clear_bit(NCI_DATA_EXCHANGE, &ndev->flags)) {
-+		kfree_skb(skb);
-+		return;
-+	}
- 
- 	if (cb) {
- 		/* forward skb to nfc core */
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index b9e1c6c80f0de..34a230e54cfea 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -510,7 +510,7 @@ static u8
+ 		[BQ27XXX_REG_RC] = 0x10,
+ 		[BQ27XXX_REG_FCC] = 0x12,
+ 		[BQ27XXX_REG_CYCT] = 0x2a,
+-		[BQ27XXX_REG_AE] = 0x22,
++		[BQ27XXX_REG_AE] = INVALID_REG_ADDR,
+ 		[BQ27XXX_REG_SOC] = 0x2c,
+ 		[BQ27XXX_REG_DCAP] = 0x3c,
+ 		[BQ27XXX_REG_AP] = 0x22,
 -- 
 2.53.0
 
