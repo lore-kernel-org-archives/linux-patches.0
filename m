@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70212C08D0;
-	Sat, 12 Sep 2026 18:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925D62C08D0;
+	Sat, 12 Sep 2026 18:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239513; cv=none; b=fzyVXU4Y7Ht657grFySe8BcpYcjltQni4IgoTbGLM6+5WYsvgCJ5Ca5oLBIv1Amg9V5DXLUwGSh8XQ5cr25CSmhs9ENGQw2GpgdEA9sZVYoYYl2UQSCqe7Ghpxuaxj6g8fMUUqxt8j3HaUaT226ZmqgQm4WAL9KuzySgcdImnKs=
+	t=1789239517; cv=none; b=GtePj1VceJ1+BlbE+woLCDkXn8EoPOrYZstrRYJG5weZmQGNtZXEH0EDcd18nfmz+py1rOLuGnVLyYSZ0i5bVOr+UQNLIXnxRy8A/6Nzby8ObFOJaaFnxzHVI1IYqyLGf8QzRPWHIVvaNk8zQO/Hdq9v8r+UCZ4gVEK04TMOJVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239513; c=relaxed/simple;
-	bh=eAgkgUuDR5ov+y5IGIQbkTWC3Aj4gG7k8ycIYSV0nSg=;
+	s=arc-20240116; t=1789239517; c=relaxed/simple;
+	bh=CaeEx8oD4JdgB6Y+KcvnGeAMZpJBXt+ItKgRZxClfUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NTcZAMkAKXdkklRT+KQiGV9UShIYkQyqqvaK4DXfxCGim2o4tqcFJKcrWiO6bQ5FCiMjaEguQdv+2ZAu/h2JC4L+auuYiMcS3AYp7v4/Ct4S03wAOxxwkGpclULDmuX6+4S9tV2KV6RuzyIcfv2CeDQjiLBbW5Ee6MMuxRrJPF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/5qlNsI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rLHx1+Iy3+foBtsusvKAa63rODD/oIKTaUGuJ5BesasfNHV1jZM/GRhSi2hDgpcw6yZLmaszPdkfGTGpDb/xoCtedFZ6DpsC52ciNBxs/w7zwnEP8GFHNifqDDDjLrJ8slxvTfpog0Ilg0tf67S9IBWb+FRlDMkO0uauXYPVQ7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjG0KiA7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/5qlNsI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 504E21F000FF;
-	Sat, 12 Sep 2026 18:58:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjG0KiA7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CCBA1F000FF;
+	Sat, 12 Sep 2026 18:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239511;
-	bh=TzdiIrLzRRge/Ass+XIKCN3U6dw8vTSE6aDJQkZoWZY=;
+	s=korg; t=1789239516;
+	bh=gUDYQnp/m2uu7V9g3oC8DJDeszv2CMtxebvX16Db2QQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i/5qlNsIxQ5lB/jwfRtFyoT4T0t8X5wX+LdL6GJRLN+q9Yp2SkmqzfxxEVc2Dz+kI
-	 V0HXgVjsYm8wIkQ8gc4D8YwN4PcRn1+E+wruBM+3umgctU62JQ9R6ZfJi2GyUST4Xa
-	 vkcelNdnQxZzQ4nSTSH6Ug7WweNE0j+ajYrHJGoA=
+	b=wjG0KiA7WlrwZgYL0eGzMaeVrhllXg9bLUSHNLFM9RzOWnX6rE6ISPy6nzxFiLK1l
+	 pOqs1IzRO+vf1HK8Tz7KaGMprJvpLAXfA7qoj8GecM0ux/8v7LhZ2vwa0z7m2m52Rv
+	 GzsN4mGLt2nUXvIH/P5y4MP5ynXoWMLJ2njPETqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Leon Romanovsky <leon@kernel.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 627/935] IB/isert: reject PDUs declaring more data than was received
-Date: Sat, 12 Sep 2026 09:00:57 +0200
-Message-ID: <20260912065541.220286653@linuxfoundation.org>
+Subject: [PATCH 5.15 673/935] HID: ensure timely release of driver-allocated resources
+Date: Sat, 12 Sep 2026 09:01:43 +0200
+Message-ID: <20260912065542.279115103@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,136 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 957f92ea4022fb6af4618271615a2a21a7b5bef9 ]
+[ Upstream commit 62c68e7cee332e08e625af3bca3318814086490d ]
 
-isert_recv_done() hands each received PDU to the opcode handlers without
-ever looking at wc->byte_len, the number of bytes the HCA actually placed
-in the receive descriptor. The handlers then copy that many bytes - the
-data-segment length the initiator declared in the BHS
-(ntoh24(hdr->dlength), via the derived unsol_data_len / imm_data_len) -
-out of the fixed-size descriptor:
+More and more drivers rely on devres to manage their resources, however
+if bus' probe() and release() methods are not trivial and control some
+of resources as well (for example enable or disable clocks, or attach
+device to a power domain), we need to make sure that driver-allocated
+resources are released immediately after driver's remove() method
+returns, and not postponed until driver core gets around to releasing
+resources.
 
-  isert_handle_iscsi_dataout():
-        sg_copy_from_buffer(sg_start, sg_nents, isert_get_data(rx_desc),
-                            unsol_data_len);
-  isert_handle_scsi_cmd():
-        sg_copy_from_buffer(cmd->se_cmd.t_data_sg, sg_nents,
-                            isert_get_data(rx_desc), imm_data_len);
+In case of HID we should not try to close the report and release
+associated memory until after all devres callbacks are executed. To fix
+that we open a new devres group before calling driver's probe() and
+explicitly release it when we return from driver's remove().
 
-Because the declared length is never checked against wc->byte_len, an
-initiator can declare a data segment larger than the bytes it actually
-sent (and larger than the descriptor) and cause an out-of-bounds read of
-the receive buffer.
+This is similar to what we did for I2C bus in commit 5b5475826c52 ("i2c:
+ensure timely release of driver-allocated resources"). It is tempting to
+try and move this into driver core, but actually doing so is challenging,
+we need to split bus' remove() method into pre- and post-remove methods,
+which would make the logic even less clear.
 
-Nothing upstream of isert closes this door:
-
-  - __iscsit_check_dataout_hdr() bounds the inbound payload against
-    conn_ops->MaxXmitDataSegmentLength (MXDSL) - a transmit parameter,
-    used here for the inbound check.
-  - iscsi_set_connection_parameters() sets
-    ops->MaxXmitDataSegmentLength = ops->TargetRecvDataSegmentLength;
-    and TARGETRECVDATASEGMENTLENGTH is absent from the min()-clamp list in
-    iscsi_check_acceptor_state(), so the value the initiator declares is
-    adopted verbatim (type range 512..16777215). The initiator effectively
-    raises its own ceiling.
-  - isert never clamps the negotiated value to its own fixed receive
-    descriptor (ISER_RX_SIZE, 9216 bytes), so the target core's bound and
-    the descriptor size are unrelated.
-
-The imm_data_len == data_len path is more than an over-read: it aliases
-the receive descriptor via sg_set_buf() and passes it to the backend as
-the data source for the SCSI WRITE, so an over-declared length causes heap
-contents past the descriptor to be written through the backend to the
-backing store. The backend is the victim of the oversized scatterlist
-isert hands it, not the cause; no read-back of the written bytes was
-demonstrated.
-
-Trigger: after login completes (full feature phase), an initiator that has
-declared a large TargetRecvDataSegmentLength and a FirstBurstLength that
-permits unsolicited/immediate data sends a PDU whose declared data-segment
-length exceeds what was received. With KASAN:
-
-  BUG: KASAN: slab-out-of-bounds in sg_copy_buffer+0x150/0x1c0
-  Read of size 4096 at addr ffff888109720800 by task kworker/1:0H/25
-  Workqueue: ib-comp-wq ib_cq_poll_work
-  Call Trace:
-   sg_copy_buffer+0x150/0x1c0
-   isert_recv_done+0xba6/0x2390
-   __ib_process_cq+0xe1/0x390
-   ib_cq_poll_work+0x46/0x150
-
-isert_recv_done+0xba6 resolves to isert_handle_iscsi_dataout()
-(ib_isert.c:1160), inlined through isert_rx_opcode().
-
-Validate wc->byte_len against the framing in isert_recv_done() before the
-PDU reaches any handler, and reinstate the connection if it is short.
-Because the test compares without subtracting the header length, it also
-rejects PDUs shorter than the iSER and iSCSI headers, which would otherwise
-be parsed out of stale descriptor contents. The login handler rejects PDUs
-shorter than ISER_HEADERS_LEN (commit 29e7b925ae6d ("IB/isert: Reject login
-PDUs shorter than ISER_HEADERS_LEN")) but does not bound the declared
-length either; that is fixed in the next patch. The data handlers had no
-length check at all.
-
-isert reads the data segment from a fixed offset: isert_get_data()
-returns the iSER header plus ISER_HEADERS_LEN and makes no adjustment for
-an AHS.  The bytes the handlers touch are therefore exactly
-[ISER_HEADERS_LEN, ISER_HEADERS_LEN + dlength), and comparing that sum
-against wc->byte_len bounds precisely the region that is read.  An AHS
-term would only make the test stricter without bounding anything further,
-and cannot cause a false reject: a PDU carrying an AHS is longer, not
-shorter.
-
-This is a memory-safety fix that verifies the bytes that were actually
-received; it does not touch RFC 7145 length negotiation and is not the
-MaxXmitDataSegmentLength negotiation redesign raised in the 2017 "[Query]
-iSER-Target: QP errors observed on increasing MaxXmitDataSegmentLength"
-discussion. That redesign is explicitly out of scope here.
-
-The patched kernel rejects the malformed DataOut PDU and both
-immediate-data variants with "PDU declares ... bytes were received" and
-continues to pass normal traffic with no regression.
-
-Reproduced with soft-RoCE (rdma_rxe) and a raw rdma_cm/ibv initiator; no
-kernel-side test hooks were needed.
-
-Fixes: b8d26b3be8b3 ("iser-target: Add iSCSI Extensions for RDMA (iSER) target driver")
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20260726163931.971063-2-yhlee@isslab.korea.ac.kr
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reported-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/20230505232417.1377393-1-swboyd@chromium.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Stable-dep-of: 207853d46f7e ("HID: synchronize input before cleaning up a failed probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/isert/ib_isert.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/hid/hid-core.c | 17 +++++++++++++++++
+ include/linux/hid.h    |  1 +
+ 2 files changed, 18 insertions(+)
 
-diff --git a/drivers/infiniband/ulp/isert/ib_isert.c b/drivers/infiniband/ulp/isert/ib_isert.c
-index 35d840e7e668f..1cfd1e681e92e 100644
---- a/drivers/infiniband/ulp/isert/ib_isert.c
-+++ b/drivers/infiniband/ulp/isert/ib_isert.c
-@@ -1338,6 +1338,21 @@ isert_recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 	ib_dma_sync_single_for_cpu(ib_dev, rx_desc->dma_addr,
- 			ISER_RX_SIZE, DMA_FROM_DEVICE);
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index d1feeca089218..fa9aea45d2c0b 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -2343,6 +2343,10 @@ static int __hid_device_probe(struct hid_device *hdev, struct hid_driver *hdrv)
+ 	if (!hid_check_device_match(hdev, hdrv, &id))
+ 		return -ENODEV;
+ 
++	hdev->devres_group_id = devres_open_group(&hdev->dev, NULL, GFP_KERNEL);
++	if (!hdev->devres_group_id)
++		return -ENOMEM;
++
+ 	/* reset the quirks that has been previously set */
+ 	hdev->quirks = hid_lookup_quirk(hdev);
+ 	hdev->driver = hdrv;
+@@ -2355,7 +2359,16 @@ static int __hid_device_probe(struct hid_device *hdev, struct hid_driver *hdrv)
+ 			ret = hid_hw_start(hdev, HID_CONNECT_DEFAULT);
+ 	}
  
 +	/*
-+	 * The data segment length declared in the BHS is attacker controlled
-+	 * and is used further down to read that many bytes out of the fixed
-+	 * size receive descriptor, so it has to be checked against the number
-+	 * of bytes that were actually received. Comparing without subtracting
-+	 * also rejects PDUs shorter than the iSER and iSCSI headers, which
-+	 * would otherwise be parsed out of stale descriptor contents.
++	 * Note that we are not closing the devres group opened above so
++	 * even resources that were attached to the device after probe is
++	 * run are released when hid_device_remove() is executed. This is
++	 * needed as some drivers would allocate additional resources,
++	 * for example when updating firmware.
 +	 */
-+	if (unlikely(wc->byte_len < ISER_HEADERS_LEN + ntoh24(hdr->dlength))) {
-+		isert_err("PDU declares %u data bytes but only %u bytes were received\n",
-+			  ntoh24(hdr->dlength), wc->byte_len);
-+		iscsit_cause_connection_reinstatement(isert_conn->conn, 0);
-+		return;
-+	}
 +
- 	isert_dbg("DMA: 0x%llx, iSCSI opcode: 0x%02x, ITT: 0x%08x, flags: 0x%02x dlen: %d\n",
- 		 rx_desc->dma_addr, hdr->opcode, hdr->itt, hdr->flags,
- 		 (int)(wc->byte_len - ISER_HEADERS_LEN));
+ 	if (ret) {
++		devres_release_group(&hdev->dev, hdev->devres_group_id);
+ 		hid_close_report(hdev);
+ 		hdev->driver = NULL;
+ 	}
+@@ -2398,6 +2411,10 @@ static void hid_device_remove(struct device *dev)
+ 			hdrv->remove(hdev);
+ 		else /* default remove */
+ 			hid_hw_stop(hdev);
++
++		/* Release all devres resources allocated by the driver */
++		devres_release_group(&hdev->dev, hdev->devres_group_id);
++
+ 		hid_close_report(hdev);
+ 		hdev->driver = NULL;
+ 	}
+diff --git a/include/linux/hid.h b/include/linux/hid.h
+index 515b645f7abc8..ab088e77742ce 100644
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -603,6 +603,7 @@ struct hid_device {							/* device report descriptor */
+ 	struct semaphore driver_input_lock;				/* protects the current driver */
+ 	struct device dev;						/* device */
+ 	struct hid_driver *driver;
++	void *devres_group_id;						/* ID of probe devres group	*/
+ 
+ 	struct hid_ll_driver *ll_driver;
+ 	struct mutex ll_open_lock;
 -- 
 2.53.0
 
