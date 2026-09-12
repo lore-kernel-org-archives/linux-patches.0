@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4BF41A4E7;
-	Sat, 12 Sep 2026 09:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C51537757A;
+	Sat, 12 Sep 2026 09:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204416; cv=none; b=juMmwTkBvwei+DWdFyzhBUqFLRg9lty/oaoUAdkp9EHbV7PKYtV8mqrvFToR2MnruYm31q/NIb2AOKe+36I6x/d4lO6iOTKzIvNyx5vBB4xtDwH0Rt6IbdkIjU7Lh6A2yh2wYW4qnNIgCGVVHOhrOEbI6Qa9jvp20b4poUDMWbw=
+	t=1789204420; cv=none; b=mcUyDh7XyIRDTR4zj94Mrsi2VB2XtE/0PkSjQdPuhxNQeeTQIjSSYHGFtbw2A+43P3ndfG1P1oBw/HVF5Yl6FReTCIYdzlc6Ep6/XQcj2BQFs0RrtGv13dT3PXQVNu52gjOwt0xhALWXjdDIkeMpKh9aRws2CGf6HygGPhI3Mww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204416; c=relaxed/simple;
-	bh=YZ2ojFTozKpyFTK7WoYjbRSj5xMYT7anQVRnOuEbqnQ=;
+	s=arc-20240116; t=1789204420; c=relaxed/simple;
+	bh=DBFmxOzKVQOjSZCVk18d8xbOyD74KJqZoRZGKDnRK4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRA89qtZFAbPMC9qPaUWJdfgbosOMbvx53AQdHNYdi83XuIsCqLiwGZVs5RNh+RJi/kk0EOgMdf1+nGIzPEsYqA1B/ydTg508YmCaDDTG3b4rzRWyVxIad87knCC9GkHt7Shsts6S8yPlG24d7cMBFKwZO1yj/J4r9Ok/hY2S0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYQjpEn0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VYIdd0csjqssWqZftU3PS+kEHpRBRSGZOPlXFjqyP7P+J1D6ncB5pKft/jUy3vrxAGZUd2YT6XdPlN80MCPbmBjPFnnHZ8IMoWOP2r8o+M4z/m/FlJpR71fKXYjXzpKmUXG1SR5ndZTs33MozJzWDM/xBmIbbZlnyvP5myOpyDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMFYMZlz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYQjpEn0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79751F000FF;
-	Sat, 12 Sep 2026 09:13:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMFYMZlz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BBFB1F000FF;
+	Sat, 12 Sep 2026 09:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204414;
-	bh=2tiS2faUrBsGWm3LCiqSHrcQsWP9QW5H9RxsbOBhlcc=;
+	s=korg; t=1789204419;
+	bh=EomYtZd8eY9kFbn24DnXC5arS/d5uc+OC6p7xz/qPus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VYQjpEn073UPm7liGvzX9Otci6BApuhNTMaR1XzPgXRDLbaG6lr+gEGxfaF7xNZS2
-	 p6w7CXLoWtOF+WPkNKT6YjeSP/32Q7ueM994PEuLB+f6wFbiq5160OWPCEnZ/neIMF
-	 35wRrr9R2In/oNoER6t5KGll0+zrhEvhORc8okBQ=
+	b=sMFYMZlzkl3xTRO7DMymoXWNuZHuyCDTUFxlTFAylVjJRzUIwkAPt+wozt6TKygK3
+	 tf5GlHSDWOa0JMB4ujpv0Ql2je0o5wGgL9HV3ZLyWvu8wavyV4NVZvGAMaUDJmFshb
+	 467lvBkCT4A7Ccl5JEUKPDeB6GX2ghSUZvzMfiBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandro Calo <alexandro.calo@nozominetworks.com>,
 	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1609/1815] ntfs: Fix index_root heap OOB write in ntfs_ir_to_ib()
-Date: Sat, 12 Sep 2026 08:55:59 +0200
-Message-ID: <20260912065726.764529015@linuxfoundation.org>
+Subject: [PATCH 7.2 1610/1815] ntfs: apply Windows name checks only with windows_names
+Date: Sat, 12 Sep 2026 08:56:00 +0200
+Message-ID: <20260912065726.789197762@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,81 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandro Calo <alexandro.calo@nozominetworks.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit dc09bf79b76f9a7157e225f449655f3f62f96c9c ]
+[ Upstream commit 71feaa7686fb9cc08fc81c8a09d120b6204b51a0 ]
 
-ntfs_ir_to_ib copies all entries from index_root into a freshly allocated
-index_block_size-byte buffer without verifying that the entries fit in the
-available space. The entries in index_root may be larger than the usable
-entry space in the index block.
+The windows_names mount option is documented to reject names containing
+characters forbidden by Windows. However, ntfs_check_bad_windows_name()
+unconditionally rejects those characters before checking the mount option.
 
-This can cause OOB writes past the end of the allocation.
+Move the character validation after the option check so a default NTFS
+mount accepts POSIX names such as names containing ':'. Mounts using
+windows_names retain the existing Windows-compatible validation, including
+reserved device names and trailing spaces or dots.
 
-The validator ntfs_index_root_inconsistent() checks that entries are
-self-consistent within the IR value, but never cross-checks them against
-index_block_size. There is no bounds check in ntfs_ir_to_ib() before the
-memcpy.
-
-Fixing this at the sink in ntfs_ir_to_ib() since
-ntfs_index_root_inconsistent() validates the logical consistency of
-index_root as a structure and a root with large entries is a structurally
-valid root. The bug is a size conflict of ntfs_ir_to_ib().
-Also, the validator is called once per inode load in
-ntfs_read_locked_inode() while ntfs_ir_to_ib() is only called during a
-reparent, a check there adds no overhead to the common path.
-Moreover, even a future call path that bypasses the validator would still
-be protected.
-
-With NULL as first parameter of ntfs_error(), the volume error flag is
-never set by this call, so the device name will be absent from the error
-message. In any case, that the caller, ntfs_ir_reparent(), prints an error
-message that includes the device name on NULL returns.
-I think this is the best solution available without adding
-'struct super_block *sb' as a parameter to ntfs_ir_to_ib().
-
-This heap out-of-bounds write is triggered by a crafted filesystem image,
-which is not in the kernel threat model, anyway, fixing memory errors would
-be nice to keep  things secure.
-
-Fixes: 0a8ac0c1fa0b ("ntfs: update directory operations")
-Signed-off-by: Alexandro Calo <alexandro.calo@nozominetworks.com>
+Fixes: af0db57d4293 ("ntfs: update inode operations")
 Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/index.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/ntfs/namei.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ntfs/index.c b/fs/ntfs/index.c
-index faa7ee920a3ad..409759eab55d3 100644
---- a/fs/ntfs/index.c
-+++ b/fs/ntfs/index.c
-@@ -1112,6 +1112,7 @@ static struct index_block *ntfs_ir_to_ib(struct index_root *ir, s64 ib_vcn)
- 	struct index_entry *ie_last;
- 	char *ies_start, *ies_end;
- 	int i;
-+	u32 ib_cap;
+diff --git a/fs/ntfs/namei.c b/fs/ntfs/namei.c
+index cd403b1d99eed..aee7aabaf0598 100644
+--- a/fs/ntfs/namei.c
++++ b/fs/ntfs/namei.c
+@@ -61,12 +61,12 @@ static int ntfs_check_bad_windows_name(struct ntfs_volume *vol,
+ 				       const __le16 *wc,
+ 				       unsigned int wc_len)
+ {
+-	if (ntfs_check_bad_char(wc, wc_len))
+-		return -EINVAL;
+-
+ 	if (!NVolCheckWindowsNames(vol))
+ 		return 0;
  
- 	ntfs_debug("Entering\n");
- 
-@@ -1127,6 +1128,16 @@ static struct index_block *ntfs_ir_to_ib(struct index_root *ir, s64 ib_vcn)
- 	 * as well, which can never have any data.
- 	 */
- 	i = (char *)ie_last - ies_start + le16_to_cpu(ie_last->length);
++	if (ntfs_check_bad_char(wc, wc_len))
++		return -EINVAL;
 +
-+	/* Entries must fit in the allocated index block */
-+	ib_cap = le32_to_cpu(ib->index.allocated_size) -
-+			le32_to_cpu(ib->index.entries_offset);
-+	if ((u32)i > ib_cap) {
-+		ntfs_error(NULL, "Entries (%d B) exceed IB capacity", i);
-+		kvfree(ib);
-+		return NULL;
-+	}
-+
- 	memcpy(ntfs_ie_get_first(&ib->index), ies_start, i);
- 
- 	ib->index.flags = ir->index.flags;
+ 	/* Check for trailing space or dot. */
+ 	if (wc_len > 0 &&
+ 	    (wc[wc_len - 1] == cpu_to_le16(' ') ||
 -- 
 2.53.0
 
