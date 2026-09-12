@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472A81E5B9F;
-	Sat, 12 Sep 2026 07:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEBA1E5B9F;
+	Sat, 12 Sep 2026 07:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199636; cv=none; b=Ao99L0EZ3oEtESXfRmOzE1zqmFJHpcGzoG6H4jlR0cPh298Kks6aSuE4nMoJXGsHuW+3gt8oafnsYoygaalbWcm5RMnShU45aSyuuggSnxIVZAjJ70ZKL0PoAPD4bZA9zS0O3V62RtwYMFyQMGOIhbfEmX+DjjjuUzLaOLVJKgs=
+	t=1789199641; cv=none; b=GE5UC5/9pToC35nT8bO5h7HN41gT0IZFECcCWdv14CCjfGW1TFj2HfbcJqMbDdVN7M2WuStOwT9abSmQ7NH6AAhBOBJoCjRXjmsCrkxrtqHaGNeTdZZnojI+p6YUXRwvbC2E21X1X2ZUZsrAd6QRbD7Pnt5CCOKlEpEd+lCHRv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199636; c=relaxed/simple;
-	bh=6kaR73c6QkTyQVyiMvwECpPcvf9jGrllUjzKXUv2Fd4=;
+	s=arc-20240116; t=1789199641; c=relaxed/simple;
+	bh=aJ5Z3O8SoDi6gEPAyq+hs9s8tJ34dRTs6cjCaXTaGEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j6/1tx3vVOowqlOOap+Dza9izpgpe9tgrAmD6FtPg8xmasBQO/OIKVJcLoueiD1zQ3pno9zgLwxL2hcemG4ayyKIaRpT2lCOWgfDE/Nm89hcSPlOVP20U2mP5W/SXBBAsqvhNPR46eB5jKdpd+3tkg5pK79UgOw76k8nFuGFjas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cgY4U7XX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nld38Hb1TovnZx9YYztxDojH+rzkMVnhsjdNsqgAMUEs4ENaWrBJywRCqPHLXgwZk1GnWKzAJD2rDYOrEhaodOBd9Wj0VbyLF+uupn4iK8FWcqXOmGvELeMhTUiyCXkRZvJgD0yrixXy1Q0gGUTwsg1ZA872CgzCHwjR19zO0yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NzWcgf+S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cgY4U7XX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0242D1F000FF;
-	Sat, 12 Sep 2026 07:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NzWcgf+S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF3B1F000FF;
+	Sat, 12 Sep 2026 07:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199635;
-	bh=yY3PO0c05tS8uZ1n5mVppG+NE1kMa8wxg/DUPXyFGmI=;
+	s=korg; t=1789199640;
+	bh=dg1EvE2lkAsSssNJMCG9H3fj3xWszEQg8p/brcmTWDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cgY4U7XXt+H+rRobeQTfJaz00a43BoLJVwnUQvpfDHoeV9HNUR+CHOlAplZcslh7d
-	 Ma9ID5ybXAZ1Jwlw/krIPeAz/NVTZTa3q1JGId311DbzRd26UPHX+0hDJG9T9/UzhA
-	 zI29ajkzSZcLO6nDkoXDds67Mtte2PerTvin7+Do=
+	b=NzWcgf+S4TXxFAPDcsAwmAC/w777KtdNPQSb/r9R4qDlYI/Vd6VsjydKDeX59m0bf
+	 u6blBOjiBSKWr7dsVmC2V+BT2hPY5JfTydd4ZxkZINFwS4T6wSfjTKl4k5lufjPPRn
+	 I70t8j140RoP4B8/Mo0G+7ppGumSYF+3ICCOzVW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhui Liu <junhui.liu@pigmoral.tech>,
-	Yixun Lan <dlan@kernel.org>,
+	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
+	Drew Fustini <fustini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0624/1815] riscv: dts: spacemit: k1: Split gmac_clk_ref into independent pinctrl groups
-Date: Sat, 12 Sep 2026 08:39:34 +0200
-Message-ID: <20260912065703.528126969@linuxfoundation.org>
+Subject: [PATCH 7.2 0625/1815] riscv: dts: thead: th1520: remove pclk for I2C1
+Date: Sat, 12 Sep 2026 08:39:35 +0200
+Message-ID: <20260912065703.551733181@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,163 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhui Liu <junhui.liu@pigmoral.tech>
+From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
 
-[ Upstream commit 8270311d70fdf36bc8aab1e52b554e654a8839ff ]
+[ Upstream commit 5ed8cdb56cd90859e0c7f269b4a7c2b1571419b2 ]
 
-The gmac_clk_ref signal is optional for the GMAC controller and is not
-strictly required for all hardware designs. The pins for gmac0_clk_ref
-(GPIO 45) and gmac1_clk_ref (GPIO 46) may also be used as GPIOs for
-other functions even when the Ethernet controller is active.
+The I2C1 node added previously to the th1520.dtsi file has two clocks
+set -- one "ref" clock (CLK_I2C1) and one "pclk" (CLK_PERI_APB_PCLK).
 
-Split the refclk pins into independent pinctrl groups so boards can
-request them only when the reference clock path is actually needed.
+However, the CLK_I2C1 clock is just a clock gate with the
+CLK_PERI_APB_PCLK clock as its input. In addition, when it's gated,
+reading registers from the I2C controller returns fixed value (the last
+read value) for all registers. These facts indicate that the CLK_I2C1
+clock is the true APB clock fed into the I2C controller instead of a
+dedicated reference clock.
 
-Among the already mainlined boards, BPI-F3, Jupiter and MusePi Pro have
-optional hardware paths for the GMAC refclk pins. BPI-F3 and Jupiter
-route both GMAC refclk pins to the PHYs through NC/0R option resistors,
-while MusePi Pro only does so for GMAC0. Keep referencing the new
-clk-ref pinctrl groups on these boards so the optional hardware paths
-remain usable if the option resistors are populated.
+Leave only the CLK_I2C1 clock as the `clocks` property of the I2C1
+device node and remove `clock-names` property, which represents the I2C
+controller only takes a single clock both as the APB clock and the
+reference clock.
 
-OrangePi R2S has no publicly available schematic, so also keep the
-clk-ref groups there to preserve the previous pinmux behavior.
-
-Fixes: 60775f28cfb7 ("riscv: dts: spacemit: Add Ethernet support for K1")
-Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-Link: https://patch.msgid.link/20260712-bpi-cm6-v3-2-8d1e2045179d@pigmoral.tech
-Signed-off-by: Yixun Lan <dlan@kernel.org>
+Fixes: 2f60e3516330 ("riscv: dts: thead: Add TH1520 I2C1 controller")
+Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+Reviewed-by: Drew Fustini <fustini@kernel.org>
+Link: https://lore.kernel.org/r/20260714074515.1959352-2-zhengxingda@iscas.ac.cn
+Signed-off-by: Drew Fustini <fustini@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/spacemit/k1-bananapi-f3.dts      |  4 ++--
- .../boot/dts/spacemit/k1-milkv-jupiter.dts    |  4 ++--
- .../riscv/boot/dts/spacemit/k1-musepi-pro.dts |  2 +-
- .../boot/dts/spacemit/k1-orangepi-r2s.dts     |  4 ++--
- arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  | 24 +++++++++++++++----
- 5 files changed, 27 insertions(+), 11 deletions(-)
+ arch/riscv/boot/dts/thead/th1520.dtsi | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index d2abda5f5383a..7f3dd08e74d79 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -101,7 +101,7 @@ &eth0 {
- 	phy-handle = <&rgmii0>;
- 	phy-mode = "rgmii-id";
- 	pinctrl-names = "default";
--	pinctrl-0 = <&gmac0_cfg>;
-+	pinctrl-0 = <&gmac0_cfg>, <&gmac0_clk_ref_cfg>;
- 	rx-internal-delay-ps = <0>;
- 	tx-internal-delay-ps = <0>;
- 	status = "okay";
-@@ -124,7 +124,7 @@ &eth1 {
- 	phy-handle = <&rgmii1>;
- 	phy-mode = "rgmii-id";
- 	pinctrl-names = "default";
--	pinctrl-0 = <&gmac1_cfg>;
-+	pinctrl-0 = <&gmac1_cfg>, <&gmac1_clk_ref_cfg>;
- 	rx-internal-delay-ps = <0>;
- 	tx-internal-delay-ps = <250>;
- 	status = "okay";
-diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-index c800153077a80..c76b91ecb914d 100644
---- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-@@ -121,7 +121,7 @@ &eth0 {
- 	phy-handle = <&rgmii0>;
- 	phy-mode = "rgmii-id";
- 	pinctrl-names = "default";
--	pinctrl-0 = <&gmac0_cfg>;
-+	pinctrl-0 = <&gmac0_cfg>, <&gmac0_clk_ref_cfg>;
- 	rx-internal-delay-ps = <0>;
- 	tx-internal-delay-ps = <0>;
- 	status = "okay";
-@@ -144,7 +144,7 @@ &eth1 {
- 	phy-handle = <&rgmii1>;
- 	phy-mode = "rgmii-id";
- 	pinctrl-names = "default";
--	pinctrl-0 = <&gmac1_cfg>;
-+	pinctrl-0 = <&gmac1_cfg>, <&gmac1_clk_ref_cfg>;
- 	rx-internal-delay-ps = <0>;
- 	tx-internal-delay-ps = <250>;
- 	status = "okay";
-diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-index 96623454116eb..246f8f2ab62b9 100644
---- a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-@@ -102,7 +102,7 @@ &combo_phy {
- &eth0 {
- 	phy-handle = <&rgmii0>;
- 	phy-mode = "rgmii-id";
--	pinctrl-0 = <&gmac0_cfg>;
-+	pinctrl-0 = <&gmac0_cfg>, <&gmac0_clk_ref_cfg>;
- 	pinctrl-names = "default";
- 	rx-internal-delay-ps = <0>;
- 	tx-internal-delay-ps = <0>;
-diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-index 564a48c70b5d3..ae2fd8f7a8572 100644
---- a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-@@ -60,7 +60,7 @@ &eth0 {
- 	phy-handle = <&rgmii0>;
- 	phy-mode = "rgmii-id";
- 	pinctrl-names = "default";
--	pinctrl-0 = <&gmac0_cfg>;
-+	pinctrl-0 = <&gmac0_cfg>, <&gmac0_clk_ref_cfg>;
- 	rx-internal-delay-ps = <0>;
- 	tx-internal-delay-ps = <0>;
- 	status = "okay";
-@@ -84,7 +84,7 @@ &eth1 {
- 	phy-handle = <&rgmii1>;
- 	phy-mode = "rgmii-id";
- 	pinctrl-names = "default";
--	pinctrl-0 = <&gmac1_cfg>;
-+	pinctrl-0 = <&gmac1_cfg>, <&gmac1_clk_ref_cfg>;
- 	rx-internal-delay-ps = <0>;
- 	tx-internal-delay-ps = <250>;
- 	status = "okay";
-diff --git a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-index 4e9a62d0e85b5..8c57ca05dabdb 100644
---- a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-@@ -27,8 +27,16 @@ gmac0-pins {
- 				 <K1_PADCONF(11, 1)>,	/* gmac0_tx_en */
- 				 <K1_PADCONF(12, 1)>,	/* gmac0_mdc */
- 				 <K1_PADCONF(13, 1)>,	/* gmac0_mdio */
--				 <K1_PADCONF(14, 1)>,	/* gmac0_int_n */
--				 <K1_PADCONF(45, 1)>;	/* gmac0_clk_ref */
-+				 <K1_PADCONF(14, 1)>;	/* gmac0_int_n */
-+
-+			bias-pull-up = <0>;
-+			drive-strength = <21>;
-+		};
-+	};
-+
-+	gmac0_clk_ref_cfg: gmac0-clk-ref-cfg {
-+		gmac0-clk-ref-pins {
-+			pinmux = <K1_PADCONF(45, 1)>;	/* gmac0_clk_ref */
- 
- 			bias-pull-up = <0>;
- 			drive-strength = <21>;
-@@ -51,8 +59,16 @@ gmac1-pins {
- 				 <K1_PADCONF(40, 1)>,	/* gmac1_tx_en */
- 				 <K1_PADCONF(41, 1)>,	/* gmac1_mdc */
- 				 <K1_PADCONF(42, 1)>,	/* gmac1_mdio */
--				 <K1_PADCONF(43, 1)>,	/* gmac1_int_n */
--				 <K1_PADCONF(46, 1)>;	/* gmac1_clk_ref */
-+				 <K1_PADCONF(43, 1)>;	/* gmac1_int_n */
-+
-+			bias-pull-up = <0>;
-+			drive-strength = <21>;
-+		};
-+	};
-+
-+	gmac1_clk_ref_cfg: gmac1-clk-ref-cfg {
-+		gmac1-clk-ref-pins {
-+			pinmux = <K1_PADCONF(46, 1)>;	/* gmac1_clk_ref */
- 
- 			bias-pull-up = <0>;
- 			drive-strength = <21>;
+diff --git a/arch/riscv/boot/dts/thead/th1520.dtsi b/arch/riscv/boot/dts/thead/th1520.dtsi
+index 94932c51b7e39..db23624696b73 100644
+--- a/arch/riscv/boot/dts/thead/th1520.dtsi
++++ b/arch/riscv/boot/dts/thead/th1520.dtsi
+@@ -415,8 +415,7 @@ i2c1: i2c@ffe7f24000 {
+ 			compatible = "thead,th1520-i2c", "snps,designware-i2c";
+ 			reg = <0xff 0xe7f24000 0x0 0x4000>;
+ 			interrupts = <45 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks = <&clk CLK_I2C1>, <&clk CLK_PERI_APB_PCLK>;
+-			clock-names = "ref", "pclk";
++			clocks = <&clk CLK_I2C1>;
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+ 			status = "disabled";
 -- 
 2.53.0
 
