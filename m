@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FFD2BDC0E;
-	Sat, 12 Sep 2026 07:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A5537CD21;
+	Sat, 12 Sep 2026 07:22:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197770; cv=none; b=qxLmS1zV+tzgSjKGpIJB5Q3WoTSIOCc9f94+ruB8FWeDbx5Yv39CHtV/eV4goti/zkB7ZCW+tAZvnkIAUtScLePa8R7cuW8TU7rAbqlHzZ+xZ73sPB2rr8TugMx4fOwvvToAr8tBhlhGRkThnuSQwSPHJ2megdP0jGyxUmyNsqw=
+	t=1789197775; cv=none; b=Y5Z5lP/8Rj/b+PDNv3PoK7J/nlN1+K23MZ3I8quF5ANjeuuUxCXy0zd4nJVjWFFAbM30fI8tMb8te2dDf0OhWu+5K9NSkBJHsj1veb5DRgsWfKdXAjaVHlIQnWtiUje87+6n5oujW9oH3H2+dGlbUD+vHC0Bs8jdmKKidf7Sxrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197770; c=relaxed/simple;
-	bh=CoPLZUVT4+2D+4BSwKqZEish969z2Qhi8/XcBQ9NQTg=;
+	s=arc-20240116; t=1789197775; c=relaxed/simple;
+	bh=drDXpDhYLU8/nEJezibw1QQvpaemhdxsdzeiEWafZdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXAelLJK+EyLIwEBsQMTcH7jXNVjwVx6mz6yMIbD9E+gNsWXo++Azf6aqZjQyeUNP/Q3hHaD6PeqUw/TH9+Z+S4fryYyODWvF/2kAJcMhcOBBIEcmw611W7CF8MVvyipEQ3v48NeSJ6nX5kRSGoPi3N6Yb8DB6ascTMV2NiWLUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uf5mPXib; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DmQ1XXKltr9Sm4pldkwrrElGRuglJgD+bwc8JhIssD06zngo+f3Y/PuFNXf4fzy4MXYOS8LmpY1QeESAhoXX4IhEzJDFqMteAWXfzgsUbim03WFiSNu/4TWDdopOsoFk6yde0ZgnrrKaQ0zTJ04bMznqZ5/LovF2C/BGmOFGBQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fBe4lO82; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uf5mPXib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A75D1F000FF;
-	Sat, 12 Sep 2026 07:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBe4lO82"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E4A1F000FF;
+	Sat, 12 Sep 2026 07:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197769;
-	bh=gzao/MNGEO6W3rysIxzgHes8j6i8PLOhEubVne2Wo3g=;
+	s=korg; t=1789197773;
+	bh=nxFVUbarzerFQB1KFyvOG5kPIB+wJwqmWUalRWXxTqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uf5mPXibQyfwGigem77W8P+ayY7vHDD2ba3HioTvDzyYxU24gO6WqjFnIkGm0EPub
-	 TcLjTjC4QSoBqKgOUCLn6ng8hkE/NCfAjo6GWO9iKNlOOhvS2QY3phx4LU9M82GQRt
-	 9mHl7vLo958eQ/Xiy4Ig6ctaI9g9tuvx2mu03C/o=
+	b=fBe4lO82E7jRF7QAk6jcrlTXtTbJ8vpauASNM0cet0ZVsUNMJakqNVD77nDfHIijp
+	 YISLkSkkUKyk5uKAddDEGV82meymGRKtIjOyEo1+OH2J1hwmjACZkDRV2WUM4w2MXl
+	 iShvGrP6/CnFfbOCWIfD21wAFS7eCxatLomuuGXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Radu Rendec <radu@rendec.net>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0244/1815] irqchip/gic-v3-its: Fix memleak in its_probe_one()
-Date: Sat, 12 Sep 2026 08:33:14 +0200
-Message-ID: <20260912065654.716180627@linuxfoundation.org>
+Subject: [PATCH 7.2 0227/1815] wifi: mac80211_hwsim: avoid NULL skb in stop queue drain
+Date: Sat, 12 Sep 2026 08:32:57 +0200
+Message-ID: <20260912065654.321334653@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,44 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 1efffab6fe336a5c4fd3c2886f255cd2f998e65f ]
+[ Upstream commit 158438cd6ad69d6dd7d871582c38baf22169fede ]
 
-Fix collection leak when its_init_domain() failed in its_probe_one().
+mac80211_hwsim_stop() drops any frames left in data->pending. The loop
+currently checks skb_queue_empty() and then dequeues separately.
 
-Fixes: 4c21f3c26ecc2 ("irqchip: GICv3: ITS: DT probing and initialization")
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Radu Rendec <radu@rendec.net>
-Link: https://patch.msgid.link/20260702033050.1583-2-shikemeng@huaweicloud.com
+That split is racy with TX status handling, which can remove a pending
+frame under the queue lock. If the last entry is removed after the empty
+check, skb_dequeue() returns NULL and the stop path passes that NULL skb
+to ieee80211_free_txskb().
+
+Use skb_dequeue() as the loop condition instead. The dequeue result is the
+object that stop owns and frees, and a concurrent status completion that
+empties the queue simply makes the loop terminate.
+
+Fixes: bd18de517923 ("mac80211_hwsim: drop pending frames on stop")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20260706161822.921039-1-zzzccc427@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/virtual/mac80211_hwsim_main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 6f5811aae59c1..7298e8d71867f 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -5320,7 +5320,7 @@ static int __init its_probe_one(struct its_node *its)
+diff --git a/drivers/net/wireless/virtual/mac80211_hwsim_main.c b/drivers/net/wireless/virtual/mac80211_hwsim_main.c
+index 75caa97becc8d..b4cabbfa9cdba 100644
+--- a/drivers/net/wireless/virtual/mac80211_hwsim_main.c
++++ b/drivers/net/wireless/virtual/mac80211_hwsim_main.c
+@@ -2314,6 +2314,7 @@ static int mac80211_hwsim_start(struct ieee80211_hw *hw)
+ static void mac80211_hwsim_stop(struct ieee80211_hw *hw, bool suspend)
+ {
+ 	struct mac80211_hwsim_data *data = hw->priv;
++	struct sk_buff *skb;
+ 	int i;
  
- 	err = its_init_domain(its);
- 	if (err)
--		goto out_free_tables;
-+		goto out_free_collection;
+ 	data->started = false;
+@@ -2321,8 +2322,8 @@ static void mac80211_hwsim_stop(struct ieee80211_hw *hw, bool suspend)
+ 	for (i = 0; i < ARRAY_SIZE(data->link_data); i++)
+ 		hrtimer_cancel(&data->link_data[i].beacon_timer);
  
- 	raw_spin_lock(&its_lock);
- 	list_add(&its->entry, &its_nodes);
-@@ -5328,6 +5328,8 @@ static int __init its_probe_one(struct its_node *its)
+-	while (!skb_queue_empty(&data->pending))
+-		ieee80211_free_txskb(hw, skb_dequeue(&data->pending));
++	while ((skb = skb_dequeue(&data->pending)))
++		ieee80211_free_txskb(hw, skb);
  
- 	return 0;
- 
-+out_free_collection:
-+	kfree(its->collections);
- out_free_tables:
- 	its_free_tables(its);
- out_free_cmd:
+ 	wiphy_dbg(hw->wiphy, "%s\n", __func__);
+ }
 -- 
 2.53.0
 
