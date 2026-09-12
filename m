@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47FB2BE65B;
-	Sat, 12 Sep 2026 20:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0BB370ACC;
+	Sat, 12 Sep 2026 20:00:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243216; cv=none; b=C3UJYSn4Nq5FVQGbkSSXVsmlTPN48owBGPy0deTPCZBzJoVUWAeWwo0RELWf5QZc1sdvSYoVkiD+j3aXStNf2mnYItqor3hboPjioo5T50qrwDJqvfgEpnsy+RDMumH88JqILbhbehetDZ+lky/mcngrRykcX74CWAX3ODwlsZs=
+	t=1789243218; cv=none; b=Uu+SaL4xs+IOmPP3dY7VGxxtuyqIHGvVpIMq+knfgLMziFRZkd9bLdlznN05w5sjtKHOaqu7keuvIMSJblJGKgCNmr/X+LJbuLvaPtJ/BPWW3g5Es8RIG/0gRa3bHNcXPnPEQ6oVgPW5b4JM1xGci+P3oOCUc+haxTLvGN/0fTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243216; c=relaxed/simple;
-	bh=KuyE+zGiZsu/Kz9SMNgIUC4k59CtkDfDfgxX2WzZ4ic=;
+	s=arc-20240116; t=1789243218; c=relaxed/simple;
+	bh=g+7igwpUk0ypYfydWap2mizy9ek+oy2W7pDu/MCUsKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MJU/j0tdwAvyAV5KSneIKHeAlfad8iHx/lkj946/2szZwd2S0TJC2lsKIU8l0BpwGyy7JXfLv0ctOT/p09UXnkL8FpSY3TRzMt7UbizByN73cyNRPmGt7fqCF9VbhHLUGp0RbGzgIMMT0RrgLdkUyI9BY/INviKWFrxqfxrFfGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uu1WNUBW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EL98nqmUe5po9BR0wYHdIr9xVtLdVzkYAavH9accv0iix/72/hpqCrOcwgd7XK5fvVbdhRbWx+vLJrjtm9tNj4kO2iO8FdvI2pjTbAtwUVPEbBa+lY351CPl2KlyC9Xq+Z8eF5SbuImGLy0z3eMACE9YWCRaFNzxsHgqs8lSUGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBgj1EYp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uu1WNUBW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D95881F000FF;
-	Sat, 12 Sep 2026 20:00:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBgj1EYp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8BC71F000FF;
+	Sat, 12 Sep 2026 20:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243214;
-	bh=8BSpHx88d+ZQGV8dKOzssEzzag+EVps3BDfBylWLVH8=;
+	s=korg; t=1789243217;
+	bh=blBdt0Y9ovLO6VbF4IEaUhEncO57OdxpddRM6QgoC48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uu1WNUBWrJen9uLAMhvMCS2v0QW4Pzo26Zqfa2KHZ46HuRUerKuTffKYr8GZR8bda
-	 DCTHlBY3fmeW4Go8JzBxqDpJ4mDzckBA6xBnLxdVJKu86dRMl3Akv6c4rk71aE2znJ
-	 qy0jAp11SzlVp1GWqlACxMhjcllHc1b6gx/bBFes=
+	b=OBgj1EYphAwm8EwyD2y3pg2SGnvkdIgOjsdFnD20glYsC65gVmxS9EO6usZuumgQS
+	 9BZcoXxb6/qLq8vAOIM9RrjKJagpLdNMHjIzrR2eKbNLIULJARpo0+nfBI20DBkKx6
+	 dRNjqGEakxHp2bwya8J749RlHEIHJ4teex6OEQdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 677/798] ASoC: pxa: Use devm_clk_get_optional() for extclk clock
-Date: Sat, 12 Sep 2026 09:05:05 +0200
-Message-ID: <20260912065532.617605864@linuxfoundation.org>
+Subject: [PATCH 5.10 651/798] Bluetooth: MSFT: validate evt_prefix_len against the response length
+Date: Sat, 12 Sep 2026 09:04:39 +0200
+Message-ID: <20260912065532.033016161@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,51 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-[ Upstream commit 6ec64d757af9b75a3c64f9f7dad76bdc1efc06ca ]
+[ Upstream commit 0079e1a944634ab2dc1c7cdec1144486d096407e ]
 
-The Device Tree binding defines the extclk clock as an optional
-property, but the driver currently uses devm_clk_get() and manually
-handles the absence of the clock.
+read_supported_features() only checks that the response covers the fixed
+part of struct msft_rp_read_supported_features, which is 11 bytes:
 
-Use devm_clk_get_optional() to match the binding and simplify the
-optional clock handling. This also propagates errors other than the
-absence of the optional clock, including -EPROBE_DEFER.
+	if (skb->len < sizeof(*rp)) {
+		bt_dev_err(hdev, "MSFT supported features length mismatch");
+		goto failed;
+	}
 
-This changes the existing behavior for errors other than
--EPROBE_DEFER. RFC to discuss whether these errors should cause probe
-to fail rather than being treated as an unavailable optional clock.
+evt_prefix[] is a flexible array member and rp->evt_prefix_len is an
+unvalidated u8 taken straight out of that response, so
 
-Fixes: 90eb6b59d311 ("ASoC: pxa-ssp: add support for an external clock in devicetree")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260811100949.61142-1-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+	msft->evt_prefix = kmemdup(rp->evt_prefix, rp->evt_prefix_len,
+				   GFP_KERNEL);
+
+copies up to 255 bytes from a reply that may have carried none of them.
+What is copied is data the controller never sent, and it is then used to
+match incoming vendor events in msft_vendor_evt().
+
+This is not an out-of-bounds access. An skb data allocation always has
+at least SKB_DATA_ALIGN(sizeof(struct skb_shared_info)) bytes past the
+payload, which is more than the 255 byte maximum, so the read stays
+inside the allocation and KASAN does not report it. It is still a read
+of bytes the host was never given, with the length fully controlled by
+the controller.
+
+Reject a response that is too short for the prefix it declares.
+
+Verified with an emulated controller over /dev/vhci on a KASAN kernel,
+with vhci made to advertise an MSFT opcode the way btintel, btqca, btmtk
+and btrtl do unconditionally. A reply of exactly 11 bytes declaring
+evt_prefix_len = 255 reaches kmemdup and copies 255 bytes
+("skb->len=11 evt_prefix_len=255", with the copied buffer dumped); since
+the reply ends at the fixed part, all 255 come from past the end of the
+response. No KASAN report is produced, as expected from the allocation
+slack described above. With this patch the response is rejected with
+"MSFT event prefix length mismatch" and msft->evt_prefix is left unset.
+
+Fixes: 145373cb1b1f ("Bluetooth: Add framework for Microsoft vendor extension")
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/pxa/pxa-ssp.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ net/bluetooth/msft.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/soc/pxa/pxa-ssp.c b/sound/soc/pxa/pxa-ssp.c
-index d847263a18b93..38440defd1fa2 100644
---- a/sound/soc/pxa/pxa-ssp.c
-+++ b/sound/soc/pxa/pxa-ssp.c
-@@ -793,13 +793,10 @@ static int pxa_ssp_probe(struct snd_soc_dai *dai)
- 			goto err_priv;
- 		}
+diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
+index 4b39534a14a18..a6b942b8d64c4 100644
+--- a/net/bluetooth/msft.c
++++ b/net/bluetooth/msft.c
+@@ -54,6 +54,11 @@ static bool read_supported_features(struct hci_dev *hdev,
+ 	if (rp->sub_opcode != MSFT_OP_READ_SUPPORTED_FEATURES)
+ 		goto failed;
  
--		priv->extclk = devm_clk_get(dev, "extclk");
-+		priv->extclk = devm_clk_get_optional(dev, "extclk");
- 		if (IS_ERR(priv->extclk)) {
- 			ret = PTR_ERR(priv->extclk);
--			if (ret == -EPROBE_DEFER)
--				goto err_priv;
--
--			priv->extclk = NULL;
-+			goto err_priv;
- 		}
- 	} else {
- 		priv->ssp = pxa_ssp_request(dai->id + 1, "SoC audio");
++	if (skb->len < sizeof(*rp) + rp->evt_prefix_len) {
++		bt_dev_err(hdev, "MSFT event prefix length mismatch");
++		goto failed;
++	}
++
+ 	if (rp->evt_prefix_len > 0) {
+ 		msft->evt_prefix = kmemdup(rp->evt_prefix, rp->evt_prefix_len,
+ 					   GFP_KERNEL);
 -- 
 2.53.0
 
