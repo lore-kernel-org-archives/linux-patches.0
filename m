@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12E0299920;
-	Sat, 12 Sep 2026 10:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072F41DA62E;
+	Sat, 12 Sep 2026 10:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208970; cv=none; b=RRsWKjD4/HhWiQSLx3pzRU0WmXgF53XFUjJXuPG7mN8vWQDnPu7FdZJb/x188nr8Lq814iyd26OH7hDDzIROFUc2+QfbjNAXy94xZgOp1nV+ZXgBB7o0oA09mscgr7d1PCgfz7zfQyfPadnfIG9blb8NIFz6wr56Etlcjq9WBD4=
+	t=1789208976; cv=none; b=Or2ghRie36+7eFy4d6b+hu/fS3JxzvwpWxY0DLs3IcHyVXywY0bHxc5mxHdRJVw0aoSIa6dD/Fkya993/kQ6Yzw5sovO5Lrk+TjIPQuIOuk++AMR9ZrZY4kWHtOD2bNt32dw5nHqqzIBxqu1rNXG9OQzN4Ns8wYSk3ZCdKgpS6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208970; c=relaxed/simple;
-	bh=q+tXdRctdjZppQVmfsZOS0IKHKd+FziuoNXSAKAy5Po=;
+	s=arc-20240116; t=1789208976; c=relaxed/simple;
+	bh=6NJ50/KJNtLqIOrO4THWhKr0PdzLDe0ZEOK4LBuyvMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q0iM1bSf0HZWMviubg8c4jzXDLAc1gu+ZPuloC+isWhJeWUOI8l84v4idBd5jJI0IEgm5RS9AmG3g7FDAVPNRiWU0m0do7USx/OrCxoVSL8eRsFS5gGeP+7SysZrsCEU62tDPbS/mzojma3RxucEYLuzb9wOLcxNPzdHnxS4E7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2mDElN9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UV18eXtE16w9vZ+T/kDPfroHKVoTDk8zZ6phGzslrgHTJpqL3MvkNXK5AjR7IVh1hVuYBk/fYuGl8I+YQvEEB1Rq+0uxeuioiQ1iOXDBVooC5c0nsWuDdaqvIzhDtwa7YVJ+Eiu+wj9iTj1O4O8WEVmzrUa9CMBCZ5V9ERp5NTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2f+H+Euf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2mDElN9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D2591F000FF;
-	Sat, 12 Sep 2026 10:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2f+H+Euf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D172A1F000FF;
+	Sat, 12 Sep 2026 10:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208969;
-	bh=Bpopo9sdwmzTrxbAxt3+xrHHSOwtfke0RpDKhCmQTmU=;
+	s=korg; t=1789208974;
+	bh=Zo5s9gKWsdhU7XeEeT0lLITTXDKMCMtJ8mpU9MMySYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h2mDElN9J6dK5uOiT30HXDVV6pQhv9oZ6X8w0kiKMPsvU16eD0g9J2gKKem6rzhtM
-	 d8Au90sTPJ/2QUrh6SH5CACBhCBSgw0RvyM8c0XlOlA8CgchPe2vPw/Q6yFPvsZb9v
-	 cTnqhxJikf5lKmov+fNvxkZVwmHmdTNyaF8yKFZY=
+	b=2f+H+EufAblVajUv0vLKQN07bB3omqOsxK3CIChX48yINzQKQ2LFDBckhRgu628gp
+	 hRxg8mekob9gGCe5W+/VcpmpjE3m61k5WRtYSnHvWsDrwliGvsnXGHT5bu2nC/RHsY
+	 Nw25Y6VCr22hw73B/l2okAEmTzPbBgObXVjETozo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Gomzyakov <nicerok11@gmail.com>,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0725/1518] wifi: mt76: connac: add MT7991A (0x7991) to is_mt7996()
-Date: Sat, 12 Sep 2026 08:48:14 +0200
-Message-ID: <20260912065639.835723442@linuxfoundation.org>
+Subject: [PATCH 6.18 0726/1518] wifi: mt76: mt76x02: do not WARN on invalid rx descriptor length
+Date: Sat, 12 Sep 2026 08:48:15 +0200
+Message-ID: <20260912065639.857718457@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,40 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Gomzyakov <nicerok11@gmail.com>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit 574bd79955d166c00c2b1531fed591ee70b6ba04 ]
+[ Upstream commit 81497634d9f872fd3e8b03aada55574afff6f174 ]
 
-The MT7991A chipset uses PCI device ID 0x7991 (MT7996_DEVICE_ID_2),
-but is_mt7996() only checks for 0x7990. This causes MT7991A devices
-to use incorrect chip-specific settings, such as:
-- MSDU_CNT_V2 instead of MSDU_CNT in TX descriptors
-- Wrong WTBL BMC size (32 instead of 64)
-- Incorrect prefetch depth for MCU queues
+The MPDU length in the rx descriptor comes from the hardware. In
+monitor mode with the fcsfail filter enabled, the hardware passes up
+corrupted frames, and a corrupted frame can report a length larger
+than the received buffer. The bounds check correctly discards such
+frames, but its WARN_ON_ONCE wrapper means any over-the-air garbage
+frame taints the kernel, and panics it on the first such frame when
+panic_on_warn is set.
 
-Fixes: 7014fe535860 ("wifi: mt76: mt7996: add macros for pci device ids")
-Signed-off-by: Dmitry Gomzyakov <nicerok11@gmail.com>
-Link: https://patch.msgid.link/20260510102911.1883849-2-kyoto1337@protonmail.com
+Drop the WARN and discard the frame silently, matching what
+commit c2d4c8723dbf ("mt76x2: remove some harmless WARN_ONs in tx
+status and rx path") did for the neighboring rx and tx status paths.
+
+Observed immediately on rx with an MT7612U in fcsfail monitor mode
+on a busy channel.
+
+Fixes: 7bc04215a66b ("mt76: add driver code for MT76x2e")
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260613002544.27750-2-lucid_duck@justthetip.ca
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76_connac.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt76x02_mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac.h b/drivers/net/wireless/mediatek/mt76/mt76_connac.h
-index 192dcc374a642..670f59f55605a 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac.h
-@@ -224,7 +224,8 @@ static inline bool is_mt798x(struct mt76_dev *dev)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
+index 83488b2d6efb9..06f17da2c0106 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
+@@ -848,7 +848,7 @@ int mt76x02_mac_process_rx(struct mt76x02_dev *dev, struct sk_buff *skb,
+ 		}
+ 	}
  
- static inline bool is_mt7996(struct mt76_dev *dev)
- {
--	return mt76_chip(dev) == 0x7990;
-+	u16 chip = mt76_chip(dev);
-+	return chip == 0x7990 || chip == 0x7991;
- }
+-	if (WARN_ON_ONCE(len > skb->len))
++	if (len > skb->len)
+ 		return -EINVAL;
  
- static inline bool is_mt7992(struct mt76_dev *dev)
+ 	if (pskb_trim(skb, len))
 -- 
 2.53.0
 
