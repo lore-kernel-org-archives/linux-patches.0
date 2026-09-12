@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0582530568E;
-	Sat, 12 Sep 2026 16:50:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FED30DEA3;
+	Sat, 12 Sep 2026 16:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231827; cv=none; b=lQ64FaVa+hnjUbQ+hBcH7I6JiM1hEHtyJHC2RABDbRI+L9UHUpBD0H1xtmJ/sddBAGN549ptZLu5Fr5qivEYPlJJdkjVMM45Jtqxz28Y61793BXkrtDQVDiFcThnC2YdupRZEHrZyvEsPDn+un7Lm/qjAvOg37YjCqwkwUnJRnM=
+	t=1789231832; cv=none; b=m9Iv2xiev1/DdpKlny4N+hVukDeFBpSfB+OXRgXBtAsBVIlwBDYZEvk4ho0bW8YwIWjwB5YZ4irbwsi19pfjXY7M568p4La8/jbWaps5MuZzwPPDvjYrBaeSps9oWOuGFLnGUPt0llckE+2LO1dh1MF0YPRL5xU/ICP+wO+f4NI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231827; c=relaxed/simple;
-	bh=gjyyoDWM1UBmlwSWbDL9PKxvNa03KBdakIoV5g4gXNw=;
+	s=arc-20240116; t=1789231832; c=relaxed/simple;
+	bh=E3JAe5KoYXtRetpF9S0IJ8HPUCxvODmzGAGe3rg08to=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MIQ5NnJhP/B6ct/JFkVOeAPHHslf0XD7KL9xEi2eSct+JjGnSIVA56vRSrgLfuyTxzEpeWx3iA4V7p/18XoRVqdkVr9EtDMDyXKHMTFfoJcVgiXqc3CohPPivxvbPEfuYfq1FeZgMK5zmHWpreW3H6NZgWkvOZGg7fAvSOBGops=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G1/ioZCB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cJwNo3o1uiDkVzU6YZfAxTnfwwlXlKFjM04wYy1LzW/5hmpsumyG+Og6WOZ06SlPtzXtUCjIE6s8khcp5DoiroJcC1liamnbTgqg2adbaKau85HsvHO1PFUZoxqLr5ppzJukScRIxQqL9MWVGUARjUGtpfTotgZgaxmW4f7N4gY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cyjNupda; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G1/ioZCB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B837B1F000FF;
-	Sat, 12 Sep 2026 16:50:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cyjNupda"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE96F1F000FF;
+	Sat, 12 Sep 2026 16:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231825;
-	bh=EOYkrcZZhxlMZZdA+b/Xor7uV9sScqCDzepqk1erJrY=;
+	s=korg; t=1789231831;
+	bh=5gNyAalXcjUoQYpgF3tOzK8ncafU4wTCpd3uvly1rOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G1/ioZCBmrjsueQE5vlICb+/2wa+KPwPGYngtFFSmi1wijpUreUHHwL9Ftm0RD0DE
-	 twmJgudpAK6348R4MQL0gmZ3t62+kLEwAqqDRBtS5T3G6K6f9lqsDzfXM6qspkzG9c
-	 kG/rylAlimSKWuf2oIohs149KqrysEkvSZOlWxK0=
+	b=cyjNupdavA6ulNx8a2ZuGy0i775pjjWExL894ipF7L9vJmieroYemti/G9oq6D0KF
+	 e9iQuKCVZdiJAfyIW2cbaLByI7T53HeHHqtLx2sdjBrphvQZkJ24wWQSQJ8wuyH3l2
+	 hjn7DcMn2V7hq3jWZHrE//jdRReVrR/rEQO/ZYWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serhat Kumral <serhatkumral1@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1078/1191] RDMA/ucma: Allow path records to exactly fit the output buffer
-Date: Sat, 12 Sep 2026 09:03:26 +0200
-Message-ID: <20260912065612.382487557@linuxfoundation.org>
+Subject: [PATCH 6.1 1079/1191] net: bridge: Reject descending VLAN tunnel ranges
+Date: Sat, 12 Sep 2026 09:03:27 +0200
+Message-ID: <20260912065612.404668901@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,49 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Serhat Kumral <serhatkumral1@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 8049741ac93acd3a590dac070e12571fddf0e294 ]
+[ Upstream commit b74a072d8fb71d3c9ffba4a17d5943e63266fb38 ]
 
-ucma_query_path() emits a path record only when the remaining output
-buffer is strictly larger than struct ib_path_rec_data. A buffer sized
-exactly for the response header and N complete records therefore gets
-only N - 1 records, while resp->num_paths still advertises N. A caller
-sizing its buffer for a single record gets a header claiming one path
-and no path data at all.
+A pair of descending VLAN and tunnel IDs can pass the tunnel range span
+check. The VLAN subtraction produces a negative int, which is converted
+to unsigned when compared with the u32 tunnel ID subtraction. It can
+therefore equal the wrapped tunnel ID delta.
 
-ucma_query_ib_service() in the same file computes the record count with
-a plain division and so accepts an exact fit; make ucma_query_path()
-behave the same way.
+The range loop then performs no iterations. Since the batched
+notification handling added a post-loop error check, this leaves err
+uninitialized and makes the request's return value unpredictable.
 
-Current librdmacm is unaffected because it always sizes the response for
-six records while the kernel currently reports at most two paths. Other
-users of the UAPI that provide an exactly sized buffer can observe the
-truncated response.
+Reject descending VLAN ranges before comparing the spans. Valid
+ascending and single-entry ranges remain unchanged, while malformed
+descending ranges consistently return -EINVAL.
 
-Fixes: ac53b264b2f3 ("RDMA/ucma: Support querying when IB paths are not reversible")
-Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
-Link: https://patch.msgid.link/20260806201358.147478-1-serhatkumral1@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: 94339443686b ("net: bridge: notify on vlan tunnel changes done via the old api")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260814134053.1387275-1-ruoyuw560@gmail.com
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/ucma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bridge/br_netlink_tunnel.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/ucma.c b/drivers/infiniband/core/ucma.c
-index 1defc9629f544..48d708edf0e7b 100644
---- a/drivers/infiniband/core/ucma.c
-+++ b/drivers/infiniband/core/ucma.c
-@@ -923,7 +923,7 @@ static ssize_t ucma_query_path(struct ucma_context *ctx,
+diff --git a/net/bridge/br_netlink_tunnel.c b/net/bridge/br_netlink_tunnel.c
+index e4aab07752701..e7fe6b22cbf6f 100644
+--- a/net/bridge/br_netlink_tunnel.c
++++ b/net/bridge/br_netlink_tunnel.c
+@@ -299,7 +299,8 @@ int br_process_vlan_tunnel_info(const struct net_bridge *br,
  
- 	resp->num_paths = ctx->cm_id->route.num_pri_alt_paths;
- 	for (i = 0, out_len -= sizeof(*resp);
--	     i < resp->num_paths && out_len > sizeof(struct ib_path_rec_data);
-+	     i < resp->num_paths && out_len >= sizeof(struct ib_path_rec_data);
- 	     i++, out_len -= sizeof(struct ib_path_rec_data)) {
- 		struct sa_path_rec *rec = &ctx->cm_id->route.path_rec[i];
- 
+ 		if (!(tinfo_last->flags & BRIDGE_VLAN_INFO_RANGE_BEGIN))
+ 			return -EINVAL;
+-		if ((tinfo_curr->vid - tinfo_last->vid) !=
++		if (tinfo_curr->vid < tinfo_last->vid ||
++		    (tinfo_curr->vid - tinfo_last->vid) !=
+ 		    (tinfo_curr->tunid - tinfo_last->tunid))
+ 			return -EINVAL;
+ 		t = tinfo_last->tunid;
 -- 
 2.53.0
 
