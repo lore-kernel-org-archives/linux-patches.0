@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027F8352003;
-	Sat, 12 Sep 2026 10:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E40A435EE9;
+	Sat, 12 Sep 2026 10:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209875; cv=none; b=gZ7ooIEYAIx3G9DVQfUoT0cfdWm8vdSnkXZOTD1VClLgE6ru3LdHAk9gdmgEYYPL2IvDO8ClflZi0xr6hyJy8FqVt7/i4AlepCWZ884s6uXZi38y4hDt2/VIq6cm9qrElmMf8Afdz1zkPwwBcu5adFxN+T4Emk0TorIRQnk8jqI=
+	t=1789209880; cv=none; b=OPIDinNCUREjqLgEJGCw7Mdsk6WoqOVsNdO3fInCPu5uPH9dMJaCRvVO337C7Y/8f/zr2Cw9BkUwJJMNrKoDf6I/YYko7YPCcA95dh7hBR+z0MMUv7L1NpcRKpEkTTIUp8XKueJww/qggfXBY/Jg3Q2FVmC/i9SqDWEZHqIsdxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209875; c=relaxed/simple;
-	bh=URrDSHE9OBDt86XWcVVZfUNQ/RPzdTgMp+5m6ixK14M=;
+	s=arc-20240116; t=1789209880; c=relaxed/simple;
+	bh=RB0uJnEVkj8V0i9/xaQQNO4unReZBIppRKCW9RCHgYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JUBW8VPIWC6K6MALBBfjhZQGNSfvXXGtRoIlaGXL9v1e+eubYXZR3YzkyZ1rtNnBbYOWJL6OnaV5ZgzW8f5ojUsmGmt+IV6/UxTG1PwvseVIaDDLDIlu3gnlzrzhAAuCCzZgMvPf+vEGbduU1J7RLSfkTZ+FnDBR9fxwLueo2Mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWLfFLMY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JQr1Kbdr0Xz+Sz5kbZUO8ysDzhNHphbCP27NIOGgL7rR6jiWyjYaqvYAOCbbdXKBFpfPm+U5NA/70kAmgWMddJ7GQllI0SW7/qZigvXlRRd8/l5s+tP5Gs2iV4epGBz6Pd+UZh5nv1YpQTIVhQWYLSJadh1VGnv8ulZ+ovaP3O4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hm2trrQx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWLfFLMY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 097E41F000FF;
-	Sat, 12 Sep 2026 10:44:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hm2trrQx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB2F1F000FF;
+	Sat, 12 Sep 2026 10:44:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209873;
-	bh=Ra8kOsa7esiSiXuJ9i4Bw60Wtz+Is2Qgu5TLW+9WldM=;
+	s=korg; t=1789209878;
+	bh=qdXW6/IYZsBKAd5CYnE8+zDKE3weROYqun+SI+7F0Ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kWLfFLMYKn8Rc6AMwUqwtBTdzJua4EoKqqrP+b9tBe1IFFG+++E1c97Ugs8HrsYTN
-	 jYCj5R4+S3lb35F6YZ3NeN9SK9B8MWgqDLWBT7LOkaqPgEV3dFN2LgyDjau57Bwx/P
-	 tWRC9QcOrdaJXmiYEGzgl4fYDkOzxWu6fAcJV0S4=
+	b=Hm2trrQxW/kQQadTIvtosBVlXKyrbIoSOrvfJlihZfEGDhgdjUl3+EIPinGzHy8o+
+	 jZxX5xQ/rDflFdDkzVwHy3IfYwMOhW9xfmFusfbi+Cxdd4sG/a7fi8DdVwjljOMckg
+	 BqKhZaf/GpfhkJh48jYn0L9aOAoP7WOTfr1dWyac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0910/1518] perf c2c: Clean up registered formats on c2c_hists__init() and c2c_hists__reinit() failure
-Date: Sat, 12 Sep 2026 08:51:19 +0200
-Message-ID: <20260912065644.040087009@linuxfoundation.org>
+Subject: [PATCH 6.18 0911/1518] drm/sun4i: vi scaler: Fix coefficient selection
+Date: Sat, 12 Sep 2026 08:51:20 +0200
+Message-ID: <20260912065644.063088744@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,85 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 6d421f609bba7b0b1a11741ec4b19feadfd27051 ]
+[ Upstream commit 5c31990b21f0b535732deb2b658b78b07464f56c ]
 
-When c2c_hists__init() or c2c_hists__reinit() calls hpp_list__parse()
-and it fails partway through, format structures registered via
-perf_hpp_list__column_register() and perf_hpp_list__register_sort_field()
-are left on the hpp_list.
+Currently, vertical coefficients are selected based on horizontal
+scaling, which is wrong. Additionally, chroma coefficients should be
+selected based on format subsampling.
 
-In c2c_hists__init(), only one of the callers, c2c_he__alloc_hists(),
-handled this with perf_hpp__reset_output_field(), while perf_c2c_report()
-did not, leaking the partially registered entries.
+Fix all that.
 
-In c2c_hists__reinit(), neither perf_c2c_report() nor resort_cl_cb()
-clean up on failure.
-
-Fix by adding cleanup inside both functions themselves, so all callers
-are protected, and remove the now redundant reset in c2c_he__alloc_hists().
-
-Fixes: 78b275437873 ("perf c2c report: Add sample processing")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Assisted-by: Opencode:mimo-v2.5-free
-Assisted-by: Opencode:DeepSeek-V4-Flash-free
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: b862a648de3b ("drm/sun4i: Add support for HW scaling to DE2")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
+Link: https://patch.msgid.link/263a4a41442a3c8b072b170256b72658f1b90802.1785772659.git.jernej.skrabec@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-c2c.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/sun4i/sun8i_vi_scaler.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/builtin-c2c.c b/tools/perf/builtin-c2c.c
-index dd4e6e40538f6..f6fcb1d3a2090 100644
---- a/tools/perf/builtin-c2c.c
-+++ b/tools/perf/builtin-c2c.c
-@@ -2152,6 +2152,8 @@ static int c2c_hists__init(struct c2c_hists *hists,
- 			   int nr_header_lines,
- 			   struct perf_env *env)
- {
-+	int ret;
+diff --git a/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c b/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c
+index 82df6244af885..695491b7739bd 100644
+--- a/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c
++++ b/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c
+@@ -893,20 +893,26 @@ static void sun8i_vi_scaler_set_coeff(struct regmap *map, u32 base,
+ 			     lan3coefftab32_left[offset + i]);
+ 		regmap_write(map, SUN8I_SCALER_VSU_YHCOEFF1(base, i),
+ 			     lan3coefftab32_right[offset + i]);
++	}
++	offset = sun8i_vi_scaler_coef_index(vstep) *
++			SUN8I_VI_SCALER_COEFF_COUNT;
++	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++)
++		regmap_write(map, SUN8I_SCALER_VSU_YVCOEFF(base, i),
++			     lan2coefftab32[offset + i]);
 +
- 	__hists__init(&hists->hists, &hists->list);
- 
- 	/*
-@@ -2164,7 +2166,13 @@ static int c2c_hists__init(struct c2c_hists *hists,
- 	/* Overload number of header lines.*/
- 	hists->list.nr_header_lines = nr_header_lines;
- 
--	return hpp_list__parse(&hists->list, /*output=*/NULL, sort, env);
-+	ret = hpp_list__parse(&hists->list, /*output=*/NULL, sort, env);
-+
-+	/* Unregister any formats added before the failure point */
-+	if (ret)
-+		perf_hpp__reset_output_field(&hists->list);
-+
-+	return ret;
++	offset = sun8i_vi_scaler_coef_index(hstep / format->hsub) *
++			SUN8I_VI_SCALER_COEFF_COUNT;
++	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++) {
+ 		regmap_write(map, SUN8I_SCALER_VSU_CHCOEFF0(base, i),
+ 			     ch_left[offset + i]);
+ 		regmap_write(map, SUN8I_SCALER_VSU_CHCOEFF1(base, i),
+ 			     ch_right[offset + i]);
+ 	}
+-
+-	offset = sun8i_vi_scaler_coef_index(hstep) *
++	offset = sun8i_vi_scaler_coef_index(vstep / format->vsub) *
+ 			SUN8I_VI_SCALER_COEFF_COUNT;
+-	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++) {
+-		regmap_write(map, SUN8I_SCALER_VSU_YVCOEFF(base, i),
+-			     lan2coefftab32[offset + i]);
++	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++)
+ 		regmap_write(map, SUN8I_SCALER_VSU_CVCOEFF(base, i),
+ 			     cy[offset + i]);
+-	}
  }
  
- static int c2c_hists__reinit(struct c2c_hists *c2c_hists,
-@@ -2172,8 +2180,16 @@ static int c2c_hists__reinit(struct c2c_hists *c2c_hists,
- 			     const char *sort,
- 			     struct perf_env *env)
- {
-+	int ret;
-+
- 	perf_hpp__reset_output_field(&c2c_hists->list);
--	return hpp_list__parse(&c2c_hists->list, output, sort, env);
-+	ret = hpp_list__parse(&c2c_hists->list, output, sort, env);
-+
-+	/* Unregister any formats added before the failure point */
-+	if (ret)
-+		perf_hpp__reset_output_field(&c2c_hists->list);
-+
-+	return ret;
- }
- 
- #define DISPLAY_LINE_LIMIT  0.001
+ void sun8i_vi_scaler_enable(struct sun8i_mixer *mixer, int layer, bool enable)
 -- 
 2.53.0
 
