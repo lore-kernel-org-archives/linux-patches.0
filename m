@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DFC41CB39;
-	Sat, 12 Sep 2026 08:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773D64477F9;
+	Sat, 12 Sep 2026 08:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202396; cv=none; b=h0uie7kly0EHGca/fXyz2iKUg3CgTT6pitMwuqXkQb9J2HaJllHnKuZ3Ca+fq9AKPHDKjoO+vXNzsBkjWt0mT7Qu/tKLIvtkKE2Dh/3ovRFm+tg3tWEdqwEtvOUTuMH5EzSc51+a/uR1/KR1nF8BXwMIKlYF4Z46GVx9CxZvbDQ=
+	t=1789202401; cv=none; b=S3xbZUDP2koNvkfsWPYbNXz4lQpZYqGaedGaDOZlOs1LHB/XXKfnQ2oRwSrEZg7nsy8aHvjZhMEysu38Bph501DPXtgRwDlZpDcfd1PdqL3GaKJGBZi8yAmEe8JiNsSvY5mf4SwuY0b9CBBUS48uJZoeVaBaUZtEgH4Ar8TMzxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202396; c=relaxed/simple;
-	bh=Qv5tpvYoiKXTfVqELpX9sIeVHDxYRDgBYGjLNwubWNk=;
+	s=arc-20240116; t=1789202401; c=relaxed/simple;
+	bh=PKxpM+ujSDJZR6fx0qGxYn9exeaBBlk/skXU7w92ri0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pV7zrgEm5b8kYys4jT9rpmtMWIxoW2ptINvY14nFmkfVcrKF5mm+xU9QBJEhNcC4U2jcRkiHZfM7P6J1q7iIH4BcKp7/cmIXuEnmYIL7JGUwANNAgUsrbXZj3omdNIzC1OyMaYmMiNfiPYJq5LH+0DBUKe/4Zj2QhXEGD1yyMqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IsasG/8B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QFYQmRPTa/efrUF+xBRQeb3VYKd1nqEK9VL12yuQvLt2sdlvWSI7IVqPaBKowth94ZvjGX3srbBet5cmm6idr/4oQ3e9lZSPl3pUcjFHY620ID1zmgF8vT0D8yihJ7bocFUMGZ9eBDfi7qF36CMeFENq0JS6b/kUJAwh7v3XsyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+7WQWAs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IsasG/8B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E34E1F000FF;
-	Sat, 12 Sep 2026 08:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+7WQWAs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EACD1F000FF;
+	Sat, 12 Sep 2026 08:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202395;
-	bh=MtR4aAz3SIjCfYJLQrXz2zBMRHmz12JmbpY6iZKtHEc=;
+	s=korg; t=1789202400;
+	bh=bx342SWQLVlvhHX19L1vXMj3Z/3arG8SGwx9irM8T1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IsasG/8BvJzBxgcO3/0R7Kru/07rwCN9MsV3lNUA90T5eqTcJYy/etD2xGv73YoxA
-	 bMK4ZWKZNhp5WMTSDQns8cBexsE6ChCcAl2FvqTLhLvHc3GuaJrjU2nqK3v2bVwvgQ
-	 wDWHJbZbtYsKJ0pl2VCt2IX48NQJTyVi/ITJyDDs=
+	b=z+7WQWAsW7ybC+g5z/DnImjeejo/LdTa6WFZkEgBus2kQyz5HVia6U9X2DVG0VdSS
+	 JWWMU0Rt1mxZxXUGoFQ7E0CWBXmlw64gUHpGnmPMEWtzrhqf50HQi6jemMA7UCA54W
+	 MsctEIT3sLdu8Qp1lZxMdV6sJxyU2cpTq/266ZRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Esteban Urrutia <esteuwu@proton.me>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Jie Gan <jie.gan@oss.qualcomm.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1187/1815] phy: qcom: qmp-pcie: Add pcs_lane1 offset to V5 offsets
-Date: Sat, 12 Sep 2026 08:48:57 +0200
-Message-ID: <20260912065716.877852062@linuxfoundation.org>
+Subject: [PATCH 7.2 1196/1815] coresight: etm4x: fix leaked trace id
+Date: Sat, 12 Sep 2026 08:49:06 +0200
+Message-ID: <20260912065717.090145037@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,36 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esteban Urrutia <esteuwu@proton.me>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit f8b4493d5e7e19682abcf538a9faad012b5ef69e ]
+[ Upstream commit 467e5862ccb0eed907002f4c6d3badfe34360940 ]
 
-Some SoCs such as SM8475 write data to registers using this offset,
-specifically SW_CTRL2 and MX_CTRL2.
-Add pcs_lane1 offset to V5 offsets to support this.
+If etm4_enable_sysfs() fails in cscfg_csdev_enable_active_config(),
+the trace ID may be leaked because it is not released.
 
-Signed-off-by: Esteban Urrutia <esteuwu@proton.me>
-Fixes: 0fd0b31965b0 ("phy: qualcomm: qmp-pcie: add support for SAR2130P")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260715-sm8475-bup-pcie-v2-2-48bd91a19abf@proton.me
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+To address this, call etm4_release_trace_id() when etm4_enable_sysfs()
+fails in cscfg_csdev_enable_active_config().
+
+Fixes: 7ebd0ec6cf94 ("coresight: configfs: Allow configfs to activate configuration")
+Reviewed-by: Jie Gan <jie.gan@oss.qualcomm.com>
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260725113645.57519-4-yeoreum.yun@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index d3effad7a074b..3618812e84d5f 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -3554,6 +3554,7 @@ static const struct qmp_pcie_offsets qmp_pcie_offsets_v5 = {
- 	.pcs_misc	= 0x0600,
- 	.tx		= 0x0e00,
- 	.rx		= 0x1000,
-+	.pcs_lane1	= 0x1400,
- 	.tx2		= 0x1600,
- 	.rx2		= 0x1800,
- };
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index 1884960cfe6f7..8363c55b3952a 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -920,8 +920,10 @@ static int etm4_enable_sysfs(struct coresight_device *csdev, struct coresight_pa
+ 	cscfg_config_sysfs_get_active_cfg(&cfg_hash, &preset);
+ 	if (cfg_hash) {
+ 		ret = cscfg_csdev_enable_active_config(csdev, cfg_hash, preset);
+-		if (ret)
++		if (ret) {
++			etm4_release_trace_id(drvdata);
+ 			return ret;
++		}
+ 	}
+ 
+ 	raw_spin_lock(&drvdata->spinlock);
 -- 
 2.53.0
 
