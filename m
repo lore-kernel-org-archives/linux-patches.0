@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61F633EAF3;
-	Sat, 12 Sep 2026 18:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93BE3385D7F;
+	Sat, 12 Sep 2026 18:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238505; cv=none; b=hfub6r6TWVH+8QVT9cgOjruXckytIm1C4Z6f9c5616xXtjwwI6eCnI4hO2CzBaGaJU+NSjt7MYs5QmPvT/8+eI3dv05WfLmxcoem0HbgVWLyaGnSjCUpZfpO8+ZhreZQJBVc4lxlvct1yWm8gCazVpIJRp6AyvNPTIGwaF2wQvM=
+	t=1789238509; cv=none; b=bySYynornyYMkraHdDjAKxJbBeEl/q0s+X0VscgmvQ1cwJBRsfSmwp97gFr+DsgmOCBdPkhry1dDoYVYQvXlOzIm2IXO69QpAs9NntFIEAzape5DoJlPYwwxw5ehTOoJpyEZ2uyCM6A1n7Op/2Ptpvy4fynZcCGGQc1e5CWIwrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238505; c=relaxed/simple;
-	bh=4SXVphgVxl+gBdI0M4AHB9EWoVKabNN/hbLZhNnI04s=;
+	s=arc-20240116; t=1789238509; c=relaxed/simple;
+	bh=QBDef2NB71IgNCotDTZy/2XEArM25NEciDVKsFEi7Co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RUUa4coYhQTYsf4R69n9atULA4FK4eyfD3nm6ITeIh82byBSfyWOcrwoZXmiLvlKXurhqdI8y/5yU441dj27GvTAcDSns2W1yTsXUfTNFDqhABAIo0YTtk96YJfsqVeUpTBfiRwDBKdzhfkAGiITAkJNgXoxuKF9WUIZBqaT7gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JDig8rC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ak48Mq+SrrCDOvN+IIF1clqi1JThbEp3EJd6JMo8Jua70e71dc4aJ3cPzCYnr/qn2zn1BWKyKDCvBnHw1GgHsiA1CvS/Y8cmI86hW+3t1PgNencNqDrIvNMrwpWSj/RyiALi/zrbwMXPrR+dLKJ7AxR/DKi3idv8gvm1n3cEafo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1SqRpsG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JDig8rC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489001F000FF;
-	Sat, 12 Sep 2026 18:41:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1SqRpsG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978B91F000FF;
+	Sat, 12 Sep 2026 18:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238503;
-	bh=lFhYAcSWdu1nSxHhJrMGVROfE4cWL/IhdJreGlVcHZg=;
+	s=korg; t=1789238508;
+	bh=J8CQmHs0gK9F7ksacUx3ymoM08PjIlo+oxOFRhgRyDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2JDig8rCdWw7Te/BEskkhAjdYLWcuqebW0uwJ/Hs+pmmf5SiKIKWHvWtBXEoA7qDq
-	 h6t3eQwRxY/oX/2aogpt78VmyIa2DezimZU1+f+KPhDk6I+OJVSu/ITy1x+7hXT+Jf
-	 bz9ijYtUKN9CMM2scmCBOCI6ybLhzUFPzY4hD5ZQ=
+	b=Q1SqRpsG4jXlZL44RDhKWVeAIT04RrZKgXhR/2cNxQ2EgvO+YOOmsdGpWPLcb3aOT
+	 Fc8b2uT3RqxvRzLIsrUwtb1n77gHOfanZnCQnvKcQurUQdjI568JRUDp0C9KTg6Hap
+	 zOmJMUEoJmI4lvpQacZPdp8GNongPTZWhI9KBtwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herman van Hazendonk <github.com@herrie.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Slavin Liu <220245772@seu.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 474/935] clk: qcom: gdsc: tear down per-domain genpds in gdsc_unregister()
-Date: Sat, 12 Sep 2026 08:58:24 +0200
-Message-ID: <20260912065537.698556258@linuxfoundation.org>
+Subject: [PATCH 5.15 475/935] usb: gadget: r8a66597: avoid double free of ep0_req in probe error path
+Date: Sat, 12 Sep 2026 08:58:25 +0200
+Message-ID: <20260912065537.721778374@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,74 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herman van Hazendonk <github.com@herrie.org>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit 86b23609d5e17a770d03037e53c6a443e742a6e6 ]
+[ Upstream commit 41d541e3718db01668a4cd29815ee4b3b55f76d2 ]
 
-gdsc_unregister() removes the OF provider entry and tears down the
-parent/subdomain wiring, but never calls pm_genpd_remove() on the
-individual generic_pm_domain structures registered by gdsc_init():
+If usb_add_gadget_udc() fails, r8a66597_probe() jumps to err_add_udc
+and frees ep0_req, then falls through to clean_up2 where ep0_req is
+freed again when it is non-NULL.
 
-	void gdsc_unregister(struct gdsc_desc *desc)
-	{
-		struct device *dev = desc->dev;
-		size_t num = desc->num;
+Remove the redundant free from err_add_udc and keep the cleanup in
+clean_up2 so the request is released exactly once.
 
-		gdsc_pm_subdomain_remove(desc, num);
-		of_genpd_del_provider(dev->of_node);
-	}
+Fixes: 776976a67ae2 ("usb: gadget: r8a66597-udc: cleanup error path")
+Issue found using a prototype static analysis tool
+and confirmed by code review.
 
-That leaves dangling entries on the global gpd_list. After a provider
-unbind/rebind cycle (deferred-probe replay during early boot, real
-module unload of a clk driver that owns GDSCs, or an OF-overlay tear-
-down) the next gdsc_init() will end up trying to re-register a name
-that is still in the list and pm_genpd_init() returns -EEXIST.
-
-While we are here, flip the order so the consumer-facing OF provider
-entry is the first thing removed -- otherwise a fresh
-of_genpd_get_from_provider() call racing with the teardown could
-attach to a domain that is mid-removal.
-
-Iterate the scs[] array and pm_genpd_remove() each registered domain
-after the subdomain links are torn down. The regulators stay devm-
-managed (devm_regulator_get_optional() in gdsc_register()), so the
-release happens automatically when the underlying device is unbound;
-just the genpd accounting needs to be undone explicitly.
-
-Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
-Fixes: 45dd0e55317c ("clk: qcom: Add support for GDSCs")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260602140934.796697-4-github.com@herrie.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Signed-off-by: Slavin Liu <220245772@seu.edu.cn>
+Link: https://patch.msgid.link/20260624140908.1282-1-getshell@seu.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gdsc.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/udc/r8a66597-udc.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index e8b2c365e75f3..4b6dcb0aade11 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -558,10 +558,18 @@ int gdsc_register(struct gdsc_desc *desc,
- void gdsc_unregister(struct gdsc_desc *desc)
- {
- 	struct device *dev = desc->dev;
-+	struct gdsc **scs = desc->scs;
- 	size_t num = desc->num;
-+	int i;
+diff --git a/drivers/usb/gadget/udc/r8a66597-udc.c b/drivers/usb/gadget/udc/r8a66597-udc.c
+index 38e4d6b505a05..e36eacc0f4d72 100644
+--- a/drivers/usb/gadget/udc/r8a66597-udc.c
++++ b/drivers/usb/gadget/udc/r8a66597-udc.c
+@@ -1953,7 +1953,6 @@ static int r8a66597_probe(struct platform_device *pdev)
+ 	return 0;
  
--	gdsc_pm_subdomain_remove(desc, num);
- 	of_genpd_del_provider(dev->of_node);
-+	gdsc_pm_subdomain_remove(desc, num);
-+
-+	for (i = 0; i < num; i++) {
-+		if (!scs[i])
-+			continue;
-+		pm_genpd_remove(&scs[i]->pd);
-+	}
- }
- 
- /*
+ err_add_udc:
+-	r8a66597_free_request(&r8a66597->ep[0].ep, r8a66597->ep0_req);
+ clean_up2:
+ 	if (r8a66597->pdata->on_chip)
+ 		clk_disable_unprepare(r8a66597->clk);
 -- 
 2.53.0
 
