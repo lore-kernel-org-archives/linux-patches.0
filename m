@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57FA047C0F7;
-	Sat, 12 Sep 2026 12:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE5747AF5F;
+	Sat, 12 Sep 2026 12:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215642; cv=none; b=hMY3zo1s/mvO3rha+V3S6Ioukdo/jgv8jBtor1DWtAIPOnd/Jiw1zmOYmbrWuwR3tknkxADFPoP0ACU/0gA/DjiGwCILzlmTfmLe/Cm8IjzfHyFDg90KpH0C+NQ6VWw/9UZQyvF1LptoM898S4vPHB4/gZFGCRL0CbJZkPPi3ks=
+	t=1789215648; cv=none; b=AHJhZGzY/UK9XomYNNiu1nKkBHovxLdoQOsMzI5vuXLRm8wkQG/wZAEVyrlauvCawLUiovGiOiyKY/Kw8ZToftqzdA44qDtibNyaiWFKlJaJOY5Y/mFiyth8HNQr7Kuff/YFyPY+kWP+p4M9SZcSYRWqfsHnHQinXEV8tKOevOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215642; c=relaxed/simple;
-	bh=x++HSP0FClkREL6SUxSoI1o+hQblqn8f7iOLh9tJNFo=;
+	s=arc-20240116; t=1789215648; c=relaxed/simple;
+	bh=ROCCaz7+tCjW9K3NrZ+rDi48uJM4tDrB7VP235MibM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rvq5yYZnEMFuDJvXHPozHHsQ5GrnuwuCwMIYHlq9mlETJdIcUCQ4ink+X1A+QWKF86ydp8tzjhO0YZMg1XkNDwCtrgamOGBvLHo3X6DvQjFkR8cc9ALx8K07wp7EA2R/gfBbF8ifr8Ggqzy0UsiOY8OvBj5UMhDOarja+qG/ZnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/CJ4Rit; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NFKHBBOsLTnLDLtB2VHe8RnlCNc4FaLxWGk7E5Oqm0BYx/xqap+HnsNIo/rGtYZaX18mNaQLg8oROcb9uTl0SMRiN3j9JvCwn7jCOY70xEGw+hx4B6hQZfWofRD5e+VB8jsqkPfBenw0OhX1+m9CVkY1G6LlOdJTHkzFVdkUTro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sUWRrVQD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/CJ4Rit"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4E51F000FF;
-	Sat, 12 Sep 2026 12:20:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sUWRrVQD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D2B1F000FF;
+	Sat, 12 Sep 2026 12:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215639;
-	bh=FGdTISCib2HzqtIxINfLQeLK6DKwJ4ETT8OCublHUoU=;
+	s=korg; t=1789215644;
+	bh=mKUZVWQxF454ssr9HGHudhbKo5HV92dmPinjamRTASY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p/CJ4RitHTjexUdtyAVskKUfvd9C8qPxQYdUny9DIMenYpDdHG1kE0PH1r1V+tcDF
-	 itJOp9TATXFILvtLGFPjnL8Xj7jEUvXDfuSW2GJlxcc+b+sJ8srSJzP+KUK+iSWEYg
-	 mER5AaYLNqKsmFUxavcmn30r33dpKv4o6sgxafik=
+	b=sUWRrVQDDPNVh9Uu8l4MrI0nbzqtls057LlZneYR0sxtoeLox9gnoK1hpxe0mrN70
+	 9p1PkQb6oTa9cDI05vSUGtpmJglWKhRRCoj8OGC56+8ZrvfsMmDlqYyTwd+VumiuBU
+	 8LhzmIZsEN/AQTF6cksTJzNGCcIevX9C23DWPYmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	Huisong Li <lihuisong@huawei.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0574/1376] ACPI: processor: idle: Expand _LPI package sanity checks
-Date: Sat, 12 Sep 2026 08:50:00 +0200
-Message-ID: <20260912065620.322135075@linuxfoundation.org>
+Subject: [PATCH 6.12 0575/1376] usb: gadget: f_uac1_legacy: remove broken string configfs attributes
+Date: Sat, 12 Sep 2026 08:50:01 +0200
+Message-ID: <20260912065620.345101507@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,84 +51,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit d5c13047a132162d2649be876906ead691d12948 ]
+[ Upstream commit 590d74ec8f488e06b9f1c0f8f0941f45531f3a55 ]
 
-The _LPI package sanity checks in acpi_processor_evaluate_lpi() miss
-a couple of things, so expand them by adding a buffer size check
-before retrieving a struct acpi_power_register from it (and skip the
-given state if the buffer is not large enough to hold a register
-structure) and making the function avoid copying the state description
-from the ACPI table if there are too few elements in the package
-supposed to hold it.
+The UAC1_STR_ATTRIBUTE macro defines configfs show/store handlers for
+the fn_play, fn_cap, and fn_cntl string options. The store function
+contains an inverted null check on the kstrndup() return value.
 
-While at it, relocate and rephrase a comment about skipping _LPI state
-package elements [7-8].
+This means every write attempt returns -ENOMEM on success and
+dereferences a NULL pointer on allocation failure. The attributes
+have been broken and unused for many years.
 
-Fixes: a36a7fecfe60 ("ACPI / processor_idle: Add support for Low Power Idle(LPI) states")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
-Acked-by: Huisong Li <lihuisong@huawei.com>
-Link: https://patch.msgid.link/5084143.GXAFRqVoOG@rafael.j.wysocki
+Remove the UAC1_STR_ATTRIBUTE macro and the three attributes it
+generated. The internal defaults (FILE_PCM_PLAYBACK, FILE_PCM_CAPTURE,
+FILE_CONTROL) set in f_audio_alloc_inst() are unaffected.
+
+Fixes: 0854611a19ae ("usb: gadget: f_uac1: add configfs support")
+Link: https://lore.kernel.org/linux-usb/20260625113154.1954813-1-xu.yang_2@oss.nxp.com/
+Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Assisted-by: Claude:claude-sonnet-4.6
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260713060845.3759673-1-xu.yang_2@oss.nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_idle.c | 28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ .../testing/configfs-usb-gadget-uac1_legacy   |  3 -
+ Documentation/usb/gadget-testing.rst          |  3 -
+ drivers/usb/gadget/function/f_uac1_legacy.c   | 56 -------------------
+ drivers/usb/gadget/function/u_uac1_legacy.h   |  3 -
+ 4 files changed, 65 deletions(-)
 
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index b8a8cbf8fafd6..6ecf784cf6b5c 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -950,6 +950,13 @@ static int acpi_processor_evaluate_lpi(acpi_handle handle,
- 		if (obj->type == ACPI_TYPE_BUFFER) {
- 			struct acpi_power_register *reg;
+diff --git a/Documentation/ABI/testing/configfs-usb-gadget-uac1_legacy b/Documentation/ABI/testing/configfs-usb-gadget-uac1_legacy
+index b2eaefd9bc498..6a681d219f439 100644
+--- a/Documentation/ABI/testing/configfs-usb-gadget-uac1_legacy
++++ b/Documentation/ABI/testing/configfs-usb-gadget-uac1_legacy
+@@ -5,8 +5,5 @@ Description:
+ 		The attributes:
  
-+			if (obj->buffer.length < sizeof(*reg)) {
-+				acpi_handle_debug(handle,
-+					"Invalid register data for _LPI state %d\n",
-+					state_idx);
-+				continue;
-+			}
-+
- 			reg = (struct acpi_power_register *)obj->buffer.pointer;
- 			if (reg->space_id != ACPI_ADR_SPACE_SYSTEM_IO &&
- 			    reg->space_id != ACPI_ADR_SPACE_FIXED_HARDWARE)
-@@ -966,13 +973,6 @@ static int acpi_processor_evaluate_lpi(acpi_handle handle,
- 			continue;
- 		}
+ 		audio_buf_size - audio buffer size
+-		fn_cap - capture pcm device file name
+-		fn_cntl - control device file name
+-		fn_play - playback pcm device file name
+ 		req_buf_size - ISO OUT endpoint request buffer size
+ 		req_count - ISO OUT endpoint request count
+diff --git a/Documentation/usb/gadget-testing.rst b/Documentation/usb/gadget-testing.rst
+index bf555c2270f5c..3ef109ad12d5b 100644
+--- a/Documentation/usb/gadget-testing.rst
++++ b/Documentation/usb/gadget-testing.rst
+@@ -712,9 +712,6 @@ The uac1 function provides these attributes in its function directory:
  
--		/* elements[7,8] skipped for now i.e. Residency/Usage counter*/
+ 	=============== ====================================
+ 	audio_buf_size	audio buffer size
+-	fn_cap		capture pcm device file name
+-	fn_cntl		control device file name
+-	fn_play		playback pcm device file name
+ 	req_buf_size	ISO OUT endpoint request buffer size
+ 	req_count	ISO OUT endpoint request count
+ 	=============== ====================================
+diff --git a/drivers/usb/gadget/function/f_uac1_legacy.c b/drivers/usb/gadget/function/f_uac1_legacy.c
+index 4981af8337ab8..c234f9fea27cf 100644
+--- a/drivers/usb/gadget/function/f_uac1_legacy.c
++++ b/drivers/usb/gadget/function/f_uac1_legacy.c
+@@ -888,60 +888,10 @@ UAC1_INT_ATTRIBUTE(req_buf_size);
+ UAC1_INT_ATTRIBUTE(req_count);
+ UAC1_INT_ATTRIBUTE(audio_buf_size);
+ 
+-#define UAC1_STR_ATTRIBUTE(name)					\
+-static ssize_t f_uac1_opts_##name##_show(struct config_item *item,	\
+-					 char *page)			\
+-{									\
+-	struct f_uac1_legacy_opts *opts = to_f_uac1_opts(item);		\
+-	int result;							\
+-									\
+-	mutex_lock(&opts->lock);					\
+-	result = sprintf(page, "%s\n", opts->name);			\
+-	mutex_unlock(&opts->lock);					\
+-									\
+-	return result;							\
+-}									\
+-									\
+-static ssize_t f_uac1_opts_##name##_store(struct config_item *item,	\
+-					  const char *page, size_t len)	\
+-{									\
+-	struct f_uac1_legacy_opts *opts = to_f_uac1_opts(item);		\
+-	int ret = -EBUSY;						\
+-	char *tmp;							\
+-									\
+-	mutex_lock(&opts->lock);					\
+-	if (opts->refcnt)						\
+-		goto end;						\
+-									\
+-	tmp = kstrndup(page, len, GFP_KERNEL);				\
+-	if (tmp) {							\
+-		ret = -ENOMEM;						\
+-		goto end;						\
+-	}								\
+-	if (opts->name##_alloc)						\
+-		kfree(opts->name);					\
+-	opts->name##_alloc = true;					\
+-	opts->name = tmp;						\
+-	ret = len;							\
+-									\
+-end:									\
+-	mutex_unlock(&opts->lock);					\
+-	return ret;							\
+-}									\
+-									\
+-CONFIGFS_ATTR(f_uac1_opts_, name)
 -
--		obj = pkg_elem + 9;
--		if (obj->type == ACPI_TYPE_STRING)
--			strscpy(lpi_state->desc, obj->string.pointer,
--				ACPI_CX_DESC_LEN);
+-UAC1_STR_ATTRIBUTE(fn_play);
+-UAC1_STR_ATTRIBUTE(fn_cap);
+-UAC1_STR_ATTRIBUTE(fn_cntl);
 -
- 		lpi_state->index = state_idx;
- 		if (obj_get_integer(pkg_elem + 0, &lpi_state->min_residency)) {
- 			pr_debug("No min. residency found, assuming 10 us\n");
-@@ -995,6 +995,20 @@ static int acpi_processor_evaluate_lpi(acpi_handle handle,
+ static struct configfs_attribute *f_uac1_attrs[] = {
+ 	&f_uac1_opts_attr_req_buf_size,
+ 	&f_uac1_opts_attr_req_count,
+ 	&f_uac1_opts_attr_audio_buf_size,
+-	&f_uac1_opts_attr_fn_play,
+-	&f_uac1_opts_attr_fn_cap,
+-	&f_uac1_opts_attr_fn_cntl,
+ 	NULL,
+ };
  
- 		if (obj_get_integer(pkg_elem + 5, &lpi_state->enable_parent_state))
- 			lpi_state->enable_parent_state = 0;
-+
-+		/* Skip elements [7-8] i.e. Residency/Usage counters. */
-+
-+		/*
-+		 * Avoid out-of-bounds access if the size of the package is less
-+		 * than expected.
-+		 */
-+		if (element->package.count < 10)
-+			continue;
-+
-+		obj = pkg_elem + 9;
-+		if (obj->type == ACPI_TYPE_STRING)
-+			strscpy(lpi_state->desc, obj->string.pointer,
-+				ACPI_CX_DESC_LEN);
- 	}
+@@ -956,12 +906,6 @@ static void f_audio_free_inst(struct usb_function_instance *f)
+ 	struct f_uac1_legacy_opts *opts;
  
- 	acpi_handle_debug(handle, "Found %d power states\n", state_idx);
+ 	opts = container_of(f, struct f_uac1_legacy_opts, func_inst);
+-	if (opts->fn_play_alloc)
+-		kfree(opts->fn_play);
+-	if (opts->fn_cap_alloc)
+-		kfree(opts->fn_cap);
+-	if (opts->fn_cntl_alloc)
+-		kfree(opts->fn_cntl);
+ 	kfree(opts);
+ }
+ 
+diff --git a/drivers/usb/gadget/function/u_uac1_legacy.h b/drivers/usb/gadget/function/u_uac1_legacy.h
+index b5df9bcbbeba7..b9ddae550ff3c 100644
+--- a/drivers/usb/gadget/function/u_uac1_legacy.h
++++ b/drivers/usb/gadget/function/u_uac1_legacy.h
+@@ -62,9 +62,6 @@ struct f_uac1_legacy_opts {
+ 	char				*fn_cap;
+ 	char				*fn_cntl;
+ 	unsigned			bound:1;
+-	unsigned			fn_play_alloc:1;
+-	unsigned			fn_cap_alloc:1;
+-	unsigned			fn_cntl_alloc:1;
+ 	struct mutex			lock;
+ 	int				refcnt;
+ };
 -- 
 2.53.0
 
