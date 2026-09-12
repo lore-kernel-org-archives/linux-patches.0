@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97E447126B;
-	Sat, 12 Sep 2026 15:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C2A4248C6;
+	Sat, 12 Sep 2026 15:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228295; cv=none; b=KWX7MYoMBdnNfAKAJug98FgSCdspfsD3hR4tWNOi6j1436CPKj8OfiTSu8/YIvakTUdX7fukmgUax/rmiTCZzY5KvkBYRfClCqnubahPZT6Wdg7AMxJ7LVhh9I5WqBHvR7iQ3REXkE/4ePMrlhVrlnOcPPOPExFzs/afDV8AlD8=
+	t=1789228300; cv=none; b=eL3kuy8+QUGAWqrzzSPbn4ZApC7f+saJ3KY6ykk/HxgSyJseq3xXMbI5/axD4shRBYD8Pj7p2zR6l/fcHmTqwMnVVFmvkzXy4j3wmY4IdjiKXnXIYPwo8ECY2c5L+Y7MtKyW+3Jl/EDx97TEP2t745+GJqftAGljokz4YiAGJRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228295; c=relaxed/simple;
-	bh=4yQ1rFnTwXDG4HWkHqIn8cedEui+mlFmua/0tBrlaPo=;
+	s=arc-20240116; t=1789228300; c=relaxed/simple;
+	bh=Lq/kSkeJVi5jDffU1tj1+V1BTngYtnXKxjuLeImrOno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uXC1QTTKa1QF65ldx6IAVmXel5NirLeLjx7923cvhLlUpX5ABmJa2Xro7dmLGGxBcZd/sMxYCcp2FTeU3DHPUcTpN75f2Wuq2JbLhWl9i6jrR5AYQjA5pFv4A/1mszwnHyeVq8QGAjfG3m1kIXg/CIw5+5jTaJCfzcwHnuR9DlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=df4LcLuB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KWLkoKvsDKpmUjgtxjhZ3sNf8dXh9UI/Z+fGGg8F3n421y387SJQCGVQ/77tG8LffVGDq11XuGJMJgXFFXyyMKVpLYZhqQ0tFLfUSH6c9TSQxpMTt4ZUjAAPECAfKWXYbcc/bA5YLy0PumccTQrOZPmWp/QNZOjYVWDlURzU/t8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kolRtoXz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="df4LcLuB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A59E1F000FF;
-	Sat, 12 Sep 2026 15:51:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kolRtoXz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A941D1F000FF;
+	Sat, 12 Sep 2026 15:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228294;
-	bh=sIhUO9N54ExShoRhjvPFiM1sa+RexsluilUcCdN81fc=;
+	s=korg; t=1789228299;
+	bh=zCwVZPSKv2BmD/7aDwCBJuX753nFFUpbINAQQjQbQp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=df4LcLuBvc4KZBr99RVNlnDdUhyqmq8eAOJ+nbLenUqM7lp2hiae1I66ZvwiO0XHm
-	 RnGyX7G946shWCHhZNO+5zuSfjS6mrS41z6Ke0SfO9Mdbf2s/D9Mkeojl0z0INn4FZ
-	 F/0sHhm3zXUSRhH5QfnVZtNsC08aj9JCk+PWUQso=
+	b=kolRtoXzbgMifcQov55XyqDo9WiH3bnHJtTEzco4QD6Uz2lybtX4YOXu+ZphIOxFK
+	 AjY8kNlyOxln42eDdrycGUsnmTVOUHgM6e9NLA302uRh3OFUdfjd92jyUT5KiH+WjF
+	 44/iGuuoc34aThqfJqfK9OuC3/SaaTh95o02nZGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 0329/1191] clk: qcom: gcc-msm8916: Fix enable_reg for gcc_blsp1_sleep_clk
-Date: Sat, 12 Sep 2026 08:50:57 +0200
-Message-ID: <20260912065555.615237024@linuxfoundation.org>
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>
+Subject: [PATCH 6.1 0356/1191] KVM: s390: Free guest debug data on vcpu destroy
+Date: Sat, 12 Sep 2026 08:51:24 +0200
+Message-ID: <20260912065556.224912599@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,40 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-commit c5339edc6abb601ea10df910ea0b1592fa1016f3 upstream.
+commit e7f698b09d4a7c36b299acf680fc50fe868e2bcd upstream.
 
-According to the APQ8016E TRM, the GCC_BLSP1_SLEEP_CBCR register is
-read-only and only has the CLK_OFF bit to check if the clock is running.
-This is a shared vote clock, the correct way to enable it is to vote for
-BLSP1_SLEEP_CLK_ENA (BIT(9)) in GCC_APCS_CLOCK_BRANCH_ENA_VOTE (0x45004).
+kvm_s390_clear_bp_data() is only called from
+kvm_arch_vcpu_ioctl_set_guest_debug(), i.e. when user space changes or
+disables debugging. A vCPU that is destroyed while hardware breakpoints
+are still armed - the normal case when the VMM just exits or crashes -
+leaks hw_bp_info, hw_wp_info and all old_data buffers, since generic KVM
+frees the vCPU right after kvm_arch_vcpu_destroy().
 
+That is bounded by MAX_BP_COUNT entries, so roughly 8 KiB per vCPU, but
+it is unbounded over VM lifetimes. The allocations are
+GFP_KERNEL_ACCOUNT, so the charge also outlives the exiting process and
+pins dying memcgs.
+
+Fix by clearing the debug data on vCPU destruction. Calling it
+unconditionally is fine: struct kvm_vcpu is zero allocated, so for a vCPU
+that never enabled debugging the counters are 0 and the pointers NULL.
+
+Fixes: 27291e2165b6 ("KVM: s390: hardware support for guest debugging")
 Cc: stable@vger.kernel.org
-Fixes: 3966fab8b6ab ("clk: qcom: Add MSM8916 Global Clock Controller support")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Link: https://lore.kernel.org/r/20260706-qcom-clk-mdm9607-fixes-v2-1-745565101869@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-ID: <20260805110455.7200-8-borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-msm8916.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/s390/kvm/kvm-s390.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/clk/qcom/gcc-msm8916.c
-+++ b/drivers/clk/qcom/gcc-msm8916.c
-@@ -1590,9 +1590,10 @@ static struct clk_branch gcc_blsp1_ahb_c
- 
- static struct clk_branch gcc_blsp1_sleep_clk = {
- 	.halt_reg = 0x01004,
-+	.halt_check = BRANCH_HALT_VOTED,
- 	.clkr = {
--		.enable_reg = 0x01004,
--		.enable_mask = BIT(0),
-+		.enable_reg = 0x45004,
-+		.enable_mask = BIT(9),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_blsp1_sleep_clk",
- 			.parent_data = &(const struct clk_parent_data){
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -3274,6 +3274,7 @@ void kvm_arch_vcpu_destroy(struct kvm_vc
+ 	trace_kvm_s390_destroy_vcpu(vcpu->vcpu_id);
+ 	kvm_s390_clear_local_irqs(vcpu);
+ 	kvm_clear_async_pf_completion_queue(vcpu);
++	kvm_s390_clear_bp_data(vcpu);
+ 	if (!kvm_is_ucontrol(vcpu->kvm))
+ 		sca_del_vcpu(vcpu);
+ 	kvm_s390_update_topology_change_report(vcpu->kvm, 1);
 
 
