@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE4733AD88;
-	Sat, 12 Sep 2026 09:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4F12F7F19;
+	Sat, 12 Sep 2026 09:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205029; cv=none; b=ZgQgkXnl69XT72AYCIuQwM+jxeeEHplpL8g+LKREwVEvM7s7dqhMe2Ti2+eYQRAYGJn14ZPpTjDqsUq8v47otNK8rSR+eLho+8Z9N2rShwSP0TqHm90kTY/JQIKmwH0zHAcvlOVKQygoiAKCorv42wiNxp99CLWCHKKdlpwc4tI=
+	t=1789205034; cv=none; b=NuLX0oW2fd9lwsBxosbBHOJpI6k5YV/UGtQeHIIPm1solmYpsxoTiP+B+c6JW5BIW/NUvVBA58j3XNvZ6Lqza0uJ7uKZZg8A0duTy3mXGIvv5HFZEpfKCi1vleiIW4fLmlQRbbS/9Zj2SfV+H5gRLJFmyTeeKp3IAoReVbL7Sag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205029; c=relaxed/simple;
-	bh=Tu0oTTp3q8seQiN7XZdpV1zK1b/SCe3Cs7bRif2cKg0=;
+	s=arc-20240116; t=1789205034; c=relaxed/simple;
+	bh=TO2mg7XPfQDuzU+RdlBZpFs80+nOGid8q9oDFuQ8T+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZFqMJQ8XBSP915dWz6U5xInZgGKIwTrpPBRrH6dNE29LEyvTwddCb7hRkDDxvdRsSVUdATZIejCS40m8U4Ks0G3MPcpqL8Bkea7fJKahjOOONW5KbuaYgRJilURQYa4uaYns6zx7UY97VGn4C5iGhD8pCsP3pDv9COUKJfq0Dfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jnWBaD4X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rnfpG169BwgoHF0dwHbJMz4uY8qyhBHOM3V02Wv7yjWhXInbalxZWK7vS0xVkfNqkSWdYHf2K0e8T6dIbf+OUq65qiSDP6zIFJNum23KycTB0wM0QRcPPZxzr5MsUhsqtsDJ1LRLFE7Jkav0nOIASKDzdgqKe8X/hcqY8DJ0xjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+F/nbaS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jnWBaD4X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33781F000FF;
-	Sat, 12 Sep 2026 09:23:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+F/nbaS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256F21F000FF;
+	Sat, 12 Sep 2026 09:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205028;
-	bh=AE6Jf0rcdVCNORYcnav7YtPfPvVyr4DdDycK0xzi01U=;
+	s=korg; t=1789205033;
+	bh=1PN6BYOdYSKXEfYhSofITaUDIZHjeqKgZdyF22/iv1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jnWBaD4XT7NB3UN3+P2WDquvNJ9qs3xKiG6jqeLCesOzNWX/Q35zrLJ2423axFgcm
-	 bj0iu9ckT7NY9Z5mJlFcJgIuyv5xsYFizvpD49KxPpXSPLFHFB8F9Jgy2ZeF1qRJLC
-	 mJtiAwgfaHuirs87ysbUIPX0ntbiyoo7QZZMrIcw=
+	b=u+F/nbaS+p0M/it+deLKvPvEFKyiO9FmML7Ebkw77rPqZS6hP2NMrX6KLp1bVpHVm
+	 vjCem8NDPbE1ZvYA5WCDpfLpWGcSxIf+mOtH4pVpM+68SPy+RaKKwFE+a42O4Fs+ZF
+	 ++Hovy0n2Cm+ZgslU3Y+pMBf+3AuBtCSkWkqHo3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nitin Shetty J <nshettyj@marvell.com>,
-	Anshumali Gaur <agaur@marvell.com>,
-	Simon Horman <horms@kernel.org>,
+	co+4638111fe2a12980@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
+	Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1732/1815] octeontx2-vf: fix workqueue and netdev race in probe/remove
-Date: Sat, 12 Sep 2026 08:58:02 +0200
-Message-ID: <20260912065729.637491765@linuxfoundation.org>
+Subject: [PATCH 7.2 1733/1815] net: qualcomm: rmnet: restore skb->dev on deaggregated frames
+Date: Sat, 12 Sep 2026 08:58:03 +0200
+Message-ID: <20260912065729.661586510@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,78 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anshumali Gaur <agaur@marvell.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 3ba97ff4f873481d370bee7f7dfb87f8296af9be ]
+[ Upstream commit a66734a1c5e36525ea07e9f4547fddc51e916de3 ]
 
-Initialize the VF workqueue before register_netdev() so ndo_set_rx_mode
-does not queue work on a NULL workqueue. Unregister the netdev before
-destroying the workqueue, and add proper probe error cleanup.
+rmnet_map_deaggregate() allocates each sub-frame with alloc_skb() and
+leaves skb->dev NULL. __rmnet_map_ingress_handler() assigns
+skb->dev = ep->egress_dev only on the data path, but a MAP command frame
+is dispatched to rmnet_map_command() before that, so rmnet_map_send_ack()
+runs netif_tx_lock(skb->dev) on a NULL device. An unprivileged user
+reaches this by unsharing a user+net namespace, creating an rmnet link
+over a tap device with INGRESS_DEAGGREGATION and INGRESS_MAP_COMMANDS,
+and writing an aggregated frame carrying a flow-control command to the
+tap fd.
 
-Fixes: cbc100aa2205 ("octeontx2-nicvf: add ndo_set_rx_mode support for multicast & promisc")
-Signed-off-by: Nitin Shetty J <nshettyj@marvell.com>
-Signed-off-by: Anshumali Gaur <agaur@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260820083634.1641740-1-nshettyj@marvell.com
+Restore the assignment dropped by 378e25357ac7, so every skb leaving
+rmnet_map_deaggregate() has a valid device.
+
+  BUG: KASAN: null-ptr-deref in _raw_spin_lock (kernel/locking/spinlock.c:158)
+  Write of size 4 at addr 00000000000004b4 by task exploit/144
+  Call Trace:
+   _raw_spin_lock (kernel/locking/spinlock.c:158)
+   netif_tx_lock (net/sched/sch_generic.c:497)
+   rmnet_map_command (drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c:67)
+   rmnet_rx_handler (drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c:125)
+   __netif_receive_skb_core.constprop.0 (net/core/dev.c:6103)
+   ...
+   __netif_receive_skb_one_core (net/core/dev.c:6214)
+   netif_receive_skb (net/core/dev.c:6474)
+   tun_get_user (drivers/net/tun.c:1966)
+   tun_chr_write_iter (drivers/net/tun.c:2012)
+   vfs_write (fs/read_write.c:687)
+   ksys_write (fs/read_write.c:739)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+Fixes: 378e25357ac7 ("net: qualcomm: rmnet: Remove unnecessary device assignment")
+Reported-by: co+4638111fe2a12980@bugs.sh
+Closes: https://lore.kernel.org/netdev/ijg79FFMfIvKJbivdJEKvTO90Q9dTvyBkJck@bugs.sh/T/#u
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260820195240.1631458-1-xmei5@asu.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/nic/otx2_vf.c  | 20 ++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
-index b022f52c68450..fcdf891f90b58 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
-@@ -737,16 +737,16 @@ static int otx2vf_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	if (err)
- 		goto err_ptp_destroy;
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
+index 305ae15ae8f39..e6f48dc9fe64d 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
+@@ -394,6 +394,7 @@ struct sk_buff *rmnet_map_deaggregate(struct sk_buff *skb,
+ 	if (!skbn)
+ 		return NULL;
  
-+	err = otx2_vf_wq_init(vf);
-+	if (err)
-+		goto err_ipsec_clean;
-+
- 	err = register_netdev(netdev);
- 	if (err) {
- 		dev_err(dev, "Failed to register netdevice\n");
--		goto err_ipsec_clean;
-+		goto err_wq_destroy;
- 	}
- 
--	err = otx2_vf_wq_init(vf);
--	if (err)
--		goto err_unreg_netdev;
--
- 	otx2vf_set_ethtool_ops(netdev);
- 
- 	err = otx2vf_mcam_flow_init(vf);
-@@ -789,6 +789,10 @@ static int otx2vf_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	otx2_shutdown_tc(vf);
- err_unreg_netdev:
- 	unregister_netdev(netdev);
-+err_wq_destroy:
-+	cancel_work_sync(&vf->reset_task);
-+	cancel_work_sync(&vf->rx_mode_work);
-+	destroy_workqueue(vf->otx2_wq);
- err_ipsec_clean:
- 	cn10k_ipsec_clean(vf);
- err_ptp_destroy:
-@@ -836,11 +840,13 @@ static void otx2vf_remove(struct pci_dev *pdev)
- 	}
- #endif
- 
--	cancel_work_sync(&vf->reset_task);
- 	otx2_unregister_dl(vf);
- 	unregister_netdev(netdev);
--	if (vf->otx2_wq)
-+	if (vf->otx2_wq) {
-+		cancel_work_sync(&vf->reset_task);
-+		cancel_work_sync(&vf->rx_mode_work);
- 		destroy_workqueue(vf->otx2_wq);
-+	}
- 	cn10k_ipsec_clean(vf);
- 	otx2_ptp_destroy(vf);
- 	otx2_mcam_flow_del(vf);
++	skbn->dev = skb->dev;
+ 	skb_reserve(skbn, RMNET_MAP_DEAGGR_HEADROOM);
+ 	skb_put(skbn, packet_len);
+ 	memcpy(skbn->data, skb->data, packet_len);
 -- 
 2.53.0
 
