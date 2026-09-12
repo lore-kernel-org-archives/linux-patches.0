@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7CC4825A1;
-	Sat, 12 Sep 2026 18:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0BC3B27D1;
+	Sat, 12 Sep 2026 18:31:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237911; cv=none; b=HqF5U9KBpl8+y8LH7pyHnwZESPS59zq/LHJMdhdMXCx8zrQ0f65ikjMy/qIAhWX5ZgoMhoTvEUEYgRHsm1H/VFP+gPqKPUjjzpUzSFxxgEZlCV3lDtYd5jcTLJxPKngWDJdUJp1dpvjLtoZJr/6Nzl5WzndtgydekwYJM65ChtI=
+	t=1789237918; cv=none; b=JDG9wNn8GLkNWvPEIhnA6/nn3zeFYcHb4PUw0uSVIYkxs5vKw0npU8zYCHjqVJwqBE+HDGhQSpfpweQK9H6Vr/EFiojeVgu4r/Sj3uK5IyuwVaFhcc47XzKC6cU5eLbt/EU4kl27i9ewbEkOzqMUiVo7HUbxUsBJHXjpnt/DHjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237911; c=relaxed/simple;
-	bh=Ws8CAR8z3Lby6wr+h11/G4HWn4YpVeYs57Z7Eg+u+7Y=;
+	s=arc-20240116; t=1789237918; c=relaxed/simple;
+	bh=9Bf2xwgC8PsM9RoTpRyXGvVHs7Qxu3BEkENIhcqAnPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HEpibaakjZnveF8o9557wjHUCcMTqZQ9MzD5AaTUaT/t0mIuEApCItvKb5VuK1cyBlE/7zQrKfOQ28N27LEhhZxEQimzRhOZK7cdKWy9I6vqbwbrIoReIgLW4FS3pvShLSYublEsKMp+UbbC0laoK58o5pHd+VAzFOL4VEEhGWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/OTOLm8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mqwVVlqWwORwNi65XzJ378Jt9WCxYadpMFCcuUJxDGvV4fa5pjv0S3x5IvZPrasewjgie+uoHIfik7eyCXcn3T/bCFeHZ0Y7Wjhc2ScDO4FfAdzMnt8AGAFZGuFQqX4zH2qSDLGUrBDzbagMjeDivWGjiKHumyx7bYfTJX0jpGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HemxLLM8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/OTOLm8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50EFA1F000FF;
-	Sat, 12 Sep 2026 18:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HemxLLM8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DF71F00893;
+	Sat, 12 Sep 2026 18:31:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237907;
-	bh=aHqyaUchHUZCP0Y/oBzZ+SuQZqTyi6L6X/HskHx26ic=;
+	s=korg; t=1789237912;
+	bh=EVcklKmrOq+ueVkvwDW5wiuXXXCYexxvNrsnleIKc80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D/OTOLm8coXeGsEnzWx9B+/c7UvfBEXuKCp69tqZGv3/XRLQ5eKHzETJ8em4w65JN
-	 NrIKLlRzBFWxHe+CulshVTUbc1sTkSsk9p8dunq5/27Kuu3KfPV75GQNCy9It68LJ0
-	 0aXsrDrCUbwNVth0tQb8ugSiMPujs4ptIRW6tSUQ=
+	b=HemxLLM8VM+3Rag07NPt8Z/lWZZeq0SQFjqMsfRX+o6dsTVXba+4Fp09y1PnU80J7
+	 O1eSfpyfsUsF26dXoX7mI36aovh6wKiCP7yLbXhHvg60bD0fXZfWLN8LYQJav00XmC
+	 ydzBs1gBxpIgKwT0V3oCb5+GgB4uRBHP9KNqzj3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 310/935] media: cec: Serialize exclusive follower delivery
-Date: Sat, 12 Sep 2026 08:55:40 +0200
-Message-ID: <20260912065533.917412763@linuxfoundation.org>
+Subject: [PATCH 5.15 311/935] media: cedrus: fix memory leak in cedrus_init_ctrls()
+Date: Sat, 12 Sep 2026 08:55:41 +0200
+Message-ID: <20260912065533.939817412@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,52 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 1924d0788caa6c66fd320dd4704fae99487fd2c7 upstream.
+commit 9df2fbe563194da1967a5db083442186c1323efe upstream.
 
-cec_receive_notify() reads the exclusive follower pointer without the
-adapter lock. Serialize the no-follower check and message delivery
-against mode changes and release.
+In cedrus_init_ctrls(), the V4L2 control handler is initialized before
+allocating memory for ctx->ctrls. If this allocation fails, the function
+returns -ENOMEM without freeing the previously allocated handler
+resources, leading to a memory leak.
 
-Fixes: 9881fe0ca187 ("[media] cec: add HDMI CEC framework (adapter)")
+Fix this by calling v4l2_ctrl_handler_free() on the ctx->ctrls allocation
+failure path.
+
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1.1.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have an
+Allwinner SoC or board with a Cedrus VPU available to test with, no
+runtime testing was able to be performed.
+
+Fixes: 50e761516f2b ("media: platform: Add Cedrus VPU decoder driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/cec/core/cec-adap.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/staging/media/sunxi/cedrus/cedrus.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/media/cec/core/cec-adap.c
-+++ b/drivers/media/cec/core/cec-adap.c
-@@ -2128,9 +2128,13 @@ static int cec_receive_notify(struct cec
- 		 * Unprocessed messages are aborted if userspace isn't doing
- 		 * any processing either.
- 		 */
-+		mutex_lock(&adap->lock);
- 		if (!is_broadcast && !is_reply && !adap->follower_cnt &&
--		    !adap->cec_follower && msg->msg[1] != CEC_MSG_FEATURE_ABORT)
-+		    !adap->cec_follower && msg->msg[1] != CEC_MSG_FEATURE_ABORT) {
-+			mutex_unlock(&adap->lock);
- 			return cec_feature_abort(adap, msg);
-+		}
-+		mutex_unlock(&adap->lock);
- 		break;
- 	}
+--- a/drivers/staging/media/sunxi/cedrus/cedrus.c
++++ b/drivers/staging/media/sunxi/cedrus/cedrus.c
+@@ -195,8 +195,10 @@ static int cedrus_init_ctrls(struct cedr
+ 	ctrl_size = sizeof(ctrl) * CEDRUS_CONTROLS_COUNT + 1;
  
-@@ -2143,10 +2147,12 @@ skip_processing:
- 	 * Send to the exclusive follower if there is one, otherwise send
- 	 * to all followers.
- 	 */
-+	mutex_lock(&adap->lock);
- 	if (adap->cec_follower)
- 		cec_queue_msg_fh(adap->cec_follower, msg);
- 	else
- 		cec_queue_msg_followers(adap, msg);
-+	mutex_unlock(&adap->lock);
- 	return 0;
- }
+ 	ctx->ctrls = kzalloc(ctrl_size, GFP_KERNEL);
+-	if (!ctx->ctrls)
++	if (!ctx->ctrls) {
++		v4l2_ctrl_handler_free(hdl);
+ 		return -ENOMEM;
++	}
  
+ 	for (i = 0; i < CEDRUS_CONTROLS_COUNT; i++) {
+ 		ctrl = v4l2_ctrl_new_custom(hdl, &cedrus_controls[i].cfg,
 
 
