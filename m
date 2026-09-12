@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8933739A067;
-	Sat, 12 Sep 2026 20:01:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53294346E75;
+	Sat, 12 Sep 2026 20:01:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243284; cv=none; b=KcGjomZ0cVHOIzyC8n2r7NWAi5xa5U2CYZHN3aAXgZ4X/jk2INKGX4fZ5Z+iHJXWLA0+z1oRMp0azvTaIw/gdDr9xE7U568nlGQeUEp5i1kwfkyM28u9iJruYsd3QBy6Na1MUV1aEBsOw5gp55K1lGAAN0MbltGAuXlM0IeJBDA=
+	t=1789243286; cv=none; b=jGz0Pjd4dO94m8VK5CYTutQ4FD8BbgfdwB2EO1gvo3jFLoUA0WZhilXl8Yz6nnE9iyxgR2mnIodFcvbODxx0Qfoc9wzkw1ZVGypHhUUvjsxOV1Oi+/RRO9B+Cf+I0ZF/qudzP0/IOXCwJmfz2nifNP6is6oPxNLNRPvgFs7wClY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243284; c=relaxed/simple;
-	bh=5EmwhACvRuGbnqtVSKk1uROy7amPW7VnEto4B8esl0U=;
+	s=arc-20240116; t=1789243286; c=relaxed/simple;
+	bh=qleDIZkbi1I0hssmpNWQjq+eTqoD+tMwB4fzpEqYurw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tSLBDWUxT90+XznIVERjClQvXlARvIZGdKr5jHOHLKu7ATx85ZMdHowqXwP57CNneoEGXJlzqwoWIgiOgFH7DuCsselirycjSRmdZ2iDuazXOZeCDx1E3rSnTmYhDoxB93HiXc64X0dFOUK6LuKPGnWag+uKjaeDNnIXuzqCewA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tmxq3gr3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VAge+7jSg1YucHjPaYg1M+bxc1dni7SlroDao3oj9zS0cJ0O7/HaiJ1Grs83YWfYkCEHBg7fvy81k5SysXRWNylLKXoUe8cqwg+rbdoQHwlY1CsoOT/BZxiyTH2wNrRqUAjxfjEyrPDbE0hqxulQNuX9KuT55t5Cct+ptDv+bts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B01ZmTpU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tmxq3gr3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0C31F000FF;
-	Sat, 12 Sep 2026 20:01:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B01ZmTpU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD661F000FF;
+	Sat, 12 Sep 2026 20:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243282;
-	bh=DQd/Fq4lwdANreCmvTT3MlDEeMn7+fKapit+PQ80blw=;
+	s=korg; t=1789243285;
+	bh=1Jf5wglZULLG+8qNAHwyYldqQf6UQ1UadfhJmGfbA5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tmxq3gr3Ka66aSi1YnuyzvoNngYeqBY8mwUdbQp2JxVrD7P1J9iTfrkn61kvdwXcK
-	 P5KjnQhbojb+mk8oWtL+q8JNxDK4uZKjTd7xDlUS9WkPYJ0a+ZFuHtsn2XWezHpK6w
-	 p4SXXBsB34tuo8cMYzAmSPWPuzLyJ6/mTXBmmD/Q=
+	b=B01ZmTpUq7j4liRlT6PZy+jzTko/VswxMWFaHt/KW8UpMUgWbVXelProNedBC8Iy4
+	 RZ5F7XbrA49917IXuWnq4c5ohgijUuJllvwq9Suz0DyvF5MbIpP4lIpcrFp83VhdEK
+	 uVnZqq1RcpnAH2xDpN9TzpgwiC4cYif9M8oJTH8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Chen Yu <yu.c.chen@intel.com>,
-	Tim Chen <tim.c.chen@linux.intel.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Andrea Righi <arighi@nvidia.com>,
+	Ran Hongyun <ranhongyun1@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 648/798] sched/fair: Check CPU capacity before comparing group types during load balance
-Date: Sat, 12 Sep 2026 09:04:36 +0200
-Message-ID: <20260912065531.964775432@linuxfoundation.org>
+Subject: [PATCH 5.10 695/798] UBI: fix two issues in the ubi.mtd MODULE_PARM_DESC
+Date: Sat, 12 Sep 2026 09:05:23 +0200
+Message-ID: <20260912065533.025103462@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -56,78 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+From: Ran Hongyun <ranhongyun1@huawei.com>
 
-[ Upstream commit 50b101f6e586b4417d060a976fd831cd87e86e2b ]
+[ Upstream commit ff7937d14f5333ec7e6fb50d00a152d7974f4105 ]
 
-update_sd_pick_busiest() may incorrectly select a fully_busy group as the
-busiest group when its per-CPU capacity exceeds that of the destination
-CPU. This happens because the type of busiest group is initialized to
-group_has_spare and allows the fully_busy group to win the type comparison.
+Fix two issues introduced before:
 
-update_sd_pick_busiest() should not choose a candidate scheduling group
-with at most one runnable task if its per-CPU capacity is greater than that
-of the destination CPU. Such a check already exists, but it is done too
-late: after the type comparison, preventing a subsequent fully_busy group
-of equal per-CPU capacity from being correctly selected.
+ - The parameter format string was missing the enable_fm and
+    need_resv_pool tokens introduced in an earlier commit.
 
-Move this check to occur before comparing group types.
+ - The bad-block reservation note was misplaced after Example 5
+    instead of after Example 3. It was misplaced due to an earlier patch.
 
-Fixes: 0b0695f2b34a ("sched/fair: Rework load_balance()")
-Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Reviewed-by: Chen Yu <yu.c.chen@intel.com>
-Reviewed-by: Tim Chen <tim.c.chen@linux.intel.com>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Tested-by: Christian Loehle <christian.loehle@arm.com>
-Tested-by: Andrea Righi <arighi@nvidia.com>
-Link: https://patch.msgid.link/20260720-rneri-fix-cas-clusters-v6-3-bb500bf4afd4@linux.intel.com
+Fixes: 83ff59a06663 ("UBI: support ubi_num on mtd.ubi command line")
+Signed-off-by: Ran Hongyun <ranhongyun1@huawei.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/mtd/ubi/build.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 6e564b06efac5..a2842a6cece63 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -8773,6 +8773,17 @@ static bool update_sd_pick_busiest(struct lb_env *env,
- 	     sds->local_stat.group_type != group_has_spare))
- 		return false;
- 
-+	/*
-+	 * Candidate sg has no more than one task per CPU and has higher
-+	 * per-CPU capacity. Migrating tasks to less capable CPUs may harm
-+	 * throughput. Maximize throughput, power/energy consequences are not
-+	 * considered.
-+	 */
-+	if ((env->sd->flags & SD_ASYM_CPUCAPACITY) &&
-+	    (sgs->group_type <= group_fully_busy) &&
-+	    (capacity_greater(sg->sgc->min_capacity, capacity_of(env->dst_cpu))))
-+		return false;
-+
- 	if (sgs->group_type > busiest->group_type)
- 		return true;
- 
-@@ -8845,17 +8856,6 @@ static bool update_sd_pick_busiest(struct lb_env *env,
- 		break;
- 	}
- 
--	/*
--	 * Candidate sg has no more than one task per CPU and has higher
--	 * per-CPU capacity. Migrating tasks to less capable CPUs may harm
--	 * throughput. Maximize throughput, power/energy consequences are not
--	 * considered.
--	 */
--	if ((env->sd->flags & SD_ASYM_CPUCAPACITY) &&
--	    (sgs->group_type <= group_fully_busy) &&
--	    (capacity_greater(sg->sgc->min_capacity, capacity_of(env->dst_cpu))))
--		return false;
--
- 	return true;
+diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
+index c59b04d8a39e5..ed6baab4903fb 100644
+--- a/drivers/mtd/ubi/build.c
++++ b/drivers/mtd/ubi/build.c
+@@ -1507,7 +1507,7 @@ static int ubi_mtd_param_parse(const char *val, const struct kernel_param *kp)
  }
  
+ module_param_call(mtd, ubi_mtd_param_parse, NULL, NULL, 0400);
+-MODULE_PARM_DESC(mtd, "MTD devices to attach. Parameter format: mtd=<name|num|path>[,<vid_hdr_offs>[,max_beb_per1024[,ubi_num]]].\n"
++MODULE_PARM_DESC(mtd, "MTD devices to attach. Parameter format: mtd=<name|num|path>[,<vid_hdr_offs>[,max_beb_per1024[,ubi_num[,enable_fm[,need_resv_pool]]]]].\n"
+ 		      "Multiple \"mtd\" parameters may be specified.\n"
+ 		      "MTD devices may be specified by their number, name, or path to the MTD character device node.\n"
+ 		      "Optional \"vid_hdr_offs\" parameter specifies UBI VID header position to be used by UBI. (default value if 0)\n"
+@@ -1520,9 +1520,9 @@ MODULE_PARM_DESC(mtd, "MTD devices to attach. Parameter format: mtd=<name|num|pa
+ 		      "Example 1: mtd=/dev/mtd0 - attach MTD device /dev/mtd0.\n"
+ 		      "Example 2: mtd=content,1984 mtd=4 - attach MTD device with name \"content\" using VID header offset 1984, and MTD device number 4 with default VID header offset.\n"
+ 		      "Example 3: mtd=/dev/mtd1,0,25 - attach MTD device /dev/mtd1 using default VID header offset and reserve 25*nand_size_in_blocks/1024 erase blocks for bad block handling.\n"
++		      "\t(e.g. if the NAND *chipset* has 4096 PEB, 100 will be reserved for this UBI device).\n"
+ 		      "Example 4: mtd=/dev/mtd1,0,0,5 - attach MTD device /dev/mtd1 to UBI 5 and using default values for the other fields.\n"
+-		      "example 5: mtd=1,0,0,5 mtd=2,0,0,6,1 - attach MTD device /dev/mtd1 to UBI 5 and disable fastmap; attach MTD device /dev/mtd2 to UBI 6 and enable fastmap.(only works when fastmap is enabled and fm_autoconvert=Y).\n"
+-		      "\t(e.g. if the NAND *chipset* has 4096 PEB, 100 will be reserved for this UBI device).");
++		      "example 5: mtd=1,0,0,5 mtd=2,0,0,6,1 - attach MTD device /dev/mtd1 to UBI 5 and disable fastmap; attach MTD device /dev/mtd2 to UBI 6 and enable fastmap.(only works when fastmap is enabled and fm_autoconvert=Y).\n");
+ #ifdef CONFIG_MTD_UBI_FASTMAP
+ module_param(fm_autoconvert, bool, 0644);
+ MODULE_PARM_DESC(fm_autoconvert, "Set this parameter to enable fastmap automatically on images without a fastmap.");
 -- 
 2.53.0
 
