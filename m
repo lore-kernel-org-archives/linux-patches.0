@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3DB208D0;
-	Sat, 12 Sep 2026 09:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AB634D915;
+	Sat, 12 Sep 2026 09:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206167; cv=none; b=l7mpBVS7O65u41bQbxyJGr+aGqqDYv4TKX9g96545YUfEmmk2VDcevuqZws4V1bQ7egrr35Aepucq0eSQau+oId50VP5GANws6FO/kgdIGruSm2iFq1HECFyz4/Gifxig+k37zcng+hBqS/MLNyCIMOQKBr2Vi6MzBTxp6Wscn0=
+	t=1789206171; cv=none; b=M92aLg8O7fgfqz0epfyze5z6i+UuUxnVs6Va5NjIUdJ2wd4FuOOJCQ2mQXjhapyDfgjhtysjPharJ2OSHNP5Fp8KcxrbOla2nG3vvhvxWkY8tPh3jZNCZkxOu1rW/GZ0PrQK25IheKFfNYwF/ikmDE1ms7cjjyVOUO8Feim5Ns4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206167; c=relaxed/simple;
-	bh=dBK3k0NwD9LrDR/HIBN3RKSi5gk0rCEssdwYaK17C54=;
+	s=arc-20240116; t=1789206171; c=relaxed/simple;
+	bh=bYIRgXbbk01rHmNsiFN+Cion1AzfpAj35w5FhogeYNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q6+TtMU2zjj5ZtDancvJqliGaZdoi+3e1o/C+kmlo8w8Y9ztbKgiKwahpf0LxILfOt07Lgkm4UVLIY+Zq6yQQH3yh8djxgBdwQeKtF2uyGmO9RkcpjKOoprBOVcH/pO7pYZDQFRw7WMy33iIZG4z2bLjRaTBOO6SKc17Jl78D8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qHxNP1H7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=trcW8tXbzBQQatC342oZMdt+UFqSa+n3AdL5IT9boTfw0K3ielpwOYiWnUFEgxbkG+gRpu7P+RGrp1zxS7WZB2CKEjSa6flcNHfXSI7xE2c277QnILp9uUp2fJvDFH36I7d83T4z8GnNZUEcv17eLHQUsnTOUyder83unyHC/lI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cughW6Nr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qHxNP1H7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6CA01F000FF;
-	Sat, 12 Sep 2026 09:42:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cughW6Nr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676741F000FF;
+	Sat, 12 Sep 2026 09:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206165;
-	bh=8NIZ+Mo6VD7OhGPaH0Qx1MpQzjjc5JDkMneaTMco4uo=;
+	s=korg; t=1789206170;
+	bh=7rIy3YC/WfkaAI/K7ZiJ9wMZIEw//UGtT+ZcLVGx+8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qHxNP1H7c9sPBCpXS0tbGQpQ5s1oJmsWpg9BzFg1/dvPsSmUxPStz3HL8eWsspaI3
-	 ocbGgOlh44YRBBkqYPLyOHOf2vWoDkK+XiuoVqWhsqCuKLmZb7BA6ovnUU01bE5988
-	 8MmxpQ2Sdd13+s9CCVQt94Q8UzsRY4/BViqNENnQ=
+	b=cughW6NrHrIOhHtn30/WqDN6Kf0dc+63LMb4eCoa7Pyme2FdAcyDfxYJ7m2dFaIxN
+	 XDftA2BwOnRCNWBM/sL+sZX+UJQayoUa9esNWij6PMcHcHXDRf4FF1RQ4g4iBGWg1U
+	 PC/ltTuwheEKegofBr+W2P6cZOZSVFz/5W5FN4LI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -37,9 +37,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0152/1518] perf test: Fix subtest status alignment for multi-digit indexes
-Date: Sat, 12 Sep 2026 08:38:41 +0200
-Message-ID: <20260912065626.931930150@linuxfoundation.org>
+Subject: [PATCH 6.18 0153/1518] perf test: Add -j/--junit option for JUnit XML test reports
+Date: Sat, 12 Sep 2026 08:38:42 +0200
+Message-ID: <20260912065626.954064614@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -60,18 +60,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 94ac3ce427c8f80d699909c85a7cb70a589c562d ]
+[ Upstream commit e2c545737bf4387d1217d3608274823421e1dbf2 ]
 
-When running perf test, the status column (: Ok) became misaligned when
-subtest indexes reached 2 or 3 digits (e.g. 9.100 vs 9.9 vs 10.1). This
-occurred because the subtest description field width (subw) was
-statically fixed to width - 2, assuming all subtest index prefixes were
-exactly 7 characters wide.
+Add a -j/--junit command line option to generate standard JUnit XML
+format test reports. The generated file defaults to 'test.xml' if no
+filename is specified, but allows users to override the path (e.g.
+-jmytest.xml).
 
-Dynamically calculate subw based on the exact character length of the
-test suite and subtest index prefix. This ensures the status column is
-perfectly aligned vertically across all test outputs regardless of
-subtest index digit count.
+The XML report captures individual test suite and subtest execution
+latency, alongside XML-escaped failure logs and skip reasons, while
+preserving the full multi-process concurrency speed of parallel test
+execution.
 
 Assisted-by: Gemini-CLI:Google Gemini 3
 Signed-off-by: Ian Rogers <irogers@google.com>
@@ -83,33 +82,285 @@ Cc: James Clark <james.clark@linaro.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
 Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20260602174129.3192312-15-irogers@google.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Stable-dep-of: 32e6312f7e39 ("perf test: Truncate test description to fit terminal width")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/builtin-test.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ tools/perf/tests/builtin-test.c | 148 ++++++++++++++++++++++++++++++--
+ 1 file changed, 142 insertions(+), 6 deletions(-)
 
 diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
-index 13c4dfa5d512a..afd4301aca715 100644
+index afd4301aca715..9f262a4c93a22 100644
 --- a/tools/perf/tests/builtin-test.c
 +++ b/tools/perf/tests/builtin-test.c
-@@ -369,10 +369,12 @@ static int print_test_result(struct test_suite *t, int curr_suite, int curr_test
- 			     int result, int width, int running)
+@@ -19,6 +19,7 @@
+ #include <dirent.h>
+ #include <sys/wait.h>
+ #include <sys/stat.h>
++#include <sys/time.h>
+ #include "builtin.h"
+ #include "config.h"
+ #include "hist.h"
+@@ -39,6 +40,9 @@
+ 
+ #include "tests-scripts.h"
+ 
++static const char *junit_filename;
++static struct strbuf junit_xml_buf = STRBUF_INIT;
++
+ /*
+  * Command line option to not fork the test running in the same process and
+  * making them easier to debug.
+@@ -300,6 +304,8 @@ struct child_test {
+ 	struct strbuf err_output;
+ 	int result;
+ 	bool done;
++	struct timespec start_time;
++	struct timespec end_time;
+ };
+ 
+ static jmp_buf run_test_jmp_buf;
+@@ -365,8 +371,34 @@ static struct strbuf summary_failed_tests_buf = STRBUF_INIT;
+ static int strbuf_addstr_safe(struct strbuf *sb, const char *s);
+ static int __printf(2, 3) strbuf_addf_safe(struct strbuf *sb, const char *fmt, ...);
+ 
++static char *xml_escape(const char *str)
++{
++	struct strbuf buf = STRBUF_INIT;
++	const char *p;
++	char *res;
++
++	if (!str)
++		return strdup("");
++
++	for (p = str; *p; p++) {
++		if (*p == '&')
++			strbuf_addstr(&buf, "&amp;");
++		else if (*p == '<')
++			strbuf_addstr(&buf, "&lt;");
++		else if (*p == '>')
++			strbuf_addstr(&buf, "&gt;");
++		else if (*p == '"')
++			strbuf_addstr(&buf, "&quot;");
++		else if ((unsigned char)*p >= 32 || *p == '\n' || *p == '\t')
++			strbuf_addch(&buf, *p);
++	}
++	res = strbuf_detach(&buf, NULL);
++	return res ? res : strdup("");
++}
++
+ static int print_test_result(struct test_suite *t, int curr_suite, int curr_test_case,
+-			     int result, int width, int running)
++			     int result, int width, int running,
++			     const char *err_output, double elapsed)
  {
  	if (test_suite__num_test_cases(t) > 1) {
--		int subw = width > 2 ? width - 2 : width;
-+		char prefix[32];
-+		int len = snprintf(prefix, sizeof(prefix), "%3d.%1d:",
-+				   curr_suite + 1, curr_test_case + 1);
-+		int subw = len >= 4 ? width + 4 - len : width;
+ 		char prefix[32];
+@@ -414,6 +446,34 @@ static int print_test_result(struct test_suite *t, int curr_suite, int curr_test
+ 		break;
+ 	}
  
--		pr_info("%3d.%1d: %-*s:", curr_suite + 1, curr_test_case + 1, subw,
--			test_description(t, curr_test_case));
-+		pr_info("%s %-*s:", prefix, subw, test_description(t, curr_test_case));
- 	} else
- 		pr_info("%3d: %-*s:", curr_suite + 1, width, test_description(t, curr_test_case));
++	if (junit_filename && result != TEST_RUNNING) {
++		const char *classname = t->desc;
++		const char *testname = test_description(t, curr_test_case);
++		char *escaped_err = xml_escape(err_output);
++		char *escaped_class = xml_escape(classname);
++		char *escaped_test = xml_escape(testname);
++
++		strbuf_addf(&junit_xml_buf,
++			    "    <testcase classname=\"%s\" name=\"%s\" time=\"%.2f\">\n",
++			    escaped_class, escaped_test, elapsed);
++		if (result != TEST_OK && result != TEST_SKIP) {
++			strbuf_addf(&junit_xml_buf,
++				    "      <failure message=\"FAILED\">\n%s\n      </failure>\n",
++				    escaped_err);
++		} else if (result == TEST_SKIP) {
++			const char *reason = skip_reason(t, curr_test_case);
++			char *escaped_reason = xml_escape(reason ? reason : "Skip");
++
++			strbuf_addf(&junit_xml_buf, "      <skipped message=\"%s\"/>\n",
++				    escaped_reason);
++			free(escaped_reason);
++		}
++		strbuf_addstr(&junit_xml_buf, "    </testcase>\n");
++		free(escaped_err);
++		free(escaped_class);
++		free(escaped_test);
++	}
++
+ 	return 0;
+ }
  
+@@ -616,6 +676,8 @@ static void finish_test(struct child_test **child_tests, int running_test, int c
+ 	struct strbuf err_output = STRBUF_INIT;
+ 	int last_running = -1;
+ 	int ret;
++	struct timespec end_time;
++	double elapsed;
+ 
+ 	if (child_test == NULL) {
+ 		/* Test wasn't started. */
+@@ -669,7 +731,7 @@ static void finish_test(struct child_test **child_tests, int running_test, int c
+ 					fprintf(debug_file(), PERF_COLOR_DELETE_LINE);
+ 				}
+ 				print_test_result(t, curr_suite, curr_test_case, TEST_RUNNING,
+-						  width, running);
++						  width, running, NULL, 0.0);
+ 				last_running = running;
+ 			}
+ 		}
+@@ -729,9 +791,14 @@ static void finish_test(struct child_test **child_tests, int running_test, int c
+ 	else if (verbose == 1 && ret == TEST_FAIL)
+ 		print_test_failure_snippet(stderr, err_output.buf);
+ 
++	clock_gettime(CLOCK_MONOTONIC, &end_time);
++	elapsed = (end_time.tv_sec - child_test->start_time.tv_sec) +
++		  (end_time.tv_nsec - child_test->start_time.tv_nsec) / 1000000000.0;
++
++	print_test_result(t, curr_suite, curr_test_case, ret, width, /*running=*/0,
++			  err_output.buf, elapsed);
+ 	strbuf_release(&err_output);
+ 	strbuf_release(&child_test->err_output);
+-	print_test_result(t, curr_suite, curr_test_case, ret, width, /*running=*/0);
+ 	if (err > 0)
+ 		close(err);
+ 	zfree(&child_tests[running_test]);
+@@ -907,7 +974,7 @@ static int finish_tests_parallel(struct child_test **child_tests, size_t num_tes
+ 				}
+ 				print_test_result(next_child->test, next_child->suite_num,
+ 						  next_child->test_case_num, TEST_RUNNING, width,
+-						  running_count);
++						  running_count, NULL, 0.0);
+ 			}
+ 			last_running = running_count;
+ 		}
+@@ -942,12 +1009,14 @@ static int finish_tests_parallel(struct child_test **child_tests, size_t num_tes
+ 				}
+ 				child->result = finish_command(&child->process);
+ 				child->process.pid = 0;
++				clock_gettime(CLOCK_MONOTONIC, &child->end_time);
+ 				child->done = true;
+ 			}
+ 		}
+ 
+ 		while (next_to_print < num_tests) {
+ 			struct child_test *child = child_tests[next_to_print];
++			double elapsed;
+ 
+ 			if (!child) {
+ 				next_to_print++;
+@@ -985,8 +1054,12 @@ static int finish_tests_parallel(struct child_test **child_tests, size_t num_tes
+ 			else if (verbose == 1 && child->result == TEST_FAIL)
+ 				print_test_failure_snippet(stderr, child->err_output.buf);
+ 
++			elapsed = (child->end_time.tv_sec - child->start_time.tv_sec) +
++				  (child->end_time.tv_nsec -
++				   child->start_time.tv_nsec) / 1000000000.0;
++
+ 			print_test_result(child->test, child->suite_num, child->test_case_num,
+-					  child->result, width, 0);
++					  child->result, width, 0, child->err_output.buf, elapsed);
+ 			pthread_sigmask(SIG_BLOCK, &set, &oldset);
+ 			strbuf_release(&child->err_output);
+ 			child_tests[next_to_print] = NULL;
+@@ -1013,11 +1086,18 @@ static int start_test(struct test_suite *test, int curr_suite, int curr_test_cas
+ 	*child = NULL;
+ 	if (dont_fork) {
+ 		if (pass == 1) {
++			struct timespec start_time, end_time;
++			double elapsed;
++
++			clock_gettime(CLOCK_MONOTONIC, &start_time);
+ 			pr_debug("--- start ---\n");
+ 			err = test_function(test, curr_test_case)(test, curr_test_case);
+ 			pr_debug("---- end ----\n");
++			clock_gettime(CLOCK_MONOTONIC, &end_time);
++			elapsed = (end_time.tv_sec - start_time.tv_sec) +
++				  (end_time.tv_nsec - start_time.tv_nsec) / 1000000000.0;
+ 			print_test_result(test, curr_suite, curr_test_case, err, width,
+-					  /*running=*/0);
++					  /*running=*/0, NULL, elapsed);
+ 		}
+ 		return 0;
+ 	}
+@@ -1083,6 +1163,41 @@ static void print_tests_summary(void)
+ 	} else {
+ 		color_fprintf(stderr, PERF_COLOR_GREEN, "Failed tests      : 0\n");
+ 	}
++
++	if (junit_filename) {
++		int fd;
++		FILE *fp;
++
++		fd = open(junit_filename, O_CREAT | O_TRUNC | O_WRONLY | O_NOFOLLOW, 0644);
++		if (fd >= 0) {
++			fp = fdopen(fd, "w");
++			if (fp) {
++				unsigned int total = summary_tests_passed +
++						     summary_subtests_passed +
++						     summary_tests_skipped +
++						     summary_tests_failed;
++				fprintf(fp, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
++				fprintf(fp, "<testsuites>\n");
++				fprintf(fp,
++					"  <testsuite name=\"perf-tests\" tests=\"%u\" failures=\"%u\" skipped=\"%u\">\n",
++					total, summary_tests_failed,
++					summary_tests_skipped);
++				fprintf(fp, "%s", junit_xml_buf.buf);
++				fprintf(fp, "  </testsuite>\n");
++				fprintf(fp, "</testsuites>\n");
++				fclose(fp);
++				pr_info("Wrote junit XML output to %s\n", junit_filename);
++			} else {
++				close(fd);
++				pr_err("Failed to associate stream with fd for %s: %s\n",
++				       junit_filename, strerror(errno));
++			}
++		} else {
++			pr_err("Failed to open %s for writing junit XML output: %s\n",
++			       junit_filename, strerror(errno));
++		}
++	}
++	strbuf_release(&junit_xml_buf);
+ 	strbuf_release(&summary_failed_tests_buf);
+ }
+ 
+@@ -1169,6 +1284,25 @@ static int __cmd_test(struct test_suite **suites, int argc, const char *argv[],
+ 					color_fprintf(stderr, PERF_COLOR_YELLOW,
+ 						      " Skip (user override)\n");
+ 					summary_tests_skipped++;
++					if (junit_filename) {
++						char *escaped_class =
++							xml_escape((const char *)
++								   test_description(*t, -1));
++						char *escaped_test = xml_escape("override");
++						char *escaped_reason =
++							xml_escape("user override");
++
++						strbuf_addf(&junit_xml_buf,
++							"    <testcase classname=\"%s\" name=\"%s\" time=\"0.000\">\n",
++							escaped_class, escaped_test);
++						strbuf_addf(&junit_xml_buf,
++							"      <skipped message=\"%s\"/>\n",
++							escaped_reason);
++						strbuf_addstr(&junit_xml_buf, "    </testcase>\n");
++						free(escaped_reason);
++						free(escaped_test);
++						free(escaped_class);
++					}
+ 				}
+ 				continue;
+ 			}
+@@ -1339,6 +1473,8 @@ int cmd_test(int argc, const char **argv)
+ 		   "objdump binary to use for disassembly and annotations"),
+ 	OPT_UINTEGER(0, "failure-snippet-lines", &failure_snippet_lines,
+ 		     "Number of lines to include in failure snippet, default 10"),
++	OPT_STRING_OPTARG('j', "junit", &junit_filename, "file",
++			  "Generate junit XML output, default test.xml", "test.xml"),
+ 	OPT_END()
+ 	};
+ 	const char * const test_subcommands[] = { "list", NULL };
 -- 
 2.53.0
 
