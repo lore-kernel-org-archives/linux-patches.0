@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611FC455162;
-	Sat, 12 Sep 2026 12:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659E52DBF75;
+	Sat, 12 Sep 2026 12:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214873; cv=none; b=OrIo/vhnSbZhtyvsTJc+VMYfK6nCK0IWkTG7o4L2ep43MLEQ7PrefJOW1aLp0VkeQjCgbwyA+EQe7ejv8KX92UFqAL2ey6qwGsNOhM6+jzXh7PZZuHaXS32H1MYya43JV1jemNK9Li6IB9SU2iT+vXHjaBqOhHvqJxFfGsRatHw=
+	t=1789214878; cv=none; b=duWVsxBFBmIVdJYDziL2eN0iXFgcbEZIWe4pKkjeIjazaoksBlh9aiBBgfPQwPzeEBguSgaA3JuZzT6FVlzV3vvxbJN8e7uIFIMujva7eGBYlYae6xbI+6kqWlXFTwL6zdHriAzm6Mv/y5nlHszndtcwCZahbvrtxf51VLCzPpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214873; c=relaxed/simple;
-	bh=9srabb763OUn6aWSs1+47/36mVUGSlzv4YVwu+Ws8T4=;
+	s=arc-20240116; t=1789214878; c=relaxed/simple;
+	bh=YuTM9do2Ny8Y+wMxfsoQjwgqtb02ABU8EgzlApt+vcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HAwBtQyUgopgwDX1IPIpPPAEDOVXdqm1ptHPuNCIZxfUduDwrxiTZq9xOt+HpT1pT/rvP+OyVrhMhCUt+tkAf4CaXGTVe5DfA1dFlpm8BfA0jFk0yn7m6oZtLkylgD7bjZsQ46nYBbJi7IXCl4jT2qsGhdLXGRgRZK0/6H8L9hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WDI+n+4u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WnrvYWLcDNGLRhc3dzf3Kq93aY9WKvRgUoiAGaeg/jh5e9Tej2c9PDNXg/wGUvKaWwn0uS7VfcVDghbGxhs67Q4nbHZfhbrDS9ISwIqm31Q5U4hz9lJCnje+z6KnBhIEWXuG1juZ+WPRoEuGD7NFPkY8zoVhVFlE9+LmlCf38e0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ac8bMvsM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDI+n+4u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD6251F000FF;
-	Sat, 12 Sep 2026 12:07:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ac8bMvsM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28991F000FF;
+	Sat, 12 Sep 2026 12:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214872;
-	bh=iRMyal+BAO4NM9afQyykCIxY1CsOBXcMkJH/uXjYn1E=;
+	s=korg; t=1789214877;
+	bh=gOL2KrsCexNReD2op8yxjt+TtXtH4kORTCAIy70D0HI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WDI+n+4uhg0k+UqahlhN7lvsqIe6ZsT54hUFBJXxbCUk8H7QPdBFZRZfUWu2xVfNY
-	 y9+0yDWLg9ZWFuL7W+1NoSDhO+9IxDD8rWpKGXICzWmLbgdJYjrNdkobX1wshviso3
-	 40NiXTFUiNPvv/VXWJy0RPZ0a16532yugnqTijRA=
+	b=ac8bMvsMrAMoJ42zUTOJZtDpbCxbesdpcqNnplnXvq7wwkUjneGoNkExqPpyTL9+/
+	 hLZ6Tl9HH4c8KscpANQX0b69+CvG5wqZ62DFqxh0woTrCZUlEsePyTyl3lUMdJhlZY
+	 EHiOINLHy3whgPrINyJY6qwDpj0cdl+bmFunKuZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ridong Chen <ridong.chen@linux.dev>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Guillaume Maudoux <layus.on@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0414/1376] cgroup/cpuset: Make nr_deadline_tasks an atomic_t
-Date: Sat, 12 Sep 2026 08:47:20 +0200
-Message-ID: <20260912065616.768457642@linuxfoundation.org>
+Subject: [PATCH 6.12 0379/1376] selftests/bpf: Mask socket type flags in mptcpify prog
+Date: Sat, 12 Sep 2026 08:46:45 +0200
+Message-ID: <20260912065615.996687767@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,92 +52,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Guillaume Maudoux <layus.on@gmail.com>
 
-[ Upstream commit 95220e1f18f6321008f021abc7d6f581f64bcb82 ]
+[ Upstream commit b4b8b334f6b535a86ab83f18d3d241fe01270bc3 ]
 
-The nr_deadline_tasks variable in the cpuset structure was introduced by
-commit 6c24849f5515 ("sched/cpuset: Keep track of SCHED_DEADLINE task
-in cpusets"). It is reported by sashiko [1] that nr_deadline_tasks
-can currently be modified by inc_dl_tasks_cs() under rq->lock and
-by cpuset_attach() under cpuset_mutex. So if both updates happen
-simultaneously, the nr_deadline_tasks variable can be corrupted leading
-to incorrect operations down the road.
+The mptcpify BPF prog upgrades eligible TCP sockets to MPTCP, but only
+when the socket type is exactly SOCK_STREAM. Its update_socket_protocol()
+hook runs on the raw type from userspace, before the socket core masks
+it with SOCK_TYPE_MASK, so the type may still carry SOCK_CLOEXEC or
+SOCK_NONBLOCK in its upper bits and the equality check fails.
 
-Fix that by changing its type to atomic_t so that nr_deadline_tasks
-are always atomically updated. This fix patch is a low hanging fruit.
-It can handle some of the races between a concurrent sched_setscheduler()
-and cpuset_can_attach()/cpuset_attach() calls, but not all of them like
-the other issue raised by sashiko [2]. This will be handled hopefully
-in a future follow up patch.
+As a result, a socket(AF_INET, SOCK_STREAM | SOCK_CLOEXEC, 0) -- what
+common libraries do by default -- is silently left as plain TCP. This
+was hit in practice with curl. Since mptcpify.c is referenced as example
+code for enabling MPTCP transparently, the same mistake is likely to be
+copied into real deployments where it fails the same way and is hard to
+diagnose.
 
-[1] https://sashiko.dev/#/patchset/20260626181923.133658-1-longman%40redhat.com
-[2] https://sashiko.dev/#/patchset/20260630033344.352702-1-longman%40redhat.com
+Mask the type before comparing, mirroring the socket core. Extend the
+test to also create the server with SOCK_CLOEXEC set; the same masking
+is applied to start_server_addr() so a flagged type still listens.
 
-Fixes: 6c24849f5515 ("sched/cpuset: Keep track of SCHED_DEADLINE task in cpusets")
-Reviewed-by: Ridong Chen <ridong.chen@linux.dev>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: ddba122428a7 ("selftests/bpf: Add mptcpify test")
+Signed-off-by: Guillaume Maudoux <layus.on@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/bpf/20260630095723.564392-1-layus.on@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset-internal.h |  2 +-
- kernel/cgroup/cpuset.c          | 10 +++++-----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ tools/testing/selftests/bpf/network_helpers.c       |  4 ++--
+ tools/testing/selftests/bpf/network_helpers.h       |  5 +++++
+ tools/testing/selftests/bpf/prog_tests/mptcp.c      | 13 ++++++++++---
+ tools/testing/selftests/bpf/progs/bpf_tracing_net.h |  3 +++
+ tools/testing/selftests/bpf/progs/mptcpify.c        |  2 +-
+ 5 files changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset-internal.h b/kernel/cgroup/cpuset-internal.h
-index 383963e28ac69..6c9916e85efd1 100644
---- a/kernel/cgroup/cpuset-internal.h
-+++ b/kernel/cgroup/cpuset-internal.h
-@@ -166,7 +166,7 @@ struct cpuset {
- 	 * number of SCHED_DEADLINE tasks attached to this cpuset, so that we
- 	 * know when to rebuild associated root domain bandwidth information.
- 	 */
--	int nr_deadline_tasks;
-+	atomic_t nr_deadline_tasks;
- 	int nr_migrate_dl_tasks;
- 	u64 sum_migrate_dl_bw;
+diff --git a/tools/testing/selftests/bpf/network_helpers.c b/tools/testing/selftests/bpf/network_helpers.c
+index e5f8cab87dd9a..cd92745c4948e 100644
+--- a/tools/testing/selftests/bpf/network_helpers.c
++++ b/tools/testing/selftests/bpf/network_helpers.c
+@@ -111,7 +111,7 @@ int start_server_addr(int type, const struct sockaddr_storage *addr, socklen_t a
+ 	if (settimeo(fd, opts->timeout_ms))
+ 		goto error_close;
  
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 4bc1ea983fe79..425d1cbe73793 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -145,14 +145,14 @@ void inc_dl_tasks_cs(struct task_struct *p)
- {
- 	struct cpuset *cs = task_cs(p);
- 
--	cs->nr_deadline_tasks++;
-+	atomic_inc(&cs->nr_deadline_tasks);
- }
- 
- void dec_dl_tasks_cs(struct task_struct *p)
- {
- 	struct cpuset *cs = task_cs(p);
- 
--	cs->nr_deadline_tasks--;
-+	atomic_dec(&cs->nr_deadline_tasks);
- }
- 
- static inline int is_partition_valid(const struct cpuset *cs)
-@@ -956,7 +956,7 @@ static void dl_update_tasks_root_domain(struct cpuset *cs)
- 	struct css_task_iter it;
- 	struct task_struct *task;
- 
--	if (cs->nr_deadline_tasks == 0)
-+	if (atomic_read(&cs->nr_deadline_tasks) == 0)
- 		return;
- 
- 	css_task_iter_start(&cs->css, 0, &it);
-@@ -3142,8 +3142,8 @@ static void cpuset_attach(struct cgroup_taskset *tset)
- 	cs->old_mems_allowed = cpuset_attach_nodemask_to;
- 
- 	if (cs->nr_migrate_dl_tasks) {
--		cs->nr_deadline_tasks += cs->nr_migrate_dl_tasks;
--		oldcs->nr_deadline_tasks -= cs->nr_migrate_dl_tasks;
-+		atomic_add(cs->nr_migrate_dl_tasks, &cs->nr_deadline_tasks);
-+		atomic_sub(cs->nr_migrate_dl_tasks, &oldcs->nr_deadline_tasks);
- 		reset_migrate_dl_data(cs);
+-	if (type == SOCK_STREAM &&
++	if ((type & SOCK_TYPE_MASK) == SOCK_STREAM &&
+ 	    setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on))) {
+ 		log_err("Failed to enable SO_REUSEADDR");
+ 		goto error_close;
+@@ -128,7 +128,7 @@ int start_server_addr(int type, const struct sockaddr_storage *addr, socklen_t a
+ 		goto error_close;
  	}
  
+-	if (type == SOCK_STREAM) {
++	if ((type & SOCK_TYPE_MASK) == SOCK_STREAM) {
+ 		if (listen(fd, opts->backlog ? MAX(opts->backlog, 0) : 1) < 0) {
+ 			log_err("Failed to listed on socket");
+ 			goto error_close;
+diff --git a/tools/testing/selftests/bpf/network_helpers.h b/tools/testing/selftests/bpf/network_helpers.h
+index 5764155b6d251..a80916a267790 100644
+--- a/tools/testing/selftests/bpf/network_helpers.h
++++ b/tools/testing/selftests/bpf/network_helpers.h
+@@ -22,6 +22,11 @@ typedef __u16 __sum16;
+ #define VIP_NUM 5
+ #define MAGIC_BYTES 123
+ 
++/* include/linux/net.h */
++#ifndef SOCK_TYPE_MASK
++#define SOCK_TYPE_MASK 0xf
++#endif
++
+ struct network_helper_opts {
+ 	int timeout_ms;
+ 	int proto;
+diff --git a/tools/testing/selftests/bpf/prog_tests/mptcp.c b/tools/testing/selftests/bpf/prog_tests/mptcp.c
+index d2ca32fa3b21e..e7158a8e95e1e 100644
+--- a/tools/testing/selftests/bpf/prog_tests/mptcp.c
++++ b/tools/testing/selftests/bpf/prog_tests/mptcp.c
+@@ -275,7 +275,7 @@ static int verify_mptcpify(int server_fd, int client_fd)
+ 	return err;
+ }
+ 
+-static int run_mptcpify(int cgroup_fd)
++static int run_mptcpify(int cgroup_fd, int type)
+ {
+ 	int server_fd, client_fd, err = 0;
+ 	struct mptcpify *mptcpify_skel;
+@@ -291,7 +291,7 @@ static int run_mptcpify(int cgroup_fd)
+ 		goto out;
+ 
+ 	/* without MPTCP */
+-	server_fd = start_server(AF_INET, SOCK_STREAM, NULL, 0, 0);
++	server_fd = start_server(AF_INET, type, NULL, 0, 0);
+ 	if (!ASSERT_GE(server_fd, 0, "start_server")) {
+ 		err = -EIO;
+ 		goto out;
+@@ -328,7 +328,14 @@ static void test_mptcpify(void)
+ 	if (!ASSERT_OK_PTR(nstoken, "create_netns"))
+ 		goto fail;
+ 
+-	ASSERT_OK(run_mptcpify(cgroup_fd), "run_mptcpify");
++	ASSERT_OK(run_mptcpify(cgroup_fd, SOCK_STREAM), "run_mptcpify");
++	/* userspace sets flags such as SOCK_CLOEXEC together with the type;
++	 * the BPF prog must still upgrade the socket to MPTCP. See
++	 * update_socket_protocol() in net/socket.c, which runs before the
++	 * type is masked with SOCK_TYPE_MASK.
++	 */
++	ASSERT_OK(run_mptcpify(cgroup_fd, SOCK_STREAM | SOCK_CLOEXEC),
++		  "run_mptcpify_cloexec");
+ 
+ fail:
+ 	cleanup_netns(nstoken);
+diff --git a/tools/testing/selftests/bpf/progs/bpf_tracing_net.h b/tools/testing/selftests/bpf/progs/bpf_tracing_net.h
+index 59843b430f76a..674120405e494 100644
+--- a/tools/testing/selftests/bpf/progs/bpf_tracing_net.h
++++ b/tools/testing/selftests/bpf/progs/bpf_tracing_net.h
+@@ -8,6 +8,9 @@
+ #define AF_INET			2
+ #define AF_INET6		10
+ 
++/* include/linux/net.h */
++#define SOCK_TYPE_MASK		0xf
++
+ #define SOL_SOCKET		1
+ #define SO_REUSEADDR		2
+ #define SO_SNDBUF		7
+diff --git a/tools/testing/selftests/bpf/progs/mptcpify.c b/tools/testing/selftests/bpf/progs/mptcpify.c
+index cbdc730c3a471..e3f8cb54dbe97 100644
+--- a/tools/testing/selftests/bpf/progs/mptcpify.c
++++ b/tools/testing/selftests/bpf/progs/mptcpify.c
+@@ -15,7 +15,7 @@ int BPF_PROG(mptcpify, int family, int type, int protocol)
+ 		return protocol;
+ 
+ 	if ((family == AF_INET || family == AF_INET6) &&
+-	    type == SOCK_STREAM &&
++	    (type & SOCK_TYPE_MASK) == SOCK_STREAM &&
+ 	    (!protocol || protocol == IPPROTO_TCP)) {
+ 		return IPPROTO_MPTCP;
+ 	}
 -- 
 2.53.0
 
