@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCC234E75A;
-	Sat, 12 Sep 2026 08:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FA5364049;
+	Sat, 12 Sep 2026 08:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201301; cv=none; b=LWZkSQd7GPiizJm1N1HTI9XXJBfK+gYnapIzMyUGS4fH1ZT+XIT2S+GrJc+MoDYSOO98mLt7MhNoWdtO2YXfp7BA7eUcGJOHAEnMlZT0O8sRD9fn+KqOQIBOYSNSbU//keKdVxfEM/3wrb6AE6G4LmdmlpIPRAg2xj68XvnnKMs=
+	t=1789201306; cv=none; b=LFJ+xDNZ58097YNrzl2z+rRWQbnxcu947F+qksDc90ZksbXHT0uQh33SD/KxQ9YV5MD3xKszq17IPSRv+B0UnAlDO3pZjnGAO+eakJo/o+4pyDYNJ0WPaeV3DrfkDEcmZNYNg4pG0XpqZZSjAdV320yCtCI6kDsaCcGytmipwac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201301; c=relaxed/simple;
-	bh=LWwT+pyTHzHiEERWIH3aN20OCVqO8BFZSyhNylsK+3g=;
+	s=arc-20240116; t=1789201306; c=relaxed/simple;
+	bh=EYsslzrOdaXs6mfXiebxfF1eaEV1GZ1sCeFwFKkC1+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JH4MZGHS5BNFnndMunaplIPrpTsXUEPGX43Er4CBqZbLZxR2xvSqVJKXILTmKnVfaG2oMkO1pyWCeNAKSjb/rnIOtzIGETiYXVXRjTCm1rO36amkpGCP4u3ENh+BWs0oW+RpJqSS/0xfm91orgecKHjfOdotu1P+6wxAlqhkxi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1j8pkwX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=alyFywpH/w4XwtrHvDlFYgAZtq1w1G2cPzXhtwY44K2bQNB+MAcNTSbguR22G6shdeaY9U2DhxzGZm7VwiSo8XGDJ7ZJGjbgj0VInoy/AhxlbWsUHAbRQs4z+RruIk6xHi1mvgjH/4AzzBERlodLuhjm13/VOwwZ4PiVGKuacyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgeWQfb1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1j8pkwX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B373F1F000FF;
-	Sat, 12 Sep 2026 08:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgeWQfb1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8439A1F000FF;
+	Sat, 12 Sep 2026 08:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201299;
-	bh=sPmfsDrNDbQfR5rufD483HHw9IxSlvroZNx+viXDbt0=;
+	s=korg; t=1789201304;
+	bh=VX1XyyX6tWqU8l/2ELJL6iUJNNINJHFTDsgoBEfuffA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X1j8pkwXNS4deMLeCmlcQA82I2yJ+ygl2+F5Xy9twDDKM4Vx1ZBGd8mGQRiRqrG2X
-	 S3la6TROneIBReqG/HKaHSjnMaEmgHIIgmp7nqjnwErqQ9CS/n9aK02aPX6j9rPoMR
-	 9i/pabKsQBi4XoSUf1A6GanWYlelrFyZJ93Eb5WU=
+	b=xgeWQfb1L5Y/+c/qBSydRslyd2tmKSEyPeobTD0F2ntrgWt3e+IPPMe1JLzOEABuv
+	 ZjpGZtTwr9Y0MKp0m8h8vCUtRQ3FmFGi5dVKgxRbow7OJaE7ptUqWJUKDH9zRmIpur
+	 KN/RKeEL0SHw0i2RbLhT6GB0LUp4kYgxj37o4kKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Huang <jason.huang2@infineon.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0969/1815] wifi: brcmfmac: fix P2P action frame handling without device vif
-Date: Sat, 12 Sep 2026 08:45:19 +0200
-Message-ID: <20260912065711.724999214@linuxfoundation.org>
+Subject: [PATCH 7.2 0970/1815] wifi: mac80211: disconnect on CSA to channel 0
+Date: Sat, 12 Sep 2026 08:45:20 +0200
+Message-ID: <20260912065711.748802933@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,52 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Huang <jason.huang2@infineon.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 1b1edb9ebed49099bdc924cef49a9aea8b552199 ]
+[ Upstream commit cf57f0a674cc3e3cda1a789359cc1238b61b9d7d ]
 
-Some P2P action frame paths assume the P2P device vif is always
-available. That is not true when userspace sends non-P2P public action
-frames through the primary interface, or when action-frame abort runs
-after the P2P device vif has not been created.
+The refactor for the CSA parsing erroneously equates channel
+zero and no information present, leading it to ignore a CSA
+on an AP that advertises a switch to that (invalid) channel.
+This leads to not disconnecting, which we should. For Intel
+devices, this can lead to a firmware crash.
 
-Fall back to the primary vif when aborting an action frame without a P2P
-device vif, and guard P2P device saved IE access before using it for
-peer channel search.
+Fix this by using an int type for the channel number as well
+as the opclass, and using a (negative) value that cannot be
+encoded in the element to indicate it's not present.
 
-Fixes: 30fb1b272909 ("brcmfmac: use actframe_abort to cancel ongoing action frame")
-Fixes: 6eda4e2c5425 ("brcmfmac: Add tx p2p off-channel support.")
-Signed-off-by: Jason Huang <jason.huang2@infineon.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260722082608.412472-1-Jason.Huang2@infineon.com
+Fixes: 21c3f8f95554 ("wifi: mac80211: refactor STA CSA parsing flows")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260802111213.3bc833515e40.I255c37c31ca8b0b34e351cf254e16b6071dd8fb3@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/mac80211/spectmgmt.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-index 92c16a3173288..66557be28e7b1 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-@@ -1283,6 +1283,9 @@ static s32 brcmf_p2p_abort_action_frame(struct brcmf_cfg80211_info *cfg)
- 	brcmf_dbg(TRACE, "Enter\n");
+diff --git a/net/mac80211/spectmgmt.c b/net/mac80211/spectmgmt.c
+index ec622750e1c9d..880f4625775dc 100644
+--- a/net/mac80211/spectmgmt.c
++++ b/net/mac80211/spectmgmt.c
+@@ -227,7 +227,7 @@ int ieee80211_parse_ch_switch_ie(struct ieee80211_sub_if_data *sdata,
+ {
+ 	enum nl80211_band new_band = current_band;
+ 	int new_freq;
+-	u8 new_chan_no = 0, new_op_class = 0;
++	int new_chan_no = -1, new_op_class = -1;
+ 	struct ieee80211_channel *new_chan;
+ 	struct cfg80211_chan_def new_chandef = {};
+ 	const struct ieee80211_sec_chan_offs_ie *sec_chan_offs;
+@@ -256,7 +256,7 @@ int ieee80211_parse_ch_switch_ie(struct ieee80211_sub_if_data *sdata,
+ 		new_op_class = ext_chansw_elem->new_operating_class;
  
- 	vif = p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif;
-+	if (!vif)
-+		vif = p2p->bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
-+
- 	err = brcmf_fil_bsscfg_data_set(vif->ifp, "actframe_abort", &int_val,
- 					sizeof(s32));
- 	if (err)
-@@ -1819,6 +1822,7 @@ bool brcmf_p2p_send_action_frame(struct brcmf_if *ifp,
- 	/* validate channel and p2p ies */
- 	if (config_af_params.search_channel &&
- 	    IS_P2P_SOCIAL_CHANNEL(le32_to_cpu(af_params->channel)) &&
-+	    p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif &&
- 	    p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif->saved_ie.probe_req_ie_len) {
- 		afx_hdl = &p2p->afx_hdl;
- 		afx_hdl->peer_listen_chan = le32_to_cpu(af_params->channel);
+ 		if (!ieee80211_operating_class_to_band(new_op_class, &new_band)) {
+-			new_op_class = 0;
++			new_op_class = -1;
+ 			if (!unprot_action)
+ 				sdata_info(sdata,
+ 					   "cannot understand ECSA IE operating class, %d, ignoring\n",
+@@ -268,14 +268,14 @@ int ieee80211_parse_ch_switch_ie(struct ieee80211_sub_if_data *sdata,
+ 		}
+ 	}
+ 
+-	if (!new_op_class && elems->ch_switch_ie) {
++	if (new_op_class < 0 && elems->ch_switch_ie) {
+ 		new_chan_no = elems->ch_switch_ie->new_ch_num;
+ 		csa_ie->count = elems->ch_switch_ie->count;
+ 		csa_ie->mode = elems->ch_switch_ie->mode;
+ 	}
+ 
+ 	/* nothing here we understand */
+-	if (!new_chan_no)
++	if (new_chan_no < 0)
+ 		return 1;
+ 
+ 	/* Mesh Channel Switch Parameters Element */
+@@ -349,7 +349,8 @@ int ieee80211_parse_ch_switch_ie(struct ieee80211_sub_if_data *sdata,
+ 				get_unaligned_le16(bwi->info.optional);
+ 	} else if (!wide_bw_chansw_ie || !wbcs_elem_to_chandef(wide_bw_chansw_ie,
+ 							       &new_chandef)) {
+-		if (!ieee80211_operating_class_to_chandef(new_op_class, new_chan,
++		if (new_op_class < 0 ||
++		    !ieee80211_operating_class_to_chandef(new_op_class, new_chan,
+ 							  &new_chandef))
+ 			new_chandef = csa_ie->chanreq.oper;
+ 	}
 -- 
 2.53.0
 
