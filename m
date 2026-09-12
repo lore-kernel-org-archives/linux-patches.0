@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD4E4195DA;
-	Sat, 12 Sep 2026 15:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889B31C5799;
+	Sat, 12 Sep 2026 15:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225234; cv=none; b=o9sA/vBgZYlDu2gLtF7uKASUKksZ8Lc5elI0g0huzSY2jn8gO/sHYuqz7RVsNLJsV/KNK97mDU7xY4Zaj25tOBI5j1J0c1YW8h6jQ/o7/JQzXGYgaRtsYyGzhPAvMbflIcr9B+Pm2RsKdMV4E8Fd5z8a5c9PzEOz43bEIlYGJ2c=
+	t=1789225240; cv=none; b=iHh2XWlJ1Wm/gBfK8ryt2PkZAonsNTxGcg+et1vw5gQE24B5JvSUerxE8gkSRBmE3y+DVt+gU/DmKBbJ35u2M86kSyGBXFUo2QfKqbUc4I7sil90boVqV+ogkNnz+xGq7u6BJkaAKTWdnhMrYoVtXDmUGyhSs2IR1DtXTyMQrmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225234; c=relaxed/simple;
-	bh=Un79tgvYxnuhpggkF5BE7php8/Qp5d+uOLPtnsLv4O0=;
+	s=arc-20240116; t=1789225240; c=relaxed/simple;
+	bh=rQRJBENU+aZA3LFvx4eUwE/2FZUmGEIroRR3QgoyNDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LqGvV7+d4gSvlrsKXWS+y/7v82VQ4kL17zpgmbFm+deMimQ6TzeVFusBzGa+KLnFPqWkNe0X5FY0PtBinw8EMcS7rPwjezp3RdfXqSX7G45YuTjNm0SfBYIzCYZ1fT/oFkpcewZKlNa1ceazfPqx7BJjD4GVeNC6ZSbjPeQPZWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAVYM/9t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CH12wHFzNPP/m2egAAdaoyHK+ng27JIAdjlbGsswuaSMgnHFd8lkUzj7U4tl7LbhNVGZKTBUAnoeptloXbWB6lR5SwhDF4YSyLfzzjzr3aYw986zVFymsrUtQRsYdhZo74FDP4hVqEOFlQ23ITxrrtiCNwzS0Zlu4TtuREr72BA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKZNzPyf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAVYM/9t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB5C1F000FF;
-	Sat, 12 Sep 2026 15:00:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKZNzPyf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6721F000FF;
+	Sat, 12 Sep 2026 15:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225232;
-	bh=xROS+gKYRUrI+TaW8DYHybJt1PFAR7JTG/bfSh3fbtk=;
+	s=korg; t=1789225237;
+	bh=RWllPJjWmr4g3vD9DmCcNVlgOWvX6ijjg7JEEAOakWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VAVYM/9t/J5LAiWlKdb2mvsQeZXsQ84AeH/uoIkvLqXS1/vYAVTtHuYSCx7n7+Qq6
-	 r7hORHM4YiS40WVVWeCpE1JZ8A7QDB0jWD36xnxYMiKUwV4hQZOo9yxnMeRfxIUGMQ
-	 lATxHlhZxn+MmFe4TwI74svouCMC9bFvlwM1gVFM=
+	b=jKZNzPyfxmyoE7Hcap+C69UNFnksPz+XwT6W8QG5XSzmxN34xUJsTXVb634h0fys/
+	 6KfeIqQzRTMG7GcTMZA11dv+9CLlrSe8ieeSX9Ru+TGwdZKrc4TvhYBDqIpj0FYJLh
+	 Az3vjzEJehOg1oT9vCCXTXP0V/fCotp09TATsNR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christoph Hellwig <hch@lst.de>,
-	Yunje Shin <ioerts@kookmin.ac.kr>,
-	Hannes Reinecke <hare@suse.de>,
-	Chris Leech <cleech@redhat.com>,
-	Alistair Francis <alistair.francis@wdc.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Guixin Liu <kanie@linux.alibaba.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1156/1424] nvme: Add the DHCHAP maximum HD IDs
-Date: Sat, 12 Sep 2026 08:59:48 +0200
-Message-ID: <20260912065633.186158962@linuxfoundation.org>
+Subject: [PATCH 6.6 1157/1424] nvmet: fix heap out-of-bounds read in nvmet_auth_negotiate()
+Date: Sat, 12 Sep 2026 08:59:49 +0200
+Message-ID: <20260912065633.208926706@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -55,38 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 09e8f0f93491c6be867f32d4edc0b16fb5da785e ]
+[ Upstream commit 5bb96cc218835769ab74ec7f3ea2bf81fbffe955 ]
 
-In preperation for using DHCHAP length in upcoming host and target
-patches let's add the hash and diffie-hellman ID length macros.
+nvmet_execute_auth_send() allocates the DH-HMAC-CHAP message buffer with
+the host-supplied transfer length (tl) and hands it to
+nvmet_auth_negotiate() without passing tl along. nvmet_auth_negotiate()
+then reads the negotiate header and, for each of the halen hash
+identifiers and dhlen DH group identifiers, indexes into the fixed
+idlist[60] array (hashes at idlist[0..halen), groups at idlist[30..]).
 
+Neither the transfer length nor halen/dhlen is validated. A malicious or
+non-conformant host can report a tl smaller than the negotiate structure,
+or a halen/dhlen larger than the array (both are u8, up to 255), making
+the loops read past the end of the allocated buffer (heap out-of-bounds
+read). The sibling nvmet_auth_reply() already validates tl against the
+structure size; the negotiate path did not.
+
+Pass tl into nvmet_auth_negotiate(), reject a tl that does not cover the
+negotiate data plus one full protocol descriptor, and reject halen/dhlen
+larger than NVME_AUTH_DHCHAP_MAX_DH_IDS.
+
+Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Yunje Shin <ioerts@kookmin.ac.kr>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Chris Leech <cleech@redhat.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: 5bb96cc21883 ("nvmet: fix heap out-of-bounds read in nvmet_auth_negotiate()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/nvme.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/nvme/target/fabrics-cmd-auth.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/nvme.h b/include/linux/nvme.h
-index 09cd06f20da61..815850270be57 100644
---- a/include/linux/nvme.h
-+++ b/include/linux/nvme.h
-@@ -2101,4 +2101,8 @@ enum nvme_pr_change_ptpl {
+diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
+index 65a1a4aae726e..193bc75de8333 100644
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -31,12 +31,16 @@ void nvmet_auth_sq_init(struct nvmet_sq *sq)
+ 	sq->dhchap_step = NVME_AUTH_DHCHAP_MESSAGE_NEGOTIATE;
+ }
  
- #define NVME_PR_IGNORE_KEY (1 << 3)
+-static u8 nvmet_auth_negotiate(struct nvmet_req *req, void *d)
++static u8 nvmet_auth_negotiate(struct nvmet_req *req, void *d, u32 tl)
+ {
+ 	struct nvmet_ctrl *ctrl = req->sq->ctrl;
+ 	struct nvmf_auth_dhchap_negotiate_data *data = d;
+ 	int i, hash_id = 0, fallback_hash_id = 0, dhgid, fallback_dhgid;
  
-+/* Section 8.3.4.5.2 of the NVMe 2.1 */
-+#define NVME_AUTH_DHCHAP_MAX_HASH_IDS 30
-+#define NVME_AUTH_DHCHAP_MAX_DH_IDS 30
++	if (tl < sizeof(*data) +
++			sizeof(struct nvmf_auth_dhchap_protocol_descriptor))
++		return NVME_AUTH_DHCHAP_FAILURE_INCORRECT_PAYLOAD;
 +
- #endif /* _LINUX_NVME_H */
+ 	pr_debug("%s: ctrl %d qid %d: data sc_d %d napd %d authid %d halen %d dhlen %d\n",
+ 		 __func__, ctrl->cntlid, req->sq->qid,
+ 		 data->sc_c, data->napd, data->auth_protocol[0].dhchap.authid,
+@@ -53,6 +57,10 @@ static u8 nvmet_auth_negotiate(struct nvmet_req *req, void *d)
+ 	    NVME_AUTH_DHCHAP_AUTH_ID)
+ 		return NVME_AUTH_DHCHAP_FAILURE_INCORRECT_PAYLOAD;
+ 
++	if (data->auth_protocol[0].dhchap.dhlen > NVME_AUTH_DHCHAP_MAX_DH_IDS ||
++	    data->auth_protocol[0].dhchap.halen > NVME_AUTH_DHCHAP_MAX_HASH_IDS)
++		return NVME_AUTH_DHCHAP_FAILURE_INCORRECT_PAYLOAD;
++
+ 	for (i = 0; i < data->auth_protocol[0].dhchap.halen; i++) {
+ 		u8 host_hmac_id = data->auth_protocol[0].dhchap.idlist[i];
+ 
+@@ -265,7 +273,7 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
+ 		} else if (data->auth_id != req->sq->dhchap_step)
+ 			goto done_failure1;
+ 		/* Validate negotiation parameters */
+-		dhchap_status = nvmet_auth_negotiate(req, d);
++		dhchap_status = nvmet_auth_negotiate(req, d, tl);
+ 		if (dhchap_status == 0)
+ 			req->sq->dhchap_step =
+ 				NVME_AUTH_DHCHAP_MESSAGE_CHALLENGE;
 -- 
 2.53.0
 
