@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632DF367B60;
-	Sat, 12 Sep 2026 08:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16472367B60;
+	Sat, 12 Sep 2026 08:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200813; cv=none; b=MTk7FrjHg67mQHQXovbHBQBNSRFonBbjBhBRwP+TtG+10Iq05sXDNRkD+pmAW0/xEC8mZ/QZhoPwYdXwx6nEXWf6dN1WwXNfEuaTEq+ISeOSKNI8U27ofkau0YBJAJTDx6jQ1S76SHVnYiL6+/wjj507WbcI/nJE/RjaBJ9LgSY=
+	t=1789200818; cv=none; b=r0MOjzijJgEk8pQ/1t3Jct8VFqg8imJ8KrcACUJlT5WWPHDHP+bM4i4HUf+mrXjhRPNhfkMHN0g+jDTMsEBOo3QwM9X5SlMoqF0PAiBh3UxpZrJh50zihCv4yZim9Ex/uik3qstwZHS8KMg/zuY8TCDgxHzNdQ16lCDET932v/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200813; c=relaxed/simple;
-	bh=Xf3OXB3QRg001hx3jCvMCoJ+sQSs47ifG7RFReWK4FY=;
+	s=arc-20240116; t=1789200818; c=relaxed/simple;
+	bh=l9Qv64uLrM+Uao/Wc3qyHgThAUasYuLgrbdd6L4SnJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PjRWgm2MnzUXOhzBnmU0TeVcXsmHCRebJWS06ewHyfzAW3yo9kvJhESlHKdOuc8zJEwE4AqLyd6mmuQqvk5xeBomM/Cwacw8MlNhUYwzL6wu0L4LGy/9ZnPTss0xF2nUt1xoxLfv6zSSPYiDF0cl22djzO8kSj83mb4Rw/XZHj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CYqp0GS/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YGUiJZBExcG/oc+8yZhg8X/DHfLRfWAtHtvMD+OmLH96dAxug1TkNRBTqkzSPN9a6IlLglUQy/faEQEdK2rq9t3bD06bWZpLWdrIsq5/l1PzOknnwigcRCUwsLceTrX04AsM7YwYSi9/1N2uCVaQoy4EvOVJo4zixNAFhGDleGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnEpNMwc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYqp0GS/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E3D1F000FF;
-	Sat, 12 Sep 2026 08:13:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnEpNMwc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B0641F000FF;
+	Sat, 12 Sep 2026 08:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200812;
-	bh=UHEgZaBmpG7NHOQGYq+YMsU2ribgu4FKWptZybMYDsg=;
+	s=korg; t=1789200817;
+	bh=jTH/rCYcvnaZY7omU0hwklhVusFnGSUBwOM3EPMWQLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CYqp0GS/XC2duFhNwzzvrAbmeZ5SswlqgjTYKKfBhDwWjVC9EjCUKCTZ038WT10Fb
-	 yp1DpU/Kfd4ZUpmEYwRvTFMXUnycLIqSw0VG+Q3X6/q7OzsjtX48frHuwY8Xi1qst2
-	 /m/hesgoemyonaJWpKQHTZgO+ejEbdz+MtDVv9NU=
+	b=BnEpNMwcxzbdxMuzY6Y5BTK//flcxZ8F8Y5xltxzDGYSLTCYzRdkV0y8kxDUOAslq
+	 jNoIwGb6+vLmNZTLAMCuENgB3NK7BqKOB4Bx7N8lQF0DRd9CZZ2Yua1rVX4vL585kI
+	 B/nMB6TbN5G50jXkESZ3LxVxgDnLETqTr7W+ouHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0824/1815] arm64: dts: qcom: eliza: Add fallback compatible for ADSP remoteproc
-Date: Sat, 12 Sep 2026 08:42:54 +0200
-Message-ID: <20260912065708.257575579@linuxfoundation.org>
+Subject: [PATCH 7.2 0825/1815] clk: qcom: nord: use BRANCH_HALT_SKIP for PHY pipe clocks
+Date: Sat, 12 Sep 2026 08:42:55 +0200
+Message-ID: <20260912065708.280327199@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,38 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+From: Taniya Das <taniya.das@oss.qualcomm.com>
 
-[ Upstream commit b589944ecd95fe4a51bc2aab13ce83b298b7bcc8 ]
+[ Upstream commit 3a8a7d597b07ffe388b47fb524827be52c9f7e0f ]
 
-The ADSP found on Eliza SoC is actually fully compatible with the ones
-from SM8750 class. So add the SM8550 compatible as fallback, just like
-the rest from the SM8750 class SoCs.
+The PCIe and USB3 pipe clocks on Nord are sourced from their
+respective PHYs. The halt bit for these branches does not toggle
+reliably when the PHY is powered down or not yet brought up, so
+polling for it with BRANCH_HALT_VOTED can spuriously time out.
 
-Fixes: 88ddafb01ec0 ("arm64: dts: qcom: eliza: Describe the ADSP and USB related nodes")
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260722-dts-qcom-eliza-fix-adsp-binding-v2-2-e1e98ae15533@oss.qualcomm.com
+Switch these pipe clock branches to BRANCH_HALT_SKIP, matching the
+convention used for PHY-sourced pipe clocks elsewhere in the Qualcomm
+clock drivers.
+
+Fixes: a4f780cd5c7a ("clk: qcom: gcc: Add multiple global clock controller driver for Nord SoC")
+Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Tested-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260716-b4-nord-pipe-clk-fixes-v1-1-e4f583633356@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/eliza.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-nord.c   | 8 ++++----
+ drivers/clk/qcom/negcc-nord.c | 4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/eliza.dtsi b/arch/arm64/boot/dts/qcom/eliza.dtsi
-index 2e9f5aa092cc2..8fa69be150508 100644
---- a/arch/arm64/boot/dts/qcom/eliza.dtsi
-+++ b/arch/arm64/boot/dts/qcom/eliza.dtsi
-@@ -1967,7 +1967,7 @@ tcsr: clock-controller@1fbf000 {
- 		};
+diff --git a/drivers/clk/qcom/gcc-nord.c b/drivers/clk/qcom/gcc-nord.c
+index 7c7c2171ac965..970a3e1a5864a 100644
+--- a/drivers/clk/qcom/gcc-nord.c
++++ b/drivers/clk/qcom/gcc-nord.c
+@@ -701,7 +701,7 @@ static struct clk_branch gcc_pcie_a_phy_rchng_clk = {
  
- 		remoteproc_adsp: remoteproc@3000000 {
--			compatible = "qcom,eliza-adsp-pas";
-+			compatible = "qcom,eliza-adsp-pas", "qcom,sm8550-adsp-pas";
- 			reg = <0x0 0x03000000 0x0 0x10000>;
+ static struct clk_branch gcc_pcie_a_pipe_clk = {
+ 	.halt_reg = 0x49068,
+-	.halt_check = BRANCH_HALT_VOTED,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.hwcg_reg = 0x49068,
+ 	.hwcg_bit = 1,
+ 	.clkr = {
+@@ -850,7 +850,7 @@ static struct clk_branch gcc_pcie_b_phy_rchng_clk = {
  
- 			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
+ static struct clk_branch gcc_pcie_b_pipe_clk = {
+ 	.halt_reg = 0x4a068,
+-	.halt_check = BRANCH_HALT_VOTED,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.clkr = {
+ 		.enable_reg = 0x9d008,
+ 		.enable_mask = BIT(24),
+@@ -995,7 +995,7 @@ static struct clk_branch gcc_pcie_c_phy_rchng_clk = {
+ 
+ static struct clk_branch gcc_pcie_c_pipe_clk = {
+ 	.halt_reg = 0x4b068,
+-	.halt_check = BRANCH_HALT_VOTED,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.clkr = {
+ 		.enable_reg = 0x9d010,
+ 		.enable_mask = BIT(1),
+@@ -1140,7 +1140,7 @@ static struct clk_branch gcc_pcie_d_phy_rchng_clk = {
+ 
+ static struct clk_branch gcc_pcie_d_pipe_clk = {
+ 	.halt_reg = 0x4c068,
+-	.halt_check = BRANCH_HALT_VOTED,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.clkr = {
+ 		.enable_reg = 0x9d010,
+ 		.enable_mask = BIT(10),
+diff --git a/drivers/clk/qcom/negcc-nord.c b/drivers/clk/qcom/negcc-nord.c
+index 355850a875acb..3427a0375373c 100644
+--- a/drivers/clk/qcom/negcc-nord.c
++++ b/drivers/clk/qcom/negcc-nord.c
+@@ -1641,7 +1641,7 @@ static struct clk_branch ne_gcc_usb3_prim_phy_com_aux_clk = {
+ 
+ static struct clk_branch ne_gcc_usb3_prim_phy_pipe_clk = {
+ 	.halt_reg = 0x2a074,
+-	.halt_check = BRANCH_HALT_VOTED,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.hwcg_reg = 0x2a074,
+ 	.hwcg_bit = 1,
+ 	.clkr = {
+@@ -1697,7 +1697,7 @@ static struct clk_branch ne_gcc_usb3_sec_phy_com_aux_clk = {
+ 
+ static struct clk_branch ne_gcc_usb3_sec_phy_pipe_clk = {
+ 	.halt_reg = 0x2c074,
+-	.halt_check = BRANCH_HALT_VOTED,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.hwcg_reg = 0x2c074,
+ 	.hwcg_bit = 1,
+ 	.clkr = {
 -- 
 2.53.0
 
