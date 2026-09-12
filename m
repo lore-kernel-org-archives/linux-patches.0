@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075F538F93B;
-	Sat, 12 Sep 2026 19:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7892837EFE5;
+	Sat, 12 Sep 2026 19:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243048; cv=none; b=Sq+DRCrrPwzyzlyeCIbTO/ah0SupnQxRhuWb4ejQw54Ekz/HnjeHcJkSn/1LM1yNaGDV0a1DinqfwTZeV1N4vmSiFaqQKKdQL9q6zfjWc+MqeA/0xtOe4cL89BS9Dcl04+TtoykPmMULNq6eGX+ygDjdkWTKZ4h33/qQ0Q1ns/I=
+	t=1789243050; cv=none; b=CwgRpWm2W/hAq0zNCW1wHxoeXiROxk0Nl7XR7LeahXqBPGGHAIEHcy0b4zDDnq1tpAbZR6PZ51yjM3ghwXBWwsB2rYX5kCCgh9+1qEkdYjiQVqDfQAHC1cUoC+dbbrYSr6b8KBJRpf4whl+nKbaSxAggvKmRLxxhVmTaZ0fTpVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243048; c=relaxed/simple;
-	bh=PIFxLjX60HZtWasaMEdP/Fu7HhapRNElCmXwEE7e51U=;
+	s=arc-20240116; t=1789243050; c=relaxed/simple;
+	bh=AdE5JlyJgFl/wgkiuT2AD2Ztc4B4UtOoJxbczh3hapI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pvAHcDJGmwBNM7l5BXVpJLV1J9Tl95eJrgDRDZLtxeDpZES8Rpf9mZNm5SCK84nynpK/m5t3+FDoLHB8HDDzAyl8Jb/fSg1cRGRJVjfP0gZgDtEpeJt1DZd6BSL7W5TGYsj8KvGnz/PcWrhBw0wDN91Cauc8KARFMPed26kOsXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCj1zn4I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NyTBsCx+csnTXdo0GnW9zeze7dNGRDRkEBxYhF0TY/MrDvBsKEBd3ekCR+dzsyL44NScxzavxub8n1GInH2zwOMzPmxRXTIwTZBjkD64zIMYrchV4sQ++T4+mcS58BdIn3stgKJlO6340c8vdfBvFCum5AJebEcfQcQLEHWzJx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xibMAkDT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCj1zn4I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193C81F000FF;
-	Sat, 12 Sep 2026 19:57:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xibMAkDT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4961F000FF;
+	Sat, 12 Sep 2026 19:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243046;
-	bh=T/UZgm1Pyinn69XcOBx984ZjGzUDqjVLPQv6ZW2T7as=;
+	s=korg; t=1789243049;
+	bh=V4DaKywVqn6CynGbeK2b1jn37IOai+dqBNyZGs0DfNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WCj1zn4IcKf/Q7gM5CTAKjtapS3ixTQq+14UvHWKMXla+KOuU4CuZUOINJoWGYlVm
-	 qbiqyW5ef6MjeFQr1+UV8D9Uy4Aa9QgE4qFaEdFgVsBTC7bApMhm88LWqa3ovxCO8X
-	 H4ZaItt7KHrv3BxQL3kz+V8/kPAa8BGVl+A/DYV0=
+	b=xibMAkDT8iFkO5UpBG+qw56p/ldKzrPasZuRZIrV1P+KMU1x/qUWcioOSntPP4DxG
+	 WCIJCufO7kHo0nhvzlp+OQmAeZwqbzcD1GgBqNZBfR/2R+PA6UNPNjz3SwpbpqgfTY
+	 JgiJg7yUpj4e9FVppyEZQLIp8mOs07jevffRCl3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Crt Mori <cmo@melexis.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Richard Genoud <richard.genoud@bootlin.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 619/798] bitfield: Add less-checking __FIELD_{GET,PREP}()
-Date: Sat, 12 Sep 2026 09:04:07 +0200
-Message-ID: <20260912065531.309289967@linuxfoundation.org>
+Subject: [PATCH 5.10 620/798] bitfield: Add non-constant field_{prep,get}() helpers
+Date: Sat, 12 Sep 2026 09:04:08 +0200
+Message-ID: <20260912065531.332914136@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -45,6 +51,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
@@ -53,110 +60,118 @@ Content-Transfer-Encoding: 8bit
 
 From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 2a6c045640c38a407a39cd40c3c4d8dd2fd89aa8 ]
+[ Upstream commit c1c6ab80b25c8db1e2ef5ae3ac8075d2c242ae13 ]
 
-The BUILD_BUG_ON_MSG() check against "~0ull" works only with "unsigned
-(long) long" _mask types.  For constant masks, that condition is usually
-met, as GENMASK() yields an UL value.  The few places where the
-constant mask is stored in an intermediate variable were fixed by
-changing the variable type to u64 (see e.g. [1] and [2]).
+The existing FIELD_{GET,PREP}() macros are limited to compile-time
+constants.  However, it is very common to prepare or extract bitfield
+elements where the bitfield mask is not a compile-time constant.
 
-However, for non-constant masks, smaller unsigned types should be valid,
-too, but currently lead to "result of comparison of constant
-18446744073709551615 with expression of type ... is always
-false"-warnings with clang and W=1.
+To avoid this limitation, the AT91 clock driver and several other
+drivers already have their own non-const field_{prep,get}() macros.
+Make them available for general use by adding them to
+<linux/bitfield.h>, and improve them slightly:
+  1. Avoid evaluating macro parameters more than once,
+  2. Replace "ffs() - 1" by "__ffs()",
+  3. Support 64-bit use on 32-bit architectures,
+  4. Wire field_{get,prep}() to FIELD_{GET,PREP}() when mask is
+     actually constant.
 
-Hence refactor the __BF_FIELD_CHECK() helper, and factor out
-__FIELD_{GET,PREP}().  The later lack the single problematic check, but
-are otherwise identical to FIELD_{GET,PREP}(), and are intended to be
-used in the fully non-const variants later.
+This is deliberately not merged into the existing FIELD_{GET,PREP}()
+macros, as people expressed the desire to keep stricter variants for
+increased safety, or for performance critical paths.
 
-[1] commit 5c667d5a5a3ec166 ("clk: sp7021: Adjust width of _m in
-    HWM_FIELD_PREP()")
-[2] commit cfd6fb45cfaf46fa ("crypto: ccree - avoid out-of-range
-    warnings from clang")
+Yury: use __mask withing new macros.
 
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://git.kernel.org/torvalds/c/5c667d5a5a3ec166 [1]
+Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Acked-by: Crt Mori <cmo@melexis.com>
+Acked-by: Nuno Sá <nuno.sa@analog.com>
+Acked-by: Richard Genoud <richard.genoud@bootlin.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
 Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
 Stable-dep-of: 62bac3202042 ("drm/sun4i: tcon-top: Keep mixer routes distinct")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bitfield.h | 36 ++++++++++++++++++++++++++++--------
- 1 file changed, 28 insertions(+), 8 deletions(-)
+ include/linux/bitfield.h | 59 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
 diff --git a/include/linux/bitfield.h b/include/linux/bitfield.h
-index 6093fa6db2600..359916a958f35 100644
+index 359916a958f35..3db9434afcfea 100644
 --- a/include/linux/bitfield.h
 +++ b/include/linux/bitfield.h
-@@ -57,7 +57,7 @@
+@@ -16,6 +16,7 @@
+  * FIELD_{GET,PREP} macros take as first parameter shifted mask
+  * from which they extract the base mask and shift amount.
+  * Mask must be a compilation time constant.
++ * field_{get,prep} are variants that take a non-const mask.
+  *
+  * Example:
+  *
+@@ -193,4 +194,62 @@ __MAKE_OP(64)
+ #undef __MAKE_OP
+ #undef ____MAKE_OP
  
- #define __bf_cast_unsigned(type, x)	((__unsigned_scalar_typeof(type))(x))
- 
--#define __BF_FIELD_CHECK(_mask, _reg, _val, _pfx)			\
-+#define __BF_FIELD_CHECK_MASK(_mask, _val, _pfx)			\
- 	({								\
- 		BUILD_BUG_ON_MSG(!__builtin_constant_p(_mask),		\
- 				 _pfx "mask is not constant");		\
-@@ -65,13 +65,33 @@
- 		BUILD_BUG_ON_MSG(__builtin_constant_p(_val) ?		\
- 				 ~((_mask) >> __bf_shf(_mask)) & (_val) : 0, \
- 				 _pfx "value too large for the field"); \
--		BUILD_BUG_ON_MSG(__bf_cast_unsigned(_mask, _mask) >	\
--				 __bf_cast_unsigned(_reg, ~0ull),	\
--				 _pfx "type of reg too small for mask"); \
- 		__BUILD_BUG_ON_NOT_POWER_OF_2((_mask) +			\
- 					      (1ULL << __bf_shf(_mask))); \
- 	})
- 
-+#define __BF_FIELD_CHECK_REG(mask, reg, pfx)				\
-+	BUILD_BUG_ON_MSG(__bf_cast_unsigned(mask, mask) >		\
-+			 __bf_cast_unsigned(reg, ~0ull),		\
-+			 pfx "type of reg too small for mask")
-+
-+#define __BF_FIELD_CHECK(mask, reg, val, pfx)				\
++#define __field_prep(mask, val)						\
 +	({								\
-+		__BF_FIELD_CHECK_MASK(mask, val, pfx);			\
-+		__BF_FIELD_CHECK_REG(mask, reg, pfx);			\
++		__auto_type __mask = (mask);				\
++		typeof(__mask) __val = (val);				\
++		unsigned int __shift = BITS_PER_TYPE(__mask) <= 32 ?	\
++				       __ffs(__mask) : __ffs64(__mask);	\
++		(__val << __shift) & __mask;				\
 +	})
 +
-+#define __FIELD_PREP(mask, val, pfx)					\
++#define __field_get(mask, reg)						\
 +	({								\
-+		__BF_FIELD_CHECK_MASK(mask, val, pfx);			\
-+		((typeof(mask))(val) << __bf_shf(mask)) & (mask);	\
++		__auto_type __mask = (mask);				\
++		typeof(__mask) __reg =  (reg);				\
++		unsigned int __shift = BITS_PER_TYPE(__mask) <= 32 ?	\
++				       __ffs(__mask) : __ffs64(__mask);	\
++		(__reg & __mask) >> __shift;				\
 +	})
 +
-+#define __FIELD_GET(mask, reg, pfx)					\
-+	({								\
-+		__BF_FIELD_CHECK_MASK(mask, 0U, pfx);			\
-+		(typeof(mask))(((reg) & (mask)) >> __bf_shf(mask));	\
-+	})
++/**
++ * field_prep() - prepare a bitfield element
++ * @mask: shifted mask defining the field's length and position, must be
++ *        non-zero
++ * @val:  value to put in the field
++ *
++ * Return: field value masked and shifted to its final destination
++ *
++ * field_prep() masks and shifts up the value.  The result should be
++ * combined with other fields of the bitfield using logical OR.
++ * Unlike FIELD_PREP(), @mask is not limited to a compile-time constant.
++ * Typical usage patterns are a value stored in a table, or calculated by
++ * shifting a constant by a variable number of bits.
++ * If you want to ensure that @mask is a compile-time constant, please use
++ * FIELD_PREP() directly instead.
++ */
++#define field_prep(mask, val)						\
++	(__builtin_constant_p(mask) ? __FIELD_PREP(mask, val, "field_prep: ") \
++				    : __field_prep(mask, val))
 +
- /**
-  * FIELD_MAX() - produce the maximum value representable by a field
-  * @_mask: shifted mask defining the field's length and position
-@@ -108,8 +128,8 @@
-  */
- #define FIELD_PREP(_mask, _val)						\
- 	({								\
--		__BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: ");	\
--		((typeof(_mask))(_val) << __bf_shf(_mask)) & (_mask);	\
-+		__BF_FIELD_CHECK_REG(_mask, 0ULL, "FIELD_PREP: ");	\
-+		__FIELD_PREP(_mask, _val, "FIELD_PREP: ");		\
- 	})
- 
- /**
-@@ -122,8 +142,8 @@
-  */
- #define FIELD_GET(_mask, _reg)						\
- 	({								\
--		__BF_FIELD_CHECK(_mask, _reg, 0U, "FIELD_GET: ");	\
--		(typeof(_mask))(((_reg) & (_mask)) >> __bf_shf(_mask));	\
-+		__BF_FIELD_CHECK_REG(_mask, _reg, "FIELD_GET: ");	\
-+		__FIELD_GET(_mask, _reg, "FIELD_GET: ");		\
- 	})
- 
- extern void __compiletime_error("value doesn't fit into mask")
++/**
++ * field_get() - extract a bitfield element
++ * @mask: shifted mask defining the field's length and position, must be
++ *        non-zero
++ * @reg:  value of entire bitfield
++ *
++ * Return: extracted field value
++ *
++ * field_get() extracts the field specified by @mask from the
++ * bitfield passed in as @reg by masking and shifting it down.
++ * Unlike FIELD_GET(), @mask is not limited to a compile-time constant.
++ * Typical usage patterns are a value stored in a table, or calculated by
++ * shifting a constant by a variable number of bits.
++ * If you want to ensure that @mask is a compile-time constant, please use
++ * FIELD_GET() directly instead.
++ */
++#define field_get(mask, reg)						\
++	(__builtin_constant_p(mask) ? __FIELD_GET(mask, reg, "field_get: ") \
++				    : __field_get(mask, reg))
++
+ #endif
 -- 
 2.53.0
 
