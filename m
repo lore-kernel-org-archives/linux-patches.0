@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BECC3AF646;
-	Sat, 12 Sep 2026 18:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39C63B27EA;
+	Sat, 12 Sep 2026 18:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239061; cv=none; b=ADGefN+oUFbMApCDb04j2tWcHyBzyoBUanjTRh3rgTKuoC5h7Wyk2cPz+lM6Ksud+4sLvTFHlAoqxrGVonISPsu7geY9Hk6aHI5MGkQgknGPGnfhhsugKLyr4l3mUmIlmYL0XEPdrHsHcFzE7FJVIuNZ+fHf2OdkuJOpzYwlwLA=
+	t=1789239067; cv=none; b=FpsN+kuv+mrV1cMXcw+rVBbHWxCJnzi8vB0+XvrOe6Yto5TmZtB7axDupnHZ3H0u2dLrWEgYQXMu0eyOzktc66yyOUU22ETJd4K1R0SBh/UCd/gJkqEZOdNV7dbgSXLyg9xUWNmBCl5sGMp9n64K+ipNCE9beqg9szmLdgLXjgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239061; c=relaxed/simple;
-	bh=LeeDS/IQDxPomunnx8S4FHsiNErtAfpWtC+DSh6e/ow=;
+	s=arc-20240116; t=1789239067; c=relaxed/simple;
+	bh=TUJUbCYNPwYR4+E3JfUUfPawBF2SpXk9XO4UUyjbQDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PInXsKYlUZ1LOoh52M39FELowLL3afrxp63yR26w9DSd+LRsLCD++9ITREdQXf6P04U7GMTUX/YzKlUO+yME2VfTJrjeCx5Rgu4pqjNN83c/3khY+Qri9WTk1ckAuJRaSb5C0YiZzjXXSm0nIsQvZeQ7FgVUs5EQKwFhcimkn/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rRGBA/R9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jZHPkzW4XbTOxkJYlTKOJZ4opSbp6Rf29Fe64CKk7Wyc48yClBSGKoKG8ftjreF2f3v2k4ehg2gpZHFWMoCR/wvewVKzVB6WZzcVmgcWyTXmW8EuCXCBzSL/DUh7If10pWYCytvKLb7lt7Rtl9pPW+OzvtI1CY+00Z+GUFzc/JU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlKr+Y6F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRGBA/R9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7D021F000FF;
-	Sat, 12 Sep 2026 18:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlKr+Y6F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5691F000FF;
+	Sat, 12 Sep 2026 18:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239060;
-	bh=Hhj5d0KcWf5t6k4lSZ5jyiozJmN8kKqreSApKA7xq1Y=;
+	s=korg; t=1789239065;
+	bh=tLbFhcKjjOISmUgEIR8jvTTwM1FaaEvLWIvp4VJ51mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rRGBA/R9jtRXJ16+a88j2f0NWyurEjKqlvvjAS54MtLEo6m7kNc9u346xNXl7IF+b
-	 pRZwbtBcViP+P6CjeeorfyeaLVRBg2GXuRRjjCM79N2HtxtHgApYtQSZzCH/ZYpU8d
-	 7J+q2OFCkXkSPnfFheArQLsLoyhs+M2kU/Xe/588=
+	b=jlKr+Y6FrkWwlRM1l3mJvx2FRM43PSnwkR11KtdrLKvMV+Oa6i6Fihfnx0pdWpZwJ
+	 rztQ2nkoRVYoh+6P4DgLrerVX7N+lOku7imd4Izrq9wv6x/X52lzsaGGyv7yZD35oJ
+	 mMC4PzqlPFC+ZioG4WC1EQdbk+8nHdw8on5O0+nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Pu Lehui <pulehui@huawei.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 535/935] bpf: Sync tail_call_reachable with callee state on entry
-Date: Sat, 12 Sep 2026 08:59:25 +0200
-Message-ID: <20260912065539.091095476@linuxfoundation.org>
+Subject: [PATCH 5.15 582/935] ext4: drain in-flight DIO before buffered write fallback
+Date: Sat, 12 Sep 2026 09:00:12 +0200
+Message-ID: <20260912065540.188116385@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,54 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit 3513ea9dab6c1a3d2dc8e6160c41f690206948b6 ]
+[ Upstream commit 15cdefd0c0522f9d5e12d947fa04f4c11649b699 ]
 
-Currently in check_max_stack_depth_subprog, when the verifier enters a
-new callee branch, the local tail_call_reachable is not properly
-synchronized with the callee's state.
+generic/746 started failing intermittently on ext3 (no-extent inodes).
+The test triggers 'Page cache invalidation failure on direct I/O'
+warnings and subsequent fsync returns -EIO. Adding a 50ms delay
+between ext4_buffered_write_iter() and filemap_write_and_wait_range()
+in ext4_dio_write_iter() makes the race almost always reproducible.
 
-Consider a main prog branching into multiple subprogs:
+On no-extent inodes, DIO writes to holes cannot use unwritten extents,
+so ext4_iomap_alloc() leaves m_flags=0 and ext4_map_blocks() returns 0.
+The iomap layer then returns -ENOTBLK, causing fallback to buffered I/O.
 
-       subprog0 -> tailcall
-main <
-       subprog1 -> subprog2
+The fallback path in ext4_dio_write_iter() calls
+ext4_buffered_write_iter() which dirties pages, then does flush and
+invalidate. However, there's an unprotected window between
+ext4_buffered_write_iter() returning (with inode lock released) and
+the subsequent flush+invalidate.
 
-When the verifier finishes checking subprog0 and backtracks to main
-prog, the local tail_call_reachable state is left as true. As it
-proceeds to subprog1, this uncleared state leaks into the new branch,
-falsely marking subprog1 and subprog2 as tailcall reachable.
+Concurrent async DIO completions from other threads can run
+kiocb_invalidate_post_direct_write() during this window. If pages have
+been re-dirtied, post-invalidation finds dirty pages and triggers the
+warning, setting -EIO in the error sequence.
 
-Fix this by explicitly syncing tail_call_reachable with the callee's
-has_tail_call state on entry. The caller's state is safely preserved and
-restored via the existing backtracking logic.
+Consider a file with two 4k extents: [hole][written]. Thread A does
+DIO to the written extent, while thread B does DIO spanning both:
 
-Fixes: ebf7d1f508a7 ("bpf, x64: rework pro/epilogue and tailcall handling in JIT")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Link: https://patch.msgid.link/20260716120157.835937-2-pulehui@huaweicloud.com
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+  kworker A (4k DIO, allocated block)    kworker B (8k DIO, fallback)
+  -----------------------------------    ----------------------------
+  inode_lock_shared()                    inode_lock_shared()
+  iomap_dio_rw():                        iomap_dio_rw():
+    kiocb_invalidate_pages -> clean        iomap_begin -> -ENOTBLK
+    submit_bio (async)                     dio->size = 0
+  inode_unlock_shared()                  inode_unlock_shared()
+
+  [bio pending in block layer]           /* fallback: lock released */
+                                         ext4_buffered_write_iter()
+                                           inode_lock(exclusive)
+                                           generic_perform_write()
+                                             -> dirty pages [0, 8k]
+                                           inode_unlock(exclusive)
+
+                                         /* pages dirty, no lock */
+  [bio completes]                        filemap_write_and_wait_range()
+  iomap_dio_complete()                     -> flush dirty pages
+    kiocb_invalidate_post_direct_write() invalidate_mapping_pages()
+      invalidate_inode_pages2_range()
+      -> finds dirty page!
+      -> dio_warn_stale_pagecache()
+      -> errseq_set(-EIO)
+
+This issue can be triggered through normal I/O paths, not just
+intentionally overlapping DIO writes from userspace. For example,
+generic/746 uses a loop device where multiple kworkers issue concurrent
+I/O to the backing file. Additionally, when block_size < folio_size,
+non-overlapping DIO writes that share a large folio can also trigger
+the race.
+
+Add inode_dio_wait() in ext4_buffered_write_iter() before
+ext4_write_checks() to drain all in-flight DIO. This ensures that
+all DIO clears existing pages before submitting IO (via
+kiocb_invalidate_pages()), all BIO waits for all DIO to complete
+(via inode_dio_wait()), and ext4_write_checks() observes the inode
+size after all completed DIO so that ext4_block_zero_eof() does not
+race with in-flight DIO, thus eliminating the race.
+
+Fixes: 378f32bab371 ("ext4: introduce direct I/O write using iomap infrastructure")
+Suggested-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/d1adcf7c-c276-458d-9cac-68a4410f7626@gmail.com
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Link: https://patch.msgid.link/20260629113827.4074335-3-libaokun@linux.alibaba.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/file.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 4e2d49b0d1f1c..40904b5b3c91a 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -3954,8 +3954,8 @@ static int check_max_stack_depth(struct bpf_verifier_env *env)
- 		i = next_insn;
- 		idx = sidx;
+diff --git a/fs/ext4/file.c b/fs/ext4/file.c
+index c025e8994d191..63c710c0d8b72 100644
+--- a/fs/ext4/file.c
++++ b/fs/ext4/file.c
+@@ -260,6 +260,13 @@ static ssize_t ext4_buffered_write_iter(struct kiocb *iocb,
+ 		return -EOPNOTSUPP;
  
--		if (subprog[idx].has_tail_call)
--			tail_call_reachable = true;
-+		/* sync tail_call_reachable with callee state on entry */
-+		tail_call_reachable = subprog[idx].has_tail_call;
- 
- 		frame++;
- 		if (frame >= MAX_CALL_FRAMES) {
+ 	inode_lock(inode);
++
++	/*
++	 * Prevent concurrent direct I/O and buffered I/O to the same file
++	 * range. Wait for in-flight DIO to finish before dirtying pages.
++	 */
++	inode_dio_wait(inode);
++
+ 	ret = ext4_write_checks(iocb, from);
+ 	if (ret <= 0)
+ 		goto out;
 -- 
 2.53.0
 
