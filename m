@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3E830ACF6;
-	Sat, 12 Sep 2026 15:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F0F41687C;
+	Sat, 12 Sep 2026 15:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225900; cv=none; b=OvM1agK9omDjoIVTZSYfPJ/X2zfRjPYgtKaqr6/F9LM8azhK47QGVMe1VcKTjoIZADi4m24OaWgjVcps93rCbsN5ZOW65o0gYujlsH+JB7bGJpC0b0+z6TPb+hjuJAJ4ywxQMOtPg++pU41o4vSppihajILFaVw6FTUOd0ZCs8g=
+	t=1789225906; cv=none; b=MHCq3GUW5Hax75D2hLw50tIIcxCkpXUqXrj1l51XA1PbPzFbLXHo5LGDaHxoj9UMdNQ1KLy6yihfPJ+icDi6XEQ4zY0NjZK0TwEndfgQNIktsuesp5vaPjEtRAuqRNOfhbgXEjx1B4LvW64Wtnv1n5D6I+1DoXyRY/Fzahp3ueg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225900; c=relaxed/simple;
-	bh=/0fhjOLS/FiTykXhncxj28l1IHhPAAcsDM1SlDhaSS4=;
+	s=arc-20240116; t=1789225906; c=relaxed/simple;
+	bh=koh5S0UPJ/0dLG4fHf9EtOkfZXziyizWOHy0thCDZyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F798FCkjrmV/VzxXAdOE3KZYbXqLum/Acv6pBqAjwcPAMW1AfyKTfSbeN1q/V3cL5iGxc+LBRiKJ2YROWXByZThFwhRG98fLUVgluoFo4jcJ56TbYDWM7uspGB37IAbzMKeoluA6gACtn1S7kMT3LpEPYrj9FWjh2GExdz2Y/GM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHu1aBT9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gd62DqJBSb15Df+hwTQNR39WSNc7hjDcp9bVxbbCbU43edI5Jx4NRQ9jdqUXuJGKsYHlUtTB56br5yJ0wP4aOrLr9mf0a1Np3osEuQKBdTQ2QodNzYuyhZI298vsPO/oFs7K8gKQfdhIAmbXDmTbUGkKWUeG+zHxizeCUIX6i0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QrLven77; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHu1aBT9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7181F000FF;
-	Sat, 12 Sep 2026 15:11:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QrLven77"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB4CD1F000FF;
+	Sat, 12 Sep 2026 15:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225899;
-	bh=n/6T5VqXEkeanFe9ncDAzkvVNHAxJZaBGvd6HmjRo6M=;
+	s=korg; t=1789225903;
+	bh=dswti/kPA7c2s28vs2Tcs0temqJ5t+8fO+QNutjLRDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vHu1aBT9ckH8HGr0VJWMlUGnYCGpq33fCkAUjigxbDoKmCElyZqXuPgnVqxt6FPqZ
-	 XILNyAz64mYamKmGNlRf7O+pNrpmE9p+88fTSvuvB4Gk7h/QZmW5ocpLs7kjWcAKtX
-	 c2xTgyUN2+Pis91XLlxMDVBFDyqyWUMn4L/NHGw4=
+	b=QrLven77BmalSUZr68fdym0Lq0F/1KPVwpMCFbYQkSW12pLVycT4dRPQ7R9froUhP
+	 w5d8uZ0CGWqUzw5SGfNqwTckZw0ohaffTvgGx6fZbZc6H+B4IjiG0c79aCLEXWdmEv
+	 /ENv2UzvRsrOTtdy47qXghwgFOG01cYitJ8TffZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
+	Baul Lee <baul.lee@xbow.com>,
 	Nikolay Aleksandrov <razor@blackwall.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1292/1424] vxlan: mdb: Add MDB bulk deletion support
-Date: Sat, 12 Sep 2026 09:02:04 +0200
-Message-ID: <20260912065636.203902331@linuxfoundation.org>
+Subject: [PATCH 6.6 1293/1424] vxlan: mdb: Fix use-after-free in vxlan_mdb_flush()
+Date: Sat, 12 Sep 2026 09:02:05 +0200
+Message-ID: <20260912065636.226049905@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,256 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-[ Upstream commit 4cde72fead4cebb5b6b2fe9425904c2064739184 ]
+[ Upstream commit bc2dc66a6693a78f8c1e6ca2dbebd50f16e2c366 ]
 
-Implement MDB bulk deletion support in the VXLAN driver, allowing MDB
-entries to be deleted in bulk according to provided parameters.
+vxlan_mdb_flush() iterates over the MDB entries using
+hlist_for_each_entry_safe(), which only tolerates the removal of the
+current entry. Contrary to the comment above the loop, the removal of an
+entry can trigger the removal of another entry.
 
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: bc2dc66a6693 ("vxlan: mdb: Fix use-after-free in vxlan_mdb_flush()")
+Flushing the remotes of a (*, G) entry also removes the (S, G) entries
+that were created for its source list, once they are left without
+remotes:
+
+vxlan_mdb_remotes_flush()
+-> vxlan_mdb_remote_del()
+   -> vxlan_mdb_remote_srcs_del()
+      -> vxlan_mdb_remote_src_del()
+         -> vxlan_mdb_remote_src_fwd_del()
+            -> __vxlan_mdb_del()
+               -> vxlan_mdb_entry_put()
+
+Such an entry can be located after the (*, G) entry in the list, as
+vxlan_mdb_entry_get() returns an existing entry without moving it to the
+head of the list. This order is obtained by adding the (S, G) entry
+before the (*, G) entry, the latter with NLM_F_REPLACE, as the addition
+of the source otherwise fails with -EEXIST. The (S, G) entry is then the
+entry saved by hlist_for_each_entry_safe() and it is freed while the
+(*, G) entry is processed. The next iteration calls hlist_del() on it
+again, writing LIST_POISON1 to LIST_POISON2 [1].
+
+Besides device deletion, the flush is also reachable from RTM_DELMDB
+with NLM_F_BULK.
+
+Fix by re-reading the next entry after the remotes were flushed. The
+current entry cannot be removed by this flush, as source lists can only
+be configured on (*, G) entries and the removed entries are (S, G)
+entries. It is therefore still linked and its next pointer reflects the
+removals.
+
+[1]
+BUG: KASAN: wild-memory-access in vxlan_mdb_entry_put.part.0+0x328/0x588
+Write of size 8 at addr dead000000000122 by task ip/327
+
+CPU: 3 UID: 1000 PID: 327 Comm: ip Not tainted 7.2.0-rc7 #2 PREEMPT
+Call trace:
+ vxlan_mdb_entry_put.part.0+0x328/0x588
+ vxlan_mdb_flush+0x1d8/0x25c
+ vxlan_mdb_fini+0x8c/0x100
+ vxlan_uninit+0x1c/0x7c
+ unregister_netdevice_many_notify+0x954/0xd4c
+ rtnl_dellink+0x210/0x530
+ rtnetlink_rcv_msg+0x434/0x4d0
+ netlink_rcv_skb+0xc4/0x204
+ rtnetlink_rcv+0x18/0x24
+ netlink_unicast+0x4b8/0x548
+ netlink_sendmsg+0x29c/0x560
+ ____sys_sendmsg+0x390/0x3ec
+ ___sys_sendmsg+0x114/0x188
+ __sys_sendmsg+0xf0/0x178
+ __arm64_sys_sendmsg+0x48/0x60
+ invoke_syscall.constprop.0+0x58/0x180
+ el0_svc_common.constprop.0+0x74/0x140
+ do_el0_svc+0x30/0x40
+ el0_svc+0x38/0x98
+ el0t_64_sync_handler+0xa0/0xe4
+ el0t_64_sync+0x198/0x19c
+
+Fixes: a3a48de5eade ("vxlan: mdb: Add MDB control path support")
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260814153547.29567-1-baul.lee@xbow.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c    |   1 +
- drivers/net/vxlan/vxlan_mdb.c     | 174 +++++++++++++++++++++++++-----
- drivers/net/vxlan/vxlan_private.h |   2 +
- 3 files changed, 153 insertions(+), 24 deletions(-)
+ drivers/net/vxlan/vxlan_mdb.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index a1ff8a9ae60ea..dd7c4c50ce589 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -3181,6 +3181,7 @@ static const struct net_device_ops vxlan_netdev_ether_ops = {
- 	.ndo_fdb_get		= vxlan_fdb_get,
- 	.ndo_mdb_add		= vxlan_mdb_add,
- 	.ndo_mdb_del		= vxlan_mdb_del,
-+	.ndo_mdb_del_bulk	= vxlan_mdb_del_bulk,
- 	.ndo_mdb_dump		= vxlan_mdb_dump,
- 	.ndo_mdb_get		= vxlan_mdb_get,
- 	.ndo_fill_metadata_dst	= vxlan_fill_metadata_dst,
 diff --git a/drivers/net/vxlan/vxlan_mdb.c b/drivers/net/vxlan/vxlan_mdb.c
-index 91272344e9c83..8b8b4d052a9c6 100644
+index 8b8b4d052a9c6..2c40e489ff8b2 100644
 --- a/drivers/net/vxlan/vxlan_mdb.c
 +++ b/drivers/net/vxlan/vxlan_mdb.c
-@@ -75,6 +75,14 @@ struct vxlan_mdb_config {
- 	u8 rt_protocol;
- };
+@@ -1428,14 +1428,17 @@ static void vxlan_mdb_flush(struct vxlan_dev *vxlan,
+ 	struct vxlan_mdb_entry *mdb_entry;
+ 	struct hlist_node *tmp;
  
-+struct vxlan_mdb_flush_desc {
-+	union vxlan_addr remote_ip;
-+	__be32 src_vni;
-+	__be32 remote_vni;
-+	__be16 remote_port;
-+	u8 rt_protocol;
-+};
-+
- static const struct rhashtable_params vxlan_mdb_rht_params = {
- 	.head_offset = offsetof(struct vxlan_mdb_entry, rhnode),
- 	.key_offset = offsetof(struct vxlan_mdb_entry, key),
-@@ -1312,6 +1320,145 @@ int vxlan_mdb_del(struct net_device *dev, struct nlattr *tb[],
- 	return err;
- }
- 
-+static const struct nla_policy
-+vxlan_mdbe_attrs_del_bulk_pol[MDBE_ATTR_MAX + 1] = {
-+	[MDBE_ATTR_RTPROT] = NLA_POLICY_MIN(NLA_U8, RTPROT_STATIC),
-+	[MDBE_ATTR_DST] = NLA_POLICY_RANGE(NLA_BINARY,
-+					   sizeof(struct in_addr),
-+					   sizeof(struct in6_addr)),
-+	[MDBE_ATTR_DST_PORT] = { .type = NLA_U16 },
-+	[MDBE_ATTR_VNI] = NLA_POLICY_FULL_RANGE(NLA_U32, &vni_range),
-+	[MDBE_ATTR_SRC_VNI] = NLA_POLICY_FULL_RANGE(NLA_U32, &vni_range),
-+	[MDBE_ATTR_STATE_MASK] = NLA_POLICY_MASK(NLA_U8, MDB_PERMANENT),
-+};
-+
-+static int vxlan_mdb_flush_desc_init(struct vxlan_dev *vxlan,
-+				     struct vxlan_mdb_flush_desc *desc,
-+				     struct nlattr *tb[],
-+				     struct netlink_ext_ack *extack)
-+{
-+	struct br_mdb_entry *entry = nla_data(tb[MDBA_SET_ENTRY]);
-+	struct nlattr *mdbe_attrs[MDBE_ATTR_MAX + 1];
-+	int err;
-+
-+	if (entry->ifindex && entry->ifindex != vxlan->dev->ifindex) {
-+		NL_SET_ERR_MSG_MOD(extack, "Invalid port net device");
-+		return -EINVAL;
-+	}
-+
-+	if (entry->vid) {
-+		NL_SET_ERR_MSG_MOD(extack, "VID must not be specified");
-+		return -EINVAL;
-+	}
-+
-+	if (!tb[MDBA_SET_ENTRY_ATTRS])
-+		return 0;
-+
-+	err = nla_parse_nested(mdbe_attrs, MDBE_ATTR_MAX,
-+			       tb[MDBA_SET_ENTRY_ATTRS],
-+			       vxlan_mdbe_attrs_del_bulk_pol, extack);
-+	if (err)
-+		return err;
-+
-+	if (mdbe_attrs[MDBE_ATTR_STATE_MASK]) {
-+		u8 state_mask = nla_get_u8(mdbe_attrs[MDBE_ATTR_STATE_MASK]);
-+
-+		if ((state_mask & MDB_PERMANENT) && !(entry->state & MDB_PERMANENT)) {
-+			NL_SET_ERR_MSG_MOD(extack, "Only permanent MDB entries are supported");
-+			return -EINVAL;
-+		}
-+	}
-+
-+	if (mdbe_attrs[MDBE_ATTR_RTPROT])
-+		desc->rt_protocol = nla_get_u8(mdbe_attrs[MDBE_ATTR_RTPROT]);
-+
-+	if (mdbe_attrs[MDBE_ATTR_DST])
-+		vxlan_nla_get_addr(&desc->remote_ip, mdbe_attrs[MDBE_ATTR_DST]);
-+
-+	if (mdbe_attrs[MDBE_ATTR_DST_PORT])
-+		desc->remote_port =
-+			cpu_to_be16(nla_get_u16(mdbe_attrs[MDBE_ATTR_DST_PORT]));
-+
-+	if (mdbe_attrs[MDBE_ATTR_VNI])
-+		desc->remote_vni =
-+			cpu_to_be32(nla_get_u32(mdbe_attrs[MDBE_ATTR_VNI]));
-+
-+	if (mdbe_attrs[MDBE_ATTR_SRC_VNI])
-+		desc->src_vni =
-+			cpu_to_be32(nla_get_u32(mdbe_attrs[MDBE_ATTR_SRC_VNI]));
-+
-+	return 0;
-+}
-+
-+static void vxlan_mdb_remotes_flush(struct vxlan_dev *vxlan,
-+				    struct vxlan_mdb_entry *mdb_entry,
-+				    const struct vxlan_mdb_flush_desc *desc)
-+{
-+	struct vxlan_mdb_remote *remote, *tmp;
-+
-+	list_for_each_entry_safe(remote, tmp, &mdb_entry->remotes, list) {
-+		struct vxlan_rdst *rd = rtnl_dereference(remote->rd);
-+		__be32 remote_vni;
-+
-+		if (desc->remote_ip.sa.sa_family &&
-+		    !vxlan_addr_equal(&desc->remote_ip, &rd->remote_ip))
-+			continue;
-+
-+		/* Encapsulation is performed with source VNI if remote VNI
-+		 * is not set.
-+		 */
-+		remote_vni = rd->remote_vni ? : mdb_entry->key.vni;
-+		if (desc->remote_vni && desc->remote_vni != remote_vni)
-+			continue;
-+
-+		if (desc->remote_port && desc->remote_port != rd->remote_port)
-+			continue;
-+
-+		if (desc->rt_protocol &&
-+		    desc->rt_protocol != remote->rt_protocol)
-+			continue;
-+
-+		vxlan_mdb_remote_del(vxlan, mdb_entry, remote);
-+	}
-+}
-+
-+static void vxlan_mdb_flush(struct vxlan_dev *vxlan,
-+			    const struct vxlan_mdb_flush_desc *desc)
-+{
-+	struct vxlan_mdb_entry *mdb_entry;
-+	struct hlist_node *tmp;
-+
-+	/* The removal of an entry cannot trigger the removal of another entry
-+	 * since entries are always added to the head of the list.
-+	 */
-+	hlist_for_each_entry_safe(mdb_entry, tmp, &vxlan->mdb_list, mdb_node) {
-+		if (desc->src_vni && desc->src_vni != mdb_entry->key.vni)
-+			continue;
-+
-+		vxlan_mdb_remotes_flush(vxlan, mdb_entry, desc);
-+		/* Entry will only be removed if its remotes list is empty. */
-+		vxlan_mdb_entry_put(vxlan, mdb_entry);
-+	}
-+}
-+
-+int vxlan_mdb_del_bulk(struct net_device *dev, struct nlattr *tb[],
-+		       struct netlink_ext_ack *extack)
-+{
-+	struct vxlan_dev *vxlan = netdev_priv(dev);
-+	struct vxlan_mdb_flush_desc desc = {};
-+	int err;
-+
-+	ASSERT_RTNL();
-+
-+	err = vxlan_mdb_flush_desc_init(vxlan, &desc, tb, extack);
-+	if (err)
-+		return err;
-+
-+	vxlan_mdb_flush(vxlan, &desc);
-+
-+	return 0;
-+}
-+
- static const struct nla_policy vxlan_mdbe_attrs_get_pol[MDBE_ATTR_MAX + 1] = {
- 	[MDBE_ATTR_SOURCE] = NLA_POLICY_RANGE(NLA_BINARY,
- 					      sizeof(struct in_addr),
-@@ -1581,29 +1728,6 @@ static void vxlan_mdb_check_empty(void *ptr, void *arg)
- 	WARN_ON_ONCE(1);
- }
- 
--static void vxlan_mdb_remotes_flush(struct vxlan_dev *vxlan,
--				    struct vxlan_mdb_entry *mdb_entry)
--{
--	struct vxlan_mdb_remote *remote, *tmp;
--
--	list_for_each_entry_safe(remote, tmp, &mdb_entry->remotes, list)
--		vxlan_mdb_remote_del(vxlan, mdb_entry, remote);
--}
--
--static void vxlan_mdb_entries_flush(struct vxlan_dev *vxlan)
--{
--	struct vxlan_mdb_entry *mdb_entry;
--	struct hlist_node *tmp;
--
 -	/* The removal of an entry cannot trigger the removal of another entry
 -	 * since entries are always added to the head of the list.
 -	 */
--	hlist_for_each_entry_safe(mdb_entry, tmp, &vxlan->mdb_list, mdb_node) {
--		vxlan_mdb_remotes_flush(vxlan, mdb_entry);
--		vxlan_mdb_entry_put(vxlan, mdb_entry);
--	}
--}
--
- int vxlan_mdb_init(struct vxlan_dev *vxlan)
- {
- 	int err;
-@@ -1619,7 +1743,9 @@ int vxlan_mdb_init(struct vxlan_dev *vxlan)
+ 	hlist_for_each_entry_safe(mdb_entry, tmp, &vxlan->mdb_list, mdb_node) {
+ 		if (desc->src_vni && desc->src_vni != mdb_entry->key.vni)
+ 			continue;
  
- void vxlan_mdb_fini(struct vxlan_dev *vxlan)
- {
--	vxlan_mdb_entries_flush(vxlan);
-+	struct vxlan_mdb_flush_desc desc = {};
-+
-+	vxlan_mdb_flush(vxlan, &desc);
- 	WARN_ON_ONCE(vxlan->cfg.flags & VXLAN_F_MDB);
- 	rhashtable_free_and_destroy(&vxlan->mdb_tbl, vxlan_mdb_check_empty,
- 				    NULL);
-diff --git a/drivers/net/vxlan/vxlan_private.h b/drivers/net/vxlan/vxlan_private.h
-index 89c8ef1e7fdde..76a351a997d51 100644
---- a/drivers/net/vxlan/vxlan_private.h
-+++ b/drivers/net/vxlan/vxlan_private.h
-@@ -235,6 +235,8 @@ int vxlan_mdb_add(struct net_device *dev, struct nlattr *tb[], u16 nlmsg_flags,
- 		  struct netlink_ext_ack *extack);
- int vxlan_mdb_del(struct net_device *dev, struct nlattr *tb[],
- 		  struct netlink_ext_ack *extack);
-+int vxlan_mdb_del_bulk(struct net_device *dev, struct nlattr *tb[],
-+		       struct netlink_ext_ack *extack);
- int vxlan_mdb_get(struct net_device *dev, struct nlattr *tb[], u32 portid,
- 		  u32 seq, struct netlink_ext_ack *extack);
- struct vxlan_mdb_entry *vxlan_mdb_entry_skb_get(struct vxlan_dev *vxlan,
+ 		vxlan_mdb_remotes_flush(vxlan, mdb_entry, desc);
++		/* The flush can remove the (S, G) entries created for the
++		 * source list of this entry, including the one saved by
++		 * hlist_for_each_entry_safe(), so re-read it while this entry
++		 * is still linked.
++		 */
++		tmp = mdb_entry->mdb_node.next;
+ 		/* Entry will only be removed if its remotes list is empty. */
+ 		vxlan_mdb_entry_put(vxlan, mdb_entry);
+ 	}
 -- 
 2.53.0
 
