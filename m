@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0021438DC7B;
-	Sat, 12 Sep 2026 19:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D8E38F620;
+	Sat, 12 Sep 2026 19:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242778; cv=none; b=Vng0WpRrZoprF6BZv0gzGCst+PoAqa32YMfZtcoi+vkT2CHT0ZpCwvJV1bMZzMKOdK/601Bt9Q7j5DnLlzZ3N2djteJwJLyvf0KrN1GVbhas2RL6Iw7grMEU421alqbnyvSoHFXGE1VpiAAIkdaEBVc8A+myS5Tq6JdBsd5AlhM=
+	t=1789242781; cv=none; b=jigutfoSl3UTU9sFQTmuQhGrgznzagYPpAccvANLd77d3c2iUYz8HzDr7oZv27z3RLw7DhcjheoZgsS0+bRtng+qAhbgZY0102Ckz42trSXWZTgm1WjVO1th6xEDlumDApoIWqxjyEAr0c1H7W7wq7pkJE7FU+d6XzW1l5PDEtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242778; c=relaxed/simple;
-	bh=J/p2PF+AkrHsZGFmZPpOJx+HFBhwVsxXdVr9jQqvxvk=;
+	s=arc-20240116; t=1789242781; c=relaxed/simple;
+	bh=3CxN8HyleAd4/i3A+fAXpOW/G4DKoiXpz7Ijl2REbRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uD+Qe5irM5H8y0qZceZ2y0mWBJNO+dfiI4Sn7U5+uJyfjW8alt0S5+QQG7VkisoZfWQk0uoEHiH2yulhVRh6h8GsR9Bc7XzvoYmemx4UNQ8lAl2X/ZYSnzd04ScZKLZnxlNnG9SmRtDPlTh41DV2dUGMpoXiB7MEdmbFhv7karM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpQbYj4y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mqs2gM266hjdiThxEzop9ufRO1mDoT3uy1MK6q0QGBxTFxcTlh8dFGuMQ5/X5gHopUI4fdnrAodGfeXlPQEeUUlKavCLeCV3GpWnGV+b3erRDZ84EXymNDu85YQC925aOdOAzj1IyVD/GNcA1bUKhyQpUYWDoGnNHORn7XBsmYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qCHR3SRE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpQbYj4y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC291F000FF;
-	Sat, 12 Sep 2026 19:52:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qCHR3SRE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8D91F000FF;
+	Sat, 12 Sep 2026 19:52:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242776;
-	bh=BIfJE9fHsUHhre3No8vULGhbXJX+ix+eB/kN7luLbvI=;
+	s=korg; t=1789242779;
+	bh=X3RbQwiedKnJ21hi5AXiWUG4v8qGJ5R8PJIWwkIWiog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MpQbYj4yBLKwC2kbsDogMT1m7OiZKuXNjoq1H028Y5+TLKaNNN1w3S8526XCjK+zF
-	 Ldf0Tt85HXwGS62cOVcNEi27ZuWhkakja7Hc126v1YRao3NvXlrzZkWMvsGjdSJVsS
-	 +YS4zImMMGkKFkynQqQ/NQrNRjyC1/OPwJDs5LFs=
+	b=qCHR3SRE85MV7Ud56wxlOIgo7bA2plCe0M8DqnJJ6TQiT5u/HMgo55F2VOA8yaVD1
+	 ovi+cssTcjqhhapWq9lU4+fQ0iNCuC56EHnPjwbzEsgMCyJNre4mI07MBOkLgxHqn7
+	 NwDjL6ZBFCJGqfHVhTWiAEhQy+zQwWNMVhTZnjHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Babanpreet Singh <bbnpreetsingh@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 516/798] power: supply: sbs-battery: Use a per-device serial number buffer
-Date: Sat, 12 Sep 2026 09:02:24 +0200
-Message-ID: <20260912065528.963090850@linuxfoundation.org>
+Subject: [PATCH 5.10 517/798] RDMA/mlx5: Fix integer overflow of user QP buffer size
+Date: Sat, 12 Sep 2026 09:02:25 +0200
+Message-ID: <20260912065528.984827246@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,78 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Babanpreet Singh <bbnpreetsingh@gmail.com>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit 6027892925b8d19d2245c2d077e2ae35b49cc2b1 ]
+[ Upstream commit dec47e4b0fe34afdf38caa72b4408ba95502e5de ]
 
-sbs_get_battery_serial_number() formats the battery serial number into
-sbs_serial[], a single file-scope buffer shared by every sbs-battery
-instance, and points val->strval at it.
+set_user_buf_size() computes the QP buffer size by left-shifting the
+user-supplied rq.wqe_cnt and rq.wqe_shift values as signed integers.
+A sufficiently large rq.wqe_cnt causes signed integer overflow, which
+is undefined behavior, and yields a small or negative buf_size, causing
+ib_umem_get() to map a buffer smaller than the hardware will actually
+write into.
 
-Nothing restricts this driver to one instance. It binds per I2C client,
-and sbs-manager registers one muxed I2C channel per supported battery
-specifically so that the smart battery driver can be bound to each of
-them, so several sbs-battery instances on one system is a supported
-configuration.
+Replace the shifts and addition with check_shl_overflow() and
+check_add_overflow(), rejecting invalid user inputs.
 
-The power supply core reads strval after the driver's get_property()
-callback has returned: power_supply_show_property() fills a local
-union power_supply_propval, then formats it with sysfs_emit(). Two
-concurrent POWER_SUPPLY_PROP_SERIAL_NUMBER reads on different batteries
-therefore race for the shared buffer - battery B's sprintf() can land
-between battery A filling the buffer and the core reading it, and
-battery A then reports battery B's serial number.
+Moreover, guard the identical shift computing qp->sq.offset in
+_create_user_qp() before set_user_buf_size() is reached.
 
-Move the buffer into struct sbs_info so that each battery formats into
-its own storage. It is deliberately not added to the chip->strings[]
-array: those entries hold the cached constant strings that
-sbs_invalidate_cached_props() clears on presence changes, whereas the
-serial number is re-read from its word register on every access.
-
-Fixes: d3ab61ecbab2 ("bq20z75: Add support for more power supply properties")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
-Link: https://patch.msgid.link/20260726072206.7-2-bbnpreetsingh@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/20260723-fix-qp-buf-size-overflow-v1-1-ccb05ee43a7b@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/sbs-battery.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/mlx5/qp.c | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/power/supply/sbs-battery.c b/drivers/power/supply/sbs-battery.c
-index 25332b5a5da79..cb3988698d88d 100644
---- a/drivers/power/supply/sbs-battery.c
-+++ b/drivers/power/supply/sbs-battery.c
-@@ -211,6 +211,7 @@ struct sbs_info {
- 	u32				flags;
- 	int				technology;
- 	char				strings[NR_STRING_BUFFERS][I2C_SMBUS_BLOCK_MAX + 1];
-+	char				serial[5];
- };
- 
- static char *sbs_get_string_buf(struct sbs_info *chip,
-@@ -814,18 +815,18 @@ static int sbs_get_battery_capacity(struct i2c_client *client,
- 	return 0;
- }
- 
--static char sbs_serial[5];
- static int sbs_get_battery_serial_number(struct i2c_client *client,
- 	union power_supply_propval *val)
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index 8f83629ceb8af..0eee841596049 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -555,6 +555,7 @@ static int set_user_buf_size(struct mlx5_ib_dev *dev,
+ 			    struct ib_qp_init_attr *attr)
  {
-+	struct sbs_info *chip = i2c_get_clientdata(client);
- 	int ret;
+ 	int desc_sz = 1 << qp->sq.wqe_shift;
++	int rq_buf_size, sq_buf_size;
  
- 	ret = sbs_read_word_data(client, sbs_data[REG_SERIAL_NUMBER].addr);
- 	if (ret < 0)
- 		return ret;
+ 	if (desc_sz > MLX5_CAP_GEN(dev->mdev, max_wqe_sz_sq)) {
+ 		mlx5_ib_warn(dev, "desc_sz %d, max_sq_desc_sz %d\n",
+@@ -579,11 +580,21 @@ static int set_user_buf_size(struct mlx5_ib_dev *dev,
  
--	sprintf(sbs_serial, "%04x", ret);
--	val->strval = sbs_serial;
-+	sprintf(chip->serial, "%04x", ret);
-+	val->strval = chip->serial;
+ 	if (attr->qp_type == IB_QPT_RAW_PACKET ||
+ 	    qp->flags & IB_QP_CREATE_SOURCE_QPN) {
+-		base->ubuffer.buf_size = qp->rq.wqe_cnt << qp->rq.wqe_shift;
+-		qp->raw_packet_qp.sq.ubuffer.buf_size = qp->sq.wqe_cnt << 6;
++		if (check_shl_overflow(qp->rq.wqe_cnt, qp->rq.wqe_shift,
++				       &base->ubuffer.buf_size))
++			return -EINVAL;
++		if (check_shl_overflow(qp->sq.wqe_cnt, 6,
++				       &qp->raw_packet_qp.sq.ubuffer.buf_size))
++			return -EINVAL;
+ 	} else {
+-		base->ubuffer.buf_size = (qp->rq.wqe_cnt << qp->rq.wqe_shift) +
+-					 (qp->sq.wqe_cnt << 6);
++		if (check_shl_overflow(qp->rq.wqe_cnt, qp->rq.wqe_shift,
++				       &rq_buf_size))
++			return -EINVAL;
++		if (check_shl_overflow(qp->sq.wqe_cnt, 6, &sq_buf_size))
++			return -EINVAL;
++		if (check_add_overflow(rq_buf_size, sq_buf_size,
++				       &base->ubuffer.buf_size))
++			return -EINVAL;
+ 	}
  
  	return 0;
- }
+@@ -939,7 +950,11 @@ static int _create_user_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
+ 
+ 	qp->rq.offset = 0;
+ 	qp->sq.wqe_shift = ilog2(MLX5_SEND_WQE_BB);
+-	qp->sq.offset = qp->rq.wqe_cnt << qp->rq.wqe_shift;
++	if (check_shl_overflow(qp->rq.wqe_cnt, qp->rq.wqe_shift,
++			       &qp->sq.offset)) {
++		err = -EINVAL;
++		goto err_bfreg;
++	}
+ 
+ 	err = set_user_buf_size(dev, qp, ucmd, base, attr);
+ 	if (err)
 -- 
 2.53.0
 
