@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03711FBEA6;
-	Sat, 12 Sep 2026 15:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8AE1FBEA6;
+	Sat, 12 Sep 2026 15:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228373; cv=none; b=jDqsKDZwKXC6odvevp2x/cdsbD6kVRz8HFF3ziKKYnV/djYNiaTKgV1DSyZCpYGQfizHvNsKQyABFnOfeaGi6HBOAoT43ZJVSCb0wZVkyAKIkskB3dowTYLN5hQGHZAIv2vbnzkMobthF0D2mBZ3K4DjjY240Ew1yeikRiIUOPM=
+	t=1789228378; cv=none; b=hCLQTgvsTF1pvbxclqUy/QDFCDW4jenJbPswaV2C+ksC/9t2N6n7oYw5o2WXfdpzkxsJFu4QDj1JOvNq9+v2reh+7jjfK3a2v9EpZAxYGCjCymtbD3hwtZNOxn6a5h9syzMqkAUvarx5uGBSkjdAdIkqIDA/08w5wQLnQHDATgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228373; c=relaxed/simple;
-	bh=RC5ZmlVE04PrYeebI0GZF64SMBRQSbQhShBzF6ITsA0=;
+	s=arc-20240116; t=1789228378; c=relaxed/simple;
+	bh=lVHL6TBxbFECk65q5Ob+u0Wu8hUc1NKL6puiZGc9V4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pprK3ngHRm145PHHn8omYr8hckjurHd+UeCk5Zr+KZGrasB0vZy9aoOZmq9E2/SgUE4lbX9MtUcI3aeMGjJ+Z9DKY1BrZEu66WL6uORbb40yvQAwjUq6yryvti1PK0l6yblbdyIQEKjolD38mH7ao8jrKiLCx0sOyTLNgRERqLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xbyqhWaK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LPta6Ad2DmjYqta2LN7BPmXOJxD9/1mCpjUMoZKkEw9+PWWBSrRlu+Er7B5m3Jxz3HjHZj436PdwH4W8JW1E0uDCvxewJCKozasbW7/o/QyCD3MwXs7VIQ39jzWzU37clyBCuFP/W7o5dHXc6a0/vKVJa54DmfWzjTupu4nG0tY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4avSsB1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xbyqhWaK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B72B1F000FF;
-	Sat, 12 Sep 2026 15:52:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4avSsB1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B02261F000FF;
+	Sat, 12 Sep 2026 15:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228372;
-	bh=bkPRbWnbuz0Bpn2+s8CD/mnI1fQWzJuRj8wfRbFGFJ0=;
+	s=korg; t=1789228377;
+	bh=BskdHkvIjx6Zpvjye9wCiiLDbClbq6TJ+emPKOnjPzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xbyqhWaKxNy4Wy/V6oZDW12z9D8UdKA2tJ5peyDCUn3+X63VpT3QTVVVgM1ExK/mo
-	 Re2VoF4iSCRYz80w3l9xxCwiz5lkGTsWqCD0lvEL7JkGzQ6BbkPAXU0is4TAXDey/k
-	 ZSyRNtv24pyoHeY19/nurubl/Z/NPhTdVqV2HU9g=
+	b=A4avSsB1dGKPX9mKC4BIgCqaDGIL6RpLRoF/k9mR2A/wsZFpeLEOetc2P3K2W5g2K
+	 Wye7nmfMh0jSQi2LApnVYJW74+1YdeOtGBw7mNSlfV0TvDOt0iEYYm1OzUdSMCz8KY
+	 7RSk2R/kjBaB6FAm3QusPiir+n1zdSNbZN3N56TI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 0370/1191] media: go7007: defer the ALSA v4l2 put until card release
-Date: Sat, 12 Sep 2026 08:51:38 +0200
-Message-ID: <20260912065556.539765430@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.1 0331/1191] clk: qcom: gcc-mdm9607: Drop incorrect apss_tcu_clk_src
+Date: Sat, 12 Sep 2026 08:50:59 +0200
+Message-ID: <20260912065555.660198210@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,65 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Stephan Gerhold <stephan@gerhold.net>
 
-commit 1bd456afeb8a515137e567967069fce6f8fcd23e upstream.
+commit 38d06956f60675f906dc3f5b70b3b52103b86a7d upstream.
 
-go7007_snd_init() already takes a v4l2_device reference for the ALSA
-side, but go7007_snd_remove() drops it immediately after calling
-snd_card_free_when_closed().
+This clock does not exist on the specified address on MDM9607.
+Reading/writing the registers always results in 0 or crashes. The math in
+the frequency table is also broken. GPLL2 on MDM9607 runs at 480 MHz, so:
 
-That is too early when a userspace process still has the capture PCM open.
-The ALSA card and its PCM callbacks remain alive until the last file is
-closed, so the release path can still reach struct go7007 through
-pcm->private_data and call go7007_snd_hw_free() after the V4L2 release path
-has freed the object.
+ - F(155000000, P_GPLL2, 6, 0, 0), // 480 MHz/6 = 80 MHz, not 155 MHz
+ - F(310000000, P_GPLL2, 3, 0, 0), // 480 MHz/3 = 160 MHz, not 310 MHz
 
-Move the matching v4l2_device_put() to the ALSA card private_free callback
-so the existing ALSA reference covers the whole deferred card lifetime.
+Presumably, this definition was mistakenly copied as-is from gcc-msm8916
+(which uses 930 MHz for GPLL2). There are no branch consumers of this root
+clock inside gcc-mdm9607 (notably, gcc_apss_tcu_clk has bimc_ddr_clk_src as
+parent instead of this clock), so we can just drop it.
 
-Closes: https://lore.kernel.org/r/178144969601.60470.6005237146425573205@gmail.com
-Fixes: d5d3a7cc127d ("[media] go7007: fix unregister/disconnect handling")
+It seems like this clock does exist on this SoC on a different address, but
+since there is no user and reference code for it, it is still better to
+drop it.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 48b7253264ea ("clk: qcom: Add MDM9607 GCC driver")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Link: https://lore.kernel.org/r/20260706-qcom-clk-mdm9607-fixes-v2-6-745565101869@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/go7007/snd-go7007.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-mdm9607.c |   35 -----------------------------------
+ 1 file changed, 35 deletions(-)
 
---- a/drivers/media/usb/go7007/snd-go7007.c
-+++ b/drivers/media/usb/go7007/snd-go7007.c
-@@ -195,6 +195,13 @@ static const struct snd_device_ops go700
- 	.dev_free	= go7007_snd_free,
+--- a/drivers/clk/qcom/gcc-mdm9607.c
++++ b/drivers/clk/qcom/gcc-mdm9607.c
+@@ -159,20 +159,6 @@ static const struct clk_parent_data gcc_
+ 	{ .hw = &gpll2.clkr.hw },
  };
  
-+static void go7007_snd_card_free(struct snd_card *card)
-+{
-+	struct go7007 *go = card->private_data;
-+
-+	v4l2_device_put(&go->v4l2_dev);
-+}
-+
- int go7007_snd_init(struct go7007 *go)
- {
- 	static int dev;
-@@ -245,6 +252,8 @@ int go7007_snd_init(struct go7007 *go)
- 	gosnd->substream = NULL;
- 	go->snd_context = gosnd;
- 	v4l2_device_get(&go->v4l2_dev);
-+	gosnd->card->private_data = go;
-+	gosnd->card->private_free = go7007_snd_card_free;
- 	++dev;
+-static const struct parent_map gcc_xo_gpll0_gpll1_gpll2_map[] = {
+-	{ P_XO, 0 },
+-	{ P_GPLL0, 1 },
+-	{ P_GPLL1, 2 },
+-	{ P_GPLL2, 3 },
+-};
+-
+-static const struct clk_parent_data gcc_xo_gpll0_gpll1_gpll2[] = {
+-	{ .fw_name = "xo" },
+-	{ .hw = &gpll0.clkr.hw },
+-	{ .hw = &gpll1_vote.hw },
+-	{ .hw = &gpll2.clkr.hw },
+-};
+-
+ static const struct freq_tbl ftbl_apss_ahb_clk[] = {
+ 	F(19200000, P_XO, 1, 0, 0),
+ 	F(50000000, P_GPLL0, 16, 0, 0),
+@@ -675,26 +661,6 @@ static struct clk_rcg2 sdcc2_apps_clk_sr
+ 	},
+ };
  
- 	return 0;
-@@ -263,7 +272,6 @@ int go7007_snd_remove(struct go7007 *go)
- 
- 	snd_card_disconnect(gosnd->card);
- 	snd_card_free_when_closed(gosnd->card);
--	v4l2_device_put(&go->v4l2_dev);
- 	return 0;
- }
- EXPORT_SYMBOL(go7007_snd_remove);
+-static const struct freq_tbl ftbl_gcc_apss_tcu_clk[] = {
+-	F(155000000, P_GPLL2, 6, 0, 0),
+-	F(310000000, P_GPLL2, 3, 0, 0),
+-	F(400000000, P_GPLL0, 2, 0, 0),
+-	{ }
+-};
+-
+-static struct clk_rcg2 apss_tcu_clk_src = {
+-	.cmd_rcgr = 0x1207c,
+-	.hid_width = 5,
+-	.parent_map = gcc_xo_gpll0_gpll1_gpll2_map,
+-	.freq_tbl = ftbl_gcc_apss_tcu_clk,
+-	.clkr.hw.init = &(struct clk_init_data){
+-		.name = "apss_tcu_clk_src",
+-		.parent_data = gcc_xo_gpll0_gpll1_gpll2,
+-		.num_parents = 4,
+-		.ops = &clk_rcg2_ops,
+-	},
+-};
+-
+ static const struct freq_tbl ftbl_gcc_usb_hs_system_clk[] = {
+ 	F(19200000, P_XO, 1, 0, 0),
+ 	F(57140000, P_GPLL0, 14, 0, 0),
+@@ -1512,7 +1478,6 @@ static struct clk_regmap *gcc_mdm9607_cl
+ 	[PDM2_CLK_SRC] = &pdm2_clk_src.clkr,
+ 	[SDCC1_APPS_CLK_SRC] = &sdcc1_apps_clk_src.clkr,
+ 	[SDCC2_APPS_CLK_SRC] = &sdcc2_apps_clk_src.clkr,
+-	[APSS_TCU_CLK_SRC] = &apss_tcu_clk_src.clkr,
+ 	[USB_HS_SYSTEM_CLK_SRC] = &usb_hs_system_clk_src.clkr,
+ 	[GCC_BLSP1_AHB_CLK] = &gcc_blsp1_ahb_clk.clkr,
+ 	[GCC_BLSP1_SLEEP_CLK] = &gcc_blsp1_sleep_clk.clkr,
 
 
