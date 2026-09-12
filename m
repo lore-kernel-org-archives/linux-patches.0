@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA213783B0;
-	Sat, 12 Sep 2026 16:44:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDBF41169F;
+	Sat, 12 Sep 2026 16:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231455; cv=none; b=K+HVfMJAMCdS+g7AzDp9XKo3jwE5nGs47/sb7cfQJULuAfhYdV/6o6RPnfBnU/VWWftg4IsqndddktkeardW9Ol4XLgWi2rDWeAwV3sn8X15569Jzc0KsWbD4TPy/d4fmEaWxkFyocFJziU+N+hJQ2y8lTDo5/63+yrEM9LroYY=
+	t=1789231460; cv=none; b=Lixlp/fFi2H9o5frfT3S15wlY8iYVrDL338nhVMr9nqaOAVWqJG/lZRWaNLb8a13Vi8xikkqPaFWqr5eszc3TMBonin/mx5tLpsqK01Sn+8CTcSm5165+zA8rT9mUw5Sm+Nrqnlu9nIdPMSMwHU8zaeTKqkcK1wM3YlQ/5UAx1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231455; c=relaxed/simple;
-	bh=5WhsIL7GzMzxEQMFpeWEO4spYLgqnI/xtb9wHPboMj4=;
+	s=arc-20240116; t=1789231460; c=relaxed/simple;
+	bh=HipXh1DI/bkw5b6MAB5KG5VuST/ICZL9+Y71e01D89w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BnTuePKwF2okgwYDA51/+UVyHdhqW99mEDPiFxKwIzf+mga+YibBNJFMybFo2Phi+ZYCzYA00x2FM7P+vhepvOPSEwQNhDuhWcko/mrOib15AEkbFeQfjA2mAWRfHqu30tVMTPeGDD0wqMI7GMiNpUBN9NrZYgfR/7b66f/RZXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QIBW+Lvv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OR/N0NFrd5JjmjeEe5NArLD7toxweEz9SwRddPVWRV0tl/0v4Aq9if5TFvD7vpanE5YwuEg59uEGmXaJkvI4xpupJjL75EAHa5qjj84HfMsEj6SQrbhD0REjUqzuLAAoizAvP3ETOC79vGLtnbTZBf7IvKQUVjdH7jSMGp++nFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6Qx+Ure; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QIBW+Lvv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F071F000FF;
-	Sat, 12 Sep 2026 16:44:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6Qx+Ure"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1E11F000FF;
+	Sat, 12 Sep 2026 16:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231453;
-	bh=MOYuPJTvSlruSfh8X4r/j6W93se60QavK7MpIDikP0k=;
+	s=korg; t=1789231458;
+	bh=9JBi/IXA8k8dACf6xmCRLUrBb+gskSPt8FU25+xHKYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QIBW+LvvrKNzyBSbVC9YYFG37Jl/41SOFV3xsb5e+3AUpJ3q+5iZBrN68H2HdQDiO
-	 l9P3OHFrv6dceVmv1B99KiXcqO8k8pXJU5oxTsp8CeP30y6G2UU9XYkLUhrDA0HuZd
-	 pC8NmSVCvc4jn2+plBaXM9+63Kpar2hsTyZJM4Ns=
+	b=i6Qx+UrekwguMuueGreFdEeuQuAude1A5+yZ68PhGetzMEaOLAU9kJs5vAaDeXFYP
+	 MAmZIg2yx3JynQOPth/QeAm30Uq3OSGtsA+tp3gi+Sct4i2BC1bMGfBdEuNeSDtZT1
+	 KkOoJ2ydZ+aJoo5bun6oqPa4C4sleoAOWIYqefPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	John Keeping <jkeeping@inmusicbrands.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1001/1191] ALSA: seq: midi: Optimize event_input locking with RCU
-Date: Sat, 12 Sep 2026 09:02:09 +0200
-Message-ID: <20260912065610.680404425@linuxfoundation.org>
+Subject: [PATCH 6.1 1002/1191] ALSA: seq: midi: Serialize input teardown with event_input
+Date: Sat, 12 Sep 2026 09:02:10 +0200
+Message-ID: <20260912065610.701742984@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,102 +51,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-[ Upstream commit 4cc25cdd3cffa475edb8dec8199b3227038ebcfb ]
+[ Upstream commit 403f7f3ad3808a0096d84cf228fab68dc253fd9d ]
 
-The recent fix for serializing the output teardown introduced a
-spinlock invocation at every MIDI output event via event_process_midi.
-Since this is a hot path, let's do performance optimization with RCU.
+snd_midi_input_event() must not be running while a rawmidi substream is
+closing, since this can lead to the trigger state becoming out-of-step
+through this sequence in snd_rawmidi_input_trigger():
 
-The new output_substream __rcu pointer is published via
-rcu_assign_pointer() in midisynth_use() after output_rfile is set, and
-cleared in midisynth_unuse() before the resource teardown.
-event_process_midi() reads it under rcu_read_lock() and bumps
-output_use_lock inside that section, which is necessary to close the
-window between the pointer dereference and the refcount increment.
+	snd_rawmidi_input_trigger(up=0)
+					snd_midi_input_event()
+					 -> snd_rawmidi_kernel_read()
+					     -> snd_rawmidi_input_trigger(up=1)
+	  -> cancel_work_sync()
 
-midisynth_unuse() calls synchronize_rcu() before snd_use_lock_sync():
-this guarantees that any reader who obtained a non-NULL pointer has
-already called atomic_inc (output_use_lock), so the subsequent
-snd_use_lock_sync() sees the correct in-flight count.
+which ends with the underlying device being active unexpectedly.
 
-Fixes: ef7607ab1c8a ("ALSA: seq: midi: Serialize output teardown with event_input")
-Link: https://patch.msgid.link/20260813144224.753399-1-tiwai@suse.de
+When this is called from close_substream(), further input can re-trigger
+the input event leaving it running after rawmidi_release_priv() has set
+rfile->rmidi to NULL which leads to:
+
+	Unable to handle kernel NULL pointer dereference at virtual address 00000000000000b0
+	Call trace:
+	 snd_midi_input_event+0x3c/0x134 [snd_seq_midi] (P)
+	 snd_rawmidi_input_event_work+0x1c/0x2c
+	 process_one_work+0x150/0x3a4
+	 worker_thread+0x190/0x318
+
+Apply a similar approach to commit ef7607ab1c8ad ("ALSA: seq: midi:
+Serialize output teardown with event_input") which fixed the same issue
+in the output direction, but updated to use RCU following Takashi Iwai's
+proposed follow-on patch [1].
+
+With this change in place, midisynth_unsubscribe() clears the input file
+so snd_midi_input_event() will not re-trigger the stream and will be
+quiesced by the cancel_work_sync() in snd_rawmidi_input_trigger().
+
+[1] https://lore.kernel.org/linux-sound/20260813144224.753399-1-tiwai@suse.de/
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Link: https://patch.msgid.link/20260813150810.795393-1-jkeeping@inmusicbrands.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_midi.c | 24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ sound/core/seq/seq_midi.c | 37 +++++++++++++++++++++++++++++++------
+ 1 file changed, 31 insertions(+), 6 deletions(-)
 
 diff --git a/sound/core/seq/seq_midi.c b/sound/core/seq/seq_midi.c
-index a687d8284161d..4c68afb5e364a 100644
+index 4c68afb5e364a..e65705d4da86f 100644
 --- a/sound/core/seq/seq_midi.c
 +++ b/sound/core/seq/seq_midi.c
-@@ -42,8 +42,8 @@ struct seq_midisynth {
+@@ -41,6 +41,8 @@ struct seq_midisynth {
+ 	struct snd_card *card;
  	int device;
  	int subdevice;
++	struct snd_rawmidi_substream __rcu *input_substream;
++	snd_use_lock_t input_use_lock;	/* in-flight event_input users */
  	struct snd_rawmidi_file input_rfile;
--	spinlock_t output_lock;		/* protects output_rfile publication */
  	snd_use_lock_t output_use_lock;	/* in-flight event_input users */
-+	struct snd_rawmidi_substream __rcu *output_substream;
- 	struct snd_rawmidi_file output_rfile;
- 	int seq_client;
- 	int seq_port;
-@@ -133,8 +133,8 @@ static int event_process_midi(struct snd_seq_event *ev, int direct,
- 	if (snd_BUG_ON(!msynth))
- 		return -EINVAL;
- 
--	scoped_guard(spinlock_irqsave, &msynth->output_lock) {
--		substream = msynth->output_rfile.output;
+ 	struct snd_rawmidi_substream __rcu *output_substream;
+@@ -75,6 +77,14 @@ static void snd_midi_input_event(struct snd_rawmidi_substream *substream)
+ 	msynth = runtime->private_data;
+ 	if (msynth == NULL)
+ 		return;
++
 +	scoped_guard(rcu) {
-+		substream = rcu_dereference(msynth->output_substream);
- 		if (!substream)
- 			return -ENODEV;
- 		snd_use_lock_use(&msynth->output_use_lock);
-@@ -176,7 +176,6 @@ static int snd_seq_midisynth_new(struct seq_midisynth *msynth,
++		if (rcu_dereference(msynth->input_substream) != substream)
++			return;
++
++		snd_use_lock_use(&msynth->input_use_lock);
++	}
++
+ 	memset(&ev, 0, sizeof(ev));
+ 	while (runtime->avail > 0) {
+ 		res = snd_rawmidi_kernel_read(substream, buf, sizeof(buf));
+@@ -94,6 +104,8 @@ static void snd_midi_input_event(struct snd_rawmidi_substream *substream)
+ 			memset(&ev, 0, sizeof(ev));
+ 		}
+ 	}
++
++	snd_use_lock_free(&msynth->input_use_lock);
+ }
+ 
+ static int dump_midi(struct snd_rawmidi_substream *substream, const char *buf, int count)
+@@ -176,6 +188,7 @@ static int snd_seq_midisynth_new(struct seq_midisynth *msynth,
  	msynth->card = card;
  	msynth->device = device;
  	msynth->subdevice = subdevice;
--	spin_lock_init(&msynth->output_lock);
++	snd_use_lock_init(&msynth->input_use_lock);
  	snd_use_lock_init(&msynth->output_use_lock);
  	return 0;
  }
-@@ -253,8 +252,8 @@ static int midisynth_use(void *private_data, struct snd_seq_port_subscribe *info
+@@ -186,29 +199,32 @@ static int midisynth_subscribe(void *private_data, struct snd_seq_port_subscribe
+ 	int err;
+ 	struct seq_midisynth *msynth = private_data;
+ 	struct snd_rawmidi_runtime *runtime;
++	struct snd_rawmidi_file rfile = {};
+ 	struct snd_rawmidi_params params;
+ 
+ 	/* open midi port */
+ 	err = snd_rawmidi_kernel_open(msynth->card, msynth->device,
+ 				      msynth->subdevice,
+ 				      SNDRV_RAWMIDI_LFLG_INPUT,
+-				      &msynth->input_rfile);
++				      &rfile);
+ 	if (err < 0) {
+ 		pr_debug("ALSA: seq_midi: midi input open failed!!!\n");
  		return err;
  	}
- 	snd_midi_event_reset_decode(msynth->parser);
--	scoped_guard(spinlock_irqsave, &msynth->output_lock)
--		msynth->output_rfile = rfile;
-+	msynth->output_rfile = rfile;
-+	rcu_assign_pointer(msynth->output_substream, rfile.output);
+-	runtime = msynth->input_rfile.input->runtime;
++	runtime = rfile.input->runtime;
+ 	memset(&params, 0, sizeof(params));
+ 	params.avail_min = 1;
+ 	params.buffer_size = input_buffer_size;
+-	err = snd_rawmidi_input_params(msynth->input_rfile.input, &params);
++	err = snd_rawmidi_input_params(rfile.input, &params);
+ 	if (err < 0) {
+-		snd_rawmidi_kernel_release(&msynth->input_rfile);
++		snd_rawmidi_kernel_release(&rfile);
+ 		return err;
+ 	}
+ 	snd_midi_event_reset_encode(msynth->parser);
+ 	runtime->event = snd_midi_input_event;
+ 	runtime->private_data = msynth;
++	msynth->input_rfile = rfile;
++	rcu_assign_pointer(msynth->input_substream, rfile.input);
+ 	snd_rawmidi_kernel_read(msynth->input_rfile.input, NULL, 0);
  	return 0;
  }
- 
-@@ -262,17 +261,16 @@ static int midisynth_use(void *private_data, struct snd_seq_port_subscribe *info
- static int midisynth_unuse(void *private_data, struct snd_seq_port_subscribe *info)
+@@ -218,10 +234,19 @@ static int midisynth_unsubscribe(void *private_data, struct snd_seq_port_subscri
  {
+ 	int err;
  	struct seq_midisynth *msynth = private_data;
--	struct snd_rawmidi_file rfile = {};
 +	struct snd_rawmidi_file rfile;
  
--	scoped_guard(spinlock_irqsave, &msynth->output_lock) {
--		rfile = msynth->output_rfile;
--		msynth->output_rfile = (struct snd_rawmidi_file){};
--	}
-+	rcu_assign_pointer(msynth->output_substream, NULL);
+-	if (snd_BUG_ON(!msynth->input_rfile.input))
++	rcu_assign_pointer(msynth->input_substream, NULL);
 +	synchronize_rcu();
-+	snd_use_lock_sync(&msynth->output_use_lock);
-+	rfile = msynth->output_rfile;
-+	msynth->output_rfile = (struct snd_rawmidi_file){};
- 
- 	if (snd_BUG_ON(!rfile.output))
++	snd_use_lock_sync(&msynth->input_use_lock);
++
++	rfile = msynth->input_rfile;
++	msynth->input_rfile = (struct snd_rawmidi_file){};
++
++	if (snd_BUG_ON(!rfile.input))
  		return -EINVAL;
--
--	snd_use_lock_sync(&msynth->output_use_lock);
- 	snd_rawmidi_drain_output(rfile.output);
- 	return snd_rawmidi_kernel_release(&rfile);
+-	err = snd_rawmidi_kernel_release(&msynth->input_rfile);
++
++	err = snd_rawmidi_kernel_release(&rfile);
+ 	return err;
  }
+ 
 -- 
 2.53.0
 
