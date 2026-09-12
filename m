@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E73B3254B8;
-	Sat, 12 Sep 2026 13:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D1031B10B;
+	Sat, 12 Sep 2026 13:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220871; cv=none; b=cJoiJg7BqX4hf4aN3N/7szFRIn5/YccbqoR0r/MJui1gVdVDEyOU5VEb84P4yzNRGxQKZ6WV9bsR75guohCCKr+TSNqPqpdD6sOS+8iCnUiTwl2tYLICHcgAOA/Qk302aLVYtN3z5IV8sNcO3vx/7Pg5qqe/aGnd55UNAvb2tO4=
+	t=1789220876; cv=none; b=ARWkUzZbi85J3zSfiEDMFtQUi+phtYFD58ylQFv21LwwXG0rcDBAFJUEH9In1XbYr1CSuj4tNQryOxWkkvJj7QQyOgy5k8jHq9UqDNBXuhXmCnq1YgEJ60D57yS2EqU+oypBBSsF8uqzHsyJQ4wpTJHl3NYhe5+PjOxaH6Oft3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220871; c=relaxed/simple;
-	bh=cxmL37GaBXrLAE7yVSocSASNj9YAIn3EcY5Yg2Mq83s=;
+	s=arc-20240116; t=1789220876; c=relaxed/simple;
+	bh=9l09/o4Bk4gLaUNFOzDIEZ4hXqwo1M60HpaTSU48Xzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OElN9KgBBl2ZLqiqo1hgsA1go8Qlg0eQ7d23PeX9c0x9mTLpKV57oP+whrvmDqrb0/LDXWXT9uXk76TsS8vfflPdcWdLVaXzYAMc70a6ULdq5WoAtVIvfniZgAO1GmuG+lczs40w0Oe+ghI51o5xifp+SvsycSYaB4T8rZA6QeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uux+tZZx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Oq/hyP7cU3hsyaX/ZB+XTIyQF1bpfR8GKAi4N+UnWpKacWwkhXjXFvnzUTvnnR3gZfsB9jES2iWlPN8HCUTNPBBtog1RgAfoxbdTJvNVFJZYtlBr7lGYWPS/66YomHe5ycC7297TXcYXXsju4TmQrI2mZU8/zv5zk+ng+z61sZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSDn5nWu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uux+tZZx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AF21F000FF;
-	Sat, 12 Sep 2026 13:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSDn5nWu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0420D1F000FF;
+	Sat, 12 Sep 2026 13:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220869;
-	bh=UUlLVaviNeLP9uCvw+7zjX8HUGTEZrWhdXfVx4zm5lA=;
+	s=korg; t=1789220874;
+	bh=68Ur7pETS3ollToVWH30vUjpIZK1ecq8OJ7os71z34Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uux+tZZxjkB8IMT2aR0UfcwVTXhkuhKApuA9KLS+eRe2EEOJu9UdgWb5zBtRuB4b5
-	 XZqDgMjaJbA6E6ounVinwXqQ2M+8e9mLNpk6kAO0TE0Xc9XB2pvvMXlg4bYiiuGX3+
-	 eI9qVDfzlnXmj7iM4+7WsyUBueT1/4h8To9w/bxs=
+	b=pSDn5nWudDhZn5vPWoP5ccTVYM3Oik9798F3PRB4Sw9cctor1cPCvGRxwspCMQAjS
+	 LZxmQNJhPfpz9a2lvCxIkDS+uMWEsCYdq/mhDJcFjAICqLd37TAZDtvA7xZKuz8I5C
+	 TkAnr9NUNnOpFA+UsIkeBxUb2KkYl3lnw34iJDes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0267/1424] net: ntb_netdev: Count packets dropped on RX refill failure
-Date: Sat, 12 Sep 2026 08:44:59 +0200
-Message-ID: <20260912065613.254589345@linuxfoundation.org>
+Subject: [PATCH 6.6 0268/1424] net/smc: do not dereference an unset send buffer on the SMC-D teardown path
+Date: Sat, 12 Sep 2026 08:45:00 +0200
+Message-ID: <20260912065613.276599272@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,46 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 31ded341c375bb2faac1d77ab0012a732ba3e2a6 upstream.
+commit b395dd319cea422239cb45b998fb38d7e373af87 upstream.
 
-When replacement skb allocation fails, ntb_netdev drops a packet that
-was received successfully and requeues the original buffer. The drop is
-counted, but rx_packets and rx_bytes are not.
+smc_close_stream_wait() calls smc_tx_prepared_sends() from inside its
+sk_wait_event() condition, and sk_wait_event() evaluates that condition
+once with the socket lock released. smcd_buf_detach() clears
+conn->sndbuf_desc from smc_conn_kill() under lock_sock(), so a link group
+terminating while a socket waits there leaves the helper dereferencing
+NULL, faulting out of close(). SIOCOUTQ reads the field by hand, and
+smc_close_cancel_work() drops the lock across two cancel_*_sync() calls.
 
-Count every good packet before allocating its replacement.
+Sample the pointer once in the helper, report nothing prepared while it is
+unset, and bound the ioctl the same way. The receive tasklet dereferences
+the field directly in smc_cdc_msg_recv_action(), not through this helper;
+1/2 is what keeps it from running that late.
 
-Fixes: d2121faf133a ("NTB: ntb_netdev: Preserve RX queue depth on allocation failure")
+Fixes: ae2be35cbed2 ("net/smc: {at|de}tach sndbuf to peer DMB if supported")
 Cc: stable@vger.kernel.org
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Link: https://patch.msgid.link/20260819172539.1450821-3-den@valinux.co.jp
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Link: https://patch.msgid.link/20260808-b4-disp-22f119e6-v2-2-61647601a6f3@proton.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ntb_netdev.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/smc/af_smc.c |    3 ++-
+ net/smc/smc_tx.h |    6 +++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ntb_netdev.c
-+++ b/drivers/net/ntb_netdev.c
-@@ -115,6 +115,9 @@ static void ntb_netdev_rx_handler(struct
- 		goto enqueue_again;
- 	}
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -3224,7 +3224,8 @@ static int smc_ioctl(struct socket *sock
+ 			return -EINVAL;
+ 		}
+ 		if (smc->sk.sk_state == SMC_INIT ||
+-		    smc->sk.sk_state == SMC_CLOSED)
++		    smc->sk.sk_state == SMC_CLOSED ||
++		    !READ_ONCE(smc->conn.sndbuf_desc))
+ 			answ = 0;
+ 		else
+ 			answ = smc->conn.sndbuf_desc->len -
+--- a/net/smc/smc_tx.h
++++ b/net/smc/smc_tx.h
+@@ -20,11 +20,15 @@
  
-+	ndev->stats.rx_packets++;
-+	ndev->stats.rx_bytes += len;
+ static inline int smc_tx_prepared_sends(struct smc_connection *conn)
+ {
++	struct smc_buf_desc *sndbuf_desc = READ_ONCE(conn->sndbuf_desc);
+ 	union smc_host_cursor sent, prep;
+ 
++	if (!sndbuf_desc)
++		return 0;
 +
- 	new_skb = netdev_alloc_skb(ndev, ndev->mtu + ETH_HLEN);
- 	if (!new_skb) {
- 		ndev->stats.rx_dropped++;
-@@ -126,8 +129,6 @@ static void ntb_netdev_rx_handler(struct
- 	skb->ip_summed = CHECKSUM_NONE;
+ 	smc_curs_copy(&sent, &conn->tx_curs_sent, conn);
+ 	smc_curs_copy(&prep, &conn->tx_curs_prep, conn);
+-	return smc_curs_diff(conn->sndbuf_desc->len, &sent, &prep);
++	return smc_curs_diff(sndbuf_desc->len, &sent, &prep);
+ }
  
- 	netif_rx(skb);
--	ndev->stats.rx_packets++;
--	ndev->stats.rx_bytes += len;
- 
- 	skb = new_skb;
- 
+ void smc_tx_pending(struct smc_connection *conn);
 
 
