@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572213BCD19;
-	Sat, 12 Sep 2026 07:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0603BE175;
+	Sat, 12 Sep 2026 07:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196883; cv=none; b=OGoHICveCpKDZnahApFK1iEXXJKJp3OpZ7zdwlbUAwOWGEDBLWbEjpqRbiX2l3Tf8yZ0xwsf+SC5rmcxE9X2zlyEDtELDH2XmUEExhPpK3pbG3ka6A14ualOd/UGMkifMi6Br+1O1Afz4Xs4yMQgPvvs+FJMQo1qPnZbe2Kx4fM=
+	t=1789196888; cv=none; b=BxKKzro8JNZLx23RE1B6Hf/223QYVa/MatwId+Ha4rFRb32o/vzV6N2K/8t3C+WB1DfoB/2PMu/yBou3RJDjIVIU/e3jhERrz0gpOWaOTbPN46Eo3W3KgCAIwYRDiBf7dD+P/x045jEDeBzf9r20VXI/T/K9auxO7Ycvto3K/qI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196883; c=relaxed/simple;
-	bh=YbKTtgRCuwYnbzLbVxp1fJfgZ/0DF0waVUXe8lqNBEA=;
+	s=arc-20240116; t=1789196888; c=relaxed/simple;
+	bh=u9iecCO5rQjDcHLQ7OqL4Un+jbZmYyLPzqs/H2PkZmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UfMHYEs0z6x5x2XE+TpCcSTtmvn1DQx1XFIoH+hK7CHcq4tUDKG01osU6IU1keHe3vj5MQgR5Cf9E1fZL/WFbGr0e0rgJbdKY4231eN5DcdScAXixqiyMiEbGj/d3juiIAwtFKgtzr/QLPStgHhIheU64TsW7/K2DRJzSWQ5atA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mamtsRB6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eyuWDLC7QHlK6FJWzUO2T/JeZFn/6mgHxmhGDIHYvrXQ3XpyqHAvITpwctr0kLgh7JQJ/coFzuc0CgZ7p7co3IQqMmaYlpHJMq5LAzWZB1rsDbgH4/+mS5uHF9lT4Ja+JjLivvp+PPDFK2CGl1jbVMzboY7iJtKhvzBUVETeN1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pot2MZhg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mamtsRB6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF381F000FF;
-	Sat, 12 Sep 2026 07:08:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pot2MZhg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF56D1F000FF;
+	Sat, 12 Sep 2026 07:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196882;
-	bh=mu+gnr8a/aPfbsnZRgtM1vl7pyjZm+8edjLmBzzDDhQ=;
+	s=korg; t=1789196887;
+	bh=q98Snti5KUGSTzOAChgqyKOfEZ8LPPU2+u7AP1LN0b0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mamtsRB69IA1UrsNTwHrxRBNbC/Tb1kyqgfVxMfQ8gXw43NuZfn8U9QEUXBp03ElD
-	 E4wJlBMPTWSNM/eiTj8MdT60R+AuMApEnipyMnu0IEwTLOQBCnYaXQU9MAvtBv6x7S
-	 85oYxJR5iXNt7Rf00uqc0fNvQt64K1rTewxg8Rqs=
+	b=pot2MZhg+KkwdCBhDwXlvDYXN1o56swhmunphklSwqY/82PNPfVn6FCgNZ81EcCqI
+	 0xZ1h2Z/E+ISo7sgQ6P+XSa2O0TkfzpjpHhB9/R3kxtUx/xVH23zOQEMoTs4V105bU
+	 WAYo9pdGtNsDiqF6Oqwf7lWr7633vu2N275yXcto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
+	Konstantin Andreev <andreev@swemel.ru>,
 	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0057/1815] smack: simplify write handlers of sysfs entries
-Date: Sat, 12 Sep 2026 08:30:07 +0200
-Message-ID: <20260912065650.354255793@linuxfoundation.org>
+Subject: [PATCH 7.2 0058/1815] smack: deduplicate smackfs/{direct,mapped} file_operations
+Date: Sat, 12 Sep 2026 08:30:08 +0200
+Message-ID: <20260912065650.376149706@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,164 +51,257 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Konstantin Andreev <andreev@swemel.ru>
 
-[ Upstream commit b78fede1c69a090d377bf80417ce1f7f7f314534 ]
+[ Upstream commit 577dc3b6a8cf200e6e27b2d9967cac14a1fed2f3 ]
 
-Use the convenient 'kstrto{u,s}32_from_user()' to simplify write
-handlers of /smack/{doi,direct,mapped,logging,ptrace} sysfs entries.
+The file_operations for smackfs/direct and smackfs/mapped are
+identical up to a textual replacement of "direct" with "mapped"
 
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+This patch combines two instances of file_operations into one,
+handling both files.
+
+Fixes: f7112e6c9abf ("Smack: allow for significantly longer Smack labels v4")
+Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
 Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
-Stable-dep-of: 577dc3b6a8cf ("smack: deduplicate smackfs/{direct,mapped} file_operations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smackfs.c | 81 +++++++++++-----------------------------
- 1 file changed, 22 insertions(+), 59 deletions(-)
+ security/smack/smack.h   |   5 +-
+ security/smack/smackfs.c | 133 ++++++++++++---------------------------
+ 2 files changed, 42 insertions(+), 96 deletions(-)
 
+diff --git a/security/smack/smack.h b/security/smack/smack.h
+index 9b9eb262fe33e..6febc2ecdfe84 100644
+--- a/security/smack/smack.h
++++ b/security/smack/smack.h
+@@ -317,8 +317,9 @@ int smack_populate_secattr(struct smack_known *skp);
+  * Shared data.
+  */
+ extern int smack_enabled __initdata;
+-extern int smack_cipso_direct;
+-extern int smack_cipso_mapped;
++extern int smack_cipso_auto_level[2];
++#define smack_cipso_direct (+smack_cipso_auto_level[0])
++#define smack_cipso_mapped (+smack_cipso_auto_level[1])
+ extern struct smack_known *smack_net_ambient;
+ extern struct smack_known *smack_syslog_label;
+ #ifdef CONFIG_SECURITY_SMACK_BRINGUP
 diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
-index 6e62dcb36f74f..f60d5469043ed 100644
+index f60d5469043ed..946405645d5ad 100644
 --- a/security/smack/smackfs.c
 +++ b/security/smack/smackfs.c
-@@ -1598,24 +1598,17 @@ static ssize_t smk_read_doi(struct file *filp, char __user *buf,
- static ssize_t smk_write_doi(struct file *file, const char __user *buf,
- 			     size_t count, loff_t *ppos)
+@@ -83,18 +83,27 @@ static DEFINE_MUTEX(smk_net6addr_lock);
+ struct smack_known *smack_net_ambient;
+ 
+ /*
+- * This is the level in a CIPSO header that indicates a
++ * Sensitivity levels for automatically created CIPSO labels.
++ * See smack_access.c`smack_populate_secattr()
++ *
++ * [0] "direct" labeling, label length < SMK_CIPSOLEN(24):
+  * smack label is contained directly in the category set.
+  * It can be reset via smackfs/direct
+- */
+-int smack_cipso_direct = SMACK_CIPSO_DIRECT_DEFAULT;
+-
+-/*
+- * This is the level in a CIPSO header that indicates a
++ *
++ * [1] "mapped" labeling, label length >= SMK_CIPSOLEN(24):
+  * secid is contained directly in the category set.
+  * It can be reset via smackfs/mapped
+  */
+-int smack_cipso_mapped = SMACK_CIPSO_MAPPED_DEFAULT;
++int smack_cipso_auto_level[2] = {
++	SMACK_CIPSO_DIRECT_DEFAULT,
++	SMACK_CIPSO_MAPPED_DEFAULT,
++};
++
++static int
++smk_cipso_auto_level_idx(const struct file *file)
++{
++	return (file_inode(file)->i_ino != SMK_DIRECT);
++}
+ 
+ #ifdef CONFIG_SECURITY_SMACK_BRINGUP
+ /*
+@@ -1621,15 +1630,15 @@ static const struct file_operations smk_doi_ops = {
+ };
+ 
+ /**
+- * smk_read_direct - read() for /smack/direct
+- * @filp: file pointer, not actually used
++ * smk_read_cipso_auto_level - read() for smackfs/direct and smackfs/mapped
++ * @filp: file pointer
+  * @buf: where to put the result
+  * @count: maximum to send along
+  * @ppos: where to start
+  *
+  * Returns number of bytes read or error code, as appropriate
+  */
+-static ssize_t smk_read_direct(struct file *filp, char __user *buf,
++static ssize_t smk_read_cipso_auto_level(struct file *filp, char __user *buf,
+ 			       size_t count, loff_t *ppos)
  {
--	char temp[80];
--	unsigned long u;
-+	int ret;
-+	u32 u;
+ 	char temp[80];
+@@ -1638,26 +1647,28 @@ static ssize_t smk_read_direct(struct file *filp, char __user *buf,
+ 	if (*ppos != 0)
+ 		return 0;
  
- 	if (!smack_privileged(CAP_MAC_ADMIN))
- 		return -EPERM;
+-	sprintf(temp, "%d", smack_cipso_direct);
++	sprintf(temp, "%d", smack_cipso_auto_level[
++			      smk_cipso_auto_level_idx(filp)]);
+ 	rc = simple_read_from_buffer(buf, count, ppos, temp, strlen(temp));
  
--	if (count >= sizeof(temp) || count == 0)
--		return -EINVAL;
--
--	if (copy_from_user(temp, buf, count) != 0)
--		return -EFAULT;
--
--	temp[count] = '\0';
-+	ret = kstrtou32_from_user(buf, count, 10, &u);
-+	if (unlikely(ret))
-+		return ret;
+ 	return rc;
+ }
  
--	if (kstrtoul(temp, 10, &u))
--		return -EINVAL;
--
--	if (u == CIPSO_V4_DOI_UNKNOWN || u > U32_MAX)
-+	if (u == CIPSO_V4_DOI_UNKNOWN)
- 		return -EINVAL;
- 
- 	return smk_cipso_doi(u, GFP_KERNEL) ? : count;
-@@ -1664,22 +1657,14 @@ static ssize_t smk_write_direct(struct file *file, const char __user *buf,
- 				size_t count, loff_t *ppos)
+ /**
+- * smk_write_direct - write() for /smack/direct
+- * @file: file pointer, not actually used
++ * smk_write_cipso_auto_level - write() for smackfs/direct and smackfs/mapped
++ * @filp: file pointer
+  * @buf: where to get the data from
+  * @count: bytes sent
+  * @ppos: where to start
+  *
+  * Returns number of bytes written or error code, as appropriate
+  */
+-static ssize_t smk_write_direct(struct file *file, const char __user *buf,
+-				size_t count, loff_t *ppos)
++static ssize_t
++smk_write_cipso_auto_level(struct file *filp, const char __user *buf,
++			   size_t count, loff_t *ppos)
  {
  	struct smack_known *skp;
--	char temp[80];
--	int i;
-+	int i, ret;
+-	int i, ret;
++	int i, ret, idx, old_lvl;
  
  	if (!smack_privileged(CAP_MAC_ADMIN))
  		return -EPERM;
- 
--	if (count >= sizeof(temp) || count == 0)
--		return -EINVAL;
--
--	if (copy_from_user(temp, buf, count) != 0)
--		return -EFAULT;
--
--	temp[count] = '\0';
--
--	if (sscanf(temp, "%d", &i) != 1)
--		return -EINVAL;
-+	ret = kstrtos32_from_user(buf, count, 10, &i);
-+	if (unlikely(ret))
-+		return ret;
- 
+@@ -1669,94 +1680,28 @@ static ssize_t smk_write_direct(struct file *file, const char __user *buf,
  	/*
  	 * Don't do anything if the value hasn't actually changed.
-@@ -1742,22 +1727,14 @@ static ssize_t smk_write_mapped(struct file *file, const char __user *buf,
- 				size_t count, loff_t *ppos)
- {
- 	struct smack_known *skp;
+ 	 * If it is changing reset the level on entries that were
+-	 * set up to be direct when they were created.
++	 * set up to be "auto" level when they were created.
+ 	 */
+-	if (smack_cipso_direct != i) {
+-		mutex_lock(&smack_known_lock);
+-		list_for_each_entry_rcu(skp, &smack_known_list, list)
+-			if (skp->smk_netlabel.attr.mls.lvl ==
+-			    smack_cipso_direct)
+-				skp->smk_netlabel.attr.mls.lvl = i;
+-		smack_cipso_direct = i;
+-		mutex_unlock(&smack_known_lock);
+-	}
+-
+-	return count;
+-}
++	idx = smk_cipso_auto_level_idx(filp);
++	old_lvl = smack_cipso_auto_level[idx];
+ 
+-static const struct file_operations smk_direct_ops = {
+-	.read		= smk_read_direct,
+-	.write		= smk_write_direct,
+-	.llseek		= default_llseek,
+-};
+-
+-/**
+- * smk_read_mapped - read() for /smack/mapped
+- * @filp: file pointer, not actually used
+- * @buf: where to put the result
+- * @count: maximum to send along
+- * @ppos: where to start
+- *
+- * Returns number of bytes read or error code, as appropriate
+- */
+-static ssize_t smk_read_mapped(struct file *filp, char __user *buf,
+-			       size_t count, loff_t *ppos)
+-{
 -	char temp[80];
--	int i;
-+	int i, ret;
- 
- 	if (!smack_privileged(CAP_MAC_ADMIN))
- 		return -EPERM;
- 
--	if (count >= sizeof(temp) || count == 0)
--		return -EINVAL;
+-	ssize_t rc;
 -
--	if (copy_from_user(temp, buf, count) != 0)
--		return -EFAULT;
+-	if (*ppos != 0)
+-		return 0;
 -
--	temp[count] = '\0';
+-	sprintf(temp, "%d", smack_cipso_mapped);
+-	rc = simple_read_from_buffer(buf, count, ppos, temp, strlen(temp));
 -
--	if (sscanf(temp, "%d", &i) != 1)
--		return -EINVAL;
-+	ret = kstrtos32_from_user(buf, count, 10, &i);
-+	if (unlikely(ret))
-+		return ret;
- 
- 	/*
- 	 * Don't do anything if the value hasn't actually changed.
-@@ -2179,22 +2156,15 @@ static ssize_t smk_read_logging(struct file *filp, char __user *buf,
- static ssize_t smk_write_logging(struct file *file, const char __user *buf,
- 				size_t count, loff_t *ppos)
- {
--	char temp[32];
--	int i;
-+	int i, ret;
- 
- 	if (!smack_privileged(CAP_MAC_ADMIN))
- 		return -EPERM;
- 
--	if (count >= sizeof(temp) || count == 0)
--		return -EINVAL;
+-	return rc;
+-}
 -
--	if (copy_from_user(temp, buf, count) != 0)
--		return -EFAULT;
-+	ret = kstrtos32_from_user(buf, count, 10, &i);
-+	if (unlikely(ret))
-+		return ret;
- 
--	temp[count] = '\0';
+-/**
+- * smk_write_mapped - write() for /smack/mapped
+- * @file: file pointer, not actually used
+- * @buf: where to get the data from
+- * @count: bytes sent
+- * @ppos: where to start
+- *
+- * Returns number of bytes written or error code, as appropriate
+- */
+-static ssize_t smk_write_mapped(struct file *file, const char __user *buf,
+-				size_t count, loff_t *ppos)
+-{
+-	struct smack_known *skp;
+-	int i, ret;
 -
--	if (sscanf(temp, "%d", &i) != 1)
--		return -EINVAL;
- 	if (i < 0 || i > 3)
- 		return -EINVAL;
- 	log_policy = i;
-@@ -2838,22 +2808,15 @@ static ssize_t smk_read_ptrace(struct file *filp, char __user *buf,
- static ssize_t smk_write_ptrace(struct file *file, const char __user *buf,
- 				size_t count, loff_t *ppos)
- {
--	char temp[32];
--	int i;
-+	int i, ret;
- 
- 	if (!smack_privileged(CAP_MAC_ADMIN))
- 		return -EPERM;
- 
--	if (*ppos != 0 || count >= sizeof(temp) || count == 0)
--		return -EINVAL;
+-	if (!smack_privileged(CAP_MAC_ADMIN))
+-		return -EPERM;
 -
--	if (copy_from_user(temp, buf, count) != 0)
--		return -EFAULT;
-+	ret = kstrtos32_from_user(buf, count, 10, &i);
-+	if (unlikely(ret))
-+		return ret;
- 
--	temp[count] = '\0';
+-	ret = kstrtos32_from_user(buf, count, 10, &i);
+-	if (unlikely(ret))
+-		return ret;
 -
--	if (sscanf(temp, "%d", &i) != 1)
--		return -EINVAL;
- 	if (i < SMACK_PTRACE_DEFAULT || i > SMACK_PTRACE_MAX)
- 		return -EINVAL;
- 	smack_ptrace_rule = i;
+-	/*
+-	 * Don't do anything if the value hasn't actually changed.
+-	 * If it is changing reset the level on entries that were
+-	 * set up to be mapped when they were created.
+-	 */
+-	if (smack_cipso_mapped != i) {
++	if (old_lvl != i) {
+ 		mutex_lock(&smack_known_lock);
+ 		list_for_each_entry_rcu(skp, &smack_known_list, list)
+ 			if (skp->smk_netlabel.attr.mls.lvl ==
+-			    smack_cipso_mapped)
++			    old_lvl)
+ 				skp->smk_netlabel.attr.mls.lvl = i;
+-		smack_cipso_mapped = i;
++		smack_cipso_auto_level[idx] = i;
+ 		mutex_unlock(&smack_known_lock);
+ 	}
+ 
+ 	return count;
+ }
+ 
+-static const struct file_operations smk_mapped_ops = {
+-	.read		= smk_read_mapped,
+-	.write		= smk_write_mapped,
++static const struct file_operations
++smk_cipso_auto_level_ops = {
++	.read		= smk_read_cipso_auto_level,
++	.write		= smk_write_cipso_auto_level,
+ 	.llseek		= default_llseek,
+ };
+ 
+@@ -2851,7 +2796,7 @@ static int smk_fill_super(struct super_block *sb, struct fs_context *fc)
+ 		[SMK_DOI] = {
+ 			"doi", &smk_doi_ops, S_IRUGO|S_IWUSR},
+ 		[SMK_DIRECT] = {
+-			"direct", &smk_direct_ops, S_IRUGO|S_IWUSR},
++			"direct", &smk_cipso_auto_level_ops, 0644},
+ 		[SMK_AMBIENT] = {
+ 			"ambient", &smk_ambient_ops, S_IRUGO|S_IWUSR},
+ 		[SMK_NET4ADDR] = {
+@@ -2867,7 +2812,7 @@ static int smk_fill_super(struct super_block *sb, struct fs_context *fc)
+ 		[SMK_ACCESSES] = {
+ 			"access", &smk_access_ops, S_IRUGO|S_IWUGO},
+ 		[SMK_MAPPED] = {
+-			"mapped", &smk_mapped_ops, S_IRUGO|S_IWUSR},
++			"mapped", &smk_cipso_auto_level_ops, 0644},
+ 		[SMK_LOAD2] = {
+ 			"load2", &smk_load2_ops, S_IRUGO|S_IWUSR},
+ 		[SMK_LOAD_SELF2] = {
 -- 
 2.53.0
 
