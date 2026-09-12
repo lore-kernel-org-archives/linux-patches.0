@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868EF349CF3;
-	Sat, 12 Sep 2026 14:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58AB33090D7;
+	Sat, 12 Sep 2026 14:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223470; cv=none; b=jcT5k42hqbsjrUDwJ4OPdI/7BTveJ+lhv3iH6Z+zseIDUv/Fea/rtZh8D1YQbM64mxP0mKEV+2OmQGMyFmWw1o14RfzD12SUJQLvvWFkM5EPokOmpy/WBKTo7cXTakCAcBt9D9BximS/4zXlf0NfuCN0Zsotp60StCeXk+L8XZo=
+	t=1789223478; cv=none; b=BgueC0vJ/SQgGBwon50ZZVN3g3Go34FshTlDzkr94ioqmFcGXjaB8ozD6BHne8xX7qqtRWTjO9ixEwnm7K+mAFrPtcATblos1hwdwFjA3O5Kkp3m8DaQqUu2FcHFVOiI7nYj8ke3J2gcooLHK0zV3JVsQLMw0zM/uvKDmOHamVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223470; c=relaxed/simple;
-	bh=b9+z0vMnVrgu6QDhJ564MUoa29wpwPQUjbqJ4gKc6FQ=;
+	s=arc-20240116; t=1789223478; c=relaxed/simple;
+	bh=E9QGMJFPZJ5Ip8UPgtPY1oBWK2Y4VogO8jIA4XMbUgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g26/yBMQuxYDc3ol4n2BHNE2YplRSQUgibRRIIWJvM9YyIveWdpKfLmghaHM07iYpt25eynDeUQUt41NPTE9US2odZZ2uIi0Ow3UjSKdefbMGGAmjhUqa+x3gXvYR4cluzVv7dSx6LZrmqJcRpaGtyLTML7222TDk/ZMRI+j7Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDcbkjfQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ekKLLIeqdVurkQp5EfRV6gV6Xuf/l4EGnUNjI/PAH+AZVzvYq4TuF65d9eBUkIxgsBW0w5avBjCTPaNKHv92UPAoHPH5oty4WQlrKO8vKf3YdkKTPuH+eNQe6iqMHmF3lB8A5zdZpAN87YGbA1ATM3xBZETQfVDez9ttif7dKCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmLRreCW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDcbkjfQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063211F000FF;
-	Sat, 12 Sep 2026 14:31:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmLRreCW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6541F000FF;
+	Sat, 12 Sep 2026 14:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223468;
-	bh=ia+uYOI9nMlG0hgx8GTbKrIorqfT1UsgVQhcksBbizo=;
+	s=korg; t=1789223473;
+	bh=GxP61T9bPaLQnRIRWZSaN4nnQaqJDrPuy6wa1wccZIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vDcbkjfQzBKLLoLrYw2bhlVXFfJrqwZbbYT9sHE8kzv9/aK7zgbgW9HvwA0LKbIPp
-	 P4KG+g2j5secI/3VKy+WikWS7Rcz3+VI7VOM3CuQhE5JBstxwb/5hvz77/8E27nfrM
-	 ip/5vuaEzx4SZTgWw/+Zx3ouuCRU4ytw+CRBam7M=
+	b=kmLRreCWZ0mm/G6rhOS2DSkGQXMBKoycelFlUxKdNqewpxDDMSlyoEakGlgKa2XB7
+	 CEPr8p2AN/v14MLW9H3pZK/6D44gzD/RzWL+fjFqBGfsj5WqSMx6Lej8drBjQ0ZipZ
+	 uJZ0jUkol3f7EPTLPEbjtpiKga3BiA5JzryV63ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biren Pandya <birenpandya@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0769/1424] media: i2c: rdacm21: Fix missing media_entity_cleanup()
-Date: Sat, 12 Sep 2026 08:53:21 +0200
-Message-ID: <20260912065624.517751967@linuxfoundation.org>
+Subject: [PATCH 6.6 0796/1424] misc: bcm-vk: Use acquire/release for msgq_inited
+Date: Sat, 12 Sep 2026 08:53:48 +0200
+Message-ID: <20260912065625.121971906@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,51 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biren Pandya <birenpandya@gmail.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit 04c053379c3a33460b581953c4f5b36de39439ac ]
+[ Upstream commit 61b101c6a150057b6d512421ed108aed16e822ea ]
 
-The driver misses calling media_entity_cleanup() on the probe error path
-and during remove, leaking resources if probe fails after entity
-initialization or when the driver is unloaded.
+bcm_vk_sync_msgq() fills the message queue information and then sets
+msgq_inited. Readers call bcm_vk_drv_access_ok() before accessing the
+message queues and their cached queue information.
 
-Fix this by adding media_entity_cleanup() to the rdacm21_probe() error
-handling path and to rdacm21_remove().
+atomic_set()/atomic_read() do not order those accesses. A reader can see
+msgq_inited set while still seeing stale queue information. Use release
+when publishing the initialized queues and acquire when checking the gate.
 
-Fixes: a59f853b3b4b ("media: i2c: Add driver for RDACM21 camera module")
-Signed-off-by: Biren Pandya <birenpandya@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Keep the clear in bcm_vk_blk_drv_access() as atomic_set(). It closes the
+gate and does not publish queue state to readers.
+
+Fixes: 111d746bb476 ("misc: bcm-vk: add VK messaging support")
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://patch.msgid.link/20260603021127.3285057-1-hanguidong02@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/rdacm21.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/misc/bcm-vk/bcm_vk_msg.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/rdacm21.c b/drivers/media/i2c/rdacm21.c
-index 3e22df36354fd..e8196ea737393 100644
---- a/drivers/media/i2c/rdacm21.c
-+++ b/drivers/media/i2c/rdacm21.c
-@@ -589,10 +589,12 @@ static int rdacm21_probe(struct i2c_client *client)
+diff --git a/drivers/misc/bcm-vk/bcm_vk_msg.c b/drivers/misc/bcm-vk/bcm_vk_msg.c
+index 54e25e9bc51b1..c339a83e4f4fd 100644
+--- a/drivers/misc/bcm-vk/bcm_vk_msg.c
++++ b/drivers/misc/bcm-vk/bcm_vk_msg.c
+@@ -108,7 +108,8 @@ u32 msgq_avail_space(const struct bcm_vk_msgq __iomem *msgq,
  
- 	ret = v4l2_async_register_subdev(&dev->sd);
- 	if (ret)
--		goto error_free_ctrls;
-+		goto error_entity_cleanup;
- 
- 	return 0;
- 
-+error_entity_cleanup:
-+	media_entity_cleanup(&dev->sd.entity);
- error_free_ctrls:
- 	v4l2_ctrl_handler_free(&dev->ctrls);
- error:
-@@ -607,6 +609,7 @@ static void rdacm21_remove(struct i2c_client *client)
- 
- 	v4l2_async_unregister_subdev(&dev->sd);
- 	v4l2_ctrl_handler_free(&dev->ctrls);
-+	media_entity_cleanup(&dev->sd.entity);
- 	i2c_unregister_device(dev->isp);
+ bool bcm_vk_drv_access_ok(struct bcm_vk *vk)
+ {
+-	return (!!atomic_read(&vk->msgq_inited));
++	/* Pair with the release store after message queue initialization. */
++	return !!atomic_read_acquire(&vk->msgq_inited);
  }
  
+ void bcm_vk_set_host_alert(struct bcm_vk *vk, u32 bit_mask)
+@@ -501,7 +502,8 @@ int bcm_vk_sync_msgq(struct bcm_vk *vk, bool force_sync)
+ 			msgq++;
+ 		}
+ 	}
+-	atomic_set(&vk->msgq_inited, 1);
++	/* Publish message queue info before allowing driver access. */
++	atomic_set_release(&vk->msgq_inited, 1);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
