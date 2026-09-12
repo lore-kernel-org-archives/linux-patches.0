@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF6D41D4F1;
-	Sat, 12 Sep 2026 10:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C934362120;
+	Sat, 12 Sep 2026 10:27:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208864; cv=none; b=KDKfAH/A9fkFFMN9Iv0ES7ya8ADPnN8wMglEvpyEt3fEenmtoh1guNPfptqPoCH2T+AYeWJ6Wi8F7MiT+bUY8fXel2+UUWDflqe1MOx7tt/049egt/T31XT8mekkMbeNgGIFs4ugxhMQmKdiB8WJZRhU/tLrrp0guIjUZ5x7yc0=
+	t=1789208865; cv=none; b=rK90He21v76e6E00w2BoQ4j67LIdKtapRlZADOuuedkX9wz5wDR/wJ/WPSxaOnygJldjzrpT1fNZXuwkj253kyZNbDmwPReQCD1H1HMyUoWwS1PnM/S/MP8WVnBnIuOXzBK9o+5OIGEFP8m75mjMFh7pIa3Vgg7dF5svhLtlArc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208864; c=relaxed/simple;
-	bh=pcwKnSh7mLDn9iyrHTGO8cfBmHrhB9AKMw4ovSADiNM=;
+	s=arc-20240116; t=1789208865; c=relaxed/simple;
+	bh=tjq/3ysm3e3O3x48BzCUUPYgs0KYa6WNTMKmDpIDMbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Okx5jGPojiAUOqu4QJGpWzbni3buuGOmM2cv2FwGbeT+lkdDRw+1ha/gYS6V/qtY3F01K8LzvGgb/WMPZtvW7u/FdQ2Vy8zJT3i6q5VRUxoyRcElEztYI9c5RKn8Qrmq8a+QrBXAPThb+GnIeTOiaiwMwV4pr4l+8ryyke5pg38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFNv7A1d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NYgGxvNYwFAQJAKDzZfo9hTVXMcSBf5r0pEpjbjCgp/acH/TvyjelLULdhb1V6YWdXhepKS8WUUdQ4f6LoCYdCphlg79VsASfiPQ4PIiUfzWQeWY7A1NG/dh6UHTtOSUDdPI0XLk7rFyu2E2IiPCf+fRL+QVg4Z2yTXo5wgRcyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBvkn0Iw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFNv7A1d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71731F000FF;
-	Sat, 12 Sep 2026 10:27:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBvkn0Iw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B214A1F00893;
+	Sat, 12 Sep 2026 10:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208857;
-	bh=+0t0pR084F2Wu5+Sme1idf3fiM8r9thPnh6E5aj3ve4=;
+	s=korg; t=1789208862;
+	bh=6hWsxynUZytqYRGiE+nVRIVjiK88Bu9mBxWnlrMZI5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rFNv7A1dQ8azmwgOSnp+7jRThi1KRmki94IEk3f4v9VyiXGlox+NeAdapJR7hpeSU
-	 kvQa9E5S27OFnMXYeDwSbe6iQnYM7QhSoEdhSkp6l84o7fnt0JGg4JZUg1Qz60ucq1
-	 5ongwOEsE9R4fvr0PAtvcyT0Qh/4UsxrVXEwMvWM=
+	b=NBvkn0IwU7R7JMGXYJP9fLoYrlxEJEUPeGBwUw7K4sgvS94VMrHHwrRs+a//LcJ0L
+	 L7MQh/RtbhczsEz919mRQLwz4SJTsDD1oW1jZKOgLEV48DPg+GLSo9NZdqUZgndVm8
+	 XUqhfP/c+k2UmMrftkXkr8o+XWHIRs18eCB/9L9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Pu Lehui <pulehui@huawei.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Amery Hung <ameryhung@gmail.com>,
-	Leon Hwang <leon.hwang@linux.dev>,
+	Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Leon Romanovsky <leon@kernel.org>,
+	Ralph Campbell <rcampbell@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0704/1518] bpf: Fix potential UAF when reading bpf link info
-Date: Sat, 12 Sep 2026 08:47:53 +0200
-Message-ID: <20260912065639.358736902@linuxfoundation.org>
+Subject: [PATCH 6.18 0705/1518] lib/test_hmm: fail dmirror_fault() when the mirrored mm is gone
+Date: Sat, 12 Sep 2026 08:47:54 +0200
+Message-ID: <20260912065639.382375092@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -55,93 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
 
-[ Upstream commit 863f3ddd0b8ac65abfb50d3be0869268ac0e277b ]
+[ Upstream commit 6a8024511ddf4877435c34fb3d6028aa8e590649 ]
 
-In bpf_link_show_fdinfo and bpf_link_get_info_by_fd, link->prog is
-accessed without holding any locks. If the prog is concurrently replaced
-via bpf_link_update, the old prog can be freed, leading to a potential
-UAF issue.
+dmirror_fault() is called from the dmirror_read() and dmirror_write()
+retry loops after dmirror_do_read() or dmirror_do_write() finds a missing
+device page table entry.
 
-Fix this by accessing link->prog under RCU protection to safely fetch
-the pointer and guarantee its lifetime while reading its fields.
+If the mirrored mm has already exited, mmget_not_zero() fails.  The
+current code returns 0 in that case, which tells the caller that faulting
+succeeded even though no page was faulted and no device page table entry
+was installed.  The caller then retries the same address, hits -ENOENT
+again, and can loop forever without making progress.
 
-Fixes: 0c991ebc8c69 ("bpf: Implement bpf_prog replacement for an active bpf_cgroup_link")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Amery Hung <ameryhung@gmail.com>
-Acked-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://lore.kernel.org/bpf/f87b53c0-8f00-45a6-82db-8242fa9b143f@huaweicloud.com [0]
-Link: https://lore.kernel.org/bpf/20260728025457.2814876-1-pulehui@huaweicloud.com
+Return -EFAULT instead, so the ioctl fails when the mirrored mm is no
+longer faultable.
+
+Link: https://lore.kernel.org/178294308408.327222.3319445682023999403.stgit@skinsburskii
+Fixes: b2ef9f5a5cb37 ("mm/hmm/test: add selftest driver for HMM")
+Signed-off-by: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: Ralph Campbell <rcampbell@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ lib/test_hmm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index b8937bebf5b81..bab472152d64d 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -3343,9 +3343,10 @@ static const char *bpf_link_type_strs[] = {
- static void bpf_link_show_fdinfo(struct seq_file *m, struct file *filp)
- {
- 	const struct bpf_link *link = filp->private_data;
--	const struct bpf_prog *prog = link->prog;
-+	const struct bpf_prog *prog;
- 	enum bpf_link_type type = link->type;
- 	char prog_tag[sizeof(prog->tag) * 2 + 1] = { };
-+	u32 prog_id = 0;
+diff --git a/lib/test_hmm.c b/lib/test_hmm.c
+index 00d34a6c6276b..ec1df4cd84807 100644
+--- a/lib/test_hmm.c
++++ b/lib/test_hmm.c
+@@ -392,7 +392,7 @@ static int dmirror_fault(struct dmirror *dmirror, unsigned long start,
  
- 	if (type < ARRAY_SIZE(bpf_link_type_strs) && bpf_link_type_strs[type]) {
- 		if (link->type == BPF_LINK_TYPE_KPROBE_MULTI)
-@@ -3362,13 +3363,20 @@ static void bpf_link_show_fdinfo(struct seq_file *m, struct file *filp)
- 	}
- 	seq_printf(m, "link_id:\t%u\n", link->id);
+ 	/* Since the mm is for the mirrored process, get a reference first. */
+ 	if (!mmget_not_zero(mm))
+-		return 0;
++		return -EFAULT;
  
-+	rcu_read_lock();
-+	prog = READ_ONCE(link->prog);
- 	if (prog) {
- 		bin2hex(prog_tag, prog->tag, sizeof(prog->tag));
-+		prog_id = prog->aux->id;
-+	}
-+	rcu_read_unlock();
-+
-+	if (prog) {
- 		seq_printf(m,
- 			   "prog_tag:\t%s\n"
- 			   "prog_id:\t%u\n",
- 			   prog_tag,
--			   prog->aux->id);
-+			   prog_id);
- 	}
- 	if (link->ops->show_fdinfo)
- 		link->ops->show_fdinfo(link, m);
-@@ -5372,6 +5380,7 @@ static int bpf_link_get_info_by_fd(struct file *file,
- {
- 	struct bpf_link_info __user *uinfo = u64_to_user_ptr(attr->info.info);
- 	struct bpf_link_info info;
-+	const struct bpf_prog *prog;
- 	u32 info_len = attr->info.info_len;
- 	int err;
- 
-@@ -5386,8 +5395,12 @@ static int bpf_link_get_info_by_fd(struct file *file,
- 
- 	info.type = link->type;
- 	info.id = link->id;
--	if (link->prog)
--		info.prog_id = link->prog->aux->id;
-+
-+	rcu_read_lock();
-+	prog = READ_ONCE(link->prog);
-+	if (prog)
-+		info.prog_id = prog->aux->id;
-+	rcu_read_unlock();
- 
- 	if (link->ops->fill_link_info) {
- 		err = link->ops->fill_link_info(link, &info);
+ 	for (addr = start; addr < end; addr = range.end) {
+ 		range.start = addr;
 -- 
 2.53.0
 
