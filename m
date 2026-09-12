@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3824BEE2A;
-	Sat, 12 Sep 2026 13:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1528847CA85;
+	Sat, 12 Sep 2026 13:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219711; cv=none; b=QhrLJbaudFyBcr6Fpc4UVn7GrfuL2Yc62kfMT84RMdjjac2B0TFZOuf/3WJBXKbZeL7DNpsjPaF1/XpjveW+ELgxNnnhED2eStHwUjRVe8iXLePvIim89XmnMlgDStk8c/bKQG1M3/cB4wTm9CtNw7oY6YJepZUzeHp5DNnvYJs=
+	t=1789219723; cv=none; b=tpr8lAJ39yto49JzWROIpBT3apnvxFdKVkyUePBMaui/H3XAGY1HJDWc46ii6svH/vKBOytHI7YwsQjdJUUox5qejEax2dgEOQNv37TaHxfy7SdI8Fc5qz4prOrZKaad2G0UqN+BdB4+8sqSWaeHNFTQVkK1ecd9oaqYyl9z+Nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219711; c=relaxed/simple;
-	bh=eh3Q1P7KhmfQ3gdCEEnK9pp6+y0NiEtzYhoD5n9UXdw=;
+	s=arc-20240116; t=1789219723; c=relaxed/simple;
+	bh=y1596Ja+ULeBZtjqwX+KxKd7MeSKSfokJ2Ztq64yzaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CsNvyzlUsET4zqmYhboYA0xUqlLQxvOHuivYr7FX5hRxZxZNwK0uBDu+a/oth6YlEX9Qs13uPP0od0BpLBgarbTeEoDUcaLxk7Wz+u5t8ZPCTRbDzKZqDZnbgLw6MDl2Nh1n7bBNAaEHTEi4pDGjDMvqUEm48xLfI1oDb96Vziw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qO0/tUEQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eEL5OW+ozgY/JhlhO83fL5OUcMbCoUj4T2q0cR7tQVVk0KSMkf5nxScmhVMkwh3WmdJ31lP++atMddq2NTmG0wxsOS9XJ0SxeJT8h3kNQNowfDeUCxt2FSBlllooPjOMBmr2kQe2HnTWqRH9vS+6tuus3TiD05ixCv5bZSMFX70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=um2daVBj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qO0/tUEQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BF61F000FF;
-	Sat, 12 Sep 2026 13:28:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="um2daVBj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB53E1F00893;
+	Sat, 12 Sep 2026 13:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219710;
-	bh=cv7CiRmMXVUkKnrirkbDhrT+yz1nzRlVDaaxRdXJmQI=;
+	s=korg; t=1789219722;
+	bh=AGU9u6oBvon3tiBMSR9FnZZRoHY8j+bXSnqR/xR5LwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qO0/tUEQwiNxD+8N4ZBZsXdbSDnUyOwPUsaCqRlZpFPYed17frZZ4yX28TYwzJjFc
-	 obpQWrdDHACpJXtRNNb9Fp/IgwVtYb0r3ZIfdraiDu/srvNZ4/TjIEKF+jffKJPUYl
-	 g1i6lLj9zoCs15iA4eyU0fZ4GGXPuFFR5upk+pLE=
+	b=um2daVBjXaqEjm9OaNb8llDB8cCkVjjw2QmT3TQ3wuBDKpLkkkZ5sgRGqbhmm271r
+	 Y40Vsp7UPSvX6w0HrYdbvUInF4RHl5qLCZjkxZudTJRX8FDfYn31zzLB7kIhGC6bMx
+	 TV2aC3ARlCarAiRvOLwyn7lyyNgQCASiDVP+a878=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Turner <mattst88@gmail.com>,
-	Magnus Lindholm <linmag7@gmail.com>
-Subject: [PATCH 6.6 0009/1424] alpha: fix ieee_swcr_to_fpcr setting FPCR_DNOD unconditionally
-Date: Sat, 12 Sep 2026 08:40:41 +0200
-Message-ID: <20260912065607.499281737@linuxfoundation.org>
+	Hui Su <sh_def@163.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.6 0024/1424] tracing: Fix use-after-free with same-name named triggers
+Date: Sat, 12 Sep 2026 08:40:56 +0200
+Message-ID: <20260912065607.846007324@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,83 +50,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Turner <mattst88@gmail.com>
+From: Hui Su <sh_def@163.com>
 
-commit 49672d026cc4773608e1222b69b29fd70f41336b upstream.
+commit a7318172aa332a161fb9618286e64454c827f8fd upstream.
 
-ieee_swcr_to_fpcr() converts the software IEEE trap-enable and status
-bits kept in thread_info.ieee_state into the hardware FPCR format.  It
-contained:
+When two hist triggers on different events are registered with the same
+name=, the second one reuses the first as named_data.  Both are added to
+tr->hist_vars by save_hist_vars() during event_hist_trigger_parse(),
+because save_hist_vars() is called before event_trigger_register() while
+the named reuse is only detected later, in hist_register_trigger().
 
-	fp |= (~sw & IEEE_TRAP_ENABLE_DNO) << 41;
+In the named-data branch hist_register_trigger() then frees the second
+histogram's hist_data via destroy_hist_data(), but never removes its
+tr->hist_vars list entry, leaving a dangling pointer and leaking the
+trace_array reference it holds.
 
-FPCR_DNOD (bit 47) disables denormal operand traps: with it set the
-hardware handles a denormal operand itself, treating it as zero, instead
-of trapping for software completion.  The intent was to set DNOD when the
-user has not asked for SIGFPE on denormal operands, but
-IEEE_TRAP_ENABLE_DNO is clear by default, so ieee_swcr_to_fpcr(0) always
-set DNOD.
+A later hist trigger that references a variable makes find_var_file()
+walk tr->hist_vars and dereference the freed hist_data.  The bug is
+reproducible from userspace by writing three hist triggers to tracefs:
 
-Instructions built with the software completion suffix therefore never
-trapped on a denormal operand.  The hardware silently substituted zero
-and produced wrong results, affecting every program compiled with -mieee
-and default FPU settings, glibc included.
+  cd /sys/kernel/tracing
+  echo 'hist:keys=common_pid:x=common_pid:name=mh' > events/sched/sched_switch/trigger
+  echo 'hist:keys=common_pid:x=common_pid:name=mh' > events/sched/sched_process_fork/trigger
+  echo 'hist:keys=common_pid:vals=$x' > events/sched/sched_process_exit/trigger
 
-Set FPCR_DNOD only when IEEE_MAP_DMZ is requested, which is exactly the
-case where flushing denormal inputs to zero is what the user asked for.
-DNOD then encodes MAP_DMZ, which ieee_fpcr_to_swcr() already recovers
-from FPCR_DNZ, so drop its attempt to recover IEEE_TRAP_ENABLE_DNO from
-DNOD; the DNO trap enable lives solely in ieee_state.
+The third write panics the kernel:
 
-Both functions are in a uapi header, so the encoding change is visible to
-userspace, but nothing outside the kernel is known to depend on DNOD
-carrying the DNO trap enable, and the kernel is the only writer of the
-FPCR.
+  BUG: KASAN: slab-use-after-free in find_var_file.part.0+0x272/0x290
+  Read of size 8 at addr ffff888001f8a0e0 by task sh/1
+  CPU: 1 UID: 0 PID: 1 Comm: sh Tainted: G      D          N
+  Call Trace:
+    find_var_file.part.0
+    find_event_var
+    parse_atom
+    parse_expr
+    __create_val_field
+    event_hist_trigger_parse
+    trigger_process_regex
+    event_trigger_write
+    vfs_write
+    ksys_write
+    do_syscall_64
+    entry_SYSCALL_64_after_hwframe
+  Allocated by task 1:
+    event_hist_trigger_parse
+  Freed by task 1:
+    hist_register_trigger+0x618/0xa30
+    event_hist_trigger_parse
+  The buggy address belongs to freed 2048-byte region
+  Oops: general protection fault ... RIP: find_var_file.part.0
+  Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
 
-This must not be backported on its own.  Re-enabling denormal operand
-traps exposes a second bug, fixed in the following patch: those traps
-usually find an exact result, and for an exact result the emulator did
-not write the FPCR back, leaving hardware-fabricated exception bits
-visible to user space.  Taken alone this change would make spurious
-exception flags more common.
+Fix by removing the hist_data from tr->hist_vars and releasing the
+trace_array reference in the named-data branch of hist_register_trigger()
+before freeing the hist_data.
 
-The bug predates the git history, so there is no commit to reference in a
-Fixes tag.
-
-Cc: stable@vger.kernel.org # 5.15+
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20260803-alpha-fp-exceptions-v1-1-c99d75608e60@gmail.com
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Cc: stable@vger.kernel.org
+Fixes: 6f86bdeab633 ("tracing: Fix bad hist from corrupting named_triggers list")
+Link: https://patch.msgid.link/20260816100427.33642-3-sh_def@163.com
+Signed-off-by: Hui Su <sh_def@163.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/include/uapi/asm/fpu.h |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/trace/trace_events_hist.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/alpha/include/uapi/asm/fpu.h
-+++ b/arch/alpha/include/uapi/asm/fpu.h
-@@ -101,7 +101,12 @@ ieee_swcr_to_fpcr(unsigned long sw)
- 		      | IEEE_TRAP_ENABLE_OVF)) << 48;
- 	fp |= (~sw & (IEEE_TRAP_ENABLE_UNF | IEEE_TRAP_ENABLE_INE)) << 57;
- 	fp |= (sw & IEEE_MAP_UMZ ? FPCR_UNDZ | FPCR_UNFD : 0);
--	fp |= (~sw & IEEE_TRAP_ENABLE_DNO) << 41;
-+	/*
-+	 * Disable denormal operand traps only when denormal inputs are to be
-+	 * flushed to zero.  Otherwise they must keep trapping, so that /S
-+	 * instructions reach the kernel emulation handler.
-+	 */
-+	fp |= (sw & IEEE_MAP_DMZ ? FPCR_DNOD : 0);
- 	return fp;
- }
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -6593,8 +6593,10 @@ static int hist_register_trigger(char *g
+ 		tracing_set_filter_buffering(file->tr, true);
+ 	}
  
-@@ -116,7 +121,6 @@ ieee_fpcr_to_swcr(unsigned long fp)
- 			     | IEEE_TRAP_ENABLE_OVF);
- 	sw |= (~fp >> 57) & (IEEE_TRAP_ENABLE_UNF | IEEE_TRAP_ENABLE_INE);
- 	sw |= (fp >> 47) & IEEE_MAP_UMZ;
--	sw |= (~fp >> 41) & IEEE_TRAP_ENABLE_DNO;
- 	return sw;
+-	if (named_data)
++	if (named_data) {
++		remove_hist_vars(hist_data);
+ 		destroy_hist_data(hist_data);
++	}
+  out:
+ 	return ret;
  }
- 
 
 
