@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6FC356742;
-	Sat, 12 Sep 2026 09:13:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA04356742;
+	Sat, 12 Sep 2026 09:13:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204435; cv=none; b=tFyocTNmyYSOyBElcu6G+H69oOm/TbZF+QGTwfSssCfZ6flcCEQYjIx0q3ODTKKxF5w/3hcxXD2HuV0SmBy3bwjVd9UdrhvVxdbWcw86GzaAdxVV0yL14ZciplDHHxx8Q9rQW0Wu/k0Vl9a7PbXsIjJSd7NIxt1sFknsFAP1rqU=
+	t=1789204440; cv=none; b=hXQ6oH8dMU3n3/cBijtbUJQmO9pKL2HY8qtrEZWjWIfBoMbsi7x15EZFx2ALq7IFYpcMjYDQ4CuvgldrFJ6JJhbaaG6c08d57nOLDziLunmA5Qo0QB7UNyDhFJViDOIjvsFwcQGyebyga0T4c2xNUNsC+xAFK+hMYVEI2RVjpQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204435; c=relaxed/simple;
-	bh=18CNCiaa8gPFkzomC6UwfKN6G3NFqO2fgL/MuE/orZw=;
+	s=arc-20240116; t=1789204440; c=relaxed/simple;
+	bh=OVezRpfunz7sGx39+E3oTDKVNGjvYcoPnAJ/GXqEzqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKPeYybBC/GObIIf7hJmwLAS8+uCRc4zrehW6vr5XAe1vTgDUbJ275Hb2s6HA+KzXtfI0wbt42oE+pixSCsclzdwcyj65LbEbLj6CMtulYWAp2AWzJ10J5Y5A2lZtrZuUtKpo51KspnHpkjcXDjgQiL/dm5o1adXAaT5ETFymvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKQPTcZI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LTGJg1zSALNP9KlZpGWMJ7zCenSISJrEOX4sLqd1P0gHx3FKXsSfDGyfUBwwBxjwZa5/ZmMHs7p3tBmowMTyHpv2kul+GNqz0FOu2WtVLJyUNS0AiA9p2oS/xlaPZwH7i1hFtkM3+JoPD8oCxdbOK946t3tayQrCN/GK4FgomS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOuYEViV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKQPTcZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD4B1F000FF;
-	Sat, 12 Sep 2026 09:13:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOuYEViV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF55B1F000FF;
+	Sat, 12 Sep 2026 09:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204434;
-	bh=gxW9fvw0Oy51aem6Cin4mw5Lpr8s1CZzVBKplfug3gk=;
+	s=korg; t=1789204438;
+	bh=U5SvUW6ZiXw3YKg8I631xsH5BxJ80By9V9LMW/wQaZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eKQPTcZIpiO9ZqCsX7opzeQ6TC1MO+DGyWTPknsx1fpdfF6RLc5YUnDUog1qa7gcR
-	 1vr2oSi3b6x8C2MtT4DjmwO3f1F2Ez2U7qagoCzTySSgx+awBTc1hTwQ1gDZg2WLnc
-	 Jky34SMunxF8uknY4/EOxfFlEBDIjhBstx3VsWyI=
+	b=EOuYEViVh2jkBrMHaH04M2Evk+r8bTc6WJIxu+VeCDBTUtqTvpPVOMaNpjS++yWzo
+	 9H7WebUQnUP04gUY7Vmz6wV/vX82thwQcBzo2TSqAApDYzc8a4LVNBP3WX6ipgk2/c
+	 gK3m9K1vXo6srjspZomtrJ8C1Hg7xQvI5ymzyppU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yi <691464208@qq.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Fengnan Chang <changfengnan@bytedance.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1613/1815] ntfs: allow index root relocation
-Date: Sat, 12 Sep 2026 08:56:03 +0200
-Message-ID: <20260912065726.859915927@linuxfoundation.org>
+Subject: [PATCH 7.2 1614/1815] iomap: split iomap_iter() logic into iomap_iter_next()
+Date: Sat, 12 Sep 2026 08:56:04 +0200
+Message-ID: <20260912065726.882177752@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,338 +54,323 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit 9badcfb91bc3bd5edb530fbcdd16f25d66640f33 ]
+[ Upstream commit 19eb9f6ab5ce1d15c7f5e48ca16804a6d7740084 ]
 
-Allow a resident attribute record to move to an extent MFT record when the
-base record needs room for an attribute list. Retry the root conversion
-after creating the list, but do not relocate a root that is already
-external.
+In preparation for changing iomap to use an in-iter (->iomap_next())
+model, move the iomap_iter() logic out into the new iomap_iter_next()
+helper function.
 
-Roll the root back to the base record if persisting the attribute list
-fails, and free extent MFT records left empty by relocation or rollback.
-Also preserve bitmap allocation errors in index operations.
+iomap_iter_next() is added as an inlined helper so it can be called
+directly by ->iomap_next() implementations where the begin()/end()
+callbacks can be direct calls.
 
-Fixes: af0db57d4293 ("ntfs: update inode operations")
-Reported-by: yi <691464208@qq.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+The DEFINE_IOMAP_ITER_NEXT() and DEFINE_IOMAP_ITER_NEXT_END() macros are
+also provided to generate the boilerplate ->iomap_next() wrapper
+functions that simply forward to iomap_iter_next() with the appropriate
+begin/end callbacks. DEFINE_IOMAP_ITER_NEXT() is for the common case
+where there is no end() callback. DEFINE_IOMAP_ITER_NEXT_END() is for
+the case where there is an explicit end() callback.
+
+No functional change intended. The one would-be behavioral difference is
+that on the iomap_end() error path (ret < 0 && !advanced), the old code
+returned with iter.status left as the caller's last value whereas the
+new code zeroes it, but this is not observable in practice as there are
+no in-tree callers that read iter.status after the iteration loop.
+
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Fengnan Chang <changfengnan@bytedance.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Link: https://patch.msgid.link/20260729192737.3190206-3-joannelkoong@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Stable-dep-of: d9e00c457d4a ("ntfs: serialize resident iomap reads with mrec_lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/attrib.c |  7 +++-
- fs/ntfs/index.c  | 85 +++++++++++++++++++++++++++++++++++++++---------
- fs/ntfs/inode.c  | 64 ++++++++++++++++++++++++++++++++++--
- fs/ntfs/inode.h  |  1 +
- 4 files changed, 137 insertions(+), 20 deletions(-)
+ fs/iomap/iter.c       | 116 ++++++++++++++++++++++--------------------
+ include/linux/iomap.h | 102 ++++++++++++++++++++++++++++++-------
+ 2 files changed, 145 insertions(+), 73 deletions(-)
 
-diff --git a/fs/ntfs/attrib.c b/fs/ntfs/attrib.c
-index 0c147b99d4eea..b4c6137c037b6 100644
---- a/fs/ntfs/attrib.c
-+++ b/fs/ntfs/attrib.c
-@@ -3553,8 +3553,13 @@ int ntfs_attr_record_move_away(struct ntfs_attr_search_ctx *ctx, int extra)
- 	unmap_mft_record(ni);
- 
- 	err = ntfs_attr_record_move_to(ctx, ni);
--	if (err)
-+	if (err) {
- 		ntfs_error(sb, "Couldn't move attribute to MFT record");
-+		if (ntfs_mft_record_free(base_ni->vol, ni))
-+			ntfs_error(sb, "Couldn't free empty MFT record");
-+		else
-+			ntfs_inode_close(ni);
-+	}
- 
- 	return err;
- }
-diff --git a/fs/ntfs/index.c b/fs/ntfs/index.c
-index 409759eab55d3..8c8eb13859ab6 100644
---- a/fs/ntfs/index.c
-+++ b/fs/ntfs/index.c
-@@ -616,6 +616,31 @@ static struct index_root *ntfs_ir_lookup2(struct ntfs_inode *ni, __le16 *name, u
- 	return ir;
+diff --git a/fs/iomap/iter.c b/fs/iomap/iter.c
+index 63617ec482500..bf7d4cccc1a7e 100644
+--- a/fs/iomap/iter.c
++++ b/fs/iomap/iter.c
+@@ -10,11 +10,12 @@
+  * Release the iter folio batch. Note that the iomap flag is meant to control
+  * the I/O path for the mapping and may not be set in error situations.
+  */
+-static inline void iomap_iter_clean_fbatch(struct iomap_iter *iter)
++static inline void iomap_iter_clean_fbatch(const struct iomap_iter *iter,
++		struct iomap *iomap)
+ {
+ 	if (!iter->fbatch)
+ 		return;
+-	iter->iomap.flags &= ~IOMAP_F_FOLIO_BATCH;
++	iomap->flags &= ~IOMAP_F_FOLIO_BATCH;
+ 	if (folio_batch_count(iter->fbatch)) {
+ 		folio_batch_release(iter->fbatch);
+ 		folio_batch_reinit(iter->fbatch);
+@@ -46,51 +47,27 @@ static inline void iomap_iter_done(struct iomap_iter *iter)
  }
  
-+static int ntfs_ir_move_to_base(struct ntfs_index_context *icx)
-+{
-+	struct ntfs_attr_search_ctx *ctx = NULL;
-+	struct index_root *ir;
-+	bool moved = false;
-+	int ret = 0;
+ /**
+- * iomap_iter - iterate over a ranges in a file
+- * @iter: iteration structue
+- * @ops: iomap ops provided by the file system
++ * iomap_iter_continue - decide whether iteration should continue
++ * @iter: iteration structure
++ * @iomap: the mapping that was just processed
++ * @srcmap: the source mapping that was just processed
+  *
+- * Iterate over filesystem-provided space mappings for the provided file range.
++ * Helper normally called via iomap_iter_next(). Called after the previous
++ * mapping has been finished to determine whether there is more of the file
++ * range left to process.
+  *
+- * This function handles cleanup of resources acquired for iteration when the
+- * filesystem indicates there are no more space mappings, which means that this
+- * function must be called in a loop that continues as long it returns a
+- * positive value.  If 0 or a negative value is returned, the caller must not
+- * return to the loop body.  Within a loop body, there are two ways to break out
+- * of the loop body:  leave @iter.status unchanged, or set it to a negative
+- * errno.
++ * Returns 1 if there is more work to do, in which case @iomap and @srcmap are
++ * cleared so the caller can produce the next mapping; zero if the range is
++ * fully consumed; or a negative errno on error.
+  */
+-int iomap_iter(struct iomap_iter *iter, const struct iomap_ops *ops)
++int iomap_iter_continue(const struct iomap_iter *iter, struct iomap *iomap,
++		struct iomap *srcmap, int ret)
+ {
+-	bool stale = iter->iomap.flags & IOMAP_F_STALE;
+-	ssize_t advanced;
+-	u64 olen;
+-	int ret;
+-
+-	trace_iomap_iter(iter, ops, _RET_IP_);
++	const bool stale = iomap->flags & IOMAP_F_STALE;
++	const ssize_t advanced = iter->pos - iter->iter_start_pos;
+ 
+-	if (!iter->iomap.length)
+-		goto begin;
+-
+-	/*
+-	 * Calculate how far the iter was advanced and the original length bytes
+-	 * for ->iomap_end().
+-	 */
+-	advanced = iter->pos - iter->iter_start_pos;
+-	olen = iter->len + advanced;
+-
+-	if (ops->iomap_end) {
+-		ret = ops->iomap_end(iter->inode, iter->iter_start_pos,
+-				iomap_length_trim(iter, iter->iter_start_pos,
+-						  olen),
+-				advanced, iter->flags, &iter->iomap);
+-		if (ret < 0 && !advanced)
+-			goto error;
+-	}
+-
+-	/* detect old return semantics where this would advance */
+-	if (WARN_ON_ONCE(iter->status > 0))
+-		iter->status = -EIO;
++	if (ret < 0 && !advanced)
++		return ret;
+ 
+ 	/*
+ 	 * Use iter->len to determine whether to continue onto the next mapping.
+@@ -98,29 +75,56 @@ int iomap_iter(struct iomap_iter *iter, const struct iomap_ops *ops)
+ 	 * advanced at all (i.e. no work was done for some reason) unless the
+ 	 * mapping has been marked stale and needs to be reprocessed.
+ 	 */
+-	if (iter->status < 0)
++	if (WARN_ON_ONCE(iter->status > 0))
++		/* detect old return semantics where this would advance */
++		ret = -EIO;
++	else if (iter->status < 0)
+ 		ret = iter->status;
+ 	else if (iter->len == 0 || (!advanced && !stale))
+ 		ret = 0;
+ 	else
+ 		ret = 1;
+-	iomap_iter_clean_fbatch(iter);
+-	iter->status = 0;
 +
-+	ir = ntfs_ir_lookup(icx->idx_ni, icx->name, icx->name_len, &ctx);
-+	if (!ir)
-+		return -ENOENT;
++	iomap_iter_clean_fbatch(iter, iomap);
 +
-+	if (ctx->ntfs_ino->mft_no != icx->idx_ni->mft_no) {
-+		ret = ntfs_attr_record_move_to(ctx, icx->idx_ni);
-+		if (!ret) {
-+			moved = true;
-+			ret = ntfs_attrlist_update(icx->idx_ni);
-+		}
-+	}
-+
-+	ntfs_attr_put_search_ctx(ctx);
-+	if (!ret && moved)
-+		ret = ntfs_inode_free_empty_extents(icx->idx_ni);
+ 	if (ret <= 0)
+ 		return ret;
+ 
+-	memset(&iter->iomap, 0, sizeof(iter->iomap));
+-	memset(&iter->srcmap, 0, sizeof(iter->srcmap));
++	memset(iomap, 0, sizeof(*iomap));
++	memset(srcmap, 0, sizeof(*srcmap));
+ 
+-begin:
+-	ret = ops->iomap_begin(iter->inode, iter->pos, iter->len, iter->flags,
+-			       &iter->iomap, &iter->srcmap);
+-	if (ret < 0)
+-		goto error;
+-	iomap_iter_done(iter);
+-	return 1;
 +	return ret;
 +}
++EXPORT_SYMBOL_GPL(iomap_iter_continue);
 +
- /*
-  * Find a key in the index block.
-  */
-@@ -989,6 +1014,7 @@ static s64 ntfs_ibm_pos_to_vcn(struct ntfs_index_context *icx, s64 pos)
- static int ntfs_ibm_add(struct ntfs_index_context *icx)
- {
- 	u8 bmp[8];
-+	int ret;
- 
- 	ntfs_debug("Entering\n");
- 
-@@ -998,10 +1024,11 @@ static int ntfs_ibm_add(struct ntfs_index_context *icx)
- 	 * AT_BITMAP must be at least 8 bytes.
- 	 */
- 	memset(bmp, 0, sizeof(bmp));
--	if (ntfs_attr_add(icx->idx_ni, AT_BITMAP, icx->name, icx->name_len,
--				bmp, sizeof(bmp))) {
-+	ret = ntfs_attr_add(icx->idx_ni, AT_BITMAP, icx->name, icx->name_len,
-+			    bmp, sizeof(bmp));
-+	if (ret) {
- 		ntfs_error(icx->idx_ni->vol->sb, "Failed to add AT_BITMAP");
--		return -EINVAL;
-+		return ret;
- 	}
- 
- 	return 0;
-@@ -1074,6 +1101,7 @@ static s64 ntfs_ibm_get_free(struct ntfs_index_context *icx)
- {
- 	u8 *bm;
- 	int bit;
-+	int ret;
- 	s64 vcn, byte, size;
- 
- 	ntfs_debug("Entering\n");
-@@ -1081,7 +1109,7 @@ static s64 ntfs_ibm_get_free(struct ntfs_index_context *icx)
- 	bm = ntfs_attr_readall(icx->idx_ni, AT_BITMAP,  icx->name, icx->name_len,
- 			&size);
- 	if (!bm)
--		return (s64)-1;
-+		return -EIO;
- 
- 	for (byte = 0; byte < size; byte++) {
- 		if (bm[byte] == 255)
-@@ -1099,10 +1127,12 @@ static s64 ntfs_ibm_get_free(struct ntfs_index_context *icx)
- out:
- 	ntfs_debug("allocated vcn: %lld\n", vcn);
- 
--	if (ntfs_ibm_set(icx, vcn))
--		vcn = (s64)-1;
-+	ret = ntfs_ibm_set(icx, vcn);
- 
- 	kvfree(bm);
-+	if (ret)
-+		return ret;
-+
- 	return vcn;
- }
- 
-@@ -1275,7 +1305,7 @@ static int ntfs_ir_reparent(struct ntfs_index_context *icx)
- 
- 	new_ib_vcn = ntfs_ibm_get_free(icx);
- 	if (new_ib_vcn < 0) {
--		ret = -EINVAL;
-+		ret = (int)new_ib_vcn;
- 		goto out;
- 	}
- 
-@@ -1346,19 +1376,42 @@ static int ntfs_ir_reparent(struct ntfs_index_context *icx)
- 	 * When there is no space to build a non-resident
- 	 * index, we may have to move the root to an extent
- 	 */
--	if ((ret == -ENOSPC) && (ctx->al_entry || !ntfs_inode_add_attrlist(icx->idx_ni))) {
--		ntfs_attr_put_search_ctx(ctx);
--		ctx = NULL;
--		ir = ntfs_ir_lookup(icx->idx_ni, icx->name, icx->name_len, &ctx);
--		if (ir && !ntfs_attr_record_move_away(ctx, ix_root_size -
--				le32_to_cpu(ctx->attr->data.resident.value_length))) {
--			if (ntfs_attrlist_update(ctx->base_ntfs_ino ?
--						 ctx->base_ntfs_ino : ctx->ntfs_ino))
-+	if (ret == -ENOSPC) {
-+		if (!ctx->al_entry) {
-+			ret = ntfs_inode_add_attrlist(icx->idx_ni);
-+			if (ret)
- 				goto clear_bmp;
-+
- 			ntfs_attr_put_search_ctx(ctx);
- 			ctx = NULL;
- 			goto retry;
- 		}
-+
-+		if (ctx->ntfs_ino->mft_no != icx->idx_ni->mft_no)
-+			goto clear_bmp;
-+
-+		ret = ntfs_attr_record_move_away(ctx, ix_root_size -
-+				le32_to_cpu(ctx->attr->data.resident.value_length));
-+		if (ret)
-+			goto clear_bmp;
-+
-+		ret = ntfs_attrlist_update(icx->idx_ni);
-+		if (ret) {
-+			int rollback_ret;
-+
-+			ntfs_attr_put_search_ctx(ctx);
-+			ctx = NULL;
-+			rollback_ret = ntfs_ir_move_to_base(icx);
-+			if (rollback_ret)
-+				ntfs_error(icx->idx_ni->vol->sb,
-+					   "Failed to roll back INDEX_ROOT relocation: %d",
-+					   rollback_ret);
-+			goto clear_bmp;
-+		}
-+
-+		ntfs_attr_put_search_ctx(ctx);
-+		ctx = NULL;
-+		goto retry;
- 	}
- clear_bmp:
- 	ntfs_ibm_clear(icx, new_ib_vcn);
-@@ -1590,7 +1643,7 @@ static int ntfs_ib_split(struct ntfs_index_context *icx, struct index_block *ib)
- 	median  = ntfs_ie_get_median(&ib->index);
- 	new_vcn = ntfs_ibm_get_free(icx);
- 	if (new_vcn < 0) {
--		ret = -EINVAL;
-+		ret = (int)new_vcn;
- 		goto out;
- 	}
- 
-diff --git a/fs/ntfs/inode.c b/fs/ntfs/inode.c
-index 1c9f6cf3ea1d8..f40f35afcda9a 100644
---- a/fs/ntfs/inode.c
-+++ b/fs/ntfs/inode.c
-@@ -3049,6 +3049,7 @@ int ntfs_inode_add_attrlist(struct ntfs_inode *ni)
- 	struct attr_list_entry *ale = NULL;
- 	struct mft_record *ni_mrec;
- 	u32 attr_al_len;
-+	bool free_empty_extents = true;
- 
- 	if (!ni)
- 		return -EINVAL;
-@@ -3148,6 +3149,7 @@ int ntfs_inode_add_attrlist(struct ntfs_inode *ni)
- 		ntfs_error(ni->vol->sb, "Couldn't add $ATTRIBUTE_LIST to MFT");
- 		goto rollback;
- 	}
-+	free_empty_extents = false;
- 
- 	err = ntfs_attrlist_update(ni);
- 	if (err < 0)
-@@ -3167,6 +3169,8 @@ int ntfs_inode_add_attrlist(struct ntfs_inode *ni)
- 				CASE_SENSITIVE, 0, NULL, 0, ctx)) {
- 		if (ntfs_attr_record_rm(ctx))
- 			ntfs_error(ni->vol->sb, "Rollback failed to remove attrlist");
-+		else
-+			free_empty_extents = true;
- 	} else {
- 		ntfs_error(ni->vol->sb, "Rollback failed to find attrlist");
- 	}
-@@ -3205,6 +3209,11 @@ int ntfs_inode_add_attrlist(struct ntfs_inode *ni)
- 	ni->attr_list_size = 0;
- 	NInoClearAttrList(ni);
- 	NInoClearAttrListDirty(ni);
-+	ntfs_attr_put_search_ctx(ctx);
-+	ctx = NULL;
-+	if (free_empty_extents && ntfs_inode_free_empty_extents(ni))
-+		ntfs_error(ni->vol->sb, "Rollback failed to free empty extent");
-+	goto err_out;
- put_err_out:
- 	ntfs_attr_put_search_ctx(ctx);
- err_out:
-@@ -3291,6 +3300,55 @@ int ntfs_inode_close(struct ntfs_inode *ni)
- 	return err;
- }
- 
-+/*
-+ * ntfs_inode_free_empty_extents - free empty extent MFT records
-+ * @ni: base inode whose empty extent records should be freed
++/**
++ * iomap_iter - iterate over ranges in a file
++ * @iter: iteration structure
++ * @ops: iomap ops provided by the filesystem
 + *
-+ * The caller must ensure that no on-disk attribute list references an empty
-+ * extent record and must hold @ni->mrec_lock to serialize the extent array.
++ * Iterate over filesystem-provided space mappings for the provided file range.
++ *
++ * This function handles cleanup of resources acquired for iteration when the
++ * filesystem indicates there are no more space mappings, which means that this
++ * function must be called in a loop that continues as long it returns a
++ * positive value.  If 0 or a negative value is returned, the caller must not
++ * return to the loop body.  Within a loop body, there are two ways to break out
++ * of the loop body:  leave @iter.status unchanged, or set it to a negative
++ * errno.
 + */
-+int ntfs_inode_free_empty_extents(struct ntfs_inode *ni)
++int iomap_iter(struct iomap_iter *iter, const struct iomap_ops *ops)
 +{
-+	int err = 0, i = 0;
++	int ret;
 +
-+	if (!ni || ni->nr_extents < 0)
-+		return -EINVAL;
++	trace_iomap_iter(iter, ops, _RET_IP_);
 +
-+	mutex_lock(&ni->extent_lock);
-+	while (i < ni->nr_extents) {
-+		struct ntfs_inode *ext_ni = ni->ext.extent_ntfs_inos[i];
-+		struct mft_record *m;
-+		int ret;
++	ret = iomap_iter_next(iter, &iter->iomap, &iter->srcmap,
++			ops->iomap_begin, ops->iomap_end);
++	iter->status = 0;
++	if (ret > 0)
++		iomap_iter_done(iter);
++	else if (ret < 0)
++		iomap_iter_clean_fbatch(iter, &iter->iomap);
+ 
+-error:
+-	iomap_iter_clean_fbatch(iter);
+ 	return ret;
+ }
+diff --git a/include/linux/iomap.h b/include/linux/iomap.h
+index 56b43d594e6e2..88ef1553cf012 100644
+--- a/include/linux/iomap.h
++++ b/include/linux/iomap.h
+@@ -212,24 +212,27 @@ struct iomap_write_ops {
+ #define IOMAP_ATOMIC		(1 << 9) /* torn-write protection */
+ #define IOMAP_DONTCACHE		(1 << 10)
+ 
+-struct iomap_ops {
+-	/*
+-	 * Return the existing mapping at pos, or reserve space starting at
+-	 * pos for up to length, as long as we can do it as a single mapping.
+-	 * The actual length is returned in iomap->length.
+-	 */
+-	int (*iomap_begin)(struct inode *inode, loff_t pos, loff_t length,
+-			unsigned flags, struct iomap *iomap,
+-			struct iomap *srcmap);
++/*
++ * Return the existing mapping at pos, or reserve space starting at pos for up
++ * to length, as long as we can do it as a single mapping.
++ * The actual length is returned in iomap->length.
++ */
++typedef int (*iomap_iter_begin_fn)(struct inode *inode, loff_t pos,
++		loff_t length, unsigned flags, struct iomap *iomap,
++		struct iomap *srcmap);
+ 
+-	/*
+-	 * Commit and/or unreserve space previous allocated using iomap_begin.
+-	 * Written indicates the length of the successful write operation which
+-	 * needs to be commited, while the rest needs to be unreserved.
+-	 * Written might be zero if no data was written.
+-	 */
+-	int (*iomap_end)(struct inode *inode, loff_t pos, loff_t length,
+-			ssize_t written, unsigned flags, struct iomap *iomap);
++/*
++ * Commit and/or unreserve space previously allocated by iomap_iter_begin_fn.
++ * Written indicates the length of the successful write operation which needs
++ * to be committed, while the rest needs to be unreserved.
++ * Written might be zero if no data was written.
++ */
++typedef int (*iomap_iter_end_fn)(struct inode *inode, loff_t pos, loff_t length,
++		ssize_t written, unsigned flags, struct iomap *iomap);
 +
-+		m = map_mft_record(ext_ni);
-+		if (IS_ERR(m)) {
-+			if (!err)
-+				err = PTR_ERR(m);
-+			i++;
-+			continue;
++struct iomap_ops {
++	iomap_iter_begin_fn iomap_begin;
++	iomap_iter_end_fn iomap_end;
+ };
+ 
+ /**
+@@ -317,6 +320,71 @@ static inline const struct iomap *iomap_iter_srcmap(const struct iomap_iter *i)
+ 	return &i->iomap;
+ }
+ 
++int iomap_iter_continue(const struct iomap_iter *iter, struct iomap *iomap,
++		struct iomap *srcmap, int ret);
++
++/**
++ * iomap_iter_next - finish the previous mapping and produce the next one
++ * @iter: iteration structure
++ * @iomap: mapping to finish and then repopulate
++ * @srcmap: source mapping to finish and then repopulate
++ * @begin: callback that produces a mapping for the current position
++ * @end: optional callback that finishes the previous mapping, or NULL
++ *
++ * Inline helper that implements the common body of an ->iomap_next()
++ * callback: it finishes the previous mapping via @end (if present), decides
++ * via iomap_iter_continue() whether to keep going, and obtains the next
++ * mapping via @begin.
++ *
++ * This helper is marked __always_inline so that when a caller passes
++ * compile-time-constant @begin and @end callbacks, the compiler can call them
++ * directly, avoiding the indirect-call overhead.
++ *
++ * Returns 1 to continue iterating, 0 once the range is fully consumed, or a
++ * negative errno on error.
++ */
++static __always_inline int iomap_iter_next(const struct iomap_iter *iter,
++		struct iomap *iomap, struct iomap *srcmap,
++		iomap_iter_begin_fn begin, iomap_iter_end_fn end)
++{
++	int ret = 0;
++
++	if (iomap->length) {
++		if (end) {
++			/*
++			 * Calculate how far the iter was advanced and the
++			 * original length bytes for end().
++			 */
++			ssize_t advanced = iter->pos - iter->iter_start_pos;
++			loff_t len;
++
++			len = iomap_length_trim(iter, iter->iter_start_pos,
++					iter->len + advanced);
++
++			ret = end(iter->inode, iter->iter_start_pos, len,
++					advanced, iter->flags, iomap);
 +		}
-+		if (le32_to_cpu(m->bytes_in_use) -
-+				le16_to_cpu(m->attrs_offset) != 8) {
-+			unmap_mft_record(ext_ni);
-+			i++;
-+			continue;
-+		}
-+		unmap_mft_record(ext_ni);
-+
-+		ret = ntfs_mft_record_free(ni->vol, ext_ni);
-+		if (ret) {
-+			if (!err)
-+				err = ret;
-+			i++;
-+			continue;
-+		}
-+		ntfs_inode_close(ext_ni);
-+		/* ntfs_inode_close() removed this entry from the extent array. */
++		ret = iomap_iter_continue(iter, iomap, srcmap, ret);
++		if (ret <= 0)
++			return ret;
 +	}
-+	mutex_unlock(&ni->extent_lock);
-+	return err;
++
++	ret = begin(iter->inode, iter->pos, iter->len, iter->flags, iomap,
++			srcmap);
++
++	return ret < 0 ? ret : 1;
 +}
 +
- void ntfs_destroy_ext_inode(struct ntfs_inode *ni)
- {
- 	ntfs_debug("Entering.");
-@@ -3390,6 +3448,9 @@ int ntfs_inode_free_space(struct ntfs_inode *ni, int size)
- 	 * Chkdsk complain if $STANDARD_INFORMATION is not in the base MFT
- 	 * record.
- 	 *
-+	 * $INDEX_ROOT must remain resident, but its attribute record may be moved
-+	 * to an extent MFT record when the base record needs room for the list.
-+	 *
- 	 * Also we can't move $ATTRIBUTE_LIST from base MFT_RECORD, so position
- 	 * search context on first attribute after $STANDARD_INFORMATION and
- 	 * $ATTRIBUTE_LIST.
-@@ -3431,9 +3492,6 @@ int ntfs_inode_free_space(struct ntfs_inode *ni, int size)
- 				ctx->attr->type == AT_DATA)
- 			goto retry;
- 
--		if (ctx->attr->type == AT_INDEX_ROOT)
--			goto retry;
--
- 		record_size = le32_to_cpu(ctx->attr->length);
- 
- 		/* Move away attribute. */
-diff --git a/fs/ntfs/inode.h b/fs/ntfs/inode.h
-index 9aacd5787ffea..bb48f55b50ddc 100644
---- a/fs/ntfs/inode.h
-+++ b/fs/ntfs/inode.h
-@@ -338,6 +338,7 @@ int ntfs_get_block_mft_record(struct ntfs_inode *mft_ni, struct ntfs_inode *ni);
- int __ntfs_write_inode(struct inode *vi, int sync);
- int ntfs_inode_attach_all_extents(struct ntfs_inode *ni);
- int ntfs_inode_add_attrlist(struct ntfs_inode *ni);
-+int ntfs_inode_free_empty_extents(struct ntfs_inode *ni);
- void ntfs_destroy_ext_inode(struct ntfs_inode *ni);
- int ntfs_inode_free_space(struct ntfs_inode *ni, int size);
- s64 ntfs_inode_attr_pread(struct inode *vi, s64 pos, s64 count, u8 *buf);
++#define DEFINE_IOMAP_ITER_NEXT_END(name, begin_fn, end_fn)		\
++int name(const struct iomap_iter *iter, struct iomap *iomap,		\
++		struct iomap *srcmap)					\
++{									\
++	return iomap_iter_next(iter, iomap, srcmap, begin_fn, end_fn);	\
++}
++
++#define DEFINE_IOMAP_ITER_NEXT(name, begin_fn)				\
++	DEFINE_IOMAP_ITER_NEXT_END(name, begin_fn, NULL)
++
+ /*
+  * Return the file offset for the first unchanged block after a short write.
+  *
 -- 
 2.53.0
 
