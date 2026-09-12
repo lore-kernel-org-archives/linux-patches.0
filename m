@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC0F31F9B1;
-	Sat, 12 Sep 2026 16:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BF432D43C;
+	Sat, 12 Sep 2026 16:48:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231679; cv=none; b=cw0GqB2FszOhlVf/mSnLe4EDjeD5rPHVtrW1+ApVXkSdAcf3mhwKs80U/st5Sqbroc2Xt32xZmQuZniyuA3l8L7zNVK5LaKk/+wUxVh16dsh6HkD7cKtirkw0mLPQiY31D2rRL/6QMU3YY3lqIJqmyN+yIGa7g1iJwrHCccqhhw=
+	t=1789231684; cv=none; b=VZmRYmV/kFe4AufjvaE4TDtyIyIMBICi+xdzUZt/LvtP77cOQRbG9qIJfyWByz5cU07xJwcfNS3z/9YJYukBDVRW7RTZLCZU0FhzWGPpYRlVDhcf3fHADLIfPESkWw7vMhgghLSckfu91ua7FfpjN9GfeRRZla09+uiGrNsuy7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231679; c=relaxed/simple;
-	bh=0vWC07R+U++6r3jK4WKw+siFq7xDmA7LEm4Ybae2NxU=;
+	s=arc-20240116; t=1789231684; c=relaxed/simple;
+	bh=mF6gdPpvFM/uIW2lfP9v1h9vvdXiSboRO21WnoORMiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JXjZBcYHEfIPjTY6aXuhSz8OTJ/f22ygFX9AkBEj05C6NhcUiFMuzPpjhqRlJmDsVTW3YvqCHareImY9F0cuG6XVjtpariyVCRZGVVxxTpLHXoAEXJK0pxJpC8MhwmxiA2+c2h5ho7dZzRCgO86PKrUNfB4VPwlHXEvYFtSbdeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agQOkll/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p+xQqm7hEyXvRXBxThn1d/81Lcbg/yF5LeApJtFB/6E7jQCa2Mpybf9UoZ5oL0aAm97MSojXAZyCmhXkERtIPoP5sQbG2KC+zkq5mT0oHeFdlQLBB4UPxG8hAOLE9kLZWzoSw2V5wtSy70UXGJc1e+uDtB3/fnGorwR+iQyOS/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6A5cLXA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agQOkll/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38C11F000FF;
-	Sat, 12 Sep 2026 16:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6A5cLXA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B1201F000FF;
+	Sat, 12 Sep 2026 16:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231678;
-	bh=rPELb0WK1aF5+f2LQiQwO9nfmS1pa/u84xsDhpRQYLc=;
+	s=korg; t=1789231682;
+	bh=SN45Kb39EdgFFfNO15fdm42nCD3nmAtlUkinRl8KERA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=agQOkll/beCWYiwsMUTtSotTg8vZH75wLGhVOopTIrPIZyRJ308TFQDB/bScZR+H/
-	 s7rqxLB8rFv7mVY1O5g1QgrNhHrjf5fM6xVBbGZxZfmn0wEPPL6clVwMYtJAz/f6sh
-	 hTwmR671iCoCCDhNTWo1MrSrHeqKTrPc5dLsNBjc=
+	b=F6A5cLXACr6osNR8vB2/rqQa9vi/79dxiQo5nSFq3/qFTuuNC/cQrNrTZ2BofHsFf
+	 Q6D/thpuwbDP2xWMM8AqZ7Kb3ErVJIzHgr/kM4VgBJ9IlTbqYvmpzgZLFH3KsnEn1a
+	 N7n+jsm0UmS9hQwcBfAOWh6CFkVBOkyIAlyOztlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Kurt Kanzenbach <kurt@linutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lukasz Majewski <lukma@denx.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1047/1191] hsr: Use a single struct for self_node.
-Date: Sat, 12 Sep 2026 09:02:55 +0200
-Message-ID: <20260912065611.693069114@linuxfoundation.org>
+Subject: [PATCH 6.1 1048/1191] net: hsr: Use full string description when opening HSR network device
+Date: Sat, 12 Sep 2026 09:02:56 +0200
+Message-ID: <20260912065611.715049576@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,170 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Lukasz Majewski <lukma@denx.de>
 
-[ Upstream commit 20d3c1e9b861b85e1a774e1876d6adeeb0251fc3 ]
+[ Upstream commit 10e52ad5ced2a7dcdb3fb18c9cef111d5f30471d ]
 
-self_node_db is a list_head with one entry of struct hsr_node. The
-purpose is to hold the two MAC addresses of the node itself.
-It is convenient to recycle the structure. However having a list_head
-and fetching always the first entry is not really optimal.
+Up till now only single character ('A' or 'B') was used to provide
+information of HSR slave network device status.
 
-Created a new data strucure contaning the two MAC addresses named
-hsr_self_node. Access that structure like an RCU protected pointer so
-it can be replaced on the fly without blocking the reader.
+As it is also possible and valid, that Interlink network device may
+be supported as well, the description must be more verbose. As a result
+the full string description is now used.
 
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Lukasz Majewski <lukma@denx.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 7f16289b91eb ("net: hsr: free learned nodes on device setup failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_device.c   |  1 -
- net/hsr/hsr_framereg.c | 63 +++++++++++++++++++-----------------------
- net/hsr/hsr_main.h     |  8 +++++-
- 3 files changed, 35 insertions(+), 37 deletions(-)
+ net/hsr/hsr_device.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
 diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
-index 48f34ad9219fd..b34a9b680aab3 100644
+index b34a9b680aab3..e66d5b6b7db4a 100644
 --- a/net/hsr/hsr_device.c
 +++ b/net/hsr/hsr_device.c
-@@ -634,7 +634,6 @@ int hsr_dev_finalize(struct net_device *hsr_dev, struct net_device *slave[2],
- 	hsr = netdev_priv(hsr_dev);
- 	INIT_LIST_HEAD(&hsr->ports);
- 	INIT_LIST_HEAD(&hsr->node_db);
--	INIT_LIST_HEAD(&hsr->self_node_db);
- 	spin_lock_init(&hsr->list_lock);
- 
- 	eth_hw_addr_set(hsr_dev, slave[0]->dev_addr);
-diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
-index fec8dd8460568..3f6c412721822 100644
---- a/net/hsr/hsr_framereg.c
-+++ b/net/hsr/hsr_framereg.c
-@@ -38,21 +38,22 @@ static bool seq_nr_after(u16 a, u16 b)
- 
- bool hsr_addr_is_self(struct hsr_priv *hsr, unsigned char *addr)
+@@ -139,30 +139,29 @@ static int hsr_dev_open(struct net_device *dev)
  {
--	struct hsr_node *node;
-+	struct hsr_self_node *sn;
-+	bool ret = false;
+ 	struct hsr_priv *hsr;
+ 	struct hsr_port *port;
+-	char designation;
++	const char *designation = NULL;
  
--	node = list_first_or_null_rcu(&hsr->self_node_db, struct hsr_node,
--				      mac_list);
--	if (!node) {
-+	rcu_read_lock();
-+	sn = rcu_dereference(hsr->self_node);
-+	if (!sn) {
- 		WARN_ONCE(1, "HSR: No self node\n");
--		return false;
-+		goto out;
+ 	hsr = netdev_priv(dev);
+-	designation = '\0';
+ 
+ 	hsr_for_each_port_rtnl(hsr, port) {
+ 		if (port->type == HSR_PT_MASTER)
+ 			continue;
+ 		switch (port->type) {
+ 		case HSR_PT_SLAVE_A:
+-			designation = 'A';
++			designation = "Slave A";
+ 			break;
+ 		case HSR_PT_SLAVE_B:
+-			designation = 'B';
++			designation = "Slave B";
+ 			break;
+ 		default:
+-			designation = '?';
++			designation = "Unknown";
+ 		}
+ 		if (!is_slave_up(port->dev))
+-			netdev_warn(dev, "Slave %c (%s) is not up; please bring it up to get a fully working HSR network\n",
++			netdev_warn(dev, "%s (%s) is not up; please bring it up to get a fully working HSR network\n",
+ 				    designation, port->dev->name);
  	}
  
--	if (ether_addr_equal(addr, node->macaddress_A))
--		return true;
--	if (ether_addr_equal(addr, node->macaddress_B))
--		return true;
--
--	return false;
-+	if (ether_addr_equal(addr, sn->macaddress_A) ||
-+	    ether_addr_equal(addr, sn->macaddress_B))
-+		ret = true;
-+out:
-+	rcu_read_unlock();
-+	return ret;
- }
+-	if (designation == '\0')
++	if (!designation)
+ 		netdev_warn(dev, "No slave devices configured\n");
  
- /* Search for mac entry. Caller must hold rcu read lock.
-@@ -70,50 +71,42 @@ static struct hsr_node *find_node_by_addr_A(struct list_head *node_db,
- 	return NULL;
- }
- 
--/* Helper for device init; the self_node_db is used in hsr_rcv() to recognize
-+/* Helper for device init; the self_node is used in hsr_rcv() to recognize
-  * frames from self that's been looped over the HSR ring.
-  */
- int hsr_create_self_node(struct hsr_priv *hsr,
- 			 const unsigned char addr_a[ETH_ALEN],
- 			 const unsigned char addr_b[ETH_ALEN])
- {
--	struct list_head *self_node_db = &hsr->self_node_db;
--	struct hsr_node *node, *oldnode;
-+	struct hsr_self_node *sn, *old;
- 
--	node = kmalloc(sizeof(*node), GFP_KERNEL);
--	if (!node)
-+	sn = kmalloc(sizeof(*sn), GFP_KERNEL);
-+	if (!sn)
- 		return -ENOMEM;
- 
--	ether_addr_copy(node->macaddress_A, addr_a);
--	ether_addr_copy(node->macaddress_B, addr_b);
-+	ether_addr_copy(sn->macaddress_A, addr_a);
-+	ether_addr_copy(sn->macaddress_B, addr_b);
- 
- 	spin_lock_bh(&hsr->list_lock);
--	oldnode = list_first_or_null_rcu(self_node_db,
--					 struct hsr_node, mac_list);
--	if (oldnode) {
--		list_replace_rcu(&oldnode->mac_list, &node->mac_list);
--		spin_unlock_bh(&hsr->list_lock);
--		kfree_rcu(oldnode, rcu_head);
--	} else {
--		list_add_tail_rcu(&node->mac_list, self_node_db);
--		spin_unlock_bh(&hsr->list_lock);
--	}
-+	old = rcu_replace_pointer(hsr->self_node, sn,
-+				  lockdep_is_held(&hsr->list_lock));
-+	spin_unlock_bh(&hsr->list_lock);
- 
-+	if (old)
-+		kfree_rcu(old, rcu_head);
  	return 0;
- }
- 
- void hsr_del_self_node(struct hsr_priv *hsr)
- {
--	struct list_head *self_node_db = &hsr->self_node_db;
--	struct hsr_node *node;
-+	struct hsr_self_node *old;
- 
- 	spin_lock_bh(&hsr->list_lock);
--	node = list_first_or_null_rcu(self_node_db, struct hsr_node, mac_list);
--	if (node) {
--		list_del_rcu(&node->mac_list);
--		kfree_rcu(node, rcu_head);
--	}
-+	old = rcu_replace_pointer(hsr->self_node, NULL,
-+				  lockdep_is_held(&hsr->list_lock));
- 	spin_unlock_bh(&hsr->list_lock);
-+	if (old)
-+		kfree_rcu(old, rcu_head);
- }
- 
- void hsr_del_nodes(struct list_head *node_db)
-diff --git a/net/hsr/hsr_main.h b/net/hsr/hsr_main.h
-index 8c011b113411f..2fcabe39e61f4 100644
---- a/net/hsr/hsr_main.h
-+++ b/net/hsr/hsr_main.h
-@@ -182,11 +182,17 @@ struct hsr_proto_ops {
- 	void (*update_san_info)(struct hsr_node *node, bool is_sup);
- };
- 
-+struct hsr_self_node {
-+	unsigned char	macaddress_A[ETH_ALEN];
-+	unsigned char	macaddress_B[ETH_ALEN];
-+	struct rcu_head	rcu_head;
-+};
-+
- struct hsr_priv {
- 	struct rcu_head		rcu_head;
- 	struct list_head	ports;
- 	struct list_head	node_db;	/* Known HSR nodes */
--	struct list_head	self_node_db;	/* MACs of slaves */
-+	struct hsr_self_node	__rcu *self_node;	/* MACs of slaves */
- 	struct timer_list	announce_timer;	/* Supervision frame dispatch */
- 	struct timer_list	prune_timer;
- 	int announce_count;
 -- 
 2.53.0
 
