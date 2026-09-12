@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A7B4BEE2A;
-	Sat, 12 Sep 2026 13:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C4747D455;
+	Sat, 12 Sep 2026 13:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219743; cv=none; b=JtxnQulE2fT+XVbLB+T4ayPtUxwszG+SXFzB561wOzEipJ8Hbf3vlTb4XCc0qPTIdl+17SwOhL14jrqHOkyopqhV5C3TMdL+HYf6vYVpQHC9OL4SlecW3McDCCmu2XgcsXja1tUtxoVAOLnD6dVydGB85vA+llZHRg+QvnjZ/Xo=
+	t=1789219747; cv=none; b=Ym/6QcE0bsBm+I/Yhk3/kuoAMYqD8WX1WaTHKI05VPR9ipgWv13fZMs0i4L2PTujXS04aLjtAKTqqk49LteubQ9Lvh7bg5vO+IP6qxXXk1DgqUJmzdXm9MfZHW+UhtISnxf42PiKXenCytI/39TOGxF4z/HbI56/yCZmy8EuosE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219743; c=relaxed/simple;
-	bh=xCSJGjaEPZ998bhfW2VugOtAbuF4bthVQ/jc7bMifD0=;
+	s=arc-20240116; t=1789219747; c=relaxed/simple;
+	bh=3qk4zBujjcSy98lfZUs3fYfY7Om76rU+vzjWPoVvN4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g2tKG/17MaZWrUVKOQWTpnbRZQmv970BcMyZFufTAZVZyFZcdhsH76A0cs+8SvsIM45OYR+TmJB03l2QXRXfLTwzkqmjHstCwICIroqlx/hK3wyWAnE7x2HKpfD7V1fNQUo3J55PEW/MuGsOaslCzuRK+iPPfKk4/oRVPLmFSRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxAzygTo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hMAd7WtoHDvVg+yKvTJSbNQw+3fgySeVXTgpvBmNCiOVQnKBzHt7+jkcziT9XbhLDe0SqNFbwqzSRZ20nKrpXTVbD1Fr7t6K7zJopZO/BSZF5S8wW3iGrOCVEYctbZFQUdrqhrIKjCg8lL6NUveLCrRVyJm6YB7evNxsdnzAAPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJ2bjMbb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxAzygTo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC8D1F000FF;
-	Sat, 12 Sep 2026 13:29:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJ2bjMbb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA8E1F000FF;
+	Sat, 12 Sep 2026 13:29:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219741;
-	bh=krNzcryviutxezO5+xKh+86lEBuBRiNTMfpRPA1ZBDs=;
+	s=korg; t=1789219746;
+	bh=4dXqFARbbAr9kEAazAyORmnfLvtLiRecl5Cs6UaVRH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mxAzygTomg/RZPUc9Ji78lqj7KtiwErvz5ByNrN7B4Q1MvuNwDQaH4pktn6pE/lwo
-	 AfE72POcApJ6f3Az2Br5vfkMm1xJ8XqL+gDpHmd8kbSns0nPSeFusjRb43BDNwtIBR
-	 rM1/fS06XjJf/LFeVhhidhFg8Ih3bezzeVqF+VS8=
+	b=gJ2bjMbbXpRLDZ8fFo1FBYTM93eNRNYKx93d3qudleXMh1IVcql6NNy/8p2cBEQuW
+	 cTmJIdkQWcSjGv1MhxOSx7hQo/NnWumdQJO2q3e5wJviGXP3ULiK1+OWnFkfAvLkd1
+	 fvl7QQUFkBOHXqiUP02AA6oaSCV7Iiz5AwPA+OlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+de553c19cb054f174a35@syzkaller.appspotmail.com,
-	Jeffin Philip <jeffinphilip14@gmail.com>
-Subject: [PATCH 6.6 0036/1424] usb: gadget: uvc: fix dangling pointers in uvc_function_bind() and uvc_function_unbind()
-Date: Sat, 12 Sep 2026 08:41:08 +0200
-Message-ID: <20260912065608.113520069@linuxfoundation.org>
+	Neill Kapron <nkapron@google.com>
+Subject: [PATCH 6.6 0037/1424] usb: gadget: f_fs: Prevent deadlock during ep0 read loop
+Date: Sat, 12 Sep 2026 08:41:09 +0200
+Message-ID: <20260912065608.136065229@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,55 +49,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeffin Philip <jeffinphilip14@gmail.com>
+From: Neill Kapron <nkapron@google.com>
 
-commit bdab5605259ba5d6ff927c1a85cc83eb3ecfdacc upstream.
+commit 569dd7e5dcffe1e1c6b26ca2cd3be57eb433e082 upstream.
 
-In uvc_function_bind() error path, we use usb_ep_free_request which
-uses uvc->control_req but does not set it to NULL afterwards. Thus,
-uvc->control_req is a dangling pointer causing a UAF. Also we do not set
-the uvc->control_buf pointer to NULL after freeing it, which is another
-dangling pointer. Fix it by setting uvc->control_req to NULL after we run
-usb_ep_free_request() and uvc->control_buf to NULL after kfree. Do the
-same for uvc_function_unbind().
+Currently, ffs_ep0_read() holds ffs->mutex when it prepares to go to
+sleep waiting for an event. When no setup events are pending, it calls
+wait_event_interruptible_exclusive_locked_irq() with the mutex still
+held. The wait macro deliberately drops the waitqueue spinlock before
+sleeping but does not drop the mutex.
 
-Reported-by: syzbot+de553c19cb054f174a35@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=de553c19cb054f174a35
-Fixes: 0f9df9393855 ("usb: gadget: uvc: fix error path in uvc_function_bind()")
-Fixes: 6d11ed76c45d ("usb: gadget: f_uvc: convert f_uvc to new function interface")
+If a userspace daemon is polling ep0 via read() and the gadget is
+asynchronously torn down via configfs (e.g., echo "" > UDC), a
+deadlock can occur:
+
+1. The configfs teardown calls functionfs_unbind(), which queues a
+   FUNCTIONFS_UNBIND event.
+2. The daemon wakes up, consumes the event, and drops the mutex.
+3. However, if the daemon loops and immediately issues another read()
+   before exiting, it reacquires ffs->mutex and again goes into an
+   interruptible sleep.
+4. Meanwhile, functionfs_unbind() continues execution and attempts to
+   acquire ffs->mutex to tear down ep0req.
+5. The kernel deadlocks because the configfs thread is stuck in an
+   uninterruptible sleep waiting for the mutex, while the userspace
+   daemon is in an interruptible sleep holding the mutex forever
+   because no more events will arrive.
+
+To fix this, we drop both the waitqueue spinlock and ffs->mutex before
+going to sleep, and use wait_event_interruptible_exclusive() instead.
+Upon waking up, we jump back to the `retry` label to safely reacquire
+the mutex and re-evaluate the state machine. By not sleeping with
+ffs->mutex held, we natively decouple gadget teardowns (which require
+the mutex) from userspace polling.
+
+Fixes: ddf8abd25994 ("USB: f_fs: the FunctionFS driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jeffin Philip <jeffinphilip14@gmail.com>
-Link: https://patch.msgid.link/20260813174311.130823-1-jeffinphilip14@gmail.com
+Assisted-by: Antigravity:gemini-3.1-pro
+Signed-off-by: Neill Kapron <nkapron@google.com>
+Link: https://patch.msgid.link/20260724204117.4036015-1-nkapron@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_uvc.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_fs.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/gadget/function/f_uvc.c
-+++ b/drivers/usb/gadget/function/f_uvc.c
-@@ -876,9 +876,12 @@ error_unlock:
- v4l2_error:
- 	v4l2_device_unregister(&uvc->v4l2_dev);
- error:
--	if (uvc->control_req)
-+	if (uvc->control_req) {
- 		usb_ep_free_request(cdev->gadget->ep0, uvc->control_req);
-+		uvc->control_req = NULL;
-+	}
- 	kfree(uvc->control_buf);
-+	uvc->control_buf = NULL;
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -515,6 +515,7 @@ static ssize_t ffs_ep0_read(struct file
+ 	if (ffs_setup_state_clear_cancelled(ffs) == FFS_SETUP_CANCELLED)
+ 		return -EIDRM;
  
- 	usb_free_all_descriptors(f);
- 	return ret;
-@@ -1060,7 +1063,9 @@ static void uvc_function_unbind(struct u
- 	uvc->vdev_release_done = NULL;
++retry:
+ 	/* Acquire mutex */
+ 	ret = ffs_mutex_lock(&ffs->mutex, file->f_flags & O_NONBLOCK);
+ 	if (ret < 0)
+@@ -549,10 +550,15 @@ static ssize_t ffs_ep0_read(struct file
+ 			break;
+ 		}
  
- 	usb_ep_free_request(cdev->gadget->ep0, uvc->control_req);
-+	uvc->control_req = NULL;
- 	kfree(uvc->control_buf);
-+	uvc->control_buf = NULL;
+-		if (wait_event_interruptible_exclusive_locked_irq(ffs->ev.waitq,
+-							ffs->ev.count)) {
+-			ret = -EINTR;
+-			break;
++		if (!ffs->ev.count) {
++			spin_unlock_irq(&ffs->ev.waitq.lock);
++			mutex_unlock(&ffs->mutex);
++
++			if (wait_event_interruptible_exclusive(ffs->ev.waitq,
++							       ffs->ev.count))
++				return -EINTR;
++
++			goto retry;
+ 		}
  
- 	usb_free_all_descriptors(f);
- }
+ 		/* unlocks spinlock */
 
 
