@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8CD381E98;
-	Sat, 12 Sep 2026 09:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2B0381E98;
+	Sat, 12 Sep 2026 09:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205470; cv=none; b=F6KYWm432U/Yc7XVvD8VXm3HeW/YMigUmjuVblN2OLvlxyFH5hBEARgf76hiAGMiVydXkCipvfBjxfZYVwlBY5GZX6z8dglejmvSDIpxRG4ysROhWxpchYOxYRZiEb2IYmb/VaRkAp863d+IX5C6NWF46SZkjUB+maCFWFVW2tA=
+	t=1789205474; cv=none; b=HvoAZ/nJ5TmYdWZrKk5beGI7iLFAF0BHX9RZcH20aVr7d48RaoKRKTDpOMs6Bbw0fRhlu3KHE8WV5WF5IuklYath4D0EghOhNBwiScl0tj8XVa8HLWsTTViGf6K4N+laqAG9ARiBtYaH8Ze/tqRyvfQlWU+v5VRzXTxHwaCDZyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205470; c=relaxed/simple;
-	bh=JYfHZeSvGE7Q15Y2i+a2nq3Y37sTWg8PEBfdsauXJmM=;
+	s=arc-20240116; t=1789205474; c=relaxed/simple;
+	bh=jNbViKLLQubxujcy8Vp2xclCha2VF1+8V/pPjoIP6po=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ka41ZMeFiWybvN5L36Dj3m4E5IvM8nzVUEbzD0+4dMjFUwbYhBg9PTc83v75zgCGKKLbdwlSju7cIQ59mPLKHwlUlEiYMGa60Xb4OLMvIP9qsIrCaopcF/0u12LOWUSHd/zy80MVqCjw52GvRix4wDXoGvKfYF11Zm7u1KOHi3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OW648AJ0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QKMe4qIkWx97djHZHkqEr7QP2GSWUdr1tNAMJyvGNDDh48/ICCgtcM1u1ayEhdl8kWPl6LUAv7+8vZRoUEU8J9rp/HecxwmDVqrr0nf1ADUY1mVJV/69jailUlk4x8VFZn5VLsb3kKpGLe5vU5w45jo3lCnjvLQUWerAyTU7/uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSDupi97; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OW648AJ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B6A1F000FF;
-	Sat, 12 Sep 2026 09:31:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSDupi97"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4311F000FF;
+	Sat, 12 Sep 2026 09:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205468;
-	bh=U84LfRD0DX7rc0U2EvZr8KgC9T2I9jvjniEGrnZ9zKc=;
+	s=korg; t=1789205473;
+	bh=9BXU3+PLhrCKipsbCM1rdGZZAJvUWno654NQhUdQDqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OW648AJ0gSU9eIOowjUBqVaOjIFoC7CC0gQyh3e3vHquaYZSH4l/mQJiWP0MT/8t+
-	 dELrubnckAOlgd/hXUYn3t6ZsjChvQ19qQqTKnZWQ9UuoiaVE2ons6plB0ZtugtbfL
-	 Ac/4jmD3GaaUR6PUPGNxb9p/m7S+nrvID4e9AAZw=
+	b=PSDupi97OuajoaTRNuMKwXYbg/S3uSmw52RN0VDTgtOaQVTkiImke9GkRU7+ZjY+b
+	 +Kl/8AAqrL05zpcSAKhdqPSDgCqbrjZLTUBkwmXR/OPTqGtObuZsrKh/VkspkINlQn
+	 DQ85TI8aTGxWczvhitnLd3NnqOiux3H2fvZhVPXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Saab <ps@mu.org>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Baineng Shou <shoubaineng@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0001/1518] net/mlx5e: xsk: Fix unlocked writing to ICOSQ
-Date: Sat, 12 Sep 2026 08:36:10 +0200
-Message-ID: <20260912065623.439739331@linuxfoundation.org>
+Subject: [PATCH 6.18 0010/1518] dma-buf: dma-heap: dont publish fd before copy_to_user() succeeds
+Date: Sat, 12 Sep 2026 08:36:19 +0200
+Message-ID: <20260912065623.641638129@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -48,123 +47,243 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Baineng Shou <shoubaineng@gmail.com>
 
-commit c326f9c68921e2f14dfcecb2f6b4216313d50248 upstream.
+[ Upstream commit 30d0aff2c65a277135cfd8ea28fa1ee75e0ea4e0 ]
 
-During napi poll, when the affinity changes and there's still XSK work
-to be done, we trigger an ICOSQ interrupt on the new CPU. However, this
-triggering on the ICOSQ is done unprotected.
+DMA_HEAP_IOCTL_ALLOC allocates a dma-buf and installs an fd into the
+caller's fd table via dma_buf_fd() -> fd_install() before
+dma_heap_ioctl() copies the result back to userspace.  If the trailing
+copy_to_user() fails, userspace never learns the fd number, but the
+fd (and the underlying dma-buf reference) are already visible to
+other threads in the same process and are leaked for the lifetime of
+the process.
 
-There are 2 such races:
+The obvious "close it on the failure path" fix is unsafe: once
+fd_install() has run, another thread can already dup() the fd, send
+it via SCM_RIGHTS, or close() it and let its number be reused, so a
+subsequent close_fd() from the ioctl path can operate on an unrelated
+file.  This was pointed out by Christian König on v1 [1].
 
-A) mlx5e_trigger_irq() is called while mlx5e_xsk_alloc_rx_mpwqe() is
-running from a different CPU due to affinity change. This can happen
-because IRQ triggering is done after napi_complete_done(). At this point
-the NAPI can be scheduled on a different CPU. Like this:
+Restructure the allocation path so that fd_install() is the last,
+unfailable step of a successful ioctl:
 
-  CPU A (old affinity, NAPI tail)    CPU B (new affinity, fresh NAPI)
-  -------------------------------    --------------------------------
-  napi_complete_done()  clears SCHED
-  mlx5e_cq_arm(...)
-                                     napi_schedule_prep() sets SCHED
-                                     mlx5e_napi_poll()
-                                       mlx5e_xsk_alloc_rx_mpwqe()
-                                         mlx5e_icosq_sync_lock() // noop
-                                         memcpy 640 B UMR body
-                                         advance sq->pc by 10
-  mlx5e_trigger_irq(&c->icosq)
-    wqe_info[pi] = {NOP, 1}
-    mlx5e_post_nop() advances sq->pc
+  1. heap->ops->allocate()      creates the dma_buf.
+  2. get_unused_fd_flags()      reserves an fd number in the caller's
+                                fd table without publishing it, so
+                                no other thread can observe it.
+  3. copy_to_user()             delivers the fd number to userspace;
+                                on failure the fd is returned with
+                                put_unused_fd() and the dma_buf
+                                reference is dropped with
+                                dma_buf_put(), leaving no user-
+                                visible state behind.
+  4. dma_buf_fd_install()       publishes the fd and emits the
+                                trace_dma_buf_fd tracepoint -- from
+                                here on the ioctl cannot fail.
 
-B) mlx5e_trigger_irq() is called on the ICOSQ when
-mlx5e_trigger_napi_icosq() is running.
+A new dma_buf_fd_install() helper is introduced in dma-buf.c to wrap
+fd_install() together with the DMA_BUF_TRACE() call, preserving the
+export tracing that dma_buf_fd() provides.  dma_heap_ioctl_allocate()
+is refactored to return the struct dma_buf * directly (returning
+ERR_PTR on failure) so the caller holds the dmabuf reference across
+steps 3 and 4.
 
-The obvious fix would be to lock the ICOSQ. But ICOSQ has an optimized
-locking scheme that doesn't work for this scenario. Kick the async ICOSQ
-instead which is always locked.
+The failure at step 3 is easily reachable from userspace: pass a
+struct dma_heap_allocation_data that lives in a page whose protection
+is flipped to PROT_READ between copy_from_user() and copy_to_user()
+(e.g. via mprotect()).  Before this change each such ioctl leaks one
+dmabuf fd; after it, the fd table is unchanged on failure and only
+/dev/dma_heap/<name> remains open.
 
-This issue was noticed in the wild with the following splat:
+No UAPI or heap-driver interface change.
 
-  netdevice: ge-0-0-1: Bad OP in ICOSQ CQE: 0xd
-  WARNING: drivers/net/ethernet/mellanox/mlx5/core/en_rx.c:826 [...]
-  [...]
-  Call Trace:
-   <IRQ>
-   mlx5e_napi_poll+0x11d/0x7f0 [mlx5_core]
-   __napi_poll+0x30/0x200
-   ? skb_defer_free_flush+0x9c/0xc0
-   net_rx_action+0x2fe/0x3f0
-   handle_softirqs+0xd8/0x340
-   __irq_exit_rcu+0xbc/0xe0
-   common_interrupt+0x85/0xa0
-   </IRQ>
-   <TASK>
-   asm_common_interrupt+0x26/0x40
-  [...]
-  ---[ end trace 0000000000000000 ]---
-  mlx5_core 0000:08:00.0 ge-0-0-1: Error cqe on cqn 0x548, ci 0x2022, qn 0x8f4,
-  opcode 0xd, syndrome 0x2, vendor syndrome 0x68
-  00000000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  00000010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  00000030: 00 00 00 00 01 00 68 02 01 00 08 f4 de 14 59 d2
-  WQE DUMP: WQ size 16384 WQ cur size 0, WQE index 0x1e14, len: 64
-  00000000: 00 00 00 01 d9 ed 80 02 00 00 00 01 d9 ed 90 02
-  00000010: 00 00 00 01 d9 ed a0 02 00 00 00 01 d9 ed b0 02
-  00000020: 00 00 00 01 d9 ed c0 02 00 00 00 01 d9 ed d0 02
-  00000030: 00 00 00 01 d9 ed e0 02 00 00 00 01 d9 ed f0 02
-  mlx5_core 0000:08:00.0 ge-0-0-1: Error cqe on cqn 0x548, ci 0x2023, qn 0x8f4,
-  opcode 0xd, syndrome 0x5, vendor syndrome 0xf9
-  00000000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  00000010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  00000030: 00 00 00 00 01 00 f9 05 01 00 08 f4 de 15 cf d2
+[1] https://lore.kernel.org/dri-devel/175e98de-f414-47d7-81c1-c0fe0a8f7f62@amd.com/
 
-[ Backport to 6.18.y and older: upstream commit calls
-  mlx5e_trigger_napi_async_icosq(), which was introduced by commit
-  0da1dba72616 ("net/mlx5e: XSK, Fix unintended ICOSQ change") and is not
-  present here. In these trees mlx5e_trigger_napi_icosq() is the
-  equivalent helper: it takes c->async_icosq_lock and triggers
-  c->async_icosq, which is unconditionally opened, activated, polled and
-  armed for every channel. Race B does not apply, as it concerns the
-  sync-ICOSQ variant of mlx5e_trigger_napi_icosq() that only exists
-  upstream, and mlx5e_icosq_sync_lock() in the race A diagram has no
-  equivalent here. ]
+Fixes: c02a81fba74f ("dma-buf: Add dma-buf heaps framework")
+Cc: stable@vger.kernel.org
+Reviewed-by: T.J. Mercier <tjmercier@google.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Acked-by: Sumit Semwal <sumit.semwal@linaro.org>
+Signed-off-by: Baineng Shou <shoubaineng@gmail.com>
+Link: https://lore.kernel.org/r/20260817050457.1005285-2-shoubaineng@gmail.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
 
-Fixes: db05815b36cb ("net/mlx5e: Add XSK zero-copy support")
-Reported-by: Paul Saab <ps@mu.org>
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260513064613.334602-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable adaptation for 6.18:
+- Resolve the dma-heap conflict without importing the absent mem_accounting
+  module parameter; retain the existing kzalloc() form.
+- This tree has neither DMA_BUF_TRACE nor trace_dma_buf_fd. Omit the new
+  dma-buf.c function and export, and provide dma_buf_fd_install as a
+  single-evaluation macro around the existing fd_install() in dma-buf.h.
+  This preserves the reserved-fd publication semantics without adding
+  functions or importing the unrelated tracing infrastructure.
+- Retain the heap allocation and usercopy cleanup changes, and expose the
+  interface needed for the target FastRPC fix to apply unchanged.
+
+[ sashal: Reduced backport -- upstream 30d0aff2c65a2 touches 3 file(s), this
+  backport carries 2. Not backported here:
+  drivers/dma-buf/dma-buf.c
+  This note is generated from the file lists only; see the resolution record
+  for the reasoning. ]
+
+Stable-dep-of: a4a1a2bfcb29 ("misc: fastrpc: don't publish fd before copy_to_user() succeeds")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_txrx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma-buf/dma-heap.c |   80 ++++++++++++++++++++++-----------------------
+ include/linux/dma-buf.h    |    5 ++
+ 2 files changed, 45 insertions(+), 40 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_txrx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_txrx.c
-index 76108299ea57d..65758e7211747 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_txrx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_txrx.c
-@@ -247,7 +247,7 @@ int mlx5e_napi_poll(struct napi_struct *napi, int budget)
+--- a/drivers/dma-buf/dma-heap.c
++++ b/drivers/dma-buf/dma-heap.c
+@@ -49,33 +49,6 @@ static dev_t dma_heap_devt;
+ static struct class *dma_heap_class;
+ static DEFINE_XARRAY_ALLOC(dma_heap_minors);
+ 
+-static int dma_heap_buffer_alloc(struct dma_heap *heap, size_t len,
+-				 u32 fd_flags,
+-				 u64 heap_flags)
+-{
+-	struct dma_buf *dmabuf;
+-	int fd;
+-
+-	/*
+-	 * Allocations from all heaps have to begin
+-	 * and end on page boundaries.
+-	 */
+-	len = PAGE_ALIGN(len);
+-	if (!len)
+-		return -EINVAL;
+-
+-	dmabuf = heap->ops->allocate(heap, len, fd_flags, heap_flags);
+-	if (IS_ERR(dmabuf))
+-		return PTR_ERR(dmabuf);
+-
+-	fd = dma_buf_fd(dmabuf, fd_flags);
+-	if (fd < 0) {
+-		dma_buf_put(dmabuf);
+-		/* just return, as put will call release and that will free */
+-	}
+-	return fd;
+-}
+-
+ static int dma_heap_open(struct inode *inode, struct file *file)
+ {
+ 	struct dma_heap *heap;
+@@ -93,30 +66,42 @@ static int dma_heap_open(struct inode *i
+ 	return 0;
+ }
+ 
+-static long dma_heap_ioctl_allocate(struct file *file, void *data)
++static struct dma_buf *dma_heap_ioctl_allocate(struct file *file, void *data)
+ {
+ 	struct dma_heap_allocation_data *heap_allocation = data;
+ 	struct dma_heap *heap = file->private_data;
++	struct dma_buf *dmabuf;
+ 	int fd;
++	size_t len;
+ 
+ 	if (heap_allocation->fd)
+-		return -EINVAL;
++		return ERR_PTR(-EINVAL);
+ 
+ 	if (heap_allocation->fd_flags & ~DMA_HEAP_VALID_FD_FLAGS)
+-		return -EINVAL;
++		return ERR_PTR(-EINVAL);
+ 
+ 	if (heap_allocation->heap_flags & ~DMA_HEAP_VALID_HEAP_FLAGS)
+-		return -EINVAL;
++		return ERR_PTR(-EINVAL);
++
++	len = PAGE_ALIGN(heap_allocation->len);
++	if (!len)
++		return ERR_PTR(-EINVAL);
+ 
+-	fd = dma_heap_buffer_alloc(heap, heap_allocation->len,
+-				   heap_allocation->fd_flags,
+-				   heap_allocation->heap_flags);
+-	if (fd < 0)
+-		return fd;
++	dmabuf = heap->ops->allocate(heap, len, heap_allocation->fd_flags,
++				     heap_allocation->heap_flags);
++
++	if (IS_ERR(dmabuf))
++		return dmabuf;
++
++	fd = get_unused_fd_flags(heap_allocation->fd_flags);
++	if (fd < 0) {
++		dma_buf_put(dmabuf);
++		return ERR_PTR(fd);
++	}
+ 
+ 	heap_allocation->fd = fd;
+ 
+-	return 0;
++	return dmabuf;
+ }
+ 
+ static unsigned int dma_heap_ioctl_cmds[] = {
+@@ -132,6 +117,8 @@ static long dma_heap_ioctl(struct file *
+ 	unsigned int in_size, out_size, drv_size, ksize;
+ 	int nr = _IOC_NR(ucmd);
+ 	int ret = 0;
++	int fd;
++	struct dma_buf *dmabuf;
+ 
+ 	if (nr >= ARRAY_SIZE(dma_heap_ioctl_cmds))
+ 		return -EINVAL;
+@@ -168,15 +155,28 @@ static long dma_heap_ioctl(struct file *
+ 
+ 	switch (kcmd) {
+ 	case DMA_HEAP_IOCTL_ALLOC:
+-		ret = dma_heap_ioctl_allocate(file, kdata);
++		dmabuf = dma_heap_ioctl_allocate(file, kdata);
++
++		if (IS_ERR(dmabuf)) {
++			ret = PTR_ERR(dmabuf);
++			break;
++		}
++
++		fd = ((struct dma_heap_allocation_data *)kdata)->fd;
++		if (copy_to_user((void __user *)arg, kdata, out_size) != 0) {
++			put_unused_fd(fd);
++			dma_buf_put(dmabuf);
++			ret = -EFAULT;
++		} else {
++			dma_buf_fd_install(dmabuf, fd);
++		}
++
+ 		break;
+ 	default:
+ 		ret = -ENOTTY;
+ 		goto err;
  	}
  
- 	if (unlikely(aff_change && busy_xsk)) {
--		mlx5e_trigger_irq(&c->icosq);
-+		mlx5e_trigger_napi_icosq(c);
- 		ch_stats->force_irq++;
- 	}
+-	if (copy_to_user((void __user *)arg, kdata, out_size) != 0)
+-		ret = -EFAULT;
+ err:
+ 	if (kdata != stack_kdata)
+ 		kfree(kdata);
+--- a/include/linux/dma-buf.h
++++ b/include/linux/dma-buf.h
+@@ -582,6 +582,11 @@ void dma_buf_unpin(struct dma_buf_attach
+ struct dma_buf *dma_buf_export(const struct dma_buf_export_info *exp_info);
  
--- 
-2.53.0
-
+ int dma_buf_fd(struct dma_buf *dmabuf, int flags);
++/*
++ * This tree has no DMA-BUF fd tracepoint, so publishing a reserved fd only
++ * requires fd_install(). Call this after all fallible work has succeeded.
++ */
++#define dma_buf_fd_install(dmabuf, fd) fd_install((fd), (dmabuf)->file)
+ struct dma_buf *dma_buf_get(int fd);
+ void dma_buf_put(struct dma_buf *dmabuf);
+ 
 
 
