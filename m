@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44985369224;
-	Sat, 12 Sep 2026 08:53:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BC337189C;
+	Sat, 12 Sep 2026 08:53:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203188; cv=none; b=hDvL5o5+iMUN6xs4RpNoTVVVYvJekIvPb2qmQTOWztpuj+39Ea9RQPwFuGIqGv6ETJ9JUX5BbPMvKF7sLjMjsqf7QXbyxcKvFhJZBe8JE1zBSRLzGmrTZJ+2q+u6mwLBnmC6rWgbOTR2lRtbVLJNuoRGC1f2c3nFVdUmVSk+vmg=
+	t=1789203193; cv=none; b=PtTPNdYC6fYMgOPtQxW6bsg0/1++4bsChfzgTqTlZzMO9p1ra0gPYFMbPVU/gybDHhDBywlnHxBvorudW8Rv3DdCDjzNDYW5X1C8IoCLMox/pMEOCJFwCjwCUf16TmVouLtymhKAvTUpw36PD73jk/nUK8en0Yd3YArPwJaZuFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203188; c=relaxed/simple;
-	bh=vVtcchnlcUFoMRin6SOJL1BKEcoiAjv+cg0rLyWyIx0=;
+	s=arc-20240116; t=1789203193; c=relaxed/simple;
+	bh=rk+6c6G+N/lTHBcR2JqBdR82U5y34ktQyH2aqE/uj8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TV5TrrAltQBC/vx8FCqi16hWnyt6WVWrCEeDpI37F7mz6a530e0m6JV5XIl2Etgc8rpQIEDGkIDNgsy6LoX8/WoF+UZr2lEUyAL+VEQ5+CpP/PpuuQW79O3/ayd3oQwXL/u5NTBq85aHgbTCbRFqsZD+4GKOe3yfxd09uMNkoco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZJRKP5v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l5yU0PG5FVOJmvhFZjaxdupkAtXAIM6pGRO3ljUxAVlWPXJNu1Tz3ALzAx7xW+LAQ2luPr13OrkGdPkWjvYIWL0qE31F/+O7+v4IifnplLGQTg5eQEHwOrjFSUtvOhERHfHYBMOGMIBxsvmWVni/34Zq9l1ujNlUR0EtEyOiRvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDtuiKrw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZJRKP5v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD281F000FF;
-	Sat, 12 Sep 2026 08:53:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDtuiKrw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8C91F000FF;
+	Sat, 12 Sep 2026 08:53:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203187;
-	bh=xhptrD/zrYeJ9c9SW+HD3fm5katavAbsSgkNdf7mRnc=;
+	s=korg; t=1789203191;
+	bh=GFWNnDRcGk1rJyl2+VTDQWhd0a8dHdzvJbag2ziQxcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MZJRKP5ve6CDCxf/piXog9q1ba/GfrXNr0VYONqo7TWo2vWNkR+nhDioqiYqVJrKx
-	 9LZIJhy1IH1raUA1bVCaBD7Pey70aXSIMsUeXWMFNR5x+9Puwg6wqd9EyjylE9x/a8
-	 nStseB201XrJwybLrHzE3+PAbNGa2t1c2IK8vDBc=
+	b=gDtuiKrwzqpku8doS9euw8x2/mcs0b2losm1Vw+dEBTr02yp8qNYcc5S1mcfWMJgJ
+	 m5lzfa9R9SD/jrd2UjY+IDD7zMQNTFXYGC5y/9po70dN7QhfdY+E+f9BZ8EuP2I2n8
+	 scTXGily6lXhLEU8EP9VSfBVhmK+//l2T3+n/Gjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Simon Horman <horms@kernel.org>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1356/1815] nfc: pn533: hold a reference to the request skb during send_frame
-Date: Sat, 12 Sep 2026 08:51:46 +0200
-Message-ID: <20260912065720.860601376@linuxfoundation.org>
+Subject: [PATCH 7.2 1357/1815] nfc: digital: Do not dump a NULL response in command completion
+Date: Sat, 12 Sep 2026 08:51:47 +0200
+Message-ID: <20260912065720.883719506@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,91 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yinhao Hu <dddddd@hust.edu.cn>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 47792358a624ea066455ef86b744159928cd7716 ]
+[ Upstream commit 1c7dd70c0adfa58fd66b5cbd03efb747ad6d8d8d ]
 
-__pn533_send_async() publishes the command and then calls
-dev->phy_ops->send_frame(). Once dev->cmd is set, an incoming frame
-can be matched to this command: the I2C threaded IRQ runs
-pn533_recv_frame(), which queues cmd_complete_work, and
-pn533_send_async_complete() frees cmd->req with consume_skb().
+digital_wq_cmd_complete() dumps the response data whenever cmd->resp is
+not an error pointer.  However, a driver can legitimately complete a
+command with no response skb at all.
 
-On the I2C transport, pn533_i2c_send_frame() still dereferences the same
-skb after i2c_master_send() returns, so a completion that races the
-send can free the skb while the transport is still using it.
+digital_tg_send_psl_res() is the only caller that passes timeout=0,
+meaning no response is expected once the command has been transmitted.
+On that path trf7970a completes the command with
 
-The request skb is owned by the command object and may be freed by
-command completion at any time after dev->cmd is published, so the
-transport send path must not assume it stays alive. Hold a temporary
-reference to the request skb across the send_frame() call so the
-transport always sees a live skb even if completion races the send.
-Add a pn533_send_cmd_frame() helper and use it from all three send
-paths.
+	trf->rx_skb = ERR_PTR(0);
 
-Fixes: 9815c7cf22da ("NFC: pn533: Separate physical layer from the core implementation")
-Signed-off-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260626073434.3977525-1-dddddd@hust.edu.cn
+which evaluates to NULL.  IS_ERR(NULL) is false, so the NULL response
+passes the !IS_ERR() check and cmd->resp->data and cmd->resp->len are
+dereferenced whenever the debug print site is enabled.  The driver
+guards its own dump with "trf->rx_skb && !IS_ERR(trf->rx_skb)"; the
+digital layer is missing the NULL half of that test.
+
+Use IS_ERR_OR_NULL() so that NULL responses are skipped as well.  The
+callback on that path, digital_tg_send_psl_res_complete(), never
+dereferences resp and dev_kfree_skb() accepts NULL, so only the debug
+dump needs fixing.
+
+Fixes: 59ee2361c924 ("NFC Digital: Implement driver commands mechanism")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Link: https://patch.msgid.link/20260710061254.80975-1-lilinmao@kylinos.cn
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/pn533/pn533.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ net/nfc/digital_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nfc/pn533/pn533.c b/drivers/nfc/pn533/pn533.c
-index 6db9ec90f594b..76081a99b4501 100644
---- a/drivers/nfc/pn533/pn533.c
-+++ b/drivers/nfc/pn533/pn533.c
-@@ -434,6 +434,18 @@ static int pn533_send_async_complete(struct pn533 *dev)
- 	return rc;
- }
+diff --git a/net/nfc/digital_core.c b/net/nfc/digital_core.c
+index 7cb1e6aaae90d..18236221d8988 100644
+--- a/net/nfc/digital_core.c
++++ b/net/nfc/digital_core.c
+@@ -127,7 +127,7 @@ static void digital_wq_cmd_complete(struct work_struct *work)
  
-+static int pn533_send_cmd_frame(struct pn533 *dev, struct pn533_cmd *cmd)
-+{
-+	struct sk_buff *req = cmd->req;
-+	int rc;
-+
-+	skb_get(req);
-+	dev->cmd = cmd;
-+	rc = dev->phy_ops->send_frame(dev, req);
-+	dev_kfree_skb(req);
-+	return rc;
-+}
-+
- static int __pn533_send_async(struct pn533 *dev, u8 cmd_code,
- 			      struct sk_buff *req,
- 			      pn533_send_async_complete_t complete_cb,
-@@ -458,8 +470,7 @@ static int __pn533_send_async(struct pn533 *dev, u8 cmd_code,
- 	mutex_lock(&dev->cmd_lock);
+ 	mutex_unlock(&ddev->cmd_lock);
  
- 	if (!dev->cmd_pending) {
--		dev->cmd = cmd;
--		rc = dev->phy_ops->send_frame(dev, req);
-+		rc = pn533_send_cmd_frame(dev, cmd);
- 		if (rc) {
- 			dev->cmd = NULL;
- 			goto error;
-@@ -529,8 +540,7 @@ static int pn533_send_cmd_direct_async(struct pn533 *dev, u8 cmd_code,
+-	if (!IS_ERR(cmd->resp))
++	if (!IS_ERR_OR_NULL(cmd->resp))
+ 		print_hex_dump_debug("DIGITAL RX: ", DUMP_PREFIX_NONE, 16, 1,
+ 				     cmd->resp->data, cmd->resp->len, false);
  
- 	pn533_build_cmd_frame(dev, cmd_code, req);
- 
--	dev->cmd = cmd;
--	rc = dev->phy_ops->send_frame(dev, req);
-+	rc = pn533_send_cmd_frame(dev, cmd);
- 	if (rc < 0) {
- 		dev->cmd = NULL;
- 		kfree(cmd);
-@@ -569,8 +579,7 @@ static void pn533_wq_cmd(struct work_struct *work)
- 
- 	mutex_unlock(&dev->cmd_lock);
- 
--	dev->cmd = cmd;
--	rc = dev->phy_ops->send_frame(dev, cmd->req);
-+	rc = pn533_send_cmd_frame(dev, cmd);
- 	if (rc < 0) {
- 		dev->cmd = NULL;
- 		dev_kfree_skb(cmd->req);
 -- 
 2.53.0
 
