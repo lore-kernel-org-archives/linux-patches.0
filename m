@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39C63B27EA;
-	Sat, 12 Sep 2026 18:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE21632B126;
+	Sat, 12 Sep 2026 18:51:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239067; cv=none; b=FpsN+kuv+mrV1cMXcw+rVBbHWxCJnzi8vB0+XvrOe6Yto5TmZtB7axDupnHZ3H0u2dLrWEgYQXMu0eyOzktc66yyOUU22ETJd4K1R0SBh/UCd/gJkqEZOdNV7dbgSXLyg9xUWNmBCl5sGMp9n64K+ipNCE9beqg9szmLdgLXjgQ=
+	t=1789239071; cv=none; b=k0LSMFGWP1o7bNgXNTP7MsWQPtgn4nWEHe8zY+57JlXDJBbYH/dK/3WIkzV2je+30js8A/PQGSpkTxrDTB+RnjDRDhEEeJsJb8toP8zedms+nbCpvVJ9LEK8GgOzWrgnkR6irFRQ9ifilVjmbDASc3uUTj5xdqB9xBtM5/S/gs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239067; c=relaxed/simple;
-	bh=TUJUbCYNPwYR4+E3JfUUfPawBF2SpXk9XO4UUyjbQDo=;
+	s=arc-20240116; t=1789239071; c=relaxed/simple;
+	bh=V5RWlIgMn8fKHKAhQR11tumGML1fWQpI/TxKKwjO5E8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jZHPkzW4XbTOxkJYlTKOJZ4opSbp6Rf29Fe64CKk7Wyc48yClBSGKoKG8ftjreF2f3v2k4ehg2gpZHFWMoCR/wvewVKzVB6WZzcVmgcWyTXmW8EuCXCBzSL/DUh7If10pWYCytvKLb7lt7Rtl9pPW+OzvtI1CY+00Z+GUFzc/JU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlKr+Y6F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ADd9CUpm6IKtw9+EKxQDRgITMkstlA53Rhwwe4amtrrSp3f5j96ExEZouXm2ruDhyAHUEkM4L5JiFRn/bBVd9N5YTX6QZ3YaafZLOXaMqThqD0bLUBw5DDOVg1VsCH/2csJ0XT6jb83Ek9QFhVZnKqQgxYbR6QVMBHENWtrX4kY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rjNu5qy1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlKr+Y6F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5691F000FF;
-	Sat, 12 Sep 2026 18:51:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rjNu5qy1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58FE1F000FF;
+	Sat, 12 Sep 2026 18:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239065;
-	bh=tLbFhcKjjOISmUgEIR8jvTTwM1FaaEvLWIvp4VJ51mc=;
+	s=korg; t=1789239070;
+	bh=VSroVwEFlepw7tyW6hlaLe9DXqzMC4uqr/BnvJrA8z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jlKr+Y6FrkWwlRM1l3mJvx2FRM43PSnwkR11KtdrLKvMV+Oa6i6Fihfnx0pdWpZwJ
-	 rztQ2nkoRVYoh+6P4DgLrerVX7N+lOku7imd4Izrq9wv6x/X52lzsaGGyv7yZD35oJ
-	 mMC4PzqlPFC+ZioG4WC1EQdbk+8nHdw8on5O0+nk=
+	b=rjNu5qy1oQIQXOZj+sBpfVYWVGjQgMNTkmTk3A+zea98bbsGDRgA41ldx0hBcQkjc
+	 MjNziuij1vANSxop90YoZ/bzqazbqMDUIZ+NyUkxDsHNbWqo8KJht1MtJ3psyh2MIf
+	 npX85b1tGYk5O+39tXZbT34CoqZjDL5V93rtcXxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Suyash Mahar <smahar@meta.com>,
+	Leo Yan <leo.yan@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 582/935] ext4: drain in-flight DIO before buffered write fallback
-Date: Sat, 12 Sep 2026 09:00:12 +0200
-Message-ID: <20260912065540.188116385@linuxfoundation.org>
+Subject: [PATCH 5.15 591/935] perf cs-etm: Avoid truncating AUX buffer sizes to int
+Date: Sat, 12 Sep 2026 09:00:21 +0200
+Message-ID: <20260912065540.395892172@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,104 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 15cdefd0c0522f9d5e12d947fa04f4c11649b699 ]
+[ Upstream commit ec99be8a31db999a4f866be74ea7db61dbb19f24 ]
 
-generic/746 started failing intermittently on ext3 (no-extent inodes).
-The test triggers 'Page cache invalidation failure on direct I/O'
-warnings and subsequent fsync returns -EIO. Adding a 50ms delay
-between ext4_buffered_write_iter() and filemap_write_and_wait_range()
-in ext4_dio_write_iter() makes the race almost always reproducible.
+cs_etm__get_trace() returns an int, but it used to return etmq->buf_len
+on success. That value comes from auxtrace_buffer::size, which is a
+size_t. For a large AUX trace block, returning the byte count through an
+int can overflow and make a valid buffer look like a negative error.
 
-On no-extent inodes, DIO writes to holes cannot use unwritten extents,
-so ext4_iomap_alloc() leaves m_flags=0 and ext4_map_blocks() returns 0.
-The iomap layer then returns -ENOTBLK, causing fallback to buffered I/O.
+The callers do not need the actual byte count from cs_etm__get_trace().
+The buffer length is already stored in the etmq->buf_len. The callers
+only need to distinguish three states:
 
-The fallback path in ext4_dio_write_iter() calls
-ext4_buffered_write_iter() which dirties pages, then does flush and
-invalidate. However, there's an unprotected window between
-ext4_buffered_write_iter() returning (with inode lock released) and
-the subsequent flush+invalidate.
+  < 0: error
+  = 0: no more AUX buffers
+  > 0: data is available
 
-Concurrent async DIO completions from other threads can run
-kiocb_invalidate_post_direct_write() during this window. If pages have
-been re-dirtied, post-invalidation finds dirty pages and triggers the
-warning, setting -EIO in the error sequence.
+Make cs_etm__get_trace() return 0 for all non-error cases and use
+etmq->buf_len to indicate whether a new buffer was found. Then make
+cs_etm__get_data_block() return 1 whenever data is available, instead of
+returning the buffer length.
 
-Consider a file with two 4k extents: [hole][written]. Thread A does
-DIO to the written extent, while thread B does DIO spanning both:
+Also refactor cs_etm__get_data_block() to make its return value
+semantics clearer.
 
-  kworker A (4k DIO, allocated block)    kworker B (8k DIO, fallback)
-  -----------------------------------    ----------------------------
-  inode_lock_shared()                    inode_lock_shared()
-  iomap_dio_rw():                        iomap_dio_rw():
-    kiocb_invalidate_pages -> clean        iomap_begin -> -ENOTBLK
-    submit_bio (async)                     dio->size = 0
-  inode_unlock_shared()                  inode_unlock_shared()
-
-  [bio pending in block layer]           /* fallback: lock released */
-                                         ext4_buffered_write_iter()
-                                           inode_lock(exclusive)
-                                           generic_perform_write()
-                                             -> dirty pages [0, 8k]
-                                           inode_unlock(exclusive)
-
-                                         /* pages dirty, no lock */
-  [bio completes]                        filemap_write_and_wait_range()
-  iomap_dio_complete()                     -> flush dirty pages
-    kiocb_invalidate_post_direct_write() invalidate_mapping_pages()
-      invalidate_inode_pages2_range()
-      -> finds dirty page!
-      -> dio_warn_stale_pagecache()
-      -> errseq_set(-EIO)
-
-This issue can be triggered through normal I/O paths, not just
-intentionally overlapping DIO writes from userspace. For example,
-generic/746 uses a loop device where multiple kworkers issue concurrent
-I/O to the backing file. Additionally, when block_size < folio_size,
-non-overlapping DIO writes that share a large folio can also trigger
-the race.
-
-Add inode_dio_wait() in ext4_buffered_write_iter() before
-ext4_write_checks() to drain all in-flight DIO. This ensures that
-all DIO clears existing pages before submitting IO (via
-kiocb_invalidate_pages()), all BIO waits for all DIO to complete
-(via inode_dio_wait()), and ext4_write_checks() observes the inode
-size after all completed DIO so that ext4_block_zero_eof() does not
-race with in-flight DIO, thus eliminating the race.
-
-Fixes: 378f32bab371 ("ext4: introduce direct I/O write using iomap infrastructure")
-Suggested-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/d1adcf7c-c276-458d-9cac-68a4410f7626@gmail.com
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Link: https://patch.msgid.link/20260629113827.4074335-3-libaokun@linux.alibaba.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reported-by: Suyash Mahar <smahar@meta.com>
+Fixes: 8224531cf5a1 ("perf cs-etm: Modularize auxtrace_buffer fetch function")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/file.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ tools/perf/util/cs-etm.c | 46 +++++++++++++++++++++++-----------------
+ 1 file changed, 26 insertions(+), 20 deletions(-)
 
-diff --git a/fs/ext4/file.c b/fs/ext4/file.c
-index c025e8994d191..63c710c0d8b72 100644
---- a/fs/ext4/file.c
-+++ b/fs/ext4/file.c
-@@ -260,6 +260,13 @@ static ssize_t ext4_buffered_write_iter(struct kiocb *iocb,
- 		return -EOPNOTSUPP;
+diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
+index be5a2e2d226d8..20492e58792d6 100644
+--- a/tools/perf/util/cs-etm.c
++++ b/tools/perf/util/cs-etm.c
+@@ -1089,8 +1089,7 @@ cs_etm__get_trace(struct cs_etm_queue *etmq)
+ 	etmq->buf_used = 0;
+ 	etmq->buf_len = aux_buffer->size;
+ 	etmq->buf = aux_buffer->data;
+-
+-	return etmq->buf_len;
++	return 0;
+ }
  
- 	inode_lock(inode);
+ static void cs_etm__set_pid_tid_cpu(struct cs_etm_auxtrace *etm,
+@@ -1687,26 +1686,33 @@ static int cs_etm__get_data_block(struct cs_etm_queue *etmq)
+ {
+ 	int ret;
+ 
+-	if (!etmq->buf_len) {
+-		ret = cs_etm__get_trace(etmq);
+-		if (ret <= 0)
+-			return ret;
+-		/*
+-		 * We cannot assume consecutive blocks in the data file
+-		 * are contiguous, reset the decoder to force re-sync.
+-		 */
+-		ret = cs_etm_decoder__reset(etmq->decoder);
+-		if (ret)
+-			return ret;
++	/* The current block is not finished */
++	if (etmq->buf_len)
++		return 1;
+ 
+-		/*
+-		 * Since the decoder is reset, this causes a global trace
+-		 * discontinuity. Flush all thread stacks.
+-		 */
+-		cs_etm__flush_all_stack(etmq);
+-	}
++	ret = cs_etm__get_trace(etmq);
++	if (ret < 0)
++		return ret;
++
++	/* No more buffer to read */
++	if (!etmq->buf_len)
++		return 0;
 +
 +	/*
-+	 * Prevent concurrent direct I/O and buffered I/O to the same file
-+	 * range. Wait for in-flight DIO to finish before dirtying pages.
++	 * We cannot assume consecutive blocks in the data file
++	 * are contiguous, reset the decoder to force re-sync.
 +	 */
-+	inode_dio_wait(inode);
++	ret = cs_etm_decoder__reset(etmq->decoder);
++	if (ret)
++		return ret;
 +
- 	ret = ext4_write_checks(iocb, from);
- 	if (ret <= 0)
- 		goto out;
++	/*
++	 * Since the decoder is reset, this causes a global trace
++	 * discontinuity. Flush all thread stacks.
++	 */
++	cs_etm__flush_all_stack(etmq);
+ 
+-	return etmq->buf_len;
++	return 1;
+ }
+ 
+ static bool cs_etm__is_svc_instr(struct cs_etm_queue *etmq, u8 trace_chan_id,
 -- 
 2.53.0
 
