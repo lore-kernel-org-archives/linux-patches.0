@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18B9246BCD;
-	Sat, 12 Sep 2026 10:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520CE371887;
+	Sat, 12 Sep 2026 10:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208083; cv=none; b=T+cwSSFCigkvjF4WuzE3+GDHVFEaybAqsfqI9DaFHJGxTz8tV3rdsqMsupDCgrTZwW+dpieR+VQfuwsHbugoDJU/TonLB46PRwj7Yc5m5M66/QhGIYYSsuoETDrlMcozCKzar5DTbd8fdoEdnWRg17gD88iAD6poHo8Hcn4r1QE=
+	t=1789208088; cv=none; b=FMUKKxbAG8rtpq84jgnS/YaOilJo5hlqUkKEqYr/HAMuIWBfG593hZZ5+VLWlncFEHxCL65nwidUy/gAz7+q3nOsSMtlA56jalOE6vEXVsN/yjQvCE/0IuKyxHY1NuYuCx1Doq1crMLs+TIOtr4vvktEMfhlkw59C0rXJonTBo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208083; c=relaxed/simple;
-	bh=/l05BasmXCj0MsKtP2ELy7GwZ+74oKrarkqIcnodna0=;
+	s=arc-20240116; t=1789208088; c=relaxed/simple;
+	bh=ILBMpWXYTfSWW0fTo8e96AeXVUJ7aoSHNXfuulmt36E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WselzQs1xRWIbVQs5YGhsitsd+r1leDDDccCiWunc19NNrJubPwnInDvW7AYmq2+7Yumg1IdKR5POOLWUyAa5zFkj+BYZIvBO2i0PTnYeKx9xDtSIGShC5xI8SDz3ZdCHewRXUd4NWKZWnY+FmnbfkhqiNI220X3hpOAIHiCWIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+FoWsiS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ejgpTllNYs7IZWyklm4xpGltn4RDQur8siWI0TjTcnaHoC20Sl/C8JNYxp+0Ya3XF7zK4o4xhLOQpV5GvJwyYDOb2Y1DEdCYAbXmtzVssoWN4zpCu74+rn+CQVt4gWSpHsKkM1HpZVtQqfOe/8QQSVduAj9rzV+BXeDg4Tt7VKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qf4YMuaY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+FoWsiS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51FD21F000FF;
-	Sat, 12 Sep 2026 10:14:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qf4YMuaY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 890F01F000FF;
+	Sat, 12 Sep 2026 10:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208082;
-	bh=JaxVRLjz0F2MYaMfTOZ3BR6o0wd3yWHL5MYMMXtdc0c=;
+	s=korg; t=1789208087;
+	bh=PZY/bU3bJQb4B07c1oj0XNm6GF9EAvayGF7E441YkNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L+FoWsiSG8VwnfQs07VOaA2L5yHOtlWWBD7T3r60dPxVSwLusDTkncKktGrC8tiuo
-	 lits1VWoIXWRLJAbL2FAiaGFwRIZA6FoqtOjCjgDuxbJ+7/t3D3l8SDrShXI6ML6eL
-	 Hv0ao0/v+04H8vhfnbCPtValMmBBw3wI6h3LMBcg=
+	b=qf4YMuaY4y1azASFEB5kwodw5NIatfJslbuTc351R+DsxiZvSoDssHZPdEGEBRLPD
+	 AG+X5RsyidjFWAP38Cle1qFGlomlgYqKGAOhlOK732fDY2X2fQ3VYINoWmurJLUmXb
+	 9Se+DQNMqaEpKDIm/I/ZGA9RXJ7zA7MBWaP1M+wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Li Xiong <xiongl24@chinatelecom.cn>,
+	Xibo Wang <wangxb12@chinatelecom.cn>,
+	Qianheng Peng <pengqh1@chinatelecom.cn>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Mario Limonciello <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0508/1518] RDMA/srpt: Pass the mapped task attribute to target_init_cmd()
-Date: Sat, 12 Sep 2026 08:44:37 +0200
-Message-ID: <20260912065634.937573087@linuxfoundation.org>
+Subject: [PATCH 6.18 0544/1518] cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active
+Date: Sat, 12 Sep 2026 08:45:13 +0200
+Message-ID: <20260912065635.749174111@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,39 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Qianheng Peng <pengqh1@chinatelecom.cn>
 
-[ Upstream commit ef63cc441703412628a517dda354f3e51fe2dc92 ]
+[ Upstream commit 8d31bb1451643f328db0cea0e21e63ef54b4faf2 ]
 
-srpt_handle_cmd() maps the initiator-supplied srp_cmd->task_attr into
-cmd->sam_task_attr, but then hands a hardcoded TCM_SIMPLE_TAG to
-target_init_cmd().
+The crash issue may occur when modprobe amd_pstate_ut on intel platform.
 
-Pass the already mapped cmd->sam_task_attr instead, so target core sees the
-attribute the initiator requested.
+   amd_pstate_ut: 1    amd_pstate_ut_acpi_cpc_valid  success!
+   amd_pstate_ut: 2    amd_pstate_ut_check_enabled   success!
+   BUG: kernel NULL pointer dereference, address: 0000000000000080
+   #PF: supervisor read access in kernel mode
+   #PF: error_code(0x0000) - not-present page
+   PGD 0 P4D 0
+   Oops: 0000 [#1] SMP NOPTI
+   CPU: 0 PID: 20300 Comm: modprobe
+   Kdump: loaded Tainted: G O 6.6.0-0010.rc1.ctl4.x86_64 #1
+   Hardware name: FiberHome R2200 V5/Xeon Boards, BIOS 3.1a 02/24/2020
+   RIP: 0010:amd_pstate_ut_check_perf+0x141/0x280 [amd_pstate_ut]
+   Call Trace:
+    <TASK>
+    amd_pstate_ut_init+0x1b/0xff0 [amd_pstate_ut]
+    ? __pfx_amd_pstate_ut_init+0x10/0x10 [amd_pstate_ut]
+    do_one_initcall+0x42/0x2e0
+    ? kmalloc_trace+0x26/0x90
+    do_init_module+0x60/0x240
+    __se_sys_init_module+0x185/0x1c0
+    do_syscall_64+0x62/0x190
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+    </TASK>
 
-Fixes: 9474b043132f ("ib_srpt: Convert I/O path to target_submit_cmd + drop legacy ioctx->kref")
-Link: https://patch.msgid.link/20260721-b4-scsi-ordering-violation-due-to-hardc-v1-1-07205aab71bb@nvidia.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Add state detection to amd pstate driver to prevent amd_pstate_ut driver
+from testing on non-AMD platforms.
+
+Fixes: 14eb1c96e3a3 ("cpufreq: amd-pstate: Add test module for amd-pstate driver")
+Suggested-by: Li Xiong <xiongl24@chinatelecom.cn>
+Suggested-by: Xibo Wang <wangxb12@chinatelecom.cn>
+Signed-off-by: Qianheng Peng <pengqh1@chinatelecom.cn>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/1784191899-28957-1-git-send-email-pengqh1@chinatelecom.cn
+(ML: adjust title)
+Signed-off-by: Mario Limonciello <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srpt/ib_srpt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/amd-pstate-ut.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
-index 81efda7840aab..212d4c7662c8a 100644
---- a/drivers/infiniband/ulp/srpt/ib_srpt.c
-+++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
-@@ -1603,7 +1603,7 @@ static void srpt_handle_cmd(struct srpt_rdma_ch *ch,
+diff --git a/drivers/cpufreq/amd-pstate-ut.c b/drivers/cpufreq/amd-pstate-ut.c
+index 447b9aa5ce40b..93b80bf992a6a 100644
+--- a/drivers/cpufreq/amd-pstate-ut.c
++++ b/drivers/cpufreq/amd-pstate-ut.c
+@@ -273,6 +273,11 @@ static int amd_pstate_ut_check_driver(u32 index)
+ static int __init amd_pstate_ut_init(void)
+ {
+ 	u32 i = 0, arr_size = ARRAY_SIZE(amd_pstate_ut_cases);
++	enum amd_pstate_mode mode = amd_pstate_get_status();
++
++	/* don't test if no running amd-pstate driver */
++	if (mode == AMD_PSTATE_UNDEFINED || mode == AMD_PSTATE_DISABLE)
++		return -EOPNOTSUPP;
  
- 	rc = target_init_cmd(cmd, ch->sess, &send_ioctx->sense_data[0],
- 			     scsilun_to_int(&srp_cmd->lun), data_len,
--			     TCM_SIMPLE_TAG, dir, TARGET_SCF_ACK_KREF);
-+			     cmd->sam_task_attr, dir, TARGET_SCF_ACK_KREF);
- 	if (rc != 0) {
- 		pr_debug("target_submit_cmd() returned %d for tag %#llx\n", rc,
- 			 srp_cmd->tag);
+ 	for (i = 0; i < arr_size; i++) {
+ 		int ret = amd_pstate_ut_cases[i].func(i);
 -- 
 2.53.0
 
