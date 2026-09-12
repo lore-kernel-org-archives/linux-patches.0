@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132AB3BD659;
-	Sat, 12 Sep 2026 10:59:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA899426D03;
+	Sat, 12 Sep 2026 10:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210756; cv=none; b=BGpZ5KGx9v3JK2CHEnOWShRJt2PyyJFMK2fL8EB7matiMBoZOSWwhWHYHXlCXJdFfLU3Jfvwa9dq9FPRqWFLl9LyYGcD4EY5s+MGmrVHJidmm8N+RUsHE/M1Jj+e/nSx/mqSHqXVPboXBoeAmSqlD4qjDxJKQDJH4f2cifNsFS8=
+	t=1789210760; cv=none; b=QU66NzjwOi8wghyBa+Nr6pB9MDp/DNs8xzLpItpr7Ne2tq97smhjv4UO/7h6IwgFw8KGvzm0iEhEEeRi5wt9vnlHKNUugFfP0ZXEKSKr+/KYqNRdI4wGMzD9GqKE5FN9SzCyi/kSwCMO5Py7PzN3B5QsLBEMuwMgyExx9QK9By8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210756; c=relaxed/simple;
-	bh=o2IGx/98wjFfgbqi0Ra+t0hwu6lE3U/x98A2BDrHEn0=;
+	s=arc-20240116; t=1789210760; c=relaxed/simple;
+	bh=gtpGdhJKULwumqVpskiJSb701Qfno5afFCwOveNvgxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OIZgBGtSxY1AirvH5yo9Wjz+kaEM6Agz55Q3ztoqwSeex0rQ4KUQhtTF3VAKx53XcM+6PYuakJ5Oeptrl+2wzv5gjUH9ahfEhP+lR5RVcD2Q6dsK0F/Ddr2dGfd2uxCsTHpBmUWEgc5CVd2772v8TJUB5Wanef6trgWCsnRCp50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nvKkvyRH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H5wGRZlhA3FfAlkYvSpHFKoWoIw/SufZ/yCao3kjj4/YFXgkE2WRvo83agK7kXCyfr3NrnT+oTb0q70ue6KrQ8kahvPbyxxLQp09jybNKn2QaeiD92odDwQf5qPP+Wzbee45+Z9xRePCCXL8lmtj04XvGh4fs+GW+9VNuA5vQMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQBLIT/V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvKkvyRH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09061F000FF;
-	Sat, 12 Sep 2026 10:59:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQBLIT/V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D161F000FF;
+	Sat, 12 Sep 2026 10:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210755;
-	bh=nvy/i9ly7Z4SOwKc7d8s65vh5exConJE79nLJbgGnTw=;
+	s=korg; t=1789210759;
+	bh=kmYUZF/2gZ8lTBhhk8H/ltUHAHTuwv2EIaFfAaohR30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nvKkvyRHujHtv57SJXjqyH7C3xKxc1P2TUbSy85VjTOQI/FYM5DxcjkBPigxqsGOm
-	 QeFBmAA3OH4zl7C+ghXDw9rt+ooWlDu7Rl6YhJbfdp1MLKbTOSPGpWCRLEUYxllAX4
-	 +DNd2amub0vCporAgauudpyzd55Fb8cc9M8GM7H4=
+	b=eQBLIT/VLy1CO+XxFvynkHwYJ3zAfzvnEd/EgRrIhXnbtydJdQXhdyyy7nydn9RTm
+	 f/b7lINZETxYqLmmfEZUmsHK1Ao7zxCtf5EQzvdgR56iJOtayih5Coez6RJVgwPDc1
+	 +wFYAdtwOha1xAAO7lSx6XFQ4h1Iy5w8E0maRv1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang Luo <luoliang@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1090/1518] selftests/sched_ext: Check skeleton open failure in exit test
-Date: Sat, 12 Sep 2026 08:54:19 +0200
-Message-ID: <20260912065648.109419405@linuxfoundation.org>
+Subject: [PATCH 6.18 1091/1518] amt: Dont support cross-netns setup.
+Date: Sat, 12 Sep 2026 08:54:20 +0200
+Message-ID: <20260912065648.133142282@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,39 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liang Luo <luoliang@kylinos.cn>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 4dc310b41aba43e9d8dfafe46dce86f8b55c0354 ]
+[ Upstream commit e99ecc3046ea5f5c6b5e1f8b4ef854c6c6998e06 ]
 
-exit.c does not check the return value of exit__open(). If it returns
-NULL, which happens when the skeleton wrapper fails to allocate the
-object or open the BPF ELF, the very next line dereferences it via
-SCX_ENUM_INIT(). That macro expands to SCX_ENUM_SET(), which accesses
-skel->rodata, causing a NULL pointer dereference.
+When a lower device is unregistered, amt_device_event() tries
+to unregister its upper AMT device, but it has two problems.
 
-Every other selftest guards this with SCX_FAIL_IF(!skel, ...); exit.c
-is the only one missing it.
+  1. amt_lookup_upper_dev() looks up an upper device in the
+      lower device's netns only
 
-Fixes: a5db7817af78 ("sched_ext: Add selftests")
-Signed-off-by: Liang Luo <luoliang@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+  2. amt_device_event() unregisters a single upper device only
+
+If AMT device is created on a lower device in another netns,
+removing the lower device triggers the splat below and gets
+stuck until all upper devices are removed. [0]
+
+The cross-netns setup seems unintentional considering 1. and
+the following points:
+
+  * amt_link_setup() sets dev->netns_immutable to true
+  * skb_scrub_packet() is not called in the fast path
+  * iproute2 binary fails to find cross-netns lower device via
+    link-netns:
+      # ip -n ns1 link add amt0 link-netns ns2 type amt dev veth1
+      Cannot find device "veth1"
+
+Instead of supporting it properly and preparing for per-netns
+netdev unreg, let's forbid cross-netns setup.
+
+Note that the problem 2. needs a separate fix.
+
+[0]:
+WARNING: net/core/dev.c:12518 at unregister_netdevice_many_notify+0x1cce/0x2250, CPU#48: ip/2031
+Modules linked in:
+CPU: 48 UID: 0 PID: 2031 Comm: ip Not tainted 7.2.0-rc5+ #27 PREEMPT(full)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+RIP: 0010:unregister_netdevice_many_notify (net/core/dev.c:12518)
+Code: 89 ef e8 d5 52 ae fe e9 d0 f4 ff ff 48 8d 3d f9 3b 9c 02 48 c7 c6 c0 0b 63 84 ba ab 1f 00 00 67 48 0f b9 3a e9 65 ff ff ff 90 <0f> 0b 90 eb 81 48 8d 3d f6 3b 9c 02 48 c7 c6 c0 0b 63 84 ba e2 1f
+RSP: 0018:ffffc90004abf160 EFLAGS: 00010212
+RAX: ffff888104d38260 RBX: ffff88800b0911b8 RCX: dffffc0000000000
+RDX: 0000000000000000 RSI: 0000000000000008 RDI: ffffffff85b9f880
+RBP: ffffc90004abf2d0 R08: ffffffff85b9f887 R09: 1ffffffff0b73f10
+R10: dffffc0000000000 R11: fffffbfff0b73f11 R12: ffff88800b091d08
+R13: ffff88800b091178 R14: dffffc0000000000 R15: ffff88800b091000
+FS:  00007f555b86c600(0000) GS:ffff8881942a0000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000562107d489c0 CR3: 0000000109a40002 CR4: 0000000000372ef0
+Call Trace:
+ <TASK>
+ rtnl_dellink (net/core/rtnetlink.c:3632 net/core/rtnetlink.c:3674)
+ rtnetlink_rcv_msg (net/core/rtnetlink.c:7112)
+ netlink_rcv_skb (net/netlink/af_netlink.c:2556)
+ netlink_unicast (net/netlink/af_netlink.c:1319)
+ netlink_sendmsg (net/netlink/af_netlink.c:1900)
+ ____sys_sendmsg (net/socket.c:775)
+ __sys_sendmsg (net/socket.c:2738)
+ do_syscall_64 (arch/x86/entry/syscall_64.c:63)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+...
+unregister_netdevice: waiting for veth0 to become free. Usage count = 7
+ref_tracker: netdev@ffff88800d7496d8 has 3/3 users at
+     __netdev_adjacent_dev_insert (./include/linux/netdevice.h:4525 ./include/linux/netdevice.h:4554 net/core/dev.c:8791)
+     __netdev_upper_dev_link (net/core/dev.c:8879 net/core/dev.c:8963)
+     netdev_upper_dev_link (net/core/dev.c:9009)
+     amt_newlink (drivers/net/amt.c:3321)
+
+Fixes: b9022b53adad ("amt: add control plane of amt interface")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Taehee Yoo <ap420073@gmail.com>
+Link: https://patch.msgid.link/20260807020326.2519445-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/sched_ext/exit.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/amt.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/sched_ext/exit.c b/tools/testing/selftests/sched_ext/exit.c
-index b987611789d16..01b17092d5c8f 100644
---- a/tools/testing/selftests/sched_ext/exit.c
-+++ b/tools/testing/selftests/sched_ext/exit.c
-@@ -31,6 +31,7 @@ static enum scx_test_status run(void *ctx)
- 			continue;
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index 2bc8781f07c2d..01d2223fce09b 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -3221,6 +3221,9 @@ static int amt_newlink(struct net_device *dev,
+ 	struct nlattr **tb = params->tb;
+ 	int err = -EINVAL;
  
- 		skel = exit__open();
-+		SCX_FAIL_IF(!skel, "Failed to open");
- 		SCX_ENUM_INIT(skel);
- 		skel->rodata->exit_point = tc;
- 		SCX_FAIL_IF(exit__load(skel), "Failed to load skel");
++	if (!net_eq(link_net, dev_net(dev)))
++		return err;
++
+ 	amt->net = link_net;
+ 	amt->mode = nla_get_u32(data[IFLA_AMT_MODE]);
+ 
 -- 
 2.53.0
 
