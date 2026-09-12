@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9A3246BCD;
-	Sat, 12 Sep 2026 09:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DA33F1AC6;
+	Sat, 12 Sep 2026 09:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206678; cv=none; b=KiQRpSo/S9yr5gidMhoO4Zy0lkMHNmRnbA4Hi/9YE0b3SqYHb5OErHlrcy7H1/cJ9+LpipznT8qytGWdBcFbakjOQERdPfacS9dMd05OV/S55JsE+CEu7St3D9c9FjG4jYJwzSCG8gCz90GIPO3C3i3W8+aJcoY6uiSSfzNukiY=
+	t=1789206684; cv=none; b=HbynbE5X479KHSPNept1EPsSFEzzbY9Y5asUIpZW4ZGZeNzCcC5SMW7J7kCy3dyeruPGV2Dikuo89YnyhkXkXKnRxYDdJ6AkNVGandjeHKJg7ml//3O6sft1qSu0cvxN1NB2+l9sb4xLXZafgrWLz7cyCt/dGLim0vbppyzZlL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206678; c=relaxed/simple;
-	bh=gdyZEdk8VG9zanJ7OGMe50Nunt7pATXvG3eHKdEjjxI=;
+	s=arc-20240116; t=1789206684; c=relaxed/simple;
+	bh=3hFwarC1wODsQWEaVOPcjdaUK1kV3Xcg72AvuA+iB7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GNYyOWsHyywFUS+7br8/H6WHGYnn4XS2EgsR9VUtIjOdGsxA07XgXauNJlIIpoAZDp9PQfzolqAlfpf0a7aOMBQziTvLXLjYCJBXl1+djeoRQ2w+zygg4wwV8Tj9CgYjbHOl1RETtlDqe35pllKYpKfghhFtecpVGGiLlyspjTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJ8rV/G8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DEERSatIW6evzF01/O9+Jn+eXpkrwdQqLYR4CFfwe+GaV+MlQqNisKai3AWrfgGVn13Vx2jEFcRoO72C2UXaBQ1LTD8sLFv5zGvdCAKEdOIbYASxVMun0OPpyVFI52GYEfgKmQV0e2Bcq+YYnugNIrj22d2zxFu+vI5BzSq4YIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yq8t7zqY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJ8rV/G8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109A31F000FF;
-	Sat, 12 Sep 2026 09:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yq8t7zqY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6AAF1F000FF;
+	Sat, 12 Sep 2026 09:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206675;
-	bh=po1/Yl28xucosBxPjmhW9FHNSoU8W8Haicj3c+H8bAY=;
+	s=korg; t=1789206680;
+	bh=dWt9QwOf475QWop2qLBqroi7mV7LDGoJyl+Rf6duak8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aJ8rV/G801fTTns/QxDUI8StfV1u6RnJu6bKdruQjRLX3W62gGBMqCpKPodQdG9Ag
-	 8sG1zhFetFPxuxF/7s533d4isAhVanfzoD0HcaF9EQW3Wl8F6XFcb67Fbhu+QzhJDT
-	 ki7m4a0uM4tpO/z+O/lECFk3udqz5B5YTMznUVHA=
+	b=Yq8t7zqYKYYjwcIxG6G+7YtbE7dUGzsTRODl1jc6lvbQ7snT5PcOSu3gPQQ6nkGDa
+	 YE8m07p832XaLFx5mR1JzEWFVVATlQqSsFYjDG8mShWILSur1hV8iAGh9q/2L+HJYA
+	 NSovhvFvvwmMz0laMaF1Q8yA+MjZWnhuf+PgFNr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0256/1518] clk: qcom: gdsc: propagate gdsc_enable() failure for ALWAYS_ON domains
-Date: Sat, 12 Sep 2026 08:40:25 +0200
-Message-ID: <20260912065629.274799581@linuxfoundation.org>
+Subject: [PATCH 6.18 0257/1518] clk: qcom: gdsc: tear down per-domain genpds in gdsc_unregister()
+Date: Sat, 12 Sep 2026 08:40:26 +0200
+Message-ID: <20260912065629.296997890@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,59 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Herman van Hazendonk <github.com@herrie.org>
 
-[ Upstream commit eea55fc694e132aacbe2cf4be7f345115e3d1801 ]
+[ Upstream commit 86b23609d5e17a770d03037e53c6a443e742a6e6 ]
 
-GENPD_FLAG_ALWAYS_ON requires the underlying domain to be on at
-genpd_init() time -- the framework will refuse to register the domain
-otherwise. When the cold readback in gdsc_init() finds an ALWAYS_ON
-GDSC powered down, the driver tries to bring it back up:
+gdsc_unregister() removes the OF provider entry and tears down the
+parent/subdomain wiring, but never calls pm_genpd_remove() on the
+individual generic_pm_domain structures registered by gdsc_init():
 
-	} else if (sc->flags & ALWAYS_ON) {
-		/* If ALWAYS_ON GDSCs are not ON, turn them ON */
-		gdsc_enable(&sc->pd);
-		on = true;
+	void gdsc_unregister(struct gdsc_desc *desc)
+	{
+		struct device *dev = desc->dev;
+		size_t num = desc->num;
+
+		gdsc_pm_subdomain_remove(desc, num);
+		of_genpd_del_provider(dev->of_node);
 	}
 
-but discards the return value: if gdsc_enable() fails (regmap write
-error, the long-form sequence's status poll times out, or the
-HW_CTRL hand-off errors) the code still sets on=true and falls
-through to pm_genpd_init(..., !on) -- which then registers the
-domain in the ON state and sets GENPD_FLAG_ALWAYS_ON, even though
-the silicon is actually off. Subsequent consumer probes will see
-genpd report "on" while accessing dead registers and hang or read
-garbage.
+That leaves dangling entries on the global gpd_list. After a provider
+unbind/rebind cycle (deferred-probe replay during early boot, real
+module unload of a clk driver that owns GDSCs, or an OF-overlay tear-
+down) the next gdsc_init() will end up trying to re-register a name
+that is still in the list and pm_genpd_init() returns -EEXIST.
 
-Catch the failure and surface it: returning the error from
-gdsc_init() makes the provider probe fail with the underlying errno,
-which propagates to consumers as -EPROBE_DEFER (or fatal if the
-hardware really is broken) rather than silently lying about the
-rail state.
+While we are here, flip the order so the consumer-facing OF provider
+entry is the first thing removed -- otherwise a fresh
+of_genpd_get_from_provider() call racing with the teardown could
+attach to a domain that is mid-removal.
+
+Iterate the scs[] array and pm_genpd_remove() each registered domain
+after the subdomain links are torn down. The regulators stay devm-
+managed (devm_regulator_get_optional() in gdsc_register()), so the
+release happens automatically when the underlying device is unbound;
+just the genpd accounting needs to be undone explicitly.
 
 Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
-Fixes: fb55bea1fe43 ("clk: qcom: gdsc: Add support for ALWAYS_ON gdscs")
+Fixes: 45dd0e55317c ("clk: qcom: Add support for GDSCs")
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260602140934.796697-3-github.com@herrie.org
+Link: https://lore.kernel.org/r/20260602140934.796697-4-github.com@herrie.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gdsc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gdsc.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index b9b47f584f6d1..a80a489763edc 100644
+index a80a489763edc..71826ccbd9bd1 100644
 --- a/drivers/clk/qcom/gdsc.c
 +++ b/drivers/clk/qcom/gdsc.c
-@@ -481,7 +481,9 @@ static int gdsc_init(struct gdsc *sc)
+@@ -645,10 +645,18 @@ int gdsc_register(struct gdsc_desc *desc,
+ void gdsc_unregister(struct gdsc_desc *desc)
+ {
+ 	struct device *dev = desc->dev;
++	struct gdsc **scs = desc->scs;
+ 	size_t num = desc->num;
++	int i;
  
- 	} else if (sc->flags & ALWAYS_ON) {
- 		/* If ALWAYS_ON GDSCs are not ON, turn them ON */
--		gdsc_enable(&sc->pd);
-+		ret = gdsc_enable(&sc->pd);
-+		if (ret)
-+			return ret;
- 		on = true;
- 	}
+-	gdsc_pm_subdomain_remove(desc, num);
+ 	of_genpd_del_provider(dev->of_node);
++	gdsc_pm_subdomain_remove(desc, num);
++
++	for (i = 0; i < num; i++) {
++		if (!scs[i])
++			continue;
++		pm_genpd_remove(&scs[i]->pd);
++	}
+ }
  
+ /*
 -- 
 2.53.0
 
