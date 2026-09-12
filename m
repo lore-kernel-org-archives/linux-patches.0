@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E7037E2E7;
-	Sat, 12 Sep 2026 12:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBD2366052;
+	Sat, 12 Sep 2026 12:26:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215961; cv=none; b=NNZvNd3I3kEwIsdan/3Oh+Ubpn71hn19ROqSI9YE6jg4DuSpbexTsDLZFvU+xHG4bTSxHi/EvHJUDrHNQdauI7mJOIqbTmet3LBtyU+PdrXc9YQj7gofETv8jBFHcg5JCgZosHPXTWFr9PHvflRcUFPa3K6t9XkzwLbzLAS3mjM=
+	t=1789215966; cv=none; b=eguJnT6R1pbv7OkxUCRHmlXHy81Uyj2d9U/5eZ4ed5mq2j13ghEWRc1RIkkGVCSnfswl2KvOzV8kxOLCELfodVY7h3f+gHKzkuiSkZsca9XSehjbJZQCgfXDYCu+YAP/4qKAy1vg3FtO1RxMeif0kIfmbwn+IqTmaMziY9+/L9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215961; c=relaxed/simple;
-	bh=NWDZcz2FV7yYVk4TL5dhW+eQllB0FQOsT8+39g32KHs=;
+	s=arc-20240116; t=1789215966; c=relaxed/simple;
+	bh=uzsB4s7b3f82TQ4Ta+/90+xNSrZLOlI/OumhHm2wC88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZv5+D1ZyGIe7t+amVXKLRG8Av75n+Gptrw+U9KvWHuka7Bs3DGiKjHLGc0QSp+XKvOIPtiDG76nEDHqEGxZj8/8j7lGLuC0MPncNRqO7oKzAL6wh87tb5yKI5lEmhyH7sLdkPERR9NsQ43NKpCGVOD8Vq81eCYeOpGbPS8jFoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZY98MgwK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WNr4AxNx0IPK+3GvObGOSTFWyqICT6xcTJ0qgOqA0KYbiKglo/gDBj/TPlzEY/gNgiXzkXFiQD3+k2fpYPhJOS2r89S/SkAGHaib35ZRDggcgtukDwcmmTNpyaWDQqpzx+JygG7fTD0HtsLMxbe1oDhLJbJdGl9jxB3o6iggtIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPlJsg17; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZY98MgwK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A6E81F000FF;
-	Sat, 12 Sep 2026 12:25:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPlJsg17"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF41B1F000FF;
+	Sat, 12 Sep 2026 12:26:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215960;
-	bh=RFb6zfSDp03dYL70HePmYmpptd5fIKBcZCDHF9Bzy68=;
+	s=korg; t=1789215965;
+	bh=1WIFQ/ix6P661H0c22y9XJALlvmMzrVZaydqdS8E+6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZY98MgwKvTjRTorKiMYZ1jQ4B67YYSOEJ7zh4S0UGYO4zoNDfj2rNLIfxJdYj6Qts
-	 R/irfTXBl3ynVepVuHuUKSliMOWwtcy6QbDWoYc1e6h7Wb/ds+o4Ka6t67gMsiB7O5
-	 kMBrANUYgaUoM1jVbeRInkPW+FP2640YIBI7zq78=
+	b=RPlJsg17XhFkmV94taWSMGISxG0HZN/RZsXHeooA4/zDc+KyPN5DKDii6hQZ7OgOR
+	 qIUTCxplbedbpaXLxbQeuYYqm1CpBhvpcZxmznqsU6tqV6HHV1Oeg/SyEXIvIcq6Vt
+	 A4G829JGWEoQxyJ7sz/oH+WnQAzxQ4jeoV3djU4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0638/1376] firmware: arm_scmi: Fix requested device removal race
-Date: Sat, 12 Sep 2026 08:51:04 +0200
-Message-ID: <20260912065621.761154138@linuxfoundation.org>
+Subject: [PATCH 6.12 0639/1376] iommu/qcom: Remove sysfs device on probe failure path
+Date: Sat, 12 Sep 2026 08:51:05 +0200
+Message-ID: <20260912065621.783785658@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,84 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit 2c4097e6c4aed276c5e9ec2ab331ab397ea780bf ]
+[ Upstream commit c579f18e79599c16168925cb149e1db3f29eea5f ]
 
-scmi_protocol_device_unrequest() drops scmi_requested_devices_mtx while
-notifying listeners but continues to retain the per-protocol list head.
-When two SCMI drivers for the same protocol unregister concurrently, one
-thread can remove the final request and free the list head while the other
-is running its notifier. The latter then dereferences the freed list head
-after reacquiring the mutex and can free it a second time.
+In qcom_iommu_device_probe(), if iommu_device_register()
+fails, the sysfs device created by iommu_device_sysfs_add()
+is not released. Add a goto label to do the cleanup.
 
-Complete the list and IDR updates, including freeing an empty list head,
-before dropping the mutex. Keep the blocking notifier outside the critical
-section and retain only the detached request across the callback.
-
-Fixes: d3cd7c525fd2 ("firmware: arm_scmi: Refactor protocol device creation")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20260722095250.2011630-1-sudeep.holla@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: 0ae349a0f33f ("iommu/qcom: Add qcom_iommu")
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/bus.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
-index 73a6ab4a224d7..2174d00feb253 100644
---- a/drivers/firmware/arm_scmi/bus.c
-+++ b/drivers/firmware/arm_scmi/bus.c
-@@ -157,6 +157,7 @@ static int scmi_protocol_table_register(const struct scmi_device_id *id_table)
-  */
- static void scmi_protocol_device_unrequest(const struct scmi_device_id *id_table)
- {
-+	struct scmi_requested_dev *rdev, *victim = NULL;
- 	struct list_head *phead;
- 
- 	pr_debug("Unrequesting SCMI device (%s) for protocol %x\n",
-@@ -165,29 +166,28 @@ static void scmi_protocol_device_unrequest(const struct scmi_device_id *id_table
- 	mutex_lock(&scmi_requested_devices_mtx);
- 	phead = idr_find(&scmi_requested_devices, id_table->protocol_id);
- 	if (phead) {
--		struct scmi_requested_dev *victim, *tmp;
--
--		list_for_each_entry_safe(victim, tmp, phead, node) {
--			if (!strcmp(victim->id_table->name, id_table->name)) {
--				list_del(&victim->node);
--
--				mutex_unlock(&scmi_requested_devices_mtx);
--				blocking_notifier_call_chain(&scmi_requested_devices_nh,
--							     SCMI_BUS_NOTIFY_DEVICE_UNREQUEST,
--							     (void *)victim->id_table);
--				kfree(victim);
--				mutex_lock(&scmi_requested_devices_mtx);
-+		list_for_each_entry(rdev, phead, node) {
-+			if (!strcmp(rdev->id_table->name, id_table->name)) {
-+				victim = rdev;
-+				list_del(&rdev->node);
- 				break;
- 			}
- 		}
- 
--		if (list_empty(phead)) {
-+		if (victim && list_empty(phead)) {
- 			idr_remove(&scmi_requested_devices,
- 				   id_table->protocol_id);
- 			kfree(phead);
- 		}
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 8a76b4f46a325..b3cca55c42184 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -860,7 +860,7 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+ 	ret = iommu_device_register(&qcom_iommu->iommu, &qcom_iommu_ops, dev);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register iommu\n");
+-		goto err_pm_disable;
++		goto err_sysfs_remove;
  	}
- 	mutex_unlock(&scmi_requested_devices_mtx);
-+
-+	if (victim) {
-+		blocking_notifier_call_chain(&scmi_requested_devices_nh,
-+					     SCMI_BUS_NOTIFY_DEVICE_UNREQUEST,
-+					     (void *)victim->id_table);
-+		kfree(victim);
-+	}
- }
  
- static void
+ 	if (qcom_iommu->local_base) {
+@@ -871,6 +871,8 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+ 
+ 	return 0;
+ 
++err_sysfs_remove:
++	iommu_device_sysfs_remove(&qcom_iommu->iommu);
+ err_pm_disable:
+ 	pm_runtime_disable(dev);
+ 	return ret;
 -- 
 2.53.0
 
