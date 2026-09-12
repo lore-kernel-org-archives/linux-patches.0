@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6105541F5D5;
-	Sat, 12 Sep 2026 13:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2E3381AF4;
+	Sat, 12 Sep 2026 13:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221350; cv=none; b=Xdx0N2PZadyCOTpd5Lp+CYxdojPTMETKE5vM+PGU4rx72+yjNueu8uCN2YSeUVSFhGOvbYnBon7WI1ONJoF8lqafs4J9Jhkd21QIwCWrdWopTDKZdCkEDH+QSyliZN5frgA22t4tdImTwEPpQrlP1KjAcICFpiigOjvd+52727I=
+	t=1789221353; cv=none; b=oWajEYVy82Am3pVhxxIfWazl7EiR7eAxJkorafo0aIB4/beIKwnVoTr03bk+rSPhH+ioSkXs9mxX0CRnj8XhNPEcpGtIG0QtxEYY87OwRxHiuEFz+7KdTVZQuK25H0RHvpKVPuG0I8tY9kSYSXdwOXSsxKLgTY3mWW8YG++hobo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221350; c=relaxed/simple;
-	bh=oKPpDdUgreTxRj46mH6IgCL4u0mFr1RzWZc0Erse6yM=;
+	s=arc-20240116; t=1789221353; c=relaxed/simple;
+	bh=TRLrhyc+jNJBsZnxTi2DJE3jV2sFnBSbB1AOT3TKYZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QTMFTyUPxrRI88Vs1gB6tIYp08JVYltyyFh5Lhl4HCfH9e6PVlkkq9HvqasTOzB0OfJk3B+d2kPDs+HtPBbX0l8bkal+VhiW/jKPrrSYK27UvFoadUlaBd3T09P91tWSMzWg74Q3QtbORoFgJkLYQlZUWS7TV/Nd0AU9MaxCkjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEp9FPpH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WCpmmfql+Spz3hmC7NDesj0XERjL/IzqSY7ONGLdX7rPAinxuN/J0bcjEI810+cSlTGOFu0HKkJ3TA9rDv4N+M5nCzQ6onwDjpXybsKLiPl9wAxKaaDFgWmkZvtSpr6a2jt80x2Dkqif/Pbv5A+ugjb29WXdjbHX7GbmtDHoCdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GI8IFE9O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEp9FPpH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47EF1F00893;
-	Sat, 12 Sep 2026 13:55:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GI8IFE9O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9801F000FF;
+	Sat, 12 Sep 2026 13:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221342;
-	bh=EytY4CNp8DrVV1AhxfI94InmsmYpKxj6ikncYiJRg8c=;
+	s=korg; t=1789221347;
+	bh=kmpn4lZokL1nOHi7iOWw31sM1tyXUjZKTZ74E84PsrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BEp9FPpHBn0iyoianvcw92B4uOS8E6zCsX4F1q3TWvm4qGTDpy44I6x+uORX+wefN
-	 KR2qaDhhfCVtnEq1z44MFH6PGMeo54j/LGJpDBKvv/JRRiRJyEesVEPfSSjjr+jjCw
-	 atWJFnkq0vOkmrRnRNFjYA7KYs+7e3jt/PdQglJ4=
+	b=GI8IFE9OmvfIdWDKVenrCmleGwgWIGDn4Rugkm+PbRP+RBPVuXuFlbXpKb2CZeAcE
+	 BFHBzoKM7sdLtu2BeDTllyZXwMiN+sCDlSe/qpqFeubwNz16qZv0DoDSmAF0ctnYFE
+	 XmQMk29zhH12ZjoXfU7zyqeHFME7ma/h8lKcQ//Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 0346/1424] mm/damon/sysfs-schemes: kobject_del() scheme region dirs
-Date: Sat, 12 Sep 2026 08:46:18 +0200
-Message-ID: <20260912065615.038470869@linuxfoundation.org>
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.6 0364/1424] rtc: rzn1: Disable alarm interrupt before reprogramming alarm registers
+Date: Sat, 12 Sep 2026 08:46:36 +0200
+Message-ID: <20260912065615.440666512@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,37 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-commit f3ec3271210781c255e737498b84d5790e8176b4 upstream.
+commit 51458d5b0a1cfb1b6013400abc95aadf16ed2a57 upstream.
 
-On CONFIG_DEBUG_KOBJECT_RELEASE enabled kernel, lack of kobject_del()
-could cause directories creation failures due to the name conflicts.  Fix
-those issues for scheme region directories by adding kobject_del() calls.
+rzn1_rtc_set_alarm() updates RZN1_RTC_ALM, RZN1_RTC_ALH and
+RZN1_RTC_ALW using separate MMIO writes without first disabling the
+alarm interrupt. If a previous alarm is still enabled, the interrupt
+can fire while the alarm registers contain a mixture of old and newly
+written values.
 
-This issue was discovered [1] by Sashiko, though its analysis was
-partially incorrect.
+Fix this by disabling the alarm interrupt before reprogramming ALM, ALH
+and ALW with a call to rzn1_rtc_alarm_irq_enable().
 
-Link: https://lore.kernel.org/20260628220121.97360-5-sj@kernel.org
-Link: https://lore.kernel.org/20260517205828.6204-1-sj@kernel.org [1]
-Fixes: 9277d0367ba1 ("mm/damon/sysfs-schemes: implement scheme region directory")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.2.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: b5ad1bf00d2c4 ("rtc: rzn1: Add alarm support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://patch.msgid.link/20260821211032.13554-7-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs-schemes.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/rtc/rtc-rzn1.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -151,6 +151,7 @@ static void damon_sysfs_scheme_regions_r
+--- a/drivers/rtc/rtc-rzn1.c
++++ b/drivers/rtc/rtc-rzn1.c
+@@ -231,6 +231,11 @@ static int rzn1_rtc_set_alarm(struct dev
+ 	if (time_after(alarm, farest))
+ 		return -ERANGE;
  
- 	list_for_each_entry_safe(r, next, &regions->regions_list, list) {
- 		list_del(&r->list);
-+		kobject_del(&r->kobj);
- 		kobject_put(&r->kobj);
- 		regions->nr_regions--;
- 	}
++	/* Disable alarm interrupts before reprogramming the alarm. */
++	ret = rzn1_rtc_alarm_irq_enable(dev, 0);
++	if (ret)
++		return ret;
++
+ 	writel(bin2bcd(tm->tm_min), rtc->base + RZN1_RTC_ALM);
+ 	writel(bin2bcd(tm->tm_hour), rtc->base + RZN1_RTC_ALH);
+ 	writel(BIT(tm->tm_wday), rtc->base + RZN1_RTC_ALW);
 
 
