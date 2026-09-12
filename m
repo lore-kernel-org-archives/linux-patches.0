@@ -1,49 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1083B2FDC30;
-	Sat, 12 Sep 2026 14:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825562D739C;
+	Sat, 12 Sep 2026 14:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224741; cv=none; b=i6BfZYm8BBHiz5K/+oIfnPSHFeiqwxO4exIfa9ogwoUzyx5/Du50qV2+7fGOlGb3uP7jzSctHSGZvMs0y6x3+96gwzC2FaCYr0J7dsI7NYflZKfCIr/rb/QcTvY7lIAoyP50/SWiRO97OFfREwNvdMcx56EgYw55qfKyU2XgtTE=
+	t=1789224746; cv=none; b=L4TUqRbTS96IpziMxHmrMlKYyoVJlpFMAF6TguXsK16muYTPJLRPT0A6saP7W8RdUibQZR0UogXIpbGTavGYHX2aY5cvbO2fFZ270FWbU95DAje5uEOXMHFVaMfnsz8jNFcNX/5E+a+lE3KhxBTO24Tm7LTeGbzrTcpTvEDWdMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224741; c=relaxed/simple;
-	bh=bbv+tUdldgUwlcVjheuxdwVqbAo0q7eVTc5tpx1McMA=;
+	s=arc-20240116; t=1789224746; c=relaxed/simple;
+	bh=bEDXCOZduTdVt0598jHAgEmG7xqSd/+T0AO9qHNie3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rx0/sAzQaCX843QARjhWI7hSAyrPDSf+sLkTUEl+KS+VrXezGR6isIGnxCA8YiqHf3gGandr7nnFr3jCBMlyzS3SWJSPS/B8hLUNHYGZLEXouwBIvAgpkx6PQD8p9TkmijUVJEGTUS8mSsElF0X8nbApUbPZAuos4cq4HB3oVqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjszKrzS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mIECRBaN7UmRqJGsYZYo1xGCrA9BggZUHfjdH+Ql9wxcgiaZStzZmrABvhYxDg5nahDQUb5Kgr6HY2KdsjWKSCHi3fIyt/yKPLnbPUM4HKuCncawuFzOGKM/jqXnnu9Gn7sGrijyihhKzPW0ayCD4G3YhZg2J6VwuqH3ssPcSNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kIE016Hn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjszKrzS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84EDF1F00893;
-	Sat, 12 Sep 2026 14:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kIE016Hn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C441F000FF;
+	Sat, 12 Sep 2026 14:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224739;
-	bh=BZzXNUxtBeTJMSw9mhCx8oJzxqmOAgZfINRMIhl6SeI=;
+	s=korg; t=1789224744;
+	bh=F76gvAnEfOCDmusmszE/YM/Sq098eLqspaHc4wWvO/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yjszKrzS4vKsY94ARZ1WEIi84zJCzjxneapCK42j3JFLXlu1ZCEIXVDXnZIKT73Kt
-	 ZkQ03GQEHHgg5tD/hvO1wSq/fDBm+xzxIkhl/Eal5uuRfEyTKSW0HQ8jSWxg06s4Me
-	 sxbSX4QkW2r4YElzfomWUiy6VtsOfKm2LJEpgPSE=
+	b=kIE016Hnwrxgq3IoGo4D3ZdNCmcIqHxq2vglg2MrC4BaNZziV9H0GQ7w9GK844pMf
+	 wr0Jqqj2lcqJNXDj5lkhnjlCR4FtSVPeV2b/Z3xD4y5oDWtMDjrwxkPMl+wD+pbkOT
+	 q1Vl9vO9SGvletMCENMqqtF8b9l0GKCrOWu7a8Mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Wang <liwang@redhat.com>,
-	Aruna Ramakrishna <aruna.ramakrishna@oracle.com>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	David Hildenbrand <david@redhat.com>,
-	Joey Gouly <joey.gouly@arm.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Keith Lucas <keith.lucas@oracle.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Donet Tom <donettom@linux.ibm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sarthak Sharma <sarthak.sharma@arm.com>,
+	Luiz Capitulino <luizcap@redhat.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
+	Liam Howlett <liam@infradead.org>,
+	Li Wang <li.wang@linux.dev>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Nico Pache <npache@redhat.com>,
+	Peter Xu <peterx@redhat.com>,
 	Ryan Roberts <ryan.roberts@arm.com>,
 	Shuah Khan <shuah@kernel.org>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1056/1424] ksm_tests: skip hugepage test when Transparent Hugepages are disabled
-Date: Sat, 12 Sep 2026 08:58:08 +0200
-Message-ID: <20260912065630.954889331@linuxfoundation.org>
+Subject: [PATCH 6.6 1057/1424] selftests/mm: ksm_tests: use kselftest framework
+Date: Sat, 12 Sep 2026 08:58:09 +0200
+Message-ID: <20260912065630.978233009@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -62,243 +74,580 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Wang <liwang@redhat.com>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-[ Upstream commit fdc3bc3497946c6b416a17628907581657102e60 ]
+[ Upstream commit 4cc68d5f52de9614e2db70f43c52f012d1ebb5ad ]
 
-Some systems (e.g.  minimal or real-time kernels) may not enable
-Transparent Hugepages (THP), causing MADV_HUGEPAGE to return EINVAL.  This
-patch introduces a runtime check using the existing THP sysfs interface
-and skips the hugepage merging test (`-H`) when THP is not available.
+Convert ksm_tests to use kselftest framework for reporting and tracking
+successful and failing runs.
 
-To avoid those failures:
-
-  # -----------------------------
-  # running ./ksm_tests -H -s 100
-  # -----------------------------
-  # ksm_tests: MADV_HUGEPAGE: Invalid argument
-  # [FAIL]
-  not ok 1 ksm_tests -H -s 100 # exit=2
-
-  # --------------------
-  # running ./khugepaged
-  # --------------------
-  # Reading PMD pagesize failed# [FAIL]
-  not ok 1 khugepaged # exit=1
-
-  # --------------------
-  # running ./soft-dirty
-  # --------------------
-  # TAP version 13
-  # 1..15
-  # ok 1 Test test_simple
-  # ok 2 Test test_vma_reuse dirty bit of allocated page
-  # ok 3 Test test_vma_reuse dirty bit of reused address page
-  # Bail out! Reading PMD pagesize failed# Planned tests != run tests (15 != 3)
-  # # Totals: pass:3 fail:0 xfail:0 xpass:0 skip:0 error:0
-  # [FAIL]
-  not ok 1 soft-dirty # exit=1
-  # SUMMARY: PASS=0 SKIP=0 FAIL=1
-
-  # -------------------
-  # running ./migration
-  # -------------------
-  # TAP version 13
-  # 1..3
-  # # Starting 3 tests from 1 test cases.
-  # #  RUN           migration.private_anon ...
-  # #            OK  migration.private_anon
-  # ok 1 migration.private_anon
-  # #  RUN           migration.shared_anon ...
-  # #            OK  migration.shared_anon
-  # ok 2 migration.shared_anon
-  # #  RUN           migration.private_anon_thp ...
-  # # migration.c:196:private_anon_thp:Expected madvise(ptr, TWOMEG, MADV_HUGEPAGE) (-1) == 0 (0)
-  # # private_anon_thp: Test terminated by assertion
-  # #          FAIL  migration.private_anon_thp
-  # not ok 3 migration.private_anon_thp
-  # # FAILED: 2 / 3 tests passed.
-  # # Totals: pass:2 fail:1 xfail:0 xpass:0 skip:0 error:0
-  # [FAIL]
-  not ok 1 migration # exit=1
-
-It's true that CONFIG_TRANSPARENT_HUGEPAGE=y is explicitly enabled in
-tools/testing/selftests/mm/config, so ideally the runtime environment
-should also support THP.
-
-However, in practice, we've found that on some systems:
-
-- THP is disabled at boot time (transparent_hugepage=never)
-- Or manually disabled via sysfs
-- Or unavailable in RT kernels, containers, or minimal CI environments
-
-In these cases, the test will fail with EINVAL on madvise(MADV_HUGEPAGE),
-even though the kernel config is correct.
-
-To make the test suite more robust and avoid false negatives, this patch
-adds a runtime check for /sys/kernel/mm/transparent_hugepage/enabled.
-
-If THP is not available, the hugepage test (-H) is skipped with a clear
-message.
-
-Link: https://lkml.kernel.org/r/20250624032748.393836-1-liwang@redhat.com
-Signed-off-by: Li Wang <liwang@redhat.com>
-Cc: Aruna Ramakrishna <aruna.ramakrishna@oracle.com>
-Cc: Bagas Sanjaya <bagasdotme@gmail.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Joey Gouly <joey.gouly@arm.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Keith Lucas <keith.lucas@oracle.com>
+Link: https://lore.kernel.org/20260511162840.375890-16-rppt@kernel.org
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Donet Tom <donettom@linux.ibm.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Tested-by: Sarthak Sharma <sarthak.sharma@arm.com>
+Tested-by: Luiz Capitulino <luizcap@redhat.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: Liam Howlett <liam@infradead.org>
+Cc: Li Wang <li.wang@linux.dev>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>
 Cc: Ryan Roberts <ryan.roberts@arm.com>
 Cc: Shuah Khan <shuah@kernel.org>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Zi Yan <ziy@nvidia.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: 15828a150c58 ("selftests/mm: fix ksm NUMA merge test for systems with memoryless NUMA nodes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/khugepaged.c   |  5 +++++
- tools/testing/selftests/mm/ksm_tests.c    |  6 ++++++
- tools/testing/selftests/mm/migration.c    |  8 ++++++++
- tools/testing/selftests/mm/soft-dirty.c   |  9 ++++++++-
- tools/testing/selftests/mm/thp_settings.c | 11 +++++++++++
- tools/testing/selftests/mm/thp_settings.h |  2 ++
- 6 files changed, 40 insertions(+), 1 deletion(-)
+ tools/testing/selftests/mm/ksm_tests.c | 180 +++++++++++--------------
+ 1 file changed, 81 insertions(+), 99 deletions(-)
 
-diff --git a/tools/testing/selftests/mm/khugepaged.c b/tools/testing/selftests/mm/khugepaged.c
-index 56d4480e8d3cb..25def60201fea 100644
---- a/tools/testing/selftests/mm/khugepaged.c
-+++ b/tools/testing/selftests/mm/khugepaged.c
-@@ -1190,6 +1190,11 @@ int main(int argc, char **argv)
- 		.read_ahead_kb = 0,
- 	};
- 
-+	if (!thp_is_enabled()) {
-+		printf("Transparent Hugepages not available\n");
-+		return KSFT_SKIP;
-+	}
-+
- 	parse_test_type(argc, argv);
- 
- 	setbuf(stdout, NULL);
 diff --git a/tools/testing/selftests/mm/ksm_tests.c b/tools/testing/selftests/mm/ksm_tests.c
-index b748c48908d9d..faa3d053994df 100644
+index faa3d053994df..d99a6bff6344c 100644
 --- a/tools/testing/selftests/mm/ksm_tests.c
 +++ b/tools/testing/selftests/mm/ksm_tests.c
-@@ -15,6 +15,7 @@
- #include "../kselftest.h"
- #include <include/vdso/time64.h>
- #include "vm_util.h"
-+#include "thp_settings.h"
+@@ -203,12 +203,12 @@ static void  *allocate_memory(void *ptr, int prot, int mapping, char data, size_
+ 	void *map_ptr = mmap(ptr, map_size, PROT_WRITE, mapping, -1, 0);
  
- #define KSM_SYSFS_PATH "/sys/kernel/mm/ksm/"
- #define KSM_FP(s) (KSM_SYSFS_PATH s)
-@@ -555,6 +556,11 @@ static int ksm_merge_hugepages_time(int merge_type, int mapping, int prot,
- 	unsigned long scan_time_ns;
+ 	if (!map_ptr) {
+-		perror("mmap");
++		ksft_perror("mmap");
+ 		return NULL;
+ 	}
+ 	memset(map_ptr, data, map_size);
+ 	if (mprotect(map_ptr, map_size, prot)) {
+-		perror("mprotect");
++		ksft_perror("mprotect");
+ 		munmap(map_ptr, map_size);
+ 		return NULL;
+ 	}
+@@ -229,11 +229,11 @@ static int ksm_do_scan(int scan_count, struct timespec start_time, int timeout)
+ 		if (ksm_read_sysfs(KSM_FP("full_scans"), &cur_scan))
+ 			return 1;
+ 		if (clock_gettime(CLOCK_MONOTONIC_RAW, &cur_time)) {
+-			perror("clock_gettime");
++			ksft_perror("clock_gettime");
+ 			return 1;
+ 		}
+ 		if ((cur_time.tv_sec - start_time.tv_sec) > timeout) {
+-			printf("Scan time limit exceeded\n");
++			ksft_print_msg("Scan time limit exceeded\n");
+ 			return 1;
+ 		}
+ 	}
+@@ -246,12 +246,12 @@ static int ksm_merge_pages(int merge_type, void *addr, size_t size,
+ {
+ 	if (merge_type == KSM_MERGE_MADVISE) {
+ 		if (madvise(addr, size, MADV_MERGEABLE)) {
+-			perror("madvise");
++			ksft_perror("madvise");
+ 			return 1;
+ 		}
+ 	} else if (merge_type == KSM_MERGE_PRCTL) {
+ 		if (prctl(PR_SET_MEMORY_MERGE, 1, 0, 0, 0)) {
+-			perror("prctl");
++			ksft_perror("prctl");
+ 			return 1;
+ 		}
+ 	}
+@@ -270,7 +270,7 @@ static int ksm_unmerge_pages(void *addr, size_t size,
+ 			     struct timespec start_time, int timeout)
+ {
+ 	if (madvise(addr, size, MADV_UNMERGEABLE)) {
+-		perror("madvise");
++		ksft_perror("madvise");
+ 		return 1;
+ 	}
+ 	return 0;
+@@ -352,7 +352,7 @@ static int check_ksm_merge(int merge_type, int mapping, int prot,
+ 	struct timespec start_time;
+ 
+ 	if (clock_gettime(CLOCK_MONOTONIC_RAW, &start_time)) {
+-		perror("clock_gettime");
++		ksft_perror("clock_gettime");
+ 		return KSFT_FAIL;
+ 	}
+ 
+@@ -366,7 +366,6 @@ static int check_ksm_merge(int merge_type, int mapping, int prot,
+ 
+ 	/* verify that the right number of pages are merged */
+ 	if (assert_ksm_pages_count(page_count)) {
+-		printf("OK\n");
+ 		munmap(map_ptr, page_size * page_count);
+ 		if (merge_type == KSM_MERGE_PRCTL)
+ 			prctl(PR_SET_MEMORY_MERGE, 0, 0, 0, 0);
+@@ -374,7 +373,6 @@ static int check_ksm_merge(int merge_type, int mapping, int prot,
+ 	}
+ 
+ err_out:
+-	printf("Not OK\n");
+ 	munmap(map_ptr, page_size * page_count);
+ 	return KSFT_FAIL;
+ }
+@@ -386,7 +384,7 @@ static int check_ksm_unmerge(int merge_type, int mapping, int prot, int timeout,
+ 	int page_count = 2;
+ 
+ 	if (clock_gettime(CLOCK_MONOTONIC_RAW, &start_time)) {
+-		perror("clock_gettime");
++		ksft_perror("clock_gettime");
+ 		return KSFT_FAIL;
+ 	}
+ 
+@@ -408,13 +406,11 @@ static int check_ksm_unmerge(int merge_type, int mapping, int prot, int timeout,
+ 
+ 	/* check that unmerging was successful and 0 pages are currently merged */
+ 	if (assert_ksm_pages_count(0)) {
+-		printf("OK\n");
+ 		munmap(map_ptr, page_size * page_count);
+ 		return KSFT_PASS;
+ 	}
+ 
+ err_out:
+-	printf("Not OK\n");
+ 	munmap(map_ptr, page_size * page_count);
+ 	return KSFT_FAIL;
+ }
+@@ -426,7 +422,7 @@ static int check_ksm_zero_page_merge(int merge_type, int mapping, int prot, long
+ 	struct timespec start_time;
+ 
+ 	if (clock_gettime(CLOCK_MONOTONIC_RAW, &start_time)) {
+-		perror("clock_gettime");
++		ksft_perror("clock_gettime");
+ 		return KSFT_FAIL;
+ 	}
+ 
+@@ -453,12 +449,10 @@ static int check_ksm_zero_page_merge(int merge_type, int mapping, int prot, long
+ 	else if (!use_zero_pages && !assert_ksm_pages_count(page_count))
+ 		goto err_out;
+ 
+-	printf("OK\n");
+ 	munmap(map_ptr, page_size * page_count);
+ 	return KSFT_PASS;
+ 
+ err_out:
+-	printf("Not OK\n");
+ 	munmap(map_ptr, page_size * page_count);
+ 	return KSFT_FAIL;
+ }
+@@ -493,16 +487,16 @@ static int check_ksm_numa_merge(int merge_type, int mapping, int prot, int timeo
+ 	int first_node;
+ 
+ 	if (clock_gettime(CLOCK_MONOTONIC_RAW, &start_time)) {
+-		perror("clock_gettime");
++		ksft_perror("clock_gettime");
+ 		return KSFT_FAIL;
+ 	}
+ 
+ 	if (numa_available() < 0) {
+-		perror("NUMA support not enabled");
++		ksft_print_msg("NUMA support not enabled\n");
+ 		return KSFT_SKIP;
+ 	}
+ 	if (numa_num_configured_nodes() <= 1) {
+-		printf("At least 2 NUMA nodes must be available\n");
++		ksft_print_msg("At least 2 NUMA nodes must be available\n");
+ 		return KSFT_SKIP;
+ 	}
+ 	if (ksm_write_sysfs(KSM_FP("merge_across_nodes"), merge_across_nodes))
+@@ -513,7 +507,7 @@ static int check_ksm_numa_merge(int merge_type, int mapping, int prot, int timeo
+ 	numa1_map_ptr = numa_alloc_onnode(page_size, first_node);
+ 	numa2_map_ptr = numa_alloc_onnode(page_size, get_next_mem_node(first_node));
+ 	if (!numa1_map_ptr || !numa2_map_ptr) {
+-		perror("numa_alloc_onnode");
++		ksft_perror("numa_alloc_onnode");
+ 		return KSFT_FAIL;
+ 	}
+ 
+@@ -538,13 +532,11 @@ static int check_ksm_numa_merge(int merge_type, int mapping, int prot, int timeo
+ 
+ 	numa_free(numa1_map_ptr, page_size);
+ 	numa_free(numa2_map_ptr, page_size);
+-	printf("OK\n");
+ 	return KSFT_PASS;
+ 
+ err_out:
+ 	numa_free(numa1_map_ptr, page_size);
+ 	numa_free(numa2_map_ptr, page_size);
+-	printf("Not OK\n");
+ 	return KSFT_FAIL;
+ }
+ 
+@@ -557,7 +549,7 @@ static int ksm_merge_hugepages_time(int merge_type, int mapping, int prot,
  	int pagemap_fd, n_normal_pages, n_huge_pages;
  
-+	if (!thp_is_enabled()) {
-+		printf("Transparent Hugepages not available\n");
-+		return KSFT_SKIP;
-+	}
-+
- 	map_size *= MB;
- 	size_t len = map_size;
+ 	if (!thp_is_enabled()) {
+-		printf("Transparent Hugepages not available\n");
++		ksft_print_msg("Transparent Hugepages not available\n");
+ 		return KSFT_SKIP;
+ 	}
  
-diff --git a/tools/testing/selftests/mm/migration.c b/tools/testing/selftests/mm/migration.c
-index d0854ecb139a6..0faeead0113bb 100644
---- a/tools/testing/selftests/mm/migration.c
-+++ b/tools/testing/selftests/mm/migration.c
-@@ -5,6 +5,8 @@
-  */
+@@ -587,36 +579,35 @@ static int ksm_merge_hugepages_time(int merge_type, int mapping, int prot,
+ 		else
+ 			n_huge_pages++;
+ 	}
+-	printf("Number of normal pages:    %d\n", n_normal_pages);
+-	printf("Number of huge pages:    %d\n", n_huge_pages);
++	ksft_print_msg("Number of normal pages:    %d\n", n_normal_pages);
++	ksft_print_msg("Number of huge pages:    %d\n", n_huge_pages);
  
- #include "../kselftest_harness.h"
-+#include "thp_settings.h"
-+
- #include <strings.h>
- #include <pthread.h>
- #include <numa.h>
-@@ -181,6 +183,9 @@ TEST_F_TIMEOUT(migration, private_anon_thp, 2*RUNTIME)
- 	uint64_t *ptr;
- 	int i;
+ 	memset(map_ptr, '*', len);
  
-+	if (!thp_is_enabled())
-+		SKIP(return, "Transparent Hugepages not available");
-+
- 	if (self->nthreads < 2 || self->n1 < 0 || self->n2 < 0)
- 		SKIP(return, "Not enough threads or NUMA nodes available");
+ 	if (clock_gettime(CLOCK_MONOTONIC_RAW, &start_time)) {
+-		perror("clock_gettime");
++		ksft_perror("clock_gettime");
+ 		goto err_out;
+ 	}
+ 	if (ksm_merge_pages(merge_type, map_ptr, map_size, start_time, timeout))
+ 		goto err_out;
+ 	if (clock_gettime(CLOCK_MONOTONIC_RAW, &end_time)) {
+-		perror("clock_gettime");
++		ksft_perror("clock_gettime");
+ 		goto err_out;
+ 	}
  
-@@ -210,6 +215,9 @@ TEST_F_TIMEOUT(migration, shared_anon_thp, 2*RUNTIME)
- 	uint64_t *ptr;
- 	int i;
+ 	scan_time_ns = (end_time.tv_sec - start_time.tv_sec) * NSEC_PER_SEC +
+ 		       (end_time.tv_nsec - start_time.tv_nsec);
  
-+	if (!thp_is_enabled())
-+		SKIP(return, "Transparent Hugepages not available");
-+
- 	if (self->nthreads < 2 || self->n1 < 0 || self->n2 < 0)
- 		SKIP(return, "Not enough threads or NUMA nodes available");
+-	printf("Total size:    %lu MiB\n", map_size / MB);
+-	printf("Total time:    %ld.%09ld s\n", scan_time_ns / NSEC_PER_SEC,
++	ksft_print_msg("Total size:    %lu MiB\n", map_size / MB);
++	ksft_print_msg("Total time:    %ld.%09ld s\n", scan_time_ns / NSEC_PER_SEC,
+ 	       scan_time_ns % NSEC_PER_SEC);
+-	printf("Average speed:  %.3f MiB/s\n", (map_size / MB) /
++	ksft_print_msg("Average speed:  %.3f MiB/s\n", (map_size / MB) /
+ 					       ((double)scan_time_ns / NSEC_PER_SEC));
  
-diff --git a/tools/testing/selftests/mm/soft-dirty.c b/tools/testing/selftests/mm/soft-dirty.c
-index 7095b95d19ae2..bfc2cb06af4eb 100644
---- a/tools/testing/selftests/mm/soft-dirty.c
-+++ b/tools/testing/selftests/mm/soft-dirty.c
-@@ -6,8 +6,10 @@
- #include <stdint.h>
- #include <malloc.h>
- #include <sys/mman.h>
-+
- #include "../kselftest.h"
- #include "vm_util.h"
-+#include "thp_settings.h"
+ 	munmap(map_ptr_orig, len + HPAGE_SIZE);
+ 	return KSFT_PASS;
  
- #define PAGEMAP_FILE_PATH "/proc/self/pagemap"
- #define TEST_ITERATIONS 10000
-@@ -78,8 +80,13 @@ static void test_hugepage(int pagemap_fd, int pagesize)
- {
- 	char *map;
- 	int i, ret;
--	size_t hpage_len = read_pmd_pagesize();
- 
-+	if (!thp_is_enabled()) {
-+		ksft_test_result_skip("Transparent Hugepages not available\n");
-+		return;
-+	}
-+
-+	size_t hpage_len = read_pmd_pagesize();
- 	if (!hpage_len)
- 		ksft_exit_fail_msg("Reading PMD pagesize failed");
- 
-diff --git a/tools/testing/selftests/mm/thp_settings.c b/tools/testing/selftests/mm/thp_settings.c
-index 577eaab6266fd..38f70155bfbf1 100644
---- a/tools/testing/selftests/mm/thp_settings.c
-+++ b/tools/testing/selftests/mm/thp_settings.c
-@@ -381,3 +381,14 @@ unsigned long thp_shmem_supported_orders(void)
- {
- 	return __thp_supported_orders(true);
+ err_out:
+-	printf("Not OK\n");
+ 	munmap(map_ptr_orig, len + HPAGE_SIZE);
+ 	return KSFT_FAIL;
  }
-+
-+bool thp_is_enabled(void)
-+{
-+	if (access(THP_SYSFS, F_OK) != 0)
-+		return false;
-+
-+	int mode = thp_read_string("enabled", thp_enabled_strings);
-+
-+	/* THP is considered enabled if it's either "always" or "madvise" */
-+	return mode == 1 || mode == 3;
-+}
-diff --git a/tools/testing/selftests/mm/thp_settings.h b/tools/testing/selftests/mm/thp_settings.h
-index 876235a23460c..079a58a662b0e 100644
---- a/tools/testing/selftests/mm/thp_settings.h
-+++ b/tools/testing/selftests/mm/thp_settings.h
-@@ -84,4 +84,6 @@ void thp_set_read_ahead_path(char *path);
- unsigned long thp_supported_orders(void);
- unsigned long thp_shmem_supported_orders(void);
+@@ -634,30 +625,29 @@ static int ksm_merge_time(int merge_type, int mapping, int prot, int timeout, si
+ 		return KSFT_FAIL;
  
-+bool thp_is_enabled(void);
+ 	if (clock_gettime(CLOCK_MONOTONIC_RAW, &start_time)) {
+-		perror("clock_gettime");
++		ksft_perror("clock_gettime");
+ 		goto err_out;
+ 	}
+ 	if (ksm_merge_pages(merge_type, map_ptr, map_size, start_time, timeout))
+ 		goto err_out;
+ 	if (clock_gettime(CLOCK_MONOTONIC_RAW, &end_time)) {
+-		perror("clock_gettime");
++		ksft_perror("clock_gettime");
+ 		goto err_out;
+ 	}
+ 
+ 	scan_time_ns = (end_time.tv_sec - start_time.tv_sec) * NSEC_PER_SEC +
+ 		       (end_time.tv_nsec - start_time.tv_nsec);
+ 
+-	printf("Total size:    %lu MiB\n", map_size / MB);
+-	printf("Total time:    %ld.%09ld s\n", scan_time_ns / NSEC_PER_SEC,
++	ksft_print_msg("Total size:    %lu MiB\n", map_size / MB);
++	ksft_print_msg("Total time:    %ld.%09ld s\n", scan_time_ns / NSEC_PER_SEC,
+ 	       scan_time_ns % NSEC_PER_SEC);
+-	printf("Average speed:  %.3f MiB/s\n", (map_size / MB) /
++	ksft_print_msg("Average speed:  %.3f MiB/s\n", (map_size / MB) /
+ 					       ((double)scan_time_ns / NSEC_PER_SEC));
+ 
+ 	munmap(map_ptr, map_size);
+ 	return KSFT_PASS;
+ 
+ err_out:
+-	printf("Not OK\n");
+ 	munmap(map_ptr, map_size);
+ 	return KSFT_FAIL;
+ }
+@@ -674,37 +664,36 @@ static int ksm_unmerge_time(int merge_type, int mapping, int prot, int timeout,
+ 	if (!map_ptr)
+ 		return KSFT_FAIL;
+ 	if (clock_gettime(CLOCK_MONOTONIC_RAW, &start_time)) {
+-		perror("clock_gettime");
++		ksft_perror("clock_gettime");
+ 		goto err_out;
+ 	}
+ 	if (ksm_merge_pages(merge_type, map_ptr, map_size, start_time, timeout))
+ 		goto err_out;
+ 
+ 	if (clock_gettime(CLOCK_MONOTONIC_RAW, &start_time)) {
+-		perror("clock_gettime");
++		ksft_perror("clock_gettime");
+ 		goto err_out;
+ 	}
+ 	if (ksm_unmerge_pages(map_ptr, map_size, start_time, timeout))
+ 		goto err_out;
+ 	if (clock_gettime(CLOCK_MONOTONIC_RAW, &end_time)) {
+-		perror("clock_gettime");
++		ksft_perror("clock_gettime");
+ 		goto err_out;
+ 	}
+ 
+ 	scan_time_ns = (end_time.tv_sec - start_time.tv_sec) * NSEC_PER_SEC +
+ 		       (end_time.tv_nsec - start_time.tv_nsec);
+ 
+-	printf("Total size:    %lu MiB\n", map_size / MB);
+-	printf("Total time:    %ld.%09ld s\n", scan_time_ns / NSEC_PER_SEC,
++	ksft_print_msg("Total size:    %lu MiB\n", map_size / MB);
++	ksft_print_msg("Total time:    %ld.%09ld s\n", scan_time_ns / NSEC_PER_SEC,
+ 	       scan_time_ns % NSEC_PER_SEC);
+-	printf("Average speed:  %.3f MiB/s\n", (map_size / MB) /
++	ksft_print_msg("Average speed:  %.3f MiB/s\n", (map_size / MB) /
+ 					       ((double)scan_time_ns / NSEC_PER_SEC));
+ 
+ 	munmap(map_ptr, map_size);
+ 	return KSFT_PASS;
+ 
+ err_out:
+-	printf("Not OK\n");
+ 	munmap(map_ptr, map_size);
+ 	return KSFT_FAIL;
+ }
+@@ -723,24 +712,24 @@ static int ksm_cow_time(int merge_type, int mapping, int prot, int timeout, size
+ 		return KSFT_FAIL;
+ 
+ 	if (clock_gettime(CLOCK_MONOTONIC_RAW, &start_time)) {
+-		perror("clock_gettime");
++		ksft_perror("clock_gettime");
+ 		return KSFT_FAIL;
+ 	}
+ 	for (size_t i = 0; i < page_count - 1; i = i + 2)
+ 		memset(map_ptr + page_size * i, '-', 1);
+ 	if (clock_gettime(CLOCK_MONOTONIC_RAW, &end_time)) {
+-		perror("clock_gettime");
++		ksft_perror("clock_gettime");
+ 		return KSFT_FAIL;
+ 	}
+ 
+ 	cow_time_ns = (end_time.tv_sec - start_time.tv_sec) * NSEC_PER_SEC +
+ 		       (end_time.tv_nsec - start_time.tv_nsec);
+ 
+-	printf("Total size:    %lu MiB\n\n", (page_size * page_count) / MB);
+-	printf("Not merged pages:\n");
+-	printf("Total time:     %ld.%09ld s\n", cow_time_ns / NSEC_PER_SEC,
++	ksft_print_msg("Total size:    %lu MiB\n\n", (page_size * page_count) / MB);
++	ksft_print_msg("Not merged pages:\n");
++	ksft_print_msg("Total time:     %ld.%09ld s\n", cow_time_ns / NSEC_PER_SEC,
+ 	       cow_time_ns % NSEC_PER_SEC);
+-	printf("Average speed:  %.3f MiB/s\n\n", ((page_size * (page_count / 2)) / MB) /
++	ksft_print_msg("Average speed:  %.3f MiB/s\n\n", ((page_size * (page_count / 2)) / MB) /
+ 					       ((double)cow_time_ns / NSEC_PER_SEC));
+ 
+ 	/* Create 2000 pairs of duplicate pages */
+@@ -752,30 +741,29 @@ static int ksm_cow_time(int merge_type, int mapping, int prot, int timeout, size
+ 		goto err_out;
+ 
+ 	if (clock_gettime(CLOCK_MONOTONIC_RAW, &start_time)) {
+-		perror("clock_gettime");
++		ksft_perror("clock_gettime");
+ 		goto err_out;
+ 	}
+ 	for (size_t i = 0; i < page_count - 1; i = i + 2)
+ 		memset(map_ptr + page_size * i, '-', 1);
+ 	if (clock_gettime(CLOCK_MONOTONIC_RAW, &end_time)) {
+-		perror("clock_gettime");
++		ksft_perror("clock_gettime");
+ 		goto err_out;
+ 	}
+ 
+ 	cow_time_ns = (end_time.tv_sec - start_time.tv_sec) * NSEC_PER_SEC +
+ 		       (end_time.tv_nsec - start_time.tv_nsec);
+ 
+-	printf("Merged pages:\n");
+-	printf("Total time:     %ld.%09ld s\n", cow_time_ns / NSEC_PER_SEC,
++	ksft_print_msg("Merged pages:\n");
++	ksft_print_msg("Total time:     %ld.%09ld s\n", cow_time_ns / NSEC_PER_SEC,
+ 	       cow_time_ns % NSEC_PER_SEC);
+-	printf("Average speed:  %.3f MiB/s\n", ((page_size * (page_count / 2)) / MB) /
++	ksft_print_msg("Average speed:  %.3f MiB/s\n", ((page_size * (page_count / 2)) / MB) /
+ 					       ((double)cow_time_ns / NSEC_PER_SEC));
+ 
+ 	munmap(map_ptr, page_size * page_count);
+ 	return KSFT_PASS;
+ 
+ err_out:
+-	printf("Not OK\n");
+ 	munmap(map_ptr, page_size * page_count);
+ 	return KSFT_FAIL;
+ }
+@@ -793,6 +781,10 @@ int main(int argc, char *argv[])
+ 	bool use_zero_pages = KSM_USE_ZERO_PAGES_DEFAULT;
+ 	bool merge_across_nodes = KSM_MERGE_ACROSS_NODES_DEFAULT;
+ 	long size_MB = 0;
++	const char *test_descr = "KSM merging";
 +
- #endif /* __THP_SETTINGS_H__ */
++	ksft_print_header();
++	ksft_set_plan(1);
+ 
+ 	while ((opt = getopt(argc, argv, "dha:p:l:z:m:s:t:MUZNPCHD")) != -1) {
+ 		switch (opt) {
+@@ -801,17 +793,13 @@ int main(int argc, char *argv[])
+ 			break;
+ 		case 'p':
+ 			page_count = atol(optarg);
+-			if (page_count <= 0) {
+-				printf("The number of pages must be greater than 0\n");
+-				return KSFT_FAIL;
+-			}
++			if (page_count <= 0)
++				ksft_exit_fail_msg("The number of pages must be greater than 0\n");
+ 			break;
+ 		case 'l':
+ 			ksm_scan_limit_sec = atoi(optarg);
+-			if (ksm_scan_limit_sec <= 0) {
+-				printf("Timeout value must be greater than 0\n");
+-				return KSFT_FAIL;
+-			}
++			if (ksm_scan_limit_sec <= 0)
++				ksft_exit_fail_msg("Timeout value must be greater than 0\n");
+ 			break;
+ 		case 'h':
+ 			print_help();
+@@ -833,19 +821,15 @@ int main(int argc, char *argv[])
+ 			break;
+ 		case 's':
+ 			size_MB = atoi(optarg);
+-			if (size_MB <= 0) {
+-				printf("Size must be greater than 0\n");
+-				return KSFT_FAIL;
+-			}
++			if (size_MB <= 0)
++				ksft_exit_fail_msg("Size must be greater than 0\n");
+ 			break;
+ 		case 't':
+ 			{
+ 				int tmp = atoi(optarg);
+ 
+-				if (tmp < 0 || tmp > KSM_MERGE_LAST) {
+-					printf("Invalid merge type\n");
+-					return KSFT_FAIL;
+-				}
++				if (tmp < 0 || tmp > KSM_MERGE_LAST)
++					ksft_exit_fail_msg("Invalid merge type\n");
+ 				merge_type = tmp;
+ 			}
+ 			break;
+@@ -873,82 +857,80 @@ int main(int argc, char *argv[])
+ 			test_name = KSM_COW_TIME;
+ 			break;
+ 		default:
+-			return KSFT_FAIL;
++			ksft_exit_fail_msg("Unknown option\n");
+ 		}
+ 	}
+ 
+ 	if (prot == 0)
+ 		prot = str_to_prot(KSM_PROT_STR_DEFAULT);
+ 
+-	if (access(KSM_SYSFS_PATH, F_OK)) {
+-		printf("Config KSM not enabled\n");
+-		return KSFT_SKIP;
+-	}
++	if (access(KSM_SYSFS_PATH, F_OK))
++		ksft_exit_skip("Config KSM not enabled\n");
+ 
+-	if (ksm_save_def(&ksm_sysfs_old)) {
+-		printf("Cannot save default tunables\n");
+-		return KSFT_FAIL;
+-	}
++	if (ksm_save_def(&ksm_sysfs_old))
++		ksft_exit_fail_msg("Cannot save default tunables\n");
+ 
+ 	if (ksm_write_sysfs(KSM_FP("run"), 2) ||
+ 	    ksm_write_sysfs(KSM_FP("sleep_millisecs"), 0) ||
+ 	    numa_available() ? 0 :
+ 		ksm_write_sysfs(KSM_FP("merge_across_nodes"), 1) ||
+ 	    ksm_write_sysfs(KSM_FP("pages_to_scan"), page_count))
+-		return KSFT_FAIL;
++		ksft_exit_fail_msg("Cannot set up KSM tunables\n");
+ 
+ 	switch (test_name) {
+ 	case CHECK_KSM_MERGE:
++		test_descr = "KSM merging";
+ 		ret = check_ksm_merge(merge_type, MAP_PRIVATE | MAP_ANONYMOUS, prot, page_count,
+ 				      ksm_scan_limit_sec, page_size);
+ 		break;
+ 	case CHECK_KSM_UNMERGE:
++		test_descr = "KSM unmerging";
+ 		ret = check_ksm_unmerge(merge_type, MAP_PRIVATE | MAP_ANONYMOUS, prot,
+ 					ksm_scan_limit_sec, page_size);
+ 		break;
+ 	case CHECK_KSM_ZERO_PAGE_MERGE:
++		test_descr = "KSM zero page merging";
+ 		ret = check_ksm_zero_page_merge(merge_type, MAP_PRIVATE | MAP_ANONYMOUS, prot,
+ 						page_count, ksm_scan_limit_sec, use_zero_pages,
+ 						page_size);
+ 		break;
+ 	case CHECK_KSM_NUMA_MERGE:
++		test_descr = "KSM NUMA merging";
+ 		ret = check_ksm_numa_merge(merge_type, MAP_PRIVATE | MAP_ANONYMOUS, prot,
+ 					ksm_scan_limit_sec, merge_across_nodes, page_size);
+ 		break;
+ 	case KSM_MERGE_TIME:
+-		if (size_MB == 0) {
+-			printf("Option '-s' is required.\n");
+-			return KSFT_FAIL;
+-		}
++		if (size_MB == 0)
++			ksft_exit_fail_msg("Option '-s' is required\n");
++		test_descr = "KSM merge time";
+ 		ret = ksm_merge_time(merge_type, MAP_PRIVATE | MAP_ANONYMOUS, prot,
+ 				ksm_scan_limit_sec, size_MB);
+ 		break;
+ 	case KSM_MERGE_TIME_HUGE_PAGES:
+-		if (size_MB == 0) {
+-			printf("Option '-s' is required.\n");
+-			return KSFT_FAIL;
+-		}
++		if (size_MB == 0)
++			ksft_exit_fail_msg("Option '-s' is required\n");
++		test_descr = "KSM merge time with huge pages";
+ 		ret = ksm_merge_hugepages_time(merge_type, MAP_PRIVATE | MAP_ANONYMOUS, prot,
+ 				ksm_scan_limit_sec, size_MB);
+ 		break;
+ 	case KSM_UNMERGE_TIME:
+-		if (size_MB == 0) {
+-			printf("Option '-s' is required.\n");
+-			return KSFT_FAIL;
+-		}
++		if (size_MB == 0)
++			ksft_exit_fail_msg("Option '-s' is required\n");
++		test_descr = "KSM unmerge time";
+ 		ret = ksm_unmerge_time(merge_type, MAP_PRIVATE | MAP_ANONYMOUS, prot,
+ 				       ksm_scan_limit_sec, size_MB);
+ 		break;
+ 	case KSM_COW_TIME:
++		test_descr = "KSM COW time";
+ 		ret = ksm_cow_time(merge_type, MAP_PRIVATE | MAP_ANONYMOUS, prot,
+ 				ksm_scan_limit_sec, page_size);
+ 		break;
+ 	}
+ 
+-	if (ksm_restore(&ksm_sysfs_old)) {
+-		printf("Cannot restore default tunables\n");
+-		return KSFT_FAIL;
+-	}
++	if (ksm_restore(&ksm_sysfs_old))
++		ksft_print_msg("Cannot restore default tunables\n");
++
++	ksft_test_result_report(ret, "%s\n", test_descr);
+ 
+-	return ret;
++	ksft_finished();
+ }
 -- 
 2.53.0
 
