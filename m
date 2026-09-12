@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00789477281;
-	Sat, 12 Sep 2026 11:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4A4247280;
+	Sat, 12 Sep 2026 11:24:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212276; cv=none; b=kM2lKpxWZn3+10yrKRK7DVRUXKT+rTFxZ+25rFcpSv7RS5wKIuGgXsQjHUe5mIFmmrxdtdkHCBacrzvRFDjLnsC0Y2fxILySzmHDiUqzUbmY/DiRRgTZtmomUA3XGDIIAO26S5JnsfJCcL5mW+k5uQx9i77U6IAUw+wpEf0qnXw=
+	t=1789212279; cv=none; b=PchK6XIiCdVkG+7FhSl7FfH5GgcVaWBQgUtVNM5a+BXbDWUkON1hpGlGyphIfcDEFbCrqO9KpyM45FQap0xOf9meHrFdwR9dCrWbgn3LkpHihABvkXEEu8hY6HrLOzoS1JDXLzIPi6qKr88oZJ4k9RyQ2p6ig0ZlV32K/ziEIPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212276; c=relaxed/simple;
-	bh=z/NzOl3j7PUr8x/aw2m4sq1phN21fSTw/5Dz71T3gf8=;
+	s=arc-20240116; t=1789212279; c=relaxed/simple;
+	bh=8+niCXjZmpDJB667jFym/BBefVEbtmOphD7JeNPmOYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bPLhC+otFzI1HY04GJamWzHm0/6LajIcGPgYRJfADI8ZJgk7EiPXSKvQC+76YlsV5tw3xZCtVHuP1K/G+HkA5WHf3wzQpXQOyebransWaovffhoXatkxWxV3Mqi9Em13mRfVF0248NTucp9h7fZ35AflmCkr4Icenf/aheTbPgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlo8WlLf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BLCkxYPDw0Oh75878uflZT3xqcB2KVGOcjQRCQGckwCSB0TR2UtpLibfBfqMdl77L5n1dceEDsd7V9IzzdwF5zhRrf8PeZlp9mCBh1+LrY3hipUlJrDGc74dfoJNLYJtjemyFpTRHkbzb8XNYJtt70bXg5nBoNNQ8z5Fgt20YZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRLVUJfx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlo8WlLf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA531F00893;
-	Sat, 12 Sep 2026 11:24:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRLVUJfx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 308DD1F000FF;
+	Sat, 12 Sep 2026 11:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212273;
-	bh=0mCb32tPds0670d6IvAY689nttbZQqqR9zlgPM8IcxE=;
+	s=korg; t=1789212278;
+	bh=JaeCxbfy8aS79Qc1mbNfHTFsueXyItCnKeVEKHieRSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vlo8WlLf9PRETdiDmwP4mo91l7sbbfLlg/pAjojNEXQA1eTdhmN8EC89qsgoNKoIj
-	 dDZlAQv1ZZJjxt1+wOdxR6US6mQI3lvwLWc9r/HkfRNo99jbmFJm5o9o4PaFvumSwa
-	 8q2+ijfz5YomsNbczfrHnh2qwExEM3KSio69mPvY=
+	b=XRLVUJfxHLAVnR8J9n0ASz42K8wzYE3z+ca2Qv3mFkFjZhYWojmI7OkF7Ou9ncJJw
+	 OXUo5MN+kgQVjbu3tbiP5ralnTCxef70fx8MUsveq3ABKNDJcDbOaAQPxUZmJwwVYg
+	 BKbdWAfrCaVFfFfp5QTV3M92pSpx30HgVaP3cDtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+4638111fe2a12980@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>,
+	Nitin Shetty J <nshettyj@marvell.com>,
+	Naveen Mamindlapalli <naveenm@marvell.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1403/1518] net: qualcomm: rmnet: restore skb->dev on deaggregated frames
-Date: Sat, 12 Sep 2026 08:59:32 +0200
-Message-ID: <20260912065655.284869701@linuxfoundation.org>
+Subject: [PATCH 6.18 1404/1518] octeontx2-af: Fix TL3/TL2 link config ENA clearing
+Date: Sat, 12 Sep 2026 08:59:33 +0200
+Message-ID: <20260912065655.306906869@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,66 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Naveen Mamindlapalli <naveenm@marvell.com>
 
-[ Upstream commit a66734a1c5e36525ea07e9f4547fddc51e916de3 ]
+[ Upstream commit 9edf8d4876e8a2471e66f54d36208eaff2858392 ]
 
-rmnet_map_deaggregate() allocates each sub-frame with alloc_skb() and
-leaves skb->dev NULL. __rmnet_map_ingress_handler() assigns
-skb->dev = ep->egress_dev only on the data path, but a MAP command frame
-is dispatched to rmnet_map_command() before that, so rmnet_map_send_ack()
-runs netif_tx_lock(skb->dev) on a NULL device. An unprivileged user
-reaches this by unsharing a user+net namespace, creating an rmnet link
-over a tap device with INGRESS_DEAGGREGATION and INGRESS_MAP_COMMANDS,
-and writing an aggregated frame carrying a flow-control command to the
-tap fd.
+Clear and restore the ENA bit for each TL3/TL2 link entry during
+SMQ flush instead of repeatedly using the same link index.
 
-Restore the assignment dropped by 378e25357ac7, so every skb leaving
-rmnet_map_deaggregate() has a valid device.
-
-  BUG: KASAN: null-ptr-deref in _raw_spin_lock (kernel/locking/spinlock.c:158)
-  Write of size 4 at addr 00000000000004b4 by task exploit/144
-  Call Trace:
-   _raw_spin_lock (kernel/locking/spinlock.c:158)
-   netif_tx_lock (net/sched/sch_generic.c:497)
-   rmnet_map_command (drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c:67)
-   rmnet_rx_handler (drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c:125)
-   __netif_receive_skb_core.constprop.0 (net/core/dev.c:6103)
-   ...
-   __netif_receive_skb_one_core (net/core/dev.c:6214)
-   netif_receive_skb (net/core/dev.c:6474)
-   tun_get_user (drivers/net/tun.c:1966)
-   tun_chr_write_iter (drivers/net/tun.c:2012)
-   vfs_write (fs/read_write.c:687)
-   ksys_write (fs/read_write.c:739)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-Fixes: 378e25357ac7 ("net: qualcomm: rmnet: Remove unnecessary device assignment")
-Reported-by: co+4638111fe2a12980@bugs.sh
-Closes: https://lore.kernel.org/netdev/ijg79FFMfIvKJbivdJEKvTO90Q9dTvyBkJck@bugs.sh/T/#u
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260820195240.1631458-1-xmei5@asu.edu
+Fixes: 019aba04f08c ("octeontx2-af: Modify SMQ flush sequence to drop packets")
+Signed-off-by: Nitin Shetty J <nshettyj@marvell.com>
+Signed-off-by: Naveen Mamindlapalli <naveenm@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260821055445.2517568-1-nshettyj@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
-index 305ae15ae8f39..e6f48dc9fe64d 100644
---- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
-+++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
-@@ -394,6 +394,7 @@ struct sk_buff *rmnet_map_deaggregate(struct sk_buff *skb,
- 	if (!skbn)
- 		return NULL;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+index 7de06eb8284ac..adedca065210a 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+@@ -2436,8 +2436,8 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
+ 	int pf = rvu_get_pf(rvu->pdev, pcifunc);
+ 	u8 cgx_id = 0, lmac_id = 0;
+ 	u16 tl2_tl3_link_schq;
+-	u8 link, link_level;
+ 	u64 cfg, bmap = 0;
++	u8 link_level;
  
-+	skbn->dev = skb->dev;
- 	skb_reserve(skbn, RMNET_MAP_DEAGGR_HEADROOM);
- 	skb_put(skbn, packet_len);
- 	memcpy(skbn->data, skb->data, packet_len);
+ 	if (!is_rvu_otx2(rvu)) {
+ 		/* Skip SMQ flush if pkt count is zero */
+@@ -2469,7 +2469,6 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
+ 	link_level = rvu_read64(rvu, blkaddr, NIX_AF_PSE_CHANNEL_LEVEL) & 0x01 ?
+ 			NIX_TXSCH_LVL_TL3 : NIX_TXSCH_LVL_TL2;
+ 	tl2_tl3_link_schq = smq_flush_ctx->smq_tree_ctx[link_level].schq;
+-	link = smq_flush_ctx->smq_tree_ctx[NIX_TXSCH_LVL_TL1].schq;
+ 
+ 	/* SMQ set enqueue xoff */
+ 	cfg = rvu_read64(rvu, blkaddr, NIX_AF_SMQX_CFG(smq));
+@@ -2479,13 +2478,13 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
+ 	/* Clear all NIX_AF_TL3_TL2_LINK_CFG[ENA] for the TL3/TL2 queue */
+ 	for (i = 0; i < (rvu->hw->cgx_links + rvu->hw->lbk_links); i++) {
+ 		cfg = rvu_read64(rvu, blkaddr,
+-				 NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link));
++				 NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, i));
+ 		if (!(cfg & BIT_ULL(12)))
+ 			continue;
+ 		bmap |= BIT_ULL(i);
+ 		cfg &= ~BIT_ULL(12);
+ 		rvu_write64(rvu, blkaddr,
+-			    NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link), cfg);
++			    NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, i), cfg);
+ 	}
+ 
+ 	/* Do SMQ flush and set enqueue xoff */
+@@ -2506,10 +2505,10 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
+ 		if (!(bmap & BIT_ULL(i)))
+ 			continue;
+ 		cfg = rvu_read64(rvu, blkaddr,
+-				 NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link));
++				 NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, i));
+ 		cfg |= BIT_ULL(12);
+ 		rvu_write64(rvu, blkaddr,
+-			    NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link), cfg);
++			    NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, i), cfg);
+ 	}
+ 
+ 	/* clear XOFF on TL2s */
 -- 
 2.53.0
 
