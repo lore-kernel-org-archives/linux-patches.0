@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712F2343893;
-	Sat, 12 Sep 2026 12:09:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0FE343893;
+	Sat, 12 Sep 2026 12:09:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214944; cv=none; b=hs77u33d/buyw2ZtcbT7tkbfs3VJbRXKdETXQZ9WCqbvUzEDBFC26VnC4P0hOc3G/IYGMupfKZBmV2mRF8QLuN2t7CfE5Cz13dbDgnlXzeZUS/1rIPWMRp8YQPQD4BgvglHj8cafD263fgs//UZsvHv6xCw5tKuLmoOWp1rUkIo=
+	t=1789214949; cv=none; b=YXmcPYlfV+KODnHNq1nbh8SpbjxHEAdvIx2wQKGayLx0MgVvwUHZew83t4Tfg3SR1rhIMTUzomMmcrvHuIU5SQSqj0Fy190Lu9gkt+/5d4SORb9McUoUFkMQsfh9kI3+CKUM06pvD2ml22wAFtX7QpidSpMdFpMlBy6oRZHe5IY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214944; c=relaxed/simple;
-	bh=zmDJJEG5aqVRUhaQ/RJyK4zufhnO2IyE8IcmGCzh8Xc=;
+	s=arc-20240116; t=1789214949; c=relaxed/simple;
+	bh=MKwr0uliz5KUw0lyM3W0r+KIrSYS7K3nP8d/b8nD8Uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WFOZ7m7yFWMBqr7SZ7bZwTsoo1EU91JxSUv//fisMDwtQe9+oGmwt8ZgIqxkmdB5aD+cpBs+TGdXppI6A7SZ2Vr1putl/L2qcEywjbofllmXDaFpdG2iDvJcFBxT6A+re7Qo5f7didDlFpdKErHevJ5t7zPwANsLiiGz0bSphck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FnKVCWWA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OZXjQxUcrMQhIPgYn/GRxjEhJTn4vdD9npeNArhRLlpVxx3trtgUi22gDLPNyFYACcbzMQoOqbHgI3FakSdIMdp14Wne/OeRdIapAboBinResQwY9qcr25+4qJrZU1I+hFc7LNpH6YV/lnA1LYA/9n1aw7/REmRuiVASYT57liw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJgyXwip; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FnKVCWWA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C761F000FF;
-	Sat, 12 Sep 2026 12:09:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJgyXwip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604441F000FF;
+	Sat, 12 Sep 2026 12:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214943;
-	bh=UXYB1c6wQM7aM9liOfcMJ87AMHhbcThyBBL0wFEeCRQ=;
+	s=korg; t=1789214948;
+	bh=SzqGvQan9wLpiI9gvfWYLmQOUtO+pjnUH/NOYtNbNuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FnKVCWWA9IK88CAZk3xFyefyO5cdJXKNle4k9apqwE0ZfjhiGr62L5UcDO5tdu151
-	 v0qp0RKAcjiPp9l4zpUzNpXnNZ1OdmRS5v04+b8ni7QTdgCYThQdHMiOuduT1RgT+b
-	 Su7Ji+1ZprcCx3U8jvkQDDBbA9k7C4/OqReJw124=
+	b=GJgyXwippUG/EMRfyfendYGKEsbyKse9mIYLuIqrp89sqrkja5rXYXBmtQ3cIfY1I
+	 3BnJ4ICxyzTbwCnGhCSRdp01ebTmqBEL1r9WQCFP38pdXKndpmUmDvIKXqSIdGcMb9
+	 5sc2UcxXLBaSBrsLBl08u62+AH2WpE6dJc7VselU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evgenii Burenchev <evg28bur@yandex.ru>,
-	Takashi Iwai <tiwai@suse.de>,
+	Malaya Kumar Rout <malayarout91@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0431/1376] ALSA: via82xx: Remove unreachable branch in snd_via686_pcm_pointer()
-Date: Sat, 12 Sep 2026 08:47:37 +0200
-Message-ID: <20260912065617.140327079@linuxfoundation.org>
+Subject: [PATCH 6.12 0432/1376] selftests/bpf: Fix memory leak in msg_alloc_iov error path
+Date: Sat, 12 Sep 2026 08:47:38 +0200
+Message-ID: <20260912065617.161781182@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,74 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Evgenii Burenchev <evg28bur@yandex.ru>
+From: Malaya Kumar Rout <malayarout91@gmail.com>
 
-[ Upstream commit cd3447e1b6425efd1704ed07f1f245c842927eb0 ]
+[ Upstream commit 0bebfaa39deadec21638f6fba553eae12627a26d ]
 
-The condition
+In msg_alloc_iov(), when calloc() fails for an individual iov_base
+allocation, the error path frees all previously allocated iov_base
+entries but fails to free the iov array itself that was allocated
+with calloc() at the beginning of the function. This results in a
+memory leak of the iov array.
 
-	if (count && size < count)
+Add free(iov) in the unwind_iov error path to ensure proper cleanup
+of all allocated memory.
 
-can never evaluate to true.
-
-The VIA DMA count register is masked with 0x00ffffff before use, while
-the DMA buffer size is limited to 0x00fffffe bytes. As a result, 'count'
-can never exceed 'size', making the condition permanently false.
-
-This branch has therefore been unreachable since the driver was
-introduced. Remove the unreachable branch without changing runtime
-behavior.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Evgenii Burenchev <evg28bur@yandex.ru>
-Link: https://patch.msgid.link/20260706131638.15311-1-evg28bur@yandex.ru
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 753fb2ee0934 ("bpf: sockmap, add msg_peek tests to test_sockmap")
+Signed-off-by: Malaya Kumar Rout <malayarout91@gmail.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/bpf/20260704122936.102394-1-malayarout91@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/via82xx_modem.c | 26 ++++++++++----------------
- 1 file changed, 10 insertions(+), 16 deletions(-)
+ tools/testing/selftests/bpf/test_sockmap.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/pci/via82xx_modem.c b/sound/pci/via82xx_modem.c
-index a0a49b8d15116..60235e953a62d 100644
---- a/sound/pci/via82xx_modem.c
-+++ b/sound/pci/via82xx_modem.c
-@@ -576,24 +576,18 @@ static inline unsigned int calc_linear_pos(struct via82xx_modem *chip,
- 		       viadev->bufsize2, viadev->idx_table[idx].offset,
- 		       viadev->idx_table[idx].size, count);
- #endif
--		if (count && size < count) {
-+		if (! count)
-+			/* bogus count 0 on the DMA boundary? */
-+			res = viadev->idx_table[idx].offset;
-+		else
-+			/* count register returns full size
-+			 * when end of buffer is reached
-+			 */
-+			res = viadev->idx_table[idx].offset + size;
-+		if (check_invalid_pos(viadev, res)) {
- 			dev_dbg(chip->card->dev,
--				"invalid via82xx_cur_ptr, using last valid pointer\n");
-+				"invalid via82xx_cur_ptr (2), using last valid pointer\n");
- 			res = viadev->lastpos;
--		} else {
--			if (! count)
--				/* bogus count 0 on the DMA boundary? */
--				res = viadev->idx_table[idx].offset;
--			else
--				/* count register returns full size
--				 * when end of buffer is reached
--				 */
--				res = viadev->idx_table[idx].offset + size;
--			if (check_invalid_pos(viadev, res)) {
--				dev_dbg(chip->card->dev,
--					"invalid via82xx_cur_ptr (2), using last valid pointer\n");
--				res = viadev->lastpos;
--			}
- 		}
- 	}
- 	viadev->lastpos = res; /* remember the last position */
+diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
+index 61a747afcd05f..a45c96e92a42f 100644
+--- a/tools/testing/selftests/bpf/test_sockmap.c
++++ b/tools/testing/selftests/bpf/test_sockmap.c
+@@ -515,6 +515,7 @@ static int msg_alloc_iov(struct msghdr *msg,
+ unwind_iov:
+ 	for (i--; i >= 0 ; i--)
+ 		free(msg->msg_iov[i].iov_base);
++	free(iov);
+ 	return -ENOMEM;
+ }
+ 
 -- 
 2.53.0
 
