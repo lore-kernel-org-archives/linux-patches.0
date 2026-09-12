@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1DE3FC5D3;
-	Sat, 12 Sep 2026 08:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3311DC198;
+	Sat, 12 Sep 2026 08:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202087; cv=none; b=iGX8ApXuRpjFr20vON7DKIMNlh+uLl29nLBvZfAs5QJEaOM/+iCsEsAlXbCBtoRt9qVajo/XoilGigrm64KzbBDsdhPYSNq/SWZ5RLwp3a/8FWcLIlxaNomM8v15gl6NWL2PIQKhmsZw48EvlSMu5qdlGwnen5hRLWWLvoz0mzE=
+	t=1789202092; cv=none; b=M9GAzZl9Z3mFuIBdVe3aIcOGIRn7Wa+KgW+rl6sgxCTCJ34OUX06oM+tDJrctMaradTa4y9vivfkgaUvG1+OSPVbFMmG4WYUq5JDv5r8lDsgMMMU0nxVmUNNemVbztFVdTyy3pERTPoV9i+EuWrGBjBi2W5ve5tmVDSWjYjCKMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202087; c=relaxed/simple;
-	bh=4QC/1sOa3JpURztUsYbLOC6w4Jxs26zaLg1o/sdzys8=;
+	s=arc-20240116; t=1789202092; c=relaxed/simple;
+	bh=p3/05zoaUdcIS99FmNMRy3t1tgh790U/izSECYxDCpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ionT+7VCM0PUvvxBJphwrdAIOL6f9jFte1IfAPrEsCmRq2Qp/IJpUzg4r7gX7A+mKemtfPVDSf4BfG6r7k8t0DfsLvIvLUzgG6Z4MCAJZavCatMUV2dX6J/Q8QMe/vEqAcEBwVEOAYJ7zINcXcPdwznX+HzFtiQ2wvZADJkZuXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFLDNlU9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ArHk+n5F4SmFVR2noa9/RG+x8mTE+Eu0V3C+VOYpz3CcTQOBDlaF8xZ1ulf4/Ed+wlik85HmNWtAfncopoitrAroZHV4Y0jRcxdEX4hW/vQyT2xIjeiguddXDLCXypkIW67rF6WLFsBJDPQu9rzQmVlx3pVGKN70zWZlLGXiNM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uIhPWvsK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFLDNlU9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B829B1F000FF;
-	Sat, 12 Sep 2026 08:34:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uIhPWvsK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCD251F000FF;
+	Sat, 12 Sep 2026 08:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202086;
-	bh=SG5qzWEp5kjbWG6DFnJfcwVPlHooCG+kXrTCWk8MLnI=;
+	s=korg; t=1789202090;
+	bh=pB9ak2pX1EmN0jR5Vcy1Tg2zOA3RtYPTPb/6ydYr7eM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nFLDNlU9is4/9X33e3KdRbG5CRP2SxLf6iX/Y8IW2WHHrlzmctRfqV/WfRqqZqvkC
-	 eylcfOSFMQz8KVaz3/ttHczkIIptsODHwJbYb+Z2D9zwRrViPzzEUmZOZvLh6/R/w8
-	 5eXqhv4OPODw8i+/n1CybLBZg77iJPBXlAou0558=
+	b=uIhPWvsKY+gyMkPuwYus7TaJeLPRP07+yT0j0m5am1pqvDHIADFxXWvj9kZw+dpKm
+	 AYcV1nf35Qf2pXTfdHmUFHm5Vx161AzfmoTVvZUPovmJrchkFLj4jIDNQfm1DGqIIw
+	 aO4zhu//a6C0gqorwmnYgQOpt53VrotlnNZwuppo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1129/1815] drm/sun4i: tcon: Set output mux for DSI and LVDS
-Date: Sat, 12 Sep 2026 08:47:59 +0200
-Message-ID: <20260912065715.526192045@linuxfoundation.org>
+Subject: [PATCH 7.2 1130/1815] drm/sun4i: tcon: Drop TCON TOP device reference
+Date: Sat, 12 Sep 2026 08:48:00 +0200
+Message-ID: <20260912065715.548677806@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,41 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 9c90199b39637ad94253c4fd8e7b1333ca1d3e0d ]
+[ Upstream commit 8208832a38ff3d2560eb8a77a9d7a2f17d8ebcdc ]
 
-DSI and LVDS skip output mux setup, so TCON TOP cannot route the selected
-mixer. Configure them like other channel 0 outputs.
+of_find_device_by_node() takes a device reference. Drop it after mux
+configuration succeeds.
 
-In practice this matters for D1, where channel 0 TCONs are fed through
-TCON TOP. The remaining set_mux implementations only handle TMDS and
-return an error for other encoder types, as before.
-
-Fixes: b9b52d2f4aaf ("drm/sun4i: Add support for D1 TCONs")
+Fixes: 0305189afb32 ("drm/sun4i: tcon: Add support for R40 TCON")
 Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 Acked-by: Chen-Yu Tsai <wens@kernel.org>
-Link: https://patch.msgid.link/7e9dad9eed2e91a79c4e1202caa8fed7c2427531.1785772659.git.jernej.skrabec@gmail.com
+Link: https://patch.msgid.link/871a3108086c15a483eef23301984c8d2254dfa7.1785772659.git.jernej.skrabec@gmail.com
 Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun4i_tcon.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/sun4i/sun4i_tcon.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/gpu/drm/sun4i/sun4i_tcon.c b/drivers/gpu/drm/sun4i/sun4i_tcon.c
-index 960e83c8291da..ea7c90fef316b 100644
+index ea7c90fef316b..de2d66623f7a2 100644
 --- a/drivers/gpu/drm/sun4i/sun4i_tcon.c
 +++ b/drivers/gpu/drm/sun4i/sun4i_tcon.c
-@@ -717,9 +717,11 @@ void sun4i_tcon_mode_set(struct sun4i_tcon *tcon,
- 	case DRM_MODE_ENCODER_DSI:
- 		/* DSI is tied to special case of CPU interface */
- 		sun4i_tcon0_mode_set_cpu(tcon, encoder, mode);
-+		sun4i_tcon_set_mux(tcon, 0, encoder);
- 		break;
- 	case DRM_MODE_ENCODER_LVDS:
- 		sun4i_tcon0_mode_set_lvds(tcon, encoder, mode);
-+		sun4i_tcon_set_mux(tcon, 0, encoder);
- 		break;
- 	case DRM_MODE_ENCODER_NONE:
- 		sun4i_tcon0_mode_set_rgb(tcon, encoder, mode);
+@@ -1409,7 +1409,7 @@ static int sun8i_r40_tcon_tv_set_mux(struct sun4i_tcon *tcon,
+ {
+ 	struct device_node *port, *remote;
+ 	struct platform_device *pdev;
+-	int id, ret;
++	int id, ret = 0;
+ 
+ 	/* find TCON TOP platform device and TCON id */
+ 
+@@ -1432,21 +1432,20 @@ static int sun8i_r40_tcon_tv_set_mux(struct sun4i_tcon *tcon,
+ 	if (IS_ENABLED(CONFIG_DRM_SUN8I_TCON_TOP) &&
+ 	    encoder->encoder_type == DRM_MODE_ENCODER_TMDS) {
+ 		ret = sun8i_tcon_top_set_hdmi_src(&pdev->dev, id);
+-		if (ret) {
+-			put_device(&pdev->dev);
+-			return ret;
+-		}
++		if (ret)
++			goto out_put_device;
+ 	}
+ 
+ 	if (IS_ENABLED(CONFIG_DRM_SUN8I_TCON_TOP)) {
+ 		ret = sun8i_tcon_top_de_config(&pdev->dev, tcon->id, id);
+-		if (ret) {
+-			put_device(&pdev->dev);
+-			return ret;
+-		}
++		if (ret)
++			goto out_put_device;
+ 	}
+ 
+-	return 0;
++out_put_device:
++	put_device(&pdev->dev);
++
++	return ret;
+ }
+ 
+ static const struct sun4i_tcon_quirks sun4i_a10_quirks = {
 -- 
 2.53.0
 
