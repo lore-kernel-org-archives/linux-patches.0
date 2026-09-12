@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A521B340D9D;
-	Sat, 12 Sep 2026 10:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048F3370D47;
+	Sat, 12 Sep 2026 10:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208308; cv=none; b=hQE2ifqF5pRjl24T+yF7DLBpDuG/Dd/zGh6Zw+50fp5F3YEeCDr+pmIW4WMLxO3B+06+5QXxg2u5C3Nv+dD3ik2mYma3Qa1/kAy4eIfn37kHl+dKr8siUgfT/V+TYO7xbyu3mmHb45YzpyzBTRt7RIV6DSWFytkvTtbadfm1EOw=
+	t=1789208315; cv=none; b=sgZ/rWpGB72rrRtinFTIYSMil7byhiSKDtImYRpWK0q3r4DgHKhucWG96Al6iIW+nR/Upmxzthgp4F626Oi/yLyCj1D+4z5WX/WcDYHw4yru3bUBnrPQ+rrWLB3Vq2v+BFzsMLakTcZKSWe+Iv1yXlA0oefsVUGTD9DuAt33eC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208308; c=relaxed/simple;
-	bh=3xEoP5lMfy4EWFSVpNBfwY5VYuLzv9uuuEk+UEqaZJ4=;
+	s=arc-20240116; t=1789208315; c=relaxed/simple;
+	bh=PaTgHRussxQGO3OVydF//4HeqwwxYfQ6n2L1tBsNXPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B71rn9fwWBWYXhYbA8EGflLKX/VVxQKn6dneAQ+jwFtVVvLs4A813n4vpXTI2QWD9ZCLXtc7ha7LM2BUJ4fUAMdPDMk93TgFzsIMT3rpeNazKEUpwdbotkVujmvwlemEsWDX1xZ2RD8Hip1G6hlPehTuZ915s2fx5uW/H2JlK40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1O9QQmL4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I6iou5nr83xNkAyRQuZyjtn+IPmG4sE3vRI54A8xqRMxGjWBLickPiabYpdSB7ZGfPzPBOMxL0r6lMQpMvi9O759u0drtThHPjxykcA0SRzO7lXi74eqoT8YqRq7Neq8sQdETHeKBP4QNoH6eR1O60uzIjVKH33JUMIYX1H7veo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzpkPPL6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1O9QQmL4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9DEA1F000FF;
-	Sat, 12 Sep 2026 10:18:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzpkPPL6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04A0A1F000FF;
+	Sat, 12 Sep 2026 10:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208306;
-	bh=zyGh7x01t8l0/VjEWS+nAS75/hYgeM8F7yVGjFw6Wz4=;
+	s=korg; t=1789208312;
+	bh=cnGfipFc3x7eyupfwMV6RwG5LmzPa3QGZ8SE0/l9CoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1O9QQmL40PQkjGsBG6op5l0AELW2eDuzYB0weeBOkc16L0uTn4iVganbMMC23hjAV
-	 E7fxEAZBqEbqmjdudDvnX2+hev5NUa8ptn/kto55wilhA6JhBwKhosTt0EO91YPt5b
-	 LSPvY4NgqJq0n/X1e2l/NEiFIE4zhKYRarB3iRjc=
+	b=BzpkPPL62VevCVsE9hhIprjaANZFdb3VY95iPyUTgIqdPeLPOL4+2Z2TwKCoe2uWc
+	 LqM2pAdrG7OCDyPBg7hBGNO3MO0nLfBxhNZIRe+H9qN7sJpLRrwKzgiLS5bCX3EFlr
+	 rU7qSKsWlNGbJS/xhJVccnGc5ngjB2LLHu3vh56Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
-	Yixun Lan <dlan@gentoo.org>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0554/1518] riscv: dts: spacemit: Add OrangePi R2S board device tree
-Date: Sat, 12 Sep 2026 08:45:23 +0200
-Message-ID: <20260912065635.971062495@linuxfoundation.org>
+Subject: [PATCH 6.18 0590/1518] spi: oc-tiny: switch to managed controller allocation
+Date: Sat, 12 Sep 2026 08:45:59 +0200
+Message-ID: <20260912065636.773487910@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,144 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 63e572b11464a233f45ad469ba64b8b9e68a9cd1 ]
+[ Upstream commit d710f43ce30975d197f73c543bfe47b958d8ba17 ]
 
-Add initial device tree support for the OrangePi RV2 board [1], which is
-marketed as using the Ky X1 SoC but is identical in die and package
-to the SpacemiT K1 SoC [2].
+The controller is allocated with the non-managed spi_alloc_host() while
+the interrupt is registered with devm_request_irq().  During removal,
+spi_bitbang_stop() only unregisters the controller; the subsequent
+spi_controller_put() then frees the controller together with its
+embedded driver-private devdata, which is the IRQ handler's dev_id.  The
+devm_request_irq() release action (free_irq()), which drains the
+handler, does not run until after .remove() returns.  A late or latched
+interrupt can therefore reach tiny_spi_irq() and dereference
+already-freed memory (e.g. hw->base).
 
-Enable UART0, to boot into a serial console
+Switch to devm_spi_alloc_host() so that the devres LIFO order releases
+the controller only after free_irq() has drained the handler, and drop
+the now-redundant spi_controller_put() from .remove().  The probe error
+path is simplified to direct returns.
 
-Two Gigabit Ethernet ports with RGMII interface standard support
-are enabled, each port is connected to an external
-Motorcomm YT8531C PHY chip which uses the GPIO for reset control.
+This issue was found by an in-house static analysis tool.
 
-Enable PDMA.
-
-Enable 8 GB eMMC chip for storage.
-
-Link: http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-R2S.html [1]
-Link: https://www.spacemit.com/en/key-stone-k1 [2]
-Signed-off-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
-Link: https://lore.kernel.org/r/20251112044426.2351999-3-michael.opdenacker@rootcommit.com
-Signed-off-by: Yixun Lan <dlan@gentoo.org>
-Stable-dep-of: 8270311d70fd ("riscv: dts: spacemit: k1: Split gmac_clk_ref into independent pinctrl groups")
+Fixes: ce792580ea2c ("spi: add OpenCores tiny SPI driver")
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260719010014.3163356-1-fanwu01@zju.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/boot/dts/spacemit/Makefile         |  1 +
- .../boot/dts/spacemit/k1-orangepi-r2s.dts     | 90 +++++++++++++++++++
- 2 files changed, 91 insertions(+)
- create mode 100644 arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+ drivers/spi/spi-oc-tiny.c | 24 ++++++++----------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
 
-diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dts/spacemit/Makefile
-index 942ecb38bea03..95889e7269d1b 100644
---- a/arch/riscv/boot/dts/spacemit/Makefile
-+++ b/arch/riscv/boot/dts/spacemit/Makefile
-@@ -2,4 +2,5 @@
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-bananapi-f3.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-milkv-jupiter.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-musepi-pro.dtb
-+dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-r2s.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-rv2.dtb
-diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-new file mode 100644
-index 0000000000000..58098c4a2aabd
---- /dev/null
-+++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-@@ -0,0 +1,90 @@
-+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-+/*
-+ * Copyright (C) 2025 Michael Opdenacker <michael.opdenacker@rootcommit.com>
-+ */
-+
-+/dts-v1/;
-+
-+#include "k1.dtsi"
-+#include "k1-pinctrl.dtsi"
-+
-+/ {
-+	model = "OrangePi R2S";
-+	compatible = "xunlong,orangepi-r2s", "spacemit,k1";
-+
-+	aliases {
-+		serial0 = &uart0;
-+		ethernet0 = &eth0;
-+		ethernet1 = &eth1;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+};
-+
-+&emmc {
-+	bus-width = <8>;
-+	mmc-hs400-1_8v;
-+	mmc-hs400-enhanced-strobe;
-+	non-removable;
-+	no-sd;
-+	no-sdio;
-+	status = "okay";
-+};
-+
-+&eth0 {
-+	phy-handle = <&rgmii0>;
-+	phy-mode = "rgmii-id";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gmac0_cfg>;
-+	rx-internal-delay-ps = <0>;
-+	tx-internal-delay-ps = <0>;
-+	status = "okay";
-+
-+	mdio-bus {
-+		#address-cells = <0x1>;
-+		#size-cells = <0x0>;
-+
-+		reset-gpios = <&gpio K1_GPIO(110) GPIO_ACTIVE_LOW>;
-+		reset-delay-us = <10000>;
-+		reset-post-delay-us = <100000>;
-+
-+		rgmii0: phy@1 {
-+			reg = <0x1>;
-+		};
-+	};
-+};
-+
-+&eth1 {
-+	phy-handle = <&rgmii1>;
-+	phy-mode = "rgmii-id";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gmac1_cfg>;
-+	rx-internal-delay-ps = <0>;
-+	tx-internal-delay-ps = <250>;
-+	status = "okay";
-+
-+	mdio-bus {
-+		#address-cells = <0x1>;
-+		#size-cells = <0x0>;
-+
-+		reset-gpios = <&gpio K1_GPIO(115) GPIO_ACTIVE_LOW>;
-+		reset-delay-us = <10000>;
-+		reset-post-delay-us = <100000>;
-+
-+		rgmii1: phy@1 {
-+			reg = <0x1>;
-+		};
-+	};
-+};
-+
-+&pdma {
-+	status = "okay";
-+};
-+
-+&uart0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart0_2_cfg>;
-+	status = "okay";
-+};
+diff --git a/drivers/spi/spi-oc-tiny.c b/drivers/spi/spi-oc-tiny.c
+index cba2299203573..cc5bceb1cc88b 100644
+--- a/drivers/spi/spi-oc-tiny.c
++++ b/drivers/spi/spi-oc-tiny.c
+@@ -211,11 +211,11 @@ static int tiny_spi_probe(struct platform_device *pdev)
+ 	struct tiny_spi_platform_data *platp = dev_get_platdata(&pdev->dev);
+ 	struct tiny_spi *hw;
+ 	struct spi_controller *host;
+-	int err = -ENODEV;
++	int err;
+ 
+-	host = spi_alloc_host(&pdev->dev, sizeof(struct tiny_spi));
++	host = devm_spi_alloc_host(&pdev->dev, sizeof(struct tiny_spi));
+ 	if (!host)
+-		return err;
++		return -ENOMEM;
+ 
+ 	/* setup the host state. */
+ 	host->bus_num = pdev->id;
+@@ -233,10 +233,8 @@ static int tiny_spi_probe(struct platform_device *pdev)
+ 
+ 	/* find and map our resources */
+ 	hw->base = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(hw->base)) {
+-		err = PTR_ERR(hw->base);
+-		goto exit;
+-	}
++	if (IS_ERR(hw->base))
++		return PTR_ERR(hw->base);
+ 	/* irq is optional */
+ 	hw->irq = platform_get_irq(pdev, 0);
+ 	if (hw->irq >= 0) {
+@@ -244,7 +242,7 @@ static int tiny_spi_probe(struct platform_device *pdev)
+ 		err = devm_request_irq(&pdev->dev, hw->irq, tiny_spi_irq, 0,
+ 				       pdev->name, hw);
+ 		if (err)
+-			goto exit;
++			return err;
+ 	}
+ 	/* find platform data */
+ 	if (platp) {
+@@ -253,29 +251,23 @@ static int tiny_spi_probe(struct platform_device *pdev)
+ 	} else {
+ 		err = tiny_spi_of_probe(pdev);
+ 		if (err)
+-			goto exit;
++			return err;
+ 	}
+ 
+ 	/* register our spi controller */
+ 	err = spi_bitbang_start(&hw->bitbang);
+ 	if (err)
+-		goto exit;
++		return err;
+ 	dev_info(&pdev->dev, "base %p, irq %d\n", hw->base, hw->irq);
+ 
+ 	return 0;
+-
+-exit:
+-	spi_controller_put(host);
+-	return err;
+ }
+ 
+ static void tiny_spi_remove(struct platform_device *pdev)
+ {
+ 	struct tiny_spi *hw = platform_get_drvdata(pdev);
+-	struct spi_controller *host = hw->bitbang.ctlr;
+ 
+ 	spi_bitbang_stop(&hw->bitbang);
+-	spi_controller_put(host);
+ }
+ 
+ #ifdef CONFIG_OF
 -- 
 2.53.0
 
