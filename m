@@ -1,104 +1,89 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE4B32D7C7;
-	Sat, 12 Sep 2026 19:28:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC9C32D7C7
+	for <patches@lists.linux.dev>; Sat, 12 Sep 2026 19:28:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241304; cv=none; b=rxZvuirXrSMX+JcdVE/+zfuq/CgBtjGmDElaw+dHDTwgBn0ioR/OOq0uFP6BuDe3IG97BTaafkZNbmZnB5foLReiXfrsLgIshfA/McMQBeAEhdjtKGDGAgPyqxRT1qQOcUf3OLaqEC+ZKLKAHkJ10Uhygq81HkwINBJDnHCAsLM=
+	t=1789241307; cv=none; b=oHEIPTB0dIPeoNGdyvfN/gb6dijK7/W8g+FBwNhBdKindhFeGMv9+43e/jXFKoU2anGX1Wz5J5ynsKHxpvyXDjLqy8NXkm/UPjTk3f+j4is0icstJYnfXWYoHcLIuY/8h5w/t+XwkeiD8kgCbT9Eje18yd/qgSRCKc5TER/Ct1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241304; c=relaxed/simple;
-	bh=yipAyQ39PmkOfsLyL7hFtCMcF3Ayksku5EofxU3dgxE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VrH4JxOlBA7xLh0eddAwV4yM4d0HlM2LV9I3CLmByZtzsqxZkFYX7QsIaIfZKCPl6Br8Z54ezPruD2C3I+pDjO8IjNwUF25xTg6tepoHcnavqVFGXo3QuNVq98PFHpE1VG7D2ERfeilnphCZ0kkr1X2Ya7vRzkh3tHcWUFluLXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xAmnYRtN; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789241307; c=relaxed/simple;
+	bh=KJFi4oJU9yUXpnVSIOw0LyTxY9gpp0T7eB6UGdEUWyc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZvOl3itoBqIjSMORNEfBFOSbgn5ySMJfI3AoQX6ZVBnSyCtNYzuCrj7KSUEcyv7ESeMtweUUx4FoO3xjQI2PNxB9lxGZ7AkEADy3iqquwDB/Ug9AD78BpPVd6nz0rl3uGew+HbQ4DHjGwUdXdJKB6kt4+yoI80GyAxgn8+jGomk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=MHBZ59YC; arc=none smtp.client-ip=178.251.229.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xAmnYRtN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DF11F000FF;
-	Sat, 12 Sep 2026 19:28:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241302;
-	bh=LWq9kUc63D0tyk5Q4vVxZ7BmQ1Z1ZIlwCGJ8yVaafs0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xAmnYRtNRAAFfdE28SsVmecOAi4nGwhua+pedhefPe6eq6Ty87hlXT1cjblSDqY/M
-	 Cq657Hv6sKcyIBS0TA0RDbDU5P9f3UGRWCLaL4vobS9IYHU+Rn/fFJO6rei3VELfxg
-	 A0Unn1wTU5dtS7flwqzu2K5LhcCTaBkxeUS13dV0=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.10 055/798] HID: sensor: custom: Fix field sysfs group cleanup on failure
-Date: Sat, 12 Sep 2026 08:54:43 +0200
-Message-ID: <20260912065518.224153311@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
-References: <20260912065516.948645775@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="MHBZ59YC"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 81FC41034BF;
+	Sat, 12 Sep 2026 21:28:16 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
+	s=dkim; t=1789241299;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=y7BOmcPqzwgHNB8tpsuWUR+UQP9k6ozYzdCsqHi/B/w=;
+	b=MHBZ59YCyzMkhyIW/16hAXXXmRkRnwsaY87sFH24wKhGqtduMrpei94/uvvXwdO37HolwP
+	ecH1OIPwsX6f5B8MUrV76RBFXjNtZhlm0XBMWmdDndFyHrv9Zjg7qxg2QQn7P9WLEpAVQ1
+	SsWpup/WFDh3ZOCnNUJufAIiwI+RuLAn8Sa4cNbHDa+g4hgXHlNsZevDlHh7gwfdXN+Plg
+	VAXEp/taH7ThSUV5t0bDmC992o3H2asBGVd5PoT01W7aN9v+gdfYe1NAXcXEtQ1GILHwLD
+	57qa0aSxqbnsgevkLewkLc2tk0t8jhdDIFpSZ59Lcrms/3dVcdFXCtXa6ll2UQ==
+Date: Sat, 12 Sep 2026 21:28:14 +0200
+From: Pavel Machek <pavel@nabladev.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.12 0000/1376] 6.12.110-rc1 review
+Message-ID: <aqWnzsSIMkyM46NV@duo.ucw.cz>
+References: <20260912065607.535295758@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-5.10-stable review patch.  If anyone has any objections, please let me know.
-
-------------------
-
-From: Haoxiang Li <haoxiang_li2024@163.com>
-
-commit 3789d0802ddb4b3be04062caf4bfadd23496e9a7 upstream.
-
-hid_sensor_custom_add_attributes() creates one sysfs group for each
-custom sensor field. If sysfs_create_group() fails after some groups
-have already been created, the function returns the error without
-removing the previously created groups.
-
-Add a local unwind path to remove the groups that were already created.
-With enable_sensor exposed only after the field attributes are ready,
-this path can free sensor_inst->fields without leaving enable_sensor
-able to access pointers into that array.
-
-Fixes: 4a7de0519df5 ("HID: sensor: Custom and Generic sensor support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/hid/hid-sensor-custom.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
---- a/drivers/hid/hid-sensor-custom.c
-+++ b/drivers/hid/hid-sensor-custom.c
-@@ -605,7 +605,7 @@ static int hid_sensor_custom_add_attribu
- 					 &sensor_inst->fields[i].
- 					 hid_custom_attribute_group);
- 		if (ret)
--			break;
-+			goto err_remove_groups;
- 
- 		/* For power or report field store indexes */
- 		if (sensor_inst->fields[i].attribute.attrib_id ==
-@@ -617,6 +617,13 @@ static int hid_sensor_custom_add_attribu
- 	}
- 
- 	return ret;
-+
-+err_remove_groups:
-+	while (--i >= 0)
-+		sysfs_remove_group(&sensor_inst->pdev->dev.kobj,
-+				   &sensor_inst->fields[i].hid_custom_attribute_group);
-+	kfree(sensor_inst->fields);
-+	return ret;
- }
- 
- static void hid_sensor_custom_remove_attributes(struct hid_sensor_custom *
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="2nd+0nHZsekXluLM"
+Content-Disposition: inline
+In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
 
+--2nd+0nHZsekXluLM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+Hi!
+
+> This is the start of the stable review cycle for the 6.12.110 release.
+> There are 1376 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+We get build errors in -cip testing:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/2842911949
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/16461797877
+
+drivers/soc/ti/knav_qmss_queue.c: In function 'knav_queue_probe':
+drivers/soc/ti/knav_qmss_queue.c:1874:9: error: 'knav_qdev' undeclared (first use in this function); did you mean 'knav_queue'?
+
+Best regards,
+										Pavel
+
+--2nd+0nHZsekXluLM
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaqWnzgAKCRAw5/Bqldv6
+8nUMAJ4me87pI5wWPjglhm7/+0F1SGbZsACfdUjR+j+Zdy1TMs/BtA31wuXoCBU=
+=H7ZQ
+-----END PGP SIGNATURE-----
+
+--2nd+0nHZsekXluLM--
