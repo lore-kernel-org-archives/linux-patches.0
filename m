@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1374480357;
-	Sat, 12 Sep 2026 13:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC9E47DF89;
+	Sat, 12 Sep 2026 13:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218300; cv=none; b=kbXOe7Ks8kfVkbuwD7zTX7TnuPZ6ZVw+0LeiQJPGzARykRZU7g+GolW+Gif7UjFFxFiOVGmeS3+ValPlq6cu9FRWA0AKCbaO0EUcnvfmfD4MVeu8DcWCWgj7JLAUN1JyA+HzSX3223VL7VThACIwUIpixQccGagihxi9FyxEE8E=
+	t=1789218305; cv=none; b=aEtdB6lUd6AoFE2z5epq1KyaF5vQ9Eh85XqJtBNyuBWKB9EtCgQZaFMkxhH9B2k+LnTwx+EB0Z/3Zf7dt0x+cequ6Jeek6bhaMLvRFH2yfQwnwrSFfSVmbS8FwJfJ/t3RgnnqX5Q7HtJ7NVhTwys0WhhSOoyCuEFE+boGRuEpDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218300; c=relaxed/simple;
-	bh=h9tZVcMPGbPaFn3Tt+nZQuGWkRtuE3HnLAyMdrA/Ir4=;
+	s=arc-20240116; t=1789218305; c=relaxed/simple;
+	bh=Pp5U0U3ZnxnLyT/HVUe9ApDseFvTSI6balCGBm5zWp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eKg6H7Bm3jb3FQqARoCZ/MER216pHbfcXCOb12DNTS04HXByOhyuzBRGxonMdZRUkA49DUirmH6u9eC/f8svRVOngArzlLMUX8WiDgSOgy7lY7Fe9gQk1EPgAcVugb61Gvri1xhR8u3doALbLzZueXgjPSVAF4SHyQELyx/D16E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ByBebY1y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hUk+1W12FTMIeFtvCxbtMtgBXrsXsrom4/DvYPceDsab9ipDyRpm0cgCR22moG51Lr5FIGaGlaxeozEwPV60ivnNjfa8680hUDacUX920OE0UAoL7GFmTEauRij3GFwPmA3WR1BqAVEYDsEJ0h+k3iASg4x09ynR2xw+sz4GdIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUnviwfy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ByBebY1y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 695B11F000FF;
-	Sat, 12 Sep 2026 13:04:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUnviwfy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A026F1F000FF;
+	Sat, 12 Sep 2026 13:05:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218298;
-	bh=2DFc7Bxv0wWDAo37QWqDrVTn6P+8OfX/euAUMBRS92w=;
+	s=korg; t=1789218303;
+	bh=isOEFzuTSSLOM2jwQP/KhdDm5vD5IaXbK8FJ0aMl/Gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ByBebY1y4o09aJQ7KGZW8/BWRtJ9OE9KM0Chq9U2oVs7vbpo3HBfHURhZjQEaAhqS
-	 Kgx9TLgb0VNGntF5ctyHKhTk7YqSMAtEwHU2Y+zOg2CuZFslj8TQUoUnQUrZLP5CLB
-	 CVOqAtd7Ik1iVFci02yygNq347W8EMSqyMmyoi38=
+	b=OUnviwfyCqmZ6zCHrMrDijpj4bsbEBUqnXxs4Efhm7f4FHPOlU5o4w8YmBuWuKUp4
+	 Dr9B7//LnrXPJSxwKz+TTwdDGpbYxgn9Gl+Klgw9rUfHbupXlw9oeOQoP26QGBAmmW
+	 Yo3/6j43Dnh3OjIzaqpg28MaDDhoyPwgDXQFoONc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Yang Xiuwei <yangxiuwei@kylinos.cn>,
-	Keith Busch <kbusch@kernel.org>,
+	John Keeping <jkeeping@inmusicbrands.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1063/1376] nvme/ioctl: check SUBMIT_IO with nvme_cmd_allowed()
-Date: Sat, 12 Sep 2026 08:58:09 +0200
-Message-ID: <20260912065631.249874379@linuxfoundation.org>
+Subject: [PATCH 6.12 1110/1376] ALSA: seq: midi: Serialize input teardown with event_input
+Date: Sat, 12 Sep 2026 08:58:56 +0200
+Message-ID: <20260912065632.300406891@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,59 +51,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Xiuwei <yangxiuwei@kylinos.cn>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-[ Upstream commit b53d495c7f0db46b6748b5ade48371a10dd5d3bc ]
+[ Upstream commit 403f7f3ad3808a0096d84cf228fab68dc253fd9d ]
 
-Unlike IO_CMD / IO64_CMD, NVME_IOCTL_SUBMIT_IO never calls
-nvme_cmd_allowed(). Unprivileged callers can thus issue I/O on a
-partition device or write through a read-only file descriptor.
+snd_midi_input_event() must not be running while a rawmidi substream is
+closing, since this can lead to the trigger state becoming out-of-step
+through this sequence in snd_rawmidi_input_trigger():
 
-Pass flags and open_for_write through and reject disallowed commands
-with -EACCES.
+	snd_rawmidi_input_trigger(up=0)
+					snd_midi_input_event()
+					 -> snd_rawmidi_kernel_read()
+					     -> snd_rawmidi_input_trigger(up=1)
+	  -> cancel_work_sync()
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: 1161be71d1ec ("nvme: reject passthrough of driver-managed Set Features")
+which ends with the underlying device being active unexpectedly.
+
+When this is called from close_substream(), further input can re-trigger
+the input event leaving it running after rawmidi_release_priv() has set
+rfile->rmidi to NULL which leads to:
+
+	Unable to handle kernel NULL pointer dereference at virtual address 00000000000000b0
+	Call trace:
+	 snd_midi_input_event+0x3c/0x134 [snd_seq_midi] (P)
+	 snd_rawmidi_input_event_work+0x1c/0x2c
+	 process_one_work+0x150/0x3a4
+	 worker_thread+0x190/0x318
+
+Apply a similar approach to commit ef7607ab1c8ad ("ALSA: seq: midi:
+Serialize output teardown with event_input") which fixed the same issue
+in the output direction, but updated to use RCU following Takashi Iwai's
+proposed follow-on patch [1].
+
+With this change in place, midisynth_unsubscribe() clears the input file
+so snd_midi_input_event() will not re-trigger the stream and will be
+quiesced by the cancel_work_sync() in snd_rawmidi_input_trigger().
+
+[1] https://lore.kernel.org/linux-sound/20260813144224.753399-1-tiwai@suse.de/
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Link: https://patch.msgid.link/20260813150810.795393-1-jkeeping@inmusicbrands.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/ioctl.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/core/seq/seq_midi.c | 37 +++++++++++++++++++++++++++++++------
+ 1 file changed, 31 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
-index 930521c633d23..635e639650e84 100644
---- a/drivers/nvme/host/ioctl.c
-+++ b/drivers/nvme/host/ioctl.c
-@@ -220,7 +220,8 @@ static int nvme_submit_user_cmd(struct request_queue *q,
- 	return ret;
- }
- 
--static int nvme_submit_io(struct nvme_ns *ns, struct nvme_user_io __user *uio)
-+static int nvme_submit_io(struct nvme_ns *ns, struct nvme_user_io __user *uio,
-+		unsigned int flags, bool open_for_write)
- {
- 	struct nvme_user_io io;
- 	struct nvme_command c;
-@@ -278,6 +279,9 @@ static int nvme_submit_io(struct nvme_ns *ns, struct nvme_user_io __user *uio)
- 	c.rw.lbat = cpu_to_le16(io.apptag);
- 	c.rw.lbatm = cpu_to_le16(io.appmask);
- 
-+	if (!nvme_cmd_allowed(ns, &c, flags, open_for_write))
-+		return -EACCES;
+diff --git a/sound/core/seq/seq_midi.c b/sound/core/seq/seq_midi.c
+index 15209f3e6d4f8..b18af999d350f 100644
+--- a/sound/core/seq/seq_midi.c
++++ b/sound/core/seq/seq_midi.c
+@@ -42,6 +42,8 @@ struct seq_midisynth {
+ 	struct snd_rawmidi *rmidi;
+ 	int device;
+ 	int subdevice;
++	struct snd_rawmidi_substream __rcu *input_substream;
++	snd_use_lock_t input_use_lock;	/* in-flight event_input users */
+ 	struct snd_rawmidi_file input_rfile;
+ 	snd_use_lock_t output_use_lock;	/* in-flight event_input users */
+ 	struct snd_rawmidi_substream __rcu *output_substream;
+@@ -76,6 +78,14 @@ static void snd_midi_input_event(struct snd_rawmidi_substream *substream)
+ 	msynth = runtime->private_data;
+ 	if (msynth == NULL)
+ 		return;
 +
- 	return nvme_submit_user_cmd(ns->queue, &c, io.addr, length, metadata,
- 			meta_len, NULL, 0, 0);
++	scoped_guard(rcu) {
++		if (rcu_dereference(msynth->input_substream) != substream)
++			return;
++
++		snd_use_lock_use(&msynth->input_use_lock);
++	}
++
+ 	memset(&ev, 0, sizeof(ev));
+ 	while (runtime->avail > 0) {
+ 		res = snd_rawmidi_kernel_read(substream, buf, sizeof(buf));
+@@ -95,6 +105,8 @@ static void snd_midi_input_event(struct snd_rawmidi_substream *substream)
+ 			memset(&ev, 0, sizeof(ev));
+ 		}
+ 	}
++
++	snd_use_lock_free(&msynth->input_use_lock);
  }
-@@ -582,7 +586,7 @@ static int nvme_ns_ioctl(struct nvme_ns *ns, unsigned int cmd,
- 	case NVME_IOCTL_SUBMIT_IO32:
- #endif
- 	case NVME_IOCTL_SUBMIT_IO:
--		return nvme_submit_io(ns, argp);
-+		return nvme_submit_io(ns, argp, flags, open_for_write);
- 	case NVME_IOCTL_IO64_CMD_VEC:
- 		flags |= NVME_IOCTL_VEC;
- 		fallthrough;
+ 
+ static int dump_midi(struct snd_rawmidi_substream *substream, const char *buf, int count)
+@@ -177,6 +189,7 @@ static int snd_seq_midisynth_new(struct seq_midisynth *msynth,
+ 	msynth->card = card;
+ 	msynth->device = device;
+ 	msynth->subdevice = subdevice;
++	snd_use_lock_init(&msynth->input_use_lock);
+ 	snd_use_lock_init(&msynth->output_use_lock);
+ 	return 0;
+ }
+@@ -187,28 +200,31 @@ static int midisynth_subscribe(void *private_data, struct snd_seq_port_subscribe
+ 	int err;
+ 	struct seq_midisynth *msynth = private_data;
+ 	struct snd_rawmidi_runtime *runtime;
++	struct snd_rawmidi_file rfile = {};
+ 	struct snd_rawmidi_params params;
+ 
+ 	/* open midi port */
+ 	err = snd_rawmidi_kernel_open(msynth->rmidi, msynth->subdevice,
+ 				      SNDRV_RAWMIDI_LFLG_INPUT,
+-				      &msynth->input_rfile);
++				      &rfile);
+ 	if (err < 0) {
+ 		pr_debug("ALSA: seq_midi: midi input open failed!!!\n");
+ 		return err;
+ 	}
+-	runtime = msynth->input_rfile.input->runtime;
++	runtime = rfile.input->runtime;
+ 	memset(&params, 0, sizeof(params));
+ 	params.avail_min = 1;
+ 	params.buffer_size = input_buffer_size;
+-	err = snd_rawmidi_input_params(msynth->input_rfile.input, &params);
++	err = snd_rawmidi_input_params(rfile.input, &params);
+ 	if (err < 0) {
+-		snd_rawmidi_kernel_release(&msynth->input_rfile);
++		snd_rawmidi_kernel_release(&rfile);
+ 		return err;
+ 	}
+ 	snd_midi_event_reset_encode(msynth->parser);
+ 	runtime->event = snd_midi_input_event;
+ 	runtime->private_data = msynth;
++	msynth->input_rfile = rfile;
++	rcu_assign_pointer(msynth->input_substream, rfile.input);
+ 	snd_rawmidi_kernel_read(msynth->input_rfile.input, NULL, 0);
+ 	return 0;
+ }
+@@ -218,10 +234,19 @@ static int midisynth_unsubscribe(void *private_data, struct snd_seq_port_subscri
+ {
+ 	int err;
+ 	struct seq_midisynth *msynth = private_data;
++	struct snd_rawmidi_file rfile;
+ 
+-	if (snd_BUG_ON(!msynth->input_rfile.input))
++	rcu_assign_pointer(msynth->input_substream, NULL);
++	synchronize_rcu();
++	snd_use_lock_sync(&msynth->input_use_lock);
++
++	rfile = msynth->input_rfile;
++	msynth->input_rfile = (struct snd_rawmidi_file){};
++
++	if (snd_BUG_ON(!rfile.input))
+ 		return -EINVAL;
+-	err = snd_rawmidi_kernel_release(&msynth->input_rfile);
++
++	err = snd_rawmidi_kernel_release(&rfile);
+ 	return err;
+ }
+ 
 -- 
 2.53.0
 
