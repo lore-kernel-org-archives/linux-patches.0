@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EDE3644D1;
-	Sat, 12 Sep 2026 07:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED06D3644D1;
+	Sat, 12 Sep 2026 07:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197470; cv=none; b=UzJTblY/W3nGIJ2aOfHBtZWsR7owxVBwy3VQvRBUWHfsNNO+hRa/QU6DJ3hxSDpcMGWCbgTu64zK1XfOv3mGJeC0RCwKbRTiX5zInd65vKxZP+Kpf+cx43kojYy+554d7plRkC2D5Nckk2y4/mnI6j5hbgIY2AaIZqdHOD5XSME=
+	t=1789197476; cv=none; b=pBtRFLy3s6sl902ErySutW18qLm9xrq0AcdMIqiHoHRV+Q21ibIFn+9giea9JdzoihEKEc6r/3PoWXxg5stsUQHuU0gc/rEyHLD6dRwzFc037OLbnzgyho4g5KK51PTHsc1Lo8xsbYfETEmZ/+vpO6Z4jhNefuSRAH+1M50Zs+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197470; c=relaxed/simple;
-	bh=LrDCuyoVfYXGy1yQJfJ/cLt9aQJeOPnE8knbzonk24g=;
+	s=arc-20240116; t=1789197476; c=relaxed/simple;
+	bh=y2BuoaVtescd+DIVR1z+9OdrA7/HhrfOKc4EtM1tXHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uefbc4OTJcE2Az0HSwDrR/Gje5j0NotqlVgBWox5+FfEmBlBS6uaS/PxBcKJ1PT6iAdNdBgDsSLvYrvlcjEpURE1yMnSpxJfFFbUI4m6mnuxt7wan2IxGrmE1eUgXiCkm3Da3pVftcLg7+uLcTVx9jqTNm+0rrGaYwPo5wNxaHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R+Bfyw+g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IRkZ4BAPZPdCLQFzW+4vVYRAEuO9PVW6chDHejlsH0YWJeJlnT8N8ANPxycdX5lZkwj/lTeVO1ke383dkESqInp/IJBi6NLNlSsNIwidSF63rvr3oFaTfOUp5bE2Dk4T8JJnL0FTd5QL2kuL2pSMgP7NkdXEbNTXo1YA98z1Rhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ig/lykr1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R+Bfyw+g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C7A1F000FF;
-	Sat, 12 Sep 2026 07:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ig/lykr1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E5E1F000FF;
+	Sat, 12 Sep 2026 07:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197469;
-	bh=Wm89s+Fq+HVMRgUoX1DnS9vMX5oztjWmOoCLxxIL5EY=;
+	s=korg; t=1789197474;
+	bh=0x5qYCCblrwJXuv59N2N7/n1rEaRiNRQj3XRNzvhPlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R+Bfyw+gIqYVoFFFHg757tzpJBjHn2WEZa8Ib1SFmeGEWviqb/VOx5yEpJUqBAIeo
-	 ntFJQ0yrk6cigpiw82AzNQ5J0+4slsGVM9+W5FHktoQaJlRqAN5uzHCEz9mAu83ZDu
-	 mekYVjpmf2ko4btmEymLeyPicHpi/KqgdHxoSHd8=
+	b=Ig/lykr10t6aHrfbXV3/PVvn2jMwyg3ue+40+7/DGX5Yd0Z6CcwAaHPR05me18Myi
+	 lamLceE2LAT4horuvZHs5fygURQ4P4ImqHdwTk/koDf4nE4CnKgCDv3YVOhG3dHOi0
+	 6dInqqlzBVwpgvqtXy3Bri5aXuuo+g2bZ2LPRV38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Leo Yan <leo.yan@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0179/1815] perf cs-etm: Fix thread leaks on trace queue init failure
-Date: Sat, 12 Sep 2026 08:32:09 +0200
-Message-ID: <20260912065653.210193245@linuxfoundation.org>
+Subject: [PATCH 7.2 0139/1815] PCI: imx6: Fix building against PCI_HOST_COMMON
+Date: Sat, 12 Sep 2026 08:31:29 +0200
+Message-ID: <20260912065652.277777484@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,48 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 50cd0d54f1f6dd9b3de7c0ad101bd41d06206ace ]
+[ Upstream commit d4e0984f12ea958e0f2def90ddb1e193a896932b ]
 
-cs_etm__init_traceid_queue() allocates the frontend and decode threads,
-if a later allocation fails, the error path does not drop thread
-reference that was already acquired.
+When CONFIG_PCI_HOST_COMMON is set to =m, the i.MX6 PCIe driver
+fails to link. This can happen when only i.MX endpoint mode is
+enabled but not host mode, which would indirectly enable the
+host-common driver itself.
 
-Release both thread pointers with thread__zput() on the error path, so
-does not leak thread references or leave stale pointers behind.
+  ld.lld: error: undefined symbol: pci_host_common_parse_ports
+  >>> referenced by pci-imx6.c
+  >>>               drivers/pci/controller/dwc/pci-imx6.o:(imx_pcie_host_init) in archive vmlinux.a
 
-Fixes: 951ccccdc715 ("perf cs-etm: Only track threads instead of PID and TIDs")
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+  ld.lld: error: undefined symbol: pci_host_common_delete_ports
+  >>> referenced by pci-imx6.c
+  >>>               drivers/pci/controller/dwc/pci-imx6.o:(imx_pcie_host_init) in archive vmlinux.a
+  >>> referenced by pci-imx6.c
+  >>>               drivers/pci/controller/dwc/pci-imx6.o:(imx_pcie_host_init) in archive vmlinux.a
+
+Select the common module from the endpoint support directly.
+
+Fixes: 250eea5c06f5 ("PCI: imx6: Parse 'reset-gpios' in Root Port nodes")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260616164049.3656435-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/pci/controller/dwc/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index 2284cda78abe1..deca07d57282e 100644
---- a/tools/perf/util/cs-etm.c
-+++ b/tools/perf/util/cs-etm.c
-@@ -645,6 +645,8 @@ static int cs_etm__init_traceid_queue(struct cs_etm_queue *etmq,
- 					       queue->tid);
- 	tidq->decode_thread = machine__findnew_thread(&etm->session->machines.host, -1,
- 					       queue->tid);
-+	if (!tidq->frontend_thread || !tidq->decode_thread)
-+		goto out;
- 
- 	tidq->packet = zalloc(sizeof(struct cs_etm_packet));
- 	if (!tidq->packet)
-@@ -679,6 +681,8 @@ static int cs_etm__init_traceid_queue(struct cs_etm_queue *etmq,
- 	zfree(&tidq->prev_packet);
- 	zfree(&tidq->packet);
- out:
-+	thread__zput(tidq->frontend_thread);
-+	thread__zput(tidq->decode_thread);
- 	return rc;
- }
- 
+diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
+index aa0b784c85b47..7d49027c67368 100644
+--- a/drivers/pci/controller/dwc/Kconfig
++++ b/drivers/pci/controller/dwc/Kconfig
+@@ -126,6 +126,7 @@ config PCI_IMX6_EP
+ 	depends on ARCH_MXC || COMPILE_TEST
+ 	depends on PCI_ENDPOINT
+ 	select PCIE_DW_EP
++	select PCI_HOST_COMMON
+ 	select PCI_IMX6
+ 	help
+ 	  Enables support for the PCIe controller in the i.MX SoCs to
 -- 
 2.53.0
 
