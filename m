@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC31247A0D7;
-	Sat, 12 Sep 2026 11:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D5D47A0CD;
+	Sat, 12 Sep 2026 11:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213857; cv=none; b=twtKmeYOK6hqSldCQe0tElmIKC/bC3NjRs9KzosPqri0aWSqKPmOYZNwkFet7ChLylW++dFNOmthUASEsHWoWCzMeusg3DOp8r0n+TACed8CFT6zrZD/A0NF6HsWHUvAen5FXl1QDolmtCZp3F/K1EryqHRT18iMSFwZuaWpHhk=
+	t=1789213862; cv=none; b=oZY2+AoG4aHIDevI0NusrWYTSTvtYWl36glCEhM8P2pRwaFXFScsHAk4MXSz2HEMY63h+zcWfZi8RXDdXV2nsIJ9xls0ieRnnEYsJtxlzeL2voxevRIIpTg0DyYA0p57Tc2h35yxN7cCNbQQdABRqvbxok6eIc6W5ZMQ780WDwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213857; c=relaxed/simple;
-	bh=KNo3tGgWCnvHQ7xj4FkYaqlEF9P1y7Xnt0MSESoRscI=;
+	s=arc-20240116; t=1789213862; c=relaxed/simple;
+	bh=bxdhkoDDf+yVK7p5nLetzwqnloe8m9kMJHvCbGPXScE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xam9UykqX7TmuzsGf70Gpcn7mmuNlomLG4dOlAZx4rZ7JxJUbzKWYxfC5jjGrvzzwMSttRAi2WKom1s3bh5nEg6uFH84oXKcKUpsKHgwg6bdMfOfwLHMDu7g3HWz/7u0L7iwldqRixeHQSjjPyKoR5kqcrwUGbK9YC8/QPtNWgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2OX2qdwT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=baf07Ej3xYNS0eX4nkswu5NCPAtRoKqcPq7VA4pQo+s5vtkES8ZQUvWmCswauuLSfu5rxpNsgSSuUD1DwDmc/hfs6sHgUL+Y0QOFLQ5k9GhYWxGXbwxgYsPsOxgEfipCIKBsE47ORobVSdj57xkzg2AdQIVfssA9AgFcozeH4Wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MArixRre; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OX2qdwT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A778C1F000FF;
-	Sat, 12 Sep 2026 11:50:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MArixRre"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919DF1F000FF;
+	Sat, 12 Sep 2026 11:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213855;
-	bh=B4hQNU1cTNF84pboIxrJCcbYJpJJejccyNRKBvR1YDo=;
+	s=korg; t=1789213860;
+	bh=Ti90xDuK7jvtL/TLi5Rx15Y3VCChH0fjrTrQ/3gjlMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2OX2qdwT8WWyeDgP+5QO7cyGyFzctaVPSRV5dQTm0kVZNH12K0S6SwhaabQNV5gX+
-	 2VSHkErjr9jSmxDKB1ivj1juiaj8I+HC6E/rCP2Xtc4G5cq+3wU6gasAptdnWr3HhD
-	 3iJ68+8A586MIGgmYb/F5omnBkGqc/QRd0qHZT+U=
+	b=MArixRrerXO7KMoPgoK8PnBvpC7G0iI8bzvWZcftE/IKAc8ZqKrP2iWZkTkUswsJX
+	 CLuzzMyLSJVvtLXSBTA10GLH5XsU1fcxIizZqRHeFiQYIobmg3l9VHrnGw0PFDegeO
+	 PkPQVDid5em6PbAMdLDm5b4sQ+o+GCeXpJMBb7jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
+	Lei Huang <huanglei@kylinos.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 0207/1376] media: s2255: bound JPEG frame size before copying into the buffer
-Date: Sat, 12 Sep 2026 08:43:53 +0200
-Message-ID: <20260912065612.163552365@linuxfoundation.org>
+Subject: [PATCH 6.12 0208/1376] media: s2255: check firmware size before reading trailing marker
+Date: Sat, 12 Sep 2026 08:43:54 +0200
+Message-ID: <20260912065612.185316062@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,53 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Lei Huang <huanglei@kylinos.cn>
 
-commit e504cc888f42999dd76b6a43788c422610f2aad2 upstream.
+commit 330f2936ab768c7215322a476f033143e8891d28 upstream.
 
-s2255_fillbuff() memcpy()s vc->jpg_size bytes of a captured JPEG/MJPEG
-frame into the vb2 plane.  vc->jpg_size is taken verbatim from the
-S2255_MARKER_FRAME header the device sends (pdword[4] in save_frame())
-and, unlike the frame payload length just above it, is never bounded:
+s2255_probe() reads a 4-byte marker and version from the last 8 bytes
+of the firmware blob (fw->data[fw_size - 8] and [fw_size - 4]). If the
+firmware file is shorter than 8 bytes, fw_size - 8 underflows and the
+access reads out of bounds. Validate the firmware size before indexing.
 
-	payload = le32_to_cpu(pdword[3]);
-	if (payload > vc->req_image_size)	/* payload is checked ... */
-		return -EINVAL;
-	vc->pkt_size = payload;
-	vc->jpg_size = le32_to_cpu(pdword[4]);	/* ... jpg_size is not */
-
-A malicious or malfunctioning device can therefore report a jpg_size
-larger than the destination vb2 plane, and the memcpy() writes past it.
-jpg_size is a signed int, so a value with the top bit set also turns
-into a huge length.
-
-Reject a frame whose jpg_size is negative or exceeds the plane size
-before copying it.
-
-Fixes: 38f993ad8b1f ("V4L/DVB (8125): This driver adds support for the Sensoray 2255 devices.")
+Fixes: 14d962602c8b ("V4L/DVB (8752): s2255drv: firmware improvement patch")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Signed-off-by: Lei Huang <huanglei@kylinos.cn>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/s2255/s2255drv.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/media/usb/s2255/s2255drv.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
 --- a/drivers/media/usb/s2255/s2255drv.c
 +++ b/drivers/media/usb/s2255/s2255drv.c
-@@ -617,6 +617,12 @@ static void s2255_fillbuff(struct s2255_
- 			break;
- 		case V4L2_PIX_FMT_JPEG:
- 		case V4L2_PIX_FMT_MJPEG:
-+			if (jpgsize < 0 ||
-+			    jpgsize > vb2_plane_size(&buf->vb.vb2_buf, 0)) {
-+				dprintk(dev, 1, "bad JPEG frame size %d\n",
-+					jpgsize);
-+				break;
-+			}
- 			vb2_set_plane_payload(&buf->vb.vb2_buf, 0, jpgsize);
- 			memcpy(vbuf, tmpbuf, jpgsize);
- 			break;
+@@ -2289,6 +2289,11 @@ static int s2255_probe(struct usb_interf
+ 	}
+ 	/* check the firmware is valid */
+ 	fw_size = dev->fw_data->fw->size;
++	if (fw_size < 8) {
++		dev_err(&interface->dev, "Firmware invalid: too small.\n");
++		retval = -ENODEV;
++		goto errorFWMARKER;
++	}
+ 	pdata = (__le32 *) &dev->fw_data->fw->data[fw_size - 8];
+ 
+ 	if (*pdata != S2255_FW_MARKER) {
 
 
