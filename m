@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB5637F75B;
-	Sat, 12 Sep 2026 19:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BB237F75B;
+	Sat, 12 Sep 2026 19:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241011; cv=none; b=mUqMdr8bWwWoU7v6f5T9sqJLuWwvXYGfuEMJGB9IPv4yQxUS66AFDxW8T+4PM5TbzCAfMKUzfJDpJWEm2yHkUy0TnPNnkR9OptRrcJGZflCmdhK5MyDdw4oy7QKEyABW6//0hRXQlKJTM5X8xmUuZuHRsO6V1o2p6648ePIeDvI=
+	t=1789241015; cv=none; b=l6GedFIFfWvwud+UjfSlRJ8ncBWMR8rtPzHA9IiqB97Wz2AsXq27iUi4BjTF+f42WHwpThW39tCvJb++wOD8zGpn1DBlCGuwL6XzIVqp+GnvykOgNWUzoqDXGxsgGEoaJxA2jMro6R0kqXkyK1k9W1n7EMlUyzOpBIB7khvLiWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241011; c=relaxed/simple;
-	bh=8wjDy4XDSBNyqEMtSwf4qaegVyVeztPCWdhuGti3n3w=;
+	s=arc-20240116; t=1789241015; c=relaxed/simple;
+	bh=i1T7HIkWL1xwg9w+ewSVdDYBBZdeVtAijPYPs5DLl90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jENSyKLO4bjfx6BpO0+qiHN1i+Om80NK7MHfdDX6pBXWgo4esu531XsZSRncUjtmJZdVme1R8D76QzqQD33WmNVDM7VzXZ/ZTF0Irgznqn/+BZC4Z2K5MbVaagOv9FPy+m7qFXFyy4GePtSGJQOZznpuRPemeyZavFS17ZH7FAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGIRCEVP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nhXarCV2OnD+qZREDsZVKc2G64wj8/SEpt09MrlRtKxj4ZILNyneXSzrSCWFuOq/49RP84UUCrdlit0Te8/LH5Wa3IEQzSjaDT3AGvnNgNLzYvuj1siN8zhyROZvquMPjlrFqAn2Eoam2hPIm95nq4Vh1xB+VIIbKLwZ4LRyKBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+56OrQk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGIRCEVP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86FF01F000FF;
-	Sat, 12 Sep 2026 19:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+56OrQk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA931F000FF;
+	Sat, 12 Sep 2026 19:23:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241009;
-	bh=TnJErf8Chv2xptNIWtkzU3VjY5q4vJlrM1MlwRTHsv8=;
+	s=korg; t=1789241014;
+	bh=tKhLv6pzex6vKEKNekGusM3T0BiADfLkqCEWQdW/cFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eGIRCEVPv0KcVAJbvHB0KuHbvGb44hJ/KY5LXjvbV2BFrmHliL1Ysp8SRUUkiYZ7G
-	 ndgx8x1GjJ0wwYq8no9WZ7oO5eqUYQkSP6R/KMlYud5jnh3Ufa/P7h+m1yCc8dMB+p
-	 uGKuwzvNdErzMZzFYHsqh2gnQNBMNSsXOZ9oNUV4=
+	b=M+56OrQk038cZAPZ4M9Fj2qHMYkKi/KuGE9s8Dtu0qWofv0JIEFL6qi5CnmSFbCNN
+	 EuXSgbHCPHCawrzRpM2DSzvpdeXNtg47YnCfiPBI3yqtrfenfJF5Y1ntIc14jLmypG
+	 vJ+iVKHf60NNM3jrPAeGABInpjLnL/YjjfnZfmtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Wolfgang Walter <linux@stwm.de>,
+	NeilBrown <neil@brown.name>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 5.10 047/798] nfsd: revoke copy-notify stateids before dropping their reference
-Date: Sat, 12 Sep 2026 08:54:35 +0200
-Message-ID: <20260912065518.042455806@linuxfoundation.org>
+Subject: [PATCH 5.10 048/798] NFSD: Prevent lock owner use-after-free during client teardown
+Date: Sat, 12 Sep 2026 08:54:36 +0200
+Message-ID: <20260912065518.065868768@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,168 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chuck Lever <cel@kernel.org>
 
-commit 3b0c3595db99bb4bebd7c8aa8a36f3c50e411bb7 upstream.
+commit 5e2fa29d223a9a1e6a948e40b109d09081d1decd upstream.
 
-Copy-notify stateids live in the s2s_cp_stateids IDR and on their parent
-stid's sc_cp_list, pinned by a single membership reference.
-_free_cpntf_state_locked() only unlinks an entry once its refcount reaches
-zero, so any revoke path that runs while a concurrent
-find_cpntf_state()/manage_cpntf_state() holder has elevated cs_count drops
-the reference without unlinking, leaving the entry discoverable with its
-membership reference already consumed. A second revoke or a laundromat tick
-then frees it while the reader still holds the pointer -- a
-KASAN-detectable use-after-free at the reader's nfs4_put_cpntf_state().
+__destroy_client() releases a client's open owners, but a lock owner
+whose only reference is a blocked lock (nbl) stays on
+cl_ownerstr_hashtbl.  client_has_state() does not count a bare owner,
+so DESTROY_CLIENTID can reach __destroy_client() with such owners
+present.
 
-This affected all three revoke paths:
+__destroy_client() then walks the table, calling remove_blocked_locks()
+on each owner without a reference.  Freeing a blocked lock drops the
+owner reference held via flc_owner.  The per-net laundromat reaps
+blocked locks from nn->blocked_locks_lru independently of client state.
+The two paths share blocked_locks_lock only for the list splice, not
+the owner's lifetime.  The laundromat therefore frees the owner as
+__destroy_client() dereferences it, a NULL dereference in
+remove_blocked_locks().
 
-  - The parent-stid drain (nfs4_free_cpntf_statelist()) repeatedly called
-    _free_cpntf_state_locked() on the first list entry; a holder that had
-    bumped cs_count made it return early, so the next iteration
-    re-decremented and burned the holder's reference.
+nfsd4_release_lockowner() holds a reference across the same call;
+__destroy_client() does not.  Hold cl_lock across the walk, taking a
+reference and unhashing each owner, then drop it before
+remove_blocked_locks() and nfs4_put_stateowner(), which take
+blocked_locks_lock and cl_lock.
 
-  - OFFLOAD_CANCEL (manage_cpntf_state()) and laundromat expiry likewise
-    used _free_cpntf_state_locked() and could drop 2->1 without unlinking.
-
-Add revoke_cpntf_state_locked(), which unhashes the entry from the IDR and
-sc_cp_list first (deferring the final free to any holder), and use it from
-all three revoke paths. The drain now walks with list_for_each_entry_safe()
-and revokes each entry unconditionally, so it terminates in one pass per
-entry regardless of cs_count. The unhash is gated on
-!list_empty(&cps->cp_list); the idr_remove() gate matters because
-idr_alloc_cyclic() may have recycled the so_id by then. Keep
-_free_cpntf_state_locked() for the reference-holder put path only, where a
-concurrent revoke may already have unlinked the entry (its list_del_init()
-then a no-op).
-
-Fixes: 624322f1adc5 ("NFSD add COPY_NOTIFY operation")
+Reported-by: Wolfgang Walter <linux@stwm.de>
+Closes: https://lore.kernel.org/linux-nfs/6eccafaaaa60651ef091257c3439c46b@stwm.de/
+Fixes: 68ef3bc31664 ("nfsd: remove blocked locks on client teardown")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260710-nfsd-testing-v3-6-a0ff7db6aa3e@kernel.org
+Reviewed-by: NeilBrown <neil@brown.name>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260709-cel-v4-1-1d519d9be0cb@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   78 +++++++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 62 insertions(+), 16 deletions(-)
+ fs/nfsd/nfs4state.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -1066,18 +1066,66 @@ void nfs4_free_copy_state(struct nfsd4_c
- 	spin_unlock(&nn->s2s_cp_lock);
- }
- 
-+/*
-+ * Drop the parent's reference on an already-unlinked cpntf entry. If a
-+ * concurrent holder still owns a reference, its nfs4_put_cpntf_state() does
-+ * the final free.
-+ *
-+ * nn->s2s_cp_lock must be held.
-+ */
-+static void put_cpntf_state_unlinked_locked(struct nfs4_cpntf_state *cps)
-+{
-+	WARN_ON_ONCE(cps->cp_stateid.cs_type != NFS4_COPYNOTIFY_STID);
-+	WARN_ON_ONCE(!list_empty(&cps->cp_list));
-+
-+	if (refcount_dec_and_test(&cps->cp_stateid.cs_count))
-+		kfree(cps);
-+}
-+
-+/*
-+ * Unhash from the IDR and sc_cp_list. Gated on list_empty() to avoid
-+ * evicting a recycled so_id.
-+ */
-+static void nfsd4_unhash_cpntf_state(struct nfsd_net *nn, struct nfs4_cpntf_state *cps)
-+{
-+	lockdep_assert_held(&nn->s2s_cp_lock);
-+
-+	if (!list_empty(&cps->cp_list)) {
-+		list_del_init(&cps->cp_list);
-+		idr_remove(&nn->s2s_cp_stateids, cps->cp_stateid.cs_stid.si_opaque.so_id);
-+	}
-+}
-+
-+/*
-+ * Revoke a copy-notify stateid: unlink it from the IDR and sc_cp_list first
-+ * so no new finder can discover it, then drop the membership reference. Every
-+ * revoke path (cancel, laundromat, drain) must use this rather than
-+ * _free_cpntf_state_locked(), which unlinks only at refcount zero and so could
-+ * let a second revoke free the entry under a concurrent reader.
-+ *
-+ * nn->s2s_cp_lock must be held.
-+ */
-+static void revoke_cpntf_state_locked(struct nfsd_net *nn,
-+				      struct nfs4_cpntf_state *cps)
-+{
-+	nfsd4_unhash_cpntf_state(nn, cps);
-+	put_cpntf_state_unlinked_locked(cps);
-+}
-+
- static void nfs4_free_cpntf_statelist(struct net *net, struct nfs4_stid *stid)
- {
--	struct nfs4_cpntf_state *cps;
-+	struct nfs4_cpntf_state *cps, *tmp;
- 	struct nfsd_net *nn;
- 
- 	nn = net_generic(net, nfsd_net_id);
- 	spin_lock(&nn->s2s_cp_lock);
--	while (!list_empty(&stid->sc_cp_list)) {
--		cps = list_first_entry(&stid->sc_cp_list,
--				       struct nfs4_cpntf_state, cp_list);
--		_free_cpntf_state_locked(nn, cps);
--	}
-+	/*
-+	 * Revoke unlinks each entry before dropping the parent's reference, so
-+	 * the drain terminates in one pass per entry regardless of cs_count; a
-+	 * concurrent holder does the final kfree via nfs4_put_cpntf_state().
-+	 */
-+	list_for_each_entry_safe(cps, tmp, &stid->sc_cp_list, cp_list)
-+		revoke_cpntf_state_locked(nn, cps);
- 	spin_unlock(&nn->s2s_cp_lock);
- }
- 
-@@ -6223,7 +6271,7 @@ nfs4_laundromat(struct nfsd_net *nn)
- 		cps = container_of(cps_t, struct nfs4_cpntf_state, cp_stateid);
- 		if (cps->cp_stateid.cs_type == NFS4_COPYNOTIFY_STID &&
- 				state_expired(&lt, cps->cpntf_time))
--			_free_cpntf_state_locked(nn, cps);
-+			revoke_cpntf_state_locked(nn, cps);
+@@ -2336,14 +2336,24 @@ __destroy_client(struct nfs4_client *clp
+ 		release_openowner(oo);
  	}
- 	spin_unlock(&nn->s2s_cp_lock);
- 	nfs4_get_client_reaplist(nn, &reaplist, &lt);
-@@ -6610,16 +6658,14 @@ nfs4_check_file(struct svc_rqst *rqstp,
- out:
- 	return status;
- }
--static void
--_free_cpntf_state_locked(struct nfsd_net *nn, struct nfs4_cpntf_state *cps)
+ 	for (i = 0; i < OWNER_HASH_SIZE; i++) {
+-		struct nfs4_stateowner *so, *tmp;
++		struct nfs4_stateowner *so;
+ 
+-		list_for_each_entry_safe(so, tmp, &clp->cl_ownerstr_hashtbl[i],
+-					 so_strhash) {
++		spin_lock(&clp->cl_lock);
++		while (!list_empty(&clp->cl_ownerstr_hashtbl[i])) {
++			so = list_first_entry(&clp->cl_ownerstr_hashtbl[i],
++					      struct nfs4_stateowner, so_strhash);
+ 			/* Should be no openowners at this point */
+ 			WARN_ON_ONCE(so->so_is_open_owner);
++			nfs4_get_stateowner(so);
++			unhash_lockowner_locked(lockowner(so));
++			spin_unlock(&clp->cl_lock);
 +
-+static void _free_cpntf_state_locked(struct nfsd_net *nn, struct nfs4_cpntf_state *cps)
- {
- 	WARN_ON_ONCE(cps->cp_stateid.cs_type != NFS4_COPYNOTIFY_STID);
--	if (!refcount_dec_and_test(&cps->cp_stateid.cs_count))
--		return;
--	list_del_init(&cps->cp_list);
--	idr_remove(&nn->s2s_cp_stateids,
--		   cps->cp_stateid.cs_stid.si_opaque.so_id);
--	kfree(cps);
-+	if (refcount_dec_and_test(&cps->cp_stateid.cs_count)) {
-+		nfsd4_unhash_cpntf_state(nn, cps);
-+		kfree(cps);
-+	}
- }
- /*
-  * A READ from an inter server to server COPY will have a
-@@ -6656,7 +6702,7 @@ __be32 manage_cpntf_state(struct nfsd_ne
- 			state = NULL;
- 			goto unlock;
- 		} else {
--			_free_cpntf_state_locked(nn, state);
-+			revoke_cpntf_state_locked(nn, state);
+ 			remove_blocked_locks(lockowner(so));
++			nfs4_put_stateowner(so);
++
++			spin_lock(&clp->cl_lock);
  		}
++		spin_unlock(&clp->cl_lock);
  	}
- unlock:
+ 	nfsd4_return_all_client_layouts(clp);
+ 	nfsd4_shutdown_copy(clp);
 
 
