@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1EB37FF60;
-	Sat, 12 Sep 2026 16:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CCA47C106;
+	Sat, 12 Sep 2026 16:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229633; cv=none; b=gXCeGq/ftAad8iUk/1/icx0lUBtg1M74k2UmKrbp0OxoEet/L9ZR94OukhapqLQ6VqRkuD44gGFD2ztM4k23siu5g8Ezf6wBGqBvh9KOSlJr2aD60FfZQFP4JDSeyatzQM2TVaClZTk0LvkSsg5AyEMAglaoUvbU3JA9HHykIiE=
+	t=1789229637; cv=none; b=FrDu17QXu83y4Ck5SSxFfB8kAKlKD8YCaPLFz12cvk+FTGICsdn/4kEKHAgEM3KS47TvpHCi344mNp5KDqkvW7CXsSoQ2xQ+Q8VuGoOtOWnoWttIQDnMWHFwU+Fq303t5BaNoU4HuGpj7NqevI3VIt50HRA2dY3DPbRdGsQTiVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229633; c=relaxed/simple;
-	bh=jWTfefTaBaO6QM/25tYGCpk4E0igFnu+7ygwIdPvIks=;
+	s=arc-20240116; t=1789229637; c=relaxed/simple;
+	bh=7nD79cSGVxp8bqe6jcv3CTyyzjj0WJiwoTwqUUqaH5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fj3lrK4/LVrAmg2lpDVLiA3z8vAHwFwV1Me9PuC8sZcxK7iedMGq+7W64HRnkDoD/x6ZtpqcEkvqlSleTDr6FM5+Rh2LvZ1qc30ffilI2W6vQ2CDjGwcKvpVPUy7sZOTv138g4oJu/kZH42w8INELSh0yVSTdsj/kpxY1+bEvIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NzbepATm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QOeekuQJMxxy1LhlV0jQMZuNsqwfZJ7F2YanYGuQAOdr1dEZEXMdowYeN/D+QV/F9sfCirMR5rc4pzR6t8gmMTkoNwO/QwRH4zHLJx552msFkbrE5H3lOzLAZhSEsswtIDmHbitv50KpF+MRnpma8HLkWEsuKHZNXvY8Na1rUiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYDpkMdN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NzbepATm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61791F000FF;
-	Sat, 12 Sep 2026 16:13:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYDpkMdN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76E871F000FF;
+	Sat, 12 Sep 2026 16:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229629;
-	bh=iSkWVVHyzD1b2AtaiOjRyl2h33qnto/uJyE6GjnAXmE=;
+	s=korg; t=1789229634;
+	bh=6RswpqmOW/CL4D+BJ4FIkI6S9huCYG5VCz6D5aBVTfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NzbepATm8nYiKrWeHIlgl53jJfcmY87DZMXzJynQL0zptXZNJJPzK8yF61n/ZMbsK
-	 di0N4cGfFOOkJCBMhuhNDOE1yBBnSEeJ0r3kxI7Y7PydZeQS4o3FgNxU8yA4hRP6yf
-	 9o51ImHTyMHIHwS46pRvJ2bTVphv9hByaBb3rA5g=
+	b=UYDpkMdN0wghFsfs+5sNLCedLhfai08X3wnPCKNASaEtHIQ0Vbzp6lVAy6oHGDUbm
+	 ajpkQ8yaajXebEvtznMuXyFBHWpaxlUAYCjbKzRzhwDkTl1fQ+FxlZ4vyqNJBlIFHy
+	 WHXv2Tfdn14c8ai2H/ohBzbxu9q4wCNgVwsP5Piw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Avraham Stern <avraham.stern@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0628/1191] wifi: iwlwifi: mei: check SAP message length before reading it
-Date: Sat, 12 Sep 2026 08:55:56 +0200
-Message-ID: <20260912065602.359040634@linuxfoundation.org>
+Subject: [PATCH 6.1 0629/1191] wifi: iwlwifi: mei: pass correct argument to function
+Date: Sat, 12 Sep 2026 08:55:57 +0200
+Message-ID: <20260912065602.381678964@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,44 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Avraham Stern <avraham.stern@intel.com>
 
-[ Upstream commit 7d8cc301bcba233f31b589a45f4c1c97f2bb90d6 ]
+[ Upstream commit 905f57aefde4f4092a411c8a55856182fb1c7598 ]
 
-Verify the SAP message size is not larger than the local buffer before
-reading the message to avoid buffer overflow.
+The first argument to iwl_mei_write_cyclic_buf() should be the cldev
+but the q_head pointer is passed instead. Fix it.
 
-Fixes: bcd68b3dbe78 ("wifi: iwlwifi: mei: fix tx DHCP packet for devices with new Tx API")
+Fixes: 652291601459 ("iwlwifi: mei: don't rely on the size from the shared area")
 Signed-off-by: Avraham Stern <avraham.stern@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260715220243.f0026ce26218.I00a856d3aacae1caac605c708f7362689b734234@changeid
+Link: https://patch.msgid.link/20260715220243.24cea60c6428.I42301010c31487b1458faa967b22c8320b0cfd23@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mei/main.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mei/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/wireless/intel/iwlwifi/mei/main.c b/drivers/net/wireless/intel/iwlwifi/mei/main.c
-index 91e30bf7a56e6..56d4b16ad4888 100644
+index 56d4b16ad4888..6719a1f892717 100644
 --- a/drivers/net/wireless/intel/iwlwifi/mei/main.c
 +++ b/drivers/net/wireless/intel/iwlwifi/mei/main.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-  * Copyright (C) 2021-2024 Intel Corporation
-+ * Copyright (C) 2026 Intel Corporation
-  */
+@@ -446,7 +446,7 @@ static int iwl_mei_send_sap_msg_payload(struct mei_cl_device *cldev,
+ 	notif_q = &dir->q_ctrl_blk[SAP_QUEUE_IDX_NOTIF];
+ 	q_head = mei->shared_mem.q_head[SAP_DIRECTION_HOST_TO_ME][SAP_QUEUE_IDX_NOTIF];
+ 	q_sz = mei->shared_mem.q_size[SAP_DIRECTION_HOST_TO_ME][SAP_QUEUE_IDX_NOTIF];
+-	ret = iwl_mei_write_cyclic_buf(q_head, notif_q, q_head, hdr, q_sz);
++	ret = iwl_mei_write_cyclic_buf(cldev, notif_q, q_head, hdr, q_sz);
  
- #include <linux/etherdevice.h>
-@@ -1118,6 +1119,11 @@ static void iwl_mei_handle_sap_rx_cmd(struct mei_cl_device *cldev,
- 		iwl_mei_read_from_q(q_head, q_sz, &rd, wr, hdr, sizeof(*hdr));
- 		valid_rx_sz -= sizeof(*hdr);
- 		len = le16_to_cpu(hdr->len);
-+		if (len + sizeof(*hdr) > PAGE_SIZE) {
-+			dev_err(&cldev->dev,
-+				"SAP message is too big: %u\n", len);
-+			break;
-+		}
- 
- 		if (valid_rx_sz < len)
- 			break;
+ 	if (ret < 0)
+ 		return ret;
 -- 
 2.53.0
 
