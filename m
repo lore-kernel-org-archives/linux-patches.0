@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6843A7587;
-	Sat, 12 Sep 2026 19:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11BA33939B3;
+	Sat, 12 Sep 2026 19:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239894; cv=none; b=HCp7ARWV3X8kLK91IuVKwukcQYqCSS9bje5h4yfygMsIWjGLFtyaVkG6q/068ymEtEy5KT06zuP4lFUwepeYAoeZtZer3/MJUxgyIU3IZnuKD84z/7gln7daakWW5Ehbif1y8O+fe73QvMk7VJpEWfq7dxzHct6M4xS+ZK21GXw=
+	t=1789239899; cv=none; b=kaKA937MJj/MZlsNl4XXSVrRrNyRxeU6DtE1L6Gaf7nIqGJEAM1Vf7wHRHxnG47UcAp4c2NvcfkDi/fp+O6Nj/+e4Yhk0W93OkunKCSdg+YjbvtSA2IYTGFV9HHhu9TVys2VaIjOIdXM5r2RSSc03fEqZ6m8xX3PY1EyWExitEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239894; c=relaxed/simple;
-	bh=RbL0qprbvZaAatVPB/1n+x3tzopwxi/abm+3kilrMfQ=;
+	s=arc-20240116; t=1789239899; c=relaxed/simple;
+	bh=7Sy/vAJUznVD15Ja7aTiR90rxVKVQlGfQOj78ARhuLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GjQzk11PHxsScfSNwb1p52iJTbZcz6PMLXdy7evTsty5b5yLUzcpVn2aZth99lBUUafv9jre1/0wU7SFRHCyZujbPj2NtcMlQWlOuO91INc0URRtqEUanD5A8NVXFRT6s6cS/n3VgTO5rs4sDcbgydovnsvHMzSXKCPoYG8McEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L8auHYgp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nqbAAsB/6pJwO+qyaMe4sC+f5dBZ4AYA5kQOz/aAtM+0eOQdoLgPquVeTCsyL2jn429b3izxH2Os5My8ZUwYXPePclfg+jmG0NIrvVZRJZSh6yme+3/bvLzk5z9DHR7qiS+zbmkVykY54EZVTkanOyqquCR186CqpSZSnQRyHcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vyVzvdZ1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L8auHYgp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52341F000FF;
-	Sat, 12 Sep 2026 19:04:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vyVzvdZ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118C61F000FF;
+	Sat, 12 Sep 2026 19:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239893;
-	bh=X3RRAHQluOijrLi9lLYGSvchGU6Su+aeAeZghS4o85Y=;
+	s=korg; t=1789239898;
+	bh=GxtXTDaEmRawTCJWsHrJvNvxWqs4wV+gDxEkIjTWJac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L8auHYgpE2GVZLaO2R+yHyb0hbmEGj1FgfHpxTDhRoHEZNwU9uBGSpKYrv2wpdV/V
-	 pu3OucGGrfA/618hlCBkIUwRVB1WcE6dvftI6ROzRTLCAf+U83iRk3LjpWPUeg4gC6
-	 d01TnGnN8azvKi/Ou5po9M2WtUcSA71iShqIJsUg=
+	b=vyVzvdZ1RcSRlHsrjOtuD8inClVU8UOti8jM46kqSUayoLafKg9siWVgCJEKwSpms
+	 Y7wT4rT7EzKvSS+TeAUp1nzCHA2EVIfnrAlRTjq1ROPyGn58wVihmP3vMNQIazVBb1
+	 W7aIxNXCA5MPa/awZ4NVDKJt1ckSDerm1mbED6v0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baowen Zheng <baowen.zheng@corigine.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Aohan Mei <henrymei@tencent.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 756/935] flow_offload: rename offload functions with offload instead of flow
-Date: Sat, 12 Sep 2026 09:03:06 +0200
-Message-ID: <20260912065544.171306531@linuxfoundation.org>
+Subject: [PATCH 5.15 757/935] net/sched: cls_api: fix teardown of an adopted proto on insert-race loss
+Date: Sat, 12 Sep 2026 09:03:07 +0200
+Message-ID: <20260912065544.194903590@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,177 +55,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baowen Zheng <baowen.zheng@corigine.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 9c1c0e124ca25589e6cf040e105ab0857f9e9c3e ]
+[ Upstream commit d4e359b3608a0e184bbe8d61a5c3b50d0831c44a ]
 
-To improves readability, we rename offload functions with offload instead
-of flow.
+In tc_new_tfilter() the create branch sets tp_created = 1 before calling
+tcf_chain_tp_insert_unique(). When the caller loses the race (another
+request inserted a proto at the same chain/prio first), insert_unique()
+destroys the caller's own tp_new and returns the winner's proto with an
+extra reference. tp_created was never cleared, so the loser's errout
+path treated the winner's live proto as its own and called
+tcf_chain_tp_delete_empty() on it, silently unlinking an active
+classifier that the winning request already advertised via
+RTM_NEWTFILTER.
 
-The term flow is related to exact matches, so we rename these functions
-with offload.
+Track the outcome of the insert step in a single tri-state variable so
+each errout path reacts correctly:
 
-We make this change to facilitate single action offload functions naming.
+- TP_NOT_CREATED: no proto created; pursue the old path.
+- TP_CREATED: proto inserted successfully; same code path as before.
+- TP_NOT_OWNED: New - lost the insert race; tp is another request's proto
+  (chain ref already released by tp_new's destroy)
 
-Signed-off-by: Baowen Zheng <baowen.zheng@corigine.com>
-Signed-off-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: d4e359b3608a ("net/sched: cls_api: fix teardown of an adopted proto on insert-race loss")
+Both errout reactions are single expressions derived from the state.
+
+This fix is motivated by the Sashiko's automated review of Patch
+(net/sched: cls_api: Always acquire rtnl_lock when destroying locked
+classifiers) [1][2]. The review identified the silent-unlink behaviour of
+an adopted proto's teardown when a request loses the
+tcf_chain_tp_insert_unique() race.
+
+[1] https://sashiko.dev/#/patchset/20260801125632.360365-1-jhs%40mojatatu.com
+[2] https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260801125632.360365-1-jhs%40mojatatu.com
+
+Fixes: 8b64678e0af8 ("net: sched: refactor tp insert/delete for concurrent execution")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260801125632.360365-1-jhs%40mojatatu.com
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260801125632.360365-1-jhs%40mojatatu.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Tested-by: Aohan Mei <henrymei@tencent.com>
+Link: https://patch.msgid.link/20260805134049.927864-1-victor@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/pkt_cls.h    |  6 +++---
- net/sched/cls_api.c      | 12 ++++++------
- net/sched/cls_flower.c   |  8 ++++----
- net/sched/cls_matchall.c |  8 ++++----
- 4 files changed, 17 insertions(+), 17 deletions(-)
+ net/sched/cls_api.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/include/net/pkt_cls.h b/include/net/pkt_cls.h
-index 83a6d07921806..6e993e2d656a4 100644
---- a/include/net/pkt_cls.h
-+++ b/include/net/pkt_cls.h
-@@ -532,9 +532,9 @@ tcf_match_indev(struct sk_buff *skb, int ifindex)
- 	return ifindex == skb->skb_iif;
- }
- 
--int tc_setup_flow_action(struct flow_action *flow_action,
--			 const struct tcf_exts *exts);
--void tc_cleanup_flow_action(struct flow_action *flow_action);
-+int tc_setup_offload_action(struct flow_action *flow_action,
-+			    const struct tcf_exts *exts);
-+void tc_cleanup_offload_action(struct flow_action *flow_action);
- 
- int tc_setup_cb_call(struct tcf_block *block, enum tc_setup_type type,
- 		     void *type_data, bool err_stop, bool rtnl_held);
 diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index b085fdf78679f..a6002e067d0b4 100644
+index a6002e067d0b4..32ccf62940f48 100644
 --- a/net/sched/cls_api.c
 +++ b/net/sched/cls_api.c
-@@ -3480,7 +3480,7 @@ static void tcf_act_put_cookie(struct flow_action_entry *entry)
- 	flow_action_cookie_destroy(entry->cookie);
+@@ -1939,6 +1939,12 @@ static bool is_ingress_or_clsact(struct tcf_block *block, struct Qdisc *q)
+ 	return tcf_block_shared(block) || (q && !!(q->flags & TCQ_F_INGRESS));
  }
  
--void tc_cleanup_flow_action(struct flow_action *flow_action)
-+void tc_cleanup_offload_action(struct flow_action *flow_action)
++enum tcf_tp_insert_state {
++	TP_NOT_CREATED = 0, /* did not create and insert a new tp */
++	TP_CREATED, /* created and inserted a new tp */
++	TP_NOT_OWNED, /* created a proto but failed to insert */
++};
++
+ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
+ 			  struct netlink_ext_ack *extack)
  {
- 	struct flow_action_entry *entry;
- 	int i;
-@@ -3491,7 +3491,7 @@ void tc_cleanup_flow_action(struct flow_action *flow_action)
- 			entry->destructor(entry->destructor_priv);
+@@ -1959,7 +1965,7 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
+ 	unsigned long cl;
+ 	void *fh;
+ 	int err;
+-	int tp_created;
++	enum tcf_tp_insert_state tp_state;
+ 	bool rtnl_held = false;
+ 	u32 flags;
+ 
+@@ -1967,7 +1973,7 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
+ 		return -EPERM;
+ 
+ replay:
+-	tp_created = 0;
++	tp_state = TP_NOT_CREATED;
+ 
+ 	err = nlmsg_parse_deprecated(n, sizeof(*t), tca, TCA_MAX,
+ 				     rtm_tca_policy, extack);
+@@ -2090,13 +2096,15 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
+ 			goto errout_tp;
+ 		}
+ 
+-		tp_created = 1;
++		tp_state = TP_CREATED;
+ 		tp = tcf_chain_tp_insert_unique(chain, tp_new, protocol, prio,
+ 						rtnl_held);
+ 		if (IS_ERR(tp)) {
+ 			err = PTR_ERR(tp);
+ 			goto errout_tp;
+ 		}
++		if (tp != tp_new)
++			tp_state = TP_NOT_OWNED;
+ 	} else {
+ 		mutex_unlock(&chain->filter_chain_lock);
  	}
- }
--EXPORT_SYMBOL(tc_cleanup_flow_action);
-+EXPORT_SYMBOL(tc_cleanup_offload_action);
+@@ -2147,13 +2155,13 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
+ 	}
  
- static void tcf_mirred_get_dev(struct flow_action_entry *entry,
- 			       const struct tc_action *act)
-@@ -3563,8 +3563,8 @@ static enum flow_action_hw_stats tc_act_hw_stats(u8 hw_stats)
- 	return hw_stats;
- }
- 
--int tc_setup_flow_action(struct flow_action *flow_action,
--			 const struct tcf_exts *exts)
-+int tc_setup_offload_action(struct flow_action *flow_action,
-+			    const struct tcf_exts *exts)
- {
- 	struct tc_action *act;
- 	int i, j, k, err = 0;
-@@ -3738,14 +3738,14 @@ int tc_setup_flow_action(struct flow_action *flow_action,
- 
- err_out:
- 	if (err)
--		tc_cleanup_flow_action(flow_action);
-+		tc_cleanup_offload_action(flow_action);
- 
- 	return err;
- err_out_locked:
- 	spin_unlock_bh(&act->tcfa_lock);
- 	goto err_out;
- }
--EXPORT_SYMBOL(tc_setup_flow_action);
-+EXPORT_SYMBOL(tc_setup_offload_action);
- 
- unsigned int tcf_exts_num_actions(struct tcf_exts *exts)
- {
-diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
-index af437be93e25a..b010778206650 100644
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -456,7 +456,7 @@ static int fl_hw_replace_filter(struct tcf_proto *tp,
- 	cls_flower.rule->match.key = &f->mkey;
- 	cls_flower.classid = f->res.classid;
- 
--	err = tc_setup_flow_action(&cls_flower.rule->action, &f->exts);
-+	err = tc_setup_offload_action(&cls_flower.rule->action, &f->exts);
- 	if (err) {
- 		kfree(cls_flower.rule);
- 		if (skip_sw) {
-@@ -468,7 +468,7 @@ static int fl_hw_replace_filter(struct tcf_proto *tp,
- 
- 	err = tc_setup_cb_add(block, tp, TC_SETUP_CLSFLOWER, &cls_flower,
- 			      skip_sw, &f->flags, &f->in_hw_count, rtnl_held);
--	tc_cleanup_flow_action(&cls_flower.rule->action);
-+	tc_cleanup_offload_action(&cls_flower.rule->action);
- 	kfree(cls_flower.rule);
- 
- 	if (err) {
-@@ -2283,7 +2283,7 @@ static int fl_reoffload(struct tcf_proto *tp, bool add, flow_setup_cb_t *cb,
- 		cls_flower.rule->match.mask = &f->mask->key;
- 		cls_flower.rule->match.key = &f->mkey;
- 
--		err = tc_setup_flow_action(&cls_flower.rule->action, &f->exts);
-+		err = tc_setup_offload_action(&cls_flower.rule->action, &f->exts);
- 		if (err) {
- 			kfree(cls_flower.rule);
- 			if (tc_skip_sw(f->flags)) {
-@@ -2300,7 +2300,7 @@ static int fl_reoffload(struct tcf_proto *tp, bool add, flow_setup_cb_t *cb,
- 					    TC_SETUP_CLSFLOWER, &cls_flower,
- 					    cb_priv, &f->flags,
- 					    &f->in_hw_count);
--		tc_cleanup_flow_action(&cls_flower.rule->action);
-+		tc_cleanup_offload_action(&cls_flower.rule->action);
- 		kfree(cls_flower.rule);
- 
- 		if (err) {
-diff --git a/net/sched/cls_matchall.c b/net/sched/cls_matchall.c
-index 24f0046ce0b33..2d2702915cfad 100644
---- a/net/sched/cls_matchall.c
-+++ b/net/sched/cls_matchall.c
-@@ -97,7 +97,7 @@ static int mall_replace_hw_filter(struct tcf_proto *tp,
- 	cls_mall.command = TC_CLSMATCHALL_REPLACE;
- 	cls_mall.cookie = cookie;
- 
--	err = tc_setup_flow_action(&cls_mall.rule->action, &head->exts);
-+	err = tc_setup_offload_action(&cls_mall.rule->action, &head->exts);
- 	if (err) {
- 		kfree(cls_mall.rule);
- 		mall_destroy_hw_filter(tp, head, cookie, NULL);
-@@ -111,7 +111,7 @@ static int mall_replace_hw_filter(struct tcf_proto *tp,
- 
- 	err = tc_setup_cb_add(block, tp, TC_SETUP_CLSMATCHALL, &cls_mall,
- 			      skip_sw, &head->flags, &head->in_hw_count, true);
--	tc_cleanup_flow_action(&cls_mall.rule->action);
-+	tc_cleanup_offload_action(&cls_mall.rule->action);
- 	kfree(cls_mall.rule);
- 
- 	if (err) {
-@@ -301,7 +301,7 @@ static int mall_reoffload(struct tcf_proto *tp, bool add, flow_setup_cb_t *cb,
- 		TC_CLSMATCHALL_REPLACE : TC_CLSMATCHALL_DESTROY;
- 	cls_mall.cookie = (unsigned long)head;
- 
--	err = tc_setup_flow_action(&cls_mall.rule->action, &head->exts);
-+	err = tc_setup_offload_action(&cls_mall.rule->action, &head->exts);
- 	if (err) {
- 		kfree(cls_mall.rule);
- 		if (add && tc_skip_sw(head->flags)) {
-@@ -314,7 +314,7 @@ static int mall_reoffload(struct tcf_proto *tp, bool add, flow_setup_cb_t *cb,
- 	err = tc_setup_cb_reoffload(block, tp, add, cb, TC_SETUP_CLSMATCHALL,
- 				    &cls_mall, cb_priv, &head->flags,
- 				    &head->in_hw_count);
--	tc_cleanup_flow_action(&cls_mall.rule->action);
-+	tc_cleanup_offload_action(&cls_mall.rule->action);
- 	kfree(cls_mall.rule);
- 
- 	if (err)
+ errout:
+-	if (err && tp_created)
++	if (err && tp_state == TP_CREATED)
+ 		tcf_chain_tp_delete_empty(chain, tp, rtnl_held, NULL);
+ errout_tp:
+ 	if (chain) {
+ 		if (tp && !IS_ERR(tp))
+ 			tcf_proto_put(tp, rtnl_held, NULL);
+-		if (!tp_created)
++		if (tp_state == TP_NOT_CREATED)
+ 			tcf_chain_put(chain);
+ 	}
+ 	tcf_block_release(q, block, rtnl_held);
 -- 
 2.53.0
 
