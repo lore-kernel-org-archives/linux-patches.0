@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E313290D1;
-	Sat, 12 Sep 2026 16:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19F2331EAE;
+	Sat, 12 Sep 2026 16:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231044; cv=none; b=u+MFApT86UMnAaO5kgXla83w+Xr8uFUXxHvfU4ro9eTaZeEYjAZs5dyKAkKM1pgEApl3NNoMACeV3Yc4b76cfqnfv42YVyi5xQbgufsnTJ5S5q4gbT11TT7CuKCU/i2XHUvnDSQaw1faHpG+H8s+BMW1aH4q8lEY5HYaccPEs6k=
+	t=1789231048; cv=none; b=pjGVJ0G44oLa+o5IlGWmnSYSr0L7fUYO1lQsTAd5NKwTCtfylVSd5Cf4X0gi5IEsbdQg62fVqm393E5dmxgSAFxfHTdLUq46XY+khQT3XSD32J8xDby0x0HhYONY2bFKDjQiuTwm/1znoURjIfUOfDjw48r/q1PA2hvNCJO7n5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231044; c=relaxed/simple;
-	bh=KuM95rPjrGeriq7ov9yq6wLKY09osWpJgNDj7WLumCk=;
+	s=arc-20240116; t=1789231048; c=relaxed/simple;
+	bh=88tXAfLh35P43KrL8k3eX+GN3Fj91XL5N6Q9VwW5j5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K7TZ/lWozyNlPRqV5Fus1rMucrKrJLBe1d15goZpZqOk13uToGMZ9ppelDcqMDo368AaKRsE2ixHRGf7Zw7YwKrnGpQ0yNVwrLoZ7OR6YwQ1qmFH/Jv7xUzLlFZo37NL5zZjSf96WDxiWx1YY4D6f9W8mYKkdjPTnr0m4iNE6ZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1gWGa+3N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BMlhA3lSjoe+ZDfJI8Tq3ffuFX2vzaTgUuOotjILuW2GqBf2AsYrCIA/PO295MF9LGsCDPXibvMnQbZJWYjOVrdS0vwdnaDykV0BZaqJDq+iBTOPtFThC+cDe9y+DKdkS3wQ4pfZ29FdXxsjKzDcmWdBBp0wyuxY0CgtdOiSP6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5stNif8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1gWGa+3N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACAAE1F000FF;
-	Sat, 12 Sep 2026 16:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5stNif8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A6F31F000FF;
+	Sat, 12 Sep 2026 16:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231042;
-	bh=n4vQyGmoSg+9SDyyD2RFVOofWDnRbbpHKknKYAjkGDQ=;
+	s=korg; t=1789231047;
+	bh=tH5XgRLFntzW7ohEQjvAyYgRDLrDtRE+glNrPCNucR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1gWGa+3NgeTabsfHDywGMfh728/jwn7fLFV+QLyEStWYNpCQlxtDfoDTZzSWTxI3m
-	 CrfNWxNrWVak8DlR71FgISyrUSaBYWSxGSy/RX9B4QLRx4ryBLFXH81B6E7Bfw0Xtg
-	 tghOC8DCJ/l/9UKTlM9PmzNc/8YYjRkQh8X9Lndk=
+	b=N5stNif8yqUsvBqjfnfpASlVndwbUWFgpXLcOhJmJ2XLIzEs5wli8FEtIJojgawxT
+	 1b4FtXcOFbFjO1ra7Ls65kuToddykDbhnjBOcrnKPwoHf2jiBziyaGxGmpFYYK40By
+	 D/EfNHMOcsZz7xMHXk+PEaA7yju1GgbpaKI5VAl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0916/1191] phy: qcom: snps-femto-v2: Fix possible NULL-deref on early runtime suspend
-Date: Sat, 12 Sep 2026 09:00:44 +0200
-Message-ID: <20260912065608.807689832@linuxfoundation.org>
+Subject: [PATCH 6.1 0917/1191] coresight: etm4x: fix wrong check of etm4x_sspcicrn_present()
+Date: Sat, 12 Sep 2026 09:00:45 +0200
+Message-ID: <20260912065608.829760220@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -54,89 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit c271a6926ea7d3c9566b033d63fd4e8c488dc860 ]
+[ Upstream commit 0e1cd4270b42a257c139165622091e1e8c7104a7 ]
 
-Runtime PM must be enabled before creating the PHY, since phy_create()
-only enables runtime PM on the PHY device if it is already enabled on
-this parent device. However, the runtime PM callbacks dereference the
-hsphy instance, which is not yet ready, leaving a window where a suspend
-callback may trigger a NULL pointer dereference.
+According to Embedded Trace Macrocell Architecture Specification
+ETMv4.0 to ETM4.6 [0], TRCSSPCICR<n> is present only if all of
+the following are true:
 
-Take a runtime PM usage reference with pm_runtime_get_noresume() before
-enabling runtime PM and release it once the PHY has been created, so that
-no runtime suspend can run before the PHY is ready. This also prevents a
-short window where an unnecessary runtime suspend can occur.
+  - TRCIDR4.NUMSSCC > n.
+  - TRCIDR4.NUMPC > 0b0000.
+  - TRCSSCSR<n>.PC == 0b1.
 
-Use the devres-managed version to ensure PM runtime is symmetrically
-disabled during driver removal for proper cleanup.
+Comment for etm4x_sspcicrn_present() is align with the specification.
+However, the check should use drvdata->nr_pe_cmp to check TRCIDR4.NUMPC
+not nr_pe.
 
-Fixes: 0d75f508a9d5 ("phy: qcom-snps: Add runtime suspend and resume handlers")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260722-qcom-usb-phy-fix-null-v6-5-534f7e61b9a6@oss.qualcomm.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://developer.arm.com/documentation/ihi0064/latest/ [0]
+Fixes: f6a18f354c58 ("coresight: etm4x: Handle access to TRCSSPCICRn")
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260725113645.57519-2-yeoreum.yun@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 26 ++++++++++++++-----
- 1 file changed, 20 insertions(+), 6 deletions(-)
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-index d0319bee01c0f..1d820bc751a2c 100644
---- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-+++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-@@ -600,8 +600,18 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, ret,
- 				     "failed to get regulator supplies\n");
- 
-+	/*
-+	 * Enable runtime PM before creating the PHY, phy_create() only enables
-+	 * it on the PHY device if already enabled on the parent. Hold a usage
-+	 * reference so callbacks cannot run before the PHY is ready.
-+	 */
-+	pm_runtime_get_noresume(dev);
- 	pm_runtime_set_active(dev);
--	pm_runtime_enable(dev);
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret) {
-+		pm_runtime_put_noidle(dev);
-+		return ret;
-+	}
- 	/*
- 	 * Prevent runtime pm from being ON by default. Users can enable
- 	 * it using power/control in sysfs.
-@@ -612,6 +622,7 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
- 	if (IS_ERR(generic_phy)) {
- 		ret = PTR_ERR(generic_phy);
- 		dev_err(dev, "failed to create phy, %d\n", ret);
-+		pm_runtime_put_noidle(dev);
- 		return ret;
- 	}
- 	hsphy->phy = generic_phy;
-@@ -621,12 +632,15 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
- 	qcom_snps_hsphy_read_override_param_seq(dev);
- 
- 	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
--	if (!IS_ERR(phy_provider))
--		dev_dbg(dev, "Registered Qcom-SNPS HS phy\n");
--	else
--		pm_runtime_disable(dev);
-+	if (IS_ERR(phy_provider)) {
-+		pm_runtime_put_noidle(dev);
-+		return PTR_ERR(phy_provider);
-+	}
- 
--	return PTR_ERR_OR_ZERO(phy_provider);
-+	dev_dbg(dev, "Registered Qcom-SNPS HS phy\n");
-+	pm_runtime_put(dev);
-+
-+	return 0;
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index b2c55cc45a11f..fa2fe4ff236da 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -82,7 +82,7 @@ struct etm4_init_arg {
+ static inline bool etm4x_sspcicrn_present(struct etmv4_drvdata *drvdata, int n)
+ {
+ 	return (n < drvdata->nr_ss_cmp) &&
+-	       drvdata->nr_pe &&
++	       drvdata->nr_pe_cmp &&
+ 	       (drvdata->config.ss_status[n] & TRCSSCSRn_PC);
  }
  
- static struct platform_driver qcom_snps_hsphy_driver = {
 -- 
 2.53.0
 
