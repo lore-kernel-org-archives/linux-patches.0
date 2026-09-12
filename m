@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7DB47DD44;
-	Sat, 12 Sep 2026 13:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6888423A72;
+	Sat, 12 Sep 2026 13:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218716; cv=none; b=ulug4Oh6CeJD7TdlaJowjH1p7hvOwNvx5WVlkCuAL8PdlP6Ecia4PEcZOYugGriT9iUs/8WI8o+Mwrw/2DYeJuA8L5GEaZylRWE9m3EEoQTD2TntLaijYv8lofRrXP7YXE0SpAp0Wn7GO4J7vvjHFtV/e0jyFtlfyAKNolOg4iw=
+	t=1789218724; cv=none; b=naqZDqFZ2wRT0GFpD8JE9UigWvJd5BQEyiGg6B5Cvgd2M2INk3rEDVI6uM00/H3OYXFI6PaRA0kaKevpvhjD3h68dfF9GpjdxALC/kadgjqTQ4ID0JUjDLfGscdz4I2PCS2zCcZT7v+ZXTPo45CN5M0YI0B9X/A7LG/jwFAmdUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218716; c=relaxed/simple;
-	bh=NhAq91lVqF/S9OyK63/C7tt1e9kOo9oTUxEMzQaeBv8=;
+	s=arc-20240116; t=1789218724; c=relaxed/simple;
+	bh=YKUKWHx0aTOwj+nG1Fn0GOKiXt6/jNGb1/dntBsTgEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lR4OpGC71ndAReW5AyelFUP7NG25D+vO6yV9KWJKGooMb7Cv3FK8F8yRtpGw4jXbbeBVni5ZlQeaBhX188a9LYgWNIB1VKrn7s9CkCLtr6dw9qmMJzL6/zsLTY3On/JBD9kTZLw4oEO077t4aMmSY410YauSxLAlekyFeVr2+Bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0mOOJOU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YLzjOaisurvjkY7RG8LWjwoGCVYtbmjmNix7mnHKljQSOGz5BisvDPJlL8Hulmq69iIoLbZcFnewYBDHSlIKPKr47AHQYo0xIhF2P2nnRFbkdH4odU44ljILtRvCUbXwNWHCEmZdfRInB7coY1icrE+k5K6x3R+I9uEWO00jEUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSQmsKcc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0mOOJOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D1B1F000FF;
-	Sat, 12 Sep 2026 13:11:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSQmsKcc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3AAD1F000FF;
+	Sat, 12 Sep 2026 13:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218709;
-	bh=I6ciJQLxy2KvtCXlmQngLAXSILUH6EjTmYRjf1OXY1o=;
+	s=korg; t=1789218718;
+	bh=urt+Oz+mcGiChGSUbla8tEj2+OGjvI4emGf35Ndn+bs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I0mOOJOU8XXh7jm7hFrwh8C7fa2LBHJjPF1w4a4/urB1cQJmlhrmPOHdrE/YdAVbP
-	 i6vHDahrkViRlTWzXJRi2FDWaZom7a4yVLPFDvCibBKsPvFg/LTkTYuxGRHS/MnEQ4
-	 rJ0MY45HsqhA/MSdz45BNbbJ74iwhfVStLVyKRDg=
+	b=sSQmsKcccxxNvoXFSbI7ijrIqbbRLHT4mJEbEE5bTfiESEImdFtc0GfW5Ez6xsVJK
+	 onahAOqhLEGEXi6xwsb7QLAA3dKq82LEEq76dff+3FWK+wcdkE4D1unLKOyrqQUE0+
+	 HVfI4zzub6MDlLERSVyR6eXKPPEz11q+759sp9S8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1198/1376] f2fs: cleanup w/ f2fs_need_rand_{blk, seg, seg_blk}
-Date: Sat, 12 Sep 2026 09:00:24 +0200
-Message-ID: <20260912065634.249586092@linuxfoundation.org>
+Subject: [PATCH 6.12 1200/1376] ipvs: fix integer overflow in ftp helper port/address parsing
+Date: Sat, 12 Sep 2026 09:00:26 +0200
+Message-ID: <20260912065634.293044032@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,118 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-[ Upstream commit 6da62bbde487d4678702ef004a911cd1c7a5c746 ]
+[ Upstream commit e625a9477d12baaff4025c5f9989184a907ea8fc ]
 
-No logic changes.
+ip_vs_ftp_get_addrport() accumulates decimal digits into a __u16
+(hport) and into unsigned char (p[]) without checking for overflow.
+A crafted FTP PASV/EPSV response with an over-long port or address
+octet wraps the value, so the helper configures the data connection
+with a truncated port/address.
 
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 0a1703eba237 ("f2fs: fix to avoid pinfile fragment on fragment:{block, segment} mode")
+The netfilter conntrack FTP helper had the same defect, fixed in
+commit 2b413fc689ba ("netfilter: nf_conntrack_ftp: avoid u16
+overflows"). Apply the equivalent fix here: widen the port accumulator
+to u32 and reject values above 65535, and reject address octets above
+255.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h    | 13 +++++++++++--
- fs/f2fs/gc.c      |  2 +-
- fs/f2fs/segment.c |  8 ++++----
- fs/f2fs/super.c   |  4 ++--
- 4 files changed, 18 insertions(+), 9 deletions(-)
+ net/netfilter/ipvs/ip_vs_ftp.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 5b6a19aea806b..57cc64a5c9d2c 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -3858,10 +3858,19 @@ unsigned int f2fs_usable_blks_in_seg(struct f2fs_sb_info *sbi,
- #define MIN_FRAGMENT_SIZE	1
- #define MAX_FRAGMENT_SIZE	512
+diff --git a/net/netfilter/ipvs/ip_vs_ftp.c b/net/netfilter/ipvs/ip_vs_ftp.c
+index 206c6700e2006..d3be352a5ea8c 100644
+--- a/net/netfilter/ipvs/ip_vs_ftp.c
++++ b/net/netfilter/ipvs/ip_vs_ftp.c
+@@ -103,7 +103,7 @@ static int ip_vs_ftp_get_addrport(char *data, char *data_limit,
+ 	char *s, c;
+ 	unsigned char p[6];
+ 	char edelim;
+-	__u16 hport;
++	__u32 hport;
+ 	int i = 0;
  
-+static inline bool f2fs_need_rand_blk(struct f2fs_sb_info *sbi)
-+{
-+	return F2FS_OPTION(sbi).fs_mode == FS_MODE_FRAGMENT_BLK;
-+}
+ 	if (data_limit - data < plen) {
+@@ -145,7 +145,11 @@ static int ip_vs_ftp_get_addrport(char *data, char *data_limit,
+ 				return -1;
+ 			c = *data;
+ 			if (isdigit(c)) {
+-				p[i] = p[i]*10 + c - '0';
++				unsigned int val = p[i] * 10 + c - '0';
 +
- static inline bool f2fs_need_rand_seg(struct f2fs_sb_info *sbi)
- {
--	return F2FS_OPTION(sbi).fs_mode == FS_MODE_FRAGMENT_SEG ||
--		F2FS_OPTION(sbi).fs_mode == FS_MODE_FRAGMENT_BLK;
-+	return F2FS_OPTION(sbi).fs_mode == FS_MODE_FRAGMENT_SEG;
-+}
-+
-+static inline bool f2fs_need_rand_seg_blk(struct f2fs_sb_info *sbi)
-+{
-+	return f2fs_need_rand_blk(sbi) || f2fs_need_rand_seg(sbi);
- }
- 
- /*
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index d66f201dd4a88..08a978b6e0a95 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -317,7 +317,7 @@ static void select_policy(struct f2fs_sb_info *sbi, int gc_type,
- 		p->max_search = sbi->max_victim_search;
- 
- 	/* let's select beginning hot/small space first. */
--	if (f2fs_need_rand_seg(sbi)) {
-+	if (f2fs_need_rand_seg_blk(sbi)) {
- 		p->offset = get_random_u32_below(MAIN_SECS(sbi) *
- 						SEGS_PER_SEC(sbi));
- 		SIT_I(sbi)->last_victim[p->gc_mode] = p->offset;
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 4a2964de47c80..7d85baa22c6ef 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -2843,7 +2843,7 @@ static unsigned int __get_next_segno(struct f2fs_sb_info *sbi, int type)
- 
- 	sanity_check_seg_type(sbi, seg_type);
- 	if (__is_large_section(sbi)) {
--		if (f2fs_need_rand_seg(sbi)) {
-+		if (f2fs_need_rand_seg_blk(sbi)) {
- 			unsigned int hint = GET_SEC_FROM_SEG(sbi, curseg->segno);
- 
- 			if (GET_SEC_FROM_SEG(sbi, curseg->segno + 1) != hint)
-@@ -2852,7 +2852,7 @@ static unsigned int __get_next_segno(struct f2fs_sb_info *sbi, int type)
- 					GET_SEG_FROM_SEC(sbi, hint + 1) - 1);
- 		}
- 		return curseg->segno;
--	} else if (f2fs_need_rand_seg(sbi)) {
-+	} else if (f2fs_need_rand_seg_blk(sbi)) {
- 		return get_random_u32_below(MAIN_SECS(sbi) * SEGS_PER_SEC(sbi));
++				if (val > 255)
++					return -1;
++				p[i] = val;
+ 			} else if (c == ',' && i < 5) {
+ 				i++;
+ 				p[i] = 0;
+@@ -223,6 +227,8 @@ static int ip_vs_ftp_get_addrport(char *data, char *data_limit,
+ 		if (!isdigit(*s))
+ 			break;
+ 		hport = hport * 10 + *s - '0';
++		if (hport > 65535)
++			return -1;
  	}
- 
-@@ -2908,7 +2908,7 @@ static int new_curseg(struct f2fs_sb_info *sbi, int type, bool new_sec)
- 	curseg->next_segno = segno;
- 	reset_curseg(sbi, type, 1);
- 	curseg->alloc_type = LFS;
--	if (F2FS_OPTION(sbi).fs_mode == FS_MODE_FRAGMENT_BLK)
-+	if (f2fs_need_rand_blk(sbi))
- 		curseg->fragment_remained_chunk =
- 				get_random_u32_inclusive(1, sbi->max_fragment_chunk);
- 	return 0;
-@@ -3712,7 +3712,7 @@ int f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct page *page,
- 		curseg->next_blkoff = f2fs_find_next_ssr_block(sbi, curseg);
- 	} else {
- 		curseg->next_blkoff++;
--		if (F2FS_OPTION(sbi).fs_mode == FS_MODE_FRAGMENT_BLK)
-+		if (f2fs_need_rand_blk(sbi))
- 			f2fs_randomize_chunk(sbi, curseg);
- 	}
- 	if (curseg->next_blkoff >= f2fs_usable_blks_in_seg(sbi, curseg->segno))
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 8ceffecf28c80..59331eddca856 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -2059,9 +2059,9 @@ static int f2fs_show_options(struct seq_file *seq, struct dentry *root)
- 		seq_puts(seq, "adaptive");
- 	else if (F2FS_OPTION(sbi).fs_mode == FS_MODE_LFS)
- 		seq_puts(seq, "lfs");
--	else if (F2FS_OPTION(sbi).fs_mode == FS_MODE_FRAGMENT_SEG)
-+	else if (f2fs_need_rand_seg(sbi))
- 		seq_puts(seq, "fragment:segment");
--	else if (F2FS_OPTION(sbi).fs_mode == FS_MODE_FRAGMENT_BLK)
-+	else if (f2fs_need_rand_blk(sbi))
- 		seq_puts(seq, "fragment:block");
- 	seq_printf(seq, ",active_logs=%u", F2FS_OPTION(sbi).active_logs);
- 	if (test_opt(sbi, RESERVE_ROOT))
+ 	if (s == data_limit || !hport || *s != edelim)
+ 		return -1;
 -- 
 2.53.0
 
