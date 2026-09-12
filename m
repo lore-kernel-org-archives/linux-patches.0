@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AE6367B8A;
-	Sat, 12 Sep 2026 08:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958C02C032C;
+	Sat, 12 Sep 2026 08:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201021; cv=none; b=J6HbesQst6ZMQkExJsU4Mh8UsJ/AuwrLfaaHRwJRp8jaeA8EqlxmgcHkERNniuXG7e1ZE8w+il50CH4FuIsj5/e0n8tdyQSIJIgKwviZCqTRgF/ixGoTvjVk7miQvaD2ikzMMkBDtIgwrIZXN4FjC1x4k1EYIYj+hIMfV3XH3cA=
+	t=1789201025; cv=none; b=rxBBR2r7VDZXRfPPbbSnzLrI3gAR3e/b9TdoI4RvkSlnpkaUosBYI3q78PMq92RxwRAZz5S6GwaOI6+1uw43mhThKahqwrI4r++T9kchDMdgOSqTiyOJWU3mc8xFurRUHkhFrNSX0flzNLCfeqnjHKHl0Sh6T4mmY2ca6Q/y6BE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201021; c=relaxed/simple;
-	bh=WtJfyxlLkXPVWW1VejCbepVS2JwfdItiityzWmCtae4=;
+	s=arc-20240116; t=1789201025; c=relaxed/simple;
+	bh=OFsszFA5XDswBQPcbfivkapMV/w9N1LL6B9LP2K+8tQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BmUzcXawwr+l6m+83HDMNvD6s8YTWi7j5HYZQ8shof+jZxXJt6x3Z0pevNo0aLeK+k3FJJ+VmYombu98DBf8NmrWMIgA6/9do6+hrhaa1NEHV5hI5eBaSz5hEqty43R4nhbXJkmeVqAlTHc58vd2e2CMc0oQoBWkWMYK6h3JRss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ttv2PyGC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=naMX11J4MZ0cvWTRgU8queUAnWQ92G6WXhUKO4adMroThhtlkXr2LxI4OBTFsXt0NuFm2yT992US9MZ4a6xaHFGWEHJfaDhgXtjNG73j6qN5kgV9/IELv5COMAPDyLRzKEdC6P5A0BgYB4a12uJB3MEyqWU20jFbkOQF4dHnsAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skf2Pzbu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ttv2PyGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AEB21F000FF;
-	Sat, 12 Sep 2026 08:16:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skf2Pzbu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7622D1F000FF;
+	Sat, 12 Sep 2026 08:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201019;
-	bh=v1lpxXVw/f/laYOI/5xBFjHz7FPZg0eO/04P3tLwVSI=;
+	s=korg; t=1789201024;
+	bh=EEL+dPFAbnkHOCFdJEWwHeQsVVeszgFj+8TfwpddY4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ttv2PyGCjiuvvZCO7AOYGQF3HNJpWbYJjIuXbWbosu5BCsjihe4io3HET1EahwrbO
-	 nDGhwI4aQ+Btvjy1XlE+o2D42BAJ2WIJLlFUoX7SaEadQwtbPI/17IuWObYqJKM9cx
-	 RMiyQrEbC/9FbmAD4kQer2SIW6lJY5VbOLq9sIBo=
+	b=skf2PzbuG/k9IQmtVOsweeuXwPkE6K1IpI/wgsMtr1epPD5oMk6SKeFSUGrr21xSV
+	 vUymZqZFTRqFlq+DuDb5kU5uuY8Z1dBBo2YNvCwvmStOCypquGGP3hDRR6A2lPH2v+
+	 IFtYo4tC3wiW/hNys2Vle4KW2LTKSbL1cZJOIFZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0908/1815] drm/msm: dont tear down KMS twice when KMS init fails
-Date: Sat, 12 Sep 2026 08:44:18 +0200
-Message-ID: <20260912065710.238766826@linuxfoundation.org>
+Subject: [PATCH 7.2 0909/1815] drm/msm/dp: reject YUV420-only modes without VSC SDP support
+Date: Sat, 12 Sep 2026 08:44:19 +0200
+Message-ID: <20260912065710.261848851@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,175 +52,129 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 93c125e4ea98fb25f927ba5a334d85845127d667 ]
+[ Upstream commit 684f95fb4e9ad10aac39fbb1fa7592a59d7f54ea ]
 
-When priv->kms_init() (mdp4_kms_init() / mdp5_kms_init()) fails partway
-through, both display drivers already tear their KMS state down via
-mdp4_destroy() / mdp5_kms_destroy() before returning the error. The
-common error path in msm_drm_init() then runs msm_drm_uninit() ->
-msm_drm_kms_uninit(), which tries to destroy the very same KMS a second
-time, which causes a use-after-free crash.
+DP conveys YUV 420 colorimetry through a VSC SDP. A sink that advertises
+a mode as YUV-420-only therefore cannot be driven at all unless the panel
+supports VSC SDP, yet msm_dp_bridge_mode_valid() only used the VSC SDP
+capability to decide whether to halve the pixel clock, otherwise letting
+such modes through to be validated (and possibly accepted) at the full
+RGB clock the sink cannot display.
 
-Bring MDP4/MDP5 in line with the DPU driver whose dpu_kms_init() doesn't
-perform error cleanup on the failure. Let the common path own the
-cleanup, instead of freeing the KMS from their error paths.
+Reject 420-only modes with MODE_NO_420 when the panel does not support
+VSC SDP. With those modes filtered out, being a 420-only mode implies VSC
+SDP support, so the YUV-420 test reduces to drm_mode_is_420_only(): drop
+msm_dp_is_yuv_420_enabled() and call the DRM helper directly at its two
+callers (the DPU encoder already has the connector from the atomic state).
 
-The crash trace for the reference:
-
-  __lock_acquire from lock_acquire (kernel/locking/lockdep.c:5906 kernel/locking/lockdep.c:5863)
-  lock_acquire from touch_wq_lockdep_map (kernel/workqueue.c:4094 (discriminator 1))
-  touch_wq_lockdep_map from __flush_workqueue (kernel/workqueue.c:4136)
-  __flush_workqueue from msm_drm_kms_uninit (drivers/gpu/drm/msm/msm_kms.c:243 (discriminator 33))
-  msm_drm_kms_uninit from msm_drm_uninit (drivers/gpu/drm/msm/msm_drv.c:93)
-  msm_drm_uninit from msm_drm_init (drivers/gpu/drm/msm/msm_drv.c:184)
-  msm_drm_init from try_to_bring_up_aggregate_device (drivers/base/component.c:249 drivers/base/component.c:227)
-  try_to_bring_up_aggregate_device from __component_add (drivers/base/component.c:269 drivers/base/component.c:748)
-  __component_add from dsi_host_attach (drivers/gpu/drm/msm/dsi/dsi_host.c:1739)
-  dsi_host_attach from mipi_dsi_attach (drivers/gpu/drm/drm_mipi_dsi.c:383)
-  mipi_dsi_attach from sharp_nt_panel_probe (drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c:247)
-
-Fixes: 506efcba3129 ("drm/msm: carve out KMS code from msm_drv.c")
+Fixes: df9cf852ca30 ("drm/msm/dp: account for widebus and yuv420 during mode validation")
+Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/742068/
-Link: https://lore.kernel.org/r/20260723-msm-fix-crash-v1-1-78fb4721c2d9@oss.qualcomm.com
+Patchwork: https://patchwork.freedesktop.org/patch/741713/
+Link: https://lore.kernel.org/r/20260722-drm-msm-display-interface-v1-1-368c10fe62fd@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 22 ++++++++--------------
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 11 +++--------
- 2 files changed, 11 insertions(+), 22 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  3 +--
+ drivers/gpu/drm/msm/dp/dp_display.c         | 28 +++++++++------------
+ drivers/gpu/drm/msm/msm_drv.h               |  8 ------
+ 3 files changed, 13 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-index 7726edb0d4ede..6ae49f94fea7b 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-@@ -398,7 +398,7 @@ static int mdp4_kms_init(struct drm_device *dev)
- 	ret = mdp_kms_init(&mdp4_kms->base, &kms_funcs);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev->dev, "failed to init kms\n");
--		goto fail;
-+		return ret;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 778e231d49677..1f20695f81e35 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -710,8 +710,7 @@ void dpu_encoder_update_topology(struct drm_encoder *drm_enc,
+ 		if (fb && MSM_FORMAT_IS_YUV(msm_framebuffer_format(fb)))
+ 			topology->num_cdm++;
+ 	} else if (disp_info->intf_type == INTF_DP) {
+-		if (msm_dp_is_yuv_420_enabled(priv->kms->dp[disp_info->h_tile_instance[0]],
+-					      adj_mode))
++		if (drm_mode_is_420_only(&connector->display_info, adj_mode))
+ 			topology->num_cdm++;
  	}
+ }
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index dc6f33809ca5f..e0c44eef3abab 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -698,6 +698,7 @@ enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
+ 	u32 mode_rate_khz = 0, supported_rate_khz = 0, mode_bpp = 0;
+ 	struct msm_dp *dp;
+ 	int mode_pclk_khz = mode->clock;
++	bool is_yuv_420;
  
- 	kms = priv->kms;
-@@ -409,7 +409,7 @@ static int mdp4_kms_init(struct drm_device *dev)
- 		ret = regulator_enable(mdp4_kms->vdd);
- 		if (ret) {
- 			DRM_DEV_ERROR(dev->dev, "failed to enable regulator vdd: %d\n", ret);
--			goto fail;
-+			return ret;
- 		}
- 	}
+ 	dp = to_dp_bridge(bridge)->msm_dp_display;
  
-@@ -421,7 +421,7 @@ static int mdp4_kms_init(struct drm_device *dev)
- 		DRM_DEV_ERROR(dev->dev, "unexpected MDP version: v%d.%d\n",
- 			      major, minor);
- 		ret = -ENXIO;
--		goto fail;
-+		return ret;
- 	}
+@@ -709,9 +710,16 @@ enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
+ 	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
+ 	link_info = &msm_dp_display->panel->link_info;
  
- 	mdp4_kms->rev = minor;
-@@ -430,7 +430,7 @@ static int mdp4_kms_init(struct drm_device *dev)
- 		if (!mdp4_kms->lut_clk) {
- 			DRM_DEV_ERROR(dev->dev, "failed to get lut_clk\n");
- 			ret = -ENODEV;
--			goto fail;
-+			return ret;
- 		}
- 		clk_set_rate(mdp4_kms->lut_clk, max_clk);
- 	}
-@@ -452,7 +452,7 @@ static int mdp4_kms_init(struct drm_device *dev)
- 	vm = msm_kms_init_vm(mdp4_kms->dev, NULL);
- 	if (IS_ERR(vm)) {
- 		ret = PTR_ERR(vm);
--		goto fail;
-+		return ret;
- 	}
+-	if ((drm_mode_is_420_only(&dp->connector->display_info, mode) &&
+-	     msm_dp_display->panel->vsc_sdp_supported) ||
+-	     msm_dp_wide_bus_available(dp))
++	is_yuv_420 = drm_mode_is_420_only(&dp->connector->display_info, mode);
++
++	/*
++	 * YUV 420 is carried over DP by signalling the colorimetry through a
++	 * VSC SDP, so a 420-only mode cannot be driven without VSC SDP support.
++	 */
++	if (is_yuv_420 && !msm_dp_display->panel->vsc_sdp_supported)
++		return MODE_NO_420;
++
++	if (is_yuv_420 || msm_dp_wide_bus_available(dp))
+ 		mode_pclk_khz /= 2;
  
- 	kms->vm = vm;
-@@ -460,7 +460,7 @@ static int mdp4_kms_init(struct drm_device *dev)
- 	ret = modeset_init(mdp4_kms);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev->dev, "modeset_init failed: %d\n", ret);
--		goto fail;
-+		return ret;
- 	}
- 
- 	mdp4_kms->blank_cursor_bo = msm_gem_new(dev, SZ_16K, MSM_BO_WC | MSM_BO_SCANOUT);
-@@ -468,14 +468,14 @@ static int mdp4_kms_init(struct drm_device *dev)
- 		ret = PTR_ERR(mdp4_kms->blank_cursor_bo);
- 		DRM_DEV_ERROR(dev->dev, "could not allocate blank-cursor bo: %d\n", ret);
- 		mdp4_kms->blank_cursor_bo = NULL;
--		goto fail;
-+		return ret;
- 	}
- 
- 	ret = msm_gem_get_and_pin_iova(mdp4_kms->blank_cursor_bo, kms->vm,
- 			&mdp4_kms->blank_cursor_iova);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev->dev, "could not pin blank-cursor bo: %d\n", ret);
--		goto fail;
-+		return ret;
- 	}
- 
- 	dev->mode_config.min_width = 0;
-@@ -484,12 +484,6 @@ static int mdp4_kms_init(struct drm_device *dev)
- 	dev->mode_config.max_height = 2048;
- 
- 	return 0;
--
--fail:
--	if (kms)
--		mdp4_destroy(kms);
--
--	return ret;
+ 	if (mode_pclk_khz > DP_MAX_PIXEL_CLK_KHZ)
+@@ -1277,22 +1285,10 @@ void __exit msm_dp_unregister(void)
+ 	platform_driver_unregister(&msm_dp_display_driver);
  }
  
- static const struct dev_pm_ops mdp4_pm_ops = {
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index 0a004ab9fc856..3934cd060b276 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -517,7 +517,7 @@ static int mdp5_kms_init(struct drm_device *dev)
- 	ret = mdp_kms_init(&mdp5_kms->base, &kms_funcs);
- 	if (ret) {
- 		DRM_DEV_ERROR(&pdev->dev, "failed to init kms\n");
--		goto fail;
-+		return ret;
- 	}
- 
- 	config = mdp5_cfg_get_config(mdp5_kms->cfg);
-@@ -540,7 +540,7 @@ static int mdp5_kms_init(struct drm_device *dev)
- 	vm = msm_kms_init_vm(mdp5_kms->dev, pdev->dev.parent);
- 	if (IS_ERR(vm)) {
- 		ret = PTR_ERR(vm);
--		goto fail;
-+		return ret;
- 	}
- 
- 	kms->vm = vm;
-@@ -550,7 +550,7 @@ static int mdp5_kms_init(struct drm_device *dev)
- 	ret = modeset_init(mdp5_kms);
- 	if (ret) {
- 		DRM_DEV_ERROR(&pdev->dev, "modeset_init failed: %d\n", ret);
--		goto fail;
-+		return ret;
- 	}
- 
- 	dev->mode_config.min_width = 0;
-@@ -562,11 +562,6 @@ static int mdp5_kms_init(struct drm_device *dev)
- 	dev->vblank_disable_immediate = true;
- 
- 	return 0;
--fail:
--	if (kms)
--		mdp5_kms_destroy(kms);
+-bool msm_dp_is_yuv_420_enabled(const struct msm_dp *msm_dp_display,
+-			       const struct drm_display_mode *mode)
+-{
+-	struct msm_dp_display_private *dp;
+-	const struct drm_display_info *info;
 -
--	return ret;
+-	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+-	info = &msm_dp_display->connector->display_info;
+-
+-	return dp->panel->vsc_sdp_supported && drm_mode_is_420_only(info, mode);
+-}
+-
+ bool msm_dp_needs_periph_flush(const struct msm_dp *msm_dp_display,
+ 			       const struct drm_display_mode *mode)
+ {
+-	return msm_dp_is_yuv_420_enabled(msm_dp_display, mode);
++	return drm_mode_is_420_only(&msm_dp_display->connector->display_info, mode);
  }
  
- static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
+ bool msm_dp_wide_bus_available(const struct msm_dp *msm_dp_display)
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 3787db8770ada..3d5679be488e7 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -356,8 +356,6 @@ void __exit msm_dp_unregister(void);
+ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 			 struct drm_encoder *encoder, bool yuv_supported);
+ void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
+-bool msm_dp_is_yuv_420_enabled(const struct msm_dp *dp_display,
+-			       const struct drm_display_mode *mode);
+ bool msm_dp_needs_periph_flush(const struct msm_dp *dp_display,
+ 			       const struct drm_display_mode *mode);
+ bool msm_dp_wide_bus_available(const struct msm_dp *dp_display);
+@@ -382,12 +380,6 @@ static inline void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm
+ {
+ }
+ 
+-static inline bool msm_dp_is_yuv_420_enabled(const struct msm_dp *dp_display,
+-					     const struct drm_display_mode *mode)
+-{
+-	return false;
+-}
+-
+ static inline bool msm_dp_needs_periph_flush(const struct msm_dp *dp_display,
+ 					     const struct drm_display_mode *mode)
+ {
 -- 
 2.53.0
 
