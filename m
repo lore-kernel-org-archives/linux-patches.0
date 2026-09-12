@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0B62E1746;
-	Sat, 12 Sep 2026 14:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD48305680;
+	Sat, 12 Sep 2026 14:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221616; cv=none; b=pySLYDYhManycTS2HnHIEnOMliZCNQ6RhK1AS7RvNqde3rzDaL10p0GC4Qg20KABn+tp5hojjyQcosq3N20Pjzq6MAymIS3p0k7ZXkUrvdc0SABejdD35SXvAA3D9YGoKaOjK4sOqmH4GKyzuj/WNUEZeIIFNyz1tp8187a+39Q=
+	t=1789221621; cv=none; b=VCbkb76D6YMV35y6ugWK6pDyI75hvHZjdch7wHAwkwXSu0Aty7cu71pQ7eVYgBSEk6/rli1jidn6N1wmA2zZi5BJnPLyF+FiXR9r4bauKnmXWcuCpkqSym4ysvAp/nBbZ1ivvTmM1rLV4CSU0S5xBERzEOcOABFmCnqhVd8kD38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221616; c=relaxed/simple;
-	bh=iUoKNZKHQKEURDyvMlSxGP9ePDvhXXAgANU1eMrFI+s=;
+	s=arc-20240116; t=1789221621; c=relaxed/simple;
+	bh=+GhwktDKUYGJm0PbRhCz7IRE7M3mKAjdDboY8Ky9/uI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SYR9nLtDsxGxcNcLRu0SCiTKCRlHEu9L9lI5axKCvKS1W28D3LO97b1ExJeiWLv+JoBMudNA1nmV8Yw4kgIGy5bb+9UVojIgsPR43TKX/ZiALVkgM7DsF7gVIAoJMVfx2cVo7Z0t19ff1bomrmJKJ2cvv7nEM9jk8eicPJpyzfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PYxnvj42; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KD5pBty1V4DC5SWDQLNJuLzUqF+x7BYW5iU5IQVRciQtifw7BJFo1IyRQlr8UoSeYftuReFkZL49XMc3p466Q+FMrAGm3uEUrSdQiX6EOFY68Z0OoRl0xu1AzF4xQrC3Q9rH72YRZVOSbX5AwSVgNxByA+ZYsnjdOCJXL1Ykuxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDD1Oe85; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PYxnvj42"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469B51F000FF;
-	Sat, 12 Sep 2026 14:00:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDD1Oe85"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324F41F000FF;
+	Sat, 12 Sep 2026 14:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221615;
-	bh=AnJr5p0YlPAk7qyDxB3mrIZBkfsVlpLHW2lCSo53KqA=;
+	s=korg; t=1789221620;
+	bh=Ghigoa8FEVbiURwTbFmcpXzUG8bzLaVtFZtlvmJ/SzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PYxnvj42nl/sNlwmTKb87HUbBHMmjWY3Qy8uCS+dfcM8gIolfTk5hn2kgR9+d5lB2
-	 LQ3OYp+TYylm03ObBCz+HoFlDR8s39K+WKMg05zZg4icmp880YUsfmTNuwW337A6rp
-	 frlDTnL/oGDAGh9PbEVSVJtMcXhcUCMCpsvGUZGc=
+	b=iDD1Oe85M5yH/6q4fEU+NiTRHwi16UTNr5iaVN6+WNjfKYuSdvfCZc1splhW/jTQA
+	 cFUDrNHVoAH51QZ5IT2ubR+FW5FhoUmqmytedtUbSq+jdO6iR/dLbRb0JplsMUkQ7d
+	 fNo+SwUic0HgcAufizGmgdszN9Fy6RXtzhMaZwJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.6 0419/1424] iio: light: gp2ap002: Disable regulators on resume failure
-Date: Sat, 12 Sep 2026 08:47:31 +0200
-Message-ID: <20260912065616.664865057@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.6 0393/1424] mtd: mtdoops: free page bitmap when the backing MTD is removed
+Date: Sat, 12 Sep 2026 08:47:05 +0200
+Message-ID: <20260912065616.090422570@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,60 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit a41000ba3a230bed1e422f283486ff8f77fe0d30 upstream.
+commit 956e7da12c114f13c63d126ab1d79c3b6a819060 upstream.
 
-If enabling VIO fails after VDD has been enabled, runtime resume
-returns without disabling VDD. Likewise, if device reinitialization
-fails, both supplies remain enabled. The runtime PM core keeps the
-device suspended when its resume callback fails, so the supplies must
-be restored to the suspended state.
+mtdoops_notify_add() allocates oops_page_used when the configured MTD
+device is registered.  mtdoops_notify_remove() detaches from that device
+but leaves the bitmap allocated.  If the same MTD device is later
+registered again, the add path allocates a new bitmap and overwrites the
+old pointer, leaking one vmalloc allocation per remove/add cycle.
 
-Disable the supplies enabled by the callback before returning an error.
+This is only visible when the backing MTD device can disappear and be
+registered again while mtdoops remains loaded, so the usual static MTD
+case does not expose it.
 
-Fixes: 97d642e23037 ("iio: light: Add a driver for Sharp GP2AP002x00F")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Free the bitmap after unregistering the dumper and flushing the pending
+workers, then clear the pointer and page count before a later attach can
+allocate fresh state.  Clearing the pointer also keeps the module exit
+path from freeing the same bitmap a second time after a remove event.
+
+Fixes: be95745f0167 ("mtd: mtdoops: keep track of used/unused pages in an array")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/gp2ap002.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/mtd/mtdoops.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/iio/light/gp2ap002.c
-+++ b/drivers/iio/light/gp2ap002.c
-@@ -671,7 +671,7 @@ static int gp2ap002_runtime_resume(struc
- 	ret = regulator_enable(gp2ap002->vio);
- 	if (ret) {
- 		dev_err(dev, "failed to enable VIO regulator in resume path\n");
--		return ret;
-+		goto out_disable_vdd;
- 	}
- 
- 	msleep(20);
-@@ -679,13 +679,19 @@ static int gp2ap002_runtime_resume(struc
- 	ret = gp2ap002_init(gp2ap002);
- 	if (ret) {
- 		dev_err(dev, "re-initialization failed\n");
--		return ret;
-+		goto out_disable_vio;
- 	}
- 
- 	/* Re-activate the IRQ */
- 	enable_irq(gp2ap002->irq);
- 
- 	return 0;
-+
-+out_disable_vio:
-+	regulator_disable(gp2ap002->vio);
-+out_disable_vdd:
-+	regulator_disable(gp2ap002->vdd);
-+	return ret;
+--- a/drivers/mtd/mtdoops.c
++++ b/drivers/mtd/mtdoops.c
+@@ -393,6 +393,9 @@ static void mtdoops_notify_remove(struct
+ 	cxt->mtd = NULL;
+ 	flush_work(&cxt->work_erase);
+ 	flush_work(&cxt->work_write);
++	vfree(cxt->oops_page_used);
++	cxt->oops_page_used = NULL;
++	cxt->oops_pages = 0;
  }
  
- static DEFINE_RUNTIME_DEV_PM_OPS(gp2ap002_dev_pm_ops, gp2ap002_runtime_suspend,
+ 
 
 
