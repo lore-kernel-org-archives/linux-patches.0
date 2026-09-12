@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7BE37FF50;
-	Sat, 12 Sep 2026 18:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C930837FF50;
+	Sat, 12 Sep 2026 18:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238035; cv=none; b=CGcb1nEwAM2L27MfRHOXdCjzgehCTj55JPGTyGKMC26lcAYPWbknmFjjurJ8eFHu68+rnehyGTvKRKCFQV1djzBKKulj08kr5hVBZ+f5NQaz0ULrwtFRA5IUezvVfnnDtHWYgt6NPkJOt1JZDQ+huAlSrTk5IHY8cc6ELKkQUm8=
+	t=1789238040; cv=none; b=f8JAPAY1HOLEadnLI+8GgCmh0XRM75bzzZb0P4HgJIlxRqr2Pi2uBIbEL6ANDWbzIvRrqRobLVzVe9sSeuWsVJjENHy0dF/lUo++TtAwhspcm10paR9/mu9zZZe5UhoSslycv+oVca6b1nJILXAhF56R1QrsrDkSQHX5sJu+48Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238035; c=relaxed/simple;
-	bh=RBLqBnomYd2DvPrqxyPiZ7teAwxZvtu5LjmhzFGQszc=;
+	s=arc-20240116; t=1789238040; c=relaxed/simple;
+	bh=k9yrZFrigGo3zpbpH9ARPCqi2iN9Yy23TSihQMcVkVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lvmJ+CBDsq3Gc/885acAI8rSwD5IzeTw0uR4ib2/mfEw49nff2TToLknd+JKi9coFbHGGzLfROWYjNSLJxbIgBA7zuBHabGssCPBvMqJitSJeEOuJTl4IE/vId9A2w4nSWYUmzy1kep2MO437qPXFlKjec7cnqmVMcHiiVSM934=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6ooLlu2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q8GrGtA8qrT1qyxlVI2sdayVtxYIm2nUI2dAezEpP8Isj7geYQDZsO22m9dYHp8+Y2m/ucWw6N/la8O+Ys9F5cMyJZ19ucXz8B4hfrdaUfBXnX7A48Qjz6oLkXD50JCj5s/wA+cxC11h62uN2BsBasgmQ6j+eQcvEwN+P6POotI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMMO7HG9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6ooLlu2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962EF1F000FF;
-	Sat, 12 Sep 2026 18:33:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMMO7HG9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3FA1F000FF;
+	Sat, 12 Sep 2026 18:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238034;
-	bh=rB9pjc1nFBlhlnChh4c5CPwqSRirkKD7HJEL7FmoavM=;
+	s=korg; t=1789238039;
+	bh=fxjHqI5e2d/Y8/p8u2Vns4i1uOdNUf+PQhBtZkzwosc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x6ooLlu2CKA7zTwb5XK4F9tJejQm1aMIJK5xWxb9/veI1R4cNOwkiSsQB5hZg7605
-	 67SbPA+5O7QCgX+JTSAME0CgxZrRMOXIPpLBS99D7e6JF259xtRfu5aqDe92RTCH1v
-	 tBbW9oeNAcvvYPxoG3E5doaYHR3bvmtILKkbp/7k=
+	b=cMMO7HG9FVQSsJ7E/WzeneyN4q5OVfUC5QJgV+rwVt6rRfiS7frVXAoLsJSjQ7hzp
+	 48czBGt/e3WY4TpyZ0qtmvBewRq1QB6Yx7jWJhqAwQ9WjPxbyRP1mOVmr58sVoeD0l
+	 yfvw9k8bchXsaSBy+rcp3Qcm4JcjdgcOlYtGBWKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Wang Liang <wangliang74@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 380/935] net: fix NULL pointer dereference in l3mdev_l3_rcv
-Date: Sat, 12 Sep 2026 08:56:50 +0200
-Message-ID: <20260912065535.534457251@linuxfoundation.org>
+	Sashiko <sashiko-dev@google.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 5.15 354/935] scsi: qla2xxx: Zero-init bsg stack buffers to avoid info leak
+Date: Sat, 12 Sep 2026 08:56:24 +0200
+Message-ID: <20260912065534.930496080@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,66 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 0032c99e83b9ce6d5995d65900aa4b6ffb501cce ]
+commit b93d3bb3afe1b44489927de1eb4e66e8536a5935 upstream.
 
-When delete l3s ipvlan:
+Several bsg handlers stage their request/reply in an uninitialized 256-byte
+on-stack buffer (uint8_t bsg[DMA_POOL_SIZE]) and fill it via
+sg_copy_to_buffer(), which only copies as many bytes as the user-supplied
+request payload. When the request is shorter than the structure, the
+remainder of the buffer is left holding stale stack data.
 
-    ip link del link eth0 ipvlan1 type ipvlan mode l3s
+qla2x00_read_fru_status() and qla2x00_read_i2c() then copy the full
+structure back to the reply payload with sg_copy_from_buffer(), leaking the
+uninitialized stack bytes to user space. The write/update paths do not copy
+the buffer back, but can feed uninitialized fields to the device.
 
-This may cause a null pointer dereference:
+Zero the stack buffer at declaration in all five handlers, mirroring the
+heap kzalloc() approach, so short requests can no longer expose stale
+memory.
 
-    Call trace:
-     ip_rcv_finish+0x48/0xd0
-     ip_rcv+0x5c/0x100
-     __netif_receive_skb_one_core+0x64/0xb0
-     __netif_receive_skb+0x20/0x80
-     process_backlog+0xb4/0x204
-     napi_poll+0xe8/0x294
-     net_rx_action+0xd8/0x22c
-     __do_softirq+0x12c/0x354
-
-This is because l3mdev_l3_rcv() visit dev->l3mdev_ops after
-ipvlan_l3s_unregister() assign the dev->l3mdev_ops to NULL. The process
-like this:
-
-    (CPU1)                     | (CPU2)
-    l3mdev_l3_rcv()            |
-      check dev->priv_flags:   |
-        master = skb->dev;     |
-                               |
-                               | ipvlan_l3s_unregister()
-                               |   set dev->priv_flags
-                               |   dev->l3mdev_ops = NULL;
-                               |
-      visit master->l3mdev_ops |
-
-To avoid this by do not set dev->l3mdev_ops when unregister l3s ipvlan.
-
-Suggested-by: David Ahern <dsahern@kernel.org>
-Fixes: c675e06a98a4 ("ipvlan: decouple l3s mode dependencies from other modes")
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250321090353.1170545-1-wangliang74@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 697a4bc69159 ("[SCSI] qla2xxx: Provide method for updating I2C attached VPD.")
+Fixes: 9ebb5d9c69f1 ("[SCSI] qla2xxx: Add I2C BSG interface.")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-dev@google.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://patch.msgid.link/20260730155838.2119230-30-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ipvlan/ipvlan_l3s.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_bsg.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ipvlan/ipvlan_l3s.c b/drivers/net/ipvlan/ipvlan_l3s.c
-index d5b05e8032199..ca35a50bb6405 100644
---- a/drivers/net/ipvlan/ipvlan_l3s.c
-+++ b/drivers/net/ipvlan/ipvlan_l3s.c
-@@ -224,5 +224,4 @@ void ipvlan_l3s_unregister(struct ipvl_port *port)
- 
- 	dev->priv_flags &= ~IFF_L3MDEV_RX_HANDLER;
- 	ipvlan_unregister_nf_hook(read_pnet(&port->pnet));
--	dev->l3mdev_ops = NULL;
- }
--- 
-2.53.0
-
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -1560,7 +1560,7 @@ qla2x00_update_fru_versions(struct bsg_j
+ 	scsi_qla_host_t *vha = shost_priv(host);
+ 	struct qla_hw_data *ha = vha->hw;
+ 	int rval = 0;
+-	uint8_t bsg[DMA_POOL_SIZE];
++	uint8_t bsg[DMA_POOL_SIZE] = {};
+ 	struct qla_image_version_list *list = (void *)bsg;
+ 	struct qla_image_version *image;
+ 	uint32_t count;
+@@ -1620,7 +1620,7 @@ qla2x00_read_fru_status(struct bsg_job *
+ 	scsi_qla_host_t *vha = shost_priv(host);
+ 	struct qla_hw_data *ha = vha->hw;
+ 	int rval = 0;
+-	uint8_t bsg[DMA_POOL_SIZE];
++	uint8_t bsg[DMA_POOL_SIZE] = {};
+ 	struct qla_status_reg *sr = (void *)bsg;
+ 	dma_addr_t sfp_dma;
+ 	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
+@@ -1671,7 +1671,7 @@ qla2x00_write_fru_status(struct bsg_job
+ 	scsi_qla_host_t *vha = shost_priv(host);
+ 	struct qla_hw_data *ha = vha->hw;
+ 	int rval = 0;
+-	uint8_t bsg[DMA_POOL_SIZE];
++	uint8_t bsg[DMA_POOL_SIZE] = {};
+ 	struct qla_status_reg *sr = (void *)bsg;
+ 	dma_addr_t sfp_dma;
+ 	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
+@@ -1718,7 +1718,7 @@ qla2x00_write_i2c(struct bsg_job *bsg_jo
+ 	scsi_qla_host_t *vha = shost_priv(host);
+ 	struct qla_hw_data *ha = vha->hw;
+ 	int rval = 0;
+-	uint8_t bsg[DMA_POOL_SIZE];
++	uint8_t bsg[DMA_POOL_SIZE] = {};
+ 	struct qla_i2c_access *i2c = (void *)bsg;
+ 	dma_addr_t sfp_dma;
+ 	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
+@@ -1770,7 +1770,7 @@ qla2x00_read_i2c(struct bsg_job *bsg_job
+ 	scsi_qla_host_t *vha = shost_priv(host);
+ 	struct qla_hw_data *ha = vha->hw;
+ 	int rval = 0;
+-	uint8_t bsg[DMA_POOL_SIZE];
++	uint8_t bsg[DMA_POOL_SIZE] = {};
+ 	struct qla_i2c_access *i2c = (void *)bsg;
+ 	dma_addr_t sfp_dma;
+ 	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
 
 
