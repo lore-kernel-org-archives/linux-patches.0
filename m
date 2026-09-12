@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D8C1EB5FD;
-	Sat, 12 Sep 2026 08:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCAA7353A70;
+	Sat, 12 Sep 2026 08:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200259; cv=none; b=P+1/bb+rF/bfIyJj0+/oFgzvtin2J2diiLTkfQHjyvHkKXGz3pv+QDq2ctDtlh++ZTQnHK5/d5v1EMF8bnYL5LV7Ot1rmyEOX2+ipI0PEXA4ZyX+fnrKfEX9FLOGq2T+YtKKUDEsocD1QZb1mqr4mICa3wzpKSk8juW2mgJ5X6s=
+	t=1789200264; cv=none; b=dgMevPQn9Sx3XyVWapsR8AT4X6EN2Sn1ll2cxqX+I5g/3bR5HDAP+3Y6qBp8MTuELhFFv0oLXS5LF7fLie7nNL530fCrHqH8jL8wLuFt5u9pHFp+DOq4xnembDHYMRr1nBttaw+dxwREXSiGHqAtZBTf6JFhx3GcVhwHR8MxhpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200259; c=relaxed/simple;
-	bh=yGcEDWD/XBy/qMTbYEf8zVHxmaSTulIKZZ3JEYJxkpo=;
+	s=arc-20240116; t=1789200264; c=relaxed/simple;
+	bh=5BtEXzpG9HikYRB7+knyYloQW122ZMMBXupkz+FAitE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c7/FMvq4I2CnKcaY7sOWTfy07cklC7fH3Tw4dNuJvAUd8bwGny+pj1ahfalMvRPor7nPCHcrjiXvQyRH7csA9vPY2W8ITYiC/yxIwWw4x7squX6QGs+sUbATmA2HxTv4xgsNQVvdP2iVAHQhtBT8p0jXLFVWU7qibT3YySSYhsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4XV1jTX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cYAUOm+UKxGKXSPJnnOQgXyvE6/237o926vum/l1EZcfl00iwl3mjatK4urRGGo7GSjKXKc0xgO0HMJaFXrJN1Nsg1rZksLIwNZhZ5na9bAeS3GUkoxrAdU4YQdxvC0aiviOPO906/4DSKGcriM7AxA2fA8dEI6IVTn95aU9h8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5Y61BGY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4XV1jTX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4CB1F000FF;
-	Sat, 12 Sep 2026 08:04:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5Y61BGY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34741F000FF;
+	Sat, 12 Sep 2026 08:04:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200258;
-	bh=hV0S4aiMKsJCEZq6pKrbs/svo4vV3Z5fogY1Ov/eGTo=;
+	s=korg; t=1789200262;
+	bh=hsThDvsG5Yi6MuRtp7Rj2sFILHOhoXM9FvCpCUjMcAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l4XV1jTXyiU/zfo3ZxojmFN8hD8dKNDK3k0LYDY0c/LMcM+12ugptsPtkzk3d7ljr
-	 btuk3La864EtfubeOGkYMZxe5o6tTABzyWfrGhVQidmuEIMN9GCUzegdB900wbqn/P
-	 YoeQazE8h4Kixph8/z56lfUYydoOs3QNpzMg5QYI=
+	b=T5Y61BGYc0fErP9aUzGoKAeYEn/0CnpltyOy/jxKbscbXKJfazMAxyMCjKBI18pt+
+	 W5Mc8ddIvt8nJhGa04FJZt3h8MyNw06a0MKAmo0q7FFJnbU2qjL1apk0OewsK9xyMT
+	 cN3B+StZ+LpZitiZ0uX1o2dGjNGAczqcpqP0FW/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0753/1815] media: qcom: iris: handle runtime PM resume failure in core deinit
-Date: Sat, 12 Sep 2026 08:41:43 +0200
-Message-ID: <20260912065706.583635086@linuxfoundation.org>
+Subject: [PATCH 7.2 0754/1815] media: stm32: dcmi: fix some error handling bugs in probe()
+Date: Sat, 12 Sep 2026 08:41:44 +0200
+Message-ID: <20260912065706.608249622@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,58 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 75d79879ec3cbfd288144b0ae4c3e3fa7700c5fc ]
+[ Upstream commit f1d1ed39ced825615aeac61f0b6a322178756632 ]
 
-Check the return value of pm_runtime_resume_and_get() in
-iris_core_deinit().
+There are a few issues here:
 
-If runtime PM resume fails, skip hardware power-off operations but
-still perform software teardown and state transition. Also skip the
-corresponding pm_runtime_put_sync() call to avoid unbalanced runtime
-PM references.
+1) After we assign:
+        chan = dma_request_chan(&pdev->dev, "tx");
+   Then the error paths need to clean up before returning.  The first
+   error path does a direct return.
+2) The error paths check "dcmi->mdma_chan" but that is not assigned
+   until later so it results in memory leaks.  Test "mdma_chan"
+   instead.
+3) The error handling calls dma_release_channel(dcmi->dma_chan) before
+   "dcmi->dma_chan" has been assigned which leads to a NULL pointer
+   dereference.  Use the "chan" variable instead.
 
-Fixes: bb8a95aa038e ("media: iris: implement power management")
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+I also moved the call to dma_release_channel() after the call to
+dma_release_channel() so it mirrors the allocation code better.
+
+Fixes: bc901885fae0 ("media: stm32: dcmi: perform dmaengine_slave_config at probe")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Acked-by: Alain Volmat <alain.volmat@foss.st.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/iris/iris_core.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/media/platform/st/stm32/stm32-dcmi.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_core.c b/drivers/media/platform/qcom/iris/iris_core.c
-index 52bf56e517f91..8c335dbfce166 100644
---- a/drivers/media/platform/qcom/iris/iris_core.c
-+++ b/drivers/media/platform/qcom/iris/iris_core.c
-@@ -12,18 +12,24 @@
- 
- void iris_core_deinit(struct iris_core *core)
- {
--	pm_runtime_resume_and_get(core->dev);
-+	int ret;
-+
-+	ret = pm_runtime_resume_and_get(core->dev);
- 
- 	mutex_lock(&core->lock);
- 	if (core->state != IRIS_CORE_DEINIT) {
- 		iris_fw_unload(core);
--		iris_vpu_power_off(core);
-+
-+		if (!ret)
-+			iris_vpu_power_off(core);
-+
- 		iris_hfi_queues_deinit(core);
- 		core->state = IRIS_CORE_DEINIT;
+diff --git a/drivers/media/platform/st/stm32/stm32-dcmi.c b/drivers/media/platform/st/stm32/stm32-dcmi.c
+index a6911a3349713..fc5acd5dbe7aa 100644
+--- a/drivers/media/platform/st/stm32/stm32-dcmi.c
++++ b/drivers/media/platform/st/stm32/stm32-dcmi.c
+@@ -2024,8 +2024,10 @@ static int dcmi_probe(struct platform_device *pdev)
+ 	mdma_chan = dma_request_chan(&pdev->dev, "mdma_tx");
+ 	if (IS_ERR(mdma_chan)) {
+ 		ret = PTR_ERR(mdma_chan);
+-		if (ret != -ENODEV)
+-			return dev_err_probe(&pdev->dev, ret, "Failed to request MDMA channel\n");
++		if (ret != -ENODEV) {
++			dev_err_probe(&pdev->dev, ret, "Failed to request MDMA channel\n");
++			goto err_release_chan;
++		}
+ 		mdma_chan = NULL;
  	}
- 	mutex_unlock(&core->lock);
  
--	pm_runtime_put_sync(core->dev);
-+	if (!ret)
-+		pm_runtime_put_sync(core->dev);
+@@ -2208,12 +2210,13 @@ static int dcmi_probe(struct platform_device *pdev)
+ err_media_device_cleanup:
+ 	media_device_cleanup(&dcmi->mdev);
+ err_mdma_slave_config:
+-	if (dcmi->mdma_chan)
++	if (mdma_chan)
+ 		gen_pool_free(dcmi->sram_pool, (unsigned long)dcmi->sram_buf, dcmi->sram_buf_size);
+ err_dma_slave_config:
+-	dma_release_channel(dcmi->dma_chan);
+-	if (dcmi->mdma_chan)
++	if (mdma_chan)
+ 		dma_release_channel(mdma_chan);
++err_release_chan:
++	dma_release_channel(chan);
+ 
+ 	return ret;
  }
- 
- static int iris_wait_for_system_response(struct iris_core *core)
 -- 
 2.53.0
 
