@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5AB47277D;
-	Sat, 12 Sep 2026 12:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F0947ACE6;
+	Sat, 12 Sep 2026 12:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217628; cv=none; b=QEUIS63yT7Aa7TlKkB8eMFJQNfJrwhrif2/HIAaIaQr1RL4MvtOZVi0qaUda8t4lkEOkBJbk1nXAODNxiYvxy1IcaxpwkQHmPsmxX9OXDfrLFRouOTzmXVRrjHrb22ttezseCa4W8UA0Bpg+oS8KWsnKmfKdnnuL3CBeiVMmMYQ=
+	t=1789217635; cv=none; b=FGYUM1q1yUj21Dfxy5uUqxUzdhW5PO3uKEJlx1cscbotjRHK66DWNvq7eBPgB1gJyE0b3h0Tvkfam6+HtiOSy3VZtmhvzxmv7OVkcWgAzgy2QvHJInvYw2Nz1Sey27BSiZ+Wif/gEoRZoexkLcqJvQ43aMbJJVTop1U7itZscfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217628; c=relaxed/simple;
-	bh=qSmC4S8ZnW6L7fXRRe3WwSGUVrDWV5HEweuuSuOltWo=;
+	s=arc-20240116; t=1789217635; c=relaxed/simple;
+	bh=cUpqv9I8IxR6zhrPrexDAgEZLTUSpzM80rYpCWcm2JQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E69Be2kwpkeFiaDftORjlInXSUrO+Q2yZI1u2BsS1WEqGyLT0Ciuo6R01zeoyG2fucTChYe38bmabXMUnL2+rb9+0SN8zzxW94d5pwpTEAxQSN+jBLOryC54X7M4Kbv6YdNxMTadaRZdZ0C4QdjAtc3QYd8OfmyiImALFq1pNDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HY7O266n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ghAUXaJ9wsuEfzMGLMHM+2RStj/1MX6tgN2Sgt5cNZcAZ1/nxEevwDAyb7m6z7cLqW+Ry3Z5vHUnYLvzKxFYTL6o6bhIxo05bsU6vqrrSphyS9FcJ3mTpGk0U/FKvkRY1v1aSLvl3bYKzAesjOPRWuMDP5OlA/lcPv1VbO1uKr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P06dNMGd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HY7O266n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F20E81F000FF;
-	Sat, 12 Sep 2026 12:53:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P06dNMGd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52151F000FF;
+	Sat, 12 Sep 2026 12:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217627;
-	bh=BOeYEY0iwP59TLE8oe19dDVF3B2P+VOAB3YHxzFtdTA=;
+	s=korg; t=1789217631;
+	bh=eCq0XInLdV0UvI2p58XBMcfJtFJ+fs8b0VnzC5EWSXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HY7O266nMqZMoJsp8L9gOXjYGX9/MvfGQ2Ipu8lVVVgw4J7fkPZD/2AMD0nwDprXb
-	 TaO5yG18prLDXH+cCmRi6UMLV8JaKT3uz4Xkqj/k+YfSZVlt1cEjmYlnCN6VaeH91l
-	 jWMRTWnVVAKrG/EeMDn+boDJpua6HRi7R8ML2Gyc=
+	b=P06dNMGd4AreJp+f/4YqPIiouJVlbfCkpLnWBw9ALIZ/dw2ZjJepZa2vRlgSLlB0y
+	 ifuPwbhbLVSzSMdyT8cJV6d+TekIzzaLj9XMrv8NoE7kWp56y2unE1JBFrvQyo3IfT
+	 Zo25aU7v9rdlBBs3uN9STVJjcJUggR/rlLb5Lsnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zijun Hu <zijun.hu@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0970/1376] Bluetooth: btusb: Fix BD_ADDR byte order in btusb_set_bdaddr_wcn6855()
-Date: Sat, 12 Sep 2026 08:56:36 +0200
-Message-ID: <20260912065629.183146531@linuxfoundation.org>
+Subject: [PATCH 6.12 0972/1376] Bluetooth: btusb: Record matched usb_device_id into btusb_data
+Date: Sat, 12 Sep 2026 08:56:38 +0200
+Message-ID: <20260912065629.230595491@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,62 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit d0b15d812688d3f0f3fe1c4426e12814d0c294dc ]
+[ Upstream commit ff50db7a522e7bd3bd1c4db6da715e4bdb53af97 ]
 
-btusb_set_bdaddr_wcn6855() sends the address without swapping byte
-order for VSC 0xFC14, but the command expects the address in reversed
-byte order compared to other HCI commands like HCI_Create_Connection,
-resulting in a wrong BD_ADDR being set.
+Add @match_id to btusb_data to record the matched usb_device_id
+which will be used later.
 
-btmon log on WCN6855 shows VSC 0xFC14 is sent with swapped bytes
-11 22 33 44 55 66, and Read BD ADDR returns the expected address
-11:22:33:44:55:66:
-
-  < HCI Command: Vendor (0x3f|0x0014) plen 6                  #3 [hci0]
-          11 22 33 44 55 66
-  > HCI Event: Command Complete (0x0e) plen 4                  #4 [hci0]
-        Vendor (0x3f|0x0014) ncmd 1
-          Status: Success (0x00)
-  < HCI Command: Read BD ADDR (0x04|0x0009) plen 0            #11 [hci0]
-  > HCI Event: Command Complete (0x0e) plen 10                #12 [hci0]
-        Read BD ADDR (0x04|0x0009) ncmd 1
-          Status: Success (0x00)
-          Address: 11:22:33:44:55:66 (OUI 11-22-33)
-
-Fix by swapping the input address before issuing the command.
-
-Fixes: b40f58b97386 ("Bluetooth: btusb: Add Qualcomm Bluetooth SoC WCN6855 support")
 Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 33c6a8d01889 ("Bluetooth: btusb: QCA: Fix populating devcoredump fields on unenabled devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 047652598ab6c..75e84a7e5abfd 100644
+index 4299ba57d48f8..662c9651cc9db 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -2990,14 +2990,15 @@ static int btusb_set_bdaddr_ath3012(struct hci_dev *hdev,
- static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
- 				const bdaddr_t *bdaddr)
- {
-+	bdaddr_t bdaddr_swapped;
- 	struct sk_buff *skb;
--	u8 buf[6];
- 	long ret;
+@@ -949,6 +949,7 @@ struct btusb_data {
+ 	bool usb_alt6_packet_flow;
+ 	int isoc_altsetting;
+ 	int suspend_count;
++	const struct usb_device_id *match_id;
  
--	memcpy(buf, bdaddr, sizeof(bdaddr_t));
-+	baswap(&bdaddr_swapped, bdaddr);
+ 	int (*recv_event)(struct hci_dev *hdev, struct sk_buff *skb);
+ 	int (*recv_acl)(struct hci_dev *hdev, struct sk_buff *skb);
+@@ -3846,6 +3847,7 @@ static int btusb_probe(struct usb_interface *intf,
+ 	if (!data)
+ 		return -ENOMEM;
  
--	skb = __hci_cmd_sync_ev(hdev, 0xfc14, sizeof(buf), buf,
--				HCI_EV_CMD_COMPLETE, HCI_INIT_TIMEOUT);
-+	skb = __hci_cmd_sync_ev(hdev, 0xfc14, sizeof(bdaddr_swapped),
-+				&bdaddr_swapped, HCI_EV_CMD_COMPLETE,
-+				HCI_INIT_TIMEOUT);
- 	if (IS_ERR(skb)) {
- 		ret = PTR_ERR(skb);
- 		bt_dev_err(hdev, "Change address command failed (%ld)", ret);
++	data->match_id = id;
+ 	err = usb_find_common_endpoints(intf->cur_altsetting, &data->bulk_rx_ep,
+ 					&data->bulk_tx_ep, &data->intr_ep, NULL);
+ 	if (err) {
 -- 
 2.53.0
 
