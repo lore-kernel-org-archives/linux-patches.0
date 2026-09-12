@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3C438E8B9;
-	Sat, 12 Sep 2026 19:51:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364CD38AC72;
+	Sat, 12 Sep 2026 19:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242715; cv=none; b=dVVfZ+ljG8O4FiOKPtLZxOVUR2alCpFJdOwRObvtzeTYnl/3ppxrG+m0d3FnCMVr44oaHYXi4L1Bz1uWXFIrsq0djQ+h9G3I/EkgBAWQN9MovvrFalgKjUwg1YoaNbVGn/L2CcgBjorZ8rZdl6WgK9Am78BZeAU9k5BMz99scAU=
+	t=1789242718; cv=none; b=ZVulyLr3Q8S5Xvi0Pn3fVn8OvrYNw0gd/9IhqRNCqDpJRnZfyFzDh8JqDw6fpGvxqV/y5yZ+3iaMXmyuL6P9y8RXd0i6vcZIvcyy1JNijAFK/xFf1SVneXahHB36da0HTHG3ZRj5TqC5vAKgg4uFYRkC/YU7PUaDjuXOBJ24ay4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242715; c=relaxed/simple;
-	bh=0GMX6vLPuK5kq6U4jtfQA5iEPLyMjLWn0KYd7qzFqWY=;
+	s=arc-20240116; t=1789242718; c=relaxed/simple;
+	bh=sRsJJpJKLLqr66CIisdnxXN6KYvQg0aKcGcVV38w1bI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KWM26A3opvI2d3klD5tqG+g75omYzV31aHvSYk4zJxLZ43CHC1hWuvuTY84p95CCnmhs3JEB09yGbPpz22hJAYEiWGzZu1QHIVEppxfls6gTj8RVbW4HGmi561l4khvk/EmSL/LUUn2oPt0QToKgJuTKyZ7vON460KjOBixHivs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OT7E0p4m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eQAwBW5kQj1gE5qp977mBsjZkTp79RpXfVjh4cmBcc5oAbxSwbZRFQvnC07fjhuIi9Nf3bvYoSwbHBWCzYUl7IoiHPZekqRJ0f4Pg0hItYXQEyqCMmCj4VVAGAPhJaBWNgrnfiMKhjMRGXsXa9O9WSMCfj5k3/EtvcGoUYi7w1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rInUaobA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OT7E0p4m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3EF61F000FF;
-	Sat, 12 Sep 2026 19:51:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rInUaobA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A0F1F000FF;
+	Sat, 12 Sep 2026 19:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242714;
-	bh=LVfMBLz84zbszJSbUAhCXJgIAfAW9JiwnS/1TTI+xvM=;
+	s=korg; t=1789242717;
+	bh=+9LLWVz+ASb6n1TMUkRdYIv0VFQZlU0obvbvwl+dLv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OT7E0p4mUFzFxNtknnLIlsP3hEkKArUTujXIXq03p/NKvQf07LAM4rIE4Y6PQ2xZR
-	 D4gbx0/iahpYYYmMu03ZZp3XYF6ZUYMBJvfVRjYcO/hQVU2cO8ijpyDh8yfXlzVZF+
-	 z1GUFIFjBdQcEGiYC9CY6ykKyFJGLStG6YIIIpV4=
+	b=rInUaobAf1OfE7Mh0kYLhz40+G6stpoIxV5dZBqLt4gGTECMr+O23CQ0gQWTjKCyh
+	 eUTcWVmkPdj+MKWd4Y+h7oCedB/ZwYYB3MVDL3E3HPvRHIRxZ9rIAh2iORo16sTtLZ
+	 U0dCFoY8WJvx7ig3L12Mnyp3X+Mtkkqb31xEVM2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 500/798] ext4: drain in-flight DIO before buffered write fallback
-Date: Sat, 12 Sep 2026 09:02:08 +0200
-Message-ID: <20260912065528.598113004@linuxfoundation.org>
+Subject: [PATCH 5.10 501/798] wifi: ath6kl: avoid buffer overreads in WMI event handlers
+Date: Sat, 12 Sep 2026 09:02:09 +0200
+Message-ID: <20260912065528.620117232@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,104 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 
-[ Upstream commit 15cdefd0c0522f9d5e12d947fa04f4c11649b699 ]
+[ Upstream commit f57314aade9d74d30f3360ec5ef85a83654748be ]
 
-generic/746 started failing intermittently on ext3 (no-extent inodes).
-The test triggers 'Page cache invalidation failure on direct I/O'
-warnings and subsequent fsync returns -EIO. Adding a 50ms delay
-between ext4_buffered_write_iter() and filemap_write_and_wait_range()
-in ext4_dio_write_iter() makes the race almost always reproducible.
+The following WMI event handlers currently read from the event buffer
+without first verifying that the message was large enough to hold the
+expected event:
+ath6kl_wmi_scan_complete_rx()
+ath6kl_wmi_addba_req_event_rx()
+ath6kl_wmi_delba_req_event_rx()
 
-On no-extent inodes, DIO writes to holes cannot use unwritten extents,
-so ext4_iomap_alloc() leaves m_flags=0 and ext4_map_blocks() returns 0.
-The iomap layer then returns -ENOTBLK, causing fallback to buffered I/O.
+Add length checks to prevent overread.
 
-The fallback path in ext4_dio_write_iter() calls
-ext4_buffered_write_iter() which dirties pages, then does flush and
-invalidate. However, there's an unprotected window between
-ext4_buffered_write_iter() returning (with inode lock released) and
-the subsequent flush+invalidate.
-
-Concurrent async DIO completions from other threads can run
-kiocb_invalidate_post_direct_write() during this window. If pages have
-been re-dirtied, post-invalidation finds dirty pages and triggers the
-warning, setting -EIO in the error sequence.
-
-Consider a file with two 4k extents: [hole][written]. Thread A does
-DIO to the written extent, while thread B does DIO spanning both:
-
-  kworker A (4k DIO, allocated block)    kworker B (8k DIO, fallback)
-  -----------------------------------    ----------------------------
-  inode_lock_shared()                    inode_lock_shared()
-  iomap_dio_rw():                        iomap_dio_rw():
-    kiocb_invalidate_pages -> clean        iomap_begin -> -ENOTBLK
-    submit_bio (async)                     dio->size = 0
-  inode_unlock_shared()                  inode_unlock_shared()
-
-  [bio pending in block layer]           /* fallback: lock released */
-                                         ext4_buffered_write_iter()
-                                           inode_lock(exclusive)
-                                           generic_perform_write()
-                                             -> dirty pages [0, 8k]
-                                           inode_unlock(exclusive)
-
-                                         /* pages dirty, no lock */
-  [bio completes]                        filemap_write_and_wait_range()
-  iomap_dio_complete()                     -> flush dirty pages
-    kiocb_invalidate_post_direct_write() invalidate_mapping_pages()
-      invalidate_inode_pages2_range()
-      -> finds dirty page!
-      -> dio_warn_stale_pagecache()
-      -> errseq_set(-EIO)
-
-This issue can be triggered through normal I/O paths, not just
-intentionally overlapping DIO writes from userspace. For example,
-generic/746 uses a loop device where multiple kworkers issue concurrent
-I/O to the backing file. Additionally, when block_size < folio_size,
-non-overlapping DIO writes that share a large folio can also trigger
-the race.
-
-Add inode_dio_wait() in ext4_buffered_write_iter() before
-ext4_write_checks() to drain all in-flight DIO. This ensures that
-all DIO clears existing pages before submitting IO (via
-kiocb_invalidate_pages()), all BIO waits for all DIO to complete
-(via inode_dio_wait()), and ext4_write_checks() observes the inode
-size after all completed DIO so that ext4_block_zero_eof() does not
-race with in-flight DIO, thus eliminating the race.
-
-Fixes: 378f32bab371 ("ext4: introduce direct I/O write using iomap infrastructure")
-Suggested-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/d1adcf7c-c276-458d-9cac-68a4410f7626@gmail.com
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Link: https://patch.msgid.link/20260629113827.4074335-3-libaokun@linux.alibaba.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
+Assisted-by: Claude:claude-sonnet-4-6
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260711-ath6kl_wmi_scan_complete_rx-v2-1-22dc0f7f45e7@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/file.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/ath/ath6kl/wmi.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ext4/file.c b/fs/ext4/file.c
-index bbed22731ac92..9caf74444c3a1 100644
---- a/fs/ext4/file.c
-+++ b/fs/ext4/file.c
-@@ -261,6 +261,13 @@ static ssize_t ext4_buffered_write_iter(struct kiocb *iocb,
- 		return -EOPNOTSUPP;
+diff --git a/drivers/net/wireless/ath/ath6kl/wmi.c b/drivers/net/wireless/ath/ath6kl/wmi.c
+index 7aa4de770f663..25d7bed49dba3 100644
+--- a/drivers/net/wireless/ath/ath6kl/wmi.c
++++ b/drivers/net/wireless/ath/ath6kl/wmi.c
+@@ -1296,6 +1296,9 @@ static int ath6kl_wmi_scan_complete_rx(struct wmi *wmi, u8 *datap, int len,
+ {
+ 	struct wmi_scan_complete_event *ev;
  
- 	inode_lock(inode);
++	if (len < sizeof(*ev))
++		return -EINVAL;
 +
-+	/*
-+	 * Prevent concurrent direct I/O and buffered I/O to the same file
-+	 * range. Wait for in-flight DIO to finish before dirtying pages.
-+	 */
-+	inode_dio_wait(inode);
+ 	ev = (struct wmi_scan_complete_event *) datap;
+ 
+ 	ath6kl_scan_complete_evt(vif, a_sle32_to_cpu(ev->status));
+@@ -3386,7 +3389,12 @@ static int ath6kl_wmi_get_pmkid_list_event_rx(struct wmi *wmi, u8 *datap,
+ static int ath6kl_wmi_addba_req_event_rx(struct wmi *wmi, u8 *datap, int len,
+ 					 struct ath6kl_vif *vif)
+ {
+-	struct wmi_addba_req_event *cmd = (struct wmi_addba_req_event *) datap;
++	struct wmi_addba_req_event *cmd;
 +
- 	ret = ext4_write_checks(iocb, from);
- 	if (ret <= 0)
- 		goto out;
++	if (len < sizeof(*cmd))
++		return -EINVAL;
++
++	cmd = (struct wmi_addba_req_event *)datap;
+ 
+ 	aggr_recv_addba_req_evt(vif, cmd->tid,
+ 				le16_to_cpu(cmd->st_seq_no), cmd->win_sz);
+@@ -3397,7 +3405,12 @@ static int ath6kl_wmi_addba_req_event_rx(struct wmi *wmi, u8 *datap, int len,
+ static int ath6kl_wmi_delba_req_event_rx(struct wmi *wmi, u8 *datap, int len,
+ 					 struct ath6kl_vif *vif)
+ {
+-	struct wmi_delba_event *cmd = (struct wmi_delba_event *) datap;
++	struct wmi_delba_event *cmd;
++
++	if (len < sizeof(*cmd))
++		return -EINVAL;
++
++	cmd = (struct wmi_delba_event *)datap;
+ 
+ 	aggr_recv_delba_req_evt(vif, cmd->tid);
+ 
 -- 
 2.53.0
 
