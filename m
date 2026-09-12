@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699ED36492C;
-	Sat, 12 Sep 2026 08:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B958337699;
+	Sat, 12 Sep 2026 08:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203020; cv=none; b=BX+W/ftg+kH6ohcLCODhYKEBIpuzJHuJ0S5CHIIKDznwy8HKfQ0gz3CDPnOPquK11XJTpFi3u10jmuOM3HPkJp6j6b3h7I0ORSJgtrJH1dDTzZKR6QcN3Sa10/h1KA92ZZlqqRrOwhFFZLS6gjTi3Rg6THe5VenK8zYoybi54/4=
+	t=1789203025; cv=none; b=UH0pWJPPmrDwvqWF4CV00tGF1zS0chU7bLropcU5nSEtwHJorKG5rdPyDElpg6AoLggqX/abxjdcW/ng5eHEpem52q/D0/rnorsJNxX3I+jraj5nhHXgSEf++cVHx4pov1Jhs1myA91kGblz+d5I455wfXcQvd6y5nWvhFt4RfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203020; c=relaxed/simple;
-	bh=LM1NJHXo7uxClGP7kdsBrh7ilenhRU27PUUWAYKeL/g=;
+	s=arc-20240116; t=1789203025; c=relaxed/simple;
+	bh=+8tuBueWWcV2ldvxiKc+V6lQNzqV3GCSmMy/VN8munw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MH/A+mOnG16IycWEoI94fA/fVWFP+tTB9IlXU93JNDA7u4DX77M8/3ebZN4j75D95M1zA9Q2Bdqhu79pzfvWB3fkcpTuQha6Bp/R20TMi2wt/4lOunQitQguiGqL4MBjGRdNbpiZAfzsEgYU3bUEeY76zMgsgJhjZs3QMuWLqQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vhdYpVjL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AiN9VAgtCO8RXpaOYIxVOj6bskGJP7hXwpoWL/pyGvD08ak5321oaW5piZxkfz/gm1bDKnbjzkasj5E8DBg4dmTTYCFzb95+PyDwneO4qw6afVBNvGcb3XDJZ1erwX7lh6rdZ1T/zUKWWrc7XXh57V1jH4QKfwJGZ2fYXCeHmt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CR/q+O9u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vhdYpVjL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537421F000FF;
-	Sat, 12 Sep 2026 08:50:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CR/q+O9u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7EA61F000FF;
+	Sat, 12 Sep 2026 08:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203019;
-	bh=V6T42XgkNeNYHfP/jRh5h51HdPgO5fAWnec8fSPhyrY=;
+	s=korg; t=1789203024;
+	bh=SSj5sPhYqnxZFHWBYhxdOhFMp+2m3m1/ITCn8bkxeJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vhdYpVjLPA8hTAKGsuUrrruCUHOtBvLPne6MpBTb+bbOunMpAn+7CTgQxIDp+1sQI
-	 x5bP0HJdUYZxWCXIYzDiy5xkjFYHmaseOVzh7NI9PMnwallh/pGXuRTWF8Xr8d5vQM
-	 yObovkUzMq+V4Ct8fhJkklI4vL1sGLd4IjZarp88=
+	b=CR/q+O9uBIvdB7QB0rgt92k7jJnU8G6YIt9RValqgty07CkDdIRxkY+aU08pluwux
+	 rALt2I6g12iY1ekmpSXGGPyIzGiu3qZ8rdbuK5Vge40xVGTIbwX7xZTXC5BqTLYo8T
+	 0mHN1JQVDTdFrKXjz5/HrOX51gLvIW7SFGtqO3/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
+	Rui Qi <qirui.001@bytedance.com>,
 	Waiman Long <longman@redhat.com>,
+	Ridong Chen <ridong.chen@linux.dev>,
 	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1321/1815] cgroup/cpuset: Use WRITE_ONCE() for shared prs_err updates
-Date: Sat, 12 Sep 2026 08:51:11 +0200
-Message-ID: <20260912065720.036795759@linuxfoundation.org>
+Subject: [PATCH 7.2 1322/1815] selftests/cgroup: Avoid awk -e in cpuset tests
+Date: Sat, 12 Sep 2026 08:51:12 +0200
+Message-ID: <20260912065720.060654059@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,104 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guopeng Zhang <zhangguopeng@kylinos.cn>
+From: Rui Qi <qirui.001@bytedance.com>
 
-[ Upstream commit 26d3a59e0241c3ef9f66ae1ae990f9326acbc059 ]
+[ Upstream commit 75e79a20190040800445ec95a4c4a84193d16992 ]
 
-cpuset_partition_show() reads cs->prs_err without cpuset_mutex using
-READ_ONCE(). The field is documented as not lock protected, but several
-updates to live cpusets still use plain stores.
+The cpuset selftests use awk -e to parse cgroup mount points. This
+works with gawk, but mawk rejects the option. In test_cpuset_prs.sh,
+this leaves CGROUP2 empty and causes the test to skip as if cgroup v2
+were not mounted. The same non-portable invocation exists in the cpuset
+v1 hotplug test.
 
-Convert the remaining prs_err stores on live cpusets to WRITE_ONCE().
+The scripts only need to pass a single awk program. Use the standard awk
+invocation without -e so mount point detection works with awk
+implementations that do not support the gawk extension.
 
-Fixes: 0c7f293efc87 ("cgroup/cpuset: Add cpuset.cpus.exclusive.effective for v2")
-Assisted-by: LLM
-Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Reviewed-by: Waiman Long <longman@redhat.com>
+Fixes: a8c52eba880a ("kselftest/cgroup: Add cpuset v2 partition root state test")
+Fixes: 812c5945bdb8 ("cgroup/cpuset: Add test_cpuset_v1_hp.sh")
+Signed-off-by: Rui Qi <qirui.001@bytedance.com>
+Acked-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Ridong Chen <ridong.chen@linux.dev>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ tools/testing/selftests/cgroup/test_cpuset_prs.sh   | 2 +-
+ tools/testing/selftests/cgroup/test_cpuset_v1_hp.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 411533d1b46c8..1c6d568006688 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1548,7 +1548,7 @@ static int remote_partition_enable(struct cpuset *cs, int new_prs,
- 	cpumask_copy(cs->effective_xcpus, tmp->new_cpus);
- 	spin_unlock_irq(&callback_lock);
- 	cpuset_force_rebuild();
--	cs->prs_err = 0;
-+	WRITE_ONCE(cs->prs_err, 0);
+diff --git a/tools/testing/selftests/cgroup/test_cpuset_prs.sh b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+index ca9bc38fdb95d..8e21e9fc439c0 100755
+--- a/tools/testing/selftests/cgroup/test_cpuset_prs.sh
++++ b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+@@ -20,7 +20,7 @@ skip_test() {
+ WAIT_INOTIFY=$(cd $(dirname $0); pwd)/wait_inotify
  
- 	/*
- 	 * Propagate changes in top_cpuset's effective_cpus down the hierarchy.
-@@ -1622,7 +1622,7 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *xcpus,
- 	WARN_ON_ONCE(!cpumask_subset(cs->effective_xcpus, subpartitions_cpus));
+ # Find cgroup v2 mount point
+-CGROUP2=$(mount -t cgroup2 | head -1 | awk -e '{print $3}')
++CGROUP2=$(mount -t cgroup2 | head -1 | awk '{print $3}')
+ [[ -n "$CGROUP2" ]] || skip_test "Cgroup v2 mount point not found!"
+ SUBPARTS_CPUS=$CGROUP2/.__DEBUG__.cpuset.cpus.subpartitions
+ CPULIST=$(cat $CGROUP2/cpuset.cpus.effective)
+diff --git a/tools/testing/selftests/cgroup/test_cpuset_v1_hp.sh b/tools/testing/selftests/cgroup/test_cpuset_v1_hp.sh
+index 7406c24be1ac9..da97f1643f9a3 100755
+--- a/tools/testing/selftests/cgroup/test_cpuset_v1_hp.sh
++++ b/tools/testing/selftests/cgroup/test_cpuset_v1_hp.sh
+@@ -14,7 +14,7 @@ skip_test() {
+ [[ $(id -u) -eq 0 ]] || skip_test "Test must be run as root!"
  
- 	if (cpumask_empty(excpus)) {
--		cs->prs_err = PERR_CPUSEMPTY;
-+		WRITE_ONCE(cs->prs_err, PERR_CPUSEMPTY);
- 		goto invalidate;
- 	}
+ # Find cpuset v1 mount point
+-CPUSET=$(mount -t cgroup | grep cpuset | head -1 | awk -e '{print $3}')
++CPUSET=$(mount -t cgroup | grep cpuset | head -1 | awk '{print $3}')
+ [[ -n "$CPUSET" ]] || skip_test "cpuset v1 mount point not found!"
  
-@@ -1637,13 +1637,13 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *xcpus,
- 	if (adding) {
- 		WARN_ON_ONCE(cpumask_intersects(tmp->addmask, subpartitions_cpus));
- 		if (!capable(CAP_SYS_ADMIN))
--			cs->prs_err = PERR_ACCESS;
-+			WRITE_ONCE(cs->prs_err, PERR_ACCESS);
- 		else if (cpumask_intersects(tmp->addmask, subpartitions_cpus) ||
- 			 cpumask_subset(top_cpuset.effective_cpus, tmp->addmask))
--			cs->prs_err = PERR_NOCPUS;
-+			WRITE_ONCE(cs->prs_err, PERR_NOCPUS);
- 		else if ((prs == PRS_ISOLATED) &&
- 			 !isolated_cpus_can_update(tmp->addmask, tmp->delmask))
--			cs->prs_err = PERR_HKEEPING;
-+			WRITE_ONCE(cs->prs_err, PERR_HKEEPING);
- 		if (cs->prs_err)
- 			goto invalidate;
- 	}
-@@ -2071,13 +2071,13 @@ static void compute_partition_effective_cpumask(struct cpuset *cs,
- 		 * partition root.
- 		 */
- 		WARN_ON_ONCE(is_remote_partition(child));
--		child->prs_err = 0;
-+		WRITE_ONCE(child->prs_err, 0);
- 		if (!cpumask_subset(child->effective_xcpus,
- 				    cs->effective_xcpus))
--			child->prs_err = PERR_INVCPUS;
-+			WRITE_ONCE(child->prs_err, PERR_INVCPUS);
- 		else if (populated &&
- 			 cpumask_subset(new_ecpus, child->effective_xcpus))
--			child->prs_err = PERR_NOCPUS;
-+			WRITE_ONCE(child->prs_err, PERR_NOCPUS);
- 
- 		if (child->prs_err) {
- 			int old_prs = child->partition_root_state;
-@@ -2381,8 +2381,10 @@ static void partition_cpus_change(struct cpuset *cs, struct cpuset *trialcs,
- 		return;
- 
- 	prs_err = validate_partition(cs, trialcs);
--	if (prs_err)
--		trialcs->prs_err = cs->prs_err = prs_err;
-+	if (prs_err) {
-+		WRITE_ONCE(cs->prs_err, prs_err);
-+		trialcs->prs_err = prs_err;
-+	}
- 
- 	if (is_remote_partition(cs)) {
- 		if (trialcs->prs_err)
-@@ -3801,7 +3803,7 @@ static void cpuset_hotplug_update_tasks(struct cpuset *cs, struct tmpmasks *tmp)
- 	if (remote && (cpumask_empty(subpartitions_cpus) ||
- 			(cpumask_empty(&new_cpus) &&
- 			 partition_is_populated(cs, NULL)))) {
--		cs->prs_err = PERR_HOTPLUG;
-+		WRITE_ONCE(cs->prs_err, PERR_HOTPLUG);
- 		remote_partition_disable(cs, tmp);
- 		compute_effective_cpumask(&new_cpus, cs, parent);
- 		remote = false;
+ #
 -- 
 2.53.0
 
