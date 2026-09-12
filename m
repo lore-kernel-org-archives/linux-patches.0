@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B22D412BED;
-	Sat, 12 Sep 2026 09:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB432420888;
+	Sat, 12 Sep 2026 09:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206544; cv=none; b=o9ZqVbIE7wi4n0PD25y5yh0houekfBXfz5/d8RXraIhGUywChwEIoNWkRaOv7t5zV2y48P+aHEboIrZPJXeoZTm2MODK1W4WvSkUvnmQOstk5YK0hCLqkHBRW8Bi5oEF2IphPsEowNxYWQLafUbrwboyxwJEkwrvvO9f8rVxu2k=
+	t=1789206550; cv=none; b=sxO+qZ/aipyCyDR+/5UjnVhPeWJqpirN8+C5jFX2LDD+QdhSuUl9r/W1tiSLyBfNQUF93nJMVswBDr9+YysyReSUe2XJRMolwyMy/inbGofmCKsgUq9zQUkhK2rg4OYS9m2GQ6+R6mcY3He0KE9Q8C5wV5jfoeCjerdVasZ5fs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206544; c=relaxed/simple;
-	bh=J9BnH3b/R1+pMrZjD8q3K+nITV1CmUO5c2CxPp1O99k=;
+	s=arc-20240116; t=1789206550; c=relaxed/simple;
+	bh=CdWNki+wr5Yi1/qL8PbW+rF7TxEJkFF7nXtPVJr2pRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cCu/oo/rLdvHnMBd/FdW9QY04tkcK6Bvmxe0cOZ8gCGEDqdg5jvQ/3npUcYK2BlGaeWuqLBkhS7EKjPZeKxj5s9qOa2BwBE0Mq573h1ZBw4rkKYZ+LsrAZWk7dnj4xMHKHuyieYB9wCQwajmhcOMGTxM1hKRYTENxtG5fv19Btw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVLa+EYF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QI0ARat8RzJ2g/rSYpjW0Bon5hWcwxwGUAFmVp4VkJ+gVWe7tUW9qIwQm/cgHdhNszyLRZ5GrNr6WeZcw1Vitw6lRikHmUFPbk4raMdtqho/bzUkUJjBPrhy2Wpg0ThY1zXJKUD4ZI8uabKvYAnXsCiMXnM8sFW4jmlf0S4ggVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MLBaFLLw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVLa+EYF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CF61F000FF;
-	Sat, 12 Sep 2026 09:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MLBaFLLw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0C01F000FF;
+	Sat, 12 Sep 2026 09:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206543;
-	bh=HLfkGGH4XwtHQxVBuPYuV9IOJlf+YvbOtG/uGNp0sUw=;
+	s=korg; t=1789206548;
+	bh=HYwe7BK+hGDKJfrJCIFeQ/LiBgS1tTVcKCQAmhU2euU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WVLa+EYFWQDags99jDTz0psOtKeF+M+Ha1lOQDO4GNGftBHdcu+WnH9lbrWj+z1tY
-	 oS8F703Yfn3BpmwEJFqibrjd9b9cHlAQdykW/kUfYeDh24ll0QYvDZJ/OSfiTBv8Uk
-	 9U7/tarJpnI0A8AsM5ZpBy4NRfWI8/YkpsRhtsVQ=
+	b=MLBaFLLwcGbQ6C5xIq9qt6m/HAgHw4z0X5ri/nABL73WPi2g1puDZWTHLINRofr+4
+	 qQZGmoB52NM1pvuV7b3haz5H6XyLGrtm81z1oSts/4W27go7Y5uVnmzDjm0ouIGYUC
+	 nrFGo8DBHO/QKMwJSj2hAcAiA9/Aq8pSOt5MvFQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rong Zhang <i@rong.moe>,
+	Guo Ren <guoren@kernel.org>,
+	Hanlin Song <pgeorge8929@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0227/1518] staging: sm750fb: Add missing Kconfig dependency
-Date: Sat, 12 Sep 2026 08:39:56 +0200
-Message-ID: <20260912065628.624612646@linuxfoundation.org>
+Subject: [PATCH 6.18 0186/1518] csky: Fix a4/a5 restoration in syscall trace path
+Date: Sat, 12 Sep 2026 08:39:15 +0200
+Message-ID: <20260912065627.698263127@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,37 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rong Zhang <i@rong.moe>
+From: Hanlin Song <pgeorge8929@gmail.com>
 
-[ Upstream commit da8fd33e7d6af4c069668c2d42234b969f706885 ]
+[ Upstream commit abb81e5ce7d995baa41556b8125fa59e28ba3be8 ]
 
-The sm750 frame buffer driver depends on FB_IOMEM_FOPS, but its Kconfig
-somehow misses it.
+The syscall trace path reloads syscall arguments from pt_regs before
+calling the syscall handler. On C-SKY ABIv2, the 5th and 6th syscall
+arguments are prepared as stack arguments before invoking syscallid.
 
-Fix it by making FB_SM750 select FB_IOMEM_FOPS, as other frame buffer
-drivers do.
+The current code adjusts sp before loading LSAVE_A4 and LSAVE_A5. Since
+those offsets are relative to the original pt_regs base, loading them
+after changing sp fetches the wrong slots. As a result, traced syscalls
+that use the 5th or 6th argument may receive corrupted arguments.
 
-Fixes: dc0ad215e5d8 ("staging/sm750fb: Initialize fb_ops with fbdev macros")
-Signed-off-by: Rong Zhang <i@rong.moe>
-Link: https://patch.msgid.link/20260603-sm750-fb-iomem-kconfig-v1-1-7f6a3046cce2@rong.moe
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is visible with mmap2(), which takes six arguments. A small
+PTRACE_SYSCALL reproducer opens a file and maps one page with:
+
+  mmap(NULL, 4096, PROT_READ | PROT_EXEC, MAP_PRIVATE, fd, 0)
+
+Before the fix, the traced child fails the mmap and exits with 12.
+After the fix, the mapping succeeds and the child exits with 0.
+
+Fix the trace path by loading a4/a5 from pt_regs before changing sp.
+
+Tested on: ck860f, linux-4.19.15, C-SKY abiv2
+
+Fixes: e0bbb53843b5 ("csky: Fixup abiv2 syscall_trace break a4 & a5")
+Suggested-by: Guo Ren <guoren@kernel.org>
+Signed-off-by: Hanlin Song <pgeorge8929@gmail.com>
+Signed-off-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/sm750fb/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ arch/csky/kernel/entry.S | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/staging/sm750fb/Kconfig b/drivers/staging/sm750fb/Kconfig
-index 08bcccdd0f1c4..25fe422f55f2c 100644
---- a/drivers/staging/sm750fb/Kconfig
-+++ b/drivers/staging/sm750fb/Kconfig
-@@ -6,6 +6,7 @@ config FB_SM750
- 	select FB_CFB_FILLRECT
- 	select FB_CFB_COPYAREA
- 	select FB_CFB_IMAGEBLIT
-+	select FB_IOMEM_FOPS
- 	help
- 	  Frame buffer driver for the Silicon Motion SM750 chip
- 	  with 2D acceleration and dual head support.
+diff --git a/arch/csky/kernel/entry.S b/arch/csky/kernel/entry.S
+index c68cdcc76d60e..3261f46f22442 100644
+--- a/arch/csky/kernel/entry.S
++++ b/arch/csky/kernel/entry.S
+@@ -93,11 +93,11 @@ csky_syscall_trace:
+ 	ldw	a2, (sp, LSAVE_A2)
+ 	ldw	a3, (sp, LSAVE_A3)
+ #if defined(__CSKYABIV2__)
+-	subi	sp, 8
+ 	ldw	r9, (sp, LSAVE_A4)
++	ldw	r10, (sp, LSAVE_A5)
++	subi	sp, 8
+ 	stw	r9, (sp, 0x0)
+-	ldw	r9, (sp, LSAVE_A5)
+-	stw	r9, (sp, 0x4)
++	stw	r10, (sp, 0x4)
+ 	jsr	syscallid                     /* Do system call */
+ 	addi	sp, 8
+ #else
 -- 
 2.53.0
 
