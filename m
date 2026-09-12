@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717A736A36A;
-	Sat, 12 Sep 2026 09:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EE336921B;
+	Sat, 12 Sep 2026 09:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206784; cv=none; b=lXnyVcTX/wkqKwr+cuEqQ8SOgMYoClzCHnswToYzAX9FL7IaoTLelEryJoyLxQIX3r8hq4S5Ngyk23s1XqsRje+JmRzLS2Pqu9lN9ioxctfKjk/rCO0lSRUS0ojekt75RJJoysmxoTm4MRW7uZA47rP3IMgQyTBXtCrNSnL1atE=
+	t=1789206789; cv=none; b=CjNvw7LlnwaJ9E/F2nZbLw8AyshVgkvYJ/D3ZGrk92JlBk57Mqfyf29dpaxyMuyV6ZCHSYOVFQMgX+0MezwEbiKzEhnLRam+dgAlnS/S2mhdXehmFAh94RlhvZ2JejGA4DoKyCXozONF9ELkgGXIJQeCiKmS9bUImb1IbVSDA7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206784; c=relaxed/simple;
-	bh=xDv9un8d7l2N6sFCfLZKBgK0fUBGPA9SPBcCuryrDrA=;
+	s=arc-20240116; t=1789206789; c=relaxed/simple;
+	bh=HaXrixQ28aN/PhE20bkZkgGwr8WtAe3ghbDTE2yc+Jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jrk5pXWYTPhrmj4d4J6cBoxLvfL4wozIxLbJPVZEruhGvFkq+SMYlfj6TMKquSoebL3nSG+6/194rjiLp8uCKx5P4gflgcODbdyt+T6PvI6e89ZycUI8fhLu8RAfHMir3iXsoG6wqI52CjhXNEfMXEupLMXR/53yRZEpldHG7Cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IB6MLZF7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nptk5XqWUD8+kIulh1slgyHbtsjILmEAodVH4rvyWBhZ+TjwRWhlOr7lmcN6t8WSS8iJCPx+3FTzhGht0LQQup0mQ7wyx8er1+VEZi0VU4q914h4jjAESGMqvxA4HFasBnibxT+PStzdEngN1FxsGPoljj3SaFmzj0CIuVdd5OU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+mclVlR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IB6MLZF7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA9621F000FF;
-	Sat, 12 Sep 2026 09:53:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+mclVlR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0EF1F000FF;
+	Sat, 12 Sep 2026 09:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206783;
-	bh=+Gbdoc2h0YTSqfkljUSRJnS8yqwDNu8FfSi9rhP8B7I=;
+	s=korg; t=1789206788;
+	bh=pFYhl0UO+Kojxd8sR9rxjr/GsNKyujZl2I4QYml2B9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IB6MLZF7/QZawtkZAVwIErAx23rMQBg2gsv3qYgI+BLwFI5X/bC/SiKBlq7ra+dag
-	 U9+zHnLOwZemHytSJcDmSZwhlIkPoFh+6HNDECNCc86mz590Qr3s2dotYwsultfWZu
-	 KnwSVMv6UJYWx0CBBg1iGwQdvA/OXpO2Pm7Q5pkk=
+	b=l+mclVlRyQDuGNm2mjcEwIhCZUdTc8oneZ3Ao/CqZJ1WJFw2G1vmYjEQUEnAgB2Eh
+	 apWET4gtacEUvDavzaaq/X2rc05tLR3izcTkEdl/OLLEIjB8IgeRsYGk2n+E8tOlHM
+	 labTtGSROmBWbniLw5GJ/RhL2G+G3AYTfOQ4ji5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Dan Carpenter <error27@gmail.com>,
+	Evgenii Burenchev <evg28bur@yandex.ru>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0235/1518] staging: rtl8723bs: fix mismatched free of HalData in rtw_sdio_if1_init()
-Date: Sat, 12 Sep 2026 08:40:04 +0200
-Message-ID: <20260912065628.801012752@linuxfoundation.org>
+Subject: [PATCH 6.18 0236/1518] ALSA: via82xx: Remove unreachable branch in snd_via686_pcm_pointer()
+Date: Sat, 12 Sep 2026 08:40:05 +0200
+Message-ID: <20260912065628.822721598@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,51 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Evgenii Burenchev <evg28bur@yandex.ru>
 
-[ Upstream commit 264676418b726baca7be49171e306b6aa05cceb0 ]
+[ Upstream commit cd3447e1b6425efd1704ed07f1f245c842927eb0 ]
 
-padapter->HalData is allocated via vzalloc(), but incorrectly freed
-using kfree() in the rtw_sdio_if1_init() error path. Using kfree() to
-release this vmalloc-backed buffer can lead to memory corruption.
+The condition
 
-Use rtw_hal_data_deinit() to pair the free correctly and free
-HalData with vfree().
+	if (count && size < count)
 
-The bug was first flagged by an experimental static analysis tool we
-are developing for kernel memory-management bugs. Manual inspection
-confirms that the issue is still present in current mainline.
+can never evaluate to true.
 
-An x86_64 allyesconfig build showed no new warnings. As we do not have
-suitable RTL8723BS SDIO hardware to test with, no runtime testing was
-able to be performed.
+The VIA DMA count register is masked with 0x00ffffff before use, while
+the DMA buffer size is limited to 0x00fffffe bytes. As a result, 'count'
+can never exceed 'size', making the condition permanently false.
 
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Link: https://patch.msgid.link/20260525091836.812565-1-dawei.feng@seu.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This branch has therefore been unreachable since the driver was
+introduced. Remove the unreachable branch without changing runtime
+behavior.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Evgenii Burenchev <evg28bur@yandex.ru>
+Link: https://patch.msgid.link/20260706131638.15311-1-evg28bur@yandex.ru
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/os_dep/sdio_intf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/pci/via82xx_modem.c | 26 ++++++++++----------------
+ 1 file changed, 10 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-index 139ace51486d2..ae379e99736ad 100644
---- a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-+++ b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-@@ -307,8 +307,8 @@ static struct adapter *rtw_sdio_if1_init(struct dvobj_priv *dvobj, const struct
- 	status = _SUCCESS;
- 
- free_hal_data:
--	if (status != _SUCCESS && padapter->HalData)
--		kfree(padapter->HalData);
-+	if (status != _SUCCESS)
-+		rtw_hal_data_deinit(padapter);
- 
- 	if (status != _SUCCESS) {
- 		rtw_wdev_unregister(padapter->rtw_wdev);
+diff --git a/sound/pci/via82xx_modem.c b/sound/pci/via82xx_modem.c
+index 6ce2cd88cda6c..605a3a0053d92 100644
+--- a/sound/pci/via82xx_modem.c
++++ b/sound/pci/via82xx_modem.c
+@@ -575,24 +575,18 @@ static inline unsigned int calc_linear_pos(struct via82xx_modem *chip,
+ 		       viadev->bufsize2, viadev->idx_table[idx].offset,
+ 		       viadev->idx_table[idx].size, count);
+ #endif
+-		if (count && size < count) {
++		if (! count)
++			/* bogus count 0 on the DMA boundary? */
++			res = viadev->idx_table[idx].offset;
++		else
++			/* count register returns full size
++			 * when end of buffer is reached
++			 */
++			res = viadev->idx_table[idx].offset + size;
++		if (check_invalid_pos(viadev, res)) {
+ 			dev_dbg(chip->card->dev,
+-				"invalid via82xx_cur_ptr, using last valid pointer\n");
++				"invalid via82xx_cur_ptr (2), using last valid pointer\n");
+ 			res = viadev->lastpos;
+-		} else {
+-			if (! count)
+-				/* bogus count 0 on the DMA boundary? */
+-				res = viadev->idx_table[idx].offset;
+-			else
+-				/* count register returns full size
+-				 * when end of buffer is reached
+-				 */
+-				res = viadev->idx_table[idx].offset + size;
+-			if (check_invalid_pos(viadev, res)) {
+-				dev_dbg(chip->card->dev,
+-					"invalid via82xx_cur_ptr (2), using last valid pointer\n");
+-				res = viadev->lastpos;
+-			}
+ 		}
+ 	}
+ 	viadev->lastpos = res; /* remember the last position */
 -- 
 2.53.0
 
