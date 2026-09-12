@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD473859E6;
-	Sat, 12 Sep 2026 16:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98531478E25;
+	Sat, 12 Sep 2026 16:16:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229791; cv=none; b=fAZwNewdKCHZl/8SnYrQ39gPEFLAN5NpEm6t6SmMa4BdbcCyBOhBJCbmGroT8hIzoEuqlJDoFNgfo3S7FJRs3biOeLOjq4R0AlON4VNRvwFDuS7iUn+gaQRPkqoW9upwSduTqmy8E7j+cmNjrNLVFZx4goQor9a6KJ5ilVIxhnI=
+	t=1789229793; cv=none; b=uXer+SFgsE7f6kbrXe2QkngySeLGK16CPKVf/T2mwLYQseTI6uy6TblW8Ir0q6wIjCLIX2hovpsr39kpSDxjNpaTLZlm4xe3C6/z2rSWEFLLbVIY8rAbmSl6SXzyCqlNBPhsSSo5BTngLE8wJwhvBDIH7KAhoVvr+N0eU+lKsZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229791; c=relaxed/simple;
-	bh=f5kQPADyrWYI3qWj09XcwmnI9QjCrCBXHYse1lDpgRU=;
+	s=arc-20240116; t=1789229793; c=relaxed/simple;
+	bh=E9qBkFK+ra9vskb93XE54Fb5FXRha3SAjjv+7KUanWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vCUKNGmQcz1NYVbdFroiiPPjOk19uvbmuAPYg+IL0qQyXshpFhWtYkJxWPu6dUpSz87//itLj5t4vb+EE2ULC6QjJHXu8jZ+uWMSitG4t/D/ln5Lri5LP9ChfLNFxswcEV8jjHf1lZDoVCzCWJinvlirdEA2QrdvPWgBibI3ung=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yB3TXmyW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TnMQd60tSWl4Bzri0MfOtdRBhBiEl13S32solc4uRTt8CoL6xZPuXVDbB1KDYny7icLCPTVNfyn1EVxoeQJ0GOwxPU4QkKEsyS7sQ8cw/JejuyIGNF3q3TxKhooHfqPLzu+agAL5XT6eMIpYfFPEDSwsje1doPjXUfNyaC4oYPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xERoZn9X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yB3TXmyW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E874F1F00893;
-	Sat, 12 Sep 2026 16:16:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xERoZn9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 714181F000FF;
+	Sat, 12 Sep 2026 16:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229787;
-	bh=X3VC6C35sqfmRZ6hQnMaCBWI2uRxVTNAdy1WXBtb6tc=;
+	s=korg; t=1789229791;
+	bh=7SFWJEtKvNmve/S/UaXE4W+Xc+I3gE8TqjkhJ0mka8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yB3TXmyWcMC/P9ERTn6Ki99ky72MNoTT9QksksKtzeIEwfz2C85uu15XBkQ2NcT95
-	 i0qVYYv65P5hZpOMQJbUZg9o1gL+Xn73DpaG8338Ai6NyiL2gd2duy1VOX67IY6n1c
-	 +Eyv3KDieLj5YMVuq81i+zSLORbDk2xsEb7zU9uA=
+	b=xERoZn9XwCjyaM/ftzGiVIiJfJ8Gs45wNR+rzrQnNSerMDcsaYHXxuGcAbyi+ShyT
+	 /Ngns6J7LNpuvlUt1GOOlrMqUtOyJLnBIhmgVcceiyMVaGMhGD8kHvRtUzvIr0mR4q
+	 QBq2o8K9e+JisGEWzTG7KFffAhUWo+a2kEWnTs5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Koichiro Den <den@valinux.co.jp>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0662/1191] driver core: soc: Unregister bus on early device registration failure
-Date: Sat, 12 Sep 2026 08:56:30 +0200
-Message-ID: <20260912065603.126226902@linuxfoundation.org>
+Subject: [PATCH 6.1 0663/1191] dmaengine: dw-edma: Serialize abort state updates
+Date: Sat, 12 Sep 2026 08:56:31 +0200
+Message-ID: <20260912065603.149150299@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,62 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 45dfa004893dfeae182ec27eddbd153c6d4ddbf9 ]
+[ Upstream commit dd80e259f65d932634e26d366570d71669ef6654 ]
 
-soc_bus_register() registers the SoC bus before registering a deferred
-early SoC device. If soc_device_register() fails in that path, the
-function returns the error directly and leaves the bus registered.
+dw_edma_abort_interrupt() drops vc.lock before changing request and
+status. issue_pending() can acquire the lock in that small window,
+observe the old busy state, and skip starting queued descriptors. Then
+the abort handler overwrites the channel status as idle, leaving the new
+descriptors stranded for good.
 
-Store the returned SoC device pointer explicitly so the success and
-error cases are handled separately. On failure, clear soc_bus_registered
-and unregister the bus before returning the error.
+Keep descriptor completion and the state transition in the same critical
+section.
 
-Fixes: 6e12db376b60 ("base: soc: Allow early registration of a single SoC device")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260615180746.713540-1-dbgh9129@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Link: https://patch.msgid.link/20260717180639.2643243-4-den@valinux.co.jp
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/soc.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/soc.c b/drivers/base/soc.c
-index 0fb1d4ab9d8a6..7a4032846febb 100644
---- a/drivers/base/soc.c
-+++ b/drivers/base/soc.c
-@@ -179,6 +179,7 @@ EXPORT_SYMBOL_GPL(soc_device_unregister);
- 
- static int __init soc_bus_register(void)
- {
-+	struct soc_device *soc_dev;
- 	int ret;
- 
- 	ret = bus_register(&soc_bus_type);
-@@ -186,10 +187,20 @@ static int __init soc_bus_register(void)
- 		return ret;
- 	soc_bus_registered = true;
- 
--	if (early_soc_dev_attr)
--		return PTR_ERR(soc_device_register(early_soc_dev_attr));
-+	if (early_soc_dev_attr) {
-+		soc_dev = soc_device_register(early_soc_dev_attr);
-+		if (IS_ERR(soc_dev)) {
-+			ret = PTR_ERR(soc_dev);
-+			goto err_unregister_bus;
-+		}
-+	}
- 
- 	return 0;
-+
-+err_unregister_bus:
-+	soc_bus_registered = false;
-+	bus_unregister(&soc_bus_type);
-+	return ret;
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index 7625283e3780b..73d013278de28 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -649,9 +649,9 @@ static void dw_edma_abort_interrupt(struct dw_edma_chan *chan)
+ 		list_del(&vd->node);
+ 		vchan_cookie_complete(vd);
+ 	}
+-	spin_unlock_irqrestore(&chan->vc.lock, flags);
+ 	chan->request = EDMA_REQ_NONE;
+ 	chan->status = EDMA_ST_IDLE;
++	spin_unlock_irqrestore(&chan->vc.lock, flags);
  }
- core_initcall(soc_bus_register);
  
+ static irqreturn_t dw_edma_interrupt(int irq, void *data, bool write)
 -- 
 2.53.0
 
