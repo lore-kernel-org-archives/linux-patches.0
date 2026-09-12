@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D40356A0D;
-	Sat, 12 Sep 2026 10:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD545426EBB;
+	Sat, 12 Sep 2026 10:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208161; cv=none; b=XNSCIKv7oV5JjYKvAc41sLI0k0YVLwO2iZPl/t69mXmz6+WP5O2JGPC+l2Abie978syguN2A3e201vjhGVdZClo97lgMvT7d41VOwSwIu49hyU0BWfwjEXTWsjIRKbhcAwcf7du04LyfkHAjJb3BOFmI820gX6GZujI5xRiS+gY=
+	t=1789208166; cv=none; b=lq7KBTqOdOJ5MCwdKPAiDKPwqklCbx/u5ZZVlmz9laZ8xH5H1jTW7VXM/EJhn2oSj2XP1uYwE9FJjk1DKjFB0cs8R8dPAQKsrh/a+r/QHYUnCVupLYvM7yqWoz/nKXlfHy7k1ZnU5QE/ShG87E6R8hUKoA0TlTBdOcT400Uuz4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208161; c=relaxed/simple;
-	bh=npdJ/Gqxmgyr49wkANeqnpFfZnP+aauESMkuR86s72Y=;
+	s=arc-20240116; t=1789208166; c=relaxed/simple;
+	bh=k+aRM/nHKPSYIEA98pNJSMuPsbPeLzbecABC5N6zYTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YhNRAO3ANQsfHlTFq/ts10LOmh/cLN70UnHF9AbGId5pl8N1+kul7vkHtcfuRIaIDReUjyhDXabOxySeXM4/86mbEYxixPLv2ie038nzXLZmzl5L5Lt6C7CXLIX2ocgPai/niH3WPz9qOCD4adL1ivbQPePUrAScPkbMCJCB+Kk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3iNGILT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MIdl+g6mufnO4eUsJwJCdDV9ZQuExnrNXH8RjQoqt0JV/TnSipsmICQ0IDmuddW6J0KL3HDq3Q6S8H7ChW84cTwAxzCkCtYid2Z1HYs4wW352MGuIHw7tS8YSZY1GU3qc0qyv1j+GSXs0Z8b+oEoclXOP6J4Vx4PbhqOMheZz7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uha5Eq2N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3iNGILT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCEFA1F000FF;
-	Sat, 12 Sep 2026 10:15:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uha5Eq2N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7261F000FF;
+	Sat, 12 Sep 2026 10:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208158;
-	bh=uXzZzX8brSsXOpoU0Bn3qBc9il7oxnDv2Qeaugxer4Y=;
+	s=korg; t=1789208163;
+	bh=I6TUsFGyNQUczlzuY/n9GhPPBZoE3fAsSLsjRjfoWiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J3iNGILTdyHfH1E//8O9jGUd6SFGVYz1NDFHk3fB3CBDkAsPyG1byBknORpuuIpn9
-	 Se+z0rEzRtMQa+cTGaUWb10Mta4PBiuBqsJiA4Pb8eqxzQ2yn3vb8QMG8Zlt9FVVZn
-	 UkjyPcFNsHqNSh8TcI8s+WG07WbeWQjmIHAu9yJ8=
+	b=uha5Eq2Nc/5/INxeGwzhoB4afTAmHY5g5uLzw0KvNcFDkKVPd9c60f1L4tn063QqN
+	 GqY/qGxqjUm3Cfg5hI66+nRisI+9Hx4BHixA88Ugdn8SxSdbUUGWbcDdwBPpvHfp8i
+	 WhdOfEKhNTG2RNCIgF0PmCP7/txgBluC9uDdlNuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Ian Rogers <irogers@google.com>,
+	Can Peng <pengcan@kylinos.cn>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0562/1518] perf cap: Remove used_root parameter and simplify capability checks
-Date: Sat, 12 Sep 2026 08:45:31 +0200
-Message-ID: <20260912065636.147433267@linuxfoundation.org>
+Subject: [PATCH 6.18 0563/1518] drm/tve200: add OF module alias for autoloading
+Date: Sat, 12 Sep 2026 08:45:32 +0200
+Message-ID: <20260912065636.169389423@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,183 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit 87ec3437f37b9fe44c524ba967cb12e78de06f15 ]
+[ Upstream commit b6c3585f2058e0fbfa8cb403458f5cc6cf5c5e06 ]
 
-Refactor perf_cap__capable() to completely remove the used_root out-parameter
-as requested by the maintainer. Relying on an explicit used_root boolean
-poisoned sequential capability checks (e.g. failing CAP_SYS_ADMIN checks
-poisoning the flag for subsequent CAP_PERFMON evaluations for unprivileged
-users) and created redundant complexity across check_ftrace_capable(),
-symbol__read_kptr_restrict(), and perf_event_paranoid_check().
+The TVE200 DRM driver can be built as a module and uses tve200_of_match
+as its OF match table, but the table is not exported for module alias
+generation.
 
-Streamline the capability API to perform a pure true/false boolean
-evaluation. The function checks the Effective set using SYS_capget; if
-the syscall is missing or fails on legacy kernels, it cleanly falls back
-to checking EUID == 0. This perfectly preserves modern capability-aware host
-sessions, guarantees transparent fallback for older kernels, and correctly
-rejects privileged operations for containerized root processes that have
-explicitly dropped their capability bounding and permitted sets.
+Add the MODULE_DEVICE_TABLE(of, ...) entry so modpost can generate OF
+module aliases for OF based module autoloading.
 
-Fixes: e25ebda78e23 ("perf cap: Tidy up and improve capability testing")
-Suggested-by: Namhyung Kim <namhyung@kernel.org>
-Assisted-by: Antigravity:gemini-3.5-flash
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 179c02fe90a4 ("drm/tve200: Add new driver for TVE200")
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260715024130.186416-1-pengcan@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-ftrace.c  | 13 +++----------
- tools/perf/util/bpf-filter.c | 22 +++++++++-------------
- tools/perf/util/cap.c        |  4 +---
- tools/perf/util/cap.h        |  3 +--
- tools/perf/util/symbol.c     |  3 +--
- tools/perf/util/util.c       | 12 +++---------
- 6 files changed, 18 insertions(+), 39 deletions(-)
+ drivers/gpu/drm/tve200/tve200_drv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/builtin-ftrace.c b/tools/perf/builtin-ftrace.c
-index 4cc33452d79b6..d8118256243e2 100644
---- a/tools/perf/builtin-ftrace.c
-+++ b/tools/perf/builtin-ftrace.c
-@@ -71,18 +71,11 @@ static void ftrace__workload_exec_failed_signal(int signo __maybe_unused,
+diff --git a/drivers/gpu/drm/tve200/tve200_drv.c b/drivers/gpu/drm/tve200/tve200_drv.c
+index a048e37f1c2c1..7d0329292ef6d 100644
+--- a/drivers/gpu/drm/tve200/tve200_drv.c
++++ b/drivers/gpu/drm/tve200/tve200_drv.c
+@@ -259,6 +259,7 @@ static const struct of_device_id tve200_of_match[] = {
+ 	},
+ 	{},
+ };
++MODULE_DEVICE_TABLE(of, tve200_of_match);
  
- static bool check_ftrace_capable(void)
- {
--	bool used_root;
--
--	if (perf_cap__capable(CAP_PERFMON, &used_root))
--		return true;
--
--	if (!used_root && perf_cap__capable(CAP_SYS_ADMIN, &used_root))
-+	if (perf_cap__capable(CAP_PERFMON) ||
-+	    perf_cap__capable(CAP_SYS_ADMIN))
- 		return true;
- 
--	pr_err("ftrace only works for %s!\n",
--		used_root ? "root"
--			  : "users with the CAP_PERFMON or CAP_SYS_ADMIN capability"
--		);
-+	pr_err("ftrace only works for users with the CAP_PERFMON or CAP_SYS_ADMIN capability!\n");
- 	return false;
- }
- 
-diff --git a/tools/perf/util/bpf-filter.c b/tools/perf/util/bpf-filter.c
-index 1a2e7b388d57d..bcd81084e3420 100644
---- a/tools/perf/util/bpf-filter.c
-+++ b/tools/perf/util/bpf-filter.c
-@@ -629,24 +629,20 @@ struct perf_bpf_filter_expr *perf_bpf_filter_expr__new(enum perf_bpf_filter_term
- 
- static bool check_bpf_filter_capable(void)
- {
--	bool used_root;
-+	int fd;
- 
--	if (perf_cap__capable(CAP_BPF, &used_root))
-+	if (perf_cap__capable(CAP_BPF))
- 		return true;
- 
--	if (!used_root) {
--		/* Check if root already pinned the filter programs and maps */
--		int fd = get_pinned_fd("filters");
--
--		if (fd >= 0) {
--			close(fd);
--			return true;
--		}
-+	/* Check if root already pinned the filter programs and maps */
-+	fd = get_pinned_fd("filters");
-+	if (fd >= 0) {
-+		close(fd);
-+		return true;
- 	}
- 
--	pr_err("Error: BPF filter only works for %s!\n"
--	       "\tPlease run 'perf record --setup-filter pin' as root first.\n",
--	       used_root ? "root" : "users with the CAP_BPF capability");
-+	pr_err("Error: BPF filter only works for users with the CAP_BPF capability!\n"
-+	       "\tPlease run 'perf record --setup-filter pin' as root first.\n");
- 
- 	return false;
- }
-diff --git a/tools/perf/util/cap.c b/tools/perf/util/cap.c
-index ac6d1d9a523d9..272bd8255ff12 100644
---- a/tools/perf/util/cap.c
-+++ b/tools/perf/util/cap.c
-@@ -12,7 +12,7 @@
- 
- #define MAX_LINUX_CAPABILITY_U32S _LINUX_CAPABILITY_U32S_3
- 
--bool perf_cap__capable(int cap, bool *used_root)
-+bool perf_cap__capable(int cap)
- {
- 	struct __user_cap_header_struct header = {
- 		.version = _LINUX_CAPABILITY_VERSION_3,
-@@ -21,7 +21,6 @@ bool perf_cap__capable(int cap, bool *used_root)
- 	struct __user_cap_data_struct data[MAX_LINUX_CAPABILITY_U32S] = {};
- 	__u32 cap_val;
- 
--	*used_root = false;
- 	while (syscall(SYS_capget, &header, &data[0]) == -1) {
- 		/* Retry, first attempt has set the header.version correctly. */
- 		if (errno == EINVAL && header.version != _LINUX_CAPABILITY_VERSION_3 &&
-@@ -29,7 +28,6 @@ bool perf_cap__capable(int cap, bool *used_root)
- 			continue;
- 
- 		pr_debug2("capget syscall failed (%m) fall back on root check\n");
--		*used_root = true;
- 		return geteuid() == 0;
- 	}
- 
-diff --git a/tools/perf/util/cap.h b/tools/perf/util/cap.h
-index c1b8ac033ccc5..bf09fb20c7793 100644
---- a/tools/perf/util/cap.h
-+++ b/tools/perf/util/cap.h
-@@ -18,7 +18,6 @@
- #define CAP_BPF		39
- #endif
- 
--/* Query if a capability is supported, used_root is set if the fallback root check was used. */
--bool perf_cap__capable(int cap, bool *used_root);
-+bool perf_cap__capable(int cap);
- 
- #endif /* __PERF_CAP_H */
-diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
-index af0df841d640c..0d4f1f29b3356 100644
---- a/tools/perf/util/symbol.c
-+++ b/tools/perf/util/symbol.c
-@@ -2326,8 +2326,7 @@ static bool symbol__read_kptr_restrict(void)
- {
- 	bool value = false;
- 	FILE *fp = fopen("/proc/sys/kernel/kptr_restrict", "r");
--	bool used_root;
--	bool cap_syslog = perf_cap__capable(CAP_SYSLOG, &used_root);
-+	bool cap_syslog = perf_cap__capable(CAP_SYSLOG);
- 
- 	if (fp != NULL) {
- 		char line[8];
-diff --git a/tools/perf/util/util.c b/tools/perf/util/util.c
-index 0f031eb80b4c5..452c691991ae1 100644
---- a/tools/perf/util/util.c
-+++ b/tools/perf/util/util.c
-@@ -331,15 +331,9 @@ int perf_event_paranoid(void)
- 
- bool perf_event_paranoid_check(int max_level)
- {
--	bool used_root;
--
--	if (perf_cap__capable(CAP_SYS_ADMIN, &used_root))
--		return true;
--
--	if (!used_root && perf_cap__capable(CAP_PERFMON, &used_root))
--		return true;
--
--	return perf_event_paranoid() <= max_level;
-+	return perf_cap__capable(CAP_SYS_ADMIN) ||
-+	       perf_cap__capable(CAP_PERFMON) ||
-+	       perf_event_paranoid() <= max_level;
- }
- 
- int perf_tip(char **strp, const char *dirpath)
+ static struct platform_driver tve200_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
