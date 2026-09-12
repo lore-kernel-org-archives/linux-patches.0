@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69C2345749;
-	Sat, 12 Sep 2026 14:03:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244DB30E83F;
+	Sat, 12 Sep 2026 14:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221817; cv=none; b=SqMGeUNYDBhyHMHc6EOiDhSm/LbP8qmsVeKpE2r4QIzxz5k+WwMovvJdWEOV2i4RaNq/BMXpdsp9k4o+ml+Ax7L83ApWDtc8FnlEeVkPPNUgbQKtKvW6PwkWZqm1a+6rnAo4/8j9ZUvc5vUg3/wxcFhpe1cd3XGjh09KE3Jo7n0=
+	t=1789221823; cv=none; b=EowU8MJ6oc7ipai1laNawWAa/pDxRy4LJW9rIZlGu9oeCt+7ysX75qpBEr9+VUl3Sl31j98GP2N1tNOudQnLU4zfToRrkNjmeOXPyd649mXqj2c4kZmWvCZQfmWNVLdzlvmyiedGa07NJXZhochkV9NzZGfUd0JhMA03b5GOpfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221817; c=relaxed/simple;
-	bh=uNgDSbXsunkKTrc5hz6tEY/fBi/Re2ReoS4bLCpbMcU=;
+	s=arc-20240116; t=1789221823; c=relaxed/simple;
+	bh=mJFnAQhNKMvmLoo1oBL9djA83AkvqYu1PJLJzhjsiMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YstrhdMci1IJeA91p+237yL7QtyjZKIeUtEUj/z0ts2z0lcJi6aAyoT6lCB4QMXZG/YqXyxg8303ovq2U7BlZzilo+Ssidi3TWwDIAFDgSFUc597bMlRUsRoOGrC2Ugd5fuchJRDUYUdekmSjR0Ap7CP37gJ7QRqCNdJHzOGRRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLP7miGE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CoCJP36NCxwjhEUeoMGC3F2Q8I3oRC2k5iYzZE4joOvpCDEtLvbN7cDBjxaJkFy5lLo2KNHBLb7yJr9uWu9YGL8bALVc5TBytouJmLSsfaq+VG/kuMii89B8RQqn6jXRFzLBLAlv2S2QB2sC2EPmqimHrcdU+HfbAxtjKlc9ZvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HL5YcZ2P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLP7miGE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43EE21F000FF;
-	Sat, 12 Sep 2026 14:03:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HL5YcZ2P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5F11F000FF;
+	Sat, 12 Sep 2026 14:03:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221815;
-	bh=kry//dOGtD0wSPwWy2mkXRWZCIEcMbY1SzQr3mlvZaQ=;
+	s=korg; t=1789221820;
+	bh=g1DOgaH4G7sAI5oj+LG1YDf5cG6iUmw+9ZXloaszheg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BLP7miGEy6bNHpPE7hjXr5XDbUsJYjvvV1C5k3fDXW9Fem0UIoPYNEjzbNTzsjpMj
-	 6l93e62TrCLYLpqKON6KmeCAfSTPL5hYuPFR/nCBtujDv+mTwlQtya08Vobf9zDfpu
-	 OVYt4vxAt4viHmkfO5lHhoyI5KZjLeBgYv2yGk90=
+	b=HL5YcZ2PUpLTCTW6ZmZ5MJj7WfXQc8R0XD0rmIa5y9P46yPibeCvejLRPPrIMqVaw
+	 JftMniTX40inqUBEbtnLwvp1ga5dHeVOYB1VAzMh6ezm5LjEvanAw8/7HdzTLDvmQ0
+	 hwoz9kGdwXUaOgZlqs0o0BimosrdtjjUXIzK2oU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valery Borovsky <vebohr@gmail.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 0460/1424] media: rtl2832_sdr: release URBs and stream buffers on start_streaming() failure
-Date: Sat, 12 Sep 2026 08:48:12 +0200
-Message-ID: <20260912065617.589909047@linuxfoundation.org>
+Subject: [PATCH 6.6 0461/1424] media: s2255: bound JPEG frame size before copying into the buffer
+Date: Sat, 12 Sep 2026 08:48:13 +0200
+Message-ID: <20260912065617.611674217@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,62 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit fe50cdaebf12cd32ff9a44d92bfd6fbc2300dbd4 upstream.
+commit e504cc888f42999dd76b6a43788c422610f2aad2 upstream.
 
-rtl2832_sdr_start_streaming() calls rtl2832_sdr_alloc_stream_bufs(),
-rtl2832_sdr_alloc_urbs() and rtl2832_sdr_submit_urbs() in sequence and
-shares a single err: label that only unlocks the mutex and returns.
-When alloc_urbs() succeeds but submit_urbs() fails, or when alloc_urbs()
-itself returns -ENOMEM after alloc_stream_bufs() has already succeeded,
-the URBs and/or the coherent DMA stream buffers stay allocated while
-streaming reports failure to vb2. Two latent defects follow on the next
-VIDIOC_STREAMON:
+s2255_fillbuff() memcpy()s vc->jpg_size bytes of a captured JPEG/MJPEG
+frame into the vb2 plane.  vc->jpg_size is taken verbatim from the
+S2255_MARKER_FRAME header the device sends (pdword[4] in save_frame())
+and, unlike the frame payload length just above it, is never bounded:
 
-1) rtl2832_sdr_alloc_stream_bufs() unconditionally resets dev->buf_num
-   to 0 and overwrites dev->buf_list[]/dev->dma_addr[], permanently
-   leaking the coherent DMA memory allocated by the previous attempt.
+	payload = le32_to_cpu(pdword[3]);
+	if (payload > vc->req_image_size)	/* payload is checked ... */
+		return -EINVAL;
+	vc->pkt_size = payload;
+	vc->jpg_size = le32_to_cpu(pdword[4]);	/* ... jpg_size is not */
 
-2) rtl2832_sdr_alloc_urbs() never resets dev->urbs_initialized and only
-   increments it. After a second successful pass urbs_initialized can
-   exceed MAX_BULK_BUFS, so the subsequent rtl2832_sdr_free_urbs() walks
-   from urbs_initialized - 1 down to 0 and reads past the end of
-   dev->urb_list[], passing garbage pointers to usb_free_urb().
+A malicious or malfunctioning device can therefore report a jpg_size
+larger than the destination vb2 plane, and the memcpy() writes past it.
+jpg_size is a signed int, so a value with the top bit set also turns
+into a huge length.
 
-Mirror the teardown that stop_streaming() already performs: on the error
-path call rtl2832_sdr_free_urbs() and rtl2832_sdr_free_stream_bufs()
-before unlocking. Both helpers are idempotent (free_urbs kills and zeros
-urbs_initialized; free_stream_bufs is gated on URB_BUF and clears the
-buf_num counter), so partial-failure paths and the no-allocation paths
-remain safe.
+Reject a frame whose jpg_size is negative or exceeds the plane size
+before copying it.
 
-Issue identified by automated review of the INV-003 series at
-https://sashiko.dev/
-
-Fixes: 771138920eaf ("[media] rtl2832_sdr: Realtek RTL2832 SDR driver module")
+Fixes: 38f993ad8b1f ("V4L/DVB (8125): This driver adds support for the Sensoray 2255 devices.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/rtl2832_sdr.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/usb/s2255/s2255drv.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/media/dvb-frontends/rtl2832_sdr.c
-+++ b/drivers/media/dvb-frontends/rtl2832_sdr.c
-@@ -905,9 +905,12 @@ static int rtl2832_sdr_start_streaming(s
- 		goto err;
- 
- 	mutex_unlock(&dev->v4l2_lock);
-+
- 	return 0;
- 
- err:
-+	rtl2832_sdr_free_urbs(dev);
-+	rtl2832_sdr_free_stream_bufs(dev);
- 	rtl2832_sdr_cleanup_queued_bufs(dev, VB2_BUF_STATE_QUEUED);
- 	mutex_unlock(&dev->v4l2_lock);
- 
+--- a/drivers/media/usb/s2255/s2255drv.c
++++ b/drivers/media/usb/s2255/s2255drv.c
+@@ -617,6 +617,12 @@ static void s2255_fillbuff(struct s2255_
+ 			break;
+ 		case V4L2_PIX_FMT_JPEG:
+ 		case V4L2_PIX_FMT_MJPEG:
++			if (jpgsize < 0 ||
++			    jpgsize > vb2_plane_size(&buf->vb.vb2_buf, 0)) {
++				dprintk(dev, 1, "bad JPEG frame size %d\n",
++					jpgsize);
++				break;
++			}
+ 			vb2_set_plane_payload(&buf->vb.vb2_buf, 0, jpgsize);
+ 			memcpy(vbuf, tmpbuf, jpgsize);
+ 			break;
 
 
