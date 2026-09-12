@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7863264F9;
-	Sat, 12 Sep 2026 13:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD4B315785;
+	Sat, 12 Sep 2026 13:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221111; cv=none; b=b0BqbowOISJbdoi2EtfQD7MH/DXGfE1v7Ut6JbLea9H3LZkEt5fC/DOySNfuSOM7Z+LD+xA0cTF1zMYJIx+wZ9a+savDg0dyJD+OSpAxxabBEH3ANkgXsYuNSIpdDEMGDeaxwSN51kRD8Syj4QM4d5tXtukXeULLz7W2Ku1MA4c=
+	t=1789221116; cv=none; b=lq7HffH4Fj5TaPBwVQ5/lHqbIdi4Bai6VOd223MJXpHX1UGN4DR517JxRx+ZlgPHtT/97bzS+upBnOkQulG895mBGskOdEOc8OGL78Xfabq++V12zilnXP/TurEt1QQtK+RWc7Av1ZhnjZGMKvcInd9gECcGav/eNx8WauopdBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221111; c=relaxed/simple;
-	bh=r61Q1IRbtC+Turw96bZUQNM6H5FA5aPXItkF0V+XDNA=;
+	s=arc-20240116; t=1789221116; c=relaxed/simple;
+	bh=TVUqbsZcYXb/GTYsX73t76aDZNqp/4GtBwxi+nBrQ94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MX5E2V5sUO5cUPQPr0Kzl7PMB/OsHptDH+5xm4rXFSqerznh5RvhWg7A8qcAmZGRVEtJJYR/y+jo9+zacLd334P5fUgATVxxGC+OqGGJXXShS2g+kG0kWyZe1LrhTn1rf8JRmYgFyaVJeW3KETwF5yjL9iWHuHhdYNQEh+HAW/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C5dM2ZSs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BAN8TFqSKvgw9BY1sVosXskC0PW+kJOrenmbJySIwwEG8jq1UMkNZ/jLGIKPEuqAyu9BmFx3yAR9RnV0bxYQJqFuxgDrQ1I3WR8rIDBkXg9Vwth3DllLZFex7kfqSQ33Y5FBkSVcCRrlfba3tCnDe+Ro9bBmNBfRQiOtWqudIPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TozFehCG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C5dM2ZSs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDE01F000FF;
-	Sat, 12 Sep 2026 13:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TozFehCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880F11F000FF;
+	Sat, 12 Sep 2026 13:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221110;
-	bh=s4p6zEzNxQwx/2xRinearo/CrJqjTlP2OeReGSxHGmI=;
+	s=korg; t=1789221114;
+	bh=vcGNHrw4BcHRJU0fUNiDHd23aFeq2JN9JdVR/Q3XUfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C5dM2ZSsxKpNOJfUl2D7RegrmowrndCybgOZcz6hiJpdYoLPu+/8fl1BNTiDAWPMB
-	 II1jsN1eXGSbEE3DlaNk6LPBW3o08/TSbX9cEXXU4411Pd34/UC966xcOXlhgIL29W
-	 Dg7e9oIJAzQvvTzPxc3Wujm2LwJnYHIF22Fi+TWo=
+	b=TozFehCGYH2Hvox+3wnxusSw9YGpo9FSByu3MLyHhf31jux/9gGtzUy4Q5mn17dMd
+	 W+7JyIjEnS0uaNP1cqCsvdsHYz8YghmWApNFmD92QeN7sCb4Tbzcr5IBRBtKDrlgaA
+	 xd1tcD6JJ4YFcUFx88Rrw+NTiI8Q/CjMRyLZ7oIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0317/1424] net: ntb_netdev: Fix TX busy and drop handling
-Date: Sat, 12 Sep 2026 08:45:49 +0200
-Message-ID: <20260912065614.383340427@linuxfoundation.org>
+	Zi Yan <ziy@nvidia.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	William Kucharski <william.kucharski@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 0300/1424] xarray: honor XA_FLAGS_ACCOUNT in xas_split_alloc()
+Date: Sat, 12 Sep 2026 08:45:32 +0200
+Message-ID: <20260912065614.005023756@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,99 +61,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Zi Yan <ziy@nvidia.com>
 
-[ Upstream commit 8aaa47351db0f93a5c5297fbafdfa8bc75e8ae49 ]
+commit 789763523fb43cdc328de5cb5dcd19240ccf90d8 upstream.
 
-Currently, ntb_netdev returns NETDEV_TX_BUSY for every enqueue error. It
-also increments the drop and error counters while leaving the skb owned
-by the qdisc, and may return BUSY with the subqueue still awake.
-Retrying a permanent error cannot succeed either.
+XArray operations that allocate xa_nodes, such as xas_nomem() and
+xas_alloc(), add __GFP_ACCOUNT when the array has XA_FLAGS_ACCOUNT set.
+This charges the allocated memory and avoids the workingset convergence
+issue described by commit 7b785645e8f13 ("mm: fix page cache convergence
+regression").
 
-The unconditional BUSY return and premature accounting date back to the
-initial driver. The error-path queue stop was later removed without
-changing that return value. The current flow-control code includes a
-resource check, but ntb_netdev does not honor its result before enqueue.
+xas_split_alloc() does not add _GFP_ACCOUNT when XA_FLAGS_ACCOUNT is
+present.  Fix it.
 
-Honor the resource check before enqueue. For -EAGAIN and -EBUSY, stop
-the subqueue, arm the existing reaper timer, and return BUSY without
-touching the skb. For other errors, free the skb, increment tx_dropped,
-and return NETDEV_TX_OK.
-
-Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
-Fixes: d723485cb4ca ("ntb_netdev: remove tx timeout")
-Fixes: e74bfeedad08 ("NTB: Add flow control to the ntb_netdev")
-Cc: stable@vger.kernel.org
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260817053519.4135287-3-den@valinux.co.jp
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[den: adapt to the single-queue implementation, as 6.6.y lacks commit:
- ee970634c777 ("net: ntb_netdev: Introduce per-queue context")]
-Stable-dep-of: 873ce713fef5 ("NTB: ntb_transport: Fail TX enqueue when the QP link is down")
-Stable-dep-of: a4f2387db6f1 ("NTB: ntb_transport: Reject oversized TX buffers")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/20260804-add-gfp_account-to-xas_split_alloc-v3-2-38cb3ff325c5@nvidia.com
+Fixes: 6b24ca4a1a8d ("mm: Use multi-index entries in the page cache")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: William Kucharski <william.kucharski@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ntb_netdev.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ lib/xarray.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ntb_netdev.c b/drivers/net/ntb_netdev.c
-index 886b3a54f8f86..525040622f679 100644
---- a/drivers/net/ntb_netdev.c
-+++ b/drivers/net/ntb_netdev.c
-@@ -164,8 +164,10 @@ static int __ntb_netdev_maybe_stop_tx(struct net_device *netdev,
- static int ntb_netdev_maybe_stop_tx(struct net_device *ndev,
- 				    struct ntb_transport_qp *qp, int size)
- {
--	if (netif_queue_stopped(ndev) ||
--	    (ntb_transport_tx_free_entry(qp) >= size))
-+	if (netif_queue_stopped(ndev))
-+		return -EBUSY;
+--- a/lib/xarray.c
++++ b/lib/xarray.c
+@@ -1012,6 +1012,9 @@ void xas_split_alloc(struct xa_state *xa
+ 	if (xas->xa_shift + XA_CHUNK_SHIFT > order)
+ 		return;
+ 
++	if (xas->xa->xa_flags & XA_FLAGS_ACCOUNT)
++		gfp |= __GFP_ACCOUNT;
 +
-+	if (ntb_transport_tx_free_entry(qp) >= size)
- 		return 0;
- 
- 	return __ntb_netdev_maybe_stop_tx(ndev, qp, size);
-@@ -208,21 +210,30 @@ static netdev_tx_t ntb_netdev_start_xmit(struct sk_buff *skb,
- 	struct ntb_netdev *dev = netdev_priv(ndev);
- 	int rc;
- 
--	ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop);
-+	if (unlikely(ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop)))
-+		return NETDEV_TX_BUSY;
- 
- 	rc = ntb_transport_tx_enqueue(dev->qp, skb, skb->data, skb->len);
--	if (rc)
--		goto err;
-+	if (rc) {
-+		if (rc == -EAGAIN || rc == -EBUSY) {
-+			netif_stop_queue(ndev);
-+			mod_timer(&dev->tx_timer,
-+				  jiffies + usecs_to_jiffies(tx_time));
-+			return NETDEV_TX_BUSY;
-+		}
-+
-+		goto drop;
-+	}
- 
- 	/* check for next submit */
- 	ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop);
- 
- 	return NETDEV_TX_OK;
- 
--err:
-+drop:
-+	dev_kfree_skb_any(skb);
- 	ndev->stats.tx_dropped++;
--	ndev->stats.tx_errors++;
--	return NETDEV_TX_BUSY;
-+	return NETDEV_TX_OK;
- }
- 
- static void ntb_netdev_tx_timer(struct timer_list *t)
--- 
-2.53.0
-
+ 	do {
+ 		unsigned int i;
+ 		void *sibling = NULL;
 
 
