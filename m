@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B358381EBB;
-	Sat, 12 Sep 2026 09:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AB919D8BC;
+	Sat, 12 Sep 2026 09:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207063; cv=none; b=bygOJ0Z72SEw7rZkiH5zZthe6n7uj8T+gbluUPtNkjGO/JW65iDGLB+wHmpUzg872DCbXpmdisn+JIbxZ4rEheLIthp9dTOJFlnRSC2Fg6iyT9Uf0BgX/fxOUWGCVmeHlybV6J9snBUa6gsD8mX+9oQEodOleFUu+AN1AOPLYIk=
+	t=1789207072; cv=none; b=rjniADODTgdgnfWpEIxQaUrCiwwmGCIIRRbuKMJRCu9LHnmrucZ6NG+jxE2abG96fMOPtwow9leyeAbaOJTrZZPp3vce4Bax8VkQRGyubDgQIFAXCpJFnne6zUt/YMBQIuAswxbXYe3Y6n6vJzAdzubkzg6g8l7lpenu7ztdYms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207063; c=relaxed/simple;
-	bh=G4gQpFU4+Jt4qdCwVqVqRVS8G+RZVb9PgayjszoP6vg=;
+	s=arc-20240116; t=1789207072; c=relaxed/simple;
+	bh=+zonWJKAuv1pezFMYiqZKCbo7Sy+oZsv4BRnJMdWwaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CHAvfJmKNevBBLIzmKklmKqK0GYOYa4rGwydbYjIVbGA5pXJZ7Wyr0Zf5rYUElVTqKzpWE9voVvffIPT8YgjkdLYKNei18m8jokgdRTqcVfLO6hlVRJoCT3lFyk7b0rc21De0j8Fega682QvMEdPuolK4Uvi6NE2eISrl4hU8rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkWJq2Gn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CEqVdU1iYNsEEyewLN+0x4z4vcMIX/sflyTlOgK/5PnBp986WFh+lB7YKQG3Tl0laFgRS4Mr3j18nBLHjeOmKb0ICaCKAE4FCxrbbwCkCDPssyiAUwSqZk+Py1Ksabr7/ObyNHMpWYYHCS2yKBJTfa0vTmR8hAqR220IKDKCA8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjesBVR7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkWJq2Gn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3642D1F000FF;
-	Sat, 12 Sep 2026 09:57:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjesBVR7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083A51F000FF;
+	Sat, 12 Sep 2026 09:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207062;
-	bh=F66iqsb5NKYQUNeGdh7I1nojU2SzSsa5Ko53iG4RSFg=;
+	s=korg; t=1789207067;
+	bh=HJ8QuXNyRU3Jcj/cU8KXttvSWdRFEbbtQtKsjsUY5mA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qkWJq2GnzKYgRz/TI/F1Wzne0eLwCBhxuSNEthkVjasFdtFWSPL7V1RoElfkD6WEG
-	 K9p9NgROcmuI9dp2tNWtt9nVxAfS9sG5orU9GTAzT+++UyyI3vM+JKibkSFZZtO5Jh
-	 /thPZ/T7jtTbP0NqNy//jsFZ7gNc+sT8W2+z//fs=
+	b=hjesBVR7I5el+zLPRSkCBpEMjf1NmrZcLn8at9Cnwy6gQv6CCtjrMq1xvkIc45iUJ
+	 B4ToAogr9vAViSTGl6t/1fxeXdpFJyOZ6XrQmvieLLzY/JfTAMPRJbXXsWHgJWyETE
+	 nNRu5SGwcCUvWlnYCSAzj0nOYG+9MyszaLadTcJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuan-Chung Chen <damon.chen@realtek.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0336/1518] wifi: rtw89: mlo: rearrange MLSR link decision flow
-Date: Sat, 12 Sep 2026 08:41:45 +0200
-Message-ID: <20260912065631.072186190@linuxfoundation.org>
+Subject: [PATCH 6.18 0337/1518] wifi: rtw89: phy: support per PHY RX statistics
+Date: Sat, 12 Sep 2026 08:41:46 +0200
+Message-ID: <20260912065631.094181635@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,59 +53,424 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuan-Chung Chen <damon.chen@realtek.com>
 
-[ Upstream commit 7284f5be5d298c901be1fc9fda6a2476f5ffdbaf ]
+[ Upstream commit 09d369c66373de8708e442a30460ced17f254915 ]
 
-The original MLSR link decision refers to RSSI, but it should be
-based on the premise of an existing link. Otherwise, make a link
-decision to select a new link from any available band.
+Previously, RX statistics such as beacon RSSI and packet
+counters were shared across all PHYs. To support MLO,
+extend the statistics to be maintained per PHY.
+
+Update the debugfs output for phy_info and beacon_info
+to include a "[PHY X]" label for better clarity.
+
+The output of phy_info:
+
+  TP TX: 0 [0] Mbps (lv: 0), RX: 0 [0] Mbps (lv: 0)
+  Avg packet length: TX=0, RX=120
+  TF: 0
+
+  [PHY 0]
+  Beacon: 19 (-45 dBm)
+  RX count:
+     Legacy: [0, 0, 0, 0]
+      ...
+    EHT 2SS: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+The output of beacon_info:
+
+  [PHY 0]
+  Beacon: 20
+  raw rssi: 131
+  hw rate: 4
+  length: 437
+
+  [Beacon info]
+  interval: 100
+  dtim: 1
 
 Signed-off-by: Kuan-Chung Chen <damon.chen@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260429132625.1659182-2-pkshih@realtek.com
+Link: https://patch.msgid.link/20260429132625.1659182-3-pkshih@realtek.com
 Stable-dep-of: 9bf6bd6ed5ac ("wifi: rtw89: 8852a: fix RSSI report when average beacon RSSI is not ready")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/wireless/realtek/rtw89/core.c     | 26 ++++--
+ drivers/net/wireless/realtek/rtw89/core.h     |  6 +-
+ drivers/net/wireless/realtek/rtw89/debug.c    | 88 ++++++++++++-------
+ drivers/net/wireless/realtek/rtw89/fw.c       |  6 +-
+ drivers/net/wireless/realtek/rtw89/phy.c      | 17 ++--
+ drivers/net/wireless/realtek/rtw89/rtw8852a.c |  5 +-
+ 6 files changed, 97 insertions(+), 51 deletions(-)
 
 diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index 5fd15fc840d8c..2c37b94256f91 100644
+index 2c37b94256f91..46c5de687dfc0 100644
 --- a/drivers/net/wireless/realtek/rtw89/core.c
 +++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -4270,13 +4270,19 @@ static void rtw89_core_mlsr_link_decision(struct rtw89_dev *rtwdev,
+@@ -2499,12 +2499,14 @@ static u16 rtw89_bcn_get_histogram_bound(struct rtw89_dev *rtwdev, u8 target)
+ }
+ 
+ static u16 rtw89_bcn_get_rx_time(struct rtw89_dev *rtwdev,
+-				 const struct rtw89_chan *chan)
++				 struct rtw89_vif_link *rtwvif_link)
  {
- 	unsigned int sel_link_id = IEEE80211_MLD_MAX_NUM_LINKS;
- 	struct ieee80211_vif *vif = rtwvif_to_vif(rtwvif);
-+	u8 decided_bands = BIT(RTW89_BAND_NUM) - 1;
+ #define RTW89_SYMBOL_TIME_2GHZ 192
+ #define RTW89_SYMBOL_TIME_5GHZ 20
+ #define RTW89_SYMBOL_TIME_6GHZ 20
+-	struct rtw89_pkt_stat *pkt_stat = &rtwdev->phystat.cur_pkt_stat;
++	const struct rtw89_chan *chan = rtw89_chan_get(rtwdev, rtwvif_link->chanctx_idx);
++	struct rtw89_bb_ctx *bb = rtw89_get_bb_ctx(rtwdev, rtwvif_link->phy_idx);
++	struct rtw89_pkt_stat *pkt_stat = &bb->cur_pkt_stat;
+ 	u16 bitrate, val;
+ 
+ 	if (!rtw89_legacy_rate_to_bitrate(rtwdev, pkt_stat->beacon_rate, &bitrate))
+@@ -2535,15 +2537,15 @@ static void rtw89_bcn_calc_timeout(struct rtw89_dev *rtwdev,
+ #define RTW89_BCN_TRACK_EXTEND_TIMEOUT 5
+ #define RTW89_BCN_TRACK_COVERAGE_TH 0 /* unit: TU */
+ #define RTW89_BCN_TRACK_STRONG_RSSI 80
+-	const struct rtw89_chan *chan = rtw89_chan_get(rtwdev, rtwvif_link->chanctx_idx);
+-	struct rtw89_pkt_stat *pkt_stat = &rtwdev->phystat.cur_pkt_stat;
++	struct rtw89_bb_ctx *bb = rtw89_get_bb_ctx(rtwdev, rtwvif_link->phy_idx);
+ 	struct rtw89_beacon_stat *bcn_stat = &rtwdev->phystat.bcn_stat;
+ 	struct rtw89_beacon_track_info *bcn_track = &rtwdev->bcn_track;
++	struct rtw89_pkt_stat *pkt_stat = &bb->cur_pkt_stat;
+ 	struct rtw89_beacon_dist *bcn_dist = &bcn_stat->bcn_dist;
+ 	u16 outlier_high_bcn_th = bcn_track->outlier_high_bcn_th;
+ 	u16 outlier_low_bcn_th = bcn_track->outlier_low_bcn_th;
+-	u8 rssi = ewma_rssi_read(&rtwdev->phystat.bcn_rssi);
+ 	u16 target_bcn_th = bcn_track->target_bcn_th;
++	u8 rssi = ewma_rssi_read(&bb->bcn_rssi);
+ 	u16 low_bcn_th = bcn_track->low_bcn_th;
+ 	u16 med_bcn_th = bcn_track->med_bcn_th;
+ 	u16 beacon_int = bcn_track->beacon_int;
+@@ -2589,7 +2591,7 @@ static void rtw89_bcn_calc_timeout(struct rtw89_dev *rtwdev,
+ 	bcn_timeout = bcn_stat->drift[target_bcn_th];
+ 
+ out:
+-	bcn_track->bcn_timeout = bcn_timeout + rtw89_bcn_get_rx_time(rtwdev, chan);
++	bcn_track->bcn_timeout = bcn_timeout + rtw89_bcn_get_rx_time(rtwdev, rtwvif_link);
+ }
+ 
+ static void rtw89_bcn_update_timeout(struct rtw89_dev *rtwdev,
+@@ -2733,7 +2735,6 @@ static void rtw89_vif_rx_stats_iter(void *data, u8 *mac,
+ 	struct rtw89_vif_rx_stats_iter_data *iter_data = data;
+ 	struct rtw89_dev *rtwdev = iter_data->rtwdev;
+ 	struct rtw89_vif *rtwvif = vif_to_rtwvif(vif);
+-	struct rtw89_pkt_stat *pkt_stat = &rtwdev->phystat.cur_pkt_stat;
+ 	struct rtw89_rx_desc_info *desc_info = iter_data->desc_info;
+ 	struct sk_buff *skb = iter_data->skb;
+ 	struct ieee80211_rx_status *rx_status = IEEE80211_SKB_RXCB(skb);
+@@ -2743,6 +2744,8 @@ static void rtw89_vif_rx_stats_iter(void *data, u8 *mac,
+ 	struct ieee80211_bss_conf *bss_conf;
+ 	struct rtw89_vif_link *rtwvif_link;
+ 	const u8 *bssid = iter_data->bssid;
++	struct rtw89_pkt_stat *pkt_stat;
++	struct rtw89_bb_ctx *bb;
+ 	const u8 *target_bssid;
+ 
+ 	if (rtwdev->scanning &&
+@@ -2776,6 +2779,9 @@ static void rtw89_vif_rx_stats_iter(void *data, u8 *mac,
+ 		rx_status->link_id = rtwvif_link->link_id;
+ 	}
+ 
++	bb = rtw89_get_bb_ctx(rtwdev, rtwvif_link->phy_idx);
++	pkt_stat = &bb->cur_pkt_stat;
++
+ 	if (ieee80211_is_beacon(hdr->frame_control)) {
+ 		if (vif->type == NL80211_IFTYPE_STATION &&
+ 		    !test_bit(RTW89_FLAG_WOWLAN, rtwdev->flags)) {
+@@ -2784,7 +2790,7 @@ static void rtw89_vif_rx_stats_iter(void *data, u8 *mac,
+ 		}
+ 
+ 		if (phy_ppdu) {
+-			ewma_rssi_add(&rtwdev->phystat.bcn_rssi, phy_ppdu->rssi_avg);
++			ewma_rssi_add(&bb->bcn_rssi, phy_ppdu->rssi_avg);
+ 			if (!test_bit(RTW89_FLAG_LOW_POWER_MODE, rtwdev->flags))
+ 				rtwvif_link->bcn_bw_idx = phy_ppdu->bw_idx;
+ 		}
+@@ -4274,6 +4280,7 @@ static void rtw89_core_mlsr_link_decision(struct rtw89_dev *rtwdev,
  	struct rtw89_vif_link *rtwvif_link;
  	const struct rtw89_chan *chan;
  	unsigned long usable_links;
++	struct rtw89_bb_ctx *bb;
  	unsigned int link_id;
--	u8 decided_bands;
  	u8 rssi;
  
-+	usable_links = ieee80211_vif_usable_links(vif);
-+
-+	rtwvif_link = rtw89_get_designated_link(rtwvif);
-+	if (unlikely(!rtwvif_link))
-+		goto select;
-+
- 	rssi = ewma_rssi_read(&rtwdev->phystat.bcn_rssi);
+@@ -4283,7 +4290,8 @@ static void rtw89_core_mlsr_link_decision(struct rtw89_dev *rtwdev,
+ 	if (unlikely(!rtwvif_link))
+ 		goto select;
+ 
+-	rssi = ewma_rssi_read(&rtwdev->phystat.bcn_rssi);
++	bb = rtw89_get_bb_ctx(rtwdev, rtwvif_link->phy_idx);
++	rssi = ewma_rssi_read(&bb->bcn_rssi);
  	if (unlikely(!rssi))
  		return;
-@@ -4288,12 +4294,6 @@ static void rtw89_core_mlsr_link_decision(struct rtw89_dev *rtwdev,
- 	else
- 		return;
  
--	usable_links = ieee80211_vif_usable_links(vif);
+diff --git a/drivers/net/wireless/realtek/rtw89/core.h b/drivers/net/wireless/realtek/rtw89/core.h
+index 3998a53b4ee90..4f2a9ac1ffd63 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.h
++++ b/drivers/net/wireless/realtek/rtw89/core.h
+@@ -5136,9 +5136,6 @@ DECLARE_EWMA(thermal, 4, 4);
+ struct rtw89_phy_stat {
+ 	struct ewma_thermal avg_thermal[RF_PATH_MAX];
+ 	u8 last_thermal_max;
+-	struct ewma_rssi bcn_rssi;
+-	struct rtw89_pkt_stat cur_pkt_stat;
+-	struct rtw89_pkt_stat last_pkt_stat;
+ 	struct rtw89_beacon_stat bcn_stat;
+ };
+ 
+@@ -6063,6 +6060,9 @@ struct rtw89_dev {
+ 		struct rtw89_dig_info dig;
+ 		struct rtw89_phy_ch_info ch_info;
+ 		struct rtw89_edcca_bak edcca_bak;
++		struct ewma_rssi bcn_rssi;
++		struct rtw89_pkt_stat cur_pkt_stat;
++		struct rtw89_pkt_stat last_pkt_stat;
+ 	} bbs[RTW89_PHY_NUM];
+ 
+ 	struct wiphy_delayed_work track_work;
+diff --git a/drivers/net/wireless/realtek/rtw89/debug.c b/drivers/net/wireless/realtek/rtw89/debug.c
+index 987eef8170f2b..531b8b90cb75e 100644
+--- a/drivers/net/wireless/realtek/rtw89/debug.c
++++ b/drivers/net/wireless/realtek/rtw89/debug.c
+@@ -3915,38 +3915,20 @@ static const struct rtw89_rx_rate_cnt_info {
+ 	{FIRST_RATE_GEV1(EHT_NSS2_MCS0), 14, 0, "EHT 2SS:"},
+ };
+ 
+-static ssize_t rtw89_debug_priv_phy_info_get(struct rtw89_dev *rtwdev,
+-					     struct rtw89_debugfs_priv *debugfs_priv,
+-					     char *buf, size_t bufsz)
++static int rtw89_get_rx_pkt_stat(struct rtw89_dev *rtwdev, struct rtw89_bb_ctx *bb,
++				 char *buf, size_t bufsz)
+ {
+-	struct rtw89_traffic_stats *stats = &rtwdev->stats;
+-	struct rtw89_pkt_stat *pkt_stat = &rtwdev->phystat.last_pkt_stat;
++	struct rtw89_pkt_stat *pkt_stat = &bb->last_pkt_stat;
+ 	const struct rtw89_chip_info *chip = rtwdev->chip;
+-	struct rtw89_debugfs_iter_data iter_data;
+ 	const struct rtw89_rx_rate_cnt_info *info;
+-	struct rtw89_hal *hal = &rtwdev->hal;
++	u8 rssi = ewma_rssi_read(&bb->bcn_rssi);
+ 	char *p = buf, *end = buf + bufsz;
+ 	enum rtw89_hw_rate first_rate;
+-	u8 rssi;
+ 	int i;
+ 
+-	rssi = ewma_rssi_read(&rtwdev->phystat.bcn_rssi);
 -
--	rtwvif_link = rtw89_get_designated_link(rtwvif);
--	if (unlikely(!rtwvif_link))
--		goto select;
--
- 	chan = rtw89_chan_get(rtwdev, rtwvif_link->chanctx_idx);
- 	if (decided_bands & BIT(chan->band_type))
- 		return;
+-	p += scnprintf(p, end - p, "TP TX: %u [%u] Mbps (lv: %d",
+-		       stats->tx_throughput, stats->tx_throughput_raw,
+-		       stats->tx_tfc_lv);
+-	if (hal->thermal_prot_lv)
+-		p += scnprintf(p, end - p, ", duty: %d%%",
+-			       100 - hal->thermal_prot_lv * RTW89_THERMAL_PROT_STEP);
+-	p += scnprintf(p, end - p, "), RX: %u [%u] Mbps (lv: %d)\n",
+-		       stats->rx_throughput, stats->rx_throughput_raw,
+-		       stats->rx_tfc_lv);
+-	p += scnprintf(p, end - p, "Beacon: %u (%d dBm), TF: %u\n",
++	p += scnprintf(p, end - p, "Beacon: %u (%d dBm)\n",
+ 		       pkt_stat->beacon_nr,
+-		       RTW89_RSSI_RAW_TO_DBM(rssi), stats->rx_tf_periodic);
+-	p += scnprintf(p, end - p, "Avg packet length: TX=%u, RX=%u\n",
+-		       stats->tx_avg_len,
+-		       stats->rx_avg_len);
++		       RTW89_RSSI_RAW_TO_DBM(rssi));
+ 
+ 	p += scnprintf(p, end - p, "RX count:\n");
+ 
+@@ -3967,6 +3949,39 @@ static ssize_t rtw89_debug_priv_phy_info_get(struct rtw89_dev *rtwdev,
+ 		p += scnprintf(p, end - p, "]\n");
+ 	}
+ 
++	return p - buf;
++}
++
++static ssize_t rtw89_debug_priv_phy_info_get(struct rtw89_dev *rtwdev,
++					     struct rtw89_debugfs_priv *debugfs_priv,
++					     char *buf, size_t bufsz)
++{
++	struct rtw89_traffic_stats *stats = &rtwdev->stats;
++	struct rtw89_debugfs_iter_data iter_data;
++	struct rtw89_hal *hal = &rtwdev->hal;
++	char *p = buf, *end = buf + bufsz;
++	struct rtw89_bb_ctx *bb;
++
++	p += scnprintf(p, end - p, "TP TX: %u [%u] Mbps (lv: %d",
++		       stats->tx_throughput, stats->tx_throughput_raw,
++		       stats->tx_tfc_lv);
++	if (hal->thermal_prot_lv)
++		p += scnprintf(p, end - p, ", duty: %d%%",
++			       100 - hal->thermal_prot_lv * RTW89_THERMAL_PROT_STEP);
++	p += scnprintf(p, end - p, "), RX: %u [%u] Mbps (lv: %d)\n",
++		       stats->rx_throughput, stats->rx_throughput_raw,
++		       stats->rx_tfc_lv);
++	p += scnprintf(p, end - p, "Avg packet length: TX=%u, RX=%u\n",
++		       stats->tx_avg_len,
++		       stats->rx_avg_len);
++	p += scnprintf(p, end - p, "TF: %u\n", stats->rx_tf_periodic);
++
++	rtw89_for_each_active_bb(rtwdev, bb) {
++		p += scnprintf(p, end - p, "\n[PHY %u]\n", bb->phy_idx);
++		p += rtw89_get_rx_pkt_stat(rtwdev, bb, p, end - p);
++	}
++	p += scnprintf(p, end - p, "\n");
++
+ 	rtw89_debugfs_iter_data_setup(&iter_data, p, end - p);
+ 	ieee80211_iterate_stations_atomic(rtwdev->hw, rtw89_sta_info_get_iter, &iter_data);
+ 	p += iter_data.written_sz;
+@@ -4658,12 +4673,26 @@ rtw89_debug_priv_diag_mac_get(struct rtw89_dev *rtwdev,
+ 	return rtw89_mac_diag_iter_all(rtwdev, buf, bufsz);
+ }
+ 
++static int rtw89_get_beacon_info(struct rtw89_dev *rtwdev, struct rtw89_bb_ctx *bb,
++				 char *buf, size_t bufsz)
++{
++	struct rtw89_pkt_stat *pkt_stat = &bb->last_pkt_stat;
++	char *p = buf, *end = buf + bufsz;
++
++	p += scnprintf(p, end - p, "[PHY %u]\n", bb->phy_idx);
++	p += scnprintf(p, end - p, "Beacon: %u\n", pkt_stat->beacon_nr);
++	p += scnprintf(p, end - p, "raw rssi: %lu\n", ewma_rssi_read(&bb->bcn_rssi));
++	p += scnprintf(p, end - p, "hw rate: %u\n", pkt_stat->beacon_rate);
++	p += scnprintf(p, end - p, "length: %u\n\n", pkt_stat->beacon_len);
++
++	return p - buf;
++}
++
+ static ssize_t
+ rtw89_debug_priv_beacon_info_get(struct rtw89_dev *rtwdev,
+ 				 struct rtw89_debugfs_priv *debugfs_priv,
+ 				 char *buf, size_t bufsz)
+ {
+-	struct rtw89_pkt_stat *pkt_stat = &rtwdev->phystat.last_pkt_stat;
+ 	struct rtw89_beacon_track_info *bcn_track = &rtwdev->bcn_track;
+ 	struct rtw89_beacon_stat *bcn_stat = &rtwdev->phystat.bcn_stat;
+ 	struct rtw89_beacon_dist *bcn_dist = &bcn_stat->bcn_dist;
+@@ -4671,17 +4700,16 @@ rtw89_debug_priv_beacon_info_get(struct rtw89_dev *rtwdev,
+ 	char *p = buf, *end = buf + bufsz;
+ 	u16 *drift = bcn_stat->drift;
+ 	u8 bcn_num = bcn_stat->num;
++	struct rtw89_bb_ctx *bb;
+ 	u8 count;
+ 	u8 i;
+ 
++	rtw89_for_each_active_bb(rtwdev, bb)
++		p += rtw89_get_beacon_info(rtwdev, bb, p, end - p);
++
+ 	p += scnprintf(p, end - p, "[Beacon info]\n");
+-	p += scnprintf(p, end - p, "count: %u\n", pkt_stat->beacon_nr);
+ 	p += scnprintf(p, end - p, "interval: %u\n", bcn_track->beacon_int);
+ 	p += scnprintf(p, end - p, "dtim: %u\n", bcn_track->dtim);
+-	p += scnprintf(p, end - p, "raw rssi: %lu\n",
+-		       ewma_rssi_read(&rtwdev->phystat.bcn_rssi));
+-	p += scnprintf(p, end - p, "hw rate: %u\n", pkt_stat->beacon_rate);
+-	p += scnprintf(p, end - p, "length: %u\n", pkt_stat->beacon_len);
+ 
+ 	p += scnprintf(p, end - p, "\n[Distribution]\n");
+ 	p += scnprintf(p, end - p, "tbtt\n");
+diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
+index 4191fbbc2161c..c6533a085c7fe 100644
+--- a/drivers/net/wireless/realtek/rtw89/fw.c
++++ b/drivers/net/wireless/realtek/rtw89/fw.c
+@@ -3008,14 +3008,15 @@ int rtw89_fw_h2c_lps_ml_cmn_info(struct rtw89_dev *rtwdev,
+ 				 struct rtw89_vif *rtwvif)
+ {
+ 	const struct rtw89_phy_bb_gain_info_be *gain = &rtwdev->bb_gain.be;
+-	struct rtw89_pkt_stat *pkt_stat = &rtwdev->phystat.cur_pkt_stat;
+ 	static const u8 bcn_bw_ofst[] = {0, 0, 0, 3, 6, 9, 0, 12};
+ 	const struct rtw89_chip_info *chip = rtwdev->chip;
+ 	struct rtw89_efuse *efuse = &rtwdev->efuse;
+ 	struct rtw89_h2c_lps_ml_cmn_info *h2c;
+ 	struct rtw89_vif_link *rtwvif_link;
++	struct rtw89_pkt_stat *pkt_stat;
+ 	const struct rtw89_chan *chan;
+ 	u8 bw_idx = RTW89_BB_BW_20_40;
++	struct rtw89_bb_ctx *bb;
+ 	u32 len = sizeof(*h2c);
+ 	unsigned int link_id;
+ 	struct sk_buff *skb;
+@@ -3046,11 +3047,14 @@ int rtw89_fw_h2c_lps_ml_cmn_info(struct rtw89_dev *rtwdev,
+ 		path = rtwvif_link->phy_idx == RTW89_PHY_1 ? RF_PATH_B : RF_PATH_A;
+ 		chan = rtw89_chan_get(rtwdev, rtwvif_link->chanctx_idx);
+ 		gain_band = rtw89_subband_to_gain_band_be(chan->subband_type);
++		bb = rtw89_get_bb_ctx(rtwdev, rtwvif_link->phy_idx);
+ 
+ 		h2c->central_ch[rtwvif_link->phy_idx] = chan->channel;
+ 		h2c->pri_ch[rtwvif_link->phy_idx] = chan->primary_channel;
+ 		h2c->band[rtwvif_link->phy_idx] = chan->band_type;
+ 		h2c->bw[rtwvif_link->phy_idx] = chan->band_width;
++
++		pkt_stat = &bb->cur_pkt_stat;
+ 		if (pkt_stat->beacon_rate < RTW89_HW_RATE_OFDM6)
+ 			h2c->bcn_rate_type[rtwvif_link->phy_idx] = 0x1;
+ 		else
+diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
+index 36dee482bc34b..4424dae1c7aa1 100644
+--- a/drivers/net/wireless/realtek/rtw89/phy.c
++++ b/drivers/net/wireless/realtek/rtw89/phy.c
+@@ -5392,6 +5392,7 @@ static void rtw89_phy_stat_rssi_update(struct rtw89_dev *rtwdev)
+ static void rtw89_phy_stat_init(struct rtw89_dev *rtwdev)
+ {
+ 	struct rtw89_phy_stat *phystat = &rtwdev->phystat;
++	struct rtw89_bb_ctx *bb;
+ 	int i;
+ 
+ 	for (i = 0; i < rtwdev->chip->rf_path_num; i++)
+@@ -5399,24 +5400,28 @@ static void rtw89_phy_stat_init(struct rtw89_dev *rtwdev)
+ 
+ 	rtw89_phy_stat_thermal_update(rtwdev);
+ 
+-	memset(&phystat->cur_pkt_stat, 0, sizeof(phystat->cur_pkt_stat));
+-	memset(&phystat->last_pkt_stat, 0, sizeof(phystat->last_pkt_stat));
++	rtw89_for_each_capab_bb(rtwdev, bb) {
++		memset(&bb->cur_pkt_stat, 0, sizeof(bb->cur_pkt_stat));
++		memset(&bb->last_pkt_stat, 0, sizeof(bb->last_pkt_stat));
+ 
+-	ewma_rssi_init(&phystat->bcn_rssi);
++		ewma_rssi_init(&bb->bcn_rssi);
++	}
+ 
+ 	rtwdev->hal.thermal_prot_lv = 0;
+ }
+ 
+ void rtw89_phy_stat_track(struct rtw89_dev *rtwdev)
+ {
+-	struct rtw89_phy_stat *phystat = &rtwdev->phystat;
++	struct rtw89_bb_ctx *bb;
+ 
+ 	rtw89_phy_stat_thermal_update(rtwdev);
+ 	rtw89_phy_thermal_protect(rtwdev);
+ 	rtw89_phy_stat_rssi_update(rtwdev);
+ 
+-	phystat->last_pkt_stat = phystat->cur_pkt_stat;
+-	memset(&phystat->cur_pkt_stat, 0, sizeof(phystat->cur_pkt_stat));
++	rtw89_for_each_active_bb(rtwdev, bb) {
++		bb->last_pkt_stat = bb->cur_pkt_stat;
++		memset(&bb->cur_pkt_stat, 0, sizeof(bb->cur_pkt_stat));
++	}
+ }
+ 
+ static u16 rtw89_phy_ccx_us_to_idx(struct rtw89_dev *rtwdev,
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852a.c b/drivers/net/wireless/realtek/rtw89/rtw8852a.c
+index 232f4c1bee1ba..a8b604adadddf 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8852a.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8852a.c
+@@ -2107,13 +2107,14 @@ static void rtw8852a_query_ppdu(struct rtw89_dev *rtwdev,
+ 				struct rtw89_rx_phy_ppdu *phy_ppdu,
+ 				struct ieee80211_rx_status *status)
+ {
+-	u8 path;
++	struct rtw89_bb_ctx *bb = rtw89_get_bb_ctx(rtwdev, phy_ppdu->phy_idx);
+ 	u8 *rx_power = phy_ppdu->rssi;
++	u8 path;
+ 	u8 raw;
+ 
+ 	if (!status->signal) {
+ 		if (phy_ppdu->to_self)
+-			raw = ewma_rssi_read(&rtwdev->phystat.bcn_rssi);
++			raw = ewma_rssi_read(&bb->bcn_rssi);
+ 		else
+ 			raw = max(rx_power[RF_PATH_A], rx_power[RF_PATH_B]);
+ 
 -- 
 2.53.0
 
