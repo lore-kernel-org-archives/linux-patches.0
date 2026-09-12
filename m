@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7563749E3;
-	Sat, 12 Sep 2026 16:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B350A2264AB;
+	Sat, 12 Sep 2026 16:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230592; cv=none; b=bhyguZ3YGmW8myinGv8c2h/KlXuALY5Rz0Zh/fsMxJE1MWP68vNH2RRcA+iRZkDhIzp0rQK7Op5+ASyjGEtZD41gqeQvoVOYCT+AGE4qQqwaAliNZ6cwcM0bIBX1OeZP5u073aelZDivNyoKbNuESL6QgbVqJvGprZiQsFx28II=
+	t=1789230596; cv=none; b=Sjt55+b8OBTY9OS4f89+YAqGpDgBqJ2llKsnuKN9Fgsnk0pf3Y2bVupIWbcX5tVNed3gMyzkcS0HuYWXnZvk5QGkI/9IYPc1ejdIIk7EptURbyulF4lSJuVUi1VmlaM4JIQvv1gFMnjB/9LLjHqaJFcwVh1Vh6aOyWzCgFrSHgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230592; c=relaxed/simple;
-	bh=vzinu1p0hKmN8fbbzCdYy1HEviwDSosScOj2pAbgaOI=;
+	s=arc-20240116; t=1789230596; c=relaxed/simple;
+	bh=U2FjVDTn13TfniY4EkMR7lGML4B9dZgRxvQ02kIdWO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FmRImOJ3AOLqHU/CZee19IF9pyGtTN/Klyrj/pj7jah8ZyW1bw0SdEKnj/iNnZbyvzmoUsuBDmYxOu3cdEpTTVN2Q4HrHPYbOP77BoxmYssqidoMmJ+i6HyPU/Cxze8jM8hmQkkIncnFalKugbPLarqPwJ9F3l/n79R+VWsraoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ejao7MO1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jjY8viZP8x/0hQ4xBEZ9/2HF9rVbiANXh7AK0bx5Tvw0q9w7fboAEgBPaq1FZVvME9Qx7R+u42xD3DHnRkJujZUMz7ClN6TQoju4fDFahZv3a+4c1Cl/TUQ5ng4y+BaI6hhTM93+AzhzSFB7NA4xh5gj5CS/hKdysNfh/0eWMQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=039hHhKe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ejao7MO1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61941F000FF;
-	Sat, 12 Sep 2026 16:29:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="039hHhKe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13231F000FF;
+	Sat, 12 Sep 2026 16:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230590;
-	bh=rF5sB7ykVp5Ui1Slo7VjSTqcwP8jhFEONe78NmqrV7I=;
+	s=korg; t=1789230595;
+	bh=RFL8Z/KXAKzx9vbXF/i38E0U0u4n6UnQ8EGBbBR3OSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ejao7MO1nivkCcasLrAC+fc508VU0ez+P1vbz4/I2YlfHFbZ7uxPhCZUc4kNGoigr
-	 mezcRLyMsHp8oe03mAkfUaNFZQjD7cXyeAtncFb0kZ2GO1Ga3YTfQ8emRNSiKvhV0d
-	 78/CJkMb3r4TYYr2X4ai3LMbRZVaEwyCSaJwMCv8=
+	b=039hHhKezpd4b3Uq57p2f8j/S6/ivJKgJmS8T6IsNjsoFxtVHrDx1b+ERwwaGUlzy
+	 vi2EaqjuRPU+EnUoxJvrTTLyy9/q3JekF+eJifXy5+2po47lRFTBRLGRyGZ2QqNnWM
+	 lm5zJKMKDkFcW0+/S6HikXfjYKvdMHlmsVLrPa+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0823/1191] wifi: mt76: mt7915: fix ext PHY use-after-free on register error path
-Date: Sat, 12 Sep 2026 08:59:11 +0200
-Message-ID: <20260912065606.752772837@linuxfoundation.org>
+Subject: [PATCH 6.1 0824/1191] wifi: mt76: mt7915: release hif2 reference on probe IRQ failure
+Date: Sat, 12 Sep 2026 08:59:12 +0200
+Message-ID: <20260912065606.773855563@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,49 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 15b960014f24dce5388d4a2e7274e6490cb3c421 ]
+[ Upstream commit 8370aebd26a9dfa2e0de665e3ab504c0e97ee730 ]
 
-After mt7915_register_ext_phy() succeeded, a failure of the main PHY
-mt7915_init_debugfs() or mt7915_coredump_register() unwound through
-free_phy2, which called ieee80211_free_hw() on the ext PHY hw while it
-was still registered with mac80211, since mt76_unregister_device() only
-unregisters the main hw. Unregister the ext PHY (thermal + phy + hw)
-first and skip the redundant free.
+The hif2 reference obtained by mt7915_pci_init_hif2() is only released on
+error paths that key off dev->hif2, which is not assigned until after the
+IRQ setup. If pci_alloc_irq_vectors() or the primary devm_request_irq()
+fails, the reference leaks. Drop it explicitly on those paths via
+mt7915_put_hif2().
 
-Fixes: 7b8e1ae886e4 ("mt76: mt7915: rework hardware/phy initialization")
-Link: https://patch.msgid.link/20260727150434.1778520-3-nbd@nbd.name
+Fixes: f68d67623dec ("mt76: mt7915: add Wireless Ethernet Dispatch support")
+Link: https://patch.msgid.link/20260727150434.1778520-4-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/init.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/pci.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-index 725768d22363b..38027699cad07 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-@@ -1123,14 +1123,19 @@ int mt7915_register_device(struct mt7915_dev *dev)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
+index 8e125daa90747..e8b3dda2e2404 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
+@@ -143,16 +143,20 @@ static int mt7915_pci_probe(struct pci_dev *pdev,
+ 		hif2 = mt7915_pci_init_hif2(pdev);
  
- 	ret = mt7915_init_debugfs(&dev->phy);
- 	if (ret)
--		goto unreg_thermal;
-+		goto unreg_ext_phy;
+ 		ret = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES);
+-		if (ret < 0)
++		if (ret < 0) {
++			mt7915_put_hif2(hif2);
+ 			goto free_device;
++		}
  
- 	ret = mt7915_coredump_register(dev);
- 	if (ret)
--		goto unreg_thermal;
-+		goto unreg_ext_phy;
+ 		irq = pdev->irq;
+ 	}
  
- 	return 0;
- 
-+unreg_ext_phy:
-+	if (phy2) {
-+		mt7915_unregister_ext_phy(dev);
-+		phy2 = NULL;
+ 	ret = devm_request_irq(mdev->dev, irq, mt7915_irq_handler,
+ 			       IRQF_SHARED, KBUILD_MODNAME, dev);
+-	if (ret)
++	if (ret) {
++		mt7915_put_hif2(hif2);
+ 		goto free_wed_or_irq_vector;
 +	}
- unreg_thermal:
- 	mt7915_unregister_thermal(&dev->phy);
- unreg_dev:
+ 
+ 	/* master switch of PCIe tnterrupt enable */
+ 	mt76_wr(dev, MT_PCIE_MAC_INT_ENABLE, 0xff);
 -- 
 2.53.0
 
