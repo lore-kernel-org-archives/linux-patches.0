@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54B0191F93;
-	Sat, 12 Sep 2026 14:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E951DB13A;
+	Sat, 12 Sep 2026 14:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224140; cv=none; b=QnDLuZxfkqkbifPB/EGpkmrMDoCdiv4f+wlkuE9YoSpN7WNUy2Vrscy0DgkK6hbf7+DwmgaCSdt/EiTOk+qJU4w+wYX+QjbIDqqnDGSm53kIDVoBZLxphaZhpu0aKGeCGWVJAiL9IP+UJkKtVlgFQcoxPet/g5nej8EbCKig7X0=
+	t=1789224145; cv=none; b=Pr2qagqTj9UxLJIFiFqc7ibwCnrJXBgIrhjWLgoFn2+0WQKJxhAiYa6qk+RLrMmcvvPgpLhNU1VVKw1HPrSUjiLXZoxCZxZyXLyQ28257bQp8nabwsdcXgxdSUQxBVxJPYBXmP4HnYJPowPiT3clgDitejqVeSGf1I1BCbCJ/TI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224140; c=relaxed/simple;
-	bh=LqHeUEyiw+uKCqjMabybDJpKIWRIvBny1ul06rtioo4=;
+	s=arc-20240116; t=1789224145; c=relaxed/simple;
+	bh=lbU7JdyKkbP3MyG3CkD1dD+BRWW8plbTeX6wwAbrgZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RhNYU3/zxZ521smsKfze6U+/Hpz8jFaHambZmJtkD5eYEtQS1N59JBIi8mMsERb8ENUEdyCvQaYwHgazJPmFxq+MnPA7ChW3K49pbjt0EN+45QorizodXBCc0etyKfk65xX2j5yK9P0A+tzyE2owLDEajsbw2C+G+Hvez4tTWPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgV3MsIA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q30ZhA0wkxoDVNx7o8yR5KWBGk/XfkvXvnu+BD+QEgjQoZr3WFcgpn8Qxq9Ytw2uXr7QWmm+Ih7xeP4iZlCRuF37BctxvkFuBT8otUxy34vKMojU2KwloDuHewARPhtFGgEuGye3urO7uSmX+6LAsivuikA1lzbgjAn8aJJd7Qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UL8D7h0j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgV3MsIA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC6A1F000FF;
-	Sat, 12 Sep 2026 14:42:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UL8D7h0j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D56881F000FF;
+	Sat, 12 Sep 2026 14:42:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224138;
-	bh=VJ2BKBPYjJN+g80LnP+2C382UtKPZzPpmaV7RblVOrA=;
+	s=korg; t=1789224143;
+	bh=QcL8eHbKWB2xFt9ACJylcfXiisBicM0az9gHASn016Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DgV3MsIAQ8cYvroJsqBuXSwyvwjywHeBc5OxwVu0sNELhK19Z0Pk4RKEncfNJc4nf
-	 0I5ZvcDNlj1aXfaWaPKpXVuAGS4B7/JLT89AYSiu15pcpFFYPlk70ImMfISFcvM26b
-	 nJddZuNg2ZVt6ls+5ISmUKi91IINz7pzGqeco68E=
+	b=UL8D7h0jR5WfM88ISRvfW5QGYHv6wkZOdwY/65KcrL/XBbXVdUeE7+xc+/wyqeMrU
+	 P3dvkjPOSsJrDnA21DKXpC0g4/A4r1joFpabnFC5m9t5YS9orpAAPFPm0y0eamvlWs
+	 Z3GS3v16EDEb9+/3zfEE1ru+l9JNWsbC/w56SlKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Williamson <alex@shazbot.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Chen Cheng <chencheng@fnnas.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0932/1424] bus: mhi: host: Flush the posted write after writing to MHI_SOC_RESET_REQ_OFFSET
-Date: Sat, 12 Sep 2026 08:56:04 +0200
-Message-ID: <20260912065628.193992221@linuxfoundation.org>
+Subject: [PATCH 6.6 0933/1424] md/raid5: protect bitmap batch counters aka seq_flush/seq_write consistency
+Date: Sat, 12 Sep 2026 08:56:05 +0200
+Message-ID: <20260912065628.216535778@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,56 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Chen Cheng <chencheng@fnnas.com>
 
-[ Upstream commit 24f4423cbc89548def2b05ae86de6175086dbf94 ]
+[ Upstream commit f565925810cb8bc799421485770e15d922ef766a ]
 
-mhi_soc_reset() tries to reset the device by writing to the
-MHI_SOC_RESET_REQ_OFFSET register. But it doesn't do a read-back to ensure
-that the write gets flushed to the device before returning to the caller.
+kcsan detect race :
+- raid5d() closes the current bitmap batch by updating
+	conf->seq_flush under conf->device_lock.
+- __add_stripe_bio() read conf->seq_flush without that
+	lock when assigning sh->bm_seq.
 
-This may lead to the delay (if implemented) on the caller to be
-insufficient, if the posted write doesn't reach the device before the
-delay.
+so, protect seq_flush/seq_write consistency for multiple CPUs by
+READ_ONCE()/WRITE_ONCE() under the path without held device_lock.
 
-So add a read-back after writing to the MHI_SOC_RESET_REQ_OFFSET register.
+re-explain the stripe batch sequence number update flow:
+1. sh->bm_seq declare which batch number the stripe belongs to
+   when perform bitmap-related write.
+	==> bm_seq = seq_flush+1
 
-Fixes: b5a8d233a588 ("bus: mhi: core: Add device hardware reset support")
-Reported-by: Alex Williamson <alex@shazbot.org>
-Closes: https://lore.kernel.org/linux-pci/20260622160822.09350246@shazbot.org
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260623145134.43976-1-manivannan.sadhasivam@oss.qualcomm.com
+2. stripe be handled,
+	* if sh->bm_seq - conf->seq_write > 0, means the
+	  batch stripes **newer than** the last written
+	  batch, it cannot proceed yet, queued on bitmap_list.
+	* otherwise , has already proceed.
+
+3. raid5d() `++seq_flush` to closes the current batch, means
+	* no more stripes join that old batch
+	* just-closed batch ready to write-out to disk
+
+4. raid5d() calls bitmap hooks unplug() or writeout, then,
+   `++seq_write` to the same as bm_seq.
+
+- seq_flush - for producer, to close batches.
+- seq_write - for consumer, the checkpoint number.
+
+the report:
+====================================
+BUG: KCSAN: data-race in __add_stripe_bio / raid5d
+
+write to 0xffff88ba5625d470 of 4 bytes by task 82401 on cpu 0:
+ raid5d+0x1d9/0xba0
+ [.....]
+
+read to 0xffff88ba5625d470 of 4 bytes by task 82421 on cpu 8:
+ __add_stripe_bio+0x332/0x400
+ raid5_make_request+0x6ac/0x2930
+ md_handle_request+0x4a2/0xa40
+ md_submit_bio+0x109/0x1a0
+ __submit_bio+0x2ec/0x390
+ [.....]
+
+Fixes: 7c13edc87510 ("md: incorporate new plugging into raid5.")
+
+v1 -> v2:
+- remove WRITE_ONCE(conf->seq_write) in held device_lock path.
+- remove READ_ONCE(conf->seq_flush) in held device_lock path.
+
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Reviewed-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/20260622124649.1780233-1-chencheng@fnnas.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/host/main.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/md/raid5.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-index 196929fff243e..e99ac5e72ac04 100644
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -168,6 +168,9 @@ EXPORT_SYMBOL_GPL(mhi_get_mhi_state);
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 6eb94e466f904..583b9784c2256 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -3587,7 +3587,7 @@ static void __add_stripe_bio(struct stripe_head *sh, struct bio *bi,
+ 		 sh->dev[dd_idx].sector);
  
- void mhi_soc_reset(struct mhi_controller *mhi_cntrl)
- {
-+	int __maybe_unused ret;
-+	u32 tmp;
-+
- 	if (mhi_cntrl->reset) {
- 		mhi_cntrl->reset(mhi_cntrl);
- 		return;
-@@ -176,6 +179,9 @@ void mhi_soc_reset(struct mhi_controller *mhi_cntrl)
- 	/* Generic MHI SoC reset */
- 	mhi_write_reg(mhi_cntrl, mhi_cntrl->regs, MHI_SOC_RESET_REQ_OFFSET,
- 		      MHI_SOC_RESET_REQ);
-+	/* Flush the posted write to the device (ignore return value) */
-+	ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->regs, MHI_SOC_RESET_REQ_OFFSET,
-+			   &tmp);
+ 	if (conf->mddev->bitmap && firstwrite && !sh->batch_head) {
+-		sh->bm_seq = conf->seq_flush+1;
++		sh->bm_seq = READ_ONCE(conf->seq_flush) + 1;
+ 		set_bit(STRIPE_BIT_DELAY, &sh->state);
+ 	}
  }
- EXPORT_SYMBOL_GPL(mhi_soc_reset);
+@@ -5807,7 +5807,7 @@ static void make_discard_request(struct mddev *mddev, struct bio *bi)
+ 		}
+ 		spin_unlock_irq(&sh->stripe_lock);
+ 		if (conf->mddev->bitmap) {
+-			sh->bm_seq = conf->seq_flush + 1;
++			sh->bm_seq = READ_ONCE(conf->seq_flush) + 1;
+ 			set_bit(STRIPE_BIT_DELAY, &sh->state);
+ 		}
  
+@@ -6847,11 +6847,13 @@ static void raid5d(struct md_thread *thread)
+ 		if (
+ 		    !list_empty(&conf->bitmap_list)) {
+ 			/* Now is a good time to flush some bitmap updates */
+-			conf->seq_flush++;
++			int seq = conf->seq_flush + 1;
++
++			WRITE_ONCE(conf->seq_flush, seq);
+ 			spin_unlock_irq(&conf->device_lock);
+ 			md_bitmap_unplug(mddev->bitmap);
+ 			spin_lock_irq(&conf->device_lock);
+-			conf->seq_write = conf->seq_flush;
++			conf->seq_write = seq;
+ 			activate_bit_delay(conf, conf->temp_inactive_list);
+ 		}
+ 		raid5_activate_delayed(conf);
 -- 
 2.53.0
 
