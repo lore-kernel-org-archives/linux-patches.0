@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE97A3BE175;
-	Sat, 12 Sep 2026 09:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E20935F191;
+	Sat, 12 Sep 2026 09:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203634; cv=none; b=OCB+BRRoEh2/R/9mZJTxLv7PME6CUw642ej+CpANZFVfGV2rB9yBSBBszYu5Sa+1VbLhKVpuYvP3iBfimTPoyZLFlZ0lZ2ocV0WRoezIyOcj44GcNHLrTfcY8e1Neo9z34Sf+mnhnAB20CPi81/+PRBvRbyU/bsX5WoCWLov/i4=
+	t=1789203640; cv=none; b=rYgvhpFfBaTtylNC2eWuzdKormBZfIUVEAJ3pjJdjfxqcTT68xq28+KfE+AdFYIrNIZCjbJYrAROA/oyieW7pB1PbJw3X0u/+gB0X88soEor6u5roTkde9Em6m0sfVo5uFt0FySaFRnOUPhQPQqrqe1JfsJgfI59WpG5x7ZPItQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203634; c=relaxed/simple;
-	bh=xgCUjILrzH2Wz1XOCZM5yfrM03HAWvSDKnOZwECAcqU=;
+	s=arc-20240116; t=1789203640; c=relaxed/simple;
+	bh=lCFhCKrFyDSwl+P0pvfhuXBhxWrXt2I/FZ1JzdBgT3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pm2/f0vM7LTHsvqGIUph7do4kCr9gz9g+Xx2DfFQE0GioYTORAf803PPhI7eS6R1Cu4NuwJvNuBBhDspbyXDU5l7gLtwVOZ6TuSGmbaCgfB6RRy3S2u+HtEWAdOAs9oDsRey+76rKNnMcpshFBuO7i9UdGoe/uwPwUKk0jvF+LA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqoILmdX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NZdXg0TExSe4l0Xc0NQ9X94OuqqRUP6BW4yxlSFncEkUf0LX9U1odczQuedZNT65O9NquPVKUFTxkEPRCFehszkzNA0C3oaH5SKvHtyYCTV4MM9LZLoosYqWurygezEX79qvshVhA/t8K0bk5t2D+un57BMqx8SnX1N2pqLYVSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YebL6pFx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqoILmdX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841D31F000FF;
-	Sat, 12 Sep 2026 09:00:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YebL6pFx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1461F000FF;
+	Sat, 12 Sep 2026 09:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203633;
-	bh=/s/RKs+xzEUNVm9FpwQWYYgxf4ozLxvHP7YFOZ1VVLc=;
+	s=korg; t=1789203639;
+	bh=/pAW8HzXQNEZFzVqVCS7MgLxDUdJlLTrIeGGSF4kHLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kqoILmdXQBu9r8o0ecgoQE8XHfmNPWurQUqLzQhLdwTNQHQsHTR4Ygf0XmZy7OmJF
-	 lLowZcegc271f93r4Yc0J0ZZZqWl0V2klsqPv7UdoS+Gn/MvVtq1mkSoCVysamKZQX
-	 ldpdD60sAI8KV0kRRT2sUYoqPPCdF0TAa5B4BKK0=
+	b=YebL6pFx6D3Nx/wYBd5U9XW6AcGqGe+b+ZBVd1qe9u8QACEuj4WiIfrKQt2Q/s7HQ
+	 wJsjayqvD8qGn3SplTE7PzNuIIy+A5O+rCl5NMM+xNaINdC6NM2UKXbwtwM+JLwJUU
+	 zf4pyDhmmzNTVhznhGqeqN+BUWYJl95Lbp227XyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhan Xusheng <zhanxusheng@xiaomi.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1447/1815] fs/ntfs3: fix integer overflow in MFT cluster validation
-Date: Sat, 12 Sep 2026 08:53:17 +0200
-Message-ID: <20260912065722.986505761@linuxfoundation.org>
+Subject: [PATCH 7.2 1448/1815] fs/ntfs3: reject out-of-range evcn in mi_enum_attr()
+Date: Sat, 12 Sep 2026 08:53:18 +0200
+Message-ID: <20260912065723.008912924@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,90 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-[ Upstream commit c510c63873103a5da6a498fe537bdb5d6f8d03a2 ]
+[ Upstream commit 20fd9f64c0050658f2031e6bd5d552c6f0c8f7e3 ]
 
-In ntfs_init_from_boot(), the boot sector's MFT cluster numbers are
-validated against the volume size with:
+In mi_enum_attr(), the start/end VCN validation for non-resident
+attributes is:
 
-	if (mlcn  * sct_per_clst >= sectors ||
-	    mlcn2 * sct_per_clst >= sectors)
-		goto out;
+	if (svcn > evcn + 1) goto out;
 
-mlcn and mlcn2 are u64 fields read directly from the boot sector.
-sct_per_clst is bounded above by 4096 (true_sectors_per_clst() plus
-the is_power_of_2() check below it), but the multiplication is done
-in u64 and wraps when mlcn (or mlcn2) is large enough -- e.g. mlcn
-near 2^62 with sct_per_clst == 4 wraps to 0, which compares below
-any non-zero 'sectors', so the check is bypassed and the malformed
-record is accepted.
+When evcn is U64_MAX the "evcn + 1" expression wraps to 0 and any svcn
+passes the check. For evcn values close to U64_MAX (but not equal to it)
+the right-hand side is still a meaningless near-wrap upper bound, so a
+malformed on-disk attribute with svcn == 0 and evcn near U64_MAX can pass
+mi_enum_attr() unrejected.
 
-The accepted mlcn is then used unchanged in
+VCN (virtual cluster number) is a cluster index, so any valid evcn is
+bounded by the volume's total cluster count, which ntfs3 holds in
+sbi->used.bitmap.nbits (set up in ntfs_init_from_boot() before any caller
+of mi_enum_attr() runs). Reject evcn values that fall outside this range.
 
-	sbi->mft.lbo = mlcn << cluster_bits;
+However, an empty non-resident attribute (no allocated clusters) is
+legitimately encoded with svcn == 0 and evcn == -1 (U64_MAX), e.g. via
+attr->nres.evcn = cpu_to_le64((u64)vcn - 1) with vcn == 0. That sentinel
+must keep passing, so exclude evcn == U64_MAX from the range check. The
+existing "svcn > evcn + 1" test still tolerates the sentinel ("0 > 0" is
+false) and continues to require svcn == 0 for it, while the range check
+rejects every other out-of-range evcn and thereby also defuses the
+"evcn + 1" wraparound.
 
-In practice the resulting reads fail at the block layer (sb_bread()
-returns NULL via grow_buffers()'s check_mul_overflow() guard), so
-today this manifests as mount failing in odd places rather than as
-something more dangerous, but the validation step is still wrong
-and there is no reason for callers to rely on the block layer to
-catch a value that should never have been accepted in the first
-place.
+svcn does not need its own bound: once evcn < nbits, "svcn > evcn + 1"
+implies svcn <= nbits.
 
-Use check_mul_overflow() to compute the two sector positions and
-fail the mount if either multiplication wraps; this preserves the
-existing semantics (mlcn * sct_per_clst >= sectors) instead of
-switching to division (mlcn >= sectors / sct_per_clst), which
-would tighten the check at edge cases where 'sectors' is not a
-multiple of sct_per_clst.  The check_*_overflow() style is the
-one ntfs3 already uses for similar on-disk arithmetic in
-fs/ntfs3/run.c.
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Fixes: 013ff63b6494 ("fs/ntfs3: Add more attributes checks in mi_enum_attr()")
 Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+[almaz.alexandrovich@paragon-software.com: fixed evcn check]
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/super.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/ntfs3/record.c | 34 +++++++++++++++++++++++++++++++---
+ 1 file changed, 31 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 3305fe406cb22..4205a212154b8 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -65,6 +65,7 @@
- #include <linux/minmax.h>
- #include <linux/module.h>
- #include <linux/nls.h>
-+#include <linux/overflow.h>
- #include <linux/proc_fs.h>
- #include <linux/seq_file.h>
- #include <linux/statfs.h>
-@@ -957,7 +958,7 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
- 	struct ntfs_sb_info *sbi = sb->s_fs_info;
- 	int err;
- 	u32 mb, gb, boot_sector_size, sct_per_clst, record_size;
--	u64 sectors, clusters, mlcn, mlcn2, dev_size0;
-+	u64 sectors, clusters, mlcn, mlcn2, mft_pos, mft2_pos, dev_size0;
- 	struct NTFS_BOOT *boot;
- 	struct buffer_head *bh;
- 	struct MFT_REC *rec;
-@@ -1026,7 +1027,15 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
- 	mlcn2 = le64_to_cpu(boot->mft2_clst);
- 	sectors = le64_to_cpu(boot->sectors_per_volume);
+diff --git a/fs/ntfs3/record.c b/fs/ntfs3/record.c
+index 32bdb034c2a30..4f12ce15b03b4 100644
+--- a/fs/ntfs3/record.c
++++ b/fs/ntfs3/record.c
+@@ -202,7 +202,7 @@ struct ATTRIB *mi_enum_attr(struct ntfs_inode *ni, struct mft_inode *mi,
+ 	u32 used = le32_to_cpu(rec->used);
+ 	u32 t32, off, asize, prev_type;
+ 	u16 t16;
+-	u64 data_size, alloc_size, tot_size;
++	u64 svcn, evcn, data_size, alloc_size, tot_size;
  
--	if (mlcn * sct_per_clst >= sectors || mlcn2 * sct_per_clst >= sectors) {
+ 	if (!attr) {
+ 		u32 total = le32_to_cpu(rec->total);
+@@ -310,10 +310,38 @@ struct ATTRIB *mi_enum_attr(struct ntfs_inode *ni, struct mft_inode *mi,
+ 	if (t32 && le16_to_cpu(attr->name_off) + t32 > t16)
+ 		goto out;
+ 
+-	/* Check start/end vcn. */
+-	if (le64_to_cpu(attr->nres.svcn) > le64_to_cpu(attr->nres.evcn) + 1)
 +	/*
-+	 * Convert mlcn/mlcn2 to sector positions before comparing with
-+	 * 'sectors'.  All three are u64 values that come from the boot
-+	 * sector, so use check_mul_overflow() to keep a wraparound from
-+	 * silently bypassing the comparison.
++	 * Check start/end vcn.  svcn == 0 with evcn == -1 (U64_MAX) is the
++	 * sentinel for an empty non-resident attribute (no allocated
++	 * clusters) and must be accepted: "svcn > evcn + 1" tolerates it,
++	 * since "(u64)-1 + 1" is 0 and "0 > 0" is false.
++	 *
++	 * For a non-empty attribute evcn is a cluster index and must lie
++	 * within the volume (sbi->used.bitmap.nbits, set up in
++	 * ntfs_init_from_boot() before any caller of mi_enum_attr() runs).
++	 * Bounding evcn also prevents a malformed value close to U64_MAX
++	 * from slipping through the near-wrap "evcn + 1" upper bound.
 +	 */
-+	if (check_mul_overflow(mlcn, (u64)sct_per_clst, &mft_pos) ||
-+	    check_mul_overflow(mlcn2, (u64)sct_per_clst, &mft2_pos) ||
-+	    mft_pos >= sectors || mft2_pos >= sectors) {
- 		ntfs_err(
- 			sb,
- 			"%s: start of MFT 0x%llx (0x%llx) is out of volume 0x%llx.",
++	svcn = le64_to_cpu(attr->nres.svcn);
++	evcn = le64_to_cpu(attr->nres.evcn);
++	if (svcn > evcn + 1)
+ 		goto out;
+ 
++	if (is_attr_ext(attr)) {
++		/* sparsed/compressed attribute. */
++#ifdef CONFIG_NTFS3_64BIT_CLUSTER
++		/* No limits. */
++#else
++		/* Check evcn fits into 32 bits. */
++		if (evcn != U64_MAX && evcn >= (1ull << 32))
++			goto out;
++#endif
++	} else {
++		/* Check out of volume for normal attribute. */
++		if (evcn != U64_MAX && evcn >= mi->sbi->used.bitmap.nbits)
++			goto out;
++	}
++
+ 	data_size = le64_to_cpu(attr->nres.data_size);
+ 	if (le64_to_cpu(attr->nres.valid_size) > data_size)
+ 		goto out;
 -- 
 2.53.0
 
