@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A883A41B8CC;
-	Sat, 12 Sep 2026 10:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9BF34752E;
+	Sat, 12 Sep 2026 10:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210627; cv=none; b=aAfyrNRCae2YFJGWT8Sc8I50ngJqRK3mAH9dlwjRgvGM21oeIhHBjusFgPZMv6to4neslIz2Uec+Jn+kyQvRsvsog4tQmcGP9ZixalN2EIjCunYAgywFEnGNt34Hx2DHUcmyHHAs9PD0jViQGreuIBw1g54q2dU5QZq8GyoDT3Q=
+	t=1789210632; cv=none; b=P+c34wk30lFBTtucExu4bVeN2tpcNI/QufMtQtKbpoCZAgh2Mdt2CRX2Mf39BnfUqYaAGmBahrcuGRoHz55LnAH3cXKRsNBHCAFRWf3JtVH22wvP8CIMq0utNyemF7zoZcG1Z25XEMWyizPc037pjHHaTcd1oTHDaI07TiiJvbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210627; c=relaxed/simple;
-	bh=mx1BTFgTx4Cm8+oR7lgRO6QwAPXoVohziOXscIhKNeQ=;
+	s=arc-20240116; t=1789210632; c=relaxed/simple;
+	bh=vn9JX7MeCyP+5f/n1tGrInjs8gHWlctA3a3V0ejZqRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XqaLL3x/TC15lDn1Heu+9tLDUFDraFQqIO+dkyy+HT6YU3iD1UjBJUKHu2uW2DQC8Zgca+0P0ZXAxUK4RGxjc5l8uzSJ5eKpM1gaFGdj50jQ02iPiOrVq0k0nWK9bh5SX/FlGFEeE798lUrsDuZBGJho1y1n2nOuwIB3ojG3FuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogCM7Xzd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lCQOODW4AJZ7z555MuLR59AcUin85getw2tbDv14uWhHKWuK2LrieoKgdz62acPRRgNXQwloJ1Y6/fT04LldkPjg91wGMXZW8pcXAE947Pa4+RrP0NNWP2KacDEuhOKnRfq/B+Wm8yAHxPb16F3y5rLtdTVI2H+K3VvQ9SN/VS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PObAaRBR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogCM7Xzd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85681F000FF;
-	Sat, 12 Sep 2026 10:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PObAaRBR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471621F000FF;
+	Sat, 12 Sep 2026 10:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210626;
-	bh=oXh+TYR5ByYrFkuHlCDRBWRYCcQ9mnEI1lLqqr0HLfA=;
+	s=korg; t=1789210631;
+	bh=PcDGTrghV1DDAR42M1o3dsWeoqLUarzfhtAUGyxDByo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ogCM7XzdY0LWH5vWaxOXDKoCw6oYnB264W+T7dnsnDPfh9Dg6TUnb/fVui8one4Yq
-	 LsStXH/7joiTLFxPvm6B1g51+rUS8xnths422/QgIsAyJ8fPLPJzm+uR4stcrIfMMn
-	 RCyaP158frJWXAENtEHoUIgSqOm/jtzeuVztnIdQ=
+	b=PObAaRBRvDA3l+6bSPebRG8jI00ihDl9UNaKTBRkLjIBP9Jz2NQCou14NvQronyDu
+	 8XEtRdN0VlaGrJZeGWiZ5qNu09+CwW2JGY6CXIHjZOa3Zj+fdWz9J3CizUNuddsm2V
+	 1ELizjbuweOYKYppYN7/AQeC+9tPwI1Ti6AWLN08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1066/1518] iommu/vt-d: Flush context cache with correct SID when tearing down aliases
-Date: Sat, 12 Sep 2026 08:53:55 +0200
-Message-ID: <20260912065647.563645567@linuxfoundation.org>
+Subject: [PATCH 6.18 1067/1518] crypto: qat - use 2-arg strscpy where destination size is known
+Date: Sat, 12 Sep 2026 08:53:56 +0200
+Message-ID: <20260912065647.585800962@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -47,110 +46,146 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit c54e4ae971b98e8d650400137d332cee56c03f55 ]
+[ Upstream commit 4525ac14115d07c3e4c57a8cd5c154916e9d1172 ]
 
-domain_context_clear_one() and device_pasid_table_teardown() are both
-invoked once per DMA alias of a device. Each function locates the context
-entry using the bus/devfn pair provided by the pci_for_each_dma_alias()
-callback, then calls intel_context_flush_no_pasid(), which constructs a
-device-selective context-cache invalidation from info->bus and
-info->devfn (that is, always the requester ID of the device itself).
+To simplify the code, drop explicit and hard-coded size arguments from
+strscpy() where the destination buffer has a fixed size and strscpy()
+can automatically determine it using sizeof().
 
-As a result, for every alias other than the device’s own RID, the context
-entry that was just cleared in memory is never invalidated in the context
-cache. Hardware may continue using that stale cached entry. In the
-scalable-mode teardown path, intel_pasid_free_table() can then free the
-PASID directory still referenced by that stale entry, allowing the IOMMU
-to walk freed memory.
-
-Fix this by passing the source ID of the entry being torn down to
-intel_context_flush_no_pasid(), instead of deriving it from @info.
-
-Fixes: f90584f4beb84 ("iommu/vt-d: Add helper to flush caches for context change")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260602233426.357499-1-baolu.lu%40linux.intel.com
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Acked-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 61135c1597af ("crypto: qat - remove dead ADF_HEX code")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 2 +-
- drivers/iommu/intel/iommu.h | 2 +-
- drivers/iommu/intel/pasid.c | 9 ++++++---
- 3 files changed, 8 insertions(+), 5 deletions(-)
+ drivers/crypto/intel/qat/qat_common/adf_cfg.c             | 7 ++++---
+ drivers/crypto/intel/qat/qat_common/adf_cfg_services.c    | 2 +-
+ drivers/crypto/intel/qat/qat_common/adf_mstate_mgr.c      | 3 ++-
+ drivers/crypto/intel/qat/qat_common/adf_transport_debug.c | 3 ++-
+ drivers/crypto/intel/qat/qat_common/qat_compression.c     | 3 ++-
+ 5 files changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 183310979ba0d..11ed18b1e7dfd 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -1732,7 +1732,7 @@ static void domain_context_clear_one(struct device_domain_info *info, u8 bus, u8
- 	context_clear_present(context);
- 	__iommu_flush_cache(iommu, context, sizeof(*context));
- 	spin_unlock(&iommu->lock);
--	intel_context_flush_no_pasid(info, context, did);
-+	intel_context_flush_no_pasid(info, context, did, PCI_DEVID(bus, devfn));
- 	context_clear_entry(context);
- 	__iommu_flush_cache(iommu, context, sizeof(*context));
- }
-diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
-index 8e2df00e881c5..e696e019e9697 100644
---- a/drivers/iommu/intel/iommu.h
-+++ b/drivers/iommu/intel/iommu.h
-@@ -1320,7 +1320,7 @@ void cache_tag_flush_range_np(struct dmar_domain *domain, unsigned long start,
- 			      unsigned long end);
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_cfg.c b/drivers/crypto/intel/qat/qat_common/adf_cfg.c
+index 97273da40b438..3b42e29047bcc 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_cfg.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_cfg.c
+@@ -2,6 +2,7 @@
+ /* Copyright(c) 2014 - 2020 Intel Corporation */
+ #include <linux/mutex.h>
+ #include <linux/slab.h>
++#include <linux/string.h>
+ #include <linux/list.h>
+ #include <linux/seq_file.h>
+ #include "adf_accel_devices.h"
+@@ -284,13 +285,13 @@ int adf_cfg_add_key_value_param(struct adf_accel_dev *accel_dev,
+ 		return -ENOMEM;
  
- void intel_context_flush_no_pasid(struct device_domain_info *info,
--				  struct context_entry *context, u16 did);
-+				  struct context_entry *context, u16 did, u16 sid);
+ 	INIT_LIST_HEAD(&key_val->list);
+-	strscpy(key_val->key, key, sizeof(key_val->key));
++	strscpy(key_val->key, key);
  
- int intel_iommu_enable_prq(struct intel_iommu *iommu);
- int intel_iommu_finish_prq(struct intel_iommu *iommu);
-diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
-index 85c3116e351c6..48e21743f2077 100644
---- a/drivers/iommu/intel/pasid.c
-+++ b/drivers/iommu/intel/pasid.c
-@@ -749,7 +749,7 @@ static void device_pasid_table_teardown(struct device *dev, u8 bus, u8 devfn)
- 	context_clear_present(context);
- 	__iommu_flush_cache(iommu, context, sizeof(*context));
- 	spin_unlock(&iommu->lock);
--	intel_context_flush_no_pasid(info, context, did);
-+	intel_context_flush_no_pasid(info, context, did, PCI_DEVID(bus, devfn));
- 	context_clear_entry(context);
- 	__iommu_flush_cache(iommu, context, sizeof(*context));
- }
-@@ -953,9 +953,12 @@ static void __context_flush_dev_iotlb(struct device_domain_info *info)
-  * This helper can only be used when IOMMU is working in the legacy mode or
-  * IOMMU is in scalable mode but all PASID table entries of the device are
-  * non-present.
-+ *
-+ * @sid identifies the context entry that was modified, which may be a DMA
-+ * alias of @info->dev rather than its own requester ID.
-  */
- void intel_context_flush_no_pasid(struct device_domain_info *info,
--				  struct context_entry *context, u16 did)
-+				  struct context_entry *context, u16 did, u16 sid)
- {
- 	struct intel_iommu *iommu = info->iommu;
+ 	if (type == ADF_DEC) {
+ 		snprintf(key_val->val, ADF_CFG_MAX_VAL_LEN_IN_BYTES,
+ 			 "%ld", (*((long *)val)));
+ 	} else if (type == ADF_STR) {
+-		strscpy(key_val->val, (char *)val, sizeof(key_val->val));
++		strscpy(key_val->val, (char *)val);
+ 	} else if (type == ADF_HEX) {
+ 		snprintf(key_val->val, ADF_CFG_MAX_VAL_LEN_IN_BYTES,
+ 			 "0x%lx", (unsigned long)val);
+@@ -350,7 +351,7 @@ int adf_cfg_section_add(struct adf_accel_dev *accel_dev, const char *name)
+ 	if (!sec)
+ 		return -ENOMEM;
  
-@@ -965,7 +968,7 @@ void intel_context_flush_no_pasid(struct device_domain_info *info,
- 	 * when operating in scalable mode. Therefore the @did value doesn't
- 	 * matter in scalable mode.
- 	 */
--	iommu->flush.flush_context(iommu, did, PCI_DEVID(info->bus, info->devfn),
-+	iommu->flush.flush_context(iommu, did, sid,
- 				   DMA_CCMD_MASK_NOBIT, DMA_CCMD_DEVICE_INVL);
+-	strscpy(sec->name, name, sizeof(sec->name));
++	strscpy(sec->name, name);
+ 	INIT_LIST_HEAD(&sec->param_head);
+ 	down_write(&cfg->lock);
+ 	list_add_tail(&sec->list, &cfg->sec_list);
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_cfg_services.c b/drivers/crypto/intel/qat/qat_common/adf_cfg_services.c
+index 7d00bcb41ce70..11cba347d12d1 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_cfg_services.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_cfg_services.c
+@@ -60,7 +60,7 @@ static int adf_service_string_to_mask(struct adf_accel_dev *accel_dev, const cha
+ 	if (len > ADF_CFG_MAX_VAL_LEN_IN_BYTES - 1)
+ 		return -EINVAL;
  
- 	/*
+-	strscpy(services, buf, ADF_CFG_MAX_VAL_LEN_IN_BYTES);
++	strscpy(services, buf);
+ 	substr = services;
+ 
+ 	while ((token = strsep(&substr, ADF_SERVICES_DELIMITER))) {
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_mstate_mgr.c b/drivers/crypto/intel/qat/qat_common/adf_mstate_mgr.c
+index 41cc763a74aa2..df4600ab72d6b 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_mstate_mgr.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_mstate_mgr.c
+@@ -2,6 +2,7 @@
+ /* Copyright(c) 2024 Intel Corporation */
+ 
+ #include <linux/slab.h>
++#include <linux/string.h>
+ #include <linux/types.h>
+ #include "adf_mstate_mgr.h"
+ 
+@@ -158,7 +159,7 @@ static struct adf_mstate_sect_h *adf_mstate_sect_add_header(struct adf_mstate_mg
+ 		return NULL;
+ 	}
+ 
+-	strscpy(sect->id, id, sizeof(sect->id));
++	strscpy(sect->id, id);
+ 	sect->size = 0;
+ 	sect->sub_sects = 0;
+ 	mgr->state += sizeof(*sect);
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_transport_debug.c b/drivers/crypto/intel/qat/qat_common/adf_transport_debug.c
+index 6c22bc9b28e47..ad45ca7e8eb86 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_transport_debug.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_transport_debug.c
+@@ -2,6 +2,7 @@
+ /* Copyright(c) 2014 - 2020 Intel Corporation */
+ #include <linux/mutex.h>
+ #include <linux/slab.h>
++#include <linux/string.h>
+ #include <linux/seq_file.h>
+ #include "adf_accel_devices.h"
+ #include "adf_transport_internal.h"
+@@ -103,7 +104,7 @@ int adf_ring_debugfs_add(struct adf_etr_ring_data *ring, const char *name)
+ 	if (!ring_debug)
+ 		return -ENOMEM;
+ 
+-	strscpy(ring_debug->ring_name, name, sizeof(ring_debug->ring_name));
++	strscpy(ring_debug->ring_name, name);
+ 	snprintf(entry_name, sizeof(entry_name), "ring_%02d",
+ 		 ring->ring_number);
+ 
+diff --git a/drivers/crypto/intel/qat/qat_common/qat_compression.c b/drivers/crypto/intel/qat/qat_common/qat_compression.c
+index 53a4db5507ec2..69db4178a419c 100644
+--- a/drivers/crypto/intel/qat/qat_common/qat_compression.c
++++ b/drivers/crypto/intel/qat/qat_common/qat_compression.c
+@@ -2,6 +2,7 @@
+ /* Copyright(c) 2022 Intel Corporation */
+ #include <linux/module.h>
+ #include <linux/slab.h>
++#include <linux/string.h>
+ #include "adf_accel_devices.h"
+ #include "adf_common_drv.h"
+ #include "adf_transport.h"
+@@ -123,7 +124,7 @@ static int qat_compression_create_instances(struct adf_accel_dev *accel_dev)
+ 	int i;
+ 
+ 	INIT_LIST_HEAD(&accel_dev->compression_list);
+-	strscpy(key, ADF_NUM_DC, sizeof(key));
++	strscpy(key, ADF_NUM_DC);
+ 	ret = adf_cfg_get_param_value(accel_dev, SEC, key, val);
+ 	if (ret)
+ 		return ret;
 -- 
 2.53.0
 
