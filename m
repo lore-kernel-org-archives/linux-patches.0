@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E362D27FB37;
-	Sat, 12 Sep 2026 16:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD40829992B;
+	Sat, 12 Sep 2026 16:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230141; cv=none; b=frg6x9MYcguiWOQ6qktdmU/xDLSOv7PWnLrxFpOwTkbREnySYF0RgwTsU4jy19og7dIL1Q+pzhKbm77eC9YVKNZIpqACKUq+eI0vkciyITmtomM+mz3IHSw58rL9qff8alMHwK6Qlgr0Jquk1xE4EU0Sg7h9nZawVhXbFrrNdNQ=
+	t=1789230146; cv=none; b=J3XlmfTcKmCrIvfXfkW5u/+arig8mSwDWJsOBGctXQL+hf62B65IHjO1qAjWCZju1wMGK7QgeLNge43fHt6S2MzQzSfdOQ5LQcuQdudmtaXOyOz939eobijdMJydUy/H4Q1i0lIaUQV7bOC3axkyIuv0k2TBV3fHzNeU2a0LPVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230141; c=relaxed/simple;
-	bh=BxBZc0MZqKzXjFZuDvMYQ+RV37+fZSwkRPbZ/v7Y9uE=;
+	s=arc-20240116; t=1789230146; c=relaxed/simple;
+	bh=6nW+GPSWmGc8/YF1OvBr96xGvhXrI+Mj0CPmkts8gvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m1LrvpCYktHwoycTDwpWTCnaQLG5+CIfn+u3mTrJBq5H1SrwfDkJ1NA7XUiLqHXQ4CKCgWLgOEikM8JFrwnmxXiWM7+pZlPcnk3UCrCI4dHU0Oeu8hLpfOCO+PimqfbWqR5r+LlmACr0wY8e2X9aTsEBudThHfVr9Zg6C9hGq0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBiNWXjv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fxB5kAC9fLeuoGYLs2HJvlrwYo6dkIQ7AidpjzSGKh0fJsGIu04rJ7S7uRtOWFlAgoMviGr2JvOuOaMB1J+SFGqmxDwkHROai67D5HxlGGLAB0pp/FK+qSqdwdF7xPi/BI2LniOkhz5jtqk0qYotamfu/wjlyY/DXh7+bKNWu1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cPaTZ5gg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBiNWXjv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803DE1F000FF;
-	Sat, 12 Sep 2026 16:22:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cPaTZ5gg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E911F000FF;
+	Sat, 12 Sep 2026 16:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230139;
-	bh=Du1JyUhqsxXoG/FMZg846rCd3oXCrT9DXM2BQFa79Gg=;
+	s=korg; t=1789230144;
+	bh=/MkCZhajoXfvK3iMInWL5W+VYPHssGxwx4AiuhBPK80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RBiNWXjv16RaUM4E67bWV4dPRXBQofncI4ZcKCTPRvyNW9AmORU/emhmq086E8ytu
-	 qNJknlHUpR8vSfDeh9CeOb18cGIbtebBDtkJcJEIil+jpGlmFmbfD0C9iLqy6GWKp9
-	 tsTYFe1Lpa/Nj0H9FwYOtwjGkUNAN4gGJhxv42q4=
+	b=cPaTZ5ggQzv1SLB3oUwv+UAvR/2r+d4A4/IZLSEhsDj4ReR6DvdTrJHRNCXbYh0b9
+	 YrLXDnlNdh4vZ+8iGlH7Uo4jnA67ohcYe1UrcSpPswBaNoMNPuXGZeJOVF29ZZpBwV
+	 u0LNaQF7ZQS0B5TMevjSBW+ORbse3XkbbpYpFHd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Pradnya Dahiwale <pradnya.dahiwale@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0731/1191] remoteproc: core: Attach rproc asynchronously in rproc_add() path via schedule_work()
-Date: Sat, 12 Sep 2026 08:57:39 +0200
-Message-ID: <20260912065604.700275002@linuxfoundation.org>
+Subject: [PATCH 6.1 0732/1191] remoteproc: Prevent crash handling to race with rproc_del()
+Date: Sat, 12 Sep 2026 08:57:40 +0200
+Message-ID: <20260912065604.722402936@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,96 +52,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit 026a3fada43261e403c6c4d9bda9501547e3f108 ]
+[ Upstream commit 74ee3b2f5767447c57959994341e5b95f1079977 ]
 
-Unlike the remoteproc firmware load path where rproc_add() call
-rproc_auto_boot_callback() asynchronously and ignores the return value of
-rproc_boot(), the attach path calls rproc_boot() synchronously and
-propagates its return value back to rproc_add(). This means a failure
-during rproc_attach() causes rproc_add() to fail and triggers resource
-release, removing the remoteproc from sysfs and making it unavailable for
-recovery or further boot attempts.
+There's no synchronization between rproc_crash_handler_work() and
+rproc_del(), as such it's possible for a driver to be removed while
+crash-handler work is scheduled, or even executing - resulting in
+use-after-free issues.
 
-Align the remoteproc attach path with the firmware load path by
-introducing attach_work and scheduling rproc_boot() asynchronously via
-schedule_work(). This keeps the remoteproc registered and available in
-sysfs even if the initial attach attempt fails, and avoids blocking
-rproc_add() on the attach result.
+To avoid this the scheduled work need to be cancelled and synchronized
+against before the removal proceeds.
 
-Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260623-rproc-attach-issue-v3-1-8e24310707ce@oss.qualcomm.com
+In order to ensure that this doesn't race with the reporting, and
+thereby scheduling new work, a "deleting" flag is introduced. This is
+similar to the RPROC_DELETE state that was introduced to ensure that
+"start" didn't race with rproc_del(), but the existing mechanism can not
+be used as it's valid to call rproc_report_crash() in atomic context -
+and the "state" is protected by a mutex.
+
+In the event that work is cancelled the pm_stay_awake() is left
+unbalanced and need to be unrolled.
+
+The blocking and cancelling of crash-handler work prior to the actual
+rproc_shutdown() call does have the explicit side-effect that crashes
+resulting from the shutdown process will not enter the crash-handling
+path, and as such will not generate devcoredumps etc. Due to the
+existing mutual exclusion between these code paths there's no concrete
+reduction in functionality, but further work would be needed to handle
+this case.
+
+Assisted-by: OpenCode:GPT-5.5
+Fixes: 8afd519c3470 ("remoteproc: add rproc_report_crash function to notify rproc crashes")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Reviewed-by: Pradnya Dahiwale <pradnya.dahiwale@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260723-rproc-rmmod-not-crashing-v1-2-546dfd5de0e6@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 74ee3b2f5767 ("remoteproc: Prevent crash handling to race with rproc_del()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_core.c | 20 ++++++++++++--------
- include/linux/remoteproc.h           |  2 ++
- 2 files changed, 14 insertions(+), 8 deletions(-)
+ drivers/remoteproc/remoteproc_core.c  | 42 +++++++++++++++++++++------
+ drivers/remoteproc/remoteproc_sysfs.c |  1 -
+ include/linux/remoteproc.h            | 13 +++++----
+ 3 files changed, 41 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index b5c481274011d..ac0945250ad78 100644
+index ac0945250ad78..f1a7cc2744f5f 100644
 --- a/drivers/remoteproc/remoteproc_core.c
 +++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1676,18 +1676,21 @@ static void rproc_auto_boot_callback(const struct firmware *fw, void *context)
- 	release_firmware(fw);
- }
+@@ -1839,6 +1839,11 @@ int rproc_trigger_recovery(struct rproc *rproc)
+ 	if (ret)
+ 		return ret;
  
-+static void rproc_attach_work(struct work_struct *work)
-+{
-+	struct rproc *rproc = container_of(work, struct rproc, attach_work);
-+
-+	rproc_boot(rproc);
-+}
-+
- static int rproc_trigger_auto_boot(struct rproc *rproc)
- {
- 	int ret;
- 
--	/*
--	 * Since the remote processor is in a detached state, it has already
--	 * been booted by another entity.  As such there is no point in waiting
--	 * for a firmware image to be loaded, we can simply initiate the process
--	 * of attaching to it immediately.
--	 */
--	if (rproc->state == RPROC_DETACHED)
--		return rproc_boot(rproc);
-+	if (rproc->state == RPROC_DETACHED) {
-+		schedule_work(&rproc->attach_work);
-+		return 0;
++	if (READ_ONCE(rproc->deleting)) {
++		ret = -ENODEV;
++		goto unlock_mutex;
 +	}
++
+ 	/* State could have changed before we got the mutex */
+ 	if (rproc->state != RPROC_CRASHED)
+ 		goto unlock_mutex;
+@@ -1871,6 +1876,11 @@ static void rproc_crash_handler_work(struct work_struct *work)
  
- 	/*
- 	 * We're initiating an asynchronous firmware loading, so we can
-@@ -2499,6 +2502,7 @@ struct rproc *rproc_alloc(struct device *dev, const char *name,
+ 	mutex_lock(&rproc->lock);
+ 
++	if (READ_ONCE(rproc->deleting)) {
++		mutex_unlock(&rproc->lock);
++		goto out;
++	}
++
+ 	if (rproc->state == RPROC_CRASHED) {
+ 		/* handle only the first crash detected */
+ 		mutex_unlock(&rproc->lock);
+@@ -1926,9 +1936,9 @@ int rproc_boot(struct rproc *rproc)
+ 		return ret;
+ 	}
+ 
+-	if (rproc->state == RPROC_DELETED) {
++	if (READ_ONCE(rproc->deleting)) {
+ 		ret = -ENODEV;
+-		dev_err(dev, "can't boot deleted rproc %s\n", rproc->name);
++		dev_err(dev, "can't boot deleting rproc %s\n", rproc->name);
+ 		goto unlock_mutex;
+ 	}
+ 
+@@ -2501,8 +2511,9 @@ struct rproc *rproc_alloc(struct device *dev, const char *name,
+ 	INIT_LIST_HEAD(&rproc->subdevs);
  	INIT_LIST_HEAD(&rproc->dump_segments);
  
- 	INIT_WORK(&rproc->crash_handler, rproc_crash_handler_work);
-+	INIT_WORK(&rproc->attach_work, rproc_attach_work);
+-	INIT_WORK(&rproc->crash_handler, rproc_crash_handler_work);
+ 	INIT_WORK(&rproc->attach_work, rproc_attach_work);
++	INIT_WORK(&rproc->crash_handler, rproc_crash_handler_work);
++	spin_lock_init(&rproc->crash_handler_lock);
  
  	rproc->state = RPROC_OFFLINE;
  
+@@ -2562,16 +2573,21 @@ EXPORT_SYMBOL(rproc_put);
+  */
+ int rproc_del(struct rproc *rproc)
+ {
++	unsigned long flags;
++
+ 	if (!rproc)
+ 		return -EINVAL;
+ 
++	spin_lock_irqsave(&rproc->crash_handler_lock, flags);
++	WRITE_ONCE(rproc->deleting, true);
++	spin_unlock_irqrestore(&rproc->crash_handler_lock, flags);
++
++	if (cancel_work_sync(&rproc->crash_handler))
++		pm_relax(rproc->dev.parent);
++
+ 	/* TODO: make sure this works with rproc->power > 1 */
+ 	rproc_shutdown(rproc);
+ 
+-	mutex_lock(&rproc->lock);
+-	rproc->state = RPROC_DELETED;
+-	mutex_unlock(&rproc->lock);
+-
+ 	rproc_delete_debug_dir(rproc);
+ 
+ 	/* the rproc is downref'ed as soon as it's removed from the klist */
+@@ -2683,18 +2699,26 @@ EXPORT_SYMBOL(rproc_get_by_child);
+  */
+ void rproc_report_crash(struct rproc *rproc, enum rproc_crash_type type)
+ {
++	unsigned long flags;
++
+ 	if (!rproc) {
+ 		pr_err("NULL rproc pointer\n");
+ 		return;
+ 	}
+ 
++	spin_lock_irqsave(&rproc->crash_handler_lock, flags);
++	if (READ_ONCE(rproc->deleting)) {
++		spin_unlock_irqrestore(&rproc->crash_handler_lock, flags);
++		return;
++	}
++
+ 	/* Prevent suspend while the remoteproc is being recovered */
+ 	pm_stay_awake(rproc->dev.parent);
++	queue_work(rproc_recovery_wq, &rproc->crash_handler);
++	spin_unlock_irqrestore(&rproc->crash_handler_lock, flags);
+ 
+ 	dev_err(&rproc->dev, "crash detected in %s: type %s\n",
+ 		rproc->name, rproc_crash_to_string(type));
+-
+-	queue_work(rproc_recovery_wq, &rproc->crash_handler);
+ }
+ EXPORT_SYMBOL(rproc_report_crash);
+ 
+diff --git a/drivers/remoteproc/remoteproc_sysfs.c b/drivers/remoteproc/remoteproc_sysfs.c
+index 8c7ea89226388..23de0490ba161 100644
+--- a/drivers/remoteproc/remoteproc_sysfs.c
++++ b/drivers/remoteproc/remoteproc_sysfs.c
+@@ -168,7 +168,6 @@ static const char * const rproc_state_string[] = {
+ 	[RPROC_SUSPENDED]	= "suspended",
+ 	[RPROC_RUNNING]		= "running",
+ 	[RPROC_CRASHED]		= "crashed",
+-	[RPROC_DELETED]		= "deleted",
+ 	[RPROC_ATTACHED]	= "attached",
+ 	[RPROC_DETACHED]	= "detached",
+ 	[RPROC_LAST]		= "invalid",
 diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
-index fe8978eb69f1c..573e7b3b5eb5d 100644
+index 573e7b3b5eb5d..c6d2b1136712a 100644
 --- a/include/linux/remoteproc.h
 +++ b/include/linux/remoteproc.h
-@@ -526,6 +526,7 @@ enum rproc_features {
-  * @subdevs: list of subdevices, to following the running state
-  * @notifyids: idr for dynamically assigning rproc-wide unique notify ids
+@@ -37,6 +37,7 @@
+ 
+ #include <linux/types.h>
+ #include <linux/mutex.h>
++#include <linux/spinlock.h>
+ #include <linux/virtio.h>
+ #include <linux/cdev.h>
+ #include <linux/completion.h>
+@@ -412,7 +413,6 @@ struct rproc_ops {
+  *			a message.
+  * @RPROC_RUNNING:	device is up and running
+  * @RPROC_CRASHED:	device has crashed; need to start recovery
+- * @RPROC_DELETED:	device is deleted
+  * @RPROC_ATTACHED:	device has been booted by another entity and the core
+  *			has attached to it
+  * @RPROC_DETACHED:	device has been booted by another entity and waiting
+@@ -430,10 +430,9 @@ enum rproc_state {
+ 	RPROC_SUSPENDED	= 1,
+ 	RPROC_RUNNING	= 2,
+ 	RPROC_CRASHED	= 3,
+-	RPROC_DELETED	= 4,
+-	RPROC_ATTACHED	= 5,
+-	RPROC_DETACHED	= 6,
+-	RPROC_LAST	= 7,
++	RPROC_ATTACHED	= 4,
++	RPROC_DETACHED	= 5,
++	RPROC_LAST	= 6,
+ };
+ 
+ /**
+@@ -528,6 +527,8 @@ enum rproc_features {
   * @index: index of this rproc device
-+ * @attach_work: workqueue for attaching rproc
+  * @attach_work: workqueue for attaching rproc
   * @crash_handler: workqueue for handling a crash
++ * @crash_handler_lock: serializes crash handler queueing and deletion
++ * @deleting: remoteproc deletion has begun
   * @crash_cnt: crash counter
   * @recovery_disabled: flag that state if recovery was disabled
-@@ -568,6 +569,7 @@ struct rproc {
- 	struct list_head subdevs;
- 	struct idr notifyids;
+  * @max_notifyid: largest allocated notify id.
+@@ -571,6 +572,8 @@ struct rproc {
  	int index;
-+	struct work_struct attach_work;
+ 	struct work_struct attach_work;
  	struct work_struct crash_handler;
++	spinlock_t crash_handler_lock;
++	bool deleting;
  	unsigned int crash_cnt;
  	bool recovery_disabled;
+ 	int max_notifyid;
 -- 
 2.53.0
 
