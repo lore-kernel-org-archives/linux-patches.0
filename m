@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6553AFD15;
-	Sat, 12 Sep 2026 09:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3232344DB5;
+	Sat, 12 Sep 2026 09:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203920; cv=none; b=WtKROqwTJSPl429ATgs7LfqsIiO/xwfSMdVL0fFi9xDMHAYPlq9MYSictzY1aXMiE1D3kkQD4Wbcg3ubb9FNSkJLnS3KTrYVrX1sBYhEH4TA0KdHu6iKuPJDYhzglUnEukqpY7ehOyjJazZUXGPibzHTEQGRUUWsxndbUelrv7g=
+	t=1789203926; cv=none; b=o40avLTI1FV7ltGpFwK+kX3JC9EX6vNttbmBzX7Rd+cLxL1tx7w+UiG5IA8YrGqam4WjuN/L8zY4qe1c3e+l3zSQE20/dsRrTzb4QxjRDnB2T326bHngbLqJBHEH7/YMEcknP6rZQiQi25Xs3mA7FqRTZTQ8T80MLrvl8xER000=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203920; c=relaxed/simple;
-	bh=hwcero5NPuU/tBEyvpNjPVZ/mXuc71G6IhnODaN1r+M=;
+	s=arc-20240116; t=1789203926; c=relaxed/simple;
+	bh=Fj0xIV2Huv7nsaB5awUc3GP91fLRk9R4iCo52oPwMio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DoH780RQq8UmKPLbYtTx27QcFc6gArSgUwYRDHpaDLuPIWE5fc5/cXQcVw2t6qJQ46S17/Fdmb+eXaDer4f3nCOMgVIyese4lyFvmjGaYsjC/+kynD9vKJotutfWex9Aawsj1lwAMI7I7CG6R0F3FFq/4HbfeNM42KecaOOCbYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=juPoGWjx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NC7HZTdVb9tQND+HFWDDauGLfc7J80sq1H4zWnhZFuELbVSYGV++vjBi5c4x3L2ay8qK5yiOKnP1B/58NVhlzLHS3WH2jFC4dxzp9mwACOwqWAYYJAIutDZgYpSW3Lq5tLrUaEUSpDLKGJTaGHe1iToAU7rlqtlYxEHLbd3hqXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vPBRobzb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="juPoGWjx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B911F000FF;
-	Sat, 12 Sep 2026 09:05:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vPBRobzb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A941F000FF;
+	Sat, 12 Sep 2026 09:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203919;
-	bh=JlJ7SSVUCLtmPhUJjZaQfb8QrL/TAevFdZIDi0MB8MA=;
+	s=korg; t=1789203924;
+	bh=aODIcIINqD3vEIQXiQi/AdihhcpMZamHsg/aVVFnEZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=juPoGWjxUhSuqXMnXLXutvkuNLVZzoSh5dsRLShiXs25MhjUeCyLla3yF9Y9QcgTW
-	 RkJkSkl0cEJ94EBNx3rYkx/3DA89HpD5MlO5einV/l5F/6CY/mk/+wqITn0H6WmkH3
-	 uScfr8/bogqkpXbL2BMdwUNVx/Kc72NmXmpdAUBk=
+	b=vPBRobzbWjKBa2gdzWcgrrTUSrQkIlT469BEG3NVnCFzlFhzHYOCmsmRRzG9083HG
+	 I8Cp3e3Or/w7CUDjzVP4zDEp3SO1nkL1O+4fqzW8jsEKJ4FiaDA7vkPrP/4lmO3yA0
+	 0WzFc4JbJxHfeeI3ok3BgOrdPwaRYVbUzqWUQhO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yunseong Kim <yunseong.kim@est.tech>,
-	Stefan Metzmacher <metze@samba.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1504/1815] smb: smbdirect: release pending child sockets outside the handler lock
-Date: Sat, 12 Sep 2026 08:54:14 +0200
-Message-ID: <20260912065724.305136977@linuxfoundation.org>
+Subject: [PATCH 7.2 1505/1815] ksmbd: validate ipc response length before dereferencing its fields
+Date: Sat, 12 Sep 2026 08:54:15 +0200
+Message-ID: <20260912065724.328599373@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
@@ -55,179 +53,179 @@ Content-Transfer-Encoding: 8bit
 
 From: Yunseong Kim <yunseong.kim@est.tech>
 
-[ Upstream commit db82fbe4bb68e68e4aef00ef5b79f92991d8ef8e ]
+[ Upstream commit e9b33376bd07bca4175f7bcc2d6034ef250f8181 ]
 
-smbdirect_socket_destroy() releases the listener's pending/ready child
-sockets while still holding the listener's handler lock, the
-&id_priv->handler_mutex taken via rdma_lock_handler(), not
-sc->listen.lock, and before the listener's own rdma_destroy_id().
-That ordering has one real consequence and one cosmetic one.
+ipc_validate_msg() computes the expected message size by reading length
+fields out of the response buffer supplied by the userspace ksmbd daemon
+(payload_sz, session_key_len, ngroups, ...).  Those fields are read before
+the buffer is verified to be large enough to contain the struct they belong
+to, so a short response makes the read land past the end of the allocation.
 
-The real one: smbdirect_socket_release() drops the child's last
-reference, which destroys the child's cm_id.  Doing that before the
-listener's rdma_destroy_id() lets _cma_cancel_listens(), running from
-the listener's _destroy_id(), walk an already freed child id_priv,
-which KASAN catches as a slab-use-after-free during listener shutdown:
+handle_response() sizes entry->response purely from the netlink attribute
+length (nla_len()) and only guards the leading handle read, so the daemon
+can install a response as small as the kmalloc-8 object seen below.  When
+ipc_msg_send_request() then calls ipc_validate_msg() for a
+KSMBD_EVENT_RPC_REQUEST, the cast to struct ksmbd_rpc_command reads
+resp->payload_sz at offset 8 of an 8-byte allocation:
 
-[ 4758.909130] BUG: KASAN: slab-use-after-free in __mutex_lock+0x1469/0x1560
-[ 4758.911450] Read of size 1 at addr ffff88821c381db4 by task ksmbd.control/1652
-[ 4758.913262] Call Trace:
-[ 4758.913267]  <TASK>
-[ 4758.913299]  __mutex_lock+0x1469/0x1560
-[ 4758.913408]  _cma_cancel_listens+0x312/0x3b0
-[ 4758.913413]  _destroy_id+0x363/0xee0
-[ 4758.913417]  smbdirect_socket_destroy_sync+0x17d5/0x2440
-[ 4758.913443]  smbdirect_socket_release+0x124/0x230
-[ 4758.913451]  ksmbd_rdma_stop_listening+0x9f/0x190
-[ 4758.913457]  ksmbd_conn_transport_destroy+0x65/0x3c0
-[ 4758.913463]  kill_server_store+0x1fb/0x2b0
-[ 4758.913501]  kernfs_fop_write_iter+0x349/0x4d0
-[ 4758.913507]  vfs_write+0x5e7/0xc70
-[ 4758.913528]  ksys_write+0x12a/0x210
-[ 4758.913541]  do_syscall_64+0x135/0x460
-[ 4758.913555]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[ 3697.841381] ==================================================================
+[ 3697.844099] BUG: KASAN: slab-out-of-bounds in ipc_msg_send_request+0x763/0x800
+[ 3697.846604] Read of size 4 at addr ffff888105f95910 by task kworker/4:3/20682
+[ 3697.849061]
+[ 3697.849801] CPU: 4 UID: 0 PID: 20682 Comm: kworker/4:3 Not tainted 7.2.0-rc3-next-20260717-virtme #117 PREEMPT(lazy)
+[ 3697.850077] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+[ 3697.850303] Workqueue: ksmbd-io handle_ksmbd_work
+[ 3697.850592] Call Trace:
+[ 3697.850794]  <TASK>
+[ 3697.850952]  __dump_stack+0x21/0x60
+[ 3697.851239]  dump_stack_lvl+0xc2/0x100
+[ 3697.851528]  print_address_description+0x77/0x200
+[ 3697.851816]  ? ipc_msg_send_request+0x763/0x800
+[ 3697.852024]  print_report+0x58/0x70
+[ 3697.852316]  kasan_report+0x117/0x150
+[ 3697.852585]  ? down_write+0x146/0x1f0
+[ 3697.852809]  ? ipc_msg_send_request+0x763/0x800
+[ 3697.853082]  ipc_msg_send_request+0x763/0x800
+[ 3697.853385]  ? __pfx_ipc_msg_send_request+0x10/0x10
+[ 3697.853604]  ? kasan_unpoison+0x48/0x70
+[ 3697.853936]  ? __pfx___up_read+0x10/0x10
+[ 3697.854221]  ksmbd_rpc_ioctl+0x380/0x520
+[ 3697.854542]  ? __pfx_ksmbd_rpc_ioctl+0x10/0x10
+[ 3697.854757]  ? kasan_unpoison+0x48/0x70
+[ 3697.854962]  ? copy_from_kernel_nofault+0x32c/0x4e0
+[ 3697.855166]  ? kasan_unpoison+0x48/0x70
+[ 3697.855416]  fsctl_pipe_transceive+0x139/0x7a0
+[ 3697.855705]  ? __pfx_copy_from_kernel_nofault+0x10/0x10
+[ 3697.855937]  ? __pfx_fsctl_pipe_transceive+0x10/0x10
+[ 3697.856388]  ? __sanitizer_cov_trace_switch+0x7b/0x140
+[ 3697.856620]  smb2_ioctl+0x1141/0x3420
+[ 3697.856994]  ? __pfx_smb2_ioctl+0x10/0x10
+[ 3697.857182]  ? get_smb2_cmd_val+0xe3/0x1c0
+[ 3697.857655]  handle_ksmbd_work+0x9ad/0x15e0
+[ 3697.858034]  ? __pfx_handle_ksmbd_work+0x10/0x10
+[ 3697.858251]  ? lock_release+0xf7/0x360
+[ 3697.858466]  ? process_scheduled_works+0x954/0x1600
+[ 3697.858698]  ? process_scheduled_works+0x954/0x1600
+[ 3697.858905]  process_scheduled_works+0xc22/0x1600
+[ 3697.859368]  ? __pfx_process_scheduled_works+0x10/0x10
+[ 3697.859637]  ? __pfx_assign_work+0x10/0x10
+[ 3697.859896]  ? lock_is_held_type+0x7b/0x110
+[ 3697.860146]  worker_thread+0x975/0xee0
+[ 3697.860524]  ? __pfx_do_raw_spin_lock+0x10/0x10
+[ 3697.860830]  ? __kthread_parkme+0x21e/0x260
+[ 3697.861105]  kthread+0x3a6/0x490
+[ 3697.861423]  ? __pfx_worker_thread+0x10/0x10
+[ 3697.861643]  ? __pfx_kthread+0x10/0x10
+[ 3697.861878]  ret_from_fork+0x55a/0xa20
+[ 3697.862194]  ? __pfx_ret_from_fork+0x10/0x10
+[ 3697.862480]  ? __pfx_kthread+0x10/0x10
+[ 3697.862714]  ret_from_fork_asm+0x1a/0x30
+[ 3697.862965]  </TASK>
+[ 3697.863039]
+[ 3697.938882] Allocated by task 20761:
+[ 3697.940257]  kasan_save_track+0x3e/0x80
+[ 3697.941782]  __kasan_kmalloc+0x72/0x90
+[ 3697.943228]  __kvmalloc_node_noprof+0x3e9/0x6a0
+[ 3697.944948]  handle_generic_event+0x59b/0x750
+[ 3697.946592]  genl_family_rcv_msg_doit+0x3d6/0x560
+[ 3697.946977]  genl_rcv_msg+0x67c/0x900
+[ 3697.947224]  netlink_rcv_skb+0x286/0x580
+[ 3697.947488]  genl_rcv+0x2d/0x80
+[ 3697.947706]  netlink_unicast+0x937/0xb70
+[ 3697.947993]  netlink_sendmsg+0x977/0xc10
+[ 3697.948268]  __sock_sendmsg+0x264/0x2d0
+[ 3697.948536]  __sys_sendto+0x4de/0x690
+[ 3697.948789]  __x64_sys_sendto+0x173/0x380
+[ 3697.949069]  do_syscall_64+0x13d/0x420
+[ 3697.949328]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[ 3697.949662]
+[ 3697.949779] The buggy address belongs to the object at ffff888105f95908
+[ 3697.949779]  which belongs to the cache kmalloc-8 of size 8
+[ 3697.950550] The buggy address is located 0 bytes to the right of
+[ 3697.950550]  allocated 8-byte region [ffff888105f95908, ffff888105f95910)
+[ 3697.951455]
+[ 3697.951574] The buggy address belongs to the physical page:
+[ 3697.951958] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff888105f951b8 pfn:0x105f95
+[ 3697.952571] flags: 0x100000000000200(workingset|node=0|zone=2)
+[ 3697.952973] page_type: f5(slab)
+[ 3697.953198] raw: 0100000000000200 ffff888100042640 ffffea0004063610 ffff888100040588
+[ 3697.953707] raw: ffff888105f951b8 00000000001c000e 00000000f5000000 0000000000000000
+[ 3697.954240] page dumped because: kasan: bad access detected
+[ 3697.954616]
+[ 3697.954734] Memory state around the buggy address:
+[ 3697.955063]  ffff888105f95800: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fa
+[ 3697.955534]  ffff888105f95880: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[ 3697.956006] >ffff888105f95900: fc 00 fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[ 3697.956477]                          ^
+[ 3697.956728]  ffff888105f95980: fc fc fc fa fc fc fc fc fc fc fc fc fc fc fc fc
+[ 3697.957202]  ffff888105f95a00: fc fc fc fc fc fa fc fc fc fc fc fc fc fc fc fc
+[ 3697.957671] ==================================================================
 
-The cosmetic one: releasing a child recurses into
-smbdirect_socket_destroy(), which takes the child's own
-rdma_lock_handler() lock nested under the listener's.  The listener's
-and the child's cm_id are always different instances, so this cannot
-deadlock for real; the CM core itself nests a new connection id's
-handler_mutex under the listening id's in cma_ib_req_handler().  But
-lockdep only sees one lock class, reports possible recursive locking,
-and then disables itself, hiding real locking bugs for the rest of the
-run:
+The final "entry->msg_sz != msg_sz" comparison cannot help: the offending
+read has already happened by the time it runs.  Every case in the switch
+shares this pattern.
 
-[ 2424.579653] WARNING: possible recursive locking detected
-[ 2424.581180] 7.1.0-next-20260623+ #89 Not tainted
-[ 2424.582548] --------------------------------------------
-[ 2424.584500] ksmbd.control/8854 is trying to acquire lock:
-[ 2424.586817] ffff888102303c20 (&id_priv->handler_mutex){+.+.}-{4:4}, at: smbdirect_socket_destroy_sync+0xc39/0x2440
-[ 2424.590590]
-[ 2424.590590] but task is already holding lock:
-[ 2424.591601] ffff888102046c20 (&id_priv->handler_mutex){+.+.}-{4:4}, at: smbdirect_socket_destroy_sync+0xc39/0x2440
-[ 2424.594178]
-[ 2424.594178] other info that might help us debug this:
-[ 2424.596634]  Possible unsafe locking scenario:
-[ 2424.596634]
-[ 2424.598841]        CPU0
-[ 2424.599765]        ----
-[ 2424.600695]   lock(&id_priv->handler_mutex);
-[ 2424.601836]   lock(&id_priv->handler_mutex);
-[ 2424.602590]
-[ 2424.602590]  *** DEADLOCK ***
-[ 2424.602590]
-[ 2424.604512]  May be due to missing lock nesting notation
+Floor entry->msg_sz against the base struct of each event type before
+dereferencing any of its length fields.  On failure ipc_msg_send_request()
+already frees the response and returns NULL, so callers stay safe.
 
-Splice the pending/ready children onto a local list under the
-listener's listen.lock, while the handler lock is held so a concurrent
-CM CONNECT_REQUEST cannot add more, but defer the actual
-smbdirect_socket_release() calls until after the listener's cm_id has
-been destroyed and its handler lock dropped.  The children are
-independent sockets whose teardown needs neither the listener's
-handler lock nor its cm_id.
+The malformed message originates from the ksmbd.mountd daemon over genl
+netlink rather than a remote SMB client, so triggering it requires a buggy
+or compromised daemon; it is still an out-of-bounds read the validator is
+meant to prevent.
 
-Found with ksmbdzzer [2], a KSMBD fuzzer that drives libFuzzer with a
-kcov-dataflow [1] coverage vector: it folds each instrumented
-comparison/argument's runtime operand value together with its PC (the
-default arm mixes them as pc⊕val) so that a new operand value at a known
-site counts as new coverage.
-
-[1] https://lwn.net/Articles/1077606/
-[2] https://github.com/yskzalloc/kcov-dataflow
-
-Fixes: dc691b91ad16 ("smb: smbdirect: introduce smbdirect_socket_{listen,accept}()")
+Fixes: d6a6aa81eac2 ("ksmbd: validate response sizes in ipc_validate_msg()")
 Signed-off-by: Yunseong Kim <yunseong.kim@est.tech>
-Reviewed-by: Stefan Metzmacher <metze@samba.org>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/smbdirect/socket.c | 56 ++++++++++++++++++++++++++++-----------
- 1 file changed, 41 insertions(+), 15 deletions(-)
+ fs/smb/server/transport_ipc.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/fs/smb/smbdirect/socket.c b/fs/smb/smbdirect/socket.c
-index 8dec47a6603cb..bb02df6158b97 100644
---- a/fs/smb/smbdirect/socket.c
-+++ b/fs/smb/smbdirect/socket.c
-@@ -495,6 +495,7 @@ static void smbdirect_socket_destroy(struct smbdirect_socket *sc)
- 	struct smbdirect_recv_io *recv_io;
- 	struct smbdirect_recv_io *recv_tmp;
- 	LIST_HEAD(all_list);
-+	LIST_HEAD(pending_list);
- 	unsigned long flags;
+diff --git a/fs/smb/server/transport_ipc.c b/fs/smb/server/transport_ipc.c
+index 0c581b9624d3e..c2bab860281e1 100644
+--- a/fs/smb/server/transport_ipc.c
++++ b/fs/smb/server/transport_ipc.c
+@@ -497,6 +497,9 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
+ 	{
+ 		struct ksmbd_rpc_command *resp = entry->response;
  
- 	smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_INFO,
-@@ -552,24 +553,29 @@ static void smbdirect_socket_destroy(struct smbdirect_socket *sc)
- 	 * disconnect all pending and ready sockets
- 	 *
- 	 * We move ready sockets to pending again.
-+	 *
-+	 * Capture them here -- rdma_lock_handler(sc->rdma.cm_id) is held above,
-+	 * so a concurrent CM CONNECT_REQUEST cannot add more; sc->listen.lock
-+	 * below only protects the list splice itself -- but DEFER releasing
-+	 * them until the listener's cm_id is destroyed:
-+	 *
-+	 * - smbdirect_socket_release() -> smbdirect_socket_destroy() takes the
-+	 *   child's own rdma_lock_handler() lock (&id_priv->handler_mutex).
-+	 *   The listener's and the child's cm_id are always different
-+	 *   instances, so the nesting cannot really deadlock, but lockdep only
-+	 *   sees one lock class and reports "possible recursive locking".
-+	 *
-+	 * - rdma_destroy_id() of a child before the listener's own
-+	 *   rdma_destroy_id() below lets _cma_cancel_listens() walk the freed
-+	 *   child id_priv (KASAN slab-use-after-free in __mutex_lock()).
-+	 *
-+	 * The children are independent sockets whose teardown does not need
-+	 * the listener's handler lock.
- 	 */
- 	spin_lock_irqsave(&sc->listen.lock, flags);
--	list_splice_tail_init(&sc->listen.ready, &all_list);
--	list_splice_tail_init(&sc->listen.pending, &all_list);
-+	list_splice_tail_init(&sc->listen.ready, &pending_list);
-+	list_splice_tail_init(&sc->listen.pending, &pending_list);
- 	spin_unlock_irqrestore(&sc->listen.lock, flags);
--	psockets = list_count_nodes(&all_list);
--	if (sc->listen.backlog != -1) /* was a listener */
--		smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_INFO,
--			"release %zu pending sockets\n", psockets);
--	list_for_each_entry_safe(psc, tsc, &all_list, accept.list) {
--		list_del_init(&psc->accept.list);
--		psc->accept.listener = NULL;
--		smbdirect_socket_release(psc);
--	}
--	if (sc->listen.backlog != -1) /* was a listener */
--		smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_INFO,
--			"released %zu pending sockets\n", psockets);
--	INIT_LIST_HEAD(&all_list);
- 
- 	/* It's not possible for upper layer to get to reassembly */
- 	if (sc->listen.backlog == -1) /* was not a listener */
-@@ -599,6 +605,26 @@ static void smbdirect_socket_destroy(struct smbdirect_socket *sc)
- 		sc->rdma.cm_id = NULL;
- 	}
- 
-+	/*
-+	 * The listener's rdma_lock_handler() lock is dropped and its cm_id is
-+	 * destroyed, so it is safe to release the child sockets captured
-+	 * above: each release recurses into smbdirect_socket_destroy() and
-+	 * takes that child's own handler_mutex without nesting it under the
-+	 * listener's, and _cma_cancel_listens() can no longer reach them.
-+	 */
-+	psockets = list_count_nodes(&pending_list);
-+	if (sc->listen.backlog != -1) /* was a listener */
-+		smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_INFO,
-+			"release %zu pending sockets\n", psockets);
-+	list_for_each_entry_safe(psc, tsc, &pending_list, accept.list) {
-+		list_del_init(&psc->accept.list);
-+		psc->accept.listener = NULL;
-+		smbdirect_socket_release(psc);
-+	}
-+	if (sc->listen.backlog != -1) /* was a listener */
-+		smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_INFO,
-+			"released %zu pending sockets\n", psockets);
++		if (entry->msg_sz < sizeof(struct ksmbd_rpc_command))
++			return -EINVAL;
 +
- 	if (sc->listen.backlog == -1) /* was not a listener */
- 		smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_INFO,
- 			"destroying mem pools\n");
+ 		if (check_add_overflow(sizeof(struct ksmbd_rpc_command),
+ 				       resp->payload_sz, &msg_sz))
+ 			return -EINVAL;
+@@ -506,6 +509,9 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
+ 	{
+ 		struct ksmbd_spnego_authen_response *resp = entry->response;
+ 
++		if (entry->msg_sz < sizeof(struct ksmbd_spnego_authen_response))
++			return -EINVAL;
++
+ 		msg_sz = sizeof(struct ksmbd_spnego_authen_response) +
+ 				resp->session_key_len + resp->spnego_blob_len;
+ 		break;
+@@ -514,6 +520,9 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
+ 	{
+ 		struct ksmbd_share_config_response *resp = entry->response;
+ 
++		if (entry->msg_sz < sizeof(struct ksmbd_share_config_response))
++			return -EINVAL;
++
+ 		if (resp->payload_sz) {
+ 			if (resp->payload_sz < resp->veto_list_sz)
+ 				return -EINVAL;
+@@ -528,6 +537,9 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
+ 	{
+ 		struct ksmbd_login_response_ext *resp = entry->response;
+ 
++		if (entry->msg_sz < sizeof(struct ksmbd_login_response_ext))
++			return -EINVAL;
++
+ 		if (resp->ngroups) {
+ 			if (resp->ngroups < 0 ||
+ 			    resp->ngroups > NGROUPS_MAX) {
 -- 
 2.53.0
 
