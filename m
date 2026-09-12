@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4392B372ECE;
-	Sat, 12 Sep 2026 07:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C12037B036;
+	Sat, 12 Sep 2026 07:45:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199115; cv=none; b=qa9+I2tgXhNSO4K51sLWbcovucwx7VbfVTlCmePKljUpHwxackjvn+vHHK7ello1CouiDPOwjvv8IjruQU2P6kDWSwE8kwx8vpaH7RdUR4KP4OkI/Nu+iBoUSj2cqETCayZCcTFUVhC5ba2ybnAoSJsKRT7AZ3IZZIGyekm0Exs=
+	t=1789199120; cv=none; b=D1onFZUGA8K7oOTsq0q5qKuz9UI8T/Mx1/O0EtJAjyWW81e+EEX5WzmDub8N/8Qtjx3H45pw73KAPktGU//Pr+D2oIR/jF6ciXl1mtbYPgPxahvMxHOiT34Y2NUPciwZN9IdMYY2uijl7v5L6zbrNcMMlLjzeT4JfcuHs0FyTy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199115; c=relaxed/simple;
-	bh=Rdkw3kcuTq8bW2ccGFOwwL21by4w2BBd3XEo5NmTfsQ=;
+	s=arc-20240116; t=1789199120; c=relaxed/simple;
+	bh=Dx2W5rDzi5M/svv1VfQxJY45vEBCjNG2bnTHmb2qk7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gUqw7rBqJH4YuRCUzefOCUqrJjWx6+BUVPaPb+mxw6x+JTLwauI2cNDFSnGxDQmja5qAepZii2hGJsifTOMJaZrTrd76yyukyg6V62zlQo+45pwar2zr76ETsdWqk+ZzwLZ/R+oz8CkJqLUktgIn8zYzME3by9/rkSsIxVKZzec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PX3t28DB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RJPVSkh0olRakqNqKyTmE0z8tF4E7iKwq5OxlcJ5WEXziG6xWLx8vDZFDBAozCpkVBpnFfe8BurLDuole6AphQwPDeixjOCC3FGEwUVouFH46fLBdewRiwnvHLsttMeO1RrD15lDhgq3Ng1Go2eP3OPLxfyDv6+3/U+/XbbsyfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZRFOp+M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PX3t28DB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499FE1F000FF;
-	Sat, 12 Sep 2026 07:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZRFOp+M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A69A1F000FF;
+	Sat, 12 Sep 2026 07:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199114;
-	bh=RZ4s9JsUMS4VxWN/sf751uoKUwUjhRz3JL186Bclfbc=;
+	s=korg; t=1789199119;
+	bh=CCAuQ2SPXnG+IkbCAcWqA3dvvZhKzMZsnZptfAXIyRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PX3t28DBwRgQEZDoKWos/k7tx3Ajq/JLz3VKfxkfajckxkDMfSKXQKAaJCjt+t7Vz
-	 17Mkifs5Q/97blEHG1hR1HK4cN6Ep5SpRXiWU8h6l5Y9E5GryFnplSDnZLQfF0Hp5Z
-	 8+7Or1T2whaRzR/KCSOO8Ix/jewTTLitW+w0yECY=
+	b=FZRFOp+MuUoJNyuZjXf3U/+QKcYVQVurdhUDrmIGeQ1XtJpbUh3/3EDGfnkgRKBs9
+	 HCslF7QWIMpkWclaCta14E8BEug7MPJ9f1KqtXbK0h71UkZiMYHKBcw50TKmnqHLOb
+	 IgPClPm4es4D46fpqfqEE9TZgH9oL9NIprKZIKkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Gondois <pierre.gondois@arm.com>,
-	Breno Leitao <leitao@debian.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0502/1815] cacheinfo: dont propagate DT/ACPI error when arch supplies info (arm64)
-Date: Sat, 12 Sep 2026 08:37:32 +0200
-Message-ID: <20260912065700.676888878@linuxfoundation.org>
+Subject: [PATCH 7.2 0520/1815] drm/v3d: Associate BOs with every job that accesses them
+Date: Sat, 12 Sep 2026 08:37:50 +0200
+Message-ID: <20260912065701.099512173@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,65 +45,240 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 274259391c14166fcabae74f9fc0104223ff27a1 ]
+[ Upstream commit fa98563ab00dbe62fcedfef6bdd34ded7a860d9f ]
 
-cache_setup_properties() sets use_arch_info = true when DT/ACPI
-provide no cache nodes and the arch can derive the topology from
-CPU registers (e.g. arm64 reading CLIDR_EL1), but still returns the
-original -ENOENT. cache_shared_cpu_map_setup() bails on that error
-before the new flag can take effect, so the first CPU brought online
-always trips a misleading warning:
+A submission can expand into a chain of jobs (e.g. bin + render + cache
+clean). Implicit synchronization in v3d_submit_lock_reservations() is gated
+on each job's bo[], but the BO list was only ever attached to the last job
+of the chain. When that last job is a trailing CACHE_CLEAN job, the job
+that actually consumes the BOs (that is, a RENDER or CSD job) was left with
+bo_count == 0 and picked up no implicit dependencies. It could therefore
+be dispatched to the hardware and read a BO while another context was still
+writing it, leading to data corruption.
 
-  cacheinfo: Unable to detect cache hierarchy for CPU 0
+Attach the BOs to the job that consumes them, so (1) it acquires the
+correct implicit dependencies during reservation locking and (2) they are
+kept mapped until the end of the submission. Give it references to all
+consuming job's BOs through v3d_job_reference_bos() instead of looking the
+handles up a second time; that avoids a redundant lookup and guarantees
+both jobs reference the exact same objects.
 
-Subsequent CPUs skip cache_setup_properties() entirely because
-use_arch_info is now true, which is why only CPU0 hits it. This is
-reproducible on arm64 with the QEMU 'virt' machine, whose default DT
-has no cache nodes.
+As the CACHE_CLEAN job now carries a BO array as well, add a per-job
+`has_implicit_dep` flag so that only the consuming jobs take implicit
+dependencies. The CACHE_CLEAN job (a global flush) and the BIN job (binning
+waiting on another context is not a realistic scenario) are excluded.
 
-Clear ret after setting use_arch_info so the caller proceeds and
-populates the shared cpu map via the arch-supplied leaves.
-
-Fixes: ef9f643a9f8b ("cacheinfo: Add use_arch[|_cache]_info field/function")
-Reviewed-by: Pierre Gondois <pierre.gondois@arm.com>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
-Link: https://patch.msgid.link/20260611-cacheinfo-v2-1-6069ef066cf3@debian.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: dffa9b7a78c4 ("drm/v3d: Add missing implicit synchronization.")
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20260710114734.2731000-1-mcanal@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/cacheinfo.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/v3d/v3d_drv.h    |  5 ++
+ drivers/gpu/drm/v3d/v3d_submit.c | 92 +++++++++++++++++++++++---------
+ 2 files changed, 72 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/base/cacheinfo.c b/drivers/base/cacheinfo.c
-index 70701d3bc81c6..9f9c72727a059 100644
---- a/drivers/base/cacheinfo.c
-+++ b/drivers/base/cacheinfo.c
-@@ -401,9 +401,14 @@ static int cache_setup_properties(unsigned int cpu)
- 	else if (!acpi_disabled)
- 		ret = cache_setup_acpi(cpu);
+diff --git a/drivers/gpu/drm/v3d/v3d_drv.h b/drivers/gpu/drm/v3d/v3d_drv.h
+index bfa24b2c55922..c64ba176b81cf 100644
+--- a/drivers/gpu/drm/v3d/v3d_drv.h
++++ b/drivers/gpu/drm/v3d/v3d_drv.h
+@@ -358,6 +358,11 @@ struct v3d_job {
+ 	void (*free)(struct kref *ref);
  
--	// Assume there is no cache information available in DT/ACPI from now.
--	if (ret && use_arch_cache_info())
-+	/*
-+	 * No DT/ACPI cache nodes; fall back to arch-derived topology (e.g.
-+	 * arm64 CLIDR_EL1) and clear the error to avoid a spurious warning.
+ 	bool has_pm_ref;
++
++	/* Whether the job needs implicit dependencies, i.e. must wait for
++	 * other contexts still writing its BOs.
 +	 */
-+	if (ret && use_arch_cache_info()) {
- 		use_arch_info = true;
-+		ret = 0;
-+	}
++	bool has_implicit_dep;
+ };
  
- 	return ret;
+ struct v3d_bin_job {
+diff --git a/drivers/gpu/drm/v3d/v3d_submit.c b/drivers/gpu/drm/v3d/v3d_submit.c
+index 28c9a214a9e3e..fdf27d7205877 100644
+--- a/drivers/gpu/drm/v3d/v3d_submit.c
++++ b/drivers/gpu/drm/v3d/v3d_submit.c
+@@ -43,6 +43,9 @@ v3d_submit_lock_reservations(struct v3d_submit *submit)
+ 	for (i = 0; i < submit->job_count; i++) {
+ 		struct v3d_job *job = submit->jobs[i];
+ 
++		if (!job->has_implicit_dep)
++			continue;
++
+ 		for (j = 0; j < job->bo_count; j++) {
+ 			ret = drm_sched_job_add_implicit_dependencies(&job->base,
+ 								      job->bo[j],
+@@ -68,7 +71,6 @@ v3d_submit_unlock_reservations(struct v3d_submit *submit)
+ /**
+  * v3d_lookup_bos() - Sets up job->bo[] with the GEM objects
+  * referenced by the job.
+- * @dev: DRM device
+  * @file_priv: DRM file for this fd
+  * @job: V3D job being set up
+  * @bo_handles: GEM handles
+@@ -82,23 +84,44 @@ v3d_submit_unlock_reservations(struct v3d_submit *submit)
+  * failure, because that will happen at `v3d_job_free()`.
+  */
+ static int
+-v3d_lookup_bos(struct v3d_submit *submit, u64 bo_handles, u32 bo_count)
++v3d_lookup_bos(struct drm_file *file_priv, struct v3d_job *job,
++	       u64 bo_handles, u32 bo_count)
+ {
+-	struct v3d_job *last_job = submit->jobs[submit->job_count - 1];
+-
+-	last_job->bo_count = bo_count;
+-
+-	if (!last_job->bo_count) {
+-		/* See comment on bo_index for why we have to check
+-		 * this.
+-		 */
+-		drm_warn(&submit->v3d->drm, "Rendering requires BOs\n");
++	if (!bo_count) {
++		drm_warn(&job->v3d->drm, "Rendering requires BOs\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	return drm_gem_objects_lookup(submit->file_priv,
++	job->bo_count = bo_count;
++
++	return drm_gem_objects_lookup(file_priv,
+ 				      (void __user *)(uintptr_t)bo_handles,
+-				      last_job->bo_count, &last_job->bo);
++				      job->bo_count, &job->bo);
++}
++
++/**
++ * v3d_job_reference_bos() - Share another job's BOs with @dst
++ * @dst: job that acquires references to the BOs
++ * @src: job whose already-resolved BO list is shared
++ *
++ * For submissions with multiple jobs that use the same BOs, a trailing job
++ * shouldn't look the handles up again, as it could cause inconsistencies.
++ * Instead, it should reference the previous job's BOs.
++ */
++static int
++v3d_job_reference_bos(struct v3d_job *dst, struct v3d_job *src)
++{
++	dst->bo = kvmalloc_objs(*dst->bo, src->bo_count);
++	if (!dst->bo)
++		return -ENOMEM;
++
++	dst->bo_count = src->bo_count;
++	for (int i = 0; i < dst->bo_count; i++) {
++		dst->bo[i] = src->bo[i];
++		drm_gem_object_get(dst->bo[i]);
++	}
++
++	return 0;
  }
+ 
+ static void
+@@ -219,13 +242,14 @@ v3d_job_add_syncobjs(struct v3d_job *job, struct drm_file *file_priv,
+ static const struct {
+ 	size_t size;
+ 	void (*free)(struct kref *ref);
++	bool has_implicit_dep;
+ } v3d_job_types[] = {
+-	[V3D_BIN]		= { sizeof(struct v3d_bin_job), v3d_job_free },
+-	[V3D_RENDER]		= { sizeof(struct v3d_render_job), v3d_render_job_free },
+-	[V3D_TFU]		= { sizeof(struct v3d_tfu_job), v3d_job_free },
+-	[V3D_CSD]		= { sizeof(struct v3d_csd_job), v3d_job_free },
+-	[V3D_CACHE_CLEAN]	= { sizeof(struct v3d_job), v3d_job_free },
+-	[V3D_CPU]		= { sizeof(struct v3d_cpu_job), v3d_cpu_job_free },
++	[V3D_BIN]		= { sizeof(struct v3d_bin_job), v3d_job_free, false },
++	[V3D_RENDER]		= { sizeof(struct v3d_render_job), v3d_render_job_free, true },
++	[V3D_TFU]		= { sizeof(struct v3d_tfu_job), v3d_job_free, true },
++	[V3D_CSD]		= { sizeof(struct v3d_csd_job), v3d_job_free, true },
++	[V3D_CACHE_CLEAN]	= { sizeof(struct v3d_job), v3d_job_free, false },
++	[V3D_CPU]		= { sizeof(struct v3d_cpu_job), v3d_cpu_job_free, true },
+ };
+ 
+ static struct v3d_job *
+@@ -247,6 +271,7 @@ v3d_submit_add_job(struct v3d_submit *submit, enum v3d_queue queue)
+ 	job->queue = queue;
+ 	job->file_priv = v3d_priv;
+ 	job->free = v3d_job_types[queue].free;
++	job->has_implicit_dep = v3d_job_types[queue].has_implicit_dep;
+ 
+ 	ret = drm_sched_job_init(&job->base, &v3d_priv->sched_entity[queue],
+ 				 1, v3d_priv, submit->file_priv->client_id);
+@@ -426,13 +451,18 @@ v3d_setup_csd_jobs_and_bos(struct v3d_submit *submit,
+ 	if (ret)
+ 		return ret;
+ 
++	ret = v3d_lookup_bos(submit->file_priv, &job->base, args->bo_handles,
++			     args->bo_handle_count);
++	if (ret)
++		return ret;
++
+ 	job->args = *args;
+ 
+ 	clean_job = v3d_submit_add_job(submit, V3D_CACHE_CLEAN);
+ 	if (IS_ERR(clean_job))
+ 		return PTR_ERR(clean_job);
+ 
+-	return v3d_lookup_bos(submit, args->bo_handles, args->bo_handle_count);
++	return v3d_job_reference_bos(clean_job, &job->base);
+ }
+ 
+ static void
+@@ -1062,22 +1092,33 @@ v3d_submit_cl_ioctl(struct drm_device *dev, void *data,
+ 	if (ret)
+ 		goto fail;
+ 
++	/*
++	 * We don't associate the BOs with the BIN job. Fences are only
++	 * attached to the last job in the submission chain, and BIN jobs
++	 * don't need implicit dependencies since depending on results from
++	 * another context is not a realistic scenario for binning.
++	 */
++	ret = v3d_lookup_bos(submit.file_priv, &render->base,
++			     args->bo_handles, args->bo_handle_count);
++	if (ret)
++		goto fail;
++
+ 	if (args->flags & DRM_V3D_SUBMIT_CL_FLUSH_CACHE) {
+ 		clean_job = v3d_submit_add_job(&submit, V3D_CACHE_CLEAN);
+ 		if (IS_ERR(clean_job)) {
+ 			ret = PTR_ERR(clean_job);
+ 			goto fail;
+ 		}
++
++		ret = v3d_job_reference_bos(clean_job, &render->base);
++		if (ret)
++			goto fail;
+ 	}
+ 
+ 	ret = v3d_attach_perfmon_to_jobs(&submit, args->perfmon_id);
+ 	if (ret)
+ 		goto fail;
+ 
+-	ret = v3d_lookup_bos(&submit, args->bo_handles, args->bo_handle_count);
+-	if (ret)
+-		goto fail;
+-
+ 	ret = v3d_submit_lock_reservations(&submit);
+ 	if (ret)
+ 		goto fail;
+@@ -1344,7 +1385,8 @@ v3d_submit_cpu_ioctl(struct drm_device *dev, void *data,
+ 	}
+ 
+ 	if (args->bo_handle_count) {
+-		ret = v3d_lookup_bos(&submit, args->bo_handles, args->bo_handle_count);
++		ret = v3d_lookup_bos(submit.file_priv, &cpu_job->base,
++				     args->bo_handles, args->bo_handle_count);
+ 		if (ret)
+ 			goto fail;
+ 
 -- 
 2.53.0
 
