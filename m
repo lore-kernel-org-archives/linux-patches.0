@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095BD420E7C;
-	Sat, 12 Sep 2026 08:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E15B369224;
+	Sat, 12 Sep 2026 08:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202492; cv=none; b=cmEgPS3NYFfUOoqLCy6aewaZLipNhghTg5qqrHCzSof5ICCIf/rDofXM+ZeXJUNElnmQyrK1e1kPIXir4Cnluo9yLNcQ5Tt718LoG0I1lMxRE1DRdIklGztYNQttgGzJiuzrPT8s19cOVnKGxhsRbIkV74zGf7MKf3IaFeeD5Ok=
+	t=1789202497; cv=none; b=HsutFgeuJdMR4xjJB4wCSGDpKr93TfMNi6ZP5bRTyKmDzZ9t2FVbfPHhm+iFOlGC6IT4mJbsG3VgbgJtqfJaDvBJBC1KnXvGVcPtLVsID9HlUpniDDkz8MnC350jrVQ4juUdWZLMSYHqjp9e+gdoIa7ZCKTUtY3bH1opUYl1bmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202492; c=relaxed/simple;
-	bh=itYPl20BDduGyOrywd2K5dku7mKJOMMBzSKh9eqAHsw=;
+	s=arc-20240116; t=1789202497; c=relaxed/simple;
+	bh=rLcBzOwhn/Zi3Mcd9DqRdFb0G8j1GdVSboKRCzveFbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eEo8PkxDeU5ofSlCrPCJwNmcJN9GZQVAdqbbTAl4spJyMFFJ/SvrX7jfud3fluEYSt2pyeaE9JMDEknBz8DaEixU0WxFqy/ifUnqx+5ANxotyB2R8VIZAOPKomCQ2j9BLyh1lXyoCPmM92NUNcEXc1PH1qtiCXl0yErB49R8nWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2fy1/Ov; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TUNFhhsSGE6t8TvjPgLeU5ojXzU9fcZto7IKaGLLqQyywWAEzEtdd6ilg03Zz14m50VSiZ4KIll/39kGWGyzCck0TEjiOMglNd33bJohFv67i/rhByyAEfwUjaGP/8Ad+SXo11wWcu46qXTcgLpfLwJ5fSmHFqaNev6RurPO/Gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ItTRy8n6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2fy1/Ov"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FDBE1F00893;
-	Sat, 12 Sep 2026 08:41:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ItTRy8n6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9EC1F000FF;
+	Sat, 12 Sep 2026 08:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202490;
-	bh=j+QJnluI3y2jQKVMEujK/KzPryCtsFxiiyabfTOUZYs=;
+	s=korg; t=1789202496;
+	bh=EwkXJVRm5pIZyiCINMBY5uZWVpAjTYol09fhpuspwCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m2fy1/OvIZ79gdVFMGhDDxQV9NxTVMqATKzZcIRzNRnGJJedPeb8jU25tW2fbPb8/
-	 Y16oV70W3e36bmjDWf1AFosoashPepW35CYxDBckq2RANfZkheWvktTEwnIAlnO1vH
-	 WCzrr4hlKj/GAoC3PDDpOgUCIN9u1Mxv2iUHtics=
+	b=ItTRy8n66FKhpQdl0sBjIZa7YYi1PdTLI7IrjEFqDHsHkMzKH7nO4ZwQEK5HnK6N5
+	 6K0oyPD8FZVjJhpZFDK//0odxEz0b3DCyZmyWihF2bknUEFwhrHI/WYOpmzEQPehzI
+	 SvPMYi8PqH1ES8rZDTTPir4ouACydB1E7pzRm2V8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Chen Yu <yu.c.chen@intel.com>,
-	Tim Chen <tim.c.chen@linux.intel.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Andrea Righi <arighi@nvidia.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Zijun Hu <zijun.hu@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1214/1815] sched/fair: Check CPU capacity before comparing group types during load balance
-Date: Sat, 12 Sep 2026 08:49:24 +0200
-Message-ID: <20260912065717.504460726@linuxfoundation.org>
+Subject: [PATCH 7.2 1215/1815] Bluetooth: btqca: Fix qca_set_bdaddr() waiting for wrong HCI event
+Date: Sat, 12 Sep 2026 08:49:25 +0200
+Message-ID: <20260912065717.528667089@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -56,78 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit 50b101f6e586b4417d060a976fd831cd87e86e2b ]
+[ Upstream commit cf81f0a3db2a5c34ee6e4ea379c631fab6d13e01 ]
 
-update_sd_pick_busiest() may incorrectly select a fully_busy group as the
-busiest group when its per-CPU capacity exceeds that of the destination
-CPU. This happens because the type of busiest group is initialized to
-group_has_spare and allows the fully_busy group to win the type comparison.
+qca_set_bdaddr() waits for HCI_EV_VENDOR when sending
+EDL_WRITE_BD_ADDR_OPCODE (0xFC14), but the controller responds with
+Command Complete event as confirmed by btmon on WCN7850:
 
-update_sd_pick_busiest() should not choose a candidate scheduling group
-with at most one runnable task if its per-CPU capacity is greater than that
-of the destination CPU. Such a check already exists, but it is done too
-late: after the type comparison, preventing a subsequent fully_busy group
-of equal per-CPU capacity from being correctly selected.
+  < HCI Command: Vendor (0x3f|0x0014) plen 6                    #3 [hci0]
+          11 22 33 44 55 66
+  > HCI Event: Command Complete (0x0e) plen 4                    #4 [hci0]
+        Vendor (0x3f|0x0014) ncmd 1
+          Status: Success (0x00)
 
-Move this check to occur before comparing group types.
+Fix by passing 0 as the event parameter to __hci_cmd_sync_ev() to
+wait for the command complete event instead.
 
-Fixes: 0b0695f2b34a ("sched/fair: Rework load_balance()")
-Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Reviewed-by: Chen Yu <yu.c.chen@intel.com>
-Reviewed-by: Tim Chen <tim.c.chen@linux.intel.com>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Tested-by: Christian Loehle <christian.loehle@arm.com>
-Tested-by: Andrea Righi <arighi@nvidia.com>
-Link: https://patch.msgid.link/20260720-rneri-fix-cas-clusters-v6-3-bb500bf4afd4@linux.intel.com
+Fixes: 5c0a1001c8be ("Bluetooth: hci_qca: Add helper to set device address")
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/bluetooth/btqca.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 648fd3a39fd1f..4c7bb4b7018e2 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -11948,6 +11948,17 @@ static bool update_sd_pick_busiest(struct lb_env *env,
- 	     sds->local_stat.group_type != group_has_spare))
- 		return false;
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index 10c496eaea2c1..4b0d83858229b 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -1029,8 +1029,7 @@ int qca_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr)
+ 	baswap(&bdaddr_swapped, bdaddr);
  
-+	/*
-+	 * Candidate sg has no more than one task per CPU and has higher
-+	 * per-CPU capacity. Migrating tasks to less capable CPUs may harm
-+	 * throughput. Maximize throughput, power/energy consequences are not
-+	 * considered.
-+	 */
-+	if ((env->sd->flags & SD_ASYM_CPUCAPACITY) &&
-+	    (sgs->group_type <= group_fully_busy) &&
-+	    (capacity_greater(sg->sgc->min_capacity, capacity_of(env->dst_cpu))))
-+		return false;
-+
- 	if (sgs->group_type > busiest->group_type)
- 		return true;
- 
-@@ -12054,17 +12065,6 @@ static bool update_sd_pick_busiest(struct lb_env *env,
- 		break;
- 	}
- 
--	/*
--	 * Candidate sg has no more than one task per CPU and has higher
--	 * per-CPU capacity. Migrating tasks to less capable CPUs may harm
--	 * throughput. Maximize throughput, power/energy consequences are not
--	 * considered.
--	 */
--	if ((env->sd->flags & SD_ASYM_CPUCAPACITY) &&
--	    (sgs->group_type <= group_fully_busy) &&
--	    (capacity_greater(sg->sgc->min_capacity, capacity_of(env->dst_cpu))))
--		return false;
--
- 	return true;
- }
- 
+ 	skb = __hci_cmd_sync_ev(hdev, EDL_WRITE_BD_ADDR_OPCODE, 6,
+-				&bdaddr_swapped, HCI_EV_VENDOR,
+-				HCI_INIT_TIMEOUT);
++				&bdaddr_swapped, 0, HCI_INIT_TIMEOUT);
+ 	if (IS_ERR(skb)) {
+ 		err = PTR_ERR(skb);
+ 		bt_dev_err(hdev, "QCA Change address cmd failed (%d)", err);
 -- 
 2.53.0
 
