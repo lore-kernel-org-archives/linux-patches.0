@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8B637FF60;
-	Sat, 12 Sep 2026 13:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887CA47DD63;
+	Sat, 12 Sep 2026 13:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219383; cv=none; b=rmbaFKHXzbcHc+DmSR/W9leKbwuYv6k6RiqJfeBH9/IuYXuZpGg/jH2PFCf033WYpz0gRN26IeLA+5+PyefMFdxJznCmXHX2DAk0qRteyp77Z40j+yMwGLDVuyeqWBLd3zYgsKFZeIb62To8b8/jF+51MGAISMvxsuIR+DqJ/IU=
+	t=1789219387; cv=none; b=e+jqmw5/HV9iXsFqYZFfIRkBTSiIefRgH9/V8UGONJlH+LqMO4L3utCBJxGT0CHolVn2143jecfYfkm+4bA7T5IZEqpsJjHSjYVnfPFFYiXgB1/+AZW1A0OnTlsk7+siPEl+/V/5jTCIxFxLvlnscEq8o1tU9yLbCyF6W8gFcbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219383; c=relaxed/simple;
-	bh=fOSobms1oM9eqTnrp3dIi8GApXmSAuxkBAuK6UojsCE=;
+	s=arc-20240116; t=1789219387; c=relaxed/simple;
+	bh=EfFDSuuYFMHsM4YpfvQ2qQF5zT4xN2zgmlvV1+ASEaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VoKgvQFhPuKbQs+m0GSoZZ5auLGJIvcGpBP+6kywuKUtdDSYcuGqMS7JskyWMZWLTxduJYSUnzXe05xpZ7YvTXVVsNQrNRyh+BhT+BKpasokLq53AXipOZLj3r1Y1+RvlzuRH63OED3C9RGHDqF2RgbO19QV7i+ujkXMJHSY46M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xMUEJJQ3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oLBRprTDQqKXZZJGPS9m0395q/IUQJXfcEE9fK+1uBID1Ih4K0aw0V6eI5/Yi7i8HFSioF7VtyJqoVodFARnKmFQAY4WSxF6mr4YLKdZgyInKyv90QT8jntn4inVNoIMDK9t1NT4hknnQkhRpRtdChDUC7eFP2IQImRtEBmXcV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m5+5PADH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMUEJJQ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DD11F000FF;
-	Sat, 12 Sep 2026 13:23:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5+5PADH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A86D1F000FF;
+	Sat, 12 Sep 2026 13:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219381;
-	bh=wuWNs79bcQf/8XRjHAUOyhZKx0UHZALalqTxwh3CUhU=;
+	s=korg; t=1789219386;
+	bh=be4ufaYX8rrcB6x8yRg3MZnu6LbZ6T4vlbRV9eR3NcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xMUEJJQ3orr4N2USx8UosU81uKc60/WRhkksQaTIet4aGI4ye26dg/U3B8RGqqx/X
-	 PjM2s+wn+l+x05Ug/qmBq5I2fd2QIU5G859mZvUiceFLYfnE9H05pZkiO2ZjJGkfYW
-	 vElfIDLeNIiYjmlrUWj98u8CsAp6yVztQFbX5jVo=
+	b=m5+5PADHdIPj491ZN8TlpgVRrBDtkbPwOOes+rWq8HAy7MGFeUtt7dgk0Ar7GUsBv
+	 uHkqT1fMiYG4caGYrNEDjxBNml3+/6J9uoe42oDXECISGYNnMSsJpmx3Za6QiV2feH
+	 itaXwMMK3EydSt5I5axq1562VfOuDuUTAcTwHHLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1337/1376] net/sched: sch_htb: limit htb_classify inner-class filter hops
-Date: Sat, 12 Sep 2026 09:02:43 +0200
-Message-ID: <20260912065637.329260952@linuxfoundation.org>
+Subject: [PATCH 6.12 1338/1376] platform/x86: lg-laptop: Check ACPI_COMPANION() against NULL
+Date: Sat, 12 Sep 2026 09:02:44 +0200
+Message-ID: <20260912065637.351525001@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -55,102 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 729c4896ab829169f95915d65edd530325910b37 ]
+[ Upstream commit 7e169326c2263ebc4878baae536c956fa3118eff ]
 
-htb_classify() follows each filter-selected inner class by switching
-to cl->filter_list, but never bounds the number of hops. A filter on
-an inner class can point back to itself or to another inner class that
-points back, creating an infinite loop in the packet classification
-path with the qdisc lock held and BH disabled — a soft lockup / panic
-from a single packet.
+Every platform driver can be forced to match a device that doesn't match
+its list of device IDs because of device_match_driver_override(), so
+platform drivers that rely on the existence of a device's ACPI companion
+object need to verify its presence.
 
-Bound the traversal with a hop counter and drop the packet with a
-rate-limited warning once the bound is exceeded. The counter is
-incremented at the point the inner filter chain is picked up, after the
-TC_ACT_* switch has consumed the classifier verdict, so a terminal
-TC_ACT_QUEUED/STOLEN/TRAP on the last permitted chain still sets *qerr
-to __NET_XMIT_STOLEN and the packet is not charged as a drop by this
-qdisc or its parent.
+Accordingly, add a requisite ACPI_COMPANION() check against NULL to the
+platform/x86 lg-laptop driver.
 
-The bound is TC_HTB_MAXDEPTH, taken from HTB's own parameters rather than
-from the qdisc hierarchy depth limit. Class levels run from 0 to
-TC_HTB_MAXDEPTH - 1, so a traversal that strictly descends in level can
-take at most TC_HTB_MAXDEPTH hops. That descent is what a sane
-configuration does, but it is assumed here rather than enforced:
-htb_find() resolves a classid against every class in the qdisc, so a
-filter may equally select a sibling or an ancestor. The normal
-root -> inner -> leaf path takes a single hop, so the bound does not
-affect legitimate classification.
-
-htb_classify() can now return NULL irrespective of CONFIG_NET_CLS_ACT,
-whereas previously every NULL return sat inside that ifdef. The NULL
-handler in htb_enqueue() therefore cannot stay conditional either, so
-drop the ifdef around it. This matches hfsc_enqueue(), which has always
-handled a NULL class unconditionally. Without it, a kernel built
-without actions would dereference a NULL class instead of dropping.
-
-Conditions to recreate the bug:
-- CONFIG_NET_SCHED, CONFIG_NET_SCH_HTB, CONFIG_NET_CLS_U32,
-  CONFIG_LOCKUP_DETECTOR.
-- Create an HTB qdisc on a device (e.g. lo), add an inner class
-  1:1 with a leaf child 1:10, install a root u32 filter selecting
-  1:1, and an inner-class u32 filter on 1:1 also selecting 1:1.
-- Send one packet (ping). On the unfixed kernel the classify loop
-  spins with the qdisc lock held; with softlockup_panic=1 it panics.
-- Reachable from unprivileged user via unshare -Urn (CAP_NET_ADMIN).
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Vega <vega@nebusec.ai>
-Co-developed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260826143339.271935-1-victor@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2d9cb20610f7 ("platform/x86: lg-laptop: Convert ACPI driver to a platform one")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/3706551.iIbC2pHGDl@rafael.j.wysocki
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_htb.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/platform/x86/lg-laptop.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
-index 49f4599be14b6..36cc9a343b546 100644
---- a/net/sched/sch_htb.c
-+++ b/net/sched/sch_htb.c
-@@ -223,6 +223,7 @@ static struct htb_class *htb_classify(struct sk_buff *skb, struct Qdisc *sch,
- 	struct htb_class *cl;
- 	struct tcf_result res;
- 	struct tcf_proto *tcf;
-+	unsigned int hops = 0;
- 	int result;
+diff --git a/drivers/platform/x86/lg-laptop.c b/drivers/platform/x86/lg-laptop.c
+index 0a5c8f0471823..f4e43e09cbe4e 100644
+--- a/drivers/platform/x86/lg-laptop.c
++++ b/drivers/platform/x86/lg-laptop.c
+@@ -755,12 +755,11 @@ static void lg_laptop_remove_address_space_handler(void *data)
  
- 	/* allow to select class by setting skb->priority to valid classid;
-@@ -265,6 +266,10 @@ static struct htb_class *htb_classify(struct sk_buff *skb, struct Qdisc *sch,
- 		if (!cl->level)
- 			return cl;	/* we hit leaf; return it */
+ static int acpi_probe(struct platform_device *pdev)
+ {
+-	struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
+ 	struct platform_device_info pdev_info = {
+-		.fwnode = acpi_fwnode_handle(device),
+ 		.name = PLATFORM_NAME,
+ 		.id = PLATFORM_DEVID_NONE,
+ 	};
++	struct acpi_device *device;
+ 	acpi_status status;
+ 	int ret;
+ 	const char *product;
+@@ -769,6 +768,12 @@ static int acpi_probe(struct platform_device *pdev)
+ 	if (pf_device)
+ 		return 0;
  
-+		if (++hops > TC_HTB_MAXDEPTH) {
-+			pr_warn_ratelimited("htb: classify loop detected, dropping packet\n");
-+			return NULL;
-+		}
- 		/* we have got inner class; apply inner filter chain */
- 		tcf = rcu_dereference_bh(cl->filter_list);
- 	}
-@@ -632,13 +637,11 @@ static int htb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		} else {
- 			return qdisc_drop(skb, sch, to_free);
- 		}
--#ifdef CONFIG_NET_CLS_ACT
- 	} else if (!cl) {
- 		if (ret & __NET_XMIT_BYPASS)
- 			qdisc_qstats_drop(sch);
- 		__qdisc_drop(skb, to_free);
- 		return ret;
--#endif
- 	} else if ((ret = qdisc_enqueue(skb, cl->leaf.q,
- 					to_free)) != NET_XMIT_SUCCESS) {
- 		if (net_xmit_drop_count(ret)) {
++	device = ACPI_COMPANION(&pdev->dev);
++	if (!device)
++		return -ENODEV;
++
++	pdev_info.fwnode = acpi_fwnode_handle(device),
++
+ 	status = acpi_install_address_space_handler(device->handle, LG_ADDRESS_SPACE_ID,
+ 						    &lg_laptop_address_space_handler,
+ 						    NULL, &pdev->dev);
 -- 
 2.53.0
 
