@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B9738F236;
-	Sat, 12 Sep 2026 19:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4881FBEA6;
+	Sat, 12 Sep 2026 19:52:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242752; cv=none; b=BkdSGtIPezK/XRmOhVdcQonKXGecnqETJzc5owng0NsADqZq5ApUc5VmwKough7KGYhsBs85xMNLvlDwMjzLCGkxKxnuoNW05/Nl1VqCxsjnLVR8k2/ZOdm3jbSfiyvOYB2PJrZuZRMu3hgZTKwSfLNxqaD1qv8FjuUBQ24AhwY=
+	t=1789242755; cv=none; b=L7ACXOp8oaXqX1pdHNqJUy2owAVDKEsSD/AMtxJw9SKJdR9i70vWUOmthY1ujHALnrGKm+T+tz9bxmUX4yRhW4qI77N3uK8qKej7mhLxj9DhkIH7eL8lCY2RAypvt90gx0VZlLzXWMvyacgPz5Bkkf7ltfqfIUgQKvWDawz6W/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242752; c=relaxed/simple;
-	bh=I9PfhbLiTzrKFxFX2W8UuJsnmlcglWGTQMLVIy455QY=;
+	s=arc-20240116; t=1789242755; c=relaxed/simple;
+	bh=HNykB1+TYNwHA3IDpn4w6Phra5j2FOJRI7Rxj04lZ+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n7n/jhpIb07NYtFyZLGyjd6cmrvX1xxDMYmHfGWYjQcp+b1PIsaNJHw8hOzlkBKNoEyrLQflWPvCDvixmNRupUGgwAuM1yCM/bbZp/2mO8vKqxNYdg75kfIRl0CXZcHDIUuD0DiznCF8Xgr65Zcp2hLBumyuq/rpHe0fxbqkaOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4OLLhRp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=secU5AeNPBDyDQjp+WAZVx2cawaBp70CUxxxb5Azz9Gj1u0t84I4De0pZqB5L7dbXIxYI5QP3PRD9mzLgZ460uxHAV7//0R0iUFJxd50sEDK7EOb2h8YiCDJ1aVnIZAx6uVOnyMLRTIqTnidsiP0nUIpVEdpP7jZeOG304uI2NY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JVMCBvC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4OLLhRp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C02F61F000FF;
-	Sat, 12 Sep 2026 19:52:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JVMCBvC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB9D1F000FF;
+	Sat, 12 Sep 2026 19:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242751;
-	bh=6O8LrFW5/jVO0ikCCocNmq/yGmMTZFs7IOQemX5ee84=;
+	s=korg; t=1789242754;
+	bh=1hDQ15ktm2mbin1OgsYV3eeqSxH9rlGlIgYvqMPq9o0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d4OLLhRpqZ01gi6VwXMKtuCffS3Qe1dF/Vw+Pq98xSvI9Oyh8d4Xfqbp7CEHXubNM
-	 6UjhQNQes9lYNh+ydaaRfGIzAmtDOzow6epbGBZQIjWN+70nMZghJwYes9WNM+Z4eg
-	 89nvW5TZbD+120B9pHkya1sQK0xaDfmRqpmIXE50=
+	b=2JVMCBvCAiRcNZbO7fr0bL56C4MEZLS6RvKYih2YjWev51DoT6imEz7RbX/Km2TV3
+	 h0Vv1KyMx6JxKGFAiVbTImlVmoEqTYgh1taviGDfHji5E9jWTdhjAzN3mm1Tztzss4
+	 jwQkX+R98J1TXiusSfh8fwimNt/2aCLHTaywjJi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
+	Fabio Estevam <festevam@gmail.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 512/798] arm64: dts: rockchip: Fix PCI node addresses on rk3399-gru
-Date: Sat, 12 Sep 2026 09:02:20 +0200
-Message-ID: <20260912065528.870380854@linuxfoundation.org>
+Subject: [PATCH 5.10 513/798] arm64: dts: rockchip: Fix Gru WLAN sideband interrupt
+Date: Sat, 12 Sep 2026 09:02:21 +0200
+Message-ID: <20260912065528.892207857@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,77 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring <robh@kernel.org>
+From: Fabio Estevam <festevam@gmail.com>
 
-[ Upstream commit c13c823a78b77ea0e5f1f73112d910e259911101 ]
+[ Upstream commit a761818d9ee11183df0aefd16bf9fe46cc1c4c6d ]
 
-The rk3399-gru PCI node addresses are wrong.
+The Marvell WLAN host wake interrupt is wired to GPIO0 8 and is not
+one of the PCI INTx interrupts. The PCI device schema therefore
+interprets the two-cell GPIO interrupt specifier as an invalid PCI
+interrupt and reports dtbs_check warnings:
 
-In rk3399-gru-scarlet, the bus number in the address should be 0. This is
-because bus number assignment is dynamic and not known up front. For FDT,
-the bus number is simply ignored.
+pcie@0,0: wifi@0,0:interrupts:0:0: 8 is not one of [1, 2, 3, 4]
+pcie@0,0: wifi@0,0:interrupts:0: [8, 8] is too long
 
-In rk3399-gru-chromebook, the addresses are simply invalid. The first
-"reg" entry must be the configuration space for the device. The entry
-should be all 0s except for device/slot and function numbers. The existing
-64-bit memory space (0x83000000) entries are not valid because they must
-have the BAR address in the lower byte of the first cell.
+Describe the sideband interrupt with interrupts-extended, which
+explicitly carries the interrupt controller and removes the ambiguity.
 
-Warnings for these are enabled by adding the missing 'device_type = "pci"'
-for the root port node.
-
-Signed-off-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20231130191830.2424361-1-robh@kernel.org
+Fixes: 48f4d9796d99 ("arm64: dts: rockchip: add Gru/Kevin DTS")
+Signed-off-by: Fabio Estevam <festevam@gmail.com>
+Link: https://patch.msgid.link/20260721133445.44283-1-festevam@gmail.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Stable-dep-of: a761818d9ee1 ("arm64: dts: rockchip: Fix Gru WLAN sideband interrupt")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi  | 3 +--
- arch/arm64/boot/dts/rockchip/rk3399-gru-scarlet-dumo.dts | 4 ++--
- arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi             | 1 +
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi
-index 739937f70f8d0..3ac88d35c8f15 100644
+index 3ac88d35c8f15..acff3f8050f67 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi
-@@ -327,8 +327,7 @@ wacky_spi_audio: spi2@0 {
- &pci_rootport {
+@@ -328,8 +328,7 @@ &pci_rootport {
  	mvl_wifi: wifi@0,0 {
  		compatible = "pci1b4b,2b42";
--		reg = <0x83010000 0x0 0x00000000 0x0 0x00100000
--		       0x83010000 0x0 0x00100000 0x0 0x00100000>;
-+		reg = <0x0000 0x0 0x0 0x0 0x0>;
- 		interrupt-parent = <&gpio0>;
- 		interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
+ 		reg = <0x0000 0x0 0x0 0x0 0x0>;
+-		interrupt-parent = <&gpio0>;
+-		interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
++		interrupts-extended = <&gpio0 8 IRQ_TYPE_LEVEL_LOW>;
  		pinctrl-names = "default";
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-gru-scarlet-dumo.dts b/arch/arm64/boot/dts/rockchip/rk3399-gru-scarlet-dumo.dts
-index 853e88455e750..9e4b12ed62cbe 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-gru-scarlet-dumo.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-gru-scarlet-dumo.dts
-@@ -34,8 +34,8 @@ &mipi_panel {
- &pci_rootport {
- 	wifi@0,0 {
- 		compatible = "qcom,ath10k";
--		reg = <0x00010000 0x0 0x00000000 0x0 0x00000000>,
--		      <0x03010010 0x0 0x00000000 0x0 0x00200000>;
-+		reg = <0x00000000 0x0 0x00000000 0x0 0x00000000>,
-+		      <0x03000010 0x0 0x00000000 0x0 0x00200000>;
- 		qcom,ath10k-calibration-variant = "GO_DUMO";
- 	};
- };
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi
-index fb0a13cad6c93..9d237e7743e1f 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi
-@@ -456,6 +456,7 @@ pci_rootport: pcie@0,0 {
- 		#address-cells = <3>;
- 		#size-cells = <2>;
- 		ranges;
-+		device_type = "pci";
- 	};
- };
- 
+ 		pinctrl-0 = <&wlan_host_wake_l>;
+ 		wakeup-source;
 -- 
 2.53.0
 
