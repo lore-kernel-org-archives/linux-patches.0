@@ -1,37 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E023DD51A;
-	Sat, 12 Sep 2026 11:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611D7456DE1;
+	Sat, 12 Sep 2026 11:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211179; cv=none; b=Rty4V277/rx+/IOeQXJ+MIvA1Ba3+PwGpWaVt6WHAQaYmLqKP7pLdJy3jpDBeXKEc4r/Yi/dZQJohVrzoJ60L8tAypsrlm6QeOtA5VF7d4JJs2alZ1AwdESxtClFOVNW0hVCyeiXQB50PGTovNZc0lx0SFS0RwrEiquqv4gaxK4=
+	t=1789211183; cv=none; b=UUmP71fqK68vpQvmbqzIY70Akk2ObReUDxukbj0gQAUvN+hWgx9p7h9lBYj32wVyLEzh0BivUCPx4EU5rlwTnNxkzVV/pmsm/c/XPQEHnHoqN3nO/MRTQjyMZNUaHTdSNTcrnAcq9UzoWpTKqHhe+qa+S+6CnE9i+t9ixgR4YCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211179; c=relaxed/simple;
-	bh=ndeSHWfILh+dJljM7TtKOTbL3GyuoNfxFMdxEscLbA0=;
+	s=arc-20240116; t=1789211183; c=relaxed/simple;
+	bh=RTJQNq23HuFRoqcK8j26/kvXvZCMg6FQ9jy9nIapJqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n8cegg12IFswn9ubQ7KIwB+DJc92SlrfjQ5MnGOmb8bQ5jbYC6napG1/dQWcR9u158aoY570Mj+yNseNaEPYMS4Thu5Pe9FQv5Pkzq5auAgvRbsqFdZf8AkmhiyYEQqzpK58kZXO7yakdWtZycrTuaqaTbQIJJ+A0DvqFbG56Zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WAy2E5Ti; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xf9rFtNr/ZtO0qhX1cCWeqLEe3ocMsCMQJ4VDB4Eu2g2EuXlDf2qDbCm7yxPYl+eFVwvFs8MSU/ltgqmEUcBIU2DF+09kw8ll2gFqdfDmgNW+hTnr6ebmqfzN3hE3BZuy8/as3gtHGL4tdyjwG4DWh/O7MkiPeetbapBXqF31HE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtQCJ/Oh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WAy2E5Ti"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FAAB1F000FF;
-	Sat, 12 Sep 2026 11:06:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtQCJ/Oh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA881F000FF;
+	Sat, 12 Sep 2026 11:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211177;
-	bh=jmXkg+IVcoYN3JwVrnwJ7zOpPkuvAQ90AOQ92QjIAU8=;
+	s=korg; t=1789211182;
+	bh=TM4B70Pi22Pf1L8/XWExhpp6qOYZ9p4vhyE6dg7Mu8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WAy2E5TihZppKV7MdBRPf89fhc8G2wmKjyAwdhgGkdClULjbZiNGKUANJ8CaCFHts
-	 sJ7ZE5tX2sHvFGt9nZ6aMLjnB/Rkysy/UU1hPPr/pehwaC9lzzagoo2ZxjJ839dbD2
-	 ah0iWFuV656PM8HT1cylzZP7wTZuQPGFyMU47rtU=
+	b=PtQCJ/OhrdSSmH3ES6QXSQuLz+i1+qT3iqMy7InAno/IZYdz8ZgoAK99aJz3RAb5v
+	 J9eX89BHdMX6i3s6n7UmBY4pzmxrGVqMUrxiIZLhLp6CZpjvBfJZm/3VXGC8KiZIYM
+	 pVwpLe/+urVssClVqM7XghFDfxQ2jn1qoWpFIOfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	ZhengYuan Huang <gality369@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1150/1518] firewire: core: add KUnit tests for successful tree building
-Date: Sat, 12 Sep 2026 08:55:19 +0200
-Message-ID: <20260912065649.471605707@linuxfoundation.org>
+Subject: [PATCH 6.18 1177/1518] ocfs2: validate orphan slot during inode read
+Date: Sat, 12 Sep 2026 08:55:46 +0200
+Message-ID: <20260912065650.101335404@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,552 +58,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: ZhengYuan Huang <gality369@gmail.com>
 
-[ Upstream commit 7b763ea17152cf61ede5289c3c66bf133c8aafa7 ]
+[ Upstream commit b2d31acbd3b182755b019183fb46949ba5e39b9f ]
 
-After a bus reset, self ID sequence is captured by 1394 OHCI hardware and
-passed to software through SelfID DMA context. The core parses the sequence
-to build an internal cache of the node tree for the current generation
-of the bus. This is the first step in managing resources on the bus.
+Patch series "ocfs2: validate active orphan slots during inode read".
 
-The tree is build by the build_tree() function. This commit adds KUnit
-tests for the function, covering several successful scenarios.
+OCFS2 trusts active ordinary and append-DIO orphan slots read from dinodes.
+A corrupted slot can therefore index osb_orphan_wipes or the slot-local
+system-inode cache outside their allocations before the corruption is
+reported.
 
-Link: https://lore.kernel.org/r/20260810064119.410324-3-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Stable-dep-of: 05bfb1327dc5 ("firewire: core: fix memory leak in error path of build_tree()")
+Patch 1 validates the ordinary orphan slot used by inode wipe processing.
+Patch 2 validates the append-DIO orphan slot used by DIO completion and
+orphan recovery.  Both checks reject corrupt metadata at the existing inode
+validation boundary.
+
+This patch (of 2):
+
+[BUG]
+A corrupted dinode with OCFS2_ORPHANED_FL can carry an
+i_orphaned_slot outside the mounted filesystem slot range.
+ocfs2_wipe_inode() uses it to index osb_orphan_wipes before looking
+up the orphan directory, causing an out-of-bounds memory access.
+
+BUG: KASAN: slab-use-after-free in ocfs2_get_system_file_inode+0x780/0x820 fs/ocfs2/sysfile.c:102
+Read of size 8 at addr ffff88800b767c00 by task kworker/u8:3/85
+Call Trace:
+ ...
+ ocfs2_get_system_file_inode+0x780/0x820 fs/ocfs2/sysfile.c:102
+ ocfs2_wipe_inode+0x292/0xf70 fs/ocfs2/inode.c:840
+ ocfs2_delete_inode fs/ocfs2/inode.c:1155 [inline]
+ ocfs2_evict_inode+0x6c9/0x1170 fs/ocfs2/inode.c:1295
+ evict+0x38e/0x8f0 fs/inode.c:810
+ iput_final fs/inode.c:1914 [inline]
+ iput fs/inode.c:1966 [inline]
+ iput+0x55b/0x8b0 fs/inode.c:1926
+ ocfs2_recover_orphans+0x610/0xe40 fs/ocfs2/journal.c:2374
+ ocfs2_complete_recovery+0x5af/0xd00 fs/ocfs2/journal.c:1373
+ ...
+
+[CAUSE]
+ocfs2_validate_inode_block() validates i_suballoc_slot but leaves
+the active ordinary orphan slot unchecked. Downstream consumers
+assume that the value is smaller than osb->max_slots.
+
+[FIX]
+Reject an active i_orphaned_slot outside the slot range during
+dinode validation, before the inode reaches orphan wipe processing.
+
+Link: https://lore.kernel.org/20260803030007.3993199-1-gality369@gmail.com
+Link: https://lore.kernel.org/20260803030007.3993199-2-gality369@gmail.com
+Fixes: b4df6ed8db0c ("[PATCH] ocfs2: fix orphan recovery deadlock")
+Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/node-tree-test.c | 508 ++++++++++++++++++++++++++++++
- 1 file changed, 508 insertions(+)
+ fs/ocfs2/inode.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/firewire/node-tree-test.c b/drivers/firewire/node-tree-test.c
-index fca71dd99b25f..6f404df3d50e0 100644
---- a/drivers/firewire/node-tree-test.c
-+++ b/drivers/firewire/node-tree-test.c
-@@ -7,13 +7,521 @@
- // This file can not be built independently since it is intentionally included in core-topology.c.
+diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
+index d247d69349e4a..a33de57f31618 100644
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -1538,6 +1538,14 @@ int ocfs2_validate_inode_block(struct super_block *sb,
+ 		goto bail;
+ 	}
  
- #include <kunit/test.h>
-+#include <kunit/test-bug.h>
-+#include <kunit/device.h>
-+
-+struct private_data {
-+	struct fw_card *card;
-+	unsigned int release_count;
-+};
-+
-+static int node_tree_test_init(struct kunit *test)
-+{
-+	struct private_data *data;
-+
-+	data = kunit_kzalloc(test, sizeof(*data), GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_NULL(test, data);
-+
-+	data->card = kunit_kzalloc(test, sizeof(struct fw_card), GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_NULL(test, data->card);
-+
-+	data->card->device = kunit_device_register(test, "dummy-device");
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, data->card->device);
-+
-+	test->priv = data;
-+
-+	return 0;
-+}
-+
-+static void node_tree_test_exit(struct kunit *test)
-+{
-+	struct private_data *data = test->priv;
-+
-+	kunit_device_unregister(test, data->card->device);
-+	kunit_kfree(test, data->card);
-+	kunit_kfree(test, data);
-+}
-+
-+static void release_fw_node(struct fw_card *card, struct fw_node *node, struct fw_node *parent)
-+{
-+	struct private_data *data = kunit_get_current_test()->priv;
-+
-+	fw_node_put(node);
-+	++data->release_count;
-+}
-+
-+static void node_tree_test_two_nodes(struct kunit *test)
-+{
-+	//       root
-+	// ++============++
-+	// ||    phy 1   ||
-+	// ||  P0 P1 P2  ||
-+	// ++===|==|==|==++
-+	//            |
-+	//      +-----+
-+	//      |
-+	// ++===|==x==x==++
-+	// ||  P0 P1 P2  ||
-+	// ||    phy 0   ||
-+	// ++============++
-+	//
-+	static const u32 self_id_sequence[] = {
-+		0x80000080,
-+		0x8100005e,
-+	};
-+	struct private_data *data = test->priv;
-+	struct fw_card *card = data->card;
-+
-+	card->node_id = LOCAL_BUS | 0x01;
-+
-+	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
-+	KUNIT_EXPECT_NOT_NULL(test, card->local_node);
-+	KUNIT_EXPECT_PTR_EQ(test, card->local_node, card->root_node);
-+
-+	struct fw_node *node = card->root_node;
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x01);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 3);
-+	KUNIT_EXPECT_NULL(test, node->ports[0]);
-+	KUNIT_EXPECT_NULL(test, node->ports[1]);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[2]);
-+
-+	struct fw_node *parent = node;
-+	node = parent->ports[2];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x00);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 1);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[0], parent);
-+
-+	++card->color;
-+	for_each_fw_node(card, card->root_node, release_fw_node);
-+	KUNIT_EXPECT_EQ(test, data->release_count, 2);
-+}
-+
-+static void node_tree_test_two_nodes_1394a(struct kunit *test)
-+{
-+	//         root
-+	// ++===============++
-+	// ||      phy 0    ||
-+	// ||  P0 P1 P2 P3  ||
-+	// ++===|==|==|==|==++
-+	//            |
-+	//         +--+
-+	//         |
-+	// ++===|==|==|==|==|==++
-+	// ||  P0 P1 P2 P3 P4  ||
-+	// ||       phy 1      ||
-+	// ++==================++
-+	//
-+	// NOTE: Just for Self-ID Packets Zero and One.
-+	static const u32 self_id_sequence[] = {
-+		0x80000065, 0x80814000,
-+		0x8100005d, 0x81810000,
-+	};
-+	struct private_data *data = test->priv;
-+	struct fw_card *card = data->card;
-+
-+	card->node_id = LOCAL_BUS | 0x01;
-+
-+	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
-+	KUNIT_EXPECT_NOT_NULL(test, card->local_node);
-+	KUNIT_EXPECT_PTR_EQ(test, card->local_node, card->root_node);
-+
-+	struct fw_node *node = card->root_node;
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x01);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 4);
-+	KUNIT_EXPECT_NULL(test, node->ports[0]);
-+	KUNIT_EXPECT_NULL(test, node->ports[1]);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[2]);
-+	KUNIT_EXPECT_NULL(test, node->ports[3]);
-+
-+	struct fw_node *parent = node;
-+	node = parent->ports[2];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x00);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 5);
-+	KUNIT_EXPECT_NULL(test, node->ports[0]);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[1], parent);
-+	KUNIT_EXPECT_NULL(test, node->ports[2]);
-+	KUNIT_EXPECT_NULL(test, node->ports[3]);
-+	KUNIT_EXPECT_NULL(test, node->ports[4]);
-+
-+	++card->color;
-+	for_each_fw_node(card, card->root_node, release_fw_node);
-+	KUNIT_EXPECT_EQ(test, data->release_count, 2);
-+}
-+
-+static void node_tree_test_three_nodes_case0(struct kunit *test)
-+{
-+	//       root
-+	// ++============++
-+	// ||    phy 2   ||
-+	// ||  P0 P1 P2  ||
-+	// ++===|==|==|==++
-+	//      |     |
-+	//      +--+  +-----------------+
-+	//         |                    |
-+	// ++===|==|==x==++  ++===|==|==|==++
-+	// ||  P0 P1 P2  ||  ||  P0 P1 P2  ||
-+	// ||    phy 0   ||  ||    phy 1   ||
-+	// ++============++  ++============++
-+	//
-+	static const u32 self_id_sequence[] = {
-+		0x80000060,
-+		0x81000058,
-+		0x820000dc,
-+	};
-+	struct private_data *data = test->priv;
-+	struct fw_card *card = data->card;
-+
-+	card->node_id = LOCAL_BUS | 0x02;
-+
-+	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
-+	KUNIT_EXPECT_NOT_NULL(test, card->local_node);
-+	KUNIT_EXPECT_PTR_EQ(test, card->local_node, card->root_node);
-+
-+	struct fw_node *node = card->root_node;
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x02);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 3);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[0]);
-+	KUNIT_EXPECT_NULL(test, node->ports[1]);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[2]);
-+
-+	struct fw_node *parent = node;
-+	node = parent->ports[0];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x00);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 2);
-+	KUNIT_EXPECT_NULL(test, node->ports[0]);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[1], parent);
-+
-+	node = parent->ports[2];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x01);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 3);
-+	KUNIT_EXPECT_NULL(test, node->ports[0]);
-+	KUNIT_EXPECT_NULL(test, node->ports[1]);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[2], parent);
-+
-+	++card->color;
-+	for_each_fw_node(card, card->root_node, release_fw_node);
-+	KUNIT_EXPECT_EQ(test, data->release_count, 3);
-+}
-+
-+static void node_tree_test_three_nodes_case1(struct kunit *test)
-+{
-+	//       root
-+	// ++============++
-+	// ||    phy 2   ||
-+	// ||  P0 P1 P2  ||
-+	// ++===|==|==x==++
-+	//         |
-+	//         |  +-----------+
-+	//         |  |           |
-+	// ++===|==|==|==++  ++===|==x==x==++
-+	// ||  P0 P1 P2  ||  ||  P0 P1 P2  ||
-+	// ||    phy 1   ||  ||    phy 0   ||
-+	// ++============++  ++============++
-+	//
-+	static const u32 self_id_sequence[] = {
-+		0x80000080,
-+		0x8100006c,
-+		0x82000070,
-+	};
-+	struct private_data *data = test->priv;
-+	struct fw_card *card = data->card;
-+
-+	card->node_id = LOCAL_BUS | 0x02;
-+
-+	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
-+	KUNIT_EXPECT_NOT_NULL(test, card->local_node);
-+	KUNIT_EXPECT_PTR_EQ(test, card->local_node, card->root_node);
-+
-+	struct fw_node *node = card->root_node;
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x02);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 2);
-+	KUNIT_EXPECT_NULL(test, node->ports[0]);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[1]);
-+
-+	struct fw_node *parent = node;
-+	node = parent->ports[1];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x01);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 3);
-+	KUNIT_EXPECT_NULL(test, node->ports[0]);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[1], parent);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[2]);
-+
-+	parent = node;
-+	node = parent->ports[2];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x00);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 1);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[0], parent);
-+
-+	++card->color;
-+	for_each_fw_node(card, card->root_node, release_fw_node);
-+	KUNIT_EXPECT_EQ(test, data->release_count, 3);
-+}
-+
-+static void node_tree_test_four_nodes_case0(struct kunit *test)
-+{
-+	//       root
-+	// ++============++
-+	// ||    phy 3   ||
-+	// ||  P0 P1 P2  ||
-+	// ++===|==|==|==++
-+	//         |
-+	//         |  +-----------+  +--------------+
-+	//         |  |           |  |              |
-+	// ++===|==|==|==++  ++===|==|==x==++  ++===|==x==x==++
-+	// ||  P0 P1 P2  ||  ||  P0 P1 P2  ||  ||  P0 P1 P2  ||
-+	// ||    phy 2   ||  ||    phy 1   ||  ||    phy 0   ||
-+	// ++============++  ++============++  ++============++
-+	//
-+	static const u32 self_id_sequence[] = {
-+		0x80000080,
-+		0x810000b0,
-+		0x8200006c,
-+		0x83000074,
-+	};
-+	struct private_data *data = test->priv;
-+	struct fw_card *card = data->card;
-+
-+	card->node_id = LOCAL_BUS | 0x03;
-+
-+	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
-+	KUNIT_EXPECT_NOT_NULL(test, card->local_node);
-+	KUNIT_EXPECT_PTR_EQ(test, card->local_node, card->root_node);
-+
-+	struct fw_node *node = card->root_node;
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x03);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 3);
-+	KUNIT_EXPECT_NULL(test, node->ports[0]);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[1]);
-+	KUNIT_EXPECT_NULL(test, node->ports[2]);
-+
-+	struct fw_node *parent = node;
-+	node = parent->ports[1];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x02);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 3);
-+	KUNIT_EXPECT_NULL(test, node->ports[0]);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[1], parent);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[2]);
-+
-+	parent = node;
-+	node = parent->ports[2];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x01);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 2);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[0], parent);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[1]);
-+
-+	parent = node;
-+	node = parent->ports[1];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x00);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 1);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[0], parent);
-+
-+	++card->color;
-+	for_each_fw_node(card, card->root_node, release_fw_node);
-+	KUNIT_EXPECT_EQ(test, data->release_count, 4);
-+}
-+
-+static void node_tree_test_four_nodes_case1(struct kunit *test)
-+{
-+	//       root
-+	// ++============++
-+	// ||    phy 3   ||
-+	// ||  P0 P1 P2  ||
-+	// ++===|==|==x==++
-+	//      |
-+	//      |  +--------------------------------+
-+	//      |  |  +-----------+                 |
-+	// ++===|==|==|==++  ++===|==x==x==++  ++===|==|==|==++
-+	// ||  P0 P1 P2  ||  ||  P0 P1 P2  ||  ||  P0 P1 P2  ||
-+	// ||    phy 2   ||  ||    phy 1   ||  ||    phy 0   ||
-+	// ++============++  ++============++  ++============++
-+	//
-+	static const u32 self_id_sequence[] = {
-+		0x80000094,
-+		0x81000080,
-+		0x820000bc,
-+		0x830000d0,
-+	};
-+	struct private_data *data = test->priv;
-+	struct fw_card *card = data->card;
-+
-+	card->node_id = LOCAL_BUS | 0x03;
-+
-+	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
-+	KUNIT_EXPECT_NOT_NULL(test, card->local_node);
-+	KUNIT_EXPECT_PTR_EQ(test, card->local_node, card->root_node);
-+
-+	struct fw_node *node = card->root_node;
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x03);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 2);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[0]);
-+	KUNIT_EXPECT_NULL(test, node->ports[1]);
-+
-+	struct fw_node *parent = node;
-+	node = parent->ports[0];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x02);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 3);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[0], parent);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[1]);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[2]);
-+
-+	parent = node;
-+	node = parent->ports[2];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x01);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 1);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[0], parent);
-+
-+	node = parent->ports[1];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x00);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 3);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[0], parent);
-+	KUNIT_EXPECT_NULL(test, node->ports[1]);
-+	KUNIT_EXPECT_NULL(test, node->ports[2]);
-+
-+	++card->color;
-+	for_each_fw_node(card, card->root_node, release_fw_node);
-+	KUNIT_EXPECT_EQ(test, data->release_count, 4);
-+}
-+
-+static void node_tree_test_four_nodes_case2(struct kunit *test)
-+{
-+	//       root
-+	// ++============++
-+	// ||    phy 3   ||
-+	// ||  P0 P1 P2  ||
-+	// ++===|==|==|==++
-+	//      |     |
-+	//      |     +-----------------------------+
-+	//      |  +--------------+                 |
-+	// ++===|==|==x==++  ++===|==|==|==++  ++===|==x==x==++
-+	// ||  P0 P1 P2  ||  ||  P0 P1 P2  ||  ||  P0 P1 P2  ||
-+	// ||    phy 1   ||  ||    phy 0   ||  ||    phy 2   ||
-+	// ++============++  ++============++  ++============++
-+	//
-+	static const u32 self_id_sequence[] = {
-+		0x80000094,
-+		0x810000b0,
-+		0x82000080,
-+		0x830000dc,
-+	};
-+	struct private_data *data = test->priv;
-+	struct fw_card *card = data->card;
-+
-+	card->node_id = LOCAL_BUS | 0x03;
-+
-+	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
-+	KUNIT_EXPECT_NOT_NULL(test, card->local_node);
-+	KUNIT_EXPECT_PTR_EQ(test, card->local_node, card->root_node);
-+
-+	struct fw_node *node = card->root_node;
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x03);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 3);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[0]);
-+	KUNIT_EXPECT_NULL(test, node->ports[1]);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[2]);
-+
-+	struct fw_node *parent = node;
-+	node = parent->ports[2];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x02);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 1);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[0], parent);
-+
-+	node = parent->ports[0];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x01);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 2);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[0], parent);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[1]);
-+
-+	parent = node;
-+	node = parent->ports[1];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x00);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 3);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[0], parent);
-+	KUNIT_EXPECT_NULL(test, node->ports[1]);
-+	KUNIT_EXPECT_NULL(test, node->ports[2]);
-+
-+	++card->color;
-+	for_each_fw_node(card, card->root_node, release_fw_node);
-+	KUNIT_EXPECT_EQ(test, data->release_count, 4);
-+}
-+
-+static void node_tree_test_four_nodes_case3(struct kunit *test)
-+{
-+	//       root
-+	// ++============++
-+	// ||    phy 3   ||
-+	// ||  P0 P1 P2  ||
-+	// ++===|==|==|==++
-+	//      |  |  +--------------------------------+
-+	//      |  +--------------------+              |
-+	//      |                       |              |
-+	// ++===|==|==x==++  ++===|==|==|==++  ++===|==|==x==++
-+	// ||  P0 P1 P2  ||  ||  P0 P1 P2  ||  ||  P0 P1 P2  ||
-+	// ||    phy 0   ||  ||    phy 1   ||  ||    phy 2   ||
-+	// ++============++  ++============++  ++============++
-+	//
-+	static const u32 self_id_sequence[] = {
-+		0x80000090,
-+		0x81000058,
-+		0x82000060,
-+		0x830000fc,
-+	};
-+	struct private_data *data = test->priv;
-+	struct fw_card *card = data->card;
-+
-+	card->node_id = LOCAL_BUS | 0x03;
-+
-+	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
-+	KUNIT_EXPECT_NOT_NULL(test, card->local_node);
-+	KUNIT_EXPECT_PTR_EQ(test, card->local_node, card->root_node);
-+
-+	struct fw_node *node = card->root_node;
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x03);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 3);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[0]);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[1]);
-+	KUNIT_EXPECT_NOT_NULL(test, node->ports[2]);
-+
-+	struct fw_node *parent = node;
-+	node = parent->ports[2];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x02);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 2);
-+	KUNIT_EXPECT_NULL(test, node->ports[0]);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[1], parent);
-+
-+	node = parent->ports[1];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x01);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 3);
-+	KUNIT_EXPECT_NULL(test, node->ports[0]);
-+	KUNIT_EXPECT_NULL(test, node->ports[1]);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[2], parent);
-+
-+	node = parent->ports[0];
-+	KUNIT_EXPECT_EQ(test, node->node_id, LOCAL_BUS | 0x00);
-+	KUNIT_EXPECT_EQ(test, node->port_count, 2);
-+	KUNIT_EXPECT_PTR_EQ(test, node->ports[0], parent);
-+	KUNIT_EXPECT_NULL(test, node->ports[1]);
-+
-+	++card->color;
-+	for_each_fw_node(card, card->root_node, release_fw_node);
-+	KUNIT_EXPECT_EQ(test, data->release_count, 4);
-+}
- 
- static struct kunit_case node_tree_test_cases[] = {
-+	KUNIT_CASE(node_tree_test_two_nodes),
-+	KUNIT_CASE(node_tree_test_two_nodes_1394a),
-+	KUNIT_CASE(node_tree_test_three_nodes_case0),
-+	KUNIT_CASE(node_tree_test_three_nodes_case1),
-+	KUNIT_CASE(node_tree_test_four_nodes_case0),
-+	KUNIT_CASE(node_tree_test_four_nodes_case1),
-+	KUNIT_CASE(node_tree_test_four_nodes_case2),
-+	KUNIT_CASE(node_tree_test_four_nodes_case3),
- 	{}
- };
- 
- static struct kunit_suite node_tree_test_suite = {
- 	.name = "firewire-node-tree",
-+	.init = node_tree_test_init,
-+	.exit = node_tree_test_exit,
- 	.test_cases = node_tree_test_cases,
- };
- kunit_test_suite(node_tree_test_suite);
++	if ((le32_to_cpu(di->i_flags) & OCFS2_ORPHANED_FL) &&
++	    le16_to_cpu(di->i_orphaned_slot) >= OCFS2_SB(sb)->max_slots) {
++		rc = ocfs2_error(sb, "Invalid dinode %llu: orphaned slot %u\n",
++				 (unsigned long long)bh->b_blocknr,
++				 le16_to_cpu(di->i_orphaned_slot));
++		goto bail;
++	}
++
+ 	/*
+ 	 * Reject dinodes whose i_mode does not name one of the seven
+ 	 * canonical POSIX file types.  ocfs2_populate_inode() copies
 -- 
 2.53.0
 
