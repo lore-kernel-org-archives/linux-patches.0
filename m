@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E4F34250E;
-	Sat, 12 Sep 2026 19:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D423934250E;
+	Sat, 12 Sep 2026 19:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239938; cv=none; b=LVQr5KyiJkSBasv5bDzdzh/nU3uNmwUFHYH11gwtiQf12jyCdpLj9DUo6Zo/JD5sv6TUBz5kCXVApkWxTz8Yg/E+0kLMwUkx1X7EFdvVh0xuPn0poKAY3L2biCQbBZgylkkuoIR8nzvn+nrwKS7kkFfDo7+IiNAypEXEXzqajmc=
+	t=1789239943; cv=none; b=ii9fpolzPcO26TdVHOqT6OpQhPWV0cUzH5le/DeBpMWKNBvJIb1MhNipb1rGU9AozHII/SymX9NQX39tdvOG9PxozTZQt+xscQKjIi/+Uf9zN9gKNQ6UZtPMI+IQs52ZvXmmvDM2JOWz7dOz3QHjRJVJscd4GWNL47HphXEkIeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239938; c=relaxed/simple;
-	bh=YuXYm35Kwvqw+J5n9TOfICtv+JxrTYAxHgMw0jwTiL4=;
+	s=arc-20240116; t=1789239943; c=relaxed/simple;
+	bh=2aJjZeN9RqPyH3pWmS/tgw+E6e1fBw2p3m1fXVtEtJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z39HeGjcs9WYIwsHRIvxiN3rNBGh3Jn/G2i4dDC1rbOEf76vko4pOT8VbS7qbh0nsKTCLpB/3njUOd+wJDawb+IrcOZ0hR6GIbFzPAffyes747HhVxnn5m4tAQ/kSh13td7/uVQWzqze7U+l0ZQ9kjy3+v7DfOIl4RZpKujY1VE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HnLc3Gnf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MzOhgVSGEKy5LRaerPAsLWkSCOqT9bbXSWyOuyT8FnlIftmVWDRVe7tKjnhJadyXm3vCh6ukLk7cQTbWabuxqkuZ/ZdbsHiSCPMFKuf5Fhkif+0LI3m/K2m655t5g6qf5LJQU22oZA2xtg9/OM8GOAB1uhXt3qKUAa6hbuCgfHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PTg6ftt3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HnLc3Gnf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10EE1F000FF;
-	Sat, 12 Sep 2026 19:05:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PTg6ftt3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528F21F000FF;
+	Sat, 12 Sep 2026 19:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239937;
-	bh=gwA0XjlJW897Y3QIfWDsJwJfS8RySh5gRlnRhTE8fF8=;
+	s=korg; t=1789239942;
+	bh=2GJXHvkwq9rpVPA6YGG2JwLDaQkCI7ZL8+KzBSGEIEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HnLc3Gnf8RjyOb5Fcu3myvLd+azA+HeU2QaT42IK294izUuXh07oaD73dyA5QkRaQ
-	 L4rePIb9V9pDVrB8LCAC5t3WFg9g9X+gHL9ACaG64cR2BVNSIIyraaIdrrQUkjGO5l
-	 d9q3EEw1wWSLs2avAIqrgDTgiNdb5Wqu7VIQ8p30=
+	b=PTg6ftt39lN4BfPc9StLXtmXCiL7ksD81u2QnNExQYLgkO4OV/yA7eDZpVK4kVPAI
+	 lvZGSdTejCcq+Gc1NN096VX+ENmh6q0+FHVE1HF3tZVSmF4UxbiEMIJlnYqR3ZGe1r
+	 AAVXFOH+MLi7kgYT2Q8NsrKBUZPnGCtwZccahlBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
 	Vladimir Murzin <vladimir.murzin@arm.com>,
 	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 723/935] arm64: hibernate: mask DAIF before restoring hibernated kernel
-Date: Sat, 12 Sep 2026 09:02:33 +0200
-Message-ID: <20260912065543.416684086@linuxfoundation.org>
+Subject: [PATCH 5.15 724/935] arm64: hibernate: Restore DAIF state on error
+Date: Sat, 12 Sep 2026 09:02:34 +0200
+Message-ID: <20260912065543.439052631@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,79 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+From: Vladimir Murzin <vladimir.murzin@arm.com>
 
-[ Upstream commit 684bde100117931f4c51c644a95f42f2dab041bc ]
+[ Upstream commit 541549827889d0380fd73f8aacb5de6ef7a5a1ac ]
 
-The arm64 hibernate code manages the exception masking in an unsound
-way, leading to potential crashes and/or warnings during resume.
+Sashiko AI has reported that if swsusp_mte_save_tags() for some reason
+fails we return from swsusp_arch_suspend() with DAIF being masked -
+that is not what we'd expect. Restore the saved DAIF state before
+returning from the error path.
 
-When a hibernation image is saved in `swsusp_arch_suspend()`, all DAIF
-exceptions are masked (by virtue of `local_daif_save()`), and the
-suspended image is saved assuming that all DAIF exceptions will remain
-masked when the image is restored.
-
-When a hibernation image is resumed by `swsusp_arch_resume()`, only
-interrupts are masked (by virtue of `local_irq_disable()` in
-`resume_target_kernel()`). When pseudo-NMI is enabled the DAIF.IF bits
-will be clear, and regardless of pseudo-NMI the DAIF.DA bits will be
-clear.
-
-This means that there are two problems:
-
-(1) It is possible to take Debug, SError, or pseudo-NMI exceptions
-    during the resume process. This is unsafe, as during the resume
-    process both the old ane new kernels will tranisently be in an
-    inconsistent state, and swsusp_arch_suspend_exit() won't retain
-    an executable mapping of any exception vectors.
-
-    Any exception taken here will be fatal and silent.
-
-(2) When re-entering the resumed kernel, some DAIF bits will be clear
-    unexpectedly. This permits Debug, SError, or pseudo-NMI exceptions
-    to be taken for a short period while the resumed kernel is not yet
-    in a consistent state.
-
-    This is detected by CONFIG_ARM64_DEBUG_PRIORITY_MASKING.
-
-Avoid these issues by masking all DAIF exceptions during resume.
-
-Fixes: 82869ac57b5d ("arm64: kernel: Add support for hibernate/suspend-to-disk")
-Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Fixes: ee11f332af96 ("arm64: mte: Save tags when hibernating")
 Signed-off-by: Vladimir Murzin <vladimir.murzin@arm.com>
 Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/hibernate.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ arch/arm64/kernel/hibernate.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/kernel/hibernate.c b/arch/arm64/kernel/hibernate.c
-index 579d3ec9240ed..4c7f97b7da1a4 100644
+index 4c7f97b7da1a4..d61a22cb89787 100644
 --- a/arch/arm64/kernel/hibernate.c
 +++ b/arch/arm64/kernel/hibernate.c
-@@ -494,9 +494,21 @@ int __nocfi swsusp_arch_resume(void)
- 		__hyp_set_vectors(el2_vectors);
- 	}
+@@ -374,8 +374,10 @@ int swsusp_arch_suspend(void)
+ 		crash_prepare_suspend();
  
-+	/*
-+	 * It is necessary to mask all DAIF exceptions here as:
-+	 *
-+	 * - The copy of swsusp_arch_suspend_exit() in the hibernation
-+	 *   text cannot handle taking any exceptions.
-+	 *
-+	 * - The suspended kernel masked all DAIF exceptions in
-+	 *   swsusp_arch_resume(), and expects to be re-entered in the
-+	 *   same state : with all DAIF exceptions masked.
-+	 */
-+	local_daif_save();
- 	hibernate_exit(virt_to_phys(tmp_pg_dir), resume_hdr.ttbr1_el1,
- 		       resume_hdr.reenter_kernel, restore_pblist,
- 		       resume_hdr.__hyp_stub_vectors, virt_to_phys(zero_page));
-+	unreachable();
+ 		ret = swsusp_mte_save_tags();
+-		if (ret)
++		if (ret) {
++			local_daif_restore(flags);
+ 			return ret;
++		}
  
- 	return 0;
- }
+ 		sleep_cpu = smp_processor_id();
+ 		ret = swsusp_save();
 -- 
 2.53.0
 
