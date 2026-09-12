@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C74F47AF6D;
-	Sat, 12 Sep 2026 16:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964CB331EA8;
+	Sat, 12 Sep 2026 16:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231654; cv=none; b=oqwrmbM9jFBwB/h4KxLzyCXLg77BA/pCzBJR6rkp67WTUO4FwbcEggMfpjw8wDd7Zn89xlbJuqW2TPOCyzBeU2G6cwtaI3ljBU4oTYb0YbES3roTt+m4r99wNFJDb5bvE6ohQvObhUROnX7DgtciG1XgW8ACikPJdQv+yvG9dUE=
+	t=1789231660; cv=none; b=R+EcNgmHIRumQN9Zle2IpUY38tiGmmOMZKzFF3cJnfeKsw5bth8sFxJ6J7BS4PHB4aYSFtAfjhJ8muTpG57HFJ4Onm2YOekkVWVS0ZSVsUisUTeWaBDgOQH8C6cDv5yfPRTrxiUoRfs5ztTvV4rbl3ujISjCCqDS6GcvdrzOVkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231654; c=relaxed/simple;
-	bh=Wok9XvTbrmwyAjxZQRE4gYkCnbcqtk1Pprnn2u/OhZQ=;
+	s=arc-20240116; t=1789231660; c=relaxed/simple;
+	bh=Jo+hdeys3Ve0MO9RnXLHfjqmie6RhexcEN8c3kiHfgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C9iswh5fUxQOhI2Dwemo8PkrmEi8eQkeRLpOOqtn1q2oTvKzK05uCmo51uKhIQ1qBSrZaQKC2BRCeDK2quFhdV9f5s+IsnphyFMMsCzNv9/jxajJkauuIrJ9IjpTP8YQlGOdQYfPuzgyifHTEplCfaHzNLnGf6v6VW8TslRdGSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CgjJOJgh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EQ0gDO+1gKHjKGfdIE7vh0M8qCnLnkq4KdKGGlKPETxzmU5IXCIx8jWeGNV8gsiiHPe5g00ImY0FqzGOxzCcxzpi3j2aiRRsqaBDBrIpaF7Yqzzr5tflCZfQyRybjB3aCtYcUKWnhuTSmgve49sUJufztdU/oXBzEY7rXZaGRzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1FY0yyP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgjJOJgh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C504B1F000FF;
-	Sat, 12 Sep 2026 16:47:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1FY0yyP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12DA1F000FF;
+	Sat, 12 Sep 2026 16:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231652;
-	bh=xk80fXOn5kLm4WJn537Md53R0bSL2yskFQY1I/ActFU=;
+	s=korg; t=1789231657;
+	bh=yXPrP/G1UHUwYbKwr32i4IQ172/D+jLU/DS/lu6eyP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CgjJOJghGhMD0wiSSB5rxAoJC8qGrNx+ycCC11ATl0pxAqKw3zYKHvzZT2og4hTxi
-	 Ur+UDCJKL3JiIDWV7+jBJLDw/4hyH8RaLbZgBy8xLiSp1/oxMYZ4gkvUusSP0FwDaK
-	 K4UxaEtsKJePzgYorCfJOoEBN9Kl+N5LPy6KW9kA=
+	b=z1FY0yyPn2x9RwzkuvkHSSVgMty1z/UR6yFY7ofwK/aaHo6nupKtWidms8iLcFU6C
+	 llXR+LZNaNJLI7L8WFmeDmDq2EGbLMdh2RaEDlQE1gucqJrvwtknLUrLIZDnTUOXHK
+	 54fwihXl6yqP7Lqx5pHk86kgObNVBhsF49HDrs8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1042/1191] clk: ti: mux: resolve parent clocks by DT index, not by name
-Date: Sat, 12 Sep 2026 09:02:50 +0200
-Message-ID: <20260912065611.580341731@linuxfoundation.org>
+Subject: [PATCH 6.1 1043/1191] octeontx2-af: initialize lmac_bmap in rvu_mcs_set_lmac_bmap()
+Date: Sat, 12 Sep 2026 09:02:51 +0200
+Message-ID: <20260912065611.603082004@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,103 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 667f420c09f1417c9f07798e32432c901915209d ]
+[ Upstream commit 4b92a3710d4a1d850ed6421c773e735cdca69b07 ]
 
-Resolve parent clocks by their index into the device tree "clocks"
-property rather than matching names as strings. Name-based matching is
-fragile because a clock's "clock-output-names" value in its provider
-node can differ from the name used to reference it in a consumer node,
-and because names must be globally unique across all clock providers.
+rvu_mcs_set_lmac_bmap() declares lmac_bmap without initializing it and
+only sets bits for valid lmacs with set_bit(), which ORs into the word
+without clearing it first. Bits for invalid or skipped ports keep
+whatever was on the stack, and the garbage is stored into
+mcs->hw->lmac_bmap.
 
-On AM335x, this caused broken clock trees where some clocks failed to
-enable because their parents could not be found.
+Initialize lmac_bmap to 0 so only valid lmacs are marked.
 
-Replace of_clk_parent_fill() with a clk_parent_data array that sets
-.index to the array position.
+Found with Clang's -Wconditional-uninitialized.
 
-Fixes: ec7aa25fa483 ("ARM: dts: Use clock-output-names for am3")
-Signed-off-by: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: ca7f49ff8846 ("octeontx2-af: cn10k: Introduce driver for macsec block.")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260812060730.6181-1-kmehltretter@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/ti/mux.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/ti/mux.c b/drivers/clk/ti/mux.c
-index eaacd830523a2..3733480fccedb 100644
---- a/drivers/clk/ti/mux.c
-+++ b/drivers/clk/ti/mux.c
-@@ -119,7 +119,7 @@ const struct clk_ops ti_clk_mux_ops = {
- };
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c b/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c
+index d39d86e694ccf..006d3258fd4e6 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c
+@@ -854,7 +854,7 @@ int rvu_mbox_handler_mcs_ctrl_pkt_rule_write(struct rvu *rvu,
+ static void rvu_mcs_set_lmac_bmap(struct rvu *rvu)
+ {
+ 	struct mcs *mcs = mcs_get_pdata(0);
+-	unsigned long lmac_bmap;
++	unsigned long lmac_bmap = 0;
+ 	int cgx, lmac, port;
  
- static struct clk *_register_mux(struct device_node *node, const char *name,
--				 const char * const *parent_names,
-+				 const struct clk_parent_data *parent_data,
- 				 u8 num_parents, unsigned long flags,
- 				 struct clk_omap_reg *reg, u8 shift, u32 mask,
- 				 s8 latch, u8 clk_mux_flags, u32 *table)
-@@ -136,7 +136,7 @@ static struct clk *_register_mux(struct device_node *node, const char *name,
- 	init.name = name;
- 	init.ops = &ti_clk_mux_ops;
- 	init.flags = flags;
--	init.parent_names = parent_names;
-+	init.parent_data = parent_data;
- 	init.num_parents = num_parents;
- 
- 	/* struct clk_mux assignments */
-@@ -167,24 +167,26 @@ static void of_mux_clk_setup(struct device_node *node)
- 	struct clk *clk;
- 	struct clk_omap_reg reg;
- 	unsigned int num_parents;
--	const char **parent_names;
-+	struct clk_parent_data *parent_data;
- 	const char *name;
- 	u8 clk_mux_flags = 0;
- 	u32 mask = 0;
- 	u32 shift = 0;
- 	s32 latch = -EINVAL;
- 	u32 flags = CLK_SET_RATE_NO_REPARENT;
-+	int i;
- 
- 	num_parents = of_clk_get_parent_count(node);
- 	if (num_parents < 2) {
- 		pr_err("mux-clock %pOFn must have parents\n", node);
- 		return;
- 	}
--	parent_names = kcalloc(num_parents, sizeof(char *), GFP_KERNEL);
--	if (!parent_names)
--		goto cleanup;
-+	parent_data = kcalloc(num_parents, sizeof(*parent_data), GFP_KERNEL);
-+	if (!parent_data)
-+		return;
- 
--	of_clk_parent_fill(node, parent_names, num_parents);
-+	for (i = 0; i < num_parents; i++)
-+		parent_data[i].index = i;
- 
- 	if (ti_clk_get_reg_addr(node, 0, &reg))
- 		goto cleanup;
-@@ -207,7 +209,7 @@ static void of_mux_clk_setup(struct device_node *node)
- 	mask = (1 << fls(mask)) - 1;
- 
- 	name = ti_dt_clk_name(node);
--	clk = _register_mux(node, name, parent_names, num_parents,
-+	clk = _register_mux(node, name, parent_data, num_parents,
- 			    flags, &reg, shift, mask, latch, clk_mux_flags,
- 			    NULL);
- 
-@@ -215,7 +217,7 @@ static void of_mux_clk_setup(struct device_node *node)
- 		of_clk_add_provider(node, of_clk_src_simple_get, clk);
- 
- cleanup:
--	kfree(parent_names);
-+	kfree(parent_data);
- }
- CLK_OF_DECLARE(mux_clk, "ti,mux-clock", of_mux_clk_setup);
- 
+ 	for (port = 0; port < mcs->hw->lmac_cnt; port++) {
 -- 
 2.53.0
 
