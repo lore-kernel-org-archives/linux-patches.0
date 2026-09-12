@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7668416CFA;
-	Sat, 12 Sep 2026 09:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1AD2374A12;
+	Sat, 12 Sep 2026 09:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204509; cv=none; b=kC6WAWR5yML2lfx/tx8oPAcrxdxMovM+PlvM/MbkZI/yE+K/vmn7gwKKpB9GijVG5GYKdTnSO7NMGHyLRdP37SB8LHuPpU11S5SUoNoHjxeqKWYwI2UJugc/IXcWiYkqhSsiQ6SzoOcf/HLMKZwuTqYesitxDYXjUayR59QpFsU=
+	t=1789204514; cv=none; b=RH3IkuLZq7Id9SttgwIEPS/62gIZywk77PY+qzDKkU8KpGUM4wU/vpRXJNSqU1VOGbL9pj0y6apJzvBRnIHNE0REfbFDqcK8NnUk18bSDOc1WSj39MDlZkXulhAc0MgARoaHk1QtkqMMs9lXc6OdzYqcsi8ZjmPkDyCKmjkzOpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204509; c=relaxed/simple;
-	bh=FpXhLxuyeL2c8mm4bbcjryBh2h3elTLV2nLAx55DLgk=;
+	s=arc-20240116; t=1789204514; c=relaxed/simple;
+	bh=TNiYQJ38nA4zEt1qWtX4GWdSS4OkjjTal/7BYhsl23M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rLovm0E29joDT+gXRGb0Ja1xagBe/Axqvd7JUHQyGoLGKcX3eIZHqizjCz//P1krWbwiSp9f9KD92osX9guFy38Ose+7X86HsWUSX1b4dEgPKBE0O8PTfeHm9OM9KSob15V1+lBhoWtaxwYoC3anyRyFXObfH9fMvXVpAJl6EW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okS2Raua; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZrSwcidmu7117mJveN8CE2pyeoFM7Dn0ozv3xwAi9KEs5IctjbEtvKU6Ev/g0MRvE4SrUDxtlku+ZDAZ/HQspkdQuAKI+1/KRZBOa9x4XzsUzXSrdItz5qD9QrSO7AtooP7e0HH7ELWExVQr6ZLjdNKdz+b9f2FKyC6jW+oVMZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nbg2SAwg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okS2Raua"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BF31F000FF;
-	Sat, 12 Sep 2026 09:15:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nbg2SAwg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B78371F000FF;
+	Sat, 12 Sep 2026 09:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204507;
-	bh=6ME9njGKwpU+LEoToWg2+F1JLAhI6JxvT0jWavvcRD0=;
+	s=korg; t=1789204512;
+	bh=8YPFyQpiihx68jxHx2TbhUxW/tNHKMDpAfUWOD0lEFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=okS2RauamxpTR0dZ35AygwCRH6MjrVXTjipCUMMQSstn5m57u/GFc3vwkPuBCnEl/
-	 o6KDUK5ROuSYO7EzkrS/LjHTTaros5j6j/EX07SRuFl/tCaXAPnYgS6wTMZ12YiK0S
-	 qbUjng0seb+SP4OmuJ7gQHYU6S11tLKV2HCXsXWI=
+	b=Nbg2SAwgRX99KcsnP2KKzLy2/QzE/P3PAkcgv6dpRoEtQYqwceHM7bLKInhtxJC+8
+	 Qcw+NbWIRS3P93v6YxyAeXE+eHBbLW2UWWbETXFT9OXbTn6YWJdMpkgCTNIvCm0WGg
+	 Uyr95Pcbt/vkJmfgkupsQO/75joDVC0evb3aVKAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	GuoHan Zhao <zhaoguohan@kylinos.cn>,
-	Peter Hilber <peter.hilber@oss.qualcomm.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Yi Ding <yi.s.ding@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1627/1815] virtio: rtc: time out alarm requests
-Date: Sat, 12 Sep 2026 08:56:17 +0200
-Message-ID: <20260912065727.184009454@linuxfoundation.org>
+Subject: [PATCH 7.2 1628/1815] rtc: pcf8563: fix clock provider leak on unbind
+Date: Sat, 12 Sep 2026 08:56:18 +0200
+Message-ID: <20260912065727.206389066@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,96 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+From: Yi Ding <yi.s.ding@gmail.com>
 
-[ Upstream commit 68e00d9212929805b40dcb9166755610f4f4acee ]
+[ Upstream commit 9c48a53685040bb0de45a640b34055cbbfc69d4f ]
 
-RTC class operations run with rtc_device.ops_lock held. The virtio RTC
-alarm requests currently wait without a timeout for the device to return
-their requestq buffers.
+pcf8563_clkout_register_clk() registers the CLKOUT clock provider with
+of_clk_add_provider(), but nothing ever unwinds it: there is no
+of_clk_del_provider() call and the driver has no remove callback. Each
+of_clk_add_provider() allocates a struct of_clk_provider, takes a
+reference on the OF node and adds an entry to the global of_clk_providers
+list, none of which is released when the device is unbound. Every
+bind/unbind (or module reload) therefore leaks a provider structure and
+an of_node reference.
 
-On surprise removal, virtio-pci marks the virtqueues broken before
-unregistering the virtio device. If an alarm request is waiting when the
-device stops responding, viortc_remove() blocks in viortc_class_stop()
-while trying to acquire ops_lock. The request cannot complete and device
-removal hangs until the waiting task is signalled.
+The clock itself is already device-managed (devm_clk_register()); only
+the provider registration was not. Use devm_of_clk_add_hw_provider() so
+the provider is removed automatically on unbind. Tie it to the parent
+i2c device, whose OF node carries the #clock-cells and clock-output-names
+properties (the RTC class device has no OF node of its own).
 
-Use the same 60-second timeout as clock read requests for alarm reads,
-alarm programming, and alarm interrupt enable requests. The existing
-message reference counting keeps a timed-out request alive until a late
-response or device teardown.
-
-Fixes: 9d4f22fd563e ("virtio_rtc: Add RTC class driver")
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Reviewed-by: Peter Hilber <peter.hilber@oss.qualcomm.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260714024352.71307-1-zhaoguohan@kylinos.cn>
+Fixes: a39a6405d5f9 ("rtc: pcf8563: add CLKOUT to common clock framework")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Yi Ding <yi.s.ding@gmail.com>
+Link: https://patch.msgid.link/20260602035135.62264-1-yi.s.ding@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_rtc_driver.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/rtc/rtc-pcf8563.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/virtio/virtio_rtc_driver.c b/drivers/virtio/virtio_rtc_driver.c
-index 4419735b0f0dc..74616ba5be119 100644
---- a/drivers/virtio/virtio_rtc_driver.c
-+++ b/drivers/virtio/virtio_rtc_driver.c
-@@ -574,8 +574,8 @@ static int viortc_msg_xfer(struct viortc_vq *vq, struct viortc_msg *msg,
-  * read requests
-  */
+diff --git a/drivers/rtc/rtc-pcf8563.c b/drivers/rtc/rtc-pcf8563.c
+index 81d13733b1e93..a90dc940474bf 100644
+--- a/drivers/rtc/rtc-pcf8563.c
++++ b/drivers/rtc/rtc-pcf8563.c
+@@ -449,7 +449,9 @@ static struct clk *pcf8563_clkout_register_clk(struct pcf8563 *pcf8563)
+ 	clk = devm_clk_register(&pcf8563->rtc->dev, &pcf8563->clkout_hw);
  
--/** timeout for clock readings, where timeouts are considered non-fatal */
--#define VIORTC_MSG_READ_TIMEOUT secs_to_jiffies(60)
-+/** timeout for runtime requests, where timeouts are considered non-fatal */
-+#define VIORTC_MSG_TIMEOUT secs_to_jiffies(60)
+ 	if (!IS_ERR(clk))
+-		of_clk_add_provider(node, of_clk_src_simple_get, clk);
++		devm_of_clk_add_hw_provider(pcf8563->rtc->dev.parent,
++					    of_clk_hw_simple_get,
++					    &pcf8563->clkout_hw);
  
- /**
-  * viortc_read() - VIRTIO_RTC_REQ_READ wrapper
-@@ -600,7 +600,7 @@ int viortc_read(struct viortc_dev *viortc, u16 vio_clk_id, u64 *reading)
- 	VIORTC_MSG_WRITE(hdl, clock_id, &vio_clk_id);
- 
- 	ret = viortc_msg_xfer(&viortc->vqs[VIORTC_REQUESTQ], VIORTC_MSG(hdl),
--			      VIORTC_MSG_READ_TIMEOUT);
-+			      VIORTC_MSG_TIMEOUT);
- 	if (ret) {
- 		dev_dbg(&viortc->vdev->dev, "%s: xfer returned %d\n", __func__,
- 			ret);
-@@ -642,7 +642,7 @@ int viortc_read_cross(struct viortc_dev *viortc, u16 vio_clk_id, u8 hw_counter,
- 	VIORTC_MSG_WRITE(hdl, hw_counter, &hw_counter);
- 
- 	ret = viortc_msg_xfer(&viortc->vqs[VIORTC_REQUESTQ], VIORTC_MSG(hdl),
--			      VIORTC_MSG_READ_TIMEOUT);
-+			      VIORTC_MSG_TIMEOUT);
- 	if (ret) {
- 		dev_dbg(&viortc->vdev->dev, "%s: xfer returned %d\n", __func__,
- 			ret);
-@@ -809,7 +809,7 @@ int viortc_read_alarm(struct viortc_dev *viortc, u16 vio_clk_id,
- 	VIORTC_MSG_WRITE(hdl, clock_id, &vio_clk_id);
- 
- 	ret = viortc_msg_xfer(&viortc->vqs[VIORTC_REQUESTQ], VIORTC_MSG(hdl),
--			      0);
-+			      VIORTC_MSG_TIMEOUT);
- 	if (ret) {
- 		dev_dbg(&viortc->vdev->dev, "%s: xfer returned %d\n", __func__,
- 			ret);
-@@ -858,7 +858,7 @@ int viortc_set_alarm(struct viortc_dev *viortc, u16 vio_clk_id, u64 alarm_time,
- 	VIORTC_MSG_WRITE(hdl, flags, &flags);
- 
- 	ret = viortc_msg_xfer(&viortc->vqs[VIORTC_REQUESTQ], VIORTC_MSG(hdl),
--			      0);
-+			      VIORTC_MSG_TIMEOUT);
- 	if (ret) {
- 		dev_dbg(&viortc->vdev->dev, "%s: xfer returned %d\n", __func__,
- 			ret);
-@@ -900,7 +900,7 @@ int viortc_set_alarm_enabled(struct viortc_dev *viortc, u16 vio_clk_id,
- 	VIORTC_MSG_WRITE(hdl, flags, &flags);
- 
- 	ret = viortc_msg_xfer(&viortc->vqs[VIORTC_REQUESTQ], VIORTC_MSG(hdl),
--			      0);
-+			      VIORTC_MSG_TIMEOUT);
- 	if (ret) {
- 		dev_dbg(&viortc->vdev->dev, "%s: xfer returned %d\n", __func__,
- 			ret);
+ 	return clk;
+ }
 -- 
 2.53.0
 
