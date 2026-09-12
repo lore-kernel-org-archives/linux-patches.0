@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09FE3D9DC0;
-	Sat, 12 Sep 2026 11:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA2947045A;
+	Sat, 12 Sep 2026 11:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214198; cv=none; b=mp8TcPf3GGj6+Ld5PqkP9damB6Axcqmyj30nY2gxVJAb8eBu/tormBiOzogTB3TtH0NtjTi8VKtiSVnP6AuEuVcmiWykozVFUnFs47zLbsVvp5swNSIMIsxt2RXyPKxxWGkV0+2gTI7tUkWfpMth5IxJJhRNdWWdQt55xdxQ9a8=
+	t=1789214203; cv=none; b=KzukKuHXTEx/S3fqCQPfKy3GR9WtOpq4rhqZ8pWxdnugbA77BsdX5wu88pISwgGvnD4IUTX2d71+0tWH91bLNmPk7Lpz8w0BLZw8KRGJIHoNSAUk1zP1ScxwXTybBbNl7QSBXWBtgfYD7RVm5sH6JQR4YUIbpaaQIYBGk5xKBaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214198; c=relaxed/simple;
-	bh=/Lo36JCQ87687iaANU+a7kVpKv2MT/usJ5enVh88UVw=;
+	s=arc-20240116; t=1789214203; c=relaxed/simple;
+	bh=eit6ldxwj7YUddh3vvkyHQBv1FGfUjn13lZ8dnP8PuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uv+yK9sFgb76J8M/+tid62erhUHuQf2b0PddF2pnqBCKaOws283fXkZISfM+WG4+xi2Pw1un1y3FYDwVC7QYZnd5k5TBNvd36GclfaHgUfOCnNyl2MkwUfXNjrYA7ldrkdpReYPdpDi+WdXc/I7aza/7xIBOJuYefzJc8GpcyGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whhcO2su; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UMnSb6uH5XaHPEJRhS5pZypG4ZuC+Zqy8gOfIwT36GCcCVXPbrvkIYl88WS1NfbDDVItLiRksAyWncU3BoC+8m6wLIewvZUp2A9XNAsNBPQUYg3RJ5wYzAmov3Gee/4tSWiL4f2rFsA4YglyfeDo+s2IBMCp7QzcHFqKk0O0lO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZrkbLzS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whhcO2su"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B581F000FF;
-	Sat, 12 Sep 2026 11:56:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZrkbLzS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8201F000FF;
+	Sat, 12 Sep 2026 11:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214197;
-	bh=jgpp8QEkW6Y9+7SOaSNEik138fkwch/KT7slRc1khMM=;
+	s=korg; t=1789214202;
+	bh=vK5F/hzpo2xmOO49x4WjUD/iekzfVp4krVQp5rA7nv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=whhcO2suubs0CFnjDYnz0L7MQGZUXsyFDWs0xN7m5ZJcjlEXICM1RXeADawrtYEx2
-	 j6PMt5Tt3jEqIvrZaJ6oLDmroQ5LWcokx+PUui6mAVvLnFRjjmgCkLRncIPHpgW1S1
-	 ZyLuYaFmHdilj2nTZSqU8w78rvtW2fUHcgsdrFzo=
+	b=RZrkbLzSokIVn5jIsfq6fnnFIPbA2dyrlsFyZLPsXJH0W2izf8n0Mz3SlPj0wL+HA
+	 FYQljRD3hf1ZY1AJkRtGFesa+/61yAa5YntJpaKeaWtYOAP5xBcITjgcwUfvTshVPZ
+	 /1M2jDiaxfmosdUhv3Wgnij97HPYYLHnod+sI1UA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kanala Ramalingeswara Reddy <Kanala.RamalingeswaraReddy@amd.com>,
+	Sunil Khatri <sunil.khatri@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 0277/1376] drm/amdgpu: Skip accessing psp rum time db for APUs
-Date: Sat, 12 Sep 2026 08:45:03 +0200
-Message-ID: <20260912065613.719534536@linuxfoundation.org>
+Subject: [PATCH 6.12 0278/1376] drm/amdgpu: use AMDGPU_GPU_PAGE_SHIFT instead of PAGE_SHIFT
+Date: Sat, 12 Sep 2026 08:45:04 +0200
+Message-ID: <20260912065613.742340447@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,36 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kanala Ramalingeswara Reddy <Kanala.RamalingeswaraReddy@amd.com>
+From: Sunil Khatri <sunil.khatri@amd.com>
 
-commit a26301203a196a991527f7b1ab884d4dd0e7c95e upstream.
+commit d6e16df7df4d2c39e2b04b355d0434fb90e2d62c upstream.
 
-Psp runtime DB is for dGPUs only.
+For different address types the variable PAGE_SHIFT might
+not work well and it's better to use the GPU specific one
 
-Signed-off-by: Kanala Ramalingeswara Reddy <Kanala.RamalingeswaraReddy@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit dce8195027f146467c9378efb2bb1b0859cb735e)
+(cherry picked from commit 3494b77d10375e0f9ab784e9b20763339844b55b)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-@@ -358,6 +358,12 @@ static bool psp_get_runtime_db_entry(str
- 	bool ret = false;
- 	int i;
- 
-+	/*
-+	 * Runtime DB is for dGPUs only.
-+	 */
-+	if (adev->flags & AMD_IS_APU)
-+		return false;
-+
- 	if (amdgpu_ip_version(adev, MP0_HWIP, 0) == IP_VERSION(13, 0, 6) ||
- 	    amdgpu_ip_version(adev, MP0_HWIP, 0) == IP_VERSION(13, 0, 14))
- 		return false;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -1933,7 +1933,7 @@ int amdgpu_vm_bo_clear_mappings(struct a
+ 			after->start = eaddr + 1;
+ 			after->last = tmp->last;
+ 			after->offset = tmp->offset;
+-			after->offset += (after->start - tmp->start) << PAGE_SHIFT;
++			after->offset += (after->start - tmp->start) << AMDGPU_GPU_PAGE_SHIFT;
+ 			after->flags = tmp->flags;
+ 			after->bo_va = tmp->bo_va;
+ 			list_add(&after->list, &tmp->bo_va->invalids);
 
 
