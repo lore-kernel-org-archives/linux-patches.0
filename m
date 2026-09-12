@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222063AEF51;
-	Sat, 12 Sep 2026 12:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F0C441A575;
+	Sat, 12 Sep 2026 12:11:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215101; cv=none; b=iMH9zn+LN/SbqvMd8/65vDGUuzeSHc+7DfeCW2KUBiwJQbZFMjFwGV/sP0AwNsdX+FYX49Hw6gTjG93NWLEpnqjlsdn45U9AbCklEb+bTG7B2YINp3TimXET7U4wvgDcHo8ZvwEvrcr+z5G28QPgkco8ZqpRtoSA6oJg802h9qY=
+	t=1789215106; cv=none; b=W9K6v6NlJ+eCVSrJbSlPO5/N1TtWDDXR15q9k7l+HBFzsNZSQUAMsyIXASAK7CXK0IcwqmJ6XXVnT+q53RW6tyJ+LKCMuWbpsvsrE0VRvyXCqITD5j45ac57cv8/9h4dPZtwVFtNAMGZWyekD4oOKAxjLcYASyMfyThgBt5Ln5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215101; c=relaxed/simple;
-	bh=dGYgbJjKvcvpg+D6AKC9Q3PuL5l/KcYj/89DTbl+ObA=;
+	s=arc-20240116; t=1789215106; c=relaxed/simple;
+	bh=Mj8BpgiTRhjht87pxMqBnKSwjU9R7P5N9GuHCyTlvTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kdq5rbIrG88ITOAnLUCynYl65isyarWrgVOsFLhmWGN6OecY7aHaQ09gbj/9/TO+7il0Ipa+gE6eF+7TIg1I9i7GE8yduUkBEZWcf+ljJA8WrMMK3yW34kKJwjckV7nSNgmAFeE2JM/rfGM8PDYFbCXpRZ9Pr17ajpkq5sM+gWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5H59bQL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FDAr1tOBmlb8u31eeV/SXtVfNQ7kv4GoAjtNKtX/Rq4NUWpgnazXQvzCjwYXWnvTLK1h5EaynOEC3ZcudtspPtB4S9gymAsJ6iORBnIpL6hCvOxaGnb8IBmI/nJ2u598RBVkQX6udW5EUJdjaZHBeCmdn5K96sXN1jBoO3MSkxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tt9Zh82S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5H59bQL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E99CB1F000FF;
-	Sat, 12 Sep 2026 12:11:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tt9Zh82S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE271F000FF;
+	Sat, 12 Sep 2026 12:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215100;
-	bh=+YbdWh5jI/uBH6OeYXm5TZRJZSaku7afdt/ryoc+DSA=;
+	s=korg; t=1789215104;
+	bh=Rq32x4o682KHuqQSDLj8kRVYT1KNYdLlLCVy8eXE23g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T5H59bQLaPBrTCLmCkyw/4znsxnVf+FSqySUN++4DwjAmCCgtexDf7Kr9S4SJlJtt
-	 WveLZdzJ9IrlzB30ZlGfl554sHrXcGQFVUrKZDXIpFp3k3KyJgyKcoBTBWGuvGmpKy
-	 eX3SM3iH4BOaoaylmXiIP3RLnKQJs5l6D7sUnmIg=
+	b=Tt9Zh82Sxof2TNOQS3SVnjx7bCbsdFSYSsuA3s4cqTkV9nrE2jPDYa1RUUMMs2tBw
+	 yqQC4XAwY9Mz77alTV+iiTuyZKJlnrOAKUDYdkCc8HlEsbhlQHqPLPxTopZA3hrU2R
+	 UwtYBzvT0+9XHMbOXFpNOmbTAA14/l7Fyl67ovPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Ayush Mukkanwar <ayushmukkanwar@gmail.com>,
+	Wei Wang <wei.w.wang@hotmail.com>,
+	Yongwei Xu <xuyongwei@open-hieco.net>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0425/1376] staging: octeon: add missing tasklet_kill in cvm_oct_tx_shutdown
-Date: Sat, 12 Sep 2026 08:47:31 +0200
-Message-ID: <20260912065617.007914799@linuxfoundation.org>
+Subject: [PATCH 6.12 0461/1376] iommu/amd: Prevent SB IOAPIC from overriding IVRS validation errors
+Date: Sat, 12 Sep 2026 08:48:07 +0200
+Message-ID: <20260912065617.804646631@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,40 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ayush Mukkanwar <ayushmukkanwar@gmail.com>
+From: Wei Wang <wei.w.wang@hotmail.com>
 
-[ Upstream commit b9af44b0d20b2247c4eb0ea5cfca907d643eea50 ]
+[ Upstream commit 854056480f9217568e3ab5edd81a9347a173ea79 ]
 
-The TX cleanup tasklet can be scheduled by the watchdog IRQ handler
-to execute cvm_oct_tx_do_cleanup. There can be a pending tasklet in
-the queue which might run after the cvm_oct_remove() frees net_device
-structures, causing a use-after-free in cvm_oct_tx_do_cleanup() as it
-iterates cvm_oct_device[] which is an array of netdevice pointers.
-Add tasklet_kill() after free_irq() to ensure the tasklet is no longer
-scheduled or running before teardown proceeds.
+The check_ioapic_information() function validates IOAPICs against the
+IVRS table to safely disable Interrupt Remapping (IR) if the BIOS provides
+a broken topology.
 
-Fixes: 4898c560103f ("Staging: Octeon:  Free transmit SKBs in a timely manner")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260511150931.93382-1-ayushmukkanwar%40gmail.com
-Signed-off-by: Ayush Mukkanwar <ayushmukkanwar@gmail.com>
-Link: https://patch.msgid.link/20260615172734.42038-1-ayushmukkanwar@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Currently, the validation loop contains a bug: If an unmapped secondary
+IOAPIC is encountered, 'ret' is set to false. But if the Southbridge (SB)
+IOAPIC is enumerated after it in the MADT, the loop overwrites 'ret' to
+true.
+
+This bypasses the validation failure and leaves IR enabled. When devices
+attached to the unmapped secondary IOAPIC fire interrupts, the IOMMU drops
+them due to the missing Requestor ID, leading to localized device hangs.
+
+Fix this by initializing 'ret' to true and only toggling it to false
+upon encountering a validation error, ensuring failures are never erased.
+
+Fixes: c2ff5cf5294b ("iommu/amd: Work around wrong IOAPIC device-id in IVRS table")
+Signed-off-by: Wei Wang <wei.w.wang@hotmail.com>
+Tested-by: Yongwei Xu <xuyongwei@open-hieco.net>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/octeon/ethernet-tx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iommu/amd/init.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/octeon/ethernet-tx.c b/drivers/staging/octeon/ethernet-tx.c
-index bbf33b88bb7c2..e54b4a413dc40 100644
---- a/drivers/staging/octeon/ethernet-tx.c
-+++ b/drivers/staging/octeon/ethernet-tx.c
-@@ -711,4 +711,6 @@ void cvm_oct_tx_shutdown(void)
- {
- 	/* Free the interrupt handler */
- 	free_irq(OCTEON_IRQ_TIMER1, cvm_oct_device);
-+
-+	tasklet_kill(&cvm_oct_tx_cleanup_tasklet);
- }
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 54f3c17520d51..66f30e3883d57 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -2973,7 +2973,7 @@ static bool __init check_ioapic_information(void)
+ 	int idx;
+ 
+ 	has_sb_ioapic = false;
+-	ret           = false;
++	ret           = true;
+ 
+ 	/*
+ 	 * If we have map overrides on the kernel command line the
+@@ -2993,7 +2993,6 @@ static bool __init check_ioapic_information(void)
+ 			ret = false;
+ 		} else if (devid == IOAPIC_SB_DEVID) {
+ 			has_sb_ioapic = true;
+-			ret           = true;
+ 		}
+ 	}
+ 
+@@ -3007,6 +3006,7 @@ static bool __init check_ioapic_information(void)
+ 		 * device id for the IOAPIC in the system.
+ 		 */
+ 		pr_err("%s: No southbridge IOAPIC found\n", fw_bug);
++		ret = false;
+ 	}
+ 
+ 	if (!ret)
 -- 
 2.53.0
 
