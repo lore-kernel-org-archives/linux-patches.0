@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B6547CC92;
-	Sat, 12 Sep 2026 12:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A0F47D928;
+	Sat, 12 Sep 2026 12:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217314; cv=none; b=l4UV2TVtGueHJWEICNytbiAiN2Fsbb683joLInNt21bowswEfknpAYorp2yPsdF9Wm1oynJsa0LCLSaw/KDzfSu0sNOuRX+D+9FWLl2x/Sfs5MWA/CR02a8kkxgQV1u4TcFFRD4GrCoMoeZKq/u38ftZknRO6t1KZlPGd1vLcJM=
+	t=1789217317; cv=none; b=XLWFB1jbBjySOjud7nDu11rKCrcPVrhcgRklQ7X0/Q0R8fzgwpZaKjLK1kEFfmWtPfQgIc2Bqq/Aip/nk61b0cS1gAtbIiBnCDUbxUtkPOZGfylvuvTl0gJyDidmo4iaWDFJZbbU1GVM+TRJgQcbCWAwb32Nra5fx/BzA8cCpAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217314; c=relaxed/simple;
-	bh=lahFBJxR55QSqSQ+f72YPyElTnlZtaSakjH0EaVHxIA=;
+	s=arc-20240116; t=1789217317; c=relaxed/simple;
+	bh=P+y5+QBVmhbZmOq90vzqZVDdz5Kl+uO7mhAfXH1XpCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lNsltIs9Hai23SAiAj+gfpaiYBKXMLd3t/pRsrnkMX36ZoMHfuTV/ZLx1KPbfD0niopds0LHXeGx/oX2ySUVRwUfA7yyv56cbcACFIUbzBLdaHVtURClUR1XN6ZTUgEjks8B9IuTWFqX5sJfwtWDTyBXtaQy8mKjOiCMbxvBNrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PFshMHDl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d30f5T6vp64C/Dpc0vpv1Jcm4Vq5FHU2d9NTRXhX/G9YkpvT3gFir20amF09/hQCmzkVfbZhv92gx97On9E+HpiYsRyFQ5NVg/UntuudYApQDrFE12A50vKqwveGhIuP1n9qbiwshIAJu0r2x5ElTQdqIQy61DxHWkOv5WHbKJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eonGA90O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PFshMHDl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98FC41F00899;
-	Sat, 12 Sep 2026 12:48:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eonGA90O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513471F00898;
+	Sat, 12 Sep 2026 12:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217312;
-	bh=g8I61dobChdWIIis+NHIEogGJ3zkoT7ilZEneh/U8vo=;
+	s=korg; t=1789217316;
+	bh=NUVdvTrbbQrDGHe5POpljlTMmAwcFXfoHsDx4DCiyIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PFshMHDlgI1pWZ6aYWd9lq7h5sg2Z6UmC90PFRvn9f3Xt2Lc3AP1TizOSh5RZ4v21
-	 7kzy+yQD07NFJIfC/af96HGLuP0ozrt4rkg6vGmMZCqP5j6lCg1PgDRKCbo8m88tZk
-	 L1tp8FwhbsxHpyXMAcKCfc9v7gOE3Lp0x1B6OcQk=
+	b=eonGA90O2MCOFpsb3mMI/oXqEsEgAzRBSCjwnT2YMRXVCe16PWDBjKpel3u9wpbPd
+	 FN7dKJfwF3C2jcmAOjiIgk/SPZY9YfSGnoDI80BKx+JipHchCXR5ilwIk6y4tjePau
+	 JrVeAEnc9co+N5mKROkM7Vf9UMEgYTQBHCju5YNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0914/1376] of: property: add of_graph_get_next_port_endpoint()
-Date: Sat, 12 Sep 2026 08:55:40 +0200
-Message-ID: <20260912065627.938368236@linuxfoundation.org>
+Subject: [PATCH 6.12 0915/1376] drm/sun4i: tcon: Set output mux for DSI and LVDS
+Date: Sat, 12 Sep 2026 08:55:41 +0200
+Message-ID: <20260912065627.959572644@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,159 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 58fe47d6ac7413172e1fa88324fb1b4c0eb2c0a2 ]
+[ Upstream commit 9c90199b39637ad94253c4fd8e7b1333ca1d3e0d ]
 
-We already have of_graph_get_next_endpoint(), but it is not
-intuitive to use in some case.
+DSI and LVDS skip output mux setup, so TCON TOP cannot route the selected
+mixer. Configure them like other channel 0 outputs.
 
-(X)	node {
-(Y)		ports {
-(P0)			port@0 { endpoint { remote-endpoint = ...; };};
-(P10)			port@1 { endpoint { remote-endpoint = ...; };
-(P11)				 endpoint { remote-endpoint = ...; };};
-(P2)			port@2 { endpoint { remote-endpoint = ...; };};
-		};
-	};
+In practice this matters for D1, where channel 0 TCONs are fed through
+TCON TOP. The remaining set_mux implementations only handle TMDS and
+return an error for other encoder types, as before.
 
-For example, if I want to handle port@1's 2 endpoints (= P10, P11),
-I want to use like below
-
-	P10 = of_graph_get_next_endpoint(port1, NULL);
-	P11 = of_graph_get_next_endpoint(port1, P10);
-
-But 1st one will be error, because of_graph_get_next_endpoint()
-requested 1st parameter is "node" (X) or "ports" (Y), not but "port".
-Below works well, but it will get P0
-
-	P0 = of_graph_get_next_endpoint(node,  NULL);
-	P0 = of_graph_get_next_endpoint(ports, NULL);
-
-In other words, we can't handle P10/P11 directly via
-of_graph_get_next_endpoint().
-
-There is another non intuitive behavior on of_graph_get_next_endpoint().
-In case of if I could get P10 pointer for some way, and if I want to
-handle port@1 things by loop, I would like use it like below
-
-	/*
-	 * "ep" is now P10, and handle port1 things here,
-	 * but we don't know how many endpoints port1 have.
-	 *
-	 * Because "ep" is non NULL now, we can use port1
-	 * as of_graph_get_next_endpoint(port1, xxx)
-	 */
-	do {
-		/* do something for port1 specific things here */
-	} while (ep = of_graph_get_next_endpoint(port1, ep))
-
-But it also not worked as I expected.
-I expect it will be P10 -> P11 -> NULL,
-but      it will be P10 -> P11 -> P2,    because
-of_graph_get_next_endpoint() will fetch "endpoint" beyond the "port".
-It is not useful for generic driver.
-
-To handle endpoint more intuitive, create of_graph_get_next_port_endpoint()
-
-	of_graph_get_next_port_endpoint(port1, NULL); // P10
-	of_graph_get_next_port_endpoint(port1, P10);  // P11
-	of_graph_get_next_port_endpoint(port1, P11);  // NULL
-
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/r/87jzdyb5t5.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-Stable-dep-of: 62bac3202042 ("drm/sun4i: tcon-top: Keep mixer routes distinct")
+Fixes: b9b52d2f4aaf ("drm/sun4i: Add support for D1 TCONs")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Acked-by: Chen-Yu Tsai <wens@kernel.org>
+Link: https://patch.msgid.link/7e9dad9eed2e91a79c4e1202caa8fed7c2427531.1785772659.git.jernej.skrabec@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/property.c    | 27 +++++++++++++++++++++++++++
- include/linux/of_graph.h | 21 +++++++++++++++++++++
- 2 files changed, 48 insertions(+)
+ drivers/gpu/drm/sun4i/sun4i_tcon.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/of/property.c b/drivers/of/property.c
-index 7c8fb5dd4cb19..0b1d28b249bdb 100644
---- a/drivers/of/property.c
-+++ b/drivers/of/property.c
-@@ -667,6 +667,33 @@ struct device_node *of_graph_get_next_port(const struct device_node *parent,
- }
- EXPORT_SYMBOL(of_graph_get_next_port);
- 
-+/**
-+ * of_graph_get_next_port_endpoint() - get next endpoint node in port.
-+ * If it reached to end of the port, it will return NULL.
-+ * @port: pointer to the target port node
-+ * @prev: previous endpoint node, or NULL to get first
-+ *
-+ * Return: An 'endpoint' node pointer with refcount incremented. Refcount
-+ * of the passed @prev node is decremented.
-+ */
-+struct device_node *of_graph_get_next_port_endpoint(const struct device_node *port,
-+						    struct device_node *prev)
-+{
-+	while (1) {
-+		prev = of_get_next_child(port, prev);
-+		if (!prev)
-+			break;
-+		if (WARN(!of_node_name_eq(prev, "endpoint"),
-+			 "non endpoint node is used (%pOF)", prev))
-+			continue;
-+
-+		break;
-+	}
-+
-+	return prev;
-+}
-+EXPORT_SYMBOL(of_graph_get_next_port_endpoint);
-+
- /**
-  * of_graph_get_next_endpoint() - get next endpoint node
-  * @parent: pointer to the parent device node
-diff --git a/include/linux/of_graph.h b/include/linux/of_graph.h
-index 44518f3583a44..a692d9d979a64 100644
---- a/include/linux/of_graph.h
-+++ b/include/linux/of_graph.h
-@@ -50,6 +50,18 @@ struct of_endpoint {
- 	for (struct device_node *child __free(device_node) = of_graph_get_next_port(parent, NULL);\
- 	     child != NULL; child = of_graph_get_next_port(parent, child))
- 
-+/**
-+ * for_each_of_graph_port_endpoint - iterate over every endpoint in a port node
-+ * @parent: parent port node
-+ * @child: loop variable pointing to the current endpoint node
-+ *
-+ * When breaking out of the loop, and continue to use the @child, you need to
-+ * use return_ptr(@child) or no_free_ptr(@child) not to call __free() for it.
-+ */
-+#define for_each_of_graph_port_endpoint(parent, child)			\
-+	for (struct device_node *child __free(device_node) = of_graph_get_next_port_endpoint(parent, NULL);\
-+	     child != NULL; child = of_graph_get_next_port_endpoint(parent, child))
-+
- #ifdef CONFIG_OF
- bool of_graph_is_present(const struct device_node *node);
- int of_graph_parse_endpoint(const struct device_node *node,
-@@ -61,6 +73,8 @@ struct device_node *of_graph_get_next_endpoint(const struct device_node *parent,
- 					struct device_node *previous);
- struct device_node *of_graph_get_next_port(const struct device_node *parent,
- 					   struct device_node *port);
-+struct device_node *of_graph_get_next_port_endpoint(const struct device_node *port,
-+						    struct device_node *prev);
- struct device_node *of_graph_get_endpoint_by_regs(
- 		const struct device_node *parent, int port_reg, int reg);
- struct device_node *of_graph_get_remote_endpoint(
-@@ -114,6 +128,13 @@ static inline struct device_node *of_graph_get_next_port(
- 	return NULL;
- }
- 
-+static inline struct device_node *of_graph_get_next_port_endpoint(
-+					const struct device_node *parent,
-+					struct device_node *previous)
-+{
-+	return NULL;
-+}
-+
- static inline struct device_node *of_graph_get_endpoint_by_regs(
- 		const struct device_node *parent, int port_reg, int reg)
- {
+diff --git a/drivers/gpu/drm/sun4i/sun4i_tcon.c b/drivers/gpu/drm/sun4i/sun4i_tcon.c
+index a1a2c845ade0c..1b710013b9cb3 100644
+--- a/drivers/gpu/drm/sun4i/sun4i_tcon.c
++++ b/drivers/gpu/drm/sun4i/sun4i_tcon.c
+@@ -717,9 +717,11 @@ void sun4i_tcon_mode_set(struct sun4i_tcon *tcon,
+ 	case DRM_MODE_ENCODER_DSI:
+ 		/* DSI is tied to special case of CPU interface */
+ 		sun4i_tcon0_mode_set_cpu(tcon, encoder, mode);
++		sun4i_tcon_set_mux(tcon, 0, encoder);
+ 		break;
+ 	case DRM_MODE_ENCODER_LVDS:
+ 		sun4i_tcon0_mode_set_lvds(tcon, encoder, mode);
++		sun4i_tcon_set_mux(tcon, 0, encoder);
+ 		break;
+ 	case DRM_MODE_ENCODER_NONE:
+ 		sun4i_tcon0_mode_set_rgb(tcon, encoder, mode);
 -- 
 2.53.0
 
