@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CEA27AC31;
-	Sat, 12 Sep 2026 07:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2543927AC31;
+	Sat, 12 Sep 2026 07:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199937; cv=none; b=cAnQ9oKIIZlD6BX0ihR5anfNP/OX6R44izquzQqr6jdxMg2EBhhnYKJ52y956U8/VBSaRh7Iq+WiKjzaCZ4nTfYGdaPOjl4r7zne7x990BVOOs9jY8lZqeucKTU5SN36eNHWvAiSunu0azDX/C0Da+XjbUynuADLuHnlmehN4oU=
+	t=1789199942; cv=none; b=KwsR9nLyq2s65Ml2/c5U/GJivu7Gb0OZpPY8jSDWvU/V2V0qF1xdtBhfPOQBpuIXqVR1BS1z8dtrojMjGlA/yrve6VEgsKdPdz4iiDJDsq3iM3XYwaDwMBcx9AsnOQatqLTwSa/I0tcuMg1vwDE+hRtM2dS0Wm4P77pSXWCu9MY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199937; c=relaxed/simple;
-	bh=evbI0DTWq5FoA69WKaFgHp+yr5Ojdeknm/mEFXDhiDY=;
+	s=arc-20240116; t=1789199942; c=relaxed/simple;
+	bh=MujMeVXp0Y3zWNlvxblJQtKOLTIh4JPA7fU4vmDYEtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WlAFBiah/YhTljdil7SFuN5jOUJLouGzMS12RTJyDNcvR21VyMDdGiz2Br/L0BKaeioLIckpkUXUhJcFVdiCCIMEa8i+Pw1FLvSCW/bIfqHFXLdj8g7MGlmkTh/H9CRl5tGugm0Ck5UBPmZUqieycWKcXWDgPLOD7k6AjGGOHh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RGAej7GI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nqjo6StxMOBczr5QoClx/5RFlWACHWS6bSR0JqrX9kgj2XbC5wvk2lv5si1c2vSJjEdWFAICbu8528sP49viWmI7LpcfqRVindgKclFwxh1QIcmk56pQvof3xcNn5/mKHb6Fc62Cyzfdcr4M3TbpVGMA5UhzOoGVwkRFB2UOzV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ByWBro/m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RGAej7GI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B95D41F000FF;
-	Sat, 12 Sep 2026 07:58:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ByWBro/m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A320E1F000FF;
+	Sat, 12 Sep 2026 07:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199935;
-	bh=XB0WhqJc5ntvl3LXDt12d3MWJ+DSTKCx6SW678iFr5U=;
+	s=korg; t=1789199940;
+	bh=Bd49nqIPLisd4m3hXlRL8uSONXo4ihfaf68LMB48DkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RGAej7GIMMFzLN3WPEPTsFRP1zLWm7kUDvCk24dows/AfsjGKHnR4UPGqj8spZ9Po
-	 J23ffB5JWxCPIlyvhlgXhw2F0wWxR+UGtHMaH+A/SRZGlqfCgdSLA8PglYqb6/cfI7
-	 d2ZQcZ8m8gM9ztHuTzX5TlSN/jDRqfwgcD/Epi5k=
+	b=ByWBro/ml9TWhremiH1qHIS/GwN9DTKPfUxydTEPdfg+zFgAYIMyWXUKTA0HCCmDs
+	 jHpX6yr3UtjHl/IqnHEk+sljNnrVy2LhjZDkibbB3Yhu+SNcwRgz2ViRPTcv52R+7L
+	 Cb+34XOz5eugLabyQnu1Vqc7Sy+QCQwbRdWJZPo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Fabio Estevam <festevam@gmail.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0644/1815] arm64: dts: rockchip: Fix Gru WLAN sideband interrupt
-Date: Sat, 12 Sep 2026 08:39:54 +0200
-Message-ID: <20260912065704.000086045@linuxfoundation.org>
+Subject: [PATCH 7.2 0645/1815] arm64: dts: rockchip: Fix rk3566-bigtreetech-cb2 touchscreen property
+Date: Sat, 12 Sep 2026 08:39:55 +0200
+Message-ID: <20260912065704.024209954@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,42 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Fabio Estevam <festevam@gmail.com>
 
-[ Upstream commit a761818d9ee11183df0aefd16bf9fe46cc1c4c6d ]
+[ Upstream commit 7707e4555cf1d52689621e3206df8ad2debaa0dd ]
 
-The Marvell WLAN host wake interrupt is wired to GPIO0 8 and is not
-one of the PCI INTx interrupts. The PCI device schema therefore
-interprets the two-cell GPIO interrupt specifier as an invalid PCI
-interrupt and reports dtbs_check warnings:
+The TSC2007 driver uses the ti,max-rt property to specify the maximum
+touch resistance, but the rk3566-bigtreetech-cb2 device tree uses the
+undocumented ti,rt-thr property instead.
 
-pcie@0,0: wifi@0,0:interrupts:0:0: 8 is not one of [1, 2, 3, 4]
-pcie@0,0: wifi@0,0:interrupts:0: [8, 8] is too long
+As a result, the configured value is ignored and the driver falls back
+to its default maximum resistance value of 4095.
 
-Describe the sideband interrupt with interrupts-extended, which
-explicitly carries the interrupt controller and removes the ambiguity.
+Replace ti,rt-thr with ti,max-rt to preserve the intended resistance
+threshold of 3000.
 
-Fixes: 48f4d9796d99 ("arm64: dts: rockchip: add Gru/Kevin DTS")
+Fixes: bfbc663d2733 ("arm64: dts: rockchip: Add BigTreeTech CB2 and Pi2")
 Signed-off-by: Fabio Estevam <festevam@gmail.com>
-Link: https://patch.msgid.link/20260721133445.44283-1-festevam@gmail.com
+Link: https://patch.msgid.link/20260721135450.45286-1-festevam@gmail.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3566-bigtreetech-cb2.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi
-index 3f3cb0eb58096..5435fbc270954 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi
-@@ -505,8 +505,7 @@ &pci_rootport {
- 	mvl_wifi: wifi@0,0 {
- 		compatible = "pci1b4b,2b42";
- 		reg = <0x0000 0x0 0x0 0x0 0x0>;
--		interrupt-parent = <&gpio0>;
--		interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio0 8 IRQ_TYPE_LEVEL_LOW>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&wlan_host_wake_l>;
- 		wakeup-source;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-bigtreetech-cb2.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-bigtreetech-cb2.dtsi
+index b6cf03a7ba66b..04cf285e6c2af 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-bigtreetech-cb2.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-bigtreetech-cb2.dtsi
+@@ -569,7 +569,7 @@ tft_tp: touchscreen@48 {
+ 		reg = <0x48>;
+ 		status = "okay";
+ 		ti,x-plate-ohms = <660>;
+-		ti,rt-thr = <3000>;
++		ti,max-rt = <3000>;
+ 		ti,fuzzx = <32>;
+ 		ti,fuzzy = <16>;
+ 	};
 -- 
 2.53.0
 
