@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD51337F314;
-	Sat, 12 Sep 2026 19:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192B938DC48;
+	Sat, 12 Sep 2026 19:21:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240915; cv=none; b=JgAqt4g8x+wa6mPD4TGr6pXyuKVp3MJWwTWb+UA9I7Idf2nUrYlsAhagE/MHucoHWDv5kzmyMyGOhT7z6/s5t50tSCcUliIxIjuOZHpkKAkRZJ0GDzgoiVr/2n2r/3IhswHCUPtj35qXds2Ij3G8Urn6/FKGXQCHquxP9DDG7fc=
+	t=1789240920; cv=none; b=YvVl375RkRatX4Hko9EwT/RE4coZBaCKfqh0sOI2nKpLYEycOSzkW/3IoUHPS4I2KsNmwvJjx/2iq1C1dtI8K48lxhEXLJ+uYQ0CDEequyy55S2JP27Lry0Szwy6/OGUgS+snd+ITNLxyubB13khLHaBNVvh57o+bqrZ2O6Ynfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240915; c=relaxed/simple;
-	bh=lMjnXyFdqF7fqghjSz2LCWpP5jMK7N7cNVvV1elWXSM=;
+	s=arc-20240116; t=1789240920; c=relaxed/simple;
+	bh=VcTk38w6+9Yxzn1t9fo/89ONTXH7uKSorlkApBBDbIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W8TASFBcRhyFIWcaQ3eZYYBXqire797318A1gm9jTk6M0Nl3U+q7jL3aK+9S28RbQD17q6u2R45+RJuo6ofrDtlDT695IcEeB3BWUfrZum9IBZJc7dt2RDnUo+2sfgZYO0YKsoY830Rfx4TnNYf0nqjikBvF52id0QCorxNthJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDis2SjD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p2zLzDMYDD6926m+SrywCWj5lGFXazb65qIGJVgrDnipl/vEJ8SzLG9msyPV2xS/D0pl6tsmZLIKMVkDZKqRQlHTqT4pkLYDSdLF4hicr5v666FanpkKgcTBho6c/JwAMfcheY/wlGP3uQ2NB1H9YxjR3mfXBFFY1Z208hSDu5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lVF8P2Rr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDis2SjD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4181F000FF;
-	Sat, 12 Sep 2026 19:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lVF8P2Rr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98281F00893;
+	Sat, 12 Sep 2026 19:21:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240905;
-	bh=tyoq0Qw0tB40JDDSjMQ7yGrb5J4rzIaJT1IyLNzKLG4=;
+	s=korg; t=1789240909;
+	bh=t1onNDH7rXFgJ2MzGCyQArpzYlyOIRPUMLAy/lWnSss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xDis2SjD7g8ArK8iN0PlnHoJuRhy9UXyfZaQ2wLamEhV2d/oZAthGMYZXvY12xm1s
-	 eJ7C8YkEE/ygtpDVZDqkQvU+H4Rv/AN8D2uf8aJ4b4TQq2PoB6wDXe0s9Tx0MsE5j1
-	 kZ1h5GDVkHUT/GJDxqO/eHiGv1y6JJc9ctylTJzo=
+	b=lVF8P2RrWKan7RuFpfdMLtI6zvtee5zHn/3ONx6qySSY63kn1ugK2hvPoDjPkL+9m
+	 SgtgK2Q72VQkPY/L2JOjAOiXS5PpLKgE4ovJqyw9iGIF/1YIAe+yF/tO02Browo00D
+	 HNg3AUPdZ8vSFASiyTrJZNTT9Ct32TO4Ni5cr4m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 5.10 028/798] NFSD: Encode only the status in NFS-ACL v2 GETACL error replies
-Date: Sat, 12 Sep 2026 08:54:16 +0200
-Message-ID: <20260912065517.605431171@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 5.10 011/798] powerpc/powermac: fix OF node refcount
+Date: Sat, 12 Sep 2026 08:53:59 +0200
+Message-ID: <20260912065517.216759962@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -49,76 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit ed4edddad19babf76b56882ad9600f5646b167a0 upstream.
+commit bd0abfe6b013aeb2a1aebc5fbc7ceeb50355bda3 upstream.
 
-The NFSv2 ACL GETACL reply is a union that carries file attributes
-and ACL data only when the status is NFS_OK. All error cases are
-void results. However, currently the NFSv2 ACL GETACL result encoder
-decides whether to append the "OK" body by testing only whether the
-file handle resolved to a positive dentry, not the actual reply
-status.
+Platform devices created with platform_device_alloc() call
+platform_device_release() when the last reference to the device's
+kobject is dropped. This function calls of_node_put() unconditionally.
+This works fine for devices created with platform_device_register_full()
+but users of the split approach (platform_device_alloc() +
+platform_device_add()) must bump the reference of the of_node they
+assign manually. Add the missing call to of_node_get().
 
-A GETACL request that resolves its file handle but then fails for
-another reason (an unsupported mask value, a getattr failure, or an
-ACL retrieval error) therefore appends file attributes and ACL data
-after the error status on the wire. Worse, when the mask is
-rejected, fh_getattr() hasn't been called at all, so those
-attributes are serialized from a zero-filled kstat and are junk.
-
-The logic before the xdr_stream conversion used the reply status.
-Revert to that approach (but keep the xdr_stream conversion in
-place).
-
-Fixes: f8cba47344f7 ("NFSD: Update the NFSv2 GETACL result encoder to use struct xdr_stream")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260712150911.48461-1-cel@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Fixes: 81e5d8646ff6 ("i2c/powermac: Register i2c devices from device-tree")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260706-pdev-fwnode-ref-v3-1-1ff028e33779@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs2acl.c |   31 +++++++++++++++----------------
- 1 file changed, 15 insertions(+), 16 deletions(-)
+ arch/powerpc/platforms/powermac/low_i2c.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs2acl.c
-+++ b/fs/nfsd/nfs2acl.c
-@@ -246,22 +246,21 @@ nfsaclsvc_encode_getaclres(struct svc_rq
+--- a/arch/powerpc/platforms/powermac/low_i2c.c
++++ b/arch/powerpc/platforms/powermac/low_i2c.c
+@@ -1501,7 +1501,7 @@ static int __init pmac_i2c_create_platfo
+ 		if (bus->platform_dev == NULL)
+ 			return -ENOMEM;
+ 		bus->platform_dev->dev.platform_data = bus;
+-		bus->platform_dev->dev.of_node = bus->busnode;
++		bus->platform_dev->dev.of_node = of_node_get(bus->busnode);
+ 		platform_device_add(bus->platform_dev);
+ 	}
  
- 	if (!svcxdr_encode_stat(xdr, resp->status))
- 		return false;
--
--	if (dentry == NULL || d_really_is_negative(dentry))
--		return true;
--	inode = d_inode(dentry);
--
--	if (!svcxdr_encode_fattr(rqstp, xdr, &resp->fh, &resp->stat))
--		return false;
--	if (xdr_stream_encode_u32(xdr, resp->mask) < 0)
--		return false;
--
--	if (!nfs_stream_encode_acl(xdr, inode, resp->acl_access,
--				   resp->mask & NFS_ACL, 0))
--		return false;
--	if (!nfs_stream_encode_acl(xdr, inode, resp->acl_default,
--				   resp->mask & NFS_DFACL, NFS_ACL_DEFAULT))
--		return false;
-+	switch (resp->status) {
-+	case nfs_ok:
-+		inode = d_inode(dentry);
-+		if (!svcxdr_encode_fattr(rqstp, xdr, &resp->fh, &resp->stat))
-+			return false;
-+		if (xdr_stream_encode_u32(xdr, resp->mask) < 0)
-+			return false;
-+		if (!nfs_stream_encode_acl(xdr, inode, resp->acl_access,
-+					   resp->mask & NFS_ACL, 0))
-+			return false;
-+		if (!nfs_stream_encode_acl(xdr, inode, resp->acl_default,
-+					   resp->mask & NFS_DFACL, NFS_ACL_DEFAULT))
-+			return false;
-+		break;
-+	}
- 
- 	return true;
- }
 
 
