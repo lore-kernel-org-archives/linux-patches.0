@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F6735F191;
-	Sat, 12 Sep 2026 08:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5263C369990;
+	Sat, 12 Sep 2026 08:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203408; cv=none; b=EwkdC/Luy5VuP8689FA/LY7TF/NAIZ62R0X2hTZ72B11ZbjXeBuqkYzNaI4Il2B35ZpCUrUwU0v5QQiG7kIe5IMf3M3c73XIh1KfQ4pyaYQvLSFt7dbKkVCwD0xLpgebrhp24eXxLdVD+SEXOx2NWW8YO9FcS7Phlxo1M913EXY=
+	t=1789203413; cv=none; b=JTzC4cPOnAco8UD6Ixa9YdYamnfkdF5WNc7o2pI3BcYKgbD7vFZNzP5d0hAdygGuuS0o4lUUZnH/L6Mw0ZNothO8+As5ydpWadHHgmlPomlwnkNOAtB1NGVSlQ6+uoLCxVuuZuz0gUqpDVrEKfgo07KK1O74WVm96uoSdUnqCfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203408; c=relaxed/simple;
-	bh=PYurNvvxjuxjBdVHIyBerz0MyIQYLkLKVEafaEhSabA=;
+	s=arc-20240116; t=1789203413; c=relaxed/simple;
+	bh=qJraCk8UtQn7poHd4EZYyNiDW1DtCTbHVPBD7j1MORg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YIykxHyUYSs0o2b/GDiT1naOv/cDLGSqFnIlU5Uh+5x1yjgc9SJYQZFW5A/iqPn8nM+Uf3V1ge4YpniuN3BsIVcAbny8H8C7Vii9KYCqLWA1YqKM8K6MCkLJ3tpjS/uMORrn+iExFKawky5nNZs8yFLAmUaAYVF6y0jPr87kCcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQn3hvUk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cNQTX7s/52ivri+npM6korHXTQTqzjFvW4HUKgqBnqg7x7VOEIYN51Yeh7eJY7EJEPSR56dqHoCN0Tc4MalWSHm2ws1NRlab//7Xxlp9BulW+tNDHH2dLc4NoTIrhPXegDqr/m+Obov7xKA0g7bIutTjFPsykNagzKsX05Mm9cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vAyT1ISJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQn3hvUk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99F81F000FF;
-	Sat, 12 Sep 2026 08:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vAyT1ISJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89451F000FF;
+	Sat, 12 Sep 2026 08:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203406;
-	bh=q+ReKny/B1M/NLj3EotwseJYlyeVyYW3t7u7TJTndGc=;
+	s=korg; t=1789203412;
+	bh=mURTdrGwHtDRCxTDcbrU55+znELeWEIkNPbOc3szxzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iQn3hvUkSf3ABaCFvINpq6qmOBSnGcFw3OHPWvL1FumKINpFKQ5JhfMrkTy7tUMbl
-	 eSLOVCqcpUqeS1T2DdDk02LovsWZtJ4sQxNCwKx/iSRk0N2YPK7YVqG6blE3OpTUIl
-	 1QJ9opwJK3FT6oDLKZYWttIEyMLu5BXDA6mAnIVU=
+	b=vAyT1ISJ5D5Ph8zgpY7xFmP5XpyY4XCb/X58fU7fsXLRvJ1KED0OjPnJ5lV5eNPzH
+	 zDQ7NjscA22FUzV+6orguKqMEg5srjyXzLjs79MWVlzA8hP+Z8DoUkkuaLZRrmApFk
+	 b/1a0tHBvpHnuRvA5xcr6ZeFjx2EiLkVYB4DRyEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Mohammad Abu-Khader <mohammad.abukhader@hotmail.com>,
+	David Gow <david@davidgow.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1401/1815] drm/amd/pm: silence uninitialized variable warnings
-Date: Sat, 12 Sep 2026 08:52:31 +0200
-Message-ID: <20260912065721.913545476@linuxfoundation.org>
+Subject: [PATCH 7.2 1402/1815] kunit: tool: fix _list_tests filtering wrong variable when list has TAP prefix
+Date: Sat, 12 Sep 2026 08:52:32 +0200
+Message-ID: <20260912065721.937573301@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,52 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Mohammad Abu-Khader <mohammad.abukhader@hotmail.com>
 
-[ Upstream commit b4cb43789b6ac0f25fc0d9b21c5e7a6225cf6a31 ]
+[ Upstream commit dea754ded9518b51740c417d2c1e02ff540784c6 ]
 
-Smatch complains that:
+`_list_tests()` runs the kernel to list tests, strips printk timestamp
+lines via `extract_tap_lines()`, then drops the dummy TAP header from
+the cleaned `lines`.  However the subsequent regex filter mistakenly
+operates on the original `output` instead of the cleaned `lines`.  When
+the kernel output includes timestamp prefixes (common with UML or slower
+setups), e.g.:
 
-    drivers/gpu/drm/amd/amdgpu/../pm/swsmu/smu15/smu_v15_0_8_ppt.c:1964
-    smu_v15_0_8_set_performance_level() error: uninitialized symbol 'ret'.
+  [    0.100000] suite.test1
+  [    0.100000] suite.test2
 
-In this line there is an "if (ret)" condition where "ret" is either
-zero or uninitialized.  Initialize "ret" at the start of the function to
-avoid a potential uninitialized variable bug.  But also delete the
-condition since it is never true.
+the anchored regex `^[^\s.]+\.[^\s.]+$` rejects them and `--list_tests`
+returns an empty list.
 
-Fixes: 422b399b09c7 ("drm/amd/pm: Add od_edit_dpm_table support")
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Filter `lines` instead of `output`, matching the behavior of the
+adjacent `_list_tests_attr()` which already returns the cleaned list.
+
+Add a regression test with timestamp-prefixed input to verify the fix.
+
+Link: https://lore.kernel.org/r/20260803190059.36491-1-mohammad.abukhader@hotmail.com
+Fixes: 723c8258c8fe ("kunit: tool: Add command line interface to filter and report attributes")
+Signed-off-by: Mohammad Abu-Khader <mohammad.abukhader@hotmail.com>
+Reviewed-by: David Gow <david@davidgow.net>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu15/smu_v15_0_8_ppt.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ tools/testing/kunit/kunit.py           |  2 +-
+ tools/testing/kunit/kunit_tool_test.py | 12 ++++++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu15/smu_v15_0_8_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu15/smu_v15_0_8_ppt.c
-index 118eda5429ff7..68bd673c0573d 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu15/smu_v15_0_8_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu15/smu_v15_0_8_ppt.c
-@@ -1915,7 +1915,7 @@ static int smu_v15_0_8_set_performance_level(struct smu_context *smu,
- 	struct smu_dpm_table *gfx_table = &dpm_context->dpm_tables.gfx_table;
- 	struct smu_dpm_table *uclk_table = &dpm_context->dpm_tables.uclk_table;
- 	struct smu_umd_pstate_table *pstate_table = &smu->pstate_table;
--	int ret;
-+	int ret = 0;
+diff --git a/tools/testing/kunit/kunit.py b/tools/testing/kunit/kunit.py
+index ac3f7159e67fe..91d234ac3b579 100755
+--- a/tools/testing/kunit/kunit.py
++++ b/tools/testing/kunit/kunit.py
+@@ -126,7 +126,7 @@ def _list_tests(linux: kunit_kernel.LinuxSourceTree, request: KunitExecRequest)
+ 	lines.pop()
  
- 	switch (level) {
- 	case AMD_DPM_FORCED_LEVEL_PERF_DETERMINISM:
-@@ -1956,9 +1956,6 @@ static int smu_v15_0_8_set_performance_level(struct smu_context *smu,
- 				SMU_DPM_TABLE_MAX(uclk_table);
- 		}
+ 	# Filter out any extraneous non-test output that might have gotten mixed in.
+-	return [l for l in output if re.match(r'^[^\s.]+\.[^\s.]+$', l)]
++	return [l for l in lines if re.match(r'^[^\s.]+\.[^\s.]+$', l)]
  
--		if (ret)
--			goto out;
--
- 		smu_cmn_reset_custom_level(smu);
+ def _list_tests_attr(linux: kunit_kernel.LinuxSourceTree, request: KunitExecRequest) -> Iterable[str]:
+ 	args = ['kunit.action=list_attr']
+diff --git a/tools/testing/kunit/kunit_tool_test.py b/tools/testing/kunit/kunit_tool_test.py
+index da88c3a1651d0..85ae21754bdf9 100755
+--- a/tools/testing/kunit/kunit_tool_test.py
++++ b/tools/testing/kunit/kunit_tool_test.py
+@@ -979,6 +979,18 @@ class KUnitMainTest(unittest.TestCase):
+ 		self.linux_source_mock.run_kernel.assert_called_once_with(
+ 			args=['kunit.action=list'], build_dir='.kunit', filter_glob='suite*', filter='', filter_action=None, timeout=300)
  
- 		break;
++	def test_list_tests_with_prefix(self):
++		want = ['suite.test1', 'suite.test2', 'suite2.test1']
++		self.linux_source_mock.run_kernel.return_value = [
++			'[    0.100000] TAP version 14',
++			'[    0.200000] suite.test1',
++			'[    0.200000] suite.test2',
++			'[    0.300000] suite2.test1']
++
++		got = kunit._list_tests(self.linux_source_mock,
++				     kunit.KunitExecRequest(None, None, None, False, False, '.kunit', 300, 'suite*', '', None, None, 'suite', False, False, False))
++		self.assertEqual(got, want)
++
+ 	@mock.patch.object(kunit, '_list_tests')
+ 	def test_run_isolated_by_suite(self, mock_tests):
+ 		mock_tests.return_value = ['suite.test1', 'suite.test2', 'suite2.test1']
 -- 
 2.53.0
 
