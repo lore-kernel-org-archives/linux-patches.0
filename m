@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6A32F531B;
-	Sat, 12 Sep 2026 15:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F36CA6F;
+	Sat, 12 Sep 2026 15:12:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225944; cv=none; b=dM67jE+vsNdC19/qLN1YvnkqJIUabKCm/OJn92X4mT8+DalIk/I+t1W7WAyMGwICXWc/FAEmIiRmzCgL9sAB9Ib18DEnld3gdUyEeco5yfLXVDWFVIpb815MBlKiTExGSZEoRhcc+ME8hgQ0efrX+35LqN9ffsy+07VOza3jXTo=
+	t=1789225948; cv=none; b=p68f8tMD5srX7jYkvRgcMu5HtD7vfUCkCleLwB2VKk5v0RK4+dM6cqUDciEAFu94omH7gdfnC4S2p1wL+GoTZYogo6E7KuMBSgIC7d18C80GPMmzfNcjB6JX97/12+qFKKjdcrUZ8vP4fRSfn/pHVzArGfdXk86QQukmFhAmKrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225944; c=relaxed/simple;
-	bh=DqE9z1+K+BVvfSHSk/ZsxGNbPjjEiojwuR5PnVE2cZk=;
+	s=arc-20240116; t=1789225948; c=relaxed/simple;
+	bh=NYVxDLKZbPCU0XLng9UR9Zi5/Twcf6129Zd/vXNiQaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=elPmu8cH+pnlXS9q24nH+e5dlDdjSWPJunCmorNXipenW6OyBrZfjdrNtzvK2DvOnyzhFto8cETd6R11b9s/Ut2EqHibcdc6NwB6S5vD0NyYoOds4hnufWacFRWpWy9DDBzuhVAwb0GQCBqCz9nRUHX8eKcXAwQF4AJDcGJjSxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6WfQ1LC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KFYXZzSj2fzlnO1Tf9Zq6jspySZfb0iiP/eOF2CyFewMszQKeskKLjtrjgOz8Gdx9KhaWHAk+SXMbGPj6ovJxuZSa5QItugcOfGjVX/oqMPZrTS4gNsqZLUoPV4cExt6JgOPwb2RTN0EXekXUK//Hwve2SYYBxQjtfkyH9RLFco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4AYK6Zv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6WfQ1LC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8271D1F000FF;
-	Sat, 12 Sep 2026 15:12:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4AYK6Zv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546FF1F000FF;
+	Sat, 12 Sep 2026 15:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225942;
-	bh=js/+E7BEOmi+4W1h8UUff80i7aEC4qSZlB8qLa9lNZ4=;
+	s=korg; t=1789225947;
+	bh=grdDlmGRwE4cn4zVpsifq548dYDBGdmqBqiO1X5LmaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y6WfQ1LCm9VpylgtKjS6OpzAH7rsKSjrO7qUg4RNByQQ6P8UN1/ZtK4++AI7dccBc
-	 iyl/w8NBUbvcu7YxY3KLDPYyJiCaUJSRXEtjW5FXUGUwRfAr7yCAux8D3CGJEv5uC4
-	 zSGoh/f9ebbHBctvloD24aDwjDhk2kb6e/oM3gZw=
+	b=y4AYK6ZvTvBqbpebrCMLpO8f0H5wXOHdcdtqaFc8Us7mG0pKLP+btmio0vUTaK4HI
+	 4r7f2auFeeGOCY2xbMkSiTCUUSwcRCkvq4QU5ITUO8V0nVDaIbu+J/ijlndkC6tSv4
+	 RPAmxOmlxa6fYDIrEXbJgVDyRQBDUWG2juGBqHy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1301/1424] i3c: mipi-i3c-hci: Fix DAT/DCT entry sizes
-Date: Sat, 12 Sep 2026 09:02:13 +0200
-Message-ID: <20260912065636.402270491@linuxfoundation.org>
+Subject: [PATCH 6.6 1275/1424] cuse: wait for pending RCU callbacks on module exit
+Date: Sat, 12 Sep 2026 09:01:47 +0200
+Message-ID: <20260912065635.830351121@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,68 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit 0676bfebf5766f0a60549f74ba597115028fa39c ]
+[ Upstream commit 4deb3edead0c0e172cc7349e8855d741d3c5e162 ]
 
-MIPI I3C HCI specification v1.1 describes the ENTRY_SIZE field for the
-Device Address Table (DAT) and the Device Characteristics Table (DCT)
-section offset registers (DAT_SECTION_OFFSET and DCT_SECTION_OFFSET).
-That field is not documented in earlier version.
+Since commit 053fc4f755ad ("fuse: fix UAF in rcu pathwalks"),
+fuse_conn_put() frees the fuse_conn through call_rcu() rather than
+synchronously.  For cuse, fc->release is cuse_fc_release(), which
+lives in the cuse module.  If the module is removed before the RCU
+grace period ends, the callback jumps into freed module memory:
 
-ENTRY_SIZE value 0 is meant to be backward compatible. For the DAT entry
-size it is interpreted as 2 DWORDs (8-bytes) and for the DCT entry size
-as 4 DWORDs (16-bytes). Values 1-15 are reserved for future use.
+      userspace / module unload      |        RCU softirq
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ close(/dev/cuse)                    |
+  cuse_channel_release()             |
+   fuse_dev_release()                |
+    fuse_conn_put(fch->conn)         |
+     call_rcu(delayed_release) ------+---> callback queued
+                                     |
+ rmmod cuse                          |
+  cuse_exit()                        |
+   cuse_channel_destroy()            |
+   ...                               |
+   return                            |
+                                     |
+ <module text freed>                 |
+                                     |  rcu_do_batch()
+                                     |   delayed_release()
+                                     |    fc->release()
+                                     |     -> cuse_fc_release()
+                                     |        ^^^ freed text!
 
-New version I believe fixes also the TABLE_SIZE field description.
-Before it was defined in DWORDs which I believe is incorrect since the
-DAT/DCT table entry structures, and sizes, are described having
-8-bytes/16-bytes entries.
+The freed module text is unmapped by vfree(), so the jump into the
+stale callback triggers a page-fault Oops.  If the virtual address
+is subsequently reused, the callback could execute unrelated code
+(undefined behaviour).
 
-This is more clear in the specification v1.1 which states the TABLE_SIZE
-fields are interpreted as number of entries in the DAT/DCT tables. I
-believe this same holds also in earlier version, at least it makes more
-sense.
+Fix this by calling rcu_barrier() in cuse_exit() so that any pending
+fuse_conn release callback completes before the module is removed.
 
-Fix code accordingly and let the DAT_entry_size and the DCT_entry_size
-variables carry the size as bytes. Which is how it is already
-interpreted in the dat_v1.c: hci_dat_v1_init().
-
-Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20230921055704.1087277-4-jarkko.nikula@linux.intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Stable-dep-of: 308ecb824db3 ("i3c: mipi-i3c-hci: Fix missing STAT_IBI_STATUS_THLD in PIO mode")
+Fixes: 053fc4f755ad ("fuse: fix UAF in rcu pathwalks")
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/fuse/cuse.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
-index 8bceced3c305e..63d5e869dc8ad 100644
---- a/drivers/i3c/master/mipi-i3c-hci/core.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/core.c
-@@ -610,17 +610,17 @@ static int i3c_hci_init(struct i3c_hci *hci)
- 	offset = FIELD_GET(DAT_TABLE_OFFSET, regval);
- 	hci->DAT_regs = offset ? hci->base_regs + offset : NULL;
- 	hci->DAT_entries = FIELD_GET(DAT_TABLE_SIZE, regval);
--	hci->DAT_entry_size = FIELD_GET(DAT_ENTRY_SIZE, regval);
-+	hci->DAT_entry_size = FIELD_GET(DAT_ENTRY_SIZE, regval) ? 0 : 8;
- 	dev_info(&hci->master.dev, "DAT: %u %u-bytes entries at offset %#x\n",
--		 hci->DAT_entries, hci->DAT_entry_size * 4, offset);
-+		 hci->DAT_entries, hci->DAT_entry_size, offset);
+diff --git a/fs/fuse/cuse.c b/fs/fuse/cuse.c
+index e4d809e2d68d3..5fb9fc6b51736 100644
+--- a/fs/fuse/cuse.c
++++ b/fs/fuse/cuse.c
+@@ -643,6 +643,11 @@ static void __exit cuse_exit(void)
+ {
+ 	misc_deregister(&cuse_miscdev);
+ 	class_destroy(cuse_class);
++	/*
++	 * Wait for pending call_rcu() callbacks that call back into
++	 * this module via fc->release (cuse_fc_release).
++	 */
++	rcu_barrier();
+ }
  
- 	regval = reg_read(DCT_SECTION);
- 	offset = FIELD_GET(DCT_TABLE_OFFSET, regval);
- 	hci->DCT_regs = offset ? hci->base_regs + offset : NULL;
- 	hci->DCT_entries = FIELD_GET(DCT_TABLE_SIZE, regval);
--	hci->DCT_entry_size = FIELD_GET(DCT_ENTRY_SIZE, regval);
-+	hci->DCT_entry_size = FIELD_GET(DCT_ENTRY_SIZE, regval) ? 0 : 16;
- 	dev_info(&hci->master.dev, "DCT: %u %u-bytes entries at offset %#x\n",
--		 hci->DCT_entries, hci->DCT_entry_size * 4, offset);
-+		 hci->DCT_entries, hci->DCT_entry_size, offset);
- 
- 	regval = reg_read(RING_HEADERS_SECTION);
- 	offset = FIELD_GET(RING_HEADERS_OFFSET, regval);
+ module_init(cuse_init);
 -- 
 2.53.0
 
