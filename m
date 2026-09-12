@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E9D4BEE32;
-	Sat, 12 Sep 2026 11:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34514BEE32;
+	Sat, 12 Sep 2026 11:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211949; cv=none; b=czFUKPm8x7jJHXFOHcs30UmUyUbXgDVVQbO6jMpjzEQg/y87ZKCpdyEIcdgkhhS5j2BF9rGyRp6XMMPTMGLIGnqCVTAKY7xznkK29rTf/BUTamxY1WZ2FrnCgVAaK2bOjfHxc2Gz3hRJJm+pqs8KYIOafgLkhUhrNEL7Y55M8Jg=
+	t=1789211954; cv=none; b=LHnGOxipJf+Bh9ysZt1216w/Ud9gszthHraZp4CVDfP+ayOeAVVK7SbNp4j0YEmF6cqdttzUn6Y5FkCCIPoWCxZfogNCsrNqoMkvvR0tEImkLLdEj0BZgWrc1vLu3boz2kvMr40oEzYBqzuaEdx7bsA7pduBDMlNmyOi+kZDwDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211949; c=relaxed/simple;
-	bh=08H3HI0tIPP7sxxqJTXlb8es86S/04xIKr6rBC+p4c8=;
+	s=arc-20240116; t=1789211954; c=relaxed/simple;
+	bh=y+RCLAfAuKNy3fukdDWP33pkApa4v+bNhh5iXzc+TYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DMHKIRI9xVgF3lEhI7uWtYcjFBEab40aGeZ2kCZaq4qZHRSUeknZuAs+NnYT3DS7sqeLZfUTMAbwX6zh5ncsAoYqXfGj2AsM2A4lg/t8zr1vodwRI0PsQG+gXqxlrX1TAVbDJyXLG35tUdFwsuNNCPbKgtoOInb60H5Wcr6BPBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AELr2Cp6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qc5v9zTCFzA9Y9si7UbEWqVUs0XOpDDscYoUaaFNIja7Nbt2kikT1+h4NyP9Ra5wXpVCqr5wtu26A2FPXHMqGCyrewoBPc0ws9YCH/U48opGJ7j6hOHixevSYwl2YGc2tSRYK5HtSykXi/65rWSg9+nWLSzYBLefGkAerW7paHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b03Def0s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AELr2Cp6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0AE61F000FF;
-	Sat, 12 Sep 2026 11:19:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b03Def0s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D66821F000FF;
+	Sat, 12 Sep 2026 11:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211947;
-	bh=o4awGU42knKFhvlRzfnw+4RInWxY3CouFF5o7lATZHQ=;
+	s=korg; t=1789211952;
+	bh=SgyumJDSvnOzxxZY4XOm3+6I1nxvuGcq0rPWsx5aVMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AELr2Cp6zD8A1JDQ84C00Ec4jDpenSTiFarsE/3alEFQWmLLiRtsK5LvzaQDkFkFF
-	 UVV3Dm5D0HEqcK5/jRGYrZIFReb9aG6Vtl4XHiwzlwQwUK72qcquLdCw40h0EgOlFp
-	 jZWbeM9LfJMgN5xowDB66nd3o3KLxVrMXFrRWP+Q=
+	b=b03Def0sbe/qu9IsIbLfKtT0V93ntFlQzxHCamm/DD/mEUNS+zCGpeMA+VUn562iy
+	 NSwsn4DAlTumQ/RimluyXWZyCR1xbGhhVAQII7TSjebrhxZW/oRPtHO158RC9s6SBO
+	 KmyQu7NLUeW5S1TFRYRBwJ1FztnfIeJbAH9AEcdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Denis V. Lunev" <den@openvz.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	syzbot+1b2c9c4a0f8708082678@syzkaller.appspotmail.com,
+	Michal Luczaj <mhal@rbox.co>,
+	Nguyen Dinh Phi <phind.uet@gmail.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1293/1518] virtio: add virtio_device_shutdown() helper
-Date: Sat, 12 Sep 2026 08:57:42 +0200
-Message-ID: <20260912065652.765995316@linuxfoundation.org>
+Subject: [PATCH 6.18 1284/1518] vsock: dont check the listeners sk_err in vsock_accept()
+Date: Sat, 12 Sep 2026 08:57:33 +0200
+Message-ID: <20260912065652.560886381@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,104 +54,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis V. Lunev <den@openvz.org>
+From: Nguyen Dinh Phi <phind.uet@gmail.com>
 
-[ Upstream commit 0d8aebe089b4ba887e792884cf041ce9f1040ff4 ]
+[ Upstream commit b8c899cf5e7be29840a172c183dedd8d3e7a0287 ]
 
-The generic virtio bus .shutdown handler, virtio_dev_shutdown(), breaks
-and resets a device once it has established that the driver has no
-.shutdown of its own. A driver that does implement .shutdown, to quiesce
-its own activity first, still needs the same break and reset afterwards
-and would otherwise have to open code it.
+Syzbot reported an issue which can be reproduced with these steps:
+	r0 = socket(AF_VSOCK, SOCK_STREAM, 0)
+	bind(r0, {VMADDR_CID_ANY, PORT})
+	connect(r0, {VMADDR_CID_LOCAL, PORT}) -> -1, EPROTO (self-connect)
+	listen(r0, backlog)                   -> 0
+	r1 = socket(AF_VSOCK, SOCK_STREAM, 0)
+	connect(r1, {VMADDR_CID_LOCAL, PORT}) -> 0
+	accept(r0)                            -> -1, EPROTO (stale sk_err)
 
-Factor the break + synchronize_cbs + reset sequence out of
-virtio_dev_shutdown() into an exported virtio_device_shutdown() helper so
-such drivers can reuse it instead of duplicating the core logic.
+Basically, it creates a socket (r0) and triggers a self-connect after
+binding it. This self-connect fails with EPROTO because it loops back
+to r0 while the socket is still in the TCP_SYN_SENT state, causing it
+to be incorrectly dispatched to the connecting-client path. The
+unexpected packet type encountered there sets sk_err to EPROTO.
 
-No functional change.
+After that, it invokes a listen() call on the same socket. This
+listen() call succeeds because the kernel's listening path never
+inspects or clears sk_err. Then, a new socket (r1) is created as a
+normal client and connects to r0. However, vsock_accept() rejects this
+incoming connection because the listener's sk_err still holds the
+EPROTO error from the earlier failed self-connect.
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260624140846.2616797-2-den@openvz.org>
-Stable-dep-of: 7e17eef04600 ("virtio_balloon: quiesce balloon work before device shutdown")
+This rejection causes the child socket created for r1's connection to
+never be freed on virtio or hyperv transports; only the VMCI transport
+implements pending_work to revisit and clean up a rejected socket.
+
+For a non-blocking connect(), vsock_connect() may return -EINPROGRESS
+immediately, and vsock_connect_timeout() can later set sk->sk_err
+asynchronously.
+
+Since no vsock transport ever sets sk_err on a socket while it is in
+TCP_LISTEN state, checking it in vsock_accept() serves no purpose and
+only carries forward errors left behind by earlier, unrelated
+connection attempts on the same socket. Remove the checks so accept()
+no longer rejects valid incoming connections because of a stale
+error, which also avoids the resource leak described above.
+
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Reported-by: syzbot+1b2c9c4a0f8708082678@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1b2c9c4a0f8708082678
+Suggested-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20260813173024.2362935-2-phind.uet@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio.c | 41 +++++++++++++++++++++++++++--------------
- include/linux/virtio.h  |  1 +
- 2 files changed, 28 insertions(+), 14 deletions(-)
+ net/vmw_vsock/af_vsock.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/virtio/virtio.c b/drivers/virtio/virtio.c
-index 5bdc6b82b30b4..3b7bab73d8950 100644
---- a/drivers/virtio/virtio.c
-+++ b/drivers/virtio/virtio.c
-@@ -401,6 +401,32 @@ static const struct cpumask *virtio_irq_get_affinity(struct device *_d,
- 	return dev->config->get_vq_affinity(dev, irq_vec);
- }
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index e6a8ac81662d0..2f8b1e16caa8f 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1762,7 +1762,7 @@ static int vsock_accept(struct socket *sock, struct socket *newsock,
+ 	timeout = sock_rcvtimeo(listener, arg->flags & O_NONBLOCK);
  
-+/**
-+ * virtio_device_shutdown - break and reset a device on shutdown
-+ * @dev: the device
-+ *
-+ * Drivers with their own .shutdown method should quiesce their activity and
-+ * then call this to stop the device the way the generic shutdown path does.
-+ */
-+void virtio_device_shutdown(struct virtio_device *dev)
-+{
-+	/*
-+	 * Some devices get wedged if you kick them after they are
-+	 * reset. Mark all vqs as broken to make sure we don't.
-+	 */
-+	virtio_break_device(dev);
-+	/*
-+	 * Guarantee that any callback will see vq->broken as true.
-+	 */
-+	virtio_synchronize_cbs(dev);
-+	/*
-+	 * As IOMMUs are reset on shutdown, this will block device access to memory.
-+	 * Some devices get wedged if this happens, so reset to make sure it does not.
-+	 */
-+	dev->config->reset(dev);
-+}
-+EXPORT_SYMBOL_GPL(virtio_device_shutdown);
-+
- static void virtio_dev_shutdown(struct device *_d)
- {
- 	struct virtio_device *dev = dev_to_virtio(_d);
-@@ -419,20 +445,7 @@ static void virtio_dev_shutdown(struct device *_d)
- 		return;
+ 	while ((connected = vsock_dequeue_accept(listener)) == NULL &&
+-	       listener->sk_err == 0 && timeout != 0) {
++		timeout != 0) {
+ 		prepare_to_wait(sk_sleep(listener), &wait, TASK_INTERRUPTIBLE);
+ 		release_sock(listener);
+ 		timeout = schedule_timeout(timeout);
+@@ -1775,13 +1775,9 @@ static int vsock_accept(struct socket *sock, struct socket *newsock,
+ 		}
  	}
  
--	/*
--	 * Some devices get wedged if you kick them after they are
--	 * reset. Mark all vqs as broken to make sure we don't.
--	 */
--	virtio_break_device(dev);
--	/*
--	 * Guarantee that any callback will see vq->broken as true.
--	 */
--	virtio_synchronize_cbs(dev);
--	/*
--	 * As IOMMUs are reset on shutdown, this will block device access to memory.
--	 * Some devices get wedged if this happens, so reset to make sure it does not.
--	 */
--	dev->config->reset(dev);
-+	virtio_device_shutdown(dev);
- }
+-	if (listener->sk_err) {
+-		err = -listener->sk_err;
+-	} else if (!connected) {
++	if (!connected) {
+ 		err = -EAGAIN;
+-	}
+-
+-	if (connected) {
++	} else {
+ 		sk_acceptq_removed(listener);
  
- static const struct bus_type virtio_bus = {
-diff --git a/include/linux/virtio.h b/include/linux/virtio.h
-index d3f723b875a78..9918538f59ca8 100644
---- a/include/linux/virtio.h
-+++ b/include/linux/virtio.h
-@@ -204,6 +204,7 @@ int virtio_device_freeze(struct virtio_device *dev);
- int virtio_device_restore(struct virtio_device *dev);
- #endif
- void virtio_reset_device(struct virtio_device *dev);
-+void virtio_device_shutdown(struct virtio_device *dev);
- int virtio_device_reset_prepare(struct virtio_device *dev);
- int virtio_device_reset_done(struct virtio_device *dev);
- 
+ 		lock_sock_nested(connected, SINGLE_DEPTH_NESTING);
 -- 
 2.53.0
 
