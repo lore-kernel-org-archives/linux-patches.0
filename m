@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799FF4BEE38;
-	Sat, 12 Sep 2026 16:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CB92877E8;
+	Sat, 12 Sep 2026 16:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229837; cv=none; b=gXIBmB/7wYkJbsMVfCbWO95bVokZdzEeotR5spdadfUM3aZZzkWW22KreeRf4jDhYOKBnNXgMyqmB5o8u5GdaIFXpmRwsCUZn3TMvBgVJyG+OrI1Xo6QoIj8JxaTnuLilhiRKIZkUcbkN06BcOPq/e2QdHXmLuMBtpnW3XSYnvI=
+	t=1789229841; cv=none; b=NekzlrdfPoEwu01Kt2bMdERqUWfCwzLYgNYfsdv2UKVe64K3hnky3MvIPPeKD29rLc7hv+qavtq4H86o8UPCVaNVkiIcMKGYyitG3m7gW9ksgoqti44xSLMPP+Z75dR+72l5AAsYfuCriYtX235Zt8xReffFBmSd2p+zXFF9lc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229837; c=relaxed/simple;
-	bh=CSsVp6MxaTJ5g1BzfpbHQdwr8bh7szCD1nUy/vtB4Nc=;
+	s=arc-20240116; t=1789229841; c=relaxed/simple;
+	bh=CeEbzY320K1OU9m0+4Cl7/BjML0tJpeech5oxt12crY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I3cD4wxYwa1P9qvKLiYmVqFxGV/gYd5NfpaFnS9/Wkhm+mcoKQtMP/fan/qTjHHyYbj6RuS5Rg1bqw+LrjwRrpZMH1yrK7v/CyNMf451qhqCL+y0cb2AxYf4Jq/s/X/4MJ5oqHt8OMRQYW/VJJPqhPVIv+hO31/9vwqIowFnoOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tXwdJ8kh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XMn46yofOzqt0GxlXuhLsT4UakgcLIuxNgSJ0RYfEk/U0uFnyhq7WC7YVdWaY2xlFdocvXORnkl+QsgvIN7AB8ASzkGhm4Gzc0PJ2qoGaFVY5wGL9XonzxxSxVsTQv8eYPwUZFu0pOnRduk5w10YHRzKnJHxlhZ/jiYx6pO59r8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwMUQZP9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tXwdJ8kh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179081F000FF;
-	Sat, 12 Sep 2026 16:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwMUQZP9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A381F000FF;
+	Sat, 12 Sep 2026 16:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229835;
-	bh=UIuwLazoyW5cLe5osVjD/lM6J93h/XiQZE4qxeiblKg=;
+	s=korg; t=1789229840;
+	bh=w1Spdi9Jp9ilinP03cbpxKjbSEJQANBtP8n4gyWNrVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tXwdJ8kh+w9lP46nDZJJ2gMjqtN131+P9P/j2SC8lbv1zEurdCA9nWsoH+o1eKMOp
-	 /MLUaXIbC9b+6Kl6Pm8KCJNycYzOimqJsw/PfQr4UqIPr/Gh5DEFMsetVOqNqGq7wT
-	 3FaJ0JTehIttLCGTnPRIMs+f3DQOPwEbKH0biBhY=
+	b=LwMUQZP9l/asrYDtH4bBinGEFHy+vMkY/ohQceS8hIKKMZM2I71GnDkUCjIDnW+cU
+	 GtBeCkLX/azh5VvQ+eFVgrHEdKVdwVV6y7H0HvtYQ5qgONZzunqB+4mFXlVKT/il+t
+	 PVmrrYOI/XQatyxBQ9h/Y1P+PS+uMJ3/ZzU0Ae6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0671/1191] kcsan: avoid unintended access checking in NMIs
-Date: Sat, 12 Sep 2026 08:56:39 +0200
-Message-ID: <20260912065603.328851940@linuxfoundation.org>
+Subject: [PATCH 6.1 0672/1191] irqchip/gic-v3-its: Prevent leak in its_vpe_irq_domain_alloc()
+Date: Sat, 12 Sep 2026 08:56:40 +0200
+Message-ID: <20260912065603.350687645@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,58 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit a8488ecbd7ba44d65b912dfe88a73f438eba2447 ]
+[ Upstream commit 325ff3e78c64cd619d52b99f7c8b09a3f31e1495 ]
 
-If a watcher deliberately disables interrupts (either by user choice, or
-because we're dealing with a scoped reordered access) to avoid detecting
-any data races in interrupts, NMIs are still able to fire.
+When its_irq_gic_domain_alloc() fails, the following
+its_vpe_irq_domain_free() fails to invoke its_vep_teardown() for the
+corresponding interrupt, which leaks the resource.
 
-When we set up a watchpoint on a scoped reordered access, we disabled
-interrupts because the same CPU cannot observe reordering of its own
-accesses. To ensure we observe no false positives from NMIs, disable
-access checking for interrupt contexts as well.
+Invoke its_vpe_teardown() in the error handling path to avoid the leak.
 
-Fixes: 69562e4983d9 ("kcsan: Add core support for a subset of weak memory modeling")
-Signed-off-by: Marco Elver <elver@google.com>
+[ tglx: Massaged change log ]
+
+Fixes: 7d75bbb4bc1ad ("irqchip/gic-v3-its: Add VPE irq domain allocation/teardown")
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20260721063241.52549-2-shikemeng@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kcsan/core.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-gic-v3-its.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/kcsan/core.c b/kernel/kcsan/core.c
-index 8a7baf4e332e3..2db82661cd60a 100644
---- a/kernel/kcsan/core.c
-+++ b/kernel/kcsan/core.c
-@@ -585,8 +585,14 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type, unsigned
- 	 * information is lost if dirtied by KCSAN.
- 	 */
- 	kcsan_save_irqtrace(current);
--	if (!interrupt_watcher)
-+	if (!interrupt_watcher) {
- 		local_irq_save(irq_flags);
-+		/*
-+		 * NMIs can still fire, disable checking for all interrupt
-+		 * contexts.
-+		 */
-+		raw_cpu_ptr(&kcsan_cpu_ctx)->disable_count++;
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index f4ea52b26f9f8..84b00e14860eb 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -4449,6 +4449,13 @@ static int its_vpe_init(struct its_vpe *vpe)
+ 
+ static void its_vpe_teardown(struct its_vpe *vpe)
+ {
++	/*
++	 * If vpt_page is NULL, then its_vpe_init() has failed, and
++	 * there is nothing to do as no resource has been allocated.
++	 */
++	if (vpe->vpt_page == NULL)
++		return;
++
+ 	its_vpe_db_proxy_unmap(vpe);
+ 	its_vpe_id_free(vpe->vpe_id);
+ 	its_free_pending_table(vpe->vpt_page);
+@@ -4527,8 +4534,10 @@ static int its_vpe_irq_domain_alloc(struct irq_domain *domain, unsigned int virq
+ 		set_bit(i, bitmap);
+ 	}
+ 
+-	if (err)
++	if (err) {
++		its_vpe_teardown(vm->vpes[i]);
+ 		its_vpe_irq_domain_free(domain, virq, i);
 +	}
  
- 	watchpoint = insert_watchpoint((unsigned long)ptr, size, is_write);
- 	if (watchpoint == NULL) {
-@@ -699,8 +705,10 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type, unsigned
- 	atomic_long_dec(&kcsan_counters[KCSAN_COUNTER_USED_WATCHPOINTS]);
- 
- out_unlock:
--	if (!interrupt_watcher)
-+	if (!interrupt_watcher) {
-+		raw_cpu_ptr(&kcsan_cpu_ctx)->disable_count--;
- 		local_irq_restore(irq_flags);
-+	}
- 	kcsan_restore_irqtrace(current);
- 	ctx->disable_scoped--;
- 
+ 	return err;
+ }
 -- 
 2.53.0
 
