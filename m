@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D5D2D23A6;
-	Sat, 12 Sep 2026 13:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552792D23A6;
+	Sat, 12 Sep 2026 13:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220073; cv=none; b=dmD6OJT5vda8us0urTkavZobVJBSowaS4isMUQEeSWDbpsJa8CmszTAORP41ROgs9TREH4hrfYRGmOe6YHinyC0gVxWT4wywXel/kc43D9L+2vG03z0TAFnrLTq1vP86gDNvhyWuFgu8cQYBgbfJKS3/JNnSbfnPE1GfzPZU0SI=
+	t=1789220076; cv=none; b=P/XPKEmczWhniGoBL3AfCRh58GbWxX0FKOZNcEe6pp62PQjm9MNF6AVf+GmhbgV7dXbDzZE9KU7PsRuk7w1XoZV99MLx9Bxlhn+/Mn7J0cyBBUifr9PTrw1kG/KnNUdlYZdpmxrsxx7dFZHeTjiY7fVEcjHRbek/yNKVbPkowGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220073; c=relaxed/simple;
-	bh=gDJGct4HX5AlOmKUQKTbjS6Bq9yLGtl5deuj+WMT+v8=;
+	s=arc-20240116; t=1789220076; c=relaxed/simple;
+	bh=AOaZ6N+xh+har/zk2zx6JsKcic9n/P+qoS+uUvu9cPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jNizoaKG7W2QFjeI/uVL7gOqAA4ZCOvmzRUy1q9z3j+mqSU8s7RfEOScMOZX00GPOPmNWp0tm6QaF2FLES+qjrixhn8NmYb4k9VR460r9M914rOiY+u9FnbbPAtG2YPVp1AU6TPjenqB6OMKxR9nmlVDox19DzBHwKnVxYeRuXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SHPN6urG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Znt9pjFfCVcUZ+lY6Srf1vcdPPp/WoF7SrI0P/bOCjw7uIR6zQXYFvt9bXybSPmlXUu5K+HTeMbtU/oofFob7wYF6V+B/N9CULbI9RuoIY9u5xk5KzFn8n9zYSsflRkJVIWULDSuKCJDgK+OsiRrSoTsm0IqEsxtrtz/9F9vIbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zja51b1D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHPN6urG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC3B1F000FF;
-	Sat, 12 Sep 2026 13:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zja51b1D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2F41F00893;
+	Sat, 12 Sep 2026 13:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220069;
-	bh=pI2s0To+atSXz7u4CS3L+9uY7lkIM/kxQpWni9FgB68=;
+	s=korg; t=1789220074;
+	bh=mbzS4/iTahjTSW0Ft/tA7/47XbGr9b5hzskfOBAVoys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SHPN6urGIOQiQgdBfaMIr+OZ9gpzWwcHdZapqtWSxH7W6C6xsi1CZB0/nvUvcvnZt
-	 DbwjR7ppb2UGXAsET5lGVTkaRjUDB3wcYJ3XFERrI78BhJPciCGlCaC8U/iMpP2x4j
-	 JxwV3/EXi+8fyWrgrJCdPiSJf+87i2JLDybLeAq0=
+	b=zja51b1DvlakCZb1+3Rl3GcQkkaBKtI/mYGS1HhulDNtOdAf/dYl+wmo1+fUnTIKX
+	 2JTpzpBRIYiSOIYMahA+EFw/C8WXkjH31OGsc3sKWpLwBGavLtaVOS7Ck4EwiOKlqM
+	 50AhJJPZcMD94sl9ooWybxR9ymMw4c/2C1SVKvyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Anisse Astier <anisse@astier.eu>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.6 0101/1424] efivarfs: Rate limit statfs() handler
-Date: Sat, 12 Sep 2026 08:42:13 +0200
-Message-ID: <20260912065609.567751880@linuxfoundation.org>
+	Yemu Lu <prcups@krgm.moe>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
+	Christian Brauner <brauner@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 0102/1424] fat: restore original value when fat_ent_write failed
+Date: Sat, 12 Sep 2026 08:42:14 +0200
+Message-ID: <20260912065609.590627405@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,67 +57,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Yemu Lu <prcups@krgm.moe>
 
-commit b2326338dc683e8c1067c0cbf7a47986c4190902 upstream.
+commit 64d9183203eebe33de6188b70a8c1e91f52885db upstream.
 
-Ravi reports that statfs() may be called by unprivileged users on the
-efivarfs mount point, which may result in a flood of calls to the
-QueryVariableInfo() runtime service. These calls are disproportionately
-costly on x86 systems where the variable store is backed by SMM, as each
-SMM entry requires a rendez-vous of all the CPUs.
+fat_ent_write() may have committed the new link to the primary FAT but
+then failed on the mirror copy, leaving the chain pointing to new_dclus
+even though the caller will free it.  Restore the original value to keep
+the chain consistent.
 
-So rate limit the calls to QueryVariableInfo() at twice per second, and
-return the most recently obtained value for calls that are elided.
-
+Link: https://lore.kernel.org/20260525085649.781643-1-n05ec@lzu.edu.cn
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yemu Lu <prcups@krgm.moe>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+Cc: Christian Brauner <brauner@kernel.org>
 Cc: <stable@vger.kernel.org>
-Reported-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Fixes: d86ff3333cb1 ("efivarfs: expose used and total size")
-Reviewed-by: Anisse Astier <anisse@astier.eu>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/efivarfs/super.c |   30 ++++++++++++++++++++++++------
- 1 file changed, 24 insertions(+), 6 deletions(-)
+ fs/fat/misc.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/efivarfs/super.c
-+++ b/fs/efivarfs/super.c
-@@ -36,12 +36,30 @@ static int efivarfs_statfs(struct dentry
- 	/* Some UEFI firmware does not implement QueryVariableInfo() */
- 	storage_space = remaining_space = 0;
- 	if (efi_rt_services_supported(EFI_RT_SUPPORTED_QUERY_VARIABLE_INFO)) {
--		status = efivar_query_variable_info(attr, &storage_space,
--						    &remaining_space,
--						    &max_variable_size);
--		if (status != EFI_SUCCESS && status != EFI_UNSUPPORTED)
--			pr_warn_ratelimited("query_variable_info() failed: 0x%lx\n",
--					    status);
-+		static DEFINE_RATELIMIT_STATE(_rs, 2 * HZ, 5);
-+		static u64 storage, remaining;
-+		static DEFINE_SPINLOCK(lock);
+--- a/fs/fat/misc.c
++++ b/fs/fat/misc.c
+@@ -133,7 +133,11 @@ int fat_chain_add(struct inode *inode, i
+ 		ret = fat_ent_read(inode, &fatent, last);
+ 		if (ret >= 0) {
+ 			int wait = inode_needs_sync(inode);
++			int old = ret;
 +
-+		if (!__ratelimit(&_rs)) {
-+			ratelimit_set_flags(&_rs, RATELIMIT_MSG_ON_RELEASE);
-+
-+			spin_lock(&lock);
-+			storage_space = storage;
-+			remaining_space = remaining;
-+			spin_unlock(&lock);
-+		} else {
-+			status = efivar_query_variable_info(attr, &storage_space,
-+							    &remaining_space,
-+							    &max_variable_size);
-+			if (status != EFI_SUCCESS && status != EFI_UNSUPPORTED)
-+				pr_warn("query_variable_info() failed: 0x%lx\n",
-+					status);
-+
-+			spin_lock(&lock);
-+			storage = storage_space;
-+			remaining = remaining_space;
-+			spin_unlock(&lock);
-+		}
- 	}
- 
- 	/*
+ 			ret = fat_ent_write(inode, &fatent, new_dclus, wait);
++			if (ret < 0)
++				fat_ent_write(inode, &fatent, old, wait);
+ 			fatent_brelse(&fatent);
+ 		}
+ 		if (ret < 0)
 
 
