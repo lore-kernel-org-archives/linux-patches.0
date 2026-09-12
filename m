@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6CE38757A;
-	Sat, 12 Sep 2026 15:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEB238AC92;
+	Sat, 12 Sep 2026 15:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227561; cv=none; b=hRm3Ofqq5mXe7LDoP7JYx1qMuOpPNSQ5sFVk4LjnayFWyjyItXAmc9eBPKXG2yBj+p+L8G5usIlWP5uzHbv4LxVOLnDdaI0slJlZc+BVfjMl+HmVpSio381hbiAroe0I3iEbxsnzus9MAewADe2tiqtM9ZDhlhI2vP8wfqHWUZs=
+	t=1789227566; cv=none; b=hwLrf2lFB6MuQ8PBYcry9/7ccce0vEUAbhL2rw0nu8PLmSEhe2ftZC53j1pLfb4hdgD7JjDxR47qGyMzCZHqIBADEWjK7l85wVL9Yj0DyxBRRyr+IN2+N71XQaEQK3WiqsnuNXXGTEyVmmafkeGc/cuDxq9QeyMsgOuhaGraGD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227561; c=relaxed/simple;
-	bh=iAGh/LXR0JCd4IK/Km5VY78P0QomWLxmETA+npVJqW8=;
+	s=arc-20240116; t=1789227566; c=relaxed/simple;
+	bh=wkh9QMkqhkwztJQOCw96z4V7C5OVOKP8QsDb8TeQR0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C2BULYdBhu/DLFTkoVBzFB+Z7D4jQEyVNJgz1HJ0qzKID3hLu4XiZdgVTPWh24SbY/BaH3oYms80ubdxvbTXphnv3Bmq41cFAbuZrWdbq6V+kf8Ki6O6+bS6vh3XX16rDxXsswtPTo8vMK8ryV/MEKo4ratxqi5N26hVEHUSFYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GL5XC5K5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FfT/Z/PoBl+Jypx60qMPIlDVNClzvExTEe7+awT+mon7tdj8M051AsGH9gi6qnvP/dJy/6LB/MJoOhnXNdYVp4G3Yz3maUGmgkWHyNLMMEGI0+aNb6do++RPtQYiDq2BnvTzLsoWSgYcV3Jj7qvo/j/VvCVVZRt5wUmvrViNzAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tfHqAfzM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GL5XC5K5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D2C01F000FF;
-	Sat, 12 Sep 2026 15:39:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tfHqAfzM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E921F000FF;
+	Sat, 12 Sep 2026 15:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227559;
-	bh=83af1u3CXt2H3OuW1tQQM/3AkW6O2WpCs3ngwyt/EHU=;
+	s=korg; t=1789227564;
+	bh=4NrSmYfrZnV2MgxutfTtkfs04BocAuRmRts6u4UWKck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GL5XC5K50+jFjuqG2T43f5sKxz42WnLe+ZYW1WrzyywQ1+ujW4XAMYC1CDT0JH01l
-	 LMKYNGIca3T6Twx7HEzp77BbZpJf1cemqVDQWjPZu+6wdy2dEYkLX2R7dHV/wcTgq+
-	 mPy6+FcCKDk6yUl4c5YOT4mGsLF0wQKINSUszmBY=
+	b=tfHqAfzMvajctPha7MrB4BEiQGFDWzc3by4uFnXlbmiHT8S348l8vmk7g1qT8j7EF
+	 0p0XarFOnUW6RN9JwTHomBlOm2PdmqUFhKaXrIxHgdQivPOip7ewiD7fo7YiwxbquZ
+	 +PheRyvu34+iiwdvlYtfdoT3UBuJjNja8lLnXqYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 0207/1191] net: openvswitch: fix nf_connlabels leak in ovs_ct_init
-Date: Sat, 12 Sep 2026 08:48:55 +0200
-Message-ID: <20260912065552.858834327@linuxfoundation.org>
+Subject: [PATCH 6.1 0208/1191] net: ravb: avoid dereferencing an invalid PTP clock
+Date: Sat, 12 Sep 2026 08:48:56 +0200
+Message-ID: <20260912065552.881502742@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,63 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-commit f9de5db270a4c2641de87ee558c16a9bc6eb4cd8 upstream.
+commit 1f77af0aaf277413ff32f6ff8c2c4282bd64c897 upstream.
 
-ovs_ct_init() acquires a connlabels reference before initializing the
-conntrack limit state. If ovs_ct_limit_init() fails, its error is returned
-directly. The pernet core does not invoke the exit callback for the
-operation whose initialization failed, so ovs_ct_exit() cannot drop the
-reference.
+The PTP clock is unavailable before the first open, so querying its
+index can dereference a NULL pointer. Registration failures can also
+leave an error pointer in priv->ptp.clock.
 
-This leaves labels_used elevated when Open vSwitch pernet registration
-fails for an existing network namespace. Subsequent conntrack entries in
-that namespace may allocate label extensions even though Open vSwitch
-failed to register.
+Cache the PHC index separately and report -1 while no clock is
+registered. Normalize registration errors to NULL and preserve the
+static timestamping capabilities.
 
-Drop the connlabels reference before returning a conntrack limit
-initialization error. ovs_ct_limit_init() already releases its partial
-state, and the original error remains unchanged.
-
-This issue was found by a static analysis checker and confirmed by
-manual source review.
-
-Fixes: 11efd5cb04a1 ("openvswitch: Support conntrack zone limit")
+Fixes: a0d2f20650e8 ("Renesas Ethernet AVB PTP clock driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/20260815151729.3757984-1-ruoyuw560@gmail.com
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Link: https://patch.msgid.link/20260811103733.62599-2-xuanqiang.luo@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/conntrack.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/renesas/ravb.h      |    1 +
+ drivers/net/ethernet/renesas/ravb_main.c |    3 ++-
+ drivers/net/ethernet/renesas/ravb_ptp.c  |   15 +++++++++++++--
+ 3 files changed, 16 insertions(+), 3 deletions(-)
 
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -2312,6 +2312,7 @@ int ovs_ct_init(struct net *net)
- {
- 	unsigned int n_bits = sizeof(struct ovs_key_ct_labels) * BITS_PER_BYTE;
- 	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
-+	int err = 0;
- 
- 	if (nf_connlabels_get(net, n_bits - 1)) {
- 		ovs_net->xt_label = false;
-@@ -2321,10 +2322,11 @@ int ovs_ct_init(struct net *net)
+--- a/drivers/net/ethernet/renesas/ravb.h
++++ b/drivers/net/ethernet/renesas/ravb.h
+@@ -1005,6 +1005,7 @@ struct ravb_ptp_perout {
+ struct ravb_ptp {
+ 	struct ptp_clock *clock;
+ 	struct ptp_clock_info info;
++	int phc_index;
+ 	u32 default_addend;
+ 	u32 current_addend;
+ 	int extts[N_EXT_TS];
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -1700,7 +1700,7 @@ static int ravb_get_ts_info(struct net_d
+ 			(1 << HWTSTAMP_FILTER_NONE) |
+ 			(1 << HWTSTAMP_FILTER_PTP_V2_L2_EVENT) |
+ 			(1 << HWTSTAMP_FILTER_ALL);
+-		info->phc_index = ptp_clock_index(priv->ptp.clock);
++		info->phc_index = READ_ONCE(priv->ptp.phc_index);
  	}
  
- #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
--	return ovs_ct_limit_init(net, ovs_net);
--#else
--	return 0;
-+	err = ovs_ct_limit_init(net, ovs_net);
-+	if (err && ovs_net->xt_label)
-+		nf_connlabels_put(net);
- #endif
-+	return err;
+ 	return 0;
+@@ -2729,6 +2729,7 @@ static int ravb_probe(struct platform_de
+ 	priv->rstc = rstc;
+ 	priv->ndev = ndev;
+ 	priv->pdev = pdev;
++	priv->ptp.phc_index = -1;
+ 	priv->num_tx_ring[RAVB_BE] = BE_TX_RING_SIZE;
+ 	priv->num_rx_ring[RAVB_BE] = BE_RX_RING_SIZE;
+ 	if (info->nc_queues) {
+--- a/drivers/net/ethernet/renesas/ravb_ptp.c
++++ b/drivers/net/ethernet/renesas/ravb_ptp.c
+@@ -332,6 +332,7 @@ void ravb_ptp_interrupt(struct net_devic
+ void ravb_ptp_init(struct net_device *ndev, struct platform_device *pdev)
+ {
+ 	struct ravb_private *priv = netdev_priv(ndev);
++	struct ptp_clock *clock;
+ 	unsigned long flags;
+ 
+ 	priv->ptp.info = ravb_ptp_info;
+@@ -344,7 +345,15 @@ void ravb_ptp_init(struct net_device *nd
+ 	ravb_modify(ndev, GCCR, GCCR_TCSS, GCCR_TCSS_ADJGPTP);
+ 	spin_unlock_irqrestore(&priv->lock, flags);
+ 
+-	priv->ptp.clock = ptp_clock_register(&priv->ptp.info, &pdev->dev);
++	clock = ptp_clock_register(&priv->ptp.info, &pdev->dev);
++	if (IS_ERR(clock)) {
++		netdev_err(ndev, "failed to register PTP clock: %pe\n", clock);
++		clock = NULL;
++	}
++
++	priv->ptp.clock = clock;
++	if (clock)
++		WRITE_ONCE(priv->ptp.phc_index, ptp_clock_index(clock));
  }
  
- void ovs_ct_exit(struct net *net)
+ void ravb_ptp_stop(struct net_device *ndev)
+@@ -354,5 +363,7 @@ void ravb_ptp_stop(struct net_device *nd
+ 	ravb_write(ndev, 0, GIC);
+ 	ravb_write(ndev, 0, GIS);
+ 
+-	ptp_clock_unregister(priv->ptp.clock);
++	WRITE_ONCE(priv->ptp.phc_index, -1);
++	if (priv->ptp.clock)
++		ptp_clock_unregister(priv->ptp.clock);
+ }
 
 
