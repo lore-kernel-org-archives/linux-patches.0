@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5A338AC92;
-	Sat, 12 Sep 2026 09:03:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D177C3749F6;
+	Sat, 12 Sep 2026 09:03:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203816; cv=none; b=tOtyRHIyGjpShfVHzqXOlnK2VcHXGD7sw3B0M8Wb4YVphThUCdAKdy7Cmi7/OhcLLr6ePDg7nGY6XIh2IO6rK6jVRxkDl/FBb8h3x8uWRAY6PTnu5WEq59hpWnWrS287PHdQbIBG23jmtlN7ffxH0k5y+DnLjRYEAY9h8DReI2s=
+	t=1789203823; cv=none; b=SOM6ckRdQW0mofix40G0Id0mvCR9jQ/22zPw64xmHl0IAHlt/xcsJQZC5x+aIp/1UeKjYx+l/2YVmohT8ATn6a0EJk5KYnKw+1V8bgW3QNC8hGmPdnGGhOwozEUYaMG6XOnb1RgVWtUxtM4/mttSDHYsgq7HWV4YXrLboiSo7dE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203816; c=relaxed/simple;
-	bh=J4wM8qPM/9lyDXYbtX/BTdXacLJSqxqrcdLzD2HCquM=;
+	s=arc-20240116; t=1789203823; c=relaxed/simple;
+	bh=0sgb+6EYnwAO/vEAEzEinrfi00jxaIRFAS0omHqppxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bpqth8YGTkSBVgzQX+aP1RDODB3EncJAqByNAmZN5OERFl2ogVxcJBqoT7vzAXTwWHFFFvR66Wm+NsvmJhThiYW5sTbTr8pIjRmX1Z85fkTbpTfuOy0uuDXDZthBEEUxXLwJ9xn0svmDjybD6B09Nw7JCuFLMRiyj771tbYB3jA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ih3CTlGJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j963iwKpV/BxBzBODda5h7Hd2Mg8PgPX3R3+4MTd35wTnqP2i4DSXyugCrqXDc+hfYeIKtGxMc0GDZ3RrbLUM2O+9nyENj6IDZPFv+/xWZ1HT2JRM9cHpEYX+QTVi2oEkWUbzFQgWbm6QZoBpQiEiY1oCBsHYqsyYcZCoCNSMYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSVXgHMt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ih3CTlGJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630831F000FF;
-	Sat, 12 Sep 2026 09:03:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSVXgHMt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F6541F000FF;
+	Sat, 12 Sep 2026 09:03:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203815;
-	bh=mXRI17Ln8ENDTm7aFLE2PmSVREyUqQXOyOt2SMH/a6w=;
+	s=korg; t=1789203820;
+	bh=6iEQWORWJ7MsfBJ5VauI6BuBPaUGtbl9izAwph5Si64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ih3CTlGJiW25EnDGhOuaNg7xDYV2e9RrMa40HMos85XFP4hKtTjWBWZ4rUbJC/g0G
-	 ca1tXD+jPlz/lbiJk6k+fMPr2dHYpNeskbfod2gcS3rkPzIcSJ6Dum5t0tl63dLUIV
-	 GK/hcx6KTPW335jcPhkLPkFIcIpjV1E3exR5/i8U=
+	b=VSVXgHMt2qWjaqYPZl4451TuU+nnZdTrkEs/TKwq66T35dlnoqRcZ9lC8ErddUq9a
+	 FWYJQnAq0cnvoqUMXFcwESljjsfLhUZ7vHodDxn5AKOrpe2wzBCEwwC90KFpgfT6fH
+	 J5+uY0YobvMxxqwCsg727Nf4LpN/ui7zFBZqQir0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Zizhi Wo <wozizhi@huawei.com>,
 	Bart Van Assche <bvanassche@acm.org>,
+	Zizhi Wo <wozizhi@huawei.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1485/1815] null_blk: reject per-device queue resize for shared tag set
-Date: Sat, 12 Sep 2026 08:53:55 +0200
-Message-ID: <20260912065723.866285921@linuxfoundation.org>
+Subject: [PATCH 7.2 1486/1815] null_blk: serialize configfs attribute stores with the lock
+Date: Sat, 12 Sep 2026 08:53:56 +0200
+Message-ID: <20260912065723.890173515@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,87 +55,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 1cdfe2fa62b48728a9b436fbbd3dbe4c11593e24 ]
+[ Upstream commit 7e7fff51808237703a3a1df6dd5cae1dfd1db86d ]
 
-When shared_tags is enabled, null_setup_tagset() makes the device use the
-global tag_set, whose driver_data stays NULL. null_map_queues() therefore
-falls back to the module-wide g_submit_queues/g_poll_queues instead of any
-per-device value.
+The NULLB_DEVICE_ATTR _store takes no lock: apply_fn attributes
+(submit_queues, poll_queues) get dev->NAME written again after apply_fn
+returns, outside its lock; APPLY=NULL attributes are entirely lockless.
+configfs only serializes stores per-open-file, so concurrent stores on
+separate fds race.
 
-Resizing submit_queues or poll_queues via configfs on such a device calls
-blk_mq_update_nr_hw_queues() on the shared set, shrinking
-set->nr_hw_queues.  __blk_mq_realloc_hw_ctxs() only grows the
-q->queue_hw_ctx[] allocation, so on shrink it merely exits and NULLs the
-now-excess hctx slots. null_map_queues(), however, keeps mapping CPUs with
-the unchanged g_submit_queues/g_poll_queues, so mq_map[] ends up pointing
-at those NULLed hctx slots. blk_mq_map_swqueue() then dereferences the NULL
-hctx (hctx->cpumask), crashing the kernel:
+For apply_fn attributes, once one store's apply_fn has reconfigured the
+hardware, a second (losing) store can still overwrite dev->NAME
+afterwards. This leaves dev->submit_queues out of sync with the live
+queue count, which is later caught by the WARN_ON_ONCE() in
+null_map_queues().
 
-[  460.218374] KASAN: null-ptr-deref in range [0x0000000000000098-0x000000000000009f]
-[  460.219003] CPU: 24 UID: 0 PID: 1492 Comm: sh Not tainted 7.2.0-rc2+ #67 PREEMPT(full)
-[  460.219792] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-4.fc41 04/01/2014
-[  460.220452] RIP: 0010:blk_mq_map_swqueue+0x4db/0x1430
-......
-[  460.228977] Call Trace:
-[  460.229175]  <TASK>
-[  460.229354]  blk_mq_update_nr_hw_queues+0xd49/0x11c0
-[  460.229779]  ? __pfx_blk_mq_update_nr_hw_queues+0x10/0x10
-[  460.230200]  nullb_update_nr_hw_queues+0x1a9/0x370 [null_blk]
-[  460.230694]  nullb_device_submit_queues_store+0xd9/0x170 [null_blk]
-[  460.231190]  ? __pfx_nullb_device_submit_queues_store+0x10/0x10 [null_blk]
-[  460.231776]  ? configfs_write_iter+0x35c/0x4e0
-[  460.232122]  configfs_write_iter+0x286/0x4e0
-[  460.232460]  vfs_write+0x52d/0xd00
-[  460.232779]  ? __x64_sys_openat+0x108/0x1d0
-[  460.233106]  ? __pfx_vfs_write+0x10/0x10
-[  460.233413]  ? fdget_pos+0x1cf/0x4c0
-[  460.233745]  ? fput_close+0x133/0x190
-[  460.234038]  ? __pfx_expand_files+0x10/0x10
-[  460.234368]  ksys_write+0xfc/0x1d0
+For !apply_fn attributes, power_store()'s null_add_dev() validates and
+builds the device under "lock" but only sets CONFIGURED afterwards. A store
+slipping in during this window can change a field mid-setup -- for example,
+zone_nr_conv can be pushed above nr_zones after it has already been
+clamped, leading to an out-of-bounds dev->zones[] access.
 
-Reproducer:
-modprobe null_blk shared_tags=1 submit_queues=64 poll_queues=1
-mkdir /sys/kernel/config/nullb/dev
-echo 1 > /sys/kernel/config/nullb/dev/power
-echo 1 > /sys/kernel/config/nullb/dev/submit_queues
-
-A per-device resize of a shared tag set is meaningless anyway, so reject it
-with -EINVAL in nullb_update_nr_hw_queues() when the device is bound to the
-global tag_set.
+Take "lock" in the macro around the apply_fn call, the CONFIGURED test and
+the field write, and move it out of nullb_apply_submit_queues()/
+nullb_apply_poll_queues() so both paths are covered once. This serializes
+stores with power_store's setup and with each other.
 
 Fixes: 45919fbfe1c4 ("null_blk: Enable modifying 'submit_queues' after an instance has been configured")
-Suggested-by: Nilay Shroff <nilay@linux.ibm.com>
-Assisted-by: Claude-Code:GLM-5.2
+Suggested-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
 Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260725022509.714271-8-wozizhi@huaweicloud.com
+Link: https://patch.msgid.link/20260725022509.714271-10-wozizhi@huaweicloud.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/block/null_blk/main.c | 17 +++--------------
+ 1 file changed, 3 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index 78bc0206c43fe..6494b802756b5 100644
+index 6494b802756b5..0db0ac65cf49e 100644
 --- a/drivers/block/null_blk/main.c
 +++ b/drivers/block/null_blk/main.c
-@@ -382,6 +382,15 @@ static int nullb_update_nr_hw_queues(struct nullb_device *dev,
- 	if (!dev->nullb)
- 		return 0;
+@@ -360,6 +360,7 @@ nullb_device_##NAME##_store(struct config_item *item, const char *page,	\
+ 	ret = nullb_device_##TYPE##_attr_store(&new_value, page, count);\
+ 	if (ret < 0)							\
+ 		return ret;						\
++	guard(mutex)(&lock);						\
+ 	if (apply_fn)							\
+ 		ret = apply_fn(dev, new_value);				\
+ 	else if (test_bit(NULLB_DEV_FL_CONFIGURED, &dev->flags)) 	\
+@@ -430,25 +431,13 @@ static int nullb_update_nr_hw_queues(struct nullb_device *dev,
+ static int nullb_apply_submit_queues(struct nullb_device *dev,
+ 				     unsigned int submit_queues)
+ {
+-	int ret;
+-
+-	mutex_lock(&lock);
+-	ret = nullb_update_nr_hw_queues(dev, submit_queues, dev->poll_queues);
+-	mutex_unlock(&lock);
+-
+-	return ret;
++	return nullb_update_nr_hw_queues(dev, submit_queues, dev->poll_queues);
+ }
  
-+	/*
-+	 * A shared tag_set is mapped via the module-wide queue counts, so a
-+	 * per-device resize is meaningless. On shrink it would also leave
-+	 * mq_map[] pointing at NULLed hctx slots, causing a NULL deref in
-+	 * blk_mq_map_swqueue(). Reject it.
-+	 */
-+	if (dev->shared_tags)
-+		return -EINVAL;
-+
- 	/*
- 	 * Make sure at least one submit queue exists.
- 	 */
+ static int nullb_apply_poll_queues(struct nullb_device *dev,
+ 				   unsigned int poll_queues)
+ {
+-	int ret;
+-
+-	mutex_lock(&lock);
+-	ret = nullb_update_nr_hw_queues(dev, dev->submit_queues, poll_queues);
+-	mutex_unlock(&lock);
+-
+-	return ret;
++	return nullb_update_nr_hw_queues(dev, dev->submit_queues, poll_queues);
+ }
+ 
+ NULLB_DEVICE_ATTR(size, ulong, NULL);
 -- 
 2.53.0
 
