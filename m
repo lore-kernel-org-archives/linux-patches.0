@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04FE3749E3;
-	Sat, 12 Sep 2026 17:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D02D325726;
+	Sat, 12 Sep 2026 17:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232808; cv=none; b=eevNLNRDXXom8jYQycotVUHUYeckiwBUkblB+Ruk7UlR5Jhyq81WC8MGzYZwRCj+sX8WAfJ90rFVY2owVorocgKsfNpYYNijLP2Zv++wDwe3I3TZd/VMYfLIeBSRLvNXasO/eoJ80DvDuiMbDEY07bfCaWt0ZKBzqpd9qfrwcS8=
+	t=1789232812; cv=none; b=IIH3cVl9Eb0nt78ub6l9xyHpySN6xnE9PdJOrbXfkXQLYUK7nKlDKixNI+ZuIBpaDaZcJSgujMObvrI1xtf45y4wUV4nskHy4YBiSCD4ohOQrO65brH+XFIdQlczhFQz3vQ89XDlELIX9ipreCcarYpzakn2MexwEzbUVr00mTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232808; c=relaxed/simple;
-	bh=IIKqgvu7Ny1RQJcBrc7oaXKk51ucB5kg57lBDq7OSHs=;
+	s=arc-20240116; t=1789232812; c=relaxed/simple;
+	bh=To+bcqjJQvs3XPiW4WevtEbRRnxaJ1YJOzi/mZJ7EtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I3nsrCjLSIpAWVwEYLjiBksaKJRn3gco/LjnTiqbgs69NomWKj2Xx0gYY1Qqfo8qC829m+UKJf5lDNi/VH+E/WQ5gevOhhrhLQSw0a7TmglslDBTmoW5BNmNhNn6WLyi1X1eaiJEuETtu9GxghqTTI9qCEb7D1sXo7BayGNhQaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usiJs/ze; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i6Ce9j/J0W2xByKmkAW3e47ElSJZ+vImHchG8C943iSG7ebD6mA3pT0GW2XOeT35QbKjFOU4jQIj9Sd/m+6IPloc3AWd1XMTgwoa+PMg+gNAxLvLjf4mUac1ioosXzn1E19+lfXagTV6b2tAArkM1ZaXCUKCyiMon09vnft1L+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V2GxA8Jw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usiJs/ze"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A3E1F000FF;
-	Sat, 12 Sep 2026 17:06:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V2GxA8Jw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31641F000FF;
+	Sat, 12 Sep 2026 17:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232806;
-	bh=HBYSlbem9nn03uGPGfbPnYGLxmqYeHUkLM6sITevdzQ=;
+	s=korg; t=1789232810;
+	bh=7jLbR78XsO9gR2hCM2VQpTN1aXjrhM6qy2gtFRmcOsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=usiJs/zerMW+3PF+6WmlpKli8U568mVxeXh3Nk0wgsxM6ZVHCsNaFS8WBcE+eAS8S
-	 Fmzpmuj8sXulkIn7MqQhdl21CL1kh7xm7fYiwk0n4kkxJD+Ft9/luf+f3r3S4sArhw
-	 RZP7CQh6lJpJksXgJNGhDvgeoHN9wHVRwOPnOVpU=
+	b=V2GxA8JwmxhHwvqhYYw8zhI8U0dbVWYG+Xqy+go1E0P1MSq1YM5QS4KJ0I9DEdiWY
+	 TO471/8IAqOITfF8vpLWiaouCz6bpzS/4Zmh9+sPgjbOohRy/UzNL1xsGxK4HTUK6n
+	 MOib/UJ1bO5cVceZO0Inlx87f0onvea6iNxn4l4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Zwerschke <cito@online.de>,
 	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 086/935] Bluetooth: btusb: Add ASUS USB-BT540 for Realtek 8761CU
-Date: Sat, 12 Sep 2026 08:51:56 +0200
-Message-ID: <20260912065528.798982838@linuxfoundation.org>
+Subject: [PATCH 5.15 087/935] Bluetooth: btusb: Add ASUS USB-BT600 for Realtek 8761CU
+Date: Sat, 12 Sep 2026 08:51:57 +0200
+Message-ID: <20260912065528.821888389@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,10 +53,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Zwerschke <cito@online.de>
 
-commit 980084de4d9b25193398d89a1c0430ba3501b683 upstream.
+commit 6f0624b4427e38c3bb63a951c536cf8adaee1238 upstream.
 
-Add the vendor/product ID (0x0b05, 0x1bef) to the usb_device_id table for
-the Realtek RTL8761CU-based ASUS USB-BT540 adapter. It binds via the
+Add the vendor/product ID (0x0b05, 0x1d70) to the usb_device_id table for
+the Realtek RTL8761CU-based ASUS USB-BT600 adapter. It binds via the
 generic Bluetooth class today, so BTUSB_REALTEK is never set and the
 rtl8761cu firmware is not loaded, leaving the controller non-functional.
 With the entry the driver loads rtl_bt/rtl8761cu_fw.bin (already shipped by
@@ -67,9 +67,9 @@ Similar to commit bc597f0cc44f
 
 Device info from /sys/kernel/debug/usb/devices:
 
-T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 22 Spd=12   MxCh= 0
+T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 23 Spd=12   MxCh= 0
 D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0b05 ProdID=1bef Rev= 2.00
+P:  Vendor=0b05 ProdID=1d70 Rev= 2.00
 S:  Manufacturer=Realtek
 S:  Product=Bluetooth Controller
 C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
@@ -105,21 +105,19 @@ Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/bluetooth/btusb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -528,6 +528,10 @@ static const struct usb_device_id blackl
- 	{ USB_DEVICE(0x2550, 0x8761), .driver_info = BTUSB_REALTEK |
+@@ -531,6 +531,8 @@ static const struct usb_device_id blackl
+ 	/* Additional Realtek 8761CU Bluetooth devices */
+ 	{ USB_DEVICE(0x0b05, 0x1bef), .driver_info = BTUSB_REALTEK |
  						     BTUSB_WIDEBAND_SPEECH },
- 
-+	/* Additional Realtek 8761CU Bluetooth devices */
-+	{ USB_DEVICE(0x0b05, 0x1bef), .driver_info = BTUSB_REALTEK |
++	{ USB_DEVICE(0x0b05, 0x1d70), .driver_info = BTUSB_REALTEK |
 +						     BTUSB_WIDEBAND_SPEECH },
-+
+ 
  	/* Additional Realtek 8821AE Bluetooth devices */
  	{ USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
- 	{ USB_DEVICE(0x13d3, 0x3414), .driver_info = BTUSB_REALTEK },
 
 
