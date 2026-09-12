@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC666282F1B;
-	Sat, 12 Sep 2026 07:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D52D346AE3;
+	Sat, 12 Sep 2026 07:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199053; cv=none; b=TYuhc6jO/2VEFPsc6Nu697fbrU9eNhEIqboAbup2ZJaZELsxNISv8XiMZXmEx2ah4++oKSUJWkeGLwaWcYHfo1475OKLlcIzWKaRkJzIaiMPGrocXflDC1pqEtJKWOCzDAJ7YeL0DIXVCbx/ROO6B6EIJKwh7kAEycrwr6suvXo=
+	t=1789199058; cv=none; b=sPsaORvsrB46WRGz85iXhR6kUA6c//9SjeikaaA2Bxo6FLePkCf+1HI/zikTSFIIszCkMmO9bg9mpHcdoZUhpwWIq239eP6tKU4YENC46ilfOiBETCXp2Chth4zwNsJvuBXGPUPyJQtWavebg/CHpyGS1jaZNuqekNxLamGCA/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199053; c=relaxed/simple;
-	bh=qcww3a2Un2sNQAbLITeHFyij+JnPX7xWEY9b+ItBhj8=;
+	s=arc-20240116; t=1789199058; c=relaxed/simple;
+	bh=oNr7107Flt5KWKivLTjwmbe2b3fLO/rkMYzbKaOT3mU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bv+/XlAFmI+H4oW5cjnA/1plOMqIbHJ7df8V9Jj/JrSmajpcPK3Y5qi4h2tddMX4owCKcb1gpDk6KnHfZPdW/m88tbqGcpJ/PjyQmtebmYcOSoYAPRQj0fDPw7gHhBNXaqrgiWiJckMJ01ezmDmNNu8Wpf/ma3SZHvNMRuWgHxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Ep/SDuM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fmqNOzhD0XudRbWwfF3j8HC6RQmxIQu+dpbZ2BIyWKl/TSgwr7GNEDy5vd8+PNdmW8iRTaqgL6MP/6TAojrLccwPdaI2CJrLT6AZROeiHEZP0eVGpvJFTSOXJkxDz0k4jpwdSJDR0dyEbYs9un7kZUe16Mb6KJ4lePU/BhizlrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/QMnU/Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Ep/SDuM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D277F1F000FF;
-	Sat, 12 Sep 2026 07:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/QMnU/Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C861F000FF;
+	Sat, 12 Sep 2026 07:44:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199052;
-	bh=59ZCJ4+KvAQwhMv81IqTcfUVeeuuLpdAshEFq1wilOY=;
+	s=korg; t=1789199057;
+	bh=mIguXmxUAhW2kb4Lj8DpwfT0Ofxg5t1vWlH8eX17e0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Ep/SDuMRWHyMXaCaWHELL8vGRonGNjB1gCRlUyv6E8ks0wy7vZGuhJGfrSJoL+yz
-	 xZKy3DunRAASv5WMGtvDLGsYZxn+BYbrqm9VCnQrNmffXtTci2UR/T8KVw1iY1XpyQ
-	 KFsKZlhU/fKwwzdGj8jtUX+yc/odEcwm3e6wGAFc=
+	b=d/QMnU/Q7ZkPmY3YYsi/XWKOesrw7kxUiQF8nOsohH+Zi9HpBhvaqaUo9BFri0rY0
+	 6kbFJK7L704nmsmo/JC9vV8f5wQr94jJ9On8qpTR/tUzZ5FeUxdtGTipvSbsnaNCrm
+	 jcZT9j/JpMzFRaQaSo8oAmFfQwxg56XbN6rTkX4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0463/1815] perf stat: Fix duplicate output with --for-each-cgroup
-Date: Sat, 12 Sep 2026 08:36:53 +0200
-Message-ID: <20260912065659.758490590@linuxfoundation.org>
+Subject: [PATCH 7.2 0454/1815] arm64: dts: qcom: milos: Add reset for sdhc_2
+Date: Sat, 12 Sep 2026 08:36:44 +0200
+Message-ID: <20260912065659.548884877@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,90 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit c16af17927e0b9105f2964338f9341e0faf7edaa ]
+[ Upstream commit c3eceb0627605564f102dc0f5ca4a6060ca57fd4 ]
 
-Currently it produces following output with duplicate events when
- --for-each-cgroup option is used.  It seems perf stat adds them when
-it handles default events but didn't copy some fields in evsel__clone().
+Add the missing reset (BCR) for sdhc_2.
 
-  $ sudo perf stat -a --for-each-cgroup / true
-
-   Performance counter stats for 'system wide':
-
-           8,440,165      duration_time                    /
-           8,439,895      duration_time                    /
-           8,440,015      duration_time                    /
-           8,440,024      duration_time                    /
-           8,440,075      duration_time                    /
-           8,440,095      duration_time                    /
-                 330      context-switches                 /             #    679.4 cs/sec  cs_per_second
-              485.69 msec cpu-clock                        /             #     57.5 CPUs  CPUs_utilized
-                  70      cpu-migrations                   /             #    144.1 migrations/sec  migrations_per_second
-                  71      page-faults                      /             #    146.2 faults/sec  page_faults_per_second
-          12,183,711      branch-misses                    /             #     10.9 %  branch_miss_rate         (5.15%)
-         111,981,297      branches                         /                                                       (5.15%)
-          95,844,809      branches                         /             #    197.3 M/sec  branch_frequency     (35.49%)
-          65,611,429      cpu-cycles                       /             #      0.1 GHz  cycles_frequency       (98.32%)
-          24,170,987      cpu-cycles                       /                                                       (95.12%)
-          18,552,509      instructions                     /             #      0.8 instructions  insn_per_cycle  (95.12%)
-          22,405,293      cpu-cycles                       /                                                       (64.78%)
-           6,840,383      stalled-cycles-frontend          /             #     0.31 frontend_cycles_idle        (64.78%)
-       <not counted>      cpu-cycles                       /
-     <not supported>      stalled-cycles-backend           /             #      nan backend_cycles_idle
-     <not supported>      stalled-cycles-backend           /             #      nan stalled_cycles_per_instruction
-     <not supported>      instructions                     /
-     <not supported>      stalled-cycles-frontend          /
-
-         0.006546057 seconds time elapsed
-
-  Some events weren't counted. Try disabling the NMI watchdog:
-  	echo 0 > /proc/sys/kernel/nmi_watchdog
-  	perf stat ...
-  	echo 1 > /proc/sys/kernel/nmi_watchdog
-
-But I'm worrying about opening same events multiple times.  Probably due
-to grouping, but I'm not sure if it's beneficial in the end.  Without
-duplication, it seems it won't cause multiplexing (assuming no other
-users at the same time).
-
-Fixes: a3248b5b5427d ("perf jevents: Add metric DefaultShowEvents")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: d9d59d105f98 ("arm64: dts: qcom: Add initial Milos dtsi")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260710-milos-sdhc2-reset-v1-1-c7a155a517ba@fairphone.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/evsel.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/arm64/boot/dts/qcom/milos.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index 6b747b0864b38..a8119f56100a3 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -612,7 +612,13 @@ struct evsel *evsel__clone(struct evsel *orig)
- 	evsel->sample_read = orig->sample_read;
- 	evsel->collect_stat = orig->collect_stat;
- 	evsel->weak_group = orig->weak_group;
-+	evsel->bpf_counter = orig->bpf_counter;
- 	evsel->use_config_name = orig->use_config_name;
-+	evsel->skippable = orig->skippable;
-+	evsel->dont_regroup = orig->dont_regroup;
-+	evsel->default_metricgroup = orig->default_metricgroup;
-+	evsel->default_show_events = orig->default_show_events;
+diff --git a/arch/arm64/boot/dts/qcom/milos.dtsi b/arch/arm64/boot/dts/qcom/milos.dtsi
+index 8c92329889538..262fa88012562 100644
+--- a/arch/arm64/boot/dts/qcom/milos.dtsi
++++ b/arch/arm64/boot/dts/qcom/milos.dtsi
+@@ -1724,6 +1724,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+ 
+ 			iommus = <&apps_smmu 0x540 0>;
+ 
++			resets = <&gcc GCC_SDCC2_BCR>;
 +
- 	evsel->pmu = orig->pmu;
- 	evsel->first_wildcard_match = orig->first_wildcard_match;
+ 			bus-width = <4>;
  
-@@ -621,6 +627,10 @@ struct evsel *evsel__clone(struct evsel *orig)
- 
- 	evsel->alternate_hw_config = orig->alternate_hw_config;
- 
-+	evsel->retire_lat = orig->retire_lat;
-+	if (evsel->retire_lat)
-+		evsel->retirement_latency = orig->retirement_latency;
-+
- 	return evsel;
- 
- out_err:
+ 			qcom,dll-config = <0x0007442c>;
 -- 
 2.53.0
 
