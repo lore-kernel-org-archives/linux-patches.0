@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FBC932A3DA;
-	Sat, 12 Sep 2026 14:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9FD1FCFFC;
+	Sat, 12 Sep 2026 14:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223292; cv=none; b=D1U35lotZHKGQYmVE2i5TKCaIECGdxuoMSCrC1AkkzYmqshWJfBx1KaJYnvxDsgor1Km/Vp3DQQw8voEPFBI9d8q2z8CHao6WRsWqOZR2sWGZAT5ab41P1fbBbRmrr/XbPFu1YnYnQ+rupcSJBagFaQlJCZabBjfjN57RxA0MjA=
+	t=1789223298; cv=none; b=Fp5ZHOvH4kSr1xJXn1Jrf+zXGNLUZrE5x67rLp60Q2Gka6w19MrhzJUry4yNqBcU4vRvaiYcOj2ZpLYKnkrh+s0gqU3kH+QarmB8cDo8fFqNTmLDgdp1ubbqR6cXmFI1QTJgeOv6Hs7jYrO1ye6flyhiMzAP7p29weJ96pgfA3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223292; c=relaxed/simple;
-	bh=r7PRdTehMZeiF4oKem4rqyLA8iYMi61Z++jT4j4fEzY=;
+	s=arc-20240116; t=1789223298; c=relaxed/simple;
+	bh=sRhsI9xwT+XEMEH412nd861RGcVr3v5fWSOEwVP5Ol0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K/OV04p9gS/d1fl+nP3pXKnddKM2xDPV9h2icW2vOCc7V3j2mggDrcNt9sqS/Ezl5vJ1Yj8G3Bq1JqTC3kmjleo9//GRTfEGtnqUoFO86UT0i7c9mjShr1S50lFC3caJbYhSejxj+CCNJWHBrnzAjdNP4cNNiqoZvS8YNqMUNXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RiP2ngcq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jAB5jJBoZXjedKjWLUCpq+FDK7R+P4wpqngnoSBVpqi1OEOXY6CE3Vw/5P4BzxVmwqB90Wu3HTUpxcUlgHQyCvSAxxj1VP2FCO69Q/FHzd7OL5IwHw4yBSAqI3VTVioMHCj9CPhOCFSR280R0wV9oOatthvgT0R5MrnBCg3vxy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OENFETc7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RiP2ngcq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12BF71F000FF;
-	Sat, 12 Sep 2026 14:28:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OENFETc7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302181F000FF;
+	Sat, 12 Sep 2026 14:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223291;
-	bh=/oFhrYCpdE7/IJ+NssjXS1dcMbgAkyi3KZYjEJKl0Js=;
+	s=korg; t=1789223296;
+	bh=gzWXF9pkrD1iLqk1eTk9VNXwcIWjO6sp46rHjBgrQSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RiP2ngcqu7/nY25sFs0mwpyv/oDnv2bcDDTTvtUEDJre+Gfvl7MqBgxHhPg313eb8
-	 mYtaPYGq0Smlrev/cZzltAHeRezitNz6abeuTjfd0ouZJZSVqlbuAoBfxrGTLqVd7n
-	 iv70uBiwcT3DaFk4pcGnMVwQXY9OCSnJsFX4aoOg=
+	b=OENFETc7fXDz9K2kBnbTIWkNT0Xn6skBJhB0AVxdb/JOYxyQy+ffBqTnkeJQOZaGM
+	 9Js2xJdo8YWPiHetNO0zDJBApdTYVXQHM3TioBq647CcSXDOvyzOscdjf0pFy9bkbp
+	 9662wB+W14jHvK60cI8Hm7y0/e12iB8pF24TwGy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0759/1424] PCI: xgene: Drop XGENE_PCIE_IP_VER_UNKN
-Date: Sat, 12 Sep 2026 08:53:11 +0200
-Message-ID: <20260912065624.294472476@linuxfoundation.org>
+Subject: [PATCH 6.6 0724/1424] xfrm6: fix out-of-bounds write in xfrm6_input_addr() when secpath is full
+Date: Sat, 12 Sep 2026 08:52:36 +0200
+Message-ID: <20260912065623.504017593@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,54 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit fddf72ed7b52c91da37fe5f1d4faed11251b714f ]
+[ Upstream commit 5d9e3bf34fec9a5d237e4b7cef4a707bc2e091bc ]
 
-XGENE_PCIE_IP_VER_UNKN is only refered to when probing for the
-original XGene PCIe implementation, and get immediately overridden
-if the device has the "apm,xgene-pcie" compatible string.
+The depth check in xfrm6_input_addr() is off by one:
 
-Given that the only way to get there is by finding this very string in
-the DT, it is obvious that we will always overwrite the version with
-XGENE_PCIE_IP_VER_1.
+  if (1 + sp->len == XFRM_MAX_DEPTH)
+          goto drop;
+  ...
+  sp->xvec[sp->len++] = x;
 
-Drop the whole thing.
+xfrm_input() can leave sp->len == XFRM_MAX_DEPTH, and the transport-mode
+receive path re-enters IPv6 input via xfrm_trans_reinject() with that
+secpath preserved. If the inner packet carries a destination-options HAO
+option or a type-2 routing header, xfrm6_input_addr() is called with
+sp->len == XFRM_MAX_DEPTH; the check (1 + 6 == 6) is false, so
+sp->xvec[sp->len++] writes one slot past the 6-element xvec[]. The write
+stays within the sec_path allocation (invisible to KASAN); UBSAN_BOUNDS
+flags it and panics under panic_on_warn.
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://lore.kernel.org/r/20250708173404.1278635-5-maz@kernel.org
-Stable-dep-of: 4869db344e76 ("PCI: xgene: Drop unnecessary OF node reference")
+Use "sp->len >= XFRM_MAX_DEPTH", matching xfrm_input(). This also
+restores one chain level the old check rejected at sp->len == 5.
+
+  UBSAN: array-index-out-of-bounds in net/ipv6/xfrm6_input.c:309:10
+  index 6 is out of range for type 'xfrm_state *[6]'
+
+Fixes: 9473e1f631de ("[XFRM] MIPv6: Fix to input RO state correctly.")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pci-xgene.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ net/ipv6/xfrm6_input.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pci-xgene.c b/drivers/pci/controller/pci-xgene.c
-index 887b4941ff32f..cf89b799e0b9f 100644
---- a/drivers/pci/controller/pci-xgene.c
-+++ b/drivers/pci/controller/pci-xgene.c
-@@ -53,7 +53,6 @@
- #define XGENE_V1_PCI_EXP_CAP		0x40
+diff --git a/net/ipv6/xfrm6_input.c b/net/ipv6/xfrm6_input.c
+index 8432b50d9ce4c..00d2a1b8b679e 100644
+--- a/net/ipv6/xfrm6_input.c
++++ b/net/ipv6/xfrm6_input.c
+@@ -193,7 +193,7 @@ int xfrm6_input_addr(struct sk_buff *skb, xfrm_address_t *daddr,
+ 		goto drop;
+ 	}
  
- /* PCIe IP version */
--#define XGENE_PCIE_IP_VER_UNKN		0
- #define XGENE_PCIE_IP_VER_1		1
- #define XGENE_PCIE_IP_VER_2		2
- 
-@@ -609,10 +608,7 @@ static int xgene_pcie_probe(struct platform_device *pdev)
- 
- 	port->node = of_node_get(dn);
- 	port->dev = dev;
--
--	port->version = XGENE_PCIE_IP_VER_UNKN;
--	if (of_device_is_compatible(port->node, "apm,xgene-pcie"))
--		port->version = XGENE_PCIE_IP_VER_1;
-+	port->version = XGENE_PCIE_IP_VER_1;
- 
- 	ret = xgene_pcie_map_reg(port, pdev);
- 	if (ret)
+-	if (1 + sp->len == XFRM_MAX_DEPTH) {
++	if (sp->len >= XFRM_MAX_DEPTH) {
+ 		XFRM_INC_STATS(net, LINUX_MIB_XFRMINBUFFERERROR);
+ 		goto drop;
+ 	}
 -- 
 2.53.0
 
