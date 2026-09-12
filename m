@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C21424DCF9;
-	Sat, 12 Sep 2026 14:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C587824DCF9;
+	Sat, 12 Sep 2026 14:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223925; cv=none; b=jc7uOIoqe5+EDSwg4a1P0QiwLht5sa9jB2i9ejoyO2B//gri2DojVrbCcuvJPgxu8AW5lY+enFb6zuO8puoLiPUrRdlcVkS2T7TYru82qFOzDqkCNTURXa35QJrCDmV6e9HAyp/XsBo+n6TruKo86ofWTtKP1V3+9Dq3em2rWy8=
+	t=1789223930; cv=none; b=kV+2iAzLJaulMtcLMec+Ct0QZHvwDVzpH9lAi6fBOHxxzC/5ujTEhk6XjiMrzN7Yi6HwSsAJtHQg0xEEwMqZk6R2voN/m14afxaD4Wrhbss3PUUVzLF0jMkodovW+eADUW2GnE05nLqVA/xvmrajEngARaBHHnLx8waSkA6N07E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223925; c=relaxed/simple;
-	bh=XB7WdzgV4kM+VueOo/GQ/IagghCtGXo0NNMpxPTo7zw=;
+	s=arc-20240116; t=1789223930; c=relaxed/simple;
+	bh=W2tEB9EncvrDn7nvBlBsmYiwXKnGh9xO4hhtJbo5NGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DW/wwIecKB2Zj0E5SQCXy0sP36ZlYDA/Irjt90hOP1p9nKkkxijIPEWL/qyo7guNtHbUgrX71dY/sDKOBZETURxrdayykYZa4bGvz+/55/gilGO0S6lwps0JprYSPMLnZBu0CMSYsJatJRxCNQKJUg8GmoS175oGc6yjQfKW9mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBaSSTRx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Igr+eXzpnUQZ7wu0IADkTGI7jquhyKqbNmF9rLde0sAstRYyoSZ7aZmghEGCsnMRRAH8dbiCL2sNZnhoic0zbyCuuanAbRKiog4OE/lJ8WAS2AG1qJJoTVgqxv141XP/lzUiGUOIyIpPkTso5zXbB7Qf80vO1/TcpODKwTLyHo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QLCLdaDJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBaSSTRx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA8C1F000FF;
-	Sat, 12 Sep 2026 14:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLCLdaDJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7D71F000FF;
+	Sat, 12 Sep 2026 14:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223923;
-	bh=MjGvRBzjFd+6S94i0FY4RW1XLUsNkhd6XpZF8K727So=;
+	s=korg; t=1789223928;
+	bh=Ch5rBveeVLwny9A2LhXnduXskCbHl9yFlcCBUMC0nZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FBaSSTRxZFiC5JyFWfS7VrVu2TrbnRIkAI9e9lfrnwUDLO2bz+BmQf2G3UwILIlIC
-	 kQljRgFSKr+YPJ4E4P41+Cw/Vtysmsm9f7MtMyFdLVF+bz249dC31gLicPrihMVDN1
-	 T5V6coLyyav6dyISmGl3jrObQAZLClU7/1T4oE2s=
+	b=QLCLdaDJGrdOH6Zxi4UqjelBr5BGIzeQY413lEMC44CkoDLJEkvHsFqjDdb0Xm9xL
+	 VChTMXe+rHlRQOWbsodTeok6uUkshXTNlzqViCNidChAvwbQ79c6rO6Ac/Q0fBu6W6
+	 A4R1sbd3ZYxSPF0S+oXMzUdqWgV9sR/X3cNAnTag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Andreas Dilger <adilger@dilger.ca>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Can Peng <pengcan@kylinos.cn>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0861/1424] ext4: check dir entry fits before reading the hash trailer in ext4_search_dir()
-Date: Sat, 12 Sep 2026 08:54:53 +0200
-Message-ID: <20260912065626.599477330@linuxfoundation.org>
+Subject: [PATCH 6.6 0888/1424] crypto: keembay - publish OF module alias for OCS AES/SM4
+Date: Sat, 12 Sep 2026 08:55:20 +0200
+Message-ID: <20260912065627.215398567@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -54,67 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit c7e6b863d298f56522d0d08554bbea7f142e6588 ]
+[ Upstream commit 0a94091e29f914e4f233a208599ca4055882c01b ]
 
-For casefolded encrypted directories ext4 stores an 8-byte hash trailer
-after the name (EXT4_DIRENT_HASHES()), at an offset derived from
-de->name_len.  On the sb_no_casefold_compat_fallback() path ext4_match()
-reads that trailer, but ext4_search_dir()'s by-hand pre-check only tests
-de->name + de->name_len <= dlimit, which proves the name fits, not the
-rounded trailer.  A crafted entry whose name ends at the block boundary
-passes the check while EXT4_DIRENT_HASHES(de) lands past the block end,
-so ext4_match() reads out of bounds on an ordinary lookup.  KASAN reports
-it as a use-after-free when the page after the directory block holds a
-freed object:
+The Keem Bay OCS AES/SM4 driver has an OF match table wired to
+.of_match_table, but does not export the table with MODULE_DEVICE_TABLE().
 
-  BUG: KASAN: use-after-free in ext4_match (fs/ext4/namei.c:1435)
-  Read of size 4 at addr ffff888010458000 by task exploit
-  Call Trace:
-   ext4_match (fs/ext4/namei.c:1435)
-   ext4_search_dir (fs/ext4/namei.c:1470)
-   __ext4_find_entry (fs/ext4/namei.c:1268 fs/ext4/namei.c:1632)
-   ext4_lookup (fs/ext4/namei.c:1703 fs/ext4/namei.c:1769)
-   ...
-   filename_lookup (fs/namei.c:2842)
-   vfs_statx (fs/stat.c:353)
-   __do_sys_newfstatat (fs/stat.c:538)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+Although the match table lives in keembay-ocs-aes-core.o, that object is
+part of the composite keembay-ocs-aes module.  Add the missing
+MODULE_DEVICE_TABLE(of, ...) entry so modpost can generate OF module alias
+information for OF based module autoloading.
 
-Require, for hash-in-dirent directories, that the whole entry including
-the rounded trailer fits before calling ext4_match().  This is the same
-bound ext4_check_dir_entry() already enforces via ext4_dir_rec_len(), so
-no well-formed entry is rejected.  The other caller, ext4_find_dest_de(),
-runs ext4_check_dir_entry() first and is unaffected.
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by the
+platform driver, and the missing module alias publication.
 
-Fixes: 471fbbea7ff7 ("ext4: handle casefolding with encryption")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Andreas Dilger <adilger@dilger.ca>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260709184101.441348-1-xmei5@asu.edu
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 885743324513 ("crypto: keembay - Add support for Keem Bay OCS AES/SM4")
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/namei.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/crypto/intel/keembay/keembay-ocs-aes-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
-index ea43a1bbf2338..bab54394e93d1 100644
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -1542,6 +1542,8 @@ int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,
- 		/* this code is executed quadratically often */
- 		/* do minimal checking `by hand' */
- 		if (de->name + de->name_len <= dlimit &&
-+		    (!ext4_hash_in_dirent(dir) ||
-+		     (char *)de + ext4_dir_rec_len(de->name_len, dir) <= dlimit) &&
- 		    ext4_match(dir, fname, de)) {
- 			/* found a match - just to be sure, do
- 			 * a full check */
+diff --git a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
+index 394613df96e7e..2003805f08daa 100644
+--- a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
++++ b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
+@@ -1561,6 +1561,7 @@ static const struct of_device_id kmb_ocs_aes_of_match[] = {
+ 	},
+ 	{}
+ };
++MODULE_DEVICE_TABLE(of, kmb_ocs_aes_of_match);
+ 
+ static int kmb_ocs_aes_remove(struct platform_device *pdev)
+ {
 -- 
 2.53.0
 
