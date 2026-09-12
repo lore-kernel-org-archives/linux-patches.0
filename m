@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D92D36B924;
-	Sat, 12 Sep 2026 12:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F19F47B439;
+	Sat, 12 Sep 2026 12:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217518; cv=none; b=EuX/mEBps+F4UUK64nAqmJDkFBglPgEXmEBNMKN8TeC3KB3UIpkWxvFZbAO7pPF2cys+sVrXs8cOLNOj2Wv09CObj6bepVWQZVNsR9ol+EAeBL849ReEoq4l5i4kd5vUylzYGhHja515mA8lZTCSqJNuoSmRFt2Z1guFNKVXvG4=
+	t=1789217525; cv=none; b=fG4xAgfe/Dv8PbJn4vEASkHRoO5cEDrTQ2HscTw4zczIZO6++Cw+zHY2+xP9qboxQt/r4ZxwwnEAMcRgCW5s+QAuXStEqX90oCNko3TEX7GReQE8B8g8YoEFS1x+AbS/x7kJDfhdE5NITmzXaQUkAxjW9QBVz4lxuLTKuszy7r8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217518; c=relaxed/simple;
-	bh=EbYyucUn5JmESsy+evYSQZ7ov+HZIHC43MM84AFI+v4=;
+	s=arc-20240116; t=1789217525; c=relaxed/simple;
+	bh=2qlyE7d/UhI5+Cevk8W0n7upPkvEERzuOLj4qw55BVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GFsLVyfCGA99a2SjlsUjLS5jS9ILU7QdyV4JFG6wzVQJGiMRLKbpIgxXX8Rx1fCoNCbvevE1fktiEHr6llqRdiYPp1XH6WjsnBC+QeppASlWRg6C3aye5DBVop/UGwRwN+dnvYIzemrZ8K3e8/nhUfknuI6FeuPmPJPJV8l2AJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/JjFR0Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HeeE2ZOSfCUcm9LCVH1hAkUaXuy2NuyHsq6aLhRHrg4x720rVC0nREF013CbjtRIZb41rtqhimpNGxm6EjPcgH6oleBF76YarvDxNcpVPV8s1+JRbu/GJJu/ie1obb2MYR5nvhHPQuBRuloVrUr9J7t2ARh90vAxJFeP9ZTL2Xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Coc4z/rY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/JjFR0Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0E01F00893;
-	Sat, 12 Sep 2026 12:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Coc4z/rY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0688B1F000FF;
+	Sat, 12 Sep 2026 12:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217517;
-	bh=J40MsMrH1EF59XpYVgW/5bXZWakqE5IRYbRaCR03r+w=;
+	s=korg; t=1789217522;
+	bh=YaRFF8zLP9fg7xVh/o5DctQpkYPs30A7dDGOc5XXB5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B/JjFR0Yh7PYgI8VikASxi/dMWxiIxfQl55dNwjC7bd/orq3VD+5VS3hCWCv3RjEQ
-	 ojWtF83p4y3iKgBaVsdtAAwXW2cPJmA0UUFSBJPlXRxzRv+Zo4ReiqTzPyy4v7Gfqz
-	 EAD3Io5YSJDS38hb/dzNTivx3/fQSCgO71sMykAo=
+	b=Coc4z/rY9gRAmiV8Tx4xE4zlLn50G++Jg3oLDCqabEL7F/ZRXbpUPDrCYmWiPWIHb
+	 7TiYqTJ/l3LCDDnnTTK6u7qxZ3R4N/fLy1ZoFdHtUYpLifZcXrG0BXnDnFFKINrW3Y
+	 wP41T1Sa5OxTkJFuHTD1atLCxlKHJuZoqk0ICyrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mykola Marzhan <mykola@meshstor.io>,
+	Bruce Johnston <bjohnsto@redhat.com>,
 	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0956/1376] md: avoid stale clone I/O accounting timestamps
-Date: Sat, 12 Sep 2026 08:56:22 +0200
-Message-ID: <20260912065628.867696785@linuxfoundation.org>
+Subject: [PATCH 6.12 0957/1376] md/raid1: dont set array_frozen in raid1_takeover()
+Date: Sat, 12 Sep 2026 08:56:23 +0200
+Message-ID: <20260912065628.889664108@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,44 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fygo.io>
+From: Bruce Johnston <bjohnsto@redhat.com>
 
-[ Upstream commit 45102fc8330525d35675b1c193242bba101df5ee ]
+[ Upstream commit dc386aa0ac0a3ec06c9a3ea9b064b073fb72a916 ]
 
-md_clone_bio() always allocates the clone from mddev->io_clone_set, even
-when queue I/O stats are disabled. In that case it does not call
-bio_start_io_acct(), but it also left md_io_clone->start_time untouched.
+raid1_takeover() sets conf->array_frozen = 1 on the newly-allocated
+r1conf and nothing ever clears it, so every I/O to the array stalls
+permanently once _wait_barrier() sees it stuck at 1.
 
-The clone private data comes from a mempool and can contain data from a
-previous user. md_end_clone_io() checks start_time to decide whether it
-needs to call bio_end_io_acct(), so a stale non-zero value can make the
-completion path end accounting that was never started for this bio.
+This used to be harmless: level_store() called mddev_resume() right
+after pers->run(), which called raid1_quiesce(mddev, 0) and cleared
+array_frozen back to 0 regardless of what raid1_takeover() set. Commit
+b39f35ebe86d ("md: don't quiesce in mddev_suspend()") removed that
+quiesce(mddev, 0) call, so the pre-set now sticks.
 
-Set start_time to 0 in the no-stats branch. This keeps the end path tied
-to whether bio_start_io_acct() actually ran.
+setup_conf() already zero-initializes the new r1conf via kzalloc, so
+just don't set array_frozen here.
 
-Fixes: c687297b8845 ("md: also clone new io if io accounting is disabled")
-Tested-by: Mykola Marzhan <mykola@meshstor.io>
-Link: https://patch.msgid.link/20260802195038.164272-8-yukuai@kernel.org
+Same class of bug as commit 892da88d1cd9 ("md/raid10: fix a
+'conf->barrier' leakage in raid10_takeover()"), also triggered by
+b39f35ebe86d.
+
+Fixes: b39f35ebe86d ("md: don't quiesce in mddev_suspend()")
+Link: https://issues.redhat.com/browse/RHEL-191802
+Signed-off-by: Bruce Johnston <bjohnsto@redhat.com>
+Link: https://patch.msgid.link/20260803180240.1177104-1-bjohnsto@redhat.com
 Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/raid1.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index dedd8a583f7e6..79ca70ca797db 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -8836,6 +8836,8 @@ static void md_clone_bio(struct mddev *mddev, struct bio **bio)
- 	md_io_clone->mddev = mddev;
- 	if (blk_queue_io_stat(bdev->bd_disk->queue))
- 		md_io_clone->start_time = bio_start_io_acct(*bio);
-+	else
-+		md_io_clone->start_time = 0;
- 
- 	if (bio_data_dir(*bio) == WRITE && mddev->bitmap) {
- 		md_io_clone->offset = (*bio)->bi_iter.bi_sector;
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index c6ad1f97cdace..32b2eb2a169c3 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -3482,8 +3482,6 @@ static void *raid1_takeover(struct mddev *mddev)
+ 		mddev->new_chunk_sectors = 0;
+ 		conf = setup_conf(mddev);
+ 		if (!IS_ERR(conf)) {
+-			/* Array must appear to be quiesced */
+-			conf->array_frozen = 1;
+ 			mddev_clear_unsupported_flags(mddev,
+ 				UNSUPPORTED_MDDEV_FLAGS);
+ 		}
 -- 
 2.53.0
 
