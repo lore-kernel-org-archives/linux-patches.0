@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41EC0471266;
-	Sat, 12 Sep 2026 10:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4640F47045A;
+	Sat, 12 Sep 2026 10:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210234; cv=none; b=frQ3xZqZJ4aaJSFIXCePS2bHwAwIqtAl1KPDnDGx685ad5NYgiZefTPwpNh53GZBXboquOD+ZJ7ZRJVWhWpMhDREraJlH3qZzH0O2nXORTAMKAMIiZ1mcYjlQg+VTTrbJXI3TkYCGiUlWrMZsXK5Ch8Vf2k/aiiU2m3+SxnQAq8=
+	t=1789210235; cv=none; b=anhOzGv+GD8TGoVxIWpN05fWWz87GGx39ZRfRNfiwjeuA2s+3U8ZBNBnCRVNSJ+3pDWdaBPUNb9gm2DigWwF/m0kvBJmshEcDoQpbJFlINCeiKoBBEBZ5Jomy4Atk8M3uRU6nChYygJLuHvYTDSy0XInqm1COVb78xvChqgk+BE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210234; c=relaxed/simple;
-	bh=5GGi8KhdZzZw8D35wxoxQXxkgc6avpTxxBezLeiU1zo=;
+	s=arc-20240116; t=1789210235; c=relaxed/simple;
+	bh=Zp03s6/LMtWd+g+4OGGBdSAp5Pq9lTpXTXDxoaMWF7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TUF+yZBlor0owoseoFMwrMHr8gUbhmauRzOiMfN52QMy7zc6vHh9+Svq59HaQ+5cwlYRlgxSIntsvl43p7bkGPQdp9zeL8WQ7S+wa69PzX864vg7HidRr0nhC5STqzszTsObm4el15CHhombaSx6pjc6pBQvtnnj0w58B6yrOTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KiEnL3K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iSOybX92HXanbQnUAuKY9gtL0PykvPOcHL44GhL7hj1T26yzm53uS6jiu/4nsiSV8FTlaRPOSVNubNGGUyjTciTREoAvdmV7BLZXn5wObufnNfeksqu5IMka8a48K0OETfiHdaOdUuj3+tHUl2T0iEAgWFoaczC8csXxT53xRpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GldpM6aB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KiEnL3K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356AA1F000FF;
-	Sat, 12 Sep 2026 10:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GldpM6aB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F2B1F00893;
+	Sat, 12 Sep 2026 10:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210227;
-	bh=2VLlydG29u1XEgF7/XHxUaSTJqeusg0QrnCRidKLh0U=;
+	s=korg; t=1789210232;
+	bh=vjK1jsurPBNI3iFkj/izNGwG+q0ZGlmwIDpVNFSBrgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2KiEnL3K0yA0pc/HWXHRPOVgORGC2xDNbFdKV+GaneZh4EY1j9X0BIAKljj4JJvQv
-	 5dZjyUDJ0XnneKgwjK8DOAsd4AaIUwZs1t7lu6pGFGemNMD1mXm4YcfG/ePgS/wr3j
-	 IYU7Ae17Np//+UaYADrdWZT3YpTcJPApVZHfBHeg=
+	b=GldpM6aBXD0uv0RPEB0D1ScMj/GXSfDbAC/4TCJ5BnORRP64MMo5xmAPpwsStclww
+	 V+D00VORYM5UjSj1+9XvFtxip4Vj9c9njmtM+KpkWvi8mhMV858SDyAAZ/XU2+rJQu
+	 G2KvSajJiOQzqgMpvJqRu98j2y3OQRgbXsfhmbYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Yu <yu.c.chen@intel.com>,
 	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
 	Christian Loehle <christian.loehle@arm.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	Tim Chen <tim.c.chen@linux.intel.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Andrea Righi <arighi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0983/1518] sched/fair: Also gate overloaded status update for SD_ASYM_CPUCAPACITY
-Date: Sat, 12 Sep 2026 08:52:32 +0200
-Message-ID: <20260912065645.695379459@linuxfoundation.org>
+Subject: [PATCH 6.18 0984/1518] sched/fair: Check CPU capacity before comparing group types during load balance
+Date: Sat, 12 Sep 2026 08:52:33 +0200
+Message-ID: <20260912065645.718936257@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -57,42 +58,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
 
-[ Upstream commit 6060d61d13a10da8c90da4eadf4a421825149883 ]
+[ Upstream commit 50b101f6e586b4417d060a976fd831cd87e86e2b ]
 
-The argument sg_overloaded of update_sg_lb_stats() is only consumed when
-balancing at the root domain. It only makes sense to update it in such a
-case. Commit 3229adbe7875 ("sched/fair: Do not compute overloaded status
-unnecessarily during lb") updated the logic accordingly but missed the case
-in which the root domain has the SD_ASYM_CPUCAPACITY flag. Fix this.
+update_sd_pick_busiest() may incorrectly select a fully_busy group as the
+busiest group when its per-CPU capacity exceeds that of the destination
+CPU. This happens because the type of busiest group is initialized to
+group_has_spare and allows the fully_busy group to win the type comparison.
 
-Fixes: 3229adbe7875 ("sched/fair: Do not compute overloaded status unnecessarily during lb")
-Reported-by: Chen Yu <yu.c.chen@intel.com>
+update_sd_pick_busiest() should not choose a candidate scheduling group
+with at most one runnable task if its per-CPU capacity is greater than that
+of the destination CPU. Such a check already exists, but it is done too
+late: after the type comparison, preventing a subsequent fully_busy group
+of equal per-CPU capacity from being correctly selected.
+
+Move this check to occur before comparing group types.
+
+Fixes: 0b0695f2b34a ("sched/fair: Rework load_balance()")
 Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Reviewed-by: Tim Chen <tim.c.chen@linux.intel.com>
 Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
 Tested-by: Christian Loehle <christian.loehle@arm.com>
 Tested-by: Andrea Righi <arighi@nvidia.com>
-Link: https://patch.msgid.link/20260720-rneri-fix-cas-clusters-v6-2-bb500bf4afd4@linux.intel.com
+Link: https://patch.msgid.link/20260720-rneri-fix-cas-clusters-v6-3-bb500bf4afd4@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/sched/fair.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 30ebe2823d238..5620c8d3a99a6 100644
+index 5620c8d3a99a6..4f02f823d1042 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -10680,7 +10680,9 @@ static inline void update_sg_lb_stats(struct lb_env *env,
- 			/* Check for a misfit task on the cpu */
- 			if (sgs->group_misfit_task_load < rq->misfit_task_load) {
- 				sgs->group_misfit_task_load = rq->misfit_task_load;
--				*sg_overloaded = 1;
+@@ -10748,6 +10748,17 @@ static bool update_sd_pick_busiest(struct lb_env *env,
+ 	     sds->local_stat.group_type != group_has_spare))
+ 		return false;
+ 
++	/*
++	 * Candidate sg has no more than one task per CPU and has higher
++	 * per-CPU capacity. Migrating tasks to less capable CPUs may harm
++	 * throughput. Maximize throughput, power/energy consequences are not
++	 * considered.
++	 */
++	if ((env->sd->flags & SD_ASYM_CPUCAPACITY) &&
++	    (sgs->group_type <= group_fully_busy) &&
++	    (capacity_greater(sg->sgc->min_capacity, capacity_of(env->dst_cpu))))
++		return false;
 +
-+				if (balancing_at_rd)
-+					*sg_overloaded = 1;
- 			}
- 		} else if (env->idle && sched_reduced_capacity(rq, env->sd)) {
- 			/* Check for a task running on a CPU with reduced capacity */
+ 	if (sgs->group_type > busiest->group_type)
+ 		return true;
+ 
+@@ -10850,17 +10861,6 @@ static bool update_sd_pick_busiest(struct lb_env *env,
+ 		break;
+ 	}
+ 
+-	/*
+-	 * Candidate sg has no more than one task per CPU and has higher
+-	 * per-CPU capacity. Migrating tasks to less capable CPUs may harm
+-	 * throughput. Maximize throughput, power/energy consequences are not
+-	 * considered.
+-	 */
+-	if ((env->sd->flags & SD_ASYM_CPUCAPACITY) &&
+-	    (sgs->group_type <= group_fully_busy) &&
+-	    (capacity_greater(sg->sgc->min_capacity, capacity_of(env->dst_cpu))))
+-		return false;
+-
+ 	return true;
+ }
+ 
 -- 
 2.53.0
 
