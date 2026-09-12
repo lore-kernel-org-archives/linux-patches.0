@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31AE345EA7;
-	Sat, 12 Sep 2026 15:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3071345EA7;
+	Sat, 12 Sep 2026 15:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228206; cv=none; b=j+8U04pE8SdzyXuDMSG2ep/hGgIWIVmpAFsGVpzqj5B0w+oEJ2z8l2Ok56WSRtZfUtbDLU0HIqroHu0FUwJlWtoMHEJQ6gKAcXKhbRRwVy1/NLdF5Yj2JTdZxMKtZK6cZ0Q5vH9rMcPQwJR/vMRyorLwqWvn2zv3acF7tzAFbOQ=
+	t=1789228211; cv=none; b=J0jRJwXXed0er4Dx2omsgmPdq8v231KNRdBW+3bIgAdOO4Lof1DScJ+Q/HC9fQWyT/0ddwqcbe2xKzliYaRd0Kdv6e2Un6hg1mTyslyMnCxR4/Bg7Z1hecmsWSFlJrRKIGhD8n98VJdcwKU3zZr4m4CpDfTnwGyBKyb8NIYoFb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228206; c=relaxed/simple;
-	bh=zf81fLzlMUYOQ/l6uyHw3VhZzdVZ9qwIr9Oj1fJYc68=;
+	s=arc-20240116; t=1789228211; c=relaxed/simple;
+	bh=OGroMhFjZtuLA+G3AOECwUWM2A+XZ24b7j4sPqyJoEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/2C4EEDGpV6ae3a2e1FjSZ0Pg1DxWA/DP6ISGJwoqhreOyahEJpVCptwqiGQqQopWtsQ8QCJHkSsX7Sbd7azS1qHKcpuKPUPJiButR9yOwBMgknMeflh8duEl+TizA4u9sGtwSiADkzVM22GYVpMgLVPvo1Of2103TNy8e4fGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/G84L8r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W17ycfsI4f4kOsWCKXTr1Xp3dxJeSjMLr5s6N1BZSKb0qLiNlSHHZxUppaNiMFAQJEFPFMTMhdPYLXnI2SeD8lj/Gd/uyoPNiu/OF2E7zFMDXQHYA+15+n/+b9nlTSpj1rYPkfPpL4lUZuGZ8Tz4iehFuUrhoDWaHhi2zKwjZwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BiTjPVnr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/G84L8r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A961F000FF;
-	Sat, 12 Sep 2026 15:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BiTjPVnr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1321F000FF;
+	Sat, 12 Sep 2026 15:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228205;
-	bh=ND18/QIxZyQMBWS0d5m3eG6SaEoWiv+05QRcx6vZOE4=;
+	s=korg; t=1789228210;
+	bh=MsGVI4sRt3bHgqPTIN+cffH6xWy4urDoixLTl2wdpYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t/G84L8rD/TGE3m3LgRFmN/P3uz9UPwMTTBCYTpkiiIG6Wr3FAZ6SpE9iG20+lijx
-	 D9ZtRZq1zs8T/6OVo+h/MSZ+N57Qv4JoNTdeiDkKlt0z91HfYivslp23aSPCtkm6pX
-	 gBqBBRigoMxpNp2H0l67TRozFQEHqOnjy78s44V4=
+	b=BiTjPVnrS9y7YyKFecLBuFgXdKD/gv5ufcTGwLvpVN6TJ7uvxRt5iyKS5VNRJv0XQ
+	 IJrVaVhKxaz/dNRwRAJEKbeXZ4eZuqYdH8Vv0k5lb8S2RhveC5N70VP2oNhHxnfXgN
+	 78bYCbwBOOwdGAjM488H4JdvdX0fVWUoIRS3oUFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Haoxiang Li <haoxiang_li2024@163.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 0339/1191] ASoC: fsl: mpc5200-i2s: Free DMA resources on probe failure
-Date: Sat, 12 Sep 2026 08:51:07 +0200
-Message-ID: <20260912065555.841828114@linuxfoundation.org>
+Subject: [PATCH 6.1 0340/1191] AsoC: intel: sst: fix PCI device reference leak on probe failure
+Date: Sat, 12 Sep 2026 08:51:08 +0200
+Message-ID: <20260912065555.863651290@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,33 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 3a89ddcf0c3d9a068631e8c24d5c9e81d1e6512a upstream.
+commit 016f29997ebd29d6ab59c8162ce0e7f73bd1e517 upstream.
 
-mpc5200_audio_dma_create() creates the DMA resources before registering
-the component. If snd_soc_register_component() fails, the function
-returns directly and leaves the DMA resources allocated.
+intel_sst_probe() takes a reference to the PCI device with pci_dev_get().
+If sst_platform_get_resources() fails afterwards, the probe error path
+cleans up the driver context but does not drop the PCI device reference.
 
-Call mpc5200_audio_dma_destroy() before returning from this error path.
+Add a pci_dev_put() error path for failures after pci_dev_get().
 
-Fixes: f515b67381de ("ASoC: fsl: mpc5200 combine psc_dma platform data")
+Fixes: f533a035e4da ("ASoC: Intel: mrfld - create separate module for pci part")
 Cc: stable@vger.kernel.org
 Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20260622094822.926166-1-haoxiang_li2024@163.com
+Link: https://patch.msgid.link/20260622091620.897478-1-haoxiang_li2024@163.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/mpc5200_psc_i2s.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/intel/atom/sst/sst_pci.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/soc/fsl/mpc5200_psc_i2s.c
-+++ b/sound/soc/fsl/mpc5200_psc_i2s.c
-@@ -171,6 +171,7 @@ static int psc_i2s_of_probe(struct platf
- 					psc_i2s_dai, ARRAY_SIZE(psc_i2s_dai));
- 	if (rc != 0) {
- 		pr_err("Failed to register DAI\n");
-+		mpc5200_audio_dma_destroy(op);
- 		return rc;
- 	}
+--- a/sound/soc/intel/atom/sst/sst_pci.c
++++ b/sound/soc/intel/atom/sst/sst_pci.c
+@@ -141,13 +141,15 @@ static int intel_sst_probe(struct pci_de
+ 	sst_drv_ctx->pci = pci_dev_get(pci);
+ 	ret = sst_platform_get_resources(sst_drv_ctx);
+ 	if (ret < 0)
+-		goto do_free_drv_ctx;
++		goto do_put_pci;
  
+ 	pci_set_drvdata(pci, sst_drv_ctx);
+ 	sst_configure_runtime_pm(sst_drv_ctx);
+ 
+ 	return ret;
+ 
++do_put_pci:
++	pci_dev_put(sst_drv_ctx->pci);
+ do_free_drv_ctx:
+ 	sst_context_cleanup(sst_drv_ctx);
+ 	dev_err(sst_drv_ctx->dev, "Probe failed with %d\n", ret);
 
 
