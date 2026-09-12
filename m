@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4DBE3A7580;
-	Sat, 12 Sep 2026 20:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBCD3A7839;
+	Sat, 12 Sep 2026 20:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243382; cv=none; b=rKzRoUGPyiq9p6ujiWXYIRY6+yURpPhIP6r+ux1K+2amfbu5yHDCkntJtjYNBJu3R3N638iVy1hxP26+YU3S4bnPRz5aQX9RLSnf0PLMY28YHn/+UpOFI8YoNDeipHwaUp+S9coJj1qqIj1giRIu4F9ZMVFFmzi0atyBW35Mz48=
+	t=1789243383; cv=none; b=d7Qa5F3ZsqoR8yoXK26BO36jLwkAWZM3xnq/f3yIk24lMK9JD2XaJXZabNPC5R03a5acGfKtrmCtQZEPMdGsucbhWHv42qYBt5DXRpF8NiFSrK2RSfjVMTN01797DcELTL6R3E5JX+k4BlfTT0vB1Hu8yH12LfCT3taA366GP+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243382; c=relaxed/simple;
-	bh=6S8xvBi4Q7iydWnuQ6md0uX+JtQ0Aj5XlNhgm6Zo+qM=;
+	s=arc-20240116; t=1789243383; c=relaxed/simple;
+	bh=4NpmbN0LL11m/Ye918QQEsV2wrpPibONcyRaQlUDzOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mB1osXjDToKQERw1xd95nu/dqDePSi42eml+ItahNF5E78v0ZviGw9y7tin2+4Y2Wd+8AoNBU2zU5BdYZDCPplFYZD1OAK2amOGt8uBmT+oum5BP8ii8J6ZCgd3CfNaZJyhEJi9BCpA2NcgBRpZADAORl9KhgXagK1Xup1Waf+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6laQ/Ir; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dQ0kzcPl+CryCAl84P91XKpvxdAmYa5H7NZavqFP/TDkKPat6SBkPb9zWy6EZA9vQ0elj62ryape5qKyQih/dAwSZKPts5a9TbebpGkjnUi0MDgJ3IcSHIoB7AzBlaraZffytQZstKngSxZUnrTBJNBRDkbiSsDW4a/umOgJ6Jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pbJZSQ32; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6laQ/Ir"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED021F00893;
-	Sat, 12 Sep 2026 20:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pbJZSQ32"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692571F00898;
+	Sat, 12 Sep 2026 20:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243379;
-	bh=MWn2LYZDZAT8DJhsiq5rItqwXk56syqFPxjGy+XmztA=;
+	s=korg; t=1789243381;
+	bh=11XE1Y1JPh/HuQXMZtR9Dt0hFzP+2feuhP+MbWHBZyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D6laQ/IrGBwSBcK3oPjFVwP4a1NpBO651EfKuDslbknFnho8ormuPBLyVpivBCmjK
-	 SAdrUKgr6LYj+zhriBVidFTe1hbi7YQYkofk08BfsU56XSrJ8dD5fCH2aChZWqqrUG
-	 Ue6sFPp8wx4QrsJ6oh4C4xOhIW75Dzj0Dr/N5BV8=
+	b=pbJZSQ32j6IOH2IfDnOzF1naDSU5gYX3AA6L9eFWekcDv+ZoJgo0qgPNIVOmP2F9N
+	 VLzGSPJAV2atQVhe7ISNU575mGarXXWypYBgOgqGqtpRfR2UnIAgxQTz4Qn7ozFYMc
+	 deShODEWhEMlRMuAjzXXSbqdnwt4KlPcC/A+/9b4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henrik Grimler <henrik.grimler@axis.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 698/798] power: supply: bq27xxx: bq27520g4: fix REG_TTES address
-Date: Sat, 12 Sep 2026 09:05:26 +0200
-Message-ID: <20260912065533.093407375@linuxfoundation.org>
+Subject: [PATCH 5.10 734/798] bonding: initialize err for empty target lists
+Date: Sat, 12 Sep 2026 09:06:02 +0200
+Message-ID: <20260912065533.900225442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,36 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrik Grimler <henrik.grimler@axis.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit c774a623c821a173c950e1297f8e8c85a89455be ]
+[ Upstream commit 8ccc9bf9afeeb46a437081c07154fbf5964682b2 ]
 
-According to the technical reference manual the StandbyTimeToEmpty
-(TTES) register is at 0x1a, not 0x1c. At 0x1c StateOfHealth instead
-resides.
+Empty NLA_NESTED attributes are valid, and bonding uses them to clear
+the ARP and NS target lists. When either target attribute is empty,
+nla_for_each_nested() does not execute, so err retains an uninitialized
+value before it is tested. The request can consequently return an
+unpredictable error after clearing the targets.
 
-Fixes: 8835cae5f2ab ("power: supply: bq27xxx: adds specific support for bq27520-g4 revision.")
-Signed-off-by: Henrik Grimler <henrik.grimler@axis.com>
-Link: https://patch.msgid.link/20260811-bq27z746-v1-3-3a4fa38205cc@axis.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Initialize err to zero so an empty target list completes successfully.
+Non-empty lists still propagate errors from __bond_opt_set() unchanged.
+
+This issue was found by a static analysis checker and confirmed by manual
+source review.
+
+Fixes: 4fb0ef585eb2 ("bonding: convert arp_ip_target to use the new option API")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260813153126.3952893-1-ruoyuw560@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq27xxx_battery.c | 2 +-
+ drivers/net/bonding/bond_netlink.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index 44198b181c962..fac8cbf92eb7b 100644
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -323,7 +323,7 @@ static u8
- 		[BQ27XXX_REG_FLAGS] = 0x0a,
- 		[BQ27XXX_REG_TTE] = 0x16,
- 		[BQ27XXX_REG_TTF] = INVALID_REG_ADDR,
--		[BQ27XXX_REG_TTES] = 0x1c,
-+		[BQ27XXX_REG_TTES] = 0x1a,
- 		[BQ27XXX_REG_TTECP] = INVALID_REG_ADDR,
- 		[BQ27XXX_REG_NAC] = 0x0c,
- 		[BQ27XXX_REG_RC] = 0x10,
+diff --git a/drivers/net/bonding/bond_netlink.c b/drivers/net/bonding/bond_netlink.c
+index f0f9138e967f3..6a766306b3d26 100644
+--- a/drivers/net/bonding/bond_netlink.c
++++ b/drivers/net/bonding/bond_netlink.c
+@@ -162,7 +162,7 @@ static int bond_changelink(struct net_device *bond_dev, struct nlattr *tb[],
+ 	struct bonding *bond = netdev_priv(bond_dev);
+ 	struct bond_opt_value newval;
+ 	int miimon = 0;
+-	int err;
++	int err = 0;
+ 
+ 	if (!data)
+ 		return 0;
 -- 
 2.53.0
 
