@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C38D370D47;
-	Sat, 12 Sep 2026 09:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D3F370D47;
+	Sat, 12 Sep 2026 09:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206004; cv=none; b=XmWvVUCJlk6X8/KA/px7bDygaDomvJe5dl2J8432/uu5zW739tLnWc6DZRcKC3XfNYP1404Xl248FCtHvmk20kkIUyZTbRXoLXawaJ+yVSfEcLyS+4MnO3nobIieueWZsjJq+wg4BM1CckJesGmQbqzMjrRtPC+tmsmrDuu74Os=
+	t=1789206009; cv=none; b=ez/bNa1Y3I/YxheV6R9sUo+f2wm8bAgWqef5pqS8OIVhUac+3iBHPP89HDEl2llhxkBVaJU7e98BJch95S7KzkE3CTiPZvXlUxUkYrLq2eGGCwPL6cYqRM1kLqrKyhc72FGV2wm/3MF5Drpmggo7M0osJhN3nZFw06DIP3PrssY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206004; c=relaxed/simple;
-	bh=2/BT5QzKty+CQ5uUCzYa/+/G6EU360PWqSX9z5Hf1WM=;
+	s=arc-20240116; t=1789206009; c=relaxed/simple;
+	bh=Po1DcBNlPXD5T1rkaRYQA7VaJi33DLFH/DXTdSuItLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pa29EI3l++xaqEgTRp9mK22/ruarkmmMJw4K/qXaKyT993VG1slknVQ9PjmrGitIkRtidaVusCMZMfntbUO9fGwMG4ZNwHUiBYpZmPJBD5Kbh2Y4JTNrDl0aZo/M9C+Ewnae+71s1lFHzV+w8F+83Wvwyh5UvZ9A/XcvjZpSZ/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrwzZn7e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I1rGAZrpRV+NVs03JD/iWE8ICfWzbHQXJ9Xlena8kFL8Xb3T+HGF1WfXIykAVZlNhcaK/1dfq7XG1HAHsgcLfdIdE5g0iMELr4vMz/zMszWRMNed5ho1eVjv3nCm0Urpqvzqv44SdCJaOcTuYjKaD6w8wLnPu9kKc+FrG9muzRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adbaLVBU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrwzZn7e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483731F000FF;
-	Sat, 12 Sep 2026 09:40:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adbaLVBU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33EB81F000FF;
+	Sat, 12 Sep 2026 09:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206003;
-	bh=iyvNOlyYXqDgn6J2STX9i5SUgkJTob5dPb9EN9RPCQs=;
+	s=korg; t=1789206008;
+	bh=RtdWPUOaX3eE65WLLiN78DpsvGEsbJ/3s82i/JhjdHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xrwzZn7eCiJBNT82/fm0AocqNSiPOkxWxqNuYAxc+NHL0Enb7TW5UC1wJTcZxXnKA
-	 bV7AiLJ3tgM7NEi3leDYAslxYHuknfJF8zEy20rGC8iv3uMJ7Bh8k+Owmgv0I62ZdP
-	 DtTIzqRoKMdWEz5hHXWCLh8ARXP6etw5VFm19x+I=
+	b=adbaLVBUWqVrH8ebkq1ga3U92JpfCDZXetGBGMJ6y8YHDzHs4nu0TfrYPhOJmgoTw
+	 drdQPDvd+E4p/JA6F+1WMYDq93Ag0Tu9NZG+Vw3fMPGOl2dfj9fATSNj+fsDxHVu45
+	 UamaYsnwXPobAhOGCdk2njApGhbDoYPTO4vY9pgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Kaixuan Li <kaixuan.li@ntu.edu.sg>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Benson Leung <bleung@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Amin Vakil <info@aminvakil.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0117/1518] platform/chrome: cros_ec_typec: Reject out-of-bounds PD cap count
-Date: Sat, 12 Sep 2026 08:38:06 +0200
-Message-ID: <20260912065626.134887712@linuxfoundation.org>
+Subject: [PATCH 6.18 0118/1518] selftests: proc: include fcntl.h in proc-pidns
+Date: Sat, 12 Sep 2026 08:38:07 +0200
+Message-ID: <20260912065626.158693163@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,65 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Amin Vakil <info@aminvakil.com>
 
-[ Upstream commit a0a8cd9fc9c48b95095bcec4b146f7a99486f58e ]
+[ Upstream commit 879b3353d04d043a9e01525c520d9b81339421b2 ]
 
-cros_typec_register_partner_pdos() copies the partner PDOs from the EC
-TYPEC_STATUS response into the fixed caps_desc.pdo[PDO_MAX_OBJECTS] array.
+proc-pidns.c uses open() and O_* flags, but does not include
+<fcntl.h>. This breaks the proc selftests build with errors such as:
 
-	memcpy(caps_desc.pdo, resp->source_cap_pdos,
-	       sizeof(u32) * resp->source_cap_count);
-	...
-	memcpy(caps_desc.pdo, resp->sink_cap_pdos,
-	       sizeof(u32) * resp->sink_cap_count);
+  error: implicit declaration of function 'open'
+  error: 'O_WRONLY' undeclared
+  error: 'O_CREAT' undeclared
+  error: 'O_RDONLY' undeclared
 
-PDO_MAX_OBJECTS is 7. source_cap_count and sink_cap_count are u8 fields
-from the EC. The only check is that they are not both zero. If either is
-larger than 7, the memcpy writes past the end of the array on the stack.
-A count of 255 overflows it by about 1 KB. The EC source arrays are only
-seven entries wide. A larger count reads past them too.
+Include <fcntl.h> to provide the declaration and flag definitions.
 
-The ChromeOS EC firmware caps these counts today, so a compliant setup
-does not hit this. The kernel should still validate these values rather
-than trust them.
+Fixes: 5554d820f71c ("selftests/proc: add tests for new pidns APIs")
+Tested with:
+  make -C tools/testing/selftests TARGETS=proc
 
-Validate the counts in cros_typec_register_partner_pdos() next to the
-memcpy. Skip the PDO registration if either count is above PDO_MAX_OBJECTS.
-The rest of cros_typec_handle_status() still runs so events are handled
-and cleared.
-
-Fixes: 348a2e8c93d3 ("platform/chrome: cros_ec_typec: Register partner PDOs")
-Suggested-by: Andrei Kuchynski <akuchynski@chromium.org>
-Co-developed-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
-Signed-off-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Reviewed-by: Andrei Kuchynski <akuchynski@chromium.org>
-Link: https://lore.kernel.org/r/20260625130056.3378097-1-maoyixie.tju@gmail.com
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Amin Vakil <info@aminvakil.com>
+Link: https://patch.msgid.link/20260618151444.124739-1-info@aminvakil.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_typec.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/testing/selftests/proc/proc-pidns.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
-index b712bcff6fb26..03ca776a837fb 100644
---- a/drivers/platform/chrome/cros_ec_typec.c
-+++ b/drivers/platform/chrome/cros_ec_typec.c
-@@ -1118,6 +1118,12 @@ static void cros_typec_register_partner_pdos(struct cros_typec_data *typec,
- 	if (!resp->source_cap_count && !resp->sink_cap_count)
- 		return;
+diff --git a/tools/testing/selftests/proc/proc-pidns.c b/tools/testing/selftests/proc/proc-pidns.c
+index 52500597f9514..f0fff6991d461 100644
+--- a/tools/testing/selftests/proc/proc-pidns.c
++++ b/tools/testing/selftests/proc/proc-pidns.c
+@@ -6,6 +6,7 @@
  
-+	if (resp->source_cap_count > PDO_MAX_OBJECTS ||
-+	    resp->sink_cap_count > PDO_MAX_OBJECTS) {
-+		dev_warn(typec->dev, "Invalid PDO count from EC, port: %d\n", port_num);
-+		return;
-+	}
-+
- 	port->partner_pd = typec_partner_usb_power_delivery_register(port->partner, &desc);
- 	if (IS_ERR(port->partner_pd)) {
- 		dev_warn(typec->dev, "Failed to register partner PD device, port: %d\n", port_num);
+ #include <assert.h>
+ #include <errno.h>
++#include <fcntl.h>
+ #include <sched.h>
+ #include <stdbool.h>
+ #include <stdlib.h>
 -- 
 2.53.0
 
