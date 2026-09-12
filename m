@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE50282F1B;
-	Sat, 12 Sep 2026 07:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7E1346AE3;
+	Sat, 12 Sep 2026 07:44:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199072; cv=none; b=j1vqSVpLSRfVqkGDBpE5g0UVEtUtzqotMu6aCEu2Q6s/CYB43oigymHwZdAd6EpwwV4s/9c4O+xNEZyH7/kj/oPxxUXx6cBt4YeJj4G8k9i6UN+1Fy/yWcZ9GDgVM1l8Onpcyte1xJCBcxmDqwddfdDcaMSX6DJa31e0t5zCfQ4=
+	t=1789199077; cv=none; b=LLGpOwi6+qJnhIcC60pisfzYvOeLzRpGKre7+bc/+4Vzf1xbB2J9mno8m30+ONGHFcARSE1gM9ad5v9vpfuJWzZPOrHwq0zjarkBLkPHcFVg+LjMUfF80rDKj/BMiMJcyzEps/UcWmQIL+w6aBX8txNFBgJ7bDEqmfw6eFr3lJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199072; c=relaxed/simple;
-	bh=b3cnICRxlYgLeBQWqbg7QY8shpUDXZZ4ocFfjHIbyKw=;
+	s=arc-20240116; t=1789199077; c=relaxed/simple;
+	bh=eBjdqXxj49zxFO3KEylSTMJ05XkLR8HHJR/vHMJjA2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NUQlZvaqqccfAwBiPd2YWdc/Qy7V6Pw9LcPmHEOu+JUHv62S4vcT6ONEaRY8O9SVSAkHY/nlDkW4XnwMRLjjd719obLXo+DsxZziHBPdpckzfTCK7u2eqQz6a/Nn2uUcYmojj5/k8zEmcmVwq1yJtAS5W1vzQCN5ixSNtcotd8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+4LiWvI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RQAQ8XM8OEUcRFrWKd7PfXmUKOlgVkPmU3yfrg4hIoeC2qE0aO9wTTSjpqDerOikYkOZuJbaCY31Ls4Txq3c5Ee1oMNajzsVeJtLZgDgWCe3rgWsxv3YOoEYpklPblAp39oZaYieQs+W5qF28LQZXHdRB8W0GSJKyMeI4lkpM5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOAeVRdu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+4LiWvI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5051F000FF;
-	Sat, 12 Sep 2026 07:44:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOAeVRdu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5C11F000FF;
+	Sat, 12 Sep 2026 07:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199070;
-	bh=yAMXikgzHTTW2uTgE2dqMiR4QDd49+BpPo7KlrXKDGU=;
+	s=korg; t=1789199076;
+	bh=8KiRpU8PCT4M26QQvwxq8x6sP16ysZB/0EJUBh1jn64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o+4LiWvIV7geQastOgGkt8E9+RXe/NR1IW0cVheqeg5LR61XkFgG+kq89GTniZqrO
-	 GSPQkwB1xoimAArXyNvU1SYtk4NSthUg2iIXKOoSwQGHzI4fRNmnJ7cS0kj6KCdMW4
-	 vadLBvs+haXXHNSh9wJ2xmN9yGy0np1ZOdF5z/VM=
+	b=bOAeVRdufNgELT61RORK4Qvj0MWsqST1bDGcDFhjVsJWmxcOZZq/tc4WUvvprce3r
+	 HEGRIJxs0cN+ZgqRd5UfjOzL6WZPmhv9Kop9Xl2smE8spZqVLOChF4LXoyHlqwxbol
+	 pmfuwZ4DOP/jSWTLUirHbd/q+sFl8oYKN+wG9qFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhouminqiang <zhouminqiang2@huawei.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0511/1815] mtd: part: reject MTDPART_OFS_RETAIN in mtd_add_partition()
-Date: Sat, 12 Sep 2026 08:37:41 +0200
-Message-ID: <20260912065700.885345737@linuxfoundation.org>
+Subject: [PATCH 7.2 0512/1815] perf ui hists: Fix uninitialized stack memory free on pstack allocation failure
+Date: Sat, 12 Sep 2026 08:37:42 +0200
+Message-ID: <20260912065700.910160412@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,72 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhouminqiang <zhouminqiang2@huawei.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit b759d5bb6265419344ee9729fd0dc07ad85719d8 ]
+[ Upstream commit d5fdde1c426922efabe86a515f0782b3eba40577 ]
 
-mtd_add_partition() does not reject the special offset value
-MTDPART_OFS_RETAIN (-3), which leads to a WARN_ON in
-add_mtd_device() when called through the BLKPG ioctl on NAND
-devices. The RETAIN value depends on cur_offset being the end of
-the previous partition, but in the dynamic partition path
-cur_offset equals the offset argument itself, causing undefined
-behavior.
+Fixes heap corruption by initializing the options and actions arrays before
+the pstack allocation check, preventing an uninitialized stack pointer from
+being passed to free_popup_options() if the allocation fails.
 
-Commit 5daa7b21496a ("mtd: prepare partition add and del functions
-for ioctl requests") introduced mtd_add_partition() and correctly
-rejected MTDPART_OFS_APPEND (-1) and MTDPART_OFS_NXTBLK (-2),
-since those special offsets rely on cur_offset tracking the
-previous partition's end. However, commit 1a31368bf92e ("mtd: add a flags
-for partitions which should just leave smth. after them")
-later added MTDPART_OFS_RETAIN (-3) for the static
-partition table path without updating mtd_add_partition() to
-also reject this value.
-
-With offset=-3 passed via BLKPG, the RETAIN size calculation in
-allocate_partition() underflows (parent_size - 0xFFFFFFFFFFFFFFFD
-= parent_size + 3). If the underflow result does not appear to
-leave enough space, allocate_partition() jumps to out_register via
-goto, skipping erasesize initialization. This results in
-erasesize=0, which triggers:
-
-WARN_ON((!mtd->erasesize || !master->_erase) &&
-		!(mtd->flags & MTD_NO_ERASE))
-
-in add_mtd_device(). If the underflow result appears to leave
-enough space, a bogus partition size is calculated, but the
-"out of reach" sanity check catches the invalid offset and
-creates a disabled empty partition (offset=0, size=0) instead
-of returning an error.
-
-Fix this by adding MTDPART_OFS_RETAIN to the rejection list in
-mtd_add_partition(), consistent with the existing handling of
-APPEND and NXTBLK.
-
-Fixes: 1a31368bf92e ("mtd: add a flags for partitions which should just leave smth. after them")
-
-Signed-off-by: zhouminqiang <zhouminqiang2@huawei.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-perf-users/20260709035230.6DBEE1F000E9@smtp.kernel.org/
+Fixes: f2b487db45f2 ("perf hists browser: Fix possible memory leak")
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/linux-perf-users/20260709035230.6DBEE1F000E9@smtp.kernel.org/
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdpart.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/perf/ui/browsers/hists.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/mtdpart.c b/drivers/mtd/mtdpart.c
-index 4b41550fd374e..ddded0dbe77e0 100644
---- a/drivers/mtd/mtdpart.c
-+++ b/drivers/mtd/mtdpart.c
-@@ -258,7 +258,8 @@ int mtd_add_partition(struct mtd_info *parent, const char *name,
+diff --git a/tools/perf/ui/browsers/hists.c b/tools/perf/ui/browsers/hists.c
+index da7cc195b9f41..bae7e4943abff 100644
+--- a/tools/perf/ui/browsers/hists.c
++++ b/tools/perf/ui/browsers/hists.c
+@@ -3064,15 +3064,15 @@ static int evsel__hists_browse(struct evsel *evsel, int nr_events, const char *h
+ 		browser->min_pcnt = min_pcnt;
+ 	hist_browser__update_nr_entries(browser);
  
- 	/* the direct offset is expected */
- 	if (offset == MTDPART_OFS_APPEND ||
--	    offset == MTDPART_OFS_NXTBLK)
-+	    offset == MTDPART_OFS_NXTBLK ||
-+	    offset == MTDPART_OFS_RETAIN)
- 		return -EINVAL;
++	memset(options, 0, sizeof(options));
++	memset(actions, 0, sizeof(actions));
++
+ 	browser->pstack = pstack__new(3);
+ 	if (browser->pstack == NULL)
+ 		goto out;
  
- 	if (length == MTDPART_SIZ_FULL)
+ 	ui_helpline__push(helpline);
+ 
+-	memset(options, 0, sizeof(options));
+-	memset(actions, 0, sizeof(actions));
+-
+ 	if (symbol_conf.col_width_list_str)
+ 		perf_hpp__set_user_width(symbol_conf.col_width_list_str);
+ 
 -- 
 2.53.0
 
