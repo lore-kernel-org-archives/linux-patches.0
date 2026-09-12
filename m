@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E578437CD32;
-	Sat, 12 Sep 2026 09:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5C9299920;
+	Sat, 12 Sep 2026 09:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204670; cv=none; b=JlJd/kUgq41m/HCOPYLUeRw/WiTo8Ipnt0RcbKwPVMdE5phP6pHyQaK1/DMhiFD2B6iHv32i147ljQQY4OVE9FxIyHEdtT854iMoIukycZNn9YAHUvgvuTGy4LJ9Yh3yZc2Q4y2lqPw6RF84IeJJL8lvWirhmn4yVa2RdZxz3S0=
+	t=1789204674; cv=none; b=D7Y83qgVTbRukWvd/0iHjFMab1QFCbQZnYG6OiDxK9klJwzFPsKohd/8Brfr7PeYTupl6prVSc4JdG2bJ1Y/PwtNRlJ21SW9rM1CjZq/vPbJnjvHj+pi0CidS6LRHMRaR9gATGULAT5xOA3tdMOwG7s1FnvZ6EmMfA9NpTI9f7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204670; c=relaxed/simple;
-	bh=1tcFMhBU1C5+FA65Tiq6ETT2952P+0PLIHKNTAJJjIY=;
+	s=arc-20240116; t=1789204674; c=relaxed/simple;
+	bh=9PCTE+tYyjgPd+CXio2t6DoY/DPzISaygT6tc1WRQ/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sh9p82v00+La6gqqHfsK9MMtYoevCot6sXZmiQhbub7F+Ym6b/gtU+GJbFzbNf9HmPHl7D+zadYbXGeimDFWBywu48Y/Vs74tFSdLfNJTVwQEOx6xHR7WELkcF0JvLPLhcmFq2/9GdU7PYw3OyzDRcrMI16SYVcibJad1IyzXvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0VFfknI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R0LWaHZCMOOqYyCk53q3lnkpXgk/wko919/q2dWTpOtqeopjVNSHzdlbdXD/9CI8UmDuulB3VgJXjg5GUfDqHdNYobm1oqrZ4RYc5XeI6o+jlNJWgOKXMld1gRg7YAzKYcHjsYLUWch/zoEV7hkJ3ktzUeSx8aDQxYQ2wGf7eRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QG+9zJCL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0VFfknI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F761F000FF;
-	Sat, 12 Sep 2026 09:17:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QG+9zJCL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11181F000FF;
+	Sat, 12 Sep 2026 09:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204668;
-	bh=pWSM3ikYj0AsQmHtudRgBD1F4i8hEEzl7iwcrx+8AUw=;
+	s=korg; t=1789204673;
+	bh=hVHeSXGNTWBP7RgHpKe0FRUem5NaB2ehGxjrciyQs+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F0VFfknIwYyZs4WWSyB2qhNVH8Hxl8m2CoKV08MypPhtbB3I4Q2vE/jyBoTiY0oNh
-	 VXp1uN1ey6hmR5lZFD3yU8QdPRE2KcbERGIvb1PruUaw5NWRbci2tSNXwB3tDWFiLs
-	 FsiOGpsLx5xGAZuBruukt39kdzU2ySo/DIrTYvJY=
+	b=QG+9zJCL2DsIZi+D9ppUcAD345GJTo2UoafgEz8fNao4EdPnUbUZADS4BEp2h7D34
+	 u1SMtcVf3fbuDQWdwBZ9pfkcxc1UYXS5JzHECc0yjzzK2XHJySHrF22iu7h3UOHJ7R
+	 445jn8rQ68H0GAm94Xx2hiIrwWPniJ2KCLe0AL50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Huth <thuth@redhat.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1661/1815] smb: server: Remove obsolete "select CRYPTO_LIB_DES" from Kconfig file
-Date: Sat, 12 Sep 2026 08:56:51 +0200
-Message-ID: <20260912065727.984599386@linuxfoundation.org>
+Subject: [PATCH 7.2 1662/1815] smb: server: remove unused DES crypto header
+Date: Sat, 12 Sep 2026 08:56:52 +0200
+Message-ID: <20260912065728.007318457@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,34 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Huth <thuth@redhat.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit ed91d80242358ffdf127a34e3b7c9fc445c9e5d1 ]
+[ Upstream commit c5e640fe346177372ff4a51a45b01fcd48c29207 ]
 
-The DES encryption in the smb server code has been removed in 2021
-with the removal of the insecure NTLMv1 authentication code. Thus
-we don't need this "select" statement here anymore.
+The DES crypto header is no longer used after the removal of NTLMv1
+authentication. Remove it now that the server no longer selects
+CRYPTO_LIB_DES.
 
-Fixes: ce812992f239f ("ksmbd: remove NTLMv1 authentication")
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Fixes: ce812992f239 ("ksmbd: remove NTLMv1 authentication")
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/Kconfig | 1 -
+ fs/smb/server/auth.c | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/fs/smb/server/Kconfig b/fs/smb/server/Kconfig
-index 08d8b7a965a64..221ec9717a834 100644
---- a/fs/smb/server/Kconfig
-+++ b/fs/smb/server/Kconfig
-@@ -9,7 +9,6 @@ config SMB_SERVER
- 	select CRYPTO
- 	select CRYPTO_LIB_AES_CBC_MACS
- 	select CRYPTO_LIB_ARC4
--	select CRYPTO_LIB_DES
- 	select CRYPTO_LIB_MD5
- 	select CRYPTO_LIB_SHA256
- 	select CRYPTO_LIB_SHA512
+diff --git a/fs/smb/server/auth.c b/fs/smb/server/auth.c
+index 2d116d60f7f6c..8d22d28a12bf9 100644
+--- a/fs/smb/server/auth.c
++++ b/fs/smb/server/auth.c
+@@ -24,7 +24,6 @@
+ 
+ #include <linux/fips.h>
+ #include <crypto/arc4.h>
+-#include <crypto/des.h>
+ 
+ #include "server.h"
+ #include "smb_common.h"
 -- 
 2.53.0
 
