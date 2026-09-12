@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED618425CF5;
-	Sat, 12 Sep 2026 11:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D671425CF5;
+	Sat, 12 Sep 2026 11:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213257; cv=none; b=jLq3uFRV3A/S0O8NHGOkBs28oJ7a21HhAfn7EvBALFvhSnLUEYWgdqSP98qZadpCmZlXX9r3TzzRFZNJa1eiFqO9b5GwU+N/jRLO2I5EKkMFkCV0Y07x3AH52H3lphM/2Mbe5gUm7F6zLd/subHX2kd6XZudPw5l/tq8CnR9Kis=
+	t=1789213262; cv=none; b=YAHZjdzfe8CRQUSePjwJ6c+BGVTUeRmmfRmtOoBHE6I+8Szru6YQtANxJXQxBiSDDqQ06quR3htUh6FIDFrdRHf7yPUdT8bZKNiyCgrVsxMRLoXA9/Y8sCp5tBa5qaV956GegIePaxnq6sXPkOVr+UltYNWfIRukyrJ/Yx8c0yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213257; c=relaxed/simple;
-	bh=ti2D0dEl/n2ai/W9UQZSymRYOvZyMWUyBSqP3MiMnl8=;
+	s=arc-20240116; t=1789213262; c=relaxed/simple;
+	bh=Lf6ReJE8d/dQ0PV0NqI8c7VRllBCjwCwfiw8mXmkraY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Soyzz/RckfFfVAmFaSnKJSOtRvmZ5in3XhhPToid/zaFtj4DwFy4Te2MT6Isrd/tv+hNYeceUAAhXRmSssmjiMUSFTDLojKvGC89Vls7LiFS9o+n68wKGzsw6u0S/MC1ilEIJddq2JKjWDcKg1UHPgUWTXD1WR5Bu37RoQLPX38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i8Dy+Ftc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PxEcUm1JWOGSxA8j/Uqb0bogMCiHZVGwLMMJIi9sm5QVPvIWrXRQJpwz073JFXEIPGEFyhDvu6TYnKDfdXsZ+6UvGL2Qz454nOCYlpevG+542F7ZQq2McprXKDHKD8QM0EaYWMF8t08VQ7dbWgt1GG1mpaPe7P3L4WoJOHnJ3/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I49Of3XF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i8Dy+Ftc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEC31F000FF;
-	Sat, 12 Sep 2026 11:40:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I49Of3XF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9974F1F000FF;
+	Sat, 12 Sep 2026 11:40:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213255;
-	bh=ALmN/uL/mRAxXqL48hWuOwTQqG+8VyYLWDGMVUqOjIw=;
+	s=korg; t=1789213260;
+	bh=5eMfOoB99X0W5RVZ+fYNQvXk4JLDC/awRIf0AtuZNDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i8Dy+FtcIUVQoF5hYLQ+rhxKspuGp79hgR81r9d0WLb+iBxqkmAB2ZS64qXvx66hz
-	 v5n1S1pXudALLdQPQIZq8Bs18cWPAK9YcLCCd26dfpaJk2OuBAMP8FVRDWQiq3ZO1t
-	 FtlzjeVMN8Hk7MsOYuKIuilZMBrdtZp/eC/WB3SM=
+	b=I49Of3XF5N+MFsctz4/3OWAASQ5mYYaDYxMjhMaDqoCflxHNDa9q2L/3YgXpgMnfo
+	 EZN7p7bAcd2ZYUL19QUbYz6hanUlueu4ilNKV+KT/nOE3fYySvmlecguSQ/LE8cfGu
+	 vlcVaw//2HhfWg5by+cVWwF33bW6rXOl0wv0J53Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	syzbot+225231fce6755d40d078@syzkaller.appspotmail.com,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 0083/1376] ALSA: harmony: initialize locks before requesting IRQ
-Date: Sat, 12 Sep 2026 08:41:49 +0200
-Message-ID: <20260912065609.409038273@linuxfoundation.org>
+Subject: [PATCH 6.12 0084/1376] ALSA: pcm: Fix race between non-atomic ops and trigger-start
+Date: Sat, 12 Sep 2026 08:41:50 +0200
+Message-ID: <20260912065609.431805676@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,49 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 33abb7491e89285a41565670945293dda841afc4 upstream.
+commit acac7b5e07349a9d10d78873afb4b93cd1dc721f upstream.
 
-snd_harmony_create() registers the IRQ before initializing h->lock and
-h->mixer_lock. A pending interrupt can invoke the handler while these
-locks are uninitialized.
+We protect the races of the concurrent state transitions between
+atomic PCM ops, but the checks between the non-atomic ops (hw_params,
+hw_free and prepare) and the atomic ops aren't perfect; there is a
+check of the conflicting PCM state at the beginning of hw_params & co,
+but the atomic PCM ops can be still issued during the non-atomic PCM
+operations.  An example such scenario is that a thread A re-issues the
+PREPARE or HW_PARAMS for the already prepared stream, while another
+thread B triggers the PCM start in the middle of the prepare
+operation.  Although this usually doesn't lead to much serious issues,
+it can give some inconsistency as reported by syzkaller (such as
+ODEBUG warning).
 
-Initialize both locks before requesting the IRQ so the handler always
-sees valid lock state.
+There are various atomic PCM ops, and basically the only problem is
+the PCM start as it operates from the PREPARED state.  Other trigger
+commands (stop, etc) are for the running or the other special state,
+hence they are filtered as pre-condition.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260830063411.2215691-1-runyu.xiao@seu.edu.cn
+This patch is for preventing the PCM trigger-start during the non-
+atomic operations in order to address the problems above.
+Fortunately, the hw_params, hw_free and prepare operations call
+snd_pcm_buffer_access_lock(), and this can be used for checking the
+concurrent operations at the PCM trigger -- which sets the
+runtime->buffer_accessing to a negative (if possible), so the PCM
+trigger just needs to check the runtime->buffer_accessing value; if
+it's negative, it means the concurrent non-atomic PCM ops is running.
+
+Reported-by: syzbot+225231fce6755d40d078@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/6a8f0de8.1d9ded08.62e62.00b5.GAE@google.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260828115542.3999-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/parisc/harmony.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/core/pcm_native.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/parisc/harmony.c
-+++ b/sound/parisc/harmony.c
-@@ -889,6 +889,9 @@ snd_harmony_create(struct snd_card *card
- 		goto free_and_ret;
- 	}
- 		
-+	spin_lock_init(&h->mixer_lock);
-+	spin_lock_init(&h->lock);
-+
- 	err = request_irq(padev->irq, snd_harmony_interrupt, 0,
- 			  "harmony", h);
- 	if (err) {
-@@ -898,9 +901,6 @@ snd_harmony_create(struct snd_card *card
- 	}
- 	h->irq = padev->irq;
- 
--	spin_lock_init(&h->mixer_lock);
--	spin_lock_init(&h->lock);
--
- 	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, h, &ops);
- 	if (err < 0)
- 		goto free_and_ret;
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -1441,6 +1441,8 @@ static int snd_pcm_pre_start(struct snd_
+ 	struct snd_pcm_runtime *runtime = substream->runtime;
+ 	if (runtime->state != SNDRV_PCM_STATE_PREPARED)
+ 		return -EBADFD;
++	if (atomic_read(&runtime->buffer_accessing) < 0)
++		return -EBADFD; /* during hw_params, hw_free or prepare */
+ 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
+ 	    !snd_pcm_playback_data(substream))
+ 		return -EPIPE;
 
 
