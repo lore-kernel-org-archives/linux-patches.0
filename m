@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F16D386C21;
-	Sat, 12 Sep 2026 11:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46E0332610;
+	Sat, 12 Sep 2026 11:33:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212815; cv=none; b=JqcNVkc++tyOkjMa+UIgzO4cjRks6VmFdpdu2THrcT3yIuU/83r6Ei/Jhf7KleYCB5nYuS8Cbp7eMNJRsXZnHxnoIOrT+iLiTvDVKPH0+awyMY0UQjt/rAiMgjABs7YOEiJNbwlDnK/Vw6wpkTwV7wjrAhARGTh0DAQMiaRxNXc=
+	t=1789212819; cv=none; b=pyUBQJc5csEkQAc8JxsgSbuu01bB4V8SV4Oo2oTBeLON4Ng9cE6OfholfEpjcN7UbbCjafNWsQWbT6y1gpqk8jc9LRiFmVKm1xplsI3VvlB3X1dMAApkVYBeS+ZXFcHhUi55iD018Zf8/do6/LK0OPLiWdUWGrtdFgOQthV99y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212815; c=relaxed/simple;
-	bh=G8Mz8RY46kpmakGBBeHO4/fr9uBYkBxJHkCBpWI8NJU=;
+	s=arc-20240116; t=1789212819; c=relaxed/simple;
+	bh=760p52riHhKPNsBVhsfQZQM5X8eoebscv7FxUJlO9es=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NpX/g6Q1I4TBEasRRTD11XpJljXsghs1zOKszwZ9BBZzVwK047SubSd8Ii5InmGBTGggFlm4k9E82wnWFz/6e9YrQtSAq18o2JiFTmdaqJz+1JI7hMqM50YJd1zsNanU66dJ2R094RL5dUhtlL5NWTxkKumug102aOF8NIBbl8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJj1RAlc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HjL0Uex9zDpwi+W/JW2k6uJybJTPX1NSuzWV7PBEYyTLrosqvkw5VSv7FdPbk5qSoFYF5k07o8VcepWaIzWvlH/NqXBo8+HJyRfrnZZB0kc0YpPjqk803d9RBXgIdU+61KaZQ9YWJpj834eH6GKdnI6e+/dCZOpjaaqzd2jtQrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gynFNYFp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJj1RAlc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D471F000FF;
-	Sat, 12 Sep 2026 11:33:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gynFNYFp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D601F000FF;
+	Sat, 12 Sep 2026 11:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212813;
-	bh=j5PIJmyTvi3ldxdUiQzwjcA7S9zp8yiwRuxfgboIUBU=;
+	s=korg; t=1789212817;
+	bh=yOlAd7ZfYgLjzwzK/qpTjDCFzCQtPCvtuF0QB2Gs9p4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fJj1RAlcRc5NshqLbIwM9cP6m2tIFKe2a4YjmEaQwYSBMgrzPyl296FBM/Peo099u
-	 tfEKp43G/Kja6ZoZpSUh4yML50lydYddZtgHlLf00KZamHoQaMceuU1A42riTQy+c6
-	 +B6FEhTfnL4lvj6f3dbXSzbrNjhfZzhxPpgmTtl8=
+	b=gynFNYFpFrGBruW4BkWVaJDZHnAUZ95TjYWyCDNJ4kL46FRgwU0svfVjHrMWDb6vj
+	 G+nSGhheDmI5NZ0Jd6J+utoFysHLp5o6o4CJcq+v9jCggBRT5iQzarUDhltNsQKYIX
+	 I16QVBEJD6VTO9+ffcaNMO4i5kXATLXoEMO7LRJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Huisong Li <lihuisong@huawei.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1511/1518] ACPI: processor: idle: Remove redundant cstate check in acpi_processor_power_init
-Date: Sat, 12 Sep 2026 09:01:20 +0200
-Message-ID: <20260912065657.747809062@linuxfoundation.org>
+Subject: [PATCH 6.18 1512/1518] ACPI: processor: idle: Move max_cstate update out of the loop
+Date: Sat, 12 Sep 2026 09:01:21 +0200
+Message-ID: <20260912065657.771316937@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,40 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Huisong Li <lihuisong@huawei.com>
 
-[ Upstream commit db19103ea847ed139da59a2fb71773081c12cd40 ]
+[ Upstream commit 1f23194c8b8208bf3a43beb6c97d4c843197b6f6 ]
 
-The function acpi_processor_cstate_first_run_checks() is responsible
-for updating max_cstate and performing initial hardware validation.
+The acpi_processor_cstate_first_run_checks() function, which updates
+max_cstate on certain platforms, only needs to be executed once.
 
-Currently, this function is invoked within acpi_processor_power_init().
-However, the initialization flow already ensures this is called during
-acpi_processor_register_idle_driver().  Therefore, the call in
-acpi_processor_power_init() is redundant and effectively performs no work,
-so remove it.
+Move this call outside of the loop to avoid redundant executions.
 
 Signed-off-by: Huisong Li <lihuisong@huawei.com>
-Link: https://patch.msgid.link/20260311065038.4151558-2-lihuisong@huawei.com
-[ rjw: Changelog edits ]
+Link: https://patch.msgid.link/20260311065038.4151558-3-lihuisong@huawei.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Stable-dep-of: 66c62e6773c5 ("ACPI: processor: Add cpuidle driver check in acpi_processor_register_idle_driver()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_idle.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/acpi/processor_idle.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index a8a3c6229e9f4..5edbc13723361 100644
+index 5edbc13723361..2de87e5011f5d 100644
 --- a/drivers/acpi/processor_idle.c
 +++ b/drivers/acpi/processor_idle.c
-@@ -1423,8 +1423,6 @@ int acpi_processor_power_init(struct acpi_processor *pr)
- 	if (disabled_by_idle_boot_param())
- 		return 0;
+@@ -1377,6 +1377,8 @@ void acpi_processor_register_idle_driver(void)
+ 	int ret = -ENODEV;
+ 	int cpu;
  
--	acpi_processor_cstate_first_run_checks();
--
- 	if (!acpi_processor_get_power_info(pr))
- 		pr->flags.power_setup_done = 1;
++	acpi_processor_cstate_first_run_checks();
++
+ 	/*
+ 	 * ACPI idle driver is used by all possible CPUs.
+ 	 * Use the processor power info of one in them to set up idle states.
+@@ -1388,7 +1390,6 @@ void acpi_processor_register_idle_driver(void)
+ 		if (!pr)
+ 			continue;
  
+-		acpi_processor_cstate_first_run_checks();
+ 		ret = acpi_processor_get_power_info(pr);
+ 		if (!ret) {
+ 			pr->flags.power_setup_done = 1;
 -- 
 2.53.0
 
