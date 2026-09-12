@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF852BDC0E;
-	Sat, 12 Sep 2026 11:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC9635E549;
+	Sat, 12 Sep 2026 11:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212509; cv=none; b=YMpqWre4rtlqoxBLMW2y1a99Av2Oonq/a4dMDp7n25o4UQK0bcdgQg/I7DTVR+WscJ1hd85lz0AA36BLB1a4xCDs3NKJUoXzPI097aKDraJp32eQa5HU1DE5aQ5jqiObf6orhVl14WIMnjGVAE90xQvOHqwsFIn6Cj+x4jC5e9E=
+	t=1789212514; cv=none; b=ushAssgH9tlq0J6znEc50irjF1HdbnOPrVsphkUoPd7NDACQkEA+SjMfYANZfoHgFstTnRo1QKvfjGd0sqgEDKWDi10AA8S18izq1oZb+laeOPPmwP/YlYOv303DqFAjkv2fXFIPkrtpg4AJsvwxVWWjFMlLKHdByELe44D1o6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212509; c=relaxed/simple;
-	bh=XSK9q0LiLfVX5DwxZUSoJhCD5DLALgFQuZzXQnlcGxE=;
+	s=arc-20240116; t=1789212514; c=relaxed/simple;
+	bh=T2jktejjw8pcmv1zNG19QbqGt9i0WBEvnIeioaCyt2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZWMRH/10MWyHCjJhRCqGAn93rBppkRTLRwDccSc8vhEES6EYwQEbMzaD2Egyu40PdhYw1oGne4u0E+ZloM7IFTFznmpapzXsIRWfAgmebP6DH2NeM6fS+nuKEBkeGPIVb26/vq8HxGQWtiowv4v+gipagrC2eTMPldNsB4Lbta0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KT2/wJAr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N6BrH958OzrCrLUI5ZBKN4AsT6oaQp2Hiza60Zo/FlcgmtZusXISng+KM2d15liGuR5tVOMSAiyQyhUPy2Sdqi9erB+SrpKzIZpdKrGjbEQ7I4QV0PP0ynIMO/O+4jg0NH3ZeWKTfIGw1eNL5P/RBLmI6HIhb6nYRc7MTaQcBUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QX2TcZK4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KT2/wJAr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9253C1F000FF;
-	Sat, 12 Sep 2026 11:28:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QX2TcZK4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B5B1F000FF;
+	Sat, 12 Sep 2026 11:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212508;
-	bh=1rExxAYAnEB5Yq2MGbHtDktKlRroyohgy4/Btb+LU0k=;
+	s=korg; t=1789212513;
+	bh=UGUIal2WaWsh19ynPjqp/6n0CMHN+x9eq74nT0dMkxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KT2/wJArazB2xyUNlibpmDc/f1YX/f0ulCPyney3WZtBUQXLnkzdFxVPFfLV1Wq0W
-	 h5IqdoFM6BfXRNgp3fhWhao/s4HkyYdwTFPTPSYZOOkPo55Ird6xbCUoymY1z2Zm+S
-	 TgNocRcbaYlnxC2uzlAuHkTNmTwtEtS8ynXvyJic=
+	b=QX2TcZK46WM4facaqBFAaWmkxWnhsgABAjq6lI3kyEVl/1/ajPojmZzd1KzdlSAaR
+	 E+fvdHuCpkr/wcdyHVe3iae4FOlxImh91XXLd7hs+cVYmZG5fzaOg8cewsboIHdS4t
+	 mbTgsRuMbfoPyyQQF2pQyryRVYAn2Awav4RZTcJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1451/1518] net: stmmac: dwmac1000: Account for the primary MAC address for UC filtering
-Date: Sat, 12 Sep 2026 09:00:20 +0200
-Message-ID: <20260912065656.379159101@linuxfoundation.org>
+Subject: [PATCH 6.18 1425/1518] tpm: st33zp24: Return zero on status read failure
+Date: Sat, 12 Sep 2026 08:59:54 +0200
+Message-ID: <20260912065655.786980180@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,37 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 9698b6da3714fd2ef47846cb63098d2b2d252e25 ]
+[ Upstream commit 8b92687708f5ef980de01c2042dbd76d11f78547 ]
 
-The same filter slots are used to store the main MAC address as well as
-the address for the unicast filter. Let's account for that when deciding
-whether or not to use promisc when programming the UC list in hardware.
+st33zp24_status() ignores the result of the transport read and returns
+data even when no byte was received. The I2C transport, for example,
+skips i2c_master_recv() when the register-select write is short or fails,
+leaving data uninitialized. The resulting stack value can be interpreted
+as TPM_STS flags and let status checks complete spuriously.
 
-Fixes: 47dd7a540b8a ("net: add support for STMicroelectronics Ethernet controllers.")
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260826140500.616466-3-maxime.chevallier@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The status callback cannot propagate a transport error. Return zero
+unless recv() reports exactly one byte. With no status bits set, callers
+retry or take their existing timeout or error path instead of acting on
+an invalid status value.
+
+This issue was found by a static analysis checker and confirmed by manual
+source review.
+
+Fixes: 251a7b08213a ("TPM: STMicroelectronics ST33 I2C KERNEL 3.x")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Link: https://lore.kernel.org/r/20260813153032.3951878-1-ruoyuw560@gmail.com
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/tpm/st33zp24/st33zp24.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
-index 5bf717188c92d..8a786bececdad 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
-@@ -187,7 +187,7 @@ static void dwmac1000_set_filter(struct mac_device_info *hw,
- 	dwmac1000_set_mchash(ioaddr, mc_filter, mcbitslog2);
+diff --git a/drivers/char/tpm/st33zp24/st33zp24.c b/drivers/char/tpm/st33zp24/st33zp24.c
+index e2b7451ea7ccd..898e8d01d2669 100644
+--- a/drivers/char/tpm/st33zp24/st33zp24.c
++++ b/drivers/char/tpm/st33zp24/st33zp24.c
+@@ -93,7 +93,9 @@ static u8 st33zp24_status(struct tpm_chip *chip)
+ 	struct st33zp24_dev *tpm_dev = dev_get_drvdata(&chip->dev);
+ 	u8 data;
  
- 	/* Handle multiple unicast addresses (perfect filtering) */
--	if (netdev_uc_count(dev) > perfect_addr_number)
-+	if (netdev_uc_count(dev) + 1 > perfect_addr_number)
- 		/* Switch to promiscuous mode if more than unicast
- 		 * addresses are requested than supported by hardware.
- 		 */
+-	tpm_dev->ops->recv(tpm_dev->phy_id, TPM_STS, &data, 1);
++	if (tpm_dev->ops->recv(tpm_dev->phy_id, TPM_STS, &data, 1) != 1)
++		return 0;
++
+ 	return data;
+ }
+ 
 -- 
 2.53.0
 
