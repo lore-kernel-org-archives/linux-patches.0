@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8483742586B;
-	Sat, 12 Sep 2026 13:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1E622D785;
+	Sat, 12 Sep 2026 13:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218238; cv=none; b=XQPst2bPiMuM4iCUDRtrrSKleadC0CZN5wLzHNWailJXS7AsseWQ/L1cVyetYwD0ozo4NYDM2unIM6BBqv7v4c9GuXZCu6ref75LoJHAnVMPebocnwWE93Axy8MvmTfeB5XZIT9MSyws3lGyqkPPnyUuTJDrDN3Q4rKD4Tr9zZQ=
+	t=1789218242; cv=none; b=BOIXgQB2BHKsFr1VFsx+ZvbqwP0hxAkvW3ikqeW6qaOtiIHiS40CjWi5TeRr2H+vPth2AsLMAG36fuM0p8NaiSwae3bqQvIBwNH53F52ZvkC5oIXV23PuxgwlzJBjGOdm2+jrpCvm+H5/z2RWS78Vm5VjiqycKtZ6sG7fhDKnRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218238; c=relaxed/simple;
-	bh=WdwhMBPEC0XILfDbdrbvznvbBKCYgIXIWOt9aXi42Rk=;
+	s=arc-20240116; t=1789218242; c=relaxed/simple;
+	bh=3U2zA6Ke26UXxTQGGMNPTSwg8WutewK675DfPMKF8j0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PXGQpW9BEFvtHNMYDxk4asLH2HcvNtWM38CnRNweSm8k5vasMgYbiHWYjNYKDYJk8uDdC33gisC4wcUcPQJn4ngWo4PeNyDVguQt7O7hkstN/EW9QFJDQjDF69B/LrksUedYTPRY93qua60TOyDbtxsHi7ub6K39R7fNYov4Afg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ly5qqw1e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gO9n8RKnbNX5M5q509dO1OsXF0ZnvDossg8mEFifc3TZ1Xj8SXBDP0W/EKt8nkWDfr+V3B88BLm9bSTc9rftFWkALudDUxqSQHPzKfuYl4tfGwbkYRtcGrur2Co6bfZLcpxuh9KPsd0SX+NWfgiXgJebWvc5u/z3/18s33DFOl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+jR15ph; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ly5qqw1e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C2F81F000FF;
-	Sat, 12 Sep 2026 13:03:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+jR15ph"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F06281F000FF;
+	Sat, 12 Sep 2026 13:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218236;
-	bh=rrgXsqqF9vSsjf06gmhsUDQX04LP9HDdKvNqjUhL/O0=;
+	s=korg; t=1789218240;
+	bh=Q45iNtx71xC+u8IOqu59ThiGYVUYI6rwGWaWq5MG1JU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ly5qqw1eco2tGDyGvacVIEBveMc0JkLGEMDVKPy05a1XiVOL7ErHCb587wgAJeI1c
-	 dWZtO7f4TiysA/AFtasgLso7WYrz/EgJGIcKYEswEtl+v+S219rYc3CcdAKb3mfmf0
-	 GxXxJNkqUxdivEWxMzEkH+PZ8P6l1itDUdBSZlZQ=
+	b=z+jR15phg8xaLpdo8r4p7zYk1ysNY/kZHTG1sJoFOFmCwa409hOpqLUb647JYr/oa
+	 ojLgRhVXd2v+cqL/frTdzv7j7lr7L9lRgLYW74GK1ggpPriZzxq+CiadWXGBaIRovo
+	 HkXMQF1H0TQjAl6tMGjM0b3TIBd/fu1ccSs5nIgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henrik Grimler <henrik.grimler@axis.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Zhenghang Xiao <kipreyyy@gmail.com>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1102/1376] power: supply: bq27xxx: bq27520g4: fix REG_TTES address
-Date: Sat, 12 Sep 2026 08:58:48 +0200
-Message-ID: <20260912065632.120565671@linuxfoundation.org>
+Subject: [PATCH 6.12 1067/1376] nfc: nci: fix double completion race in nci_data_exchange_complete
+Date: Sat, 12 Sep 2026 08:58:13 +0200
+Message-ID: <20260912065631.342241831@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,36 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrik Grimler <henrik.grimler@axis.com>
+From: Zhenghang Xiao <kipreyyy@gmail.com>
 
-[ Upstream commit c774a623c821a173c950e1297f8e8c85a89455be ]
+[ Upstream commit 8265a626cc14a48e46e6dc8c47667e72b4232ac2 ]
 
-According to the technical reference manual the StandbyTimeToEmpty
-(TTES) register is at 0x1a, not 0x1c. At 0x1c StateOfHealth instead
-resides.
+nci_close_device() and nci_rx_work can both call
+nci_data_exchange_complete() concurrently.  After commit 4527025d440ce8
+("nfc: nci: fix circular locking dependency in nci_close_device") moved
+flush_workqueue(ndev->rx_wq) after mutex_unlock(&ndev->req_lock),
+rx_work is no longer serialized with the explicit completion call in the
+close path.  Both callers read the non-NULL callback pointer and invoke
+rawsock_data_exchange_complete(), which calls sock_put() -- but only one
+sock_hold() was taken, so the second sock_put() underflows the refcount
+and frees the socket while it is still in use.
 
-Fixes: 8835cae5f2ab ("power: supply: bq27xxx: adds specific support for bq27520-g4 revision.")
-Signed-off-by: Henrik Grimler <henrik.grimler@axis.com>
-Link: https://patch.msgid.link/20260811-bq27z746-v1-3-3a4fa38205cc@axis.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Replace the bare clear_bit(NCI_DATA_EXCHANGE) with
+test_and_clear_bit() so that only the first caller proceeds to invoke
+the callback.
+
+Fixes: 4527025d440c ("nfc: nci: fix circular locking dependency in nci_close_device")
+Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
+Link: https://patch.msgid.link/20260526103121.47957-1-kipreyyy@gmail.com
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq27xxx_battery.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/nfc/nci/data.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index a5a3ab4f8a631..b9e1c6c80f0de 100644
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -324,7 +324,7 @@ static u8
- 		[BQ27XXX_REG_FLAGS] = 0x0a,
- 		[BQ27XXX_REG_TTE] = 0x16,
- 		[BQ27XXX_REG_TTF] = INVALID_REG_ADDR,
--		[BQ27XXX_REG_TTES] = 0x1c,
-+		[BQ27XXX_REG_TTES] = 0x1a,
- 		[BQ27XXX_REG_TTECP] = INVALID_REG_ADDR,
- 		[BQ27XXX_REG_NAC] = 0x0c,
- 		[BQ27XXX_REG_RC] = 0x10,
+diff --git a/net/nfc/nci/data.c b/net/nfc/nci/data.c
+index 7a3fb2a397a1e..4db36cddf670e 100644
+--- a/net/nfc/nci/data.c
++++ b/net/nfc/nci/data.c
+@@ -46,11 +46,11 @@ void nci_data_exchange_complete(struct nci_dev *ndev, struct sk_buff *skb,
+ 	del_timer_sync(&ndev->data_timer);
+ 	clear_bit(NCI_DATA_EXCHANGE_TO, &ndev->flags);
+ 
+-	/* Mark the exchange as done before calling the callback.
+-	 * The callback (e.g. rawsock_data_exchange_complete) may
+-	 * want to immediately queue another data exchange.
+-	 */
+-	clear_bit(NCI_DATA_EXCHANGE, &ndev->flags);
++	/* Claim completion atomically -- both close and rx_work may race here */
++	if (!test_and_clear_bit(NCI_DATA_EXCHANGE, &ndev->flags)) {
++		kfree_skb(skb);
++		return;
++	}
+ 
+ 	if (cb) {
+ 		/* forward skb to nfc core */
 -- 
 2.53.0
 
