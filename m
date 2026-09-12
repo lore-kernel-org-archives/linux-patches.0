@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE1C34252D;
-	Sat, 12 Sep 2026 13:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C05C34252D;
+	Sat, 12 Sep 2026 13:12:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218745; cv=none; b=TudC+0OWH4GCiT1DZfieXp7ZBeGTjTtdUrlokY2EZHoQ05qOT2WeZeZgz8f4KlHTfzgAbGO1XWPo79eBY5xiXlBxj+1qP6j1XiJjRv6leOJB43Wxw6953t1t6D/B/WA6DeKUcH3ri/bhpEyLS0GMnOuBaRR8JBSxYuHbPo/Po7M=
+	t=1789218748; cv=none; b=cILEeI1KnaW/wwYfZ1ziEkBrWttm+TbzF9zY9uMlUf0Oe3qWXb0QxMFzv64vQhaslvjZHrXWWiFQlWYYWRHT03juyDBGJGEEfrV4bor2wLwhxFxR9Ch1s+Iyp47MYTOUMuhBZSYHpEX7OA/SQ+lyL3JBpyf77QqQ4+/l+DvPbKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218745; c=relaxed/simple;
-	bh=VpXUkXhmD2cQ2ECYVhQCJaSO/2VyAbqmdofLjdXOc3o=;
+	s=arc-20240116; t=1789218748; c=relaxed/simple;
+	bh=YGXidmTU7Z0CSGEkZfLdf+WduB5Z2aXov3TF3xQcU0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eHNHq0WW+O8MsKk762wxVr31P1lsi5pmmdLqloiBmuPYt3OgMUV4OmAvb4BZI9yIPaTe1KUEgvwwwUf85bwZfNyzJ9gWFvS9dymYzKbNugNHPbAou1RmJDnNe44XPkmvo6ZrDM9/LEHz5aYRiXrhOVSwDxj4BL/bNfu0izGqTIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJ8ron4n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QDo2RXDqG1TQoFqMy0J07hV0Sm4QfI+vb4eRpIVaz4LLDRHvtQeGcrDrV21RsOkjj0k32QL4V9gCqRrH76SwaDkFUjwJvdqxbL8tnEhgFlP++K4rcNPJ9Pd/zOlMb2FFlykIcdu4XgBA40BkmNiIm3FPCo///u7GuL/Hj8tQ+Ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AQmfksj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJ8ron4n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E0481F000FF;
-	Sat, 12 Sep 2026 13:12:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AQmfksj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E747F1F000FF;
+	Sat, 12 Sep 2026 13:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218742;
-	bh=CgZGUb6FSQaKN+19KBsMVOJGoIY8BVq3pOSC4VyADaw=;
+	s=korg; t=1789218747;
+	bh=CEX/4qxUspFoHtbCyMT5N+N8YRtM0RwAtwfb6jBEgZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MJ8ron4nwt6jcbVkK4JVZPTllLg5EZ5tcJhwO2TNF3kzHpnvgOYFHN2NakV0q+BWR
-	 vElgpjJlHTIJneJt+lh1eN2ucApByJmCUtmuQFnoCv2bCjVBtEvucnPtD6si/jc74U
-	 ohOpzWtbIvc/mMdr8Fx/gHkY8zf8KAwdmCbc0YXA=
+	b=2AQmfksjSsi1NPCzbRDFV7RCZrKdw98MialawaIDrVkVShWjnmiRjoXQXX+z5mefK
+	 ShQPfQAUcg9Hhmp2sL1/YlwV23JJyv7OcJ9FwFrAA29t/Pga7r7XJZUCUxKr8ugFpI
+	 PLjQU/8pknVDHoKdTkqAhqbyMQmL8D7SbL5wi1Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunseong Kim <yunseong.kim@est.tech>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Zizhi Wo <wozizhi@huawei.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1164/1376] ksmbd: validate ipc response length before dereferencing its fields
-Date: Sat, 12 Sep 2026 08:59:50 +0200
-Message-ID: <20260912065633.495275194@linuxfoundation.org>
+Subject: [PATCH 6.12 1155/1376] null_blk: serialize configfs attribute stores with the lock
+Date: Sat, 12 Sep 2026 08:59:41 +0200
+Message-ID: <20260912065633.296897750@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,181 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunseong Kim <yunseong.kim@est.tech>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit e9b33376bd07bca4175f7bcc2d6034ef250f8181 ]
+[ Upstream commit 7e7fff51808237703a3a1df6dd5cae1dfd1db86d ]
 
-ipc_validate_msg() computes the expected message size by reading length
-fields out of the response buffer supplied by the userspace ksmbd daemon
-(payload_sz, session_key_len, ngroups, ...).  Those fields are read before
-the buffer is verified to be large enough to contain the struct they belong
-to, so a short response makes the read land past the end of the allocation.
+The NULLB_DEVICE_ATTR _store takes no lock: apply_fn attributes
+(submit_queues, poll_queues) get dev->NAME written again after apply_fn
+returns, outside its lock; APPLY=NULL attributes are entirely lockless.
+configfs only serializes stores per-open-file, so concurrent stores on
+separate fds race.
 
-handle_response() sizes entry->response purely from the netlink attribute
-length (nla_len()) and only guards the leading handle read, so the daemon
-can install a response as small as the kmalloc-8 object seen below.  When
-ipc_msg_send_request() then calls ipc_validate_msg() for a
-KSMBD_EVENT_RPC_REQUEST, the cast to struct ksmbd_rpc_command reads
-resp->payload_sz at offset 8 of an 8-byte allocation:
+For apply_fn attributes, once one store's apply_fn has reconfigured the
+hardware, a second (losing) store can still overwrite dev->NAME
+afterwards. This leaves dev->submit_queues out of sync with the live
+queue count, which is later caught by the WARN_ON_ONCE() in
+null_map_queues().
 
-[ 3697.841381] ==================================================================
-[ 3697.844099] BUG: KASAN: slab-out-of-bounds in ipc_msg_send_request+0x763/0x800
-[ 3697.846604] Read of size 4 at addr ffff888105f95910 by task kworker/4:3/20682
-[ 3697.849061]
-[ 3697.849801] CPU: 4 UID: 0 PID: 20682 Comm: kworker/4:3 Not tainted 7.2.0-rc3-next-20260717-virtme #117 PREEMPT(lazy)
-[ 3697.850077] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-[ 3697.850303] Workqueue: ksmbd-io handle_ksmbd_work
-[ 3697.850592] Call Trace:
-[ 3697.850794]  <TASK>
-[ 3697.850952]  __dump_stack+0x21/0x60
-[ 3697.851239]  dump_stack_lvl+0xc2/0x100
-[ 3697.851528]  print_address_description+0x77/0x200
-[ 3697.851816]  ? ipc_msg_send_request+0x763/0x800
-[ 3697.852024]  print_report+0x58/0x70
-[ 3697.852316]  kasan_report+0x117/0x150
-[ 3697.852585]  ? down_write+0x146/0x1f0
-[ 3697.852809]  ? ipc_msg_send_request+0x763/0x800
-[ 3697.853082]  ipc_msg_send_request+0x763/0x800
-[ 3697.853385]  ? __pfx_ipc_msg_send_request+0x10/0x10
-[ 3697.853604]  ? kasan_unpoison+0x48/0x70
-[ 3697.853936]  ? __pfx___up_read+0x10/0x10
-[ 3697.854221]  ksmbd_rpc_ioctl+0x380/0x520
-[ 3697.854542]  ? __pfx_ksmbd_rpc_ioctl+0x10/0x10
-[ 3697.854757]  ? kasan_unpoison+0x48/0x70
-[ 3697.854962]  ? copy_from_kernel_nofault+0x32c/0x4e0
-[ 3697.855166]  ? kasan_unpoison+0x48/0x70
-[ 3697.855416]  fsctl_pipe_transceive+0x139/0x7a0
-[ 3697.855705]  ? __pfx_copy_from_kernel_nofault+0x10/0x10
-[ 3697.855937]  ? __pfx_fsctl_pipe_transceive+0x10/0x10
-[ 3697.856388]  ? __sanitizer_cov_trace_switch+0x7b/0x140
-[ 3697.856620]  smb2_ioctl+0x1141/0x3420
-[ 3697.856994]  ? __pfx_smb2_ioctl+0x10/0x10
-[ 3697.857182]  ? get_smb2_cmd_val+0xe3/0x1c0
-[ 3697.857655]  handle_ksmbd_work+0x9ad/0x15e0
-[ 3697.858034]  ? __pfx_handle_ksmbd_work+0x10/0x10
-[ 3697.858251]  ? lock_release+0xf7/0x360
-[ 3697.858466]  ? process_scheduled_works+0x954/0x1600
-[ 3697.858698]  ? process_scheduled_works+0x954/0x1600
-[ 3697.858905]  process_scheduled_works+0xc22/0x1600
-[ 3697.859368]  ? __pfx_process_scheduled_works+0x10/0x10
-[ 3697.859637]  ? __pfx_assign_work+0x10/0x10
-[ 3697.859896]  ? lock_is_held_type+0x7b/0x110
-[ 3697.860146]  worker_thread+0x975/0xee0
-[ 3697.860524]  ? __pfx_do_raw_spin_lock+0x10/0x10
-[ 3697.860830]  ? __kthread_parkme+0x21e/0x260
-[ 3697.861105]  kthread+0x3a6/0x490
-[ 3697.861423]  ? __pfx_worker_thread+0x10/0x10
-[ 3697.861643]  ? __pfx_kthread+0x10/0x10
-[ 3697.861878]  ret_from_fork+0x55a/0xa20
-[ 3697.862194]  ? __pfx_ret_from_fork+0x10/0x10
-[ 3697.862480]  ? __pfx_kthread+0x10/0x10
-[ 3697.862714]  ret_from_fork_asm+0x1a/0x30
-[ 3697.862965]  </TASK>
-[ 3697.863039]
-[ 3697.938882] Allocated by task 20761:
-[ 3697.940257]  kasan_save_track+0x3e/0x80
-[ 3697.941782]  __kasan_kmalloc+0x72/0x90
-[ 3697.943228]  __kvmalloc_node_noprof+0x3e9/0x6a0
-[ 3697.944948]  handle_generic_event+0x59b/0x750
-[ 3697.946592]  genl_family_rcv_msg_doit+0x3d6/0x560
-[ 3697.946977]  genl_rcv_msg+0x67c/0x900
-[ 3697.947224]  netlink_rcv_skb+0x286/0x580
-[ 3697.947488]  genl_rcv+0x2d/0x80
-[ 3697.947706]  netlink_unicast+0x937/0xb70
-[ 3697.947993]  netlink_sendmsg+0x977/0xc10
-[ 3697.948268]  __sock_sendmsg+0x264/0x2d0
-[ 3697.948536]  __sys_sendto+0x4de/0x690
-[ 3697.948789]  __x64_sys_sendto+0x173/0x380
-[ 3697.949069]  do_syscall_64+0x13d/0x420
-[ 3697.949328]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[ 3697.949662]
-[ 3697.949779] The buggy address belongs to the object at ffff888105f95908
-[ 3697.949779]  which belongs to the cache kmalloc-8 of size 8
-[ 3697.950550] The buggy address is located 0 bytes to the right of
-[ 3697.950550]  allocated 8-byte region [ffff888105f95908, ffff888105f95910)
-[ 3697.951455]
-[ 3697.951574] The buggy address belongs to the physical page:
-[ 3697.951958] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff888105f951b8 pfn:0x105f95
-[ 3697.952571] flags: 0x100000000000200(workingset|node=0|zone=2)
-[ 3697.952973] page_type: f5(slab)
-[ 3697.953198] raw: 0100000000000200 ffff888100042640 ffffea0004063610 ffff888100040588
-[ 3697.953707] raw: ffff888105f951b8 00000000001c000e 00000000f5000000 0000000000000000
-[ 3697.954240] page dumped because: kasan: bad access detected
-[ 3697.954616]
-[ 3697.954734] Memory state around the buggy address:
-[ 3697.955063]  ffff888105f95800: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fa
-[ 3697.955534]  ffff888105f95880: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[ 3697.956006] >ffff888105f95900: fc 00 fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[ 3697.956477]                          ^
-[ 3697.956728]  ffff888105f95980: fc fc fc fa fc fc fc fc fc fc fc fc fc fc fc fc
-[ 3697.957202]  ffff888105f95a00: fc fc fc fc fc fa fc fc fc fc fc fc fc fc fc fc
-[ 3697.957671] ==================================================================
+For !apply_fn attributes, power_store()'s null_add_dev() validates and
+builds the device under "lock" but only sets CONFIGURED afterwards. A store
+slipping in during this window can change a field mid-setup -- for example,
+zone_nr_conv can be pushed above nr_zones after it has already been
+clamped, leading to an out-of-bounds dev->zones[] access.
 
-The final "entry->msg_sz != msg_sz" comparison cannot help: the offending
-read has already happened by the time it runs.  Every case in the switch
-shares this pattern.
+Take "lock" in the macro around the apply_fn call, the CONFIGURED test and
+the field write, and move it out of nullb_apply_submit_queues()/
+nullb_apply_poll_queues() so both paths are covered once. This serializes
+stores with power_store's setup and with each other.
 
-Floor entry->msg_sz against the base struct of each event type before
-dereferencing any of its length fields.  On failure ipc_msg_send_request()
-already frees the response and returns NULL, so callers stay safe.
-
-The malformed message originates from the ksmbd.mountd daemon over genl
-netlink rather than a remote SMB client, so triggering it requires a buggy
-or compromised daemon; it is still an out-of-bounds read the validator is
-meant to prevent.
-
-Fixes: d6a6aa81eac2 ("ksmbd: validate response sizes in ipc_validate_msg()")
-Signed-off-by: Yunseong Kim <yunseong.kim@est.tech>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 45919fbfe1c4 ("null_blk: Enable modifying 'submit_queues' after an instance has been configured")
+Suggested-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Link: https://patch.msgid.link/20260725022509.714271-10-wozizhi@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/transport_ipc.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/block/null_blk/main.c | 17 +++--------------
+ 1 file changed, 3 insertions(+), 14 deletions(-)
 
-diff --git a/fs/smb/server/transport_ipc.c b/fs/smb/server/transport_ipc.c
-index 2f5b0bedf2a97..a0b9b3def3346 100644
---- a/fs/smb/server/transport_ipc.c
-+++ b/fs/smb/server/transport_ipc.c
-@@ -498,6 +498,9 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
- 	{
- 		struct ksmbd_rpc_command *resp = entry->response;
+diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
+index d641607ace964..671bd6729fa7b 100644
+--- a/drivers/block/null_blk/main.c
++++ b/drivers/block/null_blk/main.c
+@@ -356,6 +356,7 @@ nullb_device_##NAME##_store(struct config_item *item, const char *page,	\
+ 	ret = nullb_device_##TYPE##_attr_store(&new_value, page, count);\
+ 	if (ret < 0)							\
+ 		return ret;						\
++	guard(mutex)(&lock);						\
+ 	if (apply_fn)							\
+ 		ret = apply_fn(dev, new_value);				\
+ 	else if (test_bit(NULLB_DEV_FL_CONFIGURED, &dev->flags)) 	\
+@@ -426,25 +427,13 @@ static int nullb_update_nr_hw_queues(struct nullb_device *dev,
+ static int nullb_apply_submit_queues(struct nullb_device *dev,
+ 				     unsigned int submit_queues)
+ {
+-	int ret;
+-
+-	mutex_lock(&lock);
+-	ret = nullb_update_nr_hw_queues(dev, submit_queues, dev->poll_queues);
+-	mutex_unlock(&lock);
+-
+-	return ret;
++	return nullb_update_nr_hw_queues(dev, submit_queues, dev->poll_queues);
+ }
  
-+		if (entry->msg_sz < sizeof(struct ksmbd_rpc_command))
-+			return -EINVAL;
-+
- 		if (check_add_overflow(sizeof(struct ksmbd_rpc_command),
- 				       resp->payload_sz, &msg_sz))
- 			return -EINVAL;
-@@ -507,6 +510,9 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
- 	{
- 		struct ksmbd_spnego_authen_response *resp = entry->response;
+ static int nullb_apply_poll_queues(struct nullb_device *dev,
+ 				   unsigned int poll_queues)
+ {
+-	int ret;
+-
+-	mutex_lock(&lock);
+-	ret = nullb_update_nr_hw_queues(dev, dev->submit_queues, poll_queues);
+-	mutex_unlock(&lock);
+-
+-	return ret;
++	return nullb_update_nr_hw_queues(dev, dev->submit_queues, poll_queues);
+ }
  
-+		if (entry->msg_sz < sizeof(struct ksmbd_spnego_authen_response))
-+			return -EINVAL;
-+
- 		msg_sz = sizeof(struct ksmbd_spnego_authen_response) +
- 				resp->session_key_len + resp->spnego_blob_len;
- 		break;
-@@ -515,6 +521,9 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
- 	{
- 		struct ksmbd_share_config_response *resp = entry->response;
- 
-+		if (entry->msg_sz < sizeof(struct ksmbd_share_config_response))
-+			return -EINVAL;
-+
- 		if (resp->payload_sz) {
- 			if (resp->payload_sz < resp->veto_list_sz)
- 				return -EINVAL;
-@@ -529,6 +538,9 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
- 	{
- 		struct ksmbd_login_response_ext *resp = entry->response;
- 
-+		if (entry->msg_sz < sizeof(struct ksmbd_login_response_ext))
-+			return -EINVAL;
-+
- 		if (resp->ngroups) {
- 			if (resp->ngroups < 0 ||
- 			    resp->ngroups > NGROUPS_MAX) {
+ NULLB_DEVICE_ATTR(size, ulong, NULL);
 -- 
 2.53.0
 
