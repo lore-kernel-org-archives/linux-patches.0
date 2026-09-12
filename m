@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2851DC198;
-	Sat, 12 Sep 2026 08:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403841DC198;
+	Sat, 12 Sep 2026 08:35:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202105; cv=none; b=QU/aD551gjSIhwXS5A3oPKFwQF96F6mDw1smA543EahvsnG2DozsmdC9hgYQLGuZI9su/dz2Nxhew0gkxtrlGFf77ZAKfxgbvsZYc0RSmk1p+y/2iIAy+Ugjp1BnRnEIhoAkUTikq1xRW4/Uq2b5jeH2xM18OTgfxmv4HzXCayg=
+	t=1789202109; cv=none; b=JFYrj8FFbQGOsabCnluDwyIA89FYwWtvQ4WmXUsvfBMYkc4sJjOKI/fUEsTjLtvw5sstaB8owW0xAndKNx5SmfF/kaXWnfY0YgypweuqnJktJJSQH3tl0KiSy76fkJrCzKKU534kgoBAMGIq43/70QFY7GlGXOza2lf5OWWTPPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202105; c=relaxed/simple;
-	bh=C6XyDks1QRfxZYhgqEQMjC8QFx1qLA9l3ip5s4mIPKk=;
+	s=arc-20240116; t=1789202109; c=relaxed/simple;
+	bh=3H8TQWjNAro0lIHwfrLHZyp5ew4Qzur8XjGW9TGJ/dA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h3es3HozeYKyL6BmaTW9S+ApsaMQcCY+ItYRUVJUjku5s3oW2q9HJCRVS5BK+lxzFNwlBle5vsshjn6Vcb+lTsSYZ/bB3Kv916rUxSoj3h9eY8AlXyS4mcstq0dRAXUtNv97l1d4AUEhdvXZU+/25Brq4oTZut8Zs23ffQcldLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VveeOY7E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hbp1Y4ENeYLCR7mse2Gb6h1qKdWrBcPbgppiG/dbQQspjeqI03k3bX9wJ/eFbo+RDxWsWtNBFpRh9wSf9NfAP/o0z8tlKIkYOVrAzx6Kh+SDeGLZM1rN1fmQRkrPwVbgCL2HpykY6dVNtLSrdhi3C1PyJI/9IYmqT/slgGf+pD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptfNoycC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VveeOY7E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F15D1F000FF;
-	Sat, 12 Sep 2026 08:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptfNoycC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E18B1F000FF;
+	Sat, 12 Sep 2026 08:35:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202104;
-	bh=7wV2IM8M1yKQWzgFZ8/aFoRT0Ie4Oab4BMcHNcW++aU=;
+	s=korg; t=1789202108;
+	bh=UH78sp/0J9qhMP53fU3aCPNHpQVoPOwkjYDYM4YH+Kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VveeOY7E+oRVWWMNQuUEA5y7eUmoP7aVhdagd+4tGTBpLiNpzHdfe3WNkz/TbzAa5
-	 fnrkB9mbYTCkhTNO/iX5GbY2Ef9Mh8zAvraUzEVX3mM96EAgm+G/JaLFLozzbD7fFE
-	 PQwkJZyY/asUSg6sahrpbeByaioe19B9XjYfcOE8=
+	b=ptfNoycCm/Qugx8lBXrebnn0I3STplJbxg1ALnIUIO7r4WiXs64GbZ/wkhAnw8AF2
+	 QFoYIXA1J5NiFZSe/CRTncgF/E5Ry0/sJK4l1fosY2dJ/7qeGJs8niGKiphQLlA5bo
+	 GOL8sfAsw9iDiKKr5Jn+giUiqM51yUtRIcbVkRZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1133/1815] drm/sun4i: tcon: Drop remote endpoint reference
-Date: Sat, 12 Sep 2026 08:48:03 +0200
-Message-ID: <20260912065715.618790473@linuxfoundation.org>
+Subject: [PATCH 7.2 1098/1815] xen/xenbus: check otherend_id only after it has been initialized
+Date: Sat, 12 Sep 2026 08:47:28 +0200
+Message-ID: <20260912065714.794878937@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,44 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
 
-[ Upstream commit 3f77e4072630e2301efdbe521e7fca10311043ec ]
+[ Upstream commit c76cbf348c7df077f93fa99a1225a527ce64cfa1 ]
 
-sun4i_tcon_of_get_id_from_port() never drops the reference taken by
-of_graph_get_remote_endpoint(). The function is not only called during
-bind, but also on every mode set through sun8i_r40_tcon_tv_set_mux(),
-so the leak accumulates.
+When device just got initialized (for example on module load), the
+otherend_id field is initialized only after
+xenbus_read_otherend_details() gets called. If xenstore watch triggers
+xenbus_dev_changed() before that, it might consider still zeroed
+otherend_id field (not matching actual xenstore content) as a sign of
+device state reset. It can happen because xenstore watch are handled in
+another thread (xenwatch), which can run in parallel to the initial
+device probe running at module load. In that case, it would call
+device_unregister(), which would deadlock against device probe from
+module init.
 
-Fixes: e8d5bbf7f4c4 ("drm/sun4i: tcon: get TCON ID and matching engine with remote endpoint ID")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Acked-by: Chen-Yu Tsai <wens@kernel.org>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/3f5ec952ad80cb51efebf2fe230df50259041a23.1785772659.git.jernej.skrabec@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Fix this by considering dev->otherend_id change only after dev->otherend
+is set (which happen after otherend_id is initialized).
+
+Fixes: e2dcf9065536 "xen/xenbus: better handle backend crash"
+Signed-off-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260803030822.4104093-2-marmarek@invisiblethingslab.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun4i_tcon.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/xen/xenbus/xenbus_probe.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/sun4i/sun4i_tcon.c b/drivers/gpu/drm/sun4i/sun4i_tcon.c
-index de2d66623f7a2..67047e3b657ff 100644
---- a/drivers/gpu/drm/sun4i/sun4i_tcon.c
-+++ b/drivers/gpu/drm/sun4i/sun4i_tcon.c
-@@ -972,6 +972,7 @@ static int sun4i_tcon_of_get_id_from_port(struct device_node *port)
- 			continue;
+diff --git a/drivers/xen/xenbus/xenbus_probe.c b/drivers/xen/xenbus/xenbus_probe.c
+index fafb2b84fa5c4..9371f88ac5588 100644
+--- a/drivers/xen/xenbus/xenbus_probe.c
++++ b/drivers/xen/xenbus/xenbus_probe.c
+@@ -681,7 +681,8 @@ void xenbus_dev_changed(const char *node, struct xen_bus_type *bus)
+ 							    dev->otherend_id);
  
- 		ret = of_property_read_u32(remote, "reg", &reg);
-+		of_node_put(remote);
- 		if (ret)
- 			continue;
- 
+ 		if (state == XenbusStateInitialising &&
+-		    (state != dev->state || backend != dev->otherend_id)) {
++		    (state != dev->state ||
++		     (dev->otherend && backend != dev->otherend_id))) {
+ 			/*
+ 			 * State has been reset, assume the old one vanished
+ 			 * and new one needs to be probed.
 -- 
 2.53.0
 
