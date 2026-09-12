@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8FC1C75F9;
-	Sat, 12 Sep 2026 13:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5EC2FDC30;
+	Sat, 12 Sep 2026 13:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220768; cv=none; b=QtRRC/r0Y+xu3zOkyo6MeUVoDQjGixu/mt8+YbpLnJXjNY4t/v04f27KSA2+lzSofDboaahlgsiaqD/klWogub0idkuYDgDlIte0L9br7WaPsxb4c7+b+rYtJ6DRhGk/Ngfb9fJ82F3InUd04KmRm0NB3xzUKYkiDVT016OwgF4=
+	t=1789220773; cv=none; b=Xu4UGz8+SIUUnkMhzcVPA0LIMATUBp+W3vPXU3cz+Ds9cGOcYZF5/ewZtpxaybf7Qnn44f+xAlnI0OqxtkFXS7ByUoUX98KNT8XcXci5mQogmKZUjg1POc+abdtmdg85pqblCOW1NqD2RtXCssqFQpoVCVkmjbHuwmQMokox8P8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220768; c=relaxed/simple;
-	bh=b2JjpdJxAWLKFwch2qCv6J8x0ndrlHb83eesLkkJ66M=;
+	s=arc-20240116; t=1789220773; c=relaxed/simple;
+	bh=b/TMZTAstwepcrtLa92Qmjfdfg/rEIvni5cnqjwd67E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SJWyBLf93tQXJbHHAjqC6NNY+vQE8vlVIDhOLQRHkEuwYLm90mV7sEUDN5LhWyDE9t/ytSJ8SMlj10VRnUhjhe1WQOkrOa6Bw9fZvMAtXUWXvbRnx4mO2YipDabyxGYUtAm/gELE8puotwX9mTmVJLmYSVN1uL5BCja3WHhS7dA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DIs/l5Vj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=I0CMf5Fh2jIy4t65tdsl4T4fKEVOUtA2UCSxcoVrRqKqr4vVY+5vpUoCvBVa6kfNk+Cx0kL24Jsumh4WUrVfOywy9/8YWjrFkEkyKn6pqsXqn7Py2PfolJnQEZRZVurIKk15AXz9OS5AohZ8kOvVoIz9un62nkIs6T0jSCTxPy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9sqREIa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIs/l5Vj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646071F000FF;
-	Sat, 12 Sep 2026 13:46:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9sqREIa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B93F1F000FF;
+	Sat, 12 Sep 2026 13:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220767;
-	bh=xRhZRPvlb4oz3q5o7UJpwRZYD04wLCoTyRtF/ZdFLkc=;
+	s=korg; t=1789220772;
+	bh=wy0/h3Yf17VV/slAAroBncDs5MOz61oBhXwi1KQ1KaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DIs/l5Vje97Oa85k43HSXnY952DXa5A6MYpZRrkjnJf0AcmhMANh3TAvY7yWdDKIg
-	 rUsu7pmd93BjfutNQqibENlPvTi+tdfFPCyDGnb/koa6ZyrEpBXMeDBt3q683oYLDr
-	 OZkEO2dtngS23A8nbDq/uecwIwgR7Vt+MD8gdUEU=
+	b=k9sqREIa3wMBjtP3z6oJv6Fd7x7LUGnsWBcIBUkbADS1boMymXs/MStyEc1dp8N/O
+	 Uw+xgx86O1aZ6MPSE+C1hWQvYWEaAkIXN/Td/Cl2URuNqLRZEpLQsSv02dfeA3zlu3
+	 q2dYeRzk9LC4Y/przr9RAtkGANwTmfEEn404H410=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Muhammad Bilal <meatuni001@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.6 0244/1424] platform/x86: hp-bioscfg: fix heap OOB read on empty password write
-Date: Sat, 12 Sep 2026 08:44:36 +0200
-Message-ID: <20260912065612.745527074@linuxfoundation.org>
+Subject: [PATCH 6.6 0245/1424] platform/x86: hp-bioscfg: fix new_password_store() overwriting current_password
+Date: Sat, 12 Sep 2026 08:44:37 +0200
+Message-ID: <20260912065612.767931793@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,38 +53,26 @@ Content-Transfer-Encoding: 8bit
 
 From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 2b2ec354f905c14e3270e8ec3ab50f7d8ad73bab upstream.
+commit 2ea12a467a9cb12170417b30784fe26a243a75fe upstream.
 
-validate_password_input() computes length = strlen(buf) and then
-checks buf[length - 1] to strip a trailing newline, without checking
-that length is nonzero first. Writing an empty string (a bare '\n')
-to current_password or new_password gives length == 0, and
-buf[length - 1] reads buf[-1], one byte before the heap allocation
-holding the copied input.
+current_password_store() and new_password_store() both call
+store_password_instance() with is_current = true:
 
-KASAN confirms this directly:
+	static ssize_t new_password_store(...)
+	{
+		return store_password_instance(kobj, buf, count, true);
+	}
 
-  BUG: KASAN: slab-out-of-bounds in store_password_instance.constprop.0+0x223/0x2a0 [hp_bioscfg]
-  Read of size 1 at addr ffff88811bd8da9f by task sh/13740
-  ...
-  store_password_instance.constprop.0+0x223/0x2a0 [hp_bioscfg]
-  current_password_store+0x14/0x20 [hp_bioscfg]
-  ...
-  The buggy address is located 23 bytes to the right of
-  allocated 8-byte region [ffff88811bd8da80, ffff88811bd8da88)
+so a write to new_password is routed to current_password instead, and
+the new_password field is never written by either sysfs entry point.
 
-Reproduced identically via new_password_store. Execution continues
-past the bad read (the garbage byte only affects whether "length" is
-decremented by one), so the write completes and returns success; this
-is a pure information read past the buffer, not a crash, but it is
-still an out-of-bounds access KASAN correctly flags.
-
-Fix by only checking buf[length - 1] when length is nonzero.
+Fix by passing false from new_password_store(), matching what the
+is_current parameter is meant to select.
 
 Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
 Cc: stable@vger.kernel.org
 Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260812111829.172273-4-meatuni001@gmail.com
+Link: https://patch.msgid.link/20260812111829.172273-8-meatuni001@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -94,14 +82,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
 +++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-@@ -67,7 +67,7 @@ static int validate_password_input(int i
- 	struct password_data *password_data = &bioscfg_drv.password_data[instance_id];
+@@ -128,7 +128,7 @@ static ssize_t new_password_store(struct
+ 				  struct kobj_attribute *attr,
+ 				  const char *buf, size_t count)
+ {
+-	return store_password_instance(kobj, buf, count, true);
++	return store_password_instance(kobj, buf, count, false);
+ }
  
- 	length = strlen(buf);
--	if (buf[length - 1] == '\n')
-+	if (length > 0 && buf[length - 1] == '\n')
- 		length--;
- 
- 	if (length > MAX_PASSWD_SIZE)
+ static struct kobj_attribute password_new_password = __ATTR_WO(new_password);
 
 
