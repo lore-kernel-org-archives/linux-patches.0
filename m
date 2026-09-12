@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686A63290D1;
-	Sat, 12 Sep 2026 16:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31891288B9;
+	Sat, 12 Sep 2026 16:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231166; cv=none; b=J6PWFoddk9qhXBFvqbXt1UiTksXE3ykBoMKDnt4NfWRWYei2TqVhgSGkU8EvT5rP+U/73TJL1y8DjCPi0erydmPCBPBeqdoYtaFbHfQW+BnH5yqlsPQAyWFGY5ekH7E0iDkEhgmXVhYL9LRU6/bIMBZr2qCW5DWf2H/UAIu0kIU=
+	t=1789231171; cv=none; b=WI7WzV7JUyL1+GuLYSWwFsGKoljM84FAJCj4S/RPfTca8t5FoTteh4CR3YKhfGBaiRHDMAgOaW4evAfCWFKlcQraj7eIKxsh/T6DWU2msB7I01bTA2lZXNtOLOHj9dekdZOhu4iASLX4IAiZQ9y94eXdeAq+KDzAXUzHOqYWO50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231166; c=relaxed/simple;
-	bh=38KeVTzubs4kHZAjNNNGVhLk526C9T8on+W/20qTqGc=;
+	s=arc-20240116; t=1789231171; c=relaxed/simple;
+	bh=9IqTc0I6xPyY2qIKa7XG5LjH2/n5MMWPTGB07UZFRR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E/GXmjZR2JBf0gJQ06lQz2utNjW/yG4A2pnQtv1tlDA2jCM2TRK3S4EOsvIq4qtXXIYJZRgP2ZLlVivoUmHWDxnC0g4O8W7vsBc36bFZFCjvexemoVHvf9RrALLIO8+kmgeagJfw0ZVswQV6doJSr8lInCNUIPx0ME4HzV67p7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mOlAyln4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QY1bV1hma79s/tXs3/5gH5EVLV8DPMFWfaMJfwlaOfNM5aLzDpzPtKuQrJaz7a+RaWb83ulHhoTFE4OmJTBfkYQXCpPrD63fxRedIJCBctsv2lQL06hwecGhtKRRK1WlvCCd9LN8oklgadK7uIrWbCG1jhLxkUlVy+yovuCOwPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9ohyAG1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mOlAyln4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4249B1F000FF;
-	Sat, 12 Sep 2026 16:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9ohyAG1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDA91F000FF;
+	Sat, 12 Sep 2026 16:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231165;
-	bh=iB7GfHEAZBPejuGmrKF0w9EdHer7EsAnmHIQfA9T6iY=;
+	s=korg; t=1789231170;
+	bh=0MKvIdcN1SPJpHg+GBVnK2ZD0mPzdgxMnKnpE2EkpVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mOlAyln4TN8x9q6iIdsxpdo945397o6LV5RtmOrB7Ar2N4+JUJ2xNUHJjgeqTvVD9
-	 IHzPgZ0Dm5SuZW3ttzH5S1N2pXtAmz0q1yuPuQre2qPukKZtNdI+x+IypfwILVp72w
-	 IRqXHEOah99BpSjftCQDjuoSXW448lm/GhWWWjAc=
+	b=P9ohyAG1tNCtQTSIcv1mPRkbxlCzuWddPU18z5NclRt7qELe6cQMNweSMNmk8ny/I
+	 hvgty87nGIVckcTMTrkYSXrNn44uD7agEscw+hjiN+TDOJgRN1ldwzA0C3V/rQtTzo
+	 MTlSczbqBiEHkovnqa2/2ipRaWrR+XCNkfCMzeBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0943/1191] perf synthetic-events: Fix uninitialized pthread_join
-Date: Sat, 12 Sep 2026 09:01:11 +0200
-Message-ID: <20260912065609.406267345@linuxfoundation.org>
+Subject: [PATCH 6.1 0944/1191] perf synthetic-events: Fix divide by zero in perf_event__synthesize_threads
+Date: Sat, 12 Sep 2026 09:01:12 +0200
+Message-ID: <20260912065609.427899174@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,36 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 54ba44db4dddc4ca06b49bae0f9d6c5861430b18 ]
+[ Upstream commit 16a12a54e9a1151a37aab74914a51b86f7f58d0e ]
 
-In perf_event__synthesize_threads(), fix an uninitialized pthread_join()
-call when thread creation fails by only joining the successfully
-created threads.
+If scandir() finds no matching tasks in /proc, n is 0. If thread_nr is > 1,
+we bypass the single-thread fast path and then clamp thread_nr to n, making
+it 0. This results in a divide by zero when calculating num_per_thread.
 
-Assisted-by: Antigravity:gemini-3.1-pro
+Handle n <= 1 early to use the single-thread fast path and prevent the
+crash.
+
 Fixes: 340b47f510bb ("perf top: Implement multithreading for perf_event__synthesize_threads")
 Signed-off-by: Ian Rogers <irogers@google.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/synthetic-events.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/synthetic-events.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tools/perf/util/synthetic-events.c b/tools/perf/util/synthetic-events.c
-index cccd293b53124..2e55db810f8a3 100644
+index 2e55db810f8a3..70a8431937c54 100644
 --- a/tools/perf/util/synthetic-events.c
 +++ b/tools/perf/util/synthetic-events.c
-@@ -1073,8 +1073,8 @@ int perf_event__synthesize_threads(struct perf_tool *tool,
- 	}
- 	err = 0;
- out_join:
--	for (i = 0; i < thread_nr; i++)
--		pthread_join(synthesize_threads[i], NULL);
-+	for (j = 0; j < i; j++)
-+		pthread_join(synthesize_threads[j], NULL);
- 	free(args);
- free_threads:
- 	free(synthesize_threads);
+@@ -1027,7 +1027,7 @@ int perf_event__synthesize_threads(struct perf_tool *tool,
+ 	else
+ 		thread_nr = nr_threads_synthesize;
+ 
+-	if (thread_nr <= 1) {
++	if (thread_nr <= 1 || n <= 1) {
+ 		err = __perf_event__synthesize_threads(tool, process,
+ 						       machine,
+ 						       needs_mmap, mmap_data,
 -- 
 2.53.0
 
