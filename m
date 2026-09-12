@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6184E37CD21;
-	Sat, 12 Sep 2026 07:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E573F1ADC;
+	Sat, 12 Sep 2026 07:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197876; cv=none; b=LKOF9WdziqRUHZxcla5o/uZwR2nE+qAKJ7q3PTKRdmDDriVvYwqojPrMv6u1wY88PzjbFoJjqWoXYciwog4FXEJ2OoivbrrknqHm0CJ9yUgjEyLKu8BxpAOAnumaIS1WgKg5qtfPiRYtG/mauE8sBYXkVhVFD1s1WSdjKPDR52o=
+	t=1789197881; cv=none; b=i4djdraO1hQjkQgdz1d85du6uygvgyNdoMcIghTYBhwijRzOL3aXnNupMmS6k11aO601tnlbm3Lu3KMWeY3sKD1l0DPoMsaop0NY9ZIvUokv31q6Ro1OqjR0G9e9IomnHoR9rGlWDhxnDtXPWt00XsBK++KW8PGeovJzNRoBvDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197876; c=relaxed/simple;
-	bh=OBbHPmSq6BOkxCnugMULfKEH/DiC3Twq+fqYisBvJ08=;
+	s=arc-20240116; t=1789197881; c=relaxed/simple;
+	bh=hQpYhS9JlpXP1vbyXdyhYZ4TfcdI6iMIScIlk+4/NJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QE+AFGcsU0gcolOwPu/xdExHJvZpnouBwobg60PG/1DwpKG/5OzAgWT4MMFwM2N+3cg9xd57QGQjiqoS7VgI5Ltic/GjM7SC3NZz9GrkclleFNiY+VlGFCQ17YqkJn7h9dfakcsLd+Iz11ZsuvXq0tXRRu3KHl9n0Fw7QmceI9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBh6wTrp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XIkJROEgRo2ZdXa9qWm66Fpcnp3RR9hEWkQcV6ee1GZs4313WailSe6jWFgoeq+OzbzQujK8KhGDF0gz0tNy6HdxACuYvOFnPlIk9UXaS/xfb22BQxMRoEgjBin4cOABynsdGmeVMzTdNZ5c2R9pcM0L1MMVJpV8nRBTu3Rb6d0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mGMetsSq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBh6wTrp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55CCD1F000FF;
-	Sat, 12 Sep 2026 07:24:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGMetsSq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBDAA1F000FF;
+	Sat, 12 Sep 2026 07:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197875;
-	bh=6oIL77+1+9dT+AazCJ+OyLvSJfumyusdQ1xrXP+0o0w=;
+	s=korg; t=1789197880;
+	bh=Zr2CyYMZzIf60w6BZ4oGzfT1Q/UYukotFNDoIMXgapc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eBh6wTrpuWNIvJuVk/P6aFHzfnSXdrNQj2gd+QnJj/RBGjDwTArZXe+M91QR1pV0c
-	 1sllJL8YY1+gFDF0WlA19ErlPjE9V9UVzsQshTJio+KMomf87ALKBW3+jEx2Pvqk2B
-	 7wXFulDeiAWP6IUWv94Xkc0FUXLjIkb3K3O8Rfd8=
+	b=mGMetsSqe6N43wl+Nmui2imgd5D9mvTkHrT/gwaxn9Giqn7ArYLuvXidD98tymTuh
+	 9iWqFb67iFfVDTgixYPhWgo8y7oW0uOCqBzlXkEc84QMh/LgNbds/MBtN5Ph6kqaES
+	 wfUogv8jDNsShtEcJpJo6gztiWNWXAwVIIxYI/Wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ahmet Sezgin Duran <ahmet@sezginduran.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0264/1815] clk: qcom: gcc-qcs8300: Use retention for PCIe power domains
-Date: Sat, 12 Sep 2026 08:33:34 +0200
-Message-ID: <20260912065655.170496719@linuxfoundation.org>
+Subject: [PATCH 7.2 0229/1815] staging: sm750fb: gate dualview dataflow using g_dualview
+Date: Sat, 12 Sep 2026 08:32:59 +0200
+Message-ID: <20260912065654.368765706@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,48 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Ahmet Sezgin Duran <ahmet@sezginduran.net>
 
-[ Upstream commit 11b170abe4d324cac0d15a410282d1ec2b6bafa0 ]
+[ Upstream commit d352778979d2eed09e266ed0f3a5e3ccd3983940 ]
 
-As the PCIe host controller driver does not yet support dealing with the
-loss of state during suspend, use retention for relevant GDSCs.
+In sm750fb_setup and sm750fb_set_drv functions, the dualview
+related code is guarded by `sm750_dev->fb_count > 1` condition.
+That value is updated only after each framebuffer is registered,
+while both guards are used before any increment.
 
-Fix the PCIe link not surviving upon resume, and GDSC error:
-  gcc_pcie_0_gdsc status stuck at 'off'
+Current flow:
 
-Fixes: 95eeb2ffce73 ("clk: qcom: Add support for Global Clock Controller on QCS8300")
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260629-monza-suspend-v1-1-b601d8a2f2f8@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+  lynxfb_pci_probe()
+    sm750fb_setup()                 // fb_count is 0
+    for each fb:
+      sm750fb_framebuffer_alloc()
+        lynxfb_set_fbinfo()
+          sm750fb_set_drv()         // fb_count is 0 or 1
+        register_framebuffer()
+        sm750_dev->fb_count++;      // fb_count is incremented
+
+Thus even if `dualview=1` parameter is passed down to the driver,
+fb_count is never > 1 at either check, so dualview dataflows are
+not selected and crtc->vidmem_size is never halved.
+
+Use `g_dualview` global variable instead of fb_count > 1 to correctly
+enable dualview capabilities.
+
+Fixes: a3f92cc94c61 ("staging: sm750fb: replace dual member of sm750_dev with fb_count")
+Signed-off-by: Ahmet Sezgin Duran <ahmet@sezginduran.net>
+Link: https://patch.msgid.link/20260521204425.82627-1-ahmet@sezginduran.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-qcs8300.c | 4 ++--
+ drivers/staging/sm750fb/sm750.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-qcs8300.c b/drivers/clk/qcom/gcc-qcs8300.c
-index 07218d9c96a7d..71c5a901715ff 100644
---- a/drivers/clk/qcom/gcc-qcs8300.c
-+++ b/drivers/clk/qcom/gcc-qcs8300.c
-@@ -3267,7 +3267,7 @@ static struct gdsc gcc_pcie_0_gdsc = {
- 	.pd = {
- 		.name = "gcc_pcie_0_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- 	.flags = VOTABLE | RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
- };
+diff --git a/drivers/staging/sm750fb/sm750.c b/drivers/staging/sm750fb/sm750.c
+index da0b4979a281b..d85ccf5f7a7e5 100644
+--- a/drivers/staging/sm750fb/sm750.c
++++ b/drivers/staging/sm750fb/sm750.c
+@@ -591,7 +591,7 @@ static int sm750fb_set_drv(struct lynxfb_par *par)
+ 	crtc = &par->crtc;
  
-@@ -3281,7 +3281,7 @@ static struct gdsc gcc_pcie_1_gdsc = {
- 	.pd = {
- 		.name = "gcc_pcie_1_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- 	.flags = VOTABLE | RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
- };
+ 	crtc->vidmem_size = sm750_dev->vidmem_size;
+-	if (sm750_dev->fb_count > 1)
++	if (g_dualview)
+ 		crtc->vidmem_size >>= 1;
  
+ 	/* setup crtc and output member */
+@@ -896,7 +896,7 @@ static void sm750fb_setup(struct sm750_dev *sm750_dev, char *src)
+ 
+ NO_PARAM:
+ 	if (sm750_dev->revid != SM750LE_REVISION_ID) {
+-		if (sm750_dev->fb_count > 1) {
++		if (g_dualview) {
+ 			if (swap)
+ 				sm750_dev->dataflow = sm750_dual_swap;
+ 			else
 -- 
 2.53.0
 
