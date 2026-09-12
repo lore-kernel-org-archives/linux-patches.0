@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9EF26982C;
-	Sat, 12 Sep 2026 07:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9753E368D5A;
+	Sat, 12 Sep 2026 07:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199732; cv=none; b=OCYV1hecvEbGACczRgwHBIcYaxbzzIN2PIdXhl5RZFwjXyafybsWWtOmo376gEdL/oJ+3pnxETg9I/3tneCXOkCX7enWJA0khoct+tsrf6loleSms4euyNgPEewLEx8d2nLlQQkqbO8ZY0YgavwxbIxQRvC/I5Cbif17v5YDYdI=
+	t=1789199737; cv=none; b=UzU28pOhT8JXZMgfjN3yjPqenwWjxosOXX98dZx2RJxJGLGZ3z8NOT7yUAdJz+Z8j2oQc06qMl1O94EaQb0tHv3Nw1PZuUSf3bOtBqwY0eSJ4CBR/FwQBePpJQdi5I0MNKhwIcby1RxWPZjNF7AABHS3k5MBGdICJ5K7kiBKy8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199732; c=relaxed/simple;
-	bh=q66XopmC4D5eV579DtlJwrHjYXlI9yApzCwvLxBsEPs=;
+	s=arc-20240116; t=1789199737; c=relaxed/simple;
+	bh=2bUN+tXKdpaWcCu67b9byIbxUDme3IA9g2em9Nu38+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WQe6kdP8/NmCf8E/lmBbE2KRVmo1lyDXAlQfTNjKd7dNqCkUUk7a7Xos1TMcg2BNjWaLsFGv7Z81Ijx6CBQhxVXsmN9jyjr4hQ0y7PClZzhJfVgVoESVoiMMFiECgixrHhy+e6hvhWBVYuspjnQrKlNKt9Auzouc+NYrmLIDH64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCf7sTTc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PENys+GsMa9OgrOsSl63eejJz+tGqZ+R/obw5lvQX6lXrHTQ+sxABEh+0aDJhDO0u6q3DSvEbTOJPv8/cAugDkDpJdmMyUf5mGjMbi4BuffaK/T+lvty6Awk4rlDHL8icUgQi/Tdnn8MyJhAC4BsVrMcDLllfurq8Vd52SBBZ/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pmq2BbfI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCf7sTTc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717FB1F00893;
-	Sat, 12 Sep 2026 07:55:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pmq2BbfI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8771F00893;
+	Sat, 12 Sep 2026 07:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199731;
-	bh=/VdpiBVy4ijZd1kfgkF5aF81NrALEx2Iq6lT9SIa+3U=;
+	s=korg; t=1789199736;
+	bh=5QCOfcrfMSsgMQ5rZpUJZnd4r5bEpB3g2KMQWe6cMCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dCf7sTTcvKxw+HZ6CldexrRF1u1KfgibJ0oLDQpQnZgQZsX9G4APH7dmheh+9jnVG
-	 FfsrH2FpFpKGDlJOEuKmaxQSyUp5O4/ubtBe9ktsEe2OqLgGfWu/2DT4T62hrF0Y8/
-	 JZUuELdTOrpvBsfh94yz9FnEPQCxRqXCrpig62eA=
+	b=pmq2BbfITj2XkVuBz04baZ8QcOytmFT4BRZOL1MpMaEenqrb9ODZTBGpty+wBo9+7
+	 bDDfKX4UITFw8xfZuzxpQO8kZp0IQ0Pkesawqa3VEJYSyk+vEpqz9gRV1m4OqHsWjo
+	 54WcacE/iPhD7gotDENrRlJBMYjKztvp6/jCQdk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mykyta Yatsenko <yatsenko@meta.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Vladimir Zapolskiy <vz@kernel.org>,
+	Vladimir Zapolskiy <vz@mleia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0646/1815] bpf: Fix CFI mismatch in task work callback
-Date: Sat, 12 Sep 2026 08:39:56 +0200
-Message-ID: <20260912065704.047538539@linuxfoundation.org>
+Subject: [PATCH 7.2 0647/1815] ARM: lpc32xx: only run SoC init on LPC32xx hardware
+Date: Sat, 12 Sep 2026 08:39:57 +0200
+Message-ID: <20260912065704.070315187@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,65 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mykyta Yatsenko <yatsenko@meta.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 2805abd089576799b15092949420e3f8ba97fabd ]
+[ Upstream commit 717ea4000867e6dffee5e1ed92150a9704ae9f68 ]
 
-BPF subprograms use the bpf_callback_t ABI, but task work invokes the
-callback through a three-argument function pointer. This trips kCFI.
+lpc32xx_check_uid() and lpc32xx_pm_init() are arch_initcalls that poke
+LPC32xx-only registers. Since the multiplatform conversion they also
+run on other ARCH_MULTI_V5 boards where access faults e.g. on versatile:
 
-Store and invoke the callback as bpf_callback_t.
+  Unable to handle kernel paging request at virtual address f4004130
+  PC is at lpc32xx_check_uid+0x2c/0x9c
 
-Fixes: 38aa7003e369 ("bpf: task work scheduling kfuncs")
-Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
-Link: https://lore.kernel.org/bpf/20260724-task_work_cfi-v1-1-2616691781ed@meta.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Drop the arch_initcall() registrations and call both functions directly
+from lpc3250_machine_init(), the machine's .init_machine hook.
+The calls are placed in link order (common.c, pm.c, phy3250.c) to
+keep their previous relative ordering.
+
+Fixes: 75bf1bd7d2f9 ("ARM: lpc32xx: allow multiplatform build")
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Vladimir Zapolskiy <vz@mleia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/arm/mach-lpc32xx/common.c  | 5 +----
+ arch/arm/mach-lpc32xx/common.h  | 2 ++
+ arch/arm/mach-lpc32xx/phy3250.c | 2 ++
+ arch/arm/mach-lpc32xx/pm.c      | 5 +----
+ 4 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index c18f1e16edee4..88b38db47de92 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -4388,7 +4388,7 @@ struct bpf_task_work_ctx {
- 	struct bpf_map *map;
- 	void *map_val;
- 	enum task_work_notify_mode mode;
--	bpf_task_work_callback_t callback_fn;
-+	bpf_callback_t callback_fn;
- 	struct rcu_head rcu;
- } __aligned(8);
- 
-@@ -4471,7 +4471,8 @@ static void bpf_task_work_callback(struct callback_head *cb)
- 	key = (void *)map_key_from_value(ctx->map, ctx->map_val, &idx);
- 
- 	migrate_disable();
--	ctx->callback_fn(ctx->map, key, ctx->map_val);
-+	ctx->callback_fn((u64)(long)ctx->map, (u64)(long)key,
-+			 (u64)(long)ctx->map_val, 0, 0);
- 	migrate_enable();
- 
- 	bpf_task_work_ctx_reset(ctx);
-@@ -4594,7 +4595,7 @@ static struct bpf_task_work_ctx *bpf_task_work_acquire_ctx(struct bpf_task_work
+diff --git a/arch/arm/mach-lpc32xx/common.c b/arch/arm/mach-lpc32xx/common.c
+index 304ea61a07160..35ed3569c5a35 100644
+--- a/arch/arm/mach-lpc32xx/common.c
++++ b/arch/arm/mach-lpc32xx/common.c
+@@ -106,7 +106,7 @@ void __init lpc32xx_map_io(void)
+ 	iotable_init(lpc32xx_io_desc, ARRAY_SIZE(lpc32xx_io_desc));
  }
  
- static int bpf_task_work_schedule(struct task_struct *task, struct bpf_task_work *tw,
--				  struct bpf_map *map, bpf_task_work_callback_t callback_fn,
-+				  struct bpf_map *map, void *callback_fn,
- 				  struct bpf_prog_aux *aux, enum task_work_notify_mode mode)
+-static int __init lpc32xx_check_uid(void)
++void __init lpc32xx_check_uid(void)
  {
- 	struct bpf_prog *prog;
-@@ -4619,7 +4620,7 @@ static int bpf_task_work_schedule(struct task_struct *task, struct bpf_task_work
- 	}
+ 	u32 uid[4];
  
- 	ctx->task = task;
--	ctx->callback_fn = callback_fn;
-+	ctx->callback_fn = (bpf_callback_t)callback_fn;
- 	ctx->prog = prog;
- 	ctx->mode = mode;
- 	ctx->map = map;
+@@ -119,7 +119,4 @@ static int __init lpc32xx_check_uid(void)
+ 		system_serial_low = uid[0];
+ 		system_serial_high = uid[1];
+ 	}
+-
+-	return 1;
+ }
+-arch_initcall(lpc32xx_check_uid);
+diff --git a/arch/arm/mach-lpc32xx/common.h b/arch/arm/mach-lpc32xx/common.h
+index 32f0ad2178077..06b20bea324e1 100644
+--- a/arch/arm/mach-lpc32xx/common.h
++++ b/arch/arm/mach-lpc32xx/common.h
+@@ -16,6 +16,8 @@
+  * Other arch specific structures and functions
+  */
+ extern void __init lpc32xx_map_io(void);
++extern void __init lpc32xx_check_uid(void);
++extern void __init lpc32xx_pm_init(void);
+ extern void __init lpc32xx_serial_init(void);
+ 
+ /*
+diff --git a/arch/arm/mach-lpc32xx/phy3250.c b/arch/arm/mach-lpc32xx/phy3250.c
+index 66701bf432488..ddc6333ca55da 100644
+--- a/arch/arm/mach-lpc32xx/phy3250.c
++++ b/arch/arm/mach-lpc32xx/phy3250.c
+@@ -71,6 +71,8 @@ static const struct of_dev_auxdata lpc32xx_auxdata_lookup[] __initconst = {
+ 
+ static void __init lpc3250_machine_init(void)
+ {
++	lpc32xx_check_uid();
++	lpc32xx_pm_init();
+ 	lpc32xx_serial_init();
+ 
+ 	of_platform_default_populate(NULL, lpc32xx_auxdata_lookup, NULL);
+diff --git a/arch/arm/mach-lpc32xx/pm.c b/arch/arm/mach-lpc32xx/pm.c
+index 2572bd89a5e8d..9b5c5e1462ed3 100644
+--- a/arch/arm/mach-lpc32xx/pm.c
++++ b/arch/arm/mach-lpc32xx/pm.c
+@@ -120,7 +120,7 @@ static const struct platform_suspend_ops lpc32xx_pm_ops = {
+ #define EMC_DYN_MEM_CTRL_OFS 0x20
+ #define EMC_SRMMC           (1 << 3)
+ #define EMC_CTRL_REG io_p2v(LPC32XX_EMC_BASE + EMC_DYN_MEM_CTRL_OFS)
+-static int __init lpc32xx_pm_init(void)
++void __init lpc32xx_pm_init(void)
+ {
+ 	/*
+ 	 * Setup SDRAM self-refresh clock to automatically disable o
+@@ -129,7 +129,4 @@ static int __init lpc32xx_pm_init(void)
+ 	__raw_writel(__raw_readl(EMC_CTRL_REG) | EMC_SRMMC, EMC_CTRL_REG);
+ 
+ 	suspend_set_ops(&lpc32xx_pm_ops);
+-
+-	return 0;
+ }
+-arch_initcall(lpc32xx_pm_init);
 -- 
 2.53.0
 
