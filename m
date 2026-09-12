@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB71142048C;
-	Sat, 12 Sep 2026 08:46:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163393F9F47;
+	Sat, 12 Sep 2026 08:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202816; cv=none; b=N4Q2Xettaew3cxkiDd2gWE9v/7CIFU+cJs4oN3/pReghQ5GYUYo99q+VCFb2P50wLUDc9dHY07avWChKg/H4+3/NuacjlYgpyBJJBBU/lLJLtGlit62XL2OpGaDR/dtHA4fIblfwvpviz1ZUzYMN+aeiPoxam2inFHw41VCwApU=
+	t=1789202821; cv=none; b=jRv1+1qF8h2Ho5FhNQok/PC9MIVwwtPivlI0BIcG7X2mPU+qlH6no9jbFX2wqLurDwgGh0uETaWGSRpEvd0nLYCIcUakVlcE98CEGZCvsVMudLkZF2OQ9UlphqPCsFSOmgOoLkp+1BePGk+f8Qru/meeAnW4WZg9x2bDIxfoO9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202816; c=relaxed/simple;
-	bh=lGRAX/OPjAH+QDVwcurWP4yGXxCbEbPsyi72Bgagjy8=;
+	s=arc-20240116; t=1789202821; c=relaxed/simple;
+	bh=dIArauwzT4K1Zl/CsT+8rR8tVeb9ba1w8OIrBu+ir2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l8tX02c02rIuBNNptE+LVPXfIZX7oFc6MXJW3x/iLT/EVzv8tDrmTNy8fPWJIcGyg5WoRv+ujYsEAf/ogWy8aODEaklUqHYh7ArOikj9pkykmr+opDCby769FUVB8pr4nYIYUo8GurAUcUbbazSi3f4Q1mqwj8sFs3ddJqgyVW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dE8UXqom; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dryO4FsYDGrn6Hi/1XZ+PPxVa9UzBViO6ExJmpjrVY8BY+FgWs2QLZdL0Rpg2YnjgY1MN+NZ4z3jh1zDPIpyCRFeye7uALziOgLaQ4G29v4hix8L2fpqKQapP7Sc0GXeQPIDnbsIeyDT4ySxcomMxyx5Wm1oZY/aJ25K3Jkul/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMXnvY7H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dE8UXqom"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293741F00893;
-	Sat, 12 Sep 2026 08:46:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMXnvY7H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6CB1F0089A;
+	Sat, 12 Sep 2026 08:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202811;
-	bh=9dSSPEA++HRtviwCPWWXAcHhbo7xa/aZe2Qf8mxW0Kc=;
+	s=korg; t=1789202815;
+	bh=KEpEoxQquBky9FH3RBdSJc69hMdIVvxbNSYGlCvMAG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dE8UXqomHsdRqkkqO5wheDRaJ26KTPz1jebYEhf5pd3d/16OHcJAN2gM0mTcwBQMT
-	 PrEAtBrYuawdFU6C+L8RAL7BErKRJGLgBVcZdpZdr4CoP2ZkLtedQc/3Ne0oYBcb8B
-	 Zi8giX30Rq1GxGtyvgpidXO0N8ud79ekTfHs2frE=
+	b=aMXnvY7HMPHQ6adzUt5GJc1fnUcb1FPA4lcEm/CyQXME2KuQ3mJQ6e4R2lgxILK0o
+	 6GgXZewYjBEUVjFQsAMce7cYMNn6H7eN7k5KX+xbzukUFPkVNsiFyAZExsWz5DD/KY
+	 Z5ciTMCvmiS5RkSalmqYycAwCcCxds4L8R2idzdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1237/1815] pinctrl: airoha: fix mdio bitfield names
-Date: Sat, 12 Sep 2026 08:49:47 +0200
-Message-ID: <20260912065718.052321336@linuxfoundation.org>
+Subject: [PATCH 7.2 1238/1815] pinctrl: airoha: an7581: fix pinconf of i2c_scl/i2c_sda pins
+Date: Sat, 12 Sep 2026 08:49:48 +0200
+Message-ID: <20260912065718.076310122@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,65 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
 
-[ Upstream commit a8454680a6ce75fbbd8086bcb654eacf7897bc0f ]
+[ Upstream commit 65ce9d5d781f872596194771d62ad6e1260fcf4f ]
 
-Fix misprint in mdio bitfield name of GPIO_2ND_I2C_MODE register.
-
-While at it also fix an7583 mdio. It should use an7583 specific
-mdio bitfield.
+Pinconfs of i2c_sda/i2c_scl pins are swapped, this needs to be fixed.
 
 Fixes: 1c8ace2d0725 ("pinctrl: airoha: Add support for EN7581 SoC")
 Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/airoha/pinctrl-airoha.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/pinctrl/airoha/pinctrl-airoha.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/pinctrl/airoha/pinctrl-airoha.c b/drivers/pinctrl/airoha/pinctrl-airoha.c
-index 04b4424c688b2..4d0b76f270300 100644
+index 4d0b76f270300..817d51141fed1 100644
 --- a/drivers/pinctrl/airoha/pinctrl-airoha.c
 +++ b/drivers/pinctrl/airoha/pinctrl-airoha.c
-@@ -49,7 +49,7 @@
- 
- /* MUX */
- #define REG_GPIO_2ND_I2C_MODE			0x0214
--#define GPIO_MDC_IO_MASTER_MODE_MODE		BIT(14)
-+#define GPIO_MDC_IO_MASTER_MODE_MASK		BIT(14)
- #define GPIO_I2C_MASTER_MODE_MODE		BIT(13)
- #define GPIO_I2S_MODE_MASK			BIT(12)
- #define GPIO_I2C_SLAVE_MODE_MODE		BIT(11)
-@@ -66,6 +66,7 @@
- #define GPIO_2ND_I2C_MODE_MASK			BIT(0)
- 
- #define REG_GPIO_SPI_CS1_MODE			0x0218
-+#define AN7583_GPIO_MDC_IO_MASTER_MODE_MASK	BIT(22)
- #define GPIO_PCM_SPI_CS4_MODE_MASK		BIT(21)
- #define GPIO_PCM_SPI_CS3_MODE_MASK		BIT(20)
- #define GPIO_PCM_SPI_CS2_MODE_P156_MASK		BIT(19)
-@@ -1026,8 +1027,8 @@ static const struct airoha_pinctrl_func_group mdio_func_group[] = {
- 		.regmap[0] = {
- 			AIROHA_FUNC_MUX,
- 			REG_GPIO_2ND_I2C_MODE,
--			GPIO_MDC_IO_MASTER_MODE_MODE,
--			GPIO_MDC_IO_MASTER_MODE_MODE
-+			GPIO_MDC_IO_MASTER_MODE_MASK,
-+			GPIO_MDC_IO_MASTER_MODE_MASK
- 		},
- 		.regmap[1] = {
- 			AIROHA_FUNC_MUX,
-@@ -1051,8 +1052,8 @@ static const struct airoha_pinctrl_func_group an7583_mdio_func_group[] = {
- 		.regmap[1] = {
- 			AIROHA_FUNC_MUX,
- 			REG_GPIO_SPI_CS1_MODE,
--			GPIO_MDC_IO_MASTER_MODE_MODE,
--			GPIO_MDC_IO_MASTER_MODE_MODE
-+			AN7583_GPIO_MDC_IO_MASTER_MODE_MASK,
-+			AN7583_GPIO_MDC_IO_MASTER_MODE_MASK
- 		},
- 		.regmap_size = 2,
- 	},
+@@ -1844,8 +1844,8 @@ static const struct airoha_pinctrl_func an7583_pinctrl_funcs[] = {
+ static const struct airoha_pinctrl_conf en7581_pinctrl_pullup_conf[] = {
+ 	PINCTRL_CONF_DESC(0, REG_I2C_SDA_PU, UART1_TXD_PU_MASK),
+ 	PINCTRL_CONF_DESC(1, REG_I2C_SDA_PU, UART1_RXD_PU_MASK),
+-	PINCTRL_CONF_DESC(2, REG_I2C_SDA_PU, I2C_SDA_PU_MASK),
+-	PINCTRL_CONF_DESC(3, REG_I2C_SDA_PU, I2C_SCL_PU_MASK),
++	PINCTRL_CONF_DESC(2, REG_I2C_SDA_PU, I2C_SCL_PU_MASK),
++	PINCTRL_CONF_DESC(3, REG_I2C_SDA_PU, I2C_SDA_PU_MASK),
+ 	PINCTRL_CONF_DESC(4, REG_I2C_SDA_PU, SPI_CS0_PU_MASK),
+ 	PINCTRL_CONF_DESC(5, REG_I2C_SDA_PU, SPI_CLK_PU_MASK),
+ 	PINCTRL_CONF_DESC(6, REG_I2C_SDA_PU, SPI_MOSI_PU_MASK),
+@@ -1961,8 +1961,8 @@ static const struct airoha_pinctrl_conf an7583_pinctrl_pullup_conf[] = {
+ static const struct airoha_pinctrl_conf en7581_pinctrl_pulldown_conf[] = {
+ 	PINCTRL_CONF_DESC(0, REG_I2C_SDA_PD, UART1_TXD_PD_MASK),
+ 	PINCTRL_CONF_DESC(1, REG_I2C_SDA_PD, UART1_RXD_PD_MASK),
+-	PINCTRL_CONF_DESC(2, REG_I2C_SDA_PD, I2C_SDA_PD_MASK),
+-	PINCTRL_CONF_DESC(3, REG_I2C_SDA_PD, I2C_SCL_PD_MASK),
++	PINCTRL_CONF_DESC(2, REG_I2C_SDA_PD, I2C_SCL_PD_MASK),
++	PINCTRL_CONF_DESC(3, REG_I2C_SDA_PD, I2C_SDA_PD_MASK),
+ 	PINCTRL_CONF_DESC(4, REG_I2C_SDA_PD, SPI_CS0_PD_MASK),
+ 	PINCTRL_CONF_DESC(5, REG_I2C_SDA_PD, SPI_CLK_PD_MASK),
+ 	PINCTRL_CONF_DESC(6, REG_I2C_SDA_PD, SPI_MOSI_PD_MASK),
+@@ -2078,8 +2078,8 @@ static const struct airoha_pinctrl_conf an7583_pinctrl_pulldown_conf[] = {
+ static const struct airoha_pinctrl_conf en7581_pinctrl_drive_e2_conf[] = {
+ 	PINCTRL_CONF_DESC(0, REG_I2C_SDA_E2, UART1_TXD_E2_MASK),
+ 	PINCTRL_CONF_DESC(1, REG_I2C_SDA_E2, UART1_RXD_E2_MASK),
+-	PINCTRL_CONF_DESC(2, REG_I2C_SDA_E2, I2C_SDA_E2_MASK),
+-	PINCTRL_CONF_DESC(3, REG_I2C_SDA_E2, I2C_SCL_E2_MASK),
++	PINCTRL_CONF_DESC(2, REG_I2C_SDA_E2, I2C_SCL_E2_MASK),
++	PINCTRL_CONF_DESC(3, REG_I2C_SDA_E2, I2C_SDA_E2_MASK),
+ 	PINCTRL_CONF_DESC(4, REG_I2C_SDA_E2, SPI_CS0_E2_MASK),
+ 	PINCTRL_CONF_DESC(5, REG_I2C_SDA_E2, SPI_CLK_E2_MASK),
+ 	PINCTRL_CONF_DESC(6, REG_I2C_SDA_E2, SPI_MOSI_E2_MASK),
+@@ -2195,8 +2195,8 @@ static const struct airoha_pinctrl_conf an7583_pinctrl_drive_e2_conf[] = {
+ static const struct airoha_pinctrl_conf en7581_pinctrl_drive_e4_conf[] = {
+ 	PINCTRL_CONF_DESC(0, REG_I2C_SDA_E4, UART1_TXD_E4_MASK),
+ 	PINCTRL_CONF_DESC(1, REG_I2C_SDA_E4, UART1_RXD_E4_MASK),
+-	PINCTRL_CONF_DESC(2, REG_I2C_SDA_E4, I2C_SDA_E4_MASK),
+-	PINCTRL_CONF_DESC(3, REG_I2C_SDA_E4, I2C_SCL_E4_MASK),
++	PINCTRL_CONF_DESC(2, REG_I2C_SDA_E4, I2C_SCL_E4_MASK),
++	PINCTRL_CONF_DESC(3, REG_I2C_SDA_E4, I2C_SDA_E4_MASK),
+ 	PINCTRL_CONF_DESC(4, REG_I2C_SDA_E4, SPI_CS0_E4_MASK),
+ 	PINCTRL_CONF_DESC(5, REG_I2C_SDA_E4, SPI_CLK_E4_MASK),
+ 	PINCTRL_CONF_DESC(6, REG_I2C_SDA_E4, SPI_MOSI_E4_MASK),
 -- 
 2.53.0
 
