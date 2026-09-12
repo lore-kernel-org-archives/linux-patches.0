@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C2878C9C;
-	Sat, 12 Sep 2026 15:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0751D7E5C;
+	Sat, 12 Sep 2026 15:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226071; cv=none; b=jPuaw798wd5GtKmvRAb3L5zHrmKvGpYrATq/uxj4JH4GC/Ry3e/zxkK3WFCK6fT5UEjHIdtM59euoIlVZlKAdqW1ufmGY0xTnJzC0SMSNksta1PtPy/EoY8inVWDOVa3X3adLXj1Jj4PuAxKL4AnI8JsEETd8KPXnTyaGYN/oHY=
+	t=1789226076; cv=none; b=KAYWSzQv743tQOJdUNciBXqh8LoOoAL6HavOMubr09JDIQvFQn3C3xDf0UqhY02ESTUBkkQ3KkUHziVJJlDikyTGlt3DK+xfd8ZIAWyM9/WJBqw3+bt/gf9nS9Dhnf79mVpAPc+YLcdgshQHEQ+NgXdzWme8QUe7tYuerfKmdm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226071; c=relaxed/simple;
-	bh=LZHLxxq31wrpFOMW/RUY868micjYV9UgnHpahbyHUh8=;
+	s=arc-20240116; t=1789226076; c=relaxed/simple;
+	bh=K77ghUi8UlgW6WGfj709HiUUC9/oKStqKt9Vn/1bUts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rybRti02BsPLDOj3dvaZtRhKcIFogmq5e+yOmcNnabpv/62/chZ/T7YAC5uzKF5xiwn/EKM1LW6FQQ0C/SrSPok2I9xLFOgirbTtsEFCpytzbJYyy3v1jDtBoqchxe16+ZL8JC+FpPjirAdxHYJqZGKjHQQxJ88p1jVCQZ2eMC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FLJ9EkbL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cqCP+yTWjMnDbZ9jwAWU/vClWreuHVXhQ+cY9X1nNgQ8tr8QNPUX6+/xm+AwZTrsp4bN4VzTI+8Qmw+QSz0JiCzUfpgwtRrPy1lRdOIITITzjVY6odcrKvOWmDL5WCSkZyHpEUiEIdpbzoM2qYkJyDu/mDcQ4laeCPUWCok0Fjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KeRw9OT5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLJ9EkbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 076F01F000FF;
-	Sat, 12 Sep 2026 15:14:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KeRw9OT5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F881F000FF;
+	Sat, 12 Sep 2026 15:14:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226069;
-	bh=regnIjrTbrQxZRISK2EU2/iwCgTbCqybKH7K92sLbvQ=;
+	s=korg; t=1789226075;
+	bh=OPbdTaAj/KET8/rC0mBpiCtAZlMOiuD5C8h8PTTeUvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FLJ9EkbLW1LV8/lqLsm4Zxnl3+jMcJD5zRopEyuANphmdCoYd4T/LgYnJgyEhx6y2
-	 6jItpWpCQy6qEEDEzNPNNjlAdA5nL0YUO1EQ52VMeLWYQEEf++QXFqJcGO3kpk4x/s
-	 tN7Yz6qN6Q44UHexgvIUTlh8J7VXRds0/gFPC3yQ=
+	b=KeRw9OT5mDyKvyqAIlrlXCrLVqg33xZneJAuXSNk8/pb2A/v+2Dz8+6+99dvRlPvB
+	 ZZ7XB20GObzz6NOsXZDffnHLx82ZFGiXaDSZpJuMA3WiCXtvtD1xhPCm8IBdZWN/XT
+	 9BIS2e4pNgja/rcs6LY9iQthr8xTEE1KxiiCBTtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Ye <fy15309206903@gmail.com>,
+	Marek Czernohous <marek@czernohous.de>,
 	Simon Horman <horms@kernel.org>,
-	Mika Westerberg <westeri@kernel.org>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1328/1424] net: thunderbolt: Count delivered packets in rx_packets and rx_bytes
-Date: Sat, 12 Sep 2026 09:02:40 +0200
-Message-ID: <20260912065636.998059570@linuxfoundation.org>
+Subject: [PATCH 6.6 1329/1424] forcedeth: stop the tx_timeout register dump past the requested window
+Date: Sat, 12 Sep 2026 09:02:41 +0200
+Message-ID: <20260912065637.020576177@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,60 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Ye <fy15309206903@gmail.com>
+From: Marek Czernohous <marek@czernohous.de>
 
-[ Upstream commit c5ae83ee02c04487b1be1d143b791ec2caca888e ]
+[ Upstream commit cfa9178ce2e5b4f2e2a9e8b577a6cff841665aa0 ]
 
-tbnet_poll() increments rx_packets once per received frame because that is
-the NAPI work unit, and then adds the same number to stats.rx_packets. An
-skb is handed to the stack only when the last frame of a packet arrives,
-so once the MTU exceeds TBNET_MAX_PAYLOAD_SIZE the statistic reports
-frames. tx_packets is bumped once per skb, so the two ends of a link
-disagree: at MTU 65330 the receiver reports 16 times the packets its
-sender sent.
+nv_tx_timeout() dumps the register window in rows of eight dwords:
 
-rx_bytes has the matching problem: frames of a packet that is later
-dropped mid-assembly are already accounted, so it does not correspond to
-rx_packets as documented. Account for both where the packet is completed,
-and leave the NAPI work counter alone.
+	for (i = 0; i <= np->register_size; i += 32) {
+		netdev_info(dev, "%3x: %08x ... %08x\n", i,
+			    readl(base + i + 0), ..., readl(base + i + 28));
 
-Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
-Signed-off-by: Fan Ye <fy15309206903@gmail.com>
+The loop bound only checks the row's starting offset, so the final row
+reads a full 32 bytes from a position that is below the end of the window
+but too close to it. base is mapped with exactly that length:
+
+	np->base = ioremap(addr, np->register_size);
+
+so the tail of that row is read from beyond the length the driver asked
+for. Per variant, the last iteration reads past register_size by:
+
+	NV_PCI_REGSZ_VER1 (0x270): row 0x260 reads to 0x27f, 16 bytes over
+	NV_PCI_REGSZ_VER2 (0x2d4): row 0x2c0 reads to 0x2df, 12 bytes over
+	NV_PCI_REGSZ_VER3 (0x604): row 0x600 reads to 0x61f, 28 bytes over
+
+This happens on every supported device, not just one of them. Note that
+it is not a consequence of the sizes being odd: with i <= register_size
+the offending row is reached whatever the size, and a size that were a
+multiple of 32 would overrun by a full row rather than by a remainder.
+
+To be precise about the severity: the reads stay inside the BAR. Memory
+BAR sizes are powers of two, the driver only accepts a region with
+pci_resource_len() >= register_size (forcedeth.c:5757-5762), and the
+next power of two at or above each register_size already covers the
+offending row: 0x400 for 0x270 and 0x2d4, 0x800 for 0x604. ioremap()
+also rounds the mapped length up to page granularity, so the reads land
+inside the mapping the CPU has as well. What they leave is the window
+the driver asked for, not the BAR and not the mapping. That is still a
+driver reading registers it did not ask for, and it is trivial to
+avoid, but nobody should expect a fault from it.
+
+Changing <= to < is not enough: register_size is a length and every size
+above is larger than its last row start, so i still reaches the offending
+row. Check that the whole row fits instead.
+
+The trade-off is that a partial trailing row is no longer dumped: 16 bytes
+for VER1, 20 for VER2, 4 for VER3. That seemed preferable to reading
+outside the requested window, and to open-coding a second, narrower dump
+for the remainder in what is a debug-only path. Extending the dump to
+cover the tail can be done on top if anyone misses those registers.
+
+Only reachable with the debug_tx_timeout module parameter, which defaults
+to false. It has not been observed at runtime: forcing a genuine TX
+timeout on the reference machine is not something I can do safely, so this
+rests on the arithmetic above and on a build test, not on a reproduction.
+UBSAN does not catch it either, since these are MMIO reads rather than an
+array access. It was found by reading the function while fixing the
+saved_config_space off-by-one in nv_suspend() and nv_resume().
+
+The dump was introduced with a fixed 0x400 bound while ioremap() mapped
+only NV_PCI_REGSZ (0x270), so it read about 0x190 bytes too far from the
+start. Commit 86a0f04387bf ("[PATCH] forcedeth: fix initialization")
+later replaced 0x400 with np->register_size, which shrank the overrun to
+the remainder but did not remove it.
+
+Fixes: c2dba06dae7d ("[PATCH] forcedeth: rewritten tx irq handling")
+Signed-off-by: Marek Czernohous <marek@czernohous.de>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Acked-by: Mika Westerberg <westeri@kernel.org>
-Link: https://patch.msgid.link/20260815-tbnet-rx-stats-v1-1-8da375c2cd09@gmail.com
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Link: https://patch.msgid.link/178682367886.3748309.6978554332066826294@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/thunderbolt/main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/nvidia/forcedeth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/thunderbolt/main.c b/drivers/net/thunderbolt/main.c
-index 7bb9aa20fab9f..096f3ff36a437 100644
---- a/drivers/net/thunderbolt/main.c
-+++ b/drivers/net/thunderbolt/main.c
-@@ -907,9 +907,11 @@ static int tbnet_poll(struct napi_struct *napi, int budget)
- 		       le32_to_cpu(net->rx_hdr.frame_count) - 1;
+diff --git a/drivers/net/ethernet/nvidia/forcedeth.c b/drivers/net/ethernet/nvidia/forcedeth.c
+index b98825c364cf9..a179bbf7f42cb 100644
+--- a/drivers/net/ethernet/nvidia/forcedeth.c
++++ b/drivers/net/ethernet/nvidia/forcedeth.c
+@@ -2754,7 +2754,7 @@ static void nv_tx_timeout(struct net_device *dev, unsigned int txqueue)
  
- 		rx_packets++;
--		net->stats.rx_bytes += frame_size;
- 
- 		if (last) {
-+			/* Before eth_type_trans() pulls the Ethernet header. */
-+			net->stats.rx_packets++;
-+			net->stats.rx_bytes += skb->len;
- 			skb->protocol = eth_type_trans(skb, net->dev);
- 			trace_tbnet_rx_skb(skb);
- 			napi_gro_receive(&net->napi, skb);
-@@ -917,8 +919,6 @@ static int tbnet_poll(struct napi_struct *napi, int budget)
- 		}
- 	}
- 
--	net->stats.rx_packets += rx_packets;
--
- 	if (cleaned_count)
- 		tbnet_alloc_rx_buffers(net, cleaned_count);
- 
+ 		netdev_info(dev, "Ring at %lx\n", (unsigned long)np->ring_addr);
+ 		netdev_info(dev, "Dumping tx registers\n");
+-		for (i = 0; i <= np->register_size; i += 32) {
++		for (i = 0; i + 32 <= np->register_size; i += 32) {
+ 			netdev_info(dev,
+ 				    "%3x: %08x %08x %08x %08x "
+ 				    "%08x %08x %08x %08x\n",
 -- 
 2.53.0
 
