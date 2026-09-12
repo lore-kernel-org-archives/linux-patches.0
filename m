@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F3932D7F8;
-	Sat, 12 Sep 2026 18:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871F3340298;
+	Sat, 12 Sep 2026 18:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789236976; cv=none; b=t/ONlVPrrO15jmZ5Dr5DCSuB4oV7i1M8M3Wr0nVv/v/1bZWSt35JHI+lEHbUF58YnHMnamvqguOdIFodTQtVOHnaRD+Ujz5beAstJ56bKmhyDx8+O9kG3vhofRJ0UhlPlTF2J4q07+YajeKIwq3gj6umbPoxk/mViZCkmSg82Jo=
+	t=1789236981; cv=none; b=kzX+JyLGCk8exwe+uSToLLR1BRhVYVgV0WYwbeXybA5Zko1mzRmsgaftayScL8W54Wl9Mu1VnRVkZBy6H1Hub5iZuxSb5zLJwks+5t5MdIFWGHq5u9F6E4JmZDU3tx4MKak/2dbJfEXLayStpu/WN5VC2cXeQ7/g3JdOkd+zRdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789236976; c=relaxed/simple;
-	bh=qXqFej2TkbgMaP7qxqesbojVyVEyeB92ilqdQezCBu0=;
+	s=arc-20240116; t=1789236981; c=relaxed/simple;
+	bh=TbYih27lI2A7FvnB6GyqBbsNDjJ1LANgKY1o7bXOcGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l3WPzyjkjtJNyM/1LKROAHFJTFbgP1H8NmXyxIBs2qfFlNUMFIk4DbPf3oF3LAGqOuwtNEbDZZ8VK3TioMkWoNpG1BgZPTmJgKpZq7x1k0y34A3FDIOXjyZnImLh2/P74W5HLZGqt5r21GhIJdyuuWl/fZsqs+oJPrBcRcB+2Os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZmEmAWc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TKDaq+srA9AEKnW9h+qCYEfedgBjK3i876sb/EldeGgvvSMyC7Y5TYnUDkOc722XUdeudDpoOwz8umD4ObO0ZcphNkr4z+AALUHLoDj1NVBAT+ehKMI9jCQ/DLOnBZxrrUgXCLrL5LC7J++M2FKetuwDOlzhdUk+cChLEO9rHcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yCWmL4Fm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZmEmAWc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C40C1F000FF;
-	Sat, 12 Sep 2026 18:16:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCWmL4Fm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB9D1F000FF;
+	Sat, 12 Sep 2026 18:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789236975;
-	bh=b1T8m26NbgnyryCHFEhOvVfALDFrGiAXMdMUIN9fEXU=;
+	s=korg; t=1789236980;
+	bh=rukjS7EiBTsUX0R13pCv0HBjl4jQGExzZFDIs5yV1Oc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qZmEmAWc51bPvHEUiHYAd+Bpace7fK3scshQ65vCIaFAZTKS5UrigQFA944V2vHB7
-	 UmDm5sAtpwwTlcpiPSRZwgKZsBr9OOoWkuBq6K+nUFzCb/W3oG+Q/1v1JHnHOIGEIV
-	 bx6HqEgPYWIAb8L+NeG0IMFR7TNWJvr6km/Uov5I=
+	b=yCWmL4FmcocACqLw0Eg1GQmKyhajPuFwhijkzUQ0CIbbKcRtT6e6G86K1uZ4ZvgRK
+	 NWlEbt64ZonZm7jUZ4K1r54uZu1uvzTab6BsYZc+2RUEzOgRFF/YryJtKZ9fHO1m6e
+	 5dhXiAdUGWvKMk+242NYRtMZo7zgMaBZa6OB05V8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 5.15 163/935] PCI/sysfs: Avoid spurious runtime PM wakeup on config space accesses
-Date: Sat, 12 Sep 2026 08:53:13 +0200
-Message-ID: <20260912065530.558183728@linuxfoundation.org>
+Subject: [PATCH 5.15 164/935] PCI/proc: Avoid spurious runtime PM wakeup on config space accesses
+Date: Sat, 12 Sep 2026 08:53:14 +0200
+Message-ID: <20260912065530.580801187@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,64 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-commit b14b2bab88d7099ab4447560cbe4b40945e5c069 upstream.
+commit 4ff664a81d729b37f2eb65de80a670abfb61c9a0 upstream.
 
-Currently, the boundary checks in pci_read_config() and pci_write_config()
-reject only offsets beyond the effective configuration space size.
+Currently, proc_bus_pci_read() and proc_bus_pci_write() do not return early
+for zero-length configuration space accesses at valid offsets.
 
-An access at an offset exactly equal to that size passes the check, has its
-length clamped to zero, and then invokes pci_config_pm_runtime_get() and
+Such an access invokes pci_config_pm_runtime_get() and
 pci_config_pm_runtime_put() around transfer blocks that do nothing.
 
 This is a problem because pci_config_pm_runtime_get() synchronously resumes
-the upstream bridge through pm_runtime_get_sync() and resumes the device
+the upstream bridge through pm_runtime_get_sync(), and resumes the device
 itself through pm_runtime_resume() when it is in D3cold, only for the
 handler to return zero immediately afterwards.  Such a spurious wakeup
 wastes power and adds needless resume latency.
 
-The sysfs core already clamps accesses against the attribute size set
-through the bin_size() callback, which reports either 256 or 4096 bytes.
-As such, the affected accesses are reads at offset 64 (or 128 for CardBus
-devices) through files opened without CAP_SYS_ADMIN, and reads and writes
-at the exact configuration space size on devices where a quirk sets a
-non-standard size.
+The sysfs core already returns early for in-range zero-length binary
+attribute accesses before pci_read_config() or pci_write_config() is
+invoked.  In contrast, the VFS forwards zero-length requests to the procfs
+callbacks, where they continue into runtime PM handling.
 
-Reject accesses at the boundary offset as well, so they return early before
-any runtime PM involvement, matching the procfs implementations in
-proc_bus_pci_read() and proc_bus_pci_write().
+Return early from proc_bus_pci_read() and proc_bus_pci_write() when nbytes
+is zero, before any runtime PM involvement.
 
-The value returned to userspace at these offsets remains zero, so the
-change is not visible to userspace.
+The value returned to userspace at these offsets remains zero,
+so the change is not visible to userspace.
 
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-[bhelgaas: tweak commit log, order tags]
+[bhelgaas: order tags]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260720204356.1501749-1-kwilczynski@kernel.org
+Link: https://patch.msgid.link/20260729075909.1219906-1-kwilczynski@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-sysfs.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/proc.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/pci/pci-sysfs.c
-+++ b/drivers/pci/pci-sysfs.c
-@@ -727,7 +727,7 @@ static ssize_t pci_read_config(struct fi
- 	else if (dev->hdr_type == PCI_HEADER_TYPE_CARDBUS)
- 		size = 128;
+--- a/drivers/pci/proc.c
++++ b/drivers/pci/proc.c
+@@ -45,6 +45,9 @@ static ssize_t proc_bus_pci_read(struct
+ 	else
+ 		size = 64;
  
--	if (off > size)
-+	if (off >= size)
++	if (!nbytes)
++		return 0;
++
+ 	if (pos >= size)
  		return 0;
- 	if (off + count > size) {
- 		size -= off;
-@@ -803,7 +803,7 @@ static ssize_t pci_write_config(struct f
+ 	if (nbytes >= size)
+@@ -123,6 +126,9 @@ static ssize_t proc_bus_pci_write(struct
  	if (ret)
  		return ret;
  
--	if (off > dev->cfg_size)
-+	if (off >= dev->cfg_size)
++	if (!nbytes)
++		return 0;
++
+ 	if (pos >= size)
  		return 0;
- 	if (off + count > dev->cfg_size) {
- 		size = dev->cfg_size - off;
+ 	if (nbytes >= size)
 
 
