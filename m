@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF6837F729;
-	Sat, 12 Sep 2026 07:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9C237204A;
+	Sat, 12 Sep 2026 07:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197072; cv=none; b=OJhaoEU57sEwIjhS8AZbvlr6Qg42j5PICsmrNQ/EM9irfEnVPZ3tbw5+4ceQFUKDOk71nUSu5tH/2DzqftP5D+/oUik3URtjtS8oQzBtjtXuoS5/qsUZZwX1u2ELhTiIJPOtFJ7nVNDR1z03CxIAgLk8p5Fju9zFvkNxlReVyAg=
+	t=1789197078; cv=none; b=V9p6/mdGAUTiABRkETvhxQYZL388gl1iP+xjtRmzBgG7kRSFcTqHt7RkqQYeelqcDDRoZ15ntUft6A1BJ+E7Re1adx16lVl8HwvOMRfYA4tyORxoYDvtIkT3jqaRjKliLfMO4mkEhjy+e4s4p6ovSD9fUKp8qobYgX5Xnj+EG/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197072; c=relaxed/simple;
-	bh=2/qqM3XDKqIha61cRlkCWoVga0XoWbPGmxkzecT9khw=;
+	s=arc-20240116; t=1789197078; c=relaxed/simple;
+	bh=SRj/c8zUumOdh7pYpmSHIGVoczQWNii6DN8r53Gu8XA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qmXESUVqoyGdVCEen7WO5I8bw380wBD032zOGS1cU25t8VsosXee7445P1NrH7lilgE0/7VDaKE+blxlO7QEs8JSm+30u8RipKd+8SKv1G09rzFzwtKuS+rumptWqzr4A3bO+7ZKsD1oq639+rcrFcL9k0ni+VrjlfyVhTQ0+D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6k14Ik8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rqEO1MxDzoNULriVKSntk0Zsh/ivHQusYeXGsbeA6l2oEYphLI1xiebzLows0xfhnr8O0DsEMTYeZQwnPdIMN1og1aZuADeZh1pTDM6+ihxzwF/HifcXtzrErX0/xtHj8WUFFG2G5cPRD7MqvsWbO68BprmSXOdhU86fi182l5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xk+BZj1S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6k14Ik8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF95E1F000FF;
-	Sat, 12 Sep 2026 07:11:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xk+BZj1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98CC61F000FF;
+	Sat, 12 Sep 2026 07:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197071;
-	bh=rE7jyGe6cxUH1lTHdra65glSZfKjrOEv+VnO5vb370E=;
+	s=korg; t=1789197076;
+	bh=eENeNVI1nistmDwEkArbppT8bGjSPyV9ftAs5lD8xhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I6k14Ik83Td1c9+EeYt4+Y0iQ1LarfwyyPOAkmHnViwQ6FGoemH+UI4s8xLfSy1fW
-	 vBYRwRKLVJIbIdq3M/HHEruOmOji3gorEjjgAHf/aq8vZLiMf7pUoU7aT9fOvuBMk6
-	 QGp4ZK53UTv8PraavuoPhv8JR+eUt5bP/+8cRd/4=
+	b=xk+BZj1SLQmLtn/4cuC5byAqlx9nhdtjuMD8fLo2gDhM5d8aMieBTQLYmSB0vX+/x
+	 H6cwFQcpNMGp26wCKTWRiyBJIk5xfkzE8oisPyRkY7uxEeHCAr+UeCVeBug+RUCNrL
+	 C2N1ZfM60eC19lJY102SWspPNwli7wVJ8Dmi9c8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Daniel Stone <daniel@fooishbar.org>,
-	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
-	Daniel Stone <daniels@collabora.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0052/1815] drm/rockchip: vop2: Recognise 10-bit YUV422 as YUV format
-Date: Sat, 12 Sep 2026 08:30:02 +0200
-Message-ID: <20260912065650.239591895@linuxfoundation.org>
+Subject: [PATCH 7.2 0043/1815] drm/rockchip: vop2: Wait for layer cfg done before switching LAYERSEL_REGDONE_SEL
+Date: Sat, 12 Sep 2026 08:29:53 +0200
+Message-ID: <20260912065650.032698732@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,43 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit c1bfe8dac0a79d47eed313b9bcaa2658898684ec ]
+[ Upstream commit d1ad644e572c0647ad8428439eafea0aacfccf9e ]
 
-The Rockchip VOP2 video output driver has a "is_yuv_output" function,
-which returns true when a given bus format is a YUV format, and false
-otherwise.
+LAYERSEL_REGDONE_SEL mask of RK3568_OVL_CTRL register controls which
+Video Port (VP) vsync latches the shared RK3568_OVL_{LAYER|PORT}_SEL
+shadow registers into the active configuration.
 
-This switch statement is lacking the bus format used for YUV422 10-bit.
+rk3568_vop2_setup_layer_mixer() overwrites LAYERSEL_REGDONE_SEL to the
+current VP ID before waiting for the previous VP layer configuration to
+take effect.  As a consequence, the previous VP vsync can no longer
+trigger the latch, so the wait polls a value that might never appear.
 
-Add the two component orderings of the YUV422 10-bit bus formats to the
-switch statement.
+Move the layer cfg done wait before the RK3568_OVL_CTRL write so the
+previous VP vsync can still commit the pending configuration.
 
-Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
-Reviewed-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Reviewed-by: Daniel Stone <daniel@fooishbar.org>
-Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
-Link: https://patch.msgid.link/20260609-color-format-v17-13-35739b5782cc@collabora.com
-Signed-off-by: Daniel Stone <daniels@collabora.com>
+Fixes: 3e89a8c68354 ("drm/rockchip: vop2: Fix the update of LAYER/PORT select registers when there are multi display output on rk3588/rk3568")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Reviewed-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260504-vop2-layer-cfg-tmout-v1-2-730226a7331e@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/rockchip/rockchip_vop2_reg.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index be7830c9001c9..a268bd2fbaaab 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -352,6 +352,8 @@ static bool is_yuv_output(u32 bus_format)
- 	switch (bus_format) {
- 	case MEDIA_BUS_FMT_YUV8_1X24:
- 	case MEDIA_BUS_FMT_YUV10_1X30:
-+	case MEDIA_BUS_FMT_YUYV10_1X20:
-+	case MEDIA_BUS_FMT_UYVY10_1X20:
- 	case MEDIA_BUS_FMT_UYYVYY8_0_5X24:
- 	case MEDIA_BUS_FMT_UYYVYY10_0_5X30:
- 	case MEDIA_BUS_FMT_YUYV8_2X8:
+diff --git a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
+index fcf73a4327ab1..322a303d3f1a5 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
++++ b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
+@@ -2288,15 +2288,6 @@ static void rk3568_vop2_setup_layer_mixer(struct vop2_video_port *vp)
+ 	 *    lead to the configuration of the previous VP being take effect along with the VSYNC
+ 	 *    of the new VP.
+ 	 */
+-	if (layer_sel != old_layer_sel || port_sel != old_port_sel)
+-		ovl_ctrl |= FIELD_PREP(RK3568_OVL_CTRL__LAYERSEL_REGDONE_SEL, vp->id);
+-	vop2_writel(vop2, RK3568_OVL_CTRL, ovl_ctrl);
+-
+-	if (port_sel != old_port_sel) {
+-		vop2_writel(vop2, RK3568_OVL_PORT_SEL, port_sel);
+-		vop2_cfg_done(vp);
+-		rk3568_vop2_wait_for_port_mux_done(vop2);
+-	}
+ 
+ 	if (layer_sel != old_layer_sel && atv_layer_sel != old_layer_sel) {
+ 		cfg_done = vop2_readl(vop2, RK3568_REG_CFG_DONE);
+@@ -2309,6 +2300,16 @@ static void rk3568_vop2_setup_layer_mixer(struct vop2_video_port *vp)
+ 			rk3568_vop2_wait_for_layer_cfg_done(vop2, old_layer_sel);
+ 	}
+ 
++	if (layer_sel != old_layer_sel || port_sel != old_port_sel)
++		ovl_ctrl |= FIELD_PREP(RK3568_OVL_CTRL__LAYERSEL_REGDONE_SEL, vp->id);
++	vop2_writel(vop2, RK3568_OVL_CTRL, ovl_ctrl);
++
++	if (port_sel != old_port_sel) {
++		vop2_writel(vop2, RK3568_OVL_PORT_SEL, port_sel);
++		vop2_cfg_done(vp);
++		rk3568_vop2_wait_for_port_mux_done(vop2);
++	}
++
+ 	vop2_writel(vop2, RK3568_OVL_LAYER_SEL, layer_sel);
+ 	mutex_unlock(&vop2->ovl_lock);
+ }
 -- 
 2.53.0
 
