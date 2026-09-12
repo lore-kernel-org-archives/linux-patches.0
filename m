@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17FD3A8758;
-	Sat, 12 Sep 2026 19:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68745490C15;
+	Sat, 12 Sep 2026 19:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240261; cv=none; b=s+5SfV9jOGgFhJ6fznrFlLhPJ4ANnm43RrghPvlBVDAtPMlrgSJGDhKoJw1iytWtYF2TtKWanuz26EAcDM1g45mdL0HjbOvVlvdptZQf1QUWyiVzb8lheTFFjfyVjU5Az5rg/IY0SBpEYfGOZPnn9hulRGJiFv0nxhcxyVN77yc=
+	t=1789240267; cv=none; b=SZrraMhU7Ju7UDxCoTwePYxZBnx7Gvo1TEonmXtSfN/TYppGFdIV3Uk8m+PDudXHmaX07SCvJ05r2AlI2jRMefWtOSxtxe/olsYIs8cRvE/ySdL4TFVB91I/p5NTFhlnB1zYZnBKhb6N7bX1R/+VsGFjTR6VrtkoQK5CHCznZhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240261; c=relaxed/simple;
-	bh=U8ke0lAuVqKJsj9w+Xmum1iIpGvr9GRjN0c7u5zRl88=;
+	s=arc-20240116; t=1789240267; c=relaxed/simple;
+	bh=ZMJBDxlTrprvcNwpYcUZ9qBOcZuXNRBw1zzLiZL8c0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hX+HXalvZsIM++n75ohFtcF2KelWFfrZxkGAye4kePMD20wv9Dq22QBq4FzIu+E1415nZ3r4vieD0qoUmbpy1eKCQzuZjC5nlOmav3zn84g5mROBGzj1kW2HHYhGcXTYnHKMkRzLBQSvGU/cT+kWKGDcWuOsqEH6fH8WI7Wu2mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oh/J3Phe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rjlq3mlMTXXv6BIo/GkiI4/4WO60hogfu917taOlH8Y/VIKmXnauN8nPyohCJJ/M6MV+Qmp6KMya/HYZ61TMNj1nJwGHSD/+kdMovMIbVbn868cDcl10adtaKkzljuPerjrE4eYBnwhiob48kxFOOk1h4bH+0K/PI8hTtBVF+6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJO2ACy3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oh/J3Phe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA3F1F000FF;
-	Sat, 12 Sep 2026 19:10:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJO2ACy3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6B61F000FF;
+	Sat, 12 Sep 2026 19:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240259;
-	bh=zMBNjgIs3g/ct6z62DfIE5szlzP1RHhgKB/1Rhpvwlc=;
+	s=korg; t=1789240264;
+	bh=ozjjUaLusWiHzP57Gw2h0B8mVeVK1SmY2bLYsG5SLmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oh/J3Phe+85V0ALvZKxZ9jbhTlon2+5+IMH5oCDAq+WTlnJYk0V9m0a7aH8S4ZwgV
-	 J9lXFgwW1COGNwZ27P7jzx8mi/6jQsc86Ph/uv7ac9o2z8pnNdC9eWuNkG6GSCB4/9
-	 vqxbzWp9wS5qLXR6o4GIAhthr4O9bfl9a6SZ95l0=
+	b=AJO2ACy3FgFd0D7DMe0EypEg4PRRYzCcEA8fds8MLVr5LBFubRYMAeVYa9X44tVSG
+	 rLLt7QvcCZMDI3JStg5vSTynNK/pRbAPtvpLM5Ppfaf3zH2gvzSriN431TZnHFd4Nn
+	 txKjg6K5wuNiX1eTkCjputkN8TO0vqMxp2FeIklA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>,
-	Patrick Williams <patrick@stwcx.xyz>,
-	Guenter Roeck <linux@roeck-us.net>,
+	ZhangGuoDong <zhangguodong@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 832/935] hwmon: (emc1403) Add support for EMC1442
-Date: Sat, 12 Sep 2026 09:04:22 +0200
-Message-ID: <20260912065545.906527839@linuxfoundation.org>
+Subject: [PATCH 5.15 833/935] smb/server: preserve error status in smb2_handle_negotiate()
+Date: Sat, 12 Sep 2026 09:04:23 +0200
+Message-ID: <20260912065545.928637425@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,54 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
+From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit 9350163aff24530f2aa3357ee1c7bd8771a443e4 ]
+[ Upstream commit 73541bd2bab77e7e8e89b1edb5d342f4190dd4d0 ]
 
-Add support for EMC1442 which is compatible with EMC1402.
+smb2_handle_negotiate() records specific failures such as
+STATUS_INVALID_PARAMETER or STATUS_NOT_SUPPORTED.
 
-Signed-off-by: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
-Reviewed-by: Patrick Williams <patrick@stwcx.xyz>
-Link: https://lore.kernel.org/r/20231102090808.427351-1-Delphine_CC_Chiu@wiwynn.com
-[groeck: compatible with EMC1402, not EMC1403]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 75f2c0b36907 ("hwmon: (emc1403) Drop hysteresis for low limit temperature")
+Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
+Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/emc1403.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/ksmbd/smb2pdu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/emc1403.c b/drivers/hwmon/emc1403.c
-index 3148382720499..568702e08cafd 100644
---- a/drivers/hwmon/emc1403.c
-+++ b/drivers/hwmon/emc1403.c
-@@ -346,6 +346,9 @@ static int emc1403_detect(struct i2c_client *client,
- 	case 0x27:
- 		strlcpy(info->type, "emc1424", I2C_NAME_SIZE);
- 		break;
-+	case 0x60:
-+		strscpy(info->type, "emc1442", I2C_NAME_SIZE);
-+		break;
- 	default:
- 		return -ENODEV;
- 	}
-@@ -430,7 +433,7 @@ static int emc1403_probe(struct i2c_client *client)
- }
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index 2ffd78ef7da26..31b198b3f01df 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -1175,7 +1175,7 @@ int smb2_handle_negotiate(struct ksmbd_work *work)
+ 				GFP_KERNEL);
+ 		if (!conn->preauth_info) {
+ 			rc = -ENOMEM;
+-			rsp->hdr.Status = STATUS_INVALID_PARAMETER;
++			rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
+ 			goto err_out;
+ 		}
  
- static const unsigned short emc1403_address_list[] = {
--	0x18, 0x1c, 0x29, 0x4c, 0x4d, 0x5c, I2C_CLIENT_END
-+	0x18, 0x1c, 0x29, 0x3c, 0x4c, 0x4d, 0x5c, I2C_CLIENT_END
- };
+@@ -1271,7 +1271,7 @@ int smb2_handle_negotiate(struct ksmbd_work *work)
+ 	ksmbd_conn_set_need_negotiate(conn);
  
- /* Last digit of chip name indicates number of channels */
-@@ -444,6 +447,7 @@ static const struct i2c_device_id emc1403_idtable[] = {
- 	{ "emc1422", emc1402 },
- 	{ "emc1423", emc1403 },
- 	{ "emc1424", emc1404 },
-+	{ "emc1442", emc1402 },
- 	{ }
- };
- MODULE_DEVICE_TABLE(i2c, emc1403_idtable);
+ err_out:
+-	if (rc)
++	if (rc && rsp->hdr.Status == STATUS_SUCCESS)
+ 		rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
+ 
+ 	if (!rc)
 -- 
 2.53.0
 
