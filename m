@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BA341A57D;
-	Sat, 12 Sep 2026 13:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3772541A57D;
+	Sat, 12 Sep 2026 13:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219140; cv=none; b=ZA/DjnvfLXTvl4OrIp/6uXVM0hfhIevxyEth+68tFBBiE78TOrJpMPY/1h2BcUUhrOcdjYAEBMWRmibQ7/GZnzY0EcavF6wIbFX7z1tNmZCcRKmbPJ9KQR8Wdufez8PeLtv3A+N3Vr2xCljG0HsoI8Es309mfM0JgMQq+bLR/Ls=
+	t=1789219144; cv=none; b=qs9gmt1laKq2fwqKs5UzA9hwqmT1hkFioXdVH1z12V6DGl3+pqBKNWYC35aQig/UTt/RaMERRAhxcm+YkDqWGNSgzI2kZKKv3AvgsTltOs/6PWofar1ydXfOxn0ejn1yQ+RtPbh0ytZMUgX35NJl0WvpZ17aJ4JMFTEvQwd9LPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219140; c=relaxed/simple;
-	bh=rUmNGY5MO/gd0HAxppTwh4l49wjf5ddd6cH9/DmeZy4=;
+	s=arc-20240116; t=1789219144; c=relaxed/simple;
+	bh=9lCtyMYVooRETpM9Zz/8GRBJ2SIe1KUBMQyezn/cryc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DJPUnRFbgLECiWMjjBGgkAj2s+ihP0APSUyPLmjwSWAuVRSnxRrVUjZNELtMXBOUeojfl0rnIxo3e6IkWm9kanvOpI6Mni1Vdd1WCyKl7zgaqQUUkdhbF3eu7D5+5ZXPf7uUO5DZfZjZNSWt3WK3Kp5BcEhMXjlbLdNX8GIOiF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3ebnl5J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V9XpJkC6BKuOhkdyrdBuH19a9I/cRj6xY60QqHCB0hbGDhLQqCLEWhKLXpPvcW09BdHDyuaqRn2ua0hCTC+I7px6gisCwoqGwteyEHD53MH7eck4npKo+elQMpyTUcajr016hBVOnMFytuwLKRMjWwgC/NBSNeKkHhmFEuZNpwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vz/Pyonz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3ebnl5J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A216C1F000FF;
-	Sat, 12 Sep 2026 13:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vz/Pyonz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0DA1F000FF;
+	Sat, 12 Sep 2026 13:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219139;
-	bh=T+DpV6iISJVrnW9fpzfJHkYetwcOdwpG6C+bhcMJGR8=;
+	s=korg; t=1789219143;
+	bh=kLaAW3BeFSv/g+WBouRA12t9CsBb+VkBZTMIPYBrfAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q3ebnl5JY4qelfpIjiyiXlfTeR5HliTTmDgqnPqTxhhv4+gN8Z5kHKTF3IMdMWZ9M
-	 LMA6axvUQGuqmxVVW1y+z7SwTikzFs5NPeezcmSzu1P2aO8fUSTjcuRG9jiCYgnQ+w
-	 j7nB+EnELlBJjI5mgNvU+ywRlU/XmzF4tD0Bf0uQ=
+	b=Vz/Pyonz34qzt84QhKskXdFFg6Bp5uw0VZANvxta1+ZEvNjgHItmY7rxNiyLeSpC7
+	 FcNad0aJNCymx4B2KKH88fmxc6o+NG61bV2AVBHPplg6DjzHwL6KYR/0cNxGTSD81P
+	 ZcLItZqNfICr6mvbf3U41c+dHHhWPxAxCkrTgnX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Henderson <achender@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1288/1376] net/rds: use wq_has_sleeper() in rds_cong_map_updated()
-Date: Sat, 12 Sep 2026 09:01:54 +0200
-Message-ID: <20260912065636.243379238@linuxfoundation.org>
+Subject: [PATCH 6.12 1289/1376] cifs: fix clearing stats for fastest execution of each smb2 command
+Date: Sat, 12 Sep 2026 09:01:55 +0200
+Message-ID: <20260912065636.265077217@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,60 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit d4f484661961636eb90d287050959e613795f73a ]
+[ Upstream commit 48cab1fd5720508148673f59d8ed52c7c7fffca2 ]
 
-rds_cong_map_updated() runs after a peer's congestion map has been
-rewritten (by rds_tcp_cong_recv() and rds_ib_cong_recv(), or the
-clear-all in the loopback and IB send-completion paths).  It bumps
-rds_cong_generation and then checks waitqueue_active() on
-map->m_waitq and on rds_poll_waitq to decide whether anyone needs
-waking.  atomic_inc() carries no ordering and waitqueue_active() is a
-plain load, so nothing orders the map and generation stores before
-the wait queue reads.  The waiters do the mirror image: rds_cong_wait()
-adds itself to m_waitq and then tests the port bit, and rds_poll()
-registers on rds_poll_waitq and then reads the generation.  That is
-the store-buffering pattern described above waitqueue_active() in
-include/linux/wait.h - the updater can observe an empty wait queue
-while the waiter still observes the port as congested, and no wake-up
-is issued.
+The code to clear the 'fastest_cmd' statistics has a typo that
+repeatedly clears the stat for cmd 0, rather than iterating
+through each cmd.  Fix the typo (0->i).
 
-rds_cong_wait() is an interruptible sleep with no timeout, so a
-sender blocked on a congested port stays blocked until the next
-congestion update from that peer arrives or a signal is delivered.
-A poll() waiter misses the map-updated notification the same way.
-
-Use wq_has_sleeper(), which is waitqueue_active() preceded by the
-required full barrier, as rds_tcp_state_change() already does for
-the same pattern.
-
-Fixes: 922cb17a5c81 ("RDS: Congestion-handling code")
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260822052647.88318-1-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 433b8dd7672be ("SMB3: Track total time spent on roundtrips for each SMB3 command")
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/cong.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/cifs_debug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/rds/cong.c b/net/rds/cong.c
-index 8b689ebbd5b52..c85af56e42e73 100644
---- a/net/rds/cong.c
-+++ b/net/rds/cong.c
-@@ -256,9 +256,9 @@ void rds_cong_map_updated(struct rds_cong_map *map, uint64_t portmask)
- 	  map, &map->m_addr);
- 	rds_stats_inc(s_cong_update_received);
- 	atomic_inc(&rds_cong_generation);
--	if (waitqueue_active(&map->m_waitq))
-+	if (wq_has_sleeper(&map->m_waitq))
- 		wake_up(&map->m_waitq);
--	if (waitqueue_active(&rds_poll_waitq))
-+	if (wq_has_sleeper(&rds_poll_waitq))
- 		wake_up_all(&rds_poll_waitq);
- 
- 	if (portmask && !list_empty(&rds_cong_monitor)) {
+diff --git a/fs/smb/client/cifs_debug.c b/fs/smb/client/cifs_debug.c
+index 9092051776fc1..185a618f5cf1e 100644
+--- a/fs/smb/client/cifs_debug.c
++++ b/fs/smb/client/cifs_debug.c
+@@ -682,7 +682,7 @@ static ssize_t cifs_stats_proc_write(struct file *file,
+ 				atomic_set(&server->smb2slowcmd[i], 0);
+ 				server->time_per_cmd[i] = 0;
+ 				server->slowest_cmd[i] = 0;
+-				server->fastest_cmd[0] = 0;
++				server->fastest_cmd[i] = 0;
+ 			}
+ #endif /* CONFIG_CIFS_STATS2 */
+ 			list_for_each_entry(ses, &server->smb_ses_list, smb_ses_list) {
 -- 
 2.53.0
 
