@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FD0456DE1;
-	Sat, 12 Sep 2026 11:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743D6472541;
+	Sat, 12 Sep 2026 11:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210891; cv=none; b=PLV9A+JEF8clylzPTdm16JfAG6NYPBFHNtKGUhegFBHje0NLYMZtxcllFJqE/3wVMvGkZ6vnNG+14yyTr4HM9NpEGtndYRPVGcrwiaTXxQQVwimKRJYhpg7k1ZyVfK7gVJF4YNCzihUH746hPJlvPG/H+mg2+DwmEF3lt9BfLs8=
+	t=1789210895; cv=none; b=PT8RExDncuGoXJ5N9fr3bnfAA/49hqn+bX/8EmgnkGOL18vU0Dmjfuroz1zIe80YTBEkVamY5yyrwfWjt9msN6kTJwoiVrTR/gl1Z9sdPs+FITAt4i+ifJEhIPynmRBe32SJ+77G6GNNfgeZz0mRuyLapV3DlPxibnTTb8YlNyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210891; c=relaxed/simple;
-	bh=K6Y7FikbB+DbCBaIMhNobTfB5hdrNK5/BoJep6x7Uxc=;
+	s=arc-20240116; t=1789210895; c=relaxed/simple;
+	bh=qV/wm6DqYxulU6K1xu9btdhosk147aBNEWREUffx8nA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NIMfcG/LYbjk+ZsQ6mmPWJTlVeNG6LhhbZYtO5/RiXZw016Obq9RrHakSSUtc3Kxyp92K9La0dvDwQS0vhG0lRU67gsyaaKpuajQfVgpiG4x6gbQd1sw92BntP5HgiqTtZsyjPLdZbJBIVCzByiXVfsKbhXLgk5YA+ZsCkEOoPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcVwZjhH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OAqzVUjGreRhajlpf/Qy8oogbl/jmOXmrPgjNDBIeC/FRNblJ7MfVTr06MeBkHe6qDzhxnYbc0Pb9yu2qoRfMEm3WpBh1H/2V+9NHzYU5sKBnHlU/J9bvrgjV+bbsUM2cbtvdIgaWETJ3klY4pr2B9Jt41Qkn6bz9yKLbdfuYqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KVusi4nO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcVwZjhH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE9B1F000FF;
-	Sat, 12 Sep 2026 11:01:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KVusi4nO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED641F000FF;
+	Sat, 12 Sep 2026 11:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210889;
-	bh=2KzmNkpbXtgof6CCDffcBuHA/n3LpAQhux7Wl8iGqUo=;
+	s=korg; t=1789210894;
+	bh=FoyDdNYZQO3M7sAAXn04AtHNnDFhwqKPMSl94rD+Lkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kcVwZjhHQxZKySSElw1/b0cRylhxO86sVRmQ6qZyuCoixwXhUmbLiUi/wCnoL28M3
-	 GzjEi+YQjy69lEFw2XUtApsqd896aBu7XUJ0thYF3BgJheByy7X/OjcqJ+KNqoS9KG
-	 rAdIJwVCzrShufmb/2Scgh6CudouL0Xl84yMBWzU=
+	b=KVusi4nOIuZZmdBh05oWGVaOSoxacHqgwJtcwQHP4n0dFBPkFZirrrogWjhpPq0zH
+	 2I6T3xucuAqh8z6o0RA7tsS/zcyfgfdyX5stl5sYw5tRHou+/2ugPHQIT9hMI4ijiq
+	 CCh3aYBOO8t0BpOGX7nJ9l77nO0ECWnSdghtwdZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nick Chan <towinchenmi@gmail.com>,
 	Sven Peter <sven@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1119/1518] nvme: Add a quirk for page aligned admin queue buffers
-Date: Sat, 12 Sep 2026 08:54:48 +0200
-Message-ID: <20260912065648.765985302@linuxfoundation.org>
+Subject: [PATCH 6.18 1120/1518] nvme-apple: Require page aligned buffers on the admin queue
+Date: Sat, 12 Sep 2026 08:54:49 +0200
+Message-ID: <20260912065648.788934207@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -55,68 +55,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Peter <sven@kernel.org>
 
-[ Upstream commit 69d22a6b2f6984200d92dac689f8b00cc3d7d736 ]
+[ Upstream commit ea2160c7b78187ea9ab08c3190eef237c4ee99a7 ]
 
-Apple controllers seem to require any queue buffers on the admin queue
-to be aligned to the NVMe controller page size. Weirdly, this constraint
-does not apply to the i/o queue where any alignment is fine. This has
-always been required on pre-M1 controllers and is required starting with
-macOS 15 firmware or post-M4 controllers again. On M1/M2/M3 we only got
-away with this because there was a chicken bit to disable this
-requirement. Let's add a quirk that enforces this alignment.
+Now that we have a quick to align buffers on the admin queue to the NVMe
+controller page size use it for Apple controllers. This fixes pre-M1
+controllers, which always rejected unaligned requests, and also makes
+this driver work for M4 SoCs and for M1/M2/M3 SoCs that have been
+updated to the firmware shipped with macOS 15.
 
+Fixes: 5bd2927aceba ("nvme-apple: Add initial Apple SoC NVMe driver")
 Tested-by: Joshua Peisach <jpeisach@ubuntu.com>
 Tested-by: Janne Grunau <j@jannau.net>
 Tested-by: Nick Chan <towinchenmi@gmail.com>
 Signed-off-by: Sven Peter <sven@kernel.org>
-Stable-dep-of: ea2160c7b781 ("nvme-apple: Require page aligned buffers on the admin queue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 5 ++++-
- drivers/nvme/host/nvme.h | 7 +++++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ drivers/nvme/host/apple.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 7d475e298baaf..dcf729aacb1f7 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2057,7 +2057,10 @@ static void nvme_set_ctrl_limits(struct nvme_ctrl *ctrl,
- 	lim->max_integrity_segments = ctrl->max_integrity_segments;
- 	lim->virt_boundary_mask = ctrl->ops->get_virt_boundary(ctrl, is_admin);
- 	lim->max_segment_size = UINT_MAX;
--	lim->dma_alignment = 3;
-+	if (is_admin && (ctrl->quirks & NVME_QUIRK_ADMIN_PAGE_ALIGN))
-+		lim->dma_alignment = NVME_CTRL_PAGE_SIZE - 1;
-+	else
-+		lim->dma_alignment = 3;
- }
- 
- static bool nvme_update_disk_info(struct nvme_ns *ns, struct nvme_id_ns *id,
-diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index 0b8b91506b1f4..ec03a07617af1 100644
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -178,6 +178,11 @@ enum nvme_quirks {
- 	 * Align dma pool segment size to 512 bytes
- 	 */
- 	NVME_QUIRK_DMAPOOL_ALIGN_512		= (1 << 22),
-+
-+	/*
-+	 * Admin queue DMA buffers must be page aligned
-+	 */
-+	NVME_QUIRK_ADMIN_PAGE_ALIGN		= (1 << 23),
- };
- 
- static inline char *nvme_quirk_name(enum nvme_quirks q)
-@@ -229,6 +234,8 @@ static inline char *nvme_quirk_name(enum nvme_quirks q)
- 		return "broken_msi";
- 	case NVME_QUIRK_DMAPOOL_ALIGN_512:
- 		return "dmapool_align_512";
-+	case NVME_QUIRK_ADMIN_PAGE_ALIGN:
-+		return "admin_page_align";
+diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
+index 16f092c7c4d98..18e877cec0e18 100644
+--- a/drivers/nvme/host/apple.c
++++ b/drivers/nvme/host/apple.c
+@@ -1599,7 +1599,8 @@ static struct apple_nvme *apple_nvme_alloc(struct platform_device *pdev)
  	}
  
- 	return "unknown";
+ 	ret = nvme_init_ctrl(&anv->ctrl, anv->dev, &nvme_ctrl_ops,
+-			     NVME_QUIRK_SKIP_CID_GEN | NVME_QUIRK_IDENTIFY_CNS);
++			     NVME_QUIRK_SKIP_CID_GEN | NVME_QUIRK_IDENTIFY_CNS |
++			     NVME_QUIRK_ADMIN_PAGE_ALIGN);
+ 	if (ret) {
+ 		dev_err_probe(dev, ret, "Failed to initialize nvme_ctrl");
+ 		goto put_dev;
 -- 
 2.53.0
 
