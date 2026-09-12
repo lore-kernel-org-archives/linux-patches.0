@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E43738398F;
-	Sat, 12 Sep 2026 14:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5DD2ECD1D;
+	Sat, 12 Sep 2026 14:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225073; cv=none; b=trs8BRP3zVXijcbREXn4uDdPxN29A8YvecPnNcPTQqXflIQgPRsdkOZk5uLikahSncsGN6e5+EvCJ0DAX9Q4AzBRx//0cfT/hIDp7Hu35fulTpAU+AkOF41AyRaWxqZpCYZPLUqRMxQc6GT57q2zUakl6KQtIP3SN4HbEZxblSI=
+	t=1789225078; cv=none; b=WnL/QL0plWR1DDtWfCT5dvYG4V4q8vdGiAxUJpHBMl18D5OGVQDHzBZgtF83aU0CSUtdvGV4hkDrRPf4U/PAtjS1kU/nFalVFlTHgCqgsCOe558H8urS2tG5TxZYnYEeQxcDoDwBLvttfAw0T3fm+z8WFjL4kP3hwJdXkkPwvs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225073; c=relaxed/simple;
-	bh=KCRYyOYMPWy7smNIi0aNhAm6u6/DQB5Q1dXrRUyjDI8=;
+	s=arc-20240116; t=1789225078; c=relaxed/simple;
+	bh=s68RxLTag4uOW9A4YWh5C1TAuwJbWiQp6O+Eyr+4wUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hS3tRSce77ZNKM1yhswxNFQNP7FUCSb4BNnkVj/NUk8tnlSt67qIg0ZjiGP05C6KBt3ngipHHmOZNmcJLHsx/5HVIQ+fPIEGMz65mPoeCKEQZRqM+VCBadZe76cMwbG0he0Gya3EpoQwBnxIGUn+lVkJhf1tQy1zz+i92x5Z2D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDYNv7FM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HLIBLOjPSfQc+qdNd0zYiA0+vhij/qnC18PbeHT06eKTwDLwSDl+wIzz0q2Uy2spnGCtld9X9SgrZ23R75asfHAqI+6t0f0KwA698DkbO1WBBK1T4esLIJXGwxUQzX0jflyyzJwKMv0XEIa52BmN+ODpui7IBNovLjHBwrtXaG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQ0/wK9W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDYNv7FM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7481F000FF;
-	Sat, 12 Sep 2026 14:57:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQ0/wK9W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011A71F000FF;
+	Sat, 12 Sep 2026 14:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225069;
-	bh=sEWPhg89Cl75xIG7sMVGCwR1iDw3uXd9VVAojvQXx6k=;
+	s=korg; t=1789225074;
+	bh=y/Q0q/liU6bXqLNIf2/6wBd9fop3Xx5I3fJgx7wCu+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eDYNv7FMOFmFHj9aZL/wKHC4U+rx8YwJdCwQEAlZiFt8LeY2zxBNW82B3w/hG+BVe
-	 eJ8JCVdvNV+WJlbNV/mHjF0y7fYHL0hKn/DJIIT52xyR+0L/7E9l3H1GlLXMdzf2i3
-	 V0FQBSF5BBAJCARVILd2Feg8PS+2KhI+7jxvk+f4=
+	b=IQ0/wK9Wwyifk1yfGf8fx+ncP1iICt9WBSzlPXsgEflgycNHP4HJES8Up2zEk+PDx
+	 3Aeno8GO6jDrxDu2HoyDoit1WGIjkZNxFT/jtLY5vpmQZj6TyhZVq+sjraYgPWveww
+	 5BaZeHKMDmfS7sh7+hOxb6BhmBCqUfzPn9Dj7Vx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Tanushree Shah <tshah@linux.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1122/1424] Bluetooth: btusb: QCA: Fix populating devcoredump fields on unenabled devices
-Date: Sat, 12 Sep 2026 08:59:14 +0200
-Message-ID: <20260912065632.427864467@linuxfoundation.org>
+Subject: [PATCH 6.6 1123/1424] perf trace-event: Fix integer truncation in do_read() and skip()
+Date: Sat, 12 Sep 2026 08:59:15 +0200
+Message-ID: <20260912065632.449570828@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,42 +51,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Tanushree Shah <tshah@linux.ibm.com>
 
-[ Upstream commit 33c6a8d01889a84cc773c0c20c8323bce84af27d ]
+[ Upstream commit c108c1391be0826920991d24532fbae8f6373ddc ]
 
-Devcoredump is not enabled for ATH3012 or QCA_ROME, but they
-unconditionally populate devcoredump fields in btusb_setup_qca().
+The do_read() and skip() functions use 'int' for size parameters,
+truncating 64-bit sizes from callers. This causes two issues:
 
-Fix by populating devcoredump fields only when BTUSB_QCA_WCN6855 is
-set, which marks the first generation of QCA BT SoCs for which
-devcoredump is enabled.
+1. Uninitialized memory dump: do_read() reads fewer bytes than
+   allocated, leaving uninitialized heap memory that gets written
+   to output files.
 
-Fixes: 20981ce2d5a5 ("Bluetooth: btusb: Add WCN6855 devcoredump support")
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+2. Out-of-bounds read: Parsing functions process the full 64-bit
+   size while only partial data was read into the buffer.
+
+Change do_read(), __do_read(), and skip() to use size_t for size
+parameters and ssize_t for return values (where applicable), matching
+read()/write() system calls.
+Update callers to use ssize_t for storing return values.
+
+Fixes: 4a31e56599d4 ("perf tools: Get rid of read_or_die() in trace-event-read.c")
+Signed-off-by: Tanushree Shah <tshah@linux.ibm.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ tools/perf/util/trace-event-read.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 69459a90126df..1edf8674dd108 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3468,8 +3468,10 @@ static int btusb_setup_qca(struct hci_dev *hdev)
- 	if (err < 0)
- 		return err;
+diff --git a/tools/perf/util/trace-event-read.c b/tools/perf/util/trace-event-read.c
+index 72379cb8f5fd3..b0d3957c48e6c 100644
+--- a/tools/perf/util/trace-event-read.c
++++ b/tools/perf/util/trace-event-read.c
+@@ -25,18 +25,18 @@ static int input_fd;
+ static ssize_t trace_data_size;
+ static bool repipe;
  
--	btdata->qca_dump.fw_version = le32_to_cpu(ver.patch_version);
--	btdata->qca_dump.controller_id = le32_to_cpu(ver.rom_version);
-+	if (btdata->match_id->driver_info & BTUSB_QCA_WCN6855) {
-+		btdata->qca_dump.fw_version = le32_to_cpu(ver.patch_version);
-+		btdata->qca_dump.controller_id = le32_to_cpu(ver.rom_version);
-+	}
+-static int __do_read(int fd, void *buf, int size)
++static ssize_t __do_read(int fd, void *buf, size_t size)
+ {
+-	int rsize = size;
++	size_t rsize = size;
  
- 	if (!(status & QCA_SYSCFG_UPDATED)) {
- 		err = btusb_setup_qca_load_nvm(hdev, &ver, info);
+ 	while (size) {
+-		int ret = read(fd, buf, size);
++		ssize_t ret = read(fd, buf, size);
+ 
+ 		if (ret <= 0)
+ 			return -1;
+ 
+ 		if (repipe) {
+-			int retw = write(STDOUT_FILENO, buf, ret);
++			ssize_t retw = write(STDOUT_FILENO, buf, ret);
+ 
+ 			if (retw <= 0 || retw != ret) {
+ 				pr_debug("repiping input file");
+@@ -51,13 +51,13 @@ static int __do_read(int fd, void *buf, int size)
+ 	return rsize;
+ }
+ 
+-static int do_read(void *data, int size)
++static ssize_t do_read(void *data, size_t size)
+ {
+-	int r;
++	ssize_t r;
+ 
+ 	r = __do_read(input_fd, data, size);
+ 	if (r <= 0) {
+-		pr_debug("reading input file (size expected=%d received=%d)",
++		pr_debug("reading input file (size expected=%zu received=%zd)",
+ 			 size, r);
+ 		return -1;
+ 	}
+@@ -68,10 +68,10 @@ static int do_read(void *data, int size)
+ }
+ 
+ /* If it fails, the next read will report it */
+-static void skip(int size)
++static void skip(size_t size)
+ {
+ 	char buf[BUFSIZ];
+-	int r;
++	size_t r;
+ 
+ 	while (size) {
+ 		r = size > BUFSIZ ? BUFSIZ : size;
+@@ -202,7 +202,7 @@ static int read_header_files(struct tep_handle *pevent)
+ 	unsigned long long size;
+ 	char *header_page;
+ 	char buf[BUFSIZ];
+-	int ret = 0;
++	ssize_t ret = 0;
+ 
+ 	if (do_read(buf, 12) < 0)
+ 		return -1;
+@@ -250,7 +250,7 @@ static int read_header_files(struct tep_handle *pevent)
+ 
+ static int read_ftrace_file(struct tep_handle *pevent, unsigned long long size)
+ {
+-	int ret;
++	ssize_t ret;
+ 	char *buf;
+ 
+ 	buf = malloc(size);
+@@ -276,7 +276,7 @@ static int read_ftrace_file(struct tep_handle *pevent, unsigned long long size)
+ static int read_event_file(struct tep_handle *pevent, char *sys,
+ 			   unsigned long long size)
+ {
+-	int ret;
++	ssize_t ret;
+ 	char *buf;
+ 
+ 	buf = malloc(size);
+@@ -322,7 +322,7 @@ static int read_event_files(struct tep_handle *pevent)
+ 	int systems;
+ 	int count;
+ 	int i,x;
+-	int ret;
++	ssize_t ret;
+ 
+ 	systems = read4(pevent);
+ 
+@@ -350,7 +350,7 @@ static int read_saved_cmdline(struct tep_handle *pevent)
+ {
+ 	unsigned long long size;
+ 	char *buf;
+-	int ret;
++	ssize_t ret;
+ 
+ 	/* it can have 0 size */
+ 	size = read8(pevent);
 -- 
 2.53.0
 
