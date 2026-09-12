@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B393335F602;
-	Sat, 12 Sep 2026 09:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83510373BF3;
+	Sat, 12 Sep 2026 09:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204223; cv=none; b=XnS3ZZzjDuK/CejvDaX9LA3bBBc/OZnFonSqo+lxTAty2YksEpbVuRz3vqZ2qU58BMuWQ1G/WMi9pIph4HjUa8vBN9AO/xxhGveS7L5CekdZPiMq3o511aMZeGJwxrFafkj414nyecjUFyfoxGrkci19m0ju2hQmJGtuUy2trPg=
+	t=1789204228; cv=none; b=Z6jjRdbIa9zVDAI3lSFxCv+swk/G5bwNtm6qyXpvdSMDoqVXiMYUo2QWCvViit5Es8vQ7g9PKTvH0hF6Bc/iqclxwHxiUt5E8F6C+zeLG0WaukEqS/tLjrLbbLtjzDJTSj+XTRTcn7CmAEW3pzEao+n7X3h+8I/Bz4MCA9Xb+/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204223; c=relaxed/simple;
-	bh=kEVIF9L3UvBMHhS75kR7f3jBWDjRkzX6qJxP/QVw2UM=;
+	s=arc-20240116; t=1789204228; c=relaxed/simple;
+	bh=oDaESbAeZg+zmrhN7giQbBj4MliUu88V2118Z+KM5Z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UBMJReS3NAF+kENPMplsjY+pdDVS3BJ9Bf7PwjzZqzoCQXEJHGLnms8JXz3vBdNxn4arAVm4lAZm2LxTx5q1g/qDINPNqeWxW43pNA8Ejw5q8gdPMpzQxfFlybVHgx9H8y4gqbDqbNRM3xJPpDv08vCsPkvEZhlTdn43PULwOXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8BsBL5z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SXQUpU3cItWp7V7/m/NvuNQUBLD6igWxBmS6LSmX+KhVrHJfkvnHB6kd7kebs4c9W+o1Jyp9HwRBCzIq+KHiGd3H2HG2hD34K+s1bbLKZw8BgjOMn1CoHCIoPoeRU/N/JvghCLMjuRSKyeNaPqXLYpiDrrV7Mz0rGx2RlP12rS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oa2ZkNfP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8BsBL5z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548631F000FF;
-	Sat, 12 Sep 2026 09:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oa2ZkNfP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA281F000FF;
+	Sat, 12 Sep 2026 09:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204222;
-	bh=Xokn7P83LN0LhYFw7pxYucdXDTph3a0+U4QYL6P6IqA=;
+	s=korg; t=1789204227;
+	bh=dHMCSL3f6NEiawENI/a7arbcTbSq4sCpQCR9kNN5BZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p8BsBL5zQdeclh5+dtoRU8Gns5NEzqGdiRp8oHYbfrhtnotLAVgZzZCIxAZr0vh6A
-	 S6wZM31W9NsRVaDwXl0qs71qaljnYUusa9Q04KhojM2GGL1c20sYcQMiQJDyp7geT7
-	 udd+CYsRolqkhteYoECp+TejPG4seGulkr89QcQU=
+	b=oa2ZkNfP7JPwcdMHSnDAjGTnyvkEgB6OVLV34WqYiGd0rTDbC4+YHH1LDkYljlA73
+	 Y9XfjeRMjr6qcKATJF7CjWD2CwIiSPP1n0N86KrZ9GN5QyjgbTm4DwFQbKMA8LUpJW
+	 3AV7WwK8jyUyisfq1olIZGs0bRbzjUhNO3LN0tVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Xie <xiexinet@gmail.com>,
+	Anton Protopopov <a.s.protopopov@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1569/1815] net: hsr: free learned nodes on device setup failure
-Date: Sat, 12 Sep 2026 08:55:19 +0200
-Message-ID: <20260912065725.827561734@linuxfoundation.org>
+Subject: [PATCH 7.2 1570/1815] virtio_net: Fix resize of the RX ring
+Date: Sat, 12 Sep 2026 08:55:20 +0200
+Message-ID: <20260912065725.850846584@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,47 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Xie <xiexinet@gmail.com>
+From: Anton Protopopov <a.s.protopopov@gmail.com>
 
-[ Upstream commit 7f16289b91eb316f170a6bd22d32e6c632f6a5b6 ]
+[ Upstream commit d09c98a6da215bce2173a292e4b95c8de6ea5d51 ]
 
-hsr_dev_finalize() can fail after a lower-device RX handler has
-already been registered (slave A is added before the failable slave B
-and interlink adds). RX handlers run in softirq regardless of the
-master's state, so frames received in that window can learn dynamic
-nodes into node_db, and the error unwind never releases them.
+When a AF_XDP socket is attached, the virtnet_rx_resize
+should resize the rq->xsk_buffs XSK buffer array. Otherwise,
+when the size grows, the virtnet_rx_resume() causes a write
+past the end of the array. This is easily reproducable with
 
-Free both owned dynamic databases in the unwind, mirroring
-hsr_dellink(). proxy_node_db is provably empty on every current error
-exit (only interlink RX feeds it, and the interlink add is the last
-failable step) and is freed for symmetry. The order is safe:
-hsr_del_port() unregisters each RX handler with synchronize_net()
-before hsr_del_nodes() runs, which removes remaining entries with
-list_del_rcu() and defers their release with call_rcu() for readers
-already under RCU.
+    ethtool -G ens3 rx 32
+    ./xdpsock -i eth0 -q 0 -r -z &
+    ethtool -G eth0 rx 256
 
-Fixes: 81ba6afd6e64 ("net/hsr: Switch from dev_add_pack() to netdev_rx_handler_register()")
-Signed-off-by: Xin Xie <xiexinet@gmail.com>
-Link: https://patch.msgid.link/20260808110814.1637-1-xiexinet@gmail.com
+Fixes: e9f3962441c0 ("virtio_net: xsk: rx: support fill with xsk buffer")
+Signed-off-by: Anton Protopopov <a.s.protopopov@gmail.com>
+Link: https://patch.msgid.link/20260810120728.47445-1-a.s.protopopov@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_device.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/virtio_net.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
-index 5555b71ab19b5..9c3078dd38c2c 100644
---- a/net/hsr/hsr_device.c
-+++ b/net/hsr/hsr_device.c
-@@ -820,6 +820,8 @@ int hsr_dev_finalize(struct net_device *hsr_dev, struct net_device *slave[2],
- 	hsr_del_ports(hsr);
- err_add_master:
- 	hsr_del_self_node(hsr);
-+	hsr_del_nodes(&hsr->node_db);
-+	hsr_del_nodes(&hsr->proxy_node_db);
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 3e2a5876c6c8c..e34c52d059d39 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3444,17 +3444,31 @@ static void virtnet_rx_resume_all(struct virtnet_info *vi)
+ static int virtnet_rx_resize(struct virtnet_info *vi,
+ 			     struct receive_queue *rq, u32 ring_num)
+ {
++	unsigned int old_ring_num = virtqueue_get_vring_size(rq->vq);
++	struct xdp_buff **tmp_xsk_buffs = NULL;
+ 	int err, qindex;
  
- 	if (unregister)
- 		unregister_netdevice(hsr_dev);
+ 	qindex = rq - vi->rq;
+ 
++	if (rq->xsk_pool && ring_num > old_ring_num) {
++		tmp_xsk_buffs = kvzalloc_objs(*tmp_xsk_buffs, ring_num);
++		if (!tmp_xsk_buffs)
++			return -ENOMEM;
++	}
++
+ 	virtnet_rx_pause(vi, rq);
+ 
+ 	err = virtqueue_resize(rq->vq, ring_num, virtnet_rq_unmap_free_buf, NULL);
++
++	/* virtqueue_resize may have changed the size even if err != 0 */
++	if (tmp_xsk_buffs && virtqueue_get_vring_size(rq->vq) > old_ring_num)
++		swap(rq->xsk_buffs, tmp_xsk_buffs);
++
+ 	if (err)
+ 		netdev_err(vi->dev, "resize rx fail: rx queue index: %d err: %d\n", qindex, err);
+ 
+ 	virtnet_rx_resume(vi, rq, true);
++	kvfree(tmp_xsk_buffs);
+ 	return err;
+ }
+ 
 -- 
 2.53.0
 
