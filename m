@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52FC361DD0;
-	Sat, 12 Sep 2026 10:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F52A361DD0;
+	Sat, 12 Sep 2026 10:17:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208267; cv=none; b=MHVV4CiWNxiltfOFq2tut6Z7jufUL74GzKJ7s7NPOW1NDUIISFwmOrsJ0rt7OkDMrPh4dth455Npm2wkpSC4cnaj8gTKjAbls/ip8iLsUJzu4rPcDndJMtR9fwgD8CeR/8FgNcN+uSINZTaGp74VFA5hTpnl70j8BbyAkY2SL8s=
+	t=1789208273; cv=none; b=VI6AySqLLA3X1h0Z/I0EIWQpzABK7engN2q4CYhoVSeqNhS5pWoHivzsOqRNAdLOGXmq0RKjIgPDuPgQ50YxqZOAy8LAJ3WMUmcUUlVscKvpUdjv2pGyp3GSqNZU52nwNw5fY91Ccc483S/PHJ4cGZiz21WedwP73N0+/7SmSo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208267; c=relaxed/simple;
-	bh=45gm1OEdqLAUXcGM+nObPAOV9x1e58/fxI3cANU/umY=;
+	s=arc-20240116; t=1789208273; c=relaxed/simple;
+	bh=72RkQiziyJhJ8sOMkipuycZAlNk8XgI3b/5Ho4U5poU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iiReUwmqgmkrKd25aBSrSJ+YX2XToBa+1F1SDQAZAGOCuykNGCVc99RcgrdkjELRNK3tzVgTnznCHS2NT6IlcqsZT3vXlsUKuv9ODbavz+jJPaLKsVQzrhhZnIbxHcihKxHVN8dFGpWad4VOJgSUzufj34k47x8lSNntQ3Q+xn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oEJ2lXsP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m/D8nV9l5gPahWQrdq+R/+ha6Co9rzDLBwu7lqzWYpYjL1Gh949yQTIu+PlHr3qiRP42rUwOT0t2dcheS2vFVfFaOR6fkBJrVbJZzGhktmDpVaD04oNbZiwnICPOfmIamLmTfksHlihMTuhQbSxa6xmoRqLwbtbjM2F+D5zUG/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDuY2lcF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEJ2lXsP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A961F000FF;
-	Sat, 12 Sep 2026 10:17:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDuY2lcF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72A31F00893;
+	Sat, 12 Sep 2026 10:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208266;
-	bh=2yqH0ghIx8ApsXABtpDIh8RzKB70qbNA9LSa5uHrJLA=;
+	s=korg; t=1789208271;
+	bh=uBo96gxdj0Fv+6dE3KysYV6K4NNahfxZIFz79c927JQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oEJ2lXsPa/UAuDzljXWyMFq5FjKV3KGggiOtOBZ0qBn/Y/buSGLe5cG/A9RKjV0I+
-	 VlEfxnj7ZPd6eaSf1MsTLcbsXz5y1PPNQzaVOAUSDuoYimmpYRd27GZHPKmoeBppU6
-	 ihHRuAylg7iDGNyzGNHk/Zd922mcKLd8v6AThOHY=
+	b=aDuY2lcF5VTQrlUitfVl5E708511aL8brn+p/YVSzwBmDfzk3yvG2ZtiIWKUXi+Pz
+	 9l44qShWbRw1DbuQdS81kvVpvTm4S810r4RjZoouLcGZEBJlTUGWoHjp/IdIXuGoOP
+	 OoR8/Wsc4o0pdHRP8mM4+TmLXdeQUJ98vLxPZ0f0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Peng <pengcan@kylinos.cn>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0582/1518] crypto: keembay - publish OF module alias for OCS AES/SM4
-Date: Sat, 12 Sep 2026 08:45:51 +0200
-Message-ID: <20260912065636.592380500@linuxfoundation.org>
+Subject: [PATCH 6.18 0583/1518] RDMA/mlx5: Fix integer overflow of user QP buffer size
+Date: Sat, 12 Sep 2026 08:45:52 +0200
+Message-ID: <20260912065636.614289806@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,42 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Can Peng <pengcan@kylinos.cn>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit 0a94091e29f914e4f233a208599ca4055882c01b ]
+[ Upstream commit dec47e4b0fe34afdf38caa72b4408ba95502e5de ]
 
-The Keem Bay OCS AES/SM4 driver has an OF match table wired to
-.of_match_table, but does not export the table with MODULE_DEVICE_TABLE().
+set_user_buf_size() computes the QP buffer size by left-shifting the
+user-supplied rq.wqe_cnt and rq.wqe_shift values as signed integers.
+A sufficiently large rq.wqe_cnt causes signed integer overflow, which
+is undefined behavior, and yields a small or negative buf_size, causing
+ib_umem_get() to map a buffer smaller than the hardware will actually
+write into.
 
-Although the match table lives in keembay-ocs-aes-core.o, that object is
-part of the composite keembay-ocs-aes module.  Add the missing
-MODULE_DEVICE_TABLE(of, ...) entry so modpost can generate OF module alias
-information for OF based module autoloading.
+Replace the shifts and addition with check_shl_overflow() and
+check_add_overflow(), rejecting invalid user inputs.
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by the
-platform driver, and the missing module alias publication.
+Moreover, guard the identical shift computing qp->sq.offset in
+_create_user_qp() before set_user_buf_size() is reached.
 
-Fixes: 885743324513 ("crypto: keembay - Add support for Keem Bay OCS AES/SM4")
-Signed-off-by: Can Peng <pengcan@kylinos.cn>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/20260723-fix-qp-buf-size-overflow-v1-1-ccb05ee43a7b@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/keembay/keembay-ocs-aes-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/mlx5/qp.c | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
-index 460a943cca227..419f88af1031b 100644
---- a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
-+++ b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
-@@ -1561,6 +1561,7 @@ static const struct of_device_id kmb_ocs_aes_of_match[] = {
- 	},
- 	{}
- };
-+MODULE_DEVICE_TABLE(of, kmb_ocs_aes_of_match);
- 
- static void kmb_ocs_aes_remove(struct platform_device *pdev)
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index 02a0f4920cabf..50b20264c4bdd 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -637,6 +637,7 @@ static int set_user_buf_size(struct mlx5_ib_dev *dev,
+ 			    struct ib_qp_init_attr *attr)
  {
+ 	int desc_sz = 1 << qp->sq.wqe_shift;
++	int rq_buf_size, sq_buf_size;
+ 
+ 	if (desc_sz > MLX5_CAP_GEN(dev->mdev, max_wqe_sz_sq)) {
+ 		mlx5_ib_warn(dev, "desc_sz %d, max_sq_desc_sz %d\n",
+@@ -661,11 +662,21 @@ static int set_user_buf_size(struct mlx5_ib_dev *dev,
+ 
+ 	if (attr->qp_type == IB_QPT_RAW_PACKET ||
+ 	    qp->flags & IB_QP_CREATE_SOURCE_QPN) {
+-		base->ubuffer.buf_size = qp->rq.wqe_cnt << qp->rq.wqe_shift;
+-		qp->raw_packet_qp.sq.ubuffer.buf_size = qp->sq.wqe_cnt << 6;
++		if (check_shl_overflow(qp->rq.wqe_cnt, qp->rq.wqe_shift,
++				       &base->ubuffer.buf_size))
++			return -EINVAL;
++		if (check_shl_overflow(qp->sq.wqe_cnt, 6,
++				       &qp->raw_packet_qp.sq.ubuffer.buf_size))
++			return -EINVAL;
+ 	} else {
+-		base->ubuffer.buf_size = (qp->rq.wqe_cnt << qp->rq.wqe_shift) +
+-					 (qp->sq.wqe_cnt << 6);
++		if (check_shl_overflow(qp->rq.wqe_cnt, qp->rq.wqe_shift,
++				       &rq_buf_size))
++			return -EINVAL;
++		if (check_shl_overflow(qp->sq.wqe_cnt, 6, &sq_buf_size))
++			return -EINVAL;
++		if (check_add_overflow(rq_buf_size, sq_buf_size,
++				       &base->ubuffer.buf_size))
++			return -EINVAL;
+ 	}
+ 
+ 	return 0;
+@@ -989,7 +1000,11 @@ static int _create_user_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
+ 
+ 	qp->rq.offset = 0;
+ 	qp->sq.wqe_shift = ilog2(MLX5_SEND_WQE_BB);
+-	qp->sq.offset = qp->rq.wqe_cnt << qp->rq.wqe_shift;
++	if (check_shl_overflow(qp->rq.wqe_cnt, qp->rq.wqe_shift,
++			       &qp->sq.offset)) {
++		err = -EINVAL;
++		goto err_bfreg;
++	}
+ 
+ 	err = set_user_buf_size(dev, qp, ucmd, base, attr);
+ 	if (err)
 -- 
 2.53.0
 
