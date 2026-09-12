@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F8A4457D5;
-	Sat, 12 Sep 2026 08:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFBF41B357;
+	Sat, 12 Sep 2026 08:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202386; cv=none; b=XAJZqu9Y1ab7DoKktpjkXZ3IWPj57C0KJOCg2SAvwwGtL2w47QvW/23FFlUybopZgTc5PBBZmtmL5et7/UZoYHtF083QleU7XtmP1rvvaIBHNrEdFCY26BWfbLDk3hAjOocnuqaEmDWF8D/IXnkBuVQ0upNk82UjpFUh4sMHLTA=
+	t=1789202391; cv=none; b=D2loy/7AjjRsxUMOkhb3p6v6ubXPnAhBo9BVIhW7NOZqVgHt7x7oZcyARHf52iYhTLeRxOS1GjKecuqOPSKxx4fcHfJCQYJetqYcQcDqksk0HV8ecGk54eD81aJPetPEWPUUmm8jg0TBofllZqGO984c9GAgJrZGPTp5VxBcjNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202386; c=relaxed/simple;
-	bh=Mc3fZEglkPJ6K+WVgauSDjQzYRqt/HSinM05vUbumug=;
+	s=arc-20240116; t=1789202391; c=relaxed/simple;
+	bh=EEVyZNxdQMih2m3fK//hwusdpt1/wzHYnu2NesmGeto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nHKTL009t4HEx5RWo/8+9VEQ1t/thLAr/HqK4bOvrIGTylmj02LkH7b1Ge0NzaKYulF+mYCXC6G6dyO2v5qWJFvAdXsQ8UwAASEbhYxBMUoPgPG4TDfhESHA4FmtlwL+Na2PxqAzg5pGBMrTqtPEU/na1vb9MyZfLJqRGug+SbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5ZNSEqu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZYzuFEXGa56oPuA4v+qLQvYpp1M8Nc6IcLgyLLG+MBSxjZpKzwVBZP83lNZ3f0CK4aMub4yo9yQsOphXSrjRUF41Y/oDp2/K7dQbUAgFzuOK9+MWvWCaHQ2mI/G38v1Sk/BcXXR1eHw89wXv+RjdQvuM/hLCp1CvaMZvG/etjX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHeIf4ys; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5ZNSEqu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C57E1F000FF;
-	Sat, 12 Sep 2026 08:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHeIf4ys"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BB21F000FF;
+	Sat, 12 Sep 2026 08:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202385;
-	bh=zG12sWgGbPeLZ/QGl/vaX1ifj5i9aqDWxhI+YZrgYBg=;
+	s=korg; t=1789202390;
+	bh=TbWFSI4sUP4lcnBnrH8p33K18S2Bb/L94gXfprBn18g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q5ZNSEqurho12rVlflfpEY/GPtozdLPpwBxjrZsVmMlX14G4736enyhOm78yx5bQ9
-	 xcedDovjYFz3NcY49Rx1vOem02zVt6whp8ZHiIrIKy+VaC/cT3tn6pJoSV0rfpYFd8
-	 uaXX0ebkEv+7/20Kovuxd8nJciGaX4fZTkutD/i0=
+	b=NHeIf4ysMagiRZp9eFyTvKC7U+YXHTW+BofVz1MUfS7y8P7BjpWpngX8FqMmR6opf
+	 HA+Zeg8U+JVcsRd3H6Wi9skSZ+jtqvbuOEFmiPbzbXeEvqq632pjfI9NLpF+4+NG3e
+	 RGSofGa/VYy7xoMBlewZwCTm4YKeBCM+5kwfaX5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1149/1815] wifi: mac80211: skip default WMM setup for AP_VLAN links
-Date: Sat, 12 Sep 2026 08:48:19 +0200
-Message-ID: <20260912065715.988656764@linuxfoundation.org>
+Subject: [PATCH 7.2 1140/1815] cpufreq: imx6q: fix out-of-bounds write when probed more than once
+Date: Sat, 12 Sep 2026 08:48:10 +0200
+Message-ID: <20260912065715.781327177@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,38 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 4d8cfff012aaa971d50b01823b1015c1073c3ff6 ]
+[ Upstream commit 8c3afcf27fa4582c1ab912503dc8a4ebb8dc0f82 ]
 
-AP_VLAN interfaces are never passed to the driver, so setting default WMM
-parameters on their links trips the check-sdata-in-driver warning in
-drv_conf_tx(), as well as in the BSS_CHANGED_QOS link info notification.
-Skip it, matching the existing AP_VLAN handling in this function.
+imx6_soc_volt is allocated fresh on every probe, sized to the number of
+ARM OPPs:
 
-Fixes: 2259d14499d1 ("wifi: mac80211: set default WMM parameters on all links")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/20260804082608.2011433-1-nbd@nbd.name
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+	imx6_soc_volt = devm_kcalloc(cpu_dev, num, sizeof(*imx6_soc_volt),
+				     GFP_KERNEL);
+
+but it is filled through soc_opp_count, which has static storage and is
+never reset. A second bind after an unbind keeps indexing from where the
+first one stopped, and writes past the end of the new array.
+
+Unbinding and rebinding the driver on qemu's mcimx6ul-evk, under KASAN:
+
+  BUG: KASAN: slab-out-of-bounds in imx6q_cpufreq_probe+0x3b0/0xa34
+  Write of size 4 at addr c5e90480 by task binder/73
+   imx6q_cpufreq_probe from platform_probe+0x88/0xe4
+   platform_probe from really_probe+0x108/0x384
+   bind_store from kernfs_fop_write_iter+0x1b4/0x28c
+
+The write lands one u32 past the end of the allocation.
+
+soc_opp_count is only read a few lines below the loop that fills it, so it
+never needed static storage. Make it a local.
+
+Fixes: b4573d1d657a ("cpufreq: imx6q: correct VDDSOC/PU voltage scaling when cpufreq is changed")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/link.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/cpufreq/imx6q-cpufreq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/link.c b/net/mac80211/link.c
-index dc68144dc363a..931950a105088 100644
---- a/net/mac80211/link.c
-+++ b/net/mac80211/link.c
-@@ -360,7 +360,8 @@ static int ieee80211_vif_update_links(struct ieee80211_sub_if_data *sdata,
- 		link = links[link_id];
- 		ieee80211_link_init(sdata, link_id, &link->data, &link->conf);
- 		ieee80211_link_setup(&link->data);
--		ieee80211_set_wmm_default(&link->data, true, non_sta);
-+		if (sdata->vif.type != NL80211_IFTYPE_AP_VLAN)
-+			ieee80211_set_wmm_default(&link->data, true, non_sta);
- 	}
+diff --git a/drivers/cpufreq/imx6q-cpufreq.c b/drivers/cpufreq/imx6q-cpufreq.c
+index 8110c95059e0e..731f5721ff1ed 100644
+--- a/drivers/cpufreq/imx6q-cpufreq.c
++++ b/drivers/cpufreq/imx6q-cpufreq.c
+@@ -55,7 +55,6 @@ static unsigned int max_freq;
+ static unsigned int transition_latency;
  
- 	if (new_links == 0)
+ static u32 *imx6_soc_volt;
+-static u32 soc_opp_count;
+ 
+ static int imx6q_set_target(struct cpufreq_policy *policy, unsigned int index)
+ {
+@@ -330,6 +329,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
+ 	const struct property *prop;
+ 	const __be32 *val;
+ 	u32 nr, i, j;
++	u32 soc_opp_count = 0;
+ 
+ 	cpu_dev = get_cpu_device(0);
+ 	if (!cpu_dev) {
 -- 
 2.53.0
 
