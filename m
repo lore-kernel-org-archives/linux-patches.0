@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001FC37A498;
-	Sat, 12 Sep 2026 11:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C4437A498;
+	Sat, 12 Sep 2026 11:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212249; cv=none; b=UG22zRVpHr7ONO7PYy4OXnCVdm7hU0N7RaSyRZnz77MCvjmosKqZzly8wNqm8o9cl0sHnOgy4hxcOl2mgiUaQgRL11+py0FJpaNUpzZb2ioLd38UIz63F9UtVan4O89/FgTNOyPCKbdhFNalP9LxnrQ64GED64CVqSwtjvMQGRo=
+	t=1789212254; cv=none; b=eh2m3kqiW1r6pFPbYJswmiIJQjuiqenlz2XSEz9R8CEZ/4EQxoII9JTu2v0E2nysqqvDGFXN6q1pFNklnlBKcyjjHV18o6QNzmD5tR1HkOEkLc1lvNN8r3PoW61UHvvVtjlsnSUq9zzKF0T6Xm9n4cuSW2WINQnQqgQn2UwgsPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212249; c=relaxed/simple;
-	bh=BW6BYOEI9aqT89C7M6S589K4QOxOEtQcQt9T1GolXW0=;
+	s=arc-20240116; t=1789212254; c=relaxed/simple;
+	bh=fasXf0V+Em+DEeekzaVzlHXVj68HB2Gzq7E4WnMOgsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oETMsRDkBluKOTr0vrLcC5wIvaeEfmw8UlqEJU25Whqe9dFHDy6tP5Ce4lSmbaan0fJXe/crEAziuKKkVP6vo/OQ8p2JH8qAt5zj7xPQyvg/voCDnnfNfOFOoWF+Ojw9x+iiza7TFmj3iMDY94m314Fhd0Gyvlxrgzffwi9GsDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2RIuPpM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t/ABB9M+58oWlEOG4weqyEUp1bgnuOmwW6ga6zQL/XbfPlsxwhZ3JZ9vWxLmMHTwPTTy2FJMeNmTziY+2p+xIYwngLl+rlIdqg89JCZCiEO+0RDxPK1OHosyytYqfdhGyzG3fBbaySHgXyw+LT+MjRc2mH6h+NBZc3ITuz9kl1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znkSrNhM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2RIuPpM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04EC1F000FF;
-	Sat, 12 Sep 2026 11:24:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znkSrNhM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E56FA1F000FF;
+	Sat, 12 Sep 2026 11:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212247;
-	bh=KyztPmw4bJMoWKTGvKTyOjqalWiLkU7s1QTF7w7Y9K4=;
+	s=korg; t=1789212252;
+	bh=Tty8lo9xPCESAsQqXiMW9g5hZgZBGLS+R2znjXGJO/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M2RIuPpM1quzrzbni264GfogxXpYDXmlmBVPC28lorl3yCyLOcU3+fvnKgmfDcEtS
-	 MwYkB3Gb1Fm6/oNUgHCxipM92ljXBzaoL+38Dp8xDNn3b0d3id0DVr6AqiyZ885CyB
-	 RSwy3pXtERC4x5i+K3qeM5pRu24AMrblAJyf7Raw=
+	b=znkSrNhMrsfLfXs1tEWS2yr7NF8fv4JfD5DaCjayoMptJigcn2jvUGAJWtqj1ApIY
+	 ZAXmN1Ni9KcMJh4L/Nj5bfo0JQT00o8LTxClHcRAnhNm7tQdWhaBQzLHF0OseOFZVE
+	 rAPEQ+w+74QqARs3hLLwuaFU+/B4HsvQgH56A/8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
 	Stanislav Fomichev <sdf@fomichev.me>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1398/1518] xsk: align TX metadata layout across ABIs
-Date: Sat, 12 Sep 2026 08:59:27 +0200
-Message-ID: <20260912065655.173457041@linuxfoundation.org>
+Subject: [PATCH 6.18 1399/1518] xsk: honor XDP_TX_METADATA in zero-copy path
+Date: Sat, 12 Sep 2026 08:59:28 +0200
+Message-ID: <20260912065655.196052717@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,58 +56,215 @@ Content-Transfer-Encoding: 8bit
 
 From: Stanislav Fomichev <sdf.kernel@gmail.com>
 
-[ Upstream commit bd7d30bd1d3856d8354b5acef947d68ad1faf886 ]
+[ Upstream commit a6e4b9a6deb9362ef7a0706c70d674e92fe1411a ]
 
-Add explicit padding before launch_time so xsk_tx_metadata has the same
-layout on 32-bit and 64-bit systems.
+The zero-copy path reads TX metadata whenever the UMEM has metadata space,
+even if the descriptor does not set XDP_TX_METADATA. Pass descriptor
+options through the metadata helpers and ignore metadata unless the option
+is set.
 
-On several architectures (csky, i386, nios2, m65k, openrisc, sh), the old
-native 32-bit layout put launch_time at offset 12 and had a natural size of
-20 bytes. Using sizeof(struct xsk_tx_metadata) as tx_metadata_len was already
-rejected because the length must be a multiple of eight, so the
-straightforward use of the interface was broken on those ABIs. Userspace
-could still register a padded length of 24 bytes, though; mixing the old and
-new layouts then silently reads launch_time from the wrong offset and
-misprograms packet launch times. This intentionally replaces that
-incompatible layout because the affected architectures are unlikely to
-have any notable users. (x86_64 and arm64 have the most users and are _not_
-affected)
+This does not fix the existing per-WQE metadata handling for mlx5 MPWQEs.
+Only the descriptor that starts a session passes through
+xsk_tx_metadata_request() and configures offload state shared by the batch.
+Metadata on descriptors joining an open session is therefore not validated
+and does not configure its requested offloads. In addition, a non-NULL
+metadata pointer from such a descriptor is treated as a timestamp
+completion request even when XDP_TXMD_FLAGS_TIMESTAMP is not set, so its
+metadata union can be overwritten with an unrequested timestamp. Fixing
+mixed metadata states within one MPWQE requires a separate change.
 
-Fixes: ca4419f15abd ("xsk: Add launch time hardware offload support to XDP Tx metadata")
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 48eb03dd2630 ("xsk: Add TX timestamp and TX checksum offload support")
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
 Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260819160535.1472459-2-sdf@fomichev.me
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Link: https://patch.msgid.link/20260819160535.1472459-3-sdf@fomichev.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/if_xdp.h       | 1 +
- tools/include/uapi/linux/if_xdp.h | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/net/ethernet/intel/igc/igc_main.c     |  3 ++-
+ .../ethernet/mellanox/mlx5/core/en/xsk/tx.c   |  2 +-
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c |  3 ++-
+ include/net/libeth/xsk.h                      |  2 +-
+ include/net/xdp_sock_drv.h                    | 22 +++++++++++--------
+ include/net/xsk_buff_pool.h                   |  3 ++-
+ net/xdp/xsk_buff_pool.c                       |  7 ++++--
+ 7 files changed, 26 insertions(+), 16 deletions(-)
 
-diff --git a/include/uapi/linux/if_xdp.h b/include/uapi/linux/if_xdp.h
-index 23a0627814687..50d67df78911f 100644
---- a/include/uapi/linux/if_xdp.h
-+++ b/include/uapi/linux/if_xdp.h
-@@ -149,6 +149,7 @@ struct xsk_tx_metadata {
- 			__u16 csum_start;
- 			/* Offset from csum_start where checksum should be stored. */
- 			__u16 csum_offset;
-+			__u32 reserved;
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index 664c762622dcb..a8e7f4895e29e 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -3074,7 +3074,8 @@ static void igc_xdp_xmit_zc(struct igc_ring *ring)
+ 		olinfo_status = xdp_desc.len << IGC_ADVTXD_PAYLEN_SHIFT;
  
- 			/* XDP_TXMD_FLAGS_LAUNCH_TIME */
- 			/* Launch time in nanosecond against the PTP HW Clock */
-diff --git a/tools/include/uapi/linux/if_xdp.h b/tools/include/uapi/linux/if_xdp.h
-index 23a0627814687..50d67df78911f 100644
---- a/tools/include/uapi/linux/if_xdp.h
-+++ b/tools/include/uapi/linux/if_xdp.h
-@@ -149,6 +149,7 @@ struct xsk_tx_metadata {
- 			__u16 csum_start;
- 			/* Offset from csum_start where checksum should be stored. */
- 			__u16 csum_offset;
-+			__u32 reserved;
+ 		dma = xsk_buff_raw_get_dma(pool, xdp_desc.addr);
+-		meta = xsk_buff_get_metadata(pool, xdp_desc.addr);
++		meta = xsk_buff_get_metadata(pool, xdp_desc.addr,
++					     xdp_desc.options);
+ 		xsk_buff_raw_dma_sync_for_device(pool, dma, xdp_desc.len);
+ 		bi = &ring->tx_buffer_info[ntu];
  
- 			/* XDP_TXMD_FLAGS_LAUNCH_TIME */
- 			/* Launch time in nanosecond against the PTP HW Clock */
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/tx.c
+index 827538d92ac23..a7e3fe275d141 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/tx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/tx.c
+@@ -97,7 +97,7 @@ bool mlx5e_xsk_tx(struct mlx5e_xdpsq *sq, unsigned int budget)
+ 		xdptxd.dma_addr = xsk_buff_raw_get_dma(pool, desc.addr);
+ 		xdptxd.data = xsk_buff_raw_get_data(pool, desc.addr);
+ 		xdptxd.len = desc.len;
+-		meta = xsk_buff_get_metadata(pool, desc.addr);
++		meta = xsk_buff_get_metadata(pool, desc.addr, desc.options);
+ 
+ 		xsk_buff_raw_dma_sync_for_device(pool, xdptxd.dma_addr, xdptxd.len);
+ 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 4b458a39ab9f5..f6cf44d7bb642 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -2545,7 +2545,8 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+ 			tx_desc = tx_q->dma_tx + entry;
+ 
+ 		dma_addr = xsk_buff_raw_get_dma(pool, xdp_desc.addr);
+-		meta = xsk_buff_get_metadata(pool, xdp_desc.addr);
++		meta = xsk_buff_get_metadata(pool, xdp_desc.addr,
++					     xdp_desc.options);
+ 		xsk_buff_raw_dma_sync_for_device(pool, dma_addr, xdp_desc.len);
+ 
+ 		tx_q->tx_skbuff_dma[entry].buf_type = STMMAC_TXBUF_T_XSK_TX;
+diff --git a/include/net/libeth/xsk.h b/include/net/libeth/xsk.h
+index 23eb240d5ba72..3d77e72a8cc81 100644
+--- a/include/net/libeth/xsk.h
++++ b/include/net/libeth/xsk.h
+@@ -196,7 +196,7 @@ __libeth_xsk_xmit_fill_buf_md(const struct xdp_desc *xdesc,
+ 	struct libeth_xdp_tx_desc desc;
+ 	struct xdp_desc_ctx ctx;
+ 
+-	ctx = xsk_buff_raw_get_ctx(sq->pool, xdesc->addr);
++	ctx = xsk_buff_raw_get_ctx(sq->pool, xdesc->addr, xdesc->options);
+ 	desc = (typeof(desc)){
+ 		.addr	= ctx.dma,
+ 		__libeth_xdp_tx_len(xdesc->len),
+diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
+index d74ca548d4d6a..21c3b757bb883 100644
+--- a/include/net/xdp_sock_drv.h
++++ b/include/net/xdp_sock_drv.h
+@@ -236,6 +236,7 @@ static inline void *xsk_buff_raw_get_data(struct xsk_buff_pool *pool, u64 addr)
+  * xsk_buff_raw_get_ctx - get &xdp_desc context
+  * @pool: XSk buff pool desc address belongs to
+  * @addr: desc address (from userspace)
++ * @options: desc options (from userspace)
+  *
+  * Wrapper for xp_raw_get_ctx() to be used in drivers, see its kdoc for
+  * details.
+@@ -244,9 +245,9 @@ static inline void *xsk_buff_raw_get_data(struct xsk_buff_pool *pool, u64 addr)
+  * pointer, if it is present (initialized to %NULL otherwise).
+  */
+ static inline struct xdp_desc_ctx
+-xsk_buff_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr)
++xsk_buff_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr, u32 options)
+ {
+-	return xp_raw_get_ctx(pool, addr);
++	return xp_raw_get_ctx(pool, addr, options);
+ }
+ 
+ #define XDP_TXMD_FLAGS_VALID ( \
+@@ -314,18 +315,20 @@ xsk_tx_metadata_request(const struct xsk_buff_pool *pool,
+ }
+ 
+ static inline struct xsk_tx_metadata *
+-__xsk_buff_get_metadata(const struct xsk_buff_pool *pool, void *data)
++__xsk_buff_get_metadata(const struct xsk_buff_pool *pool, void *data,
++			unsigned int options)
+ {
+-	if (!pool->tx_metadata_len)
++	if (!pool->tx_metadata_len || !(options & XDP_TX_METADATA))
+ 		return NULL;
+ 
+ 	return data - pool->tx_metadata_len;
+ }
+ 
+ static inline struct xsk_tx_metadata *
+-xsk_buff_get_metadata(struct xsk_buff_pool *pool, u64 addr)
++xsk_buff_get_metadata(struct xsk_buff_pool *pool, u64 addr, u32 options)
+ {
+-	return __xsk_buff_get_metadata(pool, xp_raw_get_data(pool, addr));
++	return __xsk_buff_get_metadata(pool, xp_raw_get_data(pool, addr),
++				       options);
+ }
+ 
+ static inline void xsk_buff_dma_sync_for_cpu(struct xdp_buff *xdp)
+@@ -506,7 +509,7 @@ static inline void *xsk_buff_raw_get_data(struct xsk_buff_pool *pool, u64 addr)
+ }
+ 
+ static inline struct xdp_desc_ctx
+-xsk_buff_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr)
++xsk_buff_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr, u32 options)
+ {
+ 	return (struct xdp_desc_ctx){ };
+ }
+@@ -526,13 +529,14 @@ xsk_tx_metadata_request(const struct xsk_buff_pool *pool,
+ }
+ 
+ static inline struct xsk_tx_metadata *
+-__xsk_buff_get_metadata(const struct xsk_buff_pool *pool, void *data)
++__xsk_buff_get_metadata(const struct xsk_buff_pool *pool, void *data,
++			unsigned int options)
+ {
+ 	return NULL;
+ }
+ 
+ static inline struct xsk_tx_metadata *
+-xsk_buff_get_metadata(struct xsk_buff_pool *pool, u64 addr)
++xsk_buff_get_metadata(struct xsk_buff_pool *pool, u64 addr, u32 options)
+ {
+ 	return NULL;
+ }
+diff --git a/include/net/xsk_buff_pool.h b/include/net/xsk_buff_pool.h
+index 92a2358c6ce34..10e564d85a90c 100644
+--- a/include/net/xsk_buff_pool.h
++++ b/include/net/xsk_buff_pool.h
+@@ -154,7 +154,8 @@ struct xdp_desc_ctx {
+ 	struct xsk_tx_metadata *meta;
+ };
+ 
+-struct xdp_desc_ctx xp_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr);
++struct xdp_desc_ctx xp_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr,
++				   u32 options);
+ 
+ static inline dma_addr_t xp_get_dma(struct xdp_buff_xsk *xskb)
+ {
+diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
+index 772fe1838cfb3..6e9c51b6b4302 100644
+--- a/net/xdp/xsk_buff_pool.c
++++ b/net/xdp/xsk_buff_pool.c
+@@ -767,6 +767,7 @@ EXPORT_SYMBOL(xp_raw_get_dma);
+  * xp_raw_get_ctx - get &xdp_desc context
+  * @pool: XSk buff pool desc address belongs to
+  * @addr: desc address (from userspace)
++ * @options: desc options (from userspace)
+  *
+  * Helper for getting desc's DMA address and metadata pointer, if present.
+  * Saves one call on hotpath and double calculation of the actual address.
+@@ -775,14 +776,16 @@ EXPORT_SYMBOL(xp_raw_get_dma);
+  * Return: new &xdp_desc_ctx struct containing desc's DMA address and metadata
+  * pointer, if it is present (initialized to %NULL otherwise).
+  */
+-struct xdp_desc_ctx xp_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr)
++struct xdp_desc_ctx xp_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr,
++				   u32 options)
+ {
+ 	struct xdp_desc_ctx ret;
+ 
+ 	addr = __xp_raw_get_addr(pool, addr);
+ 
+ 	ret.dma = __xp_raw_get_dma(pool, addr);
+-	ret.meta = __xsk_buff_get_metadata(pool, __xp_raw_get_data(pool, addr));
++	ret.meta = __xsk_buff_get_metadata(pool, __xp_raw_get_data(pool, addr),
++					   options);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
