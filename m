@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9035619E7F7;
-	Sat, 12 Sep 2026 08:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB2138F259;
+	Sat, 12 Sep 2026 08:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201231; cv=none; b=jV8wfAkSg2NupT/fKorsCyQfxoqGNEex6lWCMsaLwNobP5A62vyvxhryQ03J9mT6jIIMBgyUycB0YUO56ITL4LfxdxVjWEIKSdA9clqHTP/G8q2Klt3B8urX2a1gyVGErV6iErqw+TkSRjrJiIkjTSqnX0BO4F2O/gzZcPnBKCs=
+	t=1789201236; cv=none; b=EAKsz8/zQVjCWIMU+tbX63IEivIphPbGmXPCvgxKvwEPZ4pGEMC+OT+V8GKLwLe34vZDsS/Plj2UXgXug31jScqMtScKDfVFMCxNWcTjzLF5zTIrQ6nVMLBobwTl3Au0a/Rpk1V2v3AJBMOi+zWXFf3GFFLaG4a9FOi04t0S4O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201231; c=relaxed/simple;
-	bh=dszA5I2dSq9f3x5K8AAnsjQXcJSEA4MadCvMIgosjwo=;
+	s=arc-20240116; t=1789201236; c=relaxed/simple;
+	bh=yWwTXVwclmFbkg4lK5leybO7vPW4oW1SLuhrCSk5ZrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kjSQln1tk3BLbCvYLwfAzx2YW+XgJW9SnyOqxNrm3HREjTA37pHhqk5o1T2QbGbDYDLuENeIBNq5vjKyIdStvvCY6AEF8qeVMpllpXH9eBHDRCnyVat82Gzxsw48kYA8sgU4MSr6/N2MHamNDjOpFs5Y/6Q6lABWZcg6DJSxY/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A23yzt+i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HDsJV2D3p0sEXpUoAHoR+Wfdv5/aY5j4NK1EkyVrryBFt329kuZ9DXJBUQajTk5cEZJV4Ctz1Hl0ewBOKVt9jn6uhn74+2NcXTw8ktpxtPm9tjnyIQWDZkKHYPGbUfciDaJw3XgoKd5iStD3Rnfz1ghNEyTLN/Iu0MFeGje2V7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kH0AaaDq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A23yzt+i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4929B1F000FF;
-	Sat, 12 Sep 2026 08:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kH0AaaDq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E671F000FF;
+	Sat, 12 Sep 2026 08:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201230;
-	bh=0z5D3TTqk+pyVS3KjLvS+ukWNjHuEUgYPKB+yoJ3MLE=;
+	s=korg; t=1789201235;
+	bh=+7ruBSvMJrSejCSnDO3DXjMwj8Z0h+Osuv2BSWNVfSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A23yzt+iqIs/pC/rOj1SR8P1n0YIapRER8I45flOwkWDqd9ZU/twMQ5tB5s75K+8P
-	 0z/Er4Sz3BKg5EzA41eXx2l9hM5bmRqvq0RuCZ4PIG5v2qGyKqLF3/p8LUwIUWhVrI
-	 qToO5k2VdAJyneSYOwuOsqmASoMb62eLS/yiafWs=
+	b=kH0AaaDqgiv9/q11Ofs6in9haZVtRFYYawA+ivpoflIA0qJIWoC1h6idw3K3H0dzd
+	 ze/K5UlAjAtu67BwievR9WYtjPSSi2Oc69kXEp7phOkulkTFtBP/+WcOFl5RFyQclu
+	 fXUOtIMA7HIY0KVSkfOMr5+gtQpo4xFbdW283Clo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Reshma Immaculate Rajkumar <reshma.rajkumar@oss.qualcomm.com>,
+	Aishwarya R <aishwarya.r@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0952/1815] wifi: mt76: mt7996: fix out-of-bounds link array access in mt7996_tx()
-Date: Sat, 12 Sep 2026 08:45:02 +0200
-Message-ID: <20260912065711.315744119@linuxfoundation.org>
+Subject: [PATCH 7.2 0953/1815] wifi: ath12k: fix encrypted EAPOL TX in encap offload mode
+Date: Sat, 12 Sep 2026 08:45:03 +0200
+Message-ID: <20260912065711.341721038@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,74 +54,210 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Reshma Immaculate Rajkumar <reshma.rajkumar@oss.qualcomm.com>
 
-[ Upstream commit 4330a0ef9f75a54fde3548432a9a698f06bab635 ]
+[ Upstream commit 1e33f8acd837420160ea088160d8648a3db54c3b ]
 
-When mac80211 leaves the link unspecified, mt7996_tx() substitutes the
-primary link id of the station or vif. That value is
-IEEE80211_LINK_UNSPECIFIED (0xf) until the first link has been added,
-and it is then used unchecked to index vif->link_conf[],
-mvif->mt76.link[] and sta->link[], all of which hold
-IEEE80211_MLD_MAX_NUM_LINKS (15) entries.
+When a vif operates with IEEE80211_OFFLOAD_ENCAP_ENABLED,
+mac80211 delivers EAPOL frames to ath12k in native-WiFi format.
 
-Clamp the primary link id to the default link before using it, and use
-the clamped value for the link_sta fallback as well.
+Unencrypted EAPOL frames used during the initial 4-way
+handshake are already handled through the existing
+is_diff_encap path. However, EAPOL frames transmitted during
+GTK rekeying carry ATH12K_SKB_CIPHER_SET and continue through
+the normal native-WiFi transmit path.
 
-Fixes: 1609b014aa29 ("wifi: mt76: mt7996: Overwrite unspecified link_id in mt7996_tx()")
-Link: https://patch.msgid.link/20260801145334.1166751-10-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Firmware encryption requires RAW frames with cipher-specific IV and ICV
+fields correctly provisioned in the skb. Passing encrypted EAPOL frames
+in native-WiFi format results in incorrect IV provisioning, leading to
+an invalid ICV and frame drop.
+
+Fix this by detecting the EAPOL frames that need HW encryption and
+converting them to firmware-encrypted RAW frames before transmission.
+Reserve IV space after the MAC header, append ICV space at the tail,
+select the appropriate firmware encryption type and request
+firmware-side encryption.
+
+Introduce ath12k_dp_tx_crypto_iv_len() and ath12k_dp_tx_crypto_icv_len()
+helpers in the TX path to obtain cipher-specific IV and ICV lengths.
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01270-QCAHKSWPL_SILICONZ-1
+
+Fixes: d29591d5b52e ("wifi: ath12k: Advertise encapsulation/decapsulation offload support to mac80211")
+Signed-off-by: Reshma Immaculate Rajkumar <reshma.rajkumar@oss.qualcomm.com>
+Reviewed-by: Aishwarya R <aishwarya.r@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260729171732.668367-1-reshma.rajkumar@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7996/main.c  | 20 ++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_tx.c       | 46 +++++++++++++
+ drivers/net/wireless/ath/ath12k/dp_tx.h       |  2 +
+ drivers/net/wireless/ath/ath12k/wifi7/dp_tx.c | 64 ++++++++++++++++++-
+ 3 files changed, 111 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index c49c6f92efe2d..c6140412ed322 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -1511,20 +1511,26 @@ static void mt7996_tx(struct ieee80211_hw *hw,
- 	struct ieee80211_vif *vif = info->control.vif;
- 	struct mt7996_vif *mvif = vif ? (void *)vif->drv_priv : NULL;
- 	struct mt76_wcid *wcid = &dev->mt76.global_wcid;
-+	u8 deflink_id = IEEE80211_LINK_UNSPECIFIED;
- 	u8 link_id = u32_get_bits(info->control.flags,
- 				  IEEE80211_TX_CTRL_MLO_LINK);
+diff --git a/drivers/net/wireless/ath/ath12k/dp_tx.c b/drivers/net/wireless/ath/ath12k/dp_tx.c
+index c10da6195c9c3..9644f9ef2c749 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_tx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_tx.c
+@@ -82,6 +82,52 @@ enum hal_encrypt_type ath12k_dp_tx_get_encrypt_type(u32 cipher)
+ }
+ EXPORT_SYMBOL(ath12k_dp_tx_get_encrypt_type);
  
- 	rcu_read_lock();
- 
-+	if (msta)
-+		deflink_id = msta->deflink_id;
-+	else if (mvif)
-+		deflink_id = mvif->mt76.deflink_id;
++u8 ath12k_dp_tx_crypto_iv_len(enum hal_encrypt_type enc_type)
++{
++	switch (enc_type) {
++	case HAL_ENCRYPT_TYPE_TKIP_NO_MIC:
++	case HAL_ENCRYPT_TYPE_TKIP_MIC:
++		return IEEE80211_TKIP_IV_LEN;
++	case HAL_ENCRYPT_TYPE_CCMP_128:
++		return IEEE80211_CCMP_HDR_LEN;
++	case HAL_ENCRYPT_TYPE_CCMP_256:
++		return IEEE80211_CCMP_256_HDR_LEN;
++	case HAL_ENCRYPT_TYPE_GCMP_128:
++	case HAL_ENCRYPT_TYPE_AES_GCMP_256:
++		return IEEE80211_GCMP_HDR_LEN;
++	case HAL_ENCRYPT_TYPE_WEP_40:
++	case HAL_ENCRYPT_TYPE_WEP_104:
++	case HAL_ENCRYPT_TYPE_WEP_128:
++		return IEEE80211_WEP_IV_LEN;
++	default:
++		return 0;
++	}
++}
++EXPORT_SYMBOL(ath12k_dp_tx_crypto_iv_len);
 +
-+	/* the primary link is unset until the first link has been added */
-+	if (deflink_id >= IEEE80211_MLD_MAX_NUM_LINKS)
-+		deflink_id = 0;
++u8 ath12k_dp_tx_crypto_icv_len(enum hal_encrypt_type enc_type)
++{
++	switch (enc_type) {
++	case HAL_ENCRYPT_TYPE_CCMP_128:
++		return IEEE80211_CCMP_MIC_LEN;
++	case HAL_ENCRYPT_TYPE_CCMP_256:
++		return IEEE80211_CCMP_256_MIC_LEN;
++	case HAL_ENCRYPT_TYPE_GCMP_128:
++	case HAL_ENCRYPT_TYPE_AES_GCMP_256:
++		return IEEE80211_GCMP_MIC_LEN;
++	case HAL_ENCRYPT_TYPE_TKIP_NO_MIC:
++	case HAL_ENCRYPT_TYPE_TKIP_MIC:
++		return IEEE80211_TKIP_ICV_LEN;
++	case HAL_ENCRYPT_TYPE_WEP_40:
++	case HAL_ENCRYPT_TYPE_WEP_104:
++	case HAL_ENCRYPT_TYPE_WEP_128:
++		return IEEE80211_WEP_ICV_LEN;
++	default:
++		return 0;
++	}
++}
++EXPORT_SYMBOL(ath12k_dp_tx_crypto_icv_len);
 +
- 	/* Use primary link_id if the value from mac80211 is set to
- 	 * IEEE80211_LINK_UNSPECIFIED.
- 	 */
--	if (link_id == IEEE80211_LINK_UNSPECIFIED) {
--		if (msta)
--			link_id = msta->deflink_id;
--		else if (mvif)
--			link_id = mvif->mt76.deflink_id;
--	}
-+	if (link_id == IEEE80211_LINK_UNSPECIFIED)
-+		link_id = deflink_id;
+ void ath12k_dp_tx_release_txbuf(struct ath12k_dp *dp,
+ 				struct ath12k_tx_desc_info *tx_desc,
+ 				u8 pool_id)
+diff --git a/drivers/net/wireless/ath/ath12k/dp_tx.h b/drivers/net/wireless/ath/ath12k/dp_tx.h
+index 7cef20540179f..1af79af2ada26 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_tx.h
++++ b/drivers/net/wireless/ath/ath12k/dp_tx.h
+@@ -19,6 +19,8 @@ enum hal_tcl_encap_type
+ ath12k_dp_tx_get_encap_type(struct ath12k_base *ab, struct sk_buff *skb);
+ void ath12k_dp_tx_encap_nwifi(struct sk_buff *skb);
+ u8 ath12k_dp_tx_get_tid(struct sk_buff *skb);
++u8 ath12k_dp_tx_crypto_iv_len(enum hal_encrypt_type enc_type);
++u8 ath12k_dp_tx_crypto_icv_len(enum hal_encrypt_type enc_type);
+ void *ath12k_dp_metadata_align_skb(struct sk_buff *skb, u8 tail_len);
+ int ath12k_dp_tx_align_payload(struct ath12k_dp *dp, struct sk_buff **pskb);
+ void ath12k_dp_tx_release_txbuf(struct ath12k_dp *dp,
+diff --git a/drivers/net/wireless/ath/ath12k/wifi7/dp_tx.c b/drivers/net/wireless/ath/ath12k/wifi7/dp_tx.c
+index d2749de445534..587d58eeccfa5 100644
+--- a/drivers/net/wireless/ath/ath12k/wifi7/dp_tx.c
++++ b/drivers/net/wireless/ath/ath12k/wifi7/dp_tx.c
+@@ -13,6 +13,49 @@
+ #include "hal.h"
+ #include "hal_tx.h"
  
- 	if (vif && ieee80211_vif_is_mld(vif)) {
- 		struct ieee80211_bss_conf *link_conf;
-@@ -1534,7 +1540,7 @@ static void mt7996_tx(struct ieee80211_hw *hw,
++/*
++ * Convert an encrypted EAPOL frame from native-WiFi format to
++ * the layout expected by the firmware RAW encrypt pipeline:
++ *
++ *   [802.11 hdr][IV (zeroed)][LLC/SNAP][EAPOL payload][ICV (zeroed)]
++ *
++ * mac80211 delivers the frame as [802.11 hdr][LLC/SNAP][EAPOL payload].
++ * The MAC header length is read from the unmodified skb and is safe because
++ * ieee80211_hdrlen() only inspects the 2-byte frame_control field.
++ * pskb_expand_head() is used to grow both head (for the IV) and tail
++ * (for the ICV) in a single call and allocation.
++ */
++static int
++ath12k_wifi7_dp_tx_encap_eapol(struct sk_buff *skb,
++			       struct hal_tx_info *ti,
++			       struct ath12k_skb_cb *skb_cb)
++{
++	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
++	enum hal_encrypt_type enc_type =
++				ath12k_dp_tx_get_encrypt_type(skb_cb->cipher);
++	u16 mac_hdr_len = ieee80211_hdrlen(hdr->frame_control);
++	u8 iv_len = ath12k_dp_tx_crypto_iv_len(enc_type);
++	u8 icv_len = ath12k_dp_tx_crypto_icv_len(enc_type);
++
++	if (pskb_expand_head(skb, iv_len, icv_len, GFP_ATOMIC))
++		return -ENOMEM;
++
++	if (iv_len) {
++		skb_push(skb, iv_len);
++		memmove(skb->data, skb->data + iv_len, mac_hdr_len);
++		memset(skb->data + mac_hdr_len, 0, iv_len);
++	}
++
++	if (icv_len)
++		memset(skb_put(skb, icv_len), 0, icv_len);
++
++	ti->flags0 |= u32_encode_bits(1, HAL_TCL_DATA_CMD_INFO2_TO_FW);
++	ti->encap_type = HAL_TCL_ENCAP_TYPE_RAW;
++	ti->encrypt_type = enc_type;
++
++	return 0;
++}
++
+ static void
+ ath12k_wifi7_hal_tx_cmd_ext_desc_setup(struct ath12k_base *ab,
+ 				       struct hal_tx_msdu_ext_desc *tcl_ext_cmd,
+@@ -91,6 +134,7 @@ int ath12k_wifi7_dp_tx(struct ath12k_pdev_dp *dp_pdev, struct ath12k_link_vif *a
+ 	u32 iova_mask = dp->hw_params->iova_mask;
+ 	bool is_diff_encap = false;
+ 	bool is_null_frame = false;
++	bool eapol_encap_done = false;
  
- 			link_sta = rcu_dereference(sta->link[link_id]);
- 			if (!link_sta)
--				link_sta = rcu_dereference(sta->link[msta->deflink_id]);
-+				link_sta = rcu_dereference(sta->link[deflink_id]);
+ 	if (test_bit(ATH12K_FLAG_CRASH_FLUSH, &ab->dev_flags))
+ 		return -ESHUTDOWN;
+@@ -211,9 +255,27 @@ int ath12k_wifi7_dp_tx(struct ath12k_pdev_dp *dp_pdev, struct ath12k_link_vif *a
+ 	case HAL_TCL_ENCAP_TYPE_NATIVE_WIFI:
+ 		is_null_frame = ieee80211_is_nullfunc(hdr->frame_control);
+ 		if (ahvif->vif->offload_flags & IEEE80211_OFFLOAD_ENCAP_ENABLED) {
+-			if (skb->protocol == cpu_to_be16(ETH_P_PAE) || is_null_frame)
++			if ((skb->protocol == cpu_to_be16(ETH_P_PAE) &&
++			     !(skb_cb->flags & ATH12K_SKB_CIPHER_SET)) || is_null_frame)
+ 				is_diff_encap = true;
  
- 			if (link_sta) {
- 				memcpy(hdr->addr1, link_sta->addr, ETH_ALEN);
++			if (skb->protocol == cpu_to_be16(ETH_P_PAE) &&
++			    (skb_cb->flags & ATH12K_SKB_CIPHER_SET)) {
++				if (!eapol_encap_done) {
++					ret = ath12k_wifi7_dp_tx_encap_eapol(skb, &ti,
++									     skb_cb);
++					if (ret)
++						goto fail_remove_tx_buf;
++					hdr = (void *)skb->data;
++					eapol_encap_done = true;
++				} else {
++					ti.flags0 |= u32_encode_bits(1,
++							HAL_TCL_DATA_CMD_INFO2_TO_FW);
++					ti.encap_type = HAL_TCL_ENCAP_TYPE_RAW;
++					ti.encrypt_type =
++						ath12k_dp_tx_get_encrypt_type(skb_cb->cipher);
++				}
++			}
+ 			/* Firmware expects msdu ext descriptor for nwifi/raw packets
+ 			 * received in ETH mode. Without this, observed tx fail for
+ 			 * Multicast packets in ETH mode.
 -- 
 2.53.0
 
