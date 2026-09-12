@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB71271464;
-	Sat, 12 Sep 2026 08:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C3B4028F2;
+	Sat, 12 Sep 2026 08:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202154; cv=none; b=GF4lNPYZxFY+S7sWLhB0k1hjjfC0CURTSOHhZzl57W4SJWOgO38LNJrJJFDZ8048TWU3RN3TMRQ2Emh0aX2c6T5fTaN8c6jtUspaDd8mMueYxR6/zsFAJl6vgb3rXxP8mcEECffTCx0xaEuaBhfdBMjnd7QlY/r9o8BN//FK3Rk=
+	t=1789202161; cv=none; b=sHnidUj6pOE6VZ8pIrKEacjHfnrX5HvtjP48m12tF3sOY5EK65/GiYO5O72tNKGjjfIk5uHgrGkGJ0NgoQhcPIe9+g0Ocek8JqaKV4YC4UM4vr2PA6G7ihhFbXgkRQxaK4NNG7l32kLeFt4GHGyAOQxxpdCyWobHxYaVDebxfFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202154; c=relaxed/simple;
-	bh=Z29spksNc1k9BJSFXvF/j4I8EEWfSpyiWtu3tEKHWkw=;
+	s=arc-20240116; t=1789202161; c=relaxed/simple;
+	bh=7EifDbVNsXpJJXOUFBk5LVxr30SC901gyTMDrx0nxz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lVxBy4KGlbGJyRLtybQdpD2bz2jZS1jx9Q+fLxsJjJRPKKfBRCDcDdFRKQ1fDSq7Ak69uPmXkM3PAMbZnVlWdBjayA+vL3HTtlUrKbg41EkdQt0kiIH/scM6pIBX4Cur5fQ6kGglWhcxDjnrPmsOSHYcvyYxplegLmeQCiO2lwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igDvxNvV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bpy1AKRfyIKq16f0NA4JYtbcItduYXQkHwKF5e595kyfvxTUZajgZCzzi42GYLzMM7n1/Tt5bdrcvaoV7NLAyhlJVunoeUlXn20TX52H+VH8BLnANj5IQsHTaaOCaRxeeJeWVAAqsfcXk8ho0Gf3MILBV/9tziZvHycNJrwnWS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nom1NBss; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igDvxNvV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1D91F000FF;
-	Sat, 12 Sep 2026 08:35:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nom1NBss"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76C21F000FF;
+	Sat, 12 Sep 2026 08:35:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202153;
-	bh=qHOIw446XO9A1TMQDZOQiV56B4EKG+1NuxaFADTKhIw=;
+	s=korg; t=1789202158;
+	bh=gkAQr9LDzK0evpp/izgTCnbMOrhnWbmzKNrgjLhsYNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=igDvxNvVwdxo+04XCfhRn1xdww580dxu7nVzWDifa9pWcKo+AL6PSq40VoEbjn4Ws
-	 zrl3f+hg3wv0olKKZvRR6eQBzR+4pNapmqC5guinX0zuid9n5IOxahXgYc2+vyBsXL
-	 A3xKBsE9V4RTgd+sbuFfnYpsEAeaw22lyqiwtrSU=
+	b=nom1NBssXBZo+i2ryLGzpyPMhCHH6FsfOJNf1xLZPFC5m5zj0ujj0quCD2BEYAMX+
+	 SbUEitSXMMOOeuX9cg7iHsP6khwzw+NQl8JbecGCH1hqszmfcDfNsEzvzBxywK4tR4
+	 uTp2rYOYZ/cwlKwrPb2cuvVP+3b9FC9+Mw3OdB+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robertus Diawan Chris <robertusdchris@gmail.com>,
+	Yuntao Wang <yuntao.wang@linux.dev>,
 	Nathan Chancellor <nathan@kernel.org>,
 	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1101/1815] modpost: prevent leak when early return no suffix .o in read_symbols()
-Date: Sat, 12 Sep 2026 08:47:31 +0200
-Message-ID: <20260912065714.864834328@linuxfoundation.org>
+Subject: [PATCH 7.2 1102/1815] kbuild: fix modules.builtin(.modinfo) targets in the top-level Makefile
+Date: Sat, 12 Sep 2026 08:47:32 +0200
+Message-ID: <20260912065714.887983274@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,51 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robertus Diawan Chris <robertusdchris@gmail.com>
+From: Yuntao Wang <yuntao.wang@linux.dev>
 
-[ Upstream commit 9a5b76027ed91680e10f90111d9cba300f96d1ab ]
+[ Upstream commit 69ef27076d19297c0bf3bd22171fab8d87464a09 ]
 
-The allocation for elf info symsearch and hdr from parse_elf() haven't
-been released when return because of modname didn't have suffix ".o".
-And it seems like the suffix ".o" check did not depends on parse_elf()
-to succeed first. So, move the suffix ".o" check before checking
-parse_elf() result to prevent resource leak when the modname didn't have
-suffix ".o" and return early.
+Commit 7a342e6c7735 ("kbuild: move modules.builtin(.modinfo) rules to
+Makefile.vmlinux_o") moved the modules.builtin(.modinfo) rules from
+link-vmlinux.sh to Makefile.vmlinux_o, and added the corresponding
+targets to the top-level Makefile.
 
-This is reported by Coverity Scan as "Resource leak".
+Commit 39cfd5b12160 ("kbuild: extract modules.builtin.modinfo from
+vmlinux.unstripped") later moved these rules from Makefile.vmlinux_o to
+Makefile.vmlinux, but left the corresponding targets in the top-level
+Makefile unchanged.
 
-Fixes: 8c9ce89c5b63 ("modpost: simplify mod->name allocation")
-Signed-off-by: Robertus Diawan Chris <robertusdchris@gmail.com>
+These modules.builtin(.modinfo) targets in the top-level Makefile should
+be moved alongside the vmlinux target, since they are now generated by
+Makefile.vmlinux.
+
+However, simply removing these trivial targets might be a better choice,
+as it makes the Makefile cleaner and avoids the need to keep them in sync
+across multiple files, reducing the chance of future mistakes.
+
+Fixes: 39cfd5b12160 ("kbuild: extract modules.builtin.modinfo from vmlinux.unstripped")
+Signed-off-by: Yuntao Wang <yuntao.wang@linux.dev>
 Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260624044742.144852-1-robertusdchris@gmail.com
+Link: https://patch.msgid.link/20260729071737.818007-1-yuntao.wang@linux.dev
 Signed-off-by: Nicolas Schier <nsc@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/modpost.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index 027944fe35b47..91b35eec69a8b 100644
---- a/scripts/mod/modpost.c
-+++ b/scripts/mod/modpost.c
-@@ -1592,14 +1592,14 @@ static void read_symbols(const char *modname)
- 	struct elf_info info = { };
- 	Elf_Sym *sym;
+diff --git a/Makefile b/Makefile
+index ad446f35634cd..aa4a67c1b5cbd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1361,7 +1361,7 @@ PHONY += vmlinux_o
+ vmlinux_o: vmlinux.a $(KBUILD_VMLINUX_LIBS)
+ 	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.vmlinux_o
  
--	if (!parse_elf(&info, modname))
--		return;
--
- 	if (!strends(modname, ".o")) {
- 		error("%s: filename must be suffixed with .o\n", modname);
- 		return;
- 	}
+-vmlinux.o modules.builtin.modinfo modules.builtin: vmlinux_o
++vmlinux.o: vmlinux_o
+ 	@:
  
-+	if (!parse_elf(&info, modname))
-+		return;
-+
- 	/* strip trailing .o */
- 	mod = new_module(modname, strlen(modname) - strlen(".o"));
- 
+ PHONY += vmlinux
 -- 
 2.53.0
 
