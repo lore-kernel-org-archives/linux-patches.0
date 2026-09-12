@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C764B306B3B;
-	Sat, 12 Sep 2026 13:53:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A19D325726;
+	Sat, 12 Sep 2026 13:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221203; cv=none; b=kXrt/djc2JOufTjBckvBlfVpr8hVX4d3K8WPhqR9p42/mFX3HOL84EmRAiLGnxjV1Q96NVqAuYkDsl0vSBdvOgoaXvRFFMKwPOx5pom5AI1TYYFx/vVcM+BJaXT3mObqvKiE/x1gzeFzTWSGWizjKX5rdg2ODhbl+/YUHri5DqA=
+	t=1789221216; cv=none; b=pTVrIo3tFl7UWDhzzXfgsa+C3Hk/JwfQgs7zGqYeLf0/ISyMhIWZprs1SFdtvl9vL/u4lGH3dcSPF5lUBtLnEI1fqX9VizZw+fWJRYZjO8U8Atpci+gNyh5uzyvPTeuk2CZNKTCx3OalWa96UDrie0vhkV5xMTKTPV9Z/WaD75w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221203; c=relaxed/simple;
-	bh=/MUf5JgyqvERnjXLtQ8URfOwF0hibC3jrBPlboi98pM=;
+	s=arc-20240116; t=1789221216; c=relaxed/simple;
+	bh=gFsNzthM4FRUjAVtL6Oe47nY2g7fKx+a0sOBTU7toCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sAO1DUMq3oBCH4o1hEegJ4QQ4E3+uuIWjRqfi2WdxLigE4C3Ra03cZK+Uy8ITafJGKTFYYeBxGwH+CYMuUsMhQKzKTIONHhRNHQ/MBanFUD833jhz61MZ3SfsspvlcyTFaquMDYcfYMbqyTrlwEUbWFfnFhHYvfAzerovvyw2xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzCDlY3h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i1S50vd3bUqRW70VQkSNfOhGiIVyOFOOfnzKKh4wXCC+NKrAL9e7u4ZvHUK/ra6uhbNiyXl57OsW/1xXn9L0/JLQDoiTVNDX5mZXgm8Jqc0C01uGGsgSYA9r5JUFQ9KA9Am7lFp7RPQuDaRkI8+3xK/Kj7fwk7zFMK01v6FKLiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T9YkYmsU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzCDlY3h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 014AF1F000FF;
-	Sat, 12 Sep 2026 13:53:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T9YkYmsU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1D41F000FF;
+	Sat, 12 Sep 2026 13:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221201;
-	bh=S8VQk9O5x83uQRq1FfYZ1j8QHeckZyt5GnF6pSA3/zk=;
+	s=korg; t=1789221212;
+	bh=p7WVKlvsi8HgT7YkWC7duPkhy1vWofQIUx5YGwogiPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uzCDlY3h+1oIlG4e5F10FY3OpIssAXnabJHbDv9ec04Mkf0yeIVmxw2cOeDoYyBqN
-	 83j5hPoadXKMmqgqoaIG9D7gbVVcSs4HQqBvdIDgnSDRLdG+e2qUPOmw2Wl7n9gHQB
-	 FypRohWhGGWbdSi+OJW6roWHhAca5PbBfjFVA7ic=
+	b=T9YkYmsUyjEBb6NcVyH53dDO10gwWXVxk8pP22bblIJWKSSAct3QOYezbsxfbK9Rk
+	 ZT5UHZuFvQZNzbTfIXvMhyh5wv8iefrvzaj8MIgCojX/lVAXWi+3fccYOYdPpcdxSN
+	 mqMQs+hpeKyZKCcF+tPDFHru+e2rzlax2eQWES2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Muhammad Bilal <meatuni001@gmail.com>
-Subject: [PATCH 6.6 0334/1424] staging: rtl8723bs: fix OOB read / stack overflow in rtw_get_wps_attr()
-Date: Sat, 12 Sep 2026 08:46:06 +0200
-Message-ID: <20260912065614.766434336@linuxfoundation.org>
+Subject: [PATCH 6.6 0335/1424] staging: rtl8723bs: fix OOB read in rtw_action_frame_parse()
+Date: Sat, 12 Sep 2026 08:46:07 +0200
+Message-ID: <20260912065614.788202511@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,69 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 99aa998dec83ba180822f70e6d48a514fc81c20d upstream.
+commit ff917923f4fb9c83717ba135ee47d7e4c1567bb7 upstream.
 
-rtw_get_wps_attr() walks WPS attributes inside a WPS IE taken from
-a wireless management frame. For each candidate attribute it only
-checks that the fixed 4-byte attribute header (2-byte ID + 2-byte
-length) fits inside the IE:
+rtw_action_frame_parse() takes a frame_len parameter but never
+actually checks it before indexing into the frame body:
 
-	if (attr_ptr + 4 > wps_ie + wps_ielen)
-		break;
-	u16 attr_id = get_unaligned_be16(attr_ptr);
-	u16 attr_data_len = get_unaligned_be16(attr_ptr + 2);
-	u16 attr_len = attr_data_len + 4;
+	const u8 *frame_body = frame + sizeof(struct ieee80211_hdr_3addr);
+	...
+	c = frame_body[0];
+	...
+	a = frame_body[1];
 
-attr_data_len (and therefore attr_len) is read directly from the
-wire and is never checked against the remaining bytes in the IE
-before being used as the size of:
+frame_body already points 24 bytes (sizeof(struct
+ieee80211_hdr_3addr)) into frame, so reading frame_body[0] and
+frame_body[1] requires frame_len >= 26. A management action frame
+shorter than that (e.g. exactly 24 bytes, the minimum a malicious
+peer can send) causes a 1-2 byte out-of-bounds read.
 
-	memcpy(buf_attr, attr_ptr, attr_len);
+This is reachable from rtw_cfg80211_monitor_if_xmit_entry() and
+cfg80211_rtw_mgmt_tx() in ioctl_cfg80211.c, both of which pass
+attacker/user-influenced frame buffers and lengths straight through.
 
-Since attr_len is fully attacker controlled (0 to 65535+4), this is
-both a heap OOB read of wps_ie, and, more seriously, a stack buffer
-overflow at several call sites where buf_attr is a single-byte
-stack variable, e.g. rtw_get_wps_attr_content()'s callers passing
-WPS_ATTR_SELECTED_REGISTRAR into a stack "u8 sr"/"u8
-selected_registrar" (drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c,
-drivers/staging/rtl8723bs/core/rtw_mlme_ext.c). A crafted WPS IE in a
-beacon or probe response processed during scanning can therefore
-smash the stack of the parsing thread.
-
-rtw_get_wps_attr_content() itself has no independent length check
-and simply trusts the attr_len it gets back from rtw_get_wps_attr(),
-so fixing the bound here also fixes that caller.
-
-The "attr_ptr + 4 > wps_ie + wps_ielen" header check above was added
-by commit 1463ca3ec6601 ("staging: rtl8723bs: fix OOB reads in
-rtw_get_sec_ie(), rtw_get_wapi_ie(), and rtw_get_wps_attr()"), which
-bounded the fixed header but never extended the check to cover the
-variable-length attribute data that follows it. Add that missing
-check before attr_len is used as a memcpy() length or accepted as a
-match.
+Add the missing length check before frame_body is dereferenced.
 
 Fixes: 554c0a3abf216 ("staging: Add rtl8723bs sdio wifi driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260728125456.32359-2-meatuni001@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260728125456.32359-3-meatuni001@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_ieee80211.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/staging/rtl8723bs/core/rtw_ieee80211.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
 +++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-@@ -745,6 +745,10 @@ u8 *rtw_get_wps_attr(u8 *wps_ie, uint wp
- 		u16 attr_data_len = get_unaligned_be16(attr_ptr + 2);
- 		u16 attr_len = attr_data_len + 4;
+@@ -1152,6 +1152,9 @@ int rtw_action_frame_parse(const u8 *fra
+ 	u8 c;
+ 	u8 a = ACT_PUBLIC_MAX;
  
-+		/* Reject attributes whose claimed length runs past the IE */
-+		if (attr_ptr + attr_len > wps_ie + wps_ielen)
-+			break;
++	if (frame_len < sizeof(struct ieee80211_hdr_3addr) + 2)
++		return false;
 +
- 		if (attr_id == target_attr_id) {
- 			target_attr_ptr = attr_ptr;
+ 	fc = le16_to_cpu(((struct ieee80211_hdr_3addr *)frame)->frame_control);
  
+ 	if ((fc & (IEEE80211_FCTL_FTYPE|IEEE80211_FCTL_STYPE))
 
 
