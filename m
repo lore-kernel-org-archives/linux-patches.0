@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805AE2BDC0E;
-	Sat, 12 Sep 2026 07:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0A834752E;
+	Sat, 12 Sep 2026 07:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197760; cv=none; b=E9R3f/11QQkXoVUWfc8Z2fwtk8P6UyKHpP9IlA07a2xKT2J8gOs9rDtDmNDaVMOebgq1ORCQKc0oJp8Ba3L4FcACaLJ+r7+TzWe0UN0Z6PWORx6wndMEX7gdURX042IEPQZ0fJ18SSj1RnvAES++4b8I8+a8usYY1ugMmZUNxL4=
+	t=1789197765; cv=none; b=Xv6th58W2Ax5PybCXe78r+mXXKhez+cMurdiz2PrGf1peLQb6Dway6Ddr6MFXrgS666Uj2pAi+xMoBoUt05i6zBHdruNARWEdx+++z3iMf3YbXx5q/mM9KI3A0PgmgcrToUUGzpOKLDuvbhEyKmfllqVslUmQeOD4iG5C42YJgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197760; c=relaxed/simple;
-	bh=NiHnRDm9G6iEyO71Sn4kQUs9cku+EUwkX8hUAADShyM=;
+	s=arc-20240116; t=1789197765; c=relaxed/simple;
+	bh=+MxihWzwS0B0iXI9uZY+26hVryETKE5ZJSzQ1IXdZNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YATSrxdWS39BOBmmHjgQM91RxCgL5RKA1aiDZrkdwkzZaIagKyvPDODTb2ke+DKVHeOiX8s+7aLf7yGkvGNDWfd2YzOOX3fJfzri4va3M7coOuznP+vGi4LEQV0hisza3JiXSuoUlT1Iu5uX7jjkfzQQeANkdiwIWUCmIPqRnBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adqRoiiJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qyMuWlnZ+mvLiPXQXbkDzgi3s/CZymZ6/Jpn5RA9bKNuob7NJdoaoh2x62Dzwf9DWnn5AJiDHnN5yUNwUgCFZwJGGV+kvV8w702KFkFooIAs+bIB380ynrhlqGmTqTVbaWqGtgHFaRG7N3BiquGel9Oyff3rbevaUpCD/oMJHCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBxy4RCj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adqRoiiJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EBA81F000FF;
-	Sat, 12 Sep 2026 07:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBxy4RCj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24CAD1F000FF;
+	Sat, 12 Sep 2026 07:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197759;
-	bh=VjbgSmv/7u7sankD92wgP3sDzYfgLWryuyn8iwl3tcM=;
+	s=korg; t=1789197764;
+	bh=vpUU3E2VzUODTBRTxvnADVRQbOgHEdTY8hLItV38B4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=adqRoiiJQRoDzfyKOMePZVY7QovPkSWVFlW9yZ93/B5mltYisQxyReHAu4mjd9/R6
-	 lr+dhzvdCW/1ssQJvx6dznDuQFwC9FodVbsDsYTVzm0aUq/FepWtJDdkYs9x2PpNde
-	 t50OFPORHKCe0jaJJ8h73+SOcwWeXqWquYdYugA8=
+	b=UBxy4RCjP1ksSbZfsUgdWZBWzFzGcPKW+kpikk8iTN881DnKLK0hqSemVmB1Z/OdK
+	 S+psnQQh6n8EPzToyFMjlIRvUMuulUJNpncrpObTdWG7iT5LDSEgUAFg646O+kSdqa
+	 c4xoKd0jF70U/Agl2u/VVkXyTVhb9tN/efjNdBoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Yang <yangfeng@kylinos.cn>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Wang Yan <wangyan01@kylinos.cn>,
+	William Roberts <bill.c.roberts@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0242/1815] selftests/bpf: Fix memory leak in msg_alloc_iov
-Date: Sat, 12 Sep 2026 08:33:12 +0200
-Message-ID: <20260912065654.670368534@linuxfoundation.org>
+Subject: [PATCH 7.2 0243/1815] selftests/lsm: Fix memory leak in attr_lsm_count
+Date: Sat, 12 Sep 2026 08:33:13 +0200
+Message-ID: <20260912065654.693402958@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,37 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Yang <yangfeng@kylinos.cn>
+From: Wang Yan <wangyan01@kylinos.cn>
 
-[ Upstream commit 602701718649936eb287bf6c7ecf870ec54c6f71 ]
+[ Upstream commit 0cee720cfd51402cfcb14d96cb326a36c13b823a ]
 
-In the msg_alloc_iov function, the iov pointer is only assigned to
-msg->msg_iov after all memory allocations complete successfully.
-Therefore, when a calloc failure triggers the unwind_iov cleanup branch,
-we should use the local variable iov instead of msg->msg_iov.
+The calloc-allocated buffer in attr_lsm_count() is never released on
+any exit path, including both the normal return path and the early
+return when read_sysfs_lsms fails, resulting in a heap memory leak.
 
-Fixes: 753fb2ee0934 ("bpf: sockmap, add msg_peek tests to test_sockmap")
-Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20260707081434.539327-1-yangfeng59949@163.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Add free() for the buffer on all return branches to fix the leak.
+
+Fixes: d3d929a8b0cd ("LSM: selftests for Linux Security Module syscalls")
+Signed-off-by: Wang Yan <wangyan01@kylinos.cn>
+Reviewed-by: William Roberts <bill.c.roberts@gmail.com>
+Tested-by: William Roberts <bill.c.roberts@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_sockmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/lsm/common.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
-index 3e6be455d1583..aaf2050e88450 100644
---- a/tools/testing/selftests/bpf/test_sockmap.c
-+++ b/tools/testing/selftests/bpf/test_sockmap.c
-@@ -435,7 +435,7 @@ static int msg_alloc_iov(struct msghdr *msg,
- 	return 0;
- unwind_iov:
- 	for (i--; i >= 0 ; i--)
--		free(msg->msg_iov[i].iov_base);
-+		free(iov[i].iov_base);
- 	free(iov);
- 	return -ENOMEM;
+diff --git a/tools/testing/selftests/lsm/common.c b/tools/testing/selftests/lsm/common.c
+index 9ad258912646c..927dce4f04cb2 100644
+--- a/tools/testing/selftests/lsm/common.c
++++ b/tools/testing/selftests/lsm/common.c
+@@ -76,7 +76,7 @@ int attr_lsm_count(void)
+ 		return 0;
+ 
+ 	if (read_sysfs_lsms(names, sysconf(_SC_PAGESIZE)))
+-		return 0;
++		goto out;
+ 
+ 	if (strstr(names, "selinux"))
+ 		count++;
+@@ -85,5 +85,7 @@ int attr_lsm_count(void)
+ 	if (strstr(names, "apparmor"))
+ 		count++;
+ 
++out:
++	free(names);
+ 	return count;
  }
 -- 
 2.53.0
