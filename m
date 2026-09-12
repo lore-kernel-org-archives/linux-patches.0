@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4794BEE54;
-	Sat, 12 Sep 2026 09:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B9A3542F8;
+	Sat, 12 Sep 2026 09:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206100; cv=none; b=E7lhAcbHJnl1+7dwv/EbITGt5xNvpxliYpHDSv7LqG3ozBb/uqYftgekJCO3tTipB75rj+O051IzNGgLdokaLBh6RbOk+2UT4mdmIroKI90sutbn0uMdJXBsSgiUaoR4k3PhQkWmxOzZ5CdZRJguGkprsCzatuT5bWBkkK7KBEE=
+	t=1789206105; cv=none; b=tHlVS6cUbEjy7u/qz5WXQfb8x0jFNT3rbGQ7Cgwc914+BZO+8euPni0PEwbNac5p+HZw7lve9WJ6tBe1Baw42SnPTX2axZ0j9p3epCU/ByMsc/fv3QIuqbqw7vkbsfoECmzqiytg4/yqrhsBdioPkBkHUlJ8erV7OF+xmJN3cuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206100; c=relaxed/simple;
-	bh=TLzenUQdx4hTyjFGarUxraGsx3o5U3CDaPTorgKaUKA=;
+	s=arc-20240116; t=1789206105; c=relaxed/simple;
+	bh=GwhnPXWTn7Br2lMGwXCQ0j9KEMUvm9bAYI+MboXeQPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYzfbVWQ3C3YU2naXS1QP/u3fKsQ+fc3NFi4X4db1gk1s5wPbgvxaqzEs186WnXhKDTW0ZlXbbGM9m9bX1VXB8+tsSsNHNHAGRwT6kURIZDzhVOLNX5YsXFRHOQweg+lTUwMDilMWQ3r74MXYQh4kccCqfv8OVHC4hWvUntaK8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGRjRYm1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AacGY5LXC/BBbNjFvcsdSRywIXdxffRKRYzjBhfhlkHHZgwiizBGf/qrzUHUcBawm4qoPQMn8IkH9horP9KzAQW2da47KCj25CcbdfyjTynGhSE5BjXVVEaW2K0yQ3bXU4ltpe3nmMbmCmt9fCDEqySIKGnFqNYawHkXakaA/h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ev5h6yz4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGRjRYm1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC451F000FF;
-	Sat, 12 Sep 2026 09:41:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ev5h6yz4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FF91F000FF;
+	Sat, 12 Sep 2026 09:41:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206099;
-	bh=pHBkrGPK+GbjhonS/l0rdSo2QjFx1bzBc6cZAOTe+iI=;
+	s=korg; t=1789206104;
+	bh=Exia+t5vJuhSM97TrsSCpKfI/tEghV2eJqYvdbatCv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kGRjRYm1WpMxgQpjwmN6f0IjeyhhImbql9eKvtMe+oFgKi5BfYHqNfmA2FQTjksDY
-	 3nPMW1nmzuaxTZX17sVX1rSp1s/guEiRMxv866AfUWs7E6ut85Bi0KCmwn/gRlwLYh
-	 CFj2SFqbdtSJrEb9T8+QXQCUOlJ21GaBPu3nj/iE=
+	b=ev5h6yz4PlA/k+4oV+hHauO+WmVDy1HEovoZSThYVGkAbN1mYF+1MEtvPm7k2DwuO
+	 SYJuJlrWq1JBryRjJAaJ2JFvPysDxyoTZpylTjLMHFnc2AuK8uRrOOanHZTaJV2i4P
+	 3/eNdvornLwUkSDrYBtkUfABbCc496FHUTstKPoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weigang He <geoffreyhe2@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0135/1518] ARM: imx: fix device_node refcount leak in imx_src_init()
-Date: Sat, 12 Sep 2026 08:38:24 +0200
-Message-ID: <20260912065626.547863481@linuxfoundation.org>
+Subject: [PATCH 6.18 0095/1518] drm/bridge: synopsys: dw-dp: Support unregistering the AUX channel
+Date: Sat, 12 Sep 2026 08:37:44 +0200
+Message-ID: <20260912065625.626066703@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,43 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 936407c3563ac745cbbb9953c0cf2472128a22f4 ]
+[ Upstream commit ed04e8e2307f35b3d8d49a554faf5e72d3d224e6 ]
 
-imx_src_init() obtains a device_node reference via
-of_find_compatible_node() matching "fsl,imx51-src" and uses it only to
-call of_iomap(). It never releases that reference: on the success path
-the function returns at the end without of_node_put(np), leaking one
-device_node refcount on every boot of an i.MX5/6 platform.
+The DisplayPort AUX channel gets initialized and registered during
+dw_dp_bind(), but it is never unregistered, which may lead to resource
+leaks and/or use-after-free.
 
-Release the reference right after of_iomap(). of_iomap() maps the
-node's registers but does not retain a reference to the device_node, so
-the node can be put once the mapping is done. The early return on a NULL
-np needs no put.
+Add the missing dw_dp_unbind() function to allow the users of the
+library to handle the required cleanup, i.e. unregister the AUX adapter.
 
-Found by static analysis tool CodeQL.
-
-Fixes: bd3d924d71a4 ("ARM i.MX5: Add System Reset Controller (SRC) support for i.MX51 and i.MX53")
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 86eecc3a9c2e ("drm/bridge: synopsys: Add DW DPTX Controller support library")
+Reviewed-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260601-drm-rk-fixes-v4-1-c3f3f123e1da@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-imx/src.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/bridge/synopsys/dw-dp.c | 6 ++++++
+ include/drm/bridge/dw_dp.h              | 1 +
+ 2 files changed, 7 insertions(+)
 
-diff --git a/arch/arm/mach-imx/src.c b/arch/arm/mach-imx/src.c
-index 59a8e8cc44693..f28bfb653a88f 100644
---- a/arch/arm/mach-imx/src.c
-+++ b/arch/arm/mach-imx/src.c
-@@ -171,6 +171,7 @@ void __init imx_src_init(void)
- 	if (!np)
- 		return;
- 	src_base = of_iomap(np, 0);
-+	of_node_put(np);
- 	WARN_ON(!src_base);
+diff --git a/drivers/gpu/drm/bridge/synopsys/dw-dp.c b/drivers/gpu/drm/bridge/synopsys/dw-dp.c
+index e82960163018a..70f64eb89998f 100644
+--- a/drivers/gpu/drm/bridge/synopsys/dw-dp.c
++++ b/drivers/gpu/drm/bridge/synopsys/dw-dp.c
+@@ -2098,6 +2098,12 @@ struct dw_dp *dw_dp_bind(struct device *dev, struct drm_encoder *encoder,
+ }
+ EXPORT_SYMBOL_GPL(dw_dp_bind);
  
- 	/*
++void dw_dp_unbind(struct dw_dp *dp)
++{
++	drm_dp_aux_unregister(&dp->aux);
++}
++EXPORT_SYMBOL_GPL(dw_dp_unbind);
++
+ MODULE_AUTHOR("Andy Yan <andyshrk@163.com>");
+ MODULE_DESCRIPTION("DW DP Core Library");
+ MODULE_LICENSE("GPL");
+diff --git a/include/drm/bridge/dw_dp.h b/include/drm/bridge/dw_dp.h
+index d05df49fd8846..ab5c0a9b01aeb 100644
+--- a/include/drm/bridge/dw_dp.h
++++ b/include/drm/bridge/dw_dp.h
+@@ -17,4 +17,5 @@ struct dw_dp_plat_data {
+ 
+ struct dw_dp *dw_dp_bind(struct device *dev, struct drm_encoder *encoder,
+ 			 const struct dw_dp_plat_data *plat_data);
++void dw_dp_unbind(struct dw_dp *dp);
+ #endif /* __DW_DP__ */
 -- 
 2.53.0
 
