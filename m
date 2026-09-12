@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBE53AFD15;
-	Sat, 12 Sep 2026 09:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E3E3BE175;
+	Sat, 12 Sep 2026 09:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203606; cv=none; b=ByRisM2VQQ1JyaiER3b4lwNFtsmEL6N/QN4HjhN86YnCaMee0xRlWzYQZw3JL+7UKAlwsNai1irdr5keuzR5TU5AGM67L3pdGPw/WapT1Mil0Vgev0EP3mXsrnZW0aLinSJXLty+/FPFS5afFQDp7Lj5QeFYNaK6D7k+nzuMWVk=
+	t=1789203611; cv=none; b=iyrVUohJqu2W4BUs2T5cxlanJlO8FNY0yBnkVjk4d985xTQo9TbAaEHt/BavrHMJ9e+RfGzBCvYOKDwF8A3GUoLDVehyoQCSCm3Yr7Pqm5wg0A0W+IdUnR/lDlwSnw2aTORhPku0t8Q1viqzZvLJbG5QjQQhaWnUEXV8fSI8Ios=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203606; c=relaxed/simple;
-	bh=lTL0iI0mGmh1QCqus10UL65d9gdV7+8Z6Y23d+rzqMI=;
+	s=arc-20240116; t=1789203611; c=relaxed/simple;
+	bh=ikNDzoJKwB0/eexAHkICTQ+UP1eK8hkY0lP3S4zSVdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d9W2qzi8XlvlgL3CfTnwHZGgT411lg+w+nM1QuxfxDb3YyQTKCNMseeGinvus97uOuIxt4pySCJVmdcPerDX3wBB1rT6QoCHtdmit1juAEYs1zHim8R/roZjJ1ArTg6QwBp/yCxw110mlQ/tsqFEoleKH/HSXuBMcfmbP1brauY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjLf7z/Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rw6HhibWHv08bEwysfQLvEdpcya04zXDtKM64HnQ7iZV2LNFqusLX8zCez/btxqVauYKR+T3n+XM7Umcwrv2nwo6ixWt7rgAAWf1KNTD1/Agr9syKoDSoje5xaKF+zonAALvPncLvtO7u4+1MU6uMGRDYQmFyxzl5F5xwBS+GGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zB9vDXWi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjLf7z/Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0CB61F000FF;
-	Sat, 12 Sep 2026 09:00:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zB9vDXWi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FABE1F000FF;
+	Sat, 12 Sep 2026 09:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203605;
-	bh=eArO4ORe7XRgleGOvhDsyj5thLk4KEjXWtEA+0BWwZg=;
+	s=korg; t=1789203610;
+	bh=NvTIqZ1bEWzVARyHWX6RlHUv2ofcbLj5iWiTL1jj+2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qjLf7z/ZvBszsPTfZeX1uXgFjUnktPLToDSIddLg5gp5hewelcRH94DUMYpmttenK
-	 A4S5o1rw7li+k38YzJ7d1YGxeUpafLOJSvhaY+hHj387DRrIB+iGknNhvv/CXD4SxU
-	 5WRlyQxF+hGAMGwNc3HcBURQm7yj7AVIySZgfWzc=
+	b=zB9vDXWiXlioReZKHVvbbOplu25wAYMDGnNNBKvCZXBOkIo6cKqaQjOz/njiHQLI2
+	 q00BubahzdXn7kWJghCUoCPOr9bpis96fYA0+duzqNCIrNquWA1pUkGmJwtT8M3GFp
+	 ad05WvtHD02gX/FWG93p0IIBDaP35hvzVOcA0URA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Laurence Oberman <loberman@redhat.com>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1442/1815] selftests/bpf: Fix for veristat file/prog filters processing
-Date: Sat, 12 Sep 2026 08:53:12 +0200
-Message-ID: <20260912065722.870150295@linuxfoundation.org>
+Subject: [PATCH 7.2 1443/1815] scsi: mpt3sas: Avoid freeing unallocated PCIe SGL buffers
+Date: Sat, 12 Sep 2026 08:53:13 +0200
+Message-ID: <20260912065722.892709245@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,167 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit 98d309ec8189fd91698d1a72946c3d888270c57e ]
+[ Upstream commit b9f679dfe629004b593f018df33b330d799bcee4 ]
 
-At the moment veristat filtering behaves unexpectedly for the
-following filter expression:
+_base_release_memory_pools() unconditionally frees every
+ioc->pcie_sg_lookup[] entry, including ones the setup loop never
+allocated after a partial failure, causing a "bad dma" warning on debug
+kernels or a NULL pointer dereference otherwise.
 
-  -f !file/prog
-
-The expression rejects all programs with name 'prog', and all programs
-in a file with name 'file'. This commit fixes the expression to
-exclude only a program 'prog' from a file 'file'. Additionally,
-the commit makes empty filters like '-f ""' or '-f "/"' and error.
-Here is the filtering behaviour compared old versus new:
-
-| filter   | file | prog | old verdict | new verdict |
-|----------+------+------+-------------+-------------|
-| !foo     | foo  | bar  | skipped     | skipped     |
-| !foo     | bar  | foo  | skipped     | skipped     |
-| !foo     | bar  | bar  | processed   | processed   |
-| !foo/bar | foo  | bar  | skipped     | skipped     |
-| !foo/bar | foo  | buz  | skipped     | processed   | (!)
-| !foo/bar | bar  | bar  | skipped     | processed   | (!)
-| !foo/    | foo  | bar  | skipped     | skipped     |
-| !foo/    | bar  | bar  | processed   | processed   |
-| !/bar    | foo  | bar  | skipped     | skipped     |
-| !/bar    | foo  | foo  | processed   | processed   |
-| !/       | foo  | bar  | processed   | error       | (!)
-| !        | foo  | bar  | processed   | error       | (!)
-|----------+------+------+-------------+-------------|
-| foo      | foo  | bar  | processed   | processed   |
-| foo      | bar  | foo  | processed   | processed   |
-| foo      | bar  | bar  | skipped     | skipped     |
-| foo/bar  | foo  | bar  | processed   | processed   |
-| foo/bar  | foo  | buz  | skipped     | skipped     |
-| foo/bar  | bar  | bar  | skipped     | skipped     |
-| foo/     | foo  | bar  | processed   | processed   |
-| foo/     | bar  | bar  | skipped     | skipped     |
-| /bar     | foo  | bar  | processed   | processed   |
-| /bar     | foo  | foo  | skipped     | skipped     |
-| /        | foo  | bar  | processed   | error       | (!)
-|          | foo  | bar  | skipped     | error       | (!)
-
-Fixes: 10b1b3f3e56a ("selftests/bpf: consolidate and improve file/prog filtering in veristat")
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260811-veristat-filter-fix-v2-1-6c234c4cd6ef@gmail.com
+Fixes: dbec4c9040ed ("scsi: mpt3sas: lockless command submission")
+Reported-by: Laurence Oberman <loberman@redhat.com>
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Link: https://patch.msgid.link/20260808151010.185603-1-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/veristat.c | 76 +++++++++++++++++---------
- 1 file changed, 49 insertions(+), 27 deletions(-)
+ drivers/scsi/mpt3sas/mpt3sas_base.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/veristat.c b/tools/testing/selftests/bpf/veristat.c
-index a7db6f04f7e14..96f7e43ff0a8d 100644
---- a/tools/testing/selftests/bpf/veristat.c
-+++ b/tools/testing/selftests/bpf/veristat.c
-@@ -514,6 +514,40 @@ static bool is_bpf_obj_file(const char *path) {
- 	return err == 0;
- }
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
+index 79052f2accbd3..11bcb8440e1c8 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+@@ -5870,6 +5870,8 @@ _base_release_memory_pools(struct MPT3SAS_ADAPTER *ioc)
  
-+/* Exact filter match */
-+static bool name_filter_matches(struct filter *f, const char *filename, const char *prog_name)
-+{
-+	if (f->any_glob)
-+		return glob_matches(filename, f->any_glob) ||
-+		       (prog_name && glob_matches(prog_name, f->any_glob));
-+	if (f->file_glob && f->prog_glob)
-+		return prog_name &&
-+		       glob_matches(filename, f->file_glob) &&
-+		       glob_matches(prog_name, f->prog_glob);
-+	if (f->file_glob)
-+		return glob_matches(filename, f->file_glob);
-+	if (f->prog_glob)
-+		return prog_name && glob_matches(prog_name, f->prog_glob);
-+	return false;
-+}
-+
-+/* Check if the filter does not outright reject the file name */
-+static bool name_filter_may_match(struct filter *f, const char *filename)
-+{
-+	if (f->file_glob)
-+		return glob_matches(filename, f->file_glob);
-+	/*
-+	 * If we don't know program name yet, any_glob filter
-+	 * has to assume that current BPF object file might be
-+	 * relevant; we'll check again later on after opening
-+	 * BPF object file, at which point program name will
-+	 * be known finally.
-+	 */
-+	if (f->any_glob || f->prog_glob)
-+		return true;
-+	return false;
-+}
-+
- static bool should_process_file_prog(const char *filename, const char *prog_name)
- {
- 	struct filter *f;
-@@ -521,16 +555,7 @@ static bool should_process_file_prog(const char *filename, const char *prog_name
- 
- 	for (i = 0; i < env.deny_filter_cnt; i++) {
- 		f = &env.deny_filters[i];
--		if (f->kind != FILTER_NAME)
--			continue;
--
--		if (f->any_glob && glob_matches(filename, f->any_glob))
--			return false;
--		if (f->any_glob && prog_name && glob_matches(prog_name, f->any_glob))
--			return false;
--		if (f->file_glob && glob_matches(filename, f->file_glob))
--			return false;
--		if (f->prog_glob && prog_name && glob_matches(prog_name, f->prog_glob))
-+		if (f->kind == FILTER_NAME && name_filter_matches(f, filename, prog_name))
- 			return false;
- 	}
- 
-@@ -540,24 +565,15 @@ static bool should_process_file_prog(const char *filename, const char *prog_name
- 			continue;
- 
- 		allow_cnt++;
--		if (f->any_glob) {
--			if (glob_matches(filename, f->any_glob))
--				return true;
--			/* If we don't know program name yet, any_glob filter
--			 * has to assume that current BPF object file might be
--			 * relevant; we'll check again later on after opening
--			 * BPF object file, at which point program name will
--			 * be known finally.
--			 */
--			if (!prog_name || glob_matches(prog_name, f->any_glob))
--				return true;
--		} else {
--			if (f->file_glob && !glob_matches(filename, f->file_glob))
--				continue;
--			if (f->prog_glob && prog_name && !glob_matches(prog_name, f->prog_glob))
--				continue;
-+		if (prog_name && name_filter_matches(f, filename, prog_name))
-+			return true;
-+		/*
-+		 * If there is no prog_name and the file name is not blocked by
-+		 * the filter, allow to open the file. Afterwards there would be
-+		 * a second refining query with prog_name set.
-+		 */
-+		if (!prog_name && name_filter_may_match(f, filename))
- 			return true;
--		}
- 	}
- 
- 	/* if there are no file/prog name allow filters, allow all progs,
-@@ -703,6 +719,12 @@ static int append_filter(struct filter **filters, int *cnt, const char *str)
- 		}
- 	}
- 
-+	if ((!f->any_glob && !f->file_glob && !f->prog_glob) ||
-+	    (f->any_glob && strcmp(f->any_glob, "") == 0)) {
-+		fprintf(stderr, "Invalid filter: '%s'\n", str);
-+		return -EINVAL;
-+	}
-+
- 	*cnt += 1;
- 	return 0;
- }
+ 	if (ioc->pcie_sgl_dma_pool) {
+ 		for (i = 0; i < ioc->scsiio_depth; i++) {
++			if (!ioc->pcie_sg_lookup[i].pcie_sgl)
++				continue;
+ 			dma_pool_free(ioc->pcie_sgl_dma_pool,
+ 					ioc->pcie_sg_lookup[i].pcie_sgl,
+ 					ioc->pcie_sg_lookup[i].pcie_sgl_dma);
 -- 
 2.53.0
 
