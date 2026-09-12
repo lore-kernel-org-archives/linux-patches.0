@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B62C309F08;
-	Sat, 12 Sep 2026 15:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97E447126B;
+	Sat, 12 Sep 2026 15:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228290; cv=none; b=ZcfCOaeAFJoots72H+kt9AFy+/1Sz1/VpXGpAExGslFHCiwQRAVvYZ1+C0RFA3f3n1+5meFcD2lyrFTEae7CY+gVfZdrCztQoNYgPUiB+zXYszIpLSbxj4lbBvgi4tL4xn4i4/Zu+Ru+hVr0qzWo0u7cVtJXQcV9/9sxJXRogOk=
+	t=1789228295; cv=none; b=KWX7MYoMBdnNfAKAJug98FgSCdspfsD3hR4tWNOi6j1436CPKj8OfiTSu8/YIvakTUdX7fukmgUax/rmiTCZzY5KvkBYRfClCqnubahPZT6Wdg7AMxJ7LVhh9I5WqBHvR7iQ3REXkE/4ePMrlhVrlnOcPPOPExFzs/afDV8AlD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228290; c=relaxed/simple;
-	bh=Zt6mXj/Uq+gJsd56FcBqCNntZkJIYTN8VNGE20qsNtU=;
+	s=arc-20240116; t=1789228295; c=relaxed/simple;
+	bh=4yQ1rFnTwXDG4HWkHqIn8cedEui+mlFmua/0tBrlaPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BhlY7KvrVICWPRPvkYuORcHzSzXsqQLfsiVTORDA1T0ERCndexMnFlaIV+rAyEPjNtlWLhSN4tEjXKcsbNsxDHO7KFUjz8ihv+G2rH1LQWISC9v+LyQ7Uj3ytNKWCR7ozVBf8YhhWTv3CIt4VUqLxVSAXjhhEkDlGmlC4cTstbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GNylxBfe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uXC1QTTKa1QF65ldx6IAVmXel5NirLeLjx7923cvhLlUpX5ABmJa2Xro7dmLGGxBcZd/sMxYCcp2FTeU3DHPUcTpN75f2Wuq2JbLhWl9i6jrR5AYQjA5pFv4A/1mszwnHyeVq8QGAjfG3m1kIXg/CIw5+5jTaJCfzcwHnuR9DlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=df4LcLuB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNylxBfe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC3E1F000FF;
-	Sat, 12 Sep 2026 15:51:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="df4LcLuB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A59E1F000FF;
+	Sat, 12 Sep 2026 15:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228289;
-	bh=wm6MVd8jiM5LrIspZ/2gBdcGQSdjV2wEtPA3LoyaK9I=;
+	s=korg; t=1789228294;
+	bh=sIhUO9N54ExShoRhjvPFiM1sa+RexsluilUcCdN81fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GNylxBfeGlv9csdPRB9Y9vKnR82a8n2sr0s6qVS/tlL+tg2ACw+ASC4qpMkQmePNI
-	 6Df9zNgFyYvwKUxmvP+qBoJAlmCRsD5gLzKkmZ6fu2e5YBf2YQlHZuN1FoyDRyN9ou
-	 4uklSQld+D4JT4ndq4rxsnQoTmzJL7dngJp1hLoI=
+	b=df4LcLuBvc4KZBr99RVNlnDdUhyqmq8eAOJ+nbLenUqM7lp2hiae1I66ZvwiO0XHm
+	 RnGyX7G946shWCHhZNO+5zuSfjS6mrS41z6Ke0SfO9Mdbf2s/D9Mkeojl0z0INn4FZ
+	 F/0sHhm3zXUSRhH5QfnVZtNsC08aj9JCk+PWUQso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 6.1 0355/1191] KVM: s390: Fix old_data leak in guest debug error path
-Date: Sat, 12 Sep 2026 08:51:23 +0200
-Message-ID: <20260912065556.203162622@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.1 0329/1191] clk: qcom: gcc-msm8916: Fix enable_reg for gcc_blsp1_sleep_clk
+Date: Sat, 12 Sep 2026 08:50:57 +0200
+Message-ID: <20260912065555.615237024@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,54 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit aa9c8e8baf1e765fa65b93212522c636f25d846f upstream.
+commit c5339edc6abb601ea10df910ea0b1592fa1016f3 upstream.
 
-__import_wp_info() allocates a per-watchpoint old_data buffer to back up
-the original guest memory contents. If a later watchpoint of the same
-KVM_SET_GUEST_DEBUG request fails to import, kvm_s390_import_bp_data()
-jumps to the error label, which frees the wp_info array but not the
-old_data buffers of the entries that were imported successfully. Up to
-MAX_BP_COUNT - 1 buffers of up to MAX_WP_SIZE bytes are leaked per failed
-request, and the request can be repeated.
+According to the APQ8016E TRM, the GCC_BLSP1_SLEEP_CBCR register is
+read-only and only has the CLK_OFF bit to check if the clock is running.
+This is a shared vote clock, the correct way to enable it is to vote for
+BLSP1_SLEEP_CLK_ENA (BIT(9)) in GCC_APCS_CLOCK_BRANCH_ENA_VOTE (0x45004).
 
-Create error handling for cleaning up all created old_data memory
-areas.
-
-Fixes: 27291e2165b6 ("KVM: s390: hardware support for guest debugging")
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260805110455.7200-6-borntraeger@linux.ibm.com>
+Fixes: 3966fab8b6ab ("clk: qcom: Add MSM8916 Global Clock Controller support")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20260706-qcom-clk-mdm9607-fixes-v2-1-745565101869@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/guestdbg.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-msm8916.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/s390/kvm/guestdbg.c
-+++ b/arch/s390/kvm/guestdbg.c
-@@ -256,7 +256,7 @@ int kvm_s390_import_bp_data(struct kvm_v
- 			ret = __import_wp_info(vcpu, &bp_data[i],
- 					       &wp_info[nr_wp]);
- 			if (ret)
--				goto error;
-+				goto error_wp;
- 			nr_wp++;
- 			break;
- 		case KVM_HW_BP:
-@@ -273,6 +273,10 @@ int kvm_s390_import_bp_data(struct kvm_v
- 	vcpu->arch.guestdbg.hw_wp_info = wp_info;
- 	kfree(bp_data);
- 	return 0;
-+
-+error_wp:
-+	while (nr_wp--)
-+		kfree(wp_info[nr_wp].old_data);
- error:
- 	kfree(bp_data);
- 	kfree(wp_info);
+--- a/drivers/clk/qcom/gcc-msm8916.c
++++ b/drivers/clk/qcom/gcc-msm8916.c
+@@ -1590,9 +1590,10 @@ static struct clk_branch gcc_blsp1_ahb_c
+ 
+ static struct clk_branch gcc_blsp1_sleep_clk = {
+ 	.halt_reg = 0x01004,
++	.halt_check = BRANCH_HALT_VOTED,
+ 	.clkr = {
+-		.enable_reg = 0x01004,
+-		.enable_mask = BIT(0),
++		.enable_reg = 0x45004,
++		.enable_mask = BIT(9),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_blsp1_sleep_clk",
+ 			.parent_data = &(const struct clk_parent_data){
 
 
