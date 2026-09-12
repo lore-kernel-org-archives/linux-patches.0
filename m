@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746502FFDEA;
-	Sat, 12 Sep 2026 13:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481E41C75F9;
+	Sat, 12 Sep 2026 13:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220733; cv=none; b=KIigG0zvFz6cWiv3+3TAAGIGawn0O9B/n/wclHU9SYnRfUa9slLUD6GLWZXJa6d5bJa7i/a+Lataxcf4uJvEnkB64lBhme8QPeHptgu+/qgDTYByFSqtVRvhzA9KTj7HBbOiN6ukEsLIEAsNBbg0hiOc97gqIl6JnewyXQx7o1M=
+	t=1789220738; cv=none; b=dtrqhmhZOoDkDyQZhwWdM2SOZZNafrjVteIrdZvKtuCVuszYF9RT298yLe67fVCqAXO80CEG5R1y4ms7ke/9WIlmC5PZ1vo56zTnGu/BYYY4TELFhRAkKL7zzOwsgT1DVk7HDrzo9BubElUr8xCBd70oA1B3+yOfp3hMtb9NfFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220733; c=relaxed/simple;
-	bh=IMb+JkXAy5X33czhOhfP99TfugSdLVz4VNeFEnBfvf4=;
+	s=arc-20240116; t=1789220738; c=relaxed/simple;
+	bh=Zt4lSHGk1eJfR4m7jQm+py62WXi5wEwoWQTxG72JWAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UcTnlE5MVcsrcPFrlHfWB0r8xy90QlgjWRaevbXWQoz2Ppo8VDbJqi71rSwAZP7AX/4oF87qDn9/sNKEqV71rRRO/fHM6eKNVa5O2S6ZqKOL0DjgsoUys9pFd7Eu4CabcI1STOGX3qTNCKM2UOyl0Occx++QnHkh+y6S1zwle+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQ8pzh+7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=far5Rwx+JmQ8OlpGd9LwX/Zocb35Ku8CjYXQK6AG+KxhSWLM2MGrHAW5Yl9cSj6nUfkikuRaR0zymcN45LsIgkk0HTRD+G1Ibo2LDYi/aKY0Av97HhIhqUtMg6kzIMmjbw33UHsOCiDE6znI8Rh0Gz1sKJ71LG/ibgseQrsx8Vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QiYTVTmL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQ8pzh+7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA561F00893;
-	Sat, 12 Sep 2026 13:45:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QiYTVTmL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A131F000FF;
+	Sat, 12 Sep 2026 13:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220732;
-	bh=jEa2C+tUD1QNSPgaBGkJdD4nwagnTb+S4rSarheDo8U=;
+	s=korg; t=1789220737;
+	bh=tSEiDBKKkfxWN2kvQHBSwBvm/I2Jhv8Haq2lm/ZOqMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WQ8pzh+7arzNOInu20UmIZSGayRKL7I5d9kypVMOXrjWoxph7nDHBuxr4hvUsQ0zU
-	 MkbW+oYt08cYuxBQOiUmrXOEcpXlooruuFKJIExWvZ/vJKFolB30B6xMHsHrPKsri7
-	 P5JCQLB+tuLlEwhVpIetUODOQQsRpDOoW8aFCyxY=
+	b=QiYTVTmLs04K33RcxAY5NsG8cRBT6qikv3nXj9HQ05r6sXzl+2KlXX9/VqPgeJ6Si
+	 vgFcP05UBHmKRgNUuECo0GL5VyaIFT27BEWRrYE6DNzwFkBB1OGmHUt8ppYCktQeXa
+	 WcRiLiKnxiRHzZ2XbxkKvN4CMCNMJ2Ll9qXissE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ma Ke <make_ruc2021@163.com>,
 	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.6 0237/1424] platform/x86: ISST: Validate logical CPU id and clos id
-Date: Sat, 12 Sep 2026 08:44:29 +0200
-Message-ID: <20260912065612.590042202@linuxfoundation.org>
+Subject: [PATCH 6.6 0238/1424] platform/x86: ishtp_eclite: Fix ACPI device reference leak in probe error path
+Date: Sat, 12 Sep 2026 08:44:30 +0200
+Message-ID: <20260912065612.612780973@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,70 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Ma Ke <make_ruc2021@163.com>
 
-commit 124e2dbabe460c2a6e7440f4ad8af560131295c9 upstream.
+commit 62b57396c26a1ce54963709928ea0d01fa522eea upstream.
 
-Validate max CLOS ID and logical CPU ID for core power feature.
-Reject any clos level or logical CPU number greater than the
-supported maximum. These are used to calculate MMIO offset.
+ecl_ishtp_cl_probe() acquires a reference to an ACPI device via
+acpi_find_eclite_device() but fails to release it in the error path
+when acpi_opregion_init() fails. This results in a reference count
+leak, preventing proper cleanup of the ACPI device.
 
-Fixes: 12a7d2cb811d ("platform/x86: ISST: Add SST-CP support via TPMI")
+Calling path: acpi_find_eclite_device() ->
+acpi_dev_get_first_match_dev() -> acpi_dev_get_next_match_dev() ->
+bus_find_device() -> get_device().
+
+Found by code review.
+
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20260811221514.3905817-2-srinivas.pandruvada@linux.intel.com
+Fixes: 7b6bf51de974 ("platform/x86: Add Intel ishtp eclite driver")
+Link: https://patch.msgid.link/20260624014910.1226446-1-make_ruc2021@163.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |   13 ++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/platform/x86/intel/ishtp_eclite.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-+++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-@@ -497,6 +497,8 @@ static long isst_if_core_power_state(voi
- #define SST_CLOS_CONFIG_MAX_START	16
- #define SST_CLOS_CONFIG_MAX_WIDTH	8
+--- a/drivers/platform/x86/intel/ishtp_eclite.c
++++ b/drivers/platform/x86/intel/ishtp_eclite.c
+@@ -600,13 +600,16 @@ static int ecl_ishtp_cl_probe(struct ish
+ 	rv = acpi_opregion_init(opr_dev);
+ 	if (rv) {
+ 		dev_err(cl_data_to_dev(opr_dev), "ACPI opregion init failed\n");
+-		goto err_exit;
++		goto err_put;
+ 	}
  
-+#define SST_MAX_CLOS			3
+ 	/* Reprobe devices depending on ECLite - battery, fan, etc. */
+ 	acpi_dev_clear_dependencies(opr_dev->adev);
+ 
+ 	return 0;
 +
- static long isst_if_clos_param(void __user *argp)
- {
- 	struct tpmi_per_power_domain_info *power_domain_info;
-@@ -505,6 +507,9 @@ static long isst_if_clos_param(void __us
- 	if (copy_from_user(&clos_param, argp, sizeof(clos_param)))
- 		return -EFAULT;
- 
-+	if (clos_param.clos > SST_MAX_CLOS)
-+		return -EINVAL;
-+
- 	power_domain_info = get_instance(clos_param.socket_id, clos_param.power_domain_id);
- 	if (!power_domain_info)
- 		return -EINVAL;
-@@ -548,6 +553,8 @@ static long isst_if_clos_param(void __us
- #define SST_CLOS_ASSOC_CPUS_PER_REG	16
- #define SST_CLOS_ASSOC_BITS_PER_CPU	4
- 
-+#define SST_CLOS_ASSOC_MAX_LOGICAL_CPU	63
-+
- static long isst_if_clos_assoc(void __user *argp)
- {
- 	struct isst_if_clos_assoc_cmds assoc_cmds;
-@@ -573,9 +580,15 @@ static long isst_if_clos_assoc(void __us
- 		if (copy_from_user(&clos_assoc, ptr, sizeof(clos_assoc)))
- 			return -EFAULT;
- 
-+		if (clos_assoc.clos > SST_MAX_CLOS)
-+			return -EINVAL;
-+
- 		if (clos_assoc.socket_id >= topology_max_packages())
- 			return -EINVAL;
- 
-+		if (clos_assoc.logical_cpu > SST_CLOS_ASSOC_MAX_LOGICAL_CPU)
-+			return -EINVAL;
-+
- 		cpu = clos_assoc.logical_cpu;
- 		clos = clos_assoc.clos;
- 
++err_put:
++	acpi_dev_put(opr_dev->adev);
+ err_exit:
+ 	ishtp_set_connection_state(ecl_ishtp_cl, ISHTP_CL_DISCONNECTING);
+ 	ishtp_cl_disconnect(ecl_ishtp_cl);
 
 
