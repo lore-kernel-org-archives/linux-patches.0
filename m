@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91DF288B9;
-	Sat, 12 Sep 2026 16:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C88E288B9;
+	Sat, 12 Sep 2026 16:33:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230799; cv=none; b=r/ln79GgfdS+eh6np8JO6yIICoIGZI52A9Jn1XFDI++7xqs7Uhz/zhgz8vJ3oFx/GZnXq1RGj41mcz8Y0l58N38VSPqAAwPde/lbSxmdvTl0Wcwzoa5Ptb5U35LWFDD5fnlYBuCAqDJQvz5vBZ1VkLknZ4JM2TreBPLw/JR3OgE=
+	t=1789230804; cv=none; b=T4kpOk6Asx/kY7xYTW0MzRd+iCYXSQ3y0EwKKRzwdV5EpSdBGSjX+DXkf1xAw0weocca7s6KUHfkspSv+feOrQYOfu8jzc5kiltE81i9025UF6q5Sv9x7leTZWDJsoghiNR/AT7FOGPn7knPRYeKIzj2VoqVFK7X2MTASTk3+NQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230799; c=relaxed/simple;
-	bh=v5Fzj6KrEElwmZ1ZbmHkm1pGoi8yhOwCd7LRU2/vDpA=;
+	s=arc-20240116; t=1789230804; c=relaxed/simple;
+	bh=A3CxTZJH6WlGG+oqvNyMdy5JeR63AFmtXQ8R6+3v48M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yth25TmkBqahvH/JGsZHQmzYFlJqceZJEiJCBAI/AT1ue1p/QxVRXY+7w5I3Gzd6y8JvOqn79d4L6uTK0fyaQKe3VprSmfdew6QUV8anCvbFd4I6IhHsOTFxDWC6WR1I6Gt3JpMCRkuHCweYnGxYC5FqKLtF1UKdRiLhdo+MYsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwbnT03A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ffukikQnTTUM17GNMsPhL/foKIu5XVhbI7YvpbCADYxaEcSDCQ81i2bm8G+UnmiYCVet7LObdokpq/pbp6BYQtpfwqGcJyZRGgDfsgbH1onpvy57IIe+f5tnUooi1X0OVi1LroOBdjamj/Jt3F9SIK/aYtEnpaTIvPz2lMnLo6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBuD/34A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwbnT03A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749E91F000FF;
-	Sat, 12 Sep 2026 16:33:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBuD/34A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C801F000FF;
+	Sat, 12 Sep 2026 16:33:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230798;
-	bh=+VpzIVJqdjLAkr0sIRBl00+V869Hll/s+9U2X+MjxuM=;
+	s=korg; t=1789230803;
+	bh=jJ5JB0AE7aIs0W5ofeO+WydfLgqQUnGzRf92QxiIN9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RwbnT03AhcQnVsIpNRdb+TOUiPJc0K7Xt+LEqDOIwYZ5Zq9Rp/2OAjxeuVSKQpy4E
-	 2UTQkWIDDj0h5HmiOXGpx+WpB8AsVbnwZS/DIFherZ9YzdUTntpLYMDs7pazLRx3gK
-	 Y48oDzaLdMxMqwylZKiOOBmmi0WlS9iUk1954dYg=
+	b=SBuD/34Asu1tO+dyAdJYTXSdp1mKz1PgaMjzoP+ogHJeIc2nUKekrdk4mOpvSCNe4
+	 CbyX2qGNx49ssPxcY+m7PAJeH2me+94Ml8nXjeyCnJnvS68ERYYOoxJc1xUUaulr40
+	 W/7b/nZwlg++wEtgf4jzFsvm8SzxZ1hv0gJbkP8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0831/1191] firmware: coreboot: Validate table bounds
-Date: Sat, 12 Sep 2026 08:59:19 +0200
-Message-ID: <20260912065606.928543098@linuxfoundation.org>
+Subject: [PATCH 6.1 0867/1191] arm64: dts: qcom: sm7225-fairphone-fp4: move status property down
+Date: Sat, 12 Sep 2026 08:59:55 +0200
+Message-ID: <20260912065607.729342644@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,86 +52,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit a58a57a1076f8c5dae0327e3710899478c3be901 ]
+[ Upstream commit 65aedb0b48c09595065c81722d9cca53760f7220 ]
 
-The existing coreboot_table_populate() bounds checks limit individual
-entries to the mapped length.  However, coreboot_table_probe() replaces
-the platform resource length with header and table sizes supplied by
-firmware before mapping the full table.
+Currently the dts contains a mix of status-as-first-property (old qcom
+style) and status-as-last-property (new style).
 
-A malformed table can overflow the 32-bit size addition or advertise an
-extent beyond the resource, causing the driver to map and parse memory
-outside the resource.  A resource shorter than the fixed header is also
-mapped as though it contained a complete header.
+Move all status properties down to the bottom once and for all so that
+the style is consistent between different nodes.
 
-Reject resources shorter than the fixed header.  After validating the
-signature, require a complete header, calculate the advertised extent
-with overflow checking, and reject extents beyond the resource before
-remapping the table.
-
-Fixes: d384d6f43d1e ("firmware: google memconsole: Add coreboot support")
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Link: https://lore.kernel.org/r/20260801165651.42172-1-acharyalaxman8848@gmail.com
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230213-fp4-more-i2c-v2-1-1c459c572f80@fairphone.com
+Stable-dep-of: a3b3a060b696 ("arm64: dts: qcom: sm7225-fairphone-fp4: Fix swapped USB QMP PHY vdda-phy/vdda-pll supplies")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/google/coreboot_table.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ .../boot/dts/qcom/sm7225-fairphone-fp4.dts    | 34 +++++++++----------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/firmware/google/coreboot_table.c b/drivers/firmware/google/coreboot_table.c
-index 95fc2e4d0cccf..7d7a6a1a2ac07 100644
---- a/drivers/firmware/google/coreboot_table.c
-+++ b/drivers/firmware/google/coreboot_table.c
-@@ -130,6 +130,7 @@ static int coreboot_table_populate(struct device *dev, void *ptr, resource_size_
- static int coreboot_table_probe(struct platform_device *pdev)
- {
- 	resource_size_t len;
-+	resource_size_t table_span;
- 	struct coreboot_table_header *header;
- 	struct resource *res;
- 	struct device *dev = &pdev->dev;
-@@ -141,7 +142,7 @@ static int coreboot_table_probe(struct platform_device *pdev)
- 		return -EINVAL;
+diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+index 13b1d484bdeb7..131e6c40a39b9 100644
+--- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
++++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+@@ -104,8 +104,8 @@ active-config0 {
+ };
  
- 	len = resource_size(res);
--	if (!res->start || !len)
-+	if (!res->start || len < sizeof(*header))
- 		return -EINVAL;
+ &adsp {
+-	status = "okay";
+ 	firmware-name = "qcom/sm7225/fairphone4/adsp.mdt";
++	status = "okay";
+ };
  
- 	/* Check just the header first to make sure things are sane */
-@@ -149,19 +150,27 @@ static int coreboot_table_probe(struct platform_device *pdev)
- 	if (!header)
- 		return -ENOMEM;
+ &apps_rsc {
+@@ -323,13 +323,13 @@ vreg_bob: bob {
+ };
  
--	len = header->header_bytes + header->table_bytes;
- 	ret = strncmp(header->signature, "LBIO", sizeof(header->signature));
+ &cdsp {
+-	status = "okay";
+ 	firmware-name = "qcom/sm7225/fairphone4/cdsp.mdt";
++	status = "okay";
+ };
+ 
+ &i2c10 {
+-	status = "okay";
+ 	clock-frequency = <400000>;
++	status = "okay";
+ 
+ 	haptics@5a {
+ 		compatible = "awinic,aw8695";
+@@ -357,16 +357,16 @@ haptics@5a {
+ };
+ 
+ &mpss {
+-	status = "okay";
+ 	firmware-name = "qcom/sm7225/fairphone4/modem.mdt";
++	status = "okay";
+ };
+ 
+ &pm6150l_wled {
+-	status = "okay";
+-
+ 	qcom,switching-freq = <800>;
+ 	qcom,current-limit-microamp = <20000>;
+ 	qcom,num-strings = <2>;
 +
-+	if (!ret &&
-+	    (header->header_bytes < sizeof(*header) ||
-+	     check_add_overflow((resource_size_t)header->header_bytes,
-+				(resource_size_t)header->table_bytes,
-+				&table_span) ||
-+	     table_span > len))
-+		ret = -EINVAL;
++	status = "okay";
+ };
+ 
+ &pm6350_gpios {
+@@ -380,8 +380,8 @@ gpio_keys_pin: gpio-keys-state {
+ };
+ 
+ &pm6350_resin {
+-	status = "okay";
+ 	linux,code = <KEY_VOLUMEDOWN>;
++	status = "okay";
+ };
+ 
+ &pm7250b_adc {
+@@ -433,21 +433,21 @@ &uart9 {
+ };
+ 
+ &ufs_mem_hc {
+-	status = "okay";
+-
+ 	reset-gpios = <&tlmm 156 GPIO_ACTIVE_LOW>;
+ 
+ 	vcc-supply = <&vreg_l7e>;
+ 	vcc-max-microamp = <800000>;
+ 	vccq2-supply = <&vreg_l12a>;
+ 	vccq2-max-microamp = <800000>;
+-};
+ 
+-&ufs_mem_phy {
+ 	status = "okay";
++};
+ 
++&ufs_mem_phy {
+ 	vdda-phy-supply = <&vreg_l18a>;
+ 	vdda-pll-supply = <&vreg_l22a>;
 +
- 	memunmap(header);
- 	if (ret) {
- 		dev_warn(dev, "coreboot table missing or corrupt!\n");
- 		return -ENODEV;
- 	}
++	status = "okay";
+ };
  
--	ptr = memremap(res->start, len, MEMREMAP_WB);
-+	ptr = memremap(res->start, table_span, MEMREMAP_WB);
- 	if (!ptr)
- 		return -ENOMEM;
+ &usb_1 {
+@@ -460,26 +460,26 @@ &usb_1_dwc3 {
+ };
  
--	ret = coreboot_table_populate(dev, ptr, len);
-+	ret = coreboot_table_populate(dev, ptr, table_span);
+ &usb_1_hsphy {
+-	status = "okay";
+-
+ 	vdd-supply = <&vreg_l18a>;
+ 	vdda-pll-supply = <&vreg_l2a>;
+ 	vdda-phy-dpdm-supply = <&vreg_l3a>;
+-};
  
- 	memunmap(ptr);
+-&usb_1_qmpphy {
+ 	status = "okay";
++};
  
++&usb_1_qmpphy {
+ 	vdda-phy-supply = <&vreg_l22a>;
+ 	vdda-pll-supply = <&vreg_l16a>;
+-};
+ 
+-&wifi {
+ 	status = "okay";
++};
+ 
++&wifi {
+ 	vdd-0.8-cx-mx-supply = <&vreg_l4a>;
+ 	vdd-1.8-xo-supply = <&vreg_l7a>;
+ 	vdd-1.3-rfa-supply = <&vreg_l2e>;
+ 	vdd-3.3-ch0-supply = <&vreg_l10e>;
+ 	vdd-3.3-ch1-supply = <&vreg_l11e>;
++
++	status = "okay";
+ };
 -- 
 2.53.0
 
