@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C61734252D;
-	Sat, 12 Sep 2026 07:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4631934A79D;
+	Sat, 12 Sep 2026 07:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198812; cv=none; b=T9UdYXTWEr3v1TjPOLavUMIAW7Yi89KUPlMo6FjqbyVh+ierFM4S0yfaDhxBZWdbWWDRfXYLth28IYI90LEjNTRqy2JeQfHqefaBFv2+l6MOO7meUOBl2O8wAQu+wlSm3QqQC5nT6WIQKK1iDeOFwymmwCWy1w07O5SfI+nJarw=
+	t=1789198817; cv=none; b=GkTDj4l0NJ9ceAIvUv78gpiiFNcPRUhRs6B7fqRZ+9ggtLaNC6a9awYfcbVXoYU+Zmocb/6ykz7/IR3t+mJkRt8MZlJDm1zEhxZAlFXnPib0j6MT+qRq/eClldh/DbM0lARuqvg2eehF25WPqm/D+5Ay8pKFGddQez436xwrXTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198812; c=relaxed/simple;
-	bh=ipbe99iWHbHQTD0UaOS+AY1GNftEp/YR04QgIRB1gUM=;
+	s=arc-20240116; t=1789198817; c=relaxed/simple;
+	bh=qYlgc+KU/CpIRmY6Dgkb8yzOk+w3DQfNovet1kQOJyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hc30M/cPxjk5+vpQ7J478sOOHJgf45BEd6Zn7wXMoKS643x2sOSpwLEEM2L+Ouug3BCqKztX4LeHj84D7lHrBXomL5SLG0qJ4ccKThEO2s+x/ASjE4RwOWvWfwOT4WMoAakPS8vqBt3K4OaRJGGI/fKFLjUM5BuCBr1VZx9NpMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYE4FVXI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aHrv2hl1du7uk4opp7rhv5AtLRZ4IvJh687pevPe+fRlEYkdJvjdB9qvbM18/arZ3qBShWQ9ExAKvXFFW+yXnw1P4IFa0MK2CLC6T/rMsX+6jZqUV+KxN9SfG5VP1dmo6Gymvw3RgsoxTdiHSv2vyat3XGPmehom4p5uWC8pSOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UwjFH/Ec; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYE4FVXI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157951F000FF;
-	Sat, 12 Sep 2026 07:40:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UwjFH/Ec"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DB61F000FF;
+	Sat, 12 Sep 2026 07:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198811;
-	bh=Z2/bhzEeV1z5Tesu8lNYhPp7E81M1TkvHEGJtmhigVE=;
+	s=korg; t=1789198816;
+	bh=IgloYmEZioh/Ty+7eyfC6w8Lb/gNPizjk8zbq4rR1zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NYE4FVXI3YmPdbU5skLW4z1g8hGsK8WRRYtZ3yvxYbPghcxsJn3zBDS5NbSKUxgC7
-	 sJcJ+aKh09AJcVAPbmFpHjBcK6fw1PHbBg2e4qWzdmINqAVRXSTt47uyEOk4q846Xv
-	 C4DS0NJ+QQjmlMUfIhFWKo6XKEk6lq4NMohFzVsg=
+	b=UwjFH/Ecc7Io1Elc+H04AK2U9ZTqMERMAEj3VbHaGtq4Mb4v8/sQcjay86/EIvEwo
+	 /5LqZfRnbPIacghjpOkueh2fe+5TZJHGjqWeDoEMJOQhV4aMouymvKnIBIUJapCe0o
+	 cjPPRKrFLYf4XC3lJekNfSk/HdKotIwPqUwfF9R4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Alison Schofield <alison.schofield@intel.com>,
+	John Groves <john@groves.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0414/1815] libnvdimm/labels: Bound the on-media label size before the shift
-Date: Sat, 12 Sep 2026 08:36:04 +0200
-Message-ID: <20260912065658.610625156@linuxfoundation.org>
+Subject: [PATCH 7.2 0415/1815] dax: fix misleading comment about share/index union in dax_folio_reset_order()
+Date: Sat, 12 Sep 2026 08:36:05 +0200
+Message-ID: <20260912065658.635571760@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,58 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: John Groves <John@Groves.net>
 
-[ Upstream commit 18f9124248ed7a9da1c31973b629dceef76a9b0c ]
+[ Upstream commit 3fc3ebf40b5cf077829d8fc5c66ece5b4c6e66c7 ]
 
-For a v1.2+ index, __nd_label_validate() computes the label size as
-1 << (7 + nsindex[i]->labelsize), where labelsize is a u8 read from
-the label storage medium.  A value of 25 or more makes the shift count
-reach or exceed the width of int -- undefined behavior -- and 24 already
-shifts into the sign bit.  Only 0 (128-byte) and 1 (256-byte) are valid.
+The comment in dax_folio_reset_order() claims that DAX maintains an
+invariant where folio->share != 0 only when folio->mapping == NULL,
+implying folio->share is zero whenever mapping is non-NULL. This is
+misleading because folio->share and folio->index are a union -- for
+non-shared folios with mapping != NULL, reading folio->share returns
+the file page offset (folio->index), which is typically non-zero.
 
-Reject a labelsize above 1 before the shift.  The result was rejected by
-the following size comparison anyway, so this only removes the undefined
-shift on a crafted or corrupted medium; conforming labels are unaffected.
+Reword the comment to accurately describe the union aliasing: the
+assignment clears whichever interpretation of the union word is active
+(index for non-shared folios, share for shared folios), which is correct
+because the folio is being released in either case.
 
-Fixes: 564e871aa66f ("libnvdimm, label: add v1.2 nvdimm label definitions")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+No functional change -- the code was already correct, only the
+justification was wrong.
+
+Fixes: 59eb73b98ae0b ("dax: Factor out dax_folio_reset_order() helper")
+
+Reviewed-by: Jonathan Cameron <jic23@kernel.org>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260624-b4-disp-d8279485-v3-2-cdb6cab28b41@proton.me
+Signed-off-by: John Groves <john@groves.net>
+Link: https://patch.msgid.link/0100019ecc08b8cd-4ee80eeb-1341-4f67-8478-7298129440e9-000000@email.amazonses.com
 Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvdimm/label.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ fs/dax.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/nvdimm/label.c b/drivers/nvdimm/label.c
-index ec12ce72cfe2c..dea2eee86d132 100644
---- a/drivers/nvdimm/label.c
-+++ b/drivers/nvdimm/label.c
-@@ -145,10 +145,21 @@ static int __nd_label_validate(struct nvdimm_drvdata *ndd)
- 		/* label sizes larger than 128 arrived with v1.2 */
- 		version = __le16_to_cpu(nsindex[i]->major) * 100
- 			+ __le16_to_cpu(nsindex[i]->minor);
--		if (version >= 102)
-+		if (version >= 102) {
-+			/*
-+			 * labelsize feeds the shift below; only 0 (128-byte)
-+			 * and 1 (256-byte) are valid -- a larger value would
-+			 * overflow or exceed the width of int.
-+			 */
-+			if (nsindex[i]->labelsize > 1) {
-+				dev_dbg(dev, "nsindex%d labelsize: %d invalid\n",
-+					i, nsindex[i]->labelsize);
-+				continue;
-+			}
- 			labelsize = 1 << (7 + nsindex[i]->labelsize);
--		else
-+		} else {
- 			labelsize = 128;
-+		}
+diff --git a/fs/dax.c b/fs/dax.c
+index 6d175cd47a99b..df19c9317d10e 100644
+--- a/fs/dax.c
++++ b/fs/dax.c
+@@ -392,12 +392,12 @@ int dax_folio_reset_order(struct folio *folio)
+ 	int order = folio_order(folio);
  
- 		if (labelsize != sizeof_namespace_label(ndd)) {
- 			dev_dbg(dev, "nsindex%d labelsize %d invalid\n",
+ 	/*
+-	 * DAX maintains the invariant that folio->share != 0 only when
+-	 * folio->mapping == NULL (enforced by dax_folio_make_shared()).
+-	 * Equivalently: folio->mapping != NULL implies folio->share == 0.
+-	 * Callers ensure share has been decremented to zero before
+-	 * calling here, so unconditionally clearing both fields is
+-	 * correct.
++	 * Clear the mapping and the index/share union word. folio->share
++	 * and folio->index occupy the same union in struct folio. For
++	 * non-shared folios (mapping != NULL), the union holds folio->index
++	 * (file page offset); for shared folios (mapping == NULL), it holds
++	 * folio->share (reference count). Either way, we are releasing the
++	 * folio and both fields should be zeroed.
+ 	 */
+ 	folio->mapping = NULL;
+ 	folio->share = 0;
 -- 
 2.53.0
 
