@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DFB3B1EFE;
-	Sat, 12 Sep 2026 18:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32133B27C9;
+	Sat, 12 Sep 2026 18:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238174; cv=none; b=pqOQ/H5AQ/1H9gc0e7pu2eRuu+JKXOP4pzEhxNlUaisiAyr9jJHU7K/Refqtd/tohj0XNj71B1nKL7CnQl7+x5xKWLHi8Tsvx54lgd4PvuCPORXlsSJQQlgt7Knqy4Y6HT+WnMfwqC8gxrl7qDC8PCY+T5HGMIsyYNDhgPn76SY=
+	t=1789238177; cv=none; b=vA8ngXsuuVTEAqjkQ+WYjK4EZtcahlke31Q/eW26qhAIGRLVmWE4hkIkudpapTZ1tE1p0ul357us4eUEsal+7OwNUiDMVtF24FV0icm1IBZYcA4jituhEz+JnAfw+M7d7TtxQWOjvOjiq+P9ek1tmsakbEu2pkNL4maKnuRx+DU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238174; c=relaxed/simple;
-	bh=tHO5ZdIyG8V0Q8xK+iQ7nZHFUkCux+9UzN6VhMuUgAg=;
+	s=arc-20240116; t=1789238177; c=relaxed/simple;
+	bh=MyLwk+FlC4FeShGBU1S/lX5NBO/isriLd7+PHYaO10U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GP2CppRw1LfxVqzbm+vZTqcdIzPwcgmX7W4hHkfY2qGnAs7iwyJ/avDV+gPEFv8BZph0S62M4Zgr4Kt4LWCSA/MFwNKSNQAZ7gFZckD/WCqy1ws8/PS+NuNmkYVWxlOHWZ+ZEro+rZwqH5W4AkvpkcpE2fnh62GTG9+uvc33E14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vc6u8F8s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uBXzW/c7pjaHtNT7T16ki/srmdUsVhAlvzKGvZm1Bn18dT0BjKaginrlg4VpNYim2ImDSTERN52ZpgPXFi18/hP1Fns/bC+rpWo9Nh7luRN7L3PO4E8aXi5PWQJfNYZVayO1tHkWBwXaq3ySxUi0IIHIfYmFCtjdJqxYs5Dm9y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AzF/+MN3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vc6u8F8s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869AC1F00893;
-	Sat, 12 Sep 2026 18:36:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AzF/+MN3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0A01F000FF;
+	Sat, 12 Sep 2026 18:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238168;
-	bh=LikINOHpNLHdhcg4g2gsKgb8yFxkVuSu7flF5lutQ7k=;
+	s=korg; t=1789238173;
+	bh=OcdhL4JJuUnU4p2Nq+XNAvRzaDpTR5UOC/CMNQh5KAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vc6u8F8sT3DEEbltuy1H1mGN8R+nWQ6O/oIN5NWO8mmuJLc6pyUw30mlqoK38kpwW
-	 y4PVuCGiNoLJ2Djggi92+a1fSEfCoA3YZMNsUNYyw1gkJEz1A1PrDc2XYlYCECep3/
-	 lSAOi6DQRxoe4SCH3mIAbVunKvkaQg3MuNSav2x8=
+	b=AzF/+MN3Wbgj4jzjAltrbICoCEkRoLmfSOQqqO6Q5SzqGcreX35eIASFbStp+7dvB
+	 t834/wVJTHResRJAK/OGJNdY9ByfJX7jIdvTW86AKsIIVOLbySHjoTj6hpHHiidhgg
+	 3KqIW6ThL3nkQj0S8aJEjhUzB+2Hr7Rt8pu8jHYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weigang He <geoffreyhe2@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 408/935] ARM: imx: fix device_node refcount leaks in imx7_src_init()
-Date: Sat, 12 Sep 2026 08:57:18 +0200
-Message-ID: <20260912065536.180619316@linuxfoundation.org>
+Subject: [PATCH 5.15 409/935] clk: imx: scu: drop redundant init.ops variable assignment
+Date: Sat, 12 Sep 2026 08:57:19 +0200
+Message-ID: <20260912065536.203977105@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,58 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit 3de939b2ac843d56d88e2ab1e1b1f667cba9e1d4 ]
+[ Upstream commit 5f2db1ce201216e81333ecc2ab51494410b2fe0d ]
 
-imx7_src_init() obtains two device_node references via
-of_find_compatible_node() - one for "fsl,imx7d-src" and one for
-"fsl,imx7d-gpc" - reusing the same np variable, but never calls
-of_node_put() on either. On every i.MX7D boot up to two device_node
-refcounts are leaked:
+The init.ops is assigned a default value, however right below it is an
+if, else if, and else where all of them also assign a value to init.ops.
+Drop the redundant init.ops assignment at the top.
 
-  - The "fsl,imx7d-src" node is leaked both when of_iomap() fails (the
-    early return after the mapping) and when it succeeds, because np is
-    then overwritten by the second of_find_compatible_node() call
-    without releasing the prior reference.
-  - The "fsl,imx7d-gpc" node is leaked on every path leaving the
-    function after it is acquired.
-
-Release each reference immediately after of_iomap() consumes the node.
-of_iomap() maps the node's registers but does not retain a reference to
-the device_node, so it is safe to put the node once mapped; this also
-drops the first reference before np is reused for the second lookup.
-
-Found by static analysis tool CodeQL.
-
-Fixes: e34645f45805 ("ARM: imx: add smp support for imx7d")
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 3b9ea606cda53 ("clk: imx: scu: add cpu frequency scaling support")
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-imx/src.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/imx/clk-scu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm/mach-imx/src.c b/arch/arm/mach-imx/src.c
-index f28bfb653a88f..c3c80b4c3d53b 100644
---- a/arch/arm/mach-imx/src.c
-+++ b/arch/arm/mach-imx/src.c
-@@ -196,6 +196,7 @@ void __init imx7_src_init(void)
- 		return;
+diff --git a/drivers/clk/imx/clk-scu.c b/drivers/clk/imx/clk-scu.c
+index 7e2b09f7bbc50..e39d7cc9a4bd6 100644
+--- a/drivers/clk/imx/clk-scu.c
++++ b/drivers/clk/imx/clk-scu.c
+@@ -464,7 +464,6 @@ struct clk_hw *__imx_clk_scu(struct device *dev, const char *name,
+ 	clk->clk_type = clk_type;
  
- 	src_base = of_iomap(np, 0);
-+	of_node_put(np);
- 	if (!src_base)
- 		return;
- 
-@@ -204,6 +205,7 @@ void __init imx7_src_init(void)
- 		return;
- 
- 	gpc_base = of_iomap(np, 0);
-+	of_node_put(np);
- 	if (!gpc_base)
- 		return;
- }
+ 	init.name = name;
+-	init.ops = &clk_scu_ops;
+ 	if (rsrc_id == IMX_SC_R_A35 || rsrc_id == IMX_SC_R_A53 || rsrc_id == IMX_SC_R_A72)
+ 		init.ops = &clk_scu_cpu_ops;
+ 	else if (rsrc_id == IMX_SC_R_PI_0_PLL)
 -- 
 2.53.0
 
