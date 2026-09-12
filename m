@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E0D326938;
-	Sat, 12 Sep 2026 14:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D174D3438BE;
+	Sat, 12 Sep 2026 14:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222964; cv=none; b=ZpSjUgesUImw9BKT4mBUre/TzMeBzXO8nJN/2QxFB95U3gNIrdb6byEeTYjHEwyhptk0n0LW1fLtD+G6aPBgn92no6oLGX1oO4EPxV8u8BPjzYFeAa+Anc2gD1Fnpc+HDz6a+aaXcS07mxw+X3pjWtYpWbcjADxuZvZnZhIxKCo=
+	t=1789222966; cv=none; b=pBBmruuCjnAC2BqzTgDKwpmzV4j4sGqwpJWM9isyWjSQ5rSB5X9slT8pLwmg9sLlxmWd7nIoS6fB1SzIU97afE+PXX/Y62eD28yKqjTD6OJnPlGOVGtgdbSikh5hrej3i0htG0RKM0uBLzn1oP0on82pbjOqKfI+HBxGjz5c2U4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222964; c=relaxed/simple;
-	bh=EFhE+tu5oWBO2v+0RdVYHRcIwDkTMkZ3qsVSXhyJTo4=;
+	s=arc-20240116; t=1789222966; c=relaxed/simple;
+	bh=p+Re2A4OO2sctbErSKE58SheC2e7WfW2YKoxDSr8Ekc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jKWbXhQl4UtIwl9eXbpeLaQH4eVgxzchlxx1nl/1wYexqJzsgFa6sMjgCJHNv/3C3EZHgwcR0HJiZXMWN9yediaavr5aoKrx/pkQUmVEHkGoZ0sy+7X+8wPje9KFPIk8Lrxm0Ouuo1vO7/AExaAAcY+4HITZiFKtf1IOkeeBcTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJSXB9EO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gz542aSRw1XvfebUtE/b+CFa8tMTJL+csOz4B57DSROXL54RzvhA/6Tcx6dziMbbC8/OF/6NH8HLBb/foUWmO/FAQHDrYbmnlsaDNbsK6yuU9DIpHYngVVCWXtyNaI+lZ+f6LgKvfZX/NSX3/+gOGRcTEetHjx8mU1h9U4nF3MQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHBcUkHV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJSXB9EO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4898D1F00893;
-	Sat, 12 Sep 2026 14:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHBcUkHV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6629C1F000FF;
+	Sat, 12 Sep 2026 14:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222959;
-	bh=AsJKRn0tVLtFIQff5Z9uiWcj+bu5k76JfOnzqCWroxg=;
+	s=korg; t=1789222964;
+	bh=EuQo2unNbfN6LxP8Fj1sy8lXctUD8OJOV0BpwovyLZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sJSXB9EOSkx/tXp74Nt+uVmwUdlQNtk4J1qtgTvOLdA479HqwARQ3BYHjmrpvDPGJ
-	 a41ZVZYz018JNb99dVYXFGhomFYuWdiTpKsb/M2PwSSi/UiV8SDeBiS+lBdlHsivch
-	 zDaqh8ovZGq8+60+0NHz2RVog7lZ1l7Qh70+WSTo=
+	b=RHBcUkHVkP4k0iFRD4NUgWCvZ8hcAHaJgah8//Z7sew/IpdU1Xv/HFvUMJJVQbBQF
+	 NmvjpAjw9ekx1vErmznORLsm4O2a4nB80AyIZO12h7JOL6wnQS7F4N3zvQAG7eZcPD
+	 +ZwWbPgxHFzDsKsbWvCkNAzpsjaSXxEtTRZGuCCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Wang <wei.w.wang@hotmail.com>,
-	Yongwei Xu <xuyongwei@open-hieco.net>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Herman van Hazendonk <github.com@herrie.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0693/1424] iommu/amd: Prevent SB IOAPIC from overriding IVRS validation errors
-Date: Sat, 12 Sep 2026 08:52:05 +0200
-Message-ID: <20260912065622.818670379@linuxfoundation.org>
+Subject: [PATCH 6.6 0676/1424] clk: qcom: gdsc: propagate gdsc_enable() failure for ALWAYS_ON domains
+Date: Sat, 12 Sep 2026 08:51:48 +0200
+Message-ID: <20260912065622.437818854@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,65 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Wang <wei.w.wang@hotmail.com>
+From: Herman van Hazendonk <github.com@herrie.org>
 
-[ Upstream commit 854056480f9217568e3ab5edd81a9347a173ea79 ]
+[ Upstream commit eea55fc694e132aacbe2cf4be7f345115e3d1801 ]
 
-The check_ioapic_information() function validates IOAPICs against the
-IVRS table to safely disable Interrupt Remapping (IR) if the BIOS provides
-a broken topology.
+GENPD_FLAG_ALWAYS_ON requires the underlying domain to be on at
+genpd_init() time -- the framework will refuse to register the domain
+otherwise. When the cold readback in gdsc_init() finds an ALWAYS_ON
+GDSC powered down, the driver tries to bring it back up:
 
-Currently, the validation loop contains a bug: If an unmapped secondary
-IOAPIC is encountered, 'ret' is set to false. But if the Southbridge (SB)
-IOAPIC is enumerated after it in the MADT, the loop overwrites 'ret' to
-true.
+	} else if (sc->flags & ALWAYS_ON) {
+		/* If ALWAYS_ON GDSCs are not ON, turn them ON */
+		gdsc_enable(&sc->pd);
+		on = true;
+	}
 
-This bypasses the validation failure and leaves IR enabled. When devices
-attached to the unmapped secondary IOAPIC fire interrupts, the IOMMU drops
-them due to the missing Requestor ID, leading to localized device hangs.
+but discards the return value: if gdsc_enable() fails (regmap write
+error, the long-form sequence's status poll times out, or the
+HW_CTRL hand-off errors) the code still sets on=true and falls
+through to pm_genpd_init(..., !on) -- which then registers the
+domain in the ON state and sets GENPD_FLAG_ALWAYS_ON, even though
+the silicon is actually off. Subsequent consumer probes will see
+genpd report "on" while accessing dead registers and hang or read
+garbage.
 
-Fix this by initializing 'ret' to true and only toggling it to false
-upon encountering a validation error, ensuring failures are never erased.
+Catch the failure and surface it: returning the error from
+gdsc_init() makes the provider probe fail with the underlying errno,
+which propagates to consumers as -EPROBE_DEFER (or fatal if the
+hardware really is broken) rather than silently lying about the
+rail state.
 
-Fixes: c2ff5cf5294b ("iommu/amd: Work around wrong IOAPIC device-id in IVRS table")
-Signed-off-by: Wei Wang <wei.w.wang@hotmail.com>
-Tested-by: Yongwei Xu <xuyongwei@open-hieco.net>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+Fixes: fb55bea1fe43 ("clk: qcom: gdsc: Add support for ALWAYS_ON gdscs")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260602140934.796697-3-github.com@herrie.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/gdsc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index d3dc03fa93c65..908500ff2d814 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -3029,7 +3029,7 @@ static bool __init check_ioapic_information(void)
- 	int idx;
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index c48340efc2f40..7d1fc7a2f678b 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -444,7 +444,9 @@ static int gdsc_init(struct gdsc *sc)
  
- 	has_sb_ioapic = false;
--	ret           = false;
-+	ret           = true;
- 
- 	/*
- 	 * If we have map overrides on the kernel command line the
-@@ -3049,7 +3049,6 @@ static bool __init check_ioapic_information(void)
- 			ret = false;
- 		} else if (devid == IOAPIC_SB_DEVID) {
- 			has_sb_ioapic = true;
--			ret           = true;
- 		}
+ 	} else if (sc->flags & ALWAYS_ON) {
+ 		/* If ALWAYS_ON GDSCs are not ON, turn them ON */
+-		gdsc_enable(&sc->pd);
++		ret = gdsc_enable(&sc->pd);
++		if (ret)
++			return ret;
+ 		on = true;
  	}
  
-@@ -3063,6 +3062,7 @@ static bool __init check_ioapic_information(void)
- 		 * device id for the IOAPIC in the system.
- 		 */
- 		pr_err("%s: No southbridge IOAPIC found\n", fw_bug);
-+		ret = false;
- 	}
- 
- 	if (!ret)
 -- 
 2.53.0
 
