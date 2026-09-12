@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CE2343893;
-	Sat, 12 Sep 2026 09:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC553364038;
+	Sat, 12 Sep 2026 09:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206447; cv=none; b=WMPJDmKpl1EY9ZmEjPha/+F1DxhNErKxll9hj6Fim5UICYXDZoYXXu7nLYNcV3vHXVtxRvaQG3jMn19GICtYW+sk48JC238y3CPZ257mxfnghAMxdB2TCNdMGtpZcGfZAz+MPewXJOYAZ6ropzSQUEK4dGAQsFWwSsO4YlnbZ+Y=
+	t=1789206451; cv=none; b=rhninkSM5RNxDOLALTs+soiHGsxLwWkWXKEYJn6FMXN1oTM3CyrKkxCckQ2P6jPgxKkb+Dt6yirpiB94L+Y4M135vGucuj8VCsRPWfKQ955nJbz0552WJsg9tJ272o5sjWKdw6BNn7ygy8hnvwXU6UmO1Hezx2nSjqbcL9K0ROE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206447; c=relaxed/simple;
-	bh=vmvM12DQ9YCosHCQ3+Q7dceRpEE9PMEj2F5CjoDHKg8=;
+	s=arc-20240116; t=1789206451; c=relaxed/simple;
+	bh=zq+O6Op8HJDB/f6ETvSaVwgh3V/ya+kUxF5gGpZKuXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lhHMOcXVdjjyetf+yndCIK05SD1OUaM7hrBzveoGgJSPVsN1CeOSzICsLCyUUo8OWRHehquk263CHSjeBfLiHlFIzQYJ5IHRCv0VwRovnY4iBSIzgn8b+hM92/ux+DV7b//Dk+B45lYbI10dh9BVh9hrOcoqmwCysShgdi7phxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1QIuDsvM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eOteZLq3y6OtGAUD0EDi1nMPaAa/g7YEMUoqxxX0PxvgJgnwm5PE4IZnXhKBNYKid4UUsVx0oRTn9UpC9abBIdYCHqSo1gkms83dLmlI0bjJwPpucX3TL6ffcZkl88X0ULVuqdVw4oMmxnalYHX6VqcFn0AmbEni+yfF9ye26Gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pP/jZL8S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QIuDsvM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF42A1F000FF;
-	Sat, 12 Sep 2026 09:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pP/jZL8S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D05A1F00898;
+	Sat, 12 Sep 2026 09:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206446;
-	bh=/EAygffwpkjb0tqDljK2QIynkTNf4cHz1NJyl3nTqEk=;
+	s=korg; t=1789206450;
+	bh=TYtYkMGvEhBngTkX27VrylVueKYYRvs3vMuRsximAfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1QIuDsvMAwr8LyEhuB4ZMcySErGNNzRA4H4vMFLzsQgEmJ4iOdnJGVEwS3NNfCsEm
-	 HElr4agcnSsgs7Ql3qgmB2NM9xRfd5ntprbIODB8afbWJZx9etWXB/hUhGzntacdeD
-	 kyxJBcXFc3rAM35Kri+pClsun958Ri9gbEYJYUUY=
+	b=pP/jZL8SjL7mmkYz/VE3BGGz3ssBQzvqmssykBgb+C2zLlhK6Uaf6+uU5b88D99wg
+	 PdbB/W5AjpZhmgQnknBBZ3JRszTjax9aCk2LNcMu5iVmp83Obe/M5Igi3b2wN5ZpTf
+	 v1Z8Xv7hMBaMCSigfip6zMT7gfc7fjuKw125bdUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jacob Moroni <jmoroni@google.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0209/1518] RDMA/irdma: Add irdma_cq fields to track pbl allocations
-Date: Sat, 12 Sep 2026 08:39:38 +0200
-Message-ID: <20260912065628.217115799@linuxfoundation.org>
+Subject: [PATCH 6.18 0210/1518] RDMA/irdma: Add refcounting to user ring MRs
+Date: Sat, 12 Sep 2026 08:39:39 +0200
+Message-ID: <20260912065628.239011474@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,111 +53,140 @@ Content-Transfer-Encoding: 8bit
 
 From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit 971e99623ed7a0d75a719021cf4fd64e5f9e44e5 ]
+[ Upstream commit f67d8a08f60c9217df6d40da56422d2049f5e334 ]
 
-These fields will be used in a subsequent commit which adds
-refcounting to user CQ MRs.
+Prevent userspace from deregistering the MRs that back QP/CQ/SRQ rings
+by bumping the MR's refcount upon association.
 
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
 Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Link: https://patch.msgid.link/20260618201458.875740-4-jmoroni@google.com
+Link: https://patch.msgid.link/20260618201458.875740-5-jmoroni@google.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: f67d8a08f60c ("RDMA/irdma: Add refcounting to user ring MRs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 25 +++++++++++++++----------
- drivers/infiniband/hw/irdma/verbs.h |  2 ++
- 2 files changed, 17 insertions(+), 10 deletions(-)
+ drivers/infiniband/hw/irdma/utils.c |  6 ++++
+ drivers/infiniband/hw/irdma/verbs.c | 45 +++++++++++++++++++++++++++--
+ 2 files changed, 49 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
+index e5e226b346211..835c11d6cc85c 100644
+--- a/drivers/infiniband/hw/irdma/utils.c
++++ b/drivers/infiniband/hw/irdma/utils.c
+@@ -1169,6 +1169,12 @@ void irdma_free_qp_rsrc(struct irdma_qp *iwqp)
+ 	iwqp->kqp.dma_mem.va = NULL;
+ 	kfree(iwqp->kqp.sq_wrid_mem);
+ 	kfree(iwqp->kqp.rq_wrid_mem);
++
++	if (iwqp->user_mode && iwqp->iwpbl) {
++		struct irdma_mr *iwmr = iwqp->iwpbl->iwmr;
++
++		refcount_dec(&iwmr->user_ring_refs);
++	}
+ }
+ 
+ /**
 diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 0bdb0481a7e12..b06e99c8c7b23 100644
+index b06e99c8c7b23..9ada0bc00bd07 100644
 --- a/drivers/infiniband/hw/irdma/verbs.c
 +++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -2130,6 +2130,11 @@ static int irdma_resize_cq(struct ib_cq *ibcq, int entries,
+@@ -462,6 +462,9 @@ static struct irdma_pbl *irdma_get_pbl(unsigned long va,
+ 
+ 	list_for_each_entry (iwpbl, pbl_list, list) {
+ 		if (iwpbl->user_base == va) {
++			struct irdma_mr *iwmr = iwpbl->iwmr;
++
++			refcount_inc(&iwmr->user_ring_refs);
+ 			list_del(&iwpbl->list);
+ 			iwpbl->on_list = false;
+ 			return iwpbl;
+@@ -1887,6 +1890,11 @@ static void irdma_srq_free_rsrc(struct irdma_pci_f *rf, struct irdma_srq *iwsrq)
+ 		dma_free_coherent(rf->sc_dev.hw->device, iwsrq->kmem.size,
+ 				  iwsrq->kmem.va, iwsrq->kmem.pa);
+ 		iwsrq->kmem.va = NULL;
++	} else {
++		/* Not called in any failure path, so iwpbl is valid. */
++		struct irdma_mr *iwmr = iwsrq->iwpbl->iwmr;
++
++		refcount_dec(&iwmr->user_ring_refs);
+ 	}
+ 
+ 	irdma_free_rsrc(rf, rf->allocated_srqs, srq->srq_uk.srq_id);
+@@ -1909,6 +1917,21 @@ static void irdma_cq_free_rsrc(struct irdma_pci_f *rf, struct irdma_cq *iwcq)
+ 				  iwcq->kmem_shadow.size,
+ 				  iwcq->kmem_shadow.va, iwcq->kmem_shadow.pa);
+ 		iwcq->kmem_shadow.va = NULL;
++	} else {
++		struct irdma_mr *iwmr;
++
++		/* May be called in a failure path before iwpbl is valid. */
++		if (iwcq->iwpbl) {
++			iwmr = iwcq->iwpbl->iwmr;
++
++			refcount_dec(&iwmr->user_ring_refs);
++		}
++
++		if (iwcq->iwpbl_shadow) {
++			iwmr = iwcq->iwpbl_shadow->iwmr;
++
++			refcount_dec(&iwmr->user_ring_refs);
++		}
+ 	}
+ 
+ 	irdma_free_rsrc(rf, rf->allocated_cqs, cq->cq_uk.cq_id);
+@@ -2024,7 +2047,7 @@ static int irdma_resize_cq(struct ib_cq *ibcq, int entries,
+ 	struct irdma_modify_cq_info info = {};
+ 	struct irdma_dma_mem kmem_buf;
+ 	struct irdma_cq_mr *cqmr_buf;
+-	struct irdma_pbl *iwpbl_buf;
++	struct irdma_pbl *iwpbl_buf = NULL;
+ 	struct irdma_device *iwdev;
+ 	struct irdma_pci_f *rf;
+ 	struct irdma_cq_buf *cq_buf = NULL;
+@@ -2130,11 +2153,19 @@ static int irdma_resize_cq(struct ib_cq *ibcq, int entries,
  		goto error;
  
  	spin_lock_irqsave(&iwcq->lock, flags);
-+	if (udata)
-+		/* Only update if the resize was successful. Otherwise, HW is
-+		 * still pointing to the old PBL.
-+		 */
-+		iwcq->iwpbl = iwpbl_buf;
+-	if (udata)
++	if (udata) {
++		struct irdma_pbl *old_iwpbl = iwcq->iwpbl;
++
+ 		/* Only update if the resize was successful. Otherwise, HW is
+ 		 * still pointing to the old PBL.
+ 		 */
+ 		iwcq->iwpbl = iwpbl_buf;
++		if (old_iwpbl) {
++			struct irdma_mr *old_iwmr = old_iwpbl->iwmr;
++
++			refcount_dec(&old_iwmr->user_ring_refs);
++		}
++	}
  	if (cq_buf) {
  		cq_buf->kmem_buf = iwcq->kmem;
  		cq_buf->hw = dev->hw;
-@@ -2500,6 +2505,8 @@ static int irdma_create_cq(struct ib_cq *ibcq,
- 	INIT_LIST_HEAD(&iwcq->resize_list);
- 	INIT_LIST_HEAD(&iwcq->cmpl_generated);
- 	iwcq->cq_num = cq_num;
-+	iwcq->iwpbl = NULL;
-+	iwcq->iwpbl_shadow = NULL;
- 	info.dev = dev;
- 	ukinfo->cq_size = max(entries, 4);
- 	ukinfo->cq_id = cq_num;
-@@ -2518,8 +2525,6 @@ static int irdma_create_cq(struct ib_cq *ibcq,
- 		struct irdma_ucontext *ucontext;
- 		struct irdma_create_cq_req req = {};
- 		struct irdma_cq_mr *cqmr;
--		struct irdma_pbl *iwpbl;
--		struct irdma_pbl *iwpbl_shadow;
- 		struct irdma_cq_mr *cqmr_shadow;
+@@ -2150,6 +2181,11 @@ static int irdma_resize_cq(struct ib_cq *ibcq, int entries,
  
- 		iwcq->user_mode = true;
-@@ -2533,34 +2538,34 @@ static int irdma_create_cq(struct ib_cq *ibcq,
- 		}
- 
- 		spin_lock_irqsave(&ucontext->cq_reg_mem_list_lock, flags);
--		iwpbl = irdma_get_pbl((unsigned long)req.user_cq_buf,
--				      &ucontext->cq_reg_mem_list);
-+		iwcq->iwpbl = irdma_get_pbl((unsigned long)req.user_cq_buf,
-+					    &ucontext->cq_reg_mem_list);
- 		spin_unlock_irqrestore(&ucontext->cq_reg_mem_list_lock, flags);
--		if (!iwpbl) {
-+		if (!iwcq->iwpbl) {
- 			err_code = -EPROTO;
- 			goto cq_free_rsrc;
- 		}
- 
--		cqmr = &iwpbl->cq_mr;
-+		cqmr = &iwcq->iwpbl->cq_mr;
- 
- 		if (rf->sc_dev.hw_attrs.uk_attrs.feature_flags &
- 		    IRDMA_FEATURE_CQ_RESIZE) {
- 			spin_lock_irqsave(&ucontext->cq_reg_mem_list_lock, flags);
--			iwpbl_shadow = irdma_get_pbl(
-+			iwcq->iwpbl_shadow = irdma_get_pbl(
- 					(unsigned long)req.user_shadow_area,
- 					&ucontext->cq_reg_mem_list);
- 			spin_unlock_irqrestore(&ucontext->cq_reg_mem_list_lock, flags);
- 
--			if (!iwpbl_shadow) {
-+			if (!iwcq->iwpbl_shadow) {
- 				err_code = -EPROTO;
- 				goto cq_free_rsrc;
- 			}
--			cqmr_shadow = &iwpbl_shadow->cq_mr;
-+			cqmr_shadow = &iwcq->iwpbl_shadow->cq_mr;
- 			info.shadow_area_pa = cqmr_shadow->cq_pbl.addr;
- 		} else {
- 			info.shadow_area_pa = cqmr->shadow;
- 		}
--		if (iwpbl->pbl_allocated) {
-+		if (iwcq->iwpbl->pbl_allocated) {
- 			info.virtual_map = true;
- 			info.pbl_chunk_size = 1;
- 			info.first_pm_pbl_idx = cqmr->cq_pbl.idx;
-diff --git a/drivers/infiniband/hw/irdma/verbs.h b/drivers/infiniband/hw/irdma/verbs.h
-index fbd487dbebfb9..a1651641eb714 100644
---- a/drivers/infiniband/hw/irdma/verbs.h
-+++ b/drivers/infiniband/hw/irdma/verbs.h
-@@ -153,6 +153,8 @@ struct irdma_cq {
- 	struct list_head resize_list;
- 	struct irdma_cq_poll_info cur_cqe;
- 	struct list_head cmpl_generated;
-+	struct irdma_pbl *iwpbl;
-+	struct irdma_pbl *iwpbl_shadow;
- };
- 
- struct irdma_cmpl_gen {
+ 	return 0;
+ error:
++	if (iwpbl_buf) {
++		struct irdma_mr *iwmr = iwpbl_buf->iwmr;
++
++		refcount_dec(&iwmr->user_ring_refs);
++	}
+ 	if (!udata) {
+ 		dma_free_coherent(dev->hw->device, kmem_buf.size, kmem_buf.va,
+ 				  kmem_buf.pa);
+@@ -2427,6 +2463,11 @@ static int irdma_create_srq(struct ib_srq *ibsrq,
+ 		dma_free_coherent(rf->hw.device, iwsrq->kmem.size,
+ 				  iwsrq->kmem.va, iwsrq->kmem.pa);
+ free_rsrc:
++	if (iwsrq->user_mode && iwsrq->iwpbl) {
++		struct irdma_mr *iwmr = iwsrq->iwpbl->iwmr;
++
++		refcount_dec(&iwmr->user_ring_refs);
++	}
+ 	irdma_free_rsrc(rf, rf->allocated_srqs, iwsrq->srq_num);
+ 	return err_code;
+ }
 -- 
 2.53.0
 
