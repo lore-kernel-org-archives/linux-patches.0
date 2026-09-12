@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F47A340A57;
-	Sat, 12 Sep 2026 07:57:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099C12E738A;
+	Sat, 12 Sep 2026 07:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199841; cv=none; b=WUkgYUGFMGpn2uHr9OjER7mMS1gzo2IyliypFhiOJZloZYSUDw4+telmK5hJ0EklET+EB1Jo8X3T9dqqr2Pu2mXQsmT7jbxW5TYJAnbeLXtUxX9TWc4MLQmFfav4RgReqqo7Ary6QiZdfZX4HtqnZxG9J2lwLSuP47Qi9iGgPP8=
+	t=1789199846; cv=none; b=gk4P+BWtn4B2NmrG/TFaGCAcEiBiLNxDNPDg7r2+wNvpv5X7fz1/TJBxBBs1VUjaP1qq70/4EgIqLRP1mZ0lx4+f2RBdPBGBNDrah1ns0smz4okOdknMBtWK5evcCl2MkwOVmjLCQBH/4w3pdjriJ4ofsPqTYuvhfFI9g0J0R6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199841; c=relaxed/simple;
-	bh=ticPJfvO/tTXQcS/jtF8ZsiVauXY6TD1GQ7qgp9xgyQ=;
+	s=arc-20240116; t=1789199846; c=relaxed/simple;
+	bh=lzPi7VdY6s4RTt3MgYgenPw6qz+sQixXBYY+N7i38vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jU6RcqeZtYx8wTtcZ1cuFI3oOi10JvhyJb+BS0Bxg9gi3hSskwbhovEM4c+cS5blJLcLWEwdleyQzTjUobpq3hxhP8K9EeOcaJNF0KH8pVEE2Ez9zoellWVoaVdaAhYzd2hmUsGcNKbO8gbQ8HLI+S3J6+KrLGGswjht9N5RqKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VWpdrTI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZcFfmCKTBK3hMGg+wOsM0QCJgfigBQd+7S/Uck3dsJHh/bDHBWaH57Oei/ApAg4j+LqST4ChRC8a2FOH4svm0xVPCwQnJEO6Qt3mZ7R7fGJkehG0/vrzJy/aetA/sKIUDFj7LeMN/22EPrw6SkXcmFc0XQtwddufyBW1x3GySnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GYOyXysM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VWpdrTI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477131F000FF;
-	Sat, 12 Sep 2026 07:57:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYOyXysM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3425B1F000FF;
+	Sat, 12 Sep 2026 07:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199839;
-	bh=k47MsXHlOigKzJ6MMbG+tMm76oWQd+rg7WRK0d7ZCNw=;
+	s=korg; t=1789199844;
+	bh=kZq4DiE/MWG1V7Dbf5fp8t6S6WBve4fBFXUNrZM9QqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1VWpdrTI/5RUkE746CebDjkcuuRdQKg+pb8+yFOalkd3QXQ5Lszdy+v/zkJFL+uZ9
-	 e/ib6AZwaw8u/knEhMaBO5uqVfPmaBfiHXm+rQJCKebI9duTX0DxyerW26tbKVaf/7
-	 uLOAQDbv3iAmTMzOqRVqfS1LZ/+3r4M7R+O280nc=
+	b=GYOyXysMN0UTbKCfOZacfvnr7M0KNq7Ki+VJl2eLh2RIK2YbXnpbvSghb+9VQ+sGQ
+	 ADZH/Caz4QGoeD5cSWMXwMl7j9aKpGQcDASziU7iolxahzs43VN/ZEwtMEwjfpPmG0
+	 bV+uULqZVr9R7pDlNqGg92ZwVSoqU9A/vXRiJ2w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <enju.kohei@fujitsu.com>,
-	Will Deacon <will@kernel.org>,
+	Babanpreet Singh <bbnpreetsingh@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0666/1815] arm64: RSI: fix field-spanning write warning in attestation token init
-Date: Sat, 12 Sep 2026 08:40:16 +0200
-Message-ID: <20260912065704.519298557@linuxfoundation.org>
+Subject: [PATCH 7.2 0667/1815] power: supply: sbs-battery: Use a per-device serial number buffer
+Date: Sat, 12 Sep 2026 08:40:17 +0200
+Message-ID: <20260912065704.544549176@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,79 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <enju.kohei@fujitsu.com>
+From: Babanpreet Singh <bbnpreetsingh@gmail.com>
 
-[ Upstream commit 221049874b6a78c7d87bc826581b0695cd338e2b ]
+[ Upstream commit 6027892925b8d19d2245c2d077e2ae35b49cc2b1 ]
 
-The challenge is passed in registers a1 through a8. However, copying to
-&regs.a1 makes FORTIFY treat the destination as the single a1 field,
-resulting in a field-spanning write warning. [1]
+sbs_get_battery_serial_number() formats the battery serial number into
+sbs_serial[], a single file-scope buffer shared by every sbs-battery
+instance, and points val->strval at it.
 
-Overlay the SMCCC register structure with an RSI-specific argument
-layout and copy the challenge into an explicit 64-byte array. This keeps
-the existing a1-a8 argument encoding while giving the copy a correctly
-sized destination object.
+Nothing restricts this driver to one instance. It binds per I2C client,
+and sbs-manager registers one muxed I2C channel per supported battery
+specifically so that the smart battery driver can be bound to each of
+them, so several sbs-battery instances on one system is a supported
+configuration.
 
-[1]
-memcpy: detected field-spanning write (size 64) of single field "&regs.a1" at ./arch/arm64/include/asm/rsi_cmds.h:119 (size 8)
-WARNING: ./arch/arm64/include/asm/rsi_cmds.h:119 at rsi_attestation_token_init+0xdc/0xf8 [arm_cca_guest], CPU#0: cat/3314
+The power supply core reads strval after the driver's get_property()
+callback has returned: power_supply_show_property() fills a local
+union power_supply_propval, then formats it with sysfs_emit(). Two
+concurrent POWER_SUPPLY_PROP_SERIAL_NUMBER reads on different batteries
+therefore race for the shared buffer - battery B's sprintf() can land
+between battery A filling the buffer and the core reading it, and
+battery A then reports battery B's serial number.
 
-Fixes: b880a80011f5 ("arm64: rsi: Add RSI definitions")
-Signed-off-by: Kohei Enju <enju.kohei@fujitsu.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Move the buffer into struct sbs_info so that each battery formats into
+its own storage. It is deliberately not added to the chip->strings[]
+array: those entries hold the cached constant strings that
+sbs_invalidate_cached_props() clears on presence changes, whereas the
+serial number is re-read from its word register on every access.
+
+Fixes: d3ab61ecbab2 ("bq20z75: Add support for more power supply properties")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
+Link: https://patch.msgid.link/20260726072206.7-2-bbnpreetsingh@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/rsi_cmds.h | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ drivers/power/supply/sbs-battery.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/include/asm/rsi_cmds.h b/arch/arm64/include/asm/rsi_cmds.h
-index 2c8763876dfb7..c1fab41f671ec 100644
---- a/arch/arm64/include/asm/rsi_cmds.h
-+++ b/arch/arm64/include/asm/rsi_cmds.h
-@@ -88,6 +88,14 @@ static inline long rsi_set_addr_range_state(phys_addr_t start,
- 	return res.a0;
+diff --git a/drivers/power/supply/sbs-battery.c b/drivers/power/supply/sbs-battery.c
+index 017ec06be7666..9bdb6c599c5f6 100644
+--- a/drivers/power/supply/sbs-battery.c
++++ b/drivers/power/supply/sbs-battery.c
+@@ -217,6 +217,7 @@ struct sbs_info {
+ 	u32				flags;
+ 	int				technology;
+ 	char				strings[NR_STRING_BUFFERS][I2C_SMBUS_BLOCK_MAX + 1];
++	char				serial[5];
+ };
+ 
+ static char *sbs_get_string_buf(struct sbs_info *chip,
+@@ -821,18 +822,18 @@ static int sbs_get_battery_capacity(struct i2c_client *client,
+ 	return 0;
  }
  
-+#define RSI_ATTEST_CHALLENGE_MIN_SIZE	32
-+#define RSI_ATTEST_CHALLENGE_MAX_SIZE	64
-+
-+struct rsi_attestation_token_init_args {
-+	unsigned long fid;
-+	u8 challenge[RSI_ATTEST_CHALLENGE_MAX_SIZE];
-+};
-+
- /**
-  * rsi_attestation_token_init - Initialise the operation to retrieve an
-  * attestation token.
-@@ -109,18 +117,21 @@ static inline long rsi_set_addr_range_state(phys_addr_t start,
- static inline long
- rsi_attestation_token_init(const u8 *challenge, unsigned long size)
+-static char sbs_serial[5];
+ static int sbs_get_battery_serial_number(struct i2c_client *client,
+ 	union power_supply_propval *val)
  {
--	struct arm_smccc_1_2_regs regs = { 0 };
-+	union {
-+		struct arm_smccc_1_2_regs regs;
-+		struct rsi_attestation_token_init_args init;
-+	} args = { 0 };
++	struct sbs_info *chip = i2c_get_clientdata(client);
+ 	int ret;
  
--	/* The challenge must be at least 32bytes and at most 64bytes */
--	if (!challenge || size < 32 || size > 64)
-+	if (!challenge || size < RSI_ATTEST_CHALLENGE_MIN_SIZE ||
-+	    size > RSI_ATTEST_CHALLENGE_MAX_SIZE)
- 		return -EINVAL;
+ 	ret = sbs_read_word_data(client, sbs_data[REG_SERIAL_NUMBER].addr);
+ 	if (ret < 0)
+ 		return ret;
  
--	regs.a0 = SMC_RSI_ATTESTATION_TOKEN_INIT;
--	memcpy(&regs.a1, challenge, size);
--	arm_smccc_1_2_smc(&regs, &regs);
-+	args.init.fid = SMC_RSI_ATTESTATION_TOKEN_INIT;
-+	memcpy(args.init.challenge, challenge, size);
-+	arm_smccc_1_2_smc(&args.regs, &args.regs);
+-	sprintf(sbs_serial, "%04x", ret);
+-	val->strval = sbs_serial;
++	sprintf(chip->serial, "%04x", ret);
++	val->strval = chip->serial;
  
--	if (regs.a0 == RSI_SUCCESS)
--		return regs.a1;
-+	if (args.regs.a0 == RSI_SUCCESS)
-+		return args.regs.a1;
- 
- 	return -EINVAL;
+ 	return 0;
  }
 -- 
 2.53.0
