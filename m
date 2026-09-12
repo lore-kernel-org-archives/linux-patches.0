@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8432C1586;
-	Sat, 12 Sep 2026 11:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145BD2D0C94;
+	Sat, 12 Sep 2026 11:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212769; cv=none; b=IYcPOQoWqWkbSnqE/FKjXRAFbcvZHxhamlgZU/jsICnuJreFeDVc9TaZBXte2F4KeZvlUBmviWmzSNHOj+a6bnvRnPhXmasYj5PGx4j7cQ4qNMWMOQQKWKyIBIZ4OsF1YicBkW1BmZKwTsh+Y+6JB8ej/ABsUrelFpc1zadsX6s=
+	t=1789212774; cv=none; b=SsHlhOe9B3ni9m8Bf+XLfvao8xJ4fnd37GxKrxyGgqh7hjf7FPucBuntlQOeGPEQLZa6fmsAnvXiRPFhCLy5JC9Tmfi0KKLmaDxt5ungypflQ9isVdeIGRlmxs3gOtVD3oYBG8b8I59DMMhH0ioRL5RecWuLGWbpyTDF3JE7X/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212769; c=relaxed/simple;
-	bh=5iYxo8LOC6n+a9G/I9QAdEOqrFUcSLL25a2+M5lFHbA=;
+	s=arc-20240116; t=1789212774; c=relaxed/simple;
+	bh=+BbHapoSuX4/TAxuSIKC9TCsCPp1n5KzJEQ0jJJr6So=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NT2B8J2zi97UHsdKGjvq3JpLJpxpFQhZvEvhg/0oy6DRQUwNUECM8LT06P572fvrRTk0H+cQS5070yrGiVkkJGcR+I4bQR1pX/HvXIz/rCDuACVCAZwgQ2drHtJSMD3EhJGGw/GJGzV1OXxno99gts6o5wrzMR6mOlFKHYUhUiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szbVER4q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VOFlqmsLUzuu06sTxjMzRaLVocNhRVDT+xJT8o0TUiKEz4m8NWnCzMQT+12VnC3skX5b5l5KDW76/77EC6Z/fTNMXXBF17xaI+pc2r9T8ALP5fevUkCwcAGmZWZmuKo0xLm5m9sQJfbnNTrQvQ2rqWdcWxM8+KpIZLM1ApoEsO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCBHm6CQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szbVER4q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 153841F000FF;
-	Sat, 12 Sep 2026 11:32:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCBHm6CQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13001F000FF;
+	Sat, 12 Sep 2026 11:32:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212768;
-	bh=alfIpo66M4YqPfQjbFfljIWdjA4I2dUKYdxZeb3Aujo=;
+	s=korg; t=1789212773;
+	bh=lw08+do9hquy8a19Qny7zNspZqaAHHi8TBkTJv9+e2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=szbVER4qJp0+aJlIU/P+UevggH5qDOp0172So/iuSDOpQKjhuvIl1ROJBAFxKRsc+
-	 fNa//RXiLP/Bd49dFCFUUQ6yO6p762RZguEEWKtE/7MyinxGrKUbvJWw3r2/G49vf2
-	 y2b9QiXux3+0cDtz4gpzwcQwAYbXAlgcfzKBMSfo=
+	b=JCBHm6CQ6bMFeplpHiSwM/8pYVvUf6CeAxzTJrBbrYpVuouoD8atXxca9+ylmIKnU
+	 Z+5P5THZqFWXJcVbZ/sHI20d/UfK+TSD5oub/rov48auhvrxgr3eBvkt9qBYbmsjOm
+	 EpAIFZcnB2vObcbz1h2a/BH6fsCaKzMJNrpsfgEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1503/1518] net/sched: fq: clamp quantum and initial_quantum in change path
-Date: Sat, 12 Sep 2026 09:01:12 +0200
-Message-ID: <20260912065657.564014800@linuxfoundation.org>
+Subject: [PATCH 6.18 1504/1518] io_uring/waitid: use io_waitid_remove_wq() consistently
+Date: Sat, 12 Sep 2026 09:01:13 +0200
+Message-ID: <20260912065657.588169135@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -48,85 +44,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 094cc07f98dfe70a34e2a1923af17fd29b8cf622 ]
+[ Upstream commit ab673c1bcaf20ac70352eeb6bf5b828462676693 ]
 
-The fq change path accepts TCA_FQ_QUANTUM in [1, INT_MAX] and
-TCA_FQ_INITIAL_QUANTUM up to INT_MAX, while fq_init() already clamps to
-[1, 1<<20]. A user can override the init clamp via tc qdisc change,
-restoring the small-quantum deficit spin that the init clamp prevents.
+Use it everywhere that the wait_queue_entry is removed from the head,
+and be a bit more cautious in zeroing out iw->head whenever the entry is
+removed from the list.
 
-Narrow iq_range.max to 1<<20 so TCA_FQ_INITIAL_QUANTUM is rejected at
-parse time. Clamp TCA_FQ_QUANTUM to [256, 1<<20] in fq_change() and
-fq_init() quantum to [256, 1<<20] for tiny-MTU devices.
-
-Conditions to recreate the bug:
-  CONFIG_NET_SCH_FQ=y. Requires CAP_NET_ADMIN (namespace-local via
-  unshare -Urn suffices).
-
-  tc qdisc add dev dummy0 root fq
-  tc qdisc change dev dummy0 root fq quantum 1 stab data 32768 size_log 15 cell_log 0
-
-Fixes: 709f34f7c28d ("net/sched: fq: add overflow bounds to quantum and initial quantum")
-Reported-by: Vega <vega@nebusec.ai>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.2
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: b994ace83a2b ("io_uring/waitid: fix KCSAN warning on io_waitid->head")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ io_uring/waitid.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
-index 9df9c93ae4e4c..7599a4f7a3e2a 100644
---- a/net/sched/sch_fq.c
-+++ b/net/sched/sch_fq.c
-@@ -924,7 +924,7 @@ static int fq_resize(struct Qdisc *sch, u32 log)
+diff --git a/io_uring/waitid.c b/io_uring/waitid.c
+index 41d5eed6c5723..1137e3a166d12 100644
+--- a/io_uring/waitid.c
++++ b/io_uring/waitid.c
+@@ -193,18 +193,18 @@ bool io_waitid_remove_all(struct io_ring_ctx *ctx, struct io_uring_task *tctx,
+ static inline bool io_waitid_drop_issue_ref(struct io_kiocb *req)
+ {
+ 	struct io_waitid *iw = io_kiocb_to_cmd(req, struct io_waitid);
+-	struct io_waitid_async *iwa = req->async_data;
+ 
+ 	if (!atomic_sub_return(1, &iw->refs))
+ 		return false;
+ 
++	io_waitid_remove_wq(req);
++
+ 	/*
+ 	 * Wakeup triggered, racing with us. It was prevented from
+ 	 * completing because of that, queue up the tw to do that.
+ 	 */
+ 	req->io_task_work.func = io_waitid_cb;
+ 	io_req_task_work_add(req);
+-	remove_wait_queue(iw->head, &iwa->wo.child_wait);
+ 	return true;
  }
  
- static const struct netlink_range_validation iq_range = {
--	.max = INT_MAX,
-+	.max = 1 << 20,
- };
+@@ -265,6 +265,7 @@ static int io_waitid_wait(struct wait_queue_entry *wait, unsigned mode,
+ 		return 0;
  
- static const struct nla_policy fq_policy[TCA_FQ_MAX + 1] = {
-@@ -1050,14 +1050,10 @@ static int fq_change(struct Qdisc *sch, struct nlattr *opt,
- 			   nla_get_u32(tb[TCA_FQ_FLOW_PLIMIT]));
+ 	list_del_init(&wait->entry);
++	iw->head = NULL;
  
- 	if (tb[TCA_FQ_QUANTUM]) {
--		u32 quantum = nla_get_u32(tb[TCA_FQ_QUANTUM]);
-+		u32 quantum = clamp_t(u32, nla_get_u32(tb[TCA_FQ_QUANTUM]),
-+				     256, 1 << 20);
+ 	/* cancel is in progress */
+ 	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
+@@ -291,6 +292,7 @@ int io_waitid_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	iw->which = READ_ONCE(sqe->len);
+ 	iw->upid = READ_ONCE(sqe->fd);
+ 	iw->options = READ_ONCE(sqe->file_index);
++	iw->head = NULL;
+ 	iw->infop = u64_to_user_ptr(READ_ONCE(sqe->addr2));
+ 	memset(&iw->info, 0, sizeof(iw->info));
+ 	return 0;
+@@ -322,11 +324,16 @@ int io_waitid(struct io_kiocb *req, unsigned int issue_flags)
+ 	 * callback.
+ 	 */
+ 	io_ring_submit_lock(ctx, issue_flags);
++
++	/*
++	 * iw->head is valid under the ring lock, and as long as the request
++	 * is on the waitid_list where cancelations may find it.
++	 */
++	iw->head = &current->signal->wait_chldexit;
+ 	hlist_add_head(&req->hash_node, &ctx->waitid_list);
  
--		if (quantum > 0 && quantum <= (1 << 20)) {
--			WRITE_ONCE(q->quantum, quantum);
--		} else {
--			NL_SET_ERR_MSG_MOD(extack, "invalid quantum");
--			err = -EINVAL;
--		}
-+		WRITE_ONCE(q->quantum, quantum);
+ 	init_waitqueue_func_entry(&iwa->wo.child_wait, io_waitid_wait);
+ 	iwa->wo.child_wait.private = req->tctx->task;
+-	iw->head = &current->signal->wait_chldexit;
+ 	add_wait_queue(iw->head, &iwa->wo.child_wait);
+ 
+ 	ret = __do_wait(&iwa->wo);
+@@ -349,7 +356,7 @@ int io_waitid(struct io_kiocb *req, unsigned int issue_flags)
  	}
  
- 	if (tb[TCA_FQ_INITIAL_QUANTUM])
-@@ -1176,7 +1172,7 @@ static int fq_init(struct Qdisc *sch, struct nlattr *opt,
- 	sch->limit		= 10000;
- 	q->flow_plimit		= 100;
- 	mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 1, 1 << 20);
--	q->quantum		= min_t(u32, 2 * mtu, 1 << 20);
-+	q->quantum		= clamp_t(u32, 2 * mtu, 256, 1 << 20);
- 	q->initial_quantum	= min_t(u32, 10 * mtu, 1 << 20);
- 	q->flow_refill_delay	= msecs_to_jiffies(40);
- 	q->flow_max_rate	= ~0UL;
+ 	hlist_del_init(&req->hash_node);
+-	remove_wait_queue(iw->head, &iwa->wo.child_wait);
++	io_waitid_remove_wq(req);
+ 	ret = io_waitid_finish(req, ret);
+ 
+ 	io_ring_submit_unlock(ctx, issue_flags);
 -- 
 2.53.0
 
