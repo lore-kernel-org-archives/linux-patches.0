@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E584837F75E;
-	Sat, 12 Sep 2026 19:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22053803E9;
+	Sat, 12 Sep 2026 19:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241621; cv=none; b=bQq9aoJViO6Tx7nvFhPHMryd7JhwjuQaQcWf75COA5seOh2sP8tmOrbBaontdiXQ+ujpVvpIXjiBMbgkFifmkx5jtTq6doEN3XlxcxiGLATzFjwn5DQP676kUa+Qyfua/COZ7MJ+a0oTDnB3w+WEhA1GSPJ97fr4uB7CMYPHv+M=
+	t=1789241625; cv=none; b=lcESd6rlLh9jbK4nyxzHGIbP2xHLaO8I+7g6F8eADU2n0TKbOeyPLugrbGmMh4jcAd6LDa12oPgt5xUclghW0MZnCUnQh7w/4J/TPABnzpZOxQGUEb3sbF9rIIKYvppfwgJbf4gX4GdwpIXZHr6SMdx+X53FpSUKfa9we3pMC+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241621; c=relaxed/simple;
-	bh=0EEphVmriL6VRJwc+SNuFRa43OLAnt3dwqjPrikR1R0=;
+	s=arc-20240116; t=1789241625; c=relaxed/simple;
+	bh=Z+WcEWMY16tT8WhgbQoqSyaNGA80G5GZV4J7LhcEtPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MiS33DmAo9J+FppZIQTDQrnsEBrPrqu6nJnnhO7tZ8uiq6wI84AuO4FaocrK/z0Vy+RTwec1KxFsv6+uggM7bHAk8jaCYxkyDT9+vtuNDus9YRRRBEwGc0NdYHCRJPvYPyU6/u/GgeMenll/JzQmyAyLkagZIEaPKOQ/6KIjUio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmOky6cC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u1y3pLviIXULi4bEs5PhIthAUPDfxGDFPANdG/IpApX1IMLM6M8isAJyKRzGDGVERWwCnptWplK0K4fUQ3SMzAY4KoEIE5AEwJkk3h40mH6r7+ke4/7HMQqSwhvXCBvMr3wfrf9qtr9kwWKSiAYhx/Sx1zt31f5PqJt4LkPshmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SvmrHSdI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmOky6cC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF971F000FF;
-	Sat, 12 Sep 2026 19:33:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvmrHSdI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B2B41F000FF;
+	Sat, 12 Sep 2026 19:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241619;
-	bh=RJbr7c7prxEO7uea1Cet+ZY4rB2ZiRT9vlpft3KKJiA=;
+	s=korg; t=1789241624;
+	bh=a5zXkH0BW7HMQqVB4/tzP6SPnQXSByyP7T0lbFTVIZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RmOky6cCaiZtaXPzEKgW5m9qPn4aY0dQ3UXe51lNy5Rere2BWNSIX6AgeWSEgsWBY
-	 AyQpfCb5k9G9jFdCJKTgZH6oTabUMB6T/g0EI+FOnB0kX4A0WGFXRetwyjWAuNRk0/
-	 mu+7Fl/V+DGCJm1j77sdQRDyL6YhrqAD/D4fAmnM=
+	b=SvmrHSdIftgUfrqIVGM66sfLytZ9FV5datvT1xjEZ6V9LvI9HCL6PnyHQ4Hy1FOEB
+	 LMHUkjQzXpa16MY1v2cKwon8L9ijIlkNRbAVzh33fF8n7IEgETkjw/0fsMcj+Ym0qL
+	 aM1mGvTgnuOaIWY9QP/D7S7Q7s8XS26CHCrPlx8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Haoze Xie <royenheart@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Alexander Martyniuk <alexevgmart@gmail.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 173/798] netfilter: nf_queue: pin bridge device while NFQUEUE holds fake dst
-Date: Sat, 12 Sep 2026 08:56:41 +0200
-Message-ID: <20260912065520.984042088@linuxfoundation.org>
+Subject: [PATCH 5.10 174/798] mptcp: pm: ADD_ADDR rtx: always decrease sk refcount
+Date: Sat, 12 Sep 2026 08:56:42 +0200
+Message-ID: <20260912065521.005843552@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -58,126 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoze Xie <royenheart@gmail.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit c9c9b37f8c5505224e8d206184df3bb668ee00cf upstream.
+[ Upstream commit 9634cb35af17019baec21ca648516ce376fa10e6 ]
 
-The br_netfilter fake rtable is embedded in struct net_bridge and is
-attached to bridged packets with skb_dst_set_noref(). If such a packet is
-queued to NFQUEUE, __nf_queue() upgrades that fake dst with
-skb_dst_force().
+When an ADD_ADDR is retransmitted, the sk is held in sk_reset_timer().
+It should then be released in all cases at the end.
 
-At that point the queued skb can hold a real dst reference after bridge
-teardown has started. The problem is not that every bridged packet needs
-its own dst reference. The problem is that NFQUEUE can keep the bridge
-private fake dst alive after unregister begins.
+Some (unlikely) checks were returning directly instead of calling
+sock_put() to decrease the refcount. Jump to a new 'exit' label to call
+__sock_put() (which will become sock_put() in the next commit) to fix
+this potential leak.
 
-Fix this by keeping the bridge fake dst model unchanged and pinning the
-bridge master device only while the packet sits in NFQUEUE. Record the
-bridge device in nf_queue_entry when the queued skb carries a bridge fake
-dst, take a device reference for the queue lifetime, and drop it when the
-queue entry is freed.
+While at it, drop the '!msk' check which cannot happen because it is
+never reset, and explicitly mark the remaining one as "unlikely".
 
-Also make sure queued entries are reaped when that bridge device goes
-down, and drop the redundant nf_bridge_info_exists() test from the fake
-dst detection.
-
-This keeps netdev_priv(br->dev) alive until verdict completion, so the
-embedded fake rtable and its metrics backing storage cannot be freed out
-from under dst_release(). It also avoids the constant refcount bump and
-avoids using ipv4-specific dst helpers for IPv6 bridge traffic.
-
-Fixes: 34666d467cbf ("netfilter: bridge: move br_netfilter out of the core")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Haoze Xie <royenheart@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
+Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-4-fca8091060a4@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Karl Mehltretter: applied to pm_netlink.c; retained v5.10's ID 0 guard
+  and routed it through the common refcount drop. ]
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_queue.h |  1 +
- net/netfilter/nf_queue.c         | 16 ++++++++++++++++
- net/netfilter/nfnetlink_queue.c  |  3 +++
- 3 files changed, 20 insertions(+)
+ net/mptcp/pm_netlink.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/include/net/netfilter/nf_queue.h b/include/net/netfilter/nf_queue.h
-index 6b4de68a762e3..2637d1512929a 100644
---- a/include/net/netfilter/nf_queue.h
-+++ b/include/net/netfilter/nf_queue.h
-@@ -16,6 +16,7 @@ struct nf_queue_entry {
- 	unsigned int		id;
- 	unsigned int		hook_index;	/* index in hook_entries->hook[] */
- #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
-+	struct net_device	*bridge_dev;
- 	struct net_device	*physin;
- 	struct net_device	*physout;
- #endif
-diff --git a/net/netfilter/nf_queue.c b/net/netfilter/nf_queue.c
-index d9d35658a357c..47ed9a353107a 100644
---- a/net/netfilter/nf_queue.c
-+++ b/net/netfilter/nf_queue.c
-@@ -67,6 +67,7 @@ static void nf_queue_entry_release_refs(struct nf_queue_entry *entry)
- 		nf_queue_sock_put(state->sk);
+diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
+index d4d56f0af3e0a..aee3a8dd9287a 100644
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -217,14 +217,11 @@ static void mptcp_pm_add_timer(struct timer_list *timer)
  
- #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
-+	dev_put(entry->bridge_dev);
- 	dev_put(entry->physin);
- 	dev_put(entry->physout);
- #endif
-@@ -83,6 +84,8 @@ static void __nf_queue_entry_init_physdevs(struct nf_queue_entry *entry)
- {
- #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
- 	const struct sk_buff *skb = entry->skb;
-+	struct dst_entry *dst = skb_dst(skb);
-+	struct net_device *dev = NULL;
- 	struct nf_bridge_info *nf_bridge;
+ 	pr_debug("msk=%p\n", msk);
  
- 	nf_bridge = nf_bridge_info_get(skb);
-@@ -93,6 +96,18 @@ static void __nf_queue_entry_init_physdevs(struct nf_queue_entry *entry)
- 		entry->physin = NULL;
- 		entry->physout = NULL;
- 	}
-+
-+	if (entry->state.pf == NFPROTO_BRIDGE &&
-+	    dst && (dst->flags & DST_FAKE_RTABLE)) {
-+		WARN_ON_ONCE(!rcu_read_lock_held());
-+		dev = READ_ONCE(dst->dev);
-+	}
-+
-+	/* Must hold a reference on the bridge device: dst_hold() protects
-+	 * the dst itself, but the fake rtable is embedded in bridge-private
-+	 * storage that netdevice teardown can free independently.
-+	 */
-+	entry->bridge_dev = dev;
- #endif
+-	if (!msk)
+-		return;
+-
+-	if (inet_sk_state_load(sk) == TCP_CLOSE)
+-		return;
++	if (unlikely(inet_sk_state_load(sk) == TCP_CLOSE))
++		goto exit;
+ 
+ 	if (!entry->addr.id)
+-		return;
++		goto exit;
+ 
+ 	bh_lock_sock(sk);
+ 	if (sock_owned_by_user(sk)) {
+@@ -253,6 +250,7 @@ static void mptcp_pm_add_timer(struct timer_list *timer)
+ 
+ out:
+ 	bh_unlock_sock(sk);
++exit:
+ 	__sock_put(sk);
  }
  
-@@ -109,6 +124,7 @@ bool nf_queue_entry_get_refs(struct nf_queue_entry *entry)
- 	dev_hold(state->out);
- 
- #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
-+	dev_hold(entry->bridge_dev);
- 	dev_hold(entry->physin);
- 	dev_hold(entry->physout);
- #endif
-diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index 1541d6801001c..f91cc1b8804d1 100644
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -910,6 +910,9 @@ dev_cmp(struct nf_queue_entry *entry, unsigned long ifindex)
- 
- 	if (physinif == ifindex || physoutif == ifindex)
- 		return 1;
-+
-+	if (entry->bridge_dev && entry->bridge_dev->ifindex == ifindex)
-+		return 1;
- #endif
- 	if (entry->skb_dev && entry->skb_dev->ifindex == ifindex)
- 		return 1;
 -- 
 2.53.0
 
