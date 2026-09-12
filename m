@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE81387369;
-	Sat, 12 Sep 2026 19:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC19390CAE;
+	Sat, 12 Sep 2026 19:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243002; cv=none; b=icE7zKEM35pp80qQ5ZU5uq6oFRFfmQ77b0WEaL6pZtPOZ4m3TddZIe0WMKWjutng1kCTt98Y1jXO6n996k3vWLeSfr6oXOeKmuK9bDAScbT97Fqep3qSVUxku8NJtqEunF8lv/29oRkG44+LPqlig23aPg1qo02QZZkBtU8qUK0=
+	t=1789243006; cv=none; b=HWKFLBPz/ebo3ZvzoC8Xj8ZxFaHz7OtVlDyeeaupkxyO4tpL9cnMYJYIle5cQxCl1uVCMAqEgl+EcMzx9TaPDh8K7mzQZUedv6pSV9T4eJCC18uYDkHqLsZWnick/In1/NDsk5DUyTLGisAY5QlMw0dzNan4CyNoQ+g8yFAqltc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243002; c=relaxed/simple;
-	bh=oiH9qoAGsj2BfbX2M9BnGTvCd0mjlXaZMFpEn+3+y7Y=;
+	s=arc-20240116; t=1789243006; c=relaxed/simple;
+	bh=qApnSGabrnQSwANRjiARsuR851AgwsDVl4paC4M1FFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tBgvPvw485zoKjiQqCmM8bOYjtwG8H7MlXhyIEC70Lq5CuVxgsvszPsSkH7VoAgy0/HitFddjSLDGwH4tTd/BdpamjVU0z9ylx11l93Sp4WUKwN9e4D0Qa/lAeinBPoS7eiiGO7E5EXIYaoz+vJjxe3pwl8+hlz9nkqXZyALJIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JlrM9xRq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QYBkwM5P83NjQWnWfFMcVAdcjN7C72EIoFp+yXAc6n1TYFh9oZNojJLhWDw1sG8DvmS1mMdzcfMTqNXJe3qWaNdWcvJTbpuEy6UwTrP8/4p6I6WXuHk8k3lMKUvllA1CojDr9aw+iofxx3ubfjInr7oHNcvZaJvqF3aNyx4KKe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hlnORIHJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JlrM9xRq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1692D1F000FF;
-	Sat, 12 Sep 2026 19:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hlnORIHJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E07271F000FF;
+	Sat, 12 Sep 2026 19:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243001;
-	bh=eiSjM6urQP6S22elEpQoov3LxcMD1lDuiKYP28Emeqw=;
+	s=korg; t=1789243004;
+	bh=Z63hypned6q6jjpJmomQS438JJHzNl/Fm+gZZYd279o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JlrM9xRq3YNM2gaLvGZGuA388FHtQrF2ynW6Pb7EHqQfF4RW2U4jrqtJNCH1i1iM1
-	 p8eft+u7TJEXeUxiGWVv/74FvZImNQXXVpMGOZQKrGCrwNHsOXKIEVcWglLaKvA5aw
-	 /47u/fmpVT/kRKe0ZgOlUa4cvss6bp0hsxPdxjkE=
+	b=hlnORIHJN6HDVDuhgHClgb4cxRf5Loz2kTnry5t4/HAJrN1CniCVuYPry+UHN/Mbc
+	 Di4mFVZsXa4CD5B6INSCVQrdR/cm/1Ytxp4svuzbyl5U29PO8wJqC1x+3VRSXnb5lB
+	 hZc776q8VvECmd/NEVepgIa1m26p3MynKZNN1pWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
-	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
-	Christian Brauner <brauner@kernel.org>,
-	Amit Sahrawat <a.sahrawat@samsung.com>,
-	Namjae Jeon <namjae.jeon@samsung.com>,
-	Ravishankar N <ravi.n1@samsung.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 600/798] fat: release buffer head after rebuilding parent
-Date: Sat, 12 Sep 2026 09:03:48 +0200
-Message-ID: <20260912065530.877613838@linuxfoundation.org>
+Subject: [PATCH 5.10 601/798] PCI/sysfs: Add static PCI resource attribute macros
+Date: Sat, 12 Sep 2026 09:03:49 +0200
+Message-ID: <20260912065530.901972739@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,55 +46,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-[ Upstream commit 83e98dbf19ab64e8528e101e20f8d50e1aaa68a8 ]
+[ Upstream commit b15ac7e008bf0039f981da21e983b2df130152ff ]
 
-fat_scan_logstart() leaves the matching directory entry's buffer head in
-sinfo.bh for the caller to release, just like fat_scan().
+Add three macros for declaring static binary attributes for PCI resource
+files:
 
-fat_rebuild_parent() uses the directory entry to rebuild the parent inode
-for the nostale_ro NFS export path, but does not release sinfo.bh after a
-successful scan.  Release it once fat_build_inode() has consumed the
-directory entry data.
+  - pci_dev_resource_io_attr(), for I/O BAR resources (read/write)
+  - pci_dev_resource_uc_attr(), for memory BAR resources (mmap uncached)
+  - pci_dev_resource_wc_attr(), for write-combine resources (mmap WC)
 
-Link: https://lore.kernel.org/20260715020957.1096309-1-chenyichong@uniontech.com
-Fixes: f1e6fb0ab451 ("fat (exportfs): rebuild directory-inode if fat_dget()")
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Amit Sahrawat <a.sahrawat@samsung.com>
-Cc: chenyichong <chenyichong@uniontech.com>
-Cc: Namjae Jeon <namjae.jeon@samsung.com>
-Cc: Ravishankar N <ravi.n1@samsung.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Each macro only sets the callbacks its resource type needs.  The I/O macro
+conditionally includes mmap support via __PCI_RESOURCE_IO_MMAP_ATTRS on
+architectures where arch_can_pci_mmap_io() is true at compile time (such as
+PowerPC, SPARC, and Xtensa).
+
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Link: https://patch.msgid.link/20260508043543.217179-7-kwilczynski@kernel.org
+Stable-dep-of: bad94d3d18c6 ("PCI/sysfs: Return -EINVAL for unsupported I/O BAR mmap")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fat/nfs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/pci/pci-sysfs.c | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-diff --git a/fs/fat/nfs.c b/fs/fat/nfs.c
-index bab63eeaf9cbc..bb5f056a639a2 100644
---- a/fs/fat/nfs.c
-+++ b/fs/fat/nfs.c
-@@ -250,8 +250,10 @@ struct inode *fat_rebuild_parent(struct super_block *sb, int parent_logstart)
- 		MSDOS_I(dummy_grand_parent)->i_pos = -1;
- 	}
+diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
+index 23ea48f176f16..ae0129b6ba103 100644
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -1148,6 +1148,47 @@ static ssize_t pci_write_resource_io(struct file *filp, struct kobject *kobj,
+ 	return pci_resource_io(filp, kobj, attr, buf, off, count, true);
+ }
  
--	if (!fat_scan_logstart(dummy_grand_parent, clus_to_match, &sinfo))
-+	if (!fat_scan_logstart(dummy_grand_parent, clus_to_match, &sinfo)) {
- 		parent = fat_build_inode(sb, sinfo.de, sinfo.i_pos);
-+		brelse(sinfo.bh);
-+	}
- 
- 	brelse(parent_bh);
- 	iput(dummy_grand_parent);
++/*
++ * generic_file_llseek() consults f_mapping->host to determine
++ * the file size. As iomem_inode knows nothing about the
++ * attribute, it's not going to work, so override it as well.
++ */
++#if arch_can_pci_mmap_io()
++# define __PCI_RESOURCE_IO_MMAP_ATTRS		\
++	.f_mapping = iomem_get_mapping,		\
++	.llseek = pci_llseek_resource,		\
++	.mmap = pci_mmap_resource_uc,
++#else
++# define __PCI_RESOURCE_IO_MMAP_ATTRS
++#endif
++
++#define pci_dev_resource_io_attr(_bar)					\
++static const struct bin_attribute dev_resource##_bar##_io_attr = {	\
++	.attr = { .name = "resource" __stringify(_bar), .mode = 0600 },	\
++	.private = (void *)(unsigned long)(_bar),			\
++	.read = pci_read_resource_io,					\
++	.write = pci_write_resource_io,					\
++	__PCI_RESOURCE_IO_MMAP_ATTRS					\
++}
++
++#define pci_dev_resource_uc_attr(_bar)					\
++static const struct bin_attribute dev_resource##_bar##_uc_attr = {	\
++	.attr = { .name = "resource" __stringify(_bar), .mode = 0600 },	\
++	.private = (void *)(unsigned long)(_bar),			\
++	.f_mapping = iomem_get_mapping,					\
++	.llseek = pci_llseek_resource,					\
++	.mmap = pci_mmap_resource_uc,					\
++}
++
++#define pci_dev_resource_wc_attr(_bar)					      \
++static const struct bin_attribute dev_resource##_bar##_wc_attr = {	      \
++	.attr = { .name = "resource" __stringify(_bar) "_wc", .mode = 0600 }, \
++	.private = (void *)(unsigned long)(_bar),			      \
++	.f_mapping = iomem_get_mapping,					      \
++	.llseek = pci_llseek_resource,					      \
++	.mmap = pci_mmap_resource_wc,					      \
++}
++
+ /**
+  * pci_remove_resource_files - cleanup resource files
+  * @pdev: dev to cleanup
 -- 
 2.53.0
 
