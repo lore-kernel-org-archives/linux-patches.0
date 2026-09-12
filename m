@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7AD356744;
-	Sat, 12 Sep 2026 14:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E38F2FFDEA;
+	Sat, 12 Sep 2026 14:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222917; cv=none; b=kLx3oqgHcYZsygE8jf2dVTaWB9cAHf5pXuJ57PEAOyzBDM/oL/JJ6VgGHjl+W4JNUIZz1cMtGmR9xug+TItARHanrxTlSV8K1tHYelNDa7yGa/sFNv3c6e5o2pXuRg+T9W8Yz30O2NioETb0kmFPXAVjLWI7qKsydO0mBdwT6l8=
+	t=1789222921; cv=none; b=YbtLNoQ1xJW4vXNDfw8FbB7RByPSkOzBslXuKBQrFI1sdo+BHs4/AYmfUPINqKzDGzY/0FZf9hhvcztb+mD7Y4iMfs5XEMZnMy7k7S7thbx83Gb1YJCFG1SrS9zex+VVyCvmKq6nBX7yH5LuMTdr4NC5Jf+I9YAkP4YK1PJ3Wzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222917; c=relaxed/simple;
-	bh=cuQX21q4RtFj5o/BHqtsx+yTBMpgxVW25dS/6EY6FQE=;
+	s=arc-20240116; t=1789222921; c=relaxed/simple;
+	bh=pwjWQ4GrGsieMeVKWEQP4INbvo1DPPpTfmiKn+Nsl7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UKMRIFkK3L6QocDAyu/iY0D/3SackWV07eXO0uUNOMu0jfHfi6KRS6WAhFT/WcTl2+bGJaxSiMmPfNMp6zdY5fTPL+9nVU33G8nxgcauhkmBkjHGDJYv4ENXiYuC7miKydkfTvS8jdTGd6VZoQlswS2ln4IBu1mTninWCVXJfZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RfgXdpil; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l2RuCG40fUI4LknskHmHztArkwoqZauDrQcksUTPJWHbwbt+JjpsGTiNlckqAVTpgBbEMnGe/MrIsdrkoxQCqiHLIYRLIqwhwUHWLw6gdKk+ChjPG2DhnmwCPXsIYyn6BTIUm1ox/Mas/VqbG684hOHAVanfbSCr1UdosCC905U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TTU40Wdc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RfgXdpil"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B641F000FF;
-	Sat, 12 Sep 2026 14:21:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TTU40Wdc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9D01F000FF;
+	Sat, 12 Sep 2026 14:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222910;
-	bh=UWgjBfnw6Oz7Ih2T+mtbcHFRSS0tqU2MAzoH/wuC9g0=;
+	s=korg; t=1789222920;
+	bh=rV+R2YZ0um23HG6ihcs6JuyQXiz2pM/5STdWJVbF2gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RfgXdpilI+YL0vmwyF6RdmUbqI1V/Me2VJxSs/yuuZLmtuYsT00eUaCLFSTwZkVxW
-	 vNBwWU1/MOVN6rJsL+uafDL5aJaMWP0iT0kk1iViGCoSw4xEHvnfkDoMbU9Mzz8Ud6
-	 npTTiT2kS3UfB2r6Bc/fb6hxxP9basltLhVR2IME=
+	b=TTU40Wdc9wcBkeZ7r1eNf6FNnzzZgVPx0RaviS8kMpdFqfDYbjesBmRzOdGp5W01b
+	 EIhRNTGuJlD4ePL17gQdKsdojgiTTsaV7HrGdQ2DLuLTaKdfxj2vcKlM7oJYti7SLi
+	 ZaY7rHLWlx2aAIvrZVVLXIHcbXTq1cls0t5buzbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herman van Hazendonk <github.com@herrie.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Slavin Liu <220245772@seu.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0675/1424] clk: qcom: gdsc: propagate gdsc_check_status() errors from gdsc_poll_status
-Date: Sat, 12 Sep 2026 08:51:47 +0200
-Message-ID: <20260912065622.413917158@linuxfoundation.org>
+Subject: [PATCH 6.6 0685/1424] usb: gadget: r8a66597: avoid double free of ep0_req in probe error path
+Date: Sat, 12 Sep 2026 08:51:57 +0200
+Message-ID: <20260912065622.642636993@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,75 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herman van Hazendonk <github.com@herrie.org>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit d69f0c2b8d292b4890c9f0fbe184dfc26c4de86c ]
+[ Upstream commit 41d541e3718db01668a4cd29815ee4b3b55f76d2 ]
 
-gdsc_check_status() returns negative errno when the underlying
-regmap_read() fails -- e.g. when a parent regmap dies during system
-suspend, a CSR is removed by an HW debug tool, or the bus controller
-goes into protection. gdsc_poll_status() treats the result as a plain
-boolean ("is the GDSC in the requested state?"), so any negative error
-return is truncated to "true" and the poll exits with success even
-though the rail's real state is unknown:
+If usb_add_gadget_udc() fails, r8a66597_probe() jumps to err_add_udc
+and frees ep0_req, then falls through to clean_up2 where ep0_req is
+freed again when it is non-NULL.
 
-	do {
-		if (gdsc_check_status(sc, status))
-			return 0;
-	} while (ktime_us_delta(ktime_get(), start) < STATUS_POLL_TIMEOUT_US);
+Remove the redundant free from err_add_udc and keep the cleanup in
+clean_up2 so the request is released exactly once.
 
-	if (gdsc_check_status(sc, status))
-		return 0;
+Fixes: 776976a67ae2 ("usb: gadget: r8a66597-udc: cleanup error path")
+Issue found using a prototype static analysis tool
+and confirmed by code review.
 
-	return -ETIMEDOUT;
-
-This silently misleads gdsc_toggle_logic() (which writes/un-writes
-SW_COLLAPSE on the strength of the poll succeeding) and the gdsc_init()
-sync path (which assumes the readback represents real silicon state).
-
-Latch the return value, propagate negative errno immediately, and only
-treat a strictly-positive value as "reached the target state". Make the
-same change in the post-timeout final check so a regmap that comes back
-after the deadline does not silently degrade to -ETIMEDOUT.
-
-Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
-Fixes: 77b1067a19b4 ("clk: qcom: gdsc: Add support for gdscs with gds hw controller")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260602140934.796697-2-github.com@herrie.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Signed-off-by: Slavin Liu <220245772@seu.edu.cn>
+Link: https://patch.msgid.link/20260624140908.1282-1-getshell@seu.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gdsc.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/udc/r8a66597-udc.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index 5a8c93b12efa2..c48340efc2f40 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -103,14 +103,21 @@ static int gdsc_hwctrl(struct gdsc *sc, bool en)
- static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
- {
- 	ktime_t start;
-+	int ret;
+diff --git a/drivers/usb/gadget/udc/r8a66597-udc.c b/drivers/usb/gadget/udc/r8a66597-udc.c
+index 51b665f15c8e8..91fe432fc674b 100644
+--- a/drivers/usb/gadget/udc/r8a66597-udc.c
++++ b/drivers/usb/gadget/udc/r8a66597-udc.c
+@@ -1951,7 +1951,6 @@ static int r8a66597_probe(struct platform_device *pdev)
+ 	return 0;
  
- 	start = ktime_get();
- 	do {
--		if (gdsc_check_status(sc, status))
-+		ret = gdsc_check_status(sc, status);
-+		if (ret < 0)
-+			return ret;
-+		if (ret)
- 			return 0;
- 	} while (ktime_us_delta(ktime_get(), start) < STATUS_POLL_TIMEOUT_US);
- 
--	if (gdsc_check_status(sc, status))
-+	ret = gdsc_check_status(sc, status);
-+	if (ret < 0)
-+		return ret;
-+	if (ret)
- 		return 0;
- 
- 	return -ETIMEDOUT;
+ err_add_udc:
+-	r8a66597_free_request(&r8a66597->ep[0].ep, r8a66597->ep0_req);
+ clean_up2:
+ 	if (r8a66597->pdata->on_chip)
+ 		clk_disable_unprepare(r8a66597->clk);
 -- 
 2.53.0
 
