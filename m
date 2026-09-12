@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AEE941A92A;
-	Sat, 12 Sep 2026 15:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008D53C583B;
+	Sat, 12 Sep 2026 15:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228722; cv=none; b=Wxbhy6Nf2dmW2M+62g+I1U2BI7gYpfOrnpceF473J93JS2/ScJiIniCnDWD3C3ACaGa+eaci0VUMjZxPTSeD28GPjGSb/dd6eFPnjVwFPgh1abBR8hnmqP5DOQ5NW2bgfOtezqK5Gt/FRVbykzFlIlypmYSx/qpNlUZxxUzucgY=
+	t=1789228727; cv=none; b=m/nl2YfJLPZoVJQCc5mb0J+uDTJDgWnqCz0c/6+L6HzE9C3G7Bqbrw/eRug9U7ZdDOHL3Pg6WhmGgdnQJRrVehjcvENcNYb2G7zETTdO4VcwRCwqKMkySFvykCwdZlfUbeusdkAsF9hMJnGZ5eTqZ/JQKRUN7j1dxnZ6WZscFB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228722; c=relaxed/simple;
-	bh=xKMKnImlWdXiDarwtBwTHW8+7duvTyfBwn/naMKn14g=;
+	s=arc-20240116; t=1789228727; c=relaxed/simple;
+	bh=SSuvYZjpHJs3aFzLh2VhftMMg//HKZV7G8LDBreNe7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nRWStZvy1QXCD6p9oGTTS8JE2tIpZaAvPlHffg3YW8OmDhUcxM5uF3jUUl7dNrK2uG64QuEULjchapHm1fecy1cV3AJih/ZqjH5mjfSwt9W5CUHZ48Bd3eO8jYqROQf20G8PEO+nn4lSVLgiMTAuqFhO+FsyO+uGvJ+iKpw3e4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ll0nLBy5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jVedXJzx6AkwbgotJ4oSLM9fyQoZKk9+9Md4Sb18bZyHAJgyOlQo+KU1NIaWYPh1xUJhRp0fHr5iVryyyKkiHdWqqbhOghmmEvxxoeFFkyzoLbL+AjmMICMIncW6IK4f/OFQYkrvisUw4+E/5rjE/fIxU+x7apcUijKccBfeQ7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEnBk26d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ll0nLBy5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A6D1F000FF;
-	Sat, 12 Sep 2026 15:58:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEnBk26d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF171F000FF;
+	Sat, 12 Sep 2026 15:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228721;
-	bh=lEYKaKIPwRHHWdyzaurgaqmfqT9Pp84jsGnB7npZH4o=;
+	s=korg; t=1789228725;
+	bh=Qto5QBvFES3s6BjUQo+3H2xVyBDaF0jqE6iwTVrdgyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ll0nLBy5KskmLdgsk6aUb9N2Gd/S0tdTfesOejrEx6F3A3cPdci2TBBRCOimSjrIz
-	 jkG8VUkiRSN2JBFtg/C6wHfGsPPYZXJTEf8VESsP3M5mc7iqgHKJQKMtjqJqcGl9D1
-	 BRo6xTG+kUwT4Q7hjUwNAjlWRQAP0v6w9yMuu/OQ=
+	b=LEnBk26dOMskqO97MK1Ul7M4xQuuldkny0OH3noQhIuJ1BroiB/NJuLoCTZTGCJf6
+	 NO0dgjAKoJ34zrKpjiXOsXkR+JF7zzhCNP5NE198AdtpLlLwrNKTOjUwGRa9mMYfSn
+	 h6sz6AHxJDphWn4aD3jwFcm7CV9JO4u7pn+wF1hA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Wahl <steve.wahl@hpe.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Pavin Joseph <me@pavinjoseph.com>,
-	Sarah Brofeldt <srhb@dbc.dk>,
-	Eric Hagberg <ehagberg@gmail.com>,
+	Jie Wang <wangjie125@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0443/1191] x86/mm/ident_map: Use gbpages only where full GB page should be mapped.
-Date: Sat, 12 Sep 2026 08:52:51 +0200
-Message-ID: <20260912065558.184088581@linuxfoundation.org>
+Subject: [PATCH 6.1 0444/1191] net: hns3: fix kernel crash when 1588 is sent on HIP08 devices
+Date: Sat, 12 Sep 2026 08:52:52 +0200
+Message-ID: <20260912065558.205650856@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -54,80 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve Wahl <steve.wahl@hpe.com>
+From: Jie Wang <wangjie125@huawei.com>
 
-[ Upstream commit cc31744a294584a36bf764a0ffa3255a8e69f036 ]
+[ Upstream commit 9741e72b2286de8b38de9db685588ac421a95c87 ]
 
-When ident_pud_init() uses only GB pages to create identity maps, large
-ranges of addresses not actually requested can be included in the resulting
-table; a 4K request will map a full GB.  This can include a lot of extra
-address space past that requested, including areas marked reserved by the
-BIOS.  That allows processor speculation into reserved regions, that on UV
-systems can cause system halts.
+Currently, HIP08 devices does not register the ptp devices, so the
+hdev->ptp is NULL. But the tx process would still try to set hardware time
+stamp info with SKBTX_HW_TSTAMP flag and cause a kernel crash.
 
-Only use GB pages when map creation requests include the full GB page of
-space.  Fall back to using smaller 2M pages when only portions of a GB page
-are included in the request.
+[  128.087798] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000018
+...
+[  128.280251] pc : hclge_ptp_set_tx_info+0x2c/0x140 [hclge]
+[  128.286600] lr : hclge_ptp_set_tx_info+0x20/0x140 [hclge]
+[  128.292938] sp : ffff800059b93140
+[  128.297200] x29: ffff800059b93140 x28: 0000000000003280
+[  128.303455] x27: ffff800020d48280 x26: ffff0cb9dc814080
+[  128.309715] x25: ffff0cb9cde93fa0 x24: 0000000000000001
+[  128.315969] x23: 0000000000000000 x22: 0000000000000194
+[  128.322219] x21: ffff0cd94f986000 x20: 0000000000000000
+[  128.328462] x19: ffff0cb9d2a166c0 x18: 0000000000000000
+[  128.334698] x17: 0000000000000000 x16: ffffcf1fc523ed24
+[  128.340934] x15: 0000ffffd530a518 x14: 0000000000000000
+[  128.347162] x13: ffff0cd6bdb31310 x12: 0000000000000368
+[  128.353388] x11: ffff0cb9cfbc7070 x10: ffff2cf55dd11e02
+[  128.359606] x9 : ffffcf1f85a212b4 x8 : ffff0cd7cf27dab0
+[  128.365831] x7 : 0000000000000a20 x6 : ffff0cd7cf27d000
+[  128.372040] x5 : 0000000000000000 x4 : 000000000000ffff
+[  128.378243] x3 : 0000000000000400 x2 : ffffcf1f85a21294
+[  128.384437] x1 : ffff0cb9db520080 x0 : ffff0cb9db500080
+[  128.390626] Call trace:
+[  128.393964]  hclge_ptp_set_tx_info+0x2c/0x140 [hclge]
+[  128.399893]  hns3_nic_net_xmit+0x39c/0x4c4 [hns3]
+[  128.405468]  xmit_one.constprop.0+0xc4/0x200
+[  128.410600]  dev_hard_start_xmit+0x54/0xf0
+[  128.415556]  sch_direct_xmit+0xe8/0x634
+[  128.420246]  __dev_queue_xmit+0x224/0xc70
+[  128.425101]  dev_queue_xmit+0x1c/0x40
+[  128.429608]  ovs_vport_send+0xac/0x1a0 [openvswitch]
+[  128.435409]  do_output+0x60/0x17c [openvswitch]
+[  128.440770]  do_execute_actions+0x898/0x8c4 [openvswitch]
+[  128.446993]  ovs_execute_actions+0x64/0xf0 [openvswitch]
+[  128.453129]  ovs_dp_process_packet+0xa0/0x224 [openvswitch]
+[  128.459530]  ovs_vport_receive+0x7c/0xfc [openvswitch]
+[  128.465497]  internal_dev_xmit+0x34/0xb0 [openvswitch]
+[  128.471460]  xmit_one.constprop.0+0xc4/0x200
+[  128.476561]  dev_hard_start_xmit+0x54/0xf0
+[  128.481489]  __dev_queue_xmit+0x968/0xc70
+[  128.486330]  dev_queue_xmit+0x1c/0x40
+[  128.490856]  ip_finish_output2+0x250/0x570
+[  128.495810]  __ip_finish_output+0x170/0x1e0
+[  128.500832]  ip_finish_output+0x3c/0xf0
+[  128.505504]  ip_output+0xbc/0x160
+[  128.509654]  ip_send_skb+0x58/0xd4
+[  128.513892]  udp_send_skb+0x12c/0x354
+[  128.518387]  udp_sendmsg+0x7a8/0x9c0
+[  128.522793]  inet_sendmsg+0x4c/0x8c
+[  128.527116]  __sock_sendmsg+0x48/0x80
+[  128.531609]  __sys_sendto+0x124/0x164
+[  128.536099]  __arm64_sys_sendto+0x30/0x5c
+[  128.540935]  invoke_syscall+0x50/0x130
+[  128.545508]  el0_svc_common.constprop.0+0x10c/0x124
+[  128.551205]  do_el0_svc+0x34/0xdc
+[  128.555347]  el0_svc+0x20/0x30
+[  128.559227]  el0_sync_handler+0xb8/0xc0
+[  128.563883]  el0_sync+0x160/0x180
 
-No attempt is made to coalesce mapping requests. If a request requires a
-map entry at the 2M (pmd) level, subsequent mapping requests within the
-same 1G region will also be at the pmd level, even if adjacent or
-overlapping such requests could have been combined to map a full GB page.
-Existing usage starts with larger regions and then adds smaller regions, so
-this should not have any great consequence.
-
-Signed-off-by: Steve Wahl <steve.wahl@hpe.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Pavin Joseph <me@pavinjoseph.com>
-Tested-by: Sarah Brofeldt <srhb@dbc.dk>
-Tested-by: Eric Hagberg <ehagberg@gmail.com>
-Link: https://lore.kernel.org/all/20240717213121.3064030-3-steve.wahl@hpe.com
+Fixes: 0bf5eb788512 ("net: hns3: add support for PTP")
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250106143642.539698-8-shaojijie@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/ident_map.c | 23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/x86/mm/ident_map.c b/arch/x86/mm/ident_map.c
-index 968d7005f4a72..a204a332c71fc 100644
---- a/arch/x86/mm/ident_map.c
-+++ b/arch/x86/mm/ident_map.c
-@@ -26,18 +26,31 @@ static int ident_pud_init(struct x86_mapping_info *info, pud_t *pud_page,
- 	for (; addr < end; addr = next) {
- 		pud_t *pud = pud_page + pud_index(addr);
- 		pmd_t *pmd;
-+		bool use_gbpage;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
+index 6d7aeac600128..9fdd66fb7f8ec 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
+@@ -70,6 +70,9 @@ bool hclge_ptp_set_tx_info(struct hnae3_handle *handle, struct sk_buff *skb)
+ 	struct hclge_dev *hdev = vport->back;
+ 	struct hclge_ptp *ptp = hdev->ptp;
  
- 		next = (addr & PUD_MASK) + PUD_SIZE;
- 		if (next > end)
- 			next = end;
- 
--		if (info->direct_gbpages) {
--			pud_t pudval;
-+		/* if this is already a gbpage, this portion is already mapped */
-+		if (pud_leaf(*pud))
-+			continue;
++	if (!ptp)
++		return false;
 +
-+		/* Is using a gbpage allowed? */
-+		use_gbpage = info->direct_gbpages;
- 
--			if (pud_present(*pud))
--				continue;
-+		/* Don't use gbpage if it maps more than the requested region. */
-+		/* at the begining: */
-+		use_gbpage &= ((addr & ~PUD_MASK) == 0);
-+		/* ... or at the end: */
-+		use_gbpage &= ((next & ~PUD_MASK) == 0);
-+
-+		/* Never overwrite existing mappings */
-+		use_gbpage &= !pud_present(*pud);
-+
-+		if (use_gbpage) {
-+			pud_t pudval;
- 
--			addr &= PUD_MASK;
- 			pudval = __pud((addr - info->offset) | info->page_flag);
- 			set_pud(pud, pudval);
- 			continue;
+ 	if (!test_bit(HCLGE_PTP_FLAG_TX_EN, &ptp->flags) ||
+ 	    test_and_set_bit(HCLGE_STATE_PTP_TX_HANDLING, &hdev->state)) {
+ 		ptp->tx_skipped++;
 -- 
 2.53.0
 
