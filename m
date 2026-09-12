@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A308D4BEE38;
-	Sat, 12 Sep 2026 16:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286F528E0;
+	Sat, 12 Sep 2026 16:15:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229754; cv=none; b=cL5Q9s5HEzz69Q6ihBcqgZQHF2EXEXk5O48DVRGVUEgzeUypaNbV3J/cMptrZjboTQ4lGkO3uY7gq88n5Uew+F+JlbWsdn1EUKSrdINFzxu/4hn5n5ugckLSw5PHa54H8w9wl4kVdIMdvu4hYpUlSp9Bpt5mR5v3q859yfjDMe4=
+	t=1789229759; cv=none; b=bilNHdEgqNrb/0OrcII+objbDUqQ5M3N478iETdpO/zwv+VmtV5cXsbMU3VM3ATaFD5GlPM5bMkybE5BoPItbaCE9dTe2EovWSXAa8Ao/mSY/5KA19wp2QPip63SGaaQZ1maPGKP+dF1FGT5Fo3ZClbSRG1/i7y/5h+UIxkxyHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229754; c=relaxed/simple;
-	bh=RQiDhyCnpnBVmt2gFdummjLbMZ4qUKvr3OPOPIC2kYQ=;
+	s=arc-20240116; t=1789229759; c=relaxed/simple;
+	bh=MdtYtdbB8p05wl65rZCR60irLhPFfaH5OH3hQzNhWBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JlRGbITYXcFQl5AoRtOUmoLH/cR4D1gRkcHtMH4NOkrLPcIJuQOz0TIlCwM39ISNiqzekOzxNyiTsdWH8SPt+uga4vOZKO9FkJOn4GaH9SCg/B/trbXHvRSlo7IuFXp1qzCeChawsHs3dXZ/uV3mGxiXlpi9uHXyjr8gAjuMH6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGdk1cS1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lmQNEGGoB13vjAn617XaFfp9fTEhto2AL0hAE/9jWd1DuO4knbwenyYEHmzyT6pAmsOY9LGeH6IlvbWV04TLX1fKHttsJLFKapuz3wvMAdxMUM2kk+IBMHQWtr+Yquh6b3VnSkcMDe7tTn0M9h54Z2Lr8gbMpXchgMG3q5ToTVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GK46FtCv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGdk1cS1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 431691F000FF;
-	Sat, 12 Sep 2026 16:15:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GK46FtCv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08341F000FF;
+	Sat, 12 Sep 2026 16:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229753;
-	bh=T00A7GdU7Nu/ZobLq+GSa7UtC6Vp8nSxyzhKw4HvW94=;
+	s=korg; t=1789229758;
+	bh=JOfVYtDcPc9H0ujeq88oUygFJ3D5eVbzXPEgOU3Hw0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eGdk1cS1Y4q0MGBEt8x+2vNOUZkTd3jfBEJlLWyr8wDPEahZBOMEzkDHUKSVX1rVB
-	 QymoEMHP5mCTMFMfk2VUCWGGI47mugdb8NXhYi6oOdztsbquuwCI20UxA+TphpwQRC
-	 WAo8rFO+dE5Ervjp3xrIvfr6AvPmN9TPUFj0XI9U=
+	b=GK46FtCvMw2UUGpaP6wKMbj43M9xOY5NNow26jygvMWiajA1VoENAdsV8+q9XSqJQ
+	 3GMfrWb0bLm44NU+EimDJL2/8z7HM59PSTutXbPn+on+C7ST3HosGVUyPB3YVT3cnC
+	 Ip6RwQ0bPf+I6FA7PJLE5kLNEZcHxntW8JQ4p5h0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Nishanth Menon <nm@ti.com>,
-	Md Shofiqul Islam <shofiqtest@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0655/1191] soc: ti: knav_qmss_queue: Implement resource cleanup in remove()
-Date: Sat, 12 Sep 2026 08:56:23 +0200
-Message-ID: <20260912065602.967853926@linuxfoundation.org>
+Subject: [PATCH 6.1 0656/1191] soc: ti: knav_qmss: Remove debugfs file on teardown
+Date: Sat, 12 Sep 2026 08:56:24 +0200
+Message-ID: <20260912065602.989699116@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,48 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Md Shofiqul Islam <shofiqtest@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 10a1969353b20caa50c320717e054601631c0d3e ]
+[ Upstream commit 3c817862759913097f11467ed4ed2bbf974dabaf ]
 
-Implement the TODO in knav_queue_remove() by stopping PDSPs and
-freeing queue regions and queue ranges before disabling runtime PM,
-mirroring the cleanup performed in the probe error path.
+knav_queue_probe() creates the global qmss debugfs file whose show
+callback reads the global knav_qdev state. knav_queue_remove() tears
+down the queue manager resources but leaves the debugfs file published.
 
-Set device_ready to false before cleanup to prevent any further
-use of the device during teardown.
+Save the debugfs dentry in struct knav_device and remove it during
+teardown before the resources used by the show callback are released.
+While touching the debugfs_create_file() call, spell the unchanged read-
+only file mode as 0444.
 
-This ensures resources are released on driver unbind and avoids
-leaking queue/region state.
-
-Suggested-by: Nishanth Menon <nm@ti.com>
-Signed-off-by: Md Shofiqul Islam <shofiqtest@gmail.com>
-Link: https://lore.kernel.org/linux-arm-kernel/20260506154114.2288-1-shofiqtest@gmail.com/
+Fixes: 41f93af900a2 ("soc: ti: add Keystone Navigator QMSS driver")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260706144706.96313-1-pengpeng@iscas.ac.cn
 Signed-off-by: Nishanth Menon <nm@ti.com>
-Stable-dep-of: 3c8178627599 ("soc: ti: knav_qmss: Remove debugfs file on teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ti/knav_qmss_queue.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/soc/ti/knav_qmss.h       | 1 +
+ drivers/soc/ti/knav_qmss_queue.c | 7 +++++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/soc/ti/knav_qmss.h b/drivers/soc/ti/knav_qmss.h
+index a01eda720bf6c..44d6976bbafc3 100644
+--- a/drivers/soc/ti/knav_qmss.h
++++ b/drivers/soc/ti/knav_qmss.h
+@@ -304,6 +304,7 @@ struct knav_device {
+ 	struct list_head			pools;
+ 	struct list_head			pdsps;
+ 	struct list_head			qmgrs;
++	struct dentry				*debugfs_file;
+ 	enum qmss_version			version;
+ };
+ 
 diff --git a/drivers/soc/ti/knav_qmss_queue.c b/drivers/soc/ti/knav_qmss_queue.c
-index 8fb76908be704..4bcefef9635de 100644
+index 4bcefef9635de..0b653271490d6 100644
 --- a/drivers/soc/ti/knav_qmss_queue.c
 +++ b/drivers/soc/ti/knav_qmss_queue.c
-@@ -1886,7 +1886,12 @@ static int knav_queue_probe(struct platform_device *pdev)
+@@ -1870,8 +1870,9 @@ static int knav_queue_probe(struct platform_device *pdev)
+ 		goto err;
+ 	}
  
- static int knav_queue_remove(struct platform_device *pdev)
- {
--	/* TODO: Free resources */
-+	struct knav_device *kdev = platform_get_drvdata(pdev);
-+
-+	device_ready = false;
-+	knav_queue_stop_pdsps(kdev);
-+	knav_queue_free_regions(kdev);
-+	knav_free_queue_ranges(kdev);
- 	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
+-	debugfs_create_file("qmss", S_IFREG | S_IRUGO, NULL, NULL,
+-			    &knav_queue_debug_fops);
++	knav_qdev->debugfs_file =
++		debugfs_create_file("qmss", 0444, NULL, NULL,
++				    &knav_queue_debug_fops);
+ 	device_ready = true;
  	return 0;
+ 
+@@ -1889,6 +1890,8 @@ static int knav_queue_remove(struct platform_device *pdev)
+ 	struct knav_device *kdev = platform_get_drvdata(pdev);
+ 
+ 	device_ready = false;
++	debugfs_remove(kdev->debugfs_file);
++	kdev->debugfs_file = NULL;
+ 	knav_queue_stop_pdsps(kdev);
+ 	knav_queue_free_regions(kdev);
+ 	knav_free_queue_ranges(kdev);
 -- 
 2.53.0
 
