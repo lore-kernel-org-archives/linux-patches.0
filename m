@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1564BEE43;
-	Sat, 12 Sep 2026 16:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9685B31F9B1;
+	Sat, 12 Sep 2026 16:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230342; cv=none; b=Q5If7oMrI1Z/4csm0xKHHIZ0caD2tqLQAJ+8NDxu7v4c8w7eFGkYcIija81FG5F7nT4+plYoB4VHYCIB3mO6EDuEiL9gO03oGQvHl+30nBALWpaZEQ8vA56b6ePAJLWvthiwxN1ShqGvis5xOCv6/aRpn2n93dkhNhjpas2RpTY=
+	t=1789230347; cv=none; b=Enwxt/GzF6o30N3cGZAew/Aa1FoMagzDDQ6bGrhitN9SoQHoSPAmzmFb8Wx9wStqlT8dKtlDunQuXOv+w3mZ7gPQRjBla7OfrSZU9zmnXeDWidte4zqee476QG4gR3BCwRXGp+cHn7fcGhl5zoh33fiAxpo6/r/MlsYw9odjfx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230342; c=relaxed/simple;
-	bh=lFcZ5waZEQUiM5AaUiR2S/DZ02fpc6v5f+PZrpdV7NA=;
+	s=arc-20240116; t=1789230347; c=relaxed/simple;
+	bh=DNX+KGpcVCJNOoLptDkx52vSNaWFiPD8BHogsj/QvJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TymF2Ol7AgRKYBju2WuRHfu0u+esHo5bNw61+e0VcDOpz5STY58l5xFUI5cu1Uw/yCjW8knHPj24lH6VHhgbVWVztA6lhzYq45QXM+a2M/JGv3nO15f7qI/b+ezLGyW+J6tWmAuhkc/Tdy5f0LMdhqGFsIQ6MDtloWbDFAkUJwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wZEBhupH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iYwnuNRidaa8MVomLYIJEHqQkY+EQuwAtMbsoeyNiTslr8r22lvUNbJF6EG3bspC+IcYGP84idN2ZyHEvT2sxzQR1vIylJjMAAHg1XcNfgvHtmi50nNFI/8+svkAB0qW6zr41FYDIolxxdzEgbTn1cH2AGkeXbu+faGAtIAHJcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQRgWo2x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZEBhupH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 576061F000FF;
-	Sat, 12 Sep 2026 16:25:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQRgWo2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427D11F00893;
+	Sat, 12 Sep 2026 16:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230341;
-	bh=o97OV+TXic9lSkphcZ366OJ9zwPX+6P+cIbzPb6HJ5s=;
+	s=korg; t=1789230346;
+	bh=51bRbEHOdI1LTnbwCT3H5J0osEgbCHFHRiOreIyoviI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wZEBhupHzSLtfFP7M42yoROQJT1Gcsk6L4dLsvHwQqvl7YMtiBY/P/tGQwWdg/ZN0
-	 G05kg9JKNk9q43fnbC1PLVHQCOiD0CN5syQOyOeSM0rfJYwuYhcZqzRaurkUWl6ZnR
-	 Jdt9GBGAnAVBFxKZGcRYDoyg3n+UJ4s0o+yCIGiU=
+	b=SQRgWo2xMVzydG+UiZPSUmsRqgzfXndlj9OLn2cSoVmWI+lH3Q5hbK6eoZOgwkMRh
+	 xcYg06U4crQVmhaz2LsIOVnwLdjnVJv3lcF2AqyI3fkmjoW6nY+W2MLeolhRp58Fu+
+	 fCqDbonvPM2Ft9QOJ1rHFQh52iHsal8KBz9SD9Bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0773/1191] arm64: dts: qcom: sm8550: Add PCIe PHYs and controllers nodes
-Date: Sat, 12 Sep 2026 08:58:21 +0200
-Message-ID: <20260912065605.638413030@linuxfoundation.org>
+Subject: [PATCH 6.1 0774/1191] arm64: dts: qcom: Remove "iommus" property from PCIe nodes
+Date: Sat, 12 Sep 2026 08:58:22 +0200
+Message-ID: <20260912065605.660472952@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,252 +52,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 7d1158c984d37e79ab8bb55ab152a0b35566cb89 ]
+[ Upstream commit 6340b391e15094575911ab0d96bfff09deadafba ]
 
-Add PCIe controllers and PHY nodes.
+Currently, most of the Qualcomm SoCs specify both "iommus" and "iommu-map"
+properties for the PCIe nodes. First one passes the SMR mask to the iommu
+driver and the latter specifies the SID for each PCIe device.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+But with "iommus" property, the PCIe controller will be added to the
+iommu group along with the devices. This makes no sense because the
+controller will not initiate any DMA transaction on its own. And moreover,
+it is not strictly required to pass the SMR mask to the iommu driver. If
+the "iommus" property is not present, then the default mask of "0" would be
+used which should work for all PCIe devices.
+
+On the other side, if the SMR mask specified doesn't match the one expected
+by the hypervisor, then all the PCIe transactions will end up triggering
+"Unidentified Stream Fault" by the SMMU.
+
+So to get rid of these hassles and also prohibit PCIe controllers from
+adding to the iommu group, let's remove the "iommus" property from PCIe
+nodes.
+
+Reported-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/linux-arm-msm/20230227195535.GA749409-robh@kernel.org
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230118230526.1499328-2-abel.vesa@linaro.org
+Link: https://lore.kernel.org/r/20230308075648.134119-1-manivannan.sadhasivam@linaro.org
 Stable-dep-of: deaea7e982bc ("arm64: dts: qcom: sdm845: Fix the PCIe iommu-map entries")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 213 ++++++++++++++++++++++++++-
- 1 file changed, 210 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 --
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 --
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 --
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 3 ---
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 2 --
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 --
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 --
+ 7 files changed, 15 deletions(-)
 
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index b778728390e53..2292f21d5a30f 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -2089,8 +2089,6 @@ pcie1: pci@1c08000 {
+ 
+ 			dma-coherent;
+ 
+-			iommus = <&apps_smmu 0x1c80 0x1>;
+-
+ 			iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
+ 				    <0x100 &apps_smmu 0x1c81 0x1>;
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 015239ed42a76..71d2ecbec22b0 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -2254,7 +2254,6 @@ pcie0: pci@1c00000 {
+ 				      "slave_q2a",
+ 				      "tbu";
+ 
+-			iommus = <&apps_smmu 0x1c10 0xf>;
+ 			iommu-map = <0x0   &apps_smmu 0x1c10 0x1>,
+ 				    <0x100 &apps_smmu 0x1c11 0x1>,
+ 				    <0x200 &apps_smmu 0x1c12 0x1>,
+@@ -2364,7 +2363,6 @@ pcie1: pci@1c08000 {
+ 			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+ 			assigned-clock-rates = <19200000>;
+ 
+-			iommus = <&apps_smmu 0x1c00 0xf>;
+ 			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
+ 				    <0x100 &apps_smmu 0x1c01 0x1>,
+ 				    <0x200 &apps_smmu 0x1c02 0x1>,
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index bbd322fc56460..9168173dd0e3e 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -1810,7 +1810,6 @@ pcie0: pci@1c00000 {
+ 				      "slave_q2a",
+ 				      "tbu";
+ 
+-			iommus = <&apps_smmu 0x1d80 0x3f>;
+ 			iommu-map = <0x0   &apps_smmu 0x1d80 0x1>,
+ 				    <0x100 &apps_smmu 0x1d81 0x1>;
+ 
+@@ -1913,7 +1912,6 @@ pcie1: pci@1c08000 {
+ 			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+ 			assigned-clock-rates = <19200000>;
+ 
+-			iommus = <&apps_smmu 0x1e00 0x3f>;
+ 			iommu-map = <0x0   &apps_smmu 0x1e00 0x1>,
+ 				    <0x100 &apps_smmu 0x1e01 0x1>;
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index ba912e03441ef..fbda1925f8e03 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -1850,7 +1850,6 @@ pcie0: pci@1c00000 {
+ 				      "tbu",
+ 				      "ddrss_sf_tbu";
+ 
+-			iommus = <&apps_smmu 0x1c00 0x7f>;
+ 			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
+ 				    <0x100 &apps_smmu 0x1c01 0x1>;
+ 
+@@ -1957,7 +1956,6 @@ pcie1: pci@1c08000 {
+ 			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+ 			assigned-clock-rates = <19200000>;
+ 
+-			iommus = <&apps_smmu 0x1c80 0x7f>;
+ 			iommu-map = <0x0   &apps_smmu 0x1c80 0x1>,
+ 				    <0x100 &apps_smmu 0x1c81 0x1>;
+ 
+@@ -2066,7 +2064,6 @@ pcie2: pci@1c10000 {
+ 			assigned-clocks = <&gcc GCC_PCIE_2_AUX_CLK>;
+ 			assigned-clock-rates = <19200000>;
+ 
+-			iommus = <&apps_smmu 0x1d00 0x7f>;
+ 			iommu-map = <0x0   &apps_smmu 0x1d00 0x1>,
+ 				    <0x100 &apps_smmu 0x1d01 0x1>;
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index 06b44e3c021a1..1fc8caac9b12f 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -1635,7 +1635,6 @@ pcie0: pci@1c00000 {
+ 				      "aggre1",
+ 				      "aggre0";
+ 
+-			iommus = <&apps_smmu 0x1c00 0x7f>;
+ 			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
+ 				    <0x100 &apps_smmu 0x1c01 0x1>;
+ 
+@@ -1719,7 +1718,6 @@ pcie1: pci@1c08000 {
+ 				      "ddrss_sf_tbu",
+ 				      "aggre1";
+ 
+-			iommus = <&apps_smmu 0x1c80 0x7f>;
+ 			iommu-map = <0x0   &apps_smmu 0x1c80 0x1>,
+ 				    <0x100 &apps_smmu 0x1c81 0x1>;
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index c9ca7bd886397..653998706b7ff 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -1759,7 +1759,6 @@ pcie0: pci@1c00000 {
+ 				      "aggre0",
+ 				      "aggre1";
+ 
+-			iommus = <&apps_smmu 0x1c00 0x7f>;
+ 			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
+ 				    <0x100 &apps_smmu 0x1c01 0x1>;
+ 
+@@ -1866,7 +1865,6 @@ pcie1: pci@1c08000 {
+ 				      "ddrss_sf_tbu",
+ 				      "aggre1";
+ 
+-			iommus = <&apps_smmu 0x1c80 0x7f>;
+ 			iommu-map = <0x0   &apps_smmu 0x1c80 0x1>,
+ 				    <0x100 &apps_smmu 0x1c81 0x1>;
+ 
 diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 59798491acf24..93b70cbbeb203 100644
+index 93b70cbbeb203..0734db09fbae6 100644
 --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -646,9 +646,9 @@ gcc: clock-controller@100000 {
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
- 			clocks = <&bi_tcxo_div2>, <&sleep_clk>,
--				 <0>,
--				 <0>,
--				 <0>,
-+				 <&pcie0_phy>,
-+				 <&pcie1_phy>,
-+				 <&pcie_1_phy_aux_clk>,
- 				 <&ufs_mem_phy 0>,
- 				 <&ufs_mem_phy 1>,
- 				 <&ufs_mem_phy 2>,
-@@ -1366,6 +1366,213 @@ mmss_noc: interconnect@1780000 {
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
+@@ -1416,7 +1416,6 @@ pcie0: pci@1c00000 {
+ 			interconnect-names = "pcie-mem";
+ 			interconnects = <&pcie_noc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>;
  
-+		pcie0: pci@1c00000 {
-+			device_type = "pci";
-+			compatible = "qcom,pcie-sm8550";
-+			reg = <0 0x01c00000 0 0x3000>,
-+			      <0 0x60000000 0 0xf1d>,
-+			      <0 0x60000f20 0 0xa8>,
-+			      <0 0x60001000 0 0x1000>,
-+			      <0 0x60100000 0 0x100000>;
-+			reg-names = "parf", "dbi", "elbi", "atu", "config";
-+			#address-cells = <3>;
-+			#size-cells = <2>;
-+			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
-+				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
-+			bus-range = <0x00 0xff>;
-+
-+			dma-coherent;
-+
-+			linux,pci-domain = <0>;
-+			num-lanes = <2>;
-+
-+			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "msi";
-+
-+			#interrupt-cells = <1>;
-+			interrupt-map-mask = <0 0 0 0x7>;
-+			interrupt-map = <0 0 0 1 &intc 0 0 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
-+					<0 0 0 2 &intc 0 0 0 150 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
-+					<0 0 0 3 &intc 0 0 0 151 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
-+					<0 0 0 4 &intc 0 0 0 152 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
-+
-+			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
-+				 <&gcc GCC_PCIE_0_AUX_CLK>,
-+				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
-+				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
-+				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>,
-+				 <&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>,
-+				 <&gcc GCC_DDRSS_PCIE_SF_QTB_CLK>,
-+				 <&gcc GCC_AGGRE_NOC_PCIE_AXI_CLK>;
-+			clock-names = "pipe",
-+				      "aux",
-+				      "cfg",
-+				      "bus_master",
-+				      "bus_slave",
-+				      "slave_q2a",
-+				      "ddrss_sf_tbu",
-+				      "aggre0";
-+
-+			interconnect-names = "pcie-mem";
-+			interconnects = <&pcie_noc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>;
-+
-+			iommus = <&apps_smmu 0x1400 0x7f>;
-+			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
-+				    <0x100 &apps_smmu 0x1401 0x1>;
-+
-+			resets = <&gcc GCC_PCIE_0_BCR>;
-+			reset-names = "pci";
-+
-+			power-domains = <&gcc PCIE_0_GDSC>;
-+
-+			phys = <&pcie0_phy>;
-+			phy-names = "pciephy";
-+
-+			perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
-+			wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
-+
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&pcie0_default_state>;
-+
-+			status = "disabled";
-+		};
-+
-+		pcie0_phy: phy@1c06000 {
-+			compatible = "qcom,sm8550-qmp-gen3x2-pcie-phy";
-+			reg = <0 0x01c06000 0 0x2000>;
-+
-+			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
-+				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
-+				 <&tcsr TCSR_PCIE_0_CLKREF_EN>,
-+				 <&gcc GCC_PCIE_0_PHY_RCHNG_CLK>,
-+				 <&gcc GCC_PCIE_0_PIPE_CLK>;
-+			clock-names = "aux", "cfg_ahb", "ref", "rchng",
-+				      "pipe";
-+
-+			resets = <&gcc GCC_PCIE_0_PHY_BCR>;
-+			reset-names = "phy";
-+
-+			assigned-clocks = <&gcc GCC_PCIE_0_PHY_RCHNG_CLK>;
-+			assigned-clock-rates = <100000000>;
-+
-+			power-domains = <&gcc PCIE_0_PHY_GDSC>;
-+
-+			#clock-cells = <0>;
-+			clock-output-names = "pcie0_pipe_clk";
-+
-+			#phy-cells = <0>;
-+
-+			status = "disabled";
-+		};
-+
-+		pcie1: pci@1c08000 {
-+			device_type = "pci";
-+			compatible = "qcom,pcie-sm8550";
-+			reg = <0x0 0x01c08000 0x0 0x3000>,
-+			      <0x0 0x40000000 0x0 0xf1d>,
-+			      <0x0 0x40000f20 0x0 0xa8>,
-+			      <0x0 0x40001000 0x0 0x1000>,
-+			      <0x0 0x40100000 0x0 0x100000>;
-+			reg-names = "parf", "dbi", "elbi", "atu", "config";
-+			#address-cells = <3>;
-+			#size-cells = <2>;
-+			ranges = <0x01000000 0x0 0x40200000 0 0x40200000 0x0 0x100000>,
-+				 <0x02000000 0x0 0x40300000 0 0x40300000 0x0 0x1fd00000>;
-+			bus-range = <0x00 0xff>;
-+
-+			dma-coherent;
-+
-+			linux,pci-domain = <1>;
-+			num-lanes = <2>;
-+
-+			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "msi";
-+
-+			#interrupt-cells = <1>;
-+			interrupt-map-mask = <0 0 0 0x7>;
-+			interrupt-map = <0 0 0 1 &intc 0 0 0 434 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
-+					<0 0 0 2 &intc 0 0 0 435 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
-+					<0 0 0 3 &intc 0 0 0 438 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
-+					<0 0 0 4 &intc 0 0 0 439 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
-+
-+			clocks = <&gcc GCC_PCIE_1_PIPE_CLK>,
-+				 <&gcc GCC_PCIE_1_AUX_CLK>,
-+				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
-+				 <&gcc GCC_PCIE_1_MSTR_AXI_CLK>,
-+				 <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
-+				 <&gcc GCC_PCIE_1_SLV_Q2A_AXI_CLK>,
-+				 <&gcc GCC_DDRSS_PCIE_SF_QTB_CLK>,
-+				 <&gcc GCC_AGGRE_NOC_PCIE_AXI_CLK>,
-+				 <&gcc GCC_CNOC_PCIE_SF_AXI_CLK>;
-+			clock-names = "pipe",
-+				      "aux",
-+				      "cfg",
-+				      "bus_master",
-+				      "bus_slave",
-+				      "slave_q2a",
-+				      "ddrss_sf_tbu",
-+				      "aggre1",
-+				      "cnoc_pcie_sf_axi";
-+
-+			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
-+			assigned-clock-rates = <19200000>;
-+
-+			interconnect-names = "pcie-mem";
-+			interconnects = <&pcie_noc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI1 0>;
-+
-+			iommus = <&apps_smmu 0x1480 0x7f>;
-+			iommu-map = <0x0   &apps_smmu 0x1480 0x1>,
-+				    <0x100 &apps_smmu 0x1481 0x1>;
-+
-+			resets = <&gcc GCC_PCIE_1_BCR>,
-+				<&gcc GCC_PCIE_1_LINK_DOWN_BCR>;
-+			reset-names = "pci",
-+				"pcie_1_link_down_reset";
-+
-+			power-domains = <&gcc PCIE_1_GDSC>;
-+
-+			phys = <&pcie1_phy>;
-+			phy-names = "pciephy";
-+
-+			perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
-+			enable-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
-+
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&pcie1_default_state>;
-+
-+			status = "disabled";
-+		};
-+
-+		pcie1_phy: phy@1c0e000 {
-+			compatible = "qcom,sm8550-qmp-gen4x2-pcie-phy";
-+			reg = <0x0 0x01c0e000 0x0 0x2000>;
-+
-+			clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
-+				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
-+				 <&tcsr TCSR_PCIE_1_CLKREF_EN>,
-+				 <&gcc GCC_PCIE_1_PHY_RCHNG_CLK>,
-+				 <&gcc GCC_PCIE_1_PIPE_CLK>,
-+				 <&gcc GCC_PCIE_1_PHY_AUX_CLK>;
-+			clock-names = "aux", "cfg_ahb", "ref", "rchng",
-+				      "pipe", "aux_phy";
-+
-+			resets = <&gcc GCC_PCIE_1_PHY_BCR>,
-+				 <&gcc GCC_PCIE_1_NOCSR_COM_PHY_BCR>;
-+			reset-names = "phy", "nocsr";
-+
-+			assigned-clocks = <&gcc GCC_PCIE_1_PHY_RCHNG_CLK>;
-+			assigned-clock-rates = <100000000>;
-+
-+			power-domains = <&gcc PCIE_1_PHY_GDSC>;
-+
-+			#clock-cells = <0>;
-+			clock-output-names = "pcie1_pipe_clk";
-+
-+			#phy-cells = <0>;
-+
-+			status = "disabled";
-+		};
-+
- 		cryptobam: dma-controller@1dc4000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0x0 0x01dc4000 0x0 0x28000>;
+-			iommus = <&apps_smmu 0x1400 0x7f>;
+ 			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
+ 				    <0x100 &apps_smmu 0x1401 0x1>;
+ 
+@@ -1520,7 +1519,6 @@ pcie1: pci@1c08000 {
+ 			interconnect-names = "pcie-mem";
+ 			interconnects = <&pcie_noc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI1 0>;
+ 
+-			iommus = <&apps_smmu 0x1480 0x7f>;
+ 			iommu-map = <0x0   &apps_smmu 0x1480 0x1>,
+ 				    <0x100 &apps_smmu 0x1481 0x1>;
+ 
 -- 
 2.53.0
 
