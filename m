@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C80356744;
-	Sat, 12 Sep 2026 11:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DFF356744;
+	Sat, 12 Sep 2026 11:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211337; cv=none; b=HjKgqzqqNKMDwc43bQRJjaXm/qK72VB9GXpm7CrgzHbEgzkLRj8KogxUZIdO+6De1j+wRqXbCOS7dzwmU/jJnPwrYWw4ZFNpegWo9VP+i5lazP4ikOeDJ+t0SAhixm4tgyrmPlSVsF3yBZ5Gb+RKkHHk+ZznGOC3eJ5bv8ld0E8=
+	t=1789211341; cv=none; b=DV87aLTLWn5muuh2IUgODL01F10Val5l4baWpHg/2iGUxqqMxjT8ie9fD4mkvxFmdREKPTwsOL8Imz4Ktp+tHN/iSiOAgi5ETZkDuRcKlAR8CT5RSGMN7PegdRek5M39doq6WGQcdrt6bSaR34gupHAnqXeACxe6aUME+MYaE9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211337; c=relaxed/simple;
-	bh=LgLHLLcPGDshur9HrLyPUupF4yrNga/ApZj2OjYchHo=;
+	s=arc-20240116; t=1789211341; c=relaxed/simple;
+	bh=tH/fTQPG9DmkxKVbDJ1LHNrJTynWGvkBz1cIigLFd5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iW4AwTfoeBgnLLXBbCmzgiZ3JJOMHG5X0XzJcDcybkRoO+Q82IzQcKHqpwy92gD86Gl+dEiYUxqzCncFdJ/Y5b23se75eeSagOsauaRLCd5cT5UHzmRuy0fSdnuJ3Ge6PEU41q21NtDlUdCeL9Pz4K0u8C9jslqA6xBaJo7nleo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jbpc3mtJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PrDiZGPPWg296ZycJhVZZIotGfEnnDsB+knX0MsTF5b7p8yJTSESgcmK9q7+OeiZAaMM1ZlK9ixHuOgQ7gEJZw6sY/IlE4pzn5iqpm8sPM4pdAGsYHzZK56IHHipd7GfObHantFOFePqsGp02nRu9iDHlfX0eniw3tjM5pX8f0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvtyRkUq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jbpc3mtJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF11D1F000FF;
-	Sat, 12 Sep 2026 11:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvtyRkUq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977E71F000FF;
+	Sat, 12 Sep 2026 11:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211335;
-	bh=pHxPAs25Qpi1/DWBX3vEtM/sBt3nE6EfNySx+Avm7dQ=;
+	s=korg; t=1789211340;
+	bh=9TPdraz1+i2CfLn6ORjocxBFUYyTHa0SuCSby1XdBVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jbpc3mtJ48ve+mWN3v7SvRMPD3mYdb5Nk0wXxZs6PPv1mC6wUF7kMXW9UUVUQg7w2
-	 MM4mlSBRo6ZEbs7Taai5dhDSUlqdrJuyZhgbArpUMa8LxYgAUgmy5id4Daegm0htn9
-	 XxfQSfkmBjOBLBsEW2F3Gv6pdvxJ3oJKkyQeK3Ls=
+	b=AvtyRkUqfAM+Oeg7LIsQY/9V/74mZFcFOKJi14M7IiDB7EAEWPSVgViGGVJbJfzds
+	 RxVAn1ZBdsc91j55QjU070Ct0C6SYs9XKExS9/lXHRcTcH9w2T6hTQw6tDg29j15wh
+	 kslhZCyZ7Gf1+wb9hPV/9B4g+QzvJsaJkmbHh/3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huisong Li <lihuisong@huawei.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	Adam Young <admiyo@os.amperecomputing.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1211/1518] mailbox: pcc: Fix command timeout due to missed interrupt
-Date: Sat, 12 Sep 2026 08:56:20 +0200
-Message-ID: <20260912065650.884012717@linuxfoundation.org>
+Subject: [PATCH 6.18 1194/1518] selftests/bpf: Use ping_command() for IPv6 pings in lwt_ip_encap
+Date: Sat, 12 Sep 2026 08:56:03 +0200
+Message-ID: <20260912065650.490151621@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,112 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huisong Li <lihuisong@huawei.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 3360b088175dc5d5c9166685836158470d00571e ]
+[ Upstream commit 073574da7a8e6055b1687c256bea070ab4b4ebea ]
 
-PCC command execution can time out when a fast platform completes a
-transaction and signals the platform interrupt before pcc_send_data()
-marks the channel as in use. For shared platform interrupts, the type 3
-handler uses chan_in_use to decide whether the interrupt belongs to the
-channel. If it observes false, it ignores the completion and the caller
-waits until timeout.
+lwt_ip_encap hardcodes the ping6 binary for its IPv6 pings. iputils
+merged ping6 into ping long ago and distros have started dropping the
+compat symlink -- Arch's iputils 20250605 ships only arping, clockdiff,
+ping and tracepath. There, every lwt_ip_encap subtest fails:
 
-Publish chan_in_use before ringing the doorbell. Use WRITE_ONCE() for
-the lockless flag updates and READ_ONCE() in the interrupt handler. The
-following ordered I/O accessor orders the flag store before the platform
-is notified.
+  check_ping_ok:FAIL:ip netns exec ns-lwt-ip-encap-1-0101330 ping6 -c 1 \
+    -W1 -I veth1 fb04::1 > /dev/null unexpected error: 256 (errno 2)
+  #217/1   lwt_ip_encap_ipv4/egress:FAIL
 
-Clear chan_in_use if ringing the doorbell fails. Otherwise, leave it set
-until the interrupt handler completes the transaction, clearing it before
-the mailbox core can submit another transfer.
+The IPv4 subtests fail too, because check_ping_ok() pings both families.
+SYS() runs the command through system(), so a missing binary is
+indistinguishable from an unreachable peer.
 
-Fixes: 3db174e478cb ("mailbox: pcc: Support shared interrupt for multiple subspaces")
-Signed-off-by: Huisong Li <lihuisong@huawei.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
-Tested-by: Adam Young <admiyo@os.amperecomputing.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+network_helpers.c has had ping_command() for exactly this since commit
+372642ea83ff ("selftests/bpf: Move netcnt test under test_progs"): it
+falls back to "ping -6" when ping6 is not present. lwt_ip_encap.c is the
+last hardcoded ping6 user. Fix that.
+
+Fixes: f5e288943e2c ("selftests/bpf: Move test_lwt_ip_encap to test_progs")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/bpf/20260813213558.3103179-1-andrii@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/pcc.c | 41 +++++++++++++++++++++++++++--------------
- 1 file changed, 27 insertions(+), 14 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
-index 713022aed2e2f..5189791c2790d 100644
---- a/drivers/mailbox/pcc.c
-+++ b/drivers/mailbox/pcc.c
-@@ -93,12 +93,11 @@ struct pcc_chan_reg {
-  * @plat_irq: platform interrupt
-  * @type: PCC subspace type
-  * @plat_irq_flags: platform interrupt flags
-- * @chan_in_use: this flag is used just to check if the interrupt needs
-- *		handling when it is shared. Since only one transfer can occur
-- *		at a time and mailbox takes care of locking, this flag can be
-- *		accessed without a lock. Note: the type only support the
-- *		communication from OSPM to Platform, like type3, use it, and
-- *		other types completely ignore it.
-+ * @chan_in_use: lockless flag used by type 3 initiator subspaces to filter
-+ *		platform interrupts. Only one transfer can occur at a time, but
-+ *		the interrupt handler may sample the flag on another CPU, so all
-+ *		accesses must use READ_ONCE() or WRITE_ONCE(). Other subspace
-+ *		types do not test it.
-  */
- struct pcc_chan_info {
- 	struct pcc_mbox_chan chan;
-@@ -322,8 +321,13 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
- 	if (pcc_chan_reg_read_modify_write(&pchan->plat_irq_ack))
- 		return IRQ_NONE;
+diff --git a/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c b/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c
+index 6606f0ed9a9a9..39e8a3b8b6afb 100644
+--- a/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c
++++ b/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c
+@@ -410,7 +410,8 @@ static int test_gso_fix(const char *ns1, const char *ns3, int family)
+ static int check_ping_ok(const char *ns1)
+ {
+ 	SYS(fail, "ip netns exec %s ping -c 1 -W1 -I veth1 %s > /dev/null", ns1, IP4_ADDR_DST);
+-	SYS(fail, "ip netns exec %s ping6 -c 1 -W1 -I veth1 %s > /dev/null", ns1, IP6_ADDR_DST);
++	SYS(fail, "ip netns exec %s %s -c 1 -W1 -I veth1 %s > /dev/null", ns1,
++	    ping_command(AF_INET6), IP6_ADDR_DST);
+ 	return 0;
+ fail:
+ 	return -1;
+@@ -424,7 +425,8 @@ static int check_ping_fails(const char *ns1)
+ 	if (!ret)
+ 		return -1;
  
-+	/*
-+	 * Initiator subspaces use this flag to filter shared interrupts. Use
-+	 * READ_ONCE() to sample the lockless flag written by pcc_send_data()
-+	 * on another CPU.
-+	 */
- 	if (pchan->type == ACPI_PCCT_TYPE_EXT_PCC_MASTER_SUBSPACE &&
--	    !pchan->chan_in_use)
-+	    !READ_ONCE(pchan->chan_in_use))
- 		return IRQ_NONE;
+-	ret = SYS_NOFAIL("ip netns exec %s ping6 -c 1 -W1 -I veth1 %s", ns1, IP6_ADDR_DST);
++	ret = SYS_NOFAIL("ip netns exec %s %s -c 1 -W1 -I veth1 %s", ns1,
++			 ping_command(AF_INET6), IP6_ADDR_DST);
+ 	if (!ret)
+ 		return -1;
  
- 	if (!pcc_mbox_cmd_complete_check(pchan))
-@@ -333,12 +337,12 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
- 		return IRQ_NONE;
+@@ -657,9 +659,10 @@ static void lwt_ip_encap_vxlan(bool ipv4_encap)
+ 	skel->bss->fexit_triggered = false;
  
- 	/*
--	 * Clear this flag after updating interrupt ack register and just
--	 * before mbox_chan_received_data() which might call pcc_send_data()
--	 * where the flag is set again to start new transfer. This is
--	 * required to avoid any possible race in updatation of this flag.
-+	 * Clear this flag after updating the interrupt ack register and before
-+	 * notifying the client and mailbox core. mbox_chan_txdone() may submit
-+	 * the next queued transfer and set the flag again. Use WRITE_ONCE() for
-+	 * the lockless update observed by the send and interrupt paths.
- 	 */
--	pchan->chan_in_use = false;
-+	WRITE_ONCE(pchan->chan_in_use, false);
- 	mbox_chan_received_data(chan, NULL);
+ 	if (ipv4_encap)
+-		SYS(out, "ip netns exec %s ping  -c 1 -W1 %s", ns1, IP4_ADDR_DST);
++		SYS(out, "ip netns exec %s ping -c 1 -W1 %s", ns1, IP4_ADDR_DST);
+ 	else
+-		SYS(out, "ip netns exec %s ping6 -c 1 -W1 %s", ns1, IP6_ADDR_DST);
++		SYS(out, "ip netns exec %s %s -c 1 -W1 %s", ns1,
++		    ping_command(AF_INET6), IP6_ADDR_DST);
  
- 	pcc_chan_acknowledge(pchan);
-@@ -437,9 +441,18 @@ static int pcc_send_data(struct mbox_chan *chan, void *data)
- 	if (ret)
- 		return ret;
- 
-+	/*
-+	 * Set chan_in_use before ringing the doorbell so a fast completion
-+	 * interrupt is not mistaken for a shared interrupt from another
-+	 * subspace. Use WRITE_ONCE() for the lockless flag update. The
-+	 * ordered I/O accessor used to ring the doorbell orders this store
-+	 * before the platform is notified.
-+	 */
-+	if (pchan->plat_irq > 0)
-+		WRITE_ONCE(pchan->chan_in_use, true);
- 	ret = pcc_chan_reg_read_modify_write(&pchan->db);
--	if (!ret && pchan->plat_irq > 0)
--		pchan->chan_in_use = true;
-+	if (ret && pchan->plat_irq > 0)
-+		WRITE_ONCE(pchan->chan_in_use, false);
- 
- 	return ret;
- }
+ 	if (!ASSERT_TRUE(skel->bss->fexit_triggered, "fexit_triggered"))
+ 		goto out;
 -- 
 2.53.0
 
