@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240F039182A;
-	Sat, 12 Sep 2026 19:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75943911D6;
+	Sat, 12 Sep 2026 19:58:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243116; cv=none; b=SJixiLHFEI/lo0O03ftrtzChCjt/IHzWoxOUPVl0EpSTnbIZfq63eHlHqBKgrryCoh3HKvwNyR+75t1teWEDyXuNcA2R7+KvZcFDFnu6Em6wOji1diNhVHPPyxqWgDnQdZtR3LgYvRcJbEgyfUfX7o/ppFETvC5Wer5mUMRLiLM=
+	t=1789243120; cv=none; b=L7UVppqq5QyE3+2WdNq0sEGVllJ2nEcZD7IHxkC7+YA1jAeoyaSZo3nxEGKKEdMWDE90pVOj/ayv/eDdT3xGBUJepGXS8NNehAGKe3YMFKp/N1+Tvy5kPgxfPQ7t0E9A6oBX0JIkoHjkcDgvcDFxQqRXl2zShaKoxKMq0niwimU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243116; c=relaxed/simple;
-	bh=xe4NVDwh4f1GHvdHnX6Jp6rv61IYWmchy+E1+bhZwR4=;
+	s=arc-20240116; t=1789243120; c=relaxed/simple;
+	bh=VUWHnvMGRWwljdWQBuoHtxRK4X2tBY5ChixxsjcYp4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rOTJJGEn8+JJFG3CCD7f2CntKsxM8W/BbB8uFkpx5knoCVW0GgT8+OM9mLmJgUEZBViHWrXcl5ZAG7fjc61PO27qwWKrGbix9csxV2phWlnTSxWLN8Hbhscz344pTIoACUkbslg5Spg0eBep+eItmDaGNTuVVi43KuVl9vVeBwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRE+XriM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LALsfrJzZQ2gsYsGpmN30tntSFlZSojHaEg8m0OYPWWvdCWF/qy5VIbXLQpByfoco4R3OfVvMmxf8tWON9RjjjlyyIWAw0nJ2/kVugTqZNoMv3bys4E4FafoC/hOUnUpjOwXO32YRgZkzIITQhSsl7vnunFAkbuMVT4+EcyZP40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HEpAh4GW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRE+XriM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726721F000FF;
-	Sat, 12 Sep 2026 19:58:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HEpAh4GW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BDDE1F000FF;
+	Sat, 12 Sep 2026 19:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243115;
-	bh=qDAKMO8bklrbXzoRswdWGSZio7kJb90lIeWP85TLwhw=;
+	s=korg; t=1789243117;
+	bh=cTBJClVIQO+dqJ6sZcZCQAOqPN6iZaiCika+4o6xV9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XRE+XriMYQgneSreqmKkI64exAWAYSI7RraMQ3G3TPjWKuuj/1T/mhQ5kDmMsuAjF
-	 jogYzRc8FBKnFnwvmF4sJvGWA4a+MfymiE11PnFrTbPcdYntDftXEFHdjeeQKsSQve
-	 eMkQIq/etO5hWT3cGcy/JbjmSTnE0t/qTRQzZ9MI=
+	b=HEpAh4GW8eFPjVCxakkedRTGgox+Gd+p66DJ+VsYWOTeD9N6suKrYTKsB1j22RUzH
+	 62H/+ZImv+jgJWV35tls9pAP7QIrzVoxNyJDvtaO7mbWM0o86FW4thwTl852hMaB3M
+	 ucyCwbHJo12YkghMEBovDGJLsAbs/F48jl+9IUSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Tianfei zhang <tianfei.zhang@intel.com>,
-	Matthew Gerlach <matthew.gerlach@linux.intel.com>,
-	Russ Weight <russell.h.weight@intel.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Suman Anna <s-anna@ti.com>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 641/798] firmware_loader: Check fw_state_is_done in loading_store
-Date: Sat, 12 Sep 2026 09:04:29 +0200
-Message-ID: <20260912065531.810641357@linuxfoundation.org>
+Subject: [PATCH 5.10 606/798] remoteproc: Fix various kernel-doc warnings
+Date: Sat, 12 Sep 2026 09:03:54 +0200
+Message-ID: <20260912065531.015821214@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,135 +52,418 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russ Weight <russell.h.weight@intel.com>
+From: Suman Anna <s-anna@ti.com>
 
-[ Upstream commit 736da0b657f615db7e29606eb8818871534a8943 ]
+[ Upstream commit f2867434002387c9739494041ac81c17a3808150 ]
 
-Rename fw_sysfs_done() and fw_sysfs_loading() to fw_state_is_done() and
-fw_state_is_loading() respectively, and place them along side companion
-functions in drivers/base/firmware_loader/firmware.h.
+Fix all the kernel-doc warnings in various remoteproc core files.
+Some of them just needed a formatting cleanup change, while others
+needed the Return statement to be added, or documenting the missed
+structure elements.
 
-Use the fw_state_is_done() function to exit early from
-firmware_loading_store() if the state is already "done". This is being done
-in preparation for supporting persistent sysfs nodes to allow userspace to
-upload firmware to a device, potentially reusing the sysfs loading and data
-files multiple times.
-
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Reviewed-by: Tianfei zhang <tianfei.zhang@intel.com>
-Tested-by: Matthew Gerlach <matthew.gerlach@linux.intel.com>
-Signed-off-by: Russ Weight <russell.h.weight@intel.com>
-Link: https://lore.kernel.org/r/20220421212204.36052-3-russell.h.weight@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: b48373c90195 ("firmware_loader: do not queue completed sysfs fallback requests")
+Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Suman Anna <s-anna@ti.com>
+Link: https://lore.kernel.org/r/20210519180304.23563-3-s-anna@ti.com
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Stable-dep-of: bb840ea69347 ("remoteproc: fix OOB read via signed offset in rsc_table_for_each_entry()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/firmware_loader/fallback.c | 28 +++++++------------------
- drivers/base/firmware_loader/firmware.h | 10 +++++++++
- 2 files changed, 18 insertions(+), 20 deletions(-)
+ drivers/remoteproc/remoteproc_core.c       | 44 +++++++++++++------
+ drivers/remoteproc/remoteproc_elf_loader.c | 12 ++++--
+ drivers/remoteproc/remoteproc_virtio.c     |  6 ++-
+ include/linux/remoteproc.h                 | 50 ++++++++++++----------
+ 4 files changed, 69 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/base/firmware_loader/fallback.c b/drivers/base/firmware_loader/fallback.c
-index 0fdd18ce2c52e..359773d833883 100644
---- a/drivers/base/firmware_loader/fallback.c
-+++ b/drivers/base/firmware_loader/fallback.c
-@@ -58,16 +58,6 @@ static long firmware_loading_timeout(void)
- 		__firmware_loading_timeout() * HZ : MAX_JIFFY_OFFSET;
- }
- 
--static inline bool fw_sysfs_done(struct fw_priv *fw_priv)
--{
--	return __fw_state_check(fw_priv, FW_STATUS_DONE);
--}
--
--static inline bool fw_sysfs_loading(struct fw_priv *fw_priv)
--{
--	return __fw_state_check(fw_priv, FW_STATUS_LOADING);
--}
--
- static inline int fw_sysfs_wait_timeout(struct fw_priv *fw_priv,  long timeout)
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index aff27e7ff5ca1..670bf433663e3 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -183,12 +183,12 @@ EXPORT_SYMBOL(rproc_va_to_pa);
+  * translations on the internal remoteproc memory regions through a platform
+  * implementation specific da_to_va ops, if present.
+  *
+- * The function returns a valid kernel address on success or NULL on failure.
+- *
+  * Note: phys_to_virt(iommu_iova_to_phys(rproc->domain, da)) will work too,
+  * but only on kernel direct mapped RAM memory. Instead, we're just using
+  * here the output of the DMA API for the carveouts, which should be more
+  * correct.
++ *
++ * Return: a valid kernel address on success or NULL on failure
+  */
+ void *rproc_da_to_va(struct rproc *rproc, u64 da, size_t len)
  {
- 	return __fw_state_wait_common(fw_priv, timeout);
-@@ -91,7 +81,7 @@ static void __fw_load_abort(struct fw_priv *fw_priv)
- 	 * There is a small window in which user can write to 'loading'
- 	 * between loading done/aborted and disappearance of 'loading'
- 	 */
--	if (fw_state_is_aborted(fw_priv) || fw_sysfs_done(fw_priv))
-+	if (fw_state_is_aborted(fw_priv) || fw_state_is_done(fw_priv))
- 		return;
- 
- 	fw_state_aborted(fw_priv);
-@@ -215,7 +205,7 @@ static ssize_t firmware_loading_show(struct device *dev,
- 
- 	mutex_lock(&fw_lock);
- 	if (fw_sysfs->fw_priv)
--		loading = fw_sysfs_loading(fw_sysfs->fw_priv);
-+		loading = fw_state_is_loading(fw_sysfs->fw_priv);
- 	mutex_unlock(&fw_lock);
- 
- 	return sysfs_emit(buf, "%d\n", loading);
-@@ -245,19 +235,17 @@ static ssize_t firmware_loading_store(struct device *dev,
- 
- 	mutex_lock(&fw_lock);
- 	fw_priv = fw_sysfs->fw_priv;
--	if (fw_state_is_aborted(fw_priv))
-+	if (fw_state_is_aborted(fw_priv) || fw_state_is_done(fw_priv))
- 		goto out;
- 
- 	switch (loading) {
- 	case 1:
- 		/* discarding any previous partial load */
--		if (!fw_sysfs_done(fw_priv)) {
--			fw_free_paged_buf(fw_priv);
--			fw_state_start(fw_priv);
--		}
-+		fw_free_paged_buf(fw_priv);
-+		fw_state_start(fw_priv);
- 		break;
- 	case 0:
--		if (fw_sysfs_loading(fw_priv)) {
-+		if (fw_state_is_loading(fw_priv)) {
- 			int rc;
- 
- 			/*
-@@ -345,7 +333,7 @@ static ssize_t firmware_data_read(struct file *filp, struct kobject *kobj,
- 
- 	mutex_lock(&fw_lock);
- 	fw_priv = fw_sysfs->fw_priv;
--	if (!fw_priv || fw_sysfs_done(fw_priv)) {
-+	if (!fw_priv || fw_state_is_done(fw_priv)) {
- 		ret_count = -ENODEV;
- 		goto out;
- 	}
-@@ -405,7 +393,7 @@ static ssize_t firmware_data_write(struct file *filp, struct kobject *kobj,
- 
- 	mutex_lock(&fw_lock);
- 	fw_priv = fw_sysfs->fw_priv;
--	if (!fw_priv || fw_sysfs_done(fw_priv)) {
-+	if (!fw_priv || fw_state_is_done(fw_priv)) {
- 		retval = -ENODEV;
- 		goto out;
- 	}
-diff --git a/drivers/base/firmware_loader/firmware.h b/drivers/base/firmware_loader/firmware.h
-index a3014e9e2c852..5d24f2cd19d29 100644
---- a/drivers/base/firmware_loader/firmware.h
-+++ b/drivers/base/firmware_loader/firmware.h
-@@ -149,6 +149,16 @@ static inline void fw_state_done(struct fw_priv *fw_priv)
- 	__fw_state_set(fw_priv, FW_STATUS_DONE);
- }
- 
-+static inline bool fw_state_is_done(struct fw_priv *fw_priv)
-+{
-+	return __fw_state_check(fw_priv, FW_STATUS_DONE);
-+}
-+
-+static inline bool fw_state_is_loading(struct fw_priv *fw_priv)
-+{
-+	return __fw_state_check(fw_priv, FW_STATUS_LOADING);
-+}
-+
- int assign_fw(struct firmware *fw, struct device *device);
- 
- #ifdef CONFIG_FW_LOADER_PAGED_BUF
+@@ -506,7 +506,7 @@ static int copy_dma_range_map(struct device *to, struct device *from)
+  * use RSC_DEVMEM resource entries to map their required @da to the physical
+  * address of their base CMA region (ouch, hacky!).
+  *
+- * Returns 0 on success, or an appropriate error code otherwise
++ * Return: 0 on success, or an appropriate error code otherwise
+  */
+ static int rproc_handle_vdev(struct rproc *rproc, struct fw_rsc_vdev *rsc,
+ 			     int offset, int avail)
+@@ -642,7 +642,7 @@ void rproc_vdev_release(struct kref *ref)
+  * support dynamically allocating this address using the generic
+  * DMA API (but currently there isn't a use case for that).
+  *
+- * Returns 0 on success, or an appropriate error code otherwise
++ * Return: 0 on success, or an appropriate error code otherwise
+  */
+ static int rproc_handle_trace(struct rproc *rproc, struct fw_rsc_trace *rsc,
+ 			      int offset, int avail)
+@@ -718,6 +718,8 @@ static int rproc_handle_trace(struct rproc *rproc, struct fw_rsc_trace *rsc,
+  * tell us ranges of physical addresses the firmware is allowed to request,
+  * and not allow firmwares to request access to physical addresses that
+  * are outside those ranges.
++ *
++ * Return: 0 on success, or an appropriate error code otherwise
+  */
+ static int rproc_handle_devmem(struct rproc *rproc, struct fw_rsc_devmem *rsc,
+ 			       int offset, int avail)
+@@ -779,6 +781,8 @@ static int rproc_handle_devmem(struct rproc *rproc, struct fw_rsc_devmem *rsc,
+  *
+  * This function allocate specified memory entry @mem using
+  * dma_alloc_coherent() as default allocator
++ *
++ * Return: 0 on success, or an appropriate error code otherwise
+  */
+ static int rproc_alloc_carveout(struct rproc *rproc,
+ 				struct rproc_mem_entry *mem)
+@@ -885,6 +889,8 @@ static int rproc_alloc_carveout(struct rproc *rproc,
+  *
+  * This function releases specified memory entry @mem allocated via
+  * rproc_alloc_carveout() function by @rproc.
++ *
++ * Return: 0 on success, or an appropriate error code otherwise
+  */
+ static int rproc_release_carveout(struct rproc *rproc,
+ 				  struct rproc_mem_entry *mem)
+@@ -914,6 +920,8 @@ static int rproc_release_carveout(struct rproc *rproc,
+  * (e.g. CMA) more efficiently, and also minimizes the number of TLB entries
+  * needed to map it (in case @rproc is using an IOMMU). Reducing the TLB
+  * pressure is important; it may have a substantial impact on performance.
++ *
++ * Return: 0 on success, or an appropriate error code otherwise
+  */
+ static int rproc_handle_carveout(struct rproc *rproc,
+ 				 struct fw_rsc_carveout *rsc,
+@@ -1002,6 +1010,8 @@ EXPORT_SYMBOL(rproc_add_carveout);
+  *
+  * This function allocates a rproc_mem_entry struct and fill it with parameters
+  * provided by client.
++ *
++ * Return: a valid pointer on success, or NULL on failure
+  */
+ __printf(8, 9)
+ struct rproc_mem_entry *
+@@ -1046,6 +1056,8 @@ EXPORT_SYMBOL(rproc_mem_entry_init);
+  *
+  * This function allocates a rproc_mem_entry struct and fill it with parameters
+  * provided by client.
++ *
++ * Return: a valid pointer on success, or NULL on failure
+  */
+ __printf(5, 6)
+ struct rproc_mem_entry *
+@@ -1750,6 +1762,8 @@ static int __rproc_detach(struct rproc *rproc)
+  * remoteproc functional again.
+  *
+  * This function can sleep, so it cannot be called from atomic context.
++ *
++ * Return: 0 on success or a negative value upon failure
+  */
+ int rproc_trigger_recovery(struct rproc *rproc)
+ {
+@@ -1851,7 +1865,7 @@ static void rproc_crash_handler_work(struct work_struct *work)
+  * If the remote processor is already powered on, this function immediately
+  * returns (successfully).
+  *
+- * Returns 0 on success, and an appropriate error value otherwise.
++ * Return: 0 on success, and an appropriate error value otherwise
+  */
+ int rproc_boot(struct rproc *rproc)
+ {
+@@ -1986,6 +2000,8 @@ EXPORT_SYMBOL(rproc_shutdown);
+  * no longer available.  From there it should be possible to remove the
+  * platform driver and even power cycle the application processor (if the HW
+  * supports it) without needing to switch off the remote processor.
++ *
++ * Return: 0 on success, and an appropriate error value otherwise
+  */
+ int rproc_detach(struct rproc *rproc)
+ {
+@@ -2035,7 +2051,7 @@ EXPORT_SYMBOL(rproc_detach);
+  * This function increments the remote processor's refcount, so always
+  * use rproc_put() to decrement it back once rproc isn't needed anymore.
+  *
+- * Returns the rproc handle on success, and NULL on failure.
++ * Return: rproc handle on success, and NULL on failure
+  */
+ #ifdef CONFIG_OF
+ struct rproc *rproc_get_by_phandle(phandle phandle)
+@@ -2185,8 +2201,6 @@ static int rproc_validate(struct rproc *rproc)
+  * This is called by the platform-specific rproc implementation, whenever
+  * a new remote processor device is probed.
+  *
+- * Returns 0 on success and an appropriate error code otherwise.
+- *
+  * Note: this function initiates an asynchronous firmware loading
+  * context, which will look for virtio devices supported by the rproc's
+  * firmware.
+@@ -2194,6 +2208,8 @@ static int rproc_validate(struct rproc *rproc)
+  * If found, those virtio devices will be created and added, so as a result
+  * of registering this remote processor, additional virtio drivers might be
+  * probed.
++ *
++ * Return: 0 on success and an appropriate error code otherwise
+  */
+ int rproc_add(struct rproc *rproc)
+ {
+@@ -2257,7 +2273,7 @@ static void devm_rproc_remove(void *rproc)
+  * This function performs like rproc_add() but the registered rproc device will
+  * automatically be removed on driver detach.
+  *
+- * Returns: 0 on success, negative errno on failure
++ * Return: 0 on success, negative errno on failure
+  */
+ int devm_rproc_add(struct device *dev, struct rproc *rproc)
+ {
+@@ -2361,10 +2377,10 @@ static int rproc_alloc_ops(struct rproc *rproc, const struct rproc_ops *ops)
+  * implementations should then call rproc_add() to complete
+  * the registration of the remote processor.
+  *
+- * On success the new rproc is returned, and on failure, NULL.
+- *
+  * Note: _never_ directly deallocate @rproc, even if it was not registered
+  * yet. Instead, when you need to unroll rproc_alloc(), use rproc_free().
++ *
++ * Return: new rproc pointer on success, and NULL on failure
+  */
+ struct rproc *rproc_alloc(struct device *dev, const char *name,
+ 			  const struct rproc_ops *ops,
+@@ -2479,7 +2495,7 @@ EXPORT_SYMBOL(rproc_put);
+  * of the outstanding reference created by rproc_alloc. To decrement that
+  * one last refcount, one still needs to call rproc_free().
+  *
+- * Returns 0 on success and -EINVAL if @rproc isn't valid.
++ * Return: 0 on success and -EINVAL if @rproc isn't valid
+  */
+ int rproc_del(struct rproc *rproc)
+ {
+@@ -2531,7 +2547,7 @@ static void devm_rproc_free(struct device *dev, void *res)
+  * This function performs like rproc_alloc() but the acquired rproc device will
+  * automatically be released on driver detach.
+  *
+- * Returns: new rproc instance, or NULL on failure
++ * Return: new rproc instance, or NULL on failure
+  */
+ struct rproc *devm_rproc_alloc(struct device *dev, const char *name,
+ 			       const struct rproc_ops *ops,
+@@ -2583,7 +2599,7 @@ EXPORT_SYMBOL(rproc_remove_subdev);
+  * rproc_get_by_child() - acquire rproc handle of @dev's ancestor
+  * @dev:	child device to find ancestor of
+  *
+- * Returns the ancestor rproc instance, or NULL if not found.
++ * Return: the ancestor rproc instance, or NULL if not found
+  */
+ struct rproc *rproc_get_by_child(struct device *dev)
+ {
+diff --git a/drivers/remoteproc/remoteproc_elf_loader.c b/drivers/remoteproc/remoteproc_elf_loader.c
+index df68d87752e48..334b3f9f88149 100644
+--- a/drivers/remoteproc/remoteproc_elf_loader.c
++++ b/drivers/remoteproc/remoteproc_elf_loader.c
+@@ -31,6 +31,8 @@
+  * @fw: the ELF firmware image
+  *
+  * Make sure this fw image is sane (ie a correct ELF32/ELF64 file).
++ *
++ * Return: 0 on success and -EINVAL upon any failure
+  */
+ int rproc_elf_sanity_check(struct rproc *rproc, const struct firmware *fw)
+ {
+@@ -117,11 +119,11 @@ EXPORT_SYMBOL(rproc_elf_sanity_check);
+  * @rproc: the remote processor handle
+  * @fw: the ELF firmware image
+  *
+- * This function returns the entry point address of the ELF
+- * image.
+- *
+  * Note that the boot address is not a configurable property of all remote
+  * processors. Some will always boot at a specific hard-coded address.
++ *
++ * Return: entry point address of the ELF image
++ *
+  */
+ u64 rproc_elf_get_boot_addr(struct rproc *rproc, const struct firmware *fw)
+ {
+@@ -152,6 +154,8 @@ EXPORT_SYMBOL(rproc_elf_get_boot_addr);
+  * might be different: they might not have iommus, and would prefer to
+  * directly allocate memory for every segment/resource. This is not yet
+  * supported, though.
++ *
++ * Return: 0 on success and an appropriate error code otherwise
+  */
+ int rproc_elf_load_segments(struct rproc *rproc, const struct firmware *fw)
+ {
+@@ -353,7 +357,7 @@ EXPORT_SYMBOL(rproc_elf_load_rsc_table);
+  * This function finds the location of the loaded resource table. Don't
+  * call this function if the table wasn't loaded yet - it's a bug if you do.
+  *
+- * Returns the pointer to the resource table if it is found or NULL otherwise.
++ * Return: pointer to the resource table if it is found or NULL otherwise.
+  * If the table wasn't loaded yet the result is unspecified.
+  */
+ struct resource_table *rproc_elf_find_loaded_rsc_table(struct rproc *rproc,
+diff --git a/drivers/remoteproc/remoteproc_virtio.c b/drivers/remoteproc/remoteproc_virtio.c
+index 0cc617f760682..cf4d54e98e6a2 100644
+--- a/drivers/remoteproc/remoteproc_virtio.c
++++ b/drivers/remoteproc/remoteproc_virtio.c
+@@ -45,7 +45,7 @@ static bool rproc_virtio_notify(struct virtqueue *vq)
+  * when the remote processor signals that a specific virtqueue has pending
+  * messages available.
+  *
+- * Returns IRQ_NONE if no message was found in the @notifyid virtqueue,
++ * Return: IRQ_NONE if no message was found in the @notifyid virtqueue,
+  * and otherwise returns IRQ_HANDLED.
+  */
+ irqreturn_t rproc_vq_interrupt(struct rproc *rproc, int notifyid)
+@@ -325,7 +325,7 @@ static void rproc_virtio_dev_release(struct device *dev)
+  * This function registers a virtio device. This vdev's partent is
+  * the rproc device.
+  *
+- * Returns 0 on success or an appropriate error value otherwise.
++ * Return: 0 on success or an appropriate error value otherwise
+  */
+ int rproc_add_virtio_dev(struct rproc_vdev *rvdev, int id)
+ {
+@@ -432,6 +432,8 @@ int rproc_add_virtio_dev(struct rproc_vdev *rvdev, int id)
+  * @data: must be null
+  *
+  * This function unregisters an existing virtio device.
++ *
++ * Return: 0
+  */
+ int rproc_remove_virtio_dev(struct device *dev, void *data)
+ {
+diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
+index d75758743e8f0..85231e2519848 100644
+--- a/include/linux/remoteproc.h
++++ b/include/linux/remoteproc.h
+@@ -244,7 +244,7 @@ struct fw_rsc_trace {
+  * @da: device address
+  * @align: the alignment between the consumer and producer parts of the vring
+  * @num: num of buffers supported by this vring (must be power of two)
+- * @notifyid is a unique rproc-wide notify index for this vring. This notify
++ * @notifyid: a unique rproc-wide notify index for this vring. This notify
+  * index is used when kicking a remote processor, to let it know that this
+  * vring is triggered.
+  * @pa: physical address
+@@ -267,18 +267,18 @@ struct fw_rsc_vdev_vring {
+ /**
+  * struct fw_rsc_vdev - virtio device header
+  * @id: virtio device id (as in virtio_ids.h)
+- * @notifyid is a unique rproc-wide notify index for this vdev. This notify
++ * @notifyid: a unique rproc-wide notify index for this vdev. This notify
+  * index is used when kicking a remote processor, to let it know that the
+  * status/features of this vdev have changes.
+- * @dfeatures specifies the virtio device features supported by the firmware
+- * @gfeatures is a place holder used by the host to write back the
++ * @dfeatures: specifies the virtio device features supported by the firmware
++ * @gfeatures: a place holder used by the host to write back the
+  * negotiated features that are supported by both sides.
+- * @config_len is the size of the virtio config space of this vdev. The config
++ * @config_len: the size of the virtio config space of this vdev. The config
+  * space lies in the resource table immediate after this vdev header.
+- * @status is a place holder where the host will indicate its virtio progress.
+- * @num_of_vrings indicates how many vrings are described in this vdev header
++ * @status: a place holder where the host will indicate its virtio progress.
++ * @num_of_vrings: indicates how many vrings are described in this vdev header
+  * @reserved: reserved (must be zero)
+- * @vring is an array of @num_of_vrings entries of 'struct fw_rsc_vdev_vring'.
++ * @vring: an array of @num_of_vrings entries of 'struct fw_rsc_vdev_vring'.
+  *
+  * This resource is a virtio device header: it provides information about
+  * the vdev, and is then used by the host and its peer remote processors
+@@ -288,16 +288,17 @@ struct fw_rsc_vdev_vring {
+  * to statically allocate a vdev upon registration of the rproc (dynamic vdev
+  * allocation is not yet supported).
+  *
+- * Note: unlike virtualization systems, the term 'host' here means
+- * the Linux side which is running remoteproc to control the remote
+- * processors. We use the name 'gfeatures' to comply with virtio's terms,
+- * though there isn't really any virtualized guest OS here: it's the host
+- * which is responsible for negotiating the final features.
+- * Yeah, it's a bit confusing.
+- *
+- * Note: immediately following this structure is the virtio config space for
+- * this vdev (which is specific to the vdev; for more info, read the virtio
+- * spec). the size of the config space is specified by @config_len.
++ * Note:
++ * 1. unlike virtualization systems, the term 'host' here means
++ *    the Linux side which is running remoteproc to control the remote
++ *    processors. We use the name 'gfeatures' to comply with virtio's terms,
++ *    though there isn't really any virtualized guest OS here: it's the host
++ *    which is responsible for negotiating the final features.
++ *    Yeah, it's a bit confusing.
++ *
++ * 2. immediately following this structure is the virtio config space for
++ *    this vdev (which is specific to the vdev; for more info, read the virtio
++ *    spec). The size of the config space is specified by @config_len.
+  */
+ struct fw_rsc_vdev {
+ 	u32 id;
+@@ -435,7 +436,7 @@ enum rproc_state {
+  * enum rproc_crash_type - remote processor crash types
+  * @RPROC_MMUFAULT:	iommu fault
+  * @RPROC_WATCHDOG:	watchdog bite
+- * @RPROC_FATAL_ERROR	fatal error
++ * @RPROC_FATAL_ERROR:	fatal error
+  *
+  * Each element of the enum is used as an array index. So that, the value of
+  * the elements should be always something sane.
+@@ -452,9 +453,9 @@ enum rproc_crash_type {
+  * enum rproc_dump_mechanism - Coredump options for core
+  * @RPROC_COREDUMP_DISABLED:	Don't perform any dump
+  * @RPROC_COREDUMP_ENABLED:	Copy dump to separate buffer and carry on with
+-				recovery
++ *				recovery
+  * @RPROC_COREDUMP_INLINE:	Read segments directly from device memory. Stall
+-				recovery until all segments are read
++ *				recovery until all segments are read
+  */
+ enum rproc_dump_mechanism {
+ 	RPROC_COREDUMP_DISABLED,
+@@ -470,6 +471,7 @@ enum rproc_dump_mechanism {
+  * @priv:	private data associated with the dump_segment
+  * @dump:	custom dump function to fill device memory segment associated
+  *		with coredump
++ * @offset:	offset of the segment
+  */
+ struct rproc_dump_segment {
+ 	struct list_head node;
+@@ -521,7 +523,9 @@ struct rproc_dump_segment {
+  * @autonomous: true if an external entity has booted the remote processor
+  * @dump_segments: list of segments in the firmware
+  * @nb_vdev: number of vdev currently handled by rproc
+- * @char_dev: character device of the rproc
++ * @elf_class: firmware ELF class
++ * @elf_machine: firmware ELF machine
++ * @cdev: character device of the rproc
+  * @cdev_put_on_release: flag to indicate if remoteproc should be shutdown on @char_dev release
+  */
+ struct rproc {
+@@ -613,10 +617,10 @@ struct rproc_vring {
+  * struct rproc_vdev - remoteproc state for a supported virtio device
+  * @refcount: reference counter for the vdev and vring allocations
+  * @subdev: handle for registering the vdev as a rproc subdevice
++ * @dev: device struct used for reference count semantics
+  * @id: virtio device id (as in virtio_ids.h)
+  * @node: list node
+  * @rproc: the rproc handle
+- * @vdev: the virio device
+  * @vring: the vrings for this vdev
+  * @rsc_offset: offset of the vdev's resource entry
+  * @index: vdev position versus other vdev declared in resource table
 -- 
 2.53.0
 
