@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D90827FB37;
-	Sat, 12 Sep 2026 16:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F6429D288;
+	Sat, 12 Sep 2026 16:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229582; cv=none; b=MzRdyQRf2wG5F/E0Wql3++HY8heCpMT6rkbVNS2crU4JH4Gh1ztyleqqnG0q4SytRpvE5a1xU8GFuc27DdEKSXGc8nb19ljj0oGD69mzUgFupQ/mToZuQiHr5FFUNbTD7H5vzVf/40iJyoCkgGhRgsXlnPJpoy3NwsWa2+dQp4A=
+	t=1789229587; cv=none; b=L/L4JPgOKCAOt6ndrhIiapAPNgJ9ENA2YZR7ZtFgNqufNMCDOEipG+A0CrkpYokkmcrTEI+68yPqOv+2QNimBGYYrIcjtchyhXHjtj6PuGdVuvzLmbs24tjA0Xuuqj0xy1o2OG2CnnEyWazfa0owpHF/k863zA6bKK9jB26Z8UA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229582; c=relaxed/simple;
-	bh=prujLqecv6+JE4uzFpH8DYbrNsx9saoeYaWu1R+sI6M=;
+	s=arc-20240116; t=1789229587; c=relaxed/simple;
+	bh=3kqrWp+ocoWTw5PuW0oxso55zfXVQSedhlrQ9aNTbNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SGHDH3rL6BMdLqZRBj3aLP8AW9Av5cq0ThwGa/D6Kxyuj6TNwhhdfwISesBojE1lQn6e3eU1g/FY5qKxjeQWVnMbOTmJXqfh9CJBqo//JnkAahKSvSvcpB5btO0G7vnaHZYmiiKTGiTblpBGsxTq+sf81k/RzKwIFTvyytnRbAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3vNFpGn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QkEq//kdls2P4ZwsDnTkrg1izazbPCloqfD1ldo6eNLRpQNkeNGdowwL+Tcs8BV0So+hU698Zl04uSH08aK+fyMmy/oBc1OOf20NzkIBjBqoyolfdsgWQo1fgBAdy/XZtsoNkwsLeN1EYltBz2MqxjjRseVQ5kZ0OFns8vNO3c0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VmR47UsQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3vNFpGn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B332D1F000FF;
-	Sat, 12 Sep 2026 16:12:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmR47UsQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93221F000FF;
+	Sat, 12 Sep 2026 16:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229580;
-	bh=0ejMxFQ1rUEQKD6VO1UqlSFDNFdo1WLtFXS+ob08ScQ=;
+	s=korg; t=1789229585;
+	bh=cbbHoT4h2vclyICXgFjaNdcK4vFDcuWVDRHvu7sxCE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T3vNFpGnSUiANOJ/UZPnTNQVSGEmSterUI9glJMMzQDqVj3AQSArlPsN9Sg7Wwj5p
-	 goEg7DS3I6Nr9oiooCpyGdU9FUd/2LfBUR/AEWvPJKpMFQcEMV9LMbDNA6xV4WraEe
-	 ekdCtbOIcFf6pXLd58BQQ/2U7FX/HuDk3zcPVdkQ=
+	b=VmR47UsQJdDbnixFgu/ol6VSfIcrt9nErPfzL2VsBLEcnfSqtSK/8bNzNkJYwQOdo
+	 13OrycjBVOPfKrnk4TBEzJx7h53btCNbnMPwJFyPmu3j1O0FjuAHqOHwXbEOJdqzdF
+	 0kKMe7aTewG3tl+61a3la3q8khv3DkdTXawaO55g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0619/1191] PCI: xgene: Drop unnecessary OF node reference
-Date: Sat, 12 Sep 2026 08:55:47 +0200
-Message-ID: <20260912065602.155315175@linuxfoundation.org>
+Subject: [PATCH 6.1 0620/1191] cpufreq: intel_pstate: Fix setting minimum P-state at init time
+Date: Sat, 12 Sep 2026 08:55:48 +0200
+Message-ID: <20260912065602.177040445@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,64 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 4869db344e76c9adfb1d9654df442db5371fac71 ]
+[ Upstream commit db53c573d31d07d5d782c5312d37cb33be788eba ]
 
-xgene_pcie_probe() stores dev->of_node in port->node with
-of_node_get(), but the cached node is only used during probe by
-xgene_pcie_parse_map_dma_ranges(). The driver never releases the extra
-reference, so the node reference is leaked.
+If HWP is enabled, writes to MSR_IA32_PERF_CTL have no effect,
+so intel_pstate_get_cpu_pstates() should not attempt to call
+intel_pstate_set_min_pstate() to set the minimum P-state for the
+given CPU in that case.
 
-There is no need for private OF node ownership here. Use the device's
-existing of_node directly in xgene_pcie_parse_map_dma_ranges() and remove
-the cached port->node pointer.
+Accordingly, remove the intel_pstate_set_min_pstate()
+call from intel_pstate_get_cpu_pstates() and make both
+intel_pstate_cpu_init() and intel_cpufreq_cpu_init() call
+that function in their non-HWP code paths.
 
-Fixes: 5f6b6ccdbe1c ("PCI: xgene: Add APM X-Gene PCIe driver")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260630195234.1871951-1-dbgh9129@gmail.com
+The HWP code path in intel_pstate_cpu_init() does not need to update
+the current P-state of the CPU directly at all because it is taken
+care of the processor automatically, but the HWP code path of
+intel_cpufreq_cpu_init() should update it in principle to
+initialize the DESIRED_PERF field in MSR_HWP_REQUEST.  For this
+purpose, make it call intel_cpufreq_hwp_update() and pass
+the minimum P-state limit to it as the current target value along
+with the current minimum and maximum limits.
+
+Fixes: f6ebbcf08f37 ("cpufreq: intel_pstate: Implement passive mode with HWP enabled")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/5090465.GXAFRqVoOG@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pci-xgene.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/cpufreq/intel_pstate.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pci/controller/pci-xgene.c b/drivers/pci/controller/pci-xgene.c
-index 049881a96cf44..d1773a4d77d7c 100644
---- a/drivers/pci/controller/pci-xgene.c
-+++ b/drivers/pci/controller/pci-xgene.c
-@@ -59,7 +59,6 @@
+diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
+index 8009ade8db2a1..7f87272bc532e 100644
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -2004,8 +2004,6 @@ static void intel_pstate_get_cpu_pstates(struct cpudata *cpu)
  
- #if defined(CONFIG_PCI_XGENE) || (defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS))
- struct xgene_pcie {
--	struct device_node	*node;
- 	struct device		*dev;
- 	struct clk		*clk;
- 	void __iomem		*csr_base;
-@@ -528,7 +527,7 @@ static void xgene_pcie_setup_ib_reg(struct xgene_pcie *port,
+ 	if (pstate_funcs.get_vid)
+ 		pstate_funcs.get_vid(cpu);
+-
+-	intel_pstate_set_min_pstate(cpu);
+ }
  
- static int xgene_pcie_parse_map_dma_ranges(struct xgene_pcie *port)
+ /*
+@@ -2711,6 +2709,7 @@ static int __intel_pstate_cpu_init(struct cpufreq_policy *policy)
+ static int intel_pstate_cpu_init(struct cpufreq_policy *policy)
  {
--	struct device_node *np = port->node;
-+	struct device_node *np = port->dev->of_node;
- 	struct of_pci_range range;
- 	struct of_pci_range_parser parser;
- 	struct device *dev = port->dev;
-@@ -596,7 +595,6 @@ static struct pci_ops xgene_pcie_ops = {
- static int xgene_pcie_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	struct device_node *dn = dev->of_node;
- 	struct xgene_pcie *port;
- 	struct pci_host_bridge *bridge;
- 	int ret;
-@@ -607,7 +605,6 @@ static int xgene_pcie_probe(struct platform_device *pdev)
+ 	int ret = __intel_pstate_cpu_init(policy);
++	struct cpudata *cpu;
  
- 	port = pci_host_bridge_priv(bridge);
+ 	if (ret)
+ 		return ret;
+@@ -2721,11 +2720,11 @@ static int intel_pstate_cpu_init(struct cpufreq_policy *policy)
+ 	 */
+ 	policy->policy = CPUFREQ_POLICY_POWERSAVE;
  
--	port->node = of_node_get(dn);
- 	port->dev = dev;
- 	port->version = XGENE_PCIE_IP_VER_1;
+-	if (hwp_active) {
+-		struct cpudata *cpu = all_cpu_data[policy->cpu];
+-
++	cpu = all_cpu_data[policy->cpu];
++	if (hwp_active)
+ 		cpu->epp_cached = intel_pstate_get_epp(cpu, 0);
+-	}
++	else
++		intel_pstate_set_min_pstate(cpu);
+ 
+ 	return 0;
+ }
+@@ -2948,8 +2947,6 @@ static int intel_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 		return ret;
+ 
+ 	policy->cpuinfo.transition_latency = INTEL_CPUFREQ_TRANSITION_LATENCY;
+-	/* This reflects the intel_pstate_get_cpu_pstates() setting. */
+-	policy->cur = policy->cpuinfo.min_freq;
+ 
+ 	req = kcalloc(2, sizeof(*req), GFP_KERNEL);
+ 	if (!req) {
+@@ -2970,9 +2967,15 @@ static int intel_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 		WRITE_ONCE(cpu->hwp_req_cached, value);
+ 
+ 		cpu->epp_cached = intel_pstate_get_epp(cpu, value);
++
++		intel_cpufreq_hwp_update(cpu, cpu->pstate.min_pstate,
++					 cpu->pstate.max_pstate,
++					 cpu->pstate.min_pstate, false);
+ 	} else {
+ 		policy->transition_delay_us = INTEL_CPUFREQ_TRANSITION_DELAY;
++		intel_pstate_set_min_pstate(cpu);
+ 	}
++	policy->cur = policy->cpuinfo.min_freq;
+ 
+ 	freq = DIV_ROUND_UP(cpu->pstate.turbo_freq * global.min_perf_pct, 100);
  
 -- 
 2.53.0
