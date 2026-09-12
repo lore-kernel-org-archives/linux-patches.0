@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7662F4D5A1;
-	Sat, 12 Sep 2026 07:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C042737FC;
+	Sat, 12 Sep 2026 07:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198744; cv=none; b=HnOni09j74AthUAYz4jBfBsIorGOLSI3Eyvkq8KfXCiqIJMM6Uv91v1FU05a0xViOTftLXzmzUkZspeWxAtRVsZo7XfWKmA78q7UrPY/fTbznfxUaQlXua2YUJjjQgBb+myzTVfYkpNdK5TGliG30/iMph6K/j/8aY0AB//YTjI=
+	t=1789198749; cv=none; b=b5oJedkZ/AWtJa+U0nE1z22aZ5uVUEI+7hFvqeexJqQx/J44s5qn2O4nI4YD4GSjC3U9guSvHVU3pW8Wb1Q5ZPPoJRxd48TDa/Zsjee2KBCTT7aS9aRL4PFOt0dXc1wEasqEczUcQVvm7wkqxpxI5WZtx+PP+BoPgUd1RzRzN2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198744; c=relaxed/simple;
-	bh=OhWPQqqpWxkpsZdhNCbHgbZ8VqGT+0MxG4Mis3s28WQ=;
+	s=arc-20240116; t=1789198749; c=relaxed/simple;
+	bh=UpDEyLpWZ6kwFyOf/h1aOcSsPV2AmBB9J1fsSxErzBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JapqIAYQxiO/ekxxhl3f2F2yEZl2I1L3JTKLV7soMHMbwGm0ucuAx9FC7gH0xcuaRDbBUk4SHdRk1cT/LN1baFZmKG+UGPoYD+v8R4uzDKobqrBxGtUzivx2pPqSjWPUP6rFeqaUw4mPX/5Fn1A1dw+hzMl+SbpySzJbAy7GMNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KriX5jKF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UstE0LLo2sq3nDxE3nxDyoJLHt4aGC1rrzUDDw58+zGXv8KrO2dnW7ibmQBZLrmH/2eereSN1tJjTxkcaTU/wwoL87ItNDQA+kodXpCaJG7EXjRLl1rZ2ERgwggsQcZW1DhMXBdiZk9ad+4/5uDuKAiIjMdmAA9wCs/Gb4jUplk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tGb0LzeW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KriX5jKF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C6F1F000FF;
-	Sat, 12 Sep 2026 07:39:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tGb0LzeW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AEAE1F000FF;
+	Sat, 12 Sep 2026 07:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198743;
-	bh=K0jHyi6PSdUY2i0zcAyNQNJeKkQUdhM1hPHK+J98d+k=;
+	s=korg; t=1789198748;
+	bh=6TdCMo8KUU4hBamna907n/ytBhYMOPf4hNg9mRn8iE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KriX5jKFssoaufZMtN1wtc6EJrehMn1jaWvBa/N3Gvs2J9pv5VXjRZUrw1pqRJeId
-	 gyyYo6yTaNZ5HM0CRy702Ut6rW3bo+5djNkP05B+icr65i91wytrgZNlO7/C8lbEHJ
-	 g/GQSw0Se2NOwXYQPAlSpGCBPodKMAR2lsHuvats=
+	b=tGb0LzeWzlQPavhCXSPXc9PdbEHTjPH+AI+7cDJlxqll4j0BmwMtGRW5GycLwq/So
+	 yczW4gD79yPrDaTBTE9ryLz62oJOkeUIyl6W9lJe2gDlSNgRaWHjSntJg56GQmmVfP
+	 85qDKeS17O8SCAi5sef8rutWGamgZld/htQoTF2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Khare <udaykhare77@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0442/1815] remoteproc: qcom: Fix glink->node reference leak in qcom_add_glink_subdev
-Date: Sat, 12 Sep 2026 08:36:32 +0200
-Message-ID: <20260912065659.267580267@linuxfoundation.org>
+Subject: [PATCH 7.2 0443/1815] perf: evsel: Fix error handling in tp_format lookup
+Date: Sat, 12 Sep 2026 08:36:33 +0200
+Message-ID: <20260912065659.294455515@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,44 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uday Khare <udaykhare77@gmail.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit 44f4911ab8e6f4d69afad5f2571bbd2da421c918 ]
+[ Upstream commit 4968708beaad53940b67e4952e34a97d8768091d ]
 
-In qcom_add_glink_subdev(), the device node reference acquired via
-of_get_child_by_name() is stored in glink->node. If the subsequent
-kstrdup_const() allocation for glink->ssr_name fails, the function
-returns early without calling of_node_put() on glink->node, leaking
-the reference count.
+In evsel__tp_format(), when trace_event__tp_format*() returns an error,
+IS_ERR() checks the local variable 'tp_format', but PTR_ERR() incorrectly
+uses 'evsel->tp_format' which hasn't been assigned yet.
 
-Fix this by adding of_node_put(glink->node) on the error path before
-returning.
+Fix this by using PTR_ERR(tp_format) to extract the error code from the
+correct variable.
 
-Fixes: cd9fc8f1b35b ("remoteproc: qcom: Pass ssr_name to glink subdevice")
-Signed-off-by: Uday Khare <udaykhare77@gmail.com>
-Link: https://lore.kernel.org/r/20260618132054.11010-1-udaykhare77@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 6c8310e8380d ("perf evsel: Allow evsel__newtp without libtraceevent")
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_common.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/perf/util/evsel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-index e1a955476c9b3..5294e327f1587 100644
---- a/drivers/remoteproc/qcom_common.c
-+++ b/drivers/remoteproc/qcom_common.c
-@@ -253,8 +253,10 @@ void qcom_add_glink_subdev(struct rproc *rproc, struct qcom_rproc_glink *glink,
- 		return;
+diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
+index d5f7dbce7588d..6b747b0864b38 100644
+--- a/tools/perf/util/evsel.c
++++ b/tools/perf/util/evsel.c
+@@ -706,7 +706,7 @@ struct tep_event *evsel__tp_format(struct evsel *evsel)
+ 		tp_format = trace_event__tp_format(evsel->tp_sys, evsel->tp_name);
  
- 	glink->ssr_name = kstrdup_const(ssr_name, GFP_KERNEL);
--	if (!glink->ssr_name)
-+	if (!glink->ssr_name) {
-+		of_node_put(glink->node);
- 		return;
-+	}
+ 	if (IS_ERR(tp_format)) {
+-		int err = -PTR_ERR(evsel->tp_format);
++		int err = -PTR_ERR(tp_format);
  
- 	glink->dev = dev;
- 	glink->subdev.start = glink_subdev_start;
+ 		errno = err;
+ 		pr_err("Error getting tracepoint format '%s': %m\n",
 -- 
 2.53.0
 
