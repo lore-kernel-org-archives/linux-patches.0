@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7644D345EB9;
-	Sat, 12 Sep 2026 16:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78CA431F9B1;
+	Sat, 12 Sep 2026 16:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230190; cv=none; b=QKqq+pWO4PM3U+fkDIZVIIwESV+Nba/YIrn0h1eRdfmptvoIpeX3aw7WxamM7EQp2+UABjYGgLKxzdIAy9CxpFydyNC1YPiM8AHh5RZdxRG6Fx9wr9DtzM+4nwQB+gzqSpdaRmUgt6Pq8LoEhQ0QWwui1Q8ZLQzdkWRQrao2KCA=
+	t=1789230195; cv=none; b=bbZqcNlkSmUMQadWBMvZcRpapH6ebBgan7XeTVdOJce7pDACiH1LxYgaQjU5AMxnxnJ+TN3bX9GljUSarcvbjzgPV0PcqLfNf9A9SgazcLbAPIqhEqJMFPWeirbivsrj/plU5sg0x96bA6oY2csj85B99zPO51ARq/NWF2w7Esg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230190; c=relaxed/simple;
-	bh=oiM5XJMiZL0/clTo3tt9cIsZQslyPFFb8+jF5rZT30U=;
+	s=arc-20240116; t=1789230195; c=relaxed/simple;
+	bh=n7OiVX7BFHM6ijQww3DxNO9DPLEpf7DDkTeKro6kIpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dD5ChgIi7MUZf74LrrqKa5B77PIVfzJQnrn419hcWX9jtqDKugPKBjzxK78pn4bMJvcvsAecRW7sYWOKwHukaxaHrg9+alDNZWRj/l0zrzr8dliSTjz3jObjzba1xK4NM9XsaTpvZMUVxLA+ZI9ummCZFgtR6HqreNHnNFx1Llk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cgWZqV99; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BkwHBQt5qcvgvkFho1LB96z7iZ2+GLjQ7K3K5v7+eF3+UPc33PDeOZfNgCK2Ta/0XOU5EYgLyed/y6nDmsM5l7KizQLvuLUGkxfM2wf/uPOv4mf2SrWxTigJdzKygv7HOhxZBVr2mtyLYQCvmxn30oypoudlYh24CDl69ATH+2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0W7Qkj1S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cgWZqV99"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093461F000FF;
-	Sat, 12 Sep 2026 16:23:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0W7Qkj1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC2A1F000FF;
+	Sat, 12 Sep 2026 16:23:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230189;
-	bh=VyTi7h5MjEPf303mcNIWfQHA5rV0YG1zCZexGq9h5sE=;
+	s=korg; t=1789230194;
+	bh=g1qQLEmPAiIMGuisDz3H+CI3v8vAo6+YxGGe4W+MFck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cgWZqV99mLyWnJJNHth3o/itvpAfjuEcv3L1tiulJtntRLbgDZLVLRXmGXmDdPDlK
-	 O2ldz610bgGEu+r3KuncSoVtarNNUFTdDMgXDivfT5bernzeukzgN1UcCAROrqYZCX
-	 0udoF/gY1WCLuoxrG6TvvwOCvjUwFKWVA7t7OOpI=
+	b=0W7Qkj1SrtZYM5bYIxb2/YOYpFdU80jMUq0vWDop6nXhhUM9unJsdgqitg9HPr8ek
+	 BpBv5Ly8ThKM8E8PxZ7lKQbqycOwyKBCq5Q5bN1msoBUia7LpqCom76xG4+Bk7mIog
+	 0MDYSxjkzyY+9RnhNKoAQgHnW3LyNiqgHNdBBCZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0690/1191] RDMA/core: Fix potential use after free in ib_destroy_srq_user()
-Date: Sat, 12 Sep 2026 08:56:58 +0200
-Message-ID: <20260912065603.758321999@linuxfoundation.org>
+Subject: [PATCH 6.1 0737/1191] clk: tegra: tegra124-emc: put EMC node on register failure
+Date: Sat, 12 Sep 2026 08:57:45 +0200
+Message-ID: <20260912065604.835603538@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,67 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 88244ecc71cc0b3ed200f5ef7ddea6686adfd730 ]
+[ Upstream commit f726279f5eab813f9a8b6f38ddf2a4b062d038ff ]
 
-When accessing a SRQ via the netlink path the only synchronization
-mechanism for the said SRQ is rdma_restrack_get().
-Currently, rdma_restrack_del() is invoked at the end of
-ib_destroy_srq_user(), which is too late, since by that point
-vendor-specific resources associated with the SRQ might already be
-freed. This can leave a short window where the SRQ remains accessible
-through restrack, leading to a potential use-after-free.
+tegra124_clk_register_emc() stores a device node reference returned by
+of_parse_phandle() in tegra->emc_node.
 
-Fix this by moving the rdma_restrack_begin_del() call to the start of
-ib_destroy_srq_user(), ensuring that the SRQ is removed from restrack
-before its internal resources are released. This guarantees that no new
-users hold references to a SRQ that is in the process of destruction.
+If clk_register() fails, the function returns an error before that
+reference can be consumed and released by the normal runtime path. The
+tegra_clk_emc object is freed on this failure path, but freeing the
+object does not drop the OF node reference stored in it.
 
-In addition, this change preserves the intended inverted order
-between create and destroy routines: resources are added to
-restrack at the end of successful creation, and hence shall be removed
-from the restrack first thing during the destruction flow, which keeps
-the lifecycle management consistent and predictable.
+Drop the EMC node reference before freeing the tegra_clk_emc object.
+of_node_put() is safe for a NULL node, so this also covers the case where
+the phandle is absent.
 
-Fixes: 48f8a70e899f ("RDMA/restrack: Add support to get resource tracking for SRQ")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
-Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/20260713-restrack-uaf-fix-resub-v2-4-bbe8bb270d51@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 2db04f16b589 ("clk: tegra: Add EMC clock driver")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/verbs.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/clk/tegra/clk-tegra124-emc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
-index 0337dea370120..212a1fc0421f2 100644
---- a/drivers/infiniband/core/verbs.c
-+++ b/drivers/infiniband/core/verbs.c
-@@ -1080,16 +1080,20 @@ int ib_destroy_srq_user(struct ib_srq *srq, struct ib_udata *udata)
- 	if (atomic_read(&srq->usecnt))
- 		return -EBUSY;
+diff --git a/drivers/clk/tegra/clk-tegra124-emc.c b/drivers/clk/tegra/clk-tegra124-emc.c
+index 5f1af6dfe7154..674aef2785394 100644
+--- a/drivers/clk/tegra/clk-tegra124-emc.c
++++ b/drivers/clk/tegra/clk-tegra124-emc.c
+@@ -539,6 +539,7 @@ struct clk *tegra124_clk_register_emc(void __iomem *base, struct device_node *np
  
-+	rdma_restrack_begin_del(&srq->res);
-+
- 	ret = srq->device->ops.destroy_srq(srq, udata);
--	if (ret)
-+	if (ret) {
-+		rdma_restrack_abort_del(&srq->res);
- 		return ret;
-+	}
- 
- 	atomic_dec(&srq->pd->usecnt);
- 	if (srq->srq_type == IB_SRQT_XRC && srq->ext.xrc.xrcd)
- 		atomic_dec(&srq->ext.xrc.xrcd->usecnt);
- 	if (ib_srq_has_cq(srq->srq_type))
- 		atomic_dec(&srq->ext.cq->usecnt);
--	rdma_restrack_del(&srq->res);
-+	rdma_restrack_commit_del(&srq->res);
- 	kfree(srq);
- 
- 	return ret;
+ 	clk = clk_register(NULL, &tegra->hw);
+ 	if (IS_ERR(clk)) {
++		of_node_put(tegra->emc_node);
+ 		kfree(tegra);
+ 		return clk;
+ 	}
 -- 
 2.53.0
 
