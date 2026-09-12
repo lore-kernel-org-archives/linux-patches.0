@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673AF34AB14;
-	Sat, 12 Sep 2026 10:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02C1423EB9;
+	Sat, 12 Sep 2026 10:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209016; cv=none; b=rVYDoAdX3eaa6d1zsGxzrFAfOjmPolPQfRVGAHcjOVUZoLAFXc+8R+Og9HYEAHdL9gf0iJ+OfKM2USmz4OLNnsarsAvzYuqiKshLzSWKQSdjZxNbOrwaNuDNVEI9ZBWZdd9neC/wVvGSRIVGJokRcnPGQSNfjMH1eYEbzobtl4s=
+	t=1789209021; cv=none; b=HHAgJ0OEoRoztROjr8UMkmdGzn5OLM6HJ+/NHWPZAQCkCqfIsk0lcR6Y7W3/q5WUstdJOb7TntWpBcxZYgHdxmDWyaTqjbzwwP83MahdyqEMSpMlXmp8vBF3BWKqbXw2+bp8yWSvneW/rIUAod9NISTj70FaQAjRokRgc/XTql0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209016; c=relaxed/simple;
-	bh=pun021NPvTLkF+SAAKKwUn/syEKnYA078BusZC4XiUc=;
+	s=arc-20240116; t=1789209021; c=relaxed/simple;
+	bh=2PELbCWkXKxLdAK52QEL8bg8ZbWHnhH1TfXQpSGzm9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cY0dIJ9903Tx7X1moKzmNv7webMyyTPZU6V4V8uxr434OX6zy8H07ftP4Rj8WIuAeuCcfTgOEKSxXhQ6F4BRCHUyM3ip4ZpMhZreTJrb7TNQB5cw8raIyVgULmh3zZ7k/d6G5x1jhWD4RPn9y1zKi6CM2S6xxavKFMVuBdFmEKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeZ7cNxS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XupScyAMUGbFW0uG7uAR6d6OEy9p0wfwHP21cbbsTh+kqORFQZFHRWU1R2zZNk56fP2HROYprxcMtZaQeCC1prGOb6m1fOiRehExrTi1I++ptq8bmv6yMbuSEnD76ebehWIx+fZIXQQzSfCOQZx1kOypg8V0ry7edmgKmi2EVXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnU+4pmy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeZ7cNxS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F403B1F000FF;
-	Sat, 12 Sep 2026 10:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnU+4pmy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0505C1F00893;
+	Sat, 12 Sep 2026 10:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209015;
-	bh=1FPgEzqhsvzaoTz4FdtYYj8IaAT3psCCn1lTfK06ILE=;
+	s=korg; t=1789209019;
+	bh=bovl9vayTE7rLkAgLiX9AGt7w2PYL5HzzkRYbpdgffw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MeZ7cNxSg1HTjGb6eGOQLcjh3BRpqCmS1zGqMqMTjleGNynGZrbZTyLnkvoC6FOOG
-	 pBSbPu/VfKr8UXCpLafMsTqXALzMwXaG0nQpMHSWstSL8D9i+fIWP50VvgD89uF4qb
-	 HnM9BBL8W+i3nsaLVVC4PJS1Y/+RKHw/f4kCafg4=
+	b=dnU+4pmy6ecuJnULLPd3p7nbL66IPG80CafY+iBTiHBWM8btPNPOKfKWgS/7mAW0z
+	 ODCFLcJTZq5IQuPkwNxX1DeCO64/7vo0Oh4RWyFsM5656CzdmMMvarfSzR12Ax5l0h
+	 z7bZ3WHzaMCND5WA+wTfzbffUMp+pez7+K4eUJ/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jared.Huang" <jared.huang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0733/1518] wifi: mt76: mt7925: update clc before setting sar power table
-Date: Sat, 12 Sep 2026 08:48:22 +0200
-Message-ID: <20260912065640.017510582@linuxfoundation.org>
+Subject: [PATCH 6.18 0693/1518] arm64: dts: qcom: talos: Fix the PCIe iommu-map entries
+Date: Sat, 12 Sep 2026 08:47:42 +0200
+Message-ID: <20260912065639.114853675@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,46 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jared.Huang <jared.huang@mediatek.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 8a27c5c764040fbc990cc416a927b1d7eadf559f ]
+[ Upstream commit f7e687d6050f27a03847abadc12d6821576d06ee ]
 
-Fix the power table update sequence to ensure CLC is loaded before
-setting SAR power table.
+The IOMMU provider apps_smmu uses '#iommu-cells = <2>', but the PCIe
+iommu-map entries specify only one cell for the SID, omitting the SID
+mask. This went unnoticed until the OF core started warning with commit
+ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps"):
 
-The firmware requires CLC baseline to be established first
-to properly calculate the final power limit as min(clc_limit, rate_limit,sar_limit).
+  iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
 
-Fixes: 9557b6fe0c8b ("wifi: mt76: mt7925: refine the txpower initialization flow")
-Signed-off-by: Jared.Huang <jared.huang@mediatek.com>
-Link: https://patch.msgid.link/20260617071305.1808394-1-jb.tsai@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+So fix the entries to match the provider's '#iommu-cells' property.
+
+Fixes: 718cc7542a00 ("arm64: dts: qcom: qcs615: enable pcie")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260730-iommu-map-fix-v1-13-83405d37ba41@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/main.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm6150.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index 8ef0d981adc9a..cb1046c59cf6c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -1688,9 +1688,15 @@ static int mt7925_set_sar_specs(struct ieee80211_hw *hw,
- 	int err;
+diff --git a/arch/arm64/boot/dts/qcom/sm6150.dtsi b/arch/arm64/boot/dts/qcom/sm6150.dtsi
+index a066ad5ffde57..ff3ae5688f03e 100644
+--- a/arch/arm64/boot/dts/qcom/sm6150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6150.dtsi
+@@ -1175,8 +1175,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+ 					 &config_noc SLAVE_PCIE_0 QCOM_ICC_TAG_ACTIVE_ONLY>;
+ 			interconnect-names = "pcie-mem", "cpu-pcie";
  
- 	mt792x_mutex_acquire(dev);
-+	err = mt7925_mcu_set_clc(dev, dev->mt76.alpha2,
-+			 dev->country_ie_env);
-+	if (err < 0)
-+		goto out;
-+
- 	err = mt7925_set_tx_sar_pwr(hw, sar);
--	mt792x_mutex_release(dev);
+-			iommu-map = <0x0 &apps_smmu 0x400 0x1>,
+-				    <0x100 &apps_smmu 0x401 0x1>;
++			iommu-map = <0x0 &apps_smmu 0x400 0x0 0x1>,
++				    <0x100 &apps_smmu 0x401 0x0 0x1>;
  
-+out:
-+	mt792x_mutex_release(dev);
- 	return err;
- }
- 
+ 			resets = <&gcc GCC_PCIE_0_BCR>;
+ 			reset-names = "pci";
 -- 
 2.53.0
 
