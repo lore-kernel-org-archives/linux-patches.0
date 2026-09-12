@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D184CF4F1;
-	Sat, 12 Sep 2026 16:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD03B23A562;
+	Sat, 12 Sep 2026 16:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232135; cv=none; b=LsZkIjqdLcVqSEvlZONxOXx3pvXXKQ3QpdOlDCVnU9Ed4/LNa4/UJUqQBAscd4cy0cYqrKDhF7nEnVAHND+OPnVvuZlmXqRLwx4pcVlreknW/TVQvyRHVO1VQJM6nt+TsNkquGxx23hC0QyPxdDjwxEEV1EERJBZqGI4iSSW2vU=
+	t=1789232139; cv=none; b=BcdsiINa1/7vbDva0VQ2fztaV38v/ap9pEW/FdUCTB/M8pCxlt+O2dgjZvzYl+kbZHgbudHq3eH0NSilaph2fTJyIUYGBrPW8/qknIIqFKF5f6uT5Izb3qZs1O1N+8lFR69n1GkLOAGIWHVQhD0e8B9cqsUgp4hUWTly8lU/C3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232135; c=relaxed/simple;
-	bh=VPe1JPxlW+G6f2Te3F8kgJY18V9Wlk07r+VY2JV8Pl0=;
+	s=arc-20240116; t=1789232139; c=relaxed/simple;
+	bh=yMRXBrd93vGWhO/KxMa/JqfwpVgnW45raNe+eyel2IY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oHwlv66xaZWPRgBgm9IcuwPoJv5hHGDHGYgERa8HiNQuClI9SKnDQUdr2ODy0cAduussoa6whkLuAt6EKTHvlNCDXwEuXEwgXIQ1wnds+7kYIV4mdrAO16KJa2h3qs66Lrtje1afY5jSJ5RA4pvuf4kbS7cBw5dQx0xML1mZCxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yy5aZS6C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dkd3IgcQefzc8QGfAjG2o8AGMC5SW4OSpMdWz7P/t1ZraRyZaul1uX9MpUGUupSXcicTexYq0uS2LiaLYQfQ51mZk4LL6++rnVU5Q8EdP1TPmgcicavl9ikeqkGNdTS2mCaG/PEESjlECgjAg4F1lT28TIe2GknCuz0GzQTnbGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zGojddKC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yy5aZS6C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65561F000FF;
-	Sat, 12 Sep 2026 16:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGojddKC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C145A1F000FF;
+	Sat, 12 Sep 2026 16:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232133;
-	bh=43g6AmlXzxvvzAHavHvmCL0FB6QGbzG6cfRvK7sbeps=;
+	s=korg; t=1789232138;
+	bh=De+XUiZoj3MWBzD5RbEBa998C3Zor0/S9ydFTDSMe7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yy5aZS6CFD3aYfwZIJ8NslXHhuEa7ayusWgwJceB5HpVYwV844GDL/FrNwFPmImWD
-	 ImHtw3V204qm3labggIa57QLv1CjgPKdpgFWfrvaSoQ8aynd0E5/qxGKvzmgyP2xCf
-	 QkdDDHivK+7foLnBSqLsMyDujG2t1oxWjugtCtQw=
+	b=zGojddKCcfVvcjU7FD0T8ynzlXDJaZYRzUmC8c/QV+gfWfhdPUUUrAfTHhgyL8E/q
+	 JdE5HlSr2ChWjR8d8xqPx5Q/O+3dmGLENCAZl2qZcsVx7D83sTiaPpS+x/8444CSqR
+	 LQVRD+/ZTyZTYgkg0blyWBIKgN9xYU2bk87Kx4VU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6665d3db5fef15914802@syzkaller.appspotmail.com,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Eric Dumazet <edumazet@google.com>,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1139/1191] usb: atm: usbatm: fix invalid ci_range initialization
-Date: Sat, 12 Sep 2026 09:04:27 +0200
-Message-ID: <20260912065613.733029786@linuxfoundation.org>
+Subject: [PATCH 6.1 1140/1191] tcp: fix corruption of urgent data on multi-segment retransmit
+Date: Sat, 12 Sep 2026 09:04:28 +0200
+Message-ID: <20260912065613.755222297@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,74 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit a60fd8c6dbaa76da4163cf225ed2b9e982540f39 ]
+[ Upstream commit ce2b807f42ed5e55567b8864ab72963f90779270 ]
 
-syzbot reported a shift-out-of-bounds in __vcc_connect():
+On the normal xmit path, while in urgent mode we refuse to build a
+multi-segment TSO packet, so every segment gets its own urg_ptr:
 
-  UBSAN: shift-out-of-bounds in net/atm/common.c:382:32
-  shift exponent -1 is negative
-  CPU: 0 UID: 0 PID: 5987 Comm: syz.0.18 Not tainted syzkaller #0 PREEMPT(full)
-  Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 08/05/2026
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
-   ubsan_epilogue+0xa/0x30 lib/ubsan.c:233
-   __ubsan_handle_shift_out_of_bounds+0x36d/0x400 lib/ubsan.c:494
-   __vcc_connect+0x14b4/0x19c0 net/atm/common.c:382
-   vcc_connect+0x328/0x8f0 net/atm/common.c:498
-   pvc_bind+0x272/0x380 net/atm/pvc.c:52
-   __sys_bind+0x2e3/0x410 net/socket.c:1976
-   __x64_sys_bind+0x7a/0x90 net/socket.c:1979
-   ...
+	/* tcp_write_xmit() */
+	limit = mss_now;
+	if (tso_segs > 1 && !tcp_urg_mode(tp))
+		limit = tcp_mss_split_point(...);
 
-ATM device ci_range fields (vpi_bits and vci_bits) represent the
-number of bits supported for VPI and VCI addressing on the device.
-net/atm/common.c directly uses these fields as bit shift counts:
-  vpi >> dev->ci_range.vpi_bits
-  vci >> dev->ci_range.vci_bits
-  1 << vcc->dev->ci_range.vpi_bits
-  1 << vcc->dev->ci_range.vci_bits
+The retransmit path has no such guard. __tcp_retransmit_skb() builds a
+segs > 1 skb and hands it to the GSO layer, which only advances th->seq
+per segment and copies urg_ptr verbatim:
 
-usbatm_atm_init() sets ci_range.vpi_bits and ci_range.vci_bits to
-ATM_CI_MAX (-1), which is defined in <uapi/linux/atmdev.h> as a
-sentinel value for userspace ATM_SETCIRANGE requests, not a valid bit
-count. Shifting by -1 is undefined behavior and triggers UBSAN
-warnings.
+	/* __tcp_retransmit_skb() */
+	len = cur_mss * segs;		/* segs > 1, no urg_mode check */
+	...
+	/* tcp_gso_segment(): bumps seq only, urg_ptr is copied */
 
-ATM UNI cell headers allow up to 8 bits for VPI (0..255) and 16 bits
-for VCI (0..65535). Initialize vpi_bits to 8 and vci_bits to 16, as
-done by solos-pci.
+urg_ptr is an offset from the segment's own seq, so a copied value points
+at a different place on each segment. The receiver rebuilds the absolute
+urgent seq as seg.seq + urg_ptr, so it walks a moving urgent point instead
+of the one OOB byte:
 
-Fixes: c59bba75fa50 ("[PATCH] USB ATM: new usbatm core")
-Reported-by: syzbot+6665d3db5fef15914802@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6665d3db5fef15914802
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/all/20260824024620.23485-1-kartikey406@gmail.com/T/ [v1]
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Link: https://patch.msgid.link/20260826133258.8306-1-kartikey406@gmail.com
+	seg1  seq 1     urg_ptr 5001 -> urgent @ 5001   (ok)
+	seg2  seq 1001  urg_ptr 5001 -> urgent @ 6001   (wrong, +MSS)
+	seg3  seq 2001  urg_ptr 5001 -> urgent @ 7001   (wrong, +2*MSS)
+
+The real OOB byte is never pointed at, so the receiver stops splicing it
+out and delivers it as normal in-band data, corrupting the stream.
+
+Guard the retransmit length like the xmit path: keep segs = 1 while in
+urgent mode.
+
+Fixes: 10d3be569243 ("tcp-tso: do not split TSO packets at retransmit time")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260826141145.67823-1-jiayuan.chen@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/atm/usbatm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_output.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/atm/usbatm.c b/drivers/usb/atm/usbatm.c
-index 1cdb8758ae01b..bbee6bfed5b88 100644
---- a/drivers/usb/atm/usbatm.c
-+++ b/drivers/usb/atm/usbatm.c
-@@ -917,8 +917,8 @@ static int usbatm_atm_init(struct usbatm_data *instance)
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 2a4657af3fd51..256e0a755d544 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -3255,7 +3255,7 @@ int __tcp_retransmit_skb(struct sock *sk, struct sk_buff *skb, int segs)
+ 		avail_wnd = cur_mss;
+ 	}
  
- 	instance->atm_dev = atm_dev;
- 
--	atm_dev->ci_range.vpi_bits = ATM_CI_MAX;
--	atm_dev->ci_range.vci_bits = ATM_CI_MAX;
-+	atm_dev->ci_range.vpi_bits = 8;
-+	atm_dev->ci_range.vci_bits = 16;
- 	atm_dev->signal = ATM_PHY_SIG_UNKNOWN;
- 
- 	/* temp init ATM device, set to 128kbit */
+-	len = cur_mss * segs;
++	len = cur_mss * (tcp_urg_mode(tp) ? 1 : segs);
+ 	if (len > avail_wnd) {
+ 		len = rounddown(avail_wnd, cur_mss);
+ 		if (!len)
 -- 
 2.53.0
 
