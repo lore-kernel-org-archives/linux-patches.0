@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB2433C18B;
-	Sat, 12 Sep 2026 15:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA8932B108;
+	Sat, 12 Sep 2026 15:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226551; cv=none; b=Iysfvvwz0ASX1DKUWRrsBf0V4oYZwHoyMx1JFV99XeNak4445nZuR9PXhwGSLk23p5UW7+iqcLJ9bE6g3LoI5lb5OuY9HEf4wABn+p4xnEMUwC+HANN82Y6kmNlWt6EMaKmQ7xArj1cpknxCk6p1RLkuUpglo8cdH9aHvbKOgh4=
+	t=1789226556; cv=none; b=F8VUtXv34qPsqvrpAWQ7TMNathJgg5SxQ0Ra2kIeO0nOFF4TAp2bdPo3pRoCQSSZmS2alfC634X73Mj0msQy822kx0W2k8XytuuD+Ce4RvWlW2vwYH/AVU/s61ad4ufRJqQimeNrnm/UtyfbVFTgnrsz4f92TOXr1L6ZxziNbxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226551; c=relaxed/simple;
-	bh=4Q6SZvSiMnCZYg2HmYh2fzI5mcMTSK2WXMEe4U8mh0Y=;
+	s=arc-20240116; t=1789226556; c=relaxed/simple;
+	bh=zAsRc5YgckDtVUEgX1bG76eSTT0VotehbAdL+jCWLFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cs50G00NRCzb1cp/Q1GHg4VrF5ThoCBEJZkrAcWKk32XBrmsNPB5H+JrfGli8MZ1ti0w5HPRaTEHq/OjpQRJl55hscv+nU+PNNIVccYuUvSHSTIXPsrkA4nYHm8MFjxJj+gxTREV1axdsy74VMuEUTY6pgcHFDxj00HjWwHw1/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RYWX5D/7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KVGxh2vsMZtriXh16/Yyod4AGDQ4fZTJwUJofruzSuXu70oiFmld9Q3lg05zzl/rnAYnftIKaNU0c2/l7iZ3WqysZ7jR+Wc+T6oeMg1n+N5Ig29zJxO1HsTTOK1XodLwANxfJ9/4sBr9iLVKCumB6wfMkWxW8CRm9pXnay8LoAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8kXzMfd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RYWX5D/7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C681F000FF;
-	Sat, 12 Sep 2026 15:22:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8kXzMfd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620AE1F000FF;
+	Sat, 12 Sep 2026 15:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226550;
-	bh=KSGlrxLHTzP2/DzLWMTNMBFSke/3TObLeVaW5iNMW3c=;
+	s=korg; t=1789226555;
+	bh=z1X5kKz8lPw4N8stoPc/hEIMqKRGX58glW38GEq5VnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RYWX5D/7bP3erIiIxARebqMqk3h887JRPXjZjZbZc55yHAD6ysDtO/YcThN4S+XqM
-	 OyBD1rUkSicrPhRRP6wfUDOCHpsLqDlUd/oFnyGyVmbwMbm/OXG2Ehk1nCz6+h0eEI
-	 94QcyGW1FNBPL0FqHg7v/8K2JRhUJpKOJnYamnsc=
+	b=y8kXzMfd/S+FFypl+u6mRbyZrdBohUusOP10CqxurMiDkIKghJ22S6vrc4ZCXv2i1
+	 EennAxQJEmPH7Ijob6Ho0PpvWPvGzEsx2FW7CQjHu/wYv9yPD6iL0JBQjXJd6G+Q45
+	 GWZk5d/hFMS3cjhdlqWR+Wbk7n3uyN7kDw9X5ATg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Betkov <bp@alien8.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1412/1424] irqdomain: Make build work for CONFIG_GENERIC_IRQ_CHIP=n
-Date: Sat, 12 Sep 2026 09:04:04 +0200
-Message-ID: <20260912065638.880774819@linuxfoundation.org>
+Subject: [PATCH 6.6 1413/1424] firmware: arm_scmi: Roll back partial protocol table registration
+Date: Sat, 12 Sep 2026 09:04:05 +0200
+Message-ID: <20260912065638.904016975@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,50 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 8cb2dbf94e44bcde4cff0223f2f900f8fb9083a4 ]
+[ Upstream commit 2224b622260ba590ab56ea1585d6bf7610be25b2 ]
 
-ld: kernel/irq/irqdomain.o: in function `irq_domain_instantiate':
-kernel/irq/irqdomain.c:296:(.text+0x10dd): undefined reference to `irq_domain_alloc_generic_chips'
-ld: kernel/irq/irqdomain.c:313:(.text+0x1218): undefined reference to `irq_domain_remove_generic_chips'
-ld: kernel/irq/irqdomain.o: in function `irq_domain_remove':
-kernel/irq/irqdomain.c:349:(.text+0x1ddf): undefined reference to `irq_domain_remove_generic_chips'
+scmi_protocol_table_register() can leave earlier requests registered when
+a later entry in the same ID table fails. Each request retains a pointer
+to the driver's ID table, so a failed module load can leave a dangling
+pointer after the module storage is released.
 
-Provide the required stubs.
+Unrequest only the successfully registered prefix, in reverse order,
+before returning the failure. Leave the failed entry and the remaining
+entries untouched because matching requests can be owned by another
+driver.
 
-Fixes: e6f67ce32e8e ("irqdomain: Add support for generic irq chips creation before publishing a domain")
-Reported-by: Borislav Betkov <bp@alien8.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Fixes: 2858f6e5f064 ("firmware: arm_scmi: Add multiple protocols registration support")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://patch.msgid.link/20260722173521.2184378-1-sudeep.holla@kernel.org
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/irq.h | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/firmware/arm_scmi/bus.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
-diff --git a/include/linux/irq.h b/include/linux/irq.h
-index 7bbd613c9e5a9..77fb0c510119a 100644
---- a/include/linux/irq.h
-+++ b/include/linux/irq.h
-@@ -1174,9 +1174,19 @@ int devm_irq_setup_generic_chip(struct device *dev, struct irq_chip_generic *gc,
+diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
+index 8d7f90594ee72..22e5ed1f73202 100644
+--- a/drivers/firmware/arm_scmi/bus.c
++++ b/drivers/firmware/arm_scmi/bus.c
+@@ -134,17 +134,6 @@ static int scmi_protocol_device_request(const struct scmi_device_id *id_table)
+ 	return ret;
+ }
  
- struct irq_chip_generic *irq_get_domain_generic_chip(struct irq_domain *d, unsigned int hw_irq);
+-static int scmi_protocol_table_register(const struct scmi_device_id *id_table)
+-{
+-	int ret = 0;
+-	const struct scmi_device_id *entry;
+-
+-	for (entry = id_table; entry->name && ret == 0; entry++)
+-		ret = scmi_protocol_device_request(entry);
+-
+-	return ret;
+-}
+-
+ /**
+  * scmi_protocol_device_unrequest  - Helper to unrequest a device
+  *
+@@ -190,6 +179,26 @@ static void scmi_protocol_device_unrequest(const struct scmi_device_id *id_table
+ 	}
+ }
  
-+#ifdef CONFIG_GENERIC_IRQ_CHIP
- int irq_domain_alloc_generic_chips(struct irq_domain *d,
- 				   const struct irq_domain_chip_generic_info *info);
- void irq_domain_remove_generic_chips(struct irq_domain *d);
-+#else
-+static inline int
-+irq_domain_alloc_generic_chips(struct irq_domain *d,
-+			       const struct irq_domain_chip_generic_info *info)
++static int scmi_protocol_table_register(const struct scmi_device_id *id_table)
 +{
-+	return -EINVAL;
++	const struct scmi_device_id *entry;
++	int ret;
++
++	for (entry = id_table; entry->name; entry++) {
++		ret = scmi_protocol_device_request(entry);
++		if (ret)
++			goto err_unrequest;
++	}
++
++	return 0;
++
++err_unrequest:
++	while (entry != id_table)
++		scmi_protocol_device_unrequest(--entry);
++
++	return ret;
 +}
-+static inline void irq_domain_remove_generic_chips(struct irq_domain *d) { }
-+#endif /* CONFIG_GENERIC_IRQ_CHIP */
- 
- int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
- 				     int num_ct, const char *name,
++
+ static void
+ scmi_protocol_table_unregister(const struct scmi_device_id *id_table)
+ {
 -- 
 2.53.0
 
