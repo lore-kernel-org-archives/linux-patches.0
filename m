@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACEF8221F26;
-	Sat, 12 Sep 2026 11:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8AD24CEEA;
+	Sat, 12 Sep 2026 11:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210992; cv=none; b=JQp6UjYjNKM8fBLnlJ0iu4CwElolTXlEOTFNiTjYytsVLoRY5vkD93SKYeEvyjPDK6hukFFhoJHbb4ZY5i+EXDoGQ49FxT53bTaSEIFqZbVK7QPQ1+ZXzSffW8oRPiKobYiDJsXNAlZ5cOdcjG/8nn1nV6LOIfWpJfq8UE7r0qU=
+	t=1789210996; cv=none; b=MG/rBtyg0Fh7IIpooWwhBBpzrXvF23/mXIn99CA3hy/+jIeRDdI++Vc4HoxlyKLNtF5c/MQ17eOtDTu83y9n2j51/xd6mrkBOD/FtGbEbD0g0l13RS8RGP8NNVxLTYVvn5n1aHAOx/WJmnwi4oAgcpilGAK1+r90jsjVqPAoyRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210992; c=relaxed/simple;
-	bh=eyvdSsFwgCyd9ujSUiBTfyTCUYb1MhWR01jI7eFP55E=;
+	s=arc-20240116; t=1789210996; c=relaxed/simple;
+	bh=eWcMOaz04KVKLr1oeVqb4SkLgWHD2BYOTd+WMokI+yY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hu0c0ZTcNijMq1oe4SZycnmPuu6k5WbyMzHdv6w1e+U9EMvn/CSmOatJi/Su64B8BAlvM9KY7Md6HPwNBVcujJ+H17vp3zF/Nb3DS7ZBbZ5ti0PVkSCzedtRD2uDMG26qlaKhoK2rxNFv8KooL2j8oU91Sro1efQr182JVIOulM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+XWQLW3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P+8/bC9TJxL6q+OAo8+0/C2UWSUdJXQhYGeETY34w24DGRKAPE+nbFFlTxnhdgmEQW+/seFTOqOkGcqNMIDknB64CkopFoAAG7iqr2HD6x2bqGlL93DyBl8LeydbCtWvK7gQxssZtjQQQsEa5y6DOOdykVKpUj3u9Wafs+GrirQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UcLV7ns5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+XWQLW3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07B31F000FF;
-	Sat, 12 Sep 2026 11:03:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UcLV7ns5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368A61F000FF;
+	Sat, 12 Sep 2026 11:03:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210990;
-	bh=lcGf2iGD0FQV93Ii1qoITQMQi8VZpbd5AC0TNYFGLKU=;
+	s=korg; t=1789210995;
+	bh=QbkpycJFY4wSclHsla3XUQIs+QHhvnVFJgcVqABDtHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U+XWQLW3+ZL1DGR6jap8Wxe3eDxP0QJpTiuXDtQbupw71DvoApzyKm9tST09o2NSL
-	 kTM4SbCTTRmkOOVDtXmSluSBPCctjxszvPhp2ZCUNDJ5e3YmZ+vunVduS7e6eZWMoE
-	 eR9EsQP8eNbGEHjAP71dy9M7VKx3tppM+ox6txxo=
+	b=UcLV7ns5C+WqQg8kj8YBr724XuuXDu5mKGZEJVlAgq2PL3pcNrWPIjzGy/kFncjKO
+	 M5pTfOaKf4IVcLdcPB5L6hl1xiXmNL46iYYm2o7g4VVYFtbx2dO063fxXRxmjop7a2
+	 ybwnx8owsyr1YxVSVm+k09oN4e4y+tmbC2nUb6oI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	Simon Horman <horms@kernel.org>,
+	Robert Malz <robert.malz@canonical.com>,
 	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Rinitha S <sx.rinitha@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1138/1518] ice: refactor to use helpers
-Date: Sat, 12 Sep 2026 08:55:07 +0200
-Message-ID: <20260912065649.201848854@linuxfoundation.org>
+	Marcin Szycik <marcin.szycik@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.18 1139/1518] ice: acquire NVM lock around each flash read
+Date: Sat, 12 Sep 2026 08:55:08 +0200
+Message-ID: <20260912065649.224425492@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -56,299 +54,356 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Brandeburg <jesse.brandeburg@intel.com>
+From: Robert Malz <robert.malz@canonical.com>
 
-[ Upstream commit a308ea9721122d632d1ce2af4cec1c008aff512a ]
+[ Upstream commit df88d6f1ed653993bd5c8647aef0e6498f4b1647 ]
 
-Use the ice_netdev_to_pf() helper in more places and remove a bunch of
-boilerplate code. Not every instance could be replaced due to use of the
-netdev_priv() output or the vsi variable within a bunch of functions.
+FW caps the NVM read lock at a maximum of 3000ms regardless of the timeout
+requested via ice_acquire_nvm(). ice_read_flat_nvm() splits a read into
+multiple ice_aq_read_nvm() commands, one per 4KB sector, all issued under a
+single lock taken by the caller. Reading a large region can exceed 3000ms,
+so FW reclaims the lock mid-read and the remaining commands might fail.
 
-Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Move the lock acquire/release into ice_read_flat_nvm() so it brackets each
+individual ice_aq_read_nvm() command, ensuring the lock is never held
+across more than one FW read.
+
+ice_release_nvm() issues its own AQ command and overwrites
+hw->adminq.sq_last_status, which some callers inspect after a failed read.
+Add an optional read_aq_err output parameter to ice_read_flat_nvm() to
+capture the failing read's AQ error before the release; callers that need
+it (ice_discover_flash_size() and the ethtool/devlink log paths) use it
+instead of sq_last_status, others pass NULL.
+
+Callers that previously took the lock around ice_read_flat_nvm(),
+ice_read_sr_word() or ice_read_flash_module() now call them without it.
+The now-redundant per-block locking in ice_devlink_nvm_snapshot() is
+dropped. ice_read_sr_word() is now a thin wrapper, so ice_read_sr_word_aq()
+is folded into it.
+
+Fixes: e94509906d6b ("ice: create function to read a section of the NVM and Shadow RAM")
+Signed-off-by: Robert Malz <robert.malz@canonical.com>
 Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20251016-jk-iwl-next-2025-10-15-v2-12-ff3a390d9fc6@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: df88d6f1ed65 ("ice: acquire NVM lock around each flash read")
+Reviewed-by: Marcin Szycik <marcin.szycik@linux.intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ethtool.c  | 48 ++++++-------------
- .../net/ethernet/intel/ice/ice_flex_pipe.c    |  8 +---
- drivers/net/ethernet/intel/ice/ice_lag.c      |  3 +-
- drivers/net/ethernet/intel/ice/ice_main.c     | 10 ++--
- drivers/net/ethernet/intel/ice/ice_ptp.c      |  6 +--
- drivers/net/ethernet/intel/ice/ice_sriov.c    |  3 +-
- 6 files changed, 24 insertions(+), 54 deletions(-)
+ .../net/ethernet/intel/ice/devlink/devlink.c  | 32 ++-----
+ drivers/net/ethernet/intel/ice/ice_ethtool.c  | 16 +---
+ drivers/net/ethernet/intel/ice/ice_nvm.c      | 90 ++++++++++---------
+ drivers/net/ethernet/intel/ice/ice_nvm.h      |  2 +-
+ 4 files changed, 58 insertions(+), 82 deletions(-)
 
+diff --git a/drivers/net/ethernet/intel/ice/devlink/devlink.c b/drivers/net/ethernet/intel/ice/devlink/devlink.c
+index 839b7bfa19359..4bd377a668421 100644
+--- a/drivers/net/ethernet/intel/ice/devlink/devlink.c
++++ b/drivers/net/ethernet/intel/ice/devlink/devlink.c
+@@ -1884,27 +1884,18 @@ static int ice_devlink_nvm_snapshot(struct devlink *devlink,
+ 	 */
+ 	for (i = 0; i < num_blks; i++) {
+ 		u32 read_sz = min_t(u32, ICE_DEVLINK_READ_BLK_SIZE, left);
+-
+-		status = ice_acquire_nvm(hw, ICE_RES_READ);
+-		if (status) {
+-			dev_dbg(dev, "ice_acquire_nvm failed, err %d aq_err %d\n",
+-				status, hw->adminq.sq_last_status);
+-			NL_SET_ERR_MSG_MOD(extack, "Failed to acquire NVM semaphore");
+-			vfree(nvm_data);
+-			return -EIO;
+-		}
++		enum libie_aq_err read_aq_err = LIBIE_AQ_RC_OK;
+ 
+ 		status = ice_read_flat_nvm(hw, i * ICE_DEVLINK_READ_BLK_SIZE,
+-					   &read_sz, tmp, read_shadow_ram);
++					   &read_sz, tmp, read_shadow_ram,
++					   &read_aq_err);
+ 		if (status) {
+ 			dev_dbg(dev, "ice_read_flat_nvm failed after reading %u bytes, err %d aq_err %d\n",
+-				read_sz, status, hw->adminq.sq_last_status);
++				read_sz, status, read_aq_err);
+ 			NL_SET_ERR_MSG_MOD(extack, "Failed to read NVM contents");
+-			ice_release_nvm(hw);
+ 			vfree(nvm_data);
+ 			return -EIO;
+ 		}
+-		ice_release_nvm(hw);
+ 
+ 		tmp += read_sz;
+ 		left -= read_sz;
+@@ -1937,6 +1928,7 @@ static int ice_devlink_nvm_read(struct devlink *devlink,
+ 				struct netlink_ext_ack *extack,
+ 				u64 offset, u32 size, u8 *data)
+ {
++	enum libie_aq_err read_aq_err = LIBIE_AQ_RC_OK;
+ 	struct ice_pf *pf = devlink_priv(devlink);
+ 	struct device *dev = ice_pf_to_dev(pf);
+ 	struct ice_hw *hw = &pf->hw;
+@@ -1960,24 +1952,14 @@ static int ice_devlink_nvm_read(struct devlink *devlink,
+ 		return -ERANGE;
+ 	}
+ 
+-	status = ice_acquire_nvm(hw, ICE_RES_READ);
+-	if (status) {
+-		dev_dbg(dev, "ice_acquire_nvm failed, err %d aq_err %d\n",
+-			status, hw->adminq.sq_last_status);
+-		NL_SET_ERR_MSG_MOD(extack, "Failed to acquire NVM semaphore");
+-		return -EIO;
+-	}
+-
+ 	status = ice_read_flat_nvm(hw, (u32)offset, &size, data,
+-				   read_shadow_ram);
++				   read_shadow_ram, &read_aq_err);
+ 	if (status) {
+ 		dev_dbg(dev, "ice_read_flat_nvm failed after reading %u bytes, err %d aq_err %d\n",
+-			size, status, hw->adminq.sq_last_status);
++			size, status, read_aq_err);
+ 		NL_SET_ERR_MSG_MOD(extack, "Failed to read NVM contents");
+-		ice_release_nvm(hw);
+ 		return -EIO;
+ 	}
+-	ice_release_nvm(hw);
+ 
+ 	return 0;
+ }
 diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-index 5944ab6efd448..c595fbf6eb34e 100644
+index c595fbf6eb34e..c10d0b92e63e5 100644
 --- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
 +++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -794,8 +794,7 @@ static int ice_get_extended_regs(struct net_device *netdev, void *p)
- static void
- ice_get_regs(struct net_device *netdev, struct ethtool_regs *regs, void *p)
- {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_pf *pf = np->vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
- 	struct ice_hw *hw = &pf->hw;
- 	u32 *regs_buf = (u32 *)p;
- 	unsigned int i;
-@@ -810,8 +809,7 @@ ice_get_regs(struct net_device *netdev, struct ethtool_regs *regs, void *p)
- 
- static u32 ice_get_msglevel(struct net_device *netdev)
- {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_pf *pf = np->vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
- 
- #ifndef CONFIG_DYNAMIC_DEBUG
- 	if (pf->hw.debug_mask)
-@@ -824,8 +822,7 @@ static u32 ice_get_msglevel(struct net_device *netdev)
- 
- static void ice_set_msglevel(struct net_device *netdev, u32 data)
- {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_pf *pf = np->vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
- 
- #ifndef CONFIG_DYNAMIC_DEBUG
- 	if (ICE_DBG_USER & data)
-@@ -840,16 +837,14 @@ static void ice_set_msglevel(struct net_device *netdev, u32 data)
- static void ice_get_link_ext_stats(struct net_device *netdev,
- 				   struct ethtool_link_ext_stats *stats)
- {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_pf *pf = np->vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
- 
- 	stats->link_down_events = pf->link_down_events;
- }
- 
- static int ice_get_eeprom_len(struct net_device *netdev)
- {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_pf *pf = np->vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
- 
- 	return (int)pf->hw.flash.flash_size;
- }
-@@ -858,9 +853,7 @@ static int
+@@ -853,6 +853,7 @@ static int
  ice_get_eeprom(struct net_device *netdev, struct ethtool_eeprom *eeprom,
  	       u8 *bytes)
  {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_vsi *vsi = np->vsi;
--	struct ice_pf *pf = vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
++	enum libie_aq_err read_aq_err = LIBIE_AQ_RC_OK;
+ 	struct ice_pf *pf = ice_netdev_to_pf(netdev);
  	struct ice_hw *hw = &pf->hw;
  	struct device *dev;
- 	int ret;
-@@ -959,8 +952,7 @@ static u64 ice_link_test(struct net_device *netdev)
+@@ -869,24 +870,15 @@ ice_get_eeprom(struct net_device *netdev, struct ethtool_eeprom *eeprom,
+ 	if (!buf)
+ 		return -ENOMEM;
+ 
+-	ret = ice_acquire_nvm(hw, ICE_RES_READ);
+-	if (ret) {
+-		dev_err(dev, "ice_acquire_nvm failed, err %d aq_err %s\n",
+-			ret, libie_aq_str(hw->adminq.sq_last_status));
+-		goto out;
+-	}
+-
+ 	ret = ice_read_flat_nvm(hw, eeprom->offset, &eeprom->len, buf,
+-				false);
++				false, &read_aq_err);
+ 	if (ret) {
+ 		dev_err(dev, "ice_read_flat_nvm failed, err %d aq_err %s\n",
+-			ret, libie_aq_str(hw->adminq.sq_last_status));
+-		goto release;
++			ret, libie_aq_str(read_aq_err));
++		goto out;
+ 	}
+ 
+ 	memcpy(bytes, buf, eeprom->len);
+-release:
+-	ice_release_nvm(hw);
+ out:
+ 	kfree(buf);
+ 	return ret;
+diff --git a/drivers/net/ethernet/intel/ice/ice_nvm.c b/drivers/net/ethernet/intel/ice/ice_nvm.c
+index 7e187a804dfa1..21f3b615dbbf1 100644
+--- a/drivers/net/ethernet/intel/ice/ice_nvm.c
++++ b/drivers/net/ethernet/intel/ice/ice_nvm.c
+@@ -53,17 +53,27 @@ int ice_aq_read_nvm(struct ice_hw *hw, u16 module_typeid, u32 offset,
+  * @length: (in) number of bytes to read; (out) number of bytes actually read
+  * @data: buffer to return data in (sized to fit the specified length)
+  * @read_shadow_ram: if true, read from shadow RAM instead of NVM
++ * @read_aq_err: if non-NULL, receives the AQ error status of the failing read
+  *
+  * Reads a portion of the NVM, as a flat memory space. This function correctly
+  * breaks read requests across Shadow RAM sectors and ensures that no single
+  * read request exceeds the maximum 4KB read for a single AdminQ command.
+  *
++ * FW caps the read lock at a maximum of 3000ms, so a read spanning multiple
++ * 4KB sectors cannot be done under a single lock without FW reclaiming it
++ * mid-read. The NVM lock is therefore acquired and released around each AQ
++ * read, so this function must be called without the lock held.
++ *
++ * Since ice_release_nvm() issues an AQ command that overwrites
++ * hw->adminq.sq_last_status, callers that need the failing read's AQ error
++ * must use @read_aq_err rather than inspecting sq_last_status afterwards.
++ *
+  * Returns a status code on failure. Note that the data pointer may be
+  * partially updated if some reads succeed before a failure.
   */
- static u64 ice_eeprom_test(struct net_device *netdev)
+ int
+ ice_read_flat_nvm(struct ice_hw *hw, u32 offset, u32 *length, u8 *data,
+-		  bool read_shadow_ram)
++		  bool read_shadow_ram, enum libie_aq_err *read_aq_err)
  {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_pf *pf = np->vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 	u32 inlen = *length;
+ 	u32 bytes_read = 0;
+@@ -92,12 +102,30 @@ ice_read_flat_nvm(struct ice_hw *hw, u32 offset, u32 *length, u8 *data,
  
- 	netdev_info(netdev, "EEPROM test\n");
- 	return !!(ice_nvm_validate_checksum(&pf->hw));
-@@ -1274,9 +1266,8 @@ static int ice_lbtest_receive_frames(struct ice_rx_ring *rx_ring)
+ 		last_cmd = !(bytes_read + read_size < inlen);
+ 
++		status = ice_acquire_nvm(hw, ICE_RES_READ);
++		if (status) {
++			ice_debug(hw, ICE_DBG_NVM, "Failed to acquire NVM lock, err %d aq_err %s\n",
++				  status, libie_aq_str(hw->adminq.sq_last_status));
++			break;
++		}
++
+ 		status = ice_aq_read_nvm(hw, ICE_AQC_NVM_START_POINT,
+ 					 offset, read_size,
+ 					 data + bytes_read, last_cmd,
+ 					 read_shadow_ram, NULL);
+-		if (status)
++		if (status) {
++			/* Capture the read's AQ error before ice_release_nvm()
++			 * issues its own AQ command and overwrites
++			 * sq_last_status.
++			 */
++			if (read_aq_err)
++				*read_aq_err = hw->adminq.sq_last_status;
++
++			ice_release_nvm(hw);
+ 			break;
++		}
++
++		ice_release_nvm(hw);
+ 
+ 		bytes_read += read_size;
+ 		offset += read_size;
+@@ -177,14 +205,19 @@ int ice_aq_erase_nvm(struct ice_hw *hw, u16 module_typeid, struct ice_sq_cd *cd)
+ }
+ 
+ /**
+- * ice_read_sr_word_aq - Reads Shadow RAM via AQ
++ * ice_read_sr_word - Reads Shadow RAM word
+  * @hw: pointer to the HW structure
+  * @offset: offset of the Shadow RAM word to read (0x000000 - 0x001FFF)
+  * @data: word read from the Shadow RAM
+  *
+  * Reads one 16 bit word from the Shadow RAM using ice_read_flat_nvm.
++ *
++ * The NVM lock is acquired and released internally by ice_read_flat_nvm()
++ * around the FW read, so this function must be called without the lock held.
++ *
++ * Return: zero on success, or a negative error code on failure.
   */
- static u64 ice_loopback_test(struct net_device *netdev)
+-static int ice_read_sr_word_aq(struct ice_hw *hw, u16 offset, u16 *data)
++int ice_read_sr_word(struct ice_hw *hw, u16 offset, u16 *data)
  {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_vsi *orig_vsi = np->vsi, *test_vsi;
--	struct ice_pf *pf = orig_vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
-+	struct ice_vsi *test_vsi;
- 	u8 *tx_frame __free(kfree) = NULL;
- 	u8 broadcast[ETH_ALEN], ret = 0;
- 	int num_frames, valid_frames;
-@@ -1365,8 +1356,7 @@ static u64 ice_loopback_test(struct net_device *netdev)
-  */
- static u64 ice_intr_test(struct net_device *netdev)
- {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_pf *pf = np->vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
- 	u16 swic_old = pf->sw_int_count;
+ 	u32 bytes = sizeof(u16);
+ 	__le16 data_local;
+@@ -194,7 +227,7 @@ static int ice_read_sr_word_aq(struct ice_hw *hw, u16 offset, u16 *data)
+ 	 * Shadow RAM sector restrictions necessary when reading from the NVM.
+ 	 */
+ 	status = ice_read_flat_nvm(hw, offset * sizeof(u16), &bytes,
+-				   (__force u8 *)&data_local, true);
++				   (__force u8 *)&data_local, true, NULL);
+ 	if (status)
+ 		return status;
  
- 	netdev_info(netdev, "interrupt test\n");
-@@ -1394,9 +1384,8 @@ static void
- ice_self_test(struct net_device *netdev, struct ethtool_test *eth_test,
- 	      u64 *data)
- {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
- 	bool if_running = netif_running(netdev);
--	struct ice_pf *pf = np->vsi->back;
- 	struct device *dev;
+@@ -330,13 +363,8 @@ ice_read_flash_module(struct ice_hw *hw, enum ice_bank_select bank, u16 module,
+ 		return -EINVAL;
+ 	}
  
- 	dev = ice_pf_to_dev(pf);
-@@ -1720,9 +1709,7 @@ static int ice_nway_reset(struct net_device *netdev)
-  */
- static u32 ice_get_priv_flags(struct net_device *netdev)
- {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_vsi *vsi = np->vsi;
--	struct ice_pf *pf = vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
- 	u32 i, ret_flags = 0;
+-	status = ice_acquire_nvm(hw, ICE_RES_READ);
+-	if (status)
+-		return status;
+-
+-	status = ice_read_flat_nvm(hw, start + offset, &length, data, false);
+-
+-	ice_release_nvm(hw);
++	status = ice_read_flat_nvm(hw, start + offset, &length, data, false,
++				   NULL);
  
- 	for (i = 0; i < ICE_PRIV_FLAG_ARRAY_SIZE; i++) {
-@@ -4432,9 +4419,7 @@ static int
- ice_get_module_info(struct net_device *netdev,
- 		    struct ethtool_modinfo *modinfo)
- {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_vsi *vsi = np->vsi;
--	struct ice_pf *pf = vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
- 	struct ice_hw *hw = &pf->hw;
- 	u8 sff8472_comp = 0;
- 	u8 sff8472_swap = 0;
-@@ -4506,12 +4491,10 @@ static int
- ice_get_module_eeprom(struct net_device *netdev,
- 		      struct ethtool_eeprom *ee, u8 *data)
- {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
- #define SFF_READ_BLOCK_SIZE 8
- 	u8 value[SFF_READ_BLOCK_SIZE] = { 0 };
- 	u8 addr = ICE_I2C_EEPROM_DEV_ADDR;
--	struct ice_vsi *vsi = np->vsi;
--	struct ice_pf *pf = vsi->back;
- 	struct ice_hw *hw = &pf->hw;
- 	bool is_sfp = false;
- 	unsigned int i;
-@@ -4690,8 +4673,7 @@ static void ice_get_fec_stats(struct net_device *netdev,
-  */
- static int ice_ethtool_reset(struct net_device *dev, u32 *flags)
- {
--	struct ice_netdev_priv *np = netdev_priv(dev);
--	struct ice_pf *pf = np->vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(dev);
- 	enum ice_reset_req reset;
+ 	return status;
+ }
+@@ -418,27 +446,6 @@ ice_read_netlist_module(struct ice_hw *hw, enum ice_bank_select bank, u32 offset
+ 	return status;
+ }
  
- 	switch (*flags) {
-diff --git a/drivers/net/ethernet/intel/ice/ice_flex_pipe.c b/drivers/net/ethernet/intel/ice/ice_flex_pipe.c
-index 013c93b6605ed..c8cb492fddf46 100644
---- a/drivers/net/ethernet/intel/ice/ice_flex_pipe.c
-+++ b/drivers/net/ethernet/intel/ice/ice_flex_pipe.c
-@@ -574,9 +574,7 @@ ice_destroy_tunnel(struct ice_hw *hw, u16 index, enum ice_tunnel_type type,
- int ice_udp_tunnel_set_port(struct net_device *netdev, unsigned int table,
- 			    unsigned int idx, struct udp_tunnel_info *ti)
+-/**
+- * ice_read_sr_word - Reads Shadow RAM word and acquire NVM if necessary
+- * @hw: pointer to the HW structure
+- * @offset: offset of the Shadow RAM word to read (0x000000 - 0x001FFF)
+- * @data: word read from the Shadow RAM
+- *
+- * Reads one 16 bit word from the Shadow RAM using the ice_read_sr_word_aq.
+- */
+-int ice_read_sr_word(struct ice_hw *hw, u16 offset, u16 *data)
+-{
+-	int status;
+-
+-	status = ice_acquire_nvm(hw, ICE_RES_READ);
+-	if (!status) {
+-		status = ice_read_sr_word_aq(hw, offset, data);
+-		ice_release_nvm(hw);
+-	}
+-
+-	return status;
+-}
+-
+ /**
+  * ice_get_pfa_module_tlv - Reads sub module TLV from NVM PFA
+  * @hw: pointer to hardware structure
+@@ -856,20 +863,18 @@ int ice_get_inactive_netlist_ver(struct ice_hw *hw, struct ice_netlist_info *net
+ static int ice_discover_flash_size(struct ice_hw *hw)
  {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_vsi *vsi = np->vsi;
--	struct ice_pf *pf = vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
- 	enum ice_tunnel_type tnl_type;
- 	int status;
- 	u16 index;
-@@ -598,9 +596,7 @@ int ice_udp_tunnel_set_port(struct net_device *netdev, unsigned int table,
- int ice_udp_tunnel_unset_port(struct net_device *netdev, unsigned int table,
- 			      unsigned int idx, struct udp_tunnel_info *ti)
- {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_vsi *vsi = np->vsi;
--	struct ice_pf *pf = vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
- 	enum ice_tunnel_type tnl_type;
- 	int status;
+ 	u32 min_size = 0, max_size = ICE_AQC_NVM_MAX_OFFSET + 1;
+-	int status;
+-
+-	status = ice_acquire_nvm(hw, ICE_RES_READ);
+-	if (status)
+-		return status;
++	int status = 0;
  
-diff --git a/drivers/net/ethernet/intel/ice/ice_lag.c b/drivers/net/ethernet/intel/ice/ice_lag.c
-index e8ab36d0f11d8..b2ea0532f07b2 100644
---- a/drivers/net/ethernet/intel/ice/ice_lag.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lag.c
-@@ -2177,8 +2177,7 @@ static void ice_lag_chk_disabled_bond(struct ice_lag *lag, void *ptr)
-  */
- static void ice_lag_disable_sriov_bond(struct ice_lag *lag)
- {
--	struct ice_netdev_priv *np = netdev_priv(lag->netdev);
--	struct ice_pf *pf = np->vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(lag->netdev);
+ 	while ((max_size - min_size) > 1) {
++		enum libie_aq_err read_aq_err = LIBIE_AQ_RC_OK;
+ 		u32 offset = (max_size + min_size) / 2;
+ 		u32 len = 1;
+ 		u8 data;
  
- 	ice_clear_feature_support(pf, ICE_F_SRIOV_LAG);
- 	ice_clear_feature_support(pf, ICE_F_SRIOV_AA_LAG);
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 2f1dd9eea2b23..f85051072ba2c 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -8116,9 +8116,7 @@ static int
- ice_bridge_getlink(struct sk_buff *skb, u32 pid, u32 seq,
- 		   struct net_device *dev, u32 filter_mask, int nlflags)
- {
--	struct ice_netdev_priv *np = netdev_priv(dev);
--	struct ice_vsi *vsi = np->vsi;
--	struct ice_pf *pf = vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(dev);
- 	u16 bmode;
+-		status = ice_read_flat_nvm(hw, offset, &len, &data, false);
++		status = ice_read_flat_nvm(hw, offset, &len, &data, false,
++					   &read_aq_err);
+ 		if (status == -EIO &&
+-		    hw->adminq.sq_last_status == LIBIE_AQ_RC_EINVAL) {
++		    read_aq_err == LIBIE_AQ_RC_EINVAL) {
+ 			ice_debug(hw, ICE_DBG_NVM, "%s: New upper bound of %u bytes\n",
+ 				  __func__, offset);
+ 			status = 0;
+@@ -880,7 +885,7 @@ static int ice_discover_flash_size(struct ice_hw *hw)
+ 			min_size = offset;
+ 		} else {
+ 			/* an unexpected error occurred */
+-			goto err_read_flat_nvm;
++			return status;
+ 		}
+ 	}
  
- 	bmode = pf->first_sw->bridge_mode;
-@@ -8188,8 +8186,7 @@ ice_bridge_setlink(struct net_device *dev, struct nlmsghdr *nlh,
- 		   u16 __always_unused flags,
- 		   struct netlink_ext_ack __always_unused *extack)
- {
--	struct ice_netdev_priv *np = netdev_priv(dev);
--	struct ice_pf *pf = np->vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(dev);
- 	struct nlattr *attr, *br_spec;
- 	struct ice_hw *hw = &pf->hw;
- 	struct ice_sw *pf_sw;
-@@ -9623,8 +9620,7 @@ ice_indr_setup_tc_cb(struct net_device *netdev, struct Qdisc *sch,
-  */
- int ice_open(struct net_device *netdev)
- {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_pf *pf = np->vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+@@ -888,9 +893,6 @@ static int ice_discover_flash_size(struct ice_hw *hw)
  
- 	if (ice_is_reset_in_progress(pf->state)) {
- 		netdev_err(netdev, "can't open net device while reset is in progress");
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
-index 30a34ed2ae60a..7808d583b9ee1 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
-@@ -2164,8 +2164,7 @@ static int ice_ptp_getcrosststamp(struct ptp_clock_info *info,
- int ice_ptp_hwtstamp_get(struct net_device *netdev,
- 			 struct kernel_hwtstamp_config *config)
- {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_pf *pf = np->vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 	hw->flash.flash_size = max_size;
  
- 	if (pf->ptp.state != ICE_PTP_READY)
- 		return -EIO;
-@@ -2236,8 +2235,7 @@ int ice_ptp_hwtstamp_set(struct net_device *netdev,
- 			 struct kernel_hwtstamp_config *config,
- 			 struct netlink_ext_ack *extack)
- {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_pf *pf = np->vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
- 	int err;
+-err_read_flat_nvm:
+-	ice_release_nvm(hw);
+-
+ 	return status;
+ }
  
- 	if (pf->ptp.state != ICE_PTP_READY)
-diff --git a/drivers/net/ethernet/intel/ice/ice_sriov.c b/drivers/net/ethernet/intel/ice/ice_sriov.c
-index 6a0b724e46f9a..38f8356470131 100644
---- a/drivers/net/ethernet/intel/ice/ice_sriov.c
-+++ b/drivers/net/ethernet/intel/ice/ice_sriov.c
-@@ -1192,8 +1192,7 @@ ice_vf_lan_overflow_event(struct ice_pf *pf, struct ice_rq_event_info *event)
-  */
- int ice_set_vf_spoofchk(struct net_device *netdev, int vf_id, bool ena)
- {
--	struct ice_netdev_priv *np = netdev_priv(netdev);
--	struct ice_pf *pf = np->vsi->back;
-+	struct ice_pf *pf = ice_netdev_to_pf(netdev);
- 	struct ice_vsi *vf_vsi;
- 	struct device *dev;
- 	struct ice_vf *vf;
+diff --git a/drivers/net/ethernet/intel/ice/ice_nvm.h b/drivers/net/ethernet/intel/ice/ice_nvm.h
+index 63cdc6bdac589..e1d1a11f5ca41 100644
+--- a/drivers/net/ethernet/intel/ice/ice_nvm.h
++++ b/drivers/net/ethernet/intel/ice/ice_nvm.h
+@@ -19,7 +19,7 @@ int ice_aq_read_nvm(struct ice_hw *hw, u16 module_typeid, u32 offset,
+ 		    bool read_shadow_ram, struct ice_sq_cd *cd);
+ int
+ ice_read_flat_nvm(struct ice_hw *hw, u32 offset, u32 *length, u8 *data,
+-		  bool read_shadow_ram);
++		  bool read_shadow_ram, enum libie_aq_err *read_aq_err);
+ int
+ ice_get_pfa_module_tlv(struct ice_hw *hw, u16 *module_tlv, u16 *module_tlv_len,
+ 		       u16 module_type);
 -- 
 2.53.0
 
