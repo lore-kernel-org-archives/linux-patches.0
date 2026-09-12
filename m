@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58712399354;
-	Sat, 12 Sep 2026 20:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCEF399351;
+	Sat, 12 Sep 2026 20:01:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243266; cv=none; b=jD52YJ3cwLnzob0k85aNoMINJo0MJY1qnXPwD7sFLs97sOnDcy1rmC0xfA+wGL/AY+P1qzwe0JH3SCqu5Mc6cUDk6+fbRYKzVdQYQ3yQ2k6QG7co/OB6pw+Ivlrh8Qt11wI6tmfRHNRxa3hjt/BsXrD0Cq6Mljblpcz06yCMtaM=
+	t=1789243269; cv=none; b=irndZf/v//+PJwtgjp2QP4Ji0uUXi62n+QG5eXAKfAyk3smUJYtpFUMudfC4qhTWP+TUY1qL9Fhfcg4+Uluxr339DvbQy/2RkeoiCeu+CAiw/VAmvcBEweibZzNBs66iaBikoGNqifKsx7FK/YdR+Hexb/nPdmh4JDlwLGPeewo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243266; c=relaxed/simple;
-	bh=7Wd68GvbE8/Kly8D/It/9/jdt+Zx/1upssubColMhXM=;
+	s=arc-20240116; t=1789243269; c=relaxed/simple;
+	bh=kQPaCYhCt2VrM9mi4ISzKJ1J9z0DFhBO4J9bIMfWKAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uumv8g1JNqUbqeapKHpAbySCcow3tkKRzVZMh9gNyEGUg0kItlBlDMJrnBVlZt+fSKW6F3QUaDFLzDaRbnZNHDK01UOLp2OOHc43Xk+7bBlMe+qkb//M4AsMRAuaFX6AtGGzMZLHR0QgsDTt4ouvAVq6z0Bu/59ZPKS0OHY3mwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lx1VYvGu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uUFIflRcEtQ0CugqEtRrBHs8UAgogwaYahs3Jc7UF+ROjsgxtlyxba1D6zcMcwGIKfFCMPCQ/eLx6C/LEVDjk4k9Mt4zH0MB+uMoIE3pJmfLHwn7V4Cjb4iKMUeXhdCVI2JVGb3x7tXLbla7WXCq2JH9ffJk9ADGF7a9y/KPxXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XOj2wrN5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lx1VYvGu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E6C1F000FF;
-	Sat, 12 Sep 2026 20:01:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XOj2wrN5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AFEC1F000FF;
+	Sat, 12 Sep 2026 20:01:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243265;
-	bh=EUOz1hEG02UpAPk6c7PPNo3DUdVqlSCH1AcI5pLyGRw=;
+	s=korg; t=1789243268;
+	bh=33VK7ymarbkAxxkd25yu3kwwqpfllfAclS+D44UH8lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lx1VYvGu+L9L2fhEKr7elx4USEOz1iqkMEBNA087R8fZ23ipnlmrGdvC6UPjtackj
-	 XrDw1v1qSpJeGcmoM5ahdefP9x4wYeQSNfXJqgZA5qyd4QrdSJuK50ySrjyDG48j3E
-	 wFz2v3Rn0czImLd1fM8ioWug8Fm0PXpNMLJ3+bw8=
+	b=XOj2wrN5rHw9adrLOZ6VYmZpJcmL414e+PZzrmpx353HFfhENUgU9IqIkpEEdY9p7
+	 aUHn6GjDJuz6CxDK7/dk1XtyFPpiECjh/yefHOZ/o4tAlk7wVN2bbalE464zzaA683
+	 hp2pypomqGGFmmi9y91T6fhDMlXqtj0bo64V+lmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Nikhil Gautam <nikhilgtr@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 693/798] ubi: Fix rollback for explicit UBI device numbers
-Date: Sat, 12 Sep 2026 09:05:21 +0200
-Message-ID: <20260912065532.980411911@linuxfoundation.org>
+Subject: [PATCH 5.10 653/798] iio: light: gp2ap002: re-enable irq if runtime suspend fails
+Date: Sat, 12 Sep 2026 09:04:41 +0200
+Message-ID: <20260912065532.079673442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,47 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Nikhil Gautam <nikhilgtr@gmail.com>
 
-[ Upstream commit 5b0a6b554e12a97f9771a9a9f4ea1f5457373c73 ]
+[ Upstream commit 5d89e7cbac40057f5241a0832a86ce0fe97e4818 ]
 
-ubi_init_attach() rolls back module initialization failures by scanning
-ubi_devices[0..i-1], where i is the mtd= parameter index. That assumes
-the parameter index matches the UBI device number.
+gp2ap002_runtime_suspend() disables the irq before writing OPMOD. If
+the write fails, the callback returns an error with the irq still
+disabled while the PM core marks the device active again.
 
-That assumption is not true when mtd= specifies an explicit ubi_num. A
-successfully attached device can be stored at a higher ubi_devices[]
-slot, and a later failure can miss it during rollback.
+re-enable the irq before returning the error so the irq state matches
+the active state the PM core restores.
 
-Scan the full ubi_devices[] array and detach by the actual array index,
-matching the way UBI devices are stored.
-
-Fixes: 83ff59a06663 ("UBI: support ubi_num on mtd.ubi command line")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: 97d642e23037c ("iio: light: Add a driver for Sharp GP2AP002x00F")
+Signed-off-by: Nikhil Gautam <nikhilgtr@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/build.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/light/gp2ap002.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
-index 23aec732b08c8..c59b04d8a39e5 100644
---- a/drivers/mtd/ubi/build.c
-+++ b/drivers/mtd/ubi/build.c
-@@ -1317,10 +1317,10 @@ static int __init ubi_init(void)
- 	return 0;
- 
- out_detach:
--	for (k = 0; k < i; k++)
-+	for (k = 0; k < UBI_MAX_DEVICES; k++)
- 		if (ubi_devices[k]) {
- 			mutex_lock(&ubi_devices_mutex);
--			ubi_detach_mtd_dev(ubi_devices[k]->ubi_num, 1);
-+			ubi_detach_mtd_dev(k, 1);
- 			mutex_unlock(&ubi_devices_mutex);
- 		}
- 	ubi_debugfs_exit();
+diff --git a/drivers/iio/light/gp2ap002.c b/drivers/iio/light/gp2ap002.c
+index 3d1ab38799c43..d538cac007014 100644
+--- a/drivers/iio/light/gp2ap002.c
++++ b/drivers/iio/light/gp2ap002.c
+@@ -659,6 +659,7 @@ static int __maybe_unused gp2ap002_runtime_suspend(struct device *dev)
+ 	/* Disable chip and IRQ, everything off */
+ 	ret = regmap_write(gp2ap002->map, GP2AP002_OPMOD, 0x00);
+ 	if (ret) {
++		enable_irq(gp2ap002->irq);
+ 		dev_err(gp2ap002->dev, "error setting up operation mode\n");
+ 		return ret;
+ 	}
 -- 
 2.53.0
 
