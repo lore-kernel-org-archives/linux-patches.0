@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A55FA3B27D1;
-	Sat, 12 Sep 2026 19:11:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8663A6F09;
+	Sat, 12 Sep 2026 19:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240316; cv=none; b=K9TPHzJ1LGDs6lmOAg9+29kSYnZkrZ4kqy7V+rl0yNnXqhsahW/rYE1G19/UZ1UyDj7xQBYcIH7zRZjGBiLSJSVMNKnhJGkbDlONMa754+kkms0H9UNmJxWMtUGJOk7R7acNOAVqINEmnpbNZ+Eh8CLA+9rCsW8Ig6UFabf8C/M=
+	t=1789240323; cv=none; b=lUYUNmbbg8dFrz+G7EK5FfYxB7D/CagCFuPlEEA0712OJDD/cjMCc9uHMPgUqK0+7M/NFRGPdiDQANq/brK9D7cyt7N1+oqFV9mI/pwRF8d0LAl400coGjxen9ThnRG+nb05goARchGHhOr2qqIWwan1vRntFcXvHd2uDxhkOXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240316; c=relaxed/simple;
-	bh=PM40TO+8YVj0JasackdsrioNsHGdxUff0hCV+BDuxyw=;
+	s=arc-20240116; t=1789240323; c=relaxed/simple;
+	bh=O0vT5zfLjKoIl1hj+WtSTCSnx42EyJBqOLOvjKwNKyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qzZkLoUUOtILaSQEGCW/YQ6GsKAbJlLzoKY/VF2O6FbPvnFohUoshR3NfNn4DJm8MSJLjfyM6MTdYzefnyvJ6Vs7irAPaQv8AAeG76a950fKkZhgWLYx9SVgpzaFqlyaWLVNFSV6wrX61BDpnjjkvvKt4KLcgAnvWsAkgzd/q/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1rJ8ArS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GDbc8WY/sN5mBKXhoGq9BPqScgIX0b/PNjQm9M2O2ldSlx0KwB8HRniGrfdj0ZPE1a4AQb3xnZCdSCmeLj9VBRZ6WFbGDFcjbwyktKT7AefqpyFYXFEJYrcpyn4n6eoxiE5U2VOXQGDII8S36Yl//no6qCPH0CB/vA3GWpnPm58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ox0DjXnX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1rJ8ArS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7FA1F000FF;
-	Sat, 12 Sep 2026 19:11:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ox0DjXnX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9021F000FF;
+	Sat, 12 Sep 2026 19:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240313;
-	bh=SUrIqxKmM3pVX/0p0/CQfqV/WwQ8YgQRh91fnq5O0EQ=;
+	s=korg; t=1789240319;
+	bh=5voZ3nFJgR/fe7hCmTfDzyjsC5/usqllQFZM6qFXKLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K1rJ8ArSToRZd7KvCJiD+DDJVjUN1tULvXREMmvS/s18HTT+R76RvCT/Y6hpx1css
-	 MbPzTePDj7ekHdjzSghg5HnzLNrwTmnJKfFKkpZ24uj69XaAP/Y+0Z6scF1AsXlrtL
-	 6ThJY5nwrprrSM6EqZZ2WrXF/NDvMvA59dPyyVk4=
+	b=ox0DjXnXGgokMxNw79Lulpnuv6jRV/XqFf0pq/rcUWtC4GXczE0h9gDqqfWUTursQ
+	 YQZUuoxIt1XMAKgQ1BmJeEMwI8Xdz/3xrT8TRTxCMdwfeuhvZdqtR4i97QHB1KiFlA
+	 RvvmIMyDQpLB6bfLyTCDosi2UE6gEg6QDUnn/szU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@linux.dev>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 842/935] pppox: drain queued packets on channel handoff
-Date: Sat, 12 Sep 2026 09:04:32 +0200
-Message-ID: <20260912065546.139366073@linuxfoundation.org>
+Subject: [PATCH 5.15 843/935] hsr: Use a single struct for self_node.
+Date: Sat, 12 Sep 2026 09:04:33 +0200
+Message-ID: <20260912065546.162646256@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,66 +52,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 92c1bf630abf0af646562398eaa36f80b5ff677d ]
+[ Upstream commit 20d3c1e9b861b85e1a774e1876d6adeeb0251fc3 ]
 
-PPPIOCGCHAN both returns the channel index and marks a PPPOX socket as
-bound to generic PPP, despite its getter semantic. Packets received
-before that transition are queued on sk_receive_queue, but a bound
-socket is no longer readable. Such packets therefore remain queued until
-the socket is destroyed.
+self_node_db is a list_head with one entry of struct hsr_node. The
+purpose is to hold the two MAC addresses of the node itself.
+It is convenient to recycle the structure. However having a list_head
+and fetching always the first entry is not really optimal.
 
-After marking a socket bound, wait for receive paths that observed the
-old state to finish queueing packets, and then drain the queue into
-generic PPP.
+Created a new data strucure contaning the two MAC addresses named
+hsr_self_node. Access that structure like an RCU protected pointer so
+it can be replaced on the fly without blocking the reader.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Link: https://patch.msgid.link/20260811035314.302878-1-qingfang.deng@linux.dev
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 7f16289b91eb ("net: hsr: free learned nodes on device setup failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/pppox.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ net/hsr/hsr_device.c   |  1 -
+ net/hsr/hsr_framereg.c | 63 +++++++++++++++++++-----------------------
+ net/hsr/hsr_main.h     |  8 +++++-
+ 3 files changed, 35 insertions(+), 37 deletions(-)
 
-diff --git a/drivers/net/ppp/pppox.c b/drivers/net/ppp/pppox.c
-index 08364f10a43fa..61b3453469dce 100644
---- a/drivers/net/ppp/pppox.c
-+++ b/drivers/net/ppp/pppox.c
-@@ -74,7 +74,9 @@ int pppox_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index 0d7550f7498e1..93ccd67717cb1 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -637,7 +637,6 @@ int hsr_dev_finalize(struct net_device *hsr_dev, struct net_device *slave[2],
+ 	hsr = netdev_priv(hsr_dev);
+ 	INIT_LIST_HEAD(&hsr->ports);
+ 	INIT_LIST_HEAD(&hsr->node_db);
+-	INIT_LIST_HEAD(&hsr->self_node_db);
+ 	spin_lock_init(&hsr->list_lock);
  
- 	switch (cmd) {
- 	case PPPIOCGCHAN: {
-+		struct sk_buff *skb;
- 		int index;
-+
- 		rc = -ENOTCONN;
- 		if (!(sk->sk_state & PPPOX_CONNECTED))
- 			break;
-@@ -85,7 +87,22 @@ int pppox_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 			break;
+ 	eth_hw_addr_set(hsr_dev, slave[0]->dev_addr);
+diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
+index 0b3d9dfbe6d6c..b40b45331a81f 100644
+--- a/net/hsr/hsr_framereg.c
++++ b/net/hsr/hsr_framereg.c
+@@ -40,21 +40,22 @@ static bool seq_nr_after(u16 a, u16 b)
  
- 		rc = 0;
-+		/* PPPIOCGCHAN historically marks the userspace handoff to
-+		 * generic PPP; pppd then attaches the returned channel to
-+		 * /dev/ppp.
-+		 */
- 		sk->sk_state |= PPPOX_BOUND;
-+		/* Let lockless receive paths finish queueing against the old
-+		 * state.
-+		 */
-+		synchronize_net();
-+		/* Drain packets queued before the handoff because a bound
-+		 * socket is no longer readable.
-+		 */
-+		while ((skb = skb_dequeue(&sk->sk_receive_queue))) {
-+			skb_orphan(skb);
-+			ppp_input(&po->chan, skb);
-+		}
- 		break;
+ bool hsr_addr_is_self(struct hsr_priv *hsr, unsigned char *addr)
+ {
+-	struct hsr_node *node;
++	struct hsr_self_node *sn;
++	bool ret = false;
+ 
+-	node = list_first_or_null_rcu(&hsr->self_node_db, struct hsr_node,
+-				      mac_list);
+-	if (!node) {
++	rcu_read_lock();
++	sn = rcu_dereference(hsr->self_node);
++	if (!sn) {
+ 		WARN_ONCE(1, "HSR: No self node\n");
+-		return false;
++		goto out;
  	}
- 	default:
+ 
+-	if (ether_addr_equal(addr, node->macaddress_A))
+-		return true;
+-	if (ether_addr_equal(addr, node->macaddress_B))
+-		return true;
+-
+-	return false;
++	if (ether_addr_equal(addr, sn->macaddress_A) ||
++	    ether_addr_equal(addr, sn->macaddress_B))
++		ret = true;
++out:
++	rcu_read_unlock();
++	return ret;
+ }
+ 
+ /* Search for mac entry. Caller must hold rcu read lock.
+@@ -72,50 +73,42 @@ static struct hsr_node *find_node_by_addr_A(struct list_head *node_db,
+ 	return NULL;
+ }
+ 
+-/* Helper for device init; the self_node_db is used in hsr_rcv() to recognize
++/* Helper for device init; the self_node is used in hsr_rcv() to recognize
+  * frames from self that's been looped over the HSR ring.
+  */
+ int hsr_create_self_node(struct hsr_priv *hsr,
+ 			 unsigned char addr_a[ETH_ALEN],
+ 			 unsigned char addr_b[ETH_ALEN])
+ {
+-	struct list_head *self_node_db = &hsr->self_node_db;
+-	struct hsr_node *node, *oldnode;
++	struct hsr_self_node *sn, *old;
+ 
+-	node = kmalloc(sizeof(*node), GFP_KERNEL);
+-	if (!node)
++	sn = kmalloc(sizeof(*sn), GFP_KERNEL);
++	if (!sn)
+ 		return -ENOMEM;
+ 
+-	ether_addr_copy(node->macaddress_A, addr_a);
+-	ether_addr_copy(node->macaddress_B, addr_b);
++	ether_addr_copy(sn->macaddress_A, addr_a);
++	ether_addr_copy(sn->macaddress_B, addr_b);
+ 
+ 	spin_lock_bh(&hsr->list_lock);
+-	oldnode = list_first_or_null_rcu(self_node_db,
+-					 struct hsr_node, mac_list);
+-	if (oldnode) {
+-		list_replace_rcu(&oldnode->mac_list, &node->mac_list);
+-		spin_unlock_bh(&hsr->list_lock);
+-		kfree_rcu(oldnode, rcu_head);
+-	} else {
+-		list_add_tail_rcu(&node->mac_list, self_node_db);
+-		spin_unlock_bh(&hsr->list_lock);
+-	}
++	old = rcu_replace_pointer(hsr->self_node, sn,
++				  lockdep_is_held(&hsr->list_lock));
++	spin_unlock_bh(&hsr->list_lock);
+ 
++	if (old)
++		kfree_rcu(old, rcu_head);
+ 	return 0;
+ }
+ 
+ void hsr_del_self_node(struct hsr_priv *hsr)
+ {
+-	struct list_head *self_node_db = &hsr->self_node_db;
+-	struct hsr_node *node;
++	struct hsr_self_node *old;
+ 
+ 	spin_lock_bh(&hsr->list_lock);
+-	node = list_first_or_null_rcu(self_node_db, struct hsr_node, mac_list);
+-	if (node) {
+-		list_del_rcu(&node->mac_list);
+-		kfree_rcu(node, rcu_head);
+-	}
++	old = rcu_replace_pointer(hsr->self_node, NULL,
++				  lockdep_is_held(&hsr->list_lock));
+ 	spin_unlock_bh(&hsr->list_lock);
++	if (old)
++		kfree_rcu(old, rcu_head);
+ }
+ 
+ void hsr_del_nodes(struct list_head *node_db)
+diff --git a/net/hsr/hsr_main.h b/net/hsr/hsr_main.h
+index 5c0e5f6d1eda1..cdbc61a006386 100644
+--- a/net/hsr/hsr_main.h
++++ b/net/hsr/hsr_main.h
+@@ -192,11 +192,17 @@ struct hsr_proto_ops {
+ 	void (*update_san_info)(struct hsr_node *node, bool is_sup);
+ };
+ 
++struct hsr_self_node {
++	unsigned char	macaddress_A[ETH_ALEN];
++	unsigned char	macaddress_B[ETH_ALEN];
++	struct rcu_head	rcu_head;
++};
++
+ struct hsr_priv {
+ 	struct rcu_head		rcu_head;
+ 	struct list_head	ports;
+ 	struct list_head	node_db;	/* Known HSR nodes */
+-	struct list_head	self_node_db;	/* MACs of slaves */
++	struct hsr_self_node	__rcu *self_node;	/* MACs of slaves */
+ 	struct timer_list	announce_timer;	/* Supervision frame dispatch */
+ 	struct timer_list	prune_timer;
+ 	int announce_count;
 -- 
 2.53.0
 
