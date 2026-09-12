@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031CA361DD0;
-	Sat, 12 Sep 2026 09:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9289E37CD32;
+	Sat, 12 Sep 2026 09:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204785; cv=none; b=HBfZT/i0zkHn0bxMDupwXdsvRge/P2QVzdHf5gtx0zW53UHgdJsr54KW0LPAQNVlZg+O/i9Gh159XYYT9VNI1csA74r8GmroQaNCLY5yiJjl69BDXzDLBLm/R0AjSfv2hT+1S87VM3C+PzeZ/uDkzolSorGpG+eHNU/Cn962llI=
+	t=1789204789; cv=none; b=PTMCXMFj4ET5CzHgYK3V6vvH0Xro2jFUt5YHf0glklDh0o58G9t9RnKosWhOy596f68FwGoNLY2PKt88sLiqzF76sqx6/x59yda2ZZl3KQcn8krzRcwguhT26F15iNWxaxubdE0WHtu/n2yO2gKimp9Y1KMxjTR8ZtJEHLvUrKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204785; c=relaxed/simple;
-	bh=FYgq/ap+hNrLd/LcRQQWioqbOUf27RWA3SbqxM7Vo5w=;
+	s=arc-20240116; t=1789204789; c=relaxed/simple;
+	bh=Uh6TJkofCB3L5wOBSEgybkqKXKQFBBSeIKqzqleVbTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=keWSO5E5u8THVOwljAUvf5fL7DVVvUOhs4MWXtLuo4uzGh2TuNiEnOLi8CTgfiOYnvRPas26qai/LBY/i1XFp9ZGYSo3bGk3DAehKVnpF5IudKJs3WW6p5D65RQ5aDfTtGn96IfEexk1cwXMywYPupZpr65mBM0TpV2jBfabRHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLjp48We; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BIOwxN0EQ+amgg4eRlNzkUz9THy/8NRtU/KZnxJ6D1ZELk4HnbPu1VAn/O7zhR93M+dG5x2KdEslpQSba1c6s9ctBI/CFiNPxQFTHerW8FXUgcDXoVVwc8YmyWzzmX08agvIf+FBoNRhvvu2bVnfLc4d0Wa9v4p03z899Ob5oqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shcov3p8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLjp48We"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CC41F000FF;
-	Sat, 12 Sep 2026 09:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shcov3p8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 979181F000FF;
+	Sat, 12 Sep 2026 09:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204783;
-	bh=EBKW+hNsXlVKj3bJqSv7rPYn6jbFVwz1yST/FhFx8rE=;
+	s=korg; t=1789204788;
+	bh=7cDpFlQYZ2oQB3Zs9H4OkEGau6bkfsupecNDKFid9Co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GLjp48WeAhxDrxLkpTtItS8Z8qE4o0p0d7HAKn51ADF5ydiIJ4OJp9oTv3YLQT8o6
-	 qAHhxn+7dCEYOwd4EfJAHiOmz0Rs8I4idXQVsMJ0kciO0IL+HAaLMmuzOZDYWu0l1j
-	 zZsGLjdJpezKjk3lxq2CleQV1jwCN+6Yp08LMh8E=
+	b=shcov3p8y98uL5JypUK5onoPzJ7asAN3Tt46CNnMREANyRI3OGU/inI/wz/O2JZXe
+	 XxAo+vVgz1X6ZoF5WYF7vuQVhrNXk/RaBdeTjN12AEGIG+RRbbxOZXbZyPbTn2vKsh
+	 Acd3+54ZLuF31pqZo7OrZ9A7aZN7JVB+xqfDMq3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	vega@nebusec.ai,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Jyoti, Anand B" <anand.b.jyoti@intel.com>,
+	"Li, Yifan" <yifan2.li@intel.com>,
+	Gao Jianfeng <jianfeng.gao@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1683/1815] net: sched: fix 32-bit backlog wrap in gred, bfifo and plug enqueue
-Date: Sat, 12 Sep 2026 08:57:13 +0200
-Message-ID: <20260912065728.493885502@linuxfoundation.org>
+Subject: [PATCH 7.2 1684/1815] powercap: intel_rapl: Sign-extend the PMU delta on counter wraparound
+Date: Sat, 12 Sep 2026 08:57:14 +0200
+Message-ID: <20260912065728.516614548@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,97 +55,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Li, Yifan <yifan2.li@intel.com>
 
-[ Upstream commit 4c660ee8c809637909f4f7eb1017f7b9401c75c4 ]
+[ Upstream commit a8b842366f8ff469fe0fc700ba53770ded847ea9 ]
 
-gred_enqueue(), bfifo_enqueue() and plug_enqueue() admit a packet when the
-current backlog plus the packet length fits within the queue limit:
+The RAPL PMU misreports energy when the hardware energy counter
+overflows and wraps back to zero.  perf event counts are defined to
+increase monotonically, but a single wraparound makes the PMU event
+count jump backwards by nearly the full counter range, and consumers
+that take the difference of two reads in unsigned arithmetic then
+underflow and report an absurd value.
 
-  sch->qstats.backlog + qdisc_pkt_len(skb) <= sch->limit (gred default VQ)
-  gred_backlog+qdisc_pkt_len(skb) <= q->limit  (gred configured VQ)
-  sch->qstats.backlog + qdisc_pkt_len(skb) <= sch->limit (bfifo)
-  sch->qstats.backlog + skb->len <= q->limit             (plug)
+On a Panther Lake system (energy unit 61.035 uJ, counter range
+262144 J) the package counter wraps every ~2.9 hours at 25 W, and
+turbostat prints one bogus sample per wraparound, per domain:
 
-sch->qstats.backlog and q->backlog are u32, and qdisc_pkt_len()/skb->len
-are unsigned int, so all sums are computed in 32 bits and wrap at 2^32.
-Once the true backlog exceeds 4 GiB the wrapped sum becomes small and
-admission keeps succeeding, so the queue grows without bound and the kernel
-can be driven to OOM.
+  PkgTmp  PkgWatt         CorWatt GFXWatt RAMWatt SysWatt
+  44      24.97           16.30   3.90    1.87    2145386370.35
+  43      2145240612.10   16.13   4.02    1.91    40.46
 
-Promote the sums to u64 so admission stops once the true backlog exceeds
-the limit.  The limit is u32, so the bounded queue stays below 2^32 and
-the stored u32 backlog never wraps.
+The RAPL energy counters are 32-bit wide on every register interface:
+MSR, MMIO and TPMI all describe ENERGY_COUNTER with a GENMASK(31, 0)
+mask.  rapl_read_data_raw() applies that mask, so event_read_counter()
+returns the counter zero-extended in a u64.
 
-The bug can only be reproduced as root (albeit with ridiculous setup):
- attach a gred (or bfifo/plug) qdisc with a limit near 4 GiB,
- leaving the default VQ unconfigured (for gred), and drive >4 GiB of
- queued traffic (e.g. via a size table / stab to inflate qdisc_pkt_len,
- or sustained high-rate traffic). The u32 backlog+len sum wraps at 2^32,
- admission keeps succeeding, and the queue grows unboundedly to OOM.
+rapl_event_update() then computes
 
-Fixes: a3eb95f891d6 ("net_sched: gred: add TCA_GRED_LIMIT attribute")
-Reported-by: vega@nebusec.ai
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260818095927.15901-1-jhs@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+	delta = new_raw_count - prev_raw_count;
+
+without reducing the result modulo 2^32.  While the counter does not
+wrap this is correct, but once the hardware counter wraps,
+new_raw_count < prev_raw_count and delta becomes (true_delta - 2^32),
+a large negative value.  Declaring delta as s64 only makes that value
+representable; it does not correct it.  That bogus delta is scaled and
+added to event->count, which is where the backwards jump comes from.
+
+Fix it the way arch/x86/events/rapl.c has done since the RAPL PMU was
+first introduced: shift both values up so that the 64-bit subtraction
+reduces modulo 2^32, then shift the difference back down with an
+arithmetic shift to sign-extend it.
+
+This is correct as long as at most one wraparound happens between two
+updates, which the existing overflow hrtimer already guarantees: its
+period is half of the counter range at the 200 W reference used in
+rapl_package_add_pmu_locked().
+
+The problem has been present since the powercap RAPL PMU was added, but
+only affected TPMI RAPL until commit 748d6ba43afd ("powercap:
+intel_rapl: Enable MSR-based RAPL PMU support") routed MSR RAPL through
+the same PMU, which exposed it on client platforms such as Panther Lake.
+
+Fixes: 575024a8aa7c ("powercap: intel_rapl: Introduce APIs for PMU support")
+Reported-by: Jyoti, Anand B <anand.b.jyoti@intel.com>
+Signed-off-by: Li, Yifan <yifan2.li@intel.com>
+Signed-off-by: Gao Jianfeng <jianfeng.gao@intel.com>
+Tested-by: Jyoti, Anand B <anand.b.jyoti@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Link: https://patch.msgid.link/20260814031008.750911-1-yifan2.li@intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fifo.c | 2 +-
- net/sched/sch_gred.c | 4 ++--
- net/sched/sch_plug.c | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/powercap/intel_rapl_common.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_fifo.c b/net/sched/sch_fifo.c
-index e6bfd39ff3396..1b6388d50967f 100644
---- a/net/sched/sch_fifo.c
-+++ b/net/sched/sch_fifo.c
-@@ -19,7 +19,7 @@
- static int bfifo_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 			 struct sk_buff **to_free)
- {
--	if (likely(sch->qstats.backlog + qdisc_pkt_len(skb) <=
-+	if (likely((u64)sch->qstats.backlog + qdisc_pkt_len(skb) <=
- 		   READ_ONCE(sch->limit)))
- 		return qdisc_enqueue_tail(skb, sch);
+diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
+index 1006d183d5081..6b7d11a0abc5d 100644
+--- a/drivers/powercap/intel_rapl_common.c
++++ b/drivers/powercap/intel_rapl_common.c
+@@ -32,6 +32,9 @@
  
-diff --git a/net/sched/sch_gred.c b/net/sched/sch_gred.c
-index fcc1a4c036362..f04f425c6c449 100644
---- a/net/sched/sch_gred.c
-+++ b/net/sched/sch_gred.c
-@@ -179,7 +179,7 @@ static int gred_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 			 * if no default DP has been configured. This
- 			 * allows for DP flows to be left untouched.
- 			 */
--			if (likely(sch->qstats.backlog + qdisc_pkt_len(skb) <=
-+			if (likely((u64)sch->qstats.backlog + qdisc_pkt_len(skb) <=
- 					sch->limit))
- 				return qdisc_enqueue_tail(skb, sch);
- 			else
-@@ -244,7 +244,7 @@ static int gred_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		break;
- 	}
+ #define ENERGY_STATUS_MASK		GENMASK(31, 0)
  
--	if (gred_backlog(t, q, sch) + qdisc_pkt_len(skb) <= q->limit) {
-+	if ((u64)gred_backlog(t, q, sch) + qdisc_pkt_len(skb) <= q->limit) {
- 		q->backlog += qdisc_pkt_len(skb);
- 		return qdisc_enqueue_tail(skb, sch);
- 	}
-diff --git a/net/sched/sch_plug.c b/net/sched/sch_plug.c
-index cefb65201e178..b60ddfee6a68a 100644
---- a/net/sched/sch_plug.c
-+++ b/net/sched/sch_plug.c
-@@ -89,7 +89,7 @@ static int plug_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- {
- 	struct plug_sched_data *q = qdisc_priv(sch);
++/* Width of the RAPL energy counters, see the *_ENERGY_STATUS_MASK defines */
++#define RAPL_CNTR_WIDTH			32
++
+ #define POWER_UNIT_OFFSET		0x00
+ #define POWER_UNIT_MASK			GENMASK(3, 0)
  
--	if (likely(sch->qstats.backlog + skb->len <= q->limit)) {
-+	if (likely((u64)sch->qstats.backlog + skb->len <= q->limit)) {
- 		if (!q->unplug_indefinite)
- 			q->pkts_current_epoch++;
- 		return qdisc_enqueue_tail(skb, sch);
+@@ -1227,6 +1230,7 @@ static u64 rapl_event_update(struct perf_event *event)
+ 	struct rapl_package_pmu_data *data = event_to_pmu_data(event);
+ 	u64 prev_raw_count, new_raw_count;
+ 	s64 delta, sdelta;
++	int shift = 64 - RAPL_CNTR_WIDTH;
+ 
+ 	/*
+ 	 * Follow the generic code to drain hwc->prev_count.
+@@ -1243,8 +1247,13 @@ static u64 rapl_event_update(struct perf_event *event)
+ 	 * Now we have the new raw value and have updated the prev
+ 	 * timestamp already. We can now calculate the elapsed delta
+ 	 * (event-)time and add that to the generic event.
++	 *
++	 * Careful, the counter is narrower than u64 and is not
++	 * sign-extended above its physical width.  Shift both values up
++	 * so that the subtraction wraps, then shift the result back down.
+ 	 */
+-	delta = new_raw_count - prev_raw_count;
++	delta = (new_raw_count << shift) - (prev_raw_count << shift);
++	delta >>= shift;
+ 
+ 	/*
+ 	 * Scale delta to smallest unit (2^-32)
 -- 
 2.53.0
 
