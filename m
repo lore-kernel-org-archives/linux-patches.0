@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB26377A9F;
-	Sat, 12 Sep 2026 16:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B7630568E;
+	Sat, 12 Sep 2026 16:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231862; cv=none; b=nXjh9aoznDj/RZtN0xTlmMGQIx8wvU+aKQQmqz3IUEGwdcZL4XlsT0+QhqKdGq/2Hk4iLCsVLpWHopp7RMIO2mi0+9njPd3GKdo8HMF8Zey1BI8eJIO5G1MTCMAsdd5HptR/2qyuzTS6Fwnenr+ItC5fPSG4gLvFPIDPY54KlDw=
+	t=1789231867; cv=none; b=St6rCu+JHCuR2OPMAE5v/6UYn0yyA708aMrFp/qEIudP5yIkmZysJl4G4DZfTlWxVuNaHTTI0rGGykaP76fGaefxGoT1876vvtH0ZaZsog0w8pyveCh6apq5YSIB8ha/NAAvyiM/3WPIkfTsaJjrPWT8jP3JTUcHZBeP9x+VoXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231862; c=relaxed/simple;
-	bh=8cGPBXhdBSm/StwyTs7DMKBQDqcQB60awPbi2It9a4M=;
+	s=arc-20240116; t=1789231867; c=relaxed/simple;
+	bh=e4/LjYQt9YprpkqwJpyJivRXEzw3IPJCNRE5Z31A5z0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bt37BsLlvgCPUxLdGDrXIZjhX9mt/W3KOuHFWYG4jg0V3SAqs2py5dJEB72Tt9XWKaiCqnbXqj4JzOEVtBQ2NKTDW01z3So15e/U7+oqB/ZjkII+2M4F5X+5VQHJTSurHDWdAJbUPr9Us5WNmvPfvUZJjrlSJrWZr4HNpRm1/3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mj7MejZ6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jXkdG5oT9kf0N0g+AJUh5s4R/ys0ZxFbe+Q90SOwvDTB9VO87gC/lMZATtdzk+sSNWhMsQEIF8hjpNS0X0Y86ekRe1l6FcF2fhuz5fwIQYl68bRfyFee/lqLD9NITT5AzJBFHhwwbZzAcnV8ZefrulPS+WH5FEeS/YWT1StG4KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZJuTeq4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mj7MejZ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 096F61F000FF;
-	Sat, 12 Sep 2026 16:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZJuTeq4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34381F000FF;
+	Sat, 12 Sep 2026 16:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231861;
-	bh=Nkm0bKW3Pf+tTBh0V1Ov7pkLpiX4grKlkqvORE4vXhc=;
+	s=korg; t=1789231866;
+	bh=J9t8EkUw7kPGmMPykz9EAs28zueZtyVeCy4e+sOQZjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mj7MejZ6jupoK1OpgL1/UvprqfejsmF50SXqVTbFt7BbdrM35sB2srRdAwb9tNtcC
-	 3Pzw1uKyFnftI5CEe7ABpSLnwMu0/YKNR2luWsSBTCRSHj7JofTK5XXlEMC+XzVQVt
-	 kc84EL/6ARVBWkgxavs278Vy7qHHi9WfXNw63Iu0=
+	b=LZJuTeq4vIeTP4bwwNUEHnqUqP+w/5iQq0CQjxt2x47KTTejJXuqd9wiOwvb3Vr0p
+	 DZKlH0dZBNRWqH7eY1mmEA7tcArdPcuoDeTZFUPeu31yJ9f9kkfYUvSl6C4KE2tC4t
+	 roO8J3hkwPtVty4n4KUkKCTZq3dcTrfnuDeJ5nsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1085/1191] net/smc: free stashed qentry before overwrite in REQ_ADD_LINK to ADD_LINK transition
-Date: Sat, 12 Sep 2026 09:03:33 +0200
-Message-ID: <20260912065612.533621861@linuxfoundation.org>
+Subject: [PATCH 6.1 1059/1191] 8139cp: fix Rx and Tx not being disabled in cp_suspend
+Date: Sat, 12 Sep 2026 09:03:07 +0200
+Message-ID: <20260912065611.957930911@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,60 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahanta Jambigi <mjambigi@linux.ibm.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 036322025d6e440cb75fc6fecbba9a16b271a2ae ]
+[ Upstream commit cb7643b78d35392f0f434774d78b4c77b80f677f ]
 
-When smc_llc_event_handler() transitions the local LLC flow from
-SMC_LLC_FLOW_REQ_ADD_LINK to SMC_LLC_FLOW_ADD_LINK on arrival of an ADD_LINK
-request, it calls smc_llc_flow_qentry_set() unconditionally:
+On QEMU rtl8139 model, frames that arrive while the interface is
+suspended still end up in the stack after resume. With pm_test=devices,
+which keeps devices suspended for 5s, 200 frames sent to interface
+during that time and 50 frames after resume, eth0 reports 113
+received frames.
 
-	if (lgr->llc_flow_lcl.type == SMC_LLC_FLOW_REQ_ADD_LINK) {
-		lgr->llc_flow_lcl.type = SMC_LLC_FLOW_ADD_LINK;
-		smc_llc_flow_qentry_set(&lgr->llc_flow_lcl, qentry);
-		...
-	}
+cp_suspend() is supposed to stop receiver and the transmitter, but
+the mask is wrong: (~RxOn | ~TxOn) is ~0, nothing is cleared and Cmd
+still reads 0x0d when cp_suspend() returns.
 
-A CONFIRM_LINK or ADD_LINK_CONT arriving while flow->type is
-SMC_LLC_FLOW_REQ_ADD_LINK is stashed into flow->qentry via the
-SMC_LLC_CONFIRM_LINK / SMC_LLC_ADD_LINK_CONT handler (which stores into
-flow->qentry for any non-NONE flow type).  When the subsequent ADD_LINK
-arrives, the REQ_ADD_LINK branch overwrites flow->qentry with the new pointer
-without first freeing the stashed allocation, leaking one kmalloc object.
+Use ~(RxOn | TxOn) so both bits are actually cleared.
 
-The stashed entry has no consumer: smc_llc_wait() is only called from
-llc_add_link_work, which is not yet scheduled while the flow type remains
-REQ_ADD_LINK.  No waiter is sleeping on llc_msg_waiter at this point.
-It is safe to unconditionally free any stashed qentry before
-the overwrite.
-
-Call smc_llc_flow_qentry_del() before smc_llc_flow_qentry_set() in the
-REQ_ADD_LINK branch.  smc_llc_flow_qentry_del() already checks flow->qentry
-before freeing, so the normal path where no entry is stashed is a no-op.
-
-Fixes: b4ba4652b3f8 ("net/smc: extend LLC layer for SMC-Rv2")
-Reviewed-by: Hidayath Khan <hidayath@linux.ibm.com>
-Signed-off-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Link: https://patch.msgid.link/20260818073107.466506-1-mjambigi@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260817043057.20099-1-kmehltretter@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_llc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/realtek/8139cp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/smc/smc_llc.c b/net/smc/smc_llc.c
-index 761515b590f20..ec2e60b091f30 100644
---- a/net/smc/smc_llc.c
-+++ b/net/smc/smc_llc.c
-@@ -1885,6 +1885,8 @@ static void smc_llc_event_handler(struct smc_llc_qentry *qentry)
- 			if (lgr->llc_flow_lcl.type ==
- 					SMC_LLC_FLOW_REQ_ADD_LINK) {
- 				/* server started add_link processing */
-+				/* free any qentry stashed in REQ_ADD_LINK state */
-+				smc_llc_flow_qentry_del(&lgr->llc_flow_lcl);
- 				lgr->llc_flow_lcl.type = SMC_LLC_FLOW_ADD_LINK;
- 				smc_llc_flow_qentry_set(&lgr->llc_flow_lcl,
- 							qentry);
+diff --git a/drivers/net/ethernet/realtek/8139cp.c b/drivers/net/ethernet/realtek/8139cp.c
+index f5786d78ed230..4091762275d6a 100644
+--- a/drivers/net/ethernet/realtek/8139cp.c
++++ b/drivers/net/ethernet/realtek/8139cp.c
+@@ -2066,7 +2066,7 @@ static int __maybe_unused cp_suspend(struct device *device)
+ 
+ 	/* Disable Rx and Tx */
+ 	cpw16 (IntrMask, 0);
+-	cpw8  (Cmd, cpr8 (Cmd) & (~RxOn | ~TxOn));
++	cpw8  (Cmd, cpr8 (Cmd) & ~(RxOn | TxOn));
+ 
+ 	spin_unlock_irqrestore (&cp->lock, flags);
+ 
 -- 
 2.53.0
 
