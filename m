@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F13247A0A9;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758D541C302;
 	Sat, 12 Sep 2026 15:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226790; cv=none; b=D7NY3ECTXBY6eHYBf8AR+U+yVpb0ZuKYoMSOoZFD8Lh8GrxnR/daYcaYhG2PcSMesMlWyVA0xSpa5fOD8PmhI1syoqwQrzdfYPgPAQ7OgyYT3c8wqYy+rqXp/PiLjph+L/807BflI0oJp3DBXm+xbEhgMI+Tsf/6IKxBw4tkDBU=
+	t=1789226790; cv=none; b=bR94VfR4r+ig7qaFqvX0VbwxpOP9n4G2RTeyKnVCCp9Rfm6qqxveWg8637FOpj6X56/jiVBGmXT5LrOf3/e691DqsRNq7D/0HAPCBfRK+3UujXjl1xTmjF9gyR59BWXrbOLs8YQFls1DzZWTtVe1nvbrxSACzMGiJ3BSHOEQm5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789226790; c=relaxed/simple;
-	bh=xL9T9RL3yndQznYhjUzcZ1IQs5gMY7u8SwzisMSEs9U=;
+	bh=RqoQ4NQY5giKO6fos4kTbVXhupKkIkEQ9xvWfjC1fzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VoLCmNz/eS9hCKDjjxVcLz/nraosJCdKLh1ArEjjZsQ46viP9Ube+4totgTQe9OLk9vsAhLeHWE5MpSxJmU3hIT9PCNDPRpxkoSQIHEcVh9W+RwVkhW9X7wZWWvnzZ5xNuXOeIES95lXux1tB8N+rVecXI5/vu6b6+LPHqkj5qU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=imB254b6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EB2586JT8UA2hTLXnIugyZNpPBVt7ifvkBHK79g8i7Z8oI2vy3ztnX8BtV1afSjsMcDF/RwLjb5g7pB/z4E6C9qBoRWbL40p4NDBiBYzU9gRHnx60lGu4yGc76bzFh2BEpTeHDoJMl3i8FQGYMB/d8g6ONYCfRvgxxkGJhG/5OY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5QSo50G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="imB254b6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BECEF1F000FF;
-	Sat, 12 Sep 2026 15:26:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789226789;
-	bh=kfGe101Hywf1EvTWnGtjAP9ra6MZ65nmdQIFl7l+2nM=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5QSo50G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130251F00898;
+	Sat, 12 Sep 2026 15:26:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1789226789;
+	bh=Hjixfi4DL1Hm4WDa0Tfz93M1xmlDwB5BcB+PjnEae9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=imB254b61hycNKBGbYL8VKtQZ77hh0sPvsmMbvTkVnCOfmTF6UL0JxkPMDF85W1QA
-	 6/3q0eUHpPPxIouN/0n8xql/FPofNY1SntBHAWjmFE/MaAfl6R2Okqf3Cl/SuikscG
-	 n/TJ3ZGpoRdwoVVHOksg22FmgW6rk82SG4fcIokZyO49Xm4z6cRI/3n/gruDrIWMHj
-	 pT2TJNWFx7r4xkdRAPDWo8ct257c6eN9bOA3F95LUEgAQdskO5aeaAjjgemiuiENy2
-	 7tPQstbkjw56FI262DbV3sEAm7MdnsyBckuD8rPhzyw+IqIycns//NTbLLCtTmYlWn
-	 DSOqwuqIR6pTw==
-From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org
-Cc: Sasha Levin <sashal@kernel.org>,
+	b=P5QSo50GszRMxq5hjKEAv4FezxAWTkJ2IUqPDsaz2ElOCXnwM0wxQcKPxa0gU1uS9
+	 MvBbvRsweOKhqh6RsHXoyG0jDmnh6Fd06VQyWX1wldWZ/Hw92XEdN7+iWlkwZgXoIh
+	 SjnUrBv7BHMSxmb/FWI7PQA3vvYQ7v6KcLS+5eo8=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH 6.18 0641/1518] s390: Remove compat support
-Date: Sat, 12 Sep 2026 11:26:17 -0400
-Message-ID: <daily-reply-0009-re-s390-compat-removal-6-18@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <30fec0a7-619b-44d9-9ca6-e5de551a8c0b@app.fastmail.com>
-References: <30fec0a7-619b-44d9-9ca6-e5de551a8c0b@app.fastmail.com>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.1 0048/1191] nfsd: add filehandle match check to nfsd4_delegreturn()
+Date: Sat, 12 Sep 2026 08:46:16 +0200
+Message-ID: <20260912065549.220656568@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
+References: <20260912065548.086904252@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,19 +46,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> What is the reason for backporting this? Generally speaking I don't
-> like the idea of backporting feature removals to stable kernels,
-> the entire point the timing was to allow users to stay on LTS
-> kernels if they still need it.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-The way I see it, either we have users for this, and thus can't remove this
-feature neither upstream or in LTS trees.
+------------------
 
-Or, we don't have any users, and so it's safe to remove this from both trees.
+From: Jeff Layton <jlayton@kernel.org>
 
-If we have LTS users, then we can't drop it from upstream as they'll break when
-they upgrade, which we don't want to happen.
+commit 04cce9d79f2b1a114f7128e08bf60a473e10f1ec upstream.
 
--- 
-Thanks,
-Sasha
+nfsd4_delegreturn() is the only stateful NFSv4 operation that does
+not call nfs4_check_fh() to verify the delegation's file matches
+cstate->current_fh. A client can DELEGRETURN with a mismatched
+filehandle, destroying the correct delegation but waking the wrong
+inode's waiters.
+
+Add the missing nfs4_check_fh() call after the generation check.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-6-5b90e276f2d9@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ fs/nfsd/nfs4state.c |    4 ++++
+ 1 file changed, 4 insertions(+)
+
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -7118,6 +7118,10 @@ nfsd4_delegreturn(struct svc_rqst *rqstp
+ 	if (status)
+ 		goto put_stateid;
+ 
++	status = nfs4_check_fh(&cstate->current_fh, &dp->dl_stid);
++	if (status)
++		goto put_stateid;
++
+ 	trace_nfsd_deleg_return(stateid);
+ 	wake_up_var(d_inode(cstate->current_fh.fh_dentry));
+ 	destroy_delegation(dp);
+
+
