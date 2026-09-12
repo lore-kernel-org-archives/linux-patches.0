@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EAB347CA67;
-	Sat, 12 Sep 2026 12:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86E047CC92;
+	Sat, 12 Sep 2026 12:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217992; cv=none; b=MaEtJA4TVSJQ15p64tT6vC3EOiwNI9wgUe/cB3v9bbzx/FFgVNvrO2L+5pHCvWYZES1FEUL1FXbCGXPzCfKSYeQOVjFXZme88i5WjQTkKZbrUTsErh+htjUbQxE5Zg7HSoZ4xkDTKdMTWYtpgLcQCYYVGEXU2IkmU3FsB9AFn3c=
+	t=1789217996; cv=none; b=PgjOa1mMJWhQv0kYmoctUxmvzSeJ+ITJRPIgDPxLEC/h5ox3AQdGQDSAb7dQtdGOP1Wt/j3Up3tKU8RgP/A+FGSh0TyEEGjalEj7w+gb0QejxZDo3Sq29c1DX/HOgMDkCSrHWZEcYC3c9bxLT9c9B3NCJTMjB7qKSTG5b5r/r4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217992; c=relaxed/simple;
-	bh=0C0rJvvuKvah+LpuIbVlnbrXJhtA5jDUXrAB66uL0Jo=;
+	s=arc-20240116; t=1789217996; c=relaxed/simple;
+	bh=ta7UYtrNrLWPW4RhDSKdqJndh8vQck+o+yTf3g+mFDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WmO3+BFRjePqXhXm+Ta8Ay9YCt+DpHeLUCaJS5fk/YjjU3xnDQBXiPYJ3v0K3RTHgcg/mgPLtOprRPdY8IuOvdwzgAwp1vCV16qUJhOTlhCEfmrHDAPpbUa0z71kcRWNegoqtJDE1eSIyTZxT8Zpj0sb5tmE0tTh/XSkmOXgjPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0WIZ8Gm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z5nJ312gnwxh3RKJMmPdOF1vxx9gqtRu1XxQsCQZY0VrUluEj1dXdf1nifd63JkNQEf81+pNHxHC0FYg84C/raICOgFt0p586hUIWdChso0HC6TW/1RvFQD40stHhGW8tYR1mkrUqfQE7uTEpjusYhtb5rEBteCP9kFLuxoVs+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5bNavME; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0WIZ8Gm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 384CE1F000FF;
-	Sat, 12 Sep 2026 12:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5bNavME"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9741F000FF;
+	Sat, 12 Sep 2026 12:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217991;
-	bh=lW99WjDDb1PYnVm06uipy/nxWQoMIYmZVoZ7Smrbm4E=;
+	s=korg; t=1789217995;
+	bh=i+5q7Kv8WkZ9upBC1LCbMLPcVHM0+9GX1OegD3EvoYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g0WIZ8GmrL4jtcc0Z2q5wvVmOoy5YSdY0dJ1HBrTK1GwUv9vwmcykLEzbaftWGp6T
-	 CLQBRo5mI87cuWS+Z2MpaQErnmjypJQa53oFbdlyWGXa5vDK7MdXtDGaG3vUsABji1
-	 kpYauIrC5wHUPtYZEQKAOq5Xf/ZSZ8wb6Th52kFE=
+	b=H5bNavMEovg2PpMUXW0dotuDPqGWzu5EfLn4LlPm6H8VKqSszwnjsvcOxVWXHMfbB
+	 8eRNgu/fvVxakFniCNVHDOZU2wAQvOTHMw+vZd9Q7vTwMRh3MDT0UKqxJw+bs3zg6W
+	 WSwZWq6lK1EVBjW0jk6lBkD8qtw1Vh1xY6b63qq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boqun Feng <boqun@kernel.org>,
-	kernel test robot <lkp@intel.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1052/1376] s390/irqflags: Add out-of-line definitions of arch_local_irq_*() for KMSAN
-Date: Sat, 12 Sep 2026 08:57:58 +0200
-Message-ID: <20260912065631.007192144@linuxfoundation.org>
+Subject: [PATCH 6.12 1053/1376] nvme: add reservation commands defines
+Date: Sat, 12 Sep 2026 08:57:59 +0200
+Message-ID: <20260912065631.029190133@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,126 +53,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 3f7c9f9c36b47a2a5cdbc56597eddf32662ef7fa ]
+[ Upstream commit 1900e1a4495b7376cb9b4e58f1d846660f4c9c4b ]
 
-Inline KMSAN arch_local_irq_*() definitions run afoul of
--Wstatic-in-inline. Move them out-of-line. Make sure decompressor and
-non-GPL modules see the out-of-line definitions.
+This is a preparation patch for NVMeOF target reservation
+commands implantation.
+Add the defines of reservation command, such as reservation log
+and sub operations.
 
-Cc: Boqun Feng <boqun@kernel.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202607131219.euJHPSJ5-lkp@intel.com/
-Suggested-by: Heiko Carstens <hca@linux.ibm.com>
-Fixes: 1b301f5f28ba ("s390/irqflags: do not instrument arch_local_irq_*() with KMSAN")
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Tested-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 5bb96cc21883 ("nvmet: fix heap out-of-bounds read in nvmet_auth_negotiate()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/irqflags.h | 20 +++++++++++++-------
- arch/s390/kernel/Makefile        |  1 +
- arch/s390/kernel/irqflags.c      | 28 ++++++++++++++++++++++++++++
- 3 files changed, 42 insertions(+), 7 deletions(-)
- create mode 100644 arch/s390/kernel/irqflags.c
+ include/linux/nvme.h | 68 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
 
-diff --git a/arch/s390/include/asm/irqflags.h b/arch/s390/include/asm/irqflags.h
-index bcab456dfb803..6eb6de6a99f2d 100644
---- a/arch/s390/include/asm/irqflags.h
-+++ b/arch/s390/include/asm/irqflags.h
-@@ -37,18 +37,24 @@ static __always_inline void __arch_local_irq_ssm(unsigned long flags)
- 	asm volatile("ssm   %0" : : "Q" (flags) : "memory");
- }
+diff --git a/include/linux/nvme.h b/include/linux/nvme.h
+index 84d4f0657b7a8..0095ce3748a10 100644
+--- a/include/linux/nvme.h
++++ b/include/linux/nvme.h
+@@ -2038,4 +2038,72 @@ struct nvme_completion {
+ #define NVME_MINOR(ver)		(((ver) >> 8) & 0xff)
+ #define NVME_TERTIARY(ver)	((ver) & 0xff)
  
--#ifdef CONFIG_KMSAN
--#define arch_local_irq_attributes noinline notrace __no_sanitize_memory __maybe_unused
-+#if defined(CONFIG_KMSAN) && !defined(__DECOMPRESSOR)
-+unsigned long arch_local_save_flags(void);
-+unsigned long arch_local_irq_save(void);
-+void arch_local_irq_enable_external(void);
-+void arch_local_irq_enable(void);
- #else
--#define arch_local_irq_attributes __always_inline
-+#define arch_local_save_flags		__arch_local_save_flags
-+#define arch_local_irq_save		__arch_local_irq_save
-+#define arch_local_irq_enable_external	__arch_local_irq_enable_external
-+#define arch_local_irq_enable		__arch_local_irq_enable
- #endif
- 
--static arch_local_irq_attributes unsigned long arch_local_save_flags(void)
-+static __always_inline unsigned long __arch_local_save_flags(void)
- {
- 	return __arch_local_irq_stnsm(0xff);
- }
- 
--static arch_local_irq_attributes unsigned long arch_local_irq_save(void)
-+static __always_inline unsigned long __arch_local_irq_save(void)
- {
- 	return __arch_local_irq_stnsm(0xfc);
- }
-@@ -58,12 +64,12 @@ static __always_inline void arch_local_irq_disable(void)
- 	arch_local_irq_save();
- }
- 
--static arch_local_irq_attributes void arch_local_irq_enable_external(void)
-+static __always_inline void __arch_local_irq_enable_external(void)
- {
- 	__arch_local_irq_stosm(0x01);
- }
- 
--static arch_local_irq_attributes void arch_local_irq_enable(void)
-+static __always_inline void __arch_local_irq_enable(void)
- {
- 	__arch_local_irq_stosm(0x03);
- }
-diff --git a/arch/s390/kernel/Makefile b/arch/s390/kernel/Makefile
-index 7981b91fc264e..0a1692a0e85c7 100644
---- a/arch/s390/kernel/Makefile
-+++ b/arch/s390/kernel/Makefile
-@@ -73,6 +73,7 @@ obj-$(CONFIG_JUMP_LABEL)	+= jump_label.o
- obj-$(CONFIG_KEXEC_FILE)	+= machine_kexec_file.o kexec_image.o
- obj-$(CONFIG_KEXEC_FILE)	+= kexec_elf.o
- obj-$(CONFIG_CERT_STORE)	+= cert_store.o
-+obj-$(CONFIG_KMSAN)		+= irqflags.o
- 
- obj-$(CONFIG_PERF_EVENTS)	+= perf_event.o
- obj-$(CONFIG_PERF_EVENTS)	+= perf_cpum_cf.o perf_cpum_sf.o
-diff --git a/arch/s390/kernel/irqflags.c b/arch/s390/kernel/irqflags.c
-new file mode 100644
-index 0000000000000..e192f59f8918c
---- /dev/null
-+++ b/arch/s390/kernel/irqflags.c
-@@ -0,0 +1,28 @@
-+// SPDX-License-Identifier: GPL-2.0
++enum {
++	NVME_AEN_RESV_LOG_PAGE_AVALIABLE	= 0x00,
++};
 +
-+#include <linux/export.h>
-+#include <asm/irqflags.h>
++enum {
++	NVME_PR_LOG_EMPTY_LOG_PAGE			= 0x00,
++	NVME_PR_LOG_REGISTRATION_PREEMPTED		= 0x01,
++	NVME_PR_LOG_RESERVATION_RELEASED		= 0x02,
++	NVME_PR_LOG_RESERVATOPM_PREEMPTED		= 0x03,
++};
 +
-+noinstr unsigned long arch_local_save_flags(void)
-+{
-+	return __arch_local_save_flags();
-+}
-+EXPORT_SYMBOL(arch_local_save_flags);
++enum {
++	NVME_PR_NOTIFY_BIT_REG_PREEMPTED		= 1,
++	NVME_PR_NOTIFY_BIT_RESV_RELEASED		= 2,
++	NVME_PR_NOTIFY_BIT_RESV_PREEMPTED		= 3,
++};
 +
-+noinstr unsigned long arch_local_irq_save(void)
-+{
-+	return __arch_local_irq_save();
-+}
-+EXPORT_SYMBOL(arch_local_irq_save);
++struct nvme_pr_log {
++	__le64			count;
++	__u8			type;
++	__u8			nr_pages;
++	__u8			rsvd1[2];
++	__le32			nsid;
++	__u8			rsvd2[48];
++};
 +
-+noinstr void arch_local_irq_enable_external(void)
-+{
-+	__arch_local_irq_enable_external();
-+}
-+EXPORT_SYMBOL(arch_local_irq_enable_external);
++struct nvmet_pr_register_data {
++	__le64	crkey;
++	__le64	nrkey;
++};
 +
-+noinstr void arch_local_irq_enable(void)
-+{
-+	__arch_local_irq_enable();
-+}
-+EXPORT_SYMBOL(arch_local_irq_enable);
++struct nvmet_pr_acquire_data {
++	__le64	crkey;
++	__le64	prkey;
++};
++
++struct nvmet_pr_release_data {
++	__le64	crkey;
++};
++
++enum nvme_pr_capabilities {
++	NVME_PR_SUPPORT_PTPL				= 1,
++	NVME_PR_SUPPORT_WRITE_EXCLUSIVE			= 1 << 1,
++	NVME_PR_SUPPORT_EXCLUSIVE_ACCESS		= 1 << 2,
++	NVME_PR_SUPPORT_WRITE_EXCLUSIVE_REG_ONLY	= 1 << 3,
++	NVME_PR_SUPPORT_EXCLUSIVE_ACCESS_REG_ONLY	= 1 << 4,
++	NVME_PR_SUPPORT_WRITE_EXCLUSIVE_ALL_REGS	= 1 << 5,
++	NVME_PR_SUPPORT_EXCLUSIVE_ACCESS_ALL_REGS	= 1 << 6,
++	NVME_PR_SUPPORT_IEKEY_VER_1_3_DEF		= 1 << 7,
++};
++
++enum nvme_pr_register_action {
++	NVME_PR_REGISTER_ACT_REG		= 0,
++	NVME_PR_REGISTER_ACT_UNREG		= 1,
++	NVME_PR_REGISTER_ACT_REPLACE		= 1 << 1,
++};
++
++enum nvme_pr_acquire_action {
++	NVME_PR_ACQUIRE_ACT_ACQUIRE		= 0,
++	NVME_PR_ACQUIRE_ACT_PREEMPT		= 1,
++	NVME_PR_ACQUIRE_ACT_PREEMPT_AND_ABORT	= 1 << 1,
++};
++
++enum nvme_pr_release_action {
++	NVME_PR_RELEASE_ACT_RELEASE		= 0,
++	NVME_PR_RELEASE_ACT_CLEAR		= 1,
++};
++
+ #endif /* _LINUX_NVME_H */
 -- 
 2.53.0
 
