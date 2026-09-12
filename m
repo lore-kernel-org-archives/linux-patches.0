@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F0235AC3E;
-	Sat, 12 Sep 2026 09:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5900299920;
+	Sat, 12 Sep 2026 09:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204660; cv=none; b=i4UAv+xw8LhjlJulWF74mTCO8o5FzE24jizLppzJSTXcSVV51aPxIf67Sdh0TmBenwIRk+tWcvwp7wwGzRU/JlRyhIv2pAfHZ+DOI+XtzJQYHrOUyCCMFi938/vOW5WpvFetNEExQDAi8Ng9UjzWhcU9WJu7ITGoakUV/6HFI7E=
+	t=1789204664; cv=none; b=imvXqubrGHNhDDBIUZbV62JG8AXyCPLcQD62oLz2UHypMjl+MUFhEEG7c9hUT+T+HRVRLiBKXT6HCcHTsiqlzfftoRtg6hr0srrFeLR6yh7cjvc0sCVhtwpYs5Zb0HsbsQInkSaBBkHU/sRAGbHC9vDtL7ydDxK9Mt+22I9vdXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204660; c=relaxed/simple;
-	bh=l0q4XJxbQqWKZPtr+rTkynjb3GjWniek+WjADkwZUIw=;
+	s=arc-20240116; t=1789204664; c=relaxed/simple;
+	bh=KQw4XH8XOUtBUEy017FppevyNyxXecWTZrL/5FRW9lQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TWR3r5yniNJ9i9hCS+McNvw77kpafea66CW8joNfmTXk70s8K9q8NfWCIXD4HzosAAUkca+TRaZwiJYPLv4pn2IlI29r/godLO23N8hTjK/0kQgpqZOD/RYUnbTHmgrzlb0mhcPIk1b8YJkVblBjbE3zgaqdVYdOTQwaSf2DYAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfAltK+d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iQCKBNatU2Y+9bNpb39mPXyQraiFe5t4h6vyKaqjb8eQSweotq8pPgR4z08vAbgrbhNHBQk49jqpfsdMAmG1FVj01qTMnQh8STu4eT7fUuTIAl499QndNGEIo/Uo2yb/lJorfQmZa3P3pAPsViIqvTkAgsEbD6cO4QRvqG7Bwd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHiHG0wW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfAltK+d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05351F000FF;
-	Sat, 12 Sep 2026 09:17:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHiHG0wW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5351F000FF;
+	Sat, 12 Sep 2026 09:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204658;
-	bh=y6l7EV5de00ojtPp5Ch5GmqD3gsWtJZof5BRvLUU26c=;
+	s=korg; t=1789204663;
+	bh=NqC6BhOz2o9kDdvyVEBBgTL5Kas+d4QcKRfTFx3EZ60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gfAltK+djTSA5ViX7admIXt/dggsNNIgmp6ObP7sEEQ1VVFT1HK/yk9K+0DBC63KV
-	 8MDaGLmUm3ETGc/vBR2udZPve0zR5uMZd7d5EHoc2ZUxyr9eSOxhVGATRLXpvZEJou
-	 qUDbKP1cP3CnscZb4N1Fg1FUzOsRkBHbZvGMBTl4=
+	b=iHiHG0wWr7Dz+ad+qBJE2sMVPjusua3na35lfD+Y9WRKecUAzZwJbrgNLdzJJf1wu
+	 vUMepy1qUhv623u9YuVZVkU0UqKvlGj8AVxdDm/wlsKjY92CFMfqvaoGXElJfVjsw9
+	 F8Q6qj+ZERkiuNTBqNvAidCJdaOldr/afnPM8nik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Nitin Gote <nitin.r.gote@intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1659/1815] drm/xe: dont WARN on kernel job timeout when device already wedged
-Date: Sat, 12 Sep 2026 08:56:49 +0200
-Message-ID: <20260912065727.937688714@linuxfoundation.org>
+Subject: [PATCH 7.2 1660/1815] ALSA: mtpav: shut down output timer before card teardown
+Date: Sat, 12 Sep 2026 08:56:50 +0200
+Message-ID: <20260912065727.960993354@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,59 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nitin Gote <nitin.r.gote@intel.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 13087ad7817e6e5f210064518bfc4d6d58a9c2f3 ]
+[ Upstream commit c73cb5b7c159246dd572277c668851a56e516019 ]
 
-igt@xe_wedged@wedged-at-any-timeout wedges the device in mode 2
-(UPON_ANY_HANG_NO_RESET) and then rebinds the driver. During unbind,
-a GSC proxy kernel submission can still time out; with the device wedged
-and the GuC CT stopped it can never complete, so its kernel job times out.
+snd_mtpav_output_timer() rearms chip->timer while holding
+chip->spinlock and accesses the card-private mtpav state.
 
-  Tile0: GT1: Kernel-submitted job timed out
-  WARNING: drivers/gpu/drm/xe/xe_guc_submit.c:...
-	   at guc_exec_queue_timedout_job()
-  Workqueue: gt-ordered-wq drm_sched_job_timedout
+snd_mtpav_free() currently takes the same lock and calls
+timer_delete() when the timer is active. This only removes a
+pending timer; it does not wait for a callback that is already
+running and does not prevent the callback from rearming the timer.
 
-Killed queues skip guc_submit_hint_wedged(), leaving 'wedged' false even
-though the device is already wedged. The timeout handler then treats the
-kernel queue timeout as unexpected and taints the kernel.
+A callback running on another CPU can therefore continue after
+snd_mtpav_free() releases the lock and access the card-private
+state while the card is being torn down. It can also rearm the
+timer after timer_delete() has returned.
 
-Honour an already-wedged device even for killed queues so the expected
-teardown timeout no longer trips the WARN.
+Call timer_shutdown_sync() without holding chip->spinlock. This
+waits for any running callback to finish and prevents further
+rearming before the card-private mtpav state is released.
 
-Fixes: 5a2f117a80c2 ("drm/xe: Do not wedge device on killed exec queues")
-Cc: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
-Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-Link: https://patch.msgid.link/20260814074106.92670-2-nitin.r.gote@intel.com
-Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-(cherry picked from commit a1c1dbd0f047bb05de6aaf6abe9103031179bf19)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260820112749.9195-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc_submit.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/drivers/mtpav.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
-index 1c92b96e4c324..eb426e8585887 100644
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -1537,8 +1537,14 @@ guc_exec_queue_timedout_job(struct drm_sched_job *drm_job)
- 	if (!skip_timeout_check && !check_timeout(q, job))
- 		goto rearm;
+diff --git a/sound/drivers/mtpav.c b/sound/drivers/mtpav.c
+index d31eadf4be5f8..1ed6d4f0cb625 100644
+--- a/sound/drivers/mtpav.c
++++ b/sound/drivers/mtpav.c
+@@ -642,9 +642,7 @@ static void snd_mtpav_free(struct snd_card *card)
+ {
+ 	struct mtpav *crd = card->private_data;
  
-+	/*
-+	 * Killed queues must not newly wedge the device, but preserve an
-+	 * already-wedged state to avoid warning on teardown timeouts.
-+	 */
- 	if (!exec_queue_killed(q))
- 		wedged = guc_submit_hint_wedged(exec_queue_to_guc(q));
-+	else
-+		wedged = xe_device_wedged(xe);
+-	guard(spinlock_irqsave)(&crd->spinlock);
+-	if (crd->istimer > 0)
+-		snd_mtpav_remove_output_timer(crd);
++	timer_shutdown_sync(&crd->timer);
+ }
  
- 	set_exec_queue_banned(q);
- 
+ /*
 -- 
 2.53.0
 
