@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCA830DEA3;
-	Sat, 12 Sep 2026 19:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F012D0C94;
+	Sat, 12 Sep 2026 19:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241974; cv=none; b=XpG2QmgWQEWySbmB6Cae79xMh3a6iO6iy8X4hFbaO3Wim5YR0dFsQvbAuHPtsQskl1kCFc34jETuNu1uP3rpwK/4o5dt9k48Z2VSaZpcr/9HqJCracpPi6C94zXYco5I4CjkelsbzazU71cq12POb5oAnqrGAOORaZ/B+a9Xwz4=
+	t=1789241978; cv=none; b=FZZyYLbZ69AGHLMziznU/iIcSPttYm63BORXT3osRhiNymnNUCSKUuR7U/9b+MLO2ATM4wmGFVE7PSRuJPlg/EhuKWPWKrxKEKIXultm36Ks0+0SVRd6Xuki3KlFw5Jt6A4QPVoDwPBFsp2+OYKNz1tv/x2GvZbM78rwm2UC+OU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241974; c=relaxed/simple;
-	bh=jH/BmGL7Qv/79nJessbKbtCn4finX6jM4EhUB34SZos=;
+	s=arc-20240116; t=1789241978; c=relaxed/simple;
+	bh=/fLZzSaoXOCjb7RyGHxCzX1MmZY8P8ELoirSY/+wpvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=us0wmFwwgieJxAZ6AgK+6T+lDMqOcKLeom41pfuJZTdeitohLugnCW2n1XntKbkRdbxKkqsMSQtC0BTEkccRKijNfnyzydFhhic14HRCvKa/iFraRFi0bvHx2Aua4lpYPy/mI2ulZPLj3Czg2Vx+XuDNi83AzYbOtMLa4FHVl00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7kzLACa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d1zYc2Zqp0f5NTFjyrBSOUpgllLPxhSYufRQVtecBtSm1nq2CoUt4VwbisRfHczJ6yYsphGHCniIJKf6WT3Unh5qQesmiRz3/iIpf0iJXsmooOIrk4WrE6RrVbwMf6n58/dG/My4TWm+fHCrlt7V2rxe/Likybus8gt29q4pgTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9jhrlqE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7kzLACa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BFD1F000FF;
-	Sat, 12 Sep 2026 19:39:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9jhrlqE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863651F000FF;
+	Sat, 12 Sep 2026 19:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241972;
-	bh=h4sfaTT5Q1QDV5E3dBr13QxSeepLtsWZwz6bKXJSpLA=;
+	s=korg; t=1789241977;
+	bh=JG+YY7hxjJmEcIxvCF0c15n+kNiutYpTy76+uTmz9IM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E7kzLACa+134i0uhQjVUXOAJ5VutcudrcmPD9PUUGMou/s/v6HaYj+57tjFWlgw7s
-	 XX9IhC4OWLttYNa1E6LT0fphklEoInZddPT9vosN3G4QKcHM2DCQeopWtnrh74dIpD
-	 iU8vM5MNCoedpCUGU68UA3Q7BqLOJlrtHy+DhguY=
+	b=l9jhrlqEvBvf4OfE+FTJ7GjC0peFkZu7i4nvfGBeIF4AzglQKMjER/vepaSiAey9f
+	 lbG8Fvph/U/pGNWCUKs2dbbHTU6hqOcmi9chY+/DFiR+mBfu75ype7k1vYYDH7dxvL
+	 kfWmTTpNxEyo4a/C7uMhvn3pjNt1hPXZ03uwHRwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Norbert Szetei <norbert@doyensec.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 193/798] net: skbuff: dont skb_tx_error() the source skb in skb_zerocopy()
-Date: Sat, 12 Sep 2026 08:57:01 +0200
-Message-ID: <20260912065521.485564806@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.10 240/798] parisc: Fix alignment of asm statements in head.S
+Date: Sat, 12 Sep 2026 08:57:48 +0200
+Message-ID: <20260912065522.658758696@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,67 +49,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 8ece906150128d5ec2462aabcc978c568433eca4 ]
+commit 04cf68c9a76e3c6b67ad056a66a14923abf85925 upstream.
 
-skb_zerocopy() copies frags from @from into @to. On an
-skb_orphan_frags() failure it calls skb_tx_error(@from), a destructive
-operation on the source skb the copy helper does not own. That completes
-@from's zerocopy uarg and clears SKBFL_ALL_ZEROCOPY, including the
-SKBFL_SHARED_FRAG page-ownership marker.
+All assembler statements need to be 4-byte aligned. Prevent a possible
+misalignment if someone changes the preceeding string and it's length is
+then suddenly not a multiple of 4 any longer.
 
-Both callers already report the failure on their own drop path.
-nfnetlink_queue does it at nla_put_failure, and Open vSwitch does it in
-the flow-miss drop arm of ovs_dp_process_packet(), so nothing is lost by
-dropping it here.
-
-On Open vSwitch's OVS_ACTION_ATTR_USERSPACE path the skb is not freed on
-this error: do_execute_actions() ignores output_userspace()'s return
-value and, unless the upcall was the last action, keeps forwarding the
-same skb through the flow's remaining actions. The uarg is completed
-while that skb is still in flight, telling the producer its buffers are
-free, and SKBFL_SHARED_FRAG is cleared on an skb the rest of the stack
-still handles. That flag is what makes esp_input() call skb_cow_data()
-instead of decrypting in place, so a later local ESP delivery can
-decrypt over frags the skb does not own privately.
-
-Leave error reporting to the callers.
-
-Fixes: 36d5fe6a0007 ("core, nfqueue, openvswitch: Orphan frags in skb_zerocopy and handle errors")
 Cc: stable@vger.kernel.org
-Suggested-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/6E3A780D-FB87-421F-9964-B1D457D7D106@doyensec.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ 7.2 and earlier do not have the put_page() call on the error path ]
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/parisc/kernel/head.S |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 9d7ebb9216773..faea3bf36d49e 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -3084,10 +3084,9 @@ skb_zerocopy(struct sk_buff *to, struct sk_buff *from, int len, int hlen)
- 	to->len += len + plen;
- 	to->data_len += len + plen;
+--- a/arch/parisc/kernel/head.S
++++ b/arch/parisc/kernel/head.S
+@@ -104,6 +104,7 @@ $iodc_panic:
+ 	or		%r10,%r10,%r10	/* qemu idle sleep */
+ msg1:	.ascii "Can't boot kernel which was built for PA8x00 CPUs on this machine.\r\n"
+ msg1_end:
++	.align 4
  
--	if (unlikely(skb_orphan_frags(from, GFP_ATOMIC))) {
--		skb_tx_error(from);
-+	if (unlikely(skb_orphan_frags(from, GFP_ATOMIC)))
- 		return -ENOMEM;
--	}
-+
- 	skb_zerocopy_clone(to, from, GFP_ATOMIC);
- 
- 	for (i = 0; i < skb_shinfo(from)->nr_frags; i++) {
--- 
-2.53.0
-
+ $cpu_ok:
+ #endif
 
 
