@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2004637F8D7;
-	Sat, 12 Sep 2026 19:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49705344DBD;
+	Sat, 12 Sep 2026 19:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241533; cv=none; b=A2RT0hn4VnxADdJqA3ceB9zWXFMAJjM0e5dCn5MfKMtHoO0sZsXL1qbhG2Pllriharsp84cylhhUcMB+68Vm5/9n8vq3cFxKWf8lmQKREL6tRsNo7NmkbNthbEQxuMEz7vsLLX+UUw2pWBfGdieYI9nUxovjXKb/mpApUQCD1KM=
+	t=1789241538; cv=none; b=krWfXxw36aDhtiM0CHiAtEc7wKI4MbaD72hgFlASRTCkbiIxAhOhrDMmM3ZlLLvHYZJY5jo0ubQ6M6LWxpMiAXQCqleTmjZyrxA/aD/rrREUnTk/XL7lM4y528Ae0bH2LbO85Z+bkwF2ZVueBx0yeFFmmY2riftlC70R7U6xsLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241533; c=relaxed/simple;
-	bh=280d9X8uoyKO6JkJBdPoN+iZhiDnB2IUQR4Fitm7zI8=;
+	s=arc-20240116; t=1789241538; c=relaxed/simple;
+	bh=PeFR8qgR5GDOENxOaDxQFGMrFzPoIrOPSZ4xq5NCkpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DyH3AceXyuAbrfuDVrB8Gp6uVeS2SyrhOJNL31qbMlGTZdDr7zBfMPV+oCQMdUj9NkkYVlifRXDooMd2b4eJBOL4jVIuXWatmXFpTwn3QdFAvYENDCswxM56PpcEqDMpw7jL0pm7BVOfOMaRnjHcrdOEaGGd3idb8Ug5s/2o4xY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xxrzyp+e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CfHPYGjPSSNSZr1uWpLiX2M0uhsoNMXtzLcfplLcpZOnCdIkGCY9W8Y+TRNd2f6tddKDygiRmFKUPNy0P47d3ixE7eH3sT/zyVTY+5Bo4ZHEa4bfC+uD35tHrRIi3F/FWQelYb7naXia3tLQf887JC0ZbNXILN+dHaEjI5KSFkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yO04kGpm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xxrzyp+e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36F11F00893;
-	Sat, 12 Sep 2026 19:32:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yO04kGpm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EBFE1F000FF;
+	Sat, 12 Sep 2026 19:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241532;
-	bh=zven9hwxFnFP2QwCWqsTqDm4zch46bp6UuK6p0PpB28=;
+	s=korg; t=1789241537;
+	bh=fgEZgBgnX7m9xw85e4gEUZySN6ddrczb0A2DiV5aMd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xxrzyp+eRNmKX81bt4Yyi5MaBjscnYf8ajLxfRlfuDG5gZZ2oMl77ZkiakuO8Bem5
-	 t54SV85LG3vak2qOY9tKBuWvXYzKxGYuNjcAkekLVyWCSLPwhCWe/QlHE6ysujnyyL
-	 fOmFO4gzp5ibATrvWY2bcHpvPFJXNWiEhECtLE48=
+	b=yO04kGpmL3T61naAdqAt/daHLHwQbVLImOX9EVQDRmovRDlHkHv5P05QVDge4kFdm
+	 rhCo9PcUdDG4KUZphGhWHgyQTGolxHPZgf/Fn+e88T+a5tydab8PcE0hCQJocn7VR1
+	 lDCkOxWO/vjz7GFq4cL65lrdYPeKYDsrLtSYtWyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 5.10 148/798] mmc: via-sdmmc: stop card-detect handling on probe failure
-Date: Sat, 12 Sep 2026 08:56:16 +0200
-Message-ID: <20260912065520.388707282@linuxfoundation.org>
+	Asim Viladi Oglu Manizada <manizada@pm.me>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 157/798] net: tun: bound receive headroom
+Date: Sat, 12 Sep 2026 08:56:25 +0200
+Message-ID: <20260912065520.614418802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,55 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Asim Viladi Oglu Manizada <manizada@pm.me>
 
-commit 088eaa92fcebaa6b957ccf9635afdf39643a577d upstream.
+commit 447c9303942c439a117d9b76ce6d6e2116b38ee7 upstream.
 
-request_irq() registers the SD card-detect interrupt and the probe enables
-it before mmc_add_host() runs. If mmc_add_host() fails, the error path only
-unmaps the registers and returns: the interrupt stays registered, so the
-handler keeps running against the host once it is freed. via_sdc_isr()
-dereferences sdhost and its MMIO base and schedules carddet_work, which
-via_sdc_card_detect() also runs against freed memory through its
-container_of() dereference.
+tun_get_user() uses tun->align both as skb headroom and when choosing how
+much packet data to keep linear. OVS can propagate an oversized headroom
+request from another port to TUN or TAP.
 
-Add a probe-error path that disables and frees the interrupt and cancels
-carddet_work before unmapping. carddet_work can re-enable the device
-interrupt via via_reset_pcictrl(), which restores PCIINTCTRL, so mask it
-again after cancelling the work.
+When align is larger than the usable space in a one-page skb head,
+SKB_MAX_HEAD(align) underflows and the result becomes negative when stored
+in good_linear. That value later wraps when assigned to the size_t linear
+variable, and tun_alloc_skb() can place skb->data outside the allocated
+head.
 
-This issue was found by an in-house static analysis tool and confirmed by
-manual code review.
+Bound the headroom stored by TUN to the one-page skb-head budget and the
+largest non-sentinel 16-bit skb header offset. Leave one linear byte for
+raw TUN and a complete Ethernet header for TAP, including NET_IP_ALIGN.
 
-Fixes: e4e46fb61e3b ("mmc: via-sdmmc: fix return value check of mmc_add_host()")
+Also pull the raw-TUN protocol byte and the TAP Ethernet header before
+accessing them, so these checks remain safe for nonlinear skbs supplied by
+other allocation paths.
+
+Fixes: eaea34b23c46 ("net/tun: implement ndo_set_rx_headroom")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260812012139.2134643-1-manizada@pm.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/via-sdmmc.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/tun.c |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
---- a/drivers/mmc/host/via-sdmmc.c
-+++ b/drivers/mmc/host/via-sdmmc.c
-@@ -1156,10 +1156,16 @@ static int via_sd_probe(struct pci_dev *
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -1169,11 +1169,16 @@ static netdev_features_t tun_net_fix_fea
+ static void tun_set_headroom(struct net_device *dev, int new_hr)
+ {
+ 	struct tun_struct *tun = netdev_priv(dev);
++	size_t max_headroom;
  
- 	ret = mmc_add_host(mmc);
- 	if (ret)
--		goto unmap;
-+		goto free_irq;
+-	if (new_hr < NET_SKB_PAD)
+-		new_hr = NET_SKB_PAD;
++	max_headroom = min_t(size_t, SKB_MAX_HEAD(0), U16_MAX - 1);
  
- 	return 0;
+-	tun->align = new_hr;
++	if ((tun->flags & TUN_TYPE_MASK) == IFF_TAP)
++		max_headroom -= ETH_HLEN + NET_IP_ALIGN;
++	else
++		max_headroom -= 1;
++
++	tun->align = clamp_t(int, new_hr, NET_SKB_PAD, max_headroom);
+ }
  
-+free_irq:
-+	writeb(0x0, sdhost->pcictrl_mmiobase + VIA_CRDR_PCIINTCTRL);
-+	free_irq(pcidev->irq, sdhost);
-+	cancel_work_sync(&sdhost->carddet_work);
-+	/* carddet_work may re-enable the interrupt via via_reset_pcictrl(). */
-+	writeb(0x0, sdhost->pcictrl_mmiobase + VIA_CRDR_PCIINTCTRL);
- unmap:
- 	iounmap(sdhost->mmiobase);
- free_mmc_host:
+ static void
+@@ -1899,7 +1904,13 @@ drop:
+ 	switch (tun->flags & TUN_TYPE_MASK) {
+ 	case IFF_TUN:
+ 		if (tun->flags & IFF_NO_PI) {
+-			u8 ip_version = skb->len ? (skb->data[0] >> 4) : 0;
++			u8 ip_version;
++
++			if (!pskb_may_pull(skb, 1)) {
++				err = -EINVAL;
++				goto drop;
++			}
++			ip_version = skb->data[0] >> 4;
+ 
+ 			switch (ip_version) {
+ 			case 4:
+@@ -1920,7 +1931,7 @@ drop:
+ 		skb->dev = tun->dev;
+ 		break;
+ 	case IFF_TAP:
+-		if (frags && !pskb_may_pull(skb, ETH_HLEN)) {
++		if (!pskb_may_pull(skb, ETH_HLEN)) {
+ 			err = -ENOMEM;
+ 			goto drop;
+ 		}
 
 
