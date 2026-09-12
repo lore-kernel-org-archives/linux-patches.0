@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82DC1C5799;
-	Sat, 12 Sep 2026 18:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38541C5799;
+	Sat, 12 Sep 2026 18:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239432; cv=none; b=E1RUsARwrc4TdiH9WH7r1Kl4s0CqCUHsIIL/yGV4bzQLuJO2aBuZgUmXjaCV8G3gutEDdlp2bGUTEAI4r3s3mXporPESaRGB23BO2ybuhR4AZjrQtdSIDeWA8BTbXRhZeMRHHrE2arALjN0KaLTfLWvF3xARO7f0rRW3oUkf81U=
+	t=1789239438; cv=none; b=FtgGxejQDeuiDRjKyJbk9JOWgNW8h9Rb1w4mobv6V0LvKT2f21nU9IVi6GFNPbXJeF9JSmHwvPfwpXGiEcQG5Wbg2oInMCTwE16IavgA37fHAtut2zEOiZretHSOuff3PZVJeC9UJFWxXcnAKYSywJ6j2YkLy/B0h+Q8j0v/E18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239432; c=relaxed/simple;
-	bh=P6wbgT+j5A+O8I76tfxSDwBvjHNuofg7kCQUJLT3yM4=;
+	s=arc-20240116; t=1789239438; c=relaxed/simple;
+	bh=a1dU8NGvakKpjPhWFtAmDxoqr5xpfK1Xp0ePhD/m4hY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sl0qQex5RZw4mdZsHl/dIv1fUFRrgN/UgdamsBsTJyvDSm3NiyJ5ZHERSTJVFCVZltFUtXqB1NLTVkjCwSMg/giZPcdnY+s3JdM602s2+UiPLadnxWlrbboNmmMGo8qNaekeoOFYRLxfb4rHFGdO0b8fTO8sttMFVItnzo2MtGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uukRbrJw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fcsHv7b7IaamjA/p55f++O9KfTWKQ/RfrbOr9NN35HmAfLVxfD91xLlbhBypMiosUO6GmVlagkMf3oNzQ7LARekBDRZcAD6VRbLmv56atO4LRmohiioQ+ej0nkAaaObxJcHB7I3nF1A1jDKqILcNZrplBcnBNkVhfnaeS4IfxaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rj2sIS7Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uukRbrJw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B7C1F000FF;
-	Sat, 12 Sep 2026 18:57:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rj2sIS7Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8AB1F000FF;
+	Sat, 12 Sep 2026 18:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239431;
-	bh=MmLBJVNagFD8auyP2064IbrzFYguRdmYBp2g+aENwFk=;
+	s=korg; t=1789239436;
+	bh=fOLB3Td++N20ctiqvnNpkqNPxyCheSsXjFWl+PO8zl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uukRbrJwx50yqzGh0tGlt5umnY0KuL23ymNk5Al2O0ahRJp6UpobYc5GVttva1zdJ
-	 RAuc2Us9aZZZptVIcv87H/A4vjuCrnp9rU093lj0NuaFtO8PvQZcMOpAiog/X9E9m0
-	 mgHTqoEsZCqXQL5jgZZY9ZLr6c+MMsJZMWcAuxz8=
+	b=Rj2sIS7QjX6iO/nYCw93dGmLX0i60FViKQmNwI+as5aeHjnIidhkE1xHZ3GRHt9Hh
+	 OE/YNyVxI+nCXQ3W8AKzTneAiRmGok8Z119gVgIcKL1ZnsnXjbORTio8iY+oONZkK8
+	 wmWPmRUuO61Uzw5jG/c/RU7qqslI369d7aATwFvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Pranjal Shrivastava <praan@google.com>,
-	Will Deacon <will@kernel.org>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 662/935] iommu/arm-smmu-v3: Convert to use atomic poll timeout
-Date: Sat, 12 Sep 2026 09:01:32 +0200
-Message-ID: <20260912065542.024408014@linuxfoundation.org>
+Subject: [PATCH 5.15 663/935] wifi: mac80211: send TWT teardown to peer after setup TX failure
+Date: Sat, 12 Sep 2026 09:01:33 +0200
+Message-ID: <20260912065542.046739543@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,50 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pranjal Shrivastava <praan@google.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit eced8058c82a3a81ae480a6546e2da32100dddfa ]
+[ Upstream commit a28fcce6ee74be8a4526e6cfa16dc7786d62a784 ]
 
-The arm_smmu_write_reg_sync() helper is currently implemented using
-readl_relaxed_poll_timeout() (that relies on usleep_range() internally)
-which becomes a critical issue when used in the gerror irq handler.
+When an AP's TWT Setup response is not acknowledged,
+ieee80211_s1g_tx_twt_setup_fail() asks the driver to tear down the local
+agreement and sends a TWT teardown action as the peer notification. It
+uses the response SA as the destination, but
+ieee80211_s1g_send_twt_setup() built that response with SA set to the
+AP's address. The teardown is therefore queued with DA, SA and BSSID all
+set to the AP address and never reaches the station.
 
-If the SMMU hits a gerror and enters Service Failure Mode
-(GERROR_SFM_ERR), the gerror handler calls arm_smmu_device_disable() in
-hard-irq context. This becomes a problem as arm_smmu_device_disable()
-inevitably calls arm_smmu_write_reg_sync() which might attempt to sleep
-inside a hard-irq context.
+The in-tree driver callbacks update local hardware state and emit no
+action frame. The station receives no notification that mac80211 asked
+the driver to remove the agreement and can keep following the TWT
+schedule, leaving the peers' power-save state desynchronized.
 
-Fix this by converting the arm_smmu_write_reg_sync to use the
-readl_relaxed_poll_timeout_atomic() polling helper.
+Address the teardown to the response DA, the station to which the failed
+response was sent. This also matches the station lookup the transmit
+status path already performs on the same frame.
 
-(Discovered while running Sashiko locally on another patch series).
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 48ec83bcbcf5 ("iommu/arm-smmu: Add initial driver support for ARM SMMUv3 devices")
-Signed-off-by: Pranjal Shrivastava <praan@google.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: f5a4c24e689f ("mac80211: introduce individual TWT support in AP mode")
+Assisted-by: Codex:gpt-5.6-sol
+Assisted-by: Kimi:K3
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260729173607.13340-1-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/mac80211/s1g.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index b12e23800844a..adbd27704a819 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -3161,8 +3161,9 @@ static int arm_smmu_write_reg_sync(struct arm_smmu_device *smmu, u32 val,
- 	u32 reg;
+diff --git a/net/mac80211/s1g.c b/net/mac80211/s1g.c
+index e41fd43f6a6ec..a5258ea4c956a 100644
+--- a/net/mac80211/s1g.c
++++ b/net/mac80211/s1g.c
+@@ -146,7 +146,7 @@ ieee80211_s1g_tx_twt_setup_fail(struct ieee80211_sub_if_data *sdata,
  
- 	writel_relaxed(val, smmu->base + reg_off);
--	return readl_relaxed_poll_timeout(smmu->base + ack_off, reg, reg == val,
--					  1, ARM_SMMU_POLL_TIMEOUT_US);
-+	return readl_relaxed_poll_timeout_atomic(smmu->base + ack_off, reg,
-+						reg == val, 1,
-+						ARM_SMMU_POLL_TIMEOUT_US);
+ 	drv_twt_teardown_request(sdata->local, sdata, &sta->sta, flowid);
+ 
+-	ieee80211_s1g_send_twt_teardown(sdata, mgmt->sa, sdata->vif.addr,
++	ieee80211_s1g_send_twt_teardown(sdata, mgmt->da, sdata->vif.addr,
+ 					flowid);
  }
  
- /* GBPA is "special" */
 -- 
 2.53.0
 
