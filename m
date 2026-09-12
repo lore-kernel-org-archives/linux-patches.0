@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6233F472F66;
-	Sat, 12 Sep 2026 13:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B79C47988D;
+	Sat, 12 Sep 2026 13:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218145; cv=none; b=spPIsjws20/DCybqS9tIMM0SvFrpkl2c5cA9k2UHYVuZchlguSJijpRUA+4O9Ko5NHxHbY7cWqREr/5wFlwriVZ1BCvbLGEEpcyRbjcsMTmtnmCjZOZZ8JaqlVitUuhzfvIrsV4RbTc5ylJUm0djuoDn4iMS2Rg8VMXnAsdokcI=
+	t=1789218150; cv=none; b=qiwMh6SzUJOWstFxlklWooZMd4920C2+COn6Z+I7oxl9D5TtolnYFOCOtjg0b3P0AYO2NhD7nCGApd6cxZ4OHw/cZ0VnVbAPqlpvlbCNgV9ofSwCX/pCdN86GyMgIjh+/hN9BotJiroD+K+e+7MKwDoASn1pZ8DEtWtE7msckbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218145; c=relaxed/simple;
-	bh=BEWjnpAsFY55o2AuNmKit22ZTW5qTY3hixwEheXbXKU=;
+	s=arc-20240116; t=1789218150; c=relaxed/simple;
+	bh=UObDT8BX1Nbx/pSlyGfGrWJYfv2krGzYFH1oq0vGpgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MbwSh+/Kf7krT+nbbcnOfzeY6wNkmJKFiMniIfhN/3hLX5BoPPWOcfJpyea2yNjXEEDyOQnfU3zz/1jntEOQxxTHXmB9w+30ER/Uz4unTe5t2kyg0bZI7q7kGrdxzLCVV7DfBgu5dnxGQBCjoazDeVzIcYSnBe7Ea+iq7zU/mGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cyb0jnOM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q2f8i4Toc1511KKnh/Y12A5NEtgyO7YymxRntAWWkmiOqz9kJBPKCfZ3hkPBG7BH6nOYSY6WGZnDAZHsubLD1NoduljWNB+WjOxpLmvds1W6yzOEPYx0G/TFG6tjgQDbdtncIVCZJW7wYbjpeH/tqBzlEAbofamrOrzsotkLkI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHrqes2t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cyb0jnOM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C511F000FF;
-	Sat, 12 Sep 2026 13:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHrqes2t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF801F000FF;
+	Sat, 12 Sep 2026 13:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218144;
-	bh=HrGaaPzkoUpSey/8Fuwq5RFDiFX8AZcgE18W/XFLuvU=;
+	s=korg; t=1789218149;
+	bh=jWaL+yvORJiNNIkDGbP8kCy9V7lp0Xy+ARLfgJY8wEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cyb0jnOMPnQAnS3oM4HnYq5lVU98UPawiCeFHfJP3V1Kmy77g8o3ErTxxkB/kyisW
-	 kZovuk72tArCTSWRBYAiYuLW7gLaGyhHEeKCPYGpXJ+WbUftkkdYW2FeQ/YSxsYZSC
-	 Arnp63iPexa8GzEd9tdG/zQkwCbMGR+QIWrl+CVo=
+	b=RHrqes2tAx5nG1HOmAGBcf3GsoW/0w+Q9RsGwvEKD+FRepX9sYOMymPZVaqmkRNCn
+	 nIEWrjscoIu/ngiCCf9saeT04qRH6HEUvXFpqhlb+wYwVoxWSIYolTUyYO7igh21dr
+	 O75EjAMswm06zj6pBh4eWXp01E7E18Sreiu149oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ran Hongyun <ranhongyun1@huawei.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1084/1376] UBI: fix two issues in the ubi.mtd MODULE_PARM_DESC
-Date: Sat, 12 Sep 2026 08:58:30 +0200
-Message-ID: <20260912065631.723093326@linuxfoundation.org>
+Subject: [PATCH 6.12 1085/1376] firewire: core: add KUnit test skeleton for node tree
+Date: Sat, 12 Sep 2026 08:58:31 +0200
+Message-ID: <20260912065631.744770954@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,52 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ran Hongyun <ranhongyun1@huawei.com>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit ff7937d14f5333ec7e6fb50d00a152d7974f4105 ]
+[ Upstream commit 1f9b65cf57081035547b4d3ca1805df20892e9db ]
 
-Fix two issues introduced before:
+Some issues have been reported in node tree management. Refactoring
+the topology-related code in the core is required. Adding unit tests
+would help ensure that the refactoring does not introduce regressions.
 
- - The parameter format string was missing the enable_fm and
-    need_resv_pool tokens introduced in an earlier commit.
+This commit adds a KUnit test skeleton for this purpose.
 
- - The bad-block reservation note was misplaced after Example 5
-    instead of after Example 3. It was misplaced due to an earlier patch.
-
-Fixes: 83ff59a06663 ("UBI: support ubi_num on mtd.ubi command line")
-Signed-off-by: Ran Hongyun <ranhongyun1@huawei.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Link: https://lore.kernel.org/r/20260810064119.410324-2-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Stable-dep-of: 05bfb1327dc5 ("firewire: core: fix memory leak in error path of build_tree()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/build.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/firewire/.kunitconfig     |  1 +
+ drivers/firewire/Kconfig          | 15 +++++++++++++++
+ drivers/firewire/core-topology.c  |  4 ++++
+ drivers/firewire/node-tree-test.c | 19 +++++++++++++++++++
+ 4 files changed, 39 insertions(+)
+ create mode 100644 drivers/firewire/node-tree-test.c
 
-diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
-index 3b30c80cad43f..fb121b6d08484 100644
---- a/drivers/mtd/ubi/build.c
-+++ b/drivers/mtd/ubi/build.c
-@@ -1575,7 +1575,7 @@ static int ubi_mtd_param_parse(const char *val, const struct kernel_param *kp)
- }
+diff --git a/drivers/firewire/.kunitconfig b/drivers/firewire/.kunitconfig
+index 21b7e9eef63d1..7406acb004782 100644
+--- a/drivers/firewire/.kunitconfig
++++ b/drivers/firewire/.kunitconfig
+@@ -6,3 +6,4 @@ CONFIG_FIREWIRE_KUNIT_DEVICE_ATTRIBUTE_TEST=y
+ CONFIG_FIREWIRE_KUNIT_PACKET_SERDES_TEST=y
+ CONFIG_FIREWIRE_KUNIT_SELF_ID_SEQUENCE_HELPER_TEST=y
+ CONFIG_FIREWIRE_KUNIT_OHCI_SERDES_TEST=y
++CONFIG_FIREWIRE_KUNIT_NODE_TREE_TEST=y
+diff --git a/drivers/firewire/Kconfig b/drivers/firewire/Kconfig
+index 905c82e26ce74..cfbac21660ab4 100644
+--- a/drivers/firewire/Kconfig
++++ b/drivers/firewire/Kconfig
+@@ -81,6 +81,21 @@ config FIREWIRE_KUNIT_SELF_ID_SEQUENCE_HELPER_TEST
+ 	  For more information on KUnit and unit tests in general, refer
+ 	  to the KUnit documentation in Documentation/dev-tools/kunit/.
  
- module_param_call(mtd, ubi_mtd_param_parse, NULL, NULL, 0400);
--MODULE_PARM_DESC(mtd, "MTD devices to attach. Parameter format: mtd=<name|num|path>[,<vid_hdr_offs>[,max_beb_per1024[,ubi_num]]].\n"
-+MODULE_PARM_DESC(mtd, "MTD devices to attach. Parameter format: mtd=<name|num|path>[,<vid_hdr_offs>[,max_beb_per1024[,ubi_num[,enable_fm[,need_resv_pool]]]]].\n"
- 		      "Multiple \"mtd\" parameters may be specified.\n"
- 		      "MTD devices may be specified by their number, name, or path to the MTD character device node.\n"
- 		      "Optional \"vid_hdr_offs\" parameter specifies UBI VID header position to be used by UBI. (default value if 0)\n"
-@@ -1588,9 +1588,9 @@ MODULE_PARM_DESC(mtd, "MTD devices to attach. Parameter format: mtd=<name|num|pa
- 		      "Example 1: mtd=/dev/mtd0 - attach MTD device /dev/mtd0.\n"
- 		      "Example 2: mtd=content,1984 mtd=4 - attach MTD device with name \"content\" using VID header offset 1984, and MTD device number 4 with default VID header offset.\n"
- 		      "Example 3: mtd=/dev/mtd1,0,25 - attach MTD device /dev/mtd1 using default VID header offset and reserve 25*nand_size_in_blocks/1024 erase blocks for bad block handling.\n"
-+		      "\t(e.g. if the NAND *chipset* has 4096 PEB, 100 will be reserved for this UBI device).\n"
- 		      "Example 4: mtd=/dev/mtd1,0,0,5 - attach MTD device /dev/mtd1 to UBI 5 and using default values for the other fields.\n"
--		      "example 5: mtd=1,0,0,5 mtd=2,0,0,6,1 - attach MTD device /dev/mtd1 to UBI 5 and disable fastmap; attach MTD device /dev/mtd2 to UBI 6 and enable fastmap.(only works when fastmap is enabled and fm_autoconvert=Y).\n"
--		      "\t(e.g. if the NAND *chipset* has 4096 PEB, 100 will be reserved for this UBI device).");
-+		      "example 5: mtd=1,0,0,5 mtd=2,0,0,6,1 - attach MTD device /dev/mtd1 to UBI 5 and disable fastmap; attach MTD device /dev/mtd2 to UBI 6 and enable fastmap.(only works when fastmap is enabled and fm_autoconvert=Y).\n");
- #ifdef CONFIG_MTD_UBI_FASTMAP
- module_param(fm_autoconvert, bool, 0644);
- MODULE_PARM_DESC(fm_autoconvert, "Set this parameter to enable fastmap automatically on images without a fastmap.");
++config FIREWIRE_KUNIT_NODE_TREE_TEST
++	tristate "KUnit tests for node tree" if !KUNIT_ALL_TESTS
++	depends on FIREWIRE && KUNIT
++	default KUNIT_ALL_TESTS
++	help
++	  This builds the KUnit tests for node tree.
++
++	  KUnit tests run during boot and output the results to the debug
++	  log in TAP format (https://testanything.org/). Only useful for
++	  kernel devs running KUnit test harness and are not for inclusion
++	  into a production build.
++
++	  For more information on KUnit and unit tests in general, refer
++	  to the KUnit documentation in Documentation/dev-tools/kunit/.
++
+ config FIREWIRE_OHCI
+ 	tristate "OHCI-1394 controllers"
+ 	depends on PCI && FIREWIRE && MMU
+diff --git a/drivers/firewire/core-topology.c b/drivers/firewire/core-topology.c
+index 892b94cfd6260..01c3304ea36c9 100644
+--- a/drivers/firewire/core-topology.c
++++ b/drivers/firewire/core-topology.c
+@@ -501,3 +501,7 @@ void fw_core_handle_bus_reset(struct fw_card *card, int node_id, int generation,
+ 	}
+ }
+ EXPORT_SYMBOL(fw_core_handle_bus_reset);
++
++#ifdef CONFIG_FIREWIRE_KUNIT_NODE_TREE_TEST
++#include "node-tree-test.c"
++#endif
+diff --git a/drivers/firewire/node-tree-test.c b/drivers/firewire/node-tree-test.c
+new file mode 100644
+index 0000000000000..fca71dd99b25f
+--- /dev/null
++++ b/drivers/firewire/node-tree-test.c
+@@ -0,0 +1,19 @@
++// SPDX-License-Identifier: GPL-2.0-only
++//
++// node-tree-test.c - An application of Kunit to test node tree.
++//
++// Copyright (c) 2026 Takashi Sakamoto
++//
++// This file can not be built independently since it is intentionally included in core-topology.c.
++
++#include <kunit/test.h>
++
++static struct kunit_case node_tree_test_cases[] = {
++	{}
++};
++
++static struct kunit_suite node_tree_test_suite = {
++	.name = "firewire-node-tree",
++	.test_cases = node_tree_test_cases,
++};
++kunit_test_suite(node_tree_test_suite);
 -- 
 2.53.0
 
