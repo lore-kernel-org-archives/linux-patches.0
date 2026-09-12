@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17852366052;
-	Sat, 12 Sep 2026 12:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E809E366052;
+	Sat, 12 Sep 2026 12:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216035; cv=none; b=QKqrXcv14Q597Sa3XIO14k3aA/wh7NFzJ3L8u4ONP9kkVhRrgobxn4EZVK+ZtBmC+dgbdDXPJ6SeFkNEq7frWyA2ILSNsJIkOSdj5hUJhvgJR0gyTcGShCnwAYGm/D51Vgm1i/I6Vg2mvJ8RmXeClBTpxyKFlqMAxkD/Qef4fhA=
+	t=1789216040; cv=none; b=rZ+QioKQ2hBQ+Yo1pR95ttQSHd0eKlbDmr5CK/4aDC+jjoTL4rcgazze/5HE8akmnpykEPML4qMXNZ+7VMdKrT3w9COWpOcf3aWXp8zngJpkkkfsj1Ogy5Zi5AZ2bMMZJ2XPm6tU7uqcMc7rKz9v/q/nyzV+OhQlVd0d7PRNH3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216035; c=relaxed/simple;
-	bh=5fSerMzM4l2xEEv45x7mqIcOSBHQKc2TwB3iawkxU8A=;
+	s=arc-20240116; t=1789216040; c=relaxed/simple;
+	bh=NqQyew/sWrY61A605DQ3opifiDflarC1BVI73F0QvGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7uKwBzPYrQz83XzAyOh+0xWwGMqK6Hv5ZE6M0mT5waMM2GaApOGO2yuiLnYNlMEHFzOZINeCjzUZHkiwUlquO/mlGghZXjGIRro/NdJdgzfPV41/wcc6pOEm22JTw+xbbhy8UH3QXZF2j1jI6xNYGf6m24BVk7JiEG3+LAzHlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+vdWHAT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XGFlAt3WUjUF0H4ZrARMpDdeKmJaNtRlOysoaaWOVr+j3VTIFVVAbPX7nelu3gnxSAfr+GOLyYCpysBdUwGLulSJLW47ihPXlyg7Osyhk4mmjpB2sF/7wLxjSsl3Vxyh4RfWfp8+Dch3ZZWrWPGZPtl7+EzFbPOun8RiJtPuh7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EKZt6+Ii; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+vdWHAT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C0F1F000FF;
-	Sat, 12 Sep 2026 12:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKZt6+Ii"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54C61F000FF;
+	Sat, 12 Sep 2026 12:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216034;
-	bh=99iVOhWFkMAd0HrpyA/ZIeufIGW2Er1h3DxqlTxijE8=;
+	s=korg; t=1789216038;
+	bh=EJUoY6MiIv5LbVyTzDnsBku9faDfJaZxi8j/oLcRN14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c+vdWHATIbrOV257M1R0qzGT6Glnhu8vSVuK1/kqgoyadMxaf6NIHB/xVBoHqYl40
-	 VVyFcXz6d+uxpok0B568d1PEU5b1bPCaUv/XKlhweLj6q2iN3D3+eSdsyygXslvjmn
-	 UBYjYsNGxpmpz3OXVi0DtcZrnCh4VUNmHCJIVFxM=
+	b=EKZt6+IikltpUjW3aKkU0mNuaCGcof8iEZABBdGAd0aQZZuz8kvsnaH06zaJsyHk8
+	 lkwxbBZzsA5jJPCwDjqd8+frmHBanZOGlio0xlWuAhwpgUE4QAk9WxejkkXeYk+846
+	 hExwbzvrhi7aHA9ZnonjxxBjtE088uvMJsvdFRhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
+	Viktor Malik <vmalik@redhat.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0611/1376] arm64: dts: imx8-ss-audio: Fix LPCG clock indices for ASRC0
-Date: Sat, 12 Sep 2026 08:50:37 +0200
-Message-ID: <20260912065621.158978496@linuxfoundation.org>
+Subject: [PATCH 6.12 0612/1376] selftests/bpf: Silence array bounds warning in global_map_resize
+Date: Sat, 12 Sep 2026 08:50:38 +0200
+Message-ID: <20260912065621.181357237@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -44,50 +45,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Viktor Malik <vmalik@redhat.com>
 
-[ Upstream commit 8563591f76ca02c1a6fd70ce986df1d0dde8d249 ]
+[ Upstream commit dcd164ec67f89e0db5ee025ee9e91280052eb737 ]
 
-The LPCG clock indices for ASRC0 and AUD_PLL_DIV0 are swapped. The ASRC0
-LPCG provides only IMX_LPCG_CLK_4, so update the ASRC0 clock consumer to
-use IMX_LPCG_CLK_4 instead of the non-existent IMX_LPCG_CLK_0.
+When compiling BPF selftests with -O2, GCC reports an array bounds
+violation warning in global_map_resize test:
 
-Likewise, the AUD_PLL_DIV0 LPCG provides only IMX_LPCG_CLK_0, so update its
-clock consumer to use IMX_LPCG_CLK_0 instead of the non-existent
-IMX_LPCG_CLK_4.
+    In function ‘global_map_resize_bss_subtest’,
+        inlined from ‘test_global_map_resize’ at /bpf-next/tools/testing/selftests/bpf/prog_tests/global_map_resize.c:228:3:
+    /bpf-next/tools/testing/selftests/bpf/prog_tests/global_map_resize.c:64:33: error: array subscript 1 is above array bounds of ‘int[1]’ [-Werror=array-bounds=]
+       64 |                 skel->bss->array[i] = 1;
+          |                 ~~~~~~~~~~~~~~~~^~~
+    In file included from /bpf-next/tools/testing/selftests/bpf/prog_tests/global_map_resize.c:6:
+    ./test_global_map_resize.skel.h: In function ‘test_global_map_resize’:
+    ./test_global_map_resize.skel.h:44:21: note: while referencing ‘array’
+       44 |                 int array[1];
+          |                     ^~~~~
 
-Fixes: 5125617c7a4d3 ("arm64: dts: imx8qxp: add asrc[0,1], esai0, spdif0 and sai[4,5]")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+This is a false positive because `array` (a BPF map) has been resized
+from within the BPF program. GCC doesn't know that so let us silence the
+warning by accessing the array via a plain pointer.
+
+Fixes: 08b089567573 ("libbpf: Selftests for resizing datasec maps")
+Signed-off-by: Viktor Malik <vmalik@redhat.com>
+Link: https://lore.kernel.org/bpf/57765bc465a27923c3c093eba222cc24d08d8c40.1784112948.git.vmalik@redhat.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8-ss-audio.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../testing/selftests/bpf/prog_tests/global_map_resize.c  | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8-ss-audio.dtsi b/arch/arm64/boot/dts/freescale/imx8-ss-audio.dtsi
-index ff5df0fed9e96..741a311614ddb 100644
---- a/arch/arm64/boot/dts/freescale/imx8-ss-audio.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8-ss-audio.dtsi
-@@ -124,10 +124,10 @@ asrc0: asrc@59000000 {
- 		compatible = "fsl,imx8qm-asrc";
- 		reg = <0x59000000 0x10000>;
- 		interrupts = <GIC_SPI 372 IRQ_TYPE_LEVEL_HIGH>;
--		clocks = <&asrc0_lpcg IMX_LPCG_CLK_0>,
--			 <&asrc0_lpcg IMX_LPCG_CLK_0>,
--			 <&aud_pll_div0_lpcg IMX_LPCG_CLK_4>,
--			 <&aud_pll_div1_lpcg IMX_LPCG_CLK_4>,
-+		clocks = <&asrc0_lpcg IMX_LPCG_CLK_4>,
-+			 <&asrc0_lpcg IMX_LPCG_CLK_4>,
-+			 <&aud_pll_div0_lpcg IMX_LPCG_CLK_0>,
-+			 <&aud_pll_div1_lpcg IMX_LPCG_CLK_0>,
- 			 <&acm IMX_ADMA_ACM_AUD_CLK0_SEL>,
- 			 <&acm IMX_ADMA_ACM_AUD_CLK1_SEL>,
- 			 <&clk_dummy>,
+diff --git a/tools/testing/selftests/bpf/prog_tests/global_map_resize.c b/tools/testing/selftests/bpf/prog_tests/global_map_resize.c
+index 56b5baef35c8c..602ce30f1720c 100644
+--- a/tools/testing/selftests/bpf/prog_tests/global_map_resize.c
++++ b/tools/testing/selftests/bpf/prog_tests/global_map_resize.c
+@@ -23,6 +23,7 @@ static void global_map_resize_bss_subtest(void)
+ 	struct bpf_map *map;
+ 	const __u32 desired_sz = sizeof(skel->bss->sum) + sysconf(_SC_PAGE_SIZE) * 2;
+ 	size_t array_len, actual_sz, new_sz;
++	int *array;
+ 
+ 	skel = test_global_map_resize__open();
+ 	if (!ASSERT_OK_PTR(skel, "test_global_map_resize__open"))
+@@ -58,10 +59,13 @@ static void global_map_resize_bss_subtest(void)
+ 		goto teardown;
+ 
+ 	/* fill the newly resized array with ones,
+-	 * skipping the first element which was previously set
++	 * skipping the first element which was previously set;
++	 * access through a plain pointer to avoid -Warray-bounds
++	 * since the array was resized beyond its declared length.
+ 	 */
++	array = skel->bss->array;
+ 	for (int i = 1; i < array_len; i++)
+-		skel->bss->array[i] = 1;
++		array[i] = 1;
+ 
+ 	/* set global const values before loading */
+ 	skel->rodata->pid = getpid();
 -- 
 2.53.0
 
