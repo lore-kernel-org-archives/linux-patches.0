@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E75F457E7A;
-	Sat, 12 Sep 2026 11:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FE73D9DC0;
+	Sat, 12 Sep 2026 11:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211504; cv=none; b=dG11TpOYpYwu8WPs+trvl9IHNkIlY5mfQOB/qE1tSFYB0GgTT2Ast6MNLWB21g98/z3MgxfWzaBwxUbvUzPjMPNzjH9T56+BzPYLWTBq6AXRol80tVl0uLg49B7/KVCEPB6kPtmTOefwLhsHlIzQXuWzdToUR/bIr9pR1VTlZtk=
+	t=1789211509; cv=none; b=dZDs+coFQdRV7gF+7ogtVWAG5ptGGdmu7xrek/90rGeBe8XT+eyeR6DJNCQx4xA469ZSGdj0mFpL8v0mUq7UgZ9LbGIRnEv9IU8xvqQ1ZZMaZBU1JycsOxTp5wEkUjaIKUF6uxemh+CsF2GDfB33BVG0eDrqtTGvYFhIpusWwKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211504; c=relaxed/simple;
-	bh=iJfEEN99PdS5i0HqFAxLEeZL7TL9m+szeXUfAFM1pXM=;
+	s=arc-20240116; t=1789211509; c=relaxed/simple;
+	bh=NQjvmxAe9rlisGtPDrys067QLI9iok2vdLLOPrh6Y60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CgqrBxdTrMu36pA3XXRNnvKP99KCEY/JgsFG1dKytmNmbBnUfXSOBdwqnWC0DE9GFrzBZDCyRfutbQNiLocwlDoHaPaVOjx8+4sr4wQU4tPTxrkFbqLRoZUuE6n8w9xuLLBfLyMJZs2IYx0ZyEYbiyJ3CxoZV3hOqXOUwQbCYsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qW3HgelA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IQLCElEDGENmOis4kcEZLAzs/jeAM9f83x3+4XwUUo0C0QHWE+LeHLIoOBkSUviMD2dJn9KwI6h1CcPcodN58YhFcrOtjveSwE+7f/lkB9qKuOFlyeQMW3obQBrdmFaXKYrOs2kp6tZYUn/z+YhB7G9Zr4OSaDdpfwqmkrDbYBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KXiCJRAa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qW3HgelA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204B01F000FF;
-	Sat, 12 Sep 2026 11:11:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KXiCJRAa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE67F1F000FF;
+	Sat, 12 Sep 2026 11:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211503;
-	bh=pnTMefDqdQKn64fkq3Q/EmDCeXO4Onxam1QzWoK/jvo=;
+	s=korg; t=1789211508;
+	bh=hsJzmIsGHSOGTfrNxeXugZvRdlhGxSi0EdzqRvrZZ9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qW3HgelAW1eHcpAghVaVqH1U09/6SNC959wBAJy/1rM793Su3LQtjfIhOnyRr+ftI
-	 ABbN+MbfwN8dxKm78eSrE2sRsAkr2GaDak5bBQV7ZftU4Cx5P99VLUOBZ1T94kOpU9
-	 HH59zd3dwXoBQpujBddheGMB0uMjmS+tngN9YSCs=
+	b=KXiCJRAaC/pTeMTEunrbTmgicrwxpN1w9G8glAI4mOQ7USbrxm+lFuvpE0g7ycGpI
+	 exPFEFbEJfXn0GdRz64andJFfzYKJixe376tdYjkkUumSc2hHBlAvrNNPZviqdtBKr
+	 G2quTP8qpY7QripzYtW8zYXLemkDNi3u860/39H0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Xianglin Lin <1021538027@qq.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1201/1518] crypto: lskcipher - propagate errors from unaligned crypt
-Date: Sat, 12 Sep 2026 08:56:10 +0200
-Message-ID: <20260912065650.653699301@linuxfoundation.org>
+Subject: [PATCH 6.18 1192/1518] HID: multitouch: reclassify HTIX5288 to WIN_8_FORCE_MULTI_INPUT_NSMU
+Date: Sat, 12 Sep 2026 08:56:01 +0200
+Message-ID: <20260912065650.444573699@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,45 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Xianglin Lin <1021538027@qq.com>
 
-[ Upstream commit 7537036a2e6fe96f8ed82034f755c54714a0e417 ]
+[ Upstream commit 69226cd6fad7a07370ec9a009af1c174de7635c5 ]
 
-The while loop declares a second err variable that shadows the outer
-one. When the crypt callback fails, the goto out path returns the outer
-err, which still holds the -ENOMEM value assigned before the successful
-allocation check. The real error from the cipher is discarded and the
-caller sees -ENOMEM instead.
+Commit b5e65ae557da ("HID: multitouch: Add quirk for Hantick 5288
+touchpad") assigned MT_CLS_NSMU to the HTIX5288 (0911:5288).  This was
+necessary because the device sometimes fails to send touch release
+signals when transitioning from >=2 fingers to <2 fingers, and
+MT_QUIRK_NOT_SEEN_MEANS_UP fixes stuck touches by treating missing
+contacts as released.
 
-Drop the inner declaration so the callback error reaches the caller.
+However, MT_CLS_NSMU only carries MT_QUIRK_NOT_SEEN_MEANS_UP.  It
+lacks MT_QUIRK_CONTACT_CNT_ACCURATE and MT_QUIRK_IGNORE_DUPLICATES.
+As a result, after a two-finger scroll finger lift, the device still
+reports stale coordinates from the released contact in subsequent
+frames, and the driver overwrites the remaining active slot with
+those frozen coordinates.  The remaining finger appears stuck at the
+lift position until all fingers are lifted.
 
-Verified with a test module that registers an lskcipher whose encrypt
-callback fails with -EIO and calls it through a misaligned buffer.
-An unpatched kernel returns -ENOMEM, a patched kernel returns -EIO.
+This was confirmed via evtest on Arch Linux 7.1.3: after
+TRACKING_ID=-1 for the released slot, every subsequent frame contained
+duplicate position pairs -- the real moving finger's coordinates
+followed by the lifted finger's frozen position, both attributed to
+the active slot.
 
-Found with Clang's -Wshadow.
+Reclassify the device to MT_CLS_WIN_8_FORCE_MULTI_INPUT_NSMU
+(0x0018), which preserves the original MT_QUIRK_NOT_SEEN_MEANS_UP
+fix while adding the necessary Win8 quirks (CONTACT_CNT_ACCURATE,
+IGNORE_DUPLICATES), preventing stale coordinate contamination.
 
-Fixes: 31865c4c4db2b ("crypto: skcipher - Add lskcipher")
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+The additional FORCE_MULTI_INPUT flag is harmless here: it separates
+the mouse and touchpad collections into distinct input devices,
+which is the standard behavior libinput already expects.
+
+Fixes: b5e65ae557da ("HID: multitouch: Add quirk for Hantick 5288 touchpad")
+Signed-off-by: Xianglin Lin <1021538027@qq.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/lskcipher.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/hid/hid-multitouch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/crypto/lskcipher.c b/crypto/lskcipher.c
-index c2e2c38b5aa8d..091761d6ca0bf 100644
---- a/crypto/lskcipher.c
-+++ b/crypto/lskcipher.c
-@@ -95,7 +95,6 @@ static int crypto_lskcipher_crypt_unaligned(
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 1959481dc7820..fd1b45ece4544 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -2567,7 +2567,7 @@ static const struct hid_device_id mt_devices[] = {
+ 			HID_ANY_ID) },
  
- 	while (len >= bs) {
- 		unsigned chunk = min((unsigned)PAGE_SIZE, len);
--		int err;
+ 	/* Hantick */
+-	{ .driver_data = MT_CLS_NSMU,
++	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT_NSMU,
+ 		HID_DEVICE(BUS_I2C, HID_GROUP_MULTITOUCH_WIN_8,
+ 			   I2C_VENDOR_ID_HANTICK, I2C_PRODUCT_ID_HANTICK_5288) },
  
- 		if (chunk > cs)
- 			chunk &= ~(cs - 1);
 -- 
 2.53.0
 
