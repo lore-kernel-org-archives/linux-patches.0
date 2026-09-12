@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76584BEE32;
-	Sat, 12 Sep 2026 11:20:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7505341A554;
+	Sat, 12 Sep 2026 11:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212027; cv=none; b=a6/AdGxBVgxbbyp0BFi8/g+mrAopbFy7Oa4+AXwaycODH2QvE4T52105CKG7lJKihDViaG0xwVK2c3NskWa4klrQ0v0MarZs+8oOKfFSXV5i2jmbXUJzyDeuvn9G3tDMVL5Acbq/OJOJ27OMGHaUeqoO9cjSkUwQtWs41MCFIu8=
+	t=1789212032; cv=none; b=IpA2eAwZh0k/G6nadMHUtDkV6jLeBH0T/Z4qTYyRDp8uLbgARZyLxImtx7tRbPR+rJZLtbmtAK1t+aiB5nVxsDDO1M/LLI0g+RHKPPzJdy45lpFmmze4QMX4SWI2+kbWn8g44MSzc2nrwliF2MwvyoIa4L9heh01ctGYEF6FoP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212027; c=relaxed/simple;
-	bh=bTnL82i8LA89NeRU1Hk/mYezD/J685WXV6Iu7LTgE4U=;
+	s=arc-20240116; t=1789212032; c=relaxed/simple;
+	bh=aDLddlhBS6SRw4GNJidVXoMJ6/0sWs8vzbNabm2YWXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ae7hmC0qyfDgDvW5h1TRazFGHR6L7+yck3ArNFzfuuXeEI7yzP2kBT4s3mlJQ82Iv328kO3+HCTLtMVCCI+WCxY0pnV0+VW3O7MOKvKi8p4xU7w0oUJ67bYEEwoVgieBf+UU1Dy/E9gGUNb5HFRYtsSeNaXtTXH2/DHrEyyasog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uc3jD99S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EMiq3lL+rLbTys79Mpyo6WYBsqZTrY2LEXpX7ZSuGHqo2FvB9JJ/097QmT+Not7I5HxCDfTzeWvYIx5K4tSDit9GFPtIRL8KJVeVIePhQAOmrDQWfjGZEexIcDYKwj/cfqWRadn6ZMzrBLg+a7jkrPxfTm8j22ahdKH/r/d916k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgn37bM1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uc3jD99S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A1F1F000FF;
-	Sat, 12 Sep 2026 11:20:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgn37bM1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A0B1F000FF;
+	Sat, 12 Sep 2026 11:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212025;
-	bh=gxfCq3Fa9q8t2ttHBDfVS6vsBpUdTiofnluabR2HO2k=;
+	s=korg; t=1789212030;
+	bh=EV28gHhGo3PPgnlwMl3TV0h0Q/4HsBFO0u8ZeMqIOus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uc3jD99SoFF1B4u0BY1yBkQNI6jFGb5plWh7t+Y1JzGKavY4WZtcfyGgliJGEF/As
-	 dG+ysquN0vMogCiD/dZfokwYgi0Jn6LWWHIDLJLZxsbk0ox///5Dl/LX5zbEX5lVQO
-	 NTdJ5DKU3GGSrBG1rjOgi8NgJx1yCnGbJcZHPwfM=
+	b=mgn37bM1t3IIqedSJKFVKSdAHgOPfQj5LijFRMDYMNvp0N5b+JptbVCcB3sx8mZvX
+	 e9wG+0lpGo5AJXQu2NJhAP+oBq7wQTc9CfUnVhJ3zVYWCMNEjHFFtqUhmU0qkmrjI8
+	 xC6YL8LmfdYybzsJgbx3FKqyt91xDocXbtUBh+nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1352/1518] net: add missing ref_tracker_dir_exit() to net_passive_dec()
-Date: Sat, 12 Sep 2026 08:58:41 +0200
-Message-ID: <20260912065654.114137224@linuxfoundation.org>
+Subject: [PATCH 6.18 1353/1518] net: qlcnic: validate unified ROM sections before loading
+Date: Sat, 12 Sep 2026 08:58:42 +0200
+Message-ID: <20260912065654.136584758@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,57 +52,658 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit f85dc137aabf357bf3d9fe4c9712121039d83798 ]
+[ Upstream commit 5e8076e4e4124dae75a3e080ddc20404700d7585 ]
 
-I found that trying to read /sys/kernel/debug/ref_tracker/* causes NULL
-pointer dereference crash when alloc_netdev_mqs() via unshare() returned
-NULL, for commit 9ba74e6c9e9d ("net: add networking namespace refcount
-tracker") added ref_tracker_dir_exit(&net->refcnt_tracker) to only
-__put_net() path whereas commit 65b584f53611 ("ref_tracker: automatically
-register a file in debugfs for a ref_tracker_dir") added
-ref_tracker_dir_debugfs() to ref_tracker_dir_init() path.
+The unified ROM parser reads directory, product, and data-descriptor fields
+from the firmware file.  Existing validation forms table and data ends with
+unchecked additions and multiplications.  Malformed values can wrap before
+they are compared with the firmware size.  The parser also dereferences
+typed pointers at firmware-controlled offsets.
 
-Since preinit_net() calls ref_tracker_dir_init(&net->refcnt_tracker) and
-ref_tracker_dir_init(&net->notrefcnt_tracker), we need to make sure that
-both ref_tracker_dir_exit(&net->refcnt_tracker) and
-ref_tracker_dir_exit(&net->notrefcnt_tracker) are called before
-net_passive_dec() schedules for kmem_cache_free() via net_complete_free().
+Valid descriptor extents alone are insufficient for the consumers.  The
+loader reads a fixed-size bootloader regardless of its declared size, the
+version parser assumes a 17-byte tail, and a partial final firmware word is
+read as a full u64.  A truncated image can therefore make the driver read
+beyond the firmware allocation during validation or loading.
 
-ref_tracker_dir_exit(&net->refcnt_tracker) is called via put_net() when
-ns_ref_put() returned true. But put_net() is not called when copy_net_ns()
-fails. Therefore, call ref_tracker_dir_exit() from net_passive_dec() if
-put_net() is not yet called.
+Replace the pointer-returning parser with bounded range helpers.  Validate
+table entry sizes, descriptor indices, section ranges, the fixed
+bootloader load length, and the version tail before exposing any section.
+Read all file fields with unaligned little-endian accessors and assemble a
+partial final word from only the bytes that remain.  Apply the same range
+checks to the legacy image before reading its fixed fields.
 
-Link: https://sashiko.dev/#/patchset/b06ce35d-e7bc-47a5-8e0a-e82be7e4dd08%40I-love.SAKURA.ne.jp
-Fixes: 9ba74e6c9e9d ("net: add networking namespace refcount tracker")
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Link: https://patch.msgid.link/64254d80-9248-466c-8108-95f43bd71117@I-love.SAKURA.ne.jp
+Fixes: af19b49152bd ("qlcnic: Qlogic ethernet driver for CNA devices")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260816052109.4607-1-pengpeng@iscas.ac.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/net_namespace.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../net/ethernet/qlogic/qlcnic/qlcnic_init.c  | 445 ++++++++++--------
+ 1 file changed, 248 insertions(+), 197 deletions(-)
 
-diff --git a/net/core/net_namespace.c b/net/core/net_namespace.c
-index b0e0f22d7b213..abc9a6b39dff1 100644
---- a/net/core/net_namespace.c
-+++ b/net/core/net_namespace.c
-@@ -531,8 +531,12 @@ void net_passive_dec(struct net *net)
- 	if (refcount_dec_and_test(&net->passive)) {
- 		kfree(rcu_access_pointer(net->gen));
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_init.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_init.c
+index 09f20c7947545..d26c26c21cbe8 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_init.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_init.c
+@@ -6,6 +6,7 @@
  
-+#ifdef CONFIG_REF_TRACKER
- 		/* There should not be any trackers left there. */
- 		ref_tracker_dir_exit(&net->notrefcnt_tracker);
-+		if (!net->refcnt_tracker.dead)
-+			ref_tracker_dir_exit(&net->refcnt_tracker);
-+#endif
+ #include "qlcnic.h"
+ #include "qlcnic_hw.h"
++#include <linux/unaligned.h>
  
- 		/* Wait for an extra rcu_barrier() before final free. */
- 		llist_add(&net->defer_free_list, &defer_free_list);
+ struct crb_addr_pair {
+ 	u32 addr;
+@@ -740,159 +741,212 @@ qlcnic_has_mn(struct qlcnic_adapter *adapter)
+ 	return 0;
+ }
+ 
+-static
+-struct uni_table_desc *qlcnic_get_table_desc(const u8 *unirom, int section)
+-{
+-	u32 i, entries;
+-	struct uni_table_desc *directory = (struct uni_table_desc *) &unirom[0];
+-	entries = le32_to_cpu(directory->num_entries);
+-
+-	for (i = 0; i < entries; i++) {
++#define FILEHEADER_SIZE (14 * 4)
++#define QLCNIC_UNI_DIR_TYPE_OFF		(8 * sizeof(__le32))
++#define QLCNIC_UNI_DIR_ENTRY_MIN_SIZE	(9 * sizeof(__le32))
++#define QLCNIC_UNI_PRODUCT_ENTRY_MIN_SIZE \
++	((QLCNIC_UNI_FIRMWARE_IDX_OFF + 1) * sizeof(__le32))
++#define QLCNIC_UNI_VERSION_TAIL_SIZE	17
++#define QLCNIC_UNI_BOOTLD_SIZE \
++	(QLCNIC_IMAGE_START - QLCNIC_BOOTLD_START)
++
++struct qlcnic_uni_data {
++	u32 offset;
++	u32 size;
++};
+ 
+-		u32 offs = le32_to_cpu(directory->findex) +
+-			   i * le32_to_cpu(directory->entry_size);
+-		u32 tab_type = le32_to_cpu(*((__le32 *)&unirom[offs] + 8));
++static bool qlcnic_rom_range_valid(size_t size, size_t offset, size_t len)
++{
++	return offset <= size && len <= size - offset;
++}
+ 
+-		if (tab_type == section)
+-			return (struct uni_table_desc *) &unirom[offs];
+-	}
++static bool qlcnic_rom_table_valid(size_t size, u32 offset, u32 entries,
++				   u32 entry_size, u32 min_entry_size)
++{
++	if (entry_size < min_entry_size || offset > size)
++		return false;
+ 
+-	return NULL;
++	return entries <= (size - offset) / entry_size;
+ }
+ 
+-#define FILEHEADER_SIZE (14 * 4)
+-
+-static int
+-qlcnic_validate_header(struct qlcnic_adapter *adapter)
++static int qlcnic_get_directory(struct qlcnic_adapter *adapter,
++				size_t *offset, u32 *entries, u32 *entry_size)
+ {
+-	const u8 *unirom = adapter->fw->data;
+-	struct uni_table_desc *directory = (struct uni_table_desc *) &unirom[0];
+-	u32 entries, entry_size, tab_size, fw_file_size;
+-
+-	fw_file_size = adapter->fw->size;
++	const struct firmware *fw = adapter->fw;
++	const u8 *directory = fw->data;
+ 
+-	if (fw_file_size < FILEHEADER_SIZE)
++	if (fw->size < FILEHEADER_SIZE)
+ 		return -EINVAL;
+ 
+-	entries = le32_to_cpu(directory->num_entries);
+-	entry_size = le32_to_cpu(directory->entry_size);
+-	tab_size = le32_to_cpu(directory->findex) + (entries * entry_size);
++	*offset = get_unaligned_le32(directory +
++				     offsetof(struct uni_table_desc, findex));
++	*entries = get_unaligned_le32(directory +
++				      offsetof(struct uni_table_desc, num_entries));
++	*entry_size = get_unaligned_le32(directory +
++					 offsetof(struct uni_table_desc, entry_size));
+ 
+-	if (fw_file_size < tab_size)
++	if (!qlcnic_rom_table_valid(fw->size, *offset, *entries, *entry_size,
++				    QLCNIC_UNI_DIR_ENTRY_MIN_SIZE))
+ 		return -EINVAL;
+ 
+ 	return 0;
+ }
+ 
+-static int
+-qlcnic_validate_bootld(struct qlcnic_adapter *adapter)
++static int qlcnic_get_table_desc(struct qlcnic_adapter *adapter, int section,
++				 size_t *desc_offset)
+ {
+-	struct uni_table_desc *tab_desc;
+-	struct uni_data_desc *descr;
+-	u32 offs, tab_size, data_size, idx;
+ 	const u8 *unirom = adapter->fw->data;
+-	__le32 temp;
+-
+-	temp = *((__le32 *)&unirom[adapter->file_prd_off] +
+-		 QLCNIC_UNI_BOOTLD_IDX_OFF);
+-	idx = le32_to_cpu(temp);
+-	tab_desc = qlcnic_get_table_desc(unirom, QLCNIC_UNI_DIR_SECT_BOOTLD);
+-
+-	if (!tab_desc)
+-		return -EINVAL;
+-
+-	tab_size = le32_to_cpu(tab_desc->findex) +
+-		   le32_to_cpu(tab_desc->entry_size) * (idx + 1);
+-
+-	if (adapter->fw->size < tab_size)
+-		return -EINVAL;
++	size_t directory_offset;
++	u32 entries, entry_size;
++	size_t i;
++	int ret;
+ 
+-	offs = le32_to_cpu(tab_desc->findex) +
+-	       le32_to_cpu(tab_desc->entry_size) * idx;
+-	descr = (struct uni_data_desc *)&unirom[offs];
++	ret = qlcnic_get_directory(adapter, &directory_offset, &entries,
++				   &entry_size);
++	if (ret)
++		return ret;
+ 
+-	data_size = le32_to_cpu(descr->findex) + le32_to_cpu(descr->size);
++	for (i = 0; i < entries; i++) {
++		size_t offset = directory_offset + i * entry_size;
++		u32 table_type;
+ 
+-	if (adapter->fw->size < data_size)
+-		return -EINVAL;
++		table_type = get_unaligned_le32(unirom + offset +
++						QLCNIC_UNI_DIR_TYPE_OFF);
++		if (table_type == section) {
++			*desc_offset = offset;
++			return 0;
++		}
++	}
+ 
+-	return 0;
++	return -ENOENT;
+ }
+ 
+ static int
+-qlcnic_validate_fw(struct qlcnic_adapter *adapter)
++qlcnic_validate_header(struct qlcnic_adapter *adapter)
+ {
+-	struct uni_table_desc *tab_desc;
+-	struct uni_data_desc *descr;
+-	const u8 *unirom = adapter->fw->data;
+-	u32 offs, tab_size, data_size, idx;
+-	__le32 temp;
++	u32 entries, entry_size;
++	size_t offset;
++
++	return qlcnic_get_directory(adapter, &offset, &entries, &entry_size);
++}
+ 
+-	temp = *((__le32 *)&unirom[adapter->file_prd_off] +
+-		 QLCNIC_UNI_FIRMWARE_IDX_OFF);
+-	idx = le32_to_cpu(temp);
+-	tab_desc = qlcnic_get_table_desc(unirom, QLCNIC_UNI_DIR_SECT_FW);
++static int qlcnic_get_data_desc(struct qlcnic_adapter *adapter, u32 section,
++				u32 index_offset, struct qlcnic_uni_data *data)
++{
++	size_t table_desc_offset, table_offset, desc_offset;
++	const struct firmware *fw = adapter->fw;
++	const u8 *unirom = fw->data;
++	size_t product_index_offset;
++	u32 entries, entry_size, idx;
++	int ret;
+ 
+-	if (!tab_desc)
++	product_index_offset = adapter->file_prd_off +
++				 (size_t)index_offset * sizeof(__le32);
++	if (!qlcnic_rom_range_valid(fw->size, product_index_offset,
++				    sizeof(__le32)))
+ 		return -EINVAL;
+ 
+-	tab_size = le32_to_cpu(tab_desc->findex) +
+-		   le32_to_cpu(tab_desc->entry_size) * (idx + 1);
++	idx = get_unaligned_le32(unirom + product_index_offset);
++	ret = qlcnic_get_table_desc(adapter, section, &table_desc_offset);
++	if (ret)
++		return ret;
+ 
+-	if (adapter->fw->size < tab_size)
++	table_offset = get_unaligned_le32(unirom + table_desc_offset +
++					  offsetof(struct uni_table_desc, findex));
++	entries = get_unaligned_le32(unirom + table_desc_offset +
++				     offsetof(struct uni_table_desc, num_entries));
++	entry_size = get_unaligned_le32(unirom + table_desc_offset +
++					offsetof(struct uni_table_desc, entry_size));
++	if (!qlcnic_rom_table_valid(fw->size, table_offset, entries,
++				    entry_size, sizeof(struct uni_data_desc)) ||
++	    idx >= entries)
+ 		return -EINVAL;
+ 
+-	offs = le32_to_cpu(tab_desc->findex) +
+-	       le32_to_cpu(tab_desc->entry_size) * idx;
+-	descr = (struct uni_data_desc *)&unirom[offs];
+-	data_size = le32_to_cpu(descr->findex) + le32_to_cpu(descr->size);
++	desc_offset = table_offset + (size_t)idx * entry_size;
++	data->offset = get_unaligned_le32(unirom + desc_offset +
++					  offsetof(struct uni_data_desc, findex));
++	data->size = get_unaligned_le32(unirom + desc_offset +
++					offsetof(struct uni_data_desc, size));
+ 
+-	if (adapter->fw->size < data_size)
++	if (!qlcnic_rom_range_valid(fw->size, data->offset, data->size))
+ 		return -EINVAL;
+ 
+ 	return 0;
+ }
+ 
++static int qlcnic_validate_bootld(struct qlcnic_adapter *adapter)
++{
++	struct qlcnic_uni_data data;
++	int ret;
++
++	ret = qlcnic_get_data_desc(adapter, QLCNIC_UNI_DIR_SECT_BOOTLD,
++				   QLCNIC_UNI_BOOTLD_IDX_OFF, &data);
++	if (ret)
++		return ret;
++
++	return data.size < QLCNIC_UNI_BOOTLD_SIZE ? -EINVAL : 0;
++}
++
++static int qlcnic_validate_fw(struct qlcnic_adapter *adapter)
++{
++	struct qlcnic_uni_data data;
++	int ret;
++
++	ret = qlcnic_get_data_desc(adapter, QLCNIC_UNI_DIR_SECT_FW,
++				   QLCNIC_UNI_FIRMWARE_IDX_OFF, &data);
++	if (ret)
++		return ret;
++
++	return data.size < QLCNIC_UNI_VERSION_TAIL_SIZE ? -EINVAL : 0;
++}
++
+ static int
+ qlcnic_validate_product_offs(struct qlcnic_adapter *adapter)
+ {
+-	struct uni_table_desc *ptab_descr;
++	size_t table_desc_offset, table_offset;
+ 	const u8 *unirom = adapter->fw->data;
+ 	int mn_present = qlcnic_has_mn(adapter);
+-	u32 entries, entry_size, tab_size, i;
+-	__le32 temp;
+-
+-	ptab_descr = qlcnic_get_table_desc(unirom,
+-				QLCNIC_UNI_DIR_SECT_PRODUCT_TBL);
+-	if (!ptab_descr)
+-		return -EINVAL;
++	u32 entries, entry_size;
++	size_t i;
++	int ret;
+ 
+-	entries = le32_to_cpu(ptab_descr->num_entries);
+-	entry_size = le32_to_cpu(ptab_descr->entry_size);
+-	tab_size = le32_to_cpu(ptab_descr->findex) + (entries * entry_size);
++	ret = qlcnic_get_table_desc(adapter, QLCNIC_UNI_DIR_SECT_PRODUCT_TBL,
++				    &table_desc_offset);
++	if (ret)
++		return ret;
+ 
+-	if (adapter->fw->size < tab_size)
++	table_offset = get_unaligned_le32(unirom + table_desc_offset +
++					  offsetof(struct uni_table_desc, findex));
++	entries = get_unaligned_le32(unirom + table_desc_offset +
++				     offsetof(struct uni_table_desc, num_entries));
++	entry_size = get_unaligned_le32(unirom + table_desc_offset +
++					offsetof(struct uni_table_desc, entry_size));
++	if (!qlcnic_rom_table_valid(adapter->fw->size, table_offset, entries,
++				    entry_size,
++				    QLCNIC_UNI_PRODUCT_ENTRY_MIN_SIZE))
+ 		return -EINVAL;
+ 
+ nomn:
+ 	for (i = 0; i < entries; i++) {
+-
+-		u32 flags, file_chiprev, offs;
++		size_t offset = table_offset + i * entry_size;
+ 		u8 chiprev = adapter->ahw->revision_id;
++		u32 flags, file_chiprev;
+ 		u32 flagbit;
+ 
+-		offs = le32_to_cpu(ptab_descr->findex) +
+-		       i * le32_to_cpu(ptab_descr->entry_size);
+-		temp = *((__le32 *)&unirom[offs] + QLCNIC_UNI_FLAGS_OFF);
+-		flags = le32_to_cpu(temp);
+-		temp = *((__le32 *)&unirom[offs] + QLCNIC_UNI_CHIP_REV_OFF);
+-		file_chiprev = le32_to_cpu(temp);
++		flags = get_unaligned_le32(unirom + offset +
++					   QLCNIC_UNI_FLAGS_OFF * sizeof(__le32));
++		file_chiprev = get_unaligned_le32(unirom + offset +
++						  QLCNIC_UNI_CHIP_REV_OFF *
++						  sizeof(__le32));
+ 
+ 		flagbit = mn_present ? 1 : 2;
+ 
+ 		if ((chiprev == file_chiprev) &&
+ 					((1ULL << flagbit) & flags)) {
+-			adapter->file_prd_off = offs;
++			if (offset > U32_MAX)
++				return -EINVAL;
++
++			adapter->file_prd_off = offset;
+ 			return 0;
+ 		}
+ 	}
+@@ -933,93 +987,81 @@ qlcnic_validate_unified_romimage(struct qlcnic_adapter *adapter)
+ 	return 0;
+ }
+ 
+-static
+-struct uni_data_desc *qlcnic_get_data_desc(struct qlcnic_adapter *adapter,
+-			u32 section, u32 idx_offset)
+-{
+-	const u8 *unirom = adapter->fw->data;
+-	struct uni_table_desc *tab_desc;
+-	u32 offs, idx;
+-	__le32 temp;
+-
+-	temp = *((__le32 *)&unirom[adapter->file_prd_off] + idx_offset);
+-	idx = le32_to_cpu(temp);
+-
+-	tab_desc = qlcnic_get_table_desc(unirom, section);
+-
+-	if (tab_desc == NULL)
+-		return NULL;
+-
+-	offs = le32_to_cpu(tab_desc->findex) +
+-	       le32_to_cpu(tab_desc->entry_size) * idx;
+-
+-	return (struct uni_data_desc *)&unirom[offs];
+-}
+-
+-static u8 *
+-qlcnic_get_bootld_offs(struct qlcnic_adapter *adapter)
++static int qlcnic_get_bootld_data(struct qlcnic_adapter *adapter,
++				  const u8 **bootld)
+ {
+ 	u32 offs = QLCNIC_BOOTLD_START;
+-	struct uni_data_desc *data_desc;
+-
+-	data_desc = qlcnic_get_data_desc(adapter, QLCNIC_UNI_DIR_SECT_BOOTLD,
+-					 QLCNIC_UNI_BOOTLD_IDX_OFF);
++	struct qlcnic_uni_data data;
++	int ret;
+ 
+-	if (adapter->ahw->fw_type == QLCNIC_UNIFIED_ROMIMAGE)
+-		offs = le32_to_cpu(data_desc->findex);
++	if (adapter->ahw->fw_type == QLCNIC_UNIFIED_ROMIMAGE) {
++		ret = qlcnic_get_data_desc(adapter, QLCNIC_UNI_DIR_SECT_BOOTLD,
++					   QLCNIC_UNI_BOOTLD_IDX_OFF, &data);
++		if (ret || data.size < QLCNIC_UNI_BOOTLD_SIZE)
++			return -EINVAL;
++		offs = data.offset;
++	} else if (!qlcnic_rom_range_valid(adapter->fw->size, offs,
++					   QLCNIC_UNI_BOOTLD_SIZE)) {
++		return -EINVAL;
++	}
+ 
+-	return (u8 *)&adapter->fw->data[offs];
++	*bootld = adapter->fw->data + offs;
++	return 0;
+ }
+ 
+-static u8 *
+-qlcnic_get_fw_offs(struct qlcnic_adapter *adapter)
++static int qlcnic_get_fw_data(struct qlcnic_adapter *adapter,
++			      const u8 **image, u32 *image_size)
+ {
+ 	u32 offs = QLCNIC_IMAGE_START;
+-	struct uni_data_desc *data_desc;
+-
+-	data_desc = qlcnic_get_data_desc(adapter, QLCNIC_UNI_DIR_SECT_FW,
+-					 QLCNIC_UNI_FIRMWARE_IDX_OFF);
+-	if (adapter->ahw->fw_type == QLCNIC_UNIFIED_ROMIMAGE)
+-		offs = le32_to_cpu(data_desc->findex);
+-
+-	return (u8 *)&adapter->fw->data[offs];
+-}
++	struct qlcnic_uni_data data;
++	int ret;
+ 
+-static u32 qlcnic_get_fw_size(struct qlcnic_adapter *adapter)
+-{
+-	struct uni_data_desc *data_desc;
+-	const u8 *unirom = adapter->fw->data;
++	if (adapter->ahw->fw_type == QLCNIC_UNIFIED_ROMIMAGE) {
++		ret = qlcnic_get_data_desc(adapter, QLCNIC_UNI_DIR_SECT_FW,
++					   QLCNIC_UNI_FIRMWARE_IDX_OFF, &data);
++		if (ret)
++			return ret;
++		offs = data.offset;
++		*image_size = data.size;
++	} else {
++		if (!qlcnic_rom_range_valid(adapter->fw->size,
++					    QLCNIC_FW_SIZE_OFFSET,
++					    sizeof(__le32)))
++			return -EINVAL;
++		*image_size = get_unaligned_le32(adapter->fw->data +
++						 QLCNIC_FW_SIZE_OFFSET);
++	}
+ 
+-	data_desc = qlcnic_get_data_desc(adapter, QLCNIC_UNI_DIR_SECT_FW,
+-					 QLCNIC_UNI_FIRMWARE_IDX_OFF);
++	if (!qlcnic_rom_range_valid(adapter->fw->size, offs, *image_size))
++		return -EINVAL;
+ 
+-	if (adapter->ahw->fw_type == QLCNIC_UNIFIED_ROMIMAGE)
+-		return le32_to_cpu(data_desc->size);
+-	else
+-		return le32_to_cpu(*(__le32 *)&unirom[QLCNIC_FW_SIZE_OFFSET]);
++	*image = adapter->fw->data + offs;
++	return 0;
+ }
+ 
+ static u32 qlcnic_get_fw_version(struct qlcnic_adapter *adapter)
+ {
+-	struct uni_data_desc *fw_data_desc;
++	char ver_str[QLCNIC_UNI_VERSION_TAIL_SIZE + 1];
+ 	const struct firmware *fw = adapter->fw;
++	struct qlcnic_uni_data data;
+ 	u32 major, minor, sub;
+-	__le32 version_offset;
+-	const u8 *ver_str;
+ 	int i, ret;
+ 
+-	if (adapter->ahw->fw_type != QLCNIC_UNIFIED_ROMIMAGE) {
+-		version_offset = *(__le32 *)&fw->data[QLCNIC_FW_VERSION_OFFSET];
+-		return le32_to_cpu(version_offset);
+-	}
++	if (adapter->ahw->fw_type != QLCNIC_UNIFIED_ROMIMAGE)
++		return get_unaligned_le32(fw->data + QLCNIC_FW_VERSION_OFFSET);
++
++	ret = qlcnic_get_data_desc(adapter, QLCNIC_UNI_DIR_SECT_FW,
++				   QLCNIC_UNI_FIRMWARE_IDX_OFF, &data);
++	if (ret || data.size < QLCNIC_UNI_VERSION_TAIL_SIZE)
++		return 0;
+ 
+-	fw_data_desc = qlcnic_get_data_desc(adapter, QLCNIC_UNI_DIR_SECT_FW,
+-			QLCNIC_UNI_FIRMWARE_IDX_OFF);
+-	ver_str = fw->data + le32_to_cpu(fw_data_desc->findex) +
+-		  le32_to_cpu(fw_data_desc->size) - 17;
++	memcpy(ver_str, fw->data + data.offset + data.size -
++			QLCNIC_UNI_VERSION_TAIL_SIZE,
++	       QLCNIC_UNI_VERSION_TAIL_SIZE);
++	ver_str[QLCNIC_UNI_VERSION_TAIL_SIZE] = '\0';
+ 
+ 	for (i = 0; i < 12; i++) {
+-		if (!strncmp(&ver_str[i], "REV=", 4)) {
++		if (!strncmp(ver_str + i, "REV=", 4)) {
+ 			ret = sscanf(&ver_str[i+4], "%u.%u.%u ",
+ 					&major, &minor, &sub);
+ 			if (ret != 3)
+@@ -1034,18 +1076,15 @@ static u32 qlcnic_get_fw_version(struct qlcnic_adapter *adapter)
+ 
+ static u32 qlcnic_get_bios_version(struct qlcnic_adapter *adapter)
+ {
+-	const struct firmware *fw = adapter->fw;
+ 	u32 bios_ver, prd_off = adapter->file_prd_off;
+-	u8 *version_offset;
+-	__le32 temp;
++	const struct firmware *fw = adapter->fw;
+ 
+-	if (adapter->ahw->fw_type != QLCNIC_UNIFIED_ROMIMAGE) {
+-		version_offset = (u8 *)&fw->data[QLCNIC_BIOS_VERSION_OFFSET];
+-		return le32_to_cpu(*(__le32 *)version_offset);
+-	}
++	if (adapter->ahw->fw_type != QLCNIC_UNIFIED_ROMIMAGE)
++		return get_unaligned_le32(fw->data + QLCNIC_BIOS_VERSION_OFFSET);
+ 
+-	temp = *((__le32 *)(&fw->data[prd_off]) + QLCNIC_UNI_BIOS_VERSION_OFF);
+-	bios_ver = le32_to_cpu(temp);
++	bios_ver = get_unaligned_le32(fw->data + prd_off +
++				      QLCNIC_UNI_BIOS_VERSION_OFF *
++				      sizeof(__le32));
+ 
+ 	return (bios_ver << 16) + ((bios_ver >> 8) & 0xff00) + (bios_ver >> 24);
+ }
+@@ -1106,24 +1145,26 @@ static const char *fw_name[] = {
+ int
+ qlcnic_load_firmware(struct qlcnic_adapter *adapter)
+ {
+-	__le64 *ptr64;
+-	u32 i, flashaddr, size;
+ 	const struct firmware *fw = adapter->fw;
+ 	struct pci_dev *pdev = adapter->pdev;
++	const u8 *bootld, *image;
++	u32 i, flashaddr, image_size;
++	int ret;
+ 
+ 	dev_info(&pdev->dev, "loading firmware from %s\n",
+ 		 fw_name[adapter->ahw->fw_type]);
+ 
+ 	if (fw) {
++		u32 words, remainder;
+ 		u64 data;
+ 
+-		size = (QLCNIC_IMAGE_START - QLCNIC_BOOTLD_START) / 8;
+-
+-		ptr64 = (__le64 *)qlcnic_get_bootld_offs(adapter);
++		ret = qlcnic_get_bootld_data(adapter, &bootld);
++		if (ret)
++			return ret;
+ 		flashaddr = QLCNIC_BOOTLD_START;
+ 
+-		for (i = 0; i < size; i++) {
+-			data = le64_to_cpu(ptr64[i]);
++		for (i = 0; i < QLCNIC_UNI_BOOTLD_SIZE / sizeof(u64); i++) {
++			data = get_unaligned_le64(bootld + i * sizeof(u64));
+ 
+ 			if (qlcnic_pci_mem_write_2M(adapter, flashaddr, data))
+ 				return -EIO;
+@@ -1131,13 +1172,15 @@ qlcnic_load_firmware(struct qlcnic_adapter *adapter)
+ 			flashaddr += 8;
+ 		}
+ 
+-		size = qlcnic_get_fw_size(adapter) / 8;
+-
+-		ptr64 = (__le64 *)qlcnic_get_fw_offs(adapter);
++		ret = qlcnic_get_fw_data(adapter, &image, &image_size);
++		if (ret)
++			return ret;
++		words = image_size / sizeof(u64);
++		remainder = image_size % sizeof(u64);
+ 		flashaddr = QLCNIC_IMAGE_START;
+ 
+-		for (i = 0; i < size; i++) {
+-			data = le64_to_cpu(ptr64[i]);
++		for (i = 0; i < words; i++) {
++			data = get_unaligned_le64(image + i * sizeof(u64));
+ 
+ 			if (qlcnic_pci_mem_write_2M(adapter,
+ 						flashaddr, data))
+@@ -1146,9 +1189,11 @@ qlcnic_load_firmware(struct qlcnic_adapter *adapter)
+ 			flashaddr += 8;
+ 		}
+ 
+-		size = qlcnic_get_fw_size(adapter) % 8;
+-		if (size) {
+-			data = le64_to_cpu(ptr64[i]);
++		if (remainder) {
++			__le64 tail = 0;
++
++			memcpy(&tail, image + words * sizeof(u64), remainder);
++			data = le64_to_cpu(tail);
+ 
+ 			if (qlcnic_pci_mem_write_2M(adapter,
+ 						flashaddr, data))
+@@ -1156,10 +1201,9 @@ qlcnic_load_firmware(struct qlcnic_adapter *adapter)
+ 		}
+ 
+ 	} else {
+-		u64 data;
+-		u32 hi, lo;
+-		int ret;
+ 		struct qlcnic_flt_entry bootld_entry;
++		u32 hi, lo, size;
++		u64 data;
+ 
+ 		ret = qlcnic_get_flt_entry(adapter, QLCNIC_BOOTLD_REGION,
+ 					&bootld_entry);
+@@ -1200,26 +1244,33 @@ qlcnic_load_firmware(struct qlcnic_adapter *adapter)
+ static int
+ qlcnic_validate_firmware(struct qlcnic_adapter *adapter)
+ {
+-	u32 val;
+-	u32 ver, bios, min_size;
+-	struct pci_dev *pdev = adapter->pdev;
+ 	const struct firmware *fw = adapter->fw;
++	struct pci_dev *pdev = adapter->pdev;
+ 	u8 fw_type = adapter->ahw->fw_type;
++	u32 ver, bios, min_size;
++	const u8 *data;
++	u32 data_size;
++	u32 val;
++
++	if (fw_type == QLCNIC_UNIFIED_ROMIMAGE)
++		min_size = QLCNIC_UNI_FW_MIN_SIZE;
++	else
++		min_size = QLCNIC_FW_MIN_SIZE;
++
++	if (fw->size < min_size)
++		return -EINVAL;
+ 
+ 	if (fw_type == QLCNIC_UNIFIED_ROMIMAGE) {
+ 		if (qlcnic_validate_unified_romimage(adapter))
+ 			return -EINVAL;
+-
+-		min_size = QLCNIC_UNI_FW_MIN_SIZE;
+ 	} else {
+-		val = le32_to_cpu(*(__le32 *)&fw->data[QLCNIC_FW_MAGIC_OFFSET]);
++		val = get_unaligned_le32(fw->data + QLCNIC_FW_MAGIC_OFFSET);
+ 		if (val != QLCNIC_BDINFO_MAGIC)
+ 			return -EINVAL;
+-
+-		min_size = QLCNIC_FW_MIN_SIZE;
+ 	}
+ 
+-	if (fw->size < min_size)
++	if (qlcnic_get_bootld_data(adapter, &data) ||
++	    qlcnic_get_fw_data(adapter, &data, &data_size))
+ 		return -EINVAL;
+ 
+ 	val = qlcnic_get_fw_version(adapter);
 -- 
 2.53.0
 
