@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7134E41B8CD;
-	Sat, 12 Sep 2026 09:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226333DBD5E;
+	Sat, 12 Sep 2026 09:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204557; cv=none; b=tRiV7b1SkM0NCoFZu23LxiZo5hKjjF2iniP5TLqZht9pVORP8Pit093ELMf2mByjPpgMpyBcv63GK4lGHHzUgLT0PoUEl3c+YC7VvCtp/oaufJSS6s/5R/pTLF9s6UaZE1lpIQJRmbTKv4lH75mTStvPMaH+lu5AksB+S8f1JLo=
+	t=1789204562; cv=none; b=cRe2EavU/THUi23osiXyEeT+wt3Q8xLky6B0xUKHmlMVmjp+TOmzNoUR4yUgI39eOK8LW0jByoONFVcXtQY0p7wI06rprxRvkYnk5kLvOjSxeaIycxtWQwmAqvGZZnQI/gyIh8Mi9YycWFDkRp3Op6/svHEktZRvfTUDQ/TLLfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204557; c=relaxed/simple;
-	bh=EWibbWcjVXZVEAlUSSOf74SJNYWBMVwSaIoCqTCCzyc=;
+	s=arc-20240116; t=1789204562; c=relaxed/simple;
+	bh=LUyfPGeiH27O+aWlBYRYjxrtOU69rphxASFSIxiNZBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hL41hP3dk/Mq65UYIgo2WtBHTg03n+74suZBKYFib4+fL/nqvFXBP9uI75LwtT+x+lPsBoxY5EnL+ypQ2hn3DYNaRLErS7IJIvwj3ROVxaEeK99vW8QOO3wboJfnX6PEI9Rms/+nRvGVmcJhwU2ryYDR+PZXdYfPcVuQJX0e640=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oushUUHd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Toyy0u7obf9/xmB/4WpmqDd+GOXdC/2snik6otCqmdkrsJ8T9d61qV2MRrfXFHClLFREO4O3CEf+NQSHkZATdvOoLYK+EGifVMfIViDqE5E0ABSz64accAcDEc6L++5a1Zsto6MP3ui7GRLzhPmZteWrN9Ue4hpMMNjs3MX2Czw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=laE90ec5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oushUUHd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65CD1F000FF;
-	Sat, 12 Sep 2026 09:15:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="laE90ec5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FDD91F000FF;
+	Sat, 12 Sep 2026 09:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204554;
-	bh=/7PFcOZJNfL7ptdqJmryhBsyD4p7sVR8fVny25QCT+o=;
+	s=korg; t=1789204559;
+	bh=sTfwHe/nwbvZ7RlBllNq6KqhxWeWZxs1zj/6+IrAQ8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oushUUHdIZRgwwxVIlS34kJH+mLtByquawesFCfA1ky6nZJGhK2U6Zf+AV2sVWjdV
-	 6OBkSYkitP2LctOXkGg+DvV+lZxej3YYQz+Gg01gWVBI/ZlSKYASkOo96SXn/1dt6w
-	 E27ojg1w/ecDML7Joc0qq+HEW5cqQsX7dUsFyMxE=
+	b=laE90ec55QTE9Ld3NiulT9S+uF4wo6pGnAdoOMbmvJ+MO4HD4zS+2OU2B6yz4215U
+	 /brvqeEGDndXMwoGwTUIq3ZkJnyaxqhKePpK0d+fqHvqsfKvovU70P+BrfY/IAatNs
+	 ceUp6CCf7+xa1CSbDkHBrRb0K5o6HFyEOky9+4TI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Ryan Chen <ryan_chen@aspeedtech.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Max Filippov <jcmvbkbc@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1636/1815] irqchip/ast2700-intc: Avoid allocating in the irq_domain activate() callback
-Date: Sat, 12 Sep 2026 08:56:26 +0200
-Message-ID: <20260912065727.398465065@linuxfoundation.org>
+Subject: [PATCH 7.2 1637/1815] i2c: ocores: Disable clock on failed resume
+Date: Sat, 12 Sep 2026 08:56:27 +0200
+Message-ID: <20260912065727.422052459@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,62 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Chen <ryan_chen@aspeedtech.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit b76eee9c2157223aa4aac42ceebb563288e078aa ]
+[ Upstream commit 43eb13f13385a1e7251978a1977ac61b99edef01 ]
 
-The interrupt core calls the irq_domain_activate() callback from
-__setup_irq() with desc->lock held and interrupts disabled. Both
-aspeed_intc1_irq_domain_activate() and aspeed_intc0_resolve_route() test a
-compatible string with fwnode_device_is_compatible().
+ocores_i2c_resume() enables the controller clock before reinitializing
+the hardware. If the clock rate changed while the device was suspended,
+ocores_init() may reject the resulting prescaler. The callback then
+returns an error with the clock still enabled, while the controller
+itself remains disabled.
 
-fwnode_device_is_compatible() invokes fwnode_property_match_string(), which
-allocates with GFP_KERNEL. That's obviously not possible with interrupts
-disabled and a raw spinlock held.
+Disable and unprepare the clock when ocores_init() fails so the failed
+resume path balances the successful clk_prepare_enable() call.
 
-Both call sites are only ever handed OF nodes, so use
-of_device_is_compatible() instead: it walks the property in place and does
-not allocate.
+This issue was found by a static analysis checker and confirmed by manual
+source review.
 
-Fixes: 07825e41519a ("irqchip/ast2700-intc: Add AST2700-A2 support")
-Reported-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Ryan Chen <ryan_chen@aspeedtech.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Tested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Link: https://patch.msgid.link/20260819-fix-ast2700-intc-atomic-alloc-v1-1-d92a02e2a239@aspeedtech.com
+Fixes: e961a094afe0 ("i2c: ocores: add common clock support")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Max Filippov <jcmvbkbc@gmail.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260813153155.3953577-1-ruoyuw560@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-ast2700-intc0.c | 2 +-
- drivers/irqchip/irq-ast2700-intc1.c | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-ocores.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-ast2700-intc0.c b/drivers/irqchip/irq-ast2700-intc0.c
-index 14b8b88f1179b..c85b98a19bd41 100644
---- a/drivers/irqchip/irq-ast2700-intc0.c
-+++ b/drivers/irqchip/irq-ast2700-intc0.c
-@@ -312,7 +312,7 @@ int aspeed_intc0_resolve_route(const struct irq_domain *c0domain, size_t nc1outs
- 		return -ENOENT;
+diff --git a/drivers/i2c/busses/i2c-ocores.c b/drivers/i2c/busses/i2c-ocores.c
+index df6ebf32d6e8f..2d18c10358375 100644
+--- a/drivers/i2c/busses/i2c-ocores.c
++++ b/drivers/i2c/busses/i2c-ocores.c
+@@ -755,7 +755,11 @@ static int ocores_i2c_resume(struct device *dev)
+ 	rate = clk_get_rate(i2c->clk) / 1000;
+ 	if (rate)
+ 		i2c->ip_clock_khz = rate;
+-	return ocores_init(dev, i2c);
++	ret = ocores_init(dev, i2c);
++	if (ret)
++		clk_disable_unprepare(i2c->clk);
++
++	return ret;
+ }
  
- 	if (!IS_ENABLED(CONFIG_ASPEED_AST2700_INTC_TEST) &&
--	    !fwnode_device_is_compatible(c0domain->fwnode, "aspeed,ast2700-intc0"))
-+	    !of_device_is_compatible(to_of_node(c0domain->fwnode), "aspeed,ast2700-intc0"))
- 		return -ENODEV;
- 
- 	intc0 = c0domain->host_data;
-diff --git a/drivers/irqchip/irq-ast2700-intc1.c b/drivers/irqchip/irq-ast2700-intc1.c
-index 59e8f0d5ddcd2..df6acbafce2d0 100644
---- a/drivers/irqchip/irq-ast2700-intc1.c
-+++ b/drivers/irqchip/irq-ast2700-intc1.c
-@@ -157,7 +157,8 @@ static int aspeed_intc1_irq_domain_activate(struct irq_domain *domain,
- 					intc1->ranges.nranges,
- 					intc1->ranges.ranges, &resolved);
- 	if (rc < 0) {
--		if (!fwnode_device_is_compatible(intc1->upstream->fwnode, "riscv,aplic")) {
-+		if (!of_device_is_compatible(to_of_node(intc1->upstream->fwnode),
-+					     "riscv,aplic")) {
- 			dev_warn(intc1->dev,
- 				 "Failed to resolve interrupt route for hwirq %lu in domain %s\n",
- 				 data->hwirq, domain->name);
+ static DEFINE_NOIRQ_DEV_PM_OPS(ocores_i2c_pm,
 -- 
 2.53.0
 
