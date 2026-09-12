@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09EC943BDC0;
-	Sat, 12 Sep 2026 08:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D588C43CE66;
+	Sat, 12 Sep 2026 08:45:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202735; cv=none; b=XK/3iQs3cybDpMYD0vae82jCKRq25H+3XUmAtMZJFvoxBvAWH1pah70cky+gXPjDdFyTx1wCCU7GAu0Lp84UQ4VFVvM4NxZW8DSPpBJet2M0rT2IjBEcwPlL0t4J3iKKCppdagaUGk0CekkL48jAqn3h6OtVjzjCk3gkHBUQKKc=
+	t=1789202740; cv=none; b=RBGHVFuBF4syI79RA1nmLX6ZVdxTB/ZQf2meGbjp/mhN5FhdUW2Ll3BNlUBvA9YwxR3NMyBWM6JIbVLN22DLK4UlvAGAUEMR9MWaCNewiNSLXtklKO1ToqIVlznO9Kc1Y7rV8NpkhbWUMstZXm2usFlurVVOv+NXc8ayaWFpXqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202735; c=relaxed/simple;
-	bh=DYQmoHUubZFRKtjZMlZ8ygpWz7frcYsjviZJFMpTpqk=;
+	s=arc-20240116; t=1789202740; c=relaxed/simple;
+	bh=6icZh4PZWP3Mh1oTTQL0VVyWVncxaVgP9JgpcII8gMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F87Er+/onfGrg/4hITd6JnTMUttWkVI1WsNM50LqcG7/xa2o9wDIeewhPDwjlNEAkOZkB3g4G/qdoUwe+aWqUSTWu6iH61GaELHTH6g2RaDFFoFIFJLplHWa2d9I5unRBKyjids3Q6y9x1VRY3hdHw7Qy8QJHi0NT3wTThM8QiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xX7cz45G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tuBVWmG+Qxk6HoqnihIPeQ4a4Tk2k9I4/Fk1h8BdHlfuWTZdkheH9irkdkSFqtd/8JAyXPPnvh8WM7JEXbRwtFMw2OkuxiJFCpYxR7nfb6XBcAcHbT2eIavOrBUrn+sgcR0obOjymqD9frt8T4PDZ0bNZ6sJiv8dT9FyjKLGNn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cnHwUeDB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xX7cz45G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62251F000FF;
-	Sat, 12 Sep 2026 08:45:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cnHwUeDB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23C91F000FF;
+	Sat, 12 Sep 2026 08:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202733;
-	bh=XeZIhLzt9iVox03f01TwzZFWRDpiRxl/nVQqBQMvAAs=;
+	s=korg; t=1789202738;
+	bh=XBufjYZnAszYrm3HZUjTZIWDvr1b6EjmaAuHtt2spTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xX7cz45GKD1p8se9mo6Zv7mstHVnNsEsk4bQcqbsMgjLnrM/Ksa4s2asBLAc7PUNP
-	 SVN80WB28/0uSiGqltwkw/nH731FlTf8PAG273NKnLQwUNSAwHPkeqmWPyJSLEUcln
-	 hHAG69L4EYmeEvcCfjgZ2znglk29hxELz6HDL0D8=
+	b=cnHwUeDBwbiyPzwDSJh5b7V7wxvsxbZcmhGPAVMyBpmnrDG/ePjByunPERr0/uIZh
+	 5ttN44GbpMVdBi614CvZTIizT5oTpt7Dzam2ElKIBmnGbouaAHdYArDbUBGg2m5FI7
+	 FkL8Ks3adsINanJ6oH1tG7W0/vDvAfpmGC1oVP4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Guodong Xu <guodong@riscstar.com>,
-	Paul Walmsley <pjw@kernel.org>,
+	syzbot+cdd6c0925e12b0af60cc@syzkaller.appspotmail.com,
+	sashiko-bot@kernel.org,
+	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1263/1815] riscv: cpufeature: Clarify ISA spec version for canonical order
-Date: Sat, 12 Sep 2026 08:50:13 +0200
-Message-ID: <20260912065718.666926579@linuxfoundation.org>
+Subject: [PATCH 7.2 1264/1815] bpf: Fix mmap_lock leak in irq_work path
+Date: Sat, 12 Sep 2026 08:50:14 +0200
+Message-ID: <20260912065718.690317027@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,42 +54,211 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guodong Xu <guodong@riscstar.com>
+From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
 
-[ Upstream commit fdef048705daa3d4ed1fa212ee071bcbdac02d80 ]
+[ Upstream commit fa9dcacdcdf487f0ffef64bf67622f1caed509f1 ]
 
-Specify that chapter 27 refers to version 20191213 of the RISC-V ISA
-Unprivileged Architecture. The chapter numbering differs across
-specification versions - for example, in version 20250508, the ISA
-Extension Naming Conventions is chapter 36, not chapter 27.
+stack_map_get_build_id_offset() introduced a per-CPU irq_work to defer
+mmap_read_unlock() from NMI context, and bpf_find_vma() later reused the
+same mmap_unlock_work. Both callers only check whether the work is busy
+before taking mmap_lock, so a nested caller can reuse the slot before the
+first caller queues it. Two read locks may then be acquired while only one
+deferred unlock runs, leaking a read lock and blocking exit_mmap().
 
-Historical versions of the RISC-V specification can be found via Link [1].
+Reserve the per-CPU slot before mmap_read_trylock(). Use the same wrapper
+in stackmap and bpf_find_vma() so both callers release the reservation on
+trylock failure. Keep rejecting the slot while the irq_work remains busy.
+Release it after the irq_work callback unlocks the mm.
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://riscv.org/specifications/ratified/ [1]
-Fixes: 99e2266f2460 ("RISC-V: clarify ISA string ordering rules in cpu.c")
-Signed-off-by: Guodong Xu <guodong@riscstar.com>
-Link: https://patch.msgid.link/20260125-supm-ext-id-v2-3-1e3b9714c860@riscstar.com
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Fixes: eac9153f2b58 ("bpf/stackmap: Fix deadlock with rq_lock in bpf_get_stack()")
+Reported-by: syzbot+cdd6c0925e12b0af60cc@syzkaller.appspotmail.com
+Reported-by: sashiko-bot@kernel.org
+Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Closes: https://syzkaller.appspot.com/bug?extid=cdd6c0925e12b0af60cc
+Closes: https://lore.kernel.org/r/20260630033745.B80201F000E9@smtp.kernel.org
+Link: https://lore.kernel.org/bpf/20260805031425.2157475-2-sanghyun.park.cnu@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/cpufeature.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/bpf/mmap_unlock_work.h | 51 ++++++++++++++++++++---------------
+ kernel/bpf/stackmap.c         | 28 +++++++++++--------
+ kernel/bpf/task_iter.c        | 14 +++++++---
+ 3 files changed, 56 insertions(+), 37 deletions(-)
 
-diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeature.c
-index f46aa5602d74d..64c7ec6abbf1f 100644
---- a/arch/riscv/kernel/cpufeature.c
-+++ b/arch/riscv/kernel/cpufeature.c
-@@ -452,7 +452,8 @@ static const unsigned int riscv_c_exts[] = {
+diff --git a/kernel/bpf/mmap_unlock_work.h b/kernel/bpf/mmap_unlock_work.h
+index 5d18d7d85bef9..1834db20b8612 100644
+--- a/kernel/bpf/mmap_unlock_work.h
++++ b/kernel/bpf/mmap_unlock_work.h
+@@ -4,12 +4,15 @@
  
- /*
-  * The canonical order of ISA extension names in the ISA string is defined in
-- * chapter 27 of the unprivileged specification.
-+ * Chapter 27 of the RISC-V Instruction Set Manual Volume I Unprivileged ISA
-+ * (Document Version 20191213).
-  *
-  * Ordinarily, for in-kernel data structures, this order is unimportant but
-  * isa_ext_arr defines the order of the ISA string in /proc/cpuinfo.
+ #ifndef __MMAP_UNLOCK_WORK_H__
+ #define __MMAP_UNLOCK_WORK_H__
++#include <linux/atomic.h>
++#include <linux/err.h>
+ #include <linux/irq_work.h>
+ 
+ /* irq_work to run mmap_read_unlock() in irq_work */
+ struct mmap_unlock_irq_work {
+ 	struct irq_work irq_work;
+ 	struct mm_struct *mm;
++	atomic_t active;
+ };
+ 
+ DECLARE_PER_CPU(struct mmap_unlock_irq_work, mmap_unlock_work);
+@@ -18,32 +21,36 @@ DECLARE_PER_CPU(struct mmap_unlock_irq_work, mmap_unlock_work);
+  * We cannot do mmap_read_unlock() when the irq is disabled, because of
+  * risk to deadlock with rq_lock. To look up vma when the irqs are
+  * disabled, we need to run mmap_read_unlock() in irq_work. We use a
+- * percpu variable to do the irq_work. If the irq_work is already used
+- * by another lookup, we fall over.
++ * percpu variable to do the irq_work. The active flag reserves the slot
++ * before mmap_read_trylock() and until the irq_work callback consumes mm.
+  */
+-static inline bool bpf_mmap_unlock_get_irq_work(struct mmap_unlock_irq_work **work_ptr)
++static inline struct mmap_unlock_irq_work *bpf_mmap_unlock_guard_get(void)
+ {
+-	struct mmap_unlock_irq_work *work = NULL;
+-	bool irq_work_busy = false;
++	struct mmap_unlock_irq_work *work;
+ 
+-	if (irqs_disabled()) {
+-		if (!IS_ENABLED(CONFIG_PREEMPT_RT)) {
+-			work = this_cpu_ptr(&mmap_unlock_work);
+-			if (irq_work_is_busy(&work->irq_work)) {
+-				/* cannot queue more up_read, fallback */
+-				irq_work_busy = true;
+-			}
+-		} else {
+-			/*
+-			 * PREEMPT_RT does not allow to trylock mmap sem in
+-			 * interrupt disabled context. Force the fallback code.
+-			 */
+-			irq_work_busy = true;
+-		}
+-	}
++	if (!irqs_disabled())
++		return NULL;
++
++	/*
++	 * PREEMPT_RT does not allow to trylock mmap sem in interrupt
++	 * disabled context. Force the fallback code.
++	 */
++	if (IS_ENABLED(CONFIG_PREEMPT_RT))
++		return ERR_PTR(-EBUSY);
++
++	work = this_cpu_ptr(&mmap_unlock_work);
++	if (irq_work_is_busy(&work->irq_work) ||
++	    atomic_cmpxchg_acquire(&work->active, 0, 1))
++		return ERR_PTR(-EBUSY);
+ 
+-	*work_ptr = work;
+-	return irq_work_busy;
++	return work;
++}
++
++static inline void
++bpf_mmap_unlock_guard_put(struct mmap_unlock_irq_work *work)
++{
++	if (work)
++		atomic_set_release(&work->active, 0);
+ }
+ 
+ static inline void bpf_mmap_unlock_mm(struct mmap_unlock_irq_work *work, struct mm_struct *mm)
+diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
+index 5bfa5998f39ae..142a65672c6f9 100644
+--- a/kernel/bpf/stackmap.c
++++ b/kernel/bpf/stackmap.c
+@@ -414,8 +414,7 @@ static void stack_map_get_build_id_offset_sleepable(struct bpf_stack_build_id *i
+ static void stack_map_get_build_id_offset(struct bpf_stack_build_id *id_offs,
+ 					  u32 trace_nr, bool user, bool may_fault)
+ {
+-	struct mmap_unlock_irq_work *work = NULL;
+-	bool irq_work_busy = bpf_mmap_unlock_get_irq_work(&work);
++	struct mmap_unlock_irq_work *work;
+ 	bool has_user_ctx = user && current && current->mm;
+ 	struct stack_map_build_id_cache cache = {};
+ 	struct vm_area_struct *vma;
+@@ -426,15 +425,16 @@ static void stack_map_get_build_id_offset(struct bpf_stack_build_id *id_offs,
+ 		return;
+ 	}
+ 
+-	/* If the irq_work is in use, fall back to report ips. Same
+-	 * fallback is used for kernel stack (!user) on a stackmap with
+-	 * build_id.
+-	 */
+-	if (!has_user_ctx || irq_work_busy || !mmap_read_trylock(current->mm)) {
+-		/* cannot access current->mm, fall back to ips */
+-		for (i = 0; i < trace_nr; i++)
+-			stack_map_build_id_set_ip(&id_offs[i]);
+-		return;
++	if (!has_user_ctx)
++		goto fallback;
++
++	work = bpf_mmap_unlock_guard_get();
++	if (IS_ERR(work))
++		goto fallback;
++
++	if (!mmap_read_trylock(current->mm)) {
++		bpf_mmap_unlock_guard_put(work);
++		goto fallback;
+ 	}
+ 
+ 	for (i = 0; i < trace_nr; i++) {
+@@ -465,6 +465,12 @@ static void stack_map_get_build_id_offset(struct bpf_stack_build_id *id_offs,
+ 						      vma->vm_pgoff);
+ 	}
+ 	bpf_mmap_unlock_mm(work, current->mm);
++	return;
++
++fallback:
++	/* cannot access current->mm, fall back to ips */
++	for (i = 0; i < trace_nr; i++)
++		stack_map_build_id_set_ip(&id_offs[i]);
+ }
+ 
+ static struct perf_callchain_entry *
+diff --git a/kernel/bpf/task_iter.c b/kernel/bpf/task_iter.c
+index b256fb9c1214e..13e1aabe6f886 100644
+--- a/kernel/bpf/task_iter.c
++++ b/kernel/bpf/task_iter.c
+@@ -753,9 +753,8 @@ static struct bpf_iter_reg task_vma_reg_info = {
+ BPF_CALL_5(bpf_find_vma, struct task_struct *, task, u64, start,
+ 	   bpf_callback_t, callback_fn, void *, callback_ctx, u64, flags)
+ {
+-	struct mmap_unlock_irq_work *work = NULL;
++	struct mmap_unlock_irq_work *work;
+ 	struct vm_area_struct *vma;
+-	bool irq_work_busy = false;
+ 	bool __maybe_unused mmput_needed = false;
+ 	struct mm_struct *mm;
+ 	int ret = -ENOENT;
+@@ -792,9 +791,14 @@ BPF_CALL_5(bpf_find_vma, struct task_struct *, task, u64, start,
+ 	if (!mm)
+ 		return -ENOENT;
+ 
+-	irq_work_busy = bpf_mmap_unlock_get_irq_work(&work);
++	work = bpf_mmap_unlock_guard_get();
++	if (IS_ERR(work)) {
++		ret = PTR_ERR(work);
++		goto out;
++	}
+ 
+-	if (irq_work_busy || !mmap_read_trylock(mm)) {
++	if (!mmap_read_trylock(mm)) {
++		bpf_mmap_unlock_guard_put(work);
+ 		ret = -EBUSY;
+ 		goto out;
+ 	}
+@@ -1191,6 +1195,8 @@ static void do_mmap_read_unlock(struct irq_work *entry)
+ 
+ 	work = container_of(entry, struct mmap_unlock_irq_work, irq_work);
+ 	mmap_read_unlock_non_owner(work->mm);
++	work->mm = NULL;
++	bpf_mmap_unlock_guard_put(work);
+ }
+ 
+ static int __init task_iter_init(void)
 -- 
 2.53.0
 
