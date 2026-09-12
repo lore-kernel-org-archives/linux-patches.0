@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38C0399351;
-	Sat, 12 Sep 2026 20:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B37E19D074;
+	Sat, 12 Sep 2026 20:01:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243277; cv=none; b=fUpsw2EV/kcD3H8c82aUHo8lrF2kUro0vaDxZ+I2TJSNWaETtxoPvAnY1ILEDIt53iHKD7avsz8T+9pu5R8040O9/JcX6/qH2EBrkzG8uPputFEatOKtAbW1ps+yMBQNRfrpKR6B3rwND6m4eZnn+UpZNSdUVM8xdaPdeNqVM8M=
+	t=1789243280; cv=none; b=nVwXkFaSUiSxL0jvjrqQSoet4aLIpZ/w2NPPcfvLCsptoCK27do4CouA39Io+B6nW3WVaGfehYOXYhrqcQpPXzbgdbmRU1+AlF3+fX1dkUAlMi9ItkkrAvSLG2ee0Ip2IoNvh1nGvdrR4Q4/TPJ1/LI8g4Ai7BnvpLz2ITfZxGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243277; c=relaxed/simple;
-	bh=iV9vDhQRdwoNwWtz3uXWR+I2u+SWxdm+MmoBqUdwp18=;
+	s=arc-20240116; t=1789243280; c=relaxed/simple;
+	bh=O/PpsILUZI3e/oaXv7CwTloo4w7rVUtg9Hq57BI2RJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWyv6oIbTX6NJTq5qaPNkcnuI4ogTFvtFjG6JHRIb1mpUmkRl/vE+5/KptbU/a/hrJyV18CBH4MQKZKB02HrVkmX5BNLN4whPmLn8AkkN40IgXz2RDcchTxRmKQ2by5wquum9OueCeuNUIDp3vGTRN2opWAC01NKIbZIrD7X71A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kbZAeTtI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NxX95/qptdfAE1v0KhkFpIxpq7g+yDySk+Nhm7GaPYA3YoKZNuNjWt9rJY3DIRZhzaHP4UzlJ2DRjO83AkaVXwKW+FV4xCZhwjgUHbpLlsUCucfyy+lGtWJ4ylVFktpQAmEEXjmNtvdRcy7x5YbS+QIUDBdfVkjxu6oyITnZrY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyHnK2Uq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kbZAeTtI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A201F000FF;
-	Sat, 12 Sep 2026 20:01:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyHnK2Uq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C311F000FF;
+	Sat, 12 Sep 2026 20:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243276;
-	bh=GyYCAnncem+K/spxNiqEhbIekI0jNovRk99qyfZGEyU=;
+	s=korg; t=1789243279;
+	bh=SOQisBJBV+ZN5np7kXA/4pEU/qbWuSuWkACf05XJ3vU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kbZAeTtIP7JgprRTtxJr5hChcV6qTpysqMr8+FYpFHAiCPGkwl2WcFL7N6vBG+pry
-	 fiJZ0MKh1JTinyxE519pz37mi+cXhJN95utQ679RTWd3JjqyXY7YH/UQN7H2r9C2nS
-	 DZnu9roDrZ7DGQN51HQx/QFKeFSkln1UUymcXATc=
+	b=jyHnK2Uqd8Sph8pJk4DKSMCnEiwFCNEpw+0wATskBMCKjXCaVdzRsb7Rp9h//Jg6o
+	 NzLUwQLu6UmfsmkMW953Nc6cAgEPfIYgaCSYzU4cT0xchmaND+NTg5r1ji8m9l3GTk
+	 G5O51okOBoTK61o2UXgRT/E5f+b9ec2yp/7lrif4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rosen Penev <rosenp@gmail.com>,
 	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 656/798] ARM: dts: helios4: add vcc-supply to GPIO expander
-Date: Sat, 12 Sep 2026 09:04:44 +0200
-Message-ID: <20260912065532.148720621@linuxfoundation.org>
+Subject: [PATCH 5.10 657/798] ARM: dts: helios4: add SATA regulator supplies
+Date: Sat, 12 Sep 2026 09:04:45 +0200
+Message-ID: <20260912065532.170779561@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,14 +53,22 @@ Content-Transfer-Encoding: 8bit
 
 From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit c23988f84496e937dd255564cb30bec67608dcc6 ]
+[ Upstream commit 7a90520e8c9a8f48fe6f3e741cf34d8c2b6dbc61 ]
 
-The pca953x driver requests a 'vcc' supply, producing:
-  pca953x 0-0020: supply vcc not found, using dummy regulator
+The ahci-mvebu driver and libahci_platform request three supplies
+on SATA controller and port nodes:
+  - ahci-supply  (controller power)
+  - phy-supply   (PHY power)
+  - target-supply (disk power per port)
 
-The PCA9655 (PCA9555-compatible) expander is powered by the same
-always-on 3.3V rail as the other I2C devices on the bus.  Add
-vcc-supply = <&reg_3p3v> to silence the warning.
+Without them the regulator core prints notices at boot, e.g.:
+  supply ahci not found, using dummy regulator
+  supply phy not found, using dummy regulator
+  supply target not found, using dummy regulator
+
+The SATA controller and PHY inside the Armada 388 SoC are powered
+by the 3.3V I/O rail; the four disk bays are powered by the 5V HDD
+rail.  Wire the existing fixed regulators accordingly.
 
 Fixes: ced8025b569e ("ARM: dts: armada388-helios4")
 Assisted-by: opencode:big-pickle
@@ -68,21 +76,49 @@ Signed-off-by: Rosen Penev <rosenp@gmail.com>
 Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-388-helios4.dts | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/armada-388-helios4.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/arch/arm/boot/dts/armada-388-helios4.dts b/arch/arm/boot/dts/armada-388-helios4.dts
-index c335a44d24824..a018de69da83a 100644
+index a018de69da83a..1ba824f6fb206 100644
 --- a/arch/arm/boot/dts/armada-388-helios4.dts
 +++ b/arch/arm/boot/dts/armada-388-helios4.dts
-@@ -169,6 +169,7 @@ expander0: gpio-expander@20 {
- 					gpio-controller;
- 					#gpio-cells = <2>;
- 					reg = <0x20>;
-+					vcc-supply = <&reg_3p3v>;
- 					pinctrl-names = "default";
- 					pinctrl-0 = <&pca0_pins>;
- 					interrupt-parent = <&gpio0>;
+@@ -222,13 +222,17 @@ sata@a8000 {
+ 				status = "okay";
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
++				ahci-supply = <&reg_3p3v>;
++				phy-supply = <&reg_3p3v>;
+ 
+ 				sata0: sata-port@0 {
+ 					reg = <0>;
++					target-supply = <&reg_5p0v_hdd>;
+ 				};
+ 
+ 				sata1: sata-port@1 {
+ 					reg = <1>;
++					target-supply = <&reg_5p0v_hdd>;
+ 				};
+ 			};
+ 
+@@ -236,13 +240,17 @@ sata@e0000 {
+ 				status = "okay";
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
++				ahci-supply = <&reg_3p3v>;
++				phy-supply = <&reg_3p3v>;
+ 
+ 				sata2: sata-port@0 {
+ 					reg = <0>;
++					target-supply = <&reg_5p0v_hdd>;
+ 				};
+ 
+ 				sata3: sata-port@1 {
+ 					reg = <1>;
++					target-supply = <&reg_5p0v_hdd>;
+ 				};
+ 			};
+ 
 -- 
 2.53.0
 
