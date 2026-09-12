@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33F7479863;
-	Sat, 12 Sep 2026 16:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D623CDBB5;
+	Sat, 12 Sep 2026 16:30:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230604; cv=none; b=RfZmqiRti9hjeJmEC+9PNwcGS6II30x6PiP44ft/vwvQZySqmY1rNlKTOHKn1SzWVN8tYkiqAgDIReKT42sJM4QYFIW4SpRumuuWpt2iVO3eMpiLu6T7dko08FZu7slnmp1rYgBdMOo7J1sTMYbtmUOKRqdbVe78QAeqymGEbdk=
+	t=1789230607; cv=none; b=T6Turq11FiJ3iaHeA4OFR4nABgdywqQ5jsuFm6pAM8ARvqfOWfT4F4wrRltHAhib0NMGwWwzQKBqoN4JxapA1I4o5dlOD/RmWy58jZiBTfJy8/qX3xzFD3eJYNYkMeQ66Mpzr8sEvgl21yDUnxggtICbWOXYqM4NAWCwjpVN7/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230604; c=relaxed/simple;
-	bh=0jZjoEcNAn3fUqevCr6opbllmP5PaKfiBxhtQ6xBwGU=;
+	s=arc-20240116; t=1789230607; c=relaxed/simple;
+	bh=N1NRgTWtFskIXbHeF8w3+PHKASIDN9Rw5lq2KZkanr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ehBzuUwQMQvqlrUh2dKmB3UADsUXPRG0TFNxgiWmR+ZkTSF1fxysEKksxA86ee0fuDiD3k3OUr3z8CZD4GBAJEJ11wSNabF9rTNFVfhAo8PrtpMvPL+QUclpHbSndl2MAHCnMb73gkC44VYAf0TmDf5IZpQtMleQbL9mUS3fNkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQz66AWf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LXMy7L5De8CwhQkEN2NxGgmRu2c5mDr9/E99lwmT5N/pareWNeBKCPl7rpTsUHnwrbSB1YGaywilljMIawyTWaJ6Kmx0uUJi+k9VuFOo41WMudDLR2oHLz3UFmFjoAQ4+AZWSfQhhzTngb8GDkkOP+KkxT5KKcoEv/xwhSWSubI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ez5WUXSD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQz66AWf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F011F000FF;
-	Sat, 12 Sep 2026 16:29:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ez5WUXSD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4EB31F00893;
+	Sat, 12 Sep 2026 16:30:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230600;
-	bh=2diYo0HfCnS3QkGl3S1cif1B77Bm8cNB1LGtOxUOtZE=;
+	s=korg; t=1789230604;
+	bh=Whnj/lWJDTvtD1A1grgRH8ttlCxVmXy38PCkCC4SURk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YQz66AWfsMTErID2t2N787MVNaG/KXfUA/DvtdLkCgY7jB2zQESBNVUh8ObfIYAEd
-	 OBoCNoiM3TYtD/f8shuGO+mSuadxG1dW9yj4a4qt//0JQIksQDSxKbC00fbh8xDfLL
-	 cVb39xAcea/0Q+vBo7sraTitjqmN1oFpilOVcLl4=
+	b=ez5WUXSDrh1T85U4rBMrLL1xVg4ZYVcAWOezpisl4Cuu+A8bLWHtw6ITmbMIfFY+9
+	 I+x3jRPqK7E9smZLejzMmvV+KB0MBy39bEw57B/oTJ+44+e4WnNdMOnhMzqV6qzBnD
+	 NdOT4aQ9844vzWf5EAUTjGTd9+aVilkDC9hUWWUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linghui Wu <linghui.wu@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Pranjal Shrivastava <praan@google.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0825/1191] wifi: ath10k: snoc: use memcpy_fromio() for MSA ramdump
-Date: Sat, 12 Sep 2026 08:59:13 +0200
-Message-ID: <20260912065606.797136967@linuxfoundation.org>
+Subject: [PATCH 6.1 0826/1191] iommu/arm-smmu-v3: Convert to use atomic poll timeout
+Date: Sat, 12 Sep 2026 08:59:14 +0200
+Message-ID: <20260912065606.818910449@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,78 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linghui Wu <linghui.wu@oss.qualcomm.com>
+From: Pranjal Shrivastava <praan@google.com>
 
-[ Upstream commit 4f25071afe9218aaae1c63fbf75e229aa6405319 ]
+[ Upstream commit eced8058c82a3a81ae480a6546e2da32100dddfa ]
 
-On WCN3990/SNOC the MSA region is mapped with devm_memremap(MEMREMAP_WT).
-On arm64 such a mapping is not Normal-cacheable, so unaligned accesses to
-it are not permitted. ath10k_msa_dump_memory() copies the region with a
-plain memcpy(), whose optimized __pi_memcpy_generic implementation issues
-wide/unaligned loads. This triggers an alignment fault (FSC=0x21) Oops in
-ath10k_snoc_fw_crashed_dump() while collecting the devcoredump:
+The arm_smmu_write_reg_sync() helper is currently implemented using
+readl_relaxed_poll_timeout() (that relies on usleep_range() internally)
+which becomes a critical issue when used in the gerror irq handler.
 
-  Unable to handle kernel paging request ... FSC=0x21: alignment fault
-  pc : __pi_memcpy_generic
-  lr : ath10k_snoc_fw_crashed_dump [ath10k_snoc]
+If the SMMU hits a gerror and enters Service Failure Mode
+(GERROR_SFM_ERR), the gerror handler calls arm_smmu_device_disable() in
+hard-irq context. This becomes a problem as arm_smmu_device_disable()
+inevitably calls arm_smmu_write_reg_sync() which might attempt to sleep
+inside a hard-irq context.
 
-The Oops both leaves the firmware RAM dump buffer zeroed (no dump is
-captured) and crashes the kernel, which in turn breaks modem SSR
-recovery.
+Fix this by converting the arm_smmu_write_reg_sync to use the
+readl_relaxed_poll_timeout_atomic() polling helper.
 
-Use memcpy_fromio(), which only performs accesses that are valid for such
-a device-memory mapping. The generic memcpy_fromio() implementation aligns
-the source before issuing word-sized reads and stores the destination with
-put_unaligned(), so it is also safe for the coherent DMA allocation used on
-the non-reserved-memory path. ath11k and ath12k use the same pattern
-when copying target memory into crash dumps, so call it unconditionally
-here too.
-The MEMREMAP_WT pointer is a plain void *, so an explicit __iomem cast is
-needed; use __force to keep sparse happy.
+(Discovered while running Sashiko locally on another patch series).
 
-Tested-on: WCN3990 hw1.0 SNOC WLAN.HL.3.3.7.c5-00107-QCAHLSWMTPL-1
-
-Fixes: 3f14b73c3843 ("ath10k: Enable MSA region dump support for WCN3990")
-Signed-off-by: Linghui Wu <linghui.wu@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260727072629.2297208-1-linghui.wu@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 48ec83bcbcf5 ("iommu/arm-smmu: Add initial driver support for ARM SMMUv3 devices")
+Signed-off-by: Pranjal Shrivastava <praan@google.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/snoc.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
-index b43658b016844..9e6e614c0a2b2 100644
---- a/drivers/net/wireless/ath/ath10k/snoc.c
-+++ b/drivers/net/wireless/ath/ath10k/snoc.c
-@@ -5,6 +5,7 @@
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index eba2b2e2da0b9..33f3c5e6b3320 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -3134,8 +3134,9 @@ static int arm_smmu_write_reg_sync(struct arm_smmu_device *smmu, u32 val,
+ 	u32 reg;
  
- #include <linux/bits.h>
- #include <linux/clk.h>
-+#include <linux/io.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/of.h>
-@@ -1451,11 +1452,15 @@ static void ath10k_msa_dump_memory(struct ath10k *ar,
- 	hdr->length = cpu_to_le32(ar->msa.mem_size);
- 
- 	if (current_region->len < ar->msa.mem_size) {
--		memcpy(buf, ar->msa.vaddr, current_region->len);
-+		memcpy_fromio(buf,
-+			      (const void __iomem __force *)ar->msa.vaddr,
-+			      current_region->len);
- 		ath10k_warn(ar, "msa dump length is less than msa size %x, %x\n",
- 			    current_region->len, ar->msa.mem_size);
- 	} else {
--		memcpy(buf, ar->msa.vaddr, ar->msa.mem_size);
-+		memcpy_fromio(buf,
-+			      (const void __iomem __force *)ar->msa.vaddr,
-+			      ar->msa.mem_size);
- 	}
+ 	writel_relaxed(val, smmu->base + reg_off);
+-	return readl_relaxed_poll_timeout(smmu->base + ack_off, reg, reg == val,
+-					  1, ARM_SMMU_POLL_TIMEOUT_US);
++	return readl_relaxed_poll_timeout_atomic(smmu->base + ack_off, reg,
++						reg == val, 1,
++						ARM_SMMU_POLL_TIMEOUT_US);
  }
  
+ /* GBPA is "special" */
 -- 
 2.53.0
 
