@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF0F3839BA;
-	Sat, 12 Sep 2026 19:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C15A3451C8;
+	Sat, 12 Sep 2026 19:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242650; cv=none; b=N1o9yw2FFnxgG0Uo54C1swSFVgAsNa6MOF8XcEeKU2yxjZ4YYGO+UnOD7hBhlAFNn1sTvRXr0H4YonR+O0wb+HWXAFUSBE5usvvNApuzu/uyMJivDIwTn4M8iXqqWwdut7YJLjEqPJd4ZVMwnHnIDm3vvivIfYRAGKMrvX+GDiE=
+	t=1789242653; cv=none; b=Atn1MSGZZ6meEBoaHDhQngzVjlRn3E/GIHxyFrP6uUwjgp8DxgItSEniYLBySpQ1/NHDNH0y55MGd5lg7CY31Pqk4CXkSJ1SEU9Z4zPFusN5P6JjOYXDMapHEwyGmA9izcxOpcWMfrbZfm2E2/pXFZU1IDiFCaGQ+X0iP1H9dQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242650; c=relaxed/simple;
-	bh=KC0ci7ZiC2vnSiyFvj/dyKrHaOeZAeFKxwIeVixwXEU=;
+	s=arc-20240116; t=1789242653; c=relaxed/simple;
+	bh=twda9wWiQf8+4UV10f9yrcxf1DNOnAh3YtdZOV7MErA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=splEpZr4fUo8DJzRKc1dHEmI+2/oxyXkM2OJGIweRKmpcH8xUeI3foTIK9o2IhJi8bR1Wm+M487riJNc0uo9kFQ5spIOqfSmtvIUFO7+FM+vodecYmmJVkP7YgsQz3KFpsp07NmjjzXbGSxOKL9kFzK7inh8EC1Xokhx7lvn1EA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SbLuFPWh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HgFEsTIQNr8/8osha/OCKu5UIACz+7/yEJ+D5oOuNnyyj2IZszvaMT2I2/tqzz2Hh/vjF1NH+ERGOqfUlLYFgU//LQ1o94mUAYBQe6iOUNclDkmwO9XRyZFlgD/jzzeXrqsDAz/YzGkJcX3gNTIHdNek6MEbIgLCNAAK37bKEWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ft29mTmf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SbLuFPWh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B90A1F000FF;
-	Sat, 12 Sep 2026 19:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ft29mTmf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CFD41F000FF;
+	Sat, 12 Sep 2026 19:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242649;
-	bh=360Foe53+RKAmE/CUlWDTUOMoFRhswSuWGuHK/cKf0U=;
+	s=korg; t=1789242651;
+	bh=Mt2ZOML94aAU7x9EtrIL12DbvRkiyECSnlcjlvRx16Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SbLuFPWhYy5E2SYe/qpHZ3+cKhW9aaVWn7DpMcJ++JA0pQXfD16v6TFKXykozzGHM
-	 mekYAyMNITru5hmdXTvoCVrZVOj9ZYWcu3PXS42XRrqXS0mnkTkSHzsH/5XaTz5RVa
-	 SBReQBcYaQk9q+JDXIWGIE0ED+As6KDIuhRui5RM=
+	b=ft29mTmfJDRMjqkidHGr3y6Ct0WwEDBYgtSAbb7VDFykLMJ4PLEBWUC99fwH/Blvu
+	 z+hKAhcc019Q1Je+h9zdYDmMwIvO3ozCxjbEvlxWaWKdOeZgm29RHE3n5bjLUA5mkL
+	 F4PfBmPeL3hpbX/JTKiBozaaPNdxt4NIFYgdJbKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Danila Chernetsov <listdansp@mail.ru>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 479/798] ASoC: meson: Keep link pointers valid on realloc failure
-Date: Sat, 12 Sep 2026 09:01:47 +0200
-Message-ID: <20260912065528.121263931@linuxfoundation.org>
+Subject: [PATCH 5.10 480/798] RDMA/hfi1: Propagate sdma_txinit_ahg() errors
+Date: Sat, 12 Sep 2026 09:01:48 +0200
+Message-ID: <20260912065528.143886377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,75 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Danila Chernetsov <listdansp@mail.ru>
 
-[ Upstream commit 2aaa41cf974f83a6fb105422bac4e2f107150774 ]
+[ Upstream commit 091c6162c022cbdfb64219708a71728cfd1d4600 ]
 
-meson_card_reallocate_links() grows the DAI link and private data
-arrays with two consecutive krealloc() calls and updates the owner
-pointers only after both calls have succeeded.
+set_txreq_header_ahg() ignores the return value of sdma_txinit_ahg().
 
-A successful krealloc() may move the data: it frees the old block and
-returns a new one. When that happens for the link array and the second
-krealloc() then fails, card->dai_link still points to the block that
-krealloc() already freed, and the error path frees the new block too.
-The probe error path then calls meson_card_clean_references(), which
-dereferences card->dai_link and kfree()s it again, resulting in a
-use-after-free and a double free.
+If sdma_txinit_ahg() fails, it returns before initializing tx->txreq.
+However, set_txreq_header_ahg() ignores the error and returns the AHG
+change count, causing the caller to continue processing the request as
+though initialization had succeeded.
 
-Commit card->dai_link and card->num_links right after the first
-krealloc() succeeds, so the pointer always refers to a valid allocation
-that meson_card_clean_references() can walk and free. krealloc() with
-__GFP_ZERO zero-initializes the added entries, so walking them on the
-error path is safe. With both failure paths reduced to a plain return,
-drop the goto labels and the error message.
+Propagate sdma_txinit_ahg() failures to the caller and abort request
+processing when initialization fails.
 
-Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://patch.msgid.link/20260717012433.1432285-1-lilinmao@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: e3304b7cc4f1 ("IB/hfi1: Optimize cachelines for user SDMA request structure")
+Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
+Link: https://patch.msgid.link/20260708162252.936634-1-listdansp@mail.ru
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/meson-card-utils.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ drivers/infiniband/hw/hfi1/user_sdma.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/meson/meson-card-utils.c b/sound/soc/meson/meson-card-utils.c
-index 150e12037dfe7..9d11fde529959 100644
---- a/sound/soc/meson/meson-card-utils.c
-+++ b/sound/soc/meson/meson-card-utils.c
-@@ -50,25 +50,20 @@ int meson_card_reallocate_links(struct snd_soc_card *card,
- 			 num_links * sizeof(*priv->card.dai_link),
- 			 GFP_KERNEL | __GFP_ZERO);
- 	if (!links)
--		goto err_links;
-+		return -ENOMEM;
-+
-+	priv->card.dai_link = links;
-+	priv->card.num_links = num_links;
+diff --git a/drivers/infiniband/hw/hfi1/user_sdma.c b/drivers/infiniband/hw/hfi1/user_sdma.c
+index a67791187d46d..7b8519ff16c95 100644
+--- a/drivers/infiniband/hw/hfi1/user_sdma.c
++++ b/drivers/infiniband/hw/hfi1/user_sdma.c
+@@ -1100,6 +1100,7 @@ static int set_txreq_header_ahg(struct user_sdma_request *req,
+ 				struct user_sdma_txreq *tx, u32 datalen)
+ {
+ 	u32 ahg[AHG_KDETH_ARRAY_SIZE];
++	int ret;
+ 	int idx = 0;
+ 	u8 omfactor; /* KDETH.OM */
+ 	struct hfi1_user_sdma_pkt_q *pq = req->pq;
+@@ -1204,11 +1205,13 @@ static int set_txreq_header_ahg(struct user_sdma_request *req,
+ 	trace_hfi1_sdma_user_header_ahg(pq->dd, pq->ctxt, pq->subctxt,
+ 					req->info.comp_idx, req->sde->this_idx,
+ 					req->ahg_idx, ahg, idx, tidval);
+-	sdma_txinit_ahg(&tx->txreq,
+-			SDMA_TXREQ_F_USE_AHG,
+-			datalen, req->ahg_idx, idx,
+-			ahg, sizeof(req->hdr),
+-			user_sdma_txreq_cb);
++	ret = sdma_txinit_ahg(&tx->txreq,
++				SDMA_TXREQ_F_USE_AHG,
++				datalen, req->ahg_idx, idx,
++				ahg, sizeof(req->hdr),
++				user_sdma_txreq_cb);
++	if (ret)
++		return ret;
  
- 	ldata = krealloc(priv->link_data,
- 			 num_links * sizeof(*priv->link_data),
- 			 GFP_KERNEL | __GFP_ZERO);
-+	/* meson_card_clean_references() will free the links on this error path */
- 	if (!ldata)
--		goto err_ldata;
-+		return -ENOMEM;
- 
--	priv->card.dai_link = links;
- 	priv->link_data = ldata;
--	priv->card.num_links = num_links;
- 	return 0;
--
--err_ldata:
--	kfree(links);
--err_links:
--	dev_err(priv->card.dev, "failed to allocate links\n");
--	return -ENOMEM;
--
+ 	return idx;
  }
- EXPORT_SYMBOL_GPL(meson_card_reallocate_links);
- 
 -- 
 2.53.0
 
