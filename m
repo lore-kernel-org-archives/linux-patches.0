@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF7224CEEA;
-	Sat, 12 Sep 2026 09:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E31B3750D6;
+	Sat, 12 Sep 2026 09:32:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205537; cv=none; b=cVjXo0XF0bpR0zMY1y4QmvWrnRDOrnwnvkqR71n7/70Id2b4aMei+P/J6dkDdkoQpVRgEM9hRrdCJ2dQArfkMPJyijUCK9rQQdZ30aUBqVGcOuEdfzGDfuvIdSSUYYDoy9okI10Xi2VwiBUXKs9O+6IM2Nlae2cwc+l+AGDILMI=
+	t=1789205542; cv=none; b=qOQ8cmMT1EOBdkjFQEvFrN6QnP2JWw0ZPhmU8d2rGQIN5GS5DwZXdiUDiu1BModErSZCZSRNA9caHLUyefPoJLvCCBl93IXR/1SAc9q7O9iArGw09bFWSk2D/pIIwGHjIk2L6mSUhcJf2KtHak1K/SfJTjFKpPCNkE7LN3Uqf/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205537; c=relaxed/simple;
-	bh=FCdymn8ygZqIIvyz8NzbfliklY9GVLzX/Oh8v2mJ1jk=;
+	s=arc-20240116; t=1789205542; c=relaxed/simple;
+	bh=PTWL9WXy1WkdBWnymxAE1sheBSmjGzccZO493/pWiqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IRw+PqCm12iWy+CfoE4DbCMNGBzwsioP1bTN2X4nMM5zSRGMGDssKloCVc0ymCYrUG8729YAg+utEEPE5Pwglr+LnrQFNhDTcnIWWh3vj7a6vF1juQl8wTG4ahoe5qKQHGVQhzn6RxzmwUUp9kd1DRwL4U9rIbsxA+eWPwZCoJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPL/Kxj6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j7Oj9evueRzsMzJu+kl82P25GRC4qhtrmZcsP+nBpA5MYbcdp+AmBDb8omCedtrARSHOIKS1nU7x7NF84r1JoYJ06uyg8B5m/5FxX/KfR9KIXSgf4BZ560p7z8ZNFprMSUv5veeotqF4ifO0sV/fIKZGmBymVqEC4MpwoRG3G5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMTaNZfY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPL/Kxj6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AAA21F000FF;
-	Sat, 12 Sep 2026 09:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMTaNZfY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A224F1F000FF;
+	Sat, 12 Sep 2026 09:32:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205536;
-	bh=Xhhxp4K7TZ10iXdVKtelo4e6UeORfjJdfEfCtkfjj08=;
+	s=korg; t=1789205540;
+	bh=VxPnxKrgqZjntUJ9kblAhC2s76EFSeE1NEPk40ZRalM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bPL/Kxj63tFAC/irPHwFJU9P25ac4g/bek9ZkURIoEj97/wmhLtunlQr0NYX2kW1f
-	 buKJSbZtw0Lh6egCw784MKjuoOK08vZOAJ/Hw2szSUAwUgi+M4x1vg0AWEfweABqMh
-	 wG4d2UOU6qP2volE5ex4pp/rEHTmge+JCiZx5wA4=
+	b=lMTaNZfY3z7bXOytFaD/kWVPHVc8BfqeEk8JMWUqQHQA5OzipFXY9rH2/kZsiGhOM
+	 v1W4PwOPchsSWs8veXGHqcFIrghNRycl2umL7MdIXnWxf1Cv6mBZQ80MLWZ5DaZCji
+	 mVc2UNjhkMwNnKU05cWi9O99Bx7pjIWuUPxh8Ma4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0022/1518] tracing/probes: ignore id update from btf_type_skip_modifiers
-Date: Sat, 12 Sep 2026 08:36:31 +0200
-Message-ID: <20260912065623.922294506@linuxfoundation.org>
+Subject: [PATCH 6.18 0023/1518] udf: Move udf_map_block() up
+Date: Sat, 12 Sep 2026 08:36:32 +0200
+Message-ID: <20260912065623.945402861@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,87 +50,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 823b37855829bc328d46102a56e4d0b2f7a3d0d1 ]
+[ Upstream commit 97e9d759a4193eabe4d8b6ecac093aac664c16e3 ]
 
-We can pass NULL as id pointer to btf_type_skip_modifiers if we do not
-need the id of the returned btf_type.
+Move udf_map_block() in the file to avoid forward declarations.
 
-Link: https://lore.kernel.org/all/20260623132937.3494895-1-martin@kaiser.cx/
-
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Stable-dep-of: 47e93045a2db ("tracing/probes: Fix BTF kflag check for anonymous struct member access")
+Link: https://patch.msgid.link/20260730104232.4086759-3-jack@suse.cz
+Signed-off-by: Jan Kara <jack@suse.cz>
+Stable-dep-of: 62333e480d12 ("udf: Fix data loss when converting inline inodes to out of line")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe.c |   13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ fs/udf/inode.c |  118 ++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 59 insertions(+), 59 deletions(-)
 
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -355,9 +355,8 @@ static bool btf_type_is_char_ptr(struct
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -337,65 +337,6 @@ const struct address_space_operations ud
+ 	.migrate_folio	= buffer_migrate_folio,
+ };
+ 
+-/*
+- * Expand file stored in ICB to a normal one-block-file
+- *
+- * This function requires i_mutex held
+- */
+-int udf_expand_file_adinicb(struct inode *inode)
+-{
+-	struct folio *folio;
+-	struct udf_inode_info *iinfo = UDF_I(inode);
+-	int err;
+-
+-	WARN_ON_ONCE(!inode_is_locked(inode));
+-	if (!iinfo->i_lenAlloc) {
+-		down_write(&iinfo->i_data_sem);
+-		if (UDF_QUERY_FLAG(inode->i_sb, UDF_FLAG_USE_SHORT_AD))
+-			iinfo->i_alloc_type = ICBTAG_FLAG_AD_SHORT;
+-		else
+-			iinfo->i_alloc_type = ICBTAG_FLAG_AD_LONG;
+-		up_write(&iinfo->i_data_sem);
+-		mark_inode_dirty(inode);
+-		return 0;
+-	}
+-
+-	folio = __filemap_get_folio(inode->i_mapping, 0,
+-			FGP_LOCK | FGP_ACCESSED | FGP_CREAT, GFP_KERNEL);
+-	if (IS_ERR(folio))
+-		return PTR_ERR(folio);
+-
+-	if (!folio_test_uptodate(folio))
+-		udf_adinicb_read_folio(folio);
+-	down_write(&iinfo->i_data_sem);
+-	memset(iinfo->i_data + iinfo->i_lenEAttr, 0x00,
+-	       iinfo->i_lenAlloc);
+-	iinfo->i_lenAlloc = 0;
+-	if (UDF_QUERY_FLAG(inode->i_sb, UDF_FLAG_USE_SHORT_AD))
+-		iinfo->i_alloc_type = ICBTAG_FLAG_AD_SHORT;
+-	else
+-		iinfo->i_alloc_type = ICBTAG_FLAG_AD_LONG;
+-	folio_mark_dirty(folio);
+-	folio_unlock(folio);
+-	up_write(&iinfo->i_data_sem);
+-	err = filemap_fdatawrite(inode->i_mapping);
+-	if (err) {
+-		/* Restore everything back so that we don't lose data... */
+-		folio_lock(folio);
+-		down_write(&iinfo->i_data_sem);
+-		memcpy_from_folio(iinfo->i_data + iinfo->i_lenEAttr,
+-				folio, 0, inode->i_size);
+-		folio_unlock(folio);
+-		iinfo->i_alloc_type = ICBTAG_FLAG_AD_IN_ICB;
+-		iinfo->i_lenAlloc = inode->i_size;
+-		up_write(&iinfo->i_data_sem);
+-	}
+-	folio_put(folio);
+-	mark_inode_dirty(inode);
+-
+-	return err;
+-}
+-
+ #define UDF_MAP_CREATE		0x01	/* Mapping can allocate new blocks */
+ #define UDF_MAP_NOPREALLOC	0x02	/* Do not preallocate blocks */
+ 
+@@ -456,6 +397,65 @@ out_read:
+ 	return ret;
+ }
+ 
++/*
++ * Expand file stored in ICB to a normal one-block-file
++ *
++ * This function requires i_mutex held
++ */
++int udf_expand_file_adinicb(struct inode *inode)
++{
++	struct folio *folio;
++	struct udf_inode_info *iinfo = UDF_I(inode);
++	int err;
++
++	WARN_ON_ONCE(!inode_is_locked(inode));
++	if (!iinfo->i_lenAlloc) {
++		down_write(&iinfo->i_data_sem);
++		if (UDF_QUERY_FLAG(inode->i_sb, UDF_FLAG_USE_SHORT_AD))
++			iinfo->i_alloc_type = ICBTAG_FLAG_AD_SHORT;
++		else
++			iinfo->i_alloc_type = ICBTAG_FLAG_AD_LONG;
++		up_write(&iinfo->i_data_sem);
++		mark_inode_dirty(inode);
++		return 0;
++	}
++
++	folio = __filemap_get_folio(inode->i_mapping, 0,
++			FGP_LOCK | FGP_ACCESSED | FGP_CREAT, GFP_KERNEL);
++	if (IS_ERR(folio))
++		return PTR_ERR(folio);
++
++	if (!folio_test_uptodate(folio))
++		udf_adinicb_read_folio(folio);
++	down_write(&iinfo->i_data_sem);
++	memset(iinfo->i_data + iinfo->i_lenEAttr, 0x00,
++	       iinfo->i_lenAlloc);
++	iinfo->i_lenAlloc = 0;
++	if (UDF_QUERY_FLAG(inode->i_sb, UDF_FLAG_USE_SHORT_AD))
++		iinfo->i_alloc_type = ICBTAG_FLAG_AD_SHORT;
++	else
++		iinfo->i_alloc_type = ICBTAG_FLAG_AD_LONG;
++	folio_mark_dirty(folio);
++	folio_unlock(folio);
++	up_write(&iinfo->i_data_sem);
++	err = filemap_fdatawrite(inode->i_mapping);
++	if (err) {
++		/* Restore everything back so that we don't lose data... */
++		folio_lock(folio);
++		down_write(&iinfo->i_data_sem);
++		memcpy_from_folio(iinfo->i_data + iinfo->i_lenEAttr,
++				folio, 0, inode->i_size);
++		folio_unlock(folio);
++		iinfo->i_alloc_type = ICBTAG_FLAG_AD_IN_ICB;
++		iinfo->i_lenAlloc = inode->i_size;
++		up_write(&iinfo->i_data_sem);
++	}
++	folio_put(folio);
++	mark_inode_dirty(inode);
++
++	return err;
++}
++
+ static int __udf_get_block(struct inode *inode, sector_t block,
+ 			   struct buffer_head *bh_result, int flags)
  {
- 	const struct btf_type *real_type;
- 	u32 intdata;
--	s32 tid;
- 
--	real_type = btf_type_skip_modifiers(btf, type->type, &tid);
-+	real_type = btf_type_skip_modifiers(btf, type->type, NULL);
- 	if (!real_type)
- 		return false;
- 
-@@ -374,14 +373,13 @@ static bool btf_type_is_char_array(struc
- 	const struct btf_type *real_type;
- 	const struct btf_array *array;
- 	u32 intdata;
--	s32 tid;
- 
- 	if (BTF_INFO_KIND(type->info) != BTF_KIND_ARRAY)
- 		return false;
- 
- 	array = (const struct btf_array *)(type + 1);
- 
--	real_type = btf_type_skip_modifiers(btf, array->type, &tid);
-+	real_type = btf_type_skip_modifiers(btf, array->type, NULL);
- 
- 	intdata = btf_type_int(real_type);
- 	return !(BTF_INT_ENCODING(intdata) & BTF_INT_SIGNED)
-@@ -584,7 +582,6 @@ static int parse_btf_field(char *fieldna
- 	struct btf *btf = ctx_btf(ctx);
- 	char *next;
- 	int is_ptr;
--	s32 tid;
- 
- 	do {
- 		if (!is_struct) {
-@@ -595,7 +592,7 @@ static int parse_btf_field(char *fieldna
- 			}
- 
- 			/* Convert a struct pointer type to a struct type */
--			type = btf_type_skip_modifiers(btf, type->type, &tid);
-+			type = btf_type_skip_modifiers(btf, type->type, NULL);
- 			if (!type) {
- 				trace_probe_log_err(ctx->offset, BAD_BTF_TID);
- 				return -EINVAL;
-@@ -635,7 +632,7 @@ static int parse_btf_field(char *fieldna
- 				ctx->last_bitsize = 0;
- 			}
- 
--			type = btf_type_skip_modifiers(btf, field->type, &tid);
-+			type = btf_type_skip_modifiers(btf, field->type, NULL);
- 			if (!type) {
- 				trace_probe_log_err(ctx->offset, BAD_BTF_TID);
- 				return -EINVAL;
-@@ -754,7 +751,7 @@ static int parse_btf_arg(char *varname,
- 	return -ENOENT;
- 
- found:
--	type = btf_type_skip_modifiers(ctx->btf, tid, &tid);
-+	type = btf_type_skip_modifiers(ctx->btf, tid, NULL);
- found_type:
- 	if (!type) {
- 		trace_probe_log_err(ctx->offset, BAD_BTF_TID);
 
 
