@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605EE29D288;
-	Sat, 12 Sep 2026 19:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33AB738F255;
+	Sat, 12 Sep 2026 19:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242877; cv=none; b=hYEfFLl80MBth55a0Wg+v25H0SSZF/hWYNZoLXThtxPYrCbPtgufjKgipdQGyUgnJKM3yV1FpabUmBwmdZ7Cv0Rqyu0libfeKeywVtR209egCyrJdL8xgyKdIHIAejAMEJ6QO39sFeOz5H0tFvkDjrplUf/QtsUYIH4BVPzrNmQ=
+	t=1789242880; cv=none; b=iPjwAHZy+yOvCdOc18H82wrCtDp+oHUFIV5j5GWWcncbWsvxlH4Kw1wOECm78HPALJZ1fQVhlIBEP+qVIClt/C6njbk5pJuuPJSIt5VoknMzC6MLCvqbeDYoeZc2QiX86nM/gdqSeIJboQPFYqjIXVrN7HcDpcEK6k+d3Jd7J5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242877; c=relaxed/simple;
-	bh=YIPgdiXW4+2ZHP8VxymjRhzrOKFwboK8DxLJG7YzSlM=;
+	s=arc-20240116; t=1789242880; c=relaxed/simple;
+	bh=UOgYGPRrSx0N9hztQYeuZ7r+TThknmYyb8aGzlanlY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lv/FnbA77594wtmkEZsNRuN1uvA/oO5ZuDT31iu8xrzwnD6xmvklnkcLgzLDVLb2a67InRYJ8gM5UljgNAfKyZNmQunTKgXJ4wy6GE27MFqBzZxsZ67b4PopZtF+2QqhdlnyzHrAOhDX4Tnwi74MQNcOhsHUCJDrokAMfdfWCig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvWx0bqf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ty0/In9s7E4t9vIkPmQAnhqqgo96iWVobsN6pdZbVnJGEXFX8IDNEU0/gU2TE+PyoaQmYwFSHC9sireWI26TYWuVGzhQAcB0rQ9Z05alrA8wTFVyXH3Hps2dYvvPZ6nNabavg4c3tQ01+sB/8G3lvd8NJ/g2plTXwzwywKwO8CQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mWhYCERj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvWx0bqf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804B01F000FF;
-	Sat, 12 Sep 2026 19:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mWhYCERj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 655671F000FF;
+	Sat, 12 Sep 2026 19:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242876;
-	bh=/kxAVWa2VX2z41+7yg0cejA9NjGujGrW7dx2tFl9jm0=;
+	s=korg; t=1789242878;
+	bh=+O4HhRUxGO0dihAO7d/HEyDNcgEU8+JjBnAfNHFJgKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fvWx0bqfbnoU3OgIKIW5mUmbNeqQONd2G16fqlfQy133G3q9TgqOrMkDBzu/oVrTm
-	 Y0oFOTSVWmZ/c35RLK4QmLTt2NVPSvxLMwCGzPfwQuYIbGCV3PAcrU+0Y/j20MHNy7
-	 L+HJA8gCBVX0g79oon05Ny8xrAJQR9WN7EXrlwm0=
+	b=mWhYCERjb1ebRvoJMrq+m/xjlwWw/ZQc3HGizB8ZSIYNHt381eZU+Vk2IW9V1ZslF
+	 jzffCC0j5ShHwCcHzlzA5Prv8H9cQk9YMkzgjxj+LtTBBc6una6ybWP9ct1GPj4FfQ
+	 EOwgYNrDt9XBQjuEHbvRcgd+0Hj8fVN8y5sohQT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Firas Jahjah <firasj@amazon.com>,
-	Michael Margolin <mrgolin@amazon.com>,
-	Yonatan Nachum <ynachum@amazon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Ondrej Jirman <megi@xff.cz>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 527/798] RDMA/efa: Fix PBL chunk length computation
-Date: Sat, 12 Sep 2026 09:02:35 +0200
-Message-ID: <20260912065529.212564777@linuxfoundation.org>
+Subject: [PATCH 5.10 528/798] arm64: dts: allwinner: sun50i-a64-pinephone: Fix mpu6050 mount matrix
+Date: Sat, 12 Sep 2026 09:02:36 +0200
+Message-ID: <20260912065529.235134193@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,72 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonatan Nachum <ynachum@amazon.com>
+From: Ondrej Jirman <megi@xff.cz>
 
-[ Upstream commit 229b42d7450c1cf96f45ec39ebb69211b06bc036 ]
+[ Upstream commit dfc735fd93e4814e65894916ec5f807f25a391d1 ]
 
-On register MR, when creating the PBL, if it's an indirect PBL we create
-a chunk list to hold the PBL pages pointers. Each chunk is 4KB in size
-and can hold 510 addresses (EFA_PTRS_PER_CHUNK) and has a 12-byte
-control buffer at the end of it holding the next chunk's pointer and its
-length.
+The current mount matrix for mpu6050 is wrong. The mount matrix is a
+simple transform from the sensor coordinate space to the device
+coordinate space described in DT, where, looking at the screen, X
+points to the right, Y to the top, and Z towards the user.
 
-If the PBL number of pages is a multiple of EFA_PTRS_PER_CHUNK, the
-calculated last chunk length is wrongly computed as 0, even though that
-chunk is fully populated with 510 real page pointers. This wrong length
-is used both to DMA map the chunk and is propagated to the device,
-causing the device to see the chunk as empty and reject the memory
-registration.
+The mpu6050 is mounted like this (looking at the screen from the
+front; the sensor is on the near side of the PCB, so its Z axis
+points towards the user; o marks the pin 1 corner):
 
-Fix the calculation so it will be performed only if the number of pages
-isn't a multiple of EFA_PTRS_PER_CHUNK, if it is, its already handled in
-the above loop correctly.
-Also prevent out-of-bounds reach in the chunks array in such scenario.
+           +Xs
+            ^
+            |
+         +------+
+  +Ys <--|      |
+         | o    |
+         +------+
 
-Fixes: 40909f664d27 ("RDMA/efa: Add EFA verbs implementation")
-Reviewed-by: Firas Jahjah <firasj@amazon.com>
-Reviewed-by: Michael Margolin <mrgolin@amazon.com>
-Signed-off-by: Yonatan Nachum <ynachum@amazon.com>
-Link: https://patch.msgid.link/20260727090255.1175120-1-ynachum@amazon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+so this gives:
+
+  Xd = -Ys  [0, -1, 0]
+  Yd =  Xs  [1, 0, 0]
+  Zd =  Zs  [0, 0, 1]
+
+Fixes: 2496b2aaacf1 ("arm64: dts: allwinner: pinephone: Add mount matrix to accelerometer")
+Signed-off-by: Ondrej Jirman <megi@xff.cz>
+Link: https://patch.msgid.link/20260725111909.2244868-1-megi@xff.cz
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/efa/efa_verbs.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/efa/efa_verbs.c b/drivers/infiniband/hw/efa/efa_verbs.c
-index 15086856581f7..3cb1aebae7006 100644
---- a/drivers/infiniband/hw/efa/efa_verbs.c
-+++ b/drivers/infiniband/hw/efa/efa_verbs.c
-@@ -1217,9 +1217,11 @@ static int pbl_chunk_list_create(struct efa_dev *dev, struct pbl_context *pbl)
- 
- 		chunk_list->chunks[i].length = EFA_CHUNK_USED_SIZE;
- 	}
--	chunk_list->chunks[chunk_list_size - 1].length =
--		((page_cnt % EFA_PTRS_PER_CHUNK) * EFA_CHUNK_PAYLOAD_PTR_SIZE) +
--			EFA_CHUNK_PTR_SIZE;
-+
-+	if (page_cnt % EFA_PTRS_PER_CHUNK != 0)
-+		chunk_list->chunks[chunk_list_size - 1].length =
-+			((page_cnt % EFA_PTRS_PER_CHUNK) * EFA_CHUNK_PAYLOAD_PTR_SIZE) +
-+				EFA_CHUNK_PTR_SIZE;
- 
- 	/* fill the dma addresses of sg list pages to chunks: */
- 	chunk_idx = 0;
-@@ -1231,9 +1233,12 @@ static int pbl_chunk_list_create(struct efa_dev *dev, struct pbl_context *pbl)
- 			rdma_block_iter_dma_address(&biter);
- 
- 		if (payload_idx == EFA_PTRS_PER_CHUNK) {
-+			payload_idx = 0;
- 			chunk_idx++;
-+			if (chunk_idx >= chunk_list_size)
-+				break;
-+
- 			cur_chunk_buf = chunk_list->chunks[chunk_idx].buf;
--			payload_idx = 0;
- 		}
- 	}
- 
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi
+index cf872e27d76d3..0ae30473ab0ad 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi
++++ b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi
+@@ -157,8 +157,8 @@ mpu6050@68 {
+ 		interrupts = <7 5 IRQ_TYPE_EDGE_RISING>; /* PH5 */
+ 		vdd-supply = <&reg_dldo1>;
+ 		vddio-supply = <&reg_dldo1>;
+-		mount-matrix = "0", "1", "0",
+-			       "-1", "0", "0",
++		mount-matrix = "0", "-1", "0",
++			       "1", "0", "0",
+ 			       "0", "0", "1";
+ 	};
+ };
 -- 
 2.53.0
 
