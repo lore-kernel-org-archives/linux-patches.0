@@ -1,48 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B373385A5;
-	Sat, 12 Sep 2026 12:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE194195DA;
+	Sat, 12 Sep 2026 12:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216964; cv=none; b=YpFAb+jxlIoMG8iJ9W0nxLnjWhNSmMJH5zCtwOAS3L/8mnPaPQTvRKCb33jow/nxPvTBDVA+TiwX1SZlY87DWkmfJwpLxnFiqDvrayo9LHGEub5pEu956QrMc18IxVRO5lCl7jeeVnmFnPuSzRM93x12DbT6H9kzTKvnsXr85xc=
+	t=1789216970; cv=none; b=NZz5n3k5PClX2uidZOIpB/zbfETvM4K441WB5tHo4ggJyPuw9NqGMfThB+0C/56K1a3wAIcbZycu68OMj9ahDLbtLNG/DkksSrrKe5yb9LCU3gGJdl2YPoBtPt6HyUIblIuzLcbn8WpVHyW9mou3NbdTD0K5kR7vHOLtK7NON00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216964; c=relaxed/simple;
-	bh=joQaKPFoSRDIErDs2796WWsthP/tfGf72LyfphVx9WM=;
+	s=arc-20240116; t=1789216970; c=relaxed/simple;
+	bh=plrJXaUNMhQWxIfdz/8dGelymM/yUd89MpmZBJkjzJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tE8Di1+bc3GSG7kjfMBofp3dzVcPHc2XoJAXW6x6yfWJELvqFH7RYOURo84zqSWPvKVUlu5DPda6uo+A1gfxg3ZkMUPlzUI+AAnbZbOZRPcFeW4kP/QZYvnS88l9ZJdbTvtE8aWYAYbitd9HfVP2hbNiQ8Jb9WPVMQGsARh3Pg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fYT6TYWp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F8OskIJGiUlMviLNT8Co2SOYaf/M9lEWeoWTjdU0Ej6VenUYc5NNipmo3bPQj8utjD0vzAxyN9cwYyMYCjB+Mtx5DClGVsbAvh+NENSWEeEgUhbzT06KeuJeeYBzqLAAQZYX9B7QsauKyKO7pbI9nt0LR2dUGAeaRog+cJ6pYhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lh1k3CJ+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fYT6TYWp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1411F000FF;
-	Sat, 12 Sep 2026 12:42:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lh1k3CJ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CBF41F000FF;
+	Sat, 12 Sep 2026 12:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216963;
-	bh=37sPTEEX4GaXNFTShVX3NtoLk3gP0hFsKSZ7r7Tqw14=;
+	s=korg; t=1789216968;
+	bh=vodMU7pNd7bx5mU4glNhqpYPYHK/BTWA27w/x/anAMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fYT6TYWpS2ZD8XBbLl4PF8JIuoqjQRtSYHv3B8Ah6IEi03ac32YD1X98s3gLBa7kD
-	 Ju0Gux7sp9dcAPRExvvXu9Q9KuPlKfQBm4FBEFvjC9s9rs6f7rNKDY4AoUSwTMLOPN
-	 s0HBlgDEtrZa1mc+gEbi8F4G1xmIGRgHcl5NwyaQ=
+	b=Lh1k3CJ+nA8n/EEcSRenrvbXFWpxwS+2/eU3vwWaJSB6f8WKkzEBNPkthssiydbfP
+	 7W3/gfsFq4dpY2Z/ddWSxYIxZOzkSKzOYhiO3ZQfEDOy7H/iDoNAg3gNKtecJ6fcdd
+	 4aNLslwy8zYf2TyxPw+z4jASM9lu+8G2p9meFKh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcin FM <marcin@lgic.pl>,
-	Cristian-Florin Radoi <radoi.chris@gmail.com>,
-	George Salukvadze <giosal90@gmail.com>,
-	Evgeny Kapusta <3193631@gmail.com>,
-	Samu Toljamo <samu.toljamo@gmail.com>,
-	Ariel Rosenfeld <ariel.rosenfeld.750@gmail.com>,
-	Chapuis Dario <chapuisdario4@gmail.com>,
-	=?UTF-8?q?Thibaut=20Fran=C3=A7ois?= <tibo@humeurlibre.fr>,
-	=?UTF-8?q?=E5=BC=A0=E6=97=AD=E6=B6=B5?= <Loong.0x00@gmail.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Javier Tia <floss@jetm.me>,
+	"shengwei.lu" <shengwei.lu@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0845/1376] wifi: mt76: mt7925: advertise EHT 320MHz capabilities for 6GHz band
-Date: Sat, 12 Sep 2026 08:54:31 +0200
-Message-ID: <20260912065626.383549861@linuxfoundation.org>
+Subject: [PATCH 6.12 0846/1376] wifi: mt76: mt7925: Fix EHT Beamformee SS subfields to meet 802.11be minimum
+Date: Sat, 12 Sep 2026 08:54:32 +0200
+Message-ID: <20260912065626.406635732@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -55,126 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Javier Tia <floss@jetm.me>
+From: shengwei.lu <shengwei.lu@mediatek.com>
 
-[ Upstream commit 77833c57a33450c0409e4b90d7721d255ea23a9e ]
+[ Upstream commit 404c4e564f6b1eeffd10bf2b2d3b86620f5794c3 ]
 
-mt7925_init_eht_caps() only populates EHT MCS/NSS maps for BW <= 80
-and BW = 160, but never sets BW = 320. This means iw phy shows no
-320MHz MCS map entries even though the hardware supports 320MHz
-operation in the 6GHz band.
+Per IEEE 802.11be, the Beamformee SS <= 80/160/320 MHz 3-bit subfields
+in the EHT PHY Capabilities are encoded as (Nss - 1) and are required
+to be >= 3 (i.e. at least 4 SS receive capability) whenever SU
+Beamformee is advertised.
 
-Add the missing 320MHz capability bits for 6GHz:
-  - PHY_CAP0: IEEE80211_EHT_PHY_CAP0_320MHZ_IN_6GHZ
-  - PHY_CAP1: beamformee SS for 320MHz
-  - PHY_CAP2: sounding dimensions for 320MHz
-  - PHY_CAP6: MCS15 support for 320MHz width
-  - MCS/NSS: populate bw._320 maps for 6GHz band
+MT7925 is a 2x2 STA (sts = 2), so directly filling (sts - 1) = 1
+violates the spec minimum. Clamp the encoded value to 3 when sts <= 3,
+otherwise use (sts - 1). This is applied consistently to the
+BEAMFORMEE_SS <= 80 MHz (split across phy_cap_info[0]/[1]), <= 160 MHz
+and <= 320 MHz (6 GHz only) subfields.
 
-Introduce is_320mhz_supported() to gate 320MHz on MT7927 only, since
-MT7925 does not support 320MHz operation.
-
-Tested-by: Marcin FM <marcin@lgic.pl>
-Tested-by: Cristian-Florin Radoi <radoi.chris@gmail.com>
-Tested-by: George Salukvadze <giosal90@gmail.com>
-Tested-by: Evgeny Kapusta <3193631@gmail.com>
-Tested-by: Samu Toljamo <samu.toljamo@gmail.com>
-Tested-by: Ariel Rosenfeld <ariel.rosenfeld.750@gmail.com>
-Tested-by: Chapuis Dario <chapuisdario4@gmail.com>
-Tested-by: Thibaut François <tibo@humeurlibre.fr>
-Tested-by: 张旭涵 <Loong.0x00@gmail.com>
-Reviewed-by: Sean Wang <sean.wang@mediatek.com>
-Signed-off-by: Javier Tia <floss@jetm.me>
-Link: https://patch.msgid.link/20260425195011.790265-6-sean.wang@kernel.org
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+Signed-off-by: shengwei.lu <shengwei.lu@mediatek.com>
+Link: https://patch.msgid.link/20260723031108.2017653-1-jb.tsai@mediatek.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Stable-dep-of: 404c4e564f6b ("wifi: mt76: mt7925: Fix EHT Beamformee SS subfields to meet 802.11be minimum")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt76_connac.h  |  5 +++++
- .../net/wireless/mediatek/mt76/mt7925/main.c  | 22 ++++++++++++++++++-
- 2 files changed, 26 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/main.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac.h b/drivers/net/wireless/mediatek/mt76/mt76_connac.h
-index 445d0f0ab7795..deb3c27ddc317 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac.h
-@@ -177,6 +177,11 @@ static inline bool is_mt7925(struct mt76_dev *dev)
- 	return mt76_chip(dev) == 0x7925;
- }
- 
-+static inline bool is_320mhz_supported(struct mt76_dev *dev)
-+{
-+	return mt76_chip(dev) == 0x7927;
-+}
-+
- static inline bool is_mt7920(struct mt76_dev *dev)
- {
- 	return mt76_chip(dev) == 0x7920;
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index 626e68905ffa0..c219460549679 100644
+index c219460549679..bcc5ce829169f 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -178,6 +178,10 @@ mt7925_init_eht_caps(struct mt792x_phy *phy, enum nl80211_band band,
- 		IEEE80211_EHT_PHY_CAP0_SU_BEAMFORMER |
- 		IEEE80211_EHT_PHY_CAP0_SU_BEAMFORMEE;
+@@ -182,19 +182,21 @@ mt7925_init_eht_caps(struct mt792x_phy *phy, enum nl80211_band band,
+ 		eht_cap_elem->phy_cap_info[0] |=
+ 			IEEE80211_EHT_PHY_CAP0_320MHZ_IN_6GHZ;
  
-+	if (band == NL80211_BAND_6GHZ && is_320mhz_supported(&phy->dev->mt76))
-+		eht_cap_elem->phy_cap_info[0] |=
-+			IEEE80211_EHT_PHY_CAP0_320MHZ_IN_6GHZ;
++	val = (sts > 3) ? sts - 1 : 3;
 +
  	eht_cap_elem->phy_cap_info[0] |=
- 		u8_encode_bits(u8_get_bits(sts - 1, BIT(0)),
+-		u8_encode_bits(u8_get_bits(sts - 1, BIT(0)),
++		u8_encode_bits(u8_get_bits(val, BIT(0)),
  			       IEEE80211_EHT_PHY_CAP0_BEAMFORMEE_SS_80MHZ_MASK);
-@@ -188,10 +192,20 @@ mt7925_init_eht_caps(struct mt792x_phy *phy, enum nl80211_band band,
- 		u8_encode_bits(sts - 1,
+ 
+ 	eht_cap_elem->phy_cap_info[1] =
+-		u8_encode_bits(u8_get_bits(sts - 1, GENMASK(2, 1)),
++		u8_encode_bits(u8_get_bits(val, GENMASK(2, 1)),
+ 			       IEEE80211_EHT_PHY_CAP1_BEAMFORMEE_SS_80MHZ_MASK) |
+-		u8_encode_bits(sts - 1,
++		u8_encode_bits(val,
  			       IEEE80211_EHT_PHY_CAP1_BEAMFORMEE_SS_160MHZ_MASK);
  
-+	if (band == NL80211_BAND_6GHZ && is_320mhz_supported(&phy->dev->mt76))
-+		eht_cap_elem->phy_cap_info[1] |=
-+			u8_encode_bits(sts - 1,
-+				       IEEE80211_EHT_PHY_CAP1_BEAMFORMEE_SS_320MHZ_MASK);
-+
+ 	if (band == NL80211_BAND_6GHZ && is_320mhz_supported(&phy->dev->mt76))
+ 		eht_cap_elem->phy_cap_info[1] |=
+-			u8_encode_bits(sts - 1,
++			u8_encode_bits(val,
+ 				       IEEE80211_EHT_PHY_CAP1_BEAMFORMEE_SS_320MHZ_MASK);
+ 
  	eht_cap_elem->phy_cap_info[2] =
- 		u8_encode_bits(sts - 1, IEEE80211_EHT_PHY_CAP2_SOUNDING_DIM_80MHZ_MASK) |
- 		u8_encode_bits(sts - 1, IEEE80211_EHT_PHY_CAP2_SOUNDING_DIM_160MHZ_MASK);
- 
-+	if (band == NL80211_BAND_6GHZ && is_320mhz_supported(&phy->dev->mt76))
-+		eht_cap_elem->phy_cap_info[2] |=
-+			u8_encode_bits(sts - 1,
-+				       IEEE80211_EHT_PHY_CAP2_SOUNDING_DIM_320MHZ_MASK);
-+
- 	eht_cap_elem->phy_cap_info[3] =
- 		IEEE80211_EHT_PHY_CAP3_NG_16_SU_FEEDBACK |
- 		IEEE80211_EHT_PHY_CAP3_NG_16_MU_FEEDBACK |
-@@ -212,7 +226,8 @@ mt7925_init_eht_caps(struct mt792x_phy *phy, enum nl80211_band band,
- 		u8_encode_bits(u8_get_bits(0x11, GENMASK(1, 0)),
- 			       IEEE80211_EHT_PHY_CAP5_MAX_NUM_SUPP_EHT_LTF_MASK);
- 
--	val = width == NL80211_CHAN_WIDTH_160 ? 0x7 :
-+	val = width == NL80211_CHAN_WIDTH_320 ? 0xf :
-+	      width == NL80211_CHAN_WIDTH_160 ? 0x7 :
- 	      width == NL80211_CHAN_WIDTH_80 ? 0x3 : 0x1;
- 	eht_cap_elem->phy_cap_info[6] =
- 		u8_encode_bits(u8_get_bits(0x11, GENMASK(4, 2)),
-@@ -234,6 +249,11 @@ mt7925_init_eht_caps(struct mt792x_phy *phy, enum nl80211_band band,
- 	eht_nss->bw._160.rx_tx_mcs9_max_nss = val;
- 	eht_nss->bw._160.rx_tx_mcs11_max_nss = val;
- 	eht_nss->bw._160.rx_tx_mcs13_max_nss = val;
-+	if (band == NL80211_BAND_6GHZ && is_320mhz_supported(&phy->dev->mt76)) {
-+		eht_nss->bw._320.rx_tx_mcs9_max_nss = val;
-+		eht_nss->bw._320.rx_tx_mcs11_max_nss = val;
-+		eht_nss->bw._320.rx_tx_mcs13_max_nss = val;
-+	}
- }
- 
- int mt7925_init_mlo_caps(struct mt792x_phy *phy)
 -- 
 2.53.0
 
