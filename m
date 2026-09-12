@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3C21DE4EF;
-	Sat, 12 Sep 2026 15:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD882AD3C;
+	Sat, 12 Sep 2026 15:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227980; cv=none; b=IbEykCgp9ItPU7bqjrzmVnbbz3oSk0tiCLJz9sN89t55wv0zHt+s6Sm//2STrztcVJ++ysSjCfWKwxSdPzhWXOqnWujPKsISAIWrfe1xqc5a3tqQDt4RWuZ4LZsfs3I8tzZorTnQ/giTlhJqXKUXXzljsrve8s81VScgJLywGtE=
+	t=1789227985; cv=none; b=FpgCi081a7zQphJCai+I3X3rBh2/hRNxF76u5OTO39+/8Hvg1H6s3AJISMgFtdhf3eEWdyh3KQjehIVoKANYsG53YOSe8pMw4z8LbL+vDlZDBz415pQM+GyN/adAR34PAAuE39zhRgS6tq5fwWHHdSpkhHpBkrs8VRBccRxa144=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227980; c=relaxed/simple;
-	bh=Lze17Kdy3sWN1vYOogU7Ks1iZ5OOtgcXTnPMjo3GGGM=;
+	s=arc-20240116; t=1789227985; c=relaxed/simple;
+	bh=0vBHWv+5ler9ZhJvMf9m1h2VIUOt8xjSEV1VFFEpXvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PAQhszh3nbDlxGacCCl4LRxEzfSdiylz9ik1kTDUDY7NQPZPjAqR+NFgA+5MP9mR4CrUYQdWRhyAk+HKV+TZPDjpEEB90igbaTPuf13NGf54OA64wy3rs7Cg9p3JlJJmz5Mq3ntBtqZViKIvRB5S3rdTVHH4wriH/L3YoFyyMFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgS+f/sz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ASrETA5+DbKoMNDcYkn104APnWCmKc2EMOU0HYKAgrn/Ux/zFMj9b98M4rW0W4cyDDCILVBhOErq5xe/EFr2a/lHeG1Bk/iK8ww8xRk5uC4kSYDsE1D0NeZ83eQt+ghFgVGKGxkmrWrgrWd2R7dzX15pXo2FuaWsW6GKuKMcJA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HS5XOi+T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgS+f/sz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 455031F000FF;
-	Sat, 12 Sep 2026 15:46:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HS5XOi+T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 177431F000FF;
+	Sat, 12 Sep 2026 15:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227979;
-	bh=pkFZiXEsfX1aIIXBzK+328spjtaLKlUpngz+S9ZA3Nc=;
+	s=korg; t=1789227984;
+	bh=sWIAUJOlRyLyHd5fVFGSG/hMqhkIH09YdKDpr1pNyLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KgS+f/szPToBGsabxtjVwSDxxMcRQPjgBWUaDOLrP2/L2ue9Qyq2IYpwBxOViF/H8
-	 BMp21P7h6XgpGhtlUvsN2q3J64mJstIWISu2zEEE7OwYjLnGjesNfLhQx0yypPUglP
-	 VgNkvedd+l+uY748cyrWkmiqHTSMG8NvBK3UmCx8=
+	b=HS5XOi+TBTJPxSalba7GfHatq2vXR3N6zCO7gdy4LLCrUi87MWuZTncPNr5PB2dfy
+	 tp/uoAxvidRYI6u66lHnWYew0ePI1I+gWU86XOLRLkyKn7cMNC2nUTkBW25MuPm7Xl
+	 tFDu1/ZKX9bWr+4eZDG3xvHQYOxygprs7TVFD39E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.1 0293/1191] cpuidle: dt_idle_genpd: kfree() the original name allocation
-Date: Sat, 12 Sep 2026 08:50:21 +0200
-Message-ID: <20260912065554.812122584@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 0294/1191] block: flag zoned disks with GENHD_FL_NO_PART
+Date: Sat, 12 Sep 2026 08:50:22 +0200
+Message-ID: <20260912065554.833950879@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,43 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 2b0ac85512b7f67479127b2713254490662eb13d upstream.
+commit 3f9c7a108c0e8f14425384912017071b71341e3b upstream.
 
-dt_idle_pd_alloc() kasprintf()s the full node path, then points
-pd->name at kbasename() of that string. dt_idle_pd_free() kfree()s
-pd->name, which is no longer the start of the allocation.
+Zoned block devices do not support partitions. However, the partition
+table is nevertheless still inspected, and any partition found ignored
+with a warning in add_partition(). While this is generally not a problem,
+and in fact beneficial to the user as it indicates an invalid use of a
+zoned block device, scanning for a partition table on the device may
+result in issuing read operations to offline zones (e.g. after a disk head
+is depopulated for disks that support head management operations).
 
-Copy the basename instead.
+Since partitions are ignored anyway, completely disable partition scanning
+for zoned gendisks by setting the flag GENHD_FL_NO_PART in __add_disk().
+The existing check in add_partition() is left as-is to ensure that we
+still get a warning if for whatever reason, despite GENHD_FL_NO_PART, we
+still endup trying to add partitions.
 
-Fixes: 9d976d6721df ("cpuidle: Factor-out power domain related code from PSCI domain driver")
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Flagging zoned disks with GENHD_FL_NO_PART also has the benefit to expose
+through sysfs the ext_range attribute with the value of 1 instead of the
+default DISK_MAX_PARTS, thus correctly advertizing the fact that zoned
+disks do not support partitions.
+
+Fixes: 5eac3eb30c9a ("block: Remove partition support for zoned block devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Link: https://patch.msgid.link/20260831025050.667758-1-dlemoal@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/dt_idle_genpd.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ block/genhd.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/cpuidle/dt_idle_genpd.c
-+++ b/drivers/cpuidle/dt_idle_genpd.c
-@@ -99,7 +99,7 @@ struct generic_pm_domain *dt_idle_pd_all
- 	if (!pd)
- 		goto out;
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -428,6 +428,13 @@ int __must_check device_add_disk(struct
+ 	elevator_init_mq(disk->queue);
  
--	pd->name = kasprintf(GFP_KERNEL, "%pOF", np);
-+	pd->name = kstrdup(kbasename(of_node_full_name(np)), GFP_KERNEL);
- 	if (!pd->name)
- 		goto free_pd;
- 
-@@ -112,7 +112,6 @@ struct generic_pm_domain *dt_idle_pd_all
- 		goto free_name;
- 
- 	pd->free_states = pd_free_states;
--	pd->name = kbasename(pd->name);
- 	pd->states = states;
- 	pd->state_count = state_count;
- 
+ 	/*
++	 * We do not support partitions with zoned block devices, so do not try
++	 * to scan the partitions table.
++	 */
++	if (blk_queue_is_zoned(disk->queue))
++		disk->flags |= GENHD_FL_NO_PART;
++
++	/*
+ 	 * If the driver provides an explicit major number it also must provide
+ 	 * the number of minors numbers supported, and those will be used to
+ 	 * setup the gendisk.
 
 
