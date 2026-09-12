@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09F836728D;
-	Sat, 12 Sep 2026 10:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09852DE702;
+	Sat, 12 Sep 2026 10:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207713; cv=none; b=k2BizDuFcs4cZnDPRKs0MuOXCjFIJbPyIANVc8OFJrGHth0FW2kdAMsK8UjvuQ2zv7jVquQkFirg3H7J60ri+ERSElsi6KMOWEp8x4BpK9M9Eg2sZF44pdOLZ+u85RE2cSD6o8GX+gZ8SCYwvRMjvl1/OVCXdwSIhwFw5z1M9BY=
+	t=1789207718; cv=none; b=kwNUR9mKIhyZNyY5553ifieiY/A/E7wc4NnaNgZR70ItKJpUsQxPdEKRlyHEi4M2G/rZz5S+qSoXFl69cjmZ7o4jBotmp9cK8XmjaUaO9yTRps8I7AwlyRq7/qAc8kxhly0HHiP3meamAthpRUHW/MnrcAy3MsWndo7OmhLLYaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207713; c=relaxed/simple;
-	bh=80S69A2GoOAgydmKuaIma/fgvQK4Fs0hKzSduhY8tPM=;
+	s=arc-20240116; t=1789207718; c=relaxed/simple;
+	bh=2lM8XcIkRTtta3R5iZ7sYZptdr7SD4pt6gp/yS1/EJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nSSfXO/Q3s4huCPCsTgE8bgBHz53pO/vwD4t5QwOmj5mZ/44/IxhkznbdHXFrrXTpomwcCNIJvlFt3szvZt0LylvuFm9BFRFLM1eiJUB6TKW2bmdHQKZFz7XmdjTv8MJZPS4IETP0PG4NgI5XaL3nQGoS/qw0/GIgemJ2G57NRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oc3e7gfJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jZMNOoGjN0ooNAYofpjuwfg+unm6UIOXw9KyjjnGgYBj4mayTPJttl2gQ2d3GWPr+qUzQP9OQgRL1sQwC0yeAW4WfNa3/8oxXi0u/AHVV2QqUfG297IOf8AHDztcObn79KedWFmOZ2jV4T/PGsPu8EIl4w7QtmZxuOB5bhIhXuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuCZ8xqs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oc3e7gfJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2251F000FF;
-	Sat, 12 Sep 2026 10:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuCZ8xqs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB511F000FF;
+	Sat, 12 Sep 2026 10:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207712;
-	bh=1HJyHvPp6RIIDycDE2vPAhegZfUI57O3q4wHwXH5b/o=;
+	s=korg; t=1789207717;
+	bh=CQ9DKYcXRhHLYTBUYhEqmyP1EjG6aJv0f5WijHRIOGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oc3e7gfJLxOjuy5zjGwNsQNmS7dOknEUrOSXXlkMcgiefyNyZfHJ70QnFR0Q10pk3
-	 MjvEoUnK1cnRolA35c8rJ5BOjG283tIRtJY2lK5PnUghS9WIcm/Uec0NMzwm9zKRVU
-	 AmdOVPK8BNB2SN4CErHmORPXAcA2dEYSwBp0l+cQ=
+	b=kuCZ8xqscUonKohMa0n8WtFlpLK9EWybR7aQAAdhHRSF0sjxYW39KNR4DiT3jIojg
+	 7oRG3ujyTxupxTflUm6rmBWMlvrVniIB3YxkKo4StrXrN8bh70GfH7xryXTFg8Jv3A
+	 oJaK+QEGr6BSWlphaSU6UTVUJAJ4+0vMRHoCjUcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puranam V G Tejaswi <puranam.tejaswi@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0470/1518] drm/msm/a6xx: Fix RBBM_CLOCK_CNTL3_TP0 value in a730_hwcg
-Date: Sat, 12 Sep 2026 08:43:59 +0200
-Message-ID: <20260912065634.081555154@linuxfoundation.org>
+Subject: [PATCH 6.18 0471/1518] bpf: Reject arena frees below the arena base
+Date: Sat, 12 Sep 2026 08:44:00 +0200
+Message-ID: <20260912065634.104099072@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,40 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puranam V G Tejaswi <puranam.tejaswi@oss.qualcomm.com>
+From: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
 
-[ Upstream commit 01bcc0398f43099acb407a6067481e635c3e1b84 ]
+[ Upstream commit b5a71cb2db6d84ac0042549dcec266b18429d41e ]
 
-The RBBM_CLOCK_CNTL3_TP0 entry in a730_hwcg has bits[19:16] set to 2
-(clock gating enabled for that TP0 stage). As per the latest
-recommendation, clear this nibble to disable clock gating for this
-particular stage.
+bpf_arena_free_pages() accepts scalar arena addresses. The runtime
+masks the address to the low 32 bits and reconstructs a full user
+address from the arena base before returning the range to the arena
+free tree.
 
-Fixes: 9588d2f860a4 ("drm/msm/a6xx: Add A730 support")
-Signed-off-by: Puranam V G Tejaswi <puranam.tejaswi@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/740955/
-Message-ID: <20260718-eliza-gpu-v2-1-64379dbebd7a@oss.qualcomm.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+When the scalar value is below the low 32 bits of the arena base,
+full_uaddr falls below user_vm_start. The existing upper-end clipping
+then turns this into an out-of-range free-tree offset. A later
+allocation can reuse that offset and return an address below the arena
+mapping.
+
+Reject such frees before computing the clipped range.
+
+Fixes: 317460317a02a ("bpf: Introduce bpf_arena.")
+Signed-off-by: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/bpf/20260717-c10-031-public-bpf-next-v2-b4-v2-1-54b555443a7c@mails.tsinghua.edu.cn
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/arena.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-index 31974a4d7e14b..b43850966a5f6 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-@@ -1167,7 +1167,7 @@ static const struct adreno_reglist a730_hwcg[] = {
- 	{ REG_A6XX_RBBM_CLOCK_DELAY_SP0, 0x00000080 },
- 	{ REG_A6XX_RBBM_CLOCK_CNTL_TP0, 0x22222220 },
- 	{ REG_A6XX_RBBM_CLOCK_CNTL2_TP0, 0x22222222 },
--	{ REG_A6XX_RBBM_CLOCK_CNTL3_TP0, 0x22222222 },
-+	{ REG_A6XX_RBBM_CLOCK_CNTL3_TP0, 0x22220222 },
- 	{ REG_A6XX_RBBM_CLOCK_CNTL4_TP0, 0x00222222 },
- 	{ REG_A6XX_RBBM_CLOCK_HYST_TP0, 0x77777777 },
- 	{ REG_A6XX_RBBM_CLOCK_HYST2_TP0, 0x77777777 },
+diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
+index dafa179da0c9c..51227c8d2b1e4 100644
+--- a/kernel/bpf/arena.c
++++ b/kernel/bpf/arena.c
+@@ -534,6 +534,8 @@ static void arena_free_pages(struct bpf_arena *arena, long uaddr, long page_cnt)
+ 	uaddr = (u32)uaddr;
+ 	uaddr &= PAGE_MASK;
+ 	full_uaddr = clear_lo32(arena->user_vm_start) + uaddr;
++	if (full_uaddr < arena->user_vm_start)
++		return;
+ 	uaddr_end = min(arena->user_vm_end, full_uaddr + (page_cnt << PAGE_SHIFT));
+ 	if (full_uaddr >= uaddr_end)
+ 		return;
 -- 
 2.53.0
 
