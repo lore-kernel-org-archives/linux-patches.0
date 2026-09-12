@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D953A7587;
-	Sat, 12 Sep 2026 20:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E17C3A2E00;
+	Sat, 12 Sep 2026 20:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243389; cv=none; b=omC2rDzUcXT+VBCYNNzE5aAqQyOKM+8O9WhhM8imRHPtCrXoOtXIj1rGTXyxOY2IlSmkOkxGge35jEpUiT6NFtYiMBNefJfgtmaErst1yWfKsHud6KdrkhCQqbsRiJr0996NHAOOWzMvX6wiaP9onRHs+p8k1Eq6pD9uBwNOt20=
+	t=1789243391; cv=none; b=STrLU4iTJ/qDkqs41i28qLWckjJ+CAGNhOQTRv516DWKH+WUKkdT261yRK9v+qhrcRHWqKTuQuNZHaAPupTIjOjafqc0tem3lU4ttIi/wNXnsBeuADiRl69Lt/wdyRLKHHDTRBaE+nddiiOQ4b0ZdPxKYL/HPmlldA5y0/BF1Zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243389; c=relaxed/simple;
-	bh=Q6O8BWQOashfp6Wjl+S37LjxLqLAtVCKkAY1EO6x8EI=;
+	s=arc-20240116; t=1789243391; c=relaxed/simple;
+	bh=Ge/+ksObRA3O3WVXknAJ9Rj/jdy/umWAt0xqk+YHVFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VIm5j8+zpH0x25RGCtAPwikfYL99nmwRL1EjHVWjG94NFLZm6SKURPbC22RuF5NyV9Ik3xB7qNcQusrdtvXpOaPmw88dSW4lKwaX2uRIfUlF/s17lz8bHmWlNKwLudWlX5H6SQuVzz7s/Yv2558nbC0HklwnjGDDsOEoJu8AifI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EKhvBHAP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PUAOusFY4+4HMcssC56/CMO8ZwWNKmwFW5S6nUNtD9CHIfiCTjfg7j/10W82UJx8fZSHxhf7Y5i4U8pnrUD1QRW9Ewfbfw8NTbGWHBDdJ01nA1MF3Rd6eOqiy05rUD82JMBAwx0Et0On6RnHYjTfbvRkfx1dtIVPoHWOPBvMK+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgNVfBo+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKhvBHAP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0381F000FF;
-	Sat, 12 Sep 2026 20:03:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgNVfBo+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4FC1F00893;
+	Sat, 12 Sep 2026 20:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243387;
-	bh=gFgzRcjAuqM65IXik4KzzxGyP0LGps7pXFvovL5EDfg=;
+	s=korg; t=1789243390;
+	bh=syebur8G5+U820X12bkZdJVFHdPoEgaCqLB8nQh9Is8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EKhvBHAPUykLC998WT6T455CrmShs4nZWTno2SW6kx7mhMWyqeDHGLxZlKclfLpS7
-	 2CSC0FTyehVaGsq8RwesD5lHAdMBIfzvo7tvftdwQJ04NAwe/dRgEhgvwfVZIJZsvD
-	 0bH3VfUqCJc+3W50B8tKwK5EtT+xcQ8rjWJuXi5I=
+	b=bgNVfBo+BdPmV6pURZyt4V5zizT+ukmaIXBaZ0GvAy/zwH61d21mgDLX3WFLII/AI
+	 2jEM+ogRXQN32MWGS8P+g64IQEYXg+CJ+rXvbAutrTmzTHxNpIteirsNEb2r9PO7TK
+	 DWd6o3frFCTINI+ViaQgjzn8aECbByZNK0VIGh3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Yi Ding <yi.s.ding@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 736/798] vdpa/mlx5: fix wrong list iterated in add_direct_chain error path
-Date: Sat, 12 Sep 2026 09:06:04 +0200
-Message-ID: <20260912065533.945586108@linuxfoundation.org>
+Subject: [PATCH 5.10 737/798] rtc: pcf8563: fix clock provider leak on unbind
+Date: Sat, 12 Sep 2026 09:06:05 +0200
+Message-ID: <20260912065533.968117958@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -47,48 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Yi Ding <yi.s.ding@gmail.com>
 
-[ Upstream commit 23ae56d9e74c122f95cae71ae3b9fc259fb88446 ]
+[ Upstream commit 9c48a53685040bb0de45a640b34055cbbfc69d4f ]
 
-In add_direct_chain(), newly allocated direct MR entries are added to
-the local list 'tmp', which is spliced into mr->head only on success.
-On the error path, the cleanup loop was incorrectly iterating over
-mr->head instead of tmp.
+pcf8563_clkout_register_clk() registers the CLKOUT clock provider with
+of_clk_add_provider(), but nothing ever unwinds it: there is no
+of_clk_del_provider() call and the driver has no remove callback. Each
+of_clk_add_provider() allocates a struct of_clk_provider, takes a
+reference on the OF node and adds an entry to the global of_clk_providers
+list, none of which is released when the device is unbound. Every
+bind/unbind (or module reload) therefore leaks a provider structure and
+an of_node reference.
 
-Fix by iterating over 'tmp' in the err_alloc cleanup path.
+The clock itself is already device-managed (devm_clk_register()); only
+the provider registration was not. Use devm_of_clk_add_hw_provider() so
+the provider is removed automatically on unbind. Tie it to the parent
+i2c device, whose OF node carries the #clock-cells and clock-output-names
+properties (the RTC class device has no OF node of its own).
 
-Fixes: 94abbccdf291 ("vdpa/mlx5: Add shared memory registration code")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260701113608.1972-1-lirongqing@baidu.com>
+Fixes: a39a6405d5f9 ("rtc: pcf8563: add CLKOUT to common clock framework")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Yi Ding <yi.s.ding@gmail.com>
+Link: https://patch.msgid.link/20260602035135.62264-1-yi.s.ding@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/mlx5/core/mr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-pcf8563.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vdpa/mlx5/core/mr.c b/drivers/vdpa/mlx5/core/mr.c
-index 3259901c4c380..fc78974d9fa1f 100644
---- a/drivers/vdpa/mlx5/core/mr.c
-+++ b/drivers/vdpa/mlx5/core/mr.c
-@@ -344,7 +344,7 @@ static int add_direct_chain(struct mlx5_vdpa_dev *mvdev, u64 start, u64 size, u8
- 	return 0;
+diff --git a/drivers/rtc/rtc-pcf8563.c b/drivers/rtc/rtc-pcf8563.c
+index 129bd2f517793..815aa3e8180a7 100644
+--- a/drivers/rtc/rtc-pcf8563.c
++++ b/drivers/rtc/rtc-pcf8563.c
+@@ -507,7 +507,9 @@ static struct clk *pcf8563_clkout_register_clk(struct pcf8563 *pcf8563)
+ 	clk = devm_clk_register(&client->dev, &pcf8563->clkout_hw);
  
- err_alloc:
--	list_for_each_entry_safe(dmr, n, &mr->head, list) {
-+	list_for_each_entry_safe(dmr, n, &tmp, list) {
- 		list_del_init(&dmr->list);
- 		unmap_direct_mr(mvdev, dmr);
- 		kfree(dmr);
+ 	if (!IS_ERR(clk))
+-		of_clk_add_provider(node, of_clk_src_simple_get, clk);
++		devm_of_clk_add_hw_provider(pcf8563->rtc->dev.parent,
++					    of_clk_hw_simple_get,
++					    &pcf8563->clkout_hw);
+ 
+ 	return clk;
+ }
 -- 
 2.53.0
 
