@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3B541A51B;
-	Sat, 12 Sep 2026 09:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A4A3BE175;
+	Sat, 12 Sep 2026 09:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203617; cv=none; b=gJfbp435tiR7TJ6TSh8TxGyARQ9CQNxWzX0SwsImos1jbKsV6UYx3xvpMTFxeA6h9faD5M9Lz6OfLXg81oU9biHl3Y7qC01K/0OP7XdLC0hDetvVsYo3j45kA6uLpGJRPMXz0I8FQlJmQjty6SxE2acIGWHbBE34A99E6XJvGu8=
+	t=1789203621; cv=none; b=DfmMH3/KpUZ/TH/pzRJsvZkhyh7wVyKsylpaN/GQhlaL6gW/bjd4/iFwuvm6i2+nK1nKDMp+N3gxVWe5a6Ukq/TF/Nqu8xT+35p3bvu8MXlfHWHMtaYW+n91vWkJWMlcqoKrCpQFGOmwR6ziOosraKouyPWvCnwDdns1cIgfoSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203617; c=relaxed/simple;
-	bh=o9VnZcKGXKXl5VY1qc1XaXVolIP9lXkSCpt43YqD7ic=;
+	s=arc-20240116; t=1789203621; c=relaxed/simple;
+	bh=1Tpie4my5JSXQhkQhVO9DdDq1o3piaQdsn20LaV+kiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F42xKXM1OaXARh60pcoBWQaNwXp8l1Ags/5m7TRLfYkPxDkyOXH8f1qcj3A1T/P4JWdofQy2dySHLLImB5WHhfMMdipTA3u0yJkSmhIW3hbpOqarYxjS91a6xFvTCTXQXUgNNzcfZMOBnzmeL3VBl8Vp1IClMFkGiqQhPlRBaVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/2uTkOC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bq4HrttGXwWByjaKSCxwc1puQvnNtJdZ7Odx/B/koD8OK3cEHFrT+/u96VSoCIPQf2aTb1LAtktC+jrV5/se3WSubKal2nZKckHwXD0a+e8AF4cyZ5oDOqUVPgQvZSnJ4o6kanymgvWmaEyZbOXVL2ylVTHhOzxMxZA1FHeC9oY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XeXwTp5h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/2uTkOC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6491F000FF;
-	Sat, 12 Sep 2026 09:00:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XeXwTp5h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E7B1F000FF;
+	Sat, 12 Sep 2026 09:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203615;
-	bh=3ze8rx7EM26Y6kyRJNf7F+CH260qzlCffXlmXdo/BM4=;
+	s=korg; t=1789203619;
+	bh=+fHm26SbHLL/QkOhGV2eF56snKZhAqfpxpZte2o3x10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L/2uTkOCPRRpfRt4DZVufCBxUf1CXZwr0Z2jSxjosswD1gl2KjNRrxU1nKpKnwzbq
-	 F6t9H3ec6DGUQ2ukcy1V4URS7yv8hCSoAjVNtD1tQyGo4T2jnWDeEzNDpVoy95yB8F
-	 kJ/tXSVTPwhzPG5176Iv/0PjKZMXBOIqRyYlGYyY=
+	b=XeXwTp5hWL8g9Er3cYeqHxxwMRpq0bMxDAFLy0qjhSdHbxfxVChwDG4XKsn00lhUh
+	 7vEKnrBeCobAAvWWiy1s2Y01Jffv7dJs/zTabfJjcZ5lxbgY04BVwk5ESsGaFEcVcd
+	 HvSwXuBzJrpjFl6HeF7Ip+ibLESFe+SzDFLyRwQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Kalle Niemi <kaleposti@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1444/1815] scsi: ufs: core: Set task state before io_schedule_timeout()
-Date: Sat, 12 Sep 2026 08:53:14 +0200
-Message-ID: <20260912065722.916224081@linuxfoundation.org>
+Subject: [PATCH 7.2 1418/1815] power: supply: bd71828: Do not hide errors
+Date: Sat, 12 Sep 2026 08:52:48 +0200
+Message-ID: <20260912065722.309329598@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,39 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 720d8b2f2457f4962ca353dd90395e2660d9a10d ]
+[ Upstream commit a3c841e420e124783a805919ab072551543e477b ]
 
-Set the task state to TASK_UNINTERRUPTIBLE before calling
-io_schedule_timeout() in ufshcd_wait_for_pending_cmds().  Without
-setting the task state, io_schedule_timeout() returns immediately
-because the task state remains TASK_RUNNING. This results in a busy loop
-that wastes CPU cycles.
+The bd71828 reports success / continues operation even when some regmap
+operations fail. This can lead incorrect data to be reported.
 
-Fixes: 2000bc309703 ("scsi: ufs: core: Reduce the clock scaling latency")
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/8fe4526ce272811b28e99048b42358dd8f7c48af.1786142946.git.bvanassche@acm.org
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Return appropriate errors when operations fail.
+
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: 5bff79dad20a ("power: supply: Add bd718(15/28/78) charger driver")
+Tested-by: Kalle Niemi <kaleposti@gmail.com>
+Link: https://patch.msgid.link/22db56cf35252d2d8f67828a0554e8daac7ae251.1786356145.git.mazziesaccount@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/power/supply/bd71828-power.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 686c21301e026..86f49c0522ec0 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -1317,6 +1317,7 @@ static int ufshcd_wait_for_pending_cmds(struct ufs_hba *hba,
- 			break;
- 		}
+diff --git a/drivers/power/supply/bd71828-power.c b/drivers/power/supply/bd71828-power.c
+index 792596d96e624..3be7a75a7d6ca 100644
+--- a/drivers/power/supply/bd71828-power.c
++++ b/drivers/power/supply/bd71828-power.c
+@@ -455,8 +455,10 @@ static int bd71828_charger_get_property(struct power_supply *psy,
+ 	switch (psp) {
+ 	case POWER_SUPPLY_PROP_ONLINE:
+ 		ret = get_chg_online(pwr, &online);
+-		if (!ret)
+-			val->intval = online;
++		if (ret)
++			return ret;
++
++		val->intval = online;
+ 		break;
+ 	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
+ 		ret = bd7182x_read16_himask(pwr, pwr->regs->vdcin,
+@@ -1217,7 +1219,9 @@ static int bd71828_power_probe(struct platform_device *pdev)
+ 		return dev_err_probe(&pdev->dev, ret, "sense resistor missing\n");
  
-+		__set_current_state(TASK_UNINTERRUPTIBLE);
- 		io_schedule_timeout(msecs_to_jiffies(20));
- 		if (ktime_to_us(ktime_sub(ktime_get(), start)) >
- 		    wait_timeout_us) {
+ 	dev_set_drvdata(&pdev->dev, pwr);
+-	bd71828_init_hardware(pwr);
++	ret = bd71828_init_hardware(pwr);
++	if (ret)
++		return dev_err_probe(&pdev->dev, ret, "hardware init failed\n");
+ 
+ 	bat_cfg.drv_data	= pwr;
+ 	bat_cfg.fwnode		= dev_fwnode(&pdev->dev);
 -- 
 2.53.0
 
