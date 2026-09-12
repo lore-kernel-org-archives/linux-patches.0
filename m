@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C236F2E06E4;
-	Sat, 12 Sep 2026 13:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0971D4BEE22;
+	Sat, 12 Sep 2026 13:08:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218494; cv=none; b=IsEtpiO24Bc4yFvLWX1P3vPmBwS5VMCANvcaCdKKv2UdLx0ovtmqB0s5vi9lOygrti6ENmCOvK2gMIiPVhqkIdx38QDh0evw1s6XGOHr/SmxCx+PY8aDJ4iJjxfuvFU9Rfh52Q+pSSw0xkQXsSoZOummgw4Pu4AnP5dC8Rs3mpM=
+	t=1789218500; cv=none; b=eDw8Oz9k8iQ8q5CqXehDolS/vOG+psvCm7GfdgNJv3p9SBfhwNHuVBUFwW7RgFAMVf2BVIx8GsQRsseUAscjz72fnpL4jOibbkkXaFnJLpHJRCLhiCxsUdldH50BJ1m3VfkPkgozWGmM013Wfwg70IajAVMggqTdfR80ywg5POk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218494; c=relaxed/simple;
-	bh=mPct3qLH2wKZ5FXA3+h3+/VuuwS1S0xmJH5e5w38hzE=;
+	s=arc-20240116; t=1789218500; c=relaxed/simple;
+	bh=zDCkVjN+gVlw55YySI9f0kYUhzAd0/gbb6n74H8+dEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W3Z/fXKis1O2yhpR/DqjPORBWZlRnxHnv64wcTOeDNa5GfT2vAQlizayzi5rx9toIjDKjMjDtTqCCpVNHdfjK6IW/yCZgBZEerJuGHogqwyjkjfmGuD8No9Qvr1IkXAR43csCBA3e6Itiem4SmF9CzEE+LBhewyimkV1eWhZNJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCGDwYch; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eq/cQaE4NsRQId3j0oiWoxknu78Ep+GovbH0NLcaKu0XkdHl7XyTnqAStI3uHrMYDmXabxjMO/enGRMhCM/cx3b8CVCvUZOFBDPAulZ50BJEX5R4PVDpDMfEbtjsglcEV3LbX6GmSA61b9l9w9PmdH7HiQlfpC1Z51bKV3gGePY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUJHHnFt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCGDwYch"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67971F000FF;
-	Sat, 12 Sep 2026 13:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUJHHnFt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15E51F000FF;
+	Sat, 12 Sep 2026 13:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218493;
-	bh=v5F4XvF1wCGCDrAnajOhd/JHHLosQtX8DzxMt6OIQVs=;
+	s=korg; t=1789218498;
+	bh=ols9JUL2jOaOcX4aetP28LVMMn+2cGXho8mpszvClNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wCGDwYchtEqYuQx53DZNAH9BIoXH6VtGTvctvv2zCCjbpeuRq5g6L1zLsROpoPF6j
-	 3ZkB2qn4rx9PRJ2QntuqVixxgrFS91AksoLS79rRhxbVTx56GeQ7/LkaXNoSuncPbI
-	 VGWu3sHKQi8lATSYXQwnXoit64vhqQTYcsQ62YGU=
+	b=oUJHHnFtpUHBhXtQ1PlhadPIYxR8OiZLffnRio5+EYuSfcFNt1Pb8ywh4PDD4NknK
+	 K4YDkYOhiPUpEyW423Aj3nuRwnqP1dedvoNwMJzGyW5XIuZenCk8NfQfGhl3J3Rgom
+	 wKKtHWljkWAiINgU57q52v00zOp0aTS+pZCISeaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Zizhi Wo <wozizhi@huawei.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1154/1376] null_blk: reject per-device queue resize for shared tag set
-Date: Sat, 12 Sep 2026 08:59:40 +0200
-Message-ID: <20260912065633.274995515@linuxfoundation.org>
+Subject: [PATCH 6.12 1114/1376] selftest/cgroup: Clean up and restructure test_cpuset_prs.sh
+Date: Sat, 12 Sep 2026 08:59:00 +0200
+Message-ID: <20260912065632.391837096@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,89 +51,468 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 1cdfe2fa62b48728a9b436fbbd3dbe4c11593e24 ]
+[ Upstream commit b2b2b4d058b776be0168b4ea46ed84cfb0f884e9 ]
 
-When shared_tags is enabled, null_setup_tagset() makes the device use the
-global tag_set, whose driver_data stays NULL. null_map_queues() therefore
-falls back to the module-wide g_submit_queues/g_poll_queues instead of any
-per-device value.
+Cleaning up the test_cpuset_prs.sh script and restructure some of the
+functions so that a new test matrix with a different cgroup directory
+structure can be added in the next patch.
 
-Resizing submit_queues or poll_queues via configfs on such a device calls
-blk_mq_update_nr_hw_queues() on the shared set, shrinking
-set->nr_hw_queues.  __blk_mq_realloc_hw_ctxs() only grows the
-q->queue_hw_ctx[] allocation, so on shrink it merely exits and NULLs the
-now-excess hctx slots. null_map_queues(), however, keeps mapping CPUs with
-the unchanged g_submit_queues/g_poll_queues, so mq_map[] ends up pointing
-at those NULLed hctx slots. blk_mq_map_swqueue() then dereferences the NULL
-hctx (hctx->cpumask), crashing the kernel:
-
-[  460.218374] KASAN: null-ptr-deref in range [0x0000000000000098-0x000000000000009f]
-[  460.219003] CPU: 24 UID: 0 PID: 1492 Comm: sh Not tainted 7.2.0-rc2+ #67 PREEMPT(full)
-[  460.219792] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-4.fc41 04/01/2014
-[  460.220452] RIP: 0010:blk_mq_map_swqueue+0x4db/0x1430
-......
-[  460.228977] Call Trace:
-[  460.229175]  <TASK>
-[  460.229354]  blk_mq_update_nr_hw_queues+0xd49/0x11c0
-[  460.229779]  ? __pfx_blk_mq_update_nr_hw_queues+0x10/0x10
-[  460.230200]  nullb_update_nr_hw_queues+0x1a9/0x370 [null_blk]
-[  460.230694]  nullb_device_submit_queues_store+0xd9/0x170 [null_blk]
-[  460.231190]  ? __pfx_nullb_device_submit_queues_store+0x10/0x10 [null_blk]
-[  460.231776]  ? configfs_write_iter+0x35c/0x4e0
-[  460.232122]  configfs_write_iter+0x286/0x4e0
-[  460.232460]  vfs_write+0x52d/0xd00
-[  460.232779]  ? __x64_sys_openat+0x108/0x1d0
-[  460.233106]  ? __pfx_vfs_write+0x10/0x10
-[  460.233413]  ? fdget_pos+0x1cf/0x4c0
-[  460.233745]  ? fput_close+0x133/0x190
-[  460.234038]  ? __pfx_expand_files+0x10/0x10
-[  460.234368]  ksys_write+0xfc/0x1d0
-
-Reproducer:
-modprobe null_blk shared_tags=1 submit_queues=64 poll_queues=1
-mkdir /sys/kernel/config/nullb/dev
-echo 1 > /sys/kernel/config/nullb/dev/power
-echo 1 > /sys/kernel/config/nullb/dev/submit_queues
-
-A per-device resize of a shared tag set is meaningless anyway, so reject it
-with -EINVAL in nullb_update_nr_hw_queues() when the device is bound to the
-global tag_set.
-
-Fixes: 45919fbfe1c4 ("null_blk: Enable modifying 'submit_queues' after an instance has been configured")
-Suggested-by: Nilay Shroff <nilay@linux.ibm.com>
-Assisted-by: Claude-Code:GLM-5.2
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260725022509.714271-8-wozizhi@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: ddabc5dbd262 ("selftests/cgroup: Preserve CPU hotplug write errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ .../selftests/cgroup/test_cpuset_prs.sh       | 257 +++++++++++-------
+ 1 file changed, 156 insertions(+), 101 deletions(-)
 
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index cf8b3283c48e8..d641607ace964 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -378,6 +378,15 @@ static int nullb_update_nr_hw_queues(struct nullb_device *dev,
- 	if (!dev->nullb)
- 		return 0;
- 
-+	/*
-+	 * A shared tag_set is mapped via the module-wide queue counts, so a
-+	 * per-device resize is meaningless. On shrink it would also leave
-+	 * mq_map[] pointing at NULLed hctx slots, causing a NULL deref in
-+	 * blk_mq_map_swqueue(). Reject it.
-+	 */
-+	if (dev->shared_tags)
-+		return -EINVAL;
+diff --git a/tools/testing/selftests/cgroup/test_cpuset_prs.sh b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+index f11f347129d87..d99412e7d1965 100755
+--- a/tools/testing/selftests/cgroup/test_cpuset_prs.sh
++++ b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+@@ -88,22 +88,30 @@ echo "" > test/cpuset.cpus
+ # If isolated CPUs have been reserved at boot time (as shown in
+ # cpuset.cpus.isolated), these isolated CPUs should be outside of CPUs 0-8
+ # that will be used by this script for testing purpose. If not, some of
+-# the tests may fail incorrectly. These pre-isolated CPUs should stay in
+-# an isolated state throughout the testing process for now.
++# the tests may fail incorrectly. Wait a bit and retry again just in case
++# these isolated CPUs are leftover from previous run and have just been
++# cleaned up earlier in this script.
++#
++# These pre-isolated CPUs should stay in an isolated state throughout the
++# testing process for now.
+ #
+ BOOT_ISOLCPUS=$(cat $CGROUP2/cpuset.cpus.isolated)
++[[ -n "$BOOT_ISOLCPUS" ]] && {
++	sleep 0.5
++	BOOT_ISOLCPUS=$(cat $CGROUP2/cpuset.cpus.isolated)
++}
+ if [[ -n "$BOOT_ISOLCPUS" ]]
+ then
+ 	[[ $(echo $BOOT_ISOLCPUS | sed -e "s/[,-].*//") -le 8 ]] &&
+ 		skip_test "Pre-isolated CPUs ($BOOT_ISOLCPUS) overlap CPUs to be tested"
+ 	echo "Pre-isolated CPUs: $BOOT_ISOLCPUS"
+ fi
 +
- 	/*
- 	 * Make sure at least one submit queue exists.
- 	 */
+ cleanup()
+ {
+ 	online_cpus
+ 	cd $CGROUP2
+-	rmdir A1/A2/A3 A1/A2 A1 B1 > /dev/null 2>&1
+-	rmdir test > /dev/null 2>&1
++	rmdir A1/A2/A3 A1/A2 A1 B1 test/A1 test/B1 test > /dev/null 2>&1
+ 	[[ -n "$SCHED_DEBUG" ]] &&
+ 		echo "$SCHED_DEBUG" > /sys/kernel/debug/sched/verbose
+ }
+@@ -173,14 +181,22 @@ test_add_proc()
+ #
+ # Cgroup test hierarchy
+ #
+-# root -- A1 -- A2 -- A3
+-#      +- B1
++#	      root
++#	        |
++#	 +------+------+
++#	 |             |
++#	 A1            B1
++#	 |
++#	 A2
++#	 |
++#	 A3
+ #
+ #  P<v> = set cpus.partition (0:member, 1:root, 2:isolated)
+ #  C<l> = add cpu-list to cpuset.cpus
+ #  X<l> = add cpu-list to cpuset.cpus.exclusive
+ #  S<p> = use prefix in subtree_control
+ #  T    = put a task into cgroup
++#  CX<l> = add cpu-list to both cpuset.cpus and cpuset.cpus.exclusive
+ #  O<c>=<v> = Write <v> to CPU online file of <c>
+ #
+ # ECPUs    - effective CPUs of cpusets
+@@ -453,25 +469,26 @@ set_ctrl_state()
+ 		PFILE=$CGRP/cpuset.cpus.partition
+ 		CFILE=$CGRP/cpuset.cpus
+ 		XFILE=$CGRP/cpuset.cpus.exclusive
+-		S=$(expr substr $CMD 1 1)
+-		if [[ $S = S ]]
+-		then
+-			PREFIX=${CMD#?}
++		case $CMD in
++		    S*) PREFIX=${CMD#?}
+ 			COMM="echo ${PREFIX}${CTRL} > $SFILE"
+ 			eval $COMM $REDIRECT
+-		elif [[ $S = X ]]
+-		then
++			;;
++		    X*)
+ 			CPUS=${CMD#?}
+ 			COMM="echo $CPUS > $XFILE"
+ 			eval $COMM $REDIRECT
+-		elif [[ $S = C ]]
+-		then
+-			CPUS=${CMD#?}
++			;;
++		    CX*)
++			CPUS=${CMD#??}
++			COMM="echo $CPUS > $CFILE; echo $CPUS > $XFILE"
++			eval $COMM $REDIRECT
++			;;
++		    C*) CPUS=${CMD#?}
+ 			COMM="echo $CPUS > $CFILE"
+ 			eval $COMM $REDIRECT
+-		elif [[ $S = P ]]
+-		then
+-			VAL=${CMD#?}
++			;;
++		    P*) VAL=${CMD#?}
+ 			case $VAL in
+ 			0)  VAL=member
+ 			    ;;
+@@ -486,15 +503,17 @@ set_ctrl_state()
+ 			esac
+ 			COMM="echo $VAL > $PFILE"
+ 			eval $COMM $REDIRECT
+-		elif [[ $S = O ]]
+-		then
+-			VAL=${CMD#?}
++			;;
++		    O*) VAL=${CMD#?}
+ 			write_cpu_online $VAL
+-		elif [[ $S = T ]]
+-		then
+-			COMM="echo 0 > $TFILE"
++			;;
++		    T*) COMM="echo 0 > $TFILE"
+ 			eval $COMM $REDIRECT
+-		fi
++			;;
++		    *)  echo "Unknown command: $CMD"
++		        exit 1
++			;;
++		esac
+ 		RET=$?
+ 		[[ $RET -ne 0 ]] && {
+ 			[[ -n "$SHOWERR" ]] && {
+@@ -532,21 +551,18 @@ online_cpus()
+ }
+ 
+ #
+-# Return 1 if the list of effective cpus isn't the same as the initial list.
++# Remove all the test cgroup directories
+ #
+ reset_cgroup_states()
+ {
+ 	echo 0 > $CGROUP2/cgroup.procs
+ 	online_cpus
+-	rmdir A1/A2/A3 A1/A2 A1 B1 > /dev/null 2>&1
+-	pause 0.02
+-	set_ctrl_state . R-
+-	pause 0.01
++	rmdir $RESET_LIST > /dev/null 2>&1
+ }
+ 
+ dump_states()
+ {
+-	for DIR in . A1 A1/A2 A1/A2/A3 B1
++	for DIR in $CGROUP_LIST
+ 	do
+ 		CPUS=$DIR/cpuset.cpus
+ 		ECPUS=$DIR/cpuset.cpus.effective
+@@ -565,6 +581,21 @@ dump_states()
+ 	done
+ }
+ 
++#
++# Set the actual cgroup directory into $CGRP_DIR
++# $1 - cgroup name
++#
++set_cgroup_dir()
++{
++	CGRP_DIR=$1
++	[[ $CGRP_DIR = A2  ]] && CGRP_DIR=A1/A2
++	[[ $CGRP_DIR = A3  ]] && CGRP_DIR=A1/A2/A3
++	[[ $CGRP_DIR = c11 ]] && CGRP_DIR=p1/c11
++	[[ $CGRP_DIR = c12 ]] && CGRP_DIR=p1/c12
++	[[ $CGRP_DIR = c21 ]] && CGRP_DIR=p2/c21
++	[[ $CGRP_DIR = c22 ]] && CGRP_DIR=p2/c22
++}
++
+ #
+ # Check effective cpus
+ # $1 - check string, format: <cgroup>:<cpu-list>[|<cgroup>:<cpu-list>]*
+@@ -576,7 +607,8 @@ check_effective_cpus()
+ 	do
+ 		set -- $(echo $CHK | sed -e "s/:/ /g")
+ 		CGRP=$1
+-		CPUS=$2
++		EXPECTED_CPUS=$2
++		ACTUAL_CPUS=
+ 		if [[ $CGRP = X* ]]
+ 		then
+ 			CGRP=${CGRP#X}
+@@ -584,10 +616,10 @@ check_effective_cpus()
+ 		else
+ 			FILE=cpuset.cpus.effective
+ 		fi
+-		[[ $CGRP = A2 ]] && CGRP=A1/A2
+-		[[ $CGRP = A3 ]] && CGRP=A1/A2/A3
+-		[[ -e $CGRP/$FILE ]] || return 1
+-		[[ $CPUS = $(cat $CGRP/$FILE) ]] || return 1
++		set_cgroup_dir $CGRP
++		[[ -e $CGRP_DIR/$FILE ]] || return 1
++		ACTUAL_CPUS=$(cat $CGRP_DIR/$FILE)
++		[[ $EXPECTED_CPUS = $ACTUAL_CPUS ]] || return 1
+ 	done
+ }
+ 
+@@ -602,23 +634,21 @@ check_cgroup_states()
+ 	do
+ 		set -- $(echo $CHK | sed -e "s/:/ /g")
+ 		CGRP=$1
+-		CGRP_DIR=$CGRP
+-		STATE=$2
++		EXPECTED_STATE=$2
+ 		FILE=
+-		EVAL=$(expr substr $STATE 2 2)
+-		[[ $CGRP = A2 ]] && CGRP_DIR=A1/A2
+-		[[ $CGRP = A3 ]] && CGRP_DIR=A1/A2/A3
++		EVAL=$(expr substr $EXPECTED_STATE 2 2)
+ 
+-		case $STATE in
++		set_cgroup_dir $CGRP
++		case $EXPECTED_STATE in
+ 			P*) FILE=$CGRP_DIR/cpuset.cpus.partition
+ 			    ;;
+-			*)  echo "Unknown state: $STATE!"
++			*)  echo "Unknown state: $EXPECTED_STATE!"
+ 			    exit 1
+ 			    ;;
+ 		esac
+-		VAL=$(cat $FILE)
++		ACTUAL_STATE=$(cat $FILE)
+ 
+-		case "$VAL" in
++		case "$ACTUAL_STATE" in
+ 			member) VAL=0
+ 				;;
+ 			root)	VAL=1
+@@ -642,7 +672,7 @@ check_cgroup_states()
+ 		[[ $VAL -eq 1 && $VERBOSE -gt 0 ]] && {
+ 			DOMS=$(cat $CGRP_DIR/cpuset.cpus.effective)
+ 			[[ -n "$DOMS" ]] &&
+-				echo " [$CGRP] sched-domain: $DOMS" > $CONSOLE
++				echo " [$CGRP_DIR] sched-domain: $DOMS" > $CONSOLE
+ 		}
+ 	done
+ 	return 0
+@@ -665,22 +695,22 @@ check_cgroup_states()
+ #
+ check_isolcpus()
+ {
+-	EXPECT_VAL=$1
+-	ISOLCPUS=
++	EXPECTED_ISOLCPUS=$1
++	ISCPUS=${CGROUP2}/cpuset.cpus.isolated
++	ISOLCPUS=$(cat $ISCPUS)
+ 	LASTISOLCPU=
+ 	SCHED_DOMAINS=/sys/kernel/debug/sched/domains
+-	ISCPUS=${CGROUP2}/cpuset.cpus.isolated
+-	if [[ $EXPECT_VAL = . ]]
++	if [[ $EXPECTED_ISOLCPUS = . ]]
+ 	then
+-		EXPECT_VAL=
+-		EXPECT_VAL2=
+-	elif [[ $(expr $EXPECT_VAL : ".*|.*") > 0 ]]
++		EXPECTED_ISOLCPUS=
++		EXPECTED_SDOMAIN=
++	elif [[ $(expr $EXPECTED_ISOLCPUS : ".*|.*") > 0 ]]
+ 	then
+-		set -- $(echo $EXPECT_VAL | sed -e "s/|/ /g")
+-		EXPECT_VAL=$1
+-		EXPECT_VAL2=$2
++		set -- $(echo $EXPECTED_ISOLCPUS | sed -e "s/|/ /g")
++		EXPECTED_ISOLCPUS=$2
++		EXPECTED_SDOMAIN=$1
+ 	else
+-		EXPECT_VAL2=$EXPECT_VAL
++		EXPECTED_SDOMAIN=$EXPECTED_ISOLCPUS
+ 	fi
+ 
+ 	#
+@@ -689,20 +719,21 @@ check_isolcpus()
+ 	# to make appending those CPUs easier.
+ 	#
+ 	[[ -n "$BOOT_ISOLCPUS" ]] && {
+-		EXPECT_VAL=${EXPECT_VAL:+${EXPECT_VAL},}${BOOT_ISOLCPUS}
+-		EXPECT_VAL2=${EXPECT_VAL2:+${EXPECT_VAL2},}${BOOT_ISOLCPUS}
++		EXPECTED_ISOLCPUS=${EXPECTED_ISOLCPUS:+${EXPECTED_ISOLCPUS},}${BOOT_ISOLCPUS}
++		EXPECTED_SDOMAIN=${EXPECTED_SDOMAIN:+${EXPECTED_SDOMAIN},}${BOOT_ISOLCPUS}
+ 	}
+ 
+ 	#
+ 	# Check cpuset.cpus.isolated cpumask
+ 	#
+-	[[ "$EXPECT_VAL2" != "$ISOLCPUS" ]] && {
++	[[ "$EXPECTED_ISOLCPUS" != "$ISOLCPUS" ]] && {
+ 		# Take a 50ms pause and try again
+ 		pause 0.05
+ 		ISOLCPUS=$(cat $ISCPUS)
+ 	}
+-	[[ "$EXPECT_VAL2" != "$ISOLCPUS" ]] && return 1
++	[[ "$EXPECTED_ISOLCPUS" != "$ISOLCPUS" ]] && return 1
+ 	ISOLCPUS=
++	EXPECTED_ISOLCPUS=$EXPECTED_SDOMAIN
+ 
+ 	#
+ 	# Use the sched domain in debugfs to check isolated CPUs, if available
+@@ -736,7 +767,7 @@ check_isolcpus()
+ 	done
+ 	[[ "$ISOLCPUS" = *- ]] && ISOLCPUS=${ISOLCPUS}$LASTISOLCPU
+ 
+-	[[ "$EXPECT_VAL" = "$ISOLCPUS" ]]
++	[[ "$EXPECTED_SDOMAIN" = "$ISOLCPUS" ]]
+ }
+ 
+ test_fail()
+@@ -773,6 +804,63 @@ null_isolcpus_check()
+ 	exit 1
+ }
+ 
++#
++# Check state transition test result
++#  $1 - Test number
++#  $2 - Expected effective CPU values
++#  $3 - Expected partition states
++#  $4 - Expected isolated CPUs
++#
++check_test_results()
++{
++	_NR=$1
++	_ECPUS="$2"
++	_PSTATES="$3"
++	_ISOLCPUS="$4"
++
++	[[ -n "$_ECPUS" && "$_ECPUS" != . ]] && {
++		check_effective_cpus $_ECPUS
++		[[ $? -ne 0 ]] && test_fail $_NR "effective CPU" \
++			 "Cgroup $CGRP: expected $EXPECTED_CPUS, got $ACTUAL_CPUS"
++	}
++
++	[[ -n "$_PSTATES" && "$_PSTATES" != . ]] && {
++		check_cgroup_states $_PSTATES
++		[[ $? -ne 0 ]] && test_fail $_NR states \
++			"Cgroup $CGRP: expected $EXPECTED_STATE, got $ACTUAL_STATE"
++	}
++
++	# Compare the expected isolated CPUs with the actual ones,
++	# if available
++	[[ -n "$_ISOLCPUS" ]] && {
++		check_isolcpus $_ISOLCPUS
++		[[ $? -ne 0 ]] && {
++			[[ -n "$BOOT_ISOLCPUS" ]] && _ISOLCPUS=${_ISOLCPUS},${BOOT_ISOLCPUS}
++			test_fail $_NR "isolated CPU" \
++				"Expect $_ISOLCPUS, get $ISOLCPUS instead"
++		}
++	}
++	reset_cgroup_states
++	#
++	# Check to see if effective cpu list changes
++	#
++	_NEWLIST=$(cat $CGROUP2/cpuset.cpus.effective)
++	RETRY=0
++	while [[ $_NEWLIST != $CPULIST && $RETRY -lt 8 ]]
++	do
++		# Wait a bit longer & recheck a few times
++		pause 0.02
++		((RETRY++))
++		_NEWLIST=$(cat $CGROUP2/cpuset.cpus.effective)
++	done
++	[[ $_NEWLIST != $CPULIST ]] && {
++		echo "Effective cpus changed to $_NEWLIST after test $_NR!"
++		exit 1
++	}
++	null_isolcpus_check
++	[[ $VERBOSE -gt 0 ]] && echo "Test $I done."
++}
++
+ #
+ # Run cpuset state transition test
+ #  $1 - test matrix name
+@@ -785,6 +873,8 @@ run_state_test()
+ {
+ 	TEST=$1
+ 	CONTROLLER=cpuset
++	CGROUP_LIST=". A1 A1/A2 A1/A2/A3 B1"
++	RESET_LIST="A1/A2/A3 A1/A2 A1 B1"
+ 	I=0
+ 	eval CNT="\${#$TEST[@]}"
+ 
+@@ -824,45 +914,7 @@ run_state_test()
+ 
+ 		[[ $RETVAL -ne $RESULT ]] && test_fail $I result
+ 
+-		[[ -n "$ECPUS" && "$ECPUS" != . ]] && {
+-			check_effective_cpus $ECPUS
+-			[[ $? -ne 0 ]] && test_fail $I "effective CPU"
+-		}
+-
+-		[[ -n "$STATES" && "$STATES" != . ]] && {
+-			check_cgroup_states $STATES
+-			[[ $? -ne 0 ]] && test_fail $I states
+-		}
+-
+-		# Compare the expected isolated CPUs with the actual ones,
+-		# if available
+-		[[ -n "$ICPUS" ]] && {
+-			check_isolcpus $ICPUS
+-			[[ $? -ne 0 ]] && {
+-				[[ -n "$BOOT_ISOLCPUS" ]] && ICPUS=${ICPUS},${BOOT_ISOLCPUS}
+-				test_fail $I "isolated CPU" \
+-					"Expect $ICPUS, get $ISOLCPUS instead"
+-			}
+-		}
+-		reset_cgroup_states
+-		#
+-		# Check to see if effective cpu list changes
+-		#
+-		NEWLIST=$(cat cpuset.cpus.effective)
+-		RETRY=0
+-		while [[ $NEWLIST != $CPULIST && $RETRY -lt 8 ]]
+-		do
+-			# Wait a bit longer & recheck a few times
+-			pause 0.02
+-			((RETRY++))
+-			NEWLIST=$(cat cpuset.cpus.effective)
+-		done
+-		[[ $NEWLIST != $CPULIST ]] && {
+-			echo "Effective cpus changed to $NEWLIST after test $I!"
+-			exit 1
+-		}
+-		null_isolcpus_check
+-		[[ $VERBOSE -gt 0 ]] && echo "Test $I done."
++		check_test_results $I "$ECPUS" "$STATES" "$ICPUS"
+ 		((I++))
+ 	done
+ 	echo "All $I tests of $TEST PASSED."
+@@ -932,6 +984,7 @@ test_isolated()
+ 	echo $$ > $CGROUP2/cgroup.procs
+ 	[[ -d A1 ]] && rmdir A1
+ 	null_isolcpus_check
++	pause 0.05
+ }
+ 
+ #
+@@ -997,6 +1050,8 @@ test_inotify()
+ 	else
+ 		echo "Inotify test PASSED"
+ 	fi
++	echo member > cpuset.cpus.partition
++	echo "" > cpuset.cpus
+ }
+ 
+ trap cleanup 0 2 3 6
 -- 
 2.53.0
 
