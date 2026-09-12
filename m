@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6BB39448F;
-	Sat, 12 Sep 2026 07:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462C037204A;
+	Sat, 12 Sep 2026 07:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197131; cv=none; b=X2GtrcLjgHIg8Ag8YPxfMD7IjgJ7Ql/3aZlzZ3QxLs77+uYxSEenfgxVTP+y/fQ9ii1OGmniaioo6XH3qet9y21bR0faeDOTq525mdyjheIuLkOwCrV6j9jIB4dwhxfm5dCuGhJMgWrI5kw8rWXo15Y9PU35F4zh65Nt00MaEFo=
+	t=1789197136; cv=none; b=REbnSFERbQ7lveXo+0+D8SG+9EO3GJWmua+uW7VUREF6d+5MoGwNmhURbh/CHjpigqnf+h1PAQy9ax7TGIXOJCLE07LgvvcsOjv4pfXd+JbDIsWKRQthKotYwZ2B50KDA4N3jkJ1bR460zB0Qux19YbNZ9wU84Sa/BzWo/2gCgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197131; c=relaxed/simple;
-	bh=2fpKPkL3iP3I1ABTNQVaBumtZyZZMgYVfkQ3OGpdbWM=;
+	s=arc-20240116; t=1789197136; c=relaxed/simple;
+	bh=PSY+2AFCWHVJhE660xCSSPnBrx+zFFITGrhQV3fe3rc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cy8puZ6UDKv7UCRo74ReG6r86W2yvPhCteULULaVf7Jc0ODE1yNuf6Oq/TuNhF47ovS04N+VCp0vjD83tFhFnOd64GeZpgsG/sYd5UKtJ/il2jeVGGeU2JSptLbOEKmRk5Ft4Sw4B4CYZjdQ+XyeWbFJ3d4wTXbhj5PHv5Z0Kig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvzueA7z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mGI4cwcS0xCGCwp5SBFHrC7CtGuP4fb6fvfLC77p8zQY5JxkHECSgP+YjJJqYP+q875WI47PzaOSTwzm9HxBpWj26q33J6tOLfw0xC+2DkKlLvA+4x28LmLI9wvmo39iJU5waBiDjwqX5Av68SXi2+88q41Yy3ynZHOrCF9CdzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ve+fWTrD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvzueA7z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135101F000FF;
-	Sat, 12 Sep 2026 07:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ve+fWTrD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BAF11F000FF;
+	Sat, 12 Sep 2026 07:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197130;
-	bh=SYnqS42avlp5p9f+VnuO+WNv9cwVfjIuGyP9bfPUZ1E=;
+	s=korg; t=1789197135;
+	bh=2fz+VJP5cZqJevqOn24bF4RVoqiLaX+NlANhyZNJSlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lvzueA7zuStxIO6lEofXg8zJwz7jKftNVxgwy3UFzL8mskbnbCyf6pv1NX/9BPRfe
-	 TH9rJjNIEjCOUHIAPvxy2WIVt4l+CoMOdDqV9Oo0nSeS2pPu8h/kYe6VD0oowcF1T9
-	 /7VDZCpzEnIWfs69HJbTGUgBgaGJVZq8hWjtSrJo=
+	b=ve+fWTrDHGlPp/dcsHBhW4ecNPlhjbx9Aq3yUGYhENduMOJkbFAwMDmz2dJ2nJKpM
+	 KDzCvChqLrNcVyVtLXIEC0Ip97RHVGIlB/OuRu6iX5A1mershldd59TLu8xi+jTugw
+	 ZS8Fq/xCXVJsbh7/k8RFRvdjQm0FjBzY9HcF6Hzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zide Chen <zide.chen@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ian Rogers <irogers@google.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Weigang He <geoffreyhe2@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0108/1815] perf/x86/intel/uncore: Fix uncore_box ref/unref ordering
-Date: Sat, 12 Sep 2026 08:30:58 +0200
-Message-ID: <20260912065651.541798965@linuxfoundation.org>
+Subject: [PATCH 7.2 0091/1815] ARM: imx: fix device_node refcount leaks in imx7_src_init()
+Date: Sat, 12 Sep 2026 08:30:41 +0200
+Message-ID: <20260912065651.144625648@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,160 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zide Chen <zide.chen@intel.com>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit 174f0582e38abe03b88e15f04bfe58490f88cb19 ]
+[ Upstream commit 3de939b2ac843d56d88e2ab1e1b1f667cba9e1d4 ]
 
-In uncore_event_cpu_online(), uncore_box_ref() was called before
-uncore_change_context().  uncore_box_ref() gates on box->cpu >= 0,
-but box->cpu is still -1 at that point because uncore_change_context()
-has not run yet.  As a result, the box is never initialized on the
-first CPU to come online in a die, leaving it permanently
-uninitialized in the single-CPU-per-die case.
+imx7_src_init() obtains two device_node references via
+of_find_compatible_node() - one for "fsl,imx7d-src" and one for
+"fsl,imx7d-gpc" - reusing the same np variable, but never calls
+of_node_put() on either. On every i.MX7D boot up to two device_node
+refcounts are leaked:
 
-Thus, box->refcnt is one count below the true value, and in the CPU
-offline path, the box will be torn down on the second-to-last CPU.
+  - The "fsl,imx7d-src" node is leaked both when of_iomap() fails (the
+    early return after the mapping) and when it succeeds, because np is
+    then overwritten by the second of_find_compatible_node() call
+    without releasing the prior reference.
+  - The "fsl,imx7d-gpc" node is leaked on every path leaving the
+    function after it is acquired.
 
-In uncore_event_cpu_offline(), uncore_box_unref() was called after
-uncore_change_context(), so box->cpu is already -1 when the collector
-CPU goes offline, which prevents it from tearing down the box.
+Release each reference immediately after of_iomap() consumes the node.
+of_iomap() maps the node's registers but does not retain a reference to
+the device_node, so it is safe to put the node once mapped; this also
+drops the first reference before np is reused for the second lookup.
 
-Fix by swapping the call order in both paths so that
-uncore_box_{ref,unref}() runs at the point where box->cpu reflects
-the correct context.
+Found by static analysis tool CodeQL.
 
-Move allocate_boxes() out of uncore_box_ref() to enable this
-reordering.
-
-Fixes: c74443d92f68 ("perf/x86/uncore: Support per PMU cpumask")
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Link: https://patch.msgid.link/20260611160033.66760-8-zide.chen@intel.com
+Fixes: e34645f45805 ("ARM: imx: add smp support for imx7d")
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore.c | 50 ++++++++++++++++------------------
- 1 file changed, 23 insertions(+), 27 deletions(-)
+ arch/arm/mach-imx/src.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
-index feb8c3b0076b2..b9ac2f7d31caa 100644
---- a/arch/x86/events/intel/uncore.c
-+++ b/arch/x86/events/intel/uncore.c
-@@ -1580,9 +1580,15 @@ static int uncore_event_cpu_offline(unsigned int cpu)
- {
- 	int die, target;
+diff --git a/arch/arm/mach-imx/src.c b/arch/arm/mach-imx/src.c
+index f28bfb653a88f..c3c80b4c3d53b 100644
+--- a/arch/arm/mach-imx/src.c
++++ b/arch/arm/mach-imx/src.c
+@@ -196,6 +196,7 @@ void __init imx7_src_init(void)
+ 		return;
  
-+	/* Clear the references */
-+	die = topology_logical_die_id(cpu);
-+	uncore_box_unref(uncore_msr_uncores, die);
-+	uncore_box_unref(uncore_mmio_uncores, die);
-+
- 	/* Check if exiting cpu is used for collecting uncore events */
- 	if (!cpumask_test_and_clear_cpu(cpu, &uncore_cpu_mask))
--		goto unref;
-+		return 0;
-+
- 	/* Find a new cpu to collect uncore events */
- 	target = cpumask_any_but(topology_die_cpumask(cpu), cpu);
+ 	src_base = of_iomap(np, 0);
++	of_node_put(np);
+ 	if (!src_base)
+ 		return;
  
-@@ -1595,16 +1601,10 @@ static int uncore_event_cpu_offline(unsigned int cpu)
- 	uncore_change_context(uncore_msr_uncores, cpu, target);
- 	uncore_change_context(uncore_mmio_uncores, cpu, target);
- 	uncore_change_context(uncore_pci_uncores, cpu, target);
--
--unref:
--	/* Clear the references */
--	die = topology_logical_die_id(cpu);
--	uncore_box_unref(uncore_msr_uncores, die);
--	uncore_box_unref(uncore_mmio_uncores, die);
- 	return 0;
+@@ -204,6 +205,7 @@ void __init imx7_src_init(void)
+ 		return;
+ 
+ 	gpc_base = of_iomap(np, 0);
++	of_node_put(np);
+ 	if (!gpc_base)
+ 		return;
  }
- 
--static int allocate_boxes(struct intel_uncore_type **types,
-+static void allocate_boxes(struct intel_uncore_type **types,
- 			 unsigned int die, unsigned int cpu)
- {
- 	struct intel_uncore_box *box, *tmp;
-@@ -1621,8 +1621,10 @@ static int allocate_boxes(struct intel_uncore_type **types,
- 			if (pmu->boxes[die] || uncore_pmu_broken(pmu))
- 				continue;
- 			box = uncore_alloc_box(type, cpu_to_node(cpu));
--			if (!box)
-+			if (!box) {
-+				uncore_pmu_set_broken(pmu);
- 				goto cleanup;
-+			}
- 			box->pmu = pmu;
- 			box->dieid = die;
- 			list_add(&box->active_list, &allocated);
-@@ -1633,14 +1635,13 @@ static int allocate_boxes(struct intel_uncore_type **types,
- 		list_del_init(&box->active_list);
- 		box->pmu->boxes[die] = box;
- 	}
--	return 0;
-+	return;
- 
- cleanup:
- 	list_for_each_entry_safe(box, tmp, &allocated, active_list) {
- 		list_del_init(&box->active_list);
- 		kfree(box);
- 	}
--	return -ENOMEM;
- }
- 
- static int uncore_box_ref(struct intel_uncore_type **types,
-@@ -1649,11 +1650,7 @@ static int uncore_box_ref(struct intel_uncore_type **types,
- 	struct intel_uncore_type *type;
- 	struct intel_uncore_pmu *pmu;
- 	struct intel_uncore_box *box;
--	int i, ret;
--
--	ret = allocate_boxes(types, die, cpu);
--	if (ret)
--		return ret;
-+	int i;
- 
- 	for (; *types; types++) {
- 		type = *types;
-@@ -1669,27 +1666,26 @@ static int uncore_box_ref(struct intel_uncore_type **types,
- 
- static int uncore_event_cpu_online(unsigned int cpu)
- {
--	int die, target, msr_ret, mmio_ret;
-+	int die, target;
- 
- 	die = topology_logical_die_id(cpu);
--	msr_ret = uncore_box_ref(uncore_msr_uncores, die, cpu);
--	mmio_ret = uncore_box_ref(uncore_mmio_uncores, die, cpu);
-+	allocate_boxes(uncore_msr_uncores, die, cpu);
-+	allocate_boxes(uncore_mmio_uncores, die, cpu);
- 
- 	/*
- 	 * Check if there is an online cpu in the package
- 	 * which collects uncore events already.
- 	 */
- 	target = cpumask_any_and(&uncore_cpu_mask, topology_die_cpumask(cpu));
--	if (target < nr_cpu_ids)
--		return 0;
--
--	cpumask_set_cpu(cpu, &uncore_cpu_mask);
--
--	if (!msr_ret)
-+	if (target >= nr_cpu_ids) {
-+		cpumask_set_cpu(cpu, &uncore_cpu_mask);
- 		uncore_change_context(uncore_msr_uncores, -1, cpu);
--	if (!mmio_ret)
- 		uncore_change_context(uncore_mmio_uncores, -1, cpu);
--	uncore_change_context(uncore_pci_uncores, -1, cpu);
-+		uncore_change_context(uncore_pci_uncores, -1, cpu);
-+	}
-+
-+	uncore_box_ref(uncore_msr_uncores, die, cpu);
-+	uncore_box_ref(uncore_mmio_uncores, die, cpu);
- 	return 0;
- }
- 
 -- 
 2.53.0
 
