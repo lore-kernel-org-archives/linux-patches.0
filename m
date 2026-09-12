@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C539A246BCD;
-	Sat, 12 Sep 2026 10:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C405246BCD;
+	Sat, 12 Sep 2026 10:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207694; cv=none; b=FtpG33M/9Pui0582jtmhlwrxjxH+fZe+mBzpD9gsNvtUx2W1rlCM8+LCgCwkUzITnXrIWCdRTkVe0WtjEQ8I+O97VzNm+TqqPajHwnBTOaTpSmglbgBHNF8yPPWQY2TWGWHpY2TNc0LpnX3WcXmcKdmnQt9+B+HVyrpjcO28cDE=
+	t=1789207700; cv=none; b=el0f4EcrOF32Pf4KCMrfQu3afeZOM3aMHrYXRahisvGpXWfWG0DAfzqzgKeOfW9m1oAvhrRUybLey7+me8Xhfo9ylbxT2jlLwlfNQboOVpP20fFXWfsHP/+4Da5WxXq905WxCudVKh97Jg0N+FEba/D8fBCv9tFskWTc8oZAEjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207694; c=relaxed/simple;
-	bh=qDNd7aOpYFIMsQlznnIZd1qRzlJBfKcM24XDI4Qv2kM=;
+	s=arc-20240116; t=1789207700; c=relaxed/simple;
+	bh=LOvNPOnNtSKmwk0O2Wbt8mzWirSuNo4V8ROiJcArMkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g5qXKOU9i+GvclFceBXmqSJCXEOidF4QeQOTJgfij1VhcrfRyjuj9m1cOZpeB7KV4EqMmU7VLf8UfT26mhBuxecrlwGAnAGwpFz+Ars4PFpGWug/3nNDWr5VxVF4Lkimkc9U5SVka7Ii5mUmOSpfSGbbp+58EDM8OH2iaFx3d08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mGWt/rO+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WNq3wgqhmm/eHixdo2tzn+qnxkwdO0we4zs+6DGNDXhQoF5gExj0Rr8KH/EONWzB0GXuZHwn1FfK2AdGxT+I826APCbgdjFYuP1/OAE+ICpZV5GvKYyVhuMyI37mSiVKKc7iMHl0JSRK9VKIWTYYFu1uUn0VMvVUNo+XVKAAydw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vwrzV2EP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGWt/rO+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F071F000FF;
-	Sat, 12 Sep 2026 10:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwrzV2EP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B58591F000FF;
+	Sat, 12 Sep 2026 10:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207693;
-	bh=RVj1PrMVrJF+ov/RtLSoV7HXbvWdMPOpL0+fRI6NTRI=;
+	s=korg; t=1789207698;
+	bh=yj6yd0bEvM5Q65WW8jRUh29AN/2TeKrkwi6i0W+4isU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mGWt/rO+VukWASWeh7nJHnRazeIbt75Ix0oEBQ3K3S7F/tjSlPGb+pVftO2jjeoMf
-	 +x9SdvnSD50ZodMfXaoqCW0zCslm0/zFNB+rf8aiKf9uO7K/hs7RUm/lk8Vstc3aBp
-	 nPVucIfLU4WMUmKZgro3fNuK9a7Z6vQ27vgG82Xg=
+	b=vwrzV2EPlUmCcSD1R3aVfRXgHyLgVZL5RPxSShq0j0exV0gKpinWrTDmAXF5d2TB6
+	 JYs37ULTO0jduyJujV/0H5dZKT9z0pV3yUiiIMx9KWfo/w9oLGjG0DSZjHPGMcWMSp
+	 TwFf4E5TPZJrW9WZGtENUBv2XA3VMNLBy1JZmNeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengyu Luo <mitltlatltl@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0412/1518] arm64: dts: qcom: sc8280xp-x13s: Fix the drive-strength of mclk pin
-Date: Sat, 12 Sep 2026 08:43:01 +0200
-Message-ID: <20260912065632.776227962@linuxfoundation.org>
+Subject: [PATCH 6.18 0459/1518] char: xilinx_hwicap: unregister class on init errors
+Date: Sat, 12 Sep 2026 08:43:48 +0200
+Message-ID: <20260912065633.831908438@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,48 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengyu Luo <mitltlatltl@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 09531bb8e0de5081fdbe215877dd7f2ec8b2f0e1 ]
+[ Upstream commit e7e12b4cc0f0c3a2782aea084d4215e23f5512b3 ]
 
-The value can be retrieve via windbg on Windows.
+hwicap_module_init() registers icap_class before reserving the
+character-device region and registering the platform driver.  If either
+of those later steps fails, the init path must undo the successful class
+registration before returning an error.
 
-lkd> !dd f111000 L8
+Route the chrdev registration failure through a class unwind label, and
+let the platform-driver registration failure fall through the existing
+chrdev unwind before unregistering the class.  The normal module exit path
+is unchanged.
 
-ctl_reg => 0x284
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-in drivers/pinctrl/qcom/pinctrl-msm.c
-function msm_gpio_dbg_show_one()
-...
-drive = (ctl_reg >> g->drv_bit) & 7; // (0x284 >> 6) & 7 == 2
-...
-seq_printf(s, " %dmA", msm_regval_to_drive(drive)); // (drive + 1) * 2 == 6;
-...
-
-So the value is 6, not 16, it matches Windows now.
-
-Fixes: 21927e94caa5 ("arm64: dts: qcom: sc8280xp-x13s: Enable RGB sensor")
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260629065905.15651-2-mitltlatltl@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: ef141a0bb0dc ("[POWERPC] Xilinx: hwicap driver")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://patch.msgid.link/20260623085604.89284-1-mhun512@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/xilinx_hwicap/xilinx_hwicap.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 637430719e6d7..a7559eb411018 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -1561,7 +1561,7 @@ cam_rgb_default: cam-rgb-default-state {
- 		mclk-pins {
- 			pins = "gpio17";
- 			function = "cam_mclk";
--			drive-strength = <16>;
-+			drive-strength = <6>;
- 			bias-disable;
- 		};
+diff --git a/drivers/char/xilinx_hwicap/xilinx_hwicap.c b/drivers/char/xilinx_hwicap/xilinx_hwicap.c
+index 34a345dc5e724..9bb5fa642fd88 100644
+--- a/drivers/char/xilinx_hwicap/xilinx_hwicap.c
++++ b/drivers/char/xilinx_hwicap/xilinx_hwicap.c
+@@ -760,7 +760,7 @@ static int __init hwicap_module_init(void)
+ 					HWICAP_DEVICES,
+ 					DRIVER_NAME);
+ 	if (retval < 0)
+-		return retval;
++		goto failed_class;
+ 
+ 	retval = platform_driver_register(&hwicap_platform_driver);
+ 	if (retval)
+@@ -771,6 +771,9 @@ static int __init hwicap_module_init(void)
+  failed:
+ 	unregister_chrdev_region(devt, HWICAP_DEVICES);
+ 
++ failed_class:
++	class_unregister(&icap_class);
++
+ 	return retval;
+ }
  
 -- 
 2.53.0
