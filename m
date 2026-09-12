@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029832AD3C;
-	Sat, 12 Sep 2026 15:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEC43914EB;
+	Sat, 12 Sep 2026 15:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227995; cv=none; b=CJZz4x+EUqHVbZaFxTfVO7OiCqgCFEUIlMW1uIu8EZK0jcFeIBZ08STZnzcmrn2NHyrObABu5FjUr6PjgYcWvsneq+VS0UVbQ0p/AF5ncuKO+YXsAmkI7h0Zxn5sxEVPDJJ6deDigMdQcTAq/+/cwLwhbFQ+7JGMzXRE0+iIKiY=
+	t=1789228001; cv=none; b=IOmUjBkjVBAr2rkcuJobMRhFxugqBLcSQHp+hLghuyVxFxtxTR0H5mF9ve7vKXLn3RDC/Xd5ZJMsirXlDL9Oe6rMluYetPUTsIA06Dl05DbSy8XKSJxnxyXtZmwt7gBkjOZPLHGKQfLkC/RWBGJ7i58kb5kPXNZ5it6Eic06gg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227995; c=relaxed/simple;
-	bh=bNSGUyrQYKo/5pRUrOzut8hCHOH+mwy9W3VyebBamEk=;
+	s=arc-20240116; t=1789228001; c=relaxed/simple;
+	bh=+qcpcevXQmtqssj8LH6cGQUDuOCPZJSrR5wrpnB2A14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=texDP4S5C3ObYpxS/hsbs15cwUQ7d6+RhI2RzwGE1pLbe3yVY2yVFd1UROqiOc5yoT9k6zUI8YwT1wwChZzDBxXzVMi07xYmH4etI03yFBRdJT31VsyFHmJrDgWyH0as5Wr5wHbS0ijiGd7miSXWS0dFPOTB/C5Iyzn2cfhlnk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRjO79z+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rTgPXgXYtOsJeNU2gOdMvDWbna/qiLpCQRRcfi8M3YgAC1NALWtNzlD48SrtSn+cYMrIV7gHdxF5iNB9tltDm0tGcI8t3ilVRR9Z5b2hF1dcGD7CYTcYmmk06UlWwGtXJsLH4Dz02fmGZtG/RfYKrWWioVglin77AWQh1xgRNaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R4QhHOWJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRjO79z+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E621F000FF;
-	Sat, 12 Sep 2026 15:46:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4QhHOWJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6D61F000FF;
+	Sat, 12 Sep 2026 15:46:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227993;
-	bh=gwqHGHxpmycEhoKmj/YQVnhoSoVwg9tAWUZKC/7yG2I=;
+	s=korg; t=1789227998;
+	bh=vL46M8+2RMQsf7PDdBA8stk2I+SzoDqKFQyIAoXmyS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iRjO79z+2O/VVrlZHkUXaZQXXmzIz+buHTYfmc8+HHLjJ4GNzgyP/7u0IIK4Z9tS0
-	 Fze3FXQ8spC8j7SvMai+SFUandbF9+vS6V945K3PLAYWCsAgLqi+mBzpYMWE6B82AY
-	 P2Nowqj0OvbovOj73oS8t0BcRYl+yVa9TejEE9Ms=
+	b=R4QhHOWJbUOoFAg3kCaLK4KHEDysdEOqPO9qSWBwpWtwzgf0o5figGWmcseitkXZj
+	 aiRzfxWD74rvQJaRKCGMDLxwJaCixLtymXVMkYfMP40zuCNpHy5oiKkfFZJLET/ifv
+	 ces8FEd4ek4PjzjyQuNuSIrzUOkB9hdtkZmlTbro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5ebeb3089ea6439c37be@syzkaller.appspotmail.com,
-	Bradley Morgan <brads@mainlining.org>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 6.1 0296/1191] ima: Check for ERR_PTR from dentry_path() in validate_hash_algo()
-Date: Sat, 12 Sep 2026 08:50:24 +0200
-Message-ID: <20260912065554.878383442@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.1 0297/1191] kprobes: Protect kprobe_blacklist with RCU
+Date: Sat, 12 Sep 2026 08:50:25 +0200
+Message-ID: <20260912065554.901343655@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,47 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <brads@mainlining.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 8861f6d5c0678a7c5089c7b272509fc5931b8437 upstream.
+commit 0c4256196b3a105307e2235fbfd85e768bbcdd0f upstream.
 
-dentry_path() returns ERR_PTR(-ENAMETOOLONG) when the path exceeds the
-buffer. validate_hash_algo() passes the result straight to
-integrity_audit_msg() without checking. ERR_PTR is not NULL, so
-integrity_audit_message() sees a valid pointer and calls strlen() on
-it, which faults:
+__within_kprobe_blacklist() traverses kprobe_blacklist without holding
+kprobe_mutex. When a module is unloaded, kprobe_remove_area_blacklist()
+removes blacklist entries and immediately frees them with kfree().
+A concurrent call to within_kprobe_blacklist() can therefore dereference
+freed memory.
 
-    BUG: unable to handle page fault for address: ffffffffffffffdc
-    RIP: 0010:strlen+0x30/0xa0
-    Call Trace:
-     audit_log_untrustedstring+0x19/0x30
-     integrity_audit_message+0x366/0x4f0
-     ima_inode_setxattr+0x512/0x5f0
+Furthermore, within_kprobe_blacklist() can be called in atomic or
+non-preemptible contexts where the sleeping kprobe_mutex cannot be taken.
 
-Check for IS_ERR() and use NULL instead, which makes the audit message
-skip the name= field instead of crashing.
+Protect kprobe_blacklist with RCU. Use guard(rcu)() and
+list_for_each_entry_rcu() for traversal, list_add_tail_rcu() for
+insertions, list_del_rcu() for deletions, and kfree_rcu() to reclaim
+entries safely after a grace period.
 
-Fixes: 4f2946aa0c45 ("IMA: introduce a new policy option func=SETXATTR_CHECK")
+Link: https://lore.kernel.org/all/178810004323.64882.16493230858653316962.stgit@devnote2/
+
+Fixes: 376e242429bf ("kprobes: Introduce NOKPROBE_SYMBOL() macro to maintain kprobes blacklist")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+5ebeb3089ea6439c37be@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/6a8f89e5.1d9ded08.62e62.00bf.GAE@google.com/
-Signed-off-by: Bradley Morgan <brads@mainlining.org>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260807155802.F06041F000E9@smtp.kernel.org/
+Assisted-by: Antigravity:gemini-3.7-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/ima/ima_appraise.c |    2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/kprobes.h |    1 +
+ kernel/kprobes.c        |   14 ++++++++++----
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
---- a/security/integrity/ima/ima_appraise.c
-+++ b/security/integrity/ima/ima_appraise.c
-@@ -740,6 +740,8 @@ static int validate_hash_algo(struct den
- 		return -EACCES;
+--- a/include/linux/kprobes.h
++++ b/include/linux/kprobes.h
+@@ -186,6 +186,7 @@ struct kprobe_blacklist_entry {
+ 	struct list_head list;
+ 	unsigned long start_addr;
+ 	unsigned long end_addr;
++	struct rcu_head rcu;
+ };
  
- 	path = dentry_path(dentry, pathbuf, PATH_MAX);
-+	if (IS_ERR(path))
-+		path = NULL;
+ #ifdef CONFIG_KPROBES
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -1384,8 +1384,14 @@ static bool __within_kprobe_blacklist(un
+ 	/*
+ 	 * If 'kprobe_blacklist' is defined, check the address and
+ 	 * reject any probe registration in the prohibited area.
++	 * Note: this can return true during transition period where
++	 * (start_addr, end_addr) in the black list is shrinking
++	 * but old entry has not been removed yet. This is acceptable
++	 * because the worst case is that we reject more probes than
++	 * we should.
+ 	 */
+-	list_for_each_entry(ent, &kprobe_blacklist, list) {
++	guard(rcu)();
++	list_for_each_entry_rcu(ent, &kprobe_blacklist, list) {
+ 		if (addr >= ent->start_addr && addr < ent->end_addr)
+ 			return true;
+ 	}
+@@ -2478,7 +2484,7 @@ int kprobe_add_ksym_blacklist(unsigned l
+ 	ent->start_addr = entry;
+ 	ent->end_addr = entry + size;
+ 	INIT_LIST_HEAD(&ent->list);
+-	list_add_tail(&ent->list, &kprobe_blacklist);
++	list_add_tail_rcu(&ent->list, &kprobe_blacklist);
  
- 	integrity_audit_msg(AUDIT_INTEGRITY_DATA, d_inode(dentry), path,
- 			    "set_data", errmsg, -EACCES, 0);
+ 	return (int)size;
+ }
+@@ -2507,8 +2513,8 @@ static void kprobe_remove_area_blacklist
+ 	list_for_each_entry_safe(ent, n, &kprobe_blacklist, list) {
+ 		if (ent->start_addr < start || ent->start_addr >= end)
+ 			continue;
+-		list_del(&ent->list);
+-		kfree(ent);
++		list_del_rcu(&ent->list);
++		kfree_rcu(ent, rcu);
+ 	}
+ }
+ 
 
 
