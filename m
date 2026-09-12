@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9B0331203;
-	Sat, 12 Sep 2026 19:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BB235E1D5;
+	Sat, 12 Sep 2026 19:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242497; cv=none; b=YqK6a1JGKJOGvxwEF3Hj34OhpFpSMekdNTVv7sKexLBSHhQjuvdoXCqr7KurJe5tlDYzzvzYnjouy2nY8L03Og2Sd/ehkngIF4VPFFTM6pS7D4q3YAG+uBRWVc2GR6geOWEJzhOLus13Ffd3PoDpjikL+EdCTjEKuiNImOEhmeA=
+	t=1789242500; cv=none; b=ON/zaA0zd96nuZ8LzJ7D8qcm7zXuCC6LwlEFnGrLu9dBF72CvEKb284mp0IWLJ0BMz7emugWZ2WchoYzLQekRikMg+B4G3PeJKlYNFhTubzh+X4dVH06BwSHvsRuoZa6MkPsr2vPfFqygNqrpMkJrqZWmgNenca0kwBz758Ir60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242497; c=relaxed/simple;
-	bh=LzYkHOHFetmM+THa5nepg03wE4XnGRqzfiGL5qM+YnE=;
+	s=arc-20240116; t=1789242500; c=relaxed/simple;
+	bh=8Ji/TordrDKak8qPMaTY/0OEXvcE2p3GCl84Z4R1LXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EhbFnx5Ix4DbOhr7+98Dvz6JqxuFJPsCXfqMgBsQIxbzjiU0jWgW0ZZtceaQWlvSyNv9W/HL39ItEueYLZy4FaEJBy+S7QX4EWkj8zrzJiwfLS9R/0NZH/KGFYh5z3B6GRGnLzUM1aqdp1Ugz8Ij3od3NUFxTFszyOBBF8sX1QU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQY74Awo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HZtHJr/F6uepotD8A2DXGyQ4/6zUGT66kCDbvU45uzvRWOhjLuHZILGjS5vEeVgMPHSxoVbaXxMJurytiwt7N1nyJi3E38w6Ylxj8Y3mMf+U378xEMqYs9LGrvVsfHW7LjwGE36vT6cOzake1q+DCBR1FipihS59/Gfq0/oHAxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8+V9Js3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQY74Awo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A4B1F000FF;
-	Sat, 12 Sep 2026 19:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8+V9Js3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EDF81F000FF;
+	Sat, 12 Sep 2026 19:48:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242495;
-	bh=9bY9+Qi5RxOSwOwG5mnZY57m8QJ440xKIuqFu4wspbY=;
+	s=korg; t=1789242498;
+	bh=cFxJr0EyeHOl/IvoeWSIjiligfroaxoTIkyHyS/mQgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kQY74AwoMddDVQ7ZBotiN9VwmVvZKRN16fNAE91YCI/FLt/X/+lzxoA+E/w8P4KDq
-	 hRWxvCfHOzVGjq29uHZfmodlQzZ2wPm4HZs4RfE9SUspnr99JLTMDnFv/3p4gqtrNb
-	 QNcov6yeGc5QX6aq+5b4x1/clm3ZD+VF9jW9EYsU=
+	b=j8+V9Js36YoRROLb8iFWwaMniV9/4XPuXBKqMobQ0+XRW8aIiKBz5YFUldUdwh4BQ
+	 ldJ+35K9jOl5fjIOOuDs+ieX89Bucg2C0tDiw0epTv/BKnvN74Xednrc5KnbNK6biS
+	 mBNfsrgkDc6UQZf6n97+OTCLBT5VneJXURpSoTYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmet Sezgin Duran <ahmet@sezginduran.net>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 382/798] staging: sm750fb: gate dualview dataflow using g_dualview
-Date: Sat, 12 Sep 2026 09:00:10 +0200
-Message-ID: <20260912065525.909013459@linuxfoundation.org>
+Subject: [PATCH 5.10 383/798] greybus: audio: bound the topology section sizes against the fetched size
+Date: Sat, 12 Sep 2026 09:00:11 +0200
+Message-ID: <20260912065525.930991008@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,64 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmet Sezgin Duran <ahmet@sezginduran.net>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit d352778979d2eed09e266ed0f3a5e3ccd3983940 ]
+[ Upstream commit 33d8c7b794d2a30637c9d3fcb478f1d3222bef1e ]
 
-In sm750fb_setup and sm750fb_set_drv functions, the dualview
-related code is guarded by `sm750_dev->fb_count > 1` condition.
-That value is updated only after each framebuffer is registered,
-while both guards are used before any increment.
+gb_audio_gb_get_topology() fetches a topology blob of a module-supplied
+size, and gbaudio_tplg_parse_data() then walks it by adding the
+module-supplied size_dais, size_controls and size_widgets fields to
+form the control, widget and route section offsets. Those le32 sizes
+are never checked against the fetched blob, so a module reporting a
+small topology size but large section sizes makes the offsets point
+past the allocation, and parsing reads out of bounds.
 
-Current flow:
+Reject a topology whose section sizes do not fit within the fetched
+size before it is parsed.
 
-  lynxfb_pci_probe()
-    sm750fb_setup()                 // fb_count is 0
-    for each fb:
-      sm750fb_framebuffer_alloc()
-        lynxfb_set_fbinfo()
-          sm750fb_set_drv()         // fb_count is 0 or 1
-        register_framebuffer()
-        sm750_dev->fb_count++;      // fb_count is incremented
-
-Thus even if `dualview=1` parameter is passed down to the driver,
-fb_count is never > 1 at either check, so dualview dataflows are
-not selected and crtc->vidmem_size is never halved.
-
-Use `g_dualview` global variable instead of fb_count > 1 to correctly
-enable dualview capabilities.
-
-Fixes: a3f92cc94c61 ("staging: sm750fb: replace dual member of sm750_dev with fb_count")
-Signed-off-by: Ahmet Sezgin Duran <ahmet@sezginduran.net>
-Link: https://patch.msgid.link/20260521204425.82627-1-ahmet@sezginduran.net
+Fixes: 184992e305f1 ("greybus: audio: Add Greybus Audio Device Class Protocol helper routines")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260616-b4-disp-4352e8b0-v1-1-3e09f62e0ad5@proton.me
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/sm750fb/sm750.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/staging/greybus/audio_gb.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/staging/sm750fb/sm750.c b/drivers/staging/sm750fb/sm750.c
-index 36eb7e5418998..6e3451d08e013 100644
---- a/drivers/staging/sm750fb/sm750.c
-+++ b/drivers/staging/sm750fb/sm750.c
-@@ -597,7 +597,7 @@ static int sm750fb_set_drv(struct lynxfb_par *par)
- 	crtc = &par->crtc;
+diff --git a/drivers/staging/greybus/audio_gb.c b/drivers/staging/greybus/audio_gb.c
+index 9d8994fdb41a2..144591f1a5128 100644
+--- a/drivers/staging/greybus/audio_gb.c
++++ b/drivers/staging/greybus/audio_gb.c
+@@ -37,6 +37,19 @@ int gb_audio_gb_get_topology(struct gb_connection *connection,
+ 		return ret;
+ 	}
  
- 	crtc->vidmem_size = sm750_dev->vidmem_size;
--	if (sm750_dev->fb_count > 1)
-+	if (g_dualview)
- 		crtc->vidmem_size >>= 1;
++	/*
++	 * The size_* fields are supplied by the module and are used by
++	 * gbaudio_tplg_parse_data() to compute offsets into the blob; make
++	 * sure the sections fit within the fetched topology, so walking it
++	 * cannot read out of bounds.
++	 */
++	if ((u64)le32_to_cpu(topo->size_dais) + le32_to_cpu(topo->size_controls) +
++	    le32_to_cpu(topo->size_widgets) + le32_to_cpu(topo->size_routes) >
++	    size - sizeof(*topo)) {
++		kfree(topo);
++		return -EINVAL;
++	}
++
+ 	*topology = topo;
  
- 	/* setup crtc and output member */
-@@ -925,7 +925,7 @@ static void sm750fb_setup(struct sm750_dev *sm750_dev, char *src)
- 
- NO_PARAM:
- 	if (sm750_dev->revid != SM750LE_REVISION_ID) {
--		if (sm750_dev->fb_count > 1) {
-+		if (g_dualview) {
- 			if (swap)
- 				sm750_dev->dataflow = sm750_dual_swap;
- 			else
+ 	return 0;
 -- 
 2.53.0
 
