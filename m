@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA10C2E06E4;
-	Sat, 12 Sep 2026 12:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A140373BF2;
+	Sat, 12 Sep 2026 12:38:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216698; cv=none; b=UZ6IBx3FrfELXI6HaLNz8TzL4fqM+xRKhzb7dKCcWLT8fH64ZhtvKXJ/NGNtYMBzh8XB59zGFjphNgsqGLtBn2w8X3Ieo1gcw/kPMoov8hdKHXRI2f2Z/v8G1SO1P+i/uVmqmQ+V+2lBHEfuq0avKdTmWnOWWvC6toOV4QKMQoE=
+	t=1789216704; cv=none; b=r4mTeBAcGUQ+AfbkjSxbYI3qru8OhKuDd2z7da0lmG7KRwDtoGfPOV8bN6EQvMz54ke1xUs23460MYuC4I7d10XWfZF9wzLLKdmHCkoivhwFmrPcY67Z7LKD7PdCCasNzvCDr/1Jxs6JaSaCisverI3FqtTQw75JhN4XR8Cz+LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216698; c=relaxed/simple;
-	bh=iwaahnmnKgYsp17jTOHRPh1njUhzcORlp0VBrKopjM4=;
+	s=arc-20240116; t=1789216704; c=relaxed/simple;
+	bh=awyu5zys2+W/Gcsbk6WZdIhJnF5wf4rpmVZ0ywTBtNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mfVb6LQIoi7LLg+5TandyQVMs59SwU6R0grJk61P6BT0fyT3xkkC7sZc1YPPT37WtATzrhhQordFR6U+8C6fZXUcVj79+D+Af/mAdGNF2X5gWesQBq1MZOc5TMJza11XX2jLHco+7bzixdqro9ld2r5WVG46oQA25fdzSp0LAG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uSyB3WeX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YIfOuG4gtODOCHGUInjayrUmFt0B8NAydvLQw16hNNHg0V4E42Xrh+stDyz1Uwe1r3Q0ucd9glMulVh/u4sQswPEqxP9xKbqwpVpBS/44959CdjhWImZLftlf+Kvkncf9iRkLWhhYCJIDLtaMN4gJaHo0MUyhRFAzuJNOQiLM6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elpgpzL3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uSyB3WeX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9511D1F000FF;
-	Sat, 12 Sep 2026 12:38:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elpgpzL3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9CC41F000FF;
+	Sat, 12 Sep 2026 12:38:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216697;
-	bh=No2r/C3Tjyimo8RRtQRoACEPG5BfXyl1CqgCcE5NeFo=;
+	s=korg; t=1789216702;
+	bh=WgmxroV6UehcoXG/vM1EkjsXepiB0yogNbtVcwrFwlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uSyB3WeXfiXToXnZf7XQIY/S+U21Ori9XnEVKY395lwgcjKI9dbjYW1hjKDeL2RFK
-	 06rZNYCY8se5YKTt7iztcwS9bwtikYtnM1ARc+O1QbhRvZ5Ly7crxQQEziPIdTaPpE
-	 kmt8AE8pIYzbz2ATrX0oaMZYqKqZHY1Qrbf5CPc0=
+	b=elpgpzL3ju0lIeM9WngZFTgBZWxw5F6JkLYlM6ctCJbSNxIn/mOfgJdhk2Q0laz71
+	 V+KalWLxWtPNZzgjrl5wQVQGb5dRlIP1stC66SM81Ne4iNhhmPjrZk22fZtoXWPK2m
+	 B/i7VactCYHTgB26Q0dK3A2COoyeUfIYkA/NCUlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng-Han Wu <hank20010209@gmail.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0747/1376] selftests/zram: fix kernel_gte() for POSIX sh
-Date: Sat, 12 Sep 2026 08:52:53 +0200
-Message-ID: <20260912065624.192297268@linuxfoundation.org>
+Subject: [PATCH 6.12 0748/1376] slab: simplify init_kmem_cache_nodes() error handling
+Date: Sat, 12 Sep 2026 08:52:54 +0200
+Message-ID: <20260912065624.214673524@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,53 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng-Han Wu <hank20010209@gmail.com>
+From: Vlastimil Babka <vbabka@suse.cz>
 
-[ Upstream commit 649ba27dfac784427a01f9c95c09ecbcb88900d8 ]
+[ Upstream commit 9d4e6ab865c48c70e684b176d3ee1574d092626f ]
 
-Commit fc4eb486a59d ("selftests/zram: Skip max_comp_streams
-interface on newer kernel") added kernel_gte() to zram_lib.sh.
-The function uses the bash-specific [[ ... ]] conditional, but
-zram selftests source this file while running under /bin/sh.
+We don't need to call free_kmem_cache_nodes() immediately when failing
+to allocate a kmem_cache_node, because when we return 0,
+do_kmem_cache_create() calls __kmem_cache_release() which also performs
+free_kmem_cache_nodes().
 
-On systems where /bin/sh is dash, such as Debian, the following
-test fails:
-
-  dash -c '
-  kernel_major=6; kernel_minor=1; major=6; minor=0
-  if [ $kernel_major -gt $major ]; then
-      echo ok
-  elif [[ $kernel_major -eq $major && $kernel_minor -ge $minor ]]; then
-      echo ok
-  fi'
-
-with:
-
-  dash: 5: [[: not found
-
-Use separate POSIX test expressions joined by && instead.
-
-Fixes: fc4eb486a59d ("selftests/zram: Skip max_comp_streams interface on newer kernel")
-Signed-off-by: Cheng-Han Wu <hank20010209@gmail.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Stable-dep-of: 4c6eb712a91f ("wifi: ath12k: fix stride mismatch in mac_phy_caps_parse()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/zram/zram_lib.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/slub.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/zram/zram_lib.sh b/tools/testing/selftests/zram/zram_lib.sh
-index 21ec1966de76c..0d44d83888f9d 100755
---- a/tools/testing/selftests/zram/zram_lib.sh
-+++ b/tools/testing/selftests/zram/zram_lib.sh
-@@ -37,7 +37,7 @@ kernel_gte()
+diff --git a/mm/slub.c b/mm/slub.c
+index b61225c3503bf..68407f1177482 100644
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -5323,10 +5323,8 @@ static int init_kmem_cache_nodes(struct kmem_cache *s)
+ 		n = kmem_cache_alloc_node(kmem_cache_node,
+ 						GFP_KERNEL, node);
  
- 	if [ $kernel_major -gt $major ]; then
- 		return 0
--	elif [[ $kernel_major -eq $major && $kernel_minor -ge $minor ]]; then
-+	elif [ $kernel_major -eq $major ] && [ $kernel_minor -ge $minor ]; then
- 		return 0
- 	fi
+-		if (!n) {
+-			free_kmem_cache_nodes(s);
++		if (!n)
+ 			return 0;
+-		}
  
+ 		init_kmem_cache_node(n);
+ 		s->node[node] = n;
 -- 
 2.53.0
 
