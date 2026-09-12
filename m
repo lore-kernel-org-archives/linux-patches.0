@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BBD380FD6;
-	Sat, 12 Sep 2026 08:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E2A38E8A8;
+	Sat, 12 Sep 2026 08:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200644; cv=none; b=o57DbCZDEP6tiKqmbXvGwEwFCz4uc/hHjELVfNecVFgtKi5CzTxdwb1bOVWRpIbmO74l0YkYm9W09xYHfbfd4FAjw3VKdX0FQpZSl9RyNUFYcUr++eNMXTe/O8TFdXpPiVIiiGm+QH88bKl9r0MiOdE96x5T4OZMXFqHJNh3/9A=
+	t=1789200649; cv=none; b=hsqhkXKx5UUjM/8KdpLd4utHJnT3C9hBTDwcED7O3jjW4QKTtfu1hkV9uWtgi4cjrqIR4qMky0m1clBsGmluPkKS4x23v7swa/eGqKRrjlVjsxx0D08ILV8oS8lWWG/ny+YKKVcjU1k/9Sf04yyqsDBL2pNwK9ga4KJHcKPWtY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200644; c=relaxed/simple;
-	bh=jvSeYl/hvgg7LWO+IXcnbjM9uWJa9qSbFmyGm4gQb9c=;
+	s=arc-20240116; t=1789200649; c=relaxed/simple;
+	bh=3iutN3AJTrX9N14f0lAAJsoN9eXiF8ngZAG0lX3Cq/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t+SgS+OZotMO1KqKTKfBjwiAbiH3KSTqGfHfXDs+42N/ZckMSIpXOU+EFg89IlXkxlb3zX1FDZoGC6cRBXoC2+GUuVK7jamYsDlnIDZAMYFwEoZ1nSi6NMI4rwYrOUQrrnUU7TKUAnAM9h3AEOdIMhqtOW7qkyNjk78QXWc8aEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Icom8Mo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hErTkUQVVnC08CyctU0zLA0JLWlTEHAkVxax2hvUOXPDIBS9OeQhH/1JYPx/Bisnz4yt4JXxCZ5etbfrKOUi+x8qCo/AvxSn/LPGONKNgS4O/BwfuTQzy6G04I7KXtYfSZbHNklVNZrQH2Vkic9GPhoUflhJR5tumtlmPzwe7tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U60SdNJY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Icom8Mo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8031F000FF;
-	Sat, 12 Sep 2026 08:10:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U60SdNJY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5A341F000FF;
+	Sat, 12 Sep 2026 08:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200642;
-	bh=7WXl8A3AzZ9tz3XXPY44Q1AZTlwLq0UxGPtSksS2QKM=;
+	s=korg; t=1789200648;
+	bh=zBGs1wXf7xHpjd4SAWJY6lUfU55m4fdu6RYTK+dBnJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Icom8MoaU8H/YyCsqlBifsFwwiWweucUP8/LFQmFRbxjYj9RPQFSXmljXp8GsbHz
-	 8WljOSzFRGflbvpDzD/iJTo5vukpI+5X6vDU6rY2gYH4nu+1utliu6eki35nNFoucV
-	 zgt/CrW9KXVl3tVx6STMG0Y6ih4+ONTjUAP6vtYA=
+	b=U60SdNJYm/xm6rwafTtpbufmKwpUH+oFRSsHaMVx3thQ6xnnKDUcfYSo8vhaI8z2N
+	 qdmOmykFRzzgeZ8wxab2zz6xGEp0G5ZEbHR0IPOUormhLYAN6pPCqfqlp6BC9FEjLe
+	 /7A7T8Lq6aXxQUzL7RlGpaDGczvrhb1eEsHXvWN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Imran Shaik <imran.shaik@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0833/1815] clk: qcom: qcm2290: Update DISPCC and GPUCC GDSC *wait_val values
-Date: Sat, 12 Sep 2026 08:43:03 +0200
-Message-ID: <20260912065708.469457528@linuxfoundation.org>
+Subject: [PATCH 7.2 0834/1815] clk: qcom: gpucc-qcm2290: Drop pm_clk handling
+Date: Sat, 12 Sep 2026 08:43:04 +0200
+Message-ID: <20260912065708.492656228@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,63 +55,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Imran Shaik <imran.shaik@oss.qualcomm.com>
 
-[ Upstream commit 08cfbfd81dd6e27167b1331e0c485bd0414cf5fe ]
+[ Upstream commit 1b2e1f5a37dd4c856a9269bc7e5988c642db5847 ]
 
-Update the QCM2290 DISPCC and GPUCC GDSC wait_val fields to match the
-hardware default values. Incorrect settings can cause the GDSC FSM to
-stuck, leading to power on/off failures.
+Drop the pm_clk handling from QCM2290 GPUCC driver as the required GCC AHB
+clocks are kept always enabled by the GCC driver during probe.
 
-Fixes: cc517ea3333f ("clk: qcom: Add display clock controller driver for QCM2290")
-Fixes: 8cab033628b1 ("clk: qcom: Add QCM2290 GPU clock controller driver")
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260718-shikra-dispcc-gpucc-v6-7-62703e05ef0f@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260718-shikra-dispcc-gpucc-v6-8-62703e05ef0f@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 7274ea68d2b4 ("clk: qcom: gpucc-qcm2290: Keep the critical clocks always-on from probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-qcm2290.c | 3 +++
- drivers/clk/qcom/gpucc-qcm2290.c  | 6 ++++++
- 2 files changed, 9 insertions(+)
+ drivers/clk/qcom/gpucc-qcm2290.c | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-diff --git a/drivers/clk/qcom/dispcc-qcm2290.c b/drivers/clk/qcom/dispcc-qcm2290.c
-index 1b796698dff5a..d32fd3f8d7acd 100644
---- a/drivers/clk/qcom/dispcc-qcm2290.c
-+++ b/drivers/clk/qcom/dispcc-qcm2290.c
-@@ -451,6 +451,9 @@ static const struct qcom_reset_map disp_cc_qcm2290_resets[] = {
- 
- static struct gdsc mdss_gdsc = {
- 	.gdscr = 0x3000,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "mdss_gdsc",
- 	},
 diff --git a/drivers/clk/qcom/gpucc-qcm2290.c b/drivers/clk/qcom/gpucc-qcm2290.c
-index 8d397cadc86aa..4e97a02d942ad 100644
+index 4e97a02d942ad..f14b4620090ef 100644
 --- a/drivers/clk/qcom/gpucc-qcm2290.c
 +++ b/drivers/clk/qcom/gpucc-qcm2290.c
-@@ -296,6 +296,9 @@ static struct clk_branch gpu_cc_hlos1_vote_gpu_smmu_clk = {
- static struct gdsc gpu_cx_gdsc = {
- 	.gdscr = 0x106c,
- 	.gds_hw_ctrl = 0x1540,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0x2,
- 	.pd = {
- 		.name = "gpu_cx_gdsc",
- 	},
-@@ -308,6 +311,9 @@ static struct gdsc gpu_gx_gdsc = {
- 	.clamp_io_ctrl = 0x1508,
- 	.resets = (unsigned int []){ GPU_GX_BCR },
- 	.reset_count = 1,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0x2,
- 	.pd = {
- 		.name = "gpu_gx_gdsc",
- 	},
+@@ -7,7 +7,6 @@
+ #include <linux/clk-provider.h>
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+-#include <linux/pm_clock.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/regmap.h>
+ 
+@@ -385,16 +384,6 @@ static int gpu_cc_qcm2290_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = devm_pm_clk_create(&pdev->dev);
+-	if (ret)
+-		return ret;
+-
+-	ret = pm_clk_add(&pdev->dev, NULL);
+-	if (ret < 0) {
+-		dev_err(&pdev->dev, "failed to acquire ahb clock\n");
+-		return ret;
+-	}
+-
+ 	ret = pm_runtime_resume_and_get(&pdev->dev);
+ 	if (ret)
+ 		return ret;
 -- 
 2.53.0
 
