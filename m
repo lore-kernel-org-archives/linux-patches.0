@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6051D282F03;
-	Sat, 12 Sep 2026 16:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2499F47B425;
+	Sat, 12 Sep 2026 16:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232270; cv=none; b=gDueC3FtTJVC+N2UmIRngJXjvmEXt9LKbmsK9gvsUffL/lV0iDU9R6jFF9NaKGMFiqpI3iklLaRK7N3e1BnjdnLG4Y8hzBxsmrv3zi538uhzyhpOOEI7zzMwhXZ8ij2nxWZX6KVoAkbksxlKFXdhJ9CiJZlvYjgmBQkzo6jjBW0=
+	t=1789232275; cv=none; b=lUnetBlnvkm2HKuFZTlO2KBrcdyerBtUP/x3O5XGANeMzSCFrWKDDF/FskPzNx0fpkHwayDWtdsRWnN6QHG+FDO0XsvBbEMLdjVdCWvz7Zd6gv1Vxzh/dNU+YIvm97VfuKpm2JTRNTUvVJTmVkruYul5NOeUVQm17DD9aleRCSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232270; c=relaxed/simple;
-	bh=/rvsU2yE4kkcXoDmWg/OO6EbINGJcrKq6mJUnDCeYgY=;
+	s=arc-20240116; t=1789232275; c=relaxed/simple;
+	bh=PB9w7WvqsWVIBz+FZEi5ubs0lpg956lLa6GB85HNJbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YKUAoBGAYCUaVUxwRHFmCwvpYRxUNPTIwCL8DIXmZbfRIvrui63ofqLJ/6Im134NrnXjOfelmf/kV63fJIo2/sIopIPr5c9e1UtAYV6/Mr4xOhlqQu2KLlkr724tls1BbunZAxoyXTj7Bv45TaXiCo5uwja2LFd0cvl6kAcp12w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gal9vXWN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MU+KdqM8gT5DKecIjEUOcY1Rqf8g4SvG3YXGz8+oolhuByGSzHkUxIxXvVfSIW53IAHSJbgKZPlCyPvwbzJ6El91XKMxA+OcbFUBp4j8Hvh4YWUspuRwGqbQ0/VIupuejQNi+3KQzOwbHYA5UZ605XuVUxIGEMj8VXb1jgpd0vU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDQh+fsd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gal9vXWN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F771F000FF;
-	Sat, 12 Sep 2026 16:57:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDQh+fsd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECDB41F000FF;
+	Sat, 12 Sep 2026 16:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232269;
-	bh=GKJtfM7+DxzndIm3Q0EFwID0j5R0l1RpxpJYXL3V4vo=;
+	s=korg; t=1789232274;
+	bh=bnxEtRGeM2qoAqTFmZNm4F+ZqNymI+JGLkm80mULYj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gal9vXWNElqg+53Ntu2OpLDGJlhjblfL7lG5bIyER51ISuwb5Zdo2W3pN3N6xu0EU
-	 9tfUX2IU1qfdHVoEmPr57eLP6cbpJlUlqTDgfqXTJpnJOu7BW7snZhVa1wQw+9RMta
-	 FtJEKH83wE6xv13b9Xq7AmpUWT0sz6viMbz4vhLg=
+	b=zDQh+fsduAaC+UhRtmZjp4ycRFTLQCQ9EraXCsX0edLP6lmFkhA0+roFzZng4xFC1
+	 naZNLvBjWNNIHcjjN7KLxeBRYTXfJKzDTA/avD4hVvoCtXVcHCivIp6bDrNnLIWSSI
+	 LiGGzKsRiKwpoaAwjXrbMtLBDzNjQSDQU/4Iq+Ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1168/1191] arm64: dts: qcom: sm8550: Update idle state time requirements
-Date: Sat, 12 Sep 2026 09:04:56 +0200
-Message-ID: <20260912065614.373623666@linuxfoundation.org>
+Subject: [PATCH 6.1 1169/1191] arm64: dts: qcom: sm8550: Separate out X3 idle state
+Date: Sat, 12 Sep 2026 09:04:57 +0200
+Message-ID: <20260912065614.395330478@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,73 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit ad6556fb45d4ab91ad786a2025cbe2b0f2e6cf77 ]
+[ Upstream commit 28b735232d5e16a34f98dbac1e7b5401c1c16d89 ]
 
-The idle state entry/exit/residency times differ from what shipped on
-production devices, mostly being overly optimistic in entry times and
-overly pessimistic in minimal residency times. Align them with
-downstream sources.
+The X3 core has different entry/exit/residency time requirements than
+the big cluster. Denote them to stop confusing the scheduler.
 
 Fixes: ffc50b2d3828 ("arm64: dts: qcom: Add base SM8550 dtsi")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20231218-topic-8550_fixes-v1-12-ce1272d77540@linaro.org
+Link: https://lore.kernel.org/r/20231218-topic-8550_fixes-v1-11-ce1272d77540@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index a36e85c48a07f..2e7421d80a23b 100644
+index 2e7421d80a23b..20790336eada5 100644
 --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -259,9 +259,9 @@ LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
- 				compatible = "arm,idle-state";
- 				idle-state-name = "silver-rail-power-collapse";
- 				arm,psci-suspend-param = <0x40000004>;
--				entry-latency-us = <800>;
-+				entry-latency-us = <550>;
- 				exit-latency-us = <750>;
--				min-residency-us = <4090>;
-+				min-residency-us = <6700>;
+@@ -274,6 +274,16 @@ BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
+ 				min-residency-us = <8136>;
  				local-timer-stop;
  			};
- 
-@@ -270,8 +270,8 @@ BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
- 				idle-state-name = "gold-rail-power-collapse";
- 				arm,psci-suspend-param = <0x40000004>;
- 				entry-latency-us = <600>;
--				exit-latency-us = <1550>;
--				min-residency-us = <4791>;
-+				exit-latency-us = <1300>;
-+				min-residency-us = <8136>;
- 				local-timer-stop;
- 			};
++
++			PRIME_CPU_SLEEP_0: cpu-sleep-2-0 {
++				compatible = "arm,idle-state";
++				idle-state-name = "goldplus-rail-power-collapse";
++				arm,psci-suspend-param = <0x40000004>;
++				entry-latency-us = <500>;
++				exit-latency-us = <1350>;
++				min-residency-us = <7480>;
++				local-timer-stop;
++			};
  		};
-@@ -280,17 +280,17 @@ domain-idle-states {
- 			CLUSTER_SLEEP_0: cluster-sleep-0 {
- 				compatible = "domain-idle-state";
- 				arm,psci-suspend-param = <0x41000044>;
--				entry-latency-us = <1050>;
--				exit-latency-us = <2500>;
--				min-residency-us = <5309>;
-+				entry-latency-us = <750>;
-+				exit-latency-us = <2350>;
-+				min-residency-us = <9144>;
- 			};
  
- 			CLUSTER_SLEEP_1: cluster-sleep-1 {
- 				compatible = "domain-idle-state";
- 				arm,psci-suspend-param = <0x4100c344>;
--				entry-latency-us = <2700>;
--				exit-latency-us = <3500>;
--				min-residency-us = <13959>;
-+				entry-latency-us = <2800>;
-+				exit-latency-us = <4400>;
-+				min-residency-us = <10150>;
- 			};
+ 		domain-idle-states {
+@@ -373,7 +383,7 @@ CPU_PD6: power-domain-cpu6 {
+ 		CPU_PD7: power-domain-cpu7 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++			domain-idle-states = <&PRIME_CPU_SLEEP_0>;
  		};
- 	};
+ 
+ 		CLUSTER_PD: power-domain-cluster {
 -- 
 2.53.0
 
