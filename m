@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD8A37E5D1;
-	Sat, 12 Sep 2026 13:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5751247126B;
+	Sat, 12 Sep 2026 13:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220506; cv=none; b=LGipgUv6CYK0wPIutaDPxLw6wUm9hhl1yh/2qucPdYz5H8xkgykc1MUrFm7x//HKzVLJmVX6XAxOskDtJbjfPKMKJBGoKzaOTVg9AwnD/zmgV9cbJPl9A+sqwKLihGPTncboRuLeCJ+HAW0zNtrQP25PYuvJgsfIFfS09bAzKBM=
+	t=1789220511; cv=none; b=ezzAR1J3FAaNMZiuwauEPuF8Q7DZafSW0Im8K+gYEQ0vLcdsxG533dbkzqwJHoFarsBPKemunLyj4XGN3LNY70QX921TWyKXOfvNYB+pFDyTPxN5Lv+0fHiEidk3pzKpD/bLAU24C4J2BpEdq23m7stHlQ8j3sJSiUWLYCVtv7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220506; c=relaxed/simple;
-	bh=DTHT22HdlZI+h12szVB8PkMYjp2GtWQCZukSivIw/Qc=;
+	s=arc-20240116; t=1789220511; c=relaxed/simple;
+	bh=54L6+vqXQjLpzi4905l4d6ShfoaoyjZYj1NeuZ2Ut0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R0fMQ9z7rbIic6fKUdVnaGV/Ono3ia50by9jNsa7j4SfVmKdVrNs3rZ/8Fj2smrFXmb1URMtpWd6KxGfpXeFCp1ajPKZ0h2zFyV8HRTSdLjxWYlh1dbXJXySY2b9Z8KgJHy39GcO2HOUNfzENLf9BdTTKg6aMb0n5iaiw0rBd5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X76PEgrO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O1DQqeTRCM7ddp14k9YT/OHJHPGs++I4d5W/F3sQr4X/SMYsADaDOyNBmpgXXp5ps6th4LXQdGxCPye5Nkuk86UBHMRZ7fdCx0LqMcVU9yjL9s4UBllz5qIay/yGkPOaqhV9roPWhIoFVJ692T/quFbTkLAGo8ifakNR4D2NW2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOR+GzoP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X76PEgrO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B9F1F000FF;
-	Sat, 12 Sep 2026 13:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOR+GzoP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED701F000FF;
+	Sat, 12 Sep 2026 13:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220504;
-	bh=KjSgP0pZlMUM0QRpHVXYv8m3akfUpFkNs5EWxpTVttQ=;
+	s=korg; t=1789220509;
+	bh=fs3wHLEA9/WV3eIhgeeOYrirSla9i6HZSBFn2B1uRKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X76PEgrOOPbX81xHrksaDfBPOwwCv9bJ86z46OPk30tiKd4+J+GoG7t8BMxitzeMq
-	 EuCBYis1lT5fqMsGqILOIVYzjUxG5GTLIhGzw/hRPYcvlv8KMw3dzUbiyN5NwToX2V
-	 90LApofilN158kRKD2hmS0NuqzQQValN0+S4Z2HA=
+	b=sOR+GzoPATBrWoQDpR7dmKeQ+GTQ5DW3pU6FUVGTHefWbFQdyi8Hk4gMXZdfhJB8F
+	 QwnsCOlrpHvRbDWmMHSlwXcRaHM0Gwp/v4RPMGTRFbKSJmDyCLd1QGumFjT6Sl2+Vt
+	 pshyqz3EvVmjTv5uAQIpi0FFU+tR/vM2WXR6We90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.6 0190/1424] arm64: compat: Fix decrementing LDM/STM alignment emulation
-Date: Sat, 12 Sep 2026 08:43:42 +0200
-Message-ID: <20260912065611.542338916@linuxfoundation.org>
+	Christopher Tolang <christophertolang@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 0191/1424] ASoC: amd: yc: Add DMI entry for MSI Thin A15 B7UC
+Date: Sat, 12 Sep 2026 08:43:43 +0200
+Message-ID: <20260912065611.564620711@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,54 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Christopher Tolang <christophertolang@gmail.com>
 
-commit f5b8b9037df387394a73aab47c5437bbac975077 upstream.
+commit e2aa5ad3be41accfcdcccc62348f21af7baa3a38 upstream.
 
-The compat alignment emulator inherited unsigned long data addresses from
-the 32-bit ARM implementation.
+This model requires an additional detection quirk to enable the internal
+microphone.
 
-In do_alignment_ldmstm(), nr_regs is an unsigned int holding the transfer
-size. The function uses the same address addition for both transfer
-directions, negating nr_regs first for a decrementing LDM or STM. The
-32-bit negation wraps before the addition, so the handler adds nearly
-4 GiB instead of subtracting the transfer size.
-The resulting address lies outside the compat task's address space, so
-decrementing LDM/STM emulation fails, while incrementing forms work.
-
-For example, a backwards-moving copy routine using decrementing LDM/STM can
-take an alignment fault when called with unaligned pointers. The compat
-handler should emulate the transfer, but this bug instead causes SIGBUS.
-
-The offset negated in do_alignment_finish_ldst() is offset_union.un, which
-is already unsigned long and does not have this width mismatch.
-
-Make nr_regs unsigned long so its negation and the address arithmetic
-use the same width.
-
-Fixes: 3fc24ef32d3b ("arm64: compat: Implement misalignment fixups for multiword loads")
+Fixes: fa991481b8b2 ("ASoC: amd: add YC machine driver using dmic")
 Cc: stable@vger.kernel.org
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Assisted-by: OpenAI Codex
+Signed-off-by: Christopher Tolang <christophertolang@gmail.com>
+Link: https://patch.msgid.link/20260823113221.19744-1-christophertolang@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/compat_alignment.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/arch/arm64/kernel/compat_alignment.c
-+++ b/arch/arm64/kernel/compat_alignment.c
-@@ -114,8 +114,8 @@ do_alignment_ldrdstrd(unsigned long addr
- static int
- do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
--	unsigned int rd, rn, nr_regs, regbits;
--	unsigned long eaddr, newaddr;
-+	unsigned int rd, rn, regbits;
-+	unsigned long eaddr, newaddr, nr_regs;
- 	unsigned int val;
- 
- 	/* count the number of registers in the mask to be transferred */
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -742,6 +742,13 @@ static const struct dmi_system_id yc_acp
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Thin A15 B7UC"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Thin A15 B7VE"),
+ 		}
+ 	},
 
 
