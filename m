@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5084F4D5A1;
-	Sat, 12 Sep 2026 07:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2300C4D5A1;
+	Sat, 12 Sep 2026 07:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198605; cv=none; b=WTJIsHHJCKtIHDXoVaAaKiDb2AXWFV65ib+Ct1ISgNc0d+MSLS0KarEa3f8GRKoc/5vpLFl1X9JPw0Om5qtd3cNn9gqW9QH5I5VIL+zx3R1iVWRbjxlWDp6LjsTK49OFCfQP+5B7HHNuIKXxsCL1NJ0d+o3TenX9r/VTT7hvjZY=
+	t=1789198610; cv=none; b=HYtMZ8nt7SOplBf/Jiyci6CAxBKMxpC/WRKiwo8/LRKXvOyNDQ3e3KQC+aTOi4MJKttse7aqblE2exXHgk+jB+fNk3Vdrn28E7QJ/3Sv8oZdbmc4j4tsYOxzo19Z2rQIgMmcK9BM3/MFlZMwKGp6iO7FyoZeWjBiu+oXX2D6jl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198605; c=relaxed/simple;
-	bh=JC2TNxapcmXUwsPzMgMeboC8E1JyRMNSAgRi7e0W1xE=;
+	s=arc-20240116; t=1789198610; c=relaxed/simple;
+	bh=+E0qjgaJG7OpLbfQOxm9/pT6CSD0surI98mhtBewB5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I9+eIiJQFtn/dyGHSLHUTXLRSSS7PSUMn/qtXBScn3aCbCABQwlD1Pp7ENGazbAJNsYxQA81ARE7B4ZQH57vxhmGrVRp5re4QN2PGKgIxT0Wpthd/ogst2hofo2S5EAUwRCx6D22o/OF5pcV0QuVvGELPL2cvEt9gytZrjujuIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPDnkAyJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ecrZjDYjpB1u2KUljZr9XMK8QqeTC8o71BIdRed78+c85X/0amny00U3VsKHQZ0jsqLJt7pPsoEdC+qxivjQZtirFdcewC5EhKKh9Zk/e18eqWIB7MShC0iszlWGdLQlLSuZk3dz3nvQ/wtGEUEErePIX4tASkfS+lLtgoiKy20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTpCd9fV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPDnkAyJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1B01F000FF;
-	Sat, 12 Sep 2026 07:36:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTpCd9fV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2061F000FF;
+	Sat, 12 Sep 2026 07:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198604;
-	bh=Pp1n5JiAT2s6MwLz8jPJfs14EnDLFaa3hMJ289osfWA=;
+	s=korg; t=1789198609;
+	bh=tDKlxX5r1qcGVpiud35iEKjS/jzEBe48kFpXNTKkDWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qPDnkAyJOoJlH/RT99a429n300JYVrd5yKa/WA3fOrLP6JJrbr34GowJl4P47mTHp
-	 bnxri6tFK3NrFMX5aIMvZH7mym48F3cOo1l/uG/KLPaqtke0Ovy1SE/tpefRh3JAAf
-	 0X9kKGNpL5yzhfdBtczpHnNF8YY8+9vGr9FiOmYo=
+	b=hTpCd9fVdIT4syWkeKSIHnM43GsoMFfpI2H5GTxnL9rEuMQ+G+foUbapH9wtC7Pv+
+	 vcAwREdFhaxsd/cesP6hJfY/WZ/Dy2dMRXaXHgrPoT2b5CfIt/BTqOj2N0GKPlKVbH
+	 YkiHRUkWIsBFIvfLj62KDoGG+JYk/0ItcsIkjFPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Kai-Heng Feng <kaihengf@nvidia.com>,
+	Koba Ko <kobak@nvidia.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Richard Cheng <icheng@nvidia.com>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0362/1815] RDMA/hfi1: Free RX data on late probe failure
-Date: Sat, 12 Sep 2026 08:35:12 +0200
-Message-ID: <20260912065657.404038809@linuxfoundation.org>
+Subject: [PATCH 7.2 0409/1815] cxl/features: Reject Get Feature count larger than the output buffer
+Date: Sat, 12 Sep 2026 08:35:59 +0200
+Message-ID: <20260912065658.495244402@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,39 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Richard Cheng <icheng@nvidia.com>
 
-[ Upstream commit 8e17e101e04a3dc062e2719da57ff78c1c060632 ]
+[ Upstream commit 4bf6bac375076ced2fa4b3fef8739bd985f93456 ]
 
-hfi1_init_dd() allocates the shared AIP/VNIC RX support before returning.
-If hfi1_init() or hfi1_register_ib_device() later fails, init_one() tears
-down the device data without calling hfi1_free_rx(). This leaks netdev_rx
-and its dummy netdev.
+cxlctl_get_feature() sizes its output buffer from the user's
+fwctl_rpc.out_len, but the device is told to write
+cxl_mbox_get_feat_in.count bytes into rpc_out->payload, which is a
+separate user-controlled value. Nothing bounds count against out_len, so
+a small out_len with a large count overflows the kvzalloc()'d buffer.
+A heap OOB write reachable from FWCTL_RPC.
 
-Free the RX support after IB unregistration and before postinit_cleanup(),
-as done on normal device removal.
+Reject requests where count exceeds the available payload room, before
+allocating.
 
-Fixes: 4730f4a6c6b2 ("IB/hfi1: Activate the dummy netdev")
-Link: https://patch.msgid.link/20260708-clean-init-one-hfi1-v1-7-b9e9641268a5@nvidia.com
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 5908f3ed6dc2 ("cxl: Add support to handle user feature commands for get feature")
+Reviewed-by: Kai-Heng Feng <kaihengf@nvidia.com>
+Reviewed-by: Koba Ko <kobak@nvidia.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Richard Cheng <icheng@nvidia.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260626104102.53892-2-icheng@nvidia.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/init.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/cxl/core/features.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hfi1/init.c b/drivers/infiniband/hw/hfi1/init.c
-index 3a408399f9ab8..11141a1b950fd 100644
---- a/drivers/infiniband/hw/hfi1/init.c
-+++ b/drivers/infiniband/hw/hfi1/init.c
-@@ -1686,6 +1686,7 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 			hfi1_device_remove(dd);
- 		if (!ret)
- 			hfi1_unregister_ib_device(dd);
-+		hfi1_free_rx(dd);
- 		postinit_cleanup(dd);
- 		if (initfail)
- 			ret = initfail;
+diff --git a/drivers/cxl/core/features.c b/drivers/cxl/core/features.c
+index 8731b95dd0b5e..d50e6b58d8fdb 100644
+--- a/drivers/cxl/core/features.c
++++ b/drivers/cxl/core/features.c
+@@ -474,6 +474,10 @@ static void *cxlctl_get_feature(struct cxl_features_state *cxlfs,
+ 	if (!count)
+ 		return ERR_PTR(-EINVAL);
+ 
++	if (out_size < offsetof(struct fwctl_rpc_cxl_out, payload) ||
++	    count > out_size - offsetof(struct fwctl_rpc_cxl_out, payload))
++		return ERR_PTR(-EINVAL);
++
+ 	struct fwctl_rpc_cxl_out *rpc_out __free(kvfree) =
+ 		kvzalloc(out_size, GFP_KERNEL);
+ 	if (!rpc_out)
 -- 
 2.53.0
 
