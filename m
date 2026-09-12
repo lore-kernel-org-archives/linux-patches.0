@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E74330B14;
-	Sat, 12 Sep 2026 14:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F216FCA6F;
+	Sat, 12 Sep 2026 14:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223664; cv=none; b=ifkUQSj6OCZqq5eblhbkRRYWpyOm9yUcnhHl8whq6/+Yla0DA5Faf4HqJETQfWsHdq0CIgMEh+7w39zEpXbIk6dayBkyO2VPq4F8UjX5vTpGTUFqnge7iPSx88iuahNPf998EniIJqgx79fr/AUTW/VQ3HYgXGDmrwubDq+Ve+c=
+	t=1789223669; cv=none; b=qWHgRtn6TuvkrEZPdadrSbc3w8qkGpZwurZI/MOfIz+eWfRZcpuftW0vGj3mNYDi/kDC9KjbHqAY/JktwqyItXRHr/BCGMpYo1bAdZvNKkZZ3mhQ7/xkUzUcfK7d169nsWRBKBiEgYIxK59li8mDNHOoR7alq0LUryYZ5t0gRdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223664; c=relaxed/simple;
-	bh=pheyAIWI6vX0jp99I9oB3aVxfI7BXh1Mn4Ht8wN0YLs=;
+	s=arc-20240116; t=1789223669; c=relaxed/simple;
+	bh=el8lMKyOIJv+h+hz1wE9vle41tDa5rx9Tyux2U0M9Dk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPxQfOa7anARFz3fiUiS5OYCxT2G7YEn3u092L/3GjCG3XuMR/H8XPmNU2MUJWMhlRsvMzlg/ACulzNOzM86ztWIrC1DZurqEZKDF33OAkJDgXhwoVGdyL3lTdVQOkUvEBNO5qPkFl8qRzkjQwOeYdWKhBbFoC+Xuy/5tOc+P/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PmYfsCFM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SqXFp7Vfv9ndxIYgWprXhZSkbRVrcaJ4XRL5bEwz2X2BumpX/KyUHGC+CRJ0UmcYMzFBh/J1kYmOGoS+kb4EtvUHP5lLfzk9/rs0dinI0GBlQZG3gCc3v74RgUDubalh3EZax7LBHiI8dG+TzJS9amOZIJg1Lr0v7ddBkHj3OBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PostM5wE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PmYfsCFM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190DC1F00898;
-	Sat, 12 Sep 2026 14:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PostM5wE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECDF71F000FF;
+	Sat, 12 Sep 2026 14:34:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223663;
-	bh=N8YXIbEZm9mj2DcfIRY9/0vmipc1eERg1q9/KpTMe+M=;
+	s=korg; t=1789223667;
+	bh=z5fPf5C32Pp3f1M43nHZROnR+JnU5DUKONbf8cRcl2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PmYfsCFM9QXMX0CYTFLWdN5U4ErL47o5aoYIxtaaOz3yLPGuKAX0fzfny2SV25us0
-	 96Y6WiZPn7y9d14L0GzFGCzgiiu0glymcKd8MAlSSoOOhWsIXEenj0iUM6HCw90582
-	 T5LjK99mp9mvMvqMigobU15x9376lE5bH+2+OpM8=
+	b=PostM5wE7Ua77vqBTw1jF0xUZSjhf1x/FIPIlvPfxmuAhg5TNOEbFJCpipntw496p
+	 N9Havcz/V0ld0Mk2h7KOh2XC5yYrsElIZuord5Bv0ASosw38A9LOk9mgDiuedoqlx5
+	 C/u/gl8OHK4v013XxtIz97E01LB/6D+R08pF82z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Cheng Xu <chengyou@linux.alibaba.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0835/1424] RDMA/erdma: Fix CEQ tasklet use-after-free on removal
-Date: Sat, 12 Sep 2026 08:54:27 +0200
-Message-ID: <20260912065626.007858990@linuxfoundation.org>
+Subject: [PATCH 6.6 0836/1424] RDMA/core: Add support to set privileged QKEY parameter
+Date: Sat, 12 Sep 2026 08:54:28 +0200
+Message-ID: <20260912065626.030496118@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,50 +51,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 0ca79979384f031d710c4b3bae065dcb5d95aca3 ]
+[ Upstream commit 465d6b42f1a3b855c06da1d4d3b09907d261af69 ]
 
-Each CEQ interrupt handler only schedules eqc->tasklet. The tasklet calls
-erdma_ceq_completion_handler(), which reads the DMA-coherent EQ ring
-through get_next_valid_eqe() and updates eq->dbrec through notify_eq().
+Add netlink command that enables/disables privileged QKEY by default.
 
-erdma_ceqs_uninit() frees each CEQ IRQ and then destroys its EQ.
-free_irq() prevents another hard IRQ and waits for an in-flight handler,
-but it does not drain a tasklet that the handler already scheduled. The
-tasklet can therefore access eq->qbuf or eq->dbrec after
-erdma_eq_destroy() frees them.
+It is disabled by default, since according to IB spec only privileged
+users are allowed to use privileged QKEY.
+According to the IB specification rel-1.6, section 3.5.3:
+"QKEYs with the most significant bit set are considered controlled
+QKEYs, and a HCA does not allow a consumer to arbitrarily specify a
+controlled QKEY."
 
-Clearing ceq_cb->ready does not synchronize with a tasklet that already
-passed the check at the start of erdma_ceq_completion_handler().
+Using rdma tool,
+$rdma system set privileged-qkey on
 
-Kill the tasklet after free_irq(), when no handler can schedule it again,
-and before erdma_ceq_uninit_one() releases the EQ buffers.
+When enabled non-privileged users would be able to use
+controlled QKEYs which are considered privileged.
 
-Fixes: f2a0a630b953 ("RDMA/erdma: Add event queue implementation")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260721082545.47395-1-mhun512@gmail.com
-Acked-by: Cheng Xu <chengyou@linux.alibaba.com>
+Using rdma tool,
+$rdma system set privileged-qkey off
+
+When disabled only privileged users would be able to use
+controlled QKEYs.
+
+You can also use the command below to check the parameter state:
+$rdma system show
+netns shared privileged-qkey off copy-on-fork on
+
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Link: https://lore.kernel.org/r/90398be70a9d23d2aa9d0f9fd11d2c264c1be534.1696848201.git.leon@kernel.org
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 709ba0e5311b ("RDMA/core: Fix use after free in ib_query_qp()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_eq.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/core/core_priv.h  |  1 +
+ drivers/infiniband/core/nldev.c      | 63 ++++++++++++++++++++++++----
+ drivers/infiniband/core/uverbs_cmd.c |  3 +-
+ include/uapi/rdma/rdma_netlink.h     |  2 +
+ 4 files changed, 60 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma_eq.c b/drivers/infiniband/hw/erdma/erdma_eq.c
-index ea47cb21fdb8c..364bddbadd37a 100644
---- a/drivers/infiniband/hw/erdma/erdma_eq.c
-+++ b/drivers/infiniband/hw/erdma/erdma_eq.c
-@@ -204,6 +204,7 @@ static void erdma_free_ceq_irq(struct erdma_dev *dev, u16 ceqn)
+diff --git a/drivers/infiniband/core/core_priv.h b/drivers/infiniband/core/core_priv.h
+index 149dacf5b64d8..a7bcf13ada64a 100644
+--- a/drivers/infiniband/core/core_priv.h
++++ b/drivers/infiniband/core/core_priv.h
+@@ -376,4 +376,5 @@ void rdma_umap_priv_init(struct rdma_umap_priv *priv,
  
- 	irq_set_affinity_hint(eqc->irq.msix_vector, NULL);
- 	free_irq(eqc->irq.msix_vector, eqc);
-+	tasklet_kill(&eqc->tasklet);
+ void ib_cq_pool_cleanup(struct ib_device *dev);
+ 
++bool rdma_nl_get_privileged_qkey(void);
+ #endif /* _CORE_PRIV_H */
+diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+index 5aff8e284db2e..b010f78ed808b 100644
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -43,6 +43,13 @@
+ #include "restrack.h"
+ #include "uverbs.h"
+ 
++/*
++ * This determines whether a non-privileged user is allowed to specify a
++ * controlled QKEY or not, when true non-privileged user is allowed to specify
++ * a controlled QKEY.
++ */
++static bool privileged_qkey;
++
+ typedef int (*res_fill_func_t)(struct sk_buff*, bool,
+ 			       struct rdma_restrack_entry*, uint32_t);
+ 
+@@ -156,6 +163,7 @@ static const struct nla_policy nldev_policy[RDMA_NLDEV_ATTR_MAX] = {
+ 	[RDMA_NLDEV_SYS_ATTR_COPY_ON_FORK]	= { .type = NLA_U8 },
+ 	[RDMA_NLDEV_ATTR_STAT_HWCOUNTER_INDEX]	= { .type = NLA_U32 },
+ 	[RDMA_NLDEV_ATTR_STAT_HWCOUNTER_DYNAMIC] = { .type = NLA_U8 },
++	[RDMA_NLDEV_SYS_ATTR_PRIVILEGED_QKEY_MODE] = { .type = NLA_U8 },
+ };
+ 
+ static int put_driver_name_print_type(struct sk_buff *msg, const char *name,
+@@ -237,6 +245,12 @@ int rdma_nl_put_driver_u64_hex(struct sk_buff *msg, const char *name, u64 value)
+ }
+ EXPORT_SYMBOL(rdma_nl_put_driver_u64_hex);
+ 
++bool rdma_nl_get_privileged_qkey(void)
++{
++	return privileged_qkey || capable(CAP_NET_RAW);
++}
++EXPORT_SYMBOL(rdma_nl_get_privileged_qkey);
++
+ static int fill_nldev_handle(struct sk_buff *msg, struct ib_device *device)
+ {
+ 	if (nla_put_u32(msg, RDMA_NLDEV_ATTR_DEV_INDEX, device->index))
+@@ -1883,6 +1897,12 @@ static int nldev_sys_get_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		return err;
+ 	}
+ 
++	err = nla_put_u8(msg, RDMA_NLDEV_SYS_ATTR_PRIVILEGED_QKEY_MODE,
++			 (u8)privileged_qkey);
++	if (err) {
++		nlmsg_free(msg);
++		return err;
++	}
+ 	/*
+ 	 * Copy-on-fork is supported.
+ 	 * See commits:
+@@ -1899,18 +1919,11 @@ static int nldev_sys_get_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	return rdma_nl_unicast(sock_net(skb->sk), msg, NETLINK_CB(skb).portid);
  }
  
- static int create_eq_cmd(struct erdma_dev *dev, u32 eqn, struct erdma_eq *eq)
+-static int nldev_set_sys_set_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
+-				  struct netlink_ext_ack *extack)
++static int nldev_set_sys_set_netns_doit(struct nlattr *tb[])
+ {
+-	struct nlattr *tb[RDMA_NLDEV_ATTR_MAX];
+ 	u8 enable;
+ 	int err;
+ 
+-	err = nlmsg_parse(nlh, 0, tb, RDMA_NLDEV_ATTR_MAX - 1,
+-			  nldev_policy, extack);
+-	if (err || !tb[RDMA_NLDEV_SYS_ATTR_NETNS_MODE])
+-		return -EINVAL;
+-
+ 	enable = nla_get_u8(tb[RDMA_NLDEV_SYS_ATTR_NETNS_MODE]);
+ 	/* Only 0 and 1 are supported */
+ 	if (enable > 1)
+@@ -1920,6 +1933,40 @@ static int nldev_set_sys_set_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	return err;
+ }
+ 
++static int nldev_set_sys_set_pqkey_doit(struct nlattr *tb[])
++{
++	u8 enable;
++
++	enable = nla_get_u8(tb[RDMA_NLDEV_SYS_ATTR_PRIVILEGED_QKEY_MODE]);
++	/* Only 0 and 1 are supported */
++	if (enable > 1)
++		return -EINVAL;
++
++	privileged_qkey = enable;
++	return 0;
++}
++
++static int nldev_set_sys_set_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
++				  struct netlink_ext_ack *extack)
++{
++	struct nlattr *tb[RDMA_NLDEV_ATTR_MAX];
++	int err;
++
++	err = nlmsg_parse(nlh, 0, tb, RDMA_NLDEV_ATTR_MAX - 1,
++			  nldev_policy, extack);
++	if (err)
++		return -EINVAL;
++
++	if (tb[RDMA_NLDEV_SYS_ATTR_NETNS_MODE])
++		return nldev_set_sys_set_netns_doit(tb);
++
++	if (tb[RDMA_NLDEV_SYS_ATTR_PRIVILEGED_QKEY_MODE])
++		return nldev_set_sys_set_pqkey_doit(tb);
++
++	return -EINVAL;
++}
++
++
+ static int nldev_stat_set_mode_doit(struct sk_buff *msg,
+ 				    struct netlink_ext_ack *extack,
+ 				    struct nlattr *tb[],
+diff --git a/drivers/infiniband/core/uverbs_cmd.c b/drivers/infiniband/core/uverbs_cmd.c
+index 2e4265ba35b7f..0890f56c0ec48 100644
+--- a/drivers/infiniband/core/uverbs_cmd.c
++++ b/drivers/infiniband/core/uverbs_cmd.c
+@@ -1859,7 +1859,8 @@ static int modify_qp(struct uverbs_attr_bundle *attrs,
+ 	if (cmd->base.attr_mask & IB_QP_PATH_MIG_STATE)
+ 		attr->path_mig_state = cmd->base.path_mig_state;
+ 	if (cmd->base.attr_mask & IB_QP_QKEY) {
+-		if (cmd->base.qkey & IB_QP_SET_QKEY && !capable(CAP_NET_RAW)) {
++		if (cmd->base.qkey & IB_QP_SET_QKEY &&
++		    !rdma_nl_get_privileged_qkey()) {
+ 			ret = -EPERM;
+ 			goto release_qp;
+ 		}
+diff --git a/include/uapi/rdma/rdma_netlink.h b/include/uapi/rdma/rdma_netlink.h
+index e50c357367db0..6e05b8ecb8a91 100644
+--- a/include/uapi/rdma/rdma_netlink.h
++++ b/include/uapi/rdma/rdma_netlink.h
+@@ -554,6 +554,8 @@ enum rdma_nldev_attr {
+ 	RDMA_NLDEV_ATTR_STAT_HWCOUNTER_INDEX,	/* u32 */
+ 	RDMA_NLDEV_ATTR_STAT_HWCOUNTER_DYNAMIC, /* u8 */
+ 
++	RDMA_NLDEV_SYS_ATTR_PRIVILEGED_QKEY_MODE, /* u8 */
++
+ 	/*
+ 	 * Always the end
+ 	 */
 -- 
 2.53.0
 
