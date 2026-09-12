@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE2F33ADBA;
-	Sat, 12 Sep 2026 09:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFA833ADBA;
+	Sat, 12 Sep 2026 09:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206999; cv=none; b=S2iw+YGi+2Tij4fUyajTQrn61kxtvSwFtdb2sTAqlOSumsfvlfjG9maNu1vvqCIXxUun7zru2aj6aflEdKU3/D8gwJv9cXE11OmJemjsCmBnGIy7VjWxq76C1lBnC3BCN2zPcnj3EghB0/m2plZCwoTVtt7gAMYy7uyC/9mua90=
+	t=1789207004; cv=none; b=I2KSQuOhSeveMgvD2RItPOpaIgvwYuXGgZ+zyz6IYlh1lItQG2dVgTerfL0HNL3r/WEC+Sm6C4o0ZPteAhUtzlt5SM0R4iJznBCnMYrbh9IqnqTHEnemMDJm3X84LVp1CkuSVfAVVSVLtTT6GwI9+6IDkaeNNe8Fzi/4JEg8ra8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206999; c=relaxed/simple;
-	bh=ZJhQUiAUjSu1NI1Qd2eZi9QpONCl6lp78cDsZgBilv8=;
+	s=arc-20240116; t=1789207004; c=relaxed/simple;
+	bh=jUPENSzDCZ5hkSwVN11EJTuhUro1vmY4giuWUSSBSg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sPEOo+Iunj0Acnd/YvgwURWgRrnwzYOcU/0OdmuoMJ/vLDNMsUKIPCwtX+kZ78prinZM5iu507y+gWPcZ1ZcjdsUsIcDYR4uHmcZC3RZViZ1bdg7jLvI1v0i1YHaicN5gjTYe4rrdWoqzIkIlHReO1Y4dLKacL/lgsyAQDHzz/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p1mKITaQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c1RtYARx2RoUL32lcmzpEwBKkFRRL/xCYVvnDC25R4gvSipXqiA7R5LLbKcWhExRrHxj5QwS0wTkmXbSsnSllUu6HJtPOXQnFt/QTHpJVDncpdf/XJer82N2Dbqvdf6oXk49ONPRbwrnxNOasiFG+MMY13EyrToAOMKniMC/raI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m812/2KV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p1mKITaQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD1071F000FF;
-	Sat, 12 Sep 2026 09:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m812/2KV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15351F000FF;
+	Sat, 12 Sep 2026 09:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206997;
-	bh=WDNZxpZPTpxQijNn8izOyrRyepgdjyPo9yCIW09aTgI=;
+	s=korg; t=1789207002;
+	bh=pJ9uP8tQLw80XeJ3HD2SHMrtFVOFLJPphruaTwmaiUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p1mKITaQZcVVza27nZVndqxbynNW4kFj7F3Mdp86SYmBCR3EIIw03YEHyQtabjwkx
-	 6yHY/sTF21GEsQrTOzD9ZVPrHWe+V7TNO/PIibTCMr3S7SUxHiahxv2/86Vb/Zi+Wi
-	 kWj8NZLBmL56fIlxvX5Ai4oQzF1qqAqTvqOsvugo=
+	b=m812/2KVhajh8qTqeSmIPJs7akHnIdMStDmu28zvvUSgKFAKV3bFI/Wi2mUKDAJnK
+	 CWqnYZ8zmK5OQ782xxkJvlYz7A0MaLKVcpD6esxJGDBGAWEiIJMJ/d/W20oWI4k9jq
+	 bO24o5Z4Ix3p1xQnKqRehadCHRE9kjGS2Hd1k3uU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akari Tsuyukusa <akkun11.open@gmail.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0279/1518] iommu/mediatek-v1: Fix off-by-one in MT2701_LARB_NR_MAX
-Date: Sat, 12 Sep 2026 08:40:48 +0200
-Message-ID: <20260912065629.793286634@linuxfoundation.org>
+Subject: [PATCH 6.18 0280/1518] bpf: Fix security_bpf_map_create error handling
+Date: Sat, 12 Sep 2026 08:40:49 +0200
+Message-ID: <20260912065629.815891163@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,43 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akari Tsuyukusa <akkun11.open@gmail.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit aebaa93f3da1572877579c2e15ebf27be2dcc7fb ]
+[ Upstream commit 36ffa86c42f91c8a57071e024afc4ffb51a8958f ]
 
-The mt2701_m4u_in_larb[] array contains 4 (for LARB0 to LARB3)
-elements, meaning mt2701_m4u_to_larb() can legitimately return 3.
-The current check `if (larbid >= MT2701_LARB_NR_MAX)` incorrectly
-rejects valid LARB3 with -EINVAL.
+Commit 5816bf4273ed ("lsm,selinux: Add LSM blob support for BPF objects")
+made the LSM hook wrappers for BPF object creation clean up the LSM
+state internally upon denial, e.g. security_bpf_map_create() internally
+calls security_bpf_map_free() when the bpf_map_create hook returns an
+error. map_create() however still routes a denial to its free_map_sec
+label, which invokes security_bpf_map_free() a second time, so the
+bpf_map_free hook fires twice for a single denied map.
 
-Fix this off-by-one error by updating MT2701_LARB_NR_MAX to 4.
+In-tree LSMs are unaffected in practice since the blob kfree() inside
+security_bpf_map_free() is NULL-safe and idempotent and none of them
+implement bpf_map_free, but a BPF LSM program attached to that hook
+observes double invocations. Route the denial to free_map instead.
 
-Note that this does not cause immediate issues with the current
-mt2701.dtsi and mt7623n.dtsi because it only defines 3 LARBs:
-    mediatek,larbs = <&larb0 &larb1 &larb2>;
-Thus, larbid never reaches 3 in the existing upstream device tree.
-
-Fixes: de78657e16f4 ("iommu/mediatek: Fix NULL pointer dereference when printing dev_name")
-Signed-off-by: Akari Tsuyukusa <akkun11.open@gmail.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: 5816bf4273ed ("lsm,selinux: Add LSM blob support for BPF objects")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20260709073422.379247-1-daniel@iogearbox.net
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/mtk_iommu_v1.c | 2 +-
+ kernel/bpf/syscall.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
-index 44b965a2db923..ad2dbd29fef8d 100644
---- a/drivers/iommu/mtk_iommu_v1.c
-+++ b/drivers/iommu/mtk_iommu_v1.c
-@@ -88,7 +88,7 @@ struct dma_iommu_mapping {
- /* MTK generation one iommu HW only support 4K size mapping */
- #define MT2701_IOMMU_PAGE_SHIFT			12
- #define MT2701_IOMMU_PAGE_SIZE			(1UL << MT2701_IOMMU_PAGE_SHIFT)
--#define MT2701_LARB_NR_MAX			3
-+#define MT2701_LARB_NR_MAX			4
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index e92fd2bec98c7..b8937bebf5b81 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -1593,7 +1593,7 @@ static int map_create(union bpf_attr *attr, bpfptr_t uattr)
  
- /*
-  * MTK m4u support 4GB iova address space, and only support 4K page
+ 	err = security_bpf_map_create(map, attr, token, uattr.is_kernel);
+ 	if (err)
+-		goto free_map_sec;
++		goto free_map;
+ 
+ 	err = bpf_map_alloc_id(map);
+ 	if (err)
 -- 
 2.53.0
 
