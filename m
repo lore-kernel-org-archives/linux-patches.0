@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1901C356742;
-	Sat, 12 Sep 2026 15:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EAD3DD51A;
+	Sat, 12 Sep 2026 15:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225225; cv=none; b=Et6bvIANP0HURoT+ohAzSaLHcv48yn1juVmiN4cE2Ii2X+SJeRzjiR6NHZWrZtVe7n9i62jaxs+07Y77rhqaPCz0bE80bHUP/hDx3f7ASe/PYMNHA41JR2UYHcJ7r+GuBWYaHZbxFsru3YGvCeJt4ROFeMUCLe/M3A3t7FeCmDE=
+	t=1789225231; cv=none; b=ZXyrzEYdJl53jP5D64DjjAIQ1eyhayL47LOehixj9FXGg2Y1E4NS9ppb1Ts455pMqoXjJDijuvbL+KFQUL9UnSQ3qeyWMnSmR8sZheWDG3bAcVhV3nDRdaSuPtbr6n1T5Wta0YNL4qpCpCSN3IkdYpuIwLEYOnBKA5yrGitvzw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225225; c=relaxed/simple;
-	bh=jISxAEsVEjTXs4pL5OCSVs7Zop2Es2SDLPKOLKVldEo=;
+	s=arc-20240116; t=1789225231; c=relaxed/simple;
+	bh=7At1m+EfLurQ6vUMLHKcFzZ0ItnvdS/h84/uB3DB85M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ye16uBvh/jYZ7nyMdk+jMmcN+lm1PUCaG1HpbTvfRNHCptEOjP+8FAHZ9FRoLG1MDyQq3ojer4fGEgqCLdpCxAHSqDoogwdSatS7EeQy0fIPD0IDZ9mv4BSNrhtNPrswa8nNk7CiTJB9mDBfbncsHmPqHjSTX/A+553GMFnnRI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4Z7HCyW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P+Eso9NkBDSDTELjVOV3gF9evSKbqreSDDHOAUrUJzWFZjPJJJadWwMi32fhcZ8Mdd5pH7s0+vjUoE3XQPBS/PKF3k4gTTNtuBEVeWWK4UXHOZzyffsYD1UI6NkepVpFLWMGqeW0xTGIxGRB1Uj400ep8jbQLPO2NXzFQJaLi24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQSVxx21; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4Z7HCyW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F301F000FF;
-	Sat, 12 Sep 2026 15:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQSVxx21"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFF231F000FF;
+	Sat, 12 Sep 2026 15:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225224;
-	bh=LseqDoj20Fh6Ly6YsOhpnoQoAeiIZqQm+lJ5ngrKUZA=;
+	s=korg; t=1789225228;
+	bh=vmw4w2GAnQDyYGMFDjCn8nVR4usXLNuCPDIVCTjUTMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i4Z7HCyWQIYn07NlgY7F4TCMC+sA2wFGSVe4jBXbI/QMgLL9Og801RVd1r7AaEXbP
-	 loNRvYUN4CDKFjUlg0zSDGk2DbTinZ6Fzti028ER32uXybVlQOHFxacrtH4NNTzkX4
-	 fYQPXqi+SFTDj/UYT4JHcq1A51a3Ek48iU9zOXwo=
+	b=KQSVxx21qMBgT2UyRO9Hlfgz7L6lAjR6bUPvSGqLCprkajbCgKxu9B/VXHHGOBr8N
+	 DqPF0B1Fh38HrzlxFFesHMExnVoPp1l6y4kmiuoQwEOVJ4psYHhvZSkBkGhBfPusnC
+	 JDyPBcWrKP7hn0ZxlKa7I1s246LbNj9cQN6Cpscg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Guixin Liu <kanie@linux.alibaba.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1154/1424] nvme: add reservation commands defines
-Date: Sat, 12 Sep 2026 08:59:46 +0200
-Message-ID: <20260912065633.141915562@linuxfoundation.org>
+Subject: [PATCH 6.6 1155/1424] nvme: introduce change ptpl and iekey definition
+Date: Sat, 12 Sep 2026 08:59:47 +0200
+Message-ID: <20260912065633.163889615@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -55,99 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 1900e1a4495b7376cb9b4e58f1d846660f4c9c4b ]
+[ Upstream commit 7d2f9f870f26798699585f96fa7a2a2cab38dc02 ]
 
-This is a preparation patch for NVMeOF target reservation
-commands implantation.
-Add the defines of reservation command, such as reservation log
-and sub operations.
+This is for the next tuning pr code more readble patch, make
+linux/nvme.h's changes separately.
 
 Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Tested-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Stable-dep-of: 5bb96cc21883 ("nvmet: fix heap out-of-bounds read in nvmet_auth_negotiate()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/nvme.h | 68 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 68 insertions(+)
+ include/linux/nvme.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/include/linux/nvme.h b/include/linux/nvme.h
-index 8e4906c265935..b1e818a6d2bac 100644
+index b1e818a6d2bac..09cd06f20da61 100644
 --- a/include/linux/nvme.h
 +++ b/include/linux/nvme.h
-@@ -2024,4 +2024,72 @@ struct nvme_completion {
- #define NVME_MINOR(ver)		(((ver) >> 8) & 0xff)
- #define NVME_TERTIARY(ver)	((ver) & 0xff)
+@@ -2092,4 +2092,13 @@ enum nvme_pr_release_action {
+ 	NVME_PR_RELEASE_ACT_CLEAR		= 1,
+ };
  
-+enum {
-+	NVME_AEN_RESV_LOG_PAGE_AVALIABLE	= 0x00,
++enum nvme_pr_change_ptpl {
++	NVME_PR_CPTPL_NO_CHANGE			= 0,
++	NVME_PR_CPTPL_RESV			= 1 << 30,
++	NVME_PR_CPTPL_CLEARED			= 2 << 30,
++	NVME_PR_CPTPL_PERSIST			= 3 << 30,
 +};
 +
-+enum {
-+	NVME_PR_LOG_EMPTY_LOG_PAGE			= 0x00,
-+	NVME_PR_LOG_REGISTRATION_PREEMPTED		= 0x01,
-+	NVME_PR_LOG_RESERVATION_RELEASED		= 0x02,
-+	NVME_PR_LOG_RESERVATOPM_PREEMPTED		= 0x03,
-+};
-+
-+enum {
-+	NVME_PR_NOTIFY_BIT_REG_PREEMPTED		= 1,
-+	NVME_PR_NOTIFY_BIT_RESV_RELEASED		= 2,
-+	NVME_PR_NOTIFY_BIT_RESV_PREEMPTED		= 3,
-+};
-+
-+struct nvme_pr_log {
-+	__le64			count;
-+	__u8			type;
-+	__u8			nr_pages;
-+	__u8			rsvd1[2];
-+	__le32			nsid;
-+	__u8			rsvd2[48];
-+};
-+
-+struct nvmet_pr_register_data {
-+	__le64	crkey;
-+	__le64	nrkey;
-+};
-+
-+struct nvmet_pr_acquire_data {
-+	__le64	crkey;
-+	__le64	prkey;
-+};
-+
-+struct nvmet_pr_release_data {
-+	__le64	crkey;
-+};
-+
-+enum nvme_pr_capabilities {
-+	NVME_PR_SUPPORT_PTPL				= 1,
-+	NVME_PR_SUPPORT_WRITE_EXCLUSIVE			= 1 << 1,
-+	NVME_PR_SUPPORT_EXCLUSIVE_ACCESS		= 1 << 2,
-+	NVME_PR_SUPPORT_WRITE_EXCLUSIVE_REG_ONLY	= 1 << 3,
-+	NVME_PR_SUPPORT_EXCLUSIVE_ACCESS_REG_ONLY	= 1 << 4,
-+	NVME_PR_SUPPORT_WRITE_EXCLUSIVE_ALL_REGS	= 1 << 5,
-+	NVME_PR_SUPPORT_EXCLUSIVE_ACCESS_ALL_REGS	= 1 << 6,
-+	NVME_PR_SUPPORT_IEKEY_VER_1_3_DEF		= 1 << 7,
-+};
-+
-+enum nvme_pr_register_action {
-+	NVME_PR_REGISTER_ACT_REG		= 0,
-+	NVME_PR_REGISTER_ACT_UNREG		= 1,
-+	NVME_PR_REGISTER_ACT_REPLACE		= 1 << 1,
-+};
-+
-+enum nvme_pr_acquire_action {
-+	NVME_PR_ACQUIRE_ACT_ACQUIRE		= 0,
-+	NVME_PR_ACQUIRE_ACT_PREEMPT		= 1,
-+	NVME_PR_ACQUIRE_ACT_PREEMPT_AND_ABORT	= 1 << 1,
-+};
-+
-+enum nvme_pr_release_action {
-+	NVME_PR_RELEASE_ACT_RELEASE		= 0,
-+	NVME_PR_RELEASE_ACT_CLEAR		= 1,
-+};
++#define NVME_PR_IGNORE_KEY (1 << 3)
 +
  #endif /* _LINUX_NVME_H */
 -- 
