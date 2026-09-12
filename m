@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BFC47ACF0;
-	Sat, 12 Sep 2026 12:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951B447AF4D;
+	Sat, 12 Sep 2026 12:02:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214517; cv=none; b=pNvwmuNYBcNlzr09+W+YXyC7dit6m2sFKmL1R+lOXPjYepUUxdfMCL4Kz7y2qVeN8f7WniRVJeEolPvId/US8z0xrJK6Ty45O+/tWyuBW0yyV07aZnASNcl5dnkkkNjtif0htwFZYMdwJ8OLZbvBuy9f8+VHy8Gxnun3x+Ru6cE=
+	t=1789214528; cv=none; b=IrKtHOg0JqnHKYGlJfYlXejDoVQHcudR544JqZf8mfZ79LbpVP0GqvsZw2lGHAGEbi49Mdh+M4aDZuMhmV6E0dnuq8jutpvru049VACQjGhxGOcodpfKi37V8M6cD1VwUmX8tdyT/JFOdw1nvULWVwRlXbYuHAcIqe6TYDErSbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214517; c=relaxed/simple;
-	bh=f1KnR8+/QDikHd8TMHNY2kUmM4V3QN3BTC8PBQ87BKw=;
+	s=arc-20240116; t=1789214528; c=relaxed/simple;
+	bh=Xdmgm96aUM3l0ocyxaKAMxZ83MKSZBMGDB1Z30HWRO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=raHreXXYOnvLffde0D9UFqEsDrvUiflHkDvwjgYwAskIeldpn0dkWQIgdbatRjNa6AObEJYXYufVn/Y4SomXwodr+m/SmR9QfjqNR7F9AP7MkhCjRqT7TrXPuIA9h6QB1T67sjHzVwYRAvqbvkWTuwLzzobIiExZ5hYb1d6C+zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABhgCzwH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IAGwRhg/cU+VgdsnW3WlNmWZ3j36w6ihYtR4l/er+mghnSI1GQx6pkHR2N80xCD1h/MMr4ZqKAoBdwvB2ROfkEG5wGLUrKyWL4S9llZEzN67OcXLrPW5ayCNMwniwBmfLw10N2cbygJB2QO2gsyKDFa9DZd4qbpFYI5AtJHOKxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IMuIYmKD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABhgCzwH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C641F000FF;
-	Sat, 12 Sep 2026 12:01:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMuIYmKD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE5B1F000FF;
+	Sat, 12 Sep 2026 12:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214516;
-	bh=krsYG1MBu7f/5DjFaVnr+z1EqbnY23h29dY+kEaaPwQ=;
+	s=korg; t=1789214520;
+	bh=aBwD5p5K+KrjGSpvFDNSTOIY9AqNBnDfbtKAiR68cAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ABhgCzwHVuym0MgDHgUF8AL2jfzqJAhkHStVINiKUkcoTKdD4IPSrd5hO8EJikPS3
-	 2wGjPPPIf98Ftd5hpjXoT8q7+cRIC8wvmcxhbsV9jMuAtvHgg2+xdV732PrUDrFlSu
-	 YoaKc97IiFS7g0o8ElCNIW7m3BGLzrTo9VXHn81M=
+	b=IMuIYmKDmvKmJkT9fBhhyV/qN0iImskEUJKgIKMLHsLo3r5oVMxYPA0wV9lQJivzf
+	 TgNjSTfP2ZDy4lh5IESEPpsQZAhjvw/yKN4DdrGYB0mPBQxzODI9+8uqvRntyc3r0E
+	 O4OzM/EX6eRzq4UwHarH6zIbTfzVryfZieGcV0nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Yuan Liu <yuan1.liu@intel.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Chen Yu <yu.c.chen@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0343/1376] mm/mm_init: fix incorrect node_spanned_pages
-Date: Sat, 12 Sep 2026 08:46:09 +0200
-Message-ID: <20260912065615.196607320@linuxfoundation.org>
+Subject: [PATCH 6.12 0344/1376] sched/fair: Fix overflow in update_tg_cfs_runnable()
+Date: Sat, 12 Sep 2026 08:46:10 +0200
+Message-ID: <20260912065615.219183517@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,103 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Yang <richard.weiyang@gmail.com>
+From: Chen, Yu C <yu.c.chen@intel.com>
 
-[ Upstream commit 7783dcd79ae9c4aa48bc47bd4275772445dc4b2a ]
+[ Upstream commit 4f166adb5cb0525d9e32d45729fd8f28c80acbee ]
 
-Current node_spanned_pages is got as a summation of all zone's spanned page
-in calculate_node_totalpages(). Generally this is good, but if we use
-kernelcore=mirror, it is would be wrong.
+A divide-by-zero crash is observed when running hackbench:
 
-Without kernelcore=mirror:
+   [14697.488452] CPU: 112 UID: 0 PID: 124791 Comm: hackbench Not tainted 7.1.0-rc2+
+   [14697.492627] RIP: 0010:propagate_entity_load_avg+0x35f/0x3e0
+   [14697.506799]  <TASK>
+   [14697.507411]  __dequeue_task+0x2b4/0xc70
+   [14697.508677]  dequeue_task_fair+0x36/0x370
+   [14697.509047]  dequeue_task+0x101/0x2f0
+   [14697.509426]  __schedule+0x1b1/0x1a00
+   [14697.510868]  anon_pipe_read+0x3da/0x450
+   [14697.511400]  vfs_read+0x361/0x390
+   [14697.512053]  __x64_sys_read+0x19/0x30
 
-    The test machine has below memory layout:
+The divide-by-zero happens here:
 
-      memory[0x0]     [0x0000000000001000-0x000000000009efff], 0x000000000009e000 bytes on node 0 flags: 0x0
-      memory[0x1]     [0x0000000000100000-0x00000000bffdefff], 0x00000000bfedf000 bytes on node 0 flags: 0x0
-      memory[0x2]     [0x0000000100000000-0x00000001bfffffff], 0x00000000c0000000 bytes on node 0 flags: 0x0
+  if (scale_load_down(gcfs_rq->load.weight)) {
+           load_sum = div_u64(gcfs_rq->avg.load_sum,
+                              scale_load_down(gcfs_rq->load.weight));
+  }
 
-    And the Zone range is:
+gcfs_rq->load.weight is an insane large value and is truncated
+to the lower 32 bits by div_u64, which happen to be 0.
 
-      DMA      [mem 0x0000000000001000-0x0000000000ffffff]
-      DMA32    [mem 0x0000000001000000-0x00000000ffffffff]
-      Normal   [mem 0x0000000100000000-0x00000001bfffffff]
+Using AI for investigation, the cause is a u32 overflow in
+update_tg_cfs_runnable(), and flat pickup became a victim when using
+tg_tasks():
 
-    Then we see, with spanned_pages printed:
+   u32 new_sum, divider;
+   ...
+   new_sum = se->avg.runnable_avg * divider; <-- boom
 
-      On node 0 spanned_pages: 1835007 totalpages: 1572733
+The following sequence shows how this triggers the crash:
 
-With kernelcore=mirror:
+   propagate_entity_load_avg()
+     update_tg_cfs_runnable()     # u32 overflow corrupts runnable_sum
 
-    The test machine has below memory layout:
+   __update_load_avg_cfs_rq()
+     ___update_load_avg()         # computes insane runnable_avg
+   update_tg_load_avg()           # propagates to tg->runnable_avg
 
-      memory[0x0]     [0x0000000000001000-0x000000000009efff], 0x000000000009e000 bytes on node 0 flags: 0x2
-      memory[0x1]     [0x0000000000100000-0x00000000bffdefff], 0x00000000bfedf000 bytes on node 0 flags: 0x2
-      memory[0x2]     [0x0000000100000000-0x000000013fffffff], 0x0000000040000000 bytes on node 0 flags: 0x2
-      memory[0x3]     [0x0000000140000000-0x00000001bfffffff], 0x0000000080000000 bytes on node 0 flags: 0x0
+   update_cfs_group()
+     calc_concur_shares()
+       tg_tasks()                 # long-to-int truncation, negative nr
+     reweight_entity()            # corrupted se->load.weight
+       update_load_add()          # corrupted cfs_rq->load.weight
 
-    And the Zone range is:
+   propagate_entity_load_avg()
+     update_tg_cfs_load()
+       div_u64()                  # divide-by-zero
 
-      DMA      [mem 0x0000000000001000-0x0000000000ffffff]
-      DMA32    [mem 0x0000000001000000-0x00000000ffffffff]
-      Normal   [mem 0x0000000100000000-0x00000001bfffffff]
-      Device   empty
-    Movable zone start for each node
-      Node 0: 0x0000000140000000
+Fix by widening new_sum from u32 to u64 (no need to force tg_tasks()
+to return unsigned long after this fix)
 
-    Then we see, with spanned_pages printed:
-
-      On node 0 spanned_pages: 2359295 totalpages: 1572733
-
-The total range of memory on node 0 doesn't change, but the spanned_pages
-becomes much larger.
-
-The reason is when kernelcore=mirror is specified, the range of Zone Normal
-and Zone Movable would overlap. So the overlapped range would be calculated
-twice.
-
-A wrong node_spanned_pages would effect defer_init(), since each
-zone_end_pfn is less than pgdat_end_pfn().
-
-As we already passed in node_start_pfn and node_end_pfn, fix this by get it
-from (node_start_pfn - node_end_pfn) directly.
-
-Fixes: 342332e6a925 ("mm/page_alloc.c: introduce kernelcore=mirror option")
-Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
-Cc: Yuan Liu <yuan1.liu@intel.com>
-Link: https://patch.msgid.link/20260622022403.16375-1-richard.weiyang@gmail.com
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Fixes: 95246d1ec80b ("sched/pelt: Relax the sync of runnable_sum with runnable_avg")
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/a22eea2b-4c4a-4623-9a44-d7b18c0c91c8@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mm_init.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ kernel/sched/fair.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/mm/mm_init.c b/mm/mm_init.c
-index 21e01537c9f5f..c8ac7f206f941 100644
---- a/mm/mm_init.c
-+++ b/mm/mm_init.c
-@@ -1310,7 +1310,7 @@ static void __init calculate_node_totalpages(struct pglist_data *pgdat,
- 						unsigned long node_start_pfn,
- 						unsigned long node_end_pfn)
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 5a09448e22c33..4be1df2b90df0 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -4416,7 +4416,8 @@ static inline void
+ update_tg_cfs_runnable(struct cfs_rq *cfs_rq, struct sched_entity *se, struct cfs_rq *gcfs_rq)
  {
--	unsigned long realtotalpages = 0, totalpages = 0;
-+	unsigned long realtotalpages = 0;
- 	enum zone_type i;
+ 	long delta_sum, delta_avg = gcfs_rq->avg.runnable_avg - se->avg.runnable_avg;
+-	u32 new_sum, divider;
++	u64 new_sum;
++	u32 divider;
  
- 	for (i = 0; i < MAX_NR_ZONES; i++) {
-@@ -1340,11 +1340,10 @@ static void __init calculate_node_totalpages(struct pglist_data *pgdat,
- 		zone->present_early_pages = real_size;
- #endif
+ 	/* Nothing to update */
+ 	if (!delta_avg)
+@@ -4430,7 +4431,7 @@ update_tg_cfs_runnable(struct cfs_rq *cfs_rq, struct sched_entity *se, struct cf
  
--		totalpages += spanned;
- 		realtotalpages += real_size;
- 	}
+ 	/* Set new sched_entity's runnable */
+ 	se->avg.runnable_avg = gcfs_rq->avg.runnable_avg;
+-	new_sum = se->avg.runnable_avg * divider;
++	new_sum = (u64)se->avg.runnable_avg * divider;
+ 	delta_sum = (long)new_sum - (long)se->avg.runnable_sum;
+ 	se->avg.runnable_sum = new_sum;
  
--	pgdat->node_spanned_pages = totalpages;
-+	pgdat->node_spanned_pages = node_end_pfn - node_start_pfn;
- 	pgdat->node_present_pages = realtotalpages;
- 	pr_debug("On node %d totalpages: %lu\n", pgdat->node_id, realtotalpages);
- }
 -- 
 2.53.0
 
