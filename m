@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3093369D56;
-	Sat, 12 Sep 2026 10:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C186125B0AA;
+	Sat, 12 Sep 2026 10:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207963; cv=none; b=htDuq0ROxJ8tX+Abd52fmjG6USKMVUuRy2GXTJQ6KXLiZtvKlU6xcv2Tr2PYT2CKvlphObpeYN5+IS8BedC/bJenPe9ZTJp33tNC9FkujTILA53SEOsgfJyroK9cykdwTP3hIuOkM9C+ZgZyb3d/HeoYHlvGgLUnHCEK6/JxUSE=
+	t=1789207967; cv=none; b=MQrtlOT1elu9pluzRt0t3/bb1Qs0FoDJwDFvj1zex/+RUpauMmfzroxNJDPcdRS54vGyE4rE/LOHfMrp+JmB+1hByXLHxKK7Lbb1bv/ap3fBSIrBLIUFWcgnTlnFu/mVf5o7lHaV6ow+z+piSWjYzFXhJs7ak4W/PU0sheafDSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207963; c=relaxed/simple;
-	bh=BByc3rzhQGJxjPURWAq9DVlnLluSJMni+XhEf0paZxI=;
+	s=arc-20240116; t=1789207967; c=relaxed/simple;
+	bh=WjDd/e/AKNvYAkJvilfeiS9Z5M6oslt0es9E0pZ+Ogo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ND0zsyQfAVxbLugzOuIg4vzpwYr0TMJhRiomyr9sbxYqO++aGNT8UOWPGY3j3mZlUjl5bcKUNAPAWK8XrQ+LNyY/JlC8i40Z0vXxfhC54MP11/6rzphwJdwd/6oAMhUXUQWWkaqOmk/tPOrlFZoPREDpqVaGNqvMn/Vz9N+mwJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQNT/2wn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cc9NkCuq/JjnVbT+Pi0139K7OUSaoVfIX69HMkNJbV8w0/SLT22mjglr09rTvuWWU5VhG51q545zbImRudDlHYlTysHhqo5slb1tcBlT8V2I8G9c+YS339zW39by9Cdoayb4oSgDy3m1eXgIYXOKFxktVj6LPvoYQgCwxFA0vuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdYubd26; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQNT/2wn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD3091F000FF;
-	Sat, 12 Sep 2026 10:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdYubd26"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9702F1F000FF;
+	Sat, 12 Sep 2026 10:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207961;
-	bh=bdIny75S9Qcl8WpTCqJc47gKg1kTEGTD3ZJa5Up/vqk=;
+	s=korg; t=1789207966;
+	bh=yxUdI7fGrN5KgD77VMR44GGWiKatVsqhaRCug4aKN8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gQNT/2wnhwb+9BoYuxBvkb1wY07oEKOxDoHvw9fduuJDi/57e0aISgfvO/wznrMc+
-	 Fpotletc9vo1rnpG0QR1PEqSpmj54cj5goXjSMaQDQeN9rz2rTl65gS4hmxWo8MgUO
-	 peUeAvKC2oq+lHVhgEyCPxG/Gw+V5Akf05HUfJic=
+	b=EdYubd26PeFgdZRYpeG93hmjK5/MdCBpG+Mj2JsCEj8+olSNMe1R/e2A+jd0Yt1Og
+	 IU+89U793o2+Jv/tnRlvC0idwlH/mgaDNyXOgVes5/2Ej4TyYLB7ejyQVRl2aARZeD
+	 QO8SPSy9eHWJJZ3RE5gu4JzjVJqw2i/vFXyXx1Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0521/1518] RDMA/core: Fix potential use after free in ib_dealloc_pd_user()
-Date: Sat, 12 Sep 2026 08:44:50 +0200
-Message-ID: <20260912065635.231592737@linuxfoundation.org>
+Subject: [PATCH 6.18 0522/1518] firmware: arm_scmi: Fix requested device removal race
+Date: Sat, 12 Sep 2026 08:44:51 +0200
+Message-ID: <20260912065635.254616535@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,67 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 8b90e701342275f414e36e7421c502237df241ad ]
+[ Upstream commit 2c4097e6c4aed276c5e9ec2ab331ab397ea780bf ]
 
-When accessing a PD via the netlink path the only synchronization
-mechanism for the said PD is rdma_restrack_get().
-Currently, rdma_restrack_del() is invoked at the end of
-ib_dealloc_pd_user(), which is too late, since by that point
-vendor-specific resources associated with the PD might already be
-freed. This can leave a short window where the PD remains accessible
-through restrack, leading to a potential use-after-free.
+scmi_protocol_device_unrequest() drops scmi_requested_devices_mtx while
+notifying listeners but continues to retain the per-protocol list head.
+When two SCMI drivers for the same protocol unregister concurrently, one
+thread can remove the final request and free the list head while the other
+is running its notifier. The latter then dereferences the freed list head
+after reacquiring the mutex and can free it a second time.
 
-Fix this by moving the rdma_restrack_begin_del() call to the start of
-ib_dealloc_pd_user(), ensuring that the PD is removed from restrack
-before its internal resources are released. This guarantees that no new
-users hold references to a PD that is in the process of destruction.
+Complete the list and IDR updates, including freeing an empty list head,
+before dropping the mutex. Keep the blocking notifier outside the critical
+section and retain only the detached request across the callback.
 
-In addition, this change preserves the intended inverted order
-between create and destroy routines: resources are added to
-restrack at the end of successful creation, and hence shall be removed
-from the restrack first thing during the destruction flow, which keeps
-the lifecycle management consistent and predictable.
-
-Fixes: 91a7c58fce06 ("RDMA: Restore ability to fail on PD deallocate")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
-Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/20260713-restrack-uaf-fix-resub-v2-8-bbe8bb270d51@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: d3cd7c525fd2 ("firmware: arm_scmi: Refactor protocol device creation")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://patch.msgid.link/20260722095250.2011630-1-sudeep.holla@kernel.org
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/verbs.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/firmware/arm_scmi/bus.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
-index 480a2b1898619..2ef4358b01c52 100644
---- a/drivers/infiniband/core/verbs.c
-+++ b/drivers/infiniband/core/verbs.c
-@@ -335,6 +335,7 @@ int ib_dealloc_pd_user(struct ib_pd *pd, struct ib_udata *udata)
+diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
+index e5e4975b2120d..150ea30d0481a 100644
+--- a/drivers/firmware/arm_scmi/bus.c
++++ b/drivers/firmware/arm_scmi/bus.c
+@@ -159,6 +159,7 @@ static int scmi_protocol_table_register(const struct scmi_device_id *id_table)
+  */
+ static void scmi_protocol_device_unrequest(const struct scmi_device_id *id_table)
  {
- 	int ret;
++	struct scmi_requested_dev *rdev, *victim = NULL;
+ 	struct list_head *phead;
  
-+	rdma_restrack_begin_del(&pd->res);
- 	if (pd->__internal_mr) {
- 		ret = pd->device->ops.dereg_mr(pd->__internal_mr, NULL);
- 		WARN_ON(ret);
-@@ -342,10 +343,12 @@ int ib_dealloc_pd_user(struct ib_pd *pd, struct ib_udata *udata)
+ 	pr_debug("Unrequesting SCMI device (%s) for protocol %x\n",
+@@ -167,29 +168,28 @@ static void scmi_protocol_device_unrequest(const struct scmi_device_id *id_table
+ 	mutex_lock(&scmi_requested_devices_mtx);
+ 	phead = idr_find(&scmi_requested_devices, id_table->protocol_id);
+ 	if (phead) {
+-		struct scmi_requested_dev *victim, *tmp;
+-
+-		list_for_each_entry_safe(victim, tmp, phead, node) {
+-			if (!strcmp(victim->id_table->name, id_table->name)) {
+-				list_del(&victim->node);
+-
+-				mutex_unlock(&scmi_requested_devices_mtx);
+-				blocking_notifier_call_chain(&scmi_requested_devices_nh,
+-							     SCMI_BUS_NOTIFY_DEVICE_UNREQUEST,
+-							     (void *)victim->id_table);
+-				kfree(victim);
+-				mutex_lock(&scmi_requested_devices_mtx);
++		list_for_each_entry(rdev, phead, node) {
++			if (!strcmp(rdev->id_table->name, id_table->name)) {
++				victim = rdev;
++				list_del(&rdev->node);
+ 				break;
+ 			}
+ 		}
+ 
+-		if (list_empty(phead)) {
++		if (victim && list_empty(phead)) {
+ 			idr_remove(&scmi_requested_devices,
+ 				   id_table->protocol_id);
+ 			kfree(phead);
+ 		}
  	}
- 
- 	ret = pd->device->ops.dealloc_pd(pd, udata);
--	if (ret)
-+	if (ret) {
-+		rdma_restrack_abort_del(&pd->res);
- 		return ret;
+ 	mutex_unlock(&scmi_requested_devices_mtx);
++
++	if (victim) {
++		blocking_notifier_call_chain(&scmi_requested_devices_nh,
++					     SCMI_BUS_NOTIFY_DEVICE_UNREQUEST,
++					     (void *)victim->id_table);
++		kfree(victim);
 +	}
- 
--	rdma_restrack_del(&pd->res);
-+	rdma_restrack_commit_del(&pd->res);
- 	kfree(pd);
- 	return ret;
  }
+ 
+ static void
 -- 
 2.53.0
 
