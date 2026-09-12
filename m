@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB772F531B;
-	Sat, 12 Sep 2026 12:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615132E06E4;
+	Sat, 12 Sep 2026 12:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215484; cv=none; b=dvuiAzim5W3cwP0n6Ne7MIoF77lSuBch+IFowbk1lk2GcxzQ9D44XGL2ofPthHSMHtnxFeTvGigBGvhfaY04mpCIe7YtzWrwAj2A8a5wrFT4W1PUjDqGhtO7XW+JbR+sQH7e/i6fHKDkgDMMfSusRN+b1JClwh4vbhsvFzEXeGQ=
+	t=1789215489; cv=none; b=oZ1r6pzSoMhrGhRcgN1a+BWRzTUZ4VZqTPBZR/EHuzlucMYexQ/0V23vbH06/9hngGnLwRvaz8LVFaq/2uU8btQDLOW36UngDeM8Az3cbSA5VkC0nUz22YNhPmQroVXf4STm9i5skmAsHK6JSoDcmleYJ4TIMOUYGkVDp8bZV7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215484; c=relaxed/simple;
-	bh=M/z/KqXDJz/svVddtX7sI2yzc+ICbA31iyOhouJGuJk=;
+	s=arc-20240116; t=1789215489; c=relaxed/simple;
+	bh=D5GRhOI3cfSgxd1JNfNN3Kb3q2m7z2bY70v+BHRZZ2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AeJEXjPSMFUeppHrFwMq0g/G5JcJuh6xwXALjuIPhwn2UIzUdwpiPL6pb36Yx18z61Hr3GyKMlmhJBxeJhql2IQjTP4pkah81ZV2JDnxvIcmq3jH2grsn4RiYLl1DZeQZo0G+Slil/5a/3coHka5yeruyV2Zj58XxSgevBlGz0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQyVKZdZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bn1CIyyN5AJtClzwSxIgk944cRgYDkVm7S70s1hSXf4Avut1luS9rqNmdS/1xPkmMz7QcCSGSMXvAGtZ5OXETNa3MgQQEerYGHFIUTPByqQKJIpeBZ3c/uNfjUPpHkqk3vbbbi98oEVwMioiPOi624ZsHw1OIgkQPLsaq99hkco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WABqSuYX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQyVKZdZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836491F000FF;
-	Sat, 12 Sep 2026 12:18:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WABqSuYX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF881F000FF;
+	Sat, 12 Sep 2026 12:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215483;
-	bh=3sl1DXOnoYGvVdijsfUxs0m+dfm2Xo89HYQO/+if79Y=;
+	s=korg; t=1789215488;
+	bh=KAEoMzTCfrECaqOpIwepAouwde9aKduGdoFnvBpAHos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tQyVKZdZOOl/7XyP10vko26InT4kfNQJ/AABCE3XN+cCYRGbEmnsPst3tUNS4p7Os
-	 7ejpX70lkcunzAm9F/MtnmuvAfuRe3EiJT5G9kVTxTf1nplhRBia/0VvEdKjIWq3X0
-	 +mTvW1ZOtVqMlEyk5oaBDEj8Xw4Zepa6tPs2MCm0=
+	b=WABqSuYXCi+sF/h84NA4hQI7LcMMZ8dnwlJjZiujTZrbfcA/JJk4MebRqMgHvHGW+
+	 NSqJZuCfGWj8wodiwbS0cPiEBzr2lmbJiSk954OHaotWP+XLoNPN9rQ3CwmIuQWHfe
+	 G2Lu3M76P7ev7RndrC7YGSCk9s7v3BIV2uuIWvuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0541/1376] firmware: arm_scmi: Protect device request lookup with RCU
-Date: Sat, 12 Sep 2026 08:49:27 +0200
-Message-ID: <20260912065619.599167720@linuxfoundation.org>
+Subject: [PATCH 6.12 0515/1376] RDMA/hfi1: Stop flushing the global IB workqueue
+Date: Sat, 12 Sep 2026 08:49:01 +0200
+Message-ID: <20260912065619.014726039@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,48 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit e6a0e7a49d83e4fa4e1db68d74f99282eb97aa49 ]
+[ Upstream commit d43b1c17f9e1b9d34a0d742f569c00d84147ebc0 ]
 
-The SCMI device request notifier looks up protocol OF nodes from the
-active_protocols IDR. The IDR lookup can run concurrently with protocol
-activation while probe is still registering protocols and creating their
-SCMI devices.
+hfi1 does not queue work on ib_wq. QSFP and link work run on the per-port
+link_wq, while the remaining device work uses hfi1_wq or dedicated queues.
+The probe failure path destroys both per-port workqueues, and normal device
+removal flushes them in shutdown_device() before destroying them.
 
-Wrap the lookup in an RCU read-side critical section as required by the
-IDR API for lockless readers.
+Remove the flushes of the core-owned global workqueue. Waiting for
+unrelated core or other device work is not part of hfi1 teardown.
 
-Fixes: 53b8c25df708 ("firmware: arm_scmi: Add common notifier helpers")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-9-3afe499d46e3@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: 71d47008ca1b ("IB/hfi1: Create workqueue for link events")
+Link: https://patch.msgid.link/20260708-clean-init-one-hfi1-v1-10-b9e9641268a5@nvidia.com
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/hw/hfi1/init.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 17f0a461cb96f..179005c64aa5c 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -31,6 +31,7 @@
- #include <linux/of.h>
- #include <linux/platform_device.h>
- #include <linux/processor.h>
-+#include <linux/rcupdate.h>
- #include <linux/refcount.h>
- #include <linux/slab.h>
- #include <linux/xarray.h>
-@@ -2834,7 +2835,9 @@ static int scmi_device_request_notifier(struct notifier_block *nb,
- 	struct scmi_device_id *id_table = data;
- 	struct scmi_info *info = req_nb_to_scmi_info(nb);
+diff --git a/drivers/infiniband/hw/hfi1/init.c b/drivers/infiniband/hw/hfi1/init.c
+index 904a426115c54..d6846d77f9479 100644
+--- a/drivers/infiniband/hw/hfi1/init.c
++++ b/drivers/infiniband/hw/hfi1/init.c
+@@ -1650,7 +1650,6 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	if (initfail || ret) {
+ 		msix_clean_up_interrupts(dd);
+ 		stop_timers(dd);
+-		flush_workqueue(ib_wq);
+ 		for (pidx = 0; pidx < dd->num_pports; ++pidx) {
+ 			hfi1_quiet_serdes(dd->pport + pidx);
+ 			ppd = dd->pport + pidx;
+@@ -1727,9 +1726,6 @@ static void remove_one(struct pci_dev *pdev)
  
-+	rcu_read_lock();
- 	np = idr_find(&info->active_protocols, id_table->protocol_id);
-+	rcu_read_unlock();
- 	if (!np)
- 		return NOTIFY_DONE;
+ 	stop_timers(dd);
+ 
+-	/* wait until all of our (qsfp) queue_work() calls complete */
+-	flush_workqueue(ib_wq);
+-
+ 	postinit_cleanup(dd);
+ }
  
 -- 
 2.53.0
