@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9276C37A498;
-	Sat, 12 Sep 2026 11:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93B34BEE32;
+	Sat, 12 Sep 2026 11:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212066; cv=none; b=G6Zg1pnK0tXcjnNL8/2CqHYsrjsb9w6djE93Pd2f+NK5NNmr5aIVJetyb152/thYQxPEvLpe09j7qBSUwj8raWIZprZJXP/A69rk7JvzDvfb7QA+L9nfmcFgPJzh1G8faoYgEf7CkH7EbojS+ebjQ5p+EL040WwDj+kFLamMsLw=
+	t=1789212071; cv=none; b=GbxlR8f7AEAlI7/xRkQeymCVwTrfkV2fHru1dLO+9mV8GtIMUrkdoRS9FKaNK/wa9kXyZMN1CkilCZoVSZqGdfx67xIiLk9KJrCBycILkDTtjvP/M905XIySKu9CVVQhoZxkoOdveW/UZnWtdmVdLpbl2picsgvPocfUc16RDIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212066; c=relaxed/simple;
-	bh=mz9zIMGkTpCG9R9Av0CvLoLSq8rKkQrTP9z1RjEF2uQ=;
+	s=arc-20240116; t=1789212071; c=relaxed/simple;
+	bh=WYMvZQv+Uds6QywqSXpuHrl/uvjU1yU8tDKD42lnI6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WsxR8xd9Vniy5yogm6A9r9rUPQEWU0Gg6x9ZTBkZrtfOJTWYWB9hgIC7KJO8nC+i8AQK6KollffWato8iX3V1INU0mQ5H+CxdTFGDtOZ/Va+hqja/WQDa9wrvlSUJje0A4myWz8xueMH1iUTj2EVG2z2NAqdtP7RbfCIssq7pNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tq+SOxS4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ri9z+YcHrKrIDbpF46e1DIZpmkg980JjpTucCEoFJQ6XTXGGn/xWCzmUF0zP6h/czSECh4YVUDpFUJbIG3dzzaPQCsTkTmcbMrqGKukzVzf22Bw1Ok+qmkKXyGQW607R76E54d+nKiyJaOh0OCkKH7gLY/khxDx53gWy0SZlR1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oSdgVCN5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tq+SOxS4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 981731F0089C;
-	Sat, 12 Sep 2026 11:21:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSdgVCN5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833571F000FF;
+	Sat, 12 Sep 2026 11:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212065;
-	bh=+Hb6gWG1mjFxiX2MepFGbkoffIuPt3yP08unmfEXkV0=;
+	s=korg; t=1789212070;
+	bh=dSzS7J4hU2+pkPxy8o11AUCrAusviNmtd800FVS2cR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tq+SOxS4rS9/tLjn5Qp0wtZaxUrQfnEpVh1TRF84kuqVsY78M1xsWrhyA/nOcHMWP
-	 U8kBZz4WUT1NMdyiPD2GUBHPuUiQ4qHnwS+id112B0UBolMPg9UfM5f1YpUiUu95zS
-	 fbUPm6/LmRH+bY0yjNXkl2bhtxMWMhLPIcGAGaFk=
+	b=oSdgVCN57t3riIDT73m1tDoJCSd99XljRCghnNW0S5rHQEJUFNzt07DYwmzlO5XQo
+	 mn/m5JTZ63dHl8Qc+UxLhb7skMo6FqI/ru0Tx07O5Fgu1zrrZtfC5BpX0oJ2YyZc6h
+	 8i04vpEptFhfich15lhIkNLUeDPzpado6CEt6glY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Ye <fy15309206903@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Mika Westerberg <westeri@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1333/1518] net: thunderbolt: Count delivered packets in rx_packets and rx_bytes
-Date: Sat, 12 Sep 2026 08:58:22 +0200
-Message-ID: <20260912065653.685320215@linuxfoundation.org>
+Subject: [PATCH 6.18 1360/1518] ip6mr: plug drop_reason to ip6mr_cache_report()
+Date: Sat, 12 Sep 2026 08:58:49 +0200
+Message-ID: <20260912065654.298280409@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,60 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Ye <fy15309206903@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c5ae83ee02c04487b1be1d143b791ec2caca888e ]
+[ Upstream commit 8d59a7a188c0a7f6d52e4a829f3ce75534255d76 ]
 
-tbnet_poll() increments rx_packets once per received frame because that is
-the NAPI work unit, and then adds the same number to stats.rx_packets. An
-skb is handed to the stack only when the last frame of a packet arrives,
-so once the MTU exceeds TBNET_MAX_PAYLOAD_SIZE the statistic reports
-frames. tx_packets is bumped once per skb, so the two ends of a link
-disagree: at MTU 65330 the receiver reports 16 times the packets its
-sender sent.
+- Check mrt->mroute_sk earlier in the function.
 
-rx_bytes has the matching problem: frames of a packet that is later
-dropped mid-assembly are already accounted, so it does not correspond to
-rx_packets as documented. Account for both where the packet is completed,
-and leave the NAPI work counter alone.
+- Use sock_queue_rcv_skb_reason() instead of sock_queue_rcv_skb().
+- Use sk_skb_reason_drop() instead of kfree_skb().
+  Note that we return -ENOMEM if sock_queue_rcv_skb_reason() failed,
+  as the precise error is not really needed for callers.
 
-Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
-Signed-off-by: Fan Ye <fy15309206903@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Acked-by: Mika Westerberg <westeri@kernel.org>
-Link: https://patch.msgid.link/20260815-tbnet-rx-stats-v1-1-8da375c2cd09@gmail.com
+- Remove one net_warn_ratelimited().
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260430074004.4133602-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 235b42b58601 ("ip6mr: do not clone dst in ip6mr_cache_report()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/thunderbolt/main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/ipv6/ip6mr.c | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/thunderbolt/main.c b/drivers/net/thunderbolt/main.c
-index 7bb9aa20fab9f..096f3ff36a437 100644
---- a/drivers/net/thunderbolt/main.c
-+++ b/drivers/net/thunderbolt/main.c
-@@ -907,9 +907,11 @@ static int tbnet_poll(struct napi_struct *napi, int budget)
- 		       le32_to_cpu(net->rx_hdr.frame_count) - 1;
+diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
+index e047a4680ab0e..61e61e36f0907 100644
+--- a/net/ipv6/ip6mr.c
++++ b/net/ipv6/ip6mr.c
+@@ -1063,10 +1063,14 @@ static void ip6mr_cache_resolve(struct net *net, struct mr_table *mrt,
+ static int ip6mr_cache_report(const struct mr_table *mrt, struct sk_buff *pkt,
+ 			      mifi_t mifi, int assert)
+ {
++	enum skb_drop_reason reason;
+ 	struct sock *mroute6_sk;
+ 	struct sk_buff *skb;
+ 	struct mrt6msg *msg;
+-	int ret;
++
++	mroute6_sk = rcu_dereference(mrt->mroute_sk);
++	if (!mroute6_sk)
++		return -EINVAL;
  
- 		rx_packets++;
--		net->stats.rx_bytes += frame_size;
- 
- 		if (last) {
-+			/* Before eth_type_trans() pulls the Ethernet header. */
-+			net->stats.rx_packets++;
-+			net->stats.rx_bytes += skb->len;
- 			skb->protocol = eth_type_trans(skb, net->dev);
- 			trace_tbnet_rx_skb(skb);
- 			napi_gro_receive(&net->napi, skb);
-@@ -917,8 +919,6 @@ static int tbnet_poll(struct napi_struct *napi, int budget)
- 		}
+ #ifdef CONFIG_IPV6_PIMSM_V2
+ 	if (assert == MRT6MSG_WHOLEPKT || assert == MRT6MSG_WRMIFWHOLE)
+@@ -1136,23 +1140,17 @@ static int ip6mr_cache_report(const struct mr_table *mrt, struct sk_buff *pkt,
+ 	skb->ip_summed = CHECKSUM_UNNECESSARY;
  	}
  
--	net->stats.rx_packets += rx_packets;
+-	mroute6_sk = rcu_dereference(mrt->mroute_sk);
+-	if (!mroute6_sk) {
+-		kfree_skb(skb);
+-		return -EINVAL;
+-	}
 -
- 	if (cleaned_count)
- 		tbnet_alloc_rx_buffers(net, cleaned_count);
+ 	mrt6msg_netlink_event(mrt, skb);
  
+ 	/* Deliver to user space multicast routing algorithms */
+-	ret = sock_queue_rcv_skb(mroute6_sk, skb);
++	reason = sock_queue_rcv_skb_reason(mroute6_sk, skb);
+ 
+-	if (ret < 0) {
+-		net_warn_ratelimited("mroute6: pending queue full, dropping entries\n");
+-		kfree_skb(skb);
++	if (reason) {
++		sk_skb_reason_drop(mroute6_sk, skb, reason);
++		return -ENOMEM;
+ 	}
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ /* Queue a packet for resolution. It gets locked cache entry! */
 -- 
 2.53.0
 
