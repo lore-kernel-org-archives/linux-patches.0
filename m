@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050D12E7631;
-	Sat, 12 Sep 2026 13:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E238D2C15A9;
+	Sat, 12 Sep 2026 13:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220569; cv=none; b=Ew7eZya2Q0kz2SC/I5QW553cZf7gte/RhYXWsDV7AZw6fovHNWAzb6B+/eHXqbbg3daCZvMUI6+57wkyTE/iwQVt2cT2wQfqRX59A+r1uA+/GBLW5oe7RuH1qzaLV7saJO85lfBKWkAJfKmjHK1SxXfeoKONnZ+Hs4+h+MS2s98=
+	t=1789220574; cv=none; b=FBd2rlrdgn2PcOy+43epEUlZ+K6dgmohBgF3ch5ydiRtJM4uJ6IMhUUZWSR87jcnqKqIDMyRrSUs0h/jFYo66hgBTftMhQ0Gi6h7LlROAquwfO31D3TK56ggKybrgy3zK7lGy5q22z6swI+3HcmTfhOpBhPL2I4sK5HzOHR+eio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220569; c=relaxed/simple;
-	bh=ywiZYvTl/Vc6rYCWviyUIrep7jMQLMXtTRIXYoEGvgo=;
+	s=arc-20240116; t=1789220574; c=relaxed/simple;
+	bh=uplvI0mRgRI1pVhpK29kkKI2S4WuYUSW1N3eaN8xlOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LuzPLuVsXCxlCzcHBltIOVfWFp9Jb2HAJk7ij3oL8nsqvzQ4JiMBON7yF/EzjLZHurH85chsJNUKeIGNKNwsIxE0EKzU9gQ9ujtEtPyIfXwspGsiScRhQS2OVw5NvqTuOR2eTN6IAcB3IoGt0zdTglM1YmdGDWxnT5pB8U5coG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Awnf2hIC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P/FpDzOiJLKOxJdO50rs8Emph2AsKClj+7jcXI71byod8w4A1YnakmuvUxMLv60BvZ6QYmS7D05H8jZedLrU8bJIs1xCfXjCvYvuxN2Z+rUYvzXIknefJEJoKTSu5mpyxEGeLNDodfN4C1LDDNtgwmk0ecnL1C2Rrg7V48sDvXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2vPnbVj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Awnf2hIC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1BE41F000FF;
-	Sat, 12 Sep 2026 13:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2vPnbVj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532811F000FF;
+	Sat, 12 Sep 2026 13:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220567;
-	bh=ZyIk6H2TGSl6Aj9e/3WoWk+15p5JS5/daaRC3w0kRKg=;
+	s=korg; t=1789220572;
+	bh=3ctZMfOUo6IVlMYfIxI4GxczUBIH90fd1qayNvOBcNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Awnf2hICyEveeyMy1eG6qQKbdUefAErYdXMqgqhZw3WW8HRjXB9DJzR/a5BZyRpVE
-	 6gnNyqdKxIvBXY9oZ79UbHwMNlzs0VVSfWfYEWVPv2Y9rYQkjKIP0B8FlBDBFr5dWB
-	 PEst3FtiSCpr4uTn7Bn6r1qFFmzmIGWyFUgJ/WZY=
+	b=n2vPnbVjtbR0m2AU5PnR/0OK9w8QGPqAjuGCT2o43lKjLNAHOyyDHkPqYp/zWJrQi
+	 AnK7UMRBE+7kv9ax0NgrOEMiRdfsnAebaS95SeSzGoJFKy9x8K04Lmc6iV8TsrnW6u
+	 tHhyuTlBTyAtebD/K9jU/1HbLOE8sKt2g1qFZBEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
 	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0202/1424] sctp: drop a chunk if its transport was removed
-Date: Sat, 12 Sep 2026 08:43:54 +0200
-Message-ID: <20260912065611.816055010@linuxfoundation.org>
+	Weiming Shi <bestswngs@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 0203/1424] sctp: fix NULL deref on untransmitted RECONF completion
+Date: Sat, 12 Sep 2026 08:43:55 +0200
+Message-ID: <20260912065611.839000721@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,58 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit 03a9d10ecf71f54b2af8020935f2033d4a132be5 upstream.
+commit 2db9bfa3e27bdea15e05ea70b56bad3d21e570ec upstream.
 
-sctp_rcv() resolves the transport once per packet and leaves it in
-chunk->transport. The lookup reference, or the one sctp_add_backlog() takes
-if the socket is owned by userspace, keeps it around until the chunk has
-been processed.
+sctp_process_strreset_outreq(), sctp_process_strreset_addstrm_out() and
+sctp_process_strreset_resp() complete a pending stream reconfiguration
+request by stopping the reconf timer on the transport it was sent on:
 
-An authenticated ASCONF DEL-IP can remove it in the meantime.
-sctp_assoc_rm_peer() takes the transport out of the association and calls
-sctp_transport_free(), which tags it dead and drops the reference the
-association held. There is a window on both paths: the packet can sit on
-the socket backlog, and on the direct path the lookup completes before
-bh_lock_sock().
+	t = asoc->strreset_chunk->transport;
+	if (timer_delete(&t->reconf_timer))
+		sctp_transport_put(t);
 
-The DATA chunk in that packet puts the removed transport back into
-asoc->peer.last_data_from. Once the packet is done that reference goes
-away and the transport is freed by RCU, so the next delayed SACK carries
-the pointer into the SACK chunk and sctp_outq_select_transport() reads the
-freed transport's state.
+chunk->transport is assigned by __sctp_packet_append_chunk() when the
+chunk is appended to an outbound packet, and sctp_outq_flush_ctrl() arms
+the reconf timer at that same point. A request already published in
+asoc->strreset_chunk but not yet transmitted has neither, so completing
+it dereferences NULL.
 
-Drop the chunk in sctp_inq_push(), next to the existing rcvr->dead check.
-Both paths reach it with the association's socket lock held. The peer
-retransmits it.
+Two ways to get there. sctp_send_asconf_del_ip() sets
+asoc->src_out_of_asoc_ok without sending anything when the address being
+removed is the association's last one, and sctp_outq_flush_ctrl() then
+leaves every non-ASCONF control chunk queued; as only
+sctp_process_asconf_ack() clears that flag, it persists. An unprivileged
+process that removes such an address and then asks for a stream reset
+panics the kernel from softirq. A peer needs neither ASCONF nor local
+help: sctp_cmd_interpreter() uncorks the outqueue only once the whole
+packet has been processed, so a reply built while walking a RECONF chunk
+stays untransmitted for the rest of that walk, and one RECONF chunk
+carrying [Incoming SSN Reset Request, Outgoing SSN Reset Request,
+Response] -- or two RECONF chunks in one packet -- reaches the same
+dereference.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+  KASAN: null-ptr-deref in range [0x00000000000001e8-0x00000000000001ef]
+  RIP: 0010:timer_delete+0x67/0x110
+  Call Trace:
+   <IRQ>
+   sctp_process_strreset_addstrm_out (net/sctp/stream.c:832)
+   sctp_sf_do_reconf (net/sctp/sm_statefuns.c:4212)
+   sctp_do_sm (net/sctp/sm_sideeffect.c:1172)
+   sctp_assoc_bh_rcv (net/sctp/associola.c:1044)
+   sctp_rcv (net/sctp/input.c:243)
+   ip_local_deliver (net/ipv4/ip_input.c:262)
+   process_backlog (net/core/dev.c:6680)
+   </IRQ>
+
+A response can only acknowledge a request that was actually sent, so do
+not match asoc->strreset_chunk while chunk->transport is NULL. Guarding
+the lookup covers all three completion sites.
+
+Fixes: 810544764536 ("sctp: implement receiver-side procedures for the Outgoing SSN Reset Request Parameter")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
 Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/aoUJHQmxL0LFIMCw@v4bel
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260823172857.896146-2-bestswngs@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/inqueue.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/sctp/stream.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sctp/inqueue.c
-+++ b/net/sctp/inqueue.c
-@@ -71,8 +71,11 @@ void sctp_inq_free(struct sctp_inq *queu
-  */
- void sctp_inq_push(struct sctp_inq *q, struct sctp_chunk *chunk)
- {
--	/* Directly call the packet handling routine. */
--	if (chunk->rcvr->dead) {
-+	/* Directly call the packet handling routine.  Drop the chunk if the
-+	 * receiver or the transport it was looked up on is gone.
-+	 */
-+	if (chunk->rcvr->dead ||
-+	    (chunk->transport && chunk->transport->dead)) {
- 		sctp_chunk_free(chunk);
- 		return;
- 	}
+--- a/net/sctp/stream.c
++++ b/net/sctp/stream.c
+@@ -488,7 +488,7 @@ static struct sctp_paramhdr *sctp_chunk_
+ 	struct sctp_reconf_chunk *hdr;
+ 	union sctp_params param;
+ 
+-	if (!chunk)
++	if (!chunk || !chunk->transport)
+ 		return NULL;
+ 
+ 	hdr = (struct sctp_reconf_chunk *)chunk->chunk_hdr;
 
 
