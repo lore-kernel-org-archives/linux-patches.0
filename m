@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952F047F3A1;
-	Sat, 12 Sep 2026 13:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88DD2F531B;
+	Sat, 12 Sep 2026 13:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219485; cv=none; b=sKJjH/zp2S2m1iOA/RSDKVuZ5/xl5pjOx2MIA4oezqZy8oOG6gB6c8wmGu9K+Y4s0G+jM31VADGpR2R48UTcLurEQAiA1wcXa/izwFIAq6JiluLPVVDfFWqw0PcbYwU5zNxFeW7Qs18PW/lBM6lUAKTBOtG0+X2Pn/Dn63RTJBE=
+	t=1789219489; cv=none; b=ajA0RyzSZevZw9xr5QvJPCNW3sy3sgyhwRlTYMgKoqarpIIEeOwFgrg3Vvph1xUfhYQZRVd4ZYmvxXXUdC7I1PZT2xpqc5cJ6T41UdVfZeYx1WyyUXH0gtLgbzBFn7CXuqWzPFBLJ0GqrDBW/1K0R/oEETPXOTkUkMzrHdgIW9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219485; c=relaxed/simple;
-	bh=KbeSmOJzJoLPDzQIkdHql9+mZ+F59icLA+GRwBZ/VFk=;
+	s=arc-20240116; t=1789219489; c=relaxed/simple;
+	bh=EHnBeyIAkM+UJqv5O1VVwbjJwsDrLgQdEbBCzOicLhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BqhusqVZqj3x1Rt1m+LxJ59ZpbYVfxP9tbE5ABga2qpp4p4DLIxY0AKptvfcKWSdDTCPSMT9geyHbyS8F3QgMunW5sM6+iUamrwhJUgI3zxlyzYFlzBuVf2HQf+TrjuN0Y5VYM2bS8wFuq8D5SjjivAC2zzEYz35ledKgyaQZwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ymRqbUiP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Um273pU9gg/bDyHSk/mhYkntMmte/y8JU7w5ei4ILUMAZeYqAHnoW/MxYHK1jmlFJWqRzvsIf/tdw5vymiGJWWav3BKK9TyHL2Rme5s9ksB00OFsvr2zL4TrNk9M2Ij9gEyknJO78dZH7CQdP3qez16RGf5OGriGD+dux3eTuvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEDn/Crq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymRqbUiP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9816B1F000FF;
-	Sat, 12 Sep 2026 13:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEDn/Crq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B621F000FF;
+	Sat, 12 Sep 2026 13:24:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219483;
-	bh=cM7mgEPec0e/l01o7/0ZgsgfBbEvLEGyrGPPEc+c7x4=;
+	s=korg; t=1789219488;
+	bh=cEpFQ41Wq3lsCcIBQTKwGMA9OW/ybYVkgqSyBO0/yJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ymRqbUiPlwOHOU0xIE3aAHpkaj8aXH8r3t2YsSJi+hgLUTePctRB2jjKiiAY+6rtE
-	 z9Ad2Qy+4FI0fUvliISkpbdkbFYmM3DR5D0v+kErn7dUMediJsi05UTz3ce/PKyd2h
-	 F3FqvpNKiy5XCwRZUIWXrKp0QZRmm1a4rq51hkGI=
+	b=vEDn/CrqACjGFwKR3snXzRJUvEmaaYcZVX+fbCWRnOH5X/sU59ZAsGM0YUapvWJXo
+	 /IPXmpqZPhi6P/RksHlm+7T/EWiyOLP2nzG4ZNGQvPZFGGyo3G3g5DBsjG080onIJu
+	 pKrF5XogGIZ4328ppyCNY0gRc7XaAM29GVggWcbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yang Shi <yang@os.amperecomputing.com>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1360/1376] net/sched: fq: clamp quantum and initial_quantum in change path
-Date: Sat, 12 Sep 2026 09:03:06 +0200
-Message-ID: <20260912065637.844982946@linuxfoundation.org>
+Subject: [PATCH 6.12 1361/1376] kselftest/arm64: mte: Skip the hugetlb tests if MTE not supported on such mappings
+Date: Sat, 12 Sep 2026 09:03:07 +0200
+Message-ID: <20260912065637.867368948@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -48,85 +47,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-[ Upstream commit 094cc07f98dfe70a34e2a1923af17fd29b8cf622 ]
+[ Upstream commit 306219d59b72cfca4005229b2c6ad43a16479e3b ]
 
-The fq change path accepts TCA_FQ_QUANTUM in [1, INT_MAX] and
-TCA_FQ_INITIAL_QUANTUM up to INT_MAX, while fq_init() already clamps to
-[1, 1<<20]. A user can override the init clamp via tc qdisc change,
-restoring the small-quantum deficit spin that the init clamp prevents.
+While the kselftest was added at the same time with the kernel support
+for MTE on hugetlb mappings, the tests may be run on older kernels. Skip
+the tests if PROT_MTE is not supported on MAP_HUGETLB mappings.
 
-Narrow iq_range.max to 1<<20 so TCA_FQ_INITIAL_QUANTUM is rejected at
-parse time. Clamp TCA_FQ_QUANTUM to [256, 1<<20] in fq_change() and
-fq_init() quantum to [256, 1<<20] for tiny-MTU devices.
-
-Conditions to recreate the bug:
-  CONFIG_NET_SCH_FQ=y. Requires CAP_NET_ADMIN (namespace-local via
-  unshare -Urn suffices).
-
-  tc qdisc add dev dummy0 root fq
-  tc qdisc change dev dummy0 root fq quantum 1 stab data 32768 size_log 15 cell_log 0
-
-Fixes: 709f34f7c28d ("net/sched: fq: add overflow bounds to quantum and initial quantum")
-Reported-by: Vega <vega@nebusec.ai>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.2
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 27879e8cb6b0 ("selftests: arm64: add hugetlb mte tests")
+Cc: Yang Shi <yang@os.amperecomputing.com>
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Yang Shi <yang@os.amperecomputing.com>
+Link: https://lore.kernel.org/r/20250221093331.2184245-3-catalin.marinas@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ .../selftests/arm64/mte/check_hugetlb_options.c       | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
-index afb76d7595917..6b85bb2a4f8ab 100644
---- a/net/sched/sch_fq.c
-+++ b/net/sched/sch_fq.c
-@@ -909,7 +909,7 @@ static int fq_resize(struct Qdisc *sch, u32 log)
- }
+diff --git a/tools/testing/selftests/arm64/mte/check_hugetlb_options.c b/tools/testing/selftests/arm64/mte/check_hugetlb_options.c
+index a8087c9288176..d1dc587b18254 100644
+--- a/tools/testing/selftests/arm64/mte/check_hugetlb_options.c
++++ b/tools/testing/selftests/arm64/mte/check_hugetlb_options.c
+@@ -227,6 +227,8 @@ static int check_child_hugetlb_memory_mapping(int mem_type, int mode, int mappin
+ int main(int argc, char *argv[])
+ {
+ 	int err;
++	void *map_ptr;
++	unsigned long map_size;
  
- static const struct netlink_range_validation iq_range = {
--	.max = INT_MAX,
-+	.max = 1 << 20,
- };
+ 	ksft_print_header();
  
- static const struct nla_policy fq_policy[TCA_FQ_MAX + 1] = {
-@@ -1034,14 +1034,10 @@ static int fq_change(struct Qdisc *sch, struct nlattr *opt,
- 			   nla_get_u32(tb[TCA_FQ_FLOW_PLIMIT]));
- 
- 	if (tb[TCA_FQ_QUANTUM]) {
--		u32 quantum = nla_get_u32(tb[TCA_FQ_QUANTUM]);
-+		u32 quantum = clamp_t(u32, nla_get_u32(tb[TCA_FQ_QUANTUM]),
-+				     256, 1 << 20);
- 
--		if (quantum > 0 && quantum <= (1 << 20)) {
--			WRITE_ONCE(q->quantum, quantum);
--		} else {
--			NL_SET_ERR_MSG_MOD(extack, "invalid quantum");
--			err = -EINVAL;
--		}
-+		WRITE_ONCE(q->quantum, quantum);
+@@ -245,6 +247,15 @@ int main(int argc, char *argv[])
+ 		return KSFT_FAIL;
  	}
  
- 	if (tb[TCA_FQ_INITIAL_QUANTUM])
-@@ -1147,7 +1143,7 @@ static int fq_init(struct Qdisc *sch, struct nlattr *opt,
- 	sch->limit		= 10000;
- 	q->flow_plimit		= 100;
- 	mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 1, 1 << 20);
--	q->quantum		= min_t(u32, 2 * mtu, 1 << 20);
-+	q->quantum		= clamp_t(u32, 2 * mtu, 256, 1 << 20);
- 	q->initial_quantum	= min_t(u32, 10 * mtu, 1 << 20);
- 	q->flow_refill_delay	= msecs_to_jiffies(40);
- 	q->flow_max_rate	= ~0UL;
++	/* Check if MTE supports hugetlb mappings */
++	map_size = default_huge_page_size();
++	map_ptr = mmap(NULL, map_size, PROT_READ | PROT_MTE,
++		       MAP_PRIVATE | MAP_ANONYMOUS | MAP_HUGETLB, -1, 0);
++	if (map_ptr == MAP_FAILED)
++		ksft_exit_skip("PROT_MTE not supported with MAP_HUGETLB mappings\n");
++	else
++		munmap(map_ptr, map_size);
++
+ 	/* Set test plan */
+ 	ksft_set_plan(12);
+ 
 -- 
 2.53.0
 
