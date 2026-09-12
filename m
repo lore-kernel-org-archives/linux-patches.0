@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79AC3F23BE;
-	Sat, 12 Sep 2026 10:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08C9455605;
+	Sat, 12 Sep 2026 10:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209945; cv=none; b=LuwriXu0AqF+ApQDxL/20S+sODo3B29sHyDkgxtuNdMaYwtf2ba20tL2PQbsCPdxnayWbkqbmIq0Fx5ws61S+UDRsn6VX8I4dtGUoEo+1DuzBs35VpqGbsfAlTuwEEcJu17uz3kEdda3VeCE55WOlLiE8RGEr9iwNKPN0c5ZuQE=
+	t=1789209949; cv=none; b=tCqWa5qdZS9TT3nDq9Cfp8uzUwGr24KhZVw76pFT0LFHD+ZB/yshlmo29UW5KEMUSkf/5BNoxoimqDEAJGiJDu4+yqn/l268UPzyk4680wyVg+HGkOxCU3CUMxfEBaq03q4oMaV8T31E4+BPTcCBb4XTq54tAhhMcM+YUNzOpYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209945; c=relaxed/simple;
-	bh=5+DZrKr/uXWiGsz71Y0TAhYw7UL2PZxblXuUkpIWiPA=;
+	s=arc-20240116; t=1789209949; c=relaxed/simple;
+	bh=6xK2Gnj1BT0xJzkjkqJXBTRsU3IT+bZj7xJuHhVdRMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U8WB6C9JlfYpipgzdQYq9oN308ksrry4HYxdTIx0jalOeFdg+Xn5A17myR2hAKtC7r82kjoDYElP/4hp8A8jqWzFr7aLAxlXR3FaJ+78MlG4tQIzZF9viZJqU0GK57arU/rdAGi7TyKpx7iCqTHiXVJKzD0P/xtMcv4VuHcTAQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oyVkvETP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AGjuYvpwaj387VRcgfouRpQteeLDbbgZCDrlpcmCQwMYO7xjm/SdbUgnpjM7okxWD3BibG1Sg1ObXugVTnqGuJyDTdT8nrDbqgcitF8DWe1pQSkoNKrygBdI3moNL0Nr43TB0eUDEeFCY6Q9KzKNslNGDVbPI8wivnyihVjGtAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/duL6VV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oyVkvETP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F021F000FF;
-	Sat, 12 Sep 2026 10:45:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/duL6VV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A952B1F000FF;
+	Sat, 12 Sep 2026 10:45:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209943;
-	bh=XT59j6RzWvIrMmSxHdDwPOP1Fuk/58fDdIDuMySSK5s=;
+	s=korg; t=1789209948;
+	bh=q6fkJvgTY5KbXwc1KalammwdKR43WqNq207wBScXW8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oyVkvETP6RqXjhrt7cgrGgxflxlBXm362K1OFlZlVLasnFMcyB/FTyxfm9UUyhdTI
-	 /3wYERwgVI6OncynajDa3wjF9PB3fIAHg6+5oTBqGOkHrStMDTy/LpspLsPjWQ+7BN
-	 6grAqwom1PhJo6HVI5Wgz8H+m0QxX8bIJxzQZ2EE=
+	b=a/duL6VV7dh0zYA6oV8laWgZtUq5zG2ax4UCJRNezZqzwObPDnvJ/+ZpYVvEIkqQ+
+	 XR2/9VLhk73zyD58Vq9EQMABc4ZlQ2fEbbA5Abu+TsWJx4Dh8qy1t7HJnju7VlDN4L
+	 8J4FT1k54gygSIx0s9n/KmJl6V6oQdA7nnIK+76A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0918/1518] drm/sun4i: hdmi-phy: Fix H6 8-bit MPLL config at 594 MHz
-Date: Sat, 12 Sep 2026 08:51:27 +0200
-Message-ID: <20260912065644.217855018@linuxfoundation.org>
+Subject: [PATCH 6.18 0927/1518] module: use strscpy() to copy module names in stats and dup tracking
+Date: Sat, 12 Sep 2026 08:51:36 +0200
+Message-ID: <20260912065644.420421297@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,43 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
 
-[ Upstream commit 0ba6deddaae74f0539c0303bfb5f860adbe1a68b ]
+[ Upstream commit 93c29ebd1622fb0670701e1c1b3a978a5cac08b7 ]
 
-The 8-bit entry of the last MPLL row (594 MHz) doesn't lock reliably on
-H6. 4K@60 RGB/YUV444, which is the mode that reaches this entry, doesn't
-come up.
+Both try_add_failed_module() and kmod_dup_request_exists_wait() use
+memcpy() with strlen() to copy module names into fixed-size
+char[MODULE_NAME_LEN] buffers. Neither performs a bounds check on the
+copy. Current callers always pass names originating from
+mod->name (itself char[MODULE_NAME_LEN]), so this is not exploitable
+today. However both functions accept a plain const char * with no
+documented length contract, making them latent buffer overflows if a
+future caller passes a longer string.
 
-Align the value with the vendor driver. Other entries are left alone,
-they are used by lower pixel clocks which work fine.
+Replace memcpy() with strscpy() in both sites, which bounds the copy
+to MODULE_NAME_LEN and always NUL-terminates.
 
-Tested with 4K@60 on a LG TV.
-
-Fixes: 0fb4b858b102 ("drm/sun4i: Add support for H6 HDMI PHY")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Acked-by: Chen-Yu Tsai <wens@kernel.org>
-Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-Link: https://patch.msgid.link/aec9060209473b8176eb43bc7c63c20b21306adf.1785772659.git.jernej.skrabec@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Stable-dep-of: 5eecb11b543f ("module/dups: Fix use-after-free in kmod_dup_req lifetime handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/module/dups.c  | 2 +-
+ kernel/module/stats.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c b/drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c
-index 4fa69c463dc46..489ea94693ffa 100644
---- a/drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c
-+++ b/drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c
-@@ -91,7 +91,7 @@ static const struct dw_hdmi_mpll_config sun50i_h6_mpll_cfg[] = {
- 		},
- 	},  {
- 		594000000, {
--			{ 0x1a40, 0x0003 },
-+			{ 0x1a7c, 0x0003 },
- 			{ 0x3b4c, 0x0003 },
- 			{ 0x5a64, 0x0003 },
- 		},
+diff --git a/kernel/module/dups.c b/kernel/module/dups.c
+index 0b633f2edda6b..6ecc42193de24 100644
+--- a/kernel/module/dups.c
++++ b/kernel/module/dups.c
+@@ -129,7 +129,7 @@ bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
+ 	if (!new_kmod_req)
+ 		return false;
+ 
+-	memcpy(new_kmod_req->name, module_name, strlen(module_name));
++	strscpy(new_kmod_req->name, module_name);
+ 	INIT_WORK(&new_kmod_req->complete_work, kmod_dup_request_complete);
+ 	INIT_DELAYED_WORK(&new_kmod_req->delete_work, kmod_dup_request_delete);
+ 	init_completion(&new_kmod_req->first_req_done);
+diff --git a/kernel/module/stats.c b/kernel/module/stats.c
+index 3ba0e98b3c910..2a4e2f6708965 100644
+--- a/kernel/module/stats.c
++++ b/kernel/module/stats.c
+@@ -253,7 +253,7 @@ int try_add_failed_module(const char *name, enum fail_dup_mod_reason reason)
+ 	mod_fail = kzalloc(sizeof(*mod_fail), GFP_KERNEL);
+ 	if (!mod_fail)
+ 		return -ENOMEM;
+-	memcpy(mod_fail->name, name, strlen(name));
++	strscpy(mod_fail->name, name);
+ 	__set_bit(reason, &mod_fail->dup_fail_mask);
+ 	atomic_long_inc(&mod_fail->count);
+ 	list_add_rcu(&mod_fail->list, &dup_failed_modules);
 -- 
 2.53.0
 
