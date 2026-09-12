@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C7727FB37;
-	Sat, 12 Sep 2026 16:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF731331A6E;
+	Sat, 12 Sep 2026 16:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229615; cv=none; b=QT97o/lVxQLkkKdZop6nquCyi9VJ/QgtbokjRTYKwF7Nt9jRo9i24AELlI2qTxJGgzswhXaI9/U7d3QayEvLjYeOl1/5SLuiQvVqgNJpYiGl3tuF/cEnhzLE4Cnms+z7q9HRHMK8rRjbSnxFDi2of3EnV02FMM/eu6jFkWwF+64=
+	t=1789229621; cv=none; b=W5qrRg9y9KG9Qh+SzHOm6Gvl3CGECqsKNcAMKlDiZ17zQH8kdoSh3B21wv5i//DLtPKfpHX+SYFN1yl6/KNTzTbSsdelKrT11QppHxkoaok+0JJIwpnI2ecalIxsaLyLzbjLKCsONrUuQXP8YPtAYQ0YccgyKsiEWY1g6qRZTBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229615; c=relaxed/simple;
-	bh=xStsWvKlNTwUZSff1jEUTo7M8kQ9TkBOknlMxllB6Vw=;
+	s=arc-20240116; t=1789229621; c=relaxed/simple;
+	bh=wwudBwcBTqLWlTLskHZ5+iwjmJpAMDIUWSU28H4kGao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mYlM4RiNA2NzsN0ZemnXY+JIzfFaTocMp0cJgERY2aG8TadKLbM1nIpBuCM1HUoV6PIBvumsZZbKCSWpY4qShMkjLEVmp5Y61VeiPNnU+zq0mZw5K05VsEvvfK+GJIm0G6hjYuxNE1dB7zuH+NQogfKpnurbJl8kG2W5B6M1Qh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ph0LdsA2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RmvsJLngWNEqTYJf4vxTo/uufmVtfbsJ0fdA5YQZwOFJneqAwW05feXtO8CoR7bHOn2x46ri+pJOZsWUxYNt2N/m1DOP3XvvUZ5TnB2MWNvMEOcDQDs6v//aP0chJSBbhpl3wN8JCGlwB1c82QslQPHFOJg7KbI9n/EbVjEIXYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNTwdCSL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ph0LdsA2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC6B1F000FF;
-	Sat, 12 Sep 2026 16:13:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNTwdCSL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64D71F000FF;
+	Sat, 12 Sep 2026 16:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229614;
-	bh=QT/ySRrPPfcmPzNHHD6MuCZw0ddkd5zOqzbU1HejR/s=;
+	s=korg; t=1789229619;
+	bh=mIjMWdCv/xLEITymOsVLCv+Xaq4FGHAUqtsjCh2sz0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ph0LdsA2lT2PoSz1PdpyqW3JZxOipjEpwPKp4Aphl4MgMI8E5l+Hqxp1C3uz8csNS
-	 ci/W6Wzt1AtFMBywKMrX8r2it72I6fKR/rOXpcQ9aiSMSit2zmXBlSfGRiYgR2GWL1
-	 PrJ7zcZ6bZMpLSMiwA+mO9shS9L65lkk6Rm0KMUs=
+	b=yNTwdCSLrITKdKLO5jMgpZM3G9YISoqvoKQRzBvjHBgGGn7raLIiwoYd3H2iA8wYO
+	 MZ8f6rY6aB27einQ6TubvzyB6AEXvZ2/lGHrDDegwMIC93Jaz74VaOzygDADhsgzlH
+	 VtLI5XrdF0ZGKNyGLXooZ7zOlsdV9frwvp7pfDfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Avraham Stern <avraham.stern@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0626/1191] wifi: iwlmei: dont send SAP messages if AMT is disabled
-Date: Sat, 12 Sep 2026 08:55:54 +0200
-Message-ID: <20260912065602.313941361@linuxfoundation.org>
+Subject: [PATCH 6.1 0627/1191] wifi: iwlwifi: mei: add support for SAP version 4
+Date: Sat, 12 Sep 2026 08:55:55 +0200
+Message-ID: <20260912065602.336239130@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -54,86 +54,190 @@ Content-Transfer-Encoding: 8bit
 
 From: Avraham Stern <avraham.stern@intel.com>
 
-[ Upstream commit ef030ab17e060b0ef47028e86cf85b68988b56ae ]
+[ Upstream commit 27c8f12e972d3647e9d759d7cafd4c34fa513432 ]
 
-SAP messages should not be sent when AMT is disabled.
+SAP version 4 uses larger Host to MEI notification queue.
+Since it is unknown which SAP version is used by the CSME firmware
+when the driver loads, try version 4 first. In case the CSME firmware
+uses version 3, the memory allocation will fail. In this case the
+driver will try again to allocate the memory for version 3.
 
 Signed-off-by: Avraham Stern <avraham.stern@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230822103048.db16b55c27c1.I48834c14f5af8d31792f5048b3023509cba191dd@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20240729201718.8372e040282f.Ia0085784e08a35159c9293f986c3d2774038f4c4@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Stable-dep-of: 7d8cc301bcba ("wifi: iwlwifi: mei: check SAP message length before reading it")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mei/main.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ .../net/wireless/intel/iwlwifi/mei/iwl-mei.h  | 10 ++++
+ drivers/net/wireless/intel/iwlwifi/mei/main.c | 58 ++++++++++++++-----
+ 2 files changed, 53 insertions(+), 15 deletions(-)
 
+diff --git a/drivers/net/wireless/intel/iwlwifi/mei/iwl-mei.h b/drivers/net/wireless/intel/iwlwifi/mei/iwl-mei.h
+index 5409699c9a1fd..da7c26531d368 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mei/iwl-mei.h
++++ b/drivers/net/wireless/intel/iwlwifi/mei/iwl-mei.h
+@@ -281,6 +281,16 @@ struct iwl_mei_colloc_info {
+ 	u8 bssid[ETH_ALEN];
+ };
+ 
++/**
++ * enum iwl_mei_sap_version - SAP version
++ * @IWL_MEI_SAP_VERSION_3: SAP version 3
++ * @IWL_MEI_SAP_VERSION_4: SAP version 4
++ */
++enum iwl_mei_sap_version {
++	IWL_MEI_SAP_VERSION_3 = 3,
++	IWL_MEI_SAP_VERSION_4 = 4,
++};
++
+ /*
+  * struct iwl_mei_ops - driver's operations called by iwlmei
+  * Operations will not be called more than once concurrently.
 diff --git a/drivers/net/wireless/intel/iwlwifi/mei/main.c b/drivers/net/wireless/intel/iwlwifi/mei/main.c
-index 27eb28290e234..c2f84e1ce73fe 100644
+index c2f84e1ce73fe..91e30bf7a56e6 100644
 --- a/drivers/net/wireless/intel/iwlwifi/mei/main.c
 +++ b/drivers/net/wireless/intel/iwlwifi/mei/main.c
 @@ -1,6 +1,6 @@
  // SPDX-License-Identifier: GPL-2.0-only
  /*
-- * Copyright (C) 2021-2022 Intel Corporation
-+ * Copyright (C) 2021-2023 Intel Corporation
+- * Copyright (C) 2021-2023 Intel Corporation
++ * Copyright (C) 2021-2024 Intel Corporation
   */
  
  #include <linux/etherdevice.h>
-@@ -1437,7 +1437,7 @@ void iwl_mei_host_associated(const struct iwl_mei_conn_info *conn_info,
+@@ -53,7 +53,6 @@ bool iwl_mei_is_connected(void)
+ }
+ EXPORT_SYMBOL_GPL(iwl_mei_is_connected);
  
- 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
+-#define SAP_VERSION	3
+ #define SAP_CONTROL_BLOCK_ID 0x21504153 /* SAP! in ASCII */
  
--	if (!mei && !mei->amt_enabled)
-+	if (!mei || !mei->amt_enabled)
- 		goto out;
+ struct iwl_sap_q_ctrl_blk {
+@@ -105,16 +104,19 @@ struct iwl_sap_shared_mem_ctrl_blk {
  
- 	iwl_mei_send_sap_msg_payload(mei->cldev, &msg.hdr);
-@@ -1466,7 +1466,7 @@ void iwl_mei_host_disassociated(void)
+ #define SAP_H2M_DATA_Q_SZ	48256
+ #define SAP_M2H_DATA_Q_SZ	24128
+-#define SAP_H2M_NOTIF_Q_SZ	2240
++#define SAP_H2M_NOTIF_Q_SZ_VER3	2240
++#define SAP_H2M_NOTIF_Q_SZ_VER4	32768
+ #define SAP_M2H_NOTIF_Q_SZ	62720
  
- 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
+-#define _IWL_MEI_SAP_SHARED_MEM_SZ \
++#define _IWL_MEI_SAP_SHARED_MEM_SZ_VER3 \
+ 	(sizeof(struct iwl_sap_shared_mem_ctrl_blk) + \
+-	 SAP_H2M_DATA_Q_SZ + SAP_H2M_NOTIF_Q_SZ + \
++	 SAP_H2M_DATA_Q_SZ + SAP_H2M_NOTIF_Q_SZ_VER3 + \
+ 	 SAP_M2H_DATA_Q_SZ + SAP_M2H_NOTIF_Q_SZ + 4)
  
--	if (!mei && !mei->amt_enabled)
-+	if (!mei || !mei->amt_enabled)
- 		goto out;
+-#define IWL_MEI_SAP_SHARED_MEM_SZ \
+-	(roundup(_IWL_MEI_SAP_SHARED_MEM_SZ, PAGE_SIZE))
++#define _IWL_MEI_SAP_SHARED_MEM_SZ_VER4 \
++	(sizeof(struct iwl_sap_shared_mem_ctrl_blk) + \
++	 SAP_H2M_DATA_Q_SZ + SAP_H2M_NOTIF_Q_SZ_VER4 + \
++	 SAP_M2H_DATA_Q_SZ + SAP_M2H_NOTIF_Q_SZ + 4)
  
- 	iwl_mei_send_sap_msg_payload(mei->cldev, &msg.hdr);
-@@ -1502,7 +1502,7 @@ void iwl_mei_set_rfkill_state(bool hw_rfkill, bool sw_rfkill)
+ struct iwl_mei_shared_mem_ptrs {
+ 	struct iwl_sap_shared_mem_ctrl_blk *ctrl;
+@@ -194,6 +196,7 @@ struct iwl_mei {
+  * @mac_address: interface MAC address.
+  * @nvm_address: NVM MAC address.
+  * @priv: A pointer to iwlwifi.
++ * @sap_version: The SAP version to use. enum iwl_mei_sap_version.
+  *
+  * This used to cache the configurations coming from iwlwifi's way. The data
+  * is cached here so that we can buffer the configuration even if we don't have
+@@ -208,6 +211,7 @@ struct iwl_mei_cache {
+ 	u16 mcc;
+ 	u8 mac_address[6];
+ 	u8 nvm_address[6];
++	enum iwl_mei_sap_version sap_version;
+ 	void *priv;
+ };
  
- 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
+@@ -226,14 +230,17 @@ static void iwl_mei_free_shared_mem(struct mei_cl_device *cldev)
  
--	if (!mei && !mei->amt_enabled)
-+	if (!mei || !mei->amt_enabled)
- 		goto out;
+ #define HBM_DMA_BUF_ID_WLAN 1
  
- 	iwl_mei_send_sap_msg_payload(mei->cldev, &msg.hdr);
-@@ -1531,7 +1531,7 @@ void iwl_mei_set_nic_info(const u8 *mac_address, const u8 *nvm_address)
+-static int iwl_mei_alloc_shared_mem(struct mei_cl_device *cldev)
++static int iwl_mei_alloc_mem_for_version(struct mei_cl_device *cldev,
++					 enum iwl_mei_sap_version version)
+ {
+ 	struct iwl_mei *mei = mei_cldev_get_drvdata(cldev);
+ 	struct iwl_mei_shared_mem_ptrs *mem = &mei->shared_mem;
++	u32 mem_size = roundup(version == IWL_MEI_SAP_VERSION_4 ?
++			       _IWL_MEI_SAP_SHARED_MEM_SZ_VER4 :
++			       _IWL_MEI_SAP_SHARED_MEM_SZ_VER3, PAGE_SIZE);
  
- 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
+-	mem->ctrl = mei_cldev_dma_map(cldev, HBM_DMA_BUF_ID_WLAN,
+-				       IWL_MEI_SAP_SHARED_MEM_SZ);
+-
++	iwl_mei_cache.sap_version = version;
++	mem->ctrl = mei_cldev_dma_map(cldev, HBM_DMA_BUF_ID_WLAN, mem_size);
+ 	if (IS_ERR(mem->ctrl)) {
+ 		int ret = PTR_ERR(mem->ctrl);
  
--	if (!mei && !mei->amt_enabled)
-+	if (!mei || !mei->amt_enabled)
- 		goto out;
+@@ -242,11 +249,30 @@ static int iwl_mei_alloc_shared_mem(struct mei_cl_device *cldev)
+ 		return ret;
+ 	}
  
- 	iwl_mei_send_sap_msg_payload(mei->cldev, &msg.hdr);
-@@ -1559,7 +1559,7 @@ void iwl_mei_set_country_code(u16 mcc)
+-	memset(mem->ctrl, 0, IWL_MEI_SAP_SHARED_MEM_SZ);
++	memset(mem->ctrl, 0, mem_size);
  
- 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
+ 	return 0;
+ }
  
--	if (!mei && !mei->amt_enabled)
-+	if (!mei || !mei->amt_enabled)
- 		goto out;
++static int iwl_mei_alloc_shared_mem(struct mei_cl_device *cldev)
++{
++	int ret;
++
++	/*
++	 * SAP version 4 uses a larger Host to MEI notif queue.
++	 * Since it is unknown at this stage which SAP version is used by the
++	 * CSME firmware on this platform, try to allocate the version 4 first.
++	 * If the CSME firmware uses version 3, this allocation is expected to
++	 * fail because the CSME firmware allocated less memory for our driver.
++	 */
++	ret = iwl_mei_alloc_mem_for_version(cldev, IWL_MEI_SAP_VERSION_4);
++	if (ret)
++		ret = iwl_mei_alloc_mem_for_version(cldev,
++						    IWL_MEI_SAP_VERSION_3);
++
++	return ret;
++}
++
+ static void iwl_mei_init_shared_mem(struct iwl_mei *mei)
+ {
+ 	struct iwl_mei_shared_mem_ptrs *mem = &mei->shared_mem;
+@@ -265,7 +291,9 @@ static void iwl_mei_init_shared_mem(struct iwl_mei *mei)
+ 	h2m->q_ctrl_blk[SAP_QUEUE_IDX_DATA].size =
+ 		cpu_to_le32(SAP_H2M_DATA_Q_SZ);
+ 	h2m->q_ctrl_blk[SAP_QUEUE_IDX_NOTIF].size =
+-		cpu_to_le32(SAP_H2M_NOTIF_Q_SZ);
++		iwl_mei_cache.sap_version == IWL_MEI_SAP_VERSION_3 ?
++		cpu_to_le32(SAP_H2M_NOTIF_Q_SZ_VER3) :
++		cpu_to_le32(SAP_H2M_NOTIF_Q_SZ_VER4);
+ 	m2h->q_ctrl_blk[SAP_QUEUE_IDX_DATA].size =
+ 		cpu_to_le32(SAP_M2H_DATA_Q_SZ);
+ 	m2h->q_ctrl_blk[SAP_QUEUE_IDX_NOTIF].size =
+@@ -635,7 +663,7 @@ iwl_mei_handle_rx_start_ok(struct mei_cl_device *cldev,
+ 		return;
+ 	}
  
- 	iwl_mei_send_sap_msg_payload(mei->cldev, &msg.hdr);
-@@ -1585,7 +1585,7 @@ void iwl_mei_set_power_limit(const __le16 *power_limit)
- 
- 	mei = mei_cldev_get_drvdata(iwl_mei_global_cldev);
- 
--	if (!mei && !mei->amt_enabled)
-+	if (!mei || !mei->amt_enabled)
- 		goto out;
- 
- 	memcpy(msg.sar_chain_info_table, power_limit, sizeof(msg.sar_chain_info_table));
+-	if (rsp->supported_version != SAP_VERSION) {
++	if (rsp->supported_version != iwl_mei_cache.sap_version) {
+ 		dev_err(&cldev->dev,
+ 			"didn't get the expected version: got %d\n",
+ 			rsp->supported_version);
+@@ -1252,7 +1280,7 @@ static int iwl_mei_send_start(struct mei_cl_device *cldev)
+ 		.hdr.type = cpu_to_le32(SAP_ME_MSG_START),
+ 		.hdr.seq_num = cpu_to_le32(atomic_inc_return(&mei->seq_no)),
+ 		.hdr.len = cpu_to_le32(sizeof(msg)),
+-		.supported_versions[0] = SAP_VERSION,
++		.supported_versions[0] = iwl_mei_cache.sap_version,
+ 		.init_data_seq_num = cpu_to_le16(0x100),
+ 		.init_notif_seq_num = cpu_to_le16(0x800),
+ 	};
 -- 
 2.53.0
 
