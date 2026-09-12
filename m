@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F5B3630A5;
-	Sat, 12 Sep 2026 08:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA90819E7F7;
+	Sat, 12 Sep 2026 08:21:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201270; cv=none; b=RbSwCyC6gNJfggvkwNBmVoIA9cl53mWg5YRhSRLnFGsqPWdh8455NZZq5bZqLHApW8DbDsfE0/SSw2mZLVX8vfSi4hgTOroU+gaS3w16ZdS1XOCEFSc6CCCI2UNRfRQ4Rr3dbGn0dTa06EYSQUCUCeN0Sx/kUdaV3AaDdmq4TgE=
+	t=1789201275; cv=none; b=FIZE80XbPWIvE+GPhVZ/UZiMAQodYvVvB5pfhS+w9nInHj/xTsq3q33ve8T15FCOuok0Qr6X3rKTraB1HHTpMdL2bIk/xtQ7w/BK9WxzXuZJA7su0InQ3Qguqc1LAUwIak3SBdjsZ2C5UlySPFrFOZ/t43Kqkx+WRpWs0Ahh9n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201270; c=relaxed/simple;
-	bh=f+ePstvjMWy9rxLT2+ny/59/3VQ0LD17T+W/LhXfKkA=;
+	s=arc-20240116; t=1789201275; c=relaxed/simple;
+	bh=XAY+lyGhnZL/hbb4cpJoV409yTqn+02DxFC2Jxdo+W8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D3AXwY8qlJkpvan3aWXv71brB6kfLOPhmZsYbXPVXM3wWNNLLouF5T9SUY8KkeDPTDxW/OFsz7/aqMeUX47FYp34PmjS73HnfZTvLbsRWpxkqTIKbN8NGbeUcYZAPjlApJJVNFUkvL+zDELPhvguEb4rzxZChCbCCgcp+mBX+x4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FDmKkAR8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O0rhF6FnbrSRYPIhiglvtYSTcIkyAy7QvFRgC0zDtD7qThtAK2vk0P8Q3MjvzHb9x5rsLLCzLxJGzNcje3DyC3aSacr+jRsWUjPJLqz5EgLHrcRcMbHGDnklSV4nSNXJU5epyR4MdxVyAaVujb4rGgvzNyJ/MX3FlXGMmvPPYj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pryEKE4G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDmKkAR8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF291F000FF;
-	Sat, 12 Sep 2026 08:21:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pryEKE4G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858EF1F000FF;
+	Sat, 12 Sep 2026 08:21:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201269;
-	bh=uWk3mnZZzVspZB9WVRb4bqalUJgrxCmdVwSWXY/urzE=;
+	s=korg; t=1789201274;
+	bh=q0EF0LuryojW2on/IffU7vopa/LGMU6p5quoMdgFiLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FDmKkAR8mc9qu3nkxbGCGPZGzsWDNJNzGu1FKzE9868GffWvSN11BrVgbm+MVaKFB
-	 h17cTpPNBmV3lNcCw4i+8ETa73CR9Ff2Z8WMNYFPRtjskJAEco9bZqTPaEyAZmZAat
-	 a7homsIir4Jl1bthNgC0qLvEXLKAx69C11B/OKlc=
+	b=pryEKE4GFwI5+sUydtNI5fYCDEYw1rrC+8q0Qtj3Vb/YuddZJINzPhzYCTEIXDlok
+	 2MSCNUYluHoqb0WmX9sKB1G0N/vXGOWaQt+Plm//GNwyhOZy51HeYFKE8BqpYo7UpB
+	 xz4FLDlZDIvL9MYqXMTqEuEWqsyhbJnxG1XzsmOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Ashish Mhetre <amhetre@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Joy Zou <joy.zou@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0919/1815] arm64: tegra: Fix CMDQV interrupt type on Tegra264
-Date: Sat, 12 Sep 2026 08:44:29 +0200
-Message-ID: <20260912065710.504201823@linuxfoundation.org>
+Subject: [PATCH 7.2 0920/1815] regulator: core: use system_freezable_wq for init complete work
+Date: Sat, 12 Sep 2026 08:44:30 +0200
+Message-ID: <20260912065710.528398681@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,77 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashish Mhetre <amhetre@nvidia.com>
+From: Joy Zou <joy.zou@oss.nxp.com>
 
-[ Upstream commit 5af7a8a522f61ae2a3e5038c889e231e56d63526 ]
+[ Upstream commit 03eab318cedd6ae34ecd34533cd986edf5237164 ]
 
-The CMDQV interrupts on Tegra264 are described as level-triggered, but
-per the hardware interrupt documentation these interrupts are actually
-edge-triggered.
+schedule_delayed_work() uses system_wq, which is non-freezable, allowing
+regulator_init_complete_work to run concurrently with system suspend. This
+work fires ~30s after boot to disable unused regulators via I2C. When it
+races with PM suspend, the I2C adapter may already be suspended, triggering
+a -ESHUTDOWN warning in __i2c_transfer():
 
-Correct the interrupt type for all CMDQV nodes from IRQ_TYPE_LEVEL_HIGH
-to IRQ_TYPE_EDGE_RISING.
+  WARNING: ... at __i2c_transfer+0x36c/0x3c8
+  Call trace:
+   __i2c_transfer
+   i2c_transfer
+   regmap_i2c_write
+   _regmap_update_bits
+   regulator_disable_regmap
+   _regulator_do_disable
+   regulator_late_cleanup
+   regulator_init_complete_work_function
+   process_one_work
 
-Fixes: fe57d0ac4835 ("arm64: tegra: Add nodes for CMDQV")
-Reported-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Ashish Mhetre <amhetre@nvidia.com>
-Acked-by: Jon Hunter <jonathanh@nvidia.com>
-Acked-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Switch to system_freezable_wq so the work is frozen before any device
+is suspended, eliminating the race.
+
+Fixes: 55576cf18537 ("regulator: Defer init completion for a while after late_initcall")
+Signed-off-by: Joy Zou <joy.zou@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260731-b4-regulator-pf01-v2-1-a406c8737fdb@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra264.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/regulator/core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra264.dtsi b/arch/arm64/boot/dts/nvidia/tegra264.dtsi
-index 2d2cb1a3d95cb..bcbf0a558d8db 100644
---- a/arch/arm64/boot/dts/nvidia/tegra264.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra264.dtsi
-@@ -3393,7 +3393,7 @@ smmu1: iommu@5000000 {
- 		cmdqv1: cmdqv@5200000 {
- 			compatible = "nvidia,tegra264-cmdqv";
- 			reg = <0x00 0x5200000 0x0 0x830000>;
--			interrupts = <GIC_SPI 19 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <GIC_SPI 19 IRQ_TYPE_EDGE_RISING>;
- 			status = "disabled";
- 		};
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 2e61606fc1d05..6a4008f387b5e 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -27,6 +27,7 @@
+ #include <linux/regulator/driver.h>
+ #include <linux/regulator/machine.h>
+ #include <linux/module.h>
++#include <linux/workqueue.h>
  
-@@ -3413,7 +3413,7 @@ smmu2: iommu@6000000 {
- 		cmdqv2: cmdqv@6200000 {
- 			compatible = "nvidia,tegra264-cmdqv";
- 			reg = <0x00 0x6200000 0x0 0x830000>;
--			interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <GIC_SPI 8 IRQ_TYPE_EDGE_RISING>;
- 			status = "disabled";
- 		};
+ #define CREATE_TRACE_POINTS
+ #include <trace/events/regulator.h>
+@@ -6899,8 +6900,9 @@ static int __init regulator_init_complete(void)
+ 	 * we'd only do this on systems that need it, and a kernel
+ 	 * command line option might be useful.
+ 	 */
+-	schedule_delayed_work(&regulator_init_complete_work,
+-			      msecs_to_jiffies(30000));
++	queue_delayed_work(system_freezable_wq,
++			   &regulator_init_complete_work,
++			   msecs_to_jiffies(30000));
  
-@@ -3486,7 +3486,7 @@ smmu0: iommu@a000000 {
- 		cmdqv0: cmdqv@a200000 {
- 			compatible = "nvidia,tegra264-cmdqv";
- 			reg = <0x00 0xa200000 0x0 0x830000>;
--			interrupts = <GIC_SPI 28 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <GIC_SPI 28 IRQ_TYPE_EDGE_RISING>;
- 			status = "disabled";
- 		};
- 
-@@ -3506,7 +3506,7 @@ smmu4: iommu@b000000 {
- 		cmdqv4: cmdqv@b200000 {
- 			compatible = "nvidia,tegra264-cmdqv";
- 			reg = <0x00 0xb200000 0x0 0x830000>;
--			interrupts = <GIC_SPI 37 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <GIC_SPI 37 IRQ_TYPE_EDGE_RISING>;
- 			status = "disabled";
- 		};
- 
-@@ -3831,7 +3831,7 @@ smmu3: iommu@6000000 {
- 		cmdqv3: cmdqv@6200000 {
- 			compatible = "nvidia,tegra264-cmdqv";
- 			reg = <0x00 0x6200000 0x0 0x830000>;
--			interrupts = <GIC_SPI 232 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <GIC_SPI 232 IRQ_TYPE_EDGE_RISING>;
- 			status = "disabled";
- 		};
- 
+ 	return 0;
+ }
 -- 
 2.53.0
 
