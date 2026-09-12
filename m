@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B9A47A0CD;
-	Sat, 12 Sep 2026 11:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79A9343893;
+	Sat, 12 Sep 2026 11:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214106; cv=none; b=A6+kou+6l0NeSMkzWhKP1j1qhFHipsRFx7DNJamJQBm3rUnl7RwnavEdwk1CSCM6gt0Zj0jmdfd9mFkWBMUY7JRtqwGVYRzDgB4IXcu377aRnFIedD0XjEh9AuAT75fUeJOkipfjwe8zY0Dc9iba+C+HTxvA9rwQDVKlQe3yO5I=
+	t=1789214112; cv=none; b=QiPZgpv1vczFi0XKLAhCRcEn0WgbANfv/sknqNRAetIPmwsbqcTeWIB14hW2fQcwcJhVUX6mSBUnXqBzR+zOIrswm0RWfcSqOUCCbkjXAYu77laqLldv/uqlb8VS5GGovz2lw+ppp3xdrNsVSUtBwDtLr9lIM3Pyd3LiHX+LnFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214106; c=relaxed/simple;
-	bh=HkpSo9+6NkTaZKBM5mAugwrzkPq/AIKLE6lSKNA0VKI=;
+	s=arc-20240116; t=1789214112; c=relaxed/simple;
+	bh=UdpZLbxTu9eSCcOfJAuzcJadGcgW/8VNZdtClc4X3uI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qQot8HZUwgyy9X0962h1Sqaff6dbfTdmJXEcsajRH64qUQWfOQdmSb72iBCtJuvDPxvKYHihL5q31uvGZ6OfoHgugBqd1HCZZwAe8C+JVXtTf25nZNjyIzl7XHmIJ9bAj+foALSBCtJ2UJvK9un4oPrEehZFuxrpOWZ3zd2glp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHwXlwK2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fRq7cxyJDy7G2VBuVu3iun73wHTrxjEQinvIhaL+jWW3QdP7WfxdtPyfwmfLVIXeSpTb2xChYkrS+MY92HQ4CjYdQFh/6Vn6yHiFEx5Ktr2tHmcy5JTGy1wmCm+arTDINNXMPDJv0elP6nbagsNU5EwVM+4O+zgSFaJhq2g4Cw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oe5QptsQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHwXlwK2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B600F1F000FF;
-	Sat, 12 Sep 2026 11:55:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oe5QptsQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A05621F000FF;
+	Sat, 12 Sep 2026 11:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214105;
-	bh=Ke6O4kZO2gz0Cil/CVExrV6ZclZ7RgIeWLGlyM7MBbQ=;
+	s=korg; t=1789214110;
+	bh=IJ9VORrQvT5JdYi6TFQj52lOFL7iZ0yEIaFPi6dm8WU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bHwXlwK22waU0wL/fQo8J3tBxczXONxQpbFeyTnspB4Fk3kPIpLrRiveBEzS3liMx
-	 DUzpP8nQqIFNnuS66vAxsUP+59M7+TxDNCZUuTwVMRYm+7GjnMuhUNWbufsjrVlgXo
-	 JEt8BkB7VcFuT6UY3R7eb6qDdS93pZTmtFBePCgc=
+	b=oe5QptsQXgPo5D48at4DRazzyEczxXOogdVSH5gSKH2oLMvgSaRo8Cw5yZVChSk33
+	 CD3lOQDFd1vwFppmMT/aZPVWchcXUt+fEusvRde9psSEDzLEfj3TkEtRVO8dbatCif
+	 DWHJsQDnXSY4334AVctSRGCs7x++UPrv2RpBIsDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.12 0251/1376] f2fs: return writeback error from collapse range
-Date: Sat, 12 Sep 2026 08:44:37 +0200
-Message-ID: <20260912065613.136328619@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 0260/1376] drm/panel-edp: fix i2c adapter leak on probe failure
+Date: Sat, 12 Sep 2026 08:44:46 +0200
+Message-ID: <20260912065613.334881116@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,44 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit f8a4108800254d6f7b2755515fbbd9d0caac561e upstream.
+commit e2a9e291275a74e309a21cbb1def6296a72d6aed upstream.
 
-f2fs_collapse_range() writes back pages moved by f2fs_do_collapse(),
-but ignores the return value. If writeback fails, the ioctl can still
-truncate page cache, shrink blocks, and report success.
+Make sure to drop the i2c adapter reference on probe failure (e.g.
+probe deferral) and on driver unbind also if a devicetree redundantly
+uses the 'ddc-i2c-bus' property to point to the aux ddc bus.
 
-Return the error before truncating page cache or updating the file size.
-
-Fixes: b4ace3370324 ("f2fs: support FALLOC_FL_COLLAPSE_RANGE")
-Cc: stable@kernel.org
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: cc5a3fc041f0 ("drm/panel: panel-simple: Stash DP AUX bus; allow using it for DDC")
+Cc: stable@vger.kernel.org	# 5.15
+Reported-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/CAD=FV=VZPhzHU+Pet2m3L+Pqc7mOPfZC-f5p0OuNL79wNZPxRg@mail.gmail.com
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260717143119.1815106-2-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-edp.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -1542,11 +1542,14 @@ static int f2fs_collapse_range(struct in
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -831,6 +831,13 @@ exit:
+ 	return 0;
+ }
  
- 	/* write out all moved pages, if possible */
- 	filemap_invalidate_lock(inode->i_mapping);
--	filemap_write_and_wait_range(inode->i_mapping, offset, LLONG_MAX);
-+	ret = filemap_write_and_wait_range(inode->i_mapping, offset, LLONG_MAX);
-+	if (ret)
-+		goto out_unlock;
- 	truncate_pagecache(inode, offset);
++static void panel_edp_put_adapter(void *_adap)
++{
++	struct i2c_adapter *adap = _adap;
++
++	put_device(&adap->dev);
++}
++
+ static int panel_edp_probe(struct device *dev, const struct panel_desc *desc,
+ 			   struct drm_dp_aux *aux)
+ {
+@@ -877,6 +884,11 @@ static int panel_edp_probe(struct device
  
- 	new_size = i_size_read(inode) - len;
- 	ret = f2fs_truncate_blocks(inode, new_size, true);
-+out_unlock:
- 	filemap_invalidate_unlock(inode->i_mapping);
- 	if (!ret)
- 		f2fs_i_size_write(inode, new_size);
+ 		if (!panel->ddc)
+ 			return -EPROBE_DEFER;
++
++		err = devm_add_action_or_reset(dev, panel_edp_put_adapter,
++					       panel->ddc);
++		if (err)
++			return err;
+ 	} else if (aux) {
+ 		panel->ddc = &aux->ddc;
+ 	}
+@@ -890,7 +902,7 @@ static int panel_edp_probe(struct device
+ 
+ 	err = drm_panel_of_backlight(&panel->base);
+ 	if (err)
+-		goto err_finished_ddc_init;
++		return err;
+ 
+ 	/*
+ 	 * We use runtime PM for prepare / unprepare since those power the panel
+@@ -937,9 +949,6 @@ static int panel_edp_probe(struct device
+ err_finished_pm_runtime:
+ 	pm_runtime_dont_use_autosuspend(dev);
+ 	pm_runtime_disable(dev);
+-err_finished_ddc_init:
+-	if (panel->ddc && (!panel->aux || panel->ddc != &panel->aux->ddc))
+-		put_device(&panel->ddc->dev);
+ 
+ 	return err;
+ }
+@@ -983,8 +992,6 @@ static void panel_edp_remove(struct devi
+ 
+ 	pm_runtime_dont_use_autosuspend(dev);
+ 	pm_runtime_disable(dev);
+-	if (panel->ddc && (!panel->aux || panel->ddc != &panel->aux->ddc))
+-		put_device(&panel->ddc->dev);
+ 
+ 	drm_edid_free(panel->drm_edid);
+ 	panel->drm_edid = NULL;
 
 
