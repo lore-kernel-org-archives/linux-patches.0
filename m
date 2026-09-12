@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15DDF191F93;
-	Sat, 12 Sep 2026 14:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A4434E74B;
+	Sat, 12 Sep 2026 14:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224940; cv=none; b=IrGA2zDrn9KEtNx57c1cCdtqZ2f1PQSIW0kyh4s7r4htsPiXQUGLTX088cWsz7fw+fo15SwR0Mk2zKjhV2b6KjiFooRh9thzcjLvCuN0b5o9yrr3gvSL+4QhqZP19inM6VbX1/J5aLNTVhcE1hXxCbhm3cc6MZ9yIsqc2+JBOI4=
+	t=1789224945; cv=none; b=E2KfNg+naJ0GVNVgX3Vm76OtkYq5GCkXI5m+Ylaf7XXpuCNDty8fDGg7HWKQe78CJ+OfM7VMbHeomSgSudYNzsBlBpUjgg7ZDukGSd77jO/UP0guSfVjUFUWsQoI2Kiat2A1FlntQuef/VQ2H8msdbY20NBr6gnq6rbX9fSOOPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224940; c=relaxed/simple;
-	bh=RhMQSXtJN4QWO+I0H3MvEtMh2ZpNqIJ3CgrT40TC2jM=;
+	s=arc-20240116; t=1789224945; c=relaxed/simple;
+	bh=AC4diMI0/4IDpNyPueO5EbSMV5WPXgP8l7oy2MZrfjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CF5WNd4UnmveYtvcRmC5tZ40kIyybKcFIV7i5KaKvnwB1JA9DyKD9fKsQtNBKzwv7fdcoHXkvEho6yDWZmktovL5amYL4Y0d3iSyQbJnZGLFWLZjRtSR8Vd+l4kQO3uLEmFdNSb8lyIP5Rob4Zpb6yHIMrZRF3pFLAC+1jFebLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfdvhmwQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qP6QbKXIkOT8dB4N7Oc9PqZkcNoGsDPL9MnAyOhDQHE7IVlUjmuWiraab9EzTzJyKFhYYg3f4xD7Sh6QhemMCvi7OFUVgYOc7aipr3e65IRreJZJy1Yd71sRt+pM19780+cuZU5uoLhuZmbYZ4Y4bss1zUZFiyeBQJvQihs6TSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DaOfx0C6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfdvhmwQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1AC1F000FF;
-	Sat, 12 Sep 2026 14:55:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DaOfx0C6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8BED1F000FF;
+	Sat, 12 Sep 2026 14:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224938;
-	bh=XtO52cdlR2pXCehYq3kVlj/8E/ltqK2D7C8EvPIZ8qc=;
+	s=korg; t=1789224943;
+	bh=EF1GhzifbwV2lj1HEq4trs/nUceOAZvWBDkkZfoI0p0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BfdvhmwQoLixKhjH7xqWcq4hqdDguieg48bGzm7y1GKhntvoeVxsvsCXiv7haQ/hO
-	 ut9WRhFG2ZYl/GRB4MVgY8rSc/yUVyIT9+uEnfhfjVF4x+Y1CsHDheu2HaLRmoCMtS
-	 iKs65botegIjnzgYxlt5uBQofzH8zlM3tC/CdN3A=
+	b=DaOfx0C6nkznZmdRJ16JyoYaI5AB77Aam2aDRXvCkkmQyUm/kPnlOysOmI8fRI93U
+	 TsLizVsdYvNK/P72is6R6hiDJndjDxM/EB+AA9uoef8EQAvv9XJ43dseUyuEGlLVpM
+	 AulYTulzpwqV7lUQfd4cpChVfSVH9OWX725BsHus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Lee Jones <lee@kernel.org>,
+	Manish Rangankar <mrangankar@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1089/1424] mfd: iqs62x: Reject zero-length firmware records
-Date: Sat, 12 Sep 2026 08:58:41 +0200
-Message-ID: <20260912065631.694460691@linuxfoundation.org>
+Subject: [PATCH 6.6 1098/1424] scsi: qla2xxx: Remove redundant VPD flash read in sysfs read path
+Date: Sat, 12 Sep 2026 08:58:50 +0200
+Message-ID: <20260912065631.895449694@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,41 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Manish Rangankar <mrangankar@marvell.com>
 
-[ Upstream commit 08ea045e0b82cbcadb7a2efc43a23561489a00f2 ]
+[ Upstream commit 5cbc49d5c4cd20c18041e86958103045216d2190 ]
 
-struct iqs62x_fw_rec includes the first data byte in its fixed-size header,
-so the parser advances by len - 1 bytes after that header. A zero len makes
-the size_t cursor update move back by one byte, so the next record overlaps
-the current record instead of following a valid declared extent.
+qla2x00_sysfs_read_vpd() called ha->isp_ops->read_optrom() a second time
+after releasing optrom_mutex. The repeated read is redundant and, unlike
+the first, runs without optrom_mutex held, exposing flash access to
+concurrent optrom operations. Drop the duplicate call.
 
-Reject zero-length records and express the remaining-size check without an
-offset addition.
-
-Fixes: 4d9cf7df8d35 ("mfd: Add support for Azoteq IQS620A/621/622/624/625")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://lore.kernel.org/all/20260706091034.75865-1-pengpeng@iscas.ac.cn/
-Link: https://patch.msgid.link/20260720115423.94994-1-pengpeng@iscas.ac.cn
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 5fa8774c7f38 ("scsi: qla2xxx: Add 28xx flash primary/secondary status/image mechanism")
+Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260723050413.3897522-7-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/iqs62x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_attr.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/mfd/iqs62x.c b/drivers/mfd/iqs62x.c
-index e03b4d38fbb0a..70ac09ed120c7 100644
---- a/drivers/mfd/iqs62x.c
-+++ b/drivers/mfd/iqs62x.c
-@@ -237,7 +237,7 @@ static int iqs62x_firmware_parse(struct iqs62x_core *iqs62x,
- 		fw_rec = (struct iqs62x_fw_rec *)(fw->data + pos);
- 		pos += sizeof(*fw_rec);
+diff --git a/drivers/scsi/qla2xxx/qla_attr.c b/drivers/scsi/qla2xxx/qla_attr.c
+index c4cc92de11061..83a1fd47126da 100644
+--- a/drivers/scsi/qla2xxx/qla_attr.c
++++ b/drivers/scsi/qla2xxx/qla_attr.c
+@@ -580,7 +580,6 @@ qla2x00_sysfs_read_vpd(struct file *filp, struct kobject *kobj,
+ 	ha->isp_ops->read_optrom(vha, ha->vpd, faddr, ha->vpd_size);
+ 	mutex_unlock(&ha->optrom_mutex);
  
--		if (pos + fw_rec->len - 1 > fw->size) {
-+		if (!fw_rec->len || fw_rec->len - 1 > fw->size - pos) {
- 			ret = -EINVAL;
- 			break;
- 		}
+-	ha->isp_ops->read_optrom(vha, ha->vpd, faddr, ha->vpd_size);
+ skip:
+ 	return memory_read_from_buffer(buf, count, &off, ha->vpd, ha->vpd_size);
+ }
 -- 
 2.53.0
 
