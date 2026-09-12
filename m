@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F0F242D65;
-	Sat, 12 Sep 2026 11:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3883515CB;
+	Sat, 12 Sep 2026 11:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212566; cv=none; b=qXbVmCox8BE0VUxYRJVozodM/g8dQATlgZWvFs4ctViDh1TyTFE5dXYzofCr6yNjkEemq7zcYA+z+FPAcnWyzIBGqW7nH9IOoAlLPIiQzNDIkhs3HQrd+9naRywOK3+ccWenqG1bn0EfmPscGeBujWfzhH/6yb4bFUnJnl3DxfU=
+	t=1789212569; cv=none; b=aOW+2iGQlcCtiCG6p4t6A1gJo5l86lzETUlTQMgo82zN6ihhrMr+q2Jc3PeiVLR+447LxYtIXE14JmeYo/hBieMPd6bG1mioQ8KutPeIB7oKeHO9ha09mH/Yx++chm4ch6Rnu1xFhk6Uhv3uY1WDq7MquOWHdMAf41GN124yPCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212566; c=relaxed/simple;
-	bh=hn/PEj31JNiXVVUfNsfQ0/BBC6385YqQ4LuL1ydJBys=;
+	s=arc-20240116; t=1789212569; c=relaxed/simple;
+	bh=JCtNS4qmMbKK6CRk7tCLwFCSI/V2bsxiUi1ec5Lp5/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=umsrJalfyqI55ig7pW508dgQRNr+uRe1piFUwnMgwnoM2IjY94El2lRxSd94yqpEpJZ9fOUaZ6kV4u4pYetBjUSDWO/Zs+e8sNwj3JhSxcaIFQxAovsWPxcOOBRMyYr/UsgUf8BJ8z+mguAWwhqE7NNAdXpvILJy7HUOVmYoalo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1J6wKsu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uhLVR59utgg12fvtUGVjKx81e0yD+pOBnxHz4VqppFARehkuNDvCmfq3P3qqQQgT3/bEiF8Izd10zTHbCUPPMRPJfA/2UOH8b+6c6pOLAv0DPR66UmLri846aeQ64eUp2pxOVVKjVAIDtRCLQkpN651OpYd1yYMpz0ff4gVzBAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJgJWapk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1J6wKsu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32401F000FF;
-	Sat, 12 Sep 2026 11:29:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJgJWapk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0891F000FF;
+	Sat, 12 Sep 2026 11:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212562;
-	bh=b/XWcA6qPF74l3apll3HJbskIq02h9RdzLd2t0W6H0A=;
+	s=korg; t=1789212567;
+	bh=O4NNa41KQ7b8n3Pho+CdfvANc0KHwaKH5Do6DDdCSUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U1J6wKsumNNjo5b2LF+3gfxztpCPr2w56Z7F1/a7Bk5GIOo8kDoP3CGUTYKfWydK2
-	 LshTZ0ySOvX7CgIleIvFR4gq3fpVu5aB/oTKprlQgkhogHi4uufSMsHOYPwbR2sR7j
-	 0Rxrm5k9hXqfwBMtsVUAGxtEJYstjYtSi2KY7tag=
+	b=dJgJWapkicXj018N4KUGIF6Vk6jumgOAXNd/C5pcvxi8jo4crxV2HHMtGeZPqj20Z
+	 xSUs98uC5AW3yYqATZdVUjoThBXqNgC10lAvuKQLxjDbxzS99itBnSZBy6d3U6CMaf
+	 1QED/Ptli9LFJ7ssFmurkS1mHjML1tDsfXntNAqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1461/1518] net/sched: sch_htb: limit htb_classify inner-class filter hops
-Date: Sat, 12 Sep 2026 09:00:30 +0200
-Message-ID: <20260912065656.605712164@linuxfoundation.org>
+Subject: [PATCH 6.18 1426/1518] tpm: st33zp24: Validate locality read result
+Date: Sat, 12 Sep 2026 08:59:55 +0200
+Message-ID: <20260912065655.809657729@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -48,109 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 729c4896ab829169f95915d65edd530325910b37 ]
+[ Upstream commit 264216889d39df509b9c8045df53529480b0b718 ]
 
-htb_classify() follows each filter-selected inner class by switching
-to cl->filter_list, but never bounds the number of hops. A filter on
-an inner class can point back to itself or to another inner class that
-points back, creating an infinite loop in the packet classification
-path with the qdisc lock held and BH disabled — a soft lockup / panic
-from a single packet.
+check_locality() treats every nonzero transport return as success. SPI
+errors remain negative, while the I2C path can convert a negative write
+error through its byte-sized status variable. Either result is nonzero
+even though the TPM_ACCESS byte can remain unwritten, so indeterminate
+ACTIVE_LOCALITY and VALID bits can falsely report an active locality.
 
-Bound the traversal with a hop counter and drop the packet with a
-rate-limited warning once the bound is exceeded. The counter is
-incremented at the point the inner filter chain is picked up, after the
-TC_ACT_* switch has consumed the classifier verdict, so a terminal
-TC_ACT_QUEUED/STOLEN/TRAP on the last permitted chain still sets *qerr
-to __NET_XMIT_STOLEN and the packet is not charged as a drop by this
-qdisc or its parent.
+Require recv() to return exactly the requested byte before examining
+TPM_ACCESS. Transport errors and short reads now report an inactive
+locality, while successful reads retain the existing behavior.
 
-The bound is TC_HTB_MAXDEPTH, taken from HTB's own parameters rather than
-from the qdisc hierarchy depth limit. Class levels run from 0 to
-TC_HTB_MAXDEPTH - 1, so a traversal that strictly descends in level can
-take at most TC_HTB_MAXDEPTH hops. That descent is what a sane
-configuration does, but it is assumed here rather than enforced:
-htb_find() resolves a classid against every class in the qdisc, so a
-filter may equally select a sibling or an ancestor. The normal
-root -> inner -> leaf path takes a single hop, so the bound does not
-affect legitimate classification.
+This issue was found by a static analysis checker and confirmed by manual
+source review.
 
-htb_classify() can now return NULL irrespective of CONFIG_NET_CLS_ACT,
-whereas previously every NULL return sat inside that ifdef. The NULL
-handler in htb_enqueue() therefore cannot stay conditional either, so
-drop the ifdef around it. This matches hfsc_enqueue(), which has always
-handled a NULL class unconditionally. Without it, a kernel built
-without actions would dereference a NULL class instead of dropping.
-
-Conditions to recreate the bug:
-- CONFIG_NET_SCHED, CONFIG_NET_SCH_HTB, CONFIG_NET_CLS_U32,
-  CONFIG_LOCKUP_DETECTOR.
-- Create an HTB qdisc on a device (e.g. lo), add an inner class
-  1:1 with a leaf child 1:10, install a root u32 filter selecting
-  1:1, and an inner-class u32 filter on 1:1 also selecting 1:1.
-- Send one packet (ping). On the unfixed kernel the classify loop
-  spins with the qdisc lock held; with softlockup_panic=1 it panics.
-- Reachable from unprivileged user via unshare -Urn (CAP_NET_ADMIN).
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Vega <vega@nebusec.ai>
-Co-developed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260826143339.271935-1-victor@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 251a7b08213a ("TPM: STMicroelectronics ST33 I2C KERNEL 3.x")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Link: https://lore.kernel.org/r/20260813153032.3951878-2-ruoyuw560@gmail.com
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_htb.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/char/tpm/st33zp24/st33zp24.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
-index db97fdb403515..fc8c540393433 100644
---- a/net/sched/sch_htb.c
-+++ b/net/sched/sch_htb.c
-@@ -223,6 +223,7 @@ static struct htb_class *htb_classify(struct sk_buff *skb, struct Qdisc *sch,
- 	struct htb_class *cl;
- 	struct tcf_result res;
- 	struct tcf_proto *tcf;
-+	unsigned int hops = 0;
- 	int result;
+diff --git a/drivers/char/tpm/st33zp24/st33zp24.c b/drivers/char/tpm/st33zp24/st33zp24.c
+index 898e8d01d2669..0e2deff94c367 100644
+--- a/drivers/char/tpm/st33zp24/st33zp24.c
++++ b/drivers/char/tpm/st33zp24/st33zp24.c
+@@ -106,10 +106,10 @@ static bool check_locality(struct tpm_chip *chip)
+ {
+ 	struct st33zp24_dev *tpm_dev = dev_get_drvdata(&chip->dev);
+ 	u8 data;
+-	u8 status;
++	int status;
  
- 	/* allow to select class by setting skb->priority to valid classid;
-@@ -265,6 +266,10 @@ static struct htb_class *htb_classify(struct sk_buff *skb, struct Qdisc *sch,
- 		if (!cl->level)
- 			return cl;	/* we hit leaf; return it */
- 
-+		if (++hops > TC_HTB_MAXDEPTH) {
-+			pr_warn_ratelimited("htb: classify loop detected, dropping packet\n");
-+			return NULL;
-+		}
- 		/* we have got inner class; apply inner filter chain */
- 		tcf = rcu_dereference_bh(cl->filter_list);
- 	}
-@@ -632,13 +637,11 @@ static int htb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		} else {
- 			return qdisc_drop(skb, sch, to_free);
- 		}
--#ifdef CONFIG_NET_CLS_ACT
- 	} else if (!cl) {
- 		if (ret & __NET_XMIT_BYPASS)
- 			qdisc_qstats_drop(sch);
- 		__qdisc_drop(skb, to_free);
- 		return ret;
--#endif
- 	} else if ((ret = qdisc_enqueue(skb, cl->leaf.q,
- 					to_free)) != NET_XMIT_SUCCESS) {
- 		if (net_xmit_drop_count(ret)) {
+ 	status = tpm_dev->ops->recv(tpm_dev->phy_id, TPM_ACCESS, &data, 1);
+-	if (status && (data &
++	if (status == 1 && (data &
+ 		(TPM_ACCESS_ACTIVE_LOCALITY | TPM_ACCESS_VALID)) ==
+ 		(TPM_ACCESS_ACTIVE_LOCALITY | TPM_ACCESS_VALID))
+ 		return true;
 -- 
 2.53.0
 
