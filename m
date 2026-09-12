@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71A5399351;
-	Sat, 12 Sep 2026 20:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38E7399365;
+	Sat, 12 Sep 2026 20:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243312; cv=none; b=jVI443/+qHRWeKEFvzo49QC9zmn/E3U8bIqObF+8AgIkD49U3aOVamwijePMpAodoCUL+zgk7NZpqb+9SVvdh9jbQW75zuFvqA5BwxDupq+dDDnrZssQ+250s+NnQvn0rYB38MTUgA5CkjQwVmBJ3mJ+HjMIjXrw3nrBQ4FltmM=
+	t=1789243314; cv=none; b=bXaClD2UdaON7s+qwAHpuT9B/V/ORKTqcxL9V9vvJBD4+YAp9Z5wtvMAZ5mxOCl2RRiGU21CrUWW8WJDSs6+jr/ahTR5edlAKiWlMA58WeDqnv6PZR4lHuOjAYM7DBVyvoVpIQB4BMSjGrvCXfMXz5OJjfm0bGD9JbBf5yXEJ+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243312; c=relaxed/simple;
-	bh=QUWNTB80p/0wDSTncbSAUH1sRtodoNeMZEx0RKCKobA=;
+	s=arc-20240116; t=1789243314; c=relaxed/simple;
+	bh=Ze8ZA3E1WHBnTwab19ZRhgiYCxLzy+qKmqaVP32rDE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qFffpcCL5ijA4FCkpCVYO8co0rCuRxOh4dVFa0Szv3aXegTmneT1q9LuklfiFtzDKi0tiBHD/PVDWjBHgOPJlQAedvzA7tUCPtrHk/QQwlYltNwPaJjZiSd//h/VA1nl4DyAF58FFnHypPPi2hDE5jnR62BLrLN+WWm/KcjZDdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9oVVpQB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MnV91JExaA0FLlMWzDdfyc6NR1uR+m4nkTcvTx2+LilGvHjmP/sY8W6zImFN8gOhvZBvQSdoTFK38RJkufG9811mW6s1iAlx01HNOFGzY0rpwlRJ+bkek9Bt0zOjoV2qPXoekXL3eHkrBg4KeXuMNQIo7PBPWo0lf8vmr3+n1tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAegHbjM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9oVVpQB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE6A1F000FF;
-	Sat, 12 Sep 2026 20:01:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAegHbjM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198F61F000FF;
+	Sat, 12 Sep 2026 20:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243310;
-	bh=UGV4iNDGMpISCR0Gf+ydWCtEx/S2Gbt9k0imT9StlCM=;
+	s=korg; t=1789243313;
+	bh=Q2oF+c0tFVO9FaZmr0UHqWqzlqORFsIHC3/G+tkW5HM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S9oVVpQBr7QyvLcJSKmuuTbcAHmhCH0g7g9RNtMWg2eDNFBHn0rYKmy0vg8O++RSj
-	 v4qCbGkp3Hc8VrM3UdbSjKqIrNbOAfgKX02EOLRr6LlXoNTwUqRH//3pS+ba+u4pgz
-	 szigINaA2CCbPUKMzplj+xGjagHDexwqlyQ2bimM=
+	b=UAegHbjMkH9LGmKQdmuUUDSMVjoT9ESpfUHkdlzYSYvXF5sRV8QKbpK/vfo5/Xi6H
+	 gj1GeghaRKFVWW2XnZrUALDK7V1quw3jUL4AxFBA6Q2qooV6FDAHTH1lQXYaM5bAKz
+	 tDocfnn7uecyros5j54zQY4QuRb1EGopu6gnt9XE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ritesh Harjani <riteshh@linux.ibm.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	=?UTF-8?q?Israel=20T=C3=A9llez=20Garc=C3=ADa?= <i.tellez@btesa.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 712/798] tracing: Have TRACE_DEFINE_ENUM affect trace event types as well
-Date: Sat, 12 Sep 2026 09:05:40 +0200
-Message-ID: <20260912065533.404747135@linuxfoundation.org>
+Subject: [PATCH 5.10 713/798] bpf: Fix pending_pos walk on 32-bit ring position wrap
+Date: Sat, 12 Sep 2026 09:05:41 +0200
+Message-ID: <20260912065533.427402029@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -45,88 +45,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Israel Téllez García <i.tellez@btesa.com>
 
-[ Upstream commit b3bc8547d3be60898818885f5bf22d0a62e2eb48 ]
+[ Upstream commit 6ff5b56a50c5351aeeb180e34327736576c038fa ]
 
-The macro TRACE_DEFINE_ENUM is used to convert enums in the kernel to
-their actual value when they are exported to user space via the trace
-event format file.
+The reservation path caches the position of the oldest not-yet-committed
+record in rb->pending_pos and advances it past already committed records
+on every reservation:
 
-Currently only the enums in the "print fmt" (TP_printk in the TRACE_EVENT
-macro) have the enums converted. But the enums can be used to denote array
-size:
+	while (pend_pos < prod_pos) {
 
-        field:unsigned int fc_ineligible_rc[EXT4_FC_REASON_MAX]; offset:12;      size:36;        signed:0;
+consumer_pos, producer_pos and pending_pos are unsigned long, i.e.
+32-bit on 32-bit architectures, and Documentation/bpf/ringbuf.rst states
+that these counters may wrap around there. Every other comparison in the
+file is written as a difference, so modular arithmetic keeps them
+correct across the wrap. This one is an ordering comparison, and it is
+not wrap-safe.
 
-The EXT4_FC_REASON_MAX has no meaning to userspace but it needs to know
-that information to know how to parse the array.
+Once producer_pos wraps past 2^32, prod_pos is small while pend_pos
+still holds its pre-wrap value, so the loop condition is false and
+pending_pos is never advanced again. Reservations keep succeeding for a
+while, because bpf_ringbuf_has_space() uses differences, but
+new_prod_pos - pend_pos grows as the producer advances, and once it
+exceeds rb->mask every subsequent __bpf_ringbuf_reserve() call fails:
+the kernel believes a pending record spans the whole buffer. The ring
+never recovers, bpf_ringbuf_output() drops every event from then on, and
+nothing is logged.
 
-Have the array indexes also be parsed as well.
+Observed on four armv7 devices (i.MX7 Dual, 6.6.52) running a
+tracepoint-based collector with a 512 KiB ring and 160-byte records.
+Every one of them stopped delivering after exactly 26846821 records and
+4295491360 bytes had passed through the ring, at event rates between 441
+and 862 records/s, that is after 8 h to 17 h of uptime: the trigger is
+the byte count, not time or load. That figure is 2^32 plus 524064 bytes,
+and the excess is one ring's worth of grace period, as expected while
+new_prod_pos - pend_pos is still below rb->mask. The last reservation
+that fits is the largest record boundary X with X + 160 <= 524287, and
+since 2^32 mod 160 = 96 the boundaries after the wrap sit at
+X = 64 (mod 160), giving X = 524064. Userspace kept consuming normally
+until the producer stopped, then read zero records for good. With this
+patch applied, one of the four devices took 10 GiB through the same ring
+with no stall, while the three unpatched ones kept wedging at the same
+byte count.
 
-Link: https://lore.kernel.org/all/cover.1646922487.git.riteshh@linux.ibm.com/
+64-bit hosts are unaffected in practice: their counters would need
+16 EiB to wrap.
 
-Reported-by: Ritesh Harjani <riteshh@linux.ibm.com>
-Tested-by: Ritesh Harjani <riteshh@linux.ibm.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: ae70b04ab9c7 ("tracing: Have trace_event_update_all() only handle module that is loading")
+Compare the two positions as a difference instead. pending_pos never
+runs ahead of producer_pos, so the unsigned difference is the real
+distance between them and stays correct across the wrap.
+
+Fixes: cfa1a2329a69 ("bpf: Fix overrunning reservations in ringbuf")
+Signed-off-by: Israel Téllez García <i.tellez@btesa.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260814124843.22041-2-i.tellez@btesa.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ kernel/bpf/ringbuf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-index ea63a3fa32a2e..889ec51171ce9 100644
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -2433,6 +2433,33 @@ static void update_event_printk(struct trace_event_call *call,
- 	}
- }
+diff --git a/kernel/bpf/ringbuf.c b/kernel/bpf/ringbuf.c
+index 8830a47c8f30c..78fc1d4645e5b 100644
+--- a/kernel/bpf/ringbuf.c
++++ b/kernel/bpf/ringbuf.c
+@@ -353,7 +353,7 @@ static void *__bpf_ringbuf_reserve(struct bpf_ringbuf *rb, u64 size)
+ 	prod_pos = rb->producer_pos;
+ 	new_prod_pos = prod_pos + len;
  
-+static void update_event_fields(struct trace_event_call *call,
-+				struct trace_eval_map *map)
-+{
-+	struct ftrace_event_field *field;
-+	struct list_head *head;
-+	char *ptr;
-+	int len = strlen(map->eval_string);
-+
-+	head = trace_get_fields(call);
-+	list_for_each_entry(field, head, link) {
-+		ptr = strchr(field->type, '[');
-+		if (!ptr)
-+			continue;
-+		ptr++;
-+
-+		if (!isalpha(*ptr) && *ptr != '_')
-+			continue;
-+
-+		if (strncmp(map->eval_string, ptr, len) != 0)
-+			continue;
-+
-+		ptr = eval_replace(ptr, map, len);
-+		/* enum/sizeof string smaller than value */
-+		WARN_ON_ONCE(!ptr);
-+	}
-+}
-+
- void trace_event_eval_update(struct trace_eval_map **map, int len)
- {
- 	struct trace_event_call *call, *p;
-@@ -2468,6 +2495,7 @@ void trace_event_eval_update(struct trace_eval_map **map, int len)
- 					first = false;
- 				}
- 				update_event_printk(call, map[i]);
-+				update_event_fields(call, map[i]);
- 			}
- 		}
- 		cond_resched();
+-	while (pend_pos < prod_pos) {
++	while (prod_pos - pend_pos > 0) {
+ 		hdr = (void *)rb->data + (pend_pos & rb->mask);
+ 		hdr_len = READ_ONCE(hdr->len);
+ 		if (hdr_len & BPF_RINGBUF_BUSY_BIT)
 -- 
 2.53.0
 
