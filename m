@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B272C3537FF;
-	Sat, 12 Sep 2026 16:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4154532E757;
+	Sat, 12 Sep 2026 16:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231611; cv=none; b=jSrjxvNDZmHy0Q0MmT9VQOsvyK/byY5sL4U/c6ruffEkmKtRRN0Dqq45GOH2HpqJbTL3vjDbRwdVC+jTsmqOIJQj+nouXa6G/MBQlZ62aHqky134NVPRdIkpyxNfhXuBLisnPRDYRFKGlqJX8sQkzwV0gfHAohv1B/5ByOWIFRk=
+	t=1789231615; cv=none; b=uOP4x34zHGfQJaY/VU0M2RVNwpThCFCG+V2ZdxgczTcHGL8zvN+bddU7MIAtOPeJCrRh1YZ6va/hRkE+cHa84fatUWf5Yz/HhydP0EC2I5tWwxeL+5v2frnE5b0SYsEnlsqeWeggNzXR3W4f+V75NvMMBLI5IbVZWrqlGrRVzgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231611; c=relaxed/simple;
-	bh=g7+SKD/BZxXg92st/+NJQxn8tmb8Eh7d4l6UyNX81B4=;
+	s=arc-20240116; t=1789231615; c=relaxed/simple;
+	bh=4Ss4X6phAa0JQy/emGujbuGYhuAQ2f3cXFFk2j2nZQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IEAkJlRf45nmD0ylUmvxFjb6k6H9LNvicJvQeADEja8koGCLdcNoXmnHL3o/O+YBDVi76DyVidBezlfrZeofrNbRncGs9GEvGieBLDH2gOjJ05cmP2wAV8uGdVOGI219EwK5FBHFEDye8V6mgRP07ZGuqXKQE1Hh48aFaueM/sQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Az2GuXC1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E3Hg4ExEfjRnpYRliY2VuCQjObMi5KQhTwFkgMO1qWQ0U6nyon7oqYth8PoGVFdPQqG2G7fm5sLa5lr0R5G9LSQgDykhL0CQ/VOeywAdnqKT7AbIGTSke86IIGr9W5zxbgI0rGuXn4Y9dAO2J1ApoNgiYfvHT1+okXrTG+oPynE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9IDoYPq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Az2GuXC1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD401F000FF;
-	Sat, 12 Sep 2026 16:46:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9IDoYPq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C2A1F000FF;
+	Sat, 12 Sep 2026 16:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231610;
-	bh=9pRihTC+LIp1tcEeVPQ4vosJgNVtuf4kKBPgUdEQUtg=;
+	s=korg; t=1789231614;
+	bh=rMz8i+tRQGtj0ghM4eMFt4UpSQ/uH7mLh1fEEZh5XJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Az2GuXC1GKBmI910RoVyiSjbHmF+78cRfg4epFflTUnB2grOzHoqQ4GJEMcyLcAGe
-	 LIIENAeQ9YcIGPkj+qDSq4xXstQJfjgZRZ3LxjOjplnk3BhRrHUxMNojo1nqqU4Wr3
-	 agcfd2Jwb8CNwkthI7mzBVVuF2P4/DbGCPb0PkKE=
+	b=t9IDoYPqmgmbOVEZLHFLBMsVYA3Mhk+h5VGLAN+Z3r9AM9GrTv6+9a+u/XXaoezEs
+	 H4xVYqaGvL0xWo3BMxo9UcEYuFU4TLBD3wgGpUkwA6dhbqwGqav1i2KnXjbQ7hwhWi
+	 Pw7fqId2txy0U2vHUDPX/DwG7p5O+LF+aCQ2endQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	ZhangGuoDong <zhangguodong@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1034/1191] ksmbd: Do not skip lock checks for single-byte ranges
-Date: Sat, 12 Sep 2026 09:02:42 +0200
-Message-ID: <20260912065611.406110620@linuxfoundation.org>
+Subject: [PATCH 6.1 1035/1191] smb/server: preserve error status in smb2_handle_negotiate()
+Date: Sat, 12 Sep 2026 09:02:43 +0200
+Message-ID: <20260912065611.428026175@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,45 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit d40c24634fe077a0dc91fd11fccf44ce12b454d5 ]
+[ Upstream commit 73541bd2bab77e7e8e89b1edb5d342f4190dd4d0 ]
 
-check_lock_range() uses inclusive ranges. Its callers pass the end
-offset as start + length - 1, so start == end represents a valid
-single-byte range rather than an empty range.
+smb2_handle_negotiate() records specific failures such as
+STATUS_INVALID_PARAMETER or STATUS_NOT_SUPPORTED.
 
-The start == end shortcut therefore skips mandatory byte-range lock
-checks for one-byte reads, writes, copychunk operations and one-byte
-truncate ranges. A conflicting lock covering that byte is not checked
-and the operation is allowed to proceed.
-
-Remove the shortcut. The truncate size == inode->i_size case is already
-handled by only calling check_lock_range() when the new size differs
-from the current file size.
-
-Fixes: 5d510ac31626 ("ksmbd: skip lock-range check on equal size to avoid size==0 underflow")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
+Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs.c | 3 ---
- 1 file changed, 3 deletions(-)
+ fs/smb/server/smb2pdu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index 1834dd4f255ec..2915f7e98fe93 100644
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -330,9 +330,6 @@ static int check_lock_range(struct file *filp, loff_t start, loff_t end,
- 	struct file_lock_context *ctx = file_inode(filp)->i_flctx;
- 	int error = 0;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index bddf03ec337ee..7d47f7749cdc9 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1175,7 +1175,7 @@ int smb2_handle_negotiate(struct ksmbd_work *work)
+ 				GFP_KERNEL);
+ 		if (!conn->preauth_info) {
+ 			rc = -ENOMEM;
+-			rsp->hdr.Status = STATUS_INVALID_PARAMETER;
++			rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
+ 			goto err_out;
+ 		}
  
--	if (start == end)
--		return 0;
--
- 	if (!ctx || list_empty_careful(&ctx->flc_posix))
- 		return 0;
+@@ -1271,7 +1271,7 @@ int smb2_handle_negotiate(struct ksmbd_work *work)
+ 	ksmbd_conn_set_need_negotiate(conn);
  
+ err_out:
+-	if (rc)
++	if (rc && rsp->hdr.Status == STATUS_SUCCESS)
+ 		rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
+ 
+ 	if (!rc)
 -- 
 2.53.0
 
