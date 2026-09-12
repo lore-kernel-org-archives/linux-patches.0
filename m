@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794DB2931FB;
-	Sat, 12 Sep 2026 08:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7252F352003;
+	Sat, 12 Sep 2026 08:02:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200135; cv=none; b=N/oIBha2DPX7LsKpqYXM6A6DK+KOEIm0VudD7+JGEYivPnfufITVXdlCDJO9fwLMtixxBE+bcA7Ec1yZ6iXu0UPAhuwDGhvkzOoDq7/197CCs2sIpk+EPFKh61P//l9FPpFz5z6Bozp9bvDYOZKNDZbDp0UklNOiY2AtH2nMazo=
+	t=1789200140; cv=none; b=TLm8zG835+raJacO17IApg7JVGdSX7sCJShYOx/Xsh8y6p54IMH1gxAna9k7pZdr7MZJn7mT0OYcRAm/j4N2N2jH0HE7/JyBOIRF85cCuCH1SZ6o8aryIXE6xBJRpzQDJrf9f0Retf+Wk9xBr1A2nWP7BEmdME4JfIwItyEj58M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200135; c=relaxed/simple;
-	bh=wiqB825ITWZEP7LzE8/7TzORbJIZkPALmb1GmQqTteA=;
+	s=arc-20240116; t=1789200140; c=relaxed/simple;
+	bh=vaUadNCo7CSRO3jpGV6DvS0szqOJJRqY26ROAva5LGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tXI+6rLoUxHJN7iLEGp66gHSgGpbIlNX3xVEWt5zNLI63v8z5Iggc5c2WvyY6Ot1ZuPDzvkCl+2IPs4C0gx+SA2iStnEGa6Ak4BZyagfgb+zKuoA99JJ3lSajXCZu0t8RTYVFcWH7lqGMryaH2RZMloZY6GqDm1d39/5iuUn9cI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2RLm0c+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NH+6789GzOMBg073+Ec+/ILCMLaixWM3eL2Mlo1ejiB9IxhlDLtn+0WCmCEgu3fVr+XmZZObK6TYXvde6QLSyAbS2GdLpLJPr4fk6l1O+gm3agEzw8D9skP1NA9W/xrDdBNCdWAHL4YSjIJ/Vh4a5PwF8w9Y8x9m4v/wnMz7LtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCFl/9pZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2RLm0c+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33AF61F000FF;
-	Sat, 12 Sep 2026 08:02:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCFl/9pZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C051F000FF;
+	Sat, 12 Sep 2026 08:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200134;
-	bh=BtipoxNBy4WVMYtWujOgQty44dCp7lmb4KtqBhdZxcg=;
+	s=korg; t=1789200139;
+	bh=FFo4/DJEOw3JAdQWtabRQq1msvzQELNQPS6yYa2GkFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O2RLm0c+e0eeA7xkdhpnL5WKJuJwpEG/8NG2Gof2G3tJ5U6YdYLJD9knxHInilhGy
-	 FLIHVwaYTqRncVcGr61GkmXBP43BRlNC6QcwDRPs2KNACXEEeC41eby3ZlvHiUZm/3
-	 4eOJlxIj0H7FndBg/Kkk0qG7bzwVXkErRgg4Zd+g=
+	b=MCFl/9pZt/REwaDx3kTXnE5bk6Wk5DoG8HJQ8x/HrJr3lvhUct1lj8UTEHU+DsqA4
+	 8TojTIJ6xhP0jcDw43yj31hLvJC1tCnZd4NIzZxJozDweAmJHJ13Ax5CtGikk1Y3xa
+	 LMQ8+9KxhyqH8x6VStDbsJsQnPHfF3up4I93D13A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lee <david.lee@trailofbits.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Cheng-Yang Chou <yphbchou0911@gmail.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0726/1815] nilfs2: prevent out-of-bounds read in super root block parsing
-Date: Sat, 12 Sep 2026 08:41:16 +0200
-Message-ID: <20260912065705.944140185@linuxfoundation.org>
+Subject: [PATCH 7.2 0687/1815] sched_ext: Fix exit_cpu accuracy for lockup paths
+Date: Sat, 12 Sep 2026 08:40:37 +0200
+Message-ID: <20260912065705.018989185@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,45 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lee <david.lee@trailofbits.com>
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
 
-[ Upstream commit 7cb2f76a6a2ba2130b577cb8ac13e1e46c4fc689 ]
+[ Upstream commit da428d572e07bb9dd2d076297ef5700f6483aafd ]
 
-super-root inode metadata size is trusted before nilfs_read_inode_common().
+handle_lockup() uses raw_smp_processor_id() for exit_cpu, which is wrong
+for two paths:
 
-Reject super-root inode sizes whose computed on-disk footprint exceeds the
-filesystem block size. This prevents malformed filesystem images from
-making nilfs_read_inode_common() read past the end of the super-root block.
+- scx_hardlockup_irq_workfn() has the hung CPU in a local variable but
+  irq_work may run elsewhere. Pass the local cpu explicitly.
+- scx_rcu_cpu_stall() records the detector CPU rather than the stalled
+  one. Pass -1 for now. The next patch fixes this properly.
 
-[ryusuke: clarify the commit title]
-
-Fixes: 8a9d2191e9f4 ("nilfs2: operations for the_nilfs core object")
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 3c4b38064937 ("sched_ext: Abort directly from the hardlockup handler")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/the_nilfs.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/sched/ext/ext.c      | 15 +++++++++------
+ kernel/sched/ext/internal.h |  2 --
+ 2 files changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
-index 7b23e373a106e..f3805e7aabeb5 100644
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -461,6 +461,12 @@ static int nilfs_store_disk_layout(struct the_nilfs *nilfs,
- 			  nilfs->ns_inode_size);
- 		return -EINVAL;
- 	}
-+	if (NILFS_SR_BYTES(nilfs->ns_inode_size) > nilfs->ns_blocksize) {
-+		nilfs_err(nilfs->ns_sb,
-+			  "too large inode size for super root: %d bytes",
-+			  nilfs->ns_inode_size);
-+		return -EINVAL;
-+	}
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index d7c4b62e712e5..688158b53ddb5 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -5291,6 +5291,7 @@ bool scx_allow_ttwu_queue(const struct task_struct *p)
  
- 	nilfs->ns_first_ino = le32_to_cpu(sbp->s_first_ino);
- 	if (nilfs->ns_first_ino < NILFS_USER_INO) {
+ /**
+  * handle_lockup - sched_ext common lockup handler
++ * @exit_cpu: CPU to record in exit_info. Pass the stalled/hung CPU, not current.
+  * @fmt: format string
+  *
+  * Called on system stall or lockup condition and initiates abort of sched_ext
+@@ -5300,7 +5301,7 @@ bool scx_allow_ttwu_queue(const struct task_struct *p)
+  * resolve the lockup. %false if sched_ext is not enabled or abort was already
+  * initiated by someone else.
+  */
+-static __printf(1, 2) bool handle_lockup(const char *fmt, ...)
++static __printf(2, 3) bool handle_lockup(int exit_cpu, const char *fmt, ...)
+ {
+ 	struct scx_sched *sch;
+ 	va_list args;
+@@ -5316,7 +5317,7 @@ static __printf(1, 2) bool handle_lockup(const char *fmt, ...)
+ 	case SCX_ENABLING:
+ 	case SCX_ENABLED:
+ 		va_start(args, fmt);
+-		ret = scx_verror(sch, fmt, args);
++		ret = scx_vexit(sch, SCX_EXIT_ERROR, 0, exit_cpu, fmt, args);
+ 		va_end(args);
+ 		return ret;
+ 	default:
+@@ -5338,7 +5339,7 @@ static __printf(1, 2) bool handle_lockup(const char *fmt, ...)
+  */
+ bool scx_rcu_cpu_stall(void)
+ {
+-	return handle_lockup("RCU CPU stall detected!");
++	return handle_lockup(-1, "RCU CPU stall detected!");
+ }
+ 
+ /**
+@@ -5353,11 +5354,13 @@ bool scx_rcu_cpu_stall(void)
+  */
+ void scx_softlockup(u32 dur_s)
+ {
+-	if (!handle_lockup("soft lockup - CPU %d stuck for %us", smp_processor_id(), dur_s))
++	int cpu = smp_processor_id();
++
++	if (!handle_lockup(cpu, "soft lockup - CPU %d stuck for %us", cpu, dur_s))
+ 		return;
+ 
+ 	printk_deferred(KERN_ERR "sched_ext: Soft lockup - CPU %d stuck for %us, disabling BPF scheduler\n",
+-			smp_processor_id(), dur_s);
++			cpu, dur_s);
+ }
+ 
+ /*
+@@ -5372,7 +5375,7 @@ static void scx_hardlockup_irq_workfn(struct irq_work *work)
+ {
+ 	int cpu = atomic_xchg(&scx_hardlockup_cpu, -1);
+ 
+-	if (cpu >= 0 && handle_lockup("hard lockup - CPU %d", cpu))
++	if (cpu >= 0 && handle_lockup(cpu, "hard lockup - CPU %d", cpu))
+ 		printk_deferred(KERN_ERR "sched_ext: Hard lockup - CPU %d, disabling BPF scheduler\n",
+ 				cpu);
+ }
+diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+index 673059fa9d728..b295991b9f10c 100644
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -1544,8 +1544,6 @@ __printf(5, 6) bool __scx_exit(struct scx_sched *sch, enum scx_exit_kind kind,
+ 	__scx_exit(sch, kind, exit_code, raw_smp_processor_id(), fmt, ##args)
+ #define scx_error(sch, fmt, args...)						\
+ 	scx_exit((sch), SCX_EXIT_ERROR, 0, fmt, ##args)
+-#define scx_verror(sch, fmt, args)						\
+-	scx_vexit((sch), SCX_EXIT_ERROR, 0, raw_smp_processor_id(), fmt, args)
+ 
+ /*
+  * Return the rq currently locked from an scx callback, or NULL if no rq is
 -- 
 2.53.0
 
