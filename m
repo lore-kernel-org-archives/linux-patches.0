@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EF41DE4EF;
-	Sat, 12 Sep 2026 14:12:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD7C4BEE5E;
+	Sat, 12 Sep 2026 14:12:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222358; cv=none; b=Sbr6+KPM1OH1+ibh8QyEowDo1C8aegebIMhKphkZlhxhEqcNDM27j71GWofEYOm9XYSST2u8cM50V8or/WACC+8KtWfMbxldSNK+QF2HSrSaYBfZG4xu0VaLNPgvcLHPq8LYaBPJ9zRaTUdRX6plYaNetc6r0GhqmVYBQwjavOo=
+	t=1789222363; cv=none; b=rzprRZlqFedMsfwAkbAaoa91MzECndEK1+z0/a5aDbfS66WnzmBVk3Kjk+YXv3ks0e3O3YalVg14ziZJ+CHO9xfolluq485QwZHHmE21qZTmmc3MKvgfj/rbd5JjPsToJ/m5LgPfuaB6tjT8CGZi+hBDJTi/VeqHd7HcM460DQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222358; c=relaxed/simple;
-	bh=w5Ivfxv8srZytDmF7m01/7+aB52Lsl/SDIZoB1pw4Vg=;
+	s=arc-20240116; t=1789222363; c=relaxed/simple;
+	bh=MlCM7aUiHhttlbyNTTuE7Df+U5KlD/LwjXxQzP+tV7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mHBL4TJh4Thy/vWnfXt4E4IsqRXgeGlX4OrNgyMvAZYdND7tjJjFBgWQPf/FLrjue1NcQ4ikE115HbMGHpRTk8r9HNTaylKCS4vjAU2XynRJ2+Pw2Tyn5fgqymem4JLB9kqye2/u7IFuSylLeArWaNd+OQbv/2+2TQMo3Cit7eQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NvLqL/bD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IQdF1wRPRTFRFjaOWW0pGZHP+4vdD1Y+dD/t0i8WSV80W9RgRBL+Uht2phep8qRWvem+rxyVqidxM9FNye3dWQhx6hDrxeAkNki8kH5PpbDKPlEku5CtEQHhOZbmvgUlFM4nLI/utDxtdS609a/slH7X6bqQkf/I+5rhS0+YNkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqtcQrbp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NvLqL/bD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779D31F000FF;
-	Sat, 12 Sep 2026 14:12:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqtcQrbp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180751F000FF;
+	Sat, 12 Sep 2026 14:12:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222357;
-	bh=Q5RAT1iSTHIrqX7YlttZKm+BIvRi5PgLS6rI3kWsq1k=;
+	s=korg; t=1789222361;
+	bh=Yc79OMHTXKhYhV+kLmRmpOALKxEkjOepcrGGWKFULrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NvLqL/bDgc2TH3t9b5mCib3AepDJPq4JqTqBQ1nZd4ego+Mgdv3gcLEg2QHa9DpUq
-	 cKY4b31B3jPgEvlzlpgyxV1NAR9+QIR95Gxh9R/wXxjjlFBVPsFUP02/qD07FYzhgd
-	 fNJF2aTMwhrVj96nFg7+fUjQbaXEeLy0sUzwijI8=
+	b=QqtcQrbp6kMu4dGjRV0jbA2hOB2noMEW33dwIYovN0ttsIWAhcAiig+xBwOHdoOTI
+	 /rZrvxVCrD06dpxVbOHzNmLfjLemoOhm3RJv7bjRS29S0oq91bsFBqIxa/zDIhMx61
+	 bTKP2WM8fTrSGIvNaxKn5Ga6ZDpTK8+AgUcyH3nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jens Remus <jremus@linux.ibm.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Andrei Kuchynski <akuchynski@chromium.org>,
+	Kaixuan Li <kaixuan.li@ntu.edu.sg>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Benson Leung <bleung@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0569/1424] x86/cfi: Use symmetric SYM_START and SYM_END in __CFI_TYPE()
-Date: Sat, 12 Sep 2026 08:50:01 +0200
-Message-ID: <20260912065620.044932580@linuxfoundation.org>
+Subject: [PATCH 6.6 0570/1424] platform/chrome: cros_ec_typec: Reject out-of-bounds PD cap count
+Date: Sat, 12 Sep 2026 08:50:02 +0200
+Message-ID: <20260912065620.066645191@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -54,52 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Remus <jremus@linux.ibm.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit 0cfdf974f133e0ff17ed80e7895adbe7889d9522 ]
+[ Upstream commit a0a8cd9fc9c48b95095bcec4b146f7a99486f58e ]
 
-Commit
+cros_typec_register_partner_pdos() copies the partner PDOs from the EC
+TYPEC_STATUS response into the fixed caps_desc.pdo[PDO_MAX_OBJECTS] array.
 
-  ccace936eec7 ("x86: Add types to indirectly called assembly functions")
+	memcpy(caps_desc.pdo, resp->source_cap_pdos,
+	       sizeof(u32) * resp->source_cap_count);
+	...
+	memcpy(caps_desc.pdo, resp->sink_cap_pdos,
+	       sizeof(u32) * resp->sink_cap_count);
 
-introduced a x86-specific implementation of __CFI_TYPE() using an asymmetric
-combination of SYM_START() and SYM_FUNC_END() to add a symbol to the KCFI type
-identifier that precedes a function.
+PDO_MAX_OBJECTS is 7. source_cap_count and sink_cap_count are u8 fields
+from the EC. The only check is that they are not both zero. If either is
+larger than 7, the memcpy writes past the end of the array on the stack.
+A count of 255 overflows it by about 1 KB. The EC source arrays are only
+seven entries wide. A larger count reads past them too.
 
-This asymmetric combination is an issue if SYM_FUNC_END() ever gets extended
-in a way that requires it to be used symmetrically with SYM_FUNC_START*().
-For instance to emit DWARF CFI directives that denote the start/end of
-a function. [1]
+The ChromeOS EC firmware caps these counts today, so a compliant setup
+does not hit this. The kernel should still validate these values rather
+than trust them.
 
-Use SYM_END() with SYM_T_FUNC instead.  No functional change, as the generic
-implementation of SYM_FUNC_END(name) expands into SYM_END(name, SYM_T_FUNC).
+Validate the counts in cros_typec_register_partner_pdos() next to the
+memcpy. Skip the PDO registration if either count is above PDO_MAX_OBJECTS.
+The rest of cros_typec_handle_status() still runs so events are handled
+and cleared.
 
-Fixes: ccace936eec7 ("x86: Add types to indirectly called assembly functions")
-Closes: https://sashiko.dev/#/patchset/20260522110427.2816637-1-jremus@linux.ibm.com?part=3 [1]
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Jens Remus <jremus@linux.ibm.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260611155716.830563-1-jremus@linux.ibm.com
+Fixes: 348a2e8c93d3 ("platform/chrome: cros_ec_typec: Register partner PDOs")
+Suggested-by: Andrei Kuchynski <akuchynski@chromium.org>
+Co-developed-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+Signed-off-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Reviewed-by: Andrei Kuchynski <akuchynski@chromium.org>
+Link: https://lore.kernel.org/r/20260625130056.3378097-1-maoyixie.tju@gmail.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/linkage.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/chrome/cros_ec_typec.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/x86/include/asm/linkage.h b/arch/x86/include/asm/linkage.h
-index 571fe4d2d2328..6cea7b15785a3 100644
---- a/arch/x86/include/asm/linkage.h
-+++ b/arch/x86/include/asm/linkage.h
-@@ -103,7 +103,7 @@
- 	.byte 0xb8 ASM_NL					\
- 	.long __kcfi_typeid_##name ASM_NL			\
- 	CFI_POST_PADDING					\
--	SYM_FUNC_END(__cfi_##name)
-+	SYM_END(__cfi_##name, SYM_T_FUNC)
+diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
+index 76807ceb313a9..65549c3a67486 100644
+--- a/drivers/platform/chrome/cros_ec_typec.c
++++ b/drivers/platform/chrome/cros_ec_typec.c
+@@ -942,6 +942,12 @@ static void cros_typec_register_partner_pdos(struct cros_typec_data *typec,
+ 	if (!resp->source_cap_count && !resp->sink_cap_count)
+ 		return;
  
- /* UML needs to be able to override memcpy() and friends for KASAN. */
- #ifdef CONFIG_UML
++	if (resp->source_cap_count > PDO_MAX_OBJECTS ||
++	    resp->sink_cap_count > PDO_MAX_OBJECTS) {
++		dev_warn(typec->dev, "Invalid PDO count from EC, port: %d\n", port_num);
++		return;
++	}
++
+ 	port->partner_pd = typec_partner_usb_power_delivery_register(port->partner, &desc);
+ 	if (IS_ERR(port->partner_pd)) {
+ 		dev_warn(typec->dev, "Failed to register partner PD device, port: %d\n", port_num);
 -- 
 2.53.0
 
