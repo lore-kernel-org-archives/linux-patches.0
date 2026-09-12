@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D30386562;
-	Sat, 12 Sep 2026 16:59:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3D341C302;
+	Sat, 12 Sep 2026 16:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232375; cv=none; b=WbQ46ZuMcPv8WRGeuM5fXp9qHj0ucTa3ZjN9TE7dt1evVtEaO/4HV4ezHqAWbEjY4Ub5pWWskposKQjylP5mNMzRtdCYjreAESxjvEvO50QpkFSlRXUKfS5BzYSMhx3dhT+2s8iqvFP+jDvHBRnr+AwMLS5yhAvOqVelSQLaaF0=
+	t=1789232379; cv=none; b=qRyDgGu10aTFmFFRbwes27nwck6P19Ze0oEVoZl0smNmqYQ92xv+OoZJSnJ2RkTi80x/DYy2uWo6GpE5fzpbSlbaiahZFwk9ucWvFK8gXLmyLs6RVl9Ng9PDkArptQOOSda40SFL/oScc9ZGBWvCx3GujncVxMAeYkWeRMI9B9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232375; c=relaxed/simple;
-	bh=gaNJA628uAIJGFBCC3RUQ972qpYOwKg0ikxC0moiDX4=;
+	s=arc-20240116; t=1789232379; c=relaxed/simple;
+	bh=mwzK0VjfpGQGQgiuf6T07v/j38C3Xxj7D8Iwx7FZCR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OsuO+Kddcaf7m3Dl0DQxnl254WitMZcQPgimikphGePydmhB63esKrFHtnS/BB168E9Kcw7h0oRen1NJbRY60+rQPey1250N3EVUFaibp6bNoHh9ZO0/gwo8ML0ghCxMme/t588oRTvL+fXnrStMwKHk8KqRcMUXCktjCoWDhf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chk6Imbv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=htmXpZwx38oLD/WF0oJjPv7XvYv0GkOet4RdZDlwXGfGfAl7+bsx6Yo3HIp9rEHZ9qTbodX1e9qb1zVJfNLNcadT/xWB4C3PkwbPvj1qcXy12r9kGIRtFjFPjVUHxC2MuCXCGC+6j1rxNtEQIQmFOGmOWdNyZSbZIj8Lsl8a35M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnZdJmR/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chk6Imbv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FEF41F000FF;
-	Sat, 12 Sep 2026 16:59:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnZdJmR/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 096351F000FF;
+	Sat, 12 Sep 2026 16:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232373;
-	bh=5qeVTaXnPa7yfbU4/D2yG54z+qn3K0MDmquZoDp0PWg=;
+	s=korg; t=1789232378;
+	bh=zMOp5imRNn/uvwLI9DpAC56JXeWNot60TpEWCBcHBq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=chk6ImbvA7irLoJz0Fjv5NfG2fapyQre13EfLwmHfLDpYhND/TRGaldteJ+dSKvD9
-	 02tS+73BOYuzrp2z05nolboDCu7ANAmM/TKu9uaZUTV4OIbH2SFnIAKGWoC5dpcijU
-	 ltBeI/NLG12K5UZMgoRhxxjs/aZuybDbusoXMNDM=
+	b=xnZdJmR/6hY3hLmr7jdmVy38BD+TTE0filshhjtpS6Ow7DlDmHIDP+QDLZrfIHWDy
+	 t0zt8IoHrDtSTLjK7D39VfA28g8cJMQu81s/F9g/TXfmk2v5O82U3iC2JljFphXiAK
+	 0h5b0R8D0Y/veQyGo9TDrz1ErOubtf7RofouMthw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1152/1191] clk: qcom: gcc-sm8550: Use floor ops for SDCC RCGs
-Date: Sat, 12 Sep 2026 09:04:40 +0200
-Message-ID: <20260912065614.020870494@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.1 1188/1191] pinctrl: mediatek: common-v1: Fix error checking in mtk_eint_init()
+Date: Sat, 12 Sep 2026 09:05:16 +0200
+Message-ID: <20260912065614.816793002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,55 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 1c06e3956054fb5a0930f07b02726b1774b6c700 ]
+commit 446d28584723e5d4bcdb18cf6ef87cb2bb597dd8 upstream.
 
-In line with commit a27ac3806b0a ("clk: qcom: gcc-sm8450: Use floor ops
-for SDCC RCGs") done to fix issues with overclocked SD cards on SM8450
-powered boards set floor clock operations for SDCC RCGs on SM8550.
+The devm_kzalloc() function doesn't return error pointers, it returns
+NULL on error.  Then on the next line it checks the same pointer again
+by mistake, "->base" instead of "->base[0]".
 
-This change fixes initialization of some SD cards, where the problem
-is manifested by the SDHC driver:
-
-    mmc0: Card appears overclocked; req 50000000 Hz, actual 100000000 Hz
-    mmc0: error -110 whilst initialising SD card
-
-Fixes: 955f2ea3b9e9 ("clk: qcom: Add GCC driver for SM8550")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251124212012.3660189-2-vladimir.zapolskiy@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: fe412e3a6c97 ("pinctrl: mediatek: common-v1: Fix EINT breakage on older controllers")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/aAijc10fHka1WAMX@stanley.mountain
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-sm8550.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-mtk-common.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
-index 0f8fa570dc854..c27782c2f80f6 100644
---- a/drivers/clk/qcom/gcc-sm8550.c
-+++ b/drivers/clk/qcom/gcc-sm8550.c
-@@ -1024,7 +1024,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
- 		.parent_data = gcc_parent_data_9,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_9),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_shared_floor_ops,
- 	},
- };
+--- a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
++++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
+@@ -1015,12 +1015,12 @@ static int mtk_eint_init(struct mtk_pinc
+ 	pctl->eint->nbase = 1;
+ 	/* mtk-eint expects an array */
+ 	pctl->eint->base = devm_kzalloc(pctl->dev, sizeof(pctl->eint->base), GFP_KERNEL);
+-	if (IS_ERR(pctl->eint->base))
++	if (!pctl->eint->base)
+ 		return -ENOMEM;
  
-@@ -1047,7 +1047,7 @@ static struct clk_rcg2 gcc_sdcc4_apps_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_shared_floor_ops,
- 	},
- };
+ 	pctl->eint->base[0] = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(pctl->eint->base))
+-		return PTR_ERR(pctl->eint->base);
++	if (IS_ERR(pctl->eint->base[0]))
++		return PTR_ERR(pctl->eint->base[0]);
  
--- 
-2.53.0
-
+ 	pctl->eint->irq = irq_of_parse_and_map(np, 0);
+ 	if (!pctl->eint->irq)
 
 
