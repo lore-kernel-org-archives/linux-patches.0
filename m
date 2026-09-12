@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10F6426EAD;
-	Sat, 12 Sep 2026 10:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105ED29DB64;
+	Sat, 12 Sep 2026 10:34:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209294; cv=none; b=g9CzJ0XBOAG4R6A4hmpHq5bgZZJAvJoxN0EqjSawKIp05eSwl0TLJFxx7fm4RAw2IcMCI37TQ9Q92a3MI29q4OqIevLLc+kbM69XNXVcARAiv5Q7rI7XQOHSwChmaHyxH61V+Zdftd2er1b/uJIM4AOaxHSAm8xo+DLvkuOEaB0=
+	t=1789209297; cv=none; b=I+ThGQzDI2IvBeg2xgs1I32lDtT6Jn3nAxtT18CrFU52iMJUZD6aX8GgZmsfOkpHjVwwGqQVERlJTLTa0vms7aeLwiSsWFkk/a06A9eby33H05yt2svL7tqCT0qaHa16OGJuRbEPxwbGOtJdooHEhFIA6H7t/GuyLFbrg3yRhRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209294; c=relaxed/simple;
-	bh=jNbc9ElY5g9jJQEBlzbbOupvKSeoZs1swm1S3Eelrgw=;
+	s=arc-20240116; t=1789209297; c=relaxed/simple;
+	bh=iQkKj7vZluy9LSaWdc/NLmhreWpOF16B+MF0CXNaY+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nt/HDROo3JsoBnFJ1H5bP88GPsY1cgIpMpQRMoBRpvVBTC/+OiLm1uShn+nhon78H8IDTpUhIYa38YTmH2UgemEIVIgBwTEJNLMr6m9IgCmKattA7V4p922Qr2YHb8kiPemSyMz25DBS+0A5vzmCBmbP+jSanTZ1IpM7YikZw1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0VEX64zn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SjWeZBmA7s7y7ROh6HvdKsmGo9VQ6SLbEPfDB91ZXFJm46ZIp39OAh0g2OeVPpsU0gBfveHRrgYfzTBJHFyN8VI5/24pEVpaDMMMZkkTBPLi+88cxdywZ6cxbZ5ZdNCBRDmL5UDf6D2rdmOGt5i4sdZnfkskJJEfNOtQ4VZ5OYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=puiQMcDW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0VEX64zn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64571F000FF;
-	Sat, 12 Sep 2026 10:34:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="puiQMcDW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD831F000FF;
+	Sat, 12 Sep 2026 10:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209290;
-	bh=CypT7tK5T/sxPC5vsVIprUNCrnkO/Ltf61cTj+dIqQQ=;
+	s=korg; t=1789209295;
+	bh=LI+iB8roV1lPc5mZr0kHUvjD5UWgZHE63zlGc2G4PCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0VEX64zn52nx8KC/FnXeETYRBFlYVLTS07a4ZprEETnu2iRD7YU5FbncVDlD9Rfsg
-	 Zchzc8hXzjXrNP9/s3azGg6SA1JdCUNs8T4Qs3EP5z912PEoJOcARpBILXJpAIbpFy
-	 vdpbvMsxIPK559TuzxI+13WlvaNJhYFfOuTft/Vc=
+	b=puiQMcDW3gc+6Z1SffJXWRYXtM15AnubT1/AKJGqrfxP/NuOwrUNqGJP40l1mslF3
+	 6OedceuiANIJskVRFTOMzOYmelmDF+gZ8I/ctnpMYV9gmy/j7S+B/MhKG72re8CEjt
+	 prT4fENdz8X1x8acvAZDvVOE64jQEQ5AT9dbng+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0792/1518] wifi: mt76: mt7996: fix MIB TX aggregation counter registers for mt7990
-Date: Sat, 12 Sep 2026 08:49:21 +0200
-Message-ID: <20260912065641.349696687@linuxfoundation.org>
+Subject: [PATCH 6.18 0793/1518] wifi: mt76: mt7915: fix double hif2 init on the non-WED path
+Date: Sat, 12 Sep 2026 08:49:22 +0200
+Message-ID: <20260912065641.372567085@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,132 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit d0b750072a29c8ff0504c3bc28c411c402f26716 ]
+[ Upstream commit 3ae8ad277e2819a281b0e36b55633c8515c16ce7 ]
 
-The MIB_TSCR0-7 counters read by mt7996_mac_update_stats() are
-hardcoded at the mt7996/mt7992 offsets 0x6b0-0x6d0, but mt7990 moved
-them to 0x750-0x770, so TX AMPDU statistics were read from unrelated
-registers on that chip. Move the offsets into the per-chip register
-tables.
+mt7915_pci_init_hif2() was called unconditionally and again inside the
+WED-inactive branch. The helper increments the global hif_idx, writes the
+PCIe RECOG_ID register and takes a get_device() reference via
+mt7915_pci_get_hif2(), while removal only drops one reference. On non-WED
+dual-hif hardware this double-incremented hif_idx, wrote RECOG_ID twice and
+leaked a device reference. Only the call inside the WED-inactive branch is
+correct; drop the unconditional one. hif2 is already initialised to NULL.
 
-Fixes: f6c87411d15f ("wifi: mt76: mt7996: rework register mapping for mt7990")
-Link: https://patch.msgid.link/20260727150434.1778520-1-nbd@nbd.name
+Fixes: cacdd67812c6 ("mt76: mt7915: add mt7915_mmio_probe() as a common probing function")
+Link: https://patch.msgid.link/20260727150434.1778520-2-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7996/mmio.c  | 24 +++++++++++++++++++
- .../net/wireless/mediatek/mt76/mt7996/regs.h  | 24 ++++++++++++-------
- 2 files changed, 40 insertions(+), 8 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/pci.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-index 80db102ed809c..ed292c617168c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-@@ -54,6 +54,14 @@ static const u32 mt7996_offs[] = {
- 	[MIB_BSCR7]		= 0x9e8,
- 	[MIB_BSCR17]		= 0xa10,
- 	[MIB_TRDR1]		= 0xa28,
-+	[MIB_TSCR0]		= 0x6b0,
-+	[MIB_TSCR1]		= 0x6b4,
-+	[MIB_TSCR2]		= 0x6b8,
-+	[MIB_TSCR3]		= 0x6bc,
-+	[MIB_TSCR4]		= 0x6c0,
-+	[MIB_TSCR5]		= 0x6c4,
-+	[MIB_TSCR6]		= 0x6c8,
-+	[MIB_TSCR7]		= 0x6d0,
- 	[HIF_REMAP_L1]		= 0x24,
- 	[HIF_REMAP_BASE_L1]	= 0x130000,
- 	[HIF_REMAP_L2]		= 0x1b4,
-@@ -91,6 +99,14 @@ static const u32 mt7992_offs[] = {
- 	[MIB_BSCR7]		= 0xae4,
- 	[MIB_BSCR17]		= 0xb0c,
- 	[MIB_TRDR1]		= 0xb24,
-+	[MIB_TSCR0]		= 0x6b0,
-+	[MIB_TSCR1]		= 0x6b4,
-+	[MIB_TSCR2]		= 0x6b8,
-+	[MIB_TSCR3]		= 0x6bc,
-+	[MIB_TSCR4]		= 0x6c0,
-+	[MIB_TSCR5]		= 0x6c4,
-+	[MIB_TSCR6]		= 0x6c8,
-+	[MIB_TSCR7]		= 0x6d0,
- 	[HIF_REMAP_L1]		= 0x8,
- 	[HIF_REMAP_BASE_L1]	= 0x40000,
- 	[HIF_REMAP_L2]		= 0x1b4,
-@@ -128,6 +144,14 @@ static const u32 mt7990_offs[] = {
- 	[MIB_BSCR7]		= 0xbd4,
- 	[MIB_BSCR17]		= 0xbfc,
- 	[MIB_TRDR1]		= 0xc14,
-+	[MIB_TSCR0]		= 0x750,
-+	[MIB_TSCR1]		= 0x754,
-+	[MIB_TSCR2]		= 0x758,
-+	[MIB_TSCR3]		= 0x75c,
-+	[MIB_TSCR4]		= 0x760,
-+	[MIB_TSCR5]		= 0x764,
-+	[MIB_TSCR6]		= 0x768,
-+	[MIB_TSCR7]		= 0x770,
- 	[HIF_REMAP_L1]		= 0x8,
- 	[HIF_REMAP_BASE_L1]	= 0x40000,
- 	[HIF_REMAP_L2]		= 0x1b8,
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/regs.h b/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
-index 0fa325f87fcd9..a46c790550c62 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
-@@ -64,6 +64,14 @@ enum offs_rev {
- 	MIB_BSCR7,
- 	MIB_BSCR17,
- 	MIB_TRDR1,
-+	MIB_TSCR0,
-+	MIB_TSCR1,
-+	MIB_TSCR2,
-+	MIB_TSCR3,
-+	MIB_TSCR4,
-+	MIB_TSCR5,
-+	MIB_TSCR6,
-+	MIB_TSCR7,
- 	HIF_REMAP_L1,
- 	HIF_REMAP_BASE_L1,
- 	HIF_REMAP_L2,
-@@ -247,9 +255,9 @@ enum offs_rev {
- #define MT_MIB_BSCR7(_band)			MT_WF_MIB(_band, __OFFS(MIB_BSCR7))
- #define MT_MIB_BSCR17(_band)			MT_WF_MIB(_band, __OFFS(MIB_BSCR17))
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
+index 07b0a5766eab7..5a0c9eeb2c4e2 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
+@@ -135,7 +135,6 @@ static int mt7915_pci_probe(struct pci_dev *pdev,
  
--#define MT_MIB_TSCR5(_band)			MT_WF_MIB(_band, 0x6c4)
--#define MT_MIB_TSCR6(_band)			MT_WF_MIB(_band, 0x6c8)
--#define MT_MIB_TSCR7(_band)			MT_WF_MIB(_band, 0x6d0)
-+#define MT_MIB_TSCR5(_band)			MT_WF_MIB(_band, __OFFS(MIB_TSCR5))
-+#define MT_MIB_TSCR6(_band)			MT_WF_MIB(_band, __OFFS(MIB_TSCR6))
-+#define MT_MIB_TSCR7(_band)			MT_WF_MIB(_band, __OFFS(MIB_TSCR7))
+ 	mdev = &dev->mt76;
+ 	mt7915_wfsys_reset(dev);
+-	hif2 = mt7915_pci_init_hif2(pdev);
  
- #define MT_MIB_RSCR1(_band)			MT_WF_MIB(_band, __OFFS(MIB_RSCR1))
- /* rx mpdu counter, full 32 bits */
-@@ -265,14 +273,14 @@ enum offs_rev {
- #define MT_MIB_RSCR36(_band)			MT_WF_MIB(_band, __OFFS(MIB_RSCR36))
- 
- /* tx ampdu cnt, full 32 bits */
--#define MT_MIB_TSCR0(_band)			MT_WF_MIB(_band, 0x6b0)
--#define MT_MIB_TSCR2(_band)			MT_WF_MIB(_band, 0x6b8)
-+#define MT_MIB_TSCR0(_band)			MT_WF_MIB(_band, __OFFS(MIB_TSCR0))
-+#define MT_MIB_TSCR2(_band)			MT_WF_MIB(_band, __OFFS(MIB_TSCR2))
- 
- /* counts all mpdus in ampdu, regardless of success */
--#define MT_MIB_TSCR3(_band)			MT_WF_MIB(_band, 0x6bc)
-+#define MT_MIB_TSCR3(_band)			MT_WF_MIB(_band, __OFFS(MIB_TSCR3))
- 
- /* counts all successfully tx'd mpdus in ampdu */
--#define MT_MIB_TSCR4(_band)			MT_WF_MIB(_band, 0x6c0)
-+#define MT_MIB_TSCR4(_band)			MT_WF_MIB(_band, __OFFS(MIB_TSCR4))
- 
- /* rx ampdu count, 32-bit */
- #define MT_MIB_RSCR27(_band)			MT_WF_MIB(_band, __OFFS(MIB_RSCR27))
-@@ -296,7 +304,7 @@ enum offs_rev {
- #define MT_MIB_RVSR1(_band)			MT_WF_MIB(_band, __OFFS(MIB_RVSR1))
- 
- /* rx blockack count, 32 bits */
--#define MT_MIB_TSCR1(_band)			MT_WF_MIB(_band, 0x6b4)
-+#define MT_MIB_TSCR1(_band)			MT_WF_MIB(_band, __OFFS(MIB_TSCR1))
- 
- #define MT_MIB_BTSCR0(_band)			MT_WF_MIB(_band, 0x5e0)
- #define MT_MIB_BTSCR5(_band)			MT_WF_MIB(_band, __OFFS(MIB_BTSCR5))
+ 	ret = mt7915_mmio_wed_init(dev, pdev, true, &irq);
+ 	if (ret < 0)
 -- 
 2.53.0
 
