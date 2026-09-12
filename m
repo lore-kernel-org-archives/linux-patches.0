@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D6933C18B;
-	Sat, 12 Sep 2026 15:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702AFCA6F;
+	Sat, 12 Sep 2026 15:35:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227349; cv=none; b=V7S+ClS1zyfItn7uWtDV6z9oiSZap/r2Is4xh6pxqCrVSgxk5wJFM5Txy+wrwRYBZUXXr7CJ+OkN03gkV2avJkQeBe7LidthqrGy16vJgMTczFGajlSw/sEBf5dZypTg0WdDZlunTus4yfCKnc1UL9u4AkfwNs7A+Ud4Cwu/CME=
+	t=1789227353; cv=none; b=JXjzbQjUmIEcw6ExAYMn+Ho7MQUhKU6oYZ4pb+OXTxJZCJYlGDxKs4dFIlfMYFXnOs60MLLGzs6msZuMkOkh6H3ddszWbuDtLg4lkX+U041TFhF8pWLNf6pdhxwRf6SxWdAWHGIQ/XeESrJlRNmN8FrPacb7jw9+5cpTRl5IK90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227349; c=relaxed/simple;
-	bh=fUZRsHeyQJoViNCgGQHTveg95xA9TdDU3WvZ3MLtlus=;
+	s=arc-20240116; t=1789227353; c=relaxed/simple;
+	bh=drDLWExzfhTA+Xz9jgHg0YiJok1TI0TdU1C7bjGHhlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZOCpnXDh5MlTZbCqiArPwwqWHP3NWyenn+CDbaxcjB647owZMw/9IR9eiyUhN5MzocLVpX52H+yfPgViLNSPAKiX69izcZXo1GERbn+WIv1w0W9lhQ2xEvLxbBpKSMbf8ltg1UjmhK5ib029XjAS21husnFGY/kuavjaSqJkLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XhwXhKou; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QBkcCuCcj+QYD6ii7LGrtQ7ANiZCgvl/v2RtyA3DueYnPDR4+ZjmSkcx5P7uJTKkygyycEVi1ei+cAd6r+4jv+WjeLFQjqXv1mesA2c+wiiq+ramj0UcVoEcEuVKDXX7BA7RzB5V+jvBJLKdx21LePSXGxtzyRKge8zs0QDcERg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xv4piYQK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XhwXhKou"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A61A91F000FF;
-	Sat, 12 Sep 2026 15:35:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xv4piYQK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 771D91F000FF;
+	Sat, 12 Sep 2026 15:35:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227347;
-	bh=L0fWbY6CK47N+zMAZDJUC3ocupja37zQ6Qa0jh6d0k0=;
+	s=korg; t=1789227352;
+	bh=APJEtMg7sdVWX80GASweeQF87k+b3KGv8MnMog4UMbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XhwXhKouiGMS9GujiZMS55Fmjiz5MKvhIHXNDhULagSAAyiWrIREX+Fh745Snk5Mx
-	 hTX1DetZBIk86XgVRpXlmtLIWXHSyTgI23QgdLaIRKTBHHhQknbY2X8MtWD8l6fto3
-	 zH+zqBenUXsn0SIamIBRTKXGIDm0eDANCo6TjfEQ=
+	b=xv4piYQKyPRZ6VtRspPVi9Q1TzwZOS5YD3+dWDmMUUmCXUPi9U6CHELiWSoQ5jQ0E
+	 hu1n8wQj5RK1B/0jSiPuE+Wmeposazyrk6JpL0GIm8paJnFHp/OCAXakHO8kdNeveB
+	 2CXkXvD9CEsc75cS0NflRXshLw5L+0ssNuVEQXyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 0163/1191] lockd: pin next file across nlm_inspect_file lock-drop
-Date: Sat, 12 Sep 2026 08:48:11 +0200
-Message-ID: <20260912065551.874553900@linuxfoundation.org>
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Ewan D. Milne" <emilne@redhat.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.1 0164/1191] nvme: nvme-fc: Fix nvme_fc_create_hw_io_queues() queue deletion in error path
+Date: Sat, 12 Sep 2026 08:48:12 +0200
+Message-ID: <20260912065551.896736026@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,121 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Ewan D. Milne <emilne@redhat.com>
 
-commit 526c49cff3f72c3ec74752016380c7567040581b upstream.
+commit 22eb631bf86ee3246f47885e4fa94154a46863e4 upstream.
 
-nlm_traverse_files() pins the current file with f_count++ across
-a mutex_unlock for nlm_inspect_file(), but nothing pins the saved
-next pointer.  A concurrent nlm_release_file() can kfree the next
-file during the unlock window, and the iterator dereferences freed
-memory on the next loop step.
+nvme_fc_create_hw_io_queues() will call __nvme_fc_delete_hw_queue() for the
+last queue on which __nvme_fc_create_hw_queue() reported an error when deleting
+all the io queues if they cannot all be created.  This is incorrect since the
+last queue did not actually get created.
 
-Pin both current and next before the lock-drop.  Advance by
-swapping the pinned cursors at the end of each iteration so next
-is always held alive across the unlock.
+The most recent change to this code was commit 17a1ec08ce70 ("nvme/fc: simplify
+error handling of nvme_fc_create_hw_io_queues") which moved the cleanup to the
+delete_queues: label and changed the loop bounds, however the code was not
+correct prior to this change in a different way.  The original commit
+e399441de911 ("nvme-fabrics: Add host support for FC transport") had a
+different error which called __nvme_fc_delete_hw_queue() on queue index 0 which
+is used for the admin queue.
 
-Always call nlm_file_release() after dropping the iteration pin,
-regardless of whether the file matched the predicate.  Use
-nlm_file_inuse(), which does a live walk of the inode lock list,
-rather than the cached f_locks field, so skipped files that never
-ran nlm_inspect_file() are evaluated correctly.
+Fix this by correcting the initial loop index when deleting the io queues.
 
-Because every file in a hash bucket is now pinned and released,
-files skipped by the is_failover_file predicate that have no
-locks, blocks, shares, or external references are deleted during
-traversal.  The old code never evaluated skipped files for
-cleanup.  The new behavior is intentional: such files are stale
-and should not persist in the table.
-
-Fixes: 01df9c5e918a ("LOCKD: Fix a deadlock in nlm_traverse_files()")
+Fixes: 17a1ec08ce70 ("nvme/fc: simplify error handling of nvme_fc_create_hw_io_queues")
+Fixes: e399441de911 ("nvme-fabrics: Add host support for FC transport")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260524115527.1734251-1-michael.bommarito@gmail.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Assisted-by: Claude:claude-opus-4-6
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Ewan D. Milne <emilne@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/lockd/svcsubs.c |   53 ++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 30 insertions(+), 23 deletions(-)
+ drivers/nvme/host/fc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/lockd/svcsubs.c
-+++ b/fs/lockd/svcsubs.c
-@@ -286,12 +286,10 @@ nlm_file_inuse(struct nlm_file *file)
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -2337,7 +2337,7 @@ nvme_fc_create_hw_io_queues(struct nvme_
  	return 0;
+ 
+ delete_queues:
+-	for (; i > 0; i--)
++	for (--i; i > 0; i--)
+ 		__nvme_fc_delete_hw_queue(ctrl, &ctrl->queues[i], i);
+ 	return ret;
  }
- 
--static void nlm_close_files(struct nlm_file *file)
-+static void nlm_file_release(struct nlm_file *file)
- {
--	if (file->f_file[O_RDONLY])
--		nlmsvc_ops->fclose(file->f_file[O_RDONLY]);
--	if (file->f_file[O_WRONLY])
--		nlmsvc_ops->fclose(file->f_file[O_WRONLY]);
-+	if (!nlm_file_inuse(file))
-+		nlm_delete_file(file);
- }
- 
- /*
-@@ -301,32 +299,41 @@ static int
- nlm_traverse_files(void *data, nlm_host_match_fn_t match,
- 		int (*is_failover_file)(void *data, struct nlm_file *file))
- {
--	struct hlist_node *next;
--	struct nlm_file	*file;
-+	struct nlm_file *file, *next;
- 	int i, ret = 0;
- 
- 	mutex_lock(&nlm_file_mutex);
- 	for (i = 0; i < FILE_NRHASH; i++) {
--		hlist_for_each_entry_safe(file, next, &nlm_files[i], f_list) {
--			if (is_failover_file && !is_failover_file(data, file))
--				continue;
-+		file = hlist_entry_safe(nlm_files[i].first,
-+					struct nlm_file, f_list);
-+		if (file)
- 			file->f_count++;
--			mutex_unlock(&nlm_file_mutex);
-+		while (file) {
-+			/*
-+			 * Pin the next neighbour before we drop the mutex
-+			 * for nlm_inspect_file(); a concurrent
-+			 * nlm_release_file() under the same mutex would
-+			 * otherwise be free to unlink and kfree it during
-+			 * the unlock window, leaving us to dereference a
-+			 * freed slab when we walked to next afterwards.
-+			 */
-+			next = hlist_entry_safe(file->f_list.next,
-+						struct nlm_file, f_list);
-+			if (next)
-+				next->f_count++;
- 
--			/* Traverse locks, blocks and shares of this file
--			 * and update file->f_locks count */
--			if (nlm_inspect_file(data, file, match))
--				ret = 1;
-+			if (!is_failover_file || is_failover_file(data, file)) {
-+				mutex_unlock(&nlm_file_mutex);
- 
--			mutex_lock(&nlm_file_mutex);
--			file->f_count--;
--			/* No more references to this file. Let go of it. */
--			if (list_empty(&file->f_blocks) && !file->f_locks
--			 && !file->f_shares && !file->f_count) {
--				hlist_del(&file->f_list);
--				nlm_close_files(file);
--				kfree(file);
-+				if (nlm_inspect_file(data, file, match))
-+					ret = 1;
-+
-+				mutex_lock(&nlm_file_mutex);
- 			}
-+
-+			file->f_count--;
-+			nlm_file_release(file);
-+			file = next;
- 		}
- 	}
- 	mutex_unlock(&nlm_file_mutex);
 
 
