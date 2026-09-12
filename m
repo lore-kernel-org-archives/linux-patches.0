@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE4B343893;
-	Sat, 12 Sep 2026 09:41:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478174BEE54;
+	Sat, 12 Sep 2026 09:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206086; cv=none; b=tiqiWOPrtF0KkAA5L74swd9jLx4ypqtCh6L57Liy2fZOPkkN0BcjwEMiJBQTPDYmvyjjWrrQat8Q0PFhz5921cH6mimeuz2BMpLDk7wy2sYQSnp/ayxhoNTawQOdIi3lfV2lLYPxOkm+eS/+WGLMnBqrLMfj4gH3ibLC1qttcT8=
+	t=1789206090; cv=none; b=UDEgPqgf5DAqmgVhTZZ9GCD4bn2nVEx0r7HfhuR/1FwSSH5/hWXQ8E/idjO4sUN1cAear95S43M+GbZZAO2xQXS4X4t2phMRjljYIQjQX0K8benIi1ReHGfdpKrwzA46QINjl6RT/wg3GBcHqGS6GjqZgndWztu6Nw3YTBzEOPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206086; c=relaxed/simple;
-	bh=xqBS/V0l7ti87A/y2vkA1+TmSe91lIVC5YewB1YtwNY=;
+	s=arc-20240116; t=1789206090; c=relaxed/simple;
+	bh=vlgYikXtD8KlTa6HhEbMVob9WoC8H4cMFfaoTmU/8W0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iw5WapSYk2OIx+gydG6NAj4StiuN1oCYyDN5II5P67E2p8E5EjCeL1cTK+1DZVhkVaVV54Xp1FsHoa7m3T7QL8Vq5ftXTem51GkEI/WNWnDud+Bis+1i37lYWr4JzyYEZCp/yfcfYNIimvJ0KNlj7ict4426vTMBYLLFJxOJKRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XbXwmo31; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NdKXU+/8YRolKik8RN4nbi5BpEhZno9Bq3RxYz3211WSStLwNq+8EskFxxTO51n+KF8xXw902DK8L+0muP+oBldJ09oRdcfRCTEp/qStvzshgLI8Fz3SdiC6Nr7nLO6facmsSybvplUgrblgRlN5HpsGUAQqbq1Ss7V+VoLqzBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqENBhH0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XbXwmo31"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1796F1F00893;
-	Sat, 12 Sep 2026 09:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqENBhH0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62811F00893;
+	Sat, 12 Sep 2026 09:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206084;
-	bh=zUTVQx1Ok+ANTZ9ohhTScwV+GbpzIE2PUPsOI7cKGdM=;
+	s=korg; t=1789206089;
+	bh=H7y3HcI9l0Zpa9rESzG9gKfeGQyklMyiZXtXB+5VWbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XbXwmo31e5tSeWt+k+52qsrvRNCOsnKYRaMbUEATaQZOTtp73lfZ15/Ejm0vG5Wnf
-	 A7nc+Uzkh65yfXHxWiM4C2P6uzqaXcECI38V+Ry/2lffzyhZfSnlefkveITETYuMyJ
-	 N/VCq3VzTxAhIdZonLmJ4r7zRA4q5VGbhuWK94zo=
+	b=xqENBhH0qrzHMRtLpleBIxcSB6v0BnpH8BSvvYZFAhGRBJUQSfA8F3VEa6jOlrWy0
+	 xojWDMfmqn7auIHprWaq912F+GyrOBOV64OO8ddDZ1xj0AWNqdwNDdWwk62/P/qx5p
+	 7lANEf7hZECZOHY1voS9/jml5oVEv1vgbA+JHVcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0132/1518] ASoC: rt700-sdw: always drain jack work on remove
-Date: Sat, 12 Sep 2026 08:38:21 +0200
-Message-ID: <20260912065626.477545485@linuxfoundation.org>
+Subject: [PATCH 6.18 0133/1518] ASoC: fsl_audmix: rework runtime PM handling in probe
+Date: Sat, 12 Sep 2026 08:38:22 +0200
+Message-ID: <20260912065626.500336204@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,62 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 612ccf42acd14bb2685fa60c3495ca13e63e8989 ]
+[ Upstream commit 3359ba93d01a23b2e4249e9e44ccfe48eb9c5d71 ]
 
-rt700_sdw_remove() drains jack_detect_work and jack_btn_check_work only
-when rt700->hw_init is true. That state bit is cleared by
-rt700_update_status() when the SoundWire slave becomes UNATTACHED, but a
-jack work item can already have been queued by rt700_interrupt_callback()
-or rt700_jack_init() while the device was initialized.
+After pm_runtime_enable() the AUDMIX block is powered off and stays
+suspended until the first runtime resume. Register writes issued between
+probe() and the first resume (e.g. from DAPM or ALSA control paths)
+target unpowered hardware and cause a system hang.
 
-Do not use hw_init as the remove-time guard for draining these work
-objects. The delayed works are initialized during rt700_init(), so remove
-can cancel them unconditionally and pair the object lifetime with the
-codec-private data lifetime instead of a mutable hardware state bit.
+Fix this by calling pm_runtime_resume_and_get() immediately after
+pm_runtime_enable() to power the hardware up and enable its clocks.
+Release the reference afterwards with pm_runtime_put() to allow the
+runtime PM framework to suspend the device and switch the regmap to
+cache-only mode when idle.
 
-This issue was found by our static analysis tool and then confirmed by
-manual review of the SoundWire status, interrupt and remove paths. The
-remove path should drain work based on whether the work object exists, not
-on a runtime hardware state bit that can change after the work was queued.
+When CONFIG_PM is disabled or runtime PM is not enabled, pm_runtime_*
+calls are stubs that do not power up the hardware. Handle this case
+explicitly by calling fsl_audmix_runtime_resume() directly so the
+hardware is always initialised and its clocks are enabled, ensuring
+register accesses succeed regardless of PM configuration.
 
-A QEMU PoC queued jack_detect_work, simulated SDW_SLAVE_UNATTACHED, and
-then entered remove. DEBUG_OBJECTS reported an active timer/work object
-associated with the rt700 jack work path after remove skipped the cancel.
-
-This is sent as an RFC because the practical trigger depends on SoundWire
-core remove ordering after an UNATTACHED status update. If remove cannot
-run after hw_init has been cleared while jack work is still pending, this
-is a defensive lifecycle cleanup rather than a reachable race on current
-systems.
-
-Fixes: 737ee8bdf682 ("ASoC: rt700-sdw: use cancel_work_sync() in .remove as well as .suspend")
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260619122325.2504287-1-runyu.xiao@seu.edu.cn
+Fixes: be1df61cf06ef ("ASoC: fsl: Add Audio Mixer CPU DAI driver")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20260618023818.31618-1-shengjiu.wang@oss.nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt700-sdw.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ sound/soc/fsl/fsl_audmix.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/rt700-sdw.c b/sound/soc/codecs/rt700-sdw.c
-index 44543c0da1772..f7bd793e3e672 100644
---- a/sound/soc/codecs/rt700-sdw.c
-+++ b/sound/soc/codecs/rt700-sdw.c
-@@ -459,10 +459,8 @@ static int rt700_sdw_remove(struct sdw_slave *slave)
+diff --git a/sound/soc/fsl/fsl_audmix.c b/sound/soc/fsl/fsl_audmix.c
+index d9b0bd61755d5..c9a7a41ef388c 100644
+--- a/sound/soc/fsl/fsl_audmix.c
++++ b/sound/soc/fsl/fsl_audmix.c
+@@ -454,6 +454,9 @@ static const struct of_device_id fsl_audmix_ids[] = {
+ };
+ MODULE_DEVICE_TABLE(of, fsl_audmix_ids);
+ 
++static int fsl_audmix_runtime_resume(struct device *dev);
++static int fsl_audmix_runtime_suspend(struct device *dev);
++
+ static int fsl_audmix_probe(struct platform_device *pdev)
  {
- 	struct rt700_priv *rt700 = dev_get_drvdata(&slave->dev);
+ 	struct device *dev = &pdev->dev;
+@@ -485,13 +488,25 @@ static int fsl_audmix_probe(struct platform_device *pdev)
+ 	spin_lock_init(&priv->lock);
+ 	platform_set_drvdata(pdev, priv);
+ 	pm_runtime_enable(dev);
++	if (!pm_runtime_enabled(dev)) {
++		ret = fsl_audmix_runtime_resume(dev);
++		if (ret)
++			goto err_disable_pm;
++	}
++
++	ret = pm_runtime_resume_and_get(dev);
++	if (ret < 0)
++		goto err_pm_get_sync;
++
++	/* To enable regmap cache only when runtime PM enabled */
++	pm_runtime_put(dev);
  
--	if (rt700->hw_init) {
--		cancel_delayed_work_sync(&rt700->jack_detect_work);
--		cancel_delayed_work_sync(&rt700->jack_btn_check_work);
--	}
-+	cancel_delayed_work_sync(&rt700->jack_detect_work);
-+	cancel_delayed_work_sync(&rt700->jack_btn_check_work);
+ 	ret = devm_snd_soc_register_component(dev, &fsl_audmix_component,
+ 					      fsl_audmix_dai,
+ 					      ARRAY_SIZE(fsl_audmix_dai));
+ 	if (ret) {
+ 		dev_err(dev, "failed to register ASoC DAI\n");
+-		goto err_disable_pm;
++		goto err_pm_get_sync;
+ 	}
  
- 	pm_runtime_disable(&slave->dev);
+ 	/*
+@@ -503,12 +518,15 @@ static int fsl_audmix_probe(struct platform_device *pdev)
+ 		if (IS_ERR(priv->pdev)) {
+ 			ret = PTR_ERR(priv->pdev);
+ 			dev_err(dev, "failed to register platform: %d\n", ret);
+-			goto err_disable_pm;
++			goto err_pm_get_sync;
+ 		}
+ 	}
  
+ 	return 0;
+ 
++err_pm_get_sync:
++	if (!pm_runtime_status_suspended(dev))
++		fsl_audmix_runtime_suspend(dev);
+ err_disable_pm:
+ 	pm_runtime_disable(dev);
+ 	return ret;
+@@ -519,6 +537,8 @@ static void fsl_audmix_remove(struct platform_device *pdev)
+ 	struct fsl_audmix *priv = dev_get_drvdata(&pdev->dev);
+ 
+ 	pm_runtime_disable(&pdev->dev);
++	if (!pm_runtime_status_suspended(&pdev->dev))
++		fsl_audmix_runtime_suspend(&pdev->dev);
+ 
+ 	if (priv->pdev)
+ 		platform_device_unregister(priv->pdev);
 -- 
 2.53.0
 
