@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5E2367F36;
-	Sat, 12 Sep 2026 07:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4782EBDE9;
+	Sat, 12 Sep 2026 07:21:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197678; cv=none; b=jKXL9irpO8hzA83HArNDvSRMDyZ75dqBpohI58cf8HvT3zTWaZfIuU20nOU+iYhjsH3QygQaLz7V2prNLuP0TNmTbSA0xON+rpagV7ZOmfPLetnbfFQSdB/cj4EK4SzTtYjWKfG/LZm0d0/nalSdwxOmDqetSErl1CHlHujkG/g=
+	t=1789197682; cv=none; b=Yapm5OAetrKiddGEqeQvTnO+mcjr2NzFMs2znQZqnA3yY5rvG5g/B4pUzpOpQOpNoxpdJynjP/otxw9338onszY5z7B7K+dhjfEt2IxILESraNgM5MVa24hcfRQtB/SAurJ7Mzdx5Haef+wFvxVjTJmRFvluBm+aQ5SRTwVxwHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197678; c=relaxed/simple;
-	bh=2j7Ssgv99gzfD+8yWqqqyUsp+tdbqkDlwc28baFqbJk=;
+	s=arc-20240116; t=1789197682; c=relaxed/simple;
+	bh=oa+T9kotS9E2qvA5a9ogXyKGO/mof3CFnJTjHwr8MZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EFJMiFexK5uiSAgBqBa2sfGRrsfIeJLCjdZlsj4mPk4aFfSns/xNTu7kD1/X6ahrPiw9Fijmox8Idjn0DS14t954yEUUy3C7le/8I0/CYRi7J575tIWoQDUtp5xZmhK8A3aJ6U6fzw+F2MGI2NTRuOtCqK+0qnbuZR4XiwiQu4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+JQ5R25; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o/3aAAtXww1PYMRilmS6MZzAnmDNUK5fdCa70geH9l6BidNxvGl/70wFLAnHtbPA4dsFMIHTWVkpfTDXWdnBaEjGZ7eMzR9UNp4MGtu69FdqwRZ+AiSYPDUmFnLyry0e8tymIZ6HeQ5LiNfHizgJybN50PGXQwIX5IF6vqsLZ0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UtG1KHYO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+JQ5R25"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8741F000FF;
-	Sat, 12 Sep 2026 07:21:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UtG1KHYO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D2F21F000FF;
+	Sat, 12 Sep 2026 07:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197677;
-	bh=sgivpiSOOQ6HklQWUcstUGYPBa5fC2muebnS0Gzk0Eg=;
+	s=korg; t=1789197681;
+	bh=sI6tWEGTSJUBPSxXY3H3kPodhJvmM0HEwN738D5Ucrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r+JQ5R25A3lCfvQOpUoaHoPVtJjc5j/VPkOO44Tl1N63pJZTUZty5KEZYMSEkgI2o
-	 ER5NUwdTyb0/yFj/NWJgbAXac3Elhg0UndD6d4BT1HedtAGEVKACCbRYnffZ3g2zvo
-	 zj8V50VeaV+srOyBqokAtXnZ9aE6J4ce7SXjr59s=
+	b=UtG1KHYOMlBACJlU59gaNNAiflh4dCWCoA3ZwVlt9udxq6UGlm5wqYemulqi0pd4p
+	 Hea2PehpP5YWhyfFJmXU3oIj/JrqymqZOXn8o1D5XQr10DSpnPuxCvOn8woJjweECR
+	 GV0shXeXBKTb3hEIr7EWs0gl95f39WY92ICbbtbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pradyot Kumar Nayak <pradyot.nayak@oss.qualcomm.com>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0222/1815] arm64: dts: glymur-crd: Add reset GPIO to touchscreen node
-Date: Sat, 12 Sep 2026 08:32:52 +0200
-Message-ID: <20260912065654.206347480@linuxfoundation.org>
+Subject: [PATCH 7.2 0223/1815] clk: qcom: gcc-glymur: Move EVA clocks to critical clock list
+Date: Sat, 12 Sep 2026 08:32:53 +0200
+Message-ID: <20260912065654.230391779@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,47 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pradyot Kumar Nayak <pradyot.nayak@oss.qualcomm.com>
+From: Taniya Das <taniya.das@oss.qualcomm.com>
 
-[ Upstream commit f64ef325f1d9ca9d005b7124c2bf065bb0b99c3d ]
+[ Upstream commit 7399034fd78615ba826b864fca2e4572f13cf8e3 ]
 
-The touchscreen module on Glymur/Mahua CRDs is different from the one
-used on Hamoa CRDs and requires the reset-gpios to be wired to the device.
-Without this in place the reset line will remain permanently asserted
-during resume leaving the device offline and causing all I2C transactions
-to fail with -ENXIO.
+The gcc_eva_ahb_clk and gcc_eva_xo_clk branch clocks should not be
+registered as standalone GCC branch clocks. Drop these clocks from
+the GCC clock list and instead add their CBCR registers to the GCC
+critical clocks list to ensure they remain enabled during early boot.
 
-Error Logs:
-i2c_hid_of 3-0038: failed to change power setting.
-i2c_hid_of 3-0038: PM: dpm_run_callback(): i2c_hid_core_pm_resume [i2c_hid] returns -6
-i2c_hid_of 3-0038: PM: failed to resume async: error -6
+If these clocks are registered as normal branch clocks, they may be
+gated, which breaks access to the EVA clock controller during clock
+controller probe, thus leave them as critical clocks similar to other
+subsystem AHB and XO clocks.
 
-Add the reset GPIO so the driver can deassert the line on resume,
-restoring I2C communication with the device.
-
-Fixes: e6bf559f7eb9 ("arm64: dts: qcom: glymur-crd: Enable keyboard, trackpad and touchscreen")
-Signed-off-by: Pradyot Kumar Nayak <pradyot.nayak@oss.qualcomm.com>
+Fixes: efe504300a17 ("clk: qcom: gcc: Add support for Global Clock Controller")
+Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260522-arm64-dts-glymur-crd-add-reset-gpio-to-touchscreen-v1-1-c7653924acdc@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260617-evacc_glymur-v2-1-905108dacaaa@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/glymur-crd.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/qcom/gcc-glymur.c | 32 ++------------------------------
+ 1 file changed, 2 insertions(+), 30 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/glymur-crd.dtsi b/arch/arm64/boot/dts/qcom/glymur-crd.dtsi
-index db6f5419b4bc8..7d3c6bbd31d28 100644
---- a/arch/arm64/boot/dts/qcom/glymur-crd.dtsi
-+++ b/arch/arm64/boot/dts/qcom/glymur-crd.dtsi
-@@ -640,6 +640,8 @@ touchscreen@38 {
- 		vdd-supply = <&vreg_misc_3p3>;
- 		vddl-supply = <&vreg_l15b_e0_1p8>;
+diff --git a/drivers/clk/qcom/gcc-glymur.c b/drivers/clk/qcom/gcc-glymur.c
+index f4ede4a3a1c07..6925c6865089c 100644
+--- a/drivers/clk/qcom/gcc-glymur.c
++++ b/drivers/clk/qcom/gcc-glymur.c
+@@ -3668,21 +3668,6 @@ static struct clk_branch gcc_disp_hf_axi_clk = {
+ 	},
+ };
  
-+		reset-gpios = <&tlmm 48 GPIO_ACTIVE_LOW>;
-+
- 		pinctrl-0 = <&ts0_default>;
- 		pinctrl-names = "default";
- 	};
+-static struct clk_branch gcc_eva_ahb_clk = {
+-	.halt_reg = 0x9b004,
+-	.halt_check = BRANCH_HALT_VOTED,
+-	.hwcg_reg = 0x9b004,
+-	.hwcg_bit = 1,
+-	.clkr = {
+-		.enable_reg = 0x9b004,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(const struct clk_init_data) {
+-			.name = "gcc_eva_ahb_clk",
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+ static struct clk_branch gcc_eva_axi0_clk = {
+ 	.halt_reg = 0x9b008,
+ 	.halt_check = BRANCH_HALT_SKIP,
+@@ -3713,19 +3698,6 @@ static struct clk_branch gcc_eva_axi0c_clk = {
+ 	},
+ };
+ 
+-static struct clk_branch gcc_eva_xo_clk = {
+-	.halt_reg = 0x9b024,
+-	.halt_check = BRANCH_HALT,
+-	.clkr = {
+-		.enable_reg = 0x9b024,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(const struct clk_init_data) {
+-			.name = "gcc_eva_xo_clk",
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+ static struct clk_branch gcc_gp1_clk = {
+ 	.halt_reg = 0x64000,
+ 	.halt_check = BRANCH_HALT,
+@@ -7992,10 +7964,8 @@ static struct clk_regmap *gcc_glymur_clocks[] = {
+ 	[GCC_CFG_NOC_USB_ANOC_AHB_CLK] = &gcc_cfg_noc_usb_anoc_ahb_clk.clkr,
+ 	[GCC_CFG_NOC_USB_ANOC_SOUTH_AHB_CLK] = &gcc_cfg_noc_usb_anoc_south_ahb_clk.clkr,
+ 	[GCC_DISP_HF_AXI_CLK] = &gcc_disp_hf_axi_clk.clkr,
+-	[GCC_EVA_AHB_CLK] = &gcc_eva_ahb_clk.clkr,
+ 	[GCC_EVA_AXI0_CLK] = &gcc_eva_axi0_clk.clkr,
+ 	[GCC_EVA_AXI0C_CLK] = &gcc_eva_axi0c_clk.clkr,
+-	[GCC_EVA_XO_CLK] = &gcc_eva_xo_clk.clkr,
+ 	[GCC_GP1_CLK] = &gcc_gp1_clk.clkr,
+ 	[GCC_GP1_CLK_SRC] = &gcc_gp1_clk_src.clkr,
+ 	[GCC_GP2_CLK] = &gcc_gp2_clk.clkr,
+@@ -8544,6 +8514,8 @@ static const u32 gcc_glymur_critical_cbcrs[] = {
+ 	0x71004, /* GCC_GPU_CFG_AHB_CLK */
+ 	0x32004, /* GCC_VIDEO_AHB_CLK */
+ 	0x32058, /* GCC_VIDEO_XO_CLK */
++	0x9b004, /* GCC_EVA_AHB_CLK */
++	0x9b024, /* GCC_EVA_XO_CLK */
+ };
+ 
+ static const struct regmap_config gcc_glymur_regmap_config = {
 -- 
 2.53.0
 
