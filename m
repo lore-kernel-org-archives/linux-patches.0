@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50E635DA40;
-	Sat, 12 Sep 2026 18:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C90B35DA40;
+	Sat, 12 Sep 2026 18:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237973; cv=none; b=iBURh5k+724Cger2Pm6g0SiBkaeTW7W5kHmR767X+XCrboMDd+ISU3IBtq7IaAcke0A9sg+H8Y1a97y772nt9I9kBdQjPMgEMJ155rT9h7vuOXDl34g4tKQP3ygLqd/kVAUTS2B4H6RkbJQ+gtsMBwqW85+meylIpUTDX8E/gQY=
+	t=1789237979; cv=none; b=mOhSx2SKRkDoUCWZtAEYscyeXJD7/6xXTJAygwUdxE6epp1FSpLlcRjlSULY+Oip+NXPenku49eQS7uM8TmFp/Ibkk6mreXMnBlDUH3bU9rhXV6Q/CuVJQMjLgyKALLgzsR9IPTdqmc0cKWI0iAmFqvPooJptEZtUJU3AgqVdnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237973; c=relaxed/simple;
-	bh=qyCdLXnPpWRU9NRD+avhP5FUgvt/IRJA9rHXIq24a8M=;
+	s=arc-20240116; t=1789237979; c=relaxed/simple;
+	bh=fW51Gu6+qqXkK3lqIloI8p1zOB8FJbN4yaaRzgtxWa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/icfXNBmFPLZ8r6cEybAIN7HCcVKkzUvh2OxB0SKrlcmR2yeGF/b47hwMQ9qkfnI0otERnQZV566cpw8hqxLqgOcdc3s1/C0MpJKuYjj/ufAKnJlhQGmx9hHXBCcvFfsAqjdtIB5wscT41ec7nw/eOGHbS503si6TCX99shZdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXEZso8d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HEqLIv2n8jRv5sY+GCxNcpPW2yc9hkGqR9NxhrKOELXslN98gDvpN+dcFUbv2GdO2rvIHi/fTKyra53D8L/fmRJX4sdYGDiUI0ZpKs/ssY6Xekt4NXfZSF8Bi+RQUbW6C2EWWbQuwkUQdVcmExYkyKRiDn8xRBpINsj5VbH2bOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gH+XN5Vn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXEZso8d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E23E1F00893;
-	Sat, 12 Sep 2026 18:32:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gH+XN5Vn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C3E1F00899;
+	Sat, 12 Sep 2026 18:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237972;
-	bh=sgQw27fjJiHEWIM6B3Z6FVC0r5GEpViJm9Hn8ZWo3v0=;
+	s=korg; t=1789237977;
+	bh=BXN91dwqcPiPE9RZg3jGNXgN0+VHUjRzh+R7TRH47Y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UXEZso8dlsPI7Q79Q0/bgQpXFTs+BeE8vccyIeqNcxeWjtMJCF4S+pKd9XCZSSW8q
-	 AfRzBI85tSecvE9txRVs0e84GhKTmgcN1Hm6HaFTMOYMRnSmYp5hMLU1DT/4tzeNpj
-	 soS4RnaPuV33N4yZ+v7Z3EGQxudYnNZRoboaRLAI=
+	b=gH+XN5Vn/xdX1sufLL+Vvep87WtDEuCjG7C8m4UYp1CjVGKkKKCca3jG3MYPYg90B
+	 VNLvwFlB7YJ+iLTd4O2SoRAozfGWmQjRbmGsz9qwuy+uTNwalzUuHyrZrd5Jrc4QvZ
+	 Gb6vK9zR4uRE0Nea+d+6Z0Zq3stD6C/sGZUbgNIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunil Khatri <sunil.khatri@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 368/935] drm/amdgpu: use AMDGPU_GPU_PAGE_SHIFT instead of PAGE_SHIFT
-Date: Sat, 12 Sep 2026 08:56:38 +0200
-Message-ID: <20260912065535.249190215@linuxfoundation.org>
+	Faith Ekstrand <faith.ekstrand@collabora.com>,
+	Aaron Kling <webgeek1234@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 5.15 369/935] drm/nouveau: Use write-combined maps for coherent
+Date: Sat, 12 Sep 2026 08:56:39 +0200
+Message-ID: <20260912065535.271400993@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,33 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sunil Khatri <sunil.khatri@amd.com>
+From: Faith Ekstrand <faith.ekstrand@collabora.com>
 
-commit d6e16df7df4d2c39e2b04b355d0434fb90e2d62c upstream.
+commit 774b73428e6eabb4f0382aeeb76e569c7b106a29 upstream.
 
-For different address types the variable PAGE_SHIFT might
-not work well and it's better to use the GPU specific one
+On Tegra devices, uncached maps translate to device memory, causing
+unaligned accesses by userspace resulting in a SIGBUS. Instead, use
+write-combined maps to ensure proper access.
 
-Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3494b77d10375e0f9ab784e9b20763339844b55b)
+This would also affect discrete cards on any Arm device. It was
+determined that discrete cards regardless of cpu arch should use
+write-combined maps for coherent anyways. Thus this change is made for
+all gpu types.
+
 Cc: stable@vger.kernel.org
+Signed-off-by: Faith Ekstrand <faith.ekstrand@collabora.com>
+Co-developed-by: Aaron Kling <webgeek1234@gmail.com>
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+Fixes: 1b4ea4c5980f ("drm/ttm: set the tt caching state at creation time")
+Link: https://patch.msgid.link/20260821-tegra-coherent-wc-v2-1-2b1ddb67bf18@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nouveau_sgdma.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2565,7 +2565,7 @@ int amdgpu_vm_bo_clear_mappings(struct a
- 			after->start = eaddr + 1;
- 			after->last = tmp->last;
- 			after->offset = tmp->offset;
--			after->offset += (after->start - tmp->start) << PAGE_SHIFT;
-+			after->offset += (after->start - tmp->start) << AMDGPU_GPU_PAGE_SHIFT;
- 			after->flags = tmp->flags;
- 			after->bo_va = tmp->bo_va;
- 			list_add(&after->list, &tmp->bo_va->invalids);
+--- a/drivers/gpu/drm/nouveau/nouveau_sgdma.c
++++ b/drivers/gpu/drm/nouveau/nouveau_sgdma.c
+@@ -73,9 +73,7 @@ nouveau_sgdma_create_ttm(struct ttm_buff
+ 	struct nouveau_sgdma_be *nvbe;
+ 	enum ttm_caching caching;
+ 
+-	if (nvbo->force_coherent)
+-		caching = ttm_uncached;
+-	else if (drm->agp.bridge)
++	if (nvbo->force_coherent || drm->agp.bridge)
+ 		caching = ttm_write_combined;
+ 	else
+ 		caching = ttm_cached;
 
 
