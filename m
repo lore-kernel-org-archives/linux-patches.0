@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73173859CE;
-	Sat, 12 Sep 2026 07:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8474F2576E;
+	Sat, 12 Sep 2026 07:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199894; cv=none; b=Xxfw7lAHSyxPF0JSQldi+KcEM/QZbD9KuNEn7O9E3vTvsZh4mr4oqmFL5ih2VgH8ahEw6XYxn81RBqhnEe7BhmEJWEtJccsuBotBa7zYCjxmc4be1xb3Gr8vG2i87e8k3dykgq+YEB+nApTlXRsiQAqBgr8M8Fe0V+rtXGarmkQ=
+	t=1789199898; cv=none; b=ghIeBAdugUhaOcno4OjdDp8W2exAd5ISro9O8PhIcJn3kU5pZZ4en5E7lXt9L6jNBr2RCFPC8C/AVQsroysiFhTaGThz7vj6JrQUqoduMYaID9XgWTxsU63+fP97rdhkXqG2YYbqs7ESJkkqYip/arfnce2lwwqEgIOm3BPC6mY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199894; c=relaxed/simple;
-	bh=ifNi6J/97F47ortvIzaJVecknTK+BnE55K+rx7cBQwk=;
+	s=arc-20240116; t=1789199898; c=relaxed/simple;
+	bh=VmPeRL9BtLna9VPUSJmKdedHBT+WSBpf7/wM2QXYDf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qs5l+KGLbsxGSvYXK8CGnDA3GG7Pc+BOFvlB6jo+0oc1bTgRiE5O7WY1drRaXvtfo1XGuX0MjtxnXo7l+RuXnsoPmx6zm72xEvF8N5BWzcxLkMtqJYy4VRtqXS47AR7GvJQRGQ8MJgUBVDQ3n45Jt8lCnZQarmbhgvoH0ZNDDQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CspGIz3F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ru05l9ZElf+EG6DJupy4+gz6NwXmoQqQS3/9WDoBwZTp0yarYixvGJjDXdx5FvyjRTbYmOkSJfYePpTsZi5SCZbYtsgggs+QVm/aTEOaMDni/3L6zSmYDAPugMWjMX3w6U4qMs7zdJWM6uSVY8nZq3Bf/vYDtkkvVegteKH4onU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mzkix66a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CspGIz3F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C7E21F000FF;
-	Sat, 12 Sep 2026 07:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mzkix66a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CAF81F000FF;
+	Sat, 12 Sep 2026 07:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199892;
-	bh=Rq28bSlXRdq3ek74C9UWdjWtFDUKJUdzb9kdiCHH6oo=;
+	s=korg; t=1789199897;
+	bh=5U1R1o8rSXOaxmsLHofwJRWAd4XzNnBMetZe+tPp01c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CspGIz3F7QntRykhKxa8BkNSRcj9uZwMSfR9EnSLs3dzR2A+SgPrRZf44Ixify8Qq
-	 K/MhFUAqQLdidXFRcmDgL/mUuJ7Nc+2acy0DZuFgkW7TcyjmgvzQGjUxK3QR25zDFU
-	 zXgR/kEmvwR6x0Fd+jE+b/G3jvihCmmxvOgFj+J0=
+	b=Mzkix66axE0WpIUTvKW+77QzZZh8J7MiEOhdURXhsT/Pd2FmhpjG8WyxMK69wbRH7
+	 jL9GV/i5HvjlTVl2keWpakRPU8ShR1Bx9rk1GMWKBBzkHxcG23a0eFr8UJ5iZxX4Qj
+	 5xgpQEdu5aLJwkawhPAEesXJdDs7J1uhtVv+xZOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Saverio Miroddi <saverio.pub2@gmail.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Wayen Yan <win847@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0676/1815] ACPI: bus: Avoid confusing complaints regarding missing _OSC features
-Date: Sat, 12 Sep 2026 08:40:26 +0200
-Message-ID: <20260912065704.756647169@linuxfoundation.org>
+Subject: [PATCH 7.2 0677/1815] thermal/drivers/airoha: Fix copy paste error on clamp_t low temp
+Date: Sat, 12 Sep 2026 08:40:27 +0200
+Message-ID: <20260912065704.779739009@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,70 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit 9bfb23e0661be3d6a72aedde08a9f0fec2e8041a ]
+[ Upstream commit 251621813fb4275e24431f9a0690aec9b15823e7 ]
 
-The platform firmware on some platforms sets OSC_CAPABILITIES_MASK_ERROR
-in _OSC error bits even though it actually acknowledges all of the
-requested features which after commit e5322888e6bf ("ACPI: bus: Rework
-the handling of \_SB._OSC platform features") causes the kernel to
-complain unnecessarily.
+In airoha_thermal_set_trips, there is a copy paste error on clamping the
+value for the low trip temp point. Fix it to the correct value and actually
+clamp for the low variable.
 
-Avoid the confusing complaints by explicitly checking for that case
-in acpi_osc_handshake().
-
-Fixes: e5322888e6bf ("ACPI: bus: Rework the handling of \_SB._OSC platform features")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Tested-by: Saverio Miroddi <saverio.pub2@gmail.com>
-[ rjw: Fixed a typo in the new comment ]
-Link: https://patch.msgid.link/6315683.lOV4Wx5bFT@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 42de37f40e1b ("thermal/drivers: Add support for Airoha EN7581 thermal sensor")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Wayen Yan <win847@gmail.com>
+Link: https://patch.msgid.link/20260702094846.17325-2-ansuelsmth@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/bus.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/thermal/airoha_thermal.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
-index a30a904f6535f..8614b8140ef71 100644
---- a/drivers/acpi/bus.c
-+++ b/drivers/acpi/bus.c
-@@ -335,7 +335,7 @@ static int acpi_osc_handshake(acpi_handle handle, const char *uuid_str,
- 		.length = bufsize * sizeof(u32),
- 	};
- 	struct acpi_buffer output;
--	u32 *retbuf, test;
-+	u32 *retbuf, test, errors;
- 	guid_t guid;
- 	int ret, i;
+diff --git a/drivers/thermal/airoha_thermal.c b/drivers/thermal/airoha_thermal.c
+index b9fd6bfc88e5e..439aa011b75c7 100644
+--- a/drivers/thermal/airoha_thermal.c
++++ b/drivers/thermal/airoha_thermal.c
+@@ -273,7 +273,7 @@ static int airoha_thermal_set_trips(struct thermal_zone_device *tz, int low,
  
-@@ -395,10 +395,18 @@ static int acpi_osc_handshake(acpi_handle handle, const char *uuid_str,
- 	 * Clear the feature bits in capbuf[] that have not been acknowledged.
- 	 * After that, capbuf[] contains the resultant feature mask.
- 	 */
--	for (i = OSC_QUERY_DWORD + 1; i < bufsize; i++)
-+	for (i = OSC_QUERY_DWORD + 1, test = 0; i < bufsize; i++) {
-+		test |= capbuf[i] & ~retbuf[i];
- 		capbuf[i] &= retbuf[i];
-+	}
+ 	if (low != -INT_MAX) {
+ 		/* Validate low and clamp it to a supported value */
+-		low = clamp_t(int, high, RAW_TO_TEMP(priv, 0),
++		low = clamp_t(int, low, RAW_TO_TEMP(priv, 0),
+ 			      RAW_TO_TEMP(priv, FIELD_MAX(EN7581_DOUT_TADC_MASK)));
  
--	if (retbuf[OSC_QUERY_DWORD] & OSC_ERROR_MASK) {
-+	errors = retbuf[OSC_QUERY_DWORD] & OSC_ERROR_MASK;
-+	/*
-+	 * Some platforms set OSC_CAPABILITIES_MASK_ERROR even though they
-+	 * acknowledge all of the requested features, so avoid complaining in
-+	 * those cases unless any other error bits are also set.
-+	 */
-+	if (errors && (test || errors != OSC_CAPABILITIES_MASK_ERROR)) {
- 		/*
- 		 * Complain about the unexpected errors and print diagnostic
- 		 * information related to them.
+ 		/* We offset the low temp of 1°C to trigger correct event */
 -- 
 2.53.0
 
