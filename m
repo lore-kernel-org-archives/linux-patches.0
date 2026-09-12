@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206322737FC;
-	Sat, 12 Sep 2026 07:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B928346AE3;
+	Sat, 12 Sep 2026 07:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198725; cv=none; b=iTd5ErI6OD9t9QHIWhYFWp5CNDlQ6J0XKki9NAhryqw5jy8ux/O54Kdjw6sZmsRQEl1770PvlAkKWdQ1UEqQHJ8uD91PijDulZzfunel/clUEoC1nG4vfDWouCWUX+719lu5g1LO0SHEWqyKi8jcYTDAtNs/RVB14nyGeMFtzLQ=
+	t=1789198730; cv=none; b=d035N1O4oWChOiiPbaKWACORlBuveHEJuMUq8QJKV30IFqbOAQQzGzJCqik9wMMsqtvEIY7Ds5d4ECBnVBJ+qCpQ7GCI/GExjqR/zSGV8CD/lQG89iFo05s+1DM5zPgT6rJ9G3lBEFd3orWaajXHVGkdD1++pEBxHHWzvh0ad5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198725; c=relaxed/simple;
-	bh=t26ETqn/CvacdiuFMWWut+1kBroI2yyxxIGl45dK8Zk=;
+	s=arc-20240116; t=1789198730; c=relaxed/simple;
+	bh=Y5tWwhrQNU4/esGZ+cao6lzyIcbjAMk+KrnIEz4NQ6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=niWzqUua1GOhl0NJsM/F367hZT48Q6t6kuGii+l/2/Qi3GkJTKzqKYEAP1Zk4wDwKkdYqMo4QIa5SvY3CkhfF1D/a/9yR6gDNJi5PzNQlNX7DIpnE+ntUX7YleOJprNoPuNmsf52ZbsrLfkgj3V94bPbRpElOXw6aoFHCEN0UGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNfc8G4F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bXGja/yNvTwopuKAizqS+qAKCamj/6W9q+LT2+5HUSeeJG+dugthqU5OFw5Ekzcty/tO0Rsmk5mr78CHoICbLsxnkJPz990boetpEBUWlAZxdfCanUiiMMOu9JEP5ID0XlVUky7kx2hjWbCrvt3YJz3cxA3GeKeEZIIIRC6AtdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcqNREGt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNfc8G4F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65E41F000FF;
-	Sat, 12 Sep 2026 07:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcqNREGt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D401F000FF;
+	Sat, 12 Sep 2026 07:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198724;
-	bh=LRFePdkNbUt2zeuZnMjyr4uTTOjF7GqXKoWfONNLAhc=;
+	s=korg; t=1789198728;
+	bh=0obdTJAa0Vp8Hf94LSCAFBfX3UJ54XcSvKEyUocMifQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WNfc8G4FXCTF4PgrJtBfpM+Sc66qk3Z7cmUwr101XgJKoDfMkgu3lVpS6fXQaUnZv
-	 GUnhmsmjr/tE4wrra7vvQWOFk9+WhlPDs7bK6jaN4ISuIUeT5otjnt9H3XmIshJUH9
-	 MeH8jHVlQ8GMI+kIw+n+gUNY6vCUO3cCm8qE0qcM=
+	b=lcqNREGtTdN7PqbKM+7rIW96ftKbFEsL2wUQy0DH4idWsprTzL6f7hJzNbZPk2Yk3
+	 Qulo3jLrW9NRC4ZnPd3W10UzV87YO8hFhKMf0jLrfkxlS3Jnw27tg24nCv03YouWPP
+	 HK2UcSE7KNwDxqr412V7X1wMCAygVMY0OpxSM8A0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Christian Loehle <christian.loehle@arm.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0438/1815] cpufreq: intel_pstate: Fix setting minimum P-state at init time
-Date: Sat, 12 Sep 2026 08:36:28 +0200
-Message-ID: <20260912065659.174885544@linuxfoundation.org>
+Subject: [PATCH 7.2 0439/1815] cpufreq: schedutil: Fix self-contradictory comment in sugov_iowait_apply()
+Date: Sat, 12 Sep 2026 08:36:29 +0200
+Message-ID: <20260912065659.197727530@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,99 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
 
-[ Upstream commit db53c573d31d07d5d782c5312d37cb33be788eba ]
+[ Upstream commit db6a017c91b774c15b1b890db45981eacfff540e ]
 
-If HWP is enabled, writes to MSR_IA32_PERF_CTL have no effect,
-so intel_pstate_get_cpu_pstates() should not attempt to call
-intel_pstate_set_min_pstate() to set the minimum P-state for the
-given CPU in that case.
+The kerneldoc of sugov_iowait_apply() says the IO boost value is increased
+in sugov_iowait_apply() and, in the same sentence, that it is decreased by
+the same function. That is self-contradictory, and the first part is wrong:
+sugov_iowait_apply() only decreases the boost.
 
-Accordingly, remove the intel_pstate_set_min_pstate()
-call from intel_pstate_get_cpu_pstates() and make both
-intel_pstate_cpu_init() and intel_cpufreq_cpu_init() call
-that function in their non-HWP code paths.
+The boost is actually increased in sugov_iowait_boost(). Fix the comment to
+name sugov_iowait_boost() as the place where the boost is increased, so it
+matches the code.
 
-The HWP code path in intel_pstate_cpu_init() does not need to update
-the current P-state of the CPU directly at all because it is taken
-care of the processor automatically, but the HWP code path of
-intel_cpufreq_cpu_init() should update it in principle to
-initialize the DESIRED_PERF field in MSR_HWP_REQUEST.  For this
-purpose, make it call intel_cpufreq_hwp_update() and pass
-the minimum P-state limit to it as the current target value along
-with the current minimum and maximum limits.
+No functional change.
 
-Fixes: f6ebbcf08f37 ("cpufreq: intel_pstate: Implement passive mode with HWP enabled")
+Fixes: fd7d5287fd65 ("cpufreq: schedutil: Cleanup and document iowait boost")
+Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/20260703092433.4080165-1-zhongqiu.han@oss.qualcomm.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/5090465.GXAFRqVoOG@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/intel_pstate.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ kernel/sched/cpufreq_schedutil.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
-index 6e984c114d96f..311087197d7fa 100644
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -2356,8 +2356,6 @@ static void intel_pstate_get_cpu_pstates(struct cpudata *cpu)
- 
- 	if (pstate_funcs.get_vid)
- 		pstate_funcs.get_vid(cpu);
--
--	intel_pstate_set_min_pstate(cpu);
- }
- 
- /*
-@@ -3063,6 +3061,7 @@ static int __intel_pstate_cpu_init(struct cpufreq_policy *policy)
- static int intel_pstate_cpu_init(struct cpufreq_policy *policy)
- {
- 	int ret = __intel_pstate_cpu_init(policy);
-+	struct cpudata *cpu;
- 
- 	if (ret)
- 		return ret;
-@@ -3073,11 +3072,11 @@ static int intel_pstate_cpu_init(struct cpufreq_policy *policy)
- 	 */
- 	policy->policy = CPUFREQ_POLICY_POWERSAVE;
- 
--	if (hwp_active) {
--		struct cpudata *cpu = all_cpu_data[policy->cpu];
--
-+	cpu = all_cpu_data[policy->cpu];
-+	if (hwp_active)
- 		cpu->epp_cached = intel_pstate_get_epp(cpu, 0);
--	}
-+	else
-+		intel_pstate_set_min_pstate(cpu);
- 
- 	return 0;
- }
-@@ -3301,8 +3300,6 @@ static int intel_cpufreq_cpu_init(struct cpufreq_policy *policy)
- 		return ret;
- 
- 	policy->cpuinfo.transition_latency = INTEL_CPUFREQ_TRANSITION_LATENCY;
--	/* This reflects the intel_pstate_get_cpu_pstates() setting. */
--	policy->cur = policy->cpuinfo.min_freq;
- 
- 	req = kzalloc_objs(*req, 2);
- 	if (!req) {
-@@ -3323,9 +3320,15 @@ static int intel_cpufreq_cpu_init(struct cpufreq_policy *policy)
- 		WRITE_ONCE(cpu->hwp_req_cached, value);
- 
- 		cpu->epp_cached = intel_pstate_get_epp(cpu, value);
-+
-+		intel_cpufreq_hwp_update(cpu, cpu->pstate.min_pstate,
-+					 cpu->pstate.max_pstate,
-+					 cpu->pstate.min_pstate, false);
- 	} else {
- 		policy->transition_delay_us = INTEL_CPUFREQ_TRANSITION_DELAY;
-+		intel_pstate_set_min_pstate(cpu);
- 	}
-+	policy->cur = policy->cpuinfo.min_freq;
- 
- 	freq = DIV_ROUND_UP(cpu->pstate.turbo_freq * global.min_perf_pct, 100);
- 
+diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
+index 614ff0d33c016..835df03e3d7b1 100644
+--- a/kernel/sched/cpufreq_schedutil.c
++++ b/kernel/sched/cpufreq_schedutil.c
+@@ -325,7 +325,7 @@ static void sugov_iowait_boost(struct sugov_cpu *sg_cpu, u64 time,
+  * A CPU running a task which woken up after an IO operation can have its
+  * utilization boosted to speed up the completion of those IO operations.
+  * The IO boost value is increased each time a task wakes up from IO, in
+- * sugov_iowait_apply(), and it's instead decreased by this function,
++ * sugov_iowait_boost(), and it's instead decreased by this function,
+  * each time an increase has not been requested (!iowait_boost_pending).
+  *
+  * A CPU which also appears to have been idle for at least one tick has also
 -- 
 2.53.0
 
