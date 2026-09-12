@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D0819D8BC;
-	Sat, 12 Sep 2026 09:57:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5D019D8BC;
+	Sat, 12 Sep 2026 09:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207023; cv=none; b=CVi7qFDSOioM7koLPCZCdBu3PF9Zu66O+IFJcGA6OhGphxEZSkJo2P0IoXozbM5iknMTLhtMMXyBEqe8u2aG047LRcZ0FiX3wCLHq9K2sGO0HZTzwMWW7ftxy/C6p3yUloJvbzm/5xP8oJeVf8aSCVhOHQBOdm7tpDaIwd22W3g=
+	t=1789207028; cv=none; b=jM4UWt+of0DunVQlTUMeoxIGQhlYP4bX+qAwQ4IWbFL2lsZ9vHv8SGXb/E1bqRG6VZYHyoaMncVv3kHWkmaxpXbNaz9tRXHaBB6WzRUUitqXgoKISQNypCUIT5EMop8RKWBmyP16FveQ4yr062ouqvLm+aqwELF98c1wnklQi0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207023; c=relaxed/simple;
-	bh=fxnv5Um+CJjZrPBC6XMgE2rESd0mB0+Ivl1yMl4QUog=;
+	s=arc-20240116; t=1789207028; c=relaxed/simple;
+	bh=DMpTiCpdKBKix9kQ1gp7UN8h96Dk26evpWoE9rdaL/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RLOsEgV23c+lHPSheetlshqIJzzMuA8frmRdWOyd2asv1ANAlP1/z90olUZUWhHapQi/YOdXdSxZjoaQVn58Hx8SB4W/2i4Wvf4fPNg/B91R0ZL5AMnUKDsY+59Oh6ZBXPWgzHiC0ByNQRPXAuHk5OEDxdrdJtVNClWkv7RgBHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P38KYtHm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Ol0GSWOcteME7r+FbItDsj+cfINtTjezTJy9cZEaB6BE43woqGfqbpaAOUNnkG8n44CNHcuAId0LCjcNlqghXkDUMunFbj6zEeEfsyq8pb/9rp23o5Deq0nWjSdS97IU9RuapQzaYUviUZH5wNfJlRJIE8/ggrHIA1ObMOHq4RA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bzhYVsHv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P38KYtHm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DFD91F000FF;
-	Sat, 12 Sep 2026 09:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bzhYVsHv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325481F000FF;
+	Sat, 12 Sep 2026 09:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207022;
-	bh=zaXpu4ZEHWhWG+WiJF6SbPRGl0MMnu0N3Omvqj+JzFc=;
+	s=korg; t=1789207027;
+	bh=pfVJ1D/9PpA24ZkaQJrCg3n2qD2p4Kh7GD3qH02CT7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P38KYtHmw7QVhhvcC4FXjPlLvBsGh0dlQ44IsEVxypf0JLRCd0X78sjvbyIXXHyaI
-	 +Bj8dCVvFGE92wPaMZM9e//kxLK9bw3XEA9knDftzuTcmLt3jAVCgY5kHPAJmvz4h2
-	 SuL/Oe7mVUvmwoJgVv48xD6DoxM2WGfaZOm11osI=
+	b=bzhYVsHvAz1mnUervtwzLjZhjL1AZRc8ExR53O4Cem37ycGwi4juygKD5lECZs+6D
+	 m7VGXQZA3L1w6FiTKH2rjHI/hnpPCfUKnhdlf51CcQzA1fSt7FZyN+Hp1dfUyf14TZ
+	 K1lCcxodjpuH1q9DY1ro3VlXHbYtJO3iz1aNeC4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tanushree Shah <tshah@linux.ibm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0274/1518] perf dso: Fix kallsyms DSO detection with fallback logic
-Date: Sat, 12 Sep 2026 08:40:43 +0200
-Message-ID: <20260912065629.683105843@linuxfoundation.org>
+Subject: [PATCH 6.18 0321/1518] platform/surface: acpi-notify: Check ACPI companion before use
+Date: Sat, 12 Sep 2026 08:41:30 +0200
+Message-ID: <20260912065630.738389644@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,129 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tanushree Shah <tshah@linux.ibm.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 8c5f60344b07f839267c0c835962e2206143be85 ]
+[ Upstream commit 2b3a5dabe89e330413af403246b648c1890f368f ]
 
-The current kallsyms detection in dso__is_kallsyms() uses the
-dso_binary_type enum which fixes the issue of kallsyms being cached in
-the build-id cache for out-of-tree modules.
+Since every platform driver can be forced to match a device that doesn't
+match its list of device IDs because of device_match_driver_override(),
+platform drivers that rely on the existence of a device's ACPI companion
+object should verify its presence.
 
-However, during build-id injection in perf record/inject, dso_binary_type
-has not been explicitly set yet,so dso__binary_type() returns
-DSO_BINARY_TYPE__NOT_FOUND instead of DSO_BINARY_TYPE__KALLSYMS for the
-kernel DSO. The current check then fails to identify it as kallsyms,
-causing build-id symlinks to not be created in ~/.debug/.build-id/ and
-perf archive to fail with "Cannot stat" errors.
+san_probe() dereferences the result of ACPI_COMPANION() when installing
+the GSBUS address space handler, so force-binding the driver to a device
+without an ACPI companion leads to a NULL pointer dereference.  The
+dereference was introduced when the probe function was switched from
+ACPI_HANDLE() to ACPI_COMPANION().
 
-Steps to reproduce the issue:
-1. rm -rf ~/.debug/.build-id
-2. perf record sleep 1
-3. perf archive
+Check the ACPI companion against NULL and return -ENODEV when it is
+missing, like commit e4865a56d013 ("ACPI: driver: Check ACPI_COMPANION()
+against NULL during probe") does for the core ACPI platform drivers.
 
-Fix by falling back to matching long_name against the known kallsyms
-strings explicitly when binary_type is not yet set
-(== DSO_BINARY_TYPE__NOT_FOUND). Use strcmp() for exact matching of
-fixed names and strict validation for guest kallsyms with embedded PID
-to prevent path traversal attacks.
-
-Fixes: ebf0b332732d ("perf dso: fix dso__is_kallsyms() check")
-Signed-off-by: Tanushree Shah <tshah@linux.ibm.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: a9e10e587304 ("ACPI: scan: Extend acpi_walk_dep_device_list()")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Link: https://patch.msgid.link/20260706012512.524359-2-lilinmao@kylinos.cn
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dso.h | 57 ++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 56 insertions(+), 1 deletion(-)
+ drivers/platform/surface/surface_acpi_notify.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/dso.h b/tools/perf/util/dso.h
-index 54e470dd07305..b374dfabf49cc 100644
---- a/tools/perf/util/dso.h
-+++ b/tools/perf/util/dso.h
-@@ -9,6 +9,7 @@
- #include <stdbool.h>
- #include <stdio.h>
- #include <linux/bitops.h>
-+#include <string.h>
- #include "build-id.h"
- #include "debuginfo.h"
- #include "mutex.h"
-@@ -20,6 +21,40 @@ struct perf_env;
+diff --git a/drivers/platform/surface/surface_acpi_notify.c b/drivers/platform/surface/surface_acpi_notify.c
+index 3b30cfe3466b8..3bad4e689f5ce 100644
+--- a/drivers/platform/surface/surface_acpi_notify.c
++++ b/drivers/platform/surface/surface_acpi_notify.c
+@@ -777,12 +777,16 @@ static int san_consumer_links_setup(struct platform_device *pdev)
  
- #define DSO__NAME_KALLSYMS	"[kernel.kallsyms]"
- #define DSO__NAME_KCORE		"[kernel.kcore]"
-+#define DSO__NAME_GUEST_KALLSYMS		"[guest.kernel.kallsyms]"
-+#define DSO__NAME_GUEST_KALLSYMS_PID_PREFIX	"[guest.kernel.kallsyms."
-+
-+/*
-+ * Validate names of the form "[guest.kernel.kallsyms.<pid>]", where
-+ * <pid> is the PID of the guest VM and varies per guest, so it
-+ * cannot be matched with strcmp() against a fixed string.
-+ *
-+ * Every character after the fixed prefix must be a decimal digit,
-+ * with ']' immediately terminating the digit run and nothing
-+ * following it. This rules out '/', "..", or any other character
-+ * being smuggled into the name.
-+ */
-+static inline bool is_guest_kallsyms_pid_name(const char *name)
-+{
-+	const size_t prefix_len = sizeof(DSO__NAME_GUEST_KALLSYMS_PID_PREFIX) - 1;
-+	size_t digits;
-+
-+	if (strncmp(name, DSO__NAME_GUEST_KALLSYMS_PID_PREFIX, prefix_len) != 0)
-+		return false;
-+
-+	digits = strspn(name + prefix_len, "0123456789");
-+	if (digits == 0)
-+		return false;
-+
-+	/* ']' must terminate the digit run, with nothing trailing it */
-+	if (name[prefix_len + digits] != ']')
-+		return false;
-+
-+	if (name[prefix_len + digits + 1] != '\0')
-+		return false;
-+
-+	return true;
-+}
- 
- /**
-  * enum dso_binary_type - The kind of DSO generally associated with a memory
-@@ -894,8 +929,28 @@ static inline bool dso__is_kcore(const struct dso *dso)
- static inline bool dso__is_kallsyms(const struct dso *dso)
+ static int san_probe(struct platform_device *pdev)
  {
- 	enum dso_binary_type bt = dso__binary_type(dso);
-+	const char *name;
-+
-+	if (bt == DSO_BINARY_TYPE__KALLSYMS || bt == DSO_BINARY_TYPE__GUEST_KALLSYMS)
-+		return true;
-+
-+	if (bt != DSO_BINARY_TYPE__NOT_FOUND)
-+		return false;
-+
-+	if (!dso__kernel(dso))
-+		return false;
-+
-+	name = dso__long_name(dso);
-+	if (!name)
-+		return false;
-+
-+	if (!strcmp(name, DSO__NAME_KALLSYMS))
-+		return true;
-+
-+	if (!strcmp(name, DSO__NAME_GUEST_KALLSYMS))
-+		return true;
+-	struct acpi_device *san = ACPI_COMPANION(&pdev->dev);
+ 	struct ssam_controller *ctrl;
++	struct acpi_device *san;
+ 	struct san_data *data;
+ 	acpi_status astatus;
+ 	int status;
  
--	return bt == DSO_BINARY_TYPE__KALLSYMS || bt == DSO_BINARY_TYPE__GUEST_KALLSYMS;
-+	return is_guest_kallsyms_pid_name(name);
- }
- 
- bool dso__is_object_file(const struct dso *dso);
++	san = ACPI_COMPANION(&pdev->dev);
++	if (!san)
++		return -ENODEV;
++
+ 	ctrl = ssam_client_bind(&pdev->dev);
+ 	if (IS_ERR(ctrl))
+ 		return PTR_ERR(ctrl) == -ENODEV ? -EPROBE_DEFER : PTR_ERR(ctrl);
 -- 
 2.53.0
 
