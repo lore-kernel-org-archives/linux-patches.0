@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E0B340D9D;
-	Sat, 12 Sep 2026 13:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421F8340D9D;
+	Sat, 12 Sep 2026 13:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220583; cv=none; b=K+lFpzVowjuStiS5LYz2Cpl6XeumE8IF6xufitOX54BmPfDRTeaHHP8YzQ1IDZE1pckxtoAajMfCf95UbWnsWBXcuxr2ru9aNH0Q7VcXSAu8X+2Eu+GSFAhyTy14UMtV/4uXXM5fn4EevxPwZYrOfv1LSQimkBuNCgQFU1gIzV4=
+	t=1789220588; cv=none; b=P8CgTSyRND+ShIRaewJ+mCqnot0VgqpnHcEBTDwwpmnrbDdJ6CgJv9ZotFajkdbGg3IsW391s2wfz0rLcJiZ8gJ5LvgLnYNwFTOqHI/efqYU5cWvSkcydYRGGYg8HATAANq6FtfWq1OeiB4fDiJ/OVucvY1OQzxkEZtW7Oudbik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220583; c=relaxed/simple;
-	bh=Z0q+4pVs1YEw275fDkzXh8Fw+Qe0xVA9I9q/ZRR2fUI=;
+	s=arc-20240116; t=1789220588; c=relaxed/simple;
+	bh=ZcyhBIZViajLjmjFoidyKOb8TZvRtjET4Dks5tP7eVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GT3PkcmlSarvUsdGF26hCsbCRlq+U4WhimLNZ3Zvq0N6khv7skWPZleZJKxOTqBFOMWWptYdo/XD2uNccVr2Ss/R05QScJH+N5eY/oKpLJrW6DPmmszVK9gmO52Sy1kQFYG0zJBZva/gGPvTClnviGW2IsoVwcBDqfXq1nl0jSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDF35jhb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AwGijNnatmbycAV/0U8VAkqpvbj7fuOwsMaSCD8nzVf5lZ1or50l2Y+P4yORUHs1nNKaRA37cg/Bf3+m3xGu8NPFxejRNSzaQ1G6dAouqkvTksb8K7cqfevgrRjHR/BOadmV7hDVCMbaYfSPGNicsfzzThceYHuo0GxyNfQRw98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QULBESRA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDF35jhb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B561F000FF;
-	Sat, 12 Sep 2026 13:43:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QULBESRA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 152931F000FF;
+	Sat, 12 Sep 2026 13:43:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220582;
-	bh=qHGJn13aS0SsTDWkHaQ2WZC4MWKK9Pm7bKnxWzFa8lQ=;
+	s=korg; t=1789220587;
+	bh=EVDioa+FK5kUwqHqYVLkED3qNgwF47uAfILIix4vCJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aDF35jhbbTo6N4409+Ixpy6UvAMwEAI+zNNhXOvBCfVmoZNyxLmT0/Km3jOS5xe+Q
-	 WAuPp9LgBQZB0368zkLa8qasTMF3BxtPE+1vm6GsxjJa+DX/vRcz+pQXLhAXSJPiLk
-	 X2VDaWghfsYQC9IICS8wa2sAnjlu6q+JdpH+/wE8=
+	b=QULBESRAknEcX2TYQaiGYySV75/iSlY+s2XZKgKJWFOupg9J2GrKywyrPALU2UzYM
+	 IHrb+I0FNLy62cpClERJFqsCUIYM2m609Jh7bkCegB+Caj5qtB4dIs73ldlEs2K35W
+	 u4y956+eJ1iV5iwWGfv9legF1lvrROrgGW9+gzUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jun Yang <junvyyang@tencent.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 0205/1424] sctp: fix stream->outcnt underflow on duplicate RECONF responses
-Date: Sat, 12 Sep 2026 08:43:57 +0200
-Message-ID: <20260912065611.881521535@linuxfoundation.org>
+	Hao-Qun Huang <alvinhuang0603@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 0165/1424] staging: media: tegra-video: fix of_node_put() on VIP parse errors
+Date: Sat, 12 Sep 2026 08:43:17 +0200
+Message-ID: <20260912065610.988862230@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,164 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yang <junvyyang@tencent.com>
+From: Hao-Qun Huang <alvinhuang0603@gmail.com>
 
-commit 3faf13aff243ca9f78d08b1a2956ef5a6fc77b6e upstream.
+commit 7393372f79db940acff206b43e2905685a0c57ad upstream.
 
-A cached RECONF chunk may contain more than one request parameter.  A
-duplicate response can therefore find and process the same ADD_OUT request
-again while another parameter is still outstanding, rolling back outcnt
-twice and possibly underflowing it.
+tegra_vip_channel_of_parse() initializes np from dev->of_node without
+taking a reference, but its error paths drop one through the
+err_node_put label. This underflows the refcount of the VIP device's
+OF node when endpoint parsing fails on a malformed device tree.
 
-Track outstanding request types as bits and clear each bit after its first
-response.  Later responses for the same request are then ignored.
+The only reference the function takes on np is the success-path
+of_node_get() stored in vip->chan.of_node, and that one is already
+released by the tegra_vip_init() error path and by tegra_vip_exit().
 
-Fixes: 11ae76e67a17 ("sctp: implement receiver-side procedures for the Reconf Response Parameter")
-Cc: stable@kernel.org
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Link: https://lore.kernel.org/netdev/20260730110225.37371-1-juny24602@gmail.com/
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Assisted-by: tencentos-corvus-ai:kimi-k3
-Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Link: https://patch.msgid.link/20260824081832.98717-3-juny24602@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Return errors directly instead of jumping to the bogus cleanup label.
+
+Fixes: e740d199cf0f ("staging: media: tegra-video: add support for Tegra20 parallel input")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Hao-Qun Huang <alvinhuang0603@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/sctp/structs.h |    2 +-
- net/sctp/stream.c          |   39 ++++++++++++++++++++++++++++-----------
- 2 files changed, 29 insertions(+), 12 deletions(-)
+ drivers/staging/media/tegra-video/vip.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
---- a/include/net/sctp/structs.h
-+++ b/include/net/sctp/structs.h
-@@ -2088,7 +2088,7 @@ struct sctp_association {
- 	     force_delay:1;
- 
- 	__u8 strreset_enable;
--	__u8 strreset_outstanding; /* request param count on the fly */
-+	__u8 strreset_outstanding; /* request param bitmask on the fly */
- 
- 	__u32 strreset_outseq; /* Update after receiving response */
- 	__u32 strreset_inseq; /* Update after receiving request */
---- a/net/sctp/stream.c
-+++ b/net/sctp/stream.c
-@@ -22,6 +22,15 @@
- #include <net/sctp/sm.h>
- #include <net/sctp/stream_sched.h>
- 
-+#define SCTP_STRRESET_MASK(type) \
-+	BIT(ntohs(type) - ntohs(SCTP_PARAM_RESET_OUT_REQUEST))
-+#define SCTP_STRRESET_TEST(asoc, type) \
-+	((asoc)->strreset_outstanding & SCTP_STRRESET_MASK(type))
-+#define SCTP_STRRESET_SET(asoc, type) \
-+	((asoc)->strreset_outstanding |= SCTP_STRRESET_MASK(type))
-+#define SCTP_STRRESET_CLEAR(asoc, type) \
-+	((asoc)->strreset_outstanding &= ~SCTP_STRRESET_MASK(type))
-+
- static void sctp_stream_shrink_out(struct sctp_stream *stream, __u16 outcnt)
- {
- 	struct sctp_association *asoc;
-@@ -372,7 +381,10 @@ int sctp_send_reset_streams(struct sctp_
- 		goto out;
+diff --git a/drivers/staging/media/tegra-video/vip.c b/drivers/staging/media/tegra-video/vip.c
+index 9ff1f1750a15..5fba11e31e1d 100644
+--- a/drivers/staging/media/tegra-video/vip.c
++++ b/drivers/staging/media/tegra-video/vip.c
+@@ -126,7 +126,7 @@ static int tegra_vip_channel_of_parse(struct tegra_vip *vip)
+ 	if (!ep) {
+ 		err = -EINVAL;
+ 		dev_err_probe(dev, err, "%pOF: error getting endpoint node\n", np);
+-		goto err_node_put;
++		return err;
  	}
  
--	asoc->strreset_outstanding = out + in;
-+	if (out)
-+		SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_OUT_REQUEST);
-+	if (in)
-+		SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_IN_REQUEST);
- 
- out:
- 	return retval;
-@@ -417,7 +429,7 @@ int sctp_send_reset_assoc(struct sctp_as
- 		return retval;
+ 	fwh = of_fwnode_handle(ep);
+@@ -134,14 +134,14 @@ static int tegra_vip_channel_of_parse(struct tegra_vip *vip)
+ 	of_node_put(ep);
+ 	if (err) {
+ 		dev_err_probe(dev, err, "%pOF: failed to parse v4l2 endpoint\n", np);
+-		goto err_node_put;
++		return err;
  	}
  
--	asoc->strreset_outstanding = 1;
-+	SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_TSN_REQUEST);
+ 	num_pads = of_graph_get_endpoint_count(np);
+ 	if (num_pads != TEGRA_VIP_PADS_NUM) {
+ 		err = -EINVAL;
+ 		dev_err_probe(dev, err, "%pOF: need 2 pads, got %d\n", np, num_pads);
+-		goto err_node_put;
++		return err;
+ 	}
+ 
+ 	vip->chan.of_node = of_node_get(np);
+@@ -149,10 +149,6 @@ static int tegra_vip_channel_of_parse(struct tegra_vip *vip)
+ 	vip->chan.pads[TEGRA_VIP_PAD_SOURCE].flags = MEDIA_PAD_FL_SOURCE;
  
  	return 0;
+-
+-err_node_put:
+-	of_node_put(np);
+-	return err;
  }
-@@ -474,7 +486,10 @@ int sctp_send_add_streams(struct sctp_as
- 		goto out;
- 	}
  
--	asoc->strreset_outstanding = !!out + !!in;
-+	if (out)
-+		SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_ADD_OUT_STREAMS);
-+	if (in)
-+		SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_ADD_IN_STREAMS);
- 
- out:
- 	return retval;
-@@ -564,13 +579,14 @@ struct sctp_chunk *sctp_process_strreset
- 	if (asoc->strreset_chunk) {
- 		if (!sctp_chunk_lookup_strreset_param(
- 				asoc, outreq->response_seq,
--				SCTP_PARAM_RESET_IN_REQUEST, true)) {
-+				SCTP_PARAM_RESET_IN_REQUEST, true) ||
-+		    !SCTP_STRRESET_TEST(asoc, SCTP_PARAM_RESET_IN_REQUEST)) {
- 			/* same process with outstanding isn't 0 */
- 			result = SCTP_STRRESET_ERR_IN_PROGRESS;
- 			goto out;
- 		}
- 
--		asoc->strreset_outstanding--;
-+		SCTP_STRRESET_CLEAR(asoc, SCTP_PARAM_RESET_IN_REQUEST);
- 		asoc->strreset_outseq++;
- 
- 		if (!asoc->strreset_outstanding) {
-@@ -669,7 +685,7 @@ struct sctp_chunk *sctp_process_strreset
- 			SCTP_SO(stream, i)->state = SCTP_STREAM_CLOSED;
- 
- 	asoc->strreset_chunk = chunk;
--	asoc->strreset_outstanding = 1;
-+	SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_OUT_REQUEST);
- 	sctp_chunk_hold(asoc->strreset_chunk);
- 
- 	result = SCTP_STRRESET_PERFORMED;
-@@ -816,13 +832,14 @@ struct sctp_chunk *sctp_process_strreset
- 
- 	if (asoc->strreset_chunk) {
- 		if (!sctp_chunk_lookup_strreset_param(
--			asoc, 0, SCTP_PARAM_RESET_ADD_IN_STREAMS, false)) {
-+			asoc, 0, SCTP_PARAM_RESET_ADD_IN_STREAMS, false) ||
-+		    !SCTP_STRRESET_TEST(asoc, SCTP_PARAM_RESET_ADD_IN_STREAMS)) {
- 			/* same process with outstanding isn't 0 */
- 			result = SCTP_STRRESET_ERR_IN_PROGRESS;
- 			goto out;
- 		}
- 
--		asoc->strreset_outstanding--;
-+		SCTP_STRRESET_CLEAR(asoc, SCTP_PARAM_RESET_ADD_IN_STREAMS);
- 		asoc->strreset_outseq++;
- 
- 		if (!asoc->strreset_outstanding) {
-@@ -899,7 +916,7 @@ struct sctp_chunk *sctp_process_strreset
- 		goto out;
- 
- 	asoc->strreset_chunk = chunk;
--	asoc->strreset_outstanding = 1;
-+	SCTP_STRRESET_SET(asoc, SCTP_PARAM_RESET_ADD_OUT_STREAMS);
- 	sctp_chunk_hold(asoc->strreset_chunk);
- 
- 	stream->outcnt = outcnt;
-@@ -929,7 +946,7 @@ struct sctp_chunk *sctp_process_strreset
- 
- 	req = sctp_chunk_lookup_strreset_param(asoc, resp->response_seq, 0,
- 					       true);
--	if (!req)
-+	if (!req || !SCTP_STRRESET_TEST(asoc, req->type))
- 		return NULL;
- 
- 	result = ntohl(resp->result);
-@@ -1079,7 +1096,7 @@ struct sctp_chunk *sctp_process_strreset
- 			nums, 0, GFP_ATOMIC);
- 	}
- 
--	asoc->strreset_outstanding--;
-+	SCTP_STRRESET_CLEAR(asoc, req->type);
- 	asoc->strreset_outseq++;
- 
- 	/* remove everything for this reconf request */
+ static int tegra_vip_channel_init(struct tegra_vip *vip)
+-- 
+2.55.0
+
 
 
