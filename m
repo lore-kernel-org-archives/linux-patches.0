@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED17B356A0D;
-	Sat, 12 Sep 2026 11:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B1E412276;
+	Sat, 12 Sep 2026 11:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212125; cv=none; b=D7RMf8SPHNOkBasrGH+WCkrkzOffIFkE6b8ba/pDHOc4oBWmKQsOb7F4OyCSMyi+q0Nq5mGok6jCMVuQi5G9kMZh7CTjCXvR0z6aDzE9ZZd6vzyayi1K5tpDNPLsJoG6p/eWEPkkrvmVNghquKd2trM5c6HOqVDcG9R52zE5HXo=
+	t=1789212130; cv=none; b=SOITLC8y7H2lXHR7o4w2jdHhhq03sKbszFeXQPIEf1AOg4mI/F/wA4oqOftypMD7MJKCLbRoRTgqU43DmutD5CPrY+vzl5y7XtjLcmHe3YqkbSWixgYH3tMD4wEKdxas/87Q+gVCfaZ7u/rmJtU702x4lYqmuM0jmVNx3dg1e0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212125; c=relaxed/simple;
-	bh=m09NV0y5XZl3n2zuAsML1qPUJghhn0MxVqoJMg23QdQ=;
+	s=arc-20240116; t=1789212130; c=relaxed/simple;
+	bh=FKHWJSOqYjHrx7ys+obctplGfeMqSyh3sbCq/pSxZgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fqJNbtPX+KmprXVORrjqCenC4HL1Km29CyrWfcUZiWzXPCYSxgSd0Iu/b/E/nHzmSzaNUUwUL8VwIdOoeCAWRwmpJv+Gji7/o2gmxilOwXfkDWk/r2Eha/KrYgfU34p7Ia/y1IpyLUa+MM1lz11Y1dCRPI1kmqOLEUVhH9R9hEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Is2c4KuF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CVE2Hcz4ODTvGFy0doVnYeDbezNWAWp/hdH4NgeXtCB1HuFGy4+vAYvni2Xg8tY4pHuI2ai8on2t+PEDuimuRC+ycoyn7Un23Xbhvjv9o93vKhm/uleY9k4yuczjkvAH5DomR/zuRg7hZhQSocrYwEFTxUanC8ZDurYuM65wrFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=guC+Aio4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Is2c4KuF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BA71F000FF;
-	Sat, 12 Sep 2026 11:22:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="guC+Aio4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7731F000FF;
+	Sat, 12 Sep 2026 11:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212123;
-	bh=LptRPpY2UO49xNddrkZCDsgD7eG7BSpZxh1DNSGo6ek=;
+	s=korg; t=1789212128;
+	bh=fQ2ZRVTjKuFUa7ssUvYbVR7KKp4AzwU4fiZqvNfqncQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Is2c4KuFKo1s/g8DCA655ikPm0c5oMowp3A+edMa/SN6Pvq1vryZlEUV01xc/+lRM
-	 XrVPkMuUywiWp8z1TYlX5MhVceF3JIrSFiubVoDmPL9Oo7EIWfN47S2q6aG95Vqk0W
-	 KkVyMOaXyae3Hifj08nFwMpl/EwfnZrMsmqTSZ3k=
+	b=guC+Aio4no/rGTPeZiVyrQcAdngIdpzZ9NKkdDJ3KeuLJ/6yIJztjyafREwWNr6Gq
+	 X3HWdbnYyU5U8LMBv9akd0IncuPzpc9pC9qiIioOibPUssnXhUM+tutU2bJmQVk3ju
+	 hl5rDLXs/8yzKuMnXbJqgWWlmBO3y246VH7vY7GI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Thomas Walsh <thwalsh@redhat.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1370/1518] bnxt_en: Gate TPH enablement behind BNXT_SUPPORTS_QUEUE_API check
-Date: Sat, 12 Sep 2026 08:58:59 +0200
-Message-ID: <20260912065654.535469342@linuxfoundation.org>
+Subject: [PATCH 6.18 1371/1518] ptp: netc: fix period truncation and potential divide-by-zero in PEROUT
+Date: Sat, 12 Sep 2026 08:59:00 +0200
+Message-ID: <20260912065654.558317336@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,59 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Walsh <thwalsh@redhat.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit a70859cf31214e546cb73da7142f190138dae9ab ]
+[ Upstream commit 777dbc9914b2f003f1d44af80c7a4a395c5961b2 ]
 
-In bnxt_request_irq(), pcie_enable_tph() is called unconditionally to
-enable PCIe TPH when setting up interrupts.
+The max_period bound in net_timer_enable_perout() was computed as:
 
-If the NIC hardware or firmware capabilities do not support queue ops,
-attempting to enable TPH during bnxt_request_irq() is unnecessary.
+  max_period = (u64)NETC_TMR_DEFAULT_FIPER + integral_period;
 
-As a result a flood of "RX queue restart failed: err=-95"  messages is
-seen upon boot.
+which exceeds U32_MAX when integral_period > 0 (e.g. 0x100000002 for
+the default 333333333 Hz clock). A period_ns that passes this check but
+exceeds U32_MAX is then silently truncated when stored into the u32
+struct netc_pp::period field.
 
-Older NICs (pre-Thor / BCM57414) do not support TPH or queue management.
-TPH requires queue management to restart the queue.  NICs that support
-queue management (with updated FW) all support TPH.
+A truncated value of zero can reach netc_timer_set_perout_alarm(), where
+the local u32 period variable would also be 0, causing a divide-by-zero
+in roundup_u64(delta, period) whenever the stime < min_time branch is
+taken (which always happens for a start time of {0, 0}).
 
-Gate the call to pcie_enable_tph() and setting of bp->tph_mode
-behind BNXT_SUPPORTS_QUEUE_API(bp) to ensure TPH is only initialized
-on devices capable of supporting queue ops. This prevents a guaranteed
--EOPNOTSUPP error from occurring due to NULL operations.
+Additionally, netc_timer_enable_periodic_pulse() and
+netc_timer_enable_fiper() both compute:
 
-Fixes: c214410c47d6 ("bnxt_en: Add TPH support in BNXT driver")
-Suggested-by: Michal Schmidt <mschmidt@redhat.com>
-Signed-off-by: Thomas Walsh <thwalsh@redhat.com>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://patch.msgid.link/20260820220544.1240879-1-thwalsh@redhat.com
+  fiper = pp->period - integral_period;
+
+A zero pp->period results in an unsigned wraparound to 0xFFFFFFFD,
+mis-programming the FIPER hardware register.
+
+Fix all three issues by capping max_period at NETC_TMR_DEFAULT_FIPER
+(0xFFFFFFFF). This ensures that any period_ns passing the range check
+fits in a u32 without truncation, so the stored value is always valid
+and non-zero. The accepted range is reduced by integral_period ns
+(typically only a few nanoseconds), which is negligible in practice.
+
+Fixes: 671e266835b8 ("ptp: netc: add periodic pulse output support")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260821032449.1235065-1-wei.fang@oss.nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/ptp/ptp_netc.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 186fc98a555de..e2bceec96932b 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -11772,9 +11772,11 @@ static int bnxt_request_irq(struct bnxt *bp)
- #endif
+diff --git a/drivers/ptp/ptp_netc.c b/drivers/ptp/ptp_netc.c
+index 59db08e189e6e..19ca99d80e95b 100644
+--- a/drivers/ptp/ptp_netc.c
++++ b/drivers/ptp/ptp_netc.c
+@@ -440,7 +440,7 @@ static int net_timer_enable_perout(struct netc_timer *priv,
+ 	}
  
- 	/* Enable TPH support as part of IRQ request */
--	rc = pcie_enable_tph(bp->pdev, PCI_TPH_ST_IV_MODE);
--	if (!rc)
--		bp->tph_mode = PCI_TPH_ST_IV_MODE;
-+	if (BNXT_SUPPORTS_QUEUE_API(bp)) {
-+		rc = pcie_enable_tph(bp->pdev, PCI_TPH_ST_IV_MODE);
-+		if (!rc)
-+			bp->tph_mode = PCI_TPH_ST_IV_MODE;
-+	}
+ 	if (on) {
+-		u64 period_ns, gclk_period, max_period, min_period;
++		u64 period_ns, gclk_period, min_period;
+ 		struct timespec64 period, stime;
+ 		u32 integral_period;
+ 		int alarm_id;
+@@ -450,12 +450,12 @@ static int net_timer_enable_perout(struct netc_timer *priv,
+ 		period_ns = timespec64_to_ns(&period);
  
- 	for (i = 0, j = 0; i < bp->cp_nr_rings; i++) {
- 		int map_idx = bnxt_cp_num_to_irq_num(bp, i);
+ 		integral_period = netc_timer_get_integral_period(priv);
+-		max_period = (u64)NETC_TMR_DEFAULT_FIPER + integral_period;
+ 		gclk_period = netc_timer_get_gclk_period(priv);
+ 		min_period = gclk_period * 4 + integral_period;
+-		if (period_ns > max_period || period_ns < min_period) {
+-			dev_err(dev, "The period range is %llu ~ %llu\n",
+-				min_period, max_period);
++		if (period_ns > NETC_TMR_DEFAULT_FIPER ||
++		    period_ns < min_period) {
++			dev_err(dev, "The period range is %llu ~ %lu\n",
++				min_period, NETC_TMR_DEFAULT_FIPER);
+ 			err = -EINVAL;
+ 			goto unlock_spinlock;
+ 		}
 -- 
 2.53.0
 
