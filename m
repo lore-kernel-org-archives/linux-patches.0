@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A646A37B00E;
-	Sat, 12 Sep 2026 13:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A5D284B37;
+	Sat, 12 Sep 2026 13:14:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218879; cv=none; b=qKvbDnQCpXmQZcwin6ikbBlGfyb3I6CTFwWnzUjBUucThvrDYoM0NEB/HVejg6h5TD1gy3tboYye4Vcx1SdDYt7gr/NFTQXBOxvxydh4prEuqOB29keWBobzQcbohKoKs7De7MHqNI+mKUUCKogH1xItH0Ih4xXZk2ltzj6fA5g=
+	t=1789218885; cv=none; b=Q4hzucg6Ay2APzmFNa8hNm4uDm49kStvhFU1gnYTb4aj+EDLrniBPda2cGybue2F5Wqo5/VWBbN5j6AFuKWzTrq5lhqFTS1DlQNkKifpasLWTSy1PyLJzYT9t4wqrKXSY0v9F08bLZuH3Kh07YFaaLy48bATJhKxSvtUe10GJRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218879; c=relaxed/simple;
-	bh=5pNOn2z2qiGznVGSTpAuHT41lNZB914+/Am8FcdvG3k=;
+	s=arc-20240116; t=1789218885; c=relaxed/simple;
+	bh=4QK2h9XMQ/6x1AxNfyjETcWB7zZEtwFZKvgbbooPqXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BhelGeSJ+VC+AeyO4d+UBblmWPzLlBJDacO5Wel94Dpu/w4b/FncBu2vb1Tk1mbF3m2HF6UyE/amiO36dVpRmXXR8KF5LKw8NkjNTr7IvkON6jJUq9ftZzCGrr+2zKZJxO7vbTW6I+hhnoNWJVTepTOTx1sRAeTYnVgiGz4woXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnbXfVtm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z7L+VgLJ3+HyWU/FfwNH7zm4ySU/MEgdcthNJte7VEl2jucdDf9norBGcMLB+2uJCLBNu5Bo9YqznE4A09K5jLms5oCuyIq01dk6Xd5ipyuer+P4A/ASSbPExuTVdQ2MQg1cGwIZidVSmbSrjmBwShtrxjrUmPvw2FTv3pYZg9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdD7L0yD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnbXfVtm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC331F000FF;
-	Sat, 12 Sep 2026 13:14:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdD7L0yD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08FA51F000FF;
+	Sat, 12 Sep 2026 13:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218878;
-	bh=G/VbgqhjVaTiJPqVqM40ZQ2IvuBF1TGeC/BlysafE0E=;
+	s=korg; t=1789218883;
+	bh=+K3IuXBS474pMIby/5bzxdiBZgaEIrN+LnMjVdSv0Qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BnbXfVtm3HBz49GtBn0O3pbFDlg7sryZWKhrkOi2d8nhgR05QFSbYpqa5RZlBstuc
-	 188IBdJxq6+6liYxzG0KLNjGnIPCgW3P1VI3KZq2hrHTkF9Xjy749whSdYIt1ztOh4
-	 tID0NmJoE4MQRVkqV5FaKHLuX5OtxBtyMuFf3IRE=
+	b=HdD7L0yD4tnnnIfNpyytgauY4mMAU0A+2gyPwjQJip/BPskG55OEh2gbX8QPy6Gsb
+	 i/SCXP2OXlIsvbeJXMS7dW4NGJNkqseNT1d0clNxg076p5306W4rqQV+JJly9zMXZb
+	 eV/1/fteoQCeB/RjLbVm5SzUxpHRdieAFxZL4axA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Max Filippov <jcmvbkbc@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1235/1376] irqchip/renesas-rzg2l: Fix loss of interrupt
-Date: Sat, 12 Sep 2026 09:01:01 +0200
-Message-ID: <20260912065635.071257817@linuxfoundation.org>
+Subject: [PATCH 6.12 1236/1376] i2c: ocores: Disable clock on failed resume
+Date: Sat, 12 Sep 2026 09:01:02 +0200
+Message-ID: <20260912065635.092999942@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,59 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 50b10bd0c2d721ad38abd1abe3acdefb6caa0944 ]
+[ Upstream commit 43eb13f13385a1e7251978a1977ac61b99edef01 ]
 
-rzg2l_clear_irq_int() and rzg2l_clear_tint_int() perform a
-read-modify-write on the ISCR/TSCR status registers to clear the bit
-for the interrupt just handled. Since these registers are
-write-0-to-clear per bit, this is racy:
+ocores_i2c_resume() enables the controller clock before reinitializing
+the hardware. If the clock rate changed while the device was suspended,
+ocores_init() may reject the resulting prescaler. The callback then
+returns an error with the clock still enabled, while the controller
+itself remains disabled.
 
-If another interrupt's status bit gets set between the read and the write,
-that bit is written back as 0 by the software-constructed value, clearing
-an interrupt that hasn't been serviced yet and losing it.
+Disable and unprepare the clock when ocores_init() fails so the failed
+resume path balances the successful clk_prepare_enable() call.
 
-This can be reproduced by triggering multiple interrupts at once, e.g.:
+This issue was found by a static analysis checker and confirmed by manual
+source review.
 
-  gpioset -c gpiochip0 355=0 353=0 328=0 352=0
-
-Fix this by writing back only the bit being cleared, with all other bits
-set to 1, instead of read-modify-writing the whole register.  Since 1-bits
-are left unchanged by hardware, concurrently-set status bits for other
-interrupts are preserved.
-
-Fixes: 3fed09559cd8 ("irqchip: Add RZ/G2L IA55 Interrupt Controller driver")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260818110937.5816-1-biju.das.jz@bp.renesas.com
+Fixes: e961a094afe0 ("i2c: ocores: add common clock support")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Max Filippov <jcmvbkbc@gmail.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260813153155.3953577-1-ruoyuw560@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-renesas-rzg2l.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-ocores.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-renesas-rzg2l.c b/drivers/irqchip/irq-renesas-rzg2l.c
-index d83dfc10ff49e..ac88d5aa46c22 100644
---- a/drivers/irqchip/irq-renesas-rzg2l.c
-+++ b/drivers/irqchip/irq-renesas-rzg2l.c
-@@ -104,7 +104,7 @@ static void rzg2l_clear_irq_int(struct rzg2l_irqc_priv *priv, unsigned int hwirq
- 	 * falling/rising-edge.
- 	 */
- 	if ((iscr & bit) && (iitsr & IITSR_IITSEL_MASK(hw_irq))) {
--		writel_relaxed(iscr & ~bit, priv->base + ISCR);
-+		writel_relaxed(~bit, priv->base + ISCR);
- 		/*
- 		 * Enforce that the posted write is flushed to prevent that the
- 		 * just handled interrupt is raised again.
-@@ -120,7 +120,7 @@ static void rzg2l_clear_tint_int(struct rzg2l_irqc_priv *priv, unsigned int hwir
+diff --git a/drivers/i2c/busses/i2c-ocores.c b/drivers/i2c/busses/i2c-ocores.c
+index 482b37c8a1297..d62a664a94d54 100644
+--- a/drivers/i2c/busses/i2c-ocores.c
++++ b/drivers/i2c/busses/i2c-ocores.c
+@@ -761,7 +761,11 @@ static int ocores_i2c_resume(struct device *dev)
+ 	rate = clk_get_rate(i2c->clk) / 1000;
+ 	if (rate)
+ 		i2c->ip_clock_khz = rate;
+-	return ocores_init(dev, i2c);
++	ret = ocores_init(dev, i2c);
++	if (ret)
++		clk_disable_unprepare(i2c->clk);
++
++	return ret;
+ }
  
- 	reg = readl_relaxed(priv->base + TSCR);
- 	if (reg & bit) {
--		writel_relaxed(reg & ~bit, priv->base + TSCR);
-+		writel_relaxed(~bit, priv->base + TSCR);
- 		/*
- 		 * Enforce that the posted write is flushed to prevent that the
- 		 * just handled interrupt is raised again.
+ static DEFINE_NOIRQ_DEV_PM_OPS(ocores_i2c_pm,
 -- 
 2.53.0
 
