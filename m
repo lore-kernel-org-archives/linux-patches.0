@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CB5385D89;
-	Sat, 12 Sep 2026 08:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68DF37FF6D;
+	Sat, 12 Sep 2026 08:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200849; cv=none; b=tLU/GG0KXzGKKiFtdI3k+iKvokl8zHlkSzct2ACgv/IT9CgsUv/eyQGO3MZvgMJiwmBKOBj+M9su0JJ7N675iAO5GTDlSdWpwf7ryCLNGrv3HDPnmMeUbW9lguaca+audWKaAWCWpjRmF8c/VQCpl+7x87lNfLPbuRFtdsulVHw=
+	t=1789200852; cv=none; b=L1qyEErwDXx2GUqoPNqFuGWs1FBcv0QOjgjDKbe2kHoI0tysuURbdMcJTlbnqre7qjzLRIUbO8x52S0OHatTm/ENCl2Ha5r93D2Im5lfpO227kwB0Fl7ZpmgE5SROHOmaqrDzOmjcOsAEBvMs4tHKbsYADcj2uvlx1pY8UpwWbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200849; c=relaxed/simple;
-	bh=y861H+gf2OhkchCQoLHbqYrPkk5w4wq7qK9g58Nzr3I=;
+	s=arc-20240116; t=1789200852; c=relaxed/simple;
+	bh=riaIdkbGge3CBKSy1Ahq9mZS7f39hmf7yyh4QNT01OE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K8MGpmuxbq3JG/vHLgFFlA39fh9ObRMlCUyVBusql8yHykVUzdlyGilqvtZ4Bo77hcsMDevX6Ih+ulTmbn8ipgUPRTg52W4C4VsJbUC8npDktRhh3ThMoZ27yLqf521IiGHNKMtG4odiXOPY/QSgGIk4YPY2YKwaupeQwJHQD3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0RxOkVPJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a0GGjNLMLq66MIloEIrpqjQ2o2NSIJ7aYhtWiAD8chaXBmkfPAjHsrKPqnEkuvgp+1zi/Uu6KHlLzkroH+Qq3qg1nGBujouXfq0Fr1wGK3MYOFaNEAaJJfP5bvMHZd+zTSBzmjHis59+PE+orAPMttkjBtIfK4srJAd1HJXigu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpF8m0KY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0RxOkVPJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA221F000FF;
-	Sat, 12 Sep 2026 08:14:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpF8m0KY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F231F00893;
+	Sat, 12 Sep 2026 08:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200845;
-	bh=j+7jewXccr51B7iLOuctD9p+6IPZC1oPB2BLrXQV27c=;
+	s=korg; t=1789200849;
+	bh=mDawxjKRslhta4SmvhZmnBOevuIQZJy/Awa67Bve0R0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0RxOkVPJ4oNq9sIwbXYGemOJPH/Hewzks4qnkzagBKKqs6aEfK5RRD2D2BQYDuc12
-	 sP60fPcWA2+ipbkLx4TWxLhKUH2u1noCNQqWwccvmBzxXdau/PvaYFmDrJ4AiTyRXB
-	 9fmbdigSuTCrA7bwTOzb62voQ+/7RQx6LBV+jyRs=
+	b=LpF8m0KYEU13rj6yppORPSFJSyJTnrl5xEthCzHWfHyQUxDCDqQZAHJpfXHJc3jI5
+	 7WcO0Yyw2gNGXm7TL19OD78ba7/qqhn5O6loOKOWNFWi9FsCOPB6TzYuVoIdU7IySE
+	 b+h06UrD/Ot/EedUAuyU5tNnx4t1p2SygJLQGvFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Rex Lu <rex.lu@mediatek.com>,
 	Shayne Chen <shayne.chen@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0875/1815] wifi: mt76: mt7996: fix capability of EHT-MCS 15 in MRU
-Date: Sat, 12 Sep 2026 08:43:45 +0200
-Message-ID: <20260912065709.463535576@linuxfoundation.org>
+Subject: [PATCH 7.2 0876/1815] wifi: mt76: fix RX data queuing of RRO 3.0
+Date: Sat, 12 Sep 2026 08:43:46 +0200
+Message-ID: <20260912065709.487724713@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,58 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shayne Chen <shayne.chen@mediatek.com>
+From: Rex Lu <rex.lu@mediatek.com>
 
-[ Upstream commit 29e889c4ada83c69d10a3937f5ae2934306e2e3d ]
+[ Upstream commit 86897f106669c07eea4c34b54c3268d448d41426 ]
 
-According to the definition in IEEE Std 802.11be-2024, Table 9-417r:
-- If 80 MHz is not supported, bit 1-3 are set to 0.
-- If 160 MHz is not supported, bit 2-3 are set to 0.
-- If 320 MHz is not supported, bit 3 is set to 0.
+For RRO 3.0, RX data released from a RRO data queue should be put to
+the indicator queue. The frames are processed and completed in the
+context of the indicator queue NAPI, which only polls skbs queued on
+the MT_RXQ_RRO_IND list; frames queued under the data queue id are
+left sitting on that list until the data queue NAPI happens to run,
+stalling and reordering RX data.
 
-Fixes: 348533eb968d ("wifi: mt76: mt7996: add EHT capability init")
+Fixes: b1e58e137b61 ("wifi: mt76: mt7996: Introduce RRO MSDU callbacks")
+Signed-off-by: Rex Lu <rex.lu@mediatek.com>
 Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20260313062150.3165433-2-shayne.chen@mediatek.com
+Link: https://patch.msgid.link/20260722082610.2699628-1-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mac80211.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index d6f9aa1ab52d1..de20553bc689d 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -1561,7 +1561,6 @@ mt7996_init_eht_caps(struct mt7996_phy *phy, enum nl80211_band band,
- 	struct ieee80211_sta_eht_cap *eht_cap = &data->eht_cap;
- 	struct ieee80211_eht_cap_elem_fixed *eht_cap_elem = &eht_cap->eht_cap_elem;
- 	struct ieee80211_eht_mcs_nss_supp *eht_nss = &eht_cap->eht_mcs_nss_supp;
--	enum nl80211_chan_width width = phy->mt76->chandef.width;
- 	int nss = hweight8(phy->mt76->antenna_mask);
- 	int sts = hweight16(phy->mt76->chainmask);
- 	u8 val;
-@@ -1637,11 +1636,16 @@ mt7996_init_eht_caps(struct mt7996_phy *phy, enum nl80211_band band,
- 		u8_encode_bits(u8_get_bits(1, GENMASK(1, 0)),
- 			       IEEE80211_EHT_PHY_CAP5_MAX_NUM_SUPP_EHT_LTF_MASK);
+diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
+index c4cbf7195b805..f92277770488a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mac80211.c
++++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
+@@ -893,6 +893,7 @@ static void mt76_rx_release_amsdu(struct mt76_phy *phy, enum mt76_rxq_id q)
+ 	struct sk_buff *skb = phy->rx_amsdu[q].head;
+ 	struct mt76_rx_status *status = (struct mt76_rx_status *)skb->cb;
+ 	struct mt76_dev *dev = phy->dev;
++	struct mt76_queue *rxq = &dev->q_rx[q];
  
--	val = width == NL80211_CHAN_WIDTH_320 ? 0xf :
--	      width == NL80211_CHAN_WIDTH_160 ? 0x7 :
--	      width == NL80211_CHAN_WIDTH_80 ? 0x3 : 0x1;
--	eht_cap_elem->phy_cap_info[6] =
--		u8_encode_bits(val, IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_MASK);
-+	eht_cap_elem->phy_cap_info[6] = IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_MASK;
-+	if (band != NL80211_BAND_6GHZ) {
-+		eht_cap_elem->phy_cap_info[6] &=
-+			~IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_320MHZ;
+ 	phy->rx_amsdu[q].head = NULL;
+ 	phy->rx_amsdu[q].tail = NULL;
+@@ -921,6 +922,13 @@ static void mt76_rx_release_amsdu(struct mt76_phy *phy, enum mt76_rxq_id q)
+ 			return;
+ 		}
+ 	}
 +
-+		if (band != NL80211_BAND_5GHZ)
-+			eht_cap_elem->phy_cap_info[6] &=
-+				~(IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_160MHZ |
-+				  IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_80MHZ);
-+	}
++	/* RRO 3.0 data queue skbs are processed and completed in the context
++	 * of the indicator queue NAPI, which only polls its own skb list
++	 */
++	if (mt76_queue_is_wed_rro_data(rxq) && dev->hwrro_mode == MT76_HWRRO_V3)
++		q = MT_RXQ_RRO_IND;
++
+ 	__skb_queue_tail(&dev->rx_skb[q], skb);
+ }
  
- 	val = u8_encode_bits(nss, IEEE80211_EHT_MCS_NSS_RX) |
- 	      u8_encode_bits(nss, IEEE80211_EHT_MCS_NSS_TX);
 -- 
 2.53.0
 
