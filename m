@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14BA1B983F;
-	Sat, 12 Sep 2026 13:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E891B983F;
+	Sat, 12 Sep 2026 13:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220619; cv=none; b=S90MFnfxHthtpL91yJ/7Ei+IgzICT4ZV7BWYjNeZugGq7tF4+6VS0xcCQBC61JN1drBKkQQAbjwlN2IO87RI5SC2oHT52EP/S+L4HQIGZpApq008aDQeklSZzbGWAfaNBRwlWveqUyf/45dLXWWQST50Rb+wxzHmMgfcU/d32xo=
+	t=1789220623; cv=none; b=JxeiUQtlLdClFdktV8p9wwWdDw4ymmVbofD6TYg9GzrNba+Jk9EM1mW2vIhH30VFeHdZ5bWWfw2uVCN7ls6GhcZUZwxZmoBRUbTSEbwFj222TOp+o0pF7whLiUlhXeMUmbc6hsvjGW/Cpqh7OzaJ2Y7Qt5V9rnYwl3hz9wiI0k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220619; c=relaxed/simple;
-	bh=mpsjKoAcsHjWm2jUf2h3sV+x2PU3qN5n4ZO017rl6Tk=;
+	s=arc-20240116; t=1789220623; c=relaxed/simple;
+	bh=7cNbUfAZgMZRhoIrfBpw7pDeZ9aURvGbAQ2LQBf/1fQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tfUecPuq3U2KRCJLByh3O55vvBtsibmM7SlBoCjOy7Rp5O8Zla/cyD3I/ZBbTJ/cqsdk/3ApIzmCINutuIFQA52Vy2BJMlONPf4o/dWwFz0ixL2geN6zQbyZMs0ZbzBrtKb8AjYmWp3iNC+G50GUONcML5G3dMJd6ghWQ/qfd/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJlKFQ91; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cfj1yxh9vGiKSPq8uSX+eeohS6YGqtDzqk/BtbvMnim/KGVCkZ1F6W2x9vx3rYZFMVWVOmDqyJOWD2WmNWLQr+nLs6SD7VeTbebDiZsr9cvRGTg9LEq++Arl6msOIai7AP8r3w/ybdsgFvPLgQEmDJuTdoaOWeoBZawVqPh0lc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhvOJAmg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJlKFQ91"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FBA81F00893;
-	Sat, 12 Sep 2026 13:43:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhvOJAmg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9881F000FF;
+	Sat, 12 Sep 2026 13:43:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220617;
-	bh=OzdKgGvZGftda84vBZ1T849AA4ZV62TsDnub75tvGQM=;
+	s=korg; t=1789220622;
+	bh=CI5SXNd6/j8ccN2QaDBeuXo3j+HK7VMfTqSzBHQWVBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rJlKFQ91a3WABV7knDMp2E2IzWXZvJjGglItaFVgwYldV0ykmEa30quxZPMwSjo1P
-	 2wzDKwlwSi1Jisj7AzO4HuM691DmCzD4uYlGixlMZUN5kJnEjUDSoPfEEAWRdrf3oX
-	 E+NF4j6XngJGFAvq7iVjaFa4/q+EfQHUVavX7ip8=
+	b=zhvOJAmgP9Ko9fLvovOBDSnyXj/aTzbQql6zakux2ewEmIsq1QDaZELoEidgTT8u1
+	 wpadHhfzcHcDy01GdYBWq0YsyETXIZnFPTIGQpn7hrrKX7/Yxq6MMm5Hk/yeODMhu8
+	 HbPHqZsgHzh8ykhsb5QFptI7+GGVlCg5Lkss3VV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Jianing Li <m13940358460@163.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.6 0207/1424] power: supply: bq256xx: drain usb_work before freeing the charger
-Date: Sat, 12 Sep 2026 08:43:59 +0200
-Message-ID: <20260912065611.924468759@linuxfoundation.org>
+Subject: [PATCH 6.6 0216/1424] power: supply: max17040: drop incorrect I2C functionality check
+Date: Sat, 12 Sep 2026 08:44:08 +0200
+Message-ID: <20260912065612.125125063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,89 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Jianing Li <m13940358460@163.com>
 
-commit 2dd6cd823777bea6d9a880a12a92a73ec76aee0b upstream.
+commit 4e4b9f5ce9dfb8ed4b8d1262a504b8043ac09d87 upstream.
 
-The USB-PHY notifier queues usb_work, whose handler calls
-power_supply_changed(bq->charger). The reset devm action only unregisters
-the notifier and was registered before the power supplies, so devm frees
-bq->charger on unwind before the action runs; a usb_work still queued can
-then dereference it.
+max17040_probe() rejects adapters that do not advertise
+I2C_FUNC_SMBUS_BYTE. The driver does not issue SMBus byte transactions,
+however. Its regmap has 8-bit registers and 16-bit big-endian values, for
+which regmap-i2c supports either raw I2C transfers or SMBus word-data
+transactions.
 
-Register the reset action after the power supplies, so it unregisters
-the notifiers and drains usb_work before the supplies are released.
-Initialize usb_work and obtain the PHY references before registering
-the notifiers, so the worker cannot run before the supplies exist.
+Consequently, an adapter providing raw I2C transfers or SMBus word data
+but not SMBus byte transactions is rejected even though regmap can access
+the device. Conversely, the current check can pass an adapter that regmap
+cannot use.
 
-Found by static analysis.
+Drop the stale check and let devm_regmap_init_i2c() validate and select
+the supported transfer method.
 
-Fixes: 32e4978bb920 ("power: supply: bq256xx: Introduce the BQ256XX charger driver")
+Fixes: 6455a8a84bdfd ("power: supply: max17040: Use regmap i2c")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260804145511.103470-1-fanwu01@zju.edu.cn
+Signed-off-by: Jianing Li <m13940358460@163.com>
+Link: https://patch.msgid.link/20260731084259.916-1-m13940358460@163.com
+[Fixed Fixes tag, so that it points to the regmap introduction instead of the initial driver addition]
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq256xx_charger.c |   29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ drivers/power/supply/max17040_battery.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/drivers/power/supply/bq256xx_charger.c
-+++ b/drivers/power/supply/bq256xx_charger.c
-@@ -905,6 +905,8 @@ static void bq256xx_charger_reset(void *
+--- a/drivers/power/supply/max17040_battery.c
++++ b/drivers/power/supply/max17040_battery.c
+@@ -433,16 +433,12 @@ static const struct power_supply_desc ma
+ static int max17040_probe(struct i2c_client *client)
+ {
+ 	const struct i2c_device_id *id = i2c_client_get_device_id(client);
+-	struct i2c_adapter *adapter = client->adapter;
+ 	struct power_supply_config psy_cfg = {};
+ 	struct max17040_chip *chip;
+ 	enum chip_id chip_id;
+ 	bool enable_irq = false;
+ 	int ret;
  
- 	if (!IS_ERR_OR_NULL(bq->usb3_phy))
- 		usb_unregister_notifier(bq->usb3_phy, &bq->usb_nb);
-+
-+	cancel_work_sync(&bq->usb_work);
- }
- 
- static int bq256xx_set_charger_property(struct power_supply *psy,
-@@ -1727,24 +1729,12 @@ static int bq256xx_probe(struct i2c_clie
- 		return ret;
- 	}
- 
--	ret = devm_add_action_or_reset(dev, bq256xx_charger_reset, bq);
--	if (ret)
--		return ret;
-+	INIT_WORK(&bq->usb_work, bq256xx_usb_work);
-+	bq->usb_nb.notifier_call = bq256xx_usb_notifier;
- 
- 	/* OTG reporting */
- 	bq->usb2_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB2);
--	if (!IS_ERR_OR_NULL(bq->usb2_phy)) {
--		INIT_WORK(&bq->usb_work, bq256xx_usb_work);
--		bq->usb_nb.notifier_call = bq256xx_usb_notifier;
--		usb_register_notifier(bq->usb2_phy, &bq->usb_nb);
--	}
+-	if (!i2c_check_functionality(adapter, I2C_FUNC_SMBUS_BYTE))
+-		return -EIO;
 -
- 	bq->usb3_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB3);
--	if (!IS_ERR_OR_NULL(bq->usb3_phy)) {
--		INIT_WORK(&bq->usb_work, bq256xx_usb_work);
--		bq->usb_nb.notifier_call = bq256xx_usb_notifier;
--		usb_register_notifier(bq->usb3_phy, &bq->usb_nb);
--	}
- 
- 	ret = bq256xx_power_supply_init(bq, &psy_cfg, dev);
- 	if (ret) {
-@@ -1752,6 +1742,17 @@ static int bq256xx_probe(struct i2c_clie
- 		return ret;
- 	}
- 
-+	/* Register after the power supplies so devm runs it first. */
-+	ret = devm_add_action_or_reset(dev, bq256xx_charger_reset, bq);
-+	if (ret)
-+		return ret;
-+
-+	if (!IS_ERR_OR_NULL(bq->usb2_phy))
-+		usb_register_notifier(bq->usb2_phy, &bq->usb_nb);
-+
-+	if (!IS_ERR_OR_NULL(bq->usb3_phy))
-+		usb_register_notifier(bq->usb3_phy, &bq->usb_nb);
-+
- 	if (client->irq) {
- 		ret = devm_request_threaded_irq(dev, client->irq, NULL,
- 						bq256xx_irq_handler_thread,
+ 	chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
+ 	if (!chip)
+ 		return -ENOMEM;
 
 
