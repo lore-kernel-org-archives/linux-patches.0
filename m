@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF648344DB5;
-	Sat, 12 Sep 2026 08:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8BB28B4FA;
+	Sat, 12 Sep 2026 08:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203199; cv=none; b=KOozs8SJ0AtPO46L0jjzgdPtprGPNB/1IYke/cx2JWEYs7EmPgrztm0j1tfAZPnKiXSsl2UudWUfdFDDyG9RIjPkj1CGmpB6crlHSrMmAy9fhTePLp06H/v/HQPxcaT04MiPyg8mRTL2Mee2aszXDxurlDJwkaPqRSDco3/yjZM=
+	t=1789203203; cv=none; b=isaOpL+UMI0c0NL7XTULfEY6/kAt9sOO/TE93Ov/EQPUqjdhzGhBphOP0vibGxlDKoxWE46ZzBLgo7aefQ4QBXDl+B00dnffGqGIv2lDYlVhhlwNNFho7Db8Dt9mJdCZVPS97ZFFJAJHyz1wwPSCslA/ThcJO5xXuZmO7foyhOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203199; c=relaxed/simple;
-	bh=hIvImefOZjS5tGm6aFFBgpIGfqAKFQCg3ZfotwiE04Y=;
+	s=arc-20240116; t=1789203203; c=relaxed/simple;
+	bh=i/FSEsoyl3J9rBhqr1qWvc3TvCT8zxidjyaSfrjAW10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+mpxeIUe6TQtCjeGupg8n5zoqgFwPYeMWK+uxMgokSPUfPW5SARZ9/prco206Ft1uxBSqvREe9MvmawLdSVWUlPTbYAzZhUDzehJeXBExWzxX8PLcdjbwdEUa5AHCu52B8Q17oZm8p3zUcG05A1L8tRe5yscGdWwGaNK9oehkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gry3Zam1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C2R/HLyzFqKmFHYup4/ENa51ALHSFko38/5IrirNpw3byXGKRNK+4TqcRWu8MFBxXP3pNZcWX42l7YxJ8rIvrNlkoAbv6HhUK8WtuGaYMZD5MX75ASSIZnU0FSV1eQVsc6eJaY1ZQt5bd7lMbIBXCa+oWca+jnYn2+wRlqotz24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ms+csIun; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gry3Zam1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC231F000FF;
-	Sat, 12 Sep 2026 08:53:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ms+csIun"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D5F1F000FF;
+	Sat, 12 Sep 2026 08:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203197;
-	bh=b9FEmYunyfJkudghc2DqquqpufGXhPBRCVQr4FboMBY=;
+	s=korg; t=1789203202;
+	bh=ZGpLGu+0S0vs0/AXf+CJeHRVcihcJJLs2uU4JljY4CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gry3Zam11xQaw+8cCcidquBF2NbJDd4wwN1/PrbNj06J4QvaZ8/Fqn1OjcNWqdzvC
-	 HQlNsqCS8nCGIivLYqqiKMF9t2o02FHj1kfCmjB0u2DjROsNThzx4a9AwPvG0E6fR5
-	 sDqHaO2MnVYxi57i05E2n9GlCwEWkZJ3rum/B+CQ=
+	b=ms+csIunC+kVVoxD2de9f2MHFSiVw2QipUEv5X5pMeUmKW+wMVi6o8ofbsmXNacBk
+	 QLZx0D7ENUGmLPFaYO/OBZaS1KW+O+LgYB2du5CZUY6tdbCuohPXYxgWq0f1Dl4ELL
+	 y5++LVZ1R5HqViY1nXI/DpyGYLOJk2+8NE5N5Nzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+46ca2592193f2fb3debc@syzkaller.appspotmail.com,
-	Yun Zhou <yun.zhou@windriver.com>,
-	David Heidelberg <david@ixit.cz>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1358/1815] nfc: nci: fix use of uninitialized memory in CORE_INIT_RSP parsing
-Date: Sat, 12 Sep 2026 08:51:48 +0200
-Message-ID: <20260912065720.908315243@linuxfoundation.org>
+Subject: [PATCH 7.2 1359/1815] ALSA: seq: Dont leak the extension cell pointer in the bounce payload
+Date: Sat, 12 Sep 2026 08:51:49 +0200
+Message-ID: <20260912065720.931459893@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,121 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit d56575a2595ee1f597f39e8a1cfb67ed3501678d ]
+[ Upstream commit 59e1592d3c270ff4642d5d6dc55c545306eb0693 ]
 
-nci_core_init_rsp_packet_v1() and nci_core_init_rsp_packet_v2() parse
-the CORE_INIT_RSP packet without validating that the skb contains
-enough data. A malformed response (e.g. injected via virtual_ncidev)
-can declare a large num_supported_rf_interfaces while providing
-insufficient data, causing reads of uninitialized slab memory. This
-is later used in nci_init_complete_req(), triggering a KMSAN
-uninit-value warning.
+The bounce_error_event() embeds the failed event in the bounce payload
+by pointing data.ext.ptr at it.  When that event is a queued
+variable-length event, its own data.ext.ptr holds the address of its
+first extension cell, put there by snd_seq_event_dup().  The payload
+goes out verbatim through snd_seq_expand_var_event(), so the address
+reaches userspace.
 
-Add skb length checks before accessing packet fields:
-- Validate the skb has at least 1 byte for the status field.
-- Validate the skb can hold the fixed-size header before parsing.
-- In v2, bounds-check each variable-length rf_interface entry and its
-  extension parameters within the parsing loop.
-- In v1, verify the skb is large enough for both the variable-length
-  rf_interfaces array and the trailing rsp_2 structure.
+That is the same address commit 705dd6dcbc0e ("ALSA: seq: Clear
+variable event pointer on read") removed from the event header.  The
+read path still clears it there, just above the call that expands the
+payload.
 
-Reported-by: syzbot+46ca2592193f2fb3debc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=46ca2592193f2fb3debc
-Fixes: bcd684aace34 ("net/nfc/nci: Support NCI 2.x initial sequence")
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Link: https://patch.msgid.link/20260527052625.3309581-1-yun.zhou@windriver.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Embed a sanitised copy instead, treated exactly as snd_seq_read()
+treats the header.  A stack copy is enough because delivery is
+synchronous and snd_seq_event_dup() copies before returning.
+
+An unprivileged client reaches this by setting SNDRV_SEQ_FILTER_BOUNCE,
+queueing a variable-length event to a port that does not exist and
+reading the bounce back.  Eight bytes on 64-bit, from its own pool.
+
+Fixes: efc86691e4d8 ("ALSA: seq: Fix kernel heap address leak in bounce_error_event()")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260811131835.3837024-1-sammiee5311@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/rsp.c | 41 ++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 38 insertions(+), 3 deletions(-)
+ sound/core/seq/seq_clientmgr.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/net/nfc/nci/rsp.c b/net/nfc/nci/rsp.c
-index 165aa4115166a..b0ab4f5acbce8 100644
---- a/net/nfc/nci/rsp.c
-+++ b/net/nfc/nci/rsp.c
-@@ -50,11 +50,27 @@ static u8 nci_core_init_rsp_packet_v1(struct nci_dev *ndev,
- 	const struct nci_core_init_rsp_1 *rsp_1 = (void *)skb->data;
- 	const struct nci_core_init_rsp_2 *rsp_2;
- 
-+	/* Ensure that the status field can be accessed. */
-+	if (skb_headlen(skb) < 1)
-+		return NCI_STATUS_SYNTAX_ERROR;
-+
- 	pr_debug("status 0x%x\n", rsp_1->status);
- 
- 	if (rsp_1->status != NCI_STATUS_OK)
- 		return rsp_1->status;
- 
-+	/* Success response must contain the full fixed-size header */
-+	if (skb_headlen(skb) < sizeof(*rsp_1))
-+		return NCI_STATUS_SYNTAX_ERROR;
-+
-+	/* Ensure the variable-length rf_interfaces array and trailing
-+	 * rsp_2 structure are fully contained within the skb.
-+	 */
-+	if (skb_headlen(skb) < sizeof(*rsp_1) +
-+			       rsp_1->num_supported_rf_interfaces +
-+			       sizeof(*rsp_2))
-+		return NCI_STATUS_SYNTAX_ERROR;
-+
- 	ndev->nfcc_features = __le32_to_cpu(rsp_1->nfcc_features);
- 	ndev->num_supported_rf_interfaces = rsp_1->num_supported_rf_interfaces;
- 
-@@ -87,15 +103,25 @@ static u8 nci_core_init_rsp_packet_v2(struct nci_dev *ndev,
- 				      const struct sk_buff *skb)
+diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
+index 28782e1776fa8..9ec6c1c0cabc5 100644
+--- a/sound/core/seq/seq_clientmgr.c
++++ b/sound/core/seq/seq_clientmgr.c
+@@ -528,7 +528,7 @@ static int bounce_error_event(struct snd_seq_client *client,
+ 			      struct snd_seq_event *event,
+ 			      int err, int atomic, int hop)
  {
- 	const struct nci_core_init_rsp_nci_ver2 *rsp = (void *)skb->data;
--	const u8 *supported_rf_interface = rsp->supported_rf_interfaces;
-+	const u8 *supported_rf_interface;
- 	u8 rf_interface_idx = 0;
- 	u8 rf_extension_cnt = 0;
+-	struct snd_seq_event bounce_ev;
++	struct snd_seq_event bounce_ev, quoted;
+ 	int result;
  
-+	/* Ensure that the status field can be accessed. */
-+	if (skb_headlen(skb) < 1)
-+		return NCI_STATUS_SYNTAX_ERROR;
-+
- 	pr_debug("status %x\n", rsp->status);
- 
- 	if (rsp->status != NCI_STATUS_OK)
- 		return rsp->status;
- 
-+	/* Success response must contain the full fixed-size header */
-+	if (skb_headlen(skb) < sizeof(*rsp))
-+		return NCI_STATUS_SYNTAX_ERROR;
-+
-+	supported_rf_interface = rsp->supported_rf_interfaces;
-+
- 	ndev->nfcc_features = __le32_to_cpu(rsp->nfcc_features);
- 	ndev->num_supported_rf_interfaces = rsp->num_supported_rf_interfaces;
- 
-@@ -104,13 +130,22 @@ static u8 nci_core_init_rsp_packet_v2(struct nci_dev *ndev,
- 		    NCI_MAX_SUPPORTED_RF_INTERFACES);
- 
- 	while (rf_interface_idx < ndev->num_supported_rf_interfaces) {
--		ndev->supported_rf_interfaces[rf_interface_idx++] = *supported_rf_interface++;
-+		/* Each entry: [rf_interface_type (1B)] [ext_count (1B)] [ext...] */
-+		if (supported_rf_interface + 2 > skb_tail_pointer(skb))
-+			break;
-+		ndev->supported_rf_interfaces[rf_interface_idx] = *supported_rf_interface++;
- 
--		/* skip rf extension parameters */
- 		rf_extension_cnt = *supported_rf_interface++;
-+		if (supported_rf_interface + rf_extension_cnt > skb_tail_pointer(skb))
-+			break;
-+
-+		/* Only count the entry after full validation */
-+		rf_interface_idx++;
- 		supported_rf_interface += rf_extension_cnt;
- 	}
- 
-+	ndev->num_supported_rf_interfaces = rf_interface_idx;
-+
- 	ndev->max_logical_connections = rsp->max_logical_connections;
- 	ndev->max_routing_table_size =
- 			__le16_to_cpu(rsp->max_routing_table_size);
+ 	if (client == NULL ||
+@@ -548,15 +548,19 @@ static int bounce_error_event(struct snd_seq_client *client,
+ 		 * For user clients, send SNDRV_SEQ_EVENT_BOUNCE with the
+ 		 * original event embedded as variable-length data.  This
+ 		 * avoids exposing data.quote.event (a kernel pointer) to
+-		 * userspace.  The variable-length path in snd_seq_event_dup()
+-		 * copies the event data from data.ext.ptr into chained cells,
+-		 * and snd_seq_expand_var_event() copies only the data content
+-		 * -- never the pointer -- to userspace.
++		 * userspace.  Sanitise the embedded copy too - a queued
++		 * variable-length event carries the address of its own
++		 * extension cell, and the payload goes out verbatim.
+ 		 */
++		quoted = *event;
++		if (snd_seq_ev_is_variable(&quoted)) {
++			quoted.data.ext.len &= ~SNDRV_SEQ_EXT_MASK;
++			quoted.data.ext.ptr = NULL;
++		}
+ 		bounce_ev.type = SNDRV_SEQ_EVENT_BOUNCE;
+ 		bounce_ev.flags = SNDRV_SEQ_EVENT_LENGTH_VARIABLE;
+ 		bounce_ev.data.ext.len = sizeof(struct snd_seq_event);
+-		bounce_ev.data.ext.ptr = (char *)event;
++		bounce_ev.data.ext.ptr = (char *)&quoted;
+ 	} else {
+ 		/*
+ 		 * For kernel clients, quote the event pointer directly.
 -- 
 2.53.0
 
