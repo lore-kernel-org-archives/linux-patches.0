@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E32715A85A;
-	Sat, 12 Sep 2026 15:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483D0349CE7;
+	Sat, 12 Sep 2026 15:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226172; cv=none; b=gcX1ofkmul9w2ikYTw91NA62Jct0QO85xyb1+w3wjwl0MuyiPeFtQxamK165XorWL+WkQCSGyDNWxNaQ+UQvWhUIr8DoxWN2L2UC8MUTqDd/UixgmJm+qSO8JwXtuom2wCejL4tC359GVbVGZODr0pxefnPVjMjioTJGWsik3ac=
+	t=1789226177; cv=none; b=jZkf9CiSsvlXOai65MUlciUmpjaDtblCxjkmom1YBTdGzXrLQt1RoiE/HCCG+s0EXe0GUEdweoMF7DDK2coJwY5LnCV9VJx4C7GDaz46PCai+S0T55izrEygtRjMAM76mqIbl4cgGRnSDuBcCXDybW9HqnKOvt5OG6V+Gs5OqUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226172; c=relaxed/simple;
-	bh=t3u8rb7ezAYPjGsODlIt7idc6LZmsrxTAgofnBGEqt4=;
+	s=arc-20240116; t=1789226177; c=relaxed/simple;
+	bh=jnEZeARb96ilLeGaEtaWqRNfCOjqJY2c8ZtiHklZ6Uo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oPxhZCm3xRbsGDjPnIA+KZFq2YpTQt5GdufrVjR5XtktBzhLgbmkVMmoow3kxFV4IFu/mIqFUHP8ESOjWIUq0GLC/PapPlzthVI6DQ7agNpKvDzQR1ZyiVa808N+W4yTZxPbbwKABO1ZG3owgp7k+Ea3yeC8HfmFOMr8dtG4Dns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=leoEocy8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jBKjkIpLwkwfy7aq9JIFEknq7Xs7H1l9u1WX/zXpV4tEtVT14zO/DoRGP3P+JXp1/V2DTjrUg2DjK37Cu3hcNBoyvihbakLS2e8AA6GHEdM9Cn3ZaAqJtwkeY8tQkvyuPwknZzAbKgK8OgH+4tKHWcltTE6EWQ3agLBNEZ0Irpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2PkbMApV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="leoEocy8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167381F000FF;
-	Sat, 12 Sep 2026 15:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PkbMApV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01FB21F000FF;
+	Sat, 12 Sep 2026 15:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226171;
-	bh=zrr5vs5jw6oapY6iwechi3jFADEfXfF+rF5pE823TQs=;
+	s=korg; t=1789226176;
+	bh=1SY57xFVp514sfH4X01xxIpVamJ/CPPyS+P4kB7eAOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=leoEocy8Kj5X05vHvVL+1AztReO7zQ6OR/ZXKioyBuNsvWLLT/99e/sc8qv80JPx7
-	 JCtd1LFcZoD8cV3qnTflvXmex7MKvMcbb1JT73X1cAvLdfUhcyHdzgFdcLi75P5yEU
-	 1d2jet4GvrcGtd8QZhnv947gaVD4xTgTk+oKFJ7M=
+	b=2PkbMApVLr7r9y2Z1JjsxoXUCXLhzhrjEozmq6TATAHnj0nnT5UiRYaxZwwdHB4pL
+	 Aykf1w3HOqrLFxMSZ2upv9h7DDHRZOafcCD7zsqfSEh0NavGLNuvJi4SVR7NPXyIjW
+	 49bSiiI6oCxXlT+Ebjk1L2B2/6c3r7udxB2LUWAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1321/1424] ALSA: core: Add scoped cleanup helper for card references
-Date: Sat, 12 Sep 2026 09:02:33 +0200
-Message-ID: <20260912065636.845254499@linuxfoundation.org>
+Subject: [PATCH 6.6 1348/1424] Bluetooth: RFCOMM: Validate MTU in rfcomm_apply_pn() to prevent infinite loop
+Date: Sat, 12 Sep 2026 09:03:00 +0200
+Message-ID: <20260912065637.447873987@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -45,106 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit c6c6f0aec6fb4cbcc547bb265315fd76f18be731 ]
+[ Upstream commit 44c98fd082eafd49d55a8a4077ff488175b2fe24 ]
 
-Several ALSA paths acquire temporary card references with snd_card_ref()
-and release them manually with snd_card_unref(). control_led.c already
-defines a local cleanup helper for this pattern, while other core paths
-still open-code the release.
+rfcomm_apply_pn() accepts the MTU value from a remote PN (Parameter
+Negotiation) frame without checking for zero. When the remote peer
+sends an MTU of zero, d->mtu is set to 0. This causes the sendmsg
+path to enter an infinite loop when fragmenting data, as each fragment
+has size == min_t(size_t, len, 0) == 0, so the remaining length never
+decreases. The infinite allocation of zero-length skbs exhausts all
+system memory.
 
-Move the helper to the common ALSA core header and use it in control-layer
-card-reference paths. This makes the ownership rule explicit and avoids
-future missing-unref mistakes when adding early exits.
+Fix by clamping d->mtu to RFCOMM_DEFAULT_MTU when the negotiated
+value is zero, consistent with the initial value assigned in
+rfcomm_dlc_alloc().
 
-No functional change is intended.
-
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260604-alsa-scoped-cleanups-v1-2-10c43152a728@gmail.com
-Stable-dep-of: d736eba9c453 ("ALSA: ice1712: Fix the card leak at probe error with the auto-cleanup")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/core.h     | 2 ++
- sound/core/control.c     | 6 +++---
- sound/core/control_led.c | 9 ++++-----
- 3 files changed, 9 insertions(+), 8 deletions(-)
+ net/bluetooth/rfcomm/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/sound/core.h b/include/sound/core.h
-index dfef0c9d4b9f7..fe955fb238e59 100644
---- a/include/sound/core.h
-+++ b/include/sound/core.h
-@@ -314,6 +314,8 @@ static inline void snd_card_unref(struct snd_card *card)
- 	put_device(&card->card_dev);
- }
+diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
+index edeb076c537ba..390107643a76c 100644
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -1458,6 +1458,10 @@ static int rfcomm_apply_pn(struct rfcomm_dlc *d, int cr, struct rfcomm_pn *pn)
  
-+DEFINE_FREE(snd_card_unref, struct snd_card *, if (_T) snd_card_unref(_T))
+ 	d->mtu = __le16_to_cpu(pn->mtu);
+ 
++	/* MTU 0 causes an infinite loop when fragmenting in sendmsg */
++	if (!d->mtu)
++		d->mtu = RFCOMM_DEFAULT_MTU;
 +
- #define snd_card_set_dev(card, devptr) ((card)->dev = (devptr))
+ 	if (cr && d->mtu > s->mtu)
+ 		d->mtu = s->mtu;
  
- /* device.c */
-diff --git a/sound/core/control.c b/sound/core/control.c
-index bc92212cf6462..3eca2ff89ab42 100644
---- a/sound/core/control.c
-+++ b/sound/core/control.c
-@@ -2234,7 +2234,6 @@ EXPORT_SYMBOL_GPL(snd_ctl_request_layer);
-  */
- void snd_ctl_register_layer(struct snd_ctl_layer_ops *lops)
- {
--	struct snd_card *card;
- 	int card_number;
- 
- 	scoped_guard(rwsem_write, &snd_ctl_layer_rwsem) {
-@@ -2242,11 +2241,12 @@ void snd_ctl_register_layer(struct snd_ctl_layer_ops *lops)
- 		snd_ctl_layer = lops;
- 	}
- 	for (card_number = 0; card_number < SNDRV_CARDS; card_number++) {
--		card = snd_card_ref(card_number);
-+		struct snd_card *card __free(snd_card_unref) =
-+			snd_card_ref(card_number);
-+
- 		if (card) {
- 			scoped_guard(rwsem_read, &card->controls_rwsem)
- 				lops->lregister(card);
--			snd_card_unref(card);
- 		}
- 	}
- }
-diff --git a/sound/core/control_led.c b/sound/core/control_led.c
-index ba984ed00972d..15acb07c65150 100644
---- a/sound/core/control_led.c
-+++ b/sound/core/control_led.c
-@@ -775,18 +775,17 @@ static int __init snd_ctl_led_init(void)
- static void __exit snd_ctl_led_exit(void)
- {
- 	struct snd_ctl_led *led;
--	struct snd_card *card;
- 	unsigned int group, card_number;
- 
- 	snd_ctl_disconnect_layer(&snd_ctl_led_lops);
- 	for (card_number = 0; card_number < SNDRV_CARDS; card_number++) {
- 		if (!snd_ctl_led_card_valid[card_number])
- 			continue;
--		card = snd_card_ref(card_number);
--		if (card) {
-+		struct snd_card *card __free(snd_card_unref) =
-+			snd_card_ref(card_number);
-+
-+		if (card)
- 			snd_ctl_led_sysfs_remove(card);
--			snd_card_unref(card);
--		}
- 	}
- 	for (group = 0; group < MAX_LED; group++) {
- 		led = &snd_ctl_leds[group];
 -- 
 2.53.0
 
