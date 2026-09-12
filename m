@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D7D35F602;
-	Sat, 12 Sep 2026 09:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E93E3AFD15;
+	Sat, 12 Sep 2026 09:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203625; cv=none; b=GQAvVkO/ynJaGGEMjRd+SrUPtGzo02lwTbeNGL5vNiZBrBSDBlqdbmwPgSMEmvTMgT/E687SSorxYNd3Q97tyAYgC8zBs92nswXhAZ+LnYFJUsXpk9TLezV9I6uLwZDmmb/DZob0bdRCHnQve/QHcDHDnuwyNjet5H3/cQVtOI4=
+	t=1789203629; cv=none; b=rb+eSD6DT2zUjuFGOTIY/3jbhg2U9nUp9MX8hSqJdIC6YCw6avV8dHwYRA+2YZvF4AkF/AKxZH04CRvwMYmHXYE5NMBada99a1nLcorFaPoR0trmJdZhftlA3yR6/Pp40esboUHJk5a8pDJwgJUQxZOw9WEOkxVMCQfTnsa48as=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203625; c=relaxed/simple;
-	bh=9W5nc+6cckyvaJ3lBbUF5N1Q3Ia+wi9JHVFomYK53jE=;
+	s=arc-20240116; t=1789203629; c=relaxed/simple;
+	bh=Ai5XoyOgOTBPNOpP96qu53voRRC1IPxf5PkZ1pLwfik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WSVUQB6YRR8K4Jo2bUSDODeLf3EKnkipdC/0k+nlY0Wg0Hyf/uy/GQPM89yDao1WV2U6kNv5zrAt/lE9hrP7OHfxWyb3PJjCHbzgJlFTscXhQ6+VB+M7MuapXWMLU5+Qci88zuZSivzkSlll2xUCizNNoql35vBzo6CIUTHhQP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZwYozj0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OpgwdPtkuDCUmQY9v3QtRbVrFQQHQshx31ZCTQgByEfz/6NIlXZDF7l13rG4s7i/KvDw9AFfmKoXbDO/6RFRllWFjYbYiYUSZTsjU+cusHyKGmiv29WltKzjUa/HkF3wrVsq8aCHlSWFt475NVKxdAlxBV+VcoAUst3IGEooYto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0yaXQ7+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZwYozj0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523CA1F000FF;
-	Sat, 12 Sep 2026 09:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0yaXQ7+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9D91F000FF;
+	Sat, 12 Sep 2026 09:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203624;
-	bh=fmzjk8bf7hP5KjxLuis/u1bpk4m2CaUYN2pD8mz9VXw=;
+	s=korg; t=1789203628;
+	bh=UMy4fC/gQSeJJraauALBz00lJQCjdsQDDBG4qS3DgNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tZwYozj035oIOV9myQkm8erHo1gHQJhHOcsI+KILNrWOS6Nrn8yLRE/YJh+Hzv8zy
-	 DJT7EzWawBG6qk1AKXxxj2GPNKJ9vsjvCbmIbw44EpJ5emviQCMVUzv5PCnqIiZrk9
-	 lMPsPtsaKWeXA/7iSc6IQ/CdXvaMj7iIrF3NjbhA=
+	b=C0yaXQ7+6PqGT3b0iIvR1o0omcAHNbR7ZVX7OBBoQpVvH9YcEkZw5tV69a3gf7v8m
+	 jwpedl1+SPx9EGL9BLIjaJtqoyb5jLUsGFTSo8EtcLtvRyREYlFtdBl5QtoY/ieALS
+	 Kz06Y2ijTVc5KRPotqVct4Ni5Gd4mXyymCu94p98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mina Almasry <almasrymina@google.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Xu Kuohai <xukuohai@huawei.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1445/1815] net: page_pool: fix UAF in __page_pool_release_netmem_dma on xa_cmpxchg race
-Date: Sat, 12 Sep 2026 08:53:15 +0200
-Message-ID: <20260912065722.939112285@linuxfoundation.org>
+Subject: [PATCH 7.2 1446/1815] bpf, arm64: Fix stack-passed arguments for indirect trampolines
+Date: Sat, 12 Sep 2026 08:53:16 +0200
+Message-ID: <20260912065722.963130846@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -47,163 +46,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jijie Shao <shaojijie@huawei.com>
+From: Puranjay Mohan <puranjay@kernel.org>
 
-[ Upstream commit 24ef02f934eeb48830cff6b739abc3c62b1d107b ]
+[ Upstream commit 50de1c47a41d4031f6002969e71dc6954dedb6b2 ]
 
-This bug was discovered while testing the hns3 driver under channel
-reconfiguration (`ethtool -L` / `ethtool -G`) with iperf3 traffic on
-arm64. The race is intermittently triggered when page_pool_destroy()
-runs page_pool_scrub() concurrently with page return via
-page_pool_put_netmem() on a different CPU. A WARN in
-page_pool_clear_pp_info() surfaced the dangling DMA index bits left
-by the cmpxchg loser, which led to the investigation.
+save_args() reads stack-passed arguments relative to FP assuming the
+trampoline is entered through the fentry call from a traced function, in
+which case both the parent frame (FP/x9) and the traced function frame
+(FP/LR) are saved before FP is set, so the arguments start at FP + 32.
 
-page_pool_scrub() iterates pool->dma_mapped via xa_for_each() with no
-page ref held. __page_pool_release_netmem_dma() currently reads and
-writes netmem fields (dma_addr, DMA index bits in pp_magic) after
-xa_cmpxchg() returns. The unref path calls put_page() unconditionally
-regardless of the cmpxchg outcome; when it loses the cmpxchg, it still
-frees the page before the scrub winner finishes these netmem accesses,
-so scrub touches a freed page -- a Use-After-Free.
+An indirect trampoline for a struct_ops callback is entered through a
+function pointer (blr), so only the FP/LR frame is pushed and the
+arguments start at FP + 16, not FP + 32. Every stack-passed argument of
+a struct_ops callback with more than eight argument slots is read two
+slots off.
 
-Fix this by splitting the DMA release into two functions:
+This went unnoticed because no struct_ops member passed arguments on the
+stack until bpf_testmod_ops3::test_arena_stack, added by
+commit 2d4de9a493a0 ("selftests/bpf: Test stack-passed struct_ops arena arguments").
+That member covers this on arm64 once the JIT gains arena argument
+support later in this series. Pass is_struct_ops into save_args() and
+pick the offset accordingly, mirroring the x86 fix.
 
-1. __page_pool_unmap_netmem_dma() caches dma_addr before xa_cmpxchg(),
-   does the cmpxchg to remove the DMA mapping, and calls dma_unmap on
-   the cached address. It never touches netmem fields after the cmpxchg,
-   making it safe for the scrub path which holds no page ref.
-
-2. __page_pool_release_netmem_dma() wraps the above and additionally
-   clears dma_addr and DMA index bits in netmem fields. This is safe
-   only when the caller holds a page ref, so it is used by the return
-   path (page_pool_return_netmem).
-
-The scrub path calls __page_pool_unmap_netmem_dma() directly; the return
-path calls __page_pool_release_netmem_dma().
-
-Fixes: ee62ce7a1d90 ("page_pool: Track DMA-mapped pages and unmap them when destroying the pool")
-Suggested-by: Mina Almasry <almasrymina@google.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20260807114830.344336-1-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9014cf56f13d ("bpf, arm64: Support up to 12 function arguments")
+Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
+Reviewed-by: Xu Kuohai <xukuohai@huawei.com>
+Link: https://lore.kernel.org/bpf/20260813190356.335181-2-puranjay@kernel.org
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/page_pool.c | 66 +++++++++++++++++++++++---------------------
- 1 file changed, 35 insertions(+), 31 deletions(-)
+ arch/arm64/net/bpf_jit_comp.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/page_pool.c b/net/core/page_pool.c
-index 21dc4a9c8714d..50ee550fef73a 100644
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -500,29 +500,40 @@ static int page_pool_register_dma_index(struct page_pool *pool,
- 	return err;
+diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
+index 6d9d2ecc4fe46..d4e62484baea0 100644
+--- a/arch/arm64/net/bpf_jit_comp.c
++++ b/arch/arm64/net/bpf_jit_comp.c
+@@ -2512,9 +2512,8 @@ static void clear_garbage(struct jit_ctx *ctx, int reg, int effective_bytes)
  }
  
--static int page_pool_release_dma_index(struct page_pool *pool,
--				       netmem_ref netmem)
-+static void __page_pool_unmap_netmem_dma(struct page_pool *pool,
-+					 netmem_ref netmem)
+ static void save_args(struct jit_ctx *ctx, int bargs_off, int oargs_off,
+-		      const struct btf_func_model *m,
+-		      const struct arg_aux *a,
+-		      bool for_call_origin)
++		      const struct btf_func_model *m, const struct arg_aux *a,
++		      bool for_call_origin, bool is_struct_ops)
  {
- 	struct page *old, *page = netmem_to_page(netmem);
- 	unsigned long id;
-+	dma_addr_t dma;
- 
--	if (unlikely(!PP_DMA_INDEX_BITS))
--		return 0;
--
--	id = netmem_get_dma_index(netmem);
--	if (!id)
--		return -1;
-+	if (!pool->dma_map)
-+		return;
- 
--	if (in_softirq())
--		old = xa_cmpxchg(&pool->dma_mapped, id, page, NULL, 0);
--	else
--		old = xa_cmpxchg_bh(&pool->dma_mapped, id, page, NULL, 0);
--	if (old != page)
--		return -1;
-+	/* Cache dma_addr before xa_cmpxchg. The scrub path holds no page ref;
-+	 * the unref path calls put_page() regardless of cmpxchg outcome, so
-+	 * after the cmpxchg we cannot safely touch netmem fields.
-+	 */
-+	dma = page_pool_get_dma_addr_netmem(netmem);
- 
--	netmem_set_dma_index(netmem, 0);
-+	if (likely(PP_DMA_INDEX_BITS)) {
-+		id = netmem_get_dma_index(netmem);
-+		if (!id)
-+			return;
-+
-+		if (in_softirq())
-+			old = xa_cmpxchg(&pool->dma_mapped,
-+					 id, page, NULL, 0);
-+		else
-+			old = xa_cmpxchg_bh(&pool->dma_mapped,
-+					    id, page, NULL, 0);
-+		if (old != page)
-+			return;
-+	}
- 
--	return 0;
-+	dma_unmap_page_attrs(pool->p.dev, dma,
-+			     PAGE_SIZE << pool->p.order, pool->p.dma_dir,
-+			     DMA_ATTR_SKIP_CPU_SYNC | DMA_ATTR_WEAK_ORDERING);
- }
- 
- static bool page_pool_dma_map(struct page_pool *pool, netmem_ref netmem, gfp_t gfp)
-@@ -728,24 +739,16 @@ void page_pool_clear_pp_info(netmem_ref netmem)
- static __always_inline void __page_pool_release_netmem_dma(struct page_pool *pool,
- 							   netmem_ref netmem)
- {
--	dma_addr_t dma;
--
-+	/* Caller must hold a page ref: __page_pool_unmap_netmem_dma() is
-+	 * safe without a ref, but the field clears below require it.
-+	 */
- 	if (!pool->dma_map)
--		/* Always account for inflight pages, even if we didn't
--		 * map them
--		 */
- 		return;
- 
--	if (page_pool_release_dma_index(pool, netmem))
--		return;
--
--	dma = page_pool_get_dma_addr_netmem(netmem);
--
--	/* When page is unmapped, it cannot be returned to our pool */
--	dma_unmap_page_attrs(pool->p.dev, dma,
--			     PAGE_SIZE << pool->p.order, pool->p.dma_dir,
--			     DMA_ATTR_SKIP_CPU_SYNC | DMA_ATTR_WEAK_ORDERING);
-+	__page_pool_unmap_netmem_dma(pool, netmem);
- 	page_pool_set_dma_addr_netmem(netmem, 0);
-+	if (likely(PP_DMA_INDEX_BITS))
-+		netmem_set_dma_index(netmem, 0);
- }
- 
- /* Disconnects a page (from a page_pool).  API users can have a need
-@@ -1171,8 +1174,9 @@ static void page_pool_scrub(struct page_pool *pool)
- 				synchronize_net();
- 		}
- 
-+		/* No page ref, dma-unmap only. */
- 		xa_for_each(&pool->dma_mapped, id, ptr)
--			__page_pool_release_netmem_dma(pool, page_to_netmem((struct page *)ptr));
-+			__page_pool_unmap_netmem_dma(pool, page_to_netmem((struct page *)ptr));
+ 	int i;
+ 	int reg;
+@@ -2534,7 +2533,15 @@ static void save_args(struct jit_ctx *ctx, int bargs_off, int oargs_off,
+ 		bargs_off += 8;
  	}
  
- 	/* No more consumers should exist, but producers could still
+-	soff = 32; /* on stack arguments start from FP + 32 */
++	/*
++	 * On-stack arguments start above the frame(s) pushed by the trampoline
++	 * prologue. Entered through the fentry call from a traced function, the
++	 * prologue saves both the parent (FP/x9) and the traced function
++	 * (FP/LR) frames, so the arguments start at FP + 32. A struct_ops
++	 * callback is called indirectly and only the FP/LR frame is saved, so
++	 * they start at FP + 16.
++	 */
++	soff = is_struct_ops ? 16 : 32;
+ 	doff = (for_call_origin ? oargs_off : bargs_off);
+ 
+ 	/* save on stack arguments */
+@@ -2730,7 +2737,7 @@ static int prepare_trampoline(struct jit_ctx *ctx, struct bpf_tramp_image *im,
+ 	store_func_meta(ctx, func_meta, func_meta_off);
+ 
+ 	/* save args for bpf */
+-	save_args(ctx, bargs_off, oargs_off, m, a, false);
++	save_args(ctx, bargs_off, oargs_off, m, a, false, is_struct_ops);
+ 
+ 	/* save callee saved registers */
+ 	emit(A64_STR64I(A64_R(19), A64_SP, regs_off), ctx);
+@@ -2779,7 +2786,7 @@ static int prepare_trampoline(struct jit_ctx *ctx, struct bpf_tramp_image *im,
+ 
+ 	if (flags & BPF_TRAMP_F_CALL_ORIG) {
+ 		/* save args for original func */
+-		save_args(ctx, bargs_off, oargs_off, m, a, true);
++		save_args(ctx, bargs_off, oargs_off, m, a, true, is_struct_ops);
+ 		/* call original func */
+ 		emit(A64_LDR64I(A64_R(10), A64_SP, retaddr_off), ctx);
+ 		emit(A64_ADR(A64_LR, AARCH64_INSN_SIZE * 2), ctx);
 -- 
 2.53.0
 
