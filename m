@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0774A3B71DA;
-	Sat, 12 Sep 2026 10:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120EC3B71DA;
+	Sat, 12 Sep 2026 10:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209193; cv=none; b=LqIaRtcNrxFj/6QdFK82Iw0ZvNH9ZxODCSpFdRrj/2rQkjCqk6cIEC0f3wGjXLpCouHtapvLfu53NWnNS078f8jDJuqqePgvFUKBc8S691a5Ks1DQ6EXuYT+fTVdEbKIy1B4wkLsBloOpKZJihApnCQXFKX0cPai8kJbhx4GmW0=
+	t=1789209198; cv=none; b=QmaK1dAjR98yghwZ39BqukNzAkzACthlUe7lEQnL+QzwOZTPRcHXB3o2eD7oghCUihrvAH6Blg6OlxsJmr17wZy9fwGhfb8yRgZw8y2E6kRHfsYAdwgkr6exR4MHPiJHjYxQz7rzMKJ2hUD0lehWnjIbBTgfxV0/uGUUGJQjPM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209193; c=relaxed/simple;
-	bh=EG3h/iTivuonZhhLf4TIt3xiwVW23MVG87OHrEwrxhg=;
+	s=arc-20240116; t=1789209198; c=relaxed/simple;
+	bh=HAHRL2ZnREJM9QXF+EqSt2t9GksqGlAH5aZJjxxE/aY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nzMHcEMD5O09LWJSegaQFzi1LYmNVewTMkfK4rexT5BYqtMgylJsM9bJJ46NhNPNgJP+DuKeR31l95ZLP6qR5oegY3Tka+y/6Qrh7Ybgl1D0Zgygaj9b67ZsYNro562RzMnX3sTQFvW0GIVjfwvKqNT/8puaJ0jXw1+btxrjQ3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pxq7Ujy8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dC9rNxfC9ZiPF+8cE7TaJn+wji/YFbJIx7uSWbCdJrs3Cyl7tWMuFR9C7KxR0VirWZEr/ylu+0Wujz1q9jjn6WGj8Xi5e+kLcVQLtS7jDAUNMtjU3dsaQUqxCl78GtFHcrP0zR6uDQbExEJBzsvc3mbUOzCL6xzgBy9ZXmGwTIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t3U/31ZK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pxq7Ujy8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1AB1F000FF;
-	Sat, 12 Sep 2026 10:33:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3U/31ZK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45AF1F000FF;
+	Sat, 12 Sep 2026 10:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209191;
-	bh=SV1MGZYKVoeA0L/Z05y6HBDVE857q114qwEywXM40DA=;
+	s=korg; t=1789209196;
+	bh=AwW4+NjMjfqJcnJw8FysINsiMY8yjt7fx2eEj2Bt7Go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pxq7Ujy8fvPaWk2BXxcS6rq+maWPRKxAmkhYk2mnquomZhJZ+qC1MuVRHecRc0VWZ
-	 E6Up3Sk3ywh8sdfgOyFMu7R/9+7v8CN9WSk4WPK19H8LquM+oN3S/dwm28MhotXQdz
-	 RDw+gGFycH03gTdGDpOUTEIL7tB7fj6TKk5I4tfE=
+	b=t3U/31ZK2fZpVfdMld8Q4RzyxOGeQpu8+MPrcp3Mr8lxFvXWkP8lMXwG9T5WjtEvJ
+	 JwTZGuufDsWv0BBnIoNgzp+xv5F/OjyX2LfWWxnjwjz5lIKepxs49+pPXyxtqsBV7/
+	 nktjpotzBDpNLizt6csq09hyaRcdjsGLsO/ba5v8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0770/1518] drm/msm/dpu: Drop sneaky dev_pm_opp_set_rate(0)
-Date: Sat, 12 Sep 2026 08:48:59 +0200
-Message-ID: <20260912065640.852813912@linuxfoundation.org>
+Subject: [PATCH 6.18 0771/1518] drm/msm/dp: Drop dev_pm_opp_set_rate(0)
+Date: Sat, 12 Sep 2026 08:49:00 +0200
+Message-ID: <20260912065640.875717260@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,38 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 811c38907eab0f66c22c5e5708e6f8eab14d76fa ]
+[ Upstream commit cebfa9909e27ec7b7cbaec25ee5516cf886baa39 ]
 
 dev_pm_opp_set_rate(0) removes the vote specified in required-opps but
 does not actually park the clock, making it run without the necessary
-power backing. Prevent that from happening when
-_dpu_core_perf_get_core_clk_rate() returns 0.
+power backing. Drop the explicit calls to it.
 
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/742779/
-Link: https://lore.kernel.org/r/20260728-topic-dpu_power-v1-1-e7783b859a70@oss.qualcomm.com
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/742781/
+Link: https://lore.kernel.org/r/20260728-topic-dpu_power-v1-2-e7783b859a70@oss.qualcomm.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/msm/dp/dp_ctrl.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index 13cc658065c56..6524531bd8bdc 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -394,6 +394,10 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
- 
- 		trace_dpu_core_perf_update_clk(kms->dev, !crtc->enabled, clk_rate);
- 
-+		/* If we're going offline, PM callbacks will disable the clocks instead */
-+		if (!clk_rate)
-+			return 0;
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index 38ed4de8313e3..2ff7db77a82b6 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -1941,13 +1941,12 @@ static int msm_dp_ctrl_reinitialize_mainlink(struct msm_dp_ctrl_private *ctrl)
+ 	msm_dp_ctrl_mainlink_disable(ctrl);
+ 	ctrl->phy_opts.dp.lanes = ctrl->link->link_params.num_lanes;
+ 	phy_configure(phy, &ctrl->phy_opts);
 +
- 		clk_rate = min(clk_rate, kms->perf.max_core_clk_rate);
- 		ret = dev_pm_opp_set_rate(&kms->pdev->dev, clk_rate);
- 		if (ret) {
+ 	/*
+ 	 * Disable and re-enable the mainlink clock since the
+ 	 * link clock might have been adjusted as part of the
+ 	 * link maintenance.
+ 	 */
+-	dev_pm_opp_set_rate(ctrl->dev, 0);
+-
+ 	msm_dp_ctrl_link_clk_disable(&ctrl->msm_dp_ctrl);
+ 
+ 	phy_power_off(phy);
+@@ -1973,7 +1972,6 @@ static int msm_dp_ctrl_deinitialize_mainlink(struct msm_dp_ctrl_private *ctrl)
+ 
+ 	msm_dp_ctrl_reset(&ctrl->msm_dp_ctrl);
+ 
+-	dev_pm_opp_set_rate(ctrl->dev, 0);
+ 	msm_dp_ctrl_link_clk_disable(&ctrl->msm_dp_ctrl);
+ 
+ 	phy_power_off(phy);
+@@ -2620,7 +2618,6 @@ void msm_dp_ctrl_off(struct msm_dp_ctrl *msm_dp_ctrl)
+ 		ctrl->stream_clks_on = false;
+ 	}
+ 
+-	dev_pm_opp_set_rate(ctrl->dev, 0);
+ 	msm_dp_ctrl_link_clk_disable(&ctrl->msm_dp_ctrl);
+ 
+ 	phy_power_off(phy);
 -- 
 2.53.0
 
