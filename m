@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7732427A04;
-	Sat, 12 Sep 2026 08:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA77A20ED;
+	Sat, 12 Sep 2026 08:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202836; cv=none; b=BnE5TpsXR8UUZQGtgbQR9j7vCa9G/A/tmrSnZoPMLSjgVYtqGF7vdIME6VFGYE6j/raoKKORd0jVBtXZ4xLzRHETtJDrcjCaUj1weS5+a9UlmA/JSLJ+LrI62iAhezXo/gaOKDIA9fUex+EfXSZ4vx+vswJnoNnpfMHIFWec51A=
+	t=1789202839; cv=none; b=CYjzi1p7oaWCo7Za83x5Qy4M7+xEvB5EeV7RWaU7gbt2MQUYZxvekiwVWI2O8AcQpjE+G3hMpceLl7TtAVt+Op4v8ioVLtbpkW0MBdBZ49i2bd/xr9S2+QCwUnqc7U9taHVy0hdUjbWcB/9t89Dj4qaJKbNzaHEAvUTsqJqZvsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202836; c=relaxed/simple;
-	bh=iDtU3cAn4FnNz7EZIWHv0myfIcEjx9Tg2JfoMie7fMs=;
+	s=arc-20240116; t=1789202839; c=relaxed/simple;
+	bh=gW8C/87Pvzer1p62sbQuT+VeUJd/vD/cRVQlmWzqdBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ewi2Q+ALJAbDtowkqiw50EAJQlcXwYZPzb9t//zyUS0+NzjKU+Z7CKRb5vhw5T8HYNckdfG5F1Tt+4LAaovWT6K3ynLoQEjMMkOvIF/PE3of/jEWHPi12C6TEtJFXW6KghBSb/mtdfur83U3mI7ymEoWGaU09cM4utE3gwEG1lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSBMt3lR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KDfFFBBxvfIF600mW4tzdLfNg0eNPNLlh+P0wG2ZneqiY1bR6e93dYdE+lZAaRgBusNlI988qzyIkDvMGrMANw/QgJv3kwV62n9G141UmsKm22qV6lFqmXlyUT/D2Xkl2QxjkzGAcVzmpkZpIp1b+7Zw6LAm5N2GaCLfqnj6D+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4tOFptm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSBMt3lR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFA601F000FF;
-	Sat, 12 Sep 2026 08:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4tOFptm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684651F00893;
+	Sat, 12 Sep 2026 08:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202830;
-	bh=r80BdIcZxCM8ZOgfJGPtbi1rVOI3BZzi1YIgI7i8ohM=;
+	s=korg; t=1789202835;
+	bh=S/ok3YdVC9YQJ4RdfyNrPbcYAeZCEbfVguxfnODb6Lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rSBMt3lRPDd4krxFpVFYbcMryS6W/v49zLawL5yl1JYYF+TAgcBXDqwzlUZLe23yx
-	 JRhFTB88uA/cwnmX7zkKgh8R6GfWtzUb9/ay/Dou9dqrrkcSLa5/YfAkdxu3od0yzi
-	 woTV62S4FeT0vGOn6kI/eQp/hAHwTOONmvfrP+rA=
+	b=S4tOFptm3T0sFXp4jHHfGxWhIfLbOKTQ7iikiPtdvPyQ/WFKF6mBP1F52fI53rIX0
+	 M3KYHVbUMJzW3OnKqGQlYIaWhlUi5gdsvAioTOhEqWpjNSej7eeTDKwGUeYkiehfPG
+	 go6N0U1ToW1B6IHEbLm0fvPt63v8UQC0cCTn3P2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
-	Linus Walleij <linusw@kernel.org>,
+	Boris Burkov <boris@bur.io>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1241/1815] pinctrl: airoha: an7583: fix muxing of non-gpio default pins
-Date: Sat, 12 Sep 2026 08:49:51 +0200
-Message-ID: <20260912065718.146750020@linuxfoundation.org>
+Subject: [PATCH 7.2 1232/1815] btrfs: zoned: dont clobber the extent buffer when zeroing it out
+Date: Sat, 12 Sep 2026 08:49:42 +0200
+Message-ID: <20260912065717.934774121@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,200 +52,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit aaa41d8010c04635e035a9d334885b07edc8af21 ]
+[ Upstream commit db4b9eefc8ee0bcaeee4d5e6a7313905f6a2fe7c ]
 
-Current an7583 pinmux implementation have following issues:
- * pins 51 and 52 can't be set as pcie_reset, current pcie_reset code
-   will sets pins to gpio mode instead.
- * there is no proper way to set pins 41--54 to gpio mode.
- * pins 41--53 can't be actually set as pwm pins. These pins must be
-   muxed to gpio mode as well.
+On a zoned filesystem a freed-but-still-dirty tree block is written out
+as zeros (EXTENT_BUFFER_ZONED_ZEROOUT) only to keep the zone write
+pointer advancing. btree_csum_one_bio() implemented this by memzeroing
+the extent buffer's own folios before submission.
 
-This patch fixes above issues.
+That destroys the in-memory buffer while it may still be referenced. In
+particular btrfs_free_tree_block() can run on it afterwards and reads
+the header to add a delayed reference; once the header has been zeroed
+it frees bytenr 0 and corrupts the extent tree (the
+btrfs_header_bytenr(buf) != 0 ASSERT in btrfs_free_tree_block(), or an
+"unable to find ref" abort). It is flaky and reproduces under fsstress,
+e.g. generic/461 and generic/013.
 
-Fixes: 3ffeb17a9a27 ("pinctrl: airoha: add support for Airoha AN7583 PINs")
-Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Write the zeros to disk from the shared zero page instead and leave the
+extent buffer content untouched, so any later reference - including the
+delayed reference from btrfs_free_tree_block() - still sees a valid
+header. end_bbio_meta_write() now clears writeback on the buffer's own
+folios, as the bio no longer carries them.
+
+Fixes: aa6313e6ff2b ("btrfs: zoned: don't clear dirty flag of extent buffer")
+Assisted-by: LLM (debugging, commit message)
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/airoha/pinctrl-airoha.c | 99 +++++++++++++++++++++----
- 1 file changed, 86 insertions(+), 13 deletions(-)
+ fs/btrfs/disk-io.c   | 13 +++++++------
+ fs/btrfs/extent_io.c | 31 ++++++++++++++++++++++++-------
+ 2 files changed, 31 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/pinctrl/airoha/pinctrl-airoha.c b/drivers/pinctrl/airoha/pinctrl-airoha.c
-index 4be694b8ea778..ee2bd0ee8c40f 100644
---- a/drivers/pinctrl/airoha/pinctrl-airoha.c
-+++ b/drivers/pinctrl/airoha/pinctrl-airoha.c
-@@ -85,6 +85,18 @@
- #define GPIO_SPI_CS1_MODE_MASK			BIT(0)
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index ca55c886d6068..de6e23b88b406 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -271,14 +271,15 @@ int btree_csum_one_bio(struct btrfs_bio *bbio)
+ 		return -EIO;
  
- #define REG_GPIO_PON_MODE			0x021c
-+#define AN7583_MDIO_0_GPIO_MODE_MASK		BIT(26)
-+#define AN7583_MDC_0_GPIO_MODE_MASK		BIT(25)
-+#define AN7583_UART_RXD_GPIO_MODE_MASK		BIT(24)
-+#define AN7583_UART_TXD_GPIO_MODE_MASK		BIT(23)
-+#define AN7583_SPI_MISO_GPIO_MODE_MASK		BIT(22)
-+#define AN7583_SPI_MOSI_GPIO_MODE_MASK		BIT(21)
-+#define AN7583_SPI_CS_GPIO_MODE_MASK		BIT(20)
-+#define AN7583_SPI_CLK_GPIO_MODE_MASK		BIT(19)
-+#define AN7583_I2C1_SDA_GPIO_MODE_MASK		BIT(18)
-+#define AN7583_I2C1_SCL_GPIO_MODE_MASK		BIT(17)
-+#define AN7583_I2C0_SDA_GPIO_MODE_MASK		BIT(16)
-+#define AN7583_I2C0_SCL_GPIO_MODE_MASK		BIT(15)
- #define GPIO_PARALLEL_NAND_MODE_MASK		BIT(14)
- #define GPIO_SGMII_MDIO_MODE_MASK		BIT(13)
- #define GPIO_PCIE_RESET2_MASK			BIT(12)
-@@ -783,6 +795,10 @@ static const int an7583_gpio45_pins[] = { 47 };
- static const int an7583_gpio46_pins[] = { 48 };
- static const int an7583_gpio47_pins[] = { 49 };
- static const int an7583_gpio48_pins[] = { 50 };
-+static const int an7583_gpio49_pins[] = { 51 };
-+static const int an7583_gpio50_pins[] = { 52 };
-+static const int an7583_gpio51_pins[] = { 53 };
-+static const int an7583_gpio52_pins[] = { 54 };
- static const int an7583_pcie_reset0_pins[] = { 51 };
- static const int an7583_pcie_reset1_pins[] = { 52 };
+ 	/*
+-	 * If an extent_buffer is marked as EXTENT_BUFFER_ZONED_ZEROOUT, don't
+-	 * checksum it but zero-out its content. This is done to preserve
+-	 * ordering of I/O without unnecessarily writing out data.
++	 * An extent_buffer marked EXTENT_BUFFER_ZONED_ZEROOUT is written out as
++	 * zeros to preserve ordering of I/O without persisting the now
++	 * unnecessary block. The bio is fed from the shared zero page (see
++	 * write_one_eb()), so there is nothing to checksum here. Crucially, the
++	 * buffer's own content is left intact: it may still be referenced, e.g.
++	 * btrfs_free_tree_block() reads its header to add a delayed reference.
+ 	 */
+-	if (test_bit(EXTENT_BUFFER_ZONED_ZEROOUT, &eb->bflags)) {
+-		memzero_extent_buffer(eb, 0, eb->len);
++	if (test_bit(EXTENT_BUFFER_ZONED_ZEROOUT, &eb->bflags))
+ 		return 0;
+-	}
  
-@@ -863,6 +879,10 @@ static const struct pingroup an7583_pinctrl_groups[] = {
- 	PINCTRL_PIN_GROUP("gpio46", an7583_gpio46),
- 	PINCTRL_PIN_GROUP("gpio47", an7583_gpio47),
- 	PINCTRL_PIN_GROUP("gpio48", an7583_gpio48),
-+	PINCTRL_PIN_GROUP("gpio49", an7583_gpio49),
-+	PINCTRL_PIN_GROUP("gpio50", an7583_gpio50),
-+	PINCTRL_PIN_GROUP("gpio51", an7583_gpio51),
-+	PINCTRL_PIN_GROUP("gpio52", an7583_gpio52),
- 	PINCTRL_PIN_GROUP("pcie_reset0", an7583_pcie_reset0),
- 	PINCTRL_PIN_GROUP("pcie_reset1", an7583_pcie_reset1),
- };
-@@ -892,6 +912,11 @@ static const char *const pnand_groups[] = { "pnand" };
- static const char *const gpio_groups[] = { "gpio47", "gpio48", "gpio49" };
- static const char *const pcie_reset_groups[] = { "pcie_reset0", "pcie_reset1",
- 						 "pcie_reset2" };
-+static const char *const an7583_gpio_groups[] = { "gpio39", "gpio40", "gpio41",
-+						  "gpio42", "gpio43", "gpio44",
-+						  "gpio45", "gpio46", "gpio47",
-+						  "gpio48", "gpio49", "gpio50",
-+						  "gpio51", "gpio52" };
- static const char *const an7583_pcie_reset_groups[] = { "pcie_reset0", "pcie_reset1" };
- static const char *const pwm_groups[] = { "gpio0", "gpio1",
- 					  "gpio2", "gpio3",
-@@ -938,7 +963,8 @@ static const char *const an7583_pwm_groups[] = { "gpio0", "gpio1",
- 						 "gpio42", "gpio43",
- 						 "gpio44", "gpio45",
- 						 "gpio46", "gpio47",
--						 "gpio48" };
-+						 "gpio48", "gpio49",
-+						 "gpio50", "gpio51" };
- static const char *const phy1_led0_groups[] = { "gpio33", "gpio34",
- 						"gpio35", "gpio42" };
- static const char *const phy2_led0_groups[] = { "gpio33", "gpio34",
-@@ -1484,6 +1510,36 @@ static const struct airoha_pinctrl_func_group pcie_reset_func_group[] = {
- 	},
- };
+ 	if (WARN_ON_ONCE(found_start != eb->start))
+ 		return -EIO;
+diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
+index df341a605ac0c..ae6294fedd2d7 100644
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -2379,14 +2379,17 @@ static struct extent_buffer *find_extent_buffer_nolock(
+ static void end_bbio_meta_write(struct btrfs_bio *bbio)
+ {
+ 	struct extent_buffer *eb = bbio->private;
+-	struct folio_iter fi;
  
-+static const struct airoha_pinctrl_func_group an7583_gpio_func_group[] = {
-+	AIROHA_PINCTRL_GPIO_EXT("gpio39", GPIO39_FLASH_MODE_CFG,
-+				AN7583_I2C0_SCL_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_GPIO_EXT("gpio40", GPIO40_FLASH_MODE_CFG,
-+				AN7583_I2C0_SDA_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_GPIO_EXT("gpio41", GPIO41_FLASH_MODE_CFG,
-+				AN7583_I2C1_SCL_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_GPIO_EXT("gpio42", GPIO42_FLASH_MODE_CFG,
-+				AN7583_I2C1_SDA_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_GPIO_EXT("gpio43", GPIO43_FLASH_MODE_CFG,
-+				AN7583_SPI_CLK_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_GPIO_EXT("gpio44", GPIO44_FLASH_MODE_CFG,
-+				AN7583_SPI_CS_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_GPIO_EXT("gpio45", GPIO45_FLASH_MODE_CFG,
-+				AN7583_SPI_MOSI_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_GPIO_EXT("gpio46", GPIO46_FLASH_MODE_CFG,
-+				AN7583_SPI_MISO_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_GPIO_EXT("gpio47", GPIO47_FLASH_MODE_CFG,
-+				AN7583_UART_TXD_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_GPIO_EXT("gpio48", GPIO48_FLASH_MODE_CFG,
-+				AN7583_UART_RXD_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_GPIO_EXT("gpio49", GPIO49_FLASH_MODE_CFG,
-+				GPIO_PCIE_RESET0_MASK),
-+	AIROHA_PINCTRL_GPIO_EXT("gpio50", GPIO50_FLASH_MODE_CFG,
-+				GPIO_PCIE_RESET1_MASK),
-+	AIROHA_PINCTRL_GPIO_EXT("gpio51", GPIO51_FLASH_MODE_CFG,
-+				AN7583_MDC_0_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_GPIO("gpio52", AN7583_MDIO_0_GPIO_MODE_MASK),
-+};
+ 	if (bbio->bio.bi_status != BLK_STS_OK)
+ 		set_btree_ioerr(eb);
+ 
+-	bio_for_each_folio_all(fi, &bbio->bio) {
+-		btrfs_meta_folio_clear_writeback(fi.folio, eb);
+-	}
++	/*
++	 * Clear writeback on the buffer's own folios. The bio may carry the
++	 * shared zero page instead (EXTENT_BUFFER_ZONED_ZEROOUT), so iterate
++	 * the extent buffer folios rather than the bio folios.
++	 */
++	for (int i = 0; i < num_extent_folios(eb); i++)
++		btrfs_meta_folio_clear_writeback(eb->folios[i], eb);
+ 
+ 	buffer_tree_clear_mark(eb, PAGECACHE_TAG_WRITEBACK);
+ 	clear_and_wake_up_bit(EXTENT_BUFFER_WRITEBACK, &eb->bflags);
+@@ -2427,7 +2430,8 @@ static noinline_for_stack void write_one_eb(struct extent_buffer *eb,
+ 	struct btrfs_fs_info *fs_info = eb->fs_info;
+ 	struct btrfs_bio *bbio;
+ 
+-	prepare_eb_write(eb);
++	if (!test_bit(EXTENT_BUFFER_ZONED_ZEROOUT, &eb->bflags))
++		prepare_eb_write(eb);
+ 
+ 	bbio = btrfs_bio_alloc(INLINE_EXTENT_BUFFER_PAGES,
+ 			       REQ_OP_WRITE | REQ_META | wbc_to_write_flags(wbc),
+@@ -2447,8 +2451,21 @@ static noinline_for_stack void write_one_eb(struct extent_buffer *eb,
+ 		btrfs_meta_folio_set_writeback(folio, eb);
+ 		if (!folio_test_dirty(folio))
+ 			wbc->nr_to_write -= folio_nr_pages(folio);
+-		bio_add_folio_nofail(&bbio->bio, folio, range_len,
+-				     offset_in_folio(folio, range_start));
++		if (test_bit(EXTENT_BUFFER_ZONED_ZEROOUT, &eb->bflags)) {
++			u32 off = 0;
 +
- static const struct airoha_pinctrl_func_group an7583_pcie_reset_func_group[] = {
- 	{
- 		.name = "pcie_reset0",
-@@ -1491,7 +1547,7 @@ static const struct airoha_pinctrl_func_group an7583_pcie_reset_func_group[] = {
- 			AIROHA_FUNC_MUX,
- 			REG_GPIO_PON_MODE,
- 			GPIO_PCIE_RESET0_MASK,
--			GPIO_PCIE_RESET0_MASK
-+			0
- 		},
- 		.regmap_size = 1,
- 	}, {
-@@ -1500,7 +1556,7 @@ static const struct airoha_pinctrl_func_group an7583_pcie_reset_func_group[] = {
- 			AIROHA_FUNC_MUX,
- 			REG_GPIO_PON_MODE,
- 			GPIO_PCIE_RESET1_MASK,
--			GPIO_PCIE_RESET1_MASK
-+			0
- 		},
- 		.regmap_size = 1,
- 	},
-@@ -1637,16 +1693,32 @@ static const struct airoha_pinctrl_func_group an7583_pwm_func_group[] = {
- 	AIROHA_PINCTRL_PWM_EXT("gpio36", GPIO36_FLASH_MODE_CFG),
- 	AIROHA_PINCTRL_PWM_EXT("gpio37", GPIO37_FLASH_MODE_CFG),
- 	AIROHA_PINCTRL_PWM_EXT("gpio38", GPIO38_FLASH_MODE_CFG),
--	AIROHA_PINCTRL_PWM_EXT("gpio39", GPIO39_FLASH_MODE_CFG),
--	AIROHA_PINCTRL_PWM_EXT("gpio40", GPIO40_FLASH_MODE_CFG),
--	AIROHA_PINCTRL_PWM_EXT("gpio41", GPIO41_FLASH_MODE_CFG),
--	AIROHA_PINCTRL_PWM_EXT("gpio42", GPIO42_FLASH_MODE_CFG),
--	AIROHA_PINCTRL_PWM_EXT("gpio43", GPIO43_FLASH_MODE_CFG),
--	AIROHA_PINCTRL_PWM_EXT("gpio44", GPIO44_FLASH_MODE_CFG),
--	AIROHA_PINCTRL_PWM_EXT("gpio45", GPIO45_FLASH_MODE_CFG),
--	AIROHA_PINCTRL_PWM_EXT("gpio46", GPIO46_FLASH_MODE_CFG),
--	AIROHA_PINCTRL_PWM_EXT("gpio47", GPIO47_FLASH_MODE_CFG),
--	AIROHA_PINCTRL_PWM_EXT("gpio48", GPIO48_FLASH_MODE_CFG),
-+	AIROHA_PINCTRL_PWM_EXT_SEC("gpio39", GPIO39_FLASH_MODE_CFG,
-+				   AN7583_I2C0_SCL_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_PWM_EXT_SEC("gpio40", GPIO40_FLASH_MODE_CFG,
-+				   AN7583_I2C0_SDA_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_PWM_EXT_SEC("gpio41", GPIO41_FLASH_MODE_CFG,
-+				   AN7583_I2C1_SCL_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_PWM_EXT_SEC("gpio42", GPIO42_FLASH_MODE_CFG,
-+				   AN7583_I2C1_SDA_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_PWM_EXT_SEC("gpio43", GPIO43_FLASH_MODE_CFG,
-+				   AN7583_SPI_CLK_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_PWM_EXT_SEC("gpio44", GPIO44_FLASH_MODE_CFG,
-+				   AN7583_SPI_CS_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_PWM_EXT_SEC("gpio45", GPIO45_FLASH_MODE_CFG,
-+				   AN7583_SPI_MOSI_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_PWM_EXT_SEC("gpio46", GPIO46_FLASH_MODE_CFG,
-+				   AN7583_SPI_MISO_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_PWM_EXT_SEC("gpio47", GPIO47_FLASH_MODE_CFG,
-+				   AN7583_UART_TXD_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_PWM_EXT_SEC("gpio48", GPIO48_FLASH_MODE_CFG,
-+				   AN7583_UART_RXD_GPIO_MODE_MASK),
-+	AIROHA_PINCTRL_PWM_EXT_SEC("gpio49", GPIO49_FLASH_MODE_CFG,
-+				   GPIO_PCIE_RESET0_MASK),
-+	AIROHA_PINCTRL_PWM_EXT_SEC("gpio50", GPIO50_FLASH_MODE_CFG,
-+				   GPIO_PCIE_RESET1_MASK),
-+	AIROHA_PINCTRL_PWM_EXT_SEC("gpio51", GPIO51_FLASH_MODE_CFG,
-+				   AN7583_MDC_0_GPIO_MODE_MASK),
- };
- 
- #define AIROHA_PINCTRL_PHY_LED0(gpio, mux_val, map_mask, map_val)	\
-@@ -1901,6 +1973,7 @@ static const struct airoha_pinctrl_func an7583_pinctrl_funcs[] = {
- 	PINCTRL_FUNC_DESC("pcm_spi", an7583_pcm_spi),
- 	PINCTRL_FUNC_DESC("emmc", emmc),
- 	PINCTRL_FUNC_DESC("pnand", pnand),
-+	PINCTRL_FUNC_DESC("gpio", an7583_gpio),
- 	PINCTRL_FUNC_DESC("pcie_reset", an7583_pcie_reset),
- 	PINCTRL_FUNC_DESC("pwm", an7583_pwm),
- 	PINCTRL_FUNC_DESC("phy1_led0", an7583_phy1_led0),
++			while (off < range_len) {
++				u32 add = min_t(u32, PAGE_SIZE, range_len - off);
++
++				bio_add_folio_nofail(&bbio->bio,
++						     page_folio(ZERO_PAGE(0)),
++						     add, 0);
++				off += add;
++			}
++		} else {
++			bio_add_folio_nofail(&bbio->bio, folio, range_len,
++					     offset_in_folio(folio, range_start));
++		}
+ 		wbc_account_cgroup_owner(wbc, folio, range_len);
+ 		folio_unlock(folio);
+ 	}
 -- 
 2.53.0
 
