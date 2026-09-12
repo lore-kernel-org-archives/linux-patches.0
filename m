@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37FC26AC5;
-	Sat, 12 Sep 2026 16:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D8326AC5;
+	Sat, 12 Sep 2026 16:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230830; cv=none; b=AzccocazVPXNO7Pwuu6IjNO35Ywt6/UYTFM16uSZyA6SMT8T/76NbdAxHqyBxW2xEdKQ3sN7GPamzKyMB6Z6R2pWfez4zEAkcgTmPqrFLvI7IBk9HQLfC1e19sBF+h/X6Z2R/hJAX6Gqfuf9AMPHU16reXCtPqlLuHd4O/uAtMk=
+	t=1789230834; cv=none; b=FlVEgjzBFTsGw2NpoGCgiUN/IIhSedkhRz5eFeu9bY96SaDqxAR1CQhVC2HhbnzhjMV1w2YVEvAoZwD3Tcf86/QPxXXlaHDj2jnuzy7Szmn2Zua9zC5t7OsHt6wOhkwhKd//TTfS5xYk7JVMqk7yTkIt0qTDzT/S0lqX9dVl4eQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230830; c=relaxed/simple;
-	bh=qaDFcCdXT8mb4iIKEkZSdn1QXtJ/KCS+jiw0M9j7OCU=;
+	s=arc-20240116; t=1789230834; c=relaxed/simple;
+	bh=4N3L0ekzs03w/1/mlF3W6NnFgre/wJD40rhzFiRUl8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xy+8V0jVlsPlee+mESgl8dI2wiK7oWCsZoiULeKgJsZ9U8EZwiXHWu0L04CeW4ITYL2pQufCEkf5VjlZtxtQeVIi8UztbSef0c2rVDv0c8VLQ0efRIWbpc2oIFxswW/KSS7o1iOWN0aBCz5hnpVtBJTCo95U124wcSuk1olp1rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zsnxAOxt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jsjGj8F291OzhDxz1Em3Xk2O4ZdXSWElDNpPvk8rMTFw0A2JcCXTEMY3ej3ZYPOa/XA4HA0H7TbIJ+G+moHWQdyj0dvrLu5l3cmZF3VEvYx9GAsIACckJSmLMv/AEog3sk0Btwu0sqLvMaTgpfUYK2hCL7Ady+4Dx0INRQ86Hrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDKWBJD6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zsnxAOxt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424F31F000FF;
-	Sat, 12 Sep 2026 16:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDKWBJD6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785C61F000FF;
+	Sat, 12 Sep 2026 16:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230828;
-	bh=BX3JKJ7IejLcjmTrH9AcVfHjuAP3Zbkk682pnot6IRI=;
+	s=korg; t=1789230833;
+	bh=MJah2kE923KFfQzEtRLaxErvG8KrA5GG3OViVuXViNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zsnxAOxtGPDRZD7LJLXNrBytvYlw5nfQpvWsfqQbIqg1Dfs/F+j9NtZk5Lhupxh8W
-	 2U80koM/djTQFBaiLaGByAzaPzavJu4lKUAWTiUyc2JltuBBIgjbJGrQfy+Yn0f5ZW
-	 QzJ4lNqoURn4JPylS+oPM3GcJLSdongtHORfsH4Y=
+	b=zDKWBJD6J6oQk+ZSnQ1rVQWj/kzMcKRNg/raH2NmBm7TKg9Cm2cHJlL2Qf8NPndFM
+	 +QBoi+EIo1txjJSnFRsEWvyTYtTgFHEnCGkxncCEZ0/t/esEo5v60d35VMLenZWv+D
+	 jEeAlmbvA/BFwssihU55uQ0UvOYcaAO5ku+ha40U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Xu <chengyou@linux.alibaba.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Gou Hao <gouhao@uniontech.com>,
+	jiazhenyuan <jiazhenyuan@uniontech.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0872/1191] RDMA/erdma: Hold CQ references when processing EQ events
-Date: Sat, 12 Sep 2026 09:00:00 +0200
-Message-ID: <20260912065607.838820731@linuxfoundation.org>
+Subject: [PATCH 6.1 0832/1191] powerpc/smp: add NULL guard for cause_ipi in smp_muxed_ipi_message_pass
+Date: Sat, 12 Sep 2026 08:59:20 +0200
+Message-ID: <20260912065606.949713435@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,164 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Xu <chengyou@linux.alibaba.com>
+From: Gou Hao <gouhao@uniontech.com>
 
-[ Upstream commit 98df2aee1459ee1c62c70cbe9b370d2a532aea36 ]
+[ Upstream commit 5aabc192702defb8950e7c81b05c3f4ca8ee43ec ]
 
-EQ handlers look up CQs from dev->cq_xa and invoke CQ completion or
-error callbacks outside the xarray lock. erdma_destroy_cq() can erase the
-CQ from the xarray and free its queue buffer and doorbell record while a
-previously scheduled EQ handler is still using the CQ.
+smp_muxed_ipi_message_pass() calls smp_ops->cause_ipi() without
+checking whether it has been set.
 
-Add a CQ refcount and take a reference under the xarray lock with
-refcount_inc_not_zero(). Remove the CQ from the xarray before dropping
-the destroy-path reference, then wait for in-flight EQ users before
-releasing CQ resources.
+On platforms using muxed IPI (e.g. powernv/pseries), smp_ops->cause_ipi
+is initialized to NULL in the static smp_ops and only assigned during
+the platform smp_probe() handler.  If the IPI subsystem fails to
+initialize -- for example when xive_init_ipis() fails and
+xive_smp_probe() returns an error -- the probe handler returns early
+and cause_ipi is never set.  Any subsequent IPI send (e.g.
+arch_smp_send_reschedule()) would dereference the NULL pointer.
 
-Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
-Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
-Link: https://patch.msgid.link/20260730124357.12976-1-chengyou@linux.alibaba.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Add a NULL check to avoid the crash in that situation.
+
+Fixes: 23d72bfd8f9f ("powerpc: Consolidate ipi message mux and demux")
+Signed-off-by: Gou Hao <gouhao@uniontech.com>
+Reviewed-by: jiazhenyuan <jiazhenyuan@uniontech.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260727104215.184786-6-gouhao@uniontech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_eq.c    |  6 ++++--
- drivers/infiniband/hw/erdma/erdma_verbs.c | 12 +++++++++--
- drivers/infiniband/hw/erdma/erdma_verbs.h | 25 +++++++++++++++++++++--
- 3 files changed, 37 insertions(+), 6 deletions(-)
+ arch/powerpc/kernel/smp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma_eq.c b/drivers/infiniband/hw/erdma/erdma_eq.c
-index 35722b0a13c7e..da146516db3ee 100644
---- a/drivers/infiniband/hw/erdma/erdma_eq.c
-+++ b/drivers/infiniband/hw/erdma/erdma_eq.c
-@@ -52,7 +52,7 @@ void erdma_aeq_event_handler(struct erdma_dev *dev)
- 		if (FIELD_GET(ERDMA_AEQE_HDR_TYPE_MASK,
- 			      le32_to_cpu(aeqe->hdr)) == ERDMA_AE_TYPE_CQ_ERR) {
- 			cqn = le32_to_cpu(aeqe->event_data0);
--			cq = find_cq_by_cqn(dev, cqn);
-+			cq = erdma_cq_get_by_cqn(dev, cqn);
- 			if (!cq)
- 				continue;
+diff --git a/arch/powerpc/kernel/smp.c b/arch/powerpc/kernel/smp.c
+index 24c1950010812..980f2bc832d98 100644
+--- a/arch/powerpc/kernel/smp.c
++++ b/arch/powerpc/kernel/smp.c
+@@ -294,6 +294,9 @@ void smp_muxed_ipi_set_message(int cpu, int msg)
  
-@@ -62,6 +62,7 @@ void erdma_aeq_event_handler(struct erdma_dev *dev)
- 			if (cq->ibcq.event_handler)
- 				cq->ibcq.event_handler(&event,
- 						       cq->ibcq.cq_context);
-+			erdma_cq_put(cq);
- 		} else {
- 			qpn = le32_to_cpu(aeqe->event_data0);
- 			qp = find_qp_by_qpn(dev, qpn);
-@@ -142,7 +143,7 @@ void erdma_ceq_completion_handler(struct erdma_eq_cb *ceq_cb)
- 		poll_cnt++;
- 		cqn = FIELD_GET(ERDMA_CEQE_HDR_CQN_MASK, READ_ONCE(*ceqe));
- 
--		cq = find_cq_by_cqn(dev, cqn);
-+		cq = erdma_cq_get_by_cqn(dev, cqn);
- 		if (!cq)
- 			continue;
- 
-@@ -151,6 +152,7 @@ void erdma_ceq_completion_handler(struct erdma_eq_cb *ceq_cb)
- 
- 		if (cq->ibcq.comp_handler)
- 			cq->ibcq.comp_handler(&cq->ibcq, cq->ibcq.cq_context);
-+		erdma_cq_put(cq);
- 	}
- 
- 	notify_eq(&ceq_cb->eq);
-diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
-index 193c9389bbb75..0894517d33be8 100644
---- a/drivers/infiniband/hw/erdma/erdma_verbs.c
-+++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
-@@ -988,6 +988,7 @@ int erdma_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
- 	struct erdma_dev *dev = to_edev(ibcq->device);
- 	struct erdma_ucontext *ctx = rdma_udata_to_drv_context(
- 		udata, struct erdma_ucontext, ibucontext);
-+	unsigned long flags;
- 	int err;
- 	struct erdma_cmdq_destroy_cq_req req;
- 
-@@ -999,6 +1000,13 @@ int erdma_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
- 	if (err)
- 		return err;
- 
-+	xa_lock_irqsave(&dev->cq_xa, flags);
-+	__xa_erase(&dev->cq_xa, cq->cqn);
-+	xa_unlock_irqrestore(&dev->cq_xa, flags);
-+
-+	erdma_cq_put(cq);
-+	wait_for_completion(&cq->free);
-+
- 	if (rdma_is_kernel_res(&cq->ibcq.res)) {
- 		dma_free_coherent(&dev->pdev->dev,
- 				  WARPPED_BUFSIZE(cq->depth << CQE_SHIFT),
-@@ -1008,8 +1016,6 @@ int erdma_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
- 		put_mtt_entries(dev, &cq->user_cq.qbuf_mtt);
- 	}
- 
--	xa_erase(&dev->cq_xa, cq->cqn);
--
- 	return 0;
- }
- 
-@@ -1409,6 +1415,8 @@ int erdma_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
- 	cq->ibcq.cqe = depth;
- 	cq->depth = depth;
- 	cq->assoc_eqn = attr->comp_vector + 1;
-+	refcount_set(&cq->refcount, 1);
-+	init_completion(&cq->free);
- 
- 	ret = xa_alloc_cyclic(&dev->cq_xa, &cq->cqn, cq,
- 			      XA_LIMIT(1, dev->attrs.max_cq - 1),
-diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.h b/drivers/infiniband/hw/erdma/erdma_verbs.h
-index eabab8bba95af..03ce6e171be8c 100644
---- a/drivers/infiniband/hw/erdma/erdma_verbs.h
-+++ b/drivers/infiniband/hw/erdma/erdma_verbs.h
-@@ -7,6 +7,9 @@
- #ifndef __ERDMA_VERBS_H__
- #define __ERDMA_VERBS_H__
- 
-+#include <linux/completion.h>
-+#include <linux/refcount.h>
-+
- #include "erdma.h"
- 
- /* RDMA Capability. */
-@@ -231,6 +234,8 @@ struct erdma_cq {
- 
- 	u32 depth;
- 	u32 assoc_eqn;
-+	refcount_t refcount;
-+	struct completion free;
- 
- 	union {
- 		struct erdma_kcq_info kern_cq;
-@@ -245,9 +250,25 @@ static inline struct erdma_qp *find_qp_by_qpn(struct erdma_dev *dev, int id)
- 	return (struct erdma_qp *)xa_load(&dev->qp_xa, id);
- }
- 
--static inline struct erdma_cq *find_cq_by_cqn(struct erdma_dev *dev, int id)
-+static inline struct erdma_cq *erdma_cq_get_by_cqn(struct erdma_dev *dev,
-+						   int id)
-+{
-+	struct erdma_cq *cq;
-+	unsigned long flags;
-+
-+	xa_lock_irqsave(&dev->cq_xa, flags);
-+	cq = xa_load(&dev->cq_xa, id);
-+	if (cq && !refcount_inc_not_zero(&cq->refcount))
-+		cq = NULL;
-+	xa_unlock_irqrestore(&dev->cq_xa, flags);
-+
-+	return cq;
-+}
-+
-+static inline void erdma_cq_put(struct erdma_cq *cq)
+ void smp_muxed_ipi_message_pass(int cpu, int msg)
  {
--	return (struct erdma_cq *)xa_load(&dev->cq_xa, id);
-+	if (refcount_dec_and_test(&cq->refcount))
-+		complete(&cq->free);
- }
++	if (!smp_ops->cause_ipi)
++		return;
++
+ 	smp_muxed_ipi_set_message(cpu, msg);
  
- void erdma_qp_get(struct erdma_qp *qp);
+ 	/*
 -- 
 2.53.0
 
