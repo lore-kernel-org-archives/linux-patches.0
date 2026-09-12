@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228C82AEEB;
-	Sat, 12 Sep 2026 15:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B03742CB1C;
+	Sat, 12 Sep 2026 15:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227146; cv=none; b=ecidE4amKMFFCwpoFOD/EMe71GoMk62tlUuf2iJ+SZK24XgcmRtQI1J7p2pIUbbiNKXG7EEtCFj4v867V0es2NgF3PeU7pRGzKwQPVGW7xRQSC12/oKVmMTpjMx5Ak6sF1ppTCYit5HCZTgKKxos46TKC+LqijMmWf/qLBxBzFs=
+	t=1789227151; cv=none; b=e/NCkMP0Hwv5xEbjra0IDZsZAHmBN5Cbmy5TvrX/HcNQoHiwO7QTOPszf6ij3x4j95mdwvncMTOi4gqAiYmuJn3dvjEIdw1Ua1bTEJshiFN17vGiiW281MDXqGAw5kxcnPsA/yl4GPeD+vidWl1l8iKsEPNXArZUN9L5hvz1Iyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227146; c=relaxed/simple;
-	bh=JZ1nDNDlRqBfSOm8UvKD1ryZ2mrvBHmj+rp6TtDf4h4=;
+	s=arc-20240116; t=1789227151; c=relaxed/simple;
+	bh=VCrd4BLhnJ/4szb03SKsBhg4gGySNlE+/xRU0A/yijY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kyDZj8dULLjMSr+Mg5Pz+QYdqg5EQx3wGvK1B/qUVbQ4VPGlCuwTzqVDSHEEpviN2QI3GhAOup0+rXPhGDCUzMRoCVF2Y8n7dJzha+5asY0sBfVBzw3mBWq+c2laIQbhTng2wgAdT/uhm5ibd9XDtkQagQmonM7AbIW3TWhx518=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CWDOscd8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ixrCGiXGz3FNgwVh4lrQavKtcKydK+lPWm1in5PD6W8/gCm913Hqmulr01a097cXVofccSyDXvVP8hjsOGhHfd+ftXZJFO0S1Ajw15e/FTl6KZQb+D5z+sa18ZAFFXuoNfMiZV9sfmpeCbL8hMiTvLXBmkbyqLMmynPvRzktEJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/UIJ/85; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CWDOscd8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0DD21F000FF;
-	Sat, 12 Sep 2026 15:32:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/UIJ/85"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3751F000FF;
+	Sat, 12 Sep 2026 15:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227145;
-	bh=xHGO3JWfBxh3J6UDUeT6HlnWyVLAxaTIw6sYb6EqK+c=;
+	s=korg; t=1789227150;
+	bh=yJ/4yTnGfJDxDH4MP62vhlPLRefZssGE+cF0/21gIYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CWDOscd8KWCZjZ7k1sCQM/KSnhnxQ5qUdmcPsjrqRvYwfpPpPjKVGbDfOfNHln1V3
-	 BZT/+tFXXjStUsnLDClBGHNM4srXqTinLFXO0AeuTPlDQloB4O0hiXhXCLzeB/N37E
-	 UBitaBZps6cu7AOBS9u68BuLc+wJDUEONnQNaWgY=
+	b=b/UIJ/85QK2m8y+KJFWxI+2NlFJq0I58hGf9LU3fLVxee9HdzRQIzKAtnJv3f+t7e
+	 hvmxLUjZeXCPnlIR7L/AUfr3LPLpWFhHOm0EkRcobYS4YBFwj7hkTJC+oo8lU6vIaX
+	 46/D5vXzElGSi+hYZADVjNOR0qqfHJWWPZQZyih4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	Bryam Vargas <hexlabsecurity@proton.me>
-Subject: [PATCH 6.1 0121/1191] libnvdimm/labels: Prevent integer overflow in __nd_label_validate()
-Date: Sat, 12 Sep 2026 08:47:29 +0200
-Message-ID: <20260912065550.908053183@linuxfoundation.org>
+	Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>
+Subject: [PATCH 6.1 0122/1191] mailbox: qcom-ipcc: fix duplicate channel allocation across holes
+Date: Sat, 12 Sep 2026 08:47:30 +0200
+Message-ID: <20260912065550.930659675@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,50 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
 
-commit 037770686126155eafc44501312989e2837b9659 upstream.
+commit 66c7bcad72430a02c860521031350b84b31ad9a8 upstream.
 
-The on-media namespace index field nslot is a u32 read from the DIMM
-label storage area.  __nd_label_validate() bounds it against the config
-area size, but sizeof_namespace_label() returns unsigned, so the product
-nslot * label_size is evaluated in 32-bit and wraps modulo 2^32 before
-the comparison.  A crafted nslot passes the bound and is then used as the
-loop trip count in nd_label_data_init(), whose memset() walks off the end
-of the config_size buffer: an out-of-bounds write.
+The IPCC of_xlate() both scans for a free mailbox channel and checks
+for duplicate references to the same underlying IPCC channel. When a
+channel has been shutdown it might have left a hole in the channel
+list, which would terminate the search without considering duplicates
+later in the list.
 
-The field is not trusted -- it comes from the medium, or from userspace
-via ND_CMD_SET_CONFIG_DATA.  Evaluate the product in 64-bit so the bound
-check is exact; conforming labels are unaffected.
+Continue the traversal of the channel list to detect and reject
+duplicates, while keeping track of the first free channel.
 
-The check was safe when introduced by commit 4a826c83db4e ("libnvdimm:
-namespace indices: read and validate"): it multiplied by sizeof(struct
-nd_namespace_label), a size_t, so on a 64-bit build the product did not
-wrap.  Commit 564e871aa66f ("libnvdimm, label: add v1.2 nvdimm label
-definitions") narrowed it to 32 bits when the label size became a runtime
-value read via sizeof_namespace_label().
-
-Fixes: 564e871aa66f ("libnvdimm, label: add v1.2 nvdimm label definitions")
+Fixes: d6fbfdbc1274 ("mailbox: qcom-ipcc: Fix IPCC mbox channel exhaustion")
 Cc: stable@vger.kernel.org
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260624-b4-disp-d8279485-v3-1-cdb6cab28b41@proton.me
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvdimm/label.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mailbox/qcom-ipcc.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
---- a/drivers/nvdimm/label.c
-+++ b/drivers/nvdimm/label.c
-@@ -202,7 +202,7 @@ static int __nd_label_validate(struct nv
- 		}
+--- a/drivers/mailbox/qcom-ipcc.c
++++ b/drivers/mailbox/qcom-ipcc.c
+@@ -165,7 +165,7 @@ static struct mbox_chan *qcom_ipcc_mbox_
+ {
+ 	struct qcom_ipcc *ipcc = to_qcom_ipcc(mbox);
+ 	struct qcom_ipcc_chan_info *mchan;
+-	struct mbox_chan *chan;
++	struct mbox_chan *chan, *free_chan = NULL;
+ 	struct device *dev;
+ 	int chan_id;
  
- 		nslot = __le32_to_cpu(nsindex[i]->nslot);
--		if (nslot * sizeof_namespace_label(ndd)
-+		if ((u64)nslot * sizeof_namespace_label(ndd)
- 				+ 2 * sizeof_namespace_index(ndd)
- 				> ndd->nsarea.config_size) {
- 			dev_dbg(dev, "nsindex%d nslot: %u invalid, config_size: %#x\n",
+@@ -178,16 +178,21 @@ static struct mbox_chan *qcom_ipcc_mbox_
+ 		chan = &ipcc->chans[chan_id];
+ 		mchan = chan->con_priv;
+ 
+-		if (!mchan)
+-			break;
+-		else if (mchan->client_id == ph->args[0] &&
+-				mchan->signal_id == ph->args[1])
++		if (!mchan) {
++			/* Keep scanning past holes to reject duplicate channel requests. */
++			if (!free_chan)
++				free_chan = chan;
++		} else if (mchan->client_id == ph->args[0] &&
++				mchan->signal_id == ph->args[1]) {
+ 			return ERR_PTR(-EBUSY);
++		}
+ 	}
+ 
+-	if (chan_id >= mbox->num_chans)
++	if (!free_chan)
+ 		return ERR_PTR(-EBUSY);
+ 
++	chan = free_chan;
++
+ 	mchan = devm_kzalloc(dev, sizeof(*mchan), GFP_KERNEL);
+ 	if (!mchan)
+ 		return ERR_PTR(-ENOMEM);
 
 
