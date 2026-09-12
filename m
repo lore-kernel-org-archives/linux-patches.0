@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D0242902A;
-	Sat, 12 Sep 2026 10:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6843B3BF5;
+	Sat, 12 Sep 2026 10:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208239; cv=none; b=n1x99piv515KuVoYWvq8lOV+0bcghwPCwpRPlrzv8trmSg2n0h0rjUBATrWwBOCOviGxMIrrJgXv/sxULa/VqEqiNORluT5OpF3xdWggmQPp1BL1gBM4N0EQu32CLf3Uc5QXaCrBCYeTZc7H+pngH9yStjDJ7IokDJuEW4b5NQ0=
+	t=1789208240; cv=none; b=E73cQsNmuQ/e4brRv/SmLUkRvcmfloIIrWx1xGGLrTCq1OWtXrml78M08rEXHeOGDry6SSU1b9x8k8iC6H+uaXPMDUtgBksFYTeFDXJI18tVOSj7tNePOuENOg8unr0M0AJ/FDYwnGB39OMQ8s3xw2H4odD/C0U4E0Tk7TVyZV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208239; c=relaxed/simple;
-	bh=fpgD9TLJg8SpxjaEsIeAWSMMMPtoxlZeCD6HQWGrAjI=;
+	s=arc-20240116; t=1789208240; c=relaxed/simple;
+	bh=HiPlI1y7zP+7VH5nhA5rw869had2DVMA6MeCM4Cbcyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gMQvjXCfCyEFow9KEvgshyAH7WaI+AsNyRCUZVDXlBQWWzJYybXBViwjyuAXRT38TcM6oDrk5mrxzSQrx65agIZ6U10i+onh2ERQW+jvWfAGl3Zy8bFNWeHWl/OiWg41ZaPGKZtewD5FXnjVg2yVBlSDgcyXlZSneq8CxKJfViM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqsASHtd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X/ROJ4+SV61138jD4E7CwP6q07NQbDpCIiTnCkJ82qqkgEqLPbpjz/OwNZvOJ25XRtRfv1aD5pG0SroSfyxgwtenB5Q+25NPzWUS2o8MHm6HSjETIyp6Sx0LE0i4g+6wvbuKUbmqvYby5V5CNBPfSitlJEWqWh3Ch/PfEi3cxyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VjBlxQOz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqsASHtd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CDAD1F00898;
-	Sat, 12 Sep 2026 10:17:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VjBlxQOz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC41F1F000FF;
+	Sat, 12 Sep 2026 10:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208231;
-	bh=9DjYrlGuw6J30X47Bpo7PjulSfVu8mAvHUkazo6QzVg=;
+	s=korg; t=1789208237;
+	bh=XNhQyFwA8O914jZKNbLUU4L4On/IuOAMGic2ZdXphPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kqsASHtdcXSIXMePd0ugWtuzjVVDC1vfmRya6ti9bFf4Q50KOIOLZJPuju4N4PG//
-	 G6Y3d2YvNbBwSaP496TQMf8krsVlt+/qFgQsAkv0LgOW1Rjh6XJFPOFuvMsmPBTAE1
-	 R7wNNcTdg9TmvG3N/rRsRblwthh0SBitm6L/Y3Ss=
+	b=VjBlxQOzxwkKII61AuFddctqN71wefXm+36hf5vHayYAwtQtcSf2uRI/AR9k/kU0O
+	 uqMWuugENGDgcVsHIv+ulOqZrPiOonMdFR8zn5UbXygzyo7CNcOPisR0l+cMZk9z8I
+	 x2iIM2QZWt8CINe+BawGXBQRo0eh8bAPC3pX90Q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Yeh <justin.yeh@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Linus Walleij <linusw@kernel.org>,
+	James Clark <james.clark@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0576/1518] pinctrl: mediatek: free EINT resources on unbind
-Date: Sat, 12 Sep 2026 08:45:45 +0200
-Message-ID: <20260912065636.459035610@linuxfoundation.org>
+Subject: [PATCH 6.18 0577/1518] tools/build: Allow versioning of all LLVM tools defined in Makefile.include
+Date: Sat, 12 Sep 2026 08:45:46 +0200
+Message-ID: <20260912065636.481288001@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,86 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Yeh <justin.yeh@mediatek.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 88292b7103d260e3e606eb3bb2794060a5fde48e ]
+[ Upstream commit d5a1d1270c898057afc5b51fb6d0f2defa89d56d ]
 
-mtk_eint_do_init() creates an IRQ domain, populates it with a mapping for
-every EINT line and installs a chained handler on the parent interrupt,
-but none of these are ever released. This was harmless while the drivers
-were built-in, but now that they can be built as modules and
-unbound/rmmod'd it leaves behind a dangling IRQ domain, interrupt mappings
-whose chip data points at freed memory, and a chained handler that keeps
-firing into that freed data.
+The version of LLVM tools can be given on the build command with
+LLVM=-15, but this isn't applied to all tools. For example $(CC) gets
+versioned, but $(CLANG) doesn't. This causes a Perf build with LTO=1 to
+fail with an error about mixed clang versions:
 
-The plain allocations in mtk_eint_do_init() already use the device-managed
-devm_*() helpers, so tear the remaining resources down the same way:
-register a devm action that detaches the chained handler, waits for any
-in-flight handler to finish, disposes of the per-line mappings and removes
-the IRQ domain. This mirrors the device-managed lifecycle adopted for the
-GPIO chip and keeps the whole EINT setup self-cleaning on unbind.
+ ld.lld: error: libperf/core.o: Unknown attribute kind (86)
+   (Producer: 'LLVM18.1.8' Reader: 'LLVM 15.0.7')
 
-Fixes: e46df235b4e6 ("pinctrl: mediatek: refactor EINT related code for all MediaTek pinctrl can fit")
-Signed-off-by: Justin Yeh <justin.yeh@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+This file has two "ifneq ($(LLVM),)" blocks adjacent to each other, so
+merge these blocks making it obvious that all tools should be versioned
+consistently and there is nothing special about each block.
+
+This also reveals that ?= and "allow-override" are used inconsistently
+between the blocks. "allow-override" is technically only required for
+builtin variables, but isn't only used on them, and doesn't do any harm
+if used on a non-builtin. Make them all "allow-override" for
+consistency. The only functional difference this will cause is if there
+is a file level definition of one of the variables followed by an
+"#include of Makefile.include" which will now overwrite. But this isn't
+done and in a later commit some of the duplicate definitions will be
+removed for good measure.
+
+There are also some other LLVM tools that are not defined here and will
+be moved in a later commit.
+
+Signed-off-by: James Clark <james.clark@linaro.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: e9c281928c24 ("kbuild: Make $(LLVM) more flexible")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/mtk-eint.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ tools/scripts/Makefile.include | 37 ++++++++++++++++++----------------
+ 1 file changed, 20 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/pinctrl/mediatek/mtk-eint.c b/drivers/pinctrl/mediatek/mtk-eint.c
-index 5f12af59a91b5..df99401c0b7d7 100644
---- a/drivers/pinctrl/mediatek/mtk-eint.c
-+++ b/drivers/pinctrl/mediatek/mtk-eint.c
-@@ -12,8 +12,10 @@
-  */
+diff --git a/tools/scripts/Makefile.include b/tools/scripts/Makefile.include
+index ded48263dd5e0..c5bb7bf42f430 100644
+--- a/tools/scripts/Makefile.include
++++ b/tools/scripts/Makefile.include
+@@ -59,10 +59,18 @@ LLVM_SUFFIX := $(LLVM)
+ endif
  
- #include <linux/delay.h>
-+#include <linux/device.h>
- #include <linux/err.h>
- #include <linux/gpio/driver.h>
-+#include <linux/interrupt.h>
- #include <linux/io.h>
- #include <linux/irqchip/chained_irq.h>
- #include <linux/irqdomain.h>
-@@ -504,6 +506,27 @@ int mtk_eint_find_irq(struct mtk_eint *eint, unsigned long eint_n)
- }
- EXPORT_SYMBOL_GPL(mtk_eint_find_irq);
+ $(call allow-override,CC,$(LLVM_PREFIX)clang$(LLVM_SUFFIX))
++$(call allow-override,CLANG,$(LLVM_PREFIX)clang$(LLVM_SUFFIX))
++$(call allow-override,HOSTCC,$(LLVM_PREFIX)clang$(LLVM_SUFFIX))
+ $(call allow-override,AR,$(LLVM_PREFIX)llvm-ar$(LLVM_SUFFIX))
++$(call allow-override,HOSTAR,$(LLVM_PREFIX)llvm-ar$(LLVM_SUFFIX))
+ $(call allow-override,LD,$(LLVM_PREFIX)ld.lld$(LLVM_SUFFIX))
++$(call allow-override,HOSTLD,$(LLVM_PREFIX)ld.lld$(LLVM_SUFFIX))
+ $(call allow-override,CXX,$(LLVM_PREFIX)clang++$(LLVM_SUFFIX))
+ $(call allow-override,STRIP,$(LLVM_PREFIX)llvm-strip$(LLVM_SUFFIX))
++$(call allow-override,LLVM_STRIP,$(LLVM_PREFIX)llvm-strip$(LLVM_SUFFIX))
++$(call allow-override,LLC,$(LLVM_PREFIX)llc$(LLVM_SUFFIX))
++$(call allow-override,LLVM_CONFIG,$(LLVM_PREFIX)llvm-config$(LLVM_SUFFIX))
++$(call allow-override,LLVM_OBJCOPY,$(LLVM_PREFIX)llvm-objcopy$(LLVM_SUFFIX))
+ else
+ # Allow setting various cross-compile vars or setting CROSS_COMPILE as a prefix.
+ $(call allow-override,CC,$(CROSS_COMPILE)gcc)
+@@ -70,26 +78,21 @@ $(call allow-override,AR,$(CROSS_COMPILE)ar)
+ $(call allow-override,LD,$(CROSS_COMPILE)ld)
+ $(call allow-override,CXX,$(CROSS_COMPILE)g++)
+ $(call allow-override,STRIP,$(CROSS_COMPILE)strip)
+-endif
+-
+-CC_NO_CLANG := $(shell $(CC) -dM -E -x c /dev/null | grep -Fq "__clang__"; echo $$?)
  
-+static void mtk_eint_teardown(void *data)
-+{
-+	struct mtk_eint *eint = data;
-+	unsigned int i, virq;
+-ifneq ($(LLVM),)
+-HOSTAR  ?= $(LLVM_PREFIX)llvm-ar$(LLVM_SUFFIX)
+-HOSTCC  ?= $(LLVM_PREFIX)clang$(LLVM_SUFFIX)
+-HOSTLD  ?= $(LLVM_PREFIX)ld.lld$(LLVM_SUFFIX)
+-else
+-HOSTAR  ?= ar
+-HOSTCC  ?= gcc
+-HOSTLD  ?= ld
++# Host versions aren't prefixed
++$(call allow-override,HOSTAR,ar)
++$(call allow-override,HOSTCC,gcc)
++$(call allow-override,HOSTLD,ld)
 +
-+	/* Detach the demux handler so it can no longer reference freed data. */
-+	irq_set_chained_handler_and_data(eint->irq, NULL, NULL);
-+
-+	/* Wait for any in-flight handler to finish before tearing down. */
-+	synchronize_irq(eint->irq);
-+
-+	/* Dispose of all child mappings before the domain is removed. */
-+	for (i = 0; i < eint->hw->ap_num; i++) {
-+		virq = irq_find_mapping(eint->domain, i);
-+		if (virq)
-+			irq_dispose_mapping(virq);
-+	}
-+
-+	irq_domain_remove(eint->domain);
-+}
-+
- int mtk_eint_do_init(struct mtk_eint *eint, struct mtk_eint_pin *eint_pin)
- {
- 	unsigned int size, i, port, virq, inst = 0;
-@@ -596,7 +619,7 @@ int mtk_eint_do_init(struct mtk_eint *eint, struct mtk_eint_pin *eint_pin)
- 	irq_set_chained_handler_and_data(eint->irq, mtk_eint_irq_handler,
- 					 eint);
++# Some tools still require Clang, LLC and/or LLVM utils
++$(call allow-override,CLANG,clang)
++$(call allow-override,LLC,llc)
++$(call allow-override,LLVM_CONFIG,llvm-config)
++$(call allow-override,LLVM_OBJCOPY,llvm-objcopy)
++$(call allow-override,LLVM_STRIP,llvm-strip)
+ endif
  
--	return 0;
-+	return devm_add_action_or_reset(eint->dev, mtk_eint_teardown, eint);
+-# Some tools require Clang, LLC and/or LLVM utils
+-CLANG		?= clang
+-LLC		?= llc
+-LLVM_CONFIG	?= llvm-config
+-LLVM_OBJCOPY	?= llvm-objcopy
+-LLVM_STRIP	?= llvm-strip
++CC_NO_CLANG := $(shell $(CC) -dM -E -x c /dev/null | grep -Fq "__clang__"; echo $$?)
  
- err_eint:
- 	for (i = 0; i < eint->nbase; i++) {
+ # Some tools require bpftool
+ SYSTEM_BPFTOOL	?= bpftool
 -- 
 2.53.0
 
