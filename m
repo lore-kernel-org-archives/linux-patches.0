@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A39364049;
-	Sat, 12 Sep 2026 07:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873F53546E4;
+	Sat, 12 Sep 2026 07:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198694; cv=none; b=p8RBI9BlAGbsO4QHmKgDR+Ob3QljZwckVRwzTery5SWvYmRp7CyREd0vfKfxHQ7zDuJaIgKd3NTocKHjf+1ql0F1JtpMJ1Dp96sqMxUkL6lsbgym0zlnr/CNrrvw8/U1FHxk7h3zgAQyPPqZYi+hhvGiW3KxNoIVinq4veuOEAo=
+	t=1789198700; cv=none; b=LOzT0M3aUEiPwr5rk599zxfqugtKoC6pRY2ToGjttPF90qQWo/Z9jJNugY84Yx8P3gNEkrQzKW2/BBnFLqxNsSrhh3wqqRjQpWTHAXtv/8Wpga7s9uNE3LA07FYL4DaRtd0MsGy3kiqMexjFzGJWBuZZI29Ow804QDCvHc5Y17A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198694; c=relaxed/simple;
-	bh=bljkVx3MMusHQK8oIFZgCGSO2UjAUOQtoxWpxBIek9g=;
+	s=arc-20240116; t=1789198700; c=relaxed/simple;
+	bh=WWNxtJsEqsdwljPWjStsJ81is7M/8WITV17D7VX5aYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uybzZ7VdzlAUY6Rd4Pu1W10iJQDKuKiamEYPj0tnoECwGITZX9zPnlTdjXUAkZETjU02y8+av6i+cpfvvtjOsmkH9kNdQrULXYIrnJvRkiq7mXKLd7/pB4+3pd+AscWXvzfkFcc0ZvkUP2zHYSwF+HJ9leU2yVkddd3BrLshDPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTY3g39k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OFkW+usneUDrkd/F5bJT+0rmPvfyCpkLRVcmShqIEV3LCN7MMZrxWGoxmT4vHPy5eKNbpkgD7ZRrCY2I7YS9RK0trop4OVq66L9quxVAhiQbBaRAihZjO1KBRYqx6h/PfpH4TIcT78yGiozc/6MMA800tAG/ap3HQZRLaw227g8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9RsqRVR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTY3g39k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD411F000FF;
-	Sat, 12 Sep 2026 07:38:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9RsqRVR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E42691F000FF;
+	Sat, 12 Sep 2026 07:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198692;
-	bh=u54msIacinI2UFTIXg5byLA2x1kjfpq+6XLy3u50BX0=;
+	s=korg; t=1789198698;
+	bh=jCL24fC2mpb3hXuW61ooV98aAIaQg+IUsm1mfhgJIdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yTY3g39kxwxJ6VVDe0QBJO3clfqRAB5HKhL3DPVzUIdhXyoxGG2OBiAqN5nHd+Vkk
-	 7m5NDIPt4a8sm0NIiaS2dvBXQ0voVdXxoPAF5hlau6QjVp4V7AbMAVM34oeoVLVv4m
-	 uCmSmhOuJTH9m+ONdY5mml3SAkRGd2P0aKZCfOPE=
+	b=M9RsqRVRtd7t5/gPAUXMwDRwnXA/BHTtT4jIV0vDGkZB1Gm5QvO0KkDg5w2TSFqOU
+	 1cjtFYxeBlGtco5OpS3pFuEKHWipeUuA8HcE7BobuwAWbV0RuuTfAwQa0DJ1D1cJJ8
+	 P8Rm10WSWvCc8Z+O/qXxJFmWqahlKKAUo4JhOQQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregor Herburger <gregor.herburger@linutronix.de>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Geoffrey McRae <geoffrey.mcrae@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0433/1815] OPP: Fix cleanup ordering
-Date: Sat, 12 Sep 2026 08:36:23 +0200
-Message-ID: <20260912065659.059881736@linuxfoundation.org>
+Subject: [PATCH 7.2 0434/1815] drm/amd/display: Fix DM I2C teardown race
+Date: Sat, 12 Sep 2026 08:36:24 +0200
+Message-ID: <20260912065659.083166496@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,84 +47,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gregor Herburger <gregor.herburger@linutronix.de>
+From: Geoffrey McRae <geoffrey.mcrae@amd.com>
 
-[ Upstream commit ce46fede7792cedd247e34b48bc8a02eb90c7848 ]
+[ Upstream commit e4ae30a12aa95942814957d8bc1ce7366a7107d7 ]
 
-Commit 173e02d67494 ("OPP: Initialize scope-based pointers inline")
-added initialization for all pointers. In some cases, the ordering was
-changed so that *opp_table was initialized after *opp. This also changes
-the order of the registered cleanup functions.
+DM I2C adapters can remain visible to userspace while DM teardown is
+already in progress. A concurrent i2c-dev transfer may then enter
+amdgpu_dm_i2c_xfer() after the backing DM state has been torn down,
+leading to a NULL pointer dereference.
 
-When the cleanup happens, this can cause use-after-free errors when the
-last reference is released and the release function _opp_kref_release
-tries to access the already freed opp->opp_table.
+Create a devres group around the DM I2C adapter lifetime and release it
+at the start of dm_hw_fini(), before HPD, IRQ, and DM state are torn
+down. This removes the I2C adapters first and waits for in-flight users
+to drain before the structures used by amdgpu_dm_i2c_xfer() disappear.
 
-Initialize *opp_table before *opp again to fix this and ensure the
-correct cleanup order.
+This fixes a teardown ordering race seen during device removal:
 
-Fixes: 173e02d67494 ("OPP: Initialize scope-based pointers inline")
-Signed-off-by: Gregor Herburger <gregor.herburger@linutronix.de>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+BUG: kernel NULL pointer dereference
+RIP: amdgpu_dm_i2c_xfer+0x122/0x1c0 [amdgpu]
+Call Trace:
+__i2c_transfer
+i2c_transfer
+i2cdev_ioctl_rdwr
+
+Fixes: 5b3eca05cfb0 ("drm/amd/display: Use devm_i2c_add_adapter to simplify i2c cleanup logic")
+Signed-off-by: Geoffrey McRae <geoffrey.mcrae@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Leo Li <sunpeng.li@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/opp/core.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 14 +++++++++++++-
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h |  7 +++++++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-index ab0b0a2f85a17..b6966e509f7dd 100644
---- a/drivers/opp/core.c
-+++ b/drivers/opp/core.c
-@@ -1412,13 +1412,12 @@ static int _set_opp(struct device *dev, struct opp_table *opp_table,
-  */
- int dev_pm_opp_set_rate(struct device *dev, unsigned long target_freq)
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 69d12377f6817..170c6b8d0a5f6 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3284,17 +3284,26 @@ static int dm_hw_init(struct amdgpu_ip_block *ip_block)
+ 	struct amdgpu_device *adev = ip_block->adev;
+ 	int r;
+ 
++	adev->dm.i2c_devres_group = devres_open_group(adev->dev, NULL, GFP_KERNEL);
++	if (!adev->dm.i2c_devres_group)
++		return -ENOMEM;
++
+ 	/* Create DAL display manager */
+ 	r = amdgpu_dm_init(adev);
+ 	if (r)
+-		return r;
++		goto err_release_i2c;
+ 	amdgpu_dm_hpd_init(adev);
+ 
+ 	r = dm_oem_i2c_hw_init(adev);
+ 	if (r)
+ 		drm_info(adev_to_drm(adev), "Failed to add OEM i2c bus\n");
+ 
++	devres_close_group(adev->dev, adev->dm.i2c_devres_group);
+ 	return 0;
++
++err_release_i2c:
++	devres_release_group(adev->dev, adev->dm.i2c_devres_group);
++	return r;
+ }
+ 
+ /**
+@@ -3309,6 +3318,9 @@ static int dm_hw_fini(struct amdgpu_ip_block *ip_block)
  {
-+	struct opp_table *opp_table __free(put_opp_table) =
-+		_find_opp_table(dev);
- 	struct dev_pm_opp *opp __free(put_opp) = NULL;
- 	unsigned long freq = 0, temp_freq;
- 	bool forced = false;
+ 	struct amdgpu_device *adev = ip_block->adev;
  
--	struct opp_table *opp_table __free(put_opp_table) =
--		_find_opp_table(dev);
--
- 	if (IS_ERR(opp_table)) {
- 		dev_err(dev, "%s: device's opp table doesn't exist\n", __func__);
- 		return PTR_ERR(opp_table);
-@@ -2870,11 +2869,10 @@ EXPORT_SYMBOL_GPL(dev_pm_opp_add_dynamic);
- static int _opp_set_availability(struct device *dev, unsigned long freq,
- 				 bool availability_req)
- {
--	struct dev_pm_opp *opp __free(put_opp) = ERR_PTR(-ENODEV), *tmp_opp;
--
- 	/* Find the opp_table */
- 	struct opp_table *opp_table __free(put_opp_table) =
- 		_find_opp_table(dev);
-+	struct dev_pm_opp *opp __free(put_opp) = ERR_PTR(-ENODEV), *tmp_opp;
++	if (adev->dm.i2c_devres_group)
++		devres_release_group(adev->dev, adev->dm.i2c_devres_group);
++
+ 	amdgpu_dm_hpd_fini(adev);
  
- 	if (IS_ERR(opp_table)) {
- 		dev_warn(dev, "%s: Device OPP not found (%ld)\n", __func__,
-@@ -2932,12 +2930,11 @@ int dev_pm_opp_adjust_voltage(struct device *dev, unsigned long freq,
- 			      unsigned long u_volt_max)
+ 	amdgpu_dm_irq_fini(adev);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+index dd199e0b79226..797f944718108 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+@@ -688,6 +688,13 @@ struct amdgpu_display_manager {
+ 	 */
+ 	void *bb_from_dmub;
  
- {
--	struct dev_pm_opp *opp __free(put_opp) = ERR_PTR(-ENODEV), *tmp_opp;
--	int r;
--
- 	/* Find the opp_table */
- 	struct opp_table *opp_table __free(put_opp_table) =
- 		_find_opp_table(dev);
-+	struct dev_pm_opp *opp __free(put_opp) = ERR_PTR(-ENODEV), *tmp_opp;
-+	int r;
- 
- 	if (IS_ERR(opp_table)) {
- 		r = PTR_ERR(opp_table);
++	/**
++	 * @i2c_devres_group:
++	 *
++	 * Devres group for DM i2c adapter lifetime management.
++	 */
++	void *i2c_devres_group;
++
+ 	/**
+ 	 * @oem_i2c:
+ 	 *
 -- 
 2.53.0
 
