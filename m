@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9C4422E08;
-	Sat, 12 Sep 2026 10:15:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A8535AC09;
+	Sat, 12 Sep 2026 10:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208116; cv=none; b=PrI/el1Qw3tyaKTVq4IcrXncQ7X9eGEcd5No94QpK6EGFC5OTP+LwF/zJkfKTCHlYbek/1C/73mCaHD2DtNBJP042uOtvJll1CZHulxiXQl7qVHfRVe0I9+uFq0IS7N5a2XcJ4PnXvtknX9LmPirCtDLUgMWxYxIOEB4aXrewP0=
+	t=1789208121; cv=none; b=kPuG5FnvPb0k4gQ0Oha2UTZwLDH/OuNbfmkv4moyfzxQ4CFYkhvPNO3kEeCkxCe8+7Lski1hR1Ffg8jsaM73TGm6JOpUfkmfmGfiVrgenjvxn6qEphbDo/ojL8K9M5ruYRo9xx/56yHkPPCWyl2CzlyGQpcNEXvZICyo4xOhMe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208116; c=relaxed/simple;
-	bh=p9XvlL7DywVXEj/KSB+Y2fsRaevKAZwYpSnQ+5HbV1k=;
+	s=arc-20240116; t=1789208121; c=relaxed/simple;
+	bh=cx0KPW/yxgYQyoDLuLzt+bvn+H4N5yKWycJ1Com9nBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tRpLMCDlJdDzVQpOv+AppfUVJntXXR+uHGGMOQbjZzwVmR32GbkMx7xwnnn/Q0wnHAI8LFmJFM9KjPhBD0hY3Vzl4AhTuoMGecLlfOszZz2fFc3Kamc6kQpHPPO6gjiFiIoU8e/QHKGsEmK8qgdF9qcfEWY3Z3qD22+zbM0rF90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPj0sKfT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dX+XQFQCGMoa3JvOHXm5R36jB6bJCg+jAyb6N+dhEbn7Agl/zmn957d3X+qeQ+yM7DY9TBQMygP3CbfCtg8kiJwX9NDg3+bC6Zbp+bxDMFy6kywe2wV/ndmq7CeyK0ptRrASnab+qinQUm8ixNR32QhkgvlwgQgmgOVn+nmoN4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oICKq+XM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPj0sKfT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0087D1F000FF;
-	Sat, 12 Sep 2026 10:15:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oICKq+XM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFFB1F000FF;
+	Sat, 12 Sep 2026 10:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208114;
-	bh=prO5nV7ol7xHUoceBY2NkcJXhgTwhspk8IQXEQX4+Hs=;
+	s=korg; t=1789208119;
+	bh=rAUGq5lkQf1vqKApd3DFFnxGaK3+ofkLO3mPXIotO54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bPj0sKfTF6xFvQwfFauxIFnrRdrXcscEYk7sZze+TtFVbmJvdqAwHVyq3y8BisMsu
-	 IDhQ+r5+lQixFRMV98ITwWJZyYAn8ZDzbV0qiaBaRw/HzdKjrctTrFuvtMiGBHa7fp
-	 eihYCflrhS2FnB6L5Uf+DVGTgHpUpBSQ8UDLT5xM=
+	b=oICKq+XMfbcsFFsELsi+AMd8/du7BpraAI4A5WVbLLi1I/aqauxgkp69+/wEzsb8M
+	 UaEukAYx3btFLW06rgR+HDrSmebf+d3cEtz+T6sbeo8QIiJjmq2PgApDkJ1QFfSXRm
+	 FkOzHSWiYkCG/fA5WaXOA6lJxn/hZTR0rcC9CJ60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takuma Fujiwara <t-fujiwara1@ti.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Cheng Xu <chengyou@linux.alibaba.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0509/1518] PCI: j721e: Fix incorrect max_lanes for J7200
-Date: Sat, 12 Sep 2026 08:44:38 +0200
-Message-ID: <20260912065634.959630005@linuxfoundation.org>
+Subject: [PATCH 6.18 0510/1518] RDMA/erdma: Fix CEQ tasklet use-after-free on removal
+Date: Sat, 12 Sep 2026 08:44:39 +0200
+Message-ID: <20260912065634.982090317@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,53 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takuma Fujiwara <t-fujiwara1@ti.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 7147a7bfce47acd48c3738130bf0bd692bfd80de ]
+[ Upstream commit 0ca79979384f031d710c4b3bae065dcb5d95aca3 ]
 
-The PCIe Controller in the J7200 SoC supports a 4-lane configuration.
-However, j7200_pcie_rc_data and j7200_pcie_ep_data incorrectly set
-.max_lanes = 2, limiting operation to fewer lanes than the hardware
-supports.
+Each CEQ interrupt handler only schedules eqc->tasklet. The tasklet calls
+erdma_ceq_completion_handler(), which reads the DMA-coherent EQ ring
+through get_next_valid_eqe() and updates eq->dbrec through notify_eq().
 
-Set .max_lanes = 4 for both j7200_pcie_rc_data and j7200_pcie_ep_data to
-match the hardware capability.
+erdma_ceqs_uninit() frees each CEQ IRQ and then destroys its EQ.
+free_irq() prevents another hard IRQ and waits for an in-flight handler,
+but it does not drain a tasklet that the handler already scheduled. The
+tasklet can therefore access eq->qbuf or eq->dbrec after
+erdma_eq_destroy() frees them.
 
-See J7200 Technical Reference Manual (SPRUIU1D), section 12.2.3.1.1
-for further details: https://www.ti.com/lit/pdf/spruiu1d
+Clearing ceq_cb->ready does not synchronize with a tasklet that already
+passed the check at the start of erdma_ceq_completion_handler().
 
-Fixes: 3ac7f14084f5 ("PCI: j721e: Add per platform maximum lane settings")
-Signed-off-by: Takuma Fujiwara <t-fujiwara1@ti.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Link: https://patch.msgid.link/20260721155743.3347659-1-t-fujiwara1@ti.com
+Kill the tasklet after free_irq(), when no handler can schedule it again,
+and before erdma_ceq_uninit_one() releases the EQ buffers.
+
+Fixes: f2a0a630b953 ("RDMA/erdma: Add event queue implementation")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260721082545.47395-1-mhun512@gmail.com
+Acked-by: Cheng Xu <chengyou@linux.alibaba.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/cadence/pci-j721e.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/erdma/erdma_eq.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/controller/cadence/pci-j721e.c b/drivers/pci/controller/cadence/pci-j721e.c
-index 0413d163cfea0..e2ec684cc54ca 100644
---- a/drivers/pci/controller/cadence/pci-j721e.c
-+++ b/drivers/pci/controller/cadence/pci-j721e.c
-@@ -381,7 +381,7 @@ static const struct j721e_pcie_data j7200_pcie_rc_data = {
- 	.quirk_detect_quiet_flag = true,
- 	.linkdown_irq_regfield = J7200_LINK_DOWN,
- 	.byte_access_allowed = true,
--	.max_lanes = 2,
-+	.max_lanes = 4,
- };
+diff --git a/drivers/infiniband/hw/erdma/erdma_eq.c b/drivers/infiniband/hw/erdma/erdma_eq.c
+index 6486234a23600..5610e7f4c6bf7 100644
+--- a/drivers/infiniband/hw/erdma/erdma_eq.c
++++ b/drivers/infiniband/hw/erdma/erdma_eq.c
+@@ -219,6 +219,7 @@ static void erdma_free_ceq_irq(struct erdma_dev *dev, u16 ceqn)
  
- static const struct j721e_pcie_data j7200_pcie_ep_data = {
-@@ -389,7 +389,7 @@ static const struct j721e_pcie_data j7200_pcie_ep_data = {
- 	.quirk_detect_quiet_flag = true,
- 	.linkdown_irq_regfield = J7200_LINK_DOWN,
- 	.quirk_disable_flr = true,
--	.max_lanes = 2,
-+	.max_lanes = 4,
- };
+ 	irq_set_affinity_hint(eqc->irq.msix_vector, NULL);
+ 	free_irq(eqc->irq.msix_vector, eqc);
++	tasklet_kill(&eqc->tasklet);
+ }
  
- static const struct j721e_pcie_data am64_pcie_rc_data = {
+ static int create_eq_cmd(struct erdma_dev *dev, u32 eqn, struct erdma_eq *eq)
 -- 
 2.53.0
 
