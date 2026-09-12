@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFEF4309F08;
-	Sat, 12 Sep 2026 15:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84203438BE;
+	Sat, 12 Sep 2026 15:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225253; cv=none; b=r+FJybsLcwd3aorLaE9ca4lSSgsjIpIcrPbT7KjnC9Ia/1mOO3gE95hfkZse0xbYDhBvBkLJpOhcbWqoZVgkgU26SnF0IaFyTwrwECaZFpWZLOdDC4NC9mT35VD72IiVflF4A0iGQjdjBRmBmn+Ha6XVJ1tzsq7QEcpvfIHZoxg=
+	t=1789225259; cv=none; b=KZShGaf1bmJPQIPykXRGYdj7kAJuSW7XVoi53f1EyVii+nqOAxuJH+ulF1eA2vOtfV+F1tDQ70A+BnJln3O+kojkt03sofSH482z3P2JRlioIbLywL8ez0sfSHekHHiz4+IZSiqsRFKWrnpowZoB/NoQcUajJmxoEn8OewQ9oO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225253; c=relaxed/simple;
-	bh=InBYcX7j4TO2XQTSuw1PIJ5OqSOh3IiI9yxOw7sZfsk=;
+	s=arc-20240116; t=1789225259; c=relaxed/simple;
+	bh=9Kw8snxM0vlswyxnmdytOLIPZVc62bEbZQh6MJ4R4cg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HwknRQ8yJiKl6Yed+xvECmLYY7R9enCYJ7RphHSFEvzd9iI+dlIDkYdrtzfcYP7zQ0/BypANVN7SQ1d/96mYOW+Qy2JH9aF9sfUUgZewKQ8C4gbNrXAFHn9aG2rKl99DMybZSgOOKCDhiBv7SSyTZMy0BeWxA8+P9Kg1+09ny+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sm1VzDT/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U6YmI6TvMADrljzMsBwn0SLEXIHKKAFxWs2yPseN1tHf9/hEOervZ9ykC7w3SE0ebjBwpnnPtg3eCy1QRSs+xsacrAB5zYU832V6RR59fB3fIIc9+oHOmRjk/LlQhYi6LLbUQgJg/kHqIAeuKUbmi5+dtAzJ3bNMPIHie4XjXBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UtlH/EtY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sm1VzDT/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888281F000FF;
-	Sat, 12 Sep 2026 15:00:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UtlH/EtY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C841F000FF;
+	Sat, 12 Sep 2026 15:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225252;
-	bh=FD0fT+viQiVaBjQ3yef68jaFsppmue+Yd5bLZDODFwc=;
+	s=korg; t=1789225257;
+	bh=xXXR1plc1CxWtNSXY3yvPnaNORthOEia5OzGtI2nMsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sm1VzDT/aB8nbQ7MET0Bp65vHVQ0LuEdW0xn6xRtMig25RUNpJPN9a7/C6QU4kGNv
-	 VspJQi6GPK/RrAWEJ+tChH++vhoHX2Bw6zj6bKf3W9q7i9GX3cMFiHYBIIFTOMx0Vs
-	 brxjimSaXk/VxecxV0+upmZRzuBdmSRyw63Hw/r0=
+	b=UtlH/EtYkgSc/SAn/i+SDODVQO8Hr4Br6uTI7jbUwy7miPVq0BkpHGkTXcDVd2ocV
+	 rZIW44Pgsofo/TACM6+tdNs5Fg+iz/y/80FrfgwttKExWEZ1mTgyli7qTG9tJ/hdzP
+	 2N0ZNPMZMbGFnfd7rJHsSEFrpnkekF/vf5Dd6p5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Peisach <jpeisach@ubuntu.com>,
-	Janne Grunau <j@jannau.net>,
+	Christoph Hellwig <hch@lst.de>,
 	Nick Chan <towinchenmi@gmail.com>,
 	Sven Peter <sven@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1160/1424] nvme-apple: Never set the opcode in the NVMMU TCB
-Date: Sat, 12 Sep 2026 08:59:52 +0200
-Message-ID: <20260912065633.273141613@linuxfoundation.org>
+Subject: [PATCH 6.6 1161/1424] nvme: apple: Add Apple A11 support
+Date: Sat, 12 Sep 2026 08:59:53 +0200
+Message-ID: <20260912065633.295048105@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,36 +52,381 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Peter <sven@kernel.org>
+From: Nick Chan <towinchenmi@gmail.com>
 
-[ Upstream commit cc0fec9b42cfbc69d70cb4c4b616408a7037b445 ]
+[ Upstream commit 04d8ecf37b5e06d16228a4d37d8548c17cf70461 ]
 
-macOS always sets this to zero and the firmware starting with macOS 15
-has started to complain about what we're doing here.
+Add support for ANS2 NVMe on Apple A11 SoC.
 
-Fixes: 5bd2927aceba ("nvme-apple: Add initial Apple SoC NVMe driver")
-Tested-by: Joshua Peisach <jpeisach@ubuntu.com>
-Tested-by: Janne Grunau <j@jannau.net>
-Tested-by: Nick Chan <towinchenmi@gmail.com>
+This version of ANS2 is less quirky than the one in M1, and does not have
+NVMMU or Linear SQ. However, it still requires a non-standard 128-byte
+SQE.
+
+Acked-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Nick Chan <towinchenmi@gmail.com>
+Reviewed-by: Sven Peter <sven@kernel.org>
+Link: https://lore.kernel.org/r/20250826-t8015-nvme-v5-2-caee6ab00144@gmail.com
 Signed-off-by: Sven Peter <sven@kernel.org>
+Stable-dep-of: 8ce883fd068b ("nvme-apple: Drop the PRP null check chicken bit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/apple.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/apple.c | 197 ++++++++++++++++++++++++++------------
+ 1 file changed, 137 insertions(+), 60 deletions(-)
 
 diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
-index 932b706240f27..68b4c3ea6c4b2 100644
+index 68b4c3ea6c4b2..90d85a1bf3679 100644
 --- a/drivers/nvme/host/apple.c
 +++ b/drivers/nvme/host/apple.c
-@@ -304,7 +304,7 @@ static void apple_nvme_submit_cmd(struct apple_nvme_queue *q,
- 	u32 tag = nvme_tag_from_cid(cmd->common.command_id);
- 	struct apple_nvmmu_tcb *tcb = &q->tcbs[tag];
+@@ -35,7 +35,6 @@
+ #include "nvme.h"
  
--	tcb->opcode = cmd->common.opcode;
-+	tcb->opcode = 0;
- 	tcb->prp1 = cmd->common.dptr.prp1;
- 	tcb->prp2 = cmd->common.dptr.prp2;
- 	tcb->length = cmd->rw.length;
+ #define APPLE_ANS_BOOT_TIMEOUT	  USEC_PER_SEC
+-#define APPLE_ANS_MAX_QUEUE_DEPTH 64
+ 
+ #define APPLE_ANS_COPROC_CPU_CONTROL	 0x44
+ #define APPLE_ANS_COPROC_CPU_CONTROL_RUN BIT(4)
+@@ -75,6 +74,8 @@
+ #define APPLE_NVME_AQ_DEPTH	   2
+ #define APPLE_NVME_AQ_MQ_TAG_DEPTH (APPLE_NVME_AQ_DEPTH - 1)
+ 
++#define APPLE_NVME_IOSQES	7
++
+ /*
+  * These can be higher, but we need to ensure that any command doesn't
+  * require an sg allocation that needs more than a page of data.
+@@ -142,6 +143,7 @@ struct apple_nvme_queue {
+ 	u32 __iomem *sq_db;
+ 	u32 __iomem *cq_db;
+ 
++	u16 sq_tail;
+ 	u16 cq_head;
+ 	u8 cq_phase;
+ 
+@@ -183,11 +185,17 @@ struct apple_nvme_iod {
+ 	struct scatterlist *sg;
+ };
+ 
++struct apple_nvme_hw {
++	bool has_lsq_nvmmu;
++	u32 max_queue_depth;
++};
++
+ struct apple_nvme {
+ 	struct device *dev;
+ 
+ 	void __iomem *mmio_coproc;
+ 	void __iomem *mmio_nvme;
++	const struct apple_nvme_hw *hw;
+ 
+ 	struct device **pd_dev;
+ 	struct device_link **pd_link;
+@@ -232,10 +240,12 @@ static inline struct apple_nvme *queue_to_apple_nvme(struct apple_nvme_queue *q)
+ 
+ static unsigned int apple_nvme_queue_depth(struct apple_nvme_queue *q)
+ {
+-	if (q->is_adminq)
++	struct apple_nvme *anv = queue_to_apple_nvme(q);
++
++	if (q->is_adminq && anv->hw->has_lsq_nvmmu)
+ 		return APPLE_NVME_AQ_DEPTH;
+ 
+-	return APPLE_ANS_MAX_QUEUE_DEPTH;
++	return anv->hw->max_queue_depth;
+ }
+ 
+ static void apple_nvme_rtkit_crashed(void *cookie)
+@@ -297,7 +307,28 @@ static void apple_nvmmu_inval(struct apple_nvme_queue *q, unsigned int tag)
+ 				     "NVMMU TCB invalidation failed\n");
+ }
+ 
+-static void apple_nvme_submit_cmd(struct apple_nvme_queue *q,
++static void apple_nvme_submit_cmd_t8015(struct apple_nvme_queue *q,
++				  struct nvme_command *cmd)
++{
++	struct apple_nvme *anv = queue_to_apple_nvme(q);
++
++	spin_lock_irq(&anv->lock);
++
++	if (q->is_adminq)
++		memcpy(&q->sqes[q->sq_tail], cmd, sizeof(*cmd));
++	else
++		memcpy((void *)q->sqes + (q->sq_tail << APPLE_NVME_IOSQES),
++			cmd, sizeof(*cmd));
++
++	if (++q->sq_tail == anv->hw->max_queue_depth)
++		q->sq_tail = 0;
++
++	writel(q->sq_tail, q->sq_db);
++	spin_unlock_irq(&anv->lock);
++}
++
++
++static void apple_nvme_submit_cmd_t8103(struct apple_nvme_queue *q,
+ 				  struct nvme_command *cmd)
+ {
+ 	struct apple_nvme *anv = queue_to_apple_nvme(q);
+@@ -609,7 +640,8 @@ static inline void apple_nvme_handle_cqe(struct apple_nvme_queue *q,
+ 	__u16 command_id = READ_ONCE(cqe->command_id);
+ 	struct request *req;
+ 
+-	apple_nvmmu_inval(q, command_id);
++	if (anv->hw->has_lsq_nvmmu)
++		apple_nvmmu_inval(q, command_id);
+ 
+ 	req = nvme_find_rq(apple_nvme_queue_tagset(anv, q), command_id);
+ 	if (unlikely(!req)) {
+@@ -703,7 +735,7 @@ static int apple_nvme_create_cq(struct apple_nvme *anv)
+ 	c.create_cq.opcode = nvme_admin_create_cq;
+ 	c.create_cq.prp1 = cpu_to_le64(anv->ioq.cq_dma_addr);
+ 	c.create_cq.cqid = cpu_to_le16(1);
+-	c.create_cq.qsize = cpu_to_le16(APPLE_ANS_MAX_QUEUE_DEPTH - 1);
++	c.create_cq.qsize = cpu_to_le16(anv->hw->max_queue_depth - 1);
+ 	c.create_cq.cq_flags = cpu_to_le16(NVME_QUEUE_PHYS_CONTIG | NVME_CQ_IRQ_ENABLED);
+ 	c.create_cq.irq_vector = cpu_to_le16(0);
+ 
+@@ -731,7 +763,7 @@ static int apple_nvme_create_sq(struct apple_nvme *anv)
+ 	c.create_sq.opcode = nvme_admin_create_sq;
+ 	c.create_sq.prp1 = cpu_to_le64(anv->ioq.sq_dma_addr);
+ 	c.create_sq.sqid = cpu_to_le16(1);
+-	c.create_sq.qsize = cpu_to_le16(APPLE_ANS_MAX_QUEUE_DEPTH - 1);
++	c.create_sq.qsize = cpu_to_le16(anv->hw->max_queue_depth - 1);
+ 	c.create_sq.sq_flags = cpu_to_le16(NVME_QUEUE_PHYS_CONTIG);
+ 	c.create_sq.cqid = cpu_to_le16(1);
+ 
+@@ -783,7 +815,12 @@ static blk_status_t apple_nvme_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	}
+ 
+ 	nvme_start_request(req);
+-	apple_nvme_submit_cmd(q, cmnd);
++
++	if (anv->hw->has_lsq_nvmmu)
++		apple_nvme_submit_cmd_t8103(q, cmnd);
++	else
++		apple_nvme_submit_cmd_t8015(q, cmnd);
++
+ 	return BLK_STS_OK;
+ 
+ out_free_cmd:
+@@ -987,11 +1024,13 @@ static const struct blk_mq_ops apple_nvme_mq_ops = {
+ static void apple_nvme_init_queue(struct apple_nvme_queue *q)
+ {
+ 	unsigned int depth = apple_nvme_queue_depth(q);
++	struct apple_nvme *anv = queue_to_apple_nvme(q);
+ 
+ 	q->cq_head = 0;
+ 	q->cq_phase = 1;
+-	memset(q->tcbs, 0,
+-	       APPLE_ANS_MAX_QUEUE_DEPTH * sizeof(struct apple_nvmmu_tcb));
++	if (anv->hw->has_lsq_nvmmu)
++		memset(q->tcbs, 0, anv->hw->max_queue_depth
++			* sizeof(struct apple_nvmmu_tcb));
+ 	memset(q->cqes, 0, depth * sizeof(struct nvme_completion));
+ 	apple_nvme_enable_queue(q);
+ }
+@@ -1073,49 +1112,55 @@ static void apple_nvme_reset_work(struct work_struct *work)
+ 
+ 	dma_set_max_seg_size(anv->dev, 0xffffffff);
+ 
+-	/*
+-	 * Enable NVMMU and linear submission queues.
+-	 * While we could keep those disabled and pretend this is slightly
+-	 * more common NVMe controller we'd still need some quirks (e.g.
+-	 * sq entries will be 128 bytes) and Apple might drop support for
+-	 * that mode in the future.
+-	 */
+-	writel(APPLE_ANS_LINEAR_SQ_EN,
+-	       anv->mmio_nvme + APPLE_ANS_LINEAR_SQ_CTRL);
++	if (anv->hw->has_lsq_nvmmu) {
++		/*
++		 * Enable NVMMU and linear submission queues which is required
++		 * since T6000.
++		 */
++		writel(APPLE_ANS_LINEAR_SQ_EN,
++			anv->mmio_nvme + APPLE_ANS_LINEAR_SQ_CTRL);
+ 
+-	/* Allow as many pending command as possible for both queues */
+-	writel(APPLE_ANS_MAX_QUEUE_DEPTH | (APPLE_ANS_MAX_QUEUE_DEPTH << 16),
+-	       anv->mmio_nvme + APPLE_ANS_MAX_PEND_CMDS_CTRL);
++		/* Allow as many pending command as possible for both queues */
++		writel(anv->hw->max_queue_depth
++			| (anv->hw->max_queue_depth << 16), anv->mmio_nvme
++			+ APPLE_ANS_MAX_PEND_CMDS_CTRL);
+ 
+-	/* Setup the NVMMU for the maximum admin and IO queue depth */
+-	writel(APPLE_ANS_MAX_QUEUE_DEPTH - 1,
+-	       anv->mmio_nvme + APPLE_NVMMU_NUM_TCBS);
++		/* Setup the NVMMU for the maximum admin and IO queue depth */
++		writel(anv->hw->max_queue_depth - 1,
++			anv->mmio_nvme + APPLE_NVMMU_NUM_TCBS);
+ 
+-	/*
+-	 * This is probably a chicken bit: without it all commands where any PRP
+-	 * is set to zero (including those that don't use that field) fail and
+-	 * the co-processor complains about "completed with err BAD_CMD-" or
+-	 * a "NULL_PRP_PTR_ERR" in the syslog
+-	 */
+-	writel(readl(anv->mmio_nvme + APPLE_ANS_UNKNOWN_CTRL) &
+-		       ~APPLE_ANS_PRP_NULL_CHECK,
+-	       anv->mmio_nvme + APPLE_ANS_UNKNOWN_CTRL);
++		/*
++		 * This is probably a chicken bit: without it all commands
++		 * where any PRP is set to zero (including those that don't use
++		 * that field) fail and the co-processor complains about
++		 * "completed with err BAD_CMD-" or a "NULL_PRP_PTR_ERR" in the
++		 * syslog
++		 */
++		writel(readl(anv->mmio_nvme + APPLE_ANS_UNKNOWN_CTRL) &
++			~APPLE_ANS_PRP_NULL_CHECK,
++			anv->mmio_nvme + APPLE_ANS_UNKNOWN_CTRL);
++	}
+ 
+ 	/* Setup the admin queue */
+-	aqa = APPLE_NVME_AQ_DEPTH - 1;
++	if (anv->hw->has_lsq_nvmmu)
++		aqa = APPLE_NVME_AQ_DEPTH - 1;
++	else
++		aqa = anv->hw->max_queue_depth - 1;
+ 	aqa |= aqa << 16;
+ 	writel(aqa, anv->mmio_nvme + NVME_REG_AQA);
+ 	writeq(anv->adminq.sq_dma_addr, anv->mmio_nvme + NVME_REG_ASQ);
+ 	writeq(anv->adminq.cq_dma_addr, anv->mmio_nvme + NVME_REG_ACQ);
+ 
+-	/* Setup NVMMU for both queues */
+-	writeq(anv->adminq.tcb_dma_addr,
+-	       anv->mmio_nvme + APPLE_NVMMU_ASQ_TCB_BASE);
+-	writeq(anv->ioq.tcb_dma_addr,
+-	       anv->mmio_nvme + APPLE_NVMMU_IOSQ_TCB_BASE);
++	if (anv->hw->has_lsq_nvmmu) {
++		/* Setup NVMMU for both queues */
++		writeq(anv->adminq.tcb_dma_addr,
++			anv->mmio_nvme + APPLE_NVMMU_ASQ_TCB_BASE);
++		writeq(anv->ioq.tcb_dma_addr,
++			anv->mmio_nvme + APPLE_NVMMU_IOSQ_TCB_BASE);
++	}
+ 
+ 	anv->ctrl.sqsize =
+-		APPLE_ANS_MAX_QUEUE_DEPTH - 1; /* 0's based queue depth */
++		anv->hw->max_queue_depth - 1; /* 0's based queue depth */
+ 	anv->ctrl.cap = readq(anv->mmio_nvme + NVME_REG_CAP);
+ 
+ 	dev_dbg(anv->dev, "Enabling controller now");
+@@ -1283,8 +1328,9 @@ static int apple_nvme_alloc_tagsets(struct apple_nvme *anv)
+ 	 * both queues. The admin queue gets the first APPLE_NVME_AQ_DEPTH which
+ 	 * must be marked as reserved in the IO queue.
+ 	 */
+-	anv->tagset.reserved_tags = APPLE_NVME_AQ_DEPTH;
+-	anv->tagset.queue_depth = APPLE_ANS_MAX_QUEUE_DEPTH - 1;
++	if (anv->hw->has_lsq_nvmmu)
++		anv->tagset.reserved_tags = APPLE_NVME_AQ_DEPTH;
++	anv->tagset.queue_depth = anv->hw->max_queue_depth - 1;
+ 	anv->tagset.timeout = NVME_IO_TIMEOUT;
+ 	anv->tagset.numa_node = NUMA_NO_NODE;
+ 	anv->tagset.cmd_size = sizeof(struct apple_nvme_iod);
+@@ -1309,6 +1355,7 @@ static int apple_nvme_queue_alloc(struct apple_nvme *anv,
+ 				  struct apple_nvme_queue *q)
+ {
+ 	unsigned int depth = apple_nvme_queue_depth(q);
++	size_t iosq_size;
+ 
+ 	q->cqes = dmam_alloc_coherent(anv->dev,
+ 				      depth * sizeof(struct nvme_completion),
+@@ -1316,22 +1363,28 @@ static int apple_nvme_queue_alloc(struct apple_nvme *anv,
+ 	if (!q->cqes)
+ 		return -ENOMEM;
+ 
+-	q->sqes = dmam_alloc_coherent(anv->dev,
+-				      depth * sizeof(struct nvme_command),
++	if (anv->hw->has_lsq_nvmmu)
++		iosq_size = depth * sizeof(struct nvme_command);
++	else
++		iosq_size = depth << APPLE_NVME_IOSQES;
++
++	q->sqes = dmam_alloc_coherent(anv->dev, iosq_size,
+ 				      &q->sq_dma_addr, GFP_KERNEL);
+ 	if (!q->sqes)
+ 		return -ENOMEM;
+ 
+-	/*
+-	 * We need the maximum queue depth here because the NVMMU only has a
+-	 * single depth configuration shared between both queues.
+-	 */
+-	q->tcbs = dmam_alloc_coherent(anv->dev,
+-				      APPLE_ANS_MAX_QUEUE_DEPTH *
+-					      sizeof(struct apple_nvmmu_tcb),
+-				      &q->tcb_dma_addr, GFP_KERNEL);
+-	if (!q->tcbs)
+-		return -ENOMEM;
++	if (anv->hw->has_lsq_nvmmu) {
++		/*
++		 * We need the maximum queue depth here because the NVMMU only
++		 * has a single depth configuration shared between both queues.
++		 */
++		q->tcbs = dmam_alloc_coherent(anv->dev,
++			anv->hw->max_queue_depth *
++				sizeof(struct apple_nvmmu_tcb),
++			&q->tcb_dma_addr, GFP_KERNEL);
++		if (!q->tcbs)
++			return -ENOMEM;
++	}
+ 
+ 	/*
+ 	 * initialize phase to make sure the allocated and empty memory
+@@ -1415,6 +1468,12 @@ static struct apple_nvme *apple_nvme_alloc(struct platform_device *pdev)
+ 	anv->adminq.is_adminq = true;
+ 	platform_set_drvdata(pdev, anv);
+ 
++	anv->hw = of_device_get_match_data(&pdev->dev);
++	if (!anv->hw) {
++		ret = -ENODEV;
++		goto put_dev;
++	}
++
+ 	ret = apple_nvme_attach_genpd(anv);
+ 	if (ret < 0) {
+ 		dev_err_probe(dev, ret, "Failed to attach power domains");
+@@ -1446,10 +1505,17 @@ static struct apple_nvme *apple_nvme_alloc(struct platform_device *pdev)
+ 		goto put_dev;
+ 	}
+ 
+-	anv->adminq.sq_db = anv->mmio_nvme + APPLE_ANS_LINEAR_ASQ_DB;
+-	anv->adminq.cq_db = anv->mmio_nvme + APPLE_ANS_ACQ_DB;
+-	anv->ioq.sq_db = anv->mmio_nvme + APPLE_ANS_LINEAR_IOSQ_DB;
+-	anv->ioq.cq_db = anv->mmio_nvme + APPLE_ANS_IOCQ_DB;
++	if (anv->hw->has_lsq_nvmmu) {
++		anv->adminq.sq_db = anv->mmio_nvme + APPLE_ANS_LINEAR_ASQ_DB;
++		anv->adminq.cq_db = anv->mmio_nvme + APPLE_ANS_ACQ_DB;
++		anv->ioq.sq_db = anv->mmio_nvme + APPLE_ANS_LINEAR_IOSQ_DB;
++		anv->ioq.cq_db = anv->mmio_nvme + APPLE_ANS_IOCQ_DB;
++	} else {
++		anv->adminq.sq_db = anv->mmio_nvme + NVME_REG_DBS;
++		anv->adminq.cq_db = anv->mmio_nvme + APPLE_ANS_ACQ_DB;
++		anv->ioq.sq_db = anv->mmio_nvme + NVME_REG_DBS + 8;
++		anv->ioq.cq_db = anv->mmio_nvme + APPLE_ANS_IOCQ_DB;
++	}
+ 
+ 	anv->sart = devm_apple_sart_get(dev);
+ 	if (IS_ERR(anv->sart)) {
+@@ -1626,8 +1692,19 @@ static int apple_nvme_suspend(struct device *dev)
+ static DEFINE_SIMPLE_DEV_PM_OPS(apple_nvme_pm_ops, apple_nvme_suspend,
+ 				apple_nvme_resume);
+ 
++static const struct apple_nvme_hw apple_nvme_t8015_hw = {
++	.has_lsq_nvmmu = false,
++	.max_queue_depth = 16,
++};
++
++static const struct apple_nvme_hw apple_nvme_t8103_hw = {
++	.has_lsq_nvmmu = true,
++	.max_queue_depth = 64,
++};
++
+ static const struct of_device_id apple_nvme_of_match[] = {
+-	{ .compatible = "apple,nvme-ans2" },
++	{ .compatible = "apple,t8015-nvme-ans2", .data = &apple_nvme_t8015_hw },
++	{ .compatible = "apple,nvme-ans2", .data = &apple_nvme_t8103_hw },
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(of, apple_nvme_of_match);
 -- 
 2.53.0
 
