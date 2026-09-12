@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC34288B2;
-	Sat, 12 Sep 2026 10:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A875288B2;
+	Sat, 12 Sep 2026 10:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208635; cv=none; b=MHnOyEtFa3VThmpUoQ+h0BxgI94FZ6Merto8UHapPkJyUsFwwCuC00APUVSGi/XEk3MP5zKms7F0ve5EqMiHKgU6HBzKCoD5ZpOUK3vtSuv7iGEQ4X+o9U6xsIPQzAL6RuzL91JCRak3ol20u3ByFyouOzyswqxjtYywmzjOKQc=
+	t=1789208640; cv=none; b=lDqv2OfnVVo2cAYt1WjST0gozZb57HlES3DwqyehT6WkxNGPjpdAUgML0JfhD+XpG6G2XP/EivCgcBlGx0E78LFKLoEetQ6FMdNOWmOt49+MS0Hip9TkSJgK8zES5/m2XNTQL008kRb5B+BIF06WgrmkNaEOztJieFVDCVH7yaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208635; c=relaxed/simple;
-	bh=4Etl1ot5MRpcwOPgdec+fGgdaVfbfBirKjg84J/jpyo=;
+	s=arc-20240116; t=1789208640; c=relaxed/simple;
+	bh=qjvm+jZxTABlTyXV3gBXq4SFQHf40NSa66kv64u48cY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jZuW4TvdENXfasoL90fSyyoqtSs4ksmQzlPb02+qHC5n4PbblKFK8CtU0H0kIbugoM1pn/6w8x/5Nbrp6T7AHHqW5hqzogQ17YAN96ykftzAPMMfhUOYpv2bF1wSCg6j8ssrn+537ChHK/H6L1GPBRTM40I799kdeUyLUXmNtJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lbzVwAQ3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SSqnWJGdjtdvXSV/9bIIRepYM/vgGpowHv8/vDRstghU88/2wg5UrYXR7vwzWmt0FXUTH83f2qoy43lRLCl0D040SxB7aG/FQAD5fayqnJ6iVMNwijlTOgPitD8IoaSYzNl7wpNDy8JwHD6c2rNxIpJ09JAz2u+h6SVTdBfz0sY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZ14o3Ce; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lbzVwAQ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5021F000FF;
-	Sat, 12 Sep 2026 10:23:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZ14o3Ce"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08CB1F000FF;
+	Sat, 12 Sep 2026 10:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208633;
-	bh=qQbUyu0W3I0JdTYufapAqJS9Qx7YZzCfQkVKE3ylpGI=;
+	s=korg; t=1789208639;
+	bh=GFdYd+/9RV05h6KSZawft9asOeWdsITwxEtEFQL/n4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lbzVwAQ3tYhhzTFh/K8IWEl1qUL6AV1Q0ZFFxtJfl05/zoQ/mYsfc2KihFSAlawQk
-	 YYvxasmmgiucuLTEY5VZZxESNWEJWQrGujtIjsCV97NpkX5ePvTFhYVoylO58Iv1kV
-	 jgMEFs046lMvuNehCW/jgLScpA6XoHkUxmWaroYY=
+	b=gZ14o3Ce/XrHv2jiRXsvryPUltHzAePEsEl7lYNKiWNFTl1Xe3f9pOwBRCSvzre3Y
+	 J8fx/WpTpkL/tQvEgEmNNJ4Yd7e8CYjS6Du1Zi/gHt/Dwv61y+fsUWIXsUWJlemWqL
+	 lmWqzw1td+/xzpGaOgAWAD20Yj7vJFsdrjFm0y0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0658/1518] wifi: ath12k: fix stride mismatch in mac_phy_caps_parse()
-Date: Sat, 12 Sep 2026 08:47:07 +0200
-Message-ID: <20260912065638.317209053@linuxfoundation.org>
+Subject: [PATCH 6.18 0659/1518] wifi: ath11k: fix stride mismatch in mac_phy_caps_parse()
+Date: Sat, 12 Sep 2026 08:47:08 +0200
+Message-ID: <20260912065638.341366733@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,17 +54,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 
-[ Upstream commit 4c6eb712a91fa079be6f9f1419c96e0ad2227081 ]
+[ Upstream commit 7a246c72132eb943b5844ba79dad597b47429dba ]
 
-Currently, in ath12k_wmi_mac_phy_caps_parse(), kzalloc() sizes the
+Currently, in ath11k_wmi_tlv_mac_phy_caps_parse(), kcalloc() sizes the
 mac_phy_caps buffer as tot_phy_id * len, where len is clamped to
-min(firmware_len, sizeof(struct ath12k_wmi_mac_phy_caps_params)). The
-subsequent memcpy() destination advances by sizeof(full struct) per slot
-via C pointer arithmetic, not by the clamped len. When firmware sends
-short TLVs, the second and later slots are written past the end of the
+min(firmware_len, sizeof(struct wmi_mac_phy_capabilities)). The subsequent
+memcpy() destination advances by sizeof(full struct) per slot via C
+pointer arithmetic, not by the clamped len. When firmware sends short
+TLVs, the second and later slots are written past the end of the
 allocation.
 
-The reader in ath12k_pull_mac_phy_cap_svc_ready_ext() also indexes the
+The reader in ath11k_pull_mac_phy_cap_svc_ready_ext() also indexes the
 buffer with full-struct pointer arithmetic, so the allocation must match
 that stride.
 
@@ -72,31 +72,31 @@ Fix by using kzalloc_objs(), which derives the element size from the
 pointer type, making allocation size and pointer stride provably
 consistent regardless of what len the firmware provides.
 
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
+Compile tested only.
 
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Fixes: 5b90fc760db5 ("ath11k: fix wmi service ready ext tlv parsing")
 Assisted-by: Claude:claude-sonnet-4-6
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260728-mac_phy_caps_parse-stride-mismatch-v1-1-27a9c1a3fbd0@oss.qualcomm.com
+Link: https://patch.msgid.link/20260728-mac_phy_caps_parse-stride-mismatch-v1-2-27a9c1a3fbd0@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 8 +++++---
+ drivers/net/wireless/ath/ath11k/wmi.c | 8 +++++---
  1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 6221bf43936bc..f4392462ae3a2 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -4525,14 +4525,16 @@ static int ath12k_wmi_mac_phy_caps_parse(struct ath12k_base *soc,
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index 8fb91586abd5e..e5583cc78ba09 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -4756,14 +4756,16 @@ static int ath11k_wmi_tlv_mac_phy_caps_parse(struct ath11k_base *soc,
  	if (svc_rdy_ext->n_mac_phy_caps >= svc_rdy_ext->tot_phy_id)
  		return -ENOBUFS;
  
--	len = min_t(u16, len, sizeof(struct ath12k_wmi_mac_phy_caps_params));
+-	len = min_t(u16, len, sizeof(struct wmi_mac_phy_capabilities));
  	if (!svc_rdy_ext->n_mac_phy_caps) {
--		svc_rdy_ext->mac_phy_caps = kzalloc((svc_rdy_ext->tot_phy_id) * len,
--						    GFP_ATOMIC);
+-		svc_rdy_ext->mac_phy_caps = kcalloc(svc_rdy_ext->tot_phy_id,
+-						    len, GFP_ATOMIC);
 +		svc_rdy_ext->mac_phy_caps =
 +			kzalloc_objs(*svc_rdy_ext->mac_phy_caps,
 +				     svc_rdy_ext->tot_phy_id,
@@ -105,7 +105,7 @@ index 6221bf43936bc..f4392462ae3a2 100644
  			return -ENOMEM;
  	}
  
-+	len = min_t(u16, len, sizeof(struct ath12k_wmi_mac_phy_caps_params));
++	len = min_t(u16, len, sizeof(struct wmi_mac_phy_capabilities));
  	memcpy(svc_rdy_ext->mac_phy_caps + svc_rdy_ext->n_mac_phy_caps, ptr, len);
  	svc_rdy_ext->n_mac_phy_caps++;
  	return 0;
