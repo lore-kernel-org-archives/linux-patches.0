@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31ECF3B27C9;
-	Sat, 12 Sep 2026 18:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F9D2F617C;
+	Sat, 12 Sep 2026 18:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238597; cv=none; b=atyFvgXHNLMxzuF0viF6FTez+0ZRRnfvu8m+72ys5gdy4zzQpxvitWb9hC6FeICAC2iPp+0YERu3bIG9CjsiGvxifbFh4+RbJEpp3ipSeTerytYu8O6WN5r87G3yjCCqIvhpe3ykXesxNphQ2mc/fQcSUltdwfBDA55CYakB2F4=
+	t=1789238602; cv=none; b=j10I+axF2AYNQbhKrINidqKe0ABjxgpHSa3oHrNhPtpYexkNNgWqof9KlvGoqI/82G+M9uhshn97URFYefI321XZIJ/FHI0wH6eGKDz1hmcciL3gpURF7p7mjDbntnm6m+PJWx9P18W7khbSLlyp5vrq8k2pjABKiQsikz+r8AM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238597; c=relaxed/simple;
-	bh=B+RdO+1RJmRj65jNNu80mkoVEskkbe/QJVUL/5K2cRQ=;
+	s=arc-20240116; t=1789238602; c=relaxed/simple;
+	bh=BmeA2m/ReEsbmiQuarQIsKHz6xZ30hwA+HalW1Q0xKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HjYLBdjVEnBspMMw4wO2RB15U9jMnqSf8zg5tuOvhKk030sguLzg6PXTTRHuTEXsYcdl/IWdSsu2tI2EH3LUywQAkEL30l3p9nQmApH68YMJmXQ+Nys7PjfBGkkUTI+grlPDJcLdj0AxjIbiwcOXhylqw0O1ecVydLReF2nSClI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YuuVVbBh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t4FcKQ8Fi1ejfjnnptiuYFysIVFc/Ud/v5tcBY+HywWMY+TLBGsVK7YB61RCPUHgFusXunPtDZD/wH5PUCQFzSHby3nd1X1dZzV6kAHwV+rontVXzYxtNTq/6dJkjDa5+Bv5Aq9gzJ/FpKN7hde9KL7/CqAjWnDjxccDVwAG/UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=peclDf7D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YuuVVbBh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F5B1F000FF;
-	Sat, 12 Sep 2026 18:43:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="peclDf7D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171C31F000FF;
+	Sat, 12 Sep 2026 18:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238596;
-	bh=joffRiCpN/+Ikhu5UTh+erFo5eqa5O6EKmdN2yRZ7/Q=;
+	s=korg; t=1789238601;
+	bh=dGzcPOGR+tK0FlmW3Wutz81BaejwPpV2XCXERkTJovo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YuuVVbBhbyVIdyAStjtHCbLbqLi/hcK1xJ4N6lo34c7vdwBSxA7iL0lc9qiU8i/B6
-	 Eq+z+HkpP5hdhQ+JtJvxWGJBgSZJGqZ27ju0tv8rCP7Qyj4Q9TlOduDzEsNiWYDIUd
-	 tlj93SNVefci/sVpMBAzMxnDLyQSfSJIfH/XZ1ug=
+	b=peclDf7DykScDgNJcamz/IYGvujLcHRAQHXqHRd7pGFiduQbX00CTFpHd7ClA7niJ
+	 nKYGucYgZm1hvV5eSiCGwGZCI3/sQgoATqW7sKw4RhgLGQ/Zgi+V6qSxvUcqkPjDMW
+	 Lzoo0bTOiRqXmwwkl9EasmycduTM4vXmiNpoFaEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
+	Dan Carpenter <error27@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 451/935] greybus: audio: bound the topology section sizes against the fetched size
-Date: Sat, 12 Sep 2026 08:58:01 +0200
-Message-ID: <20260912065537.172503222@linuxfoundation.org>
+Subject: [PATCH 5.15 452/935] staging: fbtft: Use sysfs_emit_at() to print to sysfs file
+Date: Sat, 12 Sep 2026 08:58:02 +0200
+Message-ID: <20260912065537.195147621@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,54 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 33d8c7b794d2a30637c9d3fcb478f1d3222bef1e ]
+[ Upstream commit 221192a784c25e28b489a7e75fabf59be4f63d57 ]
 
-gb_audio_gb_get_topology() fetches a topology blob of a module-supplied
-size, and gbaudio_tplg_parse_data() then walks it by adding the
-module-supplied size_dais, size_controls and size_widgets fields to
-form the control, widget and route section offsets. Those le32 sizes
-are never checked against the fetched blob, so a module reporting a
-small topology size but large section sizes makes the offsets point
-past the allocation, and parsing reads out of bounds.
+This scnprintf() uses the wrong limit.  It should be "PAGE_SIZE - len"
+instead of just PAGE_SIZE.  We're not going to hit the limit in real
+life since we are printing at most FBTFT_GAMMA_MAX_VALUES_TOTAL (128)
+u32 values, however, it's still worth fixing.
 
-Reject a topology whose section sizes do not fit within the fetched
-size before it is parsed.
+Use sysfs_emit_at() to fix this since this is a sysfs file.
 
-Fixes: 184992e305f1 ("greybus: audio: Add Greybus Audio Device Class Protocol helper routines")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260616-b4-disp-4352e8b0-v1-1-3e09f62e0ad5@proton.me
+Fixes: c296d5f9957c ("staging: fbtft: core support")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Link: https://patch.msgid.link/ah_Y_Y2RtqeGxchF@stanley.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/audio_gb.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/staging/fbtft/fbtft-sysfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/greybus/audio_gb.c b/drivers/staging/greybus/audio_gb.c
-index 9d8994fdb41a2..144591f1a5128 100644
---- a/drivers/staging/greybus/audio_gb.c
-+++ b/drivers/staging/greybus/audio_gb.c
-@@ -37,6 +37,19 @@ int gb_audio_gb_get_topology(struct gb_connection *connection,
- 		return ret;
+diff --git a/drivers/staging/fbtft/fbtft-sysfs.c b/drivers/staging/fbtft/fbtft-sysfs.c
+index 39e8d28066cbe..809bf350af253 100644
+--- a/drivers/staging/fbtft/fbtft-sysfs.c
++++ b/drivers/staging/fbtft/fbtft-sysfs.c
+@@ -102,7 +102,7 @@ sprintf_gamma(struct fbtft_par *par, u32 *curves, char *buf)
+ 	mutex_lock(&par->gamma.lock);
+ 	for (i = 0; i < par->gamma.num_curves; i++) {
+ 		for (j = 0; j < par->gamma.num_values; j++)
+-			len += scnprintf(&buf[len], PAGE_SIZE,
++			len += sysfs_emit_at(buf, len,
+ 			     "%04x ", curves[i * par->gamma.num_values + j]);
+ 		buf[len - 1] = '\n';
  	}
- 
-+	/*
-+	 * The size_* fields are supplied by the module and are used by
-+	 * gbaudio_tplg_parse_data() to compute offsets into the blob; make
-+	 * sure the sections fit within the fetched topology, so walking it
-+	 * cannot read out of bounds.
-+	 */
-+	if ((u64)le32_to_cpu(topo->size_dais) + le32_to_cpu(topo->size_controls) +
-+	    le32_to_cpu(topo->size_widgets) + le32_to_cpu(topo->size_routes) >
-+	    size - sizeof(*topo)) {
-+		kfree(topo);
-+		return -EINVAL;
-+	}
-+
- 	*topology = topo;
- 
- 	return 0;
 -- 
 2.53.0
 
