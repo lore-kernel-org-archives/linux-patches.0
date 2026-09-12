@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A010137EFE2;
-	Sat, 12 Sep 2026 19:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F37C2D0C94;
+	Sat, 12 Sep 2026 19:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241843; cv=none; b=UmnNoRF5wgewae6xDAyHxQiOG9nq+SpRGfe+FbnBYIIpr70DYWTJF0+nkZMvavfLNz5XSYBGu27ahdyXxDbCLzeh45xJDhszx+8UBMRkQvNT1BPVP1v5srVkYaT5OtxXUtm+n7rEdDNJI7QHotLvsYJWhzl5NspUzmkhXzBztqY=
+	t=1789241848; cv=none; b=WIgief41XmYOWlW5Vv/to5qyFcH4EZxCSTkSC8F1EJhwQXJQwy6LwnQaaG3hRuPS3CLyFJTyQ+fMHWECTMK04nl9jleGy0C3Mu3J5QU/s5ybmdqn5D2R6s2F6iKuJVEFsQ+kRTOS1nma+xTGh4PDGWgncP3CTZzDyhFChfzfoio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241843; c=relaxed/simple;
-	bh=0zpMFaOwFuhBpAhgQowsDdvDVfWmfZ9hdc+TrHWlfMk=;
+	s=arc-20240116; t=1789241848; c=relaxed/simple;
+	bh=zlIn99PmF57OENtvz9+W9cW4ffqBFp3JJHyU3BiK6HQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ryf7o5PfEPglqe+hbsz/X4fAUppWNzOvd68Mrmyguj8Ss8YoJmM9hsih9i+MOKRM7xoN6CBIrh2xeBJSt7yNZlQh9QlOM2/9O1S0pAZ1p4rZ0vNjtvo8AkQwoQX/EwHq8d/pbA0rtESTBaIMRSaAEyiVDX0+2YiEL115rHK0KzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxMQKZRA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=odcBi/xHEtdmjBc12g6NBp0VBahzkd+K/22woXolbMoYEhzOo8dJrjbhMCB/02qytR6GHevEs5fkZPZV4i0FqOrsVEh/rF3ueGbHEk2RGO1FiJrb+DRSGVTmYxPvzS2XTWa138+1lwVCaNJeAaNXwRxsvRKLUOflRrINd2omOCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2TiMEpl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxMQKZRA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABE61F000FF;
-	Sat, 12 Sep 2026 19:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2TiMEpl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 474A41F000FF;
+	Sat, 12 Sep 2026 19:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241842;
-	bh=jZeztFFxyg2QWoOvneOOYsxEwYoSBB94ndaLAJiBtNY=;
+	s=korg; t=1789241847;
+	bh=Rko+v+jvnP2xB3kqfFvLeobmTEB2KaVfwcH1CRmEDV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sxMQKZRAsgyXcpkqLE61wDBg3Cm/n/66NlQI3mzkUk53PeOhBOooJzhaHyo3Vww8i
-	 E2JYLXXydW1mDWpHxE9rdETU99sgj0MU2N71TCyx6v1iHz6DMh4t3XqdUjGxZzMWxd
-	 S3Ou2WIZMFxMTPPcCVl0fzV/KmHfQccQRDlDghfI=
+	b=E2TiMEplyOgYZPv3qvE0ZcIdsDVOPEAWKZUZaKHsbuGGpLLApQSLmVu1nKKMW+8/Z
+	 r38ghTsTdbUis0MZYZDVRTkkXuoEbV2ZX6JBZSbKvqlozwdQrtM0lDKbl52uxVJhfg
+	 5VJwtF25uhnu3fMhIwvXZ6S2y5ybNuxENIclUMXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+fd6ef980cf1c722be639@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	Eulgyu Kim <eulgyukim@snu.ac.kr>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Lovekesh Solanki <lovekeshsolanki00@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.10 219/798] USB: gadget: fix NULL pointer dereference in gadget_dev_ioctl()
-Date: Sat, 12 Sep 2026 08:57:27 +0200
-Message-ID: <20260912065522.140326495@linuxfoundation.org>
+	Jeffin Philip <jeffinphilip14@gmail.com>
+Subject: [PATCH 5.10 220/798] usb: gadget: fix null pointer dereference in usb_put_function_instance()
+Date: Sat, 12 Sep 2026 08:57:28 +0200
+Message-ID: <20260912065522.165237255@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,46 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
+From: Jeffin Philip <jeffinphilip14@gmail.com>
 
-commit dd0eed9e165b1a6292f49e622e3dd0b7d99b106d upstream.
+commit 6e74ac5c596fd246e37eadfc354567179ccbe9aa upstream.
 
-gadget_dev_ioctl() reads dev->gadget before acquiring dev->lock, but
-dev->state is checked after acquiring the lock. Therefore a concurrent
-bind can change the device state between these operations, which can
-leave ioctl with a stale NULL gadget pointer and causing a NULL pointer
-dereference at gadget->ops->ioctl.
+usb_put_function_instance() attempts to dereference fd inside fi struct
+to get mod in uvc_alloc_inst() error path. However, fd is not allocated
+until later in try_get_usb_function_instance() after allocating fi in
+uvc_alloc_inst() and thus guranteed to be null in error path. Fix this
+by adding a null check for fi->fd that returns if fd is null.
 
-Read dev->gadget while holding dev->lock so that the gadget pointer
-and device state are sampled consistently.
-
+Reported-by: syzbot+fd6ef980cf1c722be639@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=fd6ef980cf1c722be639
+Fixes: 0062f6e56f70 ("usb: gadget: add a forward pointer from usb_function to its "instance"")
 Cc: stable <stable@kernel.org>
-Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
-Link: https://lore.kernel.org/all/20260824113510.1141236-1-jjy600901@snu.ac.kr/
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://lore.kernel.org/all/20260824113510.1141236-1-jjy600901@snu.ac.kr/
-Signed-off-by: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260825171343.459630-1-lovekeshsolanki00@gmail.com
+Signed-off-by: Jeffin Philip <jeffinphilip14@gmail.com>
+Link: https://patch.msgid.link/20260816061712.15547-1-jeffinphilip14@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/legacy/inode.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/functions.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/legacy/inode.c
-+++ b/drivers/usb/gadget/legacy/inode.c
-@@ -1249,10 +1249,11 @@ out:
- static long dev_ioctl (struct file *fd, unsigned code, unsigned long value)
+--- a/drivers/usb/gadget/functions.c
++++ b/drivers/usb/gadget/functions.c
+@@ -70,7 +70,7 @@ void usb_put_function_instance(struct us
  {
- 	struct dev_data		*dev = fd->private_data;
--	struct usb_gadget	*gadget = dev->gadget;
-+	struct usb_gadget	*gadget;
- 	long ret = -ENOTTY;
+ 	struct module *mod;
  
- 	spin_lock_irq(&dev->lock);
-+	gadget = dev->gadget;
- 	if (dev->state == STATE_DEV_OPENED ||
- 			dev->state == STATE_DEV_UNBOUND) {
- 		/* Not bound to a UDC */
+-	if (!fi)
++	if (!fi || !fi->fd)
+ 		return;
+ 
+ 	mod = fi->fd->mod;
 
 
