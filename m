@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A873382CB;
-	Sat, 12 Sep 2026 19:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDF73176EE;
+	Sat, 12 Sep 2026 19:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242230; cv=none; b=BzOJVRfBuqrApbgEpRhtdeDG4UAK5Uu6LBOnC470trXeSpv/yOpejnrckojLoPspRK6ZclSPTresqRVnTbup8zlNcy5hr+bpzLdRJw7e0zXxhf3Y/GXVm3gmOeXBD4wFGIUrds0FPsNCcpxhnKc0MbCNdDLUORLRssSqebcdoSI=
+	t=1789242233; cv=none; b=ECPucAVH2K+vbda1CB1B78Rb4c7JViadQutoFM0QCTCvC5OsGHdGFehhGhjqBTF+xwiFw+W95xWlYXG6YzBB4UEbeI8UQul4HLltU7lhdhfAXgQTRhdJMEI2PrWxfbArDuiRJTcDjjNTE9WZILRSDE5zt3Qvxp4Ru+tfEp/zef4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242230; c=relaxed/simple;
-	bh=A1W4mxk2ne3kAYIYinKMZgcPpvyFNS13JPPeEsU4t5Y=;
+	s=arc-20240116; t=1789242233; c=relaxed/simple;
+	bh=7ElQqMcbTEkLidCvu/9bvZ+4sNOS+QgUp4qB93Dbr48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PggZa47Wtmy63wCcDu2XOpb5stFLC3Ah56MnCXbTTuxyyl1vHZzNjTkO7D89V82/PTIHLVFs2xg9LNlPWLixm8wg07pIDqIj7insJXfuZn9ijDjC3GouXmzGP30fOYcaqOD1Bq7/K0kTuKduZYf6TdyCAMTgE1OaqzXTS2jvje4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVYI3S0x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mp3YwrGZ9gLbiYTxf0gJab31pgJmjNkRjoXaGD3rHtiCmNp9RJI5/tuknet3jfU/BkGKTVz9O1vN176bY2Jn6K1ayMAk1yV0yOknVxE+RtXp6/2hoRLuP3dgHUAQsks7+fpdaIPTeKDfhc7tRRJmiWaKOj/BTlduj7x2fX1BoJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtYiA/c9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVYI3S0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66ABA1F000FF;
-	Sat, 12 Sep 2026 19:43:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtYiA/c9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293551F000FF;
+	Sat, 12 Sep 2026 19:43:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242228;
-	bh=cNL68miVy6qwSI2hnmFL0HkZcPZb0A1EX4E5MFL1Qco=;
+	s=korg; t=1789242231;
+	bh=gECvuzbX/14XPdxeEovod7Pq7N1UUuElBeD2Zo4YWTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FVYI3S0xueY0P4tS5Y7wbsEQQZplcIAWiVBNg0NMUsN6mQ/LPotTqsmJMEu8ttZru
-	 3ZssKntwnln4lqNwRYzgkEyUi9aYEyq40mXc9dNkbRTGTbXIqZAB3bbGR8gOSjvLzX
-	 QTkqIBEX+uTHpPJ+qReucxG7/lUG3OkGLo3IXmQE=
+	b=FtYiA/c9XTIFE7ODNRpbqq3+U9WS/0GcSIPuGwMoJK9T6cRUFFUa4GHiK4wyKW5fm
+	 YG0B3Fc+XFwUgHl1SXj+vTY27tYm7yWm8r+wly9vqsL5ubhvPipqd3i00M+GL44O4b
+	 nR4sFUO3n2N3LtAamDo+N2k89EpBfqnDR/I8YXk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sven Eckelmann <sven@narfation.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ingo Molnar <mingo@elte.hu>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Bjoern Doebel <doebel@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 329/798] batman-adv: bla: avoid CRC corruption due to parallel claim add
-Date: Sat, 12 Sep 2026 08:59:17 +0200
-Message-ID: <20260912065524.704834785@linuxfoundation.org>
+Subject: [PATCH 5.10 330/798] perf sched: Fix register_pid() overflow, strcpy, and BUG_ON
+Date: Sat, 12 Sep 2026 08:59:18 +0200
+Message-ID: <20260912065524.727147086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -45,167 +47,146 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-commit 08645ab95768b88e2ff85a89211994651710465b upstream.
+commit 5949d339f5ec98752d56dcd4e36f619a59d513a5 upstream.
 
-batadv_bla_add_claim() is used to add claims and modify the backbone of
-claims for CLAIM frames from remote backbones and local packets. When it
-handles a claim, it needs to either
+register_pid() has several issues when processing untrusted perf.data:
 
-* add the new claim's CRC to the backbone CRC
-* remove the already existing claim's CRC from the old backbone and add it
-  to the new backbone
+1. Integer overflow: (pid + 1) * sizeof(struct task_desc *) can wrap
+   to a small value on 32-bit systems when pid is large (e.g.
+   0x40000000), causing realloc to return a tiny buffer followed by
+   out-of-bounds writes in the initialization loop.
 
-But when the "new" claim code was running in parallel to the "change
-backbone" code, it can happen that the CRC was invalid because the
-backbone_gw of the claim was changed twice in the "new" claim code path:
+2. Heap buffer overflow: strcpy(task->comm, comm) copies the
+   untrusted comm string into a fixed 20-byte COMM_LEN buffer with
+   no length check.
 
-* CPU0 creates the claim for gateway A and publishes it in the claim
-  hash. The crc16 of the address has not yet been added to A's crc at
-  this point.
+3. BUG_ON on allocation failure: perf.data is untrusted input, so
+   allocation failures should be handled gracefully rather than
+   killing the process.
 
-* CPU1 processes a claim frame of gateway B for the same client, finds
-  the just published claim, and performs the ownership change: it
-  switches the pointer to B, removes the crc16 from A's crc - which
-  never contained it - and adds it to B's crc.
+4. Realloc of sched->tasks assigned directly back, leaking the old
+   pointer on failure; nr_tasks incremented before the realloc,
+   leaving corrupted state on failure.
 
-* CPU0 continues behind the creation branch, unconditionally switches
-  the pointer back to A without compensating B's crc (its remove_crc
-  is false for the creation path), and finally adds the crc16 to A's
-  crc
+Cap pid at PID_MAX_LIMIT (4194304, matching the kernel's maximum
+on 64-bit), replace strcpy with strlcpy, guard against NULL comm,
+replace BUG_ON with NULL returns using safe realloc patterns, and
+add NULL checks in callers that dereference the result.
 
-The CRC is then wrong for both:
-
-* claim belongs to A: but CRC is not part of backbone A's CRC
-* claim doesn't belong to B: CRC is still part of backbone B's CRC
-
-This wrong CRC is never recomputated from the stored claims. For local
-backbone claims, this can also not recovered using syncs.
-
-To avoid this, split the functionality in clear separate parts:
-
-* new claim which always adds claim CRC to the backbone CRC (but never
-  changes the already set backbone_gw of the claim back)
-
-* update of existing claim which automatically changes the backbone_gw
-  entry and only updates both backbone CRCs when there was an actual change
-
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
-[ Context ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Fixes: ec156764d424 ("perf sched: Import schedbench.c")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Ingo Molnar <mingo@elte.hu>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+[doebel: context adjustment for 5.10]
+Signed-off-by: Bjoern Doebel <doebel@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/bridge_loop_avoidance.c | 63 ++++++++++++++++----------
- 1 file changed, 39 insertions(+), 24 deletions(-)
+ tools/perf/builtin-sched.c | 40 ++++++++++++++++++++++++++++----------
+ 1 file changed, 30 insertions(+), 10 deletions(-)
 
-diff --git a/net/batman-adv/bridge_loop_avoidance.c b/net/batman-adv/bridge_loop_avoidance.c
-index 533a20751b80d..f90fe509e5582 100644
---- a/net/batman-adv/bridge_loop_avoidance.c
-+++ b/net/batman-adv/bridge_loop_avoidance.c
-@@ -698,12 +698,14 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
- 	struct batadv_bla_backbone_gw *old_backbone_gw;
- 	struct batadv_bla_claim *claim;
- 	struct batadv_bla_claim search_claim;
--	bool remove_crc = false;
- 	int hash_added;
-+	u16 claim_crc;
-+	bool changed;
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index 4f8658f5f9dee..c57df485cc91b 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -50,6 +50,7 @@
+ #define COMM_LEN		20
+ #define SYM_LEN			129
+ #define MAX_PID			1024000
++#define PID_MAX_LIMIT		4194304 /* kernel limit on 64-bit */
  
- 	ether_addr_copy(search_claim.addr, mac);
- 	search_claim.vid = vid;
- 	claim = batadv_claim_hash_find(bat_priv, &search_claim);
-+	claim_crc = crc16(0, mac, ETH_ALEN);
+ static const char *cpu_list;
+ static DECLARE_BITMAP(cpu_bitmap, MAX_NR_CPUS);
+@@ -446,17 +447,28 @@ static void add_sched_event_sleep(struct perf_sched *sched, struct task_desc *ta
+ static struct task_desc *register_pid(struct perf_sched *sched,
+ 				      unsigned long pid, const char *comm)
+ {
+-	struct task_desc *task;
++	struct task_desc *task, **tasks_p;
+ 	static int pid_max;
  
- 	/* create a new claim entry if it does not exist yet. */
- 	if (!claim) {
-@@ -735,43 +737,56 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
- 			kfree(claim);
- 			return;
- 		}
-+
-+		spin_lock_bh(&backbone_gw->crc_lock);
-+		backbone_gw->crc ^= claim_crc;
-+		spin_unlock_bh(&backbone_gw->crc_lock);
-+
-+		WRITE_ONCE(backbone_gw->lasttime, jiffies);
-+
-+		batadv_claim_put(claim);
-+		return;
++	/* perf.data is untrusted — cap pid to prevent overflow in size calculations */
++	if (pid >= PID_MAX_LIMIT) {
++		pr_err("pid %lu exceeds limit %d, skipping\n", pid, PID_MAX_LIMIT);
++		return NULL;
 +	}
 +
-+	WRITE_ONCE(claim->lasttime, jiffies);
+ 	if (sched->pid_to_task == NULL) {
+ 		if (sysctl__read_int("kernel/pid_max", &pid_max) < 0)
+ 			pid_max = MAX_PID;
+-		BUG_ON((sched->pid_to_task = calloc(pid_max, sizeof(struct task_desc *))) == NULL);
++		sched->pid_to_task = calloc(pid_max, sizeof(struct task_desc *));
++		if (sched->pid_to_task == NULL)
++			return NULL;
+ 	}
+ 	if (pid >= (unsigned long)pid_max) {
+-		BUG_ON((sched->pid_to_task = realloc(sched->pid_to_task, (pid + 1) *
+-			sizeof(struct task_desc *))) == NULL);
++		void *p = realloc(sched->pid_to_task, (pid + 1) * sizeof(struct task_desc *));
 +
-+	/* replace backbone_gw atomically and adjust reference counters */
-+	spin_lock_bh(&claim->backbone_lock);
-+	if (claim->backbone_gw != backbone_gw) {
-+		changed = true;
-+
-+		old_backbone_gw = claim->backbone_gw;
-+		kref_get(&backbone_gw->refcount);
-+		claim->backbone_gw = backbone_gw;
- 	} else {
--		WRITE_ONCE(claim->lasttime, jiffies);
--		if (claim->backbone_gw == backbone_gw)
--			/* no need to register a new backbone */
--			goto claim_free_ref;
-+		old_backbone_gw = NULL;
-+		changed = false;
-+	}
-+	spin_unlock_bh(&claim->backbone_lock);
++		if (p == NULL)
++			return NULL;
++		sched->pid_to_task = p;
+ 		while (pid >= (unsigned long)pid_max)
+ 			sched->pid_to_task[pid_max++] = NULL;
+ 	}
+@@ -467,9 +479,11 @@ static struct task_desc *register_pid(struct perf_sched *sched,
+ 		return task;
  
-+	if (changed) {
- 		batadv_dbg(BATADV_DBG_BLA, bat_priv,
- 			   "%s(): changing ownership for %pM, vid %d to gw %pM\n",
- 			   __func__, mac, batadv_print_vid(vid),
- 			   backbone_gw->orig);
+ 	task = zalloc(sizeof(*task));
++	if (task == NULL)
++		return NULL;
+ 	task->pid = pid;
+-	task->nr = sched->nr_tasks;
+-	strcpy(task->comm, comm);
++	if (comm)
++		strlcpy(task->comm, comm, sizeof(task->comm));
+ 	/*
+ 	 * every task starts in sleeping state - this gets ignored
+ 	 * if there's no wakeup pointing to this sleep state:
+@@ -477,10 +491,12 @@ static struct task_desc *register_pid(struct perf_sched *sched,
+ 	add_sched_event_sleep(sched, task, 0, 0);
  
--		remove_crc = true;
--	}
-+		/* add claim address to new backbone_gw */
-+		spin_lock_bh(&backbone_gw->crc_lock);
-+		backbone_gw->crc ^= claim_crc;
-+		spin_unlock_bh(&backbone_gw->crc_lock);
+ 	sched->pid_to_task[pid] = task;
+-	sched->nr_tasks++;
+-	sched->tasks = realloc(sched->tasks, sched->nr_tasks * sizeof(struct task_desc *));
+-	BUG_ON(!sched->tasks);
+-	sched->tasks[task->nr] = task;
++	tasks_p = realloc(sched->tasks, (sched->nr_tasks + 1) * sizeof(struct task_desc *));
++	if (!tasks_p)
++		return NULL;
++	sched->tasks = tasks_p;
++	sched->tasks[sched->nr_tasks] = task;
++	task->nr = sched->nr_tasks++;
  
--	/* replace backbone_gw atomically and adjust reference counters */
--	spin_lock_bh(&claim->backbone_lock);
--	old_backbone_gw = claim->backbone_gw;
--	kref_get(&backbone_gw->refcount);
--	claim->backbone_gw = backbone_gw;
--	spin_unlock_bh(&claim->backbone_lock);
-+		WRITE_ONCE(backbone_gw->lasttime, jiffies);
-+	}
+ 	if (verbose > 0)
+ 		printf("registered task #%ld, PID %ld (%s)\n", sched->nr_tasks, pid, comm);
+@@ -824,6 +840,8 @@ replay_wakeup_event(struct perf_sched *sched,
  
--	if (remove_crc) {
-+	if (old_backbone_gw) {
- 		/* remove claim address from old backbone_gw */
- 		spin_lock_bh(&old_backbone_gw->crc_lock);
--		old_backbone_gw->crc ^= crc16(0, claim->addr, ETH_ALEN);
-+		old_backbone_gw->crc ^= claim_crc;
- 		spin_unlock_bh(&old_backbone_gw->crc_lock);
--	}
--
--	batadv_backbone_gw_put(old_backbone_gw);
+ 	waker = register_pid(sched, sample->tid, "<unknown>");
+ 	wakee = register_pid(sched, pid, comm);
++	if (waker == NULL || wakee == NULL)
++		return -1;
  
--	/* add claim address to new backbone_gw */
--	spin_lock_bh(&backbone_gw->crc_lock);
--	backbone_gw->crc ^= crc16(0, claim->addr, ETH_ALEN);
--	spin_unlock_bh(&backbone_gw->crc_lock);
--	WRITE_ONCE(backbone_gw->lasttime, jiffies);
-+		batadv_backbone_gw_put(old_backbone_gw);
-+	}
+ 	add_sched_event_wakeup(sched, waker, sample->time, wakee);
+ 	return 0;
+@@ -866,6 +884,8 @@ static int replay_switch_event(struct perf_sched *sched,
  
--claim_free_ref:
- 	batadv_claim_put(claim);
- }
+ 	prev = register_pid(sched, prev_pid, prev_comm);
+ 	next = register_pid(sched, next_pid, next_comm);
++	if (prev == NULL || next == NULL)
++		return -1;
+ 
+ 	sched->cpu_last_switched[cpu] = timestamp;
  
 -- 
 2.53.0
