@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E25A2F617C;
-	Sat, 12 Sep 2026 11:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FA53F788A;
+	Sat, 12 Sep 2026 11:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214339; cv=none; b=LGn/qhTU5KucfCscHpCaICLaASSLElAKtLhTr+N3xUpkUo8mEiKxVGnsVvDXKUzqkNYr35DCjI7ZCDM1ZXLew6tC82BJpXLXxLfYU+e89c7ZupkrxWaiiykDLrq42NL9og2ltGqRLO72Zu9T+4fim1ZXLF/bi0/c1MjLjfNFSP0=
+	t=1789214344; cv=none; b=WGO0bENOSWjaYghTHjk91UypuhNU0joMR0VX56st/lgY4tny8xQ0foIbwZ8ni+m3QPDNjmNw4mr0iOdK9l/RKSGs+7Pz/TjVn3bbWrEdiPnYQGae+TI0sfcks/6n3mE1PPbdIPgLE1tjKh5AxvDQle6o2PEAzCyACtDU8xi4dk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214339; c=relaxed/simple;
-	bh=IFy7CnI12KaFOGk0PrZ9dwvGaDDnX7zRpu0q13Onq/Y=;
+	s=arc-20240116; t=1789214344; c=relaxed/simple;
+	bh=yget+FzVL+RtoDAxGLtHaHOUWdXFpUmk4awyO+oehl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ft5TVsLhJvLi3DOnBU1SsWh3yFIbyB2sWNIxfh3Ku5PqLK5mXU5z9AZBX3ZouzjXzL1bHLKH0Nv8DRxGDjaTKASzp9e2R8ZjPtug1ozuiQTlMCbsHWHi1swxZAm7ihTMmrXudejXFqKnwLoyuH0mHFey7zJBDqNa6j8bFAmOMX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKYLvnR+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QFZf/DOEMiUAu5AVeglBb6ITCo3bvKtLDOsoSBoNXQIOrPkwa5c6b0xA2MA0wcdsCKKybQfms01dxqTEjnE1PNbD6dRfwWBOlK6QRtppRcd+Prhjh7P6Rynlk/1MAmPMQh7ChJV/eVDKYtJ0y+4Wc2Z27fl4iwjETky4pptXZ9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SuPJkQqM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKYLvnR+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9318E1F000FF;
-	Sat, 12 Sep 2026 11:58:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SuPJkQqM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351121F000FF;
+	Sat, 12 Sep 2026 11:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214338;
-	bh=6tI2Xhn7o4CYsUUTb4/HwkkV3zwxwz+B8lLB8DgHmeo=;
+	s=korg; t=1789214343;
+	bh=Ss0KGOKEFmnP8SKf01BIRTZ5si2ZL+OzyfKjyT0s03k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OKYLvnR+X040uxgnCcJ6mQnmTECwvQ9CVfDFgp0Pjwvz/UV2lMbcl+N6/x+atPvkB
-	 rASXbjPakIQ+0255HAvqYfRD+Wz/WJRQiv3lNmh8X5KCS9UWBRTo7YmgwI+z91H4+Y
-	 X+WqWwEZdCp/Pg1DLmHy/lECXCT9qmYIF0280AIA=
+	b=SuPJkQqM7lSHOV7f9ex/X6mgKm8YSzjgn+2XJvaVeWGYC6ZvuXzi2r/UQto6ZhfEq
+	 U4fB3D2QNpem33hRydpD5rm+VMaeFy0Bmt7Cft1ds55oKrWaM559l9vmJu7QxRg7tP
+	 LxwH9VoxqthGGTU8GymsG0PzGKdsGOBydLasCUeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Bumjin Im <imbumjin@gmail.com>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0306/1376] mm/damon/core: skip aging from repeated aggressive merging
-Date: Sat, 12 Sep 2026 08:45:32 +0200
-Message-ID: <20260912065614.370091166@linuxfoundation.org>
+Subject: [PATCH 6.12 0307/1376] Smack: Fix error in capability bypass
+Date: Sat, 12 Sep 2026 08:45:33 +0200
+Message-ID: <20260912065614.393045259@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,97 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Casey Schaufler <casey@schaufler-ca.com>
 
-[ Upstream commit 0250dbe08c730d003ef9f484da56ae09a1ea0c4c ]
+[ Upstream commit b2faddc13112489f8f11eb40b9456db8c1b58362 ]
 
-The number of DAMON regions could temporarily exceed the user-defined
-maximum number of regions limit for corner cases.  For example, users
-could lower the limit via runtime parameters update.  For such a case,
-kdamond_merge_regions() repeats merging regions in the case doubling the
-merge threshold.  The repeated merge operation could update the age of
-regions multiple times.  This corrupts the monitoring results.  Fix the
-issue by asking the merge operation to skip aging for the corner case.
+A bug in smack_inode_xattr_skipcap() was introduced in the inode
+capability handling. The strncmp guard at the top of the function
+is coded backwards, resulting in consistently incorrect results.
+Correct the check, and the code functions as it should. The error
+manifests as requiring CAP_SYS_ADMIN as well as CAP_MAC_ADMIN to
+change an inode's MAC attributes.
 
-The user impact is degradation of the monitoring quality.  The impact
-should be mild, since the degradation is only temporal, and it is not
-common to happen in realistic setups.
-
-The issue was discovered [1,2] by Sashiko.
-
-Link: https://lore.kernel.org/20260712165432.87609-1-sj@kernel.org
-Link: https://lore.kernel.org/20260621203548.10718-1-sj@kernel.org [1]
-Link: https://lore.kernel.org/20260709145425.96247-1-sj@kernel.org [2]
-Fixes: 310d6c15e910 ("mm/damon/core: merge regions aggressively when max_nr_regions is unmet")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.10
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 61df7b828204 ("lsm: fixup the inode xattr capability handling")
+Reported-by: Bumjin Im <imbumjin@gmail.com>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c             | 17 +++++++++++------
- mm/damon/tests/core-kunit.h |  2 +-
- 2 files changed, 12 insertions(+), 7 deletions(-)
+ security/smack/smack_lsm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 71264018cf2d1..8901a80c8a21f 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1786,15 +1786,17 @@ static void damon_merge_two_regions(struct damon_target *t,
-  * sz_limit	size upper limit of each region
+diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
+index 7a9b20a576c62..cc1f0014a10f1 100644
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -1329,7 +1329,7 @@ static int smack_inode_getattr(const struct path *path)
   */
- static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
--				   unsigned long sz_limit)
-+		unsigned long sz_limit, bool count_age)
+ static int smack_inode_xattr_skipcap(const char *name)
  {
- 	struct damon_region *r, *prev = NULL, *next;
+-	if (strncmp(name, XATTR_SMACK_SUFFIX, strlen(XATTR_SMACK_SUFFIX)))
++	if (strncmp(name, XATTR_SMACK_SUFFIX, strlen(XATTR_SMACK_SUFFIX)) == 0)
+ 		return 0;
  
- 	damon_for_each_region_safe(r, next, t) {
--		if (abs(r->nr_accesses - r->last_nr_accesses) > thres)
--			r->age = 0;
--		else
--			r->age++;
-+		if (count_age) {
-+			if (abs(r->nr_accesses - r->last_nr_accesses) > thres)
-+				r->age = 0;
-+			else
-+				r->age++;
-+		}
- 
- 		if (prev && prev->ar.end == r->ar.start &&
- 		    abs(prev->nr_accesses - r->nr_accesses) <= thres &&
-@@ -1828,15 +1830,18 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
- 	struct damon_target *t;
- 	unsigned int nr_regions;
- 	unsigned int max_thres;
-+	bool count_age = true;
- 
- 	max_thres = c->attrs.aggr_interval /
- 		(c->attrs.sample_interval ?  c->attrs.sample_interval : 1);
- 	do {
- 		nr_regions = 0;
- 		damon_for_each_target(t, c) {
--			damon_merge_regions_of(t, threshold, sz_limit);
-+			damon_merge_regions_of(t, threshold, sz_limit,
-+					count_age);
- 			nr_regions += damon_nr_regions(t);
- 		}
-+		count_age = false;
- 		threshold = max(1, threshold * 2);
- 	} while (nr_regions > c->attrs.max_nr_regions &&
- 			threshold / 2 < max_thres);
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 1039d2f793b9b..ff9f73579f7b3 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -266,7 +266,7 @@ static void damon_test_merge_regions_of(struct kunit *test)
- 		damon_add_region(r, t);
- 	}
- 
--	damon_merge_regions_of(t, 9, 9999);
-+	damon_merge_regions_of(t, 9, 9999, true);
- 	/* 0-112, 114-130, 130-156, 156-170 */
- 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 5u);
- 	if (damon_nr_regions(t) != 5)
+ 	if (strcmp(name, XATTR_NAME_SMACK) == 0 ||
 -- 
 2.53.0
 
