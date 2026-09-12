@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55841F1534;
-	Sat, 12 Sep 2026 08:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B351F1534;
+	Sat, 12 Sep 2026 08:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201669; cv=none; b=TUQOxR8Nf7ry2HKsdspr+ObxZDRqAcwtyW4vIAkjTmWUzjo0kBsHNZRtnrZyb1X0Z3xnnNq5CNauA/HyZFLM7FD7T/cieTEXtm7Q0i7zV6K1aimxrrD7DHmBd3pweQU8UW9SouYy1s2SfE5YEZiRcTzt/tFEm176cAGM7LVbOS0=
+	t=1789201674; cv=none; b=N6nLhBAtII6gWDxKVG3kbet/uPH9Ct/R8rBBNaYwq9lYrnqs/JlCQ9aMQoUxy6a3RmGK2zxBy2jhxa2BeB2xKz07WjHIMYwEZxc3NwDXxrl4YZi+LL8ymB5Cz0vu1KHZS/q52pUjHCmzaVF31afOxOzCb05hrXzvVPPVFVg8+ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201669; c=relaxed/simple;
-	bh=ZgLHCPc4J/k+NKEHDz0MGx1ZALgwe5J5tT2QUSmjhBM=;
+	s=arc-20240116; t=1789201674; c=relaxed/simple;
+	bh=eBCdmX3bj4KSUM04wWgscuh9p83Cdd56wHquUJ/5vc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h9UFhExIlN0Ejpfk+of1TL5uFnWoSz1asp11IUQtlNcfJKr9/1DDkiB4apxbajEJNVn9wwi4Y/ph2vVBOUIiMlSX7LM9o3Q7krLXWmj/28KTd7I9ulsj1KeoBZPxpjopttBk8bmkgYSgsAJNvNENHwlLRHODlr/uxS6Bj9yn98U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OmI5ndRN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=aOY5Hb10NsMrHYQVUWhSytFQtBAwQZ+8wOFmH0xrD5jO7lcTG+QTo+HhcvrCRvJi5M3sKaIEVz1T5YONZb8uG6JAagXYhfV9Q7OTJEjIrqAkJ6yB4BYx2VViw9ajprbGprs4jhOvZgQ0WggotnyzW5nl+beL5p80DDKu3DbKNQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQDfhdrC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmI5ndRN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F8CF1F000FF;
-	Sat, 12 Sep 2026 08:27:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQDfhdrC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591781F000FF;
+	Sat, 12 Sep 2026 08:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201667;
-	bh=QJPJhBUZhEm52hDPZTYBUUW5Lhn8ieNFK0TpxCDr4/0=;
+	s=korg; t=1789201672;
+	bh=wzdlEvAUQTrg5rBEf5hzRLQAmOh0owdP2tZSxWhcn+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OmI5ndRNZ+02wDltMoh4h2nUT4TE5sN9jKt7s3T6RwB9JURCFurRc+GRrdGisiiaD
-	 ruQYPBS7mZrXoZcYA0FOHzRrcW79aZZjjoi4Om8hgX0DPXfA0K3Fwx18cvR5nA90TU
-	 DpUm9kMUNUcgSdzvSxZ8BYu5rXiDz/kegerj5N+0=
+	b=uQDfhdrCYlFSXF1NO+ciz5+Am16/0ZgccEibS5DYhdBOb2fYM0hgkUsKy5k8/9c6P
+	 4eFME4Y7T+LxLCvAdVKEAkHTGRFreyhgSRpYLzOVmSyBsV1DRK/28GRBK0tBWgAo99
+	 F7KzcCjr6pLeOyo74w8+AYy0KilPPB140NrRb0HY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Jun Piao <piaojun@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	=?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20 ?= <Yeking@Red54.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1042/1815] ocfs2: validate inline xattrs during inode block validation
-Date: Sat, 12 Sep 2026 08:46:32 +0200
-Message-ID: <20260912065713.481340303@linuxfoundation.org>
+Subject: [PATCH 7.2 1007/1815] HID: i2c-hid: Refactor _DSM helper and add i2c-hid-acpi-prp0001 driver
+Date: Sat, 12 Sep 2026 08:45:57 +0200
+Message-ID: <20260912065712.645935140@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,250 +45,300 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
 
-[ Upstream commit 8914a3330b72378136c2c02d6328a826f6abdad7 ]
+[ Upstream commit fd7c67d05fb695b1deb07f9e213dd7e80e3a8427 ]
 
-Patch series "ocfs2: validate xattr entry bounds", v7.
+Move the _DSM call that gets the HID descriptor address from
+i2c-hid-acpi.c into i2c-hid-acpi.h as a static inline so both the ACPI
+and the new PRP0001 driver can use it. While refactoring, move the
+blacklist check and the _DSM call to the top of probe() to avoid a
+pointless alloc when the device is blacklisted or does not implement the
+_DSM.
 
-This series validates OCFS2 xattr entry name/value bounds when xattr
-metadata is read and validated, before getxattr() or listxattr() can walk
-out-of-range entry arrays or offsets from corrupted metadata.
+Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3,
+are declared with _HID "PRP0001" and _DSD compatible "hid-over-i2c" but
+lack "hid-descr-addr" from the _DSD and provide the HID descriptor
+address only through an ACPI _DSM. The OF driver fails to probe them
+because it requires hid-descr-addr. Add a new driver that handles these
+devices by calling the shared _DSM helper.
 
-This patch (of 2):
-
-ocfs2_validate_inode_block() verifies a dinode before OCFS2 users walk
-metadata from it, but inline xattr metadata is still checked only in
-operation-specific consumers.  The existing ibody lookup helper validates
-inline header placement and entry count, but inode block validation does
-not reject entry name/value bounds.
-
-Add a flat xattr entry validator and call it from inode block validation
-for inline xattrs.  Keep the operation paths on their existing
-header/count lookup checks; the full entry bounds check now runs when the
-inode block is validated at read time.
-
-Reject corrupted inline xattr metadata before ocfs2_xattr_ibody_get() or
-listxattr() can walk past the inline storage.
-
-Validation reproduced this kernel report:
-BUG: KASAN: use-after-free in ocfs2_xattr_find_entry+0x5a/0x170
-Read of size 2 at addr ffff8881242a2000 by task python3/529
-Call Trace:
-  dump_stack_lvl+0x66/0xa0
-  print_report+0xce/0x630
-  kasan_report+0xe0/0x110
-  ocfs2_xattr_find_entry+0x5a/0x170
-  ocfs2_xattr_get_nolock+0x20a/0x820
-  ocfs2_xattr_get+0x10c/0x1e0
-  __vfs_getxattr+0xe2/0x130
-  vfs_getxattr+0x185/0x1b0
-
-Link: https://lore.kernel.org/20260705025311.3429854-1-zzzccc427@gmail.com
-Link: https://lore.kernel.org/20260705025311.3429854-2-zzzccc427@gmail.com
-Fixes: cf1d6c763fbc ("ocfs2: Add extended attribute support")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Assisted-by: Codex:gpt-5.5
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/tencent_F6FC553D1BB737FC00062AD0FEF43C580F0A@qq.com
+Fixes: b33752c30023 ("HID: i2c-hid: Reorganize so ACPI and OF are separate modules")
+Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/inode.c |   4 ++
- fs/ocfs2/xattr.c | 118 +++++++++++++++++++++++++++++++++++++++++------
- fs/ocfs2/xattr.h |   2 +
- 3 files changed, 111 insertions(+), 13 deletions(-)
+ drivers/hid/i2c-hid/Makefile               |   2 +-
+ drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c | 104 +++++++++++++++++++++
+ drivers/hid/i2c-hid/i2c-hid-acpi.c         |  52 +++--------
+ drivers/hid/i2c-hid/i2c-hid-acpi.h         |  33 +++++++
+ 4 files changed, 152 insertions(+), 39 deletions(-)
+ create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
+ create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi.h
 
-diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
-index 662dbc845b8bd..815bf3f659da0 100644
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -1608,6 +1608,10 @@ int ocfs2_validate_inode_block(struct super_block *sb,
- 		goto bail;
- 	}
+diff --git a/drivers/hid/i2c-hid/Makefile b/drivers/hid/i2c-hid/Makefile
+index 55bd5e0f35af3..38d5d827f3ce4 100644
+--- a/drivers/hid/i2c-hid/Makefile
++++ b/drivers/hid/i2c-hid/Makefile
+@@ -8,7 +8,7 @@ obj-$(CONFIG_I2C_HID_CORE)			+= i2c-hid.o
+ i2c-hid-objs					=  i2c-hid-core.o
+ i2c-hid-$(CONFIG_DMI)				+= i2c-hid-dmi-quirks.o
  
-+	rc = ocfs2_validate_inode_xattr(sb, bh->b_blocknr, di);
-+	if (rc)
-+		goto bail;
+-obj-$(CONFIG_I2C_HID_ACPI)			+= i2c-hid-acpi.o
++obj-$(CONFIG_I2C_HID_ACPI)			+= i2c-hid-acpi.o i2c-hid-acpi-prp0001.o
+ obj-$(CONFIG_I2C_HID_OF)			+= i2c-hid-of.o
+ obj-$(CONFIG_I2C_HID_OF_ELAN)			+= i2c-hid-of-elan.o
+ obj-$(CONFIG_I2C_HID_OF_GOODIX)			+= i2c-hid-of-goodix.o
+diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
+new file mode 100644
+index 0000000000000..d2cf4714ae7f1
+--- /dev/null
++++ b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
+@@ -0,0 +1,104 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * HID over I2C driver for PRP0001 devices missing hid-descr-addr
++ *
++ * Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3, use
++ * _HID "PRP0001" with _DSD compatible "hid-over-i2c" but lack "hid-descr-addr"
++ * from the _DSD. The HID descriptor address is provided only through an ACPI
++ * _DSM. The TPD0 node in the DSDT shows _DSM Function 1 returning 0x20.
++ *
++ * Copyright (C) 2026 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
++ */
 +
- 	if (le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL) {
- 		struct ocfs2_inline_data *data = &di->id2.i_data;
- 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index f1b3aaab6a714..5e9a2f7353725 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -948,41 +948,133 @@ static int ocfs2_xattr_list_entries(struct inode *inode,
- 	return result;
- }
- 
--static int ocfs2_xattr_ibody_lookup_header(struct inode *inode,
--					   struct ocfs2_dinode *di,
--					   struct ocfs2_xattr_header **header)
-+static int ocfs2_validate_xattr_entries_flat(struct super_block *sb, u64 blkno,
-+					     struct ocfs2_xattr_header *xh,
-+					     size_t region_size)
++#include <linux/delay.h>
++#include <linux/device.h>
++#include <linux/i2c.h>
++#include <linux/module.h>
++#include <linux/of.h>
++
++#include "i2c-hid.h"
++#include "i2c-hid-acpi.h"
++
++static int i2c_hid_acpi_prp0001_power_up(struct i2chid_ops *ops)
 +{
-+	u16 xattr_count = le16_to_cpu(xh->xh_count);
-+	size_t entries_limit = region_size;
-+	size_t nv_limit = region_size;
-+	size_t max_entries;
-+	int i;
-+
-+	if (region_size < sizeof(*xh))
-+		return ocfs2_error(sb,
-+				   "Invalid xattr in block %llu: region size %zu is too small\n",
-+				   (unsigned long long)blkno, region_size);
-+
-+	max_entries = (entries_limit - sizeof(*xh)) /
-+		      sizeof(struct ocfs2_xattr_entry);
-+
-+	if (xattr_count > max_entries)
-+		return ocfs2_error(sb,
-+				   "Invalid xattr in block %llu: entry count %u exceeds maximum %zu\n",
-+				   (unsigned long long)blkno,
-+				   xattr_count, max_entries);
-+
-+	for (i = 0; i < xattr_count; i++) {
-+		struct ocfs2_xattr_entry *xe = &xh->xh_entries[i];
-+		size_t name_offset = le16_to_cpu(xe->xe_name_offset);
-+		size_t value_offset;
-+
-+		if (name_offset > nv_limit ||
-+		    xe->xe_name_len > nv_limit - name_offset)
-+			return ocfs2_error(sb,
-+					   "Invalid xattr in block %llu: entry %d name is out of bounds\n",
-+					   (unsigned long long)blkno, i);
-+
-+		value_offset = name_offset + OCFS2_XATTR_SIZE(xe->xe_name_len);
-+		if (value_offset > nv_limit)
-+			return ocfs2_error(sb,
-+					   "Invalid xattr in block %llu: entry %d value starts out of bounds\n",
-+					   (unsigned long long)blkno, i);
-+
-+		if (ocfs2_xattr_is_local(xe)) {
-+			if (le64_to_cpu(xe->xe_value_size) >
-+			    nv_limit - value_offset)
-+				return ocfs2_error(sb,
-+						   "Invalid xattr in block %llu: entry %d value is out of bounds\n",
-+						   (unsigned long long)blkno,
-+						   i);
-+		} else if (sizeof(struct ocfs2_xattr_value_root) >
-+			   nv_limit - value_offset) {
-+			return ocfs2_error(sb,
-+					   "Invalid xattr in block %llu: entry %d value root is out of bounds\n",
-+					   (unsigned long long)blkno, i);
-+		}
-+	}
-+
++	/* give the device time to power up */
++	msleep(750);
 +	return 0;
 +}
 +
-+static int ocfs2_xattr_ibody_lookup_header_raw(struct super_block *sb,
-+					       u64 blkno,
-+					       struct ocfs2_dinode *di,
-+					       struct ocfs2_xattr_header **header,
-+					       u16 *inline_size_ret)
- {
-+	struct ocfs2_xattr_header *xh;
- 	u16 xattr_count;
- 	size_t max_entries;
- 	u16 inline_size = le16_to_cpu(di->i_xattr_inline_size);
- 
--	if (inline_size > inode->i_sb->s_blocksize ||
-+	if (inline_size > sb->s_blocksize ||
- 	    inline_size < sizeof(struct ocfs2_xattr_header)) {
--		ocfs2_error(inode->i_sb,
--			    "Invalid xattr inline size %u in inode %llu\n",
--			    inline_size,
--			    (unsigned long long)OCFS2_I(inode)->ip_blkno);
-+		ocfs2_error(sb,
-+			    "Invalid inode %llu: xattr inline size %u\n",
-+			    (unsigned long long)blkno, inline_size);
- 		return -EFSCORRUPTED;
- 	}
- 
--	*header = (struct ocfs2_xattr_header *)
--		((void *)di + inode->i_sb->s_blocksize - inline_size);
-+	xh = (struct ocfs2_xattr_header *)
-+		((void *)di + sb->s_blocksize - inline_size);
- 
--	xattr_count = le16_to_cpu((*header)->xh_count);
-+	xattr_count = le16_to_cpu(xh->xh_count);
- 	max_entries = (inline_size - sizeof(struct ocfs2_xattr_header)) /
- 		      sizeof(struct ocfs2_xattr_entry);
- 
- 	if (xattr_count > max_entries) {
--		ocfs2_error(inode->i_sb,
-+		ocfs2_error(sb,
- 			    "xattr entry count %u exceeds maximum %zu in inode %llu\n",
- 			    xattr_count, max_entries,
--			    (unsigned long long)OCFS2_I(inode)->ip_blkno);
-+			    (unsigned long long)blkno);
- 		return -EFSCORRUPTED;
- 	}
- 
-+	*header = xh;
-+	if (inline_size_ret)
-+		*inline_size_ret = inline_size;
++static struct i2chid_ops i2c_hid_acpi_prp0001_ops = {
++	.power_up = i2c_hid_acpi_prp0001_power_up,
++	/*
++	 * No .restore_sequence needed: the _DSM on these devices returns a
++	 * constant (0x20) with no side effects, unlike some PNP0C50 _DSM
++	 * implementations that switch the hardware between PS/2 and I2C modes.
++	 */
++};
 +
- 	return 0;
- }
- 
-+int ocfs2_validate_inode_xattr(struct super_block *sb, u64 blkno,
-+			       struct ocfs2_dinode *di)
++static int i2c_hid_acpi_prp0001_probe(struct i2c_client *client)
 +{
-+	struct ocfs2_xattr_header *xh;
-+	u16 inline_size;
++	struct device *dev = &client->dev;
++	struct acpi_device *adev;
++	u16 hid_descriptor_address;
 +	int ret;
 +
-+	if (!(le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_XATTR_FL))
-+		return 0;
++	/* If hid-descr-addr is present, let i2c-hid-of handle it */
++	if (device_property_present(dev, "hid-descr-addr"))
++		return -ENODEV;
 +
-+	ret = ocfs2_xattr_ibody_lookup_header_raw(sb, blkno, di, &xh,
-+						  &inline_size);
-+	if (ret)
++	adev = ACPI_COMPANION(dev);
++	if (!adev)
++		return -ENODEV;
++
++	ret = i2c_hid_acpi_get_descriptor(adev);
++	if (ret < 0)
 +		return ret;
++	dev_warn(dev,
++		 "hid-descr-addr device property NOT found, using ACPI _DSM fallback. Contact vendor for firmware update!\n");
++	hid_descriptor_address = ret;
 +
-+	return ocfs2_validate_xattr_entries_flat(sb, blkno, xh, inline_size);
++	/*
++	 * No acpi_device_fix_up_power() needed: TPD0 has no _PS0, _PS3, _PSC
++	 * or _PRx methods and follows I2C bus power.
++	 */
++	return i2c_hid_core_probe(client, &i2c_hid_acpi_prp0001_ops,
++				  hid_descriptor_address, 0);
 +}
 +
-+static int ocfs2_xattr_ibody_lookup_header(struct inode *inode,
-+					   struct ocfs2_dinode *di,
-+					   struct ocfs2_xattr_header **header)
-+{
-+	return ocfs2_xattr_ibody_lookup_header_raw(inode->i_sb,
-+						   OCFS2_I(inode)->ip_blkno,
-+						   di, header, NULL);
-+}
++static const struct of_device_id i2c_hid_acpi_prp0001_of_match[] = {
++	{ .compatible = "hid-over-i2c" },
++	{},
++};
++MODULE_DEVICE_TABLE(of, i2c_hid_acpi_prp0001_of_match);
 +
- int ocfs2_has_inline_xattr_value_outside(struct inode *inode,
- 					 struct ocfs2_dinode *di)
++static const struct i2c_device_id i2c_hid_acpi_prp0001_id[] = {
++	{ .name = "hid-over-i2c" },
++	{ }
++};
++MODULE_DEVICE_TABLE(i2c, i2c_hid_acpi_prp0001_id);
++
++static struct i2c_driver i2c_hid_acpi_prp0001_driver = {
++	.driver = {
++		.name	= "i2c_hid_acpi_prp0001",
++		.pm	= &i2c_hid_core_pm,
++		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
++		/*
++		 * of_match_ptr() makes this NULL when CONFIG_OF=n, but that's
++		 * fine: the I2C id_table with "hid-over-i2c" handles matching
++		 * via client->name (set by acpi_set_modalias() from the _DSD
++		 * compatible property).
++		 */
++		.of_match_table = of_match_ptr(i2c_hid_acpi_prp0001_of_match),
++	},
++
++	.probe		= i2c_hid_acpi_prp0001_probe,
++	.remove		= i2c_hid_core_remove,
++	.shutdown	= i2c_hid_core_shutdown,
++	.id_table	= i2c_hid_acpi_prp0001_id,
++};
++
++module_i2c_driver(i2c_hid_acpi_prp0001_driver);
++
++MODULE_DESCRIPTION("HID over I2C driver for PRP0001 devices missing hid-descr-addr");
++MODULE_AUTHOR("谢致邦 (XIE Zhibang) <Yeking@Red54.com>");
++MODULE_LICENSE("GPL");
+diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.c b/drivers/hid/i2c-hid/i2c-hid-acpi.c
+index abd700a101f46..13f977d6aab61 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-acpi.c
++++ b/drivers/hid/i2c-hid/i2c-hid-acpi.c
+@@ -25,9 +25,9 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/pm.h>
+-#include <linux/uuid.h>
+ 
+ #include "i2c-hid.h"
++#include "i2c-hid-acpi.h"
+ 
+ struct i2c_hid_acpi {
+ 	struct i2chid_ops ops;
+@@ -48,39 +48,11 @@ static const struct acpi_device_id i2c_hid_acpi_blacklist[] = {
+ 	{ }
+ };
+ 
+-/* HID I²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
+-static guid_t i2c_hid_guid =
+-	GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
+-		  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
+-
+-static int i2c_hid_acpi_get_descriptor(struct i2c_hid_acpi *ihid_acpi)
+-{
+-	struct acpi_device *adev = ihid_acpi->adev;
+-	acpi_handle handle = acpi_device_handle(adev);
+-	union acpi_object *obj;
+-	u16 hid_descriptor_address;
+-
+-	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
+-		return -ENODEV;
+-
+-	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid, 1, 1, NULL,
+-				      ACPI_TYPE_INTEGER);
+-	if (!obj) {
+-		acpi_handle_err(handle, "Error _DSM call to get HID descriptor address failed\n");
+-		return -ENODEV;
+-	}
+-
+-	hid_descriptor_address = obj->integer.value;
+-	ACPI_FREE(obj);
+-
+-	return hid_descriptor_address;
+-}
+-
+ static void i2c_hid_acpi_restore_sequence(struct i2chid_ops *ops)
  {
-diff --git a/fs/ocfs2/xattr.h b/fs/ocfs2/xattr.h
-index 65e9aa7439199..6b7589941315e 100644
---- a/fs/ocfs2/xattr.h
-+++ b/fs/ocfs2/xattr.h
-@@ -43,6 +43,8 @@ int ocfs2_xattr_set_handle(handle_t *, struct inode *, struct buffer_head *,
- 			   struct ocfs2_alloc_context *);
- int ocfs2_has_inline_xattr_value_outside(struct inode *inode,
- 					 struct ocfs2_dinode *di);
-+int ocfs2_validate_inode_xattr(struct super_block *sb, u64 blkno,
-+			       struct ocfs2_dinode *di);
- int ocfs2_xattr_remove(struct inode *, struct buffer_head *);
- int ocfs2_init_security_get(struct inode *, struct inode *,
- 			    const struct qstr *,
+ 	struct i2c_hid_acpi *ihid_acpi = container_of(ops, struct i2c_hid_acpi, ops);
+ 
+-	i2c_hid_acpi_get_descriptor(ihid_acpi);
++	i2c_hid_acpi_get_descriptor(ihid_acpi->adev);
+ }
+ 
+ static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
+@@ -93,24 +65,28 @@ static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
+ static int i2c_hid_acpi_probe(struct i2c_client *client)
+ {
+ 	struct device *dev = &client->dev;
++	struct acpi_device *adev = ACPI_COMPANION(dev);
+ 	struct i2c_hid_acpi *ihid_acpi;
+ 	u16 hid_descriptor_address;
+ 	int ret;
+ 
+-	ihid_acpi = devm_kzalloc(&client->dev, sizeof(*ihid_acpi), GFP_KERNEL);
++	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
++		return -ENODEV;
++
++	ret = i2c_hid_acpi_get_descriptor(adev);
++	if (ret < 0)
++		return ret;
++	hid_descriptor_address = ret;
++
++	ihid_acpi = devm_kzalloc(dev, sizeof(*ihid_acpi), GFP_KERNEL);
+ 	if (!ihid_acpi)
+ 		return -ENOMEM;
+ 
+-	ihid_acpi->adev = ACPI_COMPANION(dev);
++	ihid_acpi->adev = adev;
+ 	ihid_acpi->ops.shutdown_tail = i2c_hid_acpi_shutdown_tail;
+ 	ihid_acpi->ops.restore_sequence = i2c_hid_acpi_restore_sequence;
+ 
+-	ret = i2c_hid_acpi_get_descriptor(ihid_acpi);
+-	if (ret < 0)
+-		return ret;
+-	hid_descriptor_address = ret;
+-
+-	acpi_device_fix_up_power(ihid_acpi->adev);
++	acpi_device_fix_up_power(adev);
+ 
+ 	return i2c_hid_core_probe(client, &ihid_acpi->ops,
+ 				  hid_descriptor_address, 0);
+diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.h b/drivers/hid/i2c-hid/i2c-hid-acpi.h
+new file mode 100644
+index 0000000000000..0bbed1853313d
+--- /dev/null
++++ b/drivers/hid/i2c-hid/i2c-hid-acpi.h
+@@ -0,0 +1,33 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++
++#ifndef _I2C_HID_ACPI_H
++#define _I2C_HID_ACPI_H
++
++#include <linux/acpi.h>
++#include <linux/uuid.h>
++
++static inline int i2c_hid_acpi_get_descriptor(struct acpi_device *adev)
++{
++	/* HID I²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
++	static const guid_t i2c_hid_guid =
++		GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
++			  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
++
++	acpi_handle handle = acpi_device_handle(adev);
++	union acpi_object *obj;
++	u16 addr;
++
++	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid,
++				      1, 1, NULL, ACPI_TYPE_INTEGER);
++	if (!obj) {
++		acpi_handle_err(handle,
++				"Error _DSM call to get HID descriptor address failed\n");
++		return -ENODEV;
++	}
++
++	addr = obj->integer.value;
++	ACPI_FREE(obj);
++	return addr;
++}
++
++#endif
 -- 
 2.53.0
 
