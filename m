@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D52D346AE3;
-	Sat, 12 Sep 2026 07:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462B1282F1B;
+	Sat, 12 Sep 2026 07:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199058; cv=none; b=sPsaORvsrB46WRGz85iXhR6kUA6c//9SjeikaaA2Bxo6FLePkCf+1HI/zikTSFIIszCkMmO9bg9mpHcdoZUhpwWIq239eP6tKU4YENC46ilfOiBETCXp2Chth4zwNsJvuBXGPUPyJQtWavebg/CHpyGS1jaZNuqekNxLamGCA/k=
+	t=1789199062; cv=none; b=NbzauXr1dJ/MQfRSCI4nJ0a58Nmw8BUCR0ci9MTVXGQO6DcYWxQC0p6Uu9CqjscVM56EOWpnaM7vJkZhLPOWwU+Xk/v2aDBzExNmywRuKNvrQyYfeV/SonebeVoRAWRFHYk2vYnuf8uHBccv70j/HU5KxVd1bwoZWtUX1lcmYdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199058; c=relaxed/simple;
-	bh=oNr7107Flt5KWKivLTjwmbe2b3fLO/rkMYzbKaOT3mU=;
+	s=arc-20240116; t=1789199062; c=relaxed/simple;
+	bh=8Sf7cMgtwLfJTj33kstWXTh8EbNbSYkNdjz2jy49WCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fmqNOzhD0XudRbWwfF3j8HC6RQmxIQu+dpbZ2BIyWKl/TSgwr7GNEDy5vd8+PNdmW8iRTaqgL6MP/6TAojrLccwPdaI2CJrLT6AZROeiHEZP0eVGpvJFTSOXJkxDz0k4jpwdSJDR0dyEbYs9un7kZUe16Mb6KJ4lePU/BhizlrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/QMnU/Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bpWq6DJU0ojut05IyJesRd3/DZjVi2FK8ZSZHHdNsBwF4Gt5NQsdANj1nKs2sA2n0/vx/yqisVeZH0hagm5ISnlI1vJnBkrnJk0GXoBHQoH+TfU7sb+phtxuDp9EHuxH19ZHte54qeE6rPhjwM8ZMtVc9vjFIL3sNpiIyLeOdhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fux9AGnK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/QMnU/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C861F000FF;
-	Sat, 12 Sep 2026 07:44:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fux9AGnK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A22E1F000FF;
+	Sat, 12 Sep 2026 07:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199057;
-	bh=mIguXmxUAhW2kb4Lj8DpwfT0Ofxg5t1vWlH8eX17e0U=;
+	s=korg; t=1789199061;
+	bh=Xs1Yw6NwfSJRkKp8c2YxEmXni7VQuGxLmhaCPUPAJ6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d/QMnU/Q7ZkPmY3YYsi/XWKOesrw7kxUiQF8nOsohH+Zi9HpBhvaqaUo9BFri0rY0
-	 6kbFJK7L704nmsmo/JC9vV8f5wQr94jJ9On8qpTR/tUzZ5FeUxdtGTipvSbsnaNCrm
-	 jcZT9j/JpMzFRaQaSo8oAmFfQwxg56XbN6rTkX4o=
+	b=Fux9AGnK9D1wPCXBveoUP7DDtYtaqhRv7QhqXNkPX4AqXkFKQpunXrN74t9+7tVGb
+	 G9MxEwQPgh5x/mz24Ak+F2hJX6FN3tgO2Cbp6MWE2A9aQr4KdqtSpyOsjVF82TF2Uk
+	 M+svxviXZJ3w2KJ3gAZqBK7LjGJaTEvljUGE8kWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0454/1815] arm64: dts: qcom: milos: Add reset for sdhc_2
-Date: Sat, 12 Sep 2026 08:36:44 +0200
-Message-ID: <20260912065659.548884877@linuxfoundation.org>
+Subject: [PATCH 7.2 0501/1815] misc: lan966x_pci: depopulate children on populate failure
+Date: Sat, 12 Sep 2026 08:37:31 +0200
+Message-ID: <20260912065700.654605080@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,35 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit c3eceb0627605564f102dc0f5ca4a6060ca57fd4 ]
+[ Upstream commit f6e2ed54db95286d9512b1cff38264e2f6299814 ]
 
-Add the missing reset (BCR) for sdhc_2.
+lan966x_pci_probe() applies a device-tree overlay and then populates
+platform children from the overlaid node. If
+of_platform_default_populate() creates some children and then fails, the
+current error path only unloads the overlay.
 
-Fixes: d9d59d105f98 ("arm64: dts: qcom: Add initial Milos dtsi")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260710-milos-sdhc2-reset-v1-1-c7a155a517ba@fairphone.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Depopulate the children before unloading the overlay on that failure
+path, matching the remove path order.
+
+Fixes: 185686beb464 ("misc: Add support for LAN966x PCI device")
+Reviewed-by: Herve Codina <herve.codina@bootlin.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260623015248.22721-1-pengpeng@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/milos.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/misc/lan966x_pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/milos.dtsi b/arch/arm64/boot/dts/qcom/milos.dtsi
-index 8c92329889538..262fa88012562 100644
---- a/arch/arm64/boot/dts/qcom/milos.dtsi
-+++ b/arch/arm64/boot/dts/qcom/milos.dtsi
-@@ -1724,6 +1724,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+diff --git a/drivers/misc/lan966x_pci.c b/drivers/misc/lan966x_pci.c
+index 0bb90c0943bf7..b0949c653e5ba 100644
+--- a/drivers/misc/lan966x_pci.c
++++ b/drivers/misc/lan966x_pci.c
+@@ -183,6 +183,7 @@ static int lan966x_pci_probe(struct pci_dev *pdev, const struct pci_device_id *i
+ 	return 0;
  
- 			iommus = <&apps_smmu 0x540 0>;
- 
-+			resets = <&gcc GCC_SDCC2_BCR>;
-+
- 			bus-width = <4>;
- 
- 			qcom,dll-config = <0x0007442c>;
+ err_unload_overlay:
++	of_platform_depopulate(dev);
+ 	lan966x_pci_unload_overlay(data);
+ 	return ret;
+ }
 -- 
 2.53.0
 
