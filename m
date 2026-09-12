@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4E136921B;
-	Sat, 12 Sep 2026 09:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611593750D6;
+	Sat, 12 Sep 2026 09:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205833; cv=none; b=rVeGvkppz7u4il33o3UzWsiBHHAMNO041scwLgcW4g9/ayBUDvbsp/1PmI2DPsVc4VQgzEdoMUboq59NpS0j1OzlLAhgkm2bfyvBDD8GPfRHUedQemMDCUQzDFauaFdXfzLaq9mX2ET82S3dcbCUv4X4AjJIcpXc02v5TTrtJv8=
+	t=1789205838; cv=none; b=XYCSQo83LeB2Lq8yABmbTAc93xHu6AqkHh/VUub2WG70i83D8dcFv+ZyOBF9QqS++ZQYKGZlBQbO2stShGdV7i6aUa5cwE/VTStH98nWbyBcjgIczmPIE+9BXPCuTZwmhrY8oITN0kHJdScLUnVM3Jmgy8Ei44MSz3Qnw/gW+7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205833; c=relaxed/simple;
-	bh=mz+KhKl/jSAlF5nu+SedaeyZlNk1FG0WvzRyWKg3W1U=;
+	s=arc-20240116; t=1789205838; c=relaxed/simple;
+	bh=u+z0WwHTVOwB/+JaeMFSB92zsUxQFZaO4FE+lBpHmdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cn6r6dllQ8M/A5LTgtDzqvIFxpRjm6pEomky3JrtVrbZqBnwg8ZLibgDxQlIz5iqHOzZUCS7TXei7w6NITlY6LT5TsPE6HLM9gydCjlr7PM0gzp7i0WG0PVimolthyvx1CXNzIQvAk9niwnhxmrfDsKQTNHfrn9zXnUWd4dHdQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qm5X/bVL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o1KJn8vxkjycvNBTcJAuKU+HTzi9prLAJyGyovx+2BnEa/+oItyqAw4hYiXhAnG4HPhLOneA791N9lN09y/bSQTGzHtCynOsKy81IGoXTwr48fl8NBVgkp5WCxQByPP9TDps3RxaioRF8YRQ4ekPWvyblLvhN1RnqhMBXbhoogI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3qXnJ36; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qm5X/bVL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1AA1F000FF;
-	Sat, 12 Sep 2026 09:37:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3qXnJ36"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B311F000FF;
+	Sat, 12 Sep 2026 09:37:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205832;
-	bh=7AdNHwRkF5gUS4H8nBmHTbQK93heIhtHYk2Bbnohplo=;
+	s=korg; t=1789205837;
+	bh=yGSJmxlIG9ojhHdLMyqcl7dVau9OISb7HelQg7kSz9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qm5X/bVLqA4vMngc1lx2mE6qZIiHyQEcLaxzWmyldFbhywGrHSlpSypaVa34r2h48
-	 d1O9Rzlq104JkzDuBgtFGDxqjZ9MQ9mPgHDkUPV+5UXir19vQc/V9+DrlmJD4s+xUn
-	 j7dm7zccQP7tWZI/BmPhHzIX+lsE06avQymKjmMI=
+	b=E3qXnJ36PXWROEU4eodKRobpUILsvBwa5bF1ukXQaQr/mNIZsM7Rz7LPEix1/YL1f
+	 Lzo4/raYsP8L2WsUdsEHUgI0StjOSNfkXfivCchDBtu/ig90neJzBRdk9S16+dp2A6
+	 xb30aaDWHnjWh55JvQ8lDVuZniFgBREoKxPnW6OE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Oliver Upton <oupton@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0081/1518] dm-pcache: validate the persisted dirty_tail chain at load
-Date: Sat, 12 Sep 2026 08:37:30 +0200
-Message-ID: <20260912065625.290108823@linuxfoundation.org>
+Subject: [PATCH 6.18 0082/1518] KVM: arm64: nv: Fully update VNCR fixmap state in kvm_translate_vncr()
+Date: Sat, 12 Sep 2026 08:37:31 +0200
+Message-ID: <20260912065625.313296397@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,145 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Oliver Upton <oupton@kernel.org>
 
-[ Upstream commit 58d620ee9e01d4bdbceaf2ae1450d307a2a9d58b ]
+[ Upstream commit 5949004d7032767e8fde1e8c986a33f241b2a192 ]
 
-The writeback worker follows the persisted dirty_tail chain, which is
-decoded from the cache device independently of the key_tail chain that
-cache_replay() walks and bounds. A crafted image, whose on-media fields are
-authenticated only by a crc32c with a fixed seed, can aim dirty_tail at a
-chain of last ksets that never terminates, so cache_writeback_fn() re-arms
-itself with no delay forever.
+kvm_translate_vncr() first invalidates the pseudo-TLB entry and
+corresponding fixmap in anticipation of installing a new translation.
 
-Walk the dirty_tail chain once at load with the same hop cap cache_replay()
-uses and fail the table load with -EIO if it does not reach an end within
-n_segs hops.
+While the fixmap invalidation does clear the mapping from host stage-1,
+it does not clear the L1_VNCR_MAPPED flag. Depending on the state of the
+VNCR TLB at vcpu_put(), this could potentially precipitate a BUG_ON() if
+vt->cpu is reset.
 
-Fixes: 1d57628ff95b ("dm-pcache: add persistent cache target in device-mapper")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-[ replaced the unavailable cache_seg_id_valid() helper with an equivalent bounds check against cache->cache_info.n_segs ]
+Share a helper with kvm_vcpu_put_hw_mmu(), ensuring that KVM's view of
+the VNCR fixmap is in sync with the state of the VNCR TLB. Give it a
+slightly verbose name to make it obvious that it is meant to be used
+local to a CPU, unlike other VNCR TLB maintenance.
+
+Fixes: 069a05e535496 ("KVM: arm64: nv: Handle VNCR_EL2-triggered faults")
+Signed-off-by: Oliver Upton <oupton@kernel.org>
+Link: https://patch.msgid.link/20260602235450.103057-3-oupton@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Stable-dep-of: 38640bc32be3 ("KVM: arm64: Handle VNCR TLB invalidation race with vcpu_put() VNCR unmapping")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-pcache/cache.c     |    7 +++
- drivers/md/dm-pcache/cache.h     |    2 +
- drivers/md/dm-pcache/cache_key.c |   69 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 78 insertions(+)
+ arch/arm64/kvm/nested.c |   27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
---- a/drivers/md/dm-pcache/cache.c
-+++ b/drivers/md/dm-pcache/cache.c
-@@ -197,6 +197,7 @@ static int cache_tail_init(struct pcache
- {
- 	struct dm_pcache *pcache = CACHE_TO_PCACHE(cache);
- 	bool new_cache = !(cache->cache_info.flags & PCACHE_CACHE_FLAGS_INIT_DONE);
-+	int ret;
- 
- 	if (new_cache) {
- 		__set_bit(0, cache->seg_map);
-@@ -213,6 +214,12 @@ static int cache_tail_init(struct pcache
- 			pcache_dev_err(pcache, "Corrupted key tail or dirty tail.\n");
- 			return -EIO;
- 		}
-+
-+		ret = cache_verify_dirty_tail(cache);
-+		if (ret) {
-+			pcache_dev_err(pcache, "dirty tail chain does not terminate (crafted cache image?)\n");
-+			return ret;
-+		}
+--- a/arch/arm64/kvm/nested.c
++++ b/arch/arm64/kvm/nested.c
+@@ -771,18 +771,24 @@ void kvm_vcpu_load_hw_mmu(struct kvm_vcp
  	}
- 
- 	return 0;
---- a/drivers/md/dm-pcache/cache.h
-+++ b/drivers/md/dm-pcache/cache.h
-@@ -652,6 +652,8 @@ static inline int cache_decode_dirty_tai
- 				&cache->dirty_tail_index);
  }
  
-+int cache_verify_dirty_tail(struct pcache_cache *cache);
-+
- int pcache_cache_init(void);
- void pcache_cache_exit(void);
- #endif /* _PCACHE_CACHE_H */
---- a/drivers/md/dm-pcache/cache_key.c
-+++ b/drivers/md/dm-pcache/cache_key.c
-@@ -846,6 +846,75 @@ out:
- 	return ret;
- }
- 
-+/*
-+ * cache_verify_dirty_tail - reject a persisted dirty_tail whose last-kset
-+ * chain does not terminate.
-+ *
-+ * dirty_tail is decoded independently of the key_tail chain cache_replay()
-+ * walks, so replay's hop cap does not cover it. A crafted chain that loops
-+ * back on itself makes the writeback worker re-arm forever; walk it once here
-+ * with the same cap and fail the load if it does not end within n_segs hops.
-+ */
-+int cache_verify_dirty_tail(struct pcache_cache *cache)
++static void this_cpu_reset_vncr_fixmap(struct kvm_vcpu *vcpu)
 +{
-+	struct pcache_cache_pos pos;
-+	struct pcache_cache_kset_onmedia *kset_onmedia;
-+	u32 to_copy, last_hops = 0, count = 0;
-+	int ret = 0;
++	if (!host_data_test_flag(L1_VNCR_MAPPED))
++		return;
 +
-+	kset_onmedia = kzalloc(PCACHE_KSET_ONMEDIA_SIZE_MAX, GFP_KERNEL);
-+	if (!kset_onmedia)
-+		return -ENOMEM;
++	BUG_ON(vcpu->arch.vncr_tlb->cpu != smp_processor_id());
++	BUG_ON(is_hyp_ctxt(vcpu));
 +
-+	cache_pos_copy(&pos, &cache->dirty_tail);
-+
-+	while (true) {
-+		to_copy = min(PCACHE_KSET_ONMEDIA_SIZE_MAX, cache_seg_remain(&pos));
-+		ret = copy_mc_to_kernel(kset_onmedia, cache_pos_addr(&pos), to_copy);
-+		if (ret) {
-+			ret = -EIO;
-+			goto out;
-+		}
-+
-+		/* A missing, short or corrupt kset is the normal end of the chain. */
-+		if (!kset_onmedia_valid(kset_onmedia) ||
-+		    kset_onmedia->crc != cache_kset_crc(kset_onmedia)) {
-+			ret = 0;
-+			goto out;
-+		}
-+
-+		if (kset_onmedia->flags & PCACHE_KSET_FLAGS_LAST) {
-+			if (kset_onmedia->next_cache_seg_id >= cache->cache_info.n_segs) {
-+				ret = -EIO;
-+				goto out;
-+			}
-+
-+			if (++last_hops > cache->n_segs) {
-+				ret = -EIO;
-+				goto out;
-+			}
-+
-+			pos.cache_seg = &cache->segments[kset_onmedia->next_cache_seg_id];
-+			pos.seg_off = 0;
-+			continue;
-+		}
-+
-+		if (get_kset_onmedia_size(kset_onmedia) > cache_seg_remain(&pos)) {
-+			ret = -EIO;
-+			goto out;
-+		}
-+
-+		cache_pos_advance(&pos, get_kset_onmedia_size(kset_onmedia));
-+		if (++count > 512) {
-+			cond_resched();
-+			count = 0;
-+		}
-+	}
-+out:
-+	kfree(kset_onmedia);
-+	return ret;
++	clear_fixmap(vncr_fixmap(vcpu->arch.vncr_tlb->cpu));
++	vcpu->arch.vncr_tlb->cpu = -1;
++	host_data_clear_flag(L1_VNCR_MAPPED);
++	atomic_dec(&vcpu->kvm->arch.vncr_map_count);
 +}
 +
- int cache_tree_init(struct pcache_cache *cache, struct pcache_cache_tree *cache_tree, u32 n_subtrees)
+ void kvm_vcpu_put_hw_mmu(struct kvm_vcpu *vcpu)
  {
- 	int ret;
+ 	/* Unconditionally drop the VNCR mapping if we have one */
+-	if (host_data_test_flag(L1_VNCR_MAPPED)) {
+-		BUG_ON(vcpu->arch.vncr_tlb->cpu != smp_processor_id());
+-		BUG_ON(is_hyp_ctxt(vcpu));
+-
+-		clear_fixmap(vncr_fixmap(vcpu->arch.vncr_tlb->cpu));
+-		vcpu->arch.vncr_tlb->cpu = -1;
+-		host_data_clear_flag(L1_VNCR_MAPPED);
+-		atomic_dec(&vcpu->kvm->arch.vncr_map_count);
+-	}
++	this_cpu_reset_vncr_fixmap(vcpu);
+ 
+ 	/*
+ 	 * Keep a reference on the associated stage-2 MMU if the vCPU is
+@@ -1244,7 +1250,8 @@ static int kvm_translate_vncr(struct kvm
+ 	 * We also prepare the next walk wilst we're at it.
+ 	 */
+ 	scoped_guard(write_lock, &vcpu->kvm->mmu_lock) {
+-		invalidate_vncr(vt);
++		this_cpu_reset_vncr_fixmap(vcpu);
++		vt->valid = false;
+ 
+ 		vt->wi = (struct s1_walk_info) {
+ 			.regime	= TR_EL20,
 
 
