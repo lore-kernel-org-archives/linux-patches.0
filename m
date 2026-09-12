@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6023347CC9C;
-	Sat, 12 Sep 2026 13:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05B939281F;
+	Sat, 12 Sep 2026 13:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219175; cv=none; b=UzshKTg6olRiM3zK/sIxbjBNditf/FOmKZOGxXx+qUr4pjA2xm66nRfQmp3ItfwWfC1LIhIk0MMGP9meN9aDb7d9johJD7rDgkngTW8aL+ONRY9geg3ojrEQIzkIRt7hWjJetFfjIjYgT3IiQjn83+DYIvmPjJTDQ5gFlTvSeGQ=
+	t=1789219182; cv=none; b=eHjm+pcTz/g91FA1XfMd0ZDQlcc0P2VRbcHD9y+0zy7sl9XPIjYOiHZr7ZpQwrVoZVFX00dKyWJGtK9eZncSZ8c0e2O8MvhfBQUayE150UJFXor81miCYXog//uCmaeZD/J8cDJlXndsmOlpXPPjoOm3EFL+8dKXt1JhSRbAgww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219175; c=relaxed/simple;
-	bh=2H/3JaxEQ4sJFWr1Xc1f+PDIHNpz2dpBpoSe49gDsz4=;
+	s=arc-20240116; t=1789219182; c=relaxed/simple;
+	bh=P76xQAD2fqivL4UI2YwWkV9SGvSmOAldjDSuFNjTIUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fXalIMOGqntCYhMmnRju425E7D2q5mSXgyYv3RAp+Wx73bGTuqmED0kdXEn+pjFyCmsMgYh6IB8sS59aBXmDL+qpygZnfx6EkjVTmCFbr3SOuKWcy4i0z7e/FwKjL3cjoOnWEqmHpT2KQDfUHbfkLjAJgBGtv3rg6/hTAKo1Rdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sNAQtQJx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lF6eWEjY3K2bCjDK3EApLwxC7SaYWA052zCWuufzUn11L5HXQ0cwy5mGtbJP+DMT207A0fs7N8dfi07fj6gbSgA7iWZpA2JS2k2aW98F+eteSodxRw285hb5EwrrSugjr7k2SOzso2PyGikpMUC/QIu8SaNrchprhzra0jHCXyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mjXtLXrK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sNAQtQJx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28A51F000FF;
-	Sat, 12 Sep 2026 13:19:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mjXtLXrK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F941F000FF;
+	Sat, 12 Sep 2026 13:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219172;
-	bh=nPubvF0zOYO7RSjvWygwWiAt/4K9bwhjsYiJGmicQl4=;
+	s=korg; t=1789219177;
+	bh=kUulLtnWZ8Xn8ARIHkBkj/4dF8v+DSUo9iIDs/LAtzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sNAQtQJxScn8R7vJajnL/pcP4dZYeHb7WhXDlmgJdoo6ROBy7Df1h1ZFGlqrZV41g
-	 fWlXQoIm4O+3UWsh1InS5e5NDE1AObZk5aFhTnZSHNAKn3hlXCgxi+KmwKH+8ZrNkN
-	 fvv5C3tQxR7YbQOgfiHzdon1gnuwI7d0tIraZoYw=
+	b=mjXtLXrKa69tVadD+jS2b0Xf5Nj7XrleDPhU33FxbjdOrv83kKQBt5LfpC4PF9ow9
+	 IyAqjSswfFtpQh7vZ249csJgCTFlqmFhkTGee5h+QlFFhzh97AhBcLdERg2bDRPI9t
+	 9nxfqvGo8zusyrX02y+ljTuQNt0EnaSHZOtEeGU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Blunt <michaelbblunt@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1254/1376] inetpeer: randomize RB-tree node comparison using SipHash
-Date: Sat, 12 Sep 2026 09:01:20 +0200
-Message-ID: <20260912065635.490477605@linuxfoundation.org>
+Subject: [PATCH 6.12 1255/1376] net: sched: fix 32-bit backlog wrap in gred, bfifo and plug enqueue
+Date: Sat, 12 Sep 2026 09:01:21 +0200
+Message-ID: <20260912065635.511957166@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,164 +54,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 2ee66e9487172fcd189bc52a767c30dad7141c09 ]
+[ Upstream commit 4c660ee8c809637909f4f7eb1017f7b9401c75c4 ]
 
-The inetpeer rate limiting system stores peer entries in a Red-Black tree
-keyed deterministically on the remote IP address. Because tree lookups walk
-the RB-tree using standard lexicographical comparisons (inetpeer_addr_cmp),
-an off-path adversary can predict the exact topology of the tree and the
-sequence of nodes traversed during lookups (the gc_stack candidate list).
+gred_enqueue(), bfifo_enqueue() and plug_enqueue() admit a packet when the
+current backlog plus the packet length fits within the queue limit:
 
-By combining deterministic tree traversal with aggressive garbage collection
-(triggered when tree size exceeds inet_peer_threshold), an attacker can
-selectively force the eviction of targeted inet_peer nodes. When an evicted
-node is subsequently re-created upon receiving a new packet, its rate-limiting
-token bucket (rate_tokens, rate_last) is reset to full capacity. This creates
-a side-channel primitive allowing off-path attackers to bypass IP-keyed ICMP
-rate limits and infer open UDP ports (similar to SAD DNS style attacks).
+  sch->qstats.backlog + qdisc_pkt_len(skb) <= sch->limit (gred default VQ)
+  gred_backlog+qdisc_pkt_len(skb) <= q->limit  (gred configured VQ)
+  sch->qstats.backlog + qdisc_pkt_len(skb) <= sch->limit (bfifo)
+  sch->qstats.backlog + skb->len <= q->limit             (plug)
 
-Mitigate this by randomizing the RB-tree node comparison logic using SipHash
-with a secret key (inetpeer_hash_key) initialized via net_get_random_once().
-Nodes are ordered in the tree by SipHash(addr, key) rather than raw IP
-addresses. Because the secret key is unknown to external entities, the tree
-layout and lookup traversal paths are unpredictable to off-path adversaries,
-breaking the deterministic eviction gadget.
+sch->qstats.backlog and q->backlog are u32, and qdisc_pkt_len()/skb->len
+are unsigned int, so all sums are computed in 32 bits and wrap at 2^32.
+Once the true backlog exceeds 4 GiB the wrapped sum becomes small and
+admission keeps succeeding, so the queue grows without bound and the kernel
+can be driven to OOM.
 
-Cache the computed 64-bit SipHash (hash) in struct inet_peer and compute the
-target hash (dhash) once at the beginning of inet_getpeer() to avoid recomputing
-SipHash at every step of the RB-tree walk.
+Promote the sums to u64 so admission stops once the true backlog exceeds
+the limit.  The limit is u32, so the bounded queue stays below 2^32 and
+the stored u32 backlog never wraps.
 
-Fixes: b145425f269a ("inetpeer: remove AVL implementation in favor of RB tree")
-Reported-by: Michael Blunt <michaelbblunt@gmail.com>
-Suggested-by: Michael Blunt <michaelbblunt@gmail.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260818151213.3953963-1-edumazet@google.com
+The bug can only be reproduced as root (albeit with ridiculous setup):
+ attach a gred (or bfifo/plug) qdisc with a limit near 4 GiB,
+ leaving the default VQ unconfigured (for gred), and drive >4 GiB of
+ queued traffic (e.g. via a size table / stab to inflate qdisc_pkt_len,
+ or sustained high-rate traffic). The u32 backlog+len sum wraps at 2^32,
+ admission keeps succeeding, and the queue grows unboundedly to OOM.
+
+Fixes: a3eb95f891d6 ("net_sched: gred: add TCA_GRED_LIMIT attribute")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260818095927.15901-1-jhs@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inetpeer.h |  4 ++++
- net/ipv4/inetpeer.c    | 38 +++++++++++++++++++++++++++++++++++---
- 2 files changed, 39 insertions(+), 3 deletions(-)
+ net/sched/sch_fifo.c | 2 +-
+ net/sched/sch_gred.c | 4 ++--
+ net/sched/sch_plug.c | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/inetpeer.h b/include/net/inetpeer.h
-index f475757daafba..414e9adf4c511 100644
---- a/include/net/inetpeer.h
-+++ b/include/net/inetpeer.h
-@@ -35,6 +35,7 @@ struct inetpeer_addr {
- 
- struct inet_peer {
- 	struct rb_node		rb_node;
-+	u64			hash;
- 	struct inetpeer_addr	daddr;
- 
- 	u32			metrics[RTAX_MAX];
-@@ -125,6 +126,9 @@ static inline int inetpeer_addr_cmp(const struct inetpeer_addr *a,
+diff --git a/net/sched/sch_fifo.c b/net/sched/sch_fifo.c
+index e6bfd39ff3396..1b6388d50967f 100644
+--- a/net/sched/sch_fifo.c
++++ b/net/sched/sch_fifo.c
+@@ -19,7 +19,7 @@
+ static int bfifo_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			 struct sk_buff **to_free)
  {
- 	int i, n;
+-	if (likely(sch->qstats.backlog + qdisc_pkt_len(skb) <=
++	if (likely((u64)sch->qstats.backlog + qdisc_pkt_len(skb) <=
+ 		   READ_ONCE(sch->limit)))
+ 		return qdisc_enqueue_tail(skb, sch);
  
-+	if (a->family != b->family)
-+		return a->family < b->family ? -1 : 1;
-+
- 	if (a->family == AF_INET)
- 		n = sizeof(a->a4) / sizeof(u32);
- 	else
-diff --git a/net/ipv4/inetpeer.c b/net/ipv4/inetpeer.c
-index 9c5ffe3b5f776..c43e632b41c0e 100644
---- a/net/ipv4/inetpeer.c
-+++ b/net/ipv4/inetpeer.c
-@@ -22,6 +22,7 @@
- #include <net/ip.h>
- #include <net/inetpeer.h>
- #include <net/secure_seq.h>
-+#include <linux/siphash.h>
+diff --git a/net/sched/sch_gred.c b/net/sched/sch_gred.c
+index 43b0343a7cd0c..53b348b83c913 100644
+--- a/net/sched/sch_gred.c
++++ b/net/sched/sch_gred.c
+@@ -179,7 +179,7 @@ static int gred_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			 * if no default DP has been configured. This
+ 			 * allows for DP flows to be left untouched.
+ 			 */
+-			if (likely(sch->qstats.backlog + qdisc_pkt_len(skb) <=
++			if (likely((u64)sch->qstats.backlog + qdisc_pkt_len(skb) <=
+ 					sch->limit))
+ 				return qdisc_enqueue_tail(skb, sch);
+ 			else
+@@ -244,7 +244,7 @@ static int gred_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		break;
+ 	}
  
- /*
-  *  Theory of operations.
-@@ -53,6 +54,34 @@
-  */
- 
- static struct kmem_cache *peer_cachep __ro_after_init;
-+static siphash_aligned_key_t inetpeer_hash_key __read_mostly;
-+
-+static u64 inetpeer_addr_hash(const struct inetpeer_addr *a)
-+{
-+	net_get_random_once(&inetpeer_hash_key, sizeof(inetpeer_hash_key));
-+
-+	if (a->family == AF_INET)
-+		return siphash_2u32((__force u32)a->a4.addr, a->a4.vif,
-+				    &inetpeer_hash_key);
-+
-+	return siphash_4u32((__force u32)a->a6.s6_addr32[0],
-+			    (__force u32)a->a6.s6_addr32[1],
-+			    (__force u32)a->a6.s6_addr32[2],
-+			    (__force u32)a->a6.s6_addr32[3],
-+			    &inetpeer_hash_key);
-+}
-+
-+static int inetpeer_entry_cmp(u64 dhash,
-+			      const struct inetpeer_addr *daddr,
-+			      const struct inet_peer *p)
-+{
-+	if (dhash < p->hash)
-+		return -1;
-+	if (dhash > p->hash)
-+		return 1;
-+
-+	return inetpeer_addr_cmp(daddr, &p->daddr);
-+}
- 
- void inet_peer_base_init(struct inet_peer_base *bp)
+-	if (gred_backlog(t, q, sch) + qdisc_pkt_len(skb) <= q->limit) {
++	if ((u64)gred_backlog(t, q, sch) + qdisc_pkt_len(skb) <= q->limit) {
+ 		q->backlog += qdisc_pkt_len(skb);
+ 		return qdisc_enqueue_tail(skb, sch);
+ 	}
+diff --git a/net/sched/sch_plug.c b/net/sched/sch_plug.c
+index cefb65201e178..b60ddfee6a68a 100644
+--- a/net/sched/sch_plug.c
++++ b/net/sched/sch_plug.c
+@@ -89,7 +89,7 @@ static int plug_enqueue(struct sk_buff *skb, struct Qdisc *sch,
  {
-@@ -86,6 +115,7 @@ void __init inet_initpeers(void)
+ 	struct plug_sched_data *q = qdisc_priv(sch);
  
- /* Called with rcu_read_lock() or base->lock held */
- static struct inet_peer *lookup(const struct inetpeer_addr *daddr,
-+				u64 dhash,
- 				struct inet_peer_base *base,
- 				unsigned int seq,
- 				struct inet_peer *gc_stack[],
-@@ -107,7 +137,7 @@ static struct inet_peer *lookup(const struct inetpeer_addr *daddr,
- 			break;
- 		parent = next;
- 		p = rb_entry(parent, struct inet_peer, rb_node);
--		cmp = inetpeer_addr_cmp(daddr, &p->daddr);
-+		cmp = inetpeer_entry_cmp(dhash, daddr, p);
- 		if (cmp == 0) {
- 			now = jiffies;
- 			if (READ_ONCE(p->dtime) != now)
-@@ -177,6 +207,7 @@ struct inet_peer *inet_getpeer(struct inet_peer_base *base,
- 			       const struct inetpeer_addr *daddr)
- {
- 	struct inet_peer *p, *gc_stack[PEER_MAX_GC];
-+	u64 dhash = inetpeer_addr_hash(daddr);
- 	struct rb_node **pp, *parent;
- 	unsigned int gc_cnt, seq;
- 
-@@ -184,7 +215,7 @@ struct inet_peer *inet_getpeer(struct inet_peer_base *base,
- 	 * Because of a concurrent writer, we might not find an existing entry.
- 	 */
- 	seq = read_seqbegin(&base->lock);
--	p = lookup(daddr, base, seq, NULL, &gc_cnt, &parent, &pp);
-+	p = lookup(daddr, dhash, base, seq, NULL, &gc_cnt, &parent, &pp);
- 
- 	if (p)
- 		return p;
-@@ -196,11 +227,12 @@ struct inet_peer *inet_getpeer(struct inet_peer_base *base,
- 	write_seqlock_bh(&base->lock);
- 
- 	gc_cnt = 0;
--	p = lookup(daddr, base, seq, gc_stack, &gc_cnt, &parent, &pp);
-+	p = lookup(daddr, dhash, base, seq, gc_stack, &gc_cnt, &parent, &pp);
- 	if (!p) {
- 		p = kmem_cache_alloc(peer_cachep, GFP_ATOMIC);
- 		if (p) {
- 			p->daddr = *daddr;
-+			p->hash = dhash;
- 			p->dtime = (__u32)jiffies;
- 			refcount_set(&p->refcnt, 1);
- 			atomic_set(&p->rid, 0);
+-	if (likely(sch->qstats.backlog + skb->len <= q->limit)) {
++	if (likely((u64)sch->qstats.backlog + skb->len <= q->limit)) {
+ 		if (!q->unplug_indefinite)
+ 			q->pkts_current_epoch++;
+ 		return qdisc_enqueue_tail(skb, sch);
 -- 
 2.53.0
 
