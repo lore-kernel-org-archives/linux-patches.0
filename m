@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67429463B91;
-	Sat, 12 Sep 2026 10:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D29468C07;
+	Sat, 12 Sep 2026 10:48:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210109; cv=none; b=CMSNwCKWzH2s0rIxCv/rpVXbYUR004t4uBhvvBJQ+rmbQsCwKcogIdkebRWcOzBOjmQlqtzu4xcfC5uGGBOilKyKUalPlF8/RPsL/klbEnO+UiUgILAAgbuB/GD+By3Q4Go6bAJU5Hctbt/USKHCtd9LqA23kco1pKDVlottqFk=
+	t=1789210114; cv=none; b=RMPz50usEsqGe8JaFefzmoP1vGbzoyrvpmQKwuSYRNVIIbQXT7lDbVPtDKoIzGZiXK80gyLubpwYRiTyFVPz/sg1Yggt2GS9V/ChSgQmnZt9ICtaB3Daht5qWH6KdnHfJbUeb0ilJSKk3rDHWBIWMUCfl5pqM9r5P8Qckxu4qvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210109; c=relaxed/simple;
-	bh=HbQS+MVESK7TvTGmC32X4luL0/v60kh5r1Em4smh9CE=;
+	s=arc-20240116; t=1789210114; c=relaxed/simple;
+	bh=hKHXnnGuk0iL4pb3lY4F6H61k3/WbPOs1q0QN9gJh18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aUHr00i3Mz3q0G26pRQvisHSUqV/ObB4IEV9JXuDInISmEzoGmHNG4fYL7+DIdOdVd4+17FFFqXq4lZh/uYDLEi5s1KnY7msaRGMU6s08qtoYDliBVpU5mY4tUQNTAzV5aPJ4KcoiCU9M+S8t5T9AjGntApIM6R1tHsNuaxHZfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BVjxCsUg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r8Xpwn3GJK7fcYz7mYkdlT99PxcXhX+sWdC02bNIYNNZK84WX2roXPuZR+PpOyz0YMD8PM5wwk5JmH7v2gtbH4HuvtYDqMknFnioXNpQTPnixWmNQw+3VyCxeY4uXs5S4eRIoVs0lRC/yw66DrUpGAdlirxA67UsKnQ6OGBX4S0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qpkv1fm/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BVjxCsUg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA701F00893;
-	Sat, 12 Sep 2026 10:48:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qpkv1fm/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588A51F000FF;
+	Sat, 12 Sep 2026 10:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210104;
-	bh=4D1FsTGoFmN9x7Q3JqOSrHrODTCY4jWlpjyaqiPmdyw=;
+	s=korg; t=1789210109;
+	bh=h3tXpq47iVPjFA7r+Q70HJs6sOURITyPEuaSm6fCh5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BVjxCsUgEQSN9afJF2COk0twR5bV4bV/H7mYOf0+CIgmT5Zn6/qX4RPL4iPwRrdSC
-	 yIu5918yDj1JoMXwI+PHCtnftwlSFe06o6XbrimNFRkX0uJhBQ9V9lMJf3vjKxpivD
-	 S6kKUMZU7RFNHScuY78Xruj5YI/A77cRES0TekVg=
+	b=Qpkv1fm/tknrvscPoMuvUi0iyzCGUOU0phiZHXz0KDuuF1hV/LCTumAu1y9QcEM7G
+	 vOT8YQYS1PF802IMcvg1y0210lysgGv6x6+g/+e5iYFSimh/+DyES/shserqhaPsrx
+	 4+1qHtO+8sq30sq45mygk8Fhlx9CtwCmao38yDWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0921/1518] cpufreq: imx6q: fix devres accumulation across driver rebind
-Date: Sat, 12 Sep 2026 08:51:30 +0200
-Message-ID: <20260912065644.284639651@linuxfoundation.org>
+Subject: [PATCH 6.18 0957/1518] phy: qcom: sgmii-eth: vote for both voltage rails with correct current loads
+Date: Sat, 12 Sep 2026 08:52:06 +0200
+Message-ID: <20260912065645.108203155@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,65 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
 
-[ Upstream commit 22c23c72c3b21fa3ec3db5070dfc0582794e0ef9 ]
+[ Upstream commit 4f81684a1d1018d7d0e5579f08d95e7701279358 ]
 
-imx6_soc_volt is allocated with devm_kcalloc(cpu_dev, ...), where cpu_dev
-is the CPU device from get_cpu_device(0). That device is never unbound, so
-its devres list is never released, and imx6q_cpufreq_remove() does not free
-the array either. Every probe therefore adds an allocation that stays for
-the lifetime of the system.
+The SerDes PHY has two voltage supply rails, vdda-0p9 and vdda-1p2,
+that must both be enabled for calibration to succeed. Without them:
 
-Allocate against the platform device instead. Its devres is released when
-the driver is unbound, which is exactly the lifetime the array wants:
-imx6q_set_target() reads it, and nothing may reach that after
-cpufreq_unregister_driver().
+  qcom-dwmac-sgmii-phy 8909000.phy: QSERDES_COM_C_READY_STATUS timed-out
+  qcom-ethqos 23040000.ethernet eth0: __stmmac_open: Serdes powerup failed
 
-That makes the array actually go away on unbind, so also clear the
-file-scope pointer in remove and on the failed-probe path, rather than
-leave it pointing at memory devres is about to release.
+The driver relied solely on the PHY framework's implicit enable of
+'phy-supply', which only voted for a single rail and set no current
+load. Use devm_regulator_bulk_get_const() to acquire both supplies and
+set the peak current loads (46 mA for vdda-0p9, 15 mA for vdda-1p2)
+as required by the hardware.
 
-Tested by rebinding the driver on qemu's mcimx6ul-evk.
-
-Fixes: b4573d1d657a ("cpufreq: imx6q: correct VDDSOC/PU voltage scaling when cpufreq is changed")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: 601d06277007 ("phy: qcom: add the SGMII SerDes PHY driver")
+Signed-off-by: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260804-b4-sgmiieth_serdes_regulator-v2-2-c4bc688177dd@oss.qualcomm.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/imx6q-cpufreq.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/phy/qualcomm/phy-qcom-sgmii-eth.c | 37 ++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/cpufreq/imx6q-cpufreq.c b/drivers/cpufreq/imx6q-cpufreq.c
-index e93697d3edfd9..8110c95059e0e 100644
---- a/drivers/cpufreq/imx6q-cpufreq.c
-+++ b/drivers/cpufreq/imx6q-cpufreq.c
-@@ -400,7 +400,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
- 	}
+diff --git a/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c b/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
+index d46a5e4df830a..8de0fba25ecff 100644
+--- a/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
++++ b/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
+@@ -10,6 +10,7 @@
+ #include <linux/phy/phy.h>
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
++#include <linux/regulator/consumer.h>
  
- 	/* Make imx6_soc_volt array's size same as arm opp number */
--	imx6_soc_volt = devm_kcalloc(cpu_dev, num, sizeof(*imx6_soc_volt),
-+	imx6_soc_volt = devm_kcalloc(&pdev->dev, num, sizeof(*imx6_soc_volt),
- 				     GFP_KERNEL);
- 	if (imx6_soc_volt == NULL) {
- 		ret = -ENOMEM;
-@@ -485,6 +485,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
+ #include "phy-qcom-qmp-pcs-sgmii.h"
+ #include "phy-qcom-qmp-qserdes-com-v5.h"
+@@ -25,7 +26,15 @@
+ #define QSERDES_PCS_SGMIIPHY_READY			BIT(7)
+ #define QSERDES_COM_C_PLL_LOCKED			BIT(1)
+ 
++static const struct regulator_bulk_data qcom_dwmac_sgmii_phy_vregs[] = {
++	{ .supply = "vdda-0p9", .init_load_uA = 46000 },
++	{ .supply = "vdda-1p2", .init_load_uA = 15000 },
++};
++
++#define QCOM_SGMII_NUM_SUPPLIES		ARRAY_SIZE(qcom_dwmac_sgmii_phy_vregs)
++
+ struct qcom_dwmac_sgmii_phy_data {
++	struct regulator_bulk_data *vregs;
+ 	struct regmap *regmap;
+ 	struct clk *refclk;
+ 	int speed;
+@@ -269,13 +278,24 @@ static int qcom_dwmac_sgmii_phy_power_on(struct phy *phy)
+ 	struct qcom_dwmac_sgmii_phy_data *data = phy_get_drvdata(phy);
+ 	int ret;
+ 
+-	ret = clk_prepare_enable(data->refclk);
+-	if (ret < 0)
++	ret = regulator_bulk_enable(QCOM_SGMII_NUM_SUPPLIES, data->vregs);
++	if (ret)
+ 		return ret;
+ 
++	ret = clk_prepare_enable(data->refclk);
++	if (ret)
++		goto err_disable_regulators;
++
+ 	ret = qcom_dwmac_sgmii_phy_calibrate(phy);
+-	if (ret < 0)
+-		clk_disable_unprepare(data->refclk);
++	if (ret)
++		goto err_disable_clk;
++
++	return 0;
++
++err_disable_clk:
++	clk_disable_unprepare(data->refclk);
++err_disable_regulators:
++	regulator_bulk_disable(QCOM_SGMII_NUM_SUPPLIES, data->vregs);
+ 
+ 	return ret;
+ }
+@@ -292,6 +312,8 @@ static int qcom_dwmac_sgmii_phy_power_off(struct phy *phy)
+ 
+ 	clk_disable_unprepare(data->refclk);
+ 
++	regulator_bulk_disable(QCOM_SGMII_NUM_SUPPLIES, data->vregs);
++
  	return 0;
+ }
  
- free_freq_table:
-+	imx6_soc_volt = NULL;
- 	dev_pm_opp_free_cpufreq_table(cpu_dev, &freq_table);
- out_free_opp:
- 	dev_pm_opp_of_remove_table(cpu_dev);
-@@ -506,6 +507,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
- static void imx6q_cpufreq_remove(struct platform_device *pdev)
- {
- 	cpufreq_unregister_driver(&imx6q_cpufreq_driver);
-+	imx6_soc_volt = NULL;
- 	dev_pm_opp_free_cpufreq_table(cpu_dev, &freq_table);
- 	dev_pm_opp_of_remove_table(cpu_dev);
- 	regulator_put(arm_reg);
+@@ -331,6 +353,7 @@ static int qcom_dwmac_sgmii_phy_probe(struct platform_device *pdev)
+ 	struct phy_provider *provider;
+ 	void __iomem *base;
+ 	struct phy *phy;
++	int ret;
+ 
+ 	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+@@ -355,6 +378,12 @@ static int qcom_dwmac_sgmii_phy_probe(struct platform_device *pdev)
+ 	if (IS_ERR(data->refclk))
+ 		return PTR_ERR(data->refclk);
+ 
++	ret = devm_regulator_bulk_get_const(dev, QCOM_SGMII_NUM_SUPPLIES,
++					    qcom_dwmac_sgmii_phy_vregs,
++					    &data->vregs);
++	if (ret)
++		return ret;
++
+ 	provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
+ 	if (IS_ERR(provider))
+ 		return PTR_ERR(provider);
 -- 
 2.53.0
 
