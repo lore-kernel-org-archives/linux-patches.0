@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC47274B46;
-	Sat, 12 Sep 2026 18:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1689132D43C;
+	Sat, 12 Sep 2026 18:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237644; cv=none; b=jnWMosl5ogyvf30iCdA225eN+6ZkIupCaFUtgzrgTfOCN2j7bE999llmdF+ZMByV0Fu3OdB34THxjxH6reFCPtFozkz3XE7CtjECkk257EULryfHkHbHTiesHcJ3d/x8qn2X0ZCEx+JeCkQ2rzpilxpvS7ridc3f1hA98s9gnGk=
+	t=1789237649; cv=none; b=LMtT48KhPjGQO1T9/tbTxsPaMM9P6eDYEbnKJHnvypvxqt7UpQxMmwbdFMMvSzqaPKUc58XvpoX54bwo0PkB6SFHuaWj7TtoctvauxoJPSN+z8lcW2IxN+gy/xLv70eD/OjVgFuuQHeibXGJEIUKZ9MLIXxBd3xbwxclaUr0Yzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237644; c=relaxed/simple;
-	bh=Mc/KYBRCbRZhSSqHvpldxd06+Mvg6QEN3wlwYSQfCTo=;
+	s=arc-20240116; t=1789237649; c=relaxed/simple;
+	bh=eB/URTNqkw3ssUUS7u5YkpFD0qPG/935/93kXkwAnw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJk11v8QzzBThQGYiDhC1gIKGrejfrI3mmsfKmDctByhxz86GkasYsJaz8WCfiQU74ZnR+u/oN4PVngqPxy1WRkPUyo0GTMUEs9+88JI/Ia97LlTu0KCejme5V9kK3dqUCE6ahW2x+JxI7h19STzaFUtH8zAwW+vZSRhl+S/vD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9u1vFyp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cvgxP2d4D9zwLOHVXP+GSqaslEzKpHBFoNhORImg21t10MWNmL3FxqVmLze4cR87zEgMg1eO2aVv8rKTtIi2n69xHb/ICXGX4VigVWSYTUfD0jT1OFhSWhmHMgx9gnts0AfKNAVePT+Aw62e7oYwOh2L51pHPUGmyx25gYKFOS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJffoZcP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9u1vFyp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1077F1F000FF;
-	Sat, 12 Sep 2026 18:27:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJffoZcP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDD781F000FF;
+	Sat, 12 Sep 2026 18:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237642;
-	bh=lZrmS8FAaNWHt44XJPIZsUPlnz5dWgd8r84YzEo0/1M=;
+	s=korg; t=1789237648;
+	bh=LInWnYGdqTA9NGJ2F3/bIwH39pab/1ch3wJgRnScLdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L9u1vFypLBJaNa6oRTPeBdud96etBn9aG+X9pWNCIneY/Oe/htASyF9Tr45cFTyc7
-	 AqQF8r3AHvLBLDVuHTQNvgeSu7BgEj7RPyDgIy8eYKUaPzg2VQX+1wSgKwaEYCmC8l
-	 6xb/J+gJ6qiDmZvx0/nDpzkGIHoGzErqzdkyfQt8=
+	b=MJffoZcPuH7XPUDYF/qyHlgCXGjQmRu4/rQdXQEiZlNm0facmO4zowulmZrCZFFmi
+	 Sl9MAtNriqs8ZJvmYc/Af2ILRrgbxK7uVr48/XDC617nVRtJCP1BfIeU2i1x8ygRVb
+	 jRCEaE+dET/r4++SgimIN0LM0dx2XD+1bpsMLSsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxwell Doose <m32285159@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Sanjay Chitroda <sanjayembeddedse@gmail.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 5.15 298/935] iio: temperature: hid-sensor-temperature: switch to non-devm iio_device_register()
-Date: Sat, 12 Sep 2026 08:55:28 +0200
-Message-ID: <20260912065533.644513215@linuxfoundation.org>
+	Yosry Ahmed <yosry@kernel.org>,
+	Kai Huang <kai.huang@intel.com>,
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 5.15 299/935] KVM: nVMX: Always flush vpid02 on first use
+Date: Sat, 12 Sep 2026 08:55:29 +0200
+Message-ID: <20260912065533.667143973@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,55 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanjay Chitroda <sanjayembeddedse@gmail.com>
+From: Yosry Ahmed <yosry@kernel.org>
 
-commit 967d066f5334740f656577bc51c381a1bb707b61 upstream.
+commit f0772389413dce9657c7d6950abf3edbbd511356 upstream.
 
-Avoid using devm_iio_device_register(), as this driver requires explicit
-error handling and teardown ordering.
+Make sure vpid02 is always flushed on first use by setting last_vpid=0
+when allocating vpid02.  nested_vmx_transition_tlb_flush() will always
+detect a VPID change on first VM-Enter after VMXON, because VPID=0 in
+vmcs12 is not allowed if L1 enables VPID.
 
-With devm_iio_device_register(), IIO device remains registered until the
-devres cleanup phase. However, driver's remove() callback removes the
-sensor hub callback and trigger support. This can create a race window
-where IIO device is still visible and read_raw() requests are issued.
-These requests might call sensor_hub_input_attr_get_raw_value(), which
-waits up to 5 seconds for a response from the sensor hub callback that
-has already been removed.
+This avoids using stale TLB entries from a previous lifetime of the
+VPID, that might have been associated with a different vCPU (or a
+completely different VM).
 
-Add an explicit iio_device_unregister() call in the teardown path to
-ensure deterministic cleanup, so that userspace can no longer access the
-device once backend resources begin to be dismantled.
+Note that last_vpid is already being initialized as 0 when the vCPU is
+created, but it is not reset when vpid02 is freed on VMXOFF. Hence, the
+problem can only occur if L1 does VMXOFF -> VMXON, runs an L2, and KVM
+happens to reuse a VPID that has TLB entries on the physical CPU.
 
-Fixes: 59d0f2da3569 ("iio: hid: Add temperature sensor support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Maxwell Doose <m32285159@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Sanjay Chitroda <sanjayembeddedse@gmail.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Reviewed-by: Jim Mattson <jmattson@google.com>
+Link: https://patch.msgid.link/20260616214652.2157032-2-yosry@kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/temperature/hid-sensor-temperature.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kvm/vmx/nested.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/iio/temperature/hid-sensor-temperature.c
-+++ b/drivers/iio/temperature/hid-sensor-temperature.c
-@@ -243,7 +243,7 @@ static int hid_temperature_probe(struct
- 	if (ret)
- 		goto error_remove_trigger;
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -1195,6 +1195,9 @@ static void nested_vmx_transition_tlb_fl
+ 	 * is the VPID incorporated into the MMU context.  I.e. KVM must assume
+ 	 * that the new vpid12 has never been used and thus represents a new
+ 	 * guest ASID that cannot have entries in the TLB.
++	 *
++	 * Note, last_vpid is initialized as 0, so the first nested VM-Enter
++	 * after VMXON will always flush the TLB to avoid using stale entries.
+ 	 */
+ 	if (is_vmenter && vmcs12->virtual_processor_id != vmx->nested.last_vpid) {
+ 		vmx->nested.last_vpid = vmcs12->virtual_processor_id;
+@@ -4974,6 +4977,13 @@ static int enter_vmx_operation(struct kv
  
--	ret = devm_iio_device_register(indio_dev->dev.parent, indio_dev);
-+	ret = iio_device_register(indio_dev);
- 	if (ret)
- 		goto error_remove_callback;
+ 	vmx->nested.vpid02 = allocate_vpid();
  
-@@ -263,6 +263,7 @@ static int hid_temperature_remove(struct
- 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
- 	struct temperature_state *temp_st = iio_priv(indio_dev);
- 
-+	iio_device_unregister(indio_dev);
- 	sensor_hub_remove_callback(hsdev, HID_USAGE_SENSOR_TEMPERATURE);
- 	hid_sensor_remove_trigger(indio_dev, &temp_st->common_attributes);
++	/*
++	 * Clear last_vpid to ensure that the VPID is flushed on the first
++	 * nested VM-Enter. Otherwise, stale TLB entries from a previous life of
++	 * the VPID (e.g. different vCPU or even different VM) could be used.
++	 */
++	vmx->nested.last_vpid = 0;
++
+ 	vmx->nested.vmcs02_initialized = false;
+ 	vmx->nested.vmxon = true;
  
 
 
