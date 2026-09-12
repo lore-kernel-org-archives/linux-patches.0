@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1751353A75;
-	Sat, 12 Sep 2026 11:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F45353A75;
+	Sat, 12 Sep 2026 11:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212613; cv=none; b=cmTvMhD+6sFQT4ex95Ze5ZJ8Za3ZB2+fvK0YeZdMWUX2WwLiwWZ6FLOaefdC1utXmBlW0JPFRI2dRIhSi8dpEaJTAiEeqZ4SSf5g/F9dVsqSz2p8zoVnSooxznMj0zZKcgOUegemJ6s10pJzC5r4KdqHtqqlUHEmMdDLXZeKNG8=
+	t=1789212619; cv=none; b=O1oEwBfNwWYGxj2b2qtKnpj15ByXBUnvZDyjUISEXymHx94gVAtIfEKroFAsZmYbqRj6Zh4jZAdLyiPdOKYDWF2SHtWf+zFiCk7RWxx6g0a6f/QlhOZVXvHtE0HRUFSyZA7HemfkUXkK4HQzML8GyDii0V6O2jvpauoZEJ1JSWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212613; c=relaxed/simple;
-	bh=04ZCdC6tcr7rTqU8/mbCeNDWI8leBvKY+2BATk39X78=;
+	s=arc-20240116; t=1789212619; c=relaxed/simple;
+	bh=VkBfUCr1G3+XWSe6jii+JG+9VWZF+jTcOKbMXoE4DrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rpTsS3pO+3/oc73vMNAU4xkiu/XI1jnmtkIDNe0J7r/0GARFxFW3afkkcf7TjOiIfy9m5HxJBVTk9hnlidMdeBGNcIx4/uu/vU8b+2kS2/6nCt48voyIpDN4N6HHZpK9O4qmdW2qTVzVGGv60I5fNhjQc9TUp39KlPN52EuM//s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4olELkt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c9tuq2Z07mJR50dipZ4h7k/aU2Liu+PJayMEByMIAuu0NTibhKpB1Bd3Kr0dywiZ5fXbRVwxIp9JVxlFF07O23o5sG+M2Z2+K6yfafPnyhJdf5vE3wLQ2Y7qDCQb7RkREac9rkmHtPXNbZhBCuxt8JaJ0DxXPxGGBVZoY9G1QEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WlmpCa7F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4olELkt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59581F000FF;
-	Sat, 12 Sep 2026 11:30:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlmpCa7F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A076D1F000FF;
+	Sat, 12 Sep 2026 11:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212612;
-	bh=nRinq/2sGq0msBbh901+DLs8EpaioGfWh6gQ6hRLtx8=;
+	s=korg; t=1789212617;
+	bh=mwsxRzOlgApWcjNtiHiDz1lTQ779yWCbJ2HtlFnzttw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v4olELkt3vFLdvnx85JYXKCgBk5tNcJzs2XZux+iuB7OB2dz1ycopzPv8Cj2tvMct
-	 bhZGESVHjlJWMkXUVHG5sBP/14jtNVgNwiPzrKzILnou/8pMZHor7eIXKOf71Swhfn
-	 pFTkhCCOkAjtqbViyqFlQ3JkhRVSzgyhYn+1ffPI=
+	b=WlmpCa7FMAbYM3EH3XuH+NKM29CQYIz3J+6Q4FCYSS2E0cl3xX/3IOLOOkzbcBMl+
+	 OUhgBK9MZUXOK6vYmbwPayPfx0TKS3SVnlln/b23Y5xjPLi3R71+2Hzlpw+r972I3O
+	 GLGAM5qohB9Ps3d4CM66h3IFcdwx+xvTTVuhhL6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1430/1518] ASoC: dapm: Fix off-by-one check on the second enum channel
-Date: Sat, 12 Sep 2026 08:59:59 +0200
-Message-ID: <20260912065655.899578449@linuxfoundation.org>
+Subject: [PATCH 6.18 1431/1518] ceph: Fix ERR_PTR(0) in ceph_mkdir()
+Date: Sat, 12 Sep 2026 09:00:00 +0200
+Message-ID: <20260912065655.922913063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,48 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit 14511c9b54ceeeef487409d73947c89ee8563590 ]
+[ Upstream commit 4f49c3f8a5a86d237bb202ecb17c2802ddc8fd2f ]
 
-The snd_soc_dapm_put_enum_double() rejects item[0] once it reaches
-e->items, but it lets item[1] be equal to it.  Both go on to
-snd_soc_enum_item_to_val(), which indexes e->values with no bound of
-its own, so an enum with a value table reads one element past the end.
+When mkdir succeeds, ceph_mkdir() sets ret to ERR_PTR(0) which is
+incorrect. It should return NULL instead for success.
 
-The indexing arrived with the MUX consolidation, which relaxed the
-item[1] check in the same hunk.  The value MUX handler it deleted used
->= there, and the snd_soc_put_enum_double() in soc-ops.c still does.
-
-Only adav80x pairs a value table with two shifts, and its second
-channel looks accidental, but the control does report two values.
-Writing three into it reads off the end of adav80x_mux_values.  The
-core catches that only under CONFIG_SND_CTL_INPUT_VALIDATION, which
-defaults off.
-
-Fixes: 3727b4968453 ("ASoC: dapm: Consolidate MUXs and value MUXs")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20260825125745.932832-1-sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 88d5baf69082 ("Change inode_operations.mkdir to return struct dentry *")
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-dapm.c | 2 +-
+ fs/ceph/dir.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/soc-dapm.c b/sound/soc/soc-dapm.c
-index 51fb09d56c5a1..f640bbe319fae 100644
---- a/sound/soc/soc-dapm.c
-+++ b/sound/soc/soc-dapm.c
-@@ -3549,7 +3549,7 @@ int snd_soc_dapm_put_enum_double(struct snd_kcontrol *kcontrol,
- 	val = snd_soc_enum_item_to_val(e, item[0]) << e->shift_l;
- 	mask = e->mask << e->shift_l;
- 	if (e->shift_l != e->shift_r) {
--		if (item[1] > e->items)
-+		if (item[1] >= e->items)
- 			return -EINVAL;
- 		val |= snd_soc_enum_item_to_val(e, item[1]) << e->shift_r;
- 		mask |= e->mask << e->shift_r;
+diff --git a/fs/ceph/dir.c b/fs/ceph/dir.c
+index e4577a80da58c..24abe4dbf774d 100644
+--- a/fs/ceph/dir.c
++++ b/fs/ceph/dir.c
+@@ -1173,7 +1173,7 @@ static struct dentry *ceph_mkdir(struct mnt_idmap *idmap, struct inode *dir,
+ 	    !req->r_reply_info.head->is_target &&
+ 	    !req->r_reply_info.head->is_dentry)
+ 		err = ceph_handle_notrace_create(dir, dentry);
+-	ret = ERR_PTR(err);
++	ret = err ? ERR_PTR(err) : NULL;
+ out_req:
+ 	if (!IS_ERR(ret) && req->r_dentry != dentry)
+ 		/* Some other dentry was spliced in */
 -- 
 2.53.0
 
