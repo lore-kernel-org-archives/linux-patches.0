@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5280641F344;
-	Sat, 12 Sep 2026 08:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39ED7384233;
+	Sat, 12 Sep 2026 08:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202847; cv=none; b=UAxKqNRP8OjeKo/b4rvNGv6JGkK1TOu9RSk8NwhBDRjYOKYSS4X4YpQG0qmKbVnkK643YrDXUFss6N7ODjvS6MH9dZq02rvTki2pM434t9uVCdb35SjfgBp25AdFoJskdL8vvmk1rFXTL1nGNj654u3EiRa0RR48XJg3TnnfPKA=
+	t=1789202849; cv=none; b=XhlWGbVOhb89oUHgAmziGPBMYi2G7J3bfY1UrEOcaioDRHZPDMDsAvDd4lY8POS5FATp3VKN8xRAxJpIKGljDFkbdlk2WtQjiYm126zHWzxx17t0kmgoF5HmYJoHw5XmGDBcrtzU6rYrGs+a0n1QSL0seCLPuEt9zbZEx6WgEuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202847; c=relaxed/simple;
-	bh=ss2BDpSa9lxCJx9LaOeZwMY75YxFuXuUvvr+6sztey4=;
+	s=arc-20240116; t=1789202849; c=relaxed/simple;
+	bh=xUzUUe2/FrbjumhVImUzyinvcuMS4w7rOvmp/V80uOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mYhD7EXw7cn6nzDaURGwIBAFZdIun+DVwcL2HSNrc5/kT32m9gGZl4LMQmcilX3iGfJi/bvAg3GZKqBhLxSOM7j5LsK+qF3gHHfGN/drr6XImercEg9oF58uTaNaoSktsqwbt2cP65TZ5SpmnvZmg7fYZLmbJOaqXcl8Fnr98qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7xMbCur; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GkgCrFP8gyxLgv4Hp4wD+1nHjtozBJqIRul4gjS73wuWW/bu3R/rlEcjRSe+xTDhEBBsSILxROZt7GyowUvVzFl7tRQrFzzWNh9loIBdA7MEMwwF07toLvxrnIyY8h/BMmp2gnNh+B+0MvCUnsH2bROgkus6kJjPT4DcrRJLdag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgKRkySl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7xMbCur"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6711F000FF;
-	Sat, 12 Sep 2026 08:47:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgKRkySl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE361F00893;
+	Sat, 12 Sep 2026 08:47:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202839;
-	bh=VMN5FUYZ1YuF5VP3cAKM/AeDmRavNBOIFzN5v6sJ7ww=;
+	s=korg; t=1789202844;
+	bh=cUhVe6B7qYHuihV7lmWbOgFlgVsdLkDi0k9EVBgzkX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P7xMbCur+d8WUqazL74AEDdv5lNrR0vkpRUkuYYD4xorwDx98VIEU8PkNR0u18V7U
-	 uKOCgBIXTfAg4npwPOVF/gWG1ymBAQ1LOISGOV0DYzXb5+18X/gAY565o7icqtK23k
-	 IlwHBxr43HcDK8wnA0Dl+s9x1QctF1NuPZtp9LlE=
+	b=RgKRkySlm7TAaDlO4FmuXklj3Mnowiwi2O+JLXg0eLsTREfmbR9e4BoOz4ufFFT7G
+	 wpIuRrFPXLDszYjyzBPUyAk/He0xMEAKfd9K0MTAJt7slIdu5AXawG2CLEVtLAIh1J
+	 FUeWQ0sY5kvIrNwwH1NjYBKMzxV6QZFnqswFi6uA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alice Rogers <alice.mei.rogers@gmail.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Leo Yan <leo.yan@linux.dev>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1279/1815] perf python: Handle Py_None for thread and cpu maps
-Date: Sat, 12 Sep 2026 08:50:29 +0200
-Message-ID: <20260912065719.041766383@linuxfoundation.org>
+Subject: [PATCH 7.2 1288/1815] fbdev: clps711x-fb: Remove unreachable unregister_framebuffer() call
+Date: Sat, 12 Sep 2026 08:50:38 +0200
+Message-ID: <20260912065719.251068600@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -60,81 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 054d1c7717b95d9089cd3b80e9e85fe1f2ea0471 ]
+[ Upstream commit 39dd7598fbe90c5b4bb77fb34d8f3dad8385d11c ]
 
-The python stubs allow passing None for threads and cpus to the
-perf.parse_events() and perf.parse_metrics() bindings. However, PyArg_ParseTuple
-parses None into a Py_None object, which is not a NULL pointer.
-Because the C code lacked an explicit check for Py_None, it would cast
-Py_None to a pyrf_thread_map/pyrf_cpu_map struct pointer and dereference it,
-causing a memory corruption crash.
+The unregister_framebuffer() call in clps711x_fb_probe() is unreachable.
+register_framebuffer() failure jumps to the unwind label, while success
+returns immediately.
 
-Fix this pre-existing issue by explicitly checking for Py_None alongside NULL
-in pyrf__parse_events, pyrf__parse_metrics, and pyrf_evsel__open.
+Remove it.
 
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alice Rogers <alice.mei.rogers@gmail.com>
-Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Leo Yan <leo.yan@linux.dev>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Thomas Richter <tmricht@linux.ibm.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Stable-dep-of: 9a142beb1eba ("perf python: Validate CPU and thread maps in pyrf_evsel__open")
+Found with Clang's -Wunreachable-code.
+
+Fixes: 36462ac193088 ("fbdev: clps711x-fb: Replace check_fb in favor of struct fb_info.lcd_dev")
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/python.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/video/fbdev/clps711x-fb.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
-index 5aec515bd70b3..a04e3f9ddc475 100644
---- a/tools/perf/util/python.c
-+++ b/tools/perf/util/python.c
-@@ -1107,10 +1107,10 @@ static PyObject *pyrf_evsel__open(struct pyrf_evsel *pevsel,
- 					 &pcpus, &pthreads, &group, &inherit))
- 		return NULL;
+diff --git a/drivers/video/fbdev/clps711x-fb.c b/drivers/video/fbdev/clps711x-fb.c
+index 7a7db7100499e..6789773b22fbe 100644
+--- a/drivers/video/fbdev/clps711x-fb.c
++++ b/drivers/video/fbdev/clps711x-fb.c
+@@ -329,8 +329,6 @@ static int clps711x_fb_probe(struct platform_device *pdev)
  
--	if (pthreads != NULL)
-+	if (pthreads != NULL && pthreads != Py_None)
- 		threads = ((struct pyrf_thread_map *)pthreads)->threads;
+ 	return 0;
  
--	if (pcpus != NULL)
-+	if (pcpus != NULL && pcpus != Py_None)
- 		cpus = ((struct pyrf_cpu_map *)pcpus)->cpus;
- 
- 	evsel->core.attr.inherit = inherit;
-@@ -2333,8 +2333,10 @@ static PyObject *pyrf__parse_events(PyObject *self, PyObject *args)
- 		return NULL;
- 	}
- 
--	threads = pthreads ? ((struct pyrf_thread_map *)pthreads)->threads : NULL;
--	cpus = pcpus ? ((struct pyrf_cpu_map *)pcpus)->cpus : NULL;
-+	threads = (pthreads && pthreads != Py_None) ?
-+			((struct pyrf_thread_map *)pthreads)->threads : NULL;
-+	cpus = (pcpus && pcpus != Py_None) ?
-+			((struct pyrf_cpu_map *)pcpus)->cpus : NULL;
- 
- 	parse_events_error__init(&err);
- 	perf_evlist__set_maps(evlist__core(evlist), cpus, threads);
-@@ -2367,8 +2369,10 @@ static PyObject *pyrf__parse_metrics(PyObject *self, PyObject *args)
- 		return NULL;
- 	}
- 
--	threads = pthreads ? ((struct pyrf_thread_map *)pthreads)->threads : NULL;
--	cpus = pcpus ? ((struct pyrf_cpu_map *)pcpus)->cpus : NULL;
-+	threads = (pthreads && pthreads != Py_None) ?
-+			((struct pyrf_thread_map *)pthreads)->threads : NULL;
-+	cpus = (pcpus && pcpus != Py_None) ?
-+			((struct pyrf_cpu_map *)pcpus)->cpus : NULL;
- 
- 	perf_evlist__set_maps(evlist__core(evlist), cpus, threads);
- 	ret = metricgroup__parse_groups(evlist, pmu ?: "all",
+-	unregister_framebuffer(info);
+-
+ out_fb_dealloc_cmap:
+ 	regmap_update_bits(cfb->syscon, SYSCON_OFFSET, SYSCON1_LCDEN, 0);
+ 	fb_dealloc_cmap(&info->cmap);
 -- 
 2.53.0
 
