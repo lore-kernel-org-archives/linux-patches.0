@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CEA369D7A;
-	Sat, 12 Sep 2026 07:40:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D97326928;
+	Sat, 12 Sep 2026 07:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198862; cv=none; b=RQ/sGZ7miJ0xZ06TD1PmmM+pKjLJ6B8TC6wcz7suPtpgzNAOOzMjJ73RtZZPN+qqrjtdAJ5uN6A7YUH+vaPIoRZ1FYNWUZRcGD3ijI7nLu7Py/8D81+7BUaGHR8yQH0tTjc8uUi3SCdOKdvzHCLeq+S+zKVYwGQ5FzjxkCJxseg=
+	t=1789198865; cv=none; b=L2JarAtSWIgbjmncHlJRDD4lWVLw3N+bxjW4MPrIKWWvHXxNgO/yY/bALR8M18mvkJkuyxv5Kf7JiypSgHCzeHWM4hdQ8I+t44g99OHJhHxRzVqIGZ3Sws8HnuNXobzhOuROT9MV6YTVF4pJiWFiimHkbDTHpHiW/fLkj0io83Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198862; c=relaxed/simple;
-	bh=9rh5682vZ0Lgxcxd+tH1ru4m0TLE571H3q4omx00QaE=;
+	s=arc-20240116; t=1789198865; c=relaxed/simple;
+	bh=YpcYeMytKl0ykXs8puehWGIe9ssI75Qk6s7akw7PjYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d452oK9mbKeOwzob2t5XxMa82238mmBwldA1ZdH1CESwAz5JDKj+R+ijfhoixU0HpNwOuT7tWzcYfCzDfI9tO3F97yb482TBx/K8e19MYFQVli7soNtmFphuwK7cGZBr46qFuTqDq7MRq0/5/5JRD8UwY5DooKiDIDQLoGxwYLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SltPIdfU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z3lG899vRAjIoUxginSif92lsSTTO3qes6yCaGocd04jJcGRoALXZeQzfO6s0yEsapOn6diC9/TbVKgpFVnw2oAIcthGG/7JeQb11M7RDN90mWTqIdP5Z6f7DytHE+2PZK37byJLnewEBJqvJ1HRJsYvrlc5QcYT3ZSxzP1cA1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YcrWCuwZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SltPIdfU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2BB1F000FF;
-	Sat, 12 Sep 2026 07:40:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YcrWCuwZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A93D1F00893;
+	Sat, 12 Sep 2026 07:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198854;
-	bh=o+zNbOvXKLHpww59RgN58iJ16ShxiPSkYX0vsjY7lCs=;
+	s=korg; t=1789198859;
+	bh=zJNHpyUTTyYLpwQUKl1sZK/lt9MTq3Tr5GkQpyUqVgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SltPIdfU8315Fbgug+lGSUmT0FEC6n9voaEoxr8GidEOLB99qb6ENThfQ1KYHIVuZ
-	 qah0f/EhEVDtbjIUOonAizfJGjgyM3cvKUPFstytIQt4vdb9H+CQgTlJ8IVZ2pZbb9
-	 sSdxqg67VjDhiotmianjP3kqvsmzrrjBasbTmOrU=
+	b=YcrWCuwZ8bGGl6wn5ZBkIWJZ2415eqtaks7xnKhFkuvrqM2hnNA8BJQ5LbSXuk7mX
+	 JZ7FtE0Uz+UC0e2fc5l2K9o9XBLYxukGLKZVMaR+8e2+EYyAwA1LMf1OPQ0ivsZaiy
+	 66wVsJ8i+HhQfDvfSv38achTgmuqbPhAm0nvJwWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Avraham Stern <avraham.stern@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0467/1815] wifi: iwlwifi: guard against division by zero in iwl_dbg_tlv_alloc_fragments
-Date: Sat, 12 Sep 2026 08:36:57 +0200
-Message-ID: <20260912065659.851329890@linuxfoundation.org>
+Subject: [PATCH 7.2 0468/1815] wifi: iwlwifi: mei: pass correct argument to function
+Date: Sat, 12 Sep 2026 08:36:58 +0200
+Message-ID: <20260912065659.873795991@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,56 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Avraham Stern <avraham.stern@intel.com>
 
-[ Upstream commit 9318bc0c41b24705690cf80d1596cf6b711e7027 ]
+[ Upstream commit 905f57aefde4f4092a411c8a55856182fb1c7598 ]
 
-Make sure we don't end-up with a num_frags = 0 situation.
-For that, check that the required size is not 0 and put a checker on
-num_frags as well.
+The first argument to iwl_mei_write_cyclic_buf() should be the cldev
+but the q_head pointer is passed instead. Fix it.
 
-Fixes: 14124b25780d ("iwlwifi: dbg_ini: implement monitor allocation flow")
-Assisted-by: GitHubCopilot:gpt-5.3-codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Fixes: 652291601459 ("iwlwifi: mei: don't rely on the size from the shared area")
+Signed-off-by: Avraham Stern <avraham.stern@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260715220243.60121deecf2c.Iebc891c95a7bd1b2a093b0bb88532db446a758ee@changeid
+Link: https://patch.msgid.link/20260715220243.24cea60c6428.I42301010c31487b1458faa967b22c8320b0cfd23@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mei/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-index b1a55909f0d4b..11763dec77eca 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-- * Copyright (C) 2018-2025 Intel Corporation
-+ * Copyright (C) 2018-2026 Intel Corporation
-  */
- #include <linux/firmware.h>
- #include "iwl-drv.h"
-@@ -611,6 +611,9 @@ static int iwl_dbg_tlv_alloc_fragments(struct iwl_fw_runtime *fwrt,
- 	    cpu_to_le32(IWL_FW_INI_LOCATION_DRAM_PATH))
- 		return 0;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mei/main.c b/drivers/net/wireless/intel/iwlwifi/mei/main.c
+index c014358593498..b78ab75afc159 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mei/main.c
++++ b/drivers/net/wireless/intel/iwlwifi/mei/main.c
+@@ -458,7 +458,7 @@ static int iwl_mei_send_sap_msg_payload(struct mei_cl_device *cldev,
+ 	notif_q = &dir->q_ctrl_blk[SAP_QUEUE_IDX_NOTIF];
+ 	q_head = mei->shared_mem.q_head[SAP_DIRECTION_HOST_TO_ME][SAP_QUEUE_IDX_NOTIF];
+ 	q_sz = mei->shared_mem.q_size[SAP_DIRECTION_HOST_TO_ME][SAP_QUEUE_IDX_NOTIF];
+-	ret = iwl_mei_write_cyclic_buf(q_head, notif_q, q_head, hdr, q_sz);
++	ret = iwl_mei_write_cyclic_buf(cldev, notif_q, q_head, hdr, q_sz);
  
-+	if (!fw_mon_cfg->req_size)
-+		return -EIO;
-+
- 	num_frags = le32_to_cpu(fw_mon_cfg->max_frags_num);
- 	if (fwrt->trans->mac_cfg->device_family < IWL_DEVICE_FAMILY_AX210) {
- 		if (alloc_id != IWL_FW_INI_ALLOCATION_ID_DBGC1)
-@@ -621,6 +624,9 @@ static int iwl_dbg_tlv_alloc_fragments(struct iwl_fw_runtime *fwrt,
- 		return -EIO;
- 	}
- 
-+	if (!num_frags)
-+		return -EIO;
-+
- 	remain_pages = DIV_ROUND_UP(le32_to_cpu(fw_mon_cfg->req_size),
- 				    PAGE_SIZE);
- 	num_frags = min_t(u32, num_frags, BUF_ALLOC_MAX_NUM_FRAGS);
+ 	if (ret < 0)
+ 		return ret;
 -- 
 2.53.0
 
