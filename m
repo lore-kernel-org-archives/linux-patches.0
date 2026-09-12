@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952F13FD96B;
-	Sat, 12 Sep 2026 09:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EB535F5F7;
+	Sat, 12 Sep 2026 09:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204989; cv=none; b=h+aUsxEghsSRTy9NBi96sqlFDK2CTot/ABbzU7TF8U3MVMSKhGaKct7OQ060SybXnOxFCGGWz5yujy+F4VGtGMGlhfhwggCjOc83JWXbar5+tNQQsvLapLS+0QH6daYaqNVEPU2XVHoD7a7Jr7ckPpknEKcNpVqk35uWNJuCa1U=
+	t=1789204995; cv=none; b=AnDlpQWN1MA80BwzCNhJAP3qeiv1SFDt49BT/QE7NHmoj4JkxD0ryBvrQpBYzaDSPWxU/BnJvAcOmrMB4SFdL1CEtcEwk/qPiKWW+oUMhBgicvyJe+EXmCeJQ19JWZaHX5vd3zLolpU2amiL8FMlev6edh0XYmTlRdyQZ8miayc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204989; c=relaxed/simple;
-	bh=WNcBtM+hLuSrZUnnRV8VqNW5YS7K6/5zFOHro2xzCa8=;
+	s=arc-20240116; t=1789204995; c=relaxed/simple;
+	bh=JaxP0U8ExZcXpv8fgriOl8dxLAJUBH0ccMNBJWnG6sc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fr1lq9AwuwcUd1FbB8hnuTD9Jnuu108or5x5VCPCHLnF4CVbloAn7Rfy6HF8mr3AYW4SajuN9h2q5hIM037MdaRphxuFeFBMOCAU14W8WCcwC1lm9gmaiOprf9kpO8s2Qo7oXNfEwnssGpveB5+Lsu4PNrasF+Csk02Jna6p+5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9ZpMaRs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tNJFdpWAY5Jvdb7RGcYiPKI3zjg88c/99xdkqUGVCCBr2t2UtsOKQ3YmDJM4EIfto3iaZ1fHK8Se3cXmFuF1zhclnVrLfh5UJVkE5vP1i6xsEe8oOQBlv9QrhqEdMDTnkO8XYdWpZm95gA/C5PmFVDyZWOFSwJ7Kfm2isJ5RAKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=syNLTLGP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9ZpMaRs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943D01F000FF;
-	Sat, 12 Sep 2026 09:23:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="syNLTLGP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 816191F000FF;
+	Sat, 12 Sep 2026 09:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204988;
-	bh=2BRdVaY4aIXKcLcnpQB6Ciz8p72NwedfPS79W8vFuRc=;
+	s=korg; t=1789204993;
+	bh=kOAfm8GMfAHWFmhGK9QKK9qs6N0vI52YNuvpvUPCCjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y9ZpMaRsBQVkhOlMfGYyjboOkY8oXNzAwvRAWVcPBOqcUTlOo7wDzi2yL8c0t18Ij
-	 nEdVlQgQ9hyCNYyfIhnlt9gDeK83c/8z7FP7heKP/7DbB5dDwa2ScCJ8Hnxx/zrAlB
-	 xWYUTSh0rbDoutw3o6Su1U+dTEuMWoutO0Ke9k58=
+	b=syNLTLGP5yNUzNE4cfoy/j/5gtpjv/8IvGvMSIP8Q68NrOpa63qAvl/3ao/uNRKON
+	 Xha96tHoH8OFLtFFwCqT6BKkXc7ALa6vqNjjCV/OfqkhrcKT7cKKvPRAmW54FhRrFi
+	 scfzQnSRJsmwYYhxZIgeBgCxo0NDdiXkw7WahhvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
+	Radek Podgorny <radek@podgorny.cz>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1725/1815] Bluetooth: RFCOMM: Validate MTU in rfcomm_apply_pn() to prevent infinite loop
-Date: Sat, 12 Sep 2026 08:57:55 +0200
-Message-ID: <20260912065729.471681299@linuxfoundation.org>
+Subject: [PATCH 7.2 1726/1815] Bluetooth: do not leak an hci_conn when a second LE connect is rejected
+Date: Sat, 12 Sep 2026 08:57:56 +0200
+Message-ID: <20260912065729.495210506@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,45 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Radek Podgorny <radek@podgorny.cz>
 
-[ Upstream commit 44c98fd082eafd49d55a8a4077ff488175b2fe24 ]
+[ Upstream commit 7e1e4047200fd7519f9bdfe8a001437715e618b4 ]
 
-rfcomm_apply_pn() accepts the MTU value from a remote PN (Parameter
-Negotiation) frame without checking for zero. When the remote peer
-sends an MTU of zero, d->mtu is set to 0. This causes the sendmsg
-path to enter an infinite loop when fragmenting data, as each fragment
-has size == min_t(size_t, len, 0) == 0, so the remaining length never
-decreases. The infinite allocation of zero-length skbs exhausts all
-system memory.
+create_le_conn_complete() decides whether the failed connection is
+still pending by comparing it against hci_lookup_le_connect(), which
+returns the first LE connection in BT_CONNECT. That is the same
+connection only while at most one is pending.
 
-Fix by clamping d->mtu to RFCOMM_DEFAULT_MTU when the negotiated
-value is zero, consistent with the initial value assigned in
-rfcomm_dlc_alloc().
+Two can be pending. Connections created on the passive scan path sit
+in BT_CONNECT with HCI_CONN_SCANNING set and are invisible to
+hci_lookup_le_connect() until hci_le_create_conn_sync() clears the
+flag when their command is issued, so the -EBUSY guard in
+hci_connect_le() does not prevent a second connection from being
+queued while the first is still on the scan path. Whenever two
+connections are in BT_CONNECT at once, the lookup may return one
+connection while create_le_conn_complete() is reporting the failure
+of the other; the early exit then drops the error and hci_conn_failed()
+never runs on the connection that failed.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+The controller also rejects a second HCI_OP_LE_CREATE_CONN issued
+while another connection creation is still outstanding, per Core Spec
+Vol 4, Part E. The spec calls for Command Disallowed there; the
+bcm43438 observed here answers with an LMP/LL error code instead,
+which bt_to_errno() maps to the -EPROTO (-71) in the log below.
+
+The leaked connection stays in BT_CONNECT forever, and because
+hci_connect_le() refuses to dial while hci_lookup_le_connect() finds
+anything, every subsequent attempt to reach any peer fails with
+-EBUSY and no command reaches the controller at all.
+
+Seen on a bcm43438 with two BLE peers polled on the same interval
+(state 5 is BT_CONNECT; both handles are UNSET ones, allocated from
+the ida above HCI_CONN_HANDLE_MAX):
+
+  Bluetooth: hci1: Opcode 0x2013 failed: -71
+
+  # hcitool con
+          < LE 14:9C:EF:03:68:81 handle 3840 state 5 lm CENTRAL
+          < LE C4:D3:6A:8C:B5:38 handle 3841 state 5 lm CENTRAL
+
+A btmon capture across the next ten minutes of connect attempts
+contains no HCI_OP_LE_CREATE_CONN at all; outgoing LE connections
+do not recover until the adapter is reset. With this change the same
+scenario fails the rejected connection cleanly and further connects
+to both peers go through.
+
+Ask about the connection itself instead of about the device.
+
+Fixes: c9f73a2178c1 ("Bluetooth: hci_conn: Fix hci_connect_le_sync")
+Signed-off-by: Radek Podgorny <radek@podgorny.cz>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/bluetooth/hci_sync.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
-index 5d150e8623d54..63fa0f542ccf1 100644
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -1455,6 +1455,10 @@ static int rfcomm_apply_pn(struct rfcomm_dlc *d, int cr, struct rfcomm_pn *pn)
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 86de842175ab8..a8d2a3f076e98 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -7221,8 +7221,13 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
+ 		goto unlock;
+ 	}
  
- 	d->mtu = __le16_to_cpu(pn->mtu);
+-	/* Check if connection is still pending */
+-	if (conn != hci_lookup_le_connect(hdev))
++	/* Check if this connection is still pending.
++	 *
++	 * hci_lookup_le_connect() returns only the first LE connection
++	 * in BT_CONNECT, which is not necessarily this one when two are
++	 * pending at once, so ask the connection itself.
++	 */
++	if (conn->state != BT_CONNECT)
+ 		goto unlock;
  
-+	/* MTU 0 causes an infinite loop when fragmenting in sendmsg */
-+	if (!d->mtu)
-+		d->mtu = RFCOMM_DEFAULT_MTU;
-+
- 	if (cr && d->mtu > s->mtu)
- 		d->mtu = s->mtu;
- 
+ 	/* Flush to make sure we send create conn cancel command if needed */
 -- 
 2.53.0
 
