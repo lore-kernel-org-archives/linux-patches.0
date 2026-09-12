@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5551EB5FD;
-	Sat, 12 Sep 2026 08:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6183403F5;
+	Sat, 12 Sep 2026 08:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200321; cv=none; b=Z5oqVzMRdJOKbWcZ8gubHwE1z6iDLyC14QJIV1FMC7cZi/YiRUhfQxfC7q2T5hiGQHTliUO0OMpYxYevuCwgN5B4YhAvxJLzBlxgISbnFrP9deLTR+4ve02EuZHZheqPXYjz2T9ecrUMoLTYkt3qdXpI7kFXUbINOnPIdKRZL7s=
+	t=1789200326; cv=none; b=Ug1fxZ0wFTWcgIa+oajUK3FFmiXdZxyJ7+dmobsUkuI//FhAPxsP9BQUvcn2eXuAERdurXj2DSrvc/y/F614Nk3FOZ4Wsjxn+F7OWFPIZwV9nK2od1mXF0CmHaO/l6zhAvYqqLcKfwyf21mFsE2z5AJEPFUhZi2KETr6X8tEaUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200321; c=relaxed/simple;
-	bh=2ELTNtMKtykxGy6cCi3UrjFCRH/WddwLwX7CDT818uU=;
+	s=arc-20240116; t=1789200326; c=relaxed/simple;
+	bh=mLMARWu3peKu14IoKY47jL1sr7wFWm8k2TVM2w8bhgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i0vi/nFKk1JCQJ3RpjDIJDbYoclGalTqbRgYrd2i6d2kGwkKWfc/bXiBDftimMN5pP0ZVSn+b9anCo0ov8uixG3bJx6Z8LZBnMBK8f1cZO7LhXbZivZ7aKO2g3udf7qQVfj8b/U/XMjtsVodHOv9q8mhQUNo5Twxcmu3jGa0rKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJ2Q18VE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XGgx7ZXrTK/F2+cNfyOHKFPr8AYsu37rwJneQmH+QKvWpgu6u3leE3KzjvcMxloVgnFQ5FDp4/01KS7gO7iTB1llkF0opVyrYLvnIJ0onAIQc75r7bgJrHj8e1X6Ku7OL3FkjnoEtijEU2t3dYpDQxS6a1Qzi6vtfEsEeCRyWd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ohSPYyVf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJ2Q18VE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABFB1F000FF;
-	Sat, 12 Sep 2026 08:05:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ohSPYyVf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36E41F000FF;
+	Sat, 12 Sep 2026 08:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200319;
-	bh=iZgC4FBu7sahP8FVQVCP0WYebBOZwlsJzikg8q1GSeA=;
+	s=korg; t=1789200324;
+	bh=FxAYcQYgH+HddJVB10q4BqQ9usRn75oz/OjhWoat5tA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rJ2Q18VEZRfbtnlfX9lp3JBz4Dpgy2Rdb9Yh4bqaaP16gt8HkhknvL0xPSa/pfI/B
-	 jDxCnH3ZGhpvjyAys3Fcfx69DDMWJSzBE6pL4axk9ddGi86izMlLr/F/nE+wGmiF+f
-	 RGHmJ/+hRbI4K21fyNXObyY8+lcj4dG2jCVnoi7k=
+	b=ohSPYyVfaTc5KhBKBO1iT/8uBNz+HbCHovNBUxCiws7a2W3pSyY4n1ezstAL11j+r
+	 LwMBrUfozaimofWLROIBJWKeZvISNWZySmqqz+KLNBGpQ0FvydqD5a54C93USDd2BM
+	 Bie/P2mf2/444Rqpb53Ym1bdsYvhGSIi+OWXAPLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Chen Cheng <chencheng@fnnas.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0765/1815] net: airoha: fix ETS QoS stats counter underflow and cross-channel corruption
-Date: Sat, 12 Sep 2026 08:41:55 +0200
-Message-ID: <20260912065706.866582802@linuxfoundation.org>
+Subject: [PATCH 7.2 0766/1815] md/raid5: protect lockless recovery_offset accesses during reshape
+Date: Sat, 12 Sep 2026 08:41:56 +0200
+Message-ID: <20260912065706.888957186@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,93 +51,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Chen Cheng <chencheng@fnnas.com>
 
-[ Upstream commit 8b9a508819880c0c41d70f5b655bbd0baa231395 ]
+[ Upstream commit a47431dfb3538a1485f65b68a0605a05307b5b2d ]
 
-airoha_qdma_get_tx_ets_stats() has two bugs:
-- The hardware counters read via airoha_qdma_rr() are 32-bit values
-  but are stored in u64 locals and subtracted from u64 baselines. When
-  a 32-bit hardware counter wraps around, the subtraction produces a
-  large underflow value passed to _bstats_update().
-- The baseline counters (cpu_tx_packets, fwd_tx_packets) are stored as
-  single per-device fields, but airoha_qdma_get_tx_ets_stats() is
-  called with different channel values (0-3). Each call reads a
-  different channel's hardware counter but overwrites the same
-  baseline, corrupting the delta computation for other channels.
+During reshape:
+- reshape_request() advances rdev->recovery_offset for non-In_sync
+  devices locklessly.
+- analyse_stripe() reads rdev->recovery_offset locklessly to decide:
+    a. use a replacement device to read ?
+    b. a device can already be treated as in-sync for the current
+       stripe ?
 
-Fix both by:
-- Narrowing the counter locals and baselines to u32 so that 32-bit
-  unsigned subtraction handles wrap-around naturally.
-- Grouping the baselines into a per-channel qos_stats array so each
-  channel tracks its own previous counter value independently.
-- Splitting the delta addition into two statements so the first u32
-  delta is widened to u64 on assignment and the second is added in
-  u64 arithmetic, preventing overflow when both deltas are large.
+one possible scenario is:
 
-Fixes: 20bf7d07c956 ("net: airoha: Add sched ETS offload support")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260725-airoha-ethtool-priv_flags-v12-2-5136a30b2157@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+CPU1                            CPU2
+reshape_request()
+-> mddev->curr_resync_completed = sector_nr
+-> if (!mddev->reshape_backwards)
+-> rdev->recovery_offset = sector_nr
+                                analyse_stripe(sh)
+                                -> rdev = conf->disks[i].replacement
+                                -> if (rdev->recovery_offset >=
+                                      sh->sector + stripe_sectors)
+                                   set_bit(R5_ReadRepl)
+                                -> or
+                                -> if (sh->sector + stripe_sectors <=
+                                      rdev->recovery_offset)
+                                   set_bit(R5_Insync)
+
+And it could be:
+
+- reading from a replacement before it is recovered far enough; or
+- treating a not-yet-recovered device as in-sync for the current stripe.
+
+Fixes: db0505d32066 ("md: be cautious about using ->curr_resync_completed for ->recovery_offset")
+
+The race report:
+==================================================================
+BUG: KCSAN: data-race in ops_run_io / reshape_request
+
+write to 0xffff8bdee168b270 of 8 bytes by task 1704 on cpu 10:
+ reshape_request+0x1292/0x17b0
+ raid5_sync_request+0x815/0xa00
+ md_do_sync.cold+0xf8d/0x1516
+ [......]
+
+read to 0xffff8bdee168b270 of 8 bytes by task 1696 on cpu 9:
+ ops_run_io+0xc25/0x1960
+ handle_stripe+0x2273/0x4570
+ handle_active_stripes.isra.0+0x6e0/0xa50
+ raid5d+0x7d5/0xb90
+ [......]
+
+value changed: 0x0000000000091a00 -> 0x0000000000091b00
+==================================================================
+
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Reviewed-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/20260627102519.136940-1-chencheng@fnnas.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 18 +++++++++++-------
- drivers/net/ethernet/airoha/airoha_eth.h |  7 ++++---
- 2 files changed, 15 insertions(+), 10 deletions(-)
+ drivers/md/raid5.c | 50 +++++++++++++++++++++++-----------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 79418e682f71f..2fc8c91f210c6 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -2521,16 +2521,20 @@ static int airoha_qdma_get_tx_ets_stats(struct net_device *netdev, int channel,
- {
- 	struct airoha_gdm_dev *dev = netdev_priv(netdev);
- 	struct airoha_qdma *qdma = dev->qdma;
-+	u32 cpu_tx_packets, fwd_tx_packets;
-+	u64 tx_packets;
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 992d0b14822e7..a700df075e209 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -3751,11 +3751,10 @@ static int want_replace(struct stripe_head *sh, int disk_idx)
+ 	int rv = 0;
  
--	u64 cpu_tx_packets = airoha_qdma_rr(qdma, REG_CNTR_VAL(channel << 1));
--	u64 fwd_tx_packets = airoha_qdma_rr(qdma,
--					    REG_CNTR_VAL((channel << 1) + 1));
--	u64 tx_packets = (cpu_tx_packets - dev->cpu_tx_packets) +
--			 (fwd_tx_packets - dev->fwd_tx_packets);
-+	cpu_tx_packets = airoha_qdma_rr(qdma, REG_CNTR_VAL(channel << 1));
-+	fwd_tx_packets = airoha_qdma_rr(qdma,
-+					REG_CNTR_VAL((channel << 1) + 1));
-+	tx_packets = (u32)(cpu_tx_packets -
-+			   dev->qos_stats[channel].cpu_tx_packets);
-+	tx_packets += (u32)(fwd_tx_packets -
-+			    dev->qos_stats[channel].fwd_tx_packets);
- 
- 	_bstats_update(opt->stats.bstats, 0, tx_packets);
--	dev->cpu_tx_packets = cpu_tx_packets;
--	dev->fwd_tx_packets = fwd_tx_packets;
-+	dev->qos_stats[channel].cpu_tx_packets = cpu_tx_packets;
-+	dev->qos_stats[channel].fwd_tx_packets = fwd_tx_packets;
- 
- 	return 0;
+ 	rdev = sh->raid_conf->disks[disk_idx].replacement;
+-	if (rdev
+-	    && !test_bit(Faulty, &rdev->flags)
+-	    && !test_bit(In_sync, &rdev->flags)
+-	    && (rdev->recovery_offset <= sh->sector
+-		|| rdev->mddev->resync_offset <= sh->sector))
++	if (rdev && !test_bit(Faulty, &rdev->flags) &&
++	    !test_bit(In_sync, &rdev->flags) &&
++	    (READ_ONCE(rdev->recovery_offset) <= sh->sector ||
++	     rdev->mddev->resync_offset <= sh->sector))
+ 		rv = 1;
+ 	return rv;
  }
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.h b/drivers/net/ethernet/airoha/airoha_eth.h
-index fe934f9ffe8a1..b894828b13752 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.h
-+++ b/drivers/net/ethernet/airoha/airoha_eth.h
-@@ -580,9 +580,10 @@ struct airoha_gdm_dev {
- 	struct airoha_eth *eth;
+@@ -4672,7 +4671,8 @@ static void analyse_stripe(struct stripe_head *sh, struct stripe_head_state *s)
+ 		 */
+ 		rdev = conf->disks[i].replacement;
+ 		if (rdev && !test_bit(Faulty, &rdev->flags) &&
+-		    rdev->recovery_offset >= sh->sector + RAID5_STRIPE_SECTORS(conf) &&
++		    READ_ONCE(rdev->recovery_offset) >=
++		    sh->sector + RAID5_STRIPE_SECTORS(conf) &&
+ 		    !rdev_has_badblock(rdev, sh->sector,
+ 				       RAID5_STRIPE_SECTORS(conf)))
+ 			set_bit(R5_ReadRepl, &dev->flags);
+@@ -4714,7 +4714,7 @@ static void analyse_stripe(struct stripe_head *sh, struct stripe_head_state *s)
+ 		} else if (test_bit(In_sync, &rdev->flags))
+ 			set_bit(R5_Insync, &dev->flags);
+ 		else if (sh->sector + RAID5_STRIPE_SECTORS(conf) <=
+-			 rdev->recovery_offset) {
++			 READ_ONCE(rdev->recovery_offset)) {
+ 			/*
+ 			 * in sync if:
+ 			 *  - normal IO, or
+@@ -5458,13 +5458,13 @@ static int raid5_read_one_chunk(struct mddev *mddev, struct bio *raid_bio)
  
- 	DECLARE_BITMAP(qos_sq_bmap, AIROHA_NUM_QOS_CHANNELS);
--	/* qos stats counters */
--	u64 cpu_tx_packets;
--	u64 fwd_tx_packets;
-+	struct {
-+		u32 cpu_tx_packets;
-+		u32 fwd_tx_packets;
-+	} qos_stats[AIROHA_NUM_QOS_CHANNELS];
+ 	rdev = conf->disks[dd_idx].replacement;
+ 	if (!rdev || test_bit(Faulty, &rdev->flags) ||
+-	    rdev->recovery_offset < end_sector) {
++	    READ_ONCE(rdev->recovery_offset) < end_sector) {
+ 		rdev = conf->disks[dd_idx].rdev;
+ 		if (!rdev)
+ 			return 0;
+ 		if (test_bit(Faulty, &rdev->flags) ||
+ 		    !(test_bit(In_sync, &rdev->flags) ||
+-		      rdev->recovery_offset >= end_sector))
++		      READ_ONCE(rdev->recovery_offset) >= end_sector))
+ 			return 0;
+ 	}
  
- 	u32 flags;
- 	int nbq;
+@@ -6427,8 +6427,8 @@ static sector_t reshape_request(struct mddev *mddev, sector_t sector_nr, int *sk
+ 				if (rdev->raid_disk >= 0 &&
+ 				    !test_bit(Journal, &rdev->flags) &&
+ 				    !test_bit(In_sync, &rdev->flags) &&
+-				    rdev->recovery_offset < sector_nr)
+-					rdev->recovery_offset = sector_nr;
++				    READ_ONCE(rdev->recovery_offset) < sector_nr)
++					WRITE_ONCE(rdev->recovery_offset, sector_nr);
+ 
+ 		conf->reshape_checkpoint = jiffies;
+ 		set_bit(MD_SB_CHANGE_DEVS, &mddev->sb_flags);
+@@ -6536,8 +6536,8 @@ static sector_t reshape_request(struct mddev *mddev, sector_t sector_nr, int *sk
+ 				if (rdev->raid_disk >= 0 &&
+ 				    !test_bit(Journal, &rdev->flags) &&
+ 				    !test_bit(In_sync, &rdev->flags) &&
+-				    rdev->recovery_offset < sector_nr)
+-					rdev->recovery_offset = sector_nr;
++				    READ_ONCE(rdev->recovery_offset) < sector_nr)
++					WRITE_ONCE(rdev->recovery_offset, sector_nr);
+ 		conf->reshape_checkpoint = jiffies;
+ 		set_bit(MD_SB_CHANGE_DEVS, &mddev->sb_flags);
+ 		md_wakeup_thread(mddev->thread);
+@@ -8058,9 +8058,9 @@ static int raid5_run(struct mddev *mddev)
+ 		/* Hack because v0.91 doesn't store recovery_offset properly. */
+ 		if (mddev->major_version == 0 &&
+ 		    mddev->minor_version > 90)
+-			rdev->recovery_offset = reshape_offset;
++			WRITE_ONCE(rdev->recovery_offset, reshape_offset);
+ 
+-		if (rdev->recovery_offset < reshape_offset) {
++		if (READ_ONCE(rdev->recovery_offset) < reshape_offset) {
+ 			/* We need to check old and new layout */
+ 			if (!only_parity(rdev->raid_disk,
+ 					 conf->algorithm,
+@@ -8215,10 +8215,10 @@ static int raid5_spare_active(struct mddev *mddev)
+ 	for (i = 0; i < conf->raid_disks; i++) {
+ 		rdev = conf->disks[i].rdev;
+ 		replacement = conf->disks[i].replacement;
+-		if (replacement
+-		    && replacement->recovery_offset == MaxSector
+-		    && !test_bit(Faulty, &replacement->flags)
+-		    && !test_and_set_bit(In_sync, &replacement->flags)) {
++		if (replacement &&
++		    READ_ONCE(replacement->recovery_offset) == MaxSector &&
++		    !test_bit(Faulty, &replacement->flags) &&
++		    !test_and_set_bit(In_sync, &replacement->flags)) {
+ 			/* Replacement has just become active. */
+ 			if (!rdev
+ 			    || !test_and_clear_bit(In_sync, &rdev->flags))
+@@ -8233,10 +8233,10 @@ static int raid5_spare_active(struct mddev *mddev)
+ 					rdev->sysfs_state);
+ 			}
+ 			sysfs_notify_dirent_safe(replacement->sysfs_state);
+-		} else if (rdev
+-		    && rdev->recovery_offset == MaxSector
+-		    && !test_bit(Faulty, &rdev->flags)
+-		    && !test_and_set_bit(In_sync, &rdev->flags)) {
++		} else if (rdev &&
++			   READ_ONCE(rdev->recovery_offset) == MaxSector &&
++			   !test_bit(Faulty, &rdev->flags) &&
++			   !test_and_set_bit(In_sync, &rdev->flags)) {
+ 			count++;
+ 			sysfs_notify_dirent_safe(rdev->sysfs_state);
+ 		}
+@@ -8605,7 +8605,7 @@ static int raid5_start_reshape(struct mddev *mddev)
+ 					    >= conf->previous_raid_disks)
+ 						set_bit(In_sync, &rdev->flags);
+ 					else
+-						rdev->recovery_offset = 0;
++						WRITE_ONCE(rdev->recovery_offset, 0);
+ 
+ 					/* Failure here is OK */
+ 					sysfs_link_rdev(mddev, rdev);
+@@ -8657,7 +8657,7 @@ static void end_reshape(struct r5conf *conf)
+ 			if (rdev->raid_disk >= 0 &&
+ 			    !test_bit(Journal, &rdev->flags) &&
+ 			    !test_bit(In_sync, &rdev->flags))
+-				rdev->recovery_offset = MaxSector;
++				WRITE_ONCE(rdev->recovery_offset, MaxSector);
+ 		spin_unlock_irq(&conf->device_lock);
+ 		wake_up(&conf->wait_for_reshape);
+ 
 -- 
 2.53.0
 
