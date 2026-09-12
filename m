@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244FC365A1A;
-	Sat, 12 Sep 2026 18:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EA247ACE2;
+	Sat, 12 Sep 2026 18:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237812; cv=none; b=AwIR2zb1pY4tpoXug9cK9ir/I/OxFmuRJZQWcATLIgCOF6UoZIYCQbqpIYFyuEg1KSlymLRLImZhRWbl5yHfQ03mIBM+kPLzGZ1CvYdE+L+t2Oaa3Yjl0SIJ0NPa+V92dZG5mtahHgLoU4ZHQ5RarU7ZLSpex+7sZFUgbAzNP+A=
+	t=1789237817; cv=none; b=FOKY7/+1tj/x456ZH4DniJjdxrNo/n1mf/w2dBEqQQC7G0nK1jX7E8kvwbX021tV3LnNvPtBMBdI3jnXHp/CVJYYUJcO3Zjz1Lf4bmytEzJSCmIDNZ5HinGz/pRkRiHQ0IB9seLcrzf1nD6aJ0nODiiCs5RlDA6HhkctaHNkySk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237812; c=relaxed/simple;
-	bh=Pf7Byz7UvsQyrrgTNB1BoG4duxhZjoUJXxqv9LPgD3E=;
+	s=arc-20240116; t=1789237817; c=relaxed/simple;
+	bh=BN7KKBFTPqZ/Lxu4FvDRy8vPNqJQwwDIa79b2chCn0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lzVxGLyaYOtKGRZVAZAv17EvcgOKuQz5XL2ywWAQYdgkBD+spx4iI2HnOvc2kqaMf05eaS1NDAoq/kOs3FuhohOjx6sQmGR1Ad8xiFYKlDOrN1n7ik+Te3tGuv24Kvr+eboOFOlXV5/19l3hHkwgwDL5wH6A2PIb1oYq3FHuYKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfRxWHX+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oQmFikoo0Ckp+YnupVRgvkAQcpm6ePSpkJPWnLfPoLpGKnNQe6oO/frjlLgzvsx7cavLzI4StVSdesHIajgp2uMN0XI2ym5sEwsQ6FqZ7ApyYg3Us8/1G+S1Ujq4c59ozwLiy3K77FRbOy7aQsuyBJ2YLHqJphpOF2KBi7yFURQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlxv4dYu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfRxWHX+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE751F000FF;
-	Sat, 12 Sep 2026 18:30:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlxv4dYu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF321F000FF;
+	Sat, 12 Sep 2026 18:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237811;
-	bh=FXMi5cpTzzj2QslMFGY37bYN0FXDubeBMFPtWaVQ6ZU=;
+	s=korg; t=1789237816;
+	bh=fntxl1yOC9gsbss2tsZwfzEPCUqpT4eymx+6A2OZwkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hfRxWHX+8hapa8WpbQmPeLrphb6dfNiuGxBmgDJLAWxQqmigjSq3wfLnVDxyslCb0
-	 +w3FQft2QPk0pZBuiApbEEXGgcMRxDMIOO8gcJ0WJrYE8/eKhMmQVG6Rq6TQYqNBkR
-	 P0So5oGpQUPGEmugE5iIo/fLVzCVWUqatB4BKMTM=
+	b=zlxv4dYu5q0/KYac0I/NE6fKRzOlF4f5KxBqiJLkibM8wxAQVY6psPvpZNPpLV9tN
+	 c6GY45ZhUe+x1BHYbT1ABXp57ImZ7knep0UJQU+zurYuNMgCI/hxP5hMUopFRYlddB
+	 fh1qz5qlhVbCOdTeapDkivWBbVfIpPUALML/+QKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 5.15 307/935] KVM: s390: Restore sigset on error path
-Date: Sat, 12 Sep 2026 08:55:37 +0200
-Message-ID: <20260912065533.847618143@linuxfoundation.org>
+	Sashiko <sashiko-dev@google.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 5.15 334/935] scsi: qla2xxx: Bound i2c->length in I2C bsg handlers
+Date: Sat, 12 Sep 2026 08:56:04 +0200
+Message-ID: <20260912065534.465778270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,52 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit c44d36d8e6501c4934412d9014e5e02da9efdb8f upstream.
+commit 0918ee2c0eeb4d7f45b82b3dc11e65c2d9b7ad59 upstream.
 
-kvm_sigset_activate() installs vcpu->sigset via sigprocmask() and
-stashes the caller's mask in current->real_blocked; only
-kvm_sigset_deactivate() restores it.
+struct qla_i2c_access carries a 16-bit length field alongside a fixed
+64-byte buffer:
 
-For KVM_RUN on a STOPPED vcpu the error path will not restore the
-userspace mask.  Re-arrange the error handling to also restore the
-signal mask.
+	struct qla_i2c_access {
+		uint16_t device, offset, option, length;
+		uint8_t  buffer[0x40];
+	} __packed;
 
-Fixes: 6352e4d2dd9a3 ("KVM: s390: implement KVM_(S|G)ET_MP_STATE for user space state control")
+qla2x00_write_i2c() and qla2x00_read_i2c() use the user-supplied
+i2c->length without any bounds check. i2c is overlaid on a 256-byte
+on-stack buffer and sfp is a 256-byte DMA-pool buffer, so a length up to
+65535 overruns both:
+
+  - write: memcpy(sfp, i2c->buffer, i2c->length) over-reads the stack and
+    over-writes the sfp heap buffer, and qla2x00_write_sfp() then DMAs
+    i2c->length bytes out of the 256-byte buffer.
+  - read: qla2x00_read_sfp() DMAs i2c->length bytes into the 256-byte sfp,
+    then memcpy(i2c->buffer, sfp, i2c->length) overflows the 64-byte
+    buffer inside the on-stack array.
+
+A caller holding CAP_SYS_RAWIO can use this to corrupt the heap and the
+kernel stack. Reject requests whose length exceeds the buffer before any
+copy or DMA transfer in both handlers.
+
+Fixes: 9ebb5d9c69f1 ("[SCSI] qla2xxx: Add I2C BSG interface.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260811153738.206885-5-borntraeger@linux.ibm.com>
+Reported-by: Sashiko <sashiko-dev@google.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://patch.msgid.link/20260730155838.2119230-33-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/kvm-s390.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/scsi/qla2xxx/qla_bsg.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/arch/s390/kvm/kvm-s390.c
-+++ b/arch/s390/kvm/kvm-s390.c
-@@ -4456,7 +4456,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
- 		pr_err_ratelimited("can't run stopped vcpu %d\n",
- 				   vcpu->vcpu_id);
- 		rc = -EINVAL;
--		goto out;
-+		goto out_sigset;
- 	}
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -1725,6 +1725,12 @@ qla2x00_write_i2c(struct bsg_job *bsg_jo
+ 	sg_copy_to_buffer(bsg_job->request_payload.sg_list,
+ 	    bsg_job->request_payload.sg_cnt, i2c, sizeof(*i2c));
  
- 	sync_regs(vcpu);
-@@ -4483,9 +4483,11 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
- 	disable_cpu_timer_accounting(vcpu);
- 	store_regs(vcpu);
- 
-+	vcpu->stat.exit_userspace++;
++	if (i2c->length > sizeof(i2c->buffer)) {
++		bsg_reply->reply_data.vendor_reply.vendor_rsp[0] =
++		    EXT_STATUS_INVALID_PARAM;
++		goto dealloc;
++	}
 +
-+out_sigset:
- 	kvm_sigset_deactivate(vcpu);
+ 	memcpy(sfp, i2c->buffer, i2c->length);
+ 	rval = qla2x00_write_sfp(vha, sfp_dma, sfp,
+ 	    i2c->device, i2c->offset, i2c->length, i2c->option);
+@@ -1771,6 +1777,12 @@ qla2x00_read_i2c(struct bsg_job *bsg_job
+ 	sg_copy_to_buffer(bsg_job->request_payload.sg_list,
+ 	    bsg_job->request_payload.sg_cnt, i2c, sizeof(*i2c));
  
--	vcpu->stat.exit_userspace++;
- out:
- 	vcpu_put(vcpu);
- 	return rc;
++	if (i2c->length > sizeof(i2c->buffer)) {
++		bsg_reply->reply_data.vendor_reply.vendor_rsp[0] =
++		    EXT_STATUS_INVALID_PARAM;
++		goto dealloc;
++	}
++
+ 	rval = qla2x00_read_sfp(vha, sfp_dma, sfp,
+ 		i2c->device, i2c->offset, i2c->length, i2c->option);
+ 
 
 
