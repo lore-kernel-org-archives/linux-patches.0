@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCC4CA6F;
-	Sat, 12 Sep 2026 15:14:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77751CA6F;
+	Sat, 12 Sep 2026 15:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226052; cv=none; b=QSu3K8TPM4S7To75f0OiVWNxoJVWoOTQIpnZzY7sGLvwyfB9WG9PXAt9xAHZkpCNiDwOqISXTryZumpRqP34MEoaUQv/dXwPu/HjUjXKL2gMxGCmEOhNTh5r5IALsxYL3+NVmjYvaOL+EE/keO9Fc2kMKvC/jwK8k0PYd3AOua4=
+	t=1789226057; cv=none; b=TLJLRxzv7+s47FMHOdwj6+N5WRhDbosrLd5beoLphSEhoKHnpKzFnkcm6JlRYlbrOCZ3MvV/14qivJyV0MaJacCzq6t9kDGluuLVsi5vYUYu1v+BWJRE1iTWehVRoTozxjc97sVhXN3NaXAkraZEIaUXL8FD1z2rgxDvoNE0tEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226052; c=relaxed/simple;
-	bh=a9bab2yODPiKMs2nTgSS87kBulXTFfgvFl2+OLLG08g=;
+	s=arc-20240116; t=1789226057; c=relaxed/simple;
+	bh=AJq1He3eYOoCvZO8Kr30FlCcqNGX/W0Oe2w4le1B7g0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e5xajp9IRrB3TIPEZU7/1bUBAI6R0wavQt4OC/Y99jgMFYo0ljNlE9FMkJe1AADBBTBXrg/qohO2QLSFM8w3solNj1wxTyssIMWNP5/D3bxfFjFHL2f1Sak9rpuECa08i3z84/u1dEAZWND1mEHRzEWnLg2oNiuPoSi0HwvZFhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5kC48eY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ICcD41q64U6FHJ+TolUQtCWZv8m2M9yKc5bq+cct+AD/AHXPlEN0nOY6HH7bD7rVPpTlTFAKnr4FEXVY3HhhOO18siXRgsMvF7Lssrf+7QVwAG4Arz8Q6OUaMHxArk2O5sYACj9zggu74jb4+91C8IePmMJlIg0+umhp9y+YZ9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5Vm3sUN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5kC48eY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3501F000FF;
-	Sat, 12 Sep 2026 15:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5Vm3sUN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172C31F000FF;
+	Sat, 12 Sep 2026 15:14:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226051;
-	bh=HG7d8i+eLHC6X97I34LOxrsSBgassoL59uzpjMESJ0s=;
+	s=korg; t=1789226056;
+	bh=8fAw07bdVwy9o8G8ljt4ws+uW8HvUASoYSu5CZRZmmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y5kC48eY3QIXEajRzXyqWW66iOZrrUgWdvmkTJmZ08aIX6z4c8lYxoxOt52Y4Stdb
-	 2s+KXGI+coT1Xu+QBxM+mfKL6p54HsWDJUIPS58mYaMRc1K99+9zclludWlBIGMNzo
-	 GnFoFtV8UM+YB1xWPLoTtmt3n6msI02KaI8Nzw7M=
+	b=P5Vm3sUNQPm+eEGFIBoVtks8Nf2EC/aiWZpJsJpLsnOhqXo5enpODnfjQ/YK3Dj04
+	 KzlGKfThVTydE6c0FDTTKRODuZ6Q/ygfZ4qy89N1JwBo+AcNmULaxNMGgnc1GyIx6b
+	 oN135Mg1J/OwpScrpSQeXL44I4JG9vulsIip3tVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1280/1424] fuse: support folios in struct fuse_args_pages and fuse_copy_pages()
-Date: Sat, 12 Sep 2026 09:01:52 +0200
-Message-ID: <20260912065635.939880214@linuxfoundation.org>
+Subject: [PATCH 6.6 1281/1424] fuse: convert readdir to use folios
+Date: Sat, 12 Sep 2026 09:01:53 +0200
+Message-ID: <20260912065635.962253316@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -54,18 +54,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit a669c2df36db5fa7a2674ec5ae10548760702f99 ]
+[ Upstream commit 02b78c7a7a0c72aee6f600a167e6adee9417ac0e ]
 
-This adds support in struct fuse_args_pages and fuse_copy_pages() for
-using folios instead of pages for transferring data. Both folios and
-pages must be supported right now in struct fuse_args_pages and
-fuse_copy_pages() until all request types have been converted to use
-folios. Once all have been converted, then
-struct fuse_args_pages and fuse_copy_pages() will only support folios.
-
-Right now in fuse, all folios are one page (large folios are not yet
-supported). As such, copying folio->page is sufficient for copying
-the entire folio in fuse_copy_pages().
+Convert readdir requests to use a folio instead of a page.
 
 No functional changes.
 
@@ -75,104 +66,65 @@ Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Stable-dep-of: 928f659a3e36 ("fuse: check for NULL root inode in fuse_fill_super_submount")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/dev.c    | 40 ++++++++++++++++++++++++++++++++--------
- fs/fuse/fuse_i.h | 22 +++++++++++++++++++---
- 2 files changed, 51 insertions(+), 11 deletions(-)
+ fs/fuse/readdir.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
-index 252b6697960f2..bfc07ffc6eb75 100644
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -974,17 +974,41 @@ static int fuse_copy_pages(struct fuse_copy_state *cs, unsigned nbytes,
- 	struct fuse_req *req = cs->req;
- 	struct fuse_args_pages *ap = container_of(req->args, typeof(*ap), args);
+diff --git a/fs/fuse/readdir.c b/fs/fuse/readdir.c
+index fca0671322afd..f4653df0ba01c 100644
+--- a/fs/fuse/readdir.c
++++ b/fs/fuse/readdir.c
+@@ -335,24 +335,25 @@ static int fuse_readdir_uncached(struct file *file, struct dir_context *ctx)
+ {
+ 	int plus;
+ 	ssize_t res;
+-	struct page *page;
++	struct folio *folio;
+ 	struct inode *inode = file_inode(file);
+ 	struct fuse_mount *fm = get_fuse_mount(inode);
+ 	struct fuse_io_args ia = {};
+ 	struct fuse_args_pages *ap = &ia.ap;
+-	struct fuse_page_desc desc = { .length = PAGE_SIZE };
++	struct fuse_folio_desc desc = { .length = PAGE_SIZE };
+ 	u64 attr_version = 0;
+ 	bool locked;
  
-+	if (ap->uses_folios) {
-+		for (i = 0; i < ap->num_folios && (nbytes || zeroing); i++) {
-+			int err;
-+			unsigned int offset = ap->folio_descs[i].offset;
-+			unsigned int count = min(nbytes, ap->folio_descs[i].length);
-+			struct page *orig, *pagep;
+-	page = alloc_page(GFP_KERNEL);
+-	if (!page)
++	folio = folio_alloc(GFP_KERNEL, 0);
++	if (!folio)
+ 		return -ENOMEM;
  
--	for (i = 0; i < ap->num_pages && (nbytes || zeroing); i++) {
--		int err;
--		unsigned int offset = ap->descs[i].offset;
--		unsigned int count = min(nbytes, ap->descs[i].length);
-+			orig = pagep = &ap->folios[i]->page;
- 
--		err = fuse_copy_page(cs, &ap->pages[i], offset, count, zeroing);
--		if (err)
--			return err;
-+			err = fuse_copy_page(cs, &pagep, offset, count, zeroing);
-+			if (err)
-+				return err;
-+
-+			nbytes -= count;
-+
-+			/*
-+			 *  fuse_copy_page may have moved a page from a pipe
-+			 *  instead of copying into our given page, so update
-+			 *  the folios if it was replaced.
-+			 */
-+			if (pagep != orig)
-+				ap->folios[i] = page_folio(pagep);
-+		}
-+	} else {
-+		for (i = 0; i < ap->num_pages && (nbytes || zeroing); i++) {
-+			int err;
-+			unsigned int offset = ap->descs[i].offset;
-+			unsigned int count = min(nbytes, ap->descs[i].length);
- 
--		nbytes -= count;
-+			err = fuse_copy_page(cs, &ap->pages[i], offset, count, zeroing);
-+			if (err)
-+				return err;
-+
-+			nbytes -= count;
-+		}
+ 	plus = fuse_use_readdirplus(inode, ctx);
+ 	ap->args.out_pages = true;
+-	ap->num_pages = 1;
+-	ap->pages = &page;
+-	ap->descs = &desc;
++	ap->uses_folios = true;
++	ap->num_folios = 1;
++	ap->folios = &folio;
++	ap->folio_descs = &desc;
+ 	if (plus) {
+ 		attr_version = fuse_get_attr_version(fm->fc);
+ 		fuse_read_args_fill(&ia, file, ctx->pos, PAGE_SIZE,
+@@ -371,15 +372,15 @@ static int fuse_readdir_uncached(struct file *file, struct dir_context *ctx)
+ 			if (ff->open_flags & FOPEN_CACHE_DIR)
+ 				fuse_readdir_cache_end(file, ctx->pos);
+ 		} else if (plus) {
+-			res = parse_dirplusfile(page_address(page), res,
++			res = parse_dirplusfile(folio_address(folio), res,
+ 						file, ctx, attr_version);
+ 		} else {
+-			res = parse_dirfile(page_address(page), res, file,
++			res = parse_dirfile(folio_address(folio), res, file,
+ 					    ctx);
+ 		}
  	}
- 	return 0;
+ 
+-	__free_page(page);
++	folio_put(folio);
+ 	fuse_invalidate_atime(inode);
+ 	return res;
  }
-diff --git a/fs/fuse/fuse_i.h b/fs/fuse/fuse_i.h
-index aa12ff6de7068..7b9a4e10212b0 100644
---- a/fs/fuse/fuse_i.h
-+++ b/fs/fuse/fuse_i.h
-@@ -266,6 +266,12 @@ struct fuse_page_desc {
- 	unsigned int offset;
- };
- 
-+/** FUSE folio descriptor */
-+struct fuse_folio_desc {
-+	unsigned int length;
-+	unsigned int offset;
-+};
-+
- struct fuse_args {
- 	uint64_t nodeid;
- 	uint32_t opcode;
-@@ -290,9 +296,19 @@ struct fuse_args {
- 
- struct fuse_args_pages {
- 	struct fuse_args args;
--	struct page **pages;
--	struct fuse_page_desc *descs;
--	unsigned int num_pages;
-+	union {
-+		struct {
-+			struct page **pages;
-+			struct fuse_page_desc *descs;
-+			unsigned int num_pages;
-+		};
-+		struct {
-+			struct folio **folios;
-+			struct fuse_folio_desc *folio_descs;
-+			unsigned int num_folios;
-+		};
-+	};
-+	bool uses_folios;
- };
- 
- #define FUSE_ARGS(args) struct fuse_args args = {}
 -- 
 2.53.0
 
