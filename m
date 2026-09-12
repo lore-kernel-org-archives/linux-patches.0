@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA6E37204A;
-	Sat, 12 Sep 2026 07:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD45737204A;
+	Sat, 12 Sep 2026 07:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197063; cv=none; b=IMjM/6oxxg7FCXSdR4Dkf+7eCFXi0aRH3Z8IhvxcBwYK3hSdO1pPIMTY6+3PJJr66XPZJA85BWs/akgXy0qGFYe9rlmuXXxpylDZQidHQXToNgt+E1FV5EeJJ4YMEHRzOkuA4lMJjxDMxML90OzyVvl0dtmxxi5txmwGYl7YH6s=
+	t=1789197067; cv=none; b=rR+5iWRmErLJHWvAv7DFGb8p64M0yuSTJAnUvG0w0pBJTopRFbIRjFSkGawDOr9PYIbkKeopyIo6xYNw6915kVSrvoWMo+la2aDy9piXhW40h6kEvlruXFGXN2LzRGFO2ru1hpAcv2UIh/s8mf8tojNkOi4V/aFeaDvdnCCeoJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197063; c=relaxed/simple;
-	bh=tSOG7Ep18TLs8xi16bdCcDPg6vOYzYLRSiQQznHnn24=;
+	s=arc-20240116; t=1789197067; c=relaxed/simple;
+	bh=rYS7ougJmZjL7pcwv+ta7futfpizkt6EG79wtS24L/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j1KCdKAgkyHbsgDX0bqis/q+BrTiWeJYwYCmjlgV/U5lNxFPqfnZHrSFUoZSN7euCXfuDzMd+SiFrLm+ka+gPLgTc8mNjLxqDfQYK4HukDRuGcCS5eIw5M3LE7yarVY8KUTj7/jUhRqw4YVu1GVt95Qkr5xDx/HudqGXpj+Eqvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dg42rC/x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=an2eqXmS6NopzwPfqRCXLGkTuiqICuXl60YaoFmpRBOiz5W1U7qzQCfwLiWEPlluigaCYUxVa2HzrFflizC7pu19dEZE+BFmCwPToeur3a972KhVvB76X+/kPfjiZxKGDpJC2i0kPuTpQJUEr6tx8VaqDU4wUvsDN7elQ64EgA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VH6+vhGP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dg42rC/x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD451F000FF;
-	Sat, 12 Sep 2026 07:11:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VH6+vhGP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C30F71F000FF;
+	Sat, 12 Sep 2026 07:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197062;
-	bh=TvNWCCJ+7aKwws44acJ9XLl/6P3S1Abt0gzau5XE02M=;
+	s=korg; t=1789197066;
+	bh=Oz6Tvd1oq/CWaJUA1ooVSVW/tWnCdhoIiERX2gLzxTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dg42rC/xqQJ8aY0nHwZadbDZUz4hLdK33KAVaaSI+MZ/BZOlb8pOUVHXMKQquI1at
-	 ghz846rGgUgD1zEwUBTPKxqXkRBYXOuAPoYzu/5lrKIpNT8v1wWiaufG0GBIApdrfY
-	 h9hAJw84DKbJSUDvL2uRHsJHjESgfJJlQpZJ5tfM=
+	b=VH6+vhGPoulGORrp70zN3B6tiys5jc4DCJNKRU3M66sXqdV+aCJnHLDSDg4X9zOeO
+	 UgwKPhgoWmK0OXwlTa2503iNu2kJPITjlrIP2OJ66zx55eFl4HtAHx67hlPc9Mcug5
+	 UOLsnWhOtJ1UsyFgjmYyf8CZ+EnWUrK7JPMzb5SA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Andy Yan <andyshrk@163.com>,
 	Daniel Stone <daniel@fooishbar.org>,
 	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
 	Daniel Stone <daniels@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0050/1815] drm/display: hdmi-state-helper: Try subsampling in mode_valid
-Date: Sat, 12 Sep 2026 08:30:00 +0200
-Message-ID: <20260912065650.193621063@linuxfoundation.org>
+Subject: [PATCH 7.2 0051/1815] drm/rockchip: vop2: Add RK3576 to the RG swap special case
+Date: Sat, 12 Sep 2026 08:30:01 +0200
+Message-ID: <20260912065650.217145703@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -56,60 +55,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
 
-[ Upstream commit f532dc0ea55a25dd24a79442fd0348da09b04b72 ]
+[ Upstream commit ae4a4e69389d576941522c3c2e01a2254fd00d10 ]
 
-drm_hdmi_connector_mode_valid assumes modes are only valid if they work
-with RGB. The reality is more complex however: YCbCr 4:2:0
-chroma-subsampled modes only require half the pixel clock that the same
-mode would require in RGB.
+Much like RK3588, RK3576 requires an RG swap to be performed for YUV444
+8-bit and YUV444 10-bit bus formats.
 
-This leads to drm_hdmi_connector_mode_valid rejecting perfectly valid
-420-only or 420-also modes.
+Add its version to the already existing check for RK3588, so that YUV444
+output is correct on this platform.
 
-Fix this by checking whether the mode is 420-capable first. If so, then
-proceed by checking it with DRM_OUTPUT_COLOR_FORMAT_YCBCR420 so long as
-the connector has legalized 420, otherwise error out. If the mode is not
-420-capable, check with RGB as was previously always the case.
-
-Fixes: 47368ab437fd ("drm/display: hdmi: add generic mode_valid helper")
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: 944757a4cba6 ("drm/rockchip: vop2: Add support for rk3576")
+Reviewed-by: Andy Yan <andyshrk@163.com>
 Reviewed-by: Daniel Stone <daniel@fooishbar.org>
 Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
-Link: https://patch.msgid.link/20260609-color-format-v17-9-35739b5782cc@collabora.com
+Link: https://patch.msgid.link/20260609-color-format-v17-12-35739b5782cc@collabora.com
 Signed-off-by: Daniel Stone <daniels@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/display/drm_hdmi_state_helper.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/display/drm_hdmi_state_helper.c b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-index cae0d85fb4407..a3aee41385548 100644
---- a/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-+++ b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-@@ -910,8 +910,21 @@ drm_hdmi_connector_mode_valid(struct drm_connector *connector,
- 			      const struct drm_display_mode *mode)
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index a160077a507f2..be7830c9001c9 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -337,7 +337,8 @@ static bool vop2_output_uv_swap(u32 bus_format, u32 output_mode)
+ 
+ static bool vop2_output_rg_swap(struct vop2 *vop2, u32 bus_format)
  {
- 	unsigned long long clock;
-+	enum drm_output_color_format fmt;
-+
-+	if (drm_mode_is_420_only(&connector->display_info, mode)) {
-+		if (connector->ycbcr_420_allowed)
-+			fmt = DRM_OUTPUT_COLOR_FORMAT_YCBCR420;
-+		else
-+			return MODE_NO_420;
-+	} else if (drm_mode_is_420_also(&connector->display_info, mode) &&
-+		   connector->ycbcr_420_allowed) {
-+		fmt = DRM_OUTPUT_COLOR_FORMAT_YCBCR420;
-+	} else {
-+		fmt = DRM_OUTPUT_COLOR_FORMAT_RGB444;
-+	}
- 
--	clock = drm_hdmi_compute_mode_clock(mode, 8, DRM_OUTPUT_COLOR_FORMAT_RGB444);
-+	clock = drm_hdmi_compute_mode_clock(mode, 8, fmt);
- 	if (!clock)
- 		return MODE_ERROR;
- 
+-	if (vop2->version == VOP_VERSION_RK3588) {
++	if (vop2->version == VOP_VERSION_RK3588 ||
++	    vop2->version == VOP_VERSION_RK3576) {
+ 		if (bus_format == MEDIA_BUS_FMT_YUV8_1X24 ||
+ 		    bus_format == MEDIA_BUS_FMT_YUV10_1X30)
+ 			return true;
 -- 
 2.53.0
 
