@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28BA33A9F3;
-	Sat, 12 Sep 2026 19:01:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F11A345EB9;
+	Sat, 12 Sep 2026 19:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239684; cv=none; b=cP529P+bj/4t5H1kYigdEsjvbOpVcKxsHy6FSbkLp/rzSil32LI70mIB9imvxpMMKDcPWmEL5F8VzvyMDaywb91RkbnSCfTQ2aU9INXSQjymoqLEEUSaXEjfptX+d/GryJTn7Lh4i5gEJ1HqWyu4RxHZ5Lm5/wJPij25DcLUn5k=
+	t=1789239688; cv=none; b=ENMZ7H7wblKKo5nUXjvdk+/9YYCe6PtJFtQwBVQPskv11MdnOk3iZ1rpzolU1Mi9i6TJbTa0OEV9Jcg0HsOIvbxB0ruslBmK3uN0NK6sLbEB73/Es9Z47V2deRzY3nIDcrCDJBZ40M901VpMPIRHlvr0glw2fJBMlKETjpEx/2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239684; c=relaxed/simple;
-	bh=tevRkQP9retyiJXwkDZMKUGAfKMya446gIihBTBjroY=;
+	s=arc-20240116; t=1789239688; c=relaxed/simple;
+	bh=8dweqkyG2yIe5VVcnd+BOenbzNJgMAWsAHoIUPHlnlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lGzjuC7J6HgQj3K+tt6PSejxbR0P9v50yoBLm8xRfUVO3RUIXkync23aB8rbu/+AZNSqVy8FQfe1LMberH6bfySADSTAvKYrWokAPkuFU3TUa3ieaEkbvWdJiH38OliV0gaXpBgkxzZu41qf4LlBowGM8O7YQ/glt6793Fa1j4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVPKCza6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FPU642ahpnjn71jFl0yyIWGayTsvBsxaY5pClb5vW4VkeGbcOMpa/Nimsm7cPDgnNtS77Xqm2uoDvorUA+SxxROG2P3afrFYiKt2gOnQE7zC4+ZPjKqO/vF83QaVpZVhpZYveg/w6DFBb/48DJLPwL0sdmq1B2hJru4570F6rTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qs/OcCX1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVPKCza6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B80541F000FF;
-	Sat, 12 Sep 2026 19:01:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qs/OcCX1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5582D1F00898;
+	Sat, 12 Sep 2026 19:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239682;
-	bh=R2kFKKUm8DHq3bXveJFfFQRRwUnC/MMqZwSQK12vavE=;
+	s=korg; t=1789239687;
+	bh=dVW5IKxdQU3YT7oj/AHlX5C7vPSTELDW5dpoTDrgZDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JVPKCza6X37G01XAZ/I6zKHY+fldfKHXX01H5Cv8lwlCYPgAoEWfX0oGWYJMBSdgX
-	 73csfM4O6CMN6T9D1llxuywXgo1oHu689XwfK0P8Oq7Melp8nQO91Ws6wYwOIKLajh
-	 x+Lyw79RLNAt46XUa9fsOSqzmjEs9VkETyul9lxI=
+	b=Qs/OcCX1ADf1eN5LUeLYkBq67nNBD4ONk/7JRrqx84JULJcPrKXWhSuFpyFHUo+R7
+	 etRD05aM/f9Z+dNs9qdt6NvuY6tTAW/M+BwZTeOeF9spjw7vkWnrwr2VqIRQS3dNTh
+	 iE1AgXQN0i47/kFtJHSrolg9XcqwKUj8g89QlkCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 712/935] drm/sun4i: tcon: Drop TCON TOP device reference
-Date: Sat, 12 Sep 2026 09:02:22 +0200
-Message-ID: <20260912065543.165899713@linuxfoundation.org>
+Subject: [PATCH 5.15 713/935] drm/sun4i: crtc: Propagate layer initialization error
+Date: Sat, 12 Sep 2026 09:02:23 +0200
+Message-ID: <20260912065543.187693926@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,64 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 8208832a38ff3d2560eb8a77a9d7a2f17d8ebcdc ]
+[ Upstream commit 7061ff05ed4a3cf16e83f7e3ad09cbd212508a32 ]
 
-of_find_device_by_node() takes a device reference. Drop it after mux
-configuration succeeds.
+sun4i_crtc_init() returns plain NULL when layer initialization fails,
+while all its other error paths return an error pointer. The only
+caller, sun4i_tcon_bind(), checks the result with IS_ERR() and happily
+continues with tcon->crtc set to NULL. sun4i_rgb_init() and
+sun4i_lvds_init() then dereference it in drm_crtc_mask(), which
+oopses.
 
-Fixes: 0305189afb32 ("drm/sun4i: tcon: Add support for R40 TCON")
+Return the error pointer instead.
+
+Fixes: dcd215801b02 ("drm/sun4i: Drop primary layer pointer from sun4i_drv")
 Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 Acked-by: Chen-Yu Tsai <wens@kernel.org>
-Link: https://patch.msgid.link/871a3108086c15a483eef23301984c8d2254dfa7.1785772659.git.jernej.skrabec@gmail.com
+Link: https://patch.msgid.link/b26a0d427d9dfae9c82e3ca90a67d24d8ece5a28.1785772659.git.jernej.skrabec@gmail.com
 Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun4i_tcon.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/sun4i/sun4i_crtc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/sun4i/sun4i_tcon.c b/drivers/gpu/drm/sun4i/sun4i_tcon.c
-index bb43196d5d83e..846085b3ee2dd 100644
---- a/drivers/gpu/drm/sun4i/sun4i_tcon.c
-+++ b/drivers/gpu/drm/sun4i/sun4i_tcon.c
-@@ -1404,7 +1404,7 @@ static int sun8i_r40_tcon_tv_set_mux(struct sun4i_tcon *tcon,
- {
- 	struct device_node *port, *remote;
- 	struct platform_device *pdev;
--	int id, ret;
-+	int id, ret = 0;
- 
- 	/* find TCON TOP platform device and TCON id */
- 
-@@ -1427,21 +1427,20 @@ static int sun8i_r40_tcon_tv_set_mux(struct sun4i_tcon *tcon,
- 	if (IS_ENABLED(CONFIG_DRM_SUN8I_TCON_TOP) &&
- 	    encoder->encoder_type == DRM_MODE_ENCODER_TMDS) {
- 		ret = sun8i_tcon_top_set_hdmi_src(&pdev->dev, id);
--		if (ret) {
--			put_device(&pdev->dev);
--			return ret;
--		}
-+		if (ret)
-+			goto out_put_device;
+diff --git a/drivers/gpu/drm/sun4i/sun4i_crtc.c b/drivers/gpu/drm/sun4i/sun4i_crtc.c
+index 45d9eb552d869..01f38a45bde98 100644
+--- a/drivers/gpu/drm/sun4i/sun4i_crtc.c
++++ b/drivers/gpu/drm/sun4i/sun4i_crtc.c
+@@ -207,7 +207,7 @@ struct sun4i_crtc *sun4i_crtc_init(struct drm_device *drm,
+ 	planes = sunxi_engine_layers_init(drm, engine);
+ 	if (IS_ERR(planes)) {
+ 		dev_err(drm->dev, "Couldn't create the planes\n");
+-		return NULL;
++		return ERR_CAST(planes);
  	}
  
- 	if (IS_ENABLED(CONFIG_DRM_SUN8I_TCON_TOP)) {
- 		ret = sun8i_tcon_top_de_config(&pdev->dev, tcon->id, id);
--		if (ret) {
--			put_device(&pdev->dev);
--			return ret;
--		}
-+		if (ret)
-+			goto out_put_device;
- 	}
- 
--	return 0;
-+out_put_device:
-+	put_device(&pdev->dev);
-+
-+	return ret;
- }
- 
- static const struct sun4i_tcon_quirks sun4i_a10_quirks = {
+ 	/* find primary and cursor planes for drm_crtc_init_with_planes */
 -- 
 2.53.0
 
