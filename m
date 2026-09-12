@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9849F288B9;
-	Sat, 12 Sep 2026 16:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47857288B9;
+	Sat, 12 Sep 2026 16:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231152; cv=none; b=FKrGkM7J6o/2qgjhROF2iCiZkw2u03QJJzxPP775lbXLZzOhss2r0V510F75A1vEjR4/DDfW13RXkjZ7bJ4ac7TG3Lt9rlqGPBfY0vupY7lWQMxJiJ9JBGSOIHQAFbxscb9BPWYUX7+3CynQ64TTT75aYoIyZILwl/BmgyyHv0c=
+	t=1789231157; cv=none; b=ZQfwSmYcGn93CjwB8AweGJGSVCRIx7VzYKXAP7yZbpj3NLBQb73w8WZ7Oo2oo1mH6YfgJ8WqDgouFDLRgXz5Ju5g/mVFgztpRKwZTt24oVf7+d7dIs+dblddkqXNmATqX5lLYl3bjCPvomQgnN2iNqO24mTGbxGcUFwrV73SCgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231152; c=relaxed/simple;
-	bh=AUBOkWn7gusDgjjOraZFVs8GuDYHVq2STR41+1PSC0Y=;
+	s=arc-20240116; t=1789231157; c=relaxed/simple;
+	bh=3X8O9PEajrBzwY7rCF1WhysUB5RYDDdKe10tKHfm/pA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGNoXOKZRD4qp9gruihNMnKorbs5oqJq936Yd1o9pM1+s7ZD5fh5hB/kkTwZpbF7FcrzpjraNkY8hxC1YCrgRBpRz4FacPI88tn+nj8Z6h9shGSAelNc4Bgc5Hh1JtKzqKBXT/CakFsWD9YTBzKbls0J5eMDHFBxCyxWNTJkk3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eISqaTwa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WYVa8VMJPPDx6wPIDOQFSdv215OmKAUjUvCv0hKulkY9RFgx5A2Eopx0leF12b3AtbSuPE7PPtCUb0Ho1/EV5laOTFwOpPER6rFnOehtiwum0VnnZjuaJ9Ji8Wtpnh0MzaT87dUqnaBe4NS+OyvMZ3VpmddLn4DFx1v3miFEFTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2G6GJwy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eISqaTwa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21DC11F000FF;
-	Sat, 12 Sep 2026 16:39:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2G6GJwy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C111F000FF;
+	Sat, 12 Sep 2026 16:39:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231151;
-	bh=CrJRVg85WwaCFAQnScvO0QxwZbOzSVbCh+qcet+gUaM=;
+	s=korg; t=1789231155;
+	bh=/HcO9cpVdBHQSpLU2jY9IPJDnS2SujVwY0IC3UQTaxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eISqaTwaxhHGujdvDP0q+GeRCaQsLGiVB0L+/tAuCL816458thwcbc5kzI8zih1Ny
-	 k9gjDjT6XionGpas3KA7FtrAe9mExJZfv9j1LBaD+aGHLhzqibt5CiY+k8oicNICmv
-	 eEWqa5CvgYJK84dRFwkEWelwmbyWyIVPy6mkG1TU=
+	b=t2G6GJwyL6K/iSOqnAwdukxsvWDDOOR8S3k1hjfClqzg9+C45TE8uGSyIsREtN8ae
+	 ORyEzY+q9Ry/IcO3hztlp9WGpMC+3WzpYbaxtqy5KFzSz9lbB9hsBJFC+GlgbRkEQh
+	 55IeySQYTY8xY2GE9rwaTNsCXMJmZnO080T/I0VI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	James Clark <james.clark@arm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Xing Zhengjun <zhengjun.xing@linux.intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0940/1191] ARM: dts: helios4: add SATA regulator supplies
-Date: Sat, 12 Sep 2026 09:01:08 +0200
-Message-ID: <20260912065609.338874419@linuxfoundation.org>
+Subject: [PATCH 6.1 0941/1191] perf stat: Clear screen only if output file is a tty
+Date: Sat, 12 Sep 2026 09:01:09 +0200
+Message-ID: <20260912065609.361501802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,74 +59,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 7a90520e8c9a8f48fe6f3e741cf34d8c2b6dbc61 ]
+[ Upstream commit 81a02c6577ecfee7056ccafbd028984d0d670c0c ]
 
-The ahci-mvebu driver and libahci_platform request three supplies
-on SATA controller and port nodes:
-  - ahci-supply  (controller power)
-  - phy-supply   (PHY power)
-  - target-supply (disk power per port)
+The --interval-clear option makes perf stat to clear the terminal at
+each interval.  But it doesn't need to clear the screen when it saves
+to a file.
 
-Without them the regulator core prints notices at boot, e.g.:
-  supply ahci not found, using dummy regulator
-  supply phy not found, using dummy regulator
-  supply target not found, using dummy regulator
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: James Clark <james.clark@arm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Xing Zhengjun <zhengjun.xing@linux.intel.com>
+Link: https://lore.kernel.org/r/20221107213314.3239159-4-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-The SATA controller and PHY inside the Armada 388 SoC are powered
-by the 3.3V I/O rail; the four disk bays are powered by the 5V HDD
-rail.  Wire the existing fixed regulators accordingly.
+to a file.  Make it fail when it's enabled with the output options.
 
-Fixes: ced8025b569e ("ARM: dts: armada388-helios4")
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+  $ perf stat -I 1 --interval-clear -o myfile true
+  --interval-clear does not work with output
+
+   Usage: perf stat [<options>] [<command>]
+
+      -o, --output <file>   output file name
+          --log-fd <n>      log output to fd, instead of stderr
+          --interval-clear  clear screen in between new interval
+
+Stable-dep-of: 340641a4b5ff ("perf stat: Fix evsel_list leak in cmd_stat")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-388-helios4.dts | 8 ++++++++
+ tools/perf/builtin-stat.c | 8 ++++++++
  1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm/boot/dts/armada-388-helios4.dts b/arch/arm/boot/dts/armada-388-helios4.dts
-index 21df1b9e3900f..003b0708e9656 100644
---- a/arch/arm/boot/dts/armada-388-helios4.dts
-+++ b/arch/arm/boot/dts/armada-388-helios4.dts
-@@ -222,13 +222,17 @@ sata@a8000 {
- 				status = "okay";
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				ahci-supply = <&reg_3p3v>;
-+				phy-supply = <&reg_3p3v>;
+diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
+index b243027bc22d8..59628fa170cac 100644
+--- a/tools/perf/builtin-stat.c
++++ b/tools/perf/builtin-stat.c
+@@ -2315,6 +2315,14 @@ int cmd_stat(int argc, const char **argv)
+ 		}
+ 	}
  
- 				sata0: sata-port@0 {
- 					reg = <0>;
-+					target-supply = <&reg_5p0v_hdd>;
- 				};
++	if (stat_config.interval_clear && !isatty(fileno(output))) {
++		fprintf(stderr, "--interval-clear does not work with output\n");
++		parse_options_usage(stat_usage, stat_options, "o", 1);
++		parse_options_usage(NULL, stat_options, "log-fd", 0);
++		parse_options_usage(NULL, stat_options, "interval-clear", 0);
++		return -1;
++	}
++
+ 	stat_config.output = output;
  
- 				sata1: sata-port@1 {
- 					reg = <1>;
-+					target-supply = <&reg_5p0v_hdd>;
- 				};
- 			};
- 
-@@ -236,13 +240,17 @@ sata@e0000 {
- 				status = "okay";
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				ahci-supply = <&reg_3p3v>;
-+				phy-supply = <&reg_3p3v>;
- 
- 				sata2: sata-port@0 {
- 					reg = <0>;
-+					target-supply = <&reg_5p0v_hdd>;
- 				};
- 
- 				sata3: sata-port@1 {
- 					reg = <1>;
-+					target-supply = <&reg_5p0v_hdd>;
- 				};
- 			};
- 
+ 	/*
 -- 
 2.53.0
 
