@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD68F34250E;
-	Sat, 12 Sep 2026 18:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B382C08D0;
+	Sat, 12 Sep 2026 18:59:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239564; cv=none; b=Hi/VBG/Zk+E9v2l3I8Mpn/OwcWsyFb6n+DAMAEV3WnIJy/yDrrHqF59UJq+n1gCtgSN/ZBUWHh2Ybre9EhsJc9LsyTeoWklWWH3hgU6aaNN9NnTq/W907428lLgCZzjYWSmC1PqD/TJ1fy9tTt4zJoTQkcZl0VaAArgOgvFPV5k=
+	t=1789239569; cv=none; b=IyaJuCHed0o9gByzDYZMvPbmJWENagw906UoKEJVGpZ/tk1+zmXM0nyw11+2/8mifrg2otmS+DB0QfSC/pSwOVRntv8NDVy+FJ9FbCIGhIzBYCkdoNflF6W36Y+1BS12tFSEEzE+CgGkGAPMBSeO7RExB2WGz/LgGPoeBfu49B0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239564; c=relaxed/simple;
-	bh=SIOO1+e5wk4g/8i+e7/Eg7lbXjAapIeEpF0QW04TTBE=;
+	s=arc-20240116; t=1789239569; c=relaxed/simple;
+	bh=XUlLRsD2VgZHGZXUcQ6ZJefRyTlp4hCn8UXsyNjdirI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S8RXA8DpYVsjqvZniKs3CF2da4PARYcY/Ma6bdqEGukCHVbF8BcJeckaZf22xmKOCBp+Akivnbt0oN+xh4shFx+IlQaiOg4FiWgKRVvtathdIn5Ckn0X+IIEo4jXex2Szm0gMyHA2uR9tjlEHtYJ/68MLMl0KLdznCyOFdGcKfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXsvxmP1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rjYh+YR7De9jSCU4so0VqH25HTs4nnXHoER5RkkYCRHDYLocnpu3i0vf6f5DsGz0BPYMuPPqw5HtCkUPf/JB2t3etZKCzyVtlbTVC4ic0WFGAW+bNbOg6eMMXXGPN6zHqHzUDo7eBhiZJQn68RWBz3tVx1TE9xz9Qj+LWo4uKhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/GNgiVf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXsvxmP1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888FE1F000FF;
-	Sat, 12 Sep 2026 18:59:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/GNgiVf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 594A71F000FF;
+	Sat, 12 Sep 2026 18:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239563;
-	bh=uylMfDVjwzsTtSyCeyik97TmChZOJCM5LvoYQq6A0Dw=;
+	s=korg; t=1789239568;
+	bh=HXJzjqfj4l/dF5mNRFvWYdMtBd78VjB6uHv/QTITlZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UXsvxmP13ha2Cjrb6Q9jtNjx9lhknvfi85py2lliWgWJdO3oEJLREfK29VcryDAPT
-	 L123jdQJbAEsyirFaVt27e9tT59OwLm3HbdSfV4CxGHECoxpOj8dYJ/7WIN/yd7qSl
-	 0CaYgSdho/0HVsMl4MDtKVV9tdIJRQTKNB/FqURE=
+	b=q/GNgiVfUnWZRN+tfAgdu8hRZM4NOu3vukCf5oG4AMpS0W8nFywtSpA/l/A62cQTl
+	 xaQyme1ii0KCkl7P2/KLD/oNO3h5e+ldwPUtkWgez1Cq45i8vY+//l2FftEFpDDgRm
+	 Tx5o6w6zlhAtjFPBH7qbgVeUsrz9AWmp3XdvUTec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bastien Curutchet <bastien.curutchet@bootlin.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
+	syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 691/935] pps: clients: gpio: Bypass edges direction check when not needed
-Date: Sat, 12 Sep 2026 09:02:01 +0200
-Message-ID: <20260912065542.689336078@linuxfoundation.org>
+Subject: [PATCH 5.15 674/935] HID: synchronize input before cleaning up a failed probe
+Date: Sat, 12 Sep 2026 09:01:44 +0200
+Message-ID: <20260912065542.301129416@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,58 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bastien Curutchet <bastien.curutchet@bootlin.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit a01f6287c244f35eeec11ca932d09061181eed8c ]
+[ Upstream commit 207853d46f7ef2e28042344a1468da8754c3ddbf ]
 
-In the IRQ handler, the GPIO's state is read to verify the direction of
-the edge that triggered the interruption before generating the PPS event.
-If a pulse is too short, the GPIO line can reach back its original state
-before this verification and the PPS event is lost.
+hid_device_io_start() allows reports to run concurrently with probe. If
+the probe subsequently fails, __hid_device_probe() releases driver
+resources and clears hdev->driver without first excluding those report
+callbacks.
 
-This check is needed when info->capture_clear is set because it needs
-interruptions on both rising and falling edges. When info->capture_clear
-is not set, interruption is triggered by one edge only so this check can
-be omitted.
+For example, a report may enter hidraw_report_event() while the failure
+path frees the associated hidraw object, leading to a use-after-free when
+the report takes the object's list lock.
 
-Add a warning if irq_handler is left without triggering any PPS event.
-Bypass the edge's direction verification when info->capture_clear is not
-set.
+Stop input before performing failed-probe cleanup. This reacquires
+driver_input_lock and waits for any report callback already in progress.
 
-Signed-off-by: Bastien Curutchet <bastien.curutchet@bootlin.com>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/20250108153012.514925-1-bastien.curutchet@bootlin.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: b899e0279f90 ("pps-gpio: remove dead capture_clear code")
+Fixes: c849a6143bec ("HID: Separate struct hid_device's driver_lock into two locks.")
+Reported-by: syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9eebf5f6544c5e873858
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/clients/pps-gpio.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/hid/hid-core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pps/clients/pps-gpio.c b/drivers/pps/clients/pps-gpio.c
-index 41e1fdbcda165..dbe598d092099 100644
---- a/drivers/pps/clients/pps-gpio.c
-+++ b/drivers/pps/clients/pps-gpio.c
-@@ -52,7 +52,9 @@ static irqreturn_t pps_gpio_irq_handler(int irq, void *data)
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index fa9aea45d2c0b..07b4bda8e2c9c 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -2368,6 +2368,8 @@ static int __hid_device_probe(struct hid_device *hdev, struct hid_driver *hdrv)
+ 	 */
  
- 	info = data;
- 
--	rising_edge = gpiod_get_value(info->gpio_pin);
-+	/* Small trick to bypass the check on edge's direction when capture_clear is unset */
-+	rising_edge = info->capture_clear ?
-+		      gpiod_get_value(info->gpio_pin) : !info->assert_falling_edge;
- 	if ((rising_edge && !info->assert_falling_edge) ||
- 			(!rising_edge && info->assert_falling_edge))
- 		pps_event(info->pps, &ts, PPS_CAPTUREASSERT, data);
-@@ -60,6 +62,8 @@ static irqreturn_t pps_gpio_irq_handler(int irq, void *data)
- 			((rising_edge && info->assert_falling_edge) ||
- 			(!rising_edge && !info->assert_falling_edge)))
- 		pps_event(info->pps, &ts, PPS_CAPTURECLEAR, data);
-+	else
-+		dev_warn_ratelimited(&info->pps->dev, "IRQ did not trigger any PPS event\n");
- 
- 	return IRQ_HANDLED;
- }
+ 	if (ret) {
++		if (hdev->io_started)
++			hid_device_io_stop(hdev);
+ 		devres_release_group(&hdev->dev, hdev->devres_group_id);
+ 		hid_close_report(hdev);
+ 		hdev->driver = NULL;
 -- 
 2.53.0
 
