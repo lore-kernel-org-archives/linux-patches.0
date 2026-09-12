@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BDA47AF6A;
-	Sat, 12 Sep 2026 12:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B641C3FF1AE;
+	Sat, 12 Sep 2026 12:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216177; cv=none; b=MCTk3L37JqxqhHP6I2GtA6NHEZT8YSbS0o2YucDmyyjY1e5ZpX7wwu03TgaUXrlWvBlX1s/PYfWRCMBULreuHrZ/1+Yj2ZR52RBHHA8SHS75Fm9kt5SnEHekTQBQlFL8AiM6KNkJbUyBrc5muZGxFcv4OYyoUNJjAuP+0GzMZSQ=
+	t=1789216181; cv=none; b=aKB1UFhYXy08J1Fk4w6o4dlKzj6GjPfDVjSgn4hxZhzsEwFRbJqCTA37PdbFRw6snJbauQ6GtFDQ/mBXjWvs+aATG3U/yX+Wcxc1f975s+sAb4u9kyrEeQldcURUyE3cAz9F/p3WjDHj+iExEdAXqW7cv2oAXU/RGaz8Tvtd2JM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216177; c=relaxed/simple;
-	bh=q4BB2GAsUDKwsSgKJAWJl5HfEszBoczhSjGQc/6hyJY=;
+	s=arc-20240116; t=1789216181; c=relaxed/simple;
+	bh=MBuZBtxwF/2kfeqe7LShIyo3HiOWM+OIRMcsvVwGggI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pXuVK247J+WVWco/YoFrYsFeIyYJSlI6VuIYQ5awvLvxhOoRNbHiG9Tg2Ms6RwC2/nKvXJyMVEbXx23IBY126V0+qLh8qsShCLbqIsVEUaw7jfE77jFuYfWW8rW1+jqlkTNWBFYBocB+VLWA30Wo6d9mlruNJQPlyW0SWqbOyEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2IspY4Vq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UniPXZ3okZVN5qsphOc2DYwWRAlJMYeBegy0Od+/hsz6Eqm7lbWeWgsDPADvbVqIP6zEVuPheKIOmS4qIjAI5gRtmXKk2mRHDCUZhsIsSnfcYnE8X8JHLnhxN1rvxOap56XQNEPmlH6q/HSdZbXzUXxyMSFxXQKxwTW+9UFlhFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BdzTXgk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2IspY4Vq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E61281F000FF;
-	Sat, 12 Sep 2026 12:29:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BdzTXgk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C2E1F000FF;
+	Sat, 12 Sep 2026 12:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216174;
-	bh=g90mQ/pnFl2QoOz4H+kcAXNSbCwFi94bJjsyK966fn8=;
+	s=korg; t=1789216179;
+	bh=m3w9sMKG/x8iqw0gXaqziuNn2LVSHT7MlDW631w3Qgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2IspY4VqhhshwAkzm4yXnn4VIsa+MRjjiw/2ES2br9MhyPlLTwvOtgroVu6WeB46i
-	 iOqCwiPWMGm/O9RNviJ+tll/UF2N4PCmUQHORsHV0EkfwcgNtD13Vas3eyBUqGStIC
-	 o3qJnbpuTApKwKgfXje3NtxFHFHwlSIynnYcZBY4=
+	b=1BdzTXgkW8rmF5XWK357zLl8RgCJE9L5tByme0aWv34fPLzM9bT6/0T3qCCAxDf0Q
+	 2zcKI60BzGsyUxuPbvtwYSJ3XzB1QLci+L4ungRoby5yPOPccsBJed3L+4/qi/NXgx
+	 zDK2QWP+nIvd+3cxy39aFn85YBA7WIgriG5nCKLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Vladimir Zapolskiy <vz@kernel.org>,
+	Vladimir Zapolskiy <vz@mleia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0682/1376] arm64: dts: rockchip: Fix Gru WLAN sideband interrupt
-Date: Sat, 12 Sep 2026 08:51:48 +0200
-Message-ID: <20260912065622.746374696@linuxfoundation.org>
+Subject: [PATCH 6.12 0683/1376] ARM: lpc32xx: only run SoC init on LPC32xx hardware
+Date: Sat, 12 Sep 2026 08:51:49 +0200
+Message-ID: <20260912065622.769095349@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,44 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit a761818d9ee11183df0aefd16bf9fe46cc1c4c6d ]
+[ Upstream commit 717ea4000867e6dffee5e1ed92150a9704ae9f68 ]
 
-The Marvell WLAN host wake interrupt is wired to GPIO0 8 and is not
-one of the PCI INTx interrupts. The PCI device schema therefore
-interprets the two-cell GPIO interrupt specifier as an invalid PCI
-interrupt and reports dtbs_check warnings:
+lpc32xx_check_uid() and lpc32xx_pm_init() are arch_initcalls that poke
+LPC32xx-only registers. Since the multiplatform conversion they also
+run on other ARCH_MULTI_V5 boards where access faults e.g. on versatile:
 
-pcie@0,0: wifi@0,0:interrupts:0:0: 8 is not one of [1, 2, 3, 4]
-pcie@0,0: wifi@0,0:interrupts:0: [8, 8] is too long
+  Unable to handle kernel paging request at virtual address f4004130
+  PC is at lpc32xx_check_uid+0x2c/0x9c
 
-Describe the sideband interrupt with interrupts-extended, which
-explicitly carries the interrupt controller and removes the ambiguity.
+Drop the arch_initcall() registrations and call both functions directly
+from lpc3250_machine_init(), the machine's .init_machine hook.
+The calls are placed in link order (common.c, pm.c, phy3250.c) to
+keep their previous relative ordering.
 
-Fixes: 48f4d9796d99 ("arm64: dts: rockchip: add Gru/Kevin DTS")
-Signed-off-by: Fabio Estevam <festevam@gmail.com>
-Link: https://patch.msgid.link/20260721133445.44283-1-festevam@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 75bf1bd7d2f9 ("ARM: lpc32xx: allow multiplatform build")
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Vladimir Zapolskiy <vz@mleia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm/mach-lpc32xx/common.c  | 5 +----
+ arch/arm/mach-lpc32xx/common.h  | 2 ++
+ arch/arm/mach-lpc32xx/phy3250.c | 2 ++
+ arch/arm/mach-lpc32xx/pm.c      | 5 +----
+ 4 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi
-index cacbad35cfc85..cf9fdb7d0cfb0 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi
-@@ -510,8 +510,7 @@ &pci_rootport {
- 	mvl_wifi: wifi@0,0 {
- 		compatible = "pci1b4b,2b42";
- 		reg = <0x0000 0x0 0x0 0x0 0x0>;
--		interrupt-parent = <&gpio0>;
--		interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio0 8 IRQ_TYPE_LEVEL_LOW>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&wlan_host_wake_l>;
- 		wakeup-source;
+diff --git a/arch/arm/mach-lpc32xx/common.c b/arch/arm/mach-lpc32xx/common.c
+index 304ea61a07160..35ed3569c5a35 100644
+--- a/arch/arm/mach-lpc32xx/common.c
++++ b/arch/arm/mach-lpc32xx/common.c
+@@ -106,7 +106,7 @@ void __init lpc32xx_map_io(void)
+ 	iotable_init(lpc32xx_io_desc, ARRAY_SIZE(lpc32xx_io_desc));
+ }
+ 
+-static int __init lpc32xx_check_uid(void)
++void __init lpc32xx_check_uid(void)
+ {
+ 	u32 uid[4];
+ 
+@@ -119,7 +119,4 @@ static int __init lpc32xx_check_uid(void)
+ 		system_serial_low = uid[0];
+ 		system_serial_high = uid[1];
+ 	}
+-
+-	return 1;
+ }
+-arch_initcall(lpc32xx_check_uid);
+diff --git a/arch/arm/mach-lpc32xx/common.h b/arch/arm/mach-lpc32xx/common.h
+index 32f0ad2178077..06b20bea324e1 100644
+--- a/arch/arm/mach-lpc32xx/common.h
++++ b/arch/arm/mach-lpc32xx/common.h
+@@ -16,6 +16,8 @@
+  * Other arch specific structures and functions
+  */
+ extern void __init lpc32xx_map_io(void);
++extern void __init lpc32xx_check_uid(void);
++extern void __init lpc32xx_pm_init(void);
+ extern void __init lpc32xx_serial_init(void);
+ 
+ /*
+diff --git a/arch/arm/mach-lpc32xx/phy3250.c b/arch/arm/mach-lpc32xx/phy3250.c
+index 66701bf432488..ddc6333ca55da 100644
+--- a/arch/arm/mach-lpc32xx/phy3250.c
++++ b/arch/arm/mach-lpc32xx/phy3250.c
+@@ -71,6 +71,8 @@ static const struct of_dev_auxdata lpc32xx_auxdata_lookup[] __initconst = {
+ 
+ static void __init lpc3250_machine_init(void)
+ {
++	lpc32xx_check_uid();
++	lpc32xx_pm_init();
+ 	lpc32xx_serial_init();
+ 
+ 	of_platform_default_populate(NULL, lpc32xx_auxdata_lookup, NULL);
+diff --git a/arch/arm/mach-lpc32xx/pm.c b/arch/arm/mach-lpc32xx/pm.c
+index 2572bd89a5e8d..9b5c5e1462ed3 100644
+--- a/arch/arm/mach-lpc32xx/pm.c
++++ b/arch/arm/mach-lpc32xx/pm.c
+@@ -120,7 +120,7 @@ static const struct platform_suspend_ops lpc32xx_pm_ops = {
+ #define EMC_DYN_MEM_CTRL_OFS 0x20
+ #define EMC_SRMMC           (1 << 3)
+ #define EMC_CTRL_REG io_p2v(LPC32XX_EMC_BASE + EMC_DYN_MEM_CTRL_OFS)
+-static int __init lpc32xx_pm_init(void)
++void __init lpc32xx_pm_init(void)
+ {
+ 	/*
+ 	 * Setup SDRAM self-refresh clock to automatically disable o
+@@ -129,7 +129,4 @@ static int __init lpc32xx_pm_init(void)
+ 	__raw_writel(__raw_readl(EMC_CTRL_REG) | EMC_SRMMC, EMC_CTRL_REG);
+ 
+ 	suspend_set_ops(&lpc32xx_pm_ops);
+-
+-	return 0;
+ }
+-arch_initcall(lpc32xx_pm_init);
 -- 
 2.53.0
 
