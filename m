@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768E147A87A;
-	Sat, 12 Sep 2026 12:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B61A38AC9A;
+	Sat, 12 Sep 2026 12:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214497; cv=none; b=NLiDcgUBBfx5gA55t6TjhLT3SXoieJEjZCxKgji7Hoz9tYL9MY1MrWMy6xqPYNgdhlnW7s5EC58cuQ4A9owhzFqvhapuIiVW5ulL2Z6ehUVrJQPK+szGGZcScrLQ/NtVDLffNTV+KYrafQB0nbH+1MrSeJ/ooJJhYVJNDJCDKKM=
+	t=1789214503; cv=none; b=jokUZd7wljhHcWtL6PYMNLX4iVccwV0an3lXoVZFmfhqIMTfMQ0dNO/TR0vZx/n/m+TJOz+5NTquD/CRau0GIXfy7K2GdAtTlVn5DMXqgi/SncmmOWWlPxgwbYaf5THHvwK7IzKkTShNA26IEyrfWFhyCV/vgjRivRYY8ob8B0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214497; c=relaxed/simple;
-	bh=At1rkUzhyRxZ1RiV0+MGu7W0KVdjaNug/Fs6YL+cMQY=;
+	s=arc-20240116; t=1789214503; c=relaxed/simple;
+	bh=SURSLzc99uaTdM03YfPlxy85479CfyjO0xovk16/99s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BJIc417N6IBgtGXgABGyMLiEShxjaizl5gBYSbxn46RXXYANyL2RvLcb7Vsq89wh9gjkehZGusmyIrCsLPm0CtDfgyYInekNTq/WNNaBhgCZtB6IMZsh07FJc0798weZNxxxWd8X0XGZDwEx+z4s4cJ1DQcEXjKbCAkUD5XcjOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uSiQiPlt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h4hzq9gbpmbpUZ7A0hsy/NtfUuY0jqmpZvV7d6FSwRAmSiYv7xJ5j5asGHmg2VTW2i7Rq87051vxzFHJ7bzIW5ak0WaAfmVYwQL/SICNS40XecCLyX5+OM41Rz25K0G27eJkDxsHBgiwhiOj7aeoMOpus382GMYKQ2iIbSFZN7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBX7gT/7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uSiQiPlt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10411F000FF;
-	Sat, 12 Sep 2026 12:01:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBX7gT/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F091F000FF;
+	Sat, 12 Sep 2026 12:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214496;
-	bh=iFWHBVafvb0Xm+Oetx2eDSSGksJSoxTkECEOYS+Nhjg=;
+	s=korg; t=1789214501;
+	bh=zB0lVe6EwZ6G0YLf75rGGtR5vcuguNAZmaGIzv5j65s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uSiQiPltYI8KAJo9lUAocyhCgpF95tObTZpsq8iaBSH7cQpuuznvEV5P3BPu6z2HM
-	 2l+niAtaX0i/xeIIU9dasQiTc2vAjfsBgiojPcgCQfDSv0A0+Zc0CeishVCB8EpeJ5
-	 22jqj73xS5cEZn1I4mURzDMVouwcYLt2TuFrP9cc=
+	b=NBX7gT/7vUx/jH3xROj7OTDZUKQtdGeKOQWiTIVAf3GHGPfOQWpZlIx0LxdiuwRJn
+	 ix6QJuCq6JzCm61vVMvMRp73rZ21CIopoDv+GUJnj9QLb5HZK8ViIznGW1PPeqKcnS
+	 xy1lijP4g999WGsW/EtNu1jw2GtKjfCtpngYBj3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	Joey Lu <a0987203069@gmail.com>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0331/1376] clk: nuvoton: ma35d1: fix ignored div_u64 return values in PLL freq calculation
-Date: Sat, 12 Sep 2026 08:45:57 +0200
-Message-ID: <20260912065614.924807182@linuxfoundation.org>
+Subject: [PATCH 6.12 0340/1376] arm64: dts: imx93-kontron: set memory node to 0x80000000/1GiB
+Date: Sat, 12 Sep 2026 08:46:06 +0200
+Message-ID: <20260912065615.128945350@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,48 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joey Lu <a0987203069@gmail.com>
+From: Frieder Schrempf <frieder.schrempf@kontron.de>
 
-[ Upstream commit b3a2223a7805c7e6759a32a5d6ca574ad07e2710 ]
+[ Upstream commit 9c269fe7eae8cb60d8d6c326dd8955818722fae9 ]
 
-div_u64() does not modify its argument in place; the return value must
-be assigned.  Both ma35d1_calc_smic_pll_freq() and ma35d1_calc_pll_freq()
-called div_u64() and discarded the result, leaving pll_freq holding the
-undivided product and thus returning a frequency orders of magnitude too
-high.
+The start address of the DRAM area is 0x80000000. The minimal size of the
+DDR on the SoM is 1 GiB.
 
-Fixes: 691521a367cf ("clk: nuvoton: Add clock driver for ma35d1 clock controller")
-
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Signed-off-by: Joey Lu <a0987203069@gmail.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Fixes: 2b52fd6035b7 ("arm64: dts: Add support for Kontron i.MX93 OSM-S SoM and BL carrier board")
+Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/nuvoton/clk-ma35d1-pll.c | 4 ++--
+ arch/arm64/boot/dts/freescale/imx93-kontron-osm-s.dtsi | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/nuvoton/clk-ma35d1-pll.c b/drivers/clk/nuvoton/clk-ma35d1-pll.c
-index ff3fb8b87c24b..9bb18fc371d17 100644
---- a/drivers/clk/nuvoton/clk-ma35d1-pll.c
-+++ b/drivers/clk/nuvoton/clk-ma35d1-pll.c
-@@ -92,7 +92,7 @@ static unsigned long ma35d1_calc_smic_pll_freq(u32 pll0_ctl0,
- 	p = FIELD_GET(SPLL0_CTL0_OUTDIV, pll0_ctl0);
- 	outdiv = 1 << p;
- 	pll_freq = (u64)parent_rate * n;
--	div_u64(pll_freq, m * outdiv);
-+	pll_freq = div_u64(pll_freq, m * outdiv);
- 	return pll_freq;
- }
+diff --git a/arch/arm64/boot/dts/freescale/imx93-kontron-osm-s.dtsi b/arch/arm64/boot/dts/freescale/imx93-kontron-osm-s.dtsi
+index 47c1363a2f99a..dd5da2789bc70 100644
+--- a/arch/arm64/boot/dts/freescale/imx93-kontron-osm-s.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx93-kontron-osm-s.dtsi
+@@ -15,9 +15,9 @@ aliases {
+ 		rtc1 = &bbnsm_rtc;
+ 	};
  
-@@ -110,7 +110,7 @@ static unsigned long ma35d1_calc_pll_freq(u8 mode, u32 *reg_ctl, unsigned long p
+-	memory@40000000 {
++	memory@80000000 {
+ 		device_type = "memory";
+-		reg = <0x0 0x40000000 0 0x80000000>;
++		reg = <0x0 0x80000000 0 0x40000000>;
+ 	};
  
- 	if (mode == PLL_MODE_INT) {
- 		pll_freq = (u64)parent_rate * n;
--		div_u64(pll_freq, m * p);
-+		pll_freq = div_u64(pll_freq, m * p);
- 	} else {
- 		x = FIELD_GET(PLL_CTL1_FRAC, reg_ctl[1]);
- 		/* 2 decimal places floating to integer (ex. 1.23 to 123) */
+ 	chosen {
 -- 
 2.53.0
 
