@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C427B31F9B1;
-	Sat, 12 Sep 2026 19:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147A03815E7;
+	Sat, 12 Sep 2026 19:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241175; cv=none; b=XFGW/h2fxqFbS+1U4UQJ58fCMH9uvCX1jbTdJ5uZYQWLLL0wlwnhB2yOC1eLkpES9i25MsUT4sxY0GfB1AfR8pDVA8sTURaBdxE9ki/PV7BU0ERlfTiTy0C/yPY6AL9iI/8MMni+dYXgfMDO/eWo5z3CR+PdoL21dsUHClxOEbE=
+	t=1789241181; cv=none; b=N5rg/VdLzTv5yBOpS32jvVE9gK6bsE+CBN1UAZZqJ92Wiij8K8uixFeujmQDjrRm7eUQ9xGwXCy7GmOCM+YAyk8VMEQrthyldAxvxcWkwoc1Fa0DVuWB3KNDyAaT6Vi2RYKPwxBQLa8DeJOwRa5SPySR/y34w0AL2rWdP6tKGy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241175; c=relaxed/simple;
-	bh=WsRyIRNeOo9T8Z2+jEpUc7dvJ5N/MwY1C5hEnBgd0lw=;
+	s=arc-20240116; t=1789241181; c=relaxed/simple;
+	bh=H8GcFA6Q1oZyPcLhSqJX/lRT+xaa3/OXwh6yupebC/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kB8UwK0lK0MPvXKq4/Id7BvMaZ2mhMNeN5UxVNBKsPzsI3kYcwTnc6LbCf+FfF6ixtVxKkyyipHRgKRq7xPOpXH+SMjymAes5rPI3eScdDSI2tVkhocweb1tTZ2vkAwxnet5R/9Qf7LTwSJXzI5WYBv6xGun7al6OymCAYS+S9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ng5VzHeq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qz4dCceZTbqAZn+R3fC25/5L6EFFUI7xL1kaX3zjUEIjQzzUeZiPiNb3wpl8LbdDEZITrc/RKpWiQ+ZUjZUV3bRJzFPc1bGV5X6hpAMeKDJZp5VX0DXQxrRpa+JlyhWikEIZSF8bYfR6sDWUHIOzzdK0isguwZe4IA9UM7bkw8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1wiFIefo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ng5VzHeq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85A01F000FF;
-	Sat, 12 Sep 2026 19:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1wiFIefo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5AD11F000FF;
+	Sat, 12 Sep 2026 19:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241174;
-	bh=DJGlJHHd4NP98EM/VpLcSGBpm2pww4WN91KTP2sVVlA=;
+	s=korg; t=1789241179;
+	bh=BkH42djEjzHmjSUClG7V7SNjA/wHSqEu4fzp/EWRlCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ng5VzHeqz2fhor0AnEax6lvrO8UWs7iYXnNW5JpsQWhEV5sFbn7bB/ljO7orfqQN0
-	 hzITO9SnLWyiukRtNaoFdE/xp1jXVcN6Co7LeM56jR7tW0YocHL0pmxziAaheEpORc
-	 /Bl79/yX5FJL3NU6uAaJl2tXxiy5S8CmluOj5Om0=
+	b=1wiFIefowaFyDVwBIisMTzBbNq4bYFQcXm0CNwZzjN4EOfQUCO+viKl66eIlCy/9s
+	 Kd2bpE+VF6VQwI+/sTTU40ObfXKR2vj+OWpo0EsB6e3514z0+ApXZGDwSVb51wtw6v
+	 a9714G5pELHhkO9nU8Xw+3UfrQoJx8Ipnugnnujg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.10 082/798] cpufreq: schedutil: Fix rate limit overflow
-Date: Sat, 12 Sep 2026 08:55:10 +0200
-Message-ID: <20260912065518.841609041@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.10 083/798] Bluetooth: hci_bcm: fix usage_count leak when autosuspend_delay is negative
+Date: Sat, 12 Sep 2026 08:55:11 +0200
+Message-ID: <20260912065518.863391116@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,72 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 3bff8f8e95fdc6ad19c8a1a8f87029094747e4bf upstream.
+commit dc6b7c771a963e20aedf4a21ffa22543b9837ba8 upstream.
 
-rate_limit_us is an unsigned int, while NSEC_PER_USEC is defined as
-1000L. On 32-bit systems, the multiplication is therefore performed
-using 32-bit unsigned arithmetic before the result is assigned to
-freq_update_delay_ns.
+bcm_request_irq() calls pm_runtime_use_autosuspend(), but bcm_close()
+does not call the matching pm_runtime_dont_use_autosuspend() when
+tearing down runtime PM.
 
-For example, writing 4294968 to rate_limit_us wraps the delay from
-4294968000 ns to 704 ns. This makes schedutil update far more often
-than configured.
+If the autosuspend delay is set to a negative value while autosuspend
+is enabled, the runtime PM core increments usage_count to prevent
+runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
+during driver teardown, this reference is not dropped and usage_count
+remains unbalanced.
 
-Add sugov_update_rate_limit_us() to widen rate_limit_us to s64 before
-converting it to nanoseconds. Use the helper when updating the tunable
-through sysfs and when starting the governor, so both paths perform the
-conversion without overflow.
+Add the missing pm_runtime_dont_use_autosuspend() call before disabling
+runtime PM.
 
-Fixes: 9bdcb44e391d ("cpufreq: schedutil: New governor based on scheduler utilization data")
-Signed-off-by: Hui Su <sh_def@163.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260806142304.1761454-1-sh_def@163.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+This issue was found by manual code inspection.
+
+Fixes: e88ab30d3669 ("Bluetooth: hci_bcm: Add suspend/resume runtime PM functions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/cpufreq_schedutil.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/bluetooth/hci_bcm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/sched/cpufreq_schedutil.c
-+++ b/kernel/sched/cpufreq_schedutil.c
-@@ -66,6 +66,17 @@ static DEFINE_PER_CPU(struct sugov_cpu,
+--- a/drivers/bluetooth/hci_bcm.c
++++ b/drivers/bluetooth/hci_bcm.c
+@@ -520,6 +520,7 @@ static int bcm_close(struct hci_uart *hu
+ 		if (IS_ENABLED(CONFIG_PM) && bdev->irq_acquired) {
+ 			devm_free_irq(bdev->dev, bdev->irq, bdev);
+ 			device_init_wakeup(bdev->dev, false);
++			pm_runtime_dont_use_autosuspend(bdev->dev);
+ 			pm_runtime_disable(bdev->dev);
+ 		}
  
- /************************ Governor internals ***********************/
- 
-+static void sugov_update_rate_limit_us(struct sugov_policy *sg_policy)
-+{
-+	/*
-+	 * Cast rate_limit_us before multiplication to force 64-bit arithmetic.
-+	 * Otherwise, on 32-bit platforms, both operands are converted to
-+	 * 32-bit unsigned long and the multiplication may overflow.
-+	 */
-+	sg_policy->freq_update_delay_ns =
-+		(s64)sg_policy->tunables->rate_limit_us * NSEC_PER_USEC;
-+}
-+
- static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
- {
- 	s64 delta_ns;
-@@ -618,7 +629,7 @@ rate_limit_us_store(struct gov_attr_set
- 	tunables->rate_limit_us = rate_limit_us;
- 
- 	list_for_each_entry(sg_policy, &attr_set->policy_list, tunables_hook)
--		sg_policy->freq_update_delay_ns = rate_limit_us * NSEC_PER_USEC;
-+		sugov_update_rate_limit_us(sg_policy);
- 
- 	return count;
- }
-@@ -848,7 +859,7 @@ static int sugov_start(struct cpufreq_po
- 	struct sugov_policy *sg_policy = policy->governor_data;
- 	unsigned int cpu;
- 
--	sg_policy->freq_update_delay_ns	= sg_policy->tunables->rate_limit_us * NSEC_PER_USEC;
-+	sugov_update_rate_limit_us(sg_policy);
- 	sg_policy->last_freq_update_time	= 0;
- 	sg_policy->next_freq			= 0;
- 	sg_policy->work_in_progress		= false;
 
 
