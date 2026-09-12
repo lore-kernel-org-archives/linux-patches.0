@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473741EB5FD;
-	Sat, 12 Sep 2026 07:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4311EB5FD;
+	Sat, 12 Sep 2026 07:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199781; cv=none; b=ll4lDKrkPvXaufqD81FcKJWq8t05EaNx8t2T6n98ruiAObB4LVTNdQ+hp+59fd0rLeam16hSyIveduQJ9Sj23Ih/M2j0Iy+eA47PoklLsjzNT/kBpaabkAvVjPa8mG3ie36kMMCFunX7szsF9A4amY7O0suToII9wzCViTw7ZYs=
+	t=1789199786; cv=none; b=pTc8kyvPew60tHNqdzGwHPLZCiQSCYAJJg1+c4qrJG/DIjggQDf+UzNysGWMRWuYtj9bbi0PcoxaDE9eCBd62dvC/2JbLw5P5/OuhIILIZTDw187qKmEZg018/7rLJllwbQtPQBuy2TdK2e5Crz2yVAlIPDP21qKWR4Mii1gFP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199781; c=relaxed/simple;
-	bh=2KivHhhA0Q6ra42IoDxC1GYdFufgakCxhtD50zuYPgw=;
+	s=arc-20240116; t=1789199786; c=relaxed/simple;
+	bh=6mDIp/zDlR16+oHw/OhuXECW9I4hk4pS/KGGJPzRJTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V59LbBG4IBULBrRvxxDqx6+ueg0cBiiugtHoM9aY2llIGaHGwSoIVEhJk5Ag2er161SJidbrHAibCTfT4dnocVnBwPlDZrLRdJok0cWT7ldZRf4DC7Snr7D1bcfbfh+roIQplLeVL7SuBdWrOziZQh/MjziVfEavDyYcZPjcWHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNpG1TBV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TSuh78KaRTGT1Li+Z3a+Z1l9vuYiAxyWniNcmHUIq7Hw9MNr9PX0Oio7wR2MBeRSEBo/xcn8S/uHDC1Y+xQKvL6H1hT3UazwLhLsDN2eC2QYRjO+kFP9LWqYocQPNbsFZ2ZeIcsH+ErXkRVtYEpjO+BTlPGHk20QjEHQ9p2reu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IHwLlK2X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNpG1TBV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0DC1F000FF;
-	Sat, 12 Sep 2026 07:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IHwLlK2X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968421F000FF;
+	Sat, 12 Sep 2026 07:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199779;
-	bh=w/0QwAgbZiN9a18MWpObThIPhR4qhZZIs+xylKYAXbA=;
+	s=korg; t=1789199784;
+	bh=9SgQEcHINi8BtFlQQ3XWZ8cdOxyjqdvMw4NjxPKwT7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XNpG1TBVNT7xNHVNnda4TdbQ+jC7Pgg7Z5nMdabnCJYBrrwB1Adobql/TcPZBYIiZ
-	 Es0X7sN7m7BntezTzbpRAn3y9usp+6LIJyGsFLMW4w1xfF5VMlzIF5cq8tFufmFoJX
-	 4wdYj3uRF9k9ekuvmzcTa0ZBZRd7zK/C7nnRsnts=
+	b=IHwLlK2Xs8X5Cu7Tv6RHIrYRm1zCwhJwaa7MXwlsCfX6TqrxuzZthevBq/43QKT0F
+	 5W96pGTuDXv4SiAHR50k9ONjRl9uKMSP6zYmLN/sACLhlbFzCUrferxvFpZjkqm9oy
+	 /dpDpbRNdtA5FVLL7T1Gj+ukX57rgHLL4QwuCmvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Yixun Lan <dlan@kernel.org>,
+	E Shattow <e@freeshell.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0638/1815] netfilter: nf_nat_sip: rewind offset when NAT shrinks the packet
-Date: Sat, 12 Sep 2026 08:39:48 +0200
-Message-ID: <20260912065703.859231737@linuxfoundation.org>
+Subject: [PATCH 7.2 0656/1815] riscv: dts: spacemit: Add enough deassert time for the PHY on PICO ITX
+Date: Sat, 12 Sep 2026 08:40:06 +0200
+Message-ID: <20260912065704.280680750@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,50 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Inochi Amaoto <inochiama@gmail.com>
 
-[ Upstream commit 16aecbe3036f6097c26b51b12e4c1cf207769690 ]
+[ Upstream commit a225e19a4cc4e040ca0389cf0bbe209c23f5c92d ]
 
-sashiko says:
- If map_addr() changes the packet length, such as when the public NAT IP
- string is shorter or longer than the internal IP, coff will still point to
- the offset relative to the pre-mangled packet.
- If the packet shrinks, coff could overshoot the correct position,
- potentially causing the next ct_sip_parse_header_uri() call to silently
- skip bytes and miss subsequent Contact headers. Could this lead to a
- failure to NAT those subsequent headers and leak internal network details?
+RTL8211F require at least 50ms deassert to guarantee the register
+access, 10ms is only enough for the PHY reset.
 
-Fixes: c978cd3a9371 ("[NETFILTER]: nf_nat_sip: translate all Contact headers")
-Assisted-by: Claude:claude-sonnet-4-6
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 74657a376960 ("riscv: dts: spacemit: Add ethernet device for K3")
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Reviewed-by: Yixun Lan <dlan@kernel.org>
+Tested-by: E Shattow <e@freeshell.de>
+Link: https://patch.msgid.link/20260710063314.1030249-1-inochiama@gmail.com
+Signed-off-by: Yixun Lan <dlan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_nat_sip.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
-index 133bd713fe0c2..8c412bcf6cff5 100644
---- a/net/netfilter/nf_nat_sip.c
-+++ b/net/netfilter/nf_nat_sip.c
-@@ -273,12 +273,17 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
- 				       SIP_HDR_CONTACT, &in_header,
- 				       &matchoff, &matchlen,
- 				       &addr, &port) > 0) {
-+		int old_len = skb->len, delta;
-+
- 		if (!map_addr(skb, protoff, dataoff, dptr, datalen,
- 			      matchoff, matchlen,
- 			      &addr, port)) {
- 			nf_ct_helper_log(skb, ct, "cannot mangle contact");
- 			return NF_DROP;
- 		}
-+
-+		delta = (int)skb->len - old_len;
-+		coff += delta;
- 	}
- 
- 	if (!map_sip_addr(skb, protoff, dataoff, dptr, datalen, SIP_HDR_FROM) ||
+diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+index 1b535226e3ce0..650a0fe5b1ba8 100644
+--- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
++++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+@@ -195,7 +195,7 @@ phy0: phy@1 {
+ 			reg = <1>;
+ 			reset-gpios = <&gpio 0 15 GPIO_ACTIVE_LOW>;
+ 			reset-assert-us = <10000>;
+-			reset-deassert-us = <10000>;
++			reset-deassert-us = <50000>;
+ 			realtek,aldps-enable;
+ 			realtek,clkout-disable;
+ 		};
 -- 
 2.53.0
 
