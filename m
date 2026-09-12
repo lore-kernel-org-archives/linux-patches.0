@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C4648C8CB;
-	Sat, 12 Sep 2026 18:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D160399342;
+	Sat, 12 Sep 2026 18:32:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237932; cv=none; b=O512phAiPoAiHG7L+ppWDovZ8cSPwJnwRSTetV1LBnhGcSpBd6e4RRuI9A1peQMSBH/CL8MCPyVCMCTPJirI66AZ47ARXFGI1cXayzAOhVr849tUKX9Qz/bOb0dER6WZ4BdkT6L2I7Ex5Eh80BKLoJL6nw3cOdZqL/WP3ck/zGk=
+	t=1789237936; cv=none; b=eb7nYokb+oml0HltESoYWrJ+3gnivKRypxY4sy+QZMmq9WrN0i4ZHZRmDkRTepZVxyUKs2AnRqdNqyjHDWqdZ10aejmXoi7qeONOvWeFX9LtefOXuV0Wy7n5OLjqbDWyLb/AauY8TCY+cJ/Ecq4BJMtresERL6dNOZSW9QI0/IQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237932; c=relaxed/simple;
-	bh=64fVmuukyNVtS0YNjkXqy8sIYBMug104NBoi2BRcULM=;
+	s=arc-20240116; t=1789237936; c=relaxed/simple;
+	bh=VeB+kzMfTGu7FLXajyoHJZrLGjjIXIRaoNz62Z7uC/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eDeujXggcBr37wlSn9Lrq9Cw+P7oy8z86FAdDt/aSs5/l6jZHV2ZYfGG48VYBVH43/Yf4bvexEjHVSVpEOtCdvQI8Yt5BPP7joG2lres8PJkxlpX7cubUqvwnmO8bN6ZUqToFdk6W9M2dSdWseNmjbBqVaQKXWWfVmhhFw7Fddg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHeJb29O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uiXfohyY8sGozgsQ5uiN5/r7SSe6d7IA7xbr86HTVdJ6/jlgGvXLNC/geP8Dp9F451mJ3ngPPNUtaGn+vI9+utYAuJfuep8XEHKnNJzywN2qaRnIpBXpZ9N9IzjRKdm+wDzUFSR1Pnw/dlAjxpJvHs7PPhr2xJhe+XyQkGrvbO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZa1f7rf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHeJb29O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD37B1F000FF;
-	Sat, 12 Sep 2026 18:32:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZa1f7rf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C071F00893;
+	Sat, 12 Sep 2026 18:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237927;
-	bh=aOFv3ZZZpjvBW7qcl0EKcvGjYKyk4cLJqsNaJR0kDPs=;
+	s=korg; t=1789237932;
+	bh=Set/EzQR/CaBf1CPkA5o2W93l6VtKbzzQpG1izR0ZAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QHeJb29OiBJYqfLKWLdtHK0RbOO06M651xTInTT6/BlFXB8Yd3AfRyTGQobjemtfW
-	 7X8GcwMlypcoYz/btAVU/FhQULs5v0xQZhqOttowTOM0h4f0iKQ6ByDyS9kVYyzjso
-	 d0aIEqig9npco8enxZ6JY3RQBom7E54dQnwPNcuI=
+	b=ZZa1f7rf3eK3QcZztqzpCZN6OCIjuMbF0NzwiAUr3tgnTUlblkgJzOh5d7q2rjt8R
+	 yDeqMKLw54u/dV/MmQDKbSGwpTI2NtRuOH+kUsjYOuZwcjMqyZCctTDwwFBzgDqIT3
+	 C60gXlCbg+3eObJ83fPIZpSbl3ej7GJ2BAeAN7Mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 5.15 304/935] KVM: s390: Fix old_data leak in guest debug error path
-Date: Sat, 12 Sep 2026 08:55:34 +0200
-Message-ID: <20260912065533.782308372@linuxfoundation.org>
+	Sashiko <sashiko-dev@google.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 5.15 352/935] scsi: qla2xxx: Drop vport reference under lock in report ID acquisition
+Date: Sat, 12 Sep 2026 08:56:22 +0200
+Message-ID: <20260912065534.881121080@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,54 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit aa9c8e8baf1e765fa65b93212522c636f25d846f upstream.
+commit 1154b16439ffc562f9461494c4508c63446eb684 upstream.
 
-__import_wp_info() allocates a per-watchpoint old_data buffer to back up
-the original guest memory contents. If a later watchpoint of the same
-KVM_SET_GUEST_DEBUG request fails to import, kvm_s390_import_bp_data()
-jumps to the error label, which frees the wp_info array but not the
-old_data buffers of the entries that were imported successfully. Up to
-MAX_BP_COUNT - 1 buffers of up to MAX_WP_SIZE bytes are leaked per failed
-request, and the request can be repeated.
+qla24xx_report_id_acquisition() format-1 handling takes the vport
+reference under vport_slock but drops it outside the lock, after setting
+vp->vp_flags and vp->dpc_flags:
 
-Create error handling for cleaning up all created old_data memory
-areas.
+	set_bit(VP_IDX_ACQUIRED, &vp->vp_flags);
+	set_bit(REGISTER_FC4_NEEDED, &vp->dpc_flags);
+	set_bit(REGISTER_FDMI_NEEDED, &vp->dpc_flags);
 
-Fixes: 27291e2165b6 ("KVM: s390: hardware support for guest debugging")
+	atomic_dec(&vp->vref_count);
+
+Neither set_bit() nor atomic_dec() imply a memory barrier, so on a weakly
+ordered architecture the decrement can become visible before the flag
+stores. qla24xx_deallocate_vp_id() polls vref_count under vport_slock and
+unlinks the vport once it reads zero, after which qla24xx_vport_delete()
+frees it via scsi_host_put(). The poller could therefore observe
+vref_count == 0 early and tear the vport down while the pending vp_flags/
+dpc_flags stores land on freed memory.
+
+Drop the reference under vport_slock, as is done for the matching
+increment and by every other vref_count user. The unlock release pairs
+with the deallocate poller's lock acquire so the flag stores are ordered
+before vref_count == 0 can be observed.
+
+Fixes: 793cedee296f ("scsi: qla2xxx: Hold vport reference in qla24xx_report_id_acquisition()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260805110455.7200-6-borntraeger@linux.ibm.com>
+Reported-by: Sashiko <sashiko-dev@google.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://patch.msgid.link/20260730155838.2119230-23-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/guestdbg.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_mbx.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/s390/kvm/guestdbg.c
-+++ b/arch/s390/kvm/guestdbg.c
-@@ -256,7 +256,7 @@ int kvm_s390_import_bp_data(struct kvm_v
- 			ret = __import_wp_info(vcpu, &bp_data[i],
- 					       &wp_info[nr_wp]);
- 			if (ret)
--				goto error;
-+				goto error_wp;
- 			nr_wp++;
- 			break;
- 		case KVM_HW_BP:
-@@ -273,6 +273,10 @@ int kvm_s390_import_bp_data(struct kvm_v
- 	vcpu->arch.guestdbg.hw_wp_info = wp_info;
- 	kfree(bp_data);
- 	return 0;
-+
-+error_wp:
-+	while (nr_wp--)
-+		kfree(wp_info[nr_wp].old_data);
- error:
- 	kfree(bp_data);
- 	kfree(wp_info);
+--- a/drivers/scsi/qla2xxx/qla_mbx.c
++++ b/drivers/scsi/qla2xxx/qla_mbx.c
+@@ -4161,7 +4161,9 @@ qla24xx_report_id_acquisition(scsi_qla_h
+ 			set_bit(REGISTER_FC4_NEEDED, &vp->dpc_flags);
+ 			set_bit(REGISTER_FDMI_NEEDED, &vp->dpc_flags);
+ 
++			spin_lock_irqsave(&ha->vport_slock, flags);
+ 			atomic_dec(&vp->vref_count);
++			spin_unlock_irqrestore(&ha->vport_slock, flags);
+ 		}
+ 		set_bit(VP_DPC_NEEDED, &vha->dpc_flags);
+ 		qla2xxx_wake_dpc(vha);
 
 
