@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532232D23A6;
-	Sat, 12 Sep 2026 13:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4D047CA85;
+	Sat, 12 Sep 2026 13:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219564; cv=none; b=U0hOBK6UiTNHd1GN7gRC574gyr4/rj3s5EKxR65FoEG0MCk1Brg1mKAtp1jwLmH8rvIwuURewCNhufQF17ST2P/ZlawfRH8oskiWXKBO3WmbDUR1La8Gl1qZ1/ptAzqLJOUCEMuY/oO22wHn+MfaUzmfYzDTh0UlYHO7YxLO/6s=
+	t=1789219569; cv=none; b=JpbrWS4q79uKqSCxbkbvY8CyeTrVd/a/4kYdnFwYmKLC28xoKkQ4UiLhysQdaQpVh4ykO2pQMuzFsdmMqpC/Nx1dQIsE2kN6MNGqXSN09uZ2CZ9DzTF3TiJVe11yESb5ZlCAUWidfmp0ittpGrIM2/6f8MXyjEP6IbSJtMnuTbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219564; c=relaxed/simple;
-	bh=CY/DsgZXDIIfottKyQphLB+NoGRdtrcBjC3nGAcs/tM=;
+	s=arc-20240116; t=1789219569; c=relaxed/simple;
+	bh=aH9VTsKS4OC/i3ZVi9Yml2+jW558E7v923WNnR1N3rw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VgUkYDwQrSXoJcenaQgfM0SABvER+FPQ7E63eQIYFBfqt/dVKzXj1SwI8BPMJkKI/iVx1FfA5sG/VKUrMvRkVn1nMCAbhb36D0fhb5QiK83faY4d0Fo4mJ0ZbJ+p/4JUi4H1dw5SRaSRApG1z2Tk3WCSZ8efrTCby+1XY2K/r+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGit0uOm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZC1a7OoSNI76OiS4Lhv0VbV9yTLAEPRQ3pyLFIB6+ocuGyQ1fqOB0lwuowEea+8MxlBceQRYOunxUc+wQRMs6e5AI1RCzhz8vjPIKSwJo1a4I8Hk5m3eG1c/fw4iBykT/7xOhKVpFw8UX0v++s75WXss+QN+eIDr6GXUv7z6F8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IO6whqtE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGit0uOm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54E61F000FF;
-	Sat, 12 Sep 2026 13:26:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IO6whqtE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD191F000FF;
+	Sat, 12 Sep 2026 13:26:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219562;
-	bh=4uaFWbFbc87cGCwLrNal4krPjBxN67aBaK3zBJrfWio=;
+	s=korg; t=1789219568;
+	bh=/3i8bptB7XkOIELDzSrbK8G5AIcht1NSsDcRfy4U++U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pGit0uOmWi8veMMNNVV0OuWWb1LlTVywCZsF57qzKOQI4qCWa1QI7X5BAnWf7LbEe
-	 zR+Fe83WMhpqmDL9SQx/ruJtLpRvijmTbI13sMobmZbFivkwNf42fGUrIIMM0PL3t8
-	 ajvtZpK6R++c9KWU5+2H+6hvUlbZJm+z+pAo/fMs=
+	b=IO6whqtECr39TT2fpM7WqhLH3I2Fkd2rpN6DeAoi5N6cGrcbQYxHkciNlsUyC1u2B
+	 zlH0lwdI2BhqGIx75rFwO6Ok2ZNMyuUBmdDfgsbug67kXSsuZYPeb4mElXkeOGTRC3
+	 5MAbxPNZtKIEsYNW3kxs46NrWm4njeTB+tVZsrcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 6.12 1375/1376] integrity: Eliminate weak definition of arch_get_secureboot()
-Date: Sat, 12 Sep 2026 09:03:21 +0200
-Message-ID: <20260912065638.179219974@linuxfoundation.org>
+	Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.12 1376/1376] ACPI: processor: Add cpuidle driver check in acpi_processor_register_idle_driver()
+Date: Sat, 12 Sep 2026 09:03:22 +0200
+Message-ID: <20260912065638.201282590@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,144 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>
 
-commit 7caedbb5ade345df0eec0bf01035c780919a9f56 upstream.
+commit 66c62e6773c54ce5233eb21c6d48999c3747bd13 upstream.
 
-security/integrity/secure_boot.c contains a single __weak function,
-which breaks recordmcount when building with clang:
+Commit 7a8c994cbb2d ("ACPI: processor: idle: Optimize ACPI idle
+driver registration") moved the ACPI idle driver registration to
+acpi_processor_driver_init(), but it didn't check whether a cpuidle
+driver was already registered.
 
-  $ make -skj"$(nproc)" ARCH=powerpc LLVM=1 ppc64_defconfig security/integrity/secure_boot.o
-  Cannot find symbol for section 2: .text.
-  security/integrity/secure_boot.o: failed
+For example, on Intel platforms, if the intel_idle driver is already
+loaded, the code would still evaluate the _CST object in the ACPI
+table and attempt to register the acpi_idle driver. This registration
+would fail with -EBUSY due to the existing check in cpuidle_register_driver.
 
-Introduce a Kconfig symbol, CONFIG_HAVE_ARCH_GET_SECUREBOOT, to indicate
-that an architecture provides a definition of arch_get_secureboot().
-Provide a static inline stub when this symbol is not defined to achieve
-the same effect as the __weak function, allowing secure_boot.c to be
-removed altogether. Move the s390 definition of arch_get_secureboot()
-out of the CONFIG_KEXEC_FILE block to ensure it is always available, as
-it does not actually depend on KEXEC_FILE.
+Add a check at the beginning of acpi_processor_register_idle_driver()
+to avoid unnecessary _CST evaluate and potential registration failures.
 
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Fixes: 31a6a07eefeb ("integrity: Make arch_ima_get_secureboot integrity-wide")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: 7a8c994cbb2d ("ACPI: processor: idle: Optimize ACPI idle driver registration")
+Signed-off-by: Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>
+Link: https://patch.msgid.link/20260608190359.3254-1-TonyWWang-oc@zhaoxin.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/Kconfig                     |    3 +++
- arch/powerpc/Kconfig             |    1 +
- arch/s390/Kconfig                |    1 +
- arch/s390/kernel/ipl.c           |   10 +++++-----
- include/linux/secure_boot.h      |    4 ++++
- security/integrity/Makefile      |    2 +-
- security/integrity/secure_boot.c |   16 ----------------
- 7 files changed, 15 insertions(+), 22 deletions(-)
- delete mode 100644 security/integrity/secure_boot.c
+ drivers/acpi/processor_idle.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/arch/Kconfig
-+++ b/arch/Kconfig
-@@ -1684,4 +1684,7 @@ config CC_HAS_SANE_FUNCTION_ALIGNMENT
- config ARCH_NEED_CMPXCHG_1_EMU
- 	bool
+--- a/drivers/acpi/processor_idle.c
++++ b/drivers/acpi/processor_idle.c
+@@ -1386,6 +1386,15 @@ void acpi_processor_register_idle_driver
+ 	int cpu;
  
-+config HAVE_ARCH_GET_SECUREBOOT
-+	def_bool EFI
+ 	/*
++	 * If a cpuidle driver is already registered, there is no need to
++	 * evaluate _CST or attempt to register the ACPI idle driver.
++	 */
++	if (cpuidle_get_driver()) {
++		pr_debug("cpuidle driver %pS already registered.\n", cpuidle_get_driver());
++		return;
++	}
 +
- endmenu
---- a/arch/powerpc/Kconfig
-+++ b/arch/powerpc/Kconfig
-@@ -1044,6 +1044,7 @@ config PPC_SECURE_BOOT
- 	depends on IMA_ARCH_POLICY
- 	imply IMA_SECURE_AND_OR_TRUSTED_BOOT
- 	select PSERIES_PLPKS if PPC_PSERIES
-+	select HAVE_ARCH_GET_SECUREBOOT
- 	help
- 	  Systems with firmware secure boot enabled need to define security
- 	  policies to extend secure boot to the OS. This config allows a user
---- a/arch/s390/Kconfig
-+++ b/arch/s390/Kconfig
-@@ -153,6 +153,7 @@ config S390
- 	select GENERIC_IOREMAP if PCI
- 	select HAVE_ALIGNED_STRUCT_PAGE
- 	select HAVE_ARCH_AUDITSYSCALL
-+	select HAVE_ARCH_GET_SECUREBOOT
- 	select HAVE_ARCH_JUMP_LABEL
- 	select HAVE_ARCH_JUMP_LABEL_RELATIVE
- 	select HAVE_ARCH_KASAN
---- a/arch/s390/kernel/ipl.c
-+++ b/arch/s390/kernel/ipl.c
-@@ -2370,6 +2370,11 @@ void s390_reset_system(void)
- 	diag_amode31_ops.diag308_reset();
- }
- 
-+bool arch_get_secureboot(void)
-+{
-+	return ipl_secure_flag;
-+}
-+
- #ifdef CONFIG_KEXEC_FILE
- 
- int ipl_report_add_component(struct ipl_report *report, struct kexec_buf *kbuf,
-@@ -2487,11 +2492,6 @@ out:
- 	return buf;
- }
- 
--bool arch_get_secureboot(void)
--{
--	return ipl_secure_flag;
--}
--
- int ipl_report_free(struct ipl_report *report)
- {
- 	struct ipl_report_component *comp, *ncomp;
---- a/include/linux/secure_boot.h
-+++ b/include/linux/secure_boot.h
-@@ -10,10 +10,14 @@
- 
- #include <linux/types.h>
- 
-+#ifdef CONFIG_HAVE_ARCH_GET_SECUREBOOT
- /*
-  * Returns true if the platform secure boot is enabled.
-  * Returns false if disabled or not supported.
-  */
- bool arch_get_secureboot(void);
-+#else
-+static inline bool arch_get_secureboot(void) { return false; }
-+#endif
- 
- #endif /* _LINUX_SECURE_BOOT_H */
---- a/security/integrity/Makefile
-+++ b/security/integrity/Makefile
-@@ -5,7 +5,7 @@
- 
- obj-$(CONFIG_INTEGRITY) += integrity.o
- 
--integrity-y := iint.o secure_boot.o
-+integrity-y := iint.o
- integrity-$(CONFIG_INTEGRITY_AUDIT) += integrity_audit.o
- integrity-$(CONFIG_INTEGRITY_SIGNATURE) += digsig.o
- integrity-$(CONFIG_INTEGRITY_ASYMMETRIC_KEYS) += digsig_asymmetric.o
---- a/security/integrity/secure_boot.c
-+++ /dev/null
-@@ -1,16 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0-only
--/*
-- * Copyright (C) 2026 Red Hat, Inc. All Rights Reserved.
-- *
-- * Author: Coiby Xu <coxu@redhat.com>
-- */
--#include <linux/secure_boot.h>
--
--/*
-- * Default weak implementation.
-- * Architectures that support secure boot must override this.
-- */
--__weak bool arch_get_secureboot(void)
--{
--	return false;
--}
++	/*
+ 	 * ACPI idle driver is used by all possible CPUs.
+ 	 * Use the processor power info of one in them to set up idle states.
+ 	 * Note that the existing idle handler will be used on platforms that
 
 
