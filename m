@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C088C345EC1;
-	Sat, 12 Sep 2026 14:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BFC4BEE55;
+	Sat, 12 Sep 2026 14:25:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223114; cv=none; b=n1F0GaiJQVha/I/O4Ln07+ohLXvc55YBOnHZNcxq+l0jwn6RP8vehtq+EX54q2kG+W1Eb6olg7BNyyMifj+Oxln/Qdc+SjsHxCMf14dDMFs16nlrrPQVCDWuWqD+Tx0MXqcVKAy95rCsI0sgch9TWP26Imb4RkzpBlgbbqqsxVQ=
+	t=1789223116; cv=none; b=BAgHY7b1zNOvqQfc71xI5j2V3CjbIAfyz6mQXovq5sif5utsUC4RLopGSrWx2KMCWTGfdBVixiKOP+jBQeRz1Dk6IhH+Cs/hbMeOp1vV7yhQlRLcRi0d8IQFTf+/MCsKRZ1RZbdj/dgRxsYK16nQ/m6pHFO1iytb/7J9Q0w9rho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223114; c=relaxed/simple;
-	bh=vohoXN2A2/vdQSO1FIMNsrftFo5pCuX4DNCVtP4tlOE=;
+	s=arc-20240116; t=1789223116; c=relaxed/simple;
+	bh=6wiAYqC9ItyeDKjdpaqMHIj72pj4Ga8Hzy+wupdHfJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tuc6inZl1xRSFuhkgM1garRF5rpXxE1q+zMUc7WhXxSpZzsFRR/nYTpNZlSJDUGLMVXr671l3t6pxI39McfyVpRtW+8fJc8SmI6l126lD5FyPRw+GVtOM0N0QtMLt4E0LEq2m+lv4OxVp9nbkCVkXvwDZbS/SFQ8OENT+qAkaoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OY7rUeOF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jC0qIgTCjkFLP5xGRvaLXWco6cUQyMRl4ZA+NgRIXCCgGH/HoYFPG65hZyVRk8dTlB78HWvZQg5IeBUDv083I15uba+3DL1SsXY1ErOFoNRfrGpRjk6EF7FKwvs+vA71LWpKLBQng2pYZjxKx/aGwB28f9KpClIZ19lcVvL57lA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVOoU/9W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OY7rUeOF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2136D1F000FF;
-	Sat, 12 Sep 2026 14:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVOoU/9W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577351F00893;
+	Sat, 12 Sep 2026 14:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223110;
-	bh=R3Rcv3PLj7ExfVGxrL8X3wslx4QGyNJ32nH9L7uIQwo=;
+	s=korg; t=1789223115;
+	bh=yh1q8ATgHUw5DQQKew5NX7esZP3hmzz+NKVuUd+TozQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OY7rUeOFA91yKS+xSwbxguiC2+S/PaHomEbArY13McUoOKAnL/rMUNEYgxQ0XlWRF
-	 RNqVuYwTOiHZWUvraC1qqG4lJMLXVe8CdV4x5uH2igV2SgFLTp1qpmVAh0t4fqRWFN
-	 XA5idFbxFyr9kyMsbNBlvALhtTNCape0ob1RUuwM=
+	b=JVOoU/9WETZNLiXipxPTTwao59rCLMC9FBwUFbQ8LHm3+gwPx/xDk0twlBE/dE8HZ
+	 7ozSBneByU+iR4xhJ+Q2wugfeHebqd5vfb1K2BbOTJlBjPd4Qyg4tLlU8aCOPSLMVu
+	 UeYkEfGFj2br3dzHUNr4ZTdelAkg4RCuYCpQQ/Jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Steev Klimaszewski <steev@kali.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0680/1424] arm64: dts: qcom: sc8180x: Enable the power key
-Date: Sat, 12 Sep 2026 08:51:52 +0200
-Message-ID: <20260912065622.529589680@linuxfoundation.org>
+Subject: [PATCH 6.6 0681/1424] arm64: dts: qcom: sc8180x-lenovo-flex-5g: Rename regulator nodes
+Date: Sat, 12 Sep 2026 08:51:53 +0200
+Message-ID: <20260912065622.551255140@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,70 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 3706bcfbdb8aecdb506b80e45e2e5851044f1f28 ]
+[ Upstream commit 0b1c6d2a65fc41aa0d5f6617dd04043384678d61 ]
 
-No input events are generated from the pressing of the power key on
-either Primus or Flex 5G, because the device node isn't enabled.
+Align with the contemporary way of naming regulator nodes (regulator-
+prefix) in preparation for adding more of them.
 
-Give the power key node a label and enable this for the two devices.
+Reorder the renamed entries to match the expectations of the DT coding
+style doc.
 
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Tested-by: Steev Klimaszewski <steev@kali.org>
-Link: https://lore.kernel.org/r/20240812-sc8180x-pwrkey-enable-v1-1-2bcc22133774@quicinc.com
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260616-topic-8180_disp_power-v2-3-167785993231@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Stable-dep-of: d5f5c089858f ("arm64: dts: qcom: sc8180x-lenovo-flex-5g: Describe the display power net")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts | 4 ++++
- arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi         | 2 +-
- arch/arm64/boot/dts/qcom/sc8180x-primus.dts         | 4 ++++
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ .../boot/dts/qcom/sc8180x-lenovo-flex-5g.dts     | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts b/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
-index 0308677335f1d..05afc9a57e968 100644
+index 05afc9a57e968..33de3d434e3a4 100644
 --- a/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
 +++ b/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
-@@ -475,6 +475,10 @@ &pcie3_phy {
- 	status = "okay";
- };
+@@ -159,14 +159,7 @@ cdsp_mem: cdsp-region@98900000 {
+ 		};
+ 	};
  
-+&pmc8180_pwrkey {
-+	status = "okay";
-+};
-+
- &pmc8180c_lpg {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
-index ddc84282f1428..68af5888b034f 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
-@@ -77,7 +77,7 @@ pmc8180_0: pmic@0 {
- 		pon: pon@800 {
- 			compatible = "qcom,pm8916-pon";
- 			reg = <0x0800>;
--			pwrkey {
-+			pmc8180_pwrkey: pwrkey {
- 				compatible = "qcom,pm8941-pwrkey";
- 				interrupts = <0x0 0x8 0x0 IRQ_TYPE_EDGE_BOTH>;
- 				debounce = <15625>;
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
-index 7c92ab433ba41..0941fc6c4cf86 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
-@@ -545,6 +545,10 @@ &pcie1_phy {
- 	status = "okay";
- };
+-	vph_pwr: vph-pwr-regulator {
+-		compatible = "regulator-fixed";
+-		regulator-name = "vph_pwr";
+-		regulator-min-microvolt = <3700000>;
+-		regulator-max-microvolt = <3700000>;
+-	};
+-
+-	vreg_s4a_1p8: pm8150-s4-regulator {
++	vreg_s4a_1p8: regulator-pm8150-s4 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vreg_s4a_1p8";
  
-+&pmc8180_pwrkey {
-+	status = "okay";
-+};
+@@ -179,6 +172,13 @@ vreg_s4a_1p8: pm8150-s4-regulator {
+ 		vin-supply = <&vph_pwr>;
+ 	};
+ 
++	vph_pwr: regulator-vph-pwr {
++		compatible = "regulator-fixed";
++		regulator-name = "vph_pwr";
++		regulator-min-microvolt = <3700000>;
++		regulator-max-microvolt = <3700000>;
++	};
 +
- &pmc8180c_lpg {
- 	status = "okay";
- };
+ 	usbprim-sbu-mux {
+ 		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
+ 
 -- 
 2.53.0
 
