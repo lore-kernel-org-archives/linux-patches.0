@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00A238656D;
-	Sat, 12 Sep 2026 18:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A521C5799;
+	Sat, 12 Sep 2026 18:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239402; cv=none; b=aRuj3i8pXq0aBtRGKDzpK4dmgHGOYVUVjsH9ZWX76YXmknB6WZ1CUdXMejoJKWZq/Smpfvgi/Brj+NxVaQeyjc1ei7w658DAS/ZD+kdfwXan9grHPKDNI58d7HbiyrsXW7tCQGPrF9pueNBimitODBC0q2fPz9fEPpA1NYtjbsw=
+	t=1789239407; cv=none; b=OXmqymDafZ1TZ379UBh9kgajqFCAAtjxitIgi+aZj9UgoVt5WMdCOXEsRPMaxAgpEzYZfuBa40VEFjmEpBLZ3SQl+sCI+I4UguS2cEDFFQxQVRQC2qDKeMMD/gqW48WnpGkpauu9REy749lbcDt+mjk3mlNcjlJ8wCmfkdjZoMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239402; c=relaxed/simple;
-	bh=h+quaiB8HLXS3Vjk/IBRStRWDrGDlSaa4Mp03ENUI/U=;
+	s=arc-20240116; t=1789239407; c=relaxed/simple;
+	bh=iSpJaqWel+w1sbpNkWWB5MNKWxXhdXlFFJv7MsXs+Co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bKoSOeOTro/wcHMrfEieUiQY1b8D8QnMwhWpEGxDjuMvClSucEB0fnZ+acAevr4BPwSw16JQh73qcCaKBOJAeKHhJUFkF3B5YfiNr5Il46wNb04b1eHcAKs5XQklv6qEt9DeAZGD5NIBQ80x5yKDRguf3hzjD1flGmy8Bt8hgsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dj67WIam; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Pb6uTZrArqDJftMQdFHiJ+4dkvhTF20yNcoh0zYPJJB/4MSPuk9yuZMFvr0wMiJSVWmiVFl/tmBNCnzJ/eDf0UPdV31CYYGn0ZcS7mZsK+KOhKgBtt66T8ZOxLZ1Txdl6vuN+Dw7a5e9MTnzf+SZ5gGQXSxnH+CuZNtNXjlyD18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byZX92Cm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dj67WIam"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C091F000FF;
-	Sat, 12 Sep 2026 18:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byZX92Cm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0061F000FF;
+	Sat, 12 Sep 2026 18:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239401;
-	bh=ue0STj9+eN7BZYQFdSPmZ1q3lDDuEXkBRHq4S7bPfZw=;
+	s=korg; t=1789239406;
+	bh=QU1ba/S87jiV4X8gVXQrs1oO2U2dn3H+jr1LA48EOEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dj67WIammUIFIlKOFGKt2uPKUzkRulktZX3qRcQV23r/iROd905iro61j/zf7Na7q
-	 mMeFYC93l1PgSSdx1gL20Z3AhlPlaI/knCfaQwuizNYXTFryBBJbieYY+OhFgE2QhG
-	 2zEYFLYbHyiQPdVbORZSqHvv8lajsmLwHszo4kk8=
+	b=byZX92Cm8EJ5R9K9WBz6e8LNFJzfpCNwYvJXAwwMqJvpxacI/i6q5Os5o83u+LkNI
+	 d2zz2KLZP2Q1RFG+wks5CJxuZP1WR6sfPrgK4LSVMeGLFC4ZYw0ZnPdLukAEhOf1Om
+	 FSuhFLyL7is/+5buK7NGkZmvLgG5xWAM7s/apzQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	"Zhang, Yanmin" <yanmin_zhang@linux.intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 630/935] wifi: rtlwifi: pci: fix error path in rtl_pci_probe()
-Date: Sat, 12 Sep 2026 09:01:00 +0200
-Message-ID: <20260912065541.291293402@linuxfoundation.org>
+Subject: [PATCH 5.15 657/935] perf machine: Dont abort guest map creation on first inaccessible dir
+Date: Sat, 12 Sep 2026 09:01:27 +0200
+Message-ID: <20260912065541.911378428@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -45,55 +47,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 3c2999d13eeb222ae56631aeb7ca248090f2b210 ]
+[ Upstream commit b687e1a418fb819ef83c362d84c216a6a841e3b0 ]
 
-In the last error path in rtl_pci_probe(), the cleanup functions are
-skipped due to a wrong goto label. Moreover, the successful call to
-rtl_init_rfkill(), ieee80211_register_hw(), rtl_debug_add_one() have to
-be reverted. Fix this issue by updating the labels and adding the
-relevant cleanup functions to the last error path.
+machines__create_guest_kernel_maps() jumps to the failure label when one
+guest directory's kallsyms file fails access(), skipping all remaining
+valid guest directories.  An inaccessible directory is not fatal — other
+guests may still be reachable.
 
-Fixes: 0c8173385e54 ("rtl8192ce: Add new driver")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260723120118.145383-1-nihaal@cse.iitm.ac.in
+Replace 'goto failure' with 'continue' so the loop processes all
+directories, and remove the now-unreferenced failure label.
+
+Fixes: a1645ce12adb ("perf: 'perf kvm' tool for monitoring guest performance from host")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Zhang, Yanmin <yanmin_zhang@linux.intel.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/pci.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ tools/perf/util/machine.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
-index 3058c8356c292..9272ac0095261 100644
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -2228,13 +2228,17 @@ int rtl_pci_probe(struct pci_dev *pdev,
- 		rtl_dbg(rtlpriv, COMP_INIT, DBG_DMESG,
- 			"%s: failed to register IRQ handler\n",
- 			wiphy_name(hw->wiphy));
--		goto fail3;
-+		goto fail6;
+diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
+index 3fa2975a64ae1..a1c51c50b9022 100644
+--- a/tools/perf/util/machine.c
++++ b/tools/perf/util/machine.c
+@@ -1269,14 +1269,12 @@ int machines__create_guest_kernel_maps(struct machines *machines)
+ 			snprintf(path, sizeof(path), "%s/%s/proc/kallsyms",
+ 				 symbol_conf.guestmount,
+ 				 namelist[i]->d_name);
+-			ret = access(path, R_OK);
+-			if (ret) {
++			if (access(path, R_OK)) {
+ 				pr_debug("Can't access file %s\n", path);
+-				goto failure;
++				continue;
+ 			}
+ 			machines__create_kernel_maps(machines, pid);
+ 		}
+-failure:
+ 		free(namelist);
  	}
- 	rtlpci->irq_alloc = 1;
  
- 	set_bit(RTL_STATUS_INTERFACE_START, &rtlpriv->status);
- 	return 0;
- 
-+fail6:
-+	rtl_deinit_rfkill(hw);
-+	rtl_debug_remove_one(hw);
-+	ieee80211_unregister_hw(hw);
- fail5:
- 	rtl_pci_deinit(hw);
- fail4:
 -- 
 2.53.0
 
