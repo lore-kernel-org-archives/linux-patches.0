@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601281A6813;
-	Sat, 12 Sep 2026 07:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1362EBDE9;
+	Sat, 12 Sep 2026 07:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197596; cv=none; b=k9Ls0xMuqEBmH8fdBEZ3rz72QCng4g6x8CWgpBP8H8QKF8ENYo/IzLiSHG5um32K1fz736PuIu4Qmmp04AwwKTMeRj7dAHT337GD7qFYIimuzDtxoSqYgp+rHa7CqsWyObeybhmDS9GvuHYCcBzhFLJ1PVhLJvnJWHactcrD71U=
+	t=1789197600; cv=none; b=lBHBf32JgPJqPk6btUE4FgaZuY85dhQhaubePblkfC6ldoAoB0yD00+1kSLeZRL1dmBA9mMgI7wkpJCk/Yma6lkUJKJNzP647XEykgXGJAU8TRzBJGMEo8yl/zNMz/CvKfLRb0A6iupLL/9DJmuZ1X7ljmCA9XK2zfIdlpcxn34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197596; c=relaxed/simple;
-	bh=mP+GEmUaEHcV0b58ZTRAsoXZbfUmRQWD11bO6V0bjag=;
+	s=arc-20240116; t=1789197600; c=relaxed/simple;
+	bh=9/R7ggZxI4lnI8gFK+j52S69udAVwGFlT0k1mw2Tv7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fruhBnR/b/EAyjULjUrMtvy1vUagDvZ6uoP1+g1xN4Og83XSHi7ouypZgN2i/eVOVIdzG1VDwoGJYqz24bonkrCSMnFcFCg9OKCT9IE5V3Qd+8+2nODCfgOVx+VWExk297B+7GEacWzDmXyIgTXkDjmF2ckTzVgrDtbhwgBM3dY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e7JILi8/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=frLa8bH9D6TQHqemgiY8qT0X9o5Tb5OVjfSCWnAPd+amwHCffhwIdyKhYKqkpFJnKym7fQE9iwlbYSULDNzDQGFYX4my4XjIc029iOtZ+F6rfd7jg/zJfZHoMMbIhZmAFTqoayPJdWvw0hYGxL4jx+n0rTZdmvBe7KCbQ1TxFzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiA2Jn59; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7JILi8/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78921F000FF;
-	Sat, 12 Sep 2026 07:19:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiA2Jn59"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C9B1F000FF;
+	Sat, 12 Sep 2026 07:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197591;
-	bh=CRa6rMfH41prS/rfrirLwOBM5vW2Yh099b50xIMBRPs=;
+	s=korg; t=1789197599;
+	bh=UcW/VmJzd1Jag/JS2w6dlcPNOErub0G9gLvQVfS55QQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e7JILi8/oeDLPznQq7GpZBHM+xVOBWKvyO4fzryNDRRf9IeDYTJbfLOS6vFXOQveC
-	 SYeFTUgkKf/8sEIP8v+qk0+0fk+EFDs54Q9FOg60rQEVsEMCnS847uOSLDKuXPDp0e
-	 YMT0H2prRW+t6achCtS/mPzngUjQ0RL6N2FMR0G0=
+	b=HiA2Jn59JwSQiVCpNehKtSYVpsAKoquPvNHTwPWkpV6iDeRoI661Ww8MQfc1GHtVR
+	 WVo2ZWfXuvNyQpNtZai2/tjX5mwRmqGubvFCV2jW7vnkrtY7t45/Ue9q1cqem2Huve
+	 pwt9XRQrdBN1By36pJ1OL3fBnahIurKCg3c27Ic8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	"Kevin Hilman (TI)" <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0206/1815] nvmet-rdma: factor out response resource cleanup
-Date: Sat, 12 Sep 2026 08:32:36 +0200
-Message-ID: <20260912065653.836070633@linuxfoundation.org>
+Subject: [PATCH 7.2 0208/1815] bus: ti-sysc: Fix /chosen node reference leak
+Date: Sat, 12 Sep 2026 08:32:38 +0200
+Message-ID: <20260912065653.881192871@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,59 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 90096175473f7c86e39c3f74f10343f965f5a05d ]
+[ Upstream commit 6342de0aed216b6df460b492ddb532b3e0ed16f1 ]
 
-Move the RDMA read/write context teardown and the request SGL freeing
-out of nvmet_rdma_release_rsp() into a new helper function
-nvmet_rdma_free_rsp_resources().
+sysc_init_stdout_path() gets the /chosen node with
+of_find_node_by_path() to read stdout-path. The function then overwrites
+the local node pointer with the stdout-path lookup result, or exits on
+error, without dropping the /chosen reference.
 
-This is a refactoring with no functional change, in preparation for the
-following patch that uses nvmet_rdma_free_rsp_resources().
+Keep the /chosen node in a separate variable and put it after the
+stdout-path value has been used for the lookup. The successful stdout
+node lookup remains referenced by the cached stdout_path pointer.
 
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: 0114dd303b37 ("nvmet-rdma: fix response resource leak on queue teardown")
+Fixes: 3bb37c8e6e6a ("bus: ti-sysc: Handle stdout-path for debug console")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Reviewed-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://patch.msgid.link/20260615200540.770205-1-dbgh9129@gmail.com
+Signed-off-by: Kevin Hilman (TI) <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/bus/ti-sysc.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index ea1185b8267ef..3c34f235e542e 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -657,18 +657,25 @@ static void nvmet_rdma_rw_ctx_destroy(struct nvmet_rdma_rsp *rsp)
- 				    req->sg, req->sg_cnt, nvmet_data_dir(req));
- }
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index a5b9507de37c3..e118b900c9ac8 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -682,6 +682,7 @@ static struct device_node *stdout_path;
  
--static void nvmet_rdma_release_rsp(struct nvmet_rdma_rsp *rsp)
-+static void nvmet_rdma_free_rsp_resources(struct nvmet_rdma_rsp *rsp)
+ static void sysc_init_stdout_path(struct sysc *ddata)
  {
- 	struct nvmet_rdma_queue *queue = rsp->queue;
++	struct device_node *chosen;
+ 	struct device_node *np = NULL;
+ 	const char *uart;
  
--	atomic_add(1 + rsp->n_rdma, &queue->sq_wr_avail);
--
- 	if (rsp->n_rdma)
- 		nvmet_rdma_rw_ctx_destroy(rsp);
+@@ -691,15 +692,18 @@ static void sysc_init_stdout_path(struct sysc *ddata)
+ 	if (stdout_path)
+ 		return;
  
- 	if (rsp->req.sg < rsp->cmd->inline_sg ||
- 	    rsp->req.sg >= rsp->cmd->inline_sg + queue->dev->inline_page_count)
- 		nvmet_req_free_sgls(&rsp->req);
-+}
-+
-+static void nvmet_rdma_release_rsp(struct nvmet_rdma_rsp *rsp)
-+{
-+	struct nvmet_rdma_queue *queue = rsp->queue;
-+
-+	atomic_add(1 + rsp->n_rdma, &queue->sq_wr_avail);
-+
-+	nvmet_rdma_free_rsp_resources(rsp);
+-	np = of_find_node_by_path("/chosen");
+-	if (!np)
++	chosen = of_find_node_by_path("/chosen");
++	if (!chosen)
+ 		goto err;
  
- 	if (unlikely(!list_empty_careful(&queue->rsp_wr_wait_list)))
- 		nvmet_rdma_process_wr_wait_list(queue);
+-	uart = of_get_property(np, "stdout-path", NULL);
+-	if (!uart)
++	uart = of_get_property(chosen, "stdout-path", NULL);
++	if (!uart) {
++		of_node_put(chosen);
+ 		goto err;
++	}
+ 
+ 	np = of_find_node_by_path(uart);
++	of_node_put(chosen);
+ 	if (!np)
+ 		goto err;
+ 
 -- 
 2.53.0
 
