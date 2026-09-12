@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D362FCA6F;
-	Sat, 12 Sep 2026 15:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E93317145;
+	Sat, 12 Sep 2026 15:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227460; cv=none; b=So6hiHeieQJVLW576TqAVpXJMphOYUlASCK97fJGXuZGykzozpbwQMXVJaG3V3DUfcIukXj7u5w9duZloCNA6H3ey2HVNJv8oXlgtQy1xHhbgT69h8cDsia7S60hz08lp/nvBx9NNkkgHB94hOPetdoeHzbohQ4r5Aoqz3N1xxE=
+	t=1789227464; cv=none; b=Xj2QDpkq/EwHCy7FoiNpi3pucd010kOwO8eJZn849EsaZi/D4VAeergqvxs9pS0P/yRz6cHnod1GboZz2G8GbRnnr9z8jYm0DL5E0ksLiE11XRxS/KoHWnmbJ32T5eGsF5f0jklCd12jIU9pziaTyZoRhzEUgOuOwsEhp4PdkNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227460; c=relaxed/simple;
-	bh=D1DGLefwG4mRoN+vg7U0Lz4ZNA+kLxUvFfau/eGr/2s=;
+	s=arc-20240116; t=1789227464; c=relaxed/simple;
+	bh=FbYu+O95sn5LPfDWvhdvdTI143sAlM5FK3sCg/0aKx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iJMOvnFf5JbKQ5N3XmbUcBins230ZSPIqC3FEkRJkZQ6EJgE1q9/fOHjzlNIP46OoPBkgDcSVHwEWMlgoJ8IRtBbXkbCoG5NJUmSEBdc4+1GyI4qJyDSicxizB4erGtPTcvK7qcQ+FR/mzMV6sRPglLK3ZWZ1OYWgA/0uS3m9jU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqJmFS9U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iuY2RxS5i1hhOjJDmoF44px1GJTLH3GEQaFmc+zmnITV4zaKbPo7LBIoO7CoYkj/UBfEm+tYCEUJr0igJ5K5Ewuntt2uldbDBpM2IzdEWIHqUbigln/Z/acvU3K0BXfdk3R+Fv6KKP/G/wfevR3jAoCD4cXuxpgZAqjWKmOimJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7r/BV53; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqJmFS9U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3BE1F000FF;
-	Sat, 12 Sep 2026 15:37:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7r/BV53"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 798371F000FF;
+	Sat, 12 Sep 2026 15:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227458;
-	bh=wywPqr+Zu19uUxz47qkvSyesx7dgqG9vRPe/IKljulQ=;
+	s=korg; t=1789227463;
+	bh=KRizMp6qwPq0gADWBbXClFZ0c9aK+9RwmPwnxW97wyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mqJmFS9UhgOMqKi0tJ3C1MfThSo0AV0f8pO15dB5ODGYqUBbsOLg4xlxGL3EjJXKA
-	 ZomoU0XPUOIwnVCWdOFG6kk63ZZ1/XeAJnmv5dplcc06sbomrVw2ce5ePu1PijdRaP
-	 zsDb2FFQ4czg5IrLzqREFFmHkWIbFvaj71mrQtBY=
+	b=a7r/BV53J540u4xJZpY+Eqz6Jqsr/DJBS3ClSKkzjA8PMbWILu+U6lDj8xsEVF7M6
+	 fAwoqEudwHk0tOGj22uUXlBTomnkgvygDisgCbiM/fELutgurqG8C6FKiv9HEzbHGU
+	 EpmQ7ojfX41UXh7C4gqRzH1kNhqDNEYh6PJiy9F4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 0184/1191] s390/dasd: Propagate partial completion length across ERP recovery
-Date: Sat, 12 Sep 2026 08:48:32 +0200
-Message-ID: <20260912065552.346980478@linuxfoundation.org>
+	Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Subject: [PATCH 6.1 0185/1191] PCI: Fix 32-bit config write in Intel PCH Root Port MPC ACS quirk
+Date: Sat, 12 Sep 2026 08:48:33 +0200
+Message-ID: <20260912065552.369464426@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -45,65 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
 
-commit 6fb5ba2e7e43173a3761e46f091070a8185efa14 upstream.
+commit 23d7eed5974989de56273c964d7e510e4aad91e8 upstream.
 
-dasd_default_erp_postaction() copies the timing and device state from
-the finished ERP request back to the original request but drops
-proc_bytes. A request that was partially completed, an ESE read of a
-not-yet-allocated track returns fewer bytes than requested, and then
-recovered through the ERP chain loses its partial-completion length.
-__dasd_cleanup_cqr() then sees proc_bytes == 0 and completes the whole
-request instead of requeueing the remainder, silently returning zeroed
-data for the part that was never read.
+pci_quirk_enable_intel_rp_mpc_acs() reads a 32-bit DWORD from the MPC
+register, sets bit 26 (INTEL_MPC_REG_IRBNCE), but it writes it back using
+pci_write_config_word().
 
-Carry proc_bytes over to the original request like the other
-per-request state.
+Because bit 26 resides in the upper 16 bits of the 32-bit register, a
+16-bit write drops the newly set bit. The quirk logs that it is enabling
+IRBNCE, but the hardware never actually receives the command.
 
-Fixes: 5e6bdd37c552 ("s390/dasd: fix data corruption for thin provisioned devices")
+Use pci_write_config_dword() to ensure the full 32-bit value is written
+back to the hardware.
+
+Fixes: d99321b63b1f ("PCI: Enable quirks for PCIe ACS on Intel PCH root ports")
+Signed-off-by: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Jan Höppner <hoeppner@linux.ibm.com>
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Link: https://patch.msgid.link/20260805111612.1285190-3-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://patch.msgid.link/20260723171203.4892-1-raizudeen.kerneldev@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd_erp.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pci/quirks.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/s390/block/dasd_erp.c
-+++ b/drivers/s390/block/dasd_erp.c
-@@ -127,6 +127,7 @@ struct dasd_ccw_req *dasd_default_erp_po
- 	int success;
- 	unsigned long startclk, stopclk;
- 	struct dasd_device *startdev;
-+	unsigned int proc_bytes;
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -5228,7 +5228,7 @@ static void pci_quirk_enable_intel_rp_mp
+ 	if (!(mpc & INTEL_MPC_REG_IRBNCE)) {
+ 		pci_info(dev, "Enabling MPC IRBNCE\n");
+ 		mpc |= INTEL_MPC_REG_IRBNCE;
+-		pci_write_config_word(dev, INTEL_MPC_REG, mpc);
++		pci_write_config_dword(dev, INTEL_MPC_REG, mpc);
+ 	}
+ }
  
- 	BUG_ON(cqr->refers == NULL || cqr->function == NULL);
- 
-@@ -134,6 +135,7 @@ struct dasd_ccw_req *dasd_default_erp_po
- 	startclk = cqr->startclk;
- 	stopclk = cqr->stopclk;
- 	startdev = cqr->startdev;
-+	proc_bytes = cqr->proc_bytes;
- 
- 	/* free all ERPs - but NOT the original cqr */
- 	while (cqr->refers != NULL) {
-@@ -151,6 +153,7 @@ struct dasd_ccw_req *dasd_default_erp_po
- 	cqr->startclk = startclk;
- 	cqr->stopclk = stopclk;
- 	cqr->startdev = startdev;
-+	cqr->proc_bytes = proc_bytes;
- 	if (success)
- 		cqr->status = DASD_CQR_DONE;
- 	else {
 
 
