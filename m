@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301712BDC0E;
-	Sat, 12 Sep 2026 11:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D6A431A3E;
+	Sat, 12 Sep 2026 11:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212396; cv=none; b=ImRSnPLDawk9Su173WdCmerME1flqYESuUCFLBQVilv2acFFTmgcY+8jSxJVxGY0C8UVP9IB/KciR3C662p2shGaemypLlWJAycvBnlx6hurMSRtm7ODtMwksrbfEv+UHlmCy5gR1UYYQUm4+Je2OOm7jEAqwNs0nOynNRiGqSg=
+	t=1789212401; cv=none; b=laEsBAJ0VBRXwsz+TRcsq7ZDhEQ3OwAifhEfh49LtBI+d7rtD3szljnbLz8ZIqtculVGhKnz+AnAP6tCwHDFl0UfEZzCFc7cmHEkus6+x5A13kBUu8r4CxKbztc+tCQ432LOrrjiqIk3I3ukNBL2YvdetZKYUNZP3LX5E8qDLJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212396; c=relaxed/simple;
-	bh=Wd4+1jH0TH4BeKyAqAQXmiEdQLQ00gcREGp77gH3Nwc=;
+	s=arc-20240116; t=1789212401; c=relaxed/simple;
+	bh=hybXguvqwkgNrj9j7GwNBYBTLfltH3WwJaCkvjCzlSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jivvaecjLRRiJ5kFAcDwaDwGq1idox/uARYSzf1CMTy2/z22n4DmwU4QcX9IVYHM+Ady+tIiHJL8CeLRMaig70Jg17k4o28yomjE3Aq2Rqw8Ij6uY0ht0AWSVuQNZTryPlBv+UFeMpF+CAwGUqB8GXChJbOWNg7welF0BX/8m3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fRkqwm/I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MMBpIiCCTyHa3/QwdzvmKDF0XbBP+KoNUUv9DRaWoOuXdPpi4ykWCMkc1WYtC3YH5OESEoL1zbZicoHqvLqgT11JwN1+lgyP3BZmZJYTiXqEEYi98MYZtHGYsIc8Z+O2dCnMRXlh55v/VHBEIBRBRkOsHkwbo3kKVPpNI1DrlEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPliBX2R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fRkqwm/I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B46E1F000FF;
-	Sat, 12 Sep 2026 11:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPliBX2R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA281F00893;
+	Sat, 12 Sep 2026 11:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212391;
-	bh=+DWQ5thKL7a0TfxBshQ/7jTIdtpfdtNlVJmSw0DFqrY=;
+	s=korg; t=1789212396;
+	bh=jvFq/YHla+cntr6YXS1OjA6CjkcY09DgImJKwyixdhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fRkqwm/I+mgjTwSqKRrmkga8Nse/sjnmWEyXXaHcL6JKZNIMYK7nMm+QX3aytr6kq
-	 9dZKmQf4dB7R1B3bcZdk39TTZ67ziS6X8PEKURkjKrP6khouSQFG4g7c6LZmSMLyVa
-	 zk2TsOzu7Idy/RkUFY8aeIeYSfS4ewDUEKhasWtI=
+	b=gPliBX2RpMfU+eIL/oDya1Mnlvm6ym8YaWXLbSPNoF/ivYzgjERPXiJruocd0g5vm
+	 r95nB5QcUNUPCFtv94gubm4mDEY+xY/+UO838WVnAmb1roBgv7hrLvSzca+5kWpt4m
+	 KECVIouhO03njhKYQGtWORzoE2WXtMh3AQsiO9zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <xiang@kernel.org>,
+	Wei-Lin Chang <weilin.chang@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1384/1518] erofs: Fix EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS default logic
-Date: Sat, 12 Sep 2026 08:59:13 +0200
-Message-ID: <20260912065654.856255386@linuxfoundation.org>
+Subject: [PATCH 6.18 1385/1518] arm64: ptdump: Make note_page_flush() range aware
+Date: Sat, 12 Sep 2026 08:59:14 +0200
+Message-ID: <20260912065654.878512443@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,67 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Wei-Lin Chang <weilin.chang@arm.com>
 
-[ Upstream commit ab74edaeb1ae7c7194e79007e6afdfe788111a3f ]
+[ Upstream commit 902caade3cfd60f99bf71b355e7c86344bd831e5 ]
 
-When NR_CPUS is less than 16, or when SMP is disabled, the default value
-of 16 is invalid.
+note_page_flush() calls note_page() with addr == 0 and level == -1 to
+dump the last row of a ptdump. addr == 0 (1 << 64 wrapped around)
+renders a huge region with enormous size for address spaces with
+IA bits < 64. For example the stage-2 page tables and the EFI runtime
+page table.
 
-While actual configuration picks up a sensible and valid default
-(NR_CPUS or 1), "make savedefconfig" will still write a line like
+More importantly, the last region of the address space and everything
+after the address space up to 1 << 64 are merged into one row of
+output. If the last region within the address space is valid, it will
+appear to remain valid up to 1 << 64 with the same attributes.
 
-    CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS=1
+Currently only the EFI runtime ptdump is affected by this, but KVM will
+soon fix its stage-2 ptdump by using note_page_flush(). Here is an
+example of an EFI runtime ptdump (last row):
 
-to the defconfig file, even if that matches the sensible default.
+0x0000008000000000-0x0000000000000000   17179868672G PGD
 
-Avoid needlessly enlarging the defconfig files, and reduce churn for
-updating them, by specifying valid defaults depending on SMP and
-NR_CPUS.
+With this patch:
 
-While at it, make the prompt depend on SMP, as there is no point in
-asking the user about the maximum number of decompression streams if
-there is only one valid answer.
+0x0000008000000000-0x0001000000000000      261632G PGD
 
-Fixes: c9b47e6b23114e93 ("erofs: cap LZMA stream pool size")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <xiang@kernel.org>
+To fix this, cache the end address of a ptdump in ptdump_pg_state so
+note_page_flush() can call the final note_page() with the correct end
+address.
+
+Fixes: 9d80448ac92b ("efi/arm64: Add debugfs node to dump UEFI runtime page tables")
+Signed-off-by: Wei-Lin Chang <weilin.chang@arm.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/Kconfig | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/arm64/include/asm/ptdump.h |  2 ++
+ arch/arm64/mm/ptdump.c          | 14 +++++++++++++-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/fs/erofs/Kconfig b/fs/erofs/Kconfig
-index 0be8a38cfb119..473a22167c154 100644
---- a/fs/erofs/Kconfig
-+++ b/fs/erofs/Kconfig
-@@ -121,11 +121,13 @@ config EROFS_FS_ZIP_LZMA
- 	  If unsure, say N.
+diff --git a/arch/arm64/include/asm/ptdump.h b/arch/arm64/include/asm/ptdump.h
+index fded5358641f8..f70e8743fca23 100644
+--- a/arch/arm64/include/asm/ptdump.h
++++ b/arch/arm64/include/asm/ptdump.h
+@@ -50,6 +50,8 @@ struct ptdump_pg_state {
+ 	const struct addr_marker *marker;
+ 	const struct mm_struct *mm;
+ 	unsigned long start_address;
++	/* exclusive end, ULONG_MAX represents an end at 1 << 64 */
++	unsigned long end_address;
+ 	int level;
+ 	ptdesc_t current_prot;
+ 	bool check_wx;
+diff --git a/arch/arm64/mm/ptdump.c b/arch/arm64/mm/ptdump.c
+index 421a5de806c62..a1ad028bdb30d 100644
+--- a/arch/arm64/mm/ptdump.c
++++ b/arch/arm64/mm/ptdump.c
+@@ -278,9 +278,19 @@ void note_page_pgd(struct ptdump_state *pt_st, unsigned long addr, pgd_t pgd)
  
- config EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS
--	int "EROFS LZMA default maximum decompression streams"
-+	int "EROFS LZMA default maximum decompression streams" if SMP
- 	depends on EROFS_FS_ZIP_LZMA
- 	range 1 NR_CPUS if SMP
- 	range 1 1 if !SMP
--	default 16
-+	default 16 if SMP && NR_CPUS >= 16
-+	default NR_CPUS if SMP
-+	default 1
- 	help
- 	  By default EROFS allocates one LZMA decompression stream per CPU.
- 	  Each stream can hold a dictionary of up to 8 MiB taken from the
-@@ -133,7 +135,7 @@ config EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS
- 	  of memory.  This caps the default; the lzma_streams module parameter
- 	  still overrides it.
+ void note_page_flush(struct ptdump_state *pt_st)
+ {
++	struct ptdump_pg_state *st = container_of(pt_st, struct ptdump_pg_state, ptdump);
++	unsigned long end = st->end_address;
+ 	pte_t pte_zero = {0};
  
--	  If unsure, keep the default of 16.
-+	  If unsure, keep the suggested default (16 or lower).
+-	note_page(pt_st, 0, -1, pte_val(pte_zero));
++	/*
++	 * Address spaces that end at 1 << 64 have end_address == ULONG_MAX,
++	 * but note_page() expects the exclusive end. In this case adjust end
++	 * to the wraparound value 0.
++	 */
++	if (end == ULONG_MAX)
++		end = 0;
++
++	note_page(pt_st, end, -1, pte_val(pte_zero));
+ }
  
- config EROFS_FS_ZIP_DEFLATE
- 	bool "EROFS DEFLATE compressed data support"
+ void ptdump_walk(struct seq_file *s, struct ptdump_info *info)
+@@ -296,6 +306,7 @@ void ptdump_walk(struct seq_file *s, struct ptdump_info *info)
+ 		.marker = info->markers,
+ 		.mm = info->mm,
+ 		.pg_level = &kernel_pg_levels[0],
++		.end_address = end,
+ 		.level = -1,
+ 		.ptdump = {
+ 			.note_page_pte = note_page_pte,
+@@ -337,6 +348,7 @@ bool ptdump_check_wx(void)
+ 			{ -1, NULL},
+ 		},
+ 		.pg_level = &kernel_pg_levels[0],
++		.end_address = ~0UL,
+ 		.level = -1,
+ 		.check_wx = true,
+ 		.ptdump = {
 -- 
 2.53.0
 
