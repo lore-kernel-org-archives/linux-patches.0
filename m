@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE60439341;
-	Sat, 12 Sep 2026 10:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7705A3876C3;
+	Sat, 12 Sep 2026 10:42:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209769; cv=none; b=KHxOg12/mw5dZzr+dFCJvRIvEbnVLGNVdWFL/sMF2dBnkSsOqXqdZDsa2Z23TnZmKgKLRUTwfUGwp5sZHM3HmtOkGVFpqsFBDkUF2WKBeCx3tfZ+kSnvNlt6FGqHdPnmxjQuHQ9k8hqILavIRBqs6MeryIxkPTHJneks5I6/fKI=
+	t=1789209776; cv=none; b=LfrlerZeFaRWBZRM+4xPbTWUbsBhQQt6jUSWKQOfUi9umpIxqWQO+mN5ccn7VuK8hOcoTVlN5up8BoqZIgkWoBiGnwaRL+maWdrAlbiCKQeS47Gb6QJi2RByMW7o9+8ochYzYXDhzz4aL8y7LXlT9+QsguvuUsURxpVDJNHCOJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209769; c=relaxed/simple;
-	bh=YzhBPzoU3i5clHoJdEo+hIHLqD7tsd9KU/sApoaHO9U=;
+	s=arc-20240116; t=1789209776; c=relaxed/simple;
+	bh=t4F3N/CuK5CqI0mwk1Qa7F0NIpT0mfjbgJEpLMOYQOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJc2cx8cBvQWuHn8hGrDbl8AcsepMoVXKDy5kx+BgiKFDrDkDuPaS1WR16wzfsgksHxQ1m7WvJHkWkkVBESDngHC6hpLFlOFRzFtDCd6FWWSspKadc71Ek4ztVGT+FmDcLnWzwQqMRiGRJBOnvUIRBHrrfWsKAC11gHIs33oH3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ncQKW4pX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NcBKTzS8Cn8S1PRfdsJ7U8uO5zIWdnisbGQSjt8hZIfrHxTqTPoFhpQazVT5KFzPyivgTLId2mNK7dRAuRX2mIn7+LKo0MoT6U8QOUwjd2m8uI4eNe7uWsaajjPMTpzEXlDVn/DB1SX5YUdpHLfA3FDM9EpVk1Du2KXKgIya+1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjTv02iU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ncQKW4pX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E4B81F00893;
-	Sat, 12 Sep 2026 10:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjTv02iU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D871F000FF;
+	Sat, 12 Sep 2026 10:42:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209765;
-	bh=xQI2A3BIo2oeFPRxFBBXxrju4ywyN+M938+O/cW18Yg=;
+	s=korg; t=1789209770;
+	bh=rc2u+XjWs8goYZlWUCsiztITD/q8AZ+Qk7P/uoCEepY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ncQKW4pX3Z2v1W0JX9M/3nRxlcXMPqvqxXNWwjL1aTMrEqGJPoOkBOjkQseSBJ5BI
-	 xXxNX9+R4ciDv958sY0mdzO5Lkc3ONaR5aQCUrHB1KfIS/78SeYoM0Wdku6iEr7Qgo
-	 NtNMJXbq1U6wu8DaQ/CCuDCX/RMiG7eOdsA4ie2U=
+	b=CjTv02iUO2Jxea7iNpNZoHEAEKkS4Z5ACp7z9bSthKbd68uUaXVzLsgcE4z4S26RA
+	 6UD/eRdyIihYztt1lbLUrwgH2e7vHgSSDILr+JLjTkuDW0XztKxAr95mYzX0vdriki
+	 84IuMNseiIwRAK7xyxwDdr1pLc7e9uNleuUJxl8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Artem Bityutskiy <artem.bityutskiy@linux.intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0889/1518] intel_idle: Initialize sysfs after cpuidle driver initialization
-Date: Sat, 12 Sep 2026 08:50:58 +0200
-Message-ID: <20260912065643.560135880@linuxfoundation.org>
+Subject: [PATCH 6.18 0890/1518] intel_idle: Add cmdline option to adjust C-states table
+Date: Sat, 12 Sep 2026 08:50:59 +0200
+Message-ID: <20260912065643.583549784@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,51 +53,259 @@ Content-Transfer-Encoding: 8bit
 
 From: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
 
-[ Upstream commit ff24f314447a25164bac85cb310c382e289afdbe ]
+[ Upstream commit 111f77a233484cf39a6317f4d0306387e9ffda7b ]
 
-Reorder initialization calls to initialize the internal driver data before
-sysfs:
+Add a new module parameter that allows adjusting the C-states table used by
+the driver.
 
-Was:
-intel_idle_sysfs_init();
-intel_idle_cpuidle_driver_init();
+Currently, the C-states table is hardcoded in the driver based on the CPU
+model. The goal is to have good enough defaults for most users.
 
-Now:
-intel_idle_cpuidle_driver_init();
-intel_idle_sysfs_init();
+However, C-state characteristics, such as exit latency and residency, can
+vary between different variants of the same CPU model and BIOS settings.
+Moreover, different platform usage models and user preferences may benefit
+from different C-state target_residency values.
 
-Follow the general principle that drivers should initialize internal state
-before registering external interfaces like sysfs, avoiding potential usage
-before full initialization.
+Provide a way for users to adjust the C-states table via a module parameter
+"table". The general format is:
+"state1:latency1:target_residency1,state2:latency2:target_residency2,..."
+
+In other words, represent each C-state by its name, exit latency (in
+microseconds), and target residency (in microseconds), separated by colons.
+Separate multiple C-states by commas.
+
+For example, suppose a CPU has 3 C-states with the following
+characteristics:
+  C1:  exit_latency=1, target_residency=2
+  C1E: exit_latency=10, target_residency=10
+  C6:  exit_latency=100, target_residency=500
+
+Users can specify a custom C-states table as follows:
+
+1. intel_idle.table="C1:2:2,C1E:5:20,C6:150:600"
+   Result: C1:  exit_latency=2, target_residency=2
+           C1E: exit_latency=5, target_residency=20
+           C6:  exit_latency=150, target_residency=600
+2. intel_idle.table="C6::400"
+   Result: C1:  exit_latency=1, target_residency=2 (unchanged)
+           C1E: exit_latency=10, target_residency=10 (unchanged)
+           C6:  exit_latency=100, target_residency=400
+                (only target_residency changed)
 
 Signed-off-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
-Link: https://patch.msgid.link/20251216080402.156988-2-dedekind1@gmail.com
+Link: https://patch.msgid.link/20251216080402.156988-3-dedekind1@gmail.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Stable-dep-of: 9eadbed788df ("intel_idle: Avoid using deep idle states during initialization")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/idle/intel_idle.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/idle/intel_idle.c | 169 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 169 insertions(+)
 
 diff --git a/drivers/idle/intel_idle.c b/drivers/idle/intel_idle.c
-index 9ba83954c2555..45903685fe680 100644
+index 45903685fe680..f5e301faa4761 100644
 --- a/drivers/idle/intel_idle.c
 +++ b/drivers/idle/intel_idle.c
-@@ -2485,12 +2485,12 @@ static int __init intel_idle_init(void)
- 	if (!intel_idle_cpuidle_devices)
+@@ -76,6 +76,10 @@ static unsigned int preferred_states_mask __read_mostly;
+ static bool force_irq_on __read_mostly;
+ static bool ibrs_off __read_mostly;
+ 
++/* The maximum allowed length for the 'table' module parameter  */
++#define MAX_CMDLINE_TABLE_LEN 256
++static char cmdline_table_str[MAX_CMDLINE_TABLE_LEN] __read_mostly;
++
+ static struct cpuidle_device __percpu *intel_idle_cpuidle_devices;
+ 
+ static unsigned long auto_demotion_disable_flags;
+@@ -107,6 +111,9 @@ static struct device *sysfs_root __initdata;
+ static const struct idle_cpu *icpu __initdata;
+ static struct cpuidle_state *cpuidle_state_table __initdata;
+ 
++/* C-states data from the 'intel_idle.table' cmdline parameter */
++static struct cpuidle_state cmdline_states[CPUIDLE_STATE_MAX] __initdata;
++
+ static unsigned int mwait_substates __initdata;
+ 
+ /*
+@@ -2420,6 +2427,149 @@ static void __init intel_idle_sysfs_uninit(void)
+ 	put_device(sysfs_root);
+ }
+ 
++ /**
++  * get_cmdline_field - Get the current field from a cmdline string.
++  * @args: The cmdline string to get the current field from.
++  * @field: Pointer to the current field upon return.
++  * @sep: The fields separator character.
++  *
++  * Examples:
++  *   Input: args="C1:1:1,C1E:2:10", sep=':'
++  *   Output: field="C1", return "1:1,C1E:2:10"
++  *   Input: args="C1:1:1,C1E:2:10", sep=','
++  *   Output: field="C1:1:1", return "C1E:2:10"
++  *   Ipnut: args="::", sep=':'
++  *   Output: field="", return ":"
++  *
++  * Return: The continuation of the cmdline string after the field or NULL.
++  */
++static char *get_cmdline_field(char *args, char **field, char sep)
++{
++	unsigned int i;
++
++	for (i = 0; args[i] && !isspace(args[i]); i++) {
++		if (args[i] == sep)
++			break;
++	}
++
++	*field = args;
++
++	if (args[i] != sep)
++		return NULL;
++
++	args[i] = '\0';
++	return args + i + 1;
++}
++
++/**
++ * cmdline_table_adjust - Adjust the C-states table with data from cmdline.
++ * @drv: cpuidle driver (assumed to point to intel_idle_driver).
++ *
++ * Adjust the C-states table with data from the 'intel_idle.table' module
++ * parameter (if specified).
++ */
++static void __init cmdline_table_adjust(struct cpuidle_driver *drv)
++{
++	char *args = cmdline_table_str;
++	struct cpuidle_state *state;
++	int i;
++
++	if (args[0] == '\0')
++		/* The 'intel_idle.table' module parameter was not specified */
++		return;
++
++	/* Create a copy of the C-states table */
++	for (i = 0; i < drv->state_count; i++)
++		cmdline_states[i] = drv->states[i];
++
++	/*
++	 * Adjust the C-states table copy with data from the 'intel_idle.table'
++	 * module parameter.
++	 */
++	while (args) {
++		char *fields, *name, *val;
++
++		/*
++		 * Get the next C-state definition, which is expected to be
++		 * '<name>:<latency_us>:<target_residency_us>'. Treat "empty"
++		 * fields as unchanged. For example,
++		 * '<name>::<target_residency_us>' leaves the latency unchanged.
++		 */
++		args = get_cmdline_field(args, &fields, ',');
++
++		/* name */
++		fields = get_cmdline_field(fields, &name, ':');
++		if (!fields)
++			goto error;
++
++		if (!strcmp(name, "POLL")) {
++			pr_err("Cannot adjust POLL\n");
++			continue;
++		}
++
++		/* Find the C-state by its name */
++		state = NULL;
++		for (i = 0; i < drv->state_count; i++) {
++			if (!strcmp(name, drv->states[i].name)) {
++				state = &cmdline_states[i];
++				break;
++			}
++		}
++
++		if (!state) {
++			pr_err("C-state '%s' was not found\n", name);
++			continue;
++		}
++
++		/* Latency */
++		fields = get_cmdline_field(fields, &val, ':');
++		if (!fields)
++			goto error;
++
++		if (*val) {
++			if (kstrtouint(val, 0, &state->exit_latency))
++				goto error;
++		}
++
++		/* Target residency */
++		fields = get_cmdline_field(fields, &val, ':');
++
++		if (*val) {
++			if (kstrtouint(val, 0, &state->target_residency))
++				goto error;
++		}
++
++		/*
++		 * Allow for 3 more fields, but ignore them. Helps to make
++		 * possible future extensions of the cmdline format backward
++		 * compatible.
++		 */
++		for (i = 0; fields && i < 3; i++) {
++			fields = get_cmdline_field(fields, &val, ':');
++			if (!fields)
++				break;
++		}
++
++		if (fields) {
++			pr_err("Too many fields for C-state '%s'\n", state->name);
++			goto error;
++		}
++
++		pr_info("C-state from cmdline: name=%s, latency=%u, residency=%u\n",
++			state->name, state->exit_latency, state->target_residency);
++	}
++
++	/* Copy the adjusted C-states table back */
++	for (i = 1; i < drv->state_count; i++)
++		drv->states[i] = cmdline_states[i];
++
++	pr_info("Adjusted C-states with data from 'intel_idle.table'\n");
++	return;
++
++error:
++	pr_info("Failed to adjust C-states with data from 'intel_idle.table'\n");
++}
++
+ static int __init intel_idle_init(void)
+ {
+ 	const struct x86_cpu_id *id;
+@@ -2486,6 +2636,7 @@ static int __init intel_idle_init(void)
  		return -ENOMEM;
  
-+	intel_idle_cpuidle_driver_init(&intel_idle_driver);
-+
+ 	intel_idle_cpuidle_driver_init(&intel_idle_driver);
++	cmdline_table_adjust(&intel_idle_driver);
+ 
  	retval = intel_idle_sysfs_init();
  	if (retval)
- 		pr_warn("failed to initialized sysfs");
- 
--	intel_idle_cpuidle_driver_init(&intel_idle_driver);
--
- 	retval = cpuidle_register_driver(&intel_idle_driver);
- 	if (retval) {
- 		struct cpuidle_driver *drv = cpuidle_get_driver();
+@@ -2560,3 +2711,21 @@ module_param(force_irq_on, bool, 0444);
+  */
+ module_param(ibrs_off, bool, 0444);
+ MODULE_PARM_DESC(ibrs_off, "Disable IBRS when idle");
++
++/*
++ * Define the C-states table from a user input string. Expected format is
++ * 'name:latency:residency', where:
++ * - name: The C-state name.
++ * - latency: The C-state exit latency in us.
++ * - residency: The C-state target residency in us.
++ *
++ * Multiple C-states can be defined by separating them with commas:
++ * 'name1:latency1:residency1,name2:latency2:residency2'
++ *
++ * Example: intel_idle.table=C1:1:1,C1E:5:10,C6:100:600
++ *
++ * To leave latency or residency unchanged, use an empty field, for example:
++ * 'C1:1:1,C1E::10' - leaves C1E latency unchanged.
++ */
++module_param_string(table, cmdline_table_str, MAX_CMDLINE_TABLE_LEN, 0444);
++MODULE_PARM_DESC(table, "Build the C-states table from a user input string");
 -- 
 2.53.0
 
