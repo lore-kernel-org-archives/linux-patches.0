@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18802E06E4;
-	Sat, 12 Sep 2026 12:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7D347ACFF;
+	Sat, 12 Sep 2026 12:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216161; cv=none; b=iTsgZoszsK18xf2t+L3jP9Blag74JWvYVG0b31cue1kvGZ9jLnQP/SSxfGicQ0+E285oHJomf8MRKMnxGQnWFvYKAn77f2qUA8uiVwr1d8nf3tzMxvq1JuYBlVEbh2UZHNwmBoF2n8gnmA9meyi2JLWP/qjA6EsSGLqHpAn72NM=
+	t=1789216166; cv=none; b=KdbUN/JKbX6idIOnrpMdzm/gox27/weLoSFep6PNJYv86xLKZJ8bIuscU6UUZUT3Nv8PoFhOCOZEhz45/GSqS2JOowDRxXEplJzivD4ry8xmO2WU4F9MZJjbxM4b/SzwU6Q2908eEzh453OhK+ItIR+QuMgqwM5Cw+A8bW04jT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216161; c=relaxed/simple;
-	bh=lTr6WqJBUQYWoPijHATEK4nWHNPtGmlBKYb39ye6IVU=;
+	s=arc-20240116; t=1789216166; c=relaxed/simple;
+	bh=MFko6e0lgCplHtthagxxH/Feqkrn0BfHdD0xdm/XNwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bg0hixd23taji8lSlNFcqIMcgeGppxLx+EXiBikNFA+QvfPwO6O85lXFGLPhQ6oLWStfX7JJxNhOFLP8tXnzsN57luT/Ng2j3MPJr59hp0bT4BGBoyo4CxPEcAwNg7ihyW3hGWBDceX3xPdZskfde+tECKD9vpSPp1Yp2BrfnGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pSPPeX1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Icflrzx0LkSuIim6LSvXNdClg2RhI9rU3ataI/0oMy9tssptpyWXKmDFbc27e/skePhMvMzDQCa3AUq7rSZbhLV2Z8Hb6/dnKuYVoKOjAkfInzph4+rYKQBpdniT51atmbFvg/t6hpRqgoG+XMx1mbLxwHwKTwaKN+s7fp6YHaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mCyqa6JW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pSPPeX1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 004C31F000FF;
-	Sat, 12 Sep 2026 12:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mCyqa6JW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B8A1F000FF;
+	Sat, 12 Sep 2026 12:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216159;
-	bh=Qv5rgaQPmROgcz0oxzIsYeDVUIY8UYdiImR2n0cl3hY=;
+	s=korg; t=1789216165;
+	bh=gGAq1zdTCl9ani0UJEZK3kt6I0Oa1kKAAlwn3Wkfrzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0pSPPeX12xBA3EBXx6BjPhqQMPnW2a+51oYwapTFNQo3Z02x8JG8Xi6/c6fmrNdiK
-	 OwcUtvlYJnKSeaF9FGG9ZwlAljsgQFruiC+vUCygVP7VrjeZj3RLmHrkRPdNEgX/v1
-	 TUh+CmRfGeXMmisgmIsA9gRXoP4cjKpgVO195EMY=
+	b=mCyqa6JWQ3KhS9kjL2ejQSOus2T4wF0o1Iyvdg1JeP4RMPNNVxAv3unD6QpOhfe8o
+	 bmgoWXFnKemQPxfLB2wVDRablsdGcZLgUgEdMx2qqmUWARD8E5LYUbjFP45MmnEMf6
+	 j0FYvHiAVx/Owd4+zG8b83kiZSJ3oIHYMdsbXRmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Wu <weiming3@asu.edu>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0653/1376] cpufreq/amd-pstate: Store the boost numerator as highest perf again
-Date: Sat, 12 Sep 2026 08:51:19 +0200
-Message-ID: <20260912065622.097136645@linuxfoundation.org>
+Subject: [PATCH 6.12 0680/1376] fs/ntfs3: fix out-of-bounds read of INDEX_ROOT in reparse/objid init
+Date: Sat, 12 Sep 2026 08:51:46 +0200
+Message-ID: <20260912065622.702412649@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,115 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Weiming Wu <weiming3@asu.edu>
 
-[ Upstream commit 50a062a7620051c09adacd6d140ebd56881a333b ]
+[ Upstream commit 2064bc663f89e61b8681c1fb9d1ce445de72063d ]
 
-commit ad4caad58d91d ("cpufreq: amd-pstate: Merge
-amd_pstate_highest_perf_set() into amd_get_boost_ratio_numerator()")
-changed the semantics for highest perf and commit 18d9b52271213
-("cpufreq/amd-pstate: Use nominal perf for limits when boost is disabled")
-worked around those semantic changes.
+ntfs_reparse_init() and ntfs_objid_init() parse the index root of the
+$Extend/$Reparse and $Extend/$ObjId metafiles (the INDEX_ROOT attributes
+named $R and $O). They read its type and rule fields through
+resident_data(), which does not check that the resident attribute is
+large enough to hold them.
 
-This however is a confusing result and furthermore makes it awkward to
-change frequency limits and boost due to the scaling differences. Restore
-the boost numerator to highest perf again.
+mi_enum_attr() accepts a resident attribute with data_off == asize and
+data_size == 0. For such an attribute placed last in its MFT record,
+resident_data() returns a pointer to the end of the record_size buffer,
+so reading root->type / root->rule reads past the allocation.
 
-Suggested-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Fixes: ad4caad58d91 ("cpufreq: amd-pstate: Merge amd_pstate_highest_perf_set() into amd_get_boost_ratio_numerator()")
-Link: https://lore.kernel.org/r/20241209185248.16301-2-mario.limonciello@amd.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Stable-dep-of: 9dfd13f80c85 ("cpufreq/amd-pstate: Toggle auto_sel in active mode on shared memory systems")
+Use resident_data_ex(attr, sizeof(struct INDEX_ROOT)) and bail out when
+it returns NULL, as ntfs_security_init() already does for $SDH / $SII.
+
+The attribute is only parsed while mounting a crafted image, so this
+needs CAP_SYS_ADMIN.
+
+ BUG: KASAN: slab-out-of-bounds in ntfs_reparse_init (fs/ntfs3/fsntfs.c:2306)
+ Read of size 4 at addr ffff88801219dc00 by task mount
+  ntfs_reparse_init (fs/ntfs3/fsntfs.c:2306)
+  ntfs_fill_super (fs/ntfs3/super.c:1604)
+  get_tree_bdev_flags (fs/super.c:1703)
+  vfs_get_tree (fs/super.c:1758)
+  path_mount (fs/namespace.c:4131)
+  __x64_sys_mount (fs/namespace.c:4360)
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Wu <weiming3@asu.edu>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/pm/amd-pstate.rst |  4 +---
- drivers/cpufreq/amd-pstate.c                | 25 ++++++++++++---------
- 2 files changed, 16 insertions(+), 13 deletions(-)
+ fs/ntfs3/fsntfs.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/admin-guide/pm/amd-pstate.rst b/Documentation/admin-guide/pm/amd-pstate.rst
-index 210a808b74ec2..412423c54f258 100644
---- a/Documentation/admin-guide/pm/amd-pstate.rst
-+++ b/Documentation/admin-guide/pm/amd-pstate.rst
-@@ -251,9 +251,7 @@ performance supported in `AMD CPPC Performance Capability <perf_cap_>`_).
- In some ASICs, the highest CPPC performance is not the one in the ``_CPC``
- table, so we need to expose it to sysfs. If boost is not active, but
- still supported, this maximum frequency will be larger than the one in
--``cpuinfo``. On systems that support preferred core, the driver will have
--different values for some cores than others and this will reflect the values
--advertised by the platform at bootup.
-+``cpuinfo``.
- This attribute is read-only.
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index 5972f160e566e..170836749de68 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -2317,8 +2317,8 @@ int ntfs_reparse_init(struct ntfs_sb_info *sbi)
+ 		goto out;
+ 	}
  
- ``amd_pstate_lowest_nonlinear_freq``
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index c0e073b0425ec..de687d073b7b2 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -368,15 +368,19 @@ static inline int amd_pstate_enable(bool enable)
+-	root_r = resident_data(attr);
+-	if (root_r->type != ATTR_ZERO ||
++	root_r = resident_data_ex(attr, sizeof(struct INDEX_ROOT));
++	if (!root_r || root_r->type != ATTR_ZERO ||
+ 	    root_r->rule != NTFS_COLLATION_TYPE_UINTS) {
+ 		err = -EINVAL;
+ 		goto out;
+@@ -2355,8 +2355,8 @@ int ntfs_objid_init(struct ntfs_sb_info *sbi)
+ 		goto out;
+ 	}
  
- static int pstate_init_perf(struct amd_cpudata *cpudata)
- {
--	u64 cap1;
-+	u64 cap1, numerator;
- 
- 	int ret = rdmsrl_safe_on_cpu(cpudata->cpu, MSR_AMD_CPPC_CAP1,
- 				     &cap1);
- 	if (ret)
- 		return ret;
- 
--	WRITE_ONCE(cpudata->highest_perf, AMD_CPPC_HIGHEST_PERF(cap1));
--	WRITE_ONCE(cpudata->max_limit_perf, AMD_CPPC_HIGHEST_PERF(cap1));
-+	ret = amd_get_boost_ratio_numerator(cpudata->cpu, &numerator);
-+	if (ret)
-+		return ret;
-+
-+	WRITE_ONCE(cpudata->highest_perf, numerator);
-+	WRITE_ONCE(cpudata->max_limit_perf, numerator);
- 	WRITE_ONCE(cpudata->nominal_perf, AMD_CPPC_NOMINAL_PERF(cap1));
- 	WRITE_ONCE(cpudata->lowest_nonlinear_perf, AMD_CPPC_LOWNONLIN_PERF(cap1));
- 	WRITE_ONCE(cpudata->lowest_perf, AMD_CPPC_LOWEST_PERF(cap1));
-@@ -388,13 +392,18 @@ static int pstate_init_perf(struct amd_cpudata *cpudata)
- static int cppc_init_perf(struct amd_cpudata *cpudata)
- {
- 	struct cppc_perf_caps cppc_perf;
-+	u64 numerator;
- 
- 	int ret = cppc_get_perf_caps(cpudata->cpu, &cppc_perf);
- 	if (ret)
- 		return ret;
- 
--	WRITE_ONCE(cpudata->highest_perf, cppc_perf.highest_perf);
--	WRITE_ONCE(cpudata->max_limit_perf, cppc_perf.highest_perf);
-+	ret = amd_get_boost_ratio_numerator(cpudata->cpu, &numerator);
-+	if (ret)
-+		return ret;
-+
-+	WRITE_ONCE(cpudata->highest_perf, numerator);
-+	WRITE_ONCE(cpudata->max_limit_perf, numerator);
- 	WRITE_ONCE(cpudata->nominal_perf, cppc_perf.nominal_perf);
- 	WRITE_ONCE(cpudata->lowest_nonlinear_perf,
- 		   cppc_perf.lowest_nonlinear_perf);
-@@ -867,7 +876,6 @@ static int amd_pstate_init_freq(struct amd_cpudata *cpudata)
- {
- 	int ret;
- 	u32 min_freq, max_freq;
--	u64 numerator;
- 	u32 nominal_perf, nominal_freq;
- 	u32 lowest_nonlinear_perf, lowest_nonlinear_freq;
- 	u32 boost_ratio, lowest_nonlinear_ratio;
-@@ -889,10 +897,7 @@ static int amd_pstate_init_freq(struct amd_cpudata *cpudata)
- 
- 	nominal_perf = READ_ONCE(cpudata->nominal_perf);
- 
--	ret = amd_get_boost_ratio_numerator(cpudata->cpu, &numerator);
--	if (ret)
--		return ret;
--	boost_ratio = div_u64(numerator << SCHED_CAPACITY_SHIFT, nominal_perf);
-+	boost_ratio = div_u64(cpudata->highest_perf << SCHED_CAPACITY_SHIFT, nominal_perf);
- 	max_freq = (nominal_freq * boost_ratio >> SCHED_CAPACITY_SHIFT) * 1000;
- 
- 	lowest_nonlinear_perf = READ_ONCE(cpudata->lowest_nonlinear_perf);
+-	root = resident_data(attr);
+-	if (root->type != ATTR_ZERO ||
++	root = resident_data_ex(attr, sizeof(struct INDEX_ROOT));
++	if (!root || root->type != ATTR_ZERO ||
+ 	    root->rule != NTFS_COLLATION_TYPE_UINTS) {
+ 		err = -EINVAL;
+ 		goto out;
 -- 
 2.53.0
 
