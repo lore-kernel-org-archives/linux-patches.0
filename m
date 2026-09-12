@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC5047045A;
-	Sat, 12 Sep 2026 11:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9028247ACE7;
+	Sat, 12 Sep 2026 11:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214046; cv=none; b=tnR8Z1QqQqWxwDKJjHrqK3/irN2EEQ3pi/YGLL9pUSacYv6GF/kA/pAbfoqYiO8CGXCBicafuSh3iDHEYBa35eGFz3ztEBfdCs3nKeSG+3WKLjd0gMjYb75uQMVb8lYqgooByzF7UsTcQqb8H8xu0dldL5J+IoVdFhrMsvPo7LE=
+	t=1789214050; cv=none; b=X9qxFyTUN1RZljpVXOIzi89vaUiwyRhYvNI5ed4i+3XH8ql+6sLjK7tjCODZuAjJUO1QriwlpFa90Zyrh0kFLlRUgITHEBDDmlWOhhk3OtBkEBFSRWhMtEWxM/DPTEraG767hPaRidU0FcnmghyF+DBHff+bO5S7YQtuRyyna7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214046; c=relaxed/simple;
-	bh=innd4M09cfGFUKIAE4mWvAxPlOa/2Sjv178QGJxnYOo=;
+	s=arc-20240116; t=1789214050; c=relaxed/simple;
+	bh=K+m2mOVNFndVIObtTdu/Ybtjv53PPCjlTnLKGk1Tz8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kwXYOphe4Aq4qMdhKTSDgNbVWGAHuc8qGaL9NlmuT9dXQI5iCxGkYzHo7yXjgYePxEw4hoz6WjmS3zZUQPssu+BUv/fr6tiYb+wgySlANvHO6ZmDiTPa/mzVOKyDp/x7U+pT9Ju6SnA0q+QLQEicANwDx+aUNqMkI6ygU6+rukU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNAQjXA7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tsyUpNQP3+AMF1qWowGmNKyDFTyunTjyBB9nt7CXXPVzuNQZ6YCo8IvBUPThAa8zb4G6txzh2jNEGjsJcT66fdGyGg2Sk9VkOLmThN5YiNxy9slBpDKWa2xjHIpl5ppI1CFScv62/5GqIhDQjBI1AlHod1PiOLmFQWBFbk+ycMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EAVGh8iC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNAQjXA7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966181F0089A;
-	Sat, 12 Sep 2026 11:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EAVGh8iC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6991F000FF;
+	Sat, 12 Sep 2026 11:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214040;
-	bh=XgwzhQlov37FPxyp0+Ni27eJ+H04LF6/zXwaTfrtOOQ=;
+	s=korg; t=1789214045;
+	bh=zj5H+y0np4/LvNkrO0BF37HNXHKZBiJG3t2UtmKDYIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VNAQjXA7tdrD47Rhn0dyUlskAnDsUoEcJkah20R/buJQ2TfOMhB5T32zmqgRWNhXq
-	 oUwUl7nx1GdThgJip0SOLLqaXBYyaGKNsTyHYTeSWJsdz99gP1Xdaf7FCVaTo+2Wgp
-	 MGVbTn/iT2hWrM6F6W3RLwMxUO2v27MYzvAoGY8o=
+	b=EAVGh8iC2ih0Vhul4ZBQZF/k9deLcOjtVcVobcY0yJb3+VRXfZHpX+UYpv0uGCqVj
+	 Mzk3CVOS5PgsZgfVxKPR+g3qeSrt3VfMyBO3f/CZN/LV52xkLR07UkLAX68XBpWfIK
+	 3vTo8QaQE/CQ/9/PWABxhAgowaP5J2WAZExgnqtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.12 0246/1376] scsi: qla2xxx: Zero-init bsg stack buffers to avoid info leak
-Date: Sat, 12 Sep 2026 08:44:32 +0200
-Message-ID: <20260912065613.023901067@linuxfoundation.org>
+Subject: [PATCH 6.12 0247/1376] scsi: qla2xxx: Skip NVMe LS reject IOCB when FW not started
+Date: Sat, 12 Sep 2026 08:44:33 +0200
+Message-ID: <20260912065613.045088369@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,81 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-commit b93d3bb3afe1b44489927de1eb4e66e8536a5935 upstream.
+commit f7e46ebffc5781aab3f1f5a5d4350addbb5833f4 upstream.
 
-Several bsg handlers stage their request/reply in an uninitialized 256-byte
-on-stack buffer (uint8_t bsg[DMA_POOL_SIZE]) and fill it via
-sg_copy_to_buffer(), which only copies as many bytes as the user-supplied
-request payload. When the request is shorter than the structure, the
-remainder of the buffer is left holding stale stack data.
+qla_nvme_xmt_ls_rsp() bails out to the out: label when firmware is not
+started (!ha->flags.fw_started), but the out: path unconditionally calls
+qla_nvme_ls_reject_iocb(), which ends in qla2x00_start_iocbs() and an
+unconditional doorbell write to the request queue in-pointer register.
+This rings the firmware doorbell and queues an IOCB that stopped or
+resetting firmware cannot consume, and touches MMIO during the reset/EEH
+window where fw_started is also clear.
 
-qla2x00_read_fru_status() and qla2x00_read_i2c() then copy the full
-structure back to the reply payload with sg_copy_from_buffer(), leaking the
-uninitialized stack bytes to user space. The write/update paths do not copy
-the buffer back, but can feed uninitialized fields to the device.
+Only emit the LS reject IOCB (and ring the doorbell) when fw_started is
+set; otherwise just clean up and return. The post-allocation failure
+cases (SRB alloc / qla2x00_start_sp() failure) run with firmware started
+and still send the reject. Apply the same guard to the reject emission
+in qla2xxx_process_purls_pkt().
 
-Zero the stack buffer at declaration in all five handlers, mirroring the
-heap kzalloc() approach, so short requests can no longer expose stale
-memory.
-
-Fixes: 697a4bc69159 ("[SCSI] qla2xxx: Provide method for updating I2C attached VPD.")
-Fixes: 9ebb5d9c69f1 ("[SCSI] qla2xxx: Add I2C BSG interface.")
+Fixes: 875386b98857 ("scsi: qla2xxx: Add Unsolicited LS Request and Response Support for NVMe")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-30-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-26-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/scsi/qla2xxx/qla_nvme.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -1560,7 +1560,7 @@ qla2x00_update_fru_versions(struct bsg_j
- 	scsi_qla_host_t *vha = shost_priv(host);
- 	struct qla_hw_data *ha = vha->hw;
- 	int rval = 0;
--	uint8_t bsg[DMA_POOL_SIZE];
-+	uint8_t bsg[DMA_POOL_SIZE] = {};
- 	struct qla_image_version_list *list = (void *)bsg;
- 	struct qla_image_version *image;
- 	uint32_t count;
-@@ -1620,7 +1620,7 @@ qla2x00_read_fru_status(struct bsg_job *
- 	scsi_qla_host_t *vha = shost_priv(host);
- 	struct qla_hw_data *ha = vha->hw;
- 	int rval = 0;
--	uint8_t bsg[DMA_POOL_SIZE];
-+	uint8_t bsg[DMA_POOL_SIZE] = {};
- 	struct qla_status_reg *sr = (void *)bsg;
- 	dma_addr_t sfp_dma;
- 	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
-@@ -1671,7 +1671,7 @@ qla2x00_write_fru_status(struct bsg_job
- 	scsi_qla_host_t *vha = shost_priv(host);
- 	struct qla_hw_data *ha = vha->hw;
- 	int rval = 0;
--	uint8_t bsg[DMA_POOL_SIZE];
-+	uint8_t bsg[DMA_POOL_SIZE] = {};
- 	struct qla_status_reg *sr = (void *)bsg;
- 	dma_addr_t sfp_dma;
- 	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
-@@ -1718,7 +1718,7 @@ qla2x00_write_i2c(struct bsg_job *bsg_jo
- 	scsi_qla_host_t *vha = shost_priv(host);
- 	struct qla_hw_data *ha = vha->hw;
- 	int rval = 0;
--	uint8_t bsg[DMA_POOL_SIZE];
-+	uint8_t bsg[DMA_POOL_SIZE] = {};
- 	struct qla_i2c_access *i2c = (void *)bsg;
- 	dma_addr_t sfp_dma;
- 	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
-@@ -1770,7 +1770,7 @@ qla2x00_read_i2c(struct bsg_job *bsg_job
- 	scsi_qla_host_t *vha = shost_priv(host);
- 	struct qla_hw_data *ha = vha->hw;
- 	int rval = 0;
--	uint8_t bsg[DMA_POOL_SIZE];
-+	uint8_t bsg[DMA_POOL_SIZE] = {};
- 	struct qla_i2c_access *i2c = (void *)bsg;
- 	dma_addr_t sfp_dma;
- 	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
+--- a/drivers/scsi/qla2xxx/qla_nvme.c
++++ b/drivers/scsi/qla2xxx/qla_nvme.c
+@@ -441,9 +441,11 @@ out:
+ 	a.vp_idx = vha->vp_idx;
+ 	a.nport_handle = uctx->nport_handle;
+ 	a.xchg_address = uctx->exchange_address;
+-	spin_lock_irqsave(ha->base_qpair->qp_lock_ptr, flags);
+-	qla_nvme_ls_reject_iocb(vha, ha->base_qpair, &a, true);
+-	spin_unlock_irqrestore(ha->base_qpair->qp_lock_ptr, flags);
++	if (ha->flags.fw_started) {
++		spin_lock_irqsave(ha->base_qpair->qp_lock_ptr, flags);
++		qla_nvme_ls_reject_iocb(vha, ha->base_qpair, &a, true);
++		spin_unlock_irqrestore(ha->base_qpair->qp_lock_ptr, flags);
++	}
+ 	kfree(uctx);
+ 	return rval;
+ }
+@@ -1205,9 +1207,14 @@ qla2xxx_process_purls_pkt(struct scsi_ql
+ 		a.vp_idx = vha->vp_idx;
+ 		a.nport_handle = uctx->nport_handle;
+ 		a.xchg_address = uctx->exchange_address;
+-		spin_lock_irqsave(vha->hw->base_qpair->qp_lock_ptr, flags);
+-		qla_nvme_ls_reject_iocb(vha, vha->hw->base_qpair, &a, true);
+-		spin_unlock_irqrestore(vha->hw->base_qpair->qp_lock_ptr, flags);
++		if (vha->hw->flags.fw_started) {
++			spin_lock_irqsave(vha->hw->base_qpair->qp_lock_ptr,
++					  flags);
++			qla_nvme_ls_reject_iocb(vha, vha->hw->base_qpair, &a,
++						true);
++			spin_unlock_irqrestore(vha->hw->base_qpair->qp_lock_ptr,
++					       flags);
++		}
+ 		list_del(&uctx->elem);
+ 		kfree(uctx);
+ 	}
 
 
