@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7833803CF;
-	Sat, 12 Sep 2026 07:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2073B3803CF;
+	Sat, 12 Sep 2026 07:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197901; cv=none; b=IQ14R9fTN54SnxOmuIdZgzOdi+e1BrZ6ZOyALAwhhkPu2SKQjxp68eTCrLWPL/qfFDeoZqSbEwGaJMgbhe2/71qrIIv1rjBwPyHaCy/hflts+NG/wpRcRjdFIq+PachviqB/p+hDH1BiTTa7QG69ItzJn3uubg8ZHpyIqHns11Q=
+	t=1789197906; cv=none; b=WYVzvmNy7lOEm2YAB3s2wToT1W2ZrH0KIHOQ/pUIXP67WVHorJJ3DEzFHfaO1b4fZU5OYz87YTCdmA3nHhWAVpdFbPy8jHfMQA3vAzYblu740mBsKKIFH8p3kNnRkUhcqFhTb4PivIrA4i+Y9JYXi1tKaoiYZLtvt/TAWV00Lvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197901; c=relaxed/simple;
-	bh=m1LA2u4GKNJjc69OyX1eGQYxhUGPtTPUsOCI4la0ixA=;
+	s=arc-20240116; t=1789197906; c=relaxed/simple;
+	bh=cefdChgu+Ipn08cN0wlvJTq9jC00SFZQE0m8JwGeNow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NFHKpqFone62Ey38YoDuH9yEbSLx/YjMTRpuPSiZtM956w3WMDzMqsjdu2++bGqQ8IjeGB9cqiJfQ/bACWTXiU5CJToClRxkvVAzxjKPRCQuESwG84NWkyCDr/oZkAGSprT/xZTY/RL3McQjPYPn7c6GQekCDpvLnf/pXcafda0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vydlSwLA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iglWA5A9qQh58AdmDNF39bbN0N8rS/toEhRuz95m/cDYH5gwQaHlBk+BcZnjDWiWiwizrancNK5kyCOd61HqM2kHASt6h3IIGG1qNWFLsTMf8AfXqzaD4byK8V/HWdXQuO4jt/833tBQAb1rIGTRFyA1TJ6eqYlIFZxN2t19fWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LaQFVoy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vydlSwLA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BEC1F00893;
-	Sat, 12 Sep 2026 07:24:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LaQFVoy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E719E1F00893;
+	Sat, 12 Sep 2026 07:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197899;
-	bh=IBfKbnZTxdAXmKZi95XCCqnVu33e5zzQNs941Fve/KY=;
+	s=korg; t=1789197905;
+	bh=q8hLx423S+fZvaQrlZlhs73jv131dEyzi1eu+gf3ia0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vydlSwLA0w+5ucM7+X724mIaet1UDL0DiU7T++nhII8TheYjOhOJ9BfGgKADbHaP+
-	 MovS6FbVHvngqoBcyAt6VgqgIFNcDB3WRpvbsy8tO/C171tiOVrNB7GhGfNzQ4ksyp
-	 iXBzbEbhWqWZzo//55H5PKeuLUF0g+KdFJH+l9Zo=
+	b=0LaQFVoyd6eZtY1QVel6udbMyv2IGLw+kx5Cw4WT75btgGbFqCNPQia8xNdMhHjUz
+	 sCfGKykze67k3gZ0MjJAMi4JFiAEwGMHzcNszCa+g/eerPZIbBzHj82F/07k9+gVcD
+	 MAS7S2zCysp2kxZkQBgFHYPC3Ye57sxhp3Sv32XU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Dudar <main.kalliope@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Amery Hung <ameryhung@gmail.com>,
+	Vidhu Sarwal <vidhu.linux@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0268/1815] bpf: Reject writes through untrusted BTF pointers
-Date: Sat, 12 Sep 2026 08:33:38 +0200
-Message-ID: <20260912065655.261370239@linuxfoundation.org>
+Subject: [PATCH 7.2 0269/1815] staging: media: ipu7: fix pm_runtime refcount leak in ipu7_init_fw_code_region_by_sys()
+Date: Sat, 12 Sep 2026 08:33:39 +0200
+Message-ID: <20260912065655.285612926@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,55 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Dudar <main.kalliope@gmail.com>
+From: Vidhu Sarwal <vidhu.linux@gmail.com>
 
-[ Upstream commit ac65c710cc643cbc52b899627577357867249530 ]
+[ Upstream commit 843644e1c3347670498d247d7cd20dff1569181c ]
 
-check_ptr_to_btf_access() lets program-type btf_struct_access callbacks
-validate writes before the default BTF access path rejects non-read
-accesses. That bypasses the read-only policy for untrusted BTF pointers
-created by helpers such as bpf_rdonly_cast().
+ipu7_init_fw_code_region_by_sys() calls pm_runtime_get_sync() before
+accessing the firmware code region. If resuming the device fails,
+pm_runtime_get_sync() leaves the runtime PM usage count incremented,
+but the error path returns without dropping the reference.
 
-Reject non-read accesses through PTR_UNTRUSTED BTF pointers at the
-common entry point, before the callback branch to handle all cases.
+Use pm_runtime_resume_and_get() instead, which balances the usage count
+automatically on failure and avoids the leak.
 
-Fixes: 282de143ead9 ("bpf: Introduce allocated objects support")
-Signed-off-by: Nicholas Dudar <main.kalliope@gmail.com>
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Reviewed-by: Amery Hung <ameryhung@gmail.com>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+The ipu6 driver uses pm_runtime_resume_and_get() in the equivalent
+location.
+
+Fixes: b7fe4c0019b1 ("media: staging/ipu7: add Intel IPU7 PCI device driver")
+Signed-off-by: Vidhu Sarwal <vidhu.linux@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/staging/media/ipu7/ipu7.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 4e8b653fb34b9..6f78dd4043e54 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -5790,6 +5790,11 @@ static int check_ptr_to_btf_access(struct bpf_verifier_env *env,
- 		return -EACCES;
+diff --git a/drivers/staging/media/ipu7/ipu7.c b/drivers/staging/media/ipu7/ipu7.c
+index 310e3f24e571f..056af3a075075 100644
+--- a/drivers/staging/media/ipu7/ipu7.c
++++ b/drivers/staging/media/ipu7/ipu7.c
+@@ -2343,7 +2343,7 @@ static int ipu7_init_fw_code_region_by_sys(struct ipu7_bus_device *sys,
+ 		return ret;
  	}
  
-+	if (atype != BPF_READ && (type_flag(reg->type) & PTR_UNTRUSTED)) {
-+		verbose(env, "only read is supported\n");
-+		return -EACCES;
-+	}
-+
- 	if (env->ops->btf_struct_access && !type_is_alloc(reg->type) && atype == BPF_WRITE) {
- 		if (!btf_is_kernel(reg->btf)) {
- 			verifier_bug(env, "reg->btf must be kernel btf");
-@@ -5802,8 +5807,7 @@ static int check_ptr_to_btf_access(struct bpf_verifier_env *env,
- 				reg_arg_name(env, argno), tname, off, size);
- 	} else {
- 		/* Writes are permitted with default btf_struct_access for
--		 * program allocated objects (which always have id > 0),
--		 * but not for untrusted PTR_TO_BTF_ID | MEM_ALLOC.
-+		 * program allocated objects (which always have id > 0).
- 		 */
- 		if (atype != BPF_READ && !type_is_ptr_alloc_obj(reg->type)) {
- 			verbose(env, "only read is supported\n");
+-	ret = pm_runtime_get_sync(dev);
++	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to get runtime PM\n");
+ 		return ret;
 -- 
 2.53.0
 
