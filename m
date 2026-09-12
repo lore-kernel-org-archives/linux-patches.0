@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B68741D648;
-	Sat, 12 Sep 2026 08:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E686F13CF82;
+	Sat, 12 Sep 2026 08:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202658; cv=none; b=kacyjhkTnT/0GgKCXa3UCSpfhMIJzhIxpAsWgVvexv4WtwqQtXk1+w+xqxNScgBjcvDTySWpL6YmvgHoTOy/WrkkYBsXO/fz/tUie/4fZasqZq9D0Ld05LsmXmnuV+VypszJs4IpwltrdweTAo8YrzN1nVEeStIxPNQyPQYhsys=
+	t=1789202663; cv=none; b=kZpbs1KvsL7aUn6xzS9GG2s+5j0WVBCQoII3//S598F7NbKLqckdOE3Sd9FFOkedJ1aWgr/cyCekb09L4tauOYqcHiAop7fcjAGy+Kg40PkNt5zv5VowFJ1mXONI5gLy2jNpfzpI4lxDa6SovYaHMsg5MIUWPgqotkhHpg/ns8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202658; c=relaxed/simple;
-	bh=N8Er14r0Nn/AzuMRetL3W5tCAk48OOBWoaNUHjllyQ8=;
+	s=arc-20240116; t=1789202663; c=relaxed/simple;
+	bh=9dSbg0JzMcoSjHpmzZue/X76ZZXtwaVP8eD6YB6zl4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B4NxRURsPP9uLiUpOOQnebQ4exEgj6lsYhcjjMjmdvtqGmOwRFYa3L17Fou6O06li35a3h2yv1jPBZU3Uv+5CCcnBmXDEISe8HpD2VLW61qAUhGO7IZU6FMRI2/TJ0ulPZ3C7h5psc1XzGE9qb45/iXNI3L1YAfPYS4EI0AP/2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTm8yYtG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rC5fCjCgf4c8kb57YQ/9erWD5ps0GK4Mz8ggXGWhVDGmxovxL4ZHz6dLKnnoeOMxzCuwxrbdsncMG1sg+k2TIHlDsmHasunPJCDy4pL8xLZQTJAiMgUTDGGKuc1D4mOZw1gQj/4iLuBU5sX7KgLPUZpUk+uFXFEEBW1fASLCOUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sUwArn6m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTm8yYtG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24EF31F00893;
-	Sat, 12 Sep 2026 08:44:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sUwArn6m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 295311F000FF;
+	Sat, 12 Sep 2026 08:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202657;
-	bh=GhHZaivg5mP0QQP+WgZI1Ss6Nja/lD0Eoojy13J3WSQ=;
+	s=korg; t=1789202661;
+	bh=ZyDAR1kAYa9CEcCtYQvlD1QIW8Av0ZXL0+pLUzlybVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eTm8yYtGt9NGFOnA722O6dvqPaLkNpLOn+PpVpm1al3xWerD5W/wwXp5XIpfE8HEs
-	 u1Cvf6EuJsqvintxP7HrQc141ASN+UmAo0TLLaBKhWQpGeGS4Hx8RquF8sLtm0jKtI
-	 039Nm3bV0tm8V1X05Qh6lQKl9zLPBcoXSQdqUkkA=
+	b=sUwArn6m0QjFptxr0twkQbKK9Wczcq6qstCq4Wo3EfZrMlwzTMIgGlF1yRCmv3LXL
+	 4DyewNuMmYRGVUHlLzTMwAovY7b9laluS/n3gXjjhwnMaoXS5gLAcdOzWPwn8q/1na
+	 bwg410B5rIvG+YAVqw648NU1ff6OX+RCWyHtzpFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9c40ad7c6ed7165e46e8@syzkaller.appspotmail.com,
-	Pauli Virtanen <pav@iki.fi>,
+	Zijun Hu <zijun.hu@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1249/1815] Bluetooth: L2CAP: use proto_lock for l2cap_data to fix l2cap_disconn_ind
-Date: Sat, 12 Sep 2026 08:49:59 +0200
-Message-ID: <20260912065718.336053789@linuxfoundation.org>
+Subject: [PATCH 7.2 1250/1815] Bluetooth: btintel: Fix diagnostics event detection
+Date: Sat, 12 Sep 2026 08:50:00 +0200
+Message-ID: <20260912065718.358570967@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,90 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit 2b66c83ff1751d6bd3201b3017206262ab46dc05 ]
+[ Upstream commit ad0e7ac7da9a9a0095570bd6add3e27f259de104 ]
 
-hci_conn::l2cap_data is accessed without locks in l2cap_disconn_ind via
-hci_conn_timeout (disc_work) -> hci_proto_disconn_ind ->
-l2cap_disconn_ind.  This is UAF if the l2cap_conn is deleted
-concurrently.
+For a diagnostics VSE, diagnostics_hdr[] sits at the start of the event
+payload, skb->data[2], but btintel_recv_event() wrongly guards its
+memcmp with @len, which is measured from skb->data[3] for the earlier
+INTEL_BOOTLOADER check.
 
-disc_work is disabled sync in hci_conn_del(), so we cannot take
-hci_dev_lock in disc_work.
+Fix by using (@len + 1) instead, which ==
+(skb->len - HCI_EVENT_HDR_SIZE) exactly.
 
-Fix by using proto_lock to guard l2cap_data, in addition to hdev->lock
-which is held in other access paths.
-
-Fixes: ab4eedb790ca ("Bluetooth: L2CAP: Fix corrupted list in hci_chan_del")
-Reported-by: syzbot+9c40ad7c6ed7165e46e8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9c40ad7c6ed7165e46e8
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Fixes: af395330abed ("Bluetooth: btintel: Add Intel devcoredump support")
+Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ drivers/bluetooth/btintel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 1156aba4e83c4..30d7120d3a150 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -1833,7 +1833,10 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
- 	hci_chan_del(conn->hchan);
- 	conn->hchan = NULL;
- 
-+	spin_lock(&hcon->proto_lock);
- 	hcon->l2cap_data = NULL;
-+	spin_unlock(&hcon->proto_lock);
-+
- 	mutex_unlock(&conn->lock);
- 	l2cap_conn_put(conn);
- }
-@@ -7168,8 +7171,6 @@ static struct l2cap_conn *l2cap_conn_add(struct hci_conn *hcon)
- 	}
- 
- 	kref_init(&conn->ref);
--	hcon->l2cap_data = conn;
--	conn->hcon = hci_conn_get(hcon);
- 	conn->hchan = hchan;
- 
- 	BT_DBG("hcon %p conn %p hchan %p", hcon, conn, hchan);
-@@ -7198,6 +7199,11 @@ static struct l2cap_conn *l2cap_conn_add(struct hci_conn *hcon)
- 
- 	conn->disc_reason = HCI_ERROR_REMOTE_USER_TERM;
- 
-+	spin_lock(&hcon->proto_lock);
-+	conn->hcon = hci_conn_get(hcon);
-+	hcon->l2cap_data = conn;
-+	spin_unlock(&hcon->proto_lock);
-+
- 	return conn;
- }
- 
-@@ -7582,13 +7588,18 @@ static void l2cap_connect_cfm(struct hci_conn *hcon, u8 status)
- 
- int l2cap_disconn_ind(struct hci_conn *hcon)
- {
--	struct l2cap_conn *conn = hcon->l2cap_data;
-+	struct l2cap_conn *conn;
-+	int ret = HCI_ERROR_REMOTE_USER_TERM;
- 
- 	BT_DBG("hcon %p", hcon);
- 
--	if (!conn)
--		return HCI_ERROR_REMOTE_USER_TERM;
--	return conn->disc_reason;
-+	spin_lock(&hcon->proto_lock);
-+	conn = hcon->l2cap_data;
-+	if (conn)
-+		ret = conn->disc_reason;
-+	spin_unlock(&hcon->proto_lock);
-+
-+	return ret;
- }
- 
- static void l2cap_disconn_cfm(struct hci_conn *hcon, u8 reason)
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index bf567b7c5f00b..cc2234470960a 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -3834,7 +3834,7 @@ int btintel_recv_event(struct hci_dev *hdev, struct sk_buff *skb)
+ 		/* Handle all diagnostics events separately. May still call
+ 		 * hci_recv_frame.
+ 		 */
+-		if (len >= sizeof(diagnostics_hdr) &&
++		if (len + 1 >= sizeof(diagnostics_hdr) &&
+ 		    memcmp(&skb->data[2], diagnostics_hdr,
+ 			   sizeof(diagnostics_hdr)) == 0) {
+ 			return btintel_diagnostics(hdev, skb);
 -- 
 2.53.0
 
