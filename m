@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF5B47DFB9;
-	Sat, 12 Sep 2026 13:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DDF41A508;
+	Sat, 12 Sep 2026 13:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219978; cv=none; b=na0/sHs2gUrz3D/eCc966VYcE1Zx61o/JNpEsLbx2l6etvzpIHnczs7EI33BED/9vQUs/zu1Uc+Yry0JM4gD0ZrCNyd+D9zs4BlRqj3LGEVZIJkRkYV0EXDMk0S7fh+c6j3mmp+i5+wQ2QhITQd7AZ/UUZlq3jJkcXdgqbUi6sU=
+	t=1789219983; cv=none; b=Z5QEF1Cbp72c4+NhaywJRVZy4sWozQkZBoJrI1h2Qsj3UQ8RFl8JjEYW69bV6MjlUqZBkFs7nHU+21b9eLnW1JdqCtwqHaq2yhvNO/vDnkVyL5g6SJeLK31WgQfJEYEdkQ8ncBiOD104ehJzgET8CnsdQrg2kNcNdMr6keoScb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219978; c=relaxed/simple;
-	bh=ZAzRhOht0OPFLOQrKNYIArPPwcwgiKhfqd1wrmQjjz4=;
+	s=arc-20240116; t=1789219983; c=relaxed/simple;
+	bh=iJE4VYcNV1hADfKvh1px8IWqhmMQ3B+Qs+KLAZKuDAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nFiBLgKZMvgQq1yUpz/KVJFonbhGhMOTEIaNMJPhUB0fAKo+ACcrsRxid0+BxDSDqfy+gDdtKkKF1YeDj6cff6ngovvtSIdR8k8KJgEvRJrRAK4ierYh9EHmgRsrJ2VNMTGqURJTLPdM1SQdTJ9U4RHNpYJkhCQOcPIyYQYW9Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y48l/m9E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OYJRqalUifQnRzEo/TcbNaVu8K0odEPRQMgKr38MOMAp2IH2bsqraEzbYv2F4EVuaYvYOSpKFYdnmZsdIcCUr1WAfeFyX/P7dziu4mWMcp35i/eY+bChYOTK+f15aKytJvQ2dSIAeluaWEFU+jWZvFz2qtsgaDxRjkYGSCWICbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7DYLmS1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y48l/m9E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462641F00899;
-	Sat, 12 Sep 2026 13:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7DYLmS1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322AA1F000FF;
+	Sat, 12 Sep 2026 13:33:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219977;
-	bh=AomwGiAfPfBspsql46a3BapqNlbyXUmRElWIHeT0u2o=;
+	s=korg; t=1789219982;
+	bh=8LCme8TwX/gUr9qViQQiAqMVhrr051eL2jpzciXUtBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y48l/m9E38v3Kv+oyLY9Jvdv3+BU42xvAD9Y0mbtRVR1tZ1t4VtXPj+8Ko0SoezME
-	 yQNDScuNhTe/155FKgWle9WTQoCnbKZUoFLlt2T51XssflEX4ryJ/6cbZRQDyNE3d+
-	 rvCjD//OFfAw2mJ+QeV/Xu806EAi6CzfTA9MqApI=
+	b=p7DYLmS15lblU48AYoQYRZHe250AvFN+6Pus0kmhcfR7R0MNp+fKu02FKwqOr9gBz
+	 jVekjSOu77f30+YkdhdKlDF6upBhsWQsLEDg2hBUNPhHYqJJ2Sbx7T+BGrl8Eowir7
+	 HjdHmkiknRUblXrQW/CGV8ctFh6giNxvO4t6ZBzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
+	Xu Rao <raoxu@uniontech.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.6 0084/1424] HID: picolcd: clamp eeprom debugfs read to bytes actually received
-Date: Sat, 12 Sep 2026 08:41:56 +0200
-Message-ID: <20260912065609.188539524@linuxfoundation.org>
+Subject: [PATCH 6.6 0085/1424] HID: roccat: free buffered reports when destroying device
+Date: Sat, 12 Sep 2026 08:41:57 +0200
+Message-ID: <20260912065609.210510533@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,64 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit e9c667395ac1f8024f623250b32bae4c7af9caa0 upstream.
+commit bbff0ccbff360a5498075525005f6a913239a3d7 upstream.
 
-picolcd_debug_eeprom_read() trusts resp->raw_data[2] -- a length byte
-supplied by the device in its REPORT_EE_DATA reply -- clamped only to
-the caller's read() count:
+roccat_report_event() duplicates each report with kmemdup() and stores
+the allocation in a circular-buffer slot. The allocation is released only
+when that slot is reused.
 
-	ret = resp->raw_data[2];
-	if (ret > s)
-		ret = s;
-	if (copy_to_user(u, resp->raw_data+3, ret))
+The device destruction paths free struct roccat_device without releasing
+reports still stored in cbuf[]. This makes those allocations unreachable
+and leaks up to ROCCAT_CBUF_SIZE report buffers per device.
 
-It never checks resp->raw_size, the number of bytes picolcd_raw_event()
-actually copied into the 64-byte raw_data[] of the kmalloc'd struct
-picolcd_pending. A device (or a spoofed picoLCD) returning a length byte
-of 0xff, read with a count >= 255, makes copy_to_user() read past
-raw_data[] into adjacent slab memory and return it to userspace through
-the debugfs "eeprom" file:
+Add a small destructor that frees every buffered report before freeing the
+device, and use it in both paths that can destroy a registered device.
 
-	BUG: KASAN: slab-out-of-bounds in _copy_to_user
-	Read of size 255 ... picolcd_debug_eeprom_read+0x214/0x2f0 [hid_picolcd]
-
-The debug-dump path in the same file already validates the device length
-byte against the received size before trusting it; this read does not.
-The file is created S_IRUSR (root-only) and a crafted device is needed,
-so it is neither unprivileged- nor remotely-triggerable.
-
-Clamp the copy length to resp->raw_size - 3 (the payload actually
-received, minus the 3-byte header), floored at 0 for short replies.
-
-Fixes: 9bbf2b98ba11 ("HID: add experimental access to PicoLCD device's EEPROM and FLASH")
+Fixes: 206f5f2fcb5f ("HID: roccat: propagate special events of roccat hardware to userspace")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Assisted-by: AuditCode-AI:2026.07
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-picolcd_debugfs.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/hid/hid-roccat.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/hid-picolcd_debugfs.c
-+++ b/drivers/hid/hid-picolcd_debugfs.c
-@@ -98,6 +98,15 @@ static ssize_t picolcd_debug_eeprom_read
- 		ret = resp->raw_data[2];
- 		if (ret > s)
- 			ret = s;
-+		/*
-+		 * raw_data[2] is a device-supplied length; also clamp it to
-+		 * what picolcd_raw_event() actually stored (raw_size), or a
-+		 * hostile device overruns the raw_data[] buffer.
-+		 */
-+		if (ret > resp->raw_size - 3)
-+			ret = resp->raw_size - 3;
-+		if (ret < 0)
-+			ret = 0;
- 		if (copy_to_user(u, resp->raw_data+3, ret))
- 			ret = -EFAULT;
- 		else
+--- a/drivers/hid/hid-roccat.c
++++ b/drivers/hid/hid-roccat.c
+@@ -70,6 +70,15 @@ static struct roccat_device *devices[ROC
+ /* protects modifications of devices array */
+ static DEFINE_MUTEX(devices_lock);
+ 
++static void roccat_free_device(struct roccat_device *device)
++{
++	int i;
++
++	for (i = 0; i < ROCCAT_CBUF_SIZE; i++)
++		kfree(device->cbuf[i].value);
++	kfree(device);
++}
++
+ static ssize_t roccat_read(struct file *file, char __user *buffer,
+ 		size_t count, loff_t *ppos)
+ {
+@@ -226,7 +235,7 @@ static int roccat_release(struct inode *
+ 			hid_hw_power(device->hid, PM_HINT_NORMAL);
+ 			hid_hw_close(device->hid);
+ 		} else {
+-			kfree(device);
++			roccat_free_device(device);
+ 		}
+ 	}
+ 
+@@ -374,7 +383,7 @@ void roccat_disconnect(int minor)
+ 		hid_hw_close(device->hid);
+ 		wake_up_interruptible(&device->wait);
+ 	} else {
+-		kfree(device);
++		roccat_free_device(device);
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(roccat_disconnect);
 
 
