@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0208343893;
-	Sat, 12 Sep 2026 13:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3307B33F59A;
+	Sat, 12 Sep 2026 13:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219919; cv=none; b=QeIJKYB2/h22uYxz5bOJ9sQtBpkJA8BGiy1iQIbUEUYInUZjMR0+95QV3RHjisyFLbnyTEP13Ut128ALYlDfmQQAIYPnpFTFBAW4tU9MapKdlu7IVrwd1pqzuF61Ud5g4Y3FvGvD4TbRfGT3Q/usb3Acc1EMctS913WL1QEwAfc=
+	t=1789219924; cv=none; b=sw4mZfqXQ45P/MbCNLSMaKP4CyDdle0IcT4GRBbwS6xAHQxjQGVDPu0EAozWaFhJH+MmEFQmTRVq/aZrGyY22BuisuL0u4cZz/NfMtDcoI3V14xRwsKzWXcAQya10onn8iZ3wIfLDw1I6s9MQolF/bY1udtTdM56Pwadt55APpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219919; c=relaxed/simple;
-	bh=zewbqnXP7DTeeU5RWXZUkDOIwIupC5UlP0GkBQbuYJE=;
+	s=arc-20240116; t=1789219924; c=relaxed/simple;
+	bh=rbtExssbqUml6IDKeumVN3duFeJbmOMsjmy4NZ4cMJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CXcuiZpAawFL5ULiMgIIM9HwIiBVY2Az7tKE8e4RisFwRfnsqHSOcYr2NDmaQ4SEr1fVE7QXa8ZdSfHatEQmNJ8nVY9GOv7gHkzVjhrJQWi1ByK6lJLW3pg0wYjYu+AZBSANNPVSTBkUAw9LSVnnZfG0QhDY5RN1fNFZbvk4zoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcp94mYX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L8Qg9Na48Zc0oaYHIVMEJ0IPHP9PPa9+FAY5jteiQX6aawKZipzpyqmzPKbBFmuo368CufPHB5TCWLPjN/iaXepJjIFxYqflD69ariPdYKwYcrM5P4qZIUzg+YLdu/C4hTu8PfGLNDWGANdROlyKodmSE+ekWujVbH8Fri74Oug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=clH18P12; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcp94mYX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90FC1F000FF;
-	Sat, 12 Sep 2026 13:31:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="clH18P12"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945391F000FF;
+	Sat, 12 Sep 2026 13:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219917;
-	bh=MhIZJKi8jZBIFDXtrRiCGy4FL3/fSZVJBS7PPyhAwHo=;
+	s=korg; t=1789219922;
+	bh=/jd3PTbys0ZGuJQdRMJDNej2DbplMHq2afmz3l06FR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kcp94mYXnj/Fy00w/Dx1pV8T3RIKwzhRZYZtYdWF6aj20vztZvrcVj8EHdl5NI2AS
-	 fdlcIcTEhnYfrqr84NVVQPI4JTOa9OWPyTKOaGBaNcHEyyA0Fxj/IKoprs12I2Dmkq
-	 uTe8I0VYk5fv/5U+eTP6X6YV22gc9+/2LfsfeXxY=
+	b=clH18P12c1Xas0NMsiQKppP081jw0r9aoMfNHvqronoBES9dwrYLPhsbdnk2RwJm8
+	 qy+2Bl48vGUvQA1N3kweJz5b1gEe7g3XEsu9d1mWpLRPa1MVmDt28ZwQb/Uf1RDMsr
+	 Y0GmocGixrEfd4VpNX9RH05F+JlKdWWI4uE54RAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 0028/1424] Revert "media: v4l2-dev: fix error handling in __video_register_device()"
-Date: Sat, 12 Sep 2026 08:41:00 +0200
-Message-ID: <20260912065607.935765771@linuxfoundation.org>
+	Hao-Qun Huang <alvinhuang0603@gmail.com>
+Subject: [PATCH 6.6 0029/1424] staging: greybus: hid: fix SET_REPORT return value
+Date: Sat, 12 Sep 2026 08:41:01 +0200
+Message-ID: <20260912065607.959079444@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,81 +49,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil+cisco@kernel.org>
+From: Hao-Qun Huang <alvinhuang0603@gmail.com>
 
-commit e7600f5cee5de14065f950807931d6e6d40fb2d7 upstream.
+commit 6d45195a9626d8aaaaed212c55638829a9c624a3 upstream.
 
-This reverts commit 2a934fdb01db6458288fc9386d3d8ceba6dd551a.
+__gb_hid_output_raw_report() stores the result of gb_hid_set_report()
+in ret and even adjusts it to account for the report ID byte, but then
+always returns 0.
 
-The intentions of that patch were good, but it doesn't work.
+This hides Greybus transport errors from HID_REQ_SET_REPORT callers,
+and makes hidraw report zero bytes written to user space on success,
+although hid_hw_raw_request() is expected to return the number of
+bytes transferred or a negative errno. The sibling GET_REPORT path,
+__gb_hid_get_raw_report(), already follows this convention.
 
-The idea is that if device_register fails, you have to do a put_device
-to let the ref counter release resources.
+Return ret like the other HID transport drivers do.
 
-However, the V4L2 API says that if video_register_device() fails, then
-you have to call video_device_release(), which kfree()s the video_device
-struct.
-
-But the put_device() will already have freed the struct, so you end
-up in a double-free scenario.
-
-There is not really a good way of fixing this without breaking
-video_register_device() into two parts, one that initializes everything,
-and one that does the actual device_register, and then converting all
-V4L2 drivers to this new model.
-
-That is a massive job, and it is very unlikely that device_register
-will fail.
-
-So rather than ending up in a double-free scenario, just revert this
-patch, and in that case we'll have a small memory leak. Which is a lot
-more robust.
-
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Fixes: 2a934fdb01db ("media: v4l2-dev: fix error handling in __video_register_device()")
+Fixes: 96eab779e198 ("greybus: hid: add HID class driver")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-media/20260520090624.1071139-1-lgs201920130244@gmail.com/
-Link: https://lore.kernel.org/all/2026042058-charm-storable-4ad8@gregkh/
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Hao-Qun Huang <alvinhuang0603@gmail.com>
+Link: https://patch.msgid.link/20260704081613.434445-1-alvinhuang0603@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-dev.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/staging/greybus/hid.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/v4l2-core/v4l2-dev.c
-+++ b/drivers/media/v4l2-core/v4l2-dev.c
-@@ -1033,25 +1033,25 @@ int __video_register_device(struct video
- 	vdev->dev.class = &video_class;
- 	vdev->dev.devt = MKDEV(VIDEO_MAJOR, vdev->minor);
- 	vdev->dev.parent = vdev->dev_parent;
--	vdev->dev.release = v4l2_device_release;
- 	dev_set_name(&vdev->dev, "%s%d", name_base, vdev->num);
--
--	/* Increase v4l2_device refcount */
--	v4l2_device_get(vdev->v4l2_dev);
--
- 	mutex_lock(&videodev_lock);
- 	ret = device_register(&vdev->dev);
- 	if (ret < 0) {
- 		mutex_unlock(&videodev_lock);
- 		pr_err("%s: device_register failed\n", __func__);
--		put_device(&vdev->dev);
--		return ret;
-+		goto cleanup;
- 	}
-+	/* Register the release callback that will be called when the last
-+	   reference to the device goes away. */
-+	vdev->dev.release = v4l2_device_release;
+--- a/drivers/staging/greybus/hid.c
++++ b/drivers/staging/greybus/hid.c
+@@ -256,7 +256,7 @@ static int __gb_hid_output_raw_report(st
+ 	if (report_id && ret >= 0)
+ 		ret++; /* add report_id to the number of transferred bytes */
  
- 	if (nr != -1 && nr != vdev->num && warn_if_nr_in_use)
- 		pr_warn("%s: requested %s%d, got %s\n", __func__,
- 			name_base, nr, video_device_node_name(vdev));
+-	return 0;
++	return ret;
+ }
  
-+	/* Increase v4l2_device refcount */
-+	v4l2_device_get(vdev->v4l2_dev);
-+
- 	/* Part 5: Register the entity. */
- 	ret = video_register_media_controller(vdev);
- 
+ static int gb_hid_raw_request(struct hid_device *hid, unsigned char reportnum,
 
 
