@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F257647CA67;
-	Sat, 12 Sep 2026 16:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C5747B439;
+	Sat, 12 Sep 2026 16:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229647; cv=none; b=f7R1ufDOVPJzzsPOyZykJ2o7vuOyqj276DI4iwDGQ8b379U9QwZXFdrgQIx6cK7wbAI4cchQyFCaaeLvBz41OgebqoBU8Ro9B5s9KCXB8rHqDheMyzXhbs7VcEKQkVABO7L39NKLUGJ9Sqr0kGhBSDDwbrn/Lh6ilUrI89rUjxE=
+	t=1789229651; cv=none; b=UaM1ecAf0+s7xpFN10pA6QSgQfo0dVAAyrADeJu30Tpn1x/dBWK2LuQem27rNVRtOoVRNxxmtJOX+mZS8M1DXdcaMIY584EezwkuvPRYHM/zNjUwiDAkTCpKnAzFIN0tv396jItjvMlcLdqL2mPz8m82BqwLfZebCdAtOtCTwNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229647; c=relaxed/simple;
-	bh=MJHRYmqDX/2UbCl0gRDDvmTVE7AbriCwxPOB08xj5aw=;
+	s=arc-20240116; t=1789229651; c=relaxed/simple;
+	bh=ZnkpbJu6GYqzMcSxctvjwJ7V/z+uoOhkRq7nXSwUC1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cMTWl16qz4va6RRVBMuGoJ8+nZnCTCkoKQe66uCvByVXEKZ/XaOF2FAyibp/bRaeTQZz8DmEJMuQOcMiqF7mIziQ6bAIyPjUH3SNgERwE9jb75Q963SB9jtBweiYybp9DS5r0a35PV/O0vKnF68sNH3r0xWI1IQhZyfYSHUIs6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zqz3zRjj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MHG3M835xpW2rFdJR7N/xDKlOsOCRSZQM1+PclVD4TI1OOZvDnMRWhET8/onl4tOniCWR1JMq6oFWnVMmyTs/VJtjcsT/fJ8yl5WWd+B/uuS99J4+JBYj/7/NsaM0PSSMsqBc0Rod8iAcD+5ZWYT/QoaZ4JRmJWXHs8bHomOO8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bed9V9//; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zqz3zRjj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335501F000FF;
-	Sat, 12 Sep 2026 16:14:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bed9V9//"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839181F000FF;
+	Sat, 12 Sep 2026 16:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229644;
-	bh=rF2ikyr/ij8qAJcgybnZO86+5IwWEE90U160VQUhGTA=;
+	s=korg; t=1789229649;
+	bh=aO9EDKTyGx/Vw/9STWM6x5PsDHouyHMDfapXUG7DwBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zqz3zRjjLfpA3iGHxzpoGt+LOHNLE7Rgb1ua9gnwwxvey5xS64FuC+/hIM8nYxOC/
-	 pjiee22bdzOTrgWow4cUMwY9Y2bz5QvH2emnnRsoXRER25IWTQbK5uH3IGM93iWVxK
-	 X7gHrfixIfi78I22K3zjxlaMqTR3q2D0GRwpgz6I=
+	b=bed9V9//9spCckh3gWibrCNmjWDre0VBljQUXUKF4uxZszSw7OP/lc1fZlV0JS2ET
+	 slq6cnNVirJR7Lo3K0b7tcHMnQCvUmcrcLMYZdmMPwKYCCwangrxsSnNBSfCp/iJs7
+	 wvwSWH075AMayXoNrr4Xuee6GSdffqlrdDtPvT5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Pu Lehui <pulehui@huawei.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0631/1191] gpu: host1x: Avoid stack over-read in debug output helpers
-Date: Sat, 12 Sep 2026 08:55:59 +0200
-Message-ID: <20260912065602.426400771@linuxfoundation.org>
+Subject: [PATCH 6.1 0632/1191] bpf: Sync tail_call_reachable with callee state on entry
+Date: Sat, 12 Sep 2026 08:56:00 +0200
+Message-ID: <20260912065602.449560744@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,54 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit bc17ac285fb708f22a8fa2c0ed32eceb1d37e6d6 ]
+[ Upstream commit 3513ea9dab6c1a3d2dc8e6160c41f690206948b6 ]
 
-host1x_debug_output() and host1x_debug_cont() used vsnprintf(), which
-returns the length the formatted string would have reached with an
-unbounded buffer. That return value was passed straight to o->fn as
-the number of bytes to emit.
+Currently in check_max_stack_depth_subprog, when the verifier enters a
+new callee branch, the local tail_call_reachable is not properly
+synchronized with the callee's state.
 
-This could cause a read past end of the output buffer if a call to
-host1x_debug_* produced a string longer than 256 bytes. This only
-affected the debugfs files as the printk debug sink ignores the
-number of bytes. In practice, this is very unlikely to occur.
+Consider a main prog branching into multiple subprogs:
 
-Fix by switching to vscnprintf(), which returns the number of bytes
-actually written.
+       subprog0 -> tailcall
+main <
+       subprog1 -> subprog2
 
-Fixes: 6236451d83a7 ("gpu: host1x: Add debug support")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260609-b4-host1x-small-fixes-a-v1-4-7c1131c0b3ad@nvidia.com
+When the verifier finishes checking subprog0 and backtracks to main
+prog, the local tail_call_reachable state is left as true. As it
+proceeds to subprog1, this uncleared state leaks into the new branch,
+falsely marking subprog1 and subprog2 as tailcall reachable.
+
+Fix this by explicitly syncing tail_call_reachable with the callee's
+has_tail_call state on entry. The caller's state is safely preserved and
+restored via the existing backtracking logic.
+
+Fixes: ebf7d1f508a7 ("bpf, x64: rework pro/epilogue and tailcall handling in JIT")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Link: https://patch.msgid.link/20260716120157.835937-2-pulehui@huaweicloud.com
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/debug.c | 4 ++--
+ kernel/bpf/verifier.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/host1x/debug.c b/drivers/gpu/host1x/debug.c
-index 34c2e36d09e9a..d1161c18ed199 100644
---- a/drivers/gpu/host1x/debug.c
-+++ b/drivers/gpu/host1x/debug.c
-@@ -31,7 +31,7 @@ void host1x_debug_output(struct output *o, const char *fmt, ...)
- 	int len;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 9c7384295f13d..84c5b0ed5b1ed 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -4503,8 +4503,8 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx)
+ 		i = next_insn;
+ 		idx = sidx;
  
- 	va_start(args, fmt);
--	len = vsnprintf(o->buf, sizeof(o->buf), fmt, args);
-+	len = vscnprintf(o->buf, sizeof(o->buf), fmt, args);
- 	va_end(args);
+-		if (subprog[idx].has_tail_call)
+-			tail_call_reachable = true;
++		/* sync tail_call_reachable with callee state on entry */
++		tail_call_reachable = subprog[idx].has_tail_call;
  
- 	o->fn(o->ctx, o->buf, len, false);
-@@ -43,7 +43,7 @@ void host1x_debug_cont(struct output *o, const char *fmt, ...)
- 	int len;
- 
- 	va_start(args, fmt);
--	len = vsnprintf(o->buf, sizeof(o->buf), fmt, args);
-+	len = vscnprintf(o->buf, sizeof(o->buf), fmt, args);
- 	va_end(args);
- 
- 	o->fn(o->ctx, o->buf, len, true);
+ 		frame++;
+ 		if (frame >= MAX_CALL_FRAMES) {
 -- 
 2.53.0
 
