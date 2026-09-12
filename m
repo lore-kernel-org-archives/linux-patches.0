@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577B82E7631;
-	Sat, 12 Sep 2026 13:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77604BEE22;
+	Sat, 12 Sep 2026 13:42:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220554; cv=none; b=AMiJF9qvnRWrkcUhyD6FgDRxVg4TH+0ILhLBqkbMbdFkKdy5BwTzCpbyJFToyK1rjDNZSdHUZSLthW3YqyVvIMzPa3zCdv1xG3pJM0PyLiS4dqIf10McUSFMvDMgLQjwrigTlb7cJU1NpPIiEW2fYQA/NcEnWozCM1Agj9ZebxY=
+	t=1789220559; cv=none; b=NcB05lOHPD8dTgllzYkU38iPZPiOCWDWh8sPIVG+uf+0IhtK0Ns1tg0g+X3rlmT72JIOlEe90OBQ+i2qPkSGtSKeHyYRysU3xDWNKpS4LG2TJ+yN+5Mxs5DTGRyqU2+5Gb5v80WmpjugvSCZpFBnadsy/WtXniWOqYBH2lXA4ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220554; c=relaxed/simple;
-	bh=5qChb8oeTgXaL5joYnvvYCQCg+iJUftXu7rxbAty10w=;
+	s=arc-20240116; t=1789220559; c=relaxed/simple;
+	bh=NfWwu7pU9ShSYTxmkmFIaxKkU7caPGspsK5bYr/IPkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eeZ3fb4xylyH+zxMMvh1witHYfIMghwL+gHPNC7IkK2Ot2ICkaASIdNb+qBGIkhDrGnemkJ16YT/ozgq+ed8NPGCQAx+Y6iVMuZ/dXhNng4uFWTsLpAMVcnU/2QawXIVMiGkT0w89NJDvFnWjkOnsJQGqTe9vQ9qa79w8G+lf74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgALrYT6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bG/nc2RREX24RVDgR2GghBL+f6dO2mA0Za8oAFBRB8e1e+ysSeMmUI0SlRwqXIL2CjhJXQEOD0/s9YbDWhlB9pJMjlODWE5e1LMsvNmhqNUccKVZVX5KGioceTl4JsZc+S6hMzaCQsaQSTofA53xZMTEtMgPLQ0IzoWXZmlhg58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2g2YV/xq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgALrYT6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E6C1F000FF;
-	Sat, 12 Sep 2026 13:42:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2g2YV/xq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBDE41F000FF;
+	Sat, 12 Sep 2026 13:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220553;
-	bh=QmSuR8Uualfazwy+l50OS3PIZbC0KPBMzewFQ74+BAQ=;
+	s=korg; t=1789220557;
+	bh=n7Z5DkBbSDaJS9C5nGCNc3ixgCzKa1QTFa3b4OaXX4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bgALrYT6jxReemuQK+vLe8ATYnc5BXu24s6ftUKcB2YuhF8fezFwqvGZLd1ICQW/N
-	 dS2+GfRT0r7C0mdmZtGNOLI9EmiPqH8DS0I+/qwyQVswjtlmZVY4rXw/nPNoO033Pt
-	 ZKvENKxDDtlU7OcTYXV95DBiyznfdvuOFIHfzWOg=
+	b=2g2YV/xqdgrivgPSofNyllKMBVrBkF3JvoTQuDaUVSmMrMviPyQ/9a/HN2iV5kE15
+	 tp81Jvjem+uR8jXeSYqks0/ydcYqvIEVdbhI7AdtGxg1Yoc3aefDawzQe6DpnXpnXf
+	 f/r2oBYCIUgwymNYjRoiU/ZoF6LUisjQ90YZI2uA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.6 0164/1424] wifi: ath6kl: clamp assoc request/response lengths before subtracting IE offsets
-Date: Sat, 12 Sep 2026 08:43:16 +0200
-Message-ID: <20260912065610.967317801@linuxfoundation.org>
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.6 0200/1424] nvme-tcp: reject a read that transferred too few bytes
+Date: Sat, 12 Sep 2026 08:43:52 +0200
+Message-ID: <20260912065611.771598551@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,49 +50,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit 3bbd05723d15dd06f0560bcd94fbf9a91b5f5613 upstream.
+commit 7fa3f73f6c8ddc5f0425b50fb2a626a782ef7d12 upstream.
 
-ath6kl_cfg80211_connect_event() subtracts fixed IE offsets from
-assoc_req_len (-= 4) and assoc_resp_len (-= 6), both u8, with no lower
-bound. The aggregate check recently added to ath6kl_wmi_connect_event_rx()
-bounds the declared lengths from above (their sum must fit the received
-event), but an assoc request/response shorter than its fixed offset still
-underflows here: the u8 wraps to ~250, and cfg80211_connect_result() /
-cfg80211_roamed() then treat that wrapped value as the IE length and copy
-that many bytes out of the small assoc_info buffer to user space via
-nl80211, disclosing adjacent slab memory.
+nvme_tcp_recv_data() completes a request once the current C2HData PDU
+has been consumed. Nothing compares the total bytes received against
+the length the command asked for: struct nvme_tcp_request has no
+receive-side counter, queue->data_remaining is per queue, and
+blk_mq_end_request() completes for blk_rq_bytes(rq) unconditionally
+with no residual concept anywhere above.
 
-Clamp both lengths to their offsets before subtracting.
+A controller can therefore answer a 4096-byte read with 512 bytes and
+have it reported as a complete read; user space then gets 4096 bytes of
+which 3584 are whatever was already in the page. I reproduced that with
+a test target.
 
-Found by 0sec (https://0sec.ai) using automated source analysis; the
-missing lower bound is evident from source. Compile-tested.
+Count the bytes received and refuse to complete a successful read whose
+count does not match, at the two NVME_TCP_F_DATA_SUCCESS paths and in
+nvme_tcp_process_nvme_cqe(). The success test shifts req->status right
+by one, because the driver keeps the wire value there and shifts it on
+completion, so the check must see what the completion path will see.
+Only REQ_OP_READ is checked, because there the length comes from the
+sectors the request covers; a passthrough command is built by its
+submitter, which picks both command and buffer, so the kernel has
+nothing to compare against.
 
-Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
+Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
 Cc: stable@vger.kernel.org
-Assisted-by: 0sec:claude-opus-4-8
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Link: https://patch.msgid.link/20260713213251.21161-1-doruk@0sec.ai
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath6kl/cfg80211.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/nvme/host/tcp.c |   34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
---- a/drivers/net/wireless/ath/ath6kl/cfg80211.c
-+++ b/drivers/net/wireless/ath/ath6kl/cfg80211.c
-@@ -753,6 +753,11 @@ void ath6kl_cfg80211_connect_event(struc
- 	u8 *assoc_resp_ie = assoc_info + beacon_ie_len + assoc_req_len +
- 	    assoc_resp_ie_offset;
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -93,6 +93,7 @@ struct nvme_tcp_request {
  
-+	if (assoc_req_len < assoc_req_ie_offset)
-+		assoc_req_len = assoc_req_ie_offset;
-+	if (assoc_resp_len < assoc_resp_ie_offset)
-+		assoc_resp_len = assoc_resp_ie_offset;
+ 	struct bio		*curr_bio;
+ 	struct iov_iter		iter;
++	u32			data_recvd;
+ 
+ 	/* send state */
+ 	size_t			offset;
+@@ -542,6 +543,29 @@ static void nvme_tcp_error_recovery(stru
+ 	queue_work(nvme_reset_wq, &to_tcp_ctrl(ctrl)->err_work);
+ }
+ 
++/*
++ * NVMe has no short read: a read that completes successfully must
++ * have transferred everything it asked for.
++ */
++static bool nvme_tcp_data_in_short(struct nvme_tcp_queue *queue,
++				   struct request *rq)
++{
++	struct nvme_tcp_request *req = blk_mq_rq_to_pdu(rq);
 +
- 	assoc_req_len -= assoc_req_ie_offset;
- 	assoc_resp_len -= assoc_resp_ie_offset;
++	if (le16_to_cpu(req->status) >> 1)
++		return false;
++	if (req_op(rq) != REQ_OP_READ || !req->data_len)
++		return false;
++	if (likely(req->data_recvd == req->data_len))
++		return false;
++
++	dev_err(queue->ctrl->ctrl.device,
++		"queue %d tag %#x short data-in: got %u of %u\n",
++		nvme_tcp_queue_id(queue), rq->tag,
++		req->data_recvd, req->data_len);
++	return true;
++}
++
+ static int nvme_tcp_process_nvme_cqe(struct nvme_tcp_queue *queue,
+ 		struct nvme_completion *cqe)
+ {
+@@ -561,6 +585,9 @@ static int nvme_tcp_process_nvme_cqe(str
+ 	if (req->status == cpu_to_le16(NVME_SC_SUCCESS))
+ 		req->status = cqe->status;
  
++	if (unlikely(nvme_tcp_data_in_short(queue, rq)))
++		return -EPROTO;
++
+ 	if (!nvme_try_complete_req(rq, req->status, cqe->result))
+ 		nvme_complete_rq(rq);
+ 	queue->nr_cqe++;
+@@ -869,6 +896,7 @@ static int nvme_tcp_recv_data(struct nvm
+ 		*len -= recv_len;
+ 		*offset += recv_len;
+ 		queue->data_remaining -= recv_len;
++		req->data_recvd += recv_len;
+ 	}
+ 
+ 	if (!queue->data_remaining) {
+@@ -877,6 +905,8 @@ static int nvme_tcp_recv_data(struct nvm
+ 			queue->ddgst_remaining = NVME_TCP_DIGEST_LENGTH;
+ 		} else {
+ 			if (pdu->hdr.flags & NVME_TCP_F_DATA_SUCCESS) {
++				if (unlikely(nvme_tcp_data_in_short(queue, rq)))
++					return -EPROTO;
+ 				nvme_tcp_end_request(rq,
+ 						le16_to_cpu(req->status));
+ 				queue->nr_cqe++;
+@@ -925,6 +955,9 @@ static int nvme_tcp_recv_ddgst(struct nv
+ 					pdu->command_id);
+ 		struct nvme_tcp_request *req = blk_mq_rq_to_pdu(rq);
+ 
++		if (unlikely(nvme_tcp_data_in_short(queue, rq)))
++			return -EPROTO;
++
+ 		nvme_tcp_end_request(rq, le16_to_cpu(req->status));
+ 		queue->nr_cqe++;
+ 	}
+@@ -2423,6 +2456,7 @@ static blk_status_t nvme_tcp_setup_cmd_p
+ 	req->status = cpu_to_le16(NVME_SC_SUCCESS);
+ 	req->offset = 0;
+ 	req->data_sent = 0;
++	req->data_recvd = 0;
+ 	req->pdu_len = 0;
+ 	req->pdu_sent = 0;
+ 	req->h2cdata_left = 0;
 
 
