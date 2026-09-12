@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DF537EFE2;
-	Sat, 12 Sep 2026 19:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5886386559;
+	Sat, 12 Sep 2026 19:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241782; cv=none; b=fyk7AYSc/51DXDkT0FciDQK1e25LRhnI5Iilbe8010MbXXTaZ4cWibveVR61dbuSfniXeKhpuWRHssYMfEzvFKvl5uNk4ls8qbVgfo3Zuq3U7KYbjPuc3ZLBVFfHq7fTQpquO4hcDIm+oanBs/vhlYJgDA9hlzT6yJcwPTbqu1I=
+	t=1789241791; cv=none; b=W/U3vLP0nbhDDCUuR/jXLokAIaQb1mKP96LS9se3Gn8OeoxJhz/3mluP+kb5oxiT8BX/yuMTluQPpWQ/j4Bp+MyEp0fSLxF5PTABsGCldmCP2nlUzYIlAQyaGu1ksBw3k3Ar6tpij9zy74G+sJ5VYqooJczDidwypywOAStDbK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241782; c=relaxed/simple;
-	bh=9r0VMy0dzTpC6yaUOl1wkufUwJWf0qgOQI0IKdsdIsU=;
+	s=arc-20240116; t=1789241791; c=relaxed/simple;
+	bh=YN++zgM/V0bscpXFA0W92ANvoxjqUSN94GROob/dnUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JOca/FVOl2PqsX1nfKHIrd6/F02sbKmcIvyaD+6D7Hm1sSWwn0xfwQJ35mUBOYhJB7cOGjf/a5U4q1jn6XuThltkWKJTbKoTpiT2nkg3/yZ8ldBRAVIj3PMthPpUz29WJGS9llF5uloHHPqFuc+zbl/ZCDBr6Lt6A0JmWK6vk+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1dfnyQB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S8j6eBuqZfpIS6gJpaCXXJcGhxrWRuS1Eslcn56FKw2LYfokC7S9TJkIuGkLLm7rZ4+TflGhdyRtBgGQhCCMlH/Kb8Q/vORAsF5NBIogao9DcZ87nu7nY65s7gqXRNVQQFJG+yuLLKiZJQV82ix0AjaTyuKKEF7sbjoPn4or9OQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3jIVJD4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1dfnyQB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E97A1F000FF;
-	Sat, 12 Sep 2026 19:36:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3jIVJD4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E57F41F000FF;
+	Sat, 12 Sep 2026 19:36:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241780;
-	bh=zFCs9KWCoV5MOskZlS2ray2l5igWRKyFQLY8IVzLglg=;
+	s=korg; t=1789241784;
+	bh=V5I5d/PpwhkYoj1CkKfs4ZEq3Tx0Mdy+kO9a44C32nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o1dfnyQBswaAeOcWQ/5IBRkz0rLK29Gn30xi/JPnC2fn6443K7n6jPDe2hNHxwVmE
-	 3AUEXENsCsaHkAL3DS8KRWWSB7sAXNu3hLN+pqNFIU/de5P+XS/fdI++SNJPS+vsWa
-	 vtvYm1lqTw40keucJzMK3mcAsCo5o2+Pi18T8kDc=
+	b=Y3jIVJD4RhKM9c4FvC1wVadG4U5ftsENl98ZofNiKlL+h1jV4z2zwHH1dyV0eAYpq
+	 zy7TntRUNtP1oAmXPooVhioOYFofrfv1xy64piDYivYevUogP4aLW4Y5pAlBXMIP8C
+	 yiJ3McOu5zds8lqzePxsbehqmi8FCL0AtdW8ZQTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Alexander Martyniuk <alexevgmart@gmail.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Denis Arefev <arefev@swemel.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 207/798] drm/vmwgfx: drop dma_buf reference on foreign-fd prime import
-Date: Sat, 12 Sep 2026 08:57:15 +0200
-Message-ID: <20260912065521.840885120@linuxfoundation.org>
+Subject: [PATCH 5.10 208/798] net/smc: fix potential panic dues to unprotected smc_llc_srv_add_link()
+Date: Sat, 12 Sep 2026 08:57:16 +0200
+Message-ID: <20260912065521.865691303@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,56 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: D. Wythe <alibuda@linux.alibaba.com>
 
-commit f739416dc555fa205a785e5135d73fa39b26f35d upstream.
+commit e40b801b3603a8f90b46acbacdea3505c27f01c0 upstream.
 
-ttm_prime_fd_to_handle() returns -ENOSYS when the imported fd's
-dma_buf->ops do not match the ttm_object_device's ops, but does so
-without releasing the reference acquired by dma_buf_get().  Any
-unprivileged renderD client passing a non-vmwgfx prime fd through the
-DRM_VMW_GB_SURFACE_REF{,_EXT} path leaks one dma_buf reference per
-call and indefinitely pins the foreign exporter's GEM resources.
+There is a certain chance to trigger the following panic:
 
-Funnel the error path through the existing dma_buf_put() so the
-reference is always dropped.
+PID: 5900   TASK: ffff88c1c8af4100  CPU: 1   COMMAND: "kworker/1:48"
+ #0 [ffff9456c1cc79a0] machine_kexec at ffffffff870665b7
+ #1 [ffff9456c1cc79f0] __crash_kexec at ffffffff871b4c7a
+ #2 [ffff9456c1cc7ab0] crash_kexec at ffffffff871b5b60
+ #3 [ffff9456c1cc7ac0] oops_end at ffffffff87026ce7
+ #4 [ffff9456c1cc7ae0] page_fault_oops at ffffffff87075715
+ #5 [ffff9456c1cc7b58] exc_page_fault at ffffffff87ad0654
+ #6 [ffff9456c1cc7b80] asm_exc_page_fault at ffffffff87c00b62
+    [exception RIP: ib_alloc_mr+19]
+    RIP: ffffffffc0c9cce3  RSP: ffff9456c1cc7c38  RFLAGS: 00010202
+    RAX: 0000000000000000  RBX: 0000000000000002  RCX: 0000000000000004
+    RDX: 0000000000000010  RSI: 0000000000000000  RDI: 0000000000000000
+    RBP: ffff88c1ea281d00   R8: 000000020a34ffff   R9: ffff88c1350bbb20
+    R10: 0000000000000000  R11: 0000000000000001  R12: 0000000000000000
+    R13: 0000000000000010  R14: ffff88c1ab040a50  R15: ffff88c1ea281d00
+    ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
+ #7 [ffff9456c1cc7c60] smc_ib_get_memory_region at ffffffffc0aff6df [smc]
+ #8 [ffff9456c1cc7c88] smcr_buf_map_link at ffffffffc0b0278c [smc]
+ #9 [ffff9456c1cc7ce0] __smc_buf_create at ffffffffc0b03586 [smc]
 
-Fixes: 65981f7681ab ("drm/ttm: Add a minimal prime implementation for ttm base objects")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4.7
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
-Link: https://patch.msgid.link/20260505222728.519626-6-zack.rusin@broadcom.com
-Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
+The reason here is that when the server tries to create a second link,
+smc_llc_srv_add_link() has no protection and may add a new link to
+link group. This breaks the security environment protected by
+llc_conf_mutex.
+
+Fixes: 2d2209f20189 ("net/smc: first part of add link processing as SMC server")
+Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+[Denis Arefev: adapted for 5.10: smc_llc_srv_add_link() has no
+req_qentry argument here, as SMC-Rv2 REQ_ADD_LINK support is
+not present in 5.10]
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/ttm_object.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/smc/af_smc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/vmwgfx/ttm_object.c b/drivers/gpu/drm/vmwgfx/ttm_object.c
-index 16077785ad47e..39ddb74ad07f9 100644
---- a/drivers/gpu/drm/vmwgfx/ttm_object.c
-+++ b/drivers/gpu/drm/vmwgfx/ttm_object.c
-@@ -658,14 +658,17 @@ int ttm_prime_fd_to_handle(struct ttm_object_file *tfile,
- 	if (IS_ERR(dma_buf))
- 		return PTR_ERR(dma_buf);
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index e9dabe758a31d..e76e71417a2c7 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -1303,8 +1303,10 @@ static int smcr_serv_conf_first_link(struct smc_sock *smc)
+ 	smc_llc_link_active(link);
+ 	smcr_lgr_set_type(link->lgr, SMC_LGR_SINGLE);
  
--	if (dma_buf->ops != &tdev->ops)
--		return -ENOSYS;
-+	if (dma_buf->ops != &tdev->ops) {
-+		ret = -ENOSYS;
-+		goto out;
-+	}
++	mutex_lock(&link->lgr->llc_conf_mutex);
+ 	/* initial contact - try to establish second link */
+ 	smc_llc_srv_add_link(link);
++	mutex_unlock(&link->lgr->llc_conf_mutex);
+ 	return 0;
+ }
  
- 	prime = (struct ttm_prime_object *) dma_buf->priv;
- 	base = &prime->base;
- 	*handle = base->handle;
- 	ret = ttm_ref_object_add(tfile, base, TTM_REF_USAGE, NULL, false);
- 
-+out:
- 	dma_buf_put(dma_buf);
- 
- 	return ret;
 -- 
 2.53.0
 
