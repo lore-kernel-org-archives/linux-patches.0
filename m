@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6983C1D5B;
-	Sat, 12 Sep 2026 07:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3093C8717;
+	Sat, 12 Sep 2026 07:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197346; cv=none; b=XwhzRJBoob7OUC/TQVIFcmYJq4FT/EuOoncOgwEvYzpiOwK1BSDYJcKslMQwR+EW7B0Tb+t/TeI7NpY/i3hnyUNwGl3rJxzHSnjvtTTffJzHug/P6hjvdgQe8SAZi1Fj7TwU4gAF/E/h1hTIiTKkPHqD18b91CEUa0/JJX8+4R4=
+	t=1789197351; cv=none; b=CiEXKHL/Qw8lKcDsY9Ybkzi+MlqEsC3fvt0dc4VdKorJ6AhqXckhD3cDVCP+qMe6Kv9xtSmwuGeyiL8TYnrD9eT2xpcRHoc3GOSutt2+NrW4Vc+2xcTaeVo/DQSiZVICUaq4O7+WcdSm/BFd1r2bjr78CqX5Ow8tjyiHV3INzlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197346; c=relaxed/simple;
-	bh=QP/IHIN5QFE2NMrOQDaK6OKq92iS5MEztL2CLqK3sRU=;
+	s=arc-20240116; t=1789197351; c=relaxed/simple;
+	bh=JMVGRn8eVwLkfYLaKqWv29SikgNyW3dZqmJhU3tzkrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZKoWC9BXbQTuhXn2n49/+7MvfsNDU0VOnMNNAyS6F78CkN0JDYVFHN1TfnqiYIIH9DtCwlyF1HJ81z0w1m+modwUoTrSYRe/cOgAsnS2QQXQQ8UuXHQGfPoErQOhzE/IKDkuul0Uo2uDTYkL0WGMEq/SZaLW3kcj1oLTEoTPrhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ttz+vpH9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BUb8vNifik61q8uq961Vior4GE7YVkWekwt+YHop1SspbyBDiKfKzShy1nrxJ65Cn2oolyaiW0wMMqZGeI2WODmAjCIYLpmqoS2aMiiYJtD91tPFTpuGLrXNbxUm6CFrBPoIXFOOBMxsds7kVCFVbtYaZE6/S8x9rEI9afL6CmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3GR1qR/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ttz+vpH9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F34D1F000FF;
-	Sat, 12 Sep 2026 07:15:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3GR1qR/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B3B1F000FF;
+	Sat, 12 Sep 2026 07:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197345;
-	bh=YpvDvViSyyiooOWVWOtxXAqc4vdu5wkrkyp/HYUelH0=;
+	s=korg; t=1789197349;
+	bh=Er4rMIuADWOQHowf0rNoFUMF8Uo7sHb/w4FfFJG6Omo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ttz+vpH9Dvl0ntbBG3HcCGs4oc16W2YKytiak0T4zdU0DrqLvkVI5F3IEDMhSDSMh
-	 moiJEF/ItFNaXVA7xpuDTY4cePMofvgKdzjlbV+xrJCga3nyiryhWt1D90KzoBQTFN
-	 4PGYSJGgzfjAWXgn781SMXO0aCJF0n97ssYyHgMo=
+	b=m3GR1qR/TQtCCYUwjQ4v/RtLVP9by/TbKda41pa9PRfsyBGg1M8qZO5e8fsrpWAPF
+	 U78CQj61izznBT6VVU6aSq61tIyxC+T4iLOIjxbkMCsbbapFvmYPalntRx4R7sDKEe
+	 USfNzmdqeyETHRBMPWAP7lpKKMEfFGIjsqUnz7ZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Gregory Price <gourry@gourry.net>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0155/1815] mm/mm_init: handle alloc_percpu failure in free_area_init_core_hotplug
-Date: Sat, 12 Sep 2026 08:31:45 +0200
-Message-ID: <20260912065652.650276736@linuxfoundation.org>
+Subject: [PATCH 7.2 0156/1815] leds: lp5860: Fix a potential double-unlock
+Date: Sat, 12 Sep 2026 08:31:46 +0200
+Message-ID: <20260912065652.673643068@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,105 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 2ebce860bdd7ae5e13002811bc9bbbf33fcfc221 ]
+[ Upstream commit 10a5a70c02277a1c12999b669a1bd1922558338a ]
 
-We miss a failed allocation check for pgdat->per_cpu_nodestats, which
-results in a NULL deref when we offset into the per-cpu area.
+In lp5860_device_init(), if lp5860_init_dt() fails, an already unlocked
+mutex is unlocked another time.
 
-Propagate -ENOMEM up the stack and leave per_cpu_nodestats pointing
-at boot_nodestats so a later online can retry the allocation.
+Slightly rework how the lock is taken/released to avoid this potential
+double unlock.
 
-hotadd_init_pgdat() returns NULL on failure, which __try_online_node()
-already maps to -ENOMEM.
-
-On failure nothing needs to be unwound:
-  - the node is never marked online
-  - per_cpu_nodestats is left pointing at boot_nodestats
-  - __add_memory_resource() cleans up pending memblock resources
-  - later online attempts retry the per_cpu_nodestats allocation
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260627202243.758289-1-gourry%40gourry.net
-Fixes: 75ef71840539 ("mm, vmstat: add infrastructure for per-node vmstats")
-Signed-off-by: Gregory Price <gourry@gourry.net>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Link: https://patch.msgid.link/20260701221613.2818148-1-gourry@gourry.net
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Fixes: f0a66563aa2d ("leds: Add support for TI LP5860 LED driver chip")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://patch.msgid.link/0f4d556e0532bfa881d7d83c1e244572117a89e3.1781970674.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/memory_hotplug.h |  2 +-
- mm/memory_hotplug.c            |  3 ++-
- mm/mm_init.c                   | 14 +++++++++++---
- 3 files changed, 14 insertions(+), 5 deletions(-)
+ drivers/leds/rgb/leds-lp5860-core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/linux/memory_hotplug.h b/include/linux/memory_hotplug.h
-index 7c9d66729c609..06c58cb057791 100644
---- a/include/linux/memory_hotplug.h
-+++ b/include/linux/memory_hotplug.h
-@@ -289,7 +289,7 @@ static inline void __remove_memory(u64 start, u64 size) {}
- /* Default online_type (MMOP_*) when new memory blocks are added. */
- extern enum mmop mhp_get_default_online_type(void);
- extern void mhp_set_default_online_type(enum mmop online_type);
--extern void __ref free_area_init_core_hotplug(struct pglist_data *pgdat);
-+int __ref free_area_init_core_hotplug(struct pglist_data *pgdat);
- extern int __add_memory(int nid, u64 start, u64 size, mhp_t mhp_flags);
- extern int add_memory(int nid, u64 start, u64 size, mhp_t mhp_flags);
- extern int add_memory_resource(int nid, struct resource *resource,
-diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
-index 7ac19fab22632..8b137328dcf01 100644
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -1263,7 +1263,8 @@ static pg_data_t *hotadd_init_pgdat(int nid)
- 	pgdat = NODE_DATA(nid);
+diff --git a/drivers/leds/rgb/leds-lp5860-core.c b/drivers/leds/rgb/leds-lp5860-core.c
+index fd0e2f6e6e0f4..e21d5f2302be0 100644
+--- a/drivers/leds/rgb/leds-lp5860-core.c
++++ b/drivers/leds/rgb/leds-lp5860-core.c
+@@ -204,9 +204,9 @@ int lp5860_device_init(struct device *dev)
+ 	mutex_lock(&lp->lock);
+ 	ret = regmap_update_bits(lp->regmap, LP5860_REG_DEV_INITIAL, LP5860_MODE_MASK,
+ 				 LP5860_MODE_1 << LP5860_MODE_SHIFT);
++	mutex_unlock(&lp->lock);
+ 	if (ret)
+ 		goto err_disable;
+-	mutex_unlock(&lp->lock);
  
- 	/* init node's zones as empty zones, we don't have any present pages.*/
--	free_area_init_core_hotplug(pgdat);
-+	if (free_area_init_core_hotplug(pgdat))
-+		return NULL;
+ 	ret = lp5860_init_dt(lp);
+ 	if (ret)
+@@ -215,7 +215,6 @@ int lp5860_device_init(struct device *dev)
+ 	return 0;
  
- 	/*
- 	 * The node we allocated has no zone fallback lists. For avoiding
-diff --git a/mm/mm_init.c b/mm/mm_init.c
-index d52eea4e63479..d50a54dbb1064 100644
---- a/mm/mm_init.c
-+++ b/mm/mm_init.c
-@@ -1535,7 +1535,7 @@ void __init set_pageblock_order(void)
-  * NOTE: this function is only called during memory hotplug
-  */
- #ifdef CONFIG_MEMORY_HOTPLUG
--void __ref free_area_init_core_hotplug(struct pglist_data *pgdat)
-+int __ref free_area_init_core_hotplug(struct pglist_data *pgdat)
- {
- 	int nid = pgdat->node_id;
- 	enum zone_type z;
-@@ -1543,8 +1543,14 @@ void __ref free_area_init_core_hotplug(struct pglist_data *pgdat)
- 
- 	pgdat_init_internals(pgdat);
- 
--	if (pgdat->per_cpu_nodestats == &boot_nodestats)
--		pgdat->per_cpu_nodestats = alloc_percpu(struct per_cpu_nodestat);
-+	if (pgdat->per_cpu_nodestats == &boot_nodestats) {
-+		struct per_cpu_nodestat __percpu *p;
-+
-+		p = alloc_percpu(struct per_cpu_nodestat);
-+		if (!p)
-+			return -ENOMEM;
-+		pgdat->per_cpu_nodestats = p;
-+	}
- 
- 	/*
- 	 * Reset the nr_zones, order and highest_zoneidx before reuse.
-@@ -1582,6 +1588,8 @@ void __ref free_area_init_core_hotplug(struct pglist_data *pgdat)
- 		zone->present_pages = 0;
- 		zone_init_internals(zone, z, nid, 0);
- 	}
-+
-+	return 0;
+ err_disable:
+-	mutex_unlock(&lp->lock);
+ 	lp5860_chip_enable(lp, LP5860_CHIP_DISABLE);
+ 	return ret;
  }
- #endif
- 
 -- 
 2.53.0
 
