@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D73D2F90C5;
-	Sat, 12 Sep 2026 19:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FDD2F0673;
+	Sat, 12 Sep 2026 19:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240119; cv=none; b=sL85Ka+GeiLbgaOPbbLy3If/AANGPaxgIZarGK1bJfH5ZsxSY2WTsDK1NhvwsdhkPx4aXJ9TmWkuqWwblL1KqORQt9VBYuuSIjOp1EGlfA48fYU55cKn8+cqWIcy+9ds2SKnlCWHSvWREF8TXp2G74OffgybamlOmmgCAArWAfo=
+	t=1789240124; cv=none; b=YoISWfRs0lONPPaMyoqIVOUVJ2kVzIVG6wZNTX/LykS0j3MInHjhAAK8D0itf5xMtz5Va3W7yNRB0tndPgw+0ezv7wtPRH2U8T6YBTaogDmvOSdcsQ3nRvxvTdeq7QkVKbKBve3xq2i4G3wAnyFjhrFo2fRDmV70QtFEUlxFAC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240119; c=relaxed/simple;
-	bh=cf/B4Zg7aBz8rmVU82et7pPB9nRvBWLKsX7jzCcBuKk=;
+	s=arc-20240116; t=1789240124; c=relaxed/simple;
+	bh=JQHmu0BXX3NxSYeDWhrdeD88M4PKyzl0+73aNOiz0R8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yj7OJswTFUoxk717pJL2OzNUm+S7rKezhRXjIy4xoGJz7/pSmGVanaZy7CMl41hLqGppf6kdJjPcBp6YalhLGtJb2usFIqknEyppng+LREIYBkbq8xwJ95jD1dg68wVxxtHqp5qLD0HHK0Nu+r4fRdPvBpOGiAk2+IBxor0Kggs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xlwci0PD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VARoGA99oM73+4A2W9D5L2DlUoUDE42G7H+7hYCpjtvZ/rfnvkXp1xY8llpum3YT3JutGcmcC7tplNN1vOeyqDqNXD41ezKg36NhaiQpCe4nDDQtuOjm6zGt4qqbYOh/IzeZ+flPf8desIMKlO3qRVEHtez2KcJjJd8WW5N2lV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbJriYq/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xlwci0PD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED691F000FF;
-	Sat, 12 Sep 2026 19:08:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbJriYq/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448EC1F000FF;
+	Sat, 12 Sep 2026 19:08:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240118;
-	bh=tndO+jc9YuttLzukpEofI+5yf1x2OjiqOS1bwsiGjC8=;
+	s=korg; t=1789240123;
+	bh=ONo013v8m0cN5ZJXQRYHvN61eiaMcBpLufwazS/9xCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xlwci0PDsKBWgQ30k2NxDnN3NeQtb1QiY2ElGlisUrlHfgA0ilb/Tz8eqRY5hAtZU
-	 QBrLjMJay2TItMmncTkCyiKUCTD6uTPNqHJS5Fude/BritSd56rRbN/KQJSwqlsRbr
-	 gOMM6XZ/Bvxe5IA4mfWmNng3APk5XSYG8M44wN/w=
+	b=HbJriYq/wBNb1ZoqPybRK+jXqXMyF09AzqN8wZNkpD/TcD7nyRhZeViViUyB/CuOE
+	 dZ5DVoBURMox5iKWgMMXkDbGOpEASDt8SdVK5yKcv8e3Gf+wk8kzsY/VPtl740hUrR
+	 O0l2cjpcuUiagBTDIsEzEw25tsgw/DUKw1uB0bUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yucong Sun <sunyucong@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 802/935] selfetests/bpf: Update vmtest.sh defaults
-Date: Sat, 12 Sep 2026 09:03:52 +0200
-Message-ID: <20260912065545.233483816@linuxfoundation.org>
+Subject: [PATCH 5.15 803/935] selfetests/bpf: Adapt vmtest.sh to s390 libbpf CI changes
+Date: Sat, 12 Sep 2026 09:03:53 +0200
+Message-ID: <20260912065545.255931730@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,40 +51,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yucong Sun <sunyucong@gmail.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit 547208a386fa2066fa2d6d48bda145f78c38604f ]
+[ Upstream commit 29ad850a5cae84757bcd4c60e0d74232ef8c5157 ]
 
-Increase memory to 4G, 8 SMP core with host cpu passthrough. This
-make it run faster in parallel mode and more likely to succeed.
+[1] added s390 support to libbpf CI and added an ${ARCH} prefix to a
+number of paths and identifiers in libbpf GitHub repo, which vmtest.sh
+relies upon. Update these and make use of the new s390 support.
 
-Signed-off-by: Yucong Sun <sunyucong@gmail.com>
+[1] https://github.com/libbpf/libbpf/pull/204
+
+Co-developed-by: Andrii Nakryiko <andrii@kernel.org>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20211025223345.2136168-2-fallentree@fb.com
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20211118115225.1349726-1-iii@linux.ibm.com
 Stable-dep-of: 3a59f11e0f98 ("selftests/bpf: vmtest.sh: Preserve command quoting when running in the VM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/vmtest.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/bpf/vmtest.sh | 46 ++++++++++++++++++---------
+ 1 file changed, 31 insertions(+), 15 deletions(-)
 
 diff --git a/tools/testing/selftests/bpf/vmtest.sh b/tools/testing/selftests/bpf/vmtest.sh
-index 8889b3f552367..027198768fad3 100755
+index 027198768fad3..5e43c79ddc6e6 100755
 --- a/tools/testing/selftests/bpf/vmtest.sh
 +++ b/tools/testing/selftests/bpf/vmtest.sh
-@@ -224,10 +224,10 @@ EOF
+@@ -4,17 +4,34 @@
+ set -u
+ set -e
+ 
+-# This script currently only works for x86_64, as
+-# it is based on the VM image used by the BPF CI which is
+-# x86_64.
+-QEMU_BINARY="${QEMU_BINARY:="qemu-system-x86_64"}"
+-X86_BZIMAGE="arch/x86/boot/bzImage"
++# This script currently only works for x86_64 and s390x, as
++# it is based on the VM image used by the BPF CI, which is
++# available only for these architectures.
++ARCH="$(uname -m)"
++case "${ARCH}" in
++s390x)
++	QEMU_BINARY=qemu-system-s390x
++	QEMU_CONSOLE="ttyS1"
++	QEMU_FLAGS=(-smp 2)
++	BZIMAGE="arch/s390/boot/compressed/vmlinux"
++	;;
++x86_64)
++	QEMU_BINARY=qemu-system-x86_64
++	QEMU_CONSOLE="ttyS0,115200"
++	QEMU_FLAGS=(-cpu host -smp 8)
++	BZIMAGE="arch/x86/boot/bzImage"
++	;;
++*)
++	echo "Unsupported architecture"
++	exit 1
++	;;
++esac
+ DEFAULT_COMMAND="./test_progs"
+ MOUNT_DIR="mnt"
+ ROOTFS_IMAGE="root.img"
+ OUTPUT_DIR="$HOME/.bpf_selftests"
+-KCONFIG_URL="https://raw.githubusercontent.com/libbpf/libbpf/master/travis-ci/vmtest/configs/latest.config"
+-KCONFIG_API_URL="https://api.github.com/repos/libbpf/libbpf/contents/travis-ci/vmtest/configs/latest.config"
++KCONFIG_URL="https://raw.githubusercontent.com/libbpf/libbpf/master/travis-ci/vmtest/configs/config-latest.${ARCH}"
++KCONFIG_API_URL="https://api.github.com/repos/libbpf/libbpf/contents/travis-ci/vmtest/configs/config-latest.${ARCH}"
+ INDEX_URL="https://raw.githubusercontent.com/libbpf/libbpf/master/travis-ci/vmtest/configs/INDEX"
+ NUM_COMPILE_JOBS="$(nproc)"
+ LOG_FILE_BASE="$(date +"bpf_selftests.%Y-%m-%d_%H-%M-%S")"
+@@ -85,7 +102,7 @@ newest_rootfs_version()
+ {
+ 	{
+ 	for file in "${!URLS[@]}"; do
+-		if [[ $file =~ ^libbpf-vmtest-rootfs-(.*)\.tar\.zst$ ]]; then
++		if [[ $file =~ ^"${ARCH}"/libbpf-vmtest-rootfs-(.*)\.tar\.zst$ ]]; then
+ 			echo "${BASH_REMATCH[1]}"
+ 		fi
+ 	done
+@@ -102,7 +119,7 @@ download_rootfs()
+ 		exit 1
+ 	fi
+ 
+-	download "libbpf-vmtest-rootfs-$rootfsversion.tar.zst" |
++	download "${ARCH}/libbpf-vmtest-rootfs-$rootfsversion.tar.zst" |
+ 		zstd -d | sudo tar -C "$dir" -x
+ }
+ 
+@@ -224,13 +241,12 @@ EOF
  		-nodefaults \
  		-display none \
  		-serial mon:stdio \
--		-cpu kvm64 \
-+		-cpu host \
+-		-cpu host \
++		"${qemu_flags[@]}" \
  		-enable-kvm \
--		-smp 4 \
--		-m 2G \
-+		-smp 8 \
-+		-m 4G \
+-		-smp 8 \
+ 		-m 4G \
  		-drive file="${rootfs_img}",format=raw,index=1,media=disk,if=virtio,cache=none \
  		-kernel "${kernel_bzimage}" \
- 		-append "root=/dev/vda rw console=ttyS0,115200"
+-		-append "root=/dev/vda rw console=ttyS0,115200"
++		-append "root=/dev/vda rw console=${QEMU_CONSOLE}"
+ }
+ 
+ copy_logs()
+@@ -282,7 +298,7 @@ main()
+ 	local kernel_checkout=$(realpath "${script_dir}"/../../../../)
+ 	# By default the script searches for the kernel in the checkout directory but
+ 	# it also obeys environment variables O= and KBUILD_OUTPUT=
+-	local kernel_bzimage="${kernel_checkout}/${X86_BZIMAGE}"
++	local kernel_bzimage="${kernel_checkout}/${BZIMAGE}"
+ 	local command="${DEFAULT_COMMAND}"
+ 	local update_image="no"
+ 	local exit_command="poweroff -f"
+@@ -337,13 +353,13 @@ main()
+ 		if is_rel_path "${O}"; then
+ 			O="$(realpath "${PWD}/${O}")"
+ 		fi
+-		kernel_bzimage="${O}/${X86_BZIMAGE}"
++		kernel_bzimage="${O}/${BZIMAGE}"
+ 		make_command="${make_command} O=${O}"
+ 	elif [[ "${KBUILD_OUTPUT:=""}" != "" ]]; then
+ 		if is_rel_path "${KBUILD_OUTPUT}"; then
+ 			KBUILD_OUTPUT="$(realpath "${PWD}/${KBUILD_OUTPUT}")"
+ 		fi
+-		kernel_bzimage="${KBUILD_OUTPUT}/${X86_BZIMAGE}"
++		kernel_bzimage="${KBUILD_OUTPUT}/${BZIMAGE}"
+ 		make_command="${make_command} KBUILD_OUTPUT=${KBUILD_OUTPUT}"
+ 	fi
+ 
 -- 
 2.53.0
 
