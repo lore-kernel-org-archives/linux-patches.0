@@ -1,51 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA73D1EB5FD;
-	Sat, 12 Sep 2026 13:57:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685CB31618C;
+	Sat, 12 Sep 2026 13:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221432; cv=none; b=NTokRQ3gZzfF+lctFmQxKq/3bjLyaWfxDGZJytY2sWMgJddWbRI0nGtL/eRnd4RF51VVBvsWVSi3hFMe8qmE1LS0wQwciTBK1VR/zeF6bwae3lY3EQE+S4GwxiJe/2Gq5myBbs8GaPNCIt63dZm609HYYvL5QgRNU67fQfoth0s=
+	t=1789221438; cv=none; b=BAhYRXDQASCNmnbkpMrm9Ik3FEYg9B0xKiR5hKYbxxnkz/P0yg0OV9IBkXAF9nAdHAXMyDEThUvWvCovvvZ26Pa9K1m6WDqEaqfAf+nru/rg97D2NChYHEzgs+0Hb50ZXj5JZ1yln9rzNEm2pRiZHgJW32B1+3A6W8k9eEsRpdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221432; c=relaxed/simple;
-	bh=a6/IjnvomfTl2aoZZSvmgpZFaatoo+5GkAmyBsu69zo=;
+	s=arc-20240116; t=1789221438; c=relaxed/simple;
+	bh=FF5Kd7z4e0RM/esE9hVjwki09MFjsfj7x2B4Epte5uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q6uUeoqk89VciRSWu0T4Dd/Ra4EhoF2dciAytTDSBLnn/HBhx/wzzoFtHj1kOd03Ltl59I2MNgd0Gtf3VVZQ9MxUSWBHTcW5NJegdv6rzid5wL5D/VY8EdOg9lwxXbgZgcrfQ9V3q67W8K1b25e8qyRoyJDDJm212xJtUfSypKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fBn4IfOj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uGsKLH9R8q6WJLLpHi4lnKnYL2RZS7Z24anwc6wquW1sRurgtXZEe61oXF1ouyM2VVpQRn6P4Urj4bSDhu+C9YjuN60UAfPZ4BjrcrgYWjICEHB41OGmrBZdPSZaBVzE/BwVWDlLStu977ntbFvb1RaFRKq0PImjNKBptogQ+g0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qQceSZK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBn4IfOj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35531F000FF;
-	Sat, 12 Sep 2026 13:57:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qQceSZK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6E81F000FF;
+	Sat, 12 Sep 2026 13:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221430;
-	bh=OtRhcKHhFaYK1aj5+tVi1poK52R4rH3PN0zIy5whUyI=;
+	s=korg; t=1789221436;
+	bh=7rw/aSC3G+o+ZPzZ7HoJi7PNGYPGzUbwLfwX56mGbn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fBn4IfOjK/Qr31J90FeOyGsIY6WxjilYQlicDMhTL0hxvHG6qmwa87BnpWuxd+R84
-	 3+MnMU2hX9bv73SGqRtAV/RhRPAbLIzTu27o/vXPiXLJmgJDvaR7wI0cnBSGR4QSWo
-	 GDVkzc1ybwJovYFPiGhLXoFXfTm9kzxQ6BaOb8mA=
+	b=0qQceSZKmLxjiNSGj5cGyQqi5kLhJ1S4MxQr0vFH4Cu2gpGmeTdCVOwMH6RTCq5Uw
+	 TceHP00q4zAtGg8YGag4e1DOVsxrgSSUzogNtprzNG9vGEztXMByAeGrWLVw/+9OuJ
+	 X9YTm+jjPzxYZGOFEJVGt4y2ZDEbEE7PFmFSiD1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	Oscar Salvador <osalvador@suse.de>,
 	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	David Hildenbrand <david@kernel.org>,
-	Frank van der Linden <fvdl@google.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Oscar Salvador (SUSE)" <osalvador@kernel.org>,
-	Usama Arif <usama.arif@linux.dev>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 0380/1424] powerpc/mm: fix wrong addr_pfn tracking in compound vmemmap population
-Date: Sat, 12 Sep 2026 08:46:52 +0200
-Message-ID: <20260912065615.802909875@linuxfoundation.org>
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.6 0381/1424] powerpc/pseries: Handle and log pseries-wdt registration failures
+Date: Sat, 12 Sep 2026 08:46:53 +0200
+Message-ID: <20260912065615.824641985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -64,106 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-commit 89a4ae32764172468dea303eb6ae90fe6c859712 upstream.
+commit e65b526affa621b50646cafdf6b06505af07032e upstream.
 
-vmemmap_populate_compound_pages() uses addr_pfn to determine the PFN
-offset within a compound page and to decide whether the current vmemmap
-slot should be populated as a head page mapping or should reuse a tail
-page mapping.
+The pseries watchdog initialization registers the pseries-wdt platform
+device using platform_device_register_simple(), but currently ignores
+its return value.
 
-However, addr_pfn is advanced manually in parallel with addr.  The loop
-itself progresses in vmemmap address space, so each PAGE_SIZE step in addr
-covers PAGE_SIZE / sizeof(struct page) struct page slots.  Since addr_pfn
-is compared against nr_pages in data-PFN units, it should advance by the
-same number of PFNs.  The existing manual increments do not match that and
-therefore do not reliably track the PFN corresponding to the current addr.
+Check the returned pointer for errors, log a descriptive error message
+when registration fails, and propagate the failure code to the caller.
+This avoids silently ignoring platform device registration failures.
 
-As a result, pfn_offset can be computed from the wrong PFN and the code
-can make the head/tail decision for the wrong compound-page position.
-
-Fix this by deriving addr_pfn directly from the current vmemmap address
-instead of carrying it as loop state.
-
-Link: https://lore.kernel.org/20260612035903.2468601-4-songmuchun@bytedance.com
-Fixes: f2b79c0d7968 ("powerpc/book3s64/radix: add support for vmemmap optimization for radix")
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: Oscar Salvador <osalvador@suse.de>
+Cc: stable@vger.kernel.org
 Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Frank van der Linden <fvdl@google.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Oscar Salvador (SUSE) <osalvador@kernel.org>
-Cc: Usama Arif <usama.arif@linux.dev>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260727053416.276317-3-sourabhjain@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/mm/book3s64/radix_pgtable.c |    7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ arch/powerpc/platforms/pseries/setup.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/arch/powerpc/mm/book3s64/radix_pgtable.c
-+++ b/arch/powerpc/mm/book3s64/radix_pgtable.c
-@@ -1318,7 +1318,6 @@ int __meminit vmemmap_populate_compound_
- 	 * covering out both edges.
- 	 */
- 	unsigned long addr;
--	unsigned long addr_pfn = start_pfn;
- 	unsigned long next;
- 	pgd_t *pgd;
- 	p4d_t *p4d;
-@@ -1339,7 +1338,6 @@ int __meminit vmemmap_populate_compound_
- 
- 		if (pmd_leaf(READ_ONCE(*pmd))) {
- 			/* existing huge mapping. Skip the range */
--			addr_pfn += (PMD_SIZE >> PAGE_SHIFT);
- 			next = pmd_addr_end(addr, end);
- 			continue;
- 		}
-@@ -1352,11 +1350,11 @@ int __meminit vmemmap_populate_compound_
- 			 * page whose VMEMMAP_RESERVE_NR pages were mapped and
- 			 * this request fall in those pages.
- 			 */
--			addr_pfn += 1;
- 			next = addr + PAGE_SIZE;
- 			continue;
- 		} else {
- 			unsigned long nr_pages = pgmap_vmemmap_nr(pgmap);
-+			unsigned long addr_pfn = page_to_pfn((struct page *)addr);
- 			unsigned long pfn_offset = addr_pfn - ALIGN_DOWN(addr_pfn, nr_pages);
- 			pte_t *tail_page_pte;
- 
-@@ -1380,7 +1378,6 @@ int __meminit vmemmap_populate_compound_
- 				if (!pte)
- 					return -ENOMEM;
- 
--				addr_pfn += 2;
- 				next = addr + 2 * PAGE_SIZE;
- 				continue;
- 			}
-@@ -1396,7 +1393,6 @@ int __meminit vmemmap_populate_compound_
- 					return -ENOMEM;
- 				vmemmap_verify(pte, node, addr, addr + PAGE_SIZE);
- 
--				addr_pfn += 1;
- 				next = addr + PAGE_SIZE;
- 				continue;
- 			}
-@@ -1406,7 +1402,6 @@ int __meminit vmemmap_populate_compound_
- 				return -ENOMEM;
- 			vmemmap_verify(pte, node, addr, addr + PAGE_SIZE);
- 
--			addr_pfn += 1;
- 			next = addr + PAGE_SIZE;
- 			continue;
- 		}
+--- a/arch/powerpc/platforms/pseries/setup.c
++++ b/arch/powerpc/platforms/pseries/setup.c
+@@ -193,8 +193,18 @@ static void __init fwnmi_init(void)
+  */
+ static __init int pseries_wdt_init(void)
+ {
+-	if (firmware_has_feature(FW_FEATURE_WATCHDOG))
+-		platform_device_register_simple("pseries-wdt", 0, NULL, 0);
++	struct platform_device *pdev;
++
++	if (!firmware_has_feature(FW_FEATURE_WATCHDOG))
++		return 0;
++
++	pdev = platform_device_register_simple("pseries-wdt", 0, NULL, 0);
++
++	if (IS_ERR(pdev)) {
++		pr_err("Failed to register pseries-wdt platform device\n");
++		return PTR_ERR(pdev);
++	}
++
+ 	return 0;
+ }
+ machine_subsys_initcall(pseries, pseries_wdt_init);
 
 
