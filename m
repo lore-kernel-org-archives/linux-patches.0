@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEAF2343893;
-	Sat, 12 Sep 2026 09:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1F736921B;
+	Sat, 12 Sep 2026 09:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206819; cv=none; b=KThbpA3JaLFA5T/v3mcb27sWC69L9ci8nhX+NfZrR/xoOWbyziHKV+kQokxW/tU4i8d7pGDO75qkXKnIJRbOvyYhXn+mAWXvDavdNiBI/oN76xs03WzhUv9tf2HGjbufujDp9alehgk+Ick7zpqxE+9KrqCXH4Ib4y454FrtSyQ=
+	t=1789206823; cv=none; b=UKN/lJH3w5w6QPeJeA5tIK4nK+xK4+tv41IL7wIsA3h6/6NT1m/yKwUgqfCnd3eljnPpM9hKJYOj9nRJJVt4BqOgczrqw+v0GvoUnbqOOfMfWXQpZaS7DO816txEJhm86wRDli69iA8OtwG+BvbZpFBRYFXyJqUDRs8+59VpmfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206819; c=relaxed/simple;
-	bh=DoUciJk+A+gDrcHKJ3FTLISnJ4ut+oP8aj0DWVe2LmU=;
+	s=arc-20240116; t=1789206823; c=relaxed/simple;
+	bh=JtxW/5tlr+qowwQT2ZEfbVoDrHn1BXmT6lssPhUeuCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AV/BWZpeHkfqNCULTqM08tdKAe/xHmMUDaIkPFiPmdtYCsLmA+xluCW96UPR2JSigBPvI8utTbZ43PTl1OIQ/bS0KnnW1YUkkZOMg9g3bxRZF5wLb0VBRzjsTAclMNwOMIL6KlFc6A4GBfTyh/WhGBvem+TEZf5coSuk24QEZVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xhHQXokv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=p6e9aud95IEhMmMizrNckpMUcXWDWwE7D/wLzZq95TVI28IOqjsU/ujuS4DUkzQjPR2nT9pvzZZ2W6O/hU+H/gkdXvrBKEwsrcFxloCIBLOmya06OVHdjduP9uWptED+pJpAP2wS0qPMKQy9wMnYETqWC+l8IXSMifZpk2xVNDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vS2JgIZj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xhHQXokv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E281F000FF;
-	Sat, 12 Sep 2026 09:53:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vS2JgIZj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936951F000FF;
+	Sat, 12 Sep 2026 09:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206817;
-	bh=Dmpp/HdZAlYSrAOM656H0ap/K1YkJk344wUjNVWc6/M=;
+	s=korg; t=1789206822;
+	bh=RlNpLTltpUKnmzQEv1qPIzGJbWfcZlhWoYJ4u1IAeDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xhHQXokvQr2nC7VaalgYbQbylGIxBpddBEFErAqH/2jqoah3ZpTjS8CCL04liRFP2
-	 ZCS9Dzip1IW/dxwlF7738rRhXW1GTPeWeMgUsKz0tF1M2kfxfmPlTjtmegVlumD4XQ
-	 TkhWntTfBsPD4yIppIsIIZtiuFgp0PLAyGmNrFo4=
+	b=vS2JgIZjbpWey/DUKEp7DVGKI/1ahTEaEpS633v85ZSc+nlW/Gu20IUq+RUoBSGSl
+	 cgqpwG+WASLJjYPTRF1tzr3jQYe9hK5rZI0Bx8UOl5b5LRuN1qzFF8QgWXgilBToZQ
+	 mPlbcIwAlt9Y4Aqjkfu3tccoEmcPfaeDlaePf+mA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Manuel Fombuena <fombuena@outlook.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0286/1518] leds: st1202: Stop pattern sequence before reprogramming
-Date: Sat, 12 Sep 2026 08:40:55 +0200
-Message-ID: <20260912065629.952461393@linuxfoundation.org>
+Subject: [PATCH 6.18 0287/1518] leds: st1202: Fix pattern duration prescaler and pattern_clear skip marker
+Date: Sat, 12 Sep 2026 08:40:56 +0200
+Message-ID: <20260912065629.974560223@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,6 +45,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -53,67 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Manuel Fombuena <fombuena@outlook.com>
 
-[ Upstream commit 9c019a8cb95d820e0bd03e75cfbad2c5b13941b7 ]
+[ Upstream commit d32f8bdc2b417a3013e1316a54a0b314f973bbc1 ]
 
-The LED1202 datasheet (section 4.8) states that modifications to the
-Pattern Sequence Repetition register (PAT_REP) and pattern duration
-registers are only applied after the sequence has completed or been
-stopped. When the device is running in infinite loop mode (PAT_REP =
-0xFF) the sequence never completes on its own, so these writes are
-silently ignored by the hardware.
+The PATy_DUR register encodes duration as N × 22.2 ms, with register
+value 0 reserved as a pattern skip indicator (§7.10). The driver
+incorrectly subtracted 1 from the register value:
 
-Neither pattern_clear() nor pattern_set() stop the running sequence
-before modifying pattern registers, causing any subsequent pattern
-reprogramming to have no effect when the previous pattern was set to
-infinite repeat.
+  value / ST1202_MILLIS_PATTERN_DUR_MIN - 1
 
-Fix this by clearing PATS in the Configuration register before touching
-any pattern registers in both functions, ensuring the hardware accepts
-the new values immediately.
+This caused two problems:
 
-Note that the LED1202 has a single global pattern sequencer shared by
-all channels: PATS, PATSR, the duration registers, and PAT_REP are
-chip-wide. Stopping the sequencer in pattern_clear() therefore halts
-any pattern running on other channels. This is an inherent hardware
-constraint; pattern_set() restarts the sequencer when a new pattern is
-programmed.
+  - All programmed durations were off by one step (~22 ms too short).
+  - Writing the minimum duration (22 ms) produced register value 0,
+    silently skipping the pattern step instead of setting a 22 ms
+    duration.
+
+The maximum duration constant was also wrong at 5660 ms. The 8-bit
+register saturates at 255, giving a maximum of 5610 ms (22 ms × 255).
+Values above 5653 ms were already producing a uint8_t overflow and
+writing 0 to the hardware.
+
+Fix the formula by removing the erroneous subtraction, and derive the
+maximum from the register width so the relationship is explicit. Update
+the documentation to reflect the correct maximum.
+
+This exposes a secondary issue: pattern_clear() was calling
+st1202_duration_pattern_write() with ST1202_MILLIS_PATTERN_DUR_MIN to
+reset unused slots, accidentally relying on the broken formula to
+produce register value 0. With the corrected formula, the same call
+writes 0x01 (22 ms), leaving unused slots as valid 22 ms zero-PWM
+steps and making the LED appear off for 7 × 22 ms out of every cycle.
+
+Write 0 directly to the duration registers in pattern_clear() so unused
+slots are always explicitly marked as skip, independently of the
+conversion formula.
 
 Fixes: 259230378c65 ("leds: Add LED1202 I2C driver")
 Signed-off-by: Manuel Fombuena <fombuena@outlook.com>
 Assisted-by: Claude:claude-sonnet-4-6
-Link: https://patch.msgid.link/GV1PR08MB84978D0F499774773C7DA1FCC5F52@GV1PR08MB8497.eurprd08.prod.outlook.com
+Link: https://patch.msgid.link/GV1PR08MB84971D3AF982F4F707A378F0C5F52@GV1PR08MB8497.eurprd08.prod.outlook.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-st1202.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ Documentation/leds/leds-st1202.rst | 2 +-
+ drivers/leds/leds-st1202.c         | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/leds/leds-st1202.rst b/Documentation/leds/leds-st1202.rst
+index 1a09fbfcedcff..a2353549469ee 100644
+--- a/Documentation/leds/leds-st1202.rst
++++ b/Documentation/leds/leds-st1202.rst
+@@ -17,7 +17,7 @@ To be compatible with the hardware pattern format, maximum 8 tuples of
+ brightness (PWM) and duration must be written to hw_pattern.
+ 
+ - Min pattern duration: 22 ms
+-- Max pattern duration: 5660 ms
++- Max pattern duration: 5610 ms
+ 
+ The format of the hardware pattern values should be:
+ "brightness duration brightness duration ..."
 diff --git a/drivers/leds/leds-st1202.c b/drivers/leds/leds-st1202.c
-index 4e5dd76d714d8..1dbf2251f6bc9 100644
+index 1dbf2251f6bc9..6bc726f9ef467 100644
 --- a/drivers/leds/leds-st1202.c
 +++ b/drivers/leds/leds-st1202.c
-@@ -201,6 +201,10 @@ static int st1202_led_pattern_clear(struct led_classdev *ldev)
+@@ -32,7 +32,7 @@
+ #define ST1202_ILED_REG0                   0x09
+ #define ST1202_MAX_LEDS                    12
+ #define ST1202_MAX_PATTERNS                8
+-#define ST1202_MILLIS_PATTERN_DUR_MAX      5660
++#define ST1202_MILLIS_PATTERN_DUR_MAX      (ST1202_MILLIS_PATTERN_DUR_MIN * U8_MAX)
+ #define ST1202_MILLIS_PATTERN_DUR_MIN      22
+ #define ST1202_PATTERN_DUR                 0x16
+ #define ST1202_PATTERN_PWM                 0x1E
+@@ -86,7 +86,7 @@ static int st1202_write_reg(struct st1202_chip *chip, int reg, uint8_t val)
  
- 	guard(mutex)(&chip->lock);
+ static uint8_t st1202_prescalar_to_miliseconds(unsigned int value)
+ {
+-	return value / ST1202_MILLIS_PATTERN_DUR_MIN - 1;
++	return value / ST1202_MILLIS_PATTERN_DUR_MIN;
+ }
  
-+	ret = st1202_write_reg(chip, ST1202_CONFIG_REG, ST1202_CONFIG_REG_SHFT);
-+	if (ret != 0)
-+		return ret;
-+
- 	for (int patt = 0; patt < ST1202_MAX_PATTERNS; patt++) {
- 		ret = st1202_pwm_pattern_write(chip, led->led_num, patt, LED_OFF);
+ static int st1202_pwm_pattern_write(struct st1202_chip *chip, int led_num,
+@@ -210,7 +210,7 @@ static int st1202_led_pattern_clear(struct led_classdev *ldev)
  		if (ret != 0)
-@@ -227,6 +231,10 @@ static int st1202_led_pattern_set(struct led_classdev *ldev,
+ 			return ret;
  
- 	guard(mutex)(&chip->lock);
- 
-+	ret = st1202_write_reg(chip, ST1202_CONFIG_REG, ST1202_CONFIG_REG_SHFT);
-+	if (ret != 0)
-+		return ret;
-+
- 	for (int patt = 0; patt < len; patt++) {
- 		if (pattern[patt].delta_t < ST1202_MILLIS_PATTERN_DUR_MIN ||
- 				pattern[patt].delta_t > ST1202_MILLIS_PATTERN_DUR_MAX)
+-		ret = st1202_duration_pattern_write(chip, patt, ST1202_MILLIS_PATTERN_DUR_MIN);
++		ret = st1202_write_reg(chip, ST1202_PATTERN_DUR + patt, 0);
+ 		if (ret != 0)
+ 			return ret;
+ 	}
 -- 
 2.53.0
 
