@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DCA235358;
-	Sat, 12 Sep 2026 07:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729F24BEE54;
+	Sat, 12 Sep 2026 07:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198308; cv=none; b=HeTcrXwIM20UptWUSxVmGdlL+dN/dbDWbmEbEt1cWWY1xDTXUC3jZFVTByEpqOO98i/Irt87b3dhwF+t7Zk5xdMpjqb+44XaR0vwpWqCq3vsZNlmGQBXn2Js5jtanPeTwdmTFA9D+/LUuXSolYNM/XEOWB5UpL95ENPeSXbr25g=
+	t=1789198313; cv=none; b=hEJlb64jaDvG4g75COhicArd1GKQNMyo/wzbOIEemHg5Y4u1tCHif2yctvJ6aYx8054BbSdNi9OJsMKduW5zjc68bCk6HvyR9pQHO7iRJ3TkccalWbiG9URjUHYVASQKCJN9maNslVfPNYrkqyf8SZhZviHRFvnwTzX1+ZZqmGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198308; c=relaxed/simple;
-	bh=0LWOSXqbZ6s8XwhwpGwkG3qi3hz7DMb8tquR9NJSiKU=;
+	s=arc-20240116; t=1789198313; c=relaxed/simple;
+	bh=FKakCSdw4XUbrqi98uJp3+JEkqZrHOJ3liBFwVPLu+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pBrj20Rvzou2rSq1TuZBHAcStoNJQyatQlG47Dx1YDo85GkFtbqiYoPRIFGHkQP+xZm2yUfyF0Z11ikoEx4kprUogFQ+MWCtsL8UiILolZSAOp5BtJyMhFISsN1BP2TmJbNNrVu/NKwbwnOzGFW/fn9pO+Da4yAMRx9alypAjzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qI8Z7bEi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I3kFyaF+Wis9isip+TSfF1ddGJrTWAWewg2avqz5mK5lweu+zsbL0pt7v0adyeMSu9t1xQ/81KH9+fNm5cwM7M1RHT6tmyg380rVPmCAWb8XADK2zHgUsWPfLJd2JzW3h6aLHXXeL0fNuNwSRvE938sNF6N3fidSKVoLZGlC77c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIiRwbeY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qI8Z7bEi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A351C1F000FF;
-	Sat, 12 Sep 2026 07:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIiRwbeY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E101F000FF;
+	Sat, 12 Sep 2026 07:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198306;
-	bh=kSVLaISLwhucokfacSSSH2HSZgkpME5ns2GquErvEMw=;
+	s=korg; t=1789198312;
+	bh=NVo3BLbk5Rzz6PdNN9UAEQi5iItlkLEceoTFuRVso7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qI8Z7bEiEYOz1h/1tFusPuWs2F5AXgiZgjA63DZdswMpHKJsRfh2BA8bbQPumFpLU
-	 sYFK6IQU4dcttggnmrtWgkZZaz1iXgd6eHGIWynrWpQGpzxIa6ty51xaN+yMmb578p
-	 kMPvHnIRLJryTY6k+6SoNbq6hsd9fLONHLG/4Lhs=
+	b=tIiRwbeYhUA202gy3BGYb+6bsuBtUR6KQcgSVdx4NwAac31uMqoA4geU2/jvzys75
+	 r4khjnKEUeO7fqXdjeyRUr6jEdSoKepHhGYz1Tdl915o+5ubE+TWturuzVa9y9m2K6
+	 RfnukOlRnJGJrW4oGLS1+8PEKudo6MY/85yerA5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Atish Patra <atishp@meta.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0352/1815] crypto: ccp - Fix memory leak in SEV INIT_EX path
-Date: Sat, 12 Sep 2026 08:35:02 +0200
-Message-ID: <20260912065657.175094578@linuxfoundation.org>
+Subject: [PATCH 7.2 0353/1815] hwrng: ks-sa - Fix runtime PM cleanup on registration failure
+Date: Sat, 12 Sep 2026 08:35:03 +0200
+Message-ID: <20260912065657.198271837@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,79 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Atish Patra <atishp@meta.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit c8e53ada20d352b0f1bdc3e58405a9edab897a2e ]
+[ Upstream commit 1c17b601fafb09c9ec074fd097737d20eafe7d63 ]
 
-allocated pages in _init_ext_path are never freed and sev_init_ex_buffer
-is left pointing at the leaked memory in case of any failures during the
-function..
+ks_sa_rng_probe() enables runtime PM and resumes the device before
+registering the hwrng. If devm_hwrng_register() fails, probe returns
+without dropping the runtime PM usage count or disabling runtime PM.
 
-Fix by adding an error path that frees the pages and clears
-sev_init_ex_buffer. Make sure we only free the memory if the failure
-happens before the conversion. Otherwise, we may end up trying to free
-up converted pages in case of reclaim failure. rmp_mark_pages_firmware
-failures should be rare enough to avoid more code complexity to track
-down which pages were reclaimed/leaked vs which are not.
+Unwind the runtime PM state on the registration failure path, matching
+the cleanup done by remove().
 
-Fixes: 7364a6fbca45 ("crypto: ccp: Handle non-volatile INIT_EX data when SNP is enabled")
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Atish Patra <atishp@meta.com>
-Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: eb428ee0e3ca ("hwrng: ks-sa - add hw_random driver")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/sev-dev.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/char/hw_random/ks-sa-rng.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
-index 46ea24be22d04..e7db638c25276 100644
---- a/drivers/crypto/ccp/sev-dev.c
-+++ b/drivers/crypto/ccp/sev-dev.c
-@@ -1545,7 +1545,7 @@ static int __sev_platform_init_handle_init_ex_path(struct sev_device *sev)
- 	if (sev_init_ex_buffer)
- 		return 0;
- 
--	page = alloc_pages(GFP_KERNEL, get_order(NV_LENGTH));
-+	page = alloc_pages(GFP_KERNEL | __GFP_ZERO, get_order(NV_LENGTH));
- 	if (!page) {
- 		dev_err(sev->dev, "SEV: INIT_EX NV memory allocation failed\n");
- 		return -ENOMEM;
-@@ -1555,7 +1555,7 @@ static int __sev_platform_init_handle_init_ex_path(struct sev_device *sev)
- 
- 	rc = sev_read_init_ex_file();
- 	if (rc)
--		return rc;
-+		goto err_free;
- 
- 	/* If SEV-SNP is initialized, transition to firmware page. */
- 	if (sev->snp_initialized) {
-@@ -1564,11 +1564,22 @@ static int __sev_platform_init_handle_init_ex_path(struct sev_device *sev)
- 		npages = 1UL << get_order(NV_LENGTH);
- 		if (rmp_mark_pages_firmware(__pa(sev_init_ex_buffer), npages, true)) {
- 			dev_err(sev->dev, "SEV: INIT_EX NV memory page state change failed.\n");
--			return -ENOMEM;
-+			rc = -ENOMEM;
-+			/*
-+			 * Pages can be in an inconsistent state, don't release them back to the
-+			 * system.
-+			 */
-+			goto err_reset;
- 		}
+diff --git a/drivers/char/hw_random/ks-sa-rng.c b/drivers/char/hw_random/ks-sa-rng.c
+index 9e408144a10c1..4494f1e4ab4db 100644
+--- a/drivers/char/hw_random/ks-sa-rng.c
++++ b/drivers/char/hw_random/ks-sa-rng.c
+@@ -242,7 +242,14 @@ static int ks_sa_rng_probe(struct platform_device *pdev)
+ 		return dev_err_probe(dev, ret, "Failed to enable SA power-domain\n");
  	}
  
- 	return 0;
+-	return devm_hwrng_register(&pdev->dev, &ks_sa_rng->rng);
++	ret = devm_hwrng_register(dev, &ks_sa_rng->rng);
++	if (ret) {
++		pm_runtime_put_sync(dev);
++		pm_runtime_disable(dev);
++		return ret;
++	}
 +
-+err_free:
-+	__free_pages(page, get_order(NV_LENGTH));
-+err_reset:
-+	sev_init_ex_buffer = NULL;
-+	return rc;
++	return 0;
  }
  
- static int __sev_platform_init_locked(int *error)
+ static void ks_sa_rng_remove(struct platform_device *pdev)
 -- 
 2.53.0
 
