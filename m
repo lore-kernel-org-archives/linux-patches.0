@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C7919D8BC;
-	Sat, 12 Sep 2026 07:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6C83F076F;
+	Sat, 12 Sep 2026 07:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197423; cv=none; b=jY9iREy81oYjsAGHcozaXH1aPN9OD+rg3upzcbUKyIsdUIdUo4tbv1SjsUSIuTkooNoX0t0TjAR4pzHGB2+fMsm5xiepxJUprShYXqDZpFwgymdg7jT+8xC7YSCgCeIKKjbjX1d1qBz3WylFWqA/WuAGOl8N8cSuYMLPNVNKoGo=
+	t=1789197428; cv=none; b=SIHwAKK96lij62n9zVnLXupw1V5tk9E3Uu5hbTSEXpNoKwTFshzj/HcADlx1LZ8JAyb4mXM59td3YYHb5JGm2aXH3VUpDD1FVlUcy85rzMcdFZlJP6aCWoKB6nqgMEoi2PxQE6KSySixW7pezkZBY8OPOX3b83yLZYHAcvdeB20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197423; c=relaxed/simple;
-	bh=9L21W7Z7n6DHF3uZbX5fNfAoghGCyue6Q/tWPRZ9SwQ=;
+	s=arc-20240116; t=1789197428; c=relaxed/simple;
+	bh=OXWx+UIOziEAsgIC9CpeNgylu4qF1PUxFPLpLJC581o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O9artT5mWduCpYKPvZ6df2pUUY8kzuKN1hggc2Whz24FWbJkCcfV9xtd7MyyWwImqw6Axfjb9lVpxNr0A1JR1xWRdG+jET48W7mesGuQ0QdIGPYu06BrfaIThfUpuJKP4LaT8X3xpxBFcO6CxJ3DaVYnXPcLwyo+IuQ6D5Iwt04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZpDzuP51; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cIMPxobmcZGZhTLcpobI02w5sgHYkiTBVCreWnW6ch6hshG2zGqinUFjTUqlVePak8oJOuljv4PH+i6Q/c6DvGB+BoCElXUXrC7FpYQKHUbnvljH9Uku2oCvFzrFp3ihBvW8BHAfnnL4nopcl3Bc76eFy3KnXwTd+0eRVqVT740=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7hHIuC6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZpDzuP51"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE8A1F000FF;
-	Sat, 12 Sep 2026 07:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7hHIuC6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C910E1F000FF;
+	Sat, 12 Sep 2026 07:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197422;
-	bh=tjs2ZZlU0B1HwQwBZZBLuzD/fW7elwZh8gLUNgwkjeI=;
+	s=korg; t=1789197426;
+	bh=qLRk5tG15WHlEnaxXkbAKh/FauTmjpjzQpDQPWdsEAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZpDzuP51rm9zkw93ClwOy1GM4V9fAGDVizi8knyn21IwwThK452wGYhMmgx0oCJE/
-	 6firpveESHMXg54hYpavJPveAcTmCGz+jfsVBDIue0G01FykrQh6Fx057NdUU06cVI
-	 Y5P7NmjKLdp+QFHm3WXADfoZtvZQa8asR64CKuEI=
+	b=g7hHIuC62FVMviNZofHex7SUZc+okOL5hGc0qSCa78iDG6C9njBgtHutwn2MORnrP
+	 dBIcVNChe8Ds5f/L98ZB2HQxwbixLmj3VaqvFmdAypy6ZEaSpgPyF2c/rsy0yJxnd4
+	 2W2txi08fb8q2uGIk3bz+UNk/Al2nhuz2wBzs3R0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zong-Zhe Yang <kevin_yang@realtek.com>,
+	Dmitry Morgun <d.morgun@ispras.ru>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0170/1815] wifi: rtw89: fw: fix link ID filling for LPS MLO common info
-Date: Sat, 12 Sep 2026 08:32:00 +0200
-Message-ID: <20260912065652.997616875@linuxfoundation.org>
+Subject: [PATCH 7.2 0171/1815] wifi: rtw89: check return values in rtw89_ops_start_ap()
+Date: Sat, 12 Sep 2026 08:32:01 +0200
+Message-ID: <20260912065653.021915266@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,58 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zong-Zhe Yang <kevin_yang@realtek.com>
+From: Dmitry Morgun <d.morgun@ispras.ru>
 
-[ Upstream commit c1eabaaa088ddbb1b937cd339adfa4c18e93c93d ]
+[ Upstream commit a8cddb62c573f28eef5f887a8f3156e8ee22776a ]
 
-The link ID field in H2C command of LPS MLO common info is incorrectly
-filled with the PHY index. Fix it with the target link ID.
+Several functions called in rtw89_ops_start_ap() may fail to allocate
+skb or fail to send H2C command to firmware, returning -ENOMEM or an
+error code. Their return values are ignored, so subsequent commands
+are executed with incorrect state.
 
-Fixes: 20380a039ddd ("wifi: rtw89: phy: add H2C command to send detail RX gain and link parameters for PS mode")
-Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Check the return values and propagate errors.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: a52e4f2ce0f5 ("rtw89: implement ieee80211_ops::start_ap and stop_ap")
+Signed-off-by: Dmitry Morgun <d.morgun@ispras.ru>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260625061545.44808-8-pkshih@realtek.com
+Link: https://patch.msgid.link/20260629094452.8709-1-d.morgun@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/fw.c | 4 ++--
- drivers/net/wireless/realtek/rtw89/fw.h | 2 ++
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw89/mac80211.c | 35 ++++++++++++++++---
+ 1 file changed, 30 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
-index c91e7ec8b9722..2824cee964cb2 100644
---- a/drivers/net/wireless/realtek/rtw89/fw.c
-+++ b/drivers/net/wireless/realtek/rtw89/fw.c
-@@ -3439,7 +3439,7 @@ int rtw89_fw_h2c_lps_ml_cmn_info_v1(struct rtw89_dev *rtwdev,
- 	h2c->rfe_type = efuse->rfe_type;
- 	h2c->rssi_main = U8_MAX;
+diff --git a/drivers/net/wireless/realtek/rtw89/mac80211.c b/drivers/net/wireless/realtek/rtw89/mac80211.c
+index 9baedfde70854..c1be69a3c1926 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac80211.c
++++ b/drivers/net/wireless/realtek/rtw89/mac80211.c
+@@ -826,11 +826,36 @@ static int rtw89_ops_start_ap(struct ieee80211_hw *hw,
  
--	memset(h2c->link_id, 0xfe, RTW89_BB_PS_LINK_BUF_MAX);
-+	memset(h2c->link_id, RTW89_BB_PS_LINK_ID_SKIP, RTW89_BB_PS_LINK_BUF_MAX);
- 
- 	rtw89_vif_for_each_link(rtwvif, rtwvif_link, link_id) {
- 		u8 phy_idx = rtwvif_link->phy_idx;
-@@ -3447,7 +3447,7 @@ int rtw89_fw_h2c_lps_ml_cmn_info_v1(struct rtw89_dev *rtwdev,
- 		bb = rtw89_get_bb_ctx(rtwdev, phy_idx);
- 		chan = rtw89_chan_get(rtwdev, rtwvif_link->chanctx_idx);
- 
--		h2c->link_id[phy_idx] = phy_idx;
-+		h2c->link_id[phy_idx] = link_id;
- 		h2c->central_ch[phy_idx] = chan->channel;
- 		h2c->pri_ch[phy_idx] = chan->primary_channel;
- 		h2c->band[phy_idx] = chan->band_type;
-diff --git a/drivers/net/wireless/realtek/rtw89/fw.h b/drivers/net/wireless/realtek/rtw89/fw.h
-index 20721d5209aa3..5873301fc4729 100644
---- a/drivers/net/wireless/realtek/rtw89/fw.h
-+++ b/drivers/net/wireless/realtek/rtw89/fw.h
-@@ -2053,6 +2053,8 @@ enum rtw89_bb_link_rx_gain_table_type {
- 	RTW89_BB_PS_LINK_RX_GAIN_TAB_MAX,
- };
- 
-+#define RTW89_BB_PS_LINK_ID_SKIP 0xfe
+ 	ether_addr_copy(rtwvif_link->bssid, link_conf->bssid);
+ 	rtw89_cam_bssid_changed(rtwdev, rtwvif_link);
+-	rtw89_mac_port_update(rtwdev, rtwvif_link);
+-	rtw89_chip_h2c_assoc_cmac_tbl(rtwdev, rtwvif_link, NULL);
+-	rtw89_fw_h2c_role_maintain(rtwdev, rtwvif_link, NULL, RTW89_ROLE_TYPE_CHANGE);
+-	rtw89_fw_h2c_join_info(rtwdev, rtwvif_link, NULL, true);
+-	rtw89_fw_h2c_cam(rtwdev, rtwvif_link, NULL, NULL, RTW89_ROLE_TYPE_CHANGE);
++	ret = rtw89_mac_port_update(rtwdev, rtwvif_link);
++	if (ret) {
++		rtw89_warn(rtwdev, "failed to update mac port\n");
++		return ret;
++	}
 +
- enum rtw89_bb_ps_link_buf_id {
- 	RTW89_BB_PS_LINK_BUF_0 = 0x00,
- 	RTW89_BB_PS_LINK_BUF_1 = 0x01,
++	ret = rtw89_chip_h2c_assoc_cmac_tbl(rtwdev, rtwvif_link, NULL);
++	if (ret) {
++		rtw89_warn(rtwdev, "failed to send h2c cmac table\n");
++		return ret;
++	}
++
++	ret = rtw89_fw_h2c_role_maintain(rtwdev, rtwvif_link, NULL, RTW89_ROLE_TYPE_CHANGE);
++	if (ret) {
++		rtw89_warn(rtwdev, "failed to send h2c role info\n");
++		return ret;
++	}
++
++	ret = rtw89_fw_h2c_join_info(rtwdev, rtwvif_link, NULL, true);
++	if (ret) {
++		rtw89_warn(rtwdev, "failed to send h2c join info\n");
++		return ret;
++	}
++
++	ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, NULL, NULL, RTW89_ROLE_TYPE_CHANGE);
++	if (ret) {
++		rtw89_warn(rtwdev, "failed to send h2c cam\n");
++		return ret;
++	}
++
+ 	rtw89_chip_rfk_channel(rtwdev, rtwvif_link);
+ 
+ 	if (RTW89_CHK_FW_FEATURE(NOTIFY_AP_INFO, &rtwdev->fw)) {
 -- 
 2.53.0
 
