@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A8547887F;
-	Sat, 12 Sep 2026 13:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEAA47887F;
+	Sat, 12 Sep 2026 13:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218691; cv=none; b=u/D7CjE4eUEUKjEqul5oY6KKbKe1lcthJK2PDmGFj7y7C102Iqp9UUx2nRYgojrtKqp1A/wVAWpleOwwnjD6jZMrXK3SOBD4C+Ez0xbAaXipDBoVksQYdB9YXCzdAs2GQpM098uJff1HGCDtjk0mhwXkg1rq312FIaRfRFhQkiM=
+	t=1789218697; cv=none; b=pfcJz6Qr2VKcnQuIXqekOgfsCs7aAk1lnj4vFWvIofwOzmhb1o/rL0P98l6qfWz1oX4FXgsCO4iEo3JrxFBXL2iU2JgMEYy089Qy0wCm/pw9Uxr6dEaByRcZ8m7XQI/r/+nahu0TIHqsEIxomAaabK/D5NX6D7m/Qlcs1WRk3eM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218691; c=relaxed/simple;
-	bh=318NGNeL7tSeFZMWxpY/2/IjHGRd9BcaouDsY3p3PHk=;
+	s=arc-20240116; t=1789218697; c=relaxed/simple;
+	bh=8JHtXr1vaMJRjfgfSckz2mKEwoWGRvYYrDCkX/BtQ78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mZVZGELy9guXxYEC1G0J0vukjht25lsHk+pN5h3MPvl+yli1ptqZpsmlmFMTbZnQl7Kj32q0AXeODZ+cFf30r+XgHBFERiXnmhfapI7llQcg8Yze9uN1AaRTcJidW7Ucgi2ZggKMi0j9RSnJB+Ir/6a5EmaCTM6BvXkkLnGFNco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1Ebw+od; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fLXqYBTeXYj6t7Dw69p2W2S4TP19LJlSSDxSKP2PNKpoTozBdGiSQwMjNDE1/+hgihXVBKS/hesvIT2qmGikgp2zNpnxj5unakRGeGybk8c1DnCbhLZ2hg+tl1/GFaED3Dwe3oA55VmncFaXYksBc8HC9AGh49dDZc2Eid11d7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMnyWMGB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1Ebw+od"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51CA1F000FF;
-	Sat, 12 Sep 2026 13:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMnyWMGB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086B41F000FF;
+	Sat, 12 Sep 2026 13:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218690;
-	bh=5y3B0eRs0+Wo9dgMO2XnOK1sBiBtDGzpBeeJKcxFKYM=;
+	s=korg; t=1789218694;
+	bh=GU2Byixi88qY+/25mRPlGA8PbkYheG1o3dBOQ7ZBkRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O1Ebw+odkpj9YzYFJ959qV5VwTJyC/+qBLYAyUrDL5Hv/GTK1CxruBdvbjcDun5S/
-	 sPEXTGyx6EbuxHWZWUEZvTP0AkJakJeOZOjVIBV/Hn3cDZud2wBmB1PYf3uDZBAoZG
-	 9yY6L+5haenMUZQdiG27hE3TsIfcFtqaou1cI2Ik=
+	b=jMnyWMGBd3JTqblPBJP8iIeEr4dnChO13/utejz58wRoKJbSwKt+cfAizTWxp9Mvn
+	 zIuxaIWiLB/C4p0Bo5VzK0gzEg14lOEazNur8EREtpMwbGkEBdtq/CNZON7i42/DBC
+	 /7O7sLfTe/d81/XJRLFy2ssRI9EZLp7vaqqr/H8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Szymon Wilczek <swilczek.lx@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Xin Xie <xiexinet@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1159/1376] hwmon: (coretemp) Fix core_data leak on CPUs without PTS
-Date: Sat, 12 Sep 2026 08:59:45 +0200
-Message-ID: <20260912065633.384936286@linuxfoundation.org>
+Subject: [PATCH 6.12 1195/1376] net: hsr: free learned nodes on device setup failure
+Date: Sat, 12 Sep 2026 09:00:21 +0200
+Message-ID: <20260912065634.182735840@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,58 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Szymon Wilczek <swilczek.lx@gmail.com>
+From: Xin Xie <xiexinet@gmail.com>
 
-[ Upstream commit 0cd8450c257faa0cece0e0c43d3b55d1a389acc7 ]
+[ Upstream commit 7f16289b91eb316f170a6bd22d32e6c632f6a5b6 ]
 
-pdata->core_data is allocated in init_temp_data() when the first core
-temp_data of a package is created, but it is only released from
-destroy_temp_data(), and only in the branch that handles the package
-temp_data.
+hsr_dev_finalize() can fail after a lower-device RX handler has
+already been registered (slave A is added before the failable slave B
+and interlink adds). RX handlers run in softirq regardless of the
+master's state, so frames received in that window can learn dynamic
+nodes into node_db, and the error unwind never releases them.
 
-Package temp_data is created solely when the CPU supports
-X86_FEATURE_PTS. On a CPU without it, coretemp_cpu_online() never calls
-coretemp_add_core() with pkg_flag set, so pdata->pkg_data stays NULL.
-coretemp_cpu_offline() then skips the removal of the package interface,
-destroy_temp_data() is never called for package data, and the array is
-still allocated when coretemp_device_remove() frees the platform data
-that pointed at it.
+Free both owned dynamic databases in the unwind, mirroring
+hsr_dellink(). proxy_node_db is provably empty on every current error
+exit (only interlink RX feeds it, and the interlink add is the last
+failable step) and is freed for symmetry. The order is safe:
+hsr_del_port() unregisters each RX handler with synchronize_net()
+before hsr_del_nodes() runs, which removes remaining entries with
+list_del_rcu() and defers their release with call_rcu() for readers
+already under RCU.
 
-Release the array in coretemp_device_remove(). destroy_temp_data() sets
-pdata->core_data to NULL when it frees it, so the added kfree() is a
-no-op on CPUs that do have PTS.
-
-Tested on an Intel Core i5-1135G7. The driver was instrumented to log
-every allocation and release of pdata->core_data, and the PTS check in
-coretemp_cpu_online() was patched out to emulate a CPU without package
-thermal support. Without this change the array was allocated and never
-released, and coretemp_device_remove() still saw a non-NULL pointer.
-With it the array is released and the pointer accounting balances. On an
-unmodified build the release still happens via the package temp_data and
-the added kfree() sees NULL, with no slab warnings over repeated module
-load and unload cycles.
-
-Fixes: 1a793caf6f69 ("hwmon: (coretemp) Use dynamic allocated memory for core temp_data")
-Signed-off-by: Szymon Wilczek <swilczek.lx@gmail.com>
-Link: https://lore.kernel.org/r/20260810192344.3733721-1-swilczek.lx@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 81ba6afd6e64 ("net/hsr: Switch from dev_add_pack() to netdev_rx_handler_register()")
+Signed-off-by: Xin Xie <xiexinet@gmail.com>
+Link: https://patch.msgid.link/20260808110814.1637-1-xiexinet@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/hsr/hsr_device.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index 1b9203b20d709..afa481b08c8eb 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -656,6 +656,7 @@ static void coretemp_device_remove(int zoneid)
- 	struct platform_data *pdata = platform_get_drvdata(pdev);
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index fddc80c4bd24d..988d35866d043 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -819,6 +819,8 @@ int hsr_dev_finalize(struct net_device *hsr_dev, struct net_device *slave[2],
+ 	hsr_del_ports(hsr);
+ err_add_master:
+ 	hsr_del_self_node(hsr);
++	hsr_del_nodes(&hsr->node_db);
++	hsr_del_nodes(&hsr->proxy_node_db);
  
- 	ida_destroy(&pdata->ida);
-+	kfree(pdata->core_data);
- 	kfree(pdata);
- 	platform_device_unregister(pdev);
- }
+ 	if (unregister)
+ 		unregister_netdevice(hsr_dev);
 -- 
 2.53.0
 
