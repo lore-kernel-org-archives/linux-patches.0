@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09D842586B;
-	Sat, 12 Sep 2026 13:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588D737B00E;
+	Sat, 12 Sep 2026 13:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218894; cv=none; b=D4bUjSy010K75r2osWdsecQZlIPAHrke/5eml2VNdl39d/fQo1GGOvrLPIdDLKaDsPrunIzrxS7rymG4xxAKXza1R2BJHrIBxQmWsWD8a285SQX10PV+jrxkX6j9SOpTGngdN2wRc3wHrUHaQMczRnUd4e1Lw9ncNrocVKGVUDo=
+	t=1789218898; cv=none; b=rFVYok+r68OThNpvX5tZ+rt2CC8/r5gZ5VaXfZvvTBgvhg9DquZe9xhL8F3J74Gsz1Q7O319QR4gDWAYhh4X+N3G0P1oqz8q1EaUHkMcNRAlaq/TcK0e5hZlvMO3NbzHcWzsqKN00HB5fgmIU8hsOR1SZWN3+RqDpfqhWnoNBtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218894; c=relaxed/simple;
-	bh=hYT6YjWNCJDYZdS9P+5/B5YFb/zxg+ZdYHeaiSvjruo=;
+	s=arc-20240116; t=1789218898; c=relaxed/simple;
+	bh=vYr7wZHqmVPuI5Sn8qTV3sLIMSwdSx9x0KLTF68hzf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DRL9xNXUCiQq3GcF1fyZeFIp761ykw1ENkwlUstmLdbjC6PR9mQmua5x2HEnl4Ndj91Xc9R4U4NMSr4nExb9/imMek5rP4Bl/Z0zu8WppK+3+oCGuzK8Y17GdZFSWjcQFoOc0D1xQr126bJde22wyyq6vxHDzP82czLaWSylG7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJ2Zs2rR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jm7JPXaAYuSWJunQNyhT6X+ldCb7ZM89AtPBRQ2+ig5j1tw72EnIVrt8bQrI2pXmpur1ovn+5OZ+r5GC/edZKL58Tln0tglI3tAMzDV0/jBjQ1NgLbAn087gf+bCCjlHETpO2SpqyK09UvuhEScZEV1KIfniNwsnInEHSL5XE8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2omchrO+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJ2Zs2rR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFA01F000FF;
-	Sat, 12 Sep 2026 13:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2omchrO+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2979B1F000FF;
+	Sat, 12 Sep 2026 13:14:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218892;
-	bh=OqpTcbJcA3oocsdzXKFBYBMScSx1zcD9NvQMyqK9N3w=;
+	s=korg; t=1789218897;
+	bh=8ZulsY2Dx5LlDX4bn/qh5jCKofWoe4efT+Z2BjCFQWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WJ2Zs2rRy+n8aoX/TBdqcL8PUe25Oa68dG0nzJKRYe2MgnmMGtgV6vZX75Nd4pjVv
-	 HXe7afNOwX2xkpk9+CkXBpmmaCV2oKh+qYFl1X+ZqvkMILwpH5ed1rQIxh99c+IHx6
-	 hvhDKdAMfQNN27gifPzE8Xki1lQFMpp/pjpMcaE0=
+	b=2omchrO+qDNrkaZzC+9V2qanMPtiveCoIlw5a2klHXcdinoYj7cbVwPTXMXHR+cbS
+	 7yGd9emWHvpvCFpv1IPAZ3NUpclbT3BLomxm4ImRnqLcVrBQ9HVG2x23bKe8TByQwg
+	 SaoTFwGTGhcdePd1aclymnzbMZKMLYB3wjN8Uc1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <include@grrlz.net>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Cyrill Gorcuno <gorcunov@openvz.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Brian Masney <bmasney@redhat.com>,
+	Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1238/1376] prctl: fix PR_SET_MM_AUXV losing the forced AT_NULL terminator
-Date: Sat, 12 Sep 2026 09:01:04 +0200
-Message-ID: <20260912065635.136493056@linuxfoundation.org>
+Subject: [PATCH 6.12 1239/1376] clk: ti: Make sure clk_init_data is fully initialized
+Date: Sat, 12 Sep 2026 09:01:05 +0200
+Message-ID: <20260912065635.159372798@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,83 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <include@grrlz.net>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 5146e0688d86f0654263e4b0e4ff1719b4072f16 ]
+[ Upstream commit 3ae1674975d48fb6d343d03ff7961abd6904af1a ]
 
-prctl_set_auxv() copies the user vector into a stack buffer, forces
-AT_NULL on the last two entries there, and then copies only len bytes into
-mm->saved_auxv.  Which is fine until the vector is shorter than the
-buffer, because then the forced terminator sits past the end of the copy
-and never lands in saved_auxv at all.
+The clk_init_data structure contains several mutually-exclusive members
+for different methods to specify the possible parents of a clock,
+prompting drivers to initialize only the members they need.  However,
+not initializing all members may cause subtle issues, which are only
+exposed when CONFIG_INIT_STACK_ALL_PATTERN or CONFIG_INIT_STACK_NONE is
+enabled.
 
-The code even says
+_register_mux() fills in init.parent_data, and assumes that
+init.parent_names is NULL.  However, the latter is uninitialized, and
+thus may cause a crash.
 
-	/* Make sure the last entry is always AT_NULL */
+Make sure all members are fully initialized, to fix such bugs, and to
+avoid future breakage when converting drivers to a different method for
+specifying the parents.
 
-and it does, just not in the part that gets copied.
-
-So mm->saved_auxv keeps the stale tail from exec.  Reproducing it is easy:
-from a process with CAP_SYS_RESOURCE (just run it as root), call
-prctl(PR_SET_MM, PR_SET_MM_AUXV, ...) with a vector that has a couple of
-entries and no AT_NULL inside len (32 bytes on arm64), and then hexdump
-/proc/self/auxv, or gcore the process and look at the AUXV note with
-readelf -n.  This is arm64, the new vector was just { AT_UID, 0x1111,
-AT_GID, 0x2222 }:
-
-    idx  before (from exec)               after the prctl
-    [0]  AT_SYSINFO_EHDR   0x7ed1d6e000   AT_UID    0x1111    <- new
-    [1]  AT_MINSIGSTKSZ    0x1270         AT_GID    0x2222    <- new
-    [2]  AT_HWCAP          0x119fff       AT_HWCAP  0x119fff  <- stale
-    [3]  AT_PAGESZ         0x1000         AT_PAGESZ 0x1000    <- stale
-    ...  16 more entries                  ...                 <- stale
-    [20] AT_NULL           0x0            AT_NULL   0x0
-
-21 entries before the prctl, still 21 after: the two new ones plus all 19
-left over from exec.
-
-Every consumer walks the vector until AT_NULL, so what they get now is a
-vector that never existed at exec, the head from the prctl glued onto the
-tail of the old binary.  gdb and crash pull the AUXV note out of coredumps
-to find AT_PHDR, AT_ENTRY, AT_SYSINFO_EHDR and friends, and a mixed vector
-points them at the wrong layout.  /proc/<pid>/auxv and PR_GET_AUXV hand
-the same mess out to live processes too.  Nothing crashes, everything just
-quietly reads a frankenstein auxv.
-
-And callers that terminate their own vector hide the whole thing, which is
-likely why nobody noticed since PR_SET_MM_AUXV landed in 2012.  Nothing
-exciting security wise either, I mean it needs CAP_SYS_RESOURCE to begin
-with.
-
-prctl_set_mm_map() right above already copies the whole buffer for exactly
-this reason, so just do the same here.  user_auxv is zero initialized and
-only partially filled from userspace, so the rest is zeros and nothing
-leaks.
-
-Link: https://lore.kernel.org/20260809002901.32591-1-include@grrlz.net
-Fixes: fe8c7f5cbf91 ("c/r: prctl: extend PR_SET_MM to set up more mm_struct entries")
-Signed-off-by: Bradley Morgan <include@grrlz.net>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
-Cc: Cyrill Gorcuno <gorcunov@openvz.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 667f420c09f1417c ("clk: ti: mux: resolve parent clocks by DT index, not by name")
+Closes: https://lore.kernel.org/CAMuHMdU3yVqoyHC4eNF2NuYo8wy+6ODLoYat4R71X99Mxc_=kw@mail.gmail.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sys.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/ti/adpll.c   | 4 ++--
+ drivers/clk/ti/divider.c | 2 +-
+ drivers/clk/ti/mux.c     | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/sys.c b/kernel/sys.c
-index 8283e35c9eeb5..6c870636ea73c 100644
---- a/kernel/sys.c
-+++ b/kernel/sys.c
-@@ -2153,7 +2153,7 @@ static int prctl_set_auxv(struct mm_struct *mm, unsigned long addr,
- 	BUILD_BUG_ON(sizeof(user_auxv) != sizeof(mm->saved_auxv));
+diff --git a/drivers/clk/ti/adpll.c b/drivers/clk/ti/adpll.c
+index e305fcbac6475..8885d28face50 100644
+--- a/drivers/clk/ti/adpll.c
++++ b/drivers/clk/ti/adpll.c
+@@ -483,7 +483,7 @@ static const struct clk_ops ti_adpll_ops = {
  
- 	task_lock(current);
--	memcpy(mm->saved_auxv, user_auxv, len);
-+	memcpy(mm->saved_auxv, user_auxv, sizeof(user_auxv));
- 	task_unlock(current);
+ static int ti_adpll_init_dco(struct ti_adpll_data *d)
+ {
+-	struct clk_init_data init;
++	struct clk_init_data init = {};
+ 	struct clk *clock;
+ 	const char *postfix;
+ 	int width, err;
+@@ -576,7 +576,7 @@ static int ti_adpll_init_clkout(struct ti_adpll_data *d,
+ 				struct clk *clk1)
+ {
+ 	struct ti_adpll_clkout_data *co;
+-	struct clk_init_data init;
++	struct clk_init_data init = {};
+ 	struct clk_ops *ops;
+ 	const char *parent_names[2];
+ 	const char *child_name;
+diff --git a/drivers/clk/ti/divider.c b/drivers/clk/ti/divider.c
+index ade99ab6cfa9b..3f30cb0806c1d 100644
+--- a/drivers/clk/ti/divider.c
++++ b/drivers/clk/ti/divider.c
+@@ -309,7 +309,7 @@ static struct clk *_register_divider(struct device_node *node,
+ 				     u32 flags,
+ 				     struct clk_omap_divider *div)
+ {
+-	struct clk_init_data init;
++	struct clk_init_data init = {};
+ 	const char *parent_name;
+ 	const char *name;
  
- 	return 0;
+diff --git a/drivers/clk/ti/mux.c b/drivers/clk/ti/mux.c
+index 91772c8be0414..1a0e12b3b3fd5 100644
+--- a/drivers/clk/ti/mux.c
++++ b/drivers/clk/ti/mux.c
+@@ -124,9 +124,9 @@ static struct clk *_register_mux(struct device_node *node, const char *name,
+ 				 struct clk_omap_reg *reg, u8 shift, u32 mask,
+ 				 s8 latch, u8 clk_mux_flags, u32 *table)
+ {
++	struct clk_init_data init = {};
+ 	struct clk_omap_mux *mux;
+ 	struct clk *clk;
+-	struct clk_init_data init;
+ 
+ 	/* allocate the mux */
+ 	mux = kzalloc(sizeof(*mux), GFP_KERNEL);
 -- 
 2.53.0
 
