@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5E33290D1;
-	Sat, 12 Sep 2026 16:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EB32882AB;
+	Sat, 12 Sep 2026 16:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231074; cv=none; b=aZF1NeMektt6v0O7paqHhb2Xb7OzWlMptnI66skh23MI3RTPN0Bm9fDsnPkLkcOZM2sTIibv1yCDQxDqJN5m13bgts1y80TrWV61gr2a/yZbWxlYNuRC3oTw9ybMQaRUECMvE2oVVlTjCnNFIbIoV0YNu/i/Fy1aQLkRI2n5wBs=
+	t=1789231079; cv=none; b=LVSAtVqIRkDSazIYG4d46evL1mJkSp1OXmhsRs4aaZ//JTF9iOgjvppn5INsei6Z4jKRvjpL3wr5W5Tqf5Ipc1A6brNr/M4Si2pAno4uf7wc5XoCtfGydD6sitoSv8nnoungyzckpI9kiInFg9DTtvB8kYIW178fLbXFzNQDAWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231074; c=relaxed/simple;
-	bh=X4s/fq8O1xYZJgVOY35SKHvUr4oYBMRGWeztI5jIcwA=;
+	s=arc-20240116; t=1789231079; c=relaxed/simple;
+	bh=sFq+DaRNWFHAtuw+0is3Dfb81QZ37UMorcqcNIS0M5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nt0s2ENIiF7LAH8wU7C93qNLEK02kSk3hwMLk7s0YiNR0btgnJcolnnnM80QnlAL4SvSr7Et98UIj8ZJHiXh+JfJocnFtOfG3gHgAVXWkAWMS+HshXmOKKDbreTkOTcl8mMt+OV3JiBhv2v+Nyo2l0y1I4oxNPRJINh1P/yHwL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJJ/KCjL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lXAyxKz7Oy6TOoY5qqvw7+IUvr266jaS83+GhQNGQOTWIQdIT2OoSPuJZiZ1PPyk4feI3iJ1aWoehW8n+O7+9ozjzCkR7UDWuBIVvvSmMkl5WkyLoxU2E6j2KAt+IsBArVjn0OEhrWaqJPyE0ud8G8t/2C0Ae69Sq5XLUlSPubQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQVP4sUE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJJ/KCjL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F011F000FF;
-	Sat, 12 Sep 2026 16:37:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQVP4sUE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0DBD1F000FF;
+	Sat, 12 Sep 2026 16:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231072;
-	bh=x4OF1SUdGgYkQ6ofHTM8iWVlTWEnKC5lravfo8IFaAI=;
+	s=korg; t=1789231077;
+	bh=B5+0TMcDRbd3p22uAEvMM/QMO+QP2FTVGMeDKB3Y3QQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YJJ/KCjLiJO0ZpOMiDFEHsnQwAmb18X+4BJmcIJM+rIT/gnMRzjclK/4obZ9Cj4M7
-	 X+vT8mdbhbIbTN9z8INBZuPvn+rMfl4lxT3C8lzxnqQuCPGcWW7CMNMTayzKXfvX83
-	 8f1HnmYUfWxHNu3bS1iXORVzbJXFc16LkIg2V5b0=
+	b=gQVP4sUEJfwh+3scYjGwYqkSiVz3WX5yIqYW6nRtKiGwxrQuQ7J4fjTyPoG/MmNTW
+	 4fRYhmxaa/j5r8dx4UMz7GdiWiwnaS4Iig9XfRL8ABIR36XavrzVFsUMuRIMmWiei7
+	 jDb2u07rs0jsShbQpBlVC/eoJ1Fxx0NGou0rBb4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0881/1191] of: property: add of_graph_get_next_port_endpoint()
-Date: Sat, 12 Sep 2026 09:00:09 +0200
-Message-ID: <20260912065608.032461828@linuxfoundation.org>
+Subject: [PATCH 6.1 0882/1191] bitfield: Add less-checking __FIELD_{GET,PREP}()
+Date: Sat, 12 Sep 2026 09:00:10 +0200
+Message-ID: <20260912065608.053438354@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,159 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 58fe47d6ac7413172e1fa88324fb1b4c0eb2c0a2 ]
+[ Upstream commit 2a6c045640c38a407a39cd40c3c4d8dd2fd89aa8 ]
 
-We already have of_graph_get_next_endpoint(), but it is not
-intuitive to use in some case.
+The BUILD_BUG_ON_MSG() check against "~0ull" works only with "unsigned
+(long) long" _mask types.  For constant masks, that condition is usually
+met, as GENMASK() yields an UL value.  The few places where the
+constant mask is stored in an intermediate variable were fixed by
+changing the variable type to u64 (see e.g. [1] and [2]).
 
-(X)	node {
-(Y)		ports {
-(P0)			port@0 { endpoint { remote-endpoint = ...; };};
-(P10)			port@1 { endpoint { remote-endpoint = ...; };
-(P11)				 endpoint { remote-endpoint = ...; };};
-(P2)			port@2 { endpoint { remote-endpoint = ...; };};
-		};
-	};
+However, for non-constant masks, smaller unsigned types should be valid,
+too, but currently lead to "result of comparison of constant
+18446744073709551615 with expression of type ... is always
+false"-warnings with clang and W=1.
 
-For example, if I want to handle port@1's 2 endpoints (= P10, P11),
-I want to use like below
+Hence refactor the __BF_FIELD_CHECK() helper, and factor out
+__FIELD_{GET,PREP}().  The later lack the single problematic check, but
+are otherwise identical to FIELD_{GET,PREP}(), and are intended to be
+used in the fully non-const variants later.
 
-	P10 = of_graph_get_next_endpoint(port1, NULL);
-	P11 = of_graph_get_next_endpoint(port1, P10);
+[1] commit 5c667d5a5a3ec166 ("clk: sp7021: Adjust width of _m in
+    HWM_FIELD_PREP()")
+[2] commit cfd6fb45cfaf46fa ("crypto: ccree - avoid out-of-range
+    warnings from clang")
 
-But 1st one will be error, because of_graph_get_next_endpoint()
-requested 1st parameter is "node" (X) or "ports" (Y), not but "port".
-Below works well, but it will get P0
-
-	P0 = of_graph_get_next_endpoint(node,  NULL);
-	P0 = of_graph_get_next_endpoint(ports, NULL);
-
-In other words, we can't handle P10/P11 directly via
-of_graph_get_next_endpoint().
-
-There is another non intuitive behavior on of_graph_get_next_endpoint().
-In case of if I could get P10 pointer for some way, and if I want to
-handle port@1 things by loop, I would like use it like below
-
-	/*
-	 * "ep" is now P10, and handle port1 things here,
-	 * but we don't know how many endpoints port1 have.
-	 *
-	 * Because "ep" is non NULL now, we can use port1
-	 * as of_graph_get_next_endpoint(port1, xxx)
-	 */
-	do {
-		/* do something for port1 specific things here */
-	} while (ep = of_graph_get_next_endpoint(port1, ep))
-
-But it also not worked as I expected.
-I expect it will be P10 -> P11 -> NULL,
-but      it will be P10 -> P11 -> P2,    because
-of_graph_get_next_endpoint() will fetch "endpoint" beyond the "port".
-It is not useful for generic driver.
-
-To handle endpoint more intuitive, create of_graph_get_next_port_endpoint()
-
-	of_graph_get_next_port_endpoint(port1, NULL); // P10
-	of_graph_get_next_port_endpoint(port1, P10);  // P11
-	of_graph_get_next_port_endpoint(port1, P11);  // NULL
-
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/r/87jzdyb5t5.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://git.kernel.org/torvalds/c/5c667d5a5a3ec166 [1]
+Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
 Stable-dep-of: 62bac3202042 ("drm/sun4i: tcon-top: Keep mixer routes distinct")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/property.c    | 27 +++++++++++++++++++++++++++
- include/linux/of_graph.h | 21 +++++++++++++++++++++
- 2 files changed, 48 insertions(+)
+ include/linux/bitfield.h | 36 ++++++++++++++++++++++++++++--------
+ 1 file changed, 28 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/of/property.c b/drivers/of/property.c
-index c4bd3f0965dc0..c7183c5aa221d 100644
---- a/drivers/of/property.c
-+++ b/drivers/of/property.c
-@@ -668,6 +668,33 @@ struct device_node *of_graph_get_next_port(const struct device_node *parent,
- }
- EXPORT_SYMBOL(of_graph_get_next_port);
+diff --git a/include/linux/bitfield.h b/include/linux/bitfield.h
+index c9be1657f03d9..3efe29d662952 100644
+--- a/include/linux/bitfield.h
++++ b/include/linux/bitfield.h
+@@ -60,7 +60,7 @@
  
-+/**
-+ * of_graph_get_next_port_endpoint() - get next endpoint node in port.
-+ * If it reached to end of the port, it will return NULL.
-+ * @port: pointer to the target port node
-+ * @prev: previous endpoint node, or NULL to get first
-+ *
-+ * Return: An 'endpoint' node pointer with refcount incremented. Refcount
-+ * of the passed @prev node is decremented.
-+ */
-+struct device_node *of_graph_get_next_port_endpoint(const struct device_node *port,
-+						    struct device_node *prev)
-+{
-+	while (1) {
-+		prev = of_get_next_child(port, prev);
-+		if (!prev)
-+			break;
-+		if (WARN(!of_node_name_eq(prev, "endpoint"),
-+			 "non endpoint node is used (%pOF)", prev))
-+			continue;
+ #define __bf_cast_unsigned(type, x)	((__unsigned_scalar_typeof(type))(x))
+ 
+-#define __BF_FIELD_CHECK(_mask, _reg, _val, _pfx)			\
++#define __BF_FIELD_CHECK_MASK(_mask, _val, _pfx)			\
+ 	({								\
+ 		BUILD_BUG_ON_MSG(!__builtin_constant_p(_mask),		\
+ 				 _pfx "mask is not constant");		\
+@@ -68,13 +68,33 @@
+ 		BUILD_BUG_ON_MSG(__builtin_constant_p(_val) ?		\
+ 				 ~((_mask) >> __bf_shf(_mask)) & (_val) : 0, \
+ 				 _pfx "value too large for the field"); \
+-		BUILD_BUG_ON_MSG(__bf_cast_unsigned(_mask, _mask) >	\
+-				 __bf_cast_unsigned(_reg, ~0ull),	\
+-				 _pfx "type of reg too small for mask"); \
+ 		__BUILD_BUG_ON_NOT_POWER_OF_2((_mask) +			\
+ 					      (1ULL << __bf_shf(_mask))); \
+ 	})
+ 
++#define __BF_FIELD_CHECK_REG(mask, reg, pfx)				\
++	BUILD_BUG_ON_MSG(__bf_cast_unsigned(mask, mask) >		\
++			 __bf_cast_unsigned(reg, ~0ull),		\
++			 pfx "type of reg too small for mask")
 +
-+		break;
-+	}
++#define __BF_FIELD_CHECK(mask, reg, val, pfx)				\
++	({								\
++		__BF_FIELD_CHECK_MASK(mask, val, pfx);			\
++		__BF_FIELD_CHECK_REG(mask, reg, pfx);			\
++	})
 +
-+	return prev;
-+}
-+EXPORT_SYMBOL(of_graph_get_next_port_endpoint);
++#define __FIELD_PREP(mask, val, pfx)					\
++	({								\
++		__BF_FIELD_CHECK_MASK(mask, val, pfx);			\
++		((typeof(mask))(val) << __bf_shf(mask)) & (mask);	\
++	})
++
++#define __FIELD_GET(mask, reg, pfx)					\
++	({								\
++		__BF_FIELD_CHECK_MASK(mask, 0U, pfx);			\
++		(typeof(mask))(((reg) & (mask)) >> __bf_shf(mask));	\
++	})
 +
  /**
-  * of_graph_get_next_endpoint() - get next endpoint node
-  * @parent: pointer to the parent device node
-diff --git a/include/linux/of_graph.h b/include/linux/of_graph.h
-index 44518f3583a44..a692d9d979a64 100644
---- a/include/linux/of_graph.h
-+++ b/include/linux/of_graph.h
-@@ -50,6 +50,18 @@ struct of_endpoint {
- 	for (struct device_node *child __free(device_node) = of_graph_get_next_port(parent, NULL);\
- 	     child != NULL; child = of_graph_get_next_port(parent, child))
+  * FIELD_MAX() - produce the maximum value representable by a field
+  * @_mask: shifted mask defining the field's length and position
+@@ -111,8 +131,8 @@
+  */
+ #define FIELD_PREP(_mask, _val)						\
+ 	({								\
+-		__BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: ");	\
+-		((typeof(_mask))(_val) << __bf_shf(_mask)) & (_mask);	\
++		__BF_FIELD_CHECK_REG(_mask, 0ULL, "FIELD_PREP: ");	\
++		__FIELD_PREP(_mask, _val, "FIELD_PREP: ");		\
+ 	})
  
-+/**
-+ * for_each_of_graph_port_endpoint - iterate over every endpoint in a port node
-+ * @parent: parent port node
-+ * @child: loop variable pointing to the current endpoint node
-+ *
-+ * When breaking out of the loop, and continue to use the @child, you need to
-+ * use return_ptr(@child) or no_free_ptr(@child) not to call __free() for it.
-+ */
-+#define for_each_of_graph_port_endpoint(parent, child)			\
-+	for (struct device_node *child __free(device_node) = of_graph_get_next_port_endpoint(parent, NULL);\
-+	     child != NULL; child = of_graph_get_next_port_endpoint(parent, child))
-+
- #ifdef CONFIG_OF
- bool of_graph_is_present(const struct device_node *node);
- int of_graph_parse_endpoint(const struct device_node *node,
-@@ -61,6 +73,8 @@ struct device_node *of_graph_get_next_endpoint(const struct device_node *parent,
- 					struct device_node *previous);
- struct device_node *of_graph_get_next_port(const struct device_node *parent,
- 					   struct device_node *port);
-+struct device_node *of_graph_get_next_port_endpoint(const struct device_node *port,
-+						    struct device_node *prev);
- struct device_node *of_graph_get_endpoint_by_regs(
- 		const struct device_node *parent, int port_reg, int reg);
- struct device_node *of_graph_get_remote_endpoint(
-@@ -114,6 +128,13 @@ static inline struct device_node *of_graph_get_next_port(
- 	return NULL;
- }
+ /**
+@@ -125,8 +145,8 @@
+  */
+ #define FIELD_GET(_mask, _reg)						\
+ 	({								\
+-		__BF_FIELD_CHECK(_mask, _reg, 0U, "FIELD_GET: ");	\
+-		(typeof(_mask))(((_reg) & (_mask)) >> __bf_shf(_mask));	\
++		__BF_FIELD_CHECK_REG(_mask, _reg, "FIELD_GET: ");	\
++		__FIELD_GET(_mask, _reg, "FIELD_GET: ");		\
+ 	})
  
-+static inline struct device_node *of_graph_get_next_port_endpoint(
-+					const struct device_node *parent,
-+					struct device_node *previous)
-+{
-+	return NULL;
-+}
-+
- static inline struct device_node *of_graph_get_endpoint_by_regs(
- 		const struct device_node *parent, int port_reg, int reg)
- {
+ extern void __compiletime_error("value doesn't fit into mask")
 -- 
 2.53.0
 
