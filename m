@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F45353A75;
-	Sat, 12 Sep 2026 11:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4919F353A75;
+	Sat, 12 Sep 2026 11:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212619; cv=none; b=O1oEwBfNwWYGxj2b2qtKnpj15ByXBUnvZDyjUISEXymHx94gVAtIfEKroFAsZmYbqRj6Zh4jZAdLyiPdOKYDWF2SHtWf+zFiCk7RWxx6g0a6f/QlhOZVXvHtE0HRUFSyZA7HemfkUXkK4HQzML8GyDii0V6O2jvpauoZEJ1JSWE=
+	t=1789212625; cv=none; b=pLGKgX2VakMildzaryLjEh4MPZNXP+PMkAGFWJS41BF6k6KGdjaZvwXZ7cQmYRUR0mBXGI2eUsFwKy9zmW423L+a2mLEDXacQ3JGO163KN5NztKcgODgQfoRGEF9STddsR0uEspwMTnDdgSbT72uF3phSodENKOVZA92A8DG0Fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212619; c=relaxed/simple;
-	bh=VkBfUCr1G3+XWSe6jii+JG+9VWZF+jTcOKbMXoE4DrQ=;
+	s=arc-20240116; t=1789212625; c=relaxed/simple;
+	bh=uZebNGp5n1YukaYrN4rYRvd1RP7cesPYA6ZmH5KxDYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c9tuq2Z07mJR50dipZ4h7k/aU2Liu+PJayMEByMIAuu0NTibhKpB1Bd3Kr0dywiZ5fXbRVwxIp9JVxlFF07O23o5sG+M2Z2+K6yfafPnyhJdf5vE3wLQ2Y7qDCQb7RkREac9rkmHtPXNbZhBCuxt8JaJ0DxXPxGGBVZoY9G1QEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WlmpCa7F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MhiCIXiu646kcyG00+Dtfm6LXOvrzRe0b/vWK76y8ERNW8gYTLN1dhLicdf9Nvcrzm+ozSgOHnIcNRGYyGlTdaf8GyDcIjNJuPwHKgfqfq2B05CNuX+g73lNvx2AATM4Z9uRd6/KJNcL4uQe+Nmr1XJdKHvApq/NU1QEzaVShF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8qwKnPs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlmpCa7F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A076D1F000FF;
-	Sat, 12 Sep 2026 11:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8qwKnPs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D56361F000FF;
+	Sat, 12 Sep 2026 11:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212617;
-	bh=mwsxRzOlgApWcjNtiHiDz1lTQ779yWCbJ2HtlFnzttw=;
+	s=korg; t=1789212622;
+	bh=j0/4JgQTjxReZy+4LaQfzKIUokJrQTuOpF8FenYDybQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WlmpCa7FMAbYM3EH3XuH+NKM29CQYIz3J+6Q4FCYSS2E0cl3xX/3IOLOOkzbcBMl+
-	 OUhgBK9MZUXOK6vYmbwPayPfx0TKS3SVnlln/b23Y5xjPLi3R71+2Hzlpw+r972I3O
-	 GLGAM5qohB9Ps3d4CM66h3IFcdwx+xvTTVuhhL6g=
+	b=E8qwKnPs67JjSbHIuC92NUPUJmmlTJShyx3MEo/Mbq/KWgHJexId6+n7wlN0ARwom
+	 jp3Zma2MOPWAbIxXHbj7JcyBUEqRA10BI4OkN2RvDObearIA4Gh648iIdSC9qgjIIg
+	 6dPefp05q750Gp0PM0tFJThIYfeZpaEI4OlDabNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1431/1518] ceph: Fix ERR_PTR(0) in ceph_mkdir()
-Date: Sat, 12 Sep 2026 09:00:00 +0200
-Message-ID: <20260912065655.922913063@linuxfoundation.org>
+Subject: [PATCH 6.18 1422/1518] net/sched: hhf: clamp quantum before hhf_change() to avoid overflow
+Date: Sat, 12 Sep 2026 08:59:51 +0200
+Message-ID: <20260912065655.718713082@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,35 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 4f49c3f8a5a86d237bb202ecb17c2802ddc8fd2f ]
+[ Upstream commit 2164b512b97bb053e8ce4d6e95576f11bed6a005 ]
 
-When mkdir succeeds, ceph_mkdir() sets ret to ERR_PTR(0) which is
-incorrect. It should return NULL instead for success.
+hhf_init() sets q->quantum = psched_mtu(qdisc_dev(sch)) with no overflow
+check. A device with a huge MTU (e.g. dummy with max_mtu == 0 accepting
+MTU 2147483634) makes weight * quantum overflow the signed deficit in
+hhf_dequeue(), spinning forever.
 
-Fixes: 88d5baf69082 ("Change inode_operations.mkdir to return struct dentry *")
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Clamp q->quantum before hhf_change() so both the opt and !opt paths see
+a sane quantum. Without this, bare "tc qdisc add ... hhf" succeeds with
+a clamped quantum but "tc qdisc add ... hhf limit 1000" (any option
+present) fails with -EINVAL because hhf_change() re-validates the
+unclamped default (sch_hhf.c:559). 256 matches fq_codel's floor and is
+a sane minimum for a DRR quantum.
+
+Conditions to recreate the bug: a device whose MTU (plus
+hard_header_len) wraps psched_mtu() into the sign bit (e.g. a dummy
+device with max_mtu == 0 accepting MTU 2147483634). Requires
+CAP_NET_ADMIN in a user namespace.
+
+Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260822195509.112717-6-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_hhf.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/ceph/dir.c b/fs/ceph/dir.c
-index e4577a80da58c..24abe4dbf774d 100644
---- a/fs/ceph/dir.c
-+++ b/fs/ceph/dir.c
-@@ -1173,7 +1173,7 @@ static struct dentry *ceph_mkdir(struct mnt_idmap *idmap, struct inode *dir,
- 	    !req->r_reply_info.head->is_target &&
- 	    !req->r_reply_info.head->is_dentry)
- 		err = ceph_handle_notrace_create(dir, dentry);
--	ret = ERR_PTR(err);
-+	ret = err ? ERR_PTR(err) : NULL;
- out_req:
- 	if (!IS_ERR(ret) && req->r_dentry != dentry)
- 		/* Some other dentry was spliced in */
+diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
+index e1c9d1edc8a99..863a5b3e1d096 100644
+--- a/net/sched/sch_hhf.c
++++ b/net/sched/sch_hhf.c
+@@ -623,6 +623,10 @@ static int hhf_init(struct Qdisc *sch, struct nlattr *opt,
+ 	q->hhf_evict_timeout = HZ;      /* 1  sec */
+ 	q->hhf_non_hh_weight = 2;
+ 
++	if ((int)q->quantum <= 0 ||
++	    (u64)q->quantum * q->hhf_non_hh_weight > INT_MAX)
++		q->quantum = 256;
++
+ 	if (opt) {
+ 		int err = hhf_change(sch, opt, extack);
+ 
 -- 
 2.53.0
 
