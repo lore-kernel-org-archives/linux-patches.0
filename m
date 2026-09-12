@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC922479860;
-	Sat, 12 Sep 2026 11:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF05333F59A;
+	Sat, 12 Sep 2026 11:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213393; cv=none; b=Fvw6YoM+3uCf2kv3x0nm85ijquK8Mdo0FTl5z+KAZCd9kp3ApzWGCu2e8totvS5ptiO3ZP5yz25apzNB3GFM+IqSxEyONEn6lbY45tWxB8ZUXcd8G69L+EG6/e3aohq/1gFbe1scZWPxuE2gpyvWQI5uEVbClxYbtBOupDhspG8=
+	t=1789213396; cv=none; b=DANoftLfUlSCc7LaGofU5EOItyaPML+wJCTiX11P8n+VrbKveZclBOmYZArb6luhNO7Xu88tybG7HXJNy9g69KwbO7HBOj1uXVYUNeHADNrtN2a1OTYU1vrriZ8jTssGbiXbKZtxJdSB1GQKp3onXTJBXRz04THmsdepN57pzX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213393; c=relaxed/simple;
-	bh=RDbckOZSgofmIk0e87QfnkWG77gyOmRGDfeSZUAyub8=;
+	s=arc-20240116; t=1789213396; c=relaxed/simple;
+	bh=ufOhqCbEm/t0J0uDyxUMan/Ka5g0yyydC9SomXhpXBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EMNWLuFLDEZ6L01MiQnzFIqm1hIx+HNYUVFeDCne03ALHmO5JobeFIzs00ft96Z8f/c/GyVmDzTvZ33hGaIAj4SP+qa2U3O/X7JiKCiCfz55I9Tnhwh6c2i7IHojc0SYsNy5QVTcvcvHPYAQo+SsWenneKOue8R2OwxI8yap3kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FNJA7LP/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A5Jd+Gh8z3ZMLraYr9dkQdnAB0ihJHpMVsv+6O19VZUSJe5AfXBPSL8dKIami6ffBKcBXxnc2bmWI1iSwdnWEuc9yIh1hStYBVJk7ofUCKKSvwnbbIhnWvCm6413GiJYytXoxjnUCMHCwUYptqtQf9lmBTrf3e1un7r/5UoeoYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Md8jbcTk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FNJA7LP/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E31E1F000FF;
-	Sat, 12 Sep 2026 11:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Md8jbcTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC0B1F000FF;
+	Sat, 12 Sep 2026 11:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213390;
-	bh=YHrkEk1YYfoaMwLxan46k44bipiQSJPeLS3BOht5wYQ=;
+	s=korg; t=1789213395;
+	bh=OOR1Z3nDsdJbJ7ul3HaN2yWjTaQ7Hh74REut7nPQYtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FNJA7LP/SEURI/4XL73ZUFlFDU7zrHEfN0awNJHZL2dvjaz7dORTIt9Y9RVKdSoFN
-	 zTuNIx0WWDAHklf3W05cH45xLyU2LrElWREfz6pVj0RvqQmldbGuucG62X2LSmI9tq
-	 TV7t/wS3M2uCR4LTSJTvNY40GorBudxNbak1zGy0=
+	b=Md8jbcTksx1Fo0hj5IZu+2DkBmlkypQ3zGVJ1ZguPquhd5bnA9HIcw0xCNYkJ7Wfs
+	 s7xy5rjTL7Q/dtoeqHUg9gf/e8Q4/EJPy7yQbE44RJ2OVIx88yVxL1g6CDTtl3KElK
+	 ojoZtZoEE3YiUlZmZAh2W4P4PjV3NMEhrPU60HCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.12 0112/1376] batman-adv: fix stale receive device on merged fragments
-Date: Sat, 12 Sep 2026 08:42:18 +0200
-Message-ID: <20260912065610.051167256@linuxfoundation.org>
+Subject: [PATCH 6.12 0113/1376] batman-adv: mcast: ensure unshared skb for multicast packets
+Date: Sat, 12 Sep 2026 08:42:19 +0200
+Message-ID: <20260912065610.073095030@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,47 +49,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit ad46c907d7d9975a285c1e89a4adde652eaa93f5 upstream.
+commit 82bf207f48ebb7a38157f1d91dac884fc9b8cfd8 upstream.
 
-Fragment reassembly reuses the skb from the highest-numbered buffered
-fragment as the merged packet. When that fragment was received on a hard
-interface which is deleted before the chain completes, the merged skb can
-re-enter the receive path with a stale skb->dev and skb_iif.
+When a packet is transmitted via a batman-adv interface and has already
+enough room for the header then nothing will make sure that the skbuff is
+unshared. But it is not allowed to modify a currently shared skbuff.
 
-batadv_batman_skb_recv() passes such merged packets through the normal
-receive handlers again. DAT and bridge loop avoidance both derive the ARP
-header length from skb->dev, so they can dereference the freed net_device
-before the packet reaches the local mesh interface.
+Always make sure that the pskb_expand_head() is not only called for a too
+small header but also for shared skbuffs.
 
-Refresh the receive device metadata from the current receive device before
-running the packet handlers. This keeps internally reinjected merged
-fragments consistent with the normal receive path after hard interface
-teardown.
-
-Fixes: 610bfc6bc99b ("batman-adv: Receive fragmented packets and merge")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Fixes: 90039133221e ("batman-adv: mcast: implement multicast packet generation")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/main.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/batman-adv/multicast_forw.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/net/batman-adv/main.c
-+++ b/net/batman-adv/main.c
-@@ -458,6 +458,10 @@ int batadv_batman_skb_recv(struct sk_buf
- 	if (!skb)
- 		goto err_put;
+--- a/net/batman-adv/multicast_forw.c
++++ b/net/batman-adv/multicast_forw.c
+@@ -1100,8 +1100,7 @@ static int batadv_mcast_forw_expand_head
+ 		return -EINVAL;
+ 	}
  
-+	/* Merged fragments re-enter here with reused skb metadata. */
-+	skb->dev = dev;
-+	skb->skb_iif = dev->ifindex;
-+
- 	/* packet should hold at least type and version */
- 	if (unlikely(!pskb_may_pull(skb, 2)))
- 		goto err_free;
+-	if (skb_headroom(skb) < hdr_size &&
+-	    pskb_expand_head(skb, hdr_size, 0, GFP_ATOMIC) < 0)
++	if (skb_cow(skb, hdr_size) < 0)
+ 		return -ENOMEM;
+ 
+ 	return 0;
 
 
