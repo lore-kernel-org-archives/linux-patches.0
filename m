@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23FD30F7E8;
-	Sat, 12 Sep 2026 07:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE641346E75;
+	Sat, 12 Sep 2026 07:18:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197490; cv=none; b=asXUAD1yjLSW2NfmLtMIl4sQUcxuanP4lVfiVFh9vJFfm6lF1a/EdycVRIA1eiSHb/kiUHYOrm4yJWzCBgUp6eCSa6b/8pY/iW3WbIsitsj2TnCHyXmT/igI2zrA/8r3Pb2tzKJUZKCTROnZ/WWUapKblb1RVPMkc6rsbrrpbvQ=
+	t=1789197495; cv=none; b=QczAZQRgvZVILMChcGS33UZskp/98r8gCAkveKiz1gChWGTHddaJ6/FIr4XgZrac4Tesm5ZyI7O26x6+E+96bVnv1VskjqJ105OIGN7FsFcIGy2wBp0WNP4ZMuj3gGISPabT101C9GiFNFO9SDioN9DOJ0+dVotVKEg8QGG7eTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197490; c=relaxed/simple;
-	bh=Wt57B66bT1Vqt+lHrBxLb4pI5g8QvAq+UWEAPHTw2qw=;
+	s=arc-20240116; t=1789197495; c=relaxed/simple;
+	bh=3V5ojM+Gd/JpwxBKXve73UuakPWt22rqZ9oS5M0tsu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QfDEMGgrZ5pKH+vS04bUv8pVvb8rUBMQjgCdb3EeBc/f3P6fh1WJB8MQrPPwSWepPAQRE0gsEHTK8QibfJAp77yyGIDDakyc02EfBC2n51e+XunGZaqnjUdGhAKS0gsGgI54S56ZyHSM3+MEF07bN6RIfWNzlQnWZcJesP8ckNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CRwAjGZt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DyZw1IowsaqIFg8gpqGoYVSyiPbqMbw8pkBzXREvr2RhT9+xKMRbP44AY8T892gLtQrGDv0Ze68N0Zn64c0Rebw18H8xnbH30gsR51q/vZeu/HLNrtfqraHtS+SexrEp7GfOA5KrM0gBpbka2fV0NwXGFOgrdN+/Owu+D96pJwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xbCrWtjO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CRwAjGZt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4AC1F000FF;
-	Sat, 12 Sep 2026 07:18:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xbCrWtjO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EAD1F000FF;
+	Sat, 12 Sep 2026 07:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197489;
-	bh=oRImg33N5MHJsLRLTOXsWH+U3cPvfuBJLdkd9uZbg7U=;
+	s=korg; t=1789197494;
+	bh=eKpbGTtu/jzGhDrLsho2PR2a7kwXW1iue10qkFpEwzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CRwAjGZtm37LA36TWxGJUhoNgeKI6+wmE5H7xdn/lZYMrFXwNOswze/STq8M4szzG
-	 tEcKepXzoTBdx1ASxeAspjbfc+Wqk18b2o9DiGMZtMTHBv2ZqpuL23ZSGZj3xC4lkb
-	 gM0v1QNRLrOpSNqS+PhOMyfPdprw/GMN3NEYuiGM=
+	b=xbCrWtjO0KtxeMOEC8bDXzZhinDMEaXvD0NGn8BEf9Rywi0bIm/MCpzUNFGFxLfJV
+	 Z8LZE85WDYbdYzxJHkyZtPoI55MB0iMlLbjl+d7yJ/6a0d8eHp+KoruBPodGy2T2N3
+	 OTVRpAg8ZITOTvy3XdHP5ZC13r+C+p8KdRueC8bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Asad Kamal <asad.kamal@amd.com>,
 	Lijo Lazar <lijo.lazar@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0142/1815] drm/amd/powerplay: fix VoltageObjectInfo zero-stride loop and OOB read
-Date: Sat, 12 Sep 2026 08:31:32 +0200
-Message-ID: <20260912065652.347473285@linuxfoundation.org>
+Subject: [PATCH 7.2 0143/1815] drm/amdgpu/pm/powerplay: bounds-check voltage index in SMU7 lookup
+Date: Sat, 12 Sep 2026 08:31:33 +0200
+Message-ID: <20260912065652.370030233@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,81 +55,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Asad Kamal <asad.kamal@amd.com>
 
-[ Upstream commit 5d3cc8e388464f485d0944b87b8f9426e637d082 ]
+[ Upstream commit 3a8a05477cda6c8293e2b629495b42981dcaba32 ]
 
-Reject voltage objects whose usSize is smaller than the header or would
-advance the cursor past the table end, preventing an infinite loop or
-heap OOB read when the VBIOS supplies a malformed VoltageObjectInfo table.
+vddInd and vddcInd fields from VBIOS-parsed tables are used to index into
+voltage lookup tables without a bounds check. Return -EINVAL when any
+index is out of range.
 
 Fixes: c82baa281843 ("drm/amd/powerplay: add Tonga dpm support (v3)")
-Fixes: 0d2c7569e196 ("drm/amdgpu: add new atomfirmware based helpers for powerplay")
 Signed-off-by: Asad Kamal <asad.kamal@amd.com>
 Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c   | 10 ++++++++--
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c | 11 ++++++++---
- 2 files changed, 16 insertions(+), 5 deletions(-)
+ .../drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c   | 24 +++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
-index ce166a7f8e420..1fff7567bca27 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
-@@ -268,15 +268,21 @@ static const ATOM_VOLTAGE_OBJECT_V3 *atomctrl_lookup_voltage_type_v3(
- 	unsigned int offset = offsetof(ATOM_VOLTAGE_OBJECT_INFO_V3_1, asVoltageObj[0]);
- 	uint8_t *start = (uint8_t *)voltage_object_info_table;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+index f8a5648095d17..1e9fa0a250750 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+@@ -2216,12 +2216,24 @@ static int smu7_patch_voltage_dependency_tables_with_lookup_table(
+ 	if (data->vdd_gfx_control == SMU7_VOLTAGE_CONTROL_BY_SVID2) {
+ 		for (entry_id = 0; entry_id < sclk_table->count; ++entry_id) {
+ 			voltage_id = sclk_table->entries[entry_id].vddInd;
++			if (voltage_id >= table_info->vddgfx_lookup_table->count) {
++				pr_err("amdgpu: sclk[%u] vddgfx index %u out of bounds (%u)\n",
++				       entry_id, voltage_id,
++				       table_info->vddgfx_lookup_table->count);
++				return -EINVAL;
++			}
+ 			sclk_table->entries[entry_id].vddgfx =
+ 				table_info->vddgfx_lookup_table->entries[voltage_id].us_vdd;
+ 		}
+ 	} else {
+ 		for (entry_id = 0; entry_id < sclk_table->count; ++entry_id) {
+ 			voltage_id = sclk_table->entries[entry_id].vddInd;
++			if (voltage_id >= table_info->vddc_lookup_table->count) {
++				pr_err("amdgpu: sclk[%u] vddc index %u out of bounds (%u)\n",
++				       entry_id, voltage_id,
++				       table_info->vddc_lookup_table->count);
++				return -EINVAL;
++			}
+ 			sclk_table->entries[entry_id].vddc =
+ 				table_info->vddc_lookup_table->entries[voltage_id].us_vdd;
+ 		}
+@@ -2229,12 +2241,24 @@ static int smu7_patch_voltage_dependency_tables_with_lookup_table(
  
--	while (offset < size) {
-+	while (offset + sizeof(ATOM_VOLTAGE_OBJECT_HEADER_V3) <= size) {
- 		const ATOM_VOLTAGE_OBJECT_V3 *voltage_object =
- 			(const ATOM_VOLTAGE_OBJECT_V3 *)(start + offset);
-+		u16 obj_size;
-+
-+		obj_size = le16_to_cpu(voltage_object->asGpioVoltageObj.sHeader.usSize);
-+		if (obj_size < sizeof(voltage_object->asGpioVoltageObj.sHeader) ||
-+		    offset + obj_size > size)
-+			break;
- 
- 		if (voltage_type == voltage_object->asGpioVoltageObj.sHeader.ucVoltageType &&
- 			voltage_mode == voltage_object->asGpioVoltageObj.sHeader.ucVoltageMode)
- 			return voltage_object;
- 
--		offset += le16_to_cpu(voltage_object->asGpioVoltageObj.sHeader.usSize);
-+		offset += obj_size;
+ 	for (entry_id = 0; entry_id < mclk_table->count; ++entry_id) {
+ 		voltage_id = mclk_table->entries[entry_id].vddInd;
++		if (voltage_id >= table_info->vddc_lookup_table->count) {
++			pr_err("amdgpu: mclk[%u] vddc index %u out of bounds (%u)\n",
++			       entry_id, voltage_id,
++			       table_info->vddc_lookup_table->count);
++			return -EINVAL;
++		}
+ 		mclk_table->entries[entry_id].vddc =
+ 			table_info->vddc_lookup_table->entries[voltage_id].us_vdd;
  	}
  
- 	return NULL;
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
-index 6120f14caab08..69aee8661d1e5 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomfwctrl.c
-@@ -36,16 +36,21 @@ static const union atom_voltage_object_v4 *pp_atomfwctrl_lookup_voltage_type_v4(
- 			offsetof(struct atom_voltage_objects_info_v4_1, voltage_object[0]);
- 	unsigned long start = (unsigned long)voltage_object_info_table;
- 
--	while (offset < size) {
-+	while (offset + sizeof(struct atom_voltage_object_header_v4) <= size) {
- 		const union atom_voltage_object_v4 *voltage_object =
- 			(const union atom_voltage_object_v4 *)(start + offset);
-+		u16 obj_size;
-+
-+		obj_size = le16_to_cpu(voltage_object->gpio_voltage_obj.header.object_size);
-+		if (obj_size < sizeof(voltage_object->gpio_voltage_obj.header) ||
-+		    offset + obj_size > size)
-+			break;
- 
- 		if (voltage_type == voltage_object->gpio_voltage_obj.header.voltage_type &&
- 		    voltage_mode == voltage_object->gpio_voltage_obj.header.voltage_mode)
- 			return voltage_object;
- 
--		offset += le16_to_cpu(voltage_object->gpio_voltage_obj.header.object_size);
--
-+		offset += obj_size;
+ 	for (entry_id = 0; entry_id < mm_table->count; ++entry_id) {
+ 		voltage_id = mm_table->entries[entry_id].vddcInd;
++		if (voltage_id >= table_info->vddc_lookup_table->count) {
++			pr_err("amdgpu: mm[%u] vddc index %u out of bounds (%u)\n",
++			       entry_id, voltage_id,
++			       table_info->vddc_lookup_table->count);
++			return -EINVAL;
++		}
+ 		mm_table->entries[entry_id].vddc =
+ 			table_info->vddc_lookup_table->entries[voltage_id].us_vdd;
  	}
- 
- 	return NULL;
 -- 
 2.53.0
 
