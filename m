@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F59435AC09;
-	Sat, 12 Sep 2026 10:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7A4428475;
+	Sat, 12 Sep 2026 10:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208375; cv=none; b=ND9zCeqJI+sHqCgE7p0CMf5dc4fRO0dXs37O5XjQLQ48dWs79FEbrAzxe5gYjtKKk0IZzH1KXeUBrKNcw7yTg70+DMLTD2gcowM9Xc4auDPeJ9yd6UrTif+6FBjQR3K1gIVq/Q7U5fdrdY4GDbBnljHroYJZeyXtFAEacD0lglk=
+	t=1789208382; cv=none; b=n6p9/OgqTeyJpD9m4gw6dS+f88Qz6jCY231g6QcZ86zm7Z07devMuAs8AiygacvrGsuRs44L5mxZUEIQRUOY+xpPOgY8cJyGOtnZEAyZENfWAwM2jlAFpHy/7c42Nfb68sE9uzUZtCO4xgRXubHHLJrCiwfrWBP7saXHAsyWGqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208375; c=relaxed/simple;
-	bh=5QWmsezuFB6UIUK5wHhbWdsSR1ccR+qX4WiuSA0auLQ=;
+	s=arc-20240116; t=1789208382; c=relaxed/simple;
+	bh=zIWXP0NRHsrS5kypF10LwXeU6CBcw3c0+OQz++G/Y4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C71V0Th4GByof9YEoqoac5Tjqmw37nBwaKSE0AVOAzvB1kACqsyWieIvo48g/6uVpTxdoCT3B1UiLTU8i9l1e02dOW0PlZvHxFhiWYIun1oQS+HDXB7NZMilQs3AXGC+0VPYV8+/LCyXvmJGAPEjuHjKc4bw1Gd1WIRabcnpUp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNeMrj02; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lp2vnbgm2c3qjRxA1XiICd71BGTPUYV89oEn1EuI9x1HL3LLGnYo3iUXNq4d4ZWBDiya4iBfuvi29xQ+4BIf0acHzjhsVDunWZDMyH5R5Mjl0CFc2HqWj/evO0wgMnjkad6EP7+HIiISNRumYmvRV4u0qgiFaAZw6Ha9RW73yvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijQBigF9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNeMrj02"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596511F000FF;
-	Sat, 12 Sep 2026 10:19:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijQBigF9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E2D21F000FF;
+	Sat, 12 Sep 2026 10:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208373;
-	bh=5Lu9nrpo6K/Y4aGO2+QKYOlMtBwYv0KX02UtUa6w2lI=;
+	s=korg; t=1789208378;
+	bh=rVxPJkXp+mnEfp68YmQWTuRSJYILk6DGPzu7BTsBp5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KNeMrj02j9QuNFvOyv4Y6Ranh3Ig2hK58RlfWWkjgoate00BmMrqtY0bJWJsxeMo1
-	 V0CmO/HZhiljuI0jjQ3ZJNPFz0F6f9nd2Uu1DM4l3QZVFc0hUv3dxPUap9Oucuhmjs
-	 OTpv6xVkFiPG12ARangpcfuKIgA5abrjoFMF1U2A=
+	b=ijQBigF9L+qK4zen1/qpDMUZ8kNLI0Ql3XJDTq5k7MoI7bZ0IgYOPA9d5ahUzQDx2
+	 dfzxI8AYlO6hEUIsr5C4FDg/L/UCXuXA52KsHbxXJlO9y8sNYCB99qy6I/yqMpVaJO
+	 shrZCK+wjj8PdKMGcSX6dGfO1nRpakUmb9GPGUIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Marco Scardovi <scardracs@disroot.org>,
-	K Prateek Nayak <kprateek.anayk@amd.com>,
-	Mario Limonciello <superm1@kernel.org>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0550/1518] cpufreq/amd-pstate: Toggle auto_sel in active mode on shared memory systems
-Date: Sat, 12 Sep 2026 08:45:19 +0200
-Message-ID: <20260912065635.880947863@linuxfoundation.org>
+Subject: [PATCH 6.18 0598/1518] firmware: qcom_scm: Introduce PAS context allocator helper function
+Date: Sat, 12 Sep 2026 08:46:07 +0200
+Message-ID: <20260912065636.951691072@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,50 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Scardovi <scardracs@disroot.org>
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit 9dfd13f80c856eab79130403a13fa3b83199346b ]
+[ Upstream commit ccb7bde5f7cc794dee0cd66fd451cb0e0715712d ]
 
-On shared memory systems, the EPP configuration path (handled via
-cppc_set_epp_perf()) is responsible for toggling on the CPPC autonomous
-selection register (auto_sel).
+When the Peripheral Authentication Service (PAS) method runs on a SoC
+where Linux operates at EL2 (i.e., without the Gunyah hypervisor), the
+reset sequences are handled by TrustZone. In such cases, Linux must
+perform additional steps before invoking PAS SMC calls, such as creating
+a SHM bridge. Therefore, PAS SMC calls require awareness and handling of
+these additional steps when Linux runs at EL2.
 
-Currently, shmem_init_perf() returns early without doing any of the auto_sel
-configuration steps if cppc_state is AMD_PSTATE_ACTIVE. This skips enabling
-auto_sel, leaving the CPU in non-autonomous mode.
+To support this, there is a need for a data structure that can be
+initialized prior to invoking any SMC or MDT functions. This structure
+allows those functions to determine whether they are operating in the
+presence or absence of the Gunyah hypervisor and behave accordingly.
 
-Remove the early return check in shmem_init_perf() when cppc_state is
-AMD_PSTATE_ACTIVE. Toggling auto_sel is necessary for the active mode on
-shared memory systems to function based on the ACPI spec for CPPC v2 and
-below.
+Currently, remoteproc and non-remoteproc subsystems use different
+variants of the MDT loader helper API, primarily due to differences in
+metadata context handling. Remoteproc subsystems retain the metadata
+context until authentication and reset are completed, while
+non-remoteproc subsystems (e.g., video, graphics, IPA, etc.) do not
+retain the metadata context and can free it within the
+qcom_scm_pas_init() call by passing a NULL context parameter and due to
+these differences, it is not possible to extend metadata context
+handling to support remoteproc and non remoteproc subsystem use PAS
+operations, when Linux operates at EL2.
 
-Fixes: 2dd6d0ebf740 ("cpufreq: amd-pstate: Add guided autonomous mode")
-Assisted-by: Antigravity:gemini-3.5-flash
-Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Marco Scardovi <scardracs@disroot.org>
-Reviewed-by: K Prateek Nayak <kprateek.anayk@amd.com>
-Link: https://lore.kernel.org/r/20260609073042.81275-3-scardracs@disroot.org
-Signed-off-by: Mario Limonciello <superm1@kernel.org>
+Add PAS context data structure allocator helper function.
+
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260105-kvmrprocv10-v10-4-022e96815380@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 0ea50486978f ("remoteproc: qcom: q6v5: Request shutdown if crash is triggered host-side")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/firmware/qcom/qcom_scm.c       | 34 ++++++++++++++++++++++++++
+ include/linux/firmware/qcom/qcom_scm.h | 14 +++++++++++
+ 2 files changed, 48 insertions(+)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 259f04d89a79c..081d2e60a21e6 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -457,9 +457,6 @@ static int shmem_init_perf(struct amd_cpudata *cpudata)
- 	WRITE_ONCE(cpudata->perf, perf);
- 	WRITE_ONCE(cpudata->prefcore_ranking, cppc_perf.highest_perf);
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 3379607eaf94f..2e51c4d80fdce 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -558,6 +558,40 @@ static void qcom_scm_set_download_mode(u32 dload_mode)
+ 		dev_err(__scm->dev, "failed to set download mode: %d\n", ret);
+ }
  
--	if (cppc_state == AMD_PSTATE_ACTIVE)
--		return 0;
--
- 	ret = cppc_get_auto_sel(cpudata->cpu, &auto_sel);
- 	if (ret) {
- 		pr_warn("failed to get auto_sel, ret: %d\n", ret);
++/**
++ * devm_qcom_scm_pas_context_alloc() - Allocate peripheral authentication service
++ *				       context for a given peripheral
++ *
++ * PAS context is device-resource managed, so the caller does not need
++ * to worry about freeing the context memory.
++ *
++ * @dev:	  PAS firmware device
++ * @pas_id:	  peripheral authentication service id
++ * @mem_phys:	  Subsystem reserve memory start address
++ * @mem_size:	  Subsystem reserve memory size
++ *
++ * Returns: The new PAS context, or ERR_PTR() on failure.
++ */
++struct qcom_scm_pas_context *devm_qcom_scm_pas_context_alloc(struct device *dev,
++							     u32 pas_id,
++							     phys_addr_t mem_phys,
++							     size_t mem_size)
++{
++	struct qcom_scm_pas_context *ctx;
++
++	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
++	if (!ctx)
++		return ERR_PTR(-ENOMEM);
++
++	ctx->dev = dev;
++	ctx->pas_id = pas_id;
++	ctx->mem_phys = mem_phys;
++	ctx->mem_size = mem_size;
++
++	return ctx;
++}
++EXPORT_SYMBOL_GPL(devm_qcom_scm_pas_context_alloc);
++
+ /**
+  * qcom_scm_pas_init_image() - Initialize peripheral authentication service
+  *			       state machine for a given peripheral, using the
+diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
+index a13f703b16cd4..5045f8fe876da 100644
+--- a/include/linux/firmware/qcom/qcom_scm.h
++++ b/include/linux/firmware/qcom/qcom_scm.h
+@@ -72,6 +72,20 @@ struct qcom_scm_pas_metadata {
+ 	ssize_t size;
+ };
+ 
++struct qcom_scm_pas_context {
++	struct device *dev;
++	u32 pas_id;
++	phys_addr_t mem_phys;
++	size_t mem_size;
++	void *ptr;
++	dma_addr_t phys;
++	ssize_t size;
++};
++
++struct qcom_scm_pas_context *devm_qcom_scm_pas_context_alloc(struct device *dev,
++							     u32 pas_id,
++							     phys_addr_t mem_phys,
++							     size_t mem_size);
+ int qcom_scm_pas_init_image(u32 pas_id, const void *metadata, size_t size,
+ 			    struct qcom_scm_pas_metadata *ctx);
+ void qcom_scm_pas_metadata_release(struct qcom_scm_pas_metadata *ctx);
 -- 
 2.53.0
 
