@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A67B381E98;
-	Sat, 12 Sep 2026 09:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0812381E98;
+	Sat, 12 Sep 2026 09:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205586; cv=none; b=JqR64f4ZxlFfLmqh67E9CN66YkfJia60E83BCehpKjIUTEmgFSi5+1F4BckZK7xUGDVud9TFQfMW1RXOwhoj7zCRiLtXrHXjPTxF59L0rMVfPLkAiYqqHUkXKQYMCpeIc0DLq/ne8q3+5cA8W/ASA75gbov4hmXQ1f1STTpv6Z0=
+	t=1789205594; cv=none; b=SngGCyz5lUyZ+urSQloeIb3cWaaoy3nkBAPAwXX3LNV+jcXc5hCvQomfeSLFjysuRi4gl7G+BoaeYhYjcjXcdu5GDz6mX4ii5GK176rIexK65Csu1P8bcObagu+Rn0sgyl2Gf3exCQ8I3XGzgdKDSPrXWxsw2Th+RnauI76BSAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205586; c=relaxed/simple;
-	bh=1ZSl5KfvFnzF7G7g1VNwn0L0YrIBdIaeW/wTbYsb3J8=;
+	s=arc-20240116; t=1789205594; c=relaxed/simple;
+	bh=WVlSY0UuUCU9dZ6sRKtoTVMneZKhhsNcnrwOaO+pgZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UFdSq5JXP5Mdcd8a0tJAGDHzF05suB0vkKsOcejR/aAINe/P2GOusXGJKNjwtTrHN7jeinZQEg8QBEkc7Z++ZJCgOf4GJQLMtmua8r8X4vKwFryX9yPuaX2pWOWXHNbzWfsYreRoZpfZ6p7TTA5dAcGnmhjxBddeJioC0+J1u+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DugvuIHQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VYtdIEIl8lxXu55CV9HiFGA5ijLlmBWn7y5CgdxVUISDFirEKd0XCiHXtGh6CXhE/TU6NGb8+FJWqy59skKzUGhJ708K48ezpIhI5baMHCdefVvU1Jr8Ed7EqYc8vF9uNjhMCUSukkB95uhalJCle1MEAlq5JJiPV8TINueAzDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ui1DrzF9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DugvuIHQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF7B1F000FF;
-	Sat, 12 Sep 2026 09:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ui1DrzF9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E661F000FF;
+	Sat, 12 Sep 2026 09:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205585;
-	bh=BWjAVRU1cgSUOjPyOQEZmJ0Qa/24wqLVaUdzOU0PRDg=;
+	s=korg; t=1789205589;
+	bh=UFx9ZrlOa7MpYYKt4ox5CkrXiZs/5hMzQ+7DgiuC1Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DugvuIHQlFf6S8lywpeCMmcOxBPXR02Ysc0UxSXlTS/wOsnTJ0YFbafPoCrA+2M5e
-	 8tMNO+2RoXQHKypBybFkuwvfPrUxzjHZ1OEniTUqlX+xdKuAY7pIgoTMiFfD4MbqmZ
-	 bZNr3XFMfXPTcBz9soY5Wne9KZDPcxU7DfBFxaHw=
+	b=ui1DrzF9fs3ahsMucOvPINVJDspWV8lJaeG91PPOTZQbD9jJB8do3B7PvLT7B5WAm
+	 34vvbWEkO65E57h5KMaR5UCtjefhCcEYtOE+gm/LXNDhJ5FT2toJ6qiJ5wL3sAaQYM
+	 jqrgJ3p7K1L8xAksFLOfEnQCq1hJ7kS1XMSY9aRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Mark Brown <broonie@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0031/1518] ASoC: tegra: Fix the MIXER enable default value
-Date: Sat, 12 Sep 2026 08:36:40 +0200
-Message-ID: <20260912065624.127334348@linuxfoundation.org>
+Subject: [PATCH 6.18 0032/1518] i3c: master: Fix recursive locking during device registration
+Date: Sat, 12 Sep 2026 08:36:41 +0200
+Message-ID: <20260912065624.151359248@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,57 +52,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 5442b8093a2f94ecd4696b3875194be09e2676c5 ]
+[ Upstream commit 456f832e5fc26fbfd3b8200fd4553eee520cc377 ]
 
-Commit 4b05ccb17f92 ("regcache: Sort the local copy of an unsorted
-reg_defaults array") exposed an issue in the Tegra MIXER driver where
-the register default for the TEGRA210_MIXER_ENABLE is specified as 1,
-but the hardware default is actually 0. After this commit was added the
-MIXER driver is no longer working and so fix this by correcting the
-default value for this register and explicitly configuring the
-MIXER_ENABLE register when runtime resuming the MIXER device.
+i3c_master_register_new_i3c_devs() registers newly discovered devices
+while holding i3c_bus_normaluse_lock(), a down_read().  device_register()
+can immediately probe the device, and probe callbacks typically invoke
+I3C helpers that take i3c_bus_normaluse_lock() again, leading to a
+recursive acquisition of the same rwsem.  rwsems do not support recursive
+read locking and can deadlock when a writer is waiting.  See the
+"Recursive read locks" section of Documentation/locking/lockdep-design.rst.
 
-Fixes: 05bb3d5ec64a ("ASoC: tegra: Add Tegra210 based Mixer driver")
+For example, with Intel LPSS I3C, LOCKDEP generates a WARNING like:
+  # echo intel-lpss-i3c.0 > /sys/bus/platform/drivers/mipi-i3c-hci/unbind
+  # echo intel-lpss-i3c.0 > /sys/bus/platform/drivers/mipi-i3c-hci/bind
+  WARNING: possible recursive locking detected
+  kworker/5:1/94 is trying to acquire lock:
+  ffff88811c810d78 (&i3cbus->lock){++++}-{4:4}, at: i3c_device_match_id+0x45/0x370
+  but task is already holding lock:
+  ffff88811c810d78 (&i3cbus->lock){++++}-{4:4}, at: i3c_master_reg_work_fn+0x21/0x5f0
+
+Fix this by separating device creation from device registration.
+Populate desc->dev under the maintenance lock, collect the devices that
+still need registration into a local list, then release the lock before
+calling device_register().  Finally retake the lock and clean up any
+devices that failed to register.
+
+Use the maintenance lock rather than the normal-use lock while adding
+device objects.  A write-side maintenance lock prevents readers from
+observing a partially initialized desc->dev during initial device
+population, or desc->dev disappearing if registration fails.
+
+The local list requires a list node, so add a list node member to struct
+i3c_device.
+
+Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260821153734.158426-3-jonathanh@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260807145638.168865-2-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/tegra/tegra210_mixer.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/i3c/master.c       |   45 +++++++++++++++++++++++++++++++++------------
+ include/linux/i3c/master.h |    3 +++
+ 2 files changed, 36 insertions(+), 12 deletions(-)
 
---- a/sound/soc/tegra/tegra210_mixer.c
-+++ b/sound/soc/tegra/tegra210_mixer.c
-@@ -57,7 +57,7 @@ static const struct reg_default tegra210
- 	MIXER_TX_REG_DEFAULTS(3),
- 	MIXER_TX_REG_DEFAULTS(4),
- 
--	{ TEGRA210_MIXER_ENABLE, 0x1 },
-+	{ TEGRA210_MIXER_ENABLE, 0x0 },
- 	{ TEGRA210_MIXER_CG, 0x00000001},
- 	{ TEGRA210_MIXER_GAIN_CFG_RAM_CTRL, 0x00004000},
- 	{ TEGRA210_MIXER_PEAKM_RAM_CTRL, 0x00004000},
-@@ -86,11 +86,15 @@ static int tegra210_mixer_runtime_suspen
- static int tegra210_mixer_runtime_resume(struct device *dev)
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -1787,12 +1787,21 @@ err_free_dev:
+ static void
+ i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
  {
- 	struct tegra210_mixer *mixer = dev_get_drvdata(dev);
-+	int err;
++	struct i3c_device *i3cdev, *tmp;
+ 	struct i3c_dev_desc *desc;
++	LIST_HEAD(i3c_unreg_devs);
+ 	int ret;
  
- 	regcache_cache_only(mixer->regmap, false);
--	regcache_sync(mixer->regmap);
-+	err = regcache_sync(mixer->regmap);
-+	if (err)
-+		return err;
+ 	if (!master->init_done)
+ 		return;
  
--	return 0;
-+	return regmap_write(mixer->regmap, TEGRA210_MIXER_ENABLE,
-+			    TEGRA210_MIXER_EN);
++	i3c_bus_maintenance_lock(&master->bus);
++
++	if (master->shutting_down) {
++		i3c_bus_maintenance_unlock(&master->bus);
++		return;
++	}
++
+ 	i3c_bus_for_each_i3cdev(&master->bus, desc) {
+ 		if (desc->dev || !desc->info.dyn_addr || desc == master->this)
+ 			continue;
+@@ -1813,25 +1822,37 @@ i3c_master_register_new_i3c_devs(struct
+ 		if (desc->boardinfo)
+ 			desc->dev->dev.of_node = desc->boardinfo->of_node;
+ 
+-		ret = device_register(&desc->dev->dev);
+-		if (ret) {
+-			dev_err(&master->dev,
+-				"Failed to add I3C device (err = %d)\n", ret);
+-			desc->dev->desc = NULL;
+-			put_device(&desc->dev->dev);
+-			desc->dev = NULL;
+-		}
++		list_add_tail(&desc->dev->node, &i3c_unreg_devs);
+ 	}
++
++	i3c_bus_maintenance_unlock(&master->bus);
++
++	list_for_each_entry_safe(i3cdev, tmp, &i3c_unreg_devs, node) {
++		ret = device_register(&i3cdev->dev);
++		if (ret)
++			dev_err(&master->dev, "Failed to add I3C device (err = %d)\n", ret);
++		else
++			list_del_init(&i3cdev->node);
++	}
++
++	i3c_bus_maintenance_lock(&master->bus);
++
++	list_for_each_entry_safe(i3cdev, tmp, &i3c_unreg_devs, node) {
++		list_del(&i3cdev->node);
++		desc = i3cdev->desc;
++		i3cdev->desc = NULL;
++		put_device(&i3cdev->dev);
++		desc->dev = NULL;
++	}
++
++	i3c_bus_maintenance_unlock(&master->bus);
  }
  
- static int tegra210_mixer_write_ram(struct tegra210_mixer *mixer,
+ static void i3c_master_reg_work_fn(struct work_struct *work)
+ {
+ 	struct i3c_master_controller *master = container_of(work, typeof(*master), reg_work);
+ 
+-	i3c_bus_normaluse_lock(&master->bus);
+-	if (!master->shutting_down)
+-		i3c_master_register_new_i3c_devs(master);
+-	i3c_bus_normaluse_unlock(&master->bus);
++	i3c_master_register_new_i3c_devs(master);
+ }
+ 
+ /**
+--- a/include/linux/i3c/master.h
++++ b/include/linux/i3c/master.h
+@@ -228,6 +228,8 @@ struct i3c_dev_desc {
+  *	  every time the I3C device is rediscovered with a different dynamic
+  *	  address assigned
+  * @bus: I3C bus this device is attached to
++ * @node: unregistered device list node, only for use by
++ *	  i3c_master_register_new_i3c_devs(), it is not protected by a lock
+  *
+  * I3C device object exposed to I3C device drivers. The takes care of linking
+  * this object to the relevant &struct_i3c_dev_desc one.
+@@ -238,6 +240,7 @@ struct i3c_device {
+ 	struct device dev;
+ 	struct i3c_dev_desc *desc;
+ 	struct i3c_bus *bus;
++	struct list_head node;
+ };
+ 
+ /*
 
 
