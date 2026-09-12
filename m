@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C5733D505;
-	Sat, 12 Sep 2026 07:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF72A2EBB84;
+	Sat, 12 Sep 2026 07:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198209; cv=none; b=deIPU0nbs51KYJyXM4Ugaufzq3dsvMFNL16nMzrNiaoKQE2U/DnkaHhUUDu1Re3hg/sAk0gC5oFCCwu8xNdt63XDLHH6LbAPNiswMTx5nrH97CEybsc0eLicbkXCXZvtR/8QV5FYuurFO9yW8aV0qGfKMnXoxl+x1aUg1oPcW94=
+	t=1789198214; cv=none; b=TMJGez86TZHH6wW8FD7hTRY1TWAkAhMDkLbfJKRRa+DmGkLS6SAf1gApwJF3sbWh1gNXW2oapdIfHuo++1TUsCOT7udfme7+6vUnYsCt/Ygmnqkm5JC6jlQthtY3s2upXCWZz1iTA6WyeRXIdhb0CYAb7U1k8op+5UYAR+tN9tU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198209; c=relaxed/simple;
-	bh=EoiqxuDnVKxwhfxNq72BKUhnRr6lKPARMZu4VtM5B2M=;
+	s=arc-20240116; t=1789198214; c=relaxed/simple;
+	bh=kbVR0oQLY8vUMDviYOv6eyaFaJqpSdBrORxru0gAXk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SyvJRAu50TAeYjC+ZMLhRAT40ubqDGBtJBqJSXmWmpUPkDuC1APXprvdpMF1KOSkJ09ntCk7OFjNHLiQoKunNCN+FChQv8pCoF7dcNn3xUF3vlLmA80GQXwBfOj2AqlvhClpS744QM+yimJ7FcChvwKEtDj/bp3TgEmWOr2JEr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VV4tGnt5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TYxjXMyf12f881hU64itH9xrhyK28A+8z/iADMw95f8w+NW6Ra/QTL9RTQzbQam26ger7pNQVXnJNyViMyKPrmwx8c6Nn+2j8NJ1pbrGolHWsx5KURVkgCypxCcb0XTOJblbVO50dkUcC3acLD7aZfiSZKo4nInwbrrr90D1xK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ug0dZ0kA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VV4tGnt5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54421F000FF;
-	Sat, 12 Sep 2026 07:30:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ug0dZ0kA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D664D1F000FF;
+	Sat, 12 Sep 2026 07:30:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198207;
-	bh=4Ug04afzapcrRdBaS8Gc6eAPGjGUoJKtJpRlU5imMgU=;
+	s=korg; t=1789198212;
+	bh=HXQNJ81AZHrjw5P6KCU1JbCurXfwsbMPOAWGH0oklg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VV4tGnt5VaKJBfP7OEdN13K8Wvzsf7VJa2uMwxMBkQSu+vmtceLV+l+c80M+6RFZC
-	 eTer2xFNAvXtC7CAm+j+OzNGg2m1tbWVhRNKVLkrdiiiakw9drzs1vNVQfGN47H0w8
-	 v/rCc/tW73bR6HqtMZjKqwwfaVLV9fRny3sTNmBM=
+	b=ug0dZ0kAlRhv+AZAXnUp4Pvp7Exz9GWCaAzgqj8taZoIY3gd8IoE2T+eLIxdAACBh
+	 nUnB1cssSOAdH5PXQaraHH2vfqHhQCizO/jvfa12PifuKVEVyIzlzw6ZMV4X09PxWp
+	 0teFvA82C0H2c3cgbMVXPZ/5HK2tCjnFJzEzpQHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0334/1815] drm/panel: samsung-s6d16d0: Power off on prepare failure
-Date: Sat, 12 Sep 2026 08:34:44 +0200
-Message-ID: <20260912065656.764247373@linuxfoundation.org>
+Subject: [PATCH 7.2 0335/1815] perf record: Fix teardown hang on system-wide multi-threaded sessions
+Date: Sat, 12 Sep 2026 08:34:45 +0200
+Message-ID: <20260912065656.786387686@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,63 +45,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit a9f950adfe2147318d75e7a6eab5e814851802ac ]
+[ Upstream commit fb4751e79c45cb48cff1c1d86b10a9cc6f6612fe ]
 
-If enabling tearing mode or exiting sleep mode fails after the
-regulator is enabled, s6d16d0_prepare() returns without asserting
-reset or disabling the supply. Since the DRM panel core leaves the
-panel unprepared, a later unprepare call skips the driver callback
-and the supply remains enabled.
+Under system-wide (-a) parallel streaming mode (--threads=cpu),
+background recording threads can be inundated by a continuous
+firehose of hardware samples generated by the OS. In this state,
+a background thread's local hit count remains unequal to its
+sample count, causing it to bypass the blocking fdarray__poll()
+call entirely on each iteration of its recording loop.
 
-Assert reset and disable the supply before returning the DSI command error.
+Because the termination check relies on the POLLHUP event status
+populated specifically by fdarray__poll(), bypassing it prevents
+the background thread from ever recognizing that its control pipe
+was closed by the main thread. This traps the background thread
+in an infinite recording loop, hanging the main thread indefinitely
+as it awaits a termination acknowledgment that never arrives.
 
-Fixes: ac1d6d74884e ("drm/panel: Add driver for Samsung S6D16D0 panel")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260704070648.35249-1-acharyalaxman8848@gmail.com
+Ensure teardown completion by adding explicit evlist__disable()
+calls in the main thread's cleanup paths at out_child: and
+out_child_no_flush:. Additionally, patch fdarray__filter() to
+respect the fdarray_flag__nonfilterable flag, preventing it
+from incorrectly setting the background thread's control pipe
+file descriptor to -1 and clearing its revents mask upon
+processing termination POLLHUP signals.
+
+Fixes: f94563fac269 ("perf record: fix poll storm when monitored threads exit")
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-samsung-s6d16d0.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ tools/lib/api/fd/array.c    | 6 ++++--
+ tools/perf/builtin-record.c | 2 ++
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-index 1b14aa4efe359..54a65abf7e890 100644
---- a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-+++ b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-@@ -88,16 +88,22 @@ static int s6d16d0_prepare(struct drm_panel *panel)
- 				       MIPI_DSI_DCS_TEAR_MODE_VBLANK);
- 	if (ret) {
- 		dev_err(s6->dev, "failed to enable vblank TE (%d)\n", ret);
--		return ret;
-+		goto err_power_off;
- 	}
- 	/* Exit sleep mode and power on */
- 	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
- 	if (ret) {
- 		dev_err(s6->dev, "failed to exit sleep mode (%d)\n", ret);
--		return ret;
-+		goto err_power_off;
+diff --git a/tools/lib/api/fd/array.c b/tools/lib/api/fd/array.c
+index ffe8272af59b2..16a047f1906ee 100644
+--- a/tools/lib/api/fd/array.c
++++ b/tools/lib/api/fd/array.c
+@@ -115,6 +115,9 @@ int fdarray__filter(struct fdarray *fda, short revents,
+ 		return 0;
+ 
+ 	for (fd = 0; fd < fda->nr; ++fd) {
++		if (fda->priv[fd].flags & fdarray_flag__nonfilterable)
++			continue;
++
+ 		if (!fda->entries[fd].events)
+ 			continue;
+ 
+@@ -132,8 +135,7 @@ int fdarray__filter(struct fdarray *fda, short revents,
+ 			continue;
+ 		}
+ 
+-		if (!(fda->priv[fd].flags & fdarray_flag__nonfilterable))
+-			++nr;
++		++nr;
  	}
  
- 	return 0;
-+
-+err_power_off:
-+	gpiod_set_value_cansleep(s6->reset_gpio, 1);
-+	regulator_disable(s6->supply);
-+
-+	return ret;
- }
+ 	return nr;
+diff --git a/tools/perf/builtin-record.c b/tools/perf/builtin-record.c
+index ebd3ed0c9b3e8..d1276382b77a2 100644
+--- a/tools/perf/builtin-record.c
++++ b/tools/perf/builtin-record.c
+@@ -2890,11 +2890,13 @@ static int __cmd_record(struct record *rec, int argc, const char **argv)
+ 		record__synthesize_workload(rec, true);
  
- static int s6d16d0_enable(struct drm_panel *panel)
+ out_child:
++	evlist__disable(rec->evlist);
+ 	record__stop_threads(rec);
+ 	record__mmap_read_all(rec, true);
+ 	goto out_free_threads;
+ out_child_no_flush:
+ 	/* mmap read already failed — retrying would just fail again */
++	evlist__disable(rec->evlist);
+ 	record__stop_threads(rec);
+ out_free_threads:
+ 	record__free_thread_data(rec);
 -- 
 2.53.0
 
