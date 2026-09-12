@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65433344DAA;
-	Sat, 12 Sep 2026 14:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8252D2ECD1D;
+	Sat, 12 Sep 2026 14:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222551; cv=none; b=TT5yxaiV3pt/0ez+dfJs+l+XLvp9iDmDYrDfAVl6ptwjj3o2mLDM5rsBVadESimJmXGs1UzjORIZaVmwi1uIehW93OTDEavIW2YuAQRcVJmaHSiB0KYDpdCkL/NrU8/6DzKrtyAdhGAUdXYUtpsFqR+JIT2OuP3IfypuBABBxrw=
+	t=1789222556; cv=none; b=H2DzAP7MsV+hXIn5h6BPDO7+4u+0UuenpUB9Z0b8SYhcnA6ZhbMluYKl1s+zac64KKNWKn8PoLTwe2GadsCo/UTjdmyC0Y4W79gaDTc9OTCgawmAK1guGA3jIPo574aurpCNBATvBK4RKwg4tbJ56p3IleWYuqIRibsJV2zyA+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222551; c=relaxed/simple;
-	bh=cmxe28Mzmh14CcS6U9RiyJlx60a1+UyPb/LeEzU4TZ8=;
+	s=arc-20240116; t=1789222556; c=relaxed/simple;
+	bh=5zUPdfv5w3opkELSyBPjGa7j+Ldg0JNCG4I6VYeWgKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OCm4Nbk05Gz/Gc5VMZv9sPGl+tG4A/xOK+3S6UwUuFWrgeLwFaMNYb4SBtRQRDe3HhbOGmy2AUHPDRyM0ytRUNdNxGFd1+hU6qzJhp4bmCG0jesisJ86pYtn0XSWJ/dmiZ+3Ru5/CpzvSc9sJVmb43E8SLLa6RSU/kBGxcvwj0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bgd0w7Ak; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n4iCp2lkwDP7yRpJB3i93SGK8cCeGom1A/9Q8qn+y16Iy9bmpvp5ADysB8A3iD5UDM6Boo1WqyWFuPf40b8+BBFUetpizm1oShmx53yRQWXZuYLO53VDMgXsSyslXu6ulyJ/yQ/w4ZP9bfANpjFPHw/AvFNe1vJPeT5CfaY2VHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0n8FD2I/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bgd0w7Ak"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62591F00898;
-	Sat, 12 Sep 2026 14:15:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0n8FD2I/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1DE01F000FF;
+	Sat, 12 Sep 2026 14:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222549;
-	bh=j3rC7t+gQMN0viniBPeUu1YqIBZl4MblJMNjDsnLl/g=;
+	s=korg; t=1789222554;
+	bh=3FUbZl4p0wzXLHBNpIK33UqHAO+QjZ307XZLYTr/zVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bgd0w7AkfANS99Kj7+Nb4diIjJs8MNlxCLOienfXTm6Kh+L8TQtpVXqOrpC5LRPPu
-	 FH4Lp04Y8irPtM/eqqjaizrnK4/4Etxfr6LJdKrHXZ4iBqM5LvL4hqt/XJKoFpjb3Z
-	 ekMWn0DZdOt9P10EGHJxs2NRXoRkvi9BlQp5v/Fs=
+	b=0n8FD2I/41bNFjFdmS7qBKPx9iXMdOlN3WBF2TKHwXLliVP4gD0zim7KiQ0njGYhi
+	 kVPcTIqKhyoyHV5aQmyWTq9xlp0i8hFghXyWrZ3GXJU86n4sWQknjlnmstTz7jQd5w
+	 /Vl6+BSHQEDWqoWhmA8J3NhI+mLaDbgM2WSLCFEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Nirmala Devi Mal Nadar <m.nirmaladevi@ltts.com>,
 	Bhargav Raviprakash <bhargav.r@ltts.com>,
+	Mark Brown <broonie@kernel.org>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0609/1424] mfd: tps6594: Add register definitions for TI TPS65224 PMIC
-Date: Sat, 12 Sep 2026 08:50:41 +0200
-Message-ID: <20260912065620.930487315@linuxfoundation.org>
+Subject: [PATCH 6.6 0610/1424] regulator: tps6594-regulator: Add TI TPS65224 PMIC regulators
+Date: Sat, 12 Sep 2026 08:50:42 +0200
+Message-ID: <20260912065620.952759996@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -54,664 +55,568 @@ Content-Transfer-Encoding: 8bit
 
 From: Nirmala Devi Mal Nadar <m.nirmaladevi@ltts.com>
 
-[ Upstream commit 84ccfaee29fe46e305244a69c4471e83629ad5d1 ]
+[ Upstream commit 00c826525fbae0230f6c3e9879e56d50267deb42 ]
 
-Extend TPS6594 PMIC register and field definitions to support TPS65224
-power management IC.
-
-TPS65224 is software compatible to TPS6594 and can re-use many of the
-same definitions, new definitions are added to support additional
-controls available on TPS65224.
+Add support for TPS65224 regulators (bucks and LDOs) to TPS6594 driver as
+they have significant functional overlap. TPS65224 PMIC has 4 buck
+regulators and 3 LDOs. BUCK12 can operate in dual phase.
+The output voltages are configurable and are meant to supply power to the
+main processor and other components.
 
 Signed-off-by: Nirmala Devi Mal Nadar <m.nirmaladevi@ltts.com>
 Signed-off-by: Bhargav Raviprakash <bhargav.r@ltts.com>
-Link: https://lore.kernel.org/r/0109018f2f265d30-a87711fa-31d9-48db-b8cb-7109d0213e2e-000000@ap-south-1.amazonses.com
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/0109018f2fdcc305-3b817569-21b6-42a7-942c-8edbff3848f2-000000@ap-south-1.amazonses.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Stable-dep-of: 7fd28093b3ef ("regulator: tps6594: Fix device node reference leaks in multiphase loop")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mfd/tps6594.h | 347 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 335 insertions(+), 12 deletions(-)
+ drivers/regulator/Kconfig             |   4 +-
+ drivers/regulator/tps6594-regulator.c | 334 ++++++++++++++++++++------
+ 2 files changed, 268 insertions(+), 70 deletions(-)
 
-diff --git a/include/linux/mfd/tps6594.h b/include/linux/mfd/tps6594.h
-index 3f7c5e23cd4cd..e754c01acc643 100644
---- a/include/linux/mfd/tps6594.h
-+++ b/include/linux/mfd/tps6594.h
-@@ -18,12 +18,13 @@ enum pmic_id {
- 	TPS6594,
- 	TPS6593,
- 	LP8764,
-+	TPS65224,
+diff --git a/drivers/regulator/Kconfig b/drivers/regulator/Kconfig
+index 965d4f0c18a6c..9c61842d8367a 100644
+--- a/drivers/regulator/Kconfig
++++ b/drivers/regulator/Kconfig
+@@ -1543,13 +1543,15 @@ config REGULATOR_TPS6594
+ 	depends on MFD_TPS6594 && OF
+ 	default MFD_TPS6594
+ 	help
+-	  This driver supports TPS6594 voltage regulator chips.
++	  This driver supports TPS6594 series and TPS65224 voltage regulator chips.
+ 	  TPS6594 series of PMICs have 5 BUCKs and 4 LDOs
+ 	  voltage regulators.
+ 	  BUCKs 1,2,3,4 can be used in single phase or multiphase mode.
+ 	  Part number defines which single or multiphase mode is i used.
+ 	  It supports software based voltage control
+ 	  for different voltage domains.
++	  TPS65224 PMIC has 4 BUCKs and 3 LDOs. BUCK12 can be used in dual phase.
++	  All BUCKs and LDOs volatge can be controlled through software.
+ 
+ config REGULATOR_TPS6524X
+ 	tristate "TI TPS6524X Power regulators"
+diff --git a/drivers/regulator/tps6594-regulator.c b/drivers/regulator/tps6594-regulator.c
+index 5fad61785e72f..4a859f4c0f835 100644
+--- a/drivers/regulator/tps6594-regulator.c
++++ b/drivers/regulator/tps6594-regulator.c
+@@ -18,10 +18,13 @@
+ 
+ #include <linux/mfd/tps6594.h>
+ 
+-#define BUCK_NB		5
+-#define LDO_NB		4
+-#define MULTI_PHASE_NB	4
+-#define REGS_INT_NB	4
++#define BUCK_NB			5
++#define LDO_NB			4
++#define MULTI_PHASE_NB		4
++/* TPS6593 and LP8764 supports OV, UV, SC, ILIM */
++#define REGS_INT_NB		4
++/* TPS65224 supports OV or UV */
++#define TPS65224_REGS_INT_NB	1
+ 
+ enum tps6594_regulator_id {
+ 	/* DCDC's */
+@@ -66,6 +69,15 @@ static struct tps6594_regulator_irq_type tps6594_ext_regulator_irq_types[] = {
+ 	  REGULATOR_EVENT_OVER_VOLTAGE_WARN },
  };
  
- /* Macro to get page index from register address */
- #define TPS6594_REG_TO_PAGE(reg)	((reg) >> 8)
- 
--/* Registers for page 0 of TPS6594 */
-+/* Registers for page 0 */
- #define TPS6594_REG_DEV_REV				0x01
- 
- #define TPS6594_REG_NVM_CODE_1				0x02
-@@ -56,9 +57,6 @@ enum pmic_id {
- #define TPS6594_REG_GPIOX_OUT(gpio_inst)		(TPS6594_REG_GPIO_OUT_1 + (gpio_inst) / 8)
- #define TPS6594_REG_GPIOX_IN(gpio_inst)			(TPS6594_REG_GPIO_IN_1 + (gpio_inst) / 8)
- 
--#define TPS6594_REG_GPIO_IN_1				0x3f
--#define TPS6594_REG_GPIO_IN_2				0x40
--
- #define TPS6594_REG_RAIL_SEL_1				0x41
- #define TPS6594_REG_RAIL_SEL_2				0x42
- #define TPS6594_REG_RAIL_SEL_3				0x43
-@@ -70,13 +68,15 @@ enum pmic_id {
- #define TPS6594_REG_FSM_TRIG_MASK_3			0x48
- 
- #define TPS6594_REG_MASK_BUCK1_2			0x49
-+#define TPS65224_REG_MASK_BUCKS				0x49
- #define TPS6594_REG_MASK_BUCK3_4			0x4a
- #define TPS6594_REG_MASK_BUCK5				0x4b
- #define TPS6594_REG_MASK_LDO1_2				0x4c
-+#define TPS65224_REG_MASK_LDOS				0x4c
- #define TPS6594_REG_MASK_LDO3_4				0x4d
- #define TPS6594_REG_MASK_VMON				0x4e
--#define TPS6594_REG_MASK_GPIO1_8_FALL			0x4f
--#define TPS6594_REG_MASK_GPIO1_8_RISE			0x50
-+#define TPS6594_REG_MASK_GPIO_FALL			0x4f
-+#define TPS6594_REG_MASK_GPIO_RISE			0x50
- #define TPS6594_REG_MASK_GPIO9_11			0x51
- #define TPS6594_REG_MASK_STARTUP			0x52
- #define TPS6594_REG_MASK_MISC				0x53
-@@ -174,6 +174,10 @@ enum pmic_id {
- 
- #define TPS6594_REG_REGISTER_LOCK			0xa1
- 
-+#define TPS65224_REG_SRAM_ACCESS_1			0xa2
-+#define TPS65224_REG_SRAM_ACCESS_2			0xa3
-+#define TPS65224_REG_SRAM_ADDR_CTRL			0xa4
-+#define TPS65224_REG_RECOV_CNT_PFSM_INCR		0xa5
- #define TPS6594_REG_MANUFACTURING_VER			0xa6
- 
- #define TPS6594_REG_CUSTOMER_NVM_ID_REG			0xa7
-@@ -182,6 +186,9 @@ enum pmic_id {
- 
- #define TPS6594_REG_SOFT_REBOOT_REG			0xab
- 
-+#define TPS65224_REG_ADC_CTRL				0xac
-+#define TPS65224_REG_ADC_RESULT_REG_1			0xad
-+#define TPS65224_REG_ADC_RESULT_REG_2			0xae
- #define TPS6594_REG_RTC_SECONDS				0xb5
- #define TPS6594_REG_RTC_MINUTES				0xb6
- #define TPS6594_REG_RTC_HOURS				0xb7
-@@ -199,6 +206,7 @@ enum pmic_id {
- 
- #define TPS6594_REG_RTC_CTRL_1				0xc2
- #define TPS6594_REG_RTC_CTRL_2				0xc3
-+#define TPS65224_REG_STARTUP_CTRL			0xc3
- #define TPS6594_REG_RTC_STATUS				0xc4
- #define TPS6594_REG_RTC_INTERRUPTS			0xc5
- #define TPS6594_REG_RTC_COMP_LSB			0xc6
-@@ -214,13 +222,17 @@ enum pmic_id {
- #define TPS6594_REG_PFSM_DELAY_REG_2			0xce
- #define TPS6594_REG_PFSM_DELAY_REG_3			0xcf
- #define TPS6594_REG_PFSM_DELAY_REG_4			0xd0
-+#define TPS65224_REG_ADC_GAIN_COMP_REG			0xd0
-+#define TPS65224_REG_CRC_CALC_CONTROL			0xef
-+#define TPS65224_REG_REGMAP_USER_CRC_LOW		0xf0
-+#define TPS65224_REG_REGMAP_USER_CRC_HIGH		0xf1
- 
--/* Registers for page 1 of TPS6594 */
-+/* Registers for page 1 */
- #define TPS6594_REG_SERIAL_IF_CONFIG			0x11a
- #define TPS6594_REG_I2C1_ID				0x122
- #define TPS6594_REG_I2C2_ID				0x123
- 
--/* Registers for page 4 of TPS6594 */
-+/* Registers for page 4 */
- #define TPS6594_REG_WD_ANSWER_REG			0x401
- #define TPS6594_REG_WD_QUESTION_ANSW_CNT		0x402
- #define TPS6594_REG_WD_WIN1_CFG				0x403
-@@ -241,16 +253,26 @@ enum pmic_id {
- #define TPS6594_BIT_BUCK_PLDN				BIT(5)
- #define TPS6594_BIT_BUCK_RV_SEL				BIT(7)
- 
--/* BUCKX_CONF register field definition */
-+/* TPS6594 BUCKX_CONF register field definition */
- #define TPS6594_MASK_BUCK_SLEW_RATE			GENMASK(2, 0)
- #define TPS6594_MASK_BUCK_ILIM				GENMASK(5, 3)
- 
--/* BUCKX_PG_WINDOW register field definition */
-+/* TPS65224 BUCKX_CONF register field definition */
-+#define TPS65224_MASK_BUCK_SLEW_RATE			GENMASK(1, 0)
-+
-+/* TPS6594 BUCKX_PG_WINDOW register field definition */
- #define TPS6594_MASK_BUCK_OV_THR			GENMASK(2, 0)
- #define TPS6594_MASK_BUCK_UV_THR			GENMASK(5, 3)
- 
--/* BUCKX VSET */
--#define TPS6594_MASK_BUCKS_VSET GENMASK(7, 0)
-+/* TPS65224 BUCKX_PG_WINDOW register field definition */
-+#define TPS65224_MASK_BUCK_VMON_THR			GENMASK(1, 0)
-+
-+/* TPS6594 BUCKX_VOUT register field definition */
-+#define TPS6594_MASK_BUCKS_VSET				GENMASK(7, 0)
-+
-+/* TPS65224 BUCKX_VOUT register field definition */
-+#define TPS65224_MASK_BUCK1_VSET			GENMASK(7, 0)
-+#define TPS65224_MASK_BUCKS_VSET			GENMASK(6, 0)
- 
- /* LDOX_CTRL register field definition */
- #define TPS6594_BIT_LDO_EN				BIT(0)
-@@ -258,6 +280,7 @@ enum pmic_id {
- #define TPS6594_BIT_LDO_VMON_EN				BIT(4)
- #define TPS6594_MASK_LDO_PLDN				GENMASK(6, 5)
- #define TPS6594_BIT_LDO_RV_SEL				BIT(7)
-+#define TPS65224_BIT_LDO_DISCHARGE_EN			BIT(5)
- 
- /* LDORTC_CTRL register field definition */
- #define TPS6594_BIT_LDORTC_DIS				BIT(0)
-@@ -271,6 +294,9 @@ enum pmic_id {
- #define TPS6594_MASK_LDO_OV_THR				GENMASK(2, 0)
- #define TPS6594_MASK_LDO_UV_THR				GENMASK(5, 3)
- 
-+/* LDOX_PG_WINDOW register field definition */
-+#define TPS65224_MASK_LDO_VMON_THR			GENMASK(1, 0)
-+
- /* VCCA_VMON_CTRL register field definition */
- #define TPS6594_BIT_VMON_EN				BIT(0)
- #define TPS6594_BIT_VMON1_EN				BIT(1)
-@@ -278,10 +304,12 @@ enum pmic_id {
- #define TPS6594_BIT_VMON2_EN				BIT(3)
- #define TPS6594_BIT_VMON2_RV_SEL			BIT(4)
- #define TPS6594_BIT_VMON_DEGLITCH_SEL			BIT(5)
-+#define TPS65224_BIT_VMON_DEGLITCH_SEL			GENMASK(7, 5)
- 
- /* VCCA_PG_WINDOW register field definition */
- #define TPS6594_MASK_VCCA_OV_THR			GENMASK(2, 0)
- #define TPS6594_MASK_VCCA_UV_THR			GENMASK(5, 3)
-+#define TPS65224_MASK_VCCA_VMON_THR			GENMASK(1, 0)
- #define TPS6594_BIT_VCCA_PG_SET				BIT(6)
- 
- /* VMONX_PG_WINDOW register field definition */
-@@ -289,6 +317,9 @@ enum pmic_id {
- #define TPS6594_MASK_VMONX_UV_THR			GENMASK(5, 3)
- #define TPS6594_BIT_VMONX_RANGE				BIT(6)
- 
-+/* VMONX_PG_WINDOW register field definition */
-+#define TPS65224_MASK_VMONX_THR				GENMASK(1, 0)
-+
- /* GPIOX_CONF register field definition */
- #define TPS6594_BIT_GPIO_DIR				BIT(0)
- #define TPS6594_BIT_GPIO_OD				BIT(1)
-@@ -296,6 +327,8 @@ enum pmic_id {
- #define TPS6594_BIT_GPIO_PU_PD_EN			BIT(3)
- #define TPS6594_BIT_GPIO_DEGLITCH_EN			BIT(4)
- #define TPS6594_MASK_GPIO_SEL				GENMASK(7, 5)
-+#define TPS65224_MASK_GPIO_SEL				GENMASK(6, 5)
-+#define TPS65224_MASK_GPIO_SEL_GPIO6			GENMASK(7, 5)
- 
- /* NPWRON_CONF register field definition */
- #define TPS6594_BIT_NRSTOUT_OD				BIT(0)
-@@ -305,6 +338,12 @@ enum pmic_id {
- #define TPS6594_BIT_ENABLE_POL				BIT(5)
- #define TPS6594_MASK_NPWRON_SEL				GENMASK(7, 6)
- 
-+/* POWER_ON_CONFIG register field definition */
-+#define TPS65224_BIT_NINT_ENDRV_PU_SEL			BIT(0)
-+#define TPS65224_BIT_NINT_ENDRV_SEL			BIT(1)
-+#define TPS65224_BIT_EN_PB_DEGL				BIT(5)
-+#define TPS65224_MASK_EN_PB_VSENSE_CONFIG		GENMASK(7, 6)
-+
- /* GPIO_OUT_X register field definition */
- #define TPS6594_BIT_GPIOX_OUT(gpio_inst)		BIT((gpio_inst) % 8)
- 
-@@ -312,6 +351,12 @@ enum pmic_id {
- #define TPS6594_BIT_GPIOX_IN(gpio_inst)			BIT((gpio_inst) % 8)
- #define TPS6594_BIT_NPWRON_IN				BIT(3)
- 
-+/* GPIO_OUT_X register field definition */
-+#define TPS65224_BIT_GPIOX_OUT(gpio_inst)		BIT((gpio_inst))
-+
-+/* GPIO_IN_X register field definition */
-+#define TPS65224_BIT_GPIOX_IN(gpio_inst)		BIT((gpio_inst))
-+
- /* RAIL_SEL_1 register field definition */
- #define TPS6594_MASK_BUCK1_GRP_SEL			GENMASK(1, 0)
- #define TPS6594_MASK_BUCK2_GRP_SEL			GENMASK(3, 2)
-@@ -343,6 +388,9 @@ enum pmic_id {
- #define TPS6594_BIT_GPIOX_FSM_MASK(gpio_inst)		BIT(((gpio_inst) << 1) % 8)
- #define TPS6594_BIT_GPIOX_FSM_MASK_POL(gpio_inst)	BIT(((gpio_inst) << 1) % 8 + 1)
- 
-+#define TPS65224_BIT_GPIOX_FSM_MASK(gpio_inst)		BIT(((gpio_inst) << 1) % 6)
-+#define TPS65224_BIT_GPIOX_FSM_MASK_POL(gpio_inst)	BIT(((gpio_inst) << 1) % 6 + 1)
-+
- /* MASK_BUCKX register field definition */
- #define TPS6594_BIT_BUCKX_OV_MASK(buck_inst)		BIT(((buck_inst) << 2) % 8)
- #define TPS6594_BIT_BUCKX_UV_MASK(buck_inst)		BIT(((buck_inst) << 2) % 8 + 1)
-@@ -361,22 +409,46 @@ enum pmic_id {
- #define TPS6594_BIT_VMON2_OV_MASK			BIT(5)
- #define TPS6594_BIT_VMON2_UV_MASK			BIT(6)
- 
-+/* MASK_BUCK Register field definition */
-+#define TPS65224_BIT_BUCK1_UVOV_MASK			BIT(0)
-+#define TPS65224_BIT_BUCK2_UVOV_MASK			BIT(1)
-+#define TPS65224_BIT_BUCK3_UVOV_MASK			BIT(2)
-+#define TPS65224_BIT_BUCK4_UVOV_MASK			BIT(4)
-+
-+/* MASK_LDO_VMON register field definition */
-+#define TPS65224_BIT_LDO1_UVOV_MASK			BIT(0)
-+#define TPS65224_BIT_LDO2_UVOV_MASK			BIT(1)
-+#define TPS65224_BIT_LDO3_UVOV_MASK			BIT(2)
-+#define TPS65224_BIT_VCCA_UVOV_MASK			BIT(4)
-+#define TPS65224_BIT_VMON1_UVOV_MASK			BIT(5)
-+#define TPS65224_BIT_VMON2_UVOV_MASK			BIT(6)
-+
- /* MASK_GPIOX register field definition */
- #define TPS6594_BIT_GPIOX_FALL_MASK(gpio_inst)		BIT((gpio_inst) < 8 ? \
- 							    (gpio_inst) : (gpio_inst) % 8)
- #define TPS6594_BIT_GPIOX_RISE_MASK(gpio_inst)		BIT((gpio_inst) < 8 ? \
- 							    (gpio_inst) : (gpio_inst) % 8 + 3)
-+/* MASK_GPIOX register field definition */
-+#define TPS65224_BIT_GPIOX_FALL_MASK(gpio_inst)		BIT((gpio_inst))
-+#define TPS65224_BIT_GPIOX_RISE_MASK(gpio_inst)		BIT((gpio_inst))
- 
- /* MASK_STARTUP register field definition */
- #define TPS6594_BIT_NPWRON_START_MASK			BIT(0)
- #define TPS6594_BIT_ENABLE_MASK				BIT(1)
- #define TPS6594_BIT_FSD_MASK				BIT(4)
- #define TPS6594_BIT_SOFT_REBOOT_MASK			BIT(5)
-+#define TPS65224_BIT_VSENSE_MASK			BIT(0)
-+#define TPS65224_BIT_PB_SHORT_MASK			BIT(2)
- 
- /* MASK_MISC register field definition */
- #define TPS6594_BIT_BIST_PASS_MASK			BIT(0)
- #define TPS6594_BIT_EXT_CLK_MASK			BIT(1)
-+#define TPS65224_BIT_REG_UNLOCK_MASK			BIT(2)
- #define TPS6594_BIT_TWARN_MASK				BIT(3)
-+#define TPS65224_BIT_PB_LONG_MASK			BIT(4)
-+#define TPS65224_BIT_PB_FALL_MASK			BIT(5)
-+#define TPS65224_BIT_PB_RISE_MASK			BIT(6)
-+#define TPS65224_BIT_ADC_CONV_READY_MASK		BIT(7)
- 
- /* MASK_MODERATE_ERR register field definition */
- #define TPS6594_BIT_BIST_FAIL_MASK			BIT(1)
-@@ -391,6 +463,8 @@ enum pmic_id {
- #define TPS6594_BIT_ORD_SHUTDOWN_MASK			BIT(1)
- #define TPS6594_BIT_MCU_PWR_ERR_MASK			BIT(2)
- #define TPS6594_BIT_SOC_PWR_ERR_MASK			BIT(3)
-+#define TPS65224_BIT_COMM_ERR_MASK			BIT(4)
-+#define TPS65224_BIT_I2C2_ERR_MASK			BIT(5)
- 
- /* MASK_COMM_ERR register field definition */
- #define TPS6594_BIT_COMM_FRM_ERR_MASK			BIT(0)
-@@ -426,6 +500,12 @@ enum pmic_id {
- #define TPS6594_BIT_BUCK3_4_INT				BIT(1)
- #define TPS6594_BIT_BUCK5_INT				BIT(2)
- 
-+/* INT_BUCK register field definition */
-+#define TPS65224_BIT_BUCK1_UVOV_INT			BIT(0)
-+#define TPS65224_BIT_BUCK2_UVOV_INT			BIT(1)
-+#define TPS65224_BIT_BUCK3_UVOV_INT			BIT(2)
-+#define TPS65224_BIT_BUCK4_UVOV_INT			BIT(3)
-+
- /* INT_BUCKX register field definition */
- #define TPS6594_BIT_BUCKX_OV_INT(buck_inst)		BIT(((buck_inst) << 2) % 8)
- #define TPS6594_BIT_BUCKX_UV_INT(buck_inst)		BIT(((buck_inst) << 2) % 8 + 1)
-@@ -437,6 +517,14 @@ enum pmic_id {
- #define TPS6594_BIT_LDO3_4_INT				BIT(1)
- #define TPS6594_BIT_VCCA_INT				BIT(4)
- 
-+/* INT_LDO_VMON register field definition */
-+#define TPS65224_BIT_LDO1_UVOV_INT			BIT(0)
-+#define TPS65224_BIT_LDO2_UVOV_INT			BIT(1)
-+#define TPS65224_BIT_LDO3_UVOV_INT			BIT(2)
-+#define TPS65224_BIT_VCCA_UVOV_INT			BIT(4)
-+#define TPS65224_BIT_VMON1_UVOV_INT			BIT(5)
-+#define TPS65224_BIT_VMON2_UVOV_INT			BIT(6)
-+
- /* INT_LDOX register field definition */
- #define TPS6594_BIT_LDOX_OV_INT(ldo_inst)		BIT(((ldo_inst) << 2) % 8)
- #define TPS6594_BIT_LDOX_UV_INT(ldo_inst)		BIT(((ldo_inst) << 2) % 8 + 1)
-@@ -462,17 +550,32 @@ enum pmic_id {
- /* INT_GPIOX register field definition */
- #define TPS6594_BIT_GPIOX_INT(gpio_inst)		BIT(gpio_inst)
- 
-+/* INT_GPIO register field definition */
-+#define TPS65224_BIT_GPIO1_INT				BIT(0)
-+#define TPS65224_BIT_GPIO2_INT				BIT(1)
-+#define TPS65224_BIT_GPIO3_INT				BIT(2)
-+#define TPS65224_BIT_GPIO4_INT				BIT(3)
-+#define TPS65224_BIT_GPIO5_INT				BIT(4)
-+#define TPS65224_BIT_GPIO6_INT				BIT(5)
-+
- /* INT_STARTUP register field definition */
- #define TPS6594_BIT_NPWRON_START_INT			BIT(0)
-+#define TPS65224_BIT_VSENSE_INT				BIT(0)
- #define TPS6594_BIT_ENABLE_INT				BIT(1)
- #define TPS6594_BIT_RTC_INT				BIT(2)
-+#define TPS65224_BIT_PB_SHORT_INT			BIT(2)
- #define TPS6594_BIT_FSD_INT				BIT(4)
- #define TPS6594_BIT_SOFT_REBOOT_INT			BIT(5)
- 
- /* INT_MISC register field definition */
- #define TPS6594_BIT_BIST_PASS_INT			BIT(0)
- #define TPS6594_BIT_EXT_CLK_INT				BIT(1)
-+#define TPS65224_BIT_REG_UNLOCK_INT			BIT(2)
- #define TPS6594_BIT_TWARN_INT				BIT(3)
-+#define TPS65224_BIT_PB_LONG_INT			BIT(4)
-+#define TPS65224_BIT_PB_FALL_INT			BIT(5)
-+#define TPS65224_BIT_PB_RISE_INT			BIT(6)
-+#define TPS65224_BIT_ADC_CONV_READY_INT			BIT(7)
- 
- /* INT_MODERATE_ERR register field definition */
- #define TPS6594_BIT_TSD_ORD_INT				BIT(0)
-@@ -488,6 +591,7 @@ enum pmic_id {
- #define TPS6594_BIT_TSD_IMM_INT				BIT(0)
- #define TPS6594_BIT_VCCA_OVP_INT			BIT(1)
- #define TPS6594_BIT_PFSM_ERR_INT			BIT(2)
-+#define TPS65224_BIT_BG_XMON_INT			BIT(3)
- 
- /* INT_FSM_ERR register field definition */
- #define TPS6594_BIT_IMM_SHUTDOWN_INT			BIT(0)
-@@ -496,6 +600,7 @@ enum pmic_id {
- #define TPS6594_BIT_SOC_PWR_ERR_INT			BIT(3)
- #define TPS6594_BIT_COMM_ERR_INT			BIT(4)
- #define TPS6594_BIT_READBACK_ERR_INT			BIT(5)
-+#define TPS65224_BIT_I2C2_ERR_INT			BIT(5)
- #define TPS6594_BIT_ESM_INT				BIT(6)
- #define TPS6594_BIT_WD_INT				BIT(7)
- 
-@@ -536,8 +641,18 @@ enum pmic_id {
- #define TPS6594_BIT_VMON2_OV_STAT			BIT(5)
- #define TPS6594_BIT_VMON2_UV_STAT			BIT(6)
- 
-+/* STAT_LDO_VMON register field definition */
-+#define TPS65224_BIT_LDO1_UVOV_STAT			BIT(0)
-+#define TPS65224_BIT_LDO2_UVOV_STAT			BIT(1)
-+#define TPS65224_BIT_LDO3_UVOV_STAT			BIT(2)
-+#define TPS65224_BIT_VCCA_UVOV_STAT			BIT(4)
-+#define TPS65224_BIT_VMON1_UVOV_STAT			BIT(5)
-+#define TPS65224_BIT_VMON2_UVOV_STAT			BIT(6)
-+
- /* STAT_STARTUP register field definition */
-+#define TPS65224_BIT_VSENSE_STAT			BIT(0)
- #define TPS6594_BIT_ENABLE_STAT				BIT(1)
-+#define TPS65224_BIT_PB_LEVEL_STAT			BIT(2)
- 
- /* STAT_MISC register field definition */
- #define TPS6594_BIT_EXT_CLK_STAT			BIT(1)
-@@ -549,6 +664,7 @@ enum pmic_id {
- /* STAT_SEVERE_ERR register field definition */
- #define TPS6594_BIT_TSD_IMM_STAT			BIT(0)
- #define TPS6594_BIT_VCCA_OVP_STAT			BIT(1)
-+#define TPS65224_BIT_BG_XMON_STAT			BIT(3)
- 
- /* STAT_READBACK_ERR register field definition */
- #define TPS6594_BIT_EN_DRV_READBACK_STAT		BIT(0)
-@@ -597,6 +713,8 @@ enum pmic_id {
- #define TPS6594_BIT_BB_CHARGER_EN			BIT(0)
- #define TPS6594_BIT_BB_ICHR				BIT(1)
- #define TPS6594_MASK_BB_VEOC				GENMASK(3, 2)
-+#define TPS65224_BIT_I2C1_SPI_CRC_EN			BIT(4)
-+#define TPS65224_BIT_I2C2_CRC_EN			BIT(5)
- #define TPS6594_BB_EOC_RDY				BIT(7)
- 
- /* ENABLE_DRV_REG register field definition */
-@@ -617,6 +735,7 @@ enum pmic_id {
- #define TPS6594_BIT_NRSTOUT_SOC_IN			BIT(2)
- #define TPS6594_BIT_FORCE_EN_DRV_LOW			BIT(3)
- #define TPS6594_BIT_SPMI_LPM_EN				BIT(4)
-+#define TPS65224_BIT_TSD_DISABLE			BIT(5)
- 
- /* RECOV_CNT_REG_1 register field definition */
- #define TPS6594_MASK_RECOV_CNT				GENMASK(3, 0)
-@@ -671,15 +790,27 @@ enum pmic_id {
- /* ESM_SOC_START_REG register field definition */
- #define TPS6594_BIT_ESM_SOC_START			BIT(0)
- 
-+/* ESM_MCU_START_REG register field definition */
-+#define TPS65224_BIT_ESM_MCU_START			BIT(0)
-+
- /* ESM_SOC_MODE_CFG register field definition */
- #define TPS6594_MASK_ESM_SOC_ERR_CNT_TH			GENMASK(3, 0)
- #define TPS6594_BIT_ESM_SOC_ENDRV			BIT(5)
- #define TPS6594_BIT_ESM_SOC_EN				BIT(6)
- #define TPS6594_BIT_ESM_SOC_MODE			BIT(7)
- 
-+/* ESM_MCU_MODE_CFG register field definition */
-+#define TPS65224_MASK_ESM_MCU_ERR_CNT_TH		GENMASK(3, 0)
-+#define TPS65224_BIT_ESM_MCU_ENDRV			BIT(5)
-+#define TPS65224_BIT_ESM_MCU_EN				BIT(6)
-+#define TPS65224_BIT_ESM_MCU_MODE			BIT(7)
-+
- /* ESM_SOC_ERR_CNT_REG register field definition */
- #define TPS6594_MASK_ESM_SOC_ERR_CNT			GENMASK(4, 0)
- 
-+/* ESM_MCU_ERR_CNT_REG register field definition */
-+#define TPS6594_MASK_ESM_MCU_ERR_CNT			GENMASK(4, 0)
-+
- /* REGISTER_LOCK register field definition */
- #define TPS6594_BIT_REGISTER_LOCK_STATUS		BIT(0)
- 
-@@ -687,6 +818,29 @@ enum pmic_id {
- #define TPS6594_MASK_VMON1_SLEW_RATE			GENMASK(2, 0)
- #define TPS6594_MASK_VMON2_SLEW_RATE			GENMASK(5, 3)
- 
-+/* SRAM_ACCESS_1 Register field definition */
-+#define TPS65224_MASk_SRAM_UNLOCK_SEQ			GENMASK(7, 0)
-+
-+/* SRAM_ACCESS_2 Register field definition */
-+#define TPS65224_BIT_SRAM_WRITE_MODE			BIT(0)
-+#define TPS65224_BIT_OTP_PROG_USER			BIT(1)
-+#define TPS65224_BIT_OTP_PROG_PFSM			BIT(2)
-+#define TPS65224_BIT_OTP_PROG_STATUS			BIT(3)
-+#define TPS65224_BIT_SRAM_UNLOCKED			BIT(6)
-+#define TPS65224_USER_PROG_ALLOWED			BIT(7)
-+
-+/* SRAM_ADDR_CTRL Register field definition */
-+#define TPS65224_MASk_SRAM_SEL				GENMASK(1, 0)
-+
-+/* RECOV_CNT_PFSM_INCR Register field definition */
-+#define TPS65224_BIT_INCREMENT_RECOV_CNT		BIT(0)
-+
-+/* MANUFACTURING_VER Register field definition */
-+#define TPS65224_MASK_SILICON_REV			GENMASK(7, 0)
-+
-+/* CUSTOMER_NVM_ID_REG Register field definition */
-+#define TPS65224_MASK_CUSTOMER_NVM_ID			GENMASK(7, 0)
-+
- /* SOFT_REBOOT_REG register field definition */
- #define TPS6594_BIT_SOFT_REBOOT				BIT(0)
- 
-@@ -755,14 +909,83 @@ enum pmic_id {
- #define TPS6594_BIT_I2C2_CRC_EN				BIT(2)
- #define TPS6594_MASK_T_CRC				GENMASK(7, 3)
- 
-+/* ADC_CTRL Register field definition */
-+#define TPS65224_BIT_ADC_START				BIT(0)
-+#define TPS65224_BIT_ADC_CONT_CONV			BIT(1)
-+#define TPS65224_BIT_ADC_THERMAL_SEL			BIT(2)
-+#define TPS65224_BIT_ADC_RDIV_EN			BIT(3)
-+#define TPS65224_BIT_ADC_STATUS				BIT(7)
-+
-+/* ADC_RESULT_REG_1 Register field definition */
-+#define TPS65224_MASK_ADC_RESULT_11_4			GENMASK(7, 0)
-+
-+/* ADC_RESULT_REG_2 Register field definition */
-+#define TPS65224_MASK_ADC_RESULT_3_0			GENMASK(7, 4)
-+
-+/* STARTUP_CTRL Register field definition */
-+#define TPS65224_MASK_STARTUP_DEST			GENMASK(6, 5)
-+#define TPS65224_BIT_FIRST_STARTUP_DONE			BIT(7)
-+
-+/* SCRATCH_PAD_REG_1 Register field definition */
-+#define TPS6594_MASK_SCRATCH_PAD_1			GENMASK(7, 0)
-+
-+/* SCRATCH_PAD_REG_2 Register field definition */
-+#define TPS6594_MASK_SCRATCH_PAD_2			GENMASK(7, 0)
-+
-+/* SCRATCH_PAD_REG_3 Register field definition */
-+#define TPS6594_MASK_SCRATCH_PAD_3			GENMASK(7, 0)
-+
-+/* SCRATCH_PAD_REG_4 Register field definition */
-+#define TPS6594_MASK_SCRATCH_PAD_4			GENMASK(7, 0)
-+
-+/* PFSM_DELAY_REG_1 Register field definition */
-+#define TPS6594_MASK_PFSM_DELAY1			GENMASK(7, 0)
-+
-+/* PFSM_DELAY_REG_2 Register field definition */
-+#define TPS6594_MASK_PFSM_DELAY2			GENMASK(7, 0)
-+
-+/* PFSM_DELAY_REG_3 Register field definition */
-+#define TPS6594_MASK_PFSM_DELAY3			GENMASK(7, 0)
-+
-+/* PFSM_DELAY_REG_4 Register field definition */
-+#define TPS6594_MASK_PFSM_DELAY4			GENMASK(7, 0)
-+
-+/* CRC_CALC_CONTROL Register field definition */
-+#define TPS65224_BIT_RUN_CRC_BIST			BIT(0)
-+#define TPS65224_BIT_RUN_CRC_UPDATE			BIT(1)
-+
-+/* ADC_GAIN_COMP_REG Register field definition */
-+#define TPS65224_MASK_ADC_GAIN_COMP			GENMASK(7, 0)
-+
-+/* REGMAP_USER_CRC_LOW Register field definition */
-+#define TPS65224_MASK_REGMAP_USER_CRC16_LOW		GENMASK(7, 0)
-+
-+/* REGMAP_USER_CRC_HIGH Register field definition */
-+#define TPS65224_MASK_REGMAP_USER_CRC16_HIGH		GENMASK(7, 0)
-+
-+/* WD_ANSWER_REG Register field definition */
-+#define TPS6594_MASK_WD_ANSWER				GENMASK(7, 0)
-+
- /* WD_QUESTION_ANSW_CNT register field definition */
- #define TPS6594_MASK_WD_QUESTION			GENMASK(3, 0)
- #define TPS6594_MASK_WD_ANSW_CNT			GENMASK(5, 4)
-+#define TPS65224_BIT_INT_TOP_STATUS			BIT(7)
-+
-+/* WD WIN1_CFG register field definition */
-+#define TPS6594_MASK_WD_WIN1_CFG			GENMASK(6, 0)
-+
-+/* WD WIN2_CFG register field definition */
-+#define TPS6594_MASK_WD_WIN2_CFG			GENMASK(6, 0)
-+
-+/* WD LongWin register field definition */
-+#define TPS6594_MASK_WD_LONGWIN_CFG			GENMASK(7, 0)
- 
- /* WD_MODE_REG register field definition */
- #define TPS6594_BIT_WD_RETURN_LONGWIN			BIT(0)
- #define TPS6594_BIT_WD_MODE_SELECT			BIT(1)
- #define TPS6594_BIT_WD_PWRHOLD				BIT(2)
-+#define TPS65224_BIT_WD_ENDRV_SEL			BIT(6)
-+#define TPS65224_BIT_WD_CNT_SEL				BIT(7)
- 
- /* WD_QA_CFG register field definition */
- #define TPS6594_MASK_WD_QUESTION_SEED			GENMASK(3, 0)
-@@ -993,6 +1216,106 @@ enum tps6594_irqs {
- #define TPS6594_IRQ_NAME_ALARM			"alarm"
- #define TPS6594_IRQ_NAME_POWERUP		"powerup"
- 
-+/* IRQs */
-+enum tps65224_irqs {
-+	/* INT_BUCK register */
-+	TPS65224_IRQ_BUCK1_UVOV,
-+	TPS65224_IRQ_BUCK2_UVOV,
-+	TPS65224_IRQ_BUCK3_UVOV,
-+	TPS65224_IRQ_BUCK4_UVOV,
-+	/* INT_LDO_VMON register */
-+	TPS65224_IRQ_LDO1_UVOV,
-+	TPS65224_IRQ_LDO2_UVOV,
-+	TPS65224_IRQ_LDO3_UVOV,
-+	TPS65224_IRQ_VCCA_UVOV,
-+	TPS65224_IRQ_VMON1_UVOV,
-+	TPS65224_IRQ_VMON2_UVOV,
-+	/* INT_GPIO register */
-+	TPS65224_IRQ_GPIO1,
-+	TPS65224_IRQ_GPIO2,
-+	TPS65224_IRQ_GPIO3,
-+	TPS65224_IRQ_GPIO4,
-+	TPS65224_IRQ_GPIO5,
-+	TPS65224_IRQ_GPIO6,
-+	/* INT_STARTUP register */
-+	TPS65224_IRQ_VSENSE,
-+	TPS65224_IRQ_ENABLE,
-+	TPS65224_IRQ_PB_SHORT,
-+	TPS65224_IRQ_FSD,
-+	TPS65224_IRQ_SOFT_REBOOT,
-+	/* INT_MISC register */
-+	TPS65224_IRQ_BIST_PASS,
-+	TPS65224_IRQ_EXT_CLK,
-+	TPS65224_IRQ_REG_UNLOCK,
-+	TPS65224_IRQ_TWARN,
-+	TPS65224_IRQ_PB_LONG,
-+	TPS65224_IRQ_PB_FALL,
-+	TPS65224_IRQ_PB_RISE,
-+	TPS65224_IRQ_ADC_CONV_READY,
-+	/* INT_MODERATE_ERR register */
-+	TPS65224_IRQ_TSD_ORD,
-+	TPS65224_IRQ_BIST_FAIL,
-+	TPS65224_IRQ_REG_CRC_ERR,
-+	TPS65224_IRQ_RECOV_CNT,
-+	/* INT_SEVERE_ERR register */
-+	TPS65224_IRQ_TSD_IMM,
-+	TPS65224_IRQ_VCCA_OVP,
-+	TPS65224_IRQ_PFSM_ERR,
-+	TPS65224_IRQ_BG_XMON,
-+	/* INT_FSM_ERR register */
-+	TPS65224_IRQ_IMM_SHUTDOWN,
-+	TPS65224_IRQ_ORD_SHUTDOWN,
-+	TPS65224_IRQ_MCU_PWR_ERR,
-+	TPS65224_IRQ_SOC_PWR_ERR,
-+	TPS65224_IRQ_COMM_ERR,
-+	TPS65224_IRQ_I2C2_ERR,
++static struct tps6594_regulator_irq_type tps65224_ext_regulator_irq_types[] = {
++	{ TPS65224_IRQ_NAME_VCCA_UVOV, "VCCA", "voltage out of range",
++	  REGULATOR_EVENT_REGULATION_OUT },
++	{ TPS65224_IRQ_NAME_VMON1_UVOV, "VMON1", "voltage out of range",
++	  REGULATOR_EVENT_REGULATION_OUT },
++	{ TPS65224_IRQ_NAME_VMON2_UVOV, "VMON2", "voltage out of range",
++	  REGULATOR_EVENT_REGULATION_OUT },
 +};
 +
-+#define TPS65224_IRQ_NAME_BUCK1_UVOV		"buck1_uvov"
-+#define TPS65224_IRQ_NAME_BUCK2_UVOV		"buck2_uvov"
-+#define TPS65224_IRQ_NAME_BUCK3_UVOV		"buck3_uvov"
-+#define TPS65224_IRQ_NAME_BUCK4_UVOV		"buck4_uvov"
-+#define TPS65224_IRQ_NAME_LDO1_UVOV		"ldo1_uvov"
-+#define TPS65224_IRQ_NAME_LDO2_UVOV		"ldo2_uvov"
-+#define TPS65224_IRQ_NAME_LDO3_UVOV		"ldo3_uvov"
-+#define TPS65224_IRQ_NAME_VCCA_UVOV		"vcca_uvov"
-+#define TPS65224_IRQ_NAME_VMON1_UVOV		"vmon1_uvov"
-+#define TPS65224_IRQ_NAME_VMON2_UVOV		"vmon2_uvov"
-+#define TPS65224_IRQ_NAME_GPIO1			"gpio1"
-+#define TPS65224_IRQ_NAME_GPIO2			"gpio2"
-+#define TPS65224_IRQ_NAME_GPIO3			"gpio3"
-+#define TPS65224_IRQ_NAME_GPIO4			"gpio4"
-+#define TPS65224_IRQ_NAME_GPIO5			"gpio5"
-+#define TPS65224_IRQ_NAME_GPIO6			"gpio6"
-+#define TPS65224_IRQ_NAME_VSENSE	        "vsense"
-+#define TPS65224_IRQ_NAME_ENABLE		"enable"
-+#define TPS65224_IRQ_NAME_PB_SHORT		"pb_short"
-+#define TPS65224_IRQ_NAME_FSD			"fsd"
-+#define TPS65224_IRQ_NAME_SOFT_REBOOT		"soft_reboot"
-+#define TPS65224_IRQ_NAME_BIST_PASS		"bist_pass"
-+#define TPS65224_IRQ_NAME_EXT_CLK		"ext_clk"
-+#define TPS65224_IRQ_NAME_REG_UNLOCK		"reg_unlock"
-+#define TPS65224_IRQ_NAME_TWARN			"twarn"
-+#define TPS65224_IRQ_NAME_PB_LONG		"pb_long"
-+#define TPS65224_IRQ_NAME_PB_FALL		"pb_fall"
-+#define TPS65224_IRQ_NAME_PB_RISE		"pb_rise"
-+#define TPS65224_IRQ_NAME_ADC_CONV_READY	"adc_conv_ready"
-+#define TPS65224_IRQ_NAME_TSD_ORD		"tsd_ord"
-+#define TPS65224_IRQ_NAME_BIST_FAIL		"bist_fail"
-+#define TPS65224_IRQ_NAME_REG_CRC_ERR		"reg_crc_err"
-+#define TPS65224_IRQ_NAME_RECOV_CNT		"recov_cnt"
-+#define TPS65224_IRQ_NAME_TSD_IMM		"tsd_imm"
-+#define TPS65224_IRQ_NAME_VCCA_OVP		"vcca_ovp"
-+#define TPS65224_IRQ_NAME_PFSM_ERR		"pfsm_err"
-+#define TPS65224_IRQ_NAME_BG_XMON		"bg_xmon"
-+#define TPS65224_IRQ_NAME_IMM_SHUTDOWN		"imm_shutdown"
-+#define TPS65224_IRQ_NAME_ORD_SHUTDOWN		"ord_shutdown"
-+#define TPS65224_IRQ_NAME_MCU_PWR_ERR		"mcu_pwr_err"
-+#define TPS65224_IRQ_NAME_SOC_PWR_ERR		"soc_pwr_err"
-+#define TPS65224_IRQ_NAME_COMM_ERR		"comm_err"
-+#define TPS65224_IRQ_NAME_I2C2_ERR		"i2c2_err"
-+#define TPS65224_IRQ_NAME_POWERUP		"powerup"
+ struct tps6594_regulator_irq_data {
+ 	struct device *dev;
+ 	struct tps6594_regulator_irq_type *type;
+@@ -122,6 +134,27 @@ static const struct linear_range ldos_4_ranges[] = {
+ 	REGULATOR_LINEAR_RANGE(1200000, 0x20, 0x74, 25000),
+ };
+ 
++/* Voltage range for TPS65224 Bucks and LDOs */
++static const struct linear_range tps65224_bucks_1_ranges[] = {
++	REGULATOR_LINEAR_RANGE(500000, 0x0a, 0x0e, 20000),
++	REGULATOR_LINEAR_RANGE(600000, 0x0f, 0x72, 5000),
++	REGULATOR_LINEAR_RANGE(1100000, 0x73, 0xaa, 10000),
++	REGULATOR_LINEAR_RANGE(1660000, 0xab, 0xfd, 20000),
++};
 +
- /**
-  * struct tps6594 - device private data structure
-  *
++static const struct linear_range tps65224_bucks_2_3_4_ranges[] = {
++	REGULATOR_LINEAR_RANGE(500000, 0x0, 0x1a, 25000),
++	REGULATOR_LINEAR_RANGE(1200000, 0x1b, 0x45, 50000),
++};
++
++static const struct linear_range tps65224_ldos_1_ranges[] = {
++	REGULATOR_LINEAR_RANGE(1200000, 0xC, 0x36, 50000),
++};
++
++static const struct linear_range tps65224_ldos_2_3_ranges[] = {
++	REGULATOR_LINEAR_RANGE(600000, 0x0, 0x38, 50000),
++};
++
+ /* Operations permitted on BUCK1/2/3/4/5 */
+ static const struct regulator_ops tps6594_bucks_ops = {
+ 	.is_enabled		= regulator_is_enabled_regmap,
+@@ -197,6 +230,38 @@ static const struct regulator_desc buck_regs[] = {
+ 			  4, 0, 0, NULL, 0, 0),
+ };
+ 
++/* Buck configuration for TPS65224 */
++static const struct regulator_desc tps65224_buck_regs[] = {
++	TPS6594_REGULATOR("BUCK1", "buck1", TPS6594_BUCK_1,
++			  REGULATOR_VOLTAGE, tps6594_bucks_ops, TPS65224_MASK_BUCK1_VSET,
++			  TPS6594_REG_BUCKX_VOUT_1(0),
++			  TPS65224_MASK_BUCK1_VSET,
++			  TPS6594_REG_BUCKX_CTRL(0),
++			  TPS6594_BIT_BUCK_EN, 0, 0, tps65224_bucks_1_ranges,
++			  4, 0, 0, NULL, 0, 0),
++	TPS6594_REGULATOR("BUCK2", "buck2", TPS6594_BUCK_2,
++			  REGULATOR_VOLTAGE, tps6594_bucks_ops, TPS65224_MASK_BUCKS_VSET,
++			  TPS6594_REG_BUCKX_VOUT_1(1),
++			  TPS65224_MASK_BUCKS_VSET,
++			  TPS6594_REG_BUCKX_CTRL(1),
++			  TPS6594_BIT_BUCK_EN, 0, 0, tps65224_bucks_2_3_4_ranges,
++			  4, 0, 0, NULL, 0, 0),
++	TPS6594_REGULATOR("BUCK3", "buck3", TPS6594_BUCK_3,
++			  REGULATOR_VOLTAGE, tps6594_bucks_ops, TPS65224_MASK_BUCKS_VSET,
++			  TPS6594_REG_BUCKX_VOUT_1(2),
++			  TPS65224_MASK_BUCKS_VSET,
++			  TPS6594_REG_BUCKX_CTRL(2),
++			  TPS6594_BIT_BUCK_EN, 0, 0, tps65224_bucks_2_3_4_ranges,
++			  4, 0, 0, NULL, 0, 0),
++	TPS6594_REGULATOR("BUCK4", "buck4", TPS6594_BUCK_4,
++			  REGULATOR_VOLTAGE, tps6594_bucks_ops, TPS65224_MASK_BUCKS_VSET,
++			  TPS6594_REG_BUCKX_VOUT_1(3),
++			  TPS65224_MASK_BUCKS_VSET,
++			  TPS6594_REG_BUCKX_CTRL(3),
++			  TPS6594_BIT_BUCK_EN, 0, 0, tps65224_bucks_2_3_4_ranges,
++			  4, 0, 0, NULL, 0, 0),
++};
++
+ static struct tps6594_regulator_irq_type tps6594_buck1_irq_types[] = {
+ 	{ TPS6594_IRQ_NAME_BUCK1_OV, "BUCK1", "overvoltage", REGULATOR_EVENT_OVER_VOLTAGE_WARN },
+ 	{ TPS6594_IRQ_NAME_BUCK1_UV, "BUCK1", "undervoltage", REGULATOR_EVENT_UNDER_VOLTAGE },
+@@ -269,6 +334,41 @@ static struct tps6594_regulator_irq_type tps6594_ldo4_irq_types[] = {
+ 	  REGULATOR_EVENT_OVER_CURRENT },
+ };
+ 
++static struct tps6594_regulator_irq_type tps65224_buck1_irq_types[] = {
++	{ TPS65224_IRQ_NAME_BUCK1_UVOV, "BUCK1", "voltage out of range",
++	  REGULATOR_EVENT_REGULATION_OUT },
++};
++
++static struct tps6594_regulator_irq_type tps65224_buck2_irq_types[] = {
++	{ TPS65224_IRQ_NAME_BUCK2_UVOV, "BUCK2", "voltage out of range",
++	  REGULATOR_EVENT_REGULATION_OUT },
++};
++
++static struct tps6594_regulator_irq_type tps65224_buck3_irq_types[] = {
++	{ TPS65224_IRQ_NAME_BUCK3_UVOV, "BUCK3", "voltage out of range",
++	  REGULATOR_EVENT_REGULATION_OUT },
++};
++
++static struct tps6594_regulator_irq_type tps65224_buck4_irq_types[] = {
++	{ TPS65224_IRQ_NAME_BUCK4_UVOV, "BUCK4", "voltage out of range",
++	  REGULATOR_EVENT_REGULATION_OUT },
++};
++
++static struct tps6594_regulator_irq_type tps65224_ldo1_irq_types[] = {
++	{ TPS65224_IRQ_NAME_LDO1_UVOV, "LDO1", "voltage out of range",
++	  REGULATOR_EVENT_REGULATION_OUT },
++};
++
++static struct tps6594_regulator_irq_type tps65224_ldo2_irq_types[] = {
++	{ TPS65224_IRQ_NAME_LDO2_UVOV, "LDO2", "voltage out of range",
++	  REGULATOR_EVENT_REGULATION_OUT },
++};
++
++static struct tps6594_regulator_irq_type tps65224_ldo3_irq_types[] = {
++	{ TPS65224_IRQ_NAME_LDO3_UVOV, "LDO3", "voltage out of range",
++	  REGULATOR_EVENT_REGULATION_OUT },
++};
++
+ static struct tps6594_regulator_irq_type *tps6594_bucks_irq_types[] = {
+ 	tps6594_buck1_irq_types,
+ 	tps6594_buck2_irq_types,
+@@ -284,7 +384,20 @@ static struct tps6594_regulator_irq_type *tps6594_ldos_irq_types[] = {
+ 	tps6594_ldo4_irq_types,
+ };
+ 
+-static const struct regulator_desc multi_regs[] = {
++static struct tps6594_regulator_irq_type *tps65224_bucks_irq_types[] = {
++	tps65224_buck1_irq_types,
++	tps65224_buck2_irq_types,
++	tps65224_buck3_irq_types,
++	tps65224_buck4_irq_types,
++};
++
++static struct tps6594_regulator_irq_type *tps65224_ldos_irq_types[] = {
++	tps65224_ldo1_irq_types,
++	tps65224_ldo2_irq_types,
++	tps65224_ldo3_irq_types,
++};
++
++static const struct regulator_desc tps6594_multi_regs[] = {
+ 	TPS6594_REGULATOR("BUCK12", "buck12", TPS6594_BUCK_1,
+ 			  REGULATOR_VOLTAGE, tps6594_bucks_ops, TPS6594_MASK_BUCKS_VSET,
+ 			  TPS6594_REG_BUCKX_VOUT_1(0),
+@@ -315,7 +428,17 @@ static const struct regulator_desc multi_regs[] = {
+ 			  4, 4000, 0, NULL, 0, 0),
+ };
+ 
+-static const struct regulator_desc ldo_regs[] = {
++static const struct regulator_desc tps65224_multi_regs[] = {
++	TPS6594_REGULATOR("BUCK12", "buck12", TPS6594_BUCK_1,
++			  REGULATOR_VOLTAGE, tps6594_bucks_ops, TPS65224_MASK_BUCK1_VSET,
++			  TPS6594_REG_BUCKX_VOUT_1(0),
++			  TPS65224_MASK_BUCK1_VSET,
++			  TPS6594_REG_BUCKX_CTRL(0),
++			  TPS6594_BIT_BUCK_EN, 0, 0, tps65224_bucks_1_ranges,
++			  4, 4000, 0, NULL, 0, 0),
++};
++
++static const struct regulator_desc tps6594_ldo_regs[] = {
+ 	TPS6594_REGULATOR("LDO1", "ldo1", TPS6594_LDO_1,
+ 			  REGULATOR_VOLTAGE, tps6594_ldos_1_2_3_ops, TPS6594_MASK_LDO123_VSET,
+ 			  TPS6594_REG_LDOX_VOUT(0),
+@@ -346,6 +469,30 @@ static const struct regulator_desc ldo_regs[] = {
+ 			  1, 0, 0, NULL, 0, 0),
+ };
+ 
++static const struct regulator_desc tps65224_ldo_regs[] = {
++	TPS6594_REGULATOR("LDO1", "ldo1", TPS6594_LDO_1,
++			  REGULATOR_VOLTAGE, tps6594_ldos_1_2_3_ops, TPS6594_MASK_LDO123_VSET,
++			  TPS6594_REG_LDOX_VOUT(0),
++			  TPS6594_MASK_LDO123_VSET,
++			  TPS6594_REG_LDOX_CTRL(0),
++			  TPS6594_BIT_LDO_EN, 0, 0, tps65224_ldos_1_ranges,
++			  1, 0, 0, NULL, 0, TPS6594_BIT_LDO_BYPASS),
++	TPS6594_REGULATOR("LDO2", "ldo2", TPS6594_LDO_2,
++			  REGULATOR_VOLTAGE, tps6594_ldos_1_2_3_ops, TPS6594_MASK_LDO123_VSET,
++			  TPS6594_REG_LDOX_VOUT(1),
++			  TPS6594_MASK_LDO123_VSET,
++			  TPS6594_REG_LDOX_CTRL(1),
++			  TPS6594_BIT_LDO_EN, 0, 0, tps65224_ldos_2_3_ranges,
++			  1, 0, 0, NULL, 0, TPS6594_BIT_LDO_BYPASS),
++	TPS6594_REGULATOR("LDO3", "ldo3", TPS6594_LDO_3,
++			  REGULATOR_VOLTAGE, tps6594_ldos_1_2_3_ops, TPS6594_MASK_LDO123_VSET,
++			  TPS6594_REG_LDOX_VOUT(2),
++			  TPS6594_MASK_LDO123_VSET,
++			  TPS6594_REG_LDOX_CTRL(2),
++			  TPS6594_BIT_LDO_EN, 0, 0, tps65224_ldos_2_3_ranges,
++			  1, 0, 0, NULL, 0, TPS6594_BIT_LDO_BYPASS),
++};
++
+ static irqreturn_t tps6594_regulator_irq_handler(int irq, void *data)
+ {
+ 	struct tps6594_regulator_irq_data *irq_data = data;
+@@ -369,17 +516,18 @@ static irqreturn_t tps6594_regulator_irq_handler(int irq, void *data)
+ static int tps6594_request_reg_irqs(struct platform_device *pdev,
+ 				    struct regulator_dev *rdev,
+ 				    struct tps6594_regulator_irq_data *irq_data,
+-				    struct tps6594_regulator_irq_type *tps6594_regs_irq_types,
++				    struct tps6594_regulator_irq_type *regs_irq_types,
++				    size_t interrupt_cnt,
+ 				    int *irq_idx)
+ {
+ 	struct tps6594_regulator_irq_type *irq_type;
+ 	struct tps6594 *tps = dev_get_drvdata(pdev->dev.parent);
+-	int j;
++	size_t j;
+ 	int irq;
+ 	int error;
+ 
+-	for (j = 0; j < REGS_INT_NB; j++) {
+-		irq_type = &tps6594_regs_irq_types[j];
++	for (j = 0; j < interrupt_cnt; j++) {
++		irq_type = &regs_irq_types[j];
+ 		irq = platform_get_irq_byname(pdev, irq_type->irq_name);
+ 		if (irq < 0)
+ 			return -EINVAL;
+@@ -411,23 +559,47 @@ static int tps6594_regulator_probe(struct platform_device *pdev)
+ 	struct tps6594_regulator_irq_data *irq_data;
+ 	struct tps6594_ext_regulator_irq_data *irq_ext_reg_data;
+ 	struct tps6594_regulator_irq_type *irq_type;
+-	u8 buck_configured[BUCK_NB] = { 0 };
+-	u8 buck_multi[MULTI_PHASE_NB] = { 0 };
+-	static const char * const multiphases[] = {"buck12", "buck123", "buck1234", "buck34"};
++	struct tps6594_regulator_irq_type *irq_types;
++	bool buck_configured[BUCK_NB] = { false };
++	bool buck_multi[MULTI_PHASE_NB] = { false };
++
+ 	static const char *npname;
+-	int error, i, irq, multi, delta;
++	int error, i, irq, multi;
+ 	int irq_idx = 0;
+ 	int buck_idx = 0;
+-	size_t ext_reg_irq_nb = 2;
++	int nr_ldo;
++	int nr_buck;
++	int nr_types;
++	unsigned int irq_count;
++	unsigned int multi_phase_cnt;
+ 	size_t reg_irq_nb;
++	struct tps6594_regulator_irq_type **bucks_irq_types;
++	const struct regulator_desc *multi_regs;
++	struct tps6594_regulator_irq_type **ldos_irq_types;
++	const struct regulator_desc *ldo_regs;
++	size_t interrupt_count;
++
++	if (tps->chip_id == TPS65224) {
++		bucks_irq_types = tps65224_bucks_irq_types;
++		interrupt_count = ARRAY_SIZE(tps65224_buck1_irq_types);
++		multi_regs = tps65224_multi_regs;
++		ldos_irq_types = tps65224_ldos_irq_types;
++		ldo_regs = tps65224_ldo_regs;
++		multi_phase_cnt = ARRAY_SIZE(tps65224_multi_regs);
++	} else {
++		bucks_irq_types = tps6594_bucks_irq_types;
++		interrupt_count = ARRAY_SIZE(tps6594_buck1_irq_types);
++		multi_regs = tps6594_multi_regs;
++		ldos_irq_types = tps6594_ldos_irq_types;
++		ldo_regs = tps6594_ldo_regs;
++		multi_phase_cnt = ARRAY_SIZE(tps6594_multi_regs);
++	}
++
+ 	enum {
+ 		MULTI_BUCK12,
++		MULTI_BUCK12_34,
+ 		MULTI_BUCK123,
+ 		MULTI_BUCK1234,
+-		MULTI_BUCK12_34,
+-		MULTI_FIRST = MULTI_BUCK12,
+-		MULTI_LAST = MULTI_BUCK12_34,
+-		MULTI_NUM = MULTI_LAST - MULTI_FIRST + 1
+ 	};
+ 
+ 	config.dev = tps->dev;
+@@ -442,61 +614,68 @@ static int tps6594_regulator_probe(struct platform_device *pdev)
+ 	 * In case of Multiphase configuration, value should be defined for
+ 	 * buck_configured to avoid creating bucks for every buck in multiphase
+ 	 */
+-	for (multi = MULTI_FIRST; multi < MULTI_NUM; multi++) {
+-		np = of_find_node_by_name(tps->dev->of_node, multiphases[multi]);
++	for (multi = 0; multi < multi_phase_cnt; multi++) {
++		np = of_find_node_by_name(tps->dev->of_node, multi_regs[multi].supply_name);
+ 		npname = of_node_full_name(np);
+ 		np_pmic_parent = of_get_parent(of_get_parent(np));
+ 		if (of_node_cmp(of_node_full_name(np_pmic_parent), tps->dev->of_node->full_name))
+ 			continue;
+-		delta = strcmp(npname, multiphases[multi]);
+-		if (!delta) {
++		if (strcmp(npname, multi_regs[multi].supply_name) == 0) {
+ 			switch (multi) {
+ 			case MULTI_BUCK12:
+-				buck_multi[0] = 1;
+-				buck_configured[0] = 1;
+-				buck_configured[1] = 1;
++				buck_multi[0] = true;
++				buck_configured[0] = true;
++				buck_configured[1] = true;
+ 				break;
+ 			/* multiphase buck34 is supported only with buck12 */
+ 			case MULTI_BUCK12_34:
+-				buck_multi[0] = 1;
+-				buck_multi[1] = 1;
+-				buck_configured[0] = 1;
+-				buck_configured[1] = 1;
+-				buck_configured[2] = 1;
+-				buck_configured[3] = 1;
++				buck_multi[0] = true;
++				buck_multi[1] = true;
++				buck_configured[0] = true;
++				buck_configured[1] = true;
++				buck_configured[2] = true;
++				buck_configured[3] = true;
+ 				break;
+ 			case MULTI_BUCK123:
+-				buck_multi[2] = 1;
+-				buck_configured[0] = 1;
+-				buck_configured[1] = 1;
+-				buck_configured[2] = 1;
++				buck_multi[2] = true;
++				buck_configured[0] = true;
++				buck_configured[1] = true;
++				buck_configured[2] = true;
+ 				break;
+ 			case MULTI_BUCK1234:
+-				buck_multi[3] = 1;
+-				buck_configured[0] = 1;
+-				buck_configured[1] = 1;
+-				buck_configured[2] = 1;
+-				buck_configured[3] = 1;
++				buck_multi[3] = true;
++				buck_configured[0] = true;
++				buck_configured[1] = true;
++				buck_configured[2] = true;
++				buck_configured[3] = true;
+ 				break;
+ 			}
+ 		}
+ 	}
+ 
+ 	if (tps->chip_id == LP8764) {
+-		/* There is only 4 buck on LP8764 */
+-		buck_configured[4] = 1;
+-		reg_irq_nb = size_mul(REGS_INT_NB, (BUCK_NB - 1));
++		nr_buck = ARRAY_SIZE(buck_regs);
++		nr_ldo = 0;
++		nr_types = REGS_INT_NB;
++	} else if (tps->chip_id == TPS65224) {
++		nr_buck = ARRAY_SIZE(tps65224_buck_regs);
++		nr_ldo = ARRAY_SIZE(tps65224_ldo_regs);
++		nr_types = REGS_INT_NB;
+ 	} else {
+-		reg_irq_nb = size_mul(REGS_INT_NB, (size_add(BUCK_NB, LDO_NB)));
++		nr_buck = ARRAY_SIZE(buck_regs);
++		nr_ldo = ARRAY_SIZE(tps6594_ldo_regs);
++		nr_types = TPS65224_REGS_INT_NB;
+ 	}
+ 
++	reg_irq_nb = nr_types * (nr_buck + nr_ldo);
++
+ 	irq_data = devm_kmalloc_array(tps->dev, reg_irq_nb,
+ 				      sizeof(struct tps6594_regulator_irq_data), GFP_KERNEL);
+ 	if (!irq_data)
+ 		return -ENOMEM;
+ 
+-	for (i = 0; i < MULTI_PHASE_NB; i++) {
+-		if (buck_multi[i] == 0)
++	for (i = 0; i < multi_phase_cnt; i++) {
++		if (!buck_multi[i])
+ 			continue;
+ 
+ 		rdev = devm_regulator_register(&pdev->dev, &multi_regs[i], &config);
+@@ -506,52 +685,60 @@ static int tps6594_regulator_probe(struct platform_device *pdev)
+ 					     pdev->name);
+ 
+ 		/* config multiphase buck12+buck34 */
+-		if (i == 1)
++		if (i == MULTI_BUCK12_34)
+ 			buck_idx = 2;
++
+ 		error = tps6594_request_reg_irqs(pdev, rdev, irq_data,
+-						 tps6594_bucks_irq_types[buck_idx], &irq_idx);
++						 bucks_irq_types[buck_idx],
++						 interrupt_count, &irq_idx);
+ 		if (error)
+ 			return error;
++
+ 		error = tps6594_request_reg_irqs(pdev, rdev, irq_data,
+-						 tps6594_bucks_irq_types[buck_idx + 1], &irq_idx);
++						 bucks_irq_types[buck_idx + 1],
++						 interrupt_count, &irq_idx);
+ 		if (error)
+ 			return error;
+ 
+-		if (i == 2 || i == 3) {
++		if (i == MULTI_BUCK123 || i == MULTI_BUCK1234) {
+ 			error = tps6594_request_reg_irqs(pdev, rdev, irq_data,
+ 							 tps6594_bucks_irq_types[buck_idx + 2],
++							 interrupt_count,
+ 							 &irq_idx);
+ 			if (error)
+ 				return error;
+ 		}
+-		if (i == 3) {
++		if (i == MULTI_BUCK1234) {
+ 			error = tps6594_request_reg_irqs(pdev, rdev, irq_data,
+ 							 tps6594_bucks_irq_types[buck_idx + 3],
++							 interrupt_count,
+ 							 &irq_idx);
+ 			if (error)
+ 				return error;
+ 		}
+ 	}
+ 
+-	for (i = 0; i < BUCK_NB; i++) {
+-		if (buck_configured[i] == 1)
++	for (i = 0; i < nr_buck; i++) {
++		if (buck_configured[i])
+ 			continue;
+ 
+-		rdev = devm_regulator_register(&pdev->dev, &buck_regs[i], &config);
++		const struct regulator_desc *buck_cfg = (tps->chip_id == TPS65224) ?
++							 tps65224_buck_regs : buck_regs;
++
++		rdev = devm_regulator_register(&pdev->dev, &buck_cfg[i], &config);
+ 		if (IS_ERR(rdev))
+ 			return dev_err_probe(tps->dev, PTR_ERR(rdev),
+-					     "failed to register %s regulator\n",
+-					     pdev->name);
++					     "failed to register %s regulator\n", pdev->name);
+ 
+ 		error = tps6594_request_reg_irqs(pdev, rdev, irq_data,
+-						 tps6594_bucks_irq_types[i], &irq_idx);
++						 bucks_irq_types[i], interrupt_count, &irq_idx);
+ 		if (error)
+ 			return error;
+ 	}
+ 
+-	/* LP8764 dosen't have LDO */
++	/* LP8764 doesn't have LDO */
+ 	if (tps->chip_id != LP8764) {
+-		for (i = 0; i < ARRAY_SIZE(ldo_regs); i++) {
++		for (i = 0; i < nr_ldo; i++) {
+ 			rdev = devm_regulator_register(&pdev->dev, &ldo_regs[i], &config);
+ 			if (IS_ERR(rdev))
+ 				return dev_err_probe(tps->dev, PTR_ERR(rdev),
+@@ -559,26 +746,34 @@ static int tps6594_regulator_probe(struct platform_device *pdev)
+ 						     pdev->name);
+ 
+ 			error = tps6594_request_reg_irqs(pdev, rdev, irq_data,
+-							 tps6594_ldos_irq_types[i],
++							 ldos_irq_types[i], interrupt_count,
+ 							 &irq_idx);
+ 			if (error)
+ 				return error;
+ 		}
+ 	}
+ 
+-	if (tps->chip_id == LP8764)
+-		ext_reg_irq_nb = ARRAY_SIZE(tps6594_ext_regulator_irq_types);
++	if (tps->chip_id == TPS65224) {
++		irq_types = tps65224_ext_regulator_irq_types;
++		irq_count = ARRAY_SIZE(tps65224_ext_regulator_irq_types);
++	} else {
++		irq_types = tps6594_ext_regulator_irq_types;
++		if (tps->chip_id == LP8764)
++			irq_count = ARRAY_SIZE(tps6594_ext_regulator_irq_types);
++		else
++			/* TPS6593 supports only VCCA OV and UV */
++			irq_count = 2;
++	}
+ 
+ 	irq_ext_reg_data = devm_kmalloc_array(tps->dev,
+-					ext_reg_irq_nb,
+-					sizeof(struct tps6594_ext_regulator_irq_data),
+-					GFP_KERNEL);
++					      irq_count,
++					      sizeof(struct tps6594_ext_regulator_irq_data),
++					      GFP_KERNEL);
+ 	if (!irq_ext_reg_data)
+ 		return -ENOMEM;
+ 
+-	for (i = 0; i < ext_reg_irq_nb; ++i) {
+-		irq_type = &tps6594_ext_regulator_irq_types[i];
+-
++	for (i = 0; i < irq_count; ++i) {
++		irq_type = &irq_types[i];
+ 		irq = platform_get_irq_byname(pdev, irq_type->irq_name);
+ 		if (irq < 0)
+ 			return -EINVAL;
+@@ -610,5 +805,6 @@ module_platform_driver(tps6594_regulator_driver);
+ 
+ MODULE_ALIAS("platform:tps6594-regulator");
+ MODULE_AUTHOR("Jerome Neanne <jneanne@baylibre.com>");
++MODULE_AUTHOR("Nirmala Devi Mal Nadar <m.nirmaladevi@ltts.com>");
+ MODULE_DESCRIPTION("TPS6594 voltage regulator driver");
+ MODULE_LICENSE("GPL");
 -- 
 2.53.0
 
