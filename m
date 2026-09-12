@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EED33803CF;
-	Sat, 12 Sep 2026 07:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868FD2AD35;
+	Sat, 12 Sep 2026 07:28:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198127; cv=none; b=Td1ItLP96EOb72htIVtsKkqiRqjXIY9h/11qbq6HDScJ992Ir9SGqwHMRGkMYvEAYYtvwQph9K/JK1GUp0zvZ/u1H6Lv6qRHb5M2p8Obl0fab34VEGGRYsbN/hVMJyit4GwnwvmuV7hNz/dof2kB0AubqmAyoTMP5Rpgv652bZQ=
+	t=1789198132; cv=none; b=QGQfgfpGohM609/6maYODwhr/iV/cqfzx+ZdwkxO6pOIjafcppkQFCC1ognijGS+aeCE8QOu29sjWe86FzzE6zAlxd4SGF+9FZdPX72qRmMK1+mFttvqJfQbkD6k3dbwagnRgkR1mFMlkDQom1fvCm/gO/xglE1FXJnE7Mjpxig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198127; c=relaxed/simple;
-	bh=Wd1G0QHPStJSygmAENFbb+2n+DRYZyuPOYAlRBbYC8o=;
+	s=arc-20240116; t=1789198132; c=relaxed/simple;
+	bh=HbIsoZBazIRS21CRpmgQVy1olqvt6ViqTS2vKH5WmXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cG/e5FC0kuSOMVUTiEvLaUa28Um8HPLCZRjTwRI2R0bp7qn9VNA3fIwPTT5oNk52akZhhzijjh9k0GAnZWxHiY3DOlJO9SR9Xkf3OdMYfNLzzOAm8RWxurCpnsUNEdwI9vPSMSFrr+PVmulUR9XwnwBq2JJ/p9SpVVAXmmXnV+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTiPWUH0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CWwHbh7tB9crbmPKAkExfdC6g24d0Kx6Z5RE1SyLjgAW1tuLCluOA7hoy3v4htcZGUAd2NXbT/uKrR//KYU6QT7S0ej6Eu5ST722dgmuxlCYlK/94JO7jzVdXp+PrWqJLEC4eMUQxHXB8ahdVRndbRtzlaCx9+WX7Fx7OssIKDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UqTyrA/3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTiPWUH0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E213A1F000FF;
-	Sat, 12 Sep 2026 07:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UqTyrA/3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C861F000FF;
+	Sat, 12 Sep 2026 07:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198126;
-	bh=TqJUsckfnoR244uMSVn8g2Yccba9gWVuTVmJVSv7WbQ=;
+	s=korg; t=1789198131;
+	bh=/gYb7dJPS2ElWM1xRGkbVekXT1iQDqf5HHjk9pKYr5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rTiPWUH0zXA6oO+ocHkfNHDdNbUVGx1cPKhDnVPp7ulxQxBd7K0FEH7fwe1yp2x7S
-	 7dn9q3ySQKSOAlOk02Trpyvwa7z2XaQCikEHe8k6XQ8CVHXjpz4Ff/ljP3Aui+ehtX
-	 EqkZcTgZDII6Kntx6k2inkP7tOw73rhWCqRhQ2cQ=
+	b=UqTyrA/3Ix54MpoMlLC9TnWcqJn9iFsJJihNYF9jwuGG146ZVY5F3REmiEYzOdXcf
+	 rDs9lv69w/vxKdNZH6LkdqZQLyjLuF36wIX9inE+imn5lmFLv1esCjiWWKZmh851Io
+	 uWOxBJUuJDECfdX5Ui9rN1uaSwiIKypERMnqtdVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Linmao Li <lilinmao@kylinos.cn>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Praveen Talari <praveen.talari@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0314/1815] platform/x86: asus-wireless: Fail probe when there is no ACPI match
-Date: Sat, 12 Sep 2026 08:34:24 +0200
-Message-ID: <20260912065656.313279246@linuxfoundation.org>
+Subject: [PATCH 7.2 0315/1815] spi: qcom-geni: Fix missing error check on pm_runtime_get_sync()
+Date: Sat, 12 Sep 2026 08:34:25 +0200
+Message-ID: <20260912065656.335408632@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,82 +47,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Praveen Talari <praveen.talari@oss.qualcomm.com>
 
-[ Upstream commit 4aefd66ef7822cf7d3f53146dcee0b71021ed2b7 ]
+[ Upstream commit d8e9ea989acb54508477e4a8c9d9eaf8217e0081 ]
 
-Every platform driver can be forced to match a device that does not match
-its list of device IDs because of device_match_driver_override(), so
-platform drivers that rely on the existence of a device ACPI companion
-object need to verify its presence.
+spi_geni_init() calls pm_runtime_get_sync() to power up the device
+before accessing hardware registers, but never checks the return value.
+If the runtime resume fails, the function silently proceeds to read and
+write hardware registers on a device that may not be powered up, leading
+to register access faults.
 
-asus_wireless_probe() returns success when acpi_match_acpi_device()
-finds no match, leaving behind an input device that never reports
-anything because the notify handler is not installed.  Worse, when the
-driver is force-bound to a device without an ACPI companion, probe
-still succeeds and stores a NULL companion pointer, which
-asus_wireless_remove() later passes to acpi_dev_remove_notify_handler(),
-leading to a NULL pointer dereference on unbind.
+Fix this by replacing pm_runtime_get_sync() with the
+PM_RUNTIME_ACQUIRE_IF_ENABLED() macro and checking the result via
+PM_RUNTIME_ACQUIRE_ERR(), propagating any error back to the caller
+immediately before any hardware access occurs.
 
-Return -ENODEV when the device does not match the ID table.  This also
-covers the missing-companion case, because acpi_match_acpi_device()
-rejects a NULL device.  Perform the check before allocating any driver
-state, instead of after the input device has already been registered.
+Since the macro handles its own cleanup on failure, the out_pm label and
+the corresponding pm_runtime_put() call are no longer needed. Replace
+all goto out_pm paths with direct return ret statements and remove the
+label entirely.
 
-Fixes: f7e648027d7e ("platform/x86: asus-wireless: Convert ACPI driver to a platform one")
-Suggested-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Link: https://patch.msgid.link/20260710094355.186143-1-lilinmao@kylinos.cn
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 561de45f72bd ("spi: spi-geni-qcom: Add SPI driver support for GENI based QUP")
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260710-fix_sticky_-einval_after_pm_runtime_api_failure-v4-2-be81d6c15043@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-wireless.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/spi/spi-geni-qcom.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/platform/x86/asus-wireless.c b/drivers/platform/x86/asus-wireless.c
-index 2b494bf3cba8c..aab45f0442c5b 100644
---- a/drivers/platform/x86/asus-wireless.c
-+++ b/drivers/platform/x86/asus-wireless.c
-@@ -132,6 +132,10 @@ static int asus_wireless_probe(struct platform_device *pdev)
- 	const struct acpi_device_id *id;
- 	int err;
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index 26e723cfea61e..a55a3afc0ebd1 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -613,25 +613,30 @@ static int spi_geni_init(struct spi_geni_master *mas)
+ 	u32 spi_tx_cfg, fifo_disable;
+ 	int ret = -ENXIO;
  
-+	id = acpi_match_acpi_device(device_ids, adev);
-+	if (!id)
-+		return -ENODEV;
-+
- 	data = devm_kzalloc(&pdev->dev, sizeof(*data), GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
-@@ -139,6 +143,7 @@ static int asus_wireless_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, data);
+-	pm_runtime_get_sync(mas->dev);
++	PM_RUNTIME_ACQUIRE_IF_ENABLED(mas->dev, pm);
++	ret = PM_RUNTIME_ACQUIRE_ERR(&pm);
++	if (ret < 0) {
++		dev_err(mas->dev, "Failed to resume and get %d\n", ret);
++		return ret;
++	}
  
- 	data->adev = adev;
-+	data->hswc_params = (const struct hswc_params *)id->driver_data;
+ 	proto = geni_se_read_proto(se);
  
- 	data->idev = devm_input_allocate_device(&pdev->dev);
- 	if (!data->idev)
-@@ -153,12 +158,6 @@ static int asus_wireless_probe(struct platform_device *pdev)
- 	if (err)
- 		return err;
+ 	if (spi->target) {
+ 		if (proto != GENI_SE_SPI_SLAVE) {
+ 			dev_err(mas->dev, "Invalid proto %d\n", proto);
+-			goto out_pm;
++			return ret;
+ 		}
+ 		spi_slv_setup(mas);
+ 	} else if (proto == GENI_SE_INVALID_PROTO) {
+ 		ret = geni_load_se_firmware(se, GENI_SE_SPI);
+ 		if (ret) {
+ 			dev_err(mas->dev, "spi master firmware load failed ret: %d\n", ret);
+-			goto out_pm;
++			return ret;
+ 		}
+ 	} else if (proto != GENI_SE_SPI) {
+ 		dev_err(mas->dev, "Invalid proto %d\n", proto);
+-		goto out_pm;
++		return ret;
+ 	}
+ 	mas->tx_fifo_depth = geni_se_get_tx_fifo_depth(se);
  
--	id = acpi_match_acpi_device(device_ids, adev);
--	if (!id)
--		return 0;
--
--	data->hswc_params = (const struct hswc_params *)id->driver_data;
--
- 	data->wq = create_singlethread_workqueue("asus_wireless_workqueue");
- 	if (!data->wq)
- 		return -ENOMEM;
+@@ -664,7 +669,7 @@ static int spi_geni_init(struct spi_geni_master *mas)
+ 			dev_dbg(mas->dev, "Using GPI DMA mode for SPI\n");
+ 			break;
+ 		} else if (ret == -EPROBE_DEFER) {
+-			goto out_pm;
++			return ret;
+ 		}
+ 		/*
+ 		 * in case of failure to get gpi dma channel, we can still do the
+@@ -693,8 +698,6 @@ static int spi_geni_init(struct spi_geni_master *mas)
+ 		writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
+ 	}
+ 
+-out_pm:
+-	pm_runtime_put(mas->dev);
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
