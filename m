@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA204BEE3C;
-	Sat, 12 Sep 2026 16:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E1333993;
+	Sat, 12 Sep 2026 16:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232212; cv=none; b=o8dv2oYYJLDOOPLDbbqnE8D76cQhKcwymWMArPZt75DfLW76ZZisBMkecbGXmAHILzTPzbSWZPlm0E6kZrAV9e/VUDo2Dx2gAxcPJBhINv3cJfRevif35/ZPsUUVD64udq7AHefp695lH2u0u7l9FcF6bXt6pvVGrokak93J2Uo=
+	t=1789232217; cv=none; b=mI+tLW4U7XH0AGXqNZmnq3x+wyzvoHpvHNmifDD8YrF7XlQZi7ptZ4QgUuggF4ov9ehWZHnHRJH/i6hKBroKsaF0DDj2IL9mYqRqbJ18Gb51jS0kYUhiOJ4OJDy6T8iahcYwZuJgq0oLXRwmXxaxrL35ezGuA6RlW3H6gBE3hjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232212; c=relaxed/simple;
-	bh=InHGzyFTb3CRgI1VLgad5EnTAwrPzEuByg9GGNlZbAw=;
+	s=arc-20240116; t=1789232217; c=relaxed/simple;
+	bh=bOgxOrRcp0zFXt2l44bgaW9/jfttb50erJksISx7vik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=neiVUWOYVvCsxLYEJCbkgYKJNPbHaFOpAiBP8P+Vv4eZsXAtQLiVwTd0axbtMqFp6ywLb7VC+qfuQDUf2vtWmKaBBYBcq1Qqmejie3SRbEz9tmHWoTP22tHGZYgbZaM8LJlLOSmjfjQZWWSA1EWHxoG64rukZuJbiPVsZ2ODrdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIjYWCLI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lGw/Xf9TYgLA0oaN3aGTcGxvSLv21lHlUw2JABq2aMqdT8az0yt+EM2Mh8/xrfeEA/wrh8c0hdz2IOM5qDZylA+a5zYW7G83JMsv0R+5W5ZoH6eBCjZuf9DmbbRHj8RbwaAQ7V6L6JIuJ02Mz1Ef5STgjeFIfsN7gwUM4sOH8/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmPm1+Ei; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIjYWCLI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B0E1F000FF;
-	Sat, 12 Sep 2026 16:56:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmPm1+Ei"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B341F000FF;
+	Sat, 12 Sep 2026 16:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232211;
-	bh=JebR2xHe6sdyuW5n2gR//afvpEnL3PXJJBw9wOyr6HM=;
+	s=korg; t=1789232216;
+	bh=3YhqIrxVczAofNb2B7HPUX5WtbNb0D2TroOsHreEsyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rIjYWCLIyyWNmtdS9tFAAe1qXGwIJB71Cyt+m6HqkV9rraYbpMSKXu/D3g96Kbm7o
-	 DaVlhC7x0kDyVxG6kAshFNyCXIi9n7eU4b2drfw3AO0UoTRDozbTnhZiDwVzNrGdzi
-	 HPi8uKvdsExyRfY/D3cyUi8tlrC/neoh6fBqlfSI=
+	b=MmPm1+EiRT+CUT56IRbaUrcUyn5H2uV51qVC+Tsf6KRuYnXx6K+cz/vtM7ItFqQdp
+	 A/iLMaY54gExIjRBEBb2RUYtN7fX+PkgNF4r8VsmyibvraJcXlwfSWfNDFa/Mq80J7
+	 qQsS8Ave3jICXkcSR9GFVGNSp1qC85Sn2a/dPLWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1149/1191] arm64: dts: qcom: pm8998: dont use GIC_SPI for SPMI interrupts
-Date: Sat, 12 Sep 2026 09:04:37 +0200
-Message-ID: <20260912065613.954987033@linuxfoundation.org>
+Subject: [PATCH 6.1 1158/1191] arm64: dts: qcom: sm8550: Add missing properties for cryptobam
+Date: Sat, 12 Sep 2026 09:04:46 +0200
+Message-ID: <20260912065614.153288023@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,37 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-[ Upstream commit d9ef7a805a709a0b07341857d97a25598a7f92da ]
+[ Upstream commit 663cd2cad36da23cf1a3db7868fce9f1a19b2d61 ]
 
-Unlike typical GIC interrupts, first cell for SPMI interrupts is the
-USID rather than GIC_SPI/GIC_PPI/GIC_LPI qualifier. Fix the resin
-interrupt to use USID value 0x0 rather than GIC_SPI define.
+num-channels and qcom,num-ees are required for BAM nodes without clock,
+because the driver cannot ensure the hardware is powered on when trying to
+obtain the information from the hardware registers. Specifying the node
+without these properties is unsafe and has caused early boot crashes for
+other SoCs before [1, 2].
 
-Fixes: f86ae6f23a9e ("arm64: dts: qcom: sagit: add initial device tree for sagit")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Add the missing information from the hardware registers to ensure the
+driver can probe successfully without causing crashes.
+
+[1]: https://lore.kernel.org/r/CY01EKQVWE36.B9X5TDXAREPF@fairphone.com/
+[2]: https://lore.kernel.org/r/20230626145959.646747-1-krzysztof.kozlowski@linaro.org/
+
+Cc: stable@vger.kernel.org
+Fixes: 433477c3bf0b ("arm64: dts: qcom: sm8550: add QCrypto nodes")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20250212-bam-dma-fixes-v1-3-f560889e65d8@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230409182145.122895-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/pm8998.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/pm8998.dtsi b/arch/arm64/boot/dts/qcom/pm8998.dtsi
-index fabee4b716776..4034de203aa08 100644
---- a/arch/arm64/boot/dts/qcom/pm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8998.dtsi
-@@ -55,7 +55,7 @@ pm8998_pwrkey: pwrkey {
- 
- 			pm8998_resin: resin {
- 				compatible = "qcom,pm8941-resin";
--				interrupts = <GIC_SPI 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-+				interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
- 				debounce = <15625>;
- 				bias-pull-up;
- 				status = "disabled";
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 1ce2972498277..0c1df1d1e6950 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -1581,6 +1581,8 @@ cryptobam: dma-controller@1dc4000 {
+ 			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
+ 			#dma-cells = <1>;
+ 			qcom,ee = <0>;
++			qcom,num-ees = <4>;
++			num-channels = <20>;
+ 			qcom,controlled-remotely;
+ 			iommus = <&apps_smmu 0x480 0x0>,
+ 				 <&apps_smmu 0x481 0x0>;
 -- 
 2.53.0
 
