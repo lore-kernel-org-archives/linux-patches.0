@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D2A428495;
-	Sat, 12 Sep 2026 10:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5839426D03;
+	Sat, 12 Sep 2026 10:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209420; cv=none; b=OV1mokDyBspsvnuzJEgVlhgZWt1q1zBQakwK1gJYMv39uSESiu6jl4q8LaOGh0P+zO0dNowgPegMeoQ9m9IlxeultwNWbwfZ6fj0Rs7mc6Vz8oAafM3/xZSX93vTuNnPXcX3TfXIjcdys+FyZlI5YPZqdWmTXV3lmut4SAQxQe8=
+	t=1789209425; cv=none; b=ZRbYYrKbHGImE587b0TM9bYf5WQ8wTRtaMM/XGmF0pigoqWu6e6IpYivX1dQkHzkT3x7y53ed5280x54AIkwv9TBNYe0RIeLYeou9p18yJOd518nbYwZNMAHLAv8HVbsgbTNawxveG5c5Im3qUZL0QTl5gwq87rNl0+p2I0jZZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209420; c=relaxed/simple;
-	bh=sjHGde5R96cvw0Vf03iW77jujAKfyhzc/tLax0peRJE=;
+	s=arc-20240116; t=1789209425; c=relaxed/simple;
+	bh=P/c4uUOonpUw/AKpFqIQ6im/ax/7X5PffGkWLWCsEeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KN0m4HpXRJE8HK0K92dHixW9sIN5vGanAOBSUGIPoL2OH787Cu1bUnidkz5vQ4wA/dJdLZLINgKRlsiUO3Q+sip/Fh/LDSUg8nYATqbWAlE38XeVyw/lT/iqycud/NEouAdYlf10Fv1vy1/5dCXIt8CfLc5QztU4VsKCocX71Cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byxWAmUB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kJShuhFL93LgI9jz8OOR858leZEE6Y3GH3+t5DFmaznwBbnm47QhCxHddvfveEjfLotw+z3UTbXVbIUUBAion996C/VnjEkBCJcxJ6L+wYWc5VGXWSvIyGuATrxgO+TDnanDa3OKo9/cMInhqrEOqzJvu9Oi+Yw/ZXGvX/xS1p4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0kX65iJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byxWAmUB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271211F000FF;
-	Sat, 12 Sep 2026 10:36:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0kX65iJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B40C1F000FF;
+	Sat, 12 Sep 2026 10:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209418;
-	bh=uvezTLExhGvf/sWe9RToZXjjFi5EVu7wevPqA4D9brY=;
+	s=korg; t=1789209423;
+	bh=drhR1O611Z4tCBmXg/4fa6ZxA5daVZEW+dVxdS4xXNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=byxWAmUBnPQBeezY3Lb6BGdjfiqNFYrA+XopOHERSlCWTGzAaRtHnj6TlUW3ki93W
-	 huOhVFDiEByR4q9TNjEWUarfkISP9Ulpn/o7BG+AxwQYFRhtJdQS8XgKc1P9SWIUad
-	 12VbZ1mBhRknqDFG17KI41iUqz4ZR9Kj7iX5X2tw=
+	b=L0kX65iJWkmY1lVx/i8IrupNIDVx3qgKjh91I5EtqOEGkcK0+zTFKm0xjv6bsxEnY
+	 5K/bWL/aSYav/v/zV5VYPwz17OJuveSwbBgOXjMKTlfOa+oQh+TlOOja959HGuH978
+	 Rj6j2Lwhex8Xprg/E6mXKjQaXbTusxpt1pXsE3r8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
 	Johannes Berg <johannes.berg@intel.com>,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0816/1518] wifi: mac80211: disconnect on CSA to channel 0
-Date: Sat, 12 Sep 2026 08:49:45 +0200
-Message-ID: <20260912065641.896526880@linuxfoundation.org>
+Subject: [PATCH 6.18 0817/1518] wifi: cfg80211: include S1G_NO_PRIMARY flag when sending channel
+Date: Sat, 12 Sep 2026 08:49:46 +0200
+Message-ID: <20260912065641.918221514@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,80 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Lachlan Hodges <lachlan.hodges@morsemicro.com>
 
-[ Upstream commit cf57f0a674cc3e3cda1a789359cc1238b61b9d7d ]
+[ Upstream commit e1cbdf78f60c35a1a320ca401852fd6a73624a4a ]
 
-The refactor for the CSA parsing erroneously equates channel
-zero and no information present, leading it to ignore a CSA
-on an AP that advertises a switch to that (invalid) channel.
-This leads to not disconnecting, which we should. For Intel
-devices, this can lead to a firmware crash.
+When sending a channel ensure we include the IEEE80211_CHAN_S1G_NO_PRIMARY
+flag.
 
-Fix this by using an int type for the channel number as well
-as the opclass, and using a (negative) value that cannot be
-encoded in the element to indicate it's not present.
-
-Fixes: 21c3f8f95554 ("wifi: mac80211: refactor STA CSA parsing flows")
+Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+Link: https://patch.msgid.link/20260109081439.3168-1-lachlan.hodges@morsemicro.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260802111213.3bc833515e40.I255c37c31ca8b0b34e351cf254e16b6071dd8fb3@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 6c5fc504d0d6 ("wifi: cfg80211: stop PMSR before P2P and NAN teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/spectmgmt.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ include/uapi/linux/nl80211.h | 4 ++++
+ net/wireless/nl80211.c       | 3 +++
+ 2 files changed, 7 insertions(+)
 
-diff --git a/net/mac80211/spectmgmt.c b/net/mac80211/spectmgmt.c
-index 7422888d36409..080235ca23fc5 100644
---- a/net/mac80211/spectmgmt.c
-+++ b/net/mac80211/spectmgmt.c
-@@ -227,7 +227,7 @@ int ieee80211_parse_ch_switch_ie(struct ieee80211_sub_if_data *sdata,
- {
- 	enum nl80211_band new_band = current_band;
- 	int new_freq;
--	u8 new_chan_no = 0, new_op_class = 0;
-+	int new_chan_no = -1, new_op_class = -1;
- 	struct ieee80211_channel *new_chan;
- 	struct cfg80211_chan_def new_chandef = {};
- 	const struct ieee80211_sec_chan_offs_ie *sec_chan_offs;
-@@ -256,7 +256,7 @@ int ieee80211_parse_ch_switch_ie(struct ieee80211_sub_if_data *sdata,
- 		new_op_class = ext_chansw_elem->new_operating_class;
+diff --git a/include/uapi/linux/nl80211.h b/include/uapi/linux/nl80211.h
+index 8134f10e4e6c0..964e1c779cdd3 100644
+--- a/include/uapi/linux/nl80211.h
++++ b/include/uapi/linux/nl80211.h
+@@ -4444,6 +4444,9 @@ enum nl80211_wmm_rule {
+  *	channel in current regulatory domain.
+  * @NL80211_FREQUENCY_ATTR_NO_16MHZ: 16 MHz operation is not allowed on this
+  *	channel in current regulatory domain.
++ * @NL80211_FREQUENCY_ATTR_S1G_NO_PRIMARY: Channel is not permitted for use
++ *	as a primary channel. Does not prevent the channel from existing
++ *	as a non-primary subchannel. Only applicable to S1G channels.
+  * @NL80211_FREQUENCY_ATTR_MAX: highest frequency attribute number
+  *	currently defined
+  * @__NL80211_FREQUENCY_ATTR_AFTER_LAST: internal use
+@@ -4492,6 +4495,7 @@ enum nl80211_frequency_attr {
+ 	NL80211_FREQUENCY_ATTR_NO_4MHZ,
+ 	NL80211_FREQUENCY_ATTR_NO_8MHZ,
+ 	NL80211_FREQUENCY_ATTR_NO_16MHZ,
++	NL80211_FREQUENCY_ATTR_S1G_NO_PRIMARY,
  
- 		if (!ieee80211_operating_class_to_band(new_op_class, &new_band)) {
--			new_op_class = 0;
-+			new_op_class = -1;
- 			if (!unprot_action)
- 				sdata_info(sdata,
- 					   "cannot understand ECSA IE operating class, %d, ignoring\n",
-@@ -268,14 +268,14 @@ int ieee80211_parse_ch_switch_ie(struct ieee80211_sub_if_data *sdata,
- 		}
+ 	/* keep last */
+ 	__NL80211_FREQUENCY_ATTR_AFTER_LAST,
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 776dcf8835d71..541d86cc6018a 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -1316,6 +1316,9 @@ static int nl80211_msg_put_channel(struct sk_buff *msg, struct wiphy *wiphy,
+ 		if ((chan->flags & IEEE80211_CHAN_NO_16MHZ) &&
+ 		    nla_put_flag(msg, NL80211_FREQUENCY_ATTR_NO_16MHZ))
+ 			goto nla_put_failure;
++		if ((chan->flags & IEEE80211_CHAN_S1G_NO_PRIMARY) &&
++		    nla_put_flag(msg, NL80211_FREQUENCY_ATTR_S1G_NO_PRIMARY))
++			goto nla_put_failure;
  	}
  
--	if (!new_op_class && elems->ch_switch_ie) {
-+	if (new_op_class < 0 && elems->ch_switch_ie) {
- 		new_chan_no = elems->ch_switch_ie->new_ch_num;
- 		csa_ie->count = elems->ch_switch_ie->count;
- 		csa_ie->mode = elems->ch_switch_ie->mode;
- 	}
- 
- 	/* nothing here we understand */
--	if (!new_chan_no)
-+	if (new_chan_no < 0)
- 		return 1;
- 
- 	/* Mesh Channel Switch Parameters Element */
-@@ -359,7 +359,8 @@ int ieee80211_parse_ch_switch_ie(struct ieee80211_sub_if_data *sdata,
- 				get_unaligned_le16(bwi->info.optional);
- 	} else if (!wide_bw_chansw_ie || !wbcs_elem_to_chandef(wide_bw_chansw_ie,
- 							       &new_chandef)) {
--		if (!ieee80211_operating_class_to_chandef(new_op_class, new_chan,
-+		if (new_op_class < 0 ||
-+		    !ieee80211_operating_class_to_chandef(new_op_class, new_chan,
- 							  &new_chandef))
- 			new_chandef = csa_ie->chanreq.oper;
- 	}
+ 	if (nla_put_u32(msg, NL80211_FREQUENCY_ATTR_MAX_TX_POWER,
 -- 
 2.53.0
 
