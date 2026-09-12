@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62458311967;
-	Sat, 12 Sep 2026 14:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83C42F8EAE;
+	Sat, 12 Sep 2026 14:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222088; cv=none; b=oIhkUVwCjfPlL8iKVpCA/Dsw5eHwyM3dfU5VYdeGPbJVRgyyRL28mYMSFNzOEpeMk/AKh2mGHoS1R+mszXJBmKXX9hfNFQSnM4mWyGfQFWakFDtuYiziekuRb+AR6czFe0vIa2UZ5bqczDSBLIl86FlsT74L9W1TBPUdPzw1ii4=
+	t=1789222092; cv=none; b=J4U4sfjB0fZ2K8D5oBlLozI9pGby/EA3PZakFWWHWIR8h3dvxuLzljVByi01rj6mPRTk5LmGOw69wzZ6WUrZpgQ6emyytkiZMnoKX5wqELTNb3Q3wjZFVZCrlCtkAOSyqJEK7fA5fudIv1qzAEIihW4MgSfJ1Mgx9d8SAC3PZZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222088; c=relaxed/simple;
-	bh=3bRazzv4qaF50dvuTbS2sK/NjgWNOw+p7UKqwCo9oQo=;
+	s=arc-20240116; t=1789222092; c=relaxed/simple;
+	bh=n7W5f7bTFbKEnODKTCy+z7NexZNi6MmuJC1LInE0X10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oVyo05P/2Pbm2MXF/8uqgsnE8SZ0uUI1k93m10yRhZkUFt/ouI/GeTvT8/cFeDHtoomA2Eq+Y3gqlnrzxK9TKYNfLtqRJ1bQwK8bPfYdDU77/dZdur/eRkpmg36CsudkT3jAgRgqBIxEavFInOvUoTd+Zux91qh0i7bVw7l8NSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o0cP17U/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S3MIktMIm3zU5kYXVnBsSiMW2LrfEsf1aPU83ZHbje5tt+Ko1C8LdKnrC6VOly5uiCWfyFcMfyuFwfDGeB0pH+WSL0akkulNOHNXXHYeBaUhnZda+wm70hgPxcQVz8xmDQb5too8y8SZrJP/MKqQRgoZrDOcpEFnAsaGkbDwnv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAx+s5AP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0cP17U/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9665A1F000FF;
-	Sat, 12 Sep 2026 14:08:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAx+s5AP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC1E1F000FF;
+	Sat, 12 Sep 2026 14:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222085;
-	bh=UfuIijeoyzz36e7RloXaUHlzlsSiD1OgB9Zokj/a2zc=;
+	s=korg; t=1789222090;
+	bh=tIjQjU+Vb1MS4ga48DyrKSZMBrROm5fh0Wyq8+YRLsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o0cP17U/7C5fvlHg3B6DyQHAqCn57lGlo5VduuMHnu3fuXSHhFq7hTR2gFUE06znP
-	 l93uF7Y/YzYHeMrFB6w6q1NqDdvgupOX/3WpZ+3CQRs4th6ULb66JnW1qKG209q/nF
-	 kfUj7pnr2yks9GNHykJPLgsiTQliJ/zuXDZLTNVM=
+	b=bAx+s5APh13idf1lejhakcYLz7xvLAGbzclLNhB6AT8HW6oMEDSgpIg7+6gax45ix
+	 yw9+CQxdqhcpCCFftjvSuRbMIimE8t/eRSJbCLiCdsUIUl2l06rhyXwfPQS9gRmEEG
+	 oFNpHBK6BaFZkiSWqqoy8KIVwC3Zye7jw5fltaik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
-	Leo Liu <leo.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 0516/1424] drm/amdgpu/vcn: fix integer overflow in dec_msg buffer count check
-Date: Sat, 12 Sep 2026 08:49:08 +0200
-Message-ID: <20260912065618.846904956@linuxfoundation.org>
+	syzbot+916c888ba5f1a54c9526@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Ruben Wauters <rubenru09@aol.com>
+Subject: [PATCH 6.6 0517/1424] drm/gud: NUL-terminate TV mode names read from the device
+Date: Sat, 12 Sep 2026 08:49:09 +0200
+Message-ID: <20260912065618.869980913@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,68 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David (Ming Qiang) Wu <David.Wu3@amd.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 4d7390530853eb7befda9cc786e4c86e8ad7ac9e upstream.
+commit 500cb24cd61bad8a2747ddfc49b7034899c82d94 upstream.
 
-If the supplied msg[2] (num_buffers) is 0x3FFFFFFF, the expression
-6 + num_buffers * 4 wraps to 2 and the bounds check passes, letting
-the parser loop far past the end of the message BO. Triggering it
-additionally requires a ~4GiB mapping so that msg[1] survives the
-earlier "header does not fit in BO" check.
+gud_connector_add_tv_mode() reads a buffer of fixed-size mode names from
+the USB device and passes pointers into it to
+drm_mode_create_tv_properties_legacy(), which calls strlen() on each one.
+Nothing guarantees the device NUL-terminates a name, so strlen() can run
+past the end of a slot and, for the last mode, past the end of the
+allocation.
 
-Rewrite the test in division form, which is overflow-free by
-construction. Also update the message to reflect that msg is invalid.
+Terminate each name at the end of its slot before use.
 
-Fixes: b193019860d6 ("drm/amdgpu/vcn3: Prevent OOB reads when parsing dec msg")
-Fixes: 0a78f2bac142 ("drm/amdgpu/vcn4: Prevent OOB reads when parsing dec msg")
-Cc: stable@vger.kernel.org
-Signed-off-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
-Reviewed-by: Leo Liu <leo.liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 40e1a70b4aed ("drm: Add GUD USB Display driver")
+Reported-by: syzbot+916c888ba5f1a54c9526@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=916c888ba5f1a54c9526
+Tested-by: syzbot+916c888ba5f1a54c9526@syzkaller.appspotmail.com
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Acked-by: Ruben Wauters <rubenru09@aol.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Ruben Wauters <rubenru09@aol.com>
+Link: https://patch.msgid.link/20260816085234.22053-1-kartikey406@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c |   10 +++++++---
- drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c |   10 +++++++---
- 2 files changed, 14 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/gud/gud_connector.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-@@ -1844,9 +1844,13 @@ static int vcn_v3_0_dec_msg(struct amdgp
- 	len_dw = msg[1] / 4;
- 	num_buffers = msg[2];
- 
--	/* Verify that all indices fit within the claimed length. Each index is 4 DWORDs */
--	if (num_buffers > len_dw || 6 + num_buffers * 4 > len_dw) {
--		DRM_ERROR("VCN message has too many buffers!\n");
-+	/* Verify that all indices fit within the claimed length.
-+	 * There are 6 dwords in the header before the first buffer.
-+	 * Each buffer has 4 dwords. Any trailing dwords after the
-+	 * last buffer are ignored.
-+	 */
-+	if (len_dw < 6 || num_buffers > (len_dw - 6) / 4) {
-+		DRM_ERROR("Invalid VCN message!\n");
- 		r = -EINVAL;
- 		goto out;
+--- a/drivers/gpu/drm/gud/gud_connector.c
++++ b/drivers/gpu/drm/gud/gud_connector.c
+@@ -397,8 +397,13 @@ static int gud_connector_add_tv_mode(str
  	}
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-@@ -1722,9 +1722,13 @@ static int vcn_v4_0_dec_msg(struct amdgp
- 	len_dw = msg[1] / 4;
- 	num_buffers = msg[2];
  
--	/* Verify that all indices fit within the claimed length. Each index is 4 DWORDs */
--	if (num_buffers > len_dw || 6 + num_buffers * 4 > len_dw) {
--		DRM_ERROR("VCN message has too many buffers!\n");
-+	/* Verify that all indices fit within the claimed length.
-+	 * There are 6 dwords in the header before the first buffer.
-+	 * Each buffer has 4 dwords. Any trailing dwords after the
-+	 * last buffer are ignored.
-+	 */
-+	if (len_dw < 6 || num_buffers > (len_dw - 6) / 4) {
-+		DRM_ERROR("Invalid VCN message!\n");
- 		r = -EINVAL;
- 		goto out;
- 	}
+ 	num_modes = ret / GUD_CONNECTOR_TV_MODE_NAME_LEN;
+-	for (i = 0; i < num_modes; i++)
+-		modes[i] = &buf[i * GUD_CONNECTOR_TV_MODE_NAME_LEN];
++	for (i = 0; i < num_modes; i++) {
++		char *mode = &buf[i * GUD_CONNECTOR_TV_MODE_NAME_LEN];
++
++		/* The device is not trusted to NUL-terminate the name */
++		mode[GUD_CONNECTOR_TV_MODE_NAME_LEN - 1] = '\0';
++		modes[i] = mode;
++	}
+ 
+ 	ret = drm_mode_create_tv_properties_legacy(connector->dev, num_modes, modes);
+ free:
 
 
