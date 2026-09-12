@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F2F372EF0;
-	Sat, 12 Sep 2026 11:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7472B376A18;
+	Sat, 12 Sep 2026 11:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214160; cv=none; b=F4lXdf3aWDpijfZWEsOHRSXtDcOYw++yIAzuvbGmPViseD93pjhgHlOU4b3rK3ciAxs9o2W7WDT8YuMkRF9PcaEPO5eJHWij+1seCEZbjfQ/PjdNd5ydS21B+z8V9X06MaOhcY4YKSRbErNUVYcfBYsdao+++eyjbxrLxsU/9nQ=
+	t=1789214164; cv=none; b=V5cY4VkebOtp2nuQsW2wrF61PXM7Y4ck7NhHlcDKPC7CYXXDkdn5ResIeWxIOB84OY5Y0aFpriTBoEc6ASru9x8aqNcbe/AXbHLOCnIarKBZbbW/Q1Ft+6JNEly6Q/UYJ+JB7XCfM4wmjtu0JfAK3vp/gQ2fRx9BNcYaXisG2Ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214160; c=relaxed/simple;
-	bh=xdZzYmzCqTcQFfiwEwM0JyLDf3CN1huLRnzsbdpp9XA=;
+	s=arc-20240116; t=1789214164; c=relaxed/simple;
+	bh=r4F7gVDfRLdFjQocd60neSTyBlddK/mV85fwe+fHfWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZrWO5/WolxmZ8TPZFTUwfWHHFNZo1f4LYgMm+hRNM7jHbr/zUcs1Mr9P3UDSOjkvVVYjVx0S0UXKuV970QoFVDMKT5xnMIMLIbOyyYLZB8j0ztaPf+WygY3iHebjwwlrVW6rUCKIp2A5Wmo41zzdND2wmY/SlXDS8dViZnmUkoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKCfdTSi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pMr3Yi8LDtNAAgfNX4Nq73m0/AsY2K6cvVVjSqkq7hZCl79dmwjOltxiiz8iaRjOSM/I8wFVPLAuDOL3CprrPBXpTo1EAnyOvMJyx4PpcTrjyhi4/iLfScYg8EggOrVUgJI0glMbmDBUkWO9RH6Pqvk6UExtfYz2o4uBfVIyiHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6DiHPkA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKCfdTSi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC9B1F000FF;
-	Sat, 12 Sep 2026 11:55:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6DiHPkA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46BB1F000FF;
+	Sat, 12 Sep 2026 11:56:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214158;
-	bh=/ahg7QgU3kPjbJTiXs6s8Zz4j5s4L2ijIs5SItRL4RI=;
+	s=korg; t=1789214163;
+	bh=bsqdrbjtKoMiJlcZeY+R50UivCkKeOh4E8S5Jwr5EbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QKCfdTSiOLdFBXKz71JGXRK1CLCJDWogSETRumW6OmmmxhlSIcytnTwR0qeD3N4h0
-	 Y1koPUis+xen9qOK2ATFMoEEz3YxPKaWUnR92k8v43+1925SH0Gw0f4yU/aLCJetxg
-	 kMINOH0rMiWBQ06kPBxkN2PX8FTJ4+wHc1nXNgRk=
+	b=F6DiHPkAa0AtXLTrz+UQYSxYR2VID1Wu/SM4e3+bZQgckk2myVEy+69NohquVS6DP
+	 zXgv/fr1sy2n4U0hpaFLOv7nBePWFeWWK9oeTZAbKsm2/SwHVNDBotUSwgeXptEa5R
+	 Q1zG2WWXRQzs6Fqr2VDOiEbJ4gtAQaaD+pMuJBlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.12 0252/1376] f2fs: avoid NULL checkpoint thread access in sysfs
-Date: Sat, 12 Sep 2026 08:44:38 +0200
-Message-ID: <20260912065613.157418526@linuxfoundation.org>
+	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 0270/1376] drm/amdgpu/vcn: fix integer overflow in dec_msg buffer count check
+Date: Sat, 12 Sep 2026 08:44:56 +0200
+Message-ID: <20260912065613.561139948@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,61 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: David (Ming Qiang) Wu <David.Wu3@amd.com>
 
-commit 5cb33b00c8fbb6e8f1fa3d281c3036d5f7c7c41f upstream.
+commit 4d7390530853eb7befda9cc786e4c86e8ad7ac9e upstream.
 
-checkpoint_merge can be enabled even when no checkpoint merge thread is
-running. A read-only mount is one case: f2fs does not start
-f2fs_issue_ckpt there, but ckpt_thread_ioprio is still writable through
-sysfs.
+If the supplied msg[2] (num_buffers) is 0x3FFFFFFF, the expression
+6 + num_buffers * 4 wraps to 2 and the bounds check passes, letting
+the parser loop far past the end of the message BO. Triggering it
+additionally requires a ~4GiB mapping so that msg[1] survives the
+earlier "header does not fit in BO" check.
 
-The ckpt_thread_ioprio store path updates the saved ioprio value and,
-when checkpoint_merge is enabled, calls set_task_ioprio() for the
-checkpoint thread. If cprc->f2fs_issue_ckpt is NULL, that dereferences a
-NULL task pointer.
+Rewrite the test in division form, which is overflow-free by
+construction. Also update the message to reflect that msg is invalid.
 
-Protect ckpt_thread_ioprio sysfs writes with s_umount as well, so the
-checkpoint thread cannot disappear under the store path while updating
-its ioprio.
-
-Fixes: e65920661708 ("f2fs: add ckpt_thread_ioprio sysfs node")
-Cc: stable@kernel.org
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: b193019860d6 ("drm/amdgpu/vcn3: Prevent OOB reads when parsing dec msg")
+Fixes: 0a78f2bac142 ("drm/amdgpu/vcn4: Prevent OOB reads when parsing dec msg")
+Cc: stable@vger.kernel.org
+Signed-off-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
+Reviewed-by: Leo Liu <leo.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/sysfs.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c |   10 +++++++---
+ drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c |   10 +++++++---
+ 2 files changed, 14 insertions(+), 6 deletions(-)
 
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -528,7 +528,7 @@ out:
- 			return -EINVAL;
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
+@@ -1898,9 +1898,13 @@ static int vcn_v3_0_dec_msg(struct amdgp
+ 	len_dw = msg[1] / 4;
+ 	num_buffers = msg[2];
  
- 		cprc->ckpt_thread_ioprio = IOPRIO_PRIO_VALUE(class, level);
--		if (test_opt(sbi, MERGE_CHECKPOINT)) {
-+		if (cprc->f2fs_issue_ckpt) {
- 			ret = set_task_ioprio(cprc->f2fs_issue_ckpt,
- 					cprc->ckpt_thread_ioprio);
- 			if (ret)
-@@ -924,13 +924,14 @@ static ssize_t f2fs_sbi_store(struct f2f
- 	ssize_t ret;
- 	bool gc_entry = (!strcmp(a->attr.name, "gc_urgent") ||
- 					a->struct_type == GC_THREAD);
-+	bool thread_entry = !strcmp(a->attr.name, "ckpt_thread_ioprio");
- 
--	if (gc_entry) {
-+	if (gc_entry || thread_entry) {
- 		if (!down_read_trylock(&sbi->sb->s_umount))
- 			return -EAGAIN;
+-	/* Verify that all indices fit within the claimed length. Each index is 4 DWORDs */
+-	if (num_buffers > len_dw || 6 + num_buffers * 4 > len_dw) {
+-		DRM_ERROR("VCN message has too many buffers!\n");
++	/* Verify that all indices fit within the claimed length.
++	 * There are 6 dwords in the header before the first buffer.
++	 * Each buffer has 4 dwords. Any trailing dwords after the
++	 * last buffer are ignored.
++	 */
++	if (len_dw < 6 || num_buffers > (len_dw - 6) / 4) {
++		DRM_ERROR("Invalid VCN message!\n");
+ 		r = -EINVAL;
+ 		goto out;
  	}
- 	ret = __sbi_store(a, sbi, buf, count);
--	if (gc_entry)
-+	if (gc_entry || thread_entry)
- 		up_read(&sbi->sb->s_umount);
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
+@@ -1821,9 +1821,13 @@ static int vcn_v4_0_dec_msg(struct amdgp
+ 	len_dw = msg[1] / 4;
+ 	num_buffers = msg[2];
  
- 	return ret;
+-	/* Verify that all indices fit within the claimed length. Each index is 4 DWORDs */
+-	if (num_buffers > len_dw || 6 + num_buffers * 4 > len_dw) {
+-		DRM_ERROR("VCN message has too many buffers!\n");
++	/* Verify that all indices fit within the claimed length.
++	 * There are 6 dwords in the header before the first buffer.
++	 * Each buffer has 4 dwords. Any trailing dwords after the
++	 * last buffer are ignored.
++	 */
++	if (len_dw < 6 || num_buffers > (len_dw - 6) / 4) {
++		DRM_ERROR("Invalid VCN message!\n");
+ 		r = -EINVAL;
+ 		goto out;
+ 	}
 
 
