@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962A4344DB5;
-	Sat, 12 Sep 2026 09:05:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36103AFD15;
+	Sat, 12 Sep 2026 09:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203929; cv=none; b=C1w08F7nrw8U16cXDH1oJbkfH4Mv3dkW2lhV/XV+Cx+WP27zaS2/Or25b/dmLs0WfXGnAhUklZs23aZHZDaUABbT72U2x/DyPcygNFtjoH0WH1bTHDk4jsadrv0pW8Ys3irkmPNC76vTpabXKT7ezATZxL66PPa17C5S1kvrTa8=
+	t=1789203933; cv=none; b=GGyff6yKrAeeptQnZR5A7NShiCK9XFfCiRCHgiHs36N0ePl5hSbJDPBSDT0QtoTl5//JddEAmLpHFYAd8VJXBtC9I+Ex53yPoWBuzSvGHSUSBpLkXYPpTuD4lgWXXRJYq4xS/NOnazVJ411EGnatSPznTEVDJm1ryQO28VpB868=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203929; c=relaxed/simple;
-	bh=QwAdMhL8bO1G2U9I1Rega5MZDWfAfpt18HObz/QLsqg=;
+	s=arc-20240116; t=1789203933; c=relaxed/simple;
+	bh=BZ4x8FNGT+FzOeLXJva7xoa+HXC6oIY/tvDm1iRj3iE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FC5N+8tNTFiyKoFgC4DLUAanA3qdnTVQFy3oQ8IOID0OdkQQo/KyW0h/LKsyVWt3fczrvXJ4ZaPCvY9NlsjzL1HcHQloWnj8dbkS/6UJy1tOUEPwVdZUdCu6OVLc6KPRuXfeu3Wkw7KxQuc/jew9CiY2jEXJAD5jOAljNvupBK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xhvdKjsv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hCQcp3xrYzfmWuc3Whhd81/lSDfzC+HyNSort3DOI5dy9KLqq/ApYQURUcaVLsGwiPudmOEZlybGsxRbUC1AuqRPlcl7iBAHwdf5+C5oRWLtuGtIJuY571LL1A8UXGVXuhuCRRl9Nt3+sLopPKVbRsONIHpgqr4OfGU5cHnH5UI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7JGjeoo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xhvdKjsv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6A31F000FF;
-	Sat, 12 Sep 2026 09:05:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7JGjeoo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7A51F000FF;
+	Sat, 12 Sep 2026 09:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203928;
-	bh=tyVvx+J4c9HQ4YdgxKXrKps/5qQgB9sQ9UAi1MCwTAg=;
+	s=korg; t=1789203932;
+	bh=k6UaQ7yaS7OjIiMGi91UwhdY2co3H6ek4z50Ei6dd+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xhvdKjsvHuf3rRTBiZKbSLFFjkdUcWbeOxVQn2wFJ+7foAFceJYzqQJwWkNJwMitW
-	 iX5xUK10HZ4+1BCimm0x3oTIwvs4DQIX3/OEO4bomFweTYzyEIy/LyubHzKkNuHTTd
-	 n2pMbi90wvX/jEV8AOHvBPNqAMrBSdkSa4F4mnPE=
+	b=m7JGjeooLUcL9Lf7TDH6wSx0r0AjVnVJ5JxZ7fzoUL9CfTIbipYTxgLCRvaRD9V6B
+	 8FRDyqUeqp20Fq6BxebiRakcAP+AXGdRmv3NhCZpdruRSCxqOs9yBynl1Ks1q1VC6F
+	 Lbl5i7VzxUJ1+0OQPjhtRmxb3sXMLXpawQOrrREY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Zhushuai Yin <yinzhushuai@huawei.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1506/1815] ksmbd: do not advertise unimplemented CA support
-Date: Sat, 12 Sep 2026 08:54:16 +0200
-Message-ID: <20260912065724.351743973@linuxfoundation.org>
+Subject: [PATCH 7.2 1466/1815] crypto: hisilicon/sec2 - fix CCM algorithm long packet failure
+Date: Sat, 12 Sep 2026 08:53:36 +0200
+Message-ID: <20260912065723.424694633@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,76 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Zhushuai Yin <yinzhushuai@huawei.com>
 
-[ Upstream commit eebdd3f1157e35a50df5ff2d3d9a305901df3254 ]
+[ Upstream commit b82f60be50c87b3d75e207852c5ca74fa18f66cf ]
 
-ksmbd durable handles are currently in-memory state. There is no persistent
-open recovery, cluster ownership epoch, fencing, or failover implementation
-behind the continuous-availability share flag.
+In the CCM B0 block the message-length field Q spans L bytes, where
+L (cl in the driver) is derived from the cipher IV flags byte as
+c_ivin[0] + 1. set_aead_auth_iv() hardcoded writing only the last 2
+bytes of a_ivin with cryptlen, implicitly assuming cl = 2.
 
-Do not advertise SMB2 persistent-handle or continuous-availability
-capabilities until those guarantees exist. A client requesting DH2Q then
-falls back to the existing durable V2 behavior rather than being promised a
-persistent handle that cannot survive a server failure.
+When cl = 3 (a shorter nonce yielding a 3-byte length field) and the
+packet is longer than 65535 bytes, cryptlen no longer fits in 2 bytes.
+The dropped high byte made the auth IV built by the driver differ from
+the one consumed by the hardware, so the software/hardware comparison
+failed and the CCM request errored out.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Stable-dep-of: 06c7b1d731bc ("ksmbd: free preauth sessions on connection teardown")
+Write the last cl bytes of a_ivin in a loop driven by the IV's CL
+value, so the length-field width always matches the algorithm
+configuration instead of assuming a fixed 2-byte field.
+
+Fixes: c16a70c1f253 ("crypto: hisilicon/sec - add new algorithm mode for AEAD")
+Signed-off-by: Zhushuai Yin <yinzhushuai@huawei.com>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2ops.c |  9 +++++----
- fs/smb/server/smb2pdu.c | 11 +++++------
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ drivers/crypto/hisilicon/sec2/sec_crypto.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/server/smb2ops.c b/fs/smb/server/smb2ops.c
-index c9a32ee096b58..9eb7e17379763 100644
---- a/fs/smb/server/smb2ops.c
-+++ b/fs/smb/server/smb2ops.c
-@@ -266,8 +266,10 @@ void init_smb3_02_server(struct ksmbd_conn *conn)
- 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL)
- 		conn->vals->req_capabilities |= SMB2_GLOBAL_CAP_MULTI_CHANNEL;
+diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+index 77e0e03cbcab9..a7354fd10dc0f 100644
+--- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
++++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+@@ -96,7 +96,6 @@
+ #define IV_FLAGS_OFFSET	0x6
+ #define IV_CM_OFFSET		0x3
+ #define IV_LAST_BYTE1		1
+-#define IV_LAST_BYTE2		2
+ #define IV_LAST_BYTE_MASK	0xFF
+ #define IV_CTR_INIT		0x1
+ #define IV_BYTE_OFFSET		0x8
+@@ -1696,7 +1695,7 @@ static void set_aead_auth_iv(struct sec_ctx *ctx, struct sec_req *req)
+ 	struct sec_cipher_req *c_req = &req->c_req;
+ 	u32 data_size = aead_req->cryptlen;
+ 	u8 flage = 0;
+-	u8 cm, cl;
++	u8 cm, cl, i;
  
--	if (server_conf.flags & KSMBD_GLOBAL_FLAG_DURABLE_HANDLE)
--		conn->vals->req_capabilities |= SMB2_GLOBAL_CAP_PERSISTENT_HANDLES;
-+	/*
-+	 * Durable handles are in-memory only.  Do not advertise persistent
-+	 * handles until CA recovery and fencing are implemented.
-+	 */
+ 	/* the specification has been checked in aead_iv_demension_check() */
+ 	cl = c_req->c_ivin[0] + 1;
+@@ -1720,15 +1719,16 @@ static void set_aead_auth_iv(struct sec_ctx *ctx, struct sec_req *req)
+ 	 * the last 32bit is counter's initial number,
+ 	 * but the nonce uses the first 16bit
+ 	 * the tail 16bit fill with the cipher length
++	 * When CL is 3, the tail 24bit fill with the cipher length.
+ 	 */
+ 	if (!c_req->encrypt)
+ 		data_size = aead_req->cryptlen - authsize;
+ 
+-	a_req->a_ivin[ctx->c_ctx.ivsize - IV_LAST_BYTE1] =
+-			data_size & IV_LAST_BYTE_MASK;
+-	data_size >>= IV_BYTE_OFFSET;
+-	a_req->a_ivin[ctx->c_ctx.ivsize - IV_LAST_BYTE2] =
++	for (i = 1; i <= cl; i++) {
++		a_req->a_ivin[ctx->c_ctx.ivsize - i] =
+ 			data_size & IV_LAST_BYTE_MASK;
++		data_size >>= IV_BYTE_OFFSET;
++	}
  }
  
- /**
-@@ -290,8 +292,7 @@ int init_smb3_11_server(struct ksmbd_conn *conn)
- 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL)
- 		conn->vals->req_capabilities |= SMB2_GLOBAL_CAP_MULTI_CHANNEL;
- 
--	if (server_conf.flags & KSMBD_GLOBAL_FLAG_DURABLE_HANDLE)
--		conn->vals->req_capabilities |= SMB2_GLOBAL_CAP_PERSISTENT_HANDLES;
-+	/* See init_smb3_02_server(): persistent handles require CA recovery. */
- 
- 	INIT_LIST_HEAD(&conn->preauth_sess_table);
- 	return 0;
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index ebb832e47b49f..c85879607d1cc 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2324,12 +2324,11 @@ int smb2_tree_connect(struct ksmbd_work *work)
- 		goto out_err1;
- 	rsp->StructureSize = cpu_to_le16(16);
- out_err1:
--	if (server_conf.flags & KSMBD_GLOBAL_FLAG_DURABLE_HANDLE && share &&
--	    test_share_config_flag(share,
--				   KSMBD_SHARE_FLAG_CONTINUOUS_AVAILABILITY))
--		rsp->Capabilities = SMB2_SHARE_CAP_CONTINUOUS_AVAILABILITY;
--	else
--		rsp->Capabilities = 0;
-+	/*
-+	 * A configured CA share is not continuously available until persistent
-+	 * open recovery, ownership fencing, and failover are implemented.
-+	 */
-+	rsp->Capabilities = 0;
- 	rsp->Reserved = 0;
- 	/* default manual caching */
- 	rsp->ShareFlags = SMB2_SHAREFLAG_MANUAL_CACHING;
+ static void sec_aead_set_iv(struct sec_ctx *ctx, struct sec_req *req)
 -- 
 2.53.0
 
