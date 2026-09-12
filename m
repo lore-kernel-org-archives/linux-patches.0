@@ -1,47 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B422931E823;
-	Sat, 12 Sep 2026 19:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08C02D0C94;
+	Sat, 12 Sep 2026 19:35:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241697; cv=none; b=Uyy0BED5X56NEl3ETJ7MnuvsLK3Sqif689VJUD3J6UWzPTEgiv5zphs5h5QE1207WRMbWoZR4OVqVcciFbAE34rdkf0VRztwhMy1d4YoU2PVLkEvSWLJOGXnTR3MH8AmLKVyMyhoMx3apR51qX33swV2jdX1dtyWGsevLboTCn8=
+	t=1789241702; cv=none; b=rZKpb7wgJh6kzZ2xEmZpnzDeN6nc3TCykEV9lid41DxDlErFd/Y7LNOARAt4KoC9nvnHLuNUDCIdwnSm6UD7yRqKjAa6Bb1lj2ghXtYNErq/gIObnsJENWy752IHVq0+P+Z66BSycUQLHCjLp3zhPOLvfBdnnaY0kRR75cGQGkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241697; c=relaxed/simple;
-	bh=hOG1VSo1iBhBDliwSjJ+SNVdnIM3xy38g3k+TqP+KEs=;
+	s=arc-20240116; t=1789241702; c=relaxed/simple;
+	bh=ZgAaOErctvtcjCj0g+o3VCKhYfzu4SlQTK5noKtJhUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T2HrDKzmRpQhEd2fJNQRix+8KIQREek4W3/XxvB22mHV/Mu4KmIt4Uj13PpoxHtNwcn0iO/6ItnTb3PNXLk8jJ2UfgV+uejqPaLxqpkzY7f596uPFwGEkw4hJcJOCHaek96oKJUsTFq7jYTYX16HE6htsCNEps09VqR+JMDspEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjgBGSuu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u3I8289mNjyA7bcT9dVAmt+/4UDPpCVWtzAwzdiIWgxQau4TgLRpjjN99ZjjP6FkJKS81NoeezvLH4cO8fwcBeiYkcOhZmsMntB+03QCLwYawDis7E5fw4KBvjCK5gLxjlJaMV57aQY5CwRgFYkhSaKfV1N3qfsjoHCSsIzU5MY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dP+QVd/I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjgBGSuu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712271F000FF;
-	Sat, 12 Sep 2026 19:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dP+QVd/I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B22D1F000FF;
+	Sat, 12 Sep 2026 19:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241696;
-	bh=4rFDutulAmNRn89bItZd7oBEuzOqYoMIu7DXTuKl7y0=;
+	s=korg; t=1789241701;
+	bh=dHN4dxQDD4McbVsz/5nblRw2cjKomLdw1CV0YtpPrGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PjgBGSuuItIpI/Kp3lZ7xbMdzJ0WYv6npojYSQTKnhNm2Oh2DZXqIqvQcwJHhtF0b
-	 2BsxnUOhpUHYCUq7vXP/ICRiMrq8/GYdekRT5I1V6kXb/xq4jsbApSGz2q9LJVSLL5
-	 d4tsKYPBypUXBhgGluad5I5mp6zAKeu98UIglrYM=
+	b=dP+QVd/IOZfYeFE4hCSDHnu5yx6/2aO1R0YZbdOeQdJOT0wc9gFICYgVDVEo5y4gh
+	 5/Uw14y5qZWNPobIORWQVcEbzqBfODz/q1UEAU2EJOk4nBJAPLkbORXOk8I3m3Gbzf
+	 Jg27/db3fRDFPkMVVPbXxO1cYqn8F6v8iBzkpFZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <include@grrlz.net>,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Adrian Huang <adrianhuang0701@gmail.com>,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Marco Elver <elver@google.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 187/798] signal: avoid shared siginfo namespace rewrites
-Date: Sat, 12 Sep 2026 08:56:55 +0200
-Message-ID: <20260912065521.332732584@linuxfoundation.org>
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 5.10 188/798] timer: Keep debugobjects state consistent in migrate_timer_list()
+Date: Sat, 12 Sep 2026 08:56:56 +0200
+Message-ID: <20260912065521.358196794@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -60,54 +49,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <include@grrlz.net>
+From: Thomas Gleixner <tglx@kernel.org>
 
-commit d19cdc167e696714509e87d3f7ae765b6e164589 upstream.
+commit c793bbfc4a0a9f5a66978fc91559e9681748dbeb upstream.
 
-send_signal_locked() rewrites sender ids for the target namespace.  Group
-sends reuse the same siginfo, so one recipient can affect the next.
+When timers are migrated away from an offline CPU the debugobjects state
+gets corrupted. The timer is accounted as inactive on deletion, but the
+enqueue on the alive CPU lacks the activation call.
 
-Copy the siginfo before changing it.
+That used to work, but got broken when the trace point and the debug
+objects call got separated. That change missed to fixup
+migrate_timer_list().
 
-Link: https://lore.kernel.org/86a8857d58d43ee26a8b365b837fd24830343494.1782159692.git.include@grrlz.net
-Fixes: 7a0cf094944e ("signal: Correct namespace fixups of si_pid and si_uid")
-Signed-off-by: Bradley Morgan <include@grrlz.net>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>
-Cc: Adrian Huang <adrianhuang0701@gmail.com>
-Cc: Aleksandr Nogikh <nogikh@google.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Marco Elver <elver@google.com>
-Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Add the missing debug_timer_activate() invocation to fix it.
+
+Fixes: dc1e7dc5ac62 ("timer: Move trace point to get proper index")
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/87bjb0l7ha.ffs@fw13
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/signal.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/time/timer.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/signal.c
-+++ b/kernel/signal.c
-@@ -1209,6 +1209,7 @@ static inline bool has_si_pid_and_uid(st
- static int send_signal(int sig, struct kernel_siginfo *info, struct task_struct *t,
- 			enum pid_type type)
- {
-+	struct kernel_siginfo rewritten;
- 	/* Should SIGKILL or SIGSTOP be received by a pid namespace init? */
- 	bool force = false;
- 
-@@ -1222,6 +1223,9 @@ static int send_signal(int sig, struct k
- 		/* SIGKILL and SIGSTOP is special or has ids */
- 		struct user_namespace *t_user_ns;
- 
-+		rewritten = *info;
-+		info = &rewritten;
-+
- 		rcu_read_lock();
- 		t_user_ns = task_cred_xxx(t, user_ns);
- 		if (current_user_ns() != t_user_ns) {
+--- a/kernel/time/timer.c
++++ b/kernel/time/timer.c
+@@ -1963,6 +1963,7 @@ static void migrate_timer_list(struct ti
+ 		timer = hlist_entry(head->first, struct timer_list, entry);
+ 		detach_timer(timer, false);
+ 		timer->flags = (timer->flags & ~TIMER_BASEMASK) | cpu;
++		debug_timer_activate(timer);
+ 		internal_add_timer(new_base, timer);
+ 	}
+ }
 
 
