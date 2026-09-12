@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B68B24CEEA;
-	Sat, 12 Sep 2026 10:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F66F313E2B;
+	Sat, 12 Sep 2026 10:54:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210488; cv=none; b=F2JOJNHOx4SEHdzA0uYWlV61yxGVoV1IsslI5trbCLByremtXKQufc6/nTBMS0CLjaPNPei1dIOIpSyqZIiwE5F//dX+Hoc935dpCpE7cpGqm55qjCqqpUdXeTMkz/kVhJZXo4OR+OZAfXXNAA9gthrKV0TmRxqB7/nyR4XgVTc=
+	t=1789210493; cv=none; b=WCJZUjJvoz9/thRy2itSqhzZ9kaw8ZTmVvK1LfkZ1JEjIzSkzQVYHq5twztICDwnQiLEdzMcnlxbtSh/byJ8iBlnxRGdGQVxeJQzXOTRBh45kqmyvkCaoyR0OC7yPMqm+pu1Wa03Sfl+Si1BA1UDx6a8qf4wze5MjuEkh1sjs7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210488; c=relaxed/simple;
-	bh=OXgbqyrmbtiOqQ4aKsD0MMDomHX/lUWVA33pEIAyaN4=;
+	s=arc-20240116; t=1789210493; c=relaxed/simple;
+	bh=LpTG2NFfxcT/lpOLdAdDkRaehY9cEpWyIywvjKtujmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Awsl5+RexfMhoD7jDjpAzRYs6Qj3ASpX2CXA/OCESdMGj+w2Uhw60b9hQ6myULstj+rIh4TIAWjNmCDfxJrhCeaSIQr/jqmsDQEtheSWwF6AJ5uKB+PbEPlZw2DyfkqKRbMztJnUKm0kJ3GKYCKVXoniWyFlUyLClN4XOkZyFxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZvBYg0l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dyCOaY6pnUzff7OJ5oqVNXcXU2O7RnygxlE3iqQa10Yiocli5xeK+NzRMGx/DLa8hD6WlyN8fpI7IlEIv4lN00mGUwZ3qe0upj2rcYEC91Ea3psLGiteh5Jp2YqqyrlpWbhf68Z1BCRZutTleip+bfswHAYBmAm6SB9tKUpptbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9VhE0Gm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZvBYg0l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3412B1F000FF;
-	Sat, 12 Sep 2026 10:54:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9VhE0Gm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 519C81F000FF;
+	Sat, 12 Sep 2026 10:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210487;
-	bh=BCanFYuWQNNr7VXZwOy5JH9WQbqZLFPFT6QhRvPBI5A=;
+	s=korg; t=1789210492;
+	bh=xTW3RrVs1c7l7Yq/wXFmYfiJlkB/Tk0dGNflUmEomxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GZvBYg0l0nnvS0X9QUDoovaMQzQvllGLtoCg6zdgpqmygqC/+QeE/UN2S8LhN97YF
-	 r6grdevSSVTYE/e1tG4Q7/UBU9CIK7ihaYZzeBqeZNRjhyNjNeJPYY6GKR5gFqPgJ/
-	 6xFHfJCXPaFGvtxqec0fSaVD9PHv301+Vccs5bMQ=
+	b=z9VhE0Gm71Ln9rhf7/38EKWhsi5pKWaoc49/WZ3NZjUUJO+Mg0z1x5oV9xu1oMo88
+	 of6B3XWghxxMFi4DT8/Y+U9CbYwCL1D8VU0GZyrXO96kxyDxZ+2KeyOvwjSYxYNIqa
+	 E9KELSr3TzO6zTAYjQF/UIg3EEmcT+T5aWe8FQoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nikhil Gautam <nikhilgtr@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1036/1518] iio: light: gp2ap002: Fix unbalanced runtime PM on repeated event writes
-Date: Sat, 12 Sep 2026 08:53:25 +0200
-Message-ID: <20260912065646.887104717@linuxfoundation.org>
+Subject: [PATCH 6.18 1037/1518] iio: light: gp2ap002: re-enable irq if runtime suspend fails
+Date: Sat, 12 Sep 2026 08:53:26 +0200
+Message-ID: <20260912065646.909739131@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,63 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Nikhil Gautam <nikhilgtr@gmail.com>
 
-[ Upstream commit 579c049b4cb6fc72ce2c505fc5334540be0efcd3 ]
+[ Upstream commit 5d89e7cbac40057f5241a0832a86ce0fe97e4818 ]
 
-The IIO core does not filter duplicate writes to the event enable
-attribute, so writing the same value twice invokes
-write_event_config() twice. Enabling twice leaks a runtime PM
-reference, preventing the device from ever suspending again;
-disabling twice underflows the usage count and triggers a
-"Runtime PM usage count underflow" warning.
+gp2ap002_runtime_suspend() disables the irq before writing OPMOD. If
+the write fails, the callback returns an error with the irq still
+disabled while the PM core marks the device active again.
 
-Bail out early when the requested state matches the current state.
-While at it, switch to pm_runtime_resume_and_get() so a failed
-resume is propagated to userspace instead of silently marking the
-event enabled.
+re-enable the irq before returning the error so the irq state matches
+the active state the PM core restores.
 
 Fixes: 97d642e23037c ("iio: light: Add a driver for Sharp GP2AP002x00F")
 Signed-off-by: Nikhil Gautam <nikhilgtr@gmail.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/gp2ap002.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/iio/light/gp2ap002.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/iio/light/gp2ap002.c b/drivers/iio/light/gp2ap002.c
-index b62611099037e..3abe02942d127 100644
+index 3abe02942d127..bb17ef2a829b7 100644
 --- a/drivers/iio/light/gp2ap002.c
 +++ b/drivers/iio/light/gp2ap002.c
-@@ -342,6 +342,10 @@ static int gp2ap002_write_event_config(struct iio_dev *indio_dev,
- 				       bool state)
- {
- 	struct gp2ap002 *gp2ap002 = iio_priv(indio_dev);
-+	int ret;
-+
-+	if (state == gp2ap002->enabled)
-+		return 0;
- 
- 	if (state) {
- 		/*
-@@ -349,13 +353,16 @@ static int gp2ap002_write_event_config(struct iio_dev *indio_dev,
- 		 * already) and reintialize the sensor by using runtime_pm
- 		 * callbacks.
- 		 */
--		pm_runtime_get_sync(gp2ap002->dev);
--		gp2ap002->enabled = true;
-+		ret = pm_runtime_resume_and_get(gp2ap002->dev);
-+		if (ret)
-+			return ret;
-+
- 	} else {
- 		pm_runtime_put_autosuspend(gp2ap002->dev);
--		gp2ap002->enabled = false;
+@@ -649,6 +649,7 @@ static int gp2ap002_runtime_suspend(struct device *dev)
+ 	/* Disable chip and IRQ, everything off */
+ 	ret = regmap_write(gp2ap002->map, GP2AP002_OPMOD, 0x00);
+ 	if (ret) {
++		enable_irq(gp2ap002->irq);
+ 		dev_err(gp2ap002->dev, "error setting up operation mode\n");
+ 		return ret;
  	}
- 
-+	gp2ap002->enabled = state;
-+
- 	return 0;
- }
- 
 -- 
 2.53.0
 
