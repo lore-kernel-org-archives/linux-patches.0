@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38E7399365;
-	Sat, 12 Sep 2026 20:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE5D399365;
+	Sat, 12 Sep 2026 20:01:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243314; cv=none; b=bXaClD2UdaON7s+qwAHpuT9B/V/ORKTqcxL9V9vvJBD4+YAp9Z5wtvMAZ5mxOCl2RRiGU21CrUWW8WJDSs6+jr/ahTR5edlAKiWlMA58WeDqnv6PZR4lHuOjAYM7DBVyvoVpIQB4BMSjGrvCXfMXz5OJjfm0bGD9JbBf5yXEJ+I=
+	t=1789243317; cv=none; b=V2A1guSGWCl7JKNiLhBWtVFOzuOfIynn3HI6iRLcKSVLp3C/h8AXQRNe5+lU7xSMr4bmqznVodHSpSJc80hFt40NPz0Nzfp5hOHCxy6z1ZQR+6lEHVjHD1FICkW8dFHXhexWRUW9vMHJ8JLSA7QOyLufa+PEI90WpiwAL1k+/vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243314; c=relaxed/simple;
-	bh=Ze8ZA3E1WHBnTwab19ZRhgiYCxLzy+qKmqaVP32rDE0=;
+	s=arc-20240116; t=1789243317; c=relaxed/simple;
+	bh=oiVhqHF7EJ2TNy1uKv1lfP6OTCB60+93Yr6hN+aYIII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MnV91JExaA0FLlMWzDdfyc6NR1uR+m4nkTcvTx2+LilGvHjmP/sY8W6zImFN8gOhvZBvQSdoTFK38RJkufG9811mW6s1iAlx01HNOFGzY0rpwlRJ+bkek9Bt0zOjoV2qPXoekXL3eHkrBg4KeXuMNQIo7PBPWo0lf8vmr3+n1tU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAegHbjM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=epM54qkyDmAXtbVXnaasmX0Awe7d+Xb4fX/J7ceN2jEAtAYMkIYNN5YW2Zi85T/HikONELRn7IXpHYxvy9qvKejQgT1m8Nm1nQk1+W5dnEchfKQHcN4bzw+YA6FmaIZrK4GqTdOe+qJD0dswqg/lQaFwme+J7RuP/fz1yiVd6Xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZmVY1TY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAegHbjM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198F61F000FF;
-	Sat, 12 Sep 2026 20:01:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZmVY1TY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92DF1F000FF;
+	Sat, 12 Sep 2026 20:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243313;
-	bh=Q2oF+c0tFVO9FaZmr0UHqWqzlqORFsIHC3/G+tkW5HM=;
+	s=korg; t=1789243316;
+	bh=JFxw1yb1qAU8+rDpmdueRXUIF55NSkRqzpOU2Pvh6T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UAegHbjMkH9LGmKQdmuUUDSMVjoT9ESpfUHkdlzYSYvXF5sRV8QKbpK/vfo5/Xi6H
-	 gj1GeghaRKFVWW2XnZrUALDK7V1quw3jUL4AxFBA6Q2qooV6FDAHTH1lQXYaM5bAKz
-	 tDocfnn7uecyros5j54zQY4QuRb1EGopu6gnt9XE=
+	b=EZmVY1TYbbPzeFtOwhcJgg844hZNGmkNF0FyqqPQk+JYzdV8q6KyCNpiwCRwyMwLc
+	 CPC/9F4tE2jQQqJ97bxiq7S6AxqklFxVfLC2oHDw6Ob7x9BRiFL7d7MDu+Cjpidtu2
+	 ybDfjoy2sxm1ElayFvi5hAYymoqhtCTwxzDdM3T0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Israel=20T=C3=A9llez=20Garc=C3=ADa?= <i.tellez@btesa.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 713/798] bpf: Fix pending_pos walk on 32-bit ring position wrap
-Date: Sat, 12 Sep 2026 09:05:41 +0200
-Message-ID: <20260912065533.427402029@linuxfoundation.org>
+Subject: [PATCH 5.10 696/798] spi: img-spfi: dont disable runtime PM on DMA deferred probe
+Date: Sat, 12 Sep 2026 09:05:24 +0200
+Message-ID: <20260912065533.047347210@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -45,85 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Israel Téllez García <i.tellez@btesa.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 6ff5b56a50c5351aeeb180e34327736576c038fa ]
+[ Upstream commit 923e41ed59511cffe98357c7d58d0294a1c157ee ]
 
-The reservation path caches the position of the oldest not-yet-committed
-record in rb->pending_pos and advances it past already committed records
-on every reservation:
+When dma_request_chan() returns -EPROBE_DEFER, the error path jumps to
+disable_pm and calls pm_runtime_disable() even though pm_runtime_enable()
+was never called, leaving disable_depth unbalanced and the device
+permanently PM-disabled.
 
-	while (pend_pos < prod_pos) {
+Route the defer path through free_dma to skip pm_runtime_disable().
 
-consumer_pos, producer_pos and pending_pos are unsigned long, i.e.
-32-bit on 32-bit architectures, and Documentation/bpf/ringbuf.rst states
-that these counters may wrap around there. Every other comparison in the
-file is written as a difference, so modular arithmetic keeps them
-correct across the wrap. This one is an ordering comparison, and it is
-not wrap-safe.
-
-Once producer_pos wraps past 2^32, prod_pos is small while pend_pos
-still holds its pre-wrap value, so the loop condition is false and
-pending_pos is never advanced again. Reservations keep succeeding for a
-while, because bpf_ringbuf_has_space() uses differences, but
-new_prod_pos - pend_pos grows as the producer advances, and once it
-exceeds rb->mask every subsequent __bpf_ringbuf_reserve() call fails:
-the kernel believes a pending record spans the whole buffer. The ring
-never recovers, bpf_ringbuf_output() drops every event from then on, and
-nothing is logged.
-
-Observed on four armv7 devices (i.MX7 Dual, 6.6.52) running a
-tracepoint-based collector with a 512 KiB ring and 160-byte records.
-Every one of them stopped delivering after exactly 26846821 records and
-4295491360 bytes had passed through the ring, at event rates between 441
-and 862 records/s, that is after 8 h to 17 h of uptime: the trigger is
-the byte count, not time or load. That figure is 2^32 plus 524064 bytes,
-and the excess is one ring's worth of grace period, as expected while
-new_prod_pos - pend_pos is still below rb->mask. The last reservation
-that fits is the largest record boundary X with X + 160 <= 524287, and
-since 2^32 mod 160 = 96 the boundaries after the wrap sit at
-X = 64 (mod 160), giving X = 524064. Userspace kept consuming normally
-until the producer stopped, then read zero records for good. With this
-patch applied, one of the four devices took 10 GiB through the same ring
-with no stall, while the three unpatched ones kept wedging at the same
-byte count.
-
-64-bit hosts are unaffected in practice: their counters would need
-16 EiB to wrap.
-
-Compare the two positions as a difference instead. pending_pos never
-runs ahead of producer_pos, so the unsigned difference is the real
-distance between them and stays correct across the wrap.
-
-Fixes: cfa1a2329a69 ("bpf: Fix overrunning reservations in ringbuf")
-Signed-off-by: Israel Téllez García <i.tellez@btesa.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260814124843.22041-2-i.tellez@btesa.com
+Fixes: 6bfbf4d0aa0c ("spi: img-spfi: Use dma_request_chan() instead dma_request_slave_channel()")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260808-spfi-v1-1-6bc4345be430@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/ringbuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-img-spfi.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/ringbuf.c b/kernel/bpf/ringbuf.c
-index 8830a47c8f30c..78fc1d4645e5b 100644
---- a/kernel/bpf/ringbuf.c
-+++ b/kernel/bpf/ringbuf.c
-@@ -353,7 +353,7 @@ static void *__bpf_ringbuf_reserve(struct bpf_ringbuf *rb, u64 size)
- 	prod_pos = rb->producer_pos;
- 	new_prod_pos = prod_pos + len;
+diff --git a/drivers/spi/spi-img-spfi.c b/drivers/spi/spi-img-spfi.c
+index 71376b6df89db..5f84c55eee6bb 100644
+--- a/drivers/spi/spi-img-spfi.c
++++ b/drivers/spi/spi-img-spfi.c
+@@ -617,7 +617,7 @@ static int img_spfi_probe(struct platform_device *pdev)
+ 		ret = PTR_ERR(spfi->tx_ch);
+ 		spfi->tx_ch = NULL;
+ 		if (ret == -EPROBE_DEFER)
+-			goto disable_pm;
++			goto free_dma;
+ 	}
  
--	while (pend_pos < prod_pos) {
-+	while (prod_pos - pend_pos > 0) {
- 		hdr = (void *)rb->data + (pend_pos & rb->mask);
- 		hdr_len = READ_ONCE(hdr->len);
- 		if (hdr_len & BPF_RINGBUF_BUSY_BIT)
+ 	spfi->rx_ch = dma_request_chan(spfi->dev, "rx");
+@@ -625,7 +625,7 @@ static int img_spfi_probe(struct platform_device *pdev)
+ 		ret = PTR_ERR(spfi->rx_ch);
+ 		spfi->rx_ch = NULL;
+ 		if (ret == -EPROBE_DEFER)
+-			goto disable_pm;
++			goto free_dma;
+ 	}
+ 
+ 	if (!spfi->tx_ch || !spfi->rx_ch) {
+@@ -653,6 +653,7 @@ static int img_spfi_probe(struct platform_device *pdev)
+ 
+ disable_pm:
+ 	pm_runtime_disable(spfi->dev);
++free_dma:
+ 	if (spfi->rx_ch)
+ 		dma_release_channel(spfi->rx_ch);
+ 	if (spfi->tx_ch)
 -- 
 2.53.0
 
