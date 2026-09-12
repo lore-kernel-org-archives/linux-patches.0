@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3CF3002B3;
-	Sat, 12 Sep 2026 07:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40092F9D82;
+	Sat, 12 Sep 2026 07:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198244; cv=none; b=lJQAagv24jZG7bpaNFRKh/nZxm5lePKSYIPqpSYnMRWQogXcSGdiUckxZhRgZo2iYWcL6NVuqmc6XSPggDyv1RJ+lRJB+aGjlrLEhCY76PyCyb5j1cfwCj5surBPXppzq70QH8iiYO6f6GT/u9iuFFdXngX9kVeLg3gYMThhwzw=
+	t=1789198249; cv=none; b=mPxh7cfHWjtvjMCqQiwECM2CE1mRkq+q+/WHwCACRSc2mF9Y71MUTFxRSEAHnoqbPeG+5Xv3p99fyRJmPBj+vpKmEOpt3azv+nTHaUkrYljLgWiyL94CRhoz+ri/JWMdMLCm0sWKHBh2N2uEgADHt+znj9dWe8S1Ae4bt+oJSG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198244; c=relaxed/simple;
-	bh=QR1QlYacnGfHtdiyuZVaQ+70fTHTdgMhaV71E8F9+Go=;
+	s=arc-20240116; t=1789198249; c=relaxed/simple;
+	bh=IO/BcjePld4OF4G/Sh0dlQmTf4ZU39oYBwhSPmUxai4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZmmnWVyzDs5wePnTY4fjXF8hjyDKjiOfWoGXQExpgOPft52esR7xhTRV6FYJ1Tq6etCJBB3ipb4hCSd8AWdAnQN9ihqoD3BlhWTlJG6Pskm8cEps7sGKiI3TTGV8cSL0TJyRz57tSNMMWRxW7Q0anw+w8qRheDBwDNi+Rhxb+lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THWkJQjW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GNCyquZcAg2+TOtDFXxtbls7HIAuZY2iCVmH4VNpWnGOExKKzHcPikLfqm0iwE+9kYiRYpNf8BuDhfA59/ZdpkWk7uXblzKs/V40ecF/SDV6puXNVa6/J+OMIAygP04sbd1JaTOg/xD91nK0UCTjJnC5SMoepIjExelJdxxwbr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pO3G4N/K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THWkJQjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F321F000FF;
-	Sat, 12 Sep 2026 07:30:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pO3G4N/K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB6B1F000FF;
+	Sat, 12 Sep 2026 07:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198242;
-	bh=dLD30IVkrCmmJPdLYcBcbgsfIfVC6d+S1X8XsJuzotw=;
+	s=korg; t=1789198247;
+	bh=iTfcNbUJJkXV9u8gU9ar5Db8mq5sXlRxCftiQuRYDTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=THWkJQjWuSreOug0m50vFY2g9pPY4FNuNa78kez8ochKl1DKCvgqPGIYUAIp3tCl2
-	 WA/umTub6bqQap/66dHXLTQS2LFxsITKNfZAi1HrsNXd51TxyWgO+684OzY9HlJ9Xl
-	 wglJfBFCSIHJmb1cUz6MVa4rwpMHY35uAloLh5Eo=
+	b=pO3G4N/K2IlgwyHi5lOignuT9GkHCoqCkrWVhNm4qh32occKnnBNVncggTAF1EHhz
+	 Zd5diUpm8NXS1/5dX8zG2wwgcR9hDhLDPEiZ+jSJD11ATOPGXPeA8160WKcSHV7aAJ
+	 7lGQhO6JHhR5MR2hFmSbbM4kxddTxM3hrrswtR64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Nicholas Dudar <main.kalliope@gmail.com>,
+	Tejun Heo <tj@kernel.org>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0340/1815] clk: qcom: camcc-sc8280xp: unregister CAMCC_GDSC_CLK
-Date: Sat, 12 Sep 2026 08:34:50 +0200
-Message-ID: <20260912065656.898391483@linuxfoundation.org>
+Subject: [PATCH 7.2 0341/1815] bpf: Require a BPF cpumask for bpf_cpumask_populate()
+Date: Sat, 12 Sep 2026 08:34:51 +0200
+Message-ID: <20260912065656.920225956@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,120 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Nicholas Dudar <main.kalliope@gmail.com>
 
-[ Upstream commit 499b4cb6710f9a351d8b57a2132f9b4389d8464a ]
+[ Upstream commit 8740156ad33be5071b588b594c55f279457f667c ]
 
-With the introduction of sync_state support in the clk and pmdomain
-subsystems, the following warning happens when the unused clocks are
-shutdown in camcc-sc8280xp:
+bpf_cpumask_populate() writes to its destination with bitmap_copy(), but
+the destination is typed as struct cpumask *. That allows the verifier to
+accept borrowed cpumask pointers returned by read-only kfuncs, such as
+scx_bpf_get_online_cpumask(), as a writable destination.
 
-    [   15.408367] titan_top_gdsc status stuck at 'on'
-    [   15.408429] WARNING: drivers/clk/qcom/gdsc.c:178 at gdsc_toggle_logic+0x14c/0x160, CPU#2: kworker/u32:1/14
-    [   15.408462] Modules linked in: bnep vfat fat ath11k_pci(+) ath11k mac80211 cfg80211 mhi libarc4 snd_soc_wcd938x snd_soc_wcd938x_sdw snd_soc_wcd_classh hci_uart snd_soc_wcd_common
-    snd_soc_sc8280xp soundwire_qcom snd_soc_wcd_mbhc snd_soc_qcom_sdw slimbus snd_soc_qcom_common regmap_sdw btqca btrtl qcom_camss soundwire_bus btbcm btintel snd_soc_sdca snd_soc_lpass_wsa_macro
-    bluetooth snd_soc_lpass_tx_macro snd_soc_lpass_va_macro snd_soc_lpass_rx_macro snd_soc_hdmi_codec snd_soc_lpass_macro_common videobuf2_dma_sg ov5675 v4l2_fwnode videobuf2_memops
-    qcom_spmi_adc5 snd_soc_core qcom_spmi_adc_tm5 videobuf2_v4l2 snd_seq snd_seq_device videobuf2_common v4l2_async qcom_vadc_common qcom_spmi_temp_alarm pm8941_pwrkey industrialio videodev
-    snd_compress rfkill ac97_bus snd_pcm_dmaengine qcom_tsens mc qcom_edac snd_pcm pci_pwrctrl_pwrseq qcom_cpufreq_hw snd_timer snd qcomtee soundcore tee leds_gpio joydev binfmt_misc zram
-    lz4hc_compress governor_simpleondemand panel_edp msm xhci_plat_hcd nvme nvme_core dwc3 qcom_pm8008_regulator
-    [   15.408688]  ucsi_glink nvme_keyring nvme_auth pmic_glink_altmode udc_core typec_ucsi aux_hpd_bridge qcom_battmgr ulpi ubwc_config socinfo ocmem drm_gpuvm qcom_q6v5_pas drm_exec
-    qcom_pil_info leds_qcom_lpg gpu_sched led_class_multicolor rtc_pm8xxx qcom_pbs qcom_common drm_display_helper qcom_pon qcom_glink_smem qcom_glink ghash_ce pwrseq_qcom_wcn gpio_sbu_mux
-    qcom_stats phy_qcom_qmp_combo qcom_q6v5 gf128mul cec dispcc_sc8280xp phy_qcom_edp camcc_sc8280xp i2c_qcom_cci qcom_sysmon drm_dp_aux_bus mdt_loader aux_bridge qcom_pm8008 i2c_hid_of_elan
-    dwc3_qcom_legacy llcc_qcom icc_bwmon gpi typec qcom_refgen_regulator phy_qcom_qmp_usb nvmem_qfprom qcom_ipcc phy_qcom_snps_femto_v2 gpucc_sc8280xp pinctrl_sc8280xp_lpass_lpi qcom_hwspinlock
-    pinctrl_lpass_lpi lpasscc_sc8280xp qrtr qcom_aoss pmic_glink pdr_interface phy_qcom_qmp_pcie qcom_smd qcom_pdr_msg icc_osm_l3 qcom_wdt qmi_helpers qcom_rng smp2p rpmsg_core gpio_keys pwm_bl
-    smem hid_multitouch fuse i2c_dev
-    [   15.408928] CPU: 2 UID: 0 PID: 14 Comm: kworker/u32:1 Not tainted 7.1.0+ #2 PREEMPT(lazy)
-    [   15.408937] Hardware name: LENOVO 21BX0016US/21BX0016US, BIOS N3HET88W (1.60 ) 03/14/2024
-    [   15.408942] Workqueue: pm pm_runtime_work
-    [   15.408959] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-    [   15.408967] pc : gdsc_toggle_logic+0x14c/0x160
-    [   15.408978] lr : gdsc_toggle_logic+0x14c/0x160
-    [   15.408987] sp : ffff8000800f3b40
-    [   15.408991] x29: ffff8000800f3b40 x28: 0000000000000000 x27: 0000000000000000
-    [   15.409003] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
-    [   15.409014] x23: 0000000000000000 x22: 0000000000000001 x21: ffffa33f298fca88
-    [   15.409024] x20: 0000000000000000 x19: ffffa33f298fc5b0 x18: 00cd15db75dacefd
-    [   15.409035] x17: 000000040044ffff x16: ffffa33f3b1a3d88 x15: 726f776b80000002
-    [   15.409045] x14: ffffffffffffffff x13: 0000000000000028 x12: 0101010101010101
-    [   15.409056] x11: 7f7f7f7f7f7f7f7f x10: fefeff3039313274 x9 : ffffa33f3a5edafc
-    [   15.409067] x8 : ffff8000800f3780 x7 : 0000000000000001 x6 : 0000000000000001
-    [   15.409078] x5 : ffff000bf3ca1288 x4 : 0000000000000000 x3 : ffff5cccb6a3f000
-    [   15.409088] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff000080ae0000
-    [   15.409098] Call trace:
-    [   15.409103]  gdsc_toggle_logic+0x14c/0x160 (P)
-    [   15.409115]  gdsc_disable+0x4c/0x190
-    [   15.409126]  _genpd_power_off+0xa0/0x1a8
-    [   15.409137]  genpd_power_off.part.0+0x180/0x2a0
-    [   15.409149]  genpd_runtime_suspend+0x218/0x310
-    [   15.409155]  __rpm_callback+0x50/0x1f8
-    [   15.409166]  rpm_callback+0x7c/0x90
-    [   15.409175]  rpm_suspend+0xe8/0x690
-    [   15.409185]  pm_runtime_work+0xd0/0xe0
-    [   15.409195]  process_one_work+0x18c/0x518
-    [   15.409208]  worker_thread+0x190/0x320
-    [   15.409218]  kthread+0x110/0x130
-    [   15.409227]  ret_from_fork+0x10/0x20
+Make the destination a struct bpf_cpumask * so populate follows the same
+ownership rule as the other mutating cpumask kfuncs. Query kfuncs continue
+to accept const struct cpumask * inputs.
 
-This clock is force enabled to be on in the probe, and registered with
-the Common Clk Framework, resulting in them being toggled off after
-unused clocks are shutdown. This clock is required for the GDSC
-transitions.
-
-Similar to the fix in commit b60521eff227 ("clk: qcom: gcc-x1e80100:
-Unregister GCC_GPU_CFG_AHB_CLK/GCC_DISP_XO_CLK"), let's just unregister
-this clock.
-
-Link: https://lore.kernel.org/linux-clk/20260626-camcc-sc8280xp-titan-top-v1-1-2ca246886493@redhat.com/
-Fixes: ff93872a9c616 ("clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC")
-Suggested-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Link: https://lore.kernel.org/r/20260708-camcc-sc8280xp-remove-gdsc-v1-1-dfaab98a3bf5@redhat.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 950ad93df2fc ("bpf: add kfunc for populating cpumask bits")
+Signed-off-by: Nicholas Dudar <main.kalliope@gmail.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/bpf/20260709182800.2037938-2-main.kalliope@gmail.com
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/camcc-sc8280xp.c | 19 -------------------
- 1 file changed, 19 deletions(-)
+ kernel/bpf/cpumask.c                     | 6 +++---
+ tools/sched_ext/include/scx/compat.bpf.h | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/camcc-sc8280xp.c b/drivers/clk/qcom/camcc-sc8280xp.c
-index e97b8d4f3c844..660d8655d3919 100644
---- a/drivers/clk/qcom/camcc-sc8280xp.c
-+++ b/drivers/clk/qcom/camcc-sc8280xp.c
-@@ -1753,24 +1753,6 @@ static struct clk_branch camcc_csiphy3_clk = {
- 	},
- };
+diff --git a/kernel/bpf/cpumask.c b/kernel/bpf/cpumask.c
+index b8c805b4b06a0..1336a4efa7553 100644
+--- a/kernel/bpf/cpumask.c
++++ b/kernel/bpf/cpumask.c
+@@ -449,12 +449,12 @@ __bpf_kfunc u32 bpf_cpumask_weight(const struct cpumask *cpumask)
+  * @src__sz: Length of the BPF memory region in bytes.
+  *
+  * Return:
+- * * 0 if the struct cpumask * instance was populated successfully.
++ * * 0 if the struct bpf_cpumask * instance was populated successfully.
+  * * -EACCES if the memory region is too small to populate the cpumask.
+  * * -EINVAL if the memory region is not aligned to the size of a long
+  *   and the architecture does not support efficient unaligned accesses.
+  */
+-__bpf_kfunc int bpf_cpumask_populate(struct cpumask *cpumask, void *src, size_t src__sz)
++__bpf_kfunc int bpf_cpumask_populate(struct bpf_cpumask *cpumask, void *src, size_t src__sz)
+ {
+ 	unsigned long source = (unsigned long)src;
  
--static struct clk_branch camcc_gdsc_clk = {
--	.halt_reg = 0xc1e4,
--	.halt_check = BRANCH_HALT,
--	.clkr = {
--		.enable_reg = 0xc1e4,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "camcc_gdsc_clk",
--			.parent_hws = (const struct clk_hw*[]){
--				&camcc_xo_clk_src.clkr.hw,
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
- static struct clk_branch camcc_icp_ahb_clk = {
- 	.halt_reg = 0xc0d8,
- 	.halt_check = BRANCH_HALT,
-@@ -2839,7 +2821,6 @@ static struct clk_regmap *camcc_sc8280xp_clocks[] = {
- 	[CAMCC_CSIPHY2_CLK] = &camcc_csiphy2_clk.clkr,
- 	[CAMCC_CSIPHY3_CLK] = &camcc_csiphy3_clk.clkr,
- 	[CAMCC_FAST_AHB_CLK_SRC] = &camcc_fast_ahb_clk_src.clkr,
--	[CAMCC_GDSC_CLK] = &camcc_gdsc_clk.clkr,
- 	[CAMCC_ICP_AHB_CLK] = &camcc_icp_ahb_clk.clkr,
- 	[CAMCC_ICP_CLK] = &camcc_icp_clk.clkr,
- 	[CAMCC_ICP_CLK_SRC] = &camcc_icp_clk_src.clkr,
+@@ -467,7 +467,7 @@ __bpf_kfunc int bpf_cpumask_populate(struct cpumask *cpumask, void *src, size_t
+ 		!IS_ALIGNED(source, sizeof(long)))
+ 		return -EINVAL;
+ 
+-	bitmap_copy(cpumask_bits(cpumask), src, nr_cpu_ids);
++	bitmap_copy(cpumask_bits(&cpumask->cpumask), src, nr_cpu_ids);
+ 
+ 	return 0;
+ }
+diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/include/scx/compat.bpf.h
+index bcc0b4c84fc09..09149c32c41c6 100644
+--- a/tools/sched_ext/include/scx/compat.bpf.h
++++ b/tools/sched_ext/include/scx/compat.bpf.h
+@@ -84,7 +84,7 @@ bool scx_bpf_dispatch_vtime_from_dsq___old(struct bpf_iter_scx_dsq *it__iter, st
+  *
+  * Compat macro will be dropped on v6.19 release.
+  */
+-int bpf_cpumask_populate(struct cpumask *dst, void *src, size_t src__sz) __ksym __weak;
++int bpf_cpumask_populate(struct bpf_cpumask *dst, void *src, size_t src__sz) __ksym __weak;
+ 
+ #define __COMPAT_bpf_cpumask_populate(cpumask, src, size__sz)		\
+ 	(bpf_ksym_exists(bpf_cpumask_populate) ?			\
 -- 
 2.53.0
 
