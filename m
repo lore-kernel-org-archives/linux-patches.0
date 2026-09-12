@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B2037FF60;
-	Sat, 12 Sep 2026 10:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB78037FF60;
+	Sat, 12 Sep 2026 10:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208478; cv=none; b=iHW1uPd4gwoyvA+9B/rmzOBxOOwWKSSqgbC2aACFXyXSetDBk4sfXl8w/xEHiZlszDmJPXn57OBmz4hmQOhBXedmNvHxMGiv+hq4+ctPV/lyGHKtnYrEBSuMdkL39d2niLyudwk1LmkIfa/eG1K063SOZ1fykNEXfhcMc5cdcEo=
+	t=1789208483; cv=none; b=Ym8KavQda2CUUBm6vX/pqPUywtFZcx72Fx89BPwsym6dbrUL0JyTLMmsRGKSmXR5Nj8ItkXkqSHAwRUzAAk0cHc2eIParWqzXM26Oerh3XUScA7+poTo5Z0zc4tHA9BwOhWAI0fvbeppzGO0k2vOSIP18thZqDBhbWgvVi6YBwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208478; c=relaxed/simple;
-	bh=QrgeL1925P9grvVD0IkChjtCQi0IhTu68C7MIb6hp78=;
+	s=arc-20240116; t=1789208483; c=relaxed/simple;
+	bh=EqWeGctIJT1vmpApq+NIBkBzs3VIqc3nKikm8bRXNUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJpgrLHAc3MPTNKKKJv6S/sS6rWdJqZt2Rft7dm0zHkDAWKzGZ6DYcgeEQwg8NgLs6EXFLkfvLtBRix5TfLAtt7qzEeyLtHSCYHsSyu1tPk/20Wv7O4xw6ZeTue3sJX1tQNQIfzHFKwelYMmJ4UsTVP0F9eUshMhTfX6Wo4duhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1aIzZKZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XXx7xxI7cTh0SQLzdtD+dYEGWk5XbmEYl0l8k/yBlCbbJOycuylfX67mnlI1wORpxLcamEV48Cvb8BAdBdI/BTvo+9bmrOmxO3T8F/OYJzGL+LgXX7tlwES8yWJbmlDnGGCEq+daX0X7vN4bqAASwPzVXZeSFB3OcxXK3GWwn0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5HPjb34; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1aIzZKZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4AD91F000FF;
-	Sat, 12 Sep 2026 10:21:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5HPjb34"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07291F000FF;
+	Sat, 12 Sep 2026 10:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208477;
-	bh=r8HJW5kz2MzwdFE/ntQCLceRbxSAy5N99o8SLhWqZ3A=;
+	s=korg; t=1789208482;
+	bh=bLt+4SLfbQ9q3iSjizkLpwuFT/mXZ9hqbrJLdGkb6NI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t1aIzZKZSGuZZvt9bD4Wj3i4zOfW/dUZZBofUdku/GBGLGbw6W7AmOcm+jOCmfZT8
-	 YORHg071RNRIHN0e6IMUzaJhKflhLjaompuzyyV8d+TFg6qKa86teE2GUPsmY+X80I
-	 sEUGJEgbI1uTqM9z+rAKQMMbTwt8dY9djyExqqbk=
+	b=e5HPjb341fffonJuUcfB7C/yhCNJ8er1LlXhNfvP1uO+pLPFd3TpWYNovjmuo95hb
+	 LXkkgTc/t7QTgUTIoMfKxY7h5uhtEPataYmFox9mgzTbJ4GXK105jhcfmwh/TSf+gL
+	 oYo0craPX72afCG8C4eibHfK2a+DqvvdnFFIq/qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0625/1518] RDMA/mlx5: Send cong param changes to the resolved port mdev
-Date: Sat, 12 Sep 2026 08:46:34 +0200
-Message-ID: <20260912065637.571870269@linuxfoundation.org>
+Subject: [PATCH 6.18 0626/1518] RDMA/cxgb4: free STAG index when TPT entry write fails
+Date: Sat, 12 Sep 2026 08:46:35 +0200
+Message-ID: <20260912065637.593855458@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,41 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 033a79e308e4fe832b0924347eda8c4364055174 ]
+[ Upstream commit fdfb5cea4bf070cdb31d997efd87bb684df041fd ]
 
-mlx5_ib_set_cc_params() resolves the port-specific mlx5_core_dev via
-mlx5_ib_get_native_port_mdev() but issued MLX5_CMD_OP_MODIFY_CONG_PARAMS
-through dev->mdev. On an affiliated secondary RoCE port those pointers
-refer to different devices, so a write to the secondary port's cc_params
-debugfs file either altered the master port or failed with a master-side
-command error, while the read path already used the resolved mdev and
-returned the unchanged secondary value.
+write_tpt_entry() allocates a new STAG index with c4iw_get_resource() and
+bumps stats.stag.cur before programming the entry.  When
+write_adapter_mem() fails, it returns the error without releasing the index
+or reversing the statistic.  No MR is inserted into rhp->mrs, so
+deregistration never reclaims it, leaking the index until device teardown.
 
-Issue the command to the resolved mdev, the same device whose capabilities
-were checked when its debugfs directory was created. It is already
-referenced by the get/put pair, so its lifetime is safe.
+Record whether this call allocated the index and, on a failed write, return
+it to tpt_table and decrement stats.stag.cur.  Key the rollback on both the
+write error and that flag, not the error alone: a non-reset update carries
+a caller-owned STAG that this call did not allocate and must not free.
 
-Fixes: 31578defe4eb ("RDMA/mlx5: Update mlx5_ib to use new cmd interface")
-Link: https://patch.msgid.link/20260726-mlx5-ib-set-cc-params-applies-conges-v1-1-a253edafe1f3@nvidia.com
+Fixes: ec3eead21718 ("RDMA/cxgb4: Remove kfifo usage")
 Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/cong.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/cxgb4/mem.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/cong.c b/drivers/infiniband/hw/mlx5/cong.c
-index 88ac5fd1038ed..e3c4b1c928169 100644
---- a/drivers/infiniband/hw/mlx5/cong.c
-+++ b/drivers/infiniband/hw/mlx5/cong.c
-@@ -361,7 +361,7 @@ static int mlx5_ib_set_cc_params(struct mlx5_ib_dev *dev, u32 port_num,
- 	MLX5_SET(field_select_r_roce_rp, field, field_select_r_roce_rp,
- 		 attr_mask);
+diff --git a/drivers/infiniband/hw/cxgb4/mem.c b/drivers/infiniband/hw/cxgb4/mem.c
+index 40dd6ac5f91af..ac349de9d2e44 100644
+--- a/drivers/infiniband/hw/cxgb4/mem.c
++++ b/drivers/infiniband/hw/cxgb4/mem.c
+@@ -277,6 +277,7 @@ static int write_tpt_entry(struct c4iw_rdev *rdev, u32 reset_tpt_entry,
+ 	int err;
+ 	struct fw_ri_tpte *tpt;
+ 	u32 stag_idx;
++	bool stag_idx_allocated = false;
+ 	static atomic_t key;
  
--	err = mlx5_cmd_exec_in(dev->mdev, modify_cong_params, in);
-+	err = mlx5_cmd_exec_in(mdev, modify_cong_params, in);
- 	kvfree(in);
- alloc_err:
- 	mlx5_ib_put_native_port_mdev(dev, port_num + 1);
+ 	if (c4iw_fatal_error(rdev))
+@@ -299,6 +300,7 @@ static int write_tpt_entry(struct c4iw_rdev *rdev, u32 reset_tpt_entry,
+ 			return -ENOMEM;
+ 		}
+ 		mutex_lock(&rdev->stats.lock);
++		stag_idx_allocated = true;
+ 		rdev->stats.stag.cur += 32;
+ 		if (rdev->stats.stag.cur > rdev->stats.stag.max)
+ 			rdev->stats.stag.max = rdev->stats.stag.cur;
+@@ -333,7 +335,7 @@ static int write_tpt_entry(struct c4iw_rdev *rdev, u32 reset_tpt_entry,
+ 				(rdev->lldi.vr->stag.start >> 5),
+ 				sizeof(*tpt), tpt, skb, wr_waitp);
+ 
+-	if (reset_tpt_entry) {
++	if (reset_tpt_entry || (err && stag_idx_allocated)) {
+ 		c4iw_put_resource(&rdev->resource.tpt_table, stag_idx);
+ 		mutex_lock(&rdev->stats.lock);
+ 		rdev->stats.stag.cur -= 32;
 -- 
 2.53.0
 
