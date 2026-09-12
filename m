@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FAFF3385A5;
-	Sat, 12 Sep 2026 12:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D2730DEA6;
+	Sat, 12 Sep 2026 12:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216912; cv=none; b=n/B/3q4Uj6oY128WRMGTBPeGW5pDRz8uBOj3yPItwxUBg7II6Rg456eQwPsVM5sVEFpvEyj4Cionb+1RnuDlTRteQYn+gap28pKuzyyMSDmDPBpApznxMfEeMXAZukEQSwd5nyeX0Gr2I8GLKOY+L6Sw9yznfxMJV/c+E+yQCT8=
+	t=1789216917; cv=none; b=T6RRwd8xrxDyisYNlg9qQx5MJyS7hx0cSfR3hciL+MSzixSGmVkT0oTexjANuqfueBwVZjuKy7EJzvb4JXgml63j2CDmdCkOf7/mspi2FfXFqi0X6EQ/0nRyh7GJcxrIwK4qkF0dX7CqcQXwifwU+c7UNktUknM3hHg6BSQoy4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216912; c=relaxed/simple;
-	bh=Ft5PLd5mXnkWC3atrzKfr342N8ftwDQmxrw48WzsqyE=;
+	s=arc-20240116; t=1789216917; c=relaxed/simple;
+	bh=0CBIOBAUK/5SI1fh4B5iLJhpByVdixh+2hu5UpjOJ7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=snRqCIKswhcVRfbHohQaEKaHIFazyuuwljVjhLCbX2J6EpmJ1E+7ZPGhPpy/SAjTfqq36/GMO082hfvfqNEndpWXy5Y5/b1d77DD6J+ZP+oKRe+eNevsDYYHk/+GSjIdFl47X3jdD4hXuQjcy/fzy22HrehjfxGfeoeUn3cBmiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6PsMdzA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a88Et5nMT4ItleUIx+48IieXyK/IW9FOm3L8OIglL54k/DtN3yUuXMwzTgm7rltFRS0nLejcybLcnZiemvPJWpH3U5ToYyDVq9C7Y1D2WtYtScTN+GND9DzGT9/5N38sF8n9wN2ZFgBbDERd+XJTlbgwMHH0OPUWo3XGQg4uw+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdomfyOZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6PsMdzA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BAE1F0089A;
-	Sat, 12 Sep 2026 12:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdomfyOZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0B91F00893;
+	Sat, 12 Sep 2026 12:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216909;
-	bh=GRVjhsmp5nKV2vm5bIwtoQpmc8iJ1rTPKHUN4Q+NT4E=;
+	s=korg; t=1789216914;
+	bh=ucsxQ1clOiJQPyEFp/4Uih79hedbHDMN8fsrh5TklOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A6PsMdzACdlKfgHPTtcQHdRGKje87vMfNQlXcgG8u+l62PCdv3Lf3AEE6ZoY/xncx
-	 wIUQeaFf4B5QR64XwBH0yrO1eMSdFNGfcwjcOPgFoPi6Iij/uiNv6Omwtb3ZvOFayT
-	 vFwYaDUMvboKyEf30Dh6c1VQ6tpny2NtA1Iaqvbo=
+	b=FdomfyOZSih6GmGsGBqqtJa2quTYomf+JjcgKEuud2oflaLe4GosZSDqjoVDyhyqZ
+	 QwvAZl9V81k3JiZB7poY7dER/SUYMqEFSuJsYLwZbJxxLlPWp+D7LRVvfjwaluSa3L
+	 1gWEAlqu5112pHVsoXYkVjG69rlC0zFSWbjgF6Q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,10 +30,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	sashiko-bot <sashiko-bot@kernel.org>,
 	"Zhang, Yanmin" <yanmin_zhang@linux.intel.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0831/1376] perf machine: Use snprintf() for guestmount path construction
-Date: Sat, 12 Sep 2026 08:54:17 +0200
-Message-ID: <20260912065626.064071429@linuxfoundation.org>
+Subject: [PATCH 6.12 0832/1376] perf machine: Check snprintf truncation in machines__findnew()
+Date: Sat, 12 Sep 2026 08:54:18 +0200
+Message-ID: <20260912065626.088880256@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,54 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit fe63d3bca288c5bb983304efd5fc3a5ff3183403 ]
+[ Upstream commit cc6abe0012bf8c04af8275266f8ed7c55ba4a5fb ]
 
-machines__findnew() and machines__create_guest_kernel_maps() use
-sprintf() to build paths by prepending symbol_conf.guestmount.
-Both write into PATH_MAX stack buffers, but guestmount comes from
-user configuration and is not length-checked.  A guestmount path
-at or near PATH_MAX causes a stack buffer overflow.
+The guestmount path is built with snprintf() into a PATH_MAX buffer
+without checking the return value.  If symbol_conf.guestmount is long
+enough to cause truncation, the truncated path could match a different
+directory, causing the wrong guest to be associated with the pid.
 
-Switch to snprintf() with sizeof() to prevent overflow.  The
-subsequent access()/fopen() calls will fail on a truncated path.
+Check for truncation and bail out early.
 
-Fixes: a1645ce12adb6c9c ("perf: 'perf kvm' tool for monitoring guest performance from host")
+Fixes: a1645ce12adb ("perf: 'perf kvm' tool for monitoring guest performance from host")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
 Cc: Zhang, Yanmin <yanmin_zhang@linux.intel.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: cc6abe0012bf ("perf machine: Check snprintf truncation in machines__findnew()")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/perf/util/machine.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index 9bd5dd9ddc81c..03fd3dcd4c986 100644
+index 03fd3dcd4c986..ea89e7499032a 100644
 --- a/tools/perf/util/machine.c
 +++ b/tools/perf/util/machine.c
-@@ -289,7 +289,7 @@ struct machine *machines__findnew(struct machines *machines, pid_t pid)
+@@ -289,7 +289,12 @@ struct machine *machines__findnew(struct machines *machines, pid_t pid)
  	if ((pid != HOST_KERNEL_ID) &&
  	    (pid != DEFAULT_GUEST_KERNEL_ID) &&
  	    (symbol_conf.guestmount)) {
--		sprintf(path, "%s/%d", symbol_conf.guestmount, pid);
-+		snprintf(path, sizeof(path), "%s/%d", symbol_conf.guestmount, pid);
+-		snprintf(path, sizeof(path), "%s/%d", symbol_conf.guestmount, pid);
++		if (snprintf(path, sizeof(path), "%s/%d",
++			     symbol_conf.guestmount, pid) >= (int)sizeof(path)) {
++			pr_err("Guest path too long for pid %d\n", pid);
++			machine = NULL;
++			goto out;
++		}
  		if (access(path, R_OK)) {
  			static struct strlist *seen;
  
-@@ -1215,9 +1215,9 @@ int machines__create_guest_kernel_maps(struct machines *machines)
- 					 namelist[i]->d_name);
- 				continue;
- 			}
--			sprintf(path, "%s/%s/proc/kallsyms",
--				symbol_conf.guestmount,
--				namelist[i]->d_name);
-+			snprintf(path, sizeof(path), "%s/%s/proc/kallsyms",
-+				 symbol_conf.guestmount,
-+				 namelist[i]->d_name);
- 			ret = access(path, R_OK);
- 			if (ret) {
- 				pr_debug("Can't access file %s\n", path);
 -- 
 2.53.0
 
