@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E24340D9D;
-	Sat, 12 Sep 2026 10:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001C0357CEC;
+	Sat, 12 Sep 2026 10:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208389; cv=none; b=jPSZPuTlyXxjtrO+OBYdflf5bJbT0k3QvB6bAcYz/v1SATM4XriPDOB4hKxsMTaNbs29x7k847saBXHtEmconHJhicY4v23gNEmgGGw+Wb1OK99ZtZFJAmXs6d0T/yDwWTV+pNEpHsScaXkgt+JFTP2XBZOqwUtGfjtiogOs/Z4=
+	t=1789208394; cv=none; b=QjarxrDhXkHEWuxRzLjLoom1wvfG7X8QFn4TvLZB8dwmRrkwXsQdi8lgzZ03yP4L8hf50eVBEuzxgS1EdnaFS7QQWBg8Nf2TufvpL4QgN9ORS1EH5cM+3WgkktWo2oPIonsfCSTIrzygltV+4iiXTA7yKJayGj+CYWNuAjTJo2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208389; c=relaxed/simple;
-	bh=l2zGcPAnIR//bxmllvwBgGXBGS0VL0Hyv1t1olKeMQo=;
+	s=arc-20240116; t=1789208394; c=relaxed/simple;
+	bh=hhtn3biyHmP2F1w9oe/UfabYTW8F/keVDswM8ku6dBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f2cNnpxxriBad/HpK2mLOaNgD2B8/i+9LOEYtov3xZBs80In6wbbRaX0Ib3DtaEptk6IH03CSI4frDSWm+Rm5gF3izcqDirq0YpsOfjWbAAAL/tLPd5Yjlic37nQEiq6JqhCA7xLBRva2fFQLuw/OhG0RGlg3OHXkJU4zXYqZUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3Ur//dp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fg1pidk96Fxd2OS6c/CSUvqvKnVPn6n8AlaGp+756rMv4Y/kboUh1+dSzNdZCiovhL9iWT2oWHIdBRT4aaKLNKAs0eTJuTZ37S8OCRuuSUJuMR9ACNIAL3uifX7ySj64AQNNhXQ6xTYOUu48eRvkvIpH9iexcS6QNWOxP9eOtcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1EK+7EpJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3Ur//dp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2D201F000FF;
-	Sat, 12 Sep 2026 10:19:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1EK+7EpJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADDF81F000FF;
+	Sat, 12 Sep 2026 10:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208388;
-	bh=7k2xtqXCRaWwY+MoJ/i9sNBqrTRqTwT6/qfBY+LlBH0=;
+	s=korg; t=1789208392;
+	bh=Ddxl5GZKd+VZcuP1D3qdTmBXTpYyiN0CfWJ7Bla1+Mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f3Ur//dpCKN6xsJyoo5dB015Nl/JUalVAko/3zNhSiCAuCly7XhI9Nt669onsmyz7
-	 dvyWqZP1amfFF+/06CuFza9ChUyRIj5aEo+qV1Rts6DsjCXz1WD4qmHmvwSug1IREX
-	 UQuBF8p1I5Ba6488jUoUjcB0WumQfG5C+5C9yqEg=
+	b=1EK+7EpJWqljOgYSkV5K+eQcplLLbW/zNjnI7MU4C1LfwuItqIKBI5k8GF/pBrztq
+	 iB3o00PMXSp/jrtJ8dneSCyKoyj+mBWgchqE4uzkxKOqEn04mYBMEdTjsUplzYkROq
+	 urCu+hE6kxKGKW8LJzEXLEg0hZ2hJfw7c/6l5g+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Firas Jahjah <firasj@amazon.com>,
-	Michael Margolin <mrgolin@amazon.com>,
-	Yonatan Nachum <ynachum@amazon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0608/1518] RDMA/efa: Fix PBL chunk length computation
-Date: Sat, 12 Sep 2026 08:46:17 +0200
-Message-ID: <20260912065637.180751778@linuxfoundation.org>
+Subject: [PATCH 6.18 0609/1518] wifi: mac80211: fix per-STA profile length in cross-link CSA parsing
+Date: Sat, 12 Sep 2026 08:46:18 +0200
+Message-ID: <20260912065637.204345932@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,71 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonatan Nachum <ynachum@amazon.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 229b42d7450c1cf96f45ec39ebb69211b06bc036 ]
+[ Upstream commit 4a0bd262df757b25fc4e2a53c947317c119ced4e ]
 
-On register MR, when creating the PBL, if it's an indirect PBL we create
-a chunk list to hold the PBL pages pointers. Each chunk is 4KB in size
-and can hold 510 addresses (EFA_PTRS_PER_CHUNK) and has a 12-byte
-control buffer at the end of it holding the next chunk's pointer and its
-length.
+ieee80211_mgd_check_cross_link_csa() starts parsing elements after the
+fixed per-STA profile header and the STA Info field, but subtracts only
+the STA Info length from the profile length. As a result,
+ieee802_11_parse_elems() is given sizeof(*prof) == 3 bytes beyond the
+current profile's element area, and data following the profile may be
+interpreted as belonging to it.
 
-If the PBL number of pages is a multiple of EFA_PTRS_PER_CHUNK, the
-calculated last chunk length is wrongly computed as 0, even though that
-chunk is fully populated with 510 real page pointers. This wrong length
-is used both to DMA map the chunk and is propagated to the device,
-causing the device to see the chunk as empty and reject the memory
-registration.
+Subtract the fixed profile header as well. The preceding
+ieee80211_mle_basic_sta_prof_size_ok() check guarantees that the
+corrected calculation cannot underflow, and
+ieee80211_rx_uhr_link_reconfig_req() uses the same calculation.
 
-Fix the calculation so it will be performed only if the number of pages
-isn't a multiple of EFA_PTRS_PER_CHUNK, if it is, its already handled in
-the above loop correctly.
-Also prevent out-of-bounds reach in the chunks array in such scenario.
+The call site currently states that cross-link CSA parsing has no effect
+because the broader parsing is still incorrect. This patch does not
+address that broader problem; it only makes the per-STA profile parser
+stop at the end of that profile. No production allocation over-read or
+user-visible failure has been demonstrated.
 
-Fixes: 40909f664d27 ("RDMA/efa: Add EFA verbs implementation")
-Reviewed-by: Firas Jahjah <firasj@amazon.com>
-Reviewed-by: Michael Margolin <mrgolin@amazon.com>
-Signed-off-by: Yonatan Nachum <ynachum@amazon.com>
-Link: https://patch.msgid.link/20260727090255.1175120-1-ynachum@amazon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 7ef8f6821d16 ("wifi: mac80211: mlme: handle cross-link CSA")
+Assisted-by: Codex:gpt-5.6-sol
+Assisted-by: Kimi:K3
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260728111326.63087-1-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/efa/efa_verbs.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ net/mac80211/mlme.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/efa/efa_verbs.c b/drivers/infiniband/hw/efa/efa_verbs.c
-index 0bb3389d761f3..18db10741cee6 100644
---- a/drivers/infiniband/hw/efa/efa_verbs.c
-+++ b/drivers/infiniband/hw/efa/efa_verbs.c
-@@ -1392,9 +1392,11 @@ static int pbl_chunk_list_create(struct efa_dev *dev, struct pbl_context *pbl)
- 
- 		chunk_list->chunks[i].length = EFA_CHUNK_USED_SIZE;
- 	}
--	chunk_list->chunks[chunk_list_size - 1].length =
--		((page_cnt % EFA_PTRS_PER_CHUNK) * EFA_CHUNK_PAYLOAD_PTR_SIZE) +
--			EFA_CHUNK_PTR_SIZE;
-+
-+	if (page_cnt % EFA_PTRS_PER_CHUNK != 0)
-+		chunk_list->chunks[chunk_list_size - 1].length =
-+			((page_cnt % EFA_PTRS_PER_CHUNK) * EFA_CHUNK_PAYLOAD_PTR_SIZE) +
-+				EFA_CHUNK_PTR_SIZE;
- 
- 	/* fill the dma addresses of sg list pages to chunks: */
- 	chunk_idx = 0;
-@@ -1406,9 +1408,12 @@ static int pbl_chunk_list_create(struct efa_dev *dev, struct pbl_context *pbl)
- 			rdma_block_iter_dma_address(&biter);
- 
- 		if (payload_idx == EFA_PTRS_PER_CHUNK) {
-+			payload_idx = 0;
- 			chunk_idx++;
-+			if (chunk_idx >= chunk_list_size)
-+				break;
-+
- 			cur_chunk_buf = chunk_list->chunks[chunk_idx].buf;
--			payload_idx = 0;
- 		}
- 	}
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 9ec4125c06d19..8d782c8782f98 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -7303,7 +7303,7 @@ ieee80211_mgd_check_cross_link_csa(struct ieee80211_sub_if_data *sdata,
+ 		prof = (void *)sta_profiles[link_id];
+ 		prof_elems = ieee802_11_parse_elems(prof->variable +
+ 						    (prof->sta_info_len - 1),
+-						    len -
++						    len - sizeof(*prof) -
+ 						    (prof->sta_info_len - 1),
+ 						    false, NULL);
  
 -- 
 2.53.0
