@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D09F374E6F;
-	Sat, 12 Sep 2026 09:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EE74BEE54;
+	Sat, 12 Sep 2026 09:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205049; cv=none; b=Dx7NLJtWEZaxr0n1Drj3KXSdD8YroBG9SWh8RaGAhrxXT5mBS6I+COJQDd8lYMPzD7R4o/0xZrX+zClB/MHyx6fPE9Jv5phV7HfgexsdZu6lh2IFughkrFtjVDJsyCHybf9hh3RngpWXB+CosxcJ6TNQHleX2pIAk0UCSkVlcu8=
+	t=1789205054; cv=none; b=BWZ49rHnM7N/mlEn8jKV99puTzkvIudd/6pFJgT2vk/kJr3O7jsTMz4TRTsBO2WSfwxVfMRArafiHvO1BpLpG0ag2ikD6jmiUe4LlADlL80QPCSYMrEJxJfrPsm1yho70bVqjXysYmlxg8696IEk52YvovlzTdwX6BCLKzUnsWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205049; c=relaxed/simple;
-	bh=RohE9wd5C3LmLia9h3PWt9203SkIHwrxop74rn70PDM=;
+	s=arc-20240116; t=1789205054; c=relaxed/simple;
+	bh=5aVU2My+Nw8wsbvZGvsnELb5ILNRjyYFvgSvafzCC5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=thBDRm2Q9Qxldw08GEA4IoQKC7ndCoxh09rzL8JXx/xuUS781c3t9kXl1+GgUA8NWV6rNBNjKWZbhmQLz6ASMzOqHWb0v/o58kdtlH2HhRTOJ+cDW/ziyTzEsLQMU2UE+PtG7G5V87x/Htpu01uZWiYFJxHmE2rMy5aeU9/cL9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCTw+IiS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W4LFFNmKJgu84Q2FCalsFHm5Cio1KsbiyDyIpTOTcUWluP6N9T0b+wr4QE/h1/hTofE9sqytqWNm/wtwiJLtDiGxFsKQeoq43jVBjuX4YA79Nk/wB4Ew/+/diSZHtKubXvXn3GBFO8a8I07UD65h+Vh8aHrQKUzyohTbH1Z6yIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjJpCIZk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCTw+IiS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8311F000FF;
-	Sat, 12 Sep 2026 09:24:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjJpCIZk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CBA1F000FF;
+	Sat, 12 Sep 2026 09:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205048;
-	bh=mZ6k/1fhIsxY1szC0FAkWNSH/D6KnZsCaFd/T5DQDPI=;
+	s=korg; t=1789205053;
+	bh=0s+P/1yC/jU96NhlNibGQaZ8fi06ThJF3GKplYZU+Kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lCTw+IiSSGGpp1cGmakgxRxkZ+X428TnVHtT4NY9mlsZwVEndSswzTUnn4uqo7AIK
-	 FGdHAdVGOLm2Cv3QNYsvJMgr1CWbS7EReiUghO+G5eLIOPJw+tYijCowECJFogM+aY
-	 CB/Yb1er9Uom+MKXpXrvrY/l665WO9/EKSE5hdho=
+	b=OjJpCIZktjsY0CXRme83tpF2dMlkSYFw9OWJEgAo46/7L768EKK1RDf9QO7bfUMAK
+	 5v4YUkB9ZLka6EOO6f1q5Lxh8GAMkc4z9T20qSin+fU66ooIg6uoKqA5wz7w58SDcq
+	 GdWjHrlD5oCT5TR0idY0jTAxk5bZQr1w4jozgn6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wei Fang <wei.fang@nxp.com>,
-	Joe Damato <joe@dama.to>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1736/1815] net: enetc: extract common helpers for MAC promiscuous mode setting
-Date: Sat, 12 Sep 2026 08:58:06 +0200
-Message-ID: <20260912065729.734426480@linuxfoundation.org>
+Subject: [PATCH 7.2 1696/1815] ptp: netc: fix period truncation and potential divide-by-zero in PEROUT
+Date: Sat, 12 Sep 2026 08:57:26 +0200
+Message-ID: <20260912065728.794886207@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,242 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 2557834ad0ff36fe3ec220bf1d7e6098265a326d ]
+[ Upstream commit 777dbc9914b2f003f1d44af80c7a4a395c5961b2 ]
 
-The PSIPMMR (Port Station Interface Promiscuous MAC Mode Register) in
-ENETC v4 has the same bit layout as the PSIPMR register in ENETC v1: bit
-n controls unicast promiscuous mode for SI n, and bit (n + 16) controls
-multicast promiscuous mode for SI n. The only difference between the two
-hardware generations is the register address offset.
+The max_period bound in net_timer_enable_perout() was computed as:
 
-Since the register functionality is identical, the MAC promiscuous mode
-setting code can be shared between ENETC v1 and v4 drivers.
+  max_period = (u64)NETC_TMR_DEFAULT_FIPER + integral_period;
 
-Rename ENETC_PSIPMR to ENETC_PSIPMMR in enetc_hw.h to match the actual
-register name used in the reference manual, and extract two new common
-helper functions, enetc_set_si_uc_promisc() and
-enetc_set_si_mc_promisc(), into enetc_pf_common.c. These helpers select
-the correct register offset based on the hardware revision via
-is_enetc_rev1().
+which exceeds U32_MAX when integral_period > 0 (e.g. 0x100000002 for
+the default 333333333 Hz clock). A period_ns that passes this check but
+exceeds U32_MAX is then silently truncated when stored into the u32
+struct netc_pp::period field.
 
-Remove the v4-specific enetc4_pf_set_si_mac_promisc() function from
-enetc4_pf.c and the duplicate PSIPMMR_SI_MAC_UP/MP macro definitions
-from enetc4_hw.h, as they are now superseded by the shared code.
+A truncated value of zero can reach netc_timer_set_perout_alarm(), where
+the local u32 period variable would also be 0, causing a divide-by-zero
+in roundup_u64(delta, period) whenever the stime < min_time branch is
+taken (which always happens for a start time of {0, 0}).
 
+Additionally, netc_timer_enable_periodic_pulse() and
+netc_timer_enable_fiper() both compute:
+
+  fiper = pp->period - integral_period;
+
+A zero pp->period results in an unsigned wraparound to 0xFFFFFFFD,
+mis-programming the FIPER hardware register.
+
+Fix all three issues by capping max_period at NETC_TMR_DEFAULT_FIPER
+(0xFFFFFFFF). This ensures that any period_ns passing the range check
+fits in a u32 without truncation, so the stored value is always valid
+and non-zero. The accepted range is reduced by integral_period ns
+(typically only a few nanoseconds), which is negligible in practice.
+
+Fixes: 671e266835b8 ("ptp: netc: add periodic pulse output support")
 Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260720014317.1059359-2-wei.fang@oss.nxp.com
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260821032449.1235065-1-wei.fang@oss.nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: fa1a8457b858 ("net: enetc: restore RX ring congestion mode for ENETC v4")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/freescale/enetc/enetc4_hw.h  |  2 -
- .../net/ethernet/freescale/enetc/enetc4_pf.c  | 21 +--------
- .../ethernet/freescale/enetc/enetc_ethtool.c  |  2 +-
- .../net/ethernet/freescale/enetc/enetc_hw.h   |  7 +--
- .../net/ethernet/freescale/enetc/enetc_pf.c   | 11 ++---
- .../freescale/enetc/enetc_pf_common.c         | 44 +++++++++++++++++++
- .../freescale/enetc/enetc_pf_common.h         |  2 +
- 7 files changed, 56 insertions(+), 33 deletions(-)
+ drivers/ptp/ptp_netc.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc4_hw.h b/drivers/net/ethernet/freescale/enetc/enetc4_hw.h
-index f18437556a0ee..6a8f2ed56017c 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc4_hw.h
-+++ b/drivers/net/ethernet/freescale/enetc/enetc4_hw.h
-@@ -69,8 +69,6 @@
- 
- /* Port Station interface promiscuous MAC mode register */
- #define ENETC4_PSIPMMR			0x200
--#define  PSIPMMR_SI_MAC_UP(a)		BIT(a) /* a = SI index */
--#define  PSIPMMR_SI_MAC_MP(a)		BIT((a) + 16)
- 
- /* Port Station interface promiscuous VLAN mode register */
- #define ENETC4_PSIPVMR			0x204
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc4_pf.c b/drivers/net/ethernet/freescale/enetc/enetc4_pf.c
-index 437a15bbb47ba..304ec069654dc 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc4_pf.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc4_pf.c
-@@ -75,24 +75,6 @@ static void enetc4_pf_get_si_primary_mac(struct enetc_hw *hw, int si,
- 	put_unaligned_le16(lower, addr + 4);
- }
- 
--static void enetc4_pf_set_si_mac_promisc(struct enetc_hw *hw, int si,
--					 bool uc_promisc, bool mc_promisc)
--{
--	u32 val = enetc_port_rd(hw, ENETC4_PSIPMMR);
--
--	if (uc_promisc)
--		val |= PSIPMMR_SI_MAC_UP(si);
--	else
--		val &= ~PSIPMMR_SI_MAC_UP(si);
--
--	if (mc_promisc)
--		val |= PSIPMMR_SI_MAC_MP(si);
--	else
--		val &= ~PSIPMMR_SI_MAC_MP(si);
--
--	enetc_port_wr(hw, ENETC4_PSIPMMR, val);
--}
--
- static void enetc4_pf_set_si_uc_hash_filter(struct enetc_hw *hw, int si,
- 					    u64 hash)
- {
-@@ -515,7 +497,8 @@ static void enetc4_psi_do_set_rx_mode(struct work_struct *work)
- 		type = ENETC_MAC_FILTER_TYPE_ALL;
+diff --git a/drivers/ptp/ptp_netc.c b/drivers/ptp/ptp_netc.c
+index 59db08e189e6e..19ca99d80e95b 100644
+--- a/drivers/ptp/ptp_netc.c
++++ b/drivers/ptp/ptp_netc.c
+@@ -440,7 +440,7 @@ static int net_timer_enable_perout(struct netc_timer *priv,
  	}
  
--	enetc4_pf_set_si_mac_promisc(hw, 0, uc_promisc, mc_promisc);
-+	enetc_set_si_uc_promisc(si, 0, uc_promisc);
-+	enetc_set_si_mc_promisc(si, 0, mc_promisc);
+ 	if (on) {
+-		u64 period_ns, gclk_period, max_period, min_period;
++		u64 period_ns, gclk_period, min_period;
+ 		struct timespec64 period, stime;
+ 		u32 integral_period;
+ 		int alarm_id;
+@@ -450,12 +450,12 @@ static int net_timer_enable_perout(struct netc_timer *priv,
+ 		period_ns = timespec64_to_ns(&period);
  
- 	if (uc_promisc) {
- 		enetc4_pf_set_si_uc_hash_filter(hw, 0, 0);
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
-index 71f376ef1be1c..07b7832f24276 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
-@@ -29,7 +29,7 @@ static const u32 enetc_rxbdr_regs[] = {
- };
- 
- static const u32 enetc_port_regs[] = {
--	ENETC_PMR, ENETC_PSR, ENETC_PSIPMR, ENETC_PSIPMAR0(0),
-+	ENETC_PMR, ENETC_PSR, ENETC_PSIPMMR, ENETC_PSIPMAR0(0),
- 	ENETC_PSIPMAR1(0), ENETC_PTXMBAR, ENETC_PCAPR0, ENETC_PCAPR1,
- 	ENETC_PSICFGR0(0), ENETC_PRFSCAPR, ENETC_PTCMSDUR(0),
- 	ENETC_PM0_CMD_CFG, ENETC_PM0_MAXFRM, ENETC_PM0_IF_MODE
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_hw.h b/drivers/net/ethernet/freescale/enetc/enetc_hw.h
-index bf99b65d7598a..66bfda60da9cb 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_hw.h
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_hw.h
-@@ -180,9 +180,10 @@ enum enetc_bdr_type {TX, RX};
- #define ENETC_PMR_PSPEED_1000M	BIT(9)
- #define ENETC_PMR_PSPEED_2500M	BIT(10)
- #define ENETC_PSR		0x0004 /* RO */
--#define ENETC_PSIPMR		0x0018
--#define ENETC_PSIPMR_SET_UP(n)	BIT(n) /* n = SI index */
--#define ENETC_PSIPMR_SET_MP(n)	BIT((n) + 16)
-+#define ENETC_PSIPMMR		0x0018
-+#define  PSIPMMR_SI_MAC_UP(n)	BIT(n) /* n = SI index */
-+#define  PSIPMMR_SI_MAC_MP(n)	BIT((n) + 16)
-+
- #define ENETC_PSIPVMR		0x001c
- #define ENETC_VLAN_PROMISC_MAP_ALL	0x7
- #define ENETC_PSIPVMR_SET_VP(simap)	((simap) & 0x7)
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf.c b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
-index 83e47eef1acd0..30bc3e37f1f17 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
-@@ -159,21 +159,17 @@ static void enetc_pf_set_rx_mode(struct net_device *ndev)
- {
- 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
- 	struct enetc_pf *pf = enetc_si_priv(priv->si);
--	struct enetc_hw *hw = &priv->si->hw;
- 	bool uprom = false, mprom = false;
- 	struct enetc_mac_filter *filter;
- 	struct netdev_hw_addr *ha;
--	u32 psipmr = 0;
- 	bool em;
- 
- 	if (ndev->flags & IFF_PROMISC) {
- 		/* enable promisc mode for SI0 (PF) */
--		psipmr = ENETC_PSIPMR_SET_UP(0) | ENETC_PSIPMR_SET_MP(0);
- 		uprom = true;
- 		mprom = true;
- 	} else if (ndev->flags & IFF_ALLMULTI) {
- 		/* enable multi cast promisc mode for SI0 (PF) */
--		psipmr = ENETC_PSIPMR_SET_MP(0);
- 		mprom = true;
- 	}
- 
-@@ -211,9 +207,8 @@ static void enetc_pf_set_rx_mode(struct net_device *ndev)
- 		/* update PF entries */
- 		enetc_sync_mac_filters(pf);
- 
--	psipmr |= enetc_port_rd(hw, ENETC_PSIPMR) &
--		  ~(ENETC_PSIPMR_SET_UP(0) | ENETC_PSIPMR_SET_MP(0));
--	enetc_port_wr(hw, ENETC_PSIPMR, psipmr);
-+	enetc_set_si_uc_promisc(priv->si, 0, uprom);
-+	enetc_set_si_mc_promisc(priv->si, 0, mprom);
- }
- 
- static void enetc_set_loopback(struct net_device *ndev, bool en)
-@@ -474,7 +469,7 @@ static void enetc_configure_port(struct enetc_pf *pf)
- 	pf->vlan_promisc_simap = ENETC_VLAN_PROMISC_MAP_ALL;
- 	enetc_set_vlan_promisc(hw, pf->vlan_promisc_simap);
- 
--	enetc_port_wr(hw, ENETC_PSIPMR, 0);
-+	enetc_port_wr(hw, ENETC_PSIPMMR, 0);
- 
- 	/* enable port */
- 	enetc_port_wr(hw, ENETC_PMR, ENETC_PMR_EN);
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf_common.c b/drivers/net/ethernet/freescale/enetc/enetc_pf_common.c
-index 6e5d2f8699150..b0c0dc668e347 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_pf_common.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_pf_common.c
-@@ -87,6 +87,50 @@ int enetc_setup_mac_addresses(struct device_node *np, struct enetc_pf *pf)
- }
- EXPORT_SYMBOL_GPL(enetc_setup_mac_addresses);
- 
-+void enetc_set_si_uc_promisc(struct enetc_si *si, int si_id, bool promisc)
-+{
-+	struct enetc_hw *hw = &si->hw;
-+	int psipmmr_off;
-+	u32 val;
-+
-+	if (is_enetc_rev1(si))
-+		psipmmr_off = ENETC_PSIPMMR;
-+	else
-+		psipmmr_off = ENETC4_PSIPMMR;
-+
-+	val = enetc_port_rd(hw, psipmmr_off);
-+
-+	if (promisc)
-+		val |= PSIPMMR_SI_MAC_UP(si_id);
-+	else
-+		val &= ~PSIPMMR_SI_MAC_UP(si_id);
-+
-+	enetc_port_wr(hw, psipmmr_off, val);
-+}
-+EXPORT_SYMBOL_GPL(enetc_set_si_uc_promisc);
-+
-+void enetc_set_si_mc_promisc(struct enetc_si *si, int si_id, bool promisc)
-+{
-+	struct enetc_hw *hw = &si->hw;
-+	int psipmmr_off;
-+	u32 val;
-+
-+	if (is_enetc_rev1(si))
-+		psipmmr_off = ENETC_PSIPMMR;
-+	else
-+		psipmmr_off = ENETC4_PSIPMMR;
-+
-+	val = enetc_port_rd(hw, psipmmr_off);
-+
-+	if (promisc)
-+		val |= PSIPMMR_SI_MAC_MP(si_id);
-+	else
-+		val &= ~PSIPMMR_SI_MAC_MP(si_id);
-+
-+	enetc_port_wr(hw, psipmmr_off, val);
-+}
-+EXPORT_SYMBOL_GPL(enetc_set_si_mc_promisc);
-+
- void enetc_pf_netdev_setup(struct enetc_si *si, struct net_device *ndev,
- 			   const struct net_device_ops *ndev_ops)
- {
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf_common.h b/drivers/net/ethernet/freescale/enetc/enetc_pf_common.h
-index 57d2e0ebd2b0b..a619fb8fed9c5 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_pf_common.h
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_pf_common.h
-@@ -17,6 +17,8 @@ void enetc_set_default_rss_key(struct enetc_pf *pf);
- int enetc_vlan_rx_add_vid(struct net_device *ndev, __be16 prot, u16 vid);
- int enetc_vlan_rx_del_vid(struct net_device *ndev, __be16 prot, u16 vid);
- int enetc_init_sriov_resources(struct enetc_pf *pf);
-+void enetc_set_si_uc_promisc(struct enetc_si *si, int si_id, bool promisc);
-+void enetc_set_si_mc_promisc(struct enetc_si *si, int si_id, bool promisc);
- 
- static inline u16 enetc_get_ip_revision(struct enetc_hw *hw)
- {
+ 		integral_period = netc_timer_get_integral_period(priv);
+-		max_period = (u64)NETC_TMR_DEFAULT_FIPER + integral_period;
+ 		gclk_period = netc_timer_get_gclk_period(priv);
+ 		min_period = gclk_period * 4 + integral_period;
+-		if (period_ns > max_period || period_ns < min_period) {
+-			dev_err(dev, "The period range is %llu ~ %llu\n",
+-				min_period, max_period);
++		if (period_ns > NETC_TMR_DEFAULT_FIPER ||
++		    period_ns < min_period) {
++			dev_err(dev, "The period range is %llu ~ %lu\n",
++				min_period, NETC_TMR_DEFAULT_FIPER);
+ 			err = -EINVAL;
+ 			goto unlock_spinlock;
+ 		}
 -- 
 2.53.0
 
