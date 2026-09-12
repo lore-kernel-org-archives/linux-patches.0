@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF44E1A6813;
-	Sat, 12 Sep 2026 07:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9CD82EBDE9;
+	Sat, 12 Sep 2026 07:19:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197571; cv=none; b=WtN75k3X4ezCF3wVGi33nR5H6gj0oY+TZUcWORtluXrze3YrRi1PsacbFOKapnX8T6gSIyyiHiOgbRTdNp5uGb213Py1uHXQYEyL7lj4zz+QePXr24RNWFv2meyR2wjrpSaN58QuCqbCRGuYBjfKvSptfazS9toI+2WghTvCmMw=
+	t=1789197578; cv=none; b=FODMZhQ6JPDdBD41ZLSXFjbqjqpM9Rp+eblbLZx7ktSERqi2Cd16js4I3SAYoYHFDUfuCNnllf4ZuvX7HnpNLYhJ6twZhG/r3Hixb5GgU55n2tyPZ8ur5gAtpeZfRl7G0+FBd3shnuu446C5LFS8OGAImSqxLr1tbu8mIzFhWKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197571; c=relaxed/simple;
-	bh=YDBAkP+AoDbmkqqFP09hX2LPAzCE1/Our7nWAN47iXM=;
+	s=arc-20240116; t=1789197578; c=relaxed/simple;
+	bh=aF8W3tFOoJnndAZsT6aH5HVRAZcB0LlUJRkqZ5juNqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sIkhKJbZ7CGXPgSIsFsA5G+L/IF6p0XE7DxO3PYOj0hqeH1JOMUPN02jNcfiBj/XCUeAoCI42zv8bQiS3QdKYgPiss7HAlLWK17V0yUthPgXzPbyfF2zW56begjwaBLpu3TD9PGpZUhpqzcijuok7iz77yEaGUh0tZwcXjargzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZWRCJck; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LkCgbkHB8rI2xYy5/WUTxf1CgDhoYqErvvGiGnRVRz/GllMYPHjfjwjyQjB/sIBMDSzdkHmv3R2QdTAGPi1FARZTCOi5EZl5p1qyxwlxyBIzwQUIpn6l7Y+K61NtdlULz93tMmJA07ch5a1PR8YDv6qj6tmvtFTBzH55kI1RGVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IhkuTlUx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZWRCJck"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3351F000FF;
-	Sat, 12 Sep 2026 07:19:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IhkuTlUx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F84E1F000FF;
+	Sat, 12 Sep 2026 07:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197570;
-	bh=aFb+8LYLd/Cl+w0A1xdAVcjHuViaCCWw8YWGGXwTBKU=;
+	s=korg; t=1789197575;
+	bh=JPSTwhle0OuF4l7AcAi2kYEpS7e4FatMc032wTARMFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kZWRCJckHIpB7EFFVZT122e61pAs2qxl3fINEWHCG7ZbBeMqjo6bBKngdRx1QhYgx
-	 /L4WuSfk7oC18pEtvtwWhvA3C45v61ifDCDjVyOqSIP/SsUrNv0f7hp6uLOHV8WRm9
-	 4s/kY4NefLF5L76LGlhGFoxZVgzRZl9ZlLEn6ogA=
+	b=IhkuTlUxKkscnCAaELjAkqVLNY8A0g0LY4tY+2dqDNo05UymJNb5+KVMyMxE4cy/H
+	 lePA28pqJ7W5HRyzr4cXAsm3FCQley3cAFwyfZdHgRMlsgyd4OtSfbGxssRyBs3vQQ
+	 UC4n/iKMNStqmw2uRJo2aBd4nzgNySQa7RelmW68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Siva Reddy Kallam <siva.kallam@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0202/1815] arm64: dts: qcom: talos: Fix GMU unit address
-Date: Sat, 12 Sep 2026 08:32:32 +0200
-Message-ID: <20260912065653.745134939@linuxfoundation.org>
+Subject: [PATCH 7.2 0203/1815] RDMA/bng_re: return a timeout when firmware responses stall
+Date: Sat, 12 Sep 2026 08:32:33 +0200
+Message-ID: <20260912065653.767733249@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,37 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 34a4ec6910e68ce06eb7201fa36778ca59a1e510 ]
+[ Upstream commit 5f9576c6734abca88a02db72c466e09d2eddf160 ]
 
-Correct unit address of GMU node to match 'reg' property and fix dtc W=1
-warnings like:
+__wait_for_resp() documents that it returns a non-zero error when a
+firmware command does not complete, and bng_re_rcfw_send_message() already
+marks the firmware as stalled when the helper returns -ENODEV.
 
-  talos.dtsi:2020.20-2055.5: Warning (simple_bus_reg): /soc@0/gmu@506a000: simple-bus unit address format error, expected "506d000"
+However, the helper ignores wait_event_timeout() expiry.  If the response
+slot remains in use after the timeout and after the polled CREQ service
+attempt, the loop starts another full timeout period and can repeat
+forever.
 
-Fixes: 8de397a5618a ("arm64: dts: qcom: talos: Add gpu and rgmu nodes")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260528120342.46343-2-krzysztof.kozlowski@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Return -ENODEV after a timed out wait that still has no response.  The
+existing caller then marks FIRMWARE_STALL_DETECTED and returns
+-ETIMEDOUT to the command issuer.
+
+Fixes: 53c6ee7d7f68 ("RDMA/bng_re: Enable Firmware channel and query device attributes")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260625003614.27515-1-pengpeng@iscas.ac.cn
+Reviewed-by: Siva Reddy Kallam <siva.kallam@broadcom.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/talos.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/bng_re/bng_fw.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/talos.dtsi b/arch/arm64/boot/dts/qcom/talos.dtsi
-index fb1bbc51bb8a4..70df5db19e9ac 100644
---- a/arch/arm64/boot/dts/qcom/talos.dtsi
-+++ b/arch/arm64/boot/dts/qcom/talos.dtsi
-@@ -2017,7 +2017,7 @@ opp-435000000 {
- 			};
- 		};
+diff --git a/drivers/infiniband/hw/bng_re/bng_fw.c b/drivers/infiniband/hw/bng_re/bng_fw.c
+index 50156c300b335..ab6a2d2e95b53 100644
+--- a/drivers/infiniband/hw/bng_re/bng_fw.c
++++ b/drivers/infiniband/hw/bng_re/bng_fw.c
+@@ -401,14 +401,15 @@ static int __wait_for_resp(struct bng_re_rcfw *rcfw, u16 cookie)
+ {
+ 	struct bng_re_cmdq_ctx *cmdq;
+ 	struct bng_re_crsqe *crsqe;
++	unsigned long time_left;
  
--		gmu: gmu@506a000 {
-+		gmu: gmu@506d000 {
- 			compatible = "qcom,adreno-rgmu-612.0", "qcom,adreno-rgmu";
- 			reg = <0x0 0x0506d000 0x0 0x2c000>;
+ 	cmdq = &rcfw->cmdq;
+ 	crsqe = &rcfw->crsqe_tbl[cookie];
+ 
+ 	do {
+-		wait_event_timeout(cmdq->waitq,
+-				   !crsqe->is_in_used,
+-				   secs_to_jiffies(rcfw->max_timeout));
++		time_left = wait_event_timeout(cmdq->waitq,
++					       !crsqe->is_in_used,
++					       secs_to_jiffies(rcfw->max_timeout));
+ 
+ 		if (!crsqe->is_in_used)
+ 			return 0;
+@@ -417,6 +418,9 @@ static int __wait_for_resp(struct bng_re_rcfw *rcfw, u16 cookie)
+ 
+ 		if (!crsqe->is_in_used)
+ 			return 0;
++
++		if (!time_left)
++			return -ENODEV;
+ 	} while (true);
+ };
  
 -- 
 2.53.0
