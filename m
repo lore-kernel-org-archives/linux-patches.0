@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35E629DB64;
-	Sat, 12 Sep 2026 15:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDA63630AC;
+	Sat, 12 Sep 2026 15:57:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228620; cv=none; b=qojEHpVTiJzJydkuZwORomIWuRNkw+9Oj0h2NfALoi8xJSTpeLTDvREFhpmbTbk6QUz3JRcvCtJgOKtNP3EfNEeudWwKihdAKk46bTv9vcVv15xxC6vWDrjhjWrA1kgsEPNmO31QRoPP5Laj2ozcMCETCiZ1U97kJmwqgVTsG7Q=
+	t=1789228624; cv=none; b=EEVaU2Ciqa6rIpqXkWJZ/XlNTfYLf/KOjSP9tr/QvSR7knr+wWw51sdCXruhXdZ/YIBEQd3eQ4H0co5jzwnwfyMpNs5x8s+A5h0IqsU0FTNk6gBYjDDuMip6rT1RPD2YaMFrBagmYoisGfgk5RwNbAZRaZ0xAWOBCa0XSEI2AVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228620; c=relaxed/simple;
-	bh=yotreEF7T9M4ji1dRxs1AFaxuxw/GJUGTMCUNJwSQl8=;
+	s=arc-20240116; t=1789228624; c=relaxed/simple;
+	bh=nYLyjGgf044fHJQYlMCnwcuSY7+t0399qPBdbN4QUo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kR9JE3NEIMdDGhHlXTDzHdfraDNH17hN+GDIW+oxr9Xnge76fQqivMyd+QLj3xzCqF74UQpmofnHJm3D0jGN2Tc9ESSXmP/jlv9InVic8oCOdEnLbdMWt5SBwLFIGfiwpgUY7hBxUn3qzhjU8YvJEs6dKfH11a2dBt5sq6mn6Vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gekyhles; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t4h+/Of03jD2FlT5Z9GBSZ7/wS/AN8BTogF40Y6TMvUGhywMhlzhamh22gz3B34mhOFKKIoioVblIqQm/WUtW5f9yY6cRCTf1MVJLGzU405yu98By54lD5chhrHVFhBNLhK0DTZnS01w+5ozF/LjfpOEY9o8k/2CrNafqLLFhGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhjPU4E2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gekyhles"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC871F00893;
-	Sat, 12 Sep 2026 15:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhjPU4E2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E791F000FF;
+	Sat, 12 Sep 2026 15:57:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228618;
-	bh=LVPGLafpijLGSWPT7+7THDQ4vmiM/KbU3mTXb5A3A6o=;
+	s=korg; t=1789228623;
+	bh=UifKuHUpUTp50vkVoX5S3zTSn4ODl1h5qdyuRbaEgjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gekyhleshtt0T4gSwfojgRjbU4yDErXiJbJBLPsK5/rOLWXlVJO/I74+YGn6cNPxV
-	 F8MRoEGdq9CRbiaqm38hHMa2CN750gQSZXQv4Q0cTJC961firT0tUojJY+h849UGrJ
-	 SsOYxn0roRW07wyIUSt/xMCHk0ke076W6R3y5lkQ=
+	b=nhjPU4E2s9dffv/1mgQUmKkcIIyXC6VCNQ/6Wlh9mAiyz+IG80WnKyKZJeU9sq/Nj
+	 kiucGwsfdevH1mYXwxTDapMKITpSwLbgVhTAVwpWs7uG4Kzdv1COlH0YHcEhRSY5g7
+	 lu+dchP9D26QkN1ljoM3uFsb6oUwhOVf7g8a91Oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Krutskih <devsec@tpz.ru>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 0380/1191] media: tda18250: fix possible integer overflow
-Date: Sat, 12 Sep 2026 08:51:48 +0200
-Message-ID: <20260912065556.772831146@linuxfoundation.org>
+	Biren Pandya <birenpandya@gmail.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 6.1 0371/1191] media: i2c: ov02a10: fix endpoint parsing use-after-free
+Date: Sat, 12 Sep 2026 08:51:39 +0200
+Message-ID: <20260912065556.561606283@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,34 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Krutskih <devsec@tpz.ru>
+From: Biren Pandya <birenpandya@gmail.com>
 
-commit 6dd8e257f7cafda7fbf10d81b3c55c9bba4825f4 upstream.
+commit 94971ba0592ca77ec99b292226a4b398763315b8 upstream.
 
-Integer overflow may occur, when variable exp equals to zero. Result
-of shift 1 << (exp - 1) may then leads to undefined behavior.
+The ov02a10_check_hwcfg() function calls fwnode_handle_put(ep)
+immediately after allocating and parsing the endpoint. However, it
+subsequently calls fwnode_property_read_u32() using the same 'ep'
+handle, leading to a potential use-after-free.
 
-Fixes: 148abd3b5b14 ("media: tda18250: support for new silicon tuner")
+Additionally, reading the optional 'ovti,mipi-clock-voltage' property
+used to overwrite the 'ret' variable. If the property was missing,
+'ret' would become negative, and this failure code would be incorrectly
+returned at the end of the function, causing probe to fail entirely.
+
+Fix the use-after-free by moving fwnode_property_read_u32() before
+the endpoint is parsed and freed. Avoid the error leak by not
+assigning the result of fwnode_property_read_u32() to 'ret'.
+
+Fixes: 91807efbe8ec ("media: i2c: add OV02A10 image sensor driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Krutskih <devsec@tpz.ru>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Biren Pandya <birenpandya@gmail.com>
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/tuners/tda18250.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/i2c/ov02a10.c |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
---- a/drivers/media/tuners/tda18250.c
-+++ b/drivers/media/tuners/tda18250.c
-@@ -440,8 +440,8 @@ static int tda18250_pll_calc(struct dvb_
- 		goto err;
+--- a/drivers/media/i2c/ov02a10.c
++++ b/drivers/media/i2c/ov02a10.c
+@@ -821,18 +821,16 @@ static int ov02a10_check_hwcfg(struct de
+ 	if (!ep)
+ 		return -ENXIO;
  
- 	exp = (uval & 0x70) >> 4;
--	if (exp > 5)
--		exp = 0;
-+	if (exp == 0 || exp > 5)
-+		exp = 1;
- 	lopd = 1 << (exp - 1);
- 	scale = uval & 0x0f;
- 	fvco = lopd * scale * ((c->frequency / 1000) + dev->if_frequency);
++	/* Optional indication of MIPI clock voltage unit */
++	if (!fwnode_property_read_u32(ep, "ovti,mipi-clock-voltage",
++				      &clk_volt))
++		ov02a10->mipi_clock_voltage = clk_volt;
++
+ 	ret = v4l2_fwnode_endpoint_alloc_parse(ep, &bus_cfg);
+ 	fwnode_handle_put(ep);
+ 	if (ret)
+ 		return ret;
+ 
+-	/* Optional indication of MIPI clock voltage unit */
+-	ret = fwnode_property_read_u32(ep, "ovti,mipi-clock-voltage",
+-				       &clk_volt);
+-
+-	if (!ret)
+-		ov02a10->mipi_clock_voltage = clk_volt;
+-
+ 	for (i = 0; i < ARRAY_SIZE(link_freq_menu_items); i++) {
+ 		for (j = 0; j < bus_cfg.nr_of_link_frequencies; j++) {
+ 			if (link_freq_menu_items[i] ==
 
 
