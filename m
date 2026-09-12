@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B96455162;
-	Sat, 12 Sep 2026 12:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADEA3A0B36;
+	Sat, 12 Sep 2026 12:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214887; cv=none; b=iMW8FE5YOtEU1rPNK/+5WKl4FGZaESBU7/dgRK1tdIeDy9Lhxv6BBsZqeGUwrLCh27cFt7/AVDQC8ztXNUelkqt1W41A7Ow7V/7/LfTDQI2/ncKpV0xY/pKKfyUsSZidkGILIAHg22G+8XHo2OBGz9GvTjcBxCQH6t2wJHRikmA=
+	t=1789214891; cv=none; b=Xq/1rwmkXlDrKewJhQ5W2wfMDExV3NEuvu5DfjYEo3RFLv0CfYVhGN+NrxgtATw2iVA5+LR5lela+CcOkcQ1VoTUi9jKeeqZFkwF5senSnp6yLpEgfyre/9sW7iV8JXWlXthPeu2knTh5qKRVcFblFpz/2vgXJa3cJcSxxIWx3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214887; c=relaxed/simple;
-	bh=IkLJ/6rnE9b8XC+kmlgfn1aP/yBTmcN8DPmOMlg7hes=;
+	s=arc-20240116; t=1789214891; c=relaxed/simple;
+	bh=r4xHEDyciu9uMWOmsSjXMy+ZF+hYO4bTPx39Oi4cvGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YRkNooINJ1RDXuMJ+64TY41jvFEPKWsLWl8BbAmuKhhSK7na1fwFBjzovksAyaTk6pYDu+O1ADI5RWFxt38FHM+iiEP0ANGZh9DZ8M6+SgWSwhnjans0hahYKHXcVOTIgbmyqyOn/z1EW7QIFVQRHn3PYn+YxmMAuQ/RSQhKRaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rITQ7dzK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tf1BAOGSnn+PRD7Th3ODIUyYP9Vb1JZvQ59GkaGF+8zPqTG+sy41rsDDqdSzB9QWvuFIbVcWLpCQR3rYyRQnAydbRB/83YjhfMJEHSEmADSwOhI9O+myQN4zhrRuncWgy6bnScOlZU4jQbMDZMeNgWLt/ikUuHOFePbb8qVDB+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZN6g7Ds; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rITQ7dzK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11571F000FF;
-	Sat, 12 Sep 2026 12:08:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZN6g7Ds"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE001F000FF;
+	Sat, 12 Sep 2026 12:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214885;
-	bh=Rseqx27RuFmYLN+nkOX7Gx7dTTBgzaaZMID8ys+I+Jo=;
+	s=korg; t=1789214890;
+	bh=2zjdLIe1GFl1hjM3Ggv8svSeh7QCnzs8hqjzhT6sx60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rITQ7dzKeuRZg+7mjErkwHkZr2vEI0DSOYlBFX1FVGih/Mz6nr8gGMfehE2PwEx4x
-	 BmejIlXIhPZyFzs6RvqjVGD9Xf4V/6pfP1eloVcr8XTzlsWrzv4fz3WBi0hopVe4il
-	 ykGXwZdPLj7tPIW6jcjOpQOWGTMYn+rh03siDqDA=
+	b=CZN6g7DsUQwSTf6j5U0vA0K5Gpv6EurjMJYwrtrrEsZhEavw7WM4KvaEdOqPWSDMI
+	 DZq0/EsZ0NTdItmyoAePXxVkrIfFwLBZS1Pi/IuO5Nfy65mGjbL9fN6sDvPHuTDgqe
+	 tNLroAD3ms/mHjaRhEwH+Xiyj5Oxq81e91bPWxQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0416/1376] arm64: dts: qcom: hamoa: Fix clocks for HSPHYs
-Date: Sat, 12 Sep 2026 08:47:22 +0200
-Message-ID: <20260912065616.813369054@linuxfoundation.org>
+Subject: [PATCH 6.12 0417/1376] bus: qcom-ebi2: Simplify with scoped for each OF child loop
+Date: Sat, 12 Sep 2026 08:47:23 +0200
+Message-ID: <20260912065616.834847483@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,45 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 115894bc201b0cd1799d239875a1b40924f0ef7b ]
+[ Upstream commit 9c252f3c8f390fae4ca09de36c9262a35ae88ace ]
 
-The tertiary controller's HSPHY has its own toggle in TCSR, while the
-primary one is wired directly to the XO clock. Fix that.
+Use scoped for-each loop when iterating over device nodes to make code a
+bit simpler.
 
-Fixes: 4af46b7bd66f ("arm64: dts: qcom: x1e80100: Add USB nodes")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260518-topic-hamoa_hsphy_clk-v1-1-d85203756505@oss.qualcomm.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260102125030.65186-3-krzysztof.kozlowski@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 64774dea5896 ("bus: qcom-ebi2: Fix clock leak on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/bus/qcom-ebi2.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index 7e9de1b7c7a31..d456190ed76d4 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -2596,7 +2596,7 @@ usb_1_ss0_hsphy: phy@fd3000 {
- 			reg = <0 0x00fd3000 0 0x154>;
- 			#phy-cells = <0>;
+diff --git a/drivers/bus/qcom-ebi2.c b/drivers/bus/qcom-ebi2.c
+index c1fef1b4bd89b..be8166565e7cc 100644
+--- a/drivers/bus/qcom-ebi2.c
++++ b/drivers/bus/qcom-ebi2.c
+@@ -292,7 +292,6 @@ static void qcom_ebi2_setup_chipselect(struct device_node *np,
+ static int qcom_ebi2_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *np = pdev->dev.of_node;
+-	struct device_node *child;
+ 	struct device *dev = &pdev->dev;
+ 	struct resource *res;
+ 	void __iomem *ebi2_base;
+@@ -348,15 +347,13 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
+ 	writel(val, ebi2_base);
  
--			clocks = <&tcsr TCSR_USB2_1_CLKREF_EN>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>;
- 			clock-names = "ref";
+ 	/* Walk over the child nodes and see what chipselects we use */
+-	for_each_available_child_of_node(np, child) {
++	for_each_available_child_of_node_scoped(np, child) {
+ 		u32 csindex;
  
- 			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
-@@ -2736,7 +2736,7 @@ usb_1_ss2_hsphy: phy@fde000 {
- 			reg = <0 0x00fde000 0 0x154>;
- 			#phy-cells = <0>;
+ 		/* Figure out the chipselect */
+ 		ret = of_property_read_u32(child, "reg", &csindex);
+-		if (ret) {
+-			of_node_put(child);
++		if (ret)
+ 			return ret;
+-		}
  
--			clocks = <&tcsr TCSR_USB2_1_CLKREF_EN>;
-+			clocks = <&tcsr TCSR_USB2_2_CLKREF_EN>;
- 			clock-names = "ref";
- 
- 			resets = <&gcc GCC_QUSB2PHY_TERT_BCR>;
+ 		if (csindex > 5) {
+ 			dev_err(dev,
 -- 
 2.53.0
 
