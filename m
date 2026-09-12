@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD9A3AEF51;
-	Sat, 12 Sep 2026 12:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6404746A9;
+	Sat, 12 Sep 2026 12:06:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214804; cv=none; b=BqjhViF2OQeA94ZLgc+utAS5Red8jXXY/ySiHJc17zfEs9rLLzOjxBfFdIJ+xlhzijmNtNhTNWAtbWR15tm8nxG+W7C+qtzF9nvnqM+GGtU7h9QQYz+CBeHikT1TgWhDJ+wYi9W/w1GJBt5HP9F6N41Km+Hu9t3Q6V8QFvFm5HM=
+	t=1789214810; cv=none; b=PA1RBgzpjufhZV7mD4/lK4G0ZQ8iIhR8VWnkuy6tvSuwsw2Jp0L8f+4KswWGRKjcsUOFvwXAEvV34oPcoRmvZD9257w5Vfs7iWgagRvGjFbcp17EfCxfvPXju+6WtotR4hDwS7SksCkUcR7n5daMkekRUXYeC+ZywKjfvXuR6O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214804; c=relaxed/simple;
-	bh=u4b2f7h2SsMji802vorvHbK25ouB1EwWRDk9lz2VcTY=;
+	s=arc-20240116; t=1789214810; c=relaxed/simple;
+	bh=6oBYVXmwjwEKY1uAFIAHTj3eym2pbeu7QKD7pzOIHSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t5or2Qf/vLqWlR5nn1qEr4ZPLGdVnYBclefTGR/GfprC3l6/sqOxZGc11pEntfefxsuVIkHBsfyimZdA0KlEqhEB2HCsV2yxksiljiVxVRWxLDgu2i5T1zH55r1sKiW9Vj6gKxmQthSJA4AsUZR/ZuGX3GyRLDAJ1vGeZXHBWDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oO1xj3sa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vD6dWz2wbmTA3go7peP/8m6/n64vuLdSWnp8S2fXB9+BBV4T8ktV82MbeA6L1YupjA3lbg8TAkL1dG7zdM4ownt9xRarwybPzBD+CpyLxmJg14P7XvbJ+yEAX9GHDqlpTCMu0HVHJ8cQmzy+hYIqFxpiwgqLfj5re+ZHpVy7FkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rh55PAm3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oO1xj3sa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E32A71F000FF;
-	Sat, 12 Sep 2026 12:06:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rh55PAm3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 975A71F000FF;
+	Sat, 12 Sep 2026 12:06:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214803;
-	bh=7D04iBd19XWsDX/4D8BHdlDjiilH1bNcxzaV3qPFTNk=;
+	s=korg; t=1789214808;
+	bh=JYuRRyx8o0maOmsum5cS/AmtqqtYMIg8dQgZ3zVHJYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oO1xj3savib1hpZvbO6NULZThVnnR8iRTyv8R0JzUxJumuHTwbrvMzGuRVNCiS7T5
-	 +Aw2mYwpwJbHsGXzs3kZf6rJHNjDAQMve5c5o6b2Zg5D8nJEhCDUyr46G9tTLlwzcX
-	 Hb3ehxDGBuY0k/QYTSbWYHeBnP6dhHjvVKkYoZsk=
+	b=rh55PAm3TNB0fzJsMFeHY485HwtdljSTBiv7p0h/+o5btFCI6i17kghrPDYNOGf/l
+	 H0T7nyid/3jue+HeqzKggDeOgt8M+JgvXYgC3M8XJtDDQ547nyFpRjExBngY0A09cz
+	 eGHTYtBFbFgg9j7g/paxVh9abJ4MYuSrHMBWxqLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	David Laight <david.laght.linux@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0401/1376] crypto: qat - clear AES key schedule from stack
-Date: Sat, 12 Sep 2026 08:47:07 +0200
-Message-ID: <20260912065616.480249083@linuxfoundation.org>
+Subject: [PATCH 6.12 0402/1376] crypto: atmel-ecc - replace min_t with min
+Date: Sat, 12 Sep 2026 08:47:08 +0200
+Message-ID: <20260912065616.502151047@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,36 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit d41a9fcfb7f9ee36e4a4aaf5e7996bca6be1e7a9 ]
+[ Upstream commit 5b085b2a038a1458f9398cb3b3b03cba6e38e1e0 ]
 
-qat_alg_xts_reverse_key() expands the forward XTS AES key on the stack.
-That schedule contains key material and can remain in the stack frame.
+Use the simpler min() macro since the values are all unsigned and
+compatible.
 
-Clear the temporary crypto_aes_ctx with memzero_explicit() after the copy.
-
-Fixes: 5106dfeaeabe ("crypto: qat - add AES-XTS support for QAT GEN4 devices")
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: David Laight <david.laght.linux@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: f240f9b588f4 ("crypto: atmel-ecc - reject hardware ECDH without a public key")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/qat_algs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/atmel-ecc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/qat_algs.c b/drivers/crypto/intel/qat/qat_common/qat_algs.c
-index d69cc1e5e0239..274bcc83a1fc2 100644
---- a/drivers/crypto/intel/qat/qat_common/qat_algs.c
-+++ b/drivers/crypto/intel/qat/qat_common/qat_algs.c
-@@ -481,6 +481,7 @@ static void qat_alg_xts_reverse_key(const u8 *key_forward, unsigned int keylen,
- 		memcpy(key_reverse + AES_BLOCK_SIZE, key - AES_BLOCK_SIZE,
- 		       AES_BLOCK_SIZE);
- 	}
-+	memzero_explicit(&aes_expanded, sizeof(aes_expanded));
- }
+diff --git a/drivers/crypto/atmel-ecc.c b/drivers/crypto/atmel-ecc.c
+index 9da5a03880807..0ce56b095805a 100644
+--- a/drivers/crypto/atmel-ecc.c
++++ b/drivers/crypto/atmel-ecc.c
+@@ -56,7 +56,7 @@ static void atmel_ecdh_done(struct atmel_i2c_work_data *work_data, void *areq,
+ 		goto free_work_data;
  
- static void qat_alg_skcipher_init_dec(struct qat_alg_skcipher_ctx *ctx,
+ 	/* might want less than we've got */
+-	n_sz = min_t(size_t, ATMEL_ECC_NIST_P256_N_SIZE, req->dst_len);
++	n_sz = min(ATMEL_ECC_NIST_P256_N_SIZE, req->dst_len);
+ 
+ 	/* copy the shared secret */
+ 	copied = sg_copy_from_buffer(req->dst, sg_nents_for_len(req->dst, n_sz),
+@@ -150,7 +150,7 @@ static int atmel_ecdh_generate_public_key(struct kpp_request *req)
+ 		return -EINVAL;
+ 
+ 	/* might want less than we've got */
+-	nbytes = min_t(size_t, ATMEL_ECC_PUBKEY_SIZE, req->dst_len);
++	nbytes = min(ATMEL_ECC_PUBKEY_SIZE, req->dst_len);
+ 
+ 	/* public key was saved at private key generation */
+ 	copied = sg_copy_from_buffer(req->dst,
 -- 
 2.53.0
 
