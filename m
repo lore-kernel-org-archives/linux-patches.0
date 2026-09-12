@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F1F214A84;
-	Sat, 12 Sep 2026 12:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BCA4BEE22;
+	Sat, 12 Sep 2026 12:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216447; cv=none; b=EZRAQ5OZBi3cjag6oYLdKRazPGhXcUOvazZJNga55v8eArs6TNwLff40RgMflHVPWP/0EhYiBuciSJfvfVTbaWofWnitCb6wCiUdVlTYih7131vpS7tsF+PRWgOt3nibwjNCkVr7UMJYLxE8xWmP2dS+HraS4tafqAz2rH+FTaE=
+	t=1789216451; cv=none; b=DJsPFppTuPuODJ2xGioprdy4p/M4bBYbIK9oQbX1yhn9baHVAxIV7cZtPijeXZsYjhFFYMBVr6mkHaH1Qiz0YcTW9ZKjEy8iY8D8iJdUbgu5BYmf0f3lyoT6F1r7oMNLAO3aLV8tLb4weludTOu1SBQsyc16dxMZJS34dLZvjb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216447; c=relaxed/simple;
-	bh=UvjH8t/d3DHCQ2jLCqVeM2iKqSXx05MwMku5ng2KRl0=;
+	s=arc-20240116; t=1789216451; c=relaxed/simple;
+	bh=f1jl8SPCZgwCznc3mhwDazhyxVgodAXSQD3YQuBn7TI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UrwT89brBpjlFJCGDFtdGJLjndMO0NUGF4AFLJcLOTaZujXAMbx6HKLxYAxtYVREf4CwSF1Wn/2MoVLK+y+K+SfGQEhmcGSKqyZJBfhNKf6wLp24mQZO2Rmdih44itT/Bwiao9N4vi7RxapOqtEfzRpb+vx1K8sWJ2kxIUrccH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IFhaQEcC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LcwrDoPP4tyFtagN0bHLW6qTXdEt5ae3HxkRDviyDvmKHZcQlgC0XKvm7GIAvnSjqw3Fm7K7opmA/ssDDjqdxunRsmwxDOyJz0YihbCZ5BO9Vu+0h64P/1W5G7kIxyxESBHQ5ino5QBNb2O1/tVNEnATVwP6oFTVNK/qNviUmFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5jH0Rm9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IFhaQEcC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A95A1F000FF;
-	Sat, 12 Sep 2026 12:34:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5jH0Rm9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9951F000FF;
+	Sat, 12 Sep 2026 12:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216445;
-	bh=Mx5ERmnEJba3EYZHQnXcV6MasPv2p7KBmHxnXQ3gY0g=;
+	s=korg; t=1789216450;
+	bh=q3xWsWEtJrqaUc7b5nkyYxfIB9DRgEHJsZLq/jtrCR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IFhaQEcCisyzGQe2WADQo7bDFWP/UFefg4vOZtllbQWNbvK8fwpDS/XsolSFAp4DD
-	 mZ5/AJVK2LpF+/2DMMXgEvU3dm65ULMGT1a0UI2uvBtVu2e07GGlZOaX+I785DeF16
-	 7WCYDupSBiRmIg3qLxqmfTg/rkoPa3oYbK+vG7oc=
+	b=T5jH0Rm9xUB136RQTTvao7wCeuawtCFUzrdEnRx+Ft60LYjkOvJWOUCmL4PjWyHwl
+	 9tnA1mxy6bXV6zX/+0iT9/SxdCn8AhPoZhcC9DkLRhTXmUyALDR+cDff4MVs6TyaTh
+	 v8UkUV/Z0Ww2y/q/xnnbmPoXtSKIzKnPJ71gRVK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Williamson <alex@shazbot.org>,
+	Yuho Choi <dbgh9129@gmail.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0736/1376] bus: mhi: host: Flush the posted write after writing to MHI_SOC_RESET_REQ_OFFSET
-Date: Sat, 12 Sep 2026 08:52:42 +0200
-Message-ID: <20260912065623.947039838@linuxfoundation.org>
+Subject: [PATCH 6.12 0737/1376] bus: mhi: host: Fix controller cleanup on EDL sysfs failure
+Date: Sat, 12 Sep 2026 08:52:43 +0200
+Message-ID: <20260912065623.969239980@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,56 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 24f4423cbc89548def2b05ae86de6175086dbf94 ]
+[ Upstream commit 0d5b9e66591d4e2a4376ac82c8cda889a29ba3ee ]
 
-mhi_soc_reset() tries to reset the device by writing to the
-MHI_SOC_RESET_REQ_OFFSET register. But it doesn't do a read-back to ensure
-that the write gets flushed to the device before returning to the caller.
+mhi_register_controller() adds the controller device before creating the
+optional trigger_edl sysfs file. If sysfs_create_file() fails, the error
+path only drops the device reference and leaves the device registered.
 
-This may lead to the delay (if implemented) on the caller to be
-insufficient, if the posted write doesn't reach the device before the
-delay.
+Hence, call device_del() in the error path before put_device().
 
-So add a read-back after writing to the MHI_SOC_RESET_REQ_OFFSET register.
-
-Fixes: b5a8d233a588 ("bus: mhi: core: Add device hardware reset support")
-Reported-by: Alex Williamson <alex@shazbot.org>
-Closes: https://lore.kernel.org/linux-pci/20260622160822.09350246@shazbot.org
+Fixes: 17553ba8e19d ("bus: mhi: host: Add sysfs entry to force device to enter EDL")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260623145134.43976-1-manivannan.sadhasivam@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/host/main.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/bus/mhi/host/init.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-index 45ec1b585577d..846aee2a42a0b 100644
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -170,6 +170,9 @@ EXPORT_SYMBOL_GPL(mhi_get_mhi_state);
+diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+index 223fc54c45b3e..9a917f14ab1b7 100644
+--- a/drivers/bus/mhi/host/init.c
++++ b/drivers/bus/mhi/host/init.c
+@@ -1042,7 +1042,7 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 	if (mhi_cntrl->edl_trigger) {
+ 		ret = sysfs_create_file(&mhi_dev->dev.kobj, &dev_attr_trigger_edl.attr);
+ 		if (ret)
+-			goto err_release_dev;
++			goto err_del_dev;
+ 	}
  
- void mhi_soc_reset(struct mhi_controller *mhi_cntrl)
- {
-+	int __maybe_unused ret;
-+	u32 tmp;
-+
- 	if (mhi_cntrl->reset) {
- 		mhi_cntrl->reset(mhi_cntrl);
- 		return;
-@@ -178,6 +181,9 @@ void mhi_soc_reset(struct mhi_controller *mhi_cntrl)
- 	/* Generic MHI SoC reset */
- 	mhi_write_reg(mhi_cntrl, mhi_cntrl->regs, MHI_SOC_RESET_REQ_OFFSET,
- 		      MHI_SOC_RESET_REQ);
-+	/* Flush the posted write to the device (ignore return value) */
-+	ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->regs, MHI_SOC_RESET_REQ_OFFSET,
-+			   &tmp);
- }
- EXPORT_SYMBOL_GPL(mhi_soc_reset);
+ 	mhi_cntrl->mhi_dev = mhi_dev;
+@@ -1051,6 +1051,8 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
  
+ 	return 0;
+ 
++err_del_dev:
++	device_del(&mhi_dev->dev);
+ err_release_dev:
+ 	put_device(&mhi_dev->dev);
+ error_setup_irq:
 -- 
 2.53.0
 
