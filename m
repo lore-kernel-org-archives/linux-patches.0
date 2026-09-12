@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D5A3DB983;
-	Sat, 12 Sep 2026 12:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293CE3BE643;
+	Sat, 12 Sep 2026 12:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216087; cv=none; b=c7oAINYmlzkx69gJV7ko21GQuOSOhlZtGWw/vCBXAO8d3W8BTNvXObI71KBkTsSmYD/CvEKOHPe8dQYBGptVq9FOBYoROvxCH6xkAfE8tzHJAnUtJRN0IxZPpX4rkGyc7+GlqqydPSZbnabRXr7/ikq+1lXvNvCVs7Z/cJwbnYg=
+	t=1789216092; cv=none; b=M4H4jS+9gyQBn/9Aq25FJqFnAnCicJhefMx9bIjCCA8pgYXB43zKJI059VE3/hp8+VnOnwz2T6LwcVVscsg9d25w7G7ZCs3EZLmVC9+AfMTa08TeV/i1QCVmJH3f04oLPRaNAe3HpArmgaMKL54LpVmVLz1uucgsXBepd5n004I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216087; c=relaxed/simple;
-	bh=Iher/Y5042acL9e8p918cDqP+i2+gi3MU8aK1bf77Ow=;
+	s=arc-20240116; t=1789216092; c=relaxed/simple;
+	bh=Ux38nzMvLimXUDSOONULMpR31L+9RgL0mdTZTXpi/Rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rKlDKW1UDcncp4xBAUFFmvCkLrQNrG9L9/7/dISJ/BbOjpQBfUJqNw7i6cDnW4S0JYSeIr8P1QERai8REYIU3TFygp7dzL8ECCOYTrgOeqSolE1wJsgu+JGGUj3MHLA51bxG5DfFdEXvXTPVuqagAU2nJeZALknDKm4K3UyCJrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jH3jAphF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nmeU6RlUJJV0lUaCQedp6sfmxBJpZvBSCbjgtx73hNz8CBOJkbsuftqPr4BivA0VbuOjI9KcQD5p7PUALwCU/scE0ELw6WDN5RO4hVe/cV3Gzf16YxfAMgbJq2kdLbR/sPhOPRsMtwvA3ufDjf9bh1VYFyEtpcImD9+Pfb7tO3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9ZxhP+V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jH3jAphF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E221F000FF;
-	Sat, 12 Sep 2026 12:28:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9ZxhP+V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD071F000FF;
+	Sat, 12 Sep 2026 12:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216086;
-	bh=HFRGCP2YYzG+FEcpSQ9NHh89T+SfJLsIt2iLYEp0mqk=;
+	s=korg; t=1789216091;
+	bh=qbFFF04IZ884CLfVFJHuQhiJHU3pTAST+TOw9Mo5uOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jH3jAphF6SKa807yIf3gVU3MfSVobtxk8SEUC9rZCRWn1XMFiRFiSIdfyWC5BzcFq
-	 aSrgG90/gSvUMYhfwMJ4simsWhriZgLy5BWiGD3/adIFHMgfZ2FEqtcO1LIKaxYkCp
-	 m/vhCF4OQOlx7Yx5kIKcCmCYfyAfBAFb3hNmHmo8=
+	b=w9ZxhP+VyVVBo2dFirylm45PTK+ssSBJYYDsdCK7elhOuFEO0QYIOptMiMgmb7TVz
+	 5agzFLaorNuoq/79YcLgr+cCEP6vrtbXiYAtX74eIbpgIAAFXjuYjD7BFU2dGdMdck
+	 vbZD1HJsSten+/UN3cXFwYoffSYgfVPSHn4X/8ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cheng Xu <chengyou@linux.alibaba.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0666/1376] RDMA/erdma: Probe the erdma RoCEv2 device
-Date: Sat, 12 Sep 2026 08:51:32 +0200
-Message-ID: <20260912065622.386516072@linuxfoundation.org>
+Subject: [PATCH 6.12 0667/1376] RDMA/erdma: Add GID table management interfaces
+Date: Sat, 12 Sep 2026 08:51:33 +0200
+Message-ID: <20260912065622.409627331@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,208 +54,226 @@ Content-Transfer-Encoding: 8bit
 
 From: Boshi Yu <boshiyu@linux.alibaba.com>
 
-[ Upstream commit a883e71345a0101ff33be23a8d13f112ec4defb5 ]
+[ Upstream commit 6edc15abc256f676ae44ac2ddc914567859bd1a7 ]
 
-Currently, the erdma driver supports both the iWARP and RoCEv2 protocols.
-The erdma driver reads the ERDMA_REGS_DEV_PROTO_REG register to identify
-the protocol used by the erdma device. Since each protocol requires
-different ib_device_ops, we introduce the erdma_device_ops_iwarp and
-erdma_device_ops_rocev2 for iWARP and RoCEv2 protocols, respectively.
+The erdma_add_gid() interface inserts a GID entry at the
+specified index. The erdma_del_gid() interface deletes the
+GID entry at the specified index. Additionally, programs
+can invoke the erdma_query_port() and erdma_get_port_immutable()
+interfaces to query the GID table length.
 
 Signed-off-by: Boshi Yu <boshiyu@linux.alibaba.com>
-Link: https://patch.msgid.link/20241211020930.68833-2-boshiyu@linux.alibaba.com
+Link: https://patch.msgid.link/20241211020930.68833-3-boshiyu@linux.alibaba.com
 Reviewed-by: Cheng Xu <chengyou@linux.alibaba.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Stable-dep-of: 652befcba956 ("RDMA/erdma: complete object teardown when the destroy command fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/Kconfig       |  2 +-
- drivers/infiniband/hw/erdma/erdma.h       |  3 +-
- drivers/infiniband/hw/erdma/erdma_hw.h    |  7 +++++
- drivers/infiniband/hw/erdma/erdma_main.c  | 34 +++++++++++++++++------
- drivers/infiniband/hw/erdma/erdma_verbs.c | 16 ++++++++++-
- drivers/infiniband/hw/erdma/erdma_verbs.h | 12 ++++++++
- 6 files changed, 62 insertions(+), 12 deletions(-)
+ drivers/infiniband/hw/erdma/erdma.h       |  1 +
+ drivers/infiniband/hw/erdma/erdma_hw.h    | 28 +++++++++++-
+ drivers/infiniband/hw/erdma/erdma_main.c  |  3 ++
+ drivers/infiniband/hw/erdma/erdma_verbs.c | 56 +++++++++++++++++++++--
+ drivers/infiniband/hw/erdma/erdma_verbs.h | 12 +++++
+ 5 files changed, 96 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/hw/erdma/Kconfig b/drivers/infiniband/hw/erdma/Kconfig
-index 169038e3ceb12..267fc1f3c42af 100644
---- a/drivers/infiniband/hw/erdma/Kconfig
-+++ b/drivers/infiniband/hw/erdma/Kconfig
-@@ -5,7 +5,7 @@ config INFINIBAND_ERDMA
- 	depends on INFINIBAND_ADDR_TRANS
- 	depends on INFINIBAND_USER_ACCESS
- 	help
--	  This is a RDMA/iWarp driver for Alibaba Elastic RDMA Adapter(ERDMA),
-+	  This is a RDMA driver for Alibaba Elastic RDMA Adapter(ERDMA),
- 	  which supports RDMA features in Alibaba cloud environment.
- 
- 	  To compile this driver as module, choose M here. The module will be
 diff --git a/drivers/infiniband/hw/erdma/erdma.h b/drivers/infiniband/hw/erdma/erdma.h
-index 3c166359448d0..ad4dc1a4bdc72 100644
+index ad4dc1a4bdc72..42dabf674f5d4 100644
 --- a/drivers/infiniband/hw/erdma/erdma.h
 +++ b/drivers/infiniband/hw/erdma/erdma.h
-@@ -16,7 +16,7 @@
- #include "erdma_hw.h"
- 
- #define DRV_MODULE_NAME "erdma"
--#define ERDMA_NODE_DESC "Elastic RDMA(iWARP) stack"
-+#define ERDMA_NODE_DESC "Elastic RDMA Adapter stack"
- 
- struct erdma_eq {
- 	void *qbuf;
-@@ -215,6 +215,7 @@ struct erdma_dev {
- 
- 	struct dma_pool *db_pool;
- 	struct dma_pool *resp_pool;
-+	enum erdma_proto_type proto;
+@@ -148,6 +148,7 @@ struct erdma_devattr {
+ 	u32 max_mr;
+ 	u32 max_pd;
+ 	u32 max_mw;
++	u32 max_gid;
+ 	u32 local_dma_key;
  };
  
- static inline void *get_queue_entry(void *qbuf, u32 idx, u32 depth, u32 shift)
 diff --git a/drivers/infiniband/hw/erdma/erdma_hw.h b/drivers/infiniband/hw/erdma/erdma_hw.h
-index 05978f3b14759..970b392d4fb4e 100644
+index 970b392d4fb4e..7e03c5f97501a 100644
 --- a/drivers/infiniband/hw/erdma/erdma_hw.h
 +++ b/drivers/infiniband/hw/erdma/erdma_hw.h
-@@ -21,8 +21,15 @@
+@@ -21,6 +21,9 @@
  #define ERDMA_NUM_MSIX_VEC 32U
  #define ERDMA_MSIX_VECTOR_CMDQ 0
  
-+/* erdma device protocol type */
-+enum erdma_proto_type {
-+	ERDMA_PROTO_IWARP = 0,
-+	ERDMA_PROTO_ROCEV2 = 1,
++/* RoCEv2 related */
++#define ERDMA_ROCEV2_GID_SIZE 16
++
+ /* erdma device protocol type */
+ enum erdma_proto_type {
+ 	ERDMA_PROTO_IWARP = 0,
+@@ -143,7 +146,8 @@ enum CMDQ_RDMA_OPCODE {
+ 	CMDQ_OPCODE_DESTROY_CQ = 5,
+ 	CMDQ_OPCODE_REFLUSH = 6,
+ 	CMDQ_OPCODE_REG_MR = 8,
+-	CMDQ_OPCODE_DEREG_MR = 9
++	CMDQ_OPCODE_DEREG_MR = 9,
++	CMDQ_OPCODE_SET_GID = 14,
+ };
+ 
+ enum CMDQ_COMMON_OPCODE {
+@@ -401,7 +405,29 @@ struct erdma_cmdq_query_stats_resp {
+ 	u64 rx_pps_meter_drop_packets_cnt;
+ };
+ 
++enum erdma_network_type {
++	ERDMA_NETWORK_TYPE_IPV4 = 0,
++	ERDMA_NETWORK_TYPE_IPV6 = 1,
 +};
 +
- /* PCIe Bar0 Registers. */
- #define ERDMA_REGS_VERSION_REG 0x0
-+#define ERDMA_REGS_DEV_PROTO_REG 0xC
- #define ERDMA_REGS_DEV_CTRL_REG 0x10
- #define ERDMA_REGS_DEV_ST_REG 0x14
- #define ERDMA_REGS_NETDEV_MAC_L_REG 0x18
++enum erdma_set_gid_op {
++	ERDMA_SET_GID_OP_ADD = 0,
++	ERDMA_SET_GID_OP_DEL = 1,
++};
++
++/* set gid cfg */
++#define ERDMA_CMD_SET_GID_SGID_IDX_MASK GENMASK(15, 0)
++#define ERDMA_CMD_SET_GID_NTYPE_MASK BIT(16)
++#define ERDMA_CMD_SET_GID_OP_MASK BIT(31)
++
++struct erdma_cmdq_set_gid_req {
++	u64 hdr;
++	u32 cfg;
++	u8 gid[ERDMA_ROCEV2_GID_SIZE];
++};
++
+ /* cap qword 0 definition */
++#define ERDMA_CMD_DEV_CAP_MAX_GID_MASK GENMASK_ULL(51, 48)
+ #define ERDMA_CMD_DEV_CAP_MAX_CQE_MASK GENMASK_ULL(47, 40)
+ #define ERDMA_CMD_DEV_CAP_FLAGS_MASK GENMASK_ULL(31, 24)
+ #define ERDMA_CMD_DEV_CAP_MAX_RECV_WR_MASK GENMASK_ULL(23, 16)
 diff --git a/drivers/infiniband/hw/erdma/erdma_main.c b/drivers/infiniband/hw/erdma/erdma_main.c
-index 62f497a710041..cf97bb79e5951 100644
+index cf97bb79e5951..77440324b7e73 100644
 --- a/drivers/infiniband/hw/erdma/erdma_main.c
 +++ b/drivers/infiniband/hw/erdma/erdma_main.c
-@@ -172,6 +172,8 @@ static int erdma_device_init(struct erdma_dev *dev, struct pci_dev *pdev)
- {
- 	int ret;
+@@ -400,6 +400,7 @@ static int erdma_dev_attrs_init(struct erdma_dev *dev)
+ 	dev->attrs.max_mr_size = 1ULL << ERDMA_GET_CAP(MAX_MR_SIZE, cap0);
+ 	dev->attrs.max_mw = 1 << ERDMA_GET_CAP(MAX_MW, cap1);
+ 	dev->attrs.max_recv_wr = 1 << ERDMA_GET_CAP(MAX_RECV_WR, cap0);
++	dev->attrs.max_gid = 1 << ERDMA_GET_CAP(MAX_GID, cap0);
+ 	dev->attrs.local_dma_key = ERDMA_GET_CAP(DMA_LOCAL_KEY, cap1);
+ 	dev->attrs.cc = ERDMA_GET_CAP(DEFAULT_CC, cap1);
+ 	dev->attrs.max_qp = ERDMA_NQP_PER_QBLOCK * ERDMA_GET_CAP(QBLOCK, cap1);
+@@ -478,6 +479,8 @@ static void erdma_res_cb_free(struct erdma_dev *dev)
  
-+	dev->proto = erdma_reg_read32(dev, ERDMA_REGS_DEV_PROTO_REG);
-+
- 	dev->resp_pool = dma_pool_create("erdma_resp_pool", &pdev->dev,
- 					 ERDMA_HW_RESP_SIZE, ERDMA_HW_RESP_SIZE,
- 					 0);
-@@ -474,6 +476,21 @@ static void erdma_res_cb_free(struct erdma_dev *dev)
- 		bitmap_free(dev->res_cb[i].bitmap);
- }
+ static const struct ib_device_ops erdma_device_ops_rocev2 = {
+ 	.get_link_layer = erdma_get_link_layer,
++	.add_gid = erdma_add_gid,
++	.del_gid = erdma_del_gid,
+ };
  
-+static const struct ib_device_ops erdma_device_ops_rocev2 = {
-+	.get_link_layer = erdma_get_link_layer,
-+};
-+
-+static const struct ib_device_ops erdma_device_ops_iwarp = {
-+	.iw_accept = erdma_accept,
-+	.iw_add_ref = erdma_qp_get_ref,
-+	.iw_connect = erdma_connect,
-+	.iw_create_listen = erdma_create_listen,
-+	.iw_destroy_listen = erdma_destroy_listen,
-+	.iw_get_qp = erdma_get_ibqp,
-+	.iw_reject = erdma_reject,
-+	.iw_rem_ref = erdma_qp_put_ref,
-+};
-+
- static const struct ib_device_ops erdma_device_ops = {
- 	.owner = THIS_MODULE,
- 	.driver_id = RDMA_DRIVER_ERDMA,
-@@ -494,14 +511,6 @@ static const struct ib_device_ops erdma_device_ops = {
- 	.get_dma_mr = erdma_get_dma_mr,
- 	.get_hw_stats = erdma_get_hw_stats,
- 	.get_port_immutable = erdma_get_port_immutable,
--	.iw_accept = erdma_accept,
--	.iw_add_ref = erdma_qp_get_ref,
--	.iw_connect = erdma_connect,
--	.iw_create_listen = erdma_create_listen,
--	.iw_destroy_listen = erdma_destroy_listen,
--	.iw_get_qp = erdma_get_ibqp,
--	.iw_reject = erdma_reject,
--	.iw_rem_ref = erdma_qp_put_ref,
- 	.map_mr_sg = erdma_map_mr_sg,
- 	.mmap = erdma_mmap,
- 	.mmap_free = erdma_mmap_free,
-@@ -537,7 +546,14 @@ static int erdma_ib_device_add(struct pci_dev *pdev)
- 	if (ret)
- 		return ret;
- 
--	ibdev->node_type = RDMA_NODE_RNIC;
-+	if (erdma_device_iwarp(dev)) {
-+		ibdev->node_type = RDMA_NODE_RNIC;
-+		ib_set_device_ops(ibdev, &erdma_device_ops_iwarp);
-+	} else {
-+		ibdev->node_type = RDMA_NODE_IB_CA;
-+		ib_set_device_ops(ibdev, &erdma_device_ops_rocev2);
-+	}
-+
- 	memcpy(ibdev->node_desc, ERDMA_NODE_DESC, sizeof(ERDMA_NODE_DESC));
- 
- 	/*
+ static const struct ib_device_ops erdma_device_ops_iwarp = {
 diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
-index bf5627e3f237b..b330f33d32808 100644
+index b330f33d32808..2c22354071470 100644
 --- a/drivers/infiniband/hw/erdma/erdma_verbs.c
 +++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
-@@ -395,8 +395,17 @@ int erdma_query_port(struct ib_device *ibdev, u32 port,
- int erdma_get_port_immutable(struct ib_device *ibdev, u32 port,
- 			     struct ib_port_immutable *port_immutable)
- {
-+	struct erdma_dev *dev = to_edev(ibdev);
-+
+@@ -367,7 +367,13 @@ int erdma_query_port(struct ib_device *ibdev, u32 port,
+ 
+ 	memset(attr, 0, sizeof(*attr));
+ 
+-	attr->gid_tbl_len = 1;
 +	if (erdma_device_iwarp(dev)) {
-+		port_immutable->core_cap_flags = RDMA_CORE_PORT_IWARP;
++		attr->gid_tbl_len = 1;
 +	} else {
-+		port_immutable->core_cap_flags =
-+			RDMA_CORE_PORT_IBA_ROCE_UDP_ENCAP;
-+		port_immutable->max_mad_size = IB_MGMT_MAD_SIZE;
++		attr->gid_tbl_len = dev->attrs.max_gid;
++		attr->ip_gids = true;
 +	}
 +
- 	port_immutable->gid_tbl_len = 1;
--	port_immutable->core_cap_flags = RDMA_CORE_PORT_IWARP;
+ 	attr->port_cap_flags = IB_PORT_CM_SUP | IB_PORT_DEVICE_MGMT_SUP;
+ 	attr->max_msg_sz = -1;
  
+@@ -399,14 +405,14 @@ int erdma_get_port_immutable(struct ib_device *ibdev, u32 port,
+ 
+ 	if (erdma_device_iwarp(dev)) {
+ 		port_immutable->core_cap_flags = RDMA_CORE_PORT_IWARP;
++		port_immutable->gid_tbl_len = 1;
+ 	} else {
+ 		port_immutable->core_cap_flags =
+ 			RDMA_CORE_PORT_IBA_ROCE_UDP_ENCAP;
+ 		port_immutable->max_mad_size = IB_MGMT_MAD_SIZE;
++		port_immutable->gid_tbl_len = dev->attrs.max_gid;
+ 	}
+ 
+-	port_immutable->gid_tbl_len = 1;
+-
  	return 0;
  }
-@@ -1842,3 +1851,8 @@ int erdma_get_hw_stats(struct ib_device *ibdev, struct rdma_hw_stats *stats,
  
- 	return stats->num_counters;
+@@ -1856,3 +1862,47 @@ enum rdma_link_layer erdma_get_link_layer(struct ib_device *ibdev, u32 port_num)
+ {
+ 	return IB_LINK_LAYER_ETHERNET;
  }
 +
-+enum rdma_link_layer erdma_get_link_layer(struct ib_device *ibdev, u32 port_num)
++static int erdma_set_gid(struct erdma_dev *dev, u8 op, u32 idx,
++			 const union ib_gid *gid)
 +{
-+	return IB_LINK_LAYER_ETHERNET;
++	struct erdma_cmdq_set_gid_req req;
++	u8 ntype;
++
++	req.cfg = FIELD_PREP(ERDMA_CMD_SET_GID_SGID_IDX_MASK, idx) |
++		  FIELD_PREP(ERDMA_CMD_SET_GID_OP_MASK, op);
++
++	if (op == ERDMA_SET_GID_OP_ADD) {
++		if (ipv6_addr_v4mapped((struct in6_addr *)gid))
++			ntype = ERDMA_NETWORK_TYPE_IPV4;
++		else
++			ntype = ERDMA_NETWORK_TYPE_IPV6;
++
++		req.cfg |= FIELD_PREP(ERDMA_CMD_SET_GID_NTYPE_MASK, ntype);
++
++		memcpy(&req.gid, gid, ERDMA_ROCEV2_GID_SIZE);
++	}
++
++	erdma_cmdq_build_reqhdr(&req.hdr, CMDQ_SUBMOD_RDMA,
++				CMDQ_OPCODE_SET_GID);
++	return erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL);
++}
++
++int erdma_add_gid(const struct ib_gid_attr *attr, void **context)
++{
++	struct erdma_dev *dev = to_edev(attr->device);
++	int ret;
++
++	ret = erdma_check_gid_attr(attr);
++	if (ret)
++		return ret;
++
++	return erdma_set_gid(dev, ERDMA_SET_GID_OP_ADD, attr->index,
++			     &attr->gid);
++}
++
++int erdma_del_gid(const struct ib_gid_attr *attr, void **context)
++{
++	return erdma_set_gid(to_edev(attr->device), ERDMA_SET_GID_OP_DEL,
++			     attr->index, NULL);
 +}
 diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.h b/drivers/infiniband/hw/erdma/erdma_verbs.h
-index c998acd39a788..90e2b35a0973a 100644
+index 90e2b35a0973a..23cfeaf79eaab 100644
 --- a/drivers/infiniband/hw/erdma/erdma_verbs.h
 +++ b/drivers/infiniband/hw/erdma/erdma_verbs.h
-@@ -291,6 +291,16 @@ int erdma_modify_qp_internal(struct erdma_qp *qp, struct erdma_qp_attrs *attrs,
- void erdma_qp_llp_close(struct erdma_qp *qp);
- void erdma_qp_cm_drop(struct erdma_qp *qp);
+@@ -326,6 +326,16 @@ static inline struct erdma_cq *to_ecq(struct ib_cq *ibcq)
+ 	return container_of(ibcq, struct erdma_cq, ibcq);
+ }
  
-+static inline bool erdma_device_iwarp(struct erdma_dev *dev)
++static inline int erdma_check_gid_attr(const struct ib_gid_attr *attr)
 +{
-+	return dev->proto == ERDMA_PROTO_IWARP;
++	u8 ntype = rdma_gid_attr_network_type(attr);
++
++	if (ntype != RDMA_NETWORK_IPV4 && ntype != RDMA_NETWORK_IPV6)
++		return -EINVAL;
++
++	return 0;
 +}
 +
-+static inline bool erdma_device_rocev2(struct erdma_dev *dev)
-+{
-+	return dev->proto == ERDMA_PROTO_ROCEV2;
-+}
-+
- static inline struct erdma_ucontext *to_ectx(struct ib_ucontext *ibctx)
+ static inline struct erdma_user_mmap_entry *
+ to_emmap(struct rdma_user_mmap_entry *ibmmap)
  {
- 	return container_of(ibctx, struct erdma_ucontext, ibucontext);
-@@ -370,5 +380,7 @@ struct rdma_hw_stats *erdma_alloc_hw_port_stats(struct ib_device *device,
- 						u32 port_num);
- int erdma_get_hw_stats(struct ib_device *ibdev, struct rdma_hw_stats *stats,
+@@ -382,5 +392,7 @@ int erdma_get_hw_stats(struct ib_device *ibdev, struct rdma_hw_stats *stats,
  		       u32 port, int index);
-+enum rdma_link_layer erdma_get_link_layer(struct ib_device *ibdev,
-+					  u32 port_num);
+ enum rdma_link_layer erdma_get_link_layer(struct ib_device *ibdev,
+ 					  u32 port_num);
++int erdma_add_gid(const struct ib_gid_attr *attr, void **context);
++int erdma_del_gid(const struct ib_gid_attr *attr, void **context);
  
  #endif
 -- 
