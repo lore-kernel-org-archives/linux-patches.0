@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C4747D455;
-	Sat, 12 Sep 2026 13:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E86547CA85;
+	Sat, 12 Sep 2026 13:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219747; cv=none; b=Ym/6QcE0bsBm+I/Yhk3/kuoAMYqD8WX1WaTHKI05VPR9ipgWv13fZMs0i4L2PTujXS04aLjtAKTqqk49LteubQ9Lvh7bg5vO+IP6qxXXk1DgqUJmzdXm9MfZHW+UhtISnxf42PiKXenCytI/39TOGxF4z/HbI56/yCZmy8EuosE=
+	t=1789219751; cv=none; b=px3td3QUdYTcOHdMtC/ZVel973PaaWHPzRweuXjqWWvGgXKjl8moTQg/OdH3d91qmZmrra3/KM/1uqOqSdgWpQ8APQsXwGpHvl0vdB/LpeZOHI4KHSm/vbcb1EqPuCVfId+1JrUsPkjhfRPqk7MTOKh6N4WDH92Zsa2YR5Liz18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219747; c=relaxed/simple;
-	bh=3qk4zBujjcSy98lfZUs3fYfY7Om76rU+vzjWPoVvN4M=;
+	s=arc-20240116; t=1789219751; c=relaxed/simple;
+	bh=Qio1M1/r+s+s0ig9lA0X2LxAm9e9rsCBBzlqnpKzVbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hMAd7WtoHDvVg+yKvTJSbNQw+3fgySeVXTgpvBmNCiOVQnKBzHt7+jkcziT9XbhLDe0SqNFbwqzSRZ20nKrpXTVbD1Fr7t6K7zJopZO/BSZF5S8wW3iGrOCVEYctbZFQUdrqhrIKjCg8lL6NUveLCrRVyJm6YB7evNxsdnzAAPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJ2bjMbb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rvFAU0oTOZFgF3rGLxjwvvAICT7q4QAyNY7FMpWVZyWzu8HmstfxwWEGEhbRbzYk4HBdDMjGS2R1hp9ZHWhPcaAqmaUvGrI5kFeX2qi/Y1EpBn+acry4OpOq+vTcP8mAnAOPe0rzdmy28Wy1pIfo7m5mUmAf8hQF3v3aAmGvqMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6+OvudZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJ2bjMbb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA8E1F000FF;
-	Sat, 12 Sep 2026 13:29:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6+OvudZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C60E1F000FF;
+	Sat, 12 Sep 2026 13:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219746;
-	bh=4dXqFARbbAr9kEAazAyORmnfLvtLiRecl5Cs6UaVRH0=;
+	s=korg; t=1789219750;
+	bh=eFUtemKWTpQXtdlHFBdibV4c7OEjhOXcVl9TGQjSyR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gJ2bjMbbXpRLDZ8fFo1FBYTM93eNRNYKx93d3qudleXMh1IVcql6NNy/8p2cBEQuW
-	 cTmJIdkQWcSjGv1MhxOSx7hQo/NnWumdQJO2q3e5wJviGXP3ULiK1+OWnFkfAvLkd1
-	 fvl7QQUFkBOHXqiUP02AA6oaSCV7Iiz5AwPA+OlM=
+	b=C6+OvudZ5o6dXTkFfgR4GoP42GM6VW4LA8u93Jn2RE5T+3L7ntFELZxaDppBbK6UY
+	 SLZsowx9teNq0uUBKsfHc7Dqx3nPg30v85CQiQ/8ScICNfQ6Ee8/pAhzFqBdMeAN7n
+	 J0LXmjZzZMqD9cRutOHnSBAk+5ksmIlxsaRYp+b0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neill Kapron <nkapron@google.com>
-Subject: [PATCH 6.6 0037/1424] usb: gadget: f_fs: Prevent deadlock during ep0 read loop
-Date: Sat, 12 Sep 2026 08:41:09 +0200
-Message-ID: <20260912065608.136065229@linuxfoundation.org>
+	Daisuke Matsuda <matsuda@preferred.jp>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>
+Subject: [PATCH 6.6 0038/1424] fpga: altera-cvp: Avoid out-of-bounds read in trailing byte write
+Date: Sat, 12 Sep 2026 08:41:10 +0200
+Message-ID: <20260912065608.157555907@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -49,79 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neill Kapron <nkapron@google.com>
+From: Daisuke Matsuda <matsuda@preferred.jp>
 
-commit 569dd7e5dcffe1e1c6b26ca2cd3be57eb433e082 upstream.
+commit 9da70a43b5fea60d758137f7f0ccfe19356cb5bb upstream.
 
-Currently, ffs_ep0_read() holds ffs->mutex when it prepares to go to
-sleep waiting for an event. When no setup events are pending, it calls
-wait_event_interruptible_exclusive_locked_irq() with the mutex still
-held. The wait macro deliberately drops the waitqueue spinlock before
-sleeping but does not drop the mutex.
+The trailing byte path in altera_cvp_send_block() dereferences a u32
+pointer even when only 1-3 bytes remain in the input buffer. If the buffer
+ends at a page or scatterlist boundary, this can read past the valid image
+data and fault.
 
-If a userspace daemon is polling ep0 via read() and the gadget is
-asynchronously torn down via configfs (e.g., echo "" > UDC), a
-deadlock can occur:
+Copy the remaining bytes into a zero-initialized u32 before writing the
+final word so only valid bytes are read from the input buffer.
 
-1. The configfs teardown calls functionfs_unbind(), which queues a
-   FUNCTIONFS_UNBIND event.
-2. The daemon wakes up, consumes the event, and drops the mutex.
-3. However, if the daemon loops and immediately issues another read()
-   before exiting, it reacquires ffs->mutex and again goes into an
-   interruptible sleep.
-4. Meanwhile, functionfs_unbind() continues execution and attempts to
-   acquire ffs->mutex to tear down ep0req.
-5. The kernel deadlocks because the configfs thread is stuck in an
-   uninterruptible sleep waiting for the mutex, while the userspace
-   daemon is in an interruptible sleep holding the mutex forever
-   because no more events will arrive.
-
-To fix this, we drop both the waitqueue spinlock and ffs->mutex before
-going to sleep, and use wait_event_interruptible_exclusive() instead.
-Upon waking up, we jump back to the `retry` label to safely reacquire
-the mutex and re-evaluate the state machine. By not sleeping with
-ffs->mutex held, we natively decouple gadget teardowns (which require
-the mutex) from userspace polling.
-
-Fixes: ddf8abd25994 ("USB: f_fs: the FunctionFS driver")
+Fixes: 34d1dc17ce97 ("fpga manager: Add Altera CvP driver")
 Cc: stable@vger.kernel.org
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Neill Kapron <nkapron@google.com>
-Link: https://patch.msgid.link/20260724204117.4036015-1-nkapron@google.com
+Signed-off-by: Daisuke Matsuda <matsuda@preferred.jp>
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20260723081912.74082-1-dskmtsd@gmail.com
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/fpga/altera-cvp.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -515,6 +515,7 @@ static ssize_t ffs_ep0_read(struct file
- 	if (ffs_setup_state_clear_cancelled(ffs) == FFS_SETUP_CANCELLED)
- 		return -EIDRM;
+--- a/drivers/fpga/altera-cvp.c
++++ b/drivers/fpga/altera-cvp.c
+@@ -16,6 +16,7 @@
+ #include <linux/module.h>
+ #include <linux/pci.h>
+ #include <linux/sizes.h>
++#include <linux/string.h>
  
-+retry:
- 	/* Acquire mutex */
- 	ret = ffs_mutex_lock(&ffs->mutex, file->f_flags & O_NONBLOCK);
- 	if (ret < 0)
-@@ -549,10 +550,15 @@ static ssize_t ffs_ep0_read(struct file
- 			break;
- 		}
+ #define CVP_BAR		0	/* BAR used for data transfer in memory mode */
+ #define CVP_DUMMY_WR	244	/* dummy writes to clear CvP state machine */
+@@ -265,7 +266,7 @@ static int altera_cvp_v2_wait_for_credit
+ static int altera_cvp_send_block(struct altera_cvp_conf *conf,
+ 				 const u32 *data, size_t len)
+ {
+-	u32 mask, words = len / sizeof(u32);
++	u32 words = len / sizeof(u32);
+ 	int i, remainder;
  
--		if (wait_event_interruptible_exclusive_locked_irq(ffs->ev.waitq,
--							ffs->ev.count)) {
--			ret = -EINTR;
--			break;
-+		if (!ffs->ev.count) {
-+			spin_unlock_irq(&ffs->ev.waitq.lock);
-+			mutex_unlock(&ffs->mutex);
+ 	for (i = 0; i < words; i++)
+@@ -274,9 +275,10 @@ static int altera_cvp_send_block(struct
+ 	/* write up to 3 trailing bytes, if any */
+ 	remainder = len % sizeof(u32);
+ 	if (remainder) {
+-		mask = BIT(remainder * 8) - 1;
+-		if (mask)
+-			conf->write_data(conf, *data & mask);
++		u32 word = 0;
 +
-+			if (wait_event_interruptible_exclusive(ffs->ev.waitq,
-+							       ffs->ev.count))
-+				return -EINTR;
-+
-+			goto retry;
- 		}
++		memcpy(&word, data, remainder);
++		conf->write_data(conf, word);
+ 	}
  
- 		/* unlocks spinlock */
+ 	return 0;
 
 
