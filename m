@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08C9455605;
-	Sat, 12 Sep 2026 10:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6E345561A;
+	Sat, 12 Sep 2026 10:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209949; cv=none; b=tCqWa5qdZS9TT3nDq9Cfp8uzUwGr24KhZVw76pFT0LFHD+ZB/yshlmo29UW5KEMUSkf/5BNoxoimqDEAJGiJDu4+yqn/l268UPzyk4680wyVg+HGkOxCU3CUMxfEBaq03q4oMaV8T31E4+BPTcCBb4XTq54tAhhMcM+YUNzOpYc=
+	t=1789209954; cv=none; b=O0ksJZgY3tN2Rtj3AmBnajV0jk6TIMZm3rlIYOAm+OtbBuM8//BnpzHSCVJX3yZOTBd/BTzloyIc0W+9XPhW7zTrf3gM6/AfGx2/fogMA5dWk6iNUIVH5SaY7QPwga5D+99QOWzRvrvk+294DHfFApLLpiruN3/RkcPWoG8gVlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209949; c=relaxed/simple;
-	bh=6xK2Gnj1BT0xJzkjkqJXBTRsU3IT+bZj7xJuHhVdRMs=;
+	s=arc-20240116; t=1789209954; c=relaxed/simple;
+	bh=IejIheMdBanX+9lLYBLxwfBwOt3g/82laCAXiPpEN1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGjuYvpwaj387VRcgfouRpQteeLDbbgZCDrlpcmCQwMYO7xjm/SdbUgnpjM7okxWD3BibG1Sg1ObXugVTnqGuJyDTdT8nrDbqgcitF8DWe1pQSkoNKrygBdI3moNL0Nr43TB0eUDEeFCY6Q9KzKNslNGDVbPI8wivnyihVjGtAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/duL6VV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zh1mT3QV5lNpybMrjb9Dw0ql6OZk6wcgyXdGQN8kmA1T4UeX+vAO/GnNl/XFQLS8WG8IuPTEXJS+ltVA2BwMbokl3tYCzF/wkAf6cOVWYt9u9c/vYVV8UbqHJEGAoDbr7Hxrji+kT3NfGrL0/XTF/ATGzM8D0d8+TtPuxyHXXNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eW2Q9ZPb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/duL6VV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A952B1F000FF;
-	Sat, 12 Sep 2026 10:45:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eW2Q9ZPb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93AEB1F000FF;
+	Sat, 12 Sep 2026 10:45:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209948;
-	bh=q6fkJvgTY5KbXwc1KalammwdKR43WqNq207wBScXW8A=;
+	s=korg; t=1789209953;
+	bh=/hTsbHo5J+lrk1EkpQ29N3vFS2gJqGB/mwFLC0FVEzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a/duL6VV7dh0zYA6oV8laWgZtUq5zG2ax4UCJRNezZqzwObPDnvJ/+ZpYVvEIkqQ+
-	 XR2/9VLhk73zyD58Vq9EQMABc4ZlQ2fEbbA5Abu+TsWJx4Dh8qy1t7HJnju7VlDN4L
-	 8J4FT1k54gygSIx0s9n/KmJl6V6oQdA7nnIK+76A=
+	b=eW2Q9ZPbLu+IT0jwT8fgpy+TRYLYZQRr7kEfA9kILLVMw0ijpCMhgfTtS7/J5iOEJ
+	 l0SRMz0G/CiEJ3/SDhyjZGIXuRE0wBiCw9cKNjRGIwmKZRgCj+QBpzCagpdPFGKts8
+	 YBTUndaaAC+CmwLcF1iYVbC/EE96YzqST4RMidsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
 	Petr Pavlu <petr.pavlu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0927/1518] module: use strscpy() to copy module names in stats and dup tracking
-Date: Sat, 12 Sep 2026 08:51:36 +0200
-Message-ID: <20260912065644.420421297@linuxfoundation.org>
+Subject: [PATCH 6.18 0928/1518] module/dups: Inform duplicate requests about the result directly
+Date: Sat, 12 Sep 2026 08:51:37 +0200
+Message-ID: <20260912065644.444295842@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,58 +50,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-[ Upstream commit 93c29ebd1622fb0670701e1c1b3a978a5cac08b7 ]
+[ Upstream commit d258ed8a86bb46bbbbc84fb914478259a1e694a4 ]
 
-Both try_add_failed_module() and kmod_dup_request_exists_wait() use
-memcpy() with strlen() to copy module names into fixed-size
-char[MODULE_NAME_LEN] buffers. Neither performs a bounds check on the
-copy. Current callers always pass names originating from
-mod->name (itself char[MODULE_NAME_LEN]), so this is not exploitable
-today. However both functions accept a plain const char * with no
-documented length contract, making them latent buffer overflows if a
-future caller passes a longer string.
+When kmod_dup_request_announce() announces the completion of
+a request_module() call to duplicate waiters, it queues a work item to
+invoke kmod_dup_request_complete(), and only that function calls
+complete_all().
 
-Replace memcpy() with strscpy() in both sites, which bounds the copy
-to MODULE_NAME_LEN and always NUL-terminates.
+This adds an arbitrary delay that is unnecessary and provides little
+benefit. Call complete_all() directly from kmod_dup_request_announce()
+instead.
 
-Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
-Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Stable-dep-of: 5eecb11b543f ("module/dups: Fix use-after-free in kmod_dup_req lifetime handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/dups.c  | 2 +-
- kernel/module/stats.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ kernel/module/dups.c | 43 +++++++++----------------------------------
+ 1 file changed, 9 insertions(+), 34 deletions(-)
 
 diff --git a/kernel/module/dups.c b/kernel/module/dups.c
-index 0b633f2edda6b..6ecc42193de24 100644
+index 6ecc42193de24..7b9b08031d7d2 100644
 --- a/kernel/module/dups.c
 +++ b/kernel/module/dups.c
-@@ -129,7 +129,7 @@ bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
- 	if (!new_kmod_req)
+@@ -48,7 +48,6 @@ struct kmod_dup_req {
+ 	struct list_head list;
+ 	char name[MODULE_NAME_LEN];
+ 	struct completion first_req_done;
+-	struct work_struct complete_work;
+ 	struct delayed_work delete_work;
+ 	int dup_ret;
+ };
+@@ -93,29 +92,6 @@ static void kmod_dup_request_delete(struct work_struct *work)
+ 	kfree(kmod_req);
+ }
+ 
+-static void kmod_dup_request_complete(struct work_struct *work)
+-{
+-	struct kmod_dup_req *kmod_req;
+-
+-	kmod_req = container_of(work, struct kmod_dup_req, complete_work);
+-
+-	/*
+-	 * This will ensure that the kernel will let all the waiters get
+-	 * informed its time to check the return value. It's time to
+-	 * go home.
+-	 */
+-	complete_all(&kmod_req->first_req_done);
+-
+-	/*
+-	 * Now that we have allowed prior request_module() calls to go on
+-	 * with life, let's schedule deleting this entry. We don't have
+-	 * to do it right away, but we *eventually* want to do it so to not
+-	 * let this linger forever as this is just a boot optimization for
+-	 * possible abuses of vmalloc() incurred by finit_module() thrashing.
+-	 */
+-	queue_delayed_work(system_dfl_wq, &kmod_req->delete_work, 60 * HZ);
+-}
+-
+ bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
+ {
+ 	struct kmod_dup_req *kmod_req, *new_kmod_req;
+@@ -130,7 +106,6 @@ bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
  		return false;
  
--	memcpy(new_kmod_req->name, module_name, strlen(module_name));
-+	strscpy(new_kmod_req->name, module_name);
- 	INIT_WORK(&new_kmod_req->complete_work, kmod_dup_request_complete);
+ 	strscpy(new_kmod_req->name, module_name);
+-	INIT_WORK(&new_kmod_req->complete_work, kmod_dup_request_complete);
  	INIT_DELAYED_WORK(&new_kmod_req->delete_work, kmod_dup_request_delete);
  	init_completion(&new_kmod_req->first_req_done);
-diff --git a/kernel/module/stats.c b/kernel/module/stats.c
-index 3ba0e98b3c910..2a4e2f6708965 100644
---- a/kernel/module/stats.c
-+++ b/kernel/module/stats.c
-@@ -253,7 +253,7 @@ int try_add_failed_module(const char *name, enum fail_dup_mod_reason reason)
- 	mod_fail = kzalloc(sizeof(*mod_fail), GFP_KERNEL);
- 	if (!mod_fail)
- 		return -ENOMEM;
--	memcpy(mod_fail->name, name, strlen(name));
-+	strscpy(mod_fail->name, name);
- 	__set_bit(reason, &mod_fail->dup_fail_mask);
- 	atomic_long_inc(&mod_fail->count);
- 	list_add_rcu(&mod_fail->list, &dup_failed_modules);
+ 
+@@ -230,17 +205,17 @@ void kmod_dup_request_announce(char *module_name, int ret)
+ 
+ 	kmod_req->dup_ret = ret;
+ 
++	/* Inform all duplicate waiters to check the return value. */
++	complete_all(&kmod_req->first_req_done);
++
+ 	/*
+-	 * If we complete() here we may allow duplicate threads
+-	 * to continue before the first one that submitted the
+-	 * request. We're in no rush also, given that each and
+-	 * every bounce back to userspace is slow we avoid that
+-	 * with a slight delay here. So queueue up the completion
+-	 * and let duplicates suffer, just wait a tad bit longer.
+-	 * There is no rush. But we also don't want to hold the
+-	 * caller up forever or introduce any boot delays.
++	 * Now that we have allowed prior request_module() calls to go on
++	 * with life, let's schedule deleting this entry. We don't have
++	 * to do it right away, but we *eventually* want to do it so to not
++	 * let this linger forever as this is just a boot optimization for
++	 * possible abuses of vmalloc() incurred by finit_module() thrashing.
+ 	 */
+-	queue_work(system_dfl_wq, &kmod_req->complete_work);
++	queue_delayed_work(system_dfl_wq, &kmod_req->delete_work, 60 * HZ);
+ 
+ out:
+ 	mutex_unlock(&kmod_dup_mutex);
 -- 
 2.53.0
 
