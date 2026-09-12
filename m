@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9612D2BDC0E;
-	Sat, 12 Sep 2026 08:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80AAB2BDC0E;
+	Sat, 12 Sep 2026 08:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200205; cv=none; b=WFKrkNIzVMDoiYLMfP/nxg+OAZkNczo7fq3CWSOkSfhHrw2TaljdtXcCjLFS+KRjujUAUGbiYekrYtN8T8i18MeXv87zvb6YpL9kOP9CWa0gfqDtH5pglT0fgJnargPC5ne7Ouj7I7chXvUXvbRTrEau5xFS33956FhesSxnpik=
+	t=1789200209; cv=none; b=YaG4NKUkm68VzaEX86i2xjNHfkZQtyZMR73RpCnAix/YHOVG5PpPU+kpxCgTgN6vwhThJav4ChEP60SmNkUNIWemkbAx3DMfSCKoDNUeyWc97dqS+jP95HzMlboC5a+Khyx/cdGZIlnj4DU8EglZDhQGpmGG4uC/ZmgBlLbOoOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200205; c=relaxed/simple;
-	bh=T4M/dPovPOAcKdL/QPYBPH9YUqNNdOlHWQv572YH5Rw=;
+	s=arc-20240116; t=1789200209; c=relaxed/simple;
+	bh=HX54tk2PDLT5MhbfrVQoQzBx4rFoPwsnt91YfrY2jGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XoAYkJpqvwDhV4SNJq40tVgVK5wkECPLoVogZn1zH+0gO0evsulS71lsd1oyqUw8ZVJw8j2kHRNYUvonEv7Rifqn8631o8DTBBURwS+FkQJYrCAN+l4r8vlI3ivEQNrsRH426v/oEQBzdeuPrQA/BzI/f9WU5PkMj5jQVC0Ybws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6B8wYV/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lqkTcG2zKsxvpB8baLfdbtMG+GxwIoHUvUBdXwCj0NvKSkvjvnzc2Ovmm+BoHZIVW9P3xyiK8Ek5viuVWCOLN2GiP0vx8N4jayLOcKNR+135jWyzz+ozXRXXBT2f+Eq3BEuGDpG6Cdkc7Fbb0tjz4tgQDZCAm9B8ogxY+j9raUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELN/hSQ2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6B8wYV/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FFD81F000FF;
-	Sat, 12 Sep 2026 08:03:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELN/hSQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A951F0089A;
+	Sat, 12 Sep 2026 08:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200203;
-	bh=/8+UyNtlpX+YsWmkwi3ld4CRCh0JPghAt7HNKz1HXzM=;
+	s=korg; t=1789200208;
+	bh=sZsST5ccR2zESgPkly3qf7FQkCluDfx15QZiNpr/QjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v6B8wYV/sipHIFwDtusveEtKsBX+GxZPMFTtivu2YknJTcGUwozzik26Gp9f4yvHi
-	 LzKSwPdOLdRV8ya7Hpws0uhxKheSp8vGDKEKoGep5IcR1IO+z7Yy+ZXkjITJ1ninH+
-	 tYcArGhNi+cKiWHw5bjNx7MEmJtdWMhMK7DwNSL4=
+	b=ELN/hSQ2OpXQBp3hsTIqQa13x0UL9NhhO+0/15gpV868cydEXWQUBBrioSq7VMm0R
+	 1Pp4Rhv1UgFIEyCOv93KT9j/yJIunjtENHiYhjW9FGUu8JduzwDsgcVu+41mdwMaM/
+	 imzPQAu4P1WJMR3GSOypuBZ4Mw+omuBgCwZBcPGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0743/1815] spi: davinci: switch to managed controller allocation
-Date: Sat, 12 Sep 2026 08:41:33 +0200
-Message-ID: <20260912065706.350418645@linuxfoundation.org>
+Subject: [PATCH 7.2 0744/1815] drm/panthor: Add vm_bind region with kbo range overlap check
+Date: Sat, 12 Sep 2026 08:41:34 +0200
+Message-ID: <20260912065706.373149904@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,88 +46,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Adrián Larumbe <adrian.larumbe@collabora.com>
 
-[ Upstream commit ea408a05dc8f18b4a184b88d6e19d2fd1acc1527 ]
+[ Upstream commit 985f5e12f3cdf43030e13c2bbd154913133b5c3f ]
 
-The controller is allocated with the non-managed spi_alloc_host() while
-the interrupt is registered with devm_request_threaded_irq().  During
-removal, spi_bitbang_stop() only unregisters the controller; the
-subsequent spi_controller_put() then frees the controller together with
-its embedded davinci_spi devdata, which is the IRQ handler's dev_id.
-The devm_request_threaded_irq() release action (free_irq()), which
-drains the handler, does not run until after .remove() returns.  A late
-or latched interrupt can therefore reach davinci_spi_irq() and
-dereference already-freed memory.
+When a VM is created, caller has to specify the range of the address space
+carve-out set aside for mapping kernel BO's. That means vm_bind mappings of
+UM-exposed BO's should not intersect with that region, but at the moment
+we're not checking this.
 
-Switch to devm_spi_alloc_host() so that the devres LIFO order releases
-the controller only after free_irq() has drained the handler, and drop
-the now-redundant spi_controller_put() from .remove().  The probe error
-path is simplified to direct returns.
+At first, I thought of giving these values to drm_gpuvm_init() through its
+reserve_{offset, range} arguments, but it turns out that is meant for VM
+address spans that are not managed through the usual drm_gpuvm split/merge
+circuit, so storing the end of the user VA range at VM creation time and
+doing a quick check in the vm_bind ioctl path was the simplest workaround.
 
-The clock is acquired with devm_clk_get_enabled(), which is registered
-after the IRQ and thus released before it by the devres LIFO order.
-Drain the interrupt explicitly with devm_free_irq() before disabling the
-controller so that a late interrupt cannot access the registers of a
-clock-gated controller.
+The new check also makes sure vm_bind range doesn't overflow the size of a
+64-bit unsigned integer. That was already being done further down the call
+stack inside drm_gpuvm_sm_map -> drm_gpuvm_range_valid, but it's best to
+fail early in the driver before GPUVM functions are invoked so that we
+won't waste time allocating vm_bind context resources.
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: 5b3bb5963ff2 ("spi: davinci: Use devm_*() functions")
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260719010014.3163356-2-fanwu01@zju.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 12cf826bf1dd ("drm/panthor: Support sparse mappings")
+Fixes: 647810ec2476 ("drm/panthor: Add the MMU/VM logical block")
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20260720-vm_bind_checks-v6-1-c2c7dbe93a73@collabora.com
+Signed-off-by: Steven Price <steven.price@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-davinci.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/panthor/panthor_mmu.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/spi/spi-davinci.c b/drivers/spi/spi-davinci.c
-index da7f2ae3a570a..087735ed9c80c 100644
---- a/drivers/spi/spi-davinci.c
-+++ b/drivers/spi/spi-davinci.c
-@@ -928,7 +928,7 @@ static int davinci_spi_probe(struct platform_device *pdev)
- 	int ret = 0;
- 	u32 spipc0;
+diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
+index 904be1af286f5..fba2fff94ce32 100644
+--- a/drivers/gpu/drm/panthor/panthor_mmu.c
++++ b/drivers/gpu/drm/panthor/panthor_mmu.c
+@@ -318,6 +318,9 @@ struct panthor_vm {
+ 		u64 end;
+ 	} kernel_auto_va;
  
--	host = spi_alloc_host(&pdev->dev, sizeof(struct davinci_spi));
-+	host = devm_spi_alloc_host(&pdev->dev, sizeof(struct davinci_spi));
- 	if (host == NULL) {
- 		ret = -ENOMEM;
- 		goto err;
-@@ -1057,7 +1057,6 @@ static int davinci_spi_probe(struct platform_device *pdev)
- 		dma_release_channel(dspi->dma_tx);
- 	}
- free_host:
--	spi_controller_put(host);
- err:
- 	return ret;
- }
-@@ -1081,6 +1080,8 @@ static void davinci_spi_remove(struct platform_device *pdev)
- 
- 	spi_bitbang_stop(&dspi->bitbang);
- 
-+	devm_free_irq(&pdev->dev, dspi->irq, dspi);
++	/** @user_va_range: Upper boundary of VAs VM users can map objects against. */
++	u64 user_va_range;
 +
- 	/* This bit needs to be cleared to disable dpsi->clk */
- 	clear_io_bits(dspi->base + SPIGCR1, SPIGCR1_POWERDOWN_MASK);
- 
-@@ -1088,8 +1089,6 @@ static void davinci_spi_remove(struct platform_device *pdev)
- 		dma_release_channel(dspi->dma_rx);
- 		dma_release_channel(dspi->dma_tx);
+ 	/** @as: Address space related fields. */
+ 	struct {
+ 		/**
+@@ -2901,6 +2904,8 @@ panthor_vm_create(struct panthor_device *ptdev, bool for_mcu,
+ 		va_range = full_va_range;
  	}
--
--	spi_controller_put(host);
- }
  
- static struct platform_driver davinci_spi_driver = {
++	vm->user_va_range = kernel_va_start;
++
+ 	mutex_init(&vm->mm_lock);
+ 	drm_mm_init(&vm->mm, kernel_va_start, kernel_va_size);
+ 	vm->kernel_auto_va.start = auto_kernel_va_start;
+@@ -2989,6 +2994,10 @@ panthor_vm_bind_prepare_op_ctx(struct drm_file *file,
+ 	if (!IS_ALIGNED(op->va | op->size | op->bo_offset, vm_pgsz))
+ 		return -EINVAL;
+ 
++	/* We don't allow mappings that overlap with kbo's reserved range */
++	if (range_overflows(op->va, op->size, vm->user_va_range))
++		return -EINVAL;
++
+ 	switch (op->flags & DRM_PANTHOR_VM_BIND_OP_TYPE_MASK) {
+ 	case DRM_PANTHOR_VM_BIND_OP_TYPE_MAP:
+ 		if (!(op->flags & DRM_PANTHOR_VM_BIND_OP_MAP_SPARSE)) {
 -- 
 2.53.0
 
