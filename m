@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F411EB5FD;
-	Sat, 12 Sep 2026 07:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF131EB5FD;
+	Sat, 12 Sep 2026 07:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197620; cv=none; b=Lh7YB32z9ZubCJg5n0XXzDWAUaP2qtalcHR+X5Y/9iXUcjICV4fWiP5VJu3K+Onc7LRoiCJcNx7DEOHAqNT2BFbfWdcL70cUPdfs3A1/5FueNTxsNAuFnt2KbhzvZquKiEMxfEQrL9CndAywJ+mR/isd0zwl4fMXp8A45wkyBsE=
+	t=1789197624; cv=none; b=erKNzWLsWZ1guDNqeeHhqA0ooZGQsyfgU/H2Vfx6MH8oAFnzgZUNROXZkoDrwJ5eUV3CLVlVMsGX4SlS3IZVaLgDZpXt1Cgwo3K67/cuK7bCQtgdCBuvEiC7ZsM9xtoiuyDI1333sI4kz0YUwARtrhpgtrPApaEgyokrM1H7dxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197620; c=relaxed/simple;
-	bh=hK8HTzz6ySuA9twcCz5ZbV0gBAm6q423Y8MoVpJd2/0=;
+	s=arc-20240116; t=1789197624; c=relaxed/simple;
+	bh=k28Kt6DC1DDPc8LZSxD1VyBr2lP56yfmMyB5xN8E+Z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IJ/9nR3FWSAKjFjsGUIlSOwJMEPzzxqrRla0jeTc+coDtlQgMJhkDTXkpju8v1OhtF2W0T1w+Xs/rwklDgrx8/tQd9E6PvBwXBK6b1AGR3JeFavRfQYxXaRwYD39APZhQevGuvSS6iOoZCuc5BI6QyF/fHy+q+zSlxOk5mc5AdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krNrAZ8b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mdglhR5FZ7b7tziGYP0sWzl33w3NgYFRDGXrnIcEYHZ229hRN4Zoxqr70atn5+e9OtDgfbMPq8/PwEPnMAjyi9A/OSebuM7KwoPR4hefyD/6Qmh9NZmvHCyAoS5HBkjTW80vNV8xN+zjKcl6NPtv8SpbM6MrIVSUg5GO3NSCPZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qls20N86; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krNrAZ8b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A7B1F000FF;
-	Sat, 12 Sep 2026 07:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qls20N86"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21EEC1F000FF;
+	Sat, 12 Sep 2026 07:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197618;
-	bh=O4YN2XCJWskf3458FSEc6027slwVXwpAV+pKH+ODzZs=;
+	s=korg; t=1789197622;
+	bh=FNcmeLIAHc9HksuMpMweXdMmjMbRmGzeR38adbjrxPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=krNrAZ8bmLlmtAMrKXTIIzLacQw9C0+dzD3RVdg0nO/Ff6UNEtgsnEmzEx4AMPzy0
-	 afRogv5vDGXWSg1lPoD9/cmCZjdu23reJn48SYRHeEXHLkYR07Q/+PcMmhdw9YQjxI
-	 JMemwxqZSXAkbZ1SOAnwhxJ4fvg6incKP7MjYZaA=
+	b=qls20N86O7j0WMVKWaTAt6dmW93V4QZJFp+jnQZ+zMtmvAwZbTyrK531png7aUN8y
+	 sLbwpqOYDsr0hXZlMvb7loB2noC3e3q6YanOne+Oe230e8rSIUEWKg1LlTMcN75i13
+	 pkIEEZtvEauXkaZUvkjCuOKn1DR3CkiuILY0Jsls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Pengyu Luo <mitltlatltl@gmail.com>,
+	Alexander Koskovich <akoskovich@pm.me>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0211/1815] clk: qcom: gdsc: Add custom disable callback for GX GDSC
-Date: Sat, 12 Sep 2026 08:32:41 +0200
-Message-ID: <20260912065653.948935662@linuxfoundation.org>
+Subject: [PATCH 7.2 0212/1815] clk: qcom: gxclkctl: Use custom disable callback for gx_gdsc
+Date: Sat, 12 Sep 2026 08:32:42 +0200
+Message-ID: <20260912065653.971696545@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -47,88 +48,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+From: Taniya Das <taniya.das@oss.qualcomm.com>
 
-[ Upstream commit 0661ee1d650facefdf61401c7d00eb96fad40b10 ]
+[ Upstream commit badf361c00c802738c776fb5f4e8b08b4d0bad1c ]
 
-The GX GDSC is a special power domain that should only be disabled
-by OS during GMU recovery. In all other scenarios, the GMU firmware
-is responsible for handling its disable sequence, and OS must not
-interfere.
+The GX GDSC represents a special GPU power domain that must not be
+disabled during normal runtime PM flows. As per the GMU architecture,
+GX GDSC should only be force-disabled during GMU/GPU recovery, where the
+OS explicitly resets the GX power domain.
 
-During the resume_noirq() phase of system resume, the GenPD framework
-enables all power domains and later disables them in the complete()
-phase if there are no active votes from OS. This behavior can
-incorrectly disable the GX GDSC while the GMU firmware is still using
-it.
+However, when managed by the generic GDSC runtime PM path, GX GDSC may be
+disabled during GMU runtime suspend, resulting in warnings such as:
 
-To prevent this, implement a custom disable callback for GX GDSC that
-relies on GenPD’s synced_poweroff flag. The GMU driver sets this flag
-only during recovery, allowing OS to explicitly disable GX GDSC in
-hardware in that case. In all other situations, the disable callback
-will avoid touching GX GDSC hardware.
+  gx_clkctl_gx_gdsc status stuck at 'on'
 
-Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+and failures in gdsc_toggle_logic() during rpm suspend.
+
+Use the newly added custom disable callback for gx_gdsc to ensure the
+GDSC is toggled only in recovery scenarios, while preventing unintended
+disable attempts during normal GMU runtime PM operations.
+
+Reported-by: Pengyu Luo <mitltlatltl@gmail.com>
+Closes: https://lore.kernel.org/all/CAH2e8h4Vp9fJYAUUbOmoHSKB25wakPBvmpwa62BTRqgRQbMWuw@mail.gmail.com/
+Reported-by: Alexander Koskovich <akoskovich@pm.me>
+Closes: https://lore.kernel.org/all/gwVAH2mJerU4dBInw8pKmOs5aQK55Q7W6q_UQAlLFCsEgX6eyvSgXAWbNNMqAX4WmPlYCKUSMhfkr5Jry4Ps5EqnxYZqEEDd3Whwv7ZXGlc=@pm.me/
+Fixes: 5af11acae660 ("clk: qcom: Add a driver for SM8750 GPU clocks")
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260427-gfx-clk-fixes-v2-1-797e54b3d464@oss.qualcomm.com
+Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260427-gfx-clk-fixes-v2-2-797e54b3d464@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: badf361c00c8 ("clk: qcom: gxclkctl: Use custom disable callback for gx_gdsc")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gdsc.c | 22 ++++++++++++++++++++++
- drivers/clk/qcom/gdsc.h |  1 +
- 2 files changed, 23 insertions(+)
+ drivers/clk/qcom/gxclkctl-kaanapali.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index ee5f86ca50cb7..f419a28f616b6 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -708,3 +708,25 @@ int gdsc_gx_do_nothing_enable(struct generic_pm_domain *domain)
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(gdsc_gx_do_nothing_enable);
-+
-+/*
-+ * GX GDSC is a special power domain. Normally, its disable sequence
-+ * is managed by the GMU firmware, and high level OS must not attempt
-+ * to disable it. The only exception is during GMU recovery, where the
-+ * GMU driver can set GenPD’s synced_poweroff flag to allow explicitly
-+ * disable GX GDSC in hardware.
-+ */
-+int gdsc_gx_disable(struct generic_pm_domain *domain)
-+{
-+	struct gdsc *sc = domain_to_gdsc(domain);
-+
-+	if (domain->synced_poweroff)
-+		return gdsc_disable(domain);
-+
-+	/* Remove parent-supply placed in enable */
-+	if (sc->rsupply)
-+		return regulator_disable(sc->rsupply);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(gdsc_gx_disable);
-diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
-index 92ff6bcce7b1c..2f9665b664e60 100644
---- a/drivers/clk/qcom/gdsc.h
-+++ b/drivers/clk/qcom/gdsc.h
-@@ -93,6 +93,7 @@ int gdsc_register(struct gdsc_desc *desc, struct reset_controller_dev *,
- 		  struct regmap *);
- void gdsc_unregister(struct gdsc_desc *desc);
- int gdsc_gx_do_nothing_enable(struct generic_pm_domain *domain);
-+int gdsc_gx_disable(struct generic_pm_domain *domain);
- #else
- static inline int gdsc_register(struct gdsc_desc *desc,
- 				struct reset_controller_dev *rcdev,
+diff --git a/drivers/clk/qcom/gxclkctl-kaanapali.c b/drivers/clk/qcom/gxclkctl-kaanapali.c
+index 10c1a8976c56c..a03da61489b4d 100644
+--- a/drivers/clk/qcom/gxclkctl-kaanapali.c
++++ b/drivers/clk/qcom/gxclkctl-kaanapali.c
+@@ -25,6 +25,7 @@ static struct gdsc gx_clkctl_gx_gdsc = {
+ 	.pd = {
+ 		.name = "gx_clkctl_gx_gdsc",
+ 		.power_on = gdsc_gx_do_nothing_enable,
++		.power_off = gdsc_gx_disable,
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
 -- 
 2.53.0
 
