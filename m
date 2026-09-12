@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0845373BF2;
-	Sat, 12 Sep 2026 12:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B12F34E75A;
+	Sat, 12 Sep 2026 12:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216620; cv=none; b=qUH5eHTE3imeD8o9hXr2jpFZldkJh5quCsDP9kgEOs8mQDfbHqxxhuvpln7POMIQrdNxhD6NXr50raMqnp1+Op70YW0ISoj0bMppwQzy8rwk4rCr6Ro+oxT277Sq9nyKoRptwVYHjS4GkdLg0k7YBJywCsZGS96cmo/tmilskq4=
+	t=1789216624; cv=none; b=cj6Oyb6nixOWgbXE5CgYEKn/1o2hZOHmDDQuqagVkIn5e4ocmKdt1l7qqrLNy9mwfWdRKovx1fIhMvAHCNJt2TUFQK14NqOAub60bI7+jJ14je3oT8my4t2lwJMvOtDe/giGEdeiQFTt2k3aQ0y8mVDnbnjsFgXky4DbIsdmA24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216620; c=relaxed/simple;
-	bh=bmsHrnVmQoJNeOTe8/Kc5PfE/Ah0VqQDebozLvGxMn0=;
+	s=arc-20240116; t=1789216624; c=relaxed/simple;
+	bh=MMCsbuTbPPrrd0ZorjcOcRl/7zRtihzhPNhtHd8DgJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZDIEo/2pDQqr/8MISwmxGpyzhviGxYOALJ8ZXrjiR67s/3SUAcGZ58rvdrNwU7iaokKcuc/F/TO1MVOQ49SM5YDkZ9I+RD2s++LrB3xjloTXt+hWe5zVKlT02R0YZU89FKh2Pnnh1zO9vU7IDXc7Q5Ri8yU7qZBpZCmAo3S04hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2xpwo1B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q0IAzIjZ3DvXp8L6v0hwiMdB9J+tVb5Ije8a4m8tVJgKNZcIGIeoQK7fgWPvQ4wmeDhG2bkklvvldeYXtfJp/rv8GGmRmTY0Sk1HO8RfdKKIUusVs6d4EEJy59dtSylrQvmI7/SSx9KrHLNHqAW3FiDyPWc5DBqiK3dceUCI/R8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bIacx8NP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2xpwo1B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AEB1F000FF;
-	Sat, 12 Sep 2026 12:36:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bIacx8NP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F7A1F000FF;
+	Sat, 12 Sep 2026 12:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216617;
-	bh=sQutPebe4FksUUCnyDUKGA6zwH7GdXl0ZhkIRezEp4E=;
+	s=korg; t=1789216622;
+	bh=POkp3wKCCWGD6/+Rw1Skr83+4X6immWmgNvMV5GQX8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n2xpwo1BPO/FfhkNVPWXz8E+yXUp085XXXnFVqhbr9i8u62ksi29RqMEuXzPxiSUC
-	 To6E080QNvhEmAr6HE0JVi4H3pnCWkQ2xFnJuXQdsN9873Yba++vBbdNZSwy4b23Zb
-	 5ThE969NBYpy0DUZPpjPmb5DJwXSMlxhqVTPp+o0=
+	b=bIacx8NPO5lVE6EvW5PYEMUltFqcqFr0Zq0yhWJYu9vJvvUXgMnKtjyFs0svr8A5P
+	 uqpeIXxhF0GRIlQ2DNBr0rcqNCGmW+q1w/CNezde42WMk0NT/eBPqrCkkwy3RnTW88
+	 cDl6/RtHBbKFEXagDKEWxeaBkO2cpV1g1BK99Jh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0772/1376] arm64: dts: qcom: sm8550: Fix the PCIe iommu-map entries
-Date: Sat, 12 Sep 2026 08:53:18 +0200
-Message-ID: <20260912065624.743926132@linuxfoundation.org>
+Subject: [PATCH 6.12 0773/1376] arm64: dts: qcom: sm8650: add OPP table support to PCIe
+Date: Sat, 12 Sep 2026 08:53:19 +0200
+Message-ID: <20260912065624.765942017@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,57 +52,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 16d98ee918d63018eaa6cc260791b71319aa4faa ]
+[ Upstream commit 5cddecc3d1dce1e20bb64364cb6cd5d8edf376b3 ]
 
-The IOMMU provider apps_smmu uses '#iommu-cells = <2>', but the PCIe
-iommu-map entries specify only one cell for the SID, omitting the SID
-mask. This went unnoticed until the OF core started warning with commit
-ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps"):
+The PCIe bus interconnect path can be scaled depending on the
+PCIe link established, add the OPP table with all the possible
+link speeds and the associated power domain level.
 
-  iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
-
-So fix the entries to match the provider's '#iommu-cells' property.
-
-Fixes: 7d1158c984d3 ("arm64: dts: qcom: sm8550: Add PCIe PHYs and controllers nodes")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260730-iommu-map-fix-v1-10-83405d37ba41@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20250115-topic-sm8x50-upstream-dt-icc-update-v1-8-eaa8b10e2af7@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 8ccba7b44609 ("arm64: dts: qcom: sm8650: Fix the PCIe iommu-map entries")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 89 ++++++++++++++++++++++++++++
+ 1 file changed, 89 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 38b15db0676ce..7f06bea09d0ac 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -1771,8 +1771,8 @@ pcie0: pcie@1c00000 {
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index b4d9900e17763..51bfb220b6c2e 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -2279,6 +2279,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
  
- 			msi-map = <0x0 &gic_its 0x1400 0x1>,
- 				  <0x100 &gic_its 0x1401 0x1>;
--			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
--				    <0x100 &apps_smmu 0x1401 0x1>;
-+			iommu-map = <0x0   &apps_smmu 0x1400 0x0 0x1>,
-+				    <0x100 &apps_smmu 0x1401 0x0 0x1>;
+ 			power-domains = <&gcc PCIE_0_GDSC>;
  
- 			resets = <&gcc GCC_PCIE_0_BCR>;
- 			reset-names = "pci";
-@@ -1892,8 +1892,8 @@ pcie1: pcie@1c08000 {
++			operating-points-v2 = <&pcie0_opp_table>;
++
+ 			iommu-map = <0     &apps_smmu 0x1400 0x1>,
+ 				    <0x100 &apps_smmu 0x1401 0x1>;
  
- 			msi-map = <0x0 &gic_its 0x1480 0x1>,
- 				  <0x100 &gic_its 0x1481 0x1>;
--			iommu-map = <0x0   &apps_smmu 0x1480 0x1>,
--				    <0x100 &apps_smmu 0x1481 0x1>;
-+			iommu-map = <0x0   &apps_smmu 0x1480 0x0 0x1>,
-+				    <0x100 &apps_smmu 0x1481 0x0 0x1>;
+@@ -2309,6 +2311,45 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
  
- 			resets = <&gcc GCC_PCIE_1_BCR>,
- 				<&gcc GCC_PCIE_1_LINK_DOWN_BCR>;
+ 			status = "disabled";
+ 
++			pcie0_opp_table: opp-table {
++				compatible = "operating-points-v2";
++
++				/* GEN 1 x1 */
++				opp-2500000 {
++					opp-hz = /bits/ 64 <2500000>;
++					required-opps = <&rpmhpd_opp_low_svs>;
++					opp-peak-kBps = <250000 1>;
++				};
++
++				/* GEN 1 x2 and GEN 2 x1 */
++				opp-5000000 {
++					opp-hz = /bits/ 64 <5000000>;
++					required-opps = <&rpmhpd_opp_low_svs>;
++					opp-peak-kBps = <500000 1>;
++				};
++
++				/* GEN 2 x2 */
++				opp-10000000 {
++					opp-hz = /bits/ 64 <10000000>;
++					required-opps = <&rpmhpd_opp_low_svs>;
++					opp-peak-kBps = <1000000 1>;
++				};
++
++				/* GEN 3 x1 */
++				opp-8000000 {
++					opp-hz = /bits/ 64 <8000000>;
++					required-opps = <&rpmhpd_opp_nom>;
++					opp-peak-kBps = <984500 1>;
++				};
++
++				/* GEN 3 x2 */
++				opp-16000000 {
++					opp-hz = /bits/ 64 <16000000>;
++					required-opps = <&rpmhpd_opp_nom>;
++					opp-peak-kBps = <1969000 1>;
++				};
++			};
++
+ 			pcieport0: pcie@0 {
+ 				device_type = "pci";
+ 				reg = <0x0 0x0 0x0 0x0 0x0>;
+@@ -2416,6 +2457,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+ 
+ 			power-domains = <&gcc PCIE_1_GDSC>;
+ 
++			operating-points-v2 = <&pcie1_opp_table>;
++
+ 			iommu-map = <0     &apps_smmu 0x1480 0x1>,
+ 				    <0x100 &apps_smmu 0x1481 0x1>;
+ 
+@@ -2446,6 +2489,52 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+ 
+ 			status = "disabled";
+ 
++			pcie1_opp_table: opp-table {
++				compatible = "operating-points-v2";
++
++				/* GEN 1 x1 */
++				opp-2500000 {
++					opp-hz = /bits/ 64 <2500000>;
++					required-opps = <&rpmhpd_opp_low_svs>;
++					opp-peak-kBps = <250000 1>;
++				};
++
++				/* GEN 1 x2 and GEN 2 x1 */
++				opp-5000000 {
++					opp-hz = /bits/ 64 <5000000>;
++					required-opps = <&rpmhpd_opp_low_svs>;
++					opp-peak-kBps = <500000 1>;
++				};
++
++				/* GEN 2 x2 */
++				opp-10000000 {
++					opp-hz = /bits/ 64 <10000000>;
++					required-opps = <&rpmhpd_opp_low_svs>;
++					opp-peak-kBps = <1000000 1>;
++				};
++
++				/* GEN 3 x1 */
++				opp-8000000 {
++					opp-hz = /bits/ 64 <8000000>;
++					required-opps = <&rpmhpd_opp_nom>;
++					opp-peak-kBps = <984500 1>;
++				};
++
++				/* GEN 3 x2 and GEN 4 x1 */
++				opp-16000000 {
++					opp-hz = /bits/ 64 <16000000>;
++					required-opps = <&rpmhpd_opp_nom>;
++					opp-peak-kBps = <1969000 1>;
++				};
++
++				/* GEN 4 x2 */
++				opp-32000000 {
++					opp-hz = /bits/ 64 <32000000>;
++					required-opps = <&rpmhpd_opp_nom>;
++					opp-peak-kBps = <3938000 1>;
++				};
++			};
++
+ 			pcie@0 {
+ 				device_type = "pci";
+ 				reg = <0x0 0x0 0x0 0x0 0x0>;
 -- 
 2.53.0
 
