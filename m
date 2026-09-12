@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC17F4F1;
-	Sat, 12 Sep 2026 16:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B884BEE3C;
+	Sat, 12 Sep 2026 16:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232090; cv=none; b=R7qe4NkhondtKHBniUcFftOTizUnE7Dwx63X2gB40fOUtaxw/V2K7Iq8+88BgxJPiim1/RvPL+PECi1ptdD2aDAuZo1V+xefSuo/QvK6ydQztwyoIGheuSWep1ZGbUAO7CToYmZ7u2TSqRrjh98U9L3Jwhmh6wgdIrVQ6aHuo7Y=
+	t=1789232095; cv=none; b=LQYym8sq/I9EMfTmSR23JRtd/QQCdPvfPb+gmzpy07X6wddAWt6vk1gH140GvmRaSQhBJwN1ldlTjA1rfr0NxwK5oS0aB7kGPqi1zfB+yqnDzP1f9+Rlvd9U0l+UcM0PlMnEKXDh7Z/lQBrIGrpCT2GDQ39+nBXKnTRw7F8//fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232090; c=relaxed/simple;
-	bh=dgLEQFvXhttvYliEslP0lkqQ+K9fFlTfwQ5TpQRN7nI=;
+	s=arc-20240116; t=1789232095; c=relaxed/simple;
+	bh=xkxDbDkFIaaynJcJ3eaFKooUjpRJQb4VGxPIOgeIFmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ACcc6lqnqupwodcdzSgqUFyef5iQwewtT6pAcFgKs2n3T9VG53z7bnRFNzoZ1eSi+ujRKC8OxqBbRRIgR8l06QhaH3lTEZPMp/buC+3qqAse7SFKj5eA/6hVbEP2Ieu6guExAPrbmryi9JXQosCIs8TCraICAphh1Pcq/A5q4tQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFuyNNDq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EOfkYFq9ZMoMVOnXD9vsQ916/kIFElCKTL9QIRCxdQ+sAxSk4HbYBq8xxDJHt0hsNt1GikMkZda5HJgOJQUkvoPMgYHYDS1Gy2a3FdnybFgT+Cxe8EVAQPcl7dByN5YVYsKUMWgqwQKM59PprKJcVqcdtQQFS8z5yxE0gij/cno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHyzcdZo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFuyNNDq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A121F000FF;
-	Sat, 12 Sep 2026 16:54:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHyzcdZo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A811F000FF;
+	Sat, 12 Sep 2026 16:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232089;
-	bh=TTAJzDQZdeE57lMv4wIfysx5OWsXlYxlE6OZORkseyY=;
+	s=korg; t=1789232094;
+	bh=TuYv2cX2VqlGx+DJPe/VM8cBW0OPzOPKCOzjzzvOuAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HFuyNNDqARta/QxtKLqX8nmrY55qDvhxjw9T1AZPbJLkgl5VJyEvzPHR2dPKYkJQJ
-	 hJrAVX8fPmkHOHoUa5DpRZV8pM5WRcrJVVpYV3VCNFDoSTysSVZXW2hOFX2X4fnnrQ
-	 Dh7+eJD4rCEyJQ+fc2OfQ2n5cIhccs3lxRQ97Hu0=
+	b=zHyzcdZo3uMnUGd5KN9TzOUkgRJvfXR/ij7a+D8Bt4A8XGEeHr9IAIsz+FVp2q9ba
+	 wfjXJ3cbuIf81KkebFV6QqeobXefZ7kDYzRdTZkjG9wyGe+EhDbYu4eDV1tykKNiKE
+	 ksc2IJVVFeDgV4qkaoYZweDVg7VxmxBpqnz1FlUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1131/1191] net: stmmac: selftests: Check multiple MMC counters
-Date: Sat, 12 Sep 2026 09:04:19 +0200
-Message-ID: <20260912065613.555700576@linuxfoundation.org>
+Subject: [PATCH 6.1 1105/1191] net/sched: fq_codel: clamp default quantum and mtu
+Date: Sat, 12 Sep 2026 09:03:53 +0200
+Message-ID: <20260912065612.972493518@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,64 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit d29b399150b07796dfa81d8778d4804c08c2a41d ]
+[ Upstream commit d9ebd8f9aa8b2773235889cb903fafd61f2d8585 ]
 
-The MMC counters report MAC statistics. Multiple counters can be
-enabled when the IP is integrated, however there's no way to know
-exactly which ones. Un-implemented counters seem to report 0.
+fq_codel_init() sets q->quantum = psched_mtu(qdisc_dev(sch)) without
+clamping. A device with a huge MTU (e.g. dummy with max_mtu == 0
+accepting MTU 2147483634) makes psched_mtu() return 0x80000000, which
+overflows the signed flow->deficit to INT_MIN in fq_codel_dequeue(),
+causing an infinite loop and soft lockup. Emulate fq_codel_change()
+and constrain to [256, FQ_CODEL_QUANTUM_MAX].
 
-It was found that on StarFive JH7110 and Amlogic SM1, the counter that's
-used by the selftest (mmc_tx_framecount_g) isn't implemented, triggering
-an MMC selftest failure.
+The same unclamped psched_mtu() is assigned to q->cparams.mtu a bit
+below, and fq_codel_change() never updates it. codel_should_drop()
+tests "*backlog <= params->mtu"; with mtu == 0x80000000 (~2 GiB) and
+the default 32 MiB memory_limit, the test is always true, so CoDel is
+silently and completely disabled (no drops, no ECN). Declare a single
+clamped mtu and assign both q->quantum and q->cparams.mtu from it,
+which also removes the double psched_mtu() call.
 
-Both the above SoCs seem to implement mmc_rx_framecount_gb, let's use
-this counter as well for MMC counter validation.
+Conditions to recreate the bug: a device whose MTU (plus
+hard_header_len) wraps psched_mtu() into the sign bit (e.g. a dummy
+device with max_mtu == 0 accepting MTU 2147483634). Requires
+CAP_NET_ADMIN in a user namespace.
 
-Note that this doesn't guarantee that we won't encounter the same issue
-again if another IP implements yet another set of counters that don't
-include that new one.
-
-If the game of whack-a-mole with implemented counters becomes too hard to
-maintain, we may simply consider removing the MMC selftest entirely.
-
-Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260826140500.616466-2-maxime.chevallier@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4b549a2ef4be ("fq_codel: Fair Queue Codel AQM")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260822195509.112717-3-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_selftests.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ net/sched/sch_fq_codel.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index abad2dac40cfa..124e5a78abc26 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -415,11 +415,17 @@ static int stmmac_test_mmc(struct stmmac_priv *priv)
- 	stmmac_mmc_read(priv, priv->mmcaddr, &final);
+diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
+index e059d6c145741..ac2f643dd8427 100644
+--- a/net/sched/sch_fq_codel.c
++++ b/net/sched/sch_fq_codel.c
+@@ -495,6 +495,7 @@ static int fq_codel_init(struct Qdisc *sch, struct nlattr *opt,
+ 			 struct netlink_ext_ack *extack)
+ {
+ 	struct fq_codel_sched_data *q = qdisc_priv(sch);
++	u32 mtu;
+ 	int i;
+ 	int err;
  
- 	/*
--	 * The number of MMC counters available depends on HW configuration
--	 * so we just use this one to validate the feature. I hope there is
--	 * not a version without this counter.
-+	 * The number of MMC counters available depends on HW configuration,
-+	 * and there doesn't seem to be a way to enumerate the implemented
-+	 * counters.
-+	 *
-+	 * Let's check a hand-picked set of counters, knowing that :
-+	 *  - Starfive JH7110 doesn't implement mmc_tx_framecount_g
-+	 *  - Amlogic SM1 doesn't implement any mmc_tx_*
-+	 *
- 	 */
--	if (final.mmc_tx_framecount_g <= initial.mmc_tx_framecount_g)
-+	if (final.mmc_tx_framecount_g <= initial.mmc_tx_framecount_g &&
-+	    final.mmc_rx_framecount_gb <= initial.mmc_rx_framecount_gb)
- 		return -EINVAL;
+@@ -502,13 +503,14 @@ static int fq_codel_init(struct Qdisc *sch, struct nlattr *opt,
+ 	q->flows_cnt = 1024;
+ 	q->memory_limit = 32 << 20; /* 32 MBytes */
+ 	q->drop_batch_size = 64;
+-	q->quantum = psched_mtu(qdisc_dev(sch));
++	mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, FQ_CODEL_QUANTUM_MAX);
++	q->quantum = mtu;
+ 	INIT_LIST_HEAD(&q->new_flows);
+ 	INIT_LIST_HEAD(&q->old_flows);
+ 	codel_params_init(&q->cparams);
+ 	codel_stats_init(&q->cstats);
+ 	q->cparams.ecn = true;
+-	q->cparams.mtu = psched_mtu(qdisc_dev(sch));
++	q->cparams.mtu = mtu;
  
- 	return 0;
+ 	if (opt) {
+ 		err = fq_codel_change(sch, opt, extack);
 -- 
 2.53.0
 
