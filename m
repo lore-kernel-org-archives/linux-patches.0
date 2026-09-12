@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8AA352017;
-	Sat, 12 Sep 2026 15:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791021FBEA6;
+	Sat, 12 Sep 2026 15:34:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227251; cv=none; b=Pdjw7zqHztiQ2wd7/ALO1E+aCekgTWGUFGxg4HZ841+I/xLxuPg6NCsx7Qjtuqni3pLIs5eANe+B3irpntUvb6c0tZ0oINNaikGCu+V527EJyfINfLLnbnadvLssls+0UjHSTB9ykEPFyOL5xCJL1a/rgRldOthYQ0D4YiWww2U=
+	t=1789227256; cv=none; b=G+AfvZ4gkjp0nuWkCFWr4f4IpQ4VctVz5X37N0r4aE31PmbwBuKeUrBg1fDw7hUfhkl29QyqXW8gVgLbnYv720FTwbeLjUCvpwxG6umQxR3maviLUl5AyjRc9pjUL9mo4fwhVAaENl0OzAOpY5Hc+LquyuGHg7nAN/EoKOaHCaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227251; c=relaxed/simple;
-	bh=NxK17GJp+m2CyT6BT81mEDrWKSF22iO7Xl/aU156dGo=;
+	s=arc-20240116; t=1789227256; c=relaxed/simple;
+	bh=chv2cZnhXwpjYmMpNnJSZQX7JmwhD5XmovbkFqvSWpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W7cvhjFjFk/hWwtrZapRu1Phy0AC3ADsuZpX24xNdiexNQpSmQTS3dBQBejWqBEW2C8xA7OlfcaMzPD3E+W5KzUy2H1U6yMcX9NgolZhlkkPYyFTI8Dq8t8kgsJG0Hl86T/AV3Q5o0ZS97Td+8e7IGVY8rIq/60dZ+CD8x5O2Q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CCJCk3w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RPQay+g/d3RM+dqfi3KoVardNhPrQNMaJ6xQXj/RGducLlCkSTwjHoIxliBcYMgkRu03hP6h2IRzzrogdy9TdIyb8npskKTD9FVvp2WNksZB1qghZVS96g4rDj4BVeANuQnFRyDB2brVi7Tjp3shJr/oS6luM9MBN2erBOiSbIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZ+f1zEV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CCJCk3w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0ED61F000FF;
-	Sat, 12 Sep 2026 15:34:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZ+f1zEV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A7791F000FF;
+	Sat, 12 Sep 2026 15:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227250;
-	bh=KTWGQ2zZYfU7hH3yfYBkegBcWooA6vGS0vgJDYRb0CU=;
+	s=korg; t=1789227255;
+	bh=vjWtuaOlGvGcjXSMST056Ms+2VLNoPW8nOwC4m4BAHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1CCJCk3w67k02/E7VWkDnDaONktmsom514hka712Grp9zEDT1zeCpI7qu6pAapOtn
-	 tw0poWTlmWKLIwfnZ/IN2pgAvXibKal8JnzvTYVwRoFgzLlmcEpd1i8ary6S1JXeuw
-	 ucPjwjY+F1lS5DaNTIOxCuqpRsD812kFscSMAnRA=
+	b=XZ+f1zEVGvwAnFNLE7HdeMBuSdmO6qcbKKmrjkWxiKPzHvSlCZy2TSKZw/Rfb9GiW
+	 B2MiWpkqkCUl+Q2zpCyDl3nwrOBEpYpjI4P42S85sDB8Goux6ALTMOt5WIIOKClrdC
+	 RTK+RNF6USLGVqpgmP3mMwurd7AuwVFjXhql/UEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	liyouhong <liyouhong@kylinos.cn>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.1 0105/1191] dm-era: fix shadowed superblock leak on take-snap failure
-Date: Sat, 12 Sep 2026 08:47:13 +0200
-Message-ID: <20260912065550.543907215@linuxfoundation.org>
+	Erin Lo <erin.lo@mediatek.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.1 0141/1191] remoteproc: scp: Fix device reference leak on failed lookup
+Date: Sat, 12 Sep 2026 08:47:49 +0200
+Message-ID: <20260912065551.365783397@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,59 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: liyouhong <liyouhong@kylinos.cn>
+From: Johan Hovold <johan@kernel.org>
 
-commit 39c5aa3bd8ec3912d2cd0b3fe092642b0d2b0713 upstream.
+commit 22f9efb3ae07f966a1901d929d16df1388cce65c upstream.
 
-metadata_take_snap() bumps the live superblock refcount and then
-dm_tm_shadow_block() allocates a new block for the metadata snapshot.
-If the subsequent dm_sm_inc_block() of writeset_tree_root or
-era_array_root fails, the function only unlocks the clone and
-returns.  The newly allocated shadow block is never returned to the
-metadata space map, so each failed take-snap permanently leaks one
-metadata block.
+Make sure to drop the reference taken to the SCP device when attempting
+to look up its driver data before the driver has been bound.
 
-Free the clone with dm_sm_dec_block() on those error paths, matching
-the final step of metadata_drop_snap().
+Note that holding a reference to a device does not prevent its driver
+data from going away.
 
-Fixes: eec40579d848 ("dm: add era target")
-Cc: stable@vger.kernel.org
-Signed-off-by: liyouhong <liyouhong@kylinos.cn>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 63c13d61eafe ("remoteproc/mediatek: add SCP support for mt8183")
+Cc: stable@vger.kernel.org	# 5.6
+Cc: Erin Lo <erin.lo@mediatek.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20260706065614.389412-1-johan@kernel.org
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-era-target.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/remoteproc/mtk_scp.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-era-target.c
-+++ b/drivers/md/dm-era-target.c
-@@ -1022,6 +1022,7 @@ static int metadata_checkpoint(struct er
- static int metadata_take_snap(struct era_metadata *md)
- {
- 	int r, inc;
-+	dm_block_t location;
- 	struct dm_block *clone;
+--- a/drivers/remoteproc/mtk_scp.c
++++ b/drivers/remoteproc/mtk_scp.c
+@@ -36,6 +36,7 @@ struct mtk_scp *scp_get(struct platform_
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *scp_node;
+ 	struct platform_device *scp_pdev;
++	struct mtk_scp *scp;
  
- 	if (md->metadata_snap != SUPERBLOCK_LOCATION) {
-@@ -1059,7 +1060,9 @@ static int metadata_take_snap(struct era
- 	r = dm_sm_inc_block(md->sm, md->writeset_tree_root);
- 	if (r) {
- 		DMERR("%s: couldn't inc writeset tree root", __func__);
-+		location = dm_block_location(clone);
- 		dm_tm_unlock(md->tm, clone);
-+		dm_sm_dec_block(md->sm, location);
- 		return r;
+ 	scp_node = of_parse_phandle(dev->of_node, "mediatek,scp", 0);
+ 	if (!scp_node) {
+@@ -51,7 +52,13 @@ struct mtk_scp *scp_get(struct platform_
+ 		return NULL;
  	}
  
-@@ -1067,7 +1070,9 @@ static int metadata_take_snap(struct era
- 	if (r) {
- 		DMERR("%s: couldn't inc era tree root", __func__);
- 		dm_sm_dec_block(md->sm, md->writeset_tree_root);
-+		location = dm_block_location(clone);
- 		dm_tm_unlock(md->tm, clone);
-+		dm_sm_dec_block(md->sm, location);
- 		return r;
- 	}
+-	return platform_get_drvdata(scp_pdev);
++	scp = platform_get_drvdata(scp_pdev);
++	if (!scp) {
++		put_device(&scp_pdev->dev);
++		return NULL;
++	}
++
++	return scp;
+ }
+ EXPORT_SYMBOL_GPL(scp_get);
  
 
 
