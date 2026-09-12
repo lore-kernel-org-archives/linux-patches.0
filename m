@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A913A4508;
-	Sat, 12 Sep 2026 07:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58843A4508;
+	Sat, 12 Sep 2026 07:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196736; cv=none; b=vErqjxkCkiPda+/1687RYRaDwKsFjjixCQJZ3Rhy1ZJZ/bSnfIcV59/EVY86k6xyRre0CLL5wyb+RLK/3RRMSRW9aGCvYODpcHDM31wdCB4z4a/uT2wFHeU7JhoChdNguuN7sz/c2YyI/LXn1FSKexhufC1wE/s4iBMIEyc45sg=
+	t=1789196741; cv=none; b=GwNtwpg8ORzAhgd5aRFvN7qhCyCtG2EpizGjVHkJUB3NnePTZQpCzvE66vKhG08Ou2iw8vP7KiPTMJEDbaNmEiTqnmoeU67MRl6tLvPpZrzj0G3QJY/2ORPYQbeWVYngJTKSb+Hg33OsOR9XVVoyvBVCxTAJIa8CekyUawkwpVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196736; c=relaxed/simple;
-	bh=azk05WHO6V6GQXbGpKnr54h0cZetKBRRrCqPyj1iCFY=;
+	s=arc-20240116; t=1789196741; c=relaxed/simple;
+	bh=x/LSAT18OTxmXhCe16P05z++UyWC6c6vM9FZtRtNsuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aDMaw9jxvbo4t1miQ8c1dvLJr3ny8fB4iKMaMjekvIjIzCCS4pZCf2t0RSLVBk/N6zazuwhJ4leFeJuc1gkDOkHGZ7WjMD5InhXkguRKCsP4Turi+YvTIRHYdmF9LwITvcmVB4A8fWM/i633+reFprDWKNpIhFaswGhioQF7Zdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzCFNQNQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rsFwbpkEBKbtjX35JFfDSeCtEpFuoPxzhA7fzr+WF1dChqZ5GhoRUCbbTFAbP2vfDt6gzs8KngIV7mffKljBHkDEe9AKDCW/sza+fMCEhQqHbyXK3BI/wFdZjrQQttu7Wsdp6DCD0dJrsfWbwos+HIFB3QoCJrE5fXUKKKvqZ68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m20hBk22; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzCFNQNQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4F11F000FF;
-	Sat, 12 Sep 2026 07:05:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m20hBk22"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2DC41F000FF;
+	Sat, 12 Sep 2026 07:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196733;
-	bh=uI6gd4dQVZRvsOFcTmIlWF01O27WCQHdT+zNJJ5RHRs=;
+	s=korg; t=1789196737;
+	bh=OYx59bh5WwclGILyI20Xe8OE3ecnZCiT7X1Xw3kVJD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BzCFNQNQOlzMPE1qTEMjVPNFaOog8EWALYdhSo6X5QhQrfyrkqqTqlVUZU7t8orTi
-	 ssqTzn746ZIRZrkyF04sYc4q1kmLp/6u0cn4sssi2mXTiD0XmjhPL2p3EaRgHQLJIz
-	 60e9KPUlOQ5dwtqHOVwTXsrRGlteuwWfb5muCdy0=
+	b=m20hBk22ZtZbaZdZbCxs+9xLMHh+0WiNqJjQYGG/0a7VTop36r+M8C6IdOIqfsq/k
+	 e7tvNRrucR7H7F7oK7nmGxx5qgBQZSTOiMovFcXBUDuCfAe7FtcZ0JUqaIG8vAPXUc
+	 vgA2dQAvI21fK8cTi5J5MBLkRiAi69q7ESA6duAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Chen <me@linux.beauty>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	syzbot+f12658786a4153df5113@syzkaller.appspotmail.com,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Jann Horn <jannh@google.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Li Xinhai <lixinhai.lxh@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0026/1815] nvdimm: virtio_pmem: refcount requests for token lifetime
-Date: Sat, 12 Sep 2026 08:29:36 +0200
-Message-ID: <20260912065649.621450405@linuxfoundation.org>
+Subject: [PATCH 7.2 0027/1815] mm/mremap: reset unfaulted VMA page offset for MREMAP_DONTUNMAP
+Date: Sat, 12 Sep 2026 08:29:37 +0200
+Message-ID: <20260912065649.644976708@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,170 +52,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Chen <me@linux.beauty>
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
 
-[ Upstream commit e57140944b5a47a7fd5a142faab29a02af040bc8 ]
+[ Upstream commit 35b0fb391b0df57383bc15985bb769f4555c97ba ]
 
-KASAN reports slab-use-after-free in __wake_up_common():
-BUG: KASAN: slab-use-after-free in __wake_up_common+0x114/0x160
-Read of size 8 at addr ffff88810fdcb710 by task swapper/0/0
+Uniquely an mremap() invocation using the MREMAP_DONTUNMAP flag can reset
+a faulted VMA into an unfaulted one.
 
-CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted
-6.19.0-next-20260220-00006-g1eae5f204ec3 #4 PREEMPT(full)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux
-1.17.0-2-2 04/01/2014
-Call Trace:
- <IRQ>
- dump_stack_lvl+0x6d/0xb0
- print_report+0x170/0x4e2
- ? __pfx__raw_spin_lock_irqsave+0x10/0x10
- ? __virt_addr_valid+0x1dc/0x380
- kasan_report+0xbc/0xf0
- ? __wake_up_common+0x114/0x160
- ? __wake_up_common+0x114/0x160
- __wake_up_common+0x114/0x160
- ? __pfx__raw_spin_lock_irqsave+0x10/0x10
- __wake_up+0x36/0x60
- virtio_pmem_host_ack+0x11d/0x3b0
- ? sched_balance_domains+0x29f/0xb00
- ? __pfx_virtio_pmem_host_ack+0x10/0x10
- ? _raw_spin_lock_irqsave+0x98/0x100
- ? __pfx__raw_spin_lock_irqsave+0x10/0x10
- vring_interrupt+0x1c9/0x5e0
- ? __pfx_vp_interrupt+0x10/0x10
- vp_vring_interrupt+0x87/0x100
- ? __pfx_vp_interrupt+0x10/0x10
- __handle_irq_event_percpu+0x17f/0x550
- ? __pfx__raw_spin_lock+0x10/0x10
- handle_irq_event+0xab/0x1c0
- handle_fasteoi_irq+0x276/0xae0
- __common_interrupt+0x65/0x130
- common_interrupt+0x78/0xa0
- </IRQ>
+It does so after the page tables have been moved to the copied VMA with
+MREMAP_DONTUNMAP leaving the old VMA in place which is naturally unfaulted
+as the page tables it had are no longer present.
 
-virtio_pmem_host_ack() wakes a request that has already been freed by the
-submitter.
+However, in doing so, it violates the invariant that the anonymous page
+offset of an unfaulted VMA is vma->vm_start >> PAGE_SHIFT.
 
-This happens when the request token is still reachable via the virtqueue,
-but virtio_pmem_flush() returns and frees it.
+This is because a VMA may have been faulted in, mremap()'d (causing a
+delta between its page offset and vma->vm_start >> PAGE_SHIFT), and then
+mremap()'d again with MREMAP_DONTUNMAP resulting in the unfaulting.
 
-Fix the token lifetime by refcounting struct virtio_pmem_request.
-virtio_pmem_flush() holds a submitter reference, and the virtqueue holds an
-extra reference once the request is queued. The completion path drops the
-virtqueue reference, and the submitter drops its reference before
-returning.
+This condition is a violation of a fundamental assumption in mm, but now
+also triggers an assert in assert_sane_pgoff() which explicitly checks for
+this condition.
 
-Fixes: 6e84200c0a29 ("virtio-pmem: Add virtio pmem driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Li Chen <me@linux.beauty>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260630092338.2094628-9-me@linux.beauty>
+Correct it by resetting the VMA's page offset at the point of completing
+the MREMAP_DONTUNMAP operation.
+
+Link: https://lore.kernel.org/20260825-fix-mremap-dontunmap-pgoff-v1-1-39a40b2c98b3@kernel.org
+Fixes: 1583aa278f5f ("mm: mremap: unlink anon_vmas when mremap with MREMAP_DONTUNMAP success")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reported-by: syzbot+f12658786a4153df5113@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6a87853b.ae6ddae5.3da009.0023.GAE@google.com/
+Tested-by: syzbot+f12658786a4153df5113@syzkaller.appspotmail.com
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Cc: Jann Horn <jannh@google.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Li Xinhai <lixinhai.lxh@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ adapted VMA page-offset helpers to use the branch’s single vm_pgoff field. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvdimm/nd_virtio.c   |   32 ++++++++++++++++++++++++++++----
- drivers/nvdimm/virtio_pmem.h |    2 ++
- 2 files changed, 30 insertions(+), 4 deletions(-)
+ mm/mremap.c |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
---- a/drivers/nvdimm/nd_virtio.c
-+++ b/drivers/nvdimm/nd_virtio.c
-@@ -15,6 +15,14 @@ struct virtio_pmem_flush_work {
- 	struct bio *bio;
- };
- 
-+static void virtio_pmem_req_release(struct kref *kref)
-+{
-+	struct virtio_pmem_request *req;
-+
-+	req = container_of(kref, struct virtio_pmem_request, kref);
-+	kfree(req);
-+}
-+
- static void virtio_pmem_wake_one_waiter(struct virtio_pmem *vpmem)
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -1321,18 +1321,29 @@ static void dontunmap_complete(struct vm
  {
- 	struct virtio_pmem_request *req_buf;
-@@ -42,6 +50,7 @@ void virtio_pmem_host_ack(struct virtque
- 		virtio_pmem_wake_one_waiter(vpmem);
- 		WRITE_ONCE(req_data->done, true);
- 		wake_up(&req_data->host_acked);
-+		kref_put(&req_data->kref, virtio_pmem_req_release);
- 	}
- 	spin_unlock_irqrestore(&vpmem->pmem_lock, flags);
- }
-@@ -72,6 +81,7 @@ static int virtio_pmem_flush(struct nd_r
- 	if (!req_data)
- 		return -ENOMEM;
+ 	unsigned long start = vrm->addr;
+ 	unsigned long end = vrm->addr + vrm->old_len;
+-	unsigned long old_start = vrm->vma->vm_start;
+-	unsigned long old_end = vrm->vma->vm_end;
++	struct vm_area_struct *vma = vrm->vma;
++	unsigned long old_start = vma->vm_start;
++	unsigned long old_end = vma->vm_end;
  
-+	kref_init(&req_data->kref);
- 	WRITE_ONCE(req_data->done, false);
- 	init_waitqueue_head(&req_data->host_acked);
- 	init_waitqueue_head(&req_data->wq_buf);
-@@ -89,10 +99,23 @@ static int virtio_pmem_flush(struct nd_r
- 	  * to req_list and wait for host_ack to wake us up when free
- 	  * slots are available.
- 	  */
--	while ((err = virtqueue_add_sgs(vpmem->req_vq, sgs, 1, 1, req_data,
--					GFP_ATOMIC)) == -ENOSPC) {
-+	for (;;) {
-+		err = virtqueue_add_sgs(vpmem->req_vq, sgs, 1, 1, req_data,
-+					GFP_ATOMIC);
-+		if (!err) {
-+			/*
-+			 * Take the virtqueue reference while @pmem_lock is
-+			 * held so completion cannot run concurrently.
-+			 */
-+			kref_get(&req_data->kref);
-+			break;
-+		}
-+
-+		if (err != -ENOSPC)
-+			break;
+ 	/* We always clear VM_LOCKED[ONFAULT] on the old VMA. */
+-	vm_flags_clear(vrm->vma, VM_LOCKED_MASK);
++	vm_flags_clear(vma, VM_LOCKED_MASK);
  
--		dev_info(&vdev->dev, "failed to send command to virtio pmem device, no free slots in the virtqueue\n");
-+		dev_info_ratelimited(&vdev->dev,
-+				     "failed to send command to virtio pmem device, no free slots in the virtqueue\n");
- 		WRITE_ONCE(req_data->wq_buf_avail, false);
- 		list_add_tail(&req_data->list, &vpmem->req_list);
- 		spin_unlock_irqrestore(&vpmem->pmem_lock, flags);
-@@ -101,6 +124,7 @@ static int virtio_pmem_flush(struct nd_r
- 		wait_event(req_data->wq_buf, READ_ONCE(req_data->wq_buf_avail));
- 		spin_lock_irqsave(&vpmem->pmem_lock, flags);
- 	}
-+
- 	err1 = virtqueue_kick(vpmem->req_vq);
- 	spin_unlock_irqrestore(&vpmem->pmem_lock, flags);
  	/*
-@@ -116,7 +140,7 @@ static int virtio_pmem_flush(struct nd_r
- 		err = le32_to_cpu(req_data->resp.ret);
- 	}
+ 	 * anon_vma links of the old vma is no longer needed after its page
+ 	 * table has been moved.
+ 	 */
+-	if (new_vma != vrm->vma && start == old_start && end == old_end)
+-		unlink_anon_vmas(vrm->vma);
++	if (new_vma != vma && start == old_start && end == old_end) {
++		const pgoff_t pgoff_unfaulted = vma->vm_start >> PAGE_SHIFT;
++
++		unlink_anon_vmas(vma);
++		/*
++		 * The VMA is now unfaulted and it is an invariant that
++		 * unfaulted anonymous VMAs have page offset equal to
++		 * vma->vm_start >> PAGE_SHIFT.
++		 */
++		if (vma_is_anonymous(vma) && !vma->vm_file)
++			vma->vm_pgoff = pgoff_unfaulted;
++	}
  
--	kfree(req_data);
-+	kref_put(&req_data->kref, virtio_pmem_req_release);
- 	return err;
- };
- 
---- a/drivers/nvdimm/virtio_pmem.h
-+++ b/drivers/nvdimm/virtio_pmem.h
-@@ -12,12 +12,14 @@
- 
- #include <linux/module.h>
- #include <uapi/linux/virtio_pmem.h>
-+#include <linux/kref.h>
- #include <linux/libnvdimm.h>
- #include <linux/mutex.h>
- #include <linux/spinlock.h>
- #include <linux/workqueue.h>
- 
- struct virtio_pmem_request {
-+	struct kref kref;
- 	struct virtio_pmem_req req;
- 	struct virtio_pmem_resp resp;
- 
+ 	/* Because we won't unmap we don't need to touch locked_vm. */
+ }
 
 
