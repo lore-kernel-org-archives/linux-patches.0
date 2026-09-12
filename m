@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2A638F620;
-	Sat, 12 Sep 2026 19:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8174F38F620;
+	Sat, 12 Sep 2026 19:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242797; cv=none; b=Rw3CJ3D+X+fBPSLCRzN0S79uMMo68O/r1v9dIPwz3R8BpkcUvlGa0SXgYYz7MF26irsx6FoYd5jfQrqXmVEZpxGxqWpqND79zsKbsa07OBfk+S2i+iuwS0i3qhCu4LlDeTfCdoTijKyExn32W/c8UITQpHj29CUbxO/9EUz2pjk=
+	t=1789242800; cv=none; b=Zj8wC7rqBnAJYyX0nHK1j/Hf1BVy4iyU3I8jQRsFRAc+boqOYktzkfxnetdGExKdlpu5hVtcRpNDA130CGGTLM/GwTqcWv0r7RhaiBpv56zOfaS4DA/fopZTfGGJ4BGIaUcXRDCmaCXZaPiPDs27rw8xGWvQVPazWhK9i1RYgz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242797; c=relaxed/simple;
-	bh=4QzVYSERdlpCcnJkghzevgU94rApHzQhqdkibZ6luMY=;
+	s=arc-20240116; t=1789242800; c=relaxed/simple;
+	bh=kzjD3NYnQ4KswV32JvblvsIkoi6FbpV/OykyuCDd12o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MnoWzecZ5AdS+8BvSUMn5X4A62GBMOdQO7D/fkBFtxSg1++DVPfdgMOY6cVohJyXYv+HH7MY0Ci+DttS08eh8zxPbxDBb93g433S+t1OX8N0MxZkFwzL9diGWP9lwtv2KyU3PLFwuWPwYOFW46000x5qQIUuAjDgznKbGSMwOI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pZNcCOV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L+9fwOBTu7WCYNl0RU+qvQcJl3ioMbygwNi66/PkQyWeiIQ3kcVKvmFrqkzCeq1mRtt+yJ4zmc2VeGpXt6Igd7ISdSk0sqNhAmzf+k7y/PEYU4rzXH2BSNsbUE+4URaAh9X6S7vDr2oHH1uHACYXdQwwVWEC13DNEVJ7qmwuE5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awi4g4rw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pZNcCOV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1611B1F000FF;
-	Sat, 12 Sep 2026 19:53:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awi4g4rw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3411F000FF;
+	Sat, 12 Sep 2026 19:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242796;
-	bh=jeDbzD81r5WHWyJRyPU7245+tvItB55SYQZH/x7wwKk=;
+	s=korg; t=1789242799;
+	bh=ng15pfJUrIwze7lJPAafPb/7/GbR59R2XEtfWgaCwVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0pZNcCOVn4ykUgyMyl7caV5e+YLNTHSM8taWu6dcDiozkoNsYH3BvRnbYxnIDTyQY
-	 jyTP97jWL7oRj53Z1rfLmqSXGRJZd2cj6++N9wBOkClptAlvLW0Ckd5VYGA42JfImv
-	 Tq7VOkvJiW118GZSeG4U3Gt6UZbsBak66Wh8yjas=
+	b=awi4g4rwlI7JKAKm4Qm4WITCG2WUUzGktFFpjbDpGC5oQJUxKpxK0pJYhBtSQkD7K
+	 E3L/FYVdBhsdYYbA/Wvk3ZQlN7KeB8or+eQ3/WPwe7omdiJGXtpBkT8AfWWscH+kFT
+	 tskG14QjPxpz4TEUuQrSuY18ZLJt9o22p9qiZIbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	syzbot+cae54346a70bbceeff2c@syzkaller.appspotmail.com,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 523/798] remoteproc: Use unbounded workqueue for recovery work
-Date: Sat, 12 Sep 2026 09:02:31 +0200
-Message-ID: <20260912065529.121085939@linuxfoundation.org>
+Subject: [PATCH 5.10 532/798] nilfs2: fix infinite loop in nilfs_clean_segments()
+Date: Sat, 12 Sep 2026 09:02:40 +0200
+Message-ID: <20260912065529.324368233@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,79 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <quic_mojha@quicinc.com>
+From: Joshua Crofts <joshua.crofts1@gmail.com>
 
-[ Upstream commit cab8300b5621a54aa25306ff800c27fa5a4632d7 ]
+[ Upstream commit ce5a5ad1a8330a2fcfdd9ec2ab341be739e89a18 ]
 
-There could be a scenario when there is too much load on a core
-(n number of tasks which is affined) or in a case when multiple
-rproc subsystem is going for recovery, they queue their recovery
-work to one core so even though subsystem are independent their
-recovery will be delayed if one of the subsystem recovery work
-is taking more time in completing.
+syzbot reported a hung task in nilfs_transaction_begin(). This occurs
+because the cleaner ioctl falls into an infinite loop if
+nilfs_segctor_construct() repeatedly returns -EROFS (e.g. the device
+is remounted as read-only after an I/O error).
 
-If we make this queue unbounded, the recovery work could be picked
-on any cpu. This patch is trying to address this.
+Currently in nilfs_clean_segments(), if err is non-zero, it logs the
+error and sleeps but doesn't abort when it encounters a terminal error
+like -EROFS. This causes the thread to loop forever.
 
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/1650367554-15510-1-git-send-email-quic_mojha@quicinc.com
-Stable-dep-of: 74ee3b2f5767 ("remoteproc: Prevent crash handling to race with rproc_del()")
+Fix this by breaking out of the loop if nilfs_segctor_construct()
+returns -EROFS. This matches the behaviour in
+nilfs_segctor_write_out(), which also handles -EROFS.
+
+Reported-by: syzbot+cae54346a70bbceeff2c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cae54346a70bbceeff2c
+Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
+Assisted-by: gemini:gemini-3.1-pro
+Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_core.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ fs/nilfs2/segment.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index e416908745d17..e7918652217ce 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -58,6 +58,7 @@ static int rproc_release_carveout(struct rproc *rproc,
+diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
+index a7600e6722ef4..18964331ee3d9 100644
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2554,6 +2554,10 @@ int nilfs_clean_segments(struct super_block *sb, struct nilfs_argv *argv,
+ 			break;
  
- /* Unique indices for remoteproc devices */
- static DEFINE_IDA(rproc_dev_index);
-+static struct workqueue_struct *rproc_recovery_wq;
- 
- static const char * const rproc_crash_names[] = {
- 	[RPROC_MMUFAULT]	= "mmufault",
-@@ -2450,8 +2451,7 @@ void rproc_report_crash(struct rproc *rproc, enum rproc_crash_type type)
- 	dev_err(&rproc->dev, "crash detected in %s: type %s\n",
- 		rproc->name, rproc_crash_to_string(type));
- 
--	/* Have a worker handle the error; ensure system is not suspended */
--	queue_work(system_freezable_wq, &rproc->crash_handler);
-+	queue_work(rproc_recovery_wq, &rproc->crash_handler);
- }
- EXPORT_SYMBOL(rproc_report_crash);
- 
-@@ -2496,6 +2496,13 @@ static void __exit rproc_exit_panic(void)
- 
- static int __init remoteproc_init(void)
- {
-+	rproc_recovery_wq = alloc_workqueue("rproc_recovery_wq",
-+						WQ_UNBOUND | WQ_FREEZABLE, 0);
-+	if (!rproc_recovery_wq) {
-+		pr_err("remoteproc: creation of rproc_recovery_wq failed\n");
-+		return -ENOMEM;
-+	}
+ 		nilfs_warn(sb, "error %d cleaning segments", err);
 +
- 	rproc_init_sysfs();
- 	rproc_init_debugfs();
- 	rproc_init_cdev();
-@@ -2509,9 +2516,13 @@ static void __exit remoteproc_exit(void)
- {
- 	ida_destroy(&rproc_dev_index);
- 
-+	if (!rproc_recovery_wq)
-+		return;
++		if (unlikely(err == -EROFS))
++			goto out_unlock;
 +
- 	rproc_exit_panic();
- 	rproc_exit_debugfs();
- 	rproc_exit_sysfs();
-+	destroy_workqueue(rproc_recovery_wq);
- }
- module_exit(remoteproc_exit);
- 
+ 		set_current_state(TASK_INTERRUPTIBLE);
+ 		schedule_timeout(sci->sc_interval);
+ 	}
 -- 
 2.53.0
 
