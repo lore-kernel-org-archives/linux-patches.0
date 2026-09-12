@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB04A3644D1;
-	Sat, 12 Sep 2026 07:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8443C346E75;
+	Sat, 12 Sep 2026 07:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197501; cv=none; b=H6kusiG6gZp14Hd7KwMp8N+0NCAnlH/FpUmwwPbte1UdjDw65lMK6g+bSEzzCoQqdgH2ZXvm60jD4fs5ezYSR1hYedn71gUwPs5rzFiDbN42WhLItowYAy3nyJ980NM67/o3L2n1G0AEJFRGJdaTfNlK0R3H+Yi6Xt8VigsjbGc=
+	t=1789197505; cv=none; b=Ucd6qBmr+okU66BIg0k/+qRThgL5Rj4i6vF7emDLqot/CU4oXlFPNaa+Y0iEqfzmHyS/BJPkm6DR8PzTW98xL+MZbml163kMrd5RiCXTtKfhJGSIoBA68PShSrMvTK063iSh/9qakjpUIDS00ZcgaVPxqiYqxZ0YRnicS+n2prQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197501; c=relaxed/simple;
-	bh=GGIElzhkuOOhfK5lgzMEOvsDTtcB0AGht6FcWh3Idu4=;
+	s=arc-20240116; t=1789197505; c=relaxed/simple;
+	bh=k0eSBXBCr1MjF09lYJmTTq5/abXCSBksjdvJJVPSzdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D1cLou25ni8ftdQo9Rf2i6/1S5KbAjeSXdwcwRbDkOEiJDzD/blbGhXoUBhP6B7JkWpxlsqOcbJMuTGHn21E6JbxfY29TUtiNuaJ6fW+F9tNJ7ve0BCJjYFXTOLYcoqiBOOqJKeCZz+iWeH+QJ/c8X7MMvGTpljg6I5nhmcjR0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GUlVLTRG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G0fmE8Ftn6Nb4c5UtgAQhAD7AByPWs3sQj+hFmtAvvLDYMlkX9PRne7riMjUGwZaCLKP1/OfghlhTLOBR+jCpU7NXY9WGNNytJEHpqvkZf8swhI2TtiKG3zgrGX/QjsKnuTl2DcdZegGyJXEcOUnTH4q8RlVxreItEyc2XBkBHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pw6Z6Afr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GUlVLTRG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4E81F000FF;
-	Sat, 12 Sep 2026 07:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pw6Z6Afr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B951F000FF;
+	Sat, 12 Sep 2026 07:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197499;
-	bh=qoFXkvqeFdmCgHXVoOJrhoBH2ZBq2IzpNF27EDFOcIg=;
+	s=korg; t=1789197504;
+	bh=tlTZPPK0xBVnezLDvXYD3n9/QYtBIqtMNPYetDwpyHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GUlVLTRGFGZw//rWxBT+M20VJRaSCzc2nKsDoP9HzU6/pQVbf6MjHuDV4/3JjuJcO
-	 Mt/p6Bt/tP+JCOCJOS1IFj3+uUtUyROYdRBIj+eC5vsuWbl2HnKUjup3O/a6PILsrp
-	 l4dLNHQUuufUXgLWMrNkKHh3rS5EdC0ftUe/6Wns=
+	b=pw6Z6Afrc1Z9FL7BKYA55bWe+2AEQWxosuNtzTgLdhO1XPGAgHTq++Tkmk9QQU3mU
+	 UeSzJ7/yXhCMSk91sK4V01XzQzBT+IcpyRcEt8lzvMVh9Eh0YRMznhLrUzCCHxVn9b
+	 /KSsjhxa00r/XGbV2rz37ZUEYd9FlbjEeapwUghc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0134/1815] perf tests: Fix Python JIT dump profiling test failure
-Date: Sat, 12 Sep 2026 08:31:24 +0200
-Message-ID: <20260912065652.163590521@linuxfoundation.org>
+Subject: [PATCH 7.2 0181/1815] libbpf: Change has_nop_combo to work on top of nop10
+Date: Sat, 12 Sep 2026 08:32:11 +0200
+Message-ID: <20260912065653.254677666@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,139 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 07eac17339dab6b143e12cadf19acd61f03011f8 ]
+[ Upstream commit ee2862439e5c8763cee84e910706fdc5b97bc879 ]
 
-The `python profiling with jitdump` test failed due to:
-1. Target PID extraction resolving to duplicate space-separated values,
-   which broke the buildid-cache loops.
-2. The default workload duration being too short to capture JIT stack
-   trampoline samples, resulting in 0 matching JIT symbols.
+We now expect nop combo with 10 bytes nop instead of 5 bytes nop,
+fixing has_nop_combo to reflect that.
 
-Fix the PID parsing by sorting and retrieving a unique single-line value.
-Implement a robust retry loop starting at 1M python loop iterations and
-scaling up to 100M iterations until JIT symbols are successfully captured
-and verified.
-
-Fixes: c9cd0c7e529e ("perf test: Add python JIT dump test")
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 41a5c7df4466 ("libbpf: Add support to detect nop,nop5 instructions combo for usdt probe")
+Fixes: 554ba38456da ("uprobes/x86: Move optimized uprobe from nop5 to nop10")
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://patch.msgid.link/20260703114917.238144-7-jolsa@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/jitdump-python.sh | 79 ++++++++++++++++--------
- 1 file changed, 53 insertions(+), 26 deletions(-)
+ tools/lib/bpf/usdt.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/tools/perf/tests/shell/jitdump-python.sh b/tools/perf/tests/shell/jitdump-python.sh
-index ae86203b14a22..05aaa3bd900b5 100755
---- a/tools/perf/tests/shell/jitdump-python.sh
-+++ b/tools/perf/tests/shell/jitdump-python.sh
-@@ -16,11 +16,15 @@ if [ "${HAS_PERF_JIT}" != "True" ]; then
-     exit 2
- fi
+diff --git a/tools/lib/bpf/usdt.c b/tools/lib/bpf/usdt.c
+index 57fb82bb81b58..d2ecd3daab961 100644
+--- a/tools/lib/bpf/usdt.c
++++ b/tools/lib/bpf/usdt.c
+@@ -305,7 +305,7 @@ struct usdt_manager *usdt_manager_new(struct bpf_object *obj)
  
--PERF_DATA=$(mktemp /tmp/__perf_test.perf.data.XXXXXX)
-+PERF_DATA_DIR=$(mktemp -d /tmp/__perf_test.perf.data.dir.XXXXXX)
-+PERF_DATA="${PERF_DATA_DIR}/perf.data"
+ 	/*
+ 	 * Detect kernel support for uprobe() syscall, it's presence means we can
+-	 * take advantage of faster nop5 uprobe handling.
++	 * take advantage of faster nop10 uprobe handling.
+ 	 * Added in: 56101b69c919 ("uprobes/x86: Add uprobe syscall to speed up uprobe")
+ 	 */
+ 	man->has_uprobe_syscall = kernel_supports(obj, FEAT_UPROBE_SYSCALL);
+@@ -604,14 +604,14 @@ static int parse_usdt_spec(struct usdt_spec *spec, const struct usdt_note *note,
+ #if defined(__x86_64__)
+ static bool has_nop_combo(int fd, long off)
+ {
+-	unsigned char nop_combo[6] = {
+-		0x90, 0x0f, 0x1f, 0x44, 0x00, 0x00 /* nop,nop5 */
++	unsigned char nop_combo[11] = {
++		0x90, 0x66, 0x2e, 0x0f, 0x1f, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00,
+ 	};
+-	unsigned char buf[6];
++	unsigned char buf[11];
  
- cleanup() {
-     echo "Cleaning up files..."
--    rm -f ${PERF_DATA} ${PERF_DATA}.jit /tmp/jit-${PID}.dump /tmp/jitted-${PID}-*.so 2> /dev/null
-+    rm -rf ${PERF_DATA_DIR} 2> /dev/null
-+    for p in ${ALL_PIDS}; do
-+        rm -f /tmp/jit-${p}.dump /tmp/jitted-${p}-*.so 2> /dev/null
-+    done
- 
-     trap - EXIT TERM INT
+-	if (pread(fd, buf, 6, off) != 6)
++	if (pread(fd, buf, 11, off) != 11)
+ 		return false;
+-	return memcmp(buf, nop_combo, 6) == 0;
++	return memcmp(buf, nop_combo, 11) == 0;
  }
-@@ -33,9 +37,16 @@ trap_cleanup() {
+ #else
+ static bool has_nop_combo(int fd, long off)
+@@ -822,8 +822,8 @@ static int collect_usdt_targets(struct usdt_manager *man, struct elf_fd *elf_fd,
+ 		memset(target, 0, sizeof(*target));
  
- trap trap_cleanup EXIT TERM INT
- 
--echo "Run python with -Xperf_jit"
--cat <<EOF | perf record -k 1 -g --call-graph dwarf -o "${PERF_DATA}" \
--		 -- ${PYTHON} -Xperf_jit
-+ALL_PIDS=""
-+NUM=0
-+for iterations in 1000000 10000000 50000000 100000000; do
-+    echo "Running with $iterations iterations..."
-+    rm -f "${PERF_DATA}.pid"
-+    cat <<EOF | perf record -k 1 -g --call-graph dwarf -o "${PERF_DATA}" -- ${PYTHON} -Xperf_jit
-+import os
-+with open("${PERF_DATA}.pid", "w") as f:
-+    f.write(str(os.getpid()))
-+
- def foo(n):
-     result = 0
-     for _ in range(n):
-@@ -49,29 +60,45 @@ def baz(n):
-     bar(n)
- 
- if __name__ == "__main__":
--    baz(1000000)
-+    baz($iterations)
- EOF
- 
--# extract PID of the target process from the data
--_PID=$(perf report -i "${PERF_DATA}" -F pid -q -g none | cut -d: -f1 -s)
--PID=$(echo -n $_PID)  # remove newlines
--
--echo "Generate JIT-ed DSOs using perf inject"
--DEBUGINFOD_URLS='' perf inject -i "${PERF_DATA}" -j -o "${PERF_DATA}.jit"
--
--echo "Add JIT-ed DSOs to the build-ID cache"
--for F in /tmp/jitted-${PID}-*.so; do
--  perf buildid-cache -a "${F}"
--done
--
--echo "Check the symbol containing the function/module name"
--NUM=$(perf report -i "${PERF_DATA}.jit" -s sym | grep -cE 'py::(foo|bar|baz):<stdin>')
--
--echo "Found ${NUM} matching lines"
--
--echo "Remove JIT-ed DSOs from the build-ID cache"
--for F in /tmp/jitted-${PID}-*.so; do
--  perf buildid-cache -r "${F}"
-+    if [ -f "${PERF_DATA}.pid" ]; then
-+        REAL_PID=$(cat "${PERF_DATA}.pid")
-+        ALL_PIDS="${ALL_PIDS} ${REAL_PID}"
-+    fi
-+
-+    # extract PID of the target process from the data
-+    PID=$(perf report -i "${PERF_DATA}" --stdio -F pid -q -g none | \
-+          cut -d: -f1 -s | sort -u | head -n 1 | tr -d ' ')
-+    if [ -z "${PID}" ]; then
-+        echo "Failed to get PID, retrying..."
-+        continue
-+    fi
-+    ALL_PIDS="${ALL_PIDS} ${PID}"
-+
-+    echo "Generate JIT-ed DSOs using perf inject"
-+    DEBUGINFOD_URLS='' perf inject -i "${PERF_DATA}" -j -o "${PERF_DATA}.jit"
-+
-+    echo "Add JIT-ed DSOs to the build-ID cache"
-+    for F in /tmp/jitted-${PID}-*.so; do
-+        perf buildid-cache -a "${F}"
-+    done
-+
-+    echo "Check the symbol containing the function/module name"
-+    NUM=$(perf report -i "${PERF_DATA}.jit" -s sym --stdio | grep -cE 'py::(foo|bar|baz):<stdin>')
-+
-+    echo "Remove JIT-ed DSOs from the build-ID cache"
-+    for F in /tmp/jitted-${PID}-*.so; do
-+        perf buildid-cache -r "${F}"
-+    done
-+    rm -f /tmp/jitted-${PID}-*.so /tmp/jit-${PID}.dump 2>/dev/null
-+
-+    if [ "${NUM}" -gt 0 ]; then
-+        echo "Success: found ${NUM} matching lines"
-+        break
-+    fi
-+    echo "No matching lines found, retrying with more iterations..."
- done
- 
- cleanup
+ 		/*
+-		 * We have uprobe syscall and usdt with nop,nop5 instructions combo,
+-		 * so we can place the uprobe directly on nop5 (+1) and get this probe
++		 * We have uprobe syscall and usdt with nop,nop10 instructions combo,
++		 * so we can place the uprobe directly on nop10 (+1) and get this probe
+ 		 * optimized.
+ 		 */
+ 		if (man->has_uprobe_syscall && has_nop_combo(elf_fd->fd, usdt_rel_ip)) {
 -- 
 2.53.0
 
