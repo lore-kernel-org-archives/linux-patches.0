@@ -1,37 +1,71 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5193475331;
-	Sat, 12 Sep 2026 12:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6A223BD03;
+	Sat, 12 Sep 2026 12:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215208; cv=none; b=KLn1vOkcjYI/eXPwR+PgpArWM1Dlxi0rqbFwsEDV42/ik2jSJRKddzzi1pQyVwlr8vRNpQ6zN9UqCxCXUiHbN5WXf0L0kwQTRci76/zxvfE5jfFKU6oT0iPcQTltCN0+3J8BvYorIcEXhbMBjth9rAT5YcQLoPfaFkf+hIbB5aE=
+	t=1789215212; cv=none; b=gxV3AJUoe8IXze7C84ehB4kZ1dzfCRa7hqlN9/kf2t8YIDaWpGYD6XlgPsp3DeMRovsnXjvjqf+TNFynrhiaLnXX0GcXyfDYBf5B2bz5QNLbKFnCDKtUIM7Q6wYBQN1kDvL1SbzKyqrEZb0h1/9MHq21CoseROjxoz5cMjeIErg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215208; c=relaxed/simple;
-	bh=Esw8izBelSZVKoXZZCe4OH+pX0sDaHmfJ9PJoiDubKw=;
+	s=arc-20240116; t=1789215212; c=relaxed/simple;
+	bh=8hbHK/rwvpWX3bEdNcWVjP3R+Uhc+XWFcGCfW7a0pa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mxcmyytXnbg6CQbs4nGJcwLIc/Xk4sPSCw1ADtoGeThvb/hhY2/KDE6Z0FK23Jaoj/GswKjvNG8dKc2KyvBvjArkBMyIOY/gG8AiGq0y3ObRRm6pbQdexpH740C3K2vSzHy2qsDnPosTKVb2ehIwFYR0jilYBjN3C3wQjS3ncXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/dVVBkJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OA5zReqxvcVwEIlx/mO1biSrAKHzCQrpAJ6p89MRUGJ+Fj7+kdXG3m2Ws7bTzPRDzZ5mznYn3tnaQ2IrUej5fitJhyGY8ri62z2X5JObmH52u9JfUgQKBBcgX+0yDxeZhO4vZthTwRBAUHU4zqTummp32Nq2KN4c774Jy/OCKDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlFiwxmL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/dVVBkJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4B31F000FF;
-	Sat, 12 Sep 2026 12:13:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlFiwxmL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4941F000FF;
+	Sat, 12 Sep 2026 12:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215206;
-	bh=bdBuIT12WHGp/azaZmR+mXSDRxyZlzA5dYH/uhguWjM=;
+	s=korg; t=1789215211;
+	bh=haKNU1uvGecTES1pdrLT4tr9WCfydh6Qvon6Lmut5v8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U/dVVBkJMSvCnBmpSJxqACdipWfDbrXoMDgNCGxlDCbIgLV1iJSzDZHqmyAlid522
-	 o0j2hR2vaWwDyD9JoBynMwOrGn7bP0Rr/A5keo/oUKZsyGuvOY51G1CcqgI8vTYpBV
-	 CFNcgysN13y4Qhn/KylSuHLT+yQzlOVEtIDFt+D0=
+	b=FlFiwxmLlVHX8S+me/uGo95YXCZ4DCXFpBDM6tNkaqo3MY7BY3sI4Su2J4BU6iHjK
+	 m1LtaT3cXikuYTMoj7bWhDDR6DIyIcw/uqgf6VAFmluz1JrGQ4B2WOlk1HAefaNQTI
+	 /GMjBI0KK7prtTj9965RSzrR4gVEUXnqfokEDfvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
+	Jinchao Wang <wangjinchao600@gmail.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
+	Baoquan He <bhe@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Young <dyoung@redhat.com>,
+	Doug Anderson <dianders@chromium.org>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Helge Deller <deller@gmx.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Joanthan Cameron <Jonathan.Cameron@huawei.com>,
+	Joel Granados <joel.granados@kernel.org>,
+	John Ogness <john.ogness@linutronix.de>,
+	Kees Cook <kees@kernel.org>,
+	Li Huafei <lihuafei1@huawei.com>,
+	"Luck, Tony" <tony.luck@intel.com>,
+	Luo Gengkun <luogengkun@huaweicloud.com>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Nam Cao <namcao@linutronix.de>,
+	oushixiong <oushixiong@kylinos.cn>,
+	Petr Mladek <pmladek@suse.com>,
+	Qianqiang Liu <qianqiang.liu@163.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Tejun Heo <tj@kernel.org>,
+	Thomas Gleinxer <tglx@linutronix.de>,
+	Thomas Zimemrmann <tzimmermann@suse.de>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Ville Syrjala <ville.syrjala@linux.intel.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Yunhui Cui <cuiyunhui@bytedance.com>,
+	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0485/1376] usb: gadget: configfs: fix out-of-bounds read of qw_sign
-Date: Sat, 12 Sep 2026 08:48:31 +0200
-Message-ID: <20260912065618.345809710@linuxfoundation.org>
+Subject: [PATCH 6.12 0468/1376] panic/printk: replace other_cpu_in_panic() with panic_on_other_cpu()
+Date: Sat, 12 Sep 2026 08:48:14 +0200
+Message-ID: <20260912065617.961968449@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,55 +84,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Jinchao Wang <wangjinchao600@gmail.com>
 
-[ Upstream commit f63edb54d8f738f9c21e2068c777ae1c097df6b7 ]
+[ Upstream commit d4a36db5639db032a434aef968f9188a600139ec ]
 
-os_desc_qw_sign_show() passes OS_STRING_QW_SIGN_LEN as the input
-length to utf16s_to_utf8s(), but that argument counts UTF-16 code
-units while OS_STRING_QW_SIGN_LEN (14) is the byte size of qw_sign[].
-The array holds only OS_STRING_QW_SIGN_LEN / 2 (7) code units, so the
-conversion reads up to 7 units (14 bytes) past the end of qw_sign[]
-into the following members of struct gadget_info when the stored
-signature fills the array without a NUL terminator, exposing those
-bytes through the configfs attribute.
+The helper other_cpu_in_panic() duplicated logic already provided by
+panic_on_other_cpu().
 
-The store path halves the count for its input bound but passes the
-full byte count as the utf8s_to_utf16s() output limit; use the
-destination code-unit count in both directions.
+Remove other_cpu_in_panic() and update all users to call
+panic_on_other_cpu() instead.
 
-Fixes: 76180d716f91 ("usb: gadget: configfs: make qw_sign attribute symmetric")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260618005043.1581707-1-michael.bommarito@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This removes redundant code and makes panic handling consistent.
+
+Link: https://lkml.kernel.org/r/20250825022947.1596226-9-wangjinchao600@gmail.com
+Signed-off-by: Jinchao Wang <wangjinchao600@gmail.com>
+Cc: Anna Schumaker <anna.schumaker@oracle.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: "Darrick J. Wong" <djwong@kernel.org>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Doug Anderson <dianders@chromium.org>
+Cc: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Joanthan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Joel Granados <joel.granados@kernel.org>
+Cc: John Ogness <john.ogness@linutronix.de>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Li Huafei <lihuafei1@huawei.com>
+Cc: "Luck, Tony" <tony.luck@intel.com>
+Cc: Luo Gengkun <luogengkun@huaweicloud.com>
+Cc: Max Kellermann <max.kellermann@ionos.com>
+Cc: Nam Cao <namcao@linutronix.de>
+Cc: oushixiong <oushixiong@kylinos.cn>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Qianqiang Liu <qianqiang.liu@163.com>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Sohil Mehta <sohil.mehta@intel.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Thomas Gleinxer <tglx@linutronix.de>
+Cc: Thomas Zimemrmann <tzimmermann@suse.de>
+Cc: Thorsten Blum <thorsten.blum@linux.dev>
+Cc: Ville Syrjala <ville.syrjala@linux.intel.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
+Cc: Yunhui Cui <cuiyunhui@bytedance.com>
+Cc: Yury Norov (NVIDIA) <yury.norov@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 36630cafbeed ("printk: Fix possible console use-after-free")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/configfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/printk/internal.h |  1 -
+ kernel/printk/nbcon.c    |  8 ++++----
+ kernel/printk/printk.c   | 19 ++++---------------
+ 3 files changed, 8 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
-index 82282373c786b..6b3713066ac65 100644
---- a/drivers/usb/gadget/configfs.c
-+++ b/drivers/usb/gadget/configfs.c
-@@ -1177,7 +1177,7 @@ static ssize_t os_desc_qw_sign_show(struct config_item *item, char *page)
- 	struct gadget_info *gi = os_desc_item_to_gadget_info(item);
- 	int res;
+diff --git a/kernel/printk/internal.h b/kernel/printk/internal.h
+index 2cc13c5597688..53c4b3438a1c6 100644
+--- a/kernel/printk/internal.h
++++ b/kernel/printk/internal.h
+@@ -328,7 +328,6 @@ struct printk_message {
+ 	unsigned long		dropped;
+ };
  
--	res = utf16s_to_utf8s((wchar_t *) gi->qw_sign, OS_STRING_QW_SIGN_LEN,
-+	res = utf16s_to_utf8s((wchar_t *) gi->qw_sign, OS_STRING_QW_SIGN_LEN / 2,
- 			      UTF16_LITTLE_ENDIAN, page, PAGE_SIZE - 1);
- 	page[res++] = '\n';
+-bool other_cpu_in_panic(void);
+ bool printk_get_next_message(struct printk_message *pmsg, u64 seq,
+ 			     bool is_extended, bool may_supress);
  
-@@ -1199,7 +1199,7 @@ static ssize_t os_desc_qw_sign_store(struct config_item *item, const char *page,
- 	mutex_lock(&gi->lock);
- 	res = utf8s_to_utf16s(page, l,
- 			      UTF16_LITTLE_ENDIAN, (wchar_t *) gi->qw_sign,
--			      OS_STRING_QW_SIGN_LEN);
-+			      OS_STRING_QW_SIGN_LEN / 2);
- 	if (res > 0)
- 		res = len;
- 	mutex_unlock(&gi->lock);
+diff --git a/kernel/printk/nbcon.c b/kernel/printk/nbcon.c
+index 68563ed55e203..7b4dcb09ce998 100644
+--- a/kernel/printk/nbcon.c
++++ b/kernel/printk/nbcon.c
+@@ -254,7 +254,7 @@ static int nbcon_context_try_acquire_direct(struct nbcon_context *ctxt,
+ 		 * opportunity to perform any necessary cleanup if they were
+ 		 * interrupted by the panic CPU while printing.
+ 		 */
+-		if (other_cpu_in_panic() &&
++		if (panic_on_other_cpu() &&
+ 		    (!is_reacquire || cur->unsafe_takeover)) {
+ 			return -EPERM;
+ 		}
+@@ -309,7 +309,7 @@ static bool nbcon_waiter_matches(struct nbcon_state *cur, int expected_prio)
+ 	 * Event #2 implies the new context is PANIC.
+ 	 * Event #3 occurs when panic() has flushed the console.
+ 	 * Event #4 occurs when a non-panic CPU reacquires.
+-	 * Event #5 is not possible due to the other_cpu_in_panic() check
++	 * Event #5 is not possible due to the panic_on_other_cpu() check
+ 	 *          in nbcon_context_try_acquire_handover().
+ 	 */
+ 
+@@ -348,7 +348,7 @@ static int nbcon_context_try_acquire_requested(struct nbcon_context *ctxt,
+ 	struct nbcon_state new;
+ 
+ 	/* Note that the caller must still remove the request! */
+-	if (other_cpu_in_panic())
++	if (panic_on_other_cpu())
+ 		return -EPERM;
+ 
+ 	/*
+@@ -446,7 +446,7 @@ static int nbcon_context_try_acquire_handover(struct nbcon_context *ctxt,
+ 	 * nbcon_waiter_matches(). In particular, the assumption that
+ 	 * lower priorities are ignored during panic.
+ 	 */
+-	if (other_cpu_in_panic())
++	if (panic_on_other_cpu())
+ 		return -EPERM;
+ 
+ 	/* Handover is not possible on the same CPU. */
+diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
+index a01a5683ecd92..9434460cff640 100644
+--- a/kernel/printk/printk.c
++++ b/kernel/printk/printk.c
+@@ -346,17 +346,6 @@ static void __up_console_sem(unsigned long ip)
+ }
+ #define up_console_sem() __up_console_sem(_RET_IP_)
+ 
+-/*
+- * Return true if a panic is in progress on a remote CPU.
+- *
+- * On true, the local CPU should immediately release any printing resources
+- * that may be needed by the panic CPU.
+- */
+-bool other_cpu_in_panic(void)
+-{
+-	return (panic_in_progress() && !panic_on_this_cpu());
+-}
+-
+ /*
+  * This is used for debugging the mess that is the VT code by
+  * keeping track if we have the console semaphore held. It's
+@@ -2366,7 +2355,7 @@ asmlinkage int vprintk_emit(int facility, int level,
+ 	 * non-panic CPUs are generating any messages, they will be
+ 	 * silently dropped.
+ 	 */
+-	if (other_cpu_in_panic() &&
++	if (panic_on_other_cpu() &&
+ 	    !debug_non_panic_cpus &&
+ 	    !panic_triggering_all_cpu_backtrace)
+ 		return 0;
+@@ -2802,7 +2791,7 @@ void console_lock(void)
+ 	might_sleep();
+ 
+ 	/* On panic, the console_lock must be left to the panic cpu. */
+-	while (other_cpu_in_panic())
++	while (panic_on_other_cpu())
+ 		msleep(1000);
+ 
+ 	down_console_sem();
+@@ -2822,7 +2811,7 @@ EXPORT_SYMBOL(console_lock);
+ int console_trylock(void)
+ {
+ 	/* On panic, the console_lock must be left to the panic cpu. */
+-	if (other_cpu_in_panic())
++	if (panic_on_other_cpu())
+ 		return 0;
+ 	if (down_trylock_console_sem())
+ 		return 0;
+@@ -3197,7 +3186,7 @@ static bool console_flush_all(bool do_cond_resched, u64 *next_seq, bool *handove
+ 			any_progress = true;
+ 
+ 			/* Allow panic_cpu to take over the consoles safely. */
+-			if (other_cpu_in_panic())
++			if (panic_on_other_cpu())
+ 				goto abandon;
+ 
+ 			if (do_cond_resched)
 -- 
 2.53.0
 
