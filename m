@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB747274B46;
-	Sat, 12 Sep 2026 14:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE79231F9B7;
+	Sat, 12 Sep 2026 14:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225161; cv=none; b=nvVM51OoEV1AT9rdJpJkdnzXR2ibivDxSKPxZkXtnq6WmXxJwU0a3qWHCgV798CpRMCUx87kIbdkedE4igE4j5HsdBz8O4Mxr8JTTTlAfCpblpnR5uOraw4y2bBPlcgJspNxrH4FxQs9UybfBS3fBYN+1FvXzntb63sfHNzd4NE=
+	t=1789225166; cv=none; b=mtWbtZ2x0OZlY7CZjxJFWLUeLQDpkg1woBhobR1oSDvlVVP2huV4LenAmxeZ4E+4h+lvT+Km17JwWEGJegj0rbbVFuRJLWlojOoeKggUKHcOdHN3vUs+MxMx47YC7EykKcA8AIrz6GlhAeAx2nYHnaSpjpLaB/e3JDNK8wKNRdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225161; c=relaxed/simple;
-	bh=rz9P+e6rEP1EqKRBLfA0GHioW1wOarmTSEqwUzB0UT8=;
+	s=arc-20240116; t=1789225166; c=relaxed/simple;
+	bh=EswijadtP24GgCueTBZul/JN0UiaOVObL5c14z15z+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AbQWmmsGpjbGCxGU+5JuEnUohczdwzfT8enlYXZ/WTdvaE2NYdR8P9/1p1G3XfXlYPZHnVsMOYp6PW3K0HsGzqKiQOJu6UuDQs9uYdKUm3gURRE65lBqiAtsD2cDUpAzZKQgHcEVQxjk6DelSY++cEy/4oS4S2KDKl1qYPcwass=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZo35UMc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=StgiNDJgEU+CVvYYEIO4t4Yul96hhsSvIIfX7ew4rN2/MGroayZ712ua3321tuj3l45GBYKqhvGx0MkIw7jfVBTak47L3SOnGlW67EmIi1u7BmdZPnSJz4KHg2oxJos8oEqfjPTgUIhVl3Mqtyhyu3fLKWGA5Zt1pU237XHl89s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N3k+QxDO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZo35UMc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732C81F000FF;
-	Sat, 12 Sep 2026 14:59:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N3k+QxDO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB6211F000FF;
+	Sat, 12 Sep 2026 14:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225159;
-	bh=fWYhcbTAE340c3AJnK8Vo5nNroY5dzDT5oS7rx7n7yA=;
+	s=korg; t=1789225164;
+	bh=75B9mw4I1oGuo0Jngehau1KOA7TzDAZS4SvS2f8TuEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lZo35UMc9ZVAo0SIOd2LTutGJExaw1Kk8VmFJgtufQZd5QCvQwNtAK0bndNRlLG/r
-	 cpEv9z5SHKWk9poKnqbB7ENUkd+eJPj2khuzvsEWJa8AODWngupxGS70rxwAqOLKvu
-	 Z7PEh8Q9H3qTWepvagm0hfwnJ5Zti593NMcsISzg=
+	b=N3k+QxDODvBq/qtetoR+UvgWgfcZJXsv5siVQqw2zMHjkSSkLqrnbZZSeZmvsFGk7
+	 aDPWl9kbJCVAoGxB1d7bXPQV1rUsNDabwEbmxjWUFYodiq/DDPW+C5MEx0kpQr5m47
+	 nwUNz6Mv9ZE1PPErFrkU+ejM40Bk0OvL3z2TJ5sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Lee Jones <lee@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Guodong Xu <guodong@riscstar.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1088/1424] mfd: rave-sp: validate received frame payload lengths
-Date: Sat, 12 Sep 2026 08:58:40 +0200
-Message-ID: <20260912065631.671999587@linuxfoundation.org>
+Subject: [PATCH 6.6 1135/1424] riscv: cpufeature: Clarify ISA spec version for canonical order
+Date: Sat, 12 Sep 2026 08:59:27 +0200
+Message-ID: <20260912065632.718698346@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,178 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Guodong Xu <guodong@riscstar.com>
 
-[ Upstream commit 0be718b5451bd83865d6e2a8d750ca7886c4772a ]
+[ Upstream commit fdef048705daa3d4ed1fa212ee071bcbdac02d80 ]
 
-A received RAVE-SP frame contains protocol data followed by a
-variant-specific one- or two-byte checksum. rave_sp_receive_frame() derives
-a checksum pointer before proving that the frame contains the checksum,
-then passes the checksum-inclusive length to handlers that index the
-command, acknowledgment ID and event-data bytes or derive a reply payload
-length.
+Specify that chapter 27 refers to version 20191213 of the RISC-V ISA
+Unprivileged Architecture. The chapter numbering differs across
+specification versions - for example, in version 20250508, the ISA
+Extension Naming Conventions is chapter 36, not chapter 27.
 
-Name those protocol field offsets, prove the checksum extent before
-deriving the protocol-data length, pass only that data length to the
-handlers, and require the complete event or reply prefix before consuming
-it.
+Historical versions of the RISC-V specification can be found via Link [1].
 
-Fixes: 538ee27290fa ("mfd: Add driver for RAVE Supervisory Processor")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://lore.kernel.org/all/20260706092337.78754-1-pengpeng@iscas.ac.cn/
-Link: https://patch.msgid.link/20260720115523.99956-1-pengpeng@iscas.ac.cn
-Signed-off-by: Lee Jones <lee@kernel.org>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://riscv.org/specifications/ratified/ [1]
+Fixes: 99e2266f2460 ("RISC-V: clarify ISA string ordering rules in cpu.c")
+Signed-off-by: Guodong Xu <guodong@riscstar.com>
+Link: https://patch.msgid.link/20260125-supm-ext-id-v2-3-1e3b9714c860@riscstar.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/rave-sp.c | 64 +++++++++++++++++++++++++++++--------------
- 1 file changed, 44 insertions(+), 20 deletions(-)
+ arch/riscv/kernel/cpufeature.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/rave-sp.c b/drivers/mfd/rave-sp.c
-index da50eba100149..458b7334b323b 100644
---- a/drivers/mfd/rave-sp.c
-+++ b/drivers/mfd/rave-sp.c
-@@ -63,6 +63,12 @@
- #define RAVE_SP_TX_BUFFER_SIZE				\
- 	(RAVE_SP_STX_ETX_SIZE + 2 * RAVE_SP_RX_BUFFER_SIZE)
+diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeature.c
+index 3f0ad09e16500..5615b358df020 100644
+--- a/arch/riscv/kernel/cpufeature.c
++++ b/arch/riscv/kernel/cpufeature.c
+@@ -114,7 +114,8 @@ static bool riscv_isa_extension_check(int id)
  
-+enum rave_sp_frame_offset {
-+	RAVE_SP_FRAME_CODE_OFFSET,
-+	RAVE_SP_FRAME_ACK_ID_OFFSET,
-+	RAVE_SP_FRAME_DATA_OFFSET,
-+};
-+
- /**
-  * enum rave_sp_deframer_state - Possible state for de-framer
+ /*
+  * The canonical order of ISA extension names in the ISA string is defined in
+- * chapter 27 of the unprivileged specification.
++ * Chapter 27 of the RISC-V Instruction Set Manual Volume I Unprivileged ISA
++ * (Document Version 20191213).
   *
-@@ -352,7 +358,7 @@ int rave_sp_exec(struct rave_sp *sp,
- 	int command, ret = 0;
- 	u8 ackid;
- 
--	command = sp->variant->cmd.translate(data[0]);
-+	command = sp->variant->cmd.translate(data[RAVE_SP_FRAME_CODE_OFFSET]);
- 	if (command < 0)
- 		return command;
- 
-@@ -366,8 +372,8 @@ int rave_sp_exec(struct rave_sp *sp,
- 	sp->reply = &reply;
- 	mutex_unlock(&sp->reply_lock);
- 
--	data[0] = command;
--	data[1] = ackid;
-+	data[RAVE_SP_FRAME_CODE_OFFSET] = command;
-+	data[RAVE_SP_FRAME_ACK_ID_OFFSET] = ackid;
- 
- 	rave_sp_write(sp, data, data_size);
- 
-@@ -388,16 +394,23 @@ EXPORT_SYMBOL_GPL(rave_sp_exec);
- static void rave_sp_receive_event(struct rave_sp *sp,
- 				  const unsigned char *data, size_t length)
- {
--	u8 cmd[] = {
--		[0] = rave_sp_reply_code(data[0]),
--		[1] = data[1],
--	};
-+	unsigned long action;
-+	u8 cmd[RAVE_SP_FRAME_DATA_OFFSET];
-+
-+	if (length < RAVE_SP_FRAME_DATA_OFFSET + 1) {
-+		dev_warn(&sp->serdev->dev, "Dropping short event frame\n");
-+		return;
-+	}
-+
-+	cmd[RAVE_SP_FRAME_CODE_OFFSET] =
-+		rave_sp_reply_code(data[RAVE_SP_FRAME_CODE_OFFSET]);
-+	cmd[RAVE_SP_FRAME_ACK_ID_OFFSET] = data[RAVE_SP_FRAME_ACK_ID_OFFSET];
- 
- 	rave_sp_write(sp, cmd, sizeof(cmd));
- 
--	blocking_notifier_call_chain(&sp->event_notifier_list,
--				     rave_sp_action_pack(data[0], data[2]),
--				     NULL);
-+	action = rave_sp_action_pack(data[RAVE_SP_FRAME_CODE_OFFSET],
-+				     data[RAVE_SP_FRAME_DATA_OFFSET]);
-+	blocking_notifier_call_chain(&sp->event_notifier_list, action, NULL);
- }
- 
- static void rave_sp_receive_reply(struct rave_sp *sp,
-@@ -405,27 +418,35 @@ static void rave_sp_receive_reply(struct rave_sp *sp,
- {
- 	struct device *dev = &sp->serdev->dev;
- 	struct rave_sp_reply *reply;
--	const  size_t payload_length = length - 2;
-+	size_t payload_length;
-+
-+	if (length < RAVE_SP_FRAME_DATA_OFFSET) {
-+		dev_warn(dev, "Dropping short reply frame\n");
-+		return;
-+	}
-+	payload_length = length - RAVE_SP_FRAME_DATA_OFFSET;
- 
- 	mutex_lock(&sp->reply_lock);
- 	reply = sp->reply;
- 
- 	if (reply) {
--		if (reply->code == data[0] && reply->ackid == data[1] &&
-+		if (reply->code == data[RAVE_SP_FRAME_CODE_OFFSET] &&
-+		    reply->ackid == data[RAVE_SP_FRAME_ACK_ID_OFFSET] &&
- 		    payload_length >= reply->length) {
- 			/*
- 			 * We are relying on memcpy(dst, src, 0) to be a no-op
- 			 * when handling commands that have a no-payload reply
- 			 */
--			memcpy(reply->data, &data[2], reply->length);
-+			memcpy(reply->data, &data[RAVE_SP_FRAME_DATA_OFFSET],
-+			       reply->length);
- 			complete(&reply->received);
- 			sp->reply = NULL;
- 		} else {
- 			dev_err(dev, "Ignoring incorrect reply\n");
- 			dev_dbg(dev, "Code:   expected = 0x%08x received = 0x%08x\n",
--				reply->code, data[0]);
-+				reply->code, data[RAVE_SP_FRAME_CODE_OFFSET]);
- 			dev_dbg(dev, "ACK ID: expected = 0x%08x received = 0x%08x\n",
--				reply->ackid, data[1]);
-+				reply->ackid, data[RAVE_SP_FRAME_ACK_ID_OFFSET]);
- 			dev_dbg(dev, "Length: expected = %zu received = %zu\n",
- 				reply->length, payload_length);
- 		}
-@@ -439,10 +460,10 @@ static void rave_sp_receive_frame(struct rave_sp *sp,
- 				  size_t length)
- {
- 	const size_t checksum_length = sp->variant->checksum->length;
--	const size_t payload_length  = length - checksum_length;
--	const u8 *crc_reported       = &data[payload_length];
- 	struct device *dev           = &sp->serdev->dev;
- 	u8 crc_calculated[RAVE_SP_CHECKSUM_SIZE];
-+	const u8 *crc_reported;
-+	size_t payload_length;
- 
- 	if (unlikely(checksum_length > sizeof(crc_calculated))) {
- 		dev_warn(dev, "Checksum too long, dropping\n");
-@@ -457,6 +478,9 @@ static void rave_sp_receive_frame(struct rave_sp *sp,
- 		return;
- 	}
- 
-+	payload_length = length - checksum_length;
-+	crc_reported = &data[payload_length];
-+
- 	sp->variant->checksum->subroutine(data, payload_length,
- 					  crc_calculated);
- 
-@@ -465,10 +489,10 @@ static void rave_sp_receive_frame(struct rave_sp *sp,
- 		return;
- 	}
- 
--	if (rave_sp_id_is_event(data[0]))
--		rave_sp_receive_event(sp, data, length);
-+	if (rave_sp_id_is_event(data[RAVE_SP_FRAME_CODE_OFFSET]))
-+		rave_sp_receive_event(sp, data, payload_length);
- 	else
--		rave_sp_receive_reply(sp, data, length);
-+		rave_sp_receive_reply(sp, data, payload_length);
- }
- 
- static int rave_sp_receive_buf(struct serdev_device *serdev,
+  * Ordinarily, for in-kernel data structures, this order is unimportant but
+  * isa_ext_arr defines the order of the ISA string in /proc/cpuinfo.
 -- 
 2.53.0
 
