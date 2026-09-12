@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CAF352022;
-	Sat, 12 Sep 2026 16:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0043BE645;
+	Sat, 12 Sep 2026 16:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231852; cv=none; b=tPh+vXeFVcNZZd4X+ZVPjYFOetxI3C8fAJpatspxFyl4MHg6ss87zBYReS1gZvvNOgaZqMhPaAUcSWNa+YjeIJgQil843g7tuDOUWxrTDG7V/If+YBlkEhgkL41XP5bChGjnC37llO8CqCaJ7NVE/cV2DWixLhreB2GgRA0rcrA=
+	t=1789231857; cv=none; b=CAEdOMF6w/5owCKya4grkVrJSriL+ZfbGGngjwtNy3G7D8755kXA+iyJnFtDcNzalNWmLxgIGzf6ORFMq2s+UV7b0OFxKoLVWmVs65lcvlj4A3IyL9z9T8ArmLpd6pzxiuUzacNILOJ1C0EvAs7jSfqvD0fucvCdp/0F7zx0mmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231852; c=relaxed/simple;
-	bh=ahKyrcGqx2ntx0AXXma7v7YKDeBqOhuMJ0gJ/M3NO8I=;
+	s=arc-20240116; t=1789231857; c=relaxed/simple;
+	bh=DwBrXNcyE+Frt6BmjbicQlpdJL182XYP0Jc43fky7R8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a+AOdyRHr/VHHWs/EDh19AWZdJLoMXVFN5dpQWBbCnQnKM9GAb+DE3hHcylsLeAjnq6zEeWKWUHPJfNDr9ZJOmzom84qZuGtcpyrWgV9dyPafnYu3/jmcPQiBkULPbKj0yKfwNYWSsKM28roaKCA+3j/GBEpJN4tXa4YasdrzD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t4gUSTU5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YLwOX1P8m9WIZSG1vZ6iw/68lXswcQjYgNFfaeNDZ2bqVOZScqsSDW6i0vDlV/uzPVpZRsunVeQ8cc2cUKmRSQWzBwnLun5uzfGf5xXw3RQhJ1ShBFuA8r2zcLwHY6SAXGwxoN9ll+yA9KctpAKxOsFACkuKqPhv+RR5W3BFfUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMOcsFr/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4gUSTU5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D7941F00893;
-	Sat, 12 Sep 2026 16:50:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMOcsFr/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21651F000FF;
+	Sat, 12 Sep 2026 16:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231851;
-	bh=7yz/TOpk/Gkpdxlbfj9U6pRCJbXE41Ok/Tg2OSdtebo=;
+	s=korg; t=1789231856;
+	bh=ahD8utjiNSrfEhwy/ACgnsSlvGdMWkZYsTMxvQEHsJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t4gUSTU51+UX//FrEmec48IqY3RKF7rqmaM8twuHCXIzjKQKKgoJjtQE4bgwBdDkd
-	 HvC/0OCbFJ/fo6I3fgzSQJGbng1Cdv/btnIHQx+dSTTxCLHUQvMf50hvJo6ZCVheB9
-	 mAZq1JCHxQh8sM0oKRFV4bQ1sQNnJToO16609HdE=
+	b=yMOcsFr/0CyyIKkP1FU2tQbprVxyDPz8dZnvJMRoGo46AWYCU6Sz7lb09kkQrNpaO
+	 rU0CzN8V8qB4n0o8iX57FZ8WbTd9dM+JwtkT8Ctc9pJcK7XWhaS4FQel15EMaFadOn
+	 nyp7CyHxoTr4TAGz3fScMNMLOOtM3tUQ+rsnsEdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Alex Elder <elder@riscstar.com>,
+	Michael Blunt <michaelbblunt@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1083/1191] net: ipa: balance runtime PM reference on remove error
-Date: Sat, 12 Sep 2026 09:03:31 +0200
-Message-ID: <20260912065612.489962678@linuxfoundation.org>
+Subject: [PATCH 6.1 1084/1191] inetpeer: randomize RB-tree node comparison using SipHash
+Date: Sat, 12 Sep 2026 09:03:32 +0200
+Message-ID: <20260912065612.511069770@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,56 +52,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6b9eaa61ff2df63c6eb35d5cd025e2cef0861d76 ]
+[ Upstream commit 2ee66e9487172fcd189bc52a767c30dad7141c09 ]
 
-ipa_remove() takes a runtime PM reference before accessing IPA hardware
-during teardown. If a concurrent modem start or stop keeps
-ipa_modem_stop() busy across both attempts, the callback intentionally
-returns without releasing the remaining resources because proceeding
-with teardown could crash. That return also skips the matching
-pm_runtime_put_noidle(), leaving the callback's usage-count reference
-held.
+The inetpeer rate limiting system stores peer entries in a Red-Black tree
+keyed deterministically on the remote IP address. Because tree lookups walk
+the RB-tree using standard lexicographical comparisons (inetpeer_addr_cmp),
+an off-path adversary can predict the exact topology of the tree and the
+sequence of nodes traversed during lookups (the gc_stack candidate list).
 
-Drop only this runtime PM reference before returning.
-pm_runtime_put_noidle() does not request an idle transition, so the
-hardware and resources retained on this exceptional path remain
-untouched while the usage count stays balanced.
+By combining deterministic tree traversal with aggressive garbage collection
+(triggered when tree size exceeds inet_peer_threshold), an attacker can
+selectively force the eviction of targeted inet_peer nodes. When an evicted
+node is subsequently re-created upon receiving a new packet, its rate-limiting
+token bucket (rate_tokens, rate_last) is reset to full capacity. This creates
+a side-channel primitive allowing off-path attackers to bypass IP-keyed ICMP
+rate limits and infer open UDP ports (similar to SAD DNS style attacks).
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
+Mitigate this by randomizing the RB-tree node comparison logic using SipHash
+with a secret key (inetpeer_hash_key) initialized via net_get_random_once().
+Nodes are ordered in the tree by SipHash(addr, key) rather than raw IP
+addresses. Because the secret key is unknown to external entities, the tree
+layout and lookup traversal paths are unpredictable to off-path adversaries,
+breaking the deterministic eviction gadget.
 
-Fixes: 923a6b698447 ("net: ipa: get clock in ipa_probe()")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Alex Elder <elder@riscstar.com>
-Link: https://patch.msgid.link/20260815151737.3758320-1-ruoyuw560@gmail.com
+Cache the computed 64-bit SipHash (hash) in struct inet_peer and compute the
+target hash (dhash) once at the beginning of inet_getpeer() to avoid recomputing
+SipHash at every step of the RB-tree walk.
+
+Fixes: b145425f269a ("inetpeer: remove AVL implementation in favor of RB tree")
+Reported-by: Michael Blunt <michaelbblunt@gmail.com>
+Suggested-by: Michael Blunt <michaelbblunt@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260818151213.3953963-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipa/ipa_main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/net/inetpeer.h |  4 ++++
+ net/ipv4/inetpeer.c    | 38 +++++++++++++++++++++++++++++++++++---
+ 2 files changed, 39 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ipa/ipa_main.c b/drivers/net/ipa/ipa_main.c
-index 5e2d1961ea604..ce10159455a33 100644
---- a/drivers/net/ipa/ipa_main.c
-+++ b/drivers/net/ipa/ipa_main.c
-@@ -879,12 +879,12 @@ static void ipa_remove(struct platform_device *pdev)
- 		}
- 		if (ret) {
- 			/*
--			 * Not cleaning up here properly might also yield a
--			 * crash later on. As the device is still unregistered
--			 * in this case, this might even yield a crash later on.
-+			 * Continuing teardown after failing to stop the modem
-+			 * could crash, so leave the remaining resources allocated.
- 			 */
- 			dev_err(dev, "Failed to stop modem (%pe), leaking resources\n",
- 				ERR_PTR(ret));
-+			pm_runtime_put_noidle(dev);
- 			return;
- 		}
+diff --git a/include/net/inetpeer.h b/include/net/inetpeer.h
+index f475757daafba..414e9adf4c511 100644
+--- a/include/net/inetpeer.h
++++ b/include/net/inetpeer.h
+@@ -35,6 +35,7 @@ struct inetpeer_addr {
  
+ struct inet_peer {
+ 	struct rb_node		rb_node;
++	u64			hash;
+ 	struct inetpeer_addr	daddr;
+ 
+ 	u32			metrics[RTAX_MAX];
+@@ -125,6 +126,9 @@ static inline int inetpeer_addr_cmp(const struct inetpeer_addr *a,
+ {
+ 	int i, n;
+ 
++	if (a->family != b->family)
++		return a->family < b->family ? -1 : 1;
++
+ 	if (a->family == AF_INET)
+ 		n = sizeof(a->a4) / sizeof(u32);
+ 	else
+diff --git a/net/ipv4/inetpeer.c b/net/ipv4/inetpeer.c
+index 23896b6b8417d..21a9c6eff1d77 100644
+--- a/net/ipv4/inetpeer.c
++++ b/net/ipv4/inetpeer.c
+@@ -22,6 +22,7 @@
+ #include <net/ip.h>
+ #include <net/inetpeer.h>
+ #include <net/secure_seq.h>
++#include <linux/siphash.h>
+ 
+ /*
+  *  Theory of operations.
+@@ -53,6 +54,34 @@
+  */
+ 
+ static struct kmem_cache *peer_cachep __ro_after_init;
++static siphash_aligned_key_t inetpeer_hash_key __read_mostly;
++
++static u64 inetpeer_addr_hash(const struct inetpeer_addr *a)
++{
++	net_get_random_once(&inetpeer_hash_key, sizeof(inetpeer_hash_key));
++
++	if (a->family == AF_INET)
++		return siphash_2u32((__force u32)a->a4.addr, a->a4.vif,
++				    &inetpeer_hash_key);
++
++	return siphash_4u32((__force u32)a->a6.s6_addr32[0],
++			    (__force u32)a->a6.s6_addr32[1],
++			    (__force u32)a->a6.s6_addr32[2],
++			    (__force u32)a->a6.s6_addr32[3],
++			    &inetpeer_hash_key);
++}
++
++static int inetpeer_entry_cmp(u64 dhash,
++			      const struct inetpeer_addr *daddr,
++			      const struct inet_peer *p)
++{
++	if (dhash < p->hash)
++		return -1;
++	if (dhash > p->hash)
++		return 1;
++
++	return inetpeer_addr_cmp(daddr, &p->daddr);
++}
+ 
+ void inet_peer_base_init(struct inet_peer_base *bp)
+ {
+@@ -89,6 +118,7 @@ void __init inet_initpeers(void)
+ 
+ /* Called with rcu_read_lock() or base->lock held */
+ static struct inet_peer *lookup(const struct inetpeer_addr *daddr,
++				u64 dhash,
+ 				struct inet_peer_base *base,
+ 				unsigned int seq,
+ 				struct inet_peer *gc_stack[],
+@@ -110,7 +140,7 @@ static struct inet_peer *lookup(const struct inetpeer_addr *daddr,
+ 			break;
+ 		parent = next;
+ 		p = rb_entry(parent, struct inet_peer, rb_node);
+-		cmp = inetpeer_addr_cmp(daddr, &p->daddr);
++		cmp = inetpeer_entry_cmp(dhash, daddr, p);
+ 		if (cmp == 0) {
+ 			now = jiffies;
+ 			if (READ_ONCE(p->dtime) != now)
+@@ -180,6 +210,7 @@ struct inet_peer *inet_getpeer(struct inet_peer_base *base,
+ 			       const struct inetpeer_addr *daddr)
+ {
+ 	struct inet_peer *p, *gc_stack[PEER_MAX_GC];
++	u64 dhash = inetpeer_addr_hash(daddr);
+ 	struct rb_node **pp, *parent;
+ 	unsigned int gc_cnt, seq;
+ 
+@@ -187,7 +218,7 @@ struct inet_peer *inet_getpeer(struct inet_peer_base *base,
+ 	 * Because of a concurrent writer, we might not find an existing entry.
+ 	 */
+ 	seq = read_seqbegin(&base->lock);
+-	p = lookup(daddr, base, seq, NULL, &gc_cnt, &parent, &pp);
++	p = lookup(daddr, dhash, base, seq, NULL, &gc_cnt, &parent, &pp);
+ 
+ 	if (p)
+ 		return p;
+@@ -199,11 +230,12 @@ struct inet_peer *inet_getpeer(struct inet_peer_base *base,
+ 	write_seqlock_bh(&base->lock);
+ 
+ 	gc_cnt = 0;
+-	p = lookup(daddr, base, seq, gc_stack, &gc_cnt, &parent, &pp);
++	p = lookup(daddr, dhash, base, seq, gc_stack, &gc_cnt, &parent, &pp);
+ 	if (!p) {
+ 		p = kmem_cache_alloc(peer_cachep, GFP_ATOMIC);
+ 		if (p) {
+ 			p->daddr = *daddr;
++			p->hash = dhash;
+ 			p->dtime = (__u32)jiffies;
+ 			refcount_set(&p->refcnt, 1);
+ 			atomic_set(&p->rid, 0);
 -- 
 2.53.0
 
