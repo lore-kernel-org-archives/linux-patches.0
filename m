@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7990D34CFDA;
-	Sat, 12 Sep 2026 12:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419E9315D49;
+	Sat, 12 Sep 2026 12:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217765; cv=none; b=jpfzydxA6yVwJtNG8yHTTfPMPMGKdrBhbMWWTv258/AWPI3R9herZa7DZE+kheWgutZdg66O4e2EbtyyykCq7IKn/1HZMaF+KpLZxXmCygs1lj7haYJcaDk4OdkbznCpevKQdosgLCMjSjeWFWrqdrV4GVtFUaFQHZr2h6zTrSc=
+	t=1789217770; cv=none; b=ZMPNcj/nM5/F/dhWQKgIVf2cyLrkHpfXuGYfQc0EHPwnbIia5FxHp6Zuf1fFXRyZ29a9IBKWOdnrFoehD8ODVAX3b/yTqsBh2bySxprJXTlvQPibrghNStfL5tu4UAJW8TUNths5t9bjInYdprTdyN2pT7EbnTwXJ3fGSKkUd5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217765; c=relaxed/simple;
-	bh=KuxlbLQ9d7SZfpdZ4Fk2Qh/zpAL9pRJCxUX+k7LE7Es=;
+	s=arc-20240116; t=1789217770; c=relaxed/simple;
+	bh=CTmsvavft8q1vRBFpToSCgbyiImG66h1RsbmLGGtLO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LhEJoJ+vDTX8OjnUIcv4Ld85XqBWUyZZn9/UXkKdA6YxEHPTvQI0g01kLX+qi8Qc7/3ou8Yt6EwkgOcfwa3GYWBCW4GfQHrQdf6gpwd8RoBV1YzgGOKH0nf/lYtxtDPUtWEEztwV4k7wIY6noRX5GtvJV1wMeei0xjwTTaQK6c0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQnyoIQY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tvPGbz+DN93T8pVfrcrNsNzdUEo8iCU2Jx/Sy3oxv1RJbzsRC88/7mF2Yg4XNJXsU28qWKgk+bv5qIdjj0DOBHgkrse0VV3ERcM2Fz2XRQJTVxg3N3IPbf7ivcRpcv/M7PsOFRZwxC/Rla51w7myxZJBJnL7xQZL7emzcedtK5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUpJrZDB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQnyoIQY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E64F1F000FF;
-	Sat, 12 Sep 2026 12:56:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUpJrZDB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5471F000FF;
+	Sat, 12 Sep 2026 12:56:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217764;
-	bh=2nPQnPvwfv2WHxDALj9Lgsg4DYZFpqxqouenYxgCIYo=;
+	s=korg; t=1789217769;
+	bh=7wpsS/5zGjlpY8bbVRffbj5wCZzH0Zp1/obXDiq2rV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QQnyoIQYHGraxw1rEwTNFd71doZ88BKdUWMiGpcZ5CLreKse82fYyO9XGFpo5QxAe
-	 +QzMlh/7huUMzDUC3RwNE8xYzXcQyS7VLsvowbfatpbkdiS1fR++XR+8jQ9A9j/4E7
-	 sh4kDMzzjg9bVIMsDBmxQUYPxPBmFZpt4Vv3Dq8I=
+	b=NUpJrZDBg1W1fK0AiZFvyewsxj0ZKSEqaqIwdFe1nbq1XWHqbX+tTUCc7e3V2wc7O
+	 uwkVvoUcgvmZElTAQdWUIMPQHYSKa/kN5QgHwyFJEdE6S3hmQ29MpFSBzXTUh0u/VC
+	 HGXnVcPvPxJx2EFMQLS73wp3H98Qo5uSeAA63ork=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1005/1376] ARM: dts: helios4: add SATA regulator supplies
-Date: Sat, 12 Sep 2026 08:57:11 +0200
-Message-ID: <20260912065629.963650683@linuxfoundation.org>
+Subject: [PATCH 6.12 1006/1376] perf stat: Fix evsel_list leak in cmd_stat
+Date: Sat, 12 Sep 2026 08:57:12 +0200
+Message-ID: <20260912065629.986085858@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,74 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 7a90520e8c9a8f48fe6f3e741cf34d8c2b6dbc61 ]
+[ Upstream commit 340641a4b5fff4f4b12261c9d92169f6e2ea11f4 ]
 
-The ahci-mvebu driver and libahci_platform request three supplies
-on SATA controller and port nodes:
-  - ahci-supply  (controller power)
-  - phy-supply   (PHY power)
-  - target-supply (disk power per port)
+Fix a memory leak in cmd_stat() where evsel_list is leaked if an error
+occurs while opening the output file.
 
-Without them the regulator core prints notices at boot, e.g.:
-  supply ahci not found, using dummy regulator
-  supply phy not found, using dummy regulator
-  supply target not found, using dummy regulator
-
-The SATA controller and PHY inside the Armada 388 SoC are powered
-by the 3.3V I/O rail; the four disk bays are powered by the 5V HDD
-rail.  Wire the existing fixed regulators accordingly.
-
-Fixes: ced8025b569e ("ARM: dts: armada388-helios4")
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Assisted-by: Antigravity:gemini-3.1-pro
+Fixes: 361c99a661a7 ("perf evsel: Introduce perf_evlist")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/marvell/armada-388-helios4.dts | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/perf/builtin-stat.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/marvell/armada-388-helios4.dts b/arch/arm/boot/dts/marvell/armada-388-helios4.dts
-index 21df1b9e3900f..003b0708e9656 100644
---- a/arch/arm/boot/dts/marvell/armada-388-helios4.dts
-+++ b/arch/arm/boot/dts/marvell/armada-388-helios4.dts
-@@ -222,13 +222,17 @@ sata@a8000 {
- 				status = "okay";
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				ahci-supply = <&reg_3p3v>;
-+				phy-supply = <&reg_3p3v>;
+diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
+index e476598de8083..34c7cfdfec2dd 100644
+--- a/tools/perf/builtin-stat.c
++++ b/tools/perf/builtin-stat.c
+@@ -2648,7 +2648,8 @@ int cmd_stat(int argc, const char **argv)
+ 		output = fopen(output_name, mode);
+ 		if (!output) {
+ 			perror("failed to create output file");
+-			return -1;
++			status = -1;
++			goto out;
+ 		}
+ 		if (!stat_config.json_output) {
+ 			clock_gettime(CLOCK_REALTIME, &tm);
+@@ -2659,7 +2660,8 @@ int cmd_stat(int argc, const char **argv)
+ 		output = fdopen(output_fd, mode);
+ 		if (!output) {
+ 			perror("Failed opening logfd");
+-			return -errno;
++			status = -errno;
++			goto out;
+ 		}
+ 	}
  
- 				sata0: sata-port@0 {
- 					reg = <0>;
-+					target-supply = <&reg_5p0v_hdd>;
- 				};
+@@ -2668,7 +2670,8 @@ int cmd_stat(int argc, const char **argv)
+ 		parse_options_usage(stat_usage, stat_options, "o", 1);
+ 		parse_options_usage(NULL, stat_options, "log-fd", 0);
+ 		parse_options_usage(NULL, stat_options, "interval-clear", 0);
+-		return -1;
++		status = -1;
++		goto out;
+ 	}
  
- 				sata1: sata-port@1 {
- 					reg = <1>;
-+					target-supply = <&reg_5p0v_hdd>;
- 				};
- 			};
- 
-@@ -236,13 +240,17 @@ sata@e0000 {
- 				status = "okay";
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				ahci-supply = <&reg_3p3v>;
-+				phy-supply = <&reg_3p3v>;
- 
- 				sata2: sata-port@0 {
- 					reg = <0>;
-+					target-supply = <&reg_5p0v_hdd>;
- 				};
- 
- 				sata3: sata-port@1 {
- 					reg = <1>;
-+					target-supply = <&reg_5p0v_hdd>;
- 				};
- 			};
- 
+ 	stat_config.output = output;
 -- 
 2.53.0
 
