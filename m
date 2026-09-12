@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08622432E60;
-	Sat, 12 Sep 2026 15:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4513264D4;
+	Sat, 12 Sep 2026 15:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226335; cv=none; b=idB7UYnWl3+Eipo1MPYO2K0C1GKS51M3Mc/hPoC48fg99GVmXp+VBV1kKqJ7xExNwklCXkOcldaHH/gmrM7L6IheeDuJARtjP8Ko64aegzuZuU3emhx7AndJ6scCReA5nr+leAnxLfpYz1x/erTgcLrd3fawEVlNAeQYN89xTqY=
+	t=1789226340; cv=none; b=o0UpFWN/8GQYv3Ybf/pAz/kRVLwTEbK3vPcQBxwHCFDNOKWxBsHIqT3DP9n6EasJsjMIgB0L9H0nleoOU86iLaxd9ay5Jguc+YLJ9wr/a0Yt8+XT291Jo15Uzt6L7R7hoIoJGidyPfoJEhACsrnTs0aWbUImIzWeGzZyvheyhcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226335; c=relaxed/simple;
-	bh=lt1XYwPziQi2dj7M96Ldk3IjJrF2RXtMwt5u1/upMug=;
+	s=arc-20240116; t=1789226340; c=relaxed/simple;
+	bh=QOoJiVcR78if6NJqSsCpFEyN6nCq4+/Afa7g6NHHVwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o2Tva8s+GLVp9ADhjQj3dlZWpCyiC+/nNw6lXHAKwejc8QN63L+vz76Ycp4TgZkGWNZFxIcqDwTrrUgotS8g6oXC5aJ7lXSD3HhGEg+/qleOncxPv3V7zpUTPnkDHPtUK+KadS6H+7bepTBfT/NVrG8znUjbaBeNzHSeGtZvAEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2l2D3Zpz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c2QhvEvI82TS4ILoOgkWV6EP/DO21MWphXDY+jM48xiFgBYUSjYcObXzTuzWKXB9WC7cTAmw6+DW7TeJPU3iQ0attdv++FZxXhpr2rJ9Fk9Dexgwx/6zS/yy+alz6HDpscpoEsvBIA5bO/Ph+efeZYad+DyCr+XQsz8nUm0znp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FIQ9QoQa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2l2D3Zpz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940951F00893;
-	Sat, 12 Sep 2026 15:18:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIQ9QoQa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4331F000FF;
+	Sat, 12 Sep 2026 15:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226333;
-	bh=j9IGZe8jI7rh+pC/vw73vTfI7LL9PAQOkMaQM8rkYRY=;
+	s=korg; t=1789226339;
+	bh=OXFJet5og54ywm6vOG1/THTcubbr+PpOEcyIi0olS5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2l2D3ZpzGf0Q4oB7rW+Dl9sgzD/IByv9bwqZlPzJcdzSQus+AkFfxTf9zUfSwaN9s
-	 /jqkPKy7sH//EY35Bgwa9Is6dLRnCadV5AHhLCGxJCrWXPbruusy5QFGDc+U1BH8T7
-	 O/iVG6p36dv7sZoT9vFPqDv0IUTkFqpbmicfdZU0=
+	b=FIQ9QoQaMZX8skjDkqDErNvIWUMU1PnPOqbAKrHTv9ZK9Pb0l6Jdv88xlIsJ3alO+
+	 H2j+qlxUt4OcybHGu69Ee+7rXrvwgPPqO68Y0XkOFL0lwIRbmVNT/ITe4AffbO46aq
+	 4bar3upxK7POrRnu66wcdcU5bcc5EV1pmpi7m3io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marino Dzalto <marino.dzalto@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1382/1424] netfilter: xt_HL: add pr_fmt and checkentry validation
-Date: Sat, 12 Sep 2026 09:03:34 +0200
-Message-ID: <20260912065638.206170905@linuxfoundation.org>
+Subject: [PATCH 6.6 1365/1424] net/sched: hhf: clamp quantum before hhf_change() to avoid overflow
+Date: Sat, 12 Sep 2026 09:03:17 +0200
+Message-ID: <20260912065637.830737731@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,94 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marino Dzalto <marino.dzalto@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 24bd5c2679caf8a228d90cafa221da4b47fd6642 ]
+[ Upstream commit 2164b512b97bb053e8ce4d6e95576f11bed6a005 ]
 
-Add pr_fmt to prefix log messages with the module name for
-easier debugging in dmesg.
+hhf_init() sets q->quantum = psched_mtu(qdisc_dev(sch)) with no overflow
+check. A device with a huge MTU (e.g. dummy with max_mtu == 0 accepting
+MTU 2147483634) makes weight * quantum overflow the signed deficit in
+hhf_dequeue(), spinning forever.
 
-Add checkentry functions for IPv4 (ttl_mt_check) and IPv6
-(hl_mt6_check) to validate the match mode at rule registration
-time, rejecting invalid modes with -EINVAL.
+Clamp q->quantum before hhf_change() so both the opt and !opt paths see
+a sane quantum. Without this, bare "tc qdisc add ... hhf" succeeds with
+a clamped quantum but "tc qdisc add ... hhf limit 1000" (any option
+present) fails with -EINVAL because hhf_change() re-validates the
+unclamped default (sch_hhf.c:559). 256 matches fq_codel's floor and is
+a sane minimum for a DRR quantum.
 
-The evaluation function returns false in case the mode is
-unknown, so this is a cleanup, not a bug fix.
+Conditions to recreate the bug: a device whose MTU (plus
+hard_header_len) wraps psched_mtu() into the sign bit (e.g. a dummy
+device with max_mtu == 0 accepting MTU 2147483634). Requires
+CAP_NET_ADMIN in a user namespace.
 
-Signed-off-by: Marino Dzalto <marino.dzalto@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: 793d9eda4821 ("netfilter: x_tables: replace pr_{info,err}() by pr_info_ratelimited()")
+Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260822195509.112717-6-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_hl.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ net/sched/sch_hhf.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/netfilter/xt_hl.c b/net/netfilter/xt_hl.c
-index c1a70f8f04417..4a12a757ecbf8 100644
---- a/net/netfilter/xt_hl.c
-+++ b/net/netfilter/xt_hl.c
-@@ -6,6 +6,7 @@
-  * Hop Limit matching module
-  * (C) 2001-2002 Maciej Soltysiak <solt@dns.toxicfilms.tv>
-  */
-+#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
+index aca4795c4101f..f9eab403ac161 100644
+--- a/net/sched/sch_hhf.c
++++ b/net/sched/sch_hhf.c
+@@ -617,6 +617,10 @@ static int hhf_init(struct Qdisc *sch, struct nlattr *opt,
+ 	q->hhf_evict_timeout = HZ;      /* 1  sec */
+ 	q->hhf_non_hh_weight = 2;
  
- #include <linux/ip.h>
- #include <linux/ipv6.h>
-@@ -22,6 +23,18 @@ MODULE_LICENSE("GPL");
- MODULE_ALIAS("ipt_ttl");
- MODULE_ALIAS("ip6t_hl");
++	if ((int)q->quantum <= 0 ||
++	    (u64)q->quantum * q->hhf_non_hh_weight > INT_MAX)
++		q->quantum = 256;
++
+ 	if (opt) {
+ 		int err = hhf_change(sch, opt, extack);
  
-+static int ttl_mt_check(const struct xt_mtchk_param *par)
-+{
-+	const struct ipt_ttl_info *info = par->matchinfo;
-+
-+	if (info->mode > IPT_TTL_GT) {
-+		pr_err("Unknown TTL match mode: %d\n", info->mode);
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- static bool ttl_mt(const struct sk_buff *skb, struct xt_action_param *par)
- {
- 	const struct ipt_ttl_info *info = par->matchinfo;
-@@ -41,6 +54,18 @@ static bool ttl_mt(const struct sk_buff *skb, struct xt_action_param *par)
- 	return false;
- }
- 
-+static int hl_mt6_check(const struct xt_mtchk_param *par)
-+{
-+	const struct ip6t_hl_info *info = par->matchinfo;
-+
-+	if (info->mode > IP6T_HL_GT) {
-+		pr_err("Unknown Hop Limit match mode: %d\n", info->mode);
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- static bool hl_mt6(const struct sk_buff *skb, struct xt_action_param *par)
- {
- 	const struct ip6t_hl_info *info = par->matchinfo;
-@@ -65,6 +90,7 @@ static struct xt_match hl_mt_reg[] __read_mostly = {
- 		.name       = "ttl",
- 		.revision   = 0,
- 		.family     = NFPROTO_IPV4,
-+		.checkentry = ttl_mt_check,
- 		.match      = ttl_mt,
- 		.matchsize  = sizeof(struct ipt_ttl_info),
- 		.me         = THIS_MODULE,
-@@ -73,6 +99,7 @@ static struct xt_match hl_mt_reg[] __read_mostly = {
- 		.name       = "hl",
- 		.revision   = 0,
- 		.family     = NFPROTO_IPV6,
-+		.checkentry = hl_mt6_check,
- 		.match      = hl_mt6,
- 		.matchsize  = sizeof(struct ip6t_hl_info),
- 		.me         = THIS_MODULE,
 -- 
 2.53.0
 
