@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2744A39EF0B;
-	Sat, 12 Sep 2026 20:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C9B39FCCA;
+	Sat, 12 Sep 2026 20:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243357; cv=none; b=buomOdZw6oOzLDxyTC08ozmDtezblixmYRNzKLjzeyz+VEHPJ9AlpIWk6GxqCIbg+QWzBunArCiJ9n1nbj+RHqtlJ8lPa+9ysFN0+YFfdg059Kijktyh2w0qH/a5p9e7Utt8bZw+9z+e0JaLvh3nJOySLw8bneFqRzllabQPwSg=
+	t=1789243361; cv=none; b=mSuUByIvgkTuFmcTp8Qk8NRjxyxH2CjM2Fd5J8fhmDLixxFmoqON1Lo4kMnajq88NClbmP6npOehP0MV3WqxoRa2DFGlesRqF0QiuVmVCajADNwZzkoc99THI2uGmBLKUtshffSIsqzCR1oFynRVMq0BhjYXpwEjQx8W+vVp7c0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243357; c=relaxed/simple;
-	bh=VHvKASjtXfVptown0t8iZpgW8agbNoH9m/aD+VJRC4s=;
+	s=arc-20240116; t=1789243361; c=relaxed/simple;
+	bh=YWQxewp/FkCJ+IcOL/Hk6DbhwW/gbvwHtxzliBh1ev4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I6RBOfFBl5MImLOZ4mGH8vW7JWh64pPqxsNmJDMBZw66lV/DSq+q7z83gmefBL8LybDa8Ppazs8Eizi9SK+ihY670+NdMXoX6K3zdloHOhVQiiTJKA9aZc4g1/fRAveaHSqty1CxnmfqxJZv73Ylcgy3K+0mKRlJ/x98fTjRVEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vb5cz8hT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eHqGSes2h3zKrj6Y0HtqlQOg26d93VTBAKezgJJ0/R4CczovW9jPAIlFMmZpnz138QbUbMZi2acaTeJJRkaklC64ePvDIQ0nOURDketC+GPzaXGG+JZcubjjsCkdbADHXcSikUwUoPcB2/QvloXK6fmOhChAIrnzXQkpjJlmCkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbdtGlCe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vb5cz8hT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED46F1F00893;
-	Sat, 12 Sep 2026 20:02:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbdtGlCe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7EB91F000FF;
+	Sat, 12 Sep 2026 20:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243353;
-	bh=Y13XP8Zz3rsiIuQrBdKmdDQtBw17kbVsAIkAIAkmSBE=;
+	s=korg; t=1789243356;
+	bh=xdSB9HeRbTWxYgJGxBii/bS0wjILAJHsQIpQlrpTis4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vb5cz8hTDvsan+25eB4veNLJT2f0ktsfEMzhz+PE2KZ8rAA/mvkSutmhYbCyfubX5
-	 Bfp+1y7MmalCi482Ee8b9ZL7cZKrhj8Wds5QNsVXzEYXyIzt5utfaOP8ARPLjXAECU
-	 IB7PPcsapN6dqGrV6j5e+Esu3bdhYOyWVTylPBEk=
+	b=VbdtGlCeh9O4jiIklAfu4JUmAN+/YktlaFvIUJzpZ7htNThu4J4rRm/P4/PbDRVpi
+	 7UomgMQFCYGSorLEhYMshSZLc7n4jSQoPoFrD9dXZ9d/lIt8nPrH+Kko3fT29AXWnK
+	 UoHBLDE6Jq3ENq5z5kF49KsCHn5yekf2fpradhg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sechang Lim <rhkrqnwk98@gmail.com>,
-	Junseo Lim <zirajs7@gmail.com>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 725/798] net: kcm: Hold RCU read lock while running BPF parser
-Date: Sat, 12 Sep 2026 09:05:53 +0200
-Message-ID: <20260912065533.698644441@linuxfoundation.org>
+Subject: [PATCH 5.10 726/798] pppox: drain queued packets on channel handoff
+Date: Sat, 12 Sep 2026 09:05:54 +0200
+Message-ID: <20260912065533.720533607@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,50 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junseo Lim <zirajs7@gmail.com>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit b0346dd64e4905291cc9c479f2e6cf1884ced4e6 ]
+[ Upstream commit 92c1bf630abf0af646562398eaa36f80b5ff677d ]
 
-kcm_parse_func_strparser() calls bpf_prog_run_pin_on_cpu() which
-prevents CPU migration, but does not establish an RCU read-side
-critical section. Consequently, BPF map operations can trigger
-WARN_ON_ONCE(!bpf_rcu_lock_held()) when called from the KCM strparser
-program.
+PPPIOCGCHAN both returns the channel index and marks a PPPOX socket as
+bound to generic PPP, despite its getter semantic. Packets received
+before that transition are queued on sk_receive_queue, but a bound
+socket is no longer readable. Such packets therefore remain queued until
+the socket is destroyed.
 
-Hold the RCU read lock while running the program.
+After marking a socket bound, wait for receive paths that observed the
+old state to finish queueing packets, and then drain the queue into
+generic PPP.
 
-Fixes: 9b73896a81dc ("kcm: Use stream parser")
-Reported-by: Sechang Lim <rhkrqnwk98@gmail.com>
-Signed-off-by: Junseo Lim <zirajs7@gmail.com>
-Link: https://patch.msgid.link/20260813035136.106167-1-zirajs7@gmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Link: https://patch.msgid.link/20260811035314.302878-1-qingfang.deng@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/kcm/kcmsock.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ppp/pppox.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index df3ca6a9791e6..e2d55d344deb8 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -5,6 +5,7 @@
-  * Copyright (c) 2016 Tom Herbert <tom@herbertland.com>
-  */
+diff --git a/drivers/net/ppp/pppox.c b/drivers/net/ppp/pppox.c
+index 08364f10a43fa..61b3453469dce 100644
+--- a/drivers/net/ppp/pppox.c
++++ b/drivers/net/ppp/pppox.c
+@@ -74,7 +74,9 @@ int pppox_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
  
-+#include <linux/rcupdate.h>
- #include <linux/bpf.h>
- #include <linux/errno.h>
- #include <linux/errqueue.h>
-@@ -385,7 +386,9 @@ static int kcm_parse_func_strparser(struct strparser *strp, struct sk_buff *skb)
- 	struct bpf_prog *prog = psock->bpf_prog;
- 	int res;
+ 	switch (cmd) {
+ 	case PPPIOCGCHAN: {
++		struct sk_buff *skb;
+ 		int index;
++
+ 		rc = -ENOTCONN;
+ 		if (!(sk->sk_state & PPPOX_CONNECTED))
+ 			break;
+@@ -85,7 +87,22 @@ int pppox_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+ 			break;
  
-+	rcu_read_lock();
- 	res = bpf_prog_run_pin_on_cpu(prog, skb);
-+	rcu_read_unlock();
- 	return res;
- }
- 
+ 		rc = 0;
++		/* PPPIOCGCHAN historically marks the userspace handoff to
++		 * generic PPP; pppd then attaches the returned channel to
++		 * /dev/ppp.
++		 */
+ 		sk->sk_state |= PPPOX_BOUND;
++		/* Let lockless receive paths finish queueing against the old
++		 * state.
++		 */
++		synchronize_net();
++		/* Drain packets queued before the handoff because a bound
++		 * socket is no longer readable.
++		 */
++		while ((skb = skb_dequeue(&sk->sk_receive_queue))) {
++			skb_orphan(skb);
++			ppp_input(&po->chan, skb);
++		}
+ 		break;
+ 	}
+ 	default:
 -- 
 2.53.0
 
