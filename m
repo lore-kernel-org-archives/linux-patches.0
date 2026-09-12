@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4D4478E57;
-	Sat, 12 Sep 2026 13:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90EF41A57D;
+	Sat, 12 Sep 2026 13:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219183; cv=none; b=oG5hl5tgitslKS1IRj0GYHB8e0VPxWSD2TnnRVoI+wU4GuTY387Jj5ypwmC/2jFycyRevLb7TAn7pTIA1baN3378W6KguAlZ9klbZdGKzQs4CXMf0KTpbxeLQD8efCuf4TWiAiWaPCS1jtIoybXg03uIqPt5I8OKve/OJIKk8vw=
+	t=1789219191; cv=none; b=NrmddxYG9PdxNI3bdIvSIlQFH4nl6PGUUnXD4P9nv2H59Q22ZGgGOA6CESE6x8Hs5GR39vfQ4Tx034l1ndkMo2CwJNMsJHE5+LyUNAlVw4Mxb3k77vMlm+x47KmFogPXt46IK49qK919gvDUT4KnsWsPtZdBHEBdTqVT4keXM9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219183; c=relaxed/simple;
-	bh=A5/AMnBN5jhrC0oWTaTmWWpcpr47zu0OvxD6JI9igTg=;
+	s=arc-20240116; t=1789219191; c=relaxed/simple;
+	bh=9Cg+1b+cp53rPDHFGPhcBo1K9OMnQUOG3XZly1c7AGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uTxT/ekr9hiXoMUMTTa4LmzB0l1G6Aooz5R0agHUQkMRP8lyx99Vku5IJ+RlhO/Y5b4cU6rgr1c+nm+U1MT0akBmpNPy8NuVQ8k4rSVlmpLUPozduT+H+Tyf7tHjbJcN8EzlmtaVCFyW77zdIwCi0VSH3oOS9d2s5kSu5EdcxE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iC4biLE9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mij625pWw13MdYcz3yN7fhml6SMLEfSFdQBSGObAd9dxfNY84NrG7liym5H+Re33FORe9aW5jQ0dmYRDz/1AxkXAiRPvibt/QyZuaRiciCkVmiO7oDWuKrM/sXPjzZaQOjgsGaGAqBGVuC5YPrDUPxan1Zp+WXQh7Suu4d8apFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvKn98v2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iC4biLE9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB5191F00893;
-	Sat, 12 Sep 2026 13:19:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvKn98v2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72AF81F000FF;
+	Sat, 12 Sep 2026 13:19:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219182;
-	bh=Nr7y+1o+UriX0pkiBfY72U+xKqSY2F7s15ekehKZ4ok=;
+	s=korg; t=1789219187;
+	bh=SmZTOFDcnIWy5uA1+7p60XaxCacfk3cEvGXVvg2CniQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iC4biLE9pIXTdPhgHJ0xcObLWytDR7bNHaM+DoOD7wCAQfF/tBnnH475nLRP+7U+X
-	 DHGU2zPO9us95pNnJJkUap+7VFFyk3cJ0ltL0ymmXrfzLa75my58feuIfK7WFK5foq
-	 XW476DwgHeqEm9bhnS9z3tJ+WHRVg7vxb13W/mtw=
+	b=cvKn98v2DC1mWtENFMVOqgnfZTM446o3gl4xFtD/q3Bo/TLt+uDw28OsT0uiC/Uyo
+	 gEGCS/lWLChck8RfiJ/IUfH/PItRxe9jweR++o/dgjGrtAoX7f9KmnR5kwctAixdWG
+	 1jpD0+vmkT3bv4u4wuVoo1H59+PPfSFuOTgCum7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1256/1376] net/smc: free stashed qentry before overwrite in REQ_ADD_LINK to ADD_LINK transition
-Date: Sat, 12 Sep 2026 09:01:22 +0200
-Message-ID: <20260912065635.533945681@linuxfoundation.org>
+Subject: [PATCH 6.12 1247/1376] net: bridge: Reject descending VLAN tunnel ranges
+Date: Sat, 12 Sep 2026 09:01:13 +0200
+Message-ID: <20260912065635.336533946@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,60 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahanta Jambigi <mjambigi@linux.ibm.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 036322025d6e440cb75fc6fecbba9a16b271a2ae ]
+[ Upstream commit b74a072d8fb71d3c9ffba4a17d5943e63266fb38 ]
 
-When smc_llc_event_handler() transitions the local LLC flow from
-SMC_LLC_FLOW_REQ_ADD_LINK to SMC_LLC_FLOW_ADD_LINK on arrival of an ADD_LINK
-request, it calls smc_llc_flow_qentry_set() unconditionally:
+A pair of descending VLAN and tunnel IDs can pass the tunnel range span
+check. The VLAN subtraction produces a negative int, which is converted
+to unsigned when compared with the u32 tunnel ID subtraction. It can
+therefore equal the wrapped tunnel ID delta.
 
-	if (lgr->llc_flow_lcl.type == SMC_LLC_FLOW_REQ_ADD_LINK) {
-		lgr->llc_flow_lcl.type = SMC_LLC_FLOW_ADD_LINK;
-		smc_llc_flow_qentry_set(&lgr->llc_flow_lcl, qentry);
-		...
-	}
+The range loop then performs no iterations. Since the batched
+notification handling added a post-loop error check, this leaves err
+uninitialized and makes the request's return value unpredictable.
 
-A CONFIRM_LINK or ADD_LINK_CONT arriving while flow->type is
-SMC_LLC_FLOW_REQ_ADD_LINK is stashed into flow->qentry via the
-SMC_LLC_CONFIRM_LINK / SMC_LLC_ADD_LINK_CONT handler (which stores into
-flow->qentry for any non-NONE flow type).  When the subsequent ADD_LINK
-arrives, the REQ_ADD_LINK branch overwrites flow->qentry with the new pointer
-without first freeing the stashed allocation, leaking one kmalloc object.
+Reject descending VLAN ranges before comparing the spans. Valid
+ascending and single-entry ranges remain unchanged, while malformed
+descending ranges consistently return -EINVAL.
 
-The stashed entry has no consumer: smc_llc_wait() is only called from
-llc_add_link_work, which is not yet scheduled while the flow type remains
-REQ_ADD_LINK.  No waiter is sleeping on llc_msg_waiter at this point.
-It is safe to unconditionally free any stashed qentry before
-the overwrite.
+This issue was found by a static analysis checker and confirmed by
+manual source review.
 
-Call smc_llc_flow_qentry_del() before smc_llc_flow_qentry_set() in the
-REQ_ADD_LINK branch.  smc_llc_flow_qentry_del() already checks flow->qentry
-before freeing, so the normal path where no entry is stashed is a no-op.
-
-Fixes: b4ba4652b3f8 ("net/smc: extend LLC layer for SMC-Rv2")
-Reviewed-by: Hidayath Khan <hidayath@linux.ibm.com>
-Signed-off-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Link: https://patch.msgid.link/20260818073107.466506-1-mjambigi@linux.ibm.com
+Fixes: 94339443686b ("net: bridge: notify on vlan tunnel changes done via the old api")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260814134053.1387275-1-ruoyuw560@gmail.com
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_llc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bridge/br_netlink_tunnel.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/smc/smc_llc.c b/net/smc/smc_llc.c
-index 149d63cff667e..924dbd38e879c 100644
---- a/net/smc/smc_llc.c
-+++ b/net/smc/smc_llc.c
-@@ -1902,6 +1902,8 @@ static void smc_llc_event_handler(struct smc_llc_qentry *qentry)
- 			if (lgr->llc_flow_lcl.type ==
- 					SMC_LLC_FLOW_REQ_ADD_LINK) {
- 				/* server started add_link processing */
-+				/* free any qentry stashed in REQ_ADD_LINK state */
-+				smc_llc_flow_qentry_del(&lgr->llc_flow_lcl);
- 				lgr->llc_flow_lcl.type = SMC_LLC_FLOW_ADD_LINK;
- 				smc_llc_flow_qentry_set(&lgr->llc_flow_lcl,
- 							qentry);
+diff --git a/net/bridge/br_netlink_tunnel.c b/net/bridge/br_netlink_tunnel.c
+index a713668ea34f0..e7eceab5b515d 100644
+--- a/net/bridge/br_netlink_tunnel.c
++++ b/net/bridge/br_netlink_tunnel.c
+@@ -302,7 +302,8 @@ int br_process_vlan_tunnel_info(const struct net_bridge *br,
+ 
+ 		if (!(tinfo_last->flags & BRIDGE_VLAN_INFO_RANGE_BEGIN))
+ 			return -EINVAL;
+-		if ((tinfo_curr->vid - tinfo_last->vid) !=
++		if (tinfo_curr->vid < tinfo_last->vid ||
++		    (tinfo_curr->vid - tinfo_last->vid) !=
+ 		    (tinfo_curr->tunid - tinfo_last->tunid))
+ 			return -EINVAL;
+ 		t = tinfo_last->tunid;
 -- 
 2.53.0
 
