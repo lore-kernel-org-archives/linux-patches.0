@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6004078E8;
-	Sat, 12 Sep 2026 09:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6EF384CE9;
+	Sat, 12 Sep 2026 10:00:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207197; cv=none; b=AzgDBJOcfBqURbXmJ+N3m8Zv79Ne0xiL3QxFaAFgzQS3smJEdDhQTQtXLZlL7Pntpe49MIdkt3CyYm8AGKTLc4W75exKJRyefK6jKvBT7zeNp3Ltxdb1+VJTbVwm8yxCr+CJVpdhtAhFuvftmzIyR8i1Ut8uhHYNEbsFS0R7W4U=
+	t=1789207201; cv=none; b=hA4VujfGI+bFPXFaCKC1PT/FWTITVdgbaOvsflMchk2zkpWgFvIIRnUX+VGyE7Q1lBVP9OWyU4B53FbEW3pgiFHtr9ytIlOFN7OvzaOkqH8TtYxdjlqq4xwglo5Fi7hjeXlxBAdhDFLVQPeytTIJd3JWQif7F/QOFiezjx0sdeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207197; c=relaxed/simple;
-	bh=m4+VbrXmgaFNRTUPALRsw6w8wjI1HxNNVKPG1rjsWQQ=;
+	s=arc-20240116; t=1789207201; c=relaxed/simple;
+	bh=YRHKUQTrCgO4bNIWzIlHRpkRtDdeYMQKTxaMSHRXZM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XFV0rMTM44ALLVTfVPub5rXIeSNK7zc2qyRBGtbIP/3FufBC+uBiKbBozNrlr3fNue9l0bD6M2U8KrBUSh5n5O0xcRqd4xZxfW9WJRs0RHvjxeXAOiGYfD2wlvbYh2r2ZyEjvpKeFL/4kp/mzVZllRF5pYN30gZqFK814nTFumU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B34IYRHm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZsIgL1JABVKMUZSm8acvmCrFqCU+G5mTQtNQHyCBw3OsM7kVKjDz8tJ+C2PkDMRttXPLEdr0Ki0WhHCGl8hLXDUd33ns08xAr2SVZQgfGWDuMxInVU5dYdw/jLBy+NxCF1IQxL+AaL6RFbIRdw8kqARRUdJBnhfDjWAyjAF4r2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Auoi5uv9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B34IYRHm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB1E1F000FF;
-	Sat, 12 Sep 2026 09:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Auoi5uv9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 713661F000FF;
+	Sat, 12 Sep 2026 09:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207195;
-	bh=naQMkpgSNMtQE6sHD/rHPpS0GSzJ+uE6ckBdDfpHMvg=;
+	s=korg; t=1789207200;
+	bh=TnklR7gkABfwdmxYo9TzYGR2PoznEFeahcraN9N0Y4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B34IYRHmUqO5O694zQMcFmXaVYozedzlX11aXnFyteu0TLuwU8Dvbn3D7FjpMVZu0
-	 8Gypbd5KdoikdBOzBPU9SW+YQfKrjaBkcKDUC8z49XadrdWh0OhrnwcOe7nqlxwM53
-	 S2KNc+ioO4urvu2KXR/QrDtNTYC4cgbLUOKG0Z18=
+	b=Auoi5uv9rTwtriozoJn5FJfNAaxRYcvrrdI0ANx/g0peyEQL+HSK5QnPb80xjcoi0
+	 3HLRaL+hq7NtehmfCtlbzS2qp1spY1l64r/jjWdMQUVyT88CMP8PSLWqTOD9Wwwpdh
+	 RAma88Foh7U1Ni6LKCWib/Pzjx01hqoGNVgmo2JA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0361/1518] iommufd/selftest: Avoid selftest dirty bitmap size wrap
-Date: Sat, 12 Sep 2026 08:42:10 +0200
-Message-ID: <20260912065631.637132107@linuxfoundation.org>
+Subject: [PATCH 6.18 0362/1518] media: v4l2-async: Unregister sub-device if asc_list is empty
+Date: Sat, 12 Sep 2026 08:42:11 +0200
+Message-ID: <20260912065631.660197067@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,59 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-[ Upstream commit 4132ba2ae2cf14c289e3fabc1c95ac244d643356 ]
+[ Upstream commit 4e72f13d58c4245c177a9d5f54579345554f354d ]
 
-IOMMU_TEST_OP_DIRTY sizes its temporary dirty bitmap from length /
-page_size.  Very large selftest ranges can make the DIV_ROUND_UP()
-additions wrap before allocation, producing a zero-length allocation while
-the later test_bit() loop still walks the original number of bits.
+When my em28xx USB device that uses the i2c tvp5150 driver is
+disconnected, it crashes.
 
-The selftest helper does not need to support unbounded dirty bitmap sizes.
-Reject requests that would allocate more than SZ_16M for the temporary
-buffer.
+The cause is that the tvp5150 i2c module uses v4l2_async, but
+the em28xx driver does not since it predates v4l2_async.
 
-Fixes: 79ea4a496ab5 ("iommufd/selftest: Fix buffer read overrrun in the dirty test")
-Link: https://patch.msgid.link/r/20260628152331.82122.408afd7b466c.iommufd-test-dirty-bitmap-size-wrap@trailofbits.com
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+In that corner case sd->asc_list is empty, so
+v4l2_async_unregister_subdev() never calls v4l2_device_unregister_subdev().
+
+Modify the code so that, if sd->asc_list is empty,
+v4l2_device_unregister_subdev() is still called.
+
+Fixes: 28a1295795d8 ("media: v4l: async: Allow multiple connections between entities")
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Tested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/selftest.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/media/v4l2-core/v4l2-async.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
-index 35c42ff4355a7..cd3d1380cf6c5 100644
---- a/drivers/iommu/iommufd/selftest.c
-+++ b/drivers/iommu/iommufd/selftest.c
-@@ -10,6 +10,7 @@
- #include <linux/iommu.h>
- #include <linux/platform_device.h>
- #include <linux/slab.h>
-+#include <linux/sizes.h>
- #include <linux/xarray.h>
- #include <uapi/linux/iommufd.h>
+diff --git a/drivers/media/v4l2-core/v4l2-async.c b/drivers/media/v4l2-core/v4l2-async.c
+index 70284f50e1f93..5f6685e34d90f 100644
+--- a/drivers/media/v4l2-core/v4l2-async.c
++++ b/drivers/media/v4l2-core/v4l2-async.c
+@@ -897,9 +897,18 @@ void v4l2_async_unregister_subdev(struct v4l2_subdev *sd)
+ 	sd->subdev_notifier = NULL;
  
-@@ -1806,6 +1807,9 @@ static int iommufd_test_dirty(struct iommufd_ucmd *ucmd, unsigned int mockpt_id,
- 	if (!page_size || !length || iova % page_size || length % page_size ||
- 	    !uptr)
- 		return -EINVAL;
-+	max = length / page_size;
-+	if (max > SZ_16M * BITS_PER_BYTE)
-+		return -EOVERFLOW;
- 
- 	hwpt = get_md_pagetable(ucmd, mockpt_id, &mock);
- 	if (IS_ERR(hwpt))
-@@ -1816,7 +1820,6 @@ static int iommufd_test_dirty(struct iommufd_ucmd *ucmd, unsigned int mockpt_id,
- 		goto out_put;
+ 	if (sd->asc_list.next) {
+-		list_for_each_entry_safe(asc, asc_tmp, &sd->asc_list,
+-					 asc_subdev_entry) {
+-			v4l2_async_unbind_subdev_one(asc->notifier, asc);
++		if (list_empty(&sd->asc_list)) {
++			/*
++			 * If the sub-device was registered through other means
++			 * than v4l2-async, there are no async connections but
++			 * the sub-device may still well be registered.
++			 * Unregister it now.
++			 */
++			v4l2_device_unregister_subdev(sd);
++		} else {
++			list_for_each_entry_safe(asc, asc_tmp, &sd->asc_list,
++						 asc_subdev_entry)
++				v4l2_async_unbind_subdev_one(asc->notifier, asc);
+ 		}
  	}
  
--	max = length / page_size;
- 	tmp = kvzalloc(DIV_ROUND_UP(max, BITS_PER_LONG) * sizeof(unsigned long),
- 		       GFP_KERNEL_ACCOUNT);
- 	if (!tmp) {
 -- 
 2.53.0
 
