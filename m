@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED1F288B9;
-	Sat, 12 Sep 2026 16:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE239288B9;
+	Sat, 12 Sep 2026 16:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231280; cv=none; b=h3MCMcDeie4F6QZBf+yHYxEJ7gUDeP+v7VATMKzLxl4kufV/UJ8osrZqMhTyyWx9EKkTaskmC+GBZcRzGLyqB+i+mS1Lq/jX1AVlFi4e2iblqiaNfFiHJz+T1GRBY5w38+qPNLXQSmWzUXS++QZon0FZ7fHBukCGMgf9/yHFoVU=
+	t=1789231285; cv=none; b=WxqVtQVsNJiiUrUyyd4Pnm+XfWEFBHEPSO/9c2rx6ooVt2asXFRhZOJ2D/0jwM200yoNqE+frNQCM0WnJ3tJ3wAIVi/R/vM5rrSavPl1Ue+eIqoHAhr5bqrn8OEZLhu4gFaB8pYom13ORY95hdlVcFdyOshz8UDOywXud/7YM6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231280; c=relaxed/simple;
-	bh=7Big+RGget2D7FPcOlLYGaqT1f1kyORLTLq4ZwdBPd4=;
+	s=arc-20240116; t=1789231285; c=relaxed/simple;
+	bh=T/d8uMaF6I1NIwIUfzIyTfe8K8rELSHReh8Azsk4OjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l8u3iyrnptx7S77EPwjrYhTVpGyQNhrwDWZDqmb1/8zdLfL6XeIrTnDaJQ5IuwQDPtkaiDonUt2rJkbx4cPvzaqXxYoKb5pyPMYtnL3/G2IBmKGHfW+3JhN7ERN4YJSwgL16Qc0cnqY11tD4gjnvb1q1U8sIrI7GqfvpUDssgQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VlY/0t0V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HJ61QtIJ5e94V9PHIKi5RBn1BvWc1kJ3l11zVIVspUQ1+ar8RGNK/oWlijY2OiJOQYmryDSsDLfxo5ly9d76n8nFKCEYMKrtBPsKDiSLhA89aq8hNqQRsMaAmLmMdwVf4QbVVSlgCEuXSyU2nLBNLb0u+2eTs7pYROzhX90MKoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqzGYuEv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VlY/0t0V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 995A91F000FF;
-	Sat, 12 Sep 2026 16:41:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqzGYuEv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF5C1F000FF;
+	Sat, 12 Sep 2026 16:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231278;
-	bh=MEzCInGJN7Tjtg8k/dvNLcDl2YBhAZ1eQjp0EBnaOYA=;
+	s=korg; t=1789231283;
+	bh=79pA91MQ6R5Fc739zbXssEUo4lPhshYaKI8kJeZvCiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VlY/0t0VkO4Tt8x0nJtK4e/j/jyQsAWBtOfI6BF7rOuOHXsIE2npIHrSZS/Pq0NCQ
-	 zNn8Pg/3cNKc/ItGrWVc5tH/U5jEBb+9m464vng520clVxBLu1oBxCQR5fZeqcTmpX
-	 HI4mKQouDi2TX88KE5ZkSW76u++LO/l+WskeARWg=
+	b=cqzGYuEvaV6IB5OjZLDfDuOrPAS3O66371XeKMgFfXcP6kT6no07eGCPzSrdXfQhp
+	 2MG4BEehycrnTF8WjYSJHDJFOFLrp0PIRs7R7qe0S2iEOOckOeMg9c1uQ+T5uTSr4m
+	 AWQ2ITKDo1eyBfYeBM19C6NPqWOd8sZGHnsv31NU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Simon Horman <horms@kernel.org>,
-	David Heidelberg <david@ixit.cz>,
+	Zijun Hu <zijun.hu@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0964/1191] nfc: llcp: bound SNL TLV parsing to the skb and add length checks
-Date: Sat, 12 Sep 2026 09:01:32 +0200
-Message-ID: <20260912065609.870346406@linuxfoundation.org>
+Subject: [PATCH 6.1 0924/1191] Bluetooth: btusb: Fix BD_ADDR byte order in btusb_set_bdaddr_wcn6855()
+Date: Sat, 12 Sep 2026 09:00:52 +0200
+Message-ID: <20260912065608.986234096@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,116 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit f4c7f37f0ab990952539dc68d931d65c3657600a ]
+[ Upstream commit d0b15d812688d3f0f3fe1c4426e12814d0c294dc ]
 
-nfc_llcp_recv_snl() walked the SNL TLV list using a u16 offset/length
-pair derived from skb->len, without bounding reads to the actual skb
-data. Three problems followed:
+btusb_set_bdaddr_wcn6855() sends the address without swapping byte
+order for VSC 0xFC14, but the command expects the address in reversed
+byte order compared to other HCI commands like HCI_Create_Connection,
+resulting in a wrong BD_ADDR being set.
 
-  - For a short frame (skb->len < LLCP_HEADER_SIZE), tlv_len underflowed.
-  - The per-TLV header (type, length) was read without checking that two
-    bytes remained.
-  - A declared TLV length could run past the end of the buffer, and an
-    SDREQ with length == 0 made "service_name_len = length - 1" underflow
-    (size_t), driving an out-of-bounds read in the following strncmp() /
-    nfc_llcp_sock_from_sn(). The SDRES case likewise read tlv[2]/tlv[3]
-    without a length check.
+btmon log on WCN6855 shows VSC 0xFC14 is sent with swapped bytes
+11 22 33 44 55 66, and Read BD ADDR returns the expected address
+11:22:33:44:55:66:
 
-A nearby NFC device can reach this without authentication; LLCP link
-activation happens automatically after NFC-DEP.
+  < HCI Command: Vendor (0x3f|0x0014) plen 6                  #3 [hci0]
+          11 22 33 44 55 66
+  > HCI Event: Command Complete (0x0e) plen 4                  #4 [hci0]
+        Vendor (0x3f|0x0014) ncmd 1
+          Status: Success (0x00)
+  < HCI Command: Read BD ADDR (0x04|0x0009) plen 0            #11 [hci0]
+  > HCI Event: Command Complete (0x0e) plen 10                #12 [hci0]
+        Read BD ADDR (0x04|0x0009) ncmd 1
+          Status: Success (0x00)
+          Address: 11:22:33:44:55:66 (OUI 11-22-33)
 
-Walk the TLV list by pointer, bounded by skb_tail_pointer() over the
-linear skb data, and validate each TLV declared length before use. Add
-explicit length checks for SDREQ (>= 1) and SDRES (exactly 2).
+Fix by swapping the input address before issuing the command.
 
-Found by 0sec automated security-research tooling (https://0sec.ai).
-
-Fixes: 19cfe5843e86 ("NFC: Initial SNL support")
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260609202543.42282-1-doruk@0sec.ai
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Fixes: b40f58b97386 ("Bluetooth: btusb: Add Qualcomm Bluetooth SoC WCN6855 support")
+Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/llcp_core.c | 29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ drivers/bluetooth/btusb.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
-index db050f4faa5b6..7b86faf3f4ce5 100644
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -1286,10 +1286,9 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index fab5f7eb34362..acf58aaa551ef 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3218,14 +3218,15 @@ static int btusb_set_bdaddr_ath3012(struct hci_dev *hdev,
+ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
+ 				const bdaddr_t *bdaddr)
  {
- 	struct nfc_llcp_sock *llcp_sock;
- 	u8 dsap, ssap, type, length, tid, sap;
--	const u8 *tlv;
--	u16 tlv_len, offset;
-+	const u8 *tlv, *tlv_end;
- 	const char *service_name;
--	size_t service_name_len;
-+	int service_name_len;
- 	struct nfc_llcp_sdp_tlv *sdp;
- 	HLIST_HEAD(llc_sdres_list);
- 	size_t sdres_tlvs_len;
-@@ -1305,22 +1304,34 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
- 		return;
- 	}
++	bdaddr_t bdaddr_swapped;
+ 	struct sk_buff *skb;
+-	u8 buf[6];
+ 	long ret;
  
-+	/*
-+	 * Walk the SNL TLV list in the linear part of the skb only,
-+	 * bounded by skb_tail_pointer(). Each TLV needs a two-byte
-+	 * header (type, length) and its declared length must fit before
-+	 * the end; this also keeps the walk safe for very short frames.
-+	 */
- 	tlv = &skb->data[LLCP_HEADER_SIZE];
--	tlv_len = skb->len - LLCP_HEADER_SIZE;
--	offset = 0;
-+	tlv_end = skb_tail_pointer(skb);
- 	sdres_tlvs_len = 0;
+-	memcpy(buf, bdaddr, sizeof(bdaddr_t));
++	baswap(&bdaddr_swapped, bdaddr);
  
--	while (offset < tlv_len) {
-+	while (tlv + 2 < tlv_end) {
- 		type = tlv[0];
- 		length = tlv[1];
- 
-+		if (tlv + 2 + length > tlv_end)
-+			break;
-+
- 		switch (type) {
- 		case LLCP_TLV_SDREQ:
-+			if (length < 1)
-+				break;
-+
- 			tid = tlv[2];
- 			service_name = (char *) &tlv[3];
- 			service_name_len = length - 1;
- 
--			pr_debug("Looking for %.16s\n", service_name);
-+			pr_debug("Looking for %.*s\n", service_name_len,
-+				 service_name);
- 
- 			if (service_name_len == strlen("urn:nfc:sn:sdp") &&
- 			    !strncmp(service_name, "urn:nfc:sn:sdp",
-@@ -1380,6 +1391,9 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
- 			break;
- 
- 		case LLCP_TLV_SDRES:
-+			if (length != 2)
-+				break;
-+
- 			mutex_lock(&local->sdreq_lock);
- 
- 			pr_debug("LLCP_TLV_SDRES: searching tid %d\n", tlv[2]);
-@@ -1408,7 +1422,6 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
- 			break;
- 		}
- 
--		offset += length + 2;
- 		tlv += length + 2;
- 	}
- 
+-	skb = __hci_cmd_sync_ev(hdev, 0xfc14, sizeof(buf), buf,
+-				HCI_EV_CMD_COMPLETE, HCI_INIT_TIMEOUT);
++	skb = __hci_cmd_sync_ev(hdev, 0xfc14, sizeof(bdaddr_swapped),
++				&bdaddr_swapped, HCI_EV_CMD_COMPLETE,
++				HCI_INIT_TIMEOUT);
+ 	if (IS_ERR(skb)) {
+ 		ret = PTR_ERR(skb);
+ 		bt_dev_err(hdev, "Change address command failed (%ld)", ret);
 -- 
 2.53.0
 
