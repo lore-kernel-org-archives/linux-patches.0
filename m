@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00CD377ABA;
-	Sat, 12 Sep 2026 18:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA073A7F47;
+	Sat, 12 Sep 2026 18:53:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239185; cv=none; b=BgPt2gBN8PW34iSzc6rEJStW/ENfJsXsz1AU330iD/VVH+re/mKjts1bfGeYzXuEmjB+iyA//a6LzUz7L/3hdErHvQiPLWamoOIg+0/WiFuInSU/gmXouQARO+Ivp42T2B3Atd2O9h85pCVAGMs4r1l3Om5/vJ4anE7re1kXPh4=
+	t=1789239191; cv=none; b=vGNpL6WucIOxzEHbCPYvUaxCZI5OgFYwlsftWGKVQMBC97gxa6AZs3n/OkYVqFFo5KX8TtEvh9qidaApjDGPj2AArk1jnWhbtUAVJuuwJ/rK5HvZVIteksZBJRWaTGBCnMMwIAtTatl41T6divwVgBmntxatQtmZg0BypEteC/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239185; c=relaxed/simple;
-	bh=nyR+Ao5+yskZHYNgeIbcrdnoZ/SIkwCNzk3iUktyMpQ=;
+	s=arc-20240116; t=1789239191; c=relaxed/simple;
+	bh=XVh2/UI153+yVebIXvuYd90DpjX4fc8DqngwLXrBg4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=shu9l7106jQwP7SVv0zruvJgQR/8M5CMCV9qneI1AVKS3UVLbdmeNUV/KTQW9ryKCeV9dxVX1oKQ/pCIXHoKrHYd9hX/8RtsIoSXyiJCmlgX0MAUhBUgbpBeyqBM0Avr08PvDKSFzo1YmfI3+Dbo83C9euaky2aySIewhNadF98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MruqPlNy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CoKglCEKUNknFnPWaANO9vErpbKSDXYojlv2ScrEpKob6J7Cznfu1sNVsOsZvVyA7SlQ55hyr9sB8/lFPBsixFPv/N5iVHJdEdBb2NJNS8WMkfz4NAzhGOXFaklUCVXP0XD0AaRl4jrvQYWcx5mLgUTG2G/4GIOhkMhJiNva4CQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xAAkJwDF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MruqPlNy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDF11F00893;
-	Sat, 12 Sep 2026 18:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xAAkJwDF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A231F000FF;
+	Sat, 12 Sep 2026 18:53:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239184;
-	bh=u2m0DUbvolqdV+XlltBcWJQryD9YWuw0LyTTrkuxFrg=;
+	s=korg; t=1789239189;
+	bh=zMsVTHcwjG4mzkT7jXCQxzXdiYh7ul0yGl3IpJEW7Rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MruqPlNyKB3GCsXNE/UsIG/Jh9sSIoquCG/xsW7SfWSQXY1I1B2ghuj4gAF7UdQ7u
-	 6Gb/n80J51YorLzHPVvWO6QbIR0T1/YS9Ojzn22YZl1th2YQpEmzfQKMpRPPJ+u8Gb
-	 TmRg0JcDK+u3C2ZGOFZR6MkHUUzFOiVgdzeCpVZk=
+	b=xAAkJwDFbWIrKr+7LzCTg6Ch9848EKr2Wu9bcp4UC5jf+gArxuFnRLZUUZ2oDn6zl
+	 /CJZvEF3+N+1X6UnCRNbZhdFkrwKDylhd1ooLvWHyVi7MVHaVDruXBir7EKe9fxLaU
+	 b+Atd+D4xX4joNkYxCH8tJInyIRZzjNPojJwXiuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Jirman <megi@xff.cz>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 612/935] arm64: dts: allwinner: sun50i-a64-pinephone: Fix mpu6050 mount matrix
-Date: Sat, 12 Sep 2026 09:00:42 +0200
-Message-ID: <20260912065540.879623423@linuxfoundation.org>
+Subject: [PATCH 5.15 613/935] clk: tegra: tegra124-emc: put EMC node on register failure
+Date: Sat, 12 Sep 2026 09:00:43 +0200
+Message-ID: <20260912065540.901488612@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,57 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Jirman <megi@xff.cz>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit dfc735fd93e4814e65894916ec5f807f25a391d1 ]
+[ Upstream commit f726279f5eab813f9a8b6f38ddf2a4b062d038ff ]
 
-The current mount matrix for mpu6050 is wrong. The mount matrix is a
-simple transform from the sensor coordinate space to the device
-coordinate space described in DT, where, looking at the screen, X
-points to the right, Y to the top, and Z towards the user.
+tegra124_clk_register_emc() stores a device node reference returned by
+of_parse_phandle() in tegra->emc_node.
 
-The mpu6050 is mounted like this (looking at the screen from the
-front; the sensor is on the near side of the PCB, so its Z axis
-points towards the user; o marks the pin 1 corner):
+If clk_register() fails, the function returns an error before that
+reference can be consumed and released by the normal runtime path. The
+tegra_clk_emc object is freed on this failure path, but freeing the
+object does not drop the OF node reference stored in it.
 
-           +Xs
-            ^
-            |
-         +------+
-  +Ys <--|      |
-         | o    |
-         +------+
+Drop the EMC node reference before freeing the tegra_clk_emc object.
+of_node_put() is safe for a NULL node, so this also covers the case where
+the phandle is absent.
 
-so this gives:
-
-  Xd = -Ys  [0, -1, 0]
-  Yd =  Xs  [1, 0, 0]
-  Zd =  Zs  [0, 0, 1]
-
-Fixes: 2496b2aaacf1 ("arm64: dts: allwinner: pinephone: Add mount matrix to accelerometer")
-Signed-off-by: Ondrej Jirman <megi@xff.cz>
-Link: https://patch.msgid.link/20260725111909.2244868-1-megi@xff.cz
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Fixes: 2db04f16b589 ("clk: tegra: Add EMC clock driver")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/tegra/clk-tegra124-emc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi
-index 5bc18f8fe3e84..ec4c627f7cc38 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi
-@@ -200,8 +200,8 @@ accelerometer@68 {
- 		interrupts = <7 5 IRQ_TYPE_EDGE_RISING>; /* PH5 */
- 		vdd-supply = <&reg_dldo1>;
- 		vddio-supply = <&reg_dldo1>;
--		mount-matrix = "0", "1", "0",
--			       "-1", "0", "0",
-+		mount-matrix = "0", "-1", "0",
-+			       "1", "0", "0",
- 			       "0", "0", "1";
- 	};
- };
+diff --git a/drivers/clk/tegra/clk-tegra124-emc.c b/drivers/clk/tegra/clk-tegra124-emc.c
+index 5f1af6dfe7154..674aef2785394 100644
+--- a/drivers/clk/tegra/clk-tegra124-emc.c
++++ b/drivers/clk/tegra/clk-tegra124-emc.c
+@@ -539,6 +539,7 @@ struct clk *tegra124_clk_register_emc(void __iomem *base, struct device_node *np
+ 
+ 	clk = clk_register(NULL, &tegra->hw);
+ 	if (IS_ERR(clk)) {
++		of_node_put(tegra->emc_node);
+ 		kfree(tegra);
+ 		return clk;
+ 	}
 -- 
 2.53.0
 
