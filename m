@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950BF29DB64;
-	Sat, 12 Sep 2026 10:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5933428498;
+	Sat, 12 Sep 2026 10:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209311; cv=none; b=KSizZndaftrUVxZmMHxMnE9HUF7rWHxLWi7CItVcm8IOjTKlNzYIGVFVtmwNljIfesKZuzXYHTc6ib+n/jj7KG8NV/ulfW6lAN7anLsSfNLQNv3b7s/vCoFuP38eJOKxPmcpuJ4CCE0/n1BXH8fFI+R9OmoF08qUysfPOIjRdcw=
+	t=1789209316; cv=none; b=aJ4TiTk+GJoStVHHnRsV5bbJKXzJc2qpOvN560uv+izTiDbTVCPpQpyT6IalkhgX8Bl4v+7dttbKtgUodA9GK8tIbd6qrPhf92BHiD49dKeytHoCwxpLLJIqyGDXLIf7YKPCD1roN767j5mOjion24VI4FVpD8np5CVjUZ6f6Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209311; c=relaxed/simple;
-	bh=D3+2WGj2+xe3srmFO9GUjDTJi/MkKOJpIj72tdiV5oc=;
+	s=arc-20240116; t=1789209316; c=relaxed/simple;
+	bh=aadZuwOx9+ZJvxbR+2GQfXEWd7oSSV4ZgwK8BN5yDzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T0geM3o3SavlzVgs9X81ZLThzn98n2aznRoO3LaGXMyctI9fLBe2HxryMbj4dOmjesQbRhyGOQCjc3i3LW9AUyIKDyj4dhRMhXxBErTAxc5dlaWREBmsBnkldkWq/ASAgEfWCmSCuLKMrvWlTA/uIqFpNlQriVAiUzpDUWh+v24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJ8Gf0f1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LSGfYAld66oj+pHnwDVhZVA+8MdX4DgHIdyzSALD4TKR8Dvbw3EgyDhJGWh4Az3qqPfRbGgXiMpDznnwdDjyCGyrWgU1nrdyZMIEjgsc3mpdaQNo+LnFv6dK0xqMT/uk6fA6Tswpc1fgxu1KZedCcviSNEgOmajKEd3JFk3PMq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZCl7Ivs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJ8Gf0f1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4DC1F000FF;
-	Sat, 12 Sep 2026 10:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZCl7Ivs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861431F000FF;
+	Sat, 12 Sep 2026 10:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209310;
-	bh=TiUhDBydSHLFwwZTBE0u2qQPowVemY/EuxSjOk+eZr0=;
+	s=korg; t=1789209315;
+	bh=80nAunMBHkqxe/SK+/DnXMjAx8kq4eToXqlW0j8E3K0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tJ8Gf0f1z+RC493uZtbvhRv1lg6yFfBAwmf9ttILMxN+hUaFbVJJzQyUDHBPvswL0
-	 UAVBEvUQqWm0UOf0OOE3BBzAtblegChEsblMuafxlUVU69qm6v0bDOsiEHE6K3pIRV
-	 vBJmdWrVRTib4y52fqiTKDX0Vzu3adm5qgdSoJtw=
+	b=QZCl7IvsYe5luQeELssCOd8bDgl/wDKM4r81Mupog/IT04yxqWtO8NDCmHkZcqDlD
+	 AKIQtSAsX3FkF4vYHkodz0NAKi9fTBsPRTqZwdyB1FtS9kS9ub8+gnVKRcccd7xkGi
+	 fadvMerzbGYBkkYx/vjTJUibEMnC6aaCoVU9a9AM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0796/1518] wifi: mt76: mt7996: fix reg addr remap when addr is 0
-Date: Sat, 12 Sep 2026 08:49:25 +0200
-Message-ID: <20260912065641.439773151@linuxfoundation.org>
+Subject: [PATCH 6.18 0797/1518] wifi: mt76: mt7996: do not attach hif2 WED when the main WED attach failed
+Date: Sat, 12 Sep 2026 08:49:26 +0200
+Message-ID: <20260912065641.462315717@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,87 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit eb906eeff2d1e84b628dc210dada325269c71383 ]
+[ Upstream commit 7c1924332e986019c6bcddf55c843361cccac73f ]
 
-When addr is less than the hardcoded threshold in __mt7996_reg_addr,
-it indicates that remapping is unnecessary.
-Currently, the flow remaps address 0x0 to MT_HIF_REMAP_BASE_L2,
-which is incorrect.
-To address this, modify __mt7996_reg_addr to return INVALID_REG_ADDR
-if the address is not below the hardcoded value or is not present in
-the mt7996_reg_map array.
-Additionally, update the remap condition to check if addr is equal to
-INVALID_REG_ADDR.
+If the WED attach for the primary PCIe function fails, the probe path
+still attached wed_hif2 for the secondary function, leaving the device
+in an inconsistent half-WED configuration that crashes later. The hif2
+call also re-enabled hwrro_mode, which the failed primary attach had
+just turned off.
 
-Fixes: 3687854d3e7e ("wifi: mt76: mt7996: add locking for accessing mapped registers")
-Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
-Link: https://patch.msgid.link/20260727150434.1778520-5-nbd@nbd.name
+Skip the hif2 WED setup when the primary WED device is not active.
+
+Fixes: 83eafc9251d6 ("wifi: mt76: mt7996: add wed tx support")
+Link: https://patch.msgid.link/20260727150434.1778520-6-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mmio.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mmio.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-index ed292c617168c..4f63dcb19b259 100644
+index 4f63dcb19b259..e37b95f5b00b8 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-@@ -17,6 +17,8 @@
- static bool wed_enable;
- module_param(wed_enable, bool, 0644);
+@@ -490,6 +490,9 @@ int mt7996_mmio_wed_init(struct mt7996_dev *dev, void *pdev_ptr,
+ 	if (!wed_enable)
+ 		return 0;
  
-+#define INVALID_REG_ADDR	0xffffffff
++	if (hif2 && !mtk_wed_device_active(&dev->mt76.mmio.wed))
++		return 0;
 +
- static const struct __base mt7996_reg_base[] = {
- 	[WF_AGG_BASE]		= { { 0x820e2000, 0x820f2000, 0x830e2000 } },
- 	[WF_ARB_BASE]		= { { 0x820e3000, 0x820f3000, 0x830e3000 } },
-@@ -358,7 +360,7 @@ static u32 __mt7996_reg_addr(struct mt7996_dev *dev, u32 addr)
- 		return dev->reg.map[i].mapped + ofs;
- 	}
+ 	dev->mt76.hwrro_mode = is_mt7996(&dev->mt76) ? MT76_HWRRO_V3
+ 						     : MT76_HWRRO_V3_1;
  
--	return 0;
-+	return INVALID_REG_ADDR;
- }
- 
- static u32 __mt7996_reg_remap_addr(struct mt7996_dev *dev, u32 addr)
-@@ -390,7 +392,7 @@ void mt7996_memcpy_fromio(struct mt7996_dev *dev, void *buf, u32 offset,
- {
- 	u32 addr = __mt7996_reg_addr(dev, offset);
- 
--	if (addr) {
-+	if (addr != INVALID_REG_ADDR) {
- 		memcpy_fromio(buf, dev->mt76.mmio.regs + addr, len);
- 		return;
- 	}
-@@ -406,7 +408,7 @@ static u32 mt7996_rr(struct mt76_dev *mdev, u32 offset)
- 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
- 	u32 addr = __mt7996_reg_addr(dev, offset), val;
- 
--	if (addr)
-+	if (addr != INVALID_REG_ADDR)
- 		return dev->bus_ops->rr(mdev, addr);
- 
- 	spin_lock_bh(&dev->reg_lock);
-@@ -421,7 +423,7 @@ static void mt7996_wr(struct mt76_dev *mdev, u32 offset, u32 val)
- 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
- 	u32 addr = __mt7996_reg_addr(dev, offset);
- 
--	if (addr) {
-+	if (addr != INVALID_REG_ADDR) {
- 		dev->bus_ops->wr(mdev, addr, val);
- 		return;
- 	}
-@@ -436,7 +438,7 @@ static u32 mt7996_rmw(struct mt76_dev *mdev, u32 offset, u32 mask, u32 val)
- 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
- 	u32 addr = __mt7996_reg_addr(dev, offset);
- 
--	if (addr)
-+	if (addr != INVALID_REG_ADDR)
- 		return dev->bus_ops->rmw(mdev, addr, mask, val);
- 
- 	spin_lock_bh(&dev->reg_lock);
 -- 
 2.53.0
 
