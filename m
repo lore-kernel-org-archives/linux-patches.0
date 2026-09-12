@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B554BEE54;
-	Sat, 12 Sep 2026 07:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00E34BEE54;
+	Sat, 12 Sep 2026 07:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198366; cv=none; b=gjgUjlwVGi9EymckzBUfEz9d2CzQqPLlGY0aWmrWOrLCdb3IhMu+lqlZyBB41/qdLtPoSRwluQSSSF205z+Fz4+UCT+xhSHgeL/oQ9aFMz7aFaV2VwTBmy0+qlNLwVUwDObaUqcY5/3DQd+8jKLcfgpyazDXz2Eh3M0puI5w6tE=
+	t=1789198370; cv=none; b=IRUq31SvOaBsk2kmT8Py+Tm+NTbw3p5zM55ZyR/VKTnTfWJtPAcLqm2Se1tk91AtnEDzQ9iMQAMZZQk7paxxecpBJEdmwsiKE87GA2uThECwxBh5yCP7OUXQFP7T2FWyHWXv5eVjSNKHxhBxJG4h0iv9U+Jfq+xnyFv+i5K4G2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198366; c=relaxed/simple;
-	bh=usQUDHDPC5iE84Zrqp95Gl7VHpBa3gEM7ZUESp2lygg=;
+	s=arc-20240116; t=1789198370; c=relaxed/simple;
+	bh=LhPzNrHCos7tVoumalBJ167DuHs6EtlSCazd6RauOEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ClFIOZjFdgS2X6Zwz6KGqkJXRh5QCAPXHzRqFK+YsrpnvSD7MZuZ6uSA4MI5I+Khfj6wVF6BF9bIW9Ihwy6bhp/JmBXEyD+k+k2AtncBrHrpi7yA2kMFrKLB0wEy5vk1V1/YCKP1LoPAVoJOUU0qo7V4hvQaKn7RhLlch8rkbqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1wxWDeaH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cpThlnjMMdmqkoQYeFFih216Oi6Wcdchl0tOFzKNZ8B8v5TgHeA1KeFKYOozLj2zAqu1fcdAcrTIJckhaa6J4n6HUPL958P4E3xgFwNHzF8hhpURJL7+CHatm2pYGIopNStgNTfyMvbAbndY381Fo4vZ40oSs8IhQKZbO5sPmjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhIasGrU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1wxWDeaH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFBAE1F000FF;
-	Sat, 12 Sep 2026 07:32:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhIasGrU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C1BC1F000FF;
+	Sat, 12 Sep 2026 07:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198364;
-	bh=+5ZuC2sxmV2kEIFuYXSwneFNmiPzn3GJf8pXbV3c+tM=;
+	s=korg; t=1789198369;
+	bh=EDDkuDmk2LifSkVZMMI5T8ZT3so9I7WN4M8jvoo41SU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1wxWDeaHR61gKwD9JmL+Xdn98QkHyAw21j1p5qkszQlMghkvnExp3NBOyD+NbYD3D
-	 ZlN0GgjrcTMptSYDDHEbOaSMOmIlTg5wyY91Fr1aEe0CQyeDVhv6LvSO5Ga8Sd3LNp
-	 BgWcVXDueOvMb1iA7sOOVUz0QqFSBq4IDFsE5Gxs=
+	b=ZhIasGrUAF787vAJvw3ibIXA51gPWlZD9Sl2yEWm6C2TdgR6XmTXCoj4iofaUSKhr
+	 hPKF6mPi2S6/kEmYII59cIzAzIWEDhgBOShwV+ZIsijyWwfj+uGFjLofButYhKhPpD
+	 b4mrIvE7GGyVrAjg54c08PZz0yO0QVa51SYXCA30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
+	Xu Rao <raoxu@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0322/1815] usb: gadget: configfs: fix out-of-bounds read of qw_sign
-Date: Sat, 12 Sep 2026 08:34:32 +0200
-Message-ID: <20260912065656.494459094@linuxfoundation.org>
+Subject: [PATCH 7.2 0323/1815] usb: typec: tcpm: fix EPR AVS APDO maximum voltage decoding
+Date: Sat, 12 Sep 2026 08:34:33 +0200
+Message-ID: <20260912065656.516523753@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,55 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit f63edb54d8f738f9c21e2068c777ae1c097df6b7 ]
+[ Upstream commit 29741ca40b7b780ba14c4c3ffef190f908864fe9 ]
 
-os_desc_qw_sign_show() passes OS_STRING_QW_SIGN_LEN as the input
-length to utf16s_to_utf8s(), but that argument counts UTF-16 code
-units while OS_STRING_QW_SIGN_LEN (14) is the byte size of qw_sign[].
-The array holds only OS_STRING_QW_SIGN_LEN / 2 (7) code units, so the
-conversion reads up to 7 units (14 bytes) past the end of qw_sign[]
-into the following members of struct gadget_info when the stored
-signature fills the array without a NUL terminator, exposing those
-bytes through the configfs attribute.
+pdo_epr_avs_apdo_max_voltage_mv() extracts the EPR AVS minimum-voltage
+field instead of the maximum-voltage field. As a result, an EPR AVS APDO
+with different minimum and maximum voltages is decoded as having
+identical limits. The currently visible effect is that
+tcpm_log_source_caps() reports a min-min voltage range.
 
-The store path halves the count for its input bound but passes the
-full byte count as the utf8s_to_utf16s() output limit; use the
-destination code-unit count in both directions.
+Extract PDO_EPR_AVS_APDO_MAX_VOLT in the maximum-voltage accessor.
 
-Fixes: 76180d716f91 ("usb: gadget: configfs: make qw_sign attribute symmetric")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260618005043.1581707-1-michael.bommarito@gmail.com
+Fixes: f82890c98f3e ("tcpm: Parse and log AVS APDO")
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/48301FCEC9F3CA14+20260616085439.987664-1-raoxu@uniontech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/configfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/usb/pd.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
-index 183a25f65ac89..dd6d6b11199e0 100644
---- a/drivers/usb/gadget/configfs.c
-+++ b/drivers/usb/gadget/configfs.c
-@@ -1177,7 +1177,7 @@ static ssize_t os_desc_qw_sign_show(struct config_item *item, char *page)
- 	struct gadget_info *gi = os_desc_item_to_gadget_info(item);
- 	int res;
+diff --git a/include/linux/usb/pd.h b/include/linux/usb/pd.h
+index 337a5485af7c7..ee360dedeaa65 100644
+--- a/include/linux/usb/pd.h
++++ b/include/linux/usb/pd.h
+@@ -493,7 +493,7 @@ static inline unsigned int pdo_epr_avs_apdo_min_voltage_mv(u32 pdo)
  
--	res = utf16s_to_utf8s((wchar_t *) gi->qw_sign, OS_STRING_QW_SIGN_LEN,
-+	res = utf16s_to_utf8s((wchar_t *) gi->qw_sign, OS_STRING_QW_SIGN_LEN / 2,
- 			      UTF16_LITTLE_ENDIAN, page, PAGE_SIZE - 1);
- 	page[res++] = '\n';
+ static inline unsigned int pdo_epr_avs_apdo_max_voltage_mv(u32 pdo)
+ {
+-	return FIELD_GET(PDO_EPR_AVS_APDO_MIN_VOLT, pdo) * 100;
++	return FIELD_GET(PDO_EPR_AVS_APDO_MAX_VOLT, pdo) * 100;
+ }
  
-@@ -1199,7 +1199,7 @@ static ssize_t os_desc_qw_sign_store(struct config_item *item, const char *page,
- 	mutex_lock(&gi->lock);
- 	res = utf8s_to_utf16s(page, l,
- 			      UTF16_LITTLE_ENDIAN, (wchar_t *) gi->qw_sign,
--			      OS_STRING_QW_SIGN_LEN);
-+			      OS_STRING_QW_SIGN_LEN / 2);
- 	if (res > 0)
- 		res = len;
- 	mutex_unlock(&gi->lock);
+ static inline unsigned int pdo_epr_avs_apdo_pdp_w(u32 pdo)
 -- 
 2.53.0
 
