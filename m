@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFA635203A;
-	Sat, 12 Sep 2026 12:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37A347ACFA;
+	Sat, 12 Sep 2026 12:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214458; cv=none; b=Xg3j9yTexNm/WLaDIPYK4ZRGcqEvwXK1jtWVEtj0GUelfaA232LSAVi1FOsIVJC3qRQwmpCyBykG9FMbyZm9FZx7Hus3YxGFYq/VqWzP0bH/2GV5gHDPUXUuDoyhDuzitMb5/V2HKE0HsOqmPaUX3IrsYan0l6k/APRB7lFeAC8=
+	t=1789214463; cv=none; b=jGNwmINGBHYmW76mGkCAP4gi4E2h2kuj5Hvf6DXaURvOP2viPanJOUbx0p6ZJxDAqagvzWptyb4PLcCqe6NtQ0yO1lupdCigkjdlvtxQjWKvuaEJtExbvR2weJGnPSINxv9p2GEdU67T+ZC2Ey3IEUCnVIy8yJXSLLDzUFq3+ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214458; c=relaxed/simple;
-	bh=GxeoSXw/3ZFS2EeYqAOIbG6WQPpMuiDrP1dUDTrs85E=;
+	s=arc-20240116; t=1789214463; c=relaxed/simple;
+	bh=4fboB9wX6Fg4FB2lJ5dHTUDjoJZyuzXiAtXdURYiv2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JC/E5a5oRl7SaNm5H8abE0mZHJXE1J2JGGuiRLbpSoQ4VGPm/+aGEK+2y/gMC/+JuY8NnpqsNiW+pqNGf5hWIwm1D7HJ2Fn6v+qlfpZ2TCFxPTXTZyw4LW9/2MaYm3kHrlqvUBLTR2VCTa70eR4OjQPxPUVRa5HNfrCyH9allv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0qjc0gH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qc/obYe37dlX0rH0Xd0fxIxjBmNGEMKtI+sFksA49L8dHS4+0MP9U0lggyJHlS1ajIQQPNSomP41KsNigDEk2Y3NeuLX8DrA16MCuBTbwNEZyMWxXNO8iwiuTVZMVFZeCYwl125HOeoSXi9TY/AAMxaFYRuv4z/oIKjrrGxBfZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPhXhxUR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0qjc0gH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1CC1F000FF;
-	Sat, 12 Sep 2026 12:00:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPhXhxUR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1714F1F000FF;
+	Sat, 12 Sep 2026 12:01:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214457;
-	bh=DixUfiF2kb6HShb5cNsvbl7tAq7pxu1/ri1lz6TEj20=;
+	s=korg; t=1789214461;
+	bh=+5lyuJv853ErhunaEY4uqUQhrqn77WJIM67xIHnhfQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f0qjc0gHPmE8JqSmj+bkLR9Zxi+JHFjnZwR5wqjIXl2mAuQFr65bXpaHlT0IMVImf
-	 Pnvqz9cMl4gcKZLVdDF3USWSPFWXfxn6ueMqbive7wDj2RbAuxGW/uj1SEqafUmNjX
-	 AcHZlhe2b5LyE+7WC597gqSx+my24hteKCr4fpZM=
+	b=wPhXhxURV2oikR9N5su/WTg8FchJ/mGMoXXP/QgAVON+X7d0uXGabZQReP21CAql+
+	 hzy1jyLwEanr0Hqx/qCPtlAHcoe7CPnczuW25Eb57d7V19yLPdx4WpKcIoL4Pooahp
+	 DEt1+A55bTj4YfKBSOiM5lc3Wzi0ZO9TCMcsGOhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cheng <icheng@nvidia.com>,
-	Wei Hou <wei.hou@scaleflux.com>,
-	Li Ming <ming.li@zohomail.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0328/1376] cxl/pci: Remove incorrect mbox.valid check in cxl_pci_type3_init_mailbox()
-Date: Sat, 12 Sep 2026 08:45:54 +0200
-Message-ID: <20260912065614.857156549@linuxfoundation.org>
+Subject: [PATCH 6.12 0329/1376] clk: versaclock7: Fix APLL clock leak on probe failure
+Date: Sat, 12 Sep 2026 08:45:55 +0200
+Message-ID: <20260912065614.880132866@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,71 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Hou <wei.hou@scaleflux.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit d79b81893d0cc93737e811a465b9ef9a00156fd5 ]
+[ Upstream commit e25d8d35e8cbc1a4c04a8b86eed6aa7229f6449e ]
 
-The driver's design intent is that missing or malformed component
-registers should not prevent mailbox initialization. cxl_pci_probe()
-already reflects this: the CXL_REGLOC_RBI_COMPONENT setup path only
-emits a dev_warn() and continues when component registers are absent,
-rather than returning an error.
+vc7_probe() registers the APLL with clk_register_fixed_rate(), which is
+not devm-managed and must be explicitly unregistered on probe failure.
 
-The check 'if (!cxlds->reg_map.device_map.mbox.valid)' violates this
-intent and is also technically incorrect for two reasons:
+Most later errors already unwind through err_clk, but a failure from
+vc7_get_bank_clk() in the output registration loop returned directly.
+That skipped clk_unregister_fixed_rate() and leaked the APLL clock.
 
-1. Wrong struct: the MEMDEV register block is enumerated into a local
-   variable 'map', not into 'cxlds->reg_map'. The device_map.mbox.valid
-   field inside cxlds->reg_map is never written by the MEMDEV probe and
-   will always read as zero regardless of actual hardware capability.
+Route that error through the existing err_clk label so the fixed-rate
+clock is released consistently with the other probe failure paths.
 
-2. Already validated: cxl_pci_setup_regs(CXL_REGLOC_RBI_MEMDEV) calls
-   cxl_probe_regs() which explicitly checks mbox.valid and returns
-   -ENXIO if the mailbox is absent. If that check passes, the mailbox is
-   guaranteed to be present by the time cxl_pci_type3_init_mailbox() is
-   called.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-The value that the check actually reads is component_map.ras.valid,
-which aliases device_map.mbox.valid in the union. This is populated by
-the COMPONENT probe, not the MEMDEV probe. On devices where the
-component register BAR does not implement a CXL Component Capability
-Array (e.g. certain DCD devices), cxl_probe_component_regs() returns
-early leaving ras.valid=false. Through the union, this makes mbox.valid
-read as false, causing cxl_pci_type3_init_mailbox() to return -ENODEV
-(-19) even though the mailbox hardware is fully functional.
-
-Remove the check. Mailbox presence has already been validated by
-cxl_pci_setup_regs(CXL_REGLOC_RBI_MEMDEV). The presence or absence of
-component registers is irrelevant to mailbox initialization.
-
-Fixes: 8d8081cecfb9 ("cxl: Move mailbox related bits to the same context")
-Reviewed-by: Richard Cheng <icheng@nvidia.com>
-Signed-off-by: Wei Hou <wei.hou@scaleflux.com>
-Reviewed-by: Li Ming <ming.li@zohomail.com>
-Link: https://patch.msgid.link/20260628155857.239866-1-wei.hou@scaleflux.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: 48c5e98fedd9 ("clk: Renesas versaclock7 ccf device driver")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/pci.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/clk/clk-versaclock7.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
-index 09a2bc817d645..02040b51f44ec 100644
---- a/drivers/cxl/pci.c
-+++ b/drivers/cxl/pci.c
-@@ -794,12 +794,6 @@ static int cxl_pci_type3_init_mailbox(struct cxl_dev_state *cxlds)
- {
- 	int rc;
+diff --git a/drivers/clk/clk-versaclock7.c b/drivers/clk/clk-versaclock7.c
+index f323263e32c38..e1d6d88b6635f 100644
+--- a/drivers/clk/clk-versaclock7.c
++++ b/drivers/clk/clk-versaclock7.c
+@@ -1191,7 +1191,7 @@ static int vc7_probe(struct i2c_client *client)
+ 		if (ret) {
+ 			dev_err_probe(&client->dev, ret,
+ 				      "unable to register output %d\n", i);
+-			return ret;
++			goto err_clk;
+ 		}
  
--	/*
--	 * Fail the init if there's no mailbox. For a type3 this is out of spec.
--	 */
--	if (!cxlds->reg_map.device_map.mbox.valid)
--		return -ENODEV;
--
- 	rc = cxl_mailbox_init(&cxlds->cxl_mbox, cxlds->dev);
- 	if (rc)
- 		return rc;
+ 		switch (bank_src_map.type) {
 -- 
 2.53.0
 
