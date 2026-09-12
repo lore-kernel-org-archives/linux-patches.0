@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3AC47F2F9;
-	Sat, 12 Sep 2026 13:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8490A47DFB9;
+	Sat, 12 Sep 2026 13:37:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220254; cv=none; b=oin4Zw2Un8f1nDcXuUl3xXWElwF//Im+LGFc1jgAcpR4jMixoD1GuJ90gTiCVgyYSvhVV4AZYpxTe55F0L+llEpUuhTK7BDL1G4iaWBZjakMvXGiIiY8k3DQVZvrKzJXinesy9+D+imb1mgXdg6nGQjc3OSd0wPAE18jg5vpZ6A=
+	t=1789220260; cv=none; b=kaMdL6lTeuxQ3f70YfLg49QmTpieRFIEtU3dTauUkktxwiWvNroIIW++gZQyPWofBFQ3lldSbKurf092pV2HSqE/SS5y8nEOR5MVY0Dr875U9z395rVTH+LTIOh9MORht6GrrtcDkdUu3ltp9pWaJoEESlvHToK4nuUYATKnIyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220254; c=relaxed/simple;
-	bh=eE6W7btdmWhEny+qpY3a5c99mhFj37hz4rdb+ctrFN4=;
+	s=arc-20240116; t=1789220260; c=relaxed/simple;
+	bh=NdNHcgEFIuu3G3ud/wBf3aB0aIrx2cXEFHyy1oqOLEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aprTzLpxo4j0tD8Sydj+HzsEUCt4Y00eFNZLLVgmqMzK8WLNAId5yphPRdmxN9MQ38wR1soCHdLjmdFW+zslbGnQ+paMHZkTnDRt/CokXLJ/Dctge/FgZAQ/7yC/ovcG/F5iJ8JfTsXSYqBNamBVi+SZZDRXvJgXdFC7rSg8Ydg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krCc3aQa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HcASdj5eRP0Hvoru4PTsnoG2X1lk/DhUnPe2PfsSJ7FDfITNuEiFCWuxooRP7mnHQp0JmP+jikO19rOHPguoSno931ZsCBq2UxD5CdsH3c7glZFLrjuwmAuxzDNU11fyuzOyd02eGZDVIw66CjKomvifbv3mzP5FWNCKYbVPti0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YutKMyv3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krCc3aQa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5381F000FF;
-	Sat, 12 Sep 2026 13:37:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YutKMyv3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 140201F000FF;
+	Sat, 12 Sep 2026 13:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220253;
-	bh=yEIM01pws8e4P3yjC03P9EbBGhtuFX2IAt0NZMlkinY=;
+	s=korg; t=1789220258;
+	bh=bOuKGKNwG4ehCi+2HcUDugOmWmifDeLIjXyGrMEQWE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=krCc3aQauKzzBNFCyatImNZjciMIjjt3mHd6acQ80RumVC6BNF2bk1xdodFCr7yDr
-	 SEeU0lEiFFAmA2prb83/HfJPYpg6uI4/zuPefHhjzaYEYjyU7IPl9MBfVnBZi3fuTO
-	 B/B7GWqGmJ18BC9MtgkNKpb6tcGZj+EEp3ceQ1rA=
+	b=YutKMyv3JmF0rjkFdyyG5YhLGVwGDbbHi4Erjk9UoEfbrox1e4jH0FWg8dpvn6uwD
+	 qVRW7X41NqLiR6ea+tCT5CpiY62dsZHO8CH0yfxIzHJNppv6Im1QqAg7yjGWydWB1a
+	 eYPQm2HvkcFUYOGBF3/8zHrL2PKagJAV6HnqsQaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Danilov <littlesmilingcloud@gmail.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Vega <vega@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0139/1424] ipip: fix skb leak in collect_md mode when metadata_dst allocation fails
-Date: Sat, 12 Sep 2026 08:42:51 +0200
-Message-ID: <20260912065610.411467272@linuxfoundation.org>
+Subject: [PATCH 6.6 0140/1424] ip6_tunnel: use skb_cow_head() in ip6_tnl_xmit()
+Date: Sat, 12 Sep 2026 08:42:52 +0200
+Message-ID: <20260912065610.434318442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,49 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Danilov <littlesmilingcloud@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 6776efe4a52f289a3fc18f8adf19b035a7d8e1bb upstream.
+commit 87f21b59ddc618eff9670c174842964ad65fdade upstream.
 
-In collect_md mode ipip_tunnel_rcv() returns 0 without freeing the skb
-when ip_tun_rx_dst() fails to allocate the metadata_dst. ipip_rcv() and
-mplsip_rcv() are registered as xfrm_tunnel handlers, so tunnel4_rcv()
-and tunnelmpls4_rcv() read the zero return as "the packet has been
-consumed" and do not free it either. The skb is leaked.
+ip6_tnl_xmit() may need to expand headroom before it can push the
+outer IPv6 and optional encap headers. It currently does that with
+skb_realloc_headroom(), copies skb->sk ownership, consumes the original
+skb, and then continues processing with the replacement skb kept only in
+its local variable.
 
-The other tunnel drivers all dispose of the packet at this point:
-ip6_tunnel.c jumps to its drop label, ip_gre.c and ip6_gre.c return
-PACKET_REJECT, which makes gre_rcv() free the skb. Only ipip returns 0.
+That is safe only if the helper cannot fail afterwards. But this helper
+still has post-reallocation error exits. collect_md tunnels reject
+non-NONE encap after the replacement, and ip6_tnl_encap() can also fail
+later. In those cases the helper returns an error to its callers while
+the caller still only has the original skb pointer.
 
-Jump to the existing drop label instead. It frees the skb and still
-returns 0, so the packet keeps being reported as consumed, which is what
-we want here: the outer header has already been pulled, and neither the
-remaining handlers nor an ICMP unreachable have any use for it.
+Both ip6_tnl_start_xmit() and the IPv6 GRE paths free the caller skb on
+error, so they can end up freeing an skb that ip6_tnl_xmit() already
+consumed.
 
-Triggering this needs an ipip or mplsip tunnel in collect_md mode and an
-atomic allocation failure, which is why it has gone unnoticed.
+Use skb_cow_head() instead. It provides the required headroom and
+writability without privately replacing the caller-owned skb, so later
+error returns cannot leave callers with a stale pointer.
 
-Fixes: cfc7381b3002 ("ip_tunnel: add collect_md mode to IPIP tunnel")
+The Ethernet users, ip6gretap and ip6erspan, clear IFF_TX_SKB_SHARING
+and already call skb_cow_head() before entering ip6_tnl_xmit(). They do
+not rely on the removed skb_shared() reallocation. This also makes the
+IPv6 tunnel path consistent with ip_tunnel_xmit().
+
+Fixes: 058214a4d1df ("ip6_tun: Add infrastructure for doing encapsulation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Anton Danilov <littlesmilingcloud@gmail.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20260819104338.432631-2-littlesmilingcloud@gmail.com
+Reported-by: Vega <vega@nebusec.ai>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Link: https://patch.msgid.link/30807a062ccc5c9c8a5ec2c5eb805ef279c50bdd.1786452593.git.zhilinz@nebusec.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ipip.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ip6_tunnel.c |   15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
---- a/net/ipv4/ipip.c
-+++ b/net/ipv4/ipip.c
-@@ -240,7 +240,7 @@ static int ipip_tunnel_rcv(struct sk_buf
- 		if (tunnel->collect_md) {
- 			tun_dst = ip_tun_rx_dst(skb, 0, 0, 0);
- 			if (!tun_dst)
--				return 0;
-+				goto drop;
- 			ip_tunnel_md_udp_encap(skb, &tun_dst->u.tun_info);
- 		}
- 		skb_reset_mac_header(skb);
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -1226,19 +1226,8 @@ route_lookup:
+ 	 */
+ 	max_headroom += LL_RESERVED_SPACE(tdev);
+ 
+-	if (skb_headroom(skb) < max_headroom || skb_shared(skb) ||
+-	    (skb_cloned(skb) && !skb_clone_writable(skb, 0))) {
+-		struct sk_buff *new_skb;
+-
+-		new_skb = skb_realloc_headroom(skb, max_headroom);
+-		if (!new_skb)
+-			goto tx_err_dst_release;
+-
+-		if (skb->sk)
+-			skb_set_owner_w(new_skb, skb->sk);
+-		consume_skb(skb);
+-		skb = new_skb;
+-	}
++	if (skb_cow_head(skb, max_headroom))
++		goto tx_err_dst_release;
+ 
+ 	if (t->parms.collect_md) {
+ 		if (t->encap.type != TUNNEL_ENCAP_NONE)
 
 
