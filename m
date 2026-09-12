@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED8F191F93;
-	Sat, 12 Sep 2026 13:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FA931F9A6;
+	Sat, 12 Sep 2026 13:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221227; cv=none; b=RpwdSVFI3Nm0lKhzQcmj3vjTAJPLsVg98aYbOZ4iyw4TiAJxWZCtjiQmp4gNnVudar8l7DsFek0FHGnW2EKFvxF+e5Kl/UOv2I4vK8SPfCmz9N3CF4i+tTTOpCVfztHpdeakCoZlRfn1hsWWNAHUHxN8vJeWbI51lAZvNPNZLBk=
+	t=1789221230; cv=none; b=Ov8hLtSLhdhhfNYE3jVhzr6VvC2Em1uDyNGizYKbXPZomNmOh0Bw/afva8a4EGn5IvLKRzg338AKDMpAZhzQo7rTqXiXC7YUWooTh0RWzzjx7UWYQp4DIPrp/GP0axmxHWJYiuFVDQoHejY2jCTdp9KbwUSY8hg+SxyWc0oHatY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221227; c=relaxed/simple;
-	bh=oFyKJ6jmVQKsul+wgf6R+t2cf6ZHmvvYjNZDzXgpYdI=;
+	s=arc-20240116; t=1789221230; c=relaxed/simple;
+	bh=j8C6zsb2h9tIflckmGq6TcOpI5lcYE+shrmrsmlcRXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mAEqwzJrmlx0I4PPRK/vZnMMuu4+nHrw66H71zALf0RyA1frFjfX+r2PcfJOmAkuMdiz8MIfxsSYuHSo9ATu8giem7EKq/pRgyp25qkk+0q9xWXxnnuOIj3jYOa8QE3NBAH2BYQwfFqRf+8+ulncdWioFN/Ss38ldPNYL9vtV+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w0Jx7CwO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nZ4Z7ZNxlDxttg83b19tov+zyF5RsZicmHb+gZB+KDxQRyITilDtiN9ZCdT76x2h0FCnqfmrkCO1CalQWy0U8SKPw7NKWamils3t7F9Hko2P+QzieiBnHwSgw6Dp9zhh2iEc2+/ktpBNioTA2H35JvNV+oZ3pGjQOdemnRnSs0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4loILVv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w0Jx7CwO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FBEC1F000FF;
-	Sat, 12 Sep 2026 13:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4loILVv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28ACB1F00893;
+	Sat, 12 Sep 2026 13:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221221;
-	bh=/NtxDvQC/01wB5LlCOq6NRPp8hrzOycKI/NtprfAIfo=;
+	s=korg; t=1789221226;
+	bh=ZN6vbqyLZkZCcp6fXGgl7COVQfvJZlbVETOQI9Z4QJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w0Jx7CwOgUjO1Efd+bUVViOXz0mhyXuYtcW+cfZ0XnhJEYwc1dJ3c9JOxn7HbCjdZ
-	 XZbpX8R8sM8LxyYySmMWbcL6wRvL+oiS6KgB0qA59NpolAPBDlCsNu7c+eIhGaSQb+
-	 l/mnffP8Vt8u9tPJkut82ExT4+yhiSKmxYHK2RjE=
+	b=Y4loILVveZJO3CmHIPzZG/lbkvX9EJkrJ2h6Mk9awMMreXXkkQOQYT0b6gmS4VVr4
+	 o2c45Fj6y7hqcqMpsvsIdUoBFf1QcQOgw74m1ZBZ7MejQLNDgpt2YlIBrFskP+9d2J
+	 kjUfccy+MchdJ5DYl9K/qo0BE+YJbYqcFV4JbMZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Peng <pengcan@kylinos.cn>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>
-Subject: [PATCH 6.6 0337/1424] thermal/drivers/qoriq: Disable clock on resume failure
-Date: Sat, 12 Sep 2026 08:46:09 +0200
-Message-ID: <20260912065614.832157487@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.6 0302/1424] sticon/parisc: Detect default STI graphics card for console output
+Date: Sat, 12 Sep 2026 08:45:34 +0200
+Message-ID: <20260912065614.048942588@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,53 +49,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Can Peng <pengcan@kylinos.cn>
+From: Helge Deller <deller@gmx.de>
 
-commit fcbf9964b67a6d6704c50ed28daa24c3b164f01c upstream.
+commit de508ece1d37cdbbbfa52f074954310f9b066b13 upstream.
 
-qoriq_tmu_resume() enables the TMU clock before clearing the
-power-down bit and enabling monitoring.
+If a machine has multiple graphic cards, detect the graphic card which is used
+to display firmware messages and use that one as the default graphic card for
+sticon and fbcon.
 
-If either register update fails, the function returns with the clock
-still enabled. This leaves the clock enable count unbalanced after a
-failed resume.
+On parisc machines the default graphic card used for BCH (boot console
+handler, aka BIOS menu) is stored in the stable storage (equivalent to CMOS
+storage on x86) or in the console path in page zero. Extract that path and
+store it as default STI path for later comparism. Take care that the graphic
+card can be a GSC or a PCI card which use different path strings.
 
-Disable the clock on those failure paths before returning the error.
+Increase max string size for default_sti_path to 32 chars as the
+print_pa_hwpath() function formats a hardware path using unbounded sprintf
+calls for up to 6 bus converter components and 1 module component (e.g.,
+255/255/...), which can produce a string up to 28 bytes long.
 
-Fixes: 51904045d4aa ("thermal: qoriq: Add clock operations")
+Signed-off-by: Helge Deller <deller@gmx.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Can Peng <pengcan@kylinos.cn>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20260722075625.452684-1-pengcan@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/qoriq_thermal.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/video/sticore.c |   22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
---- a/drivers/thermal/qoriq_thermal.c
-+++ b/drivers/thermal/qoriq_thermal.c
-@@ -380,11 +380,20 @@ static int __maybe_unused qoriq_tmu_resu
- 	if (data->ver > TMU_VER1) {
- 		ret = regmap_clear_bits(data->regmap, REGS_TMR, TMR_CMD);
- 		if (ret)
--			return ret;
-+			goto disable_clk;
- 	}
+--- a/drivers/video/sticore.c
++++ b/drivers/video/sticore.c
+@@ -325,7 +325,7 @@ static void sti_rom_copy(unsigned long b
  
- 	/* Enable monitoring */
--	return regmap_update_bits(data->regmap, REGS_TMR, TMR_ME, TMR_ME);
-+	ret = regmap_update_bits(data->regmap, REGS_TMR, TMR_ME, TMR_ME);
-+	if (ret)
-+		goto disable_clk;
-+
-+	return 0;
-+
-+disable_clk:
-+	clk_disable_unprepare(data->clk);
-+
-+	return ret;
- }
  
- static SIMPLE_DEV_PM_OPS(qoriq_tmu_pm_ops,
+ 
+-static char default_sti_path[21] __read_mostly;
++static char default_sti_path[32] __read_mostly;
+ 
+ #ifndef MODULE
+ static int __init sti_setup(char *str)
+@@ -1143,6 +1143,26 @@ static void sti_init_roms(void)
+ 	pr_info("STI GSC/PCI core graphics driver "
+ 			STI_DRIVERVERSION "\n");
+ 
++	/*
++	 * Find default console by hardware path which is either stored in
++	 * console entry in stable storage or alternatively from console path
++	 * in PAGE0 used by BCH and PDC.
++	 */
++	if (!default_sti_path[0]) {
++		struct pdc_module_path conspath;
++		struct device *dev = NULL;
++
++		if (pdc_stable_read(0x60, &conspath, sizeof(conspath)) == PDC_OK)
++			dev = hwpath_to_device(&conspath.path);
++		if (!dev)
++			dev = hwpath_to_device(&PAGE0->mem_cons.dp.path);
++		if (dev && dev_is_pci(dev))
++			print_pci_hwpath(to_pci_dev(dev), default_sti_path);
++		else if (dev && !dev_is_pci(dev))
++			print_pa_hwpath(to_parisc_device(dev), default_sti_path);
++		pr_debug("default graphic card: %s\n", default_sti_path);
++	}
++
+ 	/* Register drivers for native & PCI cards */
+ 	register_parisc_driver(&pa_sti_driver);
+ 	WARN_ON(pci_register_driver(&pci_sti_driver));
 
 
