@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CB92877E8;
-	Sat, 12 Sep 2026 16:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F7F317145;
+	Sat, 12 Sep 2026 16:17:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229841; cv=none; b=NekzlrdfPoEwu01Kt2bMdERqUWfCwzLYgNYfsdv2UKVe64K3hnky3MvIPPeKD29rLc7hv+qavtq4H86o8UPCVaNVkiIcMKGYyitG3m7gW9ksgoqti44xSLMPP+Z75dR+72l5AAsYfuCriYtX235Zt8xReffFBmSd2p+zXFF9lc4=
+	t=1789229847; cv=none; b=iwZEPItWGp44TVFsXRxRQeuB6g77bUSGsJPPgxqVFKOLKwgvDc7UiAwnCaid1mW/uiIM2ZDKaWO/VJK9RMNG+9Js43XzU/BWPHKJ6F2Z4it77eCKwwRY9VjMhvVAOWn1vOaZ4eb6p7lE7dMyom9F/iEfTBctB8ZDGKNqkX2s39g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229841; c=relaxed/simple;
-	bh=CeEbzY320K1OU9m0+4Cl7/BjML0tJpeech5oxt12crY=;
+	s=arc-20240116; t=1789229847; c=relaxed/simple;
+	bh=xptn+z2XwraFOb6+/Hu1Ryn4ynVwt5Y8Yh1uV0JaFsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XMn46yofOzqt0GxlXuhLsT4UakgcLIuxNgSJ0RYfEk/U0uFnyhq7WC7YVdWaY2xlFdocvXORnkl+QsgvIN7AB8ASzkGhm4Gzc0PJ2qoGaFVY5wGL9XonzxxSxVsTQv8eYPwUZFu0pOnRduk5w10YHRzKnJHxlhZ/jiYx6pO59r8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwMUQZP9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zfth0WZVWcHG0T6B5kVXPFJpkWRI+nt/UDhKSGlt36uTfMyYovX8DO+K2x0iOVtg9Xcw+rxFFiGdz5e7obybv9n17zOmhm4rHI4eZI2V+EInrIw98Z96Akbm6fx3sFSUC6BV7EmcOU5n4bEdtxJWZoXpOdX/99v+2UZi2tq23P8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ce5Pi/5w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwMUQZP9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A381F000FF;
-	Sat, 12 Sep 2026 16:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ce5Pi/5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36EBF1F000FF;
+	Sat, 12 Sep 2026 16:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229840;
-	bh=w1Spdi9Jp9ilinP03cbpxKjbSEJQANBtP8n4gyWNrVU=;
+	s=korg; t=1789229845;
+	bh=BKXdgGHLGWkYaP+foXiBimv+PtvjHLJ73MMoVn0G7BU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LwMUQZP9l/asrYDtH4bBinGEFHy+vMkY/ohQceS8hIKKMZM2I71GnDkUCjIDnW+cU
-	 GtBeCkLX/azh5VvQ+eFVgrHEdKVdwVV6y7H0HvtYQ5qgONZzunqB+4mFXlVKT/il+t
-	 PVmrrYOI/XQatyxBQ9h/Y1P+PS+uMJ3/ZzU0Ae6c=
+	b=ce5Pi/5w/tRLUD3jVhXt/v8shFc36yi3ystGn4k4q2/iOnMQYGE94baHyD368OOBF
+	 jJuGgIdtyaWOM0vPOaMvMez79aP/9MiKsjffP5uDoFbWOYLnibJgQbMaD8/zhp1wCQ
+	 w6i3rE5r+4Vy10IkNn8Hkb5MNeapKhl3hnhqnREw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0672/1191] irqchip/gic-v3-its: Prevent leak in its_vpe_irq_domain_alloc()
-Date: Sat, 12 Sep 2026 08:56:40 +0200
-Message-ID: <20260912065603.350687645@linuxfoundation.org>
+Subject: [PATCH 6.1 0673/1191] RDMA/nldev: validate dynamic counter attribute length
+Date: Sat, 12 Sep 2026 08:56:41 +0200
+Message-ID: <20260912065603.373669320@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,58 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 325ff3e78c64cd619d52b99f7c8b09a3f31e1495 ]
+[ Upstream commit 74f49255492a62658f36bf2578d7916f1c6ffad1 ]
 
-When its_irq_gic_domain_alloc() fails, the following
-its_vpe_irq_domain_free() fails to invoke its_vep_teardown() for the
-corresponding interrupt, which leaks the resource.
+RDMA_NLDEV_ATTR_STAT_HWCOUNTERS is a nested attribute whose children are
+consumed directly with nla_get_u32(). The top-level policy validates only
+the container, so it does not establish the fixed shape of each child.
 
-Invoke its_vpe_teardown() in the error handling path to avoid the leak.
+Require every child payload to be exactly one u32 before reading it.
 
-[ tglx: Massaged change log ]
-
-Fixes: 7d75bbb4bc1ad ("irqchip/gic-v3-its: Add VPE irq domain allocation/teardown")
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260721063241.52549-2-shikemeng@huaweicloud.com
+Fixes: 3c3c1f141639 ("RDMA/nldev: Allow optional-counter status configuration through RDMA netlink")
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260720114918.70323-1-pengpeng@iscas.ac.cn
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/nldev.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index f4ea52b26f9f8..84b00e14860eb 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -4449,6 +4449,13 @@ static int its_vpe_init(struct its_vpe *vpe)
+diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+index 7e08ce963125c..353ba8f68dedf 100644
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -1970,6 +1970,11 @@ static int nldev_stat_set_counter_dynamic_doit(struct nlattr *tb[],
  
- static void its_vpe_teardown(struct its_vpe *vpe)
- {
-+	/*
-+	 * If vpt_page is NULL, then its_vpe_init() has failed, and
-+	 * there is nothing to do as no resource has been allocated.
-+	 */
-+	if (vpe->vpt_page == NULL)
-+		return;
+ 	nla_for_each_nested(entry_attr, tb[RDMA_NLDEV_ATTR_STAT_HWCOUNTERS],
+ 			    rem) {
++		if (nla_len(entry_attr) != sizeof(u32)) {
++			ret = -EINVAL;
++			goto out;
++		}
 +
- 	its_vpe_db_proxy_unmap(vpe);
- 	its_vpe_id_free(vpe->vpe_id);
- 	its_free_pending_table(vpe->vpt_page);
-@@ -4527,8 +4534,10 @@ static int its_vpe_irq_domain_alloc(struct irq_domain *domain, unsigned int virq
- 		set_bit(i, bitmap);
- 	}
- 
--	if (err)
-+	if (err) {
-+		its_vpe_teardown(vm->vpes[i]);
- 		its_vpe_irq_domain_free(domain, virq, i);
-+	}
- 
- 	return err;
- }
+ 		index = nla_get_u32(entry_attr);
+ 		if ((index >= stats->num_counters) ||
+ 		    !(stats->descs[index].flags & IB_STAT_FLAG_OPTIONAL)) {
 -- 
 2.53.0
 
