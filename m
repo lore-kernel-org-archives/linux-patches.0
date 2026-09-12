@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498FA4322FC;
-	Sat, 12 Sep 2026 13:34:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9577C2D23A6;
+	Sat, 12 Sep 2026 13:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220056; cv=none; b=I8G37MZp0zNtAmYebyh4Vvtuu0bjqCRssLJpLZOOz6fWdXBJMCvfgyl1yfmGihol7Rkrj3tRFUpQGLY1J0kdQBwF8bKFnNBwABGFffH1vIS6MSd00Rfg9cDegtfh8nqZhiH3tSLpj0F4CD5jaB7PNnOrkQHEEuux5Npg6+0Zc0M=
+	t=1789220060; cv=none; b=M3W/Ae9zj8QOJNMFgihdaR6u/nEQKrcDrKPyKRrnF1z8RPO36wXsHp/RhaBfW56UkW2/EKfxy4NKvoNGkj2ws2EFySPA6SZe5ZecsSELxC5u2mHisfkbsayJfQiIPC9caJvWCtBkW0mW5RuJsU9EqjUkD8W8EBkscmke/5+C9PI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220056; c=relaxed/simple;
-	bh=lQz8856SLO7ViNio53d1f6H1qwZp5cgTClSxEilqlJ0=;
+	s=arc-20240116; t=1789220060; c=relaxed/simple;
+	bh=kmhw4BgdQqMuDRNSUqxIytUUUQSKr4WzuvsK0kmSx+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mlN0H6m8PAEyEvLKyoWEfz2vkhJWd1fruY2i1FNfgk78HUP+NP8KOVcXFe3J4ghHsGx4IYM2IBmCPQNg1L4qYUhvC5aj6To/P5nbDJpQnA9448dyyuR+3F7t2fqUb888KnB3sHNtJtukFiUTCMBQKrZ62bv3NbDiygS89O3QhPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eljBfM3O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k+SOjlYrprL+5L5bgJYagnReiNzFlG147wzxb2LrNNodRRvvfMnkID6wf5YmN0Sgu7PqZRQur9Cq4DBwnbb8Odbdf/M3mrlwQEyqeVsV4aDDrFLpDfJlTfk/rAvaYFxMPHG3EmzKot+wsXO6PdQLNr8qB5VDGRJx2z8ojMtVXYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WELyhEyj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eljBfM3O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A9D1F000FF;
-	Sat, 12 Sep 2026 13:34:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WELyhEyj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91BD1F000FF;
+	Sat, 12 Sep 2026 13:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220055;
-	bh=AqHFhWldWXKYFqMIWcrcZBRu+3MgcakwOFMfllkrWfg=;
+	s=korg; t=1789220059;
+	bh=ePMD5r299fLqAPDPYZj1+smmhOFLRLJPHDfxvLuhaUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eljBfM3OXmlBNrvTT6VulML9Seo8iOEjNTewBPCntNngcScOQwr/MZgPINUPRT1qb
-	 Wy19pRs8nYmmnUdBB4RTBUkvTM4K1qWuXqURFxtGKm8Uh7YTFpHuqgEc8lXrsRt726
-	 BGi/6Zd5cTSd4XZGbtn+0neIA6RK0l3/9eKmDokU=
+	b=WELyhEyjCF0fh2OmaD/J0ABeqhXb6ZoHod4BnDbtOIAtlW9+v60mBEvIj2P31i2fQ
+	 v5ywCrW9t8ffM4JSG36d6p9aQF4rA44PR1fyo4prhrKsPTAQ/YigENaL7pJ2fGq6nG
+	 DMGiwdUjSZGw+pwsAvncU+kLDGIbocaaQKkUn81s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.6 0072/1424] libceph: reject buckets with mismatched CRUSH ids
-Date: Sat, 12 Sep 2026 08:41:44 +0200
-Message-ID: <20260912065608.920241411@linuxfoundation.org>
+	Yichong Chen <chenyichong@uniontech.com>,
+	Tyler Hicks <code@tyhicks.com>
+Subject: [PATCH 6.6 0099/1424] ecryptfs: release message context on send failure
+Date: Sat, 12 Sep 2026 08:42:11 +0200
+Message-ID: <20260912065609.521716001@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -45,54 +44,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-commit 3cde4a8302301679937474a5f7a851394cc1bd11 upstream.
+commit 219644a3ad5518217b2d62cad6d2c36a2308c949 upstream.
 
-crush_decode() stores bucket data by array slot, and the mapper later
-derives the per-bucket workspace index from the decoded bucket id. A
-malformed map can therefore make one bucket reuse another bucket's
-workspace by encoding an id different from -1 - slot.
+ecryptfs_send_message_locked() moves a message context from the free
+list to the allocated list before sending the request to the userspace
+daemon.
 
-For uniform buckets, the second replica selection expands the source
-bucket's permutation into that aliased workspace buffer. If the source
-bucket is larger than the aliased bucket, the write runs past the smaller
-permutation array and can escape the kvmalloc'd CRUSH workspace. KASAN
-reports a slab OOB write of 4 bytes in bucket_perm_choose().
+If ecryptfs_send_miscdev() fails, the context is left on the
+allocated list and cannot be reused. Move it back to the free list on
+failure and clear the caller's pointer.
 
-Reject buckets whose encoded id does not match their array slot. Valid
-CRUSH maps already use the canonical negative id corresponding to the
-bucket slot, so this restores the invariant expected by
-work->work[-1 - in->id] without changing valid map behavior.
-
-Cc: stable@vger.kernel.org
-Fixes: 66a0e2d579db ("crush: remove mutable part of CRUSH map")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: f66e883eb618 ("eCryptfs: integrate eCryptfs device handle into the module.")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Signed-off-by: Tyler Hicks <code@tyhicks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ecryptfs/messaging.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -519,6 +519,8 @@ static struct crush_map *crush_decode(vo
- 
- 		ceph_decode_need(p, end, 4*sizeof(u32), bad);
- 		b->id = ceph_decode_32(p);
-+		if (b->id != -1 - i)
-+			goto bad;
- 		b->type = ceph_decode_16(p);
- 		if (b->type == 0)
- 			goto bad;
+--- a/fs/ecryptfs/messaging.c
++++ b/fs/ecryptfs/messaging.c
+@@ -285,9 +285,16 @@ ecryptfs_send_message_locked(char *data,
+ 	mutex_unlock(&ecryptfs_msg_ctx_lists_mux);
+ 	rc = ecryptfs_send_miscdev(data, data_len, *msg_ctx, msg_type, 0,
+ 				   daemon);
+-	if (rc)
++	if (rc) {
+ 		printk(KERN_ERR "%s: Error attempting to send message to "
+ 		       "userspace daemon; rc = [%d]\n", __func__, rc);
++		mutex_lock(&ecryptfs_msg_ctx_lists_mux);
++		mutex_lock(&(*msg_ctx)->mux);
++		ecryptfs_msg_ctx_alloc_to_free(*msg_ctx);
++		mutex_unlock(&(*msg_ctx)->mux);
++		mutex_unlock(&ecryptfs_msg_ctx_lists_mux);
++		*msg_ctx = NULL;
++	}
+ out:
+ 	return rc;
+ }
 
 
