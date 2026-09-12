@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EC947ACE2;
-	Sat, 12 Sep 2026 11:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7494F4746A9;
+	Sat, 12 Sep 2026 11:52:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213938; cv=none; b=DSVc5PodphbFydVDIvlmhb5Rd+526etOQc5ZS6o3OD5BBUKTbQXpYvUcvZcgqFMbn8fcksysXsfiPd4tla2zXL90YCL5zl33T45PFoa+0u0r7ESS2TM7bL8a7y1fyavSch+e74gcGqgzG+nCz1LZE5FPri17iAjVqulmXbQKUkE=
+	t=1789213945; cv=none; b=G6OM8sepu4WC6aeFcdqQBD5Dk21/BOGNFmC/o7VV+d1MoQp6AazlmXfmtNd1M2VNyt7Rn6dqDxO9ljZr7LZmscyELBW8Buo43bgoeyiuY1yc6taDyx7xsFGQKCmDJBijXcnKA+HflQOyJnZotx15+aN4EPPb/pBz9jLp6vmEli4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213938; c=relaxed/simple;
-	bh=m6Y/hFZVEpBrVnh3XDizjSjIiXo3i9TNQibAQBCyP1w=;
+	s=arc-20240116; t=1789213945; c=relaxed/simple;
+	bh=DQJgKxcs2wv3JmRXIr1wdne7Q1P5zyoHSfuokfrxEjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pqS/fihbcY6rgVOC8UTcy0o+TKZd2XBijuFokpLnyeBSuiIwdarn5Ltj1FidJVWu5LqRUsTZ/HDDsCnkYhdbnOE1B3/KD6aWwXbCS9GuiBZz2Yucz9u/MAbVr+lNHH82xQnTyn9wwZ1X4rnbhT03u3bwIOMVVa/IgeIu/eiXDDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwgsd+kq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gIM+Xg/qlnLC4antQcr7SDsY+Ci0oC+g7e2A2GO96caLCAzZPTExhhsw3+JTOw7K5CjYqDuB1Egb4XQvphpyGhr+w69Yta7Y16VYZKi0unq8GyJpySPz1Hec19babj6OzJBdGIPRgWCfjwumi/zBBUnoCcO+6K0Zi1tK38j4sHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVw+LB4w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwgsd+kq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72301F000FF;
-	Sat, 12 Sep 2026 11:52:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVw+LB4w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29FC1F00893;
+	Sat, 12 Sep 2026 11:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213934;
-	bh=ayGrtLj/+vKWp6lvgCrzPnJ1YKYoIDnPaftUc2I+o6M=;
+	s=korg; t=1789213939;
+	bh=aNQPPYekKMRSG2CKxkmJGSqtVklNXLFdYLupqyj6FGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nwgsd+kq2RxLBdshZJHaQzZlSz0qm5g2tVZsZm1dM+v8fLjkVgAtQudxtDTV8RaOf
-	 edWEEX5bg3b5r6cK+9l/J9P7e8vs9MF6OXDXQvHYfh4qEC0qWLeeXFjQdFViMPCCRn
-	 1+Fp+mvCJn+iW+ka+fUGAtlcu8JwIJxSLUTpV2ck=
+	b=yVw+LB4wZ+pbM3wnzvG+EheA8lXwkjnCU6Ee19AMxPWS3hki1+PxP9l3II72vFrDa
+	 Y4br0XsNCjh7lTHtLRYAPW/9WQh8uUwqphzJS7iU5+XeaENTc55tr3tbuFrAaVQSz1
+	 2P8xdqTwgegP0iVn6AuWVrr1PBCtIN1fwtFk4Q9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilesh Javali <njavali@marvell.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.12 0222/1376] scsi: qla2xxx: edif: Fix NULL pointer deref in RX SA delete check
-Date: Sat, 12 Sep 2026 08:44:08 +0200
-Message-ID: <20260912065612.494823062@linuxfoundation.org>
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.12 0187/1376] media: cobalt: Avoid freeing ALSA private data twice
+Date: Sat, 12 Sep 2026 08:43:33 +0200
+Message-ID: <20260912065611.719157370@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,44 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-commit c20ee380ca59c5a8646750c4849969a815924e2e upstream.
+commit 3a7d6b9c4cb5ac18cbd3f1c7f8c7b159c42ba0b1 upstream.
 
-qla_chk_edif_rx_sa_delete_pending() obtains the SCSI command via
-GET_CMD_SP(sp) and immediately dereferences cmd->sc_data_direction.
-That command pointer can be NULL: the firmware may post a status
-completion for a command that has already been returned or aborted.  The
-caller qla2x00_status_entry() acknowledges this on the very same status
-path, re-fetching GET_CMD_SP(sp) and bailing out with the "Command
-already returned" message when it is NULL -- but that check runs only
-after qla_chk_edif_rx_sa_delete_pending() has already dereferenced the
-pointer, so a NULL cmd crashes the kernel in interrupt context.
+snd_cobalt_card_create() stores cobsc in sc->private_data and installs
+snd_cobalt_card_private_free() as sc->private_free. From that point,
+snd_card_free(sc) releases cobsc through the ALSA card cleanup path.
 
-Return early when cmd is NULL, before touching cmd->sc_data_direction.
+If cobalt_alsa_init() fails after snd_cobalt_card_create(), the
+err_exit_free path calls snd_card_free(sc) and then kfree(cobsc). That
+second free releases the same object again.
 
-Fixes: dd30706e73b7 ("scsi: qla2xxx: edif: Add key update")
+Remove the explicit kfree(cobsc) and leave ownership with the ALSA card.
+
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: 85756a069c55 ("[media] cobalt: add new driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260723050413.3897522-47-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_edif.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/pci/cobalt/cobalt-alsa-main.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_edif.c
-+++ b/drivers/scsi/qla2xxx/qla_edif.c
-@@ -3491,6 +3491,9 @@ void qla_chk_edif_rx_sa_delete_pending(s
- 	struct scsi_cmnd *cmd = GET_CMD_SP(sp);
- 	uint32_t handle;
- 
-+	if (!cmd)
-+		return;
-+
- 	handle = (uint32_t)LSW(sts24->handle);
- 
- 	/* find out if this status iosb is for a scsi read */
+--- a/drivers/media/pci/cobalt/cobalt-alsa-main.c
++++ b/drivers/media/pci/cobalt/cobalt-alsa-main.c
+@@ -135,7 +135,6 @@ int cobalt_alsa_init(struct cobalt_strea
+ err_exit_free:
+ 	if (sc != NULL)
+ 		snd_card_free(sc);
+-	kfree(cobsc);
+ err_exit:
+ 	return ret;
+ }
 
 
