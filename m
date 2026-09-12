@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18705475F;
-	Sat, 12 Sep 2026 14:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D4B5475F;
+	Sat, 12 Sep 2026 14:42:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224155; cv=none; b=fidndscY5/+XrH7YAE9ivhkpCl0iLpz/w+0O5VLsvzcrlitgVJeHjrM6LdWaFD3dTlcFLbRVPdeUrZVG0pIt6O03gn7T81opYUXXyYFR/RufXitmX4+GG/ttFCQVNdEr35xGlbITTaINvdjKoDfVD6+6e4iZvYdKbfZmS2oeGP8=
+	t=1789224160; cv=none; b=BtaQHO34YPZPuPFrPXspEDhN4iYXDKbkHRuj1M7clBudFEmqSHVfQper+Pji9ZFk7JrVuWnz4OyIeZCFDuICGjXyPFlAEAdgkdKN1gLwgq9O0kctvhRt0vtuEndPuR9wk3sxyM4VBmyq17Valfkgi+F1emutXJcHZjf+1gmPBNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224155; c=relaxed/simple;
-	bh=UQfBHXWM5YBdYStCgftlbdDPzq2RuVuMFRLx7qHrlOQ=;
+	s=arc-20240116; t=1789224160; c=relaxed/simple;
+	bh=j+U5JUAPwjCWNCwk9Jo/g/uQT5K8GakHY7T+YlgvYgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eQyeDHh9hOxolj0/MEt7Bx+KhnQ77tRSUyZULAr50myggbZf8LkSZvtC8SXHVKqrJd7WpIVIrOT80BFCWeNIBvQeYhj1NnRLs9effHGDPdGpXUZLnd2vj8fe9Wobw1998Pp2UncuZi/KBmy7YJaUV0FYnPfR0NnRiEVoTbtPxxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yfWIBSqy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FaDqINDQwXfQIiWpPAfzz0V+ZyDT1ogSdOs8P6J+TOx10FNrJi8GNdjub3RpyzeESZo+AFeKH3SDsFIk2vStyOAR1xBJgLHzUzjmXACs8oZNtTRCIcj3IauqBlMMkZyWor44fGXeWo5p/PgQ6mfKe5V++fkeTqbUKoM06yjQYSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1jl12zpR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yfWIBSqy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1EC31F000FF;
-	Sat, 12 Sep 2026 14:42:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1jl12zpR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E53D81F000FF;
+	Sat, 12 Sep 2026 14:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224153;
-	bh=4KdaxLy7RFeIu2UN2/pDmBgO/9fy43h5zguHHDAgyfc=;
+	s=korg; t=1789224159;
+	bh=u9xBQixv8vroQ6pzUTzP3a+hE9jwwPLaLx5If7lceb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yfWIBSqyTc0cNKe3F9+yt6wI1pXLmBZ90tpkPyh4HJLccrSVW+8UHdA9o1Mc51s2z
-	 EJEVEglZ3oQHAEEZJY5yVFMhhzr3XWetwLfh0/YTX9utDk91OmMGKSsZNqEaeWP9J6
-	 fbRoC31ucUeBHjdVZXpTtUyASjBsumK0mrBId1n4=
+	b=1jl12zpREFSBDmBB98K8m2LeTDcHvuwV8PDKE7Shk32bIlWBGfbyJDWIGEUCnCyfY
+	 ml3M2cMFWIeeoTq2pH7hM5u18VhGXIjWWBt1J53xLOcEiVfdjKpA03arcZS+NUeRDV
+	 F5fn4G/HcfBQ1QMUIVmx8GFee4T3E+fQiESMmMQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0908/1424] nilfs2: convert nilfs_forget_buffer to use a folio
-Date: Sat, 12 Sep 2026 08:55:40 +0200
-Message-ID: <20260912065627.660912230@linuxfoundation.org>
+Subject: [PATCH 6.6 0935/1424] tools/nolibc/powerpc: mark ctr and xer as clobbered by system call
+Date: Sat, 12 Sep 2026 08:56:07 +0200
+Message-ID: <20260912065628.261573219@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -46,58 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 797e25ad106b5f0c49bdbeb6ce015acae6b93b3b ]
+[ Upstream commit b9fc5a1742b0c8fb7edf066cc17fa0b18b7be623 ]
 
-Save two hidden calls to compound_head().
+The system call can clobber the ctr and xer registers.
 
-Link: https://lkml.kernel.org/r/20231114084436.2755-5-konishi.ryusuke@gmail.com
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 66f4ad3ce158 ("nilfs2: fix BUG in nilfs_copy_dirty_pages() on dirty state mismatch")
+Make sure the compiler takes this into account.
+
+The missing clobbers only seem to be an issue with newer compilers.
+
+Fixes: 0cb0675ec37e ("tools/nolibc: add support for powerpc")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://patch.msgid.link/20260727-nolibc-powerpc-clobber-v1-1-e0911cc99ce1@linutronix.de
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/page.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ tools/include/nolibc/arch-powerpc.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nilfs2/page.c b/fs/nilfs2/page.c
-index 144e200c4909a..2582e8a508d60 100644
---- a/fs/nilfs2/page.c
-+++ b/fs/nilfs2/page.c
-@@ -73,7 +73,7 @@ struct buffer_head *nilfs_grab_buffer(struct inode *inode,
+diff --git a/tools/include/nolibc/arch-powerpc.h b/tools/include/nolibc/arch-powerpc.h
+index 41ebd394b90c7..377ea7f4b1c76 100644
+--- a/tools/include/nolibc/arch-powerpc.h
++++ b/tools/include/nolibc/arch-powerpc.h
+@@ -23,7 +23,7 @@
   */
- void nilfs_forget_buffer(struct buffer_head *bh)
- {
--	struct page *page = bh->b_page;
-+	struct folio *folio = bh->b_folio;
- 	const unsigned long clear_bits =
- 		(BIT(BH_Uptodate) | BIT(BH_Dirty) | BIT(BH_Mapped) |
- 		 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
-@@ -82,12 +82,12 @@ void nilfs_forget_buffer(struct buffer_head *bh)
  
- 	lock_buffer(bh);
- 	set_mask_bits(&bh->b_state, clear_bits, 0);
--	if (nilfs_page_buffers_clean(page))
--		__nilfs_clear_page_dirty(page);
-+	if (nilfs_page_buffers_clean(&folio->page))
-+		__nilfs_clear_page_dirty(&folio->page);
+ #define _NOLIBC_SYSCALL_CLOBBERLIST \
+-	"memory", "cr0", "r12", "r11", "r10", "r9"
++	"memory", "cr0", "ctr", "xer", "r12", "r11", "r10", "r9"
  
- 	bh->b_blocknr = -1;
--	ClearPageUptodate(page);
--	ClearPageMappedToDisk(page);
-+	folio_clear_uptodate(folio);
-+	folio_clear_mappedtodisk(folio);
- 	unlock_buffer(bh);
- 	brelse(bh);
- }
+ #define my_syscall0(num)                                                     \
+ ({                                                                           \
 -- 
 2.53.0
 
