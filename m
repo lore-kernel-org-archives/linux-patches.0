@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688AA2882DE;
-	Sat, 12 Sep 2026 16:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E48D3603D5;
+	Sat, 12 Sep 2026 16:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231088; cv=none; b=drANTTUVsa4kzMDFEeyL9KtdcIkPAEvWPfZO/PL39sJj2EpVB2ula91Je4AIVz5127UM9ERZppBH2bjchi0O7LW7EyCNEdwRYYE1IJUER/aQn9ud5TDHNghamB22obDLrv1unDtMMXxR6CBMSZYyFd7LOZRRMj6lHCeESVfNQ+U=
+	t=1789231095; cv=none; b=BC2xFRDbBHlRyFKP7ZovIXW+0as+/WBRlZAm8XeXeK7vUyamHKRxC4pI6dW5148xycl3lH5mV0eDXVI6rJ4/WdKzXF0ZBtfmCf4/aA7g2DBNUy3LTPAd6cejYFCXVbYtj56xAOTjWSVlCPfs4qtx/W4OJc0V99Cmx1Q10grRhiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231088; c=relaxed/simple;
-	bh=fs1KXx5MM+wJMV9v3B4ydsTxohkuIEJF7FxpULd5MEc=;
+	s=arc-20240116; t=1789231095; c=relaxed/simple;
+	bh=bFJttu4wWcMPHlaFGH9y5BcxFUny2klUKloDoGdYf30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VtRfFQsx0ZQZNGQ25Cq7YUjwxaP2yCfUPFgy1/RxQHEGi/1yDPzpkhI7wAkWlAyG77RppiJEmI46B/fNcucU4r5VNUqMFpsODvPMTJ1nvhy8615/Bo+hCeKg3jCBjK5e8FidkRqJMfyuk1MC+g04T/2Am8ynCzCafzPerAex2Xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRDvaGKl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AJ8w4RtpMZoWAGGUO0v/W2d24VuZjn3hj/DXDow2GQMBl4TWEpyZgjukI/q9p0MYOKCPYNsfBZ9f6X2Z/2e+/IE6hqW4djMZN1xFDxyVK6tRuj0lJA/25h3xhHToqp/mXcxNQ6ZPii2Usk/VZKNaTWUNkCi/qwUFj9WIqvF7Y6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SY34aAby; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRDvaGKl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE041F000FF;
-	Sat, 12 Sep 2026 16:38:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SY34aAby"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D4851F000FF;
+	Sat, 12 Sep 2026 16:38:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231087;
-	bh=6U9GV06oFyS16PH125Q7apu73IdL4kyCl5U+7xn8dq4=;
+	s=korg; t=1789231092;
+	bh=DLUjYgQ1PmwEP6ZqnrnurA1abc4IIVTNTaCCPFkZyes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JRDvaGKlFwEkUkyGU2cjSctN1Gl2F1eGbwprDnoD8+CNrWVcfDKgvMq5o9RJ/9uYx
-	 N7DY4vQXnX/n4+tBi818mTzSA4cOHO2qrO0FakPEor+y8YX/WvzY7WhVyhWKABMQOH
-	 rVLaVYUU5G0ySyiFhNwNqKS/hDnKgsJFVNbCipxY=
+	b=SY34aAbyJUz53U4Rp4r1FmPx5UD9q22aa4v+a+k3DQCygezg5UoVWjiLVRnU+A3V0
+	 7LMI7hxtDpElJ6zLoJP88TnyybbEyMdtNMMlq4VcQY2MSaZhkEsTNV1FaY3ucOkuV0
+	 wnlQYawOibhbR+1JAZNZ2aelaEqA9lg3+aUOiPrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0920/1191] regulator: qcom-rpmh: Fix PMIC5 BOB bypass mode handling
-Date: Sat, 12 Sep 2026 09:00:48 +0200
-Message-ID: <20260912065608.897592435@linuxfoundation.org>
+Subject: [PATCH 6.1 0929/1191] Bluetooth: hci_conn: Fix UAF in hci_enhanced_setup_sync
+Date: Sat, 12 Sep 2026 09:00:57 +0200
+Message-ID: <20260912065609.094838492@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,75 +50,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit abd14bebb87e0fa2749371272c8b31d6ee5f0a36 ]
+[ Upstream commit 18fd04ad856df07733f5bb07e7f7168e7443d393 ]
 
-Currently, when `rpmh_regulator_set_mode_bypass()` helper function
-is called to set bypass mode, it sends PMIC4's BOB bypass mode
-value for even if its a PMIC5 BOB.
+This checks if the ACL connection remains valid as it could be destroyed
+while hci_enhanced_setup_sync is pending on cmd_sync leading to the
+following trace:
 
-To fix this, introduce new hw_data parameter`pmic_bypass_mode`
-to store bypass mode value. Use it to send correct PMIC bypass
-mode value that corresponds to PMIC4/5 BOB regulators from the
-helper function.
+BUG: KASAN: slab-use-after-free in hci_enhanced_setup_sync+0x91b/0xa60
+Read of size 1 at addr ffff888002328ffd by task kworker/u5:2/37
 
-Fixes: 610f29e5cc0e8d58 ("regulator: qcom-rpmh: Update PMIC modes for PMIC5")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260801-b4-read-rpmh-v5-v6-2-9fcb54928523@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+CPU: 0 UID: 0 PID: 37 Comm: kworker/u5:2 Not tainted 6.11.0-rc6-01300-g810be445d8d6 #7099
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-2.fc40 04/01/2014
+Workqueue: hci0 hci_cmd_sync_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x5d/0x80
+ ? hci_enhanced_setup_sync+0x91b/0xa60
+ print_report+0x152/0x4c0
+ ? hci_enhanced_setup_sync+0x91b/0xa60
+ ? __virt_addr_valid+0x1fa/0x420
+ ? hci_enhanced_setup_sync+0x91b/0xa60
+ kasan_report+0xda/0x1b0
+ ? hci_enhanced_setup_sync+0x91b/0xa60
+ hci_enhanced_setup_sync+0x91b/0xa60
+ ? __pfx_hci_enhanced_setup_sync+0x10/0x10
+ ? __pfx___mutex_lock+0x10/0x10
+ hci_cmd_sync_work+0x1c2/0x330
+ process_one_work+0x7d9/0x1360
+ ? __pfx_lock_acquire+0x10/0x10
+ ? __pfx_process_one_work+0x10/0x10
+ ? assign_work+0x167/0x240
+ worker_thread+0x5b7/0xf60
+ ? __kthread_parkme+0xac/0x1c0
+ ? __pfx_worker_thread+0x10/0x10
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x293/0x360
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x2f/0x70
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+Allocated by task 34:
+ kasan_save_stack+0x30/0x50
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0x8f/0xa0
+ __hci_conn_add+0x187/0x17d0
+ hci_connect_sco+0x2e1/0xb90
+ sco_sock_connect+0x2a2/0xb80
+ __sys_connect+0x227/0x2a0
+ __x64_sys_connect+0x6d/0xb0
+ do_syscall_64+0x71/0x140
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Freed by task 37:
+ kasan_save_stack+0x30/0x50
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3b/0x60
+ __kasan_slab_free+0x101/0x160
+ kfree+0xd0/0x250
+ device_release+0x9a/0x210
+ kobject_put+0x151/0x280
+ hci_conn_del+0x448/0xbf0
+ hci_abort_conn_sync+0x46f/0x980
+ hci_cmd_sync_work+0x1c2/0x330
+ process_one_work+0x7d9/0x1360
+ worker_thread+0x5b7/0xf60
+ kthread+0x293/0x360
+ ret_from_fork+0x2f/0x70
+ ret_from_fork_asm+0x1a/0x30
+
+Cc: stable@vger.kernel.org
+Fixes: e07a06b4eb41 ("Bluetooth: Convert SCO configure_datapath to hci_sync")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 42de40abe25d ("Bluetooth: hci_conn: fix the SCO setup context lifetime")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/qcom-rpmh-regulator.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_conn.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index f90bcdeecea58..d05f65fa261bd 100644
---- a/drivers/regulator/qcom-rpmh-regulator.c
-+++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -76,6 +76,7 @@ enum rpmh_regulator_type {
-  * @hpm_min_load_uA:		Minimum load current in microamps that requires
-  *				high power mode (HPM) operation.  This is used
-  *				for LDO hardware type regulators only.
-+ * @pmic_bypass_mode:		The PMIC bypass mode value.
-  * @pmic_mode_map:		Array indexed by regulator framework mode
-  *				containing PMIC hardware modes.  Must be large
-  *				enough to index all framework modes supported
-@@ -89,6 +90,7 @@ struct rpmh_vreg_hw_data {
- 	const struct linear_range	voltage_range;
- 	int					n_voltages;
- 	int					hpm_min_load_uA;
-+	int					pmic_bypass_mode;
- 	const int				*pmic_mode_map;
- 	unsigned int			      (*of_map_mode)(unsigned int mode);
- };
-@@ -275,7 +277,7 @@ static int rpmh_regulator_vrm_set_mode_bypass(struct rpmh_vreg *vreg,
- 		return pmic_mode;
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 285ba4c41ef80..1af9fb7840e89 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -395,6 +395,9 @@ static int hci_enhanced_setup_sync(struct hci_dev *hdev, void *data)
  
- 	if (bypassed)
--		cmd.data = PMIC4_BOB_MODE_PASS;
-+		cmd.data = vreg->hw_data->pmic_bypass_mode;
- 	else
- 		cmd.data = pmic_mode;
+ 	kfree(conn_handle);
  
-@@ -664,6 +666,7 @@ static const struct rpmh_vreg_hw_data pmic4_bob = {
- 	.ops = &rpmh_regulator_vrm_bypass_ops,
- 	.voltage_range = REGULATOR_LINEAR_RANGE(1824000, 0, 83, 32000),
- 	.n_voltages = 84,
-+	.pmic_bypass_mode = PMIC4_BOB_MODE_PASS,
- 	.pmic_mode_map = pmic_mode_map_pmic4_bob,
- 	.of_map_mode = rpmh_regulator_pmic4_bob_of_map_mode,
- };
-@@ -754,6 +757,7 @@ static const struct rpmh_vreg_hw_data pmic5_bob = {
- 	.ops = &rpmh_regulator_vrm_bypass_ops,
- 	.voltage_range = REGULATOR_LINEAR_RANGE(3000000, 0, 31, 32000),
- 	.n_voltages = 32,
-+	.pmic_bypass_mode = PMIC5_BOB_MODE_PASS,
- 	.pmic_mode_map = pmic_mode_map_pmic5_bob,
- 	.of_map_mode = rpmh_regulator_pmic4_bob_of_map_mode,
- };
++	if (!hci_conn_valid(hdev, conn))
++		return -ECANCELED;
++
+ 	bt_dev_dbg(hdev, "hcon %p", conn);
+ 
+ 	configure_datapath_sync(hdev, &conn->codec);
 -- 
 2.53.0
 
