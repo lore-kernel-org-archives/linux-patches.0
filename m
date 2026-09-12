@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3550A41B8CD;
-	Sat, 12 Sep 2026 10:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C6237F8B1;
+	Sat, 12 Sep 2026 10:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207221; cv=none; b=GXN/h8xDb0SRx9P5mxCCj6nKqgcaw1ZeTkbCavLvHpvBD4y2xZcXrmGljZe6PisCFIqPIOqAQUnSQ7/56XDuajDOOqkr/NNb1zhXhP8+e+XnoYIpk+H04H544cKkDFzzrYNN3QIAaHxYPwZVOaKWPb7Qfmk27eRVTSEMR9QLVQU=
+	t=1789207226; cv=none; b=W+NbeRPjbvgOxm9Cyc7UOEEQICizzDiAGF+n/fPlEpgYfVjJC5qlpSgPHgwrlNa4THNIzcDxCx6LebAZ2U/uEd5pBKzg2UTqd8duU8LDin+UwLs2jXOg8WoOAWBSPIFncmzbT7UuMNucS64XbIJDtNud9eOE+G/o4/HWLPMm0PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207221; c=relaxed/simple;
-	bh=hCogOOxu6phsjJbRndtSL5gAAy/ex5r4pr4IDbO9CaY=;
+	s=arc-20240116; t=1789207226; c=relaxed/simple;
+	bh=T71y7nhyXRSV4703fBSHg/2L0CODEKL8+uODg9K68sQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=elFehym0lvx6iWVX13uizD4MeAIDbwfVGjNG5EFSmSgr9i6h1BRzXhTGdyhhFwZAw1hZBFD3b4BYT3LvqeM/4s5/HcjAJ0G4Jgaw9o1d7HsuqdFp5iEwgn95cViRmieOY6uqiiJX2Qd0RWA9eovhfhA62ZFARtAdzz6oMz8izMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PCREpy9R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QrxuAYvjakOEckR/LVSWjTjAlZw0K0u/H+4K0tKwpSzd7Lu2BBQwDduMKdzVoLMNSdMPW2iNim+gei/I9QAiA8MtOBSHVAatUaWbQulyAy5XvtxemM5CuNRKoB9lPn3jHyVFssNqzcZ+Sui4DenaBJbwMKhfnkJXoQg7M+AufFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UT/N/JtF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PCREpy9R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73631F000FF;
-	Sat, 12 Sep 2026 10:00:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UT/N/JtF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E41441F000FF;
+	Sat, 12 Sep 2026 10:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207219;
-	bh=GuUe4kBbphweYxgiSQVSzb4Tw9wEdJK9X2PYv3/g4wM=;
+	s=korg; t=1789207224;
+	bh=+GhLSCKdLuekhi3aLETXZ4p6QcFXgjye3jEqhIdsL3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PCREpy9RiTj+KOzra3PviChaAgT/A9RtucA4QW3gln3zrK+uxGQ/hILvaL5mBgk/B
-	 JNwRjeTg3a2IsVswQ3zy06a1TdOzCItvAYFOHbrsrymaNH/CcW5oCGsPDgt8GcecJ5
-	 DVZInfplPfGnxwIQmVhEhYzUsV8nNCBAN4kUZ9g4=
+	b=UT/N/JtFd5CW00dhX/ekpnWUbMh4iHpBLw8VOts5mDFCAUj8IePA2uN410eXGynxx
+	 rEL9VWFlNyE6Zllvvnd+02zSV/5kWVl9nNJBZL2LA+lIioZLLmmjNucm7zeuXQf237
+	 e6S8fBrE2SaDOJAfD7SERKe5Xzl70+H0OZiHh8ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Pengyu Luo <mitltlatltl@gmail.com>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0325/1518] usb: typec: ucsi: gaokun: unwind notifier on UCSI register failure
-Date: Sat, 12 Sep 2026 08:41:34 +0200
-Message-ID: <20260912065630.826113998@linuxfoundation.org>
+Subject: [PATCH 6.18 0326/1518] drm/panel: samsung-s6d16d0: Power off on prepare failure
+Date: Sat, 12 Sep 2026 08:41:35 +0200
+Message-ID: <20260912065630.848427881@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,75 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-[ Upstream commit 2c5659a7064e7c4c0c51eb9356bcf6726a85773b ]
+[ Upstream commit a9f950adfe2147318d75e7a6eab5e814851802ac ]
 
-gaokun_ucsi_register_worker() registers the EC notifier before calling
-ucsi_register(). If ucsi_register() fails, the worker currently only logs
-the error and leaves the notifier registered. Later EC events can then
-call into an unpublished UCSI instance.
+If enabling tearing mode or exiting sleep mode fails after the
+regulator is enabled, s6d16d0_prepare() returns without asserting
+reset or disabling the supply. Since the DRM panel core leaves the
+panel unprepared, a later unprepare call skips the driver callback
+and the supply remains enabled.
 
-The remove path also unconditionally unregisters both the EC notifier and
-the UCSI device even if the delayed worker failed before both publication
-steps completed.
+Assert reset and disable the supply before returning the DSI command error.
 
-Unregister the notifier immediately when ucsi_register() fails, and track
-only the fully published state. The remove path then tears down the pair
-only if both publication steps completed.
-
-Fixes: 00327d7f2c8c ("usb: typec: ucsi: add Huawei Matebook E Go ucsi driver")
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Pengyu Luo <mitltlatltl@gmail.com>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260709123239.62930-1-pengpeng@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ac1d6d74884e ("drm/panel: Add driver for Samsung S6D16D0 panel")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260704070648.35249-1-acharyalaxman8848@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/panel/panel-samsung-s6d16d0.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c b/drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c
-index 95b7b77b726d7..b40718f402370 100644
---- a/drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c
-+++ b/drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c
-@@ -103,6 +103,7 @@ struct gaokun_ucsi {
- 	struct notifier_block nb;
- 	u16 version;
- 	u8 num_ports;
-+	bool registered;
- };
- 
- /* -------------------------------------------------------------------------- */
-@@ -482,8 +483,13 @@ static void gaokun_ucsi_register_worker(struct work_struct *work)
+diff --git a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
+index ba1a02000bb9d..04e19b5f22f8b 100644
+--- a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
++++ b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
+@@ -89,16 +89,22 @@ static int s6d16d0_prepare(struct drm_panel *panel)
+ 				       MIPI_DSI_DCS_TEAR_MODE_VBLANK);
+ 	if (ret) {
+ 		dev_err(s6->dev, "failed to enable vblank TE (%d)\n", ret);
+-		return ret;
++		goto err_power_off;
+ 	}
+ 	/* Exit sleep mode and power on */
+ 	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
+ 	if (ret) {
+ 		dev_err(s6->dev, "failed to exit sleep mode (%d)\n", ret);
+-		return ret;
++		goto err_power_off;
  	}
  
- 	ret = ucsi_register(ucsi);
--	if (ret)
-+	if (ret) {
- 		dev_err_probe(ucsi->dev, ret, "ucsi register failed\n");
-+		gaokun_ec_unregister_notify(uec->ec, &uec->nb);
-+		return;
-+	}
+ 	return 0;
 +
-+	uec->registered = true;
++err_power_off:
++	gpiod_set_value_cansleep(s6->reset_gpio, 1);
++	regulator_disable(s6->supply);
++
++	return ret;
  }
  
- static int gaokun_ucsi_probe(struct auxiliary_device *adev,
-@@ -528,8 +534,11 @@ static void gaokun_ucsi_remove(struct auxiliary_device *adev)
- 	int i;
- 
- 	disable_delayed_work_sync(&uec->work);
--	gaokun_ec_unregister_notify(uec->ec, &uec->nb);
--	ucsi_unregister(uec->ucsi);
-+	if (uec->registered) {
-+		gaokun_ec_unregister_notify(uec->ec, &uec->nb);
-+		ucsi_unregister(uec->ucsi);
-+	}
-+
- 	for (i = 0; i < uec->num_ports; ++i)
- 		typec_mux_put(uec->ports[i].typec_mux);
- 
+ static int s6d16d0_enable(struct drm_panel *panel)
 -- 
 2.53.0
 
