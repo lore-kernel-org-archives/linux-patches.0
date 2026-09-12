@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9B241D4FE;
-	Sat, 12 Sep 2026 13:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 751582C15A9;
+	Sat, 12 Sep 2026 13:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219398; cv=none; b=GXRQqJrngX5UCGGNEfNFOWGkZHK8mPwJZwF+Kq6Q3Fc1zbu4RvU3+fRfpbeD2J2ckxXV/W3z+2sued8NF1rMvYf250GQ8nVjCT5eSHB68lFopiY/DpEM07Hmj1UG9b5XnXSwxQ7PYhIfbmxqq/wxZ1dQAIfpVCp/c3x3pCYuOYw=
+	t=1789219402; cv=none; b=b4Fwom4Pgeon3pwuc5Wj6WhaI1GRFCXzqCThL2WBnSlF98tHAfUZNS+ng4suBtRea4Wb8PsimQR8ZSTFV4dS0oqldGQzZ3shsL7IA3XHFDY27r2uWS9TyqczbdMD014gB5gD9/IkX5Md6NM/dvTPclWJdlMWkorvEI4iLlnENF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219398; c=relaxed/simple;
-	bh=qmT3rtzGu2HleUo7gB4Q6wyIR5ujNiPdk/Nx6rFfQ9s=;
+	s=arc-20240116; t=1789219402; c=relaxed/simple;
+	bh=9Qzh5NZd4xqzrr9kQUMB+JbxMpSucjODF0fFDQMkKr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rN2G0XtHXh8EF0GEr0Cj/mpAX4bCHnd/rrLeDOP+jC1oKMM9syk9T9bc/JvTN8y5kGNSXPnhnV0MQS7pd9wljL7p8yv/2z6iGpqVf99ZaaC3I8h4AW4yIE4Tn++7uX3TcbyzTfJ90xIObVvctjP6a/QxXxVDeheGET3lY4sfrCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=01CnFIC2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QdtGDN+rJkdWTSlAWMeI0VeYW4p1BSIY91E0ELrIb6t+yslQalCOUrPvV6V2JzsbJhz7bUf2KD6lIqIRZBtxNZ7lwUKFT9AjYCHR8p0AaVeM11SM0jMLQkZ0Vzi2b2uaBxjL0h1viIGsE8GypstotpYcgvtq60S1IiFbxWNpx6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTBhK/F8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01CnFIC2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9A71F000FF;
-	Sat, 12 Sep 2026 13:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTBhK/F8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44ED11F000FF;
+	Sat, 12 Sep 2026 13:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219396;
-	bh=4cmrXpdajNnYF6DCibij+EqZ3V1sDSm6paqwgxYlB1w=;
+	s=korg; t=1789219401;
+	bh=sRzJySBf0aA4tXujjJhGPpcRq4dJA5dmQj3ohEl7LE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=01CnFIC2aE5qs77M2evnclsN+3YIDsVWKigwYyU6JMMsfD033c8wpE6xXRGr6qvfi
-	 HGHpDkfY1JO484zRQztGs9e4t98GfxcJtq1vEmfQxieqlHmvF3rEGpXKVCBwjrjXP7
-	 iv0Iko8bOhCAVE/oIxXYzVFLhSd9PdD/bohz1YFw=
+	b=dTBhK/F84VuArseLsurkKM2CzSABLuxAeors2rh+A4Zfpl4z2K/CQT9WbDLs6roo/
+	 qxEpIQKuWfVc/4eogfeEEPZePIuf6fVpnb2ynwLmKT0V7IfLs+iMOXU+3mVha/t3xJ
+	 OxxBPOa42w1lgRPaHAN2DQY05xpSpYf9sJ6xlCTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1299/1376] net/sched: fq_codel: clamp default quantum and mtu
-Date: Sat, 12 Sep 2026 09:02:05 +0200
-Message-ID: <20260912065636.485584498@linuxfoundation.org>
+Subject: [PATCH 6.12 1300/1376] net/sched: sch_codel: clamp default mtu to avoid disabling CoDel
+Date: Sat, 12 Sep 2026 09:02:06 +0200
+Message-ID: <20260912065636.507249998@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -55,68 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit d9ebd8f9aa8b2773235889cb903fafd61f2d8585 ]
+[ Upstream commit 6439461f1618ae176c048673ad28bdb6c68efbfc ]
 
-fq_codel_init() sets q->quantum = psched_mtu(qdisc_dev(sch)) without
+codel_init() sets q->params.mtu = psched_mtu(qdisc_dev(sch)) without
 clamping. A device with a huge MTU (e.g. dummy with max_mtu == 0
-accepting MTU 2147483634) makes psched_mtu() return 0x80000000, which
-overflows the signed flow->deficit to INT_MIN in fq_codel_dequeue(),
-causing an infinite loop and soft lockup. Emulate fq_codel_change()
-and constrain to [256, FQ_CODEL_QUANTUM_MAX].
-
-The same unclamped psched_mtu() is assigned to q->cparams.mtu a bit
-below, and fq_codel_change() never updates it. codel_should_drop()
-tests "*backlog <= params->mtu"; with mtu == 0x80000000 (~2 GiB) and
-the default 32 MiB memory_limit, the test is always true, so CoDel is
-silently and completely disabled (no drops, no ECN). Declare a single
-clamped mtu and assign both q->quantum and q->cparams.mtu from it,
-which also removes the double psched_mtu() call.
+accepting MTU 2147483634) makes psched_mtu() return 0x80000000. In
+codel_should_drop() the test "*backlog <= params->mtu" then compares
+the backlog against ~2 GiB; with the default sch->limit of
+DEFAULT_CODEL_LIMIT (1000) packets the backlog can never reach it, so
+the test is always true and CoDel is silently and completely disabled
+i.e no drops, no ECN marking, codel degrades to a tail-drop FIFO.
+codel_change() never updates params.mtu, so the init path is the only
+place to clamp it. Constrain to [256, 1 << 20], matching the fq_codel
+bound; 256 is a sane floor that only makes CoDel slightly more willing
+to act on very small queues, which is the safe direction.
 
 Conditions to recreate the bug: a device whose MTU (plus
 hard_header_len) wraps psched_mtu() into the sign bit (e.g. a dummy
 device with max_mtu == 0 accepting MTU 2147483634). Requires
 CAP_NET_ADMIN in a user namespace.
 
-Fixes: 4b549a2ef4be ("fq_codel: Fair Queue Codel AQM")
+Fixes: 76e3cc126bb2 ("codel: Controlled Delay AQM")
 Reported-by: vega@nebusec.ai
 Tested-by: Victor Nogueira <victor@mojatatu.com>
 Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260822195509.112717-3-jhs@mojatatu.com
+Link: https://patch.msgid.link/20260822195509.112717-4-jhs@mojatatu.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq_codel.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/sched/sch_codel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
-index f445507eff7af..dc07e77df5a89 100644
---- a/net/sched/sch_fq_codel.c
-+++ b/net/sched/sch_fq_codel.c
-@@ -504,6 +504,7 @@ static int fq_codel_init(struct Qdisc *sch, struct nlattr *opt,
- 			 struct netlink_ext_ack *extack)
- {
- 	struct fq_codel_sched_data *q = qdisc_priv(sch);
-+	u32 mtu;
- 	int i;
- 	int err;
- 
-@@ -511,13 +512,14 @@ static int fq_codel_init(struct Qdisc *sch, struct nlattr *opt,
- 	q->flows_cnt = 1024;
- 	q->memory_limit = 32 << 20; /* 32 MBytes */
- 	q->drop_batch_size = 64;
--	q->quantum = psched_mtu(qdisc_dev(sch));
-+	mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, FQ_CODEL_QUANTUM_MAX);
-+	q->quantum = mtu;
- 	INIT_LIST_HEAD(&q->new_flows);
- 	INIT_LIST_HEAD(&q->old_flows);
- 	codel_params_init(&q->cparams);
- 	codel_stats_init(&q->cstats);
- 	q->cparams.ecn = true;
--	q->cparams.mtu = psched_mtu(qdisc_dev(sch));
-+	q->cparams.mtu = mtu;
+diff --git a/net/sched/sch_codel.c b/net/sched/sch_codel.c
+index 29f5a98a3bab0..d6819c4e41982 100644
+--- a/net/sched/sch_codel.c
++++ b/net/sched/sch_codel.c
+@@ -203,7 +203,7 @@ static int codel_init(struct Qdisc *sch, struct nlattr *opt,
+ 	codel_params_init(&q->params);
+ 	codel_vars_init(&q->vars);
+ 	codel_stats_init(&q->stats);
+-	q->params.mtu = psched_mtu(qdisc_dev(sch));
++	q->params.mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, 1 << 20);
  
  	if (opt) {
- 		err = fq_codel_change(sch, opt, extack);
+ 		int err = codel_change(sch, opt, extack);
 -- 
 2.53.0
 
