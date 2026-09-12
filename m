@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FFA1D7E5C;
-	Sat, 12 Sep 2026 14:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583F61D7E5C;
+	Sat, 12 Sep 2026 14:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224962; cv=none; b=fsbaO8aHkK9eXRMRxpVNRHXkbgcqu6ZKgE/RyO0y1M6+01Vo/BfCtskkoWeeNaafK758GXPknVHHSN2M0JaMWvjLHSOJZ4SNJOh/yUjHNpJJ8vMNX2hOTUKVAx4z0gTyIzPqT1VMJOAThwF36Si3k2PyGJrQj4xSZeSxJaCW5Rg=
+	t=1789224964; cv=none; b=N8+44bvewCycxvzYywaEv2zxXc0kVM/8c8s8Niy1Je7vMFwCFvUX3nho1mHcADZ4ITUBlZOBDiFhXMHj3AL6Wfosv7XmTy5JJRjEI1/I0smfncvlF6hUl6SxeFFSyHLdLffVr36Ra7Svd49Z9WY5/3of0F/aKJAQhdRyxJPuD7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224962; c=relaxed/simple;
-	bh=KoiMeLV13xicvlUtb7NAnQiwLoEEiY+af8hHtfHE0iI=;
+	s=arc-20240116; t=1789224964; c=relaxed/simple;
+	bh=WJR9A4JO9KuNIfJEbAydQb2KVdrsnGZXrSrHElx7TIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CH7//RXY0wKzof3USBq3uMBIdwsjTVbQiEnV59h8CnczQYceMmeBmI2D2j/L10eYc/41Ye7n4iqlYcpTYzm8WZ7ezlvBw+Bg5Dl5QlGvG87E/yKxGqqXTMhiKQue1o9RaIMyVn4SUTzYwiW1rwlEg/r/rO2EX7fMps3NCglUXow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uKe2uCzM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Igdgbhyz4guBggg72oKfDHJox84orIlJDEurbQAP4aVjp04Ei0Vy1ug/+RGUiMlheSkjL+XVfGLedxw0eFeFKZHo49PITAi5gzBI1YeXSdGyjol80JJtNcyZTY/e4EDx9tRVmnKrK9MGLWigsHRIeHOlM/DI3HG1Q1HYDpoONjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skxiNczf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uKe2uCzM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DBC1F000FF;
-	Sat, 12 Sep 2026 14:55:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skxiNczf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52EB1F00893;
+	Sat, 12 Sep 2026 14:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224958;
-	bh=mVKRwu8foB7R+kY504VNhUnfY5kfypNTW5+pMddSHVQ=;
+	s=korg; t=1789224962;
+	bh=LMA8QWTu+Rk3/drcoXslZGASHrDibbH5jW2p7fyaDmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uKe2uCzMqNFoGlHHQXqOqTBR8bJSpgwr+CZQWYRRLXp9M7K8Q0NfyILGUqLSm/SlQ
-	 Ta4bC/Zt84nQWihQRAUTaKcsUqoNehtSue/uK/uQjBN1Oz+LuQCiIR9r39jUKzvAVx
-	 FxZK+F0z7xHVq5HkHLgwZ7qK84ID/YWCt69UXtYg=
+	b=skxiNczfUHD7udWzd9ZQtRQbe1nOMGanjl0k6j2m4p78kxBU19OTXCAJxrBEx4HQQ
+	 Rf22l4+SMXX6CjWIeRAmdiIWPRLJFsREnA7adPseKvhFSYsv2bO4STYR9PWtnUAm9x
+	 MRpXtaspDnS93NPLq4PEM0APd6tdJQ7zNfipgACE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
-	David Hildenbrand <david@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Maxim Kochetkov <fido_max@inbox.ru>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1101/1424] hugetlbfs: release subpool on fill_super failure
-Date: Sat, 12 Sep 2026 08:58:53 +0200
-Message-ID: <20260912065631.961324512@linuxfoundation.org>
+Subject: [PATCH 6.6 1102/1424] soc: fsl: qe: check platform_driver_register() in qe_ic_of_init()
+Date: Sat, 12 Sep 2026 08:58:54 +0200
+Message-ID: <20260912065631.983520889@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -54,47 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-[ Upstream commit 308ab73e97c87bd0e142b11758faab7f88d82854 ]
+[ Upstream commit fbdba2a67fa7c0e7570bcbf9f28b782d6100270d ]
 
-hugetlbfs_fill_super() allocates a hugepage subpool when size or min_size
-mount options are specified.  hugepage_new_subpool() may also reserve huge
-pages for min_size.
+qe_ic_of_init() ignored the return value of platform_driver_register()
+and always returned success. Propagate the error to the initcall.
 
-If root dentry creation fails after the subpool is created, the failure
-path frees the subpool with kfree().  This bypasses hugepage_put_subpool()
-and can leave min_size reservations charged.
-
-Use hugepage_put_subpool() on the failure path, matching the normal
-put_super path.
-
-Link: https://lore.kernel.org/20260720021900.1376309-1-chenyichong@uniontech.com
-Fixes: 7ca02d0ae586 ("hugetlbfs: accept subpool min_size mount option and setup accordingly")
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: be7ecbd240b2 ("soc: fsl: qe: convert QE interrupt controller to platform_device")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Reviewed-by: Maxim Kochetkov <fido_max@inbox.ru>
+Link: https://lore.kernel.org/r/20260731094608.1883391-1-gonglinkai@kylinos.cn
+Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hugetlbfs/inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/soc/fsl/qe/qe_ic.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
-index 914e850b9cbb7..9bc9f04e4b7a6 100644
---- a/fs/hugetlbfs/inode.c
-+++ b/fs/hugetlbfs/inode.c
-@@ -1553,7 +1553,8 @@ hugetlbfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 		goto out_free;
- 	return 0;
- out_free:
--	kfree(sbinfo->spool);
-+	if (sbinfo->spool)
-+		hugepage_put_subpool(sbinfo->spool);
- 	kfree(sbinfo);
- 	return -ENOMEM;
+diff --git a/drivers/soc/fsl/qe/qe_ic.c b/drivers/soc/fsl/qe/qe_ic.c
+index bbae3d39c7bed..f17de6000ff24 100644
+--- a/drivers/soc/fsl/qe/qe_ic.c
++++ b/drivers/soc/fsl/qe/qe_ic.c
+@@ -481,7 +481,6 @@ static struct platform_driver qe_ic_driver =
+ 
+ static int __init qe_ic_of_init(void)
+ {
+-	platform_driver_register(&qe_ic_driver);
+-	return 0;
++	return platform_driver_register(&qe_ic_driver);
  }
+ subsys_initcall(qe_ic_of_init);
 -- 
 2.53.0
 
