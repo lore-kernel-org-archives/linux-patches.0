@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5178848E0F5;
-	Sat, 12 Sep 2026 18:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E556247F3C6;
+	Sat, 12 Sep 2026 18:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238200; cv=none; b=rxBSP0STBGzdUc7qlCwreIOrQg/Ok0SZugYUbpT1ra7rAbc8RGcpbGsj/DqsXgbI8+rQNagkfS4P8H2PGubY0z2nsSnPg31i3xAp5sm4JPWH8c1NTBWr1aIV7cGWXeffTJgFVMjHRTT8C2WB9fMfiYk8aOb4x2IssWoYShCiFBU=
+	t=1789238205; cv=none; b=gYykD1WWkSLkRseQxFRZFNq2EmGmx6bugwXK3I8PKoaMq3SJAeqY26V1wfBwC8vZIdOiUFyfu6y33a33J/N3mw4iVG6Dl6vgt9M3zvOv7NYNBk4gPZ/TfCDC+TXorv2FSaZ9UqVy0nMhtfm+mLdZeb39VOQd2LZUVxn6zGiF61k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238200; c=relaxed/simple;
-	bh=c2MFKLTCYWAwurovFvIHN1dnQR1oQPh0x2fADbOhHRo=;
+	s=arc-20240116; t=1789238205; c=relaxed/simple;
+	bh=W14+PoQNY/9fbIbM04iHIi0T2ey3VN+8RBRIZHsQebk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aRH2Z/RwTZY0BY4sw5mKFLXAZ5j1MHp4of8+CeGtB5IAoqdfd+d4uNRcl3dfa2GDLkFl7cOBVSd8WGDebUxDvCULjTlloohzMqFgKWYpNpb5FJW2HIr2dJcf6EWIWQietEWTCrhDh3w3ShYTpAJ5YLCeb3QVQ3VYaO4pJvL81yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adFEHPZB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eVD/4EJi41pwlhBUvZHsyuGX9bQNmdPrm2/9q0s1UikRWFpVz8dqA4TI76lG5sk/JuEoRTGKyHX7beNf/nZb2nkkDtqSjqnNqjnbb+JRiKooh56Bi6kCyFUgYN8FmPCKob5fU9r0znVd22obichWnYoxdrm/cg3kw8FQzDK8cxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZtMkhcjB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adFEHPZB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA5E1F000FF;
-	Sat, 12 Sep 2026 18:36:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZtMkhcjB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24011F000FF;
+	Sat, 12 Sep 2026 18:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238198;
-	bh=K/QSn9hcdDf/ZYvAa8Q0rETEWU7g8iWvSJGpgMaViyg=;
+	s=korg; t=1789238203;
+	bh=iejkqyzbVlmMHi77zsN8XyyqvQVmT9k74+Bf1WSDee0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=adFEHPZBTybbj6hrLyTQwKj+iPJCwLr97rDveWCFwtek9rXySBlqn6OvJan7X7LW5
-	 BZtU7BXeXU3oPnGhvDfclJCoJdKmarVvxScmEZEz3v6lSS2qALOk7nOrZFV3B5mC8Q
-	 TJtxrJCU4EVMjrDuHLopfVcqfPNzC7zkgx8dpx3Q=
+	b=ZtMkhcjBKMeqPP+hbL40sZuUWxmQbZO0VdS0EIgM9RVgh+KHbDuvlUpATeiBt9zVr
+	 N/W3f9A1J7NfuAEw1Sg0zRuVuCBQRCXCaUVcsR3g5ci40bdOg9xULkQ4sYGj9pPABU
+	 4ZerJC4vmdguxR/p7rtCezEtjThZa789JcEaFXdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Ian Rogers <irogers@google.com>,
+	Disha Goel <disgoel@linux.vnet.ibm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	linuxppc-dev@lists.ozlabs.org,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 414/935] media: keymaps: Remove obsolete RC_MAP_HAUPPAUGE_NEW keymap define
-Date: Sat, 12 Sep 2026 08:57:24 +0200
-Message-ID: <20260912065536.320324440@linuxfoundation.org>
+Subject: [PATCH 5.15 415/935] perf tests stat_bpf_counters: Fix usage of == to address shellcheck warning
+Date: Sat, 12 Sep 2026 08:57:25 +0200
+Message-ID: <20260912065536.341381366@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,33 +58,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
 
-[ Upstream commit 6e5deb2923b0d1b73c77a1a77c30b0da43d9e022 ]
+[ Upstream commit d10eedd87bb3e7678c3a0f77a5cfe7150a318ee2 ]
 
-Since commit af86ce79f020 ("[media] remove the old RC_MAP_HAUPPAUGE_NEW
-RC map"), the RC_MAP_HAUPPAUGE_NEW define is no longer used.
+Running shellcheck on stat_bpf_counter.sh generates below
+warning:
 
-Fixes: af86ce79f020 ("[media] remove the old RC_MAP_HAUPPAUGE_NEW RC map")
-Signed-off-by: Sean Young <sean@mess.org>
-Acked-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+   In tests/shell/stat_bpf_counters.sh line 34:
+   if [ "$base_cycles" == "<not" ]; then
+                       ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.
+
+   In tests/shell/stat_bpf_counters.sh line 39:
+   if [ "$bpf_cycles" == "<not" ]; then
+                      ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.
+
+Fix this by using "=" instead of "==" to work for
+all shells.
+
+Signed-off-by: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Disha Goel <disgoel@linux.vnet.ibm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: linuxppc-dev@lists.ozlabs.org
+Link: https://lore.kernel.org/r/20230709182800.53002-10-atrajeev@linux.vnet.ibm.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: b02027776ac5 ("perf tests: Fix flakiness in BPF counters test on hybrid systems")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/media/rc-map.h | 1 -
- 1 file changed, 1 deletion(-)
+ tools/perf/tests/shell/stat_bpf_counters.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/media/rc-map.h b/include/media/rc-map.h
-index 1eb9a93330036..d59aceb38ca05 100644
---- a/include/media/rc-map.h
-+++ b/include/media/rc-map.h
-@@ -260,7 +260,6 @@ struct rc_map *rc_map_get(const char *name);
- #define RC_MAP_GENIUS_TVGO_A11MCE        "rc-genius-tvgo-a11mce"
- #define RC_MAP_GOTVIEW7135               "rc-gotview7135"
- #define RC_MAP_HAUPPAUGE                 "rc-hauppauge"
--#define RC_MAP_HAUPPAUGE_NEW             "rc-hauppauge"
- #define RC_MAP_HISI_POPLAR               "rc-hisi-poplar"
- #define RC_MAP_HISI_TV_DEMO              "rc-hisi-tv-demo"
- #define RC_MAP_IMON_MCE                  "rc-imon-mce"
+diff --git a/tools/perf/tests/shell/stat_bpf_counters.sh b/tools/perf/tests/shell/stat_bpf_counters.sh
+index 6bf24b85294c7..a87bb2814b4c6 100755
+--- a/tools/perf/tests/shell/stat_bpf_counters.sh
++++ b/tools/perf/tests/shell/stat_bpf_counters.sh
+@@ -31,12 +31,12 @@ if ! perf stat -e cycles --bpf-counters true > /dev/null 2>&1; then
+ fi
+ 
+ base_cycles=$(perf stat --no-big-num -e cycles -- perf bench sched messaging -g 1 -l 100 -t 2>&1 | awk '/cycles/ {print $1}')
+-if [ "$base_cycles" == "<not" ]; then
++if [ "$base_cycles" = "<not" ]; then
+ 	echo "Skipping: cycles event not counted"
+ 	exit 2
+ fi
+ bpf_cycles=$(perf stat --no-big-num --bpf-counters -e cycles -- perf bench sched messaging -g 1 -l 100 -t 2>&1 | awk '/cycles/ {print $1}')
+-if [ "$bpf_cycles" == "<not" ]; then
++if [ "$bpf_cycles" = "<not" ]; then
+ 	echo "Failed: cycles not counted with --bpf-counters"
+ 	exit 1
+ fi
 -- 
 2.53.0
 
