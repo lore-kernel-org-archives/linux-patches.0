@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51BB547886A;
-	Sat, 12 Sep 2026 11:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62BF847254B;
+	Sat, 12 Sep 2026 11:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212663; cv=none; b=CeWnViF+qI9QXeHtQX16IepVrQZtKy4vDmE0Uiw+0MposO2GaIwjfedKfu2tEyNH8iYU6f7GYCmaihcu25NhiBvV8Snb7KNKjE5W134WQVt/HIbSMhkZaFxtgsXFykRZ86lF3IFHMqG+Dpqp7bieXpSb9MRTpY4hV2Zf5SfQxDs=
+	t=1789212668; cv=none; b=LQPBBJrku7eWvpfiKTUDudkZ8TBFn56DxODYkXOQB7LkaPZIkoRY5pCesIKKfyppMK/mfpX362oxdRvj5Ssj+ZyJeRBvDKkmydTndIMlZVhIF0yIV9g0wjCVBN1BEmTpbgpHzltoQqY4VNLFCJXh9mw+hn+IjEkL/e2pn81gl/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212663; c=relaxed/simple;
-	bh=UgnihiCHCdxzg5XIRXe8W1H2r9J7eVzS49R7+sS3OpI=;
+	s=arc-20240116; t=1789212668; c=relaxed/simple;
+	bh=kU2xMskCgjqlhQ0dRKOJcX9eVa8ms8sLuqqLbpWJXd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PcnBKc3o8zQzAljmUC9CwFKk0i5JPqDYygXq/3JzCSZxwp9aXShLhSWrx8rra9Q1xhUJLv75g16LfOlEWCRY0RaUq+gADHT2O9jnrQNoZ5wQqZfd2q2B47B+AxCxlaPf/5bpay+fnyE8+QDgwvn51yJ+tyveiTGNt8dYIQZbHcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUomkH5W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NwhhNFt7DDu55nEJfKqyekD6UyPfl9J5QDlkrI9jMjyf6dOPCwnTntT5ESh3kFIDLyM6yUoP5w/JC7mHuMtt8VLiN/nLl8f4kfXV2WY3yfijvCfU8b18WVm9Lj6odKfFq1X+7YGUEbWtKOOhFxugZuLo/uywXx9iTrvg8eKyZwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grJd/Hg3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUomkH5W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C501F000FF;
-	Sat, 12 Sep 2026 11:31:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grJd/Hg3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032B81F000FF;
+	Sat, 12 Sep 2026 11:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212662;
-	bh=BTx0MeuInveb0V3hFYxeZQ8g5a9qF41nPRSFd+ZHwCM=;
+	s=korg; t=1789212667;
+	bh=fMTfugQSVjOKf22ouIE3bquQ/E5t+ovQQdp5jti49Ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BUomkH5WlHV91Guu+/yOCRpp75hnY6wFqdGTSf4qFfwUkCysZdcQNdEJ6+2HmLgjz
-	 Srn7TrGWNXJWh6PftqUWZBjyAxljOxfWDl3vBVwkk8Gy7wwfoRvMw8oue82c3ljuH1
-	 dGhuzFEYVUbcSacolabqYu8syii5dtDT9TCel3qs=
+	b=grJd/Hg3N6eHdLzK0f4PnSW36m9fgwBoUpus5VoCBqIBGuzyLs69WnWeiIHlBwigQ
+	 5iv4OY8GbTmOg7CS4PbKo51jNQbVbj9QqbYdtrWfY5G/9xRHHtY+57lJBYwyuELBvt
+	 qMXopmUwSmkQOdC2nPORZ5C2SMGs1MJrzQyWjvXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Yang Xiuwei <yangxiuwei@kylinos.cn>,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1483/1518] scsi: sd: Fix error handling in sd_probe() after large pool creation failure
-Date: Sat, 12 Sep 2026 09:00:52 +0200
-Message-ID: <20260912065657.109489325@linuxfoundation.org>
+Subject: [PATCH 6.18 1484/1518] pinctrl: airoha: an7583: remove undefined groups from pcm_spi pin function
+Date: Sat, 12 Sep 2026 09:00:53 +0200
+Message-ID: <20260912065657.132090208@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,41 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Xiuwei <yangxiuwei@kylinos.cn>
+From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
 
-[ Upstream commit e3cc6ea1a745e7f5d326f919a428b244fa119d8f ]
+[ Upstream commit 7b87a686a5ab138b3f8ca3d7e3489d8371c02695 ]
 
-After device_add(&sdkp->disk_dev) succeeds, sd_large_pool_create()
-failure must unregister disk_dev and let scsi_disk_release() free
-sdkp. Going through out_free_index kfree()s an already registered device
-and leaks the sysfs entry.
+pcm_spi_int, pcm_spi_cs2, pcm_spi_cs3, pcm_spi_cs4 pin groups are not
+defined, so pcm_spi function can't be applied to these groups.
 
-Fixes: 7179e626b76e ("scsi: sd: Enable sector size > PAGE_SIZE in SCSI sd driver")
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Link: https://patch.msgid.link/20260707030333.22245-2-yangxiuwei@kylinos.cn
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: 3ffeb17a9a27 ("pinctrl: airoha: add support for Airoha AN7583 PINs")
+Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sd.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/pinctrl/mediatek/pinctrl-airoha.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index ff6b953da68a7..58d28c80c93a9 100644
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -4060,7 +4060,9 @@ static int sd_probe(struct scsi_device *sdp)
- 	if (sdp->sector_size > PAGE_SIZE) {
- 		if (sd_large_pool_create()) {
- 			error = -ENOMEM;
--			goto out_free_index;
-+			device_unregister(&sdkp->disk_dev);
-+			put_disk(gd);
-+			goto out;
- 		}
- 	}
- 
+diff --git a/drivers/pinctrl/mediatek/pinctrl-airoha.c b/drivers/pinctrl/mediatek/pinctrl-airoha.c
+index ec304ce570275..22986d033430b 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-airoha.c
++++ b/drivers/pinctrl/mediatek/pinctrl-airoha.c
+@@ -900,10 +900,8 @@ static const char *const pcm_spi_groups[] = { "pcm_spi", "pcm_spi_int",
+ 					      "pcm_spi_cs2_p156",
+ 					      "pcm_spi_cs2_p128",
+ 					      "pcm_spi_cs3", "pcm_spi_cs4" };
+-static const char *const an7583_pcm_spi_groups[] = { "pcm_spi", "pcm_spi_int",
+-						     "pcm_spi_rst", "pcm_spi_cs1",
+-						     "pcm_spi_cs2", "pcm_spi_cs3",
+-						     "pcm_spi_cs4" };
++static const char *const an7583_pcm_spi_groups[] = { "pcm_spi",
++						     "pcm_spi_rst", "pcm_spi_cs1" };
+ static const char *const i2s_groups[] = { "i2s" };
+ static const char *const emmc_groups[] = { "emmc" };
+ static const char *const pnand_groups[] = { "pnand" };
 -- 
 2.53.0
 
