@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C8C351C2D;
-	Sat, 12 Sep 2026 19:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985D034F497;
+	Sat, 12 Sep 2026 19:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240608; cv=none; b=fDAedsu46b7qeTkA0uvSJgKqUtx1ShPdP6yfvwW0T9kgxeHWkd43wnPxJf/Xv5PFpbVRMoXXPBv8M2TGACgHbtkO2YJcNg0avjl7dfvPfa3tA54BSzg0XdeTxzY2kpRzf7NvH6uuWZMBqoEbP9NrGLnTw120pf1L7f7g88q1YxA=
+	t=1789240613; cv=none; b=Gf15ob16ftBLrFlUZ0F5wPreE8GstKu7ooQfI+FjFHFlGUFtgsEnUEo3LzqFosnXYHdmVJxt/WLAEnfSesYSjBL0UkYBj30VwJKTTobVfErrFkItQaJfFkEKs2kNog+wrtAnAyy0O1mSVJ4u3hf3JG49+cM/kVdifcXBhjeNElg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240608; c=relaxed/simple;
-	bh=QJXwSQfHtyy3Bu7hsmsU/O9fHSAYxPAn4RjRFI6WlVU=;
+	s=arc-20240116; t=1789240613; c=relaxed/simple;
+	bh=uesAdastUMHMfahOEwNKWU4qOYWqaMxZ01WbKPELAGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D4r3pelsl1yvqMKvhXRrmTa+5RGrvmBIeP5Gicj1L7mlW616It8FiACWx9TntO170gpUDG4dnFHHLVGj+C2GoPz6iCW8jvYVC+wjrAii18cdVefK71alyz7DZe4DH9a+G/1YtGS2Ad8eiGn7OXBh6MCifinsLIz/KrAJvYpqYXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YiAodcUW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WxxPQugbwx7A6inuuLjgtB8Wufl/1VM5+6Sa1dpLNpMXAVBLuIBFxB/JpXNFUtfE2xTh9DuPSRbuVDlefFkJejstJJXif4H6ThQIx6tYnq9SGoM12apvzFyhVBu4Tnz98XSeHn1T7X+pOstFt+PrrtgaYXzW+L9X5eG9uFVRNss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Laqxq9ej; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YiAodcUW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A581F000FF;
-	Sat, 12 Sep 2026 19:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Laqxq9ej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52DC91F000FF;
+	Sat, 12 Sep 2026 19:16:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240607;
-	bh=pgBN6iaG6xUMAxDEJ1SIN/vkHeZrBcYucDyv/QOE7dA=;
+	s=korg; t=1789240612;
+	bh=7kZhvedlJMDZRXUE/PLSiXevusOIKx8MQDHys2SBdfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YiAodcUWWw0V7/Rmqfu4nPgcIGETtFoGiLk4CHwE2fmceFnXNpuEx5Qjbr4AJoBpk
-	 RrVK3Gxqo7LKcHRXtjOvyqqG1JUT4sCAODe7zjPxEm7XAaQWDdctrYDFl+IB9JTqCZ
-	 8vqQx+IvKBZHWfHwKWXvRLKK43PswmPSCds71QLw=
+	b=Laqxq9ejKO669Fsoe0jEziQZ805XWaVL/fJMCNwkrHdoKfpeG7KOFheAUUqYIQpnA
+	 TgiM5sh/Ki5kTPomv8NAeyYSqK8nSyIugS/vOsDHbIqn79+WgS9cyD+vs2/KCBo8Th
+	 GAnmxHx4zJS18S94ePN26pgl5cZ8bzljdLTgaaN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 901/935] tpm: st33zp24: Validate locality read result
-Date: Sat, 12 Sep 2026 09:05:31 +0200
-Message-ID: <20260912065547.478465031@linuxfoundation.org>
+Subject: [PATCH 5.15 862/935] vdpa/mlx5: fix wrong list iterated in add_direct_chain error path
+Date: Sat, 12 Sep 2026 09:04:52 +0200
+Message-ID: <20260912065546.594036436@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -45,56 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 264216889d39df509b9c8045df53529480b0b718 ]
+[ Upstream commit 23ae56d9e74c122f95cae71ae3b9fc259fb88446 ]
 
-check_locality() treats every nonzero transport return as success. SPI
-errors remain negative, while the I2C path can convert a negative write
-error through its byte-sized status variable. Either result is nonzero
-even though the TPM_ACCESS byte can remain unwritten, so indeterminate
-ACTIVE_LOCALITY and VALID bits can falsely report an active locality.
+In add_direct_chain(), newly allocated direct MR entries are added to
+the local list 'tmp', which is spliced into mr->head only on success.
+On the error path, the cleanup loop was incorrectly iterating over
+mr->head instead of tmp.
 
-Require recv() to return exactly the requested byte before examining
-TPM_ACCESS. Transport errors and short reads now report an inactive
-locality, while successful reads retain the existing behavior.
+Fix by iterating over 'tmp' in the err_alloc cleanup path.
 
-This issue was found by a static analysis checker and confirmed by manual
-source review.
-
-Fixes: 251a7b08213a ("TPM: STMicroelectronics ST33 I2C KERNEL 3.x")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Link: https://lore.kernel.org/r/20260813153032.3951878-2-ruoyuw560@gmail.com
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: 94abbccdf291 ("vdpa/mlx5: Add shared memory registration code")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260701113608.1972-1-lirongqing@baidu.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/st33zp24/st33zp24.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/vdpa/mlx5/core/mr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/char/tpm/st33zp24/st33zp24.c b/drivers/char/tpm/st33zp24/st33zp24.c
-index f4f77548a6152..016bf31114115 100644
---- a/drivers/char/tpm/st33zp24/st33zp24.c
-+++ b/drivers/char/tpm/st33zp24/st33zp24.c
-@@ -113,10 +113,10 @@ static bool check_locality(struct tpm_chip *chip)
- {
- 	struct st33zp24_dev *tpm_dev = dev_get_drvdata(&chip->dev);
- 	u8 data;
--	u8 status;
-+	int status;
+diff --git a/drivers/vdpa/mlx5/core/mr.c b/drivers/vdpa/mlx5/core/mr.c
+index 59504edd1e55b..b9a3746bc908b 100644
+--- a/drivers/vdpa/mlx5/core/mr.c
++++ b/drivers/vdpa/mlx5/core/mr.c
+@@ -345,7 +345,7 @@ static int add_direct_chain(struct mlx5_vdpa_dev *mvdev, u64 start, u64 size, u8
+ 	return 0;
  
- 	status = tpm_dev->ops->recv(tpm_dev->phy_id, TPM_ACCESS, &data, 1);
--	if (status && (data &
-+	if (status == 1 && (data &
- 		(TPM_ACCESS_ACTIVE_LOCALITY | TPM_ACCESS_VALID)) ==
- 		(TPM_ACCESS_ACTIVE_LOCALITY | TPM_ACCESS_VALID))
- 		return true;
+ err_alloc:
+-	list_for_each_entry_safe(dmr, n, &mr->head, list) {
++	list_for_each_entry_safe(dmr, n, &tmp, list) {
+ 		list_del_init(&dmr->list);
+ 		unmap_direct_mr(mvdev, dmr);
+ 		kfree(dmr);
 -- 
 2.53.0
 
