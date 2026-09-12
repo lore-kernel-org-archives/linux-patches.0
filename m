@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5051E1EB5FD;
-	Sat, 12 Sep 2026 07:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AF037C0E2;
+	Sat, 12 Sep 2026 07:23:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197804; cv=none; b=NJ3eib8ZeKE0y23iVNf3eg/Qa3WXM4VWCpAEK9dqBlTL6X6B4gcAGMxdu09axq3j3kcs0N7UVjKNmsrwuw53SrwfSBThpe52GXYcZKxnDHQ9y8i8uaWLmQxzfJvn5bmm2KoO63GKtRcDEbshhOdtJODIuvch3k9qwTzl9zOvsb8=
+	t=1789197809; cv=none; b=S1tWZuFJ/tc5VSVxvlwdEUfcESXM1q0iSdGIxtSX4VMQI18gOfEFTGtaNEgd62BewgXiRNPdtDMr4yrHverVcAH0+ge9IJ6LuvP8YCIIzllhP/sUkcCvw1AYzYK4Vi/U9Vtjm9Tgz68ZjA3ehgmDSOIdoQNIlCFQ3YS3CP/1dng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197804; c=relaxed/simple;
-	bh=L1hvD33OkhQ/kRVFYqJ4Npza/hUvJSqUsZ2AF514kf0=;
+	s=arc-20240116; t=1789197809; c=relaxed/simple;
+	bh=I33RsxNI48Scu+TsmSNk5Baw1MhqlcdDimwyDu9Xrxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H+yk/DmJdW7MfT7cpAp7DK/UtzqEL9J8yMzX67Kgu2Kksk3EmATJ5VNiSlm1AcOTM9/MFKMJymArLombyC+DRtSz6sOzR8uK9ZFgtpHYzgb+5/Nr37QPIqMO3mVLFOC8IQElUe6ZjuSB6ynIpY97JPYXO1Qim1WJADQcn+2zCr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zq6a//G0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=U1NCGWtH3wHm/TTXOKTwFainHKBUDg6IXFbhx27DpezlV+ih+eRaGuCd79uELF8iQF7eFStEHj7M4lRdZBJyRXQUjj8Nnm1ATDMCrb/IdSVueHLntSBFT8ECgzR4k57xYz/AJzCfKR52F4IeiBMWPv+H7QtmPnyQ8iF87d7db7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAFJ81hj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zq6a//G0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721C91F000FF;
-	Sat, 12 Sep 2026 07:23:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAFJ81hj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D3501F000FF;
+	Sat, 12 Sep 2026 07:23:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197803;
-	bh=x+TBsWIPI0U+AGCKnOGEs1SNdUBffYABehxrHX7tAQc=;
+	s=korg; t=1789197808;
+	bh=NDbFD2P/yh/WAJJi66E+RcrmJMNLx1L2NYfhd571R7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zq6a//G0IE7j4emCvJqT51pkqBH4OH2PUbvB20j0wOldFj3KU4YwbcqHNnZKU6/Vz
-	 EkJS0pGqGnef1YWi8XQ+p4/ZneTM9otTSsKB/v+fh93Sn8I8xuTGZtqA/cc1O4H2o+
-	 Mh6bpwEl8uD5NqzkvYmiELM8Ai61KBVUOccPWV0U=
+	b=TAFJ81hjg3obyVOCCw0PYxUXVvZvfhFuFtqetUCKjNxew+TngRooTLVTQiEZsrzH1
+	 7osPj9iTFaljPXPoUnH9R7UbK+Aro5PEqkb6LA9ovmk+RvkfOBHOrw+c9PBKq72u3t
+	 rogr1CrBEVUVAx8fe9A4aMluh+625j4ArohTdeLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Malaya Kumar Rout <malayarout91@gmail.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
 	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0250/1815] time/namespace: Validate nanosecond field in proc_timens_set_offset()
-Date: Sat, 12 Sep 2026 08:33:20 +0200
-Message-ID: <20260912065654.853487012@linuxfoundation.org>
+Subject: [PATCH 7.2 0251/1815] y2038: uapi: Use 64-bit __kernel_old_timespec::tv_nsec on x32
+Date: Sat, 12 Sep 2026 08:33:21 +0200
+Message-ID: <20260912065654.876177139@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,56 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Malaya Kumar Rout <malayarout91@gmail.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 06aba58e58492d2b8eae059274caed29025ea96e ]
+[ Upstream commit 79ced850e549e8c86b772a79ea417a1425b5c04b ]
 
-The function validates tv_sec to be within [-KTIME_SEC_MAX, KTIME_SEC_MAX]
-but never validates that tv_nsec is within the valid range of
-[0, NSEC_PER_SEC-1] before using it in timespec64_add().
+'struct __kernel_old_timespec' represents the 'native' time ABI of the
+kernel. On 32-bit systems it uses 32-bit fields and on 64-bit systems
+it uses 64-bit fields.
 
-timespec64_add() expects both timespec64 structures to have normalized
-values with tv_nsec in the range [0, 999999999]. If off->val.tv_nsec
-contains invalid values (negative or >= NSEC_PER_SEC), it could lead to
-incorrect calculations or unexpected behavior.
+However the x86 x32 ABI uses the 64-bit time ABI natively.  This is
+correctly handled for the 'tv_sec' fields, through the typedefs of
+'__kernel_old_time_t' -> '__kernel_long_t' -> 'long long'. The same
+treatment was missed for 'tv_nsec'.
 
-Add validation to ensure tv_nsec is within the valid range before
-performing the addition.
+In practice this might not make much of a difference as the value of
+'tv_nsec' will always fit into 32 bits and the missing bits fall
+into the padding of the structure.
 
-Fixes: 04a8682a71be ("fs/proc: Introduce /proc/pid/timens_offsets")
-Signed-off-by: Malaya Kumar Rout <malayarout91@gmail.com>
+When introspecting the structure however, a difference can be observed.
+
+Switch to 64-bit tv_nsec on x32.  No other architectures or ABIs are
+affected.
+
+While this could be interpreted as violating the POSIX requirement of
+'timespec::tv_nsec' being 'long':
+
+  * __kernel_old_timespec is not actually the POSIX timespec type
+
+  * the requirement is gone in newer versions of POSIX
+
+  * this matches glibc
+
+Fixes: 94c467ddb273 ("y2038: add __kernel_old_timespec and __kernel_old_time_t")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260704093429.89350-1-malayarout91@gmail.com
+Link: https://patch.msgid.link/20260504-timespec-x32-v2-1-0739c9047fc4@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/namespace.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/uapi/linux/time_types.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/time/namespace.c b/kernel/time/namespace.c
-index 5fa0af66cf3f7..3aff27bb0a154 100644
---- a/kernel/time/namespace.c
-+++ b/kernel/time/namespace.c
-@@ -293,10 +293,12 @@ int proc_timens_set_offset(struct file *file, struct task_struct *p,
- 			return -EINVAL;
- 		}
+diff --git a/include/uapi/linux/time_types.h b/include/uapi/linux/time_types.h
+index bcc0002115d39..03a0d8aaadca5 100644
+--- a/include/uapi/linux/time_types.h
++++ b/include/uapi/linux/time_types.h
+@@ -30,7 +30,7 @@ struct __kernel_old_timeval {
  
--		if (off->val.tv_sec > KTIME_SEC_MAX ||
--		    off->val.tv_sec < -KTIME_SEC_MAX)
-+		if (off->val.tv_sec > KTIME_SEC_MAX || off->val.tv_sec < -KTIME_SEC_MAX)
- 			return -ERANGE;
+ struct __kernel_old_timespec {
+ 	__kernel_old_time_t	tv_sec;		/* seconds */
+-	long			tv_nsec;	/* nanoseconds */
++	__kernel_long_t		tv_nsec;	/* nanoseconds */
+ };
  
-+		if (off->val.tv_nsec < 0 || off->val.tv_nsec >= NSEC_PER_SEC)
-+			return -EINVAL;
-+
- 		tp = timespec64_add(tp, off->val);
- 		/*
- 		 * KTIME_SEC_MAX is divided by 2 to be sure that KTIME_MAX is
+ struct __kernel_old_itimerval {
 -- 
 2.53.0
 
