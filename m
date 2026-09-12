@@ -1,49 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B16436728D;
-	Sat, 12 Sep 2026 09:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66536361DDC;
+	Sat, 12 Sep 2026 09:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205118; cv=none; b=UXGqWJTPRDbJywUrLWDLXge8QlR3dwAEO0C6Xa1rdiXHytlNTUEJI7EVvIEXCtndP1FhdqKJwl+nh9u3g3SWgSJDKVZpKCaKr78Sr2MvA49lwPRMgMEQL3JuYZU2wo9WYluTFYdh2/35QbX2DXlggPdGc+bUEShZxetcIdDHsq0=
+	t=1789205123; cv=none; b=piNHFvYBsTON/e/q+9dUXswvKp81NUCG1F69RwtAb/TDwQChD3MchM04y+F42m48lOFAVc+rxxQIzQBgvMVpb76LYw7NpeRNeE4iLKWQmuA5hTE4++oTMLUQG4IJRPIRKEhQxoBW6WR8/MnRoAHmSQYt+KG0lyBTzCArHI3jZJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205118; c=relaxed/simple;
-	bh=WLFFtna0QtPgdWS0nZ0v6rGy7pGC1Lo1QkfycD51Bao=;
+	s=arc-20240116; t=1789205123; c=relaxed/simple;
+	bh=aoZ3h0sXKwKfrCjc6++Szf98VbS/hD3JBTWDvB3p29Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d8zhMzYBPfOss0XnuEicv4n6Yaidzl6t72jwusU3bIrsHm7S3VdvRpqTcOM4y/RLOHtf65Klb/irenTWfWPc+N/iEZf7N0Urfa1dXyyaT+u/9NyD3uWRkQvIE8pgGUvOhyX5RB3AegKmr2MK/pa2Nt7z0GbW7P0MGEVucnbFU4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztlfOZlL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jpv2bXMjejRGHZ2GrCy6GzvOrBPWFpOocK87TgjwaW9YKZSqUYQnKE8BNIhVX0nqlBKVPKhoqYdXCw9vpLBe0dGpzPkjLvWmsV2hkTy4RDvsox1r6AWeLJCm4xE/BuIxmpo5VQOuPkj2E9T6scKdfokAovQZSIIvItVkZGyjmhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6/nxHn3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztlfOZlL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064181F00893;
-	Sat, 12 Sep 2026 09:25:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6/nxHn3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 219901F000FF;
+	Sat, 12 Sep 2026 09:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205117;
-	bh=Iti/Lwk23mrJqjOAEvdEmBNFwkSzjduR0Zot9PRqJDQ=;
+	s=korg; t=1789205122;
+	bh=8yIPi7IGdYSYvqgDge8hQ3tGYhgziX+k9C8AfMc9eMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ztlfOZlLsIqKttUddP8rU3NdNGmsY/VDlFe5Widk/eYDtrwASS8MAwsEAAb1GNy5/
-	 Yvpbd1i6mlyMuCpmqulfRXKrI6xqWdKVmChb4PcE8csVkiC91y1euEow9g54nBq5GQ
-	 5GerVTBfUNJKJinfCU+XTVoxNfRJA32ZklGJXwV0=
+	b=v6/nxHn3UnYKy/ihTwYLVt7sPckfq0Pw+OKPs94aTmWHjZgFHICf2X1Fjnp4nmZZ6
+	 kScGKz08Ulkj2uidi2tcWxTZOy8pqyOl6ymD4MUAAAV/3RTLADVyhynyCyFr1EHVk4
+	 osiNvdp40zSNgR1fI/mJggxKhac2YlYOc1XdIDyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett (Oracle)" <liam@infradead.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Breno Leitao <leitao@debian.org>,
-	Chris Mason <clm@meta.com>,
-	Chuck Lever <cel@kernel.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Joe Perches <joe@perches.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Rik van Riel <riel@surriel.com>,
-	Waiman Long <longman@redhat.com>,
-	Will Deacon <will@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Jann Horn <jannh@google.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1753/1815] maple_tree: fix argument name in header
-Date: Sat, 12 Sep 2026 08:58:23 +0200
-Message-ID: <20260912065730.139811679@linuxfoundation.org>
+Subject: [PATCH 7.2 1754/1815] selftests/proc: make proc-maps-race work with READ_IMPLIES_EXEC
+Date: Sat, 12 Sep 2026 08:58:24 +0200
+Message-ID: <20260912065730.164436800@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -62,44 +57,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liam R. Howlett (Oracle) <liam@infradead.org>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 00f67814a14e614b749ebe54076ef1e3e6454f2b ]
+[ Upstream commit 0685630fdccb62dcb0e3f44525a40578da5f6dc8 ]
 
-The mas_prev_range() function takes a min and not a max.
+test_maps_tearing_from_split times out when READ_IMPLIES_EXEC is set.
+This happens by default on pre-ARMv6 CPUs, which lack no-execute support.
 
-Link: https://lore.kernel.org/20260821192627.4085470-18-liam@infradead.org
-Fixes: 6b9e93e01020 ("maple_tree: add mas_prev_range() and mas_find_range_rev interface")
-Signed-off-by: Liam R. Howlett (Oracle) <liam@infradead.org>
-Cc: Boqun Feng <boqun.feng@gmail.com>
-Cc: Breno Leitao <leitao@debian.org>
-Cc: Chris Mason <clm@meta.com>
-Cc: Chuck Lever <cel@kernel.org>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Joe Perches <joe@perches.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Waiman Long <longman@redhat.com>
-Cc: Will Deacon <will@kernel.org>
+split_vma() re-maps the first page with mod_info->prot | PROT_EXEC to make
+it differ from its neighbours.  With READ_IMPLIES_EXEC the original
+mapping is already executable, so no split occurs and the test hangs
+waiting for the modifier child.
+
+Use PROT_NONE for the split mapping, which always differs from its
+readable neighbours.
+
+Link: https://lore.kernel.org/20260808200312.6326-1-kmehltretter@gmail.com
+Fixes: beb69e817246 ("selftests/proc: add /proc/pid/maps tearing from vma split test")
+Assisted-by: Codex:gpt-5.6-terra
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Acked-by: Suren Baghdasaryan <surenb@google.com>
+Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/maple_tree.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/proc/proc-maps-race.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/maple_tree.h b/include/linux/maple_tree.h
-index 4a5631906affb..0d712e7be6ddc 100644
---- a/include/linux/maple_tree.h
-+++ b/include/linux/maple_tree.h
-@@ -572,7 +572,7 @@ void maple_tree_init(void);
- void mas_destroy(struct ma_state *mas);
+diff --git a/tools/testing/selftests/proc/proc-maps-race.c b/tools/testing/selftests/proc/proc-maps-race.c
+index 1026d8c400e1b..415eccb704684 100644
+--- a/tools/testing/selftests/proc/proc-maps-race.c
++++ b/tools/testing/selftests/proc/proc-maps-race.c
+@@ -490,7 +490,8 @@ static bool query_addr_at(int maps_fd, void *addr,
  
- void *mas_prev(struct ma_state *mas, unsigned long min);
--void *mas_prev_range(struct ma_state *mas, unsigned long max);
-+void *mas_prev_range(struct ma_state *mas, unsigned long min);
- void *mas_next(struct ma_state *mas, unsigned long max);
- void *mas_next_range(struct ma_state *mas, unsigned long max);
+ static inline bool split_vma(FIXTURE_DATA(proc_maps_race) *self)
+ {
+-	return mmap(self->mod_info->addr, self->page_size, self->mod_info->prot | PROT_EXEC,
++	/* PROT_NONE differs from both readable neighbors. */
++	return mmap(self->mod_info->addr, self->page_size, PROT_NONE,
+ 		    MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, -1, 0) != MAP_FAILED;
+ }
  
 -- 
 2.53.0
