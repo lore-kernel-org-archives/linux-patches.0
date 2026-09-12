@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA1241B8C6;
-	Sat, 12 Sep 2026 15:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8C5278161;
+	Sat, 12 Sep 2026 15:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226935; cv=none; b=PJSsNJtAl/FcRB9EL2Xo3cYu28zSmDsGkBypTCLy4XAIl+X1/LVLA57cMzzlsRGRv0ooejuZpoZHBLQ5wq0nMD9zAyXUKdl6xTLx6CyXSbLiQfPjsJZM1VFOISdDTrCgHdiuqTsNmvTKpTbrEPrZaO1Am2GD+fLOn67N4PHheRE=
+	t=1789226939; cv=none; b=GE+eLoK4kLwLNPD2AVsdyvHI432+JuKW10WOMQGpURV4QReGHCWocCzYNhdZN8FfjhR4hEh9m3TxYoVaD1JslBwfrc0allaGdh4Rc0/QLAk7+R8qGdALeS+hQPwxrsu1qL17nxO2bqbh52MT9CXIxsWdry/pKFRrplrrXYztMhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226935; c=relaxed/simple;
-	bh=gGUe2ks6jFUYRKRhJa6d5Rzlj3qgatZL68+8YXN2lQk=;
+	s=arc-20240116; t=1789226939; c=relaxed/simple;
+	bh=sUJE32euu2JZ20tnHEpvBdOFqsQmrZtLojsbaAJXb7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oLHIef3s//zEsMmLWkqpLE/mXaKpLFDDjJjto89ET7bbkivZ/AbrKJDeHgwo9oqj8DpxHVSuCi4+u0YTif8+f8ZG9b+txJ78DZkLFYDAx+ov3JVVpi2hy20pztqQAq6Ri7dQGXvwRL0qqlIzQQAlt/g0hZZvN6QOpLPgqQwW5ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpGH6p3y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sngy4Qdk4PNBIAQHfaHBU8svikZqLLrl955oXEz8/anGLU8GtExjGXTjyflk7h8Ei0YvzTsgfxQAPX7Pri39EqC546ThDljEwUbooztUdGPZld/XnC79n3Y3ilAqPkJCkbRw83wjSS49D3oS8bpMlBsbTohjV6aeftsDmBNp/XY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMJs3J23; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpGH6p3y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 400A31F000FF;
-	Sat, 12 Sep 2026 15:28:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMJs3J23"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BC61F000FF;
+	Sat, 12 Sep 2026 15:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226933;
-	bh=wDX1T9RzmSBhwP2WvA3XLwVNUGoTf5jUiD8AK+RRPBc=;
+	s=korg; t=1789226938;
+	bh=3RLsaeB6xWSv4XuKhlerA3ahfhOZW11GVZWTnKhe8do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xpGH6p3yd5ACKItaeXMuQwVQMlUcAQFxZdd/vXLdz0r0E7J8W02COVyag3Z+gh+dx
-	 9+hpFFQNfhQ9636ONMK/gQm6jYL0upP1N9tOWTWwxNEJAIiPVsAcHO5GpoQUuIlnyh
-	 yMd2i+opIc2IJnNa6hsf6m2g0wIFqSztUl1sTLS8=
+	b=cMJs3J238IDYQkmHA81yeQNq57OTLP2EJZNp/ROrsWh8fAslnbM9AlXrD5PfRX17z
+	 mq4IZ/dObwo6P6qWFaP6Q/wLIIYKtpxY6L9eC1wqOTwN/ZHsIuxBfFua92dYko+gOg
+	 IqmhQDFfFgmaUSVXllmsia42AFnft5D848O1hC+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yichong Chen <chenyichong@uniontech.com>,
 	Tyler Hicks <code@tyhicks.com>
-Subject: [PATCH 6.1 0078/1191] ecryptfs: fix tag 11 packet exact-fit size check
-Date: Sat, 12 Sep 2026 08:46:46 +0200
-Message-ID: <20260912065549.919711221@linuxfoundation.org>
+Subject: [PATCH 6.1 0079/1191] ecryptfs: hold msg ctx list lock when cleaning daemon queue
+Date: Sat, 12 Sep 2026 08:46:47 +0200
+Message-ID: <20260912065549.942628680@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,35 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Yichong Chen <chenyichong@uniontech.com>
 
-commit 8b2ec0f56f55477f547d332526c9ae2a8fabc0a5 upstream.
+commit 779972513c2fa8c7938e54976f686091dafff22f upstream.
 
-parse_tag_11_packet() rejects a packet when the already-consumed tag and
-length bytes plus the packet body exceed the caller supplied maximum
-packet size.  The check currently adds one extra byte, even though
-*packet_size already includes the tag byte before the length is parsed.
+ecryptfs_exorcise_daemon() drops queued messages from a dying daemon
+without holding ecryptfs_msg_ctx_lists_mux, but
+ecryptfs_msg_ctx_alloc_to_free() requires that lock.
 
-Remove the extra byte so a tag 11 packet that exactly fits the available
-buffer is accepted while oversized packets are still rejected.
+Take the list lock while moving the queued contexts back to the free
+list to avoid racing with other global msg ctx list users.
 
-Fixes: 237fead61998 ("[PATCH] ecryptfs: fs/Makefile and fs/Kconfig")
+Fixes: f66e883eb618 ("eCryptfs: integrate eCryptfs device handle into the module.")
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
 Signed-off-by: Tyler Hicks <code@tyhicks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ecryptfs/keystore.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ecryptfs/messaging.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ecryptfs/keystore.c
-+++ b/fs/ecryptfs/keystore.c
-@@ -1576,7 +1576,7 @@ parse_tag_11_packet(unsigned char *data,
- 	}
- 	(*packet_size) += length_size;
- 	(*tag_11_contents_size) = (body_size - 14);
--	if (unlikely((*packet_size) + body_size + 1 > max_packet_size)) {
-+	if (unlikely((*packet_size) + body_size > max_packet_size)) {
- 		printk(KERN_ERR "Packet size exceeds max\n");
- 		rc = -EINVAL;
+--- a/fs/ecryptfs/messaging.c
++++ b/fs/ecryptfs/messaging.c
+@@ -165,6 +165,7 @@ int ecryptfs_exorcise_daemon(struct ecry
+ 		mutex_unlock(&daemon->mux);
  		goto out;
+ 	}
++	mutex_lock(&ecryptfs_msg_ctx_lists_mux);
+ 	list_for_each_entry_safe(msg_ctx, msg_ctx_tmp,
+ 				 &daemon->msg_ctx_out_queue, daemon_out_list) {
+ 		list_del(&msg_ctx->daemon_out_list);
+@@ -173,6 +174,7 @@ int ecryptfs_exorcise_daemon(struct ecry
+ 		       "the out queue of a dying daemon\n", __func__);
+ 		ecryptfs_msg_ctx_alloc_to_free(msg_ctx);
+ 	}
++	mutex_unlock(&ecryptfs_msg_ctx_lists_mux);
+ 	hlist_del(&daemon->euid_chain);
+ 	mutex_unlock(&daemon->mux);
+ 	kfree_sensitive(daemon);
 
 
