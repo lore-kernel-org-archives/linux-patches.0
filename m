@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E971D47A88C;
-	Sat, 12 Sep 2026 17:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F0547C10C;
+	Sat, 12 Sep 2026 17:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232593; cv=none; b=LXClibxJD+0tuSF1kjPjbRaIi1pHf98lKM+8tjhqH22LVYlRueot3VvD37kL5cbZX3X5p4vaD8aHcVq7vUlX7hJnKTKUOE3aeWCY8rC162kSWmFAWt/T3LyxmNxjMzMC54OdJbbkqiZellqrJ2/5WY6xDRkGgip6aIDwWVCMhK8=
+	t=1789232596; cv=none; b=mJPJPzncH+bGm1C5Nx0MhY3n47D7QFNuBAtcm68DNsFvZ6IIv8zYsPOdjT5rs6j5NQw1fn/lozj5xhNlr5fC8alWSOTk+PiQ0Pg2Vgk9PcZj9RAQUDlTWC1JWyWiLcYMr2TPuMUOiHIwUpxCB9YfXFX2UvfugGFYoRK0ECVE0Ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232593; c=relaxed/simple;
-	bh=ZBoTmu7IZMb5F+A08Me5vehkbu+o8XjojD9FUyGZwLo=;
+	s=arc-20240116; t=1789232596; c=relaxed/simple;
+	bh=My1QhSkM7Iw8fxMwnnNvuh9qlStfLDASlxJTUUb/pf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bGRBlFnOy0FsfOXpK7xNqpb3uo60a/mzAakvG9es5JzunhrNWB0FBGfC7H8XV68VYsIqALlihJIfVQHb48+61YNEVNwraYq+j4jZ/6bUX1hI9dfhCW+NFPYynfTHHtPNOfTvHZ88H8HpEFBj2cyK/urd8TOqWP+JVEnsgJTV17E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ym4JQ8AS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z4vg+lD4PDqbkCrIgG8xq1/h2bPbhMbaGf1flui/zpfbqg2+wwcrIgNlCW2oMsSmXLGOrrq3m0CZYhbHS+Kee5GUqXRrFChLk0bhYgD/evN7QMB7T86RDR0ZgrzuPfW/MbJUXkqr46Zmb9GWa3cLGow0Kg7anluGyG2RqYbYbns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWvP6XOk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ym4JQ8AS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E72F1F000FF;
-	Sat, 12 Sep 2026 17:03:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWvP6XOk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129271F000FF;
+	Sat, 12 Sep 2026 17:03:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232589;
-	bh=BZ+vkUPGfFn8q58QcZ5VagWVOlWAV96F2O39eoSirFU=;
+	s=korg; t=1789232594;
+	bh=w8lz+Jm3agXyNrWcJaGAtzTYi59QiMPoteK4N0eVdeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ym4JQ8ASz2TOPEouTvOfFSnwqKDCI/WHezae5zvIpfD0UYuN+2GFxEI/6rx5k22mh
-	 4gdHP0RI3sbn2umVCPsc+e5AtNdDYIiOQMn48JjA81zPT2IjzsDMmDugtkh9uoUOTf
-	 iTCoFrCFWqCFqBqW9KrsF2aPMZz3LCvqwYstqCGg=
+	b=eWvP6XOkKuoo5cE835rrmiKhtAiF2UyxIlwWwrls7CqoJniix3c/P8olRUuY5kPxG
+	 xYu+MBc8mRp/qwRTTTbo52I52TRzHawkZm04qm4Ks/L2Bh8NqAQFtxbd8HTv4ECI06
+	 tXXcOlQmCZikYhL4C6eaYaVcJfT6FWhLEshW9oUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 042/935] nfsd: block non-SAVEFH ops after FOREIGN PUTFH to prevent NULL deref
-Date: Sat, 12 Sep 2026 08:51:12 +0200
-Message-ID: <20260912065527.802239390@linuxfoundation.org>
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 5.15 043/935] nfsd: check client ownership when cancelling a copy-notify stateid
+Date: Sat, 12 Sep 2026 08:51:13 +0200
+Message-ID: <20260912065527.824723178@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,69 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit c59738a00aa51b16adc1b5ceb7c80877168efb4d upstream.
+commit 6bdbfab96e0cf25e5f57dac5c09dc1749751a4bf upstream.
 
-When CONFIG_NFSD_V4_2_INTER_SSC is enabled, nfsd4_putfh() can return
-success with fh_dentry and fh_export both NULL if fh_verify() returns
-nfserr_stale and putfh->no_verify is true. The NFSD4_FH_FOREIGN flag
-is set, but the compound dispatch loop only uses this flag to bypass
-the nfserr_nofilehandle check -- it does not prevent subsequent ops
-from running with a NULL fh_dentry.
+On the OFFLOAD_CANCEL path (clp != NULL), manage_cpntf_state() freed the
+target cpntf state without checking ownership. The lookup key
+st->si_opaque.so_id is allocated cyclically (guessable) and the embedded
+clientid is the fixed per-net nn->s2s_cp_cl_id, so any authenticated
+NFSv4.2 client could cancel and free another client's copy-notify
+stateid.
 
-A remote client can exploit this by crafting a COMPOUND that includes
-an inter-SSC COPY (which causes check_if_stalefh_allowed() to set
-no_verify=true on the saved PUTFH) with an additional op inserted
-between the source PUTFH and SAVEFH. For example, SETATTR calls
-fh_want_write() which dereferences fh_export->ex_path.mnt without
-calling fh_verify() first, causing a NULL pointer dereference in the
-nfsd kthread.
+Compare the creating clientid recorded in state->cp_p_clid against the
+requesting client's cl_clientid and return nfserr_bad_stateid on a
+mismatch instead of freeing the entry.
 
-Fix this by gating the dispatch loop: when NFSD4_FH_FOREIGN is set
-and fh_dentry is NULL, only OP_SAVEFH (needed for the inter-SSC flow)
-and ops with ALLOWED_WITHOUT_FH (which don't need a resolved
-filehandle) may proceed. All other ops receive nfserr_stale, per
-RFC 7862 Section 15.2.3 which specifies that foreign filehandle
-validation is deferred to the consuming operation and NFS4ERR_STALE
-returned at that point.
-
-Fixes: b9e8638e3d9e ("NFSD: allow inter server COPY to have a STALE source server fh")
+Fixes: ce0887ac96d3 ("NFSD add nfs4 inter ssc to nfsd4_copy")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
+Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260527-putfh_foreign_fh_null_deref_consumers-v1-1-1b8a5aa28c59@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://patch.msgid.link/20260710-nfsd-testing-v3-5-a0ff7db6aa3e@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4state.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -2642,9 +2642,22 @@ nfsd4_proc_compound(struct svc_rqst *rqs
- 				op->status = nfsd4_open_omfg(rqstp, cstate, op);
- 			goto encode_op;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -6616,10 +6616,20 @@ __be32 manage_cpntf_state(struct nfsd_ne
+ 			state = NULL;
+ 			goto unlock;
  		}
--		if (!current_fh->fh_dentry &&
--				!HAS_FH_FLAG(current_fh, NFSD4_FH_FOREIGN)) {
--			if (!(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
-+		if (!current_fh->fh_dentry) {
-+			if (HAS_FH_FLAG(current_fh, NFSD4_FH_FOREIGN)) {
-+				/*
-+				 * FOREIGN fh from inter-SSC PUTFH: only
-+				 * SAVEFH may proceed with a NULL fh_dentry.
-+				 * Per RFC 7862 S15.2.3, validation of a
-+				 * foreign fh is deferred to the operation
-+				 * that consumes it, and NFS4ERR_STALE is
-+				 * returned at that point.
-+				 */
-+				if (op->opnum != OP_SAVEFH &&
-+				    !(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
-+					op->status = nfserr_stale;
-+					goto encode_op;
-+				}
-+			} else if (!(op->opdesc->op_flags & ALLOWED_WITHOUT_FH)) {
- 				op->status = nfserr_nofilehandle;
- 				goto encode_op;
- 			}
+-		if (!clp)
++		if (!clp) {
+ 			refcount_inc(&state->cp_stateid.cs_count);
+-		else
++		} else if (memcmp(&clp->cl_clientid, &state->cp_p_clid,
++				  sizeof(clientid_t))) {
++			/*
++			 * OFFLOAD_CANCEL: only the creating client may cancel.
++			 * so_id is guessable, so without this check any client
++			 * could free another's cpntf state.
++			 */
++			state = NULL;
++			goto unlock;
++		} else {
+ 			_free_cpntf_state_locked(nn, state);
++		}
+ 	}
+ unlock:
+ 	spin_unlock(&nn->s2s_cp_lock);
 
 
