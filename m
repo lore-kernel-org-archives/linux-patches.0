@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F402D0C75;
-	Sat, 12 Sep 2026 12:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B58A42C514;
+	Sat, 12 Sep 2026 12:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215878; cv=none; b=goDlaxFkVERwAVEkc61WUtp2Lit27J568I7WojTJrBPRF/lO7vw928RTApneHOuG3MZjTU1lgNCSsvEOHiASZJ8hSi3obWQcCsOLBio0A9e+fjKBHJNWx133NEXYmLFyKK0X3buhj7MH9nmqL3KFrSbLPb2uW0+N5dz9OUnwgNU=
+	t=1789215884; cv=none; b=TrSSKegSn8EZ3rdba7aZVjbIN/i55UQMSHzwDRt1G+hdVd4k9eA4FQcF0NsezECVJWEpGMi/10FGniHVJVTqtWeQUpEVnJDXLtlEelEEXfwsX1jwITWZDcA3zWVHx9MrWsdGULSVmA+mlFNyUk8CBw7SbzNEHEUraerNDg6DKW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215878; c=relaxed/simple;
-	bh=aQNByWW7IApjqkAmhgeNqRS5A+2804Ut1tcmYfTWeSY=;
+	s=arc-20240116; t=1789215884; c=relaxed/simple;
+	bh=2Y3ybPz/sKio5DC5hYpDC9DF3ehB8UbKNEvtp4PtTIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LqUWgh+1qPLgzduU+xmoSnlX1cUpViN6k9CUoseDHhs5DhVOmXIUpidmjnJ2ahceY+jYK5MRczKYPURqBCczqvGUUsaA0z0HbxJ0Alq/VDi0DouLoUx+5cETSwxkTXefHaZYiDtRNTTTipQNqXHLwL3QSr7S5hl6DjPUcX3Xm1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whZ97Iob; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fkzTTBhCPSsMCGsi2lFC13gcmUTGNAMRH9krGAytmA75mo+w7sSct2veY0m20Rbn4zC3LTMTRG1nhFi3n7Z5ftQDwYAkWFQJOF8FeL+IyqTM7/gcnEsfodD+tvToARY1rUj64QY8dgo0S13hnBLrlaeo/Ol/K3iv2kMuRgKQl9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zv9rxuNq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whZ97Iob"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B721F000FF;
-	Sat, 12 Sep 2026 12:24:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zv9rxuNq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922751F000FF;
+	Sat, 12 Sep 2026 12:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215877;
-	bh=PE3uHXnHEiRWh4nksZt2EiN3CBET1rV7BQJ45uxW6tw=;
+	s=korg; t=1789215882;
+	bh=T3t1M887+lkHwR5xssXGp7dUBCfPBvRoDdsqou6yNnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=whZ97Iob4sVIFjJIL5JpMwSkL/D6YnUNc0DDqe4tHhrUbcBYybUADOvOsLdfquoeh
-	 fyGzZq/7polugme+FkvevmWZHePDm0yf5fAheIZPV5tUxKuj1EF6Epf1lkMyGxJ1/P
-	 hQAdw4aBpaLJGvmUjw0Pfdl5MZb+kSo0zb5x/jN8=
+	b=zv9rxuNqxJcMnFpAcg5oMfPl/kz0CuGkztrbA7FVo8bciNaL6j14wQQ6HZ7LxrYuM
+	 LzfybZwxrZFBpwUS5R60JxF4D06FxTH5jIT/wi9BqAxVqPDA5a3rLIUrKAp16Mn+lr
+	 6/dldg4zUNw3pCr6Sy68sPkqsBkTWHImSxQHl1DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	golne tree <lrepper@outlook.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jun Yan <jerrysteve1101@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0623/1376] ACPI: battery: Adjust charging status validation check
-Date: Sat, 12 Sep 2026 08:50:49 +0200
-Message-ID: <20260912065621.428903611@linuxfoundation.org>
+Subject: [PATCH 6.12 0606/1376] arm64: dts: amlogic: meson-axg-s400: enable mipi_pcie_analog_dphy for PCIe
+Date: Sat, 12 Sep 2026 08:50:32 +0200
+Message-ID: <20260912065621.042723741@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,98 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Jun Yan <jerrysteve1101@gmail.com>
 
-[ Upstream commit 77ce4be0d8d53c528d1663ab62a14d93d5853f11 ]
+[ Upstream commit 7f1d0cc86cb70fa550163b6f70fd1d484c03218e ]
 
-Commit bb1256e0ddc7 ("ACPI: battery: fix incorrect charging status when
-current is zero") added a charge rate check to validate the "charging"
-status of the battery, but that check is reported to cause some systems
-to misbehave [1].  Namely, it causes the "not charging" status to be
-reported on them while the battery is in fact charging (and they were
-correctly reporting the "charging" status in that case previously).
+The PCIe PHY node references mipi_pcie_analog_dphy via its phys property.
+Enable this analog PHY node to make PCIe functionally viable.
 
-To address that, check if the battery is full in addition to checking
-the charge rate when the "charging" status is reported by the platform
-firmware and only change it to "not charging" if the battery is full and
-its charge rate is zero or it is unknown.
-
-Fixes: bb1256e0ddc7 ("ACPI: battery: fix incorrect charging status when current is zero")
-Reported-by: golne tree <lrepper@outlook.de>
-Tested-by: golne tree <lrepper@outlook.de>
-Closes: https://lore.kernel.org/linux-acpi/AM9P193MB158895CFE0DDFA62FCD1DA5ED0F22@AM9P193MB1588.EURP193.PROD.OUTLOOK.COM/ [1]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/6286911.lOV4Wx5bFT@rafael.j.wysocki
+Fixes: 9715b01da6cf ("arm64: dts: meson-axg-s400: enable PCIe M.2 Key E slots")
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://patch.msgid.link/20260624135650.727077-5-jerrysteve1101@gmail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/battery.c | 36 +++++++++++++++++++-----------------
- 1 file changed, 19 insertions(+), 17 deletions(-)
+ arch/arm64/boot/dts/amlogic/meson-axg-s400.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
-index a33d60e625f81..c69970ba1843f 100644
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -151,27 +151,28 @@ static int acpi_battery_technology(struct acpi_battery *battery)
+diff --git a/arch/arm64/boot/dts/amlogic/meson-axg-s400.dts b/arch/arm64/boot/dts/amlogic/meson-axg-s400.dts
+index 9611775b81eee..7c8a8529dbc5f 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-axg-s400.dts
++++ b/arch/arm64/boot/dts/amlogic/meson-axg-s400.dts
+@@ -432,6 +432,10 @@ gpio_speaker: gpio-controller@1f {
+ 	};
+ };
  
- static int acpi_battery_get_state(struct acpi_battery *battery);
- 
--static int acpi_battery_is_charged(struct acpi_battery *battery)
-+static bool acpi_battery_is_full(struct acpi_battery *battery)
- {
--	/* charging, discharging, critical low or charge limited */
--	if (battery->state != 0)
--		return 0;
--
- 	/* battery not reporting charge */
- 	if (battery->capacity_now == ACPI_BATTERY_VALUE_UNKNOWN ||
- 	    battery->capacity_now == 0)
--		return 0;
-+		return false;
- 
- 	/* good batteries update full_charge as the batteries degrade */
- 	if (battery->full_charge_capacity == battery->capacity_now)
--		return 1;
-+		return true;
- 
- 	/* fallback to using design values for broken batteries */
--	if (battery->design_capacity <= battery->capacity_now)
--		return 1;
-+	return battery->design_capacity <= battery->capacity_now;
-+}
- 
--	/* we don't do any sort of metric based on percentages */
--	return 0;
-+static int acpi_battery_is_charged(struct acpi_battery *battery)
-+{
-+	/* charging, discharging, critical low or charge limited */
-+	if (battery->state != 0)
-+		return 0;
++&mipi_pcie_analog_dphy {
++	status = "okay";
++};
 +
-+	return acpi_battery_is_full(battery);
- }
- 
- static bool acpi_battery_is_degraded(struct acpi_battery *battery)
-@@ -212,13 +213,14 @@ static int acpi_battery_get_property(struct power_supply *psy,
- 		if (battery->state & ACPI_BATTERY_STATE_DISCHARGING)
- 			val->intval = acpi_battery_handle_discharging(battery);
- 		else if (battery->state & ACPI_BATTERY_STATE_CHARGING)
--			/* Validate the status by checking the current. */
--			if (battery->rate_now != ACPI_BATTERY_VALUE_UNKNOWN &&
--			    battery->rate_now == 0) {
--				/* On charge but no current (0W/0mA). */
--				val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
--			} else {
-+			/* Check the rate and capacity to validate the status. */
-+			if (!acpi_battery_is_full(battery) ||
-+			    (battery->rate_now != ACPI_BATTERY_VALUE_UNKNOWN &&
-+			     battery->rate_now > 0)) {
- 				val->intval = POWER_SUPPLY_STATUS_CHARGING;
-+			} else {
-+				/* Full and zero rate. */
-+				val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
- 			}
- 		else if (battery->state & ACPI_BATTERY_STATE_CHARGE_LIMITING)
- 			val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
+ &pdm {
+ 	pinctrl-0 = <&pdm_dclk_a14_pins>, <&pdm_din0_pins>,
+ 		    <&pdm_din1_pins>, <&pdm_din2_pins>, <&pdm_din3_pins>;
 -- 
 2.53.0
 
