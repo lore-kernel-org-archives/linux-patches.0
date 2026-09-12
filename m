@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4224F345EA7;
-	Sat, 12 Sep 2026 15:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CFF9471249;
+	Sat, 12 Sep 2026 15:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228329; cv=none; b=AkgPAY/MCdljDsvtfpIu+i/+MnegXnQQ7H2Gvt93ef9d7ZiG0Y5Gbh3qESlyQ/XWLCuHcnxtNP8t8SbbC6CoPDDkd+Tduz1WkScNB6zO7aAyNJpinDSFifTiJZG9RJyQUPqidsgAsmhonWyqsgLcoEqAsq1lVNtGmXhAYtzvazo=
+	t=1789228334; cv=none; b=hJevuEAUpzT6/gBZ/O+IpGylQtYmMJnAtqknT6OP0q7JiUkio9LId2lkQRC1ul5HrGcN3BIzz8eSc0lEfzHsg5vOYly6JPAKFqyjhU3K4E3Xg49Yj7uzBprOJZY967F9bcEfXoQ8stmR2XuOrIIbINMXQx0Hhm6cZGfQzxLIroE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228329; c=relaxed/simple;
-	bh=Lw31KmWYI1hXyFndKX1QKUVmx4FJNvL1yuYLmwwYMq0=;
+	s=arc-20240116; t=1789228334; c=relaxed/simple;
+	bh=/1nqz6sZIM9kGLfjBOJcOQ9uI29xxYMfJszVMIGColA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a0syqB7o6Mv4axdrVJjz1eRFTWNv0xXwAsZ2XPlmNtV4q3BQV8OB1sgKBGwGCcwzb+JDzrXPHsnYTeMx3lf9pVjK9Fg+JXAUN1fFrVX9+hS1hpLmgRTl1OL7tbtVA14qUX5ZfaL9WQ9J4iaQadan0JFhHsI4PmJMjXLjFGQOs5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxHKnGti; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HJ1C2XnPwyPYlc5nAHs5J9mifYDU9NcQPe82w9IAwoI1IiRYxHToBe8jqB5mYSn6AJPK6mBwtpKmpkhMGqV57Rk4VJdOKci2s3cTN348BunHAyvQ3oKHqFPMF+MzUDIc0KH8Tjp7zzzaMZjFWzM+UR9vNjr6wtW8O4aIxeXxrvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlNEL+WA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxHKnGti"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40FF71F000FF;
-	Sat, 12 Sep 2026 15:52:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlNEL+WA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4BFC1F000FF;
+	Sat, 12 Sep 2026 15:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228328;
-	bh=LAH4ME9JED3yZ0049tdm7LKVIUtONJSnvvSXat06PrA=;
+	s=korg; t=1789228333;
+	bh=mu0hXInKvNKrQofHfcgf5/4Dto2F4xB0pW8gyqhLhdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yxHKnGtiY8FUSAk/TuT/xFgubGYP35RTjSiydW/v4Wi1rnULt6iQGI/yBXAvUyoyp
-	 A/7a3DngqCZhOgiBFPCWyv/FI49fzg4onq3R1ChQfqqS4kXvo/ABZEeVf+B492Vw0g
-	 LdzW73FMWXF/ByS8AVLZGZxTluHakjeXxsQ4jQH8=
+	b=nlNEL+WAwiLkuHH/Dt5w5+JucrYaI0u/hsN3fN4rx5xZbDcTlqG9/SUFPqdmg8/rR
+	 k12qWerOMc35TSO+clEdhhojQ/MszfCoyb5XBHCmNBkTEF3JbpQXBl5r4w5MHmYWao
+	 TnRUui0YNVq9MfcY2GC45UlII69Djw+itr0CrVGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Ding <yi.s.ding@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 0362/1191] media: cec: meson: ao-cec-g12a: name the CEC core regmap to avoid debugfs clash
-Date: Sat, 12 Sep 2026 08:51:30 +0200
-Message-ID: <20260912065556.357491880@linuxfoundation.org>
+Subject: [PATCH 6.1 0363/1191] media: cec: Serialize exclusive follower delivery
+Date: Sat, 12 Sep 2026 08:51:31 +0200
+Message-ID: <20260912065556.381406906@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,48 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Ding <yi.s.ding@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-commit 172c5a7d81deb922ddedd1bc920751c7fed6c43c upstream.
+commit 1924d0788caa6c66fd320dd4704fae99487fd2c7 upstream.
 
-The driver registers two regmaps on the same platform device: an MMIO
-regmap for the AO CEC registers, and an indirect regmap (using
-reg_read()/reg_write() callbacks) for the CEC controller core registers.
-Neither regmap_config sets a .name, so both default their debugfs
-directory to the device name and collide:
+cec_receive_notify() reads the exclusive follower pointer without the
+adapter lock. Serialize the no-follower check and message delivery
+against mode changes and release.
 
-  debugfs: 'ff800280.cec' already exists in 'regmap'
-
-Because of the clash the second regmap's debugfs directory fails to
-register, so its registers can no longer be inspected via debugfs.
-
-Give the indirect CEC core regmap a distinct name. The two debugfs
-directories then become "<dev>.cec" and "<dev>.cec-core". This only
-affects debugfs naming; register access is unchanged.
-
-Tested on an ODROID-N2 (Amlogic S922X): the warning is gone and both
-/sys/kernel/debug/regmap/ff800280.cec and ff800280.cec-core are present.
-
-Fixes: b7778c46683c ("media: platform: meson: Add Amlogic Meson G12A AO CEC Controller driver")
+Fixes: 9881fe0ca187 ("[media] cec: add HDMI CEC framework (adapter)")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Yi Ding <yi.s.ding@gmail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/cec/platform/meson/ao-cec-g12a.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/cec/core/cec-adap.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/media/cec/platform/meson/ao-cec-g12a.c
-+++ b/drivers/media/cec/platform/meson/ao-cec-g12a.c
-@@ -405,6 +405,7 @@ static int meson_ao_cec_g12a_write(void
+--- a/drivers/media/cec/core/cec-adap.c
++++ b/drivers/media/cec/core/cec-adap.c
+@@ -2152,9 +2152,13 @@ static int cec_receive_notify(struct cec
+ 		 * Unprocessed messages are aborted if userspace isn't doing
+ 		 * any processing either.
+ 		 */
++		mutex_lock(&adap->lock);
+ 		if (!is_broadcast && !is_reply && !adap->follower_cnt &&
+-		    !adap->cec_follower && msg->msg[1] != CEC_MSG_FEATURE_ABORT)
++		    !adap->cec_follower && msg->msg[1] != CEC_MSG_FEATURE_ABORT) {
++			mutex_unlock(&adap->lock);
+ 			return cec_feature_abort(adap, msg);
++		}
++		mutex_unlock(&adap->lock);
+ 		break;
+ 	}
+ 
+@@ -2167,10 +2171,12 @@ skip_processing:
+ 	 * Send to the exclusive follower if there is one, otherwise send
+ 	 * to all followers.
+ 	 */
++	mutex_lock(&adap->lock);
+ 	if (adap->cec_follower)
+ 		cec_queue_msg_fh(adap->cec_follower, msg);
+ 	else
+ 		cec_queue_msg_followers(adap, msg);
++	mutex_unlock(&adap->lock);
+ 	return 0;
  }
  
- static const struct regmap_config meson_ao_cec_g12a_cec_regmap_conf = {
-+	.name = "core",
- 	.reg_bits = 8,
- 	.val_bits = 8,
- 	.reg_read = meson_ao_cec_g12a_read,
 
 
