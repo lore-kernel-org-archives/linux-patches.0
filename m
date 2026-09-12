@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7448B2594BD;
-	Sat, 12 Sep 2026 16:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A0333EAF3;
+	Sat, 12 Sep 2026 16:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229537; cv=none; b=uf5H2/b33jYu0sglmPuuW780dZNjO+ZXiViEEXv5tmfNdLMfjMhWia6gM34JWHdEH5UpdNWQ+LxzZMSdOYlaV5iO7XlKPrBsjlD8tUxrinbMdnPaRsUS72+WOrbi1NyNndKKjm9d3o0bdwfXpdOvG2uUo9u1GmrdAffVj8q+zR4=
+	t=1789229542; cv=none; b=YqMtd6o45P174+YDb8QpB9VKXcjSVN27qyRw0Mq2M2gSK4aNHRV74yrbyXDOnRlVsL9HgheMgu5h2TYw8OkKlS+pRv7yDHVeQKPnfKopCi/kbbIwf9zlT9/J9jFBcWTFcuYD6k2D5JhrauJzM2bHO0L7ed99bOMrdhr6KyzP6W8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229537; c=relaxed/simple;
-	bh=vk0wPKqOV/LP7KGvRfd1DGUhU70ZujpiyqCuIuKSRU4=;
+	s=arc-20240116; t=1789229542; c=relaxed/simple;
+	bh=y/sSr5/1+Cg5nh7kUxIVmBBHBRPg7EFNWLw8f+8VQ1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wg/tTGq7ZK4up59blLPsy+TcC2kWqOHlsgUiax5pe0H0KL1p/8pKNqarJWJqcdWMkOcXLCx09HabiMx9lkkS+WqDet/ObVBXJRUyau1PRikdwSNdlQiUsLBVnSFtYFn+xX+Kqp/oSBHwYnJ5s77a47+d0049JEr8HnxV6JdVzKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1PsrIcEg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=p4CCAHeVgQFpv4DiEoSqrQGhYJQrpcu1oLQml+iMcHzYVGV9VmxoHRPBNxRmeLlvD/KlotG2/4Mzip8wYfX8ueti44nbJcfLcLP8HAM5bydZr3TkxGkqrqwSP1AMmtQKmpaWiza92kZ5RxsIZvoDHSlGG4LZs4wF77o3dh1GGzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cU2kdCVs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PsrIcEg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 772E81F000FF;
-	Sat, 12 Sep 2026 16:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cU2kdCVs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6274D1F00893;
+	Sat, 12 Sep 2026 16:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229536;
-	bh=OupCyWQ68nyhbwtVugCyvYw8yxwbCCyt9ECZQRURDrQ=;
+	s=korg; t=1789229541;
+	bh=EmPs6UUIJPVJ20/buL1WZ8FHHq37N2Sp9BoxyjXFS5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1PsrIcEg730aGtjx1PTIwUF+677JAYd4/PGhFERKFyp1wptm5M/UaxCml0Fo5/9KR
-	 6xs3WvIImlbFotBj5LjyCSmefYOaT09xJF5FhZjzTqPM5f5XwoLebYnzKkvJjprQg8
-	 Ng7iojqANfHf+xh2N2laUzuR1oJrDwXioE4ahjoQ=
+	b=cU2kdCVs4e2bg7y4EoxNIKlk1Ko0VIGeyKlVLY/vFxQgPwmWsEGrre9+0G9yE2l/h
+	 rUESCDxXhrGCAtt6mtcKEM4cBG56CXd5SkC0J9shn6vpfTLgQXDBd/mjLu/+3h5jHK
+	 t5/cSije0re/8Sn7Nqg3jTZAQKH66lhW3Y3a0apo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>,
+	Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0611/1191] rpmsg: glink: remove duplicate code for rpmsg device remove
-Date: Sat, 12 Sep 2026 08:55:39 +0200
-Message-ID: <20260912065601.976457912@linuxfoundation.org>
+Subject: [PATCH 6.1 0612/1191] rpmsg: glink: fix deadlock in endpoint destroy during driver detach
+Date: Sat, 12 Sep 2026 08:55:40 +0200
+Message-ID: <20260912065601.998877093@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -45,121 +48,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
 
-[ Upstream commit 112766cdf2e5ea0a0f72b0304d57a6f74c066670 ]
+[ Upstream commit 5a5a48e788e02fd8a8eb7188ce440572d6c12418 ]
 
-rpmsg device remove code is duplicated in at-least 2-3 places, add a
-helper function to remove this duplicated code.
+During driver detach, the device core holds the device mutex throughout
+the driver's remove callback chain.  When the rpmsg endpoint is
+destroyed as part of that teardown, the GLINK endpoint destroy
+implementation attempts to unregister the underlying rpmsg device.
+That unregistration calls device_del(), which tries to re-acquire the
+same device mutex already held higher up the stack, causing rmmod to
+hang indefinitely.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250822100043.2604794-3-srinivas.kandagatla@oss.qualcomm.com
+The deadlock manifests with the following call chain:
+
+[<0>] device_del+0x44/0x414  <- tries to acquire same mutex
+[<0>] device_unregister+0x18/0x34
+[<0>] rpmsg_unregister_device+0x28/0x4c
+[<0>] qcom_glink_remove_rpmsg_device+0x70/0xc0
+[<0>] qcom_glink_destroy_ept+0x58/0xbc
+[<0>] rpmsg_dev_remove+0x50/0x60
+[<0>] device_remove+0x4c/0x80
+[<0>] device_release_driver_internal+0x1cc/0x228  <- acquires device mutex
+[<0>] driver_detach+0x4c/0x98
+[<0>] bus_remove_driver+0x6c/0xbc
+[<0>] driver_unregister+0x30/0x60
+[<0>] unregister_rpmsg_driver+0x10/0x1c
+[<0>] fastrpc_exit+0x28/0x38 [fastrpc]
+[<0>] __arm64_sys_delete_module+0x1b8/0x294
+[<0>] invoke_syscall+0x48/0x10c
+[<0>] el0_svc_common.constprop.0+0xc0/0xe0
+[<0>] do_el0_svc+0x1c/0x28
+[<0>] el0_svc+0x34/0x108
+[<0>] el0t_64_sync_handler+0xa0/0xe4
+[<0>] el0t_64_sync+0x198/0x19c
+
+The rpmsg device unregistration inside endpoint destroy is redundant.
+In both contexts where endpoint destruction is triggered:
+
+- Driver detach path: the driver core already tears down the rpmsg
+  device.
+
+- Channel close path: the rpmsg device is already unregistered before
+  endpoint destruction is reached.
+
+Remove the redundant unregistration to fix the deadlock.
+
+Co-developed-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
+Signed-off-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
+Signed-off-by: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+Tested-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Fixes: a53e356df548 ("rpmsg: glink: fix rpmsg device leak")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260604-rpmsg-glink-fix-deadlock-destroy-ept-v1-1-b8a54ad1e4fd@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 5a5a48e788e0 ("rpmsg: glink: fix deadlock in endpoint destroy during driver detach")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/qcom_glink_native.c | 43 ++++++++++++-------------------
- 1 file changed, 16 insertions(+), 27 deletions(-)
+ drivers/rpmsg/qcom_glink_native.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index b70cc6390c372..4040fdf4fdbaf 100644
+index 4040fdf4fdbaf..9c67d07cc9e2e 100644
 --- a/drivers/rpmsg/qcom_glink_native.c
 +++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1238,11 +1238,23 @@ static int qcom_glink_announce_create(struct rpmsg_device *rpdev)
- 	return 0;
- }
- 
-+static void qcom_glink_remove_rpmsg_device(struct qcom_glink *glink, struct glink_channel *channel)
-+{
-+	struct rpmsg_channel_info chinfo;
-+
-+	if (channel->rpdev) {
-+		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
-+		chinfo.src = RPMSG_ADDR_ANY;
-+		chinfo.dst = RPMSG_ADDR_ANY;
-+		rpmsg_unregister_device(glink->dev, &chinfo);
-+	}
-+	channel->rpdev = NULL;
-+}
-+
- static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
- {
- 	struct glink_channel *channel = to_glink_channel(ept);
- 	struct qcom_glink *glink = channel->glink;
--	struct rpmsg_channel_info chinfo;
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&channel->recv_lock, flags);
-@@ -1250,14 +1262,7 @@ static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
+@@ -1261,9 +1261,6 @@ static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
+ 	channel->ept.cb = NULL;
  	spin_unlock_irqrestore(&channel->recv_lock, flags);
  
- 	/* Decouple the potential rpdev from the channel */
--	if (channel->rpdev) {
--		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
--		chinfo.src = RPMSG_ADDR_ANY;
--		chinfo.dst = RPMSG_ADDR_ANY;
+-	/* Decouple the potential rpdev from the channel */
+-	qcom_glink_remove_rpmsg_device(glink, channel);
 -
--		rpmsg_unregister_device(glink->dev, &chinfo);
--	}
--	channel->rpdev = NULL;
-+	qcom_glink_remove_rpmsg_device(glink, channel);
- 
  	qcom_glink_send_close_req(glink, channel);
  }
-@@ -1547,7 +1552,6 @@ static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
  
- static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
- {
--	struct rpmsg_channel_info chinfo;
- 	struct glink_channel *channel;
- 	unsigned long flags;
- 
-@@ -1560,14 +1564,7 @@ static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
- 	/* cancel pending rx_done work */
- 	cancel_work_sync(&channel->intent_work);
- 
--	if (channel->rpdev) {
--		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
--		chinfo.src = RPMSG_ADDR_ANY;
--		chinfo.dst = RPMSG_ADDR_ANY;
--
--		rpmsg_unregister_device(glink->dev, &chinfo);
--	}
--	channel->rpdev = NULL;
-+	qcom_glink_remove_rpmsg_device(glink, channel);
- 
- 	qcom_glink_send_close_ack(glink, channel->rcid);
- 
-@@ -1581,7 +1578,6 @@ static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
- 
- static void qcom_glink_rx_close_ack(struct qcom_glink *glink, unsigned int lcid)
- {
--	struct rpmsg_channel_info chinfo;
- 	struct glink_channel *channel;
- 	unsigned long flags;
- 
-@@ -1600,14 +1596,7 @@ static void qcom_glink_rx_close_ack(struct qcom_glink *glink, unsigned int lcid)
- 	spin_unlock_irqrestore(&glink->idr_lock, flags);
- 
- 	/* Decouple the potential rpdev from the channel */
--	if (channel->rpdev) {
--		strscpy(chinfo.name, channel->name, sizeof(chinfo.name));
--		chinfo.src = RPMSG_ADDR_ANY;
--		chinfo.dst = RPMSG_ADDR_ANY;
--
--		rpmsg_unregister_device(glink->dev, &chinfo);
--	}
--	channel->rpdev = NULL;
-+	qcom_glink_remove_rpmsg_device(glink, channel);
- 
- 	kref_put(&channel->refcount, qcom_glink_channel_release);
- }
 -- 
 2.53.0
 
