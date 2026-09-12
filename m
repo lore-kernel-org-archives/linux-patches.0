@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15816208D0;
-	Sat, 12 Sep 2026 09:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16A84BEE54;
+	Sat, 12 Sep 2026 09:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206158; cv=none; b=F4aH+MECLamzcCzLZpiH0P5MEWda73vAbXC1cSXWo9oGfaABqN4WHG+87hb29oP2cW3PT5LVrOvEvge7unyedeCInfqppW25LW93gRYxk5GszZKZ2LK81EEDUNbcJueqbb0bvS5sCld0vTyUXkYzvB9OQQheqP8pZ/bgDPwIS9Q=
+	t=1789206163; cv=none; b=ZxuOdoRoPp/+QOGMBdXTu+8qcyahQX8vQWn12tV4hX4h1b3GWpG15Act1/jqfnRHgwIM5TBrUtqUymYfaNH9pxug21miARZ9i7mv3k8jVHR07pqQmjqWz4iEvZ2SBeEzc7rWV5/tq02o9Wz7fy1Fnbus7oEiY+S959uwAvgvw5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206158; c=relaxed/simple;
-	bh=Bm5WYJti2hKbeaRPKtcV6WfpIFq1AI1ni3RHLkpjIIw=;
+	s=arc-20240116; t=1789206163; c=relaxed/simple;
+	bh=eqURXMQ3dmPYZn1zyiAeKQzmXUD65y4YN3qynEISnKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N1IrEt+boC0yg+QoiyBJi+76eqsZ4QhthjSeolHF+Ftmmn9epSFNxnOTsWEuqTc2gaufUPSuguq3VOTYSelFfZwRHQm2bfK5lzfXmhSX2MbFHGpqqpWX+p5DqVpTM+vsmIHnNGlm38ZELxIWuvDu2aWpQ5V+v+/iTTYZFBF4P54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJ2LOlYr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qby8/FpuwtXp7jTHSVytMqP+YvIPU8/wfz0IEgG90+o1bDzRgS4GNKJL3aOHPQh3EOLVYDIth5EA3Pw5l90l4rusgoA02vvySxu34Y3luWmTLhlzWsOMCg9Ma/dlXmy+s+yNrFYTzOXN6k8myGtxLidRo2V6WhYsSyjGIjPYPNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUutiDan; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJ2LOlYr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337EC1F000FF;
-	Sat, 12 Sep 2026 09:42:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUutiDan"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CE61F000FF;
+	Sat, 12 Sep 2026 09:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206157;
-	bh=yl4qDET1peO3c0768sDA0I0J+g4HeV9w5t/5jiFhgd8=;
+	s=korg; t=1789206161;
+	bh=e4Yacp57xAd3AIZrJdo+p+8mVWoKIxZMOssFBHoinIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DJ2LOlYr5okvjtNeyUMI2T3oE99CPhJsI6ZWFcvYzGjzcJ6diQqnxQg+LjmnymVMW
-	 NcvNEWu4Pyc92v/f4TufS+/RAy2pYkAF7ei+HYrRlIpxqEQx3NnC3jJs01HeeDW2Mk
-	 OEYqTSVqy6NiQiz4Wt9HHBgv/DopeakvE/nKCtww=
+	b=aUutiDanJJuQTZQs8zSRFs3dgtYLqLevVmpzuYHw5Aq5wAhr/xpbrAseq8MbHLJjY
+	 S71siJxFP6picd4cJOH5qlwLjuv30G9O6M3/cL2ElheeqGjFAIQiDRnPNpdZWJqrpd
+	 ZZ7LSOj9V/M1u1HlriVeF1NX/RE/s3w5DnpJPHzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -37,9 +37,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peter Zijlstra <peterz@infradead.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0150/1518] perf test: Show snippet failure output for verbose=1
-Date: Sat, 12 Sep 2026 08:38:39 +0200
-Message-ID: <20260912065626.885750676@linuxfoundation.org>
+Subject: [PATCH 6.18 0151/1518] perf test: Add summary reporting
+Date: Sat, 12 Sep 2026 08:38:40 +0200
+Message-ID: <20260912065626.908571079@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -60,46 +60,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit b5a4a361f5cfb8f6f6f0a59536fd5fad11ed9f5f ]
+[ Upstream commit 33f20342ba525ef75fd9734db71e9823fe65e769 ]
 
-Currently, when running tests in verbose mode (-v), if a test case
-fails, the entire raw standard error buffer is dumped to stderr via
-fprintf(stderr, "%s", child->err_output.buf). For tests that generate
-massive amounts of debugging or logging output before dying, this
-results in multi-page terminal dumps where highly critical diagnostic
-keywords (error, fail, segv) are easily lost.
+Currently, when running test suites (perf test), users must scroll
+through hundreds of lines of console output to manually tally the number
+of passed, skipped, or failed test cases.
 
-Implement a smart, bounded snippet string processor to improve
-failure triaging:
+Introduce an automated, global execution summary printed at the absolute
+tail of the test run:
 
-1. Introduce a configurable quota limit static unsigned int
-   failure_snippet_lines = 10; accessible via a new command-line option
-   --failure-snippet-lines <N>.
+1. Track counts mid-flight inside the print_test_result() accumulator,
+   clearly separating pass counts into standalone main tests vs.
+   individual subtests (where num_test_cases > 1).
 
-2. Parse the raw error buffer dynamically into lines and run a
-   three-pass extraction algorithm:
-   - Pass 0: Always select the very first line of the log as an initial
-     outline marker.
-   - Pass 1: Scan forward from the top of the log to pick up to N lines
-     that contain case-insensitive failure keywords (error, fail,
-     segv, abort) to isolate the root cause. Automatically pull in
-     the immediate subsequent line as highly-prioritized context.
-     Allow adjacent matching lines to overlap without dropping context
-     by evaluating keywords for all lines (e.g. when "Failed to
-     report" is followed by "Error:").
-   - Pass 2: If quota remains, scan backward from the absolute tail of
-     the log to capture trailing crash or abort context.
+2. Accumulate the precise descriptions of all failed test cases
+   directly into a global string buffer, formatted with their suite
+   indices (e.g., 3.1: Parse event definition strings) for effortless
+   cross-referencing.
 
-3. Output the selected lines in their original chronological order,
-   inserting a clear ... separator between non-contiguous line jumps.
+3. Define a summary printer function print_tests_summary() that
+   emits a colored outline of the final pass, skip, and fail totals,
+   followed by the explicit list of failed tests.
 
-4. Wrap matched failure keywords dynamically in bold red
-   (PERF_COLOR_RED) to immediately draw the eye to failures.
+4. Invoke the summary printer right before freeing the test array at
+   the absolute tail of __cmd_test(), guaranteeing that the summary is
+   successfully printed even if an internal emergency signal cleanup
+   occurs or if the user interrupts the run early.
 
-5. Invoke the smart processor purely when verbose == 1 && ret ==
-   TEST_FAIL in both finish_test and finish_tests_parallel, leaving
-   raw full-output dumping completely untouched when running highly
-   verbose (-vv).
+Example output:
+```
+$ sudo perf test -v
+  1: vmlinux symtab matches kallsyms                                 : Skip
+  2: Detect openat syscall event                                     : Ok
+  3: Detect openat syscall event on all cpus                         : Ok
+...
+163: perf trace summary                                              : Ok
+
+=== Test Summary ===
+Passed main tests : 123
+Passed subtests   : 145
+Skipped tests     : 22
+Failed tests      : 6
+List of failed tests:
+   92: perf kvm tests
+   95: kernel lock contention analysis test
+  120: perf metrics value validation
+  124: Check branch stack sampling
+  143: perftool-testsuite_probe
+  158: test Intel TPEBS counting mode
+```
 
 Assisted-by: Gemini-CLI:Google Gemini 3
 Signed-off-by: Ian Rogers <irogers@google.com>
@@ -114,260 +123,158 @@ Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Stable-dep-of: 32e6312f7e39 ("perf test: Truncate test description to fit terminal width")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/builtin-test.c | 203 +++++++++++++++++++++++++++++++-
- 1 file changed, 200 insertions(+), 3 deletions(-)
+ tools/perf/tests/builtin-test.c | 89 +++++++++++++++++++++++++++++++--
+ 1 file changed, 86 insertions(+), 3 deletions(-)
 
 diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
-index 552aa898fc70d..626d1b328b2f2 100644
+index 626d1b328b2f2..13c4dfa5d512a 100644
 --- a/tools/perf/tests/builtin-test.c
 +++ b/tools/perf/tests/builtin-test.c
-@@ -48,6 +48,8 @@ static bool dont_fork;
- static bool sequential;
- /* Number of times each test is run. */
- static unsigned int runs_per_test = 1;
-+/* Number of lines to include in failure snippet. */
-+static unsigned int failure_snippet_lines = 10;
- const char *dso_to_test;
- const char *test_objdump_path = "objdump";
+@@ -356,8 +356,14 @@ static int run_test_child(struct child_process *process)
  
-@@ -337,7 +339,7 @@ static int run_test_child(struct child_process *process)
- 	for (size_t i = 0; i < ARRAY_SIZE(signals); i++)
- 		signal(signals[i], child_test_sig_handler);
+ static struct pollfd *global_pfds;
+ static size_t *global_pfd_indices;
++static unsigned int summary_tests_passed;
++static unsigned int summary_subtests_passed;
++static unsigned int summary_tests_skipped;
++static unsigned int summary_tests_failed;
++static struct strbuf summary_failed_tests_buf = STRBUF_INIT;
  
--	pr_debug("--- start ---\n");
-+	pr_debug("---- start ----\n");
- 	pr_debug("test child forked, pid %d\n", getpid());
- 	err = test_function(child->test, child->test_case_num)(child->test, child->test_case_num);
- 	pr_debug("---- end(%d) ----\n", err);
-@@ -393,6 +395,195 @@ static int print_test_result(struct test_suite *t, int curr_suite, int curr_test
- 	return 0;
+ static int strbuf_addstr_safe(struct strbuf *sb, const char *s);
++static int __printf(2, 3) strbuf_addf_safe(struct strbuf *sb, const char *fmt, ...);
+ 
+ static int print_test_result(struct test_suite *t, int curr_suite, int curr_test_case,
+ 			     int result, int width, int running)
+@@ -375,11 +381,16 @@ static int print_test_result(struct test_suite *t, int curr_suite, int curr_test
+ 		color_fprintf(stderr, PERF_COLOR_YELLOW, " Running (%d active)\n", running);
+ 		break;
+ 	case TEST_OK:
++		if (test_suite__num_test_cases(t) > 1)
++			summary_subtests_passed++;
++		else
++			summary_tests_passed++;
+ 		pr_info(" Ok\n");
+ 		break;
+ 	case TEST_SKIP: {
+ 		const char *reason = skip_reason(t, curr_test_case);
+ 
++		summary_tests_skipped++;
+ 		if (reason)
+ 			color_fprintf(stderr, PERF_COLOR_YELLOW, " Skip (%s)\n", reason);
+ 		else
+@@ -388,6 +399,15 @@ static int print_test_result(struct test_suite *t, int curr_suite, int curr_test
+ 		break;
+ 	case TEST_FAIL:
+ 	default:
++		summary_tests_failed++;
++		if (test_suite__num_test_cases(t) > 1)
++			strbuf_addf_safe(&summary_failed_tests_buf, "  %3d.%1d: %s\n",
++				    curr_suite + 1, curr_test_case + 1,
++				    test_description(t, curr_test_case));
++		else
++			strbuf_addf_safe(&summary_failed_tests_buf, "  %3d: %s\n",
++				    curr_suite + 1,
++				    test_description(t, curr_test_case));
+ 		color_fprintf(stderr, PERF_COLOR_RED, " FAILED!\n");
+ 		break;
+ 	}
+@@ -729,6 +749,47 @@ static int strbuf_addstr_safe(struct strbuf *sb, const char *s)
+ 	return ret;
  }
  
-+static const char * const fail_keywords[] = {
-+	"error", "fail", "segv", "abort",
-+	"signal", "fatal", "panic", "corrupt", NULL
-+};
-+
-+static const char *find_next_keyword(const char *str, size_t max_len, size_t *kw_len)
++static int __printf(2, 3) strbuf_addf_safe(struct strbuf *sb, const char *fmt, ...)
 +{
-+	const char *best = NULL;
-+	size_t best_len = 0;
-+	int k;
++	char buf[1024];
++	va_list ap;
++	int len;
++	sigset_t set, oldset;
++	int ret;
 +
-+	for (k = 0; fail_keywords[k]; k++) {
-+		const char *s = str;
-+		size_t len = strlen(fail_keywords[k]);
++	sigemptyset(&set);
++	sigaddset(&set, SIGINT);
++	sigaddset(&set, SIGTERM);
++	sigprocmask(SIG_BLOCK, &set, &oldset);
 +
-+		while ((size_t)(s - str) + len <= max_len) {
-+			size_t i;
++	va_start(ap, fmt);
++	len = vsnprintf(buf, sizeof(buf), fmt, ap);
++	va_end(ap);
 +
-+			if (best && s >= best)
-+				break;
++	if (len < 0) {
++		sigprocmask(SIG_SETMASK, &oldset, NULL);
++		return len;
++	}
++	if ((size_t)len >= sizeof(buf)) {
++		char *dynamic_buf = malloc(len + 1);
 +
-+			for (i = 0; i < len; i++) {
-+				if (tolower(s[i]) != fail_keywords[k][i])
-+					break;
-+			}
-+			if (i == len) {
-+				if (!best || s < best) {
-+					best = s;
-+					best_len = len;
-+				}
-+				break;
-+			}
-+			s++;
++		if (!dynamic_buf) {
++			sigprocmask(SIG_SETMASK, &oldset, NULL);
++			return -ENOMEM;
 +		}
++		va_start(ap, fmt);
++		vsnprintf(dynamic_buf, len + 1, fmt, ap);
++		va_end(ap);
++		ret = strbuf_addstr(sb, dynamic_buf);
++		free(dynamic_buf);
++	} else {
++		ret = strbuf_addstr(sb, buf);
 +	}
-+	if (best) {
-+		*kw_len = best_len;
-+		return best;
-+	}
-+	return NULL;
++
++	sigprocmask(SIG_SETMASK, &oldset, NULL);
++	return ret;
 +}
 +
-+static void print_line_highlighted(FILE *fp, const char *line, size_t len)
-+{
-+	const char *s = line;
-+
-+	while (len > 0) {
-+		size_t kw_len = 0;
-+		const char *match = find_next_keyword(s, len, &kw_len);
-+
-+		if (!match) {
-+			fwrite(s, 1, len, fp);
-+			break;
-+		}
-+		if (match > s)
-+			fwrite(s, 1, match - s, fp);
-+		if (perf_use_color_default)
-+			fprintf(fp, "%s", PERF_COLOR_RED);
-+		fwrite(match, 1, kw_len, fp);
-+		if (perf_use_color_default)
-+			fprintf(fp, "%s", PERF_COLOR_RESET);
-+
-+		len -= (match + kw_len) - s;
-+		s = match + kw_len;
-+	}
-+}
-+
-+
-+static void print_test_failure_snippet(FILE *fp, const char *buf)
-+{
-+	size_t num_lines = 0;
-+	size_t max_lines = 128;
-+	const char **lines = calloc(max_lines, sizeof(const char *));
-+	size_t *line_lens = calloc(max_lines, sizeof(size_t));
-+	const char *s = buf;
-+	size_t i;
-+	unsigned int picked_count = 0;
-+	bool *pick;
-+	int last_printed = -1;
-+
-+	if (!lines || !line_lens) {
-+		free(lines); free(line_lens);
-+		fprintf(fp, "%s", buf);
-+		return;
-+	}
-+
-+	while (*s) {
-+		const char *eol = strchr(s, '\n');
-+		size_t len;
-+
-+		if (eol)
-+			len = eol - s + 1;
-+		else
-+			len = strlen(s);
-+
-+		if (num_lines == max_lines) {
-+			const char **new_lines;
-+			size_t *new_lens;
-+
-+			max_lines *= 2;
-+			new_lines = realloc(lines, max_lines * sizeof(const char *));
-+			if (!new_lines) {
-+				free(lines); free(line_lens);
-+				fprintf(fp, "%s", buf);
-+				return;
-+			}
-+			lines = new_lines;
-+
-+			new_lens = realloc(line_lens, max_lines * sizeof(size_t));
-+			if (!new_lens) {
-+				free(lines); free(line_lens);
-+				fprintf(fp, "%s", buf);
-+				return;
-+			}
-+			line_lens = new_lens;
-+		}
-+		lines[num_lines] = s;
-+		line_lens[num_lines] = len;
-+		num_lines++;
-+		s += len;
-+	}
-+
-+	if (num_lines <= failure_snippet_lines) {
-+		for (i = 0; i < num_lines; i++)
-+			print_line_highlighted(fp, lines[i], line_lens[i]);
-+		free(lines); free(line_lens);
-+		return;
-+	}
-+
-+	pick = calloc(num_lines, sizeof(bool));
-+	if (!pick) {
-+		for (i = 0; i < num_lines; i++)
-+			print_line_highlighted(fp, lines[i], line_lens[i]);
-+		free(lines); free(line_lens);
-+		return;
-+	}
-+
-+	/* Pass 0: Always pick the very first line */
-+	if (num_lines > 0 && picked_count < failure_snippet_lines) {
-+		pick[0] = true;
-+		picked_count++;
-+	}
-+
-+	/* Pass 1: Pick lines with failure keywords from start (Highest Priority) */
-+	for (i = 0; i < num_lines && picked_count < failure_snippet_lines; i++) {
-+		size_t dummy;
-+
-+		if (find_next_keyword(lines[i], line_lens[i], &dummy)) {
-+			if (!pick[i]) {
-+				pick[i] = true;
-+				picked_count++;
-+			}
-+			/* Prioritize getting the immediate next line for context */
-+			if (i + 1 < num_lines && !pick[i + 1] &&
-+			    picked_count < failure_snippet_lines) {
-+				pick[i + 1] = true;
-+				picked_count++;
-+			}
-+		}
-+	}
-+
-+	/* Pass 2: Fill remaining quota from the end backwards */
-+	i = num_lines;
-+	while (i > 0 && picked_count < failure_snippet_lines) {
-+		i--;
-+		if (!pick[i]) {
-+			pick[i] = true;
-+			picked_count++;
-+		}
-+	}
-+
-+	for (i = 0; i < num_lines; i++) {
-+		if (!pick[i])
-+			continue;
-+		if (last_printed != -1 && (int)i > last_printed + 1) {
-+			if (perf_use_color_default)
-+				fprintf(fp, "%s...%s\n", PERF_COLOR_BLUE, PERF_COLOR_RESET);
-+			else
-+				fprintf(fp, "...\n");
-+		}
-+		print_line_highlighted(fp, lines[i], line_lens[i]);
-+		last_printed = i;
-+	}
-+
-+	free(pick);
-+	free(lines);
-+	free(line_lens);
-+}
-+
- static void finish_test(struct child_test **child_tests, int running_test, int child_test_num,
- 		int width)
+ static void drain_child_process_err(struct child_test *child)
  {
-@@ -511,8 +702,10 @@ static void finish_test(struct child_test **child_tests, int running_test, int c
- 		strbuf_release(&err_output);
- 		err_output = merged;
- 	}
--	if (verbose > 1 || (verbose == 1 && ret == TEST_FAIL))
-+	if (verbose > 1)
- 		fprintf(stderr, "%s", err_output.buf);
-+	else if (verbose == 1 && ret == TEST_FAIL)
-+		print_test_failure_snippet(stderr, err_output.buf);
+ 	char buf[512];
+@@ -1006,6 +1067,23 @@ static void cmd_test_sig_handler(int sig)
+ 	siglongjmp(cmd_test_jmp_buf, sig);
+ }
  
- 	strbuf_release(&err_output);
- 	strbuf_release(&child_test->err_output);
-@@ -724,8 +917,10 @@ static int finish_tests_parallel(struct child_test **child_tests, size_t num_tes
- 				}
++static void print_tests_summary(void)
++{
++	pr_info("\n=== Test Summary ===\n");
++	pr_info("Passed main tests : %u\n", summary_tests_passed);
++	pr_info("Passed subtests   : %u\n", summary_subtests_passed);
++	pr_info("Skipped tests     : %u\n", summary_tests_skipped);
++	if (summary_tests_failed > 0) {
++		color_fprintf(stderr, PERF_COLOR_RED, "Failed tests      : %u\n",
++			      summary_tests_failed);
++		pr_info("List of failed tests:\n");
++		pr_info("%s", summary_failed_tests_buf.buf);
++	} else {
++		color_fprintf(stderr, PERF_COLOR_GREEN, "Failed tests      : 0\n");
++	}
++	strbuf_release(&summary_failed_tests_buf);
++}
++
+ static int __cmd_test(struct test_suite **suites, int argc, const char *argv[],
+ 		      struct intlist *skiplist)
+ {
+@@ -1083,9 +1161,13 @@ static int __cmd_test(struct test_suite **suites, int argc, const char *argv[],
  			}
  
--			if (verbose > 1 || (verbose == 1 && child->result == TEST_FAIL))
-+			if (verbose > 1)
- 				fprintf(stderr, "%s", child->err_output.buf);
-+			else if (verbose == 1 && child->result == TEST_FAIL)
-+				print_test_failure_snippet(stderr, child->err_output.buf);
+ 			if (intlist__find(skiplist, curr_suite + 1)) {
+-				pr_info("%3d: %-*s:", curr_suite + 1, width,
+-					test_description(*t, -1));
+-				color_fprintf(stderr, PERF_COLOR_YELLOW, " Skip (user override)\n");
++				if (pass == 1) {
++					pr_info("%3d: %-*s:", curr_suite + 1, width,
++						test_description(*t, -1));
++					color_fprintf(stderr, PERF_COLOR_YELLOW,
++						      " Skip (user override)\n");
++					summary_tests_skipped++;
++				}
+ 				continue;
+ 			}
  
- 			print_test_result(child->test, child->suite_num, child->test_case_num,
- 					  child->result, width, 0);
-@@ -1057,6 +1252,8 @@ int cmd_test(int argc, const char **argv)
- 	OPT_STRING(0, "dso", &dso_to_test, "dso", "dso to test"),
- 	OPT_STRING(0, "objdump", &test_objdump_path, "path",
- 		   "objdump binary to use for disassembly and annotations"),
-+	OPT_UINTEGER(0, "failure-snippet-lines", &failure_snippet_lines,
-+		     "Number of lines to include in failure snippet, default 10"),
- 	OPT_END()
- 	};
- 	const char * const test_subcommands[] = { "list", NULL };
+@@ -1118,6 +1200,7 @@ static int __cmd_test(struct test_suite **suites, int argc, const char *argv[],
+ 		for (size_t x = 0; x < num_tests; x++)
+ 			finish_test(child_tests, x, num_tests, width);
+ 	}
++	print_tests_summary();
+ 	free(global_pfds);
+ 	free(global_pfd_indices);
+ 	global_pfds = NULL;
 -- 
 2.53.0
 
