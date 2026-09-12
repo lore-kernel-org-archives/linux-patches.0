@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F9D2F617C;
-	Sat, 12 Sep 2026 18:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51DB2F617C;
+	Sat, 12 Sep 2026 18:43:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238602; cv=none; b=j10I+axF2AYNQbhKrINidqKe0ABjxgpHSa3oHrNhPtpYexkNNgWqof9KlvGoqI/82G+M9uhshn97URFYefI321XZIJ/FHI0wH6eGKDz1hmcciL3gpURF7p7mjDbntnm6m+PJWx9P18W7khbSLlyp5vrq8k2pjABKiQsikz+r8AM=
+	t=1789238606; cv=none; b=Edm4IcQ8axVNMYcjI3k2UJfwK9Q8EALT+HEpSd6D9pxKwIY6Lj3v3TBzSufPSsotULLOlv5bSdeHBh1/AmAzYdljWu8xcVaCgyJCjwc4NqQYjEjBNvSLEKXK46I6G0WoU26bLyE+7BJqAUpaWPZ7iYyqeUp3otcsnZ+hCahIAuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238602; c=relaxed/simple;
-	bh=BmeA2m/ReEsbmiQuarQIsKHz6xZ30hwA+HalW1Q0xKM=;
+	s=arc-20240116; t=1789238606; c=relaxed/simple;
+	bh=lB6GbOjneTef4TA+nXEny+qz+sz7uniq94zLIRJV4BI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t4FcKQ8Fi1ejfjnnptiuYFysIVFc/Ud/v5tcBY+HywWMY+TLBGsVK7YB61RCPUHgFusXunPtDZD/wH5PUCQFzSHby3nd1X1dZzV6kAHwV+rontVXzYxtNTq/6dJkjDa5+Bv5Aq9gzJ/FpKN7hde9KL7/CqAjWnDjxccDVwAG/UM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=peclDf7D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WNw1i3dC2IX65aQbiQ+RXcNbVDgTtIj5SErPfpgBadjR8mpL33Ec0ddIP4CNqonz1tcaQGPRoLUW/1z2cUBYZowjtsgz0t4u/jHMdsh0Ju670moW34bfvONyI5S/yHTgGkHvqt/VS8gKuf8ueU4dIZs4xgJycfaJNWEGTWJc3u0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QsgCledt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="peclDf7D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171C31F000FF;
-	Sat, 12 Sep 2026 18:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QsgCledt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5161F000FF;
+	Sat, 12 Sep 2026 18:43:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238601;
-	bh=dGzcPOGR+tK0FlmW3Wutz81BaejwPpV2XCXERkTJovo=;
+	s=korg; t=1789238605;
+	bh=iBeM+paYB0ulpXYUIyo11f/tRS/njC8NsNOvIMZzjkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=peclDf7DykScDgNJcamz/IYGvujLcHRAQHXqHRd7pGFiduQbX00CTFpHd7ClA7niJ
-	 nKYGucYgZm1hvV5eSiCGwGZCI3/sQgoATqW7sKw4RhgLGQ/Zgi+V6qSxvUcqkPjDMW
-	 Lzoo0bTOiRqXmwwkl9EasmycduTM4vXmiNpoFaEg=
+	b=QsgCledt8kRPcJtj1yaavKCwi0VejtJBVxAMI7kp414JEj5x5TwG8hNaXO99/9MKM
+	 6Y0MHQoDrEFzDW8qH2sWMBLGIbeU39bf/9LNc1t7+UdsGanhYM3nJFF+dDHTepM1MV
+	 SACXGkvKBrva5tDRHau2P4ufoMCqZpBd5kZ0Ztco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 452/935] staging: fbtft: Use sysfs_emit_at() to print to sysfs file
-Date: Sat, 12 Sep 2026 08:58:02 +0200
-Message-ID: <20260912065537.195147621@linuxfoundation.org>
+Subject: [PATCH 5.15 443/935] nvmet-rdma: avoid circular locking dependency on install_queue()
+Date: Sat, 12 Sep 2026 08:57:53 +0200
+Message-ID: <20260912065536.991672518@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,40 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Hannes Reinecke <hare@suse.de>
 
-[ Upstream commit 221192a784c25e28b489a7e75fabf59be4f63d57 ]
+[ Upstream commit 31deaeb11ba7a885116c9c30892b9f763c04d59c ]
 
-This scnprintf() uses the wrong limit.  It should be "PAGE_SIZE - len"
-instead of just PAGE_SIZE.  We're not going to hit the limit in real
-life since we are printing at most FBTFT_GAMMA_MAX_VALUES_TOTAL (128)
-u32 values, however, it's still worth fixing.
+nvmet_rdma_install_queue() is driven from the ->io_work workqueue
+function, but will call flush_workqueue() which might trigger
+->release_work() which in itself calls flush_work on ->io_work.
 
-Use sysfs_emit_at() to fix this since this is a sysfs file.
+To avoid that check for pending queue in disconnecting status,
+and return 'controller busy' when we reached a certain threshold.
 
-Fixes: c296d5f9957c ("staging: fbtft: core support")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Link: https://patch.msgid.link/ah_Y_Y2RtqeGxchF@stanley.mountain
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 0114dd303b37 ("nvmet-rdma: fix response resource leak on queue teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/fbtft/fbtft-sysfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/rdma.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/staging/fbtft/fbtft-sysfs.c b/drivers/staging/fbtft/fbtft-sysfs.c
-index 39e8d28066cbe..809bf350af253 100644
---- a/drivers/staging/fbtft/fbtft-sysfs.c
-+++ b/drivers/staging/fbtft/fbtft-sysfs.c
-@@ -102,7 +102,7 @@ sprintf_gamma(struct fbtft_par *par, u32 *curves, char *buf)
- 	mutex_lock(&par->gamma.lock);
- 	for (i = 0; i < par->gamma.num_curves; i++) {
- 		for (j = 0; j < par->gamma.num_values; j++)
--			len += scnprintf(&buf[len], PAGE_SIZE,
-+			len += sysfs_emit_at(buf, len,
- 			     "%04x ", curves[i * par->gamma.num_values + j]);
- 		buf[len - 1] = '\n';
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index ca21cd66b1f4e..afdbe0506df5d 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -36,6 +36,8 @@
+ #define NVMET_RDMA_MAX_MDTS			8
+ #define NVMET_RDMA_MAX_METADATA_MDTS		5
+ 
++#define NVMET_RDMA_BACKLOG 128
++
+ struct nvmet_rdma_srq;
+ 
+ struct nvmet_rdma_cmd {
+@@ -1589,8 +1591,19 @@ static int nvmet_rdma_queue_connect(struct rdma_cm_id *cm_id,
  	}
+ 
+ 	if (queue->host_qid == 0) {
+-		/* Let inflight controller teardown complete */
+-		flush_workqueue(nvmet_wq);
++		struct nvmet_rdma_queue *q;
++		int pending = 0;
++
++		/* Check for pending controller teardown */
++		mutex_lock(&nvmet_rdma_queue_mutex);
++		list_for_each_entry(q, &nvmet_rdma_queue_list, queue_list) {
++			if (q->nvme_sq.ctrl == queue->nvme_sq.ctrl &&
++			    q->state == NVMET_RDMA_Q_DISCONNECTING)
++				pending++;
++		}
++		mutex_unlock(&nvmet_rdma_queue_mutex);
++		if (pending > NVMET_RDMA_BACKLOG)
++			return NVME_SC_CONNECT_CTRL_BUSY;
+ 	}
+ 
+ 	ret = nvmet_rdma_cm_accept(cm_id, queue, &event->param.conn);
+@@ -1886,7 +1899,7 @@ static int nvmet_rdma_enable_port(struct nvmet_rdma_port *port)
+ 		goto out_destroy_id;
+ 	}
+ 
+-	ret = rdma_listen(cm_id, 128);
++	ret = rdma_listen(cm_id, NVMET_RDMA_BACKLOG);
+ 	if (ret) {
+ 		pr_err("listening to %pISpcs failed (%d)\n", addr, ret);
+ 		goto out_destroy_id;
 -- 
 2.53.0
 
