@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36B93DA7DC;
-	Sat, 12 Sep 2026 07:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793ED3DD86C;
+	Sat, 12 Sep 2026 07:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197378; cv=none; b=Dc3YQPlLVEvqbry0sV4HkYOUAv3BcH6zpN9lcnpQtkT/xGyxYLcqvfPYXMi4xh//YQnC4144mrby7wZ6wrR6iwlvd+2d8mhCSzn8Z1vGm7Xpgrc/CvAcCFf+dxU33cpXEqs+KY7wgpUMWJGreYVBl1K87aK3nhBGdGze6ETHA3I=
+	t=1789197383; cv=none; b=QOjyq3x/zX6nulqXZOnlK5RcMDGMl5aIFZmBqIrok9EE0vyYDdlNkXcZzMsQNVbdip2Bpxaaj182E7musRFBQpIhmO+YTelHvgbh5Fh0QcshXGktQY1VZipZLK2pTwP5i32zJ6tW5f/NwgZ5kl0PeZa+UsZvNzwrL5eVxvYGgqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197378; c=relaxed/simple;
-	bh=9BYwM0afN3G89XUo0+x8vLnR7OTDNnONSNyWNwflonA=;
+	s=arc-20240116; t=1789197383; c=relaxed/simple;
+	bh=4BNBPX5+A083Zv+7GzUc6GWvywXnLdmok4A6c70mA7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k69NygwxAgvOyT7Aszu1ClZq+VeRKpU7/02Ri/SXC9W9GtKBcYZZUyF6pt/h6XC1cc4yl2eRx4mc59luiSvr23JuGCmBeGy30k+fNtnzRLyBtUk+v/7KxJoWhT9M4XlUI/LI9hY8fcpyaaVijsbvENcVU95bxsod7oH4yzlH89Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9eZ1mOw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AP8EIrloYwQ3ETxJ+bW0hW0FmYt+jUy3T4XKQQ1URAyrwDD3xmzI+Y0L5ntZsaKU266CilTJJ+TLkSd6T72o0GTVRar7etJ2tb/SMg0relyXCfwyuvkjWe5ouTynGMGltnNse/vzXSNO662MCzAHJhfWLQI2VgiERr9KfwgBXFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCcMiQwo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9eZ1mOw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79271F000FF;
-	Sat, 12 Sep 2026 07:16:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCcMiQwo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A2F1F000FF;
+	Sat, 12 Sep 2026 07:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197377;
-	bh=dGb0gRrlzRqNwFCt0BA551xtw1S8Xw1H7TFuWcyXTG0=;
+	s=korg; t=1789197382;
+	bh=c87UN0zwtNtdKcmIYL8fJlMNTZmUZCWikBcFMD07UVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D9eZ1mOwQ87ppg8bB5h/Mwb0Z3MMRtFeEUkPcvv4a+oY/IM7QKKWyRtQd5NsiPpR1
-	 n07J823Db8TqjZjfaxz0F9jp+RNyxbiMWPn3BvbwSUeeEhXC4uk62xy3g0Cu/v36Gp
-	 E9r6GAvGWqnu9xAkiGCu+yB8AH5fqRsPLjYKjBGk=
+	b=JCcMiQwo4gAfvHI4NSWJqmo8FOBVdPGwRTIEYGV1KvAAymti5QwAU3oL1g3PxZcY6
+	 88eqBFHOls94ntKlvJXtx5R2yeAqPJhI4+ZoDxXYjS+WeWhzIMpLh6SREakIs7CDzi
+	 xfqyU7tTCS6GKn0sovgattFX2ty9Ztlyi5qx7asY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alex Bereza <alex@bereza.email>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0162/1815] dmaengine: xilinx_dma: Fix CPU stall in xilinx_dma_poll_timeout
-Date: Sat, 12 Sep 2026 08:31:52 +0200
-Message-ID: <20260912065652.812607520@linuxfoundation.org>
+Subject: [PATCH 7.2 0163/1815] soundwire: qcom: Fix port exhaustion check in stream_alloc_ports
+Date: Sat, 12 Sep 2026 08:31:53 +0200
+Message-ID: <20260912065652.835406761@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,100 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Bereza <alex@bereza.email>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit aa99c4d1d63bbc26a5fc4c667d89b2595743c19d ]
+[ Upstream commit 6ccec91c3535b07310e12d32fe9c67ff8d31d965 ]
 
-Currently when calling xilinx_dma_poll_timeout with delay_us=0 and a
-condition that is never fulfilled, the CPU busy-waits for prolonged time
-and the timeout triggers only with a massive delay causing a CPU stall.
+find_first_zero_bit(mask, n) returns n (not n+1) when all bits are set,
+so the guard `pn > maxport` is never true on exhaustion.  The driver
+would silently call set_bit(maxport, port_mask) and assign the
+out-of-range port instead of returning -EBUSY.  Fix the comparison to
+`pn >= maxport`.
 
-This happens due to a huge underestimation of wall clock time in
-poll_timeout_us_atomic. Commit 7349a69cf312 ("iopoll: Do not use
-timekeeping in read_poll_timeout_atomic()") changed the behavior to no
-longer use ktime_get at the expense of underestimation of wall clock
-time which appears to be very large for delay_us=0. Instead of timing
-out after approximately XILINX_DMA_LOOP_COUNT microseconds, the timeout
-takes XILINX_DMA_LOOP_COUNT * 1000 * (time that the overhead of the for
-loop in poll_timeout_us_atomic takes) which is in the range of several
-minutes for XILINX_DMA_LOOP_COUNT=1000000. Fix this by using a non-zero
-value for delay_us. Use delay_us=10 to keep the delay in the hot path of
-starting DMA transfers minimal but still avoid CPU stalls in case of
-unexpected hardware failures.
-
-One-off measurement with delay_us=0 causes the cpu to busy wait around 7
-minutes in the timeout case. After applying this patch with delay_us=10
-the measured timeout was 1053428 microseconds which is roughly
-equivalent to the expected 1000000 microseconds specified in
-XILINX_DMA_LOOP_COUNT.
-
-Add a constant XILINX_DMA_POLL_DELAY_US for delay_us value.
-
-Fixes: 9495f2648287 ("dmaengine: xilinx_vdma: Use readl_poll_timeout instead of do while loop's")
-Fixes: 7349a69cf312 ("iopoll: Do not use timekeeping in read_poll_timeout_atomic()")
-Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Alex Bereza <alex@bereza.email>
-Link: https://patch.msgid.link/20260402-fix-atomic-poll-timeout-regression-v4-1-f30d6a6c13cb@bereza.email
+Fixes: 02efb49aa805 ("soundwire: qcom: add support for SoundWire controller")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Assisted-by: Claude Sonnet 4.6
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260701193006.4113-2-srinivas.kandagatla@oss.qualcomm.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/soundwire/qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index ca396b7097427..74ad80d6c5a5f 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -167,6 +167,8 @@
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index 3d8f5a81eff19..b288218f64b42 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -1271,7 +1271,7 @@ static int qcom_swrm_stream_alloc_ports(struct qcom_swrm_ctrl *ctrl,
+ 				else
+ 					pn = find_first_zero_bit(port_mask, maxport);
  
- /* Delay loop counter to prevent hardware failure */
- #define XILINX_DMA_LOOP_COUNT		1000000
-+/* Delay between polls (avoid a delay of 0 to prevent CPU stalls) */
-+#define XILINX_DMA_POLL_DELAY_US	10
- 
- /* AXI DMA Specific Registers/Offsets */
- #define XILINX_DMA_REG_SRCDSTADDR	0x18
-@@ -1324,7 +1326,8 @@ static int xilinx_dma_stop_transfer(struct xilinx_dma_chan *chan)
- 
- 	/* Wait for the hardware to halt */
- 	return xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMASR, val,
--				       val & XILINX_DMA_DMASR_HALTED, 0,
-+				       val & XILINX_DMA_DMASR_HALTED,
-+				       XILINX_DMA_POLL_DELAY_US,
- 				       XILINX_DMA_LOOP_COUNT);
- }
- 
-@@ -1339,7 +1342,8 @@ static int xilinx_cdma_stop_transfer(struct xilinx_dma_chan *chan)
- 	u32 val;
- 
- 	return xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMASR, val,
--				       val & XILINX_DMA_DMASR_IDLE, 0,
-+				       val & XILINX_DMA_DMASR_IDLE,
-+				       XILINX_DMA_POLL_DELAY_US,
- 				       XILINX_DMA_LOOP_COUNT);
- }
- 
-@@ -1356,7 +1360,8 @@ static void xilinx_dma_start(struct xilinx_dma_chan *chan)
- 
- 	/* Wait for the hardware to start */
- 	err = xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMASR, val,
--				      !(val & XILINX_DMA_DMASR_HALTED), 0,
-+				      !(val & XILINX_DMA_DMASR_HALTED),
-+				      XILINX_DMA_POLL_DELAY_US,
- 				      XILINX_DMA_LOOP_COUNT);
- 
- 	if (err) {
-@@ -1794,7 +1799,8 @@ static int xilinx_dma_reset(struct xilinx_dma_chan *chan)
- 
- 	/* Wait for the hardware to finish reset */
- 	err = xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMACR, tmp,
--				      !(tmp & XILINX_DMA_DMACR_RESET), 0,
-+				      !(tmp & XILINX_DMA_DMACR_RESET),
-+				      XILINX_DMA_POLL_DELAY_US,
- 				      XILINX_DMA_LOOP_COUNT);
- 
- 	if (err) {
+-				if (pn > maxport) {
++				if (pn >= maxport) {
+ 					dev_err(ctrl->dev, "All ports busy\n");
+ 					return -EBUSY;
+ 				}
 -- 
 2.53.0
 
