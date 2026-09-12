@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C91221F26;
-	Sat, 12 Sep 2026 11:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E880F221F26;
+	Sat, 12 Sep 2026 11:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210972; cv=none; b=H/5x+Sl2WYyL/n/dmF9PrqWDdVfs07O7ayjogmsHng+Mhun0E8fhz0eaysqIR5aL6xVwRK99NC+fSU7wzZ4Se22y0A91snKE4TS9rXFhJhLVK4pSUpG0M3ddSk3vntRvmOmUM2LM7YwGleV94pgtu9VoQopuiJvg6s+POEpQXbs=
+	t=1789210977; cv=none; b=AjDMwAl0/P8sNONEHu/t97rLEyvPK8ahbNbfS7Se9QYna2NgdeMuVVbce7xqn5JRcxv52yWqfpp0Q/5o6cSfXD5tl9dxT+vqGDplaS26xKYaWKDX/5geXusrCU9Eapov2q4rQ4eQW/TN17AdHINjoMfcZNqgZUIlhq+3eywHOnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210972; c=relaxed/simple;
-	bh=qiFsqIr3zNY99F5jJhB+PN779uRj7DeR0ZkES99S6O8=;
+	s=arc-20240116; t=1789210977; c=relaxed/simple;
+	bh=IRg3h3kbnHpTD+WoSjUzj9BQ5QMEHSn3LC9YYcK/NEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HNq088pUTReXmMTYv0J83Im+iZ2h9tN8Lj0q8ihxhXVfumJLv2qb21WM6Irf9flN/yyEB/Tl2ItfYtDhEolqKn8mi2ytTFt1xOrk1nO+N9gpbCfjGxEaTxs+7WHpfzXvf9tmVX03lifEd+T/tIV7op2/yOc7GpUruwMYCHCfwp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0vDMMuHo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mtDBrU8nLPGFO+6vRdMxgpknYT8RfVeo1kVN7merC2+dsqSWz4Q8r+Y7L/dP80yYlLIQP3B3I8sEIJtN3cAmkkHV0FT4wlpf0HIhnPOJpbHHZxk98At2100VLMp9QMKMgyHWH8HZVNqd1Z3y4BVjAigmGDT/sp4pnK8X+bUh2C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBDaQrEF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0vDMMuHo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0C21F00893;
-	Sat, 12 Sep 2026 11:02:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBDaQrEF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B161F000FF;
+	Sat, 12 Sep 2026 11:02:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210970;
-	bh=9LsJHQDiM1tk132kPwTmFvnzATaFELcLkw2yL7e1D+A=;
+	s=korg; t=1789210975;
+	bh=QT8IkzF1kJi1Z5TbrrjKdDr9mHayzo/8+r0D/fHeFps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0vDMMuHoAceTL0utGsqyeJjlDJ/1ts2iKLk22Yr7boSw54k3ZU1dDsyulGoq80Cyq
-	 I6p8yf4HdB/bdshqTm87juRc6qf3iH4sCyJzhMqgOckcn232oAEoGKazbUaLEz+DJ9
-	 Wpy2QOh0a7cq/0q1j8rtopY7HmAEio0/jeEXArjs=
+	b=NBDaQrEFUsQOxe4IVL+NsWf2qIlEZo0BR10RSbGxfOt7KJU8sbJrnsJaSjBFFjJmK
+	 TRiIpQ+1+X4Z2S3Rupu151UjcoOIbePup3TT1iYOOwDdijWicbt2hJVLOU8FM17FaT
+	 VW3D+0IxAf8d1Xz8A68X8VwBT1Zc1aO/QwpFab88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	syzbot+72eddfbadda3e3928e72@syzkaller.appspotmail.com,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1134/1518] RDMA/cxgb4: Free debugfs on registration failure
-Date: Sat, 12 Sep 2026 08:55:03 +0200
-Message-ID: <20260912065649.112621164@linuxfoundation.org>
+Subject: [PATCH 6.18 1135/1518] RDMA/cma: Fix WARNING in res_to_rt
+Date: Sat, 12 Sep 2026 08:55:04 +0200
+Message-ID: <20260912065649.134882198@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,50 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-[ Upstream commit fe5c16bb6252dea6025b748257ddc3b2665495b0 ]
+[ Upstream commit c6d1ec4fbe56492bb88987d577f04a5fb6955f26 ]
 
-c4iw_alloc() creates the per-device debugfs tree (dev->debugfs_root via
-setup_debugfs()), but it is removed only in c4iw_remove(), not in
-c4iw_dealloc().  When RDMA device registration fails, the registration
-worker's err_dealloc_ctx path calls c4iw_dealloc() directly, bypassing
-c4iw_remove(), so the debugfs dentries leak and outlive the freed
-c4iw_dev.
+syzbot reported a WARN_ON(!res->dev) in res_to_rt() triggered via
+addr_handler() during asynchronous address resolution:
 
-Move debugfs_remove_recursive() into c4iw_dealloc() so every path that
-frees ctx->dev also removes its debugfs tree.
+"
+WARNING: drivers/infiniband/core/restrack.c:138 at res_to_rt+0x1c4/0x230
+CPU#1: kworker/u8:4/59
+Modules linked in:
+CPU: 1 UID: 0 PID: 59 Comm: kworker/u8:4 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Compute Engine, BIOS Google 07/24/2026
+Workqueue: ib_addr process_one_req
+RIP: 0010:res_to_rt+0x1c4/0x230 drivers/infiniband/core/restrack.c:138
+RSP: 0018:ffffc9000201f850 EFLAGS: 00010293
+RAX: ffffffff88d00ce5 RBX: ffff88807f0fd4f8 RCX: ffff88801e6e0000
+RDX: 0000000000000000 RSI: ffffffff8fd996f0 RDI: 0000000000000003
+RBP: 0000000000000000 R08: ffff88801e6e0000 R09: 000000000000000a
+R10: 0000000000000009 R11: 0000000000000000 R12: dffffc0000000000
+R13: 1ffff1100fe1fa9f R14: 0000000000000000 R15: 0000000000000003
+FS:  0000000000000000(0000) GS:ffff888125012000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00001d559c3d2000 CR3: 0000000077c4c000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ rdma_restrack_add+0x5a/0x8a0 drivers/infiniband/core/restrack.c:236
+ addr_handler+0x41a/0x5a0 drivers/infiniband/core/cma.c:3534
+ process_one_req+0x2eb/0x540 drivers/infiniband/core/addr.c:624
+ process_one_work kernel/workqueue.c:3375 [inline]
+ process_scheduled_works+0xc4e/0x1630 kernel/workqueue.c:3458
+ worker_thread+0xa47/0xfb0 kernel/workqueue.c:3539
+ kthread+0x388/0x470 kernel/kthread.c:436
+ ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
+"
 
-Fixes: 49ea0c036ede ("RDMA/iw_cxgb4: cleanup device debugfs entries on ULD remove")
-Link: https://patch.msgid.link/r/20260806130128.465460-2-fanwu01@zju.edu.cn
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+In addr_handler(), cma_acquire_dev_by_src_ip() is called to populate
+id_priv->cma_dev and bind the associated ib_device to id_priv->id.device.
+If cma_acquire_dev_by_src_ip() returns an error (non-zero status), the ID
+remains unassociated with any RDMA device.
+
+Previously, rdma_restrack_add(&id_priv->res) was invoked unconditionally
+even when cma_acquire_dev_by_src_ip() failed, passing a resource with a
+NULL dev pointer and triggering the WARN_ON assertion in res_to_rt().
+
+Fix this by only adding the resource to restrack when acquiring the device
+succeeds.
+
+Reported-by: syzbot+72eddfbadda3e3928e72@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=72eddfbadda3e3928e72
+Tested-by: syzbot+72eddfbadda3e3928e72@syzkaller.appspotmail.com
+Fixes: cb5cd0ea4eb3 ("RDMA/core: Add CM to restrack after successful attachment to a device")
+
+Link: https://patch.msgid.link/r/20260810220123.191696-1-yanjun.zhu@linux.dev
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/cxgb4/device.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/core/cma.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/cxgb4/device.c b/drivers/infiniband/hw/cxgb4/device.c
-index d03936d007b0f..0d023c361ef8e 100644
---- a/drivers/infiniband/hw/cxgb4/device.c
-+++ b/drivers/infiniband/hw/cxgb4/device.c
-@@ -934,6 +934,7 @@ static void c4iw_rdev_close(struct c4iw_rdev *rdev)
- 
- void c4iw_dealloc(struct uld_ctx *ctx)
- {
-+	debugfs_remove_recursive(ctx->dev->debugfs_root);
- 	c4iw_rdev_close(&ctx->dev->rdev);
- 	WARN_ON(!xa_empty(&ctx->dev->cqs));
- 	WARN_ON(!xa_empty(&ctx->dev->qps));
-@@ -958,7 +959,6 @@ static void c4iw_remove(struct uld_ctx *ctx)
- 	if (!ctx->dev)
- 		return;
- 
--	debugfs_remove_recursive(ctx->dev->debugfs_root);
- 	c4iw_unregister_device(ctx->dev);
- 	c4iw_dealloc(ctx);
- }
+diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
+index 648acc2222cf5..a73a879706c4f 100644
+--- a/drivers/infiniband/core/cma.c
++++ b/drivers/infiniband/core/cma.c
+@@ -3523,10 +3523,12 @@ static void addr_handler(int status, struct sockaddr *src_addr,
+ 	memcpy(addr, src_addr, rdma_addr_size(src_addr));
+ 	if (!status && !id_priv->cma_dev) {
+ 		status = cma_acquire_dev_by_src_ip(id_priv);
+-		if (status)
++		if (status) {
+ 			pr_debug_ratelimited("RDMA CM: ADDR_ERROR: failed to acquire device. status %d\n",
+ 					     status);
+-		rdma_restrack_add(&id_priv->res);
++		} else {
++			rdma_restrack_add(&id_priv->res);
++		}
+ 	} else if (status) {
+ 		pr_debug_ratelimited("RDMA CM: ADDR_ERROR: failed to resolve IP. status %d\n", status);
+ 	}
 -- 
 2.53.0
 
