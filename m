@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEA237204A;
-	Sat, 12 Sep 2026 07:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6BB39448F;
+	Sat, 12 Sep 2026 07:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197126; cv=none; b=HZP+49tnAboc22R3CPGckCEEuizIYixsM1OfstvVGCGsS46NiDN8Fh0u0KO3JmAIBjU6QRKgAZzLqkPPH0A7MV2lFwI9i5zZBrwfQJugw0NhvqDpF+/uXoEzqtdWdAFt9684m5dqyPht0UKC12pDLn2HDpy2ZQBmDGP8aPsCJM4=
+	t=1789197131; cv=none; b=X2GtrcLjgHIg8Ag8YPxfMD7IjgJ7Ql/3aZlzZ3QxLs77+uYxSEenfgxVTP+y/fQ9ii1OGmniaioo6XH3qet9y21bR0faeDOTq525mdyjheIuLkOwCrV6j9jIB4dwhxfm5dCuGhJMgWrI5kw8rWXo15Y9PU35F4zh65Nt00MaEFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197126; c=relaxed/simple;
-	bh=h1HqXgi630z/AG81SgFPJ/ToA7HPmOxBFu0nMNnHsdE=;
+	s=arc-20240116; t=1789197131; c=relaxed/simple;
+	bh=2fpKPkL3iP3I1ABTNQVaBumtZyZZMgYVfkQ3OGpdbWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OczMozQIcfinxvv3G0Da37zXA3fAZGSrBmDDtbXS5krsHTm9Qx7q8VJSqrSN27iplJLTl1UO/kzbHh+Va4fyTzOevU6XI7R/6r5Aoi+5Q+IwJoTN3d4R2CYuEw4qGe8vW9VHe4J8OVTwyv3+dINQ6eSZ0j6JaMjEJt267LkWkeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wTnezChE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cy8puZ6UDKv7UCRo74ReG6r86W2yvPhCteULULaVf7Jc0ODE1yNuf6Oq/TuNhF47ovS04N+VCp0vjD83tFhFnOd64GeZpgsG/sYd5UKtJ/il2jeVGGeU2JSptLbOEKmRk5Ft4Sw4B4CYZjdQ+XyeWbFJ3d4wTXbhj5PHv5Z0Kig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvzueA7z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wTnezChE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE201F000FF;
-	Sat, 12 Sep 2026 07:12:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvzueA7z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135101F000FF;
+	Sat, 12 Sep 2026 07:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197125;
-	bh=+a1B5M5JfrRlf0djVR/IuK0uXTc/E69fSlMLduXND2E=;
+	s=korg; t=1789197130;
+	bh=SYnqS42avlp5p9f+VnuO+WNv9cwVfjIuGyP9bfPUZ1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wTnezChEky7evSaAbpa7EAYzMwaAb1n011JUgdkGT7Efv5Y/aqAmyCRykCPNi8Ne5
-	 o8/vcvk4wshFAE8hSbMGNy4vP0gTx+rb3qOGjmCpp+8Y/S5gNoI9Za4ygzKtBUq1yt
-	 t0QxXsSeXswxHo6tFywAbXw4Z9cKTLgY0RHZMgiE=
+	b=lvzueA7zuStxIO6lEofXg8zJwz7jKftNVxgwy3UFzL8mskbnbCyf6pv1NX/9BPRfe
+	 TH9rJjNIEjCOUHIAPvxy2WIVt4l+CoMOdDqV9Oo0nSeS2pPu8h/kYe6VD0oowcF1T9
+	 /7VDZCpzEnIWfs69HJbTGUgBgaGJVZq8hWjtSrJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zide Chen <zide.chen@intel.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ian Rogers <irogers@google.com>,
 	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0107/1815] perf/x86/intel/uncore: Introduce PMU flags and broken state
-Date: Sat, 12 Sep 2026 08:30:57 +0200
-Message-ID: <20260912065651.518615797@linuxfoundation.org>
+Subject: [PATCH 7.2 0108/1815] perf/x86/intel/uncore: Fix uncore_box ref/unref ordering
+Date: Sat, 12 Sep 2026 08:30:58 +0200
+Message-ID: <20260912065651.541798965@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,190 +55,158 @@ Content-Transfer-Encoding: 8bit
 
 From: Zide Chen <zide.chen@intel.com>
 
-[ Upstream commit 30c0a1095652275768a5de67188ff888d1f5d190 ]
+[ Upstream commit 174f0582e38abe03b88e15f04bfe58490f88cb19 ]
 
-Replace the boolean 'registered' field in intel_uncore_pmu with an
-unsigned long 'flags' field, and add a PMU_BROKEN flag to track box
-setup failures. The broken flag is sticky, meaning it is cleared only
-by a module reload or system reboot.
+In uncore_event_cpu_online(), uncore_box_ref() was called before
+uncore_change_context().  uncore_box_ref() gates on box->cpu >= 0,
+but box->cpu is still -1 at that point because uncore_change_context()
+has not run yet.  As a result, the box is never initialized on the
+first CPU to come online in a die, leaving it permanently
+uninitialized in the single-CPU-per-die case.
 
-Broken PMUs are skipped in the CPU hotplug and box allocation paths.
+Thus, box->refcnt is one count below the true value, and in the CPU
+offline path, the box will be torn down on the second-to-last CPU.
 
-When any box fails to initialize, the PMU is marked broken.  Broken
-PMUs reject new event assignments and skip future box setup attempts.
-If the PMU was already registered, it remains so to avoid disrupting
-in-flight events on other boxes.
+In uncore_event_cpu_offline(), uncore_box_unref() was called after
+uncore_change_context(), so box->cpu is already -1 when the collector
+CPU goes offline, which prevents it from tearing down the box.
 
+Fix by swapping the call order in both paths so that
+uncore_box_{ref,unref}() runs at the point where box->cpu reflects
+the correct context.
+
+Move allocate_boxes() out of uncore_box_ref() to enable this
+reordering.
+
+Fixes: c74443d92f68 ("perf/x86/uncore: Support per PMU cpumask")
 Signed-off-by: Zide Chen <zide.chen@intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
 Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Link: https://patch.msgid.link/20260611160033.66760-7-zide.chen@intel.com
-Stable-dep-of: 174f0582e38a ("perf/x86/intel/uncore: Fix uncore_box ref/unref ordering")
+Link: https://patch.msgid.link/20260611160033.66760-8-zide.chen@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore.c     | 44 ++++++++++++++++++++++--------
- arch/x86/events/intel/uncore.h     | 13 ++++++++-
- arch/x86/events/intel/uncore_snb.c |  2 +-
- 3 files changed, 46 insertions(+), 13 deletions(-)
+ arch/x86/events/intel/uncore.c | 50 ++++++++++++++++------------------
+ 1 file changed, 23 insertions(+), 27 deletions(-)
 
 diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
-index 06ef89f6ccc28..feb8c3b0076b2 100644
+index feb8c3b0076b2..b9ac2f7d31caa 100644
 --- a/arch/x86/events/intel/uncore.c
 +++ b/arch/x86/events/intel/uncore.c
-@@ -757,7 +757,7 @@ static int uncore_pmu_event_init(struct perf_event *event)
- 
- 	pmu = uncore_event_to_pmu(event);
- 	/* no device found for this pmu */
--	if (!pmu->registered)
-+	if (!uncore_pmu_available(pmu))
- 		return -ENOENT;
- 
- 	/* Sampling not supported yet */
-@@ -953,16 +953,18 @@ static int uncore_pmu_register(struct intel_uncore_pmu *pmu)
- 
- 	ret = perf_pmu_register(&pmu->pmu, pmu->name, -1);
- 	if (!ret)
--		pmu->registered = true;
-+		uncore_pmu_set_registered(pmu);
- 	return ret;
- }
- 
- static void uncore_pmu_unregister(struct intel_uncore_pmu *pmu)
+@@ -1580,9 +1580,15 @@ static int uncore_event_cpu_offline(unsigned int cpu)
  {
--	if (!pmu->registered)
-+	if (!uncore_pmu_registered(pmu))
- 		return;
- 	perf_pmu_unregister(&pmu->pmu);
--	pmu->registered = false;
+ 	int die, target;
+ 
++	/* Clear the references */
++	die = topology_logical_die_id(cpu);
++	uncore_box_unref(uncore_msr_uncores, die);
++	uncore_box_unref(uncore_mmio_uncores, die);
 +
-+	/* Keep PMU_BROKEN_BIT sticky. */
-+	uncore_pmu_clear_registered(pmu);
- }
- 
- static void uncore_free_boxes(struct intel_uncore_pmu *pmu)
-@@ -1153,7 +1155,12 @@ static int uncore_box_setup(struct intel_uncore_pmu *pmu,
- {
- 	int ret;
- 
--	uncore_box_init(box);
-+	if (uncore_pmu_broken(pmu))
-+		return -ENODEV;
+ 	/* Check if exiting cpu is used for collecting uncore events */
+ 	if (!cpumask_test_and_clear_cpu(cpu, &uncore_cpu_mask))
+-		goto unref;
++		return 0;
 +
-+	ret = uncore_box_init(box);
-+	if (ret)
-+		goto err;
+ 	/* Find a new cpu to collect uncore events */
+ 	target = cpumask_any_but(topology_die_cpumask(cpu), cpu);
  
- 	/* First active box registers the pmu. */
- 	if (atomic_inc_return(&pmu->activeboxes) > 1)
-@@ -1167,6 +1174,16 @@ static int uncore_box_setup(struct intel_uncore_pmu *pmu,
- 
+@@ -1595,16 +1601,10 @@ static int uncore_event_cpu_offline(unsigned int cpu)
+ 	uncore_change_context(uncore_msr_uncores, cpu, target);
+ 	uncore_change_context(uncore_mmio_uncores, cpu, target);
+ 	uncore_change_context(uncore_pci_uncores, cpu, target);
+-
+-unref:
+-	/* Clear the references */
+-	die = topology_logical_die_id(cpu);
+-	uncore_box_unref(uncore_msr_uncores, die);
+-	uncore_box_unref(uncore_mmio_uncores, die);
  	return 0;
- err:
-+	/*
-+	 * If any box fails, mark the per-package PMU as broken regardless of
-+	 * whether it was registered or not.
-+	 *
-+	 * Don't decrement refcnt to avoid other in-die CPUs from trying to set
-+	 * up the PMU box again.
-+	 *
-+	 * Don't kfree box; MSR and MMIO boxes are freed at module exit only.
-+	 */
-+	uncore_pmu_set_broken(pmu);
- 	uncore_box_exit(box);
- 	return ret;
  }
-@@ -1190,8 +1207,10 @@ static int uncore_pci_pmu_register(struct pci_dev *pdev,
- 		return -EINVAL;
  
- 	box = uncore_alloc_box(type, NUMA_NO_NODE);
--	if (!box)
-+	if (!box) {
-+		uncore_pmu_set_broken(pmu);
- 		return -ENOMEM;
-+	}
- 
- 	atomic_inc(&box->refcnt);
- 	box->dieid = die;
-@@ -1507,7 +1526,8 @@ static void uncore_change_type_ctx(struct intel_uncore_type *type, int old_cpu,
- 
- 		if (old_cpu < 0) {
- 			WARN_ON_ONCE(box->cpu != -1);
--			if (uncore_die_has_box(type, die, pmu->pmu_idx)) {
-+			if (uncore_die_has_box(type, die, pmu->pmu_idx) &&
-+			    !uncore_pmu_broken(pmu)) {
- 				box->cpu = new_cpu;
- 				cpumask_set_cpu(new_cpu, &pmu->cpu_mask);
- 			}
-@@ -1515,12 +1535,14 @@ static void uncore_change_type_ctx(struct intel_uncore_type *type, int old_cpu,
- 		}
- 
- 		WARN_ON_ONCE(box->cpu != -1 && box->cpu != old_cpu);
--		box->cpu = -1;
- 		cpumask_clear_cpu(old_cpu, &pmu->cpu_mask);
--		if (new_cpu < 0)
-+		if (new_cpu < 0) {
-+			box->cpu = -1;
- 			continue;
-+		}
- 
--		if (!uncore_die_has_box(type, die, pmu->pmu_idx))
-+		/* An inactive box doesn't need migration. */
-+		if (box->cpu == -1)
- 			continue;
- 		uncore_pmu_cancel_hrtimer(box);
- 		perf_pmu_migrate_context(&pmu->pmu, old_cpu, new_cpu);
-@@ -1596,7 +1618,7 @@ static int allocate_boxes(struct intel_uncore_type **types,
- 		type = *types;
- 		pmu = type->pmus;
- 		for (i = 0; i < type->num_boxes; i++, pmu++) {
--			if (pmu->boxes[die])
-+			if (pmu->boxes[die] || uncore_pmu_broken(pmu))
+-static int allocate_boxes(struct intel_uncore_type **types,
++static void allocate_boxes(struct intel_uncore_type **types,
+ 			 unsigned int die, unsigned int cpu)
+ {
+ 	struct intel_uncore_box *box, *tmp;
+@@ -1621,8 +1621,10 @@ static int allocate_boxes(struct intel_uncore_type **types,
+ 			if (pmu->boxes[die] || uncore_pmu_broken(pmu))
  				continue;
  			box = uncore_alloc_box(type, cpu_to_node(cpu));
- 			if (!box)
-diff --git a/arch/x86/events/intel/uncore.h b/arch/x86/events/intel/uncore.h
-index d732b87be0a95..0adb477d97086 100644
---- a/arch/x86/events/intel/uncore.h
-+++ b/arch/x86/events/intel/uncore.h
-@@ -146,13 +146,24 @@ struct intel_uncore_pmu {
- 	struct pmu			pmu;
- 	char				name[UNCORE_PMU_NAME_LEN];
- 	int				pmu_idx;
--	bool				registered;
-+	unsigned long			flags;
- 	atomic_t			activeboxes;
- 	cpumask_t			cpu_mask;
- 	struct intel_uncore_type	*type;
- 	struct intel_uncore_box		**boxes;
- };
+-			if (!box)
++			if (!box) {
++				uncore_pmu_set_broken(pmu);
+ 				goto cleanup;
++			}
+ 			box->pmu = pmu;
+ 			box->dieid = die;
+ 			list_add(&box->active_list, &allocated);
+@@ -1633,14 +1635,13 @@ static int allocate_boxes(struct intel_uncore_type **types,
+ 		list_del_init(&box->active_list);
+ 		box->pmu->boxes[die] = box;
+ 	}
+-	return 0;
++	return;
  
-+#define PMU_REGISTERED_BIT	0
-+#define PMU_BROKEN_BIT		1
+ cleanup:
+ 	list_for_each_entry_safe(box, tmp, &allocated, active_list) {
+ 		list_del_init(&box->active_list);
+ 		kfree(box);
+ 	}
+-	return -ENOMEM;
+ }
+ 
+ static int uncore_box_ref(struct intel_uncore_type **types,
+@@ -1649,11 +1650,7 @@ static int uncore_box_ref(struct intel_uncore_type **types,
+ 	struct intel_uncore_type *type;
+ 	struct intel_uncore_pmu *pmu;
+ 	struct intel_uncore_box *box;
+-	int i, ret;
+-
+-	ret = allocate_boxes(types, die, cpu);
+-	if (ret)
+-		return ret;
++	int i;
+ 
+ 	for (; *types; types++) {
+ 		type = *types;
+@@ -1669,27 +1666,26 @@ static int uncore_box_ref(struct intel_uncore_type **types,
+ 
+ static int uncore_event_cpu_online(unsigned int cpu)
+ {
+-	int die, target, msr_ret, mmio_ret;
++	int die, target;
+ 
+ 	die = topology_logical_die_id(cpu);
+-	msr_ret = uncore_box_ref(uncore_msr_uncores, die, cpu);
+-	mmio_ret = uncore_box_ref(uncore_mmio_uncores, die, cpu);
++	allocate_boxes(uncore_msr_uncores, die, cpu);
++	allocate_boxes(uncore_mmio_uncores, die, cpu);
+ 
+ 	/*
+ 	 * Check if there is an online cpu in the package
+ 	 * which collects uncore events already.
+ 	 */
+ 	target = cpumask_any_and(&uncore_cpu_mask, topology_die_cpumask(cpu));
+-	if (target < nr_cpu_ids)
+-		return 0;
+-
+-	cpumask_set_cpu(cpu, &uncore_cpu_mask);
+-
+-	if (!msr_ret)
++	if (target >= nr_cpu_ids) {
++		cpumask_set_cpu(cpu, &uncore_cpu_mask);
+ 		uncore_change_context(uncore_msr_uncores, -1, cpu);
+-	if (!mmio_ret)
+ 		uncore_change_context(uncore_mmio_uncores, -1, cpu);
+-	uncore_change_context(uncore_pci_uncores, -1, cpu);
++		uncore_change_context(uncore_pci_uncores, -1, cpu);
++	}
 +
-+#define uncore_pmu_registered(pmu)	test_bit(PMU_REGISTERED_BIT, &(pmu)->flags)
-+#define uncore_pmu_broken(pmu)		test_bit(PMU_BROKEN_BIT, &(pmu)->flags)
-+#define uncore_pmu_available(pmu)	(uncore_pmu_registered(pmu) &&  \
-+					 !uncore_pmu_broken(pmu))
-+#define uncore_pmu_set_registered(pmu)	set_bit(PMU_REGISTERED_BIT, &(pmu)->flags)
-+#define uncore_pmu_set_broken(pmu)	set_bit(PMU_BROKEN_BIT, &(pmu)->flags)
-+#define uncore_pmu_clear_registered(pmu) clear_bit(PMU_REGISTERED_BIT, &(pmu)->flags)
-+
- struct intel_uncore_extra_reg {
- 	raw_spinlock_t lock;
- 	u64 config, config1, config2;
-diff --git a/arch/x86/events/intel/uncore_snb.c b/arch/x86/events/intel/uncore_snb.c
-index c5347920541c7..055131c508ffa 100644
---- a/arch/x86/events/intel/uncore_snb.c
-+++ b/arch/x86/events/intel/uncore_snb.c
-@@ -940,7 +940,7 @@ static int snb_uncore_imc_event_init(struct perf_event *event)
++	uncore_box_ref(uncore_msr_uncores, die, cpu);
++	uncore_box_ref(uncore_mmio_uncores, die, cpu);
+ 	return 0;
+ }
  
- 	pmu = uncore_event_to_pmu(event);
- 	/* no device found for this pmu */
--	if (!pmu->registered)
-+	if (!uncore_pmu_available(pmu))
- 		return -ENOENT;
- 
- 	/* Sampling not supported yet */
 -- 
 2.53.0
 
