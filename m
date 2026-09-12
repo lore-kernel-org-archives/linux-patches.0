@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3624F47A86E;
-	Sat, 12 Sep 2026 12:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 408B53C416A;
+	Sat, 12 Sep 2026 12:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215396; cv=none; b=MjqXjBu4pNCeERm8iARt17p3xYRQ3x825/1q+ARFozgS8t8DnUAAjBYxpwQqsBQn6MZabufvIV1mMKY+xbJ0nCQ+WoUV/EIi2SKGEcXjT1xLLE1ObDRfidq3zpZd8PyzGWTXL17iHFXu8ZU5vk3BcQirN95ljeCVAbinkvUAYus=
+	t=1789215402; cv=none; b=b/GPKhtUKVB2ezbfdxiiKOOss58YU165KyWzFFQm5fjj0vLrvRp0nr6Jg1zZYlL78C2IxQ0xaNWHVSxwYb8GaJdtBXaYc7/dr6JEQ/B6kIbhtBMnZrGx/eRNHM8RadJ8lvyEUcRk5PIclRK5/R/55IAMCoLXey+iOOYKZmojo/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215396; c=relaxed/simple;
-	bh=iMHSmLb05sKG3k8JgYDWCTJwQaCOfBYMz5HeM3NYROo=;
+	s=arc-20240116; t=1789215402; c=relaxed/simple;
+	bh=P03kS5xEQkWAjIWUOEBOTQJQxhiQ87zYfE8I89w5LSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HAzjzvhxmhe8IlD/xGdIBWKO8mAX0Ofx9rhNgvuc3RJ6PxSa0pIvOUkw1+TtsGX+qNKXqm9xmUUmMl6C9HdvtJcFPSGyznvtG4FaGhtq539PWj4VX/2GCs7NMR0yAvB1zZ4QV5zh1TatSHi/fZ9TtePe5qgQLsEcKUuJ5aeW6io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHs1CYyl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e4a7GhCsUX8db/FCLwM0lImoOUVygtZ0zVLYfOuyfGhUq+6O4iAHRfkctQyFBzJwknvV65ttPL348xe2Y/KrPIGalLFDmL/PcmVK1dgidp9OMxWTgHl+PeKuswpEORB65ZpY6hX0s9carmUx3GGmc/mJMCD0lLSR7Ah+SRmOY8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVAF5LgI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHs1CYyl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577E21F000FF;
-	Sat, 12 Sep 2026 12:16:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVAF5LgI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1312A1F00898;
+	Sat, 12 Sep 2026 12:16:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215390;
-	bh=n0lIruvSuHz5xvdn1YCb/QMvRk4fUGR/zKeh8KCDAKQ=;
+	s=korg; t=1789215395;
+	bh=mhxuFEAwdf4hE7vatcSsJ6rYhPwdMBOY06p8GiPLV88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tHs1CYylinw7Dn2EZm5trZU3ytg0wZDeEkSRFsLHx1yvORGDJqN6RPd+wJYGC9wSG
-	 pdzXWM19MrOQTomO+Az9TDoQOPyGoF2osnHw5mYCqCuFAtRAkyVJT3jmdJq/iAPwyN
-	 4abE4KZFOSmulpe3cPRxP461PWZqnngnJAw3+g0M=
+	b=PVAF5LgI8J8qeTiSK1AOrnPfIrtJqrlF3iybw8bLzf1PpUn4Gpme1+i/SAkOPlkT9
+	 K1rLZmIahWnnsMFfmsHsRwf4WVeoBIGphlNFbkhWaw14ghXzz/fXykUu9PWsr8gTuU
+	 M2CkdtFPqzFOOLuKV7Jep0ga9rEIqDjxy/p7/W5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guzebing <Guzebing1612@gmail.com>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0523/1376] cxl/memdev: Fix firmware upload exact-fit handling
-Date: Sat, 12 Sep 2026 08:49:09 +0200
-Message-ID: <20260912065619.193067118@linuxfoundation.org>
+Subject: [PATCH 6.12 0524/1376] cxl/mbox: Break poison list loop on an empty payload
+Date: Sat, 12 Sep 2026 08:49:10 +0200
+Message-ID: <20260912065619.214554130@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,46 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guzebing <Guzebing1612@gmail.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit af5035e1b3e400067bb003975936e5407377e7a3 ]
+[ Upstream commit 8b301c4afbce4bc3f94528441d8d5ce1366504ad ]
 
-cxl_fw_prepare() classifies a firmware image as a one-shot transfer
-only when its Transfer FW input payload is smaller than the mailbox
-payload size. An image that exactly fills the payload is therefore
-treated as a multi-part transfer.
+A device that returns count == 0 with CXL_POISON_FLAG_MORE set on every
+iteration never advances nr_records, so the max_errors guard never
+trips and the do/while loops forever while holding poison.mutex. That
+hangs the sysfs-triggered scan thread and blocks all subsequent poison
+operations on the device. The existing "Protect against an uncleared
+_FLAG_MORE" guard was intended to bound a misbehaving device but does
+not cover the count == 0 case.
 
-The firmware loader invokes cxl_fw_write() only once for that image.
-Since both offset == 0 and remaining == 0, the multi-part action
-selection sends INITIATE, never sends END, and then attempts to activate
-the target slot.
+Stop the loop on an empty payload so a malfunctioning or malicious
+device cannot wedge the poison scan.
 
-Include equality in the one-shot classification so exact-fit images use
-the FULL action.
-
-Fixes: 9521875bbe00 ("cxl: add a firmware update mechanism using the sysfs firmware loader")
-Signed-off-by: Guzebing <Guzebing1612@gmail.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260713112744.2543829-1-guzebing1612@gmail.com
+Link: https://sashiko.dev/#/patchset/20260702090849.47501-1-icheng@nvidia.com?part=3
+Fixes: ed83f7ca398b ("cxl/mbox: Add GET_POISON_LIST mailbox command")
+Assisted-by: Claude:claude-opus-4-8
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260709155714.1893280-1-dave.jiang@intel.com
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/memdev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cxl/core/mbox.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
-index 4d544a55ac3e8..d2a554c2f92b0 100644
---- a/drivers/cxl/core/memdev.c
-+++ b/drivers/cxl/core/memdev.c
-@@ -845,7 +845,7 @@ static enum fw_upload_err cxl_fw_prepare(struct fw_upload *fwl, const u8 *data,
- 	if (!size)
- 		return FW_UPLOAD_ERR_INVALID_SIZE;
+diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+index 9b178abd1528e..b094aac78ca15 100644
+--- a/drivers/cxl/core/mbox.c
++++ b/drivers/cxl/core/mbox.c
+@@ -1358,6 +1358,11 @@ int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
+ 		if (rc)
+ 			break;
  
--	mds->fw.oneshot = struct_size(transfer, data, size) <
-+	mds->fw.oneshot = struct_size(transfer, data, size) <=
- 			    cxl_mbox->payload_size;
- 
- 	if (cxl_mem_get_fw_info(mds))
++		if (!le16_to_cpu(po->count)) {
++			dev_dbg(&cxlmd->dev, "Poison empty payload!\n");
++			break;
++		}
++
+ 		for (int i = 0; i < le16_to_cpu(po->count); i++)
+ 			trace_cxl_poison(cxlmd, cxlr, &po->record[i],
+ 					 po->flags, po->overflow_ts,
 -- 
 2.53.0
 
