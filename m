@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F4519E7F7;
-	Sat, 12 Sep 2026 08:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9EF3AFAF4;
+	Sat, 12 Sep 2026 08:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201280; cv=none; b=mHgFYh2R9Ic7RDe5nTiIRSYXL2GsHqdICi8xDJuBY0CB+JzxcjrLrdjm0Og5SS2oiYmrARh5eQxdtymd8RYCwtn5zFlnOhjAy//mg9wKLlwICsuMcTJvqj5rtaDTJCZ9CgdqUm4dRUDejUVgZRPuHoqtRneebxYbpCVezewdFDc=
+	t=1789201286; cv=none; b=fLfh3OGeJyMYLZc+4hOwuyfWmKYYEa52N6mkIYWCr1SCxjgl1BjkrhZmPq1tKWTfrEy2DvMj5F9DRGINqQQFOZrc8d7RFmptgeEnptgjBZG+PfY/cC252JwkulGLidno9ql/RzD6rpta0Yke6D74MUOIf5u7I89TUPV/yjNTfa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201280; c=relaxed/simple;
-	bh=dS0NDQgbRdGv6Is29+rbim373ffsjrcPdvqyLna/KN0=;
+	s=arc-20240116; t=1789201286; c=relaxed/simple;
+	bh=PXhVx/B3RukeIbQZl6KBogUEa6EkyoNkkEWpVnB7KJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GsMFehBzgna7IRv7+by0pvLIqlsqSBx81WZefrioURbsxbDAJ2pNzmxVIu1qKx0PjCpgLM6WmT1LXCSeWCHCczBFdV3sFBLIL2Mj3CZN3vGSTp3g3BVj7scI6p3hZl/7XUUgTRvZbLHUWP7t9kDbmpMcG60CRJjZAAAcNjRt4Ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZErjNO5V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KwPnV9/rGtYoMiVt6qJT1S8E/LPFLBHWTVvnq+VIIs9Q80KnczwN8Mu/Hkim/WenrjSvdh2iWUBVseX+ZL7Ng06vVo33UJpcB1ZdWmtmZ5HvY8eUf6f/uwJ5TyiB1q8aI4faIWkRZcyFfO5dLTzNm+5FfV7ogE1RgEvhEy2p6LY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I78sKtfY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZErjNO5V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C601F000FF;
-	Sat, 12 Sep 2026 08:21:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I78sKtfY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7041F00893;
+	Sat, 12 Sep 2026 08:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201279;
-	bh=lBxbhvdgfr+zfuL4l3F7NzrWMiIP2/29SrMbrDUgNmA=;
+	s=korg; t=1789201284;
+	bh=QzLh9mc/FqDDIadL/snD5dr2jxuWs+V+/YLsZLM0nEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZErjNO5VqAO62w6GW7zvPlQcLkZOpLr40avDwzVBZswigsC8IZiDHaUJ6SjpCp2U6
-	 DC2AKM4kPCWKdVHNOefb8uIvzBnWVZl04djhdulygwn9WxDLfyElh9Z+f08N1IuxF5
-	 MnRPbiWGTMXNjetXZpymvrxXAEWnDNmsQFLT1DGQ=
+	b=I78sKtfYszRCO1nH2fYfEqUG/7/h48OKcqSGyYF/lgrpGfPUGTvdQSQyF23vUYXgA
+	 KUDnlRx/bCMjhVgFjOneMCCM9gfGdyhIiSCjQRyD/p5uJYMhtNStP3CPIvLPgJDjYN
+	 1tbOBIXIuKrB3GGgl85ystTyXje6Lna3xFIhrby4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0911/1815] perf: arm_spe: Make wakeup range check overflow safe
-Date: Sat, 12 Sep 2026 08:44:21 +0200
-Message-ID: <20260912065710.308226864@linuxfoundation.org>
+Subject: [PATCH 7.2 0958/1815] arm64/fpsimd: ptrace: Fix inactive SVE and SSVE regsets
+Date: Sat, 12 Sep 2026 08:45:08 +0200
+Message-ID: <20260912065711.460691939@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,45 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit fcc5eaea2d234162dfb8258372dd897bc2a1b862 ]
+[ Upstream commit c3f83d021162571bcd87b062ec9e587828d2b7f3 ]
 
-The current code checks whether the wakeup point is in the current
-writable range by comparing it with handle->head + handle->size.
+sve_init_header_from_task() takes header as a pointer, so for the
+inactive mode
 
-The perf AUX head is a monotonically increasing index, so that addition
-can overflow when head is close to ULONG_MAX. In that case, a wakeup
-point which is still inside the free space range can be missed.
+	header->size = sizeof(header);
 
-Use unsigned subtraction to compare the distance from head to wakeup
-against the handle->size. This can dismiss the issue when addition
-overflow.
+stores 8 rather than sizeof(struct user_sve_header), which is 16.
+Userspace sees an impossible size smaller than the header it
+describes.
 
-This is unlikely to happen in practice, but the change makes the
-watermark check logically correct.
+The inactive-mode check in sve_get_common() compares header.size
+against sizeof(header) as well, but there header is a struct, so the
+check can never fire. Reads of NT_ARM_SVE and NT_ARM_SSVE for the
+inactive mode therefore still return the other mode's FPSIMD data,
+exactly the situation the check was added to prevent.
 
-Fixes: d5d9696b0380 ("drivers/perf: Add support for ARMv8.2 Statistical Profiling Extension")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
+Fix the size, and make the check return the remaining membuf space
+instead of 0, which regset_get() would interpret as the entire
+(zero-filled) buffer having been populated.
+
+Fixes: b93e685ecff7 ("arm64/fpsimd: ptrace: Do not present register data for inactive mode")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm_spe_pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kernel/ptrace.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
-index dbd0da1116390..b64cf2313a20c 100644
---- a/drivers/perf/arm_spe_pmu.c
-+++ b/drivers/perf/arm_spe_pmu.c
-@@ -577,7 +577,7 @@ static u64 __arm_spe_pmu_next_off(struct perf_output_handle *handle)
- 	 * the page boundary following it. Keep the tail boundary if
- 	 * that's lower.
+diff --git a/arch/arm64/kernel/ptrace.c b/arch/arm64/kernel/ptrace.c
+index 4d08598e2891d..2a72c61a8af9c 100644
+--- a/arch/arm64/kernel/ptrace.c
++++ b/arch/arm64/kernel/ptrace.c
+@@ -801,7 +801,7 @@ static void sve_init_header_from_task(struct user_sve_header *header,
+ 	if (active)
+ 		header->size = SVE_PT_SIZE(vq, header->flags);
+ 	else
+-		header->size = sizeof(header);
++		header->size = sizeof(*header);
+ 	header->max_size = SVE_PT_SIZE(sve_vq_from_vl(header->max_vl),
+ 				      SVE_PT_REGS_SVE);
+ }
+@@ -837,7 +837,7 @@ static int sve_get_common(struct task_struct *target,
+ 	 * from the other mode to userspace.
  	 */
--	if (handle->wakeup < (handle->head + handle->size) && head <= wakeup)
-+	if ((handle->wakeup - handle->head) < handle->size && head <= wakeup)
- 		limit = min(limit, round_up(wakeup, PAGE_SIZE));
+ 	if (header.size == sizeof(header))
+-		return 0;
++		return to.left;
  
- 	if (limit > head)
+ 	switch ((header.flags & SVE_PT_REGS_MASK)) {
+ 	case SVE_PT_REGS_FPSIMD:
 -- 
 2.53.0
 
