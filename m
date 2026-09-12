@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4513264D4;
-	Sat, 12 Sep 2026 15:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B164430F52B;
+	Sat, 12 Sep 2026 15:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226340; cv=none; b=o0UpFWN/8GQYv3Ybf/pAz/kRVLwTEbK3vPcQBxwHCFDNOKWxBsHIqT3DP9n6EasJsjMIgB0L9H0nleoOU86iLaxd9ay5Jguc+YLJ9wr/a0Yt8+XT291Jo15Uzt6L7R7hoIoJGidyPfoJEhACsrnTs0aWbUImIzWeGzZyvheyhcE=
+	t=1789226345; cv=none; b=e70MAmVIZII9rqokgvoaH3cFZ23Mld7lGBKCs+s7wSF7V3QM5BCLmvkWuuWrj+IbLH5VnOAkaeUjR6ROURCX+EIvtWe/e7me3NKWXHxGA6eozBsYAw0jiyjdYYlpW/CLRz61TvZIGMvgYG+mOSEHNY0x31qxLznvH8UKFCsPUDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226340; c=relaxed/simple;
-	bh=QOoJiVcR78if6NJqSsCpFEyN6nCq4+/Afa7g6NHHVwo=;
+	s=arc-20240116; t=1789226345; c=relaxed/simple;
+	bh=bI3nLivTCzEzhvnjprM/u9AR22fdFm6H0RV5K5Oty6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c2QhvEvI82TS4ILoOgkWV6EP/DO21MWphXDY+jM48xiFgBYUSjYcObXzTuzWKXB9WC7cTAmw6+DW7TeJPU3iQ0attdv++FZxXhpr2rJ9Fk9Dexgwx/6zS/yy+alz6HDpscpoEsvBIA5bO/Ph+efeZYad+DyCr+XQsz8nUm0znp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FIQ9QoQa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YnNL2SIjYcCffcE45hMwrrHlj8aEjnG2AzApneTgpf6icXiAzqLv7Kq5QsXhdDHB91tPKNyIQ5/7O6msvp85SZ0qy0iK4viLfl+JZ32Q1U7eB0fe6uQXiUZgtbbbTU97uZMw4v9r/VVFkFzlGeJHvqs6XiNLmflhNsW7rNmcF7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xe5pZCsM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIQ9QoQa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4331F000FF;
-	Sat, 12 Sep 2026 15:18:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xe5pZCsM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48431F000FF;
+	Sat, 12 Sep 2026 15:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226339;
-	bh=OXFJet5og54ywm6vOG1/THTcubbr+PpOEcyIi0olS5s=;
+	s=korg; t=1789226343;
+	bh=3WjCEDWOtRfEMPC0J9PRhi7Ooi6Vysc6aS9kvHrOSS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FIQ9QoQaMZX8skjDkqDErNvIWUMU1PnPOqbAKrHTv9ZK9Pb0l6Jdv88xlIsJ3alO+
-	 H2j+qlxUt4OcybHGu69Ee+7rXrvwgPPqO68Y0XkOFL0lwIRbmVNT/ITe4AffbO46aq
-	 4bar3upxK7POrRnu66wcdcU5bcc5EV1pmpi7m3io=
+	b=Xe5pZCsMUIWiashS/yXP8veC34b1fyYe1CHTXj4qVZVxq+JULLxudH/cA86DiCHw2
+	 dpOqJATT6EOti3nuKbGauT+pmkafPKaSwK2oSQvzXGggk4j94OD86z9ZRBSCZcZrf6
+	 vtrJU9N0oz5Mroij4fEHvbiP9qUgaej5y/0T8m94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	vega@nebusec.ai,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1365/1424] net/sched: hhf: clamp quantum before hhf_change() to avoid overflow
-Date: Sat, 12 Sep 2026 09:03:17 +0200
-Message-ID: <20260912065637.830737731@linuxfoundation.org>
+Subject: [PATCH 6.6 1383/1424] netfilter: x_tables: replace pr_{info,err}() by pr_info_ratelimited()
+Date: Sat, 12 Sep 2026 09:03:35 +0200
+Message-ID: <20260912065638.228049655@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,52 +50,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 2164b512b97bb053e8ce4d6e95576f11bed6a005 ]
+[ Upstream commit 793d9eda4821f75b5f7cc9e6a870b72a58b44c2b ]
 
-hhf_init() sets q->quantum = psched_mtu(qdisc_dev(sch)) with no overflow
-check. A device with a huge MTU (e.g. dummy with max_mtu == 0 accepting
-MTU 2147483634) makes weight * quantum overflow the signed deficit in
-hhf_dequeue(), spinning forever.
+Several xtables extension still use pr_err() or pr_info() without
+ratelimit.
 
-Clamp q->quantum before hhf_change() so both the opt and !opt paths see
-a sane quantum. Without this, bare "tc qdisc add ... hhf" succeeds with
-a clamped quantum but "tc qdisc add ... hhf limit 1000" (any option
-present) fails with -EINVAL because hhf_change() re-validates the
-unclamped default (sch_hhf.c:559). 256 matches fq_codel's floor and is
-a sane minimum for a DRR quantum.
+For xt_cgroup, while at this, remove redundant "xt_cgroup:" prefix
+since pr_fmt is already set on.
 
-Conditions to recreate the bug: a device whose MTU (plus
-hard_header_len) wraps psched_mtu() into the sign bit (e.g. a dummy
-device with max_mtu == 0 accepting MTU 2147483634). Requires
-CAP_NET_ADMIN in a user namespace.
-
-Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
-Reported-by: vega@nebusec.ai
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260822195509.112717-6-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c38c4597e4bf ("netfilter: implement xt_cgroup cgroup2 path match")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hhf.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/netfilter/xt_cgroup.c | 12 ++++++------
+ net/netfilter/xt_hl.c     |  4 ++--
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
-index aca4795c4101f..f9eab403ac161 100644
---- a/net/sched/sch_hhf.c
-+++ b/net/sched/sch_hhf.c
-@@ -617,6 +617,10 @@ static int hhf_init(struct Qdisc *sch, struct nlattr *opt,
- 	q->hhf_evict_timeout = HZ;      /* 1  sec */
- 	q->hhf_non_hh_weight = 2;
+diff --git a/net/netfilter/xt_cgroup.c b/net/netfilter/xt_cgroup.c
+index b182b9e0882b6..d9943c4f5ee4d 100644
+--- a/net/netfilter/xt_cgroup.c
++++ b/net/netfilter/xt_cgroup.c
+@@ -23,7 +23,7 @@ MODULE_DESCRIPTION("Xtables: process control group matching");
+ MODULE_ALIAS("ipt_cgroup");
+ MODULE_ALIAS("ip6t_cgroup");
  
-+	if ((int)q->quantum <= 0 ||
-+	    (u64)q->quantum * q->hhf_non_hh_weight > INT_MAX)
-+		q->quantum = 256;
-+
- 	if (opt) {
- 		int err = hhf_change(sch, opt, extack);
+-#define NET_CLS_CLASSID_INVALID_MSG "xt_cgroup: classid invalid without net_cls cgroups\n"
++#define NET_CLS_CLASSID_INVALID_MSG "classid invalid without net_cls cgroups\n"
+ 
+ static int cgroup_mt_check_v0(const struct xt_mtchk_param *par)
+ {
+@@ -33,7 +33,7 @@ static int cgroup_mt_check_v0(const struct xt_mtchk_param *par)
+ 		return -EINVAL;
+ 
+ 	if (!IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
+-		pr_info(NET_CLS_CLASSID_INVALID_MSG);
++		pr_info_ratelimited(NET_CLS_CLASSID_INVALID_MSG);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -49,7 +49,7 @@ static int cgroup_mt_check_v1(const struct xt_mtchk_param *par)
+ 		return -EINVAL;
+ 
+ 	if (!info->has_path && !info->has_classid) {
+-		pr_info("xt_cgroup: no path or classid specified\n");
++		pr_info_ratelimited("no path or classid specified\n");
+ 		return -EINVAL;
+ 	}
+ 
+@@ -59,7 +59,7 @@ static int cgroup_mt_check_v1(const struct xt_mtchk_param *par)
+ 	}
+ 
+ 	if (info->has_classid && !IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
+-		pr_info(NET_CLS_CLASSID_INVALID_MSG);
++		pr_info_ratelimited(NET_CLS_CLASSID_INVALID_MSG);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -89,7 +89,7 @@ static int cgroup_mt_check_v2(const struct xt_mtchk_param *par)
+ 		return -EINVAL;
+ 
+ 	if (!info->has_path && !info->has_classid) {
+-		pr_info("xt_cgroup: no path or classid specified\n");
++		pr_info_ratelimited("no path or classid specified\n");
+ 		return -EINVAL;
+ 	}
+ 
+@@ -99,7 +99,7 @@ static int cgroup_mt_check_v2(const struct xt_mtchk_param *par)
+ 	}
+ 
+ 	if (info->has_classid && !IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
+-		pr_info(NET_CLS_CLASSID_INVALID_MSG);
++		pr_info_ratelimited(NET_CLS_CLASSID_INVALID_MSG);
+ 		return -EINVAL;
+ 	}
+ 
+diff --git a/net/netfilter/xt_hl.c b/net/netfilter/xt_hl.c
+index 4a12a757ecbf8..59e93d97b5072 100644
+--- a/net/netfilter/xt_hl.c
++++ b/net/netfilter/xt_hl.c
+@@ -28,7 +28,7 @@ static int ttl_mt_check(const struct xt_mtchk_param *par)
+ 	const struct ipt_ttl_info *info = par->matchinfo;
+ 
+ 	if (info->mode > IPT_TTL_GT) {
+-		pr_err("Unknown TTL match mode: %d\n", info->mode);
++		pr_info_ratelimited("Unknown TTL match mode: %d\n", info->mode);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -59,7 +59,7 @@ static int hl_mt6_check(const struct xt_mtchk_param *par)
+ 	const struct ip6t_hl_info *info = par->matchinfo;
+ 
+ 	if (info->mode > IP6T_HL_GT) {
+-		pr_err("Unknown Hop Limit match mode: %d\n", info->mode);
++		pr_info_ratelimited("Unknown Hop Limit match mode: %d\n", info->mode);
+ 		return -EINVAL;
+ 	}
  
 -- 
 2.53.0
