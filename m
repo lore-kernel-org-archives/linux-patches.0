@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7992737FC;
-	Sat, 12 Sep 2026 09:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B233D41B355;
+	Sat, 12 Sep 2026 09:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206630; cv=none; b=DmBixHrFMpaud3qGKmmvFbXfcCds7wqperbKY4B6xLd8VlpTqNi59eHbgMaK5VYA1re4/lkJaREoHODRN+xRCSorMSW/dsK39M7CwUIAVvH0Sg7LTZKS7FGezq/1PelzA6XAHjGqkNGWswfntspOCTJi/nn+qi3fk+4g1je1KXU=
+	t=1789206635; cv=none; b=CdLf0IhPiFc/P/Mbh5gMYD7QOMBSELLWaXuAbjZQ/4+crVbNDHI6WT9i3f9osyUeql1dom6bJ/FLkdypBq3+MgFU2yr1Pw+4AyG9AnVKV2aFhTDWL+hoXRsBkEmGnKKTQhaOtd6KYPwtvFvTFkPn9y4bd9z48SPubuvYJYy90Ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206630; c=relaxed/simple;
-	bh=4bnlbhdMHnlHk0MkbM72bFIbvU1nL87EgzPTnaZvRp4=;
+	s=arc-20240116; t=1789206635; c=relaxed/simple;
+	bh=3MJHeWz9CYYkOs+T8f/h1WSIDa0e6KV0Eq8+1S6oVN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LfRhDLpjetUh7pfRgdvBsZHoekMJCn7Z6/Y1l/e2D/qwOkm2I8sNMLlJ3Vip/obNcTW1z+JAmr1Uty+0Iu3vjO0tYHU0QEJrxHUfyyrWw04BFBYFoRi/3dRlHOVOHTecL5+ta0HcgcIH/uEOFeWchKLzyacpWJtC0RQXClk0/u0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m5FyG+jq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lDMtPvZAS37Dp+dtMkqBYTgDLqWkvDjT3e+Lw9c0Ttv4yXhqtYEAw+1l3EcQ2XOgFJ9pX1Nok1FXZZCBqz7guiTfUbzfpXPI/sRptS6q4bwCuf8CQhr4OOdVOIVkpWCM5DFpWbDw/8eVfpvxCnh6MQ10B57rW4WqgWYCr5b8pv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvZiEqIx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5FyG+jq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A28E1F000FF;
-	Sat, 12 Sep 2026 09:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvZiEqIx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4EF1F000FF;
+	Sat, 12 Sep 2026 09:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206628;
-	bh=pu7LKWJwUuk1Dzn8htk0XEBHcOixpES8IJT6F8FcR58=;
+	s=korg; t=1789206633;
+	bh=4hL27pYDbgSr/rMTlrmwFnV5PMSqnuMJAj02c/BZQE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m5FyG+jqPooV/qcLBzeqAluzYiNu/WOnDFqibOSY9vkHE94qf2VilKS4dTN4mJ7WO
-	 EnZFzZ3y9nSRaeOluNuobKJQfLJDAPoegSJYGkXtfMQlRALH/RmahKUdLr1gtsHPy2
-	 uwvPWp0oBlJho7nwcoWqeH8hW+oq40XF0ng+vvyY=
+	b=hvZiEqIxAkDqj6zD6aGZGneAWHp2C8AT2qLzx4B9PYpXxxS7/OTIgdjGfqXh4dNv/
+	 +gT9OQf/igTanxwuLE0QGSED83Pv/MVDPZJPWWgUB9bwHraZWBUHcawtuMAsn+C6YB
+	 tqYBcy3jqX+2gghcaHDxY6gqjQo7+T0xOv9R+6b4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Ayush Mukkanwar <ayushmukkanwar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0247/1518] vdso/timens: Move functions to new file
-Date: Sat, 12 Sep 2026 08:40:16 +0200
-Message-ID: <20260912065629.070401212@linuxfoundation.org>
+Subject: [PATCH 6.18 0230/1518] staging: octeon: add missing tasklet_kill in cvm_oct_tx_shutdown
+Date: Sat, 12 Sep 2026 08:39:59 +0200
+Message-ID: <20260912065628.689916938@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,465 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Ayush Mukkanwar <ayushmukkanwar@gmail.com>
 
-[ Upstream commit 5dc9cf835aba73c882348aa4f99be83b6e45ad9b ]
+[ Upstream commit b9af44b0d20b2247c4eb0ea5cfca907d643eea50 ]
 
-As a preparation of the untangling of time namespaces and the vDSO, move
-the glue functions between those subsystems into a new file.
+The TX cleanup tasklet can be scheduled by the watchdog IRQ handler
+to execute cvm_oct_tx_do_cleanup. There can be a pending tasklet in
+the queue which might run after the cvm_oct_remove() frees net_device
+structures, causing a use-after-free in cvm_oct_tx_do_cleanup() as it
+iterates cvm_oct_device[] which is an array of netdevice pointers.
+Add tasklet_kill() after free_irq() to ensure the tasklet is no longer
+scheduled or running before teardown proceeds.
 
-While at it, switch the mutex lock and mmap_read_lock() in the vDSO
-namespace code to guard().
-
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260326-vdso-timens-decoupling-v2-1-c82693a7775f@linutronix.de
-Stable-dep-of: 06aba58e5849 ("time/namespace: Validate nanosecond field in proc_timens_set_offset()")
+Fixes: 4898c560103f ("Staging: Octeon:  Free transmit SKBs in a timely manner")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260511150931.93382-1-ayushmukkanwar%40gmail.com
+Signed-off-by: Ayush Mukkanwar <ayushmukkanwar@gmail.com>
+Link: https://patch.msgid.link/20260615172734.42038-1-ayushmukkanwar@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- MAINTAINERS                      |   2 +
- include/linux/time_namespace.h   |   8 --
- kernel/time/Makefile             |   2 +-
- kernel/time/namespace.c          | 124 +-------------------------
- kernel/time/namespace_internal.h |  13 +++
- kernel/time/namespace_vdso.c     | 146 +++++++++++++++++++++++++++++++
- lib/vdso/datastore.c             |  25 ------
- 7 files changed, 166 insertions(+), 154 deletions(-)
- create mode 100644 kernel/time/namespace_internal.h
- create mode 100644 kernel/time/namespace_vdso.c
+ drivers/staging/octeon/ethernet-tx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 8262a885a6994..2a8ccc21183ae 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -10533,6 +10533,7 @@ S:	Maintained
- T:	git git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git timers/vdso
- F:	include/asm-generic/vdso/vsyscall.h
- F:	include/vdso/
-+F:	kernel/time/namespace_vdso.c
- F:	kernel/time/vsyscall.c
- F:	lib/vdso/
- F:	tools/testing/selftests/vDSO/
-@@ -20502,6 +20503,7 @@ F:	include/trace/events/timer*
- F:	kernel/time/itimer.c
- F:	kernel/time/posix-*
- F:	kernel/time/namespace.c
-+F:	kernel/time/namespace_vdso.c
- 
- POWER MANAGEMENT CORE
- M:	"Rafael J. Wysocki" <rafael@kernel.org>
-diff --git a/include/linux/time_namespace.h b/include/linux/time_namespace.h
-index c514d0e5a45cb..0421bf1b13d7a 100644
---- a/include/linux/time_namespace.h
-+++ b/include/linux/time_namespace.h
-@@ -38,8 +38,6 @@ static inline struct time_namespace *to_time_ns(struct ns_common *ns)
- 	return container_of(ns, struct time_namespace, ns);
- }
- void __init time_ns_init(void);
--extern int vdso_join_timens(struct task_struct *task,
--			    struct time_namespace *ns);
- extern void timens_commit(struct task_struct *tsk, struct time_namespace *ns);
- 
- static inline struct time_namespace *get_time_ns(struct time_namespace *ns)
-@@ -117,12 +115,6 @@ static inline void __init time_ns_init(void)
+diff --git a/drivers/staging/octeon/ethernet-tx.c b/drivers/staging/octeon/ethernet-tx.c
+index f5bbedac6a653..1b30fe1bcf43b 100644
+--- a/drivers/staging/octeon/ethernet-tx.c
++++ b/drivers/staging/octeon/ethernet-tx.c
+@@ -670,4 +670,6 @@ void cvm_oct_tx_shutdown(void)
  {
+ 	/* Free the interrupt handler */
+ 	free_irq(OCTEON_IRQ_TIMER1, cvm_oct_device);
++
++	tasklet_kill(&cvm_oct_tx_cleanup_tasklet);
  }
- 
--static inline int vdso_join_timens(struct task_struct *task,
--				   struct time_namespace *ns)
--{
--	return 0;
--}
--
- static inline void timens_commit(struct task_struct *tsk,
- 				 struct time_namespace *ns)
- {
-diff --git a/kernel/time/Makefile b/kernel/time/Makefile
-index f7d52d9543cc7..662bccb3b7f9a 100644
---- a/kernel/time/Makefile
-+++ b/kernel/time/Makefile
-@@ -29,6 +29,6 @@ endif
- obj-$(CONFIG_GENERIC_GETTIMEOFDAY)		+= vsyscall.o
- obj-$(CONFIG_DEBUG_FS)				+= timekeeping_debug.o
- obj-$(CONFIG_TEST_UDELAY)			+= test_udelay.o
--obj-$(CONFIG_TIME_NS)				+= namespace.o
-+obj-$(CONFIG_TIME_NS)				+= namespace.o namespace_vdso.o
- obj-$(CONFIG_TEST_CLOCKSOURCE_WATCHDOG)		+= clocksource-wdtest.o
- obj-$(CONFIG_TIME_KUNIT_TEST)			+= time_test.o
-diff --git a/kernel/time/namespace.c b/kernel/time/namespace.c
-index 5b6997f4dc3da..0e15a5daa45e7 100644
---- a/kernel/time/namespace.c
-+++ b/kernel/time/namespace.c
-@@ -19,7 +19,7 @@
- #include <linux/err.h>
- #include <linux/mm.h>
- 
--#include <vdso/datapage.h>
-+#include "namespace_internal.h"
- 
- ktime_t do_timens_ktime_to_host(clockid_t clockid, ktime_t tim,
- 				struct timens_offsets *ns_offsets)
-@@ -138,117 +138,7 @@ struct time_namespace *copy_time_ns(u64 flags,
- 	return clone_time_ns(user_ns, old_ns);
- }
- 
--static struct timens_offset offset_from_ts(struct timespec64 off)
--{
--	struct timens_offset ret;
--
--	ret.sec = off.tv_sec;
--	ret.nsec = off.tv_nsec;
--
--	return ret;
--}
--
--/*
-- * A time namespace VVAR page has the same layout as the VVAR page which
-- * contains the system wide VDSO data.
-- *
-- * For a normal task the VVAR pages are installed in the normal ordering:
-- *     VVAR
-- *     PVCLOCK
-- *     HVCLOCK
-- *     TIMENS   <- Not really required
-- *
-- * Now for a timens task the pages are installed in the following order:
-- *     TIMENS
-- *     PVCLOCK
-- *     HVCLOCK
-- *     VVAR
-- *
-- * The check for vdso_clock->clock_mode is in the unlikely path of
-- * the seq begin magic. So for the non-timens case most of the time
-- * 'seq' is even, so the branch is not taken.
-- *
-- * If 'seq' is odd, i.e. a concurrent update is in progress, the extra check
-- * for vdso_clock->clock_mode is a non-issue. The task is spin waiting for the
-- * update to finish and for 'seq' to become even anyway.
-- *
-- * Timens page has vdso_clock->clock_mode set to VDSO_CLOCKMODE_TIMENS which
-- * enforces the time namespace handling path.
-- */
--static void timens_setup_vdso_clock_data(struct vdso_clock *vc,
--					 struct time_namespace *ns)
--{
--	struct timens_offset *offset = vc->offset;
--	struct timens_offset monotonic = offset_from_ts(ns->offsets.monotonic);
--	struct timens_offset boottime = offset_from_ts(ns->offsets.boottime);
--
--	vc->seq				= 1;
--	vc->clock_mode			= VDSO_CLOCKMODE_TIMENS;
--	offset[CLOCK_MONOTONIC]		= monotonic;
--	offset[CLOCK_MONOTONIC_RAW]	= monotonic;
--	offset[CLOCK_MONOTONIC_COARSE]	= monotonic;
--	offset[CLOCK_BOOTTIME]		= boottime;
--	offset[CLOCK_BOOTTIME_ALARM]	= boottime;
--}
--
--struct page *find_timens_vvar_page(struct vm_area_struct *vma)
--{
--	if (likely(vma->vm_mm == current->mm))
--		return current->nsproxy->time_ns->vvar_page;
--
--	/*
--	 * VM_PFNMAP | VM_IO protect .fault() handler from being called
--	 * through interfaces like /proc/$pid/mem or
--	 * process_vm_{readv,writev}() as long as there's no .access()
--	 * in special_mapping_vmops().
--	 * For more details check_vma_flags() and __access_remote_vm()
--	 */
--
--	WARN(1, "vvar_page accessed remotely");
--
--	return NULL;
--}
--
--/*
-- * Protects possibly multiple offsets writers racing each other
-- * and tasks entering the namespace.
-- */
--static DEFINE_MUTEX(offset_lock);
--
--static void timens_set_vvar_page(struct task_struct *task,
--				struct time_namespace *ns)
--{
--	struct vdso_time_data *vdata;
--	struct vdso_clock *vc;
--	unsigned int i;
--
--	if (ns == &init_time_ns)
--		return;
--
--	/* Fast-path, taken by every task in namespace except the first. */
--	if (likely(ns->frozen_offsets))
--		return;
--
--	mutex_lock(&offset_lock);
--	/* Nothing to-do: vvar_page has been already initialized. */
--	if (ns->frozen_offsets)
--		goto out;
--
--	ns->frozen_offsets = true;
--	vdata = page_address(ns->vvar_page);
--	vc = vdata->clock_data;
--
--	for (i = 0; i < CS_BASES; i++)
--		timens_setup_vdso_clock_data(&vc[i], ns);
--
--	if (IS_ENABLED(CONFIG_POSIX_AUX_CLOCKS)) {
--		for (i = 0; i < ARRAY_SIZE(vdata->aux_clock_data); i++)
--			timens_setup_vdso_clock_data(&vdata->aux_clock_data[i], ns);
--	}
--
--out:
--	mutex_unlock(&offset_lock);
--}
-+DEFINE_MUTEX(timens_offset_lock);
- 
- void free_time_ns(struct time_namespace *ns)
- {
-@@ -298,12 +188,6 @@ static void timens_put(struct ns_common *ns)
- 	put_time_ns(to_time_ns(ns));
- }
- 
--void timens_commit(struct task_struct *tsk, struct time_namespace *ns)
--{
--	timens_set_vvar_page(tsk, ns);
--	vdso_join_timens(tsk, ns);
--}
--
- static int timens_install(struct nsset *nsset, struct ns_common *new)
- {
- 	struct nsproxy *nsproxy = nsset->nsproxy;
-@@ -428,7 +312,7 @@ int proc_timens_set_offset(struct file *file, struct task_struct *p,
- 			goto out;
- 	}
- 
--	mutex_lock(&offset_lock);
-+	mutex_lock(&timens_offset_lock);
- 	if (time_ns->frozen_offsets) {
- 		err = -EACCES;
- 		goto out_unlock;
-@@ -453,7 +337,7 @@ int proc_timens_set_offset(struct file *file, struct task_struct *p,
- 	}
- 
- out_unlock:
--	mutex_unlock(&offset_lock);
-+	mutex_unlock(&timens_offset_lock);
- out:
- 	put_time_ns(time_ns);
- 
-diff --git a/kernel/time/namespace_internal.h b/kernel/time/namespace_internal.h
-new file mode 100644
-index 0000000000000..e85da11abb4d9
---- /dev/null
-+++ b/kernel/time/namespace_internal.h
-@@ -0,0 +1,13 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef _TIME_NAMESPACE_INTERNAL_H
-+#define _TIME_NAMESPACE_INTERNAL_H
-+
-+#include <linux/mutex.h>
-+
-+/*
-+ * Protects possibly multiple offsets writers racing each other
-+ * and tasks entering the namespace.
-+ */
-+extern struct mutex timens_offset_lock;
-+
-+#endif /* _TIME_NAMESPACE_INTERNAL_H */
-diff --git a/kernel/time/namespace_vdso.c b/kernel/time/namespace_vdso.c
-new file mode 100644
-index 0000000000000..0e154f9015012
---- /dev/null
-+++ b/kernel/time/namespace_vdso.c
-@@ -0,0 +1,146 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Author: Andrei Vagin <avagin@openvz.org>
-+ * Author: Dmitry Safonov <dima@arista.com>
-+ */
-+
-+#include <linux/cleanup.h>
-+#include <linux/mm.h>
-+#include <linux/time_namespace.h>
-+#include <linux/time.h>
-+#include <linux/vdso_datastore.h>
-+
-+#include <vdso/clocksource.h>
-+#include <vdso/datapage.h>
-+
-+#include "namespace_internal.h"
-+
-+static struct timens_offset offset_from_ts(struct timespec64 off)
-+{
-+	struct timens_offset ret;
-+
-+	ret.sec = off.tv_sec;
-+	ret.nsec = off.tv_nsec;
-+
-+	return ret;
-+}
-+
-+/*
-+ * A time namespace VVAR page has the same layout as the VVAR page which
-+ * contains the system wide VDSO data.
-+ *
-+ * For a normal task the VVAR pages are installed in the normal ordering:
-+ *     VVAR
-+ *     PVCLOCK
-+ *     HVCLOCK
-+ *     TIMENS   <- Not really required
-+ *
-+ * Now for a timens task the pages are installed in the following order:
-+ *     TIMENS
-+ *     PVCLOCK
-+ *     HVCLOCK
-+ *     VVAR
-+ *
-+ * The check for vdso_clock->clock_mode is in the unlikely path of
-+ * the seq begin magic. So for the non-timens case most of the time
-+ * 'seq' is even, so the branch is not taken.
-+ *
-+ * If 'seq' is odd, i.e. a concurrent update is in progress, the extra check
-+ * for vdso_clock->clock_mode is a non-issue. The task is spin waiting for the
-+ * update to finish and for 'seq' to become even anyway.
-+ *
-+ * Timens page has vdso_clock->clock_mode set to VDSO_CLOCKMODE_TIMENS which
-+ * enforces the time namespace handling path.
-+ */
-+static void timens_setup_vdso_clock_data(struct vdso_clock *vc,
-+					 struct time_namespace *ns)
-+{
-+	struct timens_offset *offset = vc->offset;
-+	struct timens_offset monotonic = offset_from_ts(ns->offsets.monotonic);
-+	struct timens_offset boottime = offset_from_ts(ns->offsets.boottime);
-+
-+	vc->seq				= 1;
-+	vc->clock_mode			= VDSO_CLOCKMODE_TIMENS;
-+	offset[CLOCK_MONOTONIC]		= monotonic;
-+	offset[CLOCK_MONOTONIC_RAW]	= monotonic;
-+	offset[CLOCK_MONOTONIC_COARSE]	= monotonic;
-+	offset[CLOCK_BOOTTIME]		= boottime;
-+	offset[CLOCK_BOOTTIME_ALARM]	= boottime;
-+}
-+
-+struct page *find_timens_vvar_page(struct vm_area_struct *vma)
-+{
-+	if (likely(vma->vm_mm == current->mm))
-+		return current->nsproxy->time_ns->vvar_page;
-+
-+	/*
-+	 * VM_PFNMAP | VM_IO protect .fault() handler from being called
-+	 * through interfaces like /proc/$pid/mem or
-+	 * process_vm_{readv,writev}() as long as there's no .access()
-+	 * in special_mapping_vmops().
-+	 * For more details check_vma_flags() and __access_remote_vm()
-+	 */
-+
-+	WARN(1, "vvar_page accessed remotely");
-+
-+	return NULL;
-+}
-+
-+static void timens_set_vvar_page(struct task_struct *task,
-+				struct time_namespace *ns)
-+{
-+	struct vdso_time_data *vdata;
-+	struct vdso_clock *vc;
-+	unsigned int i;
-+
-+	if (ns == &init_time_ns)
-+		return;
-+
-+	/* Fast-path, taken by every task in namespace except the first. */
-+	if (likely(ns->frozen_offsets))
-+		return;
-+
-+	guard(mutex)(&timens_offset_lock);
-+	/* Nothing to-do: vvar_page has been already initialized. */
-+	if (ns->frozen_offsets)
-+		return;
-+
-+	ns->frozen_offsets = true;
-+	vdata = page_address(ns->vvar_page);
-+	vc = vdata->clock_data;
-+
-+	for (i = 0; i < CS_BASES; i++)
-+		timens_setup_vdso_clock_data(&vc[i], ns);
-+
-+	if (IS_ENABLED(CONFIG_POSIX_AUX_CLOCKS)) {
-+		for (i = 0; i < ARRAY_SIZE(vdata->aux_clock_data); i++)
-+			timens_setup_vdso_clock_data(&vdata->aux_clock_data[i], ns);
-+	}
-+}
-+
-+/*
-+ * The vvar page layout depends on whether a task belongs to the root or
-+ * non-root time namespace. Whenever a task changes its namespace, the VVAR
-+ * page tables are cleared and then they will be re-faulted with a
-+ * corresponding layout.
-+ * See also the comment near timens_setup_vdso_clock_data() for details.
-+ */
-+static int vdso_join_timens(struct task_struct *task, struct time_namespace *ns)
-+{
-+	struct mm_struct *mm = task->mm;
-+	struct vm_area_struct *vma;
-+	VMA_ITERATOR(vmi, mm, 0);
-+
-+	guard(mmap_read_lock)(mm);
-+	for_each_vma(vmi, vma) {
-+		if (vma_is_special_mapping(vma, &vdso_vvar_mapping))
-+			zap_vma_pages(vma);
-+	}
-+	return 0;
-+}
-+
-+void timens_commit(struct task_struct *tsk, struct time_namespace *ns)
-+{
-+	timens_set_vvar_page(tsk, ns);
-+	vdso_join_timens(tsk, ns);
-+}
-diff --git a/lib/vdso/datastore.c b/lib/vdso/datastore.c
-index a565c30c71a04..64d868dad8dd1 100644
---- a/lib/vdso/datastore.c
-+++ b/lib/vdso/datastore.c
-@@ -103,28 +103,3 @@ struct vm_area_struct *vdso_install_vvar_mapping(struct mm_struct *mm, unsigned
- 					VM_PFNMAP | VM_SEALED_SYSMAP,
- 					&vdso_vvar_mapping);
- }
--
--#ifdef CONFIG_TIME_NS
--/*
-- * The vvar page layout depends on whether a task belongs to the root or
-- * non-root time namespace. Whenever a task changes its namespace, the VVAR
-- * page tables are cleared and then they will be re-faulted with a
-- * corresponding layout.
-- * See also the comment near timens_setup_vdso_clock_data() for details.
-- */
--int vdso_join_timens(struct task_struct *task, struct time_namespace *ns)
--{
--	struct mm_struct *mm = task->mm;
--	struct vm_area_struct *vma;
--	VMA_ITERATOR(vmi, mm, 0);
--
--	mmap_read_lock(mm);
--	for_each_vma(vmi, vma) {
--		if (vma_is_special_mapping(vma, &vdso_vvar_mapping))
--			zap_vma_pages(vma);
--	}
--	mmap_read_unlock(mm);
--
--	return 0;
--}
--#endif
 -- 
 2.53.0
 
