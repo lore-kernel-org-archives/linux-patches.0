@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C552D23A6;
-	Sat, 12 Sep 2026 14:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988652D23A6;
+	Sat, 12 Sep 2026 14:10:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222210; cv=none; b=aizeaYzf1Q3zfS9NEgnLB4Uw+owJk/6D2Oy+hnXCKv/AqvERWCtH0f0Js0Myt5nf0ZRfPfJW/yRqAYJJBYEaj1F3Z15fV1bka7ikl8AREnaavT+7I2ec+WUiHojSwEg25QTTxcjQPsMoAgax+o3f4/132a079o4oW1W9POVO7hM=
+	t=1789222215; cv=none; b=iGxDWu2vrlOadu31jb+0Ek5bwD/rrzPpUHIXNRCfp/gjyXKKAhW9Le71/nQA2uAxAo9IS7ZUpHzdn4Wsjbw9SHkI7ORI6+YJy+9nXu6bshN/8Df7lqqD/u6zFLuCPHXYyEC0Y+bEm7eQVv/nzWD1IpWreslO6XiJWRbhSHv4aDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222210; c=relaxed/simple;
-	bh=pD0QLljMc46H0SR2z8jQU6KM/QCszO8rJWn0blDmqio=;
+	s=arc-20240116; t=1789222215; c=relaxed/simple;
+	bh=cCi/0ZDItB2BkA2W/HDNlsNydgXThMoRdLfnJzSFzgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UOcLrYO+p9FxvfAkcn7P+/tLw/Gt94FUYX4S6Uall4S5F7SWvuRbuYrDhVJYMfspjw71B7TrGfAYGdC3jnRdpXdznre8pv3MSJkfTQgd2CArO3wAHIKXp71pwJUz9eN8D9YUKImulm+kYohw7R4Y41dvjT8YZrl4L+kWxmF+WA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ag/Ajrt4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y+H71Yr9Tkvp/KmnI2Yyza/SHZX+Fx5Kz1uDcj45P48s3zfyUSlS1GKldE5D0PM2uyq4A2udQ4O16855Qh6Wbtv8mKGika4Zif7Py6WwRgM+fPQkReoHSzBDH57ixDwGvOltK6BSz/JkEITQp2nHGFRCvRt3r7SScbDQAjr85tE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsdfQeSA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ag/Ajrt4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4FBA1F000FF;
-	Sat, 12 Sep 2026 14:10:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsdfQeSA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5193D1F00893;
+	Sat, 12 Sep 2026 14:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222209;
-	bh=8/B8OsJd7xboVcWOJVvqDpOu0Nsc2Z6ZZc1nATHpbwQ=;
+	s=korg; t=1789222214;
+	bh=D6W0GnvLyGK2iomfk42pg0WCknl0Kv9dTw5ct2BtY48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ag/Ajrt4oxdM/KNR5+afuMH6vNl7JJe9/0MKQKI/IobUH+iZKMYOX5bwEIovhEQSH
-	 kdoPbWS46x6eGqPoNcLmk1OtnBcwuyEI9ERG7+dClUZHNLI73NoiC4TQ0scSOBNw6e
-	 COIYqZ4bnCgeycZ2FcbTkus+7GCyNprZU6CXi79k=
+	b=NsdfQeSAKdvX7vW3GiWFS9d0c7AX2VH67VaAJPitjCRws+TnR/UwP3TAaEJ8YPE2p
+	 k0w7t3FO9xVzoly14lFKI93T2RheKg7vMZiUrQ6QKoJnTMScIfrizsn29rF/sN0VRv
+	 O39NA5cfnu7sR3RffbDLzpCfykyFPYW39+mBkepU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 0509/1424] drm/panel-edp: fix i2c adapter leak on probe failure
-Date: Sat, 12 Sep 2026 08:49:01 +0200
-Message-ID: <20260912065618.687404949@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Deborah Brouwer <deborah.brouwer@collabora.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.6 0510/1424] drm: fix race between partial drm_dev_register() failure and ioctl
+Date: Sat, 12 Sep 2026 08:49:02 +0200
+Message-ID: <20260912065618.710373244@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,82 +53,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Danilo Krummrich <dakr@kernel.org>
 
-commit e2a9e291275a74e309a21cbb1def6296a72d6aed upstream.
+commit eb197f7d60f00d0f5b1b3505dfc86a7e36045a3e upstream.
 
-Make sure to drop the i2c adapter reference on probe failure (e.g.
-probe deferral) and on driver unbind also if a devicetree redundantly
-uses the 'ddc-i2c-bus' property to point to the aux ddc bus.
+If drm_dev_register() fails after registering a minor (e.g. render minor
+registered, primary minor fails), userspace could have opened the first
+minor and entered a drm_dev_enter() critical section. Since the
+unplugged flag was never set, the ioctl proceeds while the error path
+tears down device resources.
 
-Fixes: cc5a3fc041f0 ("drm/panel: panel-simple: Stash DP AUX bus; allow using it for DDC")
-Cc: stable@vger.kernel.org	# 5.15
-Reported-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/CAD=FV=VZPhzHU+Pet2m3L+Pqc7mOPfZC-f5p0OuNL79wNZPxRg@mail.gmail.com
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260717143119.1815106-2-johan@kernel.org
+Fix this by introducing drm_dev_synchronize_unplug(), which sets the
+unplugged flag and waits for the SRCU barrier, ensuring all in-flight
+drm_dev_enter() critical sections complete before cleanup proceeds; call
+it on the error path of drm_dev_register().
+
+Fixes: bee330f3d672 ("drm: Use srcu to protect drm_device.unplugged")
+Cc: stable@vger.kernel.org
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260620190648.2E9F61F000E9@smtp.kernel.org/
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Tested-by: Deborah Brouwer <deborah.brouwer@collabora.com>
+Link: https://patch.msgid.link/20260628145406.2107056-17-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panel/panel-edp.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/drm_drv.c |   34 +++++++++++++++++++++++++---------
+ 1 file changed, 25 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -830,6 +830,13 @@ exit:
- 	return ret;
+--- a/drivers/gpu/drm/drm_drv.c
++++ b/drivers/gpu/drm/drm_drv.c
+@@ -470,6 +470,22 @@ void drm_dev_exit(int idx)
  }
+ EXPORT_SYMBOL(drm_dev_exit);
  
-+static void panel_edp_put_adapter(void *_adap)
++/*
++ * Mark the device as unplugged and wait for any in-flight drm_dev_enter()
++ * critical sections to complete.
++ */
++static void drm_dev_synchronize_unplug(struct drm_device *dev)
 +{
-+	struct i2c_adapter *adap = _adap;
-+
-+	put_device(&adap->dev);
++	/*
++	 * After synchronizing any critical read section is guaranteed to see
++	 * the new value of ->unplugged, and any critical section which might
++	 * still have seen the old value of ->unplugged is guaranteed to have
++	 * finished.
++	 */
++	dev->unplugged = true;
++	synchronize_srcu(&drm_unplug_srcu);
 +}
 +
- static int panel_edp_probe(struct device *dev, const struct panel_desc *desc,
- 			   struct drm_dp_aux *aux)
+ /**
+  * drm_dev_unplug - unplug a DRM device
+  * @dev: DRM device
+@@ -482,15 +498,7 @@ EXPORT_SYMBOL(drm_dev_exit);
+  */
+ void drm_dev_unplug(struct drm_device *dev)
  {
-@@ -877,6 +884,11 @@ static int panel_edp_probe(struct device
+-	/*
+-	 * After synchronizing any critical read section is guaranteed to see
+-	 * the new value of ->unplugged, and any critical section which might
+-	 * still have seen the old value of ->unplugged is guaranteed to have
+-	 * finished.
+-	 */
+-	dev->unplugged = true;
+-	synchronize_srcu(&drm_unplug_srcu);
+-
++	drm_dev_synchronize_unplug(dev);
+ 	drm_dev_unregister(dev);
  
- 		if (!panel->ddc)
- 			return -EPROBE_DEFER;
+ 	/* Clear all CPU mappings pointing to this device */
+@@ -931,6 +939,7 @@ int drm_dev_register(struct drm_device *
+ 		goto err_minors;
+ 
+ 	dev->registered = true;
++	dev->unplugged = false;
+ 
+ 	if (driver->load) {
+ 		ret = driver->load(dev, flags);
+@@ -956,6 +965,13 @@ err_unload:
+ 	if (dev->driver->unload)
+ 		dev->driver->unload(dev);
+ err_minors:
++	/*
++	 * If a minor was registered before the failure, userspace could have
++	 * opened it and entered a drm_dev_enter() critical section. Ensure all
++	 * such sections complete before we clean up.
++	 */
++	drm_dev_synchronize_unplug(dev);
 +
-+		err = devm_add_action_or_reset(dev, panel_edp_put_adapter,
-+					       panel->ddc);
-+		if (err)
-+			return err;
- 	} else if (aux) {
- 		panel->ddc = &aux->ddc;
- 	}
-@@ -890,7 +902,7 @@ static int panel_edp_probe(struct device
- 
- 	err = drm_panel_of_backlight(&panel->base);
- 	if (err)
--		goto err_finished_ddc_init;
-+		return err;
- 
- 	/*
- 	 * We use runtime PM for prepare / unprepare since those power the panel
-@@ -931,9 +943,6 @@ static int panel_edp_probe(struct device
- err_finished_pm_runtime:
- 	pm_runtime_dont_use_autosuspend(dev);
- 	pm_runtime_disable(dev);
--err_finished_ddc_init:
--	if (panel->ddc && (!panel->aux || panel->ddc != &panel->aux->ddc))
--		put_device(&panel->ddc->dev);
- 
- 	return err;
- }
-@@ -948,8 +957,6 @@ static void panel_edp_remove(struct devi
- 
- 	pm_runtime_dont_use_autosuspend(dev);
- 	pm_runtime_disable(dev);
--	if (panel->ddc && (!panel->aux || panel->ddc != &panel->aux->ddc))
--		put_device(&panel->ddc->dev);
- 
- 	kfree(panel->edid);
- 	panel->edid = NULL;
+ 	remove_compat_control_link(dev);
+ 	drm_minor_unregister(dev, DRM_MINOR_ACCEL);
+ 	drm_minor_unregister(dev, DRM_MINOR_PRIMARY);
 
 
