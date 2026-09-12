@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8DE2D739C;
-	Sat, 12 Sep 2026 13:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13AFA37A498;
+	Sat, 12 Sep 2026 13:16:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218968; cv=none; b=Kep21WLc2r7v6T50A8GIwYngq+MDdUoe75B7TJScval3CJKPowQxcCHyhKCVzYY23yDuxV5afmfaSA+CIaqte107l5qcaO8mYUTV7JJXx0QM/3g15+iMsdL/hA2DzEVMTH8lgs2zqdvZGf8IJ2B32vXLMlYNEllKd5QCCJ6+NKk=
+	t=1789218973; cv=none; b=tO25pxJ+fa625Ejq6O+Z0k9OT5PPXdSNlgMQGURxuHc2psLKvurfZS9Wiy1H2LyQPP6E+p02Cb0WHVPyt11FoYW3hSwmCO/TcCaWiHiqnVrRyjFr9zsiMpuqNyWMYs6Pr1m8zxuchiNeED5Bo4zdgen998K2nIPV7deigQY28OI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218968; c=relaxed/simple;
-	bh=BW43CFFBW31NCESvpYcxGRLkXV954U1CBKpG4dcxWCM=;
+	s=arc-20240116; t=1789218973; c=relaxed/simple;
+	bh=RVzEyt+RvYPKnS8pQF8e9YE1UXAenulT8MnnNDHB7Vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RYrUnMLPOyKntJuafE44Ua4R/+0PSB6UokoV40DQF+AiI/On+sSASOzk0VbyaIHVM9d5mIoCAijSPz48OdJYgVj8dGNI1VezkPI9EfD71VxffNr3axfkT558U2j7FE7hfGZr7P1ae+GUXJ3R6yf8Rwsv36KbYu8lpQlxKjBhrnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dhnSnNiH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YyUlNnQNHYdrd6I7y6S0+1tbY5qZ1jQdgYQB4a2oL43QdKax4qRBopuPwVfzb0hEOM7hFXxi6bE/P91ex++7mRyWhfsU4uzGkcngKvLK7fXaOS73pygVxUqGGWbHrauPQR1osOsCDr1/XcjyK2XXib59EcjH10fhXfpYhoJpcr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBRKrAMu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dhnSnNiH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF541F000FF;
-	Sat, 12 Sep 2026 13:16:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBRKrAMu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC5D1F000FF;
+	Sat, 12 Sep 2026 13:16:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218967;
-	bh=sORdDZtRubJTxZJR6Rj/44kHyoqV6SEN+CSlRc8zkkM=;
+	s=korg; t=1789218972;
+	bh=wPe3c04dblbJLGR/ew0vInY45NLAFyd4sax3aNUJVkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dhnSnNiHGRukN/1R/uG0RFSJQxkukhc00j3/gHNtE/r/MgWzqPXNdaZ7pEN7Ul8eG
-	 8+DSpLLwJ+CX9I2KX6vVhwAglZWIJhLFTi6U8HWLwa5VGxeE70fLet/jD8oBFVXCDs
-	 dKwz/AJB+j600lm0lok4Lo6E/EdkxTon5mQA8M1s=
+	b=NBRKrAMuzgyB32arj3z1igENgBXrlsLkm2LJcKchUb/ml2er+kBFEdCDLBx5IpSQD
+	 awZO+ObMO+adKgFoBzxDXN/jMKHB+6J+kzGzK/HuVBB0wqzgchTZvBQcsrgW89iaoZ
+	 p95L7nFXMiYGdIqTgenRY91MiHElVKmdX1wK15eY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Vega <vega@nebusec.ai>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1201/1376] vxlan: vnifilter: enforce exact length of GROUP/GROUP6 attributes
-Date: Sat, 12 Sep 2026 09:00:27 +0200
-Message-ID: <20260912065634.314764204@linuxfoundation.org>
+Subject: [PATCH 6.12 1248/1376] net/sched: add get_fill_size callbacks for actions missing them
+Date: Sat, 12 Sep 2026 09:01:14 +0200
+Message-ID: <20260912065635.357887778@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,50 +54,455 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 984f831dda31b3a18f47454cf64989f65402879e ]
+[ Upstream commit 8e2efb3f45a5c6f7c8f68685c1c4709040aa2fa0 ]
 
-The VXLAN VNI filter entry policy declares the GROUP/GROUP6 address
-attributes as NLA_BINARY with only a maximum length, so validate_nla()
-accepts a payload shorter than the address. The GROUP consumer reads it
-with nla_get_in_addr(), an unconditional 4-byte load, so a short
-attribute over-reads up to 3 bytes of uninitialised slab data, which are
-stored into remote_ip and echoed back via RTM_GETTUNNEL, disclosing
-kernel memory.
+Several tc actions - act_police, act_bpf, act_pedit, act_ife, act_sample,
+act_ct, act_ctinfo and act_tunnel_key among them - provide no
+get_fill_size() callback, so tcf_action_fill_size() falls back to
+tcf_action_shared_attrs_size() which does not account for the
+action-specific netlink attributes emitted inside TCA_ACT_OPTIONS by
+their dump functions.
 
-Switch both entries to NLA_POLICY_EXACT_LEN() so the validator rejects
-any GROUP/GROUP6 that is not exactly 4 / 16 bytes; a valid address is
-always sent at full width.
+When an RTM_NEWACTION request with NLM_F_ECHO (or an RTNLGRP_TC
+listener) creates several actions, tcf_add_notify_msg() allocates the
+echo skb from this underestimated size. When this happens, the act_api
+code fails to add all of the fields to the netlink message and, thus,
+fails to send it. Issue is that, when that happens, this failure doesn't
+stop the action instances from being added. So any user watching these
+events will be under the false impression that no actions were created at
+all.
 
-Fixes: f9c4bb0b245c ("vxlan: vni filtering support on collect metadata device")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260812215341.763123-1-xmei5@asu.edu
+For example, act_pedit overruns with 32 actions of four munge keys each,
+act_police with 32 policers once the optional rate/peakrate/result/avrate
+attributes are present.
+
+To fix this, add the missing get_fill_size callbacks returning the
+worst-case size of each action's dump attributes, following the pattern
+used by act_gact/act_skbedit/act_vlan. Also widen the TCA_GACT_TM
+accounting in tcf_action_shared_attrs_size() to nla_total_size_64bit(),
+since actions dump their tcf_t with nla_put_64bit(), which may be
+preceded by an NLA_PAD attribute.
+
+Note: We only provided fixes for the actions we reproduced this bug with
+as of today. We can send a separate hardening patch for the remaining
+actions to net-next later. The other pre-existing issues, pointed out by
+Clashiko [1], will be fixed in upcoming patches.
+
+[1] https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260810164357.1653956-1-victor%40mojatatu.com
+
+Fixes: 4e76e75d6aba ("net sched actions: calculate add/delete event message size")
+Reported-by: Vega <vega@nebusec.ai>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260816201327.2435335-1-victor@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_vnifilter.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/sched/act_api.c        |  5 ++-
+ net/sched/act_bpf.c        | 26 +++++++++++++
+ net/sched/act_ct.c         | 46 ++++++++++++++++++++++
+ net/sched/act_ctinfo.c     | 11 ++++++
+ net/sched/act_ife.c        | 23 +++++++++++
+ net/sched/act_pedit.c      | 24 ++++++++++++
+ net/sched/act_police.c     | 12 ++++++
+ net/sched/act_sample.c     |  9 +++++
+ net/sched/act_tunnel_key.c | 80 ++++++++++++++++++++++++++++++++++++++
+ 9 files changed, 235 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/vxlan/vxlan_vnifilter.c b/drivers/net/vxlan/vxlan_vnifilter.c
-index 272fa31ef0745..b5854aceddf9d 100644
---- a/drivers/net/vxlan/vxlan_vnifilter.c
-+++ b/drivers/net/vxlan/vxlan_vnifilter.c
-@@ -467,10 +467,8 @@ static int vxlan_vnifilter_dump(struct sk_buff *skb, struct netlink_callback *cb
- static const struct nla_policy vni_filter_entry_policy[VXLAN_VNIFILTER_ENTRY_MAX + 1] = {
- 	[VXLAN_VNIFILTER_ENTRY_START] = { .type = NLA_U32 },
- 	[VXLAN_VNIFILTER_ENTRY_END] = { .type = NLA_U32 },
--	[VXLAN_VNIFILTER_ENTRY_GROUP]	= { .type = NLA_BINARY,
--					    .len = sizeof_field(struct iphdr, daddr) },
--	[VXLAN_VNIFILTER_ENTRY_GROUP6]	= { .type = NLA_BINARY,
--					    .len = sizeof(struct in6_addr) },
-+	[VXLAN_VNIFILTER_ENTRY_GROUP]	= NLA_POLICY_EXACT_LEN(sizeof_field(struct iphdr, daddr)),
-+	[VXLAN_VNIFILTER_ENTRY_GROUP6]	= NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),
- };
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index 6774edbdd5280..a5330dfef4123 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -452,7 +452,10 @@ static size_t tcf_action_shared_attrs_size(const struct tc_action *act)
+ 		/* TCA_STATS_QUEUE */
+ 		+ nla_total_size_64bit(sizeof(struct gnet_stats_queue))
+ 		+ nla_total_size(0) /* TCA_ACT_OPTIONS nested */
+-		+ nla_total_size(sizeof(struct tcf_t)); /* TCA_GACT_TM */
++		/* TCA_GACT_TM; actions dump their tcf_t with nla_put_64bit(),
++		 * which may emit an extra NLA_PAD attribute.
++		 */
++		+ nla_total_size_64bit(sizeof(struct tcf_t));
+ }
  
- static const struct nla_policy vni_filter_policy[VXLAN_VNIFILTER_MAX + 1] = {
+ static size_t tcf_action_full_attrs_size(size_t sz)
+diff --git a/net/sched/act_bpf.c b/net/sched/act_bpf.c
+index 284800b7d3c55..e99b9269ea1a9 100644
+--- a/net/sched/act_bpf.c
++++ b/net/sched/act_bpf.c
+@@ -389,6 +389,31 @@ static void tcf_bpf_cleanup(struct tc_action *act)
+ 	tcf_bpf_cfg_cleanup(&tmp);
+ }
+ 
++static size_t tcf_bpf_get_fill_size(const struct tc_action *act)
++{
++	struct tcf_bpf *prog = to_bpf(act);
++	size_t size = nla_total_size(sizeof(struct tc_act_bpf));
++
++	/* bpf_ops and bpf_num_ops are published as separate stores under
++	 * tcf_lock, so take it here as tcf_bpf_dump() does.
++	 */
++	spin_lock_bh(&prog->tcf_lock);
++	if (tcf_bpf_is_ebpf(prog)) {
++		/* TCA_ACT_BPF_NAME */
++		size += nla_total_size(ACT_BPF_NAME_LEN + 1);
++		size += nla_total_size(sizeof(u32)); /* TCA_ACT_BPF_ID */
++		size += nla_total_size(BPF_TAG_SIZE); /* TCA_ACT_BPF_TAG */
++	} else {
++		size += nla_total_size(sizeof(u16)); /* TCA_ACT_BPF_OPS_LEN */
++		/* TCA_ACT_BPF_OPS */
++		size += nla_total_size(prog->bpf_num_ops *
++				       sizeof(struct sock_filter));
++	}
++	spin_unlock_bh(&prog->tcf_lock);
++
++	return size;
++}
++
+ static struct tc_action_ops act_bpf_ops __read_mostly = {
+ 	.kind		=	"bpf",
+ 	.id		=	TCA_ID_BPF,
+@@ -397,6 +422,7 @@ static struct tc_action_ops act_bpf_ops __read_mostly = {
+ 	.dump		=	tcf_bpf_dump,
+ 	.cleanup	=	tcf_bpf_cleanup,
+ 	.init		=	tcf_bpf_init,
++	.get_fill_size	=	tcf_bpf_get_fill_size,
+ 	.size		=	sizeof(struct tcf_bpf),
+ };
+ MODULE_ALIAS_NET_ACT("bpf");
+diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
+index ba6d257abdc07..f735cf9bfd403 100644
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -1655,6 +1655,51 @@ static int tcf_ct_offload_act_setup(struct tc_action *act, void *entry_data,
+ 	return 0;
+ }
+ 
++static size_t tcf_ct_get_fill_size(const struct tc_action *act)
++{
++	const struct tcf_ct_params *p;
++	size_t size;
++
++	size = nla_total_size(sizeof(struct tc_ct)) /* TCA_CT_PARMS */
++		+ nla_total_size(sizeof(u16)); /* TCA_CT_ACTION */
++
++	rcu_read_lock();
++	p = rcu_dereference(to_ct(act)->params);
++
++	if (p->ct_action & TCA_CT_ACT_CLEAR)
++		goto out;
++
++	/* TCA_CT_MARK, TCA_CT_MARK_MASK */
++	if (IS_ENABLED(CONFIG_NF_CONNTRACK_MARK))
++		size += nla_total_size(sizeof(p->mark))
++			+ nla_total_size(sizeof(p->mark_mask));
++
++	/* TCA_CT_LABELS, TCA_CT_LABELS_MASK */
++	if (IS_ENABLED(CONFIG_NF_CONNTRACK_LABELS))
++		size += nla_total_size(sizeof(p->labels))
++			+ nla_total_size(sizeof(p->labels_mask));
++
++	if (IS_ENABLED(CONFIG_NF_CONNTRACK_ZONES))
++		size += nla_total_size(sizeof(p->zone)); /* TCA_CT_ZONE */
++
++	if (p->ct_action & TCA_CT_ACT_NAT)
++		/* TCA_CT_NAT_IPV6_{MIN,MAX}, the larger of the two address
++		 * variants, plus TCA_CT_NAT_PORT_{MIN,MAX}.
++		 */
++		size += 2 * nla_total_size(sizeof(struct in6_addr))
++			+ 2 * nla_total_size(sizeof(__be16));
++
++	/* TCA_CT_HELPER_{NAME,FAMILY,PROTO} */
++	if (p->helper)
++		size += nla_total_size(NF_CT_HELPER_NAME_LEN)
++			+ nla_total_size(sizeof(u8))
++			+ nla_total_size(sizeof(u8));
++out:
++	rcu_read_unlock();
++
++	return size;
++}
++
+ static struct tc_action_ops act_ct_ops = {
+ 	.kind		=	"ct",
+ 	.id		=	TCA_ID_CT,
+@@ -1664,6 +1709,7 @@ static struct tc_action_ops act_ct_ops = {
+ 	.init		=	tcf_ct_init,
+ 	.cleanup	=	tcf_ct_cleanup,
+ 	.stats_update	=	tcf_stats_update,
++	.get_fill_size	=	tcf_ct_get_fill_size,
+ 	.offload_act_setup =	tcf_ct_offload_act_setup,
+ 	.size		=	sizeof(struct tcf_ct),
+ };
+diff --git a/net/sched/act_ctinfo.c b/net/sched/act_ctinfo.c
+index ae571bfe84c7d..3a32a8d8a0f83 100644
+--- a/net/sched/act_ctinfo.c
++++ b/net/sched/act_ctinfo.c
+@@ -356,6 +356,16 @@ static void tcf_ctinfo_cleanup(struct tc_action *a)
+ 		kfree_rcu(cp, rcu);
+ }
+ 
++static size_t tcf_ctinfo_get_fill_size(const struct tc_action *act)
++{
++	return nla_total_size(sizeof(struct tc_ctinfo)) /* TCA_CTINFO_ACT */
++		+ nla_total_size(sizeof(u16)) /* TCA_CTINFO_ZONE */
++		/* TCA_CTINFO_PARMS_{DSCP_MASK,DSCP_STATEMASK,CPMARK_MASK} */
++		+ 3 * nla_total_size(sizeof(u32))
++		/* TCA_CTINFO_STATS_{DSCP_SET,DSCP_ERROR,CPMARK_SET} */
++		+ 3 * nla_total_size_64bit(sizeof(u64));
++}
++
+ static struct tc_action_ops act_ctinfo_ops = {
+ 	.kind	= "ctinfo",
+ 	.id	= TCA_ID_CTINFO,
+@@ -364,6 +374,7 @@ static struct tc_action_ops act_ctinfo_ops = {
+ 	.dump	= tcf_ctinfo_dump,
+ 	.init	= tcf_ctinfo_init,
+ 	.cleanup= tcf_ctinfo_cleanup,
++	.get_fill_size = tcf_ctinfo_get_fill_size,
+ 	.size	= sizeof(struct tcf_ctinfo),
+ };
+ MODULE_ALIAS_NET_ACT("ctinfo");
+diff --git a/net/sched/act_ife.c b/net/sched/act_ife.c
+index 4ad01d4e820db..a90d7959fc432 100644
+--- a/net/sched/act_ife.c
++++ b/net/sched/act_ife.c
+@@ -878,6 +878,28 @@ TC_INDIRECT_SCOPE int tcf_ife_act(struct sk_buff *skb,
+ 	return tcf_ife_decode(skb, a, res);
+ }
+ 
++static size_t tcf_ife_get_fill_size(const struct tc_action *act)
++{
++	struct tcf_ife_info *ife = to_ife(act);
++	const struct tcf_ife_params *p;
++	struct tcf_meta_info *e;
++	size_t size = nla_total_size(sizeof(struct tc_ife)) /* TCA_IFE_PARMS */
++		+ nla_total_size(ETH_ALEN) /* TCA_IFE_DMAC */
++		+ nla_total_size(ETH_ALEN) /* TCA_IFE_SMAC */
++		+ nla_total_size(2) /* TCA_IFE_TYPE */
++		+ nla_total_size(0); /* TCA_IFE_METALST */
++
++	rcu_read_lock();
++	p = rcu_dereference(ife->params);
++	if (p) {
++		list_for_each_entry_rcu(e, &p->metalist, metalist)
++			size += nla_total_size(sizeof(u32));
++	}
++	rcu_read_unlock();
++
++	return size;
++}
++
+ static struct tc_action_ops act_ife_ops = {
+ 	.kind = "ife",
+ 	.id = TCA_ID_IFE,
+@@ -886,6 +908,7 @@ static struct tc_action_ops act_ife_ops = {
+ 	.dump = tcf_ife_dump,
+ 	.cleanup = tcf_ife_cleanup,
+ 	.init = tcf_ife_init,
++	.get_fill_size = tcf_ife_get_fill_size,
+ 	.size =	sizeof(struct tcf_ife_info),
+ };
+ MODULE_ALIAS_NET_ACT("ife");
+diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
+index 5aa91fb145a27..7ce50e303575e 100644
+--- a/net/sched/act_pedit.c
++++ b/net/sched/act_pedit.c
+@@ -622,6 +622,29 @@ static int tcf_pedit_offload_act_setup(struct tc_action *act, void *entry_data,
+ 	return 0;
+ }
+ 
++static size_t tcf_pedit_get_fill_size(const struct tc_action *act)
++{
++	const struct tcf_pedit_parms *parms;
++	size_t size;
++
++	rcu_read_lock();
++	parms = rcu_dereference(to_pedit(act)->parms);
++	size = nla_total_size(struct_size_t(struct tc_pedit, keys,
++					    parms->tcfp_nkeys));
++	if (parms->tcfp_keys_ex) {
++		/* TCA_PEDIT_KEYS_EX, holding one TCA_PEDIT_KEY_EX nest with a
++		 * HTYPE and a CMD attribute per key.
++		 */
++		size += nla_total_size(0)
++			+ parms->tcfp_nkeys * (nla_total_size(0)
++					       + nla_total_size(sizeof(u16))
++					       + nla_total_size(sizeof(u16)));
++	}
++	rcu_read_unlock();
++
++	return size;
++}
++
+ static struct tc_action_ops act_pedit_ops = {
+ 	.kind		=	"pedit",
+ 	.id		=	TCA_ID_PEDIT,
+@@ -631,6 +654,7 @@ static struct tc_action_ops act_pedit_ops = {
+ 	.dump		=	tcf_pedit_dump,
+ 	.cleanup	=	tcf_pedit_cleanup,
+ 	.init		=	tcf_pedit_init,
++	.get_fill_size	=	tcf_pedit_get_fill_size,
+ 	.offload_act_setup =	tcf_pedit_offload_act_setup,
+ 	.size		=	sizeof(struct tcf_pedit),
+ };
+diff --git a/net/sched/act_police.c b/net/sched/act_police.c
+index 81d5f61be17eb..1ad8a79486902 100644
+--- a/net/sched/act_police.c
++++ b/net/sched/act_police.c
+@@ -492,6 +492,17 @@ static int tcf_police_offload_act_setup(struct tc_action *act, void *entry_data,
+ 	return 0;
+ }
+ 
++static size_t tcf_police_get_fill_size(const struct tc_action *act)
++{
++	return nla_total_size(sizeof(struct tc_police)) /* TCA_POLICE_TBF */
++		+ nla_total_size_64bit(sizeof(u64)) /* TCA_POLICE_RATE64 */
++		+ nla_total_size_64bit(sizeof(u64)) /* TCA_POLICE_PEAKRATE64 */
++		+ nla_total_size_64bit(sizeof(u64)) /* TCA_POLICE_PKTRATE64 */
++		+ nla_total_size_64bit(sizeof(u64)) /* TCA_POLICE_PKTBURST64 */
++		+ nla_total_size(sizeof(u32)) /* TCA_POLICE_RESULT */
++		+ nla_total_size(sizeof(u32)); /* TCA_POLICE_AVRATE */
++}
++
+ MODULE_AUTHOR("Alexey Kuznetsov");
+ MODULE_DESCRIPTION("Policing actions");
+ MODULE_LICENSE("GPL");
+@@ -505,6 +516,7 @@ static struct tc_action_ops act_police_ops = {
+ 	.dump		=	tcf_police_dump,
+ 	.init		=	tcf_police_init,
+ 	.cleanup	=	tcf_police_cleanup,
++	.get_fill_size	=	tcf_police_get_fill_size,
+ 	.offload_act_setup =	tcf_police_offload_act_setup,
+ 	.size		=	sizeof(struct tcf_police),
+ };
+diff --git a/net/sched/act_sample.c b/net/sched/act_sample.c
+index 2ceb4d141b713..44319a159b55d 100644
+--- a/net/sched/act_sample.c
++++ b/net/sched/act_sample.c
+@@ -315,6 +315,14 @@ static int tcf_sample_offload_act_setup(struct tc_action *act, void *entry_data,
+ 	return 0;
+ }
+ 
++static size_t tcf_sample_get_fill_size(const struct tc_action *act)
++{
++	return nla_total_size(sizeof(struct tc_sample)) /* TCA_SAMPLE_PARMS */
++		+ nla_total_size(sizeof(u32)) /* TCA_SAMPLE_RATE */
++		+ nla_total_size(sizeof(u32)) /* TCA_SAMPLE_TRUNC_SIZE */
++		+ nla_total_size(sizeof(u32)); /* TCA_SAMPLE_PSAMPLE_GROUP */
++}
++
+ static struct tc_action_ops act_sample_ops = {
+ 	.kind	  = "sample",
+ 	.id	  = TCA_ID_SAMPLE,
+@@ -324,6 +332,7 @@ static struct tc_action_ops act_sample_ops = {
+ 	.dump	  = tcf_sample_dump,
+ 	.init	  = tcf_sample_init,
+ 	.cleanup  = tcf_sample_cleanup,
++	.get_fill_size = tcf_sample_get_fill_size,
+ 	.get_psample_group = tcf_sample_get_group,
+ 	.offload_act_setup    = tcf_sample_offload_act_setup,
+ 	.size	  = sizeof(struct tcf_sample),
+diff --git a/net/sched/act_tunnel_key.c b/net/sched/act_tunnel_key.c
+index 74e9b5ea76a55..a1ecc2665b107 100644
+--- a/net/sched/act_tunnel_key.c
++++ b/net/sched/act_tunnel_key.c
+@@ -837,6 +837,85 @@ static int tcf_tunnel_key_offload_act_setup(struct tc_action *act,
+ 	return 0;
+ }
+ 
++static size_t
++tunnel_key_geneve_opts_fill_size(const struct ip_tunnel_info *info)
++{
++	const u8 *src = ip_tunnel_info_opts(info);
++	int len = info->options_len;
++	size_t size = 0;
++
++	while (len > 0) {
++		const struct geneve_opt *opt = (const struct geneve_opt *)src;
++
++		/* TCA_TUNNEL_KEY_ENC_OPT_GENEVE_{CLASS,TYPE,DATA} */
++		size += nla_total_size(2)
++			+ nla_total_size(1)
++			+ nla_total_size(opt->length * 4);
++
++		len -= sizeof(struct geneve_opt) + opt->length * 4;
++		src += sizeof(struct geneve_opt) + opt->length * 4;
++	}
++
++	return size;
++}
++
++static size_t tunnel_key_opts_fill_size(const struct ip_tunnel_info *info)
++{
++	size_t size;
++
++	if (!info->options_len)
++		return 0;
++
++	/* TCA_TUNNEL_KEY_ENC_OPTS and the per-protocol nest inside it */
++	size = nla_total_size(0) + nla_total_size(0);
++
++	if (test_bit(IP_TUNNEL_GENEVE_OPT_BIT, info->key.tun_flags)) {
++		size += tunnel_key_geneve_opts_fill_size(info);
++	} else if (test_bit(IP_TUNNEL_VXLAN_OPT_BIT, info->key.tun_flags)) {
++		/* TCA_TUNNEL_KEY_ENC_OPT_VXLAN_GBP */
++		size += nla_total_size(sizeof(u32));
++	} else if (test_bit(IP_TUNNEL_ERSPAN_OPT_BIT, info->key.tun_flags)) {
++		/* TCA_TUNNEL_KEY_ENC_OPT_ERSPAN_{VER,INDEX,DIR,HWID} */
++		size += nla_total_size(sizeof(u8))
++			+ nla_total_size(sizeof(__be32))
++			+ nla_total_size(sizeof(u8))
++			+ nla_total_size(sizeof(u8));
++	}
++
++	return size;
++}
++
++static size_t tunnel_key_get_fill_size(const struct tc_action *act)
++{
++	struct tcf_tunnel_key *t = to_tunnel_key(act);
++	const struct tcf_tunnel_key_params *params;
++	/* TCA_TUNNEL_KEY_PARMS */
++	size_t size = nla_total_size(sizeof(struct tc_tunnel_key));
++
++	rcu_read_lock();
++	params = rcu_dereference(t->params);
++	if (params->tcft_action == TCA_TUNNEL_KEY_ACT_SET) {
++		const struct ip_tunnel_info *info =
++			&params->tcft_enc_metadata->u.tun_info;
++
++		/* In dump order: TCA_TUNNEL_KEY_ENC_KEY_ID, the IPv6 address
++		 * pair (larger than the IPv4 one), ..._ENC_DST_PORT,
++		 * ..._NO_CSUM, ..._NO_FRAG, the options and ..._ENC_{TOS,TTL}.
++		 */
++		size += nla_total_size(sizeof(__be32))
++			+ 2 * nla_total_size(sizeof(struct in6_addr))
++			+ nla_total_size(sizeof(__be16))
++			+ nla_total_size(sizeof(u8))
++			+ nla_total_size(0)
++			+ tunnel_key_opts_fill_size(info)
++			+ nla_total_size(sizeof(u8))
++			+ nla_total_size(sizeof(u8));
++	}
++	rcu_read_unlock();
++
++	return size;
++}
++
+ static struct tc_action_ops act_tunnel_key_ops = {
+ 	.kind		=	"tunnel_key",
+ 	.id		=	TCA_ID_TUNNEL_KEY,
+@@ -845,6 +924,7 @@ static struct tc_action_ops act_tunnel_key_ops = {
+ 	.dump		=	tunnel_key_dump,
+ 	.init		=	tunnel_key_init,
+ 	.cleanup	=	tunnel_key_release,
++	.get_fill_size	=	tunnel_key_get_fill_size,
+ 	.offload_act_setup =	tcf_tunnel_key_offload_act_setup,
+ 	.size		=	sizeof(struct tcf_tunnel_key),
+ };
 -- 
 2.53.0
 
