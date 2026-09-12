@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6414486424;
-	Sat, 12 Sep 2026 18:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA4F3AF647;
+	Sat, 12 Sep 2026 18:22:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237366; cv=none; b=VzZro1KF5tFXnZiL0YBC5+ziEuSoj+0IzUWdIISLSArzs3++Vx6E0zeOWykjdOKhECkhwFNXDuRoXzSOrmZ/X1X79PRzQQw7AUmMp67yUVNVcuyvcSyNFNx5RtjW6S0h+04T58d8JYUIc6x+BrI7V/m1/ls5NXzol+39sAdQlWQ=
+	t=1789237368; cv=none; b=pw2GwWZ88DetXVweDRZkbRmkSn+krekCuTnvtTcEcv5S6YI360R4GsMlHMedKxMV09GIRpK8g+/J/cO3UZrIxpEqJcZaQuIQOHKMHLYoYt5E1ZTPMkLB/rX9sf/48NikZqrHAO3mlmatgPD0UeiW80ImnGcY3Ny5ThqalwCagJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237366; c=relaxed/simple;
-	bh=wosPMcwctvaOWJfImqDfoi3KeV9wwyNU0mEBzkGOlUY=;
+	s=arc-20240116; t=1789237368; c=relaxed/simple;
+	bh=7ZNEesjKPPSzIfA3n/NFzAEjaavXlLh4JMQ95jPghEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tntkQTFyacWzgDuMbNhvvWfBWGgN3iiWYo5GYE4U2uAmuuc5N0YXBS8G0pyENEtKlnSv6TpmFYAtA/aVux+daBqwGGERRsAn2STbXBv+R1YguWef3hUaIZj9YvyFw+T4ffec6rQ9T3m5AYDaNFbLkODkKZ0L4aJypcFGVa4Spd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHmfuDvt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Na/E5c/+RA/waOz01wDLTpXszlXXZz7Y1xX46F1YwQ+qEArVEF6AAejA7wXf10T6+UCdCeKW9/i9LVRA3FnLHDHuNlhTRPV87eRooPg/SUN8XvUAnHzdzdBELLI9kG9VP4qIvNiMr6tEO/xk9hyJHdWNtHFOYGZ3SQGDe7hynno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHyb5JGS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHmfuDvt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5112A1F00899;
-	Sat, 12 Sep 2026 18:22:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHyb5JGS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93751F0089A;
+	Sat, 12 Sep 2026 18:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237361;
-	bh=Xsz+rqkfZdpwTCXl2DUHeO0vROLrO/b+uuHo4eRecmk=;
+	s=korg; t=1789237366;
+	bh=oQmqag/fgQfyZH/l9oQGDlsB1CVy1lEHAaecQYxfR/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GHmfuDvt06hhoBDuaWNeKixmiZ5f65p070IHvgvSUDYhG92x3Kvh01OL8pNs0ddIY
-	 iTh1lSqyHnBcQuaPvCeAjiR7XAKtCvXmWEGdj1rtUgrVJGSDTiqL/cZdmD7I0R68tx
-	 rKbND2D36XcV3aYjiRv1233qDjI/JKNsznI7C8E8=
+	b=HHyb5JGS3USON+t+qH1alt/JchxnISiM9t/0Xy9ic8pZH/jqbypVX3p8//1ltWOLg
+	 +aZ8cumrAR9qj7+45goM8BdosyV2YBx9gb3JpNUOoDWz+lE/gIkvd0zHLTA9Y9WVS1
+	 RFZamWI6LleaQ+cbKSoR6xtvPEjXaDdjVtXUoLN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomasz Figa <tfiga@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: [PATCH 5.15 216/935] platform/chrome: sensorhub: Fix dropped timestamp events and log spam
-Date: Sat, 12 Sep 2026 08:54:06 +0200
-Message-ID: <20260912065531.778690904@linuxfoundation.org>
+	Muhammad Bilal <meatuni001@gmail.com>
+Subject: [PATCH 5.15 243/935] staging: rtl8723bs: fix OOB read / stack overflow in rtw_get_wps_attr()
+Date: Sat, 12 Sep 2026 08:54:33 +0200
+Message-ID: <20260912065532.398345874@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,83 +49,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 9a3f43b30373c61477d0d3ab52946c05f9492bf9 upstream.
+commit 99aa998dec83ba180822f70e6d48a514fc81c20d upstream.
 
-Commit 833740a2333c ("platform/chrome: sensorhub: Bound the EC-reported
-sensor number") evaluated the `sensor_num` against the bounds limit even
-for timestamp events.  A timestamp event typically has a `sensor_num` of
-0xff [1], causing the driver to flag it as invalid and skip to the next
-event.
+rtw_get_wps_attr() walks WPS attributes inside a WPS IE taken from
+a wireless management frame. For each candidate attribute it only
+checks that the fixed 4-byte attribute header (2-byte ID + 2-byte
+length) fits inside the IE:
 
-As a result, we'd see a flooding of "Invalid sensor number 255 from EC"
-warning logs and these timestamp events were being dropped.
+	if (attr_ptr + 4 > wps_ie + wps_ielen)
+		break;
+	u16 attr_id = get_unaligned_be16(attr_ptr);
+	u16 attr_data_len = get_unaligned_be16(attr_ptr + 2);
+	u16 attr_len = attr_data_len + 4;
 
-Move the bounds-check into cros_ec_sensor_ring_process_event() and
-evaluate it only after standalone timestamp events have already been
-processed and returned early.
+attr_data_len (and therefore attr_len) is read directly from the
+wire and is never checked against the remaining bytes in the IE
+before being used as the size of:
 
-[1] https://crrev.com/219ca6ef82ba266da788b673ee4ad50bd3ea1285/common/motion_sense_fifo.c#427
+	memcpy(buf_attr, attr_ptr, attr_len);
 
-Fixes: 833740a2333c ("platform/chrome: sensorhub: Bound the EC-reported sensor number")
-Reviewed-by: Tomasz Figa <tfiga@chromium.org>
-Link: https://lore.kernel.org/r/20260715024454.4127571-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Since attr_len is fully attacker controlled (0 to 65535+4), this is
+both a heap OOB read of wps_ie, and, more seriously, a stack buffer
+overflow at several call sites where buf_attr is a single-byte
+stack variable, e.g. rtw_get_wps_attr_content()'s callers passing
+WPS_ATTR_SELECTED_REGISTRAR into a stack "u8 sr"/"u8
+selected_registrar" (drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c,
+drivers/staging/rtl8723bs/core/rtw_mlme_ext.c). A crafted WPS IE in a
+beacon or probe response processed during scanning can therefore
+smash the stack of the parsing thread.
+
+rtw_get_wps_attr_content() itself has no independent length check
+and simply trusts the attr_len it gets back from rtw_get_wps_attr(),
+so fixing the bound here also fixes that caller.
+
+The "attr_ptr + 4 > wps_ie + wps_ielen" header check above was added
+by commit 1463ca3ec6601 ("staging: rtl8723bs: fix OOB reads in
+rtw_get_sec_ie(), rtw_get_wapi_ie(), and rtw_get_wps_attr()"), which
+bounded the fixed header but never extended the check to cover the
+variable-length attribute data that follows it. Add that missing
+check before attr_len is used as a memcpy() length or accepted as a
+match.
+
+Fixes: 554c0a3abf216 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://patch.msgid.link/20260728125456.32359-2-meatuni001@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/chrome/cros_ec_sensorhub_ring.c |   27 ++++++++++++-----------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_ieee80211.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/platform/chrome/cros_ec_sensorhub_ring.c
-+++ b/drivers/platform/chrome/cros_ec_sensorhub_ring.c
-@@ -436,6 +436,21 @@ cros_ec_sensor_ring_process_event(struct
- 						  fifo_timestamp,
- 						  *current_timestamp,
- 						  now);
+--- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
++++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
+@@ -762,6 +762,10 @@ u8 *rtw_get_wps_attr(u8 *wps_ie, uint wp
+ 		if (attr_ptr + 4 > wps_ie + wps_ielen)
+ 			break;
+ 
++		/* Reject attributes whose claimed length runs past the IE */
++		if (attr_ptr + attr_len > wps_ie + wps_ielen)
++			break;
 +
-+		/*
-+		 * A standalone timestamp event typically has a sensor_num of
-+		 * 0xff.  Return early here to prevent it from hitting the
-+		 * bounds check below and spamming the logs.
-+		 */
-+		return false;
-+	}
-+
-+	/* Skip event if sensor_num from EC is out of bounds. */
-+	if (in->sensor_num >= sensorhub->sensor_num) {
-+		dev_warn_ratelimited(sensorhub->dev,
-+				     "Invalid sensor number %u from EC\n",
-+				     in->sensor_num);
-+		return false;
- 	}
+ 		if (attr_id == target_attr_id) {
+ 			target_attr_ptr = attr_ptr;
  
- 	if (in->flags & MOTIONSENSE_SENSOR_FLAG_ODR) {
-@@ -463,10 +478,6 @@ cros_ec_sensor_ring_process_event(struct
- 		return true;
- 	}
- 
--	if (in->flags & MOTIONSENSE_SENSOR_FLAG_TIMESTAMP)
--		/* If we just have a timestamp, skip this entry. */
--		return false;
--
- 	/* Regular sample */
- 	out->sensor_id = in->sensor_num;
- 	trace_cros_ec_sensorhub_data(in->sensor_num,
-@@ -851,14 +862,6 @@ static void cros_ec_sensorhub_ring_handl
- 
- 		for (in = sensorhub->resp->fifo_read.data, j = 0;
- 		     j < number_data; j++, in++) {
--			/* Skip event if sensor_num from EC is out of bounds. */
--			if (in->sensor_num >= sensorhub->sensor_num) {
--				dev_warn_ratelimited(sensorhub->dev,
--						     "Invalid sensor number %u from EC\n",
--						     in->sensor_num);
--				continue;
--			}
--
- 			if (cros_ec_sensor_ring_process_event(
- 						sensorhub, fifo_info,
- 						fifo_timestamp,
 
 
