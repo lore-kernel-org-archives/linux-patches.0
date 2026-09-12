@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE401DA62E;
-	Sat, 12 Sep 2026 16:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D004C3C07A;
+	Sat, 12 Sep 2026 16:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232025; cv=none; b=EbA1oamjETo6/tuaCES0QzQmdinBj4Y6v1ureT/Kq/4tckZf9tOgg2cr7ST1STIDHZPsgLt859a+QgyFXsM16BjoJibihAq7JiHoWFpR42i2LxGGpJ/yD43o0M8+/XuthPcWpZ6w1k8yAixLSeXShsoclICSJucwHakHUW+LjW0=
+	t=1789232031; cv=none; b=lK3WBVyaAEsLEth0UTjJYpteHIFmgFVDMZZgN4QUqY0vCTmHJcqHTVw3tGOFXDv+b6zBfOIB8+NwXIrjn2ZtmEACblr3UzCCeU+IWJM7bPbhxSzSmZtkbr8CqzaKEYzGKCnPc1YWr15PgXnk6fjYLnC+z/0u8z2ArCPOaHUJ+LI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232025; c=relaxed/simple;
-	bh=li1T7mneo5w0+Wvc7MKJXVFdNcKfqEXOK1U4DJYSYAw=;
+	s=arc-20240116; t=1789232031; c=relaxed/simple;
+	bh=7yjhA/J2wd7A+NZf7ehnoxyQWhIhJMcFWDECBFH+6Ik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tEcueTxh6gQw4UrJiE3CkvTEvEsyBwYxOY1vmD+d4vMEO7U6gkUkeWewwNNa64uKg1fg+beqCKGHuTyrDWjYEb3R3Kr4BjgifaQ+QMLOQKyrZoy8hTMue9pmKoUR7Aw448JCKIISm7av/hitlA8Hk8vOXJ/o2IOAqPikKKkPpug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJPkwJla; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MM6wHQEjDMDTA5vuK+ncNObLtagGVDRfArk9E+O9VOQzjLOpLwb64c09KMg4liSIMgf9+cRPMZAOAjvS1OU9v0WgqkzIYynmzbGqM2yIuWHyUm+lZuOhVhfNdMYrTCjLALkgk2A7VNSolEertlzfxZsoi5P1vw7OcFEixEvy5/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvVs5Wxk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJPkwJla"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBC31F000FF;
-	Sat, 12 Sep 2026 16:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvVs5Wxk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E2421F000FF;
+	Sat, 12 Sep 2026 16:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232024;
-	bh=z3WcwKBl6aaRVfNtJNRcRmA9pT70oDusa8l6V8KX6lU=;
+	s=korg; t=1789232029;
+	bh=NNxOI/W3a/0TEGPxWLCGvdnbaAJrn1SJ02H/InzG1EI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AJPkwJlaLSLHsHTB47kI9LXAU/VO0FbmVXEs6W4Ii9LKZRtScQwxIyOCiDSocW9lb
-	 /mNVlkhUvADcm6nbWCmgHlZdlI0NYShbLQmPgQxvOplz9Sr/AN3kBy5Sbtwz9AMSXy
-	 fc3rbmm5Hslcz8s1v6eWVZuq6zD4b/BF1h3xjEzg=
+	b=xvVs5WxkDPD/KhNtZm6Vv9aHWgqaPqrP9wxvDdXYeBoYDJAUGXjUO+zpQcVsa7B6N
+	 aOYf24olVQpbP1z0c/UTWtbCgg1L5jGyPNgzlO5gx237FG5kDgXandwAV0qSUcUkb8
+	 pFowp5Kw3mNYiDlgQ42abS7uEUSnRhMSxy96erfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Mikityanska <alice@isovalent.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1119/1191] virtio-net: Ensure that TCP packets dont overflow gso_segs
-Date: Sat, 12 Sep 2026 09:04:07 +0200
-Message-ID: <20260912065613.285652517@linuxfoundation.org>
+Subject: [PATCH 6.1 1120/1191] netfilter: nf_tables: move hardware offload step after building the chain blob
+Date: Sat, 12 Sep 2026 09:04:08 +0200
+Message-ID: <20260912065613.309359320@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,53 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Mikityanska <alice@isovalent.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit c27c449d455aafd9018a3cbab150f1c42c87923f ]
+[ Upstream commit b1881d362e1924b66f6016c3efd28807032b41bf ]
 
-The user can specify any gso_size in a packet crafted with an AF_PACKET
-PACKET_VNET_HDR socket, even smaller than TCP_MIN_GSO_SIZE = 8. At the
-same time, GSO_MAX_SIZE = 8 * GSO_MAX_SEGS = 8 * 65535. When the user
-crafts a packet with gso_size < 8, there is a risk for partial GSO to
-overflow the 16-bit gso_segs field when dividing the SKB length by
-gso_size.
+Allocate the chain blob before the ruleset offload to reduce chances of
+entering an inconsistent state where the offloaded ruleset in the nic
+and the software ruleset differ.
 
-Adjust gso_size of TCP packets to be at least TCP_MIN_GSO_SIZE = 8. Keep
-gso_size of UDP GSO packets, as gso_size=1 is valid and explicitly
-tested at tools/testing/selftests/net/tun.c:649.
-
-Fixes: 7c6d2ecbda83 ("net: be more gentle about silly gso requests coming from user")
-Signed-off-by: Alice Mikityanska <alice@isovalent.com>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260822120117.1163423-2-alice.kernel@fastmail.im
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c9626a2cbdb2 ("netfilter: nf_tables: add hardware offload support")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/virtio_net.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/netfilter/nf_tables_api.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
-index 62613d4d84b71..5b3ddaa4c8815 100644
---- a/include/linux/virtio_net.h
-+++ b/include/linux/virtio_net.h
-@@ -4,6 +4,7 @@
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 1baf5253d635a..96b0638c220a7 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -9793,10 +9793,6 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
+ 	if (nf_tables_validate(net) < 0)
+ 		return -EAGAIN;
  
- #include <linux/if_vlan.h>
- #include <linux/udp.h>
-+#include <net/tcp.h>
- #include <uapi/linux/tcp.h>
- #include <uapi/linux/virtio_net.h>
- 
-@@ -164,6 +165,9 @@ static inline int virtio_net_hdr_to_skb(struct sk_buff *skb,
- 			if (skb->ip_summed == CHECKSUM_PARTIAL &&
- 			    skb->csum_offset != offsetof(struct tcphdr, check))
- 				return -EINVAL;
-+
-+			BUILD_BUG_ON(TCP_MIN_GSO_SIZE * GSO_MAX_SEGS < GSO_MAX_SIZE);
-+			gso_size = max(gso_size, TCP_MIN_GSO_SIZE);
- 			break;
+-	err = nft_flow_rule_offload_commit(net);
+-	if (err < 0)
+-		return err;
+-
+ 	/* 1.  Allocate space for next generation rules_gen_X[] */
+ 	list_for_each_entry_safe(trans, next, &nft_net->commit_list, list) {
+ 		int ret;
+@@ -9820,6 +9816,16 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
  		}
+ 	}
  
++	/* must be last, so audit and chain blob set up does not leave hardware
++	 * in consistent state.
++	 */
++	err = nft_flow_rule_offload_commit(net);
++	if (err < 0) {
++		nf_tables_commit_chain_prepare_cancel(net);
++		nf_tables_commit_audit_free(&adl);
++		return err;
++	}
++
+ 	/* step 2.  Make rules_gen_X visible to packet path */
+ 	list_for_each_entry(table, &nft_net->tables, list) {
+ 		list_for_each_entry(chain, &table->chains, list)
 -- 
 2.53.0
 
