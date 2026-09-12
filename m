@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6565738AC92;
-	Sat, 12 Sep 2026 11:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36982F617C;
+	Sat, 12 Sep 2026 11:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214349; cv=none; b=h87pDsAb4TWEFNpDq3TQjk9kcngO2TD7Uq5ap4tUbPoWcnLFp3XbmaIXYoEyHqQk9GQ+R4qDdvbhndSUqBIKXvGPJsEsmI/JMLep4rz0tMToLLc9mtA76dY0u1vxK4fdanRDXwGHjUoGLnspc663sQNoQqdzc/0oVZOIic/nZao=
+	t=1789214354; cv=none; b=Ep3dORtT23zbvk2sXiwvRaaZZO0wc+Q7zFbcIeAYkcSuIy63HG/B9VkfLjN+YrnxLoQ6OOsyei6NpMuZxHyd3ov3LXR1YgJ7aWuxJvQb2hSRwkx3QHq0jrqqMY0OmXrSs31XRZYIoWUVlOln+sLRiuq4xOJ3vYPRrQP/nR8XcCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214349; c=relaxed/simple;
-	bh=uAMqyxROtylSvUB87AGQ/z4k3j1DcsVUuWQT1fTMzNc=;
+	s=arc-20240116; t=1789214354; c=relaxed/simple;
+	bh=S0ob0sLicreVweoA8ckH/x4ULwgDcaDoZ9UK6we381w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j4otvC0Rag/oQIBkS+vMHShNcJm9wY4V9uEVUuX2vXlRhV23SJkqZ7+eZvVCh0ekibn9lVeIUbTZYsDMwas1y/tRuCDBtKn4S/XJqcYBrjWhjeqwXmtPYb4tRF1QWbH3oXQ6eecLoQ49YyPqsTAZgJcb03Ih+rU2mfUZN7aFHOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztw19sOh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ofX6pEuJZbmfi+Flg6x5IV9IlcDYd7n0TopzBs1n2JV+Clc/XkATEMigLpvpNJWvDMgijTxe6cvzYEdlJZ6diC7IrUdZm3qwAMOKOKq8tctC71QhoJvxiDToJF26ZkRQZdP9YxUdYyECRUSS9ug0NpeGXVH3YvC70AhBVLRO2eA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JiMb0sRZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztw19sOh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 051E51F000FF;
-	Sat, 12 Sep 2026 11:59:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JiMb0sRZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DB21F000FF;
+	Sat, 12 Sep 2026 11:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214348;
-	bh=yVIw9c1FK0rb5xxew3zqcblTXnPoK5XzOcKU2LaXOng=;
+	s=korg; t=1789214352;
+	bh=SPIxPk+PdMOq9N5W9vWEYA3QcgKmekFi4QwJ+1sSsDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ztw19sOhfGJIFsSGXS6Yw+N/GxxuDmsifUQOHV62PZg1VNcVCOQOd4WQvyPg6ghKh
-	 uonAsQRV2bC7GINeb3STd2NJt4soZPxDL0lj/KLEYZ5FlvhYGj96KN2VK3vdR3qQo7
-	 lfQDrk/JcfhwQEv7gVz2+RoFO8nWq/hwwk153fhE=
+	b=JiMb0sRZ3XpKbdQnl/Jwpb7IbkIjdxYrQ8ZIVnr9XFPbx4ZCtSD+4cEpFIg1eFl4I
+	 xOWnlsAwfA/eTw9xBi7vr++9ZM+b0U3kDG0LwUkj2kMtb8xKi1GsxFyeTpbYnRM5cw
+	 iL3KnVfNXFQWQBjz3yGgj5gHay8+PkTf6OI5OWRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yicong Hui <yiconghui@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Paul Kocialkowski <paulk@sys-base.io>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Liu Ying <victor.liu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0308/1376] drm: Remove unused header in drm_dumb_buffers.c
-Date: Sat, 12 Sep 2026 08:45:34 +0200
-Message-ID: <20260912065614.414501035@linuxfoundation.org>
+Subject: [PATCH 6.12 0309/1376] drm: lcdif: Wait for vblank before disabling DMA
+Date: Sat, 12 Sep 2026 08:45:35 +0200
+Message-ID: <20260912065614.437512334@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,43 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Hui <yiconghui@gmail.com>
+From: Paul Kocialkowski <paulk@sys-base.io>
 
-[ Upstream commit 38b4ce17ef3421fb0e5e6dbdab1974282bde1165 ]
+[ Upstream commit 351af554edd994898db12217c3be39979e168d35 ]
 
-Remove the header #include "drm_internal.h" from drm_dumb_buffers.c,
-which is included but not used.
+It is necessary to wait for the full frame to finish streaming
+through the DMA engine before we can safely disable it by removing
+the DISP_PARA_DISP_ON bit. Disabling it in-flight can leave the
+hardware confused and unable to resume streaming for the next frame.
 
-Header was introduced in commit 47f10854ca89 ("drm: Don't export the
-drm_gem_dumb_destroy() function") when moving functions, but was not
-removed in commit 96a7b60f6ddb ("drm: remove dumb_destroy callback")
-when the drm_gem_dumb_destroy function was removed.
+This causes the FIFO underrun and empty status bits to be set and
+a single solid color to be shown on the display, coming from one of
+the pixels of the previous frame. The issue occurs sporadically when
+a new mode is set, which triggers the crtc disable and enable paths.
 
-Compiles successfully with DRM enabled, pass kunit tests and
-IGT-tests in a vng virtual machine.
+Setting the shadow load bit and waiting for it to be cleared by the
+DMA engine allows waiting for completion.
 
-Fixes: 96a7b60f6ddb ("drm: remove dumb_destroy callback")
-Signed-off-by: Yicong Hui <yiconghui@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260409154826.8955-1-yiconghui@gmail.com
+The NXP BSP driver addresses this issue with a hardcoded 25 ms sleep.
+
+Fixes: 9db35bb349a0 ("drm: lcdif: Add support for i.MX8MP LCDIF variant")
+Signed-off-by: Paul Kocialkowski <paulk@sys-base.io>
+Co-developed-by: Lucas Stach <l.stach@pengutronix.de>
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Tested-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Acked-by: Liu Ying <victor.liu@nxp.com>
+Link: https://patch.msgid.link/20260402183351.3281123-3-paulk@sys-base.io
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_dumb_buffers.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/mxsfb/lcdif_kms.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_dumb_buffers.c b/drivers/gpu/drm/drm_dumb_buffers.c
-index 70032bba1c97e..7b4ba9fab299a 100644
---- a/drivers/gpu/drm/drm_dumb_buffers.c
-+++ b/drivers/gpu/drm/drm_dumb_buffers.c
-@@ -29,7 +29,6 @@
- #include <drm/drm_mode.h>
+diff --git a/drivers/gpu/drm/mxsfb/lcdif_kms.c b/drivers/gpu/drm/mxsfb/lcdif_kms.c
+index dbd42cc1da87f..19884359ce1d1 100644
+--- a/drivers/gpu/drm/mxsfb/lcdif_kms.c
++++ b/drivers/gpu/drm/mxsfb/lcdif_kms.c
+@@ -373,14 +373,23 @@ static void lcdif_disable_controller(struct lcdif_drm_private *lcdif)
+ 	int ret;
  
- #include "drm_crtc_internal.h"
--#include "drm_internal.h"
+ 	reg = readl(lcdif->base + LCDC_V8_CTRLDESCL0_5);
++	/* Disable the layer for DMA. */
+ 	reg &= ~CTRLDESCL0_5_EN;
++	/*
++	 * It is necessary to wait for the full frame to finish streaming
++	 * through the DMA engine before we can safely disable it by removing
++	 * the DISP_PARA_DISP_ON bit. Disabling it in-flight can leave the
++	 * hardware confused and unable to resume streaming for the next frame.
++	 */
++	reg |= CTRLDESCL0_5_SHADOW_LOAD_EN;
+ 	writel(reg, lcdif->base + LCDC_V8_CTRLDESCL0_5);
  
- /**
-  * DOC: overview
++	/* Wait for the frame to finish or timeout after 50 ms. */
+ 	ret = readl_poll_timeout(lcdif->base + LCDC_V8_CTRLDESCL0_5,
+-				 reg, !(reg & CTRLDESCL0_5_EN),
+-				 0, 36000);	/* Wait ~2 frame times max */
++				 reg, !(reg & CTRLDESCL0_5_SHADOW_LOAD_EN),
++				 200, 50000);
+ 	if (ret)
+-		drm_err(lcdif->drm, "Failed to disable controller!\n");
++		drm_err(lcdif->drm, "Timed out waiting for final vblank!\n");
+ 
+ 	reg = readl(lcdif->base + LCDC_V8_DISP_PARA);
+ 	reg &= ~DISP_PARA_DISP_ON;
 -- 
 2.53.0
 
