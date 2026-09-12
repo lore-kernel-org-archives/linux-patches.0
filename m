@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A1E2E92BA;
-	Sat, 12 Sep 2026 19:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D500D36828B;
+	Sat, 12 Sep 2026 19:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241127; cv=none; b=Rl2j69UzhWUamDGgnU8SazNrdH1vRuCp6QF3222o0MBxP0pZIgYjR/yEERRy8O0P/t8aCBeT9ZxY93HEMbpd/bpaM1KHBT1WgJYemGrriDTT1pah6HXqnb5zn+WNwSn9mmFVRG9FXdrSl30tTb+HVO1CJSTmWI/NZQv5zgGS8Lk=
+	t=1789241132; cv=none; b=oHq2J3C0YFpZz8+XD/Y8BbxnqnRJUcOxuf3ZBvqAEBB++pHeFot9yqTc3vLiwMe449VpB57bw/BnYpX01FmLRtnchK9/KtQmgZpvrP/CF+Xhs9ePFZp5QfyYmybBSW3BOg/UyQeuT8fY1IWt6OkU+Btoz/kCmguZXOxFcNH/ikM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241127; c=relaxed/simple;
-	bh=zFWHeNPg2KPiKh2F8M5x109es0NU58DTOLh4lhm0LEw=;
+	s=arc-20240116; t=1789241132; c=relaxed/simple;
+	bh=ugG6x7I9V+k6zJ3hu8ywOyESJmXzWIPuo26iP8Aokiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b0HboeA45LRc2TxDm2bIXqHRPG1bu4Vo10Q6QoE1+ybIi5yefCMNieEAnU3qxvBfByxESdbr4iwgy3qfNftCdO89tqeIqZgoBpfiCcpLzofIm7UuPNk2aggjI5lKEbWwCpONj9fuKPHXPtPcAjBuMVQ46u48gXXEhJagwNTnmek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0M44XaHE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s6bEMBnhraj4mNlqg+66x7419dx4OAzClnEqqWt/xP1l+3dykmwVq36dCtgFyN0mIe4N2oIJ4g0ZU5ecafHtTRh/z3kYPzL33lugFdze4VBKiKzecnquzMaFVZapcKMseRlkZ1oNR+z+iB5xO64eLgS5U+esi75E8XFYJ9w2xGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6IHYH84; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0M44XaHE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 474791F000FF;
-	Sat, 12 Sep 2026 19:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6IHYH84"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1FB1F000FF;
+	Sat, 12 Sep 2026 19:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241126;
-	bh=yq3YlpKQUc96GgFyPy4Gd4sERt3wWb+M5WUXpYtWLDQ=;
+	s=korg; t=1789241130;
+	bh=O5s801wB/4c5QSE6QSA0IJOt9A6QwyO+FIoYUzFFrIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0M44XaHEpsvOl7cMgb5jtXjuGAyOXroEprozkJV4mUygzOdbs1tllMh/fEcxGT499
-	 281y3F3qK91hdkEE64xL2bnTS8a8gP6l198pAYtECVsOIzshlS4/Op4kRFQNTml65C
-	 FORLkq8TNe8hsvuK3dCtMp98zwfvREuIzsAkd3gA=
+	b=R6IHYH84bX1l+SiEx1urWHykEvwivvIYBJsoXggz3sdAbEMX5R3UOiDFKp7T6lVC1
+	 9kef/gGXsOpYdos/TlUId5xdbBPibakPNJuaApeaBHDW0XM7yQmnjHdn2ik2Rw97lU
+	 3OPbMVozIRd/DrqWoI+w3327xmRT9l6pz/It8J6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Matt Turner <mattst88@gmail.com>,
 	Magnus Lindholm <linmag7@gmail.com>
-Subject: [PATCH 5.10 073/798] alpha: marvel: Fix irq_set_status_flags to use correct IRQ number
-Date: Sat, 12 Sep 2026 08:55:01 +0200
-Message-ID: <20260912065518.639453277@linuxfoundation.org>
+Subject: [PATCH 5.10 074/798] alpha: marvel: Fix lock ordering in init_io7_irqs()
+Date: Sat, 12 Sep 2026 08:55:02 +0200
+Message-ID: <20260912065518.661433990@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,43 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Matt Turner <mattst88@gmail.com>
 
-commit 3a3ac1f6c6a67b3803f2643584310f78301e58a8 upstream.
+commit 24d68db713d63dfe3660c56b50e887784844baea upstream.
 
-Pass base + i to irq_set_status_flags() to match the IRQ number
-used in irq_set_chip_and_handler(). Previously, IRQ_LEVEL was set
-on the wrong (low-numbered) IRQ descriptors rather than the IO7
-IRQs at base + i.
+Move irq_set_chip_and_handler() and irq_set_status_flags() calls
+outside the io7->irq_lock raw spinlock.  These functions take
+sparse_irq_lock, which is a mutex, and taking a sleeping lock while
+holding a raw spinlock is invalid.  The raw spinlock only needs to
+protect the hardware CSR accesses.
+
+This fixes the following lockdep splat during boot:
+
+  [ BUG: Invalid wait context ]
+  swapper/0/0 is trying to lock:
+  sparse_irq_lock{....}-{4:4}, at: irq_mark_irq
+  other info that might help us debug this:
+  context-{5:5}
+  1 lock held by swapper/0/0:
+   #0: &io7->irq_lock{....}-{2:2}, at: init_io7_irqs.constprop.0
 
 Cc: stable@vger.kernel.org
-Fixes: 08876fe8519c ("alpha: marvel: Convert irq_chip functions")
+Assisted-by: Claude:claude-opus-4-6
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20260528230516.1839694-1-mattst88@gmail.com
+Link: https://lore.kernel.org/r/20260528230516.1839694-2-mattst88@gmail.com
 Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/kernel/sys_marvel.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/alpha/kernel/sys_marvel.c |   25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
 --- a/arch/alpha/kernel/sys_marvel.c
 +++ b/arch/alpha/kernel/sys_marvel.c
-@@ -275,7 +275,7 @@ init_io7_irqs(struct io7 *io7,
- 	/* Set up the lsi irqs.  */
- 	for (i = 0; i < 128; ++i) {
- 		irq_set_chip_and_handler(base + i, lsi_ops, handle_level_irq);
--		irq_set_status_flags(i, IRQ_LEVEL);
-+		irq_set_status_flags(base + i, IRQ_LEVEL);
- 	}
+@@ -263,6 +263,18 @@ init_io7_irqs(struct io7 *io7,
+ 	 */
+ 	printk("  Interrupts reported to CPU at PE %u\n", boot_cpuid);
  
++	/* Set up the lsi irqs.  */
++	for (i = 0; i < 128; ++i) {
++		irq_set_chip_and_handler(base + i, lsi_ops, handle_level_irq);
++		irq_set_status_flags(base + i, IRQ_LEVEL);
++	}
++
++	/* Set up the msi irqs.  */
++	for (i = 128; i < (128 + 512); ++i) {
++		irq_set_chip_and_handler(base + i, msi_ops, handle_level_irq);
++		irq_set_status_flags(base + i, IRQ_LEVEL);
++	}
++
+ 	raw_spin_lock(&io7->irq_lock);
+ 
+ 	/* set up the error irqs */
+@@ -272,12 +284,6 @@ init_io7_irqs(struct io7 *io7,
+ 	io7_redirect_irq(io7, &io7->csrs->STV_CTL.csr, boot_cpuid);
+ 	io7_redirect_irq(io7, &io7->csrs->HEI_CTL.csr, boot_cpuid);
+ 
+-	/* Set up the lsi irqs.  */
+-	for (i = 0; i < 128; ++i) {
+-		irq_set_chip_and_handler(base + i, lsi_ops, handle_level_irq);
+-		irq_set_status_flags(base + i, IRQ_LEVEL);
+-	}
+-
  	/* Disable the implemented irqs in hardware.  */
-@@ -289,7 +289,7 @@ init_io7_irqs(struct io7 *io7,
- 	/* Set up the msi irqs.  */
- 	for (i = 128; i < (128 + 512); ++i) {
- 		irq_set_chip_and_handler(base + i, msi_ops, handle_level_irq);
--		irq_set_status_flags(i, IRQ_LEVEL);
-+		irq_set_status_flags(base + i, IRQ_LEVEL);
- 	}
+ 	for (i = 0; i < 0x60; ++i) 
+ 		init_one_io7_lsi(io7, i, boot_cpuid);
+@@ -285,13 +291,6 @@ init_io7_irqs(struct io7 *io7,
+ 	init_one_io7_lsi(io7, 0x74, boot_cpuid);
+ 	init_one_io7_lsi(io7, 0x75, boot_cpuid);
  
+-
+-	/* Set up the msi irqs.  */
+-	for (i = 128; i < (128 + 512); ++i) {
+-		irq_set_chip_and_handler(base + i, msi_ops, handle_level_irq);
+-		irq_set_status_flags(base + i, IRQ_LEVEL);
+-	}
+-
  	for (i = 0; i < 16; ++i)
+ 		init_one_io7_msi(io7, i, boot_cpuid);
+ 
 
 
