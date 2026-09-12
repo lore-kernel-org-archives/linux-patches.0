@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27793161A1;
-	Sat, 12 Sep 2026 13:49:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF7731618C;
+	Sat, 12 Sep 2026 13:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220966; cv=none; b=RsJE50gJ6iZzIXw7RUATF8e5tu2mkc/Rce9vTyI+X0RIWMZxmjs+hCRdzoeLRefpaWVjdUgQh3NUcjwNeMLGvsMUWsfrP94crtMPPa3Yj/p/BgpNZzFB/J9wxovZ/WFY5Xb26p9NGu5y8bwI+ugOT1hNuxbg8aKdNBSorg9m5cM=
+	t=1789220969; cv=none; b=YOL72Dq3owdtSjQ1d54lrHh3T/ubdQEIJ2ZAwvDH81Wh/vpNKoFbIP6No1bXHo4L0xFQltFw2O1d8rWhpCaZWeP7KNLU+NL6OleZq+qco4nvqN3b4mVI9AmAbaRAIVYhfNqYN16omjDNvtbT4AU30ygnrBXuLJVIK6hzLU6MKyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220966; c=relaxed/simple;
-	bh=fyVuwcAVTKt4rNIMllYKGEk9Xn3Hl4aQCfdt4dz1abU=;
+	s=arc-20240116; t=1789220969; c=relaxed/simple;
+	bh=M6tksezyrdGVbEa9FFMNuicxQwVWim30q3xACcfZcsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SKD4TVCnv/IqfBWQFUxxYtcQl6eoVYkLMzWixz0amSRko2gHVi+nX0xm8zW0HXoeqHga1UVmgmgXn8QYRp+z7YPiWe8GjNkUunsrtVujgG+z3UMaWfAqGumyfQYqtyj/eKA7iFrleey2MeqJw772FWNEJ/neM8u1wlYLkg7tjXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yOck3XVa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FBDtHRlDMo55oXKet4WZIvtrg09kLO5YwrSQ/+NWjuZf5Q64boBa4/E2C9mHtZqEHp406QhkdrpSHECDmrvx6bpoLuI4eKO1/S0gYHuao5CKjmUIM3vtt2lMW3Kqb0a1fCKH9dw1fu3dL6lrXwuh8j2lz93FGtPBBXZd4G8H2Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjJ++9JJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yOck3XVa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02121F000FF;
-	Sat, 12 Sep 2026 13:49:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjJ++9JJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51C231F000FF;
+	Sat, 12 Sep 2026 13:49:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220964;
-	bh=SQp9lWQ2Eu5UgYE3hFQxtwujEseKhY3RZN/9KH2R5lk=;
+	s=korg; t=1789220968;
+	bh=EVanotL3ENXK8aDlsjpjE4xljngJo8uf/GyehNsTQ1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yOck3XVaHlta8kiTYRtmge1t5dQgSQ9Eqzj4doxZrv5IXOtW7NXEIqQxZkenz1RNo
-	 B/SG9ksL19HbfoYFyDdiBeLlFYXYGHJEVwyy45EsNBV4ms44xTCNbhlQabVfqnWLcr
-	 6lWY+XF06iF9yCQ8S/d4vwOfEGd1KXNCE7KYUbDk=
+	b=sjJ++9JJ0ZqrOLXviFG+8YY/kCbtcZT9DRq9awCLhsAzzLY4DB/CcPFOrGkEYbbGi
+	 g0oyszs7odsu8nBLWavKpPWRzJPRjB2fxY1DrpnXXA3p13x4n76Y4QXH/KYqQSgMk4
+	 L2yTqhnMJaBr+/OChD8A8LI3Ud6hPp4Qyu06c1eM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Long Li <longli@microsoft.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Aditya Garg <gargaditya@linux.microsoft.com>,
+	Shradha Gupta <shradhagupta@linux.microsoft.com>,
+	Naman Jain <namjain@linux.microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0285/1424] cgroup/cpuset: Fix misplaced DL migration reset
-Date: Sat, 12 Sep 2026 08:45:17 +0200
-Message-ID: <20260912065613.664284461@linuxfoundation.org>
+Subject: [PATCH 6.6 0286/1424] PCI: hv: Set irq_retrigger callback for the Hyper-V PCI MSI irqchip
+Date: Sat, 12 Sep 2026 08:45:18 +0200
+Message-ID: <20260912065613.686647688@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,53 +56,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Naman Jain <namjain@linux.microsoft.com>
 
-Mainline commit 4a39eda5fdd8 ("cgroup/cpuset: Reset DL migration state
-on can_attach() failure") puts the common error cleanup in
-cpuset_can_attach().  The 6.6.y backport instead placed that hunk at
-cpuset_can_fork()'s similarly named out_unlock label, while removing
-cpuset_can_attach()'s two existing targeted resets.
+[ Upstream commit 86bdd16e8f390d51bae9e77a4bc4164ca2f580fe ]
 
-If cpuset_can_attach() fails after accounting a SCHED_DEADLINE task,
-cgroup_migrate_execute() does not call cpuset_cancel_attach() for the
-failing subsystem.  The temporary migration fields remain set, and a
-later successful migration can consume the stale state and corrupt
-deadline-task and pending-bandwidth accounting.
+The Hyper-V vPCI MSI irqchip never installs an irq_retrigger() callback.
 
-Move the reset to cpuset_can_attach()'s common error exit.  It is not
-needed in cpuset_can_fork(), which never accumulates migration DL state.
+On CPU hot-unplug fixup_irqs() migrates the interrupts which are affine to
+the outgoing CPU to a new target. If an interrupt still has its pending bit
+set in the outgoing CPU's IRR at that point, fixup_irqs() resends it on the
+new target through the irqchip's irq_retrigger() callback. As the Hyper-V
+PCI/MSI chip does not provide that callback, the pending interrupt is
+silently dropped, which can result in lost interrupts, stalls and "No irq
+handler for vector" messages during CPU hotplug.
 
-Fixes: 14897ef9341c ("cgroup/cpuset: Reset DL migration state on can_attach() failure")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Install irq_chip_retrigger_hierarchy() as the irq_retrigger() callback for
+the Hyper-V PCI/MSI irqchip, so that a pending interrupt is resent on its
+new target CPU via the parent x86 vector domain.
+
+Fixes: 4daace0d8ce85 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
+Cc: stable@vger.kernel.org
+Suggested-by: Long Li <longli@microsoft.com>
+Suggested-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Aditya Garg <gargaditya@linux.microsoft.com>
+Reviewed-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
+Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pci-hyperv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index f9c7178f51ada..bb413045d1744 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -2630,6 +2630,8 @@ static int cpuset_can_attach(struct cgroup_taskset *tset)
- 	 */
- 	cs->attach_in_progress++;
- out_unlock:
-+	if (ret)
-+		reset_migrate_dl_data(cs);
- 	mutex_unlock(&cpuset_mutex);
- 	return ret;
- }
-@@ -3462,8 +3464,6 @@ static int cpuset_can_fork(struct task_struct *task, struct css_set *cset)
- 	cs->attach_in_progress++;
- 
- out_unlock:
--	if (ret)
--		reset_migrate_dl_data(cs);
- 	mutex_unlock(&cpuset_mutex);
- 	return ret;
- }
+diff --git a/drivers/pci/controller/pci-hyperv.c b/drivers/pci/controller/pci-hyperv.c
+index e379ed9b5d2eb..94ee9d19a48bc 100644
+--- a/drivers/pci/controller/pci-hyperv.c
++++ b/drivers/pci/controller/pci-hyperv.c
+@@ -2058,6 +2058,7 @@ static struct irq_chip hv_msi_irq_chip = {
+ 	.name			= "Hyper-V PCIe MSI",
+ 	.irq_compose_msi_msg	= hv_compose_msi_msg,
+ 	.irq_set_affinity	= irq_chip_set_affinity_parent,
++	.irq_retrigger		= irq_chip_retrigger_hierarchy,
+ #ifdef CONFIG_X86
+ 	.irq_ack		= irq_chip_ack_parent,
+ #elif defined(CONFIG_ARM64)
 -- 
 2.53.0
 
