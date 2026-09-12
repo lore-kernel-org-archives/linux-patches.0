@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0EA34752E;
-	Sat, 12 Sep 2026 09:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB0641A92A;
+	Sat, 12 Sep 2026 09:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205334; cv=none; b=V9XcF4azvoAEoOnKty/sJOZ4YKew02KW7zhmAYFa2wiQf9HOdWUY1x/rDv5X4h9zVykV+O7e8ialiAqkmh7f8LsVvygVWx5IL3w/UtJiFGKkTcIoZOaeKtGiZ6xS0fuE3zIStv2VF+Qfc5oTBdRzi4BF9VRHvF99AQuoWOa+vt4=
+	t=1789205339; cv=none; b=qHg7IKZk0bqq9gTW9QEI8plBUwZc4+l+XyvNPi58Cj+9n4Cr5+7GPvEYt3nJ72V0uFdmVqRGSwOx5duVyGeN0/Eoodnqc5GKkCYyW+bIoEw4UD1vW7oODwmTLzdfnHcEgWoIovOnuFSwiL30HjRK1XX/PmTNM2Z6hjJhEbgBA4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205334; c=relaxed/simple;
-	bh=jvXvKDQMC6ztdTXe5SJ6TPLLQZC0lTBIxltjlTBoyqk=;
+	s=arc-20240116; t=1789205339; c=relaxed/simple;
+	bh=eoU3t5QLQOhuKJnfZNf5oqHjT4MKXqYx6wtz8C1018I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rg/rNDq8q2Ly8yAPkZTZiXN14X2eZsLJYfmPiSSaI2NM5ovkxQIPZWtKU/vNI4ZSYm/HWLVzX9xqohckrt9D47rB3z3P4szg/qCnHJOld51pRCGekRRSwtbzy4dcPekgaFqtSl0tvv6heDF4bRaKHgWgVWTCEL5aj2t32kcnQ9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GNaIga4X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QbAZSVjAmeazZpVF0HNcW3a3ApQM1YmlQm7f1LqdEQXPAa5SOURsSNawczZDYVdZycoBL88NLdBTItTaewLC2KtZq0zZhdugQNp7B1pcNLfNGaZD0tRYccVXxclJYmgatNkwAEWaQMNSkJ61Y+FI25VlBWlSG5tcnbz5XcOeTdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZR2aGfp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNaIga4X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9AF1F000FF;
-	Sat, 12 Sep 2026 09:28:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZR2aGfp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F92B1F000FF;
+	Sat, 12 Sep 2026 09:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205332;
-	bh=/GQ96fH6apKj97c9TMy41uV0tZPo5IiuXgY0IuFHoJ4=;
+	s=korg; t=1789205337;
+	bh=ZJjWwYi8nArEhHW2TPS0C21M3THai7aF1WHt+2EoBnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GNaIga4XcDh7xGQ+OuHyIIiVW7bSEpXDMOBnUqxLVAermcf1Z96HZ+JnydNgkc5bH
-	 OCSW6rboIcwLMPjb+ZXSqAd1dFejjr+NbN4N4i2JIEw92U8ML+O+DPZkWXXK/IR8wz
-	 XXZE38blyrjmWEjMvhszcpQ+Nq6eu+rKsSUtwB/o=
+	b=RZR2aGfpkc+FPXFXw//Oy/hkCrfwmCDNBKbHNrGZiui0wFxY5NZftR9eJPSaAoibM
+	 viUO8+XZ1UgjUtxN2ifZEjoOZzDuG6deRiTFhIKAaN72OlyoKvsKarWw1iSoUaeKz6
+	 mKS10UdhXTkYHsQCrJFLn6xNkDTaHgwGfZ//v2Aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1797/1815] net: stmmac: selftests: Check multiple MMC counters
-Date: Sat, 12 Sep 2026 08:59:07 +0200
-Message-ID: <20260912065731.222465940@linuxfoundation.org>
+Subject: [PATCH 7.2 1798/1815] net: stmmac: dwmac1000: Account for the primary MAC address for UC filtering
+Date: Sat, 12 Sep 2026 08:59:08 +0200
+Message-ID: <20260912065731.246701096@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,62 +54,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit d29b399150b07796dfa81d8778d4804c08c2a41d ]
+[ Upstream commit 9698b6da3714fd2ef47846cb63098d2b2d252e25 ]
 
-The MMC counters report MAC statistics. Multiple counters can be
-enabled when the IP is integrated, however there's no way to know
-exactly which ones. Un-implemented counters seem to report 0.
+The same filter slots are used to store the main MAC address as well as
+the address for the unicast filter. Let's account for that when deciding
+whether or not to use promisc when programming the UC list in hardware.
 
-It was found that on StarFive JH7110 and Amlogic SM1, the counter that's
-used by the selftest (mmc_tx_framecount_g) isn't implemented, triggering
-an MMC selftest failure.
-
-Both the above SoCs seem to implement mmc_rx_framecount_gb, let's use
-this counter as well for MMC counter validation.
-
-Note that this doesn't guarantee that we won't encounter the same issue
-again if another IP implements yet another set of counters that don't
-include that new one.
-
-If the game of whack-a-mole with implemented counters becomes too hard to
-maintain, we may simply consider removing the MMC selftest entirely.
-
-Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
+Fixes: 47dd7a540b8a ("net: add support for STMicroelectronics Ethernet controllers.")
 Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260826140500.616466-2-maxime.chevallier@bootlin.com
+Link: https://patch.msgid.link/20260826140500.616466-3-maxime.chevallier@bootlin.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_selftests.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index 2e91ea8bb7122..d9d95f5352cf8 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -415,11 +415,17 @@ static int stmmac_test_mmc(struct stmmac_priv *priv)
- 	stmmac_mmc_read(priv, priv->mmcaddr, &final);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
+index caac85fc08f1b..d4ace39248915 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
+@@ -194,7 +194,7 @@ static void dwmac1000_set_filter(struct mac_device_info *hw,
+ 	dwmac1000_set_mchash(ioaddr, mc_filter, mcbitslog2);
  
- 	/*
--	 * The number of MMC counters available depends on HW configuration
--	 * so we just use this one to validate the feature. I hope there is
--	 * not a version without this counter.
-+	 * The number of MMC counters available depends on HW configuration,
-+	 * and there doesn't seem to be a way to enumerate the implemented
-+	 * counters.
-+	 *
-+	 * Let's check a hand-picked set of counters, knowing that :
-+	 *  - Starfive JH7110 doesn't implement mmc_tx_framecount_g
-+	 *  - Amlogic SM1 doesn't implement any mmc_tx_*
-+	 *
- 	 */
--	if (final.mmc_tx_framecount_g <= initial.mmc_tx_framecount_g)
-+	if (final.mmc_tx_framecount_g <= initial.mmc_tx_framecount_g &&
-+	    final.mmc_rx_framecount_gb <= initial.mmc_rx_framecount_gb)
- 		return -EINVAL;
- 
- 	return 0;
+ 	/* Handle multiple unicast addresses (perfect filtering) */
+-	if (netdev_uc_count(dev) > perfect_addr_number)
++	if (netdev_uc_count(dev) + 1 > perfect_addr_number)
+ 		/* Switch to promiscuous mode if more than unicast
+ 		 * addresses are requested than supported by hardware.
+ 		 */
 -- 
 2.53.0
 
