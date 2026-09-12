@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667F0368D5A;
-	Sat, 12 Sep 2026 07:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AF63148DA;
+	Sat, 12 Sep 2026 07:55:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199742; cv=none; b=fXJ4jVTiDygBcCrJqDN43adUWUvICy/F1WjcHvvURy9wVr8G3VBT9e3ImEptAv5WdbCwH/UsOVvv7wslD/dJLX7mSMCgya5Y/VmnLJbKwMAXRhZzIhyRGWvhW29+05GxncZJY3Ad/1JQjf5BDOLOQi+8o5ns+BNmuSmz+uPIoc8=
+	t=1789199747; cv=none; b=WADDafBGZV5tqc+Yx4ym542JYP+/8QKN+A8udV+JF+9hNx0L1xOeq9GqUJ2gwqssyqd2EGGPAb1Q3OwtFoU6OdXnaiUTzjxO762br0I7+D/JCUy51b9ceq8ufHM8/di4N7BSVnjhn4/wXEQ1/YzmNrPwC5w4Rg4K/zY4iPNuBME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199742; c=relaxed/simple;
-	bh=OtnRbOaY0hzsTNWqZlo5Ns3E36fgahZ9E1QIYrhfarg=;
+	s=arc-20240116; t=1789199747; c=relaxed/simple;
+	bh=4P9lj8XQz1UA+US6sNK4Q5X3WUfZtb8ks5+uSqEiwqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LNqyoPS9XqFE7ZIXeKWFUbl4eJZujAkjhXpdDmpN7X8jcmJ9WKQq90D6et+Ev2+GWh0eLb7cw5jlXZSK65ynAQrXcb4R2pwfELAW933ybiNVPe8+4DO87waGSRiCzLlUc6Nbz6ZpAXumVUv9LDwf2BfV83H61lZQkUco7b0hpoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0wA13/e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rVeRMC6RtU3pHKArXvaggWyiinIK+eRObH9SAtbJp762Ul8kEifydD7O8e5LjMevqmtMnXy9unDjSXLKfBq+xADzMpBlAHMnJMvSm0Oy+ZQNXewi5/TFaCbeLIwv8av0l9+6KmfVVFU0TO1amgZEt3PDt0p1B3puP1IyU5m+Fts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REGd/JnQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0wA13/e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13FA1F000FF;
-	Sat, 12 Sep 2026 07:55:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REGd/JnQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52131F000FF;
+	Sat, 12 Sep 2026 07:55:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199741;
-	bh=l4Udm6oZGLi5OANCRy613WHp7nXBSu+lxQIz/FgNONE=;
+	s=korg; t=1789199745;
+	bh=2manMoq86SLUmmwGpBC/+2q2Q+uBxsgaoyf2f+E7RJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p0wA13/eojcJE17h+RRNxWnkLXUYStkU3j9umFyyoI0vqwggRA2rDHj9ez0+eq6Ud
-	 OHPfoz9yc+jPETn3ghzlgDXzWTYvWjcmWTUZXrzTU3gBOSM4U38kjp2VXQFhTwZS3r
-	 Qpz9KZlwk6sz/ToTblqxphQUvbp64H77oX5z45e0=
+	b=REGd/JnQ3R7sGo8n+2NMNu9cgyY/9q3HMjY0X11YVKxMnis9mAbIeIe9rvSmAQIDS
+	 56g6rdVuk5D4wO1H6VYDl/hXnAtlJYvDPl4PA+Bsz02cc+NJabQtFnwpHLVYMeELP2
+	 qp3Nc46VDY+XQLO0ANw+eAidT6jZ2A87c8kWrbVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Pu Lehui <pulehui@huawei.com>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Feng Yang <yangfeng@kylinos.cn>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0648/1815] bpf: Fix WARNING in bpf_tracing_link_release
-Date: Sat, 12 Sep 2026 08:39:58 +0200
-Message-ID: <20260912065704.092285604@linuxfoundation.org>
+Subject: [PATCH 7.2 0649/1815] selftests/bpf: Fix incorrect error checking for pthread_create
+Date: Sat, 12 Sep 2026 08:39:59 +0200
+Message-ID: <20260912065704.115781912@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,94 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Feng Yang <yangfeng@kylinos.cn>
 
-[ Upstream commit 61aaa8782bec59ecffd22e030f54ef9351bcabf9 ]
+[ Upstream commit b04b8d4e198aefc863e7b702ececb957845b0c25 ]
 
-The trampoline could be corrupted by the blindly
-'tr->flags = BPF_TRAMP_F_TAIL_CALL_CTX' in verifier.
+pthread_create returns 0 on success and a positive error code on failure;
+it never returns a negative value. The current conditional branch can never be taken.
+Failures during thread creation are silently ignored, which will lead to
+invalid memory access when waiting on threads or dereferencing thread handles later.
 
-1. A fexit attached to a tail_call_reachable prog. 'tr->flags' became
-   'BPF_TRAMP_F_CALL_ORIG | BPF_TRAMP_F_TAIL_CALL_CTX'. And, the
-   trampoline would poke the target prog's nop insn using jmp insn instead
-   of call insn.
-2. Another fexit loaded with the same tail_call_reachable prog target.
-   'tr->flags' became 'BPF_TRAMP_F_TAIL_CALL_CTX'.
-3. Close the first fexit link. Due to no BPF_TRAMP_F_CALL_ORIG in
-   'tr->flags', the trampoline will fail to restore the prog's nop insn
-   using call insn.
-
-[    3.410719] WARNING: kernel/bpf/syscall.c:3551 at bpf_tracing_link_release+0x53/0x60, CPU#1: test_progs/98
-...
-[    3.428793]  bpf_link_free+0x58/0x130
-[    3.429293]  bpf_link_release+0x23/0x30
-
-Fix the warning by updating 'tr->flags' with '|=' and lock.
-
-Fixes: 2b5dcb31a19a ("bpf, x64: Fix tailcall infinite loop")
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Reviewed-by: Pu Lehui <pulehui@huawei.com>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20260722151909.69142-2-leon.hwang@linux.dev
+Fixes: 91b2c0afd00c ("selftests/bpf: Add parallelism to test_progs")
+Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
+Link: https://lore.kernel.org/bpf/20260723085100.482147-3-yangfeng59949@163.com
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h     | 2 ++
- kernel/bpf/trampoline.c | 7 +++++++
- kernel/bpf/verifier.c   | 2 +-
- 3 files changed, 10 insertions(+), 1 deletion(-)
+ tools/testing/selftests/bpf/test_progs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 31c1fef6b59b1..52eedb71d6eb7 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -1524,6 +1524,7 @@ int bpf_trampoline_multi_attach(struct bpf_prog *prog, u32 *ids,
- 				struct bpf_tracing_multi_link *link);
- int bpf_trampoline_multi_detach(struct bpf_prog *prog,
- 				struct bpf_tracing_multi_link *link);
-+void bpf_trampoline_set_flags(struct bpf_trampoline *tr, u32 flags);
- 
- /*
-  * When the architecture supports STATIC_CALL replace the bpf_dispatcher_fn
-@@ -1647,6 +1648,7 @@ static inline int bpf_trampoline_multi_detach(struct bpf_prog *prog,
- {
- 	return -ENOTSUPP;
- }
-+static inline void bpf_trampoline_set_flags(struct bpf_trampoline *tr, u32 flags) {}
- #endif
- 
- struct bpf_func_info_aux {
-diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
-index 6eadf64f7ec90..129d07db117ec 100644
---- a/kernel/bpf/trampoline.c
-+++ b/kernel/bpf/trampoline.c
-@@ -670,6 +670,13 @@ static struct bpf_tramp_image *bpf_tramp_image_alloc(u64 key, int size)
- 	return ERR_PTR(err);
- }
- 
-+void bpf_trampoline_set_flags(struct bpf_trampoline *tr, u32 flags)
-+{
-+	trampoline_lock(tr);
-+	tr->flags |= flags;
-+	trampoline_unlock(tr);
-+}
-+
- static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mutex,
- 				 const struct bpf_trampoline_ops *ops, void *data)
- {
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 22a122403a2e3..072275c7d4be6 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -19444,7 +19444,7 @@ static int check_attach_btf_id(struct bpf_verifier_env *env)
- 		return -ENOMEM;
- 
- 	if (tgt_prog && tgt_prog->aux->tail_call_reachable)
--		tr->flags = BPF_TRAMP_F_TAIL_CALL_CTX;
-+		bpf_trampoline_set_flags(tr, BPF_TRAMP_F_TAIL_CALL_CTX);
- 
- 	prog->aux->dst_trampoline = tr;
- 	return 0;
+diff --git a/tools/testing/selftests/bpf/test_progs.c b/tools/testing/selftests/bpf/test_progs.c
+index 7ba82974ee784..643c199c3e0c1 100644
+--- a/tools/testing/selftests/bpf/test_progs.c
++++ b/tools/testing/selftests/bpf/test_progs.c
+@@ -1741,7 +1741,7 @@ static void server_main(void)
+ 		data[i].worker_id = i;
+ 		data[i].sock_fd = env.worker_socks[i];
+ 		rc = pthread_create(&dispatcher_threads[i], NULL, dispatch_thread, &data[i]);
+-		if (rc < 0) {
++		if (rc) {
+ 			perror("Failed to launch dispatcher thread");
+ 			exit(EXIT_ERR_SETUP_INFRA);
+ 		}
 -- 
 2.53.0
 
