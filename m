@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACF332A3E5;
-	Sat, 12 Sep 2026 14:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7AA3264D4;
+	Sat, 12 Sep 2026 14:11:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222284; cv=none; b=A3wzg0vdy1w+ykH/hdUnCf9iOFr83aLwPoJQxGre5LoxtH13camdPxIZBNgFsavKI48Zjf7lmG53f8Hivnz9aWaI5gB4dDfhoOB3WkLZpDvOEPP+1cFT/juVFR15G1xfJV9tf5mECGH2DiUfGCxL2XAX/QmgwfAEVn+Xn9763Lw=
+	t=1789222289; cv=none; b=D4IKCVIM8sXO/KHNeNzpQvkNvMmlW1fcIxEv62QuVXWVMr79EyBRvQiNMBKmXkZiD4dZ3Tv0J49TazA2TjMBIGsfIo6wMRadKLVhALxvv2UNjqvw5MIkj+ZJFA+7oIUUHHo8YzbGQt3STRMxWsbldEjmATZD3+ZIMzmSW4ihsQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222284; c=relaxed/simple;
-	bh=YU3r1KYRj48O5TjQv2XVjd5dz0iDeJ/v4eM+Dl6xjlE=;
+	s=arc-20240116; t=1789222289; c=relaxed/simple;
+	bh=I9TwkM826kyvo6iEBI8BkscjvdKrsWnjTMQItCtiRAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HGla/WhFKaGf2lURvZ/BlqcakSASyiRhTgvYQbMjO2xJqwKLPOo7ZLsefOOPb/A3C4sJzFoidduDj7DPHxx5lmGdC9dkw7aY00wU3bTZsIPC/tgORPU+mIQNTZa/yoqvfD7IW449TPOG9hEsHVRPrzaRxtXI2DRj5qX8G6SKOqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XiVinbd/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PpvXcb3Z7JfxUrlUb8s0lbgYfhYtXNPQVaJJPrZnShy/SPu8y97t36WNvStecwAGEHgMLkSGE9xSo4UeuW2aqwy/1epqALa8ILDCADeJZDx/OAvjCwjcJObSlxOr6/uTugVSvDTWYlPNcPGf7Epc5O2IFVWZilfE+dguSplb5dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6GiygGe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XiVinbd/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A8781F000FF;
-	Sat, 12 Sep 2026 14:11:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6GiygGe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2CF1F000FF;
+	Sat, 12 Sep 2026 14:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222283;
-	bh=EhI7krTA2vryyMVF0RDcIlRVhVMT7h1ZC9GQnEcyapU=;
+	s=korg; t=1789222288;
+	bh=B6GuWfIzsyJBBnuY1KwBSiQKKUFTbAeJ38UuoVztA3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XiVinbd/5U9vmssyr76kXzPd9S/5QPBibod5dPdEeEAhXpcYi3tKHnLiZuZIBZNxG
-	 cmNpXVv2RiwPFJEThSfwygZoMwmsNIj6tV+SlvX8ptKyLCgsWOCKZ/FhqJRjOj7Ku0
-	 F5GUiQRaHIniNn8nwVWUBPhRnsIkZ5KrRWk6kSqE=
+	b=r6GiygGeJatEiTBApSOEQatDFUvFfzq4sx30Sd9Qn3ARXXUT639tmmFV07s9x1HmV
+	 JyefOUuqZMccp2M8tIEXFEwGanNyGbFRvNW4fgi28XIeVxTNLADX5bEZ16ElLA1DMz
+	 WfDgJLagdC8Wi1t03Rz5FRuzEk1myKhNF8ckYJX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sven Eckelmann <sven@narfation.org>,
+	Jie Wang <wangjie125@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0556/1424] batman-adv: bla: avoid CRC corruption due to parallel claim add
-Date: Sat, 12 Sep 2026 08:49:48 +0200
-Message-ID: <20260912065619.756105793@linuxfoundation.org>
+Subject: [PATCH 6.6 0539/1424] net: hns3: fix kernel crash when 1588 is sent on HIP08 devices
+Date: Sat, 12 Sep 2026 08:49:31 +0200
+Message-ID: <20260912065619.370973084@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,162 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Jie Wang <wangjie125@huawei.com>
 
-commit 08645ab95768b88e2ff85a89211994651710465b upstream.
+[ Upstream commit 9741e72b2286de8b38de9db685588ac421a95c87 ]
 
-batadv_bla_add_claim() is used to add claims and modify the backbone of
-claims for CLAIM frames from remote backbones and local packets. When it
-handles a claim, it needs to either
+Currently, HIP08 devices does not register the ptp devices, so the
+hdev->ptp is NULL. But the tx process would still try to set hardware time
+stamp info with SKBTX_HW_TSTAMP flag and cause a kernel crash.
 
-* add the new claim's CRC to the backbone CRC
-* remove the already existing claim's CRC from the old backbone and add it
-  to the new backbone
+[  128.087798] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000018
+...
+[  128.280251] pc : hclge_ptp_set_tx_info+0x2c/0x140 [hclge]
+[  128.286600] lr : hclge_ptp_set_tx_info+0x20/0x140 [hclge]
+[  128.292938] sp : ffff800059b93140
+[  128.297200] x29: ffff800059b93140 x28: 0000000000003280
+[  128.303455] x27: ffff800020d48280 x26: ffff0cb9dc814080
+[  128.309715] x25: ffff0cb9cde93fa0 x24: 0000000000000001
+[  128.315969] x23: 0000000000000000 x22: 0000000000000194
+[  128.322219] x21: ffff0cd94f986000 x20: 0000000000000000
+[  128.328462] x19: ffff0cb9d2a166c0 x18: 0000000000000000
+[  128.334698] x17: 0000000000000000 x16: ffffcf1fc523ed24
+[  128.340934] x15: 0000ffffd530a518 x14: 0000000000000000
+[  128.347162] x13: ffff0cd6bdb31310 x12: 0000000000000368
+[  128.353388] x11: ffff0cb9cfbc7070 x10: ffff2cf55dd11e02
+[  128.359606] x9 : ffffcf1f85a212b4 x8 : ffff0cd7cf27dab0
+[  128.365831] x7 : 0000000000000a20 x6 : ffff0cd7cf27d000
+[  128.372040] x5 : 0000000000000000 x4 : 000000000000ffff
+[  128.378243] x3 : 0000000000000400 x2 : ffffcf1f85a21294
+[  128.384437] x1 : ffff0cb9db520080 x0 : ffff0cb9db500080
+[  128.390626] Call trace:
+[  128.393964]  hclge_ptp_set_tx_info+0x2c/0x140 [hclge]
+[  128.399893]  hns3_nic_net_xmit+0x39c/0x4c4 [hns3]
+[  128.405468]  xmit_one.constprop.0+0xc4/0x200
+[  128.410600]  dev_hard_start_xmit+0x54/0xf0
+[  128.415556]  sch_direct_xmit+0xe8/0x634
+[  128.420246]  __dev_queue_xmit+0x224/0xc70
+[  128.425101]  dev_queue_xmit+0x1c/0x40
+[  128.429608]  ovs_vport_send+0xac/0x1a0 [openvswitch]
+[  128.435409]  do_output+0x60/0x17c [openvswitch]
+[  128.440770]  do_execute_actions+0x898/0x8c4 [openvswitch]
+[  128.446993]  ovs_execute_actions+0x64/0xf0 [openvswitch]
+[  128.453129]  ovs_dp_process_packet+0xa0/0x224 [openvswitch]
+[  128.459530]  ovs_vport_receive+0x7c/0xfc [openvswitch]
+[  128.465497]  internal_dev_xmit+0x34/0xb0 [openvswitch]
+[  128.471460]  xmit_one.constprop.0+0xc4/0x200
+[  128.476561]  dev_hard_start_xmit+0x54/0xf0
+[  128.481489]  __dev_queue_xmit+0x968/0xc70
+[  128.486330]  dev_queue_xmit+0x1c/0x40
+[  128.490856]  ip_finish_output2+0x250/0x570
+[  128.495810]  __ip_finish_output+0x170/0x1e0
+[  128.500832]  ip_finish_output+0x3c/0xf0
+[  128.505504]  ip_output+0xbc/0x160
+[  128.509654]  ip_send_skb+0x58/0xd4
+[  128.513892]  udp_send_skb+0x12c/0x354
+[  128.518387]  udp_sendmsg+0x7a8/0x9c0
+[  128.522793]  inet_sendmsg+0x4c/0x8c
+[  128.527116]  __sock_sendmsg+0x48/0x80
+[  128.531609]  __sys_sendto+0x124/0x164
+[  128.536099]  __arm64_sys_sendto+0x30/0x5c
+[  128.540935]  invoke_syscall+0x50/0x130
+[  128.545508]  el0_svc_common.constprop.0+0x10c/0x124
+[  128.551205]  do_el0_svc+0x34/0xdc
+[  128.555347]  el0_svc+0x20/0x30
+[  128.559227]  el0_sync_handler+0xb8/0xc0
+[  128.563883]  el0_sync+0x160/0x180
 
-But when the "new" claim code was running in parallel to the "change
-backbone" code, it can happen that the CRC was invalid because the
-backbone_gw of the claim was changed twice in the "new" claim code path:
-
-* CPU0 creates the claim for gateway A and publishes it in the claim
-  hash. The crc16 of the address has not yet been added to A's crc at
-  this point.
-
-* CPU1 processes a claim frame of gateway B for the same client, finds
-  the just published claim, and performs the ownership change: it
-  switches the pointer to B, removes the crc16 from A's crc - which
-  never contained it - and adds it to B's crc.
-
-* CPU0 continues behind the creation branch, unconditionally switches
-  the pointer back to A without compensating B's crc (its remove_crc
-  is false for the creation path), and finally adds the crc16 to A's
-  crc
-
-The CRC is then wrong for both:
-
-* claim belongs to A: but CRC is not part of backbone A's CRC
-* claim doesn't belong to B: CRC is still part of backbone B's CRC
-
-This wrong CRC is never recomputated from the stored claims. For local
-backbone claims, this can also not recovered using syncs.
-
-To avoid this, split the functionality in clear separate parts:
-
-* new claim which always adds claim CRC to the backbone CRC (but never
-  changes the already set backbone_gw of the claim back)
-
-* update of existing claim which automatically changes the backbone_gw
-  entry and only updates both backbone CRCs when there was an actual change
-
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
-[ Context ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Fixes: 0bf5eb788512 ("net: hns3: add support for PTP")
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250106143642.539698-8-shaojijie@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/bridge_loop_avoidance.c | 63 ++++++++++++++++----------
- 1 file changed, 39 insertions(+), 24 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/batman-adv/bridge_loop_avoidance.c b/net/batman-adv/bridge_loop_avoidance.c
-index 148b8d726afa6..f84638421437d 100644
---- a/net/batman-adv/bridge_loop_avoidance.c
-+++ b/net/batman-adv/bridge_loop_avoidance.c
-@@ -693,12 +693,14 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
- 	struct batadv_bla_backbone_gw *old_backbone_gw;
- 	struct batadv_bla_claim *claim;
- 	struct batadv_bla_claim search_claim;
--	bool remove_crc = false;
- 	int hash_added;
-+	u16 claim_crc;
-+	bool changed;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
+index c1e88e67ebb65..5e94410d8dc2e 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
+@@ -58,6 +58,9 @@ bool hclge_ptp_set_tx_info(struct hnae3_handle *handle, struct sk_buff *skb)
+ 	struct hclge_dev *hdev = vport->back;
+ 	struct hclge_ptp *ptp = hdev->ptp;
  
- 	ether_addr_copy(search_claim.addr, mac);
- 	search_claim.vid = vid;
- 	claim = batadv_claim_hash_find(bat_priv, &search_claim);
-+	claim_crc = crc16(0, mac, ETH_ALEN);
- 
- 	/* create a new claim entry if it does not exist yet. */
- 	if (!claim) {
-@@ -730,43 +732,56 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
- 			kfree(claim);
- 			return;
- 		}
++	if (!ptp)
++		return false;
 +
-+		spin_lock_bh(&backbone_gw->crc_lock);
-+		backbone_gw->crc ^= claim_crc;
-+		spin_unlock_bh(&backbone_gw->crc_lock);
-+
-+		WRITE_ONCE(backbone_gw->lasttime, jiffies);
-+
-+		batadv_claim_put(claim);
-+		return;
-+	}
-+
-+	WRITE_ONCE(claim->lasttime, jiffies);
-+
-+	/* replace backbone_gw atomically and adjust reference counters */
-+	spin_lock_bh(&claim->backbone_lock);
-+	if (claim->backbone_gw != backbone_gw) {
-+		changed = true;
-+
-+		old_backbone_gw = claim->backbone_gw;
-+		kref_get(&backbone_gw->refcount);
-+		claim->backbone_gw = backbone_gw;
- 	} else {
--		WRITE_ONCE(claim->lasttime, jiffies);
--		if (claim->backbone_gw == backbone_gw)
--			/* no need to register a new backbone */
--			goto claim_free_ref;
-+		old_backbone_gw = NULL;
-+		changed = false;
-+	}
-+	spin_unlock_bh(&claim->backbone_lock);
- 
-+	if (changed) {
- 		batadv_dbg(BATADV_DBG_BLA, bat_priv,
- 			   "%s(): changing ownership for %pM, vid %d to gw %pM\n",
- 			   __func__, mac, batadv_print_vid(vid),
- 			   backbone_gw->orig);
- 
--		remove_crc = true;
--	}
-+		/* add claim address to new backbone_gw */
-+		spin_lock_bh(&backbone_gw->crc_lock);
-+		backbone_gw->crc ^= claim_crc;
-+		spin_unlock_bh(&backbone_gw->crc_lock);
- 
--	/* replace backbone_gw atomically and adjust reference counters */
--	spin_lock_bh(&claim->backbone_lock);
--	old_backbone_gw = claim->backbone_gw;
--	kref_get(&backbone_gw->refcount);
--	claim->backbone_gw = backbone_gw;
--	spin_unlock_bh(&claim->backbone_lock);
-+		WRITE_ONCE(backbone_gw->lasttime, jiffies);
-+	}
- 
--	if (remove_crc) {
-+	if (old_backbone_gw) {
- 		/* remove claim address from old backbone_gw */
- 		spin_lock_bh(&old_backbone_gw->crc_lock);
--		old_backbone_gw->crc ^= crc16(0, claim->addr, ETH_ALEN);
-+		old_backbone_gw->crc ^= claim_crc;
- 		spin_unlock_bh(&old_backbone_gw->crc_lock);
--	}
--
--	batadv_backbone_gw_put(old_backbone_gw);
- 
--	/* add claim address to new backbone_gw */
--	spin_lock_bh(&backbone_gw->crc_lock);
--	backbone_gw->crc ^= crc16(0, claim->addr, ETH_ALEN);
--	spin_unlock_bh(&backbone_gw->crc_lock);
--	WRITE_ONCE(backbone_gw->lasttime, jiffies);
-+		batadv_backbone_gw_put(old_backbone_gw);
-+	}
- 
--claim_free_ref:
- 	batadv_claim_put(claim);
- }
- 
+ 	if (!test_bit(HCLGE_PTP_FLAG_TX_EN, &ptp->flags) ||
+ 	    test_and_set_bit(HCLGE_STATE_PTP_TX_HANDLING, &hdev->state)) {
+ 		ptp->tx_skipped++;
 -- 
 2.53.0
 
