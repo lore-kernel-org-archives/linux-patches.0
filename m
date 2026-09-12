@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38C241A503;
-	Sat, 12 Sep 2026 13:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D076F479880;
+	Sat, 12 Sep 2026 13:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218987; cv=none; b=TW6ZdiWcYV5MUqNG364tdpwRPoVJ+LrttT+WY/sIyaZDh9RgUCvQkC55fHRgtVANc7e7B8SMvUlzl+z7oWwy2skpKSRcKTHjsRj0JiP4nrK8A+5eH/GXu0I/iy2U7iHRJcHG1TuMAGiSgH6+LQOy4EcWX4LINcwPr8BMoRO3cl0=
+	t=1789218992; cv=none; b=in0DHTLoYCi4jYOCbpg/R/SaxghKkNNZK++Tkh9XXqsOulFFHHo+TRXdw0f8cJ6+1hb0VfGYQkbTuxjZQ4hvqWdggr2uz60lIClIUf55sgfkJjRmdyndZ+ezQA7hUExFSOZcLrx05NkOFYR5iwOzW1+cGScfZdsiZxq8BsFmQLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218987; c=relaxed/simple;
-	bh=Kn9uN2gwImwKBOKtbQpxVLYmAd/uY/7PHtVPCG0AYHk=;
+	s=arc-20240116; t=1789218992; c=relaxed/simple;
+	bh=v/EKtT/K0qhLSSCngJVTw+0L1+iahAMi/5wkgJVAkmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m1AEQSyaocF4Os7NiPSNMhG46HPx2VeWpptBgfyiWvyqzSJXm286ba0x01AZkzH+BFjrG90Fy4j0jQ2+srBSgNEW7IjsrWmBbBLdLLHA5E4k2ynUmjrfK89rFi37VS9lMPmZnKgTLhZ/wOLhBH74rHVrd1Xplun9fPp+W3dCA9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cuRq6d19; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OxK8XwvrcIk8NIUbV4GLhKwnUgLwBWu0u7zT8XzHa/uVi5eJ4j/N5sVkjclq4Hb7N0d/lApG2TnVdyArY9Wj9FiTybpm5CeDQf/aSQPOkswgzf3iOiRnSt9X36l5Y64hco88Pa4oYEiZp7+/25Tm6EYsODjpfYJjLNfTQ4LXVQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hytCKXys; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuRq6d19"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5501F000FF;
-	Sat, 12 Sep 2026 13:16:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hytCKXys"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40111F000FF;
+	Sat, 12 Sep 2026 13:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218985;
-	bh=qmSI3VDA2LBo6IpYBDQL4tc6C5MiT6XH3isubaqYvCo=;
+	s=korg; t=1789218990;
+	bh=ZaF7pabxIqrmkgTUhjmxtAXWHlIeEmXEBGRlXLh9py8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cuRq6d19ztaI9d9Oj9akJrEFz0niHaz8np2Nm3UuD11Q3nUZV8QHIrG8OFHH73zeT
-	 W9kh9Bv+e7U9IIMYXhVV/hgum6/EkLN3qXUF8ZMfOSYAleMmRs6LgEr6rSzCl9nqFq
-	 dGpsT4pAVQoeF8lsrLJBN1mmSWI08x7dCwA9HqwE=
+	b=hytCKXysePEiMsNo/vkJ0bwilwaWnPMB6t2+prGiYpT/qYi5yLqwbPNVWlhHmd1KS
+	 oojVg5w6/C7AWmwITuSNdP6VomZu40EP3EvFxjxD5IeQFo2ajWIEVtHXS3Pxa8gO3U
+	 Jg5X4YAq/VOmYjuApPZtDDkU9Avoeus/GL/WDq/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sargun Dillon <sargun@sargun.me>,
-	Jeff Layton <jlayton@kernel.org>,
-	Benjamin Coddington <bcodding@redhat.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1259/1376] nfs: move the nfs4_data_server_cache into struct nfs_net
-Date: Sat, 12 Sep 2026 09:01:25 +0200
-Message-ID: <20260912065635.600423043@linuxfoundation.org>
+Subject: [PATCH 6.12 1260/1376] NFSv4/pnfs: key the data server cache on the NFS version
+Date: Sat, 12 Sep 2026 09:01:26 +0200
+Message-ID: <20260912065635.623480061@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,167 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit d5fb22a7c585b12ec3e6cef150689f7386e8cfd0 ]
+[ Upstream commit 13c23c5cb977f66390795437fd3837887ce1fd75 ]
 
-Since struct nfs4_pnfs_ds should not be shared between net namespaces,
-move from a global list of objects to a per-netns list and spinlock.
+nfs4_pnfs_ds_add() keys the per-net data server cache on the multipath
+address set alone, and struct nfs4_pnfs_ds records no version. That
+suffices for the files layout driver, which always connects with version
+4, but flexfiles takes its version tuple from GETDEVICEINFO per device,
+and one address can legitimately serve both NFSv3 and NFSv4.
 
-Tested-by: Sargun Dillon <sargun@sargun.me>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Link: https://lore.kernel.org/r/20250410-nfs-ds-netns-v2-2-f80b7979ba80@kernel.org
+Two deviceids on one address with different ds_versions[0].version
+therefore share a single nfs4_pnfs_ds, and whichever mirror connects
+first pins ds_clp to its own version. The other one is handed that
+client anyway, so it selects rpc_call_ops for a version the connection
+does not speak, and the mismatched sequence-slot handling dereferences
+NULL.
+
+Add the version to the cache key so the two cannot alias, giving each
+version its own nfs4_pnfs_ds and connection while both mirrors stay
+usable. Only the major version is compared, since that is what selects
+rpc_call_ops and rpc_ops; v4.0 and v4.1 keep sharing a client. The files
+layout driver passes the 4 it already hardcodes at connect time.
+
+Fixes: d67ae825a59d ("pnfs/flexfiles: Add the FlexFile Layout Driver")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Stable-dep-of: 13c23c5cb977 ("NFSv4/pnfs: key the data server cache on the NFS version")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/client.c   |  7 +++++++
- fs/nfs/netns.h    |  6 +++++-
- fs/nfs/pnfs_nfs.c | 31 +++++++++++++++++--------------
- 3 files changed, 29 insertions(+), 15 deletions(-)
+ fs/nfs/filelayout/filelayoutdev.c         |  3 ++-
+ fs/nfs/flexfilelayout/flexfilelayoutdev.c |  3 ++-
+ fs/nfs/pnfs.h                             |  3 ++-
+ fs/nfs/pnfs_nfs.c                         | 14 +++++++++-----
+ 4 files changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/fs/nfs/client.c b/fs/nfs/client.c
-index 4b9b82ddf521e..bb3f882d8c240 100644
---- a/fs/nfs/client.c
-+++ b/fs/nfs/client.c
-@@ -1260,6 +1260,10 @@ void nfs_clients_init(struct net *net)
- 	INIT_LIST_HEAD(&nn->nfs_volume_list);
- #if IS_ENABLED(CONFIG_NFS_V4)
- 	idr_init(&nn->cb_ident_idr);
-+#endif
-+#if IS_ENABLED(CONFIG_NFS_V4_1)
-+	INIT_LIST_HEAD(&nn->nfs4_data_server_cache);
-+	spin_lock_init(&nn->nfs4_data_server_lock);
- #endif
- 	spin_lock_init(&nn->nfs_client_lock);
- 	nn->boot_time = ktime_get_real();
-@@ -1277,6 +1281,9 @@ void nfs_clients_exit(struct net *net)
- 	nfs_cleanup_cb_ident_idr(net);
- 	WARN_ON_ONCE(!list_empty(&nn->nfs_client_list));
- 	WARN_ON_ONCE(!list_empty(&nn->nfs_volume_list));
-+#if IS_ENABLED(CONFIG_NFS_V4_1)
-+	WARN_ON_ONCE(!list_empty(&nn->nfs4_data_server_cache));
-+#endif
- }
+diff --git a/fs/nfs/filelayout/filelayoutdev.c b/fs/nfs/filelayout/filelayoutdev.c
+index 29d9234d5c085..b878ea466361b 100644
+--- a/fs/nfs/filelayout/filelayoutdev.c
++++ b/fs/nfs/filelayout/filelayoutdev.c
+@@ -170,7 +170,8 @@ nfs4_fl_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
+ 			goto out_err_free_deviceid;
+ 		}
  
- #ifdef CONFIG_PROC_FS
-diff --git a/fs/nfs/netns.h b/fs/nfs/netns.h
-index a68b21603ea9a..6ba3ea39e928c 100644
---- a/fs/nfs/netns.h
-+++ b/fs/nfs/netns.h
-@@ -31,7 +31,11 @@ struct nfs_net {
- 	unsigned short nfs_callback_tcpport;
- 	unsigned short nfs_callback_tcpport6;
- 	int cb_users[NFS4_MAX_MINOR_VERSION + 1];
--#endif
-+#endif /* CONFIG_NFS_V4 */
-+#if IS_ENABLED(CONFIG_NFS_V4_1)
-+	struct list_head nfs4_data_server_cache;
-+	spinlock_t nfs4_data_server_lock;
-+#endif /* CONFIG_NFS_V4_1 */
- 	struct nfs_netns_client *nfs_client;
- 	spinlock_t nfs_client_lock;
- 	ktime_t boot_time;
+-		dsaddr->ds_list[i] = nfs4_pnfs_ds_add(net, &dsaddrs, gfp_flags);
++		dsaddr->ds_list[i] = nfs4_pnfs_ds_add(net, &dsaddrs, 4,
++						      gfp_flags);
+ 		if (!dsaddr->ds_list[i])
+ 			goto out_err_drain_dsaddrs;
+ 		trace_fl_getdevinfo(server, &pdev->dev_id, dsaddr->ds_list[i]->ds_remotestr);
+diff --git a/fs/nfs/flexfilelayout/flexfilelayoutdev.c b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
+index 9c127565870ec..53655581f9cb2 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
++++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
+@@ -149,7 +149,8 @@ nfs4_ff_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
+ 	new_ds->ds_versions = ds_versions;
+ 	new_ds->ds_versions_cnt = version_count;
+ 
+-	new_ds->ds = nfs4_pnfs_ds_add(net, &dsaddrs, gfp_flags);
++	new_ds->ds = nfs4_pnfs_ds_add(net, &dsaddrs, ds_versions[0].version,
++				      gfp_flags);
+ 	if (!new_ds->ds)
+ 		goto out_err_drain_dsaddrs;
+ 
+diff --git a/fs/nfs/pnfs.h b/fs/nfs/pnfs.h
+index 3db8f13d8fe4e..7b3ba2e64e6f3 100644
+--- a/fs/nfs/pnfs.h
++++ b/fs/nfs/pnfs.h
+@@ -63,6 +63,7 @@ struct nfs4_pnfs_ds {
+ 	const struct net	*ds_net;
+ 	struct nfs_client	*ds_clp;
+ 	refcount_t		ds_count;
++	u32			ds_version;	/* cache key, with ds_addrs */
+ 	unsigned long		ds_state;
+ #define NFS4DS_CONNECTING	0	/* ds is establishing connection */
+ };
+@@ -417,7 +418,7 @@ void pnfs_generic_write_commit_done(struct rpc_task *task, void *data);
+ void nfs4_pnfs_ds_put(struct nfs4_pnfs_ds *ds);
+ struct nfs4_pnfs_ds *nfs4_pnfs_ds_add(const struct net *net,
+ 				      struct list_head *dsaddrs,
+-				      gfp_t gfp_flags);
++				      u32 version, gfp_t gfp_flags);
+ void nfs4_pnfs_v3_ds_connect_unload(void);
+ int nfs4_pnfs_ds_connect(struct nfs_server *mds_srv, struct nfs4_pnfs_ds *ds,
+ 			  struct nfs4_deviceid_node *devid, unsigned int timeo,
 diff --git a/fs/nfs/pnfs_nfs.c b/fs/nfs/pnfs_nfs.c
-index bf6abca0c29db..26dcb3bb711d1 100644
+index 26dcb3bb711d1..634ee58ced12a 100644
 --- a/fs/nfs/pnfs_nfs.c
 +++ b/fs/nfs/pnfs_nfs.c
-@@ -16,6 +16,7 @@
- #include "nfs4session.h"
- #include "internal.h"
- #include "pnfs.h"
-+#include "netns.h"
+@@ -602,15 +602,17 @@ _same_data_server_addrs_locked(const struct list_head *dsaddrs1,
+ }
  
- #define NFSDBG_FACILITY		NFSDBG_PNFS
- 
-@@ -504,14 +505,14 @@ EXPORT_SYMBOL_GPL(pnfs_generic_commit_pagelist);
  /*
-  * Data server cache
-  *
-- * Data servers can be mapped to different device ids.
-- * nfs4_pnfs_ds reference counting
-+ * Data servers can be mapped to different device ids, but should
-+ * never be shared between net namespaces.
-+ *
-+ * nfs4_pnfs_ds reference counting:
-  *   - set to 1 on allocation
-  *   - incremented when a device id maps a data server already in the cache.
-  *   - decremented when deviceid is removed from the cache.
-  */
--static DEFINE_SPINLOCK(nfs4_ds_cache_lock);
--static LIST_HEAD(nfs4_data_server_cache);
- 
- /* Debug routines */
- static void
-@@ -604,12 +605,12 @@ _same_data_server_addrs_locked(const struct list_head *dsaddrs1,
-  * Lookup DS by addresses.  nfs4_ds_cache_lock is held
+- * Lookup DS by addresses.  nfs4_ds_cache_lock is held
++ * Lookup DS by addresses and NFS version.  nfs4_ds_cache_lock is held
   */
  static struct nfs4_pnfs_ds *
--_data_server_lookup_locked(const struct net *net, const struct list_head *dsaddrs)
-+_data_server_lookup_locked(const struct nfs_net *nn, const struct list_head *dsaddrs)
+-_data_server_lookup_locked(const struct nfs_net *nn, const struct list_head *dsaddrs)
++_data_server_lookup_locked(const struct nfs_net *nn,
++			   const struct list_head *dsaddrs, u32 version)
  {
  	struct nfs4_pnfs_ds *ds;
  
--	list_for_each_entry(ds, &nfs4_data_server_cache, ds_node)
--		if (ds->ds_net == net && _same_data_server_addrs_locked(&ds->ds_addrs, dsaddrs))
-+	list_for_each_entry(ds, &nn->nfs4_data_server_cache, ds_node)
-+		if (_same_data_server_addrs_locked(&ds->ds_addrs, dsaddrs))
+ 	list_for_each_entry(ds, &nn->nfs4_data_server_cache, ds_node)
+-		if (_same_data_server_addrs_locked(&ds->ds_addrs, dsaddrs))
++		if (ds->ds_version == version &&
++		    _same_data_server_addrs_locked(&ds->ds_addrs, dsaddrs))
  			return ds;
  	return NULL;
  }
-@@ -653,10 +654,11 @@ static void destroy_ds(struct nfs4_pnfs_ds *ds)
- 
- void nfs4_pnfs_ds_put(struct nfs4_pnfs_ds *ds)
- {
--	if (refcount_dec_and_lock(&ds->ds_count,
--				&nfs4_ds_cache_lock)) {
-+	struct nfs_net *nn = net_generic(ds->ds_net, nfs_net_id);
-+
-+	if (refcount_dec_and_lock(&ds->ds_count, &nn->nfs4_data_server_lock)) {
- 		list_del_init(&ds->ds_node);
--		spin_unlock(&nfs4_ds_cache_lock);
-+		spin_unlock(&nn->nfs4_data_server_lock);
- 		destroy_ds(ds);
- 	}
- }
-@@ -718,6 +720,7 @@ nfs4_pnfs_remotestr(struct list_head *dsaddrs, gfp_t gfp_flags)
+@@ -718,7 +720,8 @@ nfs4_pnfs_remotestr(struct list_head *dsaddrs, gfp_t gfp_flags)
+  * uncached and return cached struct nfs4_pnfs_ds.
+  */
  struct nfs4_pnfs_ds *
- nfs4_pnfs_ds_add(const struct net *net, struct list_head *dsaddrs, gfp_t gfp_flags)
+-nfs4_pnfs_ds_add(const struct net *net, struct list_head *dsaddrs, gfp_t gfp_flags)
++nfs4_pnfs_ds_add(const struct net *net, struct list_head *dsaddrs, u32 version,
++		 gfp_t gfp_flags)
  {
-+	struct nfs_net *nn = net_generic(net, nfs_net_id);
+ 	struct nfs_net *nn = net_generic(net, nfs_net_id);
  	struct nfs4_pnfs_ds *tmp_ds, *ds = NULL;
- 	char *remotestr;
- 
-@@ -733,8 +736,8 @@ nfs4_pnfs_ds_add(const struct net *net, struct list_head *dsaddrs, gfp_t gfp_fla
- 	/* this is only used for debugging, so it's ok if its NULL */
+@@ -737,7 +740,7 @@ nfs4_pnfs_ds_add(const struct net *net, struct list_head *dsaddrs, gfp_t gfp_fla
  	remotestr = nfs4_pnfs_remotestr(dsaddrs, gfp_flags);
  
--	spin_lock(&nfs4_ds_cache_lock);
--	tmp_ds = _data_server_lookup_locked(net, dsaddrs);
-+	spin_lock(&nn->nfs4_data_server_lock);
-+	tmp_ds = _data_server_lookup_locked(nn, dsaddrs);
+ 	spin_lock(&nn->nfs4_data_server_lock);
+-	tmp_ds = _data_server_lookup_locked(nn, dsaddrs);
++	tmp_ds = _data_server_lookup_locked(nn, dsaddrs, version);
  	if (tmp_ds == NULL) {
  		INIT_LIST_HEAD(&ds->ds_addrs);
  		list_splice_init(dsaddrs, &ds->ds_addrs);
-@@ -743,7 +746,7 @@ nfs4_pnfs_ds_add(const struct net *net, struct list_head *dsaddrs, gfp_t gfp_fla
+@@ -746,6 +749,7 @@ nfs4_pnfs_ds_add(const struct net *net, struct list_head *dsaddrs, gfp_t gfp_fla
  		INIT_LIST_HEAD(&ds->ds_node);
  		ds->ds_net = net;
  		ds->ds_clp = NULL;
--		list_add(&ds->ds_node, &nfs4_data_server_cache);
-+		list_add(&ds->ds_node, &nn->nfs4_data_server_cache);
++		ds->ds_version = version;
+ 		list_add(&ds->ds_node, &nn->nfs4_data_server_cache);
  		dprintk("%s add new data server %s\n", __func__,
  			ds->ds_remotestr);
- 	} else {
-@@ -755,7 +758,7 @@ nfs4_pnfs_ds_add(const struct net *net, struct list_head *dsaddrs, gfp_t gfp_fla
- 			refcount_read(&tmp_ds->ds_count));
- 		ds = tmp_ds;
- 	}
--	spin_unlock(&nfs4_ds_cache_lock);
-+	spin_unlock(&nn->nfs4_data_server_lock);
- out:
- 	return ds;
- }
 -- 
 2.53.0
 
