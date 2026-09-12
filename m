@@ -1,69 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA82455639;
-	Sat, 12 Sep 2026 11:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682383F788A;
+	Sat, 12 Sep 2026 11:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213085; cv=none; b=jt95vF1mqVFCBDwAxGVjeM6px6x7Ya5CkhvfEZ3OK3pG6NY2lSqtuFCsUda0LHFOBinQtu2PzuIcSODukiZ2y4DOMS0h94rTRM6HsUZmV+aUWPVr2RE2J5FnKe/7tL+C39UqX3k5nGEWf8xpileFL1TTtj2wt+Qw+yxw0NH9W9M=
+	t=1789213087; cv=none; b=j+K1aPbwV0vvBfJp2WW3j8VQhSaZc0lkXMm5JqeVId+zLwdNKHt3TiOOsxpDMA4vrnbqGCNnRkGXOEBdy9XSFB2far5dSVrCAyiX6toMgmoLNVRhld3x1QBNVp0PE/X/RiZf4NRH4UbiYL0KX8UZK5CU7hMb5dw1Wxfd9f/+JYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213085; c=relaxed/simple;
-	bh=lKIm7gOFjbvrtrIHW1hBno3TUt4r2Zo8YthpdYtHgao=;
+	s=arc-20240116; t=1789213087; c=relaxed/simple;
+	bh=NdPoOkwrlMUaFh/7YTR88OspGDXE0Tj3CCQEYLSJQs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RtoQuNS4ZjOWer3L00q/xRpdTfQ32WJDXFIh0Roxcoz/PApA8sZsHUxSoWrAmCnb5Rx4C4p9qmKNHzRResgcXG4RTm9UceAUG56bzRKeuqxj+uxw0TdV3iD8Y703kJaBi4P6wos00pW7cV12C247z9WHXf7+6EmRX0vw0RooS9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EelMM/eR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gir7a4ZMriAf7IcmYrDfTb+hw41v79oF7NSktXPwNldBuhp+9pxA4u35HQQPrZjRoqZTBnMSWbDJtMGpTidtDiybB5j4HnZRbojBZM10YN2bdse7/0iQ4/iiY6HyuySCBRSkokOdc8FpV+myWySnlK3FFSyMmF+f26z9nUIFCiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLwceR5H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EelMM/eR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 384B81F000FF;
-	Sat, 12 Sep 2026 11:38:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLwceR5H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229661F00893;
+	Sat, 12 Sep 2026 11:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213081;
-	bh=PQPZDnh5nJRu+KX7gu/rg8E43xRcs3t4J9itCxtc8Ao=;
+	s=korg; t=1789213086;
+	bh=H7EsXcIE2OkmWykzuAm7sOd2HAQfsqeuAzuiWSzWo20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EelMM/eRALxoHGdFrLgqTT2W9C2emAS8A8xtYM/WqBQWpb5Tb42eBlBK2CYIktVy6
-	 ZUdkeeft4AS2EhU1G7cjiIon78u+Y9wGcDfUXBAiH4stXqsb80sZAlz1S5n7LIXfEc
-	 dVGHIKMIuHglqJ7XwNmISWcJLJ2KQ4x3spwkMZ9E=
+	b=sLwceR5HRENrXIONr3KUSYfpP+HEIwYtb5OoV6SOzqks8d5JH0GT3bHlmy2U1I9bP
+	 PYn99QW9NJcBX6xJhPpylOTJqfEwb9GtVs38UZw7Lzmw6kqBQE1HvH1ZSQ8iN1Ty3d
+	 CWDnvnuwdvo9geL2+3phja7muxWL+8mzTnyLyB9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dev Jain <dev.jain@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@intel.com>,
-	Gregory Price <gourry@gourry.net>,
-	Harry Yoo <harry@kernel.org>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Jann Horn <jannh@google.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	=?UTF-8?q?Junichi=20 Nick =20Nomura?= <j-nomura@ce.jp.nec.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Mel Gorman <mel@csn.ul.ie>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	Rik van Riel <riel@surriel.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0007/1376] mm/page_vma_mapped: use huge_ptep_get() for hugetlb
-Date: Sat, 12 Sep 2026 08:40:33 +0200
-Message-ID: <20260912065607.712986290@linuxfoundation.org>
+Subject: [PATCH 6.12 0008/1376] wifi: mt76: mt7996: validate default EEPROM firmware size
+Date: Sat, 12 Sep 2026 08:40:34 +0200
+Message-ID: <20260912065607.735767294@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -82,83 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dev Jain <dev.jain@arm.com>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-[ Upstream commit e87df0d5d6962bde50f55f6d02b779daa394f894 ]
+[ Upstream commit 653c6e289b13cc6942f3e8f8e3c568e70fa42d1f ]
 
-check_pte() is the final validation step in page_vma_mapped_walk().  It
-reads pvmw->pte with ptep_get() to decide whether the entry maps the PFN
-range being walked.  For hugetlb VMAs, that pointer refers to a hugetlb
-entry.
+The default EEPROM firmware is parsed and copied as a full EEPROM
+without checking its length. A truncated file can make the driver
+read beyond the firmware buffer during variant validation or the
+fallback copy.
 
-On arches which provide their own huge_ptep_get() to dereference a huge
-pte pointer, accessing via ptep_get() would cause pte_pfn(), pte_present()
-etc to misbehave.
+Reject files shorter than MT7996_EEPROM_SIZE before parsing or
+copying the firmware.
 
-It is not clear whether this has a trivially visible effect to userspace.
-
-Use huge_ptep_get() to dereference a huge pte pointer.
-
-Link: https://lore.kernel.org/20260703114202.365553-6-dev.jain@arm.com
-Fixes: ace71a19cec5 ("mm: introduce page_vma_mapped_walk()")
-Signed-off-by: Dev Jain <dev.jain@arm.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@intel.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Harry Yoo <harry@kernel.org>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Jun'ichi "Nick" Nomura <j-nomura@ce.jp.nec.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Mel Gorman <mel@csn.ul.ie>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ralph Campbell <rcampbell@nvidia.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+Link: https://patch.msgid.link/20260713115412.67095-1-acharyalaxman8848@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_vma_mapped.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/eeprom.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/mm/page_vma_mapped.c b/mm/page_vma_mapped.c
-index 585a53f7b06f0..1cc8fd382cd13 100644
---- a/mm/page_vma_mapped.c
-+++ b/mm/page_vma_mapped.c
-@@ -97,7 +97,13 @@ static bool map_pte(struct page_vma_mapped_walk *pvmw, spinlock_t **ptlp)
- static bool check_pte(struct page_vma_mapped_walk *pvmw, unsigned long pte_nr)
- {
- 	unsigned long pfn;
--	pte_t ptent = ptep_get(pvmw->pte);
-+	pte_t ptent;
-+
-+	if (is_vm_hugetlb_page(pvmw->vma))
-+		ptent = huge_ptep_get(pvmw->vma->vm_mm, pvmw->address,
-+				      pvmw->pte);
-+	else
-+		ptent = ptep_get(pvmw->pte);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7996/eeprom.c
+index 4c4ab0d4065d2..a14d1d2849b64 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/eeprom.c
+@@ -51,6 +51,12 @@ mt7996_eeprom_load_default(struct mt7996_dev *dev)
+ 		goto out;
+ 	}
  
- 	if (pvmw->flags & PVMW_MIGRATION) {
- 		swp_entry_t entry;
++	if (fw->size < MT7996_EEPROM_SIZE) {
++		dev_err(dev->mt76.dev, "Invalid default bin size\n");
++		ret = -EINVAL;
++		goto out;
++	}
++
+ 	memcpy(eeprom, fw->data, MT7996_EEPROM_SIZE);
+ 	dev->flash_mode = true;
+ 
 -- 
 2.53.0
 
