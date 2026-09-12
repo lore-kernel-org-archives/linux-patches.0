@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9490A2DC792;
-	Sat, 12 Sep 2026 11:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875012DC792;
+	Sat, 12 Sep 2026 11:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211870; cv=none; b=B04hwQxJV7TSPeTEFLyB2H2MqRmlGiIKWFcmh0nWE+P9dF4xaICGfgEktFojTQUx25lfYCL2KET2J+4WIcAksTfhsI/ziajXJ/BuN7uU2nu4tVPTfoUDX3HCM0yhkeLi2z8BX1DdeXx0JZHaKBWXN8NhW6OR4ZC1amnkpMlYZLw=
+	t=1789211875; cv=none; b=oxdWBKbMTKoLUbjRsZADBANK8lS1LahlnqWUEjgyFU2tglMuQYa0gqHfvRJg27vszzAFDIUeXZJ7s865RZKNjTtLz86yEORK72iCugalm46NUISIBAKIhFtgW0JtKFdqd2PDlYe+7V5Q/w7wLTCqnPL5OytC8SyLhUl1cbSPcFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211870; c=relaxed/simple;
-	bh=1lyS96OIcHAJ56beEAWd4L1QR39E41kQ2w+2ysu6D5E=;
+	s=arc-20240116; t=1789211875; c=relaxed/simple;
+	bh=RJgetkFDrur+gsGTaVEq6RQLM5bmpCMBpIloLawR07Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OhkXPDHzUx1uSSO0haBBDivt6LW/DX9CrMvCDi0H/wA4Yd+gBhhmVc+dTmSHF08hlCE7gS2feACc0EK5UfoFUsYzdcxsQY8uDeceLlIp3lOdbpTOwMplkHsQyYGmyNNpqDFJ/+yuW344IQbvpkEM0VB8o7LMPkjIiIkqyud0FO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=saKe4DRn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PL639bYv+LZBXEv4CUWx0TjE+epNPSod8RR+HOK1cgoqsI3aXodE2ksrA6YMW6rS0vAzOa34pfL2Ckf72kUDOY4mtbkSSW/AYqP6QqRqNln/5hIXrlBrMioNnzXP7/IhT2eRVQ8EJdewpP3Ap0K7mAP6IsE35KHQA/bS1r55Dfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qlQDGODc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saKe4DRn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986081F000FF;
-	Sat, 12 Sep 2026 11:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qlQDGODc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E961F000FF;
+	Sat, 12 Sep 2026 11:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211869;
-	bh=ftVj2F76T1Rxv1gsjYhvml3JUronEAzwHYjlb0VsOGY=;
+	s=korg; t=1789211874;
+	bh=VBcbYrYkt9w+ouaWHhd749Qyir7msHZdGGKo6LNadU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=saKe4DRn6Da2I/nF1ZQMDC1P99v3gBSkA/buvzlF1RlTY+ZODJ0tXI2Rr/Ry3WLwM
-	 yLfAy6Ea2Hbq/oBrWf1X4grKDoRynyopqGfgE+r7stcaBY1punA+5CEPpbC6HjvI+A
-	 l8hcDco1gKtWGN9ASFGwzWpc5w66+sd0zOPkIBMM=
+	b=qlQDGODc4hc4ayD7HeWs/WmjNNC+Z9y1V9rHnewr4Nh1BI+BeV9avSaWKy/6jn5kB
+	 zyVEZDs+SuaY7R3nic7xN0pekHl2uYL7q1rHPNg/C1rqNxLQoMctZI1nMxDeJGnrSG
+	 +pusGeoWYltCcjlRk+u4OqUnzYW7eAm3vHsx18Jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Brian Masney <bmasney@redhat.com>,
-	Xianwei Zhao <xianwei.zhao@amlogic.com>,
-	Mark Brown <broonie@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1319/1518] spi: amlogic-spisg: Make sure clk_init_data is fully initialized
-Date: Sat, 12 Sep 2026 08:58:08 +0200
-Message-ID: <20260912065653.367092991@linuxfoundation.org>
+Subject: [PATCH 6.18 1320/1518] ALSA: mtpav: shut down output timer before card teardown
+Date: Sat, 12 Sep 2026 08:58:09 +0200
+Message-ID: <20260912065653.390659433@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,49 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit b2702908ee23ef31bfcf241a2e07ace0eb76bd71 ]
+[ Upstream commit c73cb5b7c159246dd572277c668851a56e516019 ]
 
-The clk_init_data structure contains several mutually-exclusive members
-for different methods to specify the possible parents of a clock,
-prompting drivers to initialize only the members they need.  However,
-not initializing all members may cause subtle issues, which are only
-exposed when CONFIG_INIT_STACK_ALL_PATTERN or CONFIG_INIT_STACK_NONE is
-enabled.
+snd_mtpav_output_timer() rearms chip->timer while holding
+chip->spinlock and accesses the card-private mtpav state.
 
-aml_spisg_clk_init() fills in init.parent_data, and assumes that
-init.parent_names is NULL.  However, the latter in uninitialized, and
-thus may cause a crash.
+snd_mtpav_free() currently takes the same lock and calls
+timer_delete() when the timer is active. This only removes a
+pending timer; it does not wait for a callback that is already
+running and does not prevent the callback from rearming the timer.
 
-Make sure all members are fully initialized, to fix such bugs, and to
-avoid future breakage when converting drivers to a different method for
-specifying the parents.
+A callback running on another CPU can therefore continue after
+snd_mtpav_free() releases the lock and access the card-private
+state while the card is being torn down. It can also rearm the
+timer after timer_delete() has returned.
 
-Fixes: cef9991e04aed330 ("spi: Add Amlogic SPISG driver")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
-Link: https://patch.msgid.link/9fb35ae0aedb7a6db0db6c78a8193c7602dd9d44.1787165329.git.geert+renesas@glider.be
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Call timer_shutdown_sync() without holding chip->spinlock. This
+waits for any running callback to finish and prevents further
+rearming before the card-private mtpav state is released.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260820112749.9195-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-amlogic-spisg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/drivers/mtpav.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-amlogic-spisg.c b/drivers/spi/spi-amlogic-spisg.c
-index 970fddbb25857..8ddb7a1a40567 100644
---- a/drivers/spi/spi-amlogic-spisg.c
-+++ b/drivers/spi/spi-amlogic-spisg.c
-@@ -640,7 +640,7 @@ static int aml_spisg_target_abort(struct spi_controller *ctlr)
- static int aml_spisg_clk_init(struct spisg_device *spisg, void __iomem *base)
+diff --git a/sound/drivers/mtpav.c b/sound/drivers/mtpav.c
+index d31eadf4be5f8..1ed6d4f0cb625 100644
+--- a/sound/drivers/mtpav.c
++++ b/sound/drivers/mtpav.c
+@@ -642,9 +642,7 @@ static void snd_mtpav_free(struct snd_card *card)
  {
- 	struct device *dev = &spisg->pdev->dev;
--	struct clk_init_data init;
-+	struct clk_init_data init = {};
- 	struct clk_divider *div;
- 	struct clk_div_table *tbl;
- 	char name[32];
+ 	struct mtpav *crd = card->private_data;
+ 
+-	guard(spinlock_irqsave)(&crd->spinlock);
+-	if (crd->istimer > 0)
+-		snd_mtpav_remove_output_timer(crd);
++	timer_shutdown_sync(&crd->timer);
+ }
+ 
+ /*
 -- 
 2.53.0
 
