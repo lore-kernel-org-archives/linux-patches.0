@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E02361960;
-	Sat, 12 Sep 2026 09:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA832BDC0E;
+	Sat, 12 Sep 2026 09:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204475; cv=none; b=GS/s7gCNjXYRA221Rk284EPJsVxMP5Oiz+HTvhLWKKUP2uOMQZwpflF251toLFS1jruoVvH9KI/+xl3Zlor+qxRD+UUSF63wNinVVvJ+thY64oy/3FAbwOWrfPyO8fXxLeX2Y2MHufa8yhgboDCkz4TDeeGNyNhm9u123yhFLyk=
+	t=1789204479; cv=none; b=OgDEIb2tu+dX5T3xBhgTHgQCThSZKW1EGkqCeDSs6rdwj4jh+kuT/X51SRe6oV1FmxhBgYos5IWXs30tc1VzICpZSXXbKx8yjKgQT4uvLQh9ZhVkoKWF3EZgLq/OWKOu8WVNFFzchogncS3hRLRq3Bbqq9t4rHbgesR2QHHSaYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204475; c=relaxed/simple;
-	bh=4F/68khy2jgJ44qWtYt6Efj9/aqXm3gvwmShi63WvNQ=;
+	s=arc-20240116; t=1789204479; c=relaxed/simple;
+	bh=51Ns/AwUjECa4l9i9TOkwK/5JkiePmJvNQjG/1OMFEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AAxMsj3T55fxl8VlSaiLJFyInYoNFTKUc+8CilQL0oT4swfNdJppT8QJEe1+/I318wW9NbJn59VwkGUCRrpjMZu+Pl/AXnIQ9Vmt31Z3c+hcuVia13/QKGVWJjFWYshIxRQ0Pa5bgRU3tOrEeoa1gtRDH6dpws19EiLwKxyk8dA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2B6s+Sds; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RpBOn9VYaqQVh/bR2easdwzGYdxrSwr76Q7ygP9cKqKuQ1BmTTibFvgAVig7Dcp3bC4zr9WCW4M0YBwcFuypjvDL4PILGH199XiuR2EeKeNuHJVaRDC3AL5tewY0+F1Qtx/rKa/65jNwGx63+FxTeh7Yhnt4U9jLDtyBdV8FguQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEhMXpeS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2B6s+Sds"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADEBA1F000FF;
-	Sat, 12 Sep 2026 09:14:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEhMXpeS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38021F000FF;
+	Sat, 12 Sep 2026 09:14:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204473;
-	bh=a6fD7SulPtyEoutyOkDrB/1p0E5Wn4fgrxU1PcNbgYs=;
+	s=korg; t=1789204477;
+	bh=8icFN5vcUuTwCd5x0j/jOxdlZWoXRa1Yml7Q+vPzwr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2B6s+SdsJukg2mSlOaeXKk1QTQf9MFK7gib7WiJTS/1LSE8WUjvpf/K2DUUwYGkgw
-	 EwSMi7GfGpBNyDShtV0mwLiKgUNTABMcl2lhcykeZtHnQAp3A9nIo2OhtBUfVFEDiJ
-	 jEYJhYFj7Wx7ktiUjLh6UJ+qJDP+c7V4j8l5KbEA=
+	b=fEhMXpeSXcKhlUPNpZbWgbAapQkwOXyex8eWYLDZHgJFyqiydtReg5rOhU/pWIvbA
+	 D25z1x/5WUZvJ/fl+DuaV044ArpBzQqp9Ast1D3uh60jjc06MLXikMT0PqumF0T95U
+	 65KY8VI4870pljITsIN0Kqz2rt+RHGZJVADuKEok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	=?UTF-8?q?Linfeng=20Sun=C2=A0?= <linfeng.sun.dev@gamil.com>,
+	"Denis V. Lunev" <den@openvz.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1620/1815] vdpa_sim: fix cleanup after worker creation failure
-Date: Sat, 12 Sep 2026 08:56:10 +0200
-Message-ID: <20260912065727.021391549@linuxfoundation.org>
+Subject: [PATCH 7.2 1621/1815] virtio: add virtio_device_shutdown() helper
+Date: Sat, 12 Sep 2026 08:56:11 +0200
+Message-ID: <20260912065727.044415307@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,93 +46,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linfeng Sun  <linfeng.sun.dev@gamil.com>
+From: Denis V. Lunev <den@openvz.org>
 
-[ Upstream commit bd670e5dfd2b01fd9692f61fa1456434c54026a4 ]
+[ Upstream commit 0d8aebe089b4ba887e792884cf041ce9f1040ff4 ]
 
-vdpasim_create() leaves vdpasim->worker as an ERR_PTR when
-kthread_run_worker() fails. The error path then drops the device
-reference, which releases the partially initialized simulator.
+The generic virtio bus .shutdown handler, virtio_dev_shutdown(), breaks
+and resets a device once it has established that the driver has no
+.shutdown of its own. A driver that does implement .shutdown, to quiesce
+its own activity first, still needs the same break and reset afterwards
+and would otherwise have to open code it.
 
-vdpasim_free() unconditionally passes the worker pointer to
-kthread_destroy_worker(), so the ERR_PTR is dereferenced and can trigger
-a general protection fault.
+Factor the break + synchronize_cbs + reset sequence out of
+virtio_dev_shutdown() into an exported virtio_device_shutdown() helper so
+such drivers can reuse it instead of duplicating the core logic.
 
-Store the worker error, clear the pointer, and only clean up the worker
-when it was successfully initialized. Also make the release path tolerate
-partially initialized objects by guarding virtqueue and IOTLB cleanup,
-since the same release path can be reached from other initialization
-failures.
+No functional change.
 
-I found this bug myself, though the patch was written with AI assistance.
-
-Fixes: 76acfa7bc54f ("vdpa_sim: use kthread worker")
-Assisted-by: OpenAI-Codex:GPT-5
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gamil.com>
-Message-ID: <20260620100959.2070316-1-slf@hdu.edu.cn>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260624140846.2616797-2-den@openvz.org>
+Stable-dep-of: 7e17eef04600 ("virtio_balloon: quiesce balloon work before device shutdown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_sim/vdpa_sim.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/virtio/virtio.c | 41 +++++++++++++++++++++++++++--------------
+ include/linux/virtio.h  |  1 +
+ 2 files changed, 28 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim.c b/drivers/vdpa/vdpa_sim/vdpa_sim.c
-index 4d116644851d9..c748fe4511635 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim.c
-@@ -233,8 +233,11 @@ struct vdpasim *vdpasim_create(struct vdpasim_dev_attr *dev_attr,
- 	kthread_init_work(&vdpasim->work, vdpasim_work_fn);
- 	vdpasim->worker = kthread_run_worker(0, "vDPA sim worker: %s",
- 						dev_attr->name);
--	if (IS_ERR(vdpasim->worker))
-+	if (IS_ERR(vdpasim->worker)) {
-+		ret = PTR_ERR(vdpasim->worker);
-+		vdpasim->worker = NULL;
- 		goto err_iommu;
-+	}
+diff --git a/drivers/virtio/virtio.c b/drivers/virtio/virtio.c
+index 299fa83be1d5f..75bb4ffe3b877 100644
+--- a/drivers/virtio/virtio.c
++++ b/drivers/virtio/virtio.c
+@@ -401,6 +401,32 @@ static const struct cpumask *virtio_irq_get_affinity(struct device *_d,
+ 	return dev->config->get_vq_affinity(dev, irq_vec);
+ }
  
- 	mutex_init(&vdpasim->mutex);
- 	spin_lock_init(&vdpasim->iommu_lock);
-@@ -746,18 +749,24 @@ static void vdpasim_free(struct vdpa_device *vdpa)
- 	struct vdpasim *vdpasim = vdpa_to_sim(vdpa);
- 	int i;
- 
--	kthread_cancel_work_sync(&vdpasim->work);
--	kthread_destroy_worker(vdpasim->worker);
-+	if (vdpasim->worker) {
-+		kthread_cancel_work_sync(&vdpasim->work);
-+		kthread_destroy_worker(vdpasim->worker);
-+	}
- 
--	for (i = 0; i < vdpasim->dev_attr.nvqs; i++) {
--		vringh_kiov_cleanup(&vdpasim->vqs[i].out_iov);
--		vringh_kiov_cleanup(&vdpasim->vqs[i].in_iov);
-+	if (vdpasim->vqs) {
-+		for (i = 0; i < vdpasim->dev_attr.nvqs; i++) {
-+			vringh_kiov_cleanup(&vdpasim->vqs[i].out_iov);
-+			vringh_kiov_cleanup(&vdpasim->vqs[i].in_iov);
-+		}
++/**
++ * virtio_device_shutdown - break and reset a device on shutdown
++ * @dev: the device
++ *
++ * Drivers with their own .shutdown method should quiesce their activity and
++ * then call this to stop the device the way the generic shutdown path does.
++ */
++void virtio_device_shutdown(struct virtio_device *dev)
++{
++	/*
++	 * Some devices get wedged if you kick them after they are
++	 * reset. Mark all vqs as broken to make sure we don't.
++	 */
++	virtio_break_device(dev);
++	/*
++	 * Guarantee that any callback will see vq->broken as true.
++	 */
++	virtio_synchronize_cbs(dev);
++	/*
++	 * As IOMMUs are reset on shutdown, this will block device access to memory.
++	 * Some devices get wedged if this happens, so reset to make sure it does not.
++	 */
++	dev->config->reset(dev);
++}
++EXPORT_SYMBOL_GPL(virtio_device_shutdown);
++
+ static void virtio_dev_shutdown(struct device *_d)
+ {
+ 	struct virtio_device *dev = dev_to_virtio(_d);
+@@ -419,20 +445,7 @@ static void virtio_dev_shutdown(struct device *_d)
+ 		return;
  	}
  
- 	vdpasim->dev_attr.free(vdpasim);
+-	/*
+-	 * Some devices get wedged if you kick them after they are
+-	 * reset. Mark all vqs as broken to make sure we don't.
+-	 */
+-	virtio_break_device(dev);
+-	/*
+-	 * Guarantee that any callback will see vq->broken as true.
+-	 */
+-	virtio_synchronize_cbs(dev);
+-	/*
+-	 * As IOMMUs are reset on shutdown, this will block device access to memory.
+-	 * Some devices get wedged if this happens, so reset to make sure it does not.
+-	 */
+-	dev->config->reset(dev);
++	virtio_device_shutdown(dev);
+ }
  
--	for (i = 0; i < vdpasim->dev_attr.nas; i++)
--		vhost_iotlb_reset(&vdpasim->iommu[i]);
-+	if (vdpasim->iommu) {
-+		for (i = 0; i < vdpasim->dev_attr.nas; i++)
-+			vhost_iotlb_reset(&vdpasim->iommu[i]);
-+	}
- 	kfree(vdpasim->iommu);
- 	kfree(vdpasim->iommu_pt);
- 	kfree(vdpasim->vqs);
+ static int virtio_dev_num_vf(struct device *dev)
+diff --git a/include/linux/virtio.h b/include/linux/virtio.h
+index 93e573c565635..f923e42cfd011 100644
+--- a/include/linux/virtio.h
++++ b/include/linux/virtio.h
+@@ -213,6 +213,7 @@ int virtio_device_freeze(struct virtio_device *dev);
+ int virtio_device_restore(struct virtio_device *dev);
+ #endif
+ void virtio_reset_device(struct virtio_device *dev);
++void virtio_device_shutdown(struct virtio_device *dev);
+ int virtio_device_reset_prepare(struct virtio_device *dev);
+ int virtio_device_reset_done(struct virtio_device *dev);
+ 
 -- 
 2.53.0
 
