@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2D6383C7D;
-	Sat, 12 Sep 2026 19:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018933859CF;
+	Sat, 12 Sep 2026 19:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241743; cv=none; b=lMRxVXorW/rkZEJdl7iJs1bFZl1jEIvFpZcMUnTiRSU6VorCWKfVzBx2J8AmlRbi6Yy0ZWCGIIY5CsQPzTYcLX/IN7Dw8vH1rI5cZrMGiyDOwDLEVOWl3QF/kTygyFvToqXsAumS62mglnTvrNWUQ35Bbsrhg4ih5WJ7ktxCjbY=
+	t=1789241748; cv=none; b=Y2JR/pLlz6ahq4bUhoXeDR/0vU/KTo3W3ZyQmBlKvubtQanwm7U4mGPLwdIPbToNBQsaytR0Ep4PkRRITvLhphFUNCHxMvFNdPoGPu2MMC0OE4bCD5VRk3KoHB1GZ0uf2YJ6x1A3CI+DxIsCNCubSB50F46yMeU9g38K1jVGdDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241743; c=relaxed/simple;
-	bh=zHYL3jQ9+9OLKpOIoj/69RP8EQP++4oQ2wpOgI0M9iQ=;
+	s=arc-20240116; t=1789241748; c=relaxed/simple;
+	bh=yRE66ZzsDhdoEgUNiLioOUKffeaABpw8RB+yUfkwuu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKYy3sAtJmhhhYnPAVOAsHSjqejLjSr+iaOhhY3Huwcrb6Meudomw0pJypxydO01u8pGAnKAa1pOoqjnt0JREKesH3AvuuptkEsD7Ra8Ui838QLRly1tXcn1RE7HqWqZqA1aCATBjrsUx1zDmuiEbALoyyB40UVBlPQ5lbWzrPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6IM9nsJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ttu35qltwO5xBK6y1LfLIHqDC2SAPAS6xQ6vjrImE+H7+Q3fLZrGu8p1H3AswIbAtc43+orvExhiAyb9+20dS1p3sc+cVPKlWph9/85eVCgfkXgxNO1i4GQHmswlEmRkzi9Vxwetcp6tC9LV0Xhk9HEIXxUc5Ytgv1Wkr5JBdzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SF/63kFS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6IM9nsJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E641F000FF;
-	Sat, 12 Sep 2026 19:35:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SF/63kFS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C3D1F000FF;
+	Sat, 12 Sep 2026 19:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241740;
-	bh=xSckK6RZsCR6KFiyOzA4YuCa79HY+RGloMaQriESO5U=;
+	s=korg; t=1789241745;
+	bh=CztzVFQ9M2Jrm+3BENCG/dmd7nVdDgUqD6dZRR10lXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E6IM9nsJ22IYPgWUCXKx65G+gaXC7ioX/nOwevDBC3em7JnVOhiLkrnoMAFLCBbAd
-	 Is1ZVWjjYduTBwv84DVhutpn0j0kYZMxoNSIGpV6mAnEaY4pxPaY6ldnCECtnzg1Wx
-	 j177NFXyzLTUveMM2krnTxYh0Y3etUSlvarmF9g0=
+	b=SF/63kFS5OoEH4EETqdXxpU3ycD2OjRl83N3hJZXRK1vu2QhkDYixh29WyVieB8ts
+	 xr+8bk6yLwBkJ00GP94om2QrVOO8b2ZH8rOKuyh+tvht3qm3jEDW97Qgifc5clPBJi
+	 4PYB9juc+BXmwJ9FUBgbskuZJAIL2Edt7pi9pHlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Aleksandr Khromov <haa@amicon.ru>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 155/798] slip: fix use-after-free in sl_sync()
-Date: Sat, 12 Sep 2026 08:56:23 +0200
-Message-ID: <20260912065520.564731354@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 156/798] net: usb: qmi_wwan: add Telit Cinterion FE990D50 composition
+Date: Sat, 12 Sep 2026 08:56:24 +0200
+Message-ID: <20260912065520.589465248@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,154 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Khromov <haa@amicon.ru>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit 2c4e7c42d77e78ad595dbb9e4b5886b58b45d89d upstream.
+commit 1056e79fffd0841f43c6a1b25664b196b3caf1c6 upstream.
 
-slip_devs[] stores bare net_device pointers and takes no reference on
-them.  sl_sync() and sl_alloc() walk that table from slip_open() under
-rtnl_lock(), while an entry is dropped by sl_free_netdev(), which
-sl_setup() installs as dev->priv_destructor.
+Add the followin Telit Cinterion FE990D50 composition:
 
-priv_destructor is called from netdev_run_todo(), which deliberately
-runs with the RTNL semaphore released so that it can sleep while waiting
-for the device refcount to drop:
+0x0991: rmnet + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (AT) +
+        tty (diag) + ADPL + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=06 Cnt=03 Dev#= 10 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=0991 Rev=06.06
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE990
+S:  SerialNumber=2aa802d2
+C:  #Ifs= 9 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8b(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8c(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=8d(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-	/* Snapshot list, allow later requests */
-	list_replace_init(&net_todo_list, &list);
-
-	__rtnl_unlock();
-	...
-		if (dev->priv_destructor)
-			dev->priv_destructor(dev);	/* slip_devs[i] = NULL */
-		if (dev->needs_free_netdev)
-			free_netdev(dev);
-		...
-		/* Free network device */
-		kobject_put(&dev->dev.kobj);
-
-So rtnl_lock() does not serialise slip_open() against the teardown at
-all.  sl_sync() can load slip_devs[i] while the entry is still published
-and dereference it after netdev_run_todo() has run the destructor and
-released the device:
-
-  CPU0 (slip_open)                 CPU1 (slip_close)
-                                   unregister_netdev()
-                                     rtnl_unlock()
-                                       netdev_run_todo()
-                                         __rtnl_unlock()
-  rtnl_lock()
-  sl_sync()
-    dev = slip_devs[i]
-                                         priv_destructor(dev)
-                                           slip_devs[i] = NULL
-                                         kobject_put(&dev->dev.kobj)
-                                           /* dev is freed */
-    sl = netdev_priv(dev)
-    if (sl->tty || sl->leased)     /* use-after-free */
-
-  BUG: KASAN: use-after-free in sl_sync drivers/net/slip/slip.c:730 [inline]
-  BUG: KASAN: use-after-free in slip_open+0xef4/0x1210 drivers/net/slip/slip.c:806
-  Read of size 1 at addr ffff8880712dac71 by task syz-executor.2/6506
-
-  CPU: 2 PID: 6506 Comm: syz-executor.2 Not tainted 6.1.134-syzkaller-00260-g0c8fc3469765 #0
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-  Call Trace:
-   sl_sync drivers/net/slip/slip.c:730 [inline]
-   slip_open+0xef4/0x1210 drivers/net/slip/slip.c:806
-   tty_ldisc_open+0xa2/0x120 drivers/tty/tty_ldisc.c:433
-   tty_set_ldisc+0x324/0x720 drivers/tty/tty_ldisc.c:564
-   tiocsetd drivers/tty/tty_io.c:2428 [inline]
-   tty_ioctl+0x5f0/0x1530 drivers/tty/tty_io.c:2712
-
-  Allocated by task 6502:
-   alloc_netdev_mqs+0x98/0xfe0 net/core/dev.c:10719
-   sl_alloc drivers/net/slip/slip.c:756 [inline]
-   slip_open+0x36d/0x1210 drivers/net/slip/slip.c:817
-   tty_ldisc_open+0xa2/0x120 drivers/tty/tty_ldisc.c:433
-   tty_set_ldisc+0x324/0x720 drivers/tty/tty_ldisc.c:564
-
-  Freed by task 6497:
-   device_release+0xa2/0x240 drivers/base/core.c:2507
-   kobject_put+0x179/0x280 lib/kobject.c:729
-   netdev_run_todo+0x6c8/0xef0 net/core/dev.c:10509
-   slip_close+0x166/0x1c0 drivers/net/slip/slip.c:906
-   tty_ldisc_close+0x113/0x1a0 drivers/tty/tty_ldisc.c:456
-   tty_ldisc_kill+0x94/0x160 drivers/tty/tty_ldisc.c:614
-   tty_ldisc_release+0xe3/0x2b0 drivers/tty/tty_ldisc.c:782
-   tty_release+0xbcc/0xe70 drivers/tty/tty_io.c:1860
-
-Commit e58c19124189 ("slip: Fix use-after-free Read in slip_open") fixed
-a different source of stale entries - a device left in slip_devs[] after
-slip_open() freed it on the registration error path - and does not
-address this race, which is why the report survives it.
-
-Drop the entry from ndo_uninit instead.  unregister_netdevice() calls
-ndo_uninit under RTNL, before the device is queued to netdev_run_todo(),
-so an entry that sl_sync() can still see while holding RTNL belongs to a
-device that cannot be freed until RTNL is dropped.  sl_free_netdev()
-stays only for the slip_open() error path, where register_netdevice()
-may have failed before ndo_init and ndo_uninit is then not called
-either.  Both running for the same device is harmless: they run under
-the same RTNL section, so the slot cannot have been reused in between.
-
-This also removes the second symptom of the missing exclusion: a
-destructor running after sl_alloc() had already handed the slot out to
-another channel used to clear a live entry, so sl_sync() stopped at that
-NULL, sl_alloc() returned the same index again, and
-register_netdevice() failed with -EEXIST because slN was still there.
-
-Reproduced on x86_64 with several threads looping over
-open("/dev/ptmx") + ioctl(TIOCSETD, N_SLIP) + close().
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 5342b77c4123 ("slip: Clean up create and destroy")
 Cc: stable@vger.kernel.org
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Aleksandr Khromov <haa@amicon.ru>
-Link: https://patch.msgid.link/20260824100547.164773-1-haa@amicon.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260812054911.447887-1-Fabio.Porcedda@telit.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/slip/slip.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/usb/qmi_wwan.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/slip/slip.c
-+++ b/drivers/net/slip/slip.c
-@@ -627,9 +627,15 @@ static void sl_uninit(struct net_device
- 	struct slip *sl = netdev_priv(dev);
- 
- 	sl_free_bufs(sl);
-+	/* Drop the slip_devs[] entry here rather than from the destructor:
-+	 * ndo_uninit runs under RTNL, so it cannot race sl_sync().
-+	 */
-+	slip_devs[dev->base_addr] = NULL;
- }
- 
--/* Hook the destructor so we can free slip devices at the right point in time */
-+/* Only for the slip_open() error path: register_netdevice() can fail before
-+ * ndo_init, and then ndo_uninit is not called either.
-+ */
- static void sl_free_netdev(struct net_device *dev)
- {
- 	int i = dev->base_addr;
-@@ -656,7 +662,6 @@ static void sl_setup(struct net_device *
- {
- 	dev->netdev_ops		= &sl_netdev_ops;
- 	dev->needs_free_netdev	= true;
--	dev->priv_destructor	= sl_free_netdev;
- 
- 	dev->hard_header_len	= 0;
- 	dev->addr_len		= 0;
-@@ -907,7 +912,7 @@ static void slip_close(struct tty_struct
- #endif
- 	/* Flush network side */
- 	unregister_netdev(sl->dev);
--	/* This will complete via sl_free_netdev */
-+	/* sl_uninit() has dropped the slip_devs[] entry by now */
- }
- 
- static int slip_hangup(struct tty_struct *tty)
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1302,6 +1302,7 @@ static const struct usb_device_id produc
+ 	{QMI_FIXED_INTF(0x1bbb, 0x0203, 2)},	/* Alcatel L800MA */
+ 	{QMI_FIXED_INTF(0x2357, 0x0201, 4)},	/* TP-LINK HSUPA Modem MA180 */
+ 	{QMI_FIXED_INTF(0x2357, 0x9000, 4)},	/* TP-LINK MA260 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x0991, 0)}, /* Telit FE990D50 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1031, 3)}, /* Telit LE910C1-EUX */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1034, 2)}, /* Telit LE910C4-WWX */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1037, 4)}, /* Telit LE910C4-WWX */
 
 
