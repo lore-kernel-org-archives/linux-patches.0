@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397DA35201F;
-	Sat, 12 Sep 2026 10:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E138142EEAC;
+	Sat, 12 Sep 2026 10:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210605; cv=none; b=JsGCI0RUa0T5b9jT+ndRObTK1jv+oSJi2n9LuVNYYrwTgA151A7MF1ZJTn3tFmCyUg+kHmxZJpLfYy5pJanHHoTStB/OcZs0Ar21cg6ngA6j2ZEQymKWvU419/UF+6/B9Uw1VFHgWOrF9Bg+e+U9rFunkPB62snwsVU5ZwYolCw=
+	t=1789210610; cv=none; b=p7ozAS7GyXJdewuoHeZADpQlEif3L5Pw6mJh8FTlH+1MTeo+NJArsdY3lmmhgjOthYrVyBnQmsDDzoe+0JIephIbK1xvXO3ZS7lrr6HsFzsmALfm7xc8puF71rog3eP0A5Q+NuUhoXqVhzlC0lOUX83Q45wwvXWiDVjg94z/FuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210605; c=relaxed/simple;
-	bh=J4DG4YSISeWswc6I+HQxWjOClsrCjDUjWq2dEjMPDoU=;
+	s=arc-20240116; t=1789210610; c=relaxed/simple;
+	bh=4C+Qv7vYWQoaviVJaqjDp4IKUYH5Cu8bYAvazxdM/so=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s0LZ7v5tk/qS2hAIfRxrlPTKp5lV1/1NfVsbyqRWFu79iucN59H9MfS0dS5KpneSIL/vTC9LRebeOuqcbI1ODsH38+NEHQzhPE8COv/0PJhplChy4P6iAh25E8MHgrds+wwHyJL7y+8xgVdKUp10VMGm7MRdW0vITgdQ8Fiiiv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=exiYsrDq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rrBp0D/ZDi7se03wKR/CwwGA/xdbVWeLjGwOlgGm+CzGqKtnCfdaaAc0C0O9dRHSDQT8GVU3sKa3ruQIAGAr82CcNi71Ghz95pnz1RBxmSDhIsOn6qNjp8Emef6p65Mf4jhH5R+bMITbsxSPuCO31ynIIkDtsdJl0v41eGwUSkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBZYu8rv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exiYsrDq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC1E1F000FF;
-	Sat, 12 Sep 2026 10:56:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBZYu8rv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36371F000FF;
+	Sat, 12 Sep 2026 10:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210604;
-	bh=n/ypIHjqYUOcDboV8GZVfBd/wGPzQw6tNRaba64n69U=;
+	s=korg; t=1789210608;
+	bh=JxmWoxh7B5XEXb3nfF6+jkKvxkmPRMwlYzrtGyYj3e8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=exiYsrDqbXp6oAGqc2ttA+IUAcNDF01w85pP/Jot1VtDmuxZglqj6mgZAp8Fvb4zW
-	 K/u+lWJYDM7kU0Lf/UJswwozSs3PZ9aza4Pk3ohDPUBqq1FKeFa1z1Y/GCPNWmE6F5
-	 JcTmtMYRvvBnK7dSLhlGsLSyG6bFt9Sj0cI2oe/k=
+	b=jBZYu8rvqCzrWe+wwvZsvPQSceBP53cx8DBwwPB5up/8TZoWFHj0nJP33KkCKIjDj
+	 9kTFEGIVWVpWYdXUGRMOP9GZdBr1I1vyzVYkSMS89/eiAbW2aDoSgFIJXD5D/FcVd7
+	 mjFnM6rxBeGGBYxMthCB9ee04VjlA39c7dYN2p/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
 	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1017/1518] pinctrl: airoha: an7583: fix spi group pins
-Date: Sat, 12 Sep 2026 08:53:06 +0200
-Message-ID: <20260912065646.458900147@linuxfoundation.org>
+Subject: [PATCH 6.18 1018/1518] pinctrl: airoha: add missed get_direction() function for gpio_chip
+Date: Sat, 12 Sep 2026 08:53:07 +0200
+Message-ID: <20260912065646.481212427@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,33 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
 
-[ Upstream commit ccc41d25590645096bdbf420b43e7c22627b3f59 ]
+[ Upstream commit d6392502a9e6b11c3a93eb4c987672a8c638d749 ]
 
-pcm pins were used insted of spi pins. This patch fixes an issue.
+This patch adds missed get_direction() function for gpio_chip.
+Also it reimplements pinconf's get_direction() function using
+newly defined function.
 
-Thanks to Daniel Schwierzeck for noticing it.
-
-Fixes: 3ffeb17a9a27 ("pinctrl: airoha: add support for Airoha AN7583 PINs")
+Fixes: 1c8ace2d0725 ("pinctrl: airoha: Add support for EN7581 SoC")
 Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-airoha.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/mediatek/pinctrl-airoha.c | 50 +++++++++++++++--------
+ 1 file changed, 34 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/pinctrl/mediatek/pinctrl-airoha.c b/drivers/pinctrl/mediatek/pinctrl-airoha.c
-index ae56574041cad..eb099baf74dd5 100644
+index eb099baf74dd5..e2ba5619d44b1 100644
 --- a/drivers/pinctrl/mediatek/pinctrl-airoha.c
 +++ b/drivers/pinctrl/mediatek/pinctrl-airoha.c
-@@ -738,7 +738,7 @@ static const int an7583_jtag_udi_pins[] = { 23, 24, 22, 25, 26 };
- static const int an7583_jtag_dfd_pins[] = { 23, 24, 22, 25, 26 };
- static const int an7583_pcm1_pins[] = { 10, 11, 12, 13, 14 };
- static const int an7583_pcm2_pins[] = { 28, 29, 30, 31, 24 };
--static const int an7583_spi_pins[] = { 28, 29, 30, 31 };
-+static const int an7583_spi_pins[] = { 45, 46, 47, 48 };
- static const int an7583_spi_quad_pins[] = { 25, 26 };
- static const int an7583_spi_cs1_pins[] = { 27 };
- static const int an7583_pcm_spi_pins[] = { 28, 29, 30, 31, 10, 11, 12, 13 };
+@@ -2502,6 +2502,22 @@ static int airoha_gpio_get(struct gpio_chip *chip, unsigned int gpio)
+ 	return err ? err : !!(val & BIT(pin));
+ }
+ 
++static int airoha_gpio_get_direction(struct gpio_chip *chip, unsigned int gpio)
++{
++	struct airoha_pinctrl *pinctrl = gpiochip_get_data(chip);
++	u32 val, mask;
++	u8 index;
++	int err;
++
++	index = gpio / AIROHA_REG_GPIOCTRL_NUM_PIN;
++	err = regmap_read(pinctrl->regmap, pinctrl->gpiochip.dir[index], &val);
++	if (err)
++		return err;
++
++	mask = BIT(2 * (gpio % AIROHA_REG_GPIOCTRL_NUM_PIN));
++	return val & mask ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
++}
++
+ static int airoha_gpio_direction_output(struct gpio_chip *chip,
+ 					unsigned int gpio, int value)
+ {
+@@ -2635,19 +2651,13 @@ static int airoha_pinctrl_add_gpiochip(struct airoha_pinctrl *pinctrl,
+ 	struct device *dev = &pdev->dev;
+ 	int irq, err;
+ 
+-	chip->data = gpio_data_regs;
+-	chip->dir = gpio_dir_regs;
+-	chip->out = gpio_out_regs;
+-	chip->status = irq_status_regs;
+-	chip->level = irq_level_regs;
+-	chip->edge = irq_edge_regs;
+-
+ 	gc->parent = dev;
+ 	gc->label = dev_name(dev);
+ 	gc->request = gpiochip_generic_request;
+ 	gc->free = gpiochip_generic_free;
+ 	gc->direction_input = pinctrl_gpio_direction_input;
+ 	gc->direction_output = airoha_gpio_direction_output;
++	gc->get_direction = airoha_gpio_get_direction;
+ 	gc->set = airoha_gpio_set;
+ 	gc->get = airoha_gpio_get;
+ 	gc->base = -1;
+@@ -2857,21 +2867,18 @@ static int airoha_pinctrl_set_conf(struct airoha_pinctrl *pinctrl,
+ static int airoha_pinconf_get_direction(struct pinctrl_dev *pctrl_dev, u32 p)
+ {
+ 	struct airoha_pinctrl *pinctrl = pinctrl_dev_get_drvdata(pctrl_dev);
+-	u32 val, mask;
+-	int err, pin;
+-	u8 index;
++	int ret, pin;
+ 
+ 	pin = airoha_convert_pin_to_reg_offset(pctrl_dev, NULL, p);
+ 	if (pin < 0)
+ 		return pin;
+ 
+-	index = pin / AIROHA_REG_GPIOCTRL_NUM_PIN;
+-	err = regmap_read(pinctrl->regmap, pinctrl->gpiochip.dir[index], &val);
+-	if (err)
+-		return err;
++	ret = airoha_gpio_get_direction(&pinctrl->gpiochip.chip, pin);
++	if (ret < 0)
++		return ret;
+ 
+-	mask = BIT(2 * (pin % AIROHA_REG_GPIOCTRL_NUM_PIN));
+-	return val & mask ? PIN_CONFIG_OUTPUT_ENABLE : PIN_CONFIG_INPUT_ENABLE;
++	return ret == GPIO_LINE_DIRECTION_OUT ?
++	       PIN_CONFIG_OUTPUT_ENABLE : PIN_CONFIG_INPUT_ENABLE;
+ }
+ 
+ static int airoha_pinconf_get(struct pinctrl_dev *pctrl_dev,
+@@ -3117,6 +3124,17 @@ static int airoha_pinctrl_probe(struct platform_device *pdev)
+ 	pinctrl->desc.pins = data->pins,
+ 	pinctrl->desc.npins = data->num_pins,
+ 
++	/*
++	 * some pinctrl operations (ex: get_direction) might use gpio registers
++	 * before gpio chip abstraction will be completely initialized.
++	 */
++	pinctrl->gpiochip.data = gpio_data_regs;
++	pinctrl->gpiochip.dir = gpio_dir_regs;
++	pinctrl->gpiochip.out = gpio_out_regs;
++	pinctrl->gpiochip.status = irq_status_regs;
++	pinctrl->gpiochip.level = irq_level_regs;
++	pinctrl->gpiochip.edge = irq_edge_regs;
++
+ 	err = devm_pinctrl_register_and_init(dev, &pinctrl->desc,
+ 					     pinctrl, &pinctrl->ctrl);
+ 	if (err)
 -- 
 2.53.0
 
