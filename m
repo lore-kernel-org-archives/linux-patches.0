@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2EF2F8E90;
-	Sat, 12 Sep 2026 14:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EC94BEE5C;
+	Sat, 12 Sep 2026 14:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223973; cv=none; b=R9J0WNEJYO0uXvqow5kkBVCWLPv+3L62lLh39Hdo+F5U/wq9HVlFUnVILoE404Y4O7XzjZ0RViA71qpxdr3Svl16bHI9yke7bBOUv9DmYYEgt81XkabfoH5axzKhSmW/0yOofS9qL7Mt32hZh22fQjEvHw4x3WLPr0UyaqXNs9o=
+	t=1789223978; cv=none; b=VIIILhn33L5Rvxk7D1lvXESisLuhJ1STdSZtwDTxtCEPg+TKGpROEtFf7pZ5CsRBpuDvioPgE6wnBmP5ZU/GxdTzkTOSgDf9ZMowe5EEnOr2XcKJisW7jHjOE0G7UeXgfqJ/0mIoVlduAoVct6zymOc4h8VR6waImJKLjJhSmNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223973; c=relaxed/simple;
-	bh=HID6cn23eJaBOCHMT5HZ9azNc03S3zSjhSUKPPhyWJU=;
+	s=arc-20240116; t=1789223978; c=relaxed/simple;
+	bh=6xu4W0N9ZA0Ehr8UFdwVrHQ8igstLvIoR9103rFaaGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=slGxX2lYq3xQyiqniZlXSHc89CYWZCmNmk4DF39XB2GZoFqF/cSDcM8QIKVxuVdciOaJ8oJcsDhBJd1NLOxG+eXgwSa/TWzFweBrrcHv+zRQIxI4QCKgg1d1crX/DadWFid8S0xAeZQPRct1F135kurhcU3s0LeuS5KG6Qb8kmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXM7/dJH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kyB5r4p/N/usCpUCHZGIdz5LYuZ/LHRHWNUZZL69PqoyOFdHYfnJwv4Qp5s3r0pSUPCy1U5Zx4AfYpdhr+R3K4pDgRsBmT7j+V3V7wJV/F8v8+8w2vnyEPQ3M8g7NimWBeufHSiiABTmw62PgvOZ+l+SoTzLlgweqBWA/asOuyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1SRPDo8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXM7/dJH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08DBF1F000FF;
-	Sat, 12 Sep 2026 14:39:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1SRPDo8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284DA1F000FF;
+	Sat, 12 Sep 2026 14:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223972;
-	bh=3SS1UbK2uLe6bACSRyxfLBuBm+D9hz7t4bljXkSteMg=;
+	s=korg; t=1789223977;
+	bh=fW/Wc8X3noiQifZmE0m9of5zwDcOTBO11ilIDbk/Sd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vXM7/dJHAJus9wUEdcyvz2LLUHb0KNkwK2/k0dY+Fap6QGG2mga/ey1vV2BLPELXt
-	 C9nSZKTHRqktbd0SWlSz9HOvLoLGazldLWXgvgz3OMsZqAqe+LzqwHBi+X6scVTs4F
-	 wkFpQBYcLy8oO7h+M+eFzGwsa12hjxiopLbFLTmk=
+	b=K1SRPDo8A7l0sWw6K0FqqVKsVldwjttu2Y+muEVgs/3VGnpNN68U6DBP5jjxAg6WF
+	 26IF6YZEHHD7x7T4dytzDUTxpBXPXugeamgY2UV8LZ7f5A7Q0AaKAkwHT4tdEJY2JV
+	 zkpzq3O6B5J6A9rxu2IdX9lojufd0tm5Mpy02QLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0897/1424] fs/ntfs3: reject restart table growth beyond U16_MAX entries
-Date: Sat, 12 Sep 2026 08:55:29 +0200
-Message-ID: <20260912065627.416644385@linuxfoundation.org>
+Subject: [PATCH 6.6 0862/1424] ARM: dts: allwinner: a10: Fix PMU interrupt
+Date: Sat, 12 Sep 2026 08:54:54 +0200
+Message-ID: <20260912065626.621747227@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,67 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Andre Przywara <andre.przywara@arm.com>
 
-[ Upstream commit 111f8d74a19d85942ecbb3aba78f6f3c88e59391 ]
+[ Upstream commit eb7051f756460d7b951e94d9656e31ebb631ba28 ]
 
-During $LogFile replay, log_replay() indexes the transaction table by the
-transact_id taken from the log record header.  check_log_rec() only
-verifies that transact_id is non-zero and properly aligned, not its
-magnitude, so a crafted image can request an arbitrarily large index.
+The Performance Monitoring Unit of the Cortex-A8 cores in the Allwinner
+A10 SoC is connected to interrupt line 66, not 3. This is shown in the
+manual (where interrupt 3 is assigned to UART2, also in our .dtsi), but
+has also been confirmed by triggering an PMU overflow interrupt and
+inspecting the IRQ controller status registers (from U-Boot).
+Please note that "perf stat" does not use interrupts, this might explain
+why this evaded the initial testing.
 
-alloc_rsttbl_from_idx() grows the table to cover that index via
-extend_rsttbl(), which passes the new entry count to init_rsttbl():
-
-	rt = init_rsttbl(esize, used + add);
-
-used + add is computed as u32 but init_rsttbl() takes a u16, and the
-count is stored in struct RESTART_TABLE as a __le16.  When used + add
-exceeds U16_MAX it is truncated, init_rsttbl() allocates a table far
-smaller than the index requires, and alloc_rsttbl_from_idx() then
-dereferences and writes at the original, untruncated offset -- an
-out-of-bounds access past the allocation, reachable by mounting a
-crafted NTFS image.
-
- BUG: KASAN: use-after-free in alloc_rsttbl_from_idx (fs/ntfs3/fslog.c:950)
- Read of size 4 at addr ffff8880327ffff8 by task exploit
-  alloc_rsttbl_from_idx (fs/ntfs3/fslog.c:950)
-  log_replay (fs/ntfs3/fslog.c:4562)
-  ntfs_loadlog_and_replay (fs/ntfs3/fsntfs.c:324)
-  ntfs_fill_super (fs/ntfs3/super.c:1393)
-  get_tree_bdev_flags
-  vfs_get_tree
-  path_mount
-  __x64_sys_mount
-
-A restart table is limited to U16_MAX entries by its __le16 count, so a
-larger growth request is invalid input.  Reject it in extend_rsttbl();
-all callers already handle a NULL return.
-
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 7e345d25c796 ("ARM: dts: sun4i-a10: Add PMU node")
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://patch.msgid.link/20260720215128.5761-1-andre.przywara@arm.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm/boot/dts/allwinner/sun4i-a10.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index ab405d7f133e1..805f14461ab54 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -875,6 +875,9 @@ static inline struct RESTART_TABLE *extend_rsttbl(struct RESTART_TABLE *tbl,
- 	u32 used = le16_to_cpu(tbl->used);
- 	struct RESTART_TABLE *rt;
+diff --git a/arch/arm/boot/dts/allwinner/sun4i-a10.dtsi b/arch/arm/boot/dts/allwinner/sun4i-a10.dtsi
+index 51a6464aab9a3..cabf619c2e217 100644
+--- a/arch/arm/boot/dts/allwinner/sun4i-a10.dtsi
++++ b/arch/arm/boot/dts/allwinner/sun4i-a10.dtsi
+@@ -185,7 +185,7 @@ de: display-engine {
  
-+	if (used + add > U16_MAX)
-+		return NULL;
-+
- 	rt = init_rsttbl(esize, used + add);
- 	if (!rt)
- 		return NULL;
+ 	pmu {
+ 		compatible = "arm,cortex-a8-pmu";
+-		interrupts = <3>;
++		interrupts = <66>;
+ 	};
+ 
+ 	reserved-memory {
 -- 
 2.53.0
 
