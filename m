@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A6A41CB4D;
-	Sat, 12 Sep 2026 08:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71629360EC5;
+	Sat, 12 Sep 2026 08:45:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202707; cv=none; b=McaxKRKi+E/CdUu+RjQniOnbEaz/eIPDbJsVLUn+tL2kPEPH6OIEabJ9DSuFC1utidlRv8KwB5w6LumYUb7xOlPs3r/pp+oai9WlXT8T5PmRfesSXcWU6FYmdgS6EhapadvzFwrzGOzU8ZzHJktNs2lesZdLnMUnyOWENOwVYhM=
+	t=1789202709; cv=none; b=T+obUj/vWpkVcQT76leH6SQGHUK3hl8SyzA15Oh8LDOgWI3WAEz3kNPl8HGbCg5IVJ/WNAJ6Se9iEvjWp+mr4Mjxhg73XTgxsh5OKdwSKi1hhRZR0wajciWXDDFtuXmeTqhlUQIqoXbZ/2ksFDRSFdcHP+TY2282qxX9l6WX8oY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202707; c=relaxed/simple;
-	bh=DiJJpmxvfHBKp8M9PQBaWSRWCWHFgZkxqM2juvjrP0Y=;
+	s=arc-20240116; t=1789202709; c=relaxed/simple;
+	bh=AtN0qnyno371UiNm+LwjXrb8MQat/N/DIrxx/VCcSK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VWjltzE1RCpVw+qI80As3LT2RQR233si2rSe+uTzfDcZd5YitaM1svcG3CBUUtF9NRPZKtHuNQ3HEYcAni0xZaXIe60yzDDqvn6i5ru1PFT4L2oy34jQeIlEbSuIhuM3ogAY79VTQx5iSYQTGRNRLuf7umC/UMP4INzcGdAjJL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPv8Drdq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BO//r3ZdC75qOtcNgXbOX2i4J9srj+TBKMjYW20fxNt8+iZ4O9zpbZVpae8N3E3yVZ9hG0ZugmM0t0xWO8ZFkJ9L2YjuBGDvrvXqQ+gjzAx7VaILM2V0lq8BtU7BtTtzqIfVdMRW+kVOLNAjfAKVQT2J5RVYzfK7TEdrX/PGsGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qcxB4IFr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPv8Drdq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 006B41F000FF;
-	Sat, 12 Sep 2026 08:45:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qcxB4IFr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD461F00893;
+	Sat, 12 Sep 2026 08:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202701;
-	bh=9Nfjnm/9gyDkyMZNedT5nEMUfvjrZsoCiX4LCiwG+38=;
+	s=korg; t=1789202706;
+	bh=Z0fT0uMbplIkAQ6jgCdhjUAJe3v2tpsMJKLWo+knQ/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TPv8DrdqiiHI8kO0LMijkLMJbkJozKATBAE67hhQK635PdpktLwYb7b3LxWNzlnEx
-	 JGohFViKxHzentRXaCPNNlSD7YYobmZvXFlcwg2i8mU3m81ITYI/uO42Y06zr4bqkC
-	 dUI804XCmRCbkaJY5Yxh7krDok9tWMEyCEMPhEHQ=
+	b=qcxB4IFr8b5yfNBT6MO0mMtu+5A3SV6a7YYgkXmXdi5CBtkN3v1ltItyfaCCY39ZT
+	 /XafsLamSqgnuVNKjFrMjXbyx7+C1CXXgZqXNe4zsw+EkDJPR+lawx912qtk150ZuJ
+	 VAyKu2p+hS9n//zFFRGzHQRipE+I3bd3VsHmZ9XY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alvin.sipraga@analog.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Pu Lehui <pulehui@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Amery Hung <ameryhung@gmail.com>,
+	Leon Hwang <leon.hwang@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1257/1815] pinctrl: fix PINCTRL_GENERIC_MUX not always being selectable
-Date: Sat, 12 Sep 2026 08:50:07 +0200
-Message-ID: <20260912065718.525271178@linuxfoundation.org>
+Subject: [PATCH 7.2 1258/1815] bpf, cgroup: Fix storage null-ptr-deref after replacing prog
+Date: Sat, 12 Sep 2026 08:50:08 +0200
+Message-ID: <20260912065718.548935277@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,47 +47,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alvin Šipraga <alvin.sipraga@analog.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 465f276bb928093685c2a2b98bf0a7ccc4283b8d ]
+[ Upstream commit 3f562c537e9ecf4bc5e206cfffc2cc047f1b7e94 ]
 
-CONFIG_MULTIPLEXER can only be enabled indirectly. If it's not already
-enabled, then CONFIG_PINCTRL_GENERIC_MUX cannot be selected at all in
-menuconfig. That's because it depends on MULTIPLEXER.
+Syzkaller reported a storage null-ptr-deref issue after replacing prog.
+This occurs in the following scenario:
+1. prog A, an empty prog, is attached to a cgrp.
+2. prog B uses BPF_MAP_TYPE_PERCPU_CGROUP_STORAGE and calls the
+   bpf_get_local_storage helper.
+3. link_update is called to replace prog A with prog B.
 
-Follow similar consumers of the multiplexer core and select MULTIPLEXER
-instead. This way the driver will be visible in menuconfig as long as
-PINCTRL is selected.
+The reason is that __cgroup_bpf_replace fails to alloc and assign the
+required cgrp storage for the incoming replacement prog. Consequently,
+the new prog inherits an uninit storage, leading to null-ptr-deref panic
+when kick the new prog.
 
-Fixes: 34acc5a8adfb ("pinctrl: add generic board-level pinctrl driver using mux framework")
-Signed-off-by: Alvin Šipraga <alvin.sipraga@analog.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fix this by rejecting a link update if new_prog's cgroup storage is
+incompatible with link->prog.
+
+Fixes: 0c991ebc8c69 ("bpf: Implement bpf_prog replacement for an active bpf_cgroup_link")
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Acked-by: Leon Hwang <leon.hwang@linux.dev>
+Link: https://lore.kernel.org/bpf/20260728132336.2857800-1-pulehui@huaweicloud.com [0]
+Link: https://lore.kernel.org/bpf/f87b53c0-8f00-45a6-82db-8242fa9b143f@huaweicloud.com [1]
+Link: https://lore.kernel.org/bpf/20260807104403.1013064-1-pulehui@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/cgroup.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/pinctrl/Kconfig b/drivers/pinctrl/Kconfig
-index e5618b51ac144..bf73bc709c181 100644
---- a/drivers/pinctrl/Kconfig
-+++ b/drivers/pinctrl/Kconfig
-@@ -275,8 +275,8 @@ config PINCTRL_GEMINI
+diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+index 57fd1d784e440..31c63ff276fa7 100644
+--- a/kernel/bpf/cgroup.c
++++ b/kernel/bpf/cgroup.c
+@@ -1026,6 +1026,20 @@ static void replace_effective_prog(struct cgroup *cgrp,
+ 	}
+ }
  
- config PINCTRL_GENERIC_MUX
- 	tristate "Generic Pinctrl driver by using multiplexer"
--	depends on MULTIPLEXER
- 	depends on OF
-+	select MULTIPLEXER
- 	select PINMUX
- 	select GENERIC_PINCTRL
- 	help
++static bool cgroup_bpf_storages_compatible(struct bpf_prog *old_prog,
++					   struct bpf_prog *new_prog)
++{
++	enum bpf_cgroup_storage_type stype;
++
++	for_each_cgroup_storage_type(stype) {
++		if (old_prog->aux->cgroup_storage[stype] !=
++		    new_prog->aux->cgroup_storage[stype])
++			return false;
++	}
++
++	return true;
++}
++
+ /**
+  * __cgroup_bpf_replace() - Replace link's program and propagate the change
+  *                          to descendants
+@@ -1064,6 +1078,9 @@ static int __cgroup_bpf_replace(struct cgroup *cgrp,
+ 	if (!found)
+ 		return -ENOENT;
+ 
++	if (!cgroup_bpf_storages_compatible(link->link.prog, new_prog))
++		return -EINVAL;
++
+ 	cgrp->bpf.revisions[atype] += 1;
+ 	old_prog = xchg(&link->link.prog, new_prog);
+ 	replace_effective_prog(cgrp, atype, pl);
 -- 
 2.53.0
 
