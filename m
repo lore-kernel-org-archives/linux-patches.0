@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB5038F259;
-	Sat, 12 Sep 2026 08:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5777B19E7F7;
+	Sat, 12 Sep 2026 08:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201088; cv=none; b=ld+9byOkUl109A47jSJXyi/ZK0JhHm71ZFhdUwfvTdKYxr82qG1+c5uCkfksoFOAwLIWoq6g52Yr82He9C3P/b3rPYD9zDcNLWZ/ai4FKZdi+iRLBFvbQO1dyJsryQnPnt2Owgu+KUCeV24Pn/xqJRvI2PJ+KIDqWYW+oUC3jGs=
+	t=1789201093; cv=none; b=h7FR/cPObLdxeotCMvlIYBI0qil1dYActFaFa/fkL7D90SewxKvi6cX2bZNvRdhTdauNFhr69lOFFQPssycamdXjx+frQGdMQwYMUiLRGSxE9Z9T2s+bS6zOz9EKOrhxep9nrig0RNYrb6pj4vQfslNIhunJFABUeHZOKBkioOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201088; c=relaxed/simple;
-	bh=CdJWZVmKXtohK25M+q59VWJLuJy3DjbIinkkeLtk8jI=;
+	s=arc-20240116; t=1789201093; c=relaxed/simple;
+	bh=XnHlgNsw5EopHc2jVBnZkn2uQAHYwx52yRk50Fp4J0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DP2eritmyJ31+XlkKAGaG+U/BIENDMajV0q/V/Asps48xPk6XuHrNLTsJYfFEr1en3/dtiR5WIBXAXwBH8TvSIHCod5WOMaaM2SImG2msPaahCjT5s+e1X/+HS0tBwTgR1UHbyQcWZ2zVqlY16pScjyxjvTxVOaqVshg8KCvE/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNWJ21TU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K40j3wHvB+MfSRAdE+IAfpSduJ7XLKW8Qif+XKioXk4zNoxWHTTM2nckYF3KLBG02wpEVXZgvcY1cweR7U/7NiaRMqdJ36HMSdNq3TycEOu8RusmLp1+cbSYawbBHbEtuu2Nd6HSopxYK/vXoPGSfdpTZ0ujHsEulHNmQ8xWqY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uzl/UCVo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNWJ21TU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE4B1F000FF;
-	Sat, 12 Sep 2026 08:18:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uzl/UCVo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A971F000FF;
+	Sat, 12 Sep 2026 08:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201087;
-	bh=1sJshjL3voC1nWvuF65yLPc/urxqWHEr93oz1e6WejM=;
+	s=korg; t=1789201092;
+	bh=k8/CQIOkocQJ8KlrD6R3lKkCU5yIvgWTQyQouGY1sNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NNWJ21TU7iMFFcn/rlDwt5reYq6p8gVLlG+ZEeXtVay/WAaETikp3whfNxgwQfJhV
-	 oUmUTNrNBCLhfaIHpltzD39lt30g0tdo7FCnxoojVA393vZIdf8HTnBzgcIBtYCgDr
-	 KCxoI3oGNosAPD2WtbvBlTKbBIhUxwcsHmtzh7nI=
+	b=Uzl/UCVoPkVHL6VAt6pJbeYQoyD+NJ1ckwqfXe8NJiA0oknq9aFb7r9PJXc3PzXnk
+	 jQmOJzMU2/O6UC3cK4Ivwo2CGil2kb5N/rPMhdT9Ba1V8NoqI0Li7VSJlJuVWB0aPC
+	 3HFWYmtaKkmG1y4aqf8OG64KsJl/b5Nbv4YaX5Ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	David Ahern <dsahern@gmail.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0925/1815] perf machine: Fix NULL parent dereference in fork event processing
-Date: Sat, 12 Sep 2026 08:44:35 +0200
-Message-ID: <20260912065710.656306403@linuxfoundation.org>
+Subject: [PATCH 7.2 0926/1815] perf machine: Guard against NULL strlist in machines__findnew()
+Date: Sat, 12 Sep 2026 08:44:36 +0200
+Message-ID: <20260912065710.679610532@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,41 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 73ac546bd6ba8ed4dc8d7a90fcb9bb8236de1568 ]
+[ Upstream commit e27b96d0a34e1dc87affecf221a99fee8f6c5afc ]
 
-machine__process_fork_event() calls machine__findnew_thread() for the
-parent thread, which can return NULL on allocation failure.  The code
-then dereferences parent via thread__pid(parent) without a NULL check
-when validating whether the parent PID matches.  The later NULL check
-at thread__fork() does not prevent this earlier dereference.
+The static 'seen' strlist caches guestmount paths that have already
+been reported as inaccessible, to avoid repeating the error message.
+If strlist__new() fails (OOM), 'seen' stays NULL and the next call
+dereferences it via strlist__has_entry() and strlist__add().
 
-Add a NULL guard before accessing the parent thread.
+Guard both calls so that on allocation failure the error message is
+still printed (just not deduplicated) instead of crashing.
 
-Fixes: 5cb73340d92a ("perf tools: Make fork event processing more resilient")
+Fixes: c80c3c269011 ("perf kvm: Limit repetitive guestmount message to once per directory")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: David Ahern <dsahern@gmail.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/perf/util/machine.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index 503f5a65e0cca..8b213482e5648 100644
+index 8b213482e5648..baf855e596c26 100644
 --- a/tools/perf/util/machine.c
 +++ b/tools/perf/util/machine.c
-@@ -1923,7 +1923,8 @@ int machine__process_fork_event(struct machine *machine, union perf_event *event
- 	 * (fork) event that would have removed the thread was lost. Assume the
- 	 * latter case and continue on as best we can.
- 	 */
--	if (thread__pid(parent) != (pid_t)event->fork.ppid) {
-+	if (parent != NULL &&
-+	    thread__pid(parent) != (pid_t)event->fork.ppid) {
- 		dump_printf("removing erroneous parent thread %d/%d\n",
- 			    thread__pid(parent), thread__tid(parent));
- 		machine__remove_thread(machine, parent);
+@@ -340,9 +340,10 @@ struct machine *machines__findnew(struct machines *machines, pid_t pid)
+ 			if (!seen)
+ 				seen = strlist__new(NULL, NULL);
+ 
+-			if (!strlist__has_entry(seen, path)) {
++			if (!seen || !strlist__has_entry(seen, path)) {
+ 				pr_err("Can't access file %s\n", path);
+-				strlist__add(seen, path);
++				if (seen)
++					strlist__add(seen, path);
+ 			}
+ 			machine = NULL;
+ 			goto out;
 -- 
 2.53.0
 
