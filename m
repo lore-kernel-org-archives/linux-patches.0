@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256FC414A1D;
-	Sat, 12 Sep 2026 08:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B66238F259;
+	Sat, 12 Sep 2026 08:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202279; cv=none; b=Q59dbZWNzlvtY9xYGgzS1KtW56Rj1Aqlzax9L/H8Fy+q+vdKGt5GSnN4Ew7TgljkdslotEVdKc9a5PrxDBD2j4yS1WFomrIffqrEKfA5Nfh4WPv8rnXfGyPmOtdGYzDQDdrOicK0iqBQXNvULhWPkAdZNJwRQB/G8UOfromT+J8=
+	t=1789202284; cv=none; b=bZDuVf/Yi96ZYj2n7nIgmkbSd6ho4FrhG4WgGJOYaU31KvelrUExvB6FGSjhVhyzi4BQu2mg96cPjAbAybJzD61ZaE4qpcgZuXsgPtyAZN7WXcYCjlSpBiYio/RZXZEsrg8szj26bovn5bCzlzHkXCkdrRS/Xp6gA0wzN9+oZmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202279; c=relaxed/simple;
-	bh=bWiL1cIQcyzGKm/GoH+ZcKdTdvl9+TT/ZFiE+LIkR6k=;
+	s=arc-20240116; t=1789202284; c=relaxed/simple;
+	bh=gjmgFvNXHJaDnqKK1MSS4Zghkz2qh0j3Sk8gsHntods=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UDjiY4QamHVjAr0X2QwCVI5GUifuhh85iHSokmpGZLqzf2zEd2+3L2kMNi9Vu155BDdDxmKaEEcq+1ptZTl3mCnW11W119iIMvcM6nEW6ihA8IoFaRu2PI5RTygov5aa0yVBoHOJ5w9DLLwOksbtEXf4UDHFC2efxh8NlyDK24U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wspuYLgc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QVCNeyanPsKoNtaYRo26sobPGrB3oFnBRvO0tIGjpjscszE/7sPDSb4n0Pa0++8TifoLRwzIcpJck1JIMQoGjsW9HykbkOe93ox/hqy5PQ+acCWwl25EQv+JdaBed5rKynCxT+vvWTN/Im8bucuHGVeN5FxgLq+MLqSktfMY7EA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zcgmtwur; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wspuYLgc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2FA61F000FF;
-	Sat, 12 Sep 2026 08:37:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zcgmtwur"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEDAE1F000FF;
+	Sat, 12 Sep 2026 08:38:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202278;
-	bh=3gnROA7jSuQ1RCEXz7HI+weJ7MM/9CcZVuTTXcqz6mM=;
+	s=korg; t=1789202282;
+	bh=5Rk6VLTzVw8rvxnWdNEmFxFcWstdhHGm+kARLTSYE6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wspuYLgcw+iDGssIZ7Kf2jdkdGo3Sw+IHwYw6TMT8jnlTRx+zLoSK2Isn1mwWeqJ3
-	 qtHyEzjH5ocESE5T10NNgnb93tpMp/a9ydm7+fReHeee+sJqaOdbv5qdZ9Il2Lw0vS
-	 1bUumJ5G4WHJW++dbf/7csHqXGXN3DJ0xWwwT1XY=
+	b=ZcgmtwurtgABQjCZ+AqEaVMkNtOoqt6rrtLgUnfVX6KFyPz4zkWDNztngRMWdqnK+
+	 LbZG1g19lln72ZvGcVApYVoNdne7k0ciEQvDgpm6ufm2aoDgDs2hpS+w2dWSCzPcMj
+	 LY3ky0mbRSx0iXSAlc/Kh8CC+oLD6+tOteeYLGl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Leon Romanovsky <leon@kernel.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1143/1815] IB/isert: post the full-feature receive buffers after session registration
-Date: Sat, 12 Sep 2026 08:48:13 +0200
-Message-ID: <20260912065715.849824731@linuxfoundation.org>
+Subject: [PATCH 7.2 1170/1815] drm/amdgpu/gfx6: Fixup emitting SWITCH_BUFFER packets
+Date: Sat, 12 Sep 2026 08:48:40 +0200
+Message-ID: <20260912065716.481730323@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,112 +45,134 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 5247dde9daac7e107853b6fea043f7f47be033f7 ]
+[ Upstream commit 7aac4242a11991d530eee3e141d6e445d5f11c22 ]
 
-isert_put_login_tx() posts the full-feature receive buffers before
-__transport_register_session() runs, so an initiator that does not wait
-for the final Login Response can still have a SCSI command executed
-against an se_session whose se_tpg is NULL - the same oops as the
-previous patch, at target_submit+0xbe.
+Implement the emit_switch_buffer() function instead of emitting
+them duing emit_ib, emit_pipeline_sync and emit_vm_flush.
 
-Post them from isert_get_rx_pdu(), which the previous patch already uses
-to send that response, and post them before that send: the receive queue
-is filled at the moment the initiator is told it may use it.  Allocating
-there keeps the existing property that a memory allocation failure cannot
-happen once the final Login Response is on the wire.
+Note that it isn't necessary to emit these in both
+emit_pipeline_sync() and emit_vm_flush() because
+amdgpu_vm_flush() already calls these when calling
+either of those functions.
 
-The receive queue is already empty between the final Login Request and
-isert_post_recvm(); this moves the second point later, from a median of
-92 us to 172 us over 1200 logins.  Only an initiator that sends before it
-has been told to can reach that window, and on IB and RoCE its send is
-retried there until the buffers appear - isert_rdma_accept() asks for
-rnr_retry_count = 7.  iWARP has no RNR flow control, so there the same
-send terminates the connection instead.
-
-Measured over rxe, 400 login cycles per run, with an initiator that does
-not wait: an instrumented build counted no entries to isert_recv_done()
-before the buffers are posted in 10 runs, where that initiator oopsed
-8 of 10 unpatched runs and 5 of 10 with only the previous patch.
-
-Not tested: iWARP, discovery sessions over iSER, and real HCAs.
-
-Fixes: b8d26b3be8b3 ("iser-target: Add iSCSI Extensions for RDMA (iSER) target driver")
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20260731041212.1733364-2-yhlee@isslab.korea.ac.kr
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 2cd46ad22383 ("drm/amdgpu: add graphic pipeline implementation for si v8")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/isert/ib_isert.c | 41 ++++++++++++-------------
- 1 file changed, 20 insertions(+), 21 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c | 38 ++++++++++-----------------
+ 1 file changed, 14 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/isert/ib_isert.c b/drivers/infiniband/ulp/isert/ib_isert.c
-index 37be77a9db41f..df5d8295a7fc1 100644
---- a/drivers/infiniband/ulp/isert/ib_isert.c
-+++ b/drivers/infiniband/ulp/isert/ib_isert.c
-@@ -947,21 +947,7 @@ isert_put_login_tx(struct iscsit_conn *conn, struct iscsi_login *login,
- 	}
- 	if (!login->login_failed) {
- 		if (login->login_complete) {
--			ret = isert_alloc_rx_descriptors(isert_conn);
--			if (ret)
--				return ret;
--
--			ret = isert_post_recvm(isert_conn,
--					       ISERT_QP_MAX_RECV_DTOS);
--			if (ret)
--				return ret;
--
--			/* Now we are in FULL_FEATURE phase */
--			mutex_lock(&isert_conn->mutex);
--			isert_conn->state = ISER_CONN_FULL_FEATURE;
--			mutex_unlock(&isert_conn->mutex);
--
--			/* Sent from isert_get_rx_pdu() after registration. */
-+			/* Posted and sent from isert_get_rx_pdu(). */
- 			isert_conn->login_rsp_pending = true;
- 			return 0;
- 		}
-@@ -2633,13 +2619,26 @@ static void isert_get_rx_pdu(struct iscsit_conn *conn)
- 	struct isert_conn *isert_conn = conn->context;
- 	struct completion comp;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+index 6d7baee04372e..1a9866e409125 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+@@ -1926,12 +1926,6 @@ static void gfx_v6_0_ring_emit_ib(struct amdgpu_ring *ring,
+ 	unsigned vmid = AMDGPU_JOB_GET_VMID(job);
+ 	u32 header, control = 0;
  
-+	/* The login timeout timer can fail the login after isert_put_login_tx(). */
-+	if (!isert_conn->login_rsp_pending)
-+		return;
-+
-+	isert_conn->login_rsp_pending = false;
-+
- 	/* The session is registered by now; see isert_put_login_tx(). */
--	if (isert_conn->login_rsp_pending) {
--		isert_conn->login_rsp_pending = false;
--		if (isert_login_post_send(isert_conn,
--					  &isert_conn->login_tx_desc))
--			return;
+-	/* insert SWITCH_BUFFER packet before first IB in the ring frame */
+-	if (flags & AMDGPU_HAVE_CTX_SWITCH) {
+-		amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
+-		amdgpu_ring_write(ring, 0);
 -	}
-+	if (isert_alloc_rx_descriptors(isert_conn))
-+		return;
-+
-+	if (isert_post_recvm(isert_conn, ISERT_QP_MAX_RECV_DTOS))
-+		return;
-+
-+	/* Now we are in FULL_FEATURE phase */
-+	mutex_lock(&isert_conn->mutex);
-+	isert_conn->state = ISER_CONN_FULL_FEATURE;
-+	mutex_unlock(&isert_conn->mutex);
-+
-+	if (isert_login_post_send(isert_conn, &isert_conn->login_tx_desc))
-+		return;
+-
+ 	if (ib->flags & AMDGPU_IB_FLAG_CE)
+ 		header = PACKET3(PACKET3_INDIRECT_BUFFER_CONST, 2);
+ 	else
+@@ -2366,14 +2360,6 @@ static void gfx_v6_0_ring_emit_pipeline_sync(struct amdgpu_ring *ring)
+ 	amdgpu_ring_write(ring, seq);
+ 	amdgpu_ring_write(ring, 0xffffffff);
+ 	amdgpu_ring_write(ring, 4); /* poll interval */
+-
+-	if (usepfp) {
+-		/* synce CE with ME to prevent CE fetch CEIB before context switch done */
+-		amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
+-		amdgpu_ring_write(ring, 0);
+-		amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
+-		amdgpu_ring_write(ring, 0);
+-	}
+ }
  
- 	init_completion(&comp);
+ static void gfx_v6_0_ring_emit_vm_flush(struct amdgpu_ring *ring,
+@@ -2397,12 +2383,6 @@ static void gfx_v6_0_ring_emit_vm_flush(struct amdgpu_ring *ring,
+ 		/* sync PFP to ME, otherwise we might get invalid PFP reads */
+ 		amdgpu_ring_write(ring, PACKET3(PACKET3_PFP_SYNC_ME, 0));
+ 		amdgpu_ring_write(ring, 0x0);
+-
+-		/* synce CE with ME to prevent CE fetch CEIB before context switch done */
+-		amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
+-		amdgpu_ring_write(ring, 0);
+-		amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
+-		amdgpu_ring_write(ring, 0);
+ 	}
+ }
  
+@@ -2998,6 +2978,12 @@ static uint64_t gfx_v6_0_get_gpu_clock_counter(struct amdgpu_device *adev)
+ 	return clock;
+ }
+ 
++static void gfx_v6_0_ring_emit_sb(struct amdgpu_ring *ring)
++{
++	amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
++	amdgpu_ring_write(ring, 0);
++}
++
+ static void gfx_v6_ring_emit_cntxcntl(struct amdgpu_ring *ring, uint32_t flags)
+ {
+ 	u32 dw2 = 0x80000000; /* set load_enable otherwise this package is just NOPs */
+@@ -3541,11 +3527,12 @@ static const struct amdgpu_ring_funcs gfx_v6_0_ring_funcs_gfx = {
+ 	.emit_frame_size =
+ 		5 + 5 + /* hdp flush / invalidate */
+ 		14 + 14 + 14 + /* gfx_v6_0_ring_emit_fence x3 for user fence, vm fence */
+-		7 + 4 + /* gfx_v6_0_ring_emit_pipeline_sync */
+-		SI_FLUSH_GPU_TLB_NUM_WREG * 5 + 7 + 6 + /* gfx_v6_0_ring_emit_vm_flush */
++		7 + /* gfx_v6_0_ring_emit_pipeline_sync */
++		SI_FLUSH_GPU_TLB_NUM_WREG * 5 + 7 + 2 + /* gfx_v6_0_ring_emit_vm_flush */
++		3 * 2 + /* gfx_v6_0_ring_emit_sb x3 (from amdgpu_vm_flush, amdgpu_ib_schedule) */
+ 		3 + 2 + 2 + /* gfx_v6_ring_emit_cntxcntl including VGT flush */
+ 		5, /* SURFACE_SYNC */
+-	.emit_ib_size = 6, /* gfx_v6_0_ring_emit_ib */
++	.emit_ib_size = 4, /* gfx_v6_0_ring_emit_ib */
+ 	.emit_ib = gfx_v6_0_ring_emit_ib,
+ 	.emit_fence = gfx_v6_0_ring_emit_fence,
+ 	.emit_pipeline_sync = gfx_v6_0_ring_emit_pipeline_sync,
+@@ -3553,6 +3540,7 @@ static const struct amdgpu_ring_funcs gfx_v6_0_ring_funcs_gfx = {
+ 	.test_ring = gfx_v6_0_ring_test_ring,
+ 	.test_ib = gfx_v6_0_ring_test_ib,
+ 	.insert_nop = amdgpu_ring_insert_nop,
++	.emit_switch_buffer = gfx_v6_0_ring_emit_sb,
+ 	.emit_cntxcntl = gfx_v6_ring_emit_cntxcntl,
+ 	.emit_wreg = gfx_v6_0_ring_emit_wreg,
+ 	.emit_mem_sync = gfx_v6_0_emit_mem_sync,
+@@ -3570,8 +3558,9 @@ static const struct amdgpu_ring_funcs gfx_v6_0_ring_funcs_compute = {
+ 		7 + /* gfx_v6_0_ring_emit_pipeline_sync */
+ 		SI_FLUSH_GPU_TLB_NUM_WREG * 5 + 7 + /* gfx_v6_0_ring_emit_vm_flush */
+ 		14 + 14 + 14 + /* gfx_v6_0_ring_emit_fence x3 for user fence, vm fence */
++		3 * 2 + /* gfx_v6_0_ring_emit_sb x3 (from amdgpu_vm_flush, amdgpu_ib_schedule) */
+ 		5, /* SURFACE_SYNC */
+-	.emit_ib_size = 6, /* gfx_v6_0_ring_emit_ib */
++	.emit_ib_size = 4, /* gfx_v6_0_ring_emit_ib */
+ 	.emit_ib = gfx_v6_0_ring_emit_ib,
+ 	.emit_fence = gfx_v6_0_ring_emit_fence,
+ 	.emit_pipeline_sync = gfx_v6_0_ring_emit_pipeline_sync,
+@@ -3579,6 +3568,7 @@ static const struct amdgpu_ring_funcs gfx_v6_0_ring_funcs_compute = {
+ 	.test_ring = gfx_v6_0_ring_test_ring,
+ 	.test_ib = gfx_v6_0_ring_test_ib,
+ 	.insert_nop = amdgpu_ring_insert_nop,
++	.emit_switch_buffer = gfx_v6_0_ring_emit_sb,
+ 	.emit_wreg = gfx_v6_0_ring_emit_wreg,
+ 	.emit_mem_sync = gfx_v6_0_emit_mem_sync,
+ };
 -- 
 2.53.0
 
