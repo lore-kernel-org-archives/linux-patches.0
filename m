@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FBD230C617;
-	Sat, 12 Sep 2026 14:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FF12F8EAE;
+	Sat, 12 Sep 2026 14:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222615; cv=none; b=tOghGllSRrhn9XJkDw9ZrGXMEDFaY6XutC6Ur3ngbQxG6JErN+Qd5U+lXNeRPBn0O4dt7EoiyF5r1v5xFujGkNaCGMUsG7Wt+0S7Ga5sG3a4K1S3/JGfImpoGDJ6e+ojqsHHBDfOapH8zKvuXjSKgXfSmy4dfEvzveCcBLuFiEQ=
+	t=1789222620; cv=none; b=SF1GjzBcoSoyUnJ0E+rP8ZGu8UpSJAyQrf1jE3As/qoNgHSX/IMEeTiXdphsEakI1w/n411HSE6168DMT7puyp93KIBqFqlBT2bxpzd06ZtHycIVV1BqPqBf0JHySUlIne+210fcyB3ONoEMqmOt19bE22n/4zrIjvgX0pQHUZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222615; c=relaxed/simple;
-	bh=7mPhxUSExDHfzdGimI8uzaVNBQqLCxfwZk3oUJidKuo=;
+	s=arc-20240116; t=1789222620; c=relaxed/simple;
+	bh=TxbfbLkmc5Qjb8C8xKSedv+ZmUtIUydBGjZrord8DsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nbFylELt9goViFwHh1FjGmIeaezb0nCMo8JakNRX/j8ekhze0UOgo/YOaOrgWKbcVjWaEMgZdNEGQep0Zmx0ZJWhItiz/2AFkXXFnqJwhFKf7WySPOnw8kCZ2N2E7AFoUGJv3WCtKyzxJASLuKriPJdYsNXz/1v1znNrdsNwkM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzKypBL9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oc2CUjFQJl4Pyx9FVaQJ3+Myg5KSz5e0aGm7GS4o9x6YKBvqRFrlX7hr0qnuFUKrIIa3YDO5DMyFDKunUSJQOpfOeO6O4V4H2/i32rB+HIwTHAkmjn4N70A4BLJc5szkuGankAydlwnaMa+a7dK2M9NZbV2g/M7rYCZnBMem2Tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ElpgqvyO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzKypBL9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E7A1F000FF;
-	Sat, 12 Sep 2026 14:16:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ElpgqvyO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2C91F000FF;
+	Sat, 12 Sep 2026 14:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222613;
-	bh=AauSe+6kQHRlYwJCmuPKUsKcLU3p3QvNagQsZUiZ+dA=;
+	s=korg; t=1789222618;
+	bh=WbXORBBkXby8YclNesSopXrozE/CT/Jps8j2TbYm4fY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rzKypBL9p8R3CC0glbqK5pyS/saRmA+Ny1q8qRUoZaPmZTXuC9tBJDcht2HpPT1a4
-	 n/JmjPScrGP0QvtfDkgLi//F6t5TzMrxaIxEylNNwofPGMwAsKU4YYy5NTRj77sTLj
-	 aHNIAukNfH9a0b4JM7H/Et18QzyroAC4S64gizhE=
+	b=ElpgqvyOYkxz2O8Kfy0UYDlMDufgXjQpP829Jfy+RdJU8L7x98hSNf8Q1659olENW
+	 3O9LLv3+qR/8+qinmBQgZZT6B7LGqEElSFBGPplpGslRFMNs308bqQmAYM6mPZbBww
+	 qcEjipUUCSnl6pCaUYPSaiTxxuLNjA9907yBqmsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Weigang He <geoffreyhe2@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0621/1424] bpf: Copy per-CPU map value padding in copy_map_value_long()
-Date: Sat, 12 Sep 2026 08:50:53 +0200
-Message-ID: <20260912065621.198650716@linuxfoundation.org>
+Subject: [PATCH 6.6 0586/1424] ARM: imx: fix device_node refcount leaks in imx7_src_init()
+Date: Sat, 12 Sep 2026 08:50:18 +0200
+Message-ID: <20260912065620.415514235@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,61 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit 7cf9cd98cf6f0df3befc167ca6b54c07014d71de ]
+[ Upstream commit 3de939b2ac843d56d88e2ab1e1b1f667cba9e1d4 ]
 
-In kernel, per-CPU map elements are stored with
-round_up(map->value_size, 8) bytes. On UAPI lookup paths, it copies the
-rounded size for each CPU into a temporary buffer.
+imx7_src_init() obtains two device_node references via
+of_find_compatible_node() - one for "fsl,imx7d-src" and one for
+"fsl,imx7d-gpc" - reusing the same np variable, but never calls
+of_node_put() on either. On every i.MX7D boot up to two device_node
+refcounts are leaked:
 
-However, copy_map_value_long() passes 'map->value_size' to
-bpf_obj_memcpy(). When the map has special fields, bpf_obj_memcpy() copies
-around those fields with memcpy(), and does not copy the tail padding
-between 'map->value_size' and round_up(map->value_size, 8).
+  - The "fsl,imx7d-src" node is leaked both when of_iomap() fails (the
+    early return after the mapping) and when it succeeds, because np is
+    then overwritten by the second of_find_compatible_node() call
+    without releasing the prior reference.
+  - The "fsl,imx7d-gpc" node is leaked on every path leaving the
+    function after it is acquired.
 
-The temporary UAPI lookup buffers are allocated without __GFP_ZERO. As a
-result, when the per-CPU map's value size is not equal to
-round_up(map->value_size, 8), UAPI LOOKUP_ELEM and its variants can return
-stale heap contents from that padding to user space. The same issue
-applies to bpf_iter for per-CPU maps.
+Release each reference immediately after of_iomap() consumes the node.
+of_iomap() maps the node's registers but does not retain a reference to
+the device_node, so it is safe to put the node once mapped; this also
+drops the first reference before np is reused for the second lookup.
 
-Pass round_up(map->value_size, 8) to bpf_obj_memcpy() from
-copy_map_value_long(), so per-CPU maps both with and without special
-fields copy the entire per-CPU slot. Remove the now redundant round_up()
-from bpf_obj_memcpy()'s long_memcpy path.
+Found by static analysis tool CodeQL.
 
-Fixes: 448325199f57 ("bpf: Add copy_map_value_long to copy to remote percpu memory")
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260624155115.85196-2-leon.hwang@linux.dev
+Fixes: e34645f45805 ("ARM: imx: add smp support for imx7d")
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/mach-imx/src.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 398fa28c388d9..fd20812cbcc33 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -482,7 +482,7 @@ static inline void bpf_obj_memcpy(struct btf_record *rec,
- 
- 	if (IS_ERR_OR_NULL(rec)) {
- 		if (long_memcpy)
--			bpf_long_memcpy(dst, src, round_up(size, 8));
-+			bpf_long_memcpy(dst, src, size);
- 		else
- 			memcpy(dst, src, size);
+diff --git a/arch/arm/mach-imx/src.c b/arch/arm/mach-imx/src.c
+index f28bfb653a88f..c3c80b4c3d53b 100644
+--- a/arch/arm/mach-imx/src.c
++++ b/arch/arm/mach-imx/src.c
+@@ -196,6 +196,7 @@ void __init imx7_src_init(void)
  		return;
-@@ -505,7 +505,7 @@ static inline void copy_map_value(struct bpf_map *map, void *dst, void *src)
  
- static inline void copy_map_value_long(struct bpf_map *map, void *dst, void *src)
- {
--	bpf_obj_memcpy(map->record, dst, src, map->value_size, true);
-+	bpf_obj_memcpy(map->record, dst, src, round_up(map->value_size, 8), true);
+ 	src_base = of_iomap(np, 0);
++	of_node_put(np);
+ 	if (!src_base)
+ 		return;
+ 
+@@ -204,6 +205,7 @@ void __init imx7_src_init(void)
+ 		return;
+ 
+ 	gpc_base = of_iomap(np, 0);
++	of_node_put(np);
+ 	if (!gpc_base)
+ 		return;
  }
- 
- static inline void bpf_obj_memzero(struct btf_record *rec, void *dst, u32 size)
 -- 
 2.53.0
 
