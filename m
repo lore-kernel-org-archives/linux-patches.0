@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C103C3B9952;
-	Sat, 12 Sep 2026 07:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763E43B841B;
+	Sat, 12 Sep 2026 07:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196815; cv=none; b=nPIyPWJ6xYv+orTLkJriSPD/OxOA2H/cVhtwWrn3N00q3lVj+c37nPKXve+IkpeIO9yD5qeTRDjIO3e+OT7RaP+BDQlKpFCUPPlOMKX5bisNhARTaEOsJb7P2IYmAVZi7fSqjgmjA0UTEZGovsExlhDa9PgDpMmX+6jQglQtTTw=
+	t=1789196820; cv=none; b=uk4rTQeB5/u+N2Avqgw0+Ifb/7jwJQYyNZeQ0poRKuU31iGXwDK4s6heCV8M59cbgyHHif/VHbieiV8dvoU6fwWjCnnBE/+sxOsnsXzNTXmL1GLsrPebmM9PlDALbJyAyCdrU183Rv7GqOvRFHehiN3LskoBbHMmx6e/G+CPB94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196815; c=relaxed/simple;
-	bh=WMYDDx8ZrkqdaXzYUMiDtt8ExV/r96C4LGxvNRWE/zU=;
+	s=arc-20240116; t=1789196820; c=relaxed/simple;
+	bh=aFtVcmUNLyTGGCMviaIKt5i1zD5PMJQiD0pZ817pkdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X8YVI/8JZ2dVYMrIAHSEk1IMNRs6fCLqWDqA+A2yk1pmbr3izxd2U+ZtF1A/W1J+DIlEAIZWbZb2EbTQB3+wS6zVhWwxl6/pqVMwv11ZvpEJmeYQPcBxOcLG+62G7JdbE/QwDJ1HJxO/srhzNRXBtA2mGmwORrJDjoT03lGVS98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A09FWrqs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ds/fLcH/lfu6kpANoPiGctRGyAoPk1K2kBYAOo2+iGSdXYyGkHPlqn0vsEd2FJ4Et6gzwW2JTfGoAOLzMRfKmTO6UIW1yKKReqLQ4L3D1/P8WJDGTs41ZoH+XsWVzcWt8AnpWljHUY/4kiMTi4YuGVvKPlX2wMcQnmrAmpERIZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=01Iza1Wb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A09FWrqs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE371F000FF;
-	Sat, 12 Sep 2026 07:06:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01Iza1Wb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59CE1F000FF;
+	Sat, 12 Sep 2026 07:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196811;
-	bh=X3y41Ez4g/kOI8NZmRMutjjX9wO1VerqDU0Lbj2OtLw=;
+	s=korg; t=1789196816;
+	bh=gjq92mQdcMffdodhVKSZ1ahptFOb9it/Ey7CP2Wh3Dg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A09FWrqs3F/mOkSt0cve0BYjV5rfh6IvBVpVrpM47CLt04nd20KPR02OwBrs0ZPox
-	 e1AuzV/frED66cXBnxR5DXU5wVcIpDK4zBC7ts+yT0eQthpZb0k/kV05xZiChEnz2l
-	 sYdIZM4dvPUbsWzU8wGj7W1MlWuuz3p/Qxq2aLPY=
+	b=01Iza1Wb/tpH1CkZ6IQEwm2oxjQitKkjYuhcAMSTDGdYEJo8Fvf/r38wLVyNjgh4i
+	 omTlF/zSBr6gWD0Fmq5UHerfyenndvNqg5Lr+6c9QG8bOrCQmVy6T7/SYFBCOe8iUr
+	 72xy8kpIk5Wbw2rkssNhpPBtyF/5pZsJNfo9CrGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0040/1815] drm/rockchip: dw_dp: Add missing newline in dev_err_probe() message
-Date: Sat, 12 Sep 2026 08:29:50 +0200
-Message-ID: <20260912065649.962631793@linuxfoundation.org>
+Subject: [PATCH 7.2 0041/1815] drm/rockchip: dw_dp: Release core resources
+Date: Sat, 12 Sep 2026 08:29:51 +0200
+Message-ID: <20260912065649.986325076@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,34 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 0a01412178047bf3ff351c7e75d373e411072a87 ]
+[ Upstream commit cc6d7aca2f37a1525a94ef97eb3ce361732c876c ]
 
-Add the missing trailing newline to dev_err_probe() call in
-dw_dp_rockchip_bind().
+Core resources such as the DisplayPort AUX channel get initialized and
+registered during dw_dp_bind(), but are never unregistered, which may
+lead to memory leaks and/or use-after-free:
+
+[  224.661371] BUG: KASAN: slab-use-after-free in device_is_dependent+0xe0/0x2b0
+[  224.662015] Read of size 8 at addr ffff00011aee8550 by task modprobe/658
+[  224.662612]
+[  224.662752] CPU: 7 UID: 0 PID: 658 Comm: modprobe Not tainted 7.0.0-rc2-next-20260305 #14 PREEMPT
+[  224.662759] Hardware name: Radxa ROCK 5B (DT)
+[  224.662762] Call trace:
+[  224.662764]  show_stack+0x20/0x38 (C)
+[  224.662772]  dump_stack_lvl+0x6c/0x98
+[  224.662777]  print_report+0x160/0x4b8
+[  224.662783]  kasan_report+0xb4/0xe0
+[  224.662790]  __asan_report_load8_noabort+0x20/0x30
+[  224.662796]  device_is_dependent+0xe0/0x2b0
+[  224.662802]  device_is_dependent+0x108/0x2b0
+[  224.662808]  device_link_add+0x1f8/0x10b0
+[  224.662813]  devm_of_phy_get_by_index+0x120/0x200
+[  224.662819]  dw_dp_bind+0x34c/0xb10 [dw_dp]
+[  224.662830]  dw_dp_rockchip_bind+0x194/0x250 [rockchipdrm]
+[  224.662864]  component_bind_all+0x3a8/0x720
+[  224.662869]  rockchip_drm_bind+0x120/0x390 [rockchipdrm]
+[  224.662899]  try_to_bring_up_aggregate_device+0x76c/0x838
+[  224.662904]  component_master_add_with_match+0x1f4/0x230
+[  224.662909]  rockchip_drm_platform_probe+0x420/0x538 [rockchipdrm]
+[  224.662939]  platform_probe+0xe8/0x168
+[  224.662945]  really_probe+0x340/0x828
+[  224.662950]  __driver_probe_device+0x2e0/0x350
+[  224.662954]  driver_probe_device+0x80/0x140
+[  224.662959]  __driver_attach+0x398/0x460
+[  224.662964]  bus_for_each_dev+0xe0/0x198
+[  224.662968]  driver_attach+0x50/0x68
+[  224.662972]  bus_add_driver+0x2a0/0x4c0
+[  224.662977]  driver_register+0x294/0x360
+[  224.662982]  __platform_driver_register+0x7c/0x98
+[  224.662987]  rockchip_drm_init+0xc4/0xff8 [rockchipdrm]
+
+Since a previous commit exported dw_dp_unbind() function in DW DP core
+library to take care of the necessary cleanup, use this in the
+component's unbind() callback, as well as in its bind() error path.
 
 Fixes: d68ba7bac955 ("drm/rockchip: Add RK3588 DPTX output support")
-Fixes: 26cb3e26efa7 ("drm/rockchip: dw_dp: Simplify error handling")
 Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/20260601-drm-rk-fixes-v4-2-c3f3f123e1da@collabora.com
+Link: https://patch.msgid.link/20260601-drm-rk-fixes-v4-3-c3f3f123e1da@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/dw_dp-rockchip.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/dw_dp-rockchip.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/rockchip/dw_dp-rockchip.c b/drivers/gpu/drm/rockchip/dw_dp-rockchip.c
-index 32bc73a1d5e45..f137f699737cd 100644
+index f137f699737cd..0de822360c8db 100644
 --- a/drivers/gpu/drm/rockchip/dw_dp-rockchip.c
 +++ b/drivers/gpu/drm/rockchip/dw_dp-rockchip.c
-@@ -109,7 +109,7 @@ static int dw_dp_rockchip_bind(struct device *dev, struct device *master, void *
+@@ -107,15 +107,26 @@ static int dw_dp_rockchip_bind(struct device *dev, struct device *master, void *
+ 		return PTR_ERR(dp->base);
+ 
  	connector = drm_bridge_connector_init(drm_dev, encoder);
- 	if (IS_ERR(connector))
+-	if (IS_ERR(connector))
++	if (IS_ERR(connector)) {
++		dw_dp_unbind(dp->base);
  		return dev_err_probe(dev, PTR_ERR(connector),
--				     "Failed to init bridge connector");
-+				     "Failed to init bridge connector\n");
+ 				     "Failed to init bridge connector\n");
++	}
  
  	return 0;
  }
+ 
++static void dw_dp_rockchip_unbind(struct device *dev, struct device *master,
++				  void *data)
++{
++	struct rockchip_dw_dp *dp = dev_get_drvdata(dev);
++
++	dw_dp_unbind(dp->base);
++}
++
+ static const struct component_ops dw_dp_rockchip_component_ops = {
+ 	.bind = dw_dp_rockchip_bind,
++	.unbind = dw_dp_rockchip_unbind,
+ };
+ 
+ static int dw_dp_probe(struct platform_device *pdev)
 -- 
 2.53.0
 
