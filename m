@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFC52D0C94;
-	Sat, 12 Sep 2026 19:36:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0B337F015;
+	Sat, 12 Sep 2026 19:36:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241775; cv=none; b=MXEQ+ULKQgUmUjXAUGrxXweKa3knOY3StwzFBgARnvGr0IKt5Re1VAB97z8PEBxSa8bMMmNemty/szOYkwiJ1DVSSPA+JdaiRMHEvcz62TJIDOrs8rEZx078c0yeL4uE9Dr+sbfh5HPUlgagXi0c/GNH+g106k+KFcvELM7VrQQ=
+	t=1789241777; cv=none; b=lJIRl4ePDndQZaL1bflPbodBYfuQz8c4ylSlCrgmYeRpudPUEsGzxLdPP2ID52S8bSmCTa5KZW8i0k6e/2FeKh93F5XV311epJw006kIYbmo2kySAN0yt7GDXjXOPeZprSoO0blGYWqfkeetkBM75bOfeiIoql9QAlMkw863Eq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241775; c=relaxed/simple;
-	bh=gETyrVMtIjD6Nvx7inT1ZWI1nCgMHClRShbe9tB/bLA=;
+	s=arc-20240116; t=1789241777; c=relaxed/simple;
+	bh=/zt+o4gjXHqLKrC7YhOZdbAE1fYw6u0AjBpWE1BeAA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KPYIZ4cCDpd8wzzq4LyxdXE6BOVyo9RgFAGW2J7AoFzM7Xfw1eBnHs6yedQlBxTRcYvObhxTeuhZNAIuTQ3dQQnQDF32r5f+FigxV+7eFKqG9KLGevzb8emKt1foFTza7w26qK98dYU7J4B/xaYPA7n14cS8+AjB2CFzucKxRi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LT8LYHGm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XlyrGJXQNCNiQV7ZYk+wM0Oo3MBHddwHg+MAAUva96wlasVZcMBVYsnXB6tig9XKeOlkCW8gvhgJThfrqwiOIdXzWti6rdkndvKBXEm/lAqoovLH2B4zh9zAOWpjoqKK47iGSTOfwb5BrQFVo/TtyOavue7o1XdoLyOoE92+fzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UL95+B8J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LT8LYHGm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE171F00893;
-	Sat, 12 Sep 2026 19:36:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UL95+B8J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1790F1F000FF;
+	Sat, 12 Sep 2026 19:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241770;
-	bh=tsonptyexRUXoC2ycWs64CTHMejo9yiN1DXl2rabgyU=;
+	s=korg; t=1789241775;
+	bh=TwhHCnePeoqKmf4+Ig9bdSuqsSj2tAz2EtkHQCR8DAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LT8LYHGmWSmCVN2DO3VnDxFHURWWK7h//8kMUDfo9A7lvdU3SyXA5Iuw7TcdoPFYz
-	 JfoqunjwnEqp4qx5kgetKHMwA1mV8TUMSEAdMGk8uWG99K9fGsfHkwHS0pIli+VTOG
-	 MciuqB58BD7f5/LQCUjvb723Jm/5PcDlK+KVy8cE=
+	b=UL95+B8J+Lyo+vODLs2hZMipMRrNfeG0bxXFtLXKOcN9g9wrbWd7/lGfunRUnlXgk
+	 +6jSbM8ov7XEA81oa/o+CNsVa74NwKKrd/L5yUSbHq8+76cbt1DC9MDUCPL7GlJOUN
+	 Ucu+EwrqE8qoT7zTsP5EOFd7BS4qJC6PCzvAlyv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Alexander Martyniuk <alexevgmart@gmail.com>,
+	Koichiro Den <den@valinux.co.jp>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 205/798] selinux: reject an unclaimed class value in security_get_classes()
-Date: Sat, 12 Sep 2026 08:57:13 +0200
-Message-ID: <20260912065521.791411412@linuxfoundation.org>
+Subject: [PATCH 5.10 206/798] net: ntb_netdev: Fix TX busy and drop handling
+Date: Sat, 12 Sep 2026 08:57:14 +0200
+Message-ID: <20260912065521.815587620@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,80 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 22b05fec62c0fe9864cfceb52f7d0f3a34d9b1dd upstream.
+commit 8aaa47351db0f93a5c5297fbafdfa8bc75e8ae49 upstream.
 
-security_get_classes() sizes an array by p_classes.nprim and fills it at
-value - 1, so a class value the policy never defines leaves a NULL.
-sel_make_classes() passes every entry to sel_make_dir(), reaching the same
-d_alloc_name() dereference as the permission array. The class symbol table
-is allowed to be sparse (policydb_class_isvalid() exists to absorb that),
-but this getter builds its own array straight from the hash table and has
-no such predicate.
+Currently, ntb_netdev returns NETDEV_TX_BUSY for every enqueue error. It
+also increments the drop and error counters while leaving the skb owned
+by the qdisc, and may return BUSY with the subqueue still awake.
+Retrying a permanent error cannot succeed either.
 
-Fail the lookup when a value went unclaimed instead of handing out the
-NULL. Conforming policies define every class they declare and are
-unaffected.
+The unconditional BUSY return and premature accounting date back to the
+initial driver. The error-path queue stop was later removed without
+changing that return value. The current flow-control code includes a
+resource check, but ntb_netdev does not honor its result before enqueue.
 
+Honor the resource check before enqueue. For -EAGAIN and -EBUSY, stop
+the subqueue, arm the existing reaper timer, and return BUSY without
+touching the skb. For other errors, free the skb, increment tx_dropped,
+and return NETDEV_TX_OK.
+
+Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
+Fixes: d723485cb4ca ("ntb_netdev: remove tx timeout")
+Fixes: e74bfeedad08 ("NTB: Add flow control to the ntb_netdev")
 Cc: stable@vger.kernel.org
-Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260817053519.4135287-3-den@valinux.co.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[den: adapt to the single-queue implementation, as 5.10.y lacks commit:
+ ee970634c777 ("net: ntb_netdev: Introduce per-queue context")]
+Stable-dep-of: 873ce713fef5 ("NTB: ntb_transport: Fail TX enqueue when the QP link is down")
+Stable-dep-of: a4f2387db6f1 ("NTB: ntb_transport: Reject oversized TX buffers")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/selinux/ss/services.c | 24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ drivers/net/ntb_netdev.c | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/security/selinux/ss/services.c b/security/selinux/ss/services.c
-index 446df456b0f16..0f81c5946397c 100644
---- a/security/selinux/ss/services.c
-+++ b/security/selinux/ss/services.c
-@@ -3394,6 +3394,7 @@ int security_get_classes(struct selinux_policy *policy,
- 			 char ***classes, u32 *nclasses)
+diff --git a/drivers/net/ntb_netdev.c b/drivers/net/ntb_netdev.c
+index ed698f05c537d..af6230da5e008 100644
+--- a/drivers/net/ntb_netdev.c
++++ b/drivers/net/ntb_netdev.c
+@@ -164,8 +164,10 @@ static int __ntb_netdev_maybe_stop_tx(struct net_device *netdev,
+ static int ntb_netdev_maybe_stop_tx(struct net_device *ndev,
+ 				    struct ntb_transport_qp *qp, int size)
  {
- 	struct policydb *policydb;
-+	u32 i;
+-	if (netif_queue_stopped(ndev) ||
+-	    (ntb_transport_tx_free_entry(qp) >= size))
++	if (netif_queue_stopped(ndev))
++		return -EBUSY;
++
++	if (ntb_transport_tx_free_entry(qp) >= size)
+ 		return 0;
+ 
+ 	return __ntb_netdev_maybe_stop_tx(ndev, qp, size);
+@@ -208,21 +210,30 @@ static netdev_tx_t ntb_netdev_start_xmit(struct sk_buff *skb,
+ 	struct ntb_netdev *dev = netdev_priv(ndev);
  	int rc;
  
- 	policydb = &policy->policydb;
-@@ -3406,16 +3407,29 @@ int security_get_classes(struct selinux_policy *policy,
+-	ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop);
++	if (unlikely(ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop)))
++		return NETDEV_TX_BUSY;
  
- 	rc = hashtab_map(&policydb->p_classes.table, get_classes_callback,
- 			 *classes);
--	if (rc) {
--		u32 i;
-+	if (rc)
-+		goto err;
- 
--		for (i = 0; i < *nclasses; i++)
--			kfree((*classes)[i]);
--		kfree(*classes);
-+	/*
-+	 * The class symtab may be sparse, which policydb_class_isvalid() exists
-+	 * to absorb; the callback fills this array by value, so an unclaimed
-+	 * one leaves a NULL that sel_make_classes() hands to sel_make_dir().
-+	 */
-+	for (i = 0; i < *nclasses; i++) {
-+		if (!(*classes)[i]) {
-+			rc = -EINVAL;
-+			goto err;
+ 	rc = ntb_transport_tx_enqueue(dev->qp, skb, skb->data, skb->len);
+-	if (rc)
+-		goto err;
++	if (rc) {
++		if (rc == -EAGAIN || rc == -EBUSY) {
++			netif_stop_queue(ndev);
++			mod_timer(&dev->tx_timer,
++				  jiffies + usecs_to_jiffies(tx_time));
++			return NETDEV_TX_BUSY;
 +		}
- 	}
- 
- out:
- 	return rc;
 +
-+err:
-+	for (i = 0; i < *nclasses; i++)
-+		kfree((*classes)[i]);
-+	kfree(*classes);
-+	return rc;
++		goto drop;
++	}
+ 
+ 	/* check for next submit */
+ 	ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop);
+ 
+ 	return NETDEV_TX_OK;
+ 
+-err:
++drop:
++	dev_kfree_skb_any(skb);
+ 	ndev->stats.tx_dropped++;
+-	ndev->stats.tx_errors++;
+-	return NETDEV_TX_BUSY;
++	return NETDEV_TX_OK;
  }
  
- static int get_permissions_callback(void *k, void *d, void *args)
+ static void ntb_netdev_tx_timer(struct timer_list *t)
 -- 
 2.53.0
 
