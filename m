@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BF92AD3C;
-	Sat, 12 Sep 2026 16:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9453242D65;
+	Sat, 12 Sep 2026 16:54:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232060; cv=none; b=NID+BFw8YSVJcsP9Wok/KSFgxiZUlbXQ+0402H+qhh6sODqPH3m0Vrxn2VfwFp5kSLESzM+AbyC5kBwujtlF7BPFqs/MGn94xe2GFGxtK+fdhxcXojTpKJsT/LwUCLOQnDCIWYcqsg9J4db3kARzw5SJbXXmyeoDHMUBzyLhS80=
+	t=1789232065; cv=none; b=VVIhwbha37cTBg+1d0XeVG43e8kMgABGrPIVS8O0sVSzSjYGwCAxA47uMzPKnPWM0EVRlVT8WxbsJC8YNprRHZTUtKnkQzv43thwhQQVTwo6IpAxT0KY/veKDavpxxZFVhozlsvD83nLMVAwEVjq3J1PspGR1CUAUOVnEXMA1Pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232060; c=relaxed/simple;
-	bh=eBbkeUEFXpLy1mw803H/Posu+pCCG5bF+BmZHZC/rdM=;
+	s=arc-20240116; t=1789232065; c=relaxed/simple;
+	bh=19NoCnd9BD+aDS+kLSPyk6bLqPu+6R5Ah2TyKMf4DH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VEME3C00O8+9lSWshkpbiHd/3HtSfvYa9nEzBuhDHdF9g/7945DF98Gq7gCYXnpGkGbrMaizUOll7pXAgEtXxvzo4fmC/wIcdHALPrsEeVyNuZCbeIVzKg09+mmXlWahNrHEvE6dlRSe60p4YuSsv7pMEsAiPrhfVcOHB4PDYW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/c8sA37; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=INlvcjqwgER34URnIl5RaEKSuDPdueF4erJC2p9yofs5yETcSLvE3OM7qT28OziuJp/3op/645NG+Owl2CV+z1vG0Fcg+QjVsg1a+Wc394PwEks2KYW/NSsWXEDPKGLTIrhw6YC46Zw/quAEoqH/6h6I6o66Fsu92JrWvgdBY64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QdWGVbh7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/c8sA37"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9B61F000FF;
-	Sat, 12 Sep 2026 16:54:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdWGVbh7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81BF41F000FF;
+	Sat, 12 Sep 2026 16:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232058;
-	bh=VIiY5yZ3ZrVl4O6Wlk4Sseud5Wd4SQNdERua4MBD2sw=;
+	s=korg; t=1789232063;
+	bh=v+lGkWP9XyLBYuziyj/2T9jeTc1uzXPkLeMFaJMgtLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P/c8sA37ligS8xjH+ELTV3OjYkQOI25u89eoEZLV1gNarLDG0lVMSqSqaaNQLJpu1
-	 fwj58lh0JI1YIeOUW9jfy7anFO0x05hZtSXiLSSxp/JUc6Tfy+lKs65rLAKSVGVWQR
-	 2fbMDdmp5xcfnlk+i/R7RGJqC1CJZOY/bTvMNMF4=
+	b=QdWGVbh7e/336gRaiETu0CjQf0HtiiG5ti4dJkUwqa4aCmwWZm80dmzvRs+NAfHmX
+	 C5BsiDwTViENMtsY4oSiqsKKzgpCnVMTOoYJSAqFc/D/N4s5qo6mGMsw0Vec+MnlL9
+	 ewhz8rr2/p8PAzZcKlvrWE72NLqqDw38ssYZihpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1125/1191] ALSA: control: Introduce unlocked version for snd_ctl_find_*() helpers
-Date: Sat, 12 Sep 2026 09:04:13 +0200
-Message-ID: <20260912065613.420421313@linuxfoundation.org>
+Subject: [PATCH 6.1 1126/1191] ALSA: control_led: Use guard() for locking
+Date: Sat, 12 Sep 2026 09:04:14 +0200
+Message-ID: <20260912065613.441264289@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,337 +52,275 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit b1e055f67611daf098e27e8731386eeb5257bde3 ]
+[ Upstream commit 7dba48a474e68dcdda2b212cea131b4c9ddc7d89 ]
 
-For reducing the unnecessary use of controls_rwsem in the drivers,
-this patch adds a new variant for snd_ctl_find_*() helpers:
-snd_ctl_find_id_locked() and snd_ctl_find_numid_locked() look for a
-kctl element inside the card->controls_rwsem -- that is, doing the
-very same as what snd_ctl_find_id() and snd_ctl_find_numid() did until
-now.  snd_ctl_find_id() and snd_ctl_find_numid() remain same,
-i.e. still unlocked version, but they will be switched to locked
-version once after all callers are replaced.
+We can simplify the code gracefully with new guard() macro and co for
+automatic cleanup of locks.
 
-The patch also replaces the calls of snd_ctl_find_id() and
-snd_ctl_find_numid() in a few places; all of those are places where we
-know that the functions are called properly with controls_rwsem held.
-All others are without rwsem (although they should have been).
+A couple of functions that use snd_card_ref() and *_unref() are also
+cleaned up with a defined class, too.
 
-After this patch, we'll turn on the locking in snd_ctl_find_id() and
-snd_ctl_find_numid() to be more race-free.
+Only the code refactoring, and no functional changes.
 
-Link: https://lore.kernel.org/r/20230718141304.1032-10-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20240227085306.9764-25-tiwai@suse.de
 Stable-dep-of: 74e3b979ce8b ("ALSA: control: Don't add invalid kcontrols to LED layer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/control.h     |  4 ++-
- sound/core/control.c        | 69 +++++++++++++++++++++++++++----------
- sound/core/control_compat.c |  2 +-
- sound/core/control_led.c    |  2 +-
- sound/core/oss/mixer_oss.c  | 10 +++---
- sound/pci/emu10k1/emufx.c   |  2 +-
- 6 files changed, 61 insertions(+), 28 deletions(-)
+ sound/core/control_led.c | 150 +++++++++++++++++----------------------
+ 1 file changed, 65 insertions(+), 85 deletions(-)
 
-diff --git a/include/sound/control.h b/include/sound/control.h
-index e61b749bf2041..42e8dbb22d8e9 100644
---- a/include/sound/control.h
-+++ b/include/sound/control.h
-@@ -140,7 +140,9 @@ int snd_ctl_remove_id(struct snd_card * card, struct snd_ctl_elem_id *id);
- int snd_ctl_rename_id(struct snd_card * card, struct snd_ctl_elem_id *src_id, struct snd_ctl_elem_id *dst_id);
- void snd_ctl_rename(struct snd_card *card, struct snd_kcontrol *kctl, const char *name);
- int snd_ctl_activate_id(struct snd_card *card, struct snd_ctl_elem_id *id, int active);
--struct snd_kcontrol *snd_ctl_find_numid(struct snd_card * card, unsigned int numid);
-+struct snd_kcontrol *snd_ctl_find_numid_locked(struct snd_card *card, unsigned int numid);
-+struct snd_kcontrol *snd_ctl_find_numid(struct snd_card *card, unsigned int numid);
-+struct snd_kcontrol *snd_ctl_find_id_locked(struct snd_card *card, const struct snd_ctl_elem_id *id);
- struct snd_kcontrol *snd_ctl_find_id(struct snd_card *card, const struct snd_ctl_elem_id *id);
- 
- int snd_ctl_create(struct snd_card *card);
-diff --git a/sound/core/control.c b/sound/core/control.c
-index 54b9aa5dd9865..9b739a515fdfa 100644
---- a/sound/core/control.c
-+++ b/sound/core/control.c
-@@ -470,7 +470,7 @@ static int __snd_ctl_add_replace(struct snd_card *card,
- 	if (id.index > UINT_MAX - kcontrol->count)
- 		return -EINVAL;
- 
--	old = snd_ctl_find_id(card, &id);
-+	old = snd_ctl_find_id_locked(card, &id);
- 	if (!old) {
- 		if (mode == CTL_REPLACE)
- 			return -EINVAL;
-@@ -622,7 +622,7 @@ int snd_ctl_remove_id(struct snd_card *card, struct snd_ctl_elem_id *id)
- 	int ret;
- 
- 	down_write(&card->controls_rwsem);
--	kctl = snd_ctl_find_id(card, id);
-+	kctl = snd_ctl_find_id_locked(card, id);
- 	if (kctl == NULL) {
- 		up_write(&card->controls_rwsem);
- 		return -ENOENT;
-@@ -651,7 +651,7 @@ static int snd_ctl_remove_user_ctl(struct snd_ctl_file * file,
- 	int idx, ret;
- 
- 	down_write(&card->controls_rwsem);
--	kctl = snd_ctl_find_id(card, id);
-+	kctl = snd_ctl_find_id_locked(card, id);
- 	if (kctl == NULL) {
- 		ret = -ENOENT;
- 		goto error;
-@@ -692,7 +692,7 @@ int snd_ctl_activate_id(struct snd_card *card, struct snd_ctl_elem_id *id,
- 	int ret;
- 
- 	down_write(&card->controls_rwsem);
--	kctl = snd_ctl_find_id(card, id);
-+	kctl = snd_ctl_find_id_locked(card, id);
- 	if (kctl == NULL) {
- 		ret = -ENOENT;
- 		goto unlock;
-@@ -738,7 +738,7 @@ int snd_ctl_rename_id(struct snd_card *card, struct snd_ctl_elem_id *src_id,
- 	struct snd_kcontrol *kctl;
- 
- 	down_write(&card->controls_rwsem);
--	kctl = snd_ctl_find_id(card, src_id);
-+	kctl = snd_ctl_find_id_locked(card, src_id);
- 	if (kctl == NULL) {
- 		up_write(&card->controls_rwsem);
- 		return -ENOENT;
-@@ -791,7 +791,7 @@ snd_ctl_find_numid_slow(struct snd_card *card, unsigned int numid)
- #endif /* !CONFIG_SND_CTL_FAST_LOOKUP */
- 
- /**
-- * snd_ctl_find_numid - find the control instance with the given number-id
-+ * snd_ctl_find_numid_locked - find the control instance with the given number-id
-  * @card: the card instance
-  * @numid: the number-id to search
-  *
-@@ -801,9 +801,9 @@ snd_ctl_find_numid_slow(struct snd_card *card, unsigned int numid)
-  * (if the race condition can happen).
-  *
-  * Return: The pointer of the instance if found, or %NULL if not.
-- *
-  */
--struct snd_kcontrol *snd_ctl_find_numid(struct snd_card *card, unsigned int numid)
-+struct snd_kcontrol *
-+snd_ctl_find_numid_locked(struct snd_card *card, unsigned int numid)
- {
- 	if (snd_BUG_ON(!card || !numid))
- 		return NULL;
-@@ -813,10 +813,26 @@ struct snd_kcontrol *snd_ctl_find_numid(struct snd_card *card, unsigned int numi
- 	return snd_ctl_find_numid_slow(card, numid);
- #endif
- }
-+EXPORT_SYMBOL(snd_ctl_find_numid_locked);
-+
-+/**
-+ * snd_ctl_find_numid - find the control instance with the given number-id
-+ * @card: the card instance
-+ * @numid: the number-id to search
-+ *
-+ * Finds the control instance with the given number-id from the card.
-+ *
-+ * Return: The pointer of the instance if found, or %NULL if not.
-+ */
-+struct snd_kcontrol *snd_ctl_find_numid(struct snd_card *card,
-+					unsigned int numid)
-+{
-+	return snd_ctl_find_numid_locked(card, numid);
-+}
- EXPORT_SYMBOL(snd_ctl_find_numid);
- 
- /**
-- * snd_ctl_find_id - find the control instance with the given id
-+ * snd_ctl_find_id_locked - find the control instance with the given id
-  * @card: the card instance
-  * @id: the id to search
-  *
-@@ -826,17 +842,16 @@ EXPORT_SYMBOL(snd_ctl_find_numid);
-  * (if the race condition can happen).
-  *
-  * Return: The pointer of the instance if found, or %NULL if not.
-- *
-  */
--struct snd_kcontrol *snd_ctl_find_id(struct snd_card *card,
--				     const struct snd_ctl_elem_id *id)
-+struct snd_kcontrol *snd_ctl_find_id_locked(struct snd_card *card,
-+					    const struct snd_ctl_elem_id *id)
- {
- 	struct snd_kcontrol *kctl;
- 
- 	if (snd_BUG_ON(!card || !id))
- 		return NULL;
- 	if (id->numid != 0)
--		return snd_ctl_find_numid(card, id->numid);
-+		return snd_ctl_find_numid_locked(card, id->numid);
- #ifdef CONFIG_SND_CTL_FAST_LOOKUP
- 	kctl = xa_load(&card->ctl_hash, get_ctl_id_hash(id));
- 	if (kctl && elem_id_matches(kctl, id))
-@@ -851,6 +866,22 @@ struct snd_kcontrol *snd_ctl_find_id(struct snd_card *card,
- 
- 	return NULL;
- }
-+EXPORT_SYMBOL(snd_ctl_find_id_locked);
-+
-+/**
-+ * snd_ctl_find_id - find the control instance with the given id
-+ * @card: the card instance
-+ * @id: the id to search
-+ *
-+ * Finds the control instance with the given id from the card.
-+ *
-+ * Return: The pointer of the instance if found, or %NULL if not.
-+ */
-+struct snd_kcontrol *snd_ctl_find_id(struct snd_card *card,
-+				     const struct snd_ctl_elem_id *id)
-+{
-+	return snd_ctl_find_id_locked(card, id);
-+}
- EXPORT_SYMBOL(snd_ctl_find_id);
- 
- static int snd_ctl_card_info(struct snd_card *card, struct snd_ctl_file * ctl,
-@@ -1165,7 +1196,7 @@ static int snd_ctl_elem_info(struct snd_ctl_file *ctl,
- 	int result;
- 
- 	down_read(&card->controls_rwsem);
--	kctl = snd_ctl_find_id(card, &info->id);
-+	kctl = snd_ctl_find_id_locked(card, &info->id);
- 	if (kctl == NULL)
- 		result = -ENOENT;
- 	else
-@@ -1204,7 +1235,7 @@ static int snd_ctl_elem_read(struct snd_card *card,
- 	int ret;
- 
- 	down_read(&card->controls_rwsem);
--	kctl = snd_ctl_find_id(card, &control->id);
-+	kctl = snd_ctl_find_id_locked(card, &control->id);
- 	if (kctl == NULL) {
- 		ret = -ENOENT;
- 		goto unlock;
-@@ -1281,7 +1312,7 @@ static int snd_ctl_elem_write(struct snd_card *card, struct snd_ctl_file *file,
- 	int result;
- 
- 	down_write(&card->controls_rwsem);
--	kctl = snd_ctl_find_id(card, &control->id);
-+	kctl = snd_ctl_find_id_locked(card, &control->id);
- 	if (kctl == NULL) {
- 		up_write(&card->controls_rwsem);
- 		return -ENOENT;
-@@ -1362,7 +1393,7 @@ static int snd_ctl_elem_lock(struct snd_ctl_file *file,
- 	if (copy_from_user(&id, _id, sizeof(id)))
- 		return -EFAULT;
- 	down_write(&card->controls_rwsem);
--	kctl = snd_ctl_find_id(card, &id);
-+	kctl = snd_ctl_find_id_locked(card, &id);
- 	if (kctl == NULL) {
- 		result = -ENOENT;
- 	} else {
-@@ -1390,7 +1421,7 @@ static int snd_ctl_elem_unlock(struct snd_ctl_file *file,
- 	if (copy_from_user(&id, _id, sizeof(id)))
- 		return -EFAULT;
- 	down_write(&card->controls_rwsem);
--	kctl = snd_ctl_find_id(card, &id);
-+	kctl = snd_ctl_find_id_locked(card, &id);
- 	if (kctl == NULL) {
- 		result = -ENOENT;
- 	} else {
-@@ -1900,7 +1931,7 @@ static int snd_ctl_tlv_ioctl(struct snd_ctl_file *file,
- 	container_size = header.length;
- 	container = buf->tlv;
- 
--	kctl = snd_ctl_find_numid(file->card, header.numid);
-+	kctl = snd_ctl_find_numid_locked(file->card, header.numid);
- 	if (kctl == NULL)
- 		return -ENOENT;
- 
-diff --git a/sound/core/control_compat.c b/sound/core/control_compat.c
-index d8a86d1a99d6e..c0e553637764f 100644
---- a/sound/core/control_compat.c
-+++ b/sound/core/control_compat.c
-@@ -173,7 +173,7 @@ static int get_ctl_type(struct snd_card *card, struct snd_ctl_elem_id *id,
- 	int err;
- 
- 	down_read(&card->controls_rwsem);
--	kctl = snd_ctl_find_id(card, id);
-+	kctl = snd_ctl_find_id_locked(card, id);
- 	if (! kctl) {
- 		up_read(&card->controls_rwsem);
- 		return -ENOENT;
 diff --git a/sound/core/control_led.c b/sound/core/control_led.c
-index 6d81a6a59f29a..0f35f77af1bfe 100644
+index 0f35f77af1bfe..dd6ad4735fc4b 100644
 --- a/sound/core/control_led.c
 +++ b/sound/core/control_led.c
-@@ -251,7 +251,7 @@ static int snd_ctl_led_set_id(int card_number, struct snd_ctl_elem_id *id,
- 	card = snd_card_ref(card_number);
- 	if (card) {
- 		down_write(&card->controls_rwsem);
--		kctl = snd_ctl_find_id(card, id);
-+		kctl = snd_ctl_find_id_locked(card, id);
- 		if (kctl) {
- 			ioff = snd_ctl_get_ioff(kctl, id);
- 			vd = &kctl->vd[ioff];
-diff --git a/sound/core/oss/mixer_oss.c b/sound/core/oss/mixer_oss.c
-index c8291869ef906..abc99ae333282 100644
---- a/sound/core/oss/mixer_oss.c
-+++ b/sound/core/oss/mixer_oss.c
-@@ -524,7 +524,7 @@ static struct snd_kcontrol *snd_mixer_oss_test_id(struct snd_mixer_oss *mixer, c
- 	id.iface = SNDRV_CTL_ELEM_IFACE_MIXER;
- 	strscpy(id.name, name, sizeof(id.name));
- 	id.index = index;
--	return snd_ctl_find_id(card, &id);
-+	return snd_ctl_find_id_locked(card, &id);
+@@ -147,29 +147,27 @@ static void snd_ctl_led_set_state(struct snd_card *card, unsigned int access,
+ 		return;
+ 	route = -1;
+ 	found = false;
+-	mutex_lock(&snd_ctl_led_mutex);
+-	/* the card may not be registered (active) at this point */
+-	if (card && !snd_ctl_led_card_valid[card->number]) {
+-		mutex_unlock(&snd_ctl_led_mutex);
+-		return;
+-	}
+-	list_for_each_entry(lctl, &led->controls, list) {
+-		if (lctl->kctl == kctl && lctl->index_offset == ioff)
+-			found = true;
+-		UPDATE_ROUTE(route, snd_ctl_led_get(lctl));
+-	}
+-	if (!found && kctl && card) {
+-		lctl = kzalloc(sizeof(*lctl), GFP_KERNEL);
+-		if (lctl) {
+-			lctl->card = card;
+-			lctl->access = access;
+-			lctl->kctl = kctl;
+-			lctl->index_offset = ioff;
+-			list_add(&lctl->list, &led->controls);
++	scoped_guard(mutex, &snd_ctl_led_mutex) {
++		/* the card may not be registered (active) at this point */
++		if (card && !snd_ctl_led_card_valid[card->number])
++			return;
++		list_for_each_entry(lctl, &led->controls, list) {
++			if (lctl->kctl == kctl && lctl->index_offset == ioff)
++				found = true;
+ 			UPDATE_ROUTE(route, snd_ctl_led_get(lctl));
+ 		}
++		if (!found && kctl && card) {
++			lctl = kzalloc(sizeof(*lctl), GFP_KERNEL);
++			if (lctl) {
++				lctl->card = card;
++				lctl->access = access;
++				lctl->kctl = kctl;
++				lctl->index_offset = ioff;
++				list_add(&lctl->list, &led->controls);
++				UPDATE_ROUTE(route, snd_ctl_led_get(lctl));
++			}
++		}
+ 	}
+-	mutex_unlock(&snd_ctl_led_mutex);
+ 	switch (led->mode) {
+ 	case MODE_OFF:		route = 1; break;
+ 	case MODE_ON:		route = 0; break;
+@@ -201,14 +199,13 @@ static unsigned int snd_ctl_led_remove(struct snd_kcontrol *kctl, unsigned int i
+ 	struct snd_ctl_led_ctl *lctl;
+ 	unsigned int ret = 0;
+ 
+-	mutex_lock(&snd_ctl_led_mutex);
++	guard(mutex)(&snd_ctl_led_mutex);
+ 	lctl = snd_ctl_led_find(kctl, ioff);
+ 	if (lctl && (access == 0 || access != lctl->access)) {
+ 		ret = lctl->access;
+ 		list_del(&lctl->list);
+ 		kfree(lctl);
+ 	}
+-	mutex_unlock(&snd_ctl_led_mutex);
+ 	return ret;
  }
  
- static void snd_mixer_oss_get_volume1_vol(struct snd_mixer_oss_file *fmixer,
-@@ -540,7 +540,7 @@ static void snd_mixer_oss_get_volume1_vol(struct snd_mixer_oss_file *fmixer,
- 	if (numid == ID_UNKNOWN)
+@@ -239,44 +236,36 @@ static void snd_ctl_led_notify(struct snd_card *card, unsigned int mask,
+ 	}
+ }
+ 
++DEFINE_FREE(snd_card_unref, struct snd_card *, if (_T) snd_card_unref(_T))
++
+ static int snd_ctl_led_set_id(int card_number, struct snd_ctl_elem_id *id,
+ 			      unsigned int group, bool set)
+ {
+-	struct snd_card *card;
++	struct snd_card *card __free(snd_card_unref) = NULL;
+ 	struct snd_kcontrol *kctl;
+ 	struct snd_kcontrol_volatile *vd;
+ 	unsigned int ioff, access, new_access;
+-	int err = 0;
+ 
+ 	card = snd_card_ref(card_number);
+-	if (card) {
+-		down_write(&card->controls_rwsem);
+-		kctl = snd_ctl_find_id_locked(card, id);
+-		if (kctl) {
+-			ioff = snd_ctl_get_ioff(kctl, id);
+-			vd = &kctl->vd[ioff];
+-			access = vd->access & SNDRV_CTL_ELEM_ACCESS_LED_MASK;
+-			if (access != 0 && access != group_to_access(group)) {
+-				err = -EXDEV;
+-				goto unlock;
+-			}
+-			new_access = vd->access & ~SNDRV_CTL_ELEM_ACCESS_LED_MASK;
+-			if (set)
+-				new_access |= group_to_access(group);
+-			if (new_access != vd->access) {
+-				vd->access = new_access;
+-				snd_ctl_led_notify(card, SNDRV_CTL_EVENT_MASK_INFO, kctl, ioff);
+-			}
+-		} else {
+-			err = -ENOENT;
+-		}
+-unlock:
+-		up_write(&card->controls_rwsem);
+-		snd_card_unref(card);
+-	} else {
+-		err = -ENXIO;
++	if (!card)
++		return -ENXIO;
++	guard(rwsem_write)(&card->controls_rwsem);
++	kctl = snd_ctl_find_id_locked(card, id);
++	if (!kctl)
++		return -ENOENT;
++	ioff = snd_ctl_get_ioff(kctl, id);
++	vd = &kctl->vd[ioff];
++	access = vd->access & SNDRV_CTL_ELEM_ACCESS_LED_MASK;
++	if (access != 0 && access != group_to_access(group))
++		return -EXDEV;
++	new_access = vd->access & ~SNDRV_CTL_ELEM_ACCESS_LED_MASK;
++	if (set)
++		new_access |= group_to_access(group);
++	if (new_access != vd->access) {
++		vd->access = new_access;
++		snd_ctl_led_notify(card, SNDRV_CTL_EVENT_MASK_INFO, kctl, ioff);
+ 	}
+-	return err;
++	return 0;
+ }
+ 
+ static void snd_ctl_led_refresh(void)
+@@ -312,7 +301,7 @@ static void snd_ctl_led_clean(struct snd_card *card)
+ 
+ static int snd_ctl_led_reset(int card_number, unsigned int group)
+ {
+-	struct snd_card *card;
++	struct snd_card *card __free(snd_card_unref) = NULL;
+ 	struct snd_ctl_led *led;
+ 	struct snd_ctl_led_ctl *lctl;
+ 	struct snd_kcontrol_volatile *vd;
+@@ -322,26 +311,22 @@ static int snd_ctl_led_reset(int card_number, unsigned int group)
+ 	if (!card)
+ 		return -ENXIO;
+ 
+-	mutex_lock(&snd_ctl_led_mutex);
+-	if (!snd_ctl_led_card_valid[card_number]) {
+-		mutex_unlock(&snd_ctl_led_mutex);
+-		snd_card_unref(card);
+-		return -ENXIO;
+-	}
+-	led = &snd_ctl_leds[group];
++	scoped_guard(mutex, &snd_ctl_led_mutex) {
++		if (!snd_ctl_led_card_valid[card_number])
++			return -ENXIO;
++		led = &snd_ctl_leds[group];
+ repeat:
+-	list_for_each_entry(lctl, &led->controls, list)
+-		if (lctl->card == card) {
+-			vd = &lctl->kctl->vd[lctl->index_offset];
+-			vd->access &= ~group_to_access(group);
+-			snd_ctl_led_ctl_destroy(lctl);
+-			change = true;
+-			goto repeat;
+-		}
+-	mutex_unlock(&snd_ctl_led_mutex);
++		list_for_each_entry(lctl, &led->controls, list)
++			if (lctl->card == card) {
++				vd = &lctl->kctl->vd[lctl->index_offset];
++				vd->access &= ~group_to_access(group);
++				snd_ctl_led_ctl_destroy(lctl);
++				change = true;
++				goto repeat;
++			}
++	}
+ 	if (change)
+ 		snd_ctl_led_set_state(NULL, group_to_access(group), NULL, 0);
+-	snd_card_unref(card);
+ 	return 0;
+ }
+ 
+@@ -353,9 +338,8 @@ static void snd_ctl_led_register(struct snd_card *card)
+ 	if (snd_BUG_ON(card->number < 0 ||
+ 		       card->number >= ARRAY_SIZE(snd_ctl_led_card_valid)))
  		return;
- 	down_read(&card->controls_rwsem);
--	kctl = snd_ctl_find_numid(card, numid);
-+	kctl = snd_ctl_find_numid_locked(card, numid);
- 	if (!kctl) {
- 		up_read(&card->controls_rwsem);
- 		return;
-@@ -579,7 +579,7 @@ static void snd_mixer_oss_get_volume1_sw(struct snd_mixer_oss_file *fmixer,
- 	if (numid == ID_UNKNOWN)
- 		return;
- 	down_read(&card->controls_rwsem);
--	kctl = snd_ctl_find_numid(card, numid);
-+	kctl = snd_ctl_find_numid_locked(card, numid);
- 	if (!kctl) {
- 		up_read(&card->controls_rwsem);
- 		return;
-@@ -645,7 +645,7 @@ static void snd_mixer_oss_put_volume1_vol(struct snd_mixer_oss_file *fmixer,
- 	if (numid == ID_UNKNOWN)
- 		return;
- 	down_read(&card->controls_rwsem);
--	kctl = snd_ctl_find_numid(card, numid);
-+	kctl = snd_ctl_find_numid_locked(card, numid);
- 	if (!kctl) {
- 		up_read(&card->controls_rwsem);
- 		return;
-@@ -688,7 +688,7 @@ static void snd_mixer_oss_put_volume1_sw(struct snd_mixer_oss_file *fmixer,
- 	if (numid == ID_UNKNOWN)
- 		return;
- 	down_read(&card->controls_rwsem);
--	kctl = snd_ctl_find_numid(card, numid);
-+	kctl = snd_ctl_find_numid_locked(card, numid);
- 	if (!kctl) {
- 		up_read(&card->controls_rwsem);
- 		return;
-diff --git a/sound/pci/emu10k1/emufx.c b/sound/pci/emu10k1/emufx.c
-index 4ca65f425f39c..413da7cc4c188 100644
---- a/sound/pci/emu10k1/emufx.c
-+++ b/sound/pci/emu10k1/emufx.c
-@@ -765,7 +765,7 @@ static int snd_emu10k1_verify_controls(struct snd_emu10k1 *emu,
- 			continue;
- 		gctl_id = (struct snd_ctl_elem_id *)&gctl->id;
- 		down_read(&emu->card->controls_rwsem);
--		if (snd_ctl_find_id(emu->card, gctl_id)) {
-+		if (snd_ctl_find_id_locked(emu->card, gctl_id)) {
- 			up_read(&emu->card->controls_rwsem);
- 			err = -EEXIST;
- 			goto __error;
+-	mutex_lock(&snd_ctl_led_mutex);
+-	snd_ctl_led_card_valid[card->number] = true;
+-	mutex_unlock(&snd_ctl_led_mutex);
++	scoped_guard(mutex, &snd_ctl_led_mutex)
++		snd_ctl_led_card_valid[card->number] = true;
+ 	/* the register callback is already called with held card->controls_rwsem */
+ 	list_for_each_entry(kctl, &card->controls, list)
+ 		for (ioff = 0; ioff < kctl->count; ioff++)
+@@ -367,10 +351,10 @@ static void snd_ctl_led_register(struct snd_card *card)
+ static void snd_ctl_led_disconnect(struct snd_card *card)
+ {
+ 	snd_ctl_led_sysfs_remove(card);
+-	mutex_lock(&snd_ctl_led_mutex);
+-	snd_ctl_led_card_valid[card->number] = false;
+-	snd_ctl_led_clean(card);
+-	mutex_unlock(&snd_ctl_led_mutex);
++	scoped_guard(mutex, &snd_ctl_led_mutex) {
++		snd_ctl_led_card_valid[card->number] = false;
++		snd_ctl_led_clean(card);
++	}
+ 	snd_ctl_led_refresh();
+ }
+ 
+@@ -430,9 +414,8 @@ static ssize_t mode_store(struct device *dev,
+ 	else
+ 		return count;
+ 
+-	mutex_lock(&snd_ctl_led_mutex);
+-	led->mode = mode;
+-	mutex_unlock(&snd_ctl_led_mutex);
++	scoped_guard(mutex, &snd_ctl_led_mutex)
++		led->mode = mode;
+ 
+ 	snd_ctl_led_set_state(NULL, group_to_access(led->group), NULL, 0);
+ 	return count;
+@@ -615,15 +598,15 @@ static ssize_t list_show(struct device *dev,
+ 			 struct device_attribute *attr, char *buf)
+ {
+ 	struct snd_ctl_led_card *led_card = container_of(dev, struct snd_ctl_led_card, dev);
+-	struct snd_card *card;
++	struct snd_card *card __free(snd_card_unref) = NULL;
+ 	struct snd_ctl_led_ctl *lctl;
+ 	size_t l = 0;
+ 
+ 	card = snd_card_ref(led_card->number);
+ 	if (!card)
+ 		return -ENXIO;
+-	down_read(&card->controls_rwsem);
+-	mutex_lock(&snd_ctl_led_mutex);
++	guard(rwsem_read)(&card->controls_rwsem);
++	guard(mutex)(&snd_ctl_led_mutex);
+ 	if (snd_ctl_led_card_valid[led_card->number]) {
+ 		list_for_each_entry(lctl, &led_card->led->controls, list) {
+ 			if (lctl->card != card)
+@@ -634,9 +617,6 @@ static ssize_t list_show(struct device *dev,
+ 					   lctl->kctl->id.numid + lctl->index_offset);
+ 		}
+ 	}
+-	mutex_unlock(&snd_ctl_led_mutex);
+-	up_read(&card->controls_rwsem);
+-	snd_card_unref(card);
+ 	return l;
+ }
+ 
 -- 
 2.53.0
 
