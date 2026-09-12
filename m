@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD5D39022B;
-	Sat, 12 Sep 2026 19:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE0E3815F8;
+	Sat, 12 Sep 2026 19:53:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242837; cv=none; b=eDGDX8Od1sWKoCA1zEmS4WrtHlF8HDhIpKQxpg6f0qhh3TPaMxxtm8mXm+j3EsL5ZvGi5kSGl5Z8y2zcGKpTNRx0jC5RMUkEbFeePhE/+6bPqQPomh92ZGGBtD0ICQZgXc0ohXJ7Y7KwETLWlBCfFjDypn8KcL16t4BspEZxd/U=
+	t=1789242840; cv=none; b=PWHlE7OZcKgIfIYTVzzqYVUF+N1gswMrQdR3mte3nBIePKuglthSbSC/zkEufIqslDtNRYNnLjWrScyEJLdEdRoNzb4NIyC7C93kT5ZVUVdhhRh0wMnojVYEkFI+ciZ6DUeovl86vx7wv2tN7+XCZ2F4HAWwA2dZTzw6/VEQKiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242837; c=relaxed/simple;
-	bh=JzoN2EgXh8QeaInCd2r8cEKv7guGf++8FIARlWh9sBY=;
+	s=arc-20240116; t=1789242840; c=relaxed/simple;
+	bh=RJ+hh2bRvclx5zfPUZ/itWwhxc/WT5vCfwj9pWXzgm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BZF8HegSaVjGZYAyZvQHiI12+pIpe2+j7ESeOyP+Jm4vVv1l/cP+Mduc1Ji3o72tuhByD0TYQj0dh6QusIU+ARQgumA/d+oDKftt9qNOe0va0MttEa8yxmeacexDrvi2mV7IbIdH+fcirsz3wjGa2ukDYfLaMVLBjdNjDPPkLoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQ6ZDztG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WyVlzO9bdRkW3DO4PCy3yviTAVrH0Rc4KSVgWoCg+7P/ebonr5l8wo3zypGYAZeVcLhTfx347W2BeM363Pj2US5aNS1M+sYyGbGm7wdvGnfoM28hs41J7cNT6a6Cj2V6TlrNdQMjr71VEU3GJV4U8RDlRRcWKV9t8+9xIPQl5R0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BIy3cUgt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQ6ZDztG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA6B1F000FF;
-	Sat, 12 Sep 2026 19:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BIy3cUgt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D121F000FF;
+	Sat, 12 Sep 2026 19:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242836;
-	bh=9jCSBRYdQhlBmUXiu0U3C+4Nh2eks7XvejY0fgD+v6U=;
+	s=korg; t=1789242839;
+	bh=TAhjwu6+pckV7+7mahPzTHQFcIFLrAPs35YELk5gqFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kQ6ZDztGd7+It9SoHkCkrYIrfHxQl7WZS6BDvCPhqW6HoGVq4lU/MTF2CstplwL7W
-	 ayIHe10t4gkMRFz+HytOkIsQdmQD+HGXe3nDAOeZtAfliiexxVgMyHQJ3JzBBiQOwa
-	 8IdiS0DEClZRZecVyuwTDCErK+00M/H0H1mTAUzg=
+	b=BIy3cUgtOKFVSLphwBul45KziUr/Q5/fBu65iL6kvu++bqSbp9x0JGNQbHoMBRzNX
+	 d5bmhSsD7YtNG0AJxD9ZU6ZzgbZERc4Md2JeQkfJlAjmcQ77LFVVTLLuzVgzrngqw/
+	 1jFP9uVhPG9HEeU4FmNL8Cx2qrIsj9tQRfLG5bq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Hongyan Xu <getshell@seu.edu.cn>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 544/798] power: supply: sc2731_charger: Convert to platform remove callback returning void
-Date: Sat, 12 Sep 2026 09:02:52 +0200
-Message-ID: <20260912065529.596450264@linuxfoundation.org>
+Subject: [PATCH 5.10 545/798] power: supply: sc2731_charger: cancel work on remove
+Date: Sat, 12 Sep 2026 09:02:53 +0200
+Message-ID: <20260912065529.618795564@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -45,66 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit 0569d4cfa800ba303647dbf8170d1e89bdee3ed9 ]
+[ Upstream commit dfc859bb8d332c525872f1a44028137724fa1998 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new() which already returns void. Eventually after all drivers
-are converted, .remove_new() is renamed to .remove().
+The USB notifier and initial charger detection can schedule info->work.
+The remove path unregisters the notifier, but does not cancel queued or
+running work before the devm-allocated driver data is released.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+Set the platform drvdata used by remove, then cancel the work after
+unregistering the notifier.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230918133700.1254499-25-u.kleine-koenig@pengutronix.de
+This issue was found by a static analysis tool.
+
+Fixes: 8ac1091ed18b ("power: supply: sc2731_charger: Add one work to charge/discharge")
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Link: https://patch.msgid.link/5d48b827687168cb1b1bfe85f17945566b42829d.1785321763.git.getshell@seu.edu.cn
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Stable-dep-of: dfc859bb8d33 ("power: supply: sc2731_charger: cancel work on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/sc2731_charger.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/power/supply/sc2731_charger.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/power/supply/sc2731_charger.c b/drivers/power/supply/sc2731_charger.c
-index 288b79836c139..07aba733c447a 100644
+index 07aba733c447a..abb96fcd36163 100644
 --- a/drivers/power/supply/sc2731_charger.c
 +++ b/drivers/power/supply/sc2731_charger.c
-@@ -511,13 +511,11 @@ static int sc2731_charger_probe(struct platform_device *pdev)
- 	return 0;
- }
+@@ -466,6 +466,7 @@ static int sc2731_charger_probe(struct platform_device *pdev)
+ 	mutex_init(&info->lock);
+ 	info->dev = &pdev->dev;
+ 	INIT_WORK(&info->work, sc2731_charger_work);
++	platform_set_drvdata(pdev, info);
  
--static int sc2731_charger_remove(struct platform_device *pdev)
-+static void sc2731_charger_remove(struct platform_device *pdev)
- {
+ 	info->regmap = dev_get_regmap(pdev->dev.parent, NULL);
+ 	if (!info->regmap) {
+@@ -516,6 +517,7 @@ static void sc2731_charger_remove(struct platform_device *pdev)
  	struct sc2731_charger_info *info = platform_get_drvdata(pdev);
  
  	usb_unregister_notifier(info->usb_phy, &info->usb_notify);
--
--	return 0;
++	cancel_work_sync(&info->work);
  }
  
  static const struct of_device_id sc2731_charger_of_match[] = {
-@@ -532,7 +530,7 @@ static struct platform_driver sc2731_charger_driver = {
- 		.of_match_table = sc2731_charger_of_match,
- 	},
- 	.probe = sc2731_charger_probe,
--	.remove = sc2731_charger_remove,
-+	.remove_new = sc2731_charger_remove,
- };
- 
- module_platform_driver(sc2731_charger_driver);
 -- 
 2.53.0
 
