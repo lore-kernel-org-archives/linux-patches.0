@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A4F78C9C;
-	Sat, 12 Sep 2026 19:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4392F260C;
+	Sat, 12 Sep 2026 19:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241260; cv=none; b=OmZdexdzpvhaFSvRK83EEozIyg9iBXdpRpJJwaGhU9QV4uOcfrSsvHhpAg1tluyt8p+EEkjGg4ANrmCpU/gp4Ewk+LsTMMfskwiRXmD4m3UUiWgk44tLxGAlX3o5ojqh1q6M7W6DEuEArYEmg6WWDNPkmqiS/8vySSRhhsHXj1A=
+	t=1789241265; cv=none; b=BtPqt3O66LwirUxjfvRoK+8C/HR91LTRvPOw6Mg5KMK+kfVpPnI63eUY1G5wg7wUHlgJ1ThiIQTtSEiiUUijyk2DsPHau8J/y7zttwXbIn027e28mdfQnm3AYg3+nvit3QK3Hm4UVL+2acRwFcz/RzUENhYzvJW+76dfm/lWu8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241260; c=relaxed/simple;
-	bh=RdgtIDY7EvGpfRSyBGeEU+qmQMMf8dACXmJnh4VzOnY=;
+	s=arc-20240116; t=1789241265; c=relaxed/simple;
+	bh=SbgRChH2EOo0ptC85KcISSV3hORtKnYrfedBhUdmUTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B1rqQ+OVKsy2jU7aclPTxbvOl3PdSsUpA2F3zpVfJke3QHFRKZAplbu4Im3jAP4fqw1KrZbGh03RdeiPNHrnh3BThVNlEafAnYn0wSnbm9AL8x2YTAMbCt0DeHR3GFf0IPfXCAUbXB3/p7RjqumsSHtgzDWWw59ibsVVORacjOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjgOGHB8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T0T2+/QJMhR85Q+OKdS2aXcxuoSoE6qnb1MkBGtLXTFB8n58tg/AwxFr20B5uNCZMYtqm+qeBRFy4iwfCOQGeZMlJpKkf3B6M+ct5cdCWil/wYNpaxMyOeNxP0IAtJbwGpNz0AGd/d38P6R78f1KH16EOgX+aAoam8lK6QDkMWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6q5uLjI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjgOGHB8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7711F000FF;
-	Sat, 12 Sep 2026 19:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6q5uLjI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF0941F000FF;
+	Sat, 12 Sep 2026 19:27:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241259;
-	bh=7flqHJ29pkdSn+3CmPJOnbcc5uFpqg1VUFc5dhCPXbg=;
+	s=korg; t=1789241264;
+	bh=2vhzwHmzKiUfMj/J/WtOxek+vLLT2v0Ep2R3sMA0asI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EjgOGHB8UdTcfMWbF+YiDKxaKacD4kDIOO6QTyFC0/mNYrfM27vSwGPK9/z7HQ14J
-	 LC9lmc3XPONQbg0Cf2GS9aSJB52PihGgMM3QlEW6dqHVaHIKE0vr54EROmydpBM44d
-	 fQXIW+RUSaChr1Ezv2Ic560p7Xl1eqKCYBAldreA=
+	b=k6q5uLjIgM/LMpJuF4vR0fLddAJs99e3b6oFII7qgHM6dwNMdSkHlwMeGinw9STkB
+	 HRnbkvO2vbFscqAjAzCeGGNj/MYbS5LqmTvb3MUfLPQ0n1wUOA/uRoH4i/c8cy70g4
+	 ByKdq5U+L+d4lGqYyYa8ZD25Aywctre69M21cmeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.10 097/798] SUNRPC: always drain cache_cleaner before destroying a cache_detail
-Date: Sat, 12 Sep 2026 08:55:25 +0200
-Message-ID: <20260912065519.180759081@linuxfoundation.org>
+Subject: [PATCH 5.10 098/798] SUNRPC: Guard svcauth_gss_release() dispatch on rq_auth_stat
+Date: Sat, 12 Sep 2026 08:55:26 +0200
+Message-ID: <20260912065519.204167166@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,51 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chris Mason <clm@meta.com>
 
-commit f42d0fda0c67695db6bc704b04b7c10240805377 upstream.
+commit f8870b9b75afb77986bc65940a231d54068ff2b1 upstream.
 
-sunrpc_destroy_cache_detail() only cancels the global cache_cleaner
-delayed_work when cache_list is empty.  During per-netns teardown
-cache_list is never empty because init_net's caches remain registered,
-so the cancel never fires.  After unlink, the caller proceeds to
-cache_destroy_net() which kfrees the cache_detail while cache_clean()
-may still hold a dangling pointer to it.  The result is a
-use-after-free: cache_dequeue() takes cd->queue_lock on freed memory,
-and cache_put() dereferences cd->cache_put as a function pointer from
-freed slab.
+svcauth_gss_release() reads gc_proc and switches on gc_svc before
+consulting rq_auth_stat.  On the SVC_DENIED path after a failed
+svcauth_gss_accept(), those fields may hold stale values from a
+prior request or uninitialized slab residue: svcauth_gss_accept()
+allocates gss_svc_data with non-zeroing kmalloc and clears only
+gsd_databody_offset and rsci per request, not clcred.
 
-Drop the list_empty guard so that cancel_delayed_work_sync() always
-runs, ensuring any in-flight cache_clean() completes before the
-cache_detail is freed.  Re-arm the cleaner afterwards if other caches
-are still registered.
+Because RPC_GSS_PROC_DATA is zero, a zeroed or stale-zero gc_proc
+passes the existing guard and falls through into the gc_svc switch,
+which can dispatch to svcauth_gss_wrap_integ() or
+svcauth_gss_wrap_priv().  Both wrap helpers call
+svcauth_gss_prepare_to_wrap() before any rsci->mechctx dereference,
+and that helper already returns early when rq_auth_stat is not
+rpc_auth_ok, so the downstream NULL dereference is blocked.  The
+dispatch itself remains structurally wrong: it reads scalars that
+the caller has no contract to have initialized after a failed
+authentication.
 
-Fixes: 820f9442e711 ("SUNRPC: split cache creation and PipeFS registration")
+Mirror the existing rq_auth_stat gate in
+svcauth_gss_prepare_to_wrap() one frame up, so
+svcauth_gss_release() skips the clcred dispatch entirely when
+authentication has not succeeded.  The cleanup tail that releases
+rq_client, rq_gssclient, cr_group_info, and rsci still runs.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260526-cache_cleaner_vs_destroy_no_sync-v1-1-a707a6fcfd32@kernel.org
+Signed-off-by: Chris Mason <clm@meta.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260528-tier2-v1-4-d026a1415e0b@oracle.com
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/cache.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ net/sunrpc/auth_gss/svcauth_gss.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/sunrpc/cache.c
-+++ b/net/sunrpc/cache.c
-@@ -410,10 +410,9 @@ void sunrpc_destroy_cache_detail(struct
- 	list_del_init(&cd->others);
- 	spin_unlock(&cd->hash_lock);
- 	spin_unlock(&cache_list_lock);
--	if (list_empty(&cache_list)) {
--		/* module must be being unloaded so its safe to kill the worker */
--		cancel_delayed_work_sync(&cache_cleaner);
--	}
-+	cancel_delayed_work_sync(&cache_cleaner);
-+	if (!list_empty(&cache_list))
-+		queue_delayed_work(system_power_efficient_wq, &cache_cleaner, 0);
- }
- EXPORT_SYMBOL_GPL(sunrpc_destroy_cache_detail);
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1835,6 +1835,8 @@ svcauth_gss_release(struct svc_rqst *rqs
  
+ 	if (!gsd)
+ 		goto out;
++	if (rqstp->rq_auth_stat != rpc_auth_ok)
++		goto out;
+ 	gc = &gsd->clcred;
+ 	if (gc->gc_proc != RPC_GSS_PROC_DATA)
+ 		goto out;
 
 
