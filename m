@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FACC366052;
-	Sat, 12 Sep 2026 12:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CF2366052;
+	Sat, 12 Sep 2026 12:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216045; cv=none; b=kgXSSI7WXaPN6EJgrx39F/15NpSD5CSySHTLrLaZfA/8aO0DjrwRcbReWkU4AmMqPCsqlbZUFSK6+qD3eZGtjPdQhp+3MVPfeLnpASr1pvWaXCNyL8gPY+odDAiw6N4eQorrkX2zvHuFgIP/ydHulrJ5nwTrdINrP0rmnQ/Q9No=
+	t=1789216050; cv=none; b=DJMMrt1HvjVubn9H314LHE3khqyc/owi8SscHbDc6engtTscX3udC+MneRITrjCbKfslOTHYDtTRm2mEwsS0+3FdQ2nstRstt8tzeznnHFrUvDA4wApzErPQR2DGGzj0wWtREbbq3dg5xyHs5NiHansinNbJcjMBsuUXKN1L5w4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216045; c=relaxed/simple;
-	bh=TNvuvLzP9LQdSkl2tIVIPihpdGJsaurIxO/5zxXB380=;
+	s=arc-20240116; t=1789216050; c=relaxed/simple;
+	bh=hMbN3wHxY2c6euj5/Lb1YmRk0NUeY2Ay1ggW4TpLHJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o+SsvE3/9VcxtWA33fMJCzLRJeRmq567p41N9+ZGXT/sI5j4vMtiyGQK5j9yNNPExID9hkCuIDUXj4Ypsx3xy1jKZbRTKV1MhGU2zUSP7Vj/d3Md8bzD5iH1aO46mzcMuCQ7jLvEaAh6g503OEhPNG/b1k2xKglkZxPe4i3EKf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7gy7qe8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gGcxy2G6i7XeDNYcuWzFnAdIALsZYRYfK+NBHxsZiUUj1DZg3pRylKV/QH//2k7TrWRSoitZ0uk1wDdXaFxh/URp4wNEd3UQ4+h0WX1yF7XvvEAMZb5oCqK/Xr6avTMZF4wycqZG3qkAG+Zj8rIHBXYX7/uxxYug9ucTtXuNIw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+oknUV5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7gy7qe8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F541F000FF;
-	Sat, 12 Sep 2026 12:27:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+oknUV5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B171F000FF;
+	Sat, 12 Sep 2026 12:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216044;
-	bh=cVA9Vs9eND/8pnalvuZsDboZpkTZQ9PX4h7EF3R/x9c=;
+	s=korg; t=1789216048;
+	bh=JJRhcFjearCmjOlOvYKgJxHO9yUn7abXtfGcpnp9HRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T7gy7qe8oC5AryBWH281Sry83E6bHdcaSY5ndtuhTzKjTijzkaiiPVFs4CYHA2GWv
-	 pKb/vLTjow7EFrVmnizMpRROl+uyJFT9OnI1Fx1lQK6/3ptCk4FVe9J9ppaIFvJ5m6
-	 zAZc2eUIN1yeiGLee293UaIp/+vN2yD9yExq+KcA=
+	b=0+oknUV5FryPtPe4UbpS5aX76q2p28x4n9jZpWGVeKJGH0AR/BF/P2GfgjS+lo1Hp
+	 V5gCHbGHGhvobjTFyc3ktoMFTQt3Z/T6RUFUEJDoTW46AC/5cSgUE76uWGpkLfSReP
+	 JgpTnMgdil7KthtUutKtAtaFZ604bKh8CTLg4lSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
+	Can Peng <pengcan@kylinos.cn>,
+	Changhuang Liang <changhuang.liang@starfivetech.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0613/1376] irqchip/gic-v3-its: Prevent leak in its_vpe_irq_domain_alloc()
-Date: Sat, 12 Sep 2026 08:50:39 +0200
-Message-ID: <20260912065621.203255045@linuxfoundation.org>
+Subject: [PATCH 6.12 0604/1376] phy: starfive: Fix runtime PM cleanup in JH7110 DPHY RX probe
+Date: Sat, 12 Sep 2026 08:50:30 +0200
+Message-ID: <20260912065620.997118568@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,58 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit 325ff3e78c64cd619d52b99f7c8b09a3f31e1495 ]
+[ Upstream commit 97bed336f6a25c9d1115ca95e3aa00e05c3bc271 ]
 
-When its_irq_gic_domain_alloc() fails, the following
-its_vpe_irq_domain_free() fails to invoke its_vep_teardown() for the
-corresponding interrupt, which leaks the resource.
+stf_dphy_probe() enables runtime PM before registering the PHY provider.
+If devm_of_phy_provider_register() fails, probe returns with runtime PM
+still enabled.
 
-Invoke its_vpe_teardown() in the error handling path to avoid the leak.
+The driver also has no remove callback, so runtime PM is left enabled
+on driver unbind after a successful probe.
 
-[ tglx: Massaged change log ]
+Use devm_pm_runtime_enable() so runtime PM is disabled automatically
+on later probe failures and on driver unbind.
 
-Fixes: 7d75bbb4bc1ad ("irqchip/gic-v3-its: Add VPE irq domain allocation/teardown")
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260721063241.52549-2-shikemeng@huaweicloud.com
+Fixes: f8aa660841bc ("phy: starfive: Add mipi dphy rx support")
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Reviewed-by: Changhuang Liang <changhuang.liang@starfivetech.com>
+Link: https://patch.msgid.link/20260718090054.444513-3-pengcan@kylinos.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/phy/starfive/phy-jh7110-dphy-rx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 7050bf88b87d3..b489594df3294 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -4503,6 +4503,13 @@ static int its_vpe_init(struct its_vpe *vpe)
- 
- static void its_vpe_teardown(struct its_vpe *vpe)
+diff --git a/drivers/phy/starfive/phy-jh7110-dphy-rx.c b/drivers/phy/starfive/phy-jh7110-dphy-rx.c
+index 0b039e1f71c55..d06f21ad63325 100644
+--- a/drivers/phy/starfive/phy-jh7110-dphy-rx.c
++++ b/drivers/phy/starfive/phy-jh7110-dphy-rx.c
+@@ -150,6 +150,7 @@ static int stf_dphy_probe(struct platform_device *pdev)
  {
-+	/*
-+	 * If vpt_page is NULL, then its_vpe_init() has failed, and
-+	 * there is nothing to do as no resource has been allocated.
-+	 */
-+	if (vpe->vpt_page == NULL)
-+		return;
-+
- 	its_vpe_db_proxy_unmap(vpe);
- 	its_vpe_id_free(vpe->vpe_id);
- 	its_free_pending_table(vpe->vpt_page);
-@@ -4583,8 +4590,10 @@ static int its_vpe_irq_domain_alloc(struct irq_domain *domain, unsigned int virq
- 		irqd_set_resend_when_in_progress(irq_get_irq_data(virq + i));
+ 	struct phy_provider *phy_provider;
+ 	struct stf_dphy *dphy;
++	int ret;
+ 
+ 	dphy = devm_kzalloc(&pdev->dev, sizeof(*dphy), GFP_KERNEL);
+ 	if (!dphy)
+@@ -190,7 +191,9 @@ static int stf_dphy_probe(struct platform_device *pdev)
+ 		return PTR_ERR(dphy->phy);
  	}
  
--	if (err)
-+	if (err) {
-+		its_vpe_teardown(vm->vpes[i]);
- 		its_vpe_irq_domain_free(domain, virq, i);
-+	}
+-	pm_runtime_enable(&pdev->dev);
++	ret = devm_pm_runtime_enable(&pdev->dev);
++	if (ret)
++		return ret;
  
- 	return err;
- }
+ 	phy_set_drvdata(dphy->phy, dphy);
+ 	phy_provider = devm_of_phy_provider_register(&pdev->dev,
 -- 
 2.53.0
 
