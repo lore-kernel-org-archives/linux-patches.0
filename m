@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57483429000;
-	Sat, 12 Sep 2026 13:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10E0429000;
+	Sat, 12 Sep 2026 13:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218170; cv=none; b=X+pY4TODW1cwDg2k3Ev41J4Wc4+yZv7cFG23TKBZYTOka+OSfAAwfUhyuHxcSahkVvjO6Wth6xFe5RU0H4PuSraSMp16MM7X+Jmlmxqt1DJYjrnZyRhQacxtbUpoEAUlusRXJmz0ewGi6eocqHeIX3yWS3WuFLfxw4/oFlSNxFA=
+	t=1789218175; cv=none; b=NqbZbeUB1jmGsqJaRYtoFpGEmUAB/6WvWWguPX9yy4+iCNwuiNcAp+tO6HCC/TqfT5tNr4kt6vc/6O39FfMrAI9B3UDNm3DiCCII5PtuYnOthEz6fTWd1/iJ/5gK+JYMWYbwhJALrvFJPEtOcrIZbT2ZJG+1kjD4OfYduHbr+4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218170; c=relaxed/simple;
-	bh=+3adZxtLRls79aOYgAeF/lH9hm9003Dv22Pp5znVxIo=;
+	s=arc-20240116; t=1789218175; c=relaxed/simple;
+	bh=6hfGRfUV5ivoiFLaLiUG0ykbWYlMdgZazgKSb5nOW+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sAhEn938wp36U493oaXEeRHV4yoJlweEcb4P6JS5qhOByJri0bzhEZ4gm/Hiu2jNft6kUFaG0vFIhSbE5R5yPe8TyqJ1IcjFOjdbbZOcG4vEKUzb6svI1m9FkyNiZA9ZAeiJ/W12FJV2pfUa1ikagQXCr24SUzJ3bGXt+FsVZwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPPFUDWX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I8AkpXZdYgqhlqvdgXJCEhptPhCCUEwUzYPlE3N9sWqPcC8jIR3bvp5Dl4qhpe6g+fQJxFbv/Q/FFgxk8VRLWy4HEXYkyAVZ5g1Kzk613Q/bHcTBeDsat3f+1ELQ+zzYJB8WgOTK4S7sLP5GZCzWGykajMzUDUgylpEIqD2mHos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ahyt1wMT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPPFUDWX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27731F000FF;
-	Sat, 12 Sep 2026 13:02:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ahyt1wMT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE881F000FF;
+	Sat, 12 Sep 2026 13:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218168;
-	bh=zKVZa0PpwOvZBLxclfQdhTJFM8RJw1Z80RODQzre8pM=;
+	s=korg; t=1789218173;
+	bh=HysaSLOfRqQ1Q3Sk+sQxVq/Src0s9mJCdOZxt6a+XJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CPPFUDWXDhPrFPxrjiy6+4NNP89Nb5l17usaJfcIOV0bcUQTpLAm/Tw+oH+3RPDRE
-	 XxlJeL1gB1NZj6QeIirZ5SmaF2bZMtgoeoAa+jTt0svuPQ9h9jLoP3GJ8zdEz/L6vP
-	 DJOFbhJI1GsiZQUNOE2PkpgbF6FdDYV6pfn73I3A=
+	b=ahyt1wMTW6JoyAWcCDLHHWM+2ZYUSo3Jq/pZb8YVQe1yGX0k8uQRb9DGfWR4nrmqx
+	 Huglj+AfDtVzOU89uwrxTa2U2O1cYrdCW9rGFPxi75z3XiYl0QpXt5VNWHMNcHjGTk
+	 Bk32d5jNFKiGUz6k0NNrNr/XlFDKPes+3zMRXHOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
 	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1089/1376] firewire: core: validate parent port count before allocating nodes in build_tree()
-Date: Sat, 12 Sep 2026 08:58:35 +0200
-Message-ID: <20260912065631.833393706@linuxfoundation.org>
+Subject: [PATCH 6.12 1090/1376] firewire: core: fix memory leak in error path of build_tree()
+Date: Sat, 12 Sep 2026 08:58:36 +0200
+Message-ID: <20260912065631.855680138@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,61 +53,147 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit a563a7cb645a79a3a7e31bed8cbf95980ef5feb1 ]
+[ Upstream commit 05bfb1327dc5fb61528bab31cd8f0c1e4bddec23 ]
 
-The node tree requires each child node to have exactly one port connected
-to a parent node, while the root node must have no such port. This can be
-validated by comparing the parent port count for a PHY with the rest of
-the self ID sequence.
+In the error path of build_tree(), node instances can remain in the local
+linked list when the function returns.
 
-Currently, this validation is done after the node has been allocated. Move
-it before the allocation so that an invalid self ID sequence can cause
-an error without having to clean up the newly allocated node.
+Whenever an invalid value is detected in the self ID sequence, each
+allocated node instance is either an entry in the linked list or an
+entry in the ports array of its parent node. Therefore, the allocate
+node instances can be safely released by traversing the linked list from
+its head.
 
-Link: https://lore.kernel.org/r/20260811120928.700577-3-o-takashi@sakamocchi.jp
+Release the remaining node instances with for_each_fw_node() before
+returning to the caller.
+
+Fixes: 3038e353cfaf ("firewire: Add core firewire stack.")
+Reported-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Link: https://lore.kernel.org/all/20260727095955.104972-1-nihaal@cse.iitm.ac.in/
+Link: https://lore.kernel.org/r/20260811120928.700577-4-o-takashi@sakamocchi.jp
 Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Stable-dep-of: 05bfb1327dc5 ("firewire: core: fix memory leak in error path of build_tree()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/core-topology.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/firewire/core-topology.c  | 30 +++++++++++++++++++++---------
+ drivers/firewire/node-tree-test.c |  4 ----
+ 2 files changed, 21 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/firewire/core-topology.c b/drivers/firewire/core-topology.c
-index 95579ec963062..ed22fed327367 100644
+index ed22fed327367..c4a0a3a52b4e0 100644
 --- a/drivers/firewire/core-topology.c
 +++ b/drivers/firewire/core-topology.c
-@@ -162,6 +162,15 @@ static struct fw_node *build_tree(struct fw_card *card, const u32 *sid, int self
- 		}
- 		total_port_count += child_port_count + parent_port_count;
+@@ -88,6 +88,17 @@ static inline struct fw_node *fw_node(struct list_head *l)
+ 	return list_entry(l, struct fw_node, link);
+ }
  
-+		// Check that the node reports exactly one parent port, except for the root, which
-+		// of course should have no parents.
-+		if ((enumerator.quadlet_count == 0 && parent_port_count != 0) ||
-+		    (enumerator.quadlet_count > 0 && parent_port_count != 1)) {
-+			fw_err(card, "parent port inconsistency for node %d: parent_count=%d\n",
-+			       phy_id, parent_port_count);
-+			return NULL;
-+		}
++typedef void (*fw_node_callback_t)(struct fw_card *card, struct fw_node *node,
++				   struct fw_node *parent);
 +
++static void for_each_fw_node(struct fw_card *card, struct fw_node *root,
++			     fw_node_callback_t callback);
++
++static void free_fw_node(struct fw_card *card, struct fw_node *node, struct fw_node *parent)
++{
++	kfree(node);
++}
++
+ /*
+  * This function builds the tree representation of the topology given
+  * by the self IDs from the latest bus reset.  During the construction
+@@ -134,7 +145,7 @@ static struct fw_node *build_tree(struct fw_card *card, const u32 *sid, int self
+ 			if (PTR_ERR(self_id_sequence) != -ENODATA) {
+ 				fw_err(card, "inconsistent extended self IDs: %ld\n",
+ 				       PTR_ERR(self_id_sequence));
+-				return NULL;
++				goto error;
+ 			}
+ 			break;
+ 		}
+@@ -168,18 +179,18 @@ static struct fw_node *build_tree(struct fw_card *card, const u32 *sid, int self
+ 		    (enumerator.quadlet_count > 0 && parent_port_count != 1)) {
+ 			fw_err(card, "parent port inconsistency for node %d: parent_count=%d\n",
+ 			       phy_id, parent_port_count);
+-			return NULL;
++			goto error;
+ 		}
+ 
  		if (phy_id != phy_packet_self_id_get_phy_id(self_id_sequence[0])) {
  			fw_err(card, "PHY ID mismatch in self ID: %d != %d\n",
  			       phy_id, phy_packet_self_id_get_phy_id(self_id_sequence[0]));
-@@ -223,15 +232,6 @@ static struct fw_node *build_tree(struct fw_card *card, const u32 *sid, int self
- 			}
+-			return NULL;
++			goto error;
  		}
  
--		// Check that the node reports exactly one parent port, except for the root, which
--		// of course should have no parents.
--		if ((enumerator.quadlet_count == 0 && parent_port_count != 0) ||
--		    (enumerator.quadlet_count > 0 && parent_port_count != 1)) {
--			fw_err(card, "parent port inconsistency for node %d: "
--			       "parent_count=%d\n", phy_id, parent_port_count);
+ 		if (child_port_count > stack_depth) {
+ 			fw_err(card, "topology stack underflow\n");
 -			return NULL;
--		}
++			goto error;
+ 		}
+ 
+ 		/*
+@@ -197,7 +208,7 @@ static struct fw_node *build_tree(struct fw_card *card, const u32 *sid, int self
+ 		node = fw_node_create(self_id_sequence[0], total_port_count, card->color);
+ 		if (node == NULL) {
+ 			fw_err(card, "out of memory while building topology\n");
+-			return NULL;
++			goto error;
+ 		}
+ 
+ 		if (phy_id == (card->node_id & 0x3f))
+@@ -256,12 +267,13 @@ static struct fw_node *build_tree(struct fw_card *card, const u32 *sid, int self
+ 	card->beta_repeaters_present = beta_repeaters_present;
+ 
+ 	return local_node;
++error:
++	++card->color;
++	list_for_each_entry_safe(node, child, &stack, link)
++		for_each_fw_node(card, node, free_fw_node);
++	return NULL;
+ }
+ 
+-typedef void (*fw_node_callback_t)(struct fw_card * card,
+-				   struct fw_node * node,
+-				   struct fw_node * parent);
 -
- 		/* Pop the child nodes off the stack and push the new node. */
- 		__list_del(h->prev, &stack);
- 		list_add_tail(&node->link, &stack);
+ static void for_each_fw_node(struct fw_card *card, struct fw_node *root,
+ 			     fw_node_callback_t callback)
+ {
+diff --git a/drivers/firewire/node-tree-test.c b/drivers/firewire/node-tree-test.c
+index 251c0113639f2..5e6bb58537e94 100644
+--- a/drivers/firewire/node-tree-test.c
++++ b/drivers/firewire/node-tree-test.c
+@@ -521,7 +521,6 @@ static void node_tree_test_invalid_extended_self_id_sequence(struct kunit *test)
+ 
+ 	card->node_id = LOCAL_BUS | 0x03;
+ 
+-	// TODO: Memory leak.
+ 	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
+ 	KUNIT_EXPECT_NULL(test, card->local_node);
+ }
+@@ -541,7 +540,6 @@ static void node_tree_test_invalid_phy_id(struct kunit *test)
+ 
+ 	card->node_id = LOCAL_BUS | 0x03;
+ 
+-	// TODO: Memory leak.
+ 	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
+ 	KUNIT_EXPECT_NULL(test, card->local_node);
+ }
+@@ -561,7 +559,6 @@ static void node_tree_test_invalid_child_port_count(struct kunit *test)
+ 
+ 	card->node_id = LOCAL_BUS | 0x03;
+ 
+-	// TODO: Memory leak.
+ 	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
+ 	KUNIT_EXPECT_NULL(test, card->local_node);
+ }
+@@ -581,7 +578,6 @@ static void node_tree_test_invalid_parent_port_count(struct kunit *test)
+ 
+ 	card->node_id = LOCAL_BUS | 0x03;
+ 
+-	// TODO: Memory leak.
+ 	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
+ 	KUNIT_EXPECT_NULL(test, card->local_node);
+ }
 -- 
 2.53.0
 
