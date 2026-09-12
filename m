@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845663382CB;
-	Sat, 12 Sep 2026 19:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54FB53382CB;
+	Sat, 12 Sep 2026 19:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242082; cv=none; b=cQsdWYwmNzffWgfeYx9Hsi2dkC/GgDbPCSSk1fE6fnbrCRgOVj99R2qUFcag+Wdlpj6DxHY0Rr40jv3ZEdrHKKiKj8rLX264HG6KVUpgB8+/hsjS/iG3MAySl98skXNr9g3oYWRmbLGfwXklIkSDx/btLSYiN+OBzCpxQVHaIBc=
+	t=1789242085; cv=none; b=OPLVfBN+ulk77CVx9ALUFZs5XbMOj+9841TOT9RJQYkR+/0dZlCZ46Igv5mOtxjd1Rw7fpBrpx3+O5VER1oakzDLfXMqHYDL1o/S5WuBex570e+WY3NhUSQYa/VjDgUftuNPxoltoMAHCbMQQUzWiSOC5TXUA+yMxHkVVXLcsTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242082; c=relaxed/simple;
-	bh=BsJzdPWtrnwTx/kGPoef7wH8x119RXQlSaEdFJKZ1kQ=;
+	s=arc-20240116; t=1789242085; c=relaxed/simple;
+	bh=0iKLEAtwWQqagjQezaFPKrg+cFoEk9CXXAibjW6OdDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJfAdm7ij0XoDhS1fLK0niB6TailrAY+Z1PGMFQkUIhnRoXUV2idcbfZPkq5ZUudqukP6vMiXvWjBtV4ZVmb6kXCtAj2UPbZheNZZdWQirpiqCeaziiX709Hjm46/emtAUvBCu+qUyY4TS1l9bCRnIc3wU/czMwVUW0byfJ2lbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ToIY8MWW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZqkMiUlrlup02VbU9Y2t2Z4qT6YeIdbS99VnhtFwcuKNpMCW6roU49S83msqVi+cmsnFmByKbTRkPQS1We1UnAZAoJULUFUUvwiy/qXphYWpULI9NLubpMkasTE4FO/GebQNNQqZoFbF5RLSGwLFiFcEhMv57f0uY1NLEV9Yi4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCi6nlpu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ToIY8MWW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5DC11F000FF;
-	Sat, 12 Sep 2026 19:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCi6nlpu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0361F000FF;
+	Sat, 12 Sep 2026 19:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242081;
-	bh=CDRXm2iFYQQohPQvGkdkDv61Q5lWt3eHiuZMCgy1pP8=;
+	s=korg; t=1789242084;
+	bh=w11F/Ch12oyYhsEQXZ+NR6JVnZpZRbunoAq7x/ZZvlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ToIY8MWWENXcV7MRdybaAkxZbYK1DlVBW6+9GXOZ/1svmqTjcDCfMA5zTMsjw8+t5
-	 wBs6q6qzR2iP05300ikJp/q8wLOoZEMsSIBvIgzneXQpkiMg8uFitVeunN2o7SWCwn
-	 hwQdao7lPnLijwRysoLsX+3FeI6a0XiDCZjsOn0o=
+	b=pCi6nlpuqt6sfVHJDgrhwuDXlltlRdXFHfLLDWIs1KhEFwtbZB03oFgCDAHUI+3+j
+	 YIK2P4ZBRkmuF97YQW6svQnkEtjeagnZEosIcN9pMb5x4PiaDxeDOE6fAO4M1B243d
+	 EynqYvp7FfkHPAieP1/SxAe1DVyyOq04GvuLvE6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.10 278/798] media: go7007: defer the ALSA v4l2 put until card release
-Date: Sat, 12 Sep 2026 08:58:26 +0200
-Message-ID: <20260912065523.529479291@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.10 243/798] mtd: rawnand: validate ONFI extended parameter page sections
+Date: Sat, 12 Sep 2026 08:57:51 +0200
+Message-ID: <20260912065522.727168758@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,65 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 1bd456afeb8a515137e567967069fce6f8fcd23e upstream.
+commit e5e415262330bd70f983e091d8919d9dcd99e475 upstream.
 
-go7007_snd_init() already takes a v4l2_device reference for the ALSA
-side, but go7007_snd_remove() drops it immediately after calling
-snd_card_free_when_closed().
+nand_flash_detect_ext_param_page() allocates the length declared by the
+ONFI parameter page, then treats the data as a fixed header followed by
+variable-length sections. It reads that header and advances over sections
+without first proving that the fixed page and each current section fit in
+the allocation.
 
-That is too early when a userspace process still has the capture PCM open.
-The ALSA card and its PCM callbacks remain alive until the last file is
-closed, so the release path can still reach struct go7007 through
-pcm->private_data and call go7007_snd_hw_free() after the V4L2 release path
-has freed the object.
+Reject pages shorter than the fixed header, track the remaining variable
+area while walking sections, and require the ECC section to contain every
+field read from struct onfi_ext_ecc_info. Use device-scoped diagnostics
+that identify the malformed ONFI section.
 
-Move the matching v4l2_device_put() to the ALSA card private_free callback
-so the existing ALSA reference covers the whole deferred card lifetime.
-
-Closes: https://lore.kernel.org/r/178144969601.60470.6005237146425573205@gmail.com
-Fixes: d5d3a7cc127d ("[media] go7007: fix unregister/disconnect handling")
+Fixes: 6dcbe0cdd83f ("mtd: get the ECC info from the Extended Parameter Page")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/go7007/snd-go7007.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/nand_onfi.c |   27 +++++++++++++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
---- a/drivers/media/usb/go7007/snd-go7007.c
-+++ b/drivers/media/usb/go7007/snd-go7007.c
-@@ -195,6 +195,13 @@ static struct snd_device_ops go7007_snd_
- 	.dev_free	= go7007_snd_free,
- };
- 
-+static void go7007_snd_card_free(struct snd_card *card)
-+{
-+	struct go7007 *go = card->private_data;
-+
-+	v4l2_device_put(&go->v4l2_dev);
-+}
-+
- int go7007_snd_init(struct go7007 *go)
+--- a/drivers/mtd/nand/raw/nand_onfi.c
++++ b/drivers/mtd/nand/raw/nand_onfi.c
+@@ -35,16 +35,21 @@ static int nand_flash_detect_ext_param_p
+ 					    struct nand_onfi_params *p)
  {
- 	static int dev;
-@@ -245,6 +252,8 @@ int go7007_snd_init(struct go7007 *go)
- 	gosnd->substream = NULL;
- 	go->snd_context = gosnd;
- 	v4l2_device_get(&go->v4l2_dev);
-+	gosnd->card->private_data = go;
-+	gosnd->card->private_free = go7007_snd_card_free;
- 	++dev;
+ 	struct nand_device *base = &chip->base;
++	struct mtd_info *mtd = nand_to_mtd(chip);
+ 	struct nand_ecc_props requirements;
+ 	struct onfi_ext_param_page *ep;
+ 	struct onfi_ext_section *s;
+ 	struct onfi_ext_ecc_info *ecc;
++	size_t remaining, section_len;
+ 	uint8_t *cursor;
+ 	int ret;
+ 	int len;
+ 	int i;
  
- 	return 0;
-@@ -263,7 +272,6 @@ int go7007_snd_remove(struct go7007 *go)
+ 	len = le16_to_cpu(p->ext_param_page_length) * 16;
++	if (len < sizeof(*ep))
++		return -EINVAL;
++
+ 	ep = kmalloc(len, GFP_KERNEL);
+ 	if (!ep)
+ 		return -ENOMEM;
+@@ -77,11 +82,29 @@ static int nand_flash_detect_ext_param_p
  
- 	snd_card_disconnect(gosnd->card);
- 	snd_card_free_when_closed(gosnd->card);
--	v4l2_device_put(&go->v4l2_dev);
- 	return 0;
- }
- EXPORT_SYMBOL(go7007_snd_remove);
+ 	/* find the ECC section. */
+ 	cursor = (uint8_t *)(ep + 1);
++	remaining = len - sizeof(*ep);
+ 	for (i = 0; i < ONFI_EXT_SECTION_MAX; i++) {
+ 		s = ep->sections + i;
+-		if (s->type == ONFI_SECTION_TYPE_2)
++		section_len = s->length * 16;
++		if (section_len > remaining) {
++			dev_dbg(&mtd->dev,
++				"ONFI extended parameter section %d exceeds page\n",
++				i);
++			goto ext_out;
++		}
++
++		if (s->type == ONFI_SECTION_TYPE_2) {
++			if (section_len < sizeof(*ecc)) {
++				dev_dbg(&mtd->dev,
++					"ONFI extended parameter ECC section %d is too short\n",
++					i);
++				goto ext_out;
++			}
+ 			break;
+-		cursor += s->length * 16;
++		}
++
++		cursor += section_len;
++		remaining -= section_len;
+ 	}
+ 	if (i == ONFI_EXT_SECTION_MAX) {
+ 		pr_debug("We can not find the ECC section.\n");
 
 
