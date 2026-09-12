@@ -1,49 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7002D47F1;
-	Sat, 12 Sep 2026 14:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1282E33F5A7;
+	Sat, 12 Sep 2026 14:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222793; cv=none; b=VAPDlZkh3p7MG8c4dkjUOv3zVrKWNKjAf0WkR0W44dsyz8LXSLgrhPy+/yrkmoFI+5L2f/LY+FPIXAAjc3hHx6haJxtyoR+MFNc5LaJFw99wh67o7uSvxrrFTkr0l5nPyf8L3MkBPn4KUNTBdJv4rPdRDBroXU9ukk0DrtpUsEg=
+	t=1789222798; cv=none; b=oM41pnBpK6GHWTMzluaf9BIwt3VvBV5W3GFoGKQjBQB5oI7msLjX/oCSVSl+gvvBWDq3tIL9WCypOS590lN9tlppwztsgFc92TJ5Y510MN1BRlDf2EWL6tSxbkuZHMcyownEPawPfz73yTzuzE7kf6VEbGy/kDhLxA+lwhf9TsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222793; c=relaxed/simple;
-	bh=Gz6PrKQsrqwm3HXiTQ21ShUWfXM+qJV4Z9UuKVRkL8Y=;
+	s=arc-20240116; t=1789222798; c=relaxed/simple;
+	bh=zctUIYPh8sbb8P0UoZAgXviGdNQEm8rA4f898wmRyQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gL0OvmpeESM7f4GSfOhEjMTJcmQpMYd7EUmgjJi3L6y2g0LjW1/1SFt0ap19/WNVp8F2iQVVImGmVaTvLOuhtltJ/NF3TbWUv7BJRFDeDThNGjoRzMLzDquH2LbP8lAnYTOOmaCwRTPzGb8EPr96DYr4BzaijLDn6jbZBbuo2bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNAbsxHw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sWgGPiZVgVyOA3ZgVp11yqdbCKZ6MaBg0gCp9vUJJyCY479dFX9aATZzN1iDiiWPd12JoQ57It307BsMcOPgKmrDA7jEOUKiZbsTSokKz50maZjMfowUKjovo9Xj+OYI3cR+YP8+WLBfmtzKJzAQsNHbLKgSPbISKDrBjwWzO2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QmCzYqgB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNAbsxHw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86FE1F000FF;
-	Sat, 12 Sep 2026 14:19:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmCzYqgB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93ED1F00893;
+	Sat, 12 Sep 2026 14:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222791;
-	bh=Rp3acZ3uh0BzcQGVp4ZNc8nO3x4J+FpIvKKPnlERbdc=;
+	s=korg; t=1789222796;
+	bh=BT3TMJ/YsUIpB8h+s88wDMsRF5hg8/iQR87/LXSR+RQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fNAbsxHwcTA9WpX8gp5TmN0mm30AYSYiCXlmS7GHWCOZ6psdr4iJSJgagQNHK9QQe
-	 gWJouYWDBJYT49Xxap+2dKQkDebktlMCX3SNdYyaWK/Nogz2fyRRCGFSBrBZvcQcJJ
-	 xzKEx5jkGqJwYBhiT3ziWxAaP+JyrmrmAHDrhaZM=
+	b=QmCzYqgBphs+6PJcL3gCaEs64qMnm2PuLCszRE4DGPSdcSo9c6ebmTW2miY2LEj6K
+	 tjxuqutrmFOICLzc6JYJNf2tVoPhcd6NojlEY3wBTAkYBCpwawS3knPbqZmr27b4Ja
+	 /JoMBLmKgBd4kXFoWVQ0Ym86Xdv8dkTG/lf/0L3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Besar Wicaksono <bwicaksono@nvidia.com>,
-	James Clark <james.clark@arm.com>,
-	suzuki.poulose@arm.com,
-	mike.leach@linaro.org,
-	jonathanh@nvidia.com,
-	rwiley@nvidia.com,
-	treding@nvidia.com,
-	vsethi@nvidia.com,
-	ywan@nvidia.com,
-	linux-arm-kernel@lists.infradead.org,
-	coresight@lists.linaro.org,
-	linux-tegra@vger.kernel.org,
-	Namhyung Kim <namhyung@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0631/1424] perf cs-etm: Fix incorrect or missing decoder for raw trace
-Date: Sat, 12 Sep 2026 08:51:03 +0200
-Message-ID: <20260912065621.419338749@linuxfoundation.org>
+Subject: [PATCH 6.6 0658/1424] greybus: audio: bound the topology section sizes against the fetched size
+Date: Sat, 12 Sep 2026 08:51:30 +0200
+Message-ID: <20260912065622.027912190@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -62,245 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Besar Wicaksono <bwicaksono@nvidia.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit a16afcc58a8c5ebc65c852faf001f8f61f05e4ef ]
+[ Upstream commit 33d8c7b794d2a30637c9d3fcb478f1d3222bef1e ]
 
-The decoder creation for raw trace uses metadata from the first CPU.
-On per-cpu mode, this metadata is incorrectly used for every decoder.
-On per-process/per-thread traces, the first CPU is CPU0. If CPU0 trace
-is not enabled, its metadata will be marked unused and the decoder is
-not created. Perf report dump skips the decoding part because the
-decoder is missing.
+gb_audio_gb_get_topology() fetches a topology blob of a module-supplied
+size, and gbaudio_tplg_parse_data() then walks it by adding the
+module-supplied size_dais, size_controls and size_widgets fields to
+form the control, widget and route section offsets. Those le32 sizes
+are never checked against the fetched blob, so a module reporting a
+small topology size but large section sizes makes the offsets point
+past the allocation, and parsing reads out of bounds.
 
-To fix this, use metadata of the CPU associated with sample object.
+Reject a topology whose section sizes do not fit within the fetched
+size before it is parsed.
 
-Signed-off-by: Besar Wicaksono <bwicaksono@nvidia.com>
-Reviewed-by: James Clark <james.clark@arm.com>
-Cc: suzuki.poulose@arm.com
-Cc: mike.leach@linaro.org
-Cc: jonathanh@nvidia.com
-Cc: rwiley@nvidia.com
-Cc: treding@nvidia.com
-Cc: vsethi@nvidia.com
-Cc: ywan@nvidia.com
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: coresight@lists.linaro.org
-Cc: linux-tegra@vger.kernel.org
-Link: https://lore.kernel.org/r/20231010234803.5419-1-bwicaksono@nvidia.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Stable-dep-of: 50cd0d54f1f6 ("perf cs-etm: Fix thread leaks on trace queue init failure")
+Fixes: 184992e305f1 ("greybus: audio: Add Greybus Audio Device Class Protocol helper routines")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260616-b4-disp-4352e8b0-v1-1-3e09f62e0ad5@proton.me
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 106 ++++++++++++++++++++++++---------------
- 1 file changed, 65 insertions(+), 41 deletions(-)
+ drivers/staging/greybus/audio_gb.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index 799c104901b4f..1fb104357eebb 100644
---- a/tools/perf/util/cs-etm.c
-+++ b/tools/perf/util/cs-etm.c
-@@ -283,22 +283,31 @@ static int cs_etm__metadata_set_trace_id(u8 trace_chan_id, u64 *cpu_metadata)
- }
- 
- /*
-- * Get a metadata for a specific cpu from an array.
-+ * Get a metadata index for a specific cpu from an array.
-  *
-  */
--static u64 *get_cpu_data(struct cs_etm_auxtrace *etm, int cpu)
-+static int get_cpu_data_idx(struct cs_etm_auxtrace *etm, int cpu)
- {
- 	int i;
--	u64 *metadata = NULL;
- 
- 	for (i = 0; i < etm->num_cpu; i++) {
- 		if (etm->metadata[i][CS_ETM_CPU] == (u64)cpu) {
--			metadata = etm->metadata[i];
--			break;
-+			return i;
- 		}
+diff --git a/drivers/staging/greybus/audio_gb.c b/drivers/staging/greybus/audio_gb.c
+index 9d8994fdb41a2..144591f1a5128 100644
+--- a/drivers/staging/greybus/audio_gb.c
++++ b/drivers/staging/greybus/audio_gb.c
+@@ -37,6 +37,19 @@ int gb_audio_gb_get_topology(struct gb_connection *connection,
+ 		return ret;
  	}
  
--	return metadata;
-+	return -1;
-+}
++	/*
++	 * The size_* fields are supplied by the module and are used by
++	 * gbaudio_tplg_parse_data() to compute offsets into the blob; make
++	 * sure the sections fit within the fetched topology, so walking it
++	 * cannot read out of bounds.
++	 */
++	if ((u64)le32_to_cpu(topo->size_dais) + le32_to_cpu(topo->size_controls) +
++	    le32_to_cpu(topo->size_widgets) + le32_to_cpu(topo->size_routes) >
++	    size - sizeof(*topo)) {
++		kfree(topo);
++		return -EINVAL;
++	}
 +
-+/*
-+ * Get a metadata for a specific cpu from an array.
-+ *
-+ */
-+static u64 *get_cpu_data(struct cs_etm_auxtrace *etm, int cpu)
-+{
-+	int idx = get_cpu_data_idx(etm, cpu);
-+
-+	return (idx != -1) ? etm->metadata[idx] : NULL;
- }
+ 	*topology = topo;
  
- /*
-@@ -641,66 +650,80 @@ static void cs_etm__packet_dump(const char *pkt_string)
- }
- 
- static void cs_etm__set_trace_param_etmv3(struct cs_etm_trace_params *t_params,
--					  struct cs_etm_auxtrace *etm, int idx,
--					  u32 etmidr)
-+					  struct cs_etm_auxtrace *etm, int t_idx,
-+					  int m_idx, u32 etmidr)
- {
- 	u64 **metadata = etm->metadata;
- 
--	t_params[idx].protocol = cs_etm__get_v7_protocol_version(etmidr);
--	t_params[idx].etmv3.reg_ctrl = metadata[idx][CS_ETM_ETMCR];
--	t_params[idx].etmv3.reg_trc_id = metadata[idx][CS_ETM_ETMTRACEIDR];
-+	t_params[t_idx].protocol = cs_etm__get_v7_protocol_version(etmidr);
-+	t_params[t_idx].etmv3.reg_ctrl = metadata[m_idx][CS_ETM_ETMCR];
-+	t_params[t_idx].etmv3.reg_trc_id = metadata[m_idx][CS_ETM_ETMTRACEIDR];
- }
- 
- static void cs_etm__set_trace_param_etmv4(struct cs_etm_trace_params *t_params,
--					  struct cs_etm_auxtrace *etm, int idx)
-+					  struct cs_etm_auxtrace *etm, int t_idx,
-+					  int m_idx)
- {
- 	u64 **metadata = etm->metadata;
- 
--	t_params[idx].protocol = CS_ETM_PROTO_ETMV4i;
--	t_params[idx].etmv4.reg_idr0 = metadata[idx][CS_ETMV4_TRCIDR0];
--	t_params[idx].etmv4.reg_idr1 = metadata[idx][CS_ETMV4_TRCIDR1];
--	t_params[idx].etmv4.reg_idr2 = metadata[idx][CS_ETMV4_TRCIDR2];
--	t_params[idx].etmv4.reg_idr8 = metadata[idx][CS_ETMV4_TRCIDR8];
--	t_params[idx].etmv4.reg_configr = metadata[idx][CS_ETMV4_TRCCONFIGR];
--	t_params[idx].etmv4.reg_traceidr = metadata[idx][CS_ETMV4_TRCTRACEIDR];
-+	t_params[t_idx].protocol = CS_ETM_PROTO_ETMV4i;
-+	t_params[t_idx].etmv4.reg_idr0 = metadata[m_idx][CS_ETMV4_TRCIDR0];
-+	t_params[t_idx].etmv4.reg_idr1 = metadata[m_idx][CS_ETMV4_TRCIDR1];
-+	t_params[t_idx].etmv4.reg_idr2 = metadata[m_idx][CS_ETMV4_TRCIDR2];
-+	t_params[t_idx].etmv4.reg_idr8 = metadata[m_idx][CS_ETMV4_TRCIDR8];
-+	t_params[t_idx].etmv4.reg_configr = metadata[m_idx][CS_ETMV4_TRCCONFIGR];
-+	t_params[t_idx].etmv4.reg_traceidr = metadata[m_idx][CS_ETMV4_TRCTRACEIDR];
- }
- 
- static void cs_etm__set_trace_param_ete(struct cs_etm_trace_params *t_params,
--					  struct cs_etm_auxtrace *etm, int idx)
-+					  struct cs_etm_auxtrace *etm, int t_idx,
-+					  int m_idx)
- {
- 	u64 **metadata = etm->metadata;
- 
--	t_params[idx].protocol = CS_ETM_PROTO_ETE;
--	t_params[idx].ete.reg_idr0 = metadata[idx][CS_ETE_TRCIDR0];
--	t_params[idx].ete.reg_idr1 = metadata[idx][CS_ETE_TRCIDR1];
--	t_params[idx].ete.reg_idr2 = metadata[idx][CS_ETE_TRCIDR2];
--	t_params[idx].ete.reg_idr8 = metadata[idx][CS_ETE_TRCIDR8];
--	t_params[idx].ete.reg_configr = metadata[idx][CS_ETE_TRCCONFIGR];
--	t_params[idx].ete.reg_traceidr = metadata[idx][CS_ETE_TRCTRACEIDR];
--	t_params[idx].ete.reg_devarch = metadata[idx][CS_ETE_TRCDEVARCH];
-+	t_params[t_idx].protocol = CS_ETM_PROTO_ETE;
-+	t_params[t_idx].ete.reg_idr0 = metadata[m_idx][CS_ETE_TRCIDR0];
-+	t_params[t_idx].ete.reg_idr1 = metadata[m_idx][CS_ETE_TRCIDR1];
-+	t_params[t_idx].ete.reg_idr2 = metadata[m_idx][CS_ETE_TRCIDR2];
-+	t_params[t_idx].ete.reg_idr8 = metadata[m_idx][CS_ETE_TRCIDR8];
-+	t_params[t_idx].ete.reg_configr = metadata[m_idx][CS_ETE_TRCCONFIGR];
-+	t_params[t_idx].ete.reg_traceidr = metadata[m_idx][CS_ETE_TRCTRACEIDR];
-+	t_params[t_idx].ete.reg_devarch = metadata[m_idx][CS_ETE_TRCDEVARCH];
- }
- 
- static int cs_etm__init_trace_params(struct cs_etm_trace_params *t_params,
- 				     struct cs_etm_auxtrace *etm,
-+				     bool formatted,
-+				     int sample_cpu,
- 				     int decoders)
- {
--	int i;
-+	int t_idx, m_idx;
- 	u32 etmidr;
- 	u64 architecture;
- 
--	for (i = 0; i < decoders; i++) {
--		architecture = etm->metadata[i][CS_ETM_MAGIC];
-+	for (t_idx = 0; t_idx < decoders; t_idx++) {
-+		if (formatted)
-+			m_idx = t_idx;
-+		else {
-+			m_idx = get_cpu_data_idx(etm, sample_cpu);
-+			if (m_idx == -1) {
-+				pr_warning("CS_ETM: unknown CPU, falling back to first metadata\n");
-+				m_idx = 0;
-+			}
-+		}
-+
-+		architecture = etm->metadata[m_idx][CS_ETM_MAGIC];
- 
- 		switch (architecture) {
- 		case __perf_cs_etmv3_magic:
--			etmidr = etm->metadata[i][CS_ETM_ETMIDR];
--			cs_etm__set_trace_param_etmv3(t_params, etm, i, etmidr);
-+			etmidr = etm->metadata[m_idx][CS_ETM_ETMIDR];
-+			cs_etm__set_trace_param_etmv3(t_params, etm, t_idx, m_idx, etmidr);
- 			break;
- 		case __perf_cs_etmv4_magic:
--			cs_etm__set_trace_param_etmv4(t_params, etm, i);
-+			cs_etm__set_trace_param_etmv4(t_params, etm, t_idx, m_idx);
- 			break;
- 		case __perf_cs_ete_magic:
--			cs_etm__set_trace_param_ete(t_params, etm, i);
-+			cs_etm__set_trace_param_ete(t_params, etm, t_idx, m_idx);
- 			break;
- 		default:
- 			return -EINVAL;
-@@ -1016,7 +1039,7 @@ static u32 cs_etm__mem_access(struct cs_etm_queue *etmq, u8 trace_chan_id,
- }
- 
- static struct cs_etm_queue *cs_etm__alloc_queue(struct cs_etm_auxtrace *etm,
--						bool formatted)
-+						bool formatted, int sample_cpu)
- {
- 	struct cs_etm_decoder_params d_params;
- 	struct cs_etm_trace_params  *t_params = NULL;
-@@ -1041,7 +1064,7 @@ static struct cs_etm_queue *cs_etm__alloc_queue(struct cs_etm_auxtrace *etm,
- 	if (!t_params)
- 		goto out_free;
- 
--	if (cs_etm__init_trace_params(t_params, etm, decoders))
-+	if (cs_etm__init_trace_params(t_params, etm, formatted, sample_cpu, decoders))
- 		goto out_free;
- 
- 	/* Set decoder parameters to decode trace packets */
-@@ -1081,14 +1104,15 @@ static struct cs_etm_queue *cs_etm__alloc_queue(struct cs_etm_auxtrace *etm,
- static int cs_etm__setup_queue(struct cs_etm_auxtrace *etm,
- 			       struct auxtrace_queue *queue,
- 			       unsigned int queue_nr,
--			       bool formatted)
-+			       bool formatted,
-+			       int sample_cpu)
- {
- 	struct cs_etm_queue *etmq = queue->priv;
- 
- 	if (list_empty(&queue->head) || etmq)
- 		return 0;
- 
--	etmq = cs_etm__alloc_queue(etm, formatted);
-+	etmq = cs_etm__alloc_queue(etm, formatted, sample_cpu);
- 
- 	if (!etmq)
- 		return -ENOMEM;
-@@ -2827,7 +2851,7 @@ static int cs_etm__process_auxtrace_event(struct perf_session *session,
- 		 * formatted in piped mode (true).
- 		 */
- 		err = cs_etm__setup_queue(etm, &etm->queues.queue_array[idx],
--					  idx, true);
-+					  idx, true, -1);
- 		if (err)
- 			return err;
- 
-@@ -3033,7 +3057,7 @@ static int cs_etm__queue_aux_fragment(struct perf_session *session, off_t file_o
- 		idx = auxtrace_event->idx;
- 		formatted = !(aux_event->flags & PERF_AUX_FLAG_CORESIGHT_FORMAT_RAW);
- 		return cs_etm__setup_queue(etm, &etm->queues.queue_array[idx],
--					   idx, formatted);
-+					   idx, formatted, sample->cpu);
- 	}
- 
- 	/* Wasn't inside this buffer, but there were no parse errors. 1 == 'not found' */
+ 	return 0;
 -- 
 2.53.0
 
