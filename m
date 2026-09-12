@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4881FBEA6;
-	Sat, 12 Sep 2026 19:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3FD1FBEA6;
+	Sat, 12 Sep 2026 19:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242755; cv=none; b=L7ACXOp8oaXqX1pdHNqJUy2owAVDKEsSD/AMtxJw9SKJdR9i70vWUOmthY1ujHALnrGKm+T+tz9bxmUX4yRhW4qI77N3uK8qKej7mhLxj9DhkIH7eL8lCY2RAypvt90gx0VZlLzXWMvyacgPz5Bkkf7ltfqfIUgQKvWDawz6W/Y=
+	t=1789242758; cv=none; b=DKwBCVBXFCT26IJAsW+f0pJZIZu8N8AsTXTgWd2d21opnBBoQHg15KXo05odGUl45nq7/KtF+OUdhBA2YZXg1S99Y8C09s5gBMdgbQ8AxT648Xr99VYmMHAUj6Ig+/E/Xm8i6/dczuNAYK2tNvHXSy5f2jxDvW8KxmAuK3cfQHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242755; c=relaxed/simple;
-	bh=HNykB1+TYNwHA3IDpn4w6Phra5j2FOJRI7Rxj04lZ+c=;
+	s=arc-20240116; t=1789242758; c=relaxed/simple;
+	bh=ZdCT4/ytPMda2Ll7tvdwLOPwCi4bFlTurfHHdlcdhdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=secU5AeNPBDyDQjp+WAZVx2cawaBp70CUxxxb5Azz9Gj1u0t84I4De0pZqB5L7dbXIxYI5QP3PRD9mzLgZ460uxHAV7//0R0iUFJxd50sEDK7EOb2h8YiCDJ1aVnIZAx6uVOnyMLRTIqTnidsiP0nUIpVEdpP7jZeOG304uI2NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JVMCBvC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QwBMK4tvFgF+AbZD6MHspDMEYzi1NGNYYWyWTNPmporjTrRu9yduX27n7I9jVOErE+3TJMRnpqchhbWLD5YVt+faHhGclDMrKDnBC+avO4a6QMOLJWbLYiGy9xos69t8+xUCMsqoswhac7o+Zt/DTY7La8QmangEV5WKoIjSa5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=py4h1YHM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JVMCBvC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB9D1F000FF;
-	Sat, 12 Sep 2026 19:52:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="py4h1YHM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71DCE1F000FF;
+	Sat, 12 Sep 2026 19:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242754;
-	bh=1hDQ15ktm2mbin1OgsYV3eeqSxH9rlGlIgYvqMPq9o0=;
+	s=korg; t=1789242757;
+	bh=wPA4KfUzvVhtSuUSYmrEsZj6RTK/uVJngTYu4MENKXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2JVMCBvCAiRcNZbO7fr0bL56C4MEZLS6RvKYih2YjWev51DoT6imEz7RbX/Km2TV3
-	 h0Vv1KyMx6JxKGFAiVbTImlVmoEqTYgh1taviGDfHji5E9jWTdhjAzN3mm1Tztzss4
-	 jwQkX+R98J1TXiusSfh8fwimNt/2aCLHTaywjJi8=
+	b=py4h1YHMRpTLru6j/G39qEJ9lk21UgC7/9CFk98LBykoDuJkVofxY8z3A2h4spOz2
+	 KeC3daUnkf1klN6/06bjuGIHy7D5MOqEkA189mSG6NLkHXF24l7mJrdg2ZEEvTGS2+
+	 nfAk0uy1oGql021UPQYdCD6vhonCy8UzSeFjCqKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Alban Bedel <alban.bedel@lht.dlh.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 513/798] arm64: dts: rockchip: Fix Gru WLAN sideband interrupt
-Date: Sat, 12 Sep 2026 09:02:21 +0200
-Message-ID: <20260912065528.892207857@linuxfoundation.org>
+Subject: [PATCH 5.10 473/798] software node: Fix software_node_get_reference_args() with index -1
+Date: Sat, 12 Sep 2026 09:01:41 +0200
+Message-ID: <20260912065527.985033791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,44 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@gmail.com>
+From: Alban Bedel <alban.bedel@lht.dlh.de>
 
-[ Upstream commit a761818d9ee11183df0aefd16bf9fe46cc1c4c6d ]
+[ Upstream commit ba3dedcf3bd47017307595a7e54924198f018246 ]
 
-The Marvell WLAN host wake interrupt is wired to GPIO0 8 and is not
-one of the PCI INTx interrupts. The PCI device schema therefore
-interprets the two-cell GPIO interrupt specifier as an invalid PCI
-interrupt and reports dtbs_check warnings:
+The bounds check for the index passed to
+software_node_get_reference_args() was failing when passed UINT_MAX,
+this in turn would lead to an out of bound access in the property
+array. Fix the bound check to also cover the UINT_MAX case.
 
-pcie@0,0: wifi@0,0:interrupts:0:0: 8 is not one of [1, 2, 3, 4]
-pcie@0,0: wifi@0,0:interrupts:0: [8, 8] is too long
-
-Describe the sideband interrupt with interrupts-extended, which
-explicitly carries the interrupt controller and removes the ambiguity.
-
-Fixes: 48f4d9796d99 ("arm64: dts: rockchip: add Gru/Kevin DTS")
-Signed-off-by: Fabio Estevam <festevam@gmail.com>
-Link: https://patch.msgid.link/20260721133445.44283-1-festevam@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 31e4e12e0e960 ("software node: Correct a OOB check in software_node_get_reference_args()")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-devicetree/20260611103904.7CB131F00893@smtp.kernel.org/
+Signed-off-by: Alban Bedel <alban.bedel@lht.dlh.de>
+Link: https://patch.msgid.link/20260611164005.2930205-1-alban.bedel@lht.dlh.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/base/swnode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi
-index 3ac88d35c8f15..acff3f8050f67 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi
-@@ -328,8 +328,7 @@ &pci_rootport {
- 	mvl_wifi: wifi@0,0 {
- 		compatible = "pci1b4b,2b42";
- 		reg = <0x0000 0x0 0x0 0x0 0x0>;
--		interrupt-parent = <&gpio0>;
--		interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio0 8 IRQ_TYPE_LEVEL_LOW>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&wlan_host_wake_l>;
- 		wakeup-source;
+diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
+index 89b53ca086d6a..e11e715320199 100644
+--- a/drivers/base/swnode.c
++++ b/drivers/base/swnode.c
+@@ -508,7 +508,7 @@ software_node_get_reference_args(const struct fwnode_handle *fwnode,
+ 	if (prop->is_inline)
+ 		return -EINVAL;
+ 
+-	if ((index + 1) * sizeof(*ref) > prop->length)
++	if (index >= prop->length / sizeof(*ref))
+ 		return -ENOENT;
+ 
+ 	ref_array = prop->pointer;
 -- 
 2.53.0
 
