@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334B737204A;
-	Sat, 12 Sep 2026 07:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E6037F729;
+	Sat, 12 Sep 2026 07:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197141; cv=none; b=lMxK2epVmpv0/95JeMP2CohFvMZwOpTG4G5+/IxHIKj1FyfDnhmUB2KBjs3+SB+isKCvGLCNguH7PF9BWhu5MnjezngZccVfK2DMUG1GCDT2nhTuq0tgcpGvNb5RBSjm7oYaF0cr6guLe/XFZKyBnDHzTzizsobKqt894Cs1c1I=
+	t=1789197146; cv=none; b=Fr/7z6S4vhOEzoXEwQZPy+MtcrwROVNungewmPqpQNoBOenQ8H0ABpQGdUlFJunbuY/odCZSSNc6g65ezOJgP9RtMLqhiQ1GBtMYPdH+7D0m+r4Z0Z9On/iDT/lKBRthNB8nbQtEfkv9rn3ngVL7KZ/dTY7uAM3ETs04TySZkKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197141; c=relaxed/simple;
-	bh=MsMxqVWb1QqDBWoGWSvPIlDHku2AMXI67uxuZuhhekM=;
+	s=arc-20240116; t=1789197146; c=relaxed/simple;
+	bh=/KaLpVJU2D0kJGijcFDV8K0Wctdw1a0VmX6aefncywg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l59PyvT/CAWZD4mJde7gqTXqgfQz/G44aY80QC8a9YYHIlokIdriRpkH0yqsibuV+sAxT5UyxXx7ZAr1Ow1pDoImMUHfm2BW5iEmNa+7NZJAJUN1Ll4Eq2v1bgMmqYqdz2AhKGDPXijk/Shlr/byYi2b09i3g8DzpijQYeG/KMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzkPnGp6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g+tKLrD+2Au2SBsj3aUrGYxfSP2Dv7MhnnL1jj/ZRzIIMk9EROTj2S2aOrSoZAbkKhIAo8+QtDZVU0HjZN2lZCjyGBc++mE7L0XueXGrQWlMbb7c6a3nrNxqllYHEQ6u5f14O+FWPAhqqAor5mmPp+0k+t90ydKEjdqewlVj7xU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3Dmv9og; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzkPnGp6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6E71F000FF;
-	Sat, 12 Sep 2026 07:12:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3Dmv9og"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FA91F000FF;
+	Sat, 12 Sep 2026 07:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197140;
-	bh=qBIqP6B6bEBc4FtVpeLJzSlvYqI0C0ghiDeNSXHnroc=;
+	s=korg; t=1789197144;
+	bh=IM98MnMQ5W/7lNrE2welr2HPSr2AHtcLF+2FNLcST/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qzkPnGp61Tp3z5vQ+am68COzDJ1FVERMb/Q8OncAAOWLDxp/PnBeDSB/AJfwQKK4c
-	 voskgESE/6YDRRffaY4SjIeoTDLXw0OF3CoEaeqq+h4BEl+avaJN7hDxgFI502xbTn
-	 vRHu5Q1Q2oYtqXnyHSDOOlVf+t2JbcicGV9ID790=
+	b=k3Dmv9ogRqn1NME6zFeT0K0/qXdcRUjQJOS01PcVkPxOJYjP+t9zG334sDkwhSO9S
+	 V5EQG/kFqnpm3c3qKEhFKn1kK4ZwIEA5Jq0Qm4EGw6gtti7/hOGgLsufxoqf6Fe+Mk
+	 /DsrvecCVKBqspWfDYRQLz1rqwMELjbw17xtfBBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0109/1815] pinctrl: imx1: fix device_node leak in dt_is_flat_functions()
-Date: Sat, 12 Sep 2026 08:30:59 +0200
-Message-ID: <20260912065651.565008111@linuxfoundation.org>
+Subject: [PATCH 7.2 0110/1815] perf/x86/intel: Keep cap_user_rdpmc in sync with RDPMC user-disable state
+Date: Sat, 12 Sep 2026 08:31:00 +0200
+Message-ID: <20260912065651.587230627@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,47 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit 7b1272d02e65d2d4aeffb0d85b290a8753d24c12 ]
+[ Upstream commit 3c4ec9b2a5db56b60127bfaf933ecdeea7a1f10a ]
 
-for_each_child_of_node() holds a reference on the iterator node that
-must be released on early return. imx1_pinctrl_dt_is_flat_functions()
-has two early return paths inside the loop that skip this cleanup.
+After introducing the RDPMC user disable feature, user-space RDPMC may
+return 0 instead of the actual event count. This creates an inconsistency
+with cap_user_rdpmc, where cap_user_rdpmc is set, but user-space RDPMC
+only returns 0.
 
-Replace both loops with the scoped variant so that the reference is
-automatically dropped when the iterator goes out of scope.
+To accurately represent the user-space RDPMC capability, update
+cap_user_rdpmc (depending on PERF_EVENT_FLAG_USER_READ_CNT) according to
+the RDPMC user disable state. If RDPMC user disable is enabled,
+cap_user_rdpmc is updated to false eventually, allowing user-space
+programs to fall back to the read() syscall to obtain the real event
+count.
 
-Fixes: 63d2059cd665 ("pinctrl: imx1: Allow parsing DT without function nodes")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Because PERF_EVENT_FLAG_USER_READ_CNT is evaluated in
+x86_pmu_event_init(), move intel_pmu_update_rdpmc_user_disable()
+earlier into intel_pmu_hw_config(). This ensures that the user-disable
+state is updated before updating PERF_EVENT_FLAG_USER_READ_CNT. Note that
+since event->ctx is not yet assigned at this stage, use the
+PERF_ATTACH_TASK flag to detect whether the event is task-attached.
+
+While at it, fix the indentation of x86_pmu_has_rdpmc_user_disable()
+to adhere to the kernel coding style.
+
+Fixes: 59af95e028d4 ("perf/x86/intel: Add support for rdpmc user disable feature")
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260616044654.3468742-3-dapeng1.mi@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/freescale/pinctrl-imx1-core.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ arch/x86/events/core.c       | 3 ++-
+ arch/x86/events/intel/core.c | 6 +++---
+ arch/x86/events/perf_event.h | 2 +-
+ 3 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pinctrl/freescale/pinctrl-imx1-core.c b/drivers/pinctrl/freescale/pinctrl-imx1-core.c
-index b7bd4ef9c0db5..4a6bdaefa42f2 100644
---- a/drivers/pinctrl/freescale/pinctrl-imx1-core.c
-+++ b/drivers/pinctrl/freescale/pinctrl-imx1-core.c
-@@ -547,14 +547,11 @@ static int imx1_pinctrl_parse_functions(struct device_node *np,
-  */
- static bool imx1_pinctrl_dt_is_flat_functions(struct device_node *np)
- {
--	struct device_node *function_np;
--	struct device_node *pinctrl_np;
--
--	for_each_child_of_node(np, function_np) {
-+	for_each_child_of_node_scoped(np, function_np) {
- 		if (of_property_present(function_np, "fsl,pins"))
- 			return true;
+diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+index d1af33d96d0a3..af0b67ffb43d8 100644
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -2539,7 +2539,8 @@ static int x86_pmu_event_init(struct perf_event *event)
+ 	}
  
--		for_each_child_of_node(function_np, pinctrl_np) {
-+		for_each_child_of_node_scoped(function_np, pinctrl_np) {
- 			if (of_property_present(pinctrl_np, "fsl,pins"))
- 				return false;
- 		}
+ 	if (READ_ONCE(x86_pmu.attr_rdpmc) &&
+-	    !(event->hw.flags & PERF_X86_EVENT_LARGE_PEBS))
++	    !(event->hw.flags & PERF_X86_EVENT_LARGE_PEBS) &&
++	    !(event->hw.config & ARCH_PERFMON_EVENTSEL_RDPMC_USER_DISABLE))
+ 		event->hw.flags |= PERF_EVENT_FLAG_USER_READ_CNT;
+ 
+ 	return err;
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index 465c414f145da..5116b15438a21 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -3533,7 +3533,7 @@ static void intel_pmu_update_rdpmc_user_disable(struct perf_event *event)
+ 	 */
+ 	if (x86_pmu.attr_rdpmc == X86_USER_RDPMC_ALWAYS_ENABLE ||
+ 	    (x86_pmu.attr_rdpmc == X86_USER_RDPMC_CONDITIONAL_ENABLE &&
+-	     event->ctx->task))
++	     (event->attach_state & PERF_ATTACH_TASK)))
+ 		event->hw.config &= ~ARCH_PERFMON_EVENTSEL_RDPMC_USER_DISABLE;
+ 	else
+ 		event->hw.config |= ARCH_PERFMON_EVENTSEL_RDPMC_USER_DISABLE;
+@@ -3547,8 +3547,6 @@ static void intel_pmu_enable_event(struct perf_event *event)
+ 	struct hw_perf_event *hwc = &event->hw;
+ 	int idx = hwc->idx;
+ 
+-	intel_pmu_update_rdpmc_user_disable(event);
+-
+ 	if (unlikely(event->attr.precise_ip))
+ 		static_call(x86_pmu_pebs_enable)(event);
+ 
+@@ -5147,6 +5145,8 @@ static int intel_pmu_hw_config(struct perf_event *event)
+ 		leader->hw.flags |= PERF_X86_EVENT_ACR;
+ 	}
+ 
++	intel_pmu_update_rdpmc_user_disable(event);
++
+ 	if ((event->attr.type == PERF_TYPE_HARDWARE) ||
+ 	    (event->attr.type == PERF_TYPE_HW_CACHE))
+ 		return 0;
+diff --git a/arch/x86/events/perf_event.h b/arch/x86/events/perf_event.h
+index 5902a297daa15..a8afea8d38f0c 100644
+--- a/arch/x86/events/perf_event.h
++++ b/arch/x86/events/perf_event.h
+@@ -1344,7 +1344,7 @@ static inline u64 x86_pmu_get_event_config(struct perf_event *event)
+ static inline bool x86_pmu_has_rdpmc_user_disable(struct pmu *pmu)
+ {
+ 	return !!(hybrid(pmu, config_mask) &
+-		 ARCH_PERFMON_EVENTSEL_RDPMC_USER_DISABLE);
++		  ARCH_PERFMON_EVENTSEL_RDPMC_USER_DISABLE);
+ }
+ 
+ extern struct event_constraint emptyconstraint;
 -- 
 2.53.0
 
