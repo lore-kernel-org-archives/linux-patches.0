@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09852E06E4;
-	Sat, 12 Sep 2026 12:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E003FF1AE;
+	Sat, 12 Sep 2026 12:39:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216781; cv=none; b=QCNypuHXJ8SQD5k6r9QNUjpjge1ORz30XxJKKJAesa+CcThCAiJbdVijvgfz6+aKz4T1DdL/CEjQ5fUmwW4mztckXx/rG5z08bqXneBwhZi2oUJra5deyrlQa8Oct4tUtYwENz8CfMOeNH0nQ6QXJkczYqLIO5Ztrw8TZt4ijiw=
+	t=1789216786; cv=none; b=AygME8j5pZAalI71AobNbOStM2Yl8KZte/dHWfmojN7Q1F/PrMQ32csYO4oZkZ3fPDZAEq+bZe7HDWL2zyAaZsT92I++nngd904vnLnQYoW4l+0DVBl0wpmPZd/AQL56OfqSoygYz85bg6rdy10I38mk90APu3PQYy57L3pkOxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216781; c=relaxed/simple;
-	bh=8xb/Q+lkLNItCtsIgpq9yO1Zr55RqChUWyEhov+phhA=;
+	s=arc-20240116; t=1789216786; c=relaxed/simple;
+	bh=Fwm1tCOAsEi77zL4qFXpyVRGyraSi6wz+DKm58SfjHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=li+QfdOPQEbFqs5ar9U/FPgpXbtMHB23NkxK3/QGZbkFEsdmUhnyiKt9CapHuwROYHvzpu8zKJkSlxMr291K/uIFe9N6c1N2m7x7JDlcj1ZTxW2dVbXAGyVwYmzgOXYeSlTxDE+9pLiIew8ELyY2Xe6rggSdAGN4l32FKQoEqfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eldwyt1i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F8uzaseZzro+Q0bByyYRmZ5lEyxSVWy/uzx3oJ1Vg5PmSQiMtgfPh6otfzj5NkEr9WrdRYiYiqFf8XC69v6GNeoRnbIjK3vtW3hXZUhlRIoAoimZLfq/FRI579BD2+rjNtRPuecyGO0sM/oa4Z7LRwZUBXPtI4UC8LTsm9OWrTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnKEdZ0o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eldwyt1i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A8ED1F000FF;
-	Sat, 12 Sep 2026 12:39:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnKEdZ0o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3EB1F000FF;
+	Sat, 12 Sep 2026 12:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216779;
-	bh=GMvnKTKb2PFpbTiMocWZYQVHJPgSmp9ODmHMOZF+v+4=;
+	s=korg; t=1789216784;
+	bh=Q2buD6jQMpAd3duRjTh0cJ+tXiBJWPbFyZUMh/oyUpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Eldwyt1iUD3dzk1sS25k4IUSER2byVIS3IYb6ThRAEKcJkZdaH4dEaKt0h4PWSppO
-	 /qjd5Yc3HjNGVN7M/KdKzjxALvwDhza/xXbPiJJaDcR3nnnRH4BqJ7hlQoHB7Ul1ty
-	 MuYpUEkO4xNvUuToo+J32WQCnAy/OzoSo8l4Xy7I=
+	b=MnKEdZ0ohZ5qbHVppxMZ27tTZ8tTmaBamacIRYkNTgChQ/gAQtAZfzCTFT+DQ8TIS
+	 JThAbH5YZEk8ocusx8a7AMgfe8IIBDw2zmNHa76qh14X700fOArSoMERk3raXU2Wb0
+	 ffNZQGa1OWpZI6BWQ/G8og2J87TsZkGDzWYDF784=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Michael-CY Lee <michael-cy.lee@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0789/1376] i3c: master: Fix device_register() error path
-Date: Sat, 12 Sep 2026 08:53:35 +0200
-Message-ID: <20260912065625.121769543@linuxfoundation.org>
+Subject: [PATCH 6.12 0807/1376] wifi: mt76: fix non-AQL packet accounting for MLO stations
+Date: Sat, 12 Sep 2026 08:53:53 +0200
+Message-ID: <20260912065625.524535090@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,52 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Michael-CY Lee <michael-cy.lee@mediatek.com>
 
-[ Upstream commit 74be657d98a8d684c0475f3cbd450ef2a30ffc73 ]
+[ Upstream commit 8ae659743ba936b22ecb4620815887728e2820d6 ]
 
-When device_register() fails in i3c_master_register_new_i3c_devs(),
-put_device() is called to drop the reference taken by
-device_register().  That drops the last reference, so the device's
-release callback i3c_device_release() runs and frees the i3c_device.
+__mt76_tx_queue_skb() overrides the wcid passed by the driver with
+sta->drv_priv, so the wcid might incorrectly be changed after TX,
+causing wcid->non_aql_packets to be counted on the wrong wcid. For
+example, on the AP side, if a station's setup link is the 5G link and
+the station uses 2G to transmit a frame, the value of non_aql_packets
+is increased on the 5G wcid but decreased on the 2G wcid. Once the
+inflated counter exceeds MT_MAX_NON_AQL_PKT, the TX scheduler
+permanently refuses to service the station.
 
-Two problems follow from that:
+Drop the reassignment and account on the wcid used for transmission.
+This also records the actual wcid in the queue entry.
 
-i3c_device_release() does WARN_ON(i3cdev->desc), so it warns because
-desc->dev->desc still points back at the descriptor.  Clear it before
-calling put_device().
-
-After put_device() frees the i3c_device, desc->dev is left pointing at
-freed memory, so clear desc->dev as well.  That prevents, for example,
-i3c_master_unregister_i3c_devs() seeing desc->dev as non-NULL and
-dereferencing it.
-
-Reported-by: sashiko-bot@kernel.org
-Link: https://lore.kernel.org/linux-i3c/20260701203053.8F3971F000E9@smtp.kernel.org/
-Fixes: cab63f6488761 ("i3c: Fix potential refcount leak in i3c_master_register_new_i3c_devs")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260702183644.60827-1-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: e1378e5228aa ("mt76: rely on AQL for burst size limits on tx queueing")
+Signed-off-by: Michael-CY Lee <michael-cy.lee@mediatek.com>
+Link: https://patch.msgid.link/20260722082610.2699628-4-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/mediatek/mt76/tx.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 6eec1e6fb139f..48a91eac5ae51 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -1689,7 +1689,9 @@ i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
- 		if (ret) {
- 			dev_err(&master->dev,
- 				"Failed to add I3C device (err = %d)\n", ret);
-+			desc->dev->desc = NULL;
- 			put_device(&desc->dev->dev);
-+			desc->dev = NULL;
- 		}
- 	}
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
+index 634b6dacd1e0d..1184357d933d2 100644
+--- a/drivers/net/wireless/mediatek/mt76/tx.c
++++ b/drivers/net/wireless/mediatek/mt76/tx.c
+@@ -313,10 +313,6 @@ __mt76_tx_queue_skb(struct mt76_phy *phy, int qid, struct sk_buff *skb,
+ 	if (idx < 0 || !sta)
+ 		return idx;
+ 
+-	wcid = (struct mt76_wcid *)sta->drv_priv;
+-	if (!wcid->sta)
+-		return idx;
+-
+ 	q->entry[idx].wcid = wcid->idx;
+ 
+ 	if (!non_aql)
 -- 
 2.53.0
 
