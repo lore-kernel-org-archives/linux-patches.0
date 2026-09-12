@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B191638B15B;
-	Sat, 12 Sep 2026 19:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6108A38E8CB;
+	Sat, 12 Sep 2026 19:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242608; cv=none; b=IRSdg7jijXtjx6XW1LksklSy0PWqARLE5aAEbCn1ykDVur6CTRxKWZ47drpijQHx2tpZd3qJ9RwAaIhk7Abc7DVoqggwJT/By72WhvAreKUn7WMdCHXxZdBeZNi8iEauNw+mMJCJ7An5PeHrbfXvO3/vfsB752hvdiOesMZnMrY=
+	t=1789242610; cv=none; b=efBiZs+xNOcYhJl/ShTXGrvVJJaq2S58IMrVxrM3Yd4QvFT5QfKBoYJ6qi3Kr57xwYyRWawCY2bYX3pOo9YkPVINE2RSdTV4ehNZhKN2OioH8XDl1ESYS0xqEcjv0MC9BEQfy1aKqfuIhQIvtywPWoIGUgJgUmDs5vXK89HVz8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242608; c=relaxed/simple;
-	bh=CArfXPZUBYTZY0A5tBHo1YNj/uLNBiMsTgLK/Dditm4=;
+	s=arc-20240116; t=1789242610; c=relaxed/simple;
+	bh=vCwsZV9hOWU4L0OxqiAmx4pcZOzaCpVnzgtnybTM42M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rCi7chFsZInlbTngDnCMWpQsSD5KwKruSWFpFKe8bDJlJ8lGoUSvTKQSUVhCSVTheJ5TOKRF5LAph4driHc47RduYvO77hwi7VITZIjGTEurtCdx86Ovxo9NAPTEA+IFLPeKWBgFUKJvmZj28GugXMtdHTXe115AshFtJRbdG6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rUIZEx1j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IkB6bWBmPL73CzztTBi4CMIWClduAMAZszCW/vy5Yc5zjFCohDAp9GTEvID6c/tz1Iz9vipk1ZPD1hlZHCOaPsGePjTF/L0a9zpqnAxzvWdBHSFdCBUOHSg+Wgj5iMkFHLQpiLb2ECiJfORvoc8lOaR1/oxcP6qj0nyQoxUx5Xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6P3jyFh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rUIZEx1j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3231F000FF;
-	Sat, 12 Sep 2026 19:50:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6P3jyFh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B871E1F000FF;
+	Sat, 12 Sep 2026 19:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242606;
-	bh=c25fzMCGUWHdM0lSrghU6Lu9mzo2AManA3JJwWSsTiY=;
+	s=korg; t=1789242609;
+	bh=TyATLUFotOn5Xy6bwsPhWEtaiUTz2tvXMOBuZ20DPsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rUIZEx1jAdK+EhIn5LSXrD3TP6NmerLNOZkCYQwqSmPEEKPQpvBFay2GzBBMX0jd2
-	 dbzLsoQRQWVq7vNYcUtmN6YOiTphiudGi2JOPjB8BWJ1TPI4SWSRHZPZg5rPM6WZi1
-	 qKH135wR8fZ7SLQ0EoHxsJRYVtAts589HcYrOpGo=
+	b=b6P3jyFhAtZm/K3GYEW2v860U+LCagDYz2kp/RLEApETGNw9d9wWzy1nITYWW4b3s
+	 oDl8mPfRPRlfZA1pOraU5t4ayPkg4LBYlgnkNP13wAkgP9E6fAWcHJd4ZudcdZGygE
+	 /zM6cmTNBlUuNGPSsOiKcvyIRg5/FGpBpM/8vpkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Gleb Markov <markov.gi@npc-ksb.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 426/798] xfrm6: fix out-of-bounds write in xfrm6_input_addr() when secpath is full
-Date: Sat, 12 Sep 2026 09:00:54 +0200
-Message-ID: <20260912065526.909738853@linuxfoundation.org>
+Subject: [PATCH 5.10 462/798] misc: rtsx: add missing write register handling
+Date: Sat, 12 Sep 2026 09:01:30 +0200
+Message-ID: <20260912065527.734086473@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,55 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Gleb Markov <markov.gi@npc-ksb.ru>
 
-[ Upstream commit 5d9e3bf34fec9a5d237e4b7cef4a707bc2e091bc ]
+[ Upstream commit 655faba1ccf195e22a7a83146ef6015e3271233c ]
 
-The depth check in xfrm6_input_addr() is off by one:
+If an error occurs at the stage of working with registers in conjunction
+with MCU_Block, it will not be processed.
 
-  if (1 + sp->len == XFRM_MAX_DEPTH)
-          goto drop;
-  ...
-  sp->xvec[sp->len++] = x;
+The occurrence of errors at this stage may signal an impact on writes to
+the device's PCI registers and is a more global problem than a
+driver-level security problem, but adding a handler would be a good
+practice.
 
-xfrm_input() can leave sp->len == XFRM_MAX_DEPTH, and the transport-mode
-receive path re-enters IPv6 input via xfrm_trans_reinject() with that
-secpath preserved. If the inner packet carries a destination-options HAO
-option or a type-2 routing header, xfrm6_input_addr() is called with
-sp->len == XFRM_MAX_DEPTH; the check (1 + 6 == 6) is false, so
-sp->xvec[sp->len++] writes one slot past the 6-element xvec[]. The write
-stays within the sec_path allocation (invisible to KASAN); UBSAN_BOUNDS
-flags it and panics under panic_on_warn.
+Add a missing error handling.
 
-Use "sp->len >= XFRM_MAX_DEPTH", matching xfrm_input(). This also
-restores one chain level the old check rejected at sp->len == 5.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-  UBSAN: array-index-out-of-bounds in net/ipv6/xfrm6_input.c:309:10
-  index 6 is out of range for type 'xfrm_state *[6]'
-
-Fixes: 9473e1f631de ("[XFRM] MIPv6: Fix to input RO state correctly.")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: c0e5f4e73a71 ("misc: rtsx: Add support for RTS5261")
+Signed-off-by: Gleb Markov <markov.gi@npc-ksb.ru>
+Link: https://patch.msgid.link/20260629130920.1260-1-markov.gi@npc-ksb.ru
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/xfrm6_input.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/cardreader/rtsx_pcr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv6/xfrm6_input.c b/net/ipv6/xfrm6_input.c
-index 7dbefbb338ca5..9d52dffc10924 100644
---- a/net/ipv6/xfrm6_input.c
-+++ b/net/ipv6/xfrm6_input.c
-@@ -193,7 +193,7 @@ int xfrm6_input_addr(struct sk_buff *skb, xfrm_address_t *daddr,
- 		goto drop;
- 	}
- 
--	if (1 + sp->len == XFRM_MAX_DEPTH) {
-+	if (sp->len >= XFRM_MAX_DEPTH) {
- 		XFRM_INC_STATS(net, LINUX_MIB_XFRMINBUFFERERROR);
- 		goto drop;
- 	}
+diff --git a/drivers/misc/cardreader/rtsx_pcr.c b/drivers/misc/cardreader/rtsx_pcr.c
+index 4c57ecb2be404..f650221da35d0 100644
+--- a/drivers/misc/cardreader/rtsx_pcr.c
++++ b/drivers/misc/cardreader/rtsx_pcr.c
+@@ -1277,6 +1277,8 @@ static int rtsx_pci_init_hw(struct rtsx_pcr *pcr)
+ 		/* Gating real mcu clock */
+ 		err = rtsx_pci_write_register(pcr, RTS5261_FW_CFG1,
+ 			RTS5261_MCU_CLOCK_GATING, 0);
++		if (err < 0)
++			return err;
+ 		err = rtsx_pci_write_register(pcr, RTS5261_REG_FPDCTL,
+ 			SSC_POWER_DOWN, 0);
+ 	} else {
 -- 
 2.53.0
 
