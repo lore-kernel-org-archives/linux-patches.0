@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E268A2C08D0;
-	Sat, 12 Sep 2026 13:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19196455622;
+	Sat, 12 Sep 2026 13:31:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219884; cv=none; b=ZkiWOARReAQHajsHXPn0d9QOra7EsV6MtdSClyUh7eo2fzvBWhXINwhdxNmtngbEmKhqpcrRIc+0ZxafhBt5Yi1croUf+g2wlpN6DudozeMFnUd37M85PXvhsoYR+rQz45cYt5H91D3yOFLLbtHDrEs4hsYLQaFOkzNI/44SC/E=
+	t=1789219889; cv=none; b=SBT5fe19ZJ1ZE63f4xic9+3k90iuYxabU3XwJ1dZjcSW2GoHDvV50TForvRvhTWQdmH9+2GGTZvrlDu/G9Xh82qCCxNE8rj8oSVdDn/qzNwdY5iQQdgLkIDJicazwdwjLI19ZA/TyoenDFxvCUDCWKIabIhG/RJGpXUD+aUPA/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219884; c=relaxed/simple;
-	bh=T2ffGwGMwY9yJrlKcPy5AfEBOG2YRUhcuJXYK6bkBFE=;
+	s=arc-20240116; t=1789219889; c=relaxed/simple;
+	bh=dovCXnDmgx9n1/GruZZXgF80oHp23z3t+kMF7scrk2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VL7Gc7RiZdky75BV2uTL6p2O6CO3D0YhsISaRCvMYwUOGNKZFOdLWVxsRXItfskLl3gRKDm1r4y5BjyFx6F8wA0Td1YU2x7juW41f6GlWjIEcPeM/d2NuMF+lP+4+7oEzz9A1NfVjVzPtVaU2y/GX5hBxO7ypQL469BDQm8jPds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJcHuC7O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X/8dYUor5oUrAwikBeZ3WjOxUwYNm/YjixrYTbDrDWTtv5zfXGBCGiIg1Q5LdjFYXcl2qtrKHoTBSf0QQfONQOp4jCMT0SoXzk8XcOKVXDPx9DUVe/QNUNy/pP1yQkSRTpJDI/epUNf0w9tiQ8/zoMJZUsSw9v/DfqeMJDc/RDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWMcnkyT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJcHuC7O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A425D1F000FF;
-	Sat, 12 Sep 2026 13:31:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWMcnkyT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D954A1F000FF;
+	Sat, 12 Sep 2026 13:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219882;
-	bh=BUb2CCVyREOnlG591wGYkp6g75+Ur/e5al4xBq/rkgk=;
+	s=korg; t=1789219887;
+	bh=3F5Xs2r7ThL1y0Au8YSnzW3fSiaFCKXewShr9teeO+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RJcHuC7OEpN226IZt+MLS/uhlcEM6A7S8mQrZ6fngJjuKTDVBG6wCsMNwK8BQR1Jm
-	 LhQGAffAo7tA11KQLPEy2C/1tafNmZ0EA8lOOPoUJwtusKd716pbgFrbZbLDv3Qist
-	 dE/OFcLzWOU1H7rEk6gIiS5T2KbrXCOpmGduQfLw=
+	b=jWMcnkyTjQEgnAQk+5WLEttd4tuxTS1dNr3ZuNutT9NTPcnloGoxYXTKmy1IrHPlG
+	 xLAwiObpqGF21qi9SEaUMRMJ9ocR9WkHKY8KeUshJB9ADIKE5Co6sJMuyYb6cN6As+
+	 jEusnnXTGdXFH0o3ICyiFDcy0xQBd6GWachby4Nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Kim <james010kim@gmail.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Matt Porter <mporter@kernel.crashing.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 0027/1424] rapidio: mport_cdev: fix use-after-free in dma_req_free()
-Date: Sat, 12 Sep 2026 08:40:59 +0200
-Message-ID: <20260912065607.913481553@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.6 0063/1424] nfsd: fix XDR padding calculation in ff_encode_getdeviceinfo
+Date: Sat, 12 Sep 2026 08:41:35 +0200
+Message-ID: <20260912065608.718126168@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,56 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Kim <james010kim@gmail.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 5cbef379a94b161726c5f504598bf4791d45cedc upstream.
+commit 8b989aaec85e1293a871d602590c951fe44b8647 upstream.
 
-dma_req_free() acquires buf_mutex through req->map, drops the mapping
-reference with kref_put(), and then dereferences req->map again to unlock
-the mutex.
+nfsd4_ff_encode_getdeviceinfo() computes the da_addr_body reservation
+as 16 + netid_len + addr_len, but the subsequent xdr_encode_opaque()
+calls emit 8 + round_up(netid_len, 4) + round_up(addr_len, 4) bytes.
+The mismatch means the declared da_addr_body length exceeds the actual
+encoded data by 2-8 bytes on every flexfile GETDEVICEINFO reply,
+leaking stale reply-page content to the client and mis-aligning the
+subsequent version list decode.
 
-If kref_put() drops the last reference, mport_release_mapping() frees the
-mapping, and the subsequent mutex_unlock() dereferences a freed object.
-This is a use-after-free.
+Use xdr_align_size() for each string length to match what
+xdr_encode_opaque() actually writes.
 
-Fix this by caching map and md before kref_put(), clearing req->map while
-holding buf_mutex, and using the cached md for mutex unlocking.
-
-The bug is reachable from userspace via the RapidIO mport character device
-interface.
-
-Link: https://lore.kernel.org/20260723235220.588424-1-james010kim@gmail.com
-Fixes: e8de370188d0 ("rapidio: add mport char device driver")
-Signed-off-by: James Kim <james010kim@gmail.com>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: efcae97fa425 ("NFSD: da_addr_body field missing in some GETDEVICEINFO replies")
+Cc: stable@vger.kernel.org
+Assisted-by: kres:claude-opus-4-6
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260527-pnfs-fixes-v1-1-784f39dc1eca@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rapidio/devices/rio_mport_cdev.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/nfsd/flexfilelayoutxdr.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/rapidio/devices/rio_mport_cdev.c
-+++ b/drivers/rapidio/devices/rio_mport_cdev.c
-@@ -582,9 +582,13 @@ static void dma_req_free(struct kref *re
+--- a/fs/nfsd/flexfilelayoutxdr.c
++++ b/fs/nfsd/flexfilelayoutxdr.c
+@@ -99,7 +99,8 @@ nfsd4_ff_encode_getdeviceinfo(struct xdr
  	}
  
- 	if (req->map) {
--		mutex_lock(&req->map->md->buf_mutex);
--		kref_put(&req->map->ref, mport_release_mapping);
--		mutex_unlock(&req->map->md->buf_mutex);
-+		struct rio_mport_mapping *map = req->map;
-+		struct mport_dev *md = map->md;
-+
-+		mutex_lock(&md->buf_mutex);
-+		req->map = NULL;
-+		kref_put(&map->ref, mport_release_mapping);
-+		mutex_unlock(&md->buf_mutex);
- 	}
+ 	/* len + padding for two strings */
+-	addr_len = 16 + da->netaddr.netid_len + da->netaddr.addr_len;
++	addr_len = 8 + xdr_align_size(da->netaddr.netid_len) +
++		   xdr_align_size(da->netaddr.addr_len);
+ 	ver_len = 20;
  
- 	kref_put(&priv->dma_ref, mport_release_dma);
+ 	len = 4 + ver_len + 4 + addr_len;
 
 
