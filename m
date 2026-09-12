@@ -1,49 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CF247DFB9;
-	Sat, 12 Sep 2026 13:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD9F47DD55;
+	Sat, 12 Sep 2026 13:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219194; cv=none; b=dr4JDLWsHwXLCyVO763uCGayhcrmBGbWUzkVCgZCknK2GYj+yGpNzM07fWYmUlE1bqP+ccoVY171qbQlewl6bcud0ULNHrP1edJ3UhY47rnUXFFzrtfMfV4uswzI0YGu8Ex2mUD9KprjryDXgKEIP+4t9MUPQ4jk3X5WIQnJDaE=
+	t=1789219200; cv=none; b=YP9iAK2o1R20MExzvSBWVTXzFLDB3TJPKudX5rPST/fXJI1zKrHNx0Ycun1sPj3/AcKQAYEWqOdUwROtuOZzL5fGkwJolOKi1IFPREvUkTcVNCyWGTQvfyNerpELkveq13iKPQAukloFpstebtyMOoJL1wHYiGTYqSgWqLLNIbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219194; c=relaxed/simple;
-	bh=WkaUUo6tttp3S2N+SIO3L09Tf1RsIFOnArZmlMA5nfo=;
+	s=arc-20240116; t=1789219200; c=relaxed/simple;
+	bh=CmfjqOAmJ1l/1Q6Jq9wMLUNnBTW70NjMzappjlUgWm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IsC73xUpJi0oXczy4lQegKLQACqnxUrTUXupVB9n4Jd4VRwcwAd4/HUoh9CnuPZ3myEEooKkNwzLoG7bjEMyepf8ikbLAEpajm7t6aSMGE48cUZZyjaFerENI3nvjlm2O5opykfhxr6DyTPM2VYVGi/tFHi04ROct1LV4qP9hJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7PhO0kL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G9ctSxpTPrlvcgWonTMQ7h244qdoHg2wCfAj2jBiPWgXWhrxQM1k7A3BiKRn7C3Ds8iEdwJF/6Tl7QTNF32PiraCKP0AZs/9yrpUqI5og90kcMCfzmeI3PXH5P/MwCi3aJccSGdkb4ZU4aLqOAymc/xWvo8rAqPAflOyMlBLTSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iMDtYkK6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7PhO0kL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466471F00893;
-	Sat, 12 Sep 2026 13:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iMDtYkK6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A4F1F000FF;
+	Sat, 12 Sep 2026 13:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219192;
-	bh=E90Pqk9rgKEbHMxJ0Mz/yE/LX/qP1X4KMvwx8+Bak/0=;
+	s=korg; t=1789219197;
+	bh=Y+PF3dubXUpE5Kg2xDuG79ib8brVmqXQoh1eejwS0+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c7PhO0kLPzES6f5Ti6wJVNPsfu5qmH+GjsqB3Ap3/AVtxu7Nn/Cvm/RScCklZCu6s
-	 YsXJvxw9MMjKZj0mskHz3DzkfMxxjzOQP0CcUH9JzNkEseKvZLb42bv3F5LtgBvNpK
-	 IeWn72giOKrkZlqj++P5w7mHeHHZLwaug8SyMPZw=
+	b=iMDtYkK6exhNSulW/QOQuQcKz60+lXHTGS3vHCn2hiOwFsxrTyiUQEywJ2QBBgJqS
+	 LQ6mwe7NjZyKqWkpUOlC8197LJEPDHVXb6aFfLoQ7fnjWhCgTqawFf/hnnMKe62/4e
+	 vjWFDqCwIcIf6Zh9eMZ3p5+LqB4gYk+zrkXJHFe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett (Oracle)" <liam@infradead.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Breno Leitao <leitao@debian.org>,
-	Chris Mason <clm@meta.com>,
-	Chuck Lever <cel@kernel.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Joe Perches <joe@perches.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Rik van Riel <riel@surriel.com>,
-	Waiman Long <longman@redhat.com>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1294/1376] maple_tree: fix argument name in header
-Date: Sat, 12 Sep 2026 09:02:00 +0200
-Message-ID: <20260912065636.376101814@linuxfoundation.org>
+Subject: [PATCH 6.12 1303/1376] net/sched: sfq: clamp quantum to avoid signed overflow soft lockup
+Date: Sat, 12 Sep 2026 09:02:09 +0200
+Message-ID: <20260912065636.575700130@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -62,44 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liam R. Howlett (Oracle) <liam@infradead.org>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 00f67814a14e614b749ebe54076ef1e3e6454f2b ]
+[ Upstream commit 816e90057ab1879562a5b7cc688e35bb9027ae97 ]
 
-The mas_prev_range() function takes a min and not a max.
+sfq_init() sets q->quantum = psched_mtu(qdisc_dev(sch)) (unsigned). A
+device with a huge MTU (e.g. dummy with max_mtu == 0 accepting MTU
+2147483634) makes psched_mtu() return 0x80000000, so slot->allot = INT_MIN
+and INT_MIN + INT_MIN toggles between INT_MIN and 0 forever, spinning
+sfq_dequeue() under the qdisc lock.
 
-Link: https://lore.kernel.org/20260821192627.4085470-18-liam@infradead.org
-Fixes: 6b9e93e01020 ("maple_tree: add mas_prev_range() and mas_find_range_rev interface")
-Signed-off-by: Liam R. Howlett (Oracle) <liam@infradead.org>
-Cc: Boqun Feng <boqun.feng@gmail.com>
-Cc: Breno Leitao <leitao@debian.org>
-Cc: Chris Mason <clm@meta.com>
-Cc: Chuck Lever <cel@kernel.org>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Joe Perches <joe@perches.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Waiman Long <longman@redhat.com>
-Cc: Will Deacon <will@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Clamp the quantum to [256, 1 << 20] so the refill loop terminates. The
+lower bound also covers q->quantum == 0 (psched_mtu() returning 0),
+which spins sfq_dequeue() identically. sfq_change() already rejects a
+negative quantum, so only the init path was exposed.
+
+Conditions to recreate the bug: a device whose MTU (plus
+hard_header_len) wraps psched_mtu() into the sign bit (e.g. a dummy
+device with max_mtu == 0 accepting MTU 2147483634). Requires
+CAP_NET_ADMIN in a user namespace.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260822195509.112717-7-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/maple_tree.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_sfq.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/maple_tree.h b/include/linux/maple_tree.h
-index c2c11004085e5..ecbcc2b3e59a6 100644
---- a/include/linux/maple_tree.h
-+++ b/include/linux/maple_tree.h
-@@ -528,7 +528,7 @@ void mas_destroy(struct ma_state *mas);
- int mas_expected_entries(struct ma_state *mas, unsigned long nr_entries);
- 
- void *mas_prev(struct ma_state *mas, unsigned long min);
--void *mas_prev_range(struct ma_state *mas, unsigned long max);
-+void *mas_prev_range(struct ma_state *mas, unsigned long min);
- void *mas_next(struct ma_state *mas, unsigned long max);
- void *mas_next_range(struct ma_state *mas, unsigned long max);
+diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
+index 11a7d5a25d6b1..d3ac501e04c33 100644
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -796,7 +796,8 @@ static int sfq_init(struct Qdisc *sch, struct nlattr *opt,
+ 	q->tail = NULL;
+ 	q->divisor = SFQ_DEFAULT_HASH_DIVISOR;
+ 	q->maxflows = SFQ_DEFAULT_FLOWS;
+-	q->quantum = psched_mtu(qdisc_dev(sch));
++	q->quantum = clamp_t(u32, psched_mtu(qdisc_dev(sch)),
++			     256, 1 << 20);
+ 	q->perturb_period = 0;
+ 	get_random_bytes(&q->perturbation, sizeof(q->perturbation));
  
 -- 
 2.53.0
