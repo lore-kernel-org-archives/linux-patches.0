@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE434BEE43;
-	Sat, 12 Sep 2026 18:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A5333FE0A;
+	Sat, 12 Sep 2026 18:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238913; cv=none; b=fdCf6fKWOCgwE8GGoLFhhTQN/jmpuwgrO6YUnNHKy/d6vD7prbBouu8S2JXW9S+LLra+mSy/ct0hbsJ0u0u8SoMZ5ZvqeUHrH4WZhWnX/T2Pkjwk+2fS7nE7+ISip7eQOnPr4LoA2LDcUAGYlGERyaEFwtclQwG7ZSLgYXRuI3s=
+	t=1789238917; cv=none; b=g2o5v5DcHt/lYxdZaX8Ni/HkyvMP7hFtm7plOWw3hK7uYs9N4w8MSSOBScpiBp9LM27Uq9mGnmQYhBrLyU7pE1zfbWPTm8f1qEmu0eWjxbKEQiJRHB3s64TkV1WQ1N/CqFzr93jlM5rxOH7kUjNXsPyn5Twbo86ETwo9cDrv9OQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238913; c=relaxed/simple;
-	bh=EOROttHv9CnN8SleEbTDi6vSeBBq+EbTzPhVczkNdJM=;
+	s=arc-20240116; t=1789238917; c=relaxed/simple;
+	bh=ZD6MlELQbn31bPPLEVgNpbefcIi1NrvFWB2EJrybLzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g6YIH+gwTjztItJYUI/EbZ2MEqE3m8ETCSbWntZeetv3FcsSh7JUWv2PzVUtXw7XT/CSW7GaKawSUtmYdPG13L1zzzR24tNChbZ4WATZvhWGii0vVOyf6h+syvEpnjK5E4nAG9nITp5dAqSWwvicc9oDLGUlaeEU9dW8ohDPO+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deOeKi9A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sur4775MOAHleNv+vBObiAw+x1mAm98qoK3Tw3xLTElP8yWRzvIfJnQQIiu/T8fmuU6StfclBbaprB6tvVWpdXeTlDNFlpTCJBmWcbAq8kLVeR7/FmJADDuocp15IQlPyJ4j17S1VXng3fmQein+QZiWjf/avksIvobtCiHnj44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNyR0qUE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deOeKi9A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA821F000FF;
-	Sat, 12 Sep 2026 18:48:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNyR0qUE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D951F000FF;
+	Sat, 12 Sep 2026 18:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238912;
-	bh=7k9kh1gtqj5ADmIUy/pjxAzrF88UAhwmugID01o6UEA=;
+	s=korg; t=1789238916;
+	bh=Kv1jNFJ4Ybh5hIeqP6E4CpmvPEEX77/q2AeP0kBjOvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=deOeKi9Aaeo8+bLpf0CyhIo6gnMNW5BCoKMBjVxuxur2C+IQVGmiVvb21hRnnmCg9
-	 driE/km6hIlYvIsPBrMklzTWh44X9tX0Ah6NUm9r/ytI3Akmnh5Zn7XYWufbayGvBK
-	 +ocvW3eT5NKzV5f4QczdTP6mkFSC++pa0X+CiWxo=
+	b=NNyR0qUEkghiZDZnchfhGbNcvyVz5lOf6xZzq6jIF+NU7DFr8i6cJnwgxKYwC/wJq
+	 S+3nY4lZjeAbZrc/AzQkCptuflnkrJnOFYGutZ0dyf+VTe1H3XGVvo54AiMBj7suPu
+	 z/ZbFoHdGXduPu63L4HVibgrUjI7t7zZFnm08pxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 558/935] driver core: soc: remove layering violation for the soc_bus
-Date: Sat, 12 Sep 2026 08:59:48 +0200
-Message-ID: <20260912065539.630160497@linuxfoundation.org>
+Subject: [PATCH 5.15 559/935] driver core: soc: Unregister bus on early device registration failure
+Date: Sat, 12 Sep 2026 08:59:49 +0200
+Message-ID: <20260912065539.652909243@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,54 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 90be1f15c39858a4f0f4346c39fa150697d231c1 ]
+[ Upstream commit 45dfa004893dfeae182ec27eddbd153c6d4ddbf9 ]
 
-The soc_bus code pokes around in the internal bus structures assuming
-that it "knows" if a field is not set that it has not been registered
-yet.  That isn't a safe assumption, so just remove the layering
-violation entirely and keep track if the bus has been registered or not
-ourselves.
+soc_bus_register() registers the SoC bus before registering a deferred
+early SoC device. If soc_device_register() fails in that path, the
+function returns the error directly and leaves the bus registered.
 
-Reviewed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://lore.kernel.org/r/20230130171059.1784057-1-gregkh@linuxfoundation.org
+Store the returned SoC device pointer explicitly so the success and
+error cases are handled separately. On failure, clear soc_bus_registered
+and unregister the bus before returning the error.
+
+Fixes: 6e12db376b60 ("base: soc: Allow early registration of a single SoC device")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Link: https://patch.msgid.link/20260615180746.713540-1-dbgh9129@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 45dfa004893d ("driver core: soc: Unregister bus on early device registration failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/soc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/base/soc.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/base/soc.c b/drivers/base/soc.c
-index 0af5363a582c3..ea57b8ddb1510 100644
+index ea57b8ddb1510..5b1d8c3f8bf6b 100644
 --- a/drivers/base/soc.c
 +++ b/drivers/base/soc.c
-@@ -30,6 +30,7 @@ struct soc_device {
- static struct bus_type soc_bus_type = {
- 	.name  = "soc",
- };
-+static bool soc_bus_registered;
+@@ -179,6 +179,7 @@ EXPORT_SYMBOL_GPL(soc_device_unregister);
  
- static DEVICE_ATTR(machine,		0444, soc_info_show,  NULL);
- static DEVICE_ATTR(family,		0444, soc_info_show,  NULL);
-@@ -117,7 +118,7 @@ struct soc_device *soc_device_register(struct soc_device_attribute *soc_dev_attr
- 	const struct attribute_group **soc_attr_groups;
+ static int __init soc_bus_register(void)
+ {
++	struct soc_device *soc_dev;
  	int ret;
  
--	if (!soc_bus_type.p) {
-+	if (!soc_bus_registered) {
- 		if (early_soc_dev_attr)
- 			return ERR_PTR(-EBUSY);
- 		early_soc_dev_attr = soc_dev_attr;
-@@ -183,6 +184,7 @@ static int __init soc_bus_register(void)
  	ret = bus_register(&soc_bus_type);
- 	if (ret)
+@@ -186,10 +187,20 @@ static int __init soc_bus_register(void)
  		return ret;
-+	soc_bus_registered = true;
+ 	soc_bus_registered = true;
  
- 	if (early_soc_dev_attr)
- 		return PTR_ERR(soc_device_register(early_soc_dev_attr));
+-	if (early_soc_dev_attr)
+-		return PTR_ERR(soc_device_register(early_soc_dev_attr));
++	if (early_soc_dev_attr) {
++		soc_dev = soc_device_register(early_soc_dev_attr);
++		if (IS_ERR(soc_dev)) {
++			ret = PTR_ERR(soc_dev);
++			goto err_unregister_bus;
++		}
++	}
+ 
+ 	return 0;
++
++err_unregister_bus:
++	soc_bus_registered = false;
++	bus_unregister(&soc_bus_type);
++	return ret;
+ }
+ core_initcall(soc_bus_register);
+ 
 -- 
 2.53.0
 
