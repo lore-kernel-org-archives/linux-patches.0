@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39453F7877;
-	Sat, 12 Sep 2026 08:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D4E3A1690;
+	Sat, 12 Sep 2026 08:33:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201994; cv=none; b=P0OMKPm+YE/aaQC3+6XuIiJ8xMLOqT0R21Xj/t0pPKygwQfyQCSy6lkE7p95ilvZRyj+IdussC1EgDkK2LiGDitv1/QOgntY4IOKrM6rhMwL1KZ9+B8ktqvBtAxXRAd6Klc6cW3d7XUU0w1jv7tVogpALnB5nJzwhh4ifArfrhg=
+	t=1789201999; cv=none; b=dRuw7mOwm3rN0Bgc29sgugdzMFTnc5FhwL+rYx+5BdNLGVyl45iUWDV+60b3elRWbRD1aYZQf2axvKSEnMxsLZWfzkKnQoKK+pjB1mEpbfZdEpahaBxNFrsXgN+0JGFigKBhhm86ElayFnaw/HJyBSnqk2fYI2mZR5J0b8I9sfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201994; c=relaxed/simple;
-	bh=Skg7ZQIQRMQ4+E9Arf1FbXjLO8uK72bV7216X5hF6UE=;
+	s=arc-20240116; t=1789201999; c=relaxed/simple;
+	bh=lINRQKmBGge6j5FQ5Nkrzr4BCFqC3IrukSS46tkHVu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s7QCfw5Kz08krSm87+Vfxv83JsO80qCVHcEsrVVvhqjEpDMNT+ndbI9/fle5PoN6ZtZ8xj7nILSXSHdVrz4tm7E/p9K4iY28bCE554KCFnKoyEjVBNJZmOVT/+Uhv4gxHmPUZX0YmrknQB4l7pzjSTawBjIMl9yjy2a30XnIJD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDbaojz3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=efAAueFAEVxpvGgask8vf/uUETwYgy9JLjii5ka8+BARcZMcXhE/urrcr3o4G/prWXTyH9oBAZaZhlsS3crYkuXnotsp4rcFG/fUIHobwCpl+59FDxFouNrI12hyPhLBR8pKwMffn6u1dAZMBnz8cyCQkB11+BHmkUX8ScPORGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDxL4wtn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDbaojz3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABDD31F000FF;
-	Sat, 12 Sep 2026 08:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDxL4wtn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FF21F000FF;
+	Sat, 12 Sep 2026 08:33:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201993;
-	bh=Z019jZr6bdcNVkJYrUaxSE+6yC4KDao1WRr9CpiZLLc=;
+	s=korg; t=1789201998;
+	bh=ufEMNm/yjXZBEEoiBUSWtkVxZg4lSGpUNqfZrR+Y4Mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cDbaojz39xQBDhac6LPO0WF3qhPX9Eb+SbMtWmJ3NzzZTyRhwPAEDOtfzFkj5L4p3
-	 zzBKuU+5p4OWSUtUaJJ66lSDL6ihT/fcjDY/6aw6T9DL8TIGBILfJO44kS9cLZYZS+
-	 4jQxOancUG7Z6GaW05YJaNwAhAVzRDCm1+2tXVw0=
+	b=vDxL4wtnbyW/DjjMk/sb/o+RvDDwMGl4lzca+7awOLBO+xW5IZJ+DP2tsZy16WcWV
+	 FRfE+AKeSawaMPDaNY3RUAqbmgYYVg9faZQz58Sa3N2bxOZoWVVodTXMN1sfOw4SfD
+	 DaOxnHFAysq6mq8JOdb+KhawFbd4eVT6zosrRzO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1112/1815] perf header: Use write lock when translating BPF prog info pointers
-Date: Sat, 12 Sep 2026 08:47:42 +0200
-Message-ID: <20260912065715.123878866@linuxfoundation.org>
+Subject: [PATCH 7.2 1113/1815] perf bpf: Add PROG_TAGS to required arrays in __bpf_event__print_bpf_prog_info()
+Date: Sat, 12 Sep 2026 08:47:43 +0200
+Message-ID: <20260912065715.147551808@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -56,18 +56,22 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 60f2f5b7650bb8779af3087ef429fad4ed74a5c8 ]
+[ Upstream commit 38ba525335c4399b15c9be0f81de304e94ccb462 ]
 
-write_bpf_prog_info() holds a read lock while temporarily mutating
-info_linear via bpil_addr_to_offs()/bpil_offs_to_addr().  Between these
-two calls, the pointers in info_linear contain file offsets instead of
-heap addresses.  Concurrent readers holding the same read lock see the
-file offsets and dereference them as pointers.
+synthesize_bpf_prog_name() unconditionally dereferences prog_tags[sub_id]
+(line: u8 (*prog_tags)[BPF_TAG_SIZE] = (void *)(uintptr_t)(info->prog_tags))
+but __bpf_event__print_bpf_prog_info() only requires JITED_KSYMS and
+JITED_FUNC_LENS in its required_arrays bitmask.
 
-Use down_write()/up_write() instead of down_read()/up_read() to exclude
-concurrent readers during the addr-to-offset-to-addr translation window.
+If a crafted perf.data has the PROG_TAGS bit cleared (or the array was
+invalidated by bpil_offs_to_addr() bounds checking), info->prog_tags
+contains either zero or a raw file offset.  Dereferencing it causes a
+NULL pointer dereference or an arbitrary memory read.
 
-Fixes: 63ac7968a1fb ("perf bpf: Save bpf_prog_info information as headers to perf.data")
+Add PERF_BPIL_PROG_TAGS to required_arrays so the function returns early
+when prog_tags was not present or failed validation.
+
+Fixes: f8dfeae009effc0b ("perf bpf: Show more BPF program info in print_bpf_prog_info()")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
 Cc: Song Liu <songliubraving@fb.com>
 Reviewed-by: Ian Rogers <irogers@google.com>
@@ -76,32 +80,23 @@ Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/header.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/perf/util/bpf-event.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
-index e90e541f546b4..7db7da090a1e0 100644
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -1120,7 +1120,8 @@ static int write_bpf_prog_info(struct feat_fd *ff  __maybe_unused,
- 	struct rb_node *next;
- 	int ret = 0;
- 
--	down_read(&env->bpf_progs.lock);
-+	/* write lock: bpil_addr_to_offs() temporarily mutates info_linear */
-+	down_write(&env->bpf_progs.lock);
- 
- 	ret = do_write(ff, &env->bpf_progs.infos_cnt,
- 		       sizeof(env->bpf_progs.infos_cnt));
-@@ -1150,7 +1151,7 @@ static int write_bpf_prog_info(struct feat_fd *ff  __maybe_unused,
- 			goto out;
- 	}
- out:
--	up_read(&env->bpf_progs.lock);
-+	up_write(&env->bpf_progs.lock);
- 	return ret;
- #else
- 	pr_err("ERROR: Trying to write bpf_prog_info without libbpf support.\n");
+diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
+index fa3ebc8ea7f09..e67f28a8e92bd 100644
+--- a/tools/perf/util/bpf-event.c
++++ b/tools/perf/util/bpf-event.c
+@@ -969,7 +969,8 @@ void __bpf_event__print_bpf_prog_info(struct perf_bpil *info_linear,
+ {
+ 	struct bpf_prog_info *info = &info_linear->info;
+ 	__u64 required_arrays = (1UL << PERF_BPIL_JITED_KSYMS) |
+-				(1UL << PERF_BPIL_JITED_FUNC_LENS);
++				(1UL << PERF_BPIL_JITED_FUNC_LENS) |
++				(1UL << PERF_BPIL_PROG_TAGS);
+ 	__u32 *prog_lens;
+ 	__u64 *prog_addrs;
+ 	char name[KSYM_NAME_LEN];
 -- 
 2.53.0
 
