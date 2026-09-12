@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E48367B60;
-	Sat, 12 Sep 2026 08:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82424299920;
+	Sat, 12 Sep 2026 08:13:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200831; cv=none; b=LLqApl6UqS2Fno4/MQiRvEqnhNUs40fSbT84eTg3hedpcXuVPzqwb7eTOa1Zh3brYZ1c/NllqhBlTPShQ6IRnej3u16pdlGrJqXFIXpgMpPWhdm3DXAau2Fs8rxZ1j6sSi0QWBgv33eHAFF40x8/J4bKfvN1lEPex7D8i8Yp7vA=
+	t=1789200836; cv=none; b=Iyr4F/574hjAXtr/+5DRB8CAhYadgQuPjDvp6+ArCblPPINDTJpSYqHk2BtNoLKQB9XHbYTcIvWqrhPoGn9GXz0h/VZGowBt2yqaWAxPdamKVFF6+XqLkkaCIitNTAZW1GGR8QiBekKBMxnQQSiAYDOhUvaBOtl1ln/YIxfPDaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200831; c=relaxed/simple;
-	bh=3qhS5CBSEFSRmGXE+n1NYTxjEz6zdEl1fVdDlkmq730=;
+	s=arc-20240116; t=1789200836; c=relaxed/simple;
+	bh=uXuZnjT03ETVBZaE83VLBJ8ZrPhA8as6L2asUz22vtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jsMQ03PK+z9c0gGiYxgIFRsdMG/vhdnM2vjkUo90hgpXH1oFjI2ldjBAEpC8N/nVGN4okuC2nTms+7lDlYtAGqgWnFzjOew1h7LnrPknvBhkuiMGQx8vNpD9P7QCITveqgywFxAqee062nI2RhwLJjlbje99zXLI/zgJd12myjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXx1RG8j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bLHSRYhmlNlJy4UQa7g5/uG7k8hRkq+zY3QCMydySUCWIqpGInSIESiRh89oyvyiJO5r55xFgFheX+hV4jODrtvK1RC7yswTDVp857HxU6GdrCUs/hD6pONtVxCxLFlK7FfDTCsiNyn0b5pMMIeNnenyYYDpb+5QTVlShZBQUKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6lMuwzv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXx1RG8j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC2E61F000FF;
-	Sat, 12 Sep 2026 08:13:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6lMuwzv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228BD1F000FF;
+	Sat, 12 Sep 2026 08:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200830;
-	bh=cER/RGwK4OtqZz7dTYOKuYR5wv/fFxdF89rnhoqnIYE=;
+	s=korg; t=1789200835;
+	bh=s4HAhVbJA9UOBanzC438hohM1jkccbG/AHlRXnCragc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hXx1RG8jTKCCe/2E4lea5thrDBCSsjX3ZDAimNk1lcGKw0EA6mIgzV8AeJTKzWoCM
-	 n93u/uZ3VxRjNHIJTXgNapaRZ6ftnYY/BQuU/4HFAN/1EPEh34k46CSyrOXCK77yI3
-	 c1HLW7hLSGfWjGoGXsUPLCMjxEZGHPBOb80o/MjI=
+	b=F6lMuwzvqRkCP4Unkf071IYnzixAvsldxkf7XZBaixHUfyoJsQc5u4a2YOxg40Qjr
+	 LklEwRBUpYRxlPmVlw80hGHRtXKgwdJryFNixnT1G7AjC//utsLQNttXeaAfWpp2Zs
+	 yiWzQmYvDXa7VrPzKrO2BM8bOIzrizvUPxs851BA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0828/1815] clk: qcom: negcc-nord: keep GPU2 CFG clock enabled via critical CBCR
-Date: Sat, 12 Sep 2026 08:42:58 +0200
-Message-ID: <20260912065708.349236881@linuxfoundation.org>
+Subject: [PATCH 7.2 0819/1815] power: supply: sc2731_charger: cancel work on remove
+Date: Sat, 12 Sep 2026 08:42:49 +0200
+Message-ID: <20260912065708.139276917@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,80 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taniya Das <taniya.das@oss.qualcomm.com>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit 936e98ef12f714c19150a5595bbd296d9489b2e1 ]
+[ Upstream commit dfc859bb8d332c525872f1a44028137724fa1998 ]
 
-The GPU2 CFG clock must remain enabled for correct operation and
-should not be exposed as a controllable clk_branch.
+The USB notifier and initial charger detection can schedule info->work.
+The remove path unregisters the notifier, but does not cancel queued or
+running work before the devm-allocated driver data is released.
 
-Remove the clk_branch and mark its CBCR as critical instead to
-prevent unintended gating. This follows the same approach as
-'nw_gcc_gpu_cfg_ahb_clk' and aligns with other always-on clocks in
-Qualcomm CC drivers.
+Set the platform drvdata used by remove, then cancel the work after
+unregistering the notifier.
 
-Fixes: a4f780cd5c7a ("clk: qcom: gcc: Add multiple global clock controller driver for Nord SoC")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260724-nords_mm_v1-v3-2-32b45232217f@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+This issue was found by a static analysis tool.
+
+Fixes: 8ac1091ed18b ("power: supply: sc2731_charger: Add one work to charge/discharge")
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Link: https://patch.msgid.link/5d48b827687168cb1b1bfe85f17945566b42829d.1785321763.git.getshell@seu.edu.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/negcc-nord.c | 22 ++++++----------------
- 1 file changed, 6 insertions(+), 16 deletions(-)
+ drivers/power/supply/sc2731_charger.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/qcom/negcc-nord.c b/drivers/clk/qcom/negcc-nord.c
-index 57b90f11bc068..0db284edc4e41 100644
---- a/drivers/clk/qcom/negcc-nord.c
-+++ b/drivers/clk/qcom/negcc-nord.c
-@@ -926,21 +926,6 @@ static struct clk_branch ne_gcc_gp2_clk = {
- 	},
- };
+diff --git a/drivers/power/supply/sc2731_charger.c b/drivers/power/supply/sc2731_charger.c
+index 58b86fd787713..2b25e44da7978 100644
+--- a/drivers/power/supply/sc2731_charger.c
++++ b/drivers/power/supply/sc2731_charger.c
+@@ -466,6 +466,7 @@ static int sc2731_charger_probe(struct platform_device *pdev)
+ 	mutex_init(&info->lock);
+ 	info->dev = &pdev->dev;
+ 	INIT_WORK(&info->work, sc2731_charger_work);
++	platform_set_drvdata(pdev, info);
  
--static struct clk_branch ne_gcc_gpu_2_cfg_clk = {
--	.halt_reg = 0x34004,
--	.halt_check = BRANCH_HALT_VOTED,
--	.hwcg_reg = 0x34004,
--	.hwcg_bit = 1,
--	.clkr = {
--		.enable_reg = 0x34004,
--		.enable_mask = BIT(0),
--		.hw.init = &(const struct clk_init_data) {
--			.name = "ne_gcc_gpu_2_cfg_clk",
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
- static struct clk_branch ne_gcc_gpu_2_gpll0_clk_src = {
- 	.halt_check = BRANCH_HALT_DELAY,
- 	.clkr = {
-@@ -1791,7 +1776,6 @@ static struct clk_regmap *ne_gcc_nord_clocks[] = {
- 	[NE_GCC_GPLL0] = &ne_gcc_gpll0.clkr,
- 	[NE_GCC_GPLL0_OUT_EVEN] = &ne_gcc_gpll0_out_even.clkr,
- 	[NE_GCC_GPLL2] = &ne_gcc_gpll2.clkr,
--	[NE_GCC_GPU_2_CFG_CLK] = &ne_gcc_gpu_2_cfg_clk.clkr,
- 	[NE_GCC_GPU_2_GPLL0_CLK_SRC] = &ne_gcc_gpu_2_gpll0_clk_src.clkr,
- 	[NE_GCC_GPU_2_GPLL0_DIV_CLK_SRC] = &ne_gcc_gpu_2_gpll0_div_clk_src.clkr,
- 	[NE_GCC_GPU_2_HSCNOC_GFX_CLK] = &ne_gcc_gpu_2_hscnoc_gfx_clk.clkr,
-@@ -1920,10 +1904,16 @@ static void clk_nord_regs_configure(struct device *dev, struct regmap *regmap)
- 	qcom_branch_set_force_mem_core(regmap, ne_gcc_ufs_phy_axi_clk, true);
+ 	info->regmap = dev_get_regmap(pdev->dev.parent, NULL);
+ 	if (!info->regmap) {
+@@ -516,6 +517,7 @@ static void sc2731_charger_remove(struct platform_device *pdev)
+ 	struct sc2731_charger_info *info = platform_get_drvdata(pdev);
+ 
+ 	usb_unregister_notifier(info->usb_phy, &info->usb_notify);
++	cancel_work_sync(&info->work);
  }
  
-+static const u32 ne_gcc_nord_critical_cbcrs[] = {
-+	0x34004, /* NE_GCC_GPU_2_CFG_CLK */
-+};
-+
- static const struct qcom_cc_driver_data ne_gcc_nord_driver_data = {
- 	.dfs_rcgs = ne_gcc_nord_dfs_clocks,
- 	.num_dfs_rcgs = ARRAY_SIZE(ne_gcc_nord_dfs_clocks),
- 	.clk_regs_configure = clk_nord_regs_configure,
-+	.clk_cbcrs = ne_gcc_nord_critical_cbcrs,
-+	.num_clk_cbcrs = ARRAY_SIZE(ne_gcc_nord_critical_cbcrs),
- };
- 
- static const struct qcom_cc_desc ne_gcc_nord_desc = {
+ static const struct of_device_id sc2731_charger_of_match[] = {
 -- 
 2.53.0
 
