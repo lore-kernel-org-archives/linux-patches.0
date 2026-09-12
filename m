@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B88A29B799;
-	Sat, 12 Sep 2026 07:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AC22BDC0E;
+	Sat, 12 Sep 2026 07:51:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199494; cv=none; b=Wvg1jea8dQKarOoLC0hhc2pOLB9lNkzOiXOpC81RFrlqwzSEXDKfm8LArpIlvcYuAiYH2c6tvcASGIiE44PkpiJi0CESV7aIU1JcwCH2P25oZH5z19iQ7Bc2PC0i3qynT+m6mialieZG6GPGrsuA15d3uGK/bkcrs1ezlv6iu6U=
+	t=1789199499; cv=none; b=EoeiSnaZmN8gUxYXTitkqEaNirVS1m+3CT2rjjMC/a5Db0j+5pmTRMvHuxbCerfIEX3wBWJwiwe5aAB6BI/3CeMUc6abrWH39KZEkd4KCLHlOOxi4b1uhzN95JgG7uZxZyjCgGnuzHP8Y1+fi2qEaHT9iEl9dAkvuHC3lKinVGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199494; c=relaxed/simple;
-	bh=zPKNkn3DNo9IM9w/aXGqrhIB7C5X84Ob4+8waRnBgqA=;
+	s=arc-20240116; t=1789199499; c=relaxed/simple;
+	bh=zu40juC+hpNT85Kqs+2rW9vQQCWp9amwqdpPhHgrpyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aeJIP9cDsOy5w92m/eo5cM6kQZz9yfzKj5qt36cvIeJvZmoGStYT3rs2wM90jTzqXJqHYjNlLXnTFzqZTpgSBHcp6H3OB/e6MgqdwTxoo74jHJEq6+Hebzg4L/6Z30zPerlbUowxZ2qHenbPeCInN3deAHXN9hP65J5CyY7nJDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHbvz+nJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CaJUVI1ZUmZqYeEieR800V9gs51cyjj2pvNysJnUOOTcw+zYq6c9vr0jjzeyXIvkY1UuypJG8qZDmMT4JVLJSXL9j8DJCSOaGYH18kMEqr46BMzJLm8iO8JtDUnDsa7qPoO0tM2oHTUkeraJ7tX00ABh6k3P8kLkumjXkd/XryY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mOME416G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHbvz+nJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED9431F000FF;
-	Sat, 12 Sep 2026 07:51:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mOME416G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F18E81F000FF;
+	Sat, 12 Sep 2026 07:51:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199493;
-	bh=M/ccjKpgxkYdFLof/xKE3ID2rRcVwuSn9CRhrmN+Fag=;
+	s=korg; t=1789199498;
+	bh=8SledkcFJgm4CAJNTPX+ZGn4RPMU/Mo0bkoidm4L0o8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FHbvz+nJusCkLfJPhd31eNfs+kP/F8R3K+e26vVhOzyEvzFC7xRlic5MMC1nUL+dj
-	 3eWAmjBOMtd7gwgcRzxCZATKCn+E0m/X8cN8azVPfQiGiOM76UP/Z9p024w1BRavUJ
-	 4t7uQcTic/ZJU/XFWBUgYdpeNgIMJjwGscdIigcs=
+	b=mOME416GIkNoTvYxU4sDKYWjtSuXNvGcb+T5qFQi2T9O8pneuM9G4RL1T94VSbD3N
+	 v/Ag3LEKbDUOvR2XFfl1w9PzKQ2JI2kTH9oQ2BNOvjO3rTxh4TLZn+WscTCXmQBbQ+
+	 4bxkHzqeqIlXAZsES6VIx1SfaowTFqhTUC/lG1DI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0553/1815] samples: rust: debugfs: fix excessive stack use
-Date: Sat, 12 Sep 2026 08:38:23 +0200
-Message-ID: <20260912065701.866181575@linuxfoundation.org>
+Subject: [PATCH 7.2 0554/1815] irqchip/gic-v3-its: Prevent leak in its_vpe_irq_domain_alloc()
+Date: Sat, 12 Sep 2026 08:38:24 +0200
+Message-ID: <20260912065701.889319134@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,53 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit f5256ad60651fc010e2cf6dc7fe195415f496fc9 ]
+[ Upstream commit 325ff3e78c64cd619d52b99f7c8b09a3f31e1495 ]
 
-The current implementation creates a 4K array and move it into the box.
-Klint reports that this causes excesssive stack usage:
+When its_irq_gic_domain_alloc() fails, the following
+its_vpe_irq_domain_free() fails to invoke its_vep_teardown() for the
+corresponding interrupt, which leaks the resource.
 
-warning: stack size of `create_file_write` is 4472 bytes, exceeds the 2048-byte limit
-  --> samples/rust/rust_debugfs_scoped.rs:54:1
-   |
-54 | / fn create_file_write(
-55 | |     mod_data: &ModuleData,
-56 | |     reader: &mut kernel::uaccess::UserSliceReader,
-57 | | ) -> Result {
-   | |___________^
-   |
-   = note: the stack size is inferred from instruction `sub $0x1178,%rsp` at .text+2205
+Invoke its_vpe_teardown() in the error handling path to avoid the leak.
 
-Use pin-init to create the array in-place instead.
+[ tglx: Massaged change log ]
 
-Fixes: f656279afde1 ("samples: rust: debugfs_scoped: add example for blobs")
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
-Link: https://patch.msgid.link/20260716144144.3665719-1-gary@kernel.org
-[ Make the patch rustfmtcheck complient. - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: 7d75bbb4bc1ad ("irqchip/gic-v3-its: Add VPE irq domain allocation/teardown")
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20260721063241.52549-2-shikemeng@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/rust/rust_debugfs_scoped.rs | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v3-its.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/samples/rust/rust_debugfs_scoped.rs b/samples/rust/rust_debugfs_scoped.rs
-index 6a575a15a2c2f..ca2b154be3842 100644
---- a/samples/rust/rust_debugfs_scoped.rs
-+++ b/samples/rust/rust_debugfs_scoped.rs
-@@ -75,7 +75,10 @@ fn create_file_write(
-             GFP_KERNEL,
-         )?;
-     }
--    let blob = KBox::pin_init(new_mutex!([0x42; SZ_4K]), GFP_KERNEL)?;
-+    let blob = KBox::pin_init(
-+        new_mutex!(pin_init::init_array_from_fn(|_| 0x42)),
-+        GFP_KERNEL,
-+    )?;
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index 439dad40cef4f..274b9761c0eec 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -4592,6 +4592,13 @@ static int its_vpe_init(struct its_vpe *vpe)
  
-     let scope = KBox::pin_init(
-         mod_data.device_dir.scope(
+ static void its_vpe_teardown(struct its_vpe *vpe)
+ {
++	/*
++	 * If vpt_page is NULL, then its_vpe_init() has failed, and
++	 * there is nothing to do as no resource has been allocated.
++	 */
++	if (vpe->vpt_page == NULL)
++		return;
++
+ 	its_vpe_db_proxy_unmap(vpe);
+ 	its_vpe_id_free(vpe->vpe_id);
+ 	its_free_pending_table(vpe->vpt_page);
+@@ -4672,8 +4679,10 @@ static int its_vpe_irq_domain_alloc(struct irq_domain *domain, unsigned int virq
+ 		irqd_set_resend_when_in_progress(irq_get_irq_data(virq + i));
+ 	}
+ 
+-	if (err)
++	if (err) {
++		its_vpe_teardown(vm->vpes[i]);
+ 		its_vpe_irq_domain_free(domain, virq, i);
++	}
+ 
+ 	return err;
+ }
 -- 
 2.53.0
 
