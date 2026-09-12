@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0F4455162;
-	Sat, 12 Sep 2026 11:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76584BEE32;
+	Sat, 12 Sep 2026 11:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212022; cv=none; b=mex7L8xZbGpp8K+xm5aQrkrTyAzYsiBQHhm+F6O8QNaSvTYKc+EHREb1dQP9pGaCrttj13AW7wKw+fQUbSSUjk2foMYiFGAjeXyDF+KRP2Ff1XgiIF06VFUWlFNfavPsW6+0i+w2dhvkiyCkYWGWW8iJkxPS3GHVCYt2XnFEoYk=
+	t=1789212027; cv=none; b=a6/AdGxBVgxbbyp0BFi8/g+mrAopbFy7Oa4+AXwaycODH2QvE4T52105CKG7lJKihDViaG0xwVK2c3NskWa4klrQ0v0MarZs+8oOKfFSXV5i2jmbXUJzyDeuvn9G3tDMVL5Acbq/OJOJ27OMGHaUeqoO9cjSkUwQtWs41MCFIu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212022; c=relaxed/simple;
-	bh=vo5aD4M4IBPHwiSStl6lj3SkyRnvF3Cty00JqOxsXd8=;
+	s=arc-20240116; t=1789212027; c=relaxed/simple;
+	bh=bTnL82i8LA89NeRU1Hk/mYezD/J685WXV6Iu7LTgE4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tQ0SuixWU1GJHaXf96xoTABjIHK7gOfcmpsx1BkHxkGuOCVVFmD6Q0EAJ7UJ+S0haIcPv73OToJo3kjYsrLLDeEQVGvwQZEh3qsO1DIhqV+CWjHlgrnfAoyk++R+qv92Dg39h2GWkM19j0LBA6QiJfI21eD+ESgJmHOh0u1rJ7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y98hBKXX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ae7hmC0qyfDgDvW5h1TRazFGHR6L7+yck3ArNFzfuuXeEI7yzP2kBT4s3mlJQ82Iv328kO3+HCTLtMVCCI+WCxY0pnV0+VW3O7MOKvKi8p4xU7w0oUJ67bYEEwoVgieBf+UU1Dy/E9gGUNb5HFRYtsSeNaXtTXH2/DHrEyyasog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uc3jD99S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y98hBKXX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E622E1F000FF;
-	Sat, 12 Sep 2026 11:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uc3jD99S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A1F1F000FF;
+	Sat, 12 Sep 2026 11:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212020;
-	bh=A9/7SVXsyZE3fZaZb4QK5zlYKiwkgUrZ3FNsdT8HPdw=;
+	s=korg; t=1789212025;
+	bh=gxfCq3Fa9q8t2ttHBDfVS6vsBpUdTiofnluabR2HO2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y98hBKXXOcjc/wmKzkU7oRmD7uPmQL2Fh2CX+3Nat2N1v35RtlZx59MjFHu4pOqcD
-	 yx//10Je+fFR7jOeqHWJro/wCOJMpg4wTGTVwoLKtOlBq2MPAxNYxpz+ftDigVhCxn
-	 Wz+rZuPNL/QhaJ3n4NlXSUr8L1dZHMkcgbKWPQJE=
+	b=uc3jD99SoFF1B4u0BY1yBkQNI6jFGb5plWh7t+Y1JzGKavY4WZtcfyGgliJGEF/As
+	 dG+ysquN0vMogCiD/dZfokwYgi0Jn6LWWHIDLJLZxsbk0ox///5Dl/LX5zbEX5lVQO
+	 NTdJ5DKU3GGSrBG1rjOgi8NgJx1yCnGbJcZHPwfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1351/1518] ipv6: avoid divide by zero in rt6_multipath_rebalance
-Date: Sat, 12 Sep 2026 08:58:40 +0200
-Message-ID: <20260912065654.091135789@linuxfoundation.org>
+Subject: [PATCH 6.18 1352/1518] net: add missing ref_tracker_dir_exit() to net_passive_dec()
+Date: Sat, 12 Sep 2026 08:58:41 +0200
+Message-ID: <20260912065654.114137224@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,55 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit d2c26c2911dd1a363c488add4fb63eb5f0f28f87 ]
+[ Upstream commit f85dc137aabf357bf3d9fe4c9712121039d83798 ]
 
-rt6_multipath_rebalance() calculates the total eligible nexthop weight
-in one pass and programs upper bounds in a second pass. Since
-RTM_NEWROUTE is RTNL-free, a concurrent
-ignore_routes_with_linkdown update can make the first pass return zero
-while the second sees an eligible nexthop, causing
-rt6_upper_bound_set() to divide by zero.
+I found that trying to read /sys/kernel/debug/ref_tracker/* causes NULL
+pointer dereference crash when alloc_netdev_mqs() via unshare() returned
+NULL, for commit 9ba74e6c9e9d ("net: add networking namespace refcount
+tracker") added ref_tracker_dir_exit(&net->refcnt_tracker) to only
+__put_net() path whereas commit 65b584f53611 ("ref_tracker: automatically
+register a file in debugfs for a ref_tracker_dir") added
+ref_tracker_dir_debugfs() to ref_tracker_dir_init() path.
 
-UBSAN: division-overflow in net/ipv6/route.c:4845:17
-Oops: divide error: 0000 [#1] SMP KASAN NOPTI
-  rt6_upper_bound_set() net/ipv6/route.c:4845
-  rt6_multipath_rebalance()
-  fib6_add_rt2node()
-  ip6_route_multipath_add()
-  inet6_rtm_newroute()
+Since preinit_net() calls ref_tracker_dir_init(&net->refcnt_tracker) and
+ref_tracker_dir_init(&net->notrefcnt_tracker), we need to make sure that
+both ref_tracker_dir_exit(&net->refcnt_tracker) and
+ref_tracker_dir_exit(&net->notrefcnt_tracker) are called before
+net_passive_dec() schedules for kmem_cache_free() via net_complete_free().
 
-Skip upper-bound calculation when the first pass reports a zero total.
-This respects the lock-free performance considerations here and solves
-insecure scenarios.
+ref_tracker_dir_exit(&net->refcnt_tracker) is called via put_net() when
+ns_ref_put() returned true. But put_net() is not called when copy_net_ns()
+fails. Therefore, call ref_tracker_dir_exit() from net_passive_dec() if
+put_net() is not yet called.
 
-Fixes: bd11ff421d36 ("ipv6: Get rid of RTNL for SIOCDELRT and RTM_DELROUTE.")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Reported-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260817013237.2797-1-blbllhy@gmail.com
+Link: https://sashiko.dev/#/patchset/b06ce35d-e7bc-47a5-8e0a-e82be7e4dd08%40I-love.SAKURA.ne.jp
+Fixes: 9ba74e6c9e9d ("net: add networking namespace refcount tracker")
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://patch.msgid.link/64254d80-9248-466c-8108-95f43bd71117@I-love.SAKURA.ne.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/net_namespace.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 2d94a62ed10a4..ec6677bf7dea9 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -4831,7 +4831,7 @@ static void rt6_upper_bound_set(struct fib6_info *rt, int *weight, int total)
- {
- 	int upper_bound = -1;
+diff --git a/net/core/net_namespace.c b/net/core/net_namespace.c
+index b0e0f22d7b213..abc9a6b39dff1 100644
+--- a/net/core/net_namespace.c
++++ b/net/core/net_namespace.c
+@@ -531,8 +531,12 @@ void net_passive_dec(struct net *net)
+ 	if (refcount_dec_and_test(&net->passive)) {
+ 		kfree(rcu_access_pointer(net->gen));
  
--	if (!rt6_is_dead(rt)) {
-+	if (total && !rt6_is_dead(rt)) {
- 		*weight += rt->fib6_nh->fib_nh_weight;
- 		upper_bound = DIV_ROUND_CLOSEST_ULL((u64) (*weight) << 31,
- 						    total) - 1;
++#ifdef CONFIG_REF_TRACKER
+ 		/* There should not be any trackers left there. */
+ 		ref_tracker_dir_exit(&net->notrefcnt_tracker);
++		if (!net->refcnt_tracker.dead)
++			ref_tracker_dir_exit(&net->refcnt_tracker);
++#endif
+ 
+ 		/* Wait for an extra rcu_barrier() before final free. */
+ 		llist_add(&net->defer_free_list, &defer_free_list);
 -- 
 2.53.0
 
