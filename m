@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F66F313E2B;
-	Sat, 12 Sep 2026 10:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5117924CEEA;
+	Sat, 12 Sep 2026 10:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210493; cv=none; b=WCJZUjJvoz9/thRy2itSqhzZ9kaw8ZTmVvK1LfkZ1JEjIzSkzQVYHq5twztICDwnQiLEdzMcnlxbtSh/byJ8iBlnxRGdGQVxeJQzXOTRBh45kqmyvkCaoyR0OC7yPMqm+pu1Wa03Sfl+Si1BA1UDx6a8qf4wze5MjuEkh1sjs7s=
+	t=1789210498; cv=none; b=K8aC92wNWeJHvIKzRrV1rhOoUkHMRhCWzZczPcnIdm1Xwb9Xkj+Jap/RSiBmBeb0RH1EAcT/NL8RlyONSDpGj2X0MAScDG6KAqj9I428Cd821Z98ape1KaiUQRF04o/M+Rl2BkOsU7lQn3m5urMQW2Oun65zkKS2lv4v7t0BtbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210493; c=relaxed/simple;
-	bh=LpTG2NFfxcT/lpOLdAdDkRaehY9cEpWyIywvjKtujmY=;
+	s=arc-20240116; t=1789210498; c=relaxed/simple;
+	bh=X4XAuA7ta4SovhvKjXKY/GuXw7LHEnOKQEyOpoqtuiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dyCOaY6pnUzff7OJ5oqVNXcXU2O7RnygxlE3iqQa10Yiocli5xeK+NzRMGx/DLa8hD6WlyN8fpI7IlEIv4lN00mGUwZ3qe0upj2rcYEC91Ea3psLGiteh5Jp2YqqyrlpWbhf68Z1BCRZutTleip+bfswHAYBmAm6SB9tKUpptbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9VhE0Gm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TRFsCLDNoerI/nPJ3jLSlezbuT7VfrBaN0QiKJQ4RJLVLsi//HjBEZq6OgVCXI1iyp4s7uRiAOXZJSJAqhXIhsRLQVuDGbkYc9fSM0GWMJvJc10rgUQWch4jX4i9VlHeXOC2g/qg7jg/o5Jm9vlYr4zbi3ZGDtCwZ1vMll5kT+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzuYxmrZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9VhE0Gm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 519C81F000FF;
-	Sat, 12 Sep 2026 10:54:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzuYxmrZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559EC1F000FF;
+	Sat, 12 Sep 2026 10:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210492;
-	bh=xTW3RrVs1c7l7Yq/wXFmYfiJlkB/Tk0dGNflUmEomxE=;
+	s=korg; t=1789210497;
+	bh=uLA6EyDPrJnjLbLdcSo9alOlnVVDva0LoXbdR0MZd68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z9VhE0Gm71Ln9rhf7/38EKWhsi5pKWaoc49/WZ3NZjUUJO+Mg0z1x5oV9xu1oMo88
-	 of6B3XWghxxMFi4DT8/Y+U9CbYwCL1D8VU0GZyrXO96kxyDxZ+2KeyOvwjSYxYNIqa
-	 E9KELSr3TzO6zTAYjQF/UIg3EEmcT+T5aWe8FQoU=
+	b=EzuYxmrZkMRdbqQMiGhqqa4NM1SI5nip+6Ori0jnbsxY+XYvqrdvMCoE9vk9Wwjz4
+	 4Rh08vYp4N092U3+p3n6ytS/ZN0HnMoy1A5zxetXZ3/3UGt8sz/XLBR4N6BusOImsX
+	 QlmSR01G5wEn4PtJeDN7INaYUwrM73Ce5tApOYMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikhil Gautam <nikhilgtr@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Aohan Mei <henrymei@tencent.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1037/1518] iio: light: gp2ap002: re-enable irq if runtime suspend fails
-Date: Sat, 12 Sep 2026 08:53:26 +0200
-Message-ID: <20260912065646.909739131@linuxfoundation.org>
+Subject: [PATCH 6.18 1038/1518] net/sched: cls_api: fix teardown of an adopted proto on insert-race loss
+Date: Sat, 12 Sep 2026 08:53:27 +0200
+Message-ID: <20260912065646.932223379@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,37 +55,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil Gautam <nikhilgtr@gmail.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 5d89e7cbac40057f5241a0832a86ce0fe97e4818 ]
+[ Upstream commit d4e359b3608a0e184bbe8d61a5c3b50d0831c44a ]
 
-gp2ap002_runtime_suspend() disables the irq before writing OPMOD. If
-the write fails, the callback returns an error with the irq still
-disabled while the PM core marks the device active again.
+In tc_new_tfilter() the create branch sets tp_created = 1 before calling
+tcf_chain_tp_insert_unique(). When the caller loses the race (another
+request inserted a proto at the same chain/prio first), insert_unique()
+destroys the caller's own tp_new and returns the winner's proto with an
+extra reference. tp_created was never cleared, so the loser's errout
+path treated the winner's live proto as its own and called
+tcf_chain_tp_delete_empty() on it, silently unlinking an active
+classifier that the winning request already advertised via
+RTM_NEWTFILTER.
 
-re-enable the irq before returning the error so the irq state matches
-the active state the PM core restores.
+Track the outcome of the insert step in a single tri-state variable so
+each errout path reacts correctly:
 
-Fixes: 97d642e23037c ("iio: light: Add a driver for Sharp GP2AP002x00F")
-Signed-off-by: Nikhil Gautam <nikhilgtr@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+- TP_NOT_CREATED: no proto created; pursue the old path.
+- TP_CREATED: proto inserted successfully; same code path as before.
+- TP_NOT_OWNED: New - lost the insert race; tp is another request's proto
+  (chain ref already released by tp_new's destroy)
+
+Both errout reactions are single expressions derived from the state.
+
+This fix is motivated by the Sashiko's automated review of Patch
+(net/sched: cls_api: Always acquire rtnl_lock when destroying locked
+classifiers) [1][2]. The review identified the silent-unlink behaviour of
+an adopted proto's teardown when a request loses the
+tcf_chain_tp_insert_unique() race.
+
+[1] https://sashiko.dev/#/patchset/20260801125632.360365-1-jhs%40mojatatu.com
+[2] https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260801125632.360365-1-jhs%40mojatatu.com
+
+Fixes: 8b64678e0af8 ("net: sched: refactor tp insert/delete for concurrent execution")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260801125632.360365-1-jhs%40mojatatu.com
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260801125632.360365-1-jhs%40mojatatu.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Tested-by: Aohan Mei <henrymei@tencent.com>
+Link: https://patch.msgid.link/20260805134049.927864-1-victor@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/gp2ap002.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/sched/cls_api.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/iio/light/gp2ap002.c b/drivers/iio/light/gp2ap002.c
-index 3abe02942d127..bb17ef2a829b7 100644
---- a/drivers/iio/light/gp2ap002.c
-+++ b/drivers/iio/light/gp2ap002.c
-@@ -649,6 +649,7 @@ static int gp2ap002_runtime_suspend(struct device *dev)
- 	/* Disable chip and IRQ, everything off */
- 	ret = regmap_write(gp2ap002->map, GP2AP002_OPMOD, 0x00);
- 	if (ret) {
-+		enable_irq(gp2ap002->irq);
- 		dev_err(gp2ap002->dev, "error setting up operation mode\n");
- 		return ret;
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 21a70cc9940ce..d274514cd84df 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -2248,6 +2248,12 @@ static bool is_ingress_or_clsact(struct tcf_block *block, struct Qdisc *q)
+ 	return tcf_block_shared(block) || (q && !!(q->flags & TCQ_F_INGRESS));
+ }
+ 
++enum tcf_tp_insert_state {
++	TP_NOT_CREATED = 0, /* did not create and insert a new tp */
++	TP_CREATED, /* created and inserted a new tp */
++	TP_NOT_OWNED, /* created a proto but failed to insert */
++};
++
+ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
+ 			  struct netlink_ext_ack *extack)
+ {
+@@ -2268,12 +2274,12 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
+ 	unsigned long cl;
+ 	void *fh;
+ 	int err;
+-	int tp_created;
++	enum tcf_tp_insert_state tp_state;
+ 	bool rtnl_held = false;
+ 	u32 flags;
+ 
+ replay:
+-	tp_created = 0;
++	tp_state = TP_NOT_CREATED;
+ 
+ 	err = nlmsg_parse_deprecated(n, sizeof(*t), tca, TCA_MAX,
+ 				     rtm_tca_policy, extack);
+@@ -2395,13 +2401,15 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
+ 			goto errout_tp;
+ 		}
+ 
+-		tp_created = 1;
++		tp_state = TP_CREATED;
+ 		tp = tcf_chain_tp_insert_unique(chain, tp_new, protocol, prio,
+ 						rtnl_held);
+ 		if (IS_ERR(tp)) {
+ 			err = PTR_ERR(tp);
+ 			goto errout_tp;
+ 		}
++		if (tp != tp_new)
++			tp_state = TP_NOT_OWNED;
+ 	} else {
+ 		mutex_unlock(&chain->filter_chain_lock);
  	}
+@@ -2455,13 +2463,13 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
+ 	}
+ 
+ errout:
+-	if (err && tp_created)
++	if (err && tp_state == TP_CREATED)
+ 		tcf_chain_tp_delete_empty(chain, tp, rtnl_held, NULL);
+ errout_tp:
+ 	if (chain) {
+ 		if (tp && !IS_ERR(tp))
+ 			tcf_proto_put(tp, rtnl_held, NULL);
+-		if (!tp_created)
++		if (tp_state == TP_NOT_CREATED)
+ 			tcf_chain_put(chain);
+ 	}
+ 	tcf_block_release(q, block, rtnl_held);
 -- 
 2.53.0
 
