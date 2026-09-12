@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E8B3F929C;
-	Sat, 12 Sep 2026 09:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4087A369D56;
+	Sat, 12 Sep 2026 09:26:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205171; cv=none; b=dO7isQ6VhuGAkhTPubVwNbqNLyTvwr/injczMkcDHE2fDZvSp12Pj4bw/eVRQDohYQaVx2CghGX7AnMIzv7axXKIzNADdEeRmHd3eIhoZ1SENB3ui+0bY+e8fi8gF2eMq2x0FMCpz3ROXYw5wEm4jUUSIZhe4y/vYTILFCMxqaM=
+	t=1789205176; cv=none; b=QRfeqU+Eb8rm6UuuNuKdeU5r/Phm6C6NWqFMIw5soqxPS0Euxc9E+fhmvRDTuTHNoVc1vZ9M4MESCF6xkgBFiJZehZl3V7ueq46Pv2yLgdnyignNNrnWLPWN9SVKoHiKIh5d4omMBY41Uvw86qErkYe7Ww3jRDGFze6VSF3WvcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205171; c=relaxed/simple;
-	bh=dhhN6jVkztaBYZEC8iz4CwKN8S/4kggryPA7Wl9+5dg=;
+	s=arc-20240116; t=1789205176; c=relaxed/simple;
+	bh=IOIkwTc4FabAC4mtcrQ84vaqTOpmaicioA7CV0RavDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lB6QE9u6l/31/0V1EA3/3HG28kB4ObityBEMAPzh+WC5U/AqIdW9JUA+CiWn1E0aCXftE36H7WW8cJYtaWVJm6xyF/SYq4t2UASsVUQXw0LXEF+e9IH6OcU+ydVGEv8m829XOLqRuowVruCeKibQEzYs/9nzfm7gfaJ6F97kfK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7SmcyQm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BpXf26LkUmK41XXtn2HRBItXTsU1qd9ZXH6iXB9mXwRl1yow14Wt0sKpGqEpqcHVLKPr8C0IOZHkhcZpE9uMw1I3tch8heqEbFFqEd39/uDkCbkDyMSHJj9hMWe/A+fAZK04yORz6JXx7+X43+iPZdzTGhAL0+BDw0Nx6dlO+Og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8bht2K/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7SmcyQm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27CD41F000FF;
-	Sat, 12 Sep 2026 09:26:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8bht2K/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1339D1F000FF;
+	Sat, 12 Sep 2026 09:26:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205170;
-	bh=cr57F2gFh9ngA3R3yTuCMcfwfpQ/wJkM5/ds2DYWlbc=;
+	s=korg; t=1789205175;
+	bh=H4WwpdN+8XQnxdEE7hvMjug6NDTKp4KjoxTYek51Ke0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l7SmcyQmN1t/N/75w28GRgFGpLXeDnSycWJe1UdtCpXZUpJpEx2LjXYzR6UUG7owN
-	 0JRR7HDq7t9+XedtfN6OL9Jry/TtxXLd0XWk7NDNpA1TpkDhBNgd5IOrNXvnPs1NdH
-	 poA3fpFj0GqyaP6qpKOirdIMrV2a81ddiqxP+jUk=
+	b=M8bht2K/DDql8HrmjcXMg9N8QsFkPy0N08Fgxe5XcsStKrKg8I6A2fKmyuTJH2Iw/
+	 MdM42ujbHthZO2TED5rDGx+jJgvKYXMqBNN7fh4e4cA/704dQgwEvh+RQifmUxFq+z
+	 NXhRvU3WrUthQgPrLvnVOqQRKX9/Wjn2Evzen8Bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	vega@nebusec.ai,
-	Victor Nogueira <victor@mojatatu.com>,
+	Vega <vega@nebusec.ai>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1763/1815] net/sched: sfq: clamp quantum to avoid signed overflow soft lockup
-Date: Sat, 12 Sep 2026 08:58:33 +0200
-Message-ID: <20260912065730.381536878@linuxfoundation.org>
+Subject: [PATCH 7.2 1764/1815] net/sched: sch_teql: restore skb->dev on the slave failure path
+Date: Sat, 12 Sep 2026 08:58:34 +0200
+Message-ID: <20260912065730.408116963@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,50 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 816e90057ab1879562a5b7cc688e35bb9027ae97 ]
+[ Upstream commit dc4b95b8fee95113587e93ca116356032d271371 ]
 
-sfq_init() sets q->quantum = psched_mtu(qdisc_dev(sch)) (unsigned). A
-device with a huge MTU (e.g. dummy with max_mtu == 0 accepting MTU
-2147483634) makes psched_mtu() return 0x80000000, so slot->allot = INT_MIN
-and INT_MIN + INT_MIN toggles between INT_MIN and 0 forever, spinning
-sfq_dequeue() under the qdisc lock.
+teql_master_xmit() sets skb->dev = slave before calling the slave's
+ndo_start_xmit(), but never restores it when that transmit fails. The
+skb then walks on to the next slave still pointing at the previous one.
 
-Clamp the quantum to [256, 1 << 20] so the refill loop terminates. The
-lower bound also covers q->quantum == 0 (psched_mtu() returning 0),
-which spins sfq_dequeue() identically. sfq_change() already rejects a
-negative quantum, so only the init path was exposed.
+If a later slave has no resolved neighbour, teql_resolve() hands the skb
+to neigh_event_send(), which queues it on that neighbour's arp_queue
+with the stale skb->dev. skb->dev holds no reference, so deleting the
+previous slave frees the net_device while the skb is still queued.
+Whatever runs next on that skb - arp_error_report() on timeout, or
+neigh_direct_output() -> dev_queue_xmit() once the neighbour resolves -
+causes a UAF like the one below:
 
-Conditions to recreate the bug: a device whose MTU (plus
-hard_header_len) wraps psched_mtu() into the sign bit (e.g. a dummy
-device with max_mtu == 0 accepting MTU 2147483634). Requires
-CAP_NET_ADMIN in a user namespace.
+BUG: KASAN: slab-use-after-free in __icmp_send (net/ipv4/icmp.c:914 (discriminator 2))
+Read of size 4 at addr ffff888106e100b0 by task flood_packet/527
+CPU: 0 UID: 0 PID: 527 Comm: flood_packet Not tainted 7.2.0-rc6-g594d90519502 #1 PREEMPT(lazy)
+Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Call Trace:
+<IRQ>
+dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+? __pfx__raw_spin_lock_irqsave (./include/asm-generic/qrwlock.h:122 (discriminator 4))
+? __icmp_send (net/ipv4/icmp.c:914 (discriminator 2))
+kasan_report (mm/kasan/report.c:595)
+? __icmp_send (net/ipv4/icmp.c:914 (discriminator 2))
+__icmp_send (net/ipv4/icmp.c:914 (discriminator 2))
+[...]
+ipv4_link_failure (net/ipv4/route.c:1251 net/ipv4/route.c:1258)
+? __pfx_ipv4_link_failure (./include/linux/skbuff.h:4327)
+? _raw_write_lock (./include/linux/instrumented.h:55 ./include/linux/atomic/atomic-instrumented.h:1301 ./include/asm-generic/qrwlock.h:98 ./include/linux/rwlock_api_smp.h:230 kernel/locking/spinlock.c:304)
+? __pfx__raw_write_lock (kernel/locking/spinlock.c:175)
+arp_error_report (./include/net/dst.h:438 net/ipv4/arp.c:296)
+neigh_invalidate (net/core/neighbour.c:1077)
+neigh_timer_handler (net/core/neighbour.c:1169)
+[...]
+Allocated by task 505:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_save_track (mm/kasan/common.c:78)
+__kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+__kvmalloc_node_noprof (./include/linux/kasan.h:263 mm/slub.c:5334 mm/slub.c:6905)
+alloc_netdev_mqs (net/core/dev.c:12055 (discriminator 2))
+rtnl_create_link (net/core/rtnetlink.c:3721)
+rtnl_newlink (net/core/rtnetlink.c:3903 net/core/rtnetlink.c:4044 net/core/rtnetlink.c:4159)
+rtnetlink_rcv_msg (net/core/rtnetlink.c:7076)
+[...]
+Freed by task 536:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_save_track (mm/kasan/common.c:78)
+kasan_save_free_info (mm/kasan/generic.c:584)
+__kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
+kfree (./include/linux/kasan.h:235 mm/slub.c:2677 mm/slub.c:6377 mm/slub.c:6692)
+device_release (drivers/base/core.c:2636)
+kobject_put (lib/kobject.c:689 lib/kobject.c:720 ./include/linux/kref.h:65 lib/kobject.c:737)
+netdev_run_todo (net/core/dev.c:11756)
+rtnl_dellink (net/core/rtnetlink.c:157 ./include/linux/rtnetlink.h:135 net/core/rtnetlink.c:3651)
+rtnetlink_rcv_msg (net/core/rtnetlink.c:7076)
+[...]
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: vega@nebusec.ai
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260822195509.112717-7-jhs@mojatatu.com
+Fix this by restoring skb->dev to the master at the end of each slave's
+iteration.
+
+Fixes: 0cc0c2e661af ("net/sched: teql: fix NULL pointer dereference in iptunnel_xmit on TEQL slave xmit")
+Reported-by: Vega <vega@nebusec.ai>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260824115928.4099988-1-victor@mojatatu.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfq.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/sch_teql.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
-index 77675f9a4c46e..187d3ed578f26 100644
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -799,7 +799,8 @@ static int sfq_init(struct Qdisc *sch, struct nlattr *opt,
- 	q->tail = NULL;
- 	q->divisor = SFQ_DEFAULT_HASH_DIVISOR;
- 	q->maxflows = SFQ_DEFAULT_FLOWS;
--	q->quantum = psched_mtu(qdisc_dev(sch));
-+	q->quantum = clamp_t(u32, psched_mtu(qdisc_dev(sch)),
-+			     256, 1 << 20);
- 	q->perturb_period = 0;
- 	get_random_bytes(&q->perturbation, sizeof(q->perturbation));
+diff --git a/net/sched/sch_teql.c b/net/sched/sch_teql.c
+index 5c42a29a981cb..9e52afc2d9808 100644
+--- a/net/sched/sch_teql.c
++++ b/net/sched/sch_teql.c
+@@ -377,6 +377,7 @@ static netdev_tx_t teql_master_xmit(struct sk_buff *skb, struct net_device *dev)
+ 			nores = 1;
+ 			break;
+ 		}
++		skb->dev = dev;
+ 		__skb_pull(skb, skb_network_offset(skb));
+ 	} while ((q = rcu_dereference(NEXT_SLAVE(q))) != start);
  
 -- 
 2.53.0
