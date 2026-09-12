@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4C1CA6F;
-	Sat, 12 Sep 2026 11:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5D4CA6F;
+	Sat, 12 Sep 2026 11:09:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211395; cv=none; b=MGwV1W/ioVuKIVCWboXl6SosI7QGe9A4Um1aB5gjYCk6tslA8LnEIqPGXjPAu0mO8oMdLfkhq+RiIMbjXAd41Ljs518i88ASrq3KQBCTY3J/p/VY3NNWO1HJ24VRSVVjeUXrnbwOYXycQ5mH+YbGM1Ry9/nQPGdE7IwZQvGFG/E=
+	t=1789211400; cv=none; b=iIqQXp7PkopE2wK4dWVys2X7pd3hVDUVVJ7S2fvXuHc7r1YjXdhOFZA/BL5lSdspJ7LwAtgjqbkTILrw/LGS8XDeUFopCx6iSgKXxN75zeVFsZQdyhM9cvyBsdj0iIcTm9kqybkTgMah24qbMCmo0xFaNCislBFgBpHqg6RjS7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211395; c=relaxed/simple;
-	bh=/+vwyVX1IyIwqO77cuBV7PxYsKD7N/mc8qA+ATNhdjk=;
+	s=arc-20240116; t=1789211400; c=relaxed/simple;
+	bh=Svm7CnxmkosVMF8mh5s7tH2fK+AwGuJonvyT5Ly0S90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZhNgNhIlFfF6BRF9WnFOfJNN0sASMc16KRdHHa+qPVr35b1Ts4KvpW/4pHiYmKmXqeMuHaXB4tTL9Rdt904aszCwXqo3YBqDb9T7MKSjBCWMYE/eXhhmASbvTlAWhYV2C8dMTXuF9gWx2Fs1CgmfvgPgdebWB08DtTsO4No7mcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETkQJhVY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QzwocxJ3jLarSEtIKPIWj5JfSL/DL7jFzfgKdZHqm1TaIF1xsEjXOIdXmLQLFqd0iXZCuDQqDglZ1DRmYpXmcFikmeqHsb5vWGYrHpW1/zHfu36ZlL9/LWD42DauNL3/PgbrCsds9yGpg6cwK3Hy0bMBG9Efx4vscqcOpmW349w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySZGf2dk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETkQJhVY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15BE71F00893;
-	Sat, 12 Sep 2026 11:09:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySZGf2dk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E16051F000FF;
+	Sat, 12 Sep 2026 11:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211393;
-	bh=QFfdzqXgbzpVeA9leYg6lQBn5evmEoQCn5NP7zgAstU=;
+	s=korg; t=1789211398;
+	bh=jt1DsQEQSfUpaL4LXwgIf413PyvaPzaDManUGYO+4O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ETkQJhVYLcqTQ91lwemonNb9sp73DhB/pS60XkjWDQi+x1r5G1Zw6sUEEDeSn/UXp
-	 jXXw2u5iiJ5Z/W4WCWQsdbFG4R9Sj5D6ODpij/rQxUGgxFktbyCoXYdxxL0KB3JXN1
-	 Ubev1WxbAEpKTJw6AAFK+3iwbxjNwoEyNdNkz3sE=
+	b=ySZGf2dkpl1/dTYeU/EZTdZ6/jpHWhlU9A3KWpq2ANPZ5XIHSu08Hrr5Yd1a3t3Qa
+	 oWGsoRUfLuEkTdhEjjsAqU0HwGyaC+qotXPvO7ElF+DPcRl8hqy10u1+aLYxpgD5CO
+	 X91VAFQUGtTWz3Q9yigfnNHtlHXvt5B5syUpNSxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Martin Petricek <mp@petricek.net>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1195/1518] riscv, bpf: Fix missing sign-ext for signed 1-byte and 2-byte kfunc args
-Date: Sat, 12 Sep 2026 08:56:04 +0200
-Message-ID: <20260912065650.514036341@linuxfoundation.org>
+Subject: [PATCH 6.18 1222/1518] apparmor: fix deadlock in complain-mode change_hat
+Date: Sat, 12 Sep 2026 08:56:31 +0200
+Message-ID: <20260912065651.141002672@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,50 +51,285 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit f2aaa621591093cfe8224a25ef2f04a3b1e304b0 ]
+[ Upstream commit 4ec11f14d1d6fdda787d991b142537be7841d395 ]
 
-On RV64, the ABI requires sign-extension for signed 1-byte and 2-byte kfunc
-args. However, the RV64 JIT currently does not perform sign-extension for
-such kfunc args.
+The use of change_hat when in complain mode can cause a deadlock
+when the hat doesn't exist and a new learning profile is created
+for the missing profile. This is because change_hat() has taken
+the lock to search the hat list and creating the new learning
+profile needs to take the lock to add it to the list.
 
-Before commit 7ce090afbf72 ("bpf: Infer zext_dst based on static register
-liveness analysis"), state pruning could potentially omit zero-extension
-of 32-bit subregisters, which inadvertently masked the above issue by making
-the args appear as if they had been properly sign-extended. After that
-commit, the problem is exposed, causing the kfunc_call/kfunc_call_test4
-selftest to fail.
+>From the bug report:
 
-Fix this by extending the existing sign-extension logic to handle signed
-1-byte and 2-byte kfunc args as well.
+Originally found in 7.0.0 in LTS ubuntu 26.04 with pam_apparmor + su
+in complain mode set to change hats.  Then verified in newest
+available vanilla kernel I've compiled to see if still present:
 
-Fixes: 443574b03387 ("riscv, bpf: Fix kfunc parameters incompatibility between bpf and riscv abi")
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20260814064726.3607615-1-pulehui@huaweicloud.com
+7.2-rc7 vanilla -> affected
+
+checked also some other kernels:
+6.18.44 vanilla -> affected
+6.12.95 with debian patches -> unaffected
+
+On systems without bug (for example 6.12.95 debian) it just prints:
+
+aa_change_hat rc=0
+
+On systems with bug, the executable always hangs, prints nothing and
+becomes unkillable.  (And once stuck this way, it will cause any
+further hat changes to also cause the changing process to get stuck)
+
+Then in syslog you can find hint about cause:
+
+kernel: INFO: task hat:3409 blocked for more than 483 seconds.
+kernel:       Not tainted 7.2.0-rc7 #1
+kernel: "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+kernel: task:hat             state:D stack:0     pid:3409  tgid:3409  ppid:2605   task_flags:0x400000 flags:0x00080800
+kernel: Call Trace:
+kernel:  <TASK>
+kernel:  __schedule+0x48f/0xfe0
+kernel:  schedule+0x27/0xa0
+kernel:  schedule_preempt_disabled+0x15/0x30
+kernel:  __mutex_lock.constprop.0+0x569/0xa10
+kernel:  aa_new_learning_profile+0x15f/0x210
+kernel:  build_change_hat+0x19f/0x3b0
+kernel:  change_hat.isra.0+0x5dd/0xd60
+kernel:  aa_change_hat+0x2f3/0x710
+kernel:  aa_setprocattr_changehat+0x121/0x1f0
+kernel:  do_setattr+0x28c/0x340
+kernel:  apparmor_setselfattr+0x20/0x50
+kernel:  security_setselfattr+0xf6/0x110
+kernel:  __x64_sys_lsm_set_self_attr+0x53/0x90
+kernel:  do_syscall_64+0xdd/0x5e0
+kernel:  ? __mod_memcg_lruvec_state+0xfd/0x260
+kernel:  ? lruvec_stat_mod_folio+0x8d/0xd0
+kernel:  ? __folio_mod_stat+0x2d/0x90
+kernel:  ? map_anon_folio_pte_nopf+0xd1/0x1f0
+kernel:  ? do_anonymous_page+0x184/0xa10
+kernel:  ? __handle_mm_fault+0x805/0x870
+kernel:  ? count_memcg_events+0xef/0x230
+kernel:  ? handle_mm_fault+0x1f0/0x2f0
+kernel:  ? do_user_addr_fault+0x2bb/0x7b0
+kernel:  ? do_syscall_64+0x94/0x5e0
+kernel:  ? exc_page_fault+0x75/0x160
+kernel:  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+kernel: RIP: 0033:0x7f815e134c8d
+kernel: RSP: 002b:00007fff6df94ea8 EFLAGS: 00000246 ORIG_RAX: 00000000000001cc
+kernel: RAX: ffffffffffffffda RBX: 0000556d8c81d040 RCX: 00007f815e134c8d
+kernel: RDX: 0000000000000046 RSI: 0000556d8c81d040 RDI: 0000000000000064
+kernel: RBP: 00007fff6df94ef0 R08: 00007f815e212ac8 R09: 000000000000000c
+kernel: R10: 0000000000000000 R11: 0000000000000246 R12: 0000556d8c81d010
+kernel: R13: 0000000000000026 R14: 0000000000000046 R15: 0000000000000064
+kernel:  </TASK>
+kernel: INFO: task hat:3409 is blocked on a mutex likely owned by task hat:3409.
+
+To fix the issue, lift the locking out of the core of
+aa_new_learning_profile(), introduce a wrapper function that takes the
+lock where needed, and have build_change_hat() call the core function
+that no longer takes the lock.
+
+In addition fix 4 other issues introduced by commit
+32e92764d6f8d ("apparmor: grab ns lock and refresh when looking up changehat child profiles")
+- aa_get_profile_rcu() was replaced-by: aa_get_profile without the
+  accompanying rcu_dereference_protected()
+- an extra aa_get_label(label) was introduced at the start of
+  change_hat() without an accompanying aa_put_label() causing a
+  reference count leak.
+- a reference count leak was introduced in the label_is_stale(label)
+  case, where the newest profile would be leaked instead of the
+  label passed to the function.
+- a potential UAF when the lookup walks up the tree with new_ns != ns
+  the new label reference is put, and then used for the next lookup.
+  The mutex_lock, will block replacement, and removal in the locked
+  ns. However there are two cases where putting the reference can
+  result in the label being freed even with the lock held.
+
+  1. the label does not have a list reference (possible for temporary
+     or special profiles) in which case the put can trigger the
+     cleanup.
+  2. the new label reference is in a different namespace, which does
+     not have a lock held on it. This extends case 1 to also include
+     replacement, and removal that could be occurring in the namespace
+     new is in.
+
+Reported-by: Martin Petricek <mp@petricek.net>
+Link: https://lists.ubuntu.com/archives/apparmor/2026-August/014907.html
+Fixes: 32e92764d6f8d ("apparmor: grab ns lock and refresh when looking up changehat child profiles")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/net/bpf_jit_comp64.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ security/apparmor/domain.c         | 26 +++++++++++++++++---------
+ security/apparmor/include/policy.h |  3 +++
+ security/apparmor/policy.c         | 22 +++++++++++++++++-----
+ 3 files changed, 37 insertions(+), 14 deletions(-)
 
-diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
-index a90066cc9d58b..3e4eea261ab96 100644
---- a/arch/riscv/net/bpf_jit_comp64.c
-+++ b/arch/riscv/net/bpf_jit_comp64.c
-@@ -1770,9 +1770,10 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+diff --git a/security/apparmor/domain.c b/security/apparmor/domain.c
+index d8f3aba9b358e..8e478ac99ff6d 100644
+--- a/security/apparmor/domain.c
++++ b/security/apparmor/domain.c
+@@ -1133,8 +1133,8 @@ static struct aa_label *build_change_hat(const struct cred *subj_cred,
+ 	if (!hat) {
+ 		error = -ENOENT;
+ 		if (COMPLAIN_MODE(profile)) {
+-			hat = aa_new_learning_profile(profile, true, name,
+-						      GFP_KERNEL);
++			hat = __aa_new_learning_profile(profile, true, name,
++							GFP_KERNEL);
+ 			if (!hat) {
+ 				info = "failed null profile create";
+ 				error = -ENOMEM;
+@@ -1172,6 +1172,7 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 	bool sibling = false;
+ 	const char *name, *info = NULL;
+ 	int i, error;
++	bool needput = false;
  
- 			for (idx = 0; idx < fm->nr_args; idx++) {
- 				u8 reg = bpf_to_rv_reg(BPF_REG_1 + idx, ctx);
-+				bool sign = fm->arg_flags[idx] & BTF_FMODEL_SIGNED_ARG;
+ 	AA_BUG(!label);
+ 	AA_BUG(!hats);
+@@ -1184,7 +1185,6 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 	 * the profiles and label, we can rely on the namespaces being live
+ 	 * and avoid incrementing their refcounts while grabbing the lock.
+ 	 */
+-	label = aa_get_label(label);
+ 	ns = labels_ns(label);
  
--				if (fm->arg_size[idx] == sizeof(int))
--					emit_sextw(reg, reg, ctx);
-+				if (sign_extend(reg, reg, fm->arg_size[idx], sign, ctx))
-+					return -EINVAL;
- 			}
+ retry:
+@@ -1192,15 +1192,19 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 	if (label_is_stale(label)) {
+ 		new = aa_get_newest_label(label);
+ 		new_ns = labels_ns(new);
++
++		if (needput)
++			/* aa_put_label() is safe to call when under lock */
++			aa_put_label(label);
++		label = new;
++		needput = true;
++		/* check if replaced with label in parent ns, and lock there */
+ 		if (new_ns != ns) {
+-			aa_put_label(new);
+ 			mutex_unlock(&ns->lock);
+ 			ns = new_ns;
+-			label = new;
++			/* retry will bottom out at the root of the tree */
+ 			goto retry;
  		}
+-		aa_put_label(label);
+-		label = new;
+ 	}
  
+ 	if (PROFILE_IS_HAT(labels_profile(label)))
+@@ -1211,7 +1215,8 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 		name = hats[i];
+ 		label_for_each_in_scope(it, labels_ns(label), label, profile) {
+ 			if (sibling && PROFILE_IS_HAT(profile)) {
+-				root = aa_get_profile(profile->parent);
++				root = aa_get_profile(rcu_dereference_protected(profile->parent,
++						      mutex_is_locked(&ns->lock)));
+ 			} else if (!sibling && !PROFILE_IS_HAT(profile)) {
+ 				root = aa_get_profile(profile);
+ 			} else {	/* conflicting change type */
+@@ -1272,6 +1277,8 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 		}
+ 	}
+ 	mutex_unlock(&ns->lock);
++	if (needput)
++		aa_put_label(label);
+ 	return ERR_PTR(error);
+ 
+ build:
+@@ -1282,7 +1289,8 @@ static struct aa_label *change_hat(const struct cred *subj_cred,
+ 	mutex_unlock(&ns->lock);
+ 	AA_BUG(!new);
+ 	/* return new label or error ptr */
+-
++	if (needput)
++		aa_put_label(label);
+ 	return new;
+ }
+ 
+diff --git a/security/apparmor/include/policy.h b/security/apparmor/include/policy.h
+index bf105ae9019d3..2eaa1bee31bc0 100644
+--- a/security/apparmor/include/policy.h
++++ b/security/apparmor/include/policy.h
+@@ -271,6 +271,9 @@ struct aa_profile *aa_alloc_profile(const char *name, struct aa_proxy *proxy,
+ 				    gfp_t gfp);
+ struct aa_profile *aa_alloc_null(struct aa_profile *parent, const char *name,
+ 				 gfp_t gfp);
++struct aa_profile *__aa_new_learning_profile(struct aa_profile *parent,
++					     bool hat, const char *base,
++					     gfp_t gfp);
+ struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
+ 					   const char *base, gfp_t gfp);
+ void aa_free_profile(struct aa_profile *profile);
+diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
+index b0203b30db606..70d6315a059af 100644
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -698,7 +698,7 @@ struct aa_profile *aa_alloc_null(struct aa_profile *parent, const char *name,
+ }
+ 
+ /**
+- * aa_new_learning_profile - create or find a null-X learning profile
++ * __aa_new_learning_profile - create or find a null-X learning profile
+  * @parent: profile that caused this profile to be created (NOT NULL)
+  * @hat: true if the null- learning profile is a hat
+  * @base: name to base the null profile off of
+@@ -715,14 +715,16 @@ struct aa_profile *aa_alloc_null(struct aa_profile *parent, const char *name,
+  *
+  * Returns: new refcounted profile else NULL on failure
+  */
+-struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
+-					   const char *base, gfp_t gfp)
++struct aa_profile *__aa_new_learning_profile(struct aa_profile *parent,
++					     bool hat, const char *base,
++					     gfp_t gfp)
+ {
+ 	struct aa_profile *p, *profile;
+ 	const char *bname;
+ 	char *name = NULL;
+ 
+ 	AA_BUG(!parent);
++	AA_BUG(!mutex_is_locked(&parent->ns->lock));
+ 
+ 	if (base) {
+ 		name = kmalloc(strlen(parent->base.hname) + 8 + strlen(base),
+@@ -754,7 +756,6 @@ struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
+ 	if (hat)
+ 		profile->label.flags |= FLAG_HAT;
+ 
+-	mutex_lock_nested(&profile->ns->lock, profile->ns->level);
+ 	p = __find_child(&parent->base.profiles, bname);
+ 	if (p) {
+ 		aa_free_profile(profile);
+@@ -762,7 +763,6 @@ struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
+ 	} else {
+ 		__add_profile(&parent->base.profiles, profile);
+ 	}
+-	mutex_unlock(&profile->ns->lock);
+ 
+ 	/* refcount released by caller */
+ out:
+@@ -776,6 +776,18 @@ struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
+ 	return NULL;
+ }
+ 
++struct aa_profile *aa_new_learning_profile(struct aa_profile *parent, bool hat,
++					   const char *base, gfp_t gfp)
++{
++	struct aa_profile *profile;
++
++	mutex_lock_nested(&parent->ns->lock, parent->ns->level);
++	profile = __aa_new_learning_profile(parent, hat, base, gfp);
++	mutex_unlock(&parent->ns->lock);
++
++	return profile;
++}
++
+ /**
+  * replacement_allowed - test to see if replacement is allowed
+  * @profile: profile to test if it can be replaced  (MAYBE NULL)
 -- 
 2.53.0
 
