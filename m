@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DBE21883E;
-	Sat, 12 Sep 2026 12:48:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B6547CC92;
+	Sat, 12 Sep 2026 12:48:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217309; cv=none; b=rc3o8PDK6o1D04JEYZrpiHNuAStVwYJI9bde4H+LsFOV4mh3KRIxBEoDUbdhJjHTDc4XZ6X498ygg5o9CrKtsy3CvdQQQV1Pj9w05T8Xt0knmh+oWYH3siAKH88sUCYdCIHRM7+4tZ9i4T0fVgYt5NbOjVmq3v2ixB+dHCJIeXc=
+	t=1789217314; cv=none; b=l4UV2TVtGueHJWEICNytbiAiN2Fsbb683joLInNt21bowswEfknpAYorp2yPsdF9Wm1oynJsa0LCLSaw/KDzfSu0sNOuRX+D+9FWLl2x/Sfs5MWA/CR02a8kkxgQV1u4TcFFRD4GrCoMoeZKq/u38ftZknRO6t1KZlPGd1vLcJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217309; c=relaxed/simple;
-	bh=Vw6Bqs00ilM69USaOnsFM8Zlg3f+z3qPAk9mxTe2QAY=;
+	s=arc-20240116; t=1789217314; c=relaxed/simple;
+	bh=lahFBJxR55QSqSQ+f72YPyElTnlZtaSakjH0EaVHxIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q2C39XB/9rcBqtR6n8CzEwdxCuVai9tnE2eqwMjyKEqJkFlF5eMq05zg3fXS+nzC5a2fBA9q6+h8skTdR9PbFXQ8aU8Sw8CLfljjBY/q4EHDYt/JZt9z55907lkFTP6+rYX9chqYHtDg5qDaqYjkuPc3jk48eNL2iqPRDc+9lf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKNZGUOk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lNsltIs9Hai23SAiAj+gfpaiYBKXMLd3t/pRsrnkMX36ZoMHfuTV/ZLx1KPbfD0niopds0LHXeGx/oX2ySUVRwUfA7yyv56cbcACFIUbzBLdaHVtURClUR1XN6ZTUgEjks8B9IuTWFqX5sJfwtWDTyBXtaQy8mKjOiCMbxvBNrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PFshMHDl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKNZGUOk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD1A31F000FF;
-	Sat, 12 Sep 2026 12:48:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PFshMHDl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98FC41F00899;
+	Sat, 12 Sep 2026 12:48:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217307;
-	bh=whelAwvwHudj2JRO0XbHMsVz0YlSkghSgdONM0RHnXc=;
+	s=korg; t=1789217312;
+	bh=g8I61dobChdWIIis+NHIEogGJ3zkoT7ilZEneh/U8vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OKNZGUOk73GNJnf1ZVJ7NzJ5cEp6j9y4Kh/4RRwKzjcUdxKzSK9GoqC4Nzul3Phab
-	 xpEG07x+tijiXpSpj94c4Z6AP73v57KUQsZKP6KrU55XHGntah9hANIpYkFUTduOsG
-	 JUohQy+FM8/3xz9gQKGxEO/nPB7IuT/DyC7jfyv4=
+	b=PFshMHDlgI1pWZ6aYWd9lq7h5sg2Z6UmC90PFRvn9f3Xt2Lc3AP1TizOSh5RZ4v21
+	 7kzy+yQD07NFJIfC/af96HGLuP0ozrt4rkg6vGmMZCqP5j6lCg1PgDRKCbo8m88tZk
+	 L1tp8FwhbsxHpyXMAcKCfc9v7gOE3Lp0x1B6OcQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0913/1376] of: property: add of_graph_get_next_port()
-Date: Sat, 12 Sep 2026 08:55:39 +0200
-Message-ID: <20260912065627.917243116@linuxfoundation.org>
+Subject: [PATCH 6.12 0914/1376] of: property: add of_graph_get_next_port_endpoint()
+Date: Sat, 12 Sep 2026 08:55:40 +0200
+Message-ID: <20260912065627.938368236@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,199 +53,148 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 02ac5f9d6caec96071103f7c62b5117526e47b64 ]
+[ Upstream commit 58fe47d6ac7413172e1fa88324fb1b4c0eb2c0a2 ]
 
-We have endpoint base functions
-	- of_graph_get_next_endpoint()
-	- of_graph_get_endpoint_count()
-	- for_each_endpoint_of_node()
+We already have of_graph_get_next_endpoint(), but it is not
+intuitive to use in some case.
 
-Here, for_each_endpoint_of_node() loop finds each endpoints
-
-	ports {
-		port@0 {
-(1)			endpoint {...};
+(X)	node {
+(Y)		ports {
+(P0)			port@0 { endpoint { remote-endpoint = ...; };};
+(P10)			port@1 { endpoint { remote-endpoint = ...; };
+(P11)				 endpoint { remote-endpoint = ...; };};
+(P2)			port@2 { endpoint { remote-endpoint = ...; };};
 		};
-		port@1 {
-(2)			endpoint {...};
-		};
-		...
 	};
 
-In above case, it finds endpoint as (1) -> (2) -> ...
+For example, if I want to handle port@1's 2 endpoints (= P10, P11),
+I want to use like below
 
-Basically, user/driver knows which port is used for what, but not in
-all cases. For example on flexible/generic driver case, how many ports
-are used is not fixed.
+	P10 = of_graph_get_next_endpoint(port1, NULL);
+	P11 = of_graph_get_next_endpoint(port1, P10);
 
-For example Sound Generic Card driver which is very flexible/generic and
-used from many venders can't know how many ports are used, and used for
-what, because it depends on each vender SoC and/or its used board.
+But 1st one will be error, because of_graph_get_next_endpoint()
+requested 1st parameter is "node" (X) or "ports" (Y), not but "port".
+Below works well, but it will get P0
 
-And more, the port can have multi endpoints. For example Generic Sound
-Card case, it supports many type of connection between CPU / Codec, and
-some of them uses multi endpoint in one port. see below.
+	P0 = of_graph_get_next_endpoint(node,  NULL);
+	P0 = of_graph_get_next_endpoint(ports, NULL);
 
-	ports {
-(A)		port@0 {
-(1)			endpoint@0 {...};
-(2)			endpoint@1 {...};
-		};
-(B)		port@1 {
-(3)			endpoint {...};
-		};
-		...
-	};
+In other words, we can't handle P10/P11 directly via
+of_graph_get_next_endpoint().
 
-Generic Sound Card want to handle each connection via "port" base instead
-of "endpoint" base. But, it is very difficult to handle each "port" via
-existing for_each_endpoint_of_node(). Because getting each "port" via
-of_get_parent() from each "endpoint" doesn't work. For example in above
-case, both (1) (2) endpoint has same "port" (= A).
+There is another non intuitive behavior on of_graph_get_next_endpoint().
+In case of if I could get P10 pointer for some way, and if I want to
+handle port@1 things by loop, I would like use it like below
 
-Add "port" base functions.
+	/*
+	 * "ep" is now P10, and handle port1 things here,
+	 * but we don't know how many endpoints port1 have.
+	 *
+	 * Because "ep" is non NULL now, we can use port1
+	 * as of_graph_get_next_endpoint(port1, xxx)
+	 */
+	do {
+		/* do something for port1 specific things here */
+	} while (ep = of_graph_get_next_endpoint(port1, ep))
+
+But it also not worked as I expected.
+I expect it will be P10 -> P11 -> NULL,
+but      it will be P10 -> P11 -> P2,    because
+of_graph_get_next_endpoint() will fetch "endpoint" beyond the "port".
+It is not useful for generic driver.
+
+To handle endpoint more intuitive, create of_graph_get_next_port_endpoint()
+
+	of_graph_get_next_port_endpoint(port1, NULL); // P10
+	of_graph_get_next_port_endpoint(port1, P10);  // P11
+	of_graph_get_next_port_endpoint(port1, P11);  // NULL
 
 Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/r/87ldyeb5t9.wl-kuninori.morimoto.gx@renesas.com
+Link: https://lore.kernel.org/r/87jzdyb5t5.wl-kuninori.morimoto.gx@renesas.com
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Stable-dep-of: 62bac3202042 ("drm/sun4i: tcon-top: Keep mixer routes distinct")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/property.c    | 54 ++++++++++++++++++++++++++++++++++++++++
- include/linux/of_graph.h | 28 +++++++++++++++++++++
- 2 files changed, 82 insertions(+)
+ drivers/of/property.c    | 27 +++++++++++++++++++++++++++
+ include/linux/of_graph.h | 21 +++++++++++++++++++++
+ 2 files changed, 48 insertions(+)
 
 diff --git a/drivers/of/property.c b/drivers/of/property.c
-index 906a33ae717f7..7c8fb5dd4cb19 100644
+index 7c8fb5dd4cb19..0b1d28b249bdb 100644
 --- a/drivers/of/property.c
 +++ b/drivers/of/property.c
-@@ -630,6 +630,43 @@ struct device_node *of_graph_get_port_by_id(struct device_node *parent, u32 id)
+@@ -667,6 +667,33 @@ struct device_node *of_graph_get_next_port(const struct device_node *parent,
  }
- EXPORT_SYMBOL(of_graph_get_port_by_id);
+ EXPORT_SYMBOL(of_graph_get_next_port);
  
 +/**
-+ * of_graph_get_next_port() - get next port node.
-+ * @parent: pointer to the parent device node, or parent ports node
-+ * @prev: previous port node, or NULL to get first
++ * of_graph_get_next_port_endpoint() - get next endpoint node in port.
++ * If it reached to end of the port, it will return NULL.
++ * @port: pointer to the target port node
++ * @prev: previous endpoint node, or NULL to get first
 + *
-+ * Parent device node can be used as @parent whether device node has ports node
-+ * or not. It will work same as ports@0 node.
-+ *
-+ * Return: A 'port' node pointer with refcount incremented. Refcount
++ * Return: An 'endpoint' node pointer with refcount incremented. Refcount
 + * of the passed @prev node is decremented.
 + */
-+struct device_node *of_graph_get_next_port(const struct device_node *parent,
-+					   struct device_node *prev)
++struct device_node *of_graph_get_next_port_endpoint(const struct device_node *port,
++						    struct device_node *prev)
 +{
-+	if (!parent)
-+		return NULL;
-+
-+	if (!prev) {
-+		struct device_node *node __free(device_node) =
-+			of_get_child_by_name(parent, "ports");
-+
-+		if (node)
-+			parent = node;
-+
-+		return of_get_child_by_name(parent, "port");
-+	}
-+
-+	do {
-+		prev = of_get_next_child(parent, prev);
++	while (1) {
++		prev = of_get_next_child(port, prev);
 +		if (!prev)
 +			break;
-+	} while (!of_node_name_eq(prev, "port"));
++		if (WARN(!of_node_name_eq(prev, "endpoint"),
++			 "non endpoint node is used (%pOF)", prev))
++			continue;
++
++		break;
++	}
 +
 +	return prev;
 +}
-+EXPORT_SYMBOL(of_graph_get_next_port);
++EXPORT_SYMBOL(of_graph_get_next_port_endpoint);
 +
  /**
   * of_graph_get_next_endpoint() - get next endpoint node
   * @parent: pointer to the parent device node
-@@ -823,6 +860,23 @@ unsigned int of_graph_get_endpoint_count(const struct device_node *np)
- }
- EXPORT_SYMBOL(of_graph_get_endpoint_count);
- 
-+/**
-+ * of_graph_get_port_count() - get the number of port in a device or ports node
-+ * @np: pointer to the device or ports node
-+ *
-+ * Return: count of port of this device or ports node
-+ */
-+unsigned int of_graph_get_port_count(struct device_node *np)
-+{
-+	unsigned int num = 0;
-+
-+	for_each_of_graph_port(np, port)
-+		num++;
-+
-+	return num;
-+}
-+EXPORT_SYMBOL(of_graph_get_port_count);
-+
- /**
-  * of_graph_get_remote_node() - get remote parent device_node for given port/endpoint
-  * @node: pointer to parent device_node containing graph port/endpoint
 diff --git a/include/linux/of_graph.h b/include/linux/of_graph.h
-index a4bea62bfa290..44518f3583a44 100644
+index 44518f3583a44..a692d9d979a64 100644
 --- a/include/linux/of_graph.h
 +++ b/include/linux/of_graph.h
-@@ -11,6 +11,7 @@
- #ifndef __LINUX_OF_GRAPH_H
- #define __LINUX_OF_GRAPH_H
- 
-+#include <linux/cleanup.h>
- #include <linux/types.h>
- #include <linux/errno.h>
- 
-@@ -37,14 +38,29 @@ struct of_endpoint {
- 	for (child = of_graph_get_next_endpoint(parent, NULL); child != NULL; \
- 	     child = of_graph_get_next_endpoint(parent, child))
+@@ -50,6 +50,18 @@ struct of_endpoint {
+ 	for (struct device_node *child __free(device_node) = of_graph_get_next_port(parent, NULL);\
+ 	     child != NULL; child = of_graph_get_next_port(parent, child))
  
 +/**
-+ * for_each_of_graph_port - iterate over every port in a device or ports node
-+ * @parent: parent device or ports node containing port
-+ * @child: loop variable pointing to the current port node
++ * for_each_of_graph_port_endpoint - iterate over every endpoint in a port node
++ * @parent: parent port node
++ * @child: loop variable pointing to the current endpoint node
 + *
 + * When breaking out of the loop, and continue to use the @child, you need to
 + * use return_ptr(@child) or no_free_ptr(@child) not to call __free() for it.
 + */
-+#define for_each_of_graph_port(parent, child)			\
-+	for (struct device_node *child __free(device_node) = of_graph_get_next_port(parent, NULL);\
-+	     child != NULL; child = of_graph_get_next_port(parent, child))
++#define for_each_of_graph_port_endpoint(parent, child)			\
++	for (struct device_node *child __free(device_node) = of_graph_get_next_port_endpoint(parent, NULL);\
++	     child != NULL; child = of_graph_get_next_port_endpoint(parent, child))
 +
  #ifdef CONFIG_OF
  bool of_graph_is_present(const struct device_node *node);
  int of_graph_parse_endpoint(const struct device_node *node,
- 				struct of_endpoint *endpoint);
- unsigned int of_graph_get_endpoint_count(const struct device_node *np);
-+unsigned int of_graph_get_port_count(struct device_node *np);
- struct device_node *of_graph_get_port_by_id(struct device_node *node, u32 id);
- struct device_node *of_graph_get_next_endpoint(const struct device_node *parent,
+@@ -61,6 +73,8 @@ struct device_node *of_graph_get_next_endpoint(const struct device_node *parent,
  					struct device_node *previous);
-+struct device_node *of_graph_get_next_port(const struct device_node *parent,
-+					   struct device_node *port);
+ struct device_node *of_graph_get_next_port(const struct device_node *parent,
+ 					   struct device_node *port);
++struct device_node *of_graph_get_next_port_endpoint(const struct device_node *port,
++						    struct device_node *prev);
  struct device_node *of_graph_get_endpoint_by_regs(
  		const struct device_node *parent, int port_reg, int reg);
  struct device_node *of_graph_get_remote_endpoint(
-@@ -73,6 +89,11 @@ static inline unsigned int of_graph_get_endpoint_count(const struct device_node
- 	return 0;
- }
- 
-+static inline unsigned int of_graph_get_port_count(struct device_node *np)
-+{
-+	return 0;
-+}
-+
- static inline struct device_node *of_graph_get_port_by_id(
- 					struct device_node *node, u32 id)
- {
-@@ -86,6 +107,13 @@ static inline struct device_node *of_graph_get_next_endpoint(
+@@ -114,6 +128,13 @@ static inline struct device_node *of_graph_get_next_port(
  	return NULL;
  }
  
-+static inline struct device_node *of_graph_get_next_port(
++static inline struct device_node *of_graph_get_next_port_endpoint(
 +					const struct device_node *parent,
 +					struct device_node *previous)
 +{
