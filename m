@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A4620ED;
-	Sat, 12 Sep 2026 08:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7712E738A;
+	Sat, 12 Sep 2026 08:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203012; cv=none; b=O8xvymhyamCiUCjwBE5U8/ZoiAzA9okCCc/keMxqP7GZ1WESeEsOjX5DfMxaD8BZp/uUvm1truwNTsFw3E8z84tw99qvdOl3edVQQvwbpy9LXhkEerZ7GFsulb6ifYKYacLOfimUDZ2ce/ZaB6KyeOPNdyXm10pjS0ryJFAcGd8=
+	t=1789203016; cv=none; b=SWNHvo0ZrdfjLrSTQ4uQVB4MlIp1D5/CyZ4ANcXnR8P4GYQYGgEpQWsJKWffAWeMVbqUqdJXlULKQl8hTugjmwIUH6LZjWTdCnZvD2pJb7J05g9uTej/CGsexzYjCqY1GlIIOm88t9OdQ8XliZg8Mdnlku8l+G6r3P8biF0Srpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203012; c=relaxed/simple;
-	bh=Zn/hxpbUwb0EDXXNie3gRGMz2e1OKZWZ/9BYc6HXFXI=;
+	s=arc-20240116; t=1789203016; c=relaxed/simple;
+	bh=km4JebUWcmnrfQgO9zkR+1onq8h8DCFACiDZo6+hD1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJ4Y9CDZdLzynBy9Hg02KN/JyzR5SOEYo+G1g8rAj08FXdPoWuiFQTFxC2mx3SO3W/ih6NXOiiaZB/2qkcWyKOEXk+tuNH8Tj3gbXHSa8bCeXw0pHulBbDQIQ7nhEUaoIJXwIJdwxJzW68SlNeyy9gPpjgDzGcN9xxOxu4Bsqmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDJt6Y1p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cvq9he5GOONYaXjehAyvwjCKHc6Vxv8vwLJf9oin953O02eL8v2KEb4M2704nsXBo2qbPZS1Kqp3FADyEDIrRN//nRtxVIRLPIXVaQ2nhTheeEJTzzakwRRNmh38761gtFlBUZ97ywzAj06iTIYzS04RWUQX4lFiz64A9W4zs4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOiFeFff; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDJt6Y1p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24DC21F000FF;
-	Sat, 12 Sep 2026 08:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOiFeFff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A0C1F000FF;
+	Sat, 12 Sep 2026 08:50:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203010;
-	bh=d2OLgJxklJT5F9iOq5mXphhjp15evySqcGqca8ykZRM=;
+	s=korg; t=1789203015;
+	bh=R207BBYsiJ2KeY879bIdFGnkOJhdhpKSy090AEM90c4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iDJt6Y1piLU1N4KhTKeFCCMVVaFSdoZDHnr8vsVVDhS9XOfcphGN/dyGReiAclGsC
-	 TJnY3GZdi43b1NHSs7/G9/8i8HX1mrkzpuEREFsqKX36IObKPNyEqm0wN1iVfcTu2m
-	 0KujVTdODWYfXztZ9KoLpq1wkmYXdMXzV/Q4pWiM=
+	b=jOiFeFffoZEP2A08fbMv2JzKo4zNgHgZmJSXoFagT3SRpAbf8RvH4VCoMgatNQAcZ
+	 e4rG2ITB2RZ2cTFeChjImlB9NOwENY4nuVS6NrMTkP4iwuP7h+vfA+1mZDQ3OS1zE7
+	 VQrqdYO7sH/UPp8Pa0c5M2M/gowOu894AObLymfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,12 +30,13 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Guixin Liu <kanie@linux.alibaba.com>,
 	Hannes Reinecke <hare@suse.de>,
 	Christoph Hellwig <hch@lst.de>,
+	Kanchan Joshi <joshi.k@samsung.com>,
 	Nilay Shroff <nilay@linux.ibm.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1319/1815] nvmet: propagate percpu_ref_init() failure in nvmet_ns_enable()
-Date: Sat, 12 Sep 2026 08:51:09 +0200
-Message-ID: <20260912065719.988680730@linuxfoundation.org>
+Subject: [PATCH 7.2 1320/1815] nvme-pci: release descriptor pools on probe failure
+Date: Sat, 12 Sep 2026 08:51:10 +0200
+Message-ID: <20260912065720.013060583@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -56,42 +57,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 751709592d2626eaa8dc17ef8137796758a3c37f ]
+[ Upstream commit cb144c2f67128abfa5c7ba33318617d19f192156 ]
 
-The return value of percpu_ref_init() is discarded. At this point ret is
-0 from the preceding successful steps, so when the allocation inside
-percpu_ref_init() fails the code jumps to the out_pr_exit cleanup chain
-which ends with "return ret", i.e. reports success. The configfs enable
-store then tells userspace the namespace was enabled even though it was
-not and its backing device has already been torn down.
+The per-NUMA-node descriptor DMA pools are created lazily from
+nvme_init_hctx_common() once the admin tag set is allocated, but they are
+only destroyed in nvme_remove() via nvme_release_descriptor_pools(). Any
+probe failure after the admin tag set has been allocated unwinds through
+the out_disable label and nvme_pci_free_ctrl(), neither of which releases
+the pools, leaking the dma_pool objects.
 
-Capture the return value so the failure is propagated.
+Release the descriptor pools in the out_disable error path. It must not
+be added to nvme_pci_free_ctrl(), as that would double-free against
+nvme_remove() on the normal teardown path.
 
-Fixes: 408232680707 ("nvmet: Fix crash when a namespace is disabled")
+Fixes: d977506f8863 ("nvme-pci: make PRP list DMA pools per-NUMA-node")
 Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
 Reviewed-by: Hannes Reinecke <hare@suse.de>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
 Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nvme/host/pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index 7e565a84d341a..48a9a07f0f624 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -610,7 +610,8 @@ int nvmet_ns_enable(struct nvmet_ns *ns)
- 			goto out_dev_put;
- 	}
- 
--	if (percpu_ref_init(&ns->ref, nvmet_destroy_namespace, 0, GFP_KERNEL))
-+	ret = percpu_ref_init(&ns->ref, nvmet_destroy_namespace, 0, GFP_KERNEL);
-+	if (ret)
- 		goto out_pr_exit;
- 
- 	nvmet_ns_changed(subsys, ns->nsid);
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 219cda2558284..664a36eed23c3 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3840,6 +3840,7 @@ static int nvme_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	nvme_dev_remove_admin(dev);
+ 	nvme_dbbuf_dma_free(dev);
+ 	nvme_free_queues(dev, 0);
++	nvme_release_descriptor_pools(dev);
+ out_release_iod_mempool:
+ 	mempool_destroy(dev->dmavec_mempool);
+ out_dev_unmap:
 -- 
 2.53.0
 
