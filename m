@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97541FCFFC;
-	Sat, 12 Sep 2026 14:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E5E1FCFFC;
+	Sat, 12 Sep 2026 14:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223307; cv=none; b=u1p4NS56UOCZUlreswdFKxZ9LcuxALUHkN92G1brQwFW1hRZK00cVlRBOepDg4NnvQqpXtAfvJtwO12xkVAT1F4VjAE+wRWGd01RFMDXEixV6+5liJ223BKyWLLhWjj5cj6uyxUhcyJ0Bhno7uww8W5VhzccKzH2hGh+oFp4/aw=
+	t=1789223313; cv=none; b=PIS0JYdAaIOk0ZFYU69LObL0RoPDEZyyByOnVJ0jz4Ab1Twj6HKGG6F4UgtLiOTh7dpb+33D5DaQ98noIuVvUdi/c+y+vyGEd5FOnEUHwqJmNTwrmICechCkxE5cxJmVrYHMjTxtPBe1LT1stSUApwWIMi0dMZIYXMj4nmSXE2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223307; c=relaxed/simple;
-	bh=Tve6+ibdjt/HEXqL2O8KzYfLWyMAsPKk1D8Q7ImIR/Q=;
+	s=arc-20240116; t=1789223313; c=relaxed/simple;
+	bh=YOWKetD/iPvzJqFR1gXToEIItG1qpHQxfMFZSC9fXGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=slO9Pn4d1az/xSdRJVPxIer8s1vhMJedVIp8Ym9sD/CTtpF2HyS+mYtomapbbWxOWoffpuZ9XChBMTpnjmEixnITy8jiTytTzbPIXuTeb8xXkaBb2S6J4ucijdOvdMQEmj7VCurn9c/WwO1GnaVScUo1Kb0wbf87sVdiNjIJYfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DOL69AFv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uM0ViJBTVVC7Ctib25Uo17e7mDVHzbyynQLZxOZADPjHzcl0OmjZpuq+mjLE/2mR7tC7aoJRC1TVRSoi9xKxRPsnsL+mWKkwguLD8K226ywVBHk7mHsrUPw2hWTlais3OIZssnkiibB3aEb53/LaLKU2o1mFw+vFk3o9Np2Vnkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p3lok1mk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DOL69AFv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697661F000FF;
-	Sat, 12 Sep 2026 14:28:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p3lok1mk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08D81F000FF;
+	Sat, 12 Sep 2026 14:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223306;
-	bh=XDIv/IZ1lcRBynpA5wiEkAcakJghWNkUsIeiTK08CYg=;
+	s=korg; t=1789223311;
+	bh=vvBi1KBYg7DMxDnpw6T0NVNfnAoyxu0JeiQiyQwrg0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DOL69AFvKw4eZZleou1M1fi/61jU+Bv/WCqSTrkynQz/rDCbCMhgqvUyNxxvI8vZ4
-	 iN5XceOVMzKMXoItx9Zv9cgj8RYp5k5MgK0jakjDnsSWweRwdaxmpO/1+IorI4nzD4
-	 Z719ZQr4YnpK/vNJ2YiPHR3LaCvU9KYIT8OSksKg=
+	b=p3lok1mkDTiOiTdUsJjt/xbyYJsiAxi2tFoFfUy79uUFFPdwT3/LuMf28HToyv3Uz
+	 uHRXpdsmeuq1MIWFowOl/EXgRA+iXqMqC31umPiR721hirNshXrYVdlMQtM/8Nz8Jd
+	 ThIGrGLMo7iiM3SSeJ7xn5B3xwW7VB34xhbeXJmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Herve Codina <herve.codina@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0761/1424] irqdomain: Introduce irq_domain_free()
-Date: Sat, 12 Sep 2026 08:53:13 +0200
-Message-ID: <20260912065624.339214814@linuxfoundation.org>
+Subject: [PATCH 6.6 0762/1424] irqdomain: Introduce irq_domain_instantiate()
+Date: Sat, 12 Sep 2026 08:53:14 +0200
+Message-ID: <20260912065624.361482237@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,58 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 From: Herve Codina <herve.codina@bootlin.com>
 
-[ Upstream commit 89b37541ca38954f8ac01c2ca25405b140cfc8eb ]
+[ Upstream commit 299d623f5c9ab48e53255cf6b510627f1ef26dfe ]
 
-In preparation of the introduction of the irq domain instantiation,
-introduce irq_domain_free() to avoid code duplication on later
-modifications.
+The existing irq_domain_add_*() functions used to instantiate an IRQ
+domain are wrappers built on top of __irq_domain_add() and describe the
+domain properties using a bunch of parameters.
 
-This new function is an extraction of the current operations performed
-to free the irq domain. No functional change intended.
+Adding more parameters and wrappers to hide new parameters in the
+existing code lead to more and more code without any relevant value and
+without any flexibility.
+
+Introduce irq_domain_instantiate() where the interrupt domain properties
+are given using a irq_domain_info structure instead of the bunch of
+parameters to allow flexibility and easy evolution.
+
+irq_domain_instantiate() performs the same operation as the one done by
+__irq_domain_add(). For compatibility reason with existing code, keep
+__irq_domain_add() but convert it to irq_domain_instantiate().
+
+[ tglx: Fixed up struct initializer coding style ]
 
 Suggested-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Herve Codina <herve.codina@bootlin.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20240614173232.1184015-2-herve.codina@bootlin.com
+Link: https://lore.kernel.org/r/20240614173232.1184015-3-herve.codina@bootlin.com
 Stable-dep-of: 616dd89d81ad ("irqchip/renesas-irqc: Fix generic interrupt chip leak on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/irqdomain.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ include/linux/irqdomain.h | 21 +++++++++++++++++++++
+ kernel/irq/irqdomain.c    | 39 ++++++++++++++++++++++++++++++++-------
+ 2 files changed, 53 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
-index ddaaccdc09fae..697b5280f4bff 100644
---- a/kernel/irq/irqdomain.c
-+++ b/kernel/irq/irqdomain.c
-@@ -236,6 +236,15 @@ static void __irq_domain_publish(struct irq_domain *domain)
- 	pr_debug("Added domain %s\n", domain->name);
+diff --git a/include/linux/irqdomain.h b/include/linux/irqdomain.h
+index 51c254b7fec27..542b1bb78aa83 100644
+--- a/include/linux/irqdomain.h
++++ b/include/linux/irqdomain.h
+@@ -257,6 +257,27 @@ static inline struct fwnode_handle *irq_domain_alloc_fwnode(phys_addr_t *pa)
  }
  
-+static void irq_domain_free(struct irq_domain *domain)
+ void irq_domain_free_fwnode(struct fwnode_handle *fwnode);
++/**
++ * struct irq_domain_info - Domain information structure
++ * @fwnode:		firmware node for the interrupt controller
++ * @size:		Size of linear map; 0 for radix mapping only
++ * @hwirq_max:		Maximum number of interrupts supported by controller
++ * @direct_max:		Maximum value of direct maps;
++ *			Use ~0 for no limit; 0 for no direct mapping
++ * @ops:		Domain operation callbacks
++ * @host_data:		Controller private data pointer
++ */
++struct irq_domain_info {
++	struct fwnode_handle			*fwnode;
++	unsigned int				size;
++	irq_hw_number_t				hwirq_max;
++	int					direct_max;
++	const struct irq_domain_ops		*ops;
++	void					*host_data;
++};
++
++struct irq_domain *irq_domain_instantiate(const struct irq_domain_info *info);
++
+ struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, unsigned int size,
+ 				    irq_hw_number_t hwirq_max, int direct_max,
+ 				    const struct irq_domain_ops *ops,
+diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
+index 697b5280f4bff..80e0477beca2e 100644
+--- a/kernel/irq/irqdomain.c
++++ b/kernel/irq/irqdomain.c
+@@ -245,6 +245,27 @@ static void irq_domain_free(struct irq_domain *domain)
+ 	kfree(domain);
+ }
+ 
++/**
++ * irq_domain_instantiate() - Instantiate a new irq domain data structure
++ * @info: Domain information pointer pointing to the information for this domain
++ *
++ * Return: A pointer to the instantiated irq domain or an ERR_PTR value.
++ */
++struct irq_domain *irq_domain_instantiate(const struct irq_domain_info *info)
 +{
-+	fwnode_dev_initialized(domain->fwnode, false);
-+	fwnode_handle_put(domain->fwnode);
-+	if (domain->flags & IRQ_DOMAIN_NAME_ALLOCATED)
-+		kfree(domain->name);
-+	kfree(domain);
++	struct irq_domain *domain;
++
++	domain = __irq_domain_create(info->fwnode, info->size, info->hwirq_max,
++				     info->direct_max, info->ops, info->host_data);
++	if (!domain)
++		return ERR_PTR(-ENOMEM);
++
++	__irq_domain_publish(domain);
++
++	return domain;
 +}
++EXPORT_SYMBOL_GPL(irq_domain_instantiate);
 +
  /**
   * __irq_domain_add() - Allocate a new irq_domain data structure
   * @fwnode: firmware node for the interrupt controller
-@@ -291,12 +300,7 @@ void irq_domain_remove(struct irq_domain *domain)
- 	mutex_unlock(&irq_domain_mutex);
- 
- 	pr_debug("Removed domain %s\n", domain->name);
+@@ -263,14 +284,18 @@ struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, unsigned int s
+ 				    const struct irq_domain_ops *ops,
+ 				    void *host_data)
+ {
+-	struct irq_domain *domain;
 -
--	fwnode_dev_initialized(domain->fwnode, false);
--	fwnode_handle_put(domain->fwnode);
--	if (domain->flags & IRQ_DOMAIN_NAME_ALLOCATED)
--		kfree(domain->name);
--	kfree(domain);
-+	irq_domain_free(domain);
+-	domain = __irq_domain_create(fwnode, size, hwirq_max, direct_max,
+-				     ops, host_data);
+-	if (domain)
+-		__irq_domain_publish(domain);
++	struct irq_domain_info info = {
++		.fwnode		= fwnode,
++		.size		= size,
++		.hwirq_max	= hwirq_max,
++		.direct_max	= direct_max,
++		.ops		= ops,
++		.host_data	= host_data,
++	};
++	struct irq_domain *d;
+ 
+-	return domain;
++	d = irq_domain_instantiate(&info);
++	return IS_ERR(d) ? NULL : d;
  }
- EXPORT_SYMBOL_GPL(irq_domain_remove);
+ EXPORT_SYMBOL_GPL(__irq_domain_add);
  
 -- 
 2.53.0
