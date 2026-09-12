@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970FB3624CC;
-	Sat, 12 Sep 2026 18:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3623624CC;
+	Sat, 12 Sep 2026 18:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237204; cv=none; b=kFVrcEVBrz9wdE/7VI5ykSDpzs/vDwyYYGOK+/8PGpnizaN1uPNncqp0wRW7Qt2wOviW4K+meazjy3Xvgl2AfmdFPHeQmDENibWy9q99E7FeM9bjxw3KuMBDDsFdLXqjM+b4T6mjH4y2vUsh3lIkK5YswQZRhh9USh7RfEajrZE=
+	t=1789237209; cv=none; b=XcfZuJaz2qnqRcOpnDKPgKZPQzFfjt0Xqr9FKIZ6Dns3P0EqszzIvxXHeduBa0pjj48iwBbdX+dEFWKPA/yw9qfDY1ZQBMD+JSZjYbUwotQVEn9paUHlSezOaZF2qZOwlqLJJVZzdt/iv6HcfKEkGZG/kPwycBWFW3nWzNkqjyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237204; c=relaxed/simple;
-	bh=XOWGe9NS53/Etm1TXRq5lZm7jYyVXzirQko6dojF9mY=;
+	s=arc-20240116; t=1789237209; c=relaxed/simple;
+	bh=VGgf0FmMmlc7FHjhJqtWYtAujHsXSsrRAZF/wzScYZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kdLcwwngzGphcNZo+rMseFJKPlEJrgv9P2VaPHX4yK0kE8+3xZzRuXDJcx6dG0sk7s1QH/hqeihhuWPAqAfSD/mFJelnbxUtdE0lw+7e8TuNG9j+5znnH+KWWB9luLNLGJI0Z1/AzdLv3bZ6RrP4isUPONiGByXEn5rafpRmuRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UyFti7P8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WQRMKh3MW0yIOrl4NUbt9GwoksAQe+rTJK9H/vRxK0I+0GpDPjLwC1X0WAEvSFdMUYgqK34iuXkcSkQbdipY1G3FgpNtot9NMt9dsIg2gD1tKw75OylDCcxVUeewkGuEXEUUp/YAyhZ0tRN4sMKo/Z2DOq2FT7h+fws/wu34fV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/OHGtcI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UyFti7P8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E77C1F000FF;
-	Sat, 12 Sep 2026 18:20:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/OHGtcI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 865FB1F000FF;
+	Sat, 12 Sep 2026 18:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237203;
-	bh=qFqW4bqrqPZJBeah+L6Nt8+5H93UyRrrEpNFkCrme6Q=;
+	s=korg; t=1789237208;
+	bh=/hgnghmBM75Wcd42vRSxer4osqRtK/E4k1FKeWUQM80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UyFti7P8Csa848xA40FnNz7+HIDQXNVbF16duWjy0MrYdcP0ejQtuS8mHsHhgtClw
-	 qvkR7uaVP0uO93S/nvS4ZnIwvl+D3jp+2N9OZb1+hn+JotgTruUofwC3tlonWyP54j
-	 RU8NIIjhaauvC+ztQ52E3zgtKueew1tP8Wx5JXtc=
+	b=a/OHGtcIB46HrU5WsRsftjIvylxtqg6egiE+/Ql3KrBlj+JUjfARuo8gUCa9MSY7e
+	 oecoNtSm6aam24SBTmLbdortnA3GhYFdy4diFWA0W/Rd+GOxTGNkmN9weywaeBrLgb
+	 GFTIiGHv3xwojtIzjAGoZfMxjFO8RP/2eRzeu89k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 5.15 209/935] w1: ds28e17: reject an oversize length on an I2C block read
-Date: Sat, 12 Sep 2026 08:53:59 +0200
-Message-ID: <20260912065531.620198960@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 5.15 210/935] tpm: tpm_i2c_nuvoton: disable IRQ on wait timeout
+Date: Sat, 12 Sep 2026 08:54:00 +0200
+Message-ID: <20260912065531.642448867@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,62 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 169ae5e65e5aaf213b6a578f6478a9fd2e523606 upstream.
+commit 705c4ed0643366963547b2616d53165f2519c81f upstream.
 
-w1_f19_i2c_master_transfer() is the master_xfer for the DS28E17 1-Wire
-to I2C bridge. On an I2C_M_RECV_LEN read, it takes the length from the
-device. The downstream slave puts a length byte in buf[0]. The driver
-then reads that many bytes into buf[1] with w1_f19_i2c_read().
+i2c_nuvoton_wait_for_stat() enables the IRQ before waiting for the
+interrupt handler to report a status change. If the wait times out, or is
+interrupted before the handler runs, the function returns without
+balancing the enable_irq() call.
 
-buf[0] is controlled by the device and can be 0 to 255.
-w1_f19_i2c_read() only rejects a zero count. The caller buffer is
-I2C_SMBUS_BLOCK_MAX + 2, so 34 bytes. A length above 32 makes the read
-run past it, up to about 222 bytes out of bounds.
+Disable the IRQ before leaving the failed wait path. Also preserve an
+interrupted wait's original error code instead of converting it to
+-ETIMEDOUT inside the helper.
 
-The SMBus core does check buf[0] against I2C_SMBUS_BLOCK_MAX. That
-check runs after master_xfer returns. By then the write is already
-done. i2c-algo-bit rejects an oversize length before it copies, and
-returns -EPROTO.
-
-Reject a length above I2C_SMBUS_BLOCK_MAX at both RECV_LEN sites, the
-same way i2c-algo-bit does.
-
-Fixes: ebc4768ac497 ("add w1_ds28e17 driver for the DS28E17 Onewire to I2C master bridge")
-Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260629121043.199487-1-maoyixie.tju@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: stable@vger.kernel.org # v5.10+
+Fixes: 4c336e4b1556 ("tpm: Add support for the Nuvoton NPCT501 I2C TPM")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20260626091653.54929-1-mhun512@gmail.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/slaves/w1_ds28e17.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/char/tpm/tpm_i2c_nuvoton.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/w1/slaves/w1_ds28e17.c
-+++ b/drivers/w1/slaves/w1_ds28e17.c
-@@ -389,6 +389,10 @@ static int w1_f19_i2c_master_transfer(st
- 			 * another simple read in that case.
- 			 */
- 			if (msgs[i+1].flags & I2C_M_RECV_LEN) {
-+				if (msgs[i+1].buf[0] > I2C_SMBUS_BLOCK_MAX) {
-+					i = -EPROTO;
-+					goto error;
-+				}
- 				result = w1_f19_i2c_read(sl, msgs[i+1].addr,
- 					&(msgs[i+1].buf[1]), msgs[i+1].buf[0]);
- 				if (result < 0) {
-@@ -415,6 +419,10 @@ static int w1_f19_i2c_master_transfer(st
- 			 * another simple read in that case.
- 			 */
- 			if (msgs[i].flags & I2C_M_RECV_LEN) {
-+				if (msgs[i].buf[0] > I2C_SMBUS_BLOCK_MAX) {
-+					i = -EPROTO;
-+					goto error;
-+				}
- 				result = w1_f19_i2c_read(sl,
- 					msgs[i].addr,
- 					&(msgs[i].buf[1]),
+--- a/drivers/char/tpm/tpm_i2c_nuvoton.c
++++ b/drivers/char/tpm/tpm_i2c_nuvoton.c
+@@ -181,8 +181,10 @@ static int i2c_nuvoton_wait_for_stat(str
+ 						      timeout);
+ 		if (rc > 0)
+ 			return 0;
+-		/* At this point we know that the SINT pin is asserted, so we
+-		 * do not need to do i2c_nuvoton_check_status */
++
++		disable_irq(priv->irq);
++		if (rc < 0)
++			return rc;
+ 	} else {
+ 		unsigned long ten_msec, stop;
+ 		bool status_valid;
 
 
