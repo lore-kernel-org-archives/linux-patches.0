@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60991C5799;
-	Sat, 12 Sep 2026 18:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0893B38A4;
+	Sat, 12 Sep 2026 18:58:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239530; cv=none; b=os0JJ+AKDfG849t5cGXrOqjFNr08B1BNLosIbySTVczyBOyc6q358MBdQUOWGaXlOWVFHAafU/4votdhTANQCbmO/rTB4+S4QKOesaqwivbCsttNvcoKxSdWzQe+rSidGrTYUJYi9rcVCcQdUBx9gYxYuacIyYBKKPwB6oRg35A=
+	t=1789239535; cv=none; b=lTZq/VxDM1agSZKNjKSVmcW804RAXwsQH1GyDmhsDk3dyEBJ2/orUWZ5PGQY2AWcjXsGe8C4mSA6G2uzSjqOX5FIcskPUaZaLVEp/XZQaH0VeRNWp8+yqf4hQn1DgS8NTOMQRKnk/Y+wyc1EoRoxgyWNFxxVhrojiwg39h4sstQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239530; c=relaxed/simple;
-	bh=HI/nkoIdoQzNYBwac77GoeqxUCZezZ9Xm885BCLUE3Y=;
+	s=arc-20240116; t=1789239535; c=relaxed/simple;
+	bh=+O5LNBf2lxKEqdbDX48DCZqxH23VKei9kqHUZrxciq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lIog55yxtOsfZbCB+nrUlcngCA6mgqVVhk0ll/HUGBk6z17qs0SFXRqR1u5wZqf9BWM2ExKep+6w5JQrF11mNsRUlQLVPm17UqQHAJd+z4M+QqeyAtNhOG4m0ExWuPU0Oz4snn/fkG8DS7/e8nImwDi5xjnniy+RX9XwTJF7eug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKY0Qr+p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dFgbnDWkjK9yPX4h3012oTxbuiaE4P5p49f7vUvlIJrrXkGb4BkqVW9l+QCy/uvbOejyIDWjzzVCKNVjRjBXOb7n+a81fhbybBRyIWl3D9LG6gwcqyJos91Hyc5P5S/20BQ34NCIKRpOtgeTmJQOB9GpHU2u3xYrvQt9uQYPoks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGmpfL5r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKY0Qr+p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70BC61F000FF;
-	Sat, 12 Sep 2026 18:58:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGmpfL5r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59F471F000FF;
+	Sat, 12 Sep 2026 18:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239529;
-	bh=DHGSwjj2cTvy1wnP3OUVet/Cyp6UtkyOu+6fGeiOE0Y=;
+	s=korg; t=1789239534;
+	bh=FLEPw8pO/05f3CMt9Y6vN3iQNvx2xTbNHMymfSMUKrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eKY0Qr+pNN6GX+JryU8vz15rcx0aFAda3vi6U/ViNPNRPZBwNTvJPnG08RyTSFn3o
-	 ioMRy02eOGTBEDjzUJhnEc3Kk8LLFF6WuOfF2SgGndq18v0qs4koEO0O5525mq+GB6
-	 76YwLWLDfnMhc3UgH+K4YBRqxVxopfgOWqoK3B64=
+	b=LGmpfL5rsW+fv5H084bnAkVHoUFoFGiI8eT4qBLjaPvFsDJRHxIC+ZGmSDJzh1rdb
+	 8TenctQKuMq1/M643Xsbd2lEGc4MHYvv0AdUi0d9QapzXOuurQJpmA+rOkzl3kH3Bx
+	 iU9gBjD/+zPvjofh+SZeNhL4hSczZTAP5+0a8yv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sang-Heon Jeon <ekffu200098@gmail.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <remi@remlab.net>,
+	Joe Damato <joe@dama.to>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 684/935] iio: light: tsl2583: return zero in write_raw() on success
-Date: Sat, 12 Sep 2026 09:01:54 +0200
-Message-ID: <20260912065542.531099196@linuxfoundation.org>
+Subject: [PATCH 5.15 685/935] phonet: pep: do not write beyond optlen in getsockopt
+Date: Sat, 12 Sep 2026 09:01:55 +0200
+Message-ID: <20260912065542.552857245@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -46,45 +48,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sang-Heon Jeon <ekffu200098@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 42e8791841e0677418a3ccc97fa5c22a1455f417 ]
+[ Upstream commit 77e5eb0e192aec6710c03ca8144582fd2af36ca4 ]
 
-tsl2583_write_raw() returns the value of pm_runtime_put_autosuspend(),
-which is 1 if the device is already runtime suspended.
+pep_getsockopt() clamps the reported length to the caller's buffer with
+min_t(), but then stores the value with put_user(val, (int __user *)
+optval), which always writes sizeof(int) bytes. A getsockopt() call with
+an optlen smaller than sizeof(int) thus reports the clamped length yet
+writes a full int, one to three bytes past the user buffer.
 
-In that case write() on the sysfs attribute returns 1 instead of the
-number of bytes written. Make tsl2583_write_raw() always return zero
-on success.
+Write the value with copy_to_user() bounded by len, so at most optlen
+bytes are copied, matching the length reported back to userspace.
 
-Fixes: 371894f5d1a0 ("iio: tsl2583: add runtime power management support")
-Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Fixes: 02a47617cdce ("Phonet: implement GPRS virtual interface over PEP socket")
+Acked-by: Rémi Denis-Courmont <remi@remlab.net>
+Reviewed-by: Joe Damato <joe@dama.to>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260729-getsockopt_phase4-v4-4-c44576757c17@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/tsl2583.c | 2 +-
+ net/phonet/pep.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/light/tsl2583.c b/drivers/iio/light/tsl2583.c
-index d696d19e2e8e9..40a0b52638c1b 100644
---- a/drivers/iio/light/tsl2583.c
-+++ b/drivers/iio/light/tsl2583.c
-@@ -800,7 +800,7 @@ static int tsl2583_write_raw(struct iio_dev *indio_dev,
- 	if (ret < 0)
- 		return ret;
- 
--	return ret;
-+	return 0;
+diff --git a/net/phonet/pep.c b/net/phonet/pep.c
+index 81b90e02631d5..714a14a9a2570 100644
+--- a/net/phonet/pep.c
++++ b/net/phonet/pep.c
+@@ -1116,7 +1116,7 @@ static int pep_getsockopt(struct sock *sk, int level, int optname,
+ 	len = min_t(unsigned int, sizeof(int), len);
+ 	if (put_user(len, optlen))
+ 		return -EFAULT;
+-	if (put_user(val, (int __user *) optval))
++	if (copy_to_user(optval, &val, len))
+ 		return -EFAULT;
+ 	return 0;
  }
- 
- static const struct iio_info tsl2583_info = {
 -- 
 2.53.0
 
