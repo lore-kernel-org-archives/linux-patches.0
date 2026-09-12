@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37A247A87A;
-	Sat, 12 Sep 2026 12:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733114BEE22;
+	Sat, 12 Sep 2026 12:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216476; cv=none; b=fdexbA9XICkH0B9NZt5XiqvihuBmVBa+twi5mNGnNzUaMigfnR7rtr/vdbDfhrOrGxzil4WUFzwNLF8Yn4SqyusVLG3n2o0svhsCyfUpQbtFfK1v4rxCaxwoXcpZ0fi2A9PKf9VSbZijWRpUVY05uW5Z4qov1i2CD7Rn5UdgGzI=
+	t=1789216480; cv=none; b=HU39kmoqkmmsKUuPYANn3ddJg0VAjs0vr+gM70hUCARG9RgxSzZB/BhSozaJreT6iy0Cy9hNhXsiTesF30OdF0arFqoVow9wlsAQfInXGoZC2XmApzdFOeg7KccaFsXXj2jF4Nr0IYVQAmecXAFh2GsoGtQ39/S4N3zLnP3rqdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216476; c=relaxed/simple;
-	bh=pQB4c6NE47TKStlDm8cnzxR/sSmLCzI0aQ/nHhvZjq4=;
+	s=arc-20240116; t=1789216480; c=relaxed/simple;
+	bh=KuFnTWYGqwoT0ldri/kHIdkN6WmemXlGhTnTmfYEuyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JnZXwq7SnPulWTKPAw7JnDpn10DsLS3yjQ8SKrDcfW7O4UurCXSwOvtTkRfoKOhi63Ig/2smYKqT+ctBWAIJg3soTHCw0CTqXDlZsOvbKyxTWvl99hc5ufFW4v8y2/vACctwMZtl4F28uqKqcc4S7IbHxvx+E065GlMy6HfQhT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhkPy4yR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ABWX+XpaLZNLcKyxMOQOno94Rh22V+jI/ftVBILxNsIK5FF5660a2YQyLKI3Zpqbb+tVCF/o0PFncHfFRuPmSp1kpYkrFqwZRHroMI19dG/1+Psl3oXrhEfq1sV2KptLChaKHa04vo/SKf6doQ+bOJRcoV7M8y9NcxE6TiqFriA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QoKRRiXT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhkPy4yR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA201F000FF;
-	Sat, 12 Sep 2026 12:34:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QoKRRiXT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77AF51F000FF;
+	Sat, 12 Sep 2026 12:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216474;
-	bh=3DD7HyIxxy+D3PBsHUeMYMWAkgj3i9vOPG17Ul17xlY=;
+	s=korg; t=1789216479;
+	bh=RFm7EN5oPa5obrY4Voag9EkjXo2C5I0kDOZvc/fLWxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zhkPy4yR4lsBGszAaLhkvEn7P058ZQ2wtocZnHrF1sMe8IdxCgQ53ZyCwjmoJJLZF
-	 dAG5BUxtMKyIybySYYiGvIPobzdyVd05mAq4yILGv4aaJBs/orMFwJJGlg7epAf+lZ
-	 eEKQUQX4HMfs6YJD/DZXonWyiYLr00SG1JoL4s/M=
+	b=QoKRRiXTsg/YV0VFAwBj5uvfX8wz/zxqfWbyqBp4lEcEBWJ3dP4TyvRTLu/hp095i
+	 b78Q7nfoPk7NQJIRgsV+bIJnHLSxbwJrCmZYpioZYFynla+8dKRJZORG6TEwBBN64X
+	 3cXGNOGadkJf6qvvmXm/2jXZWVZTagS94B36SI0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Babanpreet Singh <bbnpreetsingh@gmail.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0700/1376] spi: oc-tiny: switch to managed controller allocation
-Date: Sat, 12 Sep 2026 08:52:06 +0200
-Message-ID: <20260912065623.146958289@linuxfoundation.org>
+Subject: [PATCH 6.12 0701/1376] w1: ds2482: Fix signedness bug in ds2482_w1_triplet()
+Date: Sat, 12 Sep 2026 08:52:07 +0200
+Message-ID: <20260912065623.169040375@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,110 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Babanpreet Singh <bbnpreetsingh@gmail.com>
 
-[ Upstream commit d710f43ce30975d197f73c543bfe47b958d8ba17 ]
+[ Upstream commit 4d3721b204f961e905714954ff95633337b768e3 ]
 
-The controller is allocated with the non-managed spi_alloc_host() while
-the interrupt is registered with devm_request_irq().  During removal,
-spi_bitbang_stop() only unregisters the controller; the subsequent
-spi_controller_put() then frees the controller together with its
-embedded driver-private devdata, which is the IRQ handler's dev_id.  The
-devm_request_irq() release action (free_irq()), which drains the
-handler, does not run until after .remove() returns.  A late or latched
-interrupt can therefore reach tiny_spi_irq() and dereference
-already-freed memory (e.g. hw->base).
+ds2482_wait_1wire_idle() returns the status register value (0..255) on
+success, or a negative value on I2C failure: -1 when selecting the
+status register fails, or a negative errno from i2c_smbus_read_byte().
 
-Switch to devm_spi_alloc_host() so that the devres LIFO order releases
-the controller only after free_irq() has drained the handler, and drop
-the now-redundant spi_controller_put() from .remove().  The probe error
-path is simplified to direct returns.
+ds2482_w1_triplet() feeds that result into "return (status >> 5);"
+without checking for errors, and the function returns u8. For a
+negative status the arithmetic shift keeps the sign and the u8
+truncation fabricates a triplet result whose meaning depends on the
+errno value: -1 and -EIO happen to become 0xff, whose set low bits make
+w1_search() abort, but -ETIMEDOUT (-110 >> 5 = -4) becomes 0xfc -
+"devices responded on both branches, wrote 1" - and -EOPNOTSUPP
+(-95 >> 5 = -3) becomes 0xfd - "only the zero branch responded".
+w1_search() then continues the ROM search with a fabricated direction
+bit instead of aborting, and the corrupted id is either rejected by the
+ROM CRC (existing device missed) or registers a phantom slave.
 
-This issue was found by an in-house static analysis tool.
+The function already defines an in-band error value: status is
+initialized to (3 << 5), which decodes to 3 (both branch bits set, "no
+device responded") and makes w1_search() terminate the search when
+sending the triplet command fails. Decode a negative status to the same
+value.
 
-Fixes: ce792580ea2c ("spi: add OpenCores tiny SPI driver")
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260719010014.3163356-1-fanwu01@zju.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Found by smatch:
+drivers/w1/masters/ds2482.c:314 ds2482_w1_triplet() warn: signedness bug returning '(-67108864)'
+
+Fixes: baf12ae29ab4 ("[PATCH] W1: Add the DS2482 I2C-to-w1 bridge driver.")
+Assisted-by: Claude:claude-sonnet-5
+Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
+Link: https://patch.msgid.link/20260714041011.7-1-bbnpreetsingh@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-oc-tiny.c | 24 ++++++++----------------
- 1 file changed, 8 insertions(+), 16 deletions(-)
+ drivers/w1/masters/ds2482.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/spi/spi-oc-tiny.c b/drivers/spi/spi-oc-tiny.c
-index 7d8c5cd680d1d..2e5df685c2779 100644
---- a/drivers/spi/spi-oc-tiny.c
-+++ b/drivers/spi/spi-oc-tiny.c
-@@ -211,11 +211,11 @@ static int tiny_spi_probe(struct platform_device *pdev)
- 	struct tiny_spi_platform_data *platp = dev_get_platdata(&pdev->dev);
- 	struct tiny_spi *hw;
- 	struct spi_controller *host;
--	int err = -ENODEV;
-+	int err;
+diff --git a/drivers/w1/masters/ds2482.c b/drivers/w1/masters/ds2482.c
+index a2ecbb863c57f..a7fc6ec31938e 100644
+--- a/drivers/w1/masters/ds2482.c
++++ b/drivers/w1/masters/ds2482.c
+@@ -309,6 +309,10 @@ static u8 ds2482_w1_triplet(void *data, u8 dbit)
  
--	host = spi_alloc_host(&pdev->dev, sizeof(struct tiny_spi));
-+	host = devm_spi_alloc_host(&pdev->dev, sizeof(struct tiny_spi));
- 	if (!host)
--		return err;
-+		return -ENOMEM;
+ 	mutex_unlock(&pdev->access_lock);
  
- 	/* setup the host state. */
- 	host->bus_num = pdev->id;
-@@ -233,10 +233,8 @@ static int tiny_spi_probe(struct platform_device *pdev)
- 
- 	/* find and map our resources */
- 	hw->base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(hw->base)) {
--		err = PTR_ERR(hw->base);
--		goto exit;
--	}
-+	if (IS_ERR(hw->base))
-+		return PTR_ERR(hw->base);
- 	/* irq is optional */
- 	hw->irq = platform_get_irq(pdev, 0);
- 	if (hw->irq >= 0) {
-@@ -244,7 +242,7 @@ static int tiny_spi_probe(struct platform_device *pdev)
- 		err = devm_request_irq(&pdev->dev, hw->irq, tiny_spi_irq, 0,
- 				       pdev->name, hw);
- 		if (err)
--			goto exit;
-+			return err;
- 	}
- 	/* find platform data */
- 	if (platp) {
-@@ -253,29 +251,23 @@ static int tiny_spi_probe(struct platform_device *pdev)
- 	} else {
- 		err = tiny_spi_of_probe(pdev);
- 		if (err)
--			goto exit;
-+			return err;
- 	}
- 
- 	/* register our spi controller */
- 	err = spi_bitbang_start(&hw->bitbang);
- 	if (err)
--		goto exit;
-+		return err;
- 	dev_info(&pdev->dev, "base %p, irq %d\n", hw->base, hw->irq);
- 
- 	return 0;
--
--exit:
--	spi_controller_put(host);
--	return err;
++	/* On bus error, decode to 3 (no device responded) to abort the search */
++	if (status < 0)
++		status = 3 << 5;
++
+ 	/* Decode the status */
+ 	return (status >> 5);
  }
- 
- static void tiny_spi_remove(struct platform_device *pdev)
- {
- 	struct tiny_spi *hw = platform_get_drvdata(pdev);
--	struct spi_controller *host = hw->bitbang.ctlr;
- 
- 	spi_bitbang_stop(&hw->bitbang);
--	spi_controller_put(host);
- }
- 
- #ifdef CONFIG_OF
 -- 
 2.53.0
 
