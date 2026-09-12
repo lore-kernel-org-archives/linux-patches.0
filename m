@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D45447ACE6;
-	Sat, 12 Sep 2026 13:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206A241A503;
+	Sat, 12 Sep 2026 13:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218760; cv=none; b=o2h0yeYKg5EOKujXMeJXypUrZv5+qxfujLIhMSulBObMTPSSnBl3HDhgAS2Mj7Vzgvux4/J+DRVEDz0Kcd+nRZ0Rr2amF7Yr+8sDSjXj/ISp29SHJV1UNxv77DnSoB3KM++9zIMhIbWTr2ots6tZsj1w9RJAjcVsajsThWL1fIA=
+	t=1789218765; cv=none; b=Hb6caacVRpGtwZMsAXzgdrHdNt8B6+kwCpmOh9cZ5wSbSuw7ajWpyFfkXjzW21NfpDLLE0V5R5tYQUIOKJ/Wzlgjti1hEQ7OKGuBFX9EKJO4d/XHtNR/ad96f+4h7QwJczdbF/2rcQ+w3IsVlvWCIi8mPApC8M8dLPU4X5BtmH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218760; c=relaxed/simple;
-	bh=h4ECO8ckZ4SGhzz3YsKgzUWs1qz6a4+lhUeQvQYPj98=;
+	s=arc-20240116; t=1789218765; c=relaxed/simple;
+	bh=/rp6fBqLGFnlEwnKcQWgEURideFt1WtSlowud+3OmHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q3Lyo0PzPzdedOXT1S0/nJfv087X1RRJ0HnpzKbBjFZyVC7refUXrwkyzfq6QlVdTwq0MK/tfwROD61+mcC0FqNQG9eY9gxR4LPCIqIB25m+EWIV8leT1R37IZzTDFlkn8kFwebqjanxSzno5tgC+6tZelsOOyGorkJVimoG5V4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=syUQvuJv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cEI0mrUTOsb+hLGbLjU0HEx2tsV6291XeZAbCvkR5PQg53cYgrM4HGvIVugvrPRiiv6by7Llip9qkqrYq+ElWfTCzGb8+zGM93N1ncWciybLO2Zoe3Xv0sHfgrd90Cbi11RTuTH4FXp37o6cUdYlsfAB9Sq0GPstuDZLdk5TRI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ql9PigDp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="syUQvuJv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7EDC1F00893;
-	Sat, 12 Sep 2026 13:12:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ql9PigDp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5EEC1F000FF;
+	Sat, 12 Sep 2026 13:12:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218759;
-	bh=kyQ8K+eSca89YvnBVO4hGaSi2RrX5jufp0FWbWiQ4nM=;
+	s=korg; t=1789218763;
+	bh=4pJz/2UUsAt0wPEg+/+kyYrX/MCDRA+bJXzMy7gZea4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=syUQvuJvHHsYZMyxWjNKORrLYsaK4n5d8Krq/BxqzDRIzzM51+lIkbZogdh2OZP8g
-	 JrkUqAuegWIXDlhsxwoMa04JFRT81TNMqH055hZCrIZGbxWolYTX7Rk98JWNNZ3sjZ
-	 DIWfJbGaQhnlgS1KtJVomV15p70+uO+E8oj2L6Mc=
+	b=Ql9PigDpUBmOcNeE+VTI8SErJ4P7zS6bf229a9MbB6O96PT8Qon77kzamNz+i6HZM
+	 4NA9QJLYDxiP6OkLTb+70oqp5omOJhM7bvkNJk0GqrgobvizWMHx2+WCTak+Pl46A+
+	 CXvOdJLCjbZx3Sfdn+xNgF8JwOXibWkwKjOb/vz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Baul Lee <baul.lee@xbow.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1212/1376] ALSA: hda: Fix connection list comparison in proc output
-Date: Sat, 12 Sep 2026 09:00:38 +0200
-Message-ID: <20260912065634.563116388@linuxfoundation.org>
+Subject: [PATCH 6.12 1213/1376] vxlan: mdb: Fix use-after-free in vxlan_mdb_flush()
+Date: Sat, 12 Sep 2026 09:00:39 +0200
+Message-ID: <20260912065634.584494877@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,60 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-[ Upstream commit c139e7e44f58a6f8ddc9d850ea9924d34963b5da ]
+[ Upstream commit bc2dc66a6693a78f8c1e6ca2dbebd50f16e2c366 ]
 
-print_conn_list() compares the raw hardware connection list with the
-connection list cached by the HDA driver.  When they differ, it prints an
-additional "In-driver Connection" line so that /proc/asound/card*/codec#*
-shows the topology actually used by the driver.
+vxlan_mdb_flush() iterates over the MDB entries using
+hlist_for_each_entry_safe(), which only tolerates the removal of the
+current entry. Contrary to the comment above the loop, the removal of an
+entry can trigger the removal of another entry.
 
-The comparison currently passes conn_len directly to memcmp().  However,
-conn_len is a number of connection-list entries, while memcmp() expects a
-size in bytes.  Both list and conn are arrays of hda_nid_t, which is u16,
-so only half of the connection data is compared.
+Flushing the remotes of a (*, G) entry also removes the (S, G) entries
+that were created for its source list, once they are left without
+remotes:
 
-For example, for two-entry lists such as:
+vxlan_mdb_remotes_flush()
+-> vxlan_mdb_remote_del()
+   -> vxlan_mdb_remote_srcs_del()
+      -> vxlan_mdb_remote_src_del()
+         -> vxlan_mdb_remote_src_fwd_del()
+            -> __vxlan_mdb_del()
+               -> vxlan_mdb_entry_put()
 
-  hardware: 0x0c 0x0d
-  cached:   0x0c 0x0e
+Such an entry can be located after the (*, G) entry in the list, as
+vxlan_mdb_entry_get() returns an existing entry without moving it to the
+head of the list. This order is obtained by adding the (S, G) entry
+before the (*, G) entry, the latter with NLM_F_REPLACE, as the addition
+of the source otherwise fails with -EEXIST. The (S, G) entry is then the
+entry saved by hlist_for_each_entry_safe() and it is freed while the
+(*, G) entry is processed. The next iteration calls hlist_del() on it
+again, writing LIST_POISON1 to LIST_POISON2 [1].
 
-conn_len is 2, and the current comparison checks only the first hda_nid_t.
-The lists are therefore incorrectly treated as identical even though the
-second connection differs.
+Besides device deletion, the flush is also reachable from RTM_DELMDB
+with NLM_F_BULK.
 
-This can happen legitimately when codec fixups replace a cached connection
-list with snd_hda_override_conn_list().  The codec routing used by the
-driver is not affected, but the proc output can hide the overridden
-driver-visible routing and provide misleading topology information during
-codec debugging.
+Fix by re-reading the next entry after the remotes were flushed. The
+current entry cannot be removed by this flush, as source lists can only
+be configured on (*, G) entries and the removed entries are (S, G)
+entries. It is therefore still linked and its next pointer reflects the
+removals.
 
-Convert the entry count to a byte size so that memcmp() covers the
-complete connection list.
+[1]
+BUG: KASAN: wild-memory-access in vxlan_mdb_entry_put.part.0+0x328/0x588
+Write of size 8 at addr dead000000000122 by task ip/327
 
-Fixes: 8b2c7a5c404d ("ALSA: hda - Add In-driver connection info")
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/7B802A4E225CC808+20260818083808.2735120-1-raoxu@uniontech.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+CPU: 3 UID: 1000 PID: 327 Comm: ip Not tainted 7.2.0-rc7 #2 PREEMPT
+Call trace:
+ vxlan_mdb_entry_put.part.0+0x328/0x588
+ vxlan_mdb_flush+0x1d8/0x25c
+ vxlan_mdb_fini+0x8c/0x100
+ vxlan_uninit+0x1c/0x7c
+ unregister_netdevice_many_notify+0x954/0xd4c
+ rtnl_dellink+0x210/0x530
+ rtnetlink_rcv_msg+0x434/0x4d0
+ netlink_rcv_skb+0xc4/0x204
+ rtnetlink_rcv+0x18/0x24
+ netlink_unicast+0x4b8/0x548
+ netlink_sendmsg+0x29c/0x560
+ ____sys_sendmsg+0x390/0x3ec
+ ___sys_sendmsg+0x114/0x188
+ __sys_sendmsg+0xf0/0x178
+ __arm64_sys_sendmsg+0x48/0x60
+ invoke_syscall.constprop.0+0x58/0x180
+ el0_svc_common.constprop.0+0x74/0x140
+ do_el0_svc+0x30/0x40
+ el0_svc+0x38/0x98
+ el0t_64_sync_handler+0xa0/0xe4
+ el0t_64_sync+0x198/0x19c
+
+Fixes: a3a48de5eade ("vxlan: mdb: Add MDB control path support")
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260814153547.29567-1-baul.lee@xbow.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_proc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/vxlan/vxlan_mdb.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/hda/hda_proc.c b/sound/pci/hda/hda_proc.c
-index 00c2eeb2c472d..e8a4cf3c84d82 100644
---- a/sound/pci/hda/hda_proc.c
-+++ b/sound/pci/hda/hda_proc.c
-@@ -624,7 +624,7 @@ static void print_conn_list(struct snd_info_buffer *buffer,
- 	/* Get Cache connections info */
- 	cache_len = snd_hda_get_conn_list(codec, nid, &list);
- 	if (cache_len >= 0 && (cache_len != conn_len ||
--			      memcmp(list, conn, conn_len) != 0)) {
-+			      memcmp(list, conn, conn_len * sizeof(*conn)) != 0)) {
- 		snd_iprintf(buffer, "  In-driver Connection: %d\n", cache_len);
- 		if (cache_len > 0) {
- 			snd_iprintf(buffer, "    ");
+diff --git a/drivers/net/vxlan/vxlan_mdb.c b/drivers/net/vxlan/vxlan_mdb.c
+index e15a8536dae9b..166e590da160b 100644
+--- a/drivers/net/vxlan/vxlan_mdb.c
++++ b/drivers/net/vxlan/vxlan_mdb.c
+@@ -1428,14 +1428,17 @@ static void vxlan_mdb_flush(struct vxlan_dev *vxlan,
+ 	struct vxlan_mdb_entry *mdb_entry;
+ 	struct hlist_node *tmp;
+ 
+-	/* The removal of an entry cannot trigger the removal of another entry
+-	 * since entries are always added to the head of the list.
+-	 */
+ 	hlist_for_each_entry_safe(mdb_entry, tmp, &vxlan->mdb_list, mdb_node) {
+ 		if (desc->src_vni && desc->src_vni != mdb_entry->key.vni)
+ 			continue;
+ 
+ 		vxlan_mdb_remotes_flush(vxlan, mdb_entry, desc);
++		/* The flush can remove the (S, G) entries created for the
++		 * source list of this entry, including the one saved by
++		 * hlist_for_each_entry_safe(), so re-read it while this entry
++		 * is still linked.
++		 */
++		tmp = mdb_entry->mdb_node.next;
+ 		/* Entry will only be removed if its remotes list is empty. */
+ 		vxlan_mdb_entry_put(vxlan, mdb_entry);
+ 	}
 -- 
 2.53.0
 
