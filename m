@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1362EBDE9;
-	Sat, 12 Sep 2026 07:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CEB2385D7C;
+	Sat, 12 Sep 2026 07:19:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197600; cv=none; b=lBHBf32JgPJqPk6btUE4FgaZuY85dhQhaubePblkfC6ldoAoB0yD00+1kSLeZRL1dmBA9mMgI7wkpJCk/Yma6lkUJKJNzP647XEykgXGJAU8TRzBJGMEo8yl/zNMz/CvKfLRb0A6iupLL/9DJmuZ1X7ljmCA9XK2zfIdlpcxn34=
+	t=1789197602; cv=none; b=hoChlj3XoWcZKYyHJ5hZP5+y0o06ileekJ+S26hCpMQ8+xdUAILg170uczY68zMLS6XR5PGnEwANjGAYGZ7uUj7XOnj7yDqWZrPmEjeZbpBKU3E8lD6Y9Q+bnF0AhHUe66/4GyO19TqGLgauBu2rdMrsa5PADZZ6/c+lTdvVLdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197600; c=relaxed/simple;
-	bh=9/R7ggZxI4lnI8gFK+j52S69udAVwGFlT0k1mw2Tv7w=;
+	s=arc-20240116; t=1789197602; c=relaxed/simple;
+	bh=3JoY22aNSjyEm0yQ7dLjOMrR5yYUF1XDx/5OVejvebE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=frLa8bH9D6TQHqemgiY8qT0X9o5Tb5OVjfSCWnAPd+amwHCffhwIdyKhYKqkpFJnKym7fQE9iwlbYSULDNzDQGFYX4my4XjIc029iOtZ+F6rfd7jg/zJfZHoMMbIhZmAFTqoayPJdWvw0hYGxL4jx+n0rTZdmvBe7KCbQ1TxFzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiA2Jn59; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bVustgTfW5Q0WLh7s2QiulDV8As/qItEglTfd20XTSw+xu6G42x4syqCEFmpjBd5NCMDtcPLHX5+Y2e4PMBD0sMhcn3K2I75gbgZ/E0dAfPRANA89IJdFAFpnIPzf6lmc/Fio/6sHAPI0caHMdZE7HrO6ceAofANug4fBD1U1wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nda6c7Jz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiA2Jn59"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C9B1F000FF;
-	Sat, 12 Sep 2026 07:19:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nda6c7Jz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779661F00893;
+	Sat, 12 Sep 2026 07:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197599;
-	bh=UcW/VmJzd1Jag/JS2w6dlcPNOErub0G9gLvQVfS55QQ=;
+	s=korg; t=1789197595;
+	bh=FEgud7t8o4PHvJZBvdHEIRH5PpW6oYH/ell/YrFl7Dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HiA2Jn59JwSQiVCpNehKtSYVpsAKoquPvNHTwPWkpV6iDeRoI661Ww8MQfc1GHtVR
-	 WVo2ZWfXuvNyQpNtZai2/tjX5mwRmqGubvFCV2jW7vnkrtY7t45/Ue9q1cqem2Huve
-	 pwt9XRQrdBN1By36pJ1OL3fBnahIurKCg3c27Ic8=
+	b=nda6c7Jz16SI9fQnWf0q1MC5Mv9RXeTJEQeRjJosAg1QC6ci0+7FszrpuPnlpfpcO
+	 Di5y305ORpk2cKar2HMvN1+8cH+3wz+1ocdbj5dcSsexz8y+x3TtCfmAocDQjyn+GG
+	 6XYIyxHUiWsHwnVA/vkWHWNZCNawvqeD9vnJhtL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	"Kevin Hilman (TI)" <khilman@baylibre.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0208/1815] bus: ti-sysc: Fix /chosen node reference leak
-Date: Sat, 12 Sep 2026 08:32:38 +0200
-Message-ID: <20260912065653.881192871@linuxfoundation.org>
+Subject: [PATCH 7.2 0207/1815] nvmet-rdma: fix response resource leak on queue teardown
+Date: Sat, 12 Sep 2026 08:32:37 +0200
+Message-ID: <20260912065653.858183294@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,64 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-[ Upstream commit 6342de0aed216b6df460b492ddb532b3e0ed16f1 ]
+[ Upstream commit 0114dd303b373522dea06053aabae34bdd33a7c4 ]
 
-sysc_init_stdout_path() gets the /chosen node with
-of_find_node_by_path() to read stdout-path. The function then overwrites
-the local node pointer with the stdout-path lookup result, or exits on
-error, without dropping the /chosen reference.
+When an nvme target with rdma transport is removed while I/Os are in
+flight, a response can be posted but its send completion is never
+delivered before the connection is torn down. As a result
+nvmet_rdma_send_done() and nvmet_rdma_release_rsp() are never called for
+the response, and this leaks the allocated RDMA read/write context and
+request SGLs.
 
-Keep the /chosen node in a separate variable and put it after the
-stdout-path value has been used for the lookup. The successful stdout
-node lookup remains referenced by the cached stdout_path pointer.
+These leaks are recreated by running blktests nvme/061 with the rdma
+transport and the siw driver. Kernel kmemleak feature reports them as
+follows:
 
-Fixes: 3bb37c8e6e6a ("bus: ti-sysc: Handle stdout-path for debug console")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20260615200540.770205-1-dbgh9129@gmail.com
-Signed-off-by: Kevin Hilman (TI) <khilman@baylibre.com>
+  unreferenced object 0xffff88812bc490c0 (size 32):
+    comm "kworker/2:1H", pid 409, jiffies 4307744490
+    backtrace (crc 89afd339):
+      __kmalloc_noprof+0x5f9/0x890
+      sgl_alloc_order+0x7b/0x380
+      nvmet_req_alloc_sgls+0x290/0x4f0 [nvmet]
+      nvmet_rdma_map_sgl_keyed+0x241/0x12e0 [nvmet_rdma]
+      nvmet_rdma_handle_command+0x73e/0xb80 [nvmet_rdma]
+      __ib_process_cq+0x149/0x4c0 [ib_core]
+      ib_cq_poll_work+0x49/0x160 [ib_core]
+      process_one_work+0x8b2/0x1640
+      worker_thread+0x5fd/0xfe0
+      kthread+0x367/0x460
+      ret_from_fork+0x655/0x9d0
+      ret_from_fork_asm+0x1a/0x30
+
+  unreferenced object 0xffff88814bd05e80 (size 64):
+    comm "kworker/3:1H", pid 148, jiffies 4295195428
+    backtrace (crc e35510cb):
+      __kmalloc_noprof+0x5f9/0x890
+      rdma_rw_ctx_init+0x333/0x1fa0 [ib_core]
+      nvmet_rdma_map_sgl_keyed+0x5c8/0x12e0 [nvmet_rdma]
+      nvmet_rdma_handle_command+0x73e/0xb80 [nvmet_rdma]
+      __ib_process_cq+0x149/0x4c0 [ib_core]
+      ib_cq_poll_work+0x49/0x160 [ib_core]
+      process_one_work+0x8b2/0x1640
+      worker_thread+0x5fd/0xfe0
+      kthread+0x367/0x460
+      ret_from_fork+0x655/0x9d0
+      ret_from_fork_asm+0x1a/0x30
+
+To avoid the memory leaks, reclaim the memory of the in-flight responses
+when the queue QP is torn down. Call nvmet_rdma_free_rsp_resources()
+that frees up the RDMA read/write context and the request SGLs of such
+responses.
+
+Fixes: 8f000cac6e7a ("nvmet-rdma: add a NVMe over Fabrics RDMA target driver")
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/ti-sysc.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/nvme/target/rdma.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
-index a5b9507de37c3..e118b900c9ac8 100644
---- a/drivers/bus/ti-sysc.c
-+++ b/drivers/bus/ti-sysc.c
-@@ -682,6 +682,7 @@ static struct device_node *stdout_path;
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index 3c34f235e542e..de5a88fbb2337 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -1345,9 +1345,27 @@ static int nvmet_rdma_create_queue_ib(struct nvmet_rdma_queue *queue)
+ 	goto out;
+ }
  
- static void sysc_init_stdout_path(struct sysc *ddata)
++static bool nvmet_rdma_reclaim_rsp(struct sbitmap *sb, unsigned int bitnr,
++				   void *data)
++{
++	struct nvmet_rdma_queue *queue = data;
++
++	nvmet_rdma_free_rsp_resources(&queue->rsps[bitnr]);
++
++	return true;
++}
++
+ static void nvmet_rdma_destroy_queue_ib(struct nvmet_rdma_queue *queue)
  {
-+	struct device_node *chosen;
- 	struct device_node *np = NULL;
- 	const char *uart;
- 
-@@ -691,15 +692,18 @@ static void sysc_init_stdout_path(struct sysc *ddata)
- 	if (stdout_path)
- 		return;
- 
--	np = of_find_node_by_path("/chosen");
--	if (!np)
-+	chosen = of_find_node_by_path("/chosen");
-+	if (!chosen)
- 		goto err;
- 
--	uart = of_get_property(np, "stdout-path", NULL);
--	if (!uart)
-+	uart = of_get_property(chosen, "stdout-path", NULL);
-+	if (!uart) {
-+		of_node_put(chosen);
- 		goto err;
-+	}
- 
- 	np = of_find_node_by_path(uart);
-+	of_node_put(chosen);
- 	if (!np)
- 		goto err;
- 
+ 	ib_drain_qp(queue->qp);
++
++	/*
++	 * Reclaim resources of a response that is still in-flight when the
++	 * queue is being torn down. This happens when the connection was
++	 * forcefully disconnected while an I/O is in flight.
++	 */
++	sbitmap_for_each_set(&queue->rsp_tags, nvmet_rdma_reclaim_rsp, queue);
++
+ 	if (queue->cm_id)
+ 		rdma_destroy_id(queue->cm_id);
+ 	ib_destroy_qp(queue->qp);
 -- 
 2.53.0
 
