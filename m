@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D1A41DEC8;
-	Sat, 12 Sep 2026 09:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6004078E8;
+	Sat, 12 Sep 2026 09:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207192; cv=none; b=pS1CYrn0dAKZZLg2QcRkr6VDvb4mGM4nhrkKzu4eEaBGC45vXZ9TKeFFEWI/q7cHLbu9FynW6fHcyTMZBSeEiojRHm/Xcs//qVNUuJaxG0Lezr90OMHGkFFku3sFMQtXRT4np0IR4B9+2olpkS+QyTaG+Zmtyjj6SYCRcV68QHY=
+	t=1789207197; cv=none; b=AzgDBJOcfBqURbXmJ+N3m8Zv79Ne0xiL3QxFaAFgzQS3smJEdDhQTQtXLZlL7Pntpe49MIdkt3CyYm8AGKTLc4W75exKJRyefK6jKvBT7zeNp3Ltxdb1+VJTbVwm8yxCr+CJVpdhtAhFuvftmzIyR8i1Ut8uhHYNEbsFS0R7W4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207192; c=relaxed/simple;
-	bh=6HCWL7MjhhvYtPXogX/XowjG21lLSm63n2VZNn8ZML8=;
+	s=arc-20240116; t=1789207197; c=relaxed/simple;
+	bh=m4+VbrXmgaFNRTUPALRsw6w8wjI1HxNNVKPG1rjsWQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HJ5Sa8gIDhlKOfi9gIu7iCFwbeF92z16vg16C9++PofE/+yzK6XOtIDLTYaeKhJdoVg8x9Yc5RuwQCPfLDV0bEMCWH0gcCjkKF+AZxrGf/ol+IBBiif/hrYkElVwlwqRNRNsaPN1EoopVwnuPSjx6PAPC/lxcNuNY6ToK8Kd1LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsnmORgy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XFV0rMTM44ALLVTfVPub5rXIeSNK7zc2qyRBGtbIP/3FufBC+uBiKbBozNrlr3fNue9l0bD6M2U8KrBUSh5n5O0xcRqd4xZxfW9WJRs0RHvjxeXAOiGYfD2wlvbYh2r2ZyEjvpKeFL/4kp/mzVZllRF5pYN30gZqFK814nTFumU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B34IYRHm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsnmORgy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B73B1F000FF;
-	Sat, 12 Sep 2026 09:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B34IYRHm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB1E1F000FF;
+	Sat, 12 Sep 2026 09:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207190;
-	bh=XZYtPkXypCHFyJUg8msD7sQbl17If/2pCWcpIuaTNxY=;
+	s=korg; t=1789207195;
+	bh=naQMkpgSNMtQE6sHD/rHPpS0GSzJ+uE6ckBdDfpHMvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fsnmORgyyhsdZkZoNhjJ60D4olVAZMD+oeO9O5fqx9+qlTvXzoRLlFzxVtNgxGi5E
-	 ct6Pz+2tj7xDqCCbkIlii3culmceI0Ni6FvyR93m6tyGBTLEsjtB9lpyBM38nbWzUR
-	 HJnAirZqDbssNdUbfXz/8T7vjTdwnCLW7nMHmUVE=
+	b=B34IYRHmUqO5O694zQMcFmXaVYozedzlX11aXnFyteu0TLuwU8Dvbn3D7FjpMVZu0
+	 8Gypbd5KdoikdBOzBPU9SW+YQfKrjaBkcKDUC8z49XadrdWh0OhrnwcOe7nqlxwM53
+	 S2KNc+ioO4urvu2KXR/QrDtNTYC4cgbLUOKG0Z18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Jan Kara <jack@suse.cz>,
+	Samuel Moelius <sam.moelius@trailofbits.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0360/1518] isofs: fix out-of-bounds page array access on empty zisofs block
-Date: Sat, 12 Sep 2026 08:42:09 +0200
-Message-ID: <20260912065631.615290062@linuxfoundation.org>
+Subject: [PATCH 6.18 0361/1518] iommufd/selftest: Avoid selftest dirty bitmap size wrap
+Date: Sat, 12 Sep 2026 08:42:10 +0200
+Message-ID: <20260912065631.637132107@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,71 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Samuel Moelius <sam.moelius@trailofbits.com>
 
-[ Upstream commit 68d4d3e78150c7ed7d1195af63ad1e6ace30c661 ]
+[ Upstream commit 4132ba2ae2cf14c289e3fabc1c95ac244d643356 ]
 
-zisofs_uncompress_block()'s empty-block fast path returns
-pcount << PAGE_SHIFT, ignoring the incoming poffset, unlike the
-decompression path which returns bytes produced relative to poffset.
-zisofs_fill_pages() uses that return to advance its page cursor, so when
-the zisofs block size is below PAGE_SIZE and a sub-page block leaves
-poffset partway into a page, a following empty block over-counts and
-advances pages[] one element past its end, after which
-"if (poffset && *pages)" reads pages[1] out of bounds.  rock.c only
-rejects a block-size shift > 17, so a crafted "ZF" Rock Ridge record can
-set it below PAGE_SHIFT; the bug is reached by an ordinary read() of a
-compressed file on such a mounted ISO9660 image.
+IOMMU_TEST_OP_DIRTY sizes its temporary dirty bitmap from length /
+page_size.  Very large selftest ranges can make the DIV_ROUND_UP()
+additions wrap before allocation, producing a zero-length allocation while
+the later test_bit() loop still walks the original number of bits.
 
-Return the byte count relative to poffset and zero only
-[poffset, PAGE_SIZE) of the first page, matching the decompression path.
-The page-aligned case (poffset == 0) is unaffected.
+The selftest helper does not need to support unbounded dirty bitmap sizes.
+Reject requests that would allocate more than SZ_16M for the temporary
+buffer.
 
-  BUG: KASAN: slab-out-of-bounds in zisofs_read_folio (fs/isofs/compress.c:290)
-  Read of size 8 at addr ffff88800f5eac48 by task exploit/142
-   zisofs_read_folio (fs/isofs/compress.c:290)
-   read_pages (mm/readahead.c:184)
-   ...
-   filemap_read (mm/filemap.c:2814)
-   vfs_read (fs/read_write.c:574)
-   __x64_sys_pread64 (fs/read_write.c:769)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  The buggy address is located 0 bytes to the right of the
-  allocated 8-byte region in the kmalloc-8 cache
-
-Fixes: 59bc055211b8 ("zisofs: Implement reading of compressed files when PAGE_CACHE_SIZE > compress block size")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260712234150.3213467-1-xmei5@asu.edu
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: 79ea4a496ab5 ("iommufd/selftest: Fix buffer read overrrun in the dirty test")
+Link: https://patch.msgid.link/r/20260628152331.82122.408afd7b466c.iommufd-test-dirty-bitmap-size-wrap@trailofbits.com
+Assisted-by: Codex:gpt-5.5-cyber-preview
+Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/isofs/compress.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/iommu/iommufd/selftest.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/isofs/compress.c b/fs/isofs/compress.c
-index 5f3b6da0e0225..172faf79a259d 100644
---- a/fs/isofs/compress.c
-+++ b/fs/isofs/compress.c
-@@ -65,12 +65,14 @@ static loff_t zisofs_uncompress_block(struct inode *inode, loff_t block_start,
- 	/* Empty block? */
- 	if (block_size == 0) {
- 		for ( i = 0 ; i < pcount ; i++ ) {
-+			unsigned int off = i ? 0 : poffset;
-+
- 			if (!pages[i])
- 				continue;
--			memzero_page(pages[i], 0, PAGE_SIZE);
-+			memzero_page(pages[i], off, PAGE_SIZE - off);
- 			SetPageUptodate(pages[i]);
- 		}
--		return ((loff_t)pcount) << PAGE_SHIFT;
-+		return (((loff_t)pcount) << PAGE_SHIFT) - poffset;
+diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
+index 35c42ff4355a7..cd3d1380cf6c5 100644
+--- a/drivers/iommu/iommufd/selftest.c
++++ b/drivers/iommu/iommufd/selftest.c
+@@ -10,6 +10,7 @@
+ #include <linux/iommu.h>
+ #include <linux/platform_device.h>
+ #include <linux/slab.h>
++#include <linux/sizes.h>
+ #include <linux/xarray.h>
+ #include <uapi/linux/iommufd.h>
+ 
+@@ -1806,6 +1807,9 @@ static int iommufd_test_dirty(struct iommufd_ucmd *ucmd, unsigned int mockpt_id,
+ 	if (!page_size || !length || iova % page_size || length % page_size ||
+ 	    !uptr)
+ 		return -EINVAL;
++	max = length / page_size;
++	if (max > SZ_16M * BITS_PER_BYTE)
++		return -EOVERFLOW;
+ 
+ 	hwpt = get_md_pagetable(ucmd, mockpt_id, &mock);
+ 	if (IS_ERR(hwpt))
+@@ -1816,7 +1820,6 @@ static int iommufd_test_dirty(struct iommufd_ucmd *ucmd, unsigned int mockpt_id,
+ 		goto out_put;
  	}
  
- 	/* Because zlib is not thread-safe, do all the I/O at the top. */
+-	max = length / page_size;
+ 	tmp = kvzalloc(DIV_ROUND_UP(max, BITS_PER_LONG) * sizeof(unsigned long),
+ 		       GFP_KERNEL_ACCOUNT);
+ 	if (!tmp) {
 -- 
 2.53.0
 
