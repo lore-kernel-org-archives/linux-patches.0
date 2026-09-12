@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B52B37757A;
-	Sat, 12 Sep 2026 09:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C8723876C5;
+	Sat, 12 Sep 2026 09:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205314; cv=none; b=ncVccjoYQw/VxDg8DMo4xU67+x5z7k39SzbAltnMnGWFCvvFgdEiuLC/0LwommVHSIGoeQpuUj12jqTTis5zuZ57T81bPqMHOllZOB43sBZdfKrs6QIWShpTrsXdKLMnJ/rPBi8HfGycyxtcduLS5aEEkt6lGtiCkS4aFMkSh8E=
+	t=1789205319; cv=none; b=OQTeCPXfC8XzOc1Vl3z4hXLnhWiSmVlc534NqHb1GZQkKUA+/3Qy5ZWaZyMnSUA5/FU5zQGtfEGUtCBd+He9zNZfYglodH3TN15H9n4VLhZE0HrP8tkCT8EDTASPR/542nas6RvOz23vjmF/DsVU1c9DKdhdU+6A9ShcSyB4xoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205314; c=relaxed/simple;
-	bh=mZv4Q8Ram84pfoJ9qOz2Un2NV0Ue/t7zCx4uPe+sWjc=;
+	s=arc-20240116; t=1789205319; c=relaxed/simple;
+	bh=2LOtq/jWCinMri8uUYRf8nYGt9ttLx86Y8YSo/GPH7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EPTg3dFrKvx2Db0vQXTNh5eXXSFgUGeQhqYqY8eLKQEGlUzFtRDSILto1rbL+/QUhEnjIJ27UmfheD4HaKx7yBCS654pTAgnawIVZzspz8MSw5dRbXduN9heQSeqB5DKRBd3b+qX2RM7VJeZYqct/+SbzhhYesjpcfdG905Ff1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BHEfT6CO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=frDo9YhSRhdR90G0fX6sZBiBxdtTDJswjt/UFTTPZcasgKrR2y2ua5A+TRT/k81xEgtc8opQWJOOkt9NJLI/gMUTapeA+A6BXv4QDWXwjzAFGDCmcH9xjS2jHG4uptHmPGWDLYMx7007qlfe+LL5fRK4zGJY37KHk+G73Lvsmjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKY1UjcL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BHEfT6CO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6991F000FF;
-	Sat, 12 Sep 2026 09:28:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKY1UjcL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB171F000FF;
+	Sat, 12 Sep 2026 09:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205313;
-	bh=HZcT1OZrXVv0v9ida9kVd3et2ULrsDQJfX6sUoFmLUw=;
+	s=korg; t=1789205318;
+	bh=WznZ8KoM7J1k/5AqGicC9jeE62DRY4BkjvxJrV8fAD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BHEfT6COewmWZl/jSj//YKSc6zTKuCFlsyK6TmcFCuMva2I6U0zXRRoBpDyaDz7NO
-	 maMIshOtjD2+LZwrn3qq5MvfXBDsM51rNjzoGvfFGtItK19uieCJVEPDM46Z5dt54l
-	 mothQ2pMkw7ucAubBX7g4MFuAZswja/rRRayLLyo=
+	b=qKY1UjcLDPbKtxsOkEvO5cgjOQmgH16ppV4F7b9ie64XkMc6nT/18qbCmblwZBQxM
+	 BeTStgACQ2l03LliauabS6GAPf8mKzoASLE7CCJt6Ag63VR1UZYyT6AapqrJpTL3wW
+	 09gu+dUFSXBNCQvM3Bkj2FUwWeKIc1sRzjq42yqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Pawlik <pawlik.dan@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Aravind Iddamsetty <aravind.iddamsetty@linux.intel.com>,
+	Mallesh Koujalagi <mallesh.koujalagi@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Riana Tauro <riana.tauro@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1793/1815] net: airoha: npu: fix missing streaming DMA mask
-Date: Sat, 12 Sep 2026 08:59:03 +0200
-Message-ID: <20260912065731.128425648@linuxfoundation.org>
+Subject: [PATCH 7.2 1794/1815] drm/xe/uapi: Add additional error components to xe drm_ras
+Date: Sat, 12 Sep 2026 08:59:04 +0200
+Message-ID: <20260912065731.152523608@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,45 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Pawlik <pawlik.dan@gmail.com>
+From: Riana Tauro <riana.tauro@intel.com>
 
-[ Upstream commit 6fe7e31a45e3418a39e6343a85126124feec1c2f ]
+[ Upstream commit cdeb5e248de11537cf23cd5174f6c55bab2e850b ]
 
-The driver calls dma_set_coherent_mask() but never dma_set_mask(),
-leaving the streaming DMA mask at the bus default. On the non-coherent
-EN7581 platform (Cortex-A53), this causes the NPU mailbox to hang
-after approximately 41 calls when using streaming DMA mappings.
+Add additional Error components supported by XE drm_ras (Reliability,
+Availability and Serviceability).
 
-Replace dma_set_coherent_mask() with dma_set_mask_and_coherent() to
-set both the streaming and coherent DMA masks, matching standard
-driver practice.
-
-Fixes: 6f884eb87a79 ("net: airoha: Fix DMA direction for NPU mailbox buffer")
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260814110017.2795022-1-pawlik.dan@gmail.com/
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260809152813.585797-1-pawlik.dan@gmail.com/
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260805070851.2885888-1-pawlik.dan@gmail.com/
-Signed-off-by: Daniel Pawlik <pawlik.dan@gmail.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260820085941.380401-1-pawlik.dan@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Aravind Iddamsetty <aravind.iddamsetty@linux.intel.com>
+Reviewed-by: Mallesh Koujalagi <mallesh.koujalagi@intel.com>
+Acked-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patch.msgid.link/20260618060633.2790109-9-riana.tauro@intel.com
+Signed-off-by: Riana Tauro <riana.tauro@intel.com>
+Stable-dep-of: a62212b35a21 ("drm/xe/sysctrl: Read mailbox phase bit from hardware")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_npu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/uapi/drm/xe_drm.h | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_npu.c b/drivers/net/ethernet/airoha/airoha_npu.c
-index b679bed952de3..4045d1eb93ea8 100644
---- a/drivers/net/ethernet/airoha/airoha_npu.c
-+++ b/drivers/net/ethernet/airoha/airoha_npu.c
-@@ -766,7 +766,7 @@ static int airoha_npu_probe(struct platform_device *pdev)
- 		npu->irqs[i] = irq;
- 	}
+diff --git a/include/uapi/drm/xe_drm.h b/include/uapi/drm/xe_drm.h
+index 48e9f1fdb78dd..50c80af4ad4ef 100644
+--- a/include/uapi/drm/xe_drm.h
++++ b/include/uapi/drm/xe_drm.h
+@@ -2589,6 +2589,12 @@ enum drm_xe_ras_error_component {
+ 	DRM_XE_RAS_ERR_COMP_CORE_COMPUTE = 1,
+ 	/** @DRM_XE_RAS_ERR_COMP_SOC_INTERNAL: SoC Internal Error */
+ 	DRM_XE_RAS_ERR_COMP_SOC_INTERNAL,
++	/** @DRM_XE_RAS_ERR_COMP_DEVICE_MEMORY: Device Memory Error */
++	DRM_XE_RAS_ERR_COMP_DEVICE_MEMORY,
++	/** @DRM_XE_RAS_ERR_COMP_PCIE: PCIe Subsystem Error */
++	DRM_XE_RAS_ERR_COMP_PCIE,
++	/** @DRM_XE_RAS_ERR_COMP_FABRIC: Fabric Subsystem Error */
++	DRM_XE_RAS_ERR_COMP_FABRIC,
+ 	/** @DRM_XE_RAS_ERR_COMP_MAX: Max Error */
+ 	DRM_XE_RAS_ERR_COMP_MAX	/* non-ABI */
+ };
+@@ -2606,7 +2612,10 @@ enum drm_xe_ras_error_component {
+  */
+ #define DRM_XE_RAS_ERROR_COMPONENT_NAMES {				\
+ 	[DRM_XE_RAS_ERR_COMP_CORE_COMPUTE] = "core-compute",		\
+-	[DRM_XE_RAS_ERR_COMP_SOC_INTERNAL] = "soc-internal"		\
++	[DRM_XE_RAS_ERR_COMP_SOC_INTERNAL] = "soc-internal",		\
++	[DRM_XE_RAS_ERR_COMP_DEVICE_MEMORY] = "device-memory",		\
++	[DRM_XE_RAS_ERR_COMP_PCIE] = "pcie",				\
++	[DRM_XE_RAS_ERR_COMP_FABRIC] = "fabric",			\
+ }
  
--	err = dma_set_coherent_mask(dev, DMA_BIT_MASK(32));
-+	err = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
- 	if (err)
- 		return err;
- 
+ #if defined(__cplusplus)
 -- 
 2.53.0
 
