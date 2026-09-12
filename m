@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB84A306D2A;
-	Sat, 12 Sep 2026 14:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A4E221FD4;
+	Sat, 12 Sep 2026 14:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224348; cv=none; b=X+g4qYGGPnWE5X5Q3Q0IFgooHnuQuM5IxTA0GcY++ljj6YiPY5jBZbBpkeS6JSx5Q9pFrdgug/RG5hjdgprMZ22/CfdKLsb+KXi0yF9vU/FN5PEA9pZrBBT9y8OVx35PgnEPJe79aIMMDz+qelSfRv6PwRQI+lj+9bp+9/epCjE=
+	t=1789224354; cv=none; b=Zaq7PGsY/3PkIq+vj7vW1j1mzITeQdjzXB/JBswMJ6cy7rvkAo6NTz0b4bkyE0Q3mHEbx1XUWahgZNDpno2DfJH9l0QvdGuih8EKuegk4zDG5nFRXhpBB9bFB7I914QzA3h8EIoGWbDc9zifvCg/4njlcfDrKpfGhzbbZY0Nhcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224348; c=relaxed/simple;
-	bh=IZVbF7ouuqj6pWz4xdGTpUHOcYBmCHdjTMA5+TN/O4M=;
+	s=arc-20240116; t=1789224354; c=relaxed/simple;
+	bh=a2Ghwza8HzrS9MPyEMGtB834vRtLL4bqy72Ez3WDnss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z1ArI3Y4SqqN5qpResvBUsCSD29W3PFQjnbggcQPUcctZLUHsUFeQ3q+xuoi4/lb9XOmL5jyk35GKJn/y6nFxWYhQIpsYIDGdfBiO23sIFi0yiHeTxPLzLzXjSB3aC+eUWv9kCLanaVIEW5i39cDY+yTtItIhxkpCDF1TCtrjSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2fsB5FMW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l1G37IGJduwxz39JP82ilShid/0uE3heL0BrwMrWaJ5oyps5pgNkXi2u9WRedFmNnsWyha9lY/r5DQeTohjTHdlYMAKLp7OKnQ+fWlX0un7AGt7uIav3lM9Jz2LvSetTjp4hz/U4NjKnufdqgJAs+zIUn5tsyAtiltsp1qDJNys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XGLNHrqw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2fsB5FMW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6B81F000FF;
-	Sat, 12 Sep 2026 14:45:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XGLNHrqw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0831F000FF;
+	Sat, 12 Sep 2026 14:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224347;
-	bh=U5yZZ8m4VDrkiKQHZ2MHBUwlO+wUGSLUxKT2cu53Qgc=;
+	s=korg; t=1789224353;
+	bh=qi8EU8GdFw3EZaf4DdnD66DtXNpCaE0UffxUAa7I8kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2fsB5FMWDs5Aj0im/2XYDZ0rsDlIfJbYBDdKRezUm/tJiUIlZ5DfQXI1ytH+sQ0a/
-	 Vw1SEcMV1z7x2quXcdmyNWRnAHHB8+QVdhcWXJKq3+kXLo2MzTphwG2/Vxn/yOhD3Y
-	 9tOdVX72sRkzbCA5i3kp5+021OX/XDRkXCJrvdgE=
+	b=XGLNHrqwISwrdfxtR8Sm2O3+KNvwVYiJcLIuAdf3PbfuLmH7+dylhwlTvCA02HL0w
+	 JRb2PDcSi7NsFmZOjyB5h9G3MwjZ+a1OP6kR7ewzoMIRCNJxZdNrugvpZrOp7Wkern
+	 hz88kaXHdk6B10UfqRuZnILG8zGLFYbYvr6lAfTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0975/1424] wifi: mt76: mt7996: dont report a zero TX bitrate
-Date: Sat, 12 Sep 2026 08:56:47 +0200
-Message-ID: <20260912065629.148461245@linuxfoundation.org>
+Subject: [PATCH 6.6 0976/1424] wifi: mt76: mt7915: poll the correct SLP CTRL register for the second adie
+Date: Sat, 12 Sep 2026 08:56:48 +0200
+Message-ID: <20260912065629.171380576@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,34 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit d4d92ccded678c92c390003926097ddbb6516bc7 ]
+[ Upstream commit dd59a6126a8f1bd52bf6bd057bf0c8307f76a74b ]
 
-mt7996_sta_statistics() set NL80211_STA_INFO_TX_BITRATE unconditionally
-after the block that already sets it, so a station with no rate info yet
-was reported to userspace with a valid-but-zero TX rate. Drop the
-redundant unconditional assignments; the in-block ones are sufficient.
+The clock enable path for the second adie sets MT_ADIE_SLP_CTRL_CK0(1)
+but polled the busy bit of MT_ADIE_SLP_CTRL_CK0(0), so dual-adie
+bring-up could proceed before the adie1 clock was stable.
 
-Fixes: b34f346b917e ("wifi: mt76: mt7996: drop return in mt7996_sta_statistics")
-Link: https://patch.msgid.link/20260722082610.2699628-10-nbd@nbd.name
+Fixes: 99ad32a4ca3a ("mt76: mt7915: add support for MT7986")
+Link: https://patch.msgid.link/20260722082610.2699628-18-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/main.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/soc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index c559212ea86a7..dd00a0fb5df0e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -998,8 +998,6 @@ static void mt7996_sta_statistics(struct ieee80211_hw *hw,
- 		sinfo->txrate.flags = txrate->flags;
- 		sinfo->filled |= BIT_ULL(NL80211_STA_INFO_TX_BITRATE);
- 	}
--	sinfo->txrate.flags = txrate->flags;
--	sinfo->filled |= BIT_ULL(NL80211_STA_INFO_TX_BITRATE);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/soc.c b/drivers/net/wireless/mediatek/mt76/mt7915/soc.c
+index 37348b208736e..f182ea7c5f1b8 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/soc.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/soc.c
+@@ -913,7 +913,7 @@ static void mt7986_wmac_clock_enable(struct mt7915_dev *dev, u32 adie_type)
  
- 	sinfo->ack_signal = (s8)msta->ack_signal;
- 	sinfo->filled |= BIT_ULL(NL80211_STA_INFO_ACK_SIGNAL);
+ 		read_poll_timeout(mt76_rr, cur, !(cur & MT_SLP_CTRL_BSY_MASK),
+ 				  USEC_PER_MSEC, 50 * USEC_PER_MSEC, false,
+-				  dev, MT_ADIE_SLP_CTRL_CK0(0));
++				  dev, MT_ADIE_SLP_CTRL_CK0(1));
+ 	}
+ 	mt76_wmac_spi_unlock(dev);
+ 
 -- 
 2.53.0
 
