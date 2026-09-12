@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142B12BCF4C;
-	Sat, 12 Sep 2026 18:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2561F399356;
+	Sat, 12 Sep 2026 18:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238249; cv=none; b=oyKZgis40DvsWmeOFsRTY14DX7jD9hR9lkfgJFUY5Pw2TA40vOw9fbgqUg2KE6wMUPl+TWWPj0gw+J78avD0RaOzKYzocioCYsRK5tfpA2G/G/eBXJ1NrG213fdO48xKlhSGqzFzvCFTK2lVgt0pwGMkyDgeasUY/MFoPtgn8Fc=
+	t=1789238256; cv=none; b=n+d1AEWGW62DoKYKa7OSx+FXam/AU+ELmlAw7Vq69DK0a7LD38m9zNA57D5/yXm6qgVJepEoe2Y9RUqcKaX4d8KcpCvQJ/tl8kCWqC7YmKV0p8BcwdorWsU1fpVmxlIV06lpdduQdolMg4CHaxrVLd0oeNr3a1ITaSGZeqx78rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238249; c=relaxed/simple;
-	bh=uZv5y4AjyweKO9LTc+PpLnp0YqdZeSxcvdcUz4Slt8U=;
+	s=arc-20240116; t=1789238256; c=relaxed/simple;
+	bh=gXsgov3MQLWQ0Df8bsT0oqapioVDhXHjHndHOA/7TY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lr+TgCdoMCGDsCEDJrqhYD0bDl+e2q3kb8wvJJ2GkTndgBVQKSHcph2OMytKyZflqoCEMVhkLMkzqy4Z6hPeJdYRcxjn7sfTKKN9FOORE85f5Qn/pSDZaya45eAK5pMGP8jsLsugn6EyVGV69ebqco8jmRiLjMJCzFwMfU58xQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FohsyUEO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SI/ASg5V4/96fAV3aiC+x8T3f27gLC6TnvjEuIjV4mhmwR6EC87z5Iv4WmgMho+dAWJJa9nF/W3jF1d6MEhgQsilAnPKkA3LEVDgpA9zpvOVDNdw8vdJc1dDyVhOAXR25wmxcJ0pW0btgYvJO8kzwVi7D97S4VtJtahA2MiY6Z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=saeotf9K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FohsyUEO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62B11F000FF;
-	Sat, 12 Sep 2026 18:37:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saeotf9K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B316E1F000FF;
+	Sat, 12 Sep 2026 18:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238247;
-	bh=Zmv5QT89pY44HIiqoUEDA7jgRNQr8mRCGS4zH0BukTg=;
+	s=korg; t=1789238252;
+	bh=Y9VWe7bdHXGpVohvFBYOS9n5NUjZzFzHZ+Pe34NlDhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FohsyUEOin1xN1BEvgH1bGGbf00aQmen0Kr6gVDtW+RmHoeKNIkL1V84vSfUZVuX/
-	 cffl9b+sp1nvPqCSpWXz+bsg7xrwtg2ol6HjMQAAfp+8HVX0ChePfzhAOu8rK4U0V8
-	 gQeuIYQftZqGsSBaCOs5DfQpKuJUnBHuHmZF7G3Q=
+	b=saeotf9KeYKXcTzfSUXUv09IdbXGwH2hhIJTD6KVaYZKuKApQulYw6cz9vfIF5hv3
+	 5Ts/jia8RkrfRn9uOEjFM9gO4cQP3e3WEKXnO0Ts8eoaLNKshM2CdBp4uSmcNbsn4i
+	 ejDA7qKbUk6ybhe9abmG0pVWUaVvAVSU0qK6VqNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 423/935] drm/amdgpu/pm/powerplay: bounds-check voltage index in Vega10 lookup
-Date: Sat, 12 Sep 2026 08:57:33 +0200
-Message-ID: <20260912065536.526734878@linuxfoundation.org>
+Subject: [PATCH 5.15 424/935] bpftool: Update btf_dump__new() and perf_buffer__new_raw() calls
+Date: Sat, 12 Sep 2026 08:57:34 +0200
+Message-ID: <20260912065536.549009682@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,97 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 6fa33f594e46e775a94097f71b486d7b006b6917 ]
+[ Upstream commit 164b04f27fbd769f57905dfddd2a8953974eeef4 ]
 
-vddInd, vddciInd and mvddInd from VBIOS-parsed tables index into vddc,
-vddci and vddmem lookup tables without bounds checks across nine sites.
-Return -EINVAL when any index is out of range.
+Use v1.0-compatible variants of btf_dump and perf_buffer "constructors".
+This is also a demonstration of reusing struct perf_buffer_raw_opts as
+OPTS-style option struct for new perf_buffer__new_raw() API.
 
-Fixes: f83a9991648b ("drm/amd/powerplay: add Vega10 powerplay support (v5)")
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://lore.kernel.org/bpf/20211111053624.190580-10-andrii@kernel.org
+Stable-dep-of: 66d7e39e49b0 ("tools/bpf/bpftool: Reset vmlinux BTF after map commands")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c | 35 ++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+ tools/bpf/bpftool/btf.c           | 2 +-
+ tools/bpf/bpftool/gen.c           | 2 +-
+ tools/bpf/bpftool/map_perf_ring.c | 9 +++------
+ 3 files changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-index 69d9c82282a0b..a801ca47f5be6 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-@@ -686,10 +686,18 @@ static int vega10_patch_voltage_dependency_tables_with_lookup_table(
- 			case 3: vdt = table_info->vdd_dep_on_pixclk; break;
- 			case 4: vdt = table_info->vdd_dep_on_dispclk; break;
- 			case 5: vdt = table_info->vdd_dep_on_phyclk; break;
-+			default:
-+				continue;
- 		}
+diff --git a/tools/bpf/bpftool/btf.c b/tools/bpf/bpftool/btf.c
+index f7e5ff3586c9b..d4c7cd3025171 100644
+--- a/tools/bpf/bpftool/btf.c
++++ b/tools/bpf/bpftool/btf.c
+@@ -410,7 +410,7 @@ static int dump_btf_c(const struct btf *btf,
+ 	struct btf_dump *d;
+ 	int err = 0, i;
  
- 		for (entry_id = 0; entry_id < vdt->count; entry_id++) {
- 			voltage_id = vdt->entries[entry_id].vddInd;
-+			if (voltage_id >= table_info->vddc_lookup_table->count) {
-+				pr_err("amdgpu: clk_dep[%u][%u] vddc index %u out of bounds (%u)\n",
-+				       i, entry_id, voltage_id,
-+				       table_info->vddc_lookup_table->count);
-+				return -EINVAL;
-+			}
- 			vdt->entries[entry_id].vddc =
- 					table_info->vddc_lookup_table->entries[voltage_id].us_vdd;
- 		}
-@@ -697,23 +705,48 @@ static int vega10_patch_voltage_dependency_tables_with_lookup_table(
+-	d = btf_dump__new(btf, NULL, NULL, btf_dump_printf);
++	d = btf_dump__new(btf, btf_dump_printf, NULL, NULL);
+ 	if (IS_ERR(d))
+ 		return PTR_ERR(d);
  
- 	for (entry_id = 0; entry_id < mm_table->count; ++entry_id) {
- 		voltage_id = mm_table->entries[entry_id].vddcInd;
-+		if (voltage_id >= table_info->vddc_lookup_table->count) {
-+			pr_err("amdgpu: mm[%u] vddc index %u out of bounds (%u)\n",
-+			       entry_id, voltage_id,
-+			       table_info->vddc_lookup_table->count);
-+			return -EINVAL;
-+		}
- 		mm_table->entries[entry_id].vddc =
- 			table_info->vddc_lookup_table->entries[voltage_id].us_vdd;
+diff --git a/tools/bpf/bpftool/gen.c b/tools/bpf/bpftool/gen.c
+index 07fa502a4ac15..25efbb868e9ea 100644
+--- a/tools/bpf/bpftool/gen.c
++++ b/tools/bpf/bpftool/gen.c
+@@ -197,7 +197,7 @@ static int codegen_datasecs(struct bpf_object *obj, const char *obj_name)
+ 	struct btf_dump *d;
+ 	int i, err = 0;
+ 
+-	d = btf_dump__new(btf, NULL, NULL, codegen_btf_dump_printf);
++	d = btf_dump__new(btf, codegen_btf_dump_printf, NULL, NULL);
+ 	if (IS_ERR(d))
+ 		return PTR_ERR(d);
+ 
+diff --git a/tools/bpf/bpftool/map_perf_ring.c b/tools/bpf/bpftool/map_perf_ring.c
+index 825f29f93a57a..241dd3bafd24d 100644
+--- a/tools/bpf/bpftool/map_perf_ring.c
++++ b/tools/bpf/bpftool/map_perf_ring.c
+@@ -125,7 +125,7 @@ int do_event_pipe(int argc, char **argv)
+ 		.wakeup_events = 1,
+ 	};
+ 	struct bpf_map_info map_info = {};
+-	struct perf_buffer_raw_opts opts = {};
++	LIBBPF_OPTS(perf_buffer_raw_opts, opts);
+ 	struct event_pipe_ctx ctx = {
+ 		.all_cpus = true,
+ 		.cpu = -1,
+@@ -191,14 +191,11 @@ int do_event_pipe(int argc, char **argv)
+ 		ctx.idx = 0;
  	}
  
- 	for (entry_id = 0; entry_id < mclk_table->count; ++entry_id) {
- 		voltage_id = mclk_table->entries[entry_id].vddInd;
-+		if (voltage_id >= table_info->vddc_lookup_table->count) {
-+			pr_err("amdgpu: mclk[%u] vddc index %u out of bounds (%u)\n",
-+			       entry_id, voltage_id,
-+			       table_info->vddc_lookup_table->count);
-+			return -EINVAL;
-+		}
- 		mclk_table->entries[entry_id].vddc =
- 				table_info->vddc_lookup_table->entries[voltage_id].us_vdd;
-+
- 		voltage_id = mclk_table->entries[entry_id].vddciInd;
-+		if (voltage_id >= table_info->vddci_lookup_table->count) {
-+			pr_err("amdgpu: mclk[%u] vddci index %u out of bounds (%u)\n",
-+			       entry_id, voltage_id,
-+			       table_info->vddci_lookup_table->count);
-+			return -EINVAL;
-+		}
- 		mclk_table->entries[entry_id].vddci =
- 				table_info->vddci_lookup_table->entries[voltage_id].us_vdd;
-+
- 		voltage_id = mclk_table->entries[entry_id].mvddInd;
-+		if (voltage_id >= table_info->vddmem_lookup_table->count) {
-+			pr_err("amdgpu: mclk[%u] vddmem index %u out of bounds (%u)\n",
-+			       entry_id, voltage_id,
-+			       table_info->vddmem_lookup_table->count);
-+			return -EINVAL;
-+		}
- 		mclk_table->entries[entry_id].mvdd =
- 				table_info->vddmem_lookup_table->entries[voltage_id].us_vdd;
- 	}
- 
+-	opts.attr = &perf_attr;
+-	opts.event_cb = print_bpf_output;
+-	opts.ctx = &ctx;
+ 	opts.cpu_cnt = ctx.all_cpus ? 0 : 1;
+ 	opts.cpus = &ctx.cpu;
+ 	opts.map_keys = &ctx.idx;
 -
- 	return 0;
- 
- }
+-	pb = perf_buffer__new_raw(map_fd, MMAP_PAGE_CNT, &opts);
++	pb = perf_buffer__new_raw(map_fd, MMAP_PAGE_CNT, &perf_attr,
++				  print_bpf_output, &ctx, &opts);
+ 	err = libbpf_get_error(pb);
+ 	if (err) {
+ 		p_err("failed to create perf buffer: %s (%d)",
 -- 
 2.53.0
 
