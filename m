@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7053515C1;
-	Sat, 12 Sep 2026 15:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A9725A640;
+	Sat, 12 Sep 2026 15:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227789; cv=none; b=gWvxvpJdeMQSdy3X+ANQKPTbLAo72Psui9k9PZibUvAo1vIo6q3Jsr0Ltv+peSds7Z42gmbHKkrthwoHnPJCABhJ+eGoitAVa7ksTT5ubDdCWlawNUH2Ll1EfnhKhtcBTELuY0KBk0SD7p3DnBN8P6zbkOWcOkCslCtEBelFNdo=
+	t=1789227793; cv=none; b=gapsjlCghHRJA7eobSG5w2al4ySOdTKl9mxUyxKgEtvBobqQeRyvWebVatO7Us5gSf4HOlhs1DCjymoGgEN4EkyDj5ynzxWmOlKQadt3itoRz+cuTOJlrDwBogOOWTFQMU6r+Ttp3Qq58TJNoGS/FEiIIM/zHdcho3nfJ1sSzHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227789; c=relaxed/simple;
-	bh=0fZ4eUctQpQyiyChQnsREL2du3nimQDDaSn/aUxnHwQ=;
+	s=arc-20240116; t=1789227793; c=relaxed/simple;
+	bh=u2BwvyQVxQREzKJkzt7uE5Qjr/IjBB4dmJPurki2st8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S3kRk3iRqYxM37AtxZh5OUiZCXglReSeTuyAgcAV2t072OOvzVaabCDm5vamcv12ETCaiLgKlxej0s4W56Eiw12ZeT/w5sZbipb7yg+sLJHqFlFTNRFlOkXv94f3Qah3F36SWInGnCnvRra5a2S1u80dKhiLGu6c8mqkpbIcXfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNUxJELk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fl2PJt3Q8EmF9J6jlAF283VW2B7OwaiKvs8YJRpTJmoozEZ2K0ym0RKkee5BvV08ET7fqH1gSZloz9Xzj81wJha/nXm1S4Y8Aw83hujvF2kBKLNNhQsnOXAPtiYrrOgTyQCifcnk0rfQxOwlp1DiBm425hz2Snqhz8ULP05KV9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mh52GsbI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNUxJELk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7A61F000FF;
-	Sat, 12 Sep 2026 15:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mh52GsbI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC131F000FF;
+	Sat, 12 Sep 2026 15:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227787;
-	bh=VFpicdpgQxHNlUY7zbo4fCs0t/gy/lLbvsDTlPAs7Pc=;
+	s=korg; t=1789227792;
+	bh=N3Uv+pw/5nEXhXJK+cgEEeXfpY4umspynfqJTYQFLd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mNUxJELkt+HvsaPP3sYzQ3CKzA2a9jTf5YgqW3kMXDzMbS+WGk7xiaGx4jO+RD3+h
-	 AURk30fXivd8dWWz/AMVb6wVdiHrSCsQZMPuQ1o+0KcPvSyNpC9p8HCIpJSdZ37hNo
-	 0gSjau1YqcGK7RbGt2aYFT1hBsa/q9iHeY0jp6ak=
+	b=Mh52GsbIERKZXmGC7b3h+UxlLA8NK03eeDe8s7UFNRmS4ukJz39r5D3YC2P/pqayz
+	 /USMdUA/S+yTUpMr1a1h1HZDrCLRZyvGb+XyvpX2bQXqOwzuERfMN/gYc+AJg2SXLr
+	 vjL1Aolsj7NdruMbqfVs0ThMf/ukUOS2gc3eIMuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Nan Li <tonanli66@gmail.com>,
-	Yuqi Xu <xuyuqiabc@gmail.com>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0254/1191] openvswitch: Fix CT limit teardown use-after-free
-Date: Sat, 12 Sep 2026 08:49:42 +0200
-Message-ID: <20260912065553.921810150@linuxfoundation.org>
+Subject: [PATCH 6.1 0255/1191] landlock: Require LANDLOCK_ACCESS_FS_MAKE_REG for whiteout creation
+Date: Sat, 12 Sep 2026 08:49:43 +0200
+Message-ID: <20260912065553.946578807@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -49,468 +47,238 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuqi Xu <xuyuqiabc@gmail.com>
+From: Günther Noack <gnoack@google.com>
 
-[ Upstream commit 403f96c32c9e24600093d7d0c61c17daeedca957 ]
+[ Upstream commit 672fa082d48b21e1fb62cdb184fee41513e53421 ]
 
-Packet processing uses CT limit state under RCU, while netns teardown
-frees that state under ovs_mutex. The CT limit pointer was neither removed
-from readers nor protected by a grace period, allowing packet processing to
-dereference the freed state.
+Whiteout objects are used in the upper layer of an OverlayFS to
+indicate that the file with this name does not exist in the unified
+view, even if it is present in one of the lower layer file systems.
 
-An unprivileged user can trigger this bug from a user and network
-namespace, causing a slab-use-after-free in ovs_ct_execute() when the
-netns is torn down.
+For the userspace implementations of OverlayFS (fuse-overlayfs),
+whiteout objects can be created from userspace as well:
 
-Publish the CT limit pointer through RCU, remove it before teardown, and
-wait for readers before freeing its contents. Keep ovs_mutex around
-individual CT limit updates, and use the RCU read-side lock while GET
-traverses the RCU-protected limit lists.
+* mknod(2) with S_IFCHR and makedev(0, 0)
+* renameat2(2) with RENAME_WHITEOUT,
+  creating the whiteout in the old place of the moved file.
 
-Netns teardown detaches the RCU-protected CT limit state in the pernet
-.pre_exit callback while holding ovs_mutex.  The pernet core guarantees an
-RCU grace period between the .pre_exit and .exit callbacks, so the .exit
-callback completes the teardown without adding any extra synchronization.
+This commit guards whiteout creation in both of these cases with
+LANDLOCK_ACCESS_FS_MAKE_REG.  Whiteout objects are *not* considered
+character devices and are not bound to a driver.
 
-The netlink command handlers do not need NULL checks because the userspace
-netlink socket holds an active reference to its network namespace while a
-request is processed. The per-netns exit path therefore cannot run
-concurrently with SET, DEL, or GET for that socket's namespace.
+LANDLOCK_ACCESS_FS_MAKE_REG describes the same permission class as a
+whiteout object: creating one is the only S_IFCHR creation that the VFS
+exempts from CAP_MKNOD, so it is as unprivileged as creating a regular
+file, while LANDLOCK_ACCESS_FS_MAKE_CHAR and
+LANDLOCK_ACCESS_FS_MAKE_BLOCK keep meaning the creation of devices that
+expose a kernel interface [1].
 
-Fixes: 11efd5cb04a1 ("openvswitch: Support conntrack zone limit")
+For the mknod(2) case, introduce a Landlock erratum.  The creation of
+whiteout objects through mknod(2) was previously guarded using
+LANDLOCK_ACCESS_FS_MAKE_CHAR, and it is now guarded using
+LANDLOCK_ACCESS_FS_MAKE_REG.
+
+For the renameat2(2) case, fix a bug: Before this commit, renameat2(2)
+with RENAME_WHITEOUT would create a directory entry even when all
+LANDLOCK_ACCESS_FS_MAKE_* rights were denied.
+
+This does not affect normal renames within layered OverlayFS mounts:
+When doing a regular rename() on a mounted fuse-overlayfs, it is the
+fuse-overlayfs daemon that exercises renameat2() with RENAME_WHITEOUT,
+and only the Landlock domain of that daemon is checked there.
+
+Suggested-by: Christian Brauner <brauner@kernel.org>
+Suggested-by: Mickaël Salaün <mic@digikod.net>
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Link: https://lore.kernel.org/all/cover.1784711445.git.xuyuqiabc@gmail.com
-Co-developed-by: Nan Li <tonanli66@gmail.com>
-Signed-off-by: Nan Li <tonanli66@gmail.com>
-Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
-Reviewed-by: Ren Wei <enjou1224z@gmail.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/288fbd5459d92b9dd0dcc6faf625f04819161ff3.1787280296.git.xuyuqiabc@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ 7.0+ uses kmalloc_obj[s] while older versions use kmalloc[_array]
-  6.12+ doesn't have a 'family' argument in nf_conncount_init/destroy ]
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Fixes: cb2c7d1a1776 ("landlock: Support filesystem access-control")
+Depends-on: 49c9e09d9610 ("landlock: Fix handling of disconnected directories")
+Depends-on: fe72ce6710cb ("landlock: Add errata documentation section")
+Signed-off-by: Günther Noack <gnoack@google.com>
+Link: https://patch.msgid.link/20260720.chow9ohYie5b@digikod.net [1]
+Link: https://patch.msgid.link/20260813093157.1436894-3-gnoack@google.com
+[mic: Record why LANDLOCK_ACCESS_FS_MAKE_REG is the matching right, and
+add link(2) to the user doc]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Signed-off-by: Günther Noack <gnoack3000@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/conntrack.c | 122 +++++++++++++++++++++++-------------
- net/openvswitch/conntrack.h |   6 +-
- net/openvswitch/datapath.c  |  10 ++-
- net/openvswitch/datapath.h  |   8 ++-
- 4 files changed, 98 insertions(+), 48 deletions(-)
+ include/uapi/linux/landlock.h    |  1 +
+ security/landlock/errata/abi-1.h | 24 +++++++++++++++++++
+ security/landlock/fs.c           | 40 +++++++++++++++++++++++++-------
+ 3 files changed, 56 insertions(+), 9 deletions(-)
+ create mode 100644 security/landlock/errata/abi-1.h
 
-diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
-index 17f7be9bc828b..5f52d409a2af7 100644
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -1182,10 +1182,14 @@ static int ovs_ct_check_limit(struct net *net,
- 			      const struct ovs_conntrack_info *info)
- {
- 	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
--	const struct ovs_ct_limit_info *ct_limit_info = ovs_net->ct_limit_info;
-+	const struct ovs_ct_limit_info *ct_limit_info;
- 	u32 per_zone_limit, connections;
- 	u32 conncount_key;
- 
-+	ct_limit_info = rcu_dereference(ovs_net->ct_limit_info);
-+	if (!ct_limit_info)
-+		return 0;
+diff --git a/include/uapi/linux/landlock.h b/include/uapi/linux/landlock.h
+index 17bdfaa9eb876..d7a974f80cb96 100644
+--- a/include/uapi/linux/landlock.h
++++ b/include/uapi/linux/landlock.h
+@@ -115,6 +115,7 @@ struct landlock_path_beneath_attr {
+  *   device.
+  * - %LANDLOCK_ACCESS_FS_MAKE_DIR: Create (or rename) a directory.
+  * - %LANDLOCK_ACCESS_FS_MAKE_REG: Create (or rename or link) a regular file.
++ *   This also guards the creation of whiteout objects as used in OverlayFS.
+  * - %LANDLOCK_ACCESS_FS_MAKE_SOCK: Create (or rename or link) a UNIX domain
+  *   socket.
+  * - %LANDLOCK_ACCESS_FS_MAKE_FIFO: Create (or rename or link) a named pipe.
+diff --git a/security/landlock/errata/abi-1.h b/security/landlock/errata/abi-1.h
+new file mode 100644
+index 0000000000000..53c96c2057fa0
+--- /dev/null
++++ b/security/landlock/errata/abi-1.h
+@@ -0,0 +1,24 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
 +
- 	conncount_key = info->zone.id;
- 
- 	per_zone_limit = ct_limit_get(ct_limit_info, info->zone.id);
-@@ -1892,43 +1896,56 @@ static void __ovs_ct_free_action(struct ovs_conntrack_info *ct_info)
- #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
- static int ovs_ct_limit_init(struct net *net, struct ovs_net *ovs_net)
- {
-+	struct ovs_ct_limit_info *info;
- 	int i, err;
- 
--	ovs_net->ct_limit_info = kmalloc(sizeof(*ovs_net->ct_limit_info),
--					 GFP_KERNEL);
--	if (!ovs_net->ct_limit_info)
-+	info = kmalloc(sizeof(*info), GFP_KERNEL);
-+	if (!info)
- 		return -ENOMEM;
- 
--	ovs_net->ct_limit_info->default_limit = OVS_CT_LIMIT_DEFAULT;
--	ovs_net->ct_limit_info->limits =
-+	info->default_limit = OVS_CT_LIMIT_DEFAULT;
-+	info->limits =
- 		kmalloc_array(CT_LIMIT_HASH_BUCKETS, sizeof(struct hlist_head),
- 			      GFP_KERNEL);
--	if (!ovs_net->ct_limit_info->limits) {
--		kfree(ovs_net->ct_limit_info);
-+	if (!info->limits) {
-+		kfree(info);
- 		return -ENOMEM;
- 	}
- 
- 	for (i = 0; i < CT_LIMIT_HASH_BUCKETS; i++)
--		INIT_HLIST_HEAD(&ovs_net->ct_limit_info->limits[i]);
-+		INIT_HLIST_HEAD(&info->limits[i]);
- 
--	ovs_net->ct_limit_info->data =
--		nf_conncount_init(net, NFPROTO_INET, sizeof(u32));
-+	info->data = nf_conncount_init(net, NFPROTO_INET, sizeof(u32));
- 
--	if (IS_ERR(ovs_net->ct_limit_info->data)) {
--		err = PTR_ERR(ovs_net->ct_limit_info->data);
--		kfree(ovs_net->ct_limit_info->limits);
--		kfree(ovs_net->ct_limit_info);
-+	if (IS_ERR(info->data)) {
-+		err = PTR_ERR(info->data);
-+		kfree(info->limits);
-+		kfree(info);
- 		pr_err("openvswitch: failed to init nf_conncount %d\n", err);
- 		return err;
- 	}
-+	rcu_assign_pointer(ovs_net->ct_limit_info, info);
- 	return 0;
++/**
++ * DOC: erratum_4
++ *
++ * Erratum 4: Creation of whiteout objects
++ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++ *
++ * This fix changes the access rights required for the creation of whiteout
++ * objects through :manpage:`mknod(2)`, :manpage:`renameat2(2)`, or
++ * :manpage:`link(2)`.  Creating whiteout objects is now guarded by
++ * ``LANDLOCK_ACCESS_FS_MAKE_REG`` instead of ``LANDLOCK_ACCESS_FS_MAKE_CHAR``.
++ *
++ * Whiteout objects are used in OverlayFS to mark the absence of a file in an
++ * upper file system.  Despite being created with ``S_IFCHR``, whiteout objects
++ * do not count as character devices.
++ *
++ * Impact:
++ *
++ * Sandboxed programs that create OverlayFS whiteouts (such as fuse-overlayfs)
++ * now require ``LANDLOCK_ACCESS_FS_MAKE_REG`` instead of
++ * ``LANDLOCK_ACCESS_FS_MAKE_CHAR``.
++ */
++LANDLOCK_ERRATUM(4)
+diff --git a/security/landlock/fs.c b/security/landlock/fs.c
+index 7b95afcc6b437..dd7f0fd921cf6 100644
+--- a/security/landlock/fs.c
++++ b/security/landlock/fs.c
+@@ -15,6 +15,7 @@
+ #include <linux/err.h>
+ #include <linux/fs.h>
+ #include <linux/init.h>
++#include <linux/kdev_t.h>
+ #include <linux/kernel.h>
+ #include <linux/limits.h>
+ #include <linux/list.h>
+@@ -664,7 +665,7 @@ static inline int current_check_access_path(const struct path *const path,
+ 	return check_access_path(dom, path, access_request);
  }
  
--static void ovs_ct_limit_exit(struct net *net, struct ovs_net *ovs_net)
-+static void *ovs_ct_limit_exit_start(struct ovs_net *ovs_net)
+-static inline access_mask_t get_mode_access(const umode_t mode)
++static inline access_mask_t get_mode_access(const umode_t mode, const dev_t dev)
+ {
+ 	switch (mode & S_IFMT) {
+ 	case S_IFLNK:
+@@ -672,6 +673,9 @@ static inline access_mask_t get_mode_access(const umode_t mode)
+ 	case S_IFDIR:
+ 		return LANDLOCK_ACCESS_FS_MAKE_DIR;
+ 	case S_IFCHR:
++		/* Whiteout objects are guarded with MAKE_REG. */
++		if (dev == WHITEOUT_DEV)
++			return LANDLOCK_ACCESS_FS_MAKE_REG;
+ 		return LANDLOCK_ACCESS_FS_MAKE_CHAR;
+ 	case S_IFBLK:
+ 		return LANDLOCK_ACCESS_FS_MAKE_BLOCK;
+@@ -688,6 +692,13 @@ static inline access_mask_t get_mode_access(const umode_t mode)
+ 	}
+ }
+ 
++static inline access_mask_t get_dentry_access(const struct dentry *const dentry)
 +{
-+	return rcu_replace_pointer(ovs_net->ct_limit_info, NULL,
-+				   lockdep_ovsl_is_held());
++	const struct inode *const inode = d_backing_inode(dentry);
++
++	return get_mode_access(inode->i_mode, inode->i_rdev);
 +}
 +
-+/* The CT limit state must be detached by ovs_ct_limit_exit_start() and an
-+ * RCU grace period must elapse before this function runs.  The pernet core
-+ * guarantees the grace period between the .pre_exit and .exit callbacks.
-+ */
-+static void ovs_ct_limit_exit_finish(struct net *net, void *data)
+ static inline access_mask_t maybe_remove(const struct dentry *const dentry)
  {
--	const struct ovs_ct_limit_info *info = ovs_net->ct_limit_info;
-+	const struct ovs_ct_limit_info *info = data;
- 	int i;
- 
-+	if (!info)
-+		return;
-+
- 	nf_conncount_destroy(net, NFPROTO_INET, info->data);
- 	for (i = 0; i < CT_LIMIT_HASH_BUCKETS; ++i) {
- 		struct hlist_head *head = &info->limits[i];
-@@ -1936,7 +1953,7 @@ static void ovs_ct_limit_exit(struct net *net, struct ovs_net *ovs_net)
- 		struct hlist_node *next;
- 
- 		hlist_for_each_entry_safe(ct_limit, next, head, hlist_node)
--			kfree_rcu(ct_limit, rcu);
-+			kfree(ct_limit);
- 	}
- 	kfree(info->limits);
- 	kfree(info);
-@@ -1975,12 +1992,13 @@ static bool check_zone_id(int zone_id, u16 *pzone)
- 	return false;
- }
- 
--static int ovs_ct_limit_set_zone_limit(struct nlattr *nla_zone_limit,
--				       struct ovs_ct_limit_info *info)
-+static int ovs_ct_limit_set_zone_limit(struct ovs_net *ovs_net,
-+				       struct nlattr *nla_zone_limit)
+ 	if (d_is_negative(dentry))
+@@ -768,6 +779,7 @@ static bool collect_domain_accesses(
+  * @new_dentry: Destination file or directory.
+  * @removable: Sets to true if it is a rename operation.
+  * @exchange: Sets to true if it is a rename operation with RENAME_EXCHANGE.
++ * @whiteout: Sets to true if it is a rename operation with RENAME_WHITEOUT.
+  *
+  * Because of its unprivileged constraints, Landlock relies on file hierarchies
+  * (and not only inodes) to tie access rights to files.  Being able to link or
+@@ -816,7 +828,8 @@ static bool collect_domain_accesses(
+ static int current_check_refer_path(struct dentry *const old_dentry,
+ 				    const struct path *const new_dir,
+ 				    struct dentry *const new_dentry,
+-				    const bool removable, const bool exchange)
++				    const bool removable, const bool exchange,
++				    const bool whiteout)
  {
- 	struct ovs_zone_limit *zone_limit;
--	int rem;
-+	struct ovs_ct_limit_info *info;
- 	u16 zone;
-+	int rem;
- 
- 	rem = NLA_ALIGN(nla_len(nla_zone_limit));
- 	zone_limit = (struct ovs_zone_limit *)nla_data(nla_zone_limit);
-@@ -1989,6 +2007,7 @@ static int ovs_ct_limit_set_zone_limit(struct nlattr *nla_zone_limit,
- 		if (unlikely(zone_limit->zone_id ==
- 				OVS_ZONE_LIMIT_DEFAULT_ZONE)) {
- 			ovs_lock();
-+			info = ovsl_dereference(ovs_net->ct_limit_info);
- 			info->default_limit = zone_limit->limit;
- 			ovs_unlock();
- 		} else if (unlikely(!check_zone_id(
-@@ -2006,6 +2025,7 @@ static int ovs_ct_limit_set_zone_limit(struct nlattr *nla_zone_limit,
- 			ct_limit->limit = zone_limit->limit;
- 
- 			ovs_lock();
-+			info = ovsl_dereference(ovs_net->ct_limit_info);
- 			ct_limit_set(info, ct_limit);
- 			ovs_unlock();
- 		}
-@@ -2020,12 +2040,13 @@ static int ovs_ct_limit_set_zone_limit(struct nlattr *nla_zone_limit,
- 	return 0;
- }
- 
--static int ovs_ct_limit_del_zone_limit(struct nlattr *nla_zone_limit,
--				       struct ovs_ct_limit_info *info)
-+static int ovs_ct_limit_del_zone_limit(struct ovs_net *ovs_net,
-+				       struct nlattr *nla_zone_limit)
- {
- 	struct ovs_zone_limit *zone_limit;
--	int rem;
-+	struct ovs_ct_limit_info *info;
- 	u16 zone;
-+	int rem;
- 
- 	rem = NLA_ALIGN(nla_len(nla_zone_limit));
- 	zone_limit = (struct ovs_zone_limit *)nla_data(nla_zone_limit);
-@@ -2034,6 +2055,7 @@ static int ovs_ct_limit_del_zone_limit(struct nlattr *nla_zone_limit,
- 		if (unlikely(zone_limit->zone_id ==
- 				OVS_ZONE_LIMIT_DEFAULT_ZONE)) {
- 			ovs_lock();
-+			info = ovsl_dereference(ovs_net->ct_limit_info);
- 			info->default_limit = OVS_CT_LIMIT_DEFAULT;
- 			ovs_unlock();
- 		} else if (unlikely(!check_zone_id(
-@@ -2041,6 +2063,7 @@ static int ovs_ct_limit_del_zone_limit(struct nlattr *nla_zone_limit,
- 			OVS_NLERR(true, "zone id is out of range");
- 		} else {
- 			ovs_lock();
-+			info = ovsl_dereference(ovs_net->ct_limit_info);
- 			ct_limit_del(info, zone);
- 			ovs_unlock();
- 		}
-@@ -2084,6 +2107,7 @@ static int __ovs_ct_limit_get_zone_limit(struct net *net,
- 	return nla_put_nohdr(reply, sizeof(zone_limit), &zone_limit);
- }
- 
-+/* Called with RCU read lock held. */
- static int ovs_ct_limit_get_zone_limit(struct net *net,
- 				       struct nlattr *nla_zone_limit,
- 				       struct ovs_ct_limit_info *info,
-@@ -2107,12 +2131,10 @@ static int ovs_ct_limit_get_zone_limit(struct net *net,
- 							&zone))) {
- 			OVS_NLERR(true, "zone id is out of range");
- 		} else {
--			rcu_read_lock();
- 			limit = ct_limit_get(info, zone);
- 
- 			err = __ovs_ct_limit_get_zone_limit(
- 				net, info->data, zone, limit, reply);
--			rcu_read_unlock();
- 			if (err)
- 				return err;
- 		}
-@@ -2127,6 +2149,7 @@ static int ovs_ct_limit_get_zone_limit(struct net *net,
- 	return 0;
- }
- 
-+/* Called with RCU read lock held. */
- static int ovs_ct_limit_get_all_zone_limit(struct net *net,
- 					   struct ovs_ct_limit_info *info,
- 					   struct sk_buff *reply)
-@@ -2139,19 +2162,16 @@ static int ovs_ct_limit_get_all_zone_limit(struct net *net,
- 	if (err)
- 		return err;
- 
--	rcu_read_lock();
- 	for (i = 0; i < CT_LIMIT_HASH_BUCKETS; ++i) {
- 		head = &info->limits[i];
- 		hlist_for_each_entry_rcu(ct_limit, head, hlist_node) {
- 			err = __ovs_ct_limit_get_zone_limit(net, info->data,
- 				ct_limit->zone, ct_limit->limit, reply);
- 			if (err)
--				goto exit_err;
-+				return err;
- 		}
- 	}
- 
--exit_err:
--	rcu_read_unlock();
- 	return err;
- }
- 
-@@ -2161,7 +2181,6 @@ static int ovs_ct_limit_cmd_set(struct sk_buff *skb, struct genl_info *info)
- 	struct sk_buff *reply;
- 	struct ovs_header *ovs_reply_header;
- 	struct ovs_net *ovs_net = net_generic(sock_net(skb->sk), ovs_net_id);
--	struct ovs_ct_limit_info *ct_limit_info = ovs_net->ct_limit_info;
- 	int err;
- 
- 	reply = ovs_ct_limit_cmd_reply_start(info, OVS_CT_LIMIT_CMD_SET,
-@@ -2174,8 +2193,8 @@ static int ovs_ct_limit_cmd_set(struct sk_buff *skb, struct genl_info *info)
- 		goto exit_err;
- 	}
- 
--	err = ovs_ct_limit_set_zone_limit(a[OVS_CT_LIMIT_ATTR_ZONE_LIMIT],
--					  ct_limit_info);
-+	err = ovs_ct_limit_set_zone_limit(ovs_net,
-+					  a[OVS_CT_LIMIT_ATTR_ZONE_LIMIT]);
- 	if (err)
- 		goto exit_err;
- 
-@@ -2195,7 +2214,6 @@ static int ovs_ct_limit_cmd_del(struct sk_buff *skb, struct genl_info *info)
- 	struct sk_buff *reply;
- 	struct ovs_header *ovs_reply_header;
- 	struct ovs_net *ovs_net = net_generic(sock_net(skb->sk), ovs_net_id);
--	struct ovs_ct_limit_info *ct_limit_info = ovs_net->ct_limit_info;
- 	int err;
- 
- 	reply = ovs_ct_limit_cmd_reply_start(info, OVS_CT_LIMIT_CMD_DEL,
-@@ -2208,8 +2226,8 @@ static int ovs_ct_limit_cmd_del(struct sk_buff *skb, struct genl_info *info)
- 		goto exit_err;
- 	}
- 
--	err = ovs_ct_limit_del_zone_limit(a[OVS_CT_LIMIT_ATTR_ZONE_LIMIT],
--					  ct_limit_info);
-+	err = ovs_ct_limit_del_zone_limit(ovs_net,
-+					  a[OVS_CT_LIMIT_ATTR_ZONE_LIMIT]);
- 	if (err)
- 		goto exit_err;
- 
-@@ -2229,7 +2247,7 @@ static int ovs_ct_limit_cmd_get(struct sk_buff *skb, struct genl_info *info)
- 	struct ovs_header *ovs_reply_header;
- 	struct net *net = sock_net(skb->sk);
- 	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
--	struct ovs_ct_limit_info *ct_limit_info = ovs_net->ct_limit_info;
-+	struct ovs_ct_limit_info *ct_limit_info;
- 	int err;
- 
- 	reply = ovs_ct_limit_cmd_reply_start(info, OVS_CT_LIMIT_CMD_GET,
-@@ -2243,18 +2261,19 @@ static int ovs_ct_limit_cmd_get(struct sk_buff *skb, struct genl_info *info)
- 		goto exit_err;
- 	}
- 
-+	rcu_read_lock();
-+	ct_limit_info = rcu_dereference(ovs_net->ct_limit_info);
- 	if (a[OVS_CT_LIMIT_ATTR_ZONE_LIMIT]) {
- 		err = ovs_ct_limit_get_zone_limit(
- 			net, a[OVS_CT_LIMIT_ATTR_ZONE_LIMIT], ct_limit_info,
- 			reply);
--		if (err)
--			goto exit_err;
+ 	const struct landlock_ruleset *const dom =
+ 		landlock_get_current_domain();
+@@ -836,18 +849,25 @@ static int current_check_refer_path(struct dentry *const old_dentry,
+ 	if (exchange) {
+ 		if (unlikely(d_is_negative(new_dentry)))
+ 			return -ENOENT;
+-		access_request_parent1 =
+-			get_mode_access(d_backing_inode(new_dentry)->i_mode);
++		access_request_parent1 = get_dentry_access(new_dentry);
  	} else {
- 		err = ovs_ct_limit_get_all_zone_limit(net, ct_limit_info,
- 						      reply);
--		if (err)
--			goto exit_err;
+ 		access_request_parent1 = 0;
  	}
-+	rcu_read_unlock();
-+	if (err)
-+		goto exit_err;
+-	access_request_parent2 =
+-		get_mode_access(d_backing_inode(old_dentry)->i_mode);
++	access_request_parent2 = get_dentry_access(old_dentry);
+ 	if (removable) {
+ 		access_request_parent1 |= maybe_remove(old_dentry);
+ 		access_request_parent2 |= maybe_remove(new_dentry);
+ 	}
  
- 	nla_nest_end(reply, nla_reply);
- 	genlmsg_end(reply, ovs_reply_header);
-@@ -2329,12 +2348,29 @@ int ovs_ct_init(struct net *net)
- 	return err;
++	/*
++	 * In case of renameat2(2) with RENAME_WHITEOUT, a whiteout object is
++	 * created in the source location, so we require an additional access
++	 * right there.
++	 */
++	if (whiteout)
++		access_request_parent1 |=
++			get_mode_access(S_IFCHR | WHITEOUT_MODE, WHITEOUT_DEV);
++
+ 	/* The mount points are the same for old and new paths, cf. EXDEV. */
+ 	if (old_dentry->d_parent == new_dir->dentry) {
+ 		/*
+@@ -1099,7 +1119,7 @@ static int hook_path_link(struct dentry *const old_dentry,
+ 			  struct dentry *const new_dentry)
+ {
+ 	return current_check_refer_path(old_dentry, new_dir, new_dentry, false,
+-					false);
++					false, false);
  }
  
--void ovs_ct_exit(struct net *net)
-+/* Must be called with ovs_mutex held.  Detaches the RCU-protected
-+ * ct_limit_info and stores it in ovs_net->ct_limit_exit_data for
-+ * ovs_ct_exit_finish() to complete the teardown after an RCU grace period.
-+ */
-+void ovs_ct_exit_start(struct net *net __maybe_unused)
-+{
-+#if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
-+	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
-+
-+	ovs_net->ct_limit_exit_data = ovs_ct_limit_exit_start(ovs_net);
-+#endif
-+}
-+
-+/* Completes the CT limit teardown.  The pernet core guarantees an RCU
-+ * grace period between detaching the state in ovs_ct_exit_start() and
-+ * this call, so no RCU readers remain.
-+ */
-+void ovs_ct_exit_finish(struct net *net)
+ static int hook_path_rename(const struct path *const old_dir,
+@@ -1110,7 +1130,8 @@ static int hook_path_rename(const struct path *const old_dir,
  {
- 	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
- 
- #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
--	ovs_ct_limit_exit(net, ovs_net);
-+	ovs_ct_limit_exit_finish(net, ovs_net->ct_limit_exit_data);
- #endif
- 
- 	if (ovs_net->xt_label)
-diff --git a/net/openvswitch/conntrack.h b/net/openvswitch/conntrack.h
-index 317e525c8a113..ab21d032fde3d 100644
---- a/net/openvswitch/conntrack.h
-+++ b/net/openvswitch/conntrack.h
-@@ -14,7 +14,8 @@ enum ovs_key_attr;
- 
- #if IS_ENABLED(CONFIG_NF_CONNTRACK)
- int ovs_ct_init(struct net *);
--void ovs_ct_exit(struct net *);
-+void ovs_ct_exit_start(struct net *net);
-+void ovs_ct_exit_finish(struct net *net);
- bool ovs_ct_verify(struct net *, enum ovs_key_attr attr);
- int ovs_ct_copy_action(struct net *, const struct nlattr *,
- 		       const struct sw_flow_key *, struct sw_flow_actions **,
-@@ -40,7 +41,8 @@ void ovs_ct_free_action(const struct nlattr *a);
- 
- static inline int ovs_ct_init(struct net *net) { return 0; }
- 
--static inline void ovs_ct_exit(struct net *net) { }
-+static inline void ovs_ct_exit_start(struct net *net) { }
-+static inline void ovs_ct_exit_finish(struct net *net) { }
- 
- static inline bool ovs_ct_verify(struct net *net, int attr)
- {
-diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
-index 166710e9f1cb8..bb68c3ce95194 100644
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -2700,6 +2700,13 @@ static void __net_exit list_vports_from_net(struct net *net, struct net *dnet,
- 	}
+ 	/* old_dir refers to old_dentry->d_parent and new_dir->mnt */
+ 	return current_check_refer_path(old_dentry, new_dir, new_dentry, true,
+-					!!(flags & RENAME_EXCHANGE));
++					!!(flags & RENAME_EXCHANGE),
++					!!(flags & RENAME_WHITEOUT));
  }
  
-+static void __net_exit ovs_pre_exit_net(struct net *dnet)
-+{
-+	ovs_lock();
-+	ovs_ct_exit_start(dnet);
-+	ovs_unlock();
-+}
-+
- static void __net_exit ovs_exit_net(struct net *dnet)
- {
- 	struct datapath *dp, *dp_next;
-@@ -2710,7 +2717,7 @@ static void __net_exit ovs_exit_net(struct net *dnet)
+ static int hook_path_mkdir(const struct path *const dir,
+@@ -1128,7 +1149,8 @@ static int hook_path_mknod(const struct path *const dir,
  
- 	ovs_lock();
+ 	if (!dom)
+ 		return 0;
+-	return check_access_path(dom, dir, get_mode_access(mode));
++	return check_access_path(dom, dir,
++				 get_mode_access(mode, new_decode_dev(dev)));
+ }
  
--	ovs_ct_exit(dnet);
-+	ovs_ct_exit_finish(dnet);
- 
- 	list_for_each_entry_safe(dp, dp_next, &ovs_net->dps, list_node)
- 		__dp_destroy(dp);
-@@ -2734,6 +2741,7 @@ static void __net_exit ovs_exit_net(struct net *dnet)
- 
- static struct pernet_operations ovs_net_ops = {
- 	.init = ovs_init_net,
-+	.pre_exit = ovs_pre_exit_net,
- 	.exit = ovs_exit_net,
- 	.id   = &ovs_net_id,
- 	.size = sizeof(struct ovs_net),
-diff --git a/net/openvswitch/datapath.h b/net/openvswitch/datapath.h
-index 92dea32da88bd..c16e249380fe4 100644
---- a/net/openvswitch/datapath.h
-+++ b/net/openvswitch/datapath.h
-@@ -157,7 +157,10 @@ struct dp_upcall_info {
-  * Protected by genl_mutex.
-  * @dp_notify_work: A work notifier to handle port unregistering.
-  * @masks_rebalance: A work to periodically optimize flow table caches.
-- * @ct_limit_info: A hash table of conntrack zone connection limits.
-+ * @ct_limit_info: Hash table of conntrack zone connection limits. Protected
-+ * by RCU; updates and teardown are serialized by ovs_mutex. May be NULL during
-+ * netns teardown.
-+ * @ct_limit_exit_data: CT limit state detached at .pre_exit, freed at .exit.
-  * @xt_label: Whether connlables are configured for the network or not.
-  */
- struct ovs_net {
-@@ -165,7 +168,8 @@ struct ovs_net {
- 	struct work_struct dp_notify_work;
- 	struct delayed_work masks_rebalance;
- #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
--	struct ovs_ct_limit_info *ct_limit_info;
-+	struct ovs_ct_limit_info __rcu *ct_limit_info;
-+	struct ovs_ct_limit_info *ct_limit_exit_data;
- #endif
- 	bool xt_label;
- };
+ static int hook_path_symlink(const struct path *const dir,
 -- 
 2.53.0
 
