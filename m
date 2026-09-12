@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3583A2E39;
-	Sat, 12 Sep 2026 20:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838923A2E12;
+	Sat, 12 Sep 2026 20:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243405; cv=none; b=tohG5DC/CTE2SeLNwTusWThxdwn5iugjtLGXFassuJJloLFdDdK2WLTaP4hTkg3r0QT7LAKIAjlU8YzTMnf3wli9XctwAQHoRtDw+1csjq0M2HY4Obz3MDj9S5Ka58U9NKcRHB8AJRUgHmLo5ObGsi/AkKErMTK1VuAfv6jvGNE=
+	t=1789243408; cv=none; b=ob0QKlPTNSh/vsvMQiM3jF0gXWzy3xt0S3P0zZpDDud+PTYJQPcnp1KQQVnNXX861AdihX+Gg8G93PXhdlNYQ6cUOjZQOiYyZ+IuMX0Roy6Usn8On0kldEwQfJAFj+QnCyhGZ4/THTYbiEFT+/RZAd+TTeGSXS4f2xfCD52J8kY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243405; c=relaxed/simple;
-	bh=yUrB2xBjJFzzHMs8Yk5spjA2E9aZes9CwY9Fni6WQrk=;
+	s=arc-20240116; t=1789243408; c=relaxed/simple;
+	bh=Qu4+inrZdIWmlASjmdN7Ci+k16ujF9/eF8Oa1XW9JE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m7uTHUm8GmqgjUIYdGRp7I5ZGJgc5QQwhBg/N3E+R20ymGGJiuIOhlc3+zHrdMQQP4AuIjmla6oQEwHKcc1m3P4oqzg9fZ4SeZotnL/1fD/PVAIZBzl6tjKBhy+dhYXgSRlKbBEBk7qRGlQhGCunSmXZBVtCXcDlMIT5GWXE0ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taL1sQb6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fKa7JK21oWsVBIPvRCj7twEfI76I/JRbL6fECaY7788IXBTA7g8oiRfLvcSs2+0MhvKP9oLC9rsMWF2ydokKtD/fE2BgjtQ+X+IvQHTg5xBp4X8DXWe4249rfQrEsKvm4g6fanUSKA3ZXYqsNYjn3r5KTK5ZpUJOOZXU6+klKYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ae1kNeQg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taL1sQb6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1672E1F000FF;
-	Sat, 12 Sep 2026 20:03:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ae1kNeQg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC421F000FF;
+	Sat, 12 Sep 2026 20:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243404;
-	bh=q7l/YhL2O3k8JyGJDsrwu8Ws8NmCbxa90e1drR57ik8=;
+	s=korg; t=1789243407;
+	bh=emLfpeUChfcv7Ka2HklpArgi2SpjIS7APEiPxqSlZHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=taL1sQb6XumZVOyeRctD8Pl11EZ7npXaU1qERqm+QjaSzmM+QNKuGqbI+KdG6DwaP
-	 IaXB9GIS0baVrzPpFKAMqzmjuoaPUmHy0bX3eINOy6xv6hNd2eUnZi0vxI5Kq6YHyh
-	 2WBp0hye7zHT/R7z50MAJFIzPOVV3YB1Z+6YiiG4=
+	b=Ae1kNeQgbFB286YG6RDki/jv92pWqlktjR4Zu6IuqEtUe84JiDrlWsBjiPLMj/TdS
+	 RAyO9mQ7ZvlxLuZqM7eeQ4gAxy1KVmCc7VTmFaKO+79qtX4tM5hPdci8Zj77apfQqZ
+	 nUcXzXH85ApFAPseF8LRv8nYfohhe3+Fnl26XwiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Juergen Gross <jgross@suse.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 701/798] xenbus: Unregister reboot notifier on init failure
-Date: Sat, 12 Sep 2026 09:05:29 +0200
-Message-ID: <20260912065533.160226330@linuxfoundation.org>
+Subject: [PATCH 5.10 702/798] clocksource/drivers/clps711x: Do not unmap clocksource MMIO
+Date: Sat, 12 Sep 2026 09:05:30 +0200
+Message-ID: <20260912065533.182322056@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,64 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit d330fb86a7170f845123ae82d95df440fad9b707 ]
+[ Upstream commit e998c6300ef4e062a704ee17b5a812c0b595cf42 ]
 
-xs_init() registers xs_reboot_nb before initializing XenStore
-communications and starting xenwatch. If either operation fails, the
-notifier remains registered and a later initialization attempt can hit a
-duplicate registration.
+clps711x_clksrc_init() stores the timer base address in the static tcd
+pointer and registers it as both the clocksource MMIO address and the
+sched_clock read address.
 
-Check the notifier registration result and unregister it on every
-subsequent failure path.
+The clocksource init path must therefore keep the mapping alive after
+clps711x_timer_init() returns. However, the shared unmap_io exit path is
+also reached after successful clocksource registration, so the MMIO
+mapping is torn down while the clocksource and sched_clock readers may
+still access it.
 
-Fixes: fd8aa9095a95 ("xen: optimize xenbus driver for multiple concurrent xenstore accesses")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260807032326.940377-1-dbgh9129@gmail.com>
+Return directly after successful clocksource registration and leave the
+mapping alive for the registered readers. Keep the unmap_io path for the
+error paths and for the clockevent init path.
+
+Fixes: cd32e596f02f ("clocksource/drivers/clps711x: Fix resource leaks in error paths")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Link: https://patch.msgid.link/20260704175451.256364-1-lgs201920130244@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/xenbus/xenbus_xs.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/clocksource/clps711x-timer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/xen/xenbus/xenbus_xs.c b/drivers/xen/xenbus/xenbus_xs.c
-index a4dd92719e7ae..d59bc4f5169af 100644
---- a/drivers/xen/xenbus/xenbus_xs.c
-+++ b/drivers/xen/xenbus/xenbus_xs.c
-@@ -952,19 +952,27 @@ int xs_init(void)
- 	int err;
- 	struct task_struct *task;
- 
--	register_reboot_notifier(&xs_reboot_nb);
-+	err = register_reboot_notifier(&xs_reboot_nb);
-+	if (err)
-+		return err;
- 
- 	/* Initialize the shared memory rings to talk to xenstored */
- 	err = xb_init_comms();
- 	if (err)
--		return err;
-+		goto err_unregister_reboot_notifier;
- 
- 	task = kthread_run(xenwatch_thread, NULL, "xenwatch");
--	if (IS_ERR(task))
--		return PTR_ERR(task);
-+	if (IS_ERR(task)) {
-+		err = PTR_ERR(task);
-+		goto err_unregister_reboot_notifier;
-+	}
- 
- 	/* shutdown watches for kexec boot */
- 	xs_reset_watches();
- 
- 	return 0;
-+
-+err_unregister_reboot_notifier:
-+	unregister_reboot_notifier(&xs_reboot_nb);
-+	return err;
- }
+diff --git a/drivers/clocksource/clps711x-timer.c b/drivers/clocksource/clps711x-timer.c
+index bbceb0289d457..95f8a50ba1ebb 100644
+--- a/drivers/clocksource/clps711x-timer.c
++++ b/drivers/clocksource/clps711x-timer.c
+@@ -94,7 +94,7 @@ static int __init clps711x_timer_init(struct device_node *np)
+ 	switch (of_alias_get_id(np, "timer")) {
+ 	case CLPS711X_CLKSRC_CLOCKSOURCE:
+ 		clps711x_clksrc_init(clock, base);
+-		break;
++		return 0;
+ 	case CLPS711X_CLKSRC_CLOCKEVENT:
+ 		ret =  _clps711x_clkevt_init(clock, base, irq);
+ 		break;
 -- 
 2.53.0
 
