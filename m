@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90BD3803CF;
-	Sat, 12 Sep 2026 07:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824232BDC0E;
+	Sat, 12 Sep 2026 07:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197939; cv=none; b=fh58XnQ7h9JIUgvZoHFMveGeHTPvLMk+INrHNNVKlFdRCVfF3pXFTF3iuciYHZBA6bXC+iUoanAGwDnH6apayaltg9ytubaC++vXXSB6JBdSn6mzoji9nDNtSWqHAVg61RS2W70wutAVgzhqa914mueU28JKOrojVIqT0mz0zbg=
+	t=1789197944; cv=none; b=Xg3jKzOm8pIKNJWycFQgL25JPQdueMqaZIPocqlGdKjtPiWcSeXqWfUyy64rA0BwpQO8j46T3oY6ET+O7QZHeM7IYcirKeWURPonExxTkJDphL9AoWr2b+33BLMkxWXohrTtr4LHeOuU/2Sxc8JFIHHG2rbhJehiVt/v3WbYDbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197939; c=relaxed/simple;
-	bh=tmPJB9Lqabcpc4KQUDEmSQ2cSYcv6Du2DKfHCEs0b64=;
+	s=arc-20240116; t=1789197944; c=relaxed/simple;
+	bh=+47zbszwzLpC2PhwsRW0M/XqfySAL+kNgnAN1Y9JMMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NXq6mDtTUSiXRVKSIsooiwBOhTG3AJP5uNjATao9IgZe0SfvtVfSrWWVts1wmjRbbUyUQaB55GWggpJK4sqU0upo3E9BqT8yyCgRihBWoIC2L6P/5RjosPqJrrklBkrmPJeZ0JN3Ru1AMNd0XQPJVi3rxGysL31oZpVB20a/d3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Wh+ayWb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b/IKTnvi5hVtCQVf6+bB1MalpqET5YaPNeDwlHib+y7K4gcWzre7SEf6kee0xfpFMy0VaDa5GSSqengiF7Bzcg/fLZA+CT31QyPo93xlcE0Aor9OI48i+PLORoBKGxYNxqlbwO4xFeEeVZ1iPLZGN1Y+Oj2S4H1Wd3bIl5hEzdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLzHm4+f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Wh+ayWb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5BBA1F000FF;
-	Sat, 12 Sep 2026 07:25:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLzHm4+f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863721F000FF;
+	Sat, 12 Sep 2026 07:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197938;
-	bh=fLbot/TVhlGG9nAGfZJBzrnYPuA7nT8hLIUKIPU6iXs=;
+	s=korg; t=1789197943;
+	bh=05UbBRHvFBl4PLlyTA617/ebw7BrzP5W6wPXRYuKqqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Wh+ayWbhj0+1Ib8hzR75PaaTFYoqTh00mhnj6faapn6KwzvLtDHwamjzRGxbWJIw
-	 GGPD6OhZakV7UYxYZ+wE07/ZypM4gAXCy6j01lbnuuZBOJR/t8+LSlXJtukJrcR6OD
-	 jbw2uv4M2JT2jGJReagEGWykVB4myM+mCXUPJXss=
+	b=uLzHm4+f08C//bQqYPXB5rPXIxpMhy3tJPo9cJzvWX1Tp04oPHmk4UeJLYTTq2daV
+	 ZHEXfyoPwKjyVI4d35ZheaSAJgOVvG8W99ekU0k7oBpW1yfNrFHeHq9AIPpy8qVm0w
+	 8sudJg9+yOWbzvcnWvbJLCcm5tbzaSdQj1hLkWwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0225/1815] bus: qcom-ebi2: Fix clock leak on probe failure
-Date: Sat, 12 Sep 2026 08:32:55 +0200
-Message-ID: <20260912065654.275929260@linuxfoundation.org>
+Subject: [PATCH 7.2 0272/1815] usb: typec: ucsi: unregister debugfs entries on teardown
+Date: Sat, 12 Sep 2026 08:33:42 +0200
+Message-ID: <20260912065655.354113114@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,55 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit 64774dea58969194ea5c27fa639954e551a87024 ]
+[ Upstream commit eed73a65ab609b79d53de88cccc34b36dfe753c4 ]
 
-qcom_ebi2_probe() enables the EBI2X and EBI2 clocks before it walks
-child nodes and populates child devices. If reading a child node's reg
-property fails, or if of_platform_default_populate() fails, probe returns
-without disabling either clock.
+ucsi_register() creates per-instance debugfs entries, but
+ucsi_unregister() keeps them around until ucsi_destroy().
 
-Route those failure paths through the existing clock cleanup labels so a
-failed probe does not leave the clocks prepared and enabled.
+Drivers like ucsi_glink that unregister/register the same UCSI
+instance across remoteproc restart then try to create an already
+existing debugfs directory and log:
 
-Fixes: 335a12754808 ("bus: qcom: add EBI2 driver")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Link: https://lore.kernel.org/r/20260620080406.1970447-1-ruoyuw560@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+  debugfs: 'pmic_glink.ucsi.0' already exists in 'ucsi'
+
+Unregister debugfs entries as part of ucsi_unregister(), and
+clear ucsi->debugfs after freeing it so repeated unregister
+paths remain safe.
+
+Assisted-by: Codex:GPT-5.5
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Fixes: df0383ffad64 ("usb: typec: ucsi: Add debugfs for ucsi commands")
+Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # X1E80100 CRD
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260611-usci-unregister-debugfs-v1-1-f4a518a94f27@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/qcom-ebi2.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/usb/typec/ucsi/debugfs.c | 1 +
+ drivers/usb/typec/ucsi/ucsi.c    | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/bus/qcom-ebi2.c b/drivers/bus/qcom-ebi2.c
-index be8166565e7cc..ab00c75b9e953 100644
---- a/drivers/bus/qcom-ebi2.c
-+++ b/drivers/bus/qcom-ebi2.c
-@@ -353,7 +353,7 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
- 		/* Figure out the chipselect */
- 		ret = of_property_read_u32(child, "reg", &csindex);
- 		if (ret)
--			return ret;
-+			goto err_disable_clk;
+diff --git a/drivers/usb/typec/ucsi/debugfs.c b/drivers/usb/typec/ucsi/debugfs.c
+index ff33a5e7c6b0d..a124105b6226d 100644
+--- a/drivers/usb/typec/ucsi/debugfs.c
++++ b/drivers/usb/typec/ucsi/debugfs.c
+@@ -162,6 +162,7 @@ void ucsi_debugfs_unregister(struct ucsi *ucsi)
  
- 		if (csindex > 5) {
- 			dev_err(dev,
-@@ -372,8 +372,12 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
- 		have_children = true;
- 	}
+ 	debugfs_remove_recursive(ucsi->debugfs->dentry);
+ 	kfree(ucsi->debugfs);
++	ucsi->debugfs = NULL;
+ }
  
--	if (have_children)
--		return of_platform_default_populate(np, NULL, dev);
-+	if (have_children) {
-+		ret = of_platform_default_populate(np, NULL, dev);
-+		if (ret)
-+			goto err_disable_clk;
-+	}
+ void ucsi_debugfs_init(void)
+diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+index 81d74242c816c..b3a7712a64507 100644
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -2367,6 +2367,8 @@ void ucsi_unregister(struct ucsi *ucsi)
+ 	cancel_delayed_work_sync(&ucsi->work);
+ 	cancel_work_sync(&ucsi->resume_work);
+ 
++	ucsi_debugfs_unregister(ucsi);
 +
- 	return 0;
+ 	/* Disable notifications */
+ 	ucsi->ops->async_control(ucsi, cmd);
  
- err_disable_clk:
 -- 
 2.53.0
 
