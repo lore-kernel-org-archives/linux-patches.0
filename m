@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF06373BF3;
-	Sat, 12 Sep 2026 08:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16CDD36E494;
+	Sat, 12 Sep 2026 08:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200894; cv=none; b=r/mutPbk9So2cKkLX/oZkdA9NDUboxKaNt2xjZjj+ktX5I4DPzC9Ne1yAX3buqk4tzk4WwCPYBpeR6DdSuOqLm23PPz1D+RN/0TDr8IqWRP5pdnyS3YZ2JXKxGJfPVwrfQCvG0QmqBYsoXezxSXNW6qTFdBgQVW77KgVhmn2LeE=
+	t=1789200899; cv=none; b=NaSV/TguMW1r8mgA6pKTmC2We7rYOgXhcnmwubUcu53Y7KEf6G8A7OZJqq36kl6YqDc479MLA++oIOmtORs3xhiQ55j/GmUAABj9LtGxnh9I5iQI2S7gMWYJdYxHCg2xEry4VgMSRv4RiH28OCZf2GaBYLSyFjg4EsGIUjz1CFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200894; c=relaxed/simple;
-	bh=xViZXJX5d7HYvrf2vl5VKE0zDfd5sAt1/eXfKa5CsDg=;
+	s=arc-20240116; t=1789200899; c=relaxed/simple;
+	bh=FeeGiVBwcKthpqfPN2Jt/8GMKY5VLmFFjHzmBj4LrYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jou7COyslrUQchgi7dpYkl8EMbd7EuD9QZTj+VI8fS43Oua/eYwJwQ03U9dOholYqV3a+l2+3yxlaLPPikTXveHEV0wxF6yGBbloOqechNLJmMwWNnEk5nBL2xCEuEq4JuAWs2/M7BEQyXgLIC3VwNyUkroUCF/N3ZG2Eg55CUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REjAI6TC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uUYQJ0UNjTBCmlU45PDoF+uUWzOD9SrnmBiLv/S0Jv1IagYjDQyHKsVlpvzOOfIp2EGVQp0s6XrV4cu5P/kAKS9z1UW+JUn/LLcrRMpQbaOKnMn1CsS3JPIJAAIqTmfGzkI2SMsfhUPb9dd/8DmRc6xJ7lsWeyGW82pk9HyGkKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGrAOzO0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REjAI6TC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29831F00893;
-	Sat, 12 Sep 2026 08:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGrAOzO0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE07F1F00893;
+	Sat, 12 Sep 2026 08:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200893;
-	bh=g0JUrgTZHrXgxxt5e7WEPRs/40R3Z/5yXg4rH5l8UN0=;
+	s=korg; t=1789200898;
+	bh=huiVEDcWBFEGYHU6EfW1V7vyUpDcjEzx7FW98G55tg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=REjAI6TCic9c6dPW4QE/eM9cGiA+VsvLF1x90etWeAI7bIORgircilO0az8TGENhp
-	 gqbPg7ntD9eS/mzE8sbicS5vBwNwxGhcsAv0B0TgQHzaDKHSdXA50iVlJjlST7DyKe
-	 eKSFdjsd39w9apirQqsR26dIp2uOmjLuvlerIwE8=
+	b=jGrAOzO0N17UMl5jISKv70jE11Gq0aIoypUKN3fkaMaFKSEn020kHy1qnS34a0fOQ
+	 jt50GDStNpKe/kl7nE5tPpZ4ANo/gpQs1vLYUdJ3R4aisA+ZPXs+NJSuIOqEx9+hdK
+	 KO1DQHr2op0QU+ykcKFUMoldavWJJVutKi2RBO+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eason Lai <Eason.Lai@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0867/1815] wifi: mt76: mt792x: fix use-after-free in mt76_rx_poll_complete
-Date: Sat, 12 Sep 2026 08:43:37 +0200
-Message-ID: <20260912065709.275952179@linuxfoundation.org>
+Subject: [PATCH 7.2 0885/1815] wifi: mt76: mt7915: write RX header translation bit to the correct register
+Date: Sat, 12 Sep 2026 08:43:55 +0200
+Message-ID: <20260912065709.695836104@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,101 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eason Lai <Eason.Lai@mediatek.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 217f9e7bb02558759be9d9ecfe532e9708741c50 ]
+[ Upstream commit 236145737480c4c0c515e09061d0d5f77cf52d3f ]
 
-A use-after-free issue occurs in mt76_rx_poll_complete due to a race
-condition. The STA has already been removed, but the rx_status still
-had a pointer to the wcid in the STA.
+MT_MDP_DCR0_RX_HDR_TRANS_EN is a field of MT_MDP_DCR0, but monitor-mode
+handling applied it to the per-band MT_DMA_DCR0 register instead. As a
+result RX header translation was never disabled in the MDP when entering
+monitor mode, and an undocumented bit of MT_DMA_DCR0 was toggled. Target
+MT_MDP_DCR0, matching the mt7996 driver.
 
-Set the links' wcid pointers to be NULL for a MLD in
-mt7925_sta_pre_rcu_remove()
-
-BUG: KASAN: invalid-access in mt76_rx_poll_complete+0x280/0x470
-Call trace:
-dump_backtrace+0xec/0x128
-show_stack+0x18/0x28
-dump_stack_lvl+0x40/0xc8
-print_report+0x1b8/0x710
-kasan_report+0xe0/0x144
-do_bad_area+0x120/0x260
-do_tag_check_fault+0x20/0x34
-do_mem_abort+0x54/0xa8
-el1_abort+0x3c/0x5c
-el1h_64_sync_handler+0x40/0xcc
-el1h_64_sync+0x7c/0x80
-mt76_rx_poll_complete+0x280/0x470
-mt76_dma_rx_poll+0x114/0x51c
-mt792x_poll_rx+0x60/0xf8
-napi_threaded_poll_loop+0xe0/0x450
-napi_threaded_poll+0x80/0x9c
-kthread+0x11c/0x158
-ret_from_fork+0x10/0x20
-
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Signed-off-by: Eason Lai <Eason.Lai@mediatek.com>
-Link: https://patch.msgid.link/20260701010654.956863-1-eason.lai@mediatek.com
+Fixes: b2491018587a ("wifi: mt76: mt7915: fix monitor mode issues")
+Link: https://patch.msgid.link/20260722082610.2699628-11-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7925/main.c  | 36 ++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index 3beb2c1fbec9c..fd3dea043cbe7 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -2494,6 +2494,40 @@ static void mt7925_stop(struct ieee80211_hw *hw, bool suspend)
- 	mt792x_stop(hw, suspend);
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+index c5eeafef3a903..4ed3d808654fe 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+@@ -493,7 +493,7 @@ static int mt7915_config(struct ieee80211_hw *hw, int radio_idx,
  
-+static void mt7925_sta_pre_rcu_remove(struct ieee80211_hw *hw,
-+				      struct ieee80211_vif *vif,
-+				      struct ieee80211_sta *sta)
-+{
-+	struct mt76_phy *phy = hw->priv;
-+	struct mt76_dev *dev = phy->dev;
-+	struct mt76_wcid *wcid = (struct mt76_wcid *)sta->drv_priv;
-+
-+	mutex_lock(&dev->mutex);
-+	spin_lock_bh(&dev->status_lock);
-+
-+	if (ieee80211_vif_is_mld(vif)) {
-+		struct mt792x_sta *msta = (struct mt792x_sta *)sta->drv_priv;
-+		struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
-+		unsigned long valid = mvif->valid_links;
-+		struct mt792x_link_sta *mlink;
-+		unsigned int link_id;
-+
-+		for_each_set_bit(link_id, &valid, IEEE80211_MLD_MAX_NUM_LINKS) {
-+			mlink = mt792x_sta_to_link(msta, link_id);
-+			if (!mlink || !mlink->wcid.sta)
-+				continue;
-+			if (mlink->wcid.idx < ARRAY_SIZE(dev->wcid))
-+				rcu_assign_pointer(dev->wcid[mlink->wcid.idx],
-+						   NULL);
-+		}
-+	} else {
-+		rcu_assign_pointer(dev->wcid[wcid->idx], NULL);
-+	}
-+
-+	spin_unlock_bh(&dev->status_lock);
-+	mutex_unlock(&dev->mutex);
-+}
-+
- const struct ieee80211_ops mt7925_ops = {
- 	.tx = mt792x_tx,
- 	.start = mt7925_start,
-@@ -2506,7 +2540,7 @@ const struct ieee80211_ops mt7925_ops = {
- 	.start_ap = mt7925_start_ap,
- 	.stop_ap = mt7925_stop_ap,
- 	.sta_state = mt76_sta_state,
--	.sta_pre_rcu_remove = mt76_sta_pre_rcu_remove,
-+	.sta_pre_rcu_remove = mt7925_sta_pre_rcu_remove,
- 	.set_key = mt7925_set_key,
- 	.sta_set_decap_offload = mt7925_sta_set_decap_offload,
- #if IS_ENABLED(CONFIG_IPV6)
+ 		mt76_rmw_field(dev, MT_DMA_DCR0(band), MT_DMA_DCR0_RXD_G5_EN,
+ 			       enabled);
+-		mt76_rmw_field(dev, MT_DMA_DCR0(band), MT_MDP_DCR0_RX_HDR_TRANS_EN,
++		mt76_rmw_field(dev, MT_MDP_DCR0, MT_MDP_DCR0_RX_HDR_TRANS_EN,
+ 			       !dev->monitor_mask);
+ 		mt76_testmode_reset(phy->mt76, true);
+ 		mt76_wr(dev, MT_WF_RFCR(band), rxfilter);
 -- 
 2.53.0
 
