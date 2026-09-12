@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF37A18DB35;
-	Sat, 12 Sep 2026 16:20:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6537C2F0673;
+	Sat, 12 Sep 2026 16:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230019; cv=none; b=dR1ypSa0RdfgSw0q8M6rDUFwfOnVwmf17Ne3OLBW3r37RdbFRPhKY7I67gBNsHzlVZzB8Nu+iw9PJ3zlgUSk72lhjfGDjoPkgoARGB0H6Aw90Fth7O95sOYRFoUnOLSwRfJDPC7rAWSI5tDtzJO5MJjjFaY3qRjB5lMB+NGoN/8=
+	t=1789230028; cv=none; b=lzC0Oie6wYBvurbgoz4qyFgLlN1kJXXIwQD8j6NqU7qQCep0vXAyU8gzBuC/hEiaaZiWXZ8YLOO6lnrbrjs+jsCtY5I+y5Z6nNqB0m7EMQQkZehoEGVwOUhmiz8mvVG8gz0heMiMlDO/LRs7Cciu5YgRbGL3tVJsQB9u27WKYgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230019; c=relaxed/simple;
-	bh=w+2zUicP8LSZygCU0emky+LczgHeN0aNUXwR1cpqyyA=;
+	s=arc-20240116; t=1789230028; c=relaxed/simple;
+	bh=owhD6b0mMG5CgDcAh2hexlgZFqglM+owo11nFdg/apo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dOgqIXBQQL6zovLaL+8n6dG5Bdk8M36HUfZ10yecw7OQCkKVsWEDNUGiVf8rSxcf4UqRt7jr+yRLk4H2Qjb0TxFGQyRqEjYd6LipVAHjNzdr678mseW+OH+uWGsnOI3sNNkunlo9hWRMPlFQfpKVmTvez8xvtGJms+JXv8YkDek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LqIyY/PD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n2Q/vtJkKqhlhYfbVhd0RVwGG027b20iKjMdDiN2ztah1G3eywrtilnmpegND4avqQkYPT/mJ7ZHjGc+8eOdVFniSxrOP3P9j4qDTbS609M3SJ+v6LZxD6Ou7tkqBriTOGSTziQXv1Dq2YNmfSbI/cZGygLt4Jw5gUnVpMcTV+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJR5eJtN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LqIyY/PD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA2A1F000FF;
-	Sat, 12 Sep 2026 16:20:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJR5eJtN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C011F1F000FF;
+	Sat, 12 Sep 2026 16:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230017;
-	bh=7TlbRf4BhejP13Gv96yzoaBcGhBTBaLr0Jn4vRD4f6s=;
+	s=korg; t=1789230023;
+	bh=5lm0NduEmdCylPndF8abkK+VL6WMM+gQZ6fU92FXEwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LqIyY/PDuaPPs+iQkEfZvgGx5vOsfv9HSGHQIVP6M6sEKgMkCWFuZNJUyLeHWM83h
-	 mBSQjQmeTHkgVI3L/nBDWnDHbJ8NqZttFZ5lOVAxO48/U8sgIcnHb5fL8L85mSsKOA
-	 icGcdDQNV4SChuxwkrkI1BUope25CC6osY6/QuX0=
+	b=qJR5eJtNpXLkHvOeCTCZdk0HVwXEmvXBZv+5WyAjHFoA0LOHOcoxnBB0dTlObZDU0
+	 LkuoQ1H7ugSZU2D2v7kkg/sgFVRJpp5aT2oY8OEAJkPbHSg2IQxXHSIsqpu13n0u8C
+	 qSzRD0c3Y3omEP08366gvUD3tZuEJ9cJyBZp7+xI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0709/1191] netfilter: nf_nat_sip: rewind offset when NAT shrinks the packet
-Date: Sat, 12 Sep 2026 08:57:17 +0200
-Message-ID: <20260912065604.196184311@linuxfoundation.org>
+Subject: [PATCH 6.1 0692/1191] RDMA/core: Add driver APIs pre_destroy_cq() and post_destroy_cq()
+Date: Sat, 12 Sep 2026 08:57:00 +0200
+Message-ID: <20260912065603.803726240@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,50 +51,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Mark Zhang <markzhang@nvidia.com>
 
-[ Upstream commit 16aecbe3036f6097c26b51b12e4c1cf207769690 ]
+[ Upstream commit 5a2a5b65d5d67279be9e1f0e4b9baf39ee594cb1 ]
 
-sashiko says:
- If map_addr() changes the packet length, such as when the public NAT IP
- string is shorter or longer than the internal IP, coff will still point to
- the offset relative to the pre-mangled packet.
- If the packet shrinks, coff could overshoot the correct position,
- potentially causing the next ct_sip_parse_header_uri() call to silently
- skip bytes and miss subsequent Contact headers. Could this lead to a
- failure to NAT those subsequent headers and leak internal network details?
+Currently in ib_free_cq, it disables IRQ or cancel the CQ work before
+driver destroy_cq. This isn't good as a new IRQ or a CQ work can be
+submitted immediately after disabling IRQ or canceling CQ work, which
+may run concurrently with destroy_cq and cause crashes.
+The right flow should be:
+ 1. Driver disables CQ to make sure no new CQ event will be submitted;
+ 2. Disables IRQ or Cancels CQ work in core layer, to make sure no CQ
+    polling work is running;
+ 3. Free all resources to destroy the CQ.
 
-Fixes: c978cd3a9371 ("[NETFILTER]: nf_nat_sip: translate all Contact headers")
-Assisted-by: Claude:claude-sonnet-4-6
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+This patch adds 2 driver APIs:
+- pre_destroy_cq(): Disable a CQ to prevent it from generating any new
+  work completions, but not free any kernel resources;
+- post_destroy_cq(): Free all kernel resources.
+
+In ib_free_cq, the IRQ is disabled or CQ work is canceled after
+pre_destroy_cq, and before post_destroy_cq.
+
+Fixes: 14d3a3b2498e ("IB: add a proper completion queue abstraction")
+Signed-off-by: Mark Zhang <markzhang@nvidia.com>
+Link: https://patch.msgid.link/b5f7ae3d75f44a3e15ff3f4eb2bbdea13e06b97f.1750062328.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 29dc2f8e1c97 ("RDMA/core: Fix potential use after free in ib_free_cq()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_nat_sip.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/infiniband/core/cq.c     | 12 ++++++++++--
+ drivers/infiniband/core/device.c |  2 ++
+ include/rdma/ib_verbs.h          |  9 +++++++++
+ 3 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
-index a1c41defaf22d..6b00c81084fe2 100644
---- a/net/netfilter/nf_nat_sip.c
-+++ b/net/netfilter/nf_nat_sip.c
-@@ -267,12 +267,17 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
- 				       SIP_HDR_CONTACT, &in_header,
- 				       &matchoff, &matchlen,
- 				       &addr, &port) > 0) {
-+		int old_len = skb->len, delta;
-+
- 		if (!map_addr(skb, protoff, dataoff, dptr, datalen,
- 			      matchoff, matchlen,
- 			      &addr, port)) {
- 			nf_ct_helper_log(skb, ct, "cannot mangle contact");
- 			return NF_DROP;
- 		}
-+
-+		delta = (int)skb->len - old_len;
-+		coff += delta;
- 	}
+diff --git a/drivers/infiniband/core/cq.c b/drivers/infiniband/core/cq.c
+index a70876a0a2312..584537c71545c 100644
+--- a/drivers/infiniband/core/cq.c
++++ b/drivers/infiniband/core/cq.c
+@@ -317,13 +317,18 @@ EXPORT_SYMBOL(__ib_alloc_cq_any);
+  */
+ void ib_free_cq(struct ib_cq *cq)
+ {
+-	int ret;
++	int ret = 0;
  
- 	if (!map_sip_addr(skb, protoff, dataoff, dptr, datalen, SIP_HDR_FROM) ||
+ 	if (WARN_ON_ONCE(atomic_read(&cq->usecnt)))
+ 		return;
+ 	if (WARN_ON_ONCE(cq->cqe_used))
+ 		return;
+ 
++	if (cq->device->ops.pre_destroy_cq) {
++		ret = cq->device->ops.pre_destroy_cq(cq);
++		WARN_ONCE(ret, "Disable of kernel CQ shouldn't fail");
++	}
++
+ 	switch (cq->poll_ctx) {
+ 	case IB_POLL_DIRECT:
+ 		break;
+@@ -340,7 +345,10 @@ void ib_free_cq(struct ib_cq *cq)
+ 
+ 	rdma_dim_destroy(cq);
+ 	trace_cq_free(cq);
+-	ret = cq->device->ops.destroy_cq(cq, NULL);
++	if (cq->device->ops.post_destroy_cq)
++		cq->device->ops.post_destroy_cq(cq);
++	else
++		ret = cq->device->ops.destroy_cq(cq, NULL);
+ 	WARN_ONCE(ret, "Destroy of kernel CQ shouldn't fail");
+ 	rdma_restrack_del(&cq->res);
+ 	kfree(cq->wc);
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index ec391287d61d4..d7fc76659ee2c 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -2735,8 +2735,10 @@ void ib_set_device_ops(struct ib_device *dev, const struct ib_device_ops *ops)
+ 	SET_DEVICE_OP(dev_ops, modify_srq);
+ 	SET_DEVICE_OP(dev_ops, modify_wq);
+ 	SET_DEVICE_OP(dev_ops, peek_cq);
++	SET_DEVICE_OP(dev_ops, pre_destroy_cq);
+ 	SET_DEVICE_OP(dev_ops, poll_cq);
+ 	SET_DEVICE_OP(dev_ops, port_groups);
++	SET_DEVICE_OP(dev_ops, post_destroy_cq);
+ 	SET_DEVICE_OP(dev_ops, post_recv);
+ 	SET_DEVICE_OP(dev_ops, post_send);
+ 	SET_DEVICE_OP(dev_ops, post_srq_recv);
+diff --git a/include/rdma/ib_verbs.h b/include/rdma/ib_verbs.h
+index 6f3a2aaccd445..8cf5ee31b8772 100644
+--- a/include/rdma/ib_verbs.h
++++ b/include/rdma/ib_verbs.h
+@@ -2476,6 +2476,15 @@ struct ib_device_ops {
+ 	int (*modify_cq)(struct ib_cq *cq, u16 cq_count, u16 cq_period);
+ 	int (*destroy_cq)(struct ib_cq *cq, struct ib_udata *udata);
+ 	int (*resize_cq)(struct ib_cq *cq, int cqe, struct ib_udata *udata);
++	/**
++	 * pre_destroy_cq - Prevent a cq from generating any new work
++	 * completions, but not free any kernel resources
++	 */
++	int (*pre_destroy_cq)(struct ib_cq *cq);
++	/**
++	 * post_destroy_cq - Free all kernel resources
++	 */
++	void (*post_destroy_cq)(struct ib_cq *cq);
+ 	struct ib_mr *(*get_dma_mr)(struct ib_pd *pd, int mr_access_flags);
+ 	struct ib_mr *(*reg_user_mr)(struct ib_pd *pd, u64 start, u64 length,
+ 				     u64 virt_addr, int mr_access_flags,
 -- 
 2.53.0
 
