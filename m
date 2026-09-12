@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225D747A0D1;
-	Sat, 12 Sep 2026 11:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8126247A0D1;
+	Sat, 12 Sep 2026 11:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213876; cv=none; b=MYuR/qWmmz/zxWrcZk1lyJg0+vc36jXArV9gkQppqMMGJXtrqwfgMv8a3NN5D0Nq3ct3MfbUxCsvltiCUciO8DY3PnJxHzc2RoMexi2C5wM+CiDMvmq4qoJo3LuSFctn+03y0aeY8cIBoFY57txUFFquHbXYNUX1W3+zVNi8804=
+	t=1789213880; cv=none; b=DiBkYui+dq89nm8KKUNADU4DnxgIA+9RFM6RfZ0OxilrA0TZGKIPlAbt8EYpIFGsreafKGreHjM+fao5U2DU5+pcTYzsDf9RMUz3AdcCqcoM14cw2ULbbBU/9T+Cyk6PhbrJvDv7hkpjNKBPtWubETaOpoczubcQnoGyDSOjlSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213876; c=relaxed/simple;
-	bh=SDShLdJa+xIG5kEC1VOr8kiULNok6fY9o0U1p5V/O50=;
+	s=arc-20240116; t=1789213880; c=relaxed/simple;
+	bh=3Ed5xN6nzhCauO+YFXveG1azuj5KoemCGUqVPBLbiQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KqmyxAz3Gukh9Kd959KRVqsRAzarT1RIxSJ5Wci/n109pHGopdLlbpv7AfWbWdd8ivKIo51Wi/4hU5bqrIRpIG6ObUiRGEK0TLUPLboHx4jpj8LeQyfXsN3ByTQsVA+ifbJqn9PffLlhsKcKWoWlrtAJ0Ut8qrx1JjQV6W76Q9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvVsjJtK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QdtWMcvZjVQ1Por6L7kgtBpbWBL5g+2C2yqPrmZcNo8fddWlAWv5NVVpnn/XVfbm42H9xHGrZhJCIWfjyB+DdmtUbiioMIbX0KWlMl8UgCVYM9eR5vVauFshATVwxDMbfWP9qMZS25I6a5LHiTEU9dPgJ+5Df0CL7qimamFu6x0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CpEu6zcC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvVsjJtK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DD21F00893;
-	Sat, 12 Sep 2026 11:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CpEu6zcC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6B41F000FF;
+	Sat, 12 Sep 2026 11:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213874;
-	bh=7jFjvBeMDvEE83AEpeXBun/305aW2f3pfv63S6UcEIc=;
+	s=korg; t=1789213879;
+	bh=TqgYwT86nQ2uaRa6LRea/lYd1kgCYE5pIbqgag5/YxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FvVsjJtK8ZCgFR+iZjg59sHjVIHAFbOFEafywmyg9M5xbruBNC5MTGP9j81oqWqVu
-	 PYdh9zWbZ+yxiWKhyI2RwfQ3EhFgdhK41ZaLb4R51Dxym1o1isR8j2MZVNBggN/Dzs
-	 +gsnnek7WR96maSDTKAApwXMrAnoFXX/EOJadIrc=
+	b=CpEu6zcCXsuZ/mgerdCRLrIEj9j7u4xmuo6lTI/IfdMxk3znQwLiub4KnXTJig5As
+	 9Lj05GpTL5MjAOQHB392p7J+4PbSS1wKH8Q1tl4+qbVjw6bDQDTkDvMRI2wTxgEriz
+	 1UyKRa5/Gevc/KfeYjeL7CwGkAjqwBtYbBkLGQ2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.12 0211/1376] media: v4l2-async: avoid deleting unlinked ASC entry on link error
-Date: Sat, 12 Sep 2026 08:43:57 +0200
-Message-ID: <20260912065612.250610470@linuxfoundation.org>
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.12 0212/1376] media: v4l2-ctrls: Allow unknown HDR10 white point and luminance
+Date: Sat, 12 Sep 2026 08:43:58 +0200
+Message-ID: <20260912065612.273530943@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,41 +50,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-commit 47d82b605351c0e04f6365e42c8ffe2fcfdba615 upstream.
+commit 49af0c7cad889f7dabe5cf080b019392066122a3 upstream.
 
-v4l2_async_match_notify() creates ancillary media links before adding
-asc->asc_subdev_entry to sd->asc_list.
+SMPTE ST 2086 defines the nominal ranges for mastering display
+chromaticity and luminance values. Its Annex A also documents that
+CTA 861-G uses zero maximum and minimum luminance values to signal
+that the corresponding values are unknown, and the xy chromaticity
+coordinate (0, 0) to signal that the white point chromaticity is
+unknown.
 
-If ancillary link creation fails, the function jumps to
-err_call_unbind while asc_subdev_entry has not been linked yet. Async
-connections are zero-allocated, so the list entry still has NULL next
-and prev pointers on this path. Calling list_del() on it can therefore
-dereference NULL instead of returning the original link creation error.
+The V4L2 HDR10 mastering display compound control currently rejects
+these values. Consequently, an unknown white point or luminance value
+prevents the entire compound control from being updated, making the
+other valid mastering display metadata unavailable to userspace.
 
-Do not delete asc_subdev_entry from err_call_unbind. There is no list
-insertion to undo on this path; the bound callback and sub-device
-registration are the operations that need to be rolled back.
+Accept (0, 0) as an unknown white point and zero as an unknown maximum
+or minimum mastering luminance. Continue to reject partially zero white
+point coordinates and non-zero values outside the nominal ranges.
+Display primary validation remains unchanged.
 
-Fixes: 28a1295795d8 ("media: v4l: async: Allow multiple connections between entities")
+Document the newly accepted unknown values in the V4L2 userspace API.
+
+Fixes: 1ad0de78e794 ("media: v4l: Add HDR10 static metadata controls")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-async.c |    1 -
- 1 file changed, 1 deletion(-)
+ Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst |   12 ++
+ drivers/media/v4l2-core/v4l2-ctrls-core.c                       |   49 ++++++----
+ 2 files changed, 44 insertions(+), 17 deletions(-)
 
---- a/drivers/media/v4l2-core/v4l2-async.c
-+++ b/drivers/media/v4l2-core/v4l2-async.c
-@@ -392,7 +392,6 @@ static int v4l2_async_match_notify(struc
+--- a/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
++++ b/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
+@@ -79,15 +79,25 @@ Colorimetry Control IDs
+       - ``white_point_x``
+       - Specifies the normalized x chromaticity coordinate of the white
+         point of the mastering display in increments of 0.00002.
++        When both ``white_point_x`` and ``white_point_y`` are zero,
++        the white point chromaticity is unknown. If either coordinate is
++        non-zero, both coordinates shall be within their valid ranges.
+     * - __u16
+       - ``white_point_y``
+       - Specifies the normalized y chromaticity coordinate of the white
+         point of the mastering display in increments of 0.00002.
++        When both ``white_point_x`` and ``white_point_y`` are zero,
++        the white point chromaticity is unknown. If either coordinate is
++        non-zero, both coordinates shall be within their valid ranges.
+     * - __u32
+       - ``max_luminance``
+       - Specifies the nominal maximum display luminance of the mastering
+         display in units of 0.0001 cd/m\ :sup:`2`.
++        A value of zero indicates that the nominal maximum display
++        luminance is unknown.
+     * - __u32
+       - ``min_luminance``
+-      - specifies the nominal minimum display luminance of the mastering
++      - Specifies the nominal minimum display luminance of the mastering
+         display in units of 0.0001 cd/m\ :sup:`2`.
++        A value of zero indicates that the nominal minimum display
++        luminance is unknown.
+--- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+@@ -1133,24 +1133,41 @@ static int std_validate_compound(const s
+ 				return -EINVAL;
+ 		}
  
- err_call_unbind:
- 	v4l2_async_nf_call_unbind(notifier, sd, asc);
--	list_del(&asc->asc_subdev_entry);
+-		if (p_hdr10_mastering->white_point_x <
+-			V4L2_HDR10_MASTERING_WHITE_POINT_X_LOW ||
+-		    p_hdr10_mastering->white_point_x >
+-			V4L2_HDR10_MASTERING_WHITE_POINT_X_HIGH ||
+-		    p_hdr10_mastering->white_point_y <
+-			V4L2_HDR10_MASTERING_WHITE_POINT_Y_LOW ||
+-		    p_hdr10_mastering->white_point_y >
+-			V4L2_HDR10_MASTERING_WHITE_POINT_Y_HIGH)
++		/*
++		 * SMPTE ST 2086 Annex A documents that CTA 861-G uses
++		 * (0, 0) to indicate that the white point chromaticity
++		 * is unknown.
++		 */
++		if (p_hdr10_mastering->white_point_x ||
++		    p_hdr10_mastering->white_point_y) {
++			if (p_hdr10_mastering->white_point_x <
++				V4L2_HDR10_MASTERING_WHITE_POINT_X_LOW ||
++			    p_hdr10_mastering->white_point_x >
++				V4L2_HDR10_MASTERING_WHITE_POINT_X_HIGH ||
++			    p_hdr10_mastering->white_point_y <
++				V4L2_HDR10_MASTERING_WHITE_POINT_Y_LOW ||
++			    p_hdr10_mastering->white_point_y >
++				V4L2_HDR10_MASTERING_WHITE_POINT_Y_HIGH)
++				return -EINVAL;
++		}
++
++		/*
++		 * SMPTE ST 2086 Annex A documents that CTA 861-G uses zero
++		 * maximum and minimum luminance values to indicate that
++		 * the corresponding values are unknown.
++		 */
++		if (p_hdr10_mastering->max_display_mastering_luminance &&
++		    (p_hdr10_mastering->max_display_mastering_luminance <
++				V4L2_HDR10_MASTERING_MAX_LUMA_LOW ||
++		     p_hdr10_mastering->max_display_mastering_luminance >
++				V4L2_HDR10_MASTERING_MAX_LUMA_HIGH))
+ 			return -EINVAL;
  
- err_unregister_subdev:
- 	if (registered)
+-		if (p_hdr10_mastering->max_display_mastering_luminance <
+-			V4L2_HDR10_MASTERING_MAX_LUMA_LOW ||
+-		    p_hdr10_mastering->max_display_mastering_luminance >
+-			V4L2_HDR10_MASTERING_MAX_LUMA_HIGH ||
+-		    p_hdr10_mastering->min_display_mastering_luminance <
+-			V4L2_HDR10_MASTERING_MIN_LUMA_LOW ||
+-		    p_hdr10_mastering->min_display_mastering_luminance >
+-			V4L2_HDR10_MASTERING_MIN_LUMA_HIGH)
++		if (p_hdr10_mastering->min_display_mastering_luminance &&
++		    (p_hdr10_mastering->min_display_mastering_luminance <
++				V4L2_HDR10_MASTERING_MIN_LUMA_LOW ||
++		     p_hdr10_mastering->min_display_mastering_luminance >
++				V4L2_HDR10_MASTERING_MIN_LUMA_HIGH))
+ 			return -EINVAL;
+ 
+ 		/* The following restriction comes from ITU-T Rec. H.265 spec */
 
 
