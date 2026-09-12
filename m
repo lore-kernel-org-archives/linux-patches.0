@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0524BEE2A;
-	Sat, 12 Sep 2026 10:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9944BEE2A;
+	Sat, 12 Sep 2026 10:56:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210581; cv=none; b=Fh7hHrnZSX5SCNH9LizR2AXT2aEBPQWnn9DFYWOoHK58Zj05+PF3cb5kC5wVZy25Uox/oKcF2l7IEiCNmFyFPWU/ivLRtPwzAg5YJcyBHylUHg0RNpCnt/o8bEAy6uPNUxQKPyLzgizlFYW+vJA6rFPhB5FUyWCWgIS+wZm3t6o=
+	t=1789210586; cv=none; b=ZyHxCDx17EZrM+mYNJpsBKx1cx1dj13jBnWhtboccDwqTGhQFyopos74qkDfuU8R+avPe0hu6c1XACZ9C3Trscd++8VIcBSBV+Y2zepDXUxlC4Y9axc1W/DG0ejSTM1YElcmQyONzVK/B/kfDP2nH1ECmjivYYagHTJn/NctZWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210581; c=relaxed/simple;
-	bh=UZa9oO33+Zotdr2HDRy/jURne+2HW4rnO2Up9sc7hzs=;
+	s=arc-20240116; t=1789210586; c=relaxed/simple;
+	bh=N0vSvEKpVZ/aJrP8dn0bhkYucBmKPw3U6jnwIpW+ymI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CM6TYryjRMp6QAI/a11D797aYAraTnHHTHa5BRxxiKAfvfm2Gs0sOfhiYWja9KGgmX5BiFlnk9qISXsaLcsINDrN4bJTaO682MdvnApkaIU53qHWXY9rf+R8x2451zDefefQdeC6cFn9/2wpS76kynknyo8L4TDpOImN5D4GUJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTc3Ux8h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Oz5/cREZH0P2RaQEslQ6dgibKE38h/cFIAEeJGThnL+XgEoaVa5Qqz9BHdc4ny0rZkyZHF3BewOzZJS0AcQLO+5dlIkuUe8UZZ9kwOoUbQB50PqL/qF5Sv+hEoe9ivd2ayo+blNLjTkX0f1g1c9HwvkYY5TWLaM/RKzyikhhHE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x4JcHiUe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTc3Ux8h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63601F000FF;
-	Sat, 12 Sep 2026 10:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4JcHiUe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0214C1F000FF;
+	Sat, 12 Sep 2026 10:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210579;
-	bh=s5lrgdBVolr93v3V1+x2B9VtIWlmSPgEz6J43n/VkGs=;
+	s=korg; t=1789210585;
+	bh=CLn/+DPDths1KkAo60sUvAP5yDgrH4RCTz5VaIjty2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tTc3Ux8h004LdWMzL3oMjVsUzN9BgkbERzgH0bxCSngh5xgkzw09C9cSZqAvVIZjP
-	 wMCcBrVmEk+Vcrhu8T0U8hPaGby2tbwH7hcxMOc5FP4Qq8oLuGpUF4X0Iq5Bv0q7oZ
-	 AQA2CDvoKk+4QaI6m8pkRSVqz/XKZHfnEVrSwFCU=
+	b=x4JcHiUeWr1WSlDRKyRQ0gIwbBtZ92aN6QzZzjb0p9Q5lTzLLnzA3Z+TTquqZe5sQ
+	 KUoc84beWtT/QjrCHTS4Of1Y3IpkS+WZu0pTnE5ZL1P/eQwJ+wmXiKF8nQsqzvz9AB
+	 g177H3shtzULK8e10EUWMoNomi9Dda6+O/UVytrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1053/1518] perf test: Fix skiplist leak in cmd_test
-Date: Sat, 12 Sep 2026 08:53:42 +0200
-Message-ID: <20260912065647.271645307@linuxfoundation.org>
+Subject: [PATCH 6.18 1054/1518] perf python: Check counts_values size in set_values
+Date: Sat, 12 Sep 2026 08:53:43 +0200
+Message-ID: <20260912065647.294312060@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,41 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 44e82c4d2ff37f073946b594840fd549ab6b9fb8 ]
+[ Upstream commit 612aca22a978d43f6e6765272676a17afdba8572 ]
 
-Fix a memory leak in cmd_test() where skiplist was not freed on
-exit paths.
+The set_values function incorrectly assumed the list contained exactly
+5 elements. Add a check to prevent out-of-bounds access.
 
-Assisted-by: Antigravity:gemini-3.1-pro
-Fixes: 2ae828786c65 ("perf test: Allow skipping tests")
+Fixes: 877108e42b1b ("perf tools: Initial python binding")
 Signed-off-by: Ian Rogers <irogers@google.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/builtin-test.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ tools/perf/util/python.c | 38 ++++++++++++++++++++++++++++++--------
+ 1 file changed, 30 insertions(+), 8 deletions(-)
 
-diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
-index 814cd7d922c12..a4ee849ad8646 100644
---- a/tools/perf/tests/builtin-test.c
-+++ b/tools/perf/tests/builtin-test.c
-@@ -1605,9 +1605,14 @@ int cmd_test(int argc, const char **argv)
- 	rlimit__bump_memlock();
+diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
+index 779fe1280a567..4a66ce4e8dd76 100644
+--- a/tools/perf/util/python.c
++++ b/tools/perf/util/python.c
+@@ -872,11 +872,11 @@ static void pyrf_counts_values__delete(struct pyrf_counts_values *pcounts_values
+ 	  0, help }
  
- 	suites = build_suites();
--	if (!suites)
--		return errno ? -errno : -ENOMEM;
-+	if (!suites) {
-+		int err = errno;
+ static PyMemberDef pyrf_counts_values_members[] = {
+-	counts_values_member_def(val, T_ULONG, "Value of event"),
+-	counts_values_member_def(ena, T_ULONG, "Time for which enabled"),
+-	counts_values_member_def(run, T_ULONG, "Time for which running"),
+-	counts_values_member_def(id, T_ULONG, "Unique ID for an event"),
+-	counts_values_member_def(lost, T_ULONG, "Num of lost samples"),
++	counts_values_member_def(val, T_ULONGLONG, "Value of event"),
++	counts_values_member_def(ena, T_ULONGLONG, "Time for which enabled"),
++	counts_values_member_def(run, T_ULONGLONG, "Time for which running"),
++	counts_values_member_def(id, T_ULONGLONG, "Unique ID for an event"),
++	counts_values_member_def(lost, T_ULONGLONG, "Num of lost samples"),
+ 	{ .name = NULL, },
+ };
+ 
+@@ -886,8 +886,15 @@ static PyObject *pyrf_counts_values_get_values(struct pyrf_counts_values *self,
+ 
+ 	if (!vals)
+ 		return NULL;
+-	for (int i = 0; i < 5; i++)
+-		PyList_SetItem(vals, i, PyLong_FromLong(self->values.values[i]));
++	for (int i = 0; i < 5; i++) {
++		PyObject *val = PyLong_FromUnsignedLongLong(self->values.values[i]);
 +
-+		intlist__delete(skiplist);
-+		return err ? -err : -ENOMEM;
++		if (!val) {
++			Py_DECREF(vals);
++			return NULL;
++		}
++		PyList_SetItem(vals, i, val);
 +	}
- 	ret = __cmd_test(suites, argc, argv, skiplist);
- 	free(suites);
-+	intlist__delete(skiplist);
- 	return ret;
+ 
+ 	return vals;
  }
+@@ -898,19 +905,34 @@ static int pyrf_counts_values_set_values(struct pyrf_counts_values *self, PyObje
+ 	Py_ssize_t size;
+ 	PyObject *item = NULL;
+ 
++	if (list == NULL) {
++		PyErr_SetString(PyExc_TypeError, "cannot delete attribute");
++		return -1;
++	}
++
+ 	if (!PyList_Check(list)) {
+ 		PyErr_SetString(PyExc_TypeError, "Value assigned must be a list");
+ 		return -1;
+ 	}
+ 
+ 	size = PyList_Size(list);
++	if (size != 5) {
++		PyErr_SetString(PyExc_ValueError, "List must have exactly 5 entries");
++		return -1;
++	}
++
+ 	for (Py_ssize_t i = 0; i < size; i++) {
++		unsigned long long val;
++
+ 		item = PyList_GetItem(list, i);
+ 		if (!PyLong_Check(item)) {
+ 			PyErr_SetString(PyExc_TypeError, "List members should be numbers");
+ 			return -1;
+ 		}
+-		self->values.values[i] = PyLong_AsLong(item);
++		val = PyLong_AsUnsignedLongLong(item);
++		if (val == (unsigned long long)-1 && PyErr_Occurred())
++			return -1;
++		self->values.values[i] = val;
+ 	}
+ 
+ 	return 0;
 -- 
 2.53.0
 
