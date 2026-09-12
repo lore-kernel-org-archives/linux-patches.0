@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21C7340298;
-	Sat, 12 Sep 2026 14:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9714233993;
+	Sat, 12 Sep 2026 14:02:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221735; cv=none; b=OOxBPljuxBnr9+kZlGsZBtsmYijarHuD8ehqGQASNmy7Ah8qRuBNzCQzvamq5uv1bs+yCEeAKm3lFlxnHO46zEo/XPNI4VJ8pp69Q8+LAnZVgRAU6XttzuBnWWj5AEJQJQoiOVxofr3NBZYBCaPdH+300tMn8soHdafTb6+lKQs=
+	t=1789221740; cv=none; b=LiUkuMdRHJI/bi5ZSuXPJznzreihNR4G6TmdaNVevzd8NX6ssMGhk4JVI2mmkBpakaB9i3XTABhsj1BghHhRWHVRWRhiPzw/yH0/27kRKR8DpfCP4o+LtGUknyJ6AiLf6N3LzsDOzpE69z5QqzL+JUETD581XeRHsrt6mgF9Ha8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221735; c=relaxed/simple;
-	bh=ClxhowGQasFek68dHx8dL1o4PqOqsLHHlhjd4vS5e5E=;
+	s=arc-20240116; t=1789221740; c=relaxed/simple;
+	bh=Bq/SwdaQBMYmktKuJUYvDtubJIIS1u7+LSLy9sef/RQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JJmR7hhXk3YTPYwsBf0ecqyPDelxPIBWbwm/RwqAKQm+6SWka7R+qied4/JQOQx6kHKFKwqLcXrGSnwmmR4D0mutxTCYG35gV7VcnYyEsKsQwDRo4L2xMPfvtVgTi0+nhsF23hSOVX7D7MgIwkJqJOLB8CrY1wSStbY1B5OiBbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylmN+YTv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EHgRpRhonb1Qs8ul9p9bVA3eUHE6hZAqDTWNbKoQscA9OjNdkgaFXDX9jG52i7MVkL9OOOc5xAkJxy8cahZYqkECmyF6WDsunlo3uxoq++ouzh9PkWa5CC11c6EsrQHniRdrwjMyK9Tc0BvBOmaBQ92ribns4nRGIfjx3cbP3jM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDR8TSNh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylmN+YTv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B08A1F00893;
-	Sat, 12 Sep 2026 14:02:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDR8TSNh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A831F000FF;
+	Sat, 12 Sep 2026 14:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221733;
-	bh=RR3xzdWpnBz+O7fT8Q/y9koYjjU072LMhXk4wXOiuss=;
+	s=korg; t=1789221739;
+	bh=MKJaGNuUs8sH9M8SbOZK7c+1ajiEoR3TXiIIeCgJsv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ylmN+YTvS3QrEnqdLtFR6ce8d1CAIWu0IbnPLAf7S9Gn3R5nelY3iZW1rTQhZBfaE
-	 Aydas1WRxMlpsToFcJ5iBB963mjMxP/pMiw7Cvq2pDMBrl2q+aXXk1gzfyzg2kQ9Yk
-	 EF66oeBj+PN67p5ZUrUQ6d8qhgdflJhFROo8F5XI=
+	b=wDR8TSNh5X37JoVcGSCmUbk38EwPMZ9mcGD5UhRLm2vSqawTosdepFzaZUuQqRW/o
+	 gXrh1lPpx3WfdZ6Cbxu792BXPQ6fxBxhe5uXkzzkgasgfJn3iHNKxnpZwY9RhxGiPM
+	 Z75hte5ZvYxNOfPhf6Nqd+1gmdA6yfA/RJMJwsxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Krowiak <akrowiak@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.6 0390/1424] s390/vfio-ap: fix potential use of uninitialized apm_filtered bitmap
-Date: Sat, 12 Sep 2026 08:47:02 +0200
-Message-ID: <20260912065616.025258849@linuxfoundation.org>
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>
+Subject: [PATCH 6.6 0437/1424] KVM: s390: pv: Fix rc/rrc offset for PVM_DUMP
+Date: Sat, 12 Sep 2026 08:47:49 +0200
+Message-ID: <20260912065617.069945619@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,55 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-commit bf09b9d7cd7890bc3a3b7eb63d5ece15f88bfde7 upstream.
+commit 1e3c8e7b3465fb8a49d3623d2d0f449c0b5b48f3 upstream.
 
-The DECLARE_BITMAP(apm_filtered, AP_DEVICES) macro allocates the bitmap
-on the stack without zero-initializing it.
+The rc/rrc value is copied to the cmd location of the cmd in the kvm_pv_cmd
+structure. Fix the offset.
 
-In vfio_ap_mdev_hot_plug_cfg(), the vfio_ap_mdev_filter_matrix() function
-is only called to initialize and populate apm_filtered if either
-filter_adapters or filter_domains is true. If the hot plug configuration
-change only adds control domains (meaning filter_cdoms is true, but
-filter_adapters and filter_domains are both false),
-vfio_ap_mdev_filter_matrix() is bypassed.
-
-Consequently, apm_filtered is passed to reset_queues_for_apids() with
-uninitialized stack garbage. This can cause reset_queues_for_apids() to
-interpret arbitrary stack garbage bits as valid APIDs to reset, potentially
-performing unintended guest hardware queue resets.
-
-Fix this by zero-initializing the apm_filtered bitmap at the beginning of
-vfio_ap_mdev_hot_plug_cfg() using bitmap_zero().
-
-Fixes: eeb386aeb5b7c ("s390/vfio-ap: handle config changed and scan complete notification")
+Fixes: 8aba09588d2a ("KVM: s390: Add CPU dump functionality")
 Cc: stable@vger.kernel.org
-Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-ID: <20260811153738.206885-4-borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/vfio_ap_ops.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/s390/kvm/kvm-s390.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/s390/crypto/vfio_ap_ops.c
-+++ b/drivers/s390/crypto/vfio_ap_ops.c
-@@ -2613,6 +2613,15 @@ static void vfio_ap_mdev_hot_plug_cfg(st
- 	DECLARE_BITMAP(apm_filtered, AP_DEVICES);
- 	bool filter_domains, filter_adapters, filter_cdoms, do_hotplug = false;
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -5728,7 +5728,7 @@ long kvm_arch_vcpu_ioctl(struct file *fi
+ 		r = kvm_s390_handle_pv_vcpu_dump(vcpu, &cmd);
  
-+	/*
-+	 * Zero out the apm_filtered bitmap in case there are no adapters or
-+	 * domains to be added, but only control domains. In that case,
-+	 * vfio_ap_mdev_filter_matrix() - which initializes apm_filtered - will
-+	 * not get called and the reset_queues_for_apids will crash because it
-+	 * will access an uninitialized bitmap.
-+	 */
-+	bitmap_zero(apm_filtered, AP_DEVICES);
-+
- 	filter_adapters = bitmap_intersects(matrix_mdev->matrix.apm,
- 					    matrix_mdev->apm_add, AP_DEVICES);
- 	filter_domains = bitmap_intersects(matrix_mdev->matrix.aqm,
+ 		/* Always copy over UV rc / rrc data */
+-		if (copy_to_user((__u8 __user *)argp, &cmd.rc,
++		if (copy_to_user(argp + offsetof(struct kvm_pv_cmd, rc), &cmd.rc,
+ 				 sizeof(cmd.rc) + sizeof(cmd.rrc)))
+ 			r = -EFAULT;
+ 		break;
 
 
