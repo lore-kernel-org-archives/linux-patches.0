@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5CED3A544C;
-	Sat, 12 Sep 2026 14:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BA722A7F6;
+	Sat, 12 Sep 2026 14:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221859; cv=none; b=avoDJSkaap0uu93GEllPjnCkifAj4Ch5nn1s7xb9uNER9tRGIpjRvxTpmlXHRWYSDrY5t0tK/sa8lktRTXzCKRoMtDrcO3d9XWg9MSCX0lMMgls9Z6VEWtZdWVlkDdetOIbrwLtyiEbk/mJnvyTziPfBBAixbD6ki9asLQrRoE0=
+	t=1789221865; cv=none; b=uf/NpS5OANj4lqmPYf+nlzmt5DvLEzH3ftDvhx1ybMwgWPuKc/+7c1UEffZ2p8wlo0nt8X7UL0kUvkl4+/eCVEePWBB1lsZynM6E2+cx38pf6ooiNllYnSo76p0B5uKN4h+LWEIBi2Lp7rKkRluxjH+QvyawGv04TbTIzs81BzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221859; c=relaxed/simple;
-	bh=5sPNqppKyXd8kFA5hac3E/Kn7wROVO9LYqkZc32VMhw=;
+	s=arc-20240116; t=1789221865; c=relaxed/simple;
+	bh=w8J7bdtVEEcFKoqu6XFAXT4wGPGWh+Ds+iFcUjLp+2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G37F+1dhTMeOHEKa8og2Kt144latW7uC6V9FiGn4Wn9kmb58NLZlnws7/3y3eDJmsEGPR+3u0X4DznytH2BhhWQwWIcO1LXh8lDJ2fhSipYTu4l5u30m6kOwx77ZKiVnOigK0ndN/7qHoDMinKb24cJItl5CgewRFEg2JG8pbM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+f/Y6Sp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ATFGDjvpMEQOy9bJ6MDzQ74j5tBuq3a/+DeaGlTrArddEapzDSobFPtgBe0H7BXXgjChcTQ3fkT5AwfOwUySCqhAfNG7LTRoHHMVyYkduqHZiPSmo+FxR24nA8lFxYIozITAAUUSklD/FFWQiD4wgupuV40KPmJgyV9HaS6x7w0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRxe1Ziw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+f/Y6Sp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07FF31F000FF;
-	Sat, 12 Sep 2026 14:04:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRxe1Ziw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6451F000FF;
+	Sat, 12 Sep 2026 14:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221856;
-	bh=lxVKXXd6YrD5VQwOaG5qP9j+THYzh+XjIUOmO5lG7sk=;
+	s=korg; t=1789221860;
+	bh=kC+Xgajlipo5KaJCuBjxtft96JtnlIoRvAqDRjap1qY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1+f/Y6Spp9+FPoYBXMixEU78/R5Gk/Ch9LBW7eeMlYmLQNQ1rOtccJfQ5QiRNZIfg
-	 OXs8a8u4NlE42oZuRuu4E7qd31BvtE8KfVmDfGVLByWHeeJTYwmNd9QNaaXX6owjgF
-	 eHYgi5qWJKAH/D0zi+SsYySv7xbW2hIhI5QAXhig=
+	b=qRxe1ZiwbOiGaKTjdeLvgdTfBAczH2FYM7zYqwnCapMBVHEl+tENkTcrgkoz417NP
+	 f6qbW6f4XknfuSnS32GSZNb3S/K9DTdGqDMlzxaM15QiGKaXkH8n0wpIbls8/Rsvk4
+	 DisfU5z2Krh5juqkebOYyqhESFC3FVkvq6ZgCVS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biren Pandya <birenpandya@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.6 0467/1424] media: v4l2-fwnode: Fix fwnode leak in v4l2_fwnode_parse_link
-Date: Sat, 12 Sep 2026 08:48:19 +0200
-Message-ID: <20260912065617.744831375@linuxfoundation.org>
+	Mohammed EL Kadiri <med08elkadiri@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bryan ODonoghue <bod@kernel.org>
+Subject: [PATCH 6.6 0468/1424] media: venus: fix payload size returned by parse_caps() and parse_alloc_mode()
+Date: Sat, 12 Sep 2026 08:48:20 +0200
+Message-ID: <20260912065617.768187001@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,38 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biren Pandya <birenpandya@gmail.com>
+From: Mohammed EL Kadiri <med08elkadiri@gmail.com>
 
-commit a6e86efd7f85e519bf48417f41923f8bd51f1597 upstream.
+commit a51cea23e409278f6e2ea072280aba93cc1dd75e upstream.
 
-In v4l2_fwnode_parse_link(), the remote endpoint fwnode reference is
-acquired using fwnode_graph_get_remote_endpoint(). This reference is
-properly released in the error paths, but it is leaked on the success
-path.
+parse_caps() and parse_alloc_mode() return only the size of their fixed
+header fields, excluding the flexible array payload. hfi_parser() uses
+this return value to advance through the firmware response buffer, so
+underreporting causes parser desynchronization.
 
-Add the missing fwnode_handle_put() before returning 0 to prevent the
-reference leak.
+Return the full consumed size (header + entries), matching the correct
+pattern used by parse_profile_level().
 
-Signed-off-by: Biren Pandya <birenpandya@gmail.com>
-Fixes: ca50c197bd96 ("[media] v4l: fwnode: Support generic fwnode for parsing standardised properties")
+Fixes: 9edaaa8e3e15 ("media: venus: hfi_parser: refactor hfi packet parsing logic")
 Cc: stable@vger.kernel.org
-[Sakari Ailus: Fix subject prefix and coding style a little.]
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mohammed EL Kadiri <med08elkadiri@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-fwnode.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/qcom/venus/hfi_parser.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/v4l2-core/v4l2-fwnode.c
-+++ b/drivers/media/v4l2-core/v4l2-fwnode.c
-@@ -582,6 +582,8 @@ int v4l2_fwnode_parse_link(struct fwnode
- 	if (!link->remote_node)
- 		goto err_put_remote_endpoint;
+--- a/drivers/media/platform/qcom/venus/hfi_parser.c
++++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+@@ -85,7 +85,7 @@ parse_alloc_mode(struct venus_core *core
+ 		type++;
+ 	}
  
-+	fwnode_handle_put(fwnode);
-+
- 	return 0;
+-	return sizeof(*mode);
++	return mode->num_entries * sizeof(u32) + sizeof(*mode);
+ }
  
- err_put_remote_endpoint:
+ static void fill_profile_level(struct hfi_plat_caps *cap, const void *data,
+@@ -146,7 +146,7 @@ parse_caps(struct venus_core *core, u32
+ 	for_each_codec(core->caps, ARRAY_SIZE(core->caps), codecs, domain,
+ 		       fill_caps, caps_arr, num_caps);
+ 
+-	return sizeof(*caps);
++	return num_caps * sizeof(*cap) + sizeof(u32);
+ }
+ 
+ static void fill_raw_fmts(struct hfi_plat_caps *cap, const void *fmts,
 
 
