@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF343389472;
-	Sat, 12 Sep 2026 18:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2198B32D7F8;
+	Sat, 12 Sep 2026 18:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237015; cv=none; b=RTCQ6RSelnsrQgLyPiUV9Jk8kwz+IQngihfpdOtaxTG1ejo7T89lrpnBNaJjW9XEXY1hzjlsrojzo8lNi8veNqR7ASZRxJ6HzWLTQeB0shhnrmSLELRyS1EEDMZlsPnLJ/CMT5DBy0zxbk7Wg3SoqAfao3kHLKHILD1+cgId1AE=
+	t=1789237021; cv=none; b=c2fJs7HlirS5XlVtDTEHOleK6+96rhueypJUxRe8uPYC3Dxr5KgOzopih2VNJ9ihRRDIJ0qSW1frNFqavi+/PLEtrtgHzs+Vl8E9cxtgajQ4t9jFnIZs0OqrS+zXDRYT+mbYybOd6Udxb4x/DrY/4Ahiv3S+e7vggm8ckKOWlSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237015; c=relaxed/simple;
-	bh=4U1+X2lWNDIl8NtrHYukWcmzuL+7u0IEEO+rKxRfHME=;
+	s=arc-20240116; t=1789237021; c=relaxed/simple;
+	bh=j6EueIDR/8Fj/6649ODEivgmd0UZrP91h7P+hMVjpmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FE9e2Y6mBGnT+m6uC0Hr9+y2uBR/3HfE0Bv+4G8ESoQtHRs2AHYduEAGrI+zZbPNQ8GDDfazs0CkTe6vLkoIrN/XW7BLhKpHAFFMQT4w902FoiAssdfDKjBzTl+hr5yQ5I09LzDIWTqgg9LwMKT3Dj7WYt7slmdmn7QiY3kym7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xMT2nB18; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QHjL8qvvDtnZTokVy/5zMY45VZmYvc52Z21LyBqpVFvNXH6hAGeOoJWyZDfW8UV13jxzt5kmJLrpXSXz1zr7BdsnMAiFj9m6zUc+MowMo0UuX+na0EbjgMRK1CFR2WctmiuJRBjr8xQvt0xLaLvEEGeRZZI6mdw6vbnCag3ZIxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEgvMzJA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMT2nB18"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0C01F000FF;
-	Sat, 12 Sep 2026 18:16:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEgvMzJA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3931F00898;
+	Sat, 12 Sep 2026 18:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237014;
-	bh=cIn4o7rFxYT91brHoVl5ewIIUHNZ7nvJioKJ02FrHYk=;
+	s=korg; t=1789237019;
+	bh=FODvpYlhRIenyFxq+qW77quB69HXAquXVI8Zo/x1uNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xMT2nB18Fw3kpIBRUi/PP4M2b37+a/YE7n/csRsRLEdJrUmJBa4f0vsoeWsg/6SkY
-	 j9S/95ebw4Ed8+iuQRlQZ1V557EGK25J9KCchKUmeyiuG0+zm/F2DHxgJnYz2D2Z9d
-	 WirjfTjFlye+kYSKF7QO72GRaADCC3vdgFAanTjU=
+	b=cEgvMzJAnHYJnigiFlR4qjYwTzYTD2w96hxaAH+W21dk66ZqUIArZkLqPD+P1ReEY
+	 LP3nZXX+3x42ha1NGmAITz0JM6TOYcmigkP40zbmd073MUp9WxImkocL2eBn2srTCN
+	 Xa8by9EG/HI/91FC0P7iJT3Y+/Zu56HrNMt+O3F0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 130/935] ocfs2: validate lengths in dlm_mig_lockres_handler
-Date: Sat, 12 Sep 2026 08:52:40 +0200
-Message-ID: <20260912065529.804562676@linuxfoundation.org>
+	Vaibhav Nagare <vnagare@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 121/935] qede: Fix NULL pointer dereference in TPA fragment processing
+Date: Sat, 12 Sep 2026 08:52:31 +0200
+Message-ID: <20260912065529.597515192@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -57,62 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Vaibhav Nagare <nagarevaibhav@gmail.com>
 
-commit b54e03d9b3697d25f4a0063cf717d459c5e3ad94 upstream.
+commit 06aa3d26327f24edd039ff249672fdf6f2ba5695 upstream.
 
-A node receiving a DLM_MIG_LOCKRES message trusts several fields of the
-peer-supplied dlm_migratable_lockres without validation.  num_locks and
-lockname_len are bounded only on the sending side, and the message is
-never checked to actually carry num_locks migratable_lock entries.  As a
-result dlm_process_recovery_data() walks mres->ml[0..num_locks) past the
-kmalloc(data_len) copy of the message (an out-of-bounds read that ends in
-a BUG_ON panic), and dlm_init_lockres() copies lockname_len bytes into the
-fixed 32-byte o2dlm_lockname slab object (a heap out-of-bounds write).
-Both are reachable by any node in the domain.
+Under memory pressure, the qede driver encounters NULL pointer
+dereferences when processing TPA continuation fragments.
 
-Validate these fields right after dlm_grab(), before anything uses them --
-including the not-joined error path, which already prints mres->lockname
-with the unbounded lockname_len as a %.*s precision.  Reject the message
-unless lockname_len <= DLM_LOCKID_NAME_MAX, num_locks <=
-DLM_MAX_MIGRATABLE_LOCKS (the bound the sender already asserts), and the
-payload is large enough to hold the claimed locks.  Conforming recovery
-and migration messages are unaffected.
+Commit 8a8633978b84 ("qede: Add build_skb() support.") accidentally
+dropped the assignment of tpa_info->buffer.data in qede_tpa_start().
 
-Link: https://lore.kernel.org/20260629-b4-disp-94fb6521-v1-2-6953bcc0421f@proton.me
-Fixes: 6714d8e86bf4 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+When memory pressure causes an SKB allocation failure in qede_tpa_start(),
+the driver sets tpa_start_fail = true and attempts to recycle the physical
+page later in qede_tpa_end() via qede_reuse_page(). However, because
+buffer.data was left uninitialized (NULL), qede_reuse_page() pushes a
+"ghost" BD (valid DMA mapping but NULL data pointer) back into the
+active Rx ring.
+
+The next time the hardware uses this ring slot, it passes a NULL page
+to qede_fill_frag_skb(), causing a kernel panic.
+
+Example crash from production system:
+ BUG: unable to handle kernel NULL pointer dereference at 0x8
+ RIP: qede_fill_frag_skb+0x96/0x430 [qede]
+ Call Trace:
+   qede_rx_int+0xb06/0x1de0
+   qede_poll+0x2f4/0x6c0
+   __napi_poll+0x2d/0x130
+
+Fix the root cause by restoring the tpa_info->buffer.data assignment
+in qede_tpa_start(), ensuring valid pages are correctly tracked and
+recycled. Additionally, update the stale comment for
+struct qede_agg_info::buffer to reflect its current usage.
+
+Fixes: 8a8633978b84 ("qede: Add build_skb() support.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Vaibhav Nagare <vnagare@redhat.com>
+Link: https://patch.msgid.link/20260818073309.2266072-1-vnagare@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/dlm/dlmrecovery.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/ethernet/qlogic/qede/qede.h    |    8 ++++----
+ drivers/net/ethernet/qlogic/qede/qede_fp.c |    1 +
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
---- a/fs/ocfs2/dlm/dlmrecovery.c
-+++ b/fs/ocfs2/dlm/dlmrecovery.c
-@@ -1359,6 +1359,15 @@ int dlm_mig_lockres_handler(struct o2net
- 	if (!dlm_grab(dlm))
- 		return -EINVAL;
+--- a/drivers/net/ethernet/qlogic/qede/qede.h
++++ b/drivers/net/ethernet/qlogic/qede/qede.h
+@@ -305,10 +305,10 @@ enum qede_agg_state {
+ };
  
-+	if (mres->lockname_len > DLM_LOCKID_NAME_MAX ||
-+	    mres->num_locks > DLM_MAX_MIGRATABLE_LOCKS ||
-+	    be16_to_cpu(msg->data_len) < struct_size(mres, ml, mres->num_locks)) {
-+		mlog(ML_ERROR, "%s: invalid lockres migration message from %u\n",
-+		     dlm->name, mres->master);
-+		dlm_put(dlm);
-+		return -EINVAL;
-+	}
-+
- 	if (!dlm_joined(dlm)) {
- 		mlog(ML_ERROR, "Domain %s not joined! "
- 			  "lockres %.*s, master %u\n",
+ struct qede_agg_info {
+-	/* rx_buf is a data buffer that can be placed / consumed from rx bd
+-	 * chain. It has two purposes: We will preallocate the data buffer
+-	 * for each aggregation when we open the interface and will place this
+-	 * buffer on the rx-bd-ring when we receive TPA_START. We don't want
++	/* buffer is used to retain the Rx consumer descriptor when a TPA
++	 * session starts. If the SKB allocation fails during TPA_START,
++	 * we use this saved buffer to safely recycle the physical page
++	 * back into the rx-bd-ring via qede_reuse_page(). We don't want
+ 	 * to be in a state where allocation fails, as we can't reuse the
+ 	 * consumer buffer in the rx-chain since FW may still be writing to it
+ 	 * (since header needs to be modified for TPA).
+--- a/drivers/net/ethernet/qlogic/qede/qede_fp.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_fp.c
+@@ -851,6 +851,7 @@ static void qede_tpa_start(struct qede_d
+ 					      pad, false);
+ 	tpa_info->buffer.page_offset = sw_rx_data_cons->page_offset;
+ 	tpa_info->buffer.mapping = sw_rx_data_cons->mapping;
++	tpa_info->buffer.data = sw_rx_data_cons->data;
+ 
+ 	if (unlikely(!tpa_info->skb)) {
+ 		DP_NOTICE(edev, "Failed to allocate SKB for gro\n");
 
 
