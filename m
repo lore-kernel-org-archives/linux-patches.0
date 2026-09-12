@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0751D7E5C;
-	Sat, 12 Sep 2026 15:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1AA30ACF6;
+	Sat, 12 Sep 2026 15:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226076; cv=none; b=KAYWSzQv743tQOJdUNciBXqh8LoOoAL6HavOMubr09JDIQvFQn3C3xDf0UqhY02ESTUBkkQ3KkUHziVJJlDikyTGlt3DK+xfd8ZIAWyM9/WJBqw3+bt/gf9nS9Dhnf79mVpAPc+YLcdgshQHEQ+NgXdzWme8QUe7tYuerfKmdm4=
+	t=1789226081; cv=none; b=HfCTVx3oJIpSEKq6+oJ90w/O29Thgyvu5QSyxnFGPUkhXlcbB823FmWBof2kzczZML6lTB0Y3a3Iv+jhYKE5+SDZZNCr6EnLSNSxvNBhW3jCIYYr6pJ5qDr7bL88agrcqIHQka8c/e2qtkedLZhWkNuZu83u192hUAuTMqW3jXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226076; c=relaxed/simple;
-	bh=K77ghUi8UlgW6WGfj709HiUUC9/oKStqKt9Vn/1bUts=;
+	s=arc-20240116; t=1789226081; c=relaxed/simple;
+	bh=n7vyV7Zkz9m4fwKQqBX0mTEbGlYNavjUiSpzD7oQ0Vk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cqCP+yTWjMnDbZ9jwAWU/vClWreuHVXhQ+cY9X1nNgQ8tr8QNPUX6+/xm+AwZTrsp4bN4VzTI+8Qmw+QSz0JiCzUfpgwtRrPy1lRdOIITITzjVY6odcrKvOWmDL5WCSkZyHpEUiEIdpbzoM2qYkJyDu/mDcQ4laeCPUWCok0Fjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KeRw9OT5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FJ7RYeOnauwGcCZyI+59/JICMPyigQ21qAN7aqMUZ6jZMv6K+FhOrcUC9bufQDViZrRUcgYuTD2IQtWiBnkZielC3ICUr9Xs+C4bv//iBJdfWdkvJe24tOby8SK5Pk93CcsYNYCCgl+Pusm9FS0BV+FtbSIC/piuHkehrsuzft0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y2t60RrI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KeRw9OT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F881F000FF;
-	Sat, 12 Sep 2026 15:14:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y2t60RrI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07CD71F000FF;
+	Sat, 12 Sep 2026 15:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226075;
-	bh=OPbdTaAj/KET8/rC0mBpiCtAZlMOiuD5C8h8PTTeUvI=;
+	s=korg; t=1789226080;
+	bh=f9beFiziT+JUPom7R1lYOaLz9ypbmGGh+LToMb0eG8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KeRw9OT5mDyKvyqAIlrlXCrLVqg33xZneJAuXSNk8/pb2A/v+2Dz8+6+99dvRlPvB
-	 ZZ7XB20GObzz6NOsXZDffnHLx82ZFGiXaDSZpJuMA3WiCXtvtD1xhPCm8IBdZWN/XT
-	 9BIS2e4pNgja/rcs6LY9iQthr8xTEE1KxiiCBTtk=
+	b=Y2t60RrImxWwmDFJjGc5p4mfzR4D+/BTM+rZEwyEynE5SBFMSWFICw/Sd/mgJJ2HS
+	 XFmmyi0e/n800j/hwouklaUIk57EUmmB0NTWmxMdsnGJ+Eh2XJhd4/RBM0JamfjSPx
+	 GEQFYkNnPjYzacxC4hKR3jxGzH+EGxafJOCY+BOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Czernohous <marek@czernohous.de>,
-	Simon Horman <horms@kernel.org>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1329/1424] forcedeth: stop the tx_timeout register dump past the requested window
-Date: Sat, 12 Sep 2026 09:02:41 +0200
-Message-ID: <20260912065637.020576177@linuxfoundation.org>
+Subject: [PATCH 6.6 1330/1424] net: ipa: Convert to platform remove callback returning void
+Date: Sat, 12 Sep 2026 09:02:42 +0200
+Message-ID: <20260912065637.042545092@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -47,99 +45,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Czernohous <marek@czernohous.de>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit cfa9178ce2e5b4f2e2a9e8b577a6cff841665aa0 ]
+[ Upstream commit a92dbb9cdf0465d56c7e0fc5d674e6834f7c6a79 ]
 
-nv_tx_timeout() dumps the register window in rows of eight dwords:
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-	for (i = 0; i <= np->register_size; i += 32) {
-		netdev_info(dev, "%3x: %08x ... %08x\n", i,
-			    readl(base + i + 0), ..., readl(base + i + 28));
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-The loop bound only checks the row's starting offset, so the final row
-reads a full 32 bytes from a position that is below the end of the window
-but too close to it. base is mapped with exactly that length:
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-	np->base = ioremap(addr, np->register_size);
-
-so the tail of that row is read from beyond the length the driver asked
-for. Per variant, the last iteration reads past register_size by:
-
-	NV_PCI_REGSZ_VER1 (0x270): row 0x260 reads to 0x27f, 16 bytes over
-	NV_PCI_REGSZ_VER2 (0x2d4): row 0x2c0 reads to 0x2df, 12 bytes over
-	NV_PCI_REGSZ_VER3 (0x604): row 0x600 reads to 0x61f, 28 bytes over
-
-This happens on every supported device, not just one of them. Note that
-it is not a consequence of the sizes being odd: with i <= register_size
-the offending row is reached whatever the size, and a size that were a
-multiple of 32 would overrun by a full row rather than by a remainder.
-
-To be precise about the severity: the reads stay inside the BAR. Memory
-BAR sizes are powers of two, the driver only accepts a region with
-pci_resource_len() >= register_size (forcedeth.c:5757-5762), and the
-next power of two at or above each register_size already covers the
-offending row: 0x400 for 0x270 and 0x2d4, 0x800 for 0x604. ioremap()
-also rounds the mapped length up to page granularity, so the reads land
-inside the mapping the CPU has as well. What they leave is the window
-the driver asked for, not the BAR and not the mapping. That is still a
-driver reading registers it did not ask for, and it is trivial to
-avoid, but nobody should expect a fault from it.
-
-Changing <= to < is not enough: register_size is a length and every size
-above is larger than its last row start, so i still reaches the offending
-row. Check that the whole row fits instead.
-
-The trade-off is that a partial trailing row is no longer dumped: 16 bytes
-for VER1, 20 for VER2, 4 for VER3. That seemed preferable to reading
-outside the requested window, and to open-coding a second, narrower dump
-for the remainder in what is a debug-only path. Extending the dump to
-cover the tail can be done on top if anyone misses those registers.
-
-Only reachable with the debug_tx_timeout module parameter, which defaults
-to false. It has not been observed at runtime: forcing a genuine TX
-timeout on the reference machine is not something I can do safely, so this
-rests on the arithmetic above and on a build test, not on a reproduction.
-UBSAN does not catch it either, since these are MMIO reads rather than an
-array access. It was found by reading the function while fixing the
-saved_config_space off-by-one in nv_suspend() and nv_resume().
-
-The dump was introduced with a fixed 0x400 bound while ioremap() mapped
-only NV_PCI_REGSZ (0x270), so it read about 0x190 bytes too far from the
-start. Commit 86a0f04387bf ("[PATCH] forcedeth: fix initialization")
-later replaced 0x400 with np->register_size, which shrank the overrun to
-the remainder but did not remove it.
-
-Fixes: c2dba06dae7d ("[PATCH] forcedeth: rewritten tx irq handling")
-Signed-off-by: Marek Czernohous <marek@czernohous.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://patch.msgid.link/178682367886.3748309.6978554332066826294@gmail.com
+Link: https://lore.kernel.org/r/20231117095922.876489-3-u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/c43193b9a002e88da36b111bb44ce2973ecde722.1701713943.git.u.kleine-koenig@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 6b9eaa61ff2d ("net: ipa: balance runtime PM reference on remove error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/nvidia/forcedeth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ipa/ipa_main.c | 29 +++++++++++++----------------
+ 1 file changed, 13 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/nvidia/forcedeth.c b/drivers/net/ethernet/nvidia/forcedeth.c
-index b98825c364cf9..a179bbf7f42cb 100644
---- a/drivers/net/ethernet/nvidia/forcedeth.c
-+++ b/drivers/net/ethernet/nvidia/forcedeth.c
-@@ -2754,7 +2754,7 @@ static void nv_tx_timeout(struct net_device *dev, unsigned int txqueue)
+diff --git a/drivers/net/ipa/ipa_main.c b/drivers/net/ipa/ipa_main.c
+index f5924142021d2..196755bf60f87 100644
+--- a/drivers/net/ipa/ipa_main.c
++++ b/drivers/net/ipa/ipa_main.c
+@@ -936,7 +936,7 @@ static int ipa_probe(struct platform_device *pdev)
+ 	return ret;
+ }
  
- 		netdev_info(dev, "Ring at %lx\n", (unsigned long)np->ring_addr);
- 		netdev_info(dev, "Dumping tx registers\n");
--		for (i = 0; i <= np->register_size; i += 32) {
-+		for (i = 0; i + 32 <= np->register_size; i += 32) {
- 			netdev_info(dev,
- 				    "%3x: %08x %08x %08x %08x "
- 				    "%08x %08x %08x %08x\n",
+-static int ipa_remove(struct platform_device *pdev)
++static void ipa_remove(struct platform_device *pdev)
+ {
+ 	struct ipa *ipa = dev_get_drvdata(&pdev->dev);
+ 	struct ipa_power *power = ipa->power;
+@@ -959,8 +959,16 @@ static int ipa_remove(struct platform_device *pdev)
+ 			usleep_range(USEC_PER_MSEC, 2 * USEC_PER_MSEC);
+ 			ret = ipa_modem_stop(ipa);
+ 		}
+-		if (ret)
+-			return ret;
++		if (ret) {
++			/*
++			 * Not cleaning up here properly might also yield a
++			 * crash later on. As the device is still unregistered
++			 * in this case, this might even yield a crash later on.
++			 */
++			dev_err(dev, "Failed to stop modem (%pe), leaking resources\n",
++				ERR_PTR(ret));
++			return;
++		}
+ 
+ 		ipa_teardown(ipa);
+ 	}
+@@ -978,17 +986,6 @@ static int ipa_remove(struct platform_device *pdev)
+ 	ipa_power_exit(power);
+ 
+ 	dev_info(dev, "IPA driver removed");
+-
+-	return 0;
+-}
+-
+-static void ipa_shutdown(struct platform_device *pdev)
+-{
+-	int ret;
+-
+-	ret = ipa_remove(pdev);
+-	if (ret)
+-		dev_err(&pdev->dev, "shutdown: remove returned %d\n", ret);
+ }
+ 
+ static const struct attribute_group *ipa_attribute_groups[] = {
+@@ -1001,8 +998,8 @@ static const struct attribute_group *ipa_attribute_groups[] = {
+ 
+ static struct platform_driver ipa_driver = {
+ 	.probe		= ipa_probe,
+-	.remove		= ipa_remove,
+-	.shutdown	= ipa_shutdown,
++	.remove_new	= ipa_remove,
++	.shutdown	= ipa_remove,
+ 	.driver	= {
+ 		.name		= "ipa",
+ 		.pm		= &ipa_pm_ops,
 -- 
 2.53.0
 
