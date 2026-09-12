@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED872594BD;
-	Sat, 12 Sep 2026 16:09:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB7C317145;
+	Sat, 12 Sep 2026 16:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229356; cv=none; b=VeHu3/pac+1rK+xQNrNSSBE6iaV+mmkoUmmmZLY9AEhxJAxZMTmn/djWYvSCexbdPHlF4kqCfOVphG2Db4AgCMxq5Ln9QX8/7CGgu0L75M5TLAo+HydN+G7Exmbr2vR7URiIa3aHZ3F9VYfXHI5dWi6VoSsJFoypw5T/akANA0M=
+	t=1789229361; cv=none; b=XSpx9WJhlgIAts8ldJUSXe6S5Ay3GVB+HKk13J246QA37nOQMFIdTQbzhFQ01HWj+gN5cdi6rtnX4yQjAaUOwFk/6MzSjHwJNwmFHpGMSEeBt/rLVQCYqdW1CNC6B8S2qd4b4vZZ+GmEYVIkHy8dBsNP7JIgWXiZ9ukXxuhUNic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229356; c=relaxed/simple;
-	bh=Sy1zKfGSg9xzDutEa6nBLk0lkigKpyC0zmkjYhImWjQ=;
+	s=arc-20240116; t=1789229361; c=relaxed/simple;
+	bh=+ASILvn5ywPz4/6ws8r7hY3ml2pPWl1OngUj+hMDQt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EItLvtG0PnxWWaJJjZrdWWXpYspPjQeoAFEnC38OFFwSg/FHMX/E2txXV8jmzmCsCDriOf3tWPS1ZbLwe5XXX8LgW7+jD6LeqWwwl+F5urZqdrxEo4BowvN7nqAiFmy28rqWGy/gz1FtTRQ7yyecPZ6yj5JJ2DDK5Qc723WpTtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ITnnHQYG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jXd3f8lyYevl58fbtgIZGPYKtyN32+YKJalgtD++hVZgta8U1NoiA+F2UpaaAoJUUn/9hTi+ZtLY2VjNI7pQdOg6baouYVl0/j7VqjrGorfxOtjA9BKKsA92qIgVkSH/jlktzsOGl7mKc8geZ2E4jyPTID7mQsSXqzUMEOdzxCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILQbO99n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ITnnHQYG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E32C51F000FF;
-	Sat, 12 Sep 2026 16:09:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILQbO99n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB661F000FF;
+	Sat, 12 Sep 2026 16:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229354;
-	bh=z8CbqrsnPpfHRbw7U6zEa9NSNbaSfwblhWBdBbkzyh0=;
+	s=korg; t=1789229359;
+	bh=DxXg/75Nz0uZ/px5lriPXGYb1V/LdvjNJjeKurnOG5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ITnnHQYG5TK1chQTKBpNpfp/gYg16KSnOBfRcrFzbyadrlD+4a2430juiS7NzDHDM
-	 1SOx7Wh2r61FbMIHkpIwfiiFTECgr7HTDgbEpv/9BUqncJkzqZdvJ2TVNavrXMaVl0
-	 86/HMd1At1bNsksfEzH8p6gfiPsJcCl5DZTD2G8I=
+	b=ILQbO99n3xZsV2/XOSQJM3QGFs4wASvJF7WiUtaAxq8F2TVy83B6fq362XxWf1zJW
+	 UVvY0f9lsVcKsao+NVIaxLi4p1YXtIX30y4Lj0Z06I+r98DhiHN/LZSwBPZ9vUcDmZ
+	 asgKoBMH5dEE8UgVuUfBFvIP7SOzzUXAncnh2W0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0573/1191] platform/x86: dell-wmi-base: Fix resource leak on module load failure
-Date: Sat, 12 Sep 2026 08:55:01 +0200
-Message-ID: <20260912065601.116817442@linuxfoundation.org>
+Subject: [PATCH 6.1 0574/1191] hwspinlock: propagate errno when registering single lock
+Date: Sat, 12 Sep 2026 08:55:02 +0200
+Message-ID: <20260912065601.138642492@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -45,59 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 072841e02cf9c00a7e8a9c567a14239e02ca47ad ]
+[ Upstream commit e088ffa9a00eaaaf90da74763e774ca160969c26 ]
 
-We need to properly clean up the SMBIOS request and the privacy driver
-when the module load fails.
+hwspin_lock_register_single() always returns 0 despite checking the
+result from radix_tree_insert(). Propagate the errno to make sanity
+checks in callers of this function actually meaningful.
 
-Fixes: 8af9fa37b8a3 ("platform/x86: dell-privacy: Add support for Dell hardware privacy")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20260612173451.467629-3-W_Armin@gmx.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 300bab9770e2 ("hwspinlock/core: register a bank of hwspinlocks in a single API call")
+Link: https://sashiko.dev/#/patchset/20260319105947.6237-1-wsa%2Brenesas%40sang-engineering.com # review of patch 14
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/20260512084856.30497-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-wmi-base.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/hwspinlock/hwspinlock_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/dell/dell-wmi-base.c b/drivers/platform/x86/dell/dell-wmi-base.c
-index 01f3ff21c8884..713ec2c12a04e 100644
---- a/drivers/platform/x86/dell/dell-wmi-base.c
-+++ b/drivers/platform/x86/dell/dell-wmi-base.c
-@@ -839,9 +839,22 @@ static int __init dell_wmi_init(void)
+diff --git a/drivers/hwspinlock/hwspinlock_core.c b/drivers/hwspinlock/hwspinlock_core.c
+index 425597151dd3e..ed02ba245d460 100644
+--- a/drivers/hwspinlock/hwspinlock_core.c
++++ b/drivers/hwspinlock/hwspinlock_core.c
+@@ -468,7 +468,7 @@ static int hwspin_lock_register_single(struct hwspinlock *hwlock, int id)
  
- 	err = dell_privacy_register_driver();
- 	if (err)
--		return err;
-+		goto out_smbios;
- 
--	return wmi_driver_register(&dell_wmi_driver);
-+	err = wmi_driver_register(&dell_wmi_driver);
-+	if (err)
-+		goto out_privacy;
-+
-+	return 0;
-+
-+out_privacy:
-+	dell_privacy_unregister_driver();
-+
-+out_smbios:
-+	if (wmi_requires_smbios_request)
-+		dell_wmi_events_set_enabled(false);
-+
-+	return err;
+ out:
+ 	mutex_unlock(&hwspinlock_tree_lock);
+-	return 0;
++	return ret;
  }
- late_initcall(dell_wmi_init);
  
+ static struct hwspinlock *hwspin_lock_unregister_single(unsigned int id)
 -- 
 2.53.0
 
