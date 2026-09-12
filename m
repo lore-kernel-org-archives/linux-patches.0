@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F33345EB5;
-	Sat, 12 Sep 2026 19:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFAF38E8CB;
+	Sat, 12 Sep 2026 19:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242659; cv=none; b=RWX7BvC+uhKhp/yq9LL64U3B/gmkHpGYlus9/7lkUKGTJR8UMVfQ58YaCngDbl4tUUftO1ufbzJWf0INy8MqnF1jJp0jkTREF9uCex5ESB4Z7nCSy65ZlU/03ANHtViwln1ArPVWk2WziK+DivaPGOu3HCeqiDsZFxptV3R2+aY=
+	t=1789242661; cv=none; b=P+hvZoXZYmzHbNFeL3QKrySBpmt+zTcsxBYyg+V9LQF1KLtHMoNrofkzaKoSVqy4uX+tPS/m8OWt4EqLCrYSTxeYBTsCNro3vHN4DNiK6QCXGCTO37b0zU9rSc29Uc1poqb4UEAUiQw9X25xU5C4WO/uUKjKu9g7j4S5QH7KMPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242659; c=relaxed/simple;
-	bh=Iu9uRs7y3rFBJI4UtKRBgu7x3SwjpxkE/eDeDAT1DE0=;
+	s=arc-20240116; t=1789242661; c=relaxed/simple;
+	bh=N9tylSDiClWMoshZkIHvZlB1Mj70i8rxdL58ssw/b3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jFmHWM2ryJtfmfvG1NrApiyI0sQ2BM/i47iPaYpqF1gb4gQRbUQKQefozymlYfK0wa/ys0VS8L60ewFXG2QciJG8e+i7E6AgMrMMbgdTuMyd5WbCVp4cJNjBWanaIcbXxJNAqockEmqILUda/B0cjF7iBM+2vlNab6IW4ftinF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NW87zgOx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BDQLJ+DyZpc9ADXEWFtG7h0MIltQb1JKkyk5Y+Vj++gMVBrbCoTmhzoOB3/N+2lkAR59j6sXK1bQblJ0cfbKuwJQ/3W/8teIj/jClxQLPUyofymqtm9jXY8JWFgIQujBAUESvZSXwlPODNLZaf85uKK4JqlmsBi7U8Zg1Y/WKhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGGK5jAw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NW87zgOx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F2E1F000FF;
-	Sat, 12 Sep 2026 19:50:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGGK5jAw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB35C1F000FF;
+	Sat, 12 Sep 2026 19:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242657;
-	bh=CJ9QMnMnvyuh62z0jrzfruOO+CMEAwLfBh1Si5wXX+E=;
+	s=korg; t=1789242660;
+	bh=PiLhsnIzENQR9AUzV/4uFjuckjtAL6vq4+ixeETfQN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NW87zgOxy89RdEMxCQ/DhTtK9YhJQm+6uoz2lhTs4e82j3mFmF0oPSNKSwmWR0Y7M
-	 WYLARcGZNT8hhEB4bRnaM0khsCx7ao0JtfNM9t3u/rbOKdguAIoYXMJ/zn3u6HM8WH
-	 rUYUbHfKLXpiYHBtRDqzGL4wO6WbB5UkBTtKc2yI=
+	b=NGGK5jAweZCYdmZqclZv2lpGRjHRq+1Odb4inCQJ9HQZetophOlRx0nH2GPvFPSJt
+	 qdBQJ6AQHX/yb57SV/MrTdIc4LE3DiVu99QaYforZsgMPCaDBr+UgabCMIIcar6GIV
+	 ZkbEMSGIduMBYQY8NdjGLxwu5uFWrmQtdF2V2Rkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 482/798] irqchip/gic-v3-its: Prevent leak in its_vpe_irq_domain_alloc()
-Date: Sat, 12 Sep 2026 09:01:50 +0200
-Message-ID: <20260912065528.189416206@linuxfoundation.org>
+Subject: [PATCH 5.10 483/798] ACPI: processor: validate MADT IOAPIC entry bounds
+Date: Sat, 12 Sep 2026 09:01:51 +0200
+Message-ID: <20260912065528.211506634@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,58 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 325ff3e78c64cd619d52b99f7c8b09a3f31e1495 ]
+[ Upstream commit 2c50ffdc73f3a70d745d249f509fc290754121e6 ]
 
-When its_irq_gic_domain_alloc() fails, the following
-its_vpe_irq_domain_free() fails to invoke its_vep_teardown() for the
-corresponding interrupt, which leaks the resource.
+The IOAPIC hotplug lookup parses both MADT and _MAT records directly.
+The MADT walk previously used a subtable's declared length to advance
+the cursor after only locating a generic header.  The _MAT path likewise
+passed a generic header to the IOAPIC helper.
 
-Invoke its_vpe_teardown() in the error handling path to avoid the leak.
+Validate that a current record has a complete generic header, that its
+declared length is contained in the available record range, and that a
+typed IOAPIC record contains the full fixed IOAPIC body before reading
+its fields.  Use the same relation for both MADT and _MAT provider
+paths.
 
-[ tglx: Massaged change log ]
-
-Fixes: 7d75bbb4bc1ad ("irqchip/gic-v3-its: Add VPE irq domain allocation/teardown")
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260721063241.52549-2-shikemeng@huaweicloud.com
+Fixes: ecf5636dcd59 ("ACPI: Add interfaces to parse IOAPIC ID for IOAPIC hotplug")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260715083253.22831-1-pengpeng@iscas.ac.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/acpi/processor_core.c | 31 +++++++++++++++++++++++++------
+ 1 file changed, 25 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 04b89f345c77c..b828737487bf0 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -4444,6 +4444,13 @@ static int its_vpe_init(struct its_vpe *vpe)
+diff --git a/drivers/acpi/processor_core.c b/drivers/acpi/processor_core.c
+index eae7efae3b5cf..63c787f142ef0 100644
+--- a/drivers/acpi/processor_core.c
++++ b/drivers/acpi/processor_core.c
+@@ -262,11 +262,26 @@ int acpi_get_cpuid(acpi_handle handle, int type, u32 acpi_id)
+ EXPORT_SYMBOL_GPL(acpi_get_cpuid);
  
- static void its_vpe_teardown(struct its_vpe *vpe)
- {
-+	/*
-+	 * If vpt_page is NULL, then its_vpe_init() has failed, and
-+	 * there is nothing to do as no resource has been allocated.
-+	 */
-+	if (vpe->vpt_page == NULL)
-+		return;
+ #ifdef CONFIG_ACPI_HOTPLUG_IOAPIC
+-static int get_ioapic_id(struct acpi_subtable_header *entry, u32 gsi_base,
++static bool madt_entry_is_valid(struct acpi_subtable_header *entry,
++				unsigned long end)
++{
++	unsigned long start = (unsigned long)entry;
 +
- 	its_vpe_db_proxy_unmap(vpe);
- 	its_vpe_id_free(vpe->vpe_id);
- 	its_free_pending_table(vpe->vpt_page);
-@@ -4522,8 +4529,10 @@ static int its_vpe_irq_domain_alloc(struct irq_domain *domain, unsigned int virq
- 		set_bit(i, bitmap);
++	if (start >= end || end - start < sizeof(*entry))
++		return false;
++
++	return entry->length >= sizeof(*entry) && entry->length <= end - start;
++}
++
++static int get_ioapic_id(struct acpi_subtable_header *entry,
++			 const unsigned long end, u32 gsi_base,
+ 			 u64 *phys_addr, int *ioapic_id)
+ {
+ 	struct acpi_madt_io_apic *ioapic = (struct acpi_madt_io_apic *)entry;
+ 
++	if (!madt_entry_is_valid(entry, end) || BAD_MADT_ENTRY(ioapic, end))
++		return 0;
++
+ 	if (ioapic->global_irq_base != gsi_base)
+ 		return 0;
+ 
+@@ -287,17 +302,19 @@ static int parse_madt_ioapic_entry(u32 gsi_base, u64 *phys_addr)
+ 		return apic_id;
+ 
+ 	entry = (unsigned long)madt;
++	if (madt->header.length < sizeof(*madt))
++		return apic_id;
+ 	madt_end = entry + madt->header.length;
+ 
+ 	/* Parse all entries looking for a match. */
+ 	entry += sizeof(struct acpi_table_madt);
+-	while (entry + sizeof(struct acpi_subtable_header) < madt_end) {
++	while (madt_entry_is_valid((struct acpi_subtable_header *)entry,
++				   madt_end)) {
+ 		hdr = (struct acpi_subtable_header *)entry;
+ 		if (hdr->type == ACPI_MADT_TYPE_IO_APIC &&
+-		    get_ioapic_id(hdr, gsi_base, phys_addr, &apic_id))
++		    get_ioapic_id(hdr, madt_end, gsi_base, phys_addr, &apic_id))
+ 			break;
+-		else
+-			entry += hdr->length;
++		entry += hdr->length;
  	}
  
--	if (err)
-+	if (err) {
-+		its_vpe_teardown(vm->vpes[i]);
- 		its_vpe_irq_domain_free(domain, virq, i);
-+	}
+ 	return apic_id;
+@@ -324,7 +341,9 @@ static int parse_mat_ioapic_entry(acpi_handle handle, u32 gsi_base,
  
- 	return err;
- }
+ 	header = (struct acpi_subtable_header *)obj->buffer.pointer;
+ 	if (header->type == ACPI_MADT_TYPE_IO_APIC)
+-		get_ioapic_id(header, gsi_base, phys_addr, &apic_id);
++		get_ioapic_id(header,
++			      (unsigned long)header + obj->buffer.length,
++			      gsi_base, phys_addr, &apic_id);
+ 
+ exit:
+ 	kfree(buffer.pointer);
 -- 
 2.53.0
 
