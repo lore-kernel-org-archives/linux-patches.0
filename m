@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D11CA6F;
-	Sat, 12 Sep 2026 11:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90F6CA6F;
+	Sat, 12 Sep 2026 11:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211529; cv=none; b=uAw5l2BUH60YPz27h86SYSU7Vi77xW5UHVTGZU61fVoDkwGp0Y6AHxhljHk/pywkOw49PKQsBNTKotTa8uPVlmRHJ5wCY6trWJowjr73aS4NZn1pGt4+e7ScgOarma4tNgHZLZEh8qcDOiRtPmOG7WM6lWyk88UymZHWLIPCjUQ=
+	t=1789211533; cv=none; b=JwodLGkjLLITAK2ipa2M5mvOveFK5UUqDycp/O8wg4WI8XI/gq+NHu422h7RfZqopVHX2UWYgDewD2sGXhk/fYiiL422jtvXHvyY8tVTj7HTI6hOY1QWHjVZsvngRhdSXTEPjjO9cHvX5WMB56VJDtgy7WWJ7VY43ffkcuUl6/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211529; c=relaxed/simple;
-	bh=FwzR2SD82Fx6kibsaWsTuQqTseuoY3gn+EX4HY3p8bQ=;
+	s=arc-20240116; t=1789211533; c=relaxed/simple;
+	bh=FRRtNbKE5KMbRlvy6jICUxFrQUdPVaLSQaMvJvobqQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LOgUTnqO5W0pG2nt7hvVPnBAyB5vgI3XmXWGBdo0GR3kJQmjfS583QZnGbCbGh6mdK4/J0F9b4OREABJeoRDviLld70ZgLAQwEaX5syjyOFo3DpAM+SZQSBaUDdnjzRvrudZ/b7n5/HjAteqrIWwGzsSHnpj3EzCIW7GHHngadw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DH12FiZ1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=phkJwhI5xaNFlxu+JMpd+ql9Zr4rU2cLcagJebKNBJn5EB2Rjknp3u+ZLf5aOOSLGXfUC6daA8vVE1vNBSNuKZFd9/jux8hSkaXXUqDMsS0w4jbLBVzOWY9OxOJ0zljp8bmoE78PkJabmNU8NxJw4VsN54pRmWj3flra592gCmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0uQfQeK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DH12FiZ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB511F000FF;
-	Sat, 12 Sep 2026 11:12:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0uQfQeK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24311F000FF;
+	Sat, 12 Sep 2026 11:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211527;
-	bh=spHHkf4/hsest5UPTn/3OxkG9dtOuuQjOJAb0ofnAX0=;
+	s=korg; t=1789211532;
+	bh=mpligvwF0emWDllRgb4+vZ7L9JvU9l2WEDZhkgtPmOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DH12FiZ1OnN3pK8RUksyRCCn6yyYgOOtCauo/artk+PLSX8Oxe7h+y/0fCUa3kWDm
-	 2KoUZ1lVFyXsXQ2tAyTNBlvxyNur6244R/hmqj0HCXuo03IIyac33uHqaCG93NuqMx
-	 Mh7SS7LCC50GKGGXOxHl0VZ+NYOthp9vgNDDbxNY=
+	b=K0uQfQeKQCN7RJ2iHrWDEiBravVX/UsbBy5czmr+GNSkZor/3jNtp10PSguQYftSV
+	 S1CeLyWQuFkwgZo9ArPB5OYAhg9y41LShvQ939MVFiOmBguCsyPb3STdSSJjXoQjDC
+	 Jvvjnb7vPhVoQdk1pi39e0bAyUoXfTFnq3UMeSG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeuk Kim <jeuk20.kim@samsung.com>,
+	Zhansong Gao <zhsgao@hotmail.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1250/1518] NFSv4/flexfiles: fix NULL dereference for NFSv4.0 data servers
-Date: Sat, 12 Sep 2026 08:56:59 +0200
-Message-ID: <20260912065651.786548302@linuxfoundation.org>
+Subject: [PATCH 6.18 1251/1518] NFSv4: Fix incorrect argument passed to nfs4_delete_lease() in nfs4_add_lease()
+Date: Sat, 12 Sep 2026 08:57:00 +0200
+Message-ID: <20260912065651.809345170@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,81 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeuk Kim <jeuk20.kim@gmail.com>
+From: Zhansong Gao <zhsgao@hotmail.com>
 
-[ Upstream commit 2b03ebbf8d5e8f6af4ecd6c65375232dd1ec32cc ]
+[ Upstream commit 468e458ffde907ba19acd2102ca1fbb8f6fbede2 ]
 
-flexfiles accepts NFSv4.0 data servers, but two NFSv4 code paths assume
-the data server client has a session. Unlike NFSv4.1+, an NFSv4.0 client
-has no session (clp->cl_session is NULL; it uses clp->cl_slot_tbl), so
-I/O to a v4.0 flexfiles DS oopses:
+When nfs4_add_lease() races with a delegation return, it calls
+nfs4_delete_lease() to clean up. Previously, it passed priv,
+which can legitimately be NULL. Passing a NULL priv eventually
+leads to a NULL pointer dereference in generic_setlease().
 
-  - nfs4_init_ds_session() dereferences clp->cl_session->session_state
-    while seeding the DS lease. It also only seeds cl_lease_time when
-    NFS4_SESSION_INITING is set; without a session that never happens, so
-    cl_lease_time stays 0 and nfs4_renew_state() busy-loops, requeuing
-    every 5 seconds. Seed the lease whenever there is no session and
-    return before touching session state.
-
-  - ff_layout_async_handle_error_v4() dereferences
-    clp->cl_session->fc_slot_table on every DS I/O error. Fall back to the
-    v4.0 transport slot table (clp->cl_slot_tbl) when there is no session.
-
-Fixes: a7878ca14008 ("nfs: flexfilelayout: remove v3-only data server limitation")
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+Fixes: e93a5e9306a5 ("NFSv4: Add support for application leases underpinned by a delegation")
+Signed-off-by: Zhansong Gao <zhsgao@hotmail.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c |  3 ++-
- fs/nfs/nfs4session.c                   | 16 +++++++++++-----
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ fs/nfs/nfs4proc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
-index 4604f10882722..8099bfc4fe2f8 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -1324,7 +1324,8 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
- 	struct pnfs_layout_hdr *lo = lseg->pls_layout;
- 	struct inode *inode = lo->plh_inode;
- 	struct nfs4_deviceid_node *devid = FF_LAYOUT_DEVID_NODE(lseg, idx, dss_id);
--	struct nfs4_slot_table *tbl = &clp->cl_session->fc_slot_table;
-+	struct nfs4_slot_table *tbl = nfs4_has_session(clp) ?
-+		&clp->cl_session->fc_slot_table : clp->cl_slot_tbl;
- 
- 	switch (op_status) {
- 	case NFS4_OK:
-diff --git a/fs/nfs/nfs4session.c b/fs/nfs/nfs4session.c
-index 5db460476bf2a..c59e710eb7ccc 100644
---- a/fs/nfs/nfs4session.c
-+++ b/fs/nfs/nfs4session.c
-@@ -634,16 +634,22 @@ int nfs4_init_ds_session(struct nfs_client *clp, unsigned long lease_time)
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 66b8da741a06f..84ba899bf0a74 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -7862,6 +7862,7 @@ static int nfs4_add_lease(struct file *file, int arg, struct file_lease **lease,
+ {
+ 	struct inode *inode = file_inode(file);
+ 	fmode_t type = arg == F_RDLCK ? FMODE_READ : FMODE_WRITE;
++	fl_owner_t owner = (*lease)->c.flc_owner;
  	int ret;
  
- 	spin_lock(&clp->cl_lock);
--	if (test_and_clear_bit(NFS4_SESSION_INITING, &session->session_state)) {
--		/*
--		 * Do not set NFS_CS_CHECK_LEASE_TIME instead set the
--		 * DS lease to be equal to the MDS lease.
--		 */
-+	/*
-+	 * Do not set NFS_CS_CHECK_LEASE_TIME instead set the
-+	 * DS lease to be equal to the MDS lease.
-+	 *
-+	 * A v4.0 DS has no session, so seed the lease every time.
-+	 */
-+	if (!session ||
-+	    test_and_clear_bit(NFS4_SESSION_INITING, &session->session_state)) {
- 		clp->cl_lease_time = lease_time;
- 		clp->cl_last_renewal = jiffies;
- 	}
- 	spin_unlock(&clp->cl_lock);
- 
-+	if (!session)
-+		return 0;
-+
- 	ret = nfs41_check_session_ready(clp);
- 	if (ret)
+ 	/* No delegation, no lease */
+@@ -7871,7 +7872,8 @@ static int nfs4_add_lease(struct file *file, int arg, struct file_lease **lease,
+ 	if (ret || nfs4_have_delegation(inode, type, 0))
  		return ret;
+ 	/* We raced with a delegation return */
+-	nfs4_delete_lease(file, priv);
++	dprintk("%s: raced with a delegation return\n", __func__);
++	nfs4_delete_lease(file, &owner);
+ 	return -EAGAIN;
+ }
+ 
 -- 
 2.53.0
 
