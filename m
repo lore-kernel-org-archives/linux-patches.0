@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92CF7374E6F;
-	Sat, 12 Sep 2026 09:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A9C35F602;
+	Sat, 12 Sep 2026 09:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204819; cv=none; b=T6TrAOFwNaUWoWYOAvxxVDMDhFl71ChxoJbFVAFY+LjDlHN1kQ4NMBUAURSuARmzVGUzj0ULzMwRT240enrehktwk0Uo9Z0KEC1xG9d5R9eKNymjzCg2ptPZmXkHj9LSzRgzoCzpJ1GEzBoQe3XEZHOx5d7y4Pv0GvMdPjwit8c=
+	t=1789204824; cv=none; b=ULfVvhRyiRhwCn9NZ0Ls/GOVDWHjXEkdz2WdJH4i44LnVk5oqh2d8+Shw3usgRx46JD0MfcM3tdWlajCnMSoeFDS8RVDTyvhF08SkESK2YEGBJPGqQufApCPSHa9+B76PevWbWE+JpJk30fdd/0OOcEgG5PoklSgKdjhoIglwTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204819; c=relaxed/simple;
-	bh=Yw0xdyN0QGXztq6rkeFR09K5J+hSlPq4YIwuu4+zz6E=;
+	s=arc-20240116; t=1789204824; c=relaxed/simple;
+	bh=ODRpphoMeQ3P+XwQL5Q/JDpHPtVXfJNKjnFfetNP4Rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ri1Ti2qVEm2bEYZgv3Dkb4+RLAK3Y1LNHqD78DdQe1Tx0pEW2RTTLioB/Kbpiv4CSbqHxLREbHNPmeKblDlA9EyuAHYkLg6uO605Cy0vXzQQ7EqUFGYFwRIDI6eZ2H92mPh+QClG8JGySfCbZzfsPzT0NDWSdIKjXuvQlq1Okis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GzrT8H4f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j76hg6DbjO0xR9O90AZtiVCGLuGic27eY+Ei+fBTgJqETv4JrNLT3pMz/jP0tbwhe34YpF6TACf95li+Vok/n1YsL2th52a/HuaIacxpF0ooAUr4Q8LdHv+/G2JwxpJgM+LZ74Yj5ZQbl9UdjOSZvPb/L/G5dDg1ycSv+quGKDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zLsLFyHi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GzrT8H4f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD631F000FF;
-	Sat, 12 Sep 2026 09:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zLsLFyHi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0634F1F000FF;
+	Sat, 12 Sep 2026 09:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204818;
-	bh=1bikAxTKFezG/LStzm1mUJifaIzwEGEh34u/ZsFmZ8M=;
+	s=korg; t=1789204823;
+	bh=heuxQveaFP7NWZFMA8uKKOBQDHnlxc5clYBUnoVyZyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GzrT8H4fQiPWoiwGe7ZZaxLn9toNolc03+/C8XsIUKOd3B1CSzplwP3L23+erGtND
-	 YolwBeoyjQXwW2McWFAkexILOPv6rTVfCkcSci8QKJ450j2OYqtjrvBdPU+hcvKkoU
-	 OROLAKH7H6pyZFh8F9noWgGtdLiRzJCIPWpAIrw0=
+	b=zLsLFyHilDLSTD8mYv6jsnqYXS/w651aprBSNOeDtw2k77aXq1ZphwUFRPgd1Jd0c
+	 fiLJQiMyPw1VuFkM0YsNyCE0zPtWjSVSPUxdY5dKpoMilEy7RTk2lKoAkNx1Sic1BB
+	 1JDMR2IqHliEjkIfgxf2CVUsR0k2FfAVAwqVPOBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1689/1815] NFSv4.1: zero referring call lists before decoding
-Date: Sat, 12 Sep 2026 08:57:19 +0200
-Message-ID: <20260912065728.633194672@linuxfoundation.org>
+Subject: [PATCH 7.2 1690/1815] NFSv4.2: fix LAYOUTSTATS send buffer exhaustion
+Date: Sat, 12 Sep 2026 08:57:20 +0200
+Message-ID: <20260912065728.655944369@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,48 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 8fa4804fe62ca4155a2d8fc2789d630376cbf2fc ]
+[ Upstream commit c75ef2137e749f2673f0617cfdaae53b2bb7195a ]
 
-decode_cb_sequence_args() allocates csa_rclists with kmalloc_objs(), so
-each referring_call_list starts uninitialized. decode_rc_list() assigns
-rcl_refcalls only when rcl_nrefcalls is nonzero. A valid list with zero
-referring calls therefore leaves the pointer uninitialized, and
-nfs4_callback_sequence() later passes stale slab contents to kfree().
+encode_layoutstats_maxsz budgets XDR_QUADLEN(PNFS_LAYOUTSTATS_MAXSIZE),
+i.e. 256 bytes, for the layoutupdate4 body written by the layout driver.
+The flexfiles record can exceed that.
 
-Allocate csa_rclists with kzalloc_objs() so every rcl_refcalls member is
-NULL from the beginning, including valid empty referring call lists.
+ff_layout_encode_ff_layoutupdate() emits, per data server, a netaddr4,
+an nfs_fh4, two ff_io_latency4, an nfstime4 and a bool.  A data server
+whose filehandle is NFS_MAXFHSIZE bytes long already accounts for 132 of
+those bytes, and the two ff_io_latency4 at 64 bytes each, the nfstime4
+and the bool add a further 144, so the body passes 256 bytes before the
+netaddr4 is encoded at all.  encode_layoutstats() additionally writes
+the deviceid4 and the layoutupdate4 lou_type word, neither of which the
+macro accounts for.
 
-Fixes: 4aece6a19cf7 ("nfs41: cb_sequence xdr implementation")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+The filehandle and the address are both chosen by the server, through
+LAYOUTGET and GETDEVICEINFO, so it can drive the encoder past the
+end of the send buffer.  xdr_reserve_space() returns NULL once that
+happens, and the two ff_layout_encode_io_latency() calls run with
+dss_info->mirror->lock held, so a NULL return there leaves the lock
+permanently held.
+
+Raise PNFS_LAYOUTSTATS_MAXSIZE to 384 so that the record fits inside the
+reservation.
+
+Fixes: 27c430644369 ("pnfs/flexfiles: encode LAYOUTSTATS flexfiles specific data")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/callback_xdr.c | 2 +-
+ include/linux/nfs_xdr.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/callback_xdr.c b/fs/nfs/callback_xdr.c
-index 4382baddc9eed..a6406707ede6c 100644
---- a/fs/nfs/callback_xdr.c
-+++ b/fs/nfs/callback_xdr.c
-@@ -417,7 +417,7 @@ static __be32 decode_cb_sequence_args(struct svc_rqst *rqstp,
- 	args->csa_nrclists = ntohl(*p++);
- 	args->csa_rclists = NULL;
- 	if (args->csa_nrclists) {
--		args->csa_rclists = kmalloc_objs(*args->csa_rclists,
-+		args->csa_rclists = kzalloc_objs(*args->csa_rclists,
- 						 args->csa_nrclists);
- 		if (unlikely(args->csa_rclists == NULL))
- 			return htonl(NFS4ERR_RESOURCE);
+diff --git a/include/linux/nfs_xdr.h b/include/linux/nfs_xdr.h
+index 11c5b31cfc7da..e8144048cd0ec 100644
+--- a/include/linux/nfs_xdr.h
++++ b/include/linux/nfs_xdr.h
+@@ -354,7 +354,7 @@ struct nfs4_layoutreturn {
+ 	struct nfs4_xdr_opaque_data ld_private;
+ };
+ 
+-#define PNFS_LAYOUTSTATS_MAXSIZE 256
++#define PNFS_LAYOUTSTATS_MAXSIZE 384
+ 
+ struct nfs42_layoutstat_args;
+ struct nfs42_layoutstat_devinfo;
 -- 
 2.53.0
 
