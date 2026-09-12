@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7DE25B0AA;
-	Sat, 12 Sep 2026 10:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1059A3ACA6F;
+	Sat, 12 Sep 2026 10:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207850; cv=none; b=SjwBrQZl1c8+8iI1Hk4+Ui1lbT4Gxiwg5moQXO4uThMhVVZAmCSxdyN+fMLbwU6clJByOdgAGX+4MLO20CP6pFCWpb2Nv1+G4J1OsulmdfqBfLjy7ABEfGkOmGhtFTw3DOci+joSkt3TXb5VoF5iQs6KreA35E3lNvdq+K/HFgE=
+	t=1789207855; cv=none; b=W4OK2kymmnsjehVRHmXZYM0+YjeStvcXJAlZuXCCuhrOK1Gm+N03M2J5nDZqacpPMlIXZU4XYEqr18XNIM/RiO5Ky75crEFqNLVUDj9CFZ2w7Y3vNkXUilIsBOaNLvzb1pnHefImoFqn5LNiqtZxnZxRA//+pc1CcP8cIF9j9UY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207850; c=relaxed/simple;
-	bh=XDeFMD7BtSYuUip8DIa0rYksWcFhjgDRhoDA2Xh7rsE=;
+	s=arc-20240116; t=1789207855; c=relaxed/simple;
+	bh=ae8BUyf2A8YwZY/QfDLw5YeYU6MTgJGr6CcGbcTF0Bs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WEGPvjh2J1rRv9zDhNlWiIBu6GmThFRssERw9pZhLcdeG7Ipz1t2K1K31iPfkA0fvdMPMdm0GfzOXDCQL4wKZtm3v6fL5SgfFVToMYrTHCQ+VkUQwRBZFjidUa8hT3f0IfZA9zk9J6eckJNuNlNRFA+8L/P7NlvKi9aj7HqW3zY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJbx6SJc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XRZF9df5j4k42v9ZFQxa7SCXkk/aLvUkeJ7sqt6ESwSVVaEJhHMkQS7f1rYLDA5y7xrKjJWBXiODEuvu/R2OZffeN1xLDsTPnbtlFTxWBaz5QLIj4EdozUWnZsj8qeF7klVv9c8rMeHqwgJCPsw1hAIWYZMq+GopA11k/mmj4gI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R7zt9KKg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJbx6SJc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85B71F000FF;
-	Sat, 12 Sep 2026 10:10:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R7zt9KKg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D981F000FF;
+	Sat, 12 Sep 2026 10:10:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207848;
-	bh=qOaP8HR245+VordWtpj0KAfInAfWHtHQBa4drz/jLrI=;
+	s=korg; t=1789207854;
+	bh=6jTL5x+E5GNxpa0mDBbYo/YNojo+GNM8GsfdAug0F5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KJbx6SJcrsBVRbdvfOP944HMJycmX+LW6DZlDPOpiL5zv8GotRqf99B+xM1Pz+YHy
-	 2uPSoIvyjRRZmT8J1v757X+Hf7K/tXblpl5LPGrIwLmLGtht9jJEN7fhKLUV55SuZZ
-	 MS/pYPQkLOacTcQzyG4/QO+0HwurzZA4LGFDsl5w=
+	b=R7zt9KKgeeU37Fmkbl9ghWcj6h+WN1ghqihF4/K8gnagNccSZhDcdi+7iygdUDkvG
+	 hrYo+bz9/drjB1JT/t7lYF9dlWl/9B2e3/XqZ1BAlPZLeq3lOSwtf/yjPTs4B3p39v
+	 u+Z+xs/H0iiQ56XhvOPfEo361ghIarapPAYvpYrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5d19358d7eb30ffb0cc5@syzkaller.appspotmail.com,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0496/1518] ext4: skip extra isize expansion during mount to prevent deadlock
-Date: Sat, 12 Sep 2026 08:44:25 +0200
-Message-ID: <20260912065634.666980080@linuxfoundation.org>
+Subject: [PATCH 6.18 0497/1518] platform/x86: acer-wmi: reject missing gaming WMI results
+Date: Sat, 12 Sep 2026 08:44:26 +0200
+Message-ID: <20260912065634.689148725@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -47,71 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit 7461c60b9c6a839b13ad4c3490681a0cf5aa0637 ]
+[ Upstream commit caf8342512c3056005f475d350eeca089c3c6623 ]
 
-ext4_try_to_expand_extra_isize() is called from __ext4_mark_inode_dirty()
-while holding an active jbd2 handle.  During mount (!SB_ACTIVE), the
-expand path may move xattrs to external blocks and release ea_inodes via
-iput().  When !SB_ACTIVE, iput() calls write_inode_now() which acquires
-s_writepages_rwsem, creating a circular lock dependency:
+WMI_gaming_execute_u32_u64() returns success when firmware supplies
+no output object, leaving the caller output untouched. Gaming getters
+then inspect an uninitialized result value.
 
-  s_writepages_rwsem --> jbd2_handle --> xattr_sem --> s_writepages_rwsem
+When the caller requests an output value, return -ENOMSG if firmware
+supplies no object. Preserve a NULL output pointer as the supported way
+for callers to ignore the result.
 
-This can be triggered via:
-
-  ext4_process_orphan() -> ext4_truncate() -> ext4_mark_inode_dirty()
-    -> ext4_try_to_expand_extra_isize()
-
-or:
-
-  ext4_evict_inode() -> ext4_mark_inode_dirty()
-    -> ext4_try_to_expand_extra_isize()
-
-Skip expansion when !SB_ACTIVE.  This is a minor loss of functionality
-(extra isize won't grow for these inodes during mount), which e2fsck
-can resolve later if needed.
-
-Reported-by: syzbot+5d19358d7eb30ffb0cc5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5d19358d7eb30ffb0cc5
-Fixes: c8585c6fcaf2 ("ext4: fix races between changing inode journal mode and ext4_writepages")
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260623061903.2148767-1-yun.zhou@windriver.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 2d76708c2221 ("platform/x86: acer-wmi: use WMI calls for platform profile handling")
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Link: https://patch.msgid.link/20260701164208.8998-1-alhouseenyousef@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/platform/x86/acer-wmi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 2fd18dd19eeff..e03c749772f38 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -6434,6 +6434,16 @@ static int ext4_try_to_expand_extra_isize(struct inode *inode,
- 	if (ext4_test_inode_state(inode, EXT4_STATE_NO_EXPAND))
- 		return -EOVERFLOW;
+diff --git a/drivers/platform/x86/acer-wmi.c b/drivers/platform/x86/acer-wmi.c
+index d848afc91f87d..55b1980313542 100644
+--- a/drivers/platform/x86/acer-wmi.c
++++ b/drivers/platform/x86/acer-wmi.c
+@@ -1530,7 +1530,9 @@ static int WMI_gaming_execute_u32_u64(u32 method_id, u32 in, u64 *out)
+ 		return -EIO;
  
-+	/*
-+	 * Skip expansion during mount (!SB_ACTIVE).  Expanding extra isize
-+	 * may move xattrs to external blocks and release ea_inodes via iput.
-+	 * When !SB_ACTIVE, iput triggers write_inode_now() which acquires
-+	 * s_writepages_rwsem, causing a deadlock with the caller's active
-+	 * jbd2 handle (lock order: s_writepages_rwsem -> jbd2_handle).
-+	 */
-+	if (unlikely(!(inode->i_sb->s_flags & SB_ACTIVE)))
-+		return -EBUSY;
-+
- 	/*
- 	 * In nojournal mode, we can immediately attempt to expand
- 	 * the inode.  When journaled, we first need to obtain extra
+ 	obj = result.pointer;
+-	if (obj && out) {
++	if (!obj && out) {
++		ret = -ENOMSG;
++	} else if (obj && out) {
+ 		switch (obj->type) {
+ 		case ACPI_TYPE_INTEGER:
+ 			*out = obj->integer.value;
 -- 
 2.53.0
 
