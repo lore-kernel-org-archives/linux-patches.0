@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D42309EEB;
-	Sat, 12 Sep 2026 16:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542BB2D5C68;
+	Sat, 12 Sep 2026 16:05:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229097; cv=none; b=N+du23qgzOSmZ09d/qyEa7Kf4jRinpcYojJ44DrID9YSWlthwWqAboHpjL8UO4T1fS2IXNufT1zNxo2TAIxcQ0pCEwnaeBDPCBkwhENiZMceTEviFsbJig3MhmX5OCXbxcP6sJu9tOFheOJQ7pznCKM2mN6oeX8Qmmx9qGgIggs=
+	t=1789229101; cv=none; b=M+ckTaM4wwAXxOf3XyloTtUq0g+/X2cTB5fD/bRnZ2+3kh1khbTGcj3GsJfAlETCIK7kvuk/ejRhz0sU42vR6gjPYNCyGsk5A/sR3IdlLto0bV+jvvX69VJeUQd1FONrmcRgkmkmOGUAvqnpUz5LSVNnk20DCP+QKBI8G4PjBds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229097; c=relaxed/simple;
-	bh=YY8HmSr5amw2d8OIhMCF1Lg+iqQ5Kwj3q1dkuOcC4Ww=;
+	s=arc-20240116; t=1789229101; c=relaxed/simple;
+	bh=yg/pbNmLei5SIp4DlID3MCMxZuxXgih2F44ezHw3Uyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T8Sqdt4Xgs14s0RM7f/84OzEQqI4UTfbiLIFoOU4wX7Otn++mIa97Z6lP7y73HL1mriYOCJ3aQ4U03P0iTeehbcurGkc+rMwEKdDkLyGv7HMjMIgRGN7pGnFKBo2fw0ew2ymUDIOfLm0Ac28H2xkYs0sujET8eygI5tnM3ioeb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3HFiTwB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B0w/E9hirgVJVE6Kg2I7vAi3gjiXHUP9DLEqWa2AGSAHjyb80ip92pF4iodmgzjhf8NI4HCovqME6F/QiFI2yGTPg9Kd3E+Xw+YamtL+vKw5QM2SSVzhXdQvBZXoIRAfzLkBq65MfFvBvpSUttAvswB3iEy9Gm9BOp0mxUJsFfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8eWqNb/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3HFiTwB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15851F000FF;
-	Sat, 12 Sep 2026 16:04:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8eWqNb/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B2761F000FF;
+	Sat, 12 Sep 2026 16:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229095;
-	bh=wORGrxugY4h9k+NVgHknZvlLBFZexkLHnYBn5AAERIE=;
+	s=korg; t=1789229100;
+	bh=m3ebSUkV+eCJzLswmV2/g+/Swf6LwO35QOmnok8fPVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D3HFiTwBhrcPPpM5jbuY/hUA3f6REHXRCRa3mbMyDQlICNTNxuayYv7Cymivyl2TE
-	 RSxFV/Nze7qzVpnj1B6WWVpNDFCVC0WwWCwkZDsgjYnejBD+rICmX6qh4cqxevJqwC
-	 s71ToAPneH/XC1ziRlSijDLzTSe23R8bQGuSkukw=
+	b=r8eWqNb/p6Go7ui+CZ/AUCbk0dOw5OV0V+HL1TlN8wv4K6tt3URFf+LN/YSjfFXkY
+	 t+NHzinn/7QAsClJ1PkzA6hsOJYztb4EXZY9BHV0vHdRhS5YKqRAdj4tCvZ58tD9bq
+	 NTDxysXFmPw1po8KzjkoebawNd8J05cY2LgsgzLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lothar Rubusch <l.rubusch@gmail.com>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0521/1191] crypto: atmel-sha204a - fix heap info leak on I2C transfer failure
-Date: Sat, 12 Sep 2026 08:54:09 +0200
-Message-ID: <20260912065559.951243747@linuxfoundation.org>
+Subject: [PATCH 6.1 0522/1191] crypto: sa2ul - stop probe if context pool creation fails
+Date: Sat, 12 Sep 2026 08:54:10 +0200
+Message-ID: <20260912065559.973367534@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,59 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lothar Rubusch <l.rubusch@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 72bbf11ba14bd7d5fbf31a1ec42fff608b657f74 ]
+[ Upstream commit d03f980a25853f6a380895119a572a3bb1194e8d ]
 
-The nonblocking RNG path allocates a work_data structure to track the
-state of an in-flight asynchronous I2C request. This pointer is stored
-in rng->priv and later consumed by the read path once the transaction
-completes.
+sa_ul_probe() calls sa_init_mem() to create the DMA pool used for
+security context buffers, but ignores its return value. If pool creation
+fails, probe still continues with DMA setup, algorithm registration and
+child population even though later request setup depends on that pool.
 
-If the underlying I2C transfer fails, the completion callback is invoked
-with a non-zero status. In this case, the allocated work_data is not
-usable for producing RNG output and must not remain associated with the
-hwrng state.
+Stop probing when sa_init_mem() fails, and route that failure to the PM
+cleanup path without attempting to destroy an uncreated DMA pool.
 
-Previously, the failure path only logged a warning but left the pointer
-state uncleared, which can result in subsequent read attempts observing
-stale state and interpreting it as valid completion data.
-
-Fix this by freeing the pending work_data. The I2C transaction reports
-an error. This ensures that failed requests do not leave residual state
-behind that could be interpreted as valid RNG data on later reads.
-Clearing rng->priv is done at the subsequent call to nonblocking read.
-
-Fixes: da001fb651b0 ("crypto: atmel-i2c - add support for SHA204A random number generator")
-Signed-off-by: Lothar Rubusch <l.rubusch@gmail.com>
-Assisted-by: Gemini:1.5 Pro [google]
-Reviewed-by: Thorsten Blum <thorsten.blum@linux.dev>
+Fixes: 7694b6ca649f ("crypto: sa2ul - Add crypto driver")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/atmel-sha204a.c | 6 +++++-
+ drivers/crypto/sa2ul.c | 6 +++++-
  1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/atmel-sha204a.c b/drivers/crypto/atmel-sha204a.c
-index bad6f3ed20569..93d0378586143 100644
---- a/drivers/crypto/atmel-sha204a.c
-+++ b/drivers/crypto/atmel-sha204a.c
-@@ -30,10 +30,14 @@ static void atmel_sha204a_rng_done(struct atmel_i2c_work_data *work_data,
- 	struct atmel_i2c_client_priv *i2c_priv = work_data->ctx;
- 	struct hwrng *rng = areq;
+diff --git a/drivers/crypto/sa2ul.c b/drivers/crypto/sa2ul.c
+index 2677062d33b8b..511c96cab83e8 100644
+--- a/drivers/crypto/sa2ul.c
++++ b/drivers/crypto/sa2ul.c
+@@ -2425,7 +2425,10 @@ static int sa_ul_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
  
--	if (status)
-+	if (status) {
- 		dev_warn_ratelimited(&i2c_priv->client->dev,
- 				     "i2c transaction failed (%d)\n",
- 				     status);
-+		kfree(work_data);
-+		atomic_dec(&i2c_priv->tfm_count);
-+		return;
-+	}
+-	sa_init_mem(dev_data);
++	ret = sa_init_mem(dev_data);
++	if (ret)
++		goto disable_pm;
++
+ 	ret = sa_dma_init(dev_data);
+ 	if (ret)
+ 		goto destroy_dma_pool;
+@@ -2460,6 +2463,7 @@ static int sa_ul_probe(struct platform_device *pdev)
+ destroy_dma_pool:
+ 	dma_pool_destroy(dev_data->sc_pool);
  
- 	rng->priv = (unsigned long)work_data;
- 	atomic_dec(&i2c_priv->tfm_count);
++disable_pm:
+ 	pm_runtime_put_sync(dev);
+ 	pm_runtime_disable(dev);
+ 
 -- 
 2.53.0
 
