@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B916335F61E;
-	Sat, 12 Sep 2026 07:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBC33C10A7;
+	Sat, 12 Sep 2026 07:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196968; cv=none; b=cywZnUB8KcQ6BwRlC3QbVPLdY/UyjFeaN+XarhvhJWpF6Q5eJugy2OY69r3W5Nc57MYv3jpPtI4m8UB352ILNOORJ/MtssLH6OpDvj8JoNKuFJytbHWTCNJXC40dcJcOBGC65kfuojTof7jHNPoscCHsCOGlu+DA/F2XaBp6QgI=
+	t=1789196973; cv=none; b=mDJ1dMogJ9I89QjTKYlc2NYKKUoEa9cTPQOqTCKdfLr7BwL5oLJhBORvBAlLk/nQacubrdgDUBraS4IY8KkJ0kg577ocVFqPNOwKJma9k9OyHtgUh7BOHEE0wjflnUur4atVR82bSCTE6r071RRVoxjNfM6lzo8h9LbL5V6Uub8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196968; c=relaxed/simple;
-	bh=HP9YRo5wSYK10FzZ9r6biH72Si0/wbm1NK2Fdlc1TUU=;
+	s=arc-20240116; t=1789196973; c=relaxed/simple;
+	bh=ZVcqFxzzn/lrXQGit6cFoef/XfJxIQ79ILAexPfF4UA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W7u2LwtZ15/YojNHMITEPKmOFmPH2sfmnJLrnawwKwMwEi6xzhYJEWrKfOs1UI6B0ILWkFTGJqWcSKgZJWbqc8OkQBYXW6FggFQyyFRInC6hMeMFexn/Ni2WRWK1t7UUPcYf47geWY4Wp25C137C4RlHIL0VDAuaMpOh5xpkZ3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SqclQjX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eEXMEO4drJ2nyp60tEi/dnU/sjvQheQqoDK2WrSS1LAiZQxDMPScHFB/buULFak8JSaCJ8TFcq3Pu5C9psgxrhsmI910QUYUGpW5Lpte7Tzhaza9ustBkixa1DkGSe/NI2oujYWZv2guj1hBw+VOREerE62cjmwuTxrY+uGOSFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jP3EL1LW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SqclQjX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEB11F000FF;
-	Sat, 12 Sep 2026 07:09:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jP3EL1LW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7EF1F000FF;
+	Sat, 12 Sep 2026 07:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196967;
-	bh=ekAoGbPEHN8/IWCXqCoy/E6Eaa00d4LvBR0IwtIIpDg=;
+	s=korg; t=1789196972;
+	bh=VJeOMAa+ZCh8pYESubPBnBDHsL/2cRHYzDJGowz8rr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2SqclQjX89E8HJ5Fva5OU8karTmOV7txmpEhZaJwrkq0EwSq7tOJeG0qmRedd2qRR
-	 HMjn1u7U+eBfedTEZ3mx/o2V/yllLDu1SvX6+iowbW4bIaAtZIVBzB0NRVwmPywOb3
-	 Q7iRM73kz1MkLukIfexUclWGL3JrykvspQkamq7k=
+	b=jP3EL1LW2R1A4/rPnbgUxbE9fdJuAh4ATBX9lE0aUiabNyKfRq5lpqesPlz+nBuro
+	 l2FQaScrGpcxxAYEtIE+W33cWKoaethPOqIqxcfE79DPd5if9PSRybyR5JJnftcwWz
+	 Q0BevkPP2UC/f4C4NHD+p+dI7bvMMhRziZidPe3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kaihengf@nvidia.com>,
-	Koba Ko <kobak@nvidia.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Richard Cheng <icheng@nvidia.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0073/1815] cxl/mbox: Clamp mailbox output allocation to the payload size
-Date: Sat, 12 Sep 2026 08:30:23 +0200
-Message-ID: <20260912065650.727342937@linuxfoundation.org>
+Subject: [PATCH 7.2 0074/1815] arm64: dts: imx94: Correct PCIe outbound address space configuration
+Date: Sat, 12 Sep 2026 08:30:24 +0200
+Message-ID: <20260912065650.751091853@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,50 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Cheng <icheng@nvidia.com>
+From: Richard Zhu <hongxing.zhu@nxp.com>
 
-[ Upstream commit 8a13db9f899d149c3aab24abcb668121cfda5a4f ]
+[ Upstream commit ffccbd6804e885f0fc23f0005f6bee7789a7a887 ]
 
-CXL_MEM_SEND_COMMAND bounds the user's in.size to the mailbox payload
-size but leaves out.size unbounded, then cxl_mbox_cmd_ctor() calls
-kvzalloc(out.size). A large out.size drives a huge allocation, above
-INT_MAX it WARNs and taints, and with panic_on_warn=1 it panics.
+Fix the PCIe outbound memory ranges for both pcie0 controllers on i.MX94.
 
-The transport __cxl_pci_mbox_send_cmd() already clamps the response copy
-to min(out.size, payload_size, device len), so the output buffer is
-never written beyond payload_size. Clamp the allocation to payload_size
-too, matching the RAW path.
+The memory window size was incorrectly set to 256MB during initial
+bring-up, but the hardware supports up to 4GB of outbound address space
+per controller.
 
-Fixes: 583fa5e71cae ("cxl/mem: Add basic IOCTL interface")
-Reviewed-by: Kai-Heng Feng <kaihengf@nvidia.com>
-Reviewed-by: Koba Ko <kobak@nvidia.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Richard Cheng <icheng@nvidia.com>
-Link: https://patch.msgid.link/20260624144147.53997-1-icheng@nvidia.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Additionally, the ECAM region cannot be mapped as I/O space. Use a
+memory-mapped region for I/O space instead, and relocate the 1MB I/O
+region to immediately follow the memory region at offset 0xf0000000
+within each window.
+
+Update the outbound address space layout per controller as follows:
+
+  - 3.5GB  64-bit prefetchable memory
+  - 256MB  32-bit non-prefetchable memory
+  - 1MB    I/O
+
+Fixes: 8cd439f17758 ("arm64: dts: imx94: Add pcie0 and pcie0-ep supports")
+Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/mbox.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ arch/arm64/boot/dts/freescale/imx94.dtsi | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-index 1fa1f78565e31..94b1f71675882 100644
---- a/drivers/cxl/core/mbox.c
-+++ b/drivers/cxl/core/mbox.c
-@@ -379,11 +379,7 @@ static int cxl_mbox_cmd_ctor(struct cxl_mbox_cmd *mbox_cmd,
- 		}
- 	}
- 
--	/* Prepare to handle a full payload for variable sized output */
--	if (out_size == CXL_VARIABLE_PAYLOAD)
--		mbox_cmd->size_out = cxl_mbox->payload_size;
--	else
--		mbox_cmd->size_out = out_size;
-+	mbox_cmd->size_out = min_t(size_t, out_size, cxl_mbox->payload_size);
- 
- 	if (mbox_cmd->size_out) {
- 		mbox_cmd->payload_out = kvzalloc(mbox_cmd->size_out, GFP_KERNEL);
+diff --git a/arch/arm64/boot/dts/freescale/imx94.dtsi b/arch/arm64/boot/dts/freescale/imx94.dtsi
+index a6cb5a6e848b3..1f9035e6cf159 100644
+--- a/arch/arm64/boot/dts/freescale/imx94.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx94.dtsi
+@@ -1374,8 +1374,9 @@ pcie0: pcie@4c300000 {
+ 			      <0 0x4c360000 0 0x10000>,
+ 			      <0 0x4c340000 0 0x4000>;
+ 			reg-names = "dbi", "config", "atu", "app";
+-			ranges = <0x81000000 0x0 0x00000000 0x0 0x6ff00000 0 0x00100000>,
+-				 <0x82000000 0x0 0x10000000 0x9 0x10000000 0 0x80000000>;
++			ranges = <0x43000000 0x9 0x00000000 0x9 0x00000000 0x0 0xe0000000>,
++				 <0x82000000 0x0 0xe0000000 0x9 0xe0000000 0x0 0x10000000>,
++				 <0x81000000 0x0 0x00000000 0x9 0xf0000000 0x0 0x00100000>;
+ 			#address-cells = <3>;
+ 			#size-cells = <2>;
+ 			device_type = "pci";
 -- 
 2.53.0
 
