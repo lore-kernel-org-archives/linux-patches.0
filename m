@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E5C2F531B;
-	Sat, 12 Sep 2026 12:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B8E479876;
+	Sat, 12 Sep 2026 12:09:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214994; cv=none; b=ij1CiM/oioRy5Ro2OXAG7GejoytS3IHIapejRd581aC9FgJk/bQ1CIL8VMW1pLStcH7VEr6V3PQ0B2uUXBIiRPM3IWocye2bDtPxiebTJczW97NxMbToGOGIzEUXwKfZsY5CEdXZ8ZJWQU5NtL84eY8NdNyf8TOPONKFFsxi/sg=
+	t=1789214999; cv=none; b=cbTXjHqJEz86bqkX12Jk1NG1xx1enh7qKYINgCjl1Tznk5rEIhrutlV6lEk60fPCqoPVR6JwD86PToBODmkyjGnm8WZbcJA7ZqD3Z2oBkwKf4/pss0QaMlLeDuiF0QJ6bSqZENhxg0wBC/FRK0x32qNGmbPt6LxmKYNu9sBvJeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214994; c=relaxed/simple;
-	bh=V3mKHUtFNJKRTjk5E1OnpXJuGboq2IGZ364DOQVTOhY=;
+	s=arc-20240116; t=1789214999; c=relaxed/simple;
+	bh=cvFk14BWbL+KSuSNqp4YRg+jotYqhlHa5SSQpIHBJhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GAyv5/MNEpjMi4K9UYxFhTbedvphkkqgb3wXKgdQPzk1at01suCJahKuvnoFhrctHQRIgY4A7TvxFWJZeMfx1ztzoORxbz5CRrbjRFnsdUJfkkLV94H4ml0YEVN1L2DB0bPV4H0bc3wt6tWXc3dSMRqGDDfogn2FgyFJcxW+jjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BBWesNJs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M6EBRFnfd2r9asp2yCmCaR7Wihlha6x/UyvE4PYq0rwq2rGUm0AOtTixDc6G5n6fzdUBuPNPjIvYp52JYpVkpZ/ob4DhHsjAcT+ZgAHMMlI+wB0ncSQuYO1SM8VwFXu32IzQYYaAhUuQgfOEDKiLFklATnGtVcN12zDKXeKDSUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YMgLmVJs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BBWesNJs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF3A1F000FF;
-	Sat, 12 Sep 2026 12:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YMgLmVJs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28921F000FF;
+	Sat, 12 Sep 2026 12:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214993;
-	bh=yfj0O29iGX1gEpzqd7QUFSncndnJ5rWkA2uLN77D3U4=;
+	s=korg; t=1789214997;
+	bh=ZFAjVuf43NPPJ1Dphu3Fd4dAySmN924NTjSYj/o5qLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BBWesNJsDZvQMjvfFhS8zVPyLX5elq0NLESMf+h3eCM/RqqfDP3CSJN8slh6Xd+xL
-	 M92SmH+N4W3U69cv5j+/TtogldXIbvoSWRYTp9+PrwpMT2Qr8DOnhT82EJvrbNpSCH
-	 jTLPDEe4cHB1M4D97jkw9QFSxO/KFnaNQDv54Ym0=
+	b=YMgLmVJsd2VsexoT6WxEPvvGIKy/qYatKtlzCyM+1fx3+suXmmVvOKTf5frhPAoac
+	 do12wOJZXK0ToWVJj5NAKF9w4kZuPURCsQhIv6wy26+EoBOGoGs4DalUDVwh07btHl
+	 CTTZLSCmv1H3FQAjKuP4cVmyyq/m1PUbdI0Gs78Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
+	Herman van Hazendonk <github.com@herrie.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0423/1376] greybus: audio: bound the topology section sizes against the fetched size
-Date: Sat, 12 Sep 2026 08:47:29 +0200
-Message-ID: <20260912065616.964209297@linuxfoundation.org>
+Subject: [PATCH 6.12 0441/1376] clk: qcom: gdsc: propagate gdsc_check_status() errors from gdsc_poll_status
+Date: Sat, 12 Sep 2026 08:47:47 +0200
+Message-ID: <20260912065617.362280340@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,54 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Herman van Hazendonk <github.com@herrie.org>
 
-[ Upstream commit 33d8c7b794d2a30637c9d3fcb478f1d3222bef1e ]
+[ Upstream commit d69f0c2b8d292b4890c9f0fbe184dfc26c4de86c ]
 
-gb_audio_gb_get_topology() fetches a topology blob of a module-supplied
-size, and gbaudio_tplg_parse_data() then walks it by adding the
-module-supplied size_dais, size_controls and size_widgets fields to
-form the control, widget and route section offsets. Those le32 sizes
-are never checked against the fetched blob, so a module reporting a
-small topology size but large section sizes makes the offsets point
-past the allocation, and parsing reads out of bounds.
+gdsc_check_status() returns negative errno when the underlying
+regmap_read() fails -- e.g. when a parent regmap dies during system
+suspend, a CSR is removed by an HW debug tool, or the bus controller
+goes into protection. gdsc_poll_status() treats the result as a plain
+boolean ("is the GDSC in the requested state?"), so any negative error
+return is truncated to "true" and the poll exits with success even
+though the rail's real state is unknown:
 
-Reject a topology whose section sizes do not fit within the fetched
-size before it is parsed.
+	do {
+		if (gdsc_check_status(sc, status))
+			return 0;
+	} while (ktime_us_delta(ktime_get(), start) < STATUS_POLL_TIMEOUT_US);
 
-Fixes: 184992e305f1 ("greybus: audio: Add Greybus Audio Device Class Protocol helper routines")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260616-b4-disp-4352e8b0-v1-1-3e09f62e0ad5@proton.me
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	if (gdsc_check_status(sc, status))
+		return 0;
+
+	return -ETIMEDOUT;
+
+This silently misleads gdsc_toggle_logic() (which writes/un-writes
+SW_COLLAPSE on the strength of the poll succeeding) and the gdsc_init()
+sync path (which assumes the readback represents real silicon state).
+
+Latch the return value, propagate negative errno immediately, and only
+treat a strictly-positive value as "reached the target state". Make the
+same change in the post-timeout final check so a regmap that comes back
+after the deadline does not silently degrade to -ETIMEDOUT.
+
+Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+Fixes: 77b1067a19b4 ("clk: qcom: gdsc: Add support for gdscs with gds hw controller")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260602140934.796697-2-github.com@herrie.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/audio_gb.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/clk/qcom/gdsc.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/greybus/audio_gb.c b/drivers/staging/greybus/audio_gb.c
-index 9d8994fdb41a2..144591f1a5128 100644
---- a/drivers/staging/greybus/audio_gb.c
-+++ b/drivers/staging/greybus/audio_gb.c
-@@ -37,6 +37,19 @@ int gb_audio_gb_get_topology(struct gb_connection *connection,
- 		return ret;
- 	}
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index 208fc430ec98f..c17aebb020706 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -103,14 +103,21 @@ static int gdsc_hwctrl(struct gdsc *sc, bool en)
+ static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
+ {
+ 	ktime_t start;
++	int ret;
  
-+	/*
-+	 * The size_* fields are supplied by the module and are used by
-+	 * gbaudio_tplg_parse_data() to compute offsets into the blob; make
-+	 * sure the sections fit within the fetched topology, so walking it
-+	 * cannot read out of bounds.
-+	 */
-+	if ((u64)le32_to_cpu(topo->size_dais) + le32_to_cpu(topo->size_controls) +
-+	    le32_to_cpu(topo->size_widgets) + le32_to_cpu(topo->size_routes) >
-+	    size - sizeof(*topo)) {
-+		kfree(topo);
-+		return -EINVAL;
-+	}
-+
- 	*topology = topo;
+ 	start = ktime_get();
+ 	do {
+-		if (gdsc_check_status(sc, status))
++		ret = gdsc_check_status(sc, status);
++		if (ret < 0)
++			return ret;
++		if (ret)
+ 			return 0;
+ 	} while (ktime_us_delta(ktime_get(), start) < STATUS_POLL_TIMEOUT_US);
  
- 	return 0;
+-	if (gdsc_check_status(sc, status))
++	ret = gdsc_check_status(sc, status);
++	if (ret < 0)
++		return ret;
++	if (ret)
+ 		return 0;
+ 
+ 	return -ETIMEDOUT;
 -- 
 2.53.0
 
