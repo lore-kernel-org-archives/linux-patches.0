@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4373345EA2;
-	Sat, 12 Sep 2026 16:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6187A32B125;
+	Sat, 12 Sep 2026 16:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230352; cv=none; b=RoxL7ZFW6XeRkteoaIi4QlK9nAt0OfwsY3nc6nSqnA9A1bjSqTkfQpyn2AfT2XI7nt7Gg968I4iyZedztEt6yKMGTdEdhtSi+cBWEA5PWq2ULk5hOL7jAM/WpMreC+8m3SeUwWMrRp2ojpjV06wR0Fa6swnJIvpbqUKp/0RWa0k=
+	t=1789230357; cv=none; b=JpiIIH9HMIxa4+V27Rq+H7qTYWa8abuGnina8UDAsdhhY+g7DRWmj5Zi2szsrnZlfTlMcu7V4avuNUgiIOBaYoI2l3OJJuXpvKrBajtb4vNld02RA500Yt0ATjbtuSowb3EyHLOA3+65Yg/5KXRB+FlCeYrnzHkhjEN2vDs1Pqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230352; c=relaxed/simple;
-	bh=6Jo5K6Nb/hg4tlvBU6S9AhSNYyoyBTY3ir1NkPzAxyE=;
+	s=arc-20240116; t=1789230357; c=relaxed/simple;
+	bh=lT+4YDxtw0evGCBacg9AMlAXFNl/0U27WsGuvNQSnlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b6P2O0n9hxeoEQpwJ4wBKujnWPCtN8yPS3n56I/JeNRozDsTmlT2veTaya0ry0jZwNntYq23JqT9fWb6nhb19KHBjASXmJHlYu4qIPFk1q8cTJACT7ahax39WhOj+MsC+US58lpzRrevYJjcmq2+2JUkLVxDRdcYeSyc97U8FEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I39BFdc2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oDRPIu0J6OqFgLaES0uTzq4sbf/mTTzQLtJ4PVWOMxNZn+3zMw/GRR+xtm8BWs4oVIVG7conYaJMDldq3BstsgPNL1I1LYEuRm8rSZeKFxneIkpTj3MonaYyfwnfjWEaXtXablvOjVYQzMq3Tjk15sRQt3xKW+Z5XeXk9Sy+2es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=stKO0xwy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I39BFdc2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE301F000FF;
-	Sat, 12 Sep 2026 16:25:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="stKO0xwy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E5F1F000FF;
+	Sat, 12 Sep 2026 16:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230351;
-	bh=btnSsQiTrDtdYZhbE83wNseKaSwJyhgCCf3rgxbumEQ=;
+	s=korg; t=1789230356;
+	bh=HOcj4C6NefObCTV1glgf7471eKdYM2mnD4YPYALnA08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I39BFdc2IJTznt8NtpaZf1J0FbFndokAKDEHRRxIV2uWe2L/n/vz+CL1CijLlj9XY
-	 7HRnteXHLnRK70+zBMsyqXjXHWT9+1f8yQwfNE4Q74xDBavbF5EmMtAlXWfOCjNteL
-	 ruOuEN0vt9pyOcAFaWykkSjoOKzR0/6SVUuRc5Xc=
+	b=stKO0xwyBEEr9+NAmx4EUc96JxOsZEzPkRW9SDGBBQc0ChpxAmoGdGQ3UCf+cpkOm
+	 5eYuaeZf0NYbgIN4FLGvPrBJS8JwNXLpQNgW8LeyMz+MBfJWOx168LrTQA0LNAeZ7Y
+	 JwAbepO+MWWM4WZd2ZOjCMOskYzreWyAOL6U+DIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	syzbot+cae54346a70bbceeff2c@syzkaller.appspotmail.com,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0775/1191] arm64: dts: qcom: sdm845: Fix the PCIe iommu-map entries
-Date: Sat, 12 Sep 2026 08:58:23 +0200
-Message-ID: <20260912065605.683136830@linuxfoundation.org>
+Subject: [PATCH 6.1 0740/1191] nilfs2: fix infinite loop in nilfs_clean_segments()
+Date: Sat, 12 Sep 2026 08:57:48 +0200
+Message-ID: <20260912065604.903337216@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,112 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Joshua Crofts <joshua.crofts1@gmail.com>
 
-[ Upstream commit deaea7e982bc353c8d3c406774970f16ed901adb ]
+[ Upstream commit ce5a5ad1a8330a2fcfdd9ec2ab341be739e89a18 ]
 
-The IOMMU provider apps_smmu uses '#iommu-cells = <2>', but the PCIe
-iommu-map entries specify only one cell for the SID, omitting the SID
-mask. This went unnoticed until the OF core started warning with commit
-ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps"):
+syzbot reported a hung task in nilfs_transaction_begin(). This occurs
+because the cleaner ioctl falls into an infinite loop if
+nilfs_segctor_construct() repeatedly returns -EROFS (e.g. the device
+is remounted as read-only after an I/O error).
 
-  iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
+Currently in nilfs_clean_segments(), if err is non-zero, it logs the
+error and sleeps but doesn't abort when it encounters a terminal error
+like -EROFS. This causes the thread to loop forever.
 
-So fix the entries to match the provider's '#iommu-cells' property.
+Fix this by breaking out of the loop if nilfs_segctor_construct()
+returns -EROFS. This matches the behaviour in
+nilfs_segctor_write_out(), which also handles -EROFS.
 
-Fixes: 5c538e09cb19 ("arm64: dts: qcom: sdm845: Add first PCIe controller and PHY")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260730-iommu-map-fix-v1-5-83405d37ba41@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Reported-by: syzbot+cae54346a70bbceeff2c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cae54346a70bbceeff2c
+Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
+Assisted-by: gemini:gemini-3.1-pro
+Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 64 ++++++++++++++--------------
- 1 file changed, 32 insertions(+), 32 deletions(-)
+ fs/nilfs2/segment.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 71d2ecbec22b0..10b0956f48c20 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2254,22 +2254,22 @@ pcie0: pci@1c00000 {
- 				      "slave_q2a",
- 				      "tbu";
+diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
+index 12e55e9c698a9..a412abdfbbf3e 100644
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2552,6 +2552,10 @@ int nilfs_clean_segments(struct super_block *sb, struct nilfs_argv *argv,
+ 			break;
  
--			iommu-map = <0x0   &apps_smmu 0x1c10 0x1>,
--				    <0x100 &apps_smmu 0x1c11 0x1>,
--				    <0x200 &apps_smmu 0x1c12 0x1>,
--				    <0x300 &apps_smmu 0x1c13 0x1>,
--				    <0x400 &apps_smmu 0x1c14 0x1>,
--				    <0x500 &apps_smmu 0x1c15 0x1>,
--				    <0x600 &apps_smmu 0x1c16 0x1>,
--				    <0x700 &apps_smmu 0x1c17 0x1>,
--				    <0x800 &apps_smmu 0x1c18 0x1>,
--				    <0x900 &apps_smmu 0x1c19 0x1>,
--				    <0xa00 &apps_smmu 0x1c1a 0x1>,
--				    <0xb00 &apps_smmu 0x1c1b 0x1>,
--				    <0xc00 &apps_smmu 0x1c1c 0x1>,
--				    <0xd00 &apps_smmu 0x1c1d 0x1>,
--				    <0xe00 &apps_smmu 0x1c1e 0x1>,
--				    <0xf00 &apps_smmu 0x1c1f 0x1>;
-+			iommu-map = <0x0   &apps_smmu 0x1c10 0x0 0x1>,
-+				    <0x100 &apps_smmu 0x1c11 0x0 0x1>,
-+				    <0x200 &apps_smmu 0x1c12 0x0 0x1>,
-+				    <0x300 &apps_smmu 0x1c13 0x0 0x1>,
-+				    <0x400 &apps_smmu 0x1c14 0x0 0x1>,
-+				    <0x500 &apps_smmu 0x1c15 0x0 0x1>,
-+				    <0x600 &apps_smmu 0x1c16 0x0 0x1>,
-+				    <0x700 &apps_smmu 0x1c17 0x0 0x1>,
-+				    <0x800 &apps_smmu 0x1c18 0x0 0x1>,
-+				    <0x900 &apps_smmu 0x1c19 0x0 0x1>,
-+				    <0xa00 &apps_smmu 0x1c1a 0x0 0x1>,
-+				    <0xb00 &apps_smmu 0x1c1b 0x0 0x1>,
-+				    <0xc00 &apps_smmu 0x1c1c 0x0 0x1>,
-+				    <0xd00 &apps_smmu 0x1c1d 0x0 0x1>,
-+				    <0xe00 &apps_smmu 0x1c1e 0x0 0x1>,
-+				    <0xf00 &apps_smmu 0x1c1f 0x0 0x1>;
- 
- 			resets = <&gcc GCC_PCIE_0_BCR>;
- 			reset-names = "pci";
-@@ -2363,22 +2363,22 @@ pcie1: pci@1c08000 {
- 			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
- 			assigned-clock-rates = <19200000>;
- 
--			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
--				    <0x100 &apps_smmu 0x1c01 0x1>,
--				    <0x200 &apps_smmu 0x1c02 0x1>,
--				    <0x300 &apps_smmu 0x1c03 0x1>,
--				    <0x400 &apps_smmu 0x1c04 0x1>,
--				    <0x500 &apps_smmu 0x1c05 0x1>,
--				    <0x600 &apps_smmu 0x1c06 0x1>,
--				    <0x700 &apps_smmu 0x1c07 0x1>,
--				    <0x800 &apps_smmu 0x1c08 0x1>,
--				    <0x900 &apps_smmu 0x1c09 0x1>,
--				    <0xa00 &apps_smmu 0x1c0a 0x1>,
--				    <0xb00 &apps_smmu 0x1c0b 0x1>,
--				    <0xc00 &apps_smmu 0x1c0c 0x1>,
--				    <0xd00 &apps_smmu 0x1c0d 0x1>,
--				    <0xe00 &apps_smmu 0x1c0e 0x1>,
--				    <0xf00 &apps_smmu 0x1c0f 0x1>;
-+			iommu-map = <0x0   &apps_smmu 0x1c00 0x0 0x1>,
-+				    <0x100 &apps_smmu 0x1c01 0x0 0x1>,
-+				    <0x200 &apps_smmu 0x1c02 0x0 0x1>,
-+				    <0x300 &apps_smmu 0x1c03 0x0 0x1>,
-+				    <0x400 &apps_smmu 0x1c04 0x0 0x1>,
-+				    <0x500 &apps_smmu 0x1c05 0x0 0x1>,
-+				    <0x600 &apps_smmu 0x1c06 0x0 0x1>,
-+				    <0x700 &apps_smmu 0x1c07 0x0 0x1>,
-+				    <0x800 &apps_smmu 0x1c08 0x0 0x1>,
-+				    <0x900 &apps_smmu 0x1c09 0x0 0x1>,
-+				    <0xa00 &apps_smmu 0x1c0a 0x0 0x1>,
-+				    <0xb00 &apps_smmu 0x1c0b 0x0 0x1>,
-+				    <0xc00 &apps_smmu 0x1c0c 0x0 0x1>,
-+				    <0xd00 &apps_smmu 0x1c0d 0x0 0x1>,
-+				    <0xe00 &apps_smmu 0x1c0e 0x0 0x1>,
-+				    <0xf00 &apps_smmu 0x1c0f 0x0 0x1>;
- 
- 			resets = <&gcc GCC_PCIE_1_BCR>;
- 			reset-names = "pci";
+ 		nilfs_warn(sb, "error %d cleaning segments", err);
++
++		if (unlikely(err == -EROFS))
++			goto out_unlock;
++
+ 		set_current_state(TASK_INTERRUPTIBLE);
+ 		schedule_timeout(sci->sc_interval);
+ 	}
 -- 
 2.53.0
 
