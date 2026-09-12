@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03E83ABD96;
-	Sat, 12 Sep 2026 20:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79F13AA9F4;
+	Sat, 12 Sep 2026 20:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243487; cv=none; b=aRUGLqWq91ATTKYI4iX+H23hCemml+mJAiJYrHmyUb0wd+Xuj80J3mxqZfCwCLDklnQt3fE719V99Npr7I3Qq1mwH+8dxV1LECin9g2k3XMTie5V6zCzpGw3cH0HmeH2QAgKMzN7HWHcxGClzkqJmswPA2KKQkcIuHdM44qATCk=
+	t=1789243497; cv=none; b=EoaHAgdTr5fDoEmHALzDCdU5CJiME91wAbtT8QdwO4YsEgc6RHoly2PKgHVUBNU8BKRaLVDqX2xD2CuCXYg1aBD51oUcIeAb7VRxuMcjyfdqNQl3VOXHCaZ3z7XLu4iJznOcQE6rSYfYcCtWG0pmgkpDqqxPNkdCVc8ztvI1BdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243487; c=relaxed/simple;
-	bh=+tVI98R5QDKbQFVW2Gy7yJIaRyAJf16jEz4JOh2CICQ=;
+	s=arc-20240116; t=1789243497; c=relaxed/simple;
+	bh=ip0WpeZM5N7ijkwstWMSXhKv/TNHkgT/+yhT5aKkUv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ag/cWppkDSK7oS6U9z5s/4xuI6bl8Cd6FirxizaDuqm37NrOox4HTAtQl3A80aFBMWF/jjNoAMaurzHYZUPubJe1TBkKUv7eD7XjCCRAtQzcCp29nLlYmhI1MLaO1+Jmlg+QRj4ObX4hCuW65znzNAwjRro8JkNY9MHhSt3+d3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwq0XFeV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ex0lYOWJTU3MRE3YO0gY1lLH4LCpFVkIUa3pz/PpkjM1CGBqqu3k4iVZ60Pou49mHyD3VLp1JuU92UmyNHwr48Vns15GxRQtvbUWGZ5vWzU1NwJl70m/lxUvVoUeTnqvtlZqpfShS4QbXFlZ2Gb0oAlA3gCgKZFGqMPq2tI6qXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6Jc+GEd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwq0XFeV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BFCD1F0089B;
-	Sat, 12 Sep 2026 20:04:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6Jc+GEd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C171F00899;
+	Sat, 12 Sep 2026 20:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243481;
-	bh=c0Dbkt5cOs2mqRZDjhEz/oXXbYYlM9fBUzMvCesInC8=;
+	s=korg; t=1789243484;
+	bh=p528EdbLxh+REdXe0NEgW35ThEsNlAeR6utX1JD7NAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wwq0XFeVwXmD/u+V/62v38HWd83C3Qw7NioKroJNFgqDOzmD0N/XQ9bNwN9JQaQN7
-	 +jON7IyhEOtc0rsb3LC5dJf/uQ5BJlNbvQzp9U/OcPYNwe7apIHnZBTsZ3K4t4cikl
-	 bDsF7tyARznFAEWhExqsenOb8+f6P/S9MFitT+Z8=
+	b=d6Jc+GEduBUdStnGAI6bZjMlYp22HBMDKDoiA1CGseKPaFFZTl7w5Azf8eccKAaQ0
+	 Q8AzaAoWgp2rWXKYGl2OZGifBCYgf7t8ZdYAvl8enWyw0Mpa8h4EvJATzbOKrYCTMi
+	 l9SphAdO8Rp4DvidtUyyS+beT4I/gm+4LPRr7rFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+faed97c4ed43bfe7fee5@syzkaller.appspotmail.com,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 743/798] net/smc: free pending qentry in smc_llc_flow_stop() before memset
-Date: Sat, 12 Sep 2026 09:06:11 +0200
-Message-ID: <20260912065534.103441046@linuxfoundation.org>
+Subject: [PATCH 5.10 770/798] apparmor: policy_int make sure list heads are initialized before fail path
+Date: Sat, 12 Sep 2026 09:06:38 +0200
+Message-ID: <20260912065534.716422463@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,53 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahanta Jambigi <mjambigi@linux.ibm.com>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit 5ee0ceddc7785c6dcf4a8107fef01f0414a354f4 ]
+[ Upstream commit 3daad923a8685adb66087e0d819559b7eb6ba975 ]
 
-smc_llc_flow_stop() resets a flow struct with a blind memset:
+If profile create fails before policy_init is complete the list heads
+are not properly initialized causing profile_free() sanity checks to
+trigger the following splat.
 
-	spin_lock_bh(&lgr->llc_flow_lock);
-	memset(flow, 0, sizeof(*flow));
-	flow->type = SMC_LLC_FLOW_NONE;
-	spin_unlock_bh(&lgr->llc_flow_lock);
+AppArmor WARN aa_policy_destroy: (((!list_empty(&policy->profiles) && (&policy->profiles)->prev != ((void *) 0x122 + (0xdead000000000000UL))))):
+WARNING: security/apparmor/lib.c:509 at aa_policy_destroy+0x164/0x1b0 security/apparmor/lib.c:509, CPU#0: syz.0.17/5541
+Modules linked in:
+CPU: 0 UID: 0 PID: 5541 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:aa_policy_destroy+0x16b/0x1b0 security/apparmor/lib.c:509
+Code: 85 ed 7e 4d e8 96 bc 37 fd 5b 41 5c 41 5e 41 5f 5d e9 19 27 4e 07 cc e8 83 bc 37 fd 48 8d 3d 0c f0 d3 0b 48 c7 c6 a4 eb 38 8e <67> 48 0f b9 3a e9 04 ff ff ff e8 66 bc 37 fd 48 8d 3d ff ef d3 0b
+RSP: 0018:ffffc9000345eaa0 EFLAGS: 00010293
+RAX: ffffffff848f530d RBX: ffff88803f734800 RCX: ffff88801af2a580
+RDX: 0000000000000000 RSI: ffffffff8e38eba4 RDI: ffffffff90634320
+RBP: 0000000000000000 R08: 0000000000000cc0 R09: 00000000ffffffff
+R10: dffffc0000000000 R11: fffffbfff1d95913 R12: dead000000000122
+R13: ffff88803f734800 R14: ffff88803f734828 R15: dffffc0000000000
+FS:  00007f5f6a1836c0(0000) GS:ffff88808c519000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000055d02407b048 CR3: 0000000012aa9000 CR4: 0000000000352ef0
+Call Trace:
+ <TASK>
+ aa_free_profile+0x9d/0x9f0 security/apparmor/policy.c:334
+ aa_alloc_profile+0x1e4/0x3e0 security/apparmor/policy.c:416
+ unpack_profile security/apparmor/policy_unpack.c:1153 [inline]
+ aa_unpack+0x17db/0x7430 security/apparmor/policy_unpack.c:1748
+ aa_replace_profiles+0x226/0x2a20 security/apparmor/policy.c:1183
+ policy_update+0x234/0x4a0 security/apparmor/apparmorfs.c:505
+ profile_load+0x1cb/0x320 security/apparmor/apparmorfs.c:522
+ vfs_write+0x296/0xba0 fs/read_write.c:685
+ ksys_write+0x150/0x270 fs/read_write.c:739
+ do_syscall_x64 arch/x86/entry/syscall_64.c:61 [inline]
+ do_syscall_64+0x166/0x520 arch/x86/entry/syscall_64.c:84
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f5f6939e0d9
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f5f6a183028 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 00007f5f69625fa0 RCX: 00007f5f6939e0d9
+RDX: 0000000000000041 RSI: 0000200000000400 RDI: 0000000000000003
+RBP: 00007f5f6a183090 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
+R13: 00007f5f69626038 R14: 00007f5f69625fa0 R15: 00007ffe23725c18
 
-If flow->qentry is non-NULL at this point the pointer is overwritten without the
-allocation being freed, leaking one kmalloc object.
-
-A late-arriving duplicate CONFIRM_LINK or ADD_LINK_CONT message can set
-flow->qentry after the legitimate message has been consumed by the waiter via
-smc_llc_flow_qentry_clr() (which NULLs the pointer but leaves flow->type
-non-zero) but before the flow completes and smc_llc_flow_stop() runs.  In that
-window the duplicate is stashed into flow->qentry, and then lost when
-smc_llc_flow_stop() zeros the struct.
-
-Call smc_llc_flow_qentry_del() inside the lock before the memset.
-smc_llc_flow_qentry_del() already checks flow->qentry before freeing, so the
-normal case where no entry is pending is a no-op.
-
-Fixes: 555da9af827d ("net/smc: add event-based llc_flow framework")
-Reviewed-by: Hidayath Khan <hidayath@linux.ibm.com>
-Signed-off-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Link: https://patch.msgid.link/20260818073943.1108383-1-mjambigi@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+faed97c4ed43bfe7fee5@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=faed97c4ed43bfe7fee5
+Fixes: fe6bb31f590c9 ("apparmor: split out shared policy_XXX fns to lib")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_llc.c | 1 +
- 1 file changed, 1 insertion(+)
+ security/apparmor/lib.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/smc/smc_llc.c b/net/smc/smc_llc.c
-index 572d02bfd3eda..e4d2abec8ec86 100644
---- a/net/smc/smc_llc.c
-+++ b/net/smc/smc_llc.c
-@@ -276,6 +276,7 @@ int smc_llc_flow_initiate(struct smc_link_group *lgr,
- void smc_llc_flow_stop(struct smc_link_group *lgr, struct smc_llc_flow *flow)
- {
- 	spin_lock_bh(&lgr->llc_flow_lock);
-+	smc_llc_flow_qentry_del(flow);
- 	memset(flow, 0, sizeof(*flow));
- 	flow->type = SMC_LLC_FLOW_NONE;
- 	spin_unlock_bh(&lgr->llc_flow_lock);
+diff --git a/security/apparmor/lib.c b/security/apparmor/lib.c
+index d393c96d732dc..a7510d14df4da 100644
+--- a/security/apparmor/lib.c
++++ b/security/apparmor/lib.c
+@@ -491,6 +491,8 @@ bool aa_policy_init(struct aa_policy *policy, const char *prefix,
+ 	char *hname;
+ 	size_t hname_sz;
+ 
++	INIT_LIST_HEAD(&policy->list);
++	INIT_LIST_HEAD(&policy->profiles);
+ 	hname_sz = (prefix ? strlen(prefix) + 2 : 0) + strlen(name) + 1;
+ 	/* freed by policy_free */
+ 	hname = aa_str_alloc(hname_sz, gfp);
+@@ -503,8 +505,6 @@ bool aa_policy_init(struct aa_policy *policy, const char *prefix,
+ 	policy->hname = hname;
+ 	/* base.name is a substring of fqname */
+ 	policy->name = basename(policy->hname);
+-	INIT_LIST_HEAD(&policy->list);
+-	INIT_LIST_HEAD(&policy->profiles);
+ 
+ 	return true;
+ }
 -- 
 2.53.0
 
