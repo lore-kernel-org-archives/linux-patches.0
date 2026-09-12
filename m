@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031CE3793CA;
-	Sat, 12 Sep 2026 18:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98DE486418;
+	Sat, 12 Sep 2026 18:23:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237435; cv=none; b=d+XZ/jwmxqECQVS/yZ+RdM+ghJZwGnMJ8d2wScixS6dsyTnbUYOxBYq5iIkkIEjT+6JZpGaevcqGarksNfnKZU91To01JsrxY2X72SDFbBk3EaaZqerFKAxLSVVirNCueiN2LXib6leck9NuyavqJDfGQTw1Uu15MFRe5OZBPjg=
+	t=1789237440; cv=none; b=jooCMprFHU2Xn8VbPg9wAfNS4RVDsET06/4IL8f+O6UynwcORU7q0ykErlLUB4tFtlk6YDXQC3g84Gykb6GbmWUtdk2TgQvgcXpplklp4mdjWK2zpno5IH80i5nF3AjowYIQLvi4WJv84XNIzFUtK+dBS9jW6QvcG7tnt+pPyM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237435; c=relaxed/simple;
-	bh=yYA0b1uccpi2gefUcfmhO/ddRJ9UhGs+267ytqUSXVI=;
+	s=arc-20240116; t=1789237440; c=relaxed/simple;
+	bh=zd3XDKztDvilPsY0F+eejGKjA+bO4bZFtEozg/Igu90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aSeX5VAQiuq+y3/LMtX8PsTDbCjPVx9ri42G8FqwBqdRZdknwa4kYXQgG54QaTyLUOeUQgWFjJjUo4/+NIugTUd8biUaRodTz4d/V1VSznqopc/OspNNRJx0Ra10r4EdF8m94ZtaVoX4CQ3aQ7EuDza5qcH3gwOfKnhijKJq+P4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5dS2uvi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q2DCblhXZkrIa5XAFlaH8F0wnfbRMnr1CLQD1WWeKaAoWN0tut2Wz8yqV3rZO+M7MhpRoyNOX5K+CLsKOAcSYNMwplhpOVOCO94+34ZLRJ39F5zsebuJPbbR/DudBvosaRGAEPVjmzhILqUs4VaVtbypq3bOei5S9ZiAXVC0OrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9zwvPVE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5dS2uvi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06061F000FF;
-	Sat, 12 Sep 2026 18:23:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9zwvPVE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D291F000FF;
+	Sat, 12 Sep 2026 18:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237433;
-	bh=vdvwAnS95taL8NVDoSQ0ta7m5PtfdU7Fxd7UNM3foTE=;
+	s=korg; t=1789237438;
+	bh=nFe0shlSJpn7VwcdC+a2pjp131cVysRPvqbMwa/FiVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X5dS2uviIJPevD/Sr1lZVf2Uyfxc5e8lL7rmWp/yxUZGMsSTuf4iJ3fcVftjU42Q5
-	 uixUaLJpJZZSHyereayunS+JAJWrQ0AQ4VAq6abCkzetz33O6ZMlTAX4E+GVE0bPgZ
-	 ydlSzqwEOd9beUTAnSFZVrPSRve2ZvkaZEvBx5WQ=
+	b=u9zwvPVEiyQz7DjRV/jPxTfaTuJKH3oq4czVOJTOww6CJTP+cW9HYLF3o51BRJOOl
+	 s+u9YQfkwoXo8/KF8ffpgctFDfj8A7PzmVAyNa1Bk2Thl3rRCbYbZ+KxRJN5jSiISo
+	 /PC4K+iQkzCnJc4uxog6zsUWVj2LJ+Kg+pP7PCwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5ebeb3089ea6439c37be@syzkaller.appspotmail.com,
-	Bradley Morgan <brads@mainlining.org>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 5.15 256/935] ima: Check for ERR_PTR from dentry_path() in validate_hash_algo()
-Date: Sat, 12 Sep 2026 08:54:46 +0200
-Message-ID: <20260912065532.699136554@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Miguel Garcia <miguelgarciaroman8@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 257/935] Input: aiptek - validate raw macro indices before updating state
+Date: Sat, 12 Sep 2026 08:54:47 +0200
+Message-ID: <20260912065532.723320343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,47 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <brads@mainlining.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 8861f6d5c0678a7c5089c7b272509fc5931b8437 upstream.
+[ Upstream commit 95dffe32a66cbed07fbfa7afed39d56d5014e04f ]
 
-dentry_path() returns ERR_PTR(-ENAMETOOLONG) when the path exceeds the
-buffer. validate_hash_algo() passes the result straight to
-integrity_audit_msg() without checking. ERR_PTR is not NULL, so
-integrity_audit_message() sees a valid pointer and calls strlen() on
-it, which faults:
+aiptek_irq() derives macro key indices directly from tablet reports and
+then uses them to index macroKeyEvents[]. Report types 4 and 5 also save
+the derived value in aiptek->lastMacro and later use that state to
+release the previous key.
 
-    BUG: unable to handle page fault for address: ffffffffffffffdc
-    RIP: 0010:strlen+0x30/0xa0
-    Call Trace:
-     audit_log_untrustedstring+0x19/0x30
-     integrity_audit_message+0x366/0x4f0
-     ima_inode_setxattr+0x512/0x5f0
+Validate the raw macro index once before it enters that state machine, so
+lastMacro only ever stores an in-range macro key. Keep direct bounds
+checks for report type 6, which reads the macro number from the packet
+body and uses it immediately.
 
-Check for IS_ERR() and use NULL instead, which makes the audit message
-skip the name= field instead of crashing.
-
-Fixes: 4f2946aa0c45 ("IMA: introduce a new policy option func=SETXATTR_CHECK")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+5ebeb3089ea6439c37be@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/6a8f89e5.1d9ded08.62e62.00bf.GAE@google.com/
-Signed-off-by: Bradley Morgan <brads@mainlining.org>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260329001711.88076-1-pengpeng@iscas.ac.cn
+[dtor: fix macro fallback in report 5s to use -1]
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Miguel Garcia <miguelgarciaroman8@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/ima_appraise.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/input/tablet/aiptek.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/security/integrity/ima/ima_appraise.c
-+++ b/security/integrity/ima/ima_appraise.c
-@@ -634,6 +634,8 @@ static int validate_hash_algo(struct den
- 		return -EACCES;
+diff --git a/drivers/input/tablet/aiptek.c b/drivers/input/tablet/aiptek.c
+index 1581f6ef09279..64113810e16dc 100644
+--- a/drivers/input/tablet/aiptek.c
++++ b/drivers/input/tablet/aiptek.c
+@@ -658,6 +658,8 @@ static void aiptek_irq(struct urb *urb)
+ 		pck = (data[1] & aiptek->curSetting.stylusButtonUpper) != 0 ? 1 : 0;
  
- 	path = dentry_path(dentry, pathbuf, PATH_MAX);
-+	if (IS_ERR(path))
-+		path = NULL;
+ 		macro = dv && p && tip && !(data[3] & 1) ? (data[3] >> 1) : -1;
++		if (macro >= ARRAY_SIZE(macroKeyEvents))
++			macro = -1;
+ 		z = get_unaligned_le16(data + 4);
  
- 	integrity_audit_msg(AUDIT_INTEGRITY_DATA, d_inode(dentry), path,
- 			    "set_data", errmsg, -EACCES, 0);
+ 		if (dv) {
+@@ -699,7 +701,9 @@ static void aiptek_irq(struct urb *urb)
+ 		left = (data[1]& aiptek->curSetting.mouseButtonLeft) != 0 ? 1 : 0;
+ 		right = (data[1] & aiptek->curSetting.mouseButtonRight) != 0 ? 1 : 0;
+ 		middle = (data[1] & aiptek->curSetting.mouseButtonMiddle) != 0 ? 1 : 0;
+-		macro = dv && p && left && !(data[3] & 1) ? (data[3] >> 1) : 0;
++		macro = dv && p && left && !(data[3] & 1) ? (data[3] >> 1) : -1;
++		if (macro >= ARRAY_SIZE(macroKeyEvents))
++			macro = -1;
+ 
+ 		if (dv) {
+ 		        /* If the selected tool changed, reset the old
+@@ -737,11 +741,11 @@ static void aiptek_irq(struct urb *urb)
+ 	 */
+ 	else if (data[0] == 6) {
+ 		macro = get_unaligned_le16(data + 1);
+-		if (macro > 0) {
++		if (macro > 0 && macro - 1 < ARRAY_SIZE(macroKeyEvents)) {
+ 			input_report_key(inputdev, macroKeyEvents[macro - 1],
+ 					 0);
+ 		}
+-		if (macro < 25) {
++		if (macro + 1 < ARRAY_SIZE(macroKeyEvents)) {
+ 			input_report_key(inputdev, macroKeyEvents[macro + 1],
+ 					 0);
+ 		}
+@@ -760,7 +764,8 @@ static void aiptek_irq(struct urb *urb)
+ 				aiptek->curSetting.toolMode;
+ 		}
+ 
+-		input_report_key(inputdev, macroKeyEvents[macro], 1);
++		if (macro < ARRAY_SIZE(macroKeyEvents))
++			input_report_key(inputdev, macroKeyEvents[macro], 1);
+ 		input_report_abs(inputdev, ABS_MISC,
+ 				 1 | AIPTEK_REPORT_TOOL_UNKNOWN);
+ 		input_sync(inputdev);
+-- 
+2.53.0
+
 
 
