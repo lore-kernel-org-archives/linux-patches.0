@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDBF2C1586;
-	Sat, 12 Sep 2026 11:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2F04BEE32;
+	Sat, 12 Sep 2026 11:18:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211894; cv=none; b=pc7FpL0XT0zmqC5PmGNC2kDLETGkTi+9K66EaPQG25sS75CxT7WCkqLrX1QJVOzisTL9+M71bjzp+DpLiK8waDhVOv/ZMMiZ61hkpwhv/EMwGzipwbozo0ggTuYUtB91AQqE5t0k5AwRpOkHHcdtoiHKO/R39RjQwAxH1gq6TPU=
+	t=1789211899; cv=none; b=bRZQPdqIL0mVzd+f5idORS6FnYPV64thJ8rZNMpEgQPOdXOVFs8jpmoQWbS+LOTmCgYeecEIeS4Cw+3Cg7+InFXVGdXCd8dwOlvRcKrws0SwDofyRPskUwSI4U9kjOmH3s8jTjrSgokbv/KRZtvCMzDFnvs5a3rL4wP2SeSBEg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211894; c=relaxed/simple;
-	bh=xJZBcP1Uy2yfTgNyDcbgEzvfnD9agnRnkm0X2VRljAQ=;
+	s=arc-20240116; t=1789211899; c=relaxed/simple;
+	bh=goN9JVxS94TxQSRhv6oym0QQwf2qxU1nTmLALNix7tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dDNeyc12v0Us/KxUiIu2dxVuWNQIhvW1cAyl+q3jYEeGppEoPWrPkica6D5FhAVIUzbfGyc7F96V6u22hXmUfArzLgoB1CH/oLG/D5B0LQ/+z73gjwG6umCFMP9deM33tod2aymjJr5nddw2fE2B6tUMqMMkcZ8yd+N8FrPuOME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2yigl27; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dC50ToPLbTWWA/7+EIjeExGCwQqnCX27qRYv21DDz7Zf5gynwe/qBxYl9euT01JciWspa6jzBe0PGUDhBM8+CyRLnB9Rp7ZN8S+d3Kbv9FbHC6cl3Vj0iMU5IQnkqZOlG2ydVmft8T2BtU8WEvrXgl6JKsgr/h+oQ030aXvVMyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2h0fjE/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2yigl27"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDCC41F00893;
-	Sat, 12 Sep 2026 11:18:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2h0fjE/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2CF1F000FF;
+	Sat, 12 Sep 2026 11:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211893;
-	bh=ANkgfaMQOSCcSLC8GK4/CyQ3ggIveP1ayQ/cCavBVDg=;
+	s=korg; t=1789211898;
+	bh=7EivjyFnXcdUu+W59A4tKs5DyqOMmPNowICNpc5PCyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J2yigl273J7DDXubdeRJkItRGaToqT7RTr47VdTuTwE9y576p3MBOCWPBSrIaQRjI
-	 Jx3xtV8QzPA8ihGaiGIszdl+lKi00puebjb/87rZ/0q1sJhW8H5L2g5uPlfgk3wCh0
-	 n27QpbmAe1dm2AkY1KechtudX/u5VNglHpg414yQ=
+	b=A2h0fjE/llj2qES+xSXa2GzzHsjlGlwwuircyKlxOy94NFC+EfTMhkIJts6NvVTno
+	 gv32iJkNQP71sGHcjgUu0JDw+3N56vDfUpYoKMsT+5ZHaNuOcEWSA/YHkoovizJLPW
+	 uoVcwq/hT60Wm3AkMlmQhGiFjbRMP1aqeu4lYUe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Kulikov <nikolayof23@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Markus Stockhausen <markus.stockhausen@gmx.de>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1288/1518] mlxbf-bootctl: fix the build error with FIELD_PREP()
-Date: Sat, 12 Sep 2026 08:57:37 +0200
-Message-ID: <20260912065652.650273921@linuxfoundation.org>
+Subject: [PATCH 6.18 1324/1518] irqchip/irq-realtek-rtl: Add multicore support
+Date: Sat, 12 Sep 2026 08:58:13 +0200
+Message-ID: <20260912065653.480677840@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,50 +45,200 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikolay Kulikov <nikolayof23@gmail.com>
+From: Markus Stockhausen <markus.stockhausen@gmx.de>
 
-[ Upstream commit 46b14c6f11f558362391e308f4f184ee867ef58f ]
+[ Upstream commit a1a35c09241f0577cc40f65d7372fed01138619d ]
 
-rsh_log_store() calls the FIELD_PREP() macro without including the
-required header file, resulting a build error:
+The Realtek interrupt driver currently supports only single core
+systems. So the higher end devices like RTL839x and RTL930x with
+dual VPEs must be driven with NR_CPU=1. Enhance the driver to
+support multicore (dual VPE) systems. For this:
 
-  CC      drivers/platform/mellanox/mlxbf-bootctl.o
-drivers/platform/mellanox/mlxbf-bootctl.c: In function ‘rsh_log_store’:
-drivers/platform/mellanox/mlxbf-bootctl.c:429:16: error: implicit declaration of function ‘FIELD_PREP’ [-Wimplicit-function-declaration]
-  429 |         data = FIELD_PREP(MLXBF_RSH_LOG_TYPE_MASK, MLXBF_RSH_LOG_TYPE_MSG);
-      |                ^~~~~~~~~~
+  - Extend the register map for multiple cores
+  - Search for multiple CPU cores in the devicetree
+  - Improve the register helpers to support multiple cores
+  - Add an affinity setter
+  - Enhance the IRQ handler for multiple cores
 
-Fix this by including the <linux/bitfield.h> file.
-
-Fixes: e9d1b2d0f7d0 ("mlxbf-bootctl: Add sysfs file for BlueField boot log")
-Signed-off-by: Nikolay Kulikov <nikolayof23@gmail.com>
-Link: https://patch.msgid.link/20260810-mellanox_fix_implicit_declaration-v1-1-352e647b8f28@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Markus Stockhausen <markus.stockhausen@gmx.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260604182506.1113440-3-markus.stockhausen@gmx.de
+Stable-dep-of: 58b34b72b64b ("irqchip/irq-realtek-rtl: Use readl_be()/writel_be() instead of readl()/writel()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-bootctl.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/irqchip/irq-realtek-rtl.c | 82 ++++++++++++++++++++-----------
+ 1 file changed, 54 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/platform/mellanox/mlxbf-bootctl.c b/drivers/platform/mellanox/mlxbf-bootctl.c
-index f67c7f56ab2b7..9ddc7fa1a9732 100644
---- a/drivers/platform/mellanox/mlxbf-bootctl.c
-+++ b/drivers/platform/mellanox/mlxbf-bootctl.c
-@@ -10,6 +10,7 @@
+diff --git a/drivers/irqchip/irq-realtek-rtl.c b/drivers/irqchip/irq-realtek-rtl.c
+index f490fb867deda..2ae3be7fa6338 100644
+--- a/drivers/irqchip/irq-realtek-rtl.c
++++ b/drivers/irqchip/irq-realtek-rtl.c
+@@ -23,10 +23,10 @@
  
- #include <linux/acpi.h>
- #include <linux/arm-smccc.h>
-+#include <linux/bitfield.h>
- #include <linux/delay.h>
- #include <linux/if_ether.h>
- #include <linux/iopoll.h>
+ #define RTL_ICTL_NUM_INPUTS	32
+ 
+-#define REG(x)		(realtek_ictl_base + x)
++#define REG(cpu, x)		(realtek_ictl_base[cpu] + x)
+ 
+ static DEFINE_RAW_SPINLOCK(irq_lock);
+-static void __iomem *realtek_ictl_base;
++static void __iomem *realtek_ictl_base[NR_CPUS];
+ 
+ /*
+  * IRR0-IRR3 store 4 bits per interrupt, but Realtek uses inverted numbering,
+@@ -37,27 +37,27 @@ static void __iomem *realtek_ictl_base;
+ #define IRR_OFFSET(idx)		(4 * (3 - (idx * 4) / 32))
+ #define IRR_SHIFT(idx)		((idx * 4) % 32)
+ 
+-static inline void enable_gimr(unsigned int hw_irq)
++static inline void enable_gimr(unsigned int cpu, unsigned int hw_irq)
+ {
+ 	u32 gimr;
+ 
+-	gimr = readl(REG(RTL_ICTL_GIMR));
++	gimr = readl(REG(cpu, RTL_ICTL_GIMR));
+ 	gimr |= BIT(hw_irq);
+-	writel(gimr, REG(RTL_ICTL_GIMR));
++	writel(gimr, REG(cpu, RTL_ICTL_GIMR));
+ }
+ 
+-static inline void disable_gimr(unsigned int hw_irq)
++static inline void disable_gimr(unsigned int cpu, unsigned int hw_irq)
+ {
+ 	u32 gimr;
+ 
+-	gimr = readl(REG(RTL_ICTL_GIMR));
++	gimr = readl(REG(cpu, RTL_ICTL_GIMR));
+ 	gimr &= ~BIT(hw_irq);
+-	writel(gimr, REG(RTL_ICTL_GIMR));
++	writel(gimr, REG(cpu, RTL_ICTL_GIMR));
+ }
+ 
+-static void write_irr(int hw_irq, u32 value)
++static void write_irr(unsigned int cpu, int hw_irq, u32 value)
+ {
+-	void __iomem *irr0 = REG(RTL_ICTL_IRR0);
++	void __iomem *irr0 = REG(cpu, RTL_ICTL_IRR0);
+ 	unsigned int offset = IRR_OFFSET(hw_irq);
+ 	unsigned int shift = IRR_SHIFT(hw_irq);
+ 	u32 irr;
+@@ -69,28 +69,51 @@ static void write_irr(int hw_irq, u32 value)
+ 
+ static void realtek_ictl_unmask_irq(struct irq_data *i)
+ {
++	unsigned int cpu;
++
+ 	guard(raw_spinlock)(&irq_lock);
+-	enable_gimr(i->hwirq);
++	for_each_cpu(cpu, irq_data_get_effective_affinity_mask(i))
++		enable_gimr(cpu, i->hwirq);
+ }
+ 
+ static void realtek_ictl_mask_irq(struct irq_data *i)
+ {
++	unsigned int cpu;
++
+ 	guard(raw_spinlock)(&irq_lock);
+-	disable_gimr(i->hwirq);
++	for_each_cpu(cpu, irq_data_get_effective_affinity_mask(i))
++		disable_gimr(cpu, i->hwirq);
++}
++
++static int realtek_ictl_irq_affinity(struct irq_data *i, const struct cpumask *dest, bool force)
++{
++	if (!irqd_irq_masked(i))
++		realtek_ictl_mask_irq(i);
++
++	irq_data_update_effective_affinity(i, dest);
++
++	if (!irqd_irq_masked(i))
++		realtek_ictl_unmask_irq(i);
++
++	return IRQ_SET_MASK_OK;
+ }
+ 
+ static struct irq_chip realtek_ictl_irq = {
+-	.name = "realtek-rtl-intc",
+-	.irq_mask = realtek_ictl_mask_irq,
+-	.irq_unmask = realtek_ictl_unmask_irq,
++	.name			= "realtek-rtl-intc",
++	.irq_mask		= realtek_ictl_mask_irq,
++	.irq_unmask		= realtek_ictl_unmask_irq,
++	.irq_set_affinity	= realtek_ictl_irq_affinity,
+ };
+ 
+ static int intc_map(struct irq_domain *d, unsigned int irq, irq_hw_number_t hw)
+ {
++	unsigned int cpu;
++
+ 	irq_set_chip_and_handler(irq, &realtek_ictl_irq, handle_level_irq);
+ 
+ 	guard(raw_spinlock_irqsave)(&irq_lock);
+-	write_irr(hw, 1);
++	for_each_present_cpu(cpu)
++		write_irr(cpu, hw, 1);
+ 
+ 	return 0;
+ }
+@@ -103,12 +126,13 @@ static const struct irq_domain_ops irq_domain_ops = {
+ static void realtek_irq_dispatch(struct irq_desc *desc)
+ {
+ 	struct irq_chip *chip = irq_desc_get_chip(desc);
++	unsigned int cpu = smp_processor_id();
+ 	struct irq_domain *domain;
+ 	unsigned long pending;
+ 	unsigned int soc_int;
+ 
+ 	chained_irq_enter(chip, desc);
+-	pending = readl(REG(RTL_ICTL_GIMR)) & readl(REG(RTL_ICTL_GISR));
++	pending = readl(REG(cpu, RTL_ICTL_GIMR)) & readl(REG(cpu, RTL_ICTL_GISR));
+ 
+ 	if (unlikely(!pending)) {
+ 		spurious_interrupt();
+@@ -116,7 +140,7 @@ static void realtek_irq_dispatch(struct irq_desc *desc)
+ 	}
+ 
+ 	domain = irq_desc_get_handler_data(desc);
+-	for_each_set_bit(soc_int, &pending, 32)
++	for_each_set_bit(soc_int, &pending, RTL_ICTL_NUM_INPUTS)
+ 		generic_handle_domain_irq(domain, soc_int);
+ 
+ out:
+@@ -127,16 +151,18 @@ static int __init realtek_rtl_of_init(struct device_node *node, struct device_no
+ {
+ 	struct of_phandle_args oirq;
+ 	struct irq_domain *domain;
+-	int parent_irq;
+-
+-	realtek_ictl_base = of_iomap(node, 0);
+-	if (!realtek_ictl_base)
+-		return -ENXIO;
+-
+-	/* Disable all cascaded interrupts and clear routing */
+-	for (unsigned int hw_irq = 0; hw_irq < RTL_ICTL_NUM_INPUTS; hw_irq++) {
+-		disable_gimr(hw_irq);
+-		write_irr(hw_irq, 0);
++	int cpu, parent_irq;
++
++	for_each_present_cpu(cpu) {
++		realtek_ictl_base[cpu] = of_iomap(node, cpu);
++		if (!realtek_ictl_base[cpu])
++			return -ENXIO;
++
++		/* Disable all cascaded interrupts and clear routing */
++		for (unsigned int hw_irq = 0; hw_irq < RTL_ICTL_NUM_INPUTS; hw_irq++) {
++			disable_gimr(cpu, hw_irq);
++			write_irr(cpu, hw_irq, 0);
++		}
+ 	}
+ 
+ 	if (WARN_ON(!of_irq_count(node))) {
 -- 
 2.53.0
 
