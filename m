@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6F83328FC;
-	Sat, 12 Sep 2026 14:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3065432B102;
+	Sat, 12 Sep 2026 14:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223093; cv=none; b=h4gTaHFq3ur+zlB9iCYwcdW3FAqhVWP/rweH/FPprzc1fEPMh6K5czz7p+qO8V7Qd8v3SGVwUh1KfHAC0s/QsMfh+7L7GNJvFK1Kdk73O74JMFq5DTNjtm5ncZOVh9uWTqPoXpLryU54TZ94WfWGGzAelYmHVfDROYuGn1mW9c8=
+	t=1789223097; cv=none; b=T8Adur7hNoFg8krADmJgVk76Geyp1vFCFTfEw53WnuyE3pZe6l8tyD5LEmT0K1z08aZFVmVSAmrJSFpWgKhs3dlnOFMY65ONQqKn4PD7JaA7yOsyilburNr+6NsUq7po9nz/Tb3MdNja0htG1NvNryEYpzj6p2FA9cNIODxEQH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223093; c=relaxed/simple;
-	bh=6xwYepXIgt0xHQrXBxrghecoNGA2rVfJVP/BBu5cr20=;
+	s=arc-20240116; t=1789223097; c=relaxed/simple;
+	bh=6okdQrm4IfzrA4G9PsPUb6E5Alzs71089EcjraSFTJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AAs4/dp3e9PuK8FbqVpVJ7AxKzVQlWnoAiNZVcc4k/M/xwuxRwdR+403eUIJhZ2OggywbPzBujFKD++fmUB8m+ue5vlcqcdgdMhXln0EnN5o2N1/KAplrHva9laWpNGlrgaky8wdirdowDrJg6ryrL2SMdlNYg4jj6LDcF4FaS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DsjvKqiz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kf4goiQB4k6qlofMj6J3mRQE+fVD/avhKfp45+6qa8NgRHmqpu3cE+ipQnSJ6XNIW3/hCAs5hDo0KHAwGwIQgwbkueg0uYWudhcE4rk9Sqst/gX95T2aGSad58NEq7RZzwohFgy/B/NZgtLvfVRFvX+bvT4zxc9hqHRazcVC67c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZKV/WoB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DsjvKqiz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D20C1F000FF;
-	Sat, 12 Sep 2026 14:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZKV/WoB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3941F000FF;
+	Sat, 12 Sep 2026 14:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223092;
-	bh=tQq2rMnqP+MlvubZmWiDpIfbLCPbOSUosyu5rHer1bQ=;
+	s=korg; t=1789223096;
+	bh=5ApWRDmlyI9JoIAlIPypNzg+HYeeYDb+cIeF30x5Ono=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DsjvKqizbiHWNSb6aCqWy/zJzV6S3V6ecxZDmw353FQySZAd44GHcsbXgW5dyM1gN
-	 I5dpAcLCvIBLP+zLjHRbbNf6rbMS/UAXRNf8oKhjZapPCxHtufCSB8AQIZ2ICivUa4
-	 QqBi4DOW9TL/bJFQSFIacV+MDquhgQjLwxTH6naE=
+	b=EZKV/WoBoyPrhD+KXP75Mqa23KtMrZKavGSmBQNf+q4CrKx8RPt3YAne4ALmhPs9b
+	 Xjq0CM4pBIMinh1Q04kNn/F3OufFGG9ChuWwwLY2jqdEKJpZ+ZN5dBFwUn4QNzbVNK
+	 M+1Aftb4mH9nZxm9ARF+W9isao1W4etUxDtlp8+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mert Seftali <mertsftl@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0717/1424] iio: accel: dmard09: Implement IIO_CHAN_INFO_SCALE
-Date: Sat, 12 Sep 2026 08:52:29 +0200
-Message-ID: <20260912065623.351505151@linuxfoundation.org>
+Subject: [PATCH 6.6 0718/1424] RDMA/core: Wait for RCU callbacks before unloading ib_core
+Date: Sat, 12 Sep 2026 08:52:30 +0200
+Message-ID: <20260912065623.373295328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,75 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mert Seftali <mertsftl@gmail.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit aa58ecc73466d0cb8c418de98e2225490bf600e3 ]
+[ Upstream commit 7d75592114d1664623c8cf191a12b38052c04483 ]
 
-Reading the in_accel_scale attribute on the DMARD09 has always returned
--EINVAL: the channels advertise scale via info_mask_shared_by_type so the
-IIO core exposes the attribute, but dmard09_read_raw() only handles
-IIO_CHAN_INFO_RAW, so a SCALE read falls through to 'default: return
--EINVAL':
+put_gid_ndev() is queued with call_rcu() and implemented in ib_core.
+Stopping the workqueues does not drain callbacks already queued, so RCU
+could invoke it after the module code has been unloaded.
 
-    $ cat .../iio:deviceX/in_accel_scale
-    cat: in_accel_scale: Invalid argument
+synchronize_rcu() does not wait for callbacks. Wait for them after all
+producers have stopped.
 
-leaving userspace with raw counts it cannot convert to m/s^2.
-
-The driver was written from a vendor source [1] without a datasheet, and
-the scale was declared but never implemented. The vendor source carries
-the sensitivity: its conversion is
-
-    acc = raw * GRAVITY_EARTH_1000 / sensitivity   (then / 1000 -> m/s^2)
-
-with sensitivity = 32 and GRAVITY_EARTH_1000 = 9807 ("about
-(9.80665)*1000"), i.e. 32 counts correspond to 1 g.
-
-That sensitivity applies to the value this driver already reports as raw:
-the vendor reduces each 16-bit sample to a signed 9-bit value, and the
-preparation in dmard09_read_raw() yields the same value. It is
-self-consistent: 256 counts / 32 = 8 g full scale, matching the +/-8g
-range.
-
-Implement the scale derived from that sensitivity using standard gravity:
-
-    scale = 9.80665 / 32 = 0.3064578125 m/s^2 per LSB
-
-Link: https://github.com/minstrelsy/mediatek/blob/1f49d8c87b839651bc89afc870277e8e0f2e2d55/custom/common/kernel/accelerometer/dmard09/dmard09.c [1]
-Fixes: a4fa6509dda4 ("iio: accel: add support for the Domintech DMARD09 3-axis accelerometer")
-Signed-off-by: Mert Seftali <mertsftl@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Fixes: 943bd984b108 ("RDMA/core: Allow detaching gid attribute netdevice for RoCE")
+Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Closes: https://lore.kernel.org/linux-rdma/20260708092316.Qb39F_B0@linutronix.de/
+Link: https://patch.msgid.link/20260709-unload-rcu-v1-1-fccd27211e5a@nvidia.com
+Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/dmard09.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/infiniband/core/device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iio/accel/dmard09.c b/drivers/iio/accel/dmard09.c
-index fa98623de579b..92aa0d94341d4 100644
---- a/drivers/iio/accel/dmard09.c
-+++ b/drivers/iio/accel/dmard09.c
-@@ -8,6 +8,7 @@
- #include <asm/unaligned.h>
- #include <linux/module.h>
- #include <linux/i2c.h>
-+#include <linux/units.h>
- #include <linux/iio/iio.h>
- 
- #define DMARD09_DRV_NAME	"dmard09"
-@@ -79,6 +80,12 @@ static int dmard09_read_raw(struct iio_dev *indio_dev,
- 		*val = accel;
- 
- 		return IIO_VAL_INT;
-+	case IIO_CHAN_INFO_SCALE:
-+		*val = 0;
-+		/* 1 g / 32 LSB, in m/s^2 */
-+		*val2 = IIO_G_TO_M_S_2(NANO / 32);
-+
-+		return IIO_VAL_INT_PLUS_NANO;
- 	default:
- 		return -EINVAL;
- 	}
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index 1a241864b7b54..820ce7bd38075 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -2913,6 +2913,7 @@ static void __exit ib_core_cleanup(void)
+ 	/* Make sure that any pending umem accounting work is done. */
+ 	destroy_workqueue(ib_wq);
+ 	destroy_workqueue(ib_unreg_wq);
++	rcu_barrier();
+ 	WARN_ON(!xa_empty(&clients));
+ 	WARN_ON(!xa_empty(&devices));
+ }
 -- 
 2.53.0
 
