@@ -1,53 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9938337C0E2;
-	Sat, 12 Sep 2026 09:35:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737F641D135;
+	Sat, 12 Sep 2026 09:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205760; cv=none; b=IRcmI9Exnf3lIczmYwpC067OOZH7DR5QtpkY37WdF47w1xHmSuZ1usDAgR0yWeKhN5oh0+5FLDLu0ORdskBhkgyHhld/XsYFUSAkxd5rnNL7NwXsK+fH9alYEefDvh2FCZL9uHKRY1z8CrlELnpBNDQAYN6tMdVJ8QHkmRyDgCU=
+	t=1789205765; cv=none; b=r4j5irLiW+H67bWU/0fzdfu5PtpdvXbBhvIxV4uaYOx1SfJ796RB0nHPwbGXFQTb8m5AIk6BgkgcL2im93+0dXg7eFzp1zWkvgB+uqn+ka3ixbBvwA6ZCQ54vl3quK8p+XHb7NXYN7VlsWumzq2iEI1AVX9FBlOlw3JXgyMjwkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205760; c=relaxed/simple;
-	bh=jFiNsIjnJKD4LRPIga7LGDLRnoWm+P5jWrLJyfIb+mA=;
+	s=arc-20240116; t=1789205765; c=relaxed/simple;
+	bh=flQ5zjc75wCs0gBtLagoOyKt81epyhaCWDRaeuFL39I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E331q5bfHHwHjYO0m7Q8TnMfrT8wNKDySeX6Xpx/B0i43NzkB07VC8UdekrRZt/9O0ub3omS62oJwd4RSha6uuniiAVPlLDsQJ9puUv+bN/EZtrRLXOWdSQmkKyIsPU8d8gVlBmo22F1Yuqb9vaT6Oj+rdnapNqdnzy9YKitd18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Htk0c6id; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=UUoWmDuOQIc0cdwmeaTnW7mQv1GhBhEEhyaWFoZtSS5vtpzhfopS+R9Hv5vVwef7PYb4BOl+4oTQRVAK5kp1iukFbwXyD2aAWOzldwjHLzseo3LZ9jAMYaLkLgm4WtFq/2xGJVDu1Alq2ZpuwxZaIy+yYoE/bpgNWBKyA40EqR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLhj0ei7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Htk0c6id"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C6F1F000FF;
-	Sat, 12 Sep 2026 09:35:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLhj0ei7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A241F000FF;
+	Sat, 12 Sep 2026 09:36:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205758;
-	bh=RnLnWOdPLkiN0P6T09/KUFFOdt1yFnFyAX/QFAf07Eg=;
+	s=korg; t=1789205763;
+	bh=N2xxkLVQiHBfJq7Y1NPkOldUp5Rk7we28oDKG4leD9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Htk0c6idPAvSkyYkI1Q0sBbgDbBTlXmF9VRFc0NKabCmwy1ehWrGh9pRwYXAmtQJV
-	 6K0/QCfRQJLE1x048k9I2nRfs2WktxM/zh5B58/ib12ziaCpDKcqsPqW5G/Z9zm7dw
-	 yZlcr5hYBm+V0U3PLqFGyvfVKTEUfnRj/Rchy50Q=
+	b=GLhj0ei7rHsrBwZxTSo9J5iZmrr9m/LtMsg3RsErga9Cynndk7LlIxlSM9mhUHzxT
+	 t/NVQOSh5qjU/nJzg2YIhdnrSUo2MHzdKtf/pZ4sCrHG8RxPO77M1+ZZt51b9bpFcj
+	 AHRZlLN1e378T6yN6Px3XBh/dhlAy4s1EAm7JTdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Usama Arif <usama.arif@linux.dev>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Zi Yan <ziy@nvidia.com>,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
+	syzbot+f12658786a4153df5113@syzkaller.appspotmail.com,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Jann Horn <jannh@google.com>,
 	"Liam R. Howlett" <liam@infradead.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Rik van Riel <riel@surriel.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
+	Li Xinhai <lixinhai.lxh@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0067/1518] mm/huge_memory: transfer the pmd dirty bit to the folio on zap
-Date: Sat, 12 Sep 2026 08:37:16 +0200
-Message-ID: <20260912065624.972786917@linuxfoundation.org>
+Subject: [PATCH 6.18 0068/1518] mm/mremap: reset unfaulted VMA page offset for MREMAP_DONTUNMAP
+Date: Sat, 12 Sep 2026 08:37:17 +0200
+Message-ID: <20260912065624.995227971@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -60,98 +52,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Usama Arif <usama.arif@linux.dev>
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
 
-[ Upstream commit fe6cf984939d8e12cb33a99673c8d026c5135e68 ]
+[ Upstream commit 35b0fb391b0df57383bc15985bb769f4555c97ba ]
 
-zap_huge_pmd_folio() propagates the pmd young bit to the folio for the
-file case, but not the dirty bit.  The pte path does propagate it, in
-zap_present_folio_ptes() and so does the pmd split path, in
-__split_huge_pmd_locked().
+Uniquely an mremap() invocation using the MREMAP_DONTUNMAP flag can reset
+a faulted VMA into an unfaulted one.
 
-For most file mappings the omission is harmless, because writing to a
-shared file mapping goes through page_mkwrite(), which dirties the folio.
-tmpfs is different: it has no page_mkwrite(), and vma_wants_writenotify()
-is false for it, so a *read* fault on a MAP_SHARED tmpfs mapping installs
-a writable pmd via do_read_fault().  do_read_fault() does not call
-fault_dirty_shared_page(), so subsequent stores through that mapping set
-only the hardware dirty bit in the pmd and never call folio_mark_dirty().
-A shmem folio allocated by a fault is marked uptodate but not dirty (see
-the clear: block in shmem_get_folio_gfp()), so PG_dirty is never set at
-all.
+It does so after the page tables have been moved to the copied VMA with
+MREMAP_DONTUNMAP leaving the old VMA in place which is naturally unfaulted
+as the page tables it had are no longer present.
 
-Unmapping such a folio - munmap(), or exit_mmap() when the process dies -
-then loses the only record that it was written, because zap_huge_pmd()
-drops the pmd without transferring the dirty bit.  Reclaim afterwards sees
-a clean shmem folio: the whole swap-out block in shrink_folio_list() is
-inside "if (folio_test_dirty(folio))", so pageout() is skipped and the
-folio falls into __remove_mapping().  There, folio_is_file_lru() is false
-for a swapbacked folio, so no shadow entry is created and
-__filemap_remove_folio(folio, NULL) simply empties the i_pages slot.  The
-data is freed without ever being written to swap, and the next fault on
-that index returns a freshly zeroed folio.
+However, in doing so, it violates the invariant that the anonymous page
+offset of an unfaulted VMA is vma->vm_start >> PAGE_SHIFT.
 
-This is silent data loss for any process that keeps state in a MAP_SHARED
-tmpfs segment across an unmap - for example a cache handed from one
-process generation to the next through /dev/shm.  It requires the folio to
-be PMD-mapped, so it only shows up once shmem THP is enabled (which is
-what we did in Meta fleet and started noticing crashes); with THP off the
-pte path transfers the dirty bit correctly.  It also only becomes visible
-when swap is enabled, because with no swap device shmem folios (which are
-on the anon LRU) are not scanned by reclaim at all, so the clean folio is
-never dropped.
+This is because a VMA may have been faulted in, mremap()'d (causing a
+delta between its page offset and vma->vm_start >> PAGE_SHIFT), and then
+mremap()'d again with MREMAP_DONTUNMAP resulting in the unfaulting.
 
-Reproduced on x86_64 with a tmpfs mounted huge=within_size: read-fault a
-2MB-backed region, write a known pattern through the resulting mapping,
-munmap, force reclaim of the cgroup, then re-map and read back.  Without
-this patch the region reads back as zeros and vmstat shows zswpout 0 - the
-data was discarded rather than swapped.  With this patch the region reads
-back correctly and the pages are swapped out as expected.  With
-huge=never, or when the first touch is a write, the test passes either
-way.
+This condition is a violation of a fundamental assumption in mm, but now
+also triggers an assert in assert_sane_pgoff() which explicitly checks for
+this condition.
 
-Link: https://lore.kernel.org/20260819101222.3732660-1-usama.arif@linux.dev
-Fixes: b5072380eb61 ("thp: support file pages in zap_huge_pmd()")
-Signed-off-by: Usama Arif <usama.arif@linux.dev>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Kiryl Shutsemau <kas@kernel.org>
-Acked-by: Hugh Dickins <hughd@google.com>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
+Correct it by resetting the VMA's page offset at the point of completing
+the MREMAP_DONTUNMAP operation.
+
+Link: https://lore.kernel.org/20260825-fix-mremap-dontunmap-pgoff-v1-1-39a40b2c98b3@kernel.org
+Fixes: 1583aa278f5f ("mm: mremap: unlink anon_vmas when mremap with MREMAP_DONTUNMAP success")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reported-by: syzbot+f12658786a4153df5113@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6a87853b.ae6ddae5.3da009.0023.GAE@google.com/
+Tested-by: syzbot+f12658786a4153df5113@syzkaller.appspotmail.com
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Cc: Jann Horn <jannh@google.com>
 Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Li Xinhai <lixinhai.lxh@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ adapted VMA page-offset helpers to use the branch’s single vm_pgoff field. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/mremap.c |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -2311,6 +2311,8 @@ int zap_huge_pmd(struct mmu_gather *tlb,
- 			 * Use flush_needed to indicate whether the PMD entry
- 			 * is present, instead of checking pmd_present() again.
- 			 */
-+			if (flush_needed && pmd_dirty(orig_pmd))
-+				folio_mark_dirty(folio);
- 			if (flush_needed && pmd_young(orig_pmd) &&
- 			    likely(vma_has_recency(vma)))
- 				folio_mark_accessed(folio);
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -1247,18 +1247,29 @@ static void dontunmap_complete(struct vm
+ {
+ 	unsigned long start = vrm->addr;
+ 	unsigned long end = vrm->addr + vrm->old_len;
+-	unsigned long old_start = vrm->vma->vm_start;
+-	unsigned long old_end = vrm->vma->vm_end;
++	struct vm_area_struct *vma = vrm->vma;
++	unsigned long old_start = vma->vm_start;
++	unsigned long old_end = vma->vm_end;
+ 
+ 	/* We always clear VM_LOCKED[ONFAULT] on the old VMA. */
+-	vm_flags_clear(vrm->vma, VM_LOCKED_MASK);
++	vm_flags_clear(vma, VM_LOCKED_MASK);
+ 
+ 	/*
+ 	 * anon_vma links of the old vma is no longer needed after its page
+ 	 * table has been moved.
+ 	 */
+-	if (new_vma != vrm->vma && start == old_start && end == old_end)
+-		unlink_anon_vmas(vrm->vma);
++	if (new_vma != vma && start == old_start && end == old_end) {
++		const pgoff_t pgoff_unfaulted = vma->vm_start >> PAGE_SHIFT;
++
++		unlink_anon_vmas(vma);
++		/*
++		 * The VMA is now unfaulted and it is an invariant that
++		 * unfaulted anonymous VMAs have page offset equal to
++		 * vma->vm_start >> PAGE_SHIFT.
++		 */
++		if (vma_is_anonymous(vma) && !vma->vm_file)
++			vma->vm_pgoff = pgoff_unfaulted;
++	}
+ 
+ 	/* Because we won't unmap we don't need to touch locked_vm. */
+ }
 
 
