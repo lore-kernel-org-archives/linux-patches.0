@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7736F3B5310;
-	Sat, 12 Sep 2026 07:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B063B5310;
+	Sat, 12 Sep 2026 07:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196801; cv=none; b=CRmln5kXwiAjvyl5PpZ8a8BaDjUNzFIM6CGsOaagngSDyZtMPVaPTdm5/ffKxUct7eCywVlzryHyGmcyZynBuyrETkyND0jDeUHi8KPYYr3ZgINkSp2H77RfFPLMvi3MBKvW8jByiz0qhm0rNcTXo5+G1afY9D3AcACu/j7j/so=
+	t=1789196805; cv=none; b=buez4nNmw9KDAQo3QwsM1jTRwvjHQGhWEJp2PUZyo8IFidhuwkbLACFkiqvT+gDgdNvanwf/yiVnaCDypqTPOUXiFywcI8ueWxcNMhmRx0BfEKzK3xcDBU7zhOl6voerb7Kk3jCqZirjdlI1kzg4p+qr6Y2OVBrcH/skYqa5WgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196801; c=relaxed/simple;
-	bh=Qqekp4Fd3YkBd0PyWkCQSon1wV2XRaOUBIehI5+iVCI=;
+	s=arc-20240116; t=1789196805; c=relaxed/simple;
+	bh=4rr3WX9vJGPcOO3wI6MmJPLeujFuOWTbZWipRYXb240=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U7KjyTYX1samcC3qh+GECbKNAZjCNPs+vEObD7Dvo/qLybq6/zQfkrVuLzmpAhAMR+OFJXpAf70y5otfAXyNwJCTOQ59W0Bpvz8OS8C5ILliX1OLihrtuZM2gbPOd1JHU2wJevzD9cbBWMn5dTLph/x/5VuodYNWKZboHlV1SXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GanaVfoK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bDM+yhER2+49EvmbJ0Bd+LaVBJxxOvMVycsw44ngLQyelNexlfKa4WcYn/MvVtve04uEvh5JdKkhS6dq7Jl+/0Ln+hizhH0BkPe4m7/Xr3935SnNy8Uyx0jHDRmUoOJ8niyBOc9X/IAQRpd1msG0uycWLcQG/KaNXgEl6ag7reM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ov58BIuY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GanaVfoK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904951F00893;
-	Sat, 12 Sep 2026 07:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ov58BIuY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1CA1F00899;
+	Sat, 12 Sep 2026 07:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196797;
-	bh=D8fqUtgt+IcmzZt4+oql/r0Vb0GLKJTV/qTa5/Ajx84=;
+	s=korg; t=1789196802;
+	bh=z2EjB3Ae9zV+mDLzhNCnz6mHlaBPI3aiOKrD5i0HPMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GanaVfoKXc8HVxDVEdSPZ4xvdaS1nyvuE7QPC5LC/gEPHpOVkx6j2a9LK59ph1lY2
-	 bAjRCgOapzkrijzsXxg6y1ljOS1CS1au74POEHylqH9gmV78MkWbjgC1W9v2mI1Wiq
-	 0Qp911u45KJsB0VK5cQVZMzk1GCXaKp6+nDoxDz4=
+	b=ov58BIuYTO0fJududGSoI4y1xllYF8LCtC8nmHHtRDY2FGLFjolbER2idkU9kaAR/
+	 AY7W9bfAzyfTnEp16jygSC67u34nlwyxrOB/sKPV4TRz+fWBo7X/A6y8u3aSJLV8/H
+	 DMA35RTScnHIoMw8stEznKKxNiZh71imUkHhJa5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Kocialkowski <paulk@sys-base.io>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Liu Ying <victor.liu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0038/1815] drm: lcdif: Wait for vblank before disabling DMA
-Date: Sat, 12 Sep 2026 08:29:48 +0200
-Message-ID: <20260912065649.914906029@linuxfoundation.org>
+Subject: [PATCH 7.2 0039/1815] drm/bridge: synopsys: dw-dp: Support unregistering the AUX channel
+Date: Sat, 12 Sep 2026 08:29:49 +0200
+Message-ID: <20260912065649.939700194@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,69 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Kocialkowski <paulk@sys-base.io>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 351af554edd994898db12217c3be39979e168d35 ]
+[ Upstream commit ed04e8e2307f35b3d8d49a554faf5e72d3d224e6 ]
 
-It is necessary to wait for the full frame to finish streaming
-through the DMA engine before we can safely disable it by removing
-the DISP_PARA_DISP_ON bit. Disabling it in-flight can leave the
-hardware confused and unable to resume streaming for the next frame.
+The DisplayPort AUX channel gets initialized and registered during
+dw_dp_bind(), but it is never unregistered, which may lead to resource
+leaks and/or use-after-free.
 
-This causes the FIFO underrun and empty status bits to be set and
-a single solid color to be shown on the display, coming from one of
-the pixels of the previous frame. The issue occurs sporadically when
-a new mode is set, which triggers the crtc disable and enable paths.
+Add the missing dw_dp_unbind() function to allow the users of the
+library to handle the required cleanup, i.e. unregister the AUX adapter.
 
-Setting the shadow load bit and waiting for it to be cleared by the
-DMA engine allows waiting for completion.
-
-The NXP BSP driver addresses this issue with a hardcoded 25 ms sleep.
-
-Fixes: 9db35bb349a0 ("drm: lcdif: Add support for i.MX8MP LCDIF variant")
-Signed-off-by: Paul Kocialkowski <paulk@sys-base.io>
-Co-developed-by: Lucas Stach <l.stach@pengutronix.de>
-Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Tested-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Acked-by: Liu Ying <victor.liu@nxp.com>
-Link: https://patch.msgid.link/20260402183351.3281123-3-paulk@sys-base.io
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Fixes: 86eecc3a9c2e ("drm/bridge: synopsys: Add DW DPTX Controller support library")
+Reviewed-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260601-drm-rk-fixes-v4-1-c3f3f123e1da@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mxsfb/lcdif_kms.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/bridge/synopsys/dw-dp.c | 6 ++++++
+ include/drm/bridge/dw_dp.h              | 1 +
+ 2 files changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/mxsfb/lcdif_kms.c b/drivers/gpu/drm/mxsfb/lcdif_kms.c
-index ade76c3f4e4e9..68b1eb7a8ff13 100644
---- a/drivers/gpu/drm/mxsfb/lcdif_kms.c
-+++ b/drivers/gpu/drm/mxsfb/lcdif_kms.c
-@@ -374,14 +374,23 @@ static void lcdif_disable_controller(struct lcdif_drm_private *lcdif)
- 	int ret;
+diff --git a/drivers/gpu/drm/bridge/synopsys/dw-dp.c b/drivers/gpu/drm/bridge/synopsys/dw-dp.c
+index 21541be094c47..36ee6e027af52 100644
+--- a/drivers/gpu/drm/bridge/synopsys/dw-dp.c
++++ b/drivers/gpu/drm/bridge/synopsys/dw-dp.c
+@@ -2093,6 +2093,12 @@ struct dw_dp *dw_dp_bind(struct device *dev, struct drm_encoder *encoder,
+ }
+ EXPORT_SYMBOL_GPL(dw_dp_bind);
  
- 	reg = readl(lcdif->base + LCDC_V8_CTRLDESCL0_5);
-+	/* Disable the layer for DMA. */
- 	reg &= ~CTRLDESCL0_5_EN;
-+	/*
-+	 * It is necessary to wait for the full frame to finish streaming
-+	 * through the DMA engine before we can safely disable it by removing
-+	 * the DISP_PARA_DISP_ON bit. Disabling it in-flight can leave the
-+	 * hardware confused and unable to resume streaming for the next frame.
-+	 */
-+	reg |= CTRLDESCL0_5_SHADOW_LOAD_EN;
- 	writel(reg, lcdif->base + LCDC_V8_CTRLDESCL0_5);
++void dw_dp_unbind(struct dw_dp *dp)
++{
++	drm_dp_aux_unregister(&dp->aux);
++}
++EXPORT_SYMBOL_GPL(dw_dp_unbind);
++
+ MODULE_AUTHOR("Andy Yan <andyshrk@163.com>");
+ MODULE_DESCRIPTION("DW DP Core Library");
+ MODULE_LICENSE("GPL");
+diff --git a/include/drm/bridge/dw_dp.h b/include/drm/bridge/dw_dp.h
+index 25363541e69d5..22105c3e8e4d6 100644
+--- a/include/drm/bridge/dw_dp.h
++++ b/include/drm/bridge/dw_dp.h
+@@ -24,4 +24,5 @@ struct dw_dp_plat_data {
  
-+	/* Wait for the frame to finish or timeout after 50 ms. */
- 	ret = readl_poll_timeout(lcdif->base + LCDC_V8_CTRLDESCL0_5,
--				 reg, !(reg & CTRLDESCL0_5_EN),
--				 0, 36000);	/* Wait ~2 frame times max */
-+				 reg, !(reg & CTRLDESCL0_5_SHADOW_LOAD_EN),
-+				 200, 50000);
- 	if (ret)
--		drm_err(lcdif->drm, "Failed to disable controller!\n");
-+		drm_err(lcdif->drm, "Timed out waiting for final vblank!\n");
- 
- 	reg = readl(lcdif->base + LCDC_V8_DISP_PARA);
- 	reg &= ~DISP_PARA_DISP_ON;
+ struct dw_dp *dw_dp_bind(struct device *dev, struct drm_encoder *encoder,
+ 			 const struct dw_dp_plat_data *plat_data);
++void dw_dp_unbind(struct dw_dp *dp);
+ #endif /* __DW_DP__ */
 -- 
 2.53.0
 
