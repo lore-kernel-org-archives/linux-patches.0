@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4347D2E06E4;
-	Sat, 12 Sep 2026 12:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162132E06E4;
+	Sat, 12 Sep 2026 12:19:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215542; cv=none; b=q1y+0/aFaFFxkveutTJA+AIodQU4KJS/qIL61JZOHkimtoml9zJNVnCl5SZxBXRh3bhGaA661kb2YWm0FlVmrAKKaHmtgqNYzwbBbM+OYOqrRGJxm30yPEgPRRzXNwfnkEw/qiLw8n+f8qomhRF+hu8tCZTlTAmtYLcily70H3o=
+	t=1789215547; cv=none; b=Y8Yj3xijrqBacIEK7d1FuNurWs3lucBU8UGHfQxUpoBbVjNEG8fuleMjj/cSzdmVYryFH4MpFnpNi7z+6+0sLRb3Sa+MhP2S68MuMVoRvy2D7i20MZ+n3laoEhsWMb/wAwyWahu1St2Ar0CZ2jAe8/EGSOrXcR3uicuyCfJmBTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215542; c=relaxed/simple;
-	bh=B2iI5qKGtKTDRWzdNn0dPWoNyPGfofDIn2pV4bCENgc=;
+	s=arc-20240116; t=1789215547; c=relaxed/simple;
+	bh=BKVX9wY+x502n7m+Ee5C1aVNHbDJmRW5eMyK0y3ZGwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rxr/8srDbqnb4tAluJ70fHNn4RFqcN/yOKaEzDIIpRiqZ1mOGrkGOCl1QYE4Kb9Pv14y937axx4SavApDU8ix6h9WlJJuoy+5Xbxl0CILPL4tWqouJZj5y9z8sL70nAo5oivyQy3HpDZMDNwTR0B1NQEdrBjS++EQ3XACwIO0/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzsG8XFn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f0IGh0pNHN7jhHWoq3DIafe/LYVST+yP16GSjz1CmAaLyQqIF+h1oXDO2jgHA1KDSdBWoXZnRE9Zw0yTkCS0cpJ5JttLgCFfJVEwZZHPJTZwpwzyvm/HhdSSLGBdp2mGFoGBXa3cuTHWot/tG4GAGnsesiaUnS21hafE8///rJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GmpX60YQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzsG8XFn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5031F000FF;
-	Sat, 12 Sep 2026 12:18:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GmpX60YQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4A51F000FF;
+	Sat, 12 Sep 2026 12:19:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215541;
-	bh=M/nIns4di8vkOhUd5JTAN+hrv9euKRJ4HXd3kuJjS6A=;
+	s=korg; t=1789215546;
+	bh=iHhEtu6yCztKqhATNfWbrtoN7ymA9WOKIhyjcAfw0m0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EzsG8XFnkxeyB5PMfKl34PgRwKs5K0/bTjcTVcu0kxZyOVKxcVgN3xX/RhdNJflOP
-	 bFR4styJploPwv40R1D3jpVrCNASto4Tvw/nWKEltb9Ivz1DnOAz9lpJDE7Fw0/5Sn
-	 Mqsu+pkLagOy+W/AUL2t7C8DAFoSuP1R/W1NQLCg=
+	b=GmpX60YQcXOFbsz4ql+Ef9dyu5bWQindf3J1cHHMrsNaJ+DwtwRoJ4EufmjMwYBn8
+	 pzV8f/Wr6EiswGXpS8SpfMp2kOM3B587MPr0OtIEVZsynqvv9046YIIsK89Mnp7kFQ
+	 tdHqBY4GCBAIKUbuySTpg9iqwht+A9ED05nW9NbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Eugen Hristev <ehristev@kernel.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0516/1376] RDMA/hfi1: Initialize debugfs after probe completes
-Date: Sat, 12 Sep 2026 08:49:02 +0200
-Message-ID: <20260912065619.036935816@linuxfoundation.org>
+Subject: [PATCH 6.12 0552/1376] media: bcm2835-unicam: Fix asc leaked in error/remove path
+Date: Sat, 12 Sep 2026 08:49:38 +0200
+Message-ID: <20260912065619.840158287@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,52 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Eugen Hristev <ehristev@kernel.org>
 
-[ Upstream commit bb18740b302f6f222ce3d5a7e5c45a52a90df805 ]
+[ Upstream commit 253c9659e25131b0169f718e7d094ac1aa0d9279 ]
 
-Commit ed6f653fe430 ("staging/rdma/hfi1: Fix debugfs access race") moved
-debugfs creation after device initialization and IB registration so users
-cannot access the files before the driver is ready. However, init_one()
-still creates them before character device creation and SDMA startup
-finish.
+v4l2_async_nf_add_fwnode_remote() allocates the asc, which is freed when
+v4l2_async_nf_cleanup() is called.
 
-Move hfi1_dbg_ibdev_init() to the end of the successful probe path,
-matching hfi1_dbg_ibdev_exit() as the first action in remove_one().
+Call v4l2_async_nf_cleanup() properly in the driver paths.
 
-Fixes: ed6f653fe430 ("staging/rdma/hfi1: Fix debugfs access race")
-Link: https://patch.msgid.link/20260708-clean-init-one-hfi1-v1-12-b9e9641268a5@nvidia.com
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Discovered with kmemleak after rmmod:
+
+unreferenced object 0xffff000084526b80 (size 64):
+  comm "modprobe", pid 185, jiffies 4295013512
+  hex dump (first 32 bytes):
+    01 00 00 00 00 00 00 00 e8 0d ff bf 00 00 ff ff  ................
+    40 83 bc 84 00 00 ff ff 60 83 bc 84 00 00 ff ff  @.......`.......
+  backtrace (crc ac584083):
+    [<00000000ffb081a7>] kmemleak_alloc+0x38/0x44
+    [<00000000d2fd9301>] __kmalloc+0x1b0/0x250
+    [<000000004dd5354d>] __v4l2_async_nf_add_fwnode+0x28/0x9c
+    [<0000000067587657>] __v4l2_async_nf_add_fwnode_remote+0x3c/0x64
+
+Fixes: 392cd78d495f ("media: bcm2835-unicam: Add support for CCP2/CSI2 camera interface")
+Signed-off-by: Eugen Hristev <ehristev@kernel.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/init.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/media/platform/broadcom/bcm2835-unicam.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hfi1/init.c b/drivers/infiniband/hw/hfi1/init.c
-index d6846d77f9479..c862ae679c9ca 100644
---- a/drivers/infiniband/hw/hfi1/init.c
-+++ b/drivers/infiniband/hw/hfi1/init.c
-@@ -1637,11 +1637,8 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	 * we still create devices, so diags, etc. can be used
- 	 * to determine cause of problem.
- 	 */
--	if (!initfail && !ret) {
-+	if (!initfail && !ret)
- 		dd->flags |= HFI1_INITTED;
--		/* create debufs files after init and ib register */
--		hfi1_dbg_ibdev_init(&dd->verbs_dev);
--	}
- 
- 	j = hfi1_device_create(dd);
- 	if (j)
-@@ -1674,6 +1671,7 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	}
- 
- 	sdma_start(dd);
-+	hfi1_dbg_ibdev_init(&dd->verbs_dev);
- 
+diff --git a/drivers/media/platform/broadcom/bcm2835-unicam.c b/drivers/media/platform/broadcom/bcm2835-unicam.c
+index 9f81e1582a300..d94703ac1022a 100644
+--- a/drivers/media/platform/broadcom/bcm2835-unicam.c
++++ b/drivers/media/platform/broadcom/bcm2835-unicam.c
+@@ -2570,6 +2570,7 @@ static int unicam_async_nf_init(struct unicam_device *unicam)
  	return 0;
+ 
+ error:
++	v4l2_async_nf_cleanup(&unicam->notifier);
+ 	fwnode_handle_put(ep_handle);
+ 	return ret;
+ }
+@@ -2702,6 +2703,7 @@ static void unicam_remove(struct platform_device *pdev)
+ 	v4l2_device_unregister(&unicam->v4l2_dev);
+ 	media_device_unregister(&unicam->mdev);
+ 	v4l2_async_nf_unregister(&unicam->notifier);
++	v4l2_async_nf_cleanup(&unicam->notifier);
+ 
+ 	unicam_subdev_cleanup(unicam);
  
 -- 
 2.53.0
