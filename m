@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E22B1DA62E;
-	Sat, 12 Sep 2026 11:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B703F788A;
+	Sat, 12 Sep 2026 11:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213113; cv=none; b=deJ0WxjrUenSUSFAf7N4rEWE7qKlrNVmA2nOWxSTogNcg0sseukoUyAgyS7ikIq2pi8Fj7gG39+YE+6T6QaAkoe3QiaNpX+DByn2c1a1yeHqrG3cN6k12hMcSw666F6n3Q78FJ+Kexck2GEdhJC2UtMtdXYineyYo/Xov0i3tZ8=
+	t=1789213118; cv=none; b=LKkNJWvSBd7O6vkAbOrCErlaUaXpiM/3AVsA4irB07xiPs3ryMXvK8RCn4cQWDYHUX2mUvnu/wrfPkgVc7Cv1fr7SctX2nNLp40AtwkcYkbE8MO67sSShyNJq1GjJhegIKuCxb1htu9KjyZnRCqtui/+x16ZHHtoHn1O4Wtt/JA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213113; c=relaxed/simple;
-	bh=0zGibCCSQ5earzOqGOFC0781OBX+KwO1YF4MKM9b7OI=;
+	s=arc-20240116; t=1789213118; c=relaxed/simple;
+	bh=iQeSGJePbw21f1LWHidsxHUsfzKl9/9X2vFLksjmBss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A1owGAyuL0xe51ZpcPplZh/yTjCK8Bwh8594A7LwLG6pV/cuatrA/W4iyfUNGPQPPnk5+/C3E6KgM3bQLf7jbyapTuKTuUf/qXOdeqV1bL6YL3Mf/bNzmsWrSpCEFSoLtOg/kdYz5zYQO6KvdT3gfz3ZcWgLkmB/GojlnmlrJlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chT/1UyC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ea2ikk3mYoQrDijCRRukKZZz4TPhevIK2WxqzMCgGn/mwf+sqWK6oBE99oI/Fs5wwtV65T9pBZMw50vVmIFArL5vNDg1dgDKzInEQ5kO12LhtBA8KY3sVTT1wCE/SkpWa/v65vqWT8OqFb1QgatjBb5PeeWgUNxr/WIhY2BVgPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqX3eqJU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chT/1UyC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E67551F000FF;
-	Sat, 12 Sep 2026 11:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqX3eqJU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3671F000FF;
+	Sat, 12 Sep 2026 11:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213112;
-	bh=2v/daN+8ACioMGapTaZccxD/GT9/UgEEbfWOsWkcs8o=;
+	s=korg; t=1789213117;
+	bh=A7v/G3RGy4+4BmBw3monZd/ud0JWJ25ixsPvTcmu+IE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=chT/1UyCtU+HwATcf2+bntwbyYDhsiK6IVoni5u+4rHF/sClDtwHiylJ29PoYv+z1
-	 PDsJJhfWAC5T3ZgVeWWQpuACTV11BWVEilta9j1fYNoEa+iXNUyrclPIjtykeCvf7K
-	 FvYLAPuMBML5uztm5Ar+T19dzVxmdH+WH82Amsug=
+	b=eqX3eqJUCZ/bN/t4GMjb98f5swWIw0Ojx7jpixUJodCgCaOgM2DSHZnSzMBj/daLW
+	 OqGYJdxpWIQcHfbAuZjY1ZuDkV338Y9W8RCOKZd6u2JxWK9bZQ8rj+Uaj/rMkTFbud
+	 zYtgXu5+A6vSfxUmYIO/9U2qj9wLhatL3r3bsONw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 0056/1376] dm: fix resume-vs-remove race
-Date: Sat, 12 Sep 2026 08:41:22 +0200
-Message-ID: <20260912065608.806798635@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	Mostafa Saleh <smostafa@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	"Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: [PATCH 6.12 0057/1376] dma-direct: return struct page from dma_direct_alloc_from_pool()
+Date: Sat, 12 Sep 2026 08:41:23 +0200
+Message-ID: <20260912065608.829045618@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -49,39 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 
-commit 44b43ec132f1cf3275ecc182d0c82f50c3c4c3d5 upstream.
+commit 94a04ad732c9f8b9554270fc4038a06737de5c22 upstream.
 
-If the user issues the resume ioctl and the remove ioctl at the same
-time, it may be possible that the device is resumed after it is suspended
-in __dm_destroy. The result is that the table is destroyed without
-calling the postsuspend method.
+Commit 5b138c534fda ("dma-direct: factor out a dma_direct_alloc_from_pool
+helper") changed dma_direct_alloc_from_pool() to return the CPU address
+from dma_alloc_from_pool(). That fits dma_direct_alloc(), but
+dma_direct_alloc_pages() also uses the helper and expects a struct page *.
 
-Dm targets expect that they may be removed only after the postsuspend
-method method was called. If we break this expectation, it can cause
-misbehavior in various targets. For example - in the dm-integrity target,
-the reboot notifier is not unregistered, leading to use-after-free.
+Fix this by making dma_direct_alloc_from_pool() return the struct page *
+again, and pass the CPU address back through an out-parameter for the
+dma_direct_alloc() caller.
 
-Fix this bug by refusing to resume if the device is being destroyed.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 5b138c534fda ("dma-direct: factor out a dma_direct_alloc_from_pool helper")
 Cc: stable@vger.kernel.org
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Mostafa Saleh <smostafa@google.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
+Link: https://lore.kernel.org/r/20260717180442.110954-2-aneesh.kumar@kernel.org
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/dma/direct.c |   18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -3112,7 +3112,7 @@ retry:
- 	r = -EINVAL;
- 	mutex_lock_nested(&md->suspend_lock, SINGLE_DEPTH_NESTING);
+--- a/kernel/dma/direct.c
++++ b/kernel/dma/direct.c
+@@ -168,22 +168,21 @@ static bool dma_direct_use_pool(struct d
+ 	return !gfpflags_allow_blocking(gfp) && !is_swiotlb_for_alloc(dev);
+ }
  
--	if (!dm_suspended_md(md))
-+	if (!dm_suspended_md(md) || test_bit(DMF_FREEING, &md->flags))
- 		goto out;
+-static void *dma_direct_alloc_from_pool(struct device *dev, size_t size,
+-		dma_addr_t *dma_handle, gfp_t gfp)
++static struct page *dma_direct_alloc_from_pool(struct device *dev, size_t size,
++		dma_addr_t *dma_handle, void **cpu_addr, gfp_t gfp)
+ {
+ 	struct page *page;
+ 	u64 phys_limit;
+-	void *ret;
  
- 	if (dm_suspended_internally_md(md)) {
+ 	if (WARN_ON_ONCE(!IS_ENABLED(CONFIG_DMA_COHERENT_POOL)))
+ 		return NULL;
+ 
+ 	gfp |= dma_direct_optimal_gfp_mask(dev, &phys_limit);
+-	page = dma_alloc_from_pool(dev, size, &ret, gfp, dma_coherent_ok);
++	page = dma_alloc_from_pool(dev, size, cpu_addr, gfp, dma_coherent_ok);
+ 	if (!page)
+ 		return NULL;
+ 	*dma_handle = phys_to_dma_direct(dev, page_to_phys(page));
+-	return ret;
++	return page;
+ }
+ 
+ static void *dma_direct_alloc_no_mapping(struct device *dev, size_t size,
+@@ -251,8 +250,11 @@ void *dma_direct_alloc(struct device *de
+ 	 * the atomic pools instead if we aren't allowed block.
+ 	 */
+ 	if ((remap || force_dma_unencrypted(dev)) &&
+-	    dma_direct_use_pool(dev, gfp))
+-		return dma_direct_alloc_from_pool(dev, size, dma_handle, gfp);
++	    dma_direct_use_pool(dev, gfp)) {
++		page = dma_direct_alloc_from_pool(dev, size, dma_handle,
++						  &ret, gfp);
++		return page ? ret : NULL;
++	}
+ 
+ 	/* we always manually zero the memory once we are done */
+ 	page = __dma_direct_alloc_pages(dev, size, gfp & ~__GFP_ZERO, true);
+@@ -361,7 +363,7 @@ struct page *dma_direct_alloc_pages(stru
+ 	void *ret;
+ 
+ 	if (force_dma_unencrypted(dev) && dma_direct_use_pool(dev, gfp))
+-		return dma_direct_alloc_from_pool(dev, size, dma_handle, gfp);
++		return dma_direct_alloc_from_pool(dev, size, dma_handle, &ret, gfp);
+ 
+ 	page = __dma_direct_alloc_pages(dev, size, gfp, false);
+ 	if (!page)
 
 
