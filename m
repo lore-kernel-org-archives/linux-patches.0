@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FFC343899;
-	Sat, 12 Sep 2026 16:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E0F2BCF4C;
+	Sat, 12 Sep 2026 16:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231980; cv=none; b=pyhyAJsFZkIH1i+6Uv83pCj3mRbso1NLRh/Mevj+KeVjHMZxNMvL3IQwa/j5FpDWL00cPSGYOJCJF/SlZTi1mt6ivoG7hLBK/phOQPYY0B4WKGMwqkCQkikEhlTERlhn6X98kT34NCV6RUlOdT1Wca8Mz5U0ihylLgKPt2N96Qs=
+	t=1789231985; cv=none; b=KeKiBgezRixv10qcB9f4D5U8UUYuuAIDhfh6cXg5OUOHD9UO1KanqTQ1Ue3jAjqPLtU+0BqnkqOBg1OnBL8R64wBWqX0f5TmUgD+aqi12FyfvyL4Vh4Lij5XX5bh/Yr41nxEAsztW3yuSZ4hxOtKlYN24mVM1Nb2CU87KyewUBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231980; c=relaxed/simple;
-	bh=w1CaikvwOLnRVx8LXKHhLsicrj8TyGtqPU/GACyNyKE=;
+	s=arc-20240116; t=1789231985; c=relaxed/simple;
+	bh=4Bm0URaecYLBUmyEak0wu79QGSWoccByboMEAfGYTTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cil3cLmQ8dnb8IhTJFQlmrV2xuUfmb6x4WB6zibqjkG5Q5ZFtAIMinISSFTcccYU5Re1vyM9Y9+Kwdk7btnfjJKjQJhNZlw5D66+yMOYg0glqu+tJst5zxXYd7G2jRPMUB9HwpH9nLtFvseHASM9fznIvy3FLGhv4eKmir5w6XQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N6yV+hdQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SniLS2/VGBRKQO87gQnKnGfevXhZThrzCDoGr/p+3nbJaEUYBUr76IhLCTXdNdW4WucuxuF7OMY5MdnF4JNKGHgRZoQWRQFb37YOmv83PJiErPyHXT9pZrw/a3pb1gypRvs6uhV6mVg7aU/Ki9k5ftlQ6I+lRYAJ1Aei0dEFLCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SEHex3m+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6yV+hdQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CFF1F000FF;
-	Sat, 12 Sep 2026 16:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SEHex3m+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC2061F000FF;
+	Sat, 12 Sep 2026 16:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231978;
-	bh=HC3dmlUcWy1aTFYkddHp0YhxRtCbyo8s+1Bj99FG018=;
+	s=korg; t=1789231983;
+	bh=5EhFAsg1CHOIg4Mn1p29OnBFcsH4gXddTH/meBlduns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N6yV+hdQNFfbJJazQjbpR2BnmkA+vUb2b97bsEcsXVClgPgntjiPB336+WxzNUtWl
-	 n7gf9UBRMbM8V+z4muw6suXwZFWbU9W7aRF9PUOy+FbhAR6JLbc4EDmt3WieJgv602
-	 EYmKjc7AqCuCwr+Acvssk7AMC7dq4KNNv+EhfouY=
+	b=SEHex3m+z0iPumJ/BUkEQwOHfCDV+Gfdg6Q55VRCYtd5N7iEm6Tm8IwzmNHlDO1XP
+	 KKy5SkEaEQFVQA0ubhjh7Q5IFR9u/3RE+CuEeRd9/M9IWHqdgN9Qox20CL6x41O82o
+	 zu8/Sp5qE/pstgtlTC6Q019m8pTm/YF75czEouRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1056/1191] fs/ntfs3: fix out-of-bounds read in read_log_rec_buf()
-Date: Sat, 12 Sep 2026 09:03:04 +0200
-Message-ID: <20260912065611.892215922@linuxfoundation.org>
+Subject: [PATCH 6.1 1103/1191] net_sched: act_skbmod: use RCU in tcf_skbmod_dump()
+Date: Sat, 12 Sep 2026 09:03:51 +0200
+Message-ID: <20260912065612.927930999@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,68 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit de603b9d377fab57a5e6432fa84a9f36b32c1636 ]
+[ Upstream commit 53df77e7859042a92914d664c860f65d9689f88d ]
 
-read_log_rec_buf() copies a log record into a caller buffer starting at
+Also storing tcf_action into struct tcf_skbmod_params
+makes sure there is no discrepancy in tcf_skbmod_act().
 
-	u32 off = lsn_to_page_off(log, lsn) + log->record_header_len;
+No longer block BH in tcf_skbmod_init() when acquiring tcf_lock.
 
-log->record_header_len (and log->data_off, used for the following pages)
-comes verbatim from the on-disk restart area and is only checked for
-8-byte alignment in is_rst_area_valid(), so off can exceed
-log->page_size. "tail = log->page_size - off" then underflows and
-memcpy() reads past the page_size-sized buffer returned by
-read_log_page(), spilling adjacent slab memory into the replay buffer.
-
-This is reachable by mounting a crafted NTFS image:
-
- BUG: KASAN: slab-out-of-bounds in read_log_rec_buf+0x216/0x580
- Read of size 64 at addr ffff88800a877ff8 by task exploit/127
-  read_log_rec_buf fs/ntfs3/fslog.c:2299
-  log_replay fs/ntfs3/fslog.c:4216
-  ntfs_loadlog_and_replay fs/ntfs3/fsntfs.c:324
-  ntfs_fill_super fs/ntfs3/super.c:1392
-  get_tree_bdev_flags fs/super.c:1694
-  __x64_sys_mount fs/namespace.c:4360
- The buggy address is located 4088 bytes to the right of
- the 4096-byte region [ffff88800a876000, ffff88800a877000)
-
-Reject an in-page offset outside the current page before the copy.
-
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Assisted-by: Claude:claude-opus-4-8
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-[almaz.alexandrovich@paragon-software.com: replaced the >= sign with >]
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250827125349.3505302-5-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 81d0d1e64f30 ("net/sched: act_skbmod: fix length calculations and avoid invalid header warnings")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ include/net/tc_act/tc_skbmod.h |  1 +
+ net/sched/act_skbmod.c         | 26 ++++++++++++--------------
+ 2 files changed, 13 insertions(+), 14 deletions(-)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index cf5e52602256d..c0f4822699a9b 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -2303,7 +2303,15 @@ static int read_log_rec_buf(struct ntfs_log *log,
- 	 */
- 	for (;;) {
- 		bool usa_error;
--		u32 tail = log->page_size - off;
-+		u32 tail;
-+
-+		/* off comes from the on-disk restart area; bound it. */
-+		if (off > log->page_size) {
-+			err = -EINVAL;
-+			goto out;
-+		}
-+
-+		tail = log->page_size - off;
+diff --git a/include/net/tc_act/tc_skbmod.h b/include/net/tc_act/tc_skbmod.h
+index 7c240d2fed4e3..626704cd6241b 100644
+--- a/include/net/tc_act/tc_skbmod.h
++++ b/include/net/tc_act/tc_skbmod.h
+@@ -12,6 +12,7 @@
+ struct tcf_skbmod_params {
+ 	struct rcu_head	rcu;
+ 	u64	flags; /*up to 64 types of operations; extend if needed */
++	int	action;
+ 	u8	eth_dst[ETH_ALEN];
+ 	u16	eth_type;
+ 	u8	eth_src[ETH_ALEN];
+diff --git a/net/sched/act_skbmod.c b/net/sched/act_skbmod.c
+index 744ff9729469e..94a18d029b28a 100644
+--- a/net/sched/act_skbmod.c
++++ b/net/sched/act_skbmod.c
+@@ -25,19 +25,18 @@ static int tcf_skbmod_act(struct sk_buff *skb, const struct tc_action *a,
+ 			  struct tcf_result *res)
+ {
+ 	struct tcf_skbmod *d = to_skbmod(a);
+-	int action, max_edit_len, err;
+ 	struct tcf_skbmod_params *p;
++	int max_edit_len, err;
+ 	u64 flags;
  
- 		if (tail >= data_len)
- 			tail = data_len;
+ 	tcf_lastuse_update(&d->tcf_tm);
+ 	bstats_update(this_cpu_ptr(d->common.cpu_bstats), skb);
+ 
+-	action = READ_ONCE(d->tcf_action);
+-	if (unlikely(action == TC_ACT_SHOT))
++	p = rcu_dereference_bh(d->skbmod_p);
++	if (unlikely(p->action == TC_ACT_SHOT))
+ 		goto drop;
+ 
+ 	max_edit_len = skb_mac_header_len(skb);
+-	p = rcu_dereference_bh(d->skbmod_p);
+ 	flags = p->flags;
+ 
+ 	/* tcf_skbmod_init() guarantees "flags" to be one of the following:
+@@ -83,7 +82,7 @@ static int tcf_skbmod_act(struct sk_buff *skb, const struct tc_action *a,
+ 		INET_ECN_set_ce(skb);
+ 
+ out:
+-	return action;
++	return p->action;
+ 
+ drop:
+ 	qstats_overlimit_inc(this_cpu_ptr(d->common.cpu_qstats));
+@@ -191,9 +190,9 @@ static int tcf_skbmod_init(struct net *net, struct nlattr *nla,
+ 	}
+ 
+ 	p->flags = lflags;
+-
++	p->action = parm->action;
+ 	if (ovr)
+-		spin_lock_bh(&d->tcf_lock);
++		spin_lock(&d->tcf_lock);
+ 	/* Protected by tcf_lock if overwriting existing action. */
+ 	goto_ch = tcf_action_set_ctrlact(*a, parm->action, goto_ch);
+ 	p_old = rcu_dereference_protected(d->skbmod_p, 1);
+@@ -207,7 +206,7 @@ static int tcf_skbmod_init(struct net *net, struct nlattr *nla,
+ 
+ 	rcu_assign_pointer(d->skbmod_p, p);
+ 	if (ovr)
+-		spin_unlock_bh(&d->tcf_lock);
++		spin_unlock(&d->tcf_lock);
+ 
+ 	if (p_old)
+ 		kfree_rcu(p_old, rcu);
+@@ -246,10 +245,9 @@ static int tcf_skbmod_dump(struct sk_buff *skb, struct tc_action *a,
+ 	opt.index   = d->tcf_index;
+ 	opt.refcnt  = refcount_read(&d->tcf_refcnt) - ref,
+ 	opt.bindcnt = atomic_read(&d->tcf_bindcnt) - bind;
+-	spin_lock_bh(&d->tcf_lock);
+-	opt.action = d->tcf_action;
+-	p = rcu_dereference_protected(d->skbmod_p,
+-				      lockdep_is_held(&d->tcf_lock));
++	rcu_read_lock();
++	p = rcu_dereference(d->skbmod_p);
++	opt.action = p->action;
+ 	opt.flags  = p->flags;
+ 	if (nla_put(skb, TCA_SKBMOD_PARMS, sizeof(opt), &opt))
+ 		goto nla_put_failure;
+@@ -267,10 +265,10 @@ static int tcf_skbmod_dump(struct sk_buff *skb, struct tc_action *a,
+ 	if (nla_put_64bit(skb, TCA_SKBMOD_TM, sizeof(t), &t, TCA_SKBMOD_PAD))
+ 		goto nla_put_failure;
+ 
+-	spin_unlock_bh(&d->tcf_lock);
++	rcu_read_unlock();
+ 	return skb->len;
+ nla_put_failure:
+-	spin_unlock_bh(&d->tcf_lock);
++	rcu_read_unlock();
+ 	nlmsg_trim(skb, b);
+ 	return -1;
+ }
 -- 
 2.53.0
 
