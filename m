@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A7B3839B8;
-	Sat, 12 Sep 2026 08:13:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF63B3839B8;
+	Sat, 12 Sep 2026 08:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200804; cv=none; b=IesHkzvpnFNS3b8pSpcgX9diohS6Ihzr+ycKqifk981uNgn40V0vlboxoEDC4S9lTqIK1ZnfjsGy81Q50tvVJUuOGBBSUYqMxqhSAoW3pBx5xoPwASiRGuFrfOVNj7xbBgaoQFYBhQuRB2ZbISVRe9qf0y2Vmz95QyJuhIU5ON8=
+	t=1789200810; cv=none; b=bk3Ztezs7xVjfrD04KvtjIM6KzUQvv5f25QLC6gFRLiIKH4LpiHMvKfTp1mBYrjZGFWE72nApJNq0RnExTYeN6ifAvQBKwfPXYNT1N4yOR1ypuWxmyVGDaGUoutXddAwtzr2P4JDDwZ04tm7QBO1cWCxI98wLrX2uCttbEhlFWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200804; c=relaxed/simple;
-	bh=2BclDbMDLakmEKaInoFYbJuxoBllqvd9uAf9H3p84v8=;
+	s=arc-20240116; t=1789200810; c=relaxed/simple;
+	bh=GPPDfMUbKyVq7uELMiSUwQJcY5yZS3fJGVz5CA0OQio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I3OV47PoFqYUs8JVZBxqq8nPiOlQvA8HZtLgyyc1Zv9EBBAG+3FU7vZo++rSY4gIC8N8SoPyntP0/MBcMJUJ8Mn+C/GIJ7z7TpExC+M9Esun+iLEZIJVH4iytgqwTYdCO/HrbFx4GyazdfWYDx519lBS1Y80lO9i/Uw/gdxo/Pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FPQmT4+p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O23ZWS8ULo2QJaulCytmC7HOraMRHacdw6Pc9p0XzllWTW2K9+k83wDtb6IlyFwrg3kaf/DayBQxv7ayPDQPAKw6Oe2pExeeV38/PbEBuH+PcpTQ2ZV0+g0mtY7LdTkFXEmfTh6encgLW6jni4NZgooKLxDMpIIe/S//S/z2c+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wi2YDjIg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FPQmT4+p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C1601F000FF;
-	Sat, 12 Sep 2026 08:13:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wi2YDjIg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905E61F000FF;
+	Sat, 12 Sep 2026 08:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200802;
-	bh=hnP1O6Di0jh/5zYMZp3Bmefo9YYgP8BFfQ1T1w8KOYQ=;
+	s=korg; t=1789200807;
+	bh=mCDQRd8z8RpTOEtHGvuKKqtv2gLSKQ1Pf7lxvV63Y+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FPQmT4+poKtFMto7cKRdkCdl3Pi64ZTZ78EyT7/mbk+c9rF2hip2J9hUKGKLDcE+l
-	 /tz5nCHSGj+5KVYYveHUAmIcu3HBaEwu9Dpy+BvCweyDu9m0/f5uaXym1NSOF50xzm
-	 vkOiBEsBigsaKp1HVyS9sszVL4cQaMC5jEK8S04o=
+	b=wi2YDjIgD0zxkGRTnl1TJQU/qv8Hh//AZ1oVwOl/1sMU3fI11qlC2ES8cIO0iLcg5
+	 nsl80aIbb4CNazVjIyhPch0qBACO32KaJ2maW1+/Voxbx5U5WY4AUjGE5jyRSRVle8
+	 htRjvqHMcz1UjaOTYxhDTnq/y/J6/Rbfy/Q9fftM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Larsson <benjamin.larsson@genexis.eu>,
-	Zhi-Jun You <hujy652@gmail.com>,
+	Stella Liu <yu-ching.liu@mediatek.com>,
+	Jeremy Yu <chengwei.yu@mediatek.com>,
+	Sean Wang <sean.wang@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0863/1815] wifi: mt76: mt7915: fix net_fill_forward_path for non-DBDC mt7986
-Date: Sat, 12 Sep 2026 08:43:33 +0200
-Message-ID: <20260912065709.183591358@linuxfoundation.org>
+Subject: [PATCH 7.2 0864/1815] wifi: mt76: connac: add NAN connection type
+Date: Sat, 12 Sep 2026 08:43:34 +0200
+Message-ID: <20260912065709.205865531@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,80 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhi-Jun You <hujy652@gmail.com>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit bade0d238b60c29dafcc7da17501fa489495d6ae ]
+[ Upstream commit b7ab9f780dc8f6cc9ce30333e9f131ed3419c6b3 ]
 
-Current implementation assumes that the hardware supports DBDC or single
-band and binds to band0.
+Introduce a dedicated NAN connection type for connac firmware and use it
+for NAN interface device, BSS and station records.
 
-This causes net_fill_forward_path to select the wrong queue for non-DBDC
-mt7986 because it binds to band1 and getting the following in dmesg:
+Add the common NAN MCU command and event IDs used by mt7925.
 
-ieee80211 phy2: WA: --> drop by reaseon:1, msdu id = 0xc002 but failed!
-mtk_wed1: error status=00000002
-ieee80211 phy2: WA: txblk
-10324e00
-len = 128
-DW0 : 10 00 00 00
-DW1 : 00 00 00 00
-DW2 : 00 00 00 00
-DW3 : 72 0f 94 68
-DW4 : 00 00 00 00
-DW5 : ff 03 00 00
-DW6 : 00 00 3c 40
-DW7 : 00 17 dd 14
-DW8 : 79 6f 00 00
-DW9 : 02 c0 00 00
-DW10 : 58 c5 34 10
-DW11 : 00 00 00 00
-DW12 : 00 06 3e 00
-DW13 : 00 00 00 80
-DW14 : 10 8c 00 00
-DW15 : 00 00 00 00
-DW16 : 00 00 00 00
-DW17 : 00 00 00 00
-DW18 : 00 00 00 00
-DW19 : 00 00 00 00
-DW20 : 00 00 00 00
-DW21 : 00 00 00 00
-DW22 : 00 00 00 00
-DW23 : 00 00 00 00
-DW24 : 00 00 00 00
-DW25 : 00 00 00 00
-DW26 : 00 00 00 00
-DW27 : 00 00 00 00
-DW28 : 00 00 00 00
-DW29 : 00 00 00 00
-DW30 : 00 00 00 00
-DW31 : 00 00 00 00
-
-Fix it by using phy->mt76->band_idx for queue which works for both
-non-DBDC and DBDC devices.
-
-Fixes: f68d67623dec ("mt76: mt7915: add Wireless Ethernet Dispatch support")
-Suggested-by: Benjamin Larsson <benjamin.larsson@genexis.eu>
-Signed-off-by: Zhi-Jun You <hujy652@gmail.com>
-Link: https://patch.msgid.link/20260715152113.553-2-hujy652@gmail.com
+Co-developed-by: Stella Liu <yu-ching.liu@mediatek.com>
+Signed-off-by: Stella Liu <yu-ching.liu@mediatek.com>
+Co-developed-by: Jeremy Yu <chengwei.yu@mediatek.com>
+Signed-off-by: Jeremy Yu <chengwei.yu@mediatek.com>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/20260625001834.475094-4-sean.wang@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: 217f9e7bb025 ("wifi: mt76: mt792x: fix use-after-free in mt76_rx_poll_complete")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/wireless/mediatek/mt76/mt76_connac_mcu.c   | 14 ++++++++++++++
+ .../net/wireless/mediatek/mt76/mt76_connac_mcu.h   |  4 ++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-index 51643a48ed151..044b592efe284 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-@@ -1743,7 +1743,7 @@ mt7915_net_fill_forward_path(struct ieee80211_hw *hw,
- 	path->mtk_wdma.wdma_idx = wed->wdma_idx;
- 	path->mtk_wdma.bss = mvif->mt76.idx;
- 	path->mtk_wdma.wcid = is_mt7915(&dev->mt76) ? msta->wcid.idx : 0x3ff;
--	path->mtk_wdma.queue = phy != &dev->phy;
-+	path->mtk_wdma.queue = phy->mt76->band_idx;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
+index 58b0b15e4fd6f..69a2f5398404d 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
+@@ -422,6 +422,10 @@ void mt76_connac_mcu_sta_basic_tlv(struct mt76_dev *dev, struct sk_buff *skb,
+ 		basic->conn_type = cpu_to_le32(CONNECTION_IBSS_ADHOC);
+ 		basic->aid = cpu_to_le16(link_sta->sta->aid);
+ 		break;
++	case NL80211_IFTYPE_NAN:
++	case NL80211_IFTYPE_NAN_DATA:
++		basic->conn_type = cpu_to_le32(CONNECTION_NAN);
++		break;
+ 	default:
+ 		WARN_ON(1);
+ 		break;
+@@ -1217,6 +1221,11 @@ int mt76_connac_mcu_uni_add_dev(struct mt76_phy *phy,
+ 	case NL80211_IFTYPE_ADHOC:
+ 		basic_req.basic.conn_type = cpu_to_le32(CONNECTION_IBSS_ADHOC);
+ 		break;
++	case NL80211_IFTYPE_NAN:
++	case NL80211_IFTYPE_NAN_DATA:
++		basic_req.basic.conn_type = cpu_to_le32(CONNECTION_NAN);
++		basic_req.basic.conn_state = !enable;
++		break;
+ 	default:
+ 		WARN_ON(1);
+ 		break;
+@@ -1627,6 +1636,11 @@ int mt76_connac_mcu_uni_add_bss(struct mt76_phy *phy,
+ 	case NL80211_IFTYPE_ADHOC:
+ 		basic_req.basic.conn_type = cpu_to_le32(CONNECTION_IBSS_ADHOC);
+ 		break;
++	case NL80211_IFTYPE_NAN:
++	case NL80211_IFTYPE_NAN_DATA:
++		basic_req.basic.conn_type = cpu_to_le32(CONNECTION_NAN);
++		basic_req.basic.active = enable;
++		break;
+ 	default:
+ 		WARN_ON(1);
+ 		break;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
+index 78f633ad81a07..a9a4a87ae0a76 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
+@@ -876,6 +876,7 @@ enum {
+ #define NETWORK_P2P			BIT(17)
+ #define NETWORK_IBSS			BIT(18)
+ #define NETWORK_WDS			BIT(21)
++#define NETWORK_NAN			BIT(22)
  
- 	ctx->dev = NULL;
+ #define SCAN_FUNC_RANDOM_MAC		BIT(0)
+ #define SCAN_FUNC_RNR_SCAN		BIT(3)
+@@ -888,6 +889,7 @@ enum {
+ #define CONNECTION_IBSS_ADHOC		(STA_TYPE_ADHOC | NETWORK_IBSS)
+ #define CONNECTION_WDS			(STA_TYPE_WDS | NETWORK_WDS)
+ #define CONNECTION_INFRA_BC		(STA_TYPE_BC | NETWORK_INFRA)
++#define CONNECTION_NAN			(NETWORK_NAN)
  
+ #define CONN_STATE_DISCONNECT		0
+ #define CONN_STATE_CONNECT		1
+@@ -1074,6 +1076,7 @@ enum {
+ 	MCU_UNI_EVENT_THERMAL = 0x35,
+ 	MCU_UNI_EVENT_RSSI_MONITOR = 0x41,
+ 	MCU_UNI_EVENT_NIC_CAPAB = 0x43,
++	MCU_UNI_EVENT_NAN = 0x56,
+ 	MCU_UNI_EVENT_WED_RRO = 0x57,
+ 	MCU_UNI_EVENT_PER_STA_INFO = 0x6d,
+ 	MCU_UNI_EVENT_ALL_STA_INFO = 0x6e,
+@@ -1313,6 +1316,7 @@ enum {
+ 	MCU_UNI_CMD_FIXED_RATE_TABLE = 0x40,
+ 	MCU_UNI_CMD_RSSI_MONITOR = 0x41,
+ 	MCU_UNI_CMD_TESTMODE_CTRL = 0x46,
++	MCU_UNI_CMD_NAN	= 0x56,
+ 	MCU_UNI_CMD_RRO = 0x57,
+ 	MCU_UNI_CMD_OFFCH_SCAN_CTRL = 0x58,
+ 	MCU_UNI_CMD_PER_STA_INFO = 0x6d,
 -- 
 2.53.0
 
