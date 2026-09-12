@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E213DB31A;
-	Sat, 12 Sep 2026 12:56:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B35B3DB31A;
+	Sat, 12 Sep 2026 12:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217804; cv=none; b=n+vfz8bxNM8t4s4GIdESLpVRXul0GpnO3KJZiV40sCnfITdNhcFBksijz1FaoAHBAe0Mmnc6QpXy6h16wcqvM3T/w2UohD2IzAVlmrwJaobJ0zI8G8OfoEaboGA/+r02WxQ9IwSXmq+SQvkxs+csSsiiSMNENE4MIE2PqAdbsfs=
+	t=1789217809; cv=none; b=Oq1oz8R3eFmspcJ+VXYM1at1Sfq5PrHAM4f37ztWQHvZSnyT8byXaSW+0W0JpC4XIkHc6ZAtyPTWzI/y85h3aBO2MVsetjnIjayVnjX+NH+G8w4HXtJmlLPUHfzPAomVgNUAIvXL42XimDuXciTEGjnDFYE3pzqT40zi1p9SNBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217804; c=relaxed/simple;
-	bh=Lb8si3964V97073NQwOq7zZuVVJtd82h5J927+6v7Y0=;
+	s=arc-20240116; t=1789217809; c=relaxed/simple;
+	bh=khJ4syU2qg0L7BCP7NhnORqBtRheOjUIjL4aBlNsI7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ACbL9b6qcJu2BeRNarlefrLT18olRBOWn/+8MwLMv5qqH41XTufdjxkFyilgEv9Kuw6HqtBj7VeCd9PWIk5qFRcMTA6lzoV/RAgkx020km8f9sUwd/2h6LIvKnNXUv4qkjyLOorjZvdaMkR1xuG3rUcpyf+HSNeeo51sRQKpwE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlcmoALs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l8zsetWZS8G1DrHtEpTsf6nFymM5tE77K/mZIc+6cjFDDfuCK+APzsYyL/qFRojG+GfCR7+laq53LE7jVGn27kMlWaOSvuw74OUNx8sHuIu3v0QpF0metX4XfjdngLxy02+VArPzr1E1arR1Cn1qG/wVnA2xvju819699aAXU/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jDzdPDRb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlcmoALs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 957FF1F000FF;
-	Sat, 12 Sep 2026 12:56:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jDzdPDRb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B7B1F000FF;
+	Sat, 12 Sep 2026 12:56:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217802;
-	bh=x82/XxU+/gIdd8SxO9ODgMQ3P0o1cfK9XJR6r1CrZQg=;
+	s=korg; t=1789217807;
+	bh=JGKpvPvE8+L+bNt0xoRDOdx1gcHSJ0PUby4xz62gmVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nlcmoALsy1QgmpZffP2RuaPdg114h7070HDS0zSkaKxtCPu19vaYvasH/FMMqlRtf
-	 YiucmDvGYZDyI+lXig1XsN6qz6zWtBqLxN3q8POBrZ9Spso+m6XppIn0t9oGqyAzfU
-	 iP3+BJ7DQ4q6eK5WKqexP4zKk5MeqN5/sgLZEYHg=
+	b=jDzdPDRbtPwEtzqovm8SsTfu5nolDeVJhu+hdWKkxSm9GX4o7MVle0GdMay9gTXad
+	 YtinspYUqB067NOQk8PBzmad1TtBbtCIU7KerxrebP3eQg1hVCM8PJUyUGIT/jJNHW
+	 NrikhY0AJ0vyVfw+7uIQ01oHokU38MxvoCVCUONo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -41,9 +41,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Veronika Molnarova <vmolnaro@redhat.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1012/1376] perf test: Add a signal handler to kill forked child processes
-Date: Sat, 12 Sep 2026 08:57:18 +0200
-Message-ID: <20260912065630.117902324@linuxfoundation.org>
+Subject: [PATCH 6.12 1013/1376] perf test: Sort tests placing exclusive tests last
+Date: Sat, 12 Sep 2026 08:57:19 +0200
+Message-ID: <20260912065630.140211761@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -64,12 +64,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 553d5efeb341f2f814f937e0658ed7d22f625662 ]
+[ Upstream commit 7449a4d674cc14f8e689cecf7354748706d00f30 ]
 
-If the `perf test` process is killed the child tests continue running
-and may run indefinitely. Propagate SIGINT (ctrl-C) and SIGTERM (kill)
-signals to the running child processes so that they terminate when the
-parent is killed.
+This allows a uniform test numbering even though two passes are used
+to execute them.
 
 Signed-off-by: Ian Rogers <irogers@google.com>
 Cc: Colin Ian King <colin.i.king@gmail.com>
@@ -83,80 +81,252 @@ Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Cc: Athira Jajeev <atrajeev@linux.vnet.ibm.com>
 Cc: Michael Petlan <mpetlan@redhat.com>
 Cc: Veronika Molnarova <vmolnaro@redhat.com>
-Link: https://lore.kernel.org/r/20241025192109.132482-10-irogers@google.com
+Link: https://lore.kernel.org/r/20241025192109.132482-11-irogers@google.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Stable-dep-of: 44e82c4d2ff3 ("perf test: Fix skiplist leak in cmd_test")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/builtin-test.c | 37 ++++++++++++++++++++++++++++++---
- 1 file changed, 34 insertions(+), 3 deletions(-)
+ tools/perf/tests/builtin-test.c | 125 +++++++++++++++++++++-----------
+ 1 file changed, 84 insertions(+), 41 deletions(-)
 
 diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
-index c240000f8b328..b9a9ce98cff6f 100644
+index b9a9ce98cff6f..af5a5c2e3154b 100644
 --- a/tools/perf/tests/builtin-test.c
 +++ b/tools/perf/tests/builtin-test.c
-@@ -476,13 +476,22 @@ static int start_test(struct test_suite *test, int i, int subi, struct child_tes
- 	for (j = 0, k = 0; j < ARRAY_SIZE(tests); j++, k = 0)	\
- 		while ((t = tests[j][k++]) != NULL)
+@@ -140,12 +140,6 @@ static struct test_suite *generic_tests[] = {
+ 	NULL,
+ };
  
-+/* State outside of __cmd_test for the sake of the signal handler. */
-+
-+static size_t num_tests;
-+static struct child_test **child_tests;
-+static jmp_buf cmd_test_jmp_buf;
-+
-+static void cmd_test_sig_handler(int sig)
-+{
-+	siglongjmp(cmd_test_jmp_buf, sig);
-+}
-+
- static int __cmd_test(int argc, const char *argv[], struct intlist *skiplist)
+-static struct test_suite **tests[] = {
+-	generic_tests,
+-	arch_tests,
+-	NULL, /* shell tests created at runtime. */
+-};
+-
+ static struct test_workload *workloads[] = {
+ 	&workload__noploop,
+ 	&workload__thloop,
+@@ -472,10 +466,6 @@ static int start_test(struct test_suite *test, int i, int subi, struct child_tes
+ 	return start_command(&(*child)->process);
+ }
+ 
+-#define for_each_test(j, k, t)					\
+-	for (j = 0, k = 0; j < ARRAY_SIZE(tests); j++, k = 0)	\
+-		while ((t = tests[j][k++]) != NULL)
+-
+ /* State outside of __cmd_test for the sake of the signal handler. */
+ 
+ static size_t num_tests;
+@@ -487,22 +477,21 @@ static void cmd_test_sig_handler(int sig)
+ 	siglongjmp(cmd_test_jmp_buf, sig);
+ }
+ 
+-static int __cmd_test(int argc, const char *argv[], struct intlist *skiplist)
++static int __cmd_test(struct test_suite **suites, int argc, const char *argv[],
++		      struct intlist *skiplist)
  {
- 	struct test_suite *t;
--	int width = 0;
-+	static int width = 0;
- 	unsigned int j, k;
--	size_t num_tests = 0;
--	struct child_test **child_tests;
+-	struct test_suite *t;
+ 	static int width = 0;
+-	unsigned int j, k;
  	int err = 0;
  
- 	for_each_test(j, k, t) {
-@@ -506,6 +515,26 @@ static int __cmd_test(int argc, const char *argv[], struct intlist *skiplist)
- 	if (!child_tests)
- 		return -ENOMEM;
+-	for_each_test(j, k, t) {
+-		int len = strlen(test_description(t, -1));
++	for (struct test_suite **t = suites; *t; t++) {
++		int len = strlen(test_description(*t, -1));
  
-+	err = sigsetjmp(cmd_test_jmp_buf, 1);
-+	if (err) {
-+		pr_err("\nSignal (%d) while running tests.\nTerminating tests with the same signal\n",
-+		       err);
-+		for (size_t x = 0; x < num_tests; x++) {
-+			struct child_test *child_test = child_tests[x];
-+
-+			if (!child_test)
-+				continue;
-+
-+			pr_debug3("Killing %d pid %d\n",
-+				  child_test->test_num + 1,
-+				  child_test->process.pid);
-+			kill(child_test->process.pid, err);
-+		}
-+		goto err_out;
-+	}
-+	signal(SIGINT, cmd_test_sig_handler);
-+	signal(SIGTERM, cmd_test_sig_handler);
-+
- 	/*
- 	 * In parallel mode pass 1 runs non-exclusive tests in parallel, pass 2
- 	 * runs the exclusive tests sequentially. In other modes all tests are
-@@ -566,6 +595,8 @@ static int __cmd_test(int argc, const char *argv[], struct intlist *skiplist)
+ 		if (width < len)
+ 			width = len;
+ 
+-		if (has_subtests(t)) {
+-			for (int subi = 0, subn = num_subtests(t); subi < subn; subi++) {
+-				len = strlen(test_description(t, subi));
++		if (has_subtests(*t)) {
++			for (int subi = 0, subn = num_subtests(*t); subi < subn; subi++) {
++				len = strlen(test_description(*t, subi));
+ 				if (width < len)
+ 					width = len;
+ 				num_tests++;
+@@ -544,18 +533,18 @@ static int __cmd_test(int argc, const char *argv[], struct intlist *skiplist)
+ 		int child_test_num = 0;
+ 		int i = 0;
+ 
+-		for_each_test(j, k, t) {
++		for (struct test_suite **t = suites; *t; t++) {
+ 			int curr = i++;
+ 
+-			if (!perf_test__matches(test_description(t, -1), curr, argc, argv)) {
++			if (!perf_test__matches(test_description(*t, -1), curr, argc, argv)) {
+ 				/*
+ 				 * Test suite shouldn't be run based on
+ 				 * description. See if subtest should.
+ 				 */
+ 				bool skip = true;
+ 
+-				for (int subi = 0, subn = num_subtests(t); subi < subn; subi++) {
+-					if (perf_test__matches(test_description(t, subi),
++				for (int subi = 0, subn = num_subtests(*t); subi < subn; subi++) {
++					if (perf_test__matches(test_description(*t, subi),
+ 								curr, argc, argv))
+ 						skip = false;
+ 				}
+@@ -565,24 +554,24 @@ static int __cmd_test(int argc, const char *argv[], struct intlist *skiplist)
+ 			}
+ 
+ 			if (intlist__find(skiplist, i)) {
+-				pr_info("%3d: %-*s:", curr + 1, width, test_description(t, -1));
++				pr_info("%3d: %-*s:", curr + 1, width, test_description(*t, -1));
+ 				color_fprintf(stderr, PERF_COLOR_YELLOW, " Skip (user override)\n");
+ 				continue;
+ 			}
+ 
+-			if (!has_subtests(t)) {
+-				err = start_test(t, curr, -1, &child_tests[child_test_num++],
++			if (!has_subtests(*t)) {
++				err = start_test(*t, curr, -1, &child_tests[child_test_num++],
+ 						 width, pass);
+ 				if (err)
+ 					goto err_out;
+ 				continue;
+ 			}
+-			for (int subi = 0, subn = num_subtests(t); subi < subn; subi++) {
+-				if (!perf_test__matches(test_description(t, subi),
++			for (int subi = 0, subn = num_subtests(*t); subi < subn; subi++) {
++				if (!perf_test__matches(test_description(*t, subi),
+ 							curr, argc, argv))
+ 					continue;
+ 
+-				err = start_test(t, curr, subi, &child_tests[child_test_num++],
++				err = start_test(*t, curr, subi, &child_tests[child_test_num++],
+ 						 width, pass);
+ 				if (err)
+ 					goto err_out;
+@@ -606,27 +595,25 @@ static int __cmd_test(int argc, const char *argv[], struct intlist *skiplist)
+ 	return err;
+ }
+ 
+-static int perf_test__list(int argc, const char **argv)
++static int perf_test__list(struct test_suite **suites, int argc, const char **argv)
+ {
+-	unsigned int j, k;
+-	struct test_suite *t;
+ 	int i = 0;
+ 
+-	for_each_test(j, k, t) {
++	for (struct test_suite **t = suites; *t; t++) {
+ 		int curr = i++;
+ 
+-		if (!perf_test__matches(test_description(t, -1), curr, argc, argv))
++		if (!perf_test__matches(test_description(*t, -1), curr, argc, argv))
+ 			continue;
+ 
+-		pr_info("%3d: %s\n", i, test_description(t, -1));
++		pr_info("%3d: %s\n", i, test_description(*t, -1));
+ 
+-		if (has_subtests(t)) {
+-			int subn = num_subtests(t);
++		if (has_subtests(*t)) {
++			int subn = num_subtests(*t);
+ 			int subi;
+ 
+ 			for (subi = 0; subi < subn; subi++)
+ 				pr_info("%3d:%1d: %s\n", i, subi + 1,
+-					test_description(t, subi));
++					test_description(*t, subi));
  		}
  	}
- err_out:
-+	signal(SIGINT, SIG_DFL);
-+	signal(SIGTERM, SIG_DFL);
- 	if (err) {
- 		pr_err("Internal test harness failure. Completing any started tests:\n:");
- 		for (size_t x = 0; x < num_tests; x++)
+ 	return 0;
+@@ -654,6 +641,55 @@ static int perf_test__config(const char *var, const char *value,
+ 	return 0;
+ }
+ 
++static struct test_suite **build_suites(void)
++{
++	/*
++	 * TODO: suites is static to avoid needing to clean up the scripts tests
++	 * for leak sanitizer.
++	 */
++	static struct test_suite **suites[] = {
++		generic_tests,
++		arch_tests,
++		NULL,
++	};
++	struct test_suite **result;
++	struct test_suite *t;
++	size_t n = 0, num_suites = 0;
++
++	if (suites[2] == NULL)
++		suites[2] = create_script_test_suites();
++
++#define for_each_test(t)						\
++	for (size_t i = 0, j = 0; i < ARRAY_SIZE(suites); i++, j = 0)	\
++		while ((t = suites[i][j++]) != NULL)
++
++	for_each_test(t)
++		num_suites++;
++
++	result = calloc(num_suites + 1, sizeof(struct test_suite *));
++
++	for (int pass = 1; pass <= 2; pass++) {
++		for_each_test(t) {
++			bool exclusive = false;
++
++			if (!has_subtests(t)) {
++				exclusive = test_exclusive(t, -1);
++			} else {
++				for (int subi = 0, subn = num_subtests(t); subi < subn; subi++) {
++					if (test_exclusive(t, subi)) {
++						exclusive = true;
++						break;
++					}
++				}
++			}
++			if ((!exclusive && pass == 1) || (exclusive && pass == 2))
++				result[n++] = t;
++		}
++	}
++	return result;
++#undef for_each_test
++}
++
+ int cmd_test(int argc, const char **argv)
+ {
+ 	const char *test_usage[] = {
+@@ -680,6 +716,7 @@ int cmd_test(int argc, const char **argv)
+ 	const char * const test_subcommands[] = { "list", NULL };
+ 	struct intlist *skiplist = NULL;
+         int ret = hists__init();
++	struct test_suite **suites;
+ 
+         if (ret < 0)
+                 return ret;
+@@ -689,10 +726,13 @@ int cmd_test(int argc, const char **argv)
+ 	/* Unbuffered output */
+ 	setvbuf(stdout, NULL, _IONBF, 0);
+ 
+-	tests[2] = create_script_test_suites();
+ 	argc = parse_options_subcommand(argc, argv, test_options, test_subcommands, test_usage, 0);
+-	if (argc >= 1 && !strcmp(argv[0], "list"))
+-		return perf_test__list(argc - 1, argv + 1);
++	if (argc >= 1 && !strcmp(argv[0], "list")) {
++		suites = build_suites();
++		ret = perf_test__list(suites, argc - 1, argv + 1);
++		free(suites);
++		return ret;
++	}
+ 
+ 	if (workload)
+ 		return run_workload(workload, argc, argv);
+@@ -717,5 +757,8 @@ int cmd_test(int argc, const char **argv)
+ 	 */
+ 	rlimit__bump_memlock();
+ 
+-	return __cmd_test(argc, argv, skiplist);
++	suites = build_suites();
++	ret = __cmd_test(suites, argc, argv, skiplist);
++	free(suites);
++	return ret;
+ }
 -- 
 2.53.0
 
