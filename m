@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA343AC17;
-	Sat, 12 Sep 2026 15:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801CC320CD3;
+	Sat, 12 Sep 2026 15:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225983; cv=none; b=tDjRsONsBdxf9qVcgMCMHFBwDR5cwdoYuO+FxrNijcVevU1Y87BMLWGracMaVZ7F7rloTZulC3bGO9nSyhxsSIH/4DJqemU1Fks2lmnYOVbty5+XdTmqfpRjODF6uOVLSuTFRlQS2ht89qjEJ4rcoo7YW4hxsBQ5Xz9ljC3ipUo=
+	t=1789225988; cv=none; b=V0XtOcVlmXr5A+9wF0RSCDVZdjballjSQIYlX8O1xhb3IpuabiBhRclnLdl0UOe5A6EbfD9UYnQNFWW1yf42CBM7Ewlxphk2k8IMH6/pgmT1oX8xC1/iqcIV2mnGXAnTwb56R9EtQXWr04NvdvqJOiSD08KGnmE+8v/9l8GB1dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225983; c=relaxed/simple;
-	bh=eiWB0tc7w5riqxhKbm7StrT6GtzDK7RuwSm+yS6T3ck=;
+	s=arc-20240116; t=1789225988; c=relaxed/simple;
+	bh=rPOpTNZV5PQ6Oy+EkKqxUGE6kGfTN3ZZFP68LwNdcSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KEJqafGRECkp15Y7VFIcVsrPFFAIOVijH30O2CYOc0hKedpGzCbWvF+NnTqbTrh/IiJViWrFNa3ya/JoCipbIMncoGRmXpcFgx/2OAGwyYdMyoQFIuDshqCPUqNN6hIy6P5e/QmfRNxPNf6rPhs8AL7fLi5R9LqwjNGJiyrRmzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ME1Gg/QO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=L6MewTFtqbGXWpRUhtyWLBM2KwGB14jhCKxb8AprYushIUT+wiQYo8++WfgKYlL9j9l3nbu9Bb79TT8/1U4pOzHdqoD4lP7bAhiSAWEitTCyuX8DsFFTvkJ4cn7g6XNvn5KIBNMQn2bDdSUKnpiH7wCo0ciYa9B95cIdrtNKef0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AigXDcDx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ME1Gg/QO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B131F000FF;
-	Sat, 12 Sep 2026 15:13:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AigXDcDx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE721F000FF;
+	Sat, 12 Sep 2026 15:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225981;
-	bh=6gzdg5pvWA8lRLTcbehMlvOIJJJA6C4ECFNsMa1MPzw=;
+	s=korg; t=1789225987;
+	bh=qS7eJx4mfeG5xNzmRysIrXQD9/l7sZMhW3GCzBmYcAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ME1Gg/QO/bJGGvXgfDQ/x/rWOLnvQ355zxhspCrWeCTIPmL38L/JnTmkM1GgD+W+R
-	 +4IX1/vE5mccen5LfuG0SatlNfmxboewznGi7+it+Oc7jcsNEGeqpOM2er6oJAPP7z
-	 8ROMbzpK23pdWX2VQK+LjPebZ87v8MZcgKI2oep0=
+	b=AigXDcDxpd40Ndt7dtFW1L3iyuiWnR3DPSaqgDEP7fq8ZdlyDVZ+UT2ZKbrIoLvla
+	 Me3MxqFiIb6mWK90DEU9FiuLlw9TSIJ0sdldTSq0c08Q2IN3pcTZ/S8wcDBwDek+bw
+	 Mw41KB5ib27TOkiot280myQkQ8+h228upmCW5s9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Li RongQing <lirongqing@baidu.com>,
 	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	=?UTF-8?q?Linfeng=20Sun=C2=A0?= <linfeng.sun.dev@gamil.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1308/1424] vdpa_sim: fix cleanup after worker creation failure
-Date: Sat, 12 Sep 2026 09:02:20 +0200
-Message-ID: <20260912065636.555424115@linuxfoundation.org>
+Subject: [PATCH 6.6 1309/1424] vdpa/mlx5: fix wrong list iterated in add_direct_chain error path
+Date: Sat, 12 Sep 2026 09:02:21 +0200
+Message-ID: <20260912065636.577275735@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,86 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linfeng Sun  <linfeng.sun.dev@gamil.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit bd670e5dfd2b01fd9692f61fa1456434c54026a4 ]
+[ Upstream commit 23ae56d9e74c122f95cae71ae3b9fc259fb88446 ]
 
-vdpasim_create() leaves vdpasim->worker as an ERR_PTR when
-kthread_run_worker() fails. The error path then drops the device
-reference, which releases the partially initialized simulator.
+In add_direct_chain(), newly allocated direct MR entries are added to
+the local list 'tmp', which is spliced into mr->head only on success.
+On the error path, the cleanup loop was incorrectly iterating over
+mr->head instead of tmp.
 
-vdpasim_free() unconditionally passes the worker pointer to
-kthread_destroy_worker(), so the ERR_PTR is dereferenced and can trigger
-a general protection fault.
+Fix by iterating over 'tmp' in the err_alloc cleanup path.
 
-Store the worker error, clear the pointer, and only clean up the worker
-when it was successfully initialized. Also make the release path tolerate
-partially initialized objects by guarding virtqueue and IOTLB cleanup,
-since the same release path can be reached from other initialization
-failures.
-
-I found this bug myself, though the patch was written with AI assistance.
-
-Fixes: 76acfa7bc54f ("vdpa_sim: use kthread worker")
-Assisted-by: OpenAI-Codex:GPT-5
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gamil.com>
-Message-ID: <20260620100959.2070316-1-slf@hdu.edu.cn>
+Fixes: 94abbccdf291 ("vdpa/mlx5: Add shared memory registration code")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260701113608.1972-1-lirongqing@baidu.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_sim/vdpa_sim.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/vdpa/mlx5/core/mr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim.c b/drivers/vdpa/vdpa_sim/vdpa_sim.c
-index 421ab01ef06ba..58cb711e981d3 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim.c
-@@ -229,8 +229,11 @@ struct vdpasim *vdpasim_create(struct vdpasim_dev_attr *dev_attr,
- 	kthread_init_work(&vdpasim->work, vdpasim_work_fn);
- 	vdpasim->worker = kthread_create_worker(0, "vDPA sim worker: %s",
- 						dev_attr->name);
--	if (IS_ERR(vdpasim->worker))
-+	if (IS_ERR(vdpasim->worker)) {
-+		ret = PTR_ERR(vdpasim->worker);
-+		vdpasim->worker = NULL;
- 		goto err_iommu;
-+	}
+diff --git a/drivers/vdpa/mlx5/core/mr.c b/drivers/vdpa/mlx5/core/mr.c
+index 1657306569345..f102b9ff967b8 100644
+--- a/drivers/vdpa/mlx5/core/mr.c
++++ b/drivers/vdpa/mlx5/core/mr.c
+@@ -343,7 +343,7 @@ static int add_direct_chain(struct mlx5_vdpa_dev *mvdev, u64 start, u64 size, u8
+ 	return 0;
  
- 	mutex_init(&vdpasim->mutex);
- 	spin_lock_init(&vdpasim->iommu_lock);
-@@ -709,18 +712,24 @@ static void vdpasim_free(struct vdpa_device *vdpa)
- 	struct vdpasim *vdpasim = vdpa_to_sim(vdpa);
- 	int i;
- 
--	kthread_cancel_work_sync(&vdpasim->work);
--	kthread_destroy_worker(vdpasim->worker);
-+	if (vdpasim->worker) {
-+		kthread_cancel_work_sync(&vdpasim->work);
-+		kthread_destroy_worker(vdpasim->worker);
-+	}
- 
--	for (i = 0; i < vdpasim->dev_attr.nvqs; i++) {
--		vringh_kiov_cleanup(&vdpasim->vqs[i].out_iov);
--		vringh_kiov_cleanup(&vdpasim->vqs[i].in_iov);
-+	if (vdpasim->vqs) {
-+		for (i = 0; i < vdpasim->dev_attr.nvqs; i++) {
-+			vringh_kiov_cleanup(&vdpasim->vqs[i].out_iov);
-+			vringh_kiov_cleanup(&vdpasim->vqs[i].in_iov);
-+		}
- 	}
- 
- 	vdpasim->dev_attr.free(vdpasim);
- 
--	for (i = 0; i < vdpasim->dev_attr.nas; i++)
--		vhost_iotlb_reset(&vdpasim->iommu[i]);
-+	if (vdpasim->iommu) {
-+		for (i = 0; i < vdpasim->dev_attr.nas; i++)
-+			vhost_iotlb_reset(&vdpasim->iommu[i]);
-+	}
- 	kfree(vdpasim->iommu);
- 	kfree(vdpasim->iommu_pt);
- 	kfree(vdpasim->vqs);
+ err_alloc:
+-	list_for_each_entry_safe(dmr, n, &mr->head, list) {
++	list_for_each_entry_safe(dmr, n, &tmp, list) {
+ 		list_del_init(&dmr->list);
+ 		unmap_direct_mr(mvdev, dmr);
+ 		kfree(dmr);
 -- 
 2.53.0
 
