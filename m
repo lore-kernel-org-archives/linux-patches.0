@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A1733993;
-	Sat, 12 Sep 2026 14:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB3D4BEE5C;
+	Sat, 12 Sep 2026 14:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223895; cv=none; b=Xas/loU1XI9JipNXqZ+QmwNL8CCuIl5mUlvrezeSoPQIujKjRGjCHd3t7pq8qpmiFOe8Bpul/HhMmQLN7Z8k9iSw6yMq7RNNHPBTaZKgmc6obmsLarm+YuRKR5zsrQ2Ep5KOrhQbuImXFeHZhQKLgGF+JF2fhUjcdL38L7lAO9I=
+	t=1789223899; cv=none; b=CXT/Ry9V6RSczhPGwMnrYbTBIQqn4+UvkSE7ATjZyCwY4hZb8liKpYc7nmX7xEf8Spy+wZae2T7BHRwQXBfMIERcQ6E7JlS9iLqmNYmHQPVkgLN7TXrGlIeW8N9NiazpNJsfbc5M7H20mNcQ4x4IadAEQ40OQyu9Yte/6vQXJV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223895; c=relaxed/simple;
-	bh=QIaZ5IbREgUOdPx8DHHnGghy79jBzN8Irdb8Wks77Eo=;
+	s=arc-20240116; t=1789223899; c=relaxed/simple;
+	bh=3tpTE9CNitvXqleOaYbU0xNhhE2n3Zr2f8NXiXNyHsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZFQOe5CDOmxKPTM4g8ZmSx9CN9/8xNeZRMr5IZyn0aI6BqAHz6Kn6WYoLsQuxyww5CGnj8mzKs2IWk2iJ8hcNZpuoJecWNoG5cmPe7w+dkERRtTFchQ6Tv8R3B4NZ7XvqRmdvbAO0RuPN+CfYTClNwjowSBUzrc5Rnqe11GKIXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BE1DWiJS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZJQVfo9Ghk0hIH2avKdtWKAuaUuo3AttbAhQgArvDQNm8DeaS+Q2/WxNxPHxSxjTqilISudbs3x7Dkvd3j9ORDmQxeO1pt2UbcXcEuUvDiOb7EZLHml3uxVVQjKn3efuCyt7Jw5Z47HR1Ztc1yMfPPfHaB3gfxRtmIdCvVtIbOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpVz3Dma; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BE1DWiJS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC431F000FF;
-	Sat, 12 Sep 2026 14:38:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpVz3Dma"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF39C1F000FF;
+	Sat, 12 Sep 2026 14:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223893;
-	bh=W8vVL1tvzBTITfrxtY5BL0i0j1RE9ixZQEGK7MXsvv0=;
+	s=korg; t=1789223898;
+	bh=PTBFnkIK8XsjPYrqy2kBLgEqMdaHtVIwMYQtPcSv5Qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BE1DWiJSexeQgP2ZOWuw6UMjf/nWCFkhhUlrEjb5psvnTztCyz0RWaMCo+BQqcTYZ
-	 1Oyb/Eg1VGIqGiKgrcpX9EcKyb3JR1rWM4PAngyd9v4NvRmY3bUSBGDjZScstuBEsh
-	 ZbixAQF0K0M2ateJ11VmaPdh/Chbx9mhkO3RuaYU=
+	b=cpVz3Dmamud2j14D22inJnTzO4WBZyfJx/7EiRMxU0T3FumQCMtxkJTXZRbmNCFhI
+	 XWzYE3uBb4QX6g4RNZgDNB4/slspm1JkY7r7XFDcPtkNx5L1HJHBBopgNQV/P7Dgmc
+	 hYGK2uRI5dq1hkVPi5LzPuwV/wKAR0adwLUd+Ee0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Yeh <justin.yeh@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Linus Walleij <linusw@kernel.org>,
+	John Kacur <jkacur@redhat.com>,
+	Luis Goncalves <lgoncalv@redhat.com>,
+	Gabriele Monaco <gmonaco@redhat.com>,
+	Clark Williams <williams@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0882/1424] pinctrl: mediatek: free EINT resources on unbind
-Date: Sat, 12 Sep 2026 08:55:14 +0200
-Message-ID: <20260912065627.074392371@linuxfoundation.org>
+Subject: [PATCH 6.6 0883/1424] tools/build: Add bpftool-skeletons feature test
+Date: Sat, 12 Sep 2026 08:55:15 +0200
+Message-ID: <20260912065627.097610611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,86 +55,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Yeh <justin.yeh@mediatek.com>
+From: Tomas Glozar <tglozar@redhat.com>
 
-[ Upstream commit 88292b7103d260e3e606eb3bb2794060a5fde48e ]
+[ Upstream commit 8a635c3856ddb74ed3fe7c856b271cdfeb65f293 ]
 
-mtk_eint_do_init() creates an IRQ domain, populates it with a mapping for
-every EINT line and installs a chained handler on the parent interrupt,
-but none of these are ever released. This was harmless while the drivers
-were built-in, but now that they can be built as modules and
-unbound/rmmod'd it leaves behind a dangling IRQ domain, interrupt mappings
-whose chip data points at freed memory, and a chained handler that keeps
-firing into that freed data.
+Add bpftool-skeletons feature test, testing the presence of a bpftool
+capable of generating skeletons.
 
-The plain allocations in mtk_eint_do_init() already use the device-managed
-devm_*() helpers, so tear the remaining resources down the same way:
-register a devm action that detaches the chained handler, waits for any
-in-flight handler to finish, disposes of the per-line mappings and removes
-the IRQ domain. This mirrors the device-managed lifecycle adopted for the
-GPIO chip and keeps the whole EINT setup self-cleaning on unbind.
+This is to be used for tools that do not require building their own
+bootstrap bpftool from the kernel source tree.
 
-Fixes: e46df235b4e6 ("pinctrl: mediatek: refactor EINT related code for all MediaTek pinctrl can fit")
-Signed-off-by: Justin Yeh <justin.yeh@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Cc: John Kacur <jkacur@redhat.com>
+Cc: Luis Goncalves <lgoncalv@redhat.com>
+Cc: Gabriele Monaco <gmonaco@redhat.com>
+Cc: Clark Williams <williams@redhat.com>
+Link: https://lore.kernel.org/20250218145859.27762-3-tglozar@redhat.com
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: d5a1d1270c89 ("tools/build: Allow versioning of all LLVM tools defined in Makefile.include")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/mtk-eint.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ tools/build/Makefile.feature   | 3 ++-
+ tools/build/feature/Makefile   | 3 +++
+ tools/scripts/Makefile.include | 3 +++
+ 3 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/mediatek/mtk-eint.c b/drivers/pinctrl/mediatek/mtk-eint.c
-index c2e452c699cfa..6787596167b92 100644
---- a/drivers/pinctrl/mediatek/mtk-eint.c
-+++ b/drivers/pinctrl/mediatek/mtk-eint.c
-@@ -12,8 +12,10 @@
-  */
+diff --git a/tools/build/Makefile.feature b/tools/build/Makefile.feature
+index 934e2777a2dbc..b87d73bbcc307 100644
+--- a/tools/build/Makefile.feature
++++ b/tools/build/Makefile.feature
+@@ -109,7 +109,8 @@ FEATURE_TESTS_EXTRA :=                  \
+          libbpf-bpf_create_map		\
+          libpfm4                        \
+          libdebuginfod			\
+-         clang-bpf-co-re
++         clang-bpf-co-re		\
++         bpftool-skeletons
  
- #include <linux/delay.h>
-+#include <linux/device.h>
- #include <linux/err.h>
- #include <linux/gpio/driver.h>
-+#include <linux/interrupt.h>
- #include <linux/io.h>
- #include <linux/irqchip/chained_irq.h>
- #include <linux/irqdomain.h>
-@@ -504,6 +506,27 @@ int mtk_eint_find_irq(struct mtk_eint *eint, unsigned long eint_n)
- }
- EXPORT_SYMBOL_GPL(mtk_eint_find_irq);
  
-+static void mtk_eint_teardown(void *data)
-+{
-+	struct mtk_eint *eint = data;
-+	unsigned int i, virq;
-+
-+	/* Detach the demux handler so it can no longer reference freed data. */
-+	irq_set_chained_handler_and_data(eint->irq, NULL, NULL);
-+
-+	/* Wait for any in-flight handler to finish before tearing down. */
-+	synchronize_irq(eint->irq);
-+
-+	/* Dispose of all child mappings before the domain is removed. */
-+	for (i = 0; i < eint->hw->ap_num; i++) {
-+		virq = irq_find_mapping(eint->domain, i);
-+		if (virq)
-+			irq_dispose_mapping(virq);
-+	}
-+
-+	irq_domain_remove(eint->domain);
-+}
-+
- int mtk_eint_do_init(struct mtk_eint *eint, struct mtk_eint_pin *eint_pin)
- {
- 	unsigned int size, i, port, virq, inst = 0;
-@@ -589,7 +612,7 @@ int mtk_eint_do_init(struct mtk_eint *eint, struct mtk_eint_pin *eint_pin)
- 	irq_set_chained_handler_and_data(eint->irq, mtk_eint_irq_handler,
- 					 eint);
+ FEATURE_TESTS ?= $(FEATURE_TESTS_BASIC)
+diff --git a/tools/build/feature/Makefile b/tools/build/feature/Makefile
+index 17e03236e3461..9860dc8ed2236 100644
+--- a/tools/build/feature/Makefile
++++ b/tools/build/feature/Makefile
+@@ -402,6 +402,9 @@ $(OUTPUT)test-file-handle.bin:
+ $(OUTPUT)test-libpfm4.bin:
+ 	$(BUILD) -lpfm
  
--	return 0;
-+	return devm_add_action_or_reset(eint->dev, mtk_eint_teardown, eint);
++$(OUTPUT)test-bpftool-skeletons.bin:
++	$(BPFTOOL) version | grep '^features:.*skeletons' \
++		> $(@:.bin=.make.output) 2>&1
+ ###############################
  
- err_eint:
- 	for (i = 0; i < eint->nbase; i++) {
+ clean:
+diff --git a/tools/scripts/Makefile.include b/tools/scripts/Makefile.include
+index c006e72b4f434..620104eb3d3f1 100644
+--- a/tools/scripts/Makefile.include
++++ b/tools/scripts/Makefile.include
+@@ -91,6 +91,9 @@ LLVM_CONFIG	?= llvm-config
+ LLVM_OBJCOPY	?= llvm-objcopy
+ LLVM_STRIP	?= llvm-strip
+ 
++# Some tools require bpftool
++BPFTOOL		?= bpftool
++
+ ifeq ($(CC_NO_CLANG), 1)
+ EXTRA_WARNINGS += -Wstrict-aliasing=3
+ 
 -- 
 2.53.0
 
