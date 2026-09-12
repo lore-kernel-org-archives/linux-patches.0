@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B13C36EAA4;
-	Sat, 12 Sep 2026 07:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC6D29B799;
+	Sat, 12 Sep 2026 07:50:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199435; cv=none; b=cNVNvTcFFMijJOV21Gsw1g3LrHVlr4UaAzN5FXJ/E1XFHg6JOYGZC44Nb5/HalvNJmmBUkV7Mb9bJqPj8F4RKUmKcQexOcQH4s/ytVBJutFVAIbylO4ZZzo721Ih7EaYzaGT2ykiPTv6+N19UA3vLMFDS+ESQY/ukFHJlVK1J+Y=
+	t=1789199440; cv=none; b=j1tQ+pETVsHik36bjvRL2bYU5mh8WsqSvBa44580U7aGYJeD5heynsKOR48VdeYNizN3Jn9xIxKDw6T7M4zprLuwHO0kNqz8Wug7RFP/ZwOSgUtmoG9WKE/+LTUDD4FHEk1btVo5WhAr6bHMFaq7z7XW+ENejniq9M7IwSxQCN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199435; c=relaxed/simple;
-	bh=NhZvSGurV5y1lcBr6HPZh2NXndowPJJ32FMLMzhkrm4=;
+	s=arc-20240116; t=1789199440; c=relaxed/simple;
+	bh=NJYe9NRSPjr+6HobWUxcRGFHqzIhA3ZzTdup/6ZjLe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lcPi3FH9K2/l9+belbTo7vbgfxTBT1a3JAvJF8J8L6enkdAyMK87NDfxp4TWHfqVFloCnaJ/xbHzmUbnx1+NjwoYfxZWJ/Gi+KLfxVaBFJSUbUut8yuulqPO8uRQlB+PDlIgqUoqWau4Tc3MtivEcub4oyjkQZbCwkJ+MTsc3cM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CFS1W3UJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XVRysS4h3rw5j1t62On3lNtAV5ayeiUPrYqkiuGi3VsjVUgLbzMGCKk+wrCcwcOwlt7kwSdnr/PhZBKJkCtqgn60ZBT1pc68PQIJxrWOS+GwSd5ILBt+qh8nAb66mCbzbIDBaHs/uLGKKIMr7cbDnzybg1u4kRCcPN/+oJOzadQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0zDuR2Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CFS1W3UJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 159DE1F000FF;
-	Sat, 12 Sep 2026 07:50:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0zDuR2Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD431F00898;
+	Sat, 12 Sep 2026 07:50:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199434;
-	bh=ie+5TJpYy4VybN5fjBo04Y2sGG/itXK0WyO/ZWnOcpk=;
+	s=korg; t=1789199438;
+	bh=elETltsKk1FLevfLI6JvlUCqK/rJFUWtyZSIIbByWSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CFS1W3UJQk2AzH6FVgd4BKfwD65T824CqQffWjj1YE7ecw3CFMLfRHBtkglB/clml
-	 mv0KposaHS8lfgxO+rbMh3fmo9Ji7veIepIav6m5HrORVLMOY6G0n5PHe/04vPDTim
-	 4hoW7HSWOCeLgSmaL2WWaeOLtOGl/NemneyYqlGs=
+	b=v0zDuR2YKDIpbJjMpkA85noqSr8FlGZBW+f6OgFFU7N/JhqyF3lS+dECPR33y/0dn
+	 npI7pUwdYVbojH6cyl2UAfNWVfvKiJDkmgZkxb14Kh5M0ADjW4/pv08oPqSjAuIn2X
+	 jBzAvrPg+qNAcDVqA4MTfL7a8cMukbhzZj0caMWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Edward Srouji <edwards@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0583/1815] RDMA/core: Fix potential use after free in counter_release()
-Date: Sat, 12 Sep 2026 08:38:53 +0200
-Message-ID: <20260912065702.567848077@linuxfoundation.org>
+Subject: [PATCH 7.2 0584/1815] RDMA/core: Fix potential use after free in ib_free_cq()
+Date: Sat, 12 Sep 2026 08:38:54 +0200
+Message-ID: <20260912065702.592356223@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,63 +55,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 235ef2d0e750885c29340b0fc40620a7a4f52e12 ]
+[ Upstream commit 29dc2f8e1c97372c2871a70088707933515fbd5b ]
 
-When accessing a counter via the netlink path the only synchronization
-mechanism for the said counter is rdma_restrack_get().
+When accessing a CQ via the netlink path the only synchronization
+mechanism for the said CQ is rdma_restrack_get().
 Currently, rdma_restrack_del() is invoked at the end of
-counter_release(), which is too late, since by that point
-vendor-specific resources associated with the counter might already be
-freed. This can leave a short window where the counter remains
-accessible through restrack, leading to a potential use-after-free.
+ib_free_cq(), which is too late, since by that point
+vendor-specific resources associated with the CQ might already be
+freed. This can leave a short window where the CQ remains accessible
+through restrack, leading to a potential use-after-free.
 
-Fix this by moving the rdma_restrack_del() call to be before the
-freeing of the vendor-specific resources, ensuring that the counter is
-removed from restrack before its internal resources are released.
-This guarantees that no new users hold references to a counter that is
-in the process of destruction.
+Fix this by moving the rdma_restrack_del() call to be before the freeing
+of the vendor-specific resources ensuring that the CQ is removed from
+restrack before its internal resources are released.
+This guarantees that no new users hold references to a CQ that is in
+the process of destruction.
 
-Fixes: 99fa331dc862 ("RDMA/counter: Add "auto" configuration mode support")
+Fixes: 43d781b9fa56 ("RDMA: Allow fail of destroy CQ")
 Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
 Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
 Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/20260713-restrack-uaf-fix-resub-v2-5-bbe8bb270d51@nvidia.com
+Link: https://patch.msgid.link/20260713-restrack-uaf-fix-resub-v2-6-bbe8bb270d51@nvidia.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/counters.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/cq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/counters.c b/drivers/infiniband/core/counters.c
-index a9e189194c130..a2c85840c501a 100644
---- a/drivers/infiniband/core/counters.c
-+++ b/drivers/infiniband/core/counters.c
-@@ -234,7 +234,6 @@ static void rdma_counter_free(struct rdma_counter *counter)
+diff --git a/drivers/infiniband/core/cq.c b/drivers/infiniband/core/cq.c
+index 3d7b6cddd131c..1379808e14040 100644
+--- a/drivers/infiniband/core/cq.c
++++ b/drivers/infiniband/core/cq.c
+@@ -327,6 +327,7 @@ void ib_free_cq(struct ib_cq *cq)
+ 	if (WARN_ON_ONCE(cq->cqe_used))
+ 		return;
  
- 	mutex_unlock(&port_counter->lock);
- 
--	rdma_restrack_del(&counter->res);
- 	rdma_free_hw_stats_struct(counter->stats);
- 	kfree(counter);
++	rdma_restrack_del(&cq->res);
+ 	if (cq->device->ops.pre_destroy_cq) {
+ 		ret = cq->device->ops.pre_destroy_cq(cq);
+ 		WARN_ONCE(ret, "Disable of kernel CQ shouldn't fail");
+@@ -353,7 +354,6 @@ void ib_free_cq(struct ib_cq *cq)
+ 	else
+ 		ret = cq->device->ops.destroy_cq(cq, NULL);
+ 	WARN_ONCE(ret, "Destroy of kernel CQ shouldn't fail");
+-	rdma_restrack_del(&cq->res);
+ 	kfree(cq->wc);
+ 	kfree(cq);
  }
-@@ -329,6 +328,7 @@ static void counter_release(struct kref *kref)
- 
- 	counter = container_of(kref, struct rdma_counter, kref);
- 	counter_history_stat_update(counter);
-+	rdma_restrack_del(&counter->res);
- 	counter->device->ops.counter_dealloc(counter);
- 	rdma_counter_free(counter);
- }
-@@ -490,7 +490,8 @@ static struct rdma_counter *rdma_get_counter_by_id(struct ib_device *dev,
- 		return NULL;
- 
- 	counter = container_of(res, struct rdma_counter, res);
--	kref_get(&counter->kref);
-+	if (!kref_get_unless_zero(&counter->kref))
-+		counter = NULL;
- 	rdma_restrack_put(res);
- 
- 	return counter;
 -- 
 2.53.0
 
