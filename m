@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D87360EF5;
-	Sat, 12 Sep 2026 08:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44843542F8;
+	Sat, 12 Sep 2026 08:04:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200274; cv=none; b=XuWRQPlqwAbv3U3KwGSc4YdCrEpLtJWuvTRqpBKH/ZIXsGI65X5M1ZHYq/LMuVZeXCB2SbCA9q0kGr4OHDE9I2nkyV5Wbv9mlXhXSeQLAPc7JJQN6DhAjPNHMPPovxG/PyXFfCIC593NaU/GD1nR6kJzaaWuV4qrtLx3TeBIUaM=
+	t=1789200278; cv=none; b=Hl0IyFVtieihVb2wq2bAre+LCiDgpgQbkOyWcVV7P4YNiboz/yw7fw17X6NfitP2ekPXEiTnECC+r8EH6FzkWZ99ZhrIgnq9uhUttgEo4xFGXoZz2KsIBrkKPylKro1g18g53UOGjN3dFIweRY7onWaSEFKMgEid7wwj6Z9iNTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200274; c=relaxed/simple;
-	bh=ndD7IyVkg3aoiC0fcSzfh6n1UxV9tqnhnGYaHbw7uNw=;
+	s=arc-20240116; t=1789200278; c=relaxed/simple;
+	bh=H5IsBTOQZPYor3QZlkZS9zLgGPeGWHBFch+PLIOp5ms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ILR6ano7DS+sEe6EqSKAQxkP5cr9mlxbliGGBVGUTSHypLPcMrIv8dHK+SBZu8cqahm49zuc0TUj/eJoUhxcemNsq6XHgxiyO/z6H2M1fzbsw6QKpW190bjM0QsQM3gpEHwgoFu2mkhdG+UzKAIQo7RXOOACM0/rrQgb7W+S0zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzk8hF40; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QDb/hnnlwpWW++n9A7cSeKBPOMnKdrNaj5MUid1N38cTwvR//b4jbw11xbEMLeaQpxzTlazFKSJ8xcgaufoe4oJXqMw8ryMYKZkzmU2/h+DVgBqUK7aYVEdWwk4XjiAb1VCxwyqOMMKvTm3O//YRt0PUSAHv5TtayJFzVMQKTjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdSnhYrq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzk8hF40"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C381F000FF;
-	Sat, 12 Sep 2026 08:04:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdSnhYrq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF511F000FF;
+	Sat, 12 Sep 2026 08:04:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200272;
-	bh=a1qNE9fQXW/0C8q3tVvx+PQ66ZDRuI9z3cAbDFcesIc=;
+	s=korg; t=1789200276;
+	bh=/hbQSNmR9LvzUGbjCxRRRc/QKnbkDY4ZmHvTpuEFnBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wzk8hF40YsfBOtSNOd5vytVQZpQVIi5jZkQeoXnMXEk5YCB9GvmS8QbHLEfOwHpoY
-	 pnJ2IdwsAxlR//dC6GfUm2N5ooMs++hv3FlF2hjWamgOJTR4416MCg5Pn6e1fjCzEM
-	 3WSsnY6UAky7chMsfnlW7n+9WgKKTgOPSPP1e92A=
+	b=qdSnhYrq5m7u4/vS+qQbSWPn0m9oIxlD2iMGz4qNcewEm4nPg0TLyMax55KCj9HFG
+	 a8pNZlfYehHZz+2RBCttZ50TyXpH4C6n8cF0LmKHoXPhWdUSMh1aZKU2aPq8BAo04L
+	 bEldivcC+sDlMT9by4YO+/VmjpRPA7lKzhCESFmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Surendra Singh Chouhan <kr494167@gmail.com>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Mark Brown <broonie@kernel.org>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Yixun Lan <dlan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0756/1815] regulator: tps65185: handle gpiod_get_value_cansleep() error returns
-Date: Sat, 12 Sep 2026 08:41:46 +0200
-Message-ID: <20260912065706.655103518@linuxfoundation.org>
+Subject: [PATCH 7.2 0730/1815] riscv: dts: spacemit: Make dtschema recognize the etherent PHY correctly on K3 pico-itx board
+Date: Sat, 12 Sep 2026 08:41:20 +0200
+Message-ID: <20260912065706.037212465@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,49 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Surendra Singh Chouhan <kr494167@gmail.com>
+From: Inochi Amaoto <inochiama@gmail.com>
 
-[ Upstream commit 623d9a55685c52b10b995d8dbde9da6283170220 ]
+[ Upstream commit 9b371a8b13fd0e8e6f3b12f4ef7e58927d6f62ee ]
 
-tps65185_vposneg_enable() evaluated:
-  if (gpiod_get_value_cansleep(data->pgood_gpio) != 1)
-      return -ETIMEDOUT;
+Since the previous commit does not change the phy node name,
+the dtschema can not recognize the type of the ethernet phy,
+so the following error is produced:
 
-gpiod_get_value_cansleep() returns 1 if active, 0 if inactive, and a
-negative error code (e.g. -EIO or -EINVAL) on failure. Evaluating != 1
-treats a negative error code as non-equal, swallowing GPIO read errors and
-masking them as -ETIMEDOUT.
+/arch/riscv/boot/dts/spacemit/k3-pico-itx.dtb: phy@1 (ethernet-phy-id001c.c916): $nodename:0: 'phy@1' does not match '^ethernet-phy(@[a-f0-9]+)?$'
+        from schema $id: http://devicetree.org/schemas/net/realtek,rtl82xx.yaml
+/arch/riscv/boot/dts/spacemit/k3-pico-itx.dtb: phy@1 (ethernet-phy-id001c.c916): Unevaluated properties are not allowed ('reg', 'reset-assert-us', 're
+set-deassert-us', 'reset-gpios' were unexpected)
+        from schema $id: http://devicetree.org/schemas/net/realtek,rtl82xx.yaml
 
-Fix this by capturing the return value of gpiod_get_value_cansleep(). If
-it returns a negative error code, propagate that error immediately; if
-it returns 0 (inactive), return -ETIMEDOUT.
+Change the nodename to make the dtschema can recognize the right
+PHY type.
 
-Fixes: b0fc1e770194 ("regulator: Add TPS65185 driver")
-Signed-off-by: Surendra Singh Chouhan <kr494167@gmail.com>
-Reviewed-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20260724125858.75635-1-kr494167@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 6d6536c880fe ("riscv: dts: spacemit: Fix phy id check for the phy on pico-itx board")
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Reviewed-by: Yixun Lan <dlan@kernel.org>
+Link: https://patch.msgid.link/20260729012418.154652-1-inochiama@gmail.com
+Signed-off-by: Yixun Lan <dlan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/tps65185.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/tps65185.c b/drivers/regulator/tps65185.c
-index 786622d8d5980..1f13e4156cab1 100644
---- a/drivers/regulator/tps65185.c
-+++ b/drivers/regulator/tps65185.c
-@@ -183,7 +183,10 @@ static int tps65185_vposneg_enable(struct regulator_dev *rdev)
- 	wait_for_completion_timeout(&data->pgood_completion,
- 				    msecs_to_jiffies(PGOOD_TIMEOUT_MSECS));
- 	dev_dbg(data->dev, "turned on");
--	if (gpiod_get_value_cansleep(data->pgood_gpio) != 1)
-+	ret = gpiod_get_value_cansleep(data->pgood_gpio);
-+	if (ret < 0)
-+		return ret;
-+	if (!ret)
- 		return -ETIMEDOUT;
+diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+index 3ed2bbcd8f836..86210cc6f7733 100644
+--- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
++++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+@@ -190,7 +190,7 @@ &eth0 {
+ 	status = "okay";
  
- 	return 0;
+ 	mdio {
+-		phy0: phy@1 {
++		phy0: ethernet-phy@1 {
+ 			compatible = "ethernet-phy-id001c.c916";
+ 			reg = <1>;
+ 			reset-gpios = <&gpio 0 15 GPIO_ACTIVE_LOW>;
 -- 
 2.53.0
 
