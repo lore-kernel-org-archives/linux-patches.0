@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0D9370D47;
-	Sat, 12 Sep 2026 10:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82836429802;
+	Sat, 12 Sep 2026 10:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208524; cv=none; b=X5a0Z4HFfhAURflwJaNgDCXSr4g7OTwbCalPB4BroM62UKOucCspj7r/pmQSyiCADv21996NhfDTPkmXN/R32bAt1aCfY4ojGLW7bqmE2MK49Rf6uqt2E8JtBmB6+g47CxfrIYJvp5x+BtT4XvtVK3azSJziXO0gyIF2IS1T/kc=
+	t=1789208531; cv=none; b=njqbUIweudqXt4JTV7zvlMDe1sNS7ki60M6bxQ63PZ089KH8Qoe+CFXg4zF7gFjC3Z6NvmZZI2/yl8wnuDKCaP9Mc2vC4b8oILc1+ZbAsbVBOrLTpCb9/vgLPepG0MCFxTkMbhc6OP7tKtBYFLm5Id3pqBvceZ3RPWzz9vp4WBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208524; c=relaxed/simple;
-	bh=6zAn0uRrATqQsLuhx9l5tP6ERNaBGd+fzBJs+Ge9cgQ=;
+	s=arc-20240116; t=1789208531; c=relaxed/simple;
+	bh=pNHL4E8bnWIOfZDE66l7PHImvw7Z2ezXsTcSUqKo6YY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=adegP/8PvIY14NFyyvSd6jWRNkQ+R9i6EWk2++/BO8JNtB5nViUnkPSvy2Ph3Tc6UEZ67eqDJKFA7TCf9V57vwvHqrpuKF//qPWmV9iEvyIBdGds5KDBRpi7EdxhI7O/bymRfuMkXsxm7gHbjKzl5nXjIy8s0tw2RVADLIVLYmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNZJSCYD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pQZDs1xyR/mIcIpNx0xrNJ7Dg51e1WpX65AKlJ2wSIm5CnIUZPwSx/514K8HzA4VZkQ/1lf+dj7X+cSyVA6VuvQZsQtKUQUw0JRg/X8gzpVTZxXrFWpJfd4wQe/SccnDV3dnJ48U7VpTzokOxSkyR2lV64yFQ2M9dLF28sDb+4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e99zPFdC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNZJSCYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0BC1F000FF;
-	Sat, 12 Sep 2026 10:21:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e99zPFdC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6DE71F00899;
+	Sat, 12 Sep 2026 10:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208510;
-	bh=1PDPN2Hfgzr+jpELCnmKNVRBqvumQYXJZaEQxCMPydQ=;
+	s=korg; t=1789208524;
+	bh=uVw+zcc+kZdtiyvY3v0cDb9azx3bb175kXot0xgDmwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MNZJSCYD1PEEZEJkQPxFjUsWiMU8i1EL3eoWnxc0DZunhRhbYW0J9IdFT9WxwTnOD
-	 ae5pYxSwLKQ2zJNFJwMrF2HnJAwks8H98Whg6cUxHT9oDpQABvtaqv0BbuHG+82Veo
-	 7RdCAoaLHctFawgvtlChwWuM581R61oEpir+q2bE=
+	b=e99zPFdCpJEpLhobZA/ZutwTm/ZqLjQ2WFFYd3uRgqh3AMdc64a7Hup85gm+tk+FA
+	 xcJiuoeXj0WI9KWKoXosU07fOjQW/q5OeyBfDv4I4SfRo9xXHjgwjMqW+txAIsYgHw
+	 ulKoFSFOf43PNMe1cBJ6M06hQ2S9dlAqsLLBKsQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Ali Tariq <alitariq45892@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0631/1518] spi: davinci: switch to managed controller allocation
-Date: Sat, 12 Sep 2026 08:46:40 +0200
-Message-ID: <20260912065637.704961027@linuxfoundation.org>
+Subject: [PATCH 6.18 0634/1518] PCI: starfive: Fix Runtime PM handling and teardown ordering
+Date: Sat, 12 Sep 2026 08:46:43 +0200
+Message-ID: <20260912065637.774293474@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,82 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Ali Tariq <alitariq45892@gmail.com>
 
-[ Upstream commit ea408a05dc8f18b4a184b88d6e19d2fd1acc1527 ]
+[ Upstream commit fb9f7973473fc30d62e0f5f90d59df8ef5223777 ]
 
-The controller is allocated with the non-managed spi_alloc_host() while
-the interrupt is registered with devm_request_threaded_irq().  During
-removal, spi_bitbang_stop() only unregisters the controller; the
-subsequent spi_controller_put() then frees the controller together with
-its embedded davinci_spi devdata, which is the IRQ handler's dev_id.
-The devm_request_threaded_irq() release action (free_irq()), which
-drains the handler, does not run until after .remove() returns.  A late
-or latched interrupt can therefore reach davinci_spi_irq() and
-dereference already-freed memory.
+The starfive_pcie_remove() path incorrectly disabled runtime PM
+before executing plda_pcie_host_deinit(), which can cause unmanaged
+hardware register access in plda_pcie_host_deinit() while power domains or
+clocks are disabled.
 
-Switch to devm_spi_alloc_host() so that the devres LIFO order releases
-the controller only after free_irq() has drained the handler, and drop
-the now-redundant spi_controller_put() from .remove().  The probe error
-path is simplified to direct returns.
+Fix this by restructuring starfive_pcie_remove() to deinitialize the host
+controller first while runtime PM is active, followed by a synchronous
+pm_runtime_put_sync() and pm_runtime_disable().
 
-The clock is acquired with devm_clk_get_enabled(), which is registered
-after the IRQ and thus released before it by the devres LIFO order.
-Drain the interrupt explicitly with devm_free_irq() before disabling the
-controller so that a late interrupt cannot access the registers of a
-clock-gated controller.
+This bug was found in automated AI review by sashiko-bot.
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: 5b3bb5963ff2 ("spi: davinci: Use devm_*() functions")
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260719010014.3163356-2-fanwu01@zju.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 39b91eb40c6a ("PCI: starfive: Add JH7110 PCIe controller")
+Closes: https://lore.kernel.org/linux-pci/20260712180440.423421F000E9@smtp.kernel.org/
+Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260718133825.445041-1-alitariq45892@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-davinci.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/pci/controller/plda/pcie-starfive.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-davinci.c b/drivers/spi/spi-davinci.c
-index a29934422356b..c0963483e05c8 100644
---- a/drivers/spi/spi-davinci.c
-+++ b/drivers/spi/spi-davinci.c
-@@ -868,7 +868,7 @@ static int davinci_spi_probe(struct platform_device *pdev)
- 	int ret = 0;
- 	u32 spipc0;
+diff --git a/drivers/pci/controller/plda/pcie-starfive.c b/drivers/pci/controller/plda/pcie-starfive.c
+index 628f8c8d67471..0ca39f3fa1d4f 100644
+--- a/drivers/pci/controller/plda/pcie-starfive.c
++++ b/drivers/pci/controller/plda/pcie-starfive.c
+@@ -445,9 +445,9 @@ static void starfive_pcie_remove(struct platform_device *pdev)
+ {
+ 	struct starfive_jh7110_pcie *pcie = platform_get_drvdata(pdev);
  
--	host = spi_alloc_host(&pdev->dev, sizeof(struct davinci_spi));
-+	host = devm_spi_alloc_host(&pdev->dev, sizeof(struct davinci_spi));
- 	if (host == NULL) {
- 		ret = -ENOMEM;
- 		goto err;
-@@ -998,7 +998,6 @@ static int davinci_spi_probe(struct platform_device *pdev)
- 		dma_release_channel(dspi->dma_tx);
- 	}
- free_host:
--	spi_controller_put(host);
- err:
- 	return ret;
- }
-@@ -1022,6 +1021,8 @@ static void davinci_spi_remove(struct platform_device *pdev)
- 
- 	spi_bitbang_stop(&dspi->bitbang);
- 
-+	devm_free_irq(&pdev->dev, dspi->irq, dspi);
-+
- 	/* This bit needs to be cleared to disable dpsi->clk */
- 	clear_io_bits(dspi->base + SPIGCR1, SPIGCR1_POWERDOWN_MASK);
- 
-@@ -1029,8 +1030,6 @@ static void davinci_spi_remove(struct platform_device *pdev)
- 		dma_release_channel(dspi->dma_rx);
- 		dma_release_channel(dspi->dma_tx);
- 	}
--
--	spi_controller_put(host);
+-	pm_runtime_put(&pdev->dev);
+-	pm_runtime_disable(&pdev->dev);
+ 	plda_pcie_host_deinit(&pcie->plda);
++	pm_runtime_put_sync(&pdev->dev);
++	pm_runtime_disable(&pdev->dev);
+ 	platform_set_drvdata(pdev, NULL);
  }
  
- static struct platform_driver davinci_spi_driver = {
 -- 
 2.53.0
 
