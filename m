@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5345E364038;
-	Sat, 12 Sep 2026 08:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAB3364038;
+	Sat, 12 Sep 2026 08:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203484; cv=none; b=bNPbZuaAjf1cPQNRELUNT/vpEimegYLkeVqx7K1LNHWzvTviLD8IiGM9PskVct3zgcFejCGZaroN1z7BKzVJtd8MeoT+OLNByLY5cD/NakB2zX899DjO7+ToZrsJo0ar1XnMlCHMYxCJj8u1TprKz7y27toct/XFEaLe3yoMcq0=
+	t=1789203489; cv=none; b=Kn0hq57v9IVs+z5/bbNGiV0zC7lZFPnqJerHKrZYdmYrJJoljabTbyUfLE5sTuEfs8x3eD31kMCAtpWnegEpGJDGqsD3JTE9/I46jC9qDKrFEKs9fgh63Z2vTKO3U6QLo/wzXWoSn4sujei095KqcVNR1vyx6oWsoJydZuEvo6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203484; c=relaxed/simple;
-	bh=bOoiOxyZ/WOHawh2Ga3OmwQezF57r844itE7Aq5WTbo=;
+	s=arc-20240116; t=1789203489; c=relaxed/simple;
+	bh=ecJLwrWgRucF24P0JHx2dtJXtNx+pwN7i7dUwbcuYnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gBvq+jXSOzcaGRvKdsxG8rayJHC4Vc6kK3vVDU4IwQ9LI1G7CHU7EvYyzTmsl+EldeHb+1ufpzqF0e+7ByhxsC7yucZZrIiB5TDFVKfW1VdJXO8Q8u1t843P0r28vdn0KEBmq62m66yLmsfTESpkNB2mPqEhUteAXDVs9/vK2zQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UzrEHyvh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mdgfYLC7K/z7kZgcl4pKLnQWR7CGUXLS8RB+067776dPRvwYw9pWTt70ngt6E2oPjkOHGDTMmkUXs8UKyOwlA3Ap11PR9SeeLYBOO3x/RjqqRkr0synjDL/MAXDcsZJFnKRKMXsCcOPDno+ZVPLabB1V21z6nPywSi06RMKgox8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzCGbRF+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UzrEHyvh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02C741F000FF;
-	Sat, 12 Sep 2026 08:58:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzCGbRF+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB4E1F000FF;
+	Sat, 12 Sep 2026 08:58:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203482;
-	bh=rxHUueTez7DZ4fS9pIGhFZQ61hA3B9zhZj/DndLHul4=;
+	s=korg; t=1789203487;
+	bh=ZjfVtrW3rPhB4JmL4YXrbdGhshjrXN2dtSPlxGPan5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UzrEHyvhxmgNOZXJvc0iRoJFCDukVQrslcjsBsK+oYd2Qkn8dQkWRLeZd8BoxV/n6
-	 /HtCrH1jP8KuVb/Q38p8x5tLbrRvSKjsbSNhCuNTzWrix4YhlA7OMT/ow5bKG5hzic
-	 aOqqLHMF6tP5iOJMvpgz5tu9yjd1o5EJbGhk5ovk=
+	b=HzCGbRF+x0tGj8+hIgs1rMx4BG0tGCqb7b8axz03s79Nn9T2VTD1+yo1mooRH+rrf
+	 lxefqYkHzGqo+jBkqcabC/43byBDRpR9CLBzF9d1q7XKqUmw27nS5JQkuooQCUa7FK
+	 mqGrotVqC06NCilTFTQX/rBSVnLmeIkc2wsCpWPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Ning Ding <dingning04@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1375/1815] UBI: fastmap: Pass to_be_tortured when reusing old fastmap PEBs
-Date: Sat, 12 Sep 2026 08:52:05 +0200
-Message-ID: <20260912065721.307322802@linuxfoundation.org>
+Subject: [PATCH 7.2 1376/1815] bpf: Compare iterator types during state pruning
+Date: Sat, 12 Sep 2026 08:52:06 +0200
+Message-ID: <20260912065721.330304377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,67 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Ning Ding <dingning04@gmail.com>
 
-[ Upstream commit be04fce9945aac2a843f5d16725391eb80d948ef ]
+[ Upstream commit 83608e303b95d07afba1c15da0b5d9e513c2f15a ]
 
-In ubi_update_fastmap(), when no fresh PEB is available to replace an
-old fastmap PEB, the old PEB is reused by erasing it synchronously
-via ubi_sync_erase() with the torture flag hardcoded to zero.
+An iterator stack slot can be MEM_RCU or PTR_UNTRUSTED. These states
+must not be equal, or the verifier can prune an unsafe path.
 
-However, old_fm->to_be_tortured[] may be non-zero: it is set during
-fastmap scanning when ubi_io_read_data()/ubi_io_read_ec_hdr() reports
-UBI_IO_BITFLIPS, meaning the PEB showed signs of bit decay and should
-be tortured to verify it is still reliable.
+Compare the pointer type for STACK_ITER slots.
 
-When the old PEB is instead returned to the WL sub-system via
-ubi_wl_put_fm_peb(), the to_be_tortured flag is honored. The
-synchronous reuse path is inconsistent: it silently skips the torture
-test for PEBs that exhibited bit-flips.
-
-Fix it by passing &old_fm->to_be_tortured[i] to ubi_sync_erase().
-
-Fixes: dbb7d2a88d2a ("UBI: Add fastmap core")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: dfab99df147b ("bpf: teach the verifier to enforce css_iter and task_iter in RCU CS")
+Signed-off-by: Ning Ding <dingning04@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://patch.msgid.link/20260811035955.132989-2-dingning04@gmail.com
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/fastmap.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ kernel/bpf/states.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/ubi/fastmap.c b/drivers/mtd/ubi/fastmap.c
-index 98cc698d9c34d..3f9fb7c181ffc 100644
---- a/drivers/mtd/ubi/fastmap.c
-+++ b/drivers/mtd/ubi/fastmap.c
-@@ -1488,7 +1488,7 @@ static void return_fm_pebs(struct ubi_device *ubi,
-  */
- int ubi_update_fastmap(struct ubi_device *ubi)
- {
--	int ret, i, j, torture = 0;
-+	int ret, i, j;
- 	struct ubi_fastmap_layout *new_fm, *old_fm;
- 	struct ubi_wl_entry *tmp_e;
- 
-@@ -1526,7 +1526,8 @@ int ubi_update_fastmap(struct ubi_device *ubi)
- 
- 		if (!tmp_e) {
- 			if (old_fm && old_fm->e[i]) {
--				ret = ubi_sync_erase(ubi, old_fm->e[i], &torture);
-+				ret = ubi_sync_erase(ubi, old_fm->e[i],
-+						    &old_fm->to_be_tortured[i]);
- 				if (ret < 0) {
- 					ubi_err(ubi, "could not erase old fastmap PEB");
- 
-@@ -1578,7 +1579,8 @@ int ubi_update_fastmap(struct ubi_device *ubi)
- 	if (old_fm) {
- 		/* no fresh anchor PEB was found, reuse the old one */
- 		if (!tmp_e) {
--			ret = ubi_sync_erase(ubi, old_fm->e[0], &torture);
-+			ret = ubi_sync_erase(ubi, old_fm->e[0],
-+					     &old_fm->to_be_tortured[0]);
- 			if (ret < 0) {
- 				ubi_err(ubi, "could not erase old anchor PEB");
- 
+diff --git a/kernel/bpf/states.c b/kernel/bpf/states.c
+index ea2153cf28d0a..4e6aafad33bd2 100644
+--- a/kernel/bpf/states.c
++++ b/kernel/bpf/states.c
+@@ -812,7 +812,8 @@ static bool stacksafe(struct bpf_verifier_env *env, struct bpf_func_state *old,
+ 			 * infinite loop check triggering, see
+ 			 * iter_active_depths_differ()
+ 			 */
+-			if (old_reg->iter.btf != cur_reg->iter.btf ||
++			if (old_reg->type != cur_reg->type ||
++			    old_reg->iter.btf != cur_reg->iter.btf ||
+ 			    old_reg->iter.btf_id != cur_reg->iter.btf_id ||
+ 			    old_reg->iter.state != cur_reg->iter.state ||
+ 			    /* ignore {old_reg,cur_reg}->iter.depth, see above */
 -- 
 2.53.0
 
