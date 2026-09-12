@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA403624BC;
-	Sat, 12 Sep 2026 10:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4833624A5;
+	Sat, 12 Sep 2026 10:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207294; cv=none; b=QPu1bIStMzZt95epo/FCIE9+s/9x40ReqHpa9FD9CYHM25m0fsjnOXvTyU5WIQQ8w0aYTLOJH1JjK4lOj8+DAQkG1reqioe+m2OWlesMtv5G6D50AiNUHX35+L7HY9Qfbva27fVbX90hpvo+sOYxC4113uTlW8ILR9P4/A0iGWU=
+	t=1789207299; cv=none; b=oN5RYJYI1l7I/VfjBq4VxJ9+cvbAC5mBvCA76q+kzYFyHEO9LpKPsNt3CN6gRjMAYI6NMsmzHdIns/hi7edP4/tP1NeaQIt52OgweResp2jV8VCPWdd6SlPq8SSqaAWqmUXkavf+x6mIxMau0IfaAJ3G+63G9j45sFYu8rOx5ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207294; c=relaxed/simple;
-	bh=+ZAQl5nXedGFPbM0Du/KrNdbA/7i9s92NqKhP3jw8Q8=;
+	s=arc-20240116; t=1789207299; c=relaxed/simple;
+	bh=tl59N9/QAlGlXRrKjjwn+U5fo+0cIv3XPlDwV990JU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jKYQNohh1DYgiZDHEMeWe0GypHr7Ctrz1I/zl6rHi0JLFxYSFHICCWwVHzyla1CGioopxYaa2p9VHuMelb7nrCUI1aM1UQ75SRsLtBhdTlpdvAH7VfJB82dfW6J1CBoCG9TeFydzIwvWxEwQhdLjA6Neyj4TzS6v37w4pfH9AVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihvx9Bpq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iMokVMI+mXDsWbHoVCkCVZfxbRl61kYFRpIjNxO6B+ngHkaBbouEe5aPQ1qT4gchUt1D45b/KT+sLi2N/gIpEJKhHCjfQiBtcNz4jSrEIiAIMab/bMVH/+AZJdBRfOissMOTR6nYptGnTAgTKvfXLXnfRdUDBeP/r9PcB/EH+Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBuhnnFw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihvx9Bpq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858821F000FF;
-	Sat, 12 Sep 2026 10:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBuhnnFw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251951F000FF;
+	Sat, 12 Sep 2026 10:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207293;
-	bh=p1SkiVeAyFVadcqeICbtRUxzakEcSYBW2LVGVFOtYlk=;
+	s=korg; t=1789207298;
+	bh=VXy4E+XUloR4R6qd5HbPj+si23Gp10wxixRo1EqZ+4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ihvx9BpqfTqD+I4f18vz+cdV2+HIYk58Mb8+hNgqIxHxvku9tsh3MRtf7WTrD8tKK
-	 /PUwESppkayVc8iI7OwFgARTFhEkETvcx9MdhZ7I8QCgJePq5Y445Pbu+07WMPjuds
-	 RHnwov2aIXkU2yPCHzngvbVWpHSKqCzW5ad6ju3o=
+	b=bBuhnnFwvirqHh4MfMlIO2x9/IcjeJR4lwtdlhB2ClGqIObEzcXeaXax1/hsMc4so
+	 VTnI1+oBhB0fYHG/hsWsDrVO4s47+B0wi3ehbxp7nqw1U0yqtVYmjMuw03lkrKRLZL
+	 XYOPoRr6zf3xGxxf55GQo1bh707ZA8Vb2LbMwSzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0384/1518] firmware: arm_scmi: Use channel ID for transport teardown
-Date: Sat, 12 Sep 2026 08:42:33 +0200
-Message-ID: <20260912065632.148388430@linuxfoundation.org>
+Subject: [PATCH 6.18 0385/1518] firmware: arm_scmi: Protect device request lookup with RCU
+Date: Sat, 12 Sep 2026 08:42:34 +0200
+Message-ID: <20260912065632.170797176@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,44 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit a71a3d4d8a6e9e399fd988c0e6da47a6ee21c99e ]
+[ Upstream commit e6a0e7a49d83e4fa4e1db68d74f99282eb97aa49 ]
 
-SCMI protocols can share the BASE transport channel when firmware does
-not describe a dedicated channel for the protocol. In that case multiple
-IDR entries can point at the same scmi_chan_info, whose owning transport
-device was created with cinfo->id.
+The SCMI device request notifier looks up protocol OF nodes from the
+active_protocols IDR. The IDR lookup can run concurrently with protocol
+activation while probe is still registering protocols and creating their
+SCMI devices.
 
-scmi_chan_destroy() used the IDR iterator key when destroying the
-transport device. If an alias entry is visited before the owning channel
-entry, the lookup can miss the device because the iterator key does not
-match the protocol ID used when the transport device was created. The
-code then clears cinfo->dev, so the later owning entry skips teardown and
-leaks the transport device.
+Wrap the lookup in an RCU read-side critical section as required by the
+IDR API for lockless readers.
 
-Destroy the transport device using cinfo->id, which is the protocol ID
-that owns the channel and was used when creating the transport device.
-
-Fixes: 05a2801d8b90 ("firmware: arm_scmi: Use dedicated devices to initialize channels")
+Fixes: 53b8c25df708 ("firmware: arm_scmi: Add common notifier helpers")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-8-3afe499d46e3@kernel.org
+Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-9-3afe499d46e3@kernel.org
 Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/arm_scmi/driver.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 6fc8129dc8691..c6483b8285ae4 100644
+index c6483b8285ae4..a84765b7405bf 100644
 --- a/drivers/firmware/arm_scmi/driver.c
 +++ b/drivers/firmware/arm_scmi/driver.c
-@@ -2807,7 +2807,7 @@ static int scmi_chan_destroy(int id, void *p, void *data)
- 		struct scmi_device *sdev = to_scmi_dev(cinfo->dev);
+@@ -32,6 +32,7 @@
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+ #include <linux/processor.h>
++#include <linux/rcupdate.h>
+ #include <linux/refcount.h>
+ #include <linux/slab.h>
+ #include <linux/xarray.h>
+@@ -2869,7 +2870,9 @@ static int scmi_device_request_notifier(struct notifier_block *nb,
+ 	struct scmi_device_id *id_table = data;
+ 	struct scmi_info *info = req_nb_to_scmi_info(nb);
  
- 		of_node_put(cinfo->dev->of_node);
--		scmi_device_destroy(info->dev, id, sdev->name);
-+		scmi_device_destroy(info->dev, cinfo->id, sdev->name);
- 		cinfo->dev = NULL;
- 	}
++	rcu_read_lock();
+ 	np = idr_find(&info->active_protocols, id_table->protocol_id);
++	rcu_read_unlock();
+ 	if (!np)
+ 		return NOTIFY_DONE;
  
 -- 
 2.53.0
