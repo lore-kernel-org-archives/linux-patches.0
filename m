@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB74343893;
-	Sat, 12 Sep 2026 09:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F58343893;
+	Sat, 12 Sep 2026 09:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206668; cv=none; b=sAeW5iP03zCnLrffVneK/gokaoV6rayMMzuXC7m58eewMbWF0v9DzeC/iIMTAusF707UvMyFTtWh1F7QY4srXx43a7/5rv7dyGLcdGIhxTrJe9+L8fyB99xJi9JZfIgNvam8sNhAqK/EwTQp9sGx6ZxnsE6OYj+RVUnF7oGMEIw=
+	t=1789206672; cv=none; b=KlRseOj255X3uDDh7ndwaqNidhH4NbqPp8zFLHBNfDi/jftGSTCLl8Qz4s7ziVRiuSKpm8dUPSo6HJIIPzdwlIwZRDfxr09KyvE5dxg38EVg3hOL1ijo11naavTd//MkiQB31uW7v6HU6D4Houif2CXixqbt7vAIqhNimM5GHrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206668; c=relaxed/simple;
-	bh=V7nFuJBbGl9mV/+wDLLr4h4z5tMDqXlY+28Sna2nY9g=;
+	s=arc-20240116; t=1789206672; c=relaxed/simple;
+	bh=jjXCNrhYFMZ78ffh1zeNgDaJQKZ7a+nnGLMJY8bBSfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LY+8di8PXm/cmLaAyjTUvX/O99mnC3KNu/MItwG1S41hvX5Ilet1oCM6z2RG1IUwLUfSvKuowtHnhW/RF8la+iuhdt7/VxOs8HxXG9uD7kttYr/S+fHvkGC6AzPxD+SB0Miu2kTE/zAfe0uphIPPhdQ+oh46A7AIKRhQeHujZgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AzU292p1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I8h7L6u1+LXP5tc7673cnm5T2bQcsns0/UvW2hPbXSp6lVRd8rU3jxAmCDaDaN6IJIlCkf+ufKwzWKgY++8HnYdP0q7YtAMOgXDkQhLEn/Gx+JD5n7R689slkkMnpLcNmO6YvlEkHiOU/RiWDIVSpb/nOl6YYjO6XV14/3oLl6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnvPxZAh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AzU292p1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50DB91F000FF;
-	Sat, 12 Sep 2026 09:51:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnvPxZAh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1591F000FF;
+	Sat, 12 Sep 2026 09:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206666;
-	bh=D6Pxm01KOOW4QvHSbumWg3WYXTufmx1DGcEl2exTC5A=;
+	s=korg; t=1789206670;
+	bh=8kzWrwpGMJr5k4AzCVzjO182sbD9mPmY/qGv+4RYCIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AzU292p1a+6rB85RQpRLGuMV+JZ1bPLMNynpBPd3wJYeFURnDLxgzUvyNfLC+QQ5U
-	 erJIDvwDAVSD//rQTTaG0ZNxBmaqYAmVi0fYOJXOcPu9zpKygcyHpJNcPuyS1TgiQI
-	 4UWJ1WoQckFgfwi0zQYCEcCZ4R3jiTWe8dd7mQB4=
+	b=PnvPxZAhmfavn10li71tokzIa2fGZ8K+fctl4Tf3yvvdRk/f9NYq/gtkT33iUACtz
+	 1XHWxMXC9tOMpXGqbeEIp9bH6BXwEpyZKV34RQEu4FDV1FgpedToF8CxirU5RlHaLK
+	 LQ6abKbkYSzzTtQ5QyT6r3evcvvcTeG7k+M3ww3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
+	Herman van Hazendonk <github.com@herrie.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Douglas Anderson <dianders@chromium.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0254/1518] arm64: dts: qcom: Add #{address,size}-cells to Chromium-based /firmware
-Date: Sat, 12 Sep 2026 08:40:23 +0200
-Message-ID: <20260912065629.230055200@linuxfoundation.org>
+Subject: [PATCH 6.18 0255/1518] clk: qcom: gdsc: propagate gdsc_check_status() errors from gdsc_poll_status
+Date: Sat, 12 Sep 2026 08:40:24 +0200
+Message-ID: <20260912065629.253338117@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,93 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Norris <briannorris@chromium.org>
+From: Herman van Hazendonk <github.com@herrie.org>
 
-[ Upstream commit 2a906f0b4f037b3fe5f790a48f88549a86288fdf ]
+[ Upstream commit d69f0c2b8d292b4890c9f0fbe184dfc26c4de86c ]
 
-Chromium/Depthcharge bootloaders may dynamically add a few device nodes
-to a system's DTB under a /firmware node. A typical DT looks something
-like the following:
+gdsc_check_status() returns negative errno when the underlying
+regmap_read() fails -- e.g. when a parent regmap dies during system
+suspend, a CSR is removed by an HW debug tool, or the bus controller
+goes into protection. gdsc_poll_status() treats the result as a plain
+boolean ("is the GDSC in the requested state?"), so any negative error
+return is truncated to "true" and the poll exits with success even
+though the rail's real state is unknown:
 
-/ {
-        firmware {
-                ranges;
+	do {
+		if (gdsc_check_status(sc, status))
+			return 0;
+	} while (ktime_us_delta(ktime_get(), start) < STATUS_POLL_TIMEOUT_US);
 
-                coreboot {
-                        compatible = "coreboot";
-                        reg = <...>;
-                        ...;
-                };
-        };
-};
+	if (gdsc_check_status(sc, status))
+		return 0;
 
-Notably, the /firmware node has an empty 'ranges', but does not have
-address/size-cells.
+	return -ETIMEDOUT;
 
-Commit 6e5773d52f4a ("of/address: Fix WARN when attempting translating
-non-translatable addresses") started requiring #address-cells for a
-device's parent if we want to use the reg resource in a device node.
-This leads to errors like the following:
+This silently misleads gdsc_toggle_logic() (which writes/un-writes
+SW_COLLAPSE on the strength of the poll succeeding) and the gdsc_init()
+sync path (which assumes the readback represents real silicon state).
 
-[    7.763870] coreboot_table firmware:coreboot: probe with driver coreboot_table failed with error -22
+Latch the return value, propagate negative errno immediately, and only
+treat a strictly-positive value as "reached the target state". Make the
+same change in the post-timeout final check so a regmap that comes back
+after the deadline does not silently degrade to -ETIMEDOUT.
 
-Add appropriate #{address,size}-cells to work around the problem.
-
-Note that Google has also patched the Depthcharge bootloader source to
-add {address,size}-cells [1], but bootloader updates are typically
-delivered only via Google OS updates. Not all users install Google
-software updates, and even if they do, Google may not produce updated
-binaries for all/older devices.
-
-[1] https://lore.kernel.org/all/20241209092809.GA3246424@google.com/
-    https://crrev.com/c/6051580 ("coreboot: Insert #address-cells and
-    #size-cells for firmware node")
-
-Closes: https://lore.kernel.org/all/aeKlYzTiL0OB1y3g@google.com/
-Fixes: 6e5773d52f4a ("of/address: Fix WARN when attempting translating non-translatable addresses")
-Signed-off-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+Fixes: 77b1067a19b4 ("clk: qcom: gdsc: Add support for gdscs with gds hw controller")
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20260428200712.2660635-8-briannorris@chromium.org
+Link: https://lore.kernel.org/r/20260602140934.796697-2-github.com@herrie.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi   | 5 +++++
- arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 5 +++++
- 2 files changed, 10 insertions(+)
+ drivers/clk/qcom/gdsc.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 74ab321d3333c..d60fad977a284 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -98,6 +98,11 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index 95aa071202455..b9b47f584f6d1 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -103,14 +103,21 @@ static int gdsc_hwctrl(struct gdsc *sc, bool en)
+ static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
+ {
+ 	ktime_t start;
++	int ret;
  
-+	firmware {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+	};
-+
- 	/* FIXED REGULATORS - parents above children */
+ 	start = ktime_get();
+ 	do {
+-		if (gdsc_check_status(sc, status))
++		ret = gdsc_check_status(sc, status);
++		if (ret < 0)
++			return ret;
++		if (ret)
+ 			return 0;
+ 	} while (ktime_us_delta(ktime_get(), start) < STATUS_POLL_TIMEOUT_US);
  
- 	/* This is the top level supply and variable voltage */
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-index 5c5e4f1dd2217..58ea0532c0fbb 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-@@ -25,6 +25,11 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
+-	if (gdsc_check_status(sc, status))
++	ret = gdsc_check_status(sc, status);
++	if (ret < 0)
++		return ret;
++	if (ret)
+ 		return 0;
  
-+	firmware {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+	};
-+
- 	/*
- 	 * FIXED REGULATORS
- 	 *
+ 	return -ETIMEDOUT;
 -- 
 2.53.0
 
