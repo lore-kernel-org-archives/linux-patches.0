@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6660D360EF5;
-	Sat, 12 Sep 2026 08:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D0F36492C;
+	Sat, 12 Sep 2026 08:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201433; cv=none; b=BAZ3lSarb6ZqSxSoNhiOnQQYy3S5PTbTlNkcvcuQg8VVzYIY4La/BqoFFvr7PwdO7GlJYS7m330l9tkKmQf2HhgB1o9SLNDkK9NIufSonyoxdtPSQb/DtN1P3DsUGMdhBEI3E+BJasx3oj3btpbEq7lnLyiYJGqLoUQtVM13Zss=
+	t=1789201437; cv=none; b=J8WfvocpyDsEeg5XgIXB27QmWYSIbsvECk88doKLKiUnzMgyooTQDDTnkKRr6LqIRGJyHdlXTPH951zZtudRkBk5castwaucdeUtEv8T7U4X/wLkzasE8WZ4M+XvXY7C4Ib4YLweAwO+3BesVDnx9H+ZnV6USI4CCJZ5iELC7TQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201433; c=relaxed/simple;
-	bh=UMTprr5sN5BS+NlCTVxklIABy5yfRHdxKu6BLZ7ezno=;
+	s=arc-20240116; t=1789201437; c=relaxed/simple;
+	bh=dF79NW2QhcbaNW+UPxT6GBjFjrndRx6lzGmrq+/tVvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=okrAP+8J99I/Z4FZA19qyUq2eGUzlZJ0jWwyIsxX6wwS7h2ZpksgtTPqUiXZ7I+nOdIAjrP0s+LIOCQo7RbQ8QPcdJ1fwY0v7fOXvgNO4SYY2x5U+Gr0V5WQXdHA0L32Fu4YCtbPR9w3wYx1zCZyyl+RrjhuKs/vtgM0EiLdnVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hiY5TZWx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lxPxCH6SLeAQyfp2d+g4vpDsw7DKSJwNIKXEM+tvh9/8Lk11LW1XMDUs2IJz+j0aAFC5LvQTdAck7sfr7NXgWiU3iNm2Kenc+cLw4FsxMScXUtKf8YpRZRXhVhbRLo9Sr6f5NEJ1FYDh+6PeEycwBsqNbSM38HsiaJTzjoMQVlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnenkWsG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hiY5TZWx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4D01F000FF;
-	Sat, 12 Sep 2026 08:23:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnenkWsG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99F81F000FF;
+	Sat, 12 Sep 2026 08:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201432;
-	bh=f/X08HHpKPNwS9zGcCGUw4FC7UGxjTu/2wSCeFGOqHw=;
+	s=korg; t=1789201436;
+	bh=0+U6khZJ8/4XgPnch8bAjEn1j6zZF8D8yup8QmD2ycM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hiY5TZWxEydsKTnm40N5QZwN+415nRVCUdfJKgK5DWdMr0GKHXgwTdF8rJpBPh+4m
-	 EsCSbgQgVnjZ4nL29UBYdSOAcdu9+OUW10DZ7P+dGlwdN2yXcmZrMylLdohdmMYyHc
-	 LCZyMBhocsu2CbVRE2XiRAaOURrdr+SpJCo9OC3s=
+	b=MnenkWsG9yz6F4d1p3o6sxGjJbl3N+S+XGyDoB3/7fdp0X/dLJbNt4x7mAr6lUcTo
+	 I+/f02UXUsaaR7GvfzS/djBiMNUPa9kQrky8jqWX16HaRX64YqXal3ROB0nNLL1iw1
+	 w93v4QZ3rpx8ufycI9FEH22dhPMyD2LuW8S+EZ1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ogness <john.ogness@linutronix.de>,
+	Sashiko <sashiko-bot@kernel.org>,
 	Karl Mehltretter <kmehltretter@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0994/1815] serial: amba-pl011: keep console clock enabled for atomic writes
-Date: Sat, 12 Sep 2026 08:45:44 +0200
-Message-ID: <20260912065712.333302631@linuxfoundation.org>
+Subject: [PATCH 7.2 0995/1815] serial: core: do fallible allocations before the console can be registered
+Date: Sat, 12 Sep 2026 08:45:45 +0200
+Message-ID: <20260912065712.356654021@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,166 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit c0e8cfef754645856374e82c8effd54b7d82002b ]
+[ Upstream commit 1a0e4fbce5d9c1bc179a35a2fd9ed142664299e3 ]
 
-pl011_console_write_atomic() runs from nbcon atomic context, where
-sleeping is not allowed. It calls clk_enable(), which takes the common-clk
-enable_lock. Under PREEMPT_RT that is a sleeping lock:
-clk_enable_lock() first tries spin_trylock_irqsave(), but on contention
-falls back to spin_lock_irqsave(). Therefore, an atomic-context printk on
-an RT kernel with a clk-backed pl011 can trip:
+serial_core_add_one_port() allocates uport->tty_groups after
+uart_configure_port(), which may register the console. If the allocation
+fails, the driver unwinds the port while its console remains registered.
+The earlier uport->name allocation has a related failure path that leaves
+state->uart_port linked to a port being freed.
 
-  BUG: sleeping function called from invalid context at spinlock_rt.c:48
-    __might_resched from rt_spin_lock
-    rt_spin_lock from clk_enable_lock
-    clk_enable_lock from clk_enable
-    clk_enable from pl011_console_write_atomic
-    ... from vprintk_emit
+Failslab reproduced a NULL dereference in PL011 console output and a KASAN
+use-after-free in i.MX console output after failed binds.
 
-This was found and reproduced on PREEMPT_RT. Arm32 and arm64 DT SoCs are
-affected; arm64 SBSA/ACPI has no clk, so clk_enable(NULL) short-circuits
-before the lock. In addition, write_atomic() may be invoked from NMI
-context and is documented to avoid locking. Removing clk_enable() from
-the callback also avoids a potentially unsafe NMI acquisition of the
-common-clock enable_lock.
+Allocate the name and tty_groups before linking the port and configuring
+it. Reserve space for the optional driver attribute group because
+config_port() may populate uport->attr_group during configuration.
 
-An nbcon atomic-capable console must be printable from any context, so
-the clock cannot be gated between writes. Enable the clock while the
-console is available for output: use clk_prepare_enable() in
-pl011_console_setup(), release it via clk_disable_unprepare() in the
-console .exit() callback, and drop the per-write clk_enable()/clk_disable()
-pairs from write_atomic() and write_thread().
-
-When printk suspends consoles, drop the reference after
-uart_suspend_port() stops console access and restore it before
-uart_resume_port() -- but only if suspend actually marked the port
-suspended (a wake-capable tty stays running and must keep its clock), and
-keep it when console_suspend_enabled is false so no_console_suspend works.
-
-The active power cost of keeping the clock enabled is platform-dependent:
-none where the UART clock is a fixed always-on oscillator, real where it
-is a gateable clock branch, which then cannot be gated (nor possibly can
-its parent clocks) while the console is available for output. When serial
-core actually suspends the port, the reference is released so the clock
-provider can gate the clock tree.
-
-Fixes: 2eb2608618ce ("serial: amba-pl011: Implement nbcon console")
-Suggested-by: John Ogness <john.ogness@linutronix.de>
-Link: https://lore.kernel.org/all/8733xeaxix.fsf@jogness.linutronix.de/
+Fixes: 266dcff03eed ("Serial: allow port drivers to have a default attribute group")
+Fixes: f7048b15900f ("tty: serial_core: Add name field to uart_port struct")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260719070454.D6FA21F000E9@smtp.kernel.org/
 Assisted-by: Claude:claude-fable-5
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260724213348.77418-3-kmehltretter@gmail.com
+Link: https://patch.msgid.link/20260731181844.11330-2-kmehltretter@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/amba-pl011.c | 40 +++++++++++++++++++++++----------
- 1 file changed, 28 insertions(+), 12 deletions(-)
+ drivers/tty/serial/serial_core.c | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
-index 4751bf7b4cc90..c4824c201e1c3 100644
---- a/drivers/tty/serial/amba-pl011.c
-+++ b/drivers/tty/serial/amba-pl011.c
-@@ -2543,7 +2543,7 @@ static int pl011_console_setup(struct console *co, char *options)
- 	/* Allow pins to be muxed in and configured */
- 	pinctrl_pm_select_default_state(uap->port.dev);
+diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
+index a530ad372b434..03ee3d038f4e1 100644
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -3056,7 +3056,6 @@ static int serial_core_add_one_port(struct uart_driver *drv, struct uart_port *u
+ 	struct uart_state *state;
+ 	struct tty_port *port;
+ 	struct device *tty_dev;
+-	int num_groups;
  
--	ret = clk_prepare(uap->clk);
-+	ret = clk_prepare_enable(uap->clk);
- 	if (ret)
- 		return ret;
- 
-@@ -2576,7 +2576,7 @@ static int pl011_console_exit(struct console *co)
- {
- 	struct uart_amba_port *uap = amba_ports[co->index];
- 
--	clk_unprepare(uap->clk);
-+	clk_disable_unprepare(uap->clk);
- 
- 	return 0;
- }
-@@ -2650,8 +2650,6 @@ pl011_console_write_atomic(struct console *co, struct nbcon_write_context *wctxt
- 	if (!nbcon_enter_unsafe(wctxt))
- 		return;
- 
--	clk_enable(uap->clk);
--
- 	if (!uap->vendor->always_enabled) {
- 		old_cr = pl011_read(uap, REG_CR);
- 		pl011_write((old_cr & ~UART011_CR_CTSEN) | (UART01x_CR_UARTEN | UART011_CR_TXE),
-@@ -2668,8 +2666,6 @@ pl011_console_write_atomic(struct console *co, struct nbcon_write_context *wctxt
- 	if (!uap->vendor->always_enabled)
- 		pl011_write(old_cr, uap, REG_CR);
- 
--	clk_disable(uap->clk);
--
- 	nbcon_exit_unsafe(wctxt);
- }
- 
-@@ -2682,8 +2678,6 @@ pl011_console_write_thread(struct console *co, struct nbcon_write_context *wctxt
- 	if (!nbcon_enter_unsafe(wctxt))
- 		return;
- 
--	clk_enable(uap->clk);
--
- 	if (!uap->vendor->always_enabled) {
- 		old_cr = pl011_read(uap, REG_CR);
- 		pl011_write((old_cr & ~UART011_CR_CTSEN) | (UART01x_CR_UARTEN | UART011_CR_TXE),
-@@ -2712,8 +2706,6 @@ pl011_console_write_thread(struct console *co, struct nbcon_write_context *wctxt
- 	if (!uap->vendor->always_enabled)
- 		pl011_write(old_cr, uap, REG_CR);
- 
--	clk_disable(uap->clk);
--
- 	nbcon_exit_unsafe(wctxt);
- }
- 
-@@ -3102,21 +3094,45 @@ static void pl011_remove(struct amba_device *dev)
- static int pl011_suspend(struct device *dev)
- {
- 	struct uart_amba_port *uap = dev_get_drvdata(dev);
-+	int ret;
- 
- 	if (!uap)
+ 	if (uport->line >= drv->nr)
+ 		return -EINVAL;
+@@ -3068,6 +3067,22 @@ static int serial_core_add_one_port(struct uart_driver *drv, struct uart_port *u
+ 	if (state->uart_port)
  		return -EINVAL;
  
--	return uart_suspend_port(&amba_reg, &uap->port);
-+	ret = uart_suspend_port(&amba_reg, &uap->port);
-+	if (ret)
-+		return ret;
++	uport->name = kasprintf(GFP_KERNEL, "%s%u", drv->dev_name,
++				drv->tty_driver->name_base + uport->line);
++	if (!uport->name)
++		return -ENOMEM;
 +
-+	if (console_suspend_enabled && uap->port.suspended &&
-+	    uart_console_registered(&uap->port))
-+		clk_disable_unprepare(uap->clk);
-+
-+	return 0;
- }
- 
- static int pl011_resume(struct device *dev)
- {
- 	struct uart_amba_port *uap = dev_get_drvdata(dev);
-+	bool resume_console;
-+	int ret;
- 
- 	if (!uap)
- 		return -EINVAL;
- 
--	return uart_resume_port(&amba_reg, &uap->port);
-+	resume_console = console_suspend_enabled &&
-+			 uap->port.suspended &&
-+			 uart_console_registered(&uap->port);
-+	if (resume_console) {
-+		ret = clk_prepare_enable(uap->clk);
-+		if (ret)
-+			return ret;
++	/*
++	 * uart_configure_port() may set uport->attr_group and register the
++	 * console. Allocate room for both groups and a NULL terminator first.
++	 */
++	uport->tty_groups = kzalloc_objs(*uport->tty_groups, 3);
++	if (!uport->tty_groups) {
++		kfree(uport->name);
++		return -ENOMEM;
 +	}
++	uport->tty_groups[0] = &tty_dev_attr_group;
 +
-+	ret = uart_resume_port(&amba_reg, &uap->port);
-+	if (ret && resume_console)
-+		clk_disable_unprepare(uap->clk);
-+
-+	return ret;
- }
- #endif
+ 	/* Link the port to the driver state table and vice versa */
+ 	atomic_set(&state->refcount, 1);
+ 	init_waitqueue_head(&state->remove_wait);
+@@ -3084,10 +3099,6 @@ static int serial_core_add_one_port(struct uart_driver *drv, struct uart_port *u
+ 	state->pm_state = UART_PM_STATE_UNDEFINED;
+ 	uart_port_set_cons(uport, drv->cons);
+ 	uport->minor = drv->tty_driver->minor_start + uport->line;
+-	uport->name = kasprintf(GFP_KERNEL, "%s%u", drv->dev_name,
+-				drv->tty_driver->name_base + uport->line);
+-	if (!uport->name)
+-		return -ENOMEM;
+ 
+ 	if (uport->cons && uport->dev)
+ 		of_console_check(uport->dev->of_node, uport->cons->name, uport->line);
+@@ -3102,15 +3113,6 @@ static int serial_core_add_one_port(struct uart_driver *drv, struct uart_port *u
+ 
+ 	port->console = uart_console(uport);
+ 
+-	num_groups = 2;
+-	if (uport->attr_group)
+-		num_groups++;
+-
+-	uport->tty_groups = kzalloc_objs(*uport->tty_groups, num_groups);
+-	if (!uport->tty_groups)
+-		return -ENOMEM;
+-
+-	uport->tty_groups[0] = &tty_dev_attr_group;
+ 	if (uport->attr_group)
+ 		uport->tty_groups[1] = uport->attr_group;
  
 -- 
 2.53.0
