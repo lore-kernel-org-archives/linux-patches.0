@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECCC345EB9;
-	Sat, 12 Sep 2026 15:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4ED331EC7;
+	Sat, 12 Sep 2026 15:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228798; cv=none; b=A4b01lr8DKHDIl9lRkkNfwCcdVP7IHBWnVQwQ0aPro/9lcWakzHTIezT6VzJ+rEOOvCesVEzDtSKsDPhh+yoRJZ76kFd594z+RbS8qs+DAor3ccF284I61nsnyGWTR01B3I2imsEuchEmcSKERg24gddL3+yCH/IAUbhx0rYxwo=
+	t=1789228802; cv=none; b=L5DbiZRJmHL60Om/SSeoAubiOYJBMtMvamekbyzqEjOBAhQdwIOCeFP4gZ03IT6zBJilihY2jb+C0kIKafVn3fb31WJMHRxkPHYpOXErphswFtB/kDDn9fzfxWS38TGlzhK4JcuZ6Gzdt0lqX3hnf32v2+3ukemxWeTotPn6qB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228798; c=relaxed/simple;
-	bh=yyxobjMln9uqX3LMKendA8cT+PKkgV3RGuzk3mg2aGY=;
+	s=arc-20240116; t=1789228802; c=relaxed/simple;
+	bh=kRsyOgu/t781NKo+Ke0F2APmDU61+f37DGZlqBcSzvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PtOhOArHCnTqQ+0fjbzSaKHtZYKATcANsJE8NyqOybrZhOrnaSWazIzxTCpEv6vP23sZIOJ/Vv1O7IWEsHIQ41ZiCrLOQzc7ovEt5Ccq2Mbrgh/LWWYFceoObWIwKPrtpPGLtFT8etzT1cKBFlUx/JeSczW7+1asK73LwIwnmNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4+sWMUY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rjXZvPSbpMC83stsbHNqTj7TlSzLAJ+Uh6DFUPfhUGGbP7oc0L/6JCtpukOYGuIRTxLgr7A+skKD/KT2D3SVPUFEXWfPwfADCWjkq/HDI25ujokytUAgdCmTiUeb9v+w/3222qlsDL6NAYGPcxNhEjPRu8YiWj9Rd2mFhyUMIgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XOWMfPfb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4+sWMUY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A460A1F000FF;
-	Sat, 12 Sep 2026 15:59:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XOWMfPfb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7591F00893;
+	Sat, 12 Sep 2026 15:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228793;
-	bh=3ncIJIL1GR+xQQPXq48szJj6IGdRGpofhKcDQYOwYIw=;
+	s=korg; t=1789228798;
+	bh=KWSZ2HMtcOciQDf0dzZ21N62VMi3mc+4ANI8flw7yuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c4+sWMUYcqQyKAbLwc/8MhVp9xAzOWgN0Pv6/YaT+dxFK5qibJF58GWSFYEOzHcd4
-	 etlYzVa9/RHuIPhqozDcYoZJdvV1KSMzalieVfcaa1lXjKx+bP9DXblGflgmCENwzI
-	 amUtSMrAs/nSTsvXythKjYi/L96b2WyrVfNpXPdo=
+	b=XOWMfPfbE/zN9P6nDLjyiUIcU7H2nr9NnwIuEfkEqUKSiNB69lh2ccXfvK+NDipdu
+	 kqs28NZBVpWcPL4HuTM14aFLhXzAwK3rAfwYo9n9cHvRTFnrtEItIrjlOtpc1OqA6T
+	 LLw6A7p7T6MdLfX4hd4hSLDjPGltVECK+VqHFzSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0456/1191] net: hns3: dont auto enable misc vector
-Date: Sat, 12 Sep 2026 08:53:04 +0200
-Message-ID: <20260912065558.478024245@linuxfoundation.org>
+Subject: [PATCH 6.1 0457/1191] ksmbd: fix overflow in dacloffset bounds check
+Date: Sat, 12 Sep 2026 08:53:05 +0200
+Message-ID: <20260912065558.500168363@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,96 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Norbert Szetei <norbert@doyensec.com>
 
-[ Upstream commit 98b1e3b27734139c76295754b6c317aa4df6d32e ]
+[ Upstream commit beff0bc9d69bc8e733f9bca28e2d3df5b3e10e42 ]
 
-Currently, there is a time window between misc irq enabled
-and service task inited. If an interrupte is reported at
-this time, it will cause warning like below:
+The dacloffset field was originally typed as int and used in an
+unchecked addition, which could overflow and bypass the existing
+bounds check in both smb_check_perm_dacl() and smb_inherit_dacl().
 
-[   16.324639] Call trace:
-[   16.324641]  __queue_delayed_work+0xb8/0xe0
-[   16.324643]  mod_delayed_work_on+0x78/0xd0
-[   16.324655]  hclge_errhand_task_schedule+0x58/0x90 [hclge]
-[   16.324662]  hclge_misc_irq_handle+0x168/0x240 [hclge]
-[   16.324666]  __handle_irq_event_percpu+0x64/0x1e0
-[   16.324667]  handle_irq_event+0x80/0x170
-[   16.324670]  handle_fasteoi_edge_irq+0x110/0x2bc
-[   16.324671]  __handle_domain_irq+0x84/0xfc
-[   16.324673]  gic_handle_irq+0x88/0x2c0
-[   16.324674]  el1_irq+0xb8/0x140
-[   16.324677]  arch_cpu_idle+0x18/0x40
-[   16.324679]  default_idle_call+0x5c/0x1bc
-[   16.324682]  cpuidle_idle_call+0x18c/0x1c4
-[   16.324684]  do_idle+0x174/0x17c
-[   16.324685]  cpu_startup_entry+0x30/0x6c
-[   16.324687]  secondary_start_kernel+0x1a4/0x280
-[   16.324688] ---[ end trace 6aa0bff672a964aa ]---
+This could result in out-of-bounds memory access and a kernel crash
+when dereferencing the DACL pointer.
 
-So don't auto enable misc vector when request irq..
+This patch converts dacloffset to unsigned int and uses
+check_add_overflow() to validate access to the DACL.
 
-Fixes: 7be1b9f3e99f ("net: hns3: make hclge_service use delayed workqueue")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://patch.msgid.link/20250106143642.539698-5-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c  | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ fs/smb/server/smbacl.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 0a5b1c83cbea8..d2e800e26761c 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -6,6 +6,7 @@
- #include <linux/etherdevice.h>
- #include <linux/init.h>
- #include <linux/interrupt.h>
-+#include <linux/irq.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/netdevice.h>
-@@ -3811,7 +3812,7 @@ static int hclge_misc_irq_init(struct hclge_dev *hdev)
- 	snprintf(hdev->misc_vector.name, HNAE3_INT_NAME_LEN, "%s-misc-%s",
- 		 HCLGE_NAME, pci_name(hdev->pdev));
- 	ret = request_irq(hdev->misc_vector.vector_irq, hclge_misc_irq_handle,
--			  0, hdev->misc_vector.name, hdev);
-+			  IRQF_NO_AUTOEN, hdev->misc_vector.name, hdev);
- 	if (ret) {
- 		hclge_free_vector(hdev, 0);
- 		dev_err(&hdev->pdev->dev, "request misc irq(%d) fail\n",
-@@ -11805,9 +11806,6 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index 2b2d8fbaa392e..17987e83bdd87 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1057,7 +1057,9 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
+ 	struct dentry *parent = path->dentry->d_parent;
+ 	struct user_namespace *user_ns = mnt_user_ns(path->mnt);
+ 	int inherited_flags = 0, flags = 0, i, ace_cnt = 0, nt_size = 0, pdacl_size;
+-	int rc = 0, num_aces, dacloffset, pntsd_type, pntsd_size, acl_len, aces_size;
++	int rc = 0, num_aces, pntsd_type, pntsd_size, acl_len, aces_size;
++	unsigned int dacloffset;
++	size_t dacl_struct_end;
+ 	char *aces_base;
+ 	bool is_dir = S_ISDIR(d_inode(path->dentry)->i_mode);
  
- 	hclge_init_rxd_adv_layout(hdev);
- 
--	/* Enable MISC vector(vector0) */
--	hclge_enable_vector(&hdev->misc_vector, true);
--
- 	ret = hclge_devlink_init(hdev);
- 	if (ret)
- 		goto err_ptp_uninit;
-@@ -11815,6 +11813,10 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
- 	hclge_state_init(hdev);
- 	hdev->last_reset_time = jiffies;
- 
-+	/* Enable MISC vector(vector0) */
-+	enable_irq(hdev->misc_vector.vector_irq);
-+	hclge_enable_vector(&hdev->misc_vector, true);
+@@ -1065,8 +1067,11 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
+ 					    parent, &parent_pntsd);
+ 	if (pntsd_size <= 0)
+ 		return -ENOENT;
 +
- 	dev_info(&hdev->pdev->dev, "%s driver initialization finished.\n",
- 		 HCLGE_DRIVER_NAME);
+ 	dacloffset = le32_to_cpu(parent_pntsd->dacloffset);
+-	if (!dacloffset || (dacloffset + sizeof(struct smb_acl) > pntsd_size)) {
++	if (!dacloffset ||
++	    check_add_overflow(dacloffset, sizeof(struct smb_acl), &dacl_struct_end) ||
++	    dacl_struct_end > (size_t)pntsd_size) {
+ 		rc = -EINVAL;
+ 		goto free_parent_pntsd;
+ 	}
+@@ -1269,7 +1274,9 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 	struct smb_ntsd *pntsd = NULL;
+ 	struct smb_acl *pdacl;
+ 	struct posix_acl *posix_acls;
+-	int rc = 0, pntsd_size, acl_size, aces_size, pdacl_size, dacl_offset;
++	int rc = 0, pntsd_size, acl_size, aces_size, pdacl_size;
++	unsigned int dacl_offset;
++	size_t dacl_struct_end;
+ 	struct smb_sid sid;
+ 	int granted = le32_to_cpu(*pdaccess & ~FILE_MAXIMAL_ACCESS_LE);
+ 	struct smb_ace *ace;
+@@ -1288,7 +1295,8 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
  
-@@ -12214,7 +12216,7 @@ static void hclge_uninit_ae_dev(struct hnae3_ae_dev *ae_dev)
+ 	dacl_offset = le32_to_cpu(pntsd->dacloffset);
+ 	if (!dacl_offset ||
+-	    (dacl_offset + sizeof(struct smb_acl) > pntsd_size))
++	    check_add_overflow(dacl_offset, sizeof(struct smb_acl), &dacl_struct_end) ||
++	    dacl_struct_end > (size_t)pntsd_size)
+ 		goto err_out;
  
- 	/* Disable MISC vector(vector0) */
- 	hclge_enable_vector(&hdev->misc_vector, false);
--	synchronize_irq(hdev->misc_vector.vector_irq);
-+	disable_irq(hdev->misc_vector.vector_irq);
- 
- 	/* Disable all hw interrupts */
- 	hclge_config_mac_tnl_int(hdev, false);
+ 	pdacl = (struct smb_acl *)((char *)pntsd + le32_to_cpu(pntsd->dacloffset));
 -- 
 2.53.0
 
