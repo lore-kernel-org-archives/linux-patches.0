@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5E03290D1;
-	Sat, 12 Sep 2026 16:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2C51FBEA6;
+	Sat, 12 Sep 2026 16:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231019; cv=none; b=h/zdU4pC/gjR8dljxOJ7bqvwCgx2GxxsvBpqJXrVCBzzIc7No1bMknj8qW2dYTWXx13049NGrBF16GJmfok6Ce/BX36xKOoFjLPx9bucIzUnZjj+gel7vaWpiWVOOeZEsJ/DE/qXFolf3pQ6LWvVq0NSQJkwTQeGPjpEmx9Uf/U=
+	t=1789231024; cv=none; b=fskxcqd62FPnAqN7pVw8WV2ZNBVTo43I/iGy0nW/sQLBhQEcCYqaQpau9jkNJRiKulrMBlOP+4cfjfJMdJCBaLJ1OObehxFf96ugBb6ezkab5ZkAPtYCfYUTAF7Y13NhQd9lTqn0hsFxtLY8RICQaIhrhEQlNFktLGgRY/uPbMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231019; c=relaxed/simple;
-	bh=IiKv4ysMh7g6bwO/AfQGBRwpExLZ+kbQUYRVzNlep8I=;
+	s=arc-20240116; t=1789231024; c=relaxed/simple;
+	bh=BRIlBOWpmkUfngk9exr125PrbYlhWgZjtTQqpVIhmSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bIUKwY34nnshbUzswcAMtQgef3HZwNOnu5njBZ7rjMn9whkPvo6hKyco1zh3fM8Q1v0rbq6so0QVg1gBJ6DRezc71R+nXe/MJdW9WrMVupvXEjMJusx7yO8aYliFSwheU8IXSDjQuuIlOq2iEacxr7UPb1GgGqaCLkXNMdm9eu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sz0b//DS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YLo0+Sj2OOz96hL+Sv6kK3GQCppTPaCzvDu/l8+/R/CwFjwjGcuRjiUbgdpZ5ffQAhUHErtQxXAnug+foVMJZuMsfUqGjsLriq8abzEC8VFDC2VB5H4XkI7UqzEEopVCda30wD/qX6drR239qh+hWqHTCmuXXMfh4XsIn0aK290=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0alpqAwD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sz0b//DS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FECD1F000FF;
-	Sat, 12 Sep 2026 16:36:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0alpqAwD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE391F000FF;
+	Sat, 12 Sep 2026 16:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231018;
-	bh=H47a6U4RRHANv98nvvV9BheUQCwhnXygbH8qI4XCEa8=;
+	s=korg; t=1789231022;
+	bh=pCLw5X4YSF0HiFOAw/gOdc8ERNIIqp2jeEHzxuwVUUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sz0b//DSwPLrYdgyZfR7T8RTqC5QrPSGrZUoeyIi0E9Z5OlpLMLgEVUiooV1yNr0K
-	 qPHJK8dx7wuwZdlmCBlfuYKBwEdSu1lrz4yfVKOiCrdhBNymWNN8UGS1mDxj+Vpu15
-	 rFemrAmleq2HWCcL2CrtnCU/jolWSPgKzaE8y3iA=
+	b=0alpqAwDHUuJmWf0uLsHPSzEvn+xHZyF8Io/RqTjOJWNRaWjF21Ec4sMwEt5R9SeB
+	 06+KFV8Z/MxCdX0NEsLgwqKAP6hHK26ITs2ptEoQ12ximeXd2iwZW8OfrHoeeg7meg
+	 YmdmYeXYcBm1fcgh4U14rftWl6VVHpzOTLRvZ0Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0912/1191] firmware_loader: do not queue completed sysfs fallback requests
-Date: Sat, 12 Sep 2026 09:00:40 +0200
-Message-ID: <20260912065608.719840520@linuxfoundation.org>
+Subject: [PATCH 6.1 0877/1191] drm/sun4i: vi scaler: Fix coefficient selection
+Date: Sat, 12 Sep 2026 09:00:05 +0200
+Message-ID: <20260912065607.947341741@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,59 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit b48373c901951fad1a26bd7c33ad91172b3945b5 ]
+[ Upstream commit 5c31990b21f0b535732deb2b658b78b07464f56c ]
 
-fw_load_sysfs_fallback() calls device_add() before adding the fw_priv to
-pending_fw_head. device_add() publishes the fallback loading interface, so
-a userspace helper which discovers the device by scanning sysfs can write 0
-to the loading attribute and complete the request before it is queued as
-pending.
+Currently, vertical coefficients are selected based on horizontal
+scaling, which is wrong. Additionally, chroma coefficients should be
+selected based on format subsampling.
 
-In that interleaving firmware_loading_store() calls fw_state_done() while
-pending_list still points to itself, so it cannot remove an entry from
-pending_fw_head. The subsequent unconditional list_add() then queues an
-already-completed fw_priv. Once the request is released, pending_fw_head
-can retain a pointer to freed memory and the next fallback request can
-fault while validating the list.
+Fix all that.
 
-Only in-flight fallback requests need suspend or reboot abort handling. If
-the request is already DONE after device_add(), return success from the
-fallback path without sending another uevent, waiting again, or queueing it
-as pending. This preserves the invariant that pending_fw_head contains only
-active fallback requests.
-
-Fixes: 75d95e2e39b2 ("firmware_loader: fix use-after-free in firmware_fallback_sysfs")
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260716081601.1674470-1-mukesh.ojha@oss.qualcomm.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: b862a648de3b ("drm/sun4i: Add support for HW scaling to DE2")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
+Link: https://patch.msgid.link/263a4a41442a3c8b072b170256b72658f1b90802.1785772659.git.jernej.skrabec@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/firmware_loader/fallback.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/sun4i/sun8i_vi_scaler.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/base/firmware_loader/fallback.c b/drivers/base/firmware_loader/fallback.c
-index bf68e39478147..b66a529fd041d 100644
---- a/drivers/base/firmware_loader/fallback.c
-+++ b/drivers/base/firmware_loader/fallback.c
-@@ -91,6 +91,16 @@ static int fw_load_sysfs_fallback(struct fw_sysfs *fw_sysfs, long timeout)
- 		retval = -EINTR;
- 		goto out;
- 	}
-+
-+	/*
-+	 * device_add() exposes the loading interface before pending_list is
-+	 * linked into pending_fw_head, so fw_state_done() may run first.
-+	 */
-+	if (fw_state_is_done(fw_priv)) {
-+		mutex_unlock(&fw_lock);
-+		goto out;
+diff --git a/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c b/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c
+index 7ba75011adf9f..328b84df2ee5e 100644
+--- a/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c
++++ b/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c
+@@ -891,20 +891,26 @@ static void sun8i_vi_scaler_set_coeff(struct regmap *map, u32 base,
+ 			     lan3coefftab32_left[offset + i]);
+ 		regmap_write(map, SUN8I_SCALER_VSU_YHCOEFF1(base, i),
+ 			     lan3coefftab32_right[offset + i]);
 +	}
++	offset = sun8i_vi_scaler_coef_index(vstep) *
++			SUN8I_VI_SCALER_COEFF_COUNT;
++	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++)
++		regmap_write(map, SUN8I_SCALER_VSU_YVCOEFF(base, i),
++			     lan2coefftab32[offset + i]);
 +
- 	list_add(&fw_priv->pending_list, &pending_fw_head);
- 	mutex_unlock(&fw_lock);
++	offset = sun8i_vi_scaler_coef_index(hstep / format->hsub) *
++			SUN8I_VI_SCALER_COEFF_COUNT;
++	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++) {
+ 		regmap_write(map, SUN8I_SCALER_VSU_CHCOEFF0(base, i),
+ 			     ch_left[offset + i]);
+ 		regmap_write(map, SUN8I_SCALER_VSU_CHCOEFF1(base, i),
+ 			     ch_right[offset + i]);
+ 	}
+-
+-	offset = sun8i_vi_scaler_coef_index(hstep) *
++	offset = sun8i_vi_scaler_coef_index(vstep / format->vsub) *
+ 			SUN8I_VI_SCALER_COEFF_COUNT;
+-	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++) {
+-		regmap_write(map, SUN8I_SCALER_VSU_YVCOEFF(base, i),
+-			     lan2coefftab32[offset + i]);
++	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++)
+ 		regmap_write(map, SUN8I_SCALER_VSU_CVCOEFF(base, i),
+ 			     cy[offset + i]);
+-	}
+ }
  
+ void sun8i_vi_scaler_enable(struct sun8i_mixer *mixer, int layer, bool enable)
 -- 
 2.53.0
 
