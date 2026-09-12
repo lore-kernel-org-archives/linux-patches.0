@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E683B2F617C;
-	Sat, 12 Sep 2026 18:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01B62F617C;
+	Sat, 12 Sep 2026 18:43:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238635; cv=none; b=ukqWIhvZiJV+pw/1bQufXWpCtbgsYgMi454aAefY1Ghnt8lx8yx4dl+reSiQXakpGniGtdybe3pHSa79o8ZuvTeb4YIsbf9j7YofKAw8ZWDQKThM1QOHQEKLGfabEe4vC6TaN2VZFnNx1VjpcV+Jw4x6J7WI1brLpfs5+XR7z2U=
+	t=1789238639; cv=none; b=LCIDnJxxCGqHB/80W9x1VnyLtrDezPv+nJQrvL+t5zISmVw44Xf5Vr736DC+7YQZwDZRtf2/bTbE+22f9OFY9oZ5NdAg6kuCqLT7tcF88znYc5JXN/0muSEvZVAFq7UHib8fsdJTf3PfaeR6F7DYfRaRrrWwGRQAAnQxk4sKriM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238635; c=relaxed/simple;
-	bh=HfZpsaMyo3P0p2xeYJnIylYI6ItTScx9PtfrTlxE8nc=;
+	s=arc-20240116; t=1789238639; c=relaxed/simple;
+	bh=0ItSzfPAoGJBRJIO3GPZT/xLhVrU75PoA4lrBt82Ze8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UAKSCBOOY8n+vxKk1GCQRBUXHArxXWRSPHzOr98+7C/Us+92Kn+MlmQZjSmqJb5ucptQMFSLZW3TnNv2DyBtKr5n3v9Ave1HHdy9FxYfdJ1DwGMRVQbBOB3o4LBxXE/GhB+cKC8zBazn4TAtmHay0WdIWDCfHEZ8DkVq7itsX5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NvhWAeWe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GVbVn6JGrvzaJB/WSs+GlsbjVas2rQxdDr0yob1eWIcEnxs6ASGEFydwafOwRsK/MiRiy/lFpq2baxI9jvISpHpR2sSqOGta4SlH+JjPjfzZ1bS0O+2chTsvZJQXXtRpbVFsh75cEORHMCWP1i8jPiwCtefRHEeEhUGtP1gy13Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMFsBNDX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NvhWAeWe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547D61F000FF;
-	Sat, 12 Sep 2026 18:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMFsBNDX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF6D1F000FF;
+	Sat, 12 Sep 2026 18:43:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238633;
-	bh=gyuhDsCyxgfylsalTJb81m77YlO2GNA3hC5lTbVBNak=;
+	s=korg; t=1789238638;
+	bh=yYgKm9fMRZ/1CecpEUxcS1cz/qc5ki/wIAbReeRLLnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NvhWAeWedIbX4hWe1Ak97xkRx4mOzLRkZydTFHlyIQKWFQJPAIOY3rLZNxLl8scpF
-	 D1qVKXrdj6JHdZBKzBAgAx5GouB6Oep/9ZhE8x0E7g1EfiUl1Mok3/Z/mPVMNqGXHu
-	 y93wyugKQ6vrTAgTNUkrVqXcW2bLNNEvcReTrWns=
+	b=dMFsBNDXhL5bqh9k2PcDAPBVVusmG7RcohW6LecABFJdN8Dzo7n5cwhS2aVVM8reQ
+	 OfVMgKQkcQpcdngudV0HuVDQWtG4E8klSyuOWkGQSzh59KLeWezuapJT4ra/eKxdYr
+	 Q4VEfAMmxMORWWF5oTjVvPmjnW4/2vCoAFSMySVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Evgenii Burenchev <evg28bur@yandex.ru>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 503/935] xfrm6: fix out-of-bounds write in xfrm6_input_addr() when secpath is full
-Date: Sat, 12 Sep 2026 08:58:53 +0200
-Message-ID: <20260912065538.353531108@linuxfoundation.org>
+Subject: [PATCH 5.15 504/935] ALSA: hpi: Check transport errors during HPI6000 adapter initialization
+Date: Sat, 12 Sep 2026 08:58:54 +0200
+Message-ID: <20260912065538.375124179@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,55 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Evgenii Burenchev <evg28bur@yandex.ru>
 
-[ Upstream commit 5d9e3bf34fec9a5d237e4b7cef4a707bc2e091bc ]
+[ Upstream commit cc15c329663e3ef1aeed0b68e49a5d5ce4ae0d5c ]
 
-The depth check in xfrm6_input_addr() is off by one:
+create_adapter_obj() retrieves adapter information by calling
+hpi6000_message_response_sequence(). This function reports transport-level
+errors through its return value and DSP-reported errors via hr0.error.
 
-  if (1 + sp->len == XFRM_MAX_DEPTH)
-          goto drop;
-  ...
-  sp->xvec[sp->len++] = x;
+The current code only checks hr0.error, causing transport-level errors to
+be ignored. As a result, adapter initialization may continue with an
+invalid response.
 
-xfrm_input() can leave sp->len == XFRM_MAX_DEPTH, and the transport-mode
-receive path re-enters IPv6 input via xfrm_trans_reinject() with that
-secpath preserved. If the inner packet carries a destination-options HAO
-option or a type-2 routing header, xfrm6_input_addr() is called with
-sp->len == XFRM_MAX_DEPTH; the check (1 + 6 == 6) is false, so
-sp->xvec[sp->len++] writes one slot past the 6-element xvec[]. The write
-stays within the sec_path allocation (invisible to KASAN); UBSAN_BOUNDS
-flags it and panics under panic_on_warn.
+Check the return value of hpi6000_message_response_sequence() before
+examining hr0.error.
 
-Use "sp->len >= XFRM_MAX_DEPTH", matching xfrm_input(). This also
-restores one chain level the old check rejected at sp->len == 5.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-  UBSAN: array-index-out-of-bounds in net/ipv6/xfrm6_input.c:309:10
-  index 6 is out of range for type 'xfrm_state *[6]'
-
-Fixes: 9473e1f631de ("[XFRM] MIPv6: Fix to input RO state correctly.")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 719f82d3987a ("ALSA: Add support of AudioScience ASI boards")
+Signed-off-by: Evgenii Burenchev <evg28bur@yandex.ru>
+Link: https://patch.msgid.link/20260708141147.18253-1-evg28bur@yandex.ru
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/xfrm6_input.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/asihpi/hpi6000.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/ipv6/xfrm6_input.c b/net/ipv6/xfrm6_input.c
-index 7dbefbb338ca5..9d52dffc10924 100644
---- a/net/ipv6/xfrm6_input.c
-+++ b/net/ipv6/xfrm6_input.c
-@@ -193,7 +193,7 @@ int xfrm6_input_addr(struct sk_buff *skb, xfrm_address_t *daddr,
- 		goto drop;
- 	}
+diff --git a/sound/pci/asihpi/hpi6000.c b/sound/pci/asihpi/hpi6000.c
+index aa4d063531260..0d43c06b3a3c2 100644
+--- a/sound/pci/asihpi/hpi6000.c
++++ b/sound/pci/asihpi/hpi6000.c
+@@ -537,6 +537,11 @@ static short create_adapter_obj(struct hpi_adapter_obj *pao,
+ 		hr1.size = sizeof(hr1);
  
--	if (1 + sp->len == XFRM_MAX_DEPTH) {
-+	if (sp->len >= XFRM_MAX_DEPTH) {
- 		XFRM_INC_STATS(net, LINUX_MIB_XFRMINBUFFERERROR);
- 		goto drop;
- 	}
+ 		error = hpi6000_message_response_sequence(pao, 0, &hm, &hr0);
++		if (error) {
++			HPI_DEBUG_LOG(ERROR, "message transport error %d\n",
++						  error);
++			return error;
++		}
+ 		if (hr0.error) {
+ 			HPI_DEBUG_LOG(DEBUG, "message error %d\n", hr0.error);
+ 			return hr0.error;
 -- 
 2.53.0
 
