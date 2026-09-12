@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E09D37FF60;
-	Sat, 12 Sep 2026 09:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF635384233;
+	Sat, 12 Sep 2026 09:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204110; cv=none; b=LUdymfxzi22Bn3/TnTNyLKwxikx0UFioxuyKM5nnpqFmoapSrZkNe+7iapOntXvHCg82TJGMRzoXzz/xIeiE0kV1tHYk4GBiUctVamLoD8aRzeZF4Vdcopj3ZBU3ZdLmWr30Y3/aQ4J0+lphirHaoiZREn/aHJ/3iv86rnDKbB0=
+	t=1789204115; cv=none; b=VFjNkqFea1YH35LQCn6aUCmVK2E4JVxtJt30wmsy2RRpxb6EvqZd5haJmGPnjxlUNMQzlsQzmOGZF7XBoLLydVUnm6gohFLof6e5Wpp++8BHnuTamvyJJ4Q4mkwYoDcM3MOJ77PXa7uHUUUmi64TPLKKUoxpdsmucx7WThoMOdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204110; c=relaxed/simple;
-	bh=kkracyWfR9teuyPwZy9RO6G6Z/TS3BH4lTCL+klWi+w=;
+	s=arc-20240116; t=1789204115; c=relaxed/simple;
+	bh=UZBpSf0wPtHy1dwVrlMnPQzaujCXJaEHG2ZUxqXkEkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TFAZDTIu1gTiCTmXgVq+Nk1lcUcdXEi56T5/moAXp44pDFOD5i5LptBhkdd2WBvY00oCfIZICDUtrVUFKddnmGs1m00l+o+u2zpeo75Ck2lJY2Q0lQkOyLxdBCCoynhHX0uQkSLEdj8whnXzVBO/aZcV7qwG7h/C9056MBAokag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AsSABbJA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eJOKH+A8w+l/J/aBqZrHLbkIQxEEV0W8jMoLBK1g2YmzJuBrcA5+B4isHT9HGxWVWnRVKrZDllvqjRuPjEGWUjFWjKbf9xmqoy12jKuOd6Cq1GK55YCwQHBqt849CJF8/sPN3K/hg8ORXc/K91vd7+WI8/myAAkIMvkiiO9RrD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KILXweSj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AsSABbJA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11941F000FF;
-	Sat, 12 Sep 2026 09:08:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KILXweSj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011631F000FF;
+	Sat, 12 Sep 2026 09:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204109;
-	bh=S+2Ao0Ln8C5MEuKZYrms0i2h6pOdE9cEw4uWlAqa4Rk=;
+	s=korg; t=1789204113;
+	bh=AHGkTzOAn5q4CPlDBulgrnLPNSCCbd0P+GnJ2uJGbiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AsSABbJAtnamABncrGh+1YQ5eAlgHdyaMw+g8cTcvL9xbaYXRdXGS3CfySlonkxJW
-	 b+yyZhQAAg0xGr4vEMJjYbDEoSe6GYcbVa8NAaooLyxkvlqcnDz2WdnohRk9K7czsu
-	 zPcD3hrYMKeZXdjYDPwU//fa8GU+x63IvhdIh0vk=
+	b=KILXweSjUw9oRklyyQRHlhiLUXOpk+NkTKH2G10hWzs8/PVWA09yKWPtfHNNOqsXR
+	 dTCohxqV17hsRE8k9Ykn1API7Yxc4Fo+Sf8iV/RKrlZco/0eMg3aS7TEHq/fP9ELou
+	 aNg/gG6Ad3Zjjtj1HgqD+Q44cCCcy/FuKe7TNuB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ze Tan <tanze@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1544/1815] smb/server: fix session counter on session removal
-Date: Sat, 12 Sep 2026 08:54:54 +0200
-Message-ID: <20260912065725.252261770@linuxfoundation.org>
+Subject: [PATCH 7.2 1545/1815] selftests/bpf: Retry stat generation in cgroup_iter_memcg
+Date: Sat, 12 Sep 2026 08:54:55 +0200
+Message-ID: <20260912065725.273814892@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,90 +51,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ze Tan <tanze@kylinos.cn>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 7de5cf9bcf96bf2ee2ea2ad1d35a7b950f71161a ]
+[ Upstream commit 3d9393ff98ca9a132c7a0778436f5ed856fb3dc6 ]
 
-See the procedure below:
+Each cgroup_iter_memcg subtest touches 1024 pages and expects the matching
+memcg counter to be non-zero. On a host with many CPUs it reads zero
+instead:
 
-  smb2_sess_setup
-    ksmbd_smb2_session_create
-      __session_create
-        hash_add(sessions_table, &sess->hlist, sess->id)
-        ksmbd_counter_inc(KSMBD_COUNTER_SESSIONS)
-  ksmbd_conn_handler_loop
-    ksmbd_server_terminate_conn
-      ksmbd_sessions_deregister
-        hash_del(&sess->hlist)
-        // do not decrement KSMBD_COUNTER_SESSIONS
+  test_anon:FAIL:final anon mapped val: actual 0 <= expected 0
 
-KSMBD_COUNTER_SESSIONS tracks sessions published in sessions_table, but
-session removal does not decrement it. The value therefore keeps growing
-after sessions are expired, rejected during registration, or removed on
-the last channel disconnect.
+memcg stats are cached per-cpu and only become visible once the periodic
+flusher runs (FLUSH_TIME, 2s), or once pending updates cross
+MEMCG_CHARGE_BATCH * num_online_cpus(). That threshold is 512 pages at 8
+CPUs but 8192 at 128, so a single pass no longer reaches it and
+bpf_mem_cgroup_flush_stats() returns without flushing anything.
 
-Fixes: b38f99c1217a ("ksmbd: add procfs interface for runtime monitoring and statistics")
-Signed-off-by: Ze Tan <tanze@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Retry the stat generation, sleeping in between, so that a flusher cycle is
+always covered. Sleep before dropping the mapping, so that a flusher cycle
+landing in the sleep observes the mapped state. nr_anon_mapped and
+nr_file_mapped are rmap gauges, and unmapping first would post a matching
+negative delta for the flusher to aggregate to a net zero.
+
+test_file asserts on both nr_file_pages and nr_file_mapped, which have
+different lifetimes, as page cache pages outlive the mapping. Retry
+while either one is still zero.
+
+Fixes: 6bce6ddbe634 ("bpf: selftests: selftests for memcg stat kfuncs")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20260814232017.2839959-1-andrii@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/user_session.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ .../bpf/prog_tests/cgroup_iter_memcg.c        | 43 +++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index 5b734acc00736..d91dde3f9e619 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -397,6 +397,12 @@ void ksmbd_session_destroy(struct ksmbd_session *sess)
- 	kfree(sess);
- }
+diff --git a/tools/testing/selftests/bpf/prog_tests/cgroup_iter_memcg.c b/tools/testing/selftests/bpf/prog_tests/cgroup_iter_memcg.c
+index b7c18d590b993..5a1e08d39a06b 100644
+--- a/tools/testing/selftests/bpf/prog_tests/cgroup_iter_memcg.c
++++ b/tools/testing/selftests/bpf/prog_tests/cgroup_iter_memcg.c
+@@ -10,6 +10,17 @@
+ #include "cgroup_iter_memcg.h"
+ #include "cgroup_iter_memcg.skel.h"
  
-+static void ksmbd_session_remove_from_table(struct ksmbd_session *sess)
-+{
-+	hash_del(&sess->hlist);
-+	ksmbd_counter_dec(KSMBD_COUNTER_SESSIONS);
-+}
++/*
++ * memcg stats are cached per-cpu and only become visible once the periodic
++ * flusher runs (FLUSH_TIME, 2s), or once pending updates cross
++ * MEMCG_CHARGE_BATCH * num_online_cpus(). That threshold grows with the CPU
++ * count, so on a large machine a single pass does not reach it and
++ * bpf_mem_cgroup_flush_stats() returns without flushing anything. Retry for
++ * long enough to cover a flusher cycle.
++ */
++#define MEMCG_STAT_RETRIES		16
++#define MEMCG_STAT_RETRY_DELAY_US	(250 * 1000)
 +
- struct ksmbd_session *__session_lookup(unsigned long long id)
+ static int read_stats(struct bpf_link *link)
  {
- 	struct ksmbd_session *sess;
-@@ -423,7 +429,7 @@ static void ksmbd_expire_session(struct ksmbd_conn *conn)
- 		     time_after(jiffies,
- 			       sess->last_active + SMB2_SESSION_TIMEOUT))) {
- 			xa_erase(&conn->sessions, sess->id);
--			hash_del(&sess->hlist);
-+			ksmbd_session_remove_from_table(sess);
- 			ksmbd_session_destroy(sess);
- 			continue;
- 		}
-@@ -444,7 +450,7 @@ int ksmbd_session_register(struct ksmbd_conn *conn,
- 			      KSMBD_DEFAULT_GFP));
- 	if (ret) {
- 		down_write(&sessions_table_lock);
--		hash_del(&sess->hlist);
-+		ksmbd_session_remove_from_table(sess);
- 		up_write(&sessions_table_lock);
- 		ksmbd_user_session_put(sess);
- 	}
-@@ -477,7 +483,7 @@ void ksmbd_sessions_deregister(struct ksmbd_conn *conn)
- 	hash_for_each_safe(sessions_table, bkt, tmp, sess, hlist) {
- 		if (!ksmbd_chann_del(conn, sess) &&
- 		    xa_empty(&sess->ksmbd_chann_list)) {
--			hash_del(&sess->hlist);
-+			ksmbd_session_remove_from_table(sess);
- 			down_write(&conn->session_lock);
- 			xa_erase(&conn->sessions, sess->id);
- 			up_write(&conn->session_lock);
-@@ -491,7 +497,7 @@ void ksmbd_sessions_deregister(struct ksmbd_conn *conn)
- 		ksmbd_chann_del(conn, sess);
- 		if (xa_empty(&sess->ksmbd_chann_list)) {
- 			xa_erase(&conn->sessions, sess->id);
--			hash_del(&sess->hlist);
-+			ksmbd_session_remove_from_table(sess);
- 			if (atomic_dec_and_test(&sess->refcnt))
- 				ksmbd_session_destroy(sess);
- 		}
+ 	int fd, ret = 0;
+@@ -35,11 +46,13 @@ static int read_stats(struct bpf_link *link)
+ 
+ static void test_anon(struct bpf_link *link, struct memcg_query *memcg_query)
+ {
++	int retries = 0;
+ 	void *map;
+ 	size_t len;
+ 
+ 	len = sysconf(_SC_PAGESIZE) * 1024;
+ 
++retry:
+ 	/*
+ 	 * Increase memcg anon usage by mapping and writing
+ 	 * to a new anon region.
+@@ -53,6 +66,12 @@ static void test_anon(struct bpf_link *link, struct memcg_query *memcg_query)
+ 	if (!ASSERT_OK(read_stats(link), "read stats"))
+ 		goto cleanup;
+ 
++	if (!memcg_query->nr_anon_mapped && ++retries < MEMCG_STAT_RETRIES) {
++		usleep(MEMCG_STAT_RETRY_DELAY_US);
++		munmap(map, len);
++		goto retry;
++	}
++
+ 	ASSERT_GT(memcg_query->nr_anon_mapped, 0, "final anon mapped val");
+ 
+ cleanup:
+@@ -61,6 +80,7 @@ static void test_anon(struct bpf_link *link, struct memcg_query *memcg_query)
+ 
+ static void test_file(struct bpf_link *link, struct memcg_query *memcg_query)
+ {
++	int retries = 0;
+ 	void *map;
+ 	size_t len;
+ 	char *path;
+@@ -76,6 +96,7 @@ static void test_file(struct bpf_link *link, struct memcg_query *memcg_query)
+ 	fd = open(path, O_CREAT | O_RDWR, 0644);
+ 	if (!ASSERT_OK_FD(fd, "open fd"))
+ 		return;
++retry:
+ 	if (!ASSERT_OK(ftruncate(fd, len), "ftruncate"))
+ 		goto cleanup_fd;
+ 
+@@ -88,6 +109,13 @@ static void test_file(struct bpf_link *link, struct memcg_query *memcg_query)
+ 	if (!ASSERT_OK(read_stats(link), "read stats"))
+ 		goto cleanup_map;
+ 
++	if ((!memcg_query->nr_file_pages || !memcg_query->nr_file_mapped) &&
++	    ++retries < MEMCG_STAT_RETRIES) {
++		usleep(MEMCG_STAT_RETRY_DELAY_US);
++		munmap(map, len);
++		goto retry;
++	}
++
+ 	ASSERT_GT(memcg_query->nr_file_pages, 0, "final file value");
+ 	ASSERT_GT(memcg_query->nr_file_mapped, 0, "final file mapped value");
+ 
+@@ -100,6 +128,7 @@ static void test_file(struct bpf_link *link, struct memcg_query *memcg_query)
+ 
+ static void test_shmem(struct bpf_link *link, struct memcg_query *memcg_query)
+ {
++	int retries = 0;
+ 	size_t len;
+ 	int fd;
+ 
+@@ -113,12 +142,18 @@ static void test_shmem(struct bpf_link *link, struct memcg_query *memcg_query)
+ 	if (!ASSERT_OK_FD(fd, "memfd_create"))
+ 		return;
+ 
++retry:
+ 	if (!ASSERT_OK(fallocate(fd, 0, 0, len), "fallocate"))
+ 		goto cleanup;
+ 
+ 	if (!ASSERT_OK(read_stats(link), "read stats"))
+ 		goto cleanup;
+ 
++	if (!memcg_query->nr_shmem && ++retries < MEMCG_STAT_RETRIES) {
++		usleep(MEMCG_STAT_RETRY_DELAY_US);
++		goto retry;
++	}
++
+ 	ASSERT_GT(memcg_query->nr_shmem, 0, "final shmem value");
+ 
+ cleanup:
+@@ -127,11 +162,13 @@ static void test_shmem(struct bpf_link *link, struct memcg_query *memcg_query)
+ 
+ static void test_pgfault(struct bpf_link *link, struct memcg_query *memcg_query)
+ {
++	int retries = 0;
+ 	void *map;
+ 	size_t len;
+ 
+ 	len = sysconf(_SC_PAGESIZE) * 1024;
+ 
++retry:
+ 	/* Create region to use for triggering a page fault. */
+ 	map = mmap(NULL, len, PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+ 	if (!ASSERT_NEQ(map, MAP_FAILED, "mmap anon"))
+@@ -143,6 +180,12 @@ static void test_pgfault(struct bpf_link *link, struct memcg_query *memcg_query)
+ 	if (!ASSERT_OK(read_stats(link), "read stats"))
+ 		goto cleanup;
+ 
++	if (!memcg_query->pgfault && ++retries < MEMCG_STAT_RETRIES) {
++		usleep(MEMCG_STAT_RETRY_DELAY_US);
++		munmap(map, len);
++		goto retry;
++	}
++
+ 	ASSERT_GT(memcg_query->pgfault, 0, "final pgfault val");
+ 
+ cleanup:
 -- 
 2.53.0
 
