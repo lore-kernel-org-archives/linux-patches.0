@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C696AEED8;
-	Sat, 12 Sep 2026 14:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CA2242D65;
+	Sat, 12 Sep 2026 14:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224552; cv=none; b=K0fDQfpVY1bLTLbUWAomFzdyaKxbTv61j2tX3n+Hsqu+u+/qrcdllHRnFdgT1++6mrhFzKef6xWCcjEdzst1f+fF1jOHJ3kFMOPF5tXQsDzQ6NdJBf/DYu34RAQu2wBlwXP/UTgMoBKuhTepicxoPI8JdaC7BW2WYbYqwTJr9Yg=
+	t=1789224558; cv=none; b=CgYUBBMUTL4epVERU5pQVnl8WeB31S2Kytob3ecOsbgrMxamlchsXVRc3RkhQiQ+MYOJab6K411azXGytqYhhykRLPGrEProqiharALC0LMtm14j29a2WgPcfSJySqVGcURMa/xLfWvwigwGsosh7AbgCcggFnuNhWAx53uLV8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224552; c=relaxed/simple;
-	bh=oc4MOfyw00HdwlCOTnH84t3Hv+mcvaKHRuROrVTZ+wc=;
+	s=arc-20240116; t=1789224558; c=relaxed/simple;
+	bh=476lKe52gxqoAjP/2+K2rmfLSTp2u9aPjVYpdqpduHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=shC9TTL0sE2/fsXAX2S6/iWsXv642F7tReiZL1p+NLJ6NwBMfJ2qXLWWm2LyS5s1eP22xw7a2jWKx3g/IgQiutdzpLP2Zn10LSOs1/qTRvkWNBOJffB0VMl886qR3e+Y6EwM6Hmzw3WWOz9Yqbz4B1zLjI4xzat4Sw2t0+nUv2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFLcZrRJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d7LDFCnVwbTubKOn9M4rtqjy3YyopEwbp4TsFeRqvbbCGk2xnIsFIGDa1HOq96+pHNNQK/p2bTF6gfCkT/CMeP374TUSHodZJhhexvNpaEmGZtzVcUYJonNdkYkBSPyz+ZDNDG8c4GiR+X88eglwlYelhgkc9JHT/M39EscVxUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=so3YcSzS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFLcZrRJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8271C1F000FF;
-	Sat, 12 Sep 2026 14:49:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="so3YcSzS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4CA1F000FF;
+	Sat, 12 Sep 2026 14:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224551;
-	bh=YfVTyjg6lPNFuXFGyHVJIEeKdc25Rm5KO79XS6d8LCA=;
+	s=korg; t=1789224556;
+	bh=ldEL92GgVv7xmfSiAvsz1E42I2zteEY7djMQK8V1uuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sFLcZrRJizwpT7zxOgn59JE0nuPzkmYv+APt3G1CQ5njU65Nkou4N4gp195EWfugB
-	 OCj0aORFLKok5U2MBYB964g18e6nteNTnpxbS+cYX0UfyXV4luRAL5+5Cu/PbJ3CAE
-	 05SA9PQxxJU/dpZrn9GsDheHKvuQK/vJebssM4ZQ=
+	b=so3YcSzSwlSheEBldBEHksHEDuZPbYYNHTFbUCf6JmrwATw3umSy3I4GwYzvxq5/D
+	 t2G1N0lXCkDgJkmcOZjbSBYkDloC8u7mL8ls/nWBspNVxtSKziWDQkbHClrEim+riN
+	 sNj5ud9u8/DzN0C/hhCKbRbWABtaa4dgqGox6cV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Douglas Anderson <dianders@chromium.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0999/1424] wifi: mt76: mt7996: fix reg addr remap when addr is 0
-Date: Sat, 12 Sep 2026 08:57:11 +0200
-Message-ID: <20260912065629.688204594@linuxfoundation.org>
+Subject: [PATCH 6.6 1017/1424] HID: i2c-hid: Fold i2c_hid_execute_reset() into i2c_hid_hwreset()
+Date: Sat, 12 Sep 2026 08:57:29 +0200
+Message-ID: <20260912065630.087534787@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,87 +52,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit eb906eeff2d1e84b628dc210dada325269c71383 ]
+[ Upstream commit f023605d1de6f150d9266747a2630f029956041f ]
 
-When addr is less than the hardcoded threshold in __mt7996_reg_addr,
-it indicates that remapping is unnecessary.
-Currently, the flow remaps address 0x0 to MT_HIF_REMAP_BASE_L2,
-which is incorrect.
-To address this, modify __mt7996_reg_addr to return INVALID_REG_ADDR
-if the address is not below the hardcoded value or is not present in
-the mt7996_reg_map array.
-Additionally, update the remap condition to check if addr is equal to
-INVALID_REG_ADDR.
+i2c_hid_hwreset() is the only caller of i2c_hid_execute_reset(),
+fold the latter into the former.
 
-Fixes: 3687854d3e7e ("wifi: mt76: mt7996: add locking for accessing mapped registers")
-Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
-Link: https://patch.msgid.link/20260727150434.1778520-5-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+This is a preparation patch for removing the need for
+I2C_HID_QUIRK_NO_IRQ_AFTER_RESET by making i2c-hid behave
+more like Windows.
+
+No functional changes intended.
+
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Stable-dep-of: 8da0f0951dee ("HID: i2c-hid: Fix "(null)" output when reading report descriptor fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mmio.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/hid/i2c-hid/i2c-hid-core.c | 73 ++++++++++++------------------
+ 1 file changed, 30 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-index f0fa0f513be90..5f3b3ca156241 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-@@ -11,6 +11,8 @@
- #include "mac.h"
- #include "../trace.h"
- 
-+#define INVALID_REG_ADDR	0xffffffff
-+
- static const struct __base mt7996_reg_base[] = {
- 	[WF_AGG_BASE]		= { { 0x820e2000, 0x820f2000, 0x830e2000 } },
- 	[WF_ARB_BASE]		= { { 0x820e3000, 0x820f3000, 0x830e3000 } },
-@@ -125,7 +127,7 @@ static u32 __mt7996_reg_addr(struct mt7996_dev *dev, u32 addr)
- 		return dev->reg.map[i].mapped + ofs;
- 	}
- 
--	return 0;
-+	return INVALID_REG_ADDR;
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 0a350780407ec..c87d3a825dc08 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -420,12 +420,23 @@ static int i2c_hid_set_power(struct i2c_hid *ihid, int power_state)
+ 	return ret;
  }
  
- static u32 __mt7996_reg_remap_addr(struct mt7996_dev *dev, u32 addr)
-@@ -154,7 +156,7 @@ void mt7996_memcpy_fromio(struct mt7996_dev *dev, void *buf, u32 offset,
+-static int i2c_hid_execute_reset(struct i2c_hid *ihid)
++static int i2c_hid_hwreset(struct i2c_hid *ihid)
  {
- 	u32 addr = __mt7996_reg_addr(dev, offset);
+ 	size_t length = 0;
+ 	int ret;
  
--	if (addr) {
-+	if (addr != INVALID_REG_ADDR) {
- 		memcpy_fromio(buf, dev->mt76.mmio.regs + addr, len);
- 		return;
+-	i2c_hid_dbg(ihid, "resetting...\n");
++	i2c_hid_dbg(ihid, "%s\n", __func__);
++
++	/*
++	 * This prevents sending feature reports while the device is
++	 * being reset. Otherwise we may lose the reset complete
++	 * interrupt.
++	 */
++	mutex_lock(&ihid->reset_lock);
++
++	ret = i2c_hid_set_power(ihid, I2C_HID_PWR_ON);
++	if (ret)
++		goto err_unlock;
+ 
+ 	/* Prepare reset command. Command register goes first. */
+ 	*(__le16 *)ihid->cmdbuf = ihid->hdesc.wCommandRegister;
+@@ -438,59 +449,35 @@ static int i2c_hid_execute_reset(struct i2c_hid *ihid)
+ 
+ 	ret = i2c_hid_xfer(ihid, ihid->cmdbuf, length, NULL, 0);
+ 	if (ret) {
+-		dev_err(&ihid->client->dev, "failed to reset device.\n");
+-		goto out;
++		dev_err(&ihid->client->dev,
++			"failed to reset device: %d\n", ret);
++		goto err_clear_reset;
  	}
-@@ -170,7 +172,7 @@ static u32 mt7996_rr(struct mt76_dev *mdev, u32 offset)
- 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
- 	u32 addr = __mt7996_reg_addr(dev, offset), val;
  
--	if (addr)
-+	if (addr != INVALID_REG_ADDR)
- 		return dev->bus_ops->rr(mdev, addr);
- 
- 	spin_lock_bh(&dev->reg_lock);
-@@ -185,7 +187,7 @@ static void mt7996_wr(struct mt76_dev *mdev, u32 offset, u32 val)
- 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
- 	u32 addr = __mt7996_reg_addr(dev, offset);
- 
--	if (addr) {
-+	if (addr != INVALID_REG_ADDR) {
- 		dev->bus_ops->wr(mdev, addr, val);
- 		return;
++	i2c_hid_dbg(ihid, "%s: waiting...\n", __func__);
++
+ 	if (ihid->quirks & I2C_HID_QUIRK_NO_IRQ_AFTER_RESET) {
+ 		msleep(100);
+-		goto out;
+-	}
+-
+-	i2c_hid_dbg(ihid, "%s: waiting...\n", __func__);
+-	if (!wait_event_timeout(ihid->wait,
+-				!test_bit(I2C_HID_RESET_PENDING, &ihid->flags),
+-				msecs_to_jiffies(5000))) {
++		clear_bit(I2C_HID_RESET_PENDING, &ihid->flags);
++	} else if (!wait_event_timeout(ihid->wait,
++				       !test_bit(I2C_HID_RESET_PENDING, &ihid->flags),
++				       msecs_to_jiffies(5000))) {
+ 		ret = -ENODATA;
+-		goto out;
++		goto err_clear_reset;
  	}
-@@ -200,7 +202,7 @@ static u32 mt7996_rmw(struct mt76_dev *mdev, u32 offset, u32 mask, u32 val)
- 	struct mt7996_dev *dev = container_of(mdev, struct mt7996_dev, mt76);
- 	u32 addr = __mt7996_reg_addr(dev, offset);
+ 	i2c_hid_dbg(ihid, "%s: finished.\n", __func__);
  
--	if (addr)
-+	if (addr != INVALID_REG_ADDR)
- 		return dev->bus_ops->rmw(mdev, addr, mask, val);
+-out:
+-	clear_bit(I2C_HID_RESET_PENDING, &ihid->flags);
+-	return ret;
+-}
+-
+-static int i2c_hid_hwreset(struct i2c_hid *ihid)
+-{
+-	int ret;
+-
+-	i2c_hid_dbg(ihid, "%s\n", __func__);
+-
+-	/*
+-	 * This prevents sending feature reports while the device is
+-	 * being reset. Otherwise we may lose the reset complete
+-	 * interrupt.
+-	 */
+-	mutex_lock(&ihid->reset_lock);
+-
+-	ret = i2c_hid_set_power(ihid, I2C_HID_PWR_ON);
+-	if (ret)
+-		goto out_unlock;
+-
+-	ret = i2c_hid_execute_reset(ihid);
+-	if (ret) {
+-		dev_err(&ihid->client->dev,
+-			"failed to reset device: %d\n", ret);
+-		i2c_hid_set_power(ihid, I2C_HID_PWR_SLEEP);
+-		goto out_unlock;
+-	}
+-
+ 	/* At least some SIS devices need this after reset */
+ 	if (!(ihid->quirks & I2C_HID_QUIRK_NO_WAKEUP_AFTER_RESET))
+ 		ret = i2c_hid_set_power(ihid, I2C_HID_PWR_ON);
  
- 	spin_lock_bh(&dev->reg_lock);
+-out_unlock:
++	mutex_unlock(&ihid->reset_lock);
++	return ret;
++
++err_clear_reset:
++	clear_bit(I2C_HID_RESET_PENDING, &ihid->flags);
++	i2c_hid_set_power(ihid, I2C_HID_PWR_SLEEP);
++err_unlock:
+ 	mutex_unlock(&ihid->reset_lock);
+ 	return ret;
+ }
 -- 
 2.53.0
 
