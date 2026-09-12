@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2941F380FFB;
-	Sat, 12 Sep 2026 19:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F242383326;
+	Sat, 12 Sep 2026 19:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242020; cv=none; b=t0xf+okWKXPa1QqKobjFsDpF9HMj5NFXyBLxa8U+2c9zroDWKUWge73EyQS63aXIDwaea/ru6V8ho41TsKcicz26F7bjOCY3Sp7jyGJUHrOfcJXOCYRePnI5Hr5Iy5MJ7t5/Z32Pub/oulP7Y8ra0tDk2k3wnPl4s/NxYR8BYAE=
+	t=1789242024; cv=none; b=Ofox3z5QpcBt4kWgVjIDIQi1dvSUBkbDiMJY/XFPnFTQrZ2l9IQ0EP6OmhtIiymzgXaQtFGsp66kpuhG5A2mBEY3f6pL39EeIiStCt+QEmsc6SDdCljIWQo/L+UjysHhIRWP8CqY/hXCRUDx7B+FWHARoplQTOvEcKr2rT/v2V4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242020; c=relaxed/simple;
-	bh=F+PbmmiNQjYWZbQM6RB6dPskgKNnSrVSK7FWjhC/TEU=;
+	s=arc-20240116; t=1789242024; c=relaxed/simple;
+	bh=Oiw5ww1eNVEECOR/pL3ER6z5yopPfv2aaZAd8dQ/+Mw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tI4pn6lpqx9Xywu3LnLyaM15+eGlmzdAQSxC/aw6WxDkulWTyYLf4E2BLT+/4qIBqaRjP9a0JoslFcnNGok4A711Q6Ph955NmQET7CgkSN9Tqcp9jAom36e6OdpShCOJaBlxRaftD1yJG0ixh+DTWAZ5A8/B6PMK7Hn2tpCZmNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uFw0OnXS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c2Nd7u1HN3UJ3jdbpRDt2n3wJgmGO1p5WVqDvQnKFlMA4oNqJ7Ev3ITyta7UDn1KZMZTHCfDyK/KD2OidgVMyA1oGYIW50Yh3g2+X3DprnD292ossGy5RLfsBhySdY78nL6yDlNFmjYxKRmtglbQ+5BuRUtZgInWzL+SkZdEo4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gx1P1C27; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uFw0OnXS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497B81F000FF;
-	Sat, 12 Sep 2026 19:40:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gx1P1C27"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2440E1F000FF;
+	Sat, 12 Sep 2026 19:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242018;
-	bh=NWtG6KvzyAd9ZNI9tw9VMdiNAnkJGhqAseE+DOuX2G4=;
+	s=korg; t=1789242021;
+	bh=BimNo1qmmPFymtM/6Fc6O4NL8yV6riZ85PoQ2NIliQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uFw0OnXS1frYRKGgdadFcEyZtfqeE1QVV2jevLrfIskhQ/cslszkia3lRIWc9dK0D
-	 cfKvAaBLRsWEc4TTk/7Ph7DL3mgp56CrhUu8BiuV+vJMNGfi2iLBwrS7Dht0z3a2F5
-	 saZNnB/v9/oQwj6LirCVQ9UKRvGgsK/L8iQgW2HE=
+	b=Gx1P1C27ouKwqHa55IU4nbe7iPykjw6gMrNEjtwIc8mD9+pVSYYutBS0AcCHEqTkn
+	 Fp2tHXAYiazQ/2QZdV/O8Qmlg8/cZAb2JaDiFAaw050nyA03TOBiLV3Au9icKcjPfH
+	 wli5G3zWyZ+d1nG1D4fTUj/SzGhniDffO0dc3iOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Linus Walleij <linusw@kernel.org>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 5.10 258/798] iio: gyro: mpu3050: fix sign of raw angular velocity readings
-Date: Sat, 12 Sep 2026 08:58:06 +0200
-Message-ID: <20260912065523.073020524@linuxfoundation.org>
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.10 241/798] mtd: afs: validate v2 image info bounds
+Date: Sat, 12 Sep 2026 08:57:49 +0200
+Message-ID: <20260912065522.681460441@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,47 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 06fab97602fe400bea843176f485bbac07a668e2 upstream.
+commit e9290031f736e99ad17c25c00311c92c266843b7 upstream.
 
-The MPU-3050 gyroscope output registers hold 16-bit two's complement
-values; the angular velocity channels are declared with .sign = 's'.
-When mpu3050_read_raw() handles IIO_CHAN_INFO_RAW it reads the register
-via a big-endian regmap_bulk_read() and assigns it with:
+The AFS v2 parser uses footer[8] to locate the image information block
+inside the current erase block, then uses the image information
+region_count to walk entries from a fixed local array. The footer offset
+and region count come from flash contents and are not checked against the
+erase block or the local image-info array before use.
 
-	*val = be16_to_cpu(raw_val);
+Reject v2 entries whose image information offset would underflow the
+erase block calculation, and reject region counts that cannot fit in the
+local image-info array before walking region entries.
 
-be16_to_cpu() yields an unsigned 16-bit quantity, so negative rates
-(bit 15 set) are reported to userspace as large positive integers
-(e.g. -1 becomes 65535) instead of the correct negative value.
-
-Cast to s16 before the assignment, matching the temperature channel a
-few lines above which already handles the sign correctly.
-
-Fixes: 3904b28efb2c ("iio: gyro: Add driver for the MPU-3050 gyroscope")
+Fixes: b7cf5e2830bb ("mtd: afs: add v2 partition parsing")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Acked-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/mpu3050-core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/parsers/afs.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/iio/gyro/mpu3050-core.c
-+++ b/drivers/iio/gyro/mpu3050-core.c
-@@ -354,7 +354,7 @@ static int mpu3050_read_raw(struct iio_d
- 				goto out_read_raw_unlock;
- 			}
+--- a/drivers/mtd/parsers/afs.c
++++ b/drivers/mtd/parsers/afs.c
+@@ -235,6 +235,9 @@ static int afs_parse_v2_partition(struct
+ 	pr_debug("Parsing v2 partition @%08x-%08x\n",
+ 		 off, off + mtd->erasesize);
  
--			*val = be16_to_cpu(raw_val);
-+			*val = (s16)be16_to_cpu(raw_val);
- 			ret = IIO_VAL_INT;
++	if (mtd->erasesize < sizeof(footer))
++		return -EINVAL;
++
+ 	/* First read the footer */
+ 	ptr = off + mtd->erasesize - sizeof(footer);
+ 	ret = mtd_read(mtd, ptr, sizeof(footer), &sz, (u_char *)footer);
+@@ -245,6 +248,8 @@ static int afs_parse_v2_partition(struct
+ 	}
+ 	name = (char *) &footer[0];
+ 	version = footer[9];
++	if (footer[8] > mtd->erasesize - sizeof(footer))
++		return -EINVAL;
+ 	ptr = off + mtd->erasesize - sizeof(footer) - footer[8];
  
- 			goto out_read_raw_unlock;
+ 	pr_debug("found image \"%s\", version %08x, info @%08x\n",
+@@ -278,6 +283,8 @@ static int afs_parse_v2_partition(struct
+ 	entrypoint = imginfo[pad];
+ 	attributes = imginfo[pad+1];
+ 	region_count = imginfo[pad+2];
++	if (region_count > (ARRAY_SIZE(imginfo) - pad - 3) / 4)
++		return -EINVAL;
+ 	block_start = imginfo[20];
+ 	block_end = imginfo[21];
+ 
 
 
