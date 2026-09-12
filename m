@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D323B2FCA;
-	Sat, 12 Sep 2026 18:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6E04BEE5E;
+	Sat, 12 Sep 2026 18:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238398; cv=none; b=HdHKa7e4DGKsBjRTdxkoXaotaGPlCK3jBEeIcG0fPzsOoLcBtepWriok7SV+UPx3llkyhoGlLHNvBYq4OdKYTpa+RRj1pBoeWaIhAYUhBcDgYdrPpweCDUfpOyHy9CSCbg23tXLTe6F3vQvQ45fLGTgbu7Uwu05T4M7O5Gj9/+c=
+	t=1789238404; cv=none; b=kV77RExQ82Nht0okrPCkUahZaKzfPaO+I6Xf28pd8whuCsqLqBwwRpkti8U5ME+Zz9qoZ49W5qH0NWrkaPuDEPmnoXPUK3VpV7V2QfFUCU6XG32UsAHoyU/vYBrlgWet2uep0N8xweKDFSNfE+WyW5ucWTmotI2XdzYTlXmQFPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238398; c=relaxed/simple;
-	bh=ReY2yjc5Ishz8irXJaudkooOxNXAB69GYYkJ0p+11uk=;
+	s=arc-20240116; t=1789238404; c=relaxed/simple;
+	bh=wKjH6NtHt8tZXxrmEE7DPDC9apR+mUK6vqHmVdqrchE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HGomiLKhckDDN0hT6Q9293toIgQNdkTeQ0i6A2qWDCuf1P20GxQJHwyJscLcT3fxzI0b6UN6xQKelQOuc+vIOYPpO3rHv7q8rYJX6OP18teg7ZCkWwoBBJuIfHADlUK8tK3uCGRshbISug5Bxasq6P4mRblNoSuWT+/9SwvMPhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGxpuQ68; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KoV0JbmGb2DjtywL5GY7ROJpe1qIzAgBtggWrwOoq/WG7SzzjFHYrv4PyZR8okK/aHJg2/Rn3wp7tOJubwLLe13Evo3EDD7dwkJ5CHP8vgSRQ/wgSuWfxNhl01YpwwNdNqhWRNCm8sw2az8RxKid5mlajY1Cv4gZX1bIRBAzjKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UEap1mmj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGxpuQ68"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB091F00893;
-	Sat, 12 Sep 2026 18:39:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEap1mmj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25CBD1F000FF;
+	Sat, 12 Sep 2026 18:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238394;
-	bh=ld2efpIZrSRQvrH1m7RPIZjxH7CxQxYoeMo9mqwrJc8=;
+	s=korg; t=1789238399;
+	bh=m3yu8CG2VQCbrs1cksCPwYl5B77qMoQUpYclfMUxIi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pGxpuQ686FyT5jTnWffhx2UrRFWXxGprb9ZfvRnaJseQ7yFTImkGsRibbQWD/qPqY
-	 w6bllFTdsA3t7Hiz1JDeCHOE+Hul6B+s9yMzuFdt55SOfbMPLs+uyiNPpoCrn1MsHe
-	 mP0loun15KtWFpI4cqtVPGgMrSY0l1Upxkn78fxQ=
+	b=UEap1mmjrqnKO+krXBFHVbkW8elR2Yavk1B0O4+rk2hZ4NFzFNdKY42oouotHrjAs
+	 1PeKWx8GAm0h4rX9VsNfxcUPifdWeo+bDhTevBAx69KxiD47GgrPbGLDllNmNYrxUU
+	 QjckJhMUKHxdRxAlJQs4Ss+vzRsv6hHWNNfaoQLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 454/935] netdev: reshuffle netif_napi_add() APIs to allow dropping weight
-Date: Sat, 12 Sep 2026 08:58:04 +0200
-Message-ID: <20260912065537.240827366@linuxfoundation.org>
+Subject: [PATCH 5.15 455/935] staging: switch to netif_napi_add_weight()
+Date: Sat, 12 Sep 2026 08:58:05 +0200
+Message-ID: <20260912065537.263397713@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,134 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 58caed3dacb4354a25a1aa8d2febc3e9648ba1f4 ]
+[ Upstream commit 60c85e23bed17b4e5074cb2695837244cecc827a ]
 
-Most drivers should not have to worry about selecting the right
-weight for their NAPI instances and pass NAPI_POLL_WEIGHT.
-It'd be best if we didn't require the argument at all and selected
-the default internally.
-
-This change prepares the ground for such reshuffling, allowing
-for a smooth transition. The following API should remain after
-the next release cycle:
-  netif_napi_add()
-  netif_napi_add_weight()
-  netif_napi_add_tx()
-  netif_napi_add_tx_weight()
-Where the _weight() variants take an explicit weight argument.
-I opted for a _weight() suffix rather than a __ prefix, because
-we use __ in places to mean that caller needs to also issue a
-synchronize_net() call.
+netif_napi_add() will soon default to weight of 64 instead of
+requiring the user to specify that parameter. Most users already
+pass or should pass 64. Move the callers in staging to
+netif_napi_add_weight() which will keep the argument.
+This way we'll avoid a huge cross-tree conversion when
+argument is removed.
 
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/20220502232703.396351-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20220705225801.923601-1-kuba@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: c0a9a8586a63 ("staging: octeon: add missing napi_disable in cvm_oct_rx_shutdown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h | 50 ++++++++++++++++++++++++++-------------
- net/core/dev.c            |  6 ++---
- 2 files changed, 36 insertions(+), 20 deletions(-)
+ drivers/staging/octeon/ethernet-rx.c | 4 ++--
+ drivers/staging/qlge/qlge_main.c     | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index a08e187e056a0..5e5283487dc64 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -2504,37 +2504,53 @@ static inline void *netdev_priv(const struct net_device *dev)
-  */
- #define NAPI_POLL_WEIGHT 64
+diff --git a/drivers/staging/octeon/ethernet-rx.c b/drivers/staging/octeon/ethernet-rx.c
+index 9ebd665e5d427..965330eec80a8 100644
+--- a/drivers/staging/octeon/ethernet-rx.c
++++ b/drivers/staging/octeon/ethernet-rx.c
+@@ -469,8 +469,8 @@ void cvm_oct_rx_initialize(void)
+ 		if (!(pow_receive_groups & BIT(i)))
+ 			continue;
  
-+void netif_napi_add_weight(struct net_device *dev, struct napi_struct *napi,
-+			   int (*poll)(struct napi_struct *, int), int weight);
-+
- /**
-- *	netif_napi_add - initialize a NAPI context
-- *	@dev:  network device
-- *	@napi: NAPI context
-- *	@poll: polling function
-- *	@weight: default weight
-+ * netif_napi_add() - initialize a NAPI context
-+ * @dev:  network device
-+ * @napi: NAPI context
-+ * @poll: polling function
-+ * @weight: default weight
-  *
-  * netif_napi_add() must be used to initialize a NAPI context prior to calling
-  * *any* of the other NAPI-related functions.
-  */
--void netif_napi_add(struct net_device *dev, struct napi_struct *napi,
--		    int (*poll)(struct napi_struct *, int), int weight);
-+static inline void
-+netif_napi_add(struct net_device *dev, struct napi_struct *napi,
-+	       int (*poll)(struct napi_struct *, int), int weight)
-+{
-+	netif_napi_add_weight(dev, napi, poll, weight);
-+}
-+
-+static inline void
-+netif_napi_add_tx_weight(struct net_device *dev,
-+			 struct napi_struct *napi,
-+			 int (*poll)(struct napi_struct *, int),
-+			 int weight)
-+{
-+	set_bit(NAPI_STATE_NO_BUSY_POLL, &napi->state);
-+	netif_napi_add_weight(dev, napi, poll, weight);
-+}
-+
-+#define netif_tx_napi_add netif_napi_add_tx_weight
+-		netif_napi_add(dev_for_napi, &oct_rx_group[i].napi,
+-			       cvm_oct_napi_poll, rx_napi_weight);
++		netif_napi_add_weight(dev_for_napi, &oct_rx_group[i].napi,
++				      cvm_oct_napi_poll, rx_napi_weight);
+ 		napi_enable(&oct_rx_group[i].napi);
  
- /**
-- *	netif_tx_napi_add - initialize a NAPI context
-- *	@dev:  network device
-- *	@napi: NAPI context
-- *	@poll: polling function
-- *	@weight: default weight
-+ * netif_napi_add_tx() - initialize a NAPI context to be used for Tx only
-+ * @dev:  network device
-+ * @napi: NAPI context
-+ * @poll: polling function
-  *
-  * This variant of netif_napi_add() should be used from drivers using NAPI
-  * to exclusively poll a TX queue.
-  * This will avoid we add it into napi_hash[], thus polluting this hash table.
-  */
--static inline void netif_tx_napi_add(struct net_device *dev,
-+static inline void netif_napi_add_tx(struct net_device *dev,
- 				     struct napi_struct *napi,
--				     int (*poll)(struct napi_struct *, int),
--				     int weight)
-+				     int (*poll)(struct napi_struct *, int))
- {
--	set_bit(NAPI_STATE_NO_BUSY_POLL, &napi->state);
--	netif_napi_add(dev, napi, poll, weight);
-+	netif_napi_add_tx_weight(dev, napi, poll, NAPI_POLL_WEIGHT);
- }
- 
- /**
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 4aa21422e1d0a..8aac510303a68 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -6975,8 +6975,8 @@ int dev_set_threaded(struct net_device *dev, bool threaded)
- }
- EXPORT_SYMBOL(dev_set_threaded);
- 
--void netif_napi_add(struct net_device *dev, struct napi_struct *napi,
--		    int (*poll)(struct napi_struct *, int), int weight)
-+void netif_napi_add_weight(struct net_device *dev, struct napi_struct *napi,
-+			   int (*poll)(struct napi_struct *, int), int weight)
- {
- 	if (WARN_ON(test_and_set_bit(NAPI_STATE_LISTED, &napi->state)))
- 		return;
-@@ -7009,7 +7009,7 @@ void netif_napi_add(struct net_device *dev, struct napi_struct *napi,
- 	if (dev->threaded && napi_kthread_create(napi))
- 		dev->threaded = 0;
- }
--EXPORT_SYMBOL(netif_napi_add);
-+EXPORT_SYMBOL(netif_napi_add_weight);
- 
- void napi_disable(struct napi_struct *n)
- {
+ 		oct_rx_group[i].irq = OCTEON_IRQ_WORKQ0 + i;
+diff --git a/drivers/staging/qlge/qlge_main.c b/drivers/staging/qlge/qlge_main.c
+index 8fcdf89da8aa9..309ef712c971f 100644
+--- a/drivers/staging/qlge/qlge_main.c
++++ b/drivers/staging/qlge/qlge_main.c
+@@ -3045,8 +3045,8 @@ static int qlge_start_rx_ring(struct qlge_adapter *qdev, struct rx_ring *rx_ring
+ 		/* Inbound completion handling rx_rings run in
+ 		 * separate NAPI contexts.
+ 		 */
+-		netif_napi_add(qdev->ndev, &rx_ring->napi, qlge_napi_poll_msix,
+-			       64);
++		netif_napi_add_weight(qdev->ndev, &rx_ring->napi,
++				      qlge_napi_poll_msix, 64);
+ 		cqicb->irq_delay = cpu_to_le16(qdev->rx_coalesce_usecs);
+ 		cqicb->pkt_delay = cpu_to_le16(qdev->rx_max_coalesced_frames);
+ 	} else {
 -- 
 2.53.0
 
