@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E18386C0D;
-	Sat, 12 Sep 2026 09:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468B1374E6F;
+	Sat, 12 Sep 2026 09:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205059; cv=none; b=VhrlNSL+oI5eJanrtbL5sbKdYpQOGSq7JjBK0QX51Dgoro3dsMqO8fN/6wj1ImMGQNAGZ/Kfe0TxCvu9azF0tv3cCM8lUwnvE8dudEI/SYuqmimtTWRUx8s7RV5qO1TqdOEk7wJsqpl5XiZ7dFEDiESQckwIUAwOu4xKK/SLY/s=
+	t=1789205065; cv=none; b=mdH6OE5rxaGrxwquk+uBTgXobeYwAQN6/TivrdnCMuuSz+eO542qdtF4OgR4c4CvRn10LXNBvZ7TpAjQbcC7BKeir4wchuJm/E6HTZpCVfwr4pMahnEWvzvP3FIvwtqgaE8Ue0DXui99/y725jeeUujl7ZyARI+34Ab7ysXU7Pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205059; c=relaxed/simple;
-	bh=xsLsxBYDnIm7LL+DTImSM/gHnWjiM6oCPh/bQEDNbUM=;
+	s=arc-20240116; t=1789205065; c=relaxed/simple;
+	bh=bIpx7f0FPqTs20HZ0Tpr/rPylNmtKsLLlVd50DHtiuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q36Nx0j/2t4r13a+rH3ZWtBCitCTkvpjhQCBVdhdzJv4cH7Z59QnXIhYMsD5xP6EJSqdx4Rp+ExL5WEDlZN8BIzNYOaC6pNESx8P5zc4oMDdfk5s+Z/n3Xd8yL0dPrReGQjaOQxWaXN2TTxQiN36Blf1RwH8QioE2bB0rQjk0jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ckh0XowZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M9DqRaJuCDLerTJTCPeh8qbNeGJpB6na5QbeooqOmgY5Bl+xTrSzrRNbRXLuapxfZBldVcxRewEx2+ohRNxrdieC1vZVZKN77f7dwojml3WPJWCy6fmz1nA95MO4PXxJbsxDcfOsuCAKstY5FtOdnl47LHWRUDaoPR0VCBG/3lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ChzvCGys; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ckh0XowZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 095961F000FF;
-	Sat, 12 Sep 2026 09:24:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ChzvCGys"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C481F000FF;
+	Sat, 12 Sep 2026 09:24:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205058;
-	bh=lI5AIQaX/nOpVuyur3Xyc+rRSCPwcRxYgfHU+JEkMow=;
+	s=korg; t=1789205063;
+	bh=6nhKz185eaHZHgAOEr9kIQG3MRHrt3aM+wL+/8RPd+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ckh0XowZo3gxz0LvyrZzPA5f76mdF7UVVYn1J9fOTfD3iL2UOktAaNEe6fuECkStM
-	 Ra8jaffS+UZl7SUVaJ945aTF4AS3LFt50JsUykQmi7RcNecWeWmL2dVvC72JvKWii9
-	 aaPzIpbHVKMZh2rDkgAz3Hm155B3dgcyPafFQYyk=
+	b=ChzvCGyscyFEk7Hvy29oQEM7M/PePi/1ltBHJN8KV74G6GlKjqGV+pHUFTEU3I+uv
+	 6LZ5sr1BwmFWqTN9dufmbzOqZ7lTmP5d+2vtG+xaGanCLGbRGja5bBGTHdVkdzc7iF
+	 gVJ0DmWdJuG9hGfg1EALck/Wyw/Eovr27iuwqXlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	vega@nebusec.ai,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Breno Leitao <leitao@debian.org>,
+	Daniel Machon <daniel.machon@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1697/1815] net/sched: account classifier filter allocations to memcg
-Date: Sat, 12 Sep 2026 08:57:27 +0200
-Message-ID: <20260912065728.819102866@linuxfoundation.org>
+Subject: [PATCH 7.2 1698/1815] net: microchip: vcap: use port number instead of netdev name for debugfs
+Date: Sat, 12 Sep 2026 08:57:28 +0200
+Message-ID: <20260912065728.843235458@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,296 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit 1beb81947eb486716af80db7a584f9e9fef7e003 ]
+[ Upstream commit b7adcc56fd3db4f5ddaf8c01069d26136d61e5c8 ]
 
-Allocations in the tc classifier *_change() paths (filter objects,
-per-CPU counters, and per-filter aux data) use plain GFP_KERNEL without
-__GFP_ACCOUNT, allowing unprivileged users to pin kernel memory outside
-memcg charging. The shared tcf_exts_init_ex() action array allocation in
-cls_api.c was also uncharged; this patch closes it along with the
-per-classifier filter-object/percpu/aux allocations that remain
-unaccounted.
+sparx5_vcap_init() runs before sparx5_register_netdevs() in probe, and
+its debugfs setup calls vcap_port_debugfs() for every port using
+netdev_name(ndev) as the debugfs file name. At that point the netdevs
+have only been allocated, not registered, so dev->name still holds the
+"eth%d" template and netdev_name() returns "(unnamed net_device)".
+Every port tries to create the same file under vcaps/, producing a
+flood of warnings at boot:
 
-Add GFP_KERNEL_ACCOUNT to:
-- the shared tcf_exts_init_ex() action array (cls_api.c), common to every
-  filter of every classifier (32 pointers, 256 bytes);
-- the filter-object, per-CPU-counter, and per-filter aux allocations in
-  cls_basic, cls_bpf, cls_cgroup, cls_flow, cls_flower, cls_fw,
-  cls_matchall, cls_route and cls_u32;
-- the u32_init_knode() replace-path knode allocation (cls_u32.c), which
-  allocates the same struct tc_u_knode + sel.keys on every replace of an
-  existing knode and was missed by the create-path-only conversion.
+  debugfs: '(unnamed net_device)' already exists in 'vcaps'
+  debugfs: '(unnamed net_device)' already exists in 'vcaps'
+  ...
 
-Also fix the cls_basic error path: basic_change() inserts fnew into the
-IDR before allocating the per-CPU counter. If alloc_percpu() fails the
-errout path kfree'd fnew without idr_remove, leaving a dangling pointer
-in the IDR. With GFP_KERNEL_ACCOUNT the percpu alloc becomes failable
-on demand (memcg at memory.max), making the dead path attacker-reachable
-and burning the handle permanently. Add the idr_remove on the percpu
-failure path, matching the basic_set_parms failure-path pattern.
+Add vcap_port_debugfs_portno(), a variant of vcap_port_debugfs() that
+takes the port's stable hardware port number and uses "p%u" as the
+debugfs file name instead of netdev_name(ndev). This makes the file
+name independent of registration order; the file still stores and
+later dereferences the netdev itself, same as before. sparx5 already
+reports the same "p%d" string via ndo_get_phys_port_name(), so the
+debugfs name now matches that.
 
-Note: vega@nebusec.ai provided a poc for basic_cls, but it was easy to
-extend to the other classifiers.
+Only sparx5 (and lan969x, which shares this code) is switched to the
+new function. lan966x keeps calling vcap_port_debugfs() unchanged, so
+this fix does not rename any of its existing debugfs files.
 
-Conditions to recreate the bug:
-- CONFIG_NET_SCHED, CONFIG_NET_CLS_* (the classifier being used),
-  CONFIG_NET_CLS_ACT, CONFIG_MEMCG, CONFIG_USER_NS, CONFIG_NET_NS.
-- Unprivileged user in a fresh user+network namespace (unshare -Urn),
-  or root with CAP_NET_ADMIN.
-- Create a large number of tc filters (e.g. tc filter add dev lo
-  ingress ... <classifier> ...) while watching a memcg-limited cgroup:
-  system slab grows far faster than memory.current, pinning kernel
-  memory outside memcg charging.
-
-Fixes: 0da974f4f303 ("[NET]: Conversions from kmalloc+memset to k(z|c)alloc.")
-Reported-by: vega@nebusec.ai
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260819143733.57538-1-jhs@mojatatu.com
+Fixes: b8909aad5b8d ("net: sparx5: move netdev and notifier block registration to probe")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20260817-misc-fixes-sparx5-lan969x-v3-1-c7c7fef723a8@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_api.c      |  3 ++-
- net/sched/cls_basic.c    |  6 ++++--
- net/sched/cls_bpf.c      |  6 +++---
- net/sched/cls_cgroup.c   |  2 +-
- net/sched/cls_flow.c     |  2 +-
- net/sched/cls_flower.c   |  4 ++--
- net/sched/cls_fw.c       |  4 ++--
- net/sched/cls_matchall.c |  4 ++--
- net/sched/cls_route.c    |  4 ++--
- net/sched/cls_u32.c      | 11 ++++++-----
- 10 files changed, 25 insertions(+), 21 deletions(-)
+ .../microchip/sparx5/sparx5_vcap_impl.c       |  5 +++--
+ .../microchip/vcap/vcap_api_debugfs.c         | 21 +++++++++++++++++++
+ .../microchip/vcap/vcap_api_debugfs.h         | 14 +++++++++++++
+ 3 files changed, 38 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index 3271963c945d8..9966766661d50 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -3372,7 +3372,8 @@ int tcf_exts_init_ex(struct tcf_exts *exts, struct net *net, int action,
- 	 * This reference might be taken later from tcf_exts_get_net().
- 	 */
- 	exts->net = net;
--	exts->actions = kzalloc_objs(struct tc_action *, TCA_ACT_MAX_PRIO);
-+	exts->actions = kzalloc_objs(struct tc_action *, TCA_ACT_MAX_PRIO,
-+				     GFP_KERNEL_ACCOUNT);
- 	if (!exts->actions)
- 		return -ENOMEM;
- #endif
-diff --git a/net/sched/cls_basic.c b/net/sched/cls_basic.c
-index 492cd9ce8d46f..e2a94ba9fba76 100644
---- a/net/sched/cls_basic.c
-+++ b/net/sched/cls_basic.c
-@@ -193,7 +193,7 @@ static int basic_change(struct net *net, struct sk_buff *in_skb,
- 			return -EINVAL;
- 	}
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_vcap_impl.c b/drivers/net/ethernet/microchip/sparx5/sparx5_vcap_impl.c
+index cf332de6bf736..2dee2ce19fce7 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_vcap_impl.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_vcap_impl.c
+@@ -2077,8 +2077,9 @@ int sparx5_vcap_init(struct sparx5 *sparx5)
+ 	dir = vcap_debugfs(sparx5->dev, sparx5->debugfs_root, ctrl);
+ 	for (idx = 0; idx < consts->n_ports; ++idx)
+ 		if (sparx5->ports[idx])
+-			vcap_port_debugfs(sparx5->dev, dir, ctrl,
+-					  sparx5->ports[idx]->ndev);
++			vcap_port_debugfs_portno(sparx5->dev, dir, ctrl,
++						 sparx5->ports[idx]->ndev,
++						 sparx5->ports[idx]->portno);
  
--	fnew = kzalloc_obj(*fnew);
-+	fnew = kzalloc_obj(*fnew, GFP_KERNEL_ACCOUNT);
- 	if (!fnew)
- 		return -ENOBUFS;
+ 	return err;
+ }
+diff --git a/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.c b/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.c
+index e0c65c7ab23e1..476f7496a9d44 100644
+--- a/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.c
++++ b/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.c
+@@ -400,6 +400,27 @@ void vcap_port_debugfs(struct device *dev, struct dentry *parent,
+ }
+ EXPORT_SYMBOL_GPL(vcap_port_debugfs);
  
-@@ -212,9 +212,11 @@ static int basic_change(struct net *net, struct sk_buff *in_skb,
- 	if (err)
- 		goto errout;
- 	fnew->handle = handle;
--	fnew->pf = alloc_percpu(struct tc_basic_pcnt);
-+	fnew->pf = alloc_percpu_gfp(struct tc_basic_pcnt, GFP_KERNEL_ACCOUNT);
- 	if (!fnew->pf) {
- 		err = -ENOMEM;
-+		if (!fold)
-+			idr_remove(&head->handle_idr, fnew->handle);
- 		goto errout;
- 	}
++void vcap_port_debugfs_portno(struct device *dev,
++			      struct dentry *parent,
++			      struct vcap_control *vctrl,
++			      struct net_device *ndev,
++			      unsigned int portno)
++{
++	struct vcap_port_debugfs_info *info;
++	char name[16];
++
++	info = devm_kzalloc(dev, sizeof(*info), GFP_KERNEL);
++	if (!info)
++		return;
++
++	info->vctrl = vctrl;
++	info->ndev = ndev;
++
++	snprintf(name, sizeof(name), "p%u", portno);
++	debugfs_create_file(name, 0444, parent, info, &vcap_port_debugfs_fops);
++}
++EXPORT_SYMBOL_GPL(vcap_port_debugfs_portno);
++
+ /* Show the full VCAP instance data (rules with all fields) */
+ static int vcap_debugfs_show(struct seq_file *m, void *unused)
+ {
+diff --git a/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.h b/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.h
+index 9f2c59b5f6f53..7dc6e3411a4d9 100644
+--- a/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.h
++++ b/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.h
+@@ -18,6 +18,12 @@ void vcap_port_debugfs(struct device *dev, struct dentry *parent,
+ 		       struct vcap_control *vctrl,
+ 		       struct net_device *ndev);
  
-diff --git a/net/sched/cls_bpf.c b/net/sched/cls_bpf.c
-index 6d19155becc86..188cf0f949dd4 100644
---- a/net/sched/cls_bpf.c
-+++ b/net/sched/cls_bpf.c
-@@ -352,7 +352,7 @@ static int cls_bpf_prog_from_ops(struct nlattr **tb, struct cls_bpf_prog *prog)
- 	if (bpf_size != nla_len(tb[TCA_BPF_OPS]))
- 		return -EINVAL;
++void vcap_port_debugfs_portno(struct device *dev,
++			      struct dentry *parent,
++			      struct vcap_control *vctrl,
++			      struct net_device *ndev,
++			      unsigned int portno);
++
+ /* Create a debugFS entry for a vcap instance */
+ struct dentry *vcap_debugfs(struct device *dev, struct dentry *parent,
+ 			    struct vcap_control *vctrl);
+@@ -30,6 +36,14 @@ static inline void vcap_port_debugfs(struct device *dev, struct dentry *parent,
+ {
+ }
  
--	bpf_ops = kmemdup(nla_data(tb[TCA_BPF_OPS]), bpf_size, GFP_KERNEL);
-+	bpf_ops = kmemdup(nla_data(tb[TCA_BPF_OPS]), bpf_size, GFP_KERNEL_ACCOUNT);
- 	if (bpf_ops == NULL)
- 		return -ENOMEM;
- 
-@@ -403,7 +403,7 @@ static int cls_bpf_prog_from_efd(struct nlattr **tb, struct cls_bpf_prog *prog,
- 	}
- 
- 	if (tb[TCA_BPF_NAME]) {
--		name = nla_memdup(tb[TCA_BPF_NAME], GFP_KERNEL);
-+		name = nla_memdup(tb[TCA_BPF_NAME], GFP_KERNEL_ACCOUNT);
- 		if (!name) {
- 			bpf_prog_put(fp);
- 			return -ENOMEM;
-@@ -443,7 +443,7 @@ static int cls_bpf_change(struct net *net, struct sk_buff *in_skb,
- 	if (ret < 0)
- 		return ret;
- 
--	prog = kzalloc_obj(*prog);
-+	prog = kzalloc_obj(*prog, GFP_KERNEL_ACCOUNT);
- 	if (!prog)
- 		return -ENOBUFS;
- 
-diff --git a/net/sched/cls_cgroup.c b/net/sched/cls_cgroup.c
-index 680a5c308094e..210fd9fd26d83 100644
---- a/net/sched/cls_cgroup.c
-+++ b/net/sched/cls_cgroup.c
-@@ -95,7 +95,7 @@ static int cls_cgroup_change(struct net *net, struct sk_buff *in_skb,
- 	if (head && handle != head->handle)
- 		return -ENOENT;
- 
--	new = kzalloc_obj(*head);
-+	new = kzalloc_obj(*head, GFP_KERNEL_ACCOUNT);
- 	if (!new)
- 		return -ENOBUFS;
- 
-diff --git a/net/sched/cls_flow.c b/net/sched/cls_flow.c
-index 356c68ebc3895..a9ac3acf6eda0 100644
---- a/net/sched/cls_flow.c
-+++ b/net/sched/cls_flow.c
-@@ -438,7 +438,7 @@ static int flow_change(struct net *net, struct sk_buff *in_skb,
- 			return -EOPNOTSUPP;
- 	}
- 
--	fnew = kzalloc_obj(*fnew);
-+	fnew = kzalloc_obj(*fnew, GFP_KERNEL_ACCOUNT);
- 	if (!fnew)
- 		return -ENOBUFS;
- 
-diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
-index 88f8a32fab2b4..0e275b58151c4 100644
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -2233,7 +2233,7 @@ static struct fl_flow_mask *fl_create_new_mask(struct cls_fl_head *head,
- 	struct fl_flow_mask *newmask;
- 	int err;
- 
--	newmask = kzalloc_obj(*newmask);
-+	newmask = kzalloc_obj(*newmask, GFP_KERNEL_ACCOUNT);
- 	if (!newmask)
- 		return ERR_PTR(-ENOMEM);
- 
-@@ -2394,7 +2394,7 @@ static int fl_change(struct net *net, struct sk_buff *in_skb,
- 		goto errout_tb;
- 	}
- 
--	fnew = kzalloc_obj(*fnew);
-+	fnew = kzalloc_obj(*fnew, GFP_KERNEL_ACCOUNT);
- 	if (!fnew) {
- 		err = -ENOBUFS;
- 		goto errout_tb;
-diff --git a/net/sched/cls_fw.c b/net/sched/cls_fw.c
-index 646a730dca93c..a462b262719c3 100644
---- a/net/sched/cls_fw.c
-+++ b/net/sched/cls_fw.c
-@@ -276,7 +276,7 @@ static int fw_change(struct net *net, struct sk_buff *in_skb,
- 		if (f->id != handle && handle)
- 			return -EINVAL;
- 
--		fnew = kzalloc_obj(struct fw_filter);
-+		fnew = kzalloc_obj(struct fw_filter, GFP_KERNEL_ACCOUNT);
- 		if (!fnew)
- 			return -ENOBUFS;
- 
-@@ -330,7 +330,7 @@ static int fw_change(struct net *net, struct sk_buff *in_skb,
- 		rcu_assign_pointer(tp->root, head);
- 	}
- 
--	f = kzalloc_obj(struct fw_filter);
-+	f = kzalloc_obj(struct fw_filter, GFP_KERNEL_ACCOUNT);
- 	if (f == NULL)
- 		return -ENOBUFS;
- 
-diff --git a/net/sched/cls_matchall.c b/net/sched/cls_matchall.c
-index 6f126872c14a0..c14899b935bfd 100644
---- a/net/sched/cls_matchall.c
-+++ b/net/sched/cls_matchall.c
-@@ -189,7 +189,7 @@ static int mall_change(struct net *net, struct sk_buff *in_skb,
- 			return -EINVAL;
- 	}
- 
--	new = kzalloc_obj(*new);
-+	new = kzalloc_obj(*new, GFP_KERNEL_ACCOUNT);
- 	if (!new)
- 		return -ENOBUFS;
- 
-@@ -201,7 +201,7 @@ static int mall_change(struct net *net, struct sk_buff *in_skb,
- 		handle = 1;
- 	new->handle = handle;
- 	new->flags = userflags;
--	new->pf = alloc_percpu(struct tc_matchall_pcnt);
-+	new->pf = alloc_percpu_gfp(struct tc_matchall_pcnt, GFP_KERNEL_ACCOUNT);
- 	if (!new->pf) {
- 		err = -ENOMEM;
- 		goto err_alloc_percpu;
-diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
-index eded7aacd3f70..0d1324c905837 100644
---- a/net/sched/cls_route.c
-+++ b/net/sched/cls_route.c
-@@ -455,7 +455,7 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
- 	h1 = to_hash(nhandle);
- 	b = rtnl_dereference(head->table[h1]);
- 	if (!b) {
--		b = kzalloc_obj(struct route4_bucket);
-+		b = kzalloc_obj(struct route4_bucket, GFP_KERNEL_ACCOUNT);
- 		if (b == NULL)
- 			return -ENOBUFS;
- 
-@@ -524,7 +524,7 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
- 			return -EINVAL;
- 
- 	err = -ENOBUFS;
--	f = kzalloc_obj(struct route4_filter);
-+	f = kzalloc_obj(struct route4_filter, GFP_KERNEL_ACCOUNT);
- 	if (!f)
- 		goto errout;
- 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index c297d7dbcf916..ac6d0fa5a40e3 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -825,7 +825,7 @@ static struct tc_u_knode *u32_init_knode(struct net *net, struct tcf_proto *tp,
- 	struct tc_u32_sel *s = &n->sel;
- 	struct tc_u_knode *new;
- 
--	new = kzalloc_flex(*new, sel.keys, s->nkeys);
-+	new = kzalloc_flex(*new, sel.keys, s->nkeys, GFP_KERNEL_ACCOUNT);
- 	if (!new)
- 		return NULL;
- 
-@@ -1114,15 +1114,16 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
- 		goto erridr;
- 	}
- 
--	n = kzalloc_flex(*n, sel.keys, s->nkeys);
-+	n = kzalloc_flex(*n, sel.keys, s->nkeys, GFP_KERNEL_ACCOUNT);
- 	if (n == NULL) {
- 		err = -ENOBUFS;
- 		goto erridr;
- 	}
- 
- #ifdef CONFIG_CLS_U32_PERF
--	n->pf = __alloc_percpu(struct_size(n->pf, kcnts, s->nkeys),
--			       __alignof__(struct tc_u32_pcnt));
-+	n->pf = __alloc_percpu_gfp(struct_size(n->pf, kcnts, s->nkeys),
-+				   __alignof__(struct tc_u32_pcnt),
-+				   GFP_KERNEL_ACCOUNT);
- 	if (!n->pf) {
- 		err = -ENOBUFS;
- 		goto errfree;
-@@ -1144,7 +1145,7 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
- 		goto errout;
- 
- #ifdef CONFIG_CLS_U32_MARK
--	n->pcpu_success = alloc_percpu(u32);
-+	n->pcpu_success = alloc_percpu_gfp(u32, GFP_KERNEL_ACCOUNT);
- 	if (!n->pcpu_success) {
- 		err = -ENOMEM;
- 		goto errout;
++static inline void vcap_port_debugfs_portno(struct device *dev,
++					    struct dentry *parent,
++					    struct vcap_control *vctrl,
++					    struct net_device *ndev,
++					    unsigned int portno)
++{
++}
++
+ static inline struct dentry *vcap_debugfs(struct device *dev,
+ 					  struct dentry *parent,
+ 					  struct vcap_control *vctrl)
 -- 
 2.53.0
 
