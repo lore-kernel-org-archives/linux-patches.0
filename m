@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2613612F6;
-	Sat, 12 Sep 2026 07:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DEE364049;
+	Sat, 12 Sep 2026 07:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198979; cv=none; b=grUcLBqGsnA2rLtZO4vfd94Z8y25HCp474U3mrHdmougdRCatjd/PPT+eYi7Mg+M3ucsdee90DdjSoh5AYoM7gfXGTSQHmTYsZf+JU/J3mh+IidL7W844gjAltg6sNY38mBjPcskFSKJZYlLyjuPTjwKvYihJQXs1auCAcItHYU=
+	t=1789198985; cv=none; b=JlBZietcUGFHFcGH931paOTLLKZXk6Z7amBUNfxhHlaZcK3wZd7a+9nWnj1rj0T1MaKIh3VhcbAGX1L0HFyRjlsWdIRPVEsEKyp39OpJcQWcKzQBobDa6TVtBh2FsUOLeaejuSVQBOV2Klz2o+qBP1jYONm3MjnAFQICdzu4+gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198979; c=relaxed/simple;
-	bh=DZlEnAh9y9UZ9zE1DVf0eelj7pNcw9/jbkcDXvUiT78=;
+	s=arc-20240116; t=1789198985; c=relaxed/simple;
+	bh=EPj28RLkpT4IjjETBI89ZIBOmtc0IklPbG1woIDOlq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hNCCWcqKG7Ms/0PgirUmQ8LASEq1FL45zUkSwmKHgWX0Ljl4AJm0hW8kRncaVk1oalbN0fNpjvONPa2D71l09PGzpedrWyJmtjI9g0rHkOw73vxmTjdvyUIng16PLqj+yFM9/pdYl/8327q+klUfuioQyKKliT5wzhk5xcEcSFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uU4X1a7v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HoP//2jmx9A/HqlgxLPMsUmC/jbSgw6zjskAEnEBqg5lthO/CBkDjHxxgCTQUOn7IZEFSSLlzMh4R/Dl0AIZ1AfUnOhMLEEY/FDL30J8TLeQ/9n3AEOOyCICwyYuV6MYwZz6aFBB+HSqMAMDSQiDVg9sMfb96VK0dQV5yxc2yz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nl6qzsjn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uU4X1a7v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D53A1F000FF;
-	Sat, 12 Sep 2026 07:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nl6qzsjn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684951F000FF;
+	Sat, 12 Sep 2026 07:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198978;
-	bh=ZP794hzewRr8e49r9pHdx5M0vHSPV2ZD98DSvPkhhtM=;
+	s=korg; t=1789198983;
+	bh=vQi0W1Pxl6EdBj26S8HOPvJERs+1Q4n+IOOwF1td5HQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uU4X1a7vVITCqBoFloRBiE1ur/ZDmtDJ3TZqNXcXdCEUhpbbVDwUP2oEEAPCuxMhS
-	 QMsIAyVu32HWBxF8GZbwXyQu8rsbr0v2Agxgovz2JeQzrUZVYGuF6jvWZtvNXDsmq1
-	 Tx4RnN/h28kaZ9BlXEsTPVIUjzzADPpxl1gNHvc8=
+	b=Nl6qzsjnIEIkdMqR0bDfkxth7VvWJEVx6h68NwqrFJ5nKY357hjjFicte4UTdTzjv
+	 nd7X6c3tAtkTbUn8wtK6ypyuy66LPNaF34mF+/u9bnCWc3zsfKZqyP0NSjPGqvMnkF
+	 I5ODTd4L5B3s/UDFlTjPHGx0cYFC/PGMfLemRsuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0490/1815] tlclk: if sscanf() fails, fall back to 0, not random value
-Date: Sat, 12 Sep 2026 08:37:20 +0200
-Message-ID: <20260912065700.393809795@linuxfoundation.org>
+Subject: [PATCH 7.2 0491/1815] gpib: Move stuck SRQ update under lock
+Date: Sat, 12 Sep 2026 08:37:21 +0200
+Message-ID: <20260912065700.416687895@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,190 +50,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander A. Klimov <grandmaster@al2klimov.de>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit 75f9481e0479c3faadf4d88baffe84b3d23d5763 ]
+[ Upstream commit 7ddb521ab097413fbdff483b53b4a8c73a0e2b40 ]
 
-If sscanf(IN, FMT, &OUT) fails, OUT may be unchanged.
-So if OUT was never initialized, it may be still uninitialized memory.
-To prevent such, initialize OUT=0 first.
+Move the stuck SRQ state update into autopoll_all_devices() and keep it
+under big_gpib_mutex. Except for initialization, keep the stuck_srq users
+under this mutex.
 
-Fixes: 648bf4fb21f5 ("[PATCH] tlclk driver update")
-Fixes: 1a80ba882730 ("[PATCH] Telecom Clock Driver for MPCBL0010 ATCA computer blade")
-Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
-Link: https://patch.msgid.link/20260526061321.6123-4-grandmaster@al2klimov.de
+autopoll_all_devices() is only called by autospoll_thread(), so there is
+no need to return to autospoll_thread() and set this state after dropping
+big_gpib_mutex.
+
+Without the mutex, a newly opened device can clear stuck_srq and have
+that clear overwritten by the previous autospoll result:
+
+  autospoll: serial_poll_all() returns 0 and unlocks big_gpib_mutex
+  open_dev_ioctl: open new device and clear stuck_srq
+                  with big_gpib_mutex held
+  autospoll: set stuck_srq
+
+That leaves the board marked stuck again after the new device is opened.
+autospoll_wait_should_wake_up() then refuses to poll while stuck_srq is
+set, so later SRQ handling can be mistakenly suppressed.
+
+Without the mutex, atomic_set() and set_bit() only make individual
+updates atomic. They do not order the two updates or make stuck_srq and
+status visible as a consistent pair. Taking big_gpib_mutex serializes the
+state transition with the other runtime users.
+
+Keep the existing wakeup behavior unchanged and only move the stuck SRQ
+state update under the mutex.
+
+Fixes: 9dde4559e939 ("staging: gpib: Add GPIB common core driver")
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://patch.msgid.link/20260522073447.4117690-1-hanguidong02@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tlclk.c | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ drivers/gpib/common/gpib_os.c | 21 +++++++++++----------
+ drivers/gpib/common/iblib.c   |  3 ---
+ 2 files changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/char/tlclk.c b/drivers/char/tlclk.c
-index dd45fe5eb6f27..255f69123af5f 100644
---- a/drivers/char/tlclk.c
-+++ b/drivers/char/tlclk.c
-@@ -328,7 +328,7 @@ static DEVICE_ATTR(alarms, S_IRUGO, show_alarms, NULL);
- static ssize_t store_received_ref_clk3a(struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 	unsigned long flags;
+diff --git a/drivers/gpib/common/gpib_os.c b/drivers/gpib/common/gpib_os.c
+index 69f6aa73ab9a3..384800e6bf975 100644
+--- a/drivers/gpib/common/gpib_os.c
++++ b/drivers/gpib/common/gpib_os.c
+@@ -289,18 +289,19 @@ int autopoll_all_devices(struct gpib_board *board)
+ 	dev_dbg(board->gpib_dev, "autopoll has board lock\n");
  
-@@ -350,7 +350,7 @@ static DEVICE_ATTR(received_ref_clk3a, (S_IWUSR|S_IWGRP), NULL,
- static ssize_t store_received_ref_clk3b(struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 	unsigned long flags;
+ 	retval = serial_poll_all(board, serial_timeout);
+-	if (retval < 0)	{
+-		mutex_unlock(&board->big_gpib_mutex);
+-		mutex_unlock(&board->user_mutex);
+-		return retval;
++	if (retval >= 0) {
++		dev_dbg(board->gpib_dev, "complete\n");
++		/*
++		 * need to wake wait queue in case someone is
++		 * waiting on RQS
++		 */
++		wake_up_interruptible(&board->wait);
+ 	}
  
-@@ -372,7 +372,7 @@ static DEVICE_ATTR(received_ref_clk3b, (S_IWUSR|S_IWGRP), NULL,
- static ssize_t store_enable_clk3b_output(struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 	unsigned long flags;
+-	dev_dbg(board->gpib_dev, "complete\n");
+-	/*
+-	 * need to wake wait queue in case someone is
+-	 * waiting on RQS
+-	 */
+-	wake_up_interruptible(&board->wait);
++	if (retval <= 0) {
++		atomic_set(&board->stuck_srq, 1);
++		set_bit(SRQI_NUM, &board->status);
++	}
+ 	mutex_unlock(&board->big_gpib_mutex);
+ 	mutex_unlock(&board->user_mutex);
  
-@@ -394,7 +394,7 @@ static ssize_t store_enable_clk3a_output(struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
- 	unsigned long flags;
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 
- 	sscanf(buf, "%lX", &tmp);
-@@ -415,7 +415,7 @@ static ssize_t store_enable_clkb1_output(struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
- 	unsigned long flags;
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 
- 	sscanf(buf, "%lX", &tmp);
-@@ -437,7 +437,7 @@ static ssize_t store_enable_clka1_output(struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
- 	unsigned long flags;
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 
- 	sscanf(buf, "%lX", &tmp);
-@@ -458,7 +458,7 @@ static ssize_t store_enable_clkb0_output(struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
- 	unsigned long flags;
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 
- 	sscanf(buf, "%lX", &tmp);
-@@ -479,7 +479,7 @@ static ssize_t store_enable_clka0_output(struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
- 	unsigned long flags;
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 
- 	sscanf(buf, "%lX", &tmp);
-@@ -500,7 +500,7 @@ static ssize_t store_select_amcb2_transmit_clock(struct device *d,
- 		struct device_attribute *attr, const char *buf, size_t count)
- {
- 	unsigned long flags;
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 
- 	sscanf(buf, "%lX", &tmp);
-@@ -541,7 +541,7 @@ static DEVICE_ATTR(select_amcb2_transmit_clock, (S_IWUSR|S_IWGRP), NULL,
- static ssize_t store_select_amcb1_transmit_clock(struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 	unsigned long flags;
- 
-@@ -583,7 +583,7 @@ static DEVICE_ATTR(select_amcb1_transmit_clock, (S_IWUSR|S_IWGRP), NULL,
- static ssize_t store_select_redundant_clock(struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 	unsigned long flags;
- 
-@@ -604,7 +604,7 @@ static DEVICE_ATTR(select_redundant_clock, (S_IWUSR|S_IWGRP), NULL,
- static ssize_t store_select_ref_frequency(struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 	unsigned long flags;
- 
-@@ -625,7 +625,7 @@ static DEVICE_ATTR(select_ref_frequency, (S_IWUSR|S_IWGRP), NULL,
- static ssize_t store_filter_select(struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 	unsigned long flags;
- 
-@@ -645,7 +645,7 @@ static DEVICE_ATTR(filter_select, (S_IWUSR|S_IWGRP), NULL, store_filter_select);
- static ssize_t store_hardware_switching_mode(struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 	unsigned long flags;
- 
-@@ -666,7 +666,7 @@ static DEVICE_ATTR(hardware_switching_mode, (S_IWUSR|S_IWGRP), NULL,
- static ssize_t store_hardware_switching(struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 	unsigned long flags;
- 
-@@ -687,7 +687,7 @@ static DEVICE_ATTR(hardware_switching, (S_IWUSR|S_IWGRP), NULL,
- static ssize_t store_refalign (struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned long flags;
- 
- 	sscanf(buf, "%lX", &tmp);
-@@ -706,7 +706,7 @@ static DEVICE_ATTR(refalign, (S_IWUSR|S_IWGRP), NULL, store_refalign);
- static ssize_t store_mode_select (struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 	unsigned long flags;
- 
-@@ -726,7 +726,7 @@ static DEVICE_ATTR(mode_select, (S_IWUSR|S_IWGRP), NULL, store_mode_select);
- static ssize_t store_reset (struct device *d,
- 		 struct device_attribute *attr, const char *buf, size_t count)
- {
--	unsigned long tmp;
-+	unsigned long tmp = 0;
- 	unsigned char val;
- 	unsigned long flags;
- 
+diff --git a/drivers/gpib/common/iblib.c b/drivers/gpib/common/iblib.c
+index b672dd6aad25f..511e1d61c1fb2 100644
+--- a/drivers/gpib/common/iblib.c
++++ b/drivers/gpib/common/iblib.c
+@@ -193,9 +193,6 @@ static int autospoll_thread(void *board_void)
+ 		}
+ 		if (retval <= 0) {
+ 			dev_err(board->gpib_dev, "stuck SRQ\n");
+-
+-			atomic_set(&board->stuck_srq, 1);	// XXX could be better
+-			set_bit(SRQI_NUM, &board->status);
+ 		}
+ 	}
+ 	return retval;
 -- 
 2.53.0
 
