@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA38033D505;
-	Sat, 12 Sep 2026 13:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659863264F7;
+	Sat, 12 Sep 2026 13:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221259; cv=none; b=gP/mb6zfPnoDjjb7U9xgZHKpHrTNfxJfMy76pePXEg/I3i8/catGH0vV86ZmzFgatVgqk0sv1uE83EwW3v6feg0QIYhvYJwWqGN2xUN+PZ1sE9kXVfCLDid7ijNgx6B1K1j2ENRoW9FNb2D/kW9XiNjFr/Rep68DNbFqhUSjTy4=
+	t=1789221264; cv=none; b=pVJgYbuEY0jBhUXngt9EUGnGuAj/aC8eIir0mxgDZiQWfHjFQuzRopYtIgMJjN0pod8vZxW4SUoG2I0j+SAHb7cCN1IHpmwUFHln7xHi0bgYJSyV3kAVpVhdgfAsPOJfHAK7BI6ewDLwrVL5OyWHKUhB8GiMcviG8QvXdwwQQbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221259; c=relaxed/simple;
-	bh=IzhYvGpZT6//pB5tlhSN2pLWEzJJaZE+VtCKXY++AmU=;
+	s=arc-20240116; t=1789221264; c=relaxed/simple;
+	bh=BQjZcCkwgj8kbBlUT3VdnSVATiAvqsUXS9Wfypaym1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aRElgxT0kJ/aF8N3LqLsgDQ+U5UNUPAR447b6KstV7N09fnNYkKrZW8nDEm9ovxuj8Xm3+yOQXqTLyb/1xPmdOTegSLfJ2HpGdenaMo457RmM6RuKmH1nNfSLrVinqooxSovr7mKZVETE2oqDWyw+r0RlgNE+2wY1JA1IZ3Bobs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7sSKdcJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=COxzA+ul9yG2gouPBzFPghXZRLjU0FXAxHQAvj96cS2zMaDwi2AhneK7+K+TxGd21IGXlff04uOlXMPdMBPgIbMj14VE83TME49xuXddiJykNBjMOpWL5aVnrEUkPKl3FQLoYo38yOkwvyPyIugDka8Sm9smvzbehqah5b84BFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwkukzVx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7sSKdcJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3061F000FF;
-	Sat, 12 Sep 2026 13:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwkukzVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 100DD1F00893;
+	Sat, 12 Sep 2026 13:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221255;
-	bh=Vtu4Z7fSrwLDVEIlbrVV1TduMK51qOu29BAnTuGzf+c=;
+	s=korg; t=1789221260;
+	bh=GKsyPq2oZC3OyVCEWwQ5yAt/dVnuPdg/vPsleshym1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r7sSKdcJ8WoSTRVRq2+ViyDpVVadVOekADmt/4DmAEa4RasVefEXZkitGL6JFMnHv
-	 UasJ9fODDFnl4bE6wen4Zm0aclXuJAG76T1RDKdlbhIJlL1NUs10KXeU5oiKmkbh6R
-	 7+Gf54hXU9gfvDZ517I+bLpqsUFmMJw2j/5VQdEM=
+	b=pwkukzVxID+SfBNla66uJimAdyBxJV1zehn/mVXvU58FITQP59efyKI7+uHDE8ATQ
+	 SdwSU+plZ5CjRi5hnKlatJ7zIjScSPUnQ+teEWjnNqQW56X0TYsDkzPyjNad8CT8ia
+	 146f48wD7JzsY4TRgKOlk7IUq0BZCjI12rHvpOLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Jack Wang <jinpu.wang@cloud.ionos.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.6 0343/1424] scsi: pm8001: Use rollback index when freeing MSI-X vectors
-Date: Sat, 12 Sep 2026 08:46:15 +0200
-Message-ID: <20260912065614.967239814@linuxfoundation.org>
+	Bradley Morgan <include@grrlz.net>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Adrian Huang <adrianhuang0701@gmail.com>,
+	Aleksandr Nogikh <nogikh@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Marco Elver <elver@google.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 0303/1424] signal: avoid shared siginfo namespace rewrites
+Date: Sat, 12 Sep 2026 08:45:35 +0200
+Message-ID: <20260912065614.071313767@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,43 +60,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Bradley Morgan <include@grrlz.net>
 
-commit 3f92a64545165bdbb36dee8fa35626b295463313 upstream.
+commit d19cdc167e696714509e87d3f7ae765b6e164589 upstream.
 
-pm8001_request_msix() unwinds previously registered handlers with
-free_irq() when request_irq() fails. The rollback loop uses the failing
-index i for every iteration instead of the already registered vector
-index j.
+send_signal_locked() rewrites sender ids for the target namespace.  Group
+sends reuse the same siginfo, so one recipient can affect the next.
 
-That passes the wrong IRQ/dev_id pair to free_irq() and leaves the
-earlier handlers installed. Use j for both pci_irq_vector() and the
-matching irq_vector entry in the rollback loop.
+Copy the siginfo before changing it.
 
-Fixes: a76037ff3479 ("scsi: pm8001: switch to pci_irq_alloc_vectors")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Acked-by: Jack Wang <jinpu.wang@cloud.ionos.com>
-Link: https://patch.msgid.link/20260824113618.2239100-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Link: https://lore.kernel.org/86a8857d58d43ee26a8b365b837fd24830343494.1782159692.git.include@grrlz.net
+Fixes: 7a0cf094944e ("signal: Correct namespace fixups of si_pid and si_uid")
+Signed-off-by: Bradley Morgan <include@grrlz.net>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Adrian Huang <adrianhuang0701@gmail.com>
+Cc: Aleksandr Nogikh <nogikh@google.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Marco Elver <elver@google.com>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/pm8001/pm8001_init.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/signal.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/scsi/pm8001/pm8001_init.c
-+++ b/drivers/scsi/pm8001/pm8001_init.c
-@@ -1014,8 +1014,8 @@ static u32 pm8001_request_msix(struct pm
- 			&(pm8001_ha->irq_vector[i]));
- 		if (rc) {
- 			for (j = 0; j < i; j++) {
--				free_irq(pci_irq_vector(pm8001_ha->pdev, i),
--					&(pm8001_ha->irq_vector[i]));
-+				free_irq(pci_irq_vector(pm8001_ha->pdev, j),
-+					 &pm8001_ha->irq_vector[j]);
- 			}
- 			pci_free_irq_vectors(pm8001_ha->pdev);
- 			break;
+--- a/kernel/signal.c
++++ b/kernel/signal.c
+@@ -1226,6 +1226,7 @@ static inline bool has_si_pid_and_uid(st
+ int send_signal_locked(int sig, struct kernel_siginfo *info,
+ 		       struct task_struct *t, enum pid_type type)
+ {
++	struct kernel_siginfo rewritten;
+ 	/* Should SIGKILL or SIGSTOP be received by a pid namespace init? */
+ 	bool force = false;
+ 
+@@ -1239,6 +1240,9 @@ int send_signal_locked(int sig, struct k
+ 		/* SIGKILL and SIGSTOP is special or has ids */
+ 		struct user_namespace *t_user_ns;
+ 
++		rewritten = *info;
++		info = &rewritten;
++
+ 		rcu_read_lock();
+ 		t_user_ns = task_cred_xxx(t, user_ns);
+ 		if (current_user_ns() != t_user_ns) {
 
 
