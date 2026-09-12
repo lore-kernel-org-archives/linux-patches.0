@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0578536404D;
-	Sat, 12 Sep 2026 08:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D87360EF5;
+	Sat, 12 Sep 2026 08:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200269; cv=none; b=PQkFFGuxwszPttMrvdtcNoFGCRV78JrqITtqhzamw83QV2uCzdEBKgoZop6FGXJ7Lmf3Gx8iKiAWFcwVJEuhh+F8MNXlvJGsW1hrVLp1WHaatlZi23uN/H4sKyHhKCW5OE68yGgTeS4uukhG7alIKdpX9MmiHGKKpG25vJKW9AE=
+	t=1789200274; cv=none; b=XuWRQPlqwAbv3U3KwGSc4YdCrEpLtJWuvTRqpBKH/ZIXsGI65X5M1ZHYq/LMuVZeXCB2SbCA9q0kGr4OHDE9I2nkyV5Wbv9mlXhXSeQLAPc7JJQN6DhAjPNHMPPovxG/PyXFfCIC593NaU/GD1nR6kJzaaWuV4qrtLx3TeBIUaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200269; c=relaxed/simple;
-	bh=R9FiSLO1FiQfYJnbIRR1jlAKPDud65uaqIx3miByJa4=;
+	s=arc-20240116; t=1789200274; c=relaxed/simple;
+	bh=ndD7IyVkg3aoiC0fcSzfh6n1UxV9tqnhnGYaHbw7uNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JOdRVxyPgD74rDzuJ2UHPqkvr+zaB4XsCDGKk4Dy5akn9IujUoBre5KugJD+8c0PhXiW21JRmBalajnYWGrgq9DZzUrwffPqcA54qB8SmEaCeNxGN7YKbDOy6cR0TzJOccWmcBh7Dt9RRJzKSviG7KD8mWHu8xvytx+QYq/U2ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iE4YvnWS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ILR6ano7DS+sEe6EqSKAQxkP5cr9mlxbliGGBVGUTSHypLPcMrIv8dHK+SBZu8cqahm49zuc0TUj/eJoUhxcemNsq6XHgxiyO/z6H2M1fzbsw6QKpW190bjM0QsQM3gpEHwgoFu2mkhdG+UzKAIQo7RXOOACM0/rrQgb7W+S0zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzk8hF40; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iE4YvnWS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0A01F000FF;
-	Sat, 12 Sep 2026 08:04:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzk8hF40"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C381F000FF;
+	Sat, 12 Sep 2026 08:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200267;
-	bh=0+44Sq7QMOOuWu8UJ8/JWAkGbiDUbNeiMw1X6G/lMg0=;
+	s=korg; t=1789200272;
+	bh=a1qNE9fQXW/0C8q3tVvx+PQ66ZDRuI9z3cAbDFcesIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iE4YvnWSHmlFmiBmX66+n+dk8ePPoc4tU+x7Jm1fevd/fzMLUTDEdPRvINJCtXQVR
-	 DfYbdUQYSprrfs3ntIwuRFeDq9PkFKteaR5fXZ1jcYrV9kI23UxbdFqCiovIc0xeZr
-	 lpW0uBbs8FOTvKFpFUdHwZJO2lppPQoN6yWHixP8=
+	b=wzk8hF40YsfBOtSNOd5vytVQZpQVIi5jZkQeoXnMXEk5YCB9GvmS8QbHLEfOwHpoY
+	 pnJ2IdwsAxlR//dC6GfUm2N5ooMs++hv3FlF2hjWamgOJTR4416MCg5Pn6e1fjCzEM
+	 3WSsnY6UAky7chMsfnlW7n+9WgKKTgOPSPP1e92A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Jens Remus <jremus@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Surendra Singh Chouhan <kr494167@gmail.com>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0755/1815] s390/vdso: Pass --eh-frame-hdr to the linker
-Date: Sat, 12 Sep 2026 08:41:45 +0200
-Message-ID: <20260912065706.631666059@linuxfoundation.org>
+Subject: [PATCH 7.2 0756/1815] regulator: tps65185: handle gpiod_get_value_cansleep() error returns
+Date: Sat, 12 Sep 2026 08:41:46 +0200
+Message-ID: <20260912065706.655103518@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,56 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Remus <jremus@linux.ibm.com>
+From: Surendra Singh Chouhan <kr494167@gmail.com>
 
-[ Upstream commit dc161efb6df8518b3cfa7f0a5efdc16a1aee815b ]
+[ Upstream commit 623d9a55685c52b10b995d8dbde9da6283170220 ]
 
-Commit 2b2a25845d53 ("s390/vdso: Use $(LD) instead of $(CC) to link
-vDSO") accidentally broke the GNU_EH_FRAME program table entry in
-the vDSO, causing it to be empty:
+tps65185_vposneg_enable() evaluated:
+  if (gpiod_get_value_cansleep(data->pgood_gpio) != 1)
+      return -ETIMEDOUT;
 
-  $ readelf --program-headers arch/s390/kernel/vdso/vdso.so
-  ...
-  Program Headers:
-    Type           Offset             VirtAddr           PhysAddr
-                   FileSiz            MemSiz              Flags  Align
-  ...
-    GNU_EH_FRAME   0x0000000000000000 0x0000000000000000 0x0000000000000000
-                   0x0000000000000000 0x0000000000000000         0x8
-  ...
+gpiod_get_value_cansleep() returns 1 if active, 0 if inactive, and a
+negative error code (e.g. -EIO or -EINVAL) on failure. Evaluating != 1
+treats a negative error code as non-equal, swallowing GPIO read errors and
+masking them as -ETIMEDOUT.
 
-Originally, the compiler would implicitly add --eh-frame-hdr when
-invoking the linker, but when this Makefile was converted from invoking
-the linker via the compiler, to invoking it directly, the option was
-missed.
+Fix this by capturing the return value of gpiod_get_value_cansleep(). If
+it returns a negative error code, propagate that error immediately; if
+it returns 0 (inactive), return -ETIMEDOUT.
 
-This is the s390 variant of x86 commit cd01544a268a ("x86/vdso: Pass
---eh-frame-hdr to the linker").
-
-Fixes: 2b2a25845d53 ("s390/vdso: Use $(LD) instead of $(CC) to link vDSO")
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Jens Remus <jremus@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: b0fc1e770194 ("regulator: Add TPS65185 driver")
+Signed-off-by: Surendra Singh Chouhan <kr494167@gmail.com>
+Reviewed-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://patch.msgid.link/20260724125858.75635-1-kr494167@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/vdso/Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/regulator/tps65185.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/vdso/Makefile b/arch/s390/kernel/vdso/Makefile
-index fece5d975eaf8..35c834b895ecb 100644
---- a/arch/s390/kernel/vdso/Makefile
-+++ b/arch/s390/kernel/vdso/Makefile
-@@ -30,7 +30,8 @@ KBUILD_CFLAGS_VDSO := $(filter-out -fno-asynchronous-unwind-tables,$(KBUILD_CFLA
- KBUILD_CFLAGS_VDSO += -fPIC -fno-common -fno-builtin -fasynchronous-unwind-tables
- KBUILD_CFLAGS_VDSO += -fno-stack-protector $(DISABLE_KSTACK_ERASE)
- ldflags-y := -shared -soname=linux-vdso.so.1 \
--	     --hash-style=both --build-id=sha1 -T
-+	     --hash-style=both --build-id=sha1 \
-+	     $(call ld-option, --eh-frame-hdr) -T
+diff --git a/drivers/regulator/tps65185.c b/drivers/regulator/tps65185.c
+index 786622d8d5980..1f13e4156cab1 100644
+--- a/drivers/regulator/tps65185.c
++++ b/drivers/regulator/tps65185.c
+@@ -183,7 +183,10 @@ static int tps65185_vposneg_enable(struct regulator_dev *rdev)
+ 	wait_for_completion_timeout(&data->pgood_completion,
+ 				    msecs_to_jiffies(PGOOD_TIMEOUT_MSECS));
+ 	dev_dbg(data->dev, "turned on");
+-	if (gpiod_get_value_cansleep(data->pgood_gpio) != 1)
++	ret = gpiod_get_value_cansleep(data->pgood_gpio);
++	if (ret < 0)
++		return ret;
++	if (!ret)
+ 		return -ETIMEDOUT;
  
- $(targets:%=$(obj)/%.dbg): KBUILD_CFLAGS = $(KBUILD_CFLAGS_VDSO)
- $(targets:%=$(obj)/%.dbg): KBUILD_AFLAGS = $(KBUILD_AFLAGS_VDSO)
+ 	return 0;
 -- 
 2.53.0
 
