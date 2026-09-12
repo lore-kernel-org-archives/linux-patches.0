@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4590641B8CC;
-	Sat, 12 Sep 2026 13:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372323385A5;
+	Sat, 12 Sep 2026 13:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218466; cv=none; b=KzQfiXd5UmSc89iB5kCG83lzPiOAN8AI299v3zamYlkfHE7iOhID4VzSerrasIkX78PYiA0Lzpuqt1zTfb+BUhb48HoXp2rDgGXt1rGVutJfWOwmIJJ1Lmt9TMoUKD82Evd3hneMvPRJr+zek/a7bAzBYD3B4e8fi9m6DYyO6Bw=
+	t=1789218470; cv=none; b=s1lArIEd/o+iQb2RR1Ncx9KacRlsqAAwPJ1VBhaTbEJ1nThK16xVlja53zJinNGAJeI4dgrFBiaVkkdjS/dJbWd3jMpLWldea/WSyf+aBXNfl1bVzHJfYfZI5f699SQCdqt6CHPW0w4zxgdis89Ad+WVXtkBwRJdPmLtS44yZ74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218466; c=relaxed/simple;
-	bh=UW0MMbwPqB+prkbA/PgSqOohgryqKWc1Q1OlAAJz8Uk=;
+	s=arc-20240116; t=1789218470; c=relaxed/simple;
+	bh=7OT1aJkhC0SyFIkqugQalWfZx6CynblNAN4bmtyhQ7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b2BUyVU/gubmR51oO2uNJR419QB8w04FSdDzq7EzrmUqkck0mIh8RGVRf+LD68D+DpYGsI1YHOLbdKNBiRsCYTqfhPa4fRFOMv4oz53bO00EuTbl6U16Aa9Fl34tK3SmjQho1vvjvceglmQG4KlWNMFTDA/l7+gdeUrZCR9732Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KkTgAPYi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PhAhgGD6EWX3r/YXB7AIz6CWRRqZxp0tJmwtI+l16n8REEtH1fT14NCIMuXhnOoeXxunKYkC0+OMI2/q53sSryiL41TDt9Gf27nTZqKpd092RXHli26GaRR+/CKZWbLQGacrs4tgCy2rKRMZrjsYGuBagtfC1SqFgruUAOe+Qcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1O1dKkC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KkTgAPYi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0A6C1F000FF;
-	Sat, 12 Sep 2026 13:07:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1O1dKkC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D681F000FF;
+	Sat, 12 Sep 2026 13:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218463;
-	bh=lajP1yb4W8YFqk7CiAcVaZ0ozCOrF05iSeOt3oi8xnM=;
+	s=korg; t=1789218469;
+	bh=2MSDUPs7ME+F1xiDfRRJWKZ+3L+6B/qtc9Hai4IFV04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KkTgAPYi+7ZStoO50S7p0bQDv8dPaFH1RhHUXHZ60L3/lmLxZ52XvCHdDFQx4YCZZ
-	 y/7G38ipe8qpFXN/63y6csq4gNMiyD06UxFBH6htibXkQ22oJGtmJBM4WKrPBmP7/d
-	 xSEdZDSmQ2vN3e+e/odNOY0T6XN0MtWPhtSflmJg=
+	b=L1O1dKkCn6gRx+UWFJJUbJVvP3OqjtP4Uh3W9AjJ5fMX2bxrxWKj/0tiwZzkUXfDf
+	 Ovk44bqe8k5DCSpNA8Ip5pFf8y85l/rhKr67mQuzHh0y8AT2GkZRrMxMW2Oq0xA2NM
+	 uA+49Z4azAs6E393SN6FNHJt3MJQ9hPPTLmq/i+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Huisong Li <lihuisong@huawei.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	Adam Young <admiyo@os.amperecomputing.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1113/1376] selftest/cgroup: Update test_cpuset_prs.sh to use | as effective CPUs and state separator
-Date: Sat, 12 Sep 2026 08:58:59 +0200
-Message-ID: <20260912065632.369494650@linuxfoundation.org>
+Subject: [PATCH 6.12 1149/1376] mailbox: pcc: Fix command timeout due to missed interrupt
+Date: Sat, 12 Sep 2026 08:59:35 +0200
+Message-ID: <20260912065633.163293881@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,382 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Huisong Li <lihuisong@huawei.com>
 
-[ Upstream commit 65046b5e0ad71990b5a0256710cf050d2d2ab3dd ]
+[ Upstream commit 3360b088175dc5d5c9166685836158470d00571e ]
 
-Currently, ',' is used as the cgroup separator of the expected effective
-CPUs and partition root states in the test matrix. However, ',' can be
-part of the output of the cpuset.cpus*.effective and cpuset.cpus.isolated
-files. Change the separator to '|' so that ',' can appear as part of
-the expected values.
+PCC command execution can time out when a fast platform completes a
+transaction and signals the platform interrupt before pcc_send_data()
+marks the channel as in use. For shared platform interrupts, the type 3
+handler uses chan_in_use to decide whether the interrupt belongs to the
+channel. If it observes false, it ignores the completion and the caller
+waits until timeout.
 
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Stable-dep-of: ddabc5dbd262 ("selftests/cgroup: Preserve CPU hotplug write errors")
+Publish chan_in_use before ringing the doorbell. Use WRITE_ONCE() for
+the lockless flag updates and READ_ONCE() in the interrupt handler. The
+following ordered I/O accessor orders the flag store before the platform
+is notified.
+
+Clear chan_in_use if ringing the doorbell fails. Otherwise, leave it set
+until the interrupt handler completes the transaction, clearing it before
+the mailbox core can submit another transfer.
+
+Fixes: 3db174e478cb ("mailbox: pcc: Support shared interrupt for multiple subspaces")
+Signed-off-by: Huisong Li <lihuisong@huawei.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Tested-by: Adam Young <admiyo@os.amperecomputing.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/cgroup/test_cpuset_prs.sh       | 236 +++++++++---------
- 1 file changed, 118 insertions(+), 118 deletions(-)
+ drivers/mailbox/pcc.c | 41 +++++++++++++++++++++++++++--------------
+ 1 file changed, 27 insertions(+), 14 deletions(-)
 
-diff --git a/tools/testing/selftests/cgroup/test_cpuset_prs.sh b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
-index 4e3fabed52da0..f11f347129d87 100755
---- a/tools/testing/selftests/cgroup/test_cpuset_prs.sh
-+++ b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
-@@ -207,130 +207,130 @@ TEST_MATRIX=(
- 	"  C0-1:P1   .      .    C2-3  S+:C4-5   .      .      .     0 A1:4-5"
- 	"   C0-1     .      .   C2-3:P1   .      .      .     C2     0 "
- 	"   C0-1     .      .   C2-3:P1   .      .      .    C4-5    0 B1:4-5"
--	"C0-3:P1:S+ C2-3:P1 .      .      .      .      .      .     0 A1:0-1,A2:2-3"
--	"C0-3:P1:S+ C2-3:P1 .      .     C1-3    .      .      .     0 A1:1,A2:2-3"
--	"C2-3:P1:S+  C3:P1  .      .     C3      .      .      .     0 A1:,A2:3 A1:P1,A2:P1"
--	"C2-3:P1:S+  C3:P1  .      .     C3      P0     .      .     0 A1:3,A2:3 A1:P1,A2:P0"
--	"C2-3:P1:S+  C2:P1  .      .     C2-4    .      .      .     0 A1:3-4,A2:2"
--	"C2-3:P1:S+  C3:P1  .      .     C3      .      .     C0-2   0 A1:,B1:0-2 A1:P1,A2:P1"
--	"$SETUP_A123_PARTITIONS    .     C2-3    .      .      .     0 A1:,A2:2,A3:3 A1:P1,A2:P1,A3:P1"
-+	"C0-3:P1:S+ C2-3:P1 .      .      .      .      .      .     0 A1:0-1|A2:2-3"
-+	"C0-3:P1:S+ C2-3:P1 .      .     C1-3    .      .      .     0 A1:1|A2:2-3"
-+	"C2-3:P1:S+  C3:P1  .      .     C3      .      .      .     0 A1:|A2:3 A1:P1|A2:P1"
-+	"C2-3:P1:S+  C3:P1  .      .     C3      P0     .      .     0 A1:3|A2:3 A1:P1|A2:P0"
-+	"C2-3:P1:S+  C2:P1  .      .     C2-4    .      .      .     0 A1:3-4|A2:2"
-+	"C2-3:P1:S+  C3:P1  .      .     C3      .      .     C0-2   0 A1:|B1:0-2 A1:P1|A2:P1"
-+	"$SETUP_A123_PARTITIONS    .     C2-3    .      .      .     0 A1:|A2:2|A3:3 A1:P1|A2:P1|A3:P1"
+diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
+index 890a187fb63c7..6efeadf89db2b 100644
+--- a/drivers/mailbox/pcc.c
++++ b/drivers/mailbox/pcc.c
+@@ -93,12 +93,11 @@ struct pcc_chan_reg {
+  * @plat_irq: platform interrupt
+  * @type: PCC subspace type
+  * @plat_irq_flags: platform interrupt flags
+- * @chan_in_use: this flag is used just to check if the interrupt needs
+- *		handling when it is shared. Since only one transfer can occur
+- *		at a time and mailbox takes care of locking, this flag can be
+- *		accessed without a lock. Note: the type only support the
+- *		communication from OSPM to Platform, like type3, use it, and
+- *		other types completely ignore it.
++ * @chan_in_use: lockless flag used by type 3 initiator subspaces to filter
++ *		platform interrupts. Only one transfer can occur at a time, but
++ *		the interrupt handler may sample the flag on another CPU, so all
++ *		accesses must use READ_ONCE() or WRITE_ONCE(). Other subspace
++ *		types do not test it.
+  */
+ struct pcc_chan_info {
+ 	struct pcc_mbox_chan chan;
+@@ -333,8 +332,13 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
+ 	if (pcc_chan_reg_read_modify_write(&pchan->plat_irq_ack))
+ 		return IRQ_NONE;
  
- 	# CPU offlining cases:
--	"   C0-1     .      .    C2-3    S+    C4-5     .     O2=0   0 A1:0-1,B1:3"
--	"C0-3:P1:S+ C2-3:P1 .      .     O2=0    .      .      .     0 A1:0-1,A2:3"
--	"C0-3:P1:S+ C2-3:P1 .      .     O2=0   O2=1    .      .     0 A1:0-1,A2:2-3"
--	"C0-3:P1:S+ C2-3:P1 .      .     O1=0    .      .      .     0 A1:0,A2:2-3"
--	"C0-3:P1:S+ C2-3:P1 .      .     O1=0   O1=1    .      .     0 A1:0-1,A2:2-3"
--	"C2-3:P1:S+  C3:P1  .      .     O3=0   O3=1    .      .     0 A1:2,A2:3 A1:P1,A2:P1"
--	"C2-3:P1:S+  C3:P2  .      .     O3=0   O3=1    .      .     0 A1:2,A2:3 A1:P1,A2:P2"
--	"C2-3:P1:S+  C3:P1  .      .     O2=0   O2=1    .      .     0 A1:2,A2:3 A1:P1,A2:P1"
--	"C2-3:P1:S+  C3:P2  .      .     O2=0   O2=1    .      .     0 A1:2,A2:3 A1:P1,A2:P2"
--	"C2-3:P1:S+  C3:P1  .      .     O2=0    .      .      .     0 A1:,A2:3 A1:P1,A2:P1"
--	"C2-3:P1:S+  C3:P1  .      .     O3=0    .      .      .     0 A1:2,A2: A1:P1,A2:P1"
--	"C2-3:P1:S+  C3:P1  .      .    T:O2=0   .      .      .     0 A1:3,A2:3 A1:P1,A2:P-1"
--	"C2-3:P1:S+  C3:P1  .      .      .    T:O3=0   .      .     0 A1:2,A2:2 A1:P1,A2:P-1"
--	"$SETUP_A123_PARTITIONS    .     O1=0    .      .      .     0 A1:,A2:2,A3:3 A1:P1,A2:P1,A3:P1"
--	"$SETUP_A123_PARTITIONS    .     O2=0    .      .      .     0 A1:1,A2:,A3:3 A1:P1,A2:P1,A3:P1"
--	"$SETUP_A123_PARTITIONS    .     O3=0    .      .      .     0 A1:1,A2:2,A3: A1:P1,A2:P1,A3:P1"
--	"$SETUP_A123_PARTITIONS    .    T:O1=0   .      .      .     0 A1:2-3,A2:2-3,A3:3 A1:P1,A2:P-1,A3:P-1"
--	"$SETUP_A123_PARTITIONS    .      .    T:O2=0   .      .     0 A1:1,A2:3,A3:3 A1:P1,A2:P1,A3:P-1"
--	"$SETUP_A123_PARTITIONS    .      .      .    T:O3=0   .     0 A1:1,A2:2,A3:2 A1:P1,A2:P1,A3:P-1"
--	"$SETUP_A123_PARTITIONS    .    T:O1=0  O1=1    .      .     0 A1:1,A2:2,A3:3 A1:P1,A2:P1,A3:P1"
--	"$SETUP_A123_PARTITIONS    .      .    T:O2=0  O2=1    .     0 A1:1,A2:2,A3:3 A1:P1,A2:P1,A3:P1"
--	"$SETUP_A123_PARTITIONS    .      .      .    T:O3=0  O3=1   0 A1:1,A2:2,A3:3 A1:P1,A2:P1,A3:P1"
--	"$SETUP_A123_PARTITIONS    .    T:O1=0  O2=0   O1=1    .     0 A1:1,A2:,A3:3 A1:P1,A2:P1,A3:P1"
--	"$SETUP_A123_PARTITIONS    .    T:O1=0  O2=0   O2=1    .     0 A1:2-3,A2:2-3,A3:3 A1:P1,A2:P-1,A3:P-1"
-+	"   C0-1     .      .    C2-3    S+    C4-5     .     O2=0   0 A1:0-1|B1:3"
-+	"C0-3:P1:S+ C2-3:P1 .      .     O2=0    .      .      .     0 A1:0-1|A2:3"
-+	"C0-3:P1:S+ C2-3:P1 .      .     O2=0   O2=1    .      .     0 A1:0-1|A2:2-3"
-+	"C0-3:P1:S+ C2-3:P1 .      .     O1=0    .      .      .     0 A1:0|A2:2-3"
-+	"C0-3:P1:S+ C2-3:P1 .      .     O1=0   O1=1    .      .     0 A1:0-1|A2:2-3"
-+	"C2-3:P1:S+  C3:P1  .      .     O3=0   O3=1    .      .     0 A1:2|A2:3 A1:P1|A2:P1"
-+	"C2-3:P1:S+  C3:P2  .      .     O3=0   O3=1    .      .     0 A1:2|A2:3 A1:P1|A2:P2"
-+	"C2-3:P1:S+  C3:P1  .      .     O2=0   O2=1    .      .     0 A1:2|A2:3 A1:P1|A2:P1"
-+	"C2-3:P1:S+  C3:P2  .      .     O2=0   O2=1    .      .     0 A1:2|A2:3 A1:P1|A2:P2"
-+	"C2-3:P1:S+  C3:P1  .      .     O2=0    .      .      .     0 A1:|A2:3 A1:P1|A2:P1"
-+	"C2-3:P1:S+  C3:P1  .      .     O3=0    .      .      .     0 A1:2|A2: A1:P1|A2:P1"
-+	"C2-3:P1:S+  C3:P1  .      .    T:O2=0   .      .      .     0 A1:3|A2:3 A1:P1|A2:P-1"
-+	"C2-3:P1:S+  C3:P1  .      .      .    T:O3=0   .      .     0 A1:2|A2:2 A1:P1|A2:P-1"
-+	"$SETUP_A123_PARTITIONS    .     O1=0    .      .      .     0 A1:|A2:2|A3:3 A1:P1|A2:P1|A3:P1"
-+	"$SETUP_A123_PARTITIONS    .     O2=0    .      .      .     0 A1:1|A2:|A3:3 A1:P1|A2:P1|A3:P1"
-+	"$SETUP_A123_PARTITIONS    .     O3=0    .      .      .     0 A1:1|A2:2|A3: A1:P1|A2:P1|A3:P1"
-+	"$SETUP_A123_PARTITIONS    .    T:O1=0   .      .      .     0 A1:2-3|A2:2-3|A3:3 A1:P1|A2:P-1|A3:P-1"
-+	"$SETUP_A123_PARTITIONS    .      .    T:O2=0   .      .     0 A1:1|A2:3|A3:3 A1:P1|A2:P1|A3:P-1"
-+	"$SETUP_A123_PARTITIONS    .      .      .    T:O3=0   .     0 A1:1|A2:2|A3:2 A1:P1|A2:P1|A3:P-1"
-+	"$SETUP_A123_PARTITIONS    .    T:O1=0  O1=1    .      .     0 A1:1|A2:2|A3:3 A1:P1|A2:P1|A3:P1"
-+	"$SETUP_A123_PARTITIONS    .      .    T:O2=0  O2=1    .     0 A1:1|A2:2|A3:3 A1:P1|A2:P1|A3:P1"
-+	"$SETUP_A123_PARTITIONS    .      .      .    T:O3=0  O3=1   0 A1:1|A2:2|A3:3 A1:P1|A2:P1|A3:P1"
-+	"$SETUP_A123_PARTITIONS    .    T:O1=0  O2=0   O1=1    .     0 A1:1|A2:|A3:3 A1:P1|A2:P1|A3:P1"
-+	"$SETUP_A123_PARTITIONS    .    T:O1=0  O2=0   O2=1    .     0 A1:2-3|A2:2-3|A3:3 A1:P1|A2:P-1|A3:P-1"
++	/*
++	 * Initiator subspaces use this flag to filter shared interrupts. Use
++	 * READ_ONCE() to sample the lockless flag written by pcc_send_data()
++	 * on another CPU.
++	 */
+ 	if (pchan->type == ACPI_PCCT_TYPE_EXT_PCC_MASTER_SUBSPACE &&
+-	    !pchan->chan_in_use)
++	    !READ_ONCE(pchan->chan_in_use))
+ 		return IRQ_NONE;
  
- 	#  old-A1 old-A2 old-A3 old-B1 new-A1 new-A2 new-A3 new-B1 fail ECPUs Pstate ISOLCPUS
- 	#  ------ ------ ------ ------ ------ ------ ------ ------ ---- ----- ------ --------
- 	#
- 	# Remote partition and cpuset.cpus.exclusive tests
- 	#
--	" C0-3:S+ C1-3:S+ C2-3     .    X2-3     .      .      .     0 A1:0-3,A2:1-3,A3:2-3,XA1:2-3"
--	" C0-3:S+ C1-3:S+ C2-3     .    X2-3  X2-3:P2   .      .     0 A1:0-1,A2:2-3,A3:2-3 A1:P0,A2:P2 2-3"
--	" C0-3:S+ C1-3:S+ C2-3     .    X2-3   X3:P2    .      .     0 A1:0-2,A2:3,A3:3 A1:P0,A2:P2 3"
--	" C0-3:S+ C1-3:S+ C2-3     .    X2-3   X2-3  X2-3:P2   .     0 A1:0-1,A2:1,A3:2-3 A1:P0,A3:P2 2-3"
--	" C0-3:S+ C1-3:S+ C2-3     .    X2-3   X2-3 X2-3:P2:C3 .     0 A1:0-1,A2:1,A3:2-3 A1:P0,A3:P2 2-3"
--	" C0-3:S+ C1-3:S+ C2-3   C2-3     .      .      .      P2    0 A1:0-3,A2:1-3,A3:2-3,B1:2-3 A1:P0,A3:P0,B1:P-2"
-+	" C0-3:S+ C1-3:S+ C2-3     .    X2-3     .      .      .     0 A1:0-3|A2:1-3|A3:2-3|XA1:2-3"
-+	" C0-3:S+ C1-3:S+ C2-3     .    X2-3  X2-3:P2   .      .     0 A1:0-1|A2:2-3|A3:2-3 A1:P0|A2:P2 2-3"
-+	" C0-3:S+ C1-3:S+ C2-3     .    X2-3   X3:P2    .      .     0 A1:0-2|A2:3|A3:3 A1:P0|A2:P2 3"
-+	" C0-3:S+ C1-3:S+ C2-3     .    X2-3   X2-3  X2-3:P2   .     0 A1:0-1|A2:1|A3:2-3 A1:P0|A3:P2 2-3"
-+	" C0-3:S+ C1-3:S+ C2-3     .    X2-3   X2-3 X2-3:P2:C3 .     0 A1:0-1|A2:1|A3:2-3 A1:P0|A3:P2 2-3"
-+	" C0-3:S+ C1-3:S+ C2-3   C2-3     .      .      .      P2    0 A1:0-3|A2:1-3|A3:2-3|B1:2-3 A1:P0|A3:P0|B1:P-2"
- 	" C0-3:S+ C1-3:S+ C2-3   C4-5     .      .      .      P2    0 B1:4-5 B1:P2 4-5"
--	" C0-3:S+ C1-3:S+ C2-3    C4    X2-3   X2-3  X2-3:P2   P2    0 A3:2-3,B1:4 A3:P2,B1:P2 2-4"
--	" C0-3:S+ C1-3:S+ C2-3    C4    X2-3   X2-3 X2-3:P2:C1-3 P2  0 A3:2-3,B1:4 A3:P2,B1:P2 2-4"
--	" C0-3:S+ C1-3:S+ C2-3    C4    X1-3  X1-3:P2   P2     .     0 A2:1,A3:2-3 A2:P2,A3:P2 1-3"
--	" C0-3:S+ C1-3:S+ C2-3    C4    X2-3   X2-3  X2-3:P2 P2:C4-5 0 A3:2-3,B1:4-5 A3:P2,B1:P2 2-5"
--	" C4:X0-3:S+ X1-3:S+ X2-3  .      .      P2     .      .     0 A1:4,A2:1-3,A3:1-3 A2:P2 1-3"
--	" C4:X0-3:S+ X1-3:S+ X2-3  .      .      .      P2     .     0 A1:4,A2:4,A3:2-3 A3:P2 2-3"
-+	" C0-3:S+ C1-3:S+ C2-3    C4    X2-3   X2-3  X2-3:P2   P2    0 A3:2-3|B1:4 A3:P2|B1:P2 2-4"
-+	" C0-3:S+ C1-3:S+ C2-3    C4    X2-3   X2-3 X2-3:P2:C1-3 P2  0 A3:2-3|B1:4 A3:P2|B1:P2 2-4"
-+	" C0-3:S+ C1-3:S+ C2-3    C4    X1-3  X1-3:P2   P2     .     0 A2:1|A3:2-3 A2:P2|A3:P2 1-3"
-+	" C0-3:S+ C1-3:S+ C2-3    C4    X2-3   X2-3  X2-3:P2 P2:C4-5 0 A3:2-3|B1:4-5 A3:P2|B1:P2 2-5"
-+	" C4:X0-3:S+ X1-3:S+ X2-3  .      .      P2     .      .     0 A1:4|A2:1-3|A3:1-3 A2:P2 1-3"
-+	" C4:X0-3:S+ X1-3:S+ X2-3  .      .      .      P2     .     0 A1:4|A2:4|A3:2-3 A3:P2 2-3"
+ 	if (!pcc_mbox_cmd_complete_check(pchan))
+@@ -344,12 +348,12 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
+ 		return IRQ_NONE;
  
- 	# Nested remote/local partition tests
--	" C0-3:S+ C1-3:S+ C2-3   C4-5   X2-3  X2-3:P1   P2     P1    0 A1:0-1,A2:,A3:2-3,B1:4-5 \
--								       A1:P0,A2:P1,A3:P2,B1:P1 2-3"
--	" C0-3:S+ C1-3:S+ C2-3    C4    X2-3  X2-3:P1   P2     P1    0 A1:0-1,A2:,A3:2-3,B1:4 \
--								       A1:P0,A2:P1,A3:P2,B1:P1 2-4,2-3"
--	" C0-3:S+ C1-3:S+ C2-3    C4    X2-3  X2-3:P1    .     P1    0 A1:0-1,A2:2-3,A3:2-3,B1:4 \
--								       A1:P0,A2:P1,A3:P0,B1:P1"
--	" C0-3:S+ C1-3:S+  C3     C4    X2-3  X2-3:P1   P2     P1    0 A1:0-1,A2:2,A3:3,B1:4 \
--								       A1:P0,A2:P1,A3:P2,B1:P1 2-4,3"
--	" C0-4:S+ C1-4:S+ C2-4     .    X2-4  X2-4:P2  X4:P1    .    0 A1:0-1,A2:2-3,A3:4 \
--								       A1:P0,A2:P2,A3:P1 2-4,2-3"
--	" C0-4:S+ C1-4:S+ C2-4     .    X2-4  X2-4:P2 X3-4:P1   .    0 A1:0-1,A2:2,A3:3-4 \
--								       A1:P0,A2:P2,A3:P1 2"
-+	" C0-3:S+ C1-3:S+ C2-3   C4-5   X2-3  X2-3:P1   P2     P1    0 A1:0-1|A2:|A3:2-3|B1:4-5 \
-+								       A1:P0|A2:P1|A3:P2|B1:P1 2-3"
-+	" C0-3:S+ C1-3:S+ C2-3    C4    X2-3  X2-3:P1   P2     P1    0 A1:0-1|A2:|A3:2-3|B1:4 \
-+								       A1:P0|A2:P1|A3:P2|B1:P1 2-4|2-3"
-+	" C0-3:S+ C1-3:S+ C2-3    C4    X2-3  X2-3:P1    .     P1    0 A1:0-1|A2:2-3|A3:2-3|B1:4 \
-+								       A1:P0|A2:P1|A3:P0|B1:P1"
-+	" C0-3:S+ C1-3:S+  C3     C4    X2-3  X2-3:P1   P2     P1    0 A1:0-1|A2:2|A3:3|B1:4 \
-+								       A1:P0|A2:P1|A3:P2|B1:P1 2-4|3"
-+	" C0-4:S+ C1-4:S+ C2-4     .    X2-4  X2-4:P2  X4:P1    .    0 A1:0-1|A2:2-3|A3:4 \
-+								       A1:P0|A2:P2|A3:P1 2-4|2-3"
-+	" C0-4:S+ C1-4:S+ C2-4     .    X2-4  X2-4:P2 X3-4:P1   .    0 A1:0-1|A2:2|A3:3-4 \
-+								       A1:P0|A2:P2|A3:P1 2"
- 	" C0-4:X2-4:S+ C1-4:X2-4:S+:P2 C2-4:X4:P1 \
--				   .      .      X5      .      .    0 A1:0-4,A2:1-4,A3:2-4 \
--								       A1:P0,A2:P-2,A3:P-1"
-+				   .      .      X5      .      .    0 A1:0-4|A2:1-4|A3:2-4 \
-+								       A1:P0|A2:P-2|A3:P-1"
- 	" C0-4:X2-4:S+ C1-4:X2-4:S+:P2 C2-4:X4:P1 \
--				   .      .      .      X1      .    0 A1:0-1,A2:2-4,A3:2-4 \
--								       A1:P0,A2:P2,A3:P-1 2-4"
-+				   .      .      .      X1      .    0 A1:0-1|A2:2-4|A3:2-4 \
-+								       A1:P0|A2:P2|A3:P-1 2-4"
+ 	/*
+-	 * Clear this flag after updating interrupt ack register and just
+-	 * before mbox_chan_received_data() which might call pcc_send_data()
+-	 * where the flag is set again to start new transfer. This is
+-	 * required to avoid any possible race in updatation of this flag.
++	 * Clear this flag after updating the interrupt ack register and before
++	 * notifying the client and mailbox core. mbox_chan_txdone() may submit
++	 * the next queued transfer and set the flag again. Use WRITE_ONCE() for
++	 * the lockless update observed by the send and interrupt paths.
+ 	 */
+-	pchan->chan_in_use = false;
++	WRITE_ONCE(pchan->chan_in_use, false);
+ 	mbox_chan_received_data(chan, NULL);
  
- 	# Remote partition offline tests
--	" C0-3:S+ C1-3:S+ C2-3     .    X2-3   X2-3 X2-3:P2:O2=0 .   0 A1:0-1,A2:1,A3:3 A1:P0,A3:P2 2-3"
--	" C0-3:S+ C1-3:S+ C2-3     .    X2-3   X2-3 X2-3:P2:O2=0 O2=1 0 A1:0-1,A2:1,A3:2-3 A1:P0,A3:P2 2-3"
--	" C0-3:S+ C1-3:S+  C3      .    X2-3   X2-3    P2:O3=0   .   0 A1:0-2,A2:1-2,A3: A1:P0,A3:P2 3"
--	" C0-3:S+ C1-3:S+  C3      .    X2-3   X2-3   T:P2:O3=0  .   0 A1:0-2,A2:1-2,A3:1-2 A1:P0,A3:P-2 3,"
-+	" C0-3:S+ C1-3:S+ C2-3     .    X2-3   X2-3 X2-3:P2:O2=0 .   0 A1:0-1|A2:1|A3:3 A1:P0|A3:P2 2-3"
-+	" C0-3:S+ C1-3:S+ C2-3     .    X2-3   X2-3 X2-3:P2:O2=0 O2=1 0 A1:0-1|A2:1|A3:2-3 A1:P0|A3:P2 2-3"
-+	" C0-3:S+ C1-3:S+  C3      .    X2-3   X2-3    P2:O3=0   .   0 A1:0-2|A2:1-2|A3: A1:P0|A3:P2 3"
-+	" C0-3:S+ C1-3:S+  C3      .    X2-3   X2-3   T:P2:O3=0  .   0 A1:0-2|A2:1-2|A3:1-2 A1:P0|A3:P-2 3|"
+ 	check_and_ack(pchan, chan);
+@@ -448,9 +452,18 @@ static int pcc_send_data(struct mbox_chan *chan, void *data)
+ 	if (ret)
+ 		return ret;
  
- 	# An invalidated remote partition cannot self-recover from hotplug
--	" C0-3:S+ C1-3:S+  C2      .    X2-3   X2-3   T:P2:O2=0 O2=1 0 A1:0-3,A2:1-3,A3:2 A1:P0,A3:P-2"
-+	" C0-3:S+ C1-3:S+  C2      .    X2-3   X2-3   T:P2:O2=0 O2=1 0 A1:0-3|A2:1-3|A3:2 A1:P0|A3:P-2"
++	/*
++	 * Set chan_in_use before ringing the doorbell so a fast completion
++	 * interrupt is not mistaken for a shared interrupt from another
++	 * subspace. Use WRITE_ONCE() for the lockless flag update. The
++	 * ordered I/O accessor used to ring the doorbell orders this store
++	 * before the platform is notified.
++	 */
++	if (pchan->plat_irq > 0)
++		WRITE_ONCE(pchan->chan_in_use, true);
+ 	ret = pcc_chan_reg_read_modify_write(&pchan->db);
+-	if (!ret && pchan->plat_irq > 0)
+-		pchan->chan_in_use = true;
++	if (ret && pchan->plat_irq > 0)
++		WRITE_ONCE(pchan->chan_in_use, false);
  
- 	# cpus.exclusive.effective clearing test
--	" C0-3:S+ C1-3:S+  C2      .   X2-3:X    .      .      .     0 A1:0-3,A2:1-3,A3:2,XA1:"
-+	" C0-3:S+ C1-3:S+  C2      .   X2-3:X    .      .      .     0 A1:0-3|A2:1-3|A3:2|XA1:"
- 
- 	# Invalid to valid remote partition transition test
--	" C0-3:S+   C1-3    .      .      .    X3:P2    .      .     0 A1:0-3,A2:1-3,XA2: A2:P-2"
-+	" C0-3:S+   C1-3    .      .      .    X3:P2    .      .     0 A1:0-3|A2:1-3|XA2: A2:P-2"
- 	" C0-3:S+ C1-3:X3:P2
--			    .      .    X2-3    P2      .      .     0 A1:0-2,A2:3,XA2:3 A2:P2 3"
-+			    .      .    X2-3    P2      .      .     0 A1:0-2|A2:3|XA2:3 A2:P2 3"
- 
- 	# Invalid to valid local partition direct transition tests
--	" C1-3:S+:P2 X4:P2  .      .      .      .      .      .     0 A1:1-3,XA1:1-3,A2:1-3:XA2: A1:P2,A2:P-2 1-3"
--	" C1-3:S+:P2 X4:P2  .      .      .    X3:P2    .      .     0 A1:1-2,XA1:1-3,A2:3:XA2:3 A1:P2,A2:P2 1-3"
--	"  C0-3:P2   .      .    C4-6   C0-4     .      .      .     0 A1:0-4,B1:4-6 A1:P-2,B1:P0"
--	"  C0-3:P2   .      .    C4-6 C0-4:C0-3  .      .      .     0 A1:0-3,B1:4-6 A1:P2,B1:P0 0-3"
--	"  C0-3:P2   .      .  C3-5:C4-5  .      .      .      .     0 A1:0-3,B1:4-5 A1:P2,B1:P0 0-3"
-+	" C1-3:S+:P2 X4:P2  .      .      .      .      .      .     0 A1:1-3|XA1:1-3|A2:1-3:XA2: A1:P2|A2:P-2 1-3"
-+	" C1-3:S+:P2 X4:P2  .      .      .    X3:P2    .      .     0 A1:1-2|XA1:1-3|A2:3:XA2:3 A1:P2|A2:P2 1-3"
-+	"  C0-3:P2   .      .    C4-6   C0-4     .      .      .     0 A1:0-4|B1:4-6 A1:P-2|B1:P0"
-+	"  C0-3:P2   .      .    C4-6 C0-4:C0-3  .      .      .     0 A1:0-3|B1:4-6 A1:P2|B1:P0 0-3"
-+	"  C0-3:P2   .      .  C3-5:C4-5  .      .      .      .     0 A1:0-3|B1:4-5 A1:P2|B1:P0 0-3"
- 
- 	# Local partition invalidation tests
- 	" C0-3:X1-3:S+:P2 C1-3:X2-3:S+:P2 C2-3:X3:P2 \
--				   .      .      .      .      .     0 A1:1,A2:2,A3:3 A1:P2,A2:P2,A3:P2 1-3"
-+				   .      .      .      .      .     0 A1:1|A2:2|A3:3 A1:P2|A2:P2|A3:P2 1-3"
- 	" C0-3:X1-3:S+:P2 C1-3:X2-3:S+:P2 C2-3:X3:P2 \
--				   .      .     X4      .      .     0 A1:1-3,A2:1-3,A3:2-3,XA2:,XA3: A1:P2,A2:P-2,A3:P-2 1-3"
-+				   .      .     X4      .      .     0 A1:1-3|A2:1-3|A3:2-3|XA2:|XA3: A1:P2|A2:P-2|A3:P-2 1-3"
- 	" C0-3:X1-3:S+:P2 C1-3:X2-3:S+:P2 C2-3:X3:P2 \
--				   .      .    C4:X     .      .     0 A1:1-3,A2:1-3,A3:2-3,XA2:,XA3: A1:P2,A2:P-2,A3:P-2 1-3"
-+				   .      .    C4:X     .      .     0 A1:1-3|A2:1-3|A3:2-3|XA2:|XA3: A1:P2|A2:P-2|A3:P-2 1-3"
- 	# Local partition CPU change tests
--	" C0-5:S+:P2 C4-5:S+:P1 .  .      .    C3-5     .      .     0 A1:0-2,A2:3-5 A1:P2,A2:P1 0-2"
--	" C0-5:S+:P2 C4-5:S+:P1 .  .    C1-5     .      .      .     0 A1:1-3,A2:4-5 A1:P2,A2:P1 1-3"
-+	" C0-5:S+:P2 C4-5:S+:P1 .  .      .    C3-5     .      .     0 A1:0-2|A2:3-5 A1:P2|A2:P1 0-2"
-+	" C0-5:S+:P2 C4-5:S+:P1 .  .    C1-5     .      .      .     0 A1:1-3|A2:4-5 A1:P2|A2:P1 1-3"
- 
- 	# cpus_allowed/exclusive_cpus update tests
- 	" C0-3:X2-3:S+ C1-3:X2-3:S+ C2-3:X2-3 \
--				   .    X:C4     .      P2     .     0 A1:4,A2:4,XA2:,XA3:,A3:4 \
--								       A1:P0,A3:P-2"
-+				   .    X:C4     .      P2     .     0 A1:4|A2:4|XA2:|XA3:|A3:4 \
-+								       A1:P0|A3:P-2"
- 	" C0-3:X2-3:S+ C1-3:X2-3:S+ C2-3:X2-3 \
--				   .     X1      .      P2     .     0 A1:0-3,A2:1-3,XA1:1,XA2:,XA3:,A3:2-3 \
--								       A1:P0,A3:P-2"
-+				   .     X1      .      P2     .     0 A1:0-3|A2:1-3|XA1:1|XA2:|XA3:|A3:2-3 \
-+								       A1:P0|A3:P-2"
- 	" C0-3:X2-3:S+ C1-3:X2-3:S+ C2-3:X2-3 \
--				   .      .     X3      P2     .     0 A1:0-2,A2:1-2,XA2:3,XA3:3,A3:3 \
--								       A1:P0,A3:P2 3"
-+				   .      .     X3      P2     .     0 A1:0-2|A2:1-2|XA2:3|XA3:3|A3:3 \
-+								       A1:P0|A3:P2 3"
- 	" C0-3:X2-3:S+ C1-3:X2-3:S+ C2-3:X2-3:P2 \
--				   .      .     X3      .      .     0 A1:0-2,A2:1-2,XA2:3,XA3:3,A3:3,XA3:3 \
--								       A1:P0,A3:P2 3"
-+				   .      .     X3      .      .     0 A1:0-2|A2:1-2|XA2:3|XA3:3|A3:3|XA3:3 \
-+								       A1:P0|A3:P2 3"
- 	" C0-3:X2-3:S+ C1-3:X2-3:S+ C2-3:X2-3:P2 \
--				   .     X4      .      .      .     0 A1:0-3,A2:1-3,A3:2-3,XA1:4,XA2:,XA3 \
--								       A1:P0,A3:P-2"
-+				   .     X4      .      .      .     0 A1:0-3|A2:1-3|A3:2-3|XA1:4|XA2:|XA3 \
-+								       A1:P0|A3:P-2"
- 
- 	#  old-A1 old-A2 old-A3 old-B1 new-A1 new-A2 new-A3 new-B1 fail ECPUs Pstate ISOLCPUS
- 	#  ------ ------ ------ ------ ------ ------ ------ ------ ---- ----- ------ --------
-@@ -339,68 +339,68 @@ TEST_MATRIX=(
- 	#
- 	# Adding CPUs to partition root that are not in parent's
- 	# cpuset.cpus is allowed, but those extra CPUs are ignored.
--	"C2-3:P1:S+ C3:P1   .      .      .     C2-4    .      .     0 A1:,A2:2-3 A1:P1,A2:P1"
-+	"C2-3:P1:S+ C3:P1   .      .      .     C2-4    .      .     0 A1:|A2:2-3 A1:P1|A2:P1"
- 
- 	# Taking away all CPUs from parent or itself if there are tasks
- 	# will make the partition invalid.
--	"C2-3:P1:S+  C3:P1  .      .      T     C2-3    .      .     0 A1:2-3,A2:2-3 A1:P1,A2:P-1"
--	" C3:P1:S+    C3    .      .      T      P1     .      .     0 A1:3,A2:3 A1:P1,A2:P-1"
--	"$SETUP_A123_PARTITIONS    .    T:C2-3   .      .      .     0 A1:2-3,A2:2-3,A3:3 A1:P1,A2:P-1,A3:P-1"
--	"$SETUP_A123_PARTITIONS    . T:C2-3:C1-3 .      .      .     0 A1:1,A2:2,A3:3 A1:P1,A2:P1,A3:P1"
-+	"C2-3:P1:S+  C3:P1  .      .      T     C2-3    .      .     0 A1:2-3|A2:2-3 A1:P1|A2:P-1"
-+	" C3:P1:S+    C3    .      .      T      P1     .      .     0 A1:3|A2:3 A1:P1|A2:P-1"
-+	"$SETUP_A123_PARTITIONS    .    T:C2-3   .      .      .     0 A1:2-3|A2:2-3|A3:3 A1:P1|A2:P-1|A3:P-1"
-+	"$SETUP_A123_PARTITIONS    . T:C2-3:C1-3 .      .      .     0 A1:1|A2:2|A3:3 A1:P1|A2:P1|A3:P1"
- 
- 	# Changing a partition root to member makes child partitions invalid
--	"C2-3:P1:S+  C3:P1  .      .      P0     .      .      .     0 A1:2-3,A2:3 A1:P0,A2:P-1"
--	"$SETUP_A123_PARTITIONS    .     C2-3    P0     .      .     0 A1:2-3,A2:2-3,A3:3 A1:P1,A2:P0,A3:P-1"
-+	"C2-3:P1:S+  C3:P1  .      .      P0     .      .      .     0 A1:2-3|A2:3 A1:P0|A2:P-1"
-+	"$SETUP_A123_PARTITIONS    .     C2-3    P0     .      .     0 A1:2-3|A2:2-3|A3:3 A1:P1|A2:P0|A3:P-1"
- 
- 	# cpuset.cpus can contains cpus not in parent's cpuset.cpus as long
- 	# as they overlap.
--	"C2-3:P1:S+  .      .      .      .   C3-4:P1   .      .     0 A1:2,A2:3 A1:P1,A2:P1"
-+	"C2-3:P1:S+  .      .      .      .   C3-4:P1   .      .     0 A1:2|A2:3 A1:P1|A2:P1"
- 
- 	# Deletion of CPUs distributed to child cgroup is allowed.
--	"C0-1:P1:S+ C1      .    C2-3   C4-5     .      .      .     0 A1:4-5,A2:4-5"
-+	"C0-1:P1:S+ C1      .    C2-3   C4-5     .      .      .     0 A1:4-5|A2:4-5"
- 
- 	# To become a valid partition root, cpuset.cpus must overlap parent's
- 	# cpuset.cpus.
--	"  C0-1:P1   .      .    C2-3    S+   C4-5:P1   .      .     0 A1:0-1,A2:0-1 A1:P1,A2:P-1"
-+	"  C0-1:P1   .      .    C2-3    S+   C4-5:P1   .      .     0 A1:0-1|A2:0-1 A1:P1|A2:P-1"
- 
- 	# Enabling partition with child cpusets is allowed
--	"  C0-1:S+  C1      .    C2-3    P1      .      .      .     0 A1:0-1,A2:1 A1:P1"
-+	"  C0-1:S+  C1      .    C2-3    P1      .      .      .     0 A1:0-1|A2:1 A1:P1"
- 
--	# A partition root with non-partition root parent is invalid, but it
-+	# A partition root with non-partition root parent is invalid| but it
- 	# can be made valid if its parent becomes a partition root too.
--	"  C0-1:S+  C1      .    C2-3     .      P2     .      .     0 A1:0-1,A2:1 A1:P0,A2:P-2"
--	"  C0-1:S+ C1:P2    .    C2-3     P1     .      .      .     0 A1:0,A2:1 A1:P1,A2:P2"
-+	"  C0-1:S+  C1      .    C2-3     .      P2     .      .     0 A1:0-1|A2:1 A1:P0|A2:P-2"
-+	"  C0-1:S+ C1:P2    .    C2-3     P1     .      .      .     0 A1:0|A2:1 A1:P1|A2:P2"
- 
- 	# A non-exclusive cpuset.cpus change will invalidate partition and its siblings
--	"  C0-1:P1   .      .    C2-3   C0-2     .      .      .     0 A1:0-2,B1:2-3 A1:P-1,B1:P0"
--	"  C0-1:P1   .      .  P1:C2-3  C0-2     .      .      .     0 A1:0-2,B1:2-3 A1:P-1,B1:P-1"
--	"   C0-1     .      .  P1:C2-3  C0-2     .      .      .     0 A1:0-2,B1:2-3 A1:P0,B1:P-1"
-+	"  C0-1:P1   .      .    C2-3   C0-2     .      .      .     0 A1:0-2|B1:2-3 A1:P-1|B1:P0"
-+	"  C0-1:P1   .      .  P1:C2-3  C0-2     .      .      .     0 A1:0-2|B1:2-3 A1:P-1|B1:P-1"
-+	"   C0-1     .      .  P1:C2-3  C0-2     .      .      .     0 A1:0-2|B1:2-3 A1:P0|B1:P-1"
- 
- 	# cpuset.cpus can overlap with sibling cpuset.cpus.exclusive but not subsumed by it
--	"   C0-3     .      .    C4-5     X5     .      .      .     0 A1:0-3,B1:4-5"
-+	"   C0-3     .      .    C4-5     X5     .      .      .     0 A1:0-3|B1:4-5"
- 
- 	# Child partition root that try to take all CPUs from parent partition
- 	# with tasks will remain invalid.
--	" C1-4:P1:S+ P1     .      .       .     .      .      .     0 A1:1-4,A2:1-4 A1:P1,A2:P-1"
--	" C1-4:P1:S+ P1     .      .       .   C1-4     .      .     0 A1,A2:1-4 A1:P1,A2:P1"
--	" C1-4:P1:S+ P1     .      .       T   C1-4     .      .     0 A1:1-4,A2:1-4 A1:P1,A2:P-1"
-+	" C1-4:P1:S+ P1     .      .       .     .      .      .     0 A1:1-4|A2:1-4 A1:P1|A2:P-1"
-+	" C1-4:P1:S+ P1     .      .       .   C1-4     .      .     0 A1|A2:1-4 A1:P1|A2:P1"
-+	" C1-4:P1:S+ P1     .      .       T   C1-4     .      .     0 A1:1-4|A2:1-4 A1:P1|A2:P-1"
- 
- 	# Clearing of cpuset.cpus with a preset cpuset.cpus.exclusive shouldn't
- 	# affect cpuset.cpus.exclusive.effective.
--	" C1-4:X3:S+ C1:X3  .      .       .     C      .      .     0 A2:1-4,XA2:3"
-+	" C1-4:X3:S+ C1:X3  .      .       .     C      .      .     0 A2:1-4|XA2:3"
- 
- 	#  old-A1 old-A2 old-A3 old-B1 new-A1 new-A2 new-A3 new-B1 fail ECPUs Pstate ISOLCPUS
- 	#  ------ ------ ------ ------ ------ ------ ------ ------ ---- ----- ------ --------
- 	# Failure cases:
- 
- 	# A task cannot be added to a partition with no cpu
--	"C2-3:P1:S+  C3:P1  .      .    O2=0:T   .      .      .     1 A1:,A2:3 A1:P1,A2:P1"
-+	"C2-3:P1:S+  C3:P1  .      .    O2=0:T   .      .      .     1 A1:|A2:3 A1:P1|A2:P1"
- 
- 	# Changes to cpuset.cpus.exclusive that violate exclusivity rule is rejected
--	"   C0-3     .      .    C4-5   X0-3     .      .     X3-5   1 A1:0-3,B1:4-5"
-+	"   C0-3     .      .    C4-5   X0-3     .      .     X3-5   1 A1:0-3|B1:4-5"
- 
- 	# cpuset.cpus cannot be a subset of sibling cpuset.cpus.exclusive
--	"   C0-3     .      .    C4-5   X3-5     .      .      .     1 A1:0-3,B1:4-5"
-+	"   C0-3     .      .    C4-5   X3-5     .      .      .     1 A1:0-3|B1:4-5"
- )
- 
- #
-@@ -567,12 +567,12 @@ dump_states()
- 
- #
- # Check effective cpus
--# $1 - check string, format: <cgroup>:<cpu-list>[,<cgroup>:<cpu-list>]*
-+# $1 - check string, format: <cgroup>:<cpu-list>[|<cgroup>:<cpu-list>]*
- #
- check_effective_cpus()
- {
- 	CHK_STR=$1
--	for CHK in $(echo $CHK_STR | sed -e "s/,/ /g")
-+	for CHK in $(echo $CHK_STR | sed -e "s/|/ /g")
- 	do
- 		set -- $(echo $CHK | sed -e "s/:/ /g")
- 		CGRP=$1
-@@ -593,12 +593,12 @@ check_effective_cpus()
- 
- #
- # Check cgroup states
--#  $1 - check string, format: <cgroup>:<state>[,<cgroup>:<state>]*
-+#  $1 - check string, format: <cgroup>:<state>[|<cgroup>:<state>]*
- #
- check_cgroup_states()
- {
- 	CHK_STR=$1
--	for CHK in $(echo $CHK_STR | sed -e "s/,/ /g")
-+	for CHK in $(echo $CHK_STR | sed -e "s/|/ /g")
- 	do
- 		set -- $(echo $CHK | sed -e "s/:/ /g")
- 		CGRP=$1
-@@ -674,9 +674,9 @@ check_isolcpus()
- 	then
- 		EXPECT_VAL=
- 		EXPECT_VAL2=
--	elif [[ $(expr $EXPECT_VAL : ".*,.*") > 0 ]]
-+	elif [[ $(expr $EXPECT_VAL : ".*|.*") > 0 ]]
- 	then
--		set -- $(echo $EXPECT_VAL | sed -e "s/,/ /g")
-+		set -- $(echo $EXPECT_VAL | sed -e "s/|/ /g")
- 		EXPECT_VAL=$1
- 		EXPECT_VAL2=$2
- 	else
+ 	return ret;
+ }
 -- 
 2.53.0
 
