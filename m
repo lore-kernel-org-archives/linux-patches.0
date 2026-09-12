@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5B6F4F1;
-	Sat, 12 Sep 2026 16:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F3823A562;
+	Sat, 12 Sep 2026 16:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232155; cv=none; b=uLx+pjL8fEJqAljC0rGt5ZkBErMoo9he9yqcHz9/21atPvdXykFjmDjOb1Pj+N4YzneX6W/QvR63oqdq6lW2zitx2Kj06UX7qcXbClT40zx1Af8Ra/716a/yMxN+RSElUNwjJ/h35fAqCKkoZaKINyd3fZoH7zRCxOgvy9IV2FQ=
+	t=1789232159; cv=none; b=JENjLdSPRMUm/2W1De5wW2cl4xns5z5VzgAP8N7MSr0g6t133PgKaLor0gvFeMW7CNuuWvOLGUa3PiUjUD8JklKGTll7JxgerJIqdRH3ltgHaYdQ5bOJAha0249aVcB/8NcH98y3ah+EemBefvQcdpLusiZ728nNeFzFG7t3jAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232155; c=relaxed/simple;
-	bh=KWM0BmkD2x5USwb5dDFgdYbRyv35bf8hUi4BSePf2hA=;
+	s=arc-20240116; t=1789232159; c=relaxed/simple;
+	bh=JvO3DII1Sr37H40wkvBVOhZWKuXszRKX4miQTQT7Fq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aBFCmwl0CMNtiQogk6LHSC/ji/RfI2GuFrLaYFKwFcEifbyiawQpULhpiIo81JVMFTC/Fwz8fpF93bgkwNVDvde2WOQv11dQV36ge7naXNcE7spZsy4eyPszB2p51wWIvpqRJGF1R6/xBXrSVf9rcl+iKDUDg0eor376BzrkYUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3X9qKkO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E0a/BlGUAvIy/MYMdvgvu7kkvjRq4GJUHaXG79tRWeybzf19l2nLXYXlTy0hgPNIoIxU/ROBxYUG72cSuDL1EjHq8+A61sZqBRvsbkn+uo16ffxfpBr642t7KYY78YIp+R+W6cjoGcKKsj3jchfuKdT+mPkYUDlFEMsAkxQ9uhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQh0/amL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3X9qKkO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F78D1F000FF;
-	Sat, 12 Sep 2026 16:55:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQh0/amL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255451F000FF;
+	Sat, 12 Sep 2026 16:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232153;
-	bh=K1ilyGfAVptOrvQkLH1O1jI0Tefk1flyJF9/H0xPrKk=;
+	s=korg; t=1789232158;
+	bh=47ptUybdK7XgXJheqhhaNfolePn1uXO/nYvjgWEDm1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S3X9qKkOYhA8YT7zLaQetTC37NaYp1Dm2IUXx3Rw5pVLdMd9zA0JI8fVWIkGiVm4M
-	 Y+SCVIAtETwOd0WM64Sz6lST8h10xq5rbDTEZNXuHyJPs2p4T2x+k8ko/3cxTqUg6J
-	 wQ7m2SRLtcP5Nql5mMo0D+5iI9k12GyAnO7gwlkQ=
+	b=iQh0/amLKRnoo0kncRuqBLaWrHTgQefgTcZiLUnyx1vOUcs7PI4y7hpSWoDJTa8gC
+	 qvcykI60bNyQeO+Gv9M/4wppiN0UgBgKVaD8lKmsSAu20VyWq9qO4vA+uCuzzLYDDP
+	 sUU+GIbmS9HhvsIRb6zrQwE9KBkk/N1waWi36GCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1142/1191] perf/x86/amd/uncore: Fix the return value of amd_uncore_df_event_init() on error
-Date: Sat, 12 Sep 2026 09:04:30 +0200
-Message-ID: <20260912065613.801468852@linuxfoundation.org>
+Subject: [PATCH 6.1 1143/1191] nvme: target: rdma: fix ndev refcount leak on queue connect
+Date: Sat, 12 Sep 2026 09:04:31 +0200
+Message-ID: <20260912065613.822828814@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,48 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 01439286514ce9d13b8123f8ec3717d7135ff1d6 ]
+[ Upstream commit badc53620fe813b3a9f727ef9526f98567c2c898 ]
 
-If amd_uncore_event_init() fails, return an error irrespective of the
-pmu_version. Setting hwc->config should be safe even if there is an
-error so use this opportunity to simplify the code.
+nvmet_rdma_queue_connect() calls nvmet_rdma_find_get_device() which
+acquires a reference on the returned ndev via kref_get(). On the path
+where the host queue backlog is exceeded and the function returns
+NVME_SC_CONNECT_CTRL_BUSY, reference of ndev is not released, leaking
+the kref.
 
-Closes: https://lore.kernel.org/all/aTaI0ci3vZ44lmBn@stanley.mountain/
+Fix this by adding a goto to the existing put_device label before the
+early return.
 
-Fixes: d6389d3ccc13 ("perf/x86/amd/uncore: Refactor uncore management")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
+Fixes: 31deaeb11ba7 ("nvmet-rdma: avoid circular locking dependency on install_queue()")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/076935e23a70335d33bd6e23308b75ae0ad35ba2.1765268667.git.sandipan.das@amd.com
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/uncore.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/nvme/target/rdma.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
-index cc84ed9cc63af..33ccd42328207 100644
---- a/arch/x86/events/amd/uncore.c
-+++ b/arch/x86/events/amd/uncore.c
-@@ -546,14 +546,11 @@ static int amd_uncore_df_event_init(struct perf_event *event)
- 	struct hw_perf_event *hwc = &event->hw;
- 	int ret = amd_uncore_event_init(event);
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index 0533effc15e22..aa87f5f6158d6 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -1626,8 +1626,10 @@ static int nvmet_rdma_queue_connect(struct rdma_cm_id *cm_id,
+ 				pending++;
+ 		}
+ 		mutex_unlock(&nvmet_rdma_queue_mutex);
+-		if (pending > NVMET_RDMA_BACKLOG)
+-			return NVME_SC_CONNECT_CTRL_BUSY;
++		if (pending > NVMET_RDMA_BACKLOG) {
++			ret = NVME_SC_CONNECT_CTRL_BUSY;
++			goto put_device;
++		}
+ 	}
  
--	if (ret || pmu_version < 2)
--		return ret;
--
- 	hwc->config = event->attr.config &
- 		      (pmu_version >= 2 ? AMD64_PERFMON_V2_RAW_EVENT_MASK_NB :
- 					  AMD64_RAW_EVENT_MASK_NB);
- 
--	return 0;
-+	return ret;
- }
- 
- static int amd_uncore_df_add(struct perf_event *event, int flags)
+ 	ret = nvmet_rdma_cm_accept(cm_id, queue, &event->param.conn);
 -- 
 2.53.0
 
