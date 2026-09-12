@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8126247A0D1;
-	Sat, 12 Sep 2026 11:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DF147A868;
+	Sat, 12 Sep 2026 11:51:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213880; cv=none; b=DiBkYui+dq89nm8KKUNADU4DnxgIA+9RFM6RfZ0OxilrA0TZGKIPlAbt8EYpIFGsreafKGreHjM+fao5U2DU5+pcTYzsDf9RMUz3AdcCqcoM14cw2ULbbBU/9T+Cyk6PhbrJvDv7hkpjNKBPtWubETaOpoczubcQnoGyDSOjlSA=
+	t=1789213888; cv=none; b=ZmYKAVsw7tLrRLGhMk05uoUMlqMBrskQ5ypUos9IhrqqBPbCNDuy4id+6R8pLLcvcyDNV9HLpcP3oR2L07XMMByA6BRVif71o2vKK3Ar/ggKaIydNUW0FDXR0ng6+yRZ70ad9XThj7Eh/PF+oPOLyXLVY5EHoffyW6+TsjDM95Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213880; c=relaxed/simple;
-	bh=3Ed5xN6nzhCauO+YFXveG1azuj5KoemCGUqVPBLbiQM=;
+	s=arc-20240116; t=1789213888; c=relaxed/simple;
+	bh=HmXBtLcP3zI+QgY0gzgx4OD9b3e2QdH/TZ7E78LAtQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QdtWMcvZjVQ1Por6L7kgtBpbWBL5g+2C2yqPrmZcNo8fddWlAWv5NVVpnn/XVfbm42H9xHGrZhJCIWfjyB+DdmtUbiioMIbX0KWlMl8UgCVYM9eR5vVauFshATVwxDMbfWP9qMZS25I6a5LHiTEU9dPgJ+5Df0CL7qimamFu6x0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CpEu6zcC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RYGhySufKoKB9XRTG3Oy7GFUkwuFAJOf6mR63t4/IMMJdeLNEFu+evAXndGHXsc1Wmwd7ARib4rueJRbD+WmxLow/g1+gD0i1OR1ImLOi5MnJfNou5qAN/suRcY/SLRqYxRnEsxPOcz8uQCtsnXmKloYDNfdSy8xC5YXNfAfkII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BpbA6z2X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CpEu6zcC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6B41F000FF;
-	Sat, 12 Sep 2026 11:51:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BpbA6z2X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E6981F000FF;
+	Sat, 12 Sep 2026 11:51:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213879;
-	bh=TqgYwT86nQ2uaRa6LRea/lYd1kgCYE5pIbqgag5/YxA=;
+	s=korg; t=1789213884;
+	bh=rVOarXr1kXuOVsvwiJuu19z1h/ftIrb44zNzhYwCH+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CpEu6zcCXsuZ/mgerdCRLrIEj9j7u4xmuo6lTI/IfdMxk3znQwLiub4KnXTJig5As
-	 9Lj05GpTL5MjAOQHB392p7J+4PbSS1wKH8Q1tl4+qbVjw6bDQDTkDvMRI2wTxgEriz
-	 1UyKRa5/Gevc/KfeYjeL7CwGkAjqwBtYbBkLGQ2Y=
+	b=BpbA6z2Xgw3TAJvry2zY6M9+VmdzpDJ9iQkXBqPDWTAbPb9mJAnJVBqULgQFt6jRp
+	 J1ufLqXOpiR7AAG6UCS4w+ASEIQJIDyDMSr370U23zpS83RWM/wLe14rSp1dlTcZZn
+	 iKDrquWwrDQfDaxW54NrLj4XgzZXh6FYToYBNx+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@oss.nxp.com>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 0212/1376] media: v4l2-ctrls: Allow unknown HDR10 white point and luminance
-Date: Sat, 12 Sep 2026 08:43:58 +0200
-Message-ID: <20260912065612.273530943@linuxfoundation.org>
+Subject: [PATCH 6.12 0186/1376] media: cedrus: fix memory leak in cedrus_init_ctrls()
+Date: Sat, 12 Sep 2026 08:43:32 +0200
+Message-ID: <20260912065611.696916787@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,127 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 49af0c7cad889f7dabe5cf080b019392066122a3 upstream.
+commit 9df2fbe563194da1967a5db083442186c1323efe upstream.
 
-SMPTE ST 2086 defines the nominal ranges for mastering display
-chromaticity and luminance values. Its Annex A also documents that
-CTA 861-G uses zero maximum and minimum luminance values to signal
-that the corresponding values are unknown, and the xy chromaticity
-coordinate (0, 0) to signal that the white point chromaticity is
-unknown.
+In cedrus_init_ctrls(), the V4L2 control handler is initialized before
+allocating memory for ctx->ctrls. If this allocation fails, the function
+returns -ENOMEM without freeing the previously allocated handler
+resources, leading to a memory leak.
 
-The V4L2 HDR10 mastering display compound control currently rejects
-these values. Consequently, an unknown white point or luminance value
-prevents the entire compound control from being updated, making the
-other valid mastering display metadata unavailable to userspace.
+Fix this by calling v4l2_ctrl_handler_free() on the ctx->ctrls allocation
+failure path.
 
-Accept (0, 0) as an unknown white point and zero as an unknown maximum
-or minimum mastering luminance. Continue to reject partially zero white
-point coordinates and non-zero values outside the nominal ranges.
-Display primary validation remains unchanged.
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1.1.
 
-Document the newly accepted unknown values in the V4L2 userspace API.
+An x86_64 allyesconfig build showed no new warnings. As we do not have an
+Allwinner SoC or board with a Cedrus VPU available to test with, no
+runtime testing was able to be performed.
 
-Fixes: 1ad0de78e794 ("media: v4l: Add HDR10 static metadata controls")
+Fixes: 50e761516f2b ("media: platform: Add Cedrus VPU decoder driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst |   12 ++
- drivers/media/v4l2-core/v4l2-ctrls-core.c                       |   49 ++++++----
- 2 files changed, 44 insertions(+), 17 deletions(-)
+ drivers/staging/media/sunxi/cedrus/cedrus.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
-+++ b/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
-@@ -79,15 +79,25 @@ Colorimetry Control IDs
-       - ``white_point_x``
-       - Specifies the normalized x chromaticity coordinate of the white
-         point of the mastering display in increments of 0.00002.
-+        When both ``white_point_x`` and ``white_point_y`` are zero,
-+        the white point chromaticity is unknown. If either coordinate is
-+        non-zero, both coordinates shall be within their valid ranges.
-     * - __u16
-       - ``white_point_y``
-       - Specifies the normalized y chromaticity coordinate of the white
-         point of the mastering display in increments of 0.00002.
-+        When both ``white_point_x`` and ``white_point_y`` are zero,
-+        the white point chromaticity is unknown. If either coordinate is
-+        non-zero, both coordinates shall be within their valid ranges.
-     * - __u32
-       - ``max_luminance``
-       - Specifies the nominal maximum display luminance of the mastering
-         display in units of 0.0001 cd/m\ :sup:`2`.
-+        A value of zero indicates that the nominal maximum display
-+        luminance is unknown.
-     * - __u32
-       - ``min_luminance``
--      - specifies the nominal minimum display luminance of the mastering
-+      - Specifies the nominal minimum display luminance of the mastering
-         display in units of 0.0001 cd/m\ :sup:`2`.
-+        A value of zero indicates that the nominal minimum display
-+        luminance is unknown.
---- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
-@@ -1133,24 +1133,41 @@ static int std_validate_compound(const s
- 				return -EINVAL;
- 		}
+--- a/drivers/staging/media/sunxi/cedrus/cedrus.c
++++ b/drivers/staging/media/sunxi/cedrus/cedrus.c
+@@ -285,8 +285,10 @@ static int cedrus_init_ctrls(struct cedr
+ 	ctrl_size = sizeof(ctrl) * CEDRUS_CONTROLS_COUNT + 1;
  
--		if (p_hdr10_mastering->white_point_x <
--			V4L2_HDR10_MASTERING_WHITE_POINT_X_LOW ||
--		    p_hdr10_mastering->white_point_x >
--			V4L2_HDR10_MASTERING_WHITE_POINT_X_HIGH ||
--		    p_hdr10_mastering->white_point_y <
--			V4L2_HDR10_MASTERING_WHITE_POINT_Y_LOW ||
--		    p_hdr10_mastering->white_point_y >
--			V4L2_HDR10_MASTERING_WHITE_POINT_Y_HIGH)
-+		/*
-+		 * SMPTE ST 2086 Annex A documents that CTA 861-G uses
-+		 * (0, 0) to indicate that the white point chromaticity
-+		 * is unknown.
-+		 */
-+		if (p_hdr10_mastering->white_point_x ||
-+		    p_hdr10_mastering->white_point_y) {
-+			if (p_hdr10_mastering->white_point_x <
-+				V4L2_HDR10_MASTERING_WHITE_POINT_X_LOW ||
-+			    p_hdr10_mastering->white_point_x >
-+				V4L2_HDR10_MASTERING_WHITE_POINT_X_HIGH ||
-+			    p_hdr10_mastering->white_point_y <
-+				V4L2_HDR10_MASTERING_WHITE_POINT_Y_LOW ||
-+			    p_hdr10_mastering->white_point_y >
-+				V4L2_HDR10_MASTERING_WHITE_POINT_Y_HIGH)
-+				return -EINVAL;
-+		}
-+
-+		/*
-+		 * SMPTE ST 2086 Annex A documents that CTA 861-G uses zero
-+		 * maximum and minimum luminance values to indicate that
-+		 * the corresponding values are unknown.
-+		 */
-+		if (p_hdr10_mastering->max_display_mastering_luminance &&
-+		    (p_hdr10_mastering->max_display_mastering_luminance <
-+				V4L2_HDR10_MASTERING_MAX_LUMA_LOW ||
-+		     p_hdr10_mastering->max_display_mastering_luminance >
-+				V4L2_HDR10_MASTERING_MAX_LUMA_HIGH))
- 			return -EINVAL;
+ 	ctx->ctrls = kzalloc(ctrl_size, GFP_KERNEL);
+-	if (!ctx->ctrls)
++	if (!ctx->ctrls) {
++		v4l2_ctrl_handler_free(hdl);
+ 		return -ENOMEM;
++	}
  
--		if (p_hdr10_mastering->max_display_mastering_luminance <
--			V4L2_HDR10_MASTERING_MAX_LUMA_LOW ||
--		    p_hdr10_mastering->max_display_mastering_luminance >
--			V4L2_HDR10_MASTERING_MAX_LUMA_HIGH ||
--		    p_hdr10_mastering->min_display_mastering_luminance <
--			V4L2_HDR10_MASTERING_MIN_LUMA_LOW ||
--		    p_hdr10_mastering->min_display_mastering_luminance >
--			V4L2_HDR10_MASTERING_MIN_LUMA_HIGH)
-+		if (p_hdr10_mastering->min_display_mastering_luminance &&
-+		    (p_hdr10_mastering->min_display_mastering_luminance <
-+				V4L2_HDR10_MASTERING_MIN_LUMA_LOW ||
-+		     p_hdr10_mastering->min_display_mastering_luminance >
-+				V4L2_HDR10_MASTERING_MIN_LUMA_HIGH))
- 			return -EINVAL;
- 
- 		/* The following restriction comes from ITU-T Rec. H.265 spec */
+ 	j = 0;
+ 	for (i = 0; i < CEDRUS_CONTROLS_COUNT; i++) {
 
 
