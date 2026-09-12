@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD04C37F31F;
-	Sat, 12 Sep 2026 12:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2E5373BF2;
+	Sat, 12 Sep 2026 12:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216816; cv=none; b=YIqYTjzHwStogsy2wYVJJltH/r20+FMXpFH6Dq2kfyh54suL61R64RWv+phDZTRa13fT/5C8DE4cj/EKvafXNqP3zw2AdPyWUhN8jZj/wEjpjxRkuGpVNEMBbdulQbjQQdELWbX7l0niteo8Y6RA1xhjlsbL9cvHlCRB+OA2Ppc=
+	t=1789216820; cv=none; b=on8uRlTG+nc4ybkz6Qo714XtB8DaRUxWqB/6LMSkp6UrT1Wy3idJPW4jN20doHGQlJTIPUEFgC+gmum+6YL+6fAm7K9UZdUzw0z941BTZj1f4XAnAUZt5sFoVtlQ7G/ka2UbFpOUYh8F0pc0lK0ViXKtbsvOpLGN/rMF/iRodkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216816; c=relaxed/simple;
-	bh=iFy2QhqN6yTOy3zcySG4FxK7Cs+nrOeeL1hKTt1l7EM=;
+	s=arc-20240116; t=1789216820; c=relaxed/simple;
+	bh=TowEHWrf5dhhLzDyGoIvfjVgXp4feA56DZr1kRsSU6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OFqyegDhOhKEidi/yhwAWXOFzh1AThvsEE6CNu6zVgcV3XRDpwKDf0inYiTvvtK7RbaLgoaf8+TBSsym56RDIYbzsqoIgodFzRN7mNd3g2cfGEOZxLgK+2jWwjlUmx6TL6YjlHMjc3uhniGLOmra+zkw6JFe6TwMHDTW1tQP/yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crfC4a8G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CMtISE+3gQPJiScrHau/TMqp5JlnierR90rif1FOOvdZjwmwx3tfdIY/we4uhA6o9Z16tAU1dVoNngmfVyW3nHTbSNfx0RHuBYFEfQLwj8JxdB7NyrW93lbMXh9P7ObLOwYvhyHUi57K5+NhQbOBd4pJ4AJFf2msLaB9ayZbUUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0zUBWcsn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crfC4a8G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32401F000FF;
-	Sat, 12 Sep 2026 12:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0zUBWcsn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E24A1F000FF;
+	Sat, 12 Sep 2026 12:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216813;
-	bh=TEKcpB8+kcMW3JYPxdvtpYRd1YF6jbTQvoIYDg9FqAg=;
+	s=korg; t=1789216818;
+	bh=6KMzpZEFzWlcpr+8YusfWMSENQfpznhX57GlZKSDGY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=crfC4a8Gas1CTRPk+Cw1/9SZC48uN9dp3oY36ovdPzLX+5gol+AxUDhXZqDSWBot/
-	 E/x5JjQo133/A3mfAXRboBdVCPTj4Yj1xhqJgIDKsriL++DveMyQNVGYMcBzuGAlRv
-	 LjThrms3a1cdvO0E4L4TeszRZBjhLELke4sk9vh4=
+	b=0zUBWcsnk6XXn1keeWkO89g9AtBagx5DPn5N2RyvmUQ3vtNgk2XNEPVlPhAQPnVoh
+	 t3lzgLqx24imrgF3x1wrIuxUS0ajvb8LlYq3SDNPZH/3ECWgbl3J/lza+6KYUwkb0j
+	 T58lPNwLiWLHCBcyyrdkMBzOZkm0aS5eC0LvS9NE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0813/1376] wifi: mt76: mt7915: write RX header translation bit to the correct register
-Date: Sat, 12 Sep 2026 08:53:59 +0200
-Message-ID: <20260912065625.662034334@linuxfoundation.org>
+Subject: [PATCH 6.12 0814/1376] wifi: mt76: fix stranded frames in mt76_txq_schedule_pending
+Date: Sat, 12 Sep 2026 08:54:00 +0200
+Message-ID: <20260912065625.684739895@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,35 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 236145737480c4c0c515e09061d0d5f77cf52d3f ]
+[ Upstream commit 422dd2db28ae27c35a586acd9ad482f30000c090 ]
 
-MT_MDP_DCR0_RX_HDR_TRANS_EN is a field of MT_MDP_DCR0, but monitor-mode
-handling applied it to the per-band MT_DMA_DCR0 register instead. As a
-result RX header translation was never disabled in the MDP when entering
-monitor mode, and an undocumented bit of MT_DMA_DCR0 was toggled. Target
-MT_MDP_DCR0, matching the mt7996 driver.
+A wcid is added to phy->tx_list whenever either tx_pending or
+tx_offchannel becomes non-empty, but the requeue check after a partial
+schedule required BOTH queues to be non-empty. When
+mt76_txq_schedule_pending_wcid() returns -1 (queue stopped or
+MT76_RESET) it leaves frames in tx_pending while tx_offchannel is empty,
+so the wcid is dropped from every scheduling list and its frames stall
+until the next mt76_tx() for that wcid or wcid cleanup. This strands
+EAPOL/mgmt/nullfunc frames under momentary queue-full or across
+scan/channel-switch, causing association and 4-way-handshake timeouts.
 
-Fixes: b2491018587a ("wifi: mt76: mt7915: fix monitor mode issues")
-Link: https://patch.msgid.link/20260722082610.2699628-11-nbd@nbd.name
+Requeue when either queue still holds frames, matching the enqueue
+condition.
+
+Fixes: 0b3be9d1d34e ("wifi: mt76: add separate tx scheduling queue for off-channel tx")
+Link: https://patch.msgid.link/20260722082610.2699628-14-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/tx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-index 4875f51472ed8..529926c287bce 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-@@ -490,7 +490,7 @@ static int mt7915_config(struct ieee80211_hw *hw, u32 changed)
+diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
+index 1184357d933d2..1a5acb2bcfb3e 100644
+--- a/drivers/net/wireless/mediatek/mt76/tx.c
++++ b/drivers/net/wireless/mediatek/mt76/tx.c
+@@ -664,8 +664,8 @@ static void mt76_txq_schedule_pending(struct mt76_phy *phy)
+ 			ret = mt76_txq_schedule_pending_wcid(phy, wcid, &wcid->tx_pending);
+ 		spin_lock(&phy->tx_lock);
  
- 		mt76_rmw_field(dev, MT_DMA_DCR0(band), MT_DMA_DCR0_RXD_G5_EN,
- 			       enabled);
--		mt76_rmw_field(dev, MT_DMA_DCR0(band), MT_MDP_DCR0_RX_HDR_TRANS_EN,
-+		mt76_rmw_field(dev, MT_MDP_DCR0, MT_MDP_DCR0_RX_HDR_TRANS_EN,
- 			       !dev->monitor_mask);
- 		mt76_testmode_reset(phy->mt76, true);
- 		mt76_wr(dev, MT_WF_RFCR(band), rxfilter);
+-		if (!skb_queue_empty(&wcid->tx_pending) &&
+-		    !skb_queue_empty(&wcid->tx_offchannel) &&
++		if ((!skb_queue_empty(&wcid->tx_pending) ||
++		     !skb_queue_empty(&wcid->tx_offchannel)) &&
+ 		    list_empty(&wcid->tx_list))
+ 			list_add_tail(&wcid->tx_list, &phy->tx_list);
+ 	}
 -- 
 2.53.0
 
