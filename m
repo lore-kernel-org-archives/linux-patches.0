@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1DA371887;
-	Sat, 12 Sep 2026 10:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864B441F344;
+	Sat, 12 Sep 2026 10:14:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208092; cv=none; b=j6MEQcGeua2Wa5NHXRBH87zgA40TT8lu3qm6LWFHE6Qymv49Basm3u7wDcafw17CromL4u7Mg5HSWZplQ9AzL2GurE+EOP1/Yad+syXEi8hVj54b98z/hLuaJVTcEe0R2ndS0IqdwUOp3T1YUmsmeGFzqY0CpR19i0YPgHVFbJQ=
+	t=1789208098; cv=none; b=e9JJywrbWgJ2nwkGyoRWjTi2prALumjO281RjzLvBC8bDHYex3BcIKhAfrRJ20wDjuKksXTNfAoJQ/svnIs1oRtQ+xT90oqjUNz0kVpBNd/Jb7p0xvDEprI7hGStVymlhosT+Uw2pEuNZXUXYVDP1EuARLKGe/E+hBn6I+x5JEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208092; c=relaxed/simple;
-	bh=6e9pE4RvXKRmlVeMlsCFNO3dwYkOBPBw1W3MU8OQVsI=;
+	s=arc-20240116; t=1789208098; c=relaxed/simple;
+	bh=K7XuAnWfQJ6IScAdTzZlOtaN62SXlGDNgt/XiU52AbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YKqsWD5/Q2BOu4ZhfjbtUMlzEkejxyB/779nt/7z0yThmFwjqUV/GKDBlpZ5Ti2ap5CT2aP8TISwWTs/Jc0q1pzDVKvP/dJ/5reJ3puCrhQhq6zoMz58hl5v5kwTPOGMMpM1Qtizb2yHIpprButHpALG4CMcmV6OBPLk1RGjde4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TY1dxray; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NqUBGtIMHomiaNOGdiwJM4yozaeascWfk4uQGQgu2vddCK78oSknjOV17B65kPnP7SfmLvwLgg58+OrbKPGtY0GqG0O6EF4vPR97p6aK2dyv17CE/6799bH5wOjasLXBxafExVMiTjkkni3kJmuA7GBisK0yIjCh6+LQ4lvh/lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDvhWAca; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TY1dxray"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12511F000FF;
-	Sat, 12 Sep 2026 10:14:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDvhWAca"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C81D1F000FF;
+	Sat, 12 Sep 2026 10:14:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208091;
-	bh=tM6qOzifkeUBYq/DoUVaioXzj+xqWIkhpCBrfK0g0Gs=;
+	s=korg; t=1789208096;
+	bh=xdfwAFPgO9xJnfMZAnbFjffi3gDhlV85k9xVditNM/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TY1dxray+wh96fZyUHey4n8m0TIcLy/Nnqx8oHXW3czD/OliNOSFVmZJw0nzCvhnH
-	 xR2JcZ2qSv4tFWmGIaiLluSG85sqEvr0m+HgRCMFya/1nk5bqaIpN3tEPH+k0Qc5za
-	 esrZrPmcCX6VhqwKgfd0xArQ2t9Qr1zl+/+vUpog=
+	b=pDvhWAcandpooUiaQbEYSNCVTI9Cp0+W9i13pw+hjXOH8o8lau5dUenE7lBpLMZSv
+	 p5eouGMJADpBjDnPkjW4mMOv4JcrBcjWysthGX/P3hlbw2aIhBpWAMrTWwOaseCjap
+	 W5/tccPoleQsDiqSZVt+8BV4NiKZHgdzLY10/I+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
 	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0545/1518] cpufreq/amd-pstate: Use sysfs_match_string() for epp
-Date: Sat, 12 Sep 2026 08:45:14 +0200
-Message-ID: <20260912065635.771281354@linuxfoundation.org>
+Subject: [PATCH 6.18 0546/1518] amd-pstate: Make certain freq_attrs conditionally visible
+Date: Sat, 12 Sep 2026 08:45:15 +0200
+Message-ID: <20260912065635.793692052@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,70 +51,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Gautham R. Shenoy <gautham.shenoy@amd.com>
 
-[ Upstream commit 7e17f48667b6707593fc215cbe025157920934f1 ]
+[ Upstream commit e67a5b6541831bbf1c40b6042a867a4594ec6b55 ]
 
-Rather than scanning the buffer and manually matching the string
-use the sysfs macros.
+Certain amd_pstate freq_attrs such as amd_pstate_hw_prefcore and
+amd_pstate_prefcore_ranking are enabled even when preferred core is
+not supported on the platform.
 
-Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Similarly there are common freq_attrs between the amd-pstate and the
+amd-pstate-epp drivers (eg: amd_pstate_max_freq,
+amd_pstate_lowest_nonlinear_freq, etc.) but are duplicated in two
+different freq_attr structs.
+
+Unify all the attributes in a single place and associate each of them
+with a visibility function that determines whether the attribute
+should be visible based on the underlying platform support and the
+current amd_pstate mode.
+
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
 Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Stable-dep-of: 57476909c300 ("cpufreq/amd-pstate: Fix EPP return type and handle errors during initialization")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ drivers/cpufreq/amd-pstate.c | 124 ++++++++++++++++++++++++++---------
+ 1 file changed, 93 insertions(+), 31 deletions(-)
 
 diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index ce6d6b3ff58a3..6a7621b776831 100644
+index 6a7621b776831..6ba3d4e4951a0 100644
 --- a/drivers/cpufreq/amd-pstate.c
 +++ b/drivers/cpufreq/amd-pstate.c
-@@ -118,7 +118,6 @@ static const char * const energy_perf_strings[] = {
- 	[EPP_INDEX_BALANCE_PERFORMANCE] = "balance_performance",
- 	[EPP_INDEX_BALANCE_POWERSAVE] = "balance_power",
- 	[EPP_INDEX_POWERSAVE] = "power",
--	NULL
+@@ -1203,12 +1203,87 @@ static ssize_t show_energy_performance_preference(
+ 	return sysfs_emit(buf, "%s\n", energy_perf_strings[preference]);
+ }
+ 
++cpufreq_freq_attr_ro(amd_pstate_max_freq);
++cpufreq_freq_attr_ro(amd_pstate_lowest_nonlinear_freq);
++
++cpufreq_freq_attr_ro(amd_pstate_highest_perf);
++cpufreq_freq_attr_ro(amd_pstate_prefcore_ranking);
++cpufreq_freq_attr_ro(amd_pstate_hw_prefcore);
++cpufreq_freq_attr_rw(energy_performance_preference);
++cpufreq_freq_attr_ro(energy_performance_available_preferences);
++
++struct freq_attr_visibility {
++	struct freq_attr *attr;
++	bool (*visibility_fn)(void);
++};
++
++/* For attributes which are always visible */
++static bool always_visible(void)
++{
++	return true;
++}
++
++/* Determines whether prefcore related attributes should be visible */
++static bool prefcore_visibility(void)
++{
++	return amd_pstate_prefcore;
++}
++
++/* Determines whether energy performance preference should be visible */
++static bool epp_visibility(void)
++{
++	return cppc_state == AMD_PSTATE_ACTIVE;
++}
++
++static struct freq_attr_visibility amd_pstate_attr_visibility[] = {
++	{&amd_pstate_max_freq, always_visible},
++	{&amd_pstate_lowest_nonlinear_freq, always_visible},
++	{&amd_pstate_highest_perf, always_visible},
++	{&amd_pstate_prefcore_ranking, prefcore_visibility},
++	{&amd_pstate_hw_prefcore, prefcore_visibility},
++	{&energy_performance_preference, epp_visibility},
++	{&energy_performance_available_preferences, epp_visibility},
++};
++
++static struct freq_attr **get_freq_attrs(void)
++{
++	bool attr_visible[ARRAY_SIZE(amd_pstate_attr_visibility)];
++	struct freq_attr **attrs;
++	int i, j, count;
++
++	for (i = 0, count = 0; i < ARRAY_SIZE(amd_pstate_attr_visibility); i++) {
++		struct freq_attr_visibility *v = &amd_pstate_attr_visibility[i];
++
++		attr_visible[i] = v->visibility_fn();
++		if (attr_visible[i])
++			count++;
++	}
++
++	/* amd_pstate_{max_freq, lowest_nonlinear_freq, highest_perf} should always be visible */
++	BUG_ON(!count);
++
++	attrs = kcalloc(count + 1, sizeof(struct freq_attr *), GFP_KERNEL);
++	if (!attrs)
++		return ERR_PTR(-ENOMEM);
++
++	for (i = 0, j = 0; i < ARRAY_SIZE(amd_pstate_attr_visibility); i++) {
++		if (!attr_visible[i])
++			continue;
++
++		attrs[j++] = amd_pstate_attr_visibility[i].attr;
++	}
++
++	return attrs;
++}
++
+ static void amd_pstate_driver_cleanup(void)
+ {
+ 	if (amd_pstate_prefcore)
+ 		sched_clear_itmt_support();
+ 
+ 	cppc_state = AMD_PSTATE_DISABLE;
++	kfree(current_pstate_driver->attr);
++	current_pstate_driver->attr = NULL;
+ 	current_pstate_driver = NULL;
+ }
+ 
+@@ -1233,6 +1308,7 @@ static int amd_pstate_set_driver(int mode_idx)
+ 
+ static int amd_pstate_register_driver(int mode)
+ {
++	struct freq_attr **attr = NULL;
+ 	int ret;
+ 
+ 	ret = amd_pstate_set_driver(mode);
+@@ -1241,6 +1317,22 @@ static int amd_pstate_register_driver(int mode)
+ 
+ 	cppc_state = mode;
+ 
++	/*
++	 * Note: It is important to compute the attrs _after_
++	 * re-initializing the cppc_state.  Some attributes become
++	 * visible only when cppc_state is AMD_PSTATE_ACTIVE.
++	 */
++	attr = get_freq_attrs();
++	if (IS_ERR(attr)) {
++		ret = (int) PTR_ERR(attr);
++		pr_err("Couldn't compute freq_attrs for current mode %s [%d]\n",
++			amd_pstate_get_mode_string(cppc_state), ret);
++		amd_pstate_driver_cleanup();
++		return ret;
++	}
++
++	current_pstate_driver->attr = attr;
++
+ 	/* at least one CPU supports CPB */
+ 	current_pstate_driver->boost_enabled = cpu_feature_enabled(X86_FEATURE_CPB);
+ 
+@@ -1383,37 +1475,9 @@ static ssize_t prefcore_show(struct device *dev,
+ 	return sysfs_emit(buf, "%s\n", str_enabled_disabled(amd_pstate_prefcore));
+ }
+ 
+-cpufreq_freq_attr_ro(amd_pstate_max_freq);
+-cpufreq_freq_attr_ro(amd_pstate_lowest_nonlinear_freq);
+-
+-cpufreq_freq_attr_ro(amd_pstate_highest_perf);
+-cpufreq_freq_attr_ro(amd_pstate_prefcore_ranking);
+-cpufreq_freq_attr_ro(amd_pstate_hw_prefcore);
+-cpufreq_freq_attr_rw(energy_performance_preference);
+-cpufreq_freq_attr_ro(energy_performance_available_preferences);
+ static DEVICE_ATTR_RW(status);
+ static DEVICE_ATTR_RO(prefcore);
+ 
+-static struct freq_attr *amd_pstate_attr[] = {
+-	&amd_pstate_max_freq,
+-	&amd_pstate_lowest_nonlinear_freq,
+-	&amd_pstate_highest_perf,
+-	&amd_pstate_prefcore_ranking,
+-	&amd_pstate_hw_prefcore,
+-	NULL,
+-};
+-
+-static struct freq_attr *amd_pstate_epp_attr[] = {
+-	&amd_pstate_max_freq,
+-	&amd_pstate_lowest_nonlinear_freq,
+-	&amd_pstate_highest_perf,
+-	&amd_pstate_prefcore_ranking,
+-	&amd_pstate_hw_prefcore,
+-	&energy_performance_preference,
+-	&energy_performance_available_preferences,
+-	NULL,
+-};
+-
+ static struct attribute *pstate_global_attributes[] = {
+ 	&dev_attr_status.attr,
+ 	&dev_attr_prefcore.attr,
+@@ -1680,7 +1744,6 @@ static struct cpufreq_driver amd_pstate_driver = {
+ 	.set_boost	= amd_pstate_set_boost,
+ 	.update_limits	= amd_pstate_update_limits,
+ 	.name		= "amd-pstate",
+-	.attr		= amd_pstate_attr,
  };
  
- static unsigned int epp_values[] = {
-@@ -1135,16 +1134,15 @@ static ssize_t show_amd_pstate_hw_prefcore(struct cpufreq_policy *policy,
- static ssize_t show_energy_performance_available_preferences(
- 				struct cpufreq_policy *policy, char *buf)
- {
--	int i = 0;
--	int offset = 0;
-+	int offset = 0, i;
- 	struct amd_cpudata *cpudata = policy->driver_data;
+ static struct cpufreq_driver amd_pstate_epp_driver = {
+@@ -1696,7 +1759,6 @@ static struct cpufreq_driver amd_pstate_epp_driver = {
+ 	.update_limits	= amd_pstate_update_limits,
+ 	.set_boost	= amd_pstate_set_boost,
+ 	.name		= "amd-pstate-epp",
+-	.attr		= amd_pstate_epp_attr,
+ };
  
- 	if (cpudata->policy == CPUFREQ_POLICY_PERFORMANCE)
- 		return sysfs_emit_at(buf, offset, "%s\n",
- 				energy_perf_strings[EPP_INDEX_PERFORMANCE]);
+ /*
+@@ -1842,7 +1904,7 @@ static int __init amd_pstate_init(void)
+ 	return ret;
  
--	while (energy_perf_strings[i] != NULL)
--		offset += sysfs_emit_at(buf, offset, "%s ", energy_perf_strings[i++]);
-+	for (i = 0; i < ARRAY_SIZE(energy_perf_strings); i++)
-+		offset += sysfs_emit_at(buf, offset, "%s ", energy_perf_strings[i]);
- 
- 	offset += sysfs_emit_at(buf, offset, "\n");
- 
-@@ -1155,15 +1153,10 @@ static ssize_t store_energy_performance_preference(
- 		struct cpufreq_policy *policy, const char *buf, size_t count)
- {
- 	struct amd_cpudata *cpudata = policy->driver_data;
--	char str_preference[21];
- 	ssize_t ret;
- 	u8 epp;
- 
--	ret = sscanf(buf, "%20s", str_preference);
--	if (ret != 1)
--		return -EINVAL;
--
--	ret = match_string(energy_perf_strings, -1, str_preference);
-+	ret = sysfs_match_string(energy_perf_strings, buf);
- 	if (ret < 0)
- 		return -EINVAL;
- 
+ global_attr_free:
+-	cpufreq_unregister_driver(current_pstate_driver);
++	amd_pstate_unregister_driver(0);
+ 	return ret;
+ }
+ device_initcall(amd_pstate_init);
 -- 
 2.53.0
 
