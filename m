@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A988228B517;
-	Sat, 12 Sep 2026 08:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A842128B517;
+	Sat, 12 Sep 2026 08:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200430; cv=none; b=dxFcHiQvEubpKCK/2BJ6Wg+KfUme8pK2ddinECUoVDn/ffH1LWRhyhNO5wUv48LuvSmbizy3fiSQAUhtthTjcFtwO401rbLaGh9o0KayN8FGb0F1Pug2AvciolbAfkkeYwP981LleKKjNYzeu8obJ+x0BHFIztGl1eRf5/oMUn4=
+	t=1789200434; cv=none; b=N0fRK/kyeEEdrSILHKelKQYy8OTE+sRilpZ4lPxx5NCkrMuEBPuLzyAKN1jHCYwucAGvhagOE6k7B5rQnzXX0i5rcEkW6ThZfSu8QSa7gxZhX7xyafA4DhbptDDutU7d0IOvfmbEO2vBfroCj0oKMe+x+sdauCjwB4ozC679hAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200430; c=relaxed/simple;
-	bh=jmJvy6gyQeF4kMtoEdWbun/csN1s4EvMHxF4o1B/238=;
+	s=arc-20240116; t=1789200434; c=relaxed/simple;
+	bh=bPbG1mN4iA6xeS76dLQoDlIQq881y2sBD1tI4KOm9tM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T70VnAwV/MUVEIJZ9zYftbqHSYpHYu0ZmJvNqW3S/9bvmiDPb//6nT7MolPii5u+vHep6wpzugIdtxnW9sk4kzmjja5CNzRgvHHxKYkIfjyNYtkqYGBDbN50q5j3YUHZLILOzQ5oNfabMmM+Aq/jmtZKZTBGtUyjbMoMGVKJlWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mAwET4xi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K3U3GIhVFncnQ1FNB2eRm9ehu1W5ucKF5xYtWi92VaMm+SHcQhQVuizDYW5erLQeJFV6mnprRiYtU5CedM2iXS2PeF+axRWUSo9E/SouONPW8y1teP/8IWgYawv0CuTwvFOrwv5Kj8kM0rudJEOyjgNeomAarAcqRsNxgJkWQTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TpyeytHH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mAwET4xi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4C71F000FF;
-	Sat, 12 Sep 2026 08:07:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TpyeytHH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F1CB1F000FF;
+	Sat, 12 Sep 2026 08:07:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200428;
-	bh=1pFzPcjDMqCj3fEqTUEu79zdDfeUCdMSFLCzQ8Ftbc8=;
+	s=korg; t=1789200433;
+	bh=ANWlprkYczc3AsRS01ZIrAdSbZyPlODVP0LjT9IRAAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mAwET4xictsuz7hNZX+JE/C1ITAM3F4mb0jj3pL4CjPpuJ/jy94U+NAFtyz+540cX
-	 +SuSWiOhIbsF9+gqVj8mMKKyPtunhmsH/6zOGYkgp6rKDUkyiGlUaOCSa1bNgdV5AC
-	 XphtSgS3MjKwsc/DKToQM3Q8kTF4i9/dW+x5pW/c=
+	b=TpyeytHHPGOjS3+q4UzLxy8Jrf5pmuV4Fa0SzY3iGEzYF5xjr23ztcJDk+SHqPprK
+	 UivpainBLO0QAe6IEUo6zAjvOw8L3eU0xFgZByXciHN8U9z+gYeE7Bjiy0Fj0TV+8L
+	 rxFhySkHqi0UqNjSSFvK/AE55s+Ee2fK9pOxY2Og=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0789/1815] firmware: qcom: scm: Fix NULL dereference in IRQ handler before __scm is published
-Date: Sat, 12 Sep 2026 08:42:19 +0200
-Message-ID: <20260912065707.430801578@linuxfoundation.org>
+Subject: [PATCH 7.2 0790/1815] firmware: qcom: scm: Fix reserved memory cleanup on probe failure
+Date: Sat, 12 Sep 2026 08:42:20 +0200
+Message-ID: <20260912065707.456764807@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,128 +55,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit 966d23c7e68ea32679275a7e3d2383181002c868 ]
+[ Upstream commit b697b20cea4374d27e2134da4bb7b0ea39f36c8b ]
 
-In qcom_scm_probe(), devm_request_threaded_irq() is called before
-smp_store_release(&__scm, scm). Two paths can dereference __scm before
-it is published, both causing a NULL pointer dereference.
+of_reserved_mem_device_init() adds an entry to a global list with no
+devres counterpart. If qcom_scm_probe() fails after the call the
+assignment is never cleaned up. A probe retry would add a duplicate
+entry, leaking the original one permanently.
 
-The IRQ handler receives scm via its data argument but passes only wq_ctx
-to qcom_scm_waitq_wakeup() and qcom_scm_get_completion(), which then
-dereference __scm directly. Thread scm through both functions so the IRQ
-handler path never touches __scm.
+Add an err_rmem label that calls of_reserved_mem_device_release() and
+route all error paths after of_reserved_mem_device_init() through it.
+of_reserved_mem_device_release() is safe to call unconditionally as it
+simply walks an empty list when nothing was assigned.
 
-Non-atomic SMC calls made during probe (e.g. from qcom_tzmem_init via
-qcom_scm_shm_bridge_enable) can return WAITQ_SLEEP, causing
-qcom_scm_wait_for_wq_completion() to run before __scm is published and
-dereference it. Add platform_set_drvdata(pdev, scm) early in probe and
-change qcom_scm_wait_for_wq_completion() to take the device pointer and
-use dev_get_drvdata() to reach scm, removing any dependency on __scm.
-
-Fixes: 6bf325992236 ("firmware: qcom: scm: Add wait-queue handling logic")
+Fixes: a33b2579c8d3 ("firmware: qcom: scm: add support for SHM bridge memory carveout")
 Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260724094939.613844-2-mukesh.ojha@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260724094939.613844-3-mukesh.ojha@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom/qcom_scm-smc.c |  2 +-
- drivers/firmware/qcom/qcom_scm.c     | 22 ++++++++++------------
- drivers/firmware/qcom/qcom_scm.h     |  2 +-
- 3 files changed, 12 insertions(+), 14 deletions(-)
+ drivers/firmware/qcom/qcom_scm.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/firmware/qcom/qcom_scm-smc.c b/drivers/firmware/qcom/qcom_scm-smc.c
-index 01999c22659cb..127365ab11fc2 100644
---- a/drivers/firmware/qcom/qcom_scm-smc.c
-+++ b/drivers/firmware/qcom/qcom_scm-smc.c
-@@ -111,7 +111,7 @@ static int __scm_smc_do_quirk_handle_waitq(struct device *dev, struct arm_smccc_
- 			smc_call_ctx = res->a2;
- 
- 			trace_scm_waitq_sleep(wq_ctx, smc_call_ctx);
--			ret = qcom_scm_wait_for_wq_completion(wq_ctx);
-+			ret = qcom_scm_wait_for_wq_completion(dev, wq_ctx);
- 			if (ret)
- 				return ret;
- 
 diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 6b601a4b89dbf..464ae3b4ca43d 100644
+index 464ae3b4ca43d..26bf87247afa1 100644
 --- a/drivers/firmware/qcom/qcom_scm.c
 +++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -2630,23 +2630,20 @@ static int qcom_scm_get_waitq_irq(struct qcom_scm *scm)
- 	return irq_create_fwspec_mapping(&fwspec);
- }
+@@ -2785,9 +2785,11 @@ static int qcom_scm_probe(struct platform_device *pdev)
+ 				     "Failed to setup the reserved memory region for TZ mem\n");
  
--static struct completion *qcom_scm_get_completion(u32 wq_ctx)
-+static struct completion *qcom_scm_get_completion(struct qcom_scm *scm, u32 wq_ctx)
- {
--	struct completion *wq;
--
--	if (WARN_ON_ONCE(wq_ctx >= __scm->wq_cnt))
-+	if (WARN_ON_ONCE(wq_ctx >= scm->wq_cnt))
- 		return ERR_PTR(-EINVAL);
+ 	ret = qcom_tzmem_enable(scm->dev);
+-	if (ret)
+-		return dev_err_probe(scm->dev, ret,
+-				     "Failed to enable the TrustZone memory allocator\n");
++	if (ret) {
++		ret = dev_err_probe(scm->dev, ret,
++				    "Failed to enable the TrustZone memory allocator\n");
++		goto err_rmem;
++	}
  
--	wq = &__scm->waitq_comps[wq_ctx];
--
--	return wq;
-+	return &scm->waitq_comps[wq_ctx];
- }
+ 	memset(&pool_config, 0, sizeof(pool_config));
+ 	pool_config.initial_size = 0;
+@@ -2795,9 +2797,11 @@ static int qcom_scm_probe(struct platform_device *pdev)
+ 	pool_config.max_size = SZ_256K;
  
--int qcom_scm_wait_for_wq_completion(u32 wq_ctx)
-+int qcom_scm_wait_for_wq_completion(struct device *dev, u32 wq_ctx)
- {
-+	struct qcom_scm *scm = dev_get_drvdata(dev);
- 	struct completion *wq;
+ 	scm->mempool = devm_qcom_tzmem_pool_new(scm->dev, &pool_config);
+-	if (IS_ERR(scm->mempool))
+-		return dev_err_probe(scm->dev, PTR_ERR(scm->mempool),
+-				     "Failed to create the SCM memory pool\n");
++	if (IS_ERR(scm->mempool)) {
++		ret = dev_err_probe(scm->dev, PTR_ERR(scm->mempool),
++				    "Failed to create the SCM memory pool\n");
++		goto err_rmem;
++	}
  
--	wq = qcom_scm_get_completion(wq_ctx);
-+	wq = qcom_scm_get_completion(scm, wq_ctx);
- 	if (IS_ERR(wq))
- 		return PTR_ERR(wq);
+ 	ret = qcom_scm_query_waitq_count(scm);
+ 	scm->wq_cnt = ret < 0 ? QCOM_SCM_DEFAULT_WAITQ_COUNT : ret;
+@@ -2868,6 +2872,10 @@ static int qcom_scm_probe(struct platform_device *pdev)
+ 	qcom_scm_gunyah_wdt_init(scm);
  
-@@ -2655,11 +2652,11 @@ int qcom_scm_wait_for_wq_completion(u32 wq_ctx)
  	return 0;
++
++err_rmem:
++	of_reserved_mem_device_release(scm->dev);
++	return ret;
  }
  
--static int qcom_scm_waitq_wakeup(unsigned int wq_ctx)
-+static int qcom_scm_waitq_wakeup(struct qcom_scm *scm, unsigned int wq_ctx)
- {
- 	struct completion *wq;
- 
--	wq = qcom_scm_get_completion(wq_ctx);
-+	wq = qcom_scm_get_completion(scm, wq_ctx);
- 	if (IS_ERR(wq))
- 		return PTR_ERR(wq);
- 
-@@ -2686,7 +2683,7 @@ static irqreturn_t qcom_scm_irq_handler(int irq, void *data)
- 			goto out;
- 		}
- 
--		ret = qcom_scm_waitq_wakeup(wq_ctx);
-+		ret = qcom_scm_waitq_wakeup(scm, wq_ctx);
- 		if (ret)
- 			goto out;
- 	} while (more_pending);
-@@ -2746,6 +2743,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	scm->dev = &pdev->dev;
-+	platform_set_drvdata(pdev, scm);
- 	ret = qcom_scm_find_dload_address(&pdev->dev, &scm->dload_mode_addr);
- 	if (ret < 0)
- 		return ret;
-diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
-index caab80a73e17f..cf90a565fdfbd 100644
---- a/drivers/firmware/qcom/qcom_scm.h
-+++ b/drivers/firmware/qcom/qcom_scm.h
-@@ -66,7 +66,7 @@ struct qcom_scm_res {
- 	u64 result[MAX_QCOM_SCM_RETS];
- };
- 
--int qcom_scm_wait_for_wq_completion(u32 wq_ctx);
-+int qcom_scm_wait_for_wq_completion(struct device *dev, u32 wq_ctx);
- int scm_get_wq_ctx(u32 *wq_ctx, u32 *flags, u32 *more_pending);
- 
- #define SCM_SMC_FNID(s, c)	((((s) & 0xFF) << 8) | ((c) & 0xFF))
+ static void qcom_scm_shutdown(struct platform_device *pdev)
 -- 
 2.53.0
 
