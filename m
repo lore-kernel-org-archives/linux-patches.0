@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E13F4582FF;
-	Sat, 12 Sep 2026 10:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D69E457E49;
+	Sat, 12 Sep 2026 10:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210049; cv=none; b=AAwS2XUC2n+AAe/9SoiRvL6gsaPjR21d3IPKMLVFTUv+qzRPhp3m8VD8dd08uTVBIqPbkN4Z2Wb5FBejMcL0II1hI5MSWha8dwKomEgDLODjtXsX9/nCTjt9sLBT0wAfosoCoVl7f/he+enL8RfS7NAAbzebg3LlDcCdD4mCcNM=
+	t=1789210051; cv=none; b=X70M5+9/62DhWOoilKeFytHxQTOW+b04bVSqklSu4D8/S5qb90jX9V2zhcyzOAynqxJFnrl0vja3VNYRM356k3snBw/jXjy+pzB1iHZhaYKoqS6ZYz6biMLYzAeTCyNNSpbBnDbNmdfsYbTxBGBb+sbqOjYmGB7SH8dvx6Ro+rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210049; c=relaxed/simple;
-	bh=0x4b9G78NfEsgDnn5XHptLq65mCaUf5mtZ4vHA0eMdw=;
+	s=arc-20240116; t=1789210051; c=relaxed/simple;
+	bh=EMXyTON1cEy7QViWLVlKqqA6BXXJ2ah7CkWCan5buPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rnhm4Syt+40tjKNx7UZeU5und4Gv6PgR21XMQfgfRRTSnzg1Udd8re8tRGOmQPqsWPZ9ddv7j/K5DHiGW5gR3W8A+IkZ4UDOnswI+WUvX35EaXEQd5yFDm6t4nR9ENdEiv1nntv1ekOziSJwUOhrOITXd8WQeA8jCBTmShYYjFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ErYyXww7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V1/h9KtSTzrxZ6oEvhtj12oKpkE2j5fOAFUs4ziSbuX8edGhL1/rHqPn8EYHE8CKyTGsYI9zCiiTxAckhi5Vk/eQpPsIp1JZJNJqE70B3IuVteX0/4a6WH0xRkul+GfSc4qQOhhzEzprT8Gm3LfGtcaevK3GpXwhbDRYmvQg/Xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NRFzX3Kn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ErYyXww7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC321F000FF;
-	Sat, 12 Sep 2026 10:47:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NRFzX3Kn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED66F1F00893;
+	Sat, 12 Sep 2026 10:47:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210045;
-	bh=bHPAeLrU7HrBRW224UCtrQuRdfuN98TR4kJnMzWtRmg=;
+	s=korg; t=1789210049;
+	bh=mLDBqLG2pvYygMw7UlK5k+YizztB8ZLlKv9Depgjfqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ErYyXww7Fur+C02VjoG3wU5GBbPw7xSy0MfFpoIax9VVvLQVcLQI3ORrl77UKnTF3
-	 RZAQ9ydDRlqZNvw6Ve7t3v5duNgHNUWetJy0urHV0YnXO33X1aAxcN7YIvsYPgSwDG
-	 5GYZX0RIPPd/yftx3wI1oN8mJ/k+J5JeHnfZzLrI=
+	b=NRFzX3KnMoektbVpdYT1XW4Vk5CJU8QQhUU7lPm5IaJlwSC4kdSfbsghhc8LVnpeM
+	 y5rdYJ0i3IObNXjXftqYrOMxSAYq8ANjdA+o9GzMnnlINCSHMscRl1oWL+MCncNQmR
+	 IE4J1jxpyEeIkj2jzHfN9i0zLXG/NJdFpGUN+0ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Vinod Koul <vkoul@kernel.org>,
+	Dylan Zueck <dzueck@uci.edu>,
+	Yuan Tan <ytan089@ucr.edu>,
+	Priya Bala Govindasamy <pgovind2@uci.edu>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0946/1518] phy: sunplus: fix error handling in sp_uphy_init()
-Date: Sat, 12 Sep 2026 08:51:55 +0200
-Message-ID: <20260912065644.855942396@linuxfoundation.org>
+Subject: [PATCH 6.18 0920/1518] rust: cpufreq: Fix temporary write in Registration::bios_limit_callback
+Date: Sat, 12 Sep 2026 08:51:29 +0200
+Message-ID: <20260912065644.262254180@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,52 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Priya Bala Govindasamy <pgovind2@uci.edu>
 
-[ Upstream commit 8b2683bc4cc18c581b7cd24f227cbe61abca7f4d ]
+[ Upstream commit 19c76bdd3fc02475c73c8576f6f4a55ff07886f1 ]
 
-Fix the error paths of sp_uphy_init() to undo exactly what each stage
-did: return directly if clk_prepare_enable() fails, release only the clock
-if reset_control_deassert() fails, and jump to err_reset if
-update_disc_vol() fails so the clock and reset are not leaked.
+In `Registration::bios_limit_callback`, the expression
+`&mut (unsafe { *limit })` creates a reference to a temporary copy
+of the value pointed to by `limit` on the stack.
+Therefore, writes made by `T::bios_limit` go to this temporary
+instead of the memory location pointed to by `limit`.
 
-Fixes: 99d9ccd97385 ("phy: usb: Add USB2.0 phy driver for Sunplus SP7021")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Link: https://patch.msgid.link/20260803-sunplus-usb3-v1-1-5a562524c869@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Additionally, `limit` may be uninitialized, such as when
+`Registration::bios_limit_callback` is invoked by `show_bios_limit`
+in drivers/cpufreq/cpufreq.c. Therefore creating a reference to
+`limit` is unsound.
+
+Fix this by changing the signature of `T::bios_limit` to return the limit
+value.
+`Registration::bios_limit_callback` can then update `limit` directly.
+
+Fixes: c6af9a1191d042839e56abff69e8b0302d117988 ("rust: cpufreq: Extend abstractions for driver registration")
+Reported-by: Dylan Zueck<dzueck@uci.edu>
+Reported-by: Yuan Tan<ytan089@ucr.edu>
+Assisted-by: ChatGPT:gpt-5.4
+Signed-off-by: Priya Bala Govindasamy<pgovind2@uci.edu>
+[ Viresh: Fix rustfmtcheck warning ]
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/sunplus/phy-sunplus-usb2.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ rust/kernel/cpufreq.rs | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/phy/sunplus/phy-sunplus-usb2.c b/drivers/phy/sunplus/phy-sunplus-usb2.c
-index 637a5fbae6d9a..0ad4c7160d17c 100644
---- a/drivers/phy/sunplus/phy-sunplus-usb2.c
-+++ b/drivers/phy/sunplus/phy-sunplus-usb2.c
-@@ -116,11 +116,11 @@ static int sp_uphy_init(struct phy *phy)
+diff --git a/rust/kernel/cpufreq.rs b/rust/kernel/cpufreq.rs
+index ccf22811c9f6c..1c378350f7ea1 100644
+--- a/rust/kernel/cpufreq.rs
++++ b/rust/kernel/cpufreq.rs
+@@ -821,7 +821,9 @@ pub trait Driver {
+     }
  
- 	ret = clk_prepare_enable(usbphy->phy_clk);
- 	if (ret)
--		goto err_clk;
-+		return ret;
+     /// Driver's `bios_limit` callback.
+-    fn bios_limit(_policy: &mut Policy, _limit: &mut u32) -> Result {
++    ///
++    /// Returns HW/BIOS max frequency limitations for the CPU.
++    fn bios_limit(_policy: &mut Policy) -> Result<u32> {
+         build_error!(VTABLE_DEFAULT_ERROR)
+     }
  
- 	ret = reset_control_deassert(usbphy->rstc);
- 	if (ret)
--		goto err_reset;
-+		goto err_clk;
+@@ -1356,9 +1358,12 @@ impl<T: Driver> Registration<T> {
  
- 	/* Default value modification */
- 	writel(HIGH_MASK_BITS | 0x4002, usbphy->moon4_regs + UPHY_CONTROL0);
-@@ -129,7 +129,7 @@ static int sp_uphy_init(struct phy *phy)
- 	/* disconnect voltage */
- 	ret = update_disc_vol(usbphy);
- 	if (ret < 0)
--		return ret;
-+		goto err_reset;
+         from_result(|| {
+             let mut policy = PolicyCpu::from_cpu(cpu_id)?;
+-
++            let val = T::bios_limit(&mut policy)?;
+             // SAFETY: `limit` is guaranteed by the C code to be valid.
+-            T::bios_limit(&mut policy, &mut (unsafe { *limit })).map(|()| 0)
++            unsafe {
++                *limit = val;
++            }
++            Ok(0)
+         })
+     }
  
- 	/* board uphy 0 internal register modification for tid certification */
- 	val = readl(usbphy->phy_regs + CONFIG9);
 -- 
 2.53.0
 
