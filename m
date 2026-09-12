@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4837433F59A;
-	Sat, 12 Sep 2026 12:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3171233F59A;
+	Sat, 12 Sep 2026 12:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215150; cv=none; b=pOblNSOFkYlZC4RswXYNlUEUUUusoPMVisZzl0p+2kg1iRU/X4jN4jJb2YaJcu8R7qosO33h0Ikh+zM2HplGRHc8MAyHycWD7spAzTlmSBF8k9MVgw1c7b8V9uQafYBgqw4x7Zb48noSYmqU2DNcshnKgIH1noMktyBzYN6T5R0=
+	t=1789215155; cv=none; b=JvF4xWEl6S+rtHgqjyNBClkhQ1rIN5UAr4U+Z4OXCvL6rXW0iSfx3kSJPuuxYJBgEfoO5C9AGLyHTIuSZ9w77zdf5S9Gig5zI3dqU0bJN12Acqu+n4OTMKOYNR1a3Hi6Gb+kDZoDXMSZZ/rEoTqMm9yvGjAhqRimwD4YMvCz8yM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215150; c=relaxed/simple;
-	bh=b5OoAUXRznVeWeZN+UFARmmLq9h+qJEAlGgWSZI1IJg=;
+	s=arc-20240116; t=1789215155; c=relaxed/simple;
+	bh=JBFOrCb/JT9ScjJk8T0fhh9eYJP42ty7jP2+L1tk2gI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nSDSaMNLSqt9NlLyddekj+eB2Vtfzs6eMbCU5QL9VSAnAEzekDlb6UjvZO79gVKtx1JQ/sFJO0bu9HV67jAEQZlsYC4bO6+/gHXW57njE0AGtNNGo9/KeV9/sLdMpiigJj+p5+4899Bd3Zf+gbtgMappz7jrm76hGbZ/e07U7wY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKBhPJNS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=shBzsjoj8CUKVC3bT6+H8cKSI4pYjp/TbKw91NxJBl9yvFslQQN+bXrbobYyQcBT9RCVVGL+N3K3z9A9c07YcrplvLYtlgaGt5L4YBsrPh5Avmj09nDv658WfmnsA1RJp6WAFRra1Di+Jbo5/0fq9urpMnnv0suCvntrns1ku/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvkKtdzH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKBhPJNS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019A81F000FF;
-	Sat, 12 Sep 2026 12:12:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvkKtdzH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377461F000FF;
+	Sat, 12 Sep 2026 12:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215149;
-	bh=ISZp2ekpgb9cV5y4VFWV1cv9/66igW4cvKMv35U3H0c=;
+	s=korg; t=1789215154;
+	bh=zwqNneSCRFk5hd6Ih0Ya+Tz1BmwtZvxp8VPin0dwTA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WKBhPJNSFc000HRokhpgFGRBcL77MyzlTrqWwzfn1UEJr6vn3TG8m1YWkmrJZ+sXI
-	 S0ikrEjjjXfWChnYZRo1u0aEfzA4d5khQODXmS5H+uk6yF05h9cs/izFPjQcKiv7a/
-	 TICIk1rP3kGc19JzK+mHw5+vaMG3l6RA6AjYyGvI=
+	b=XvkKtdzHss3RMB5X60+oIiw1e26BqKHQ48Te0X47AV7MlPvC52dVDGuFea1zuAarZ
+	 qAicHucsqf0eLSlVCCeCTHI+1oKUwJSc3NjiTXK060Uf/yKfZTLJ8FkuJ/Y3YdIwmd
+	 CjiSsv6XO1fiVPl/cXXc8MVfN4otgrjejjzwiQUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Dan Carpenter <error27@gmail.com>,
+	Ahmet Sezgin Duran <ahmet@sezginduran.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0430/1376] staging: rtl8723bs: fix mismatched free of HalData in rtw_sdio_if1_init()
-Date: Sat, 12 Sep 2026 08:47:36 +0200
-Message-ID: <20260912065617.118230412@linuxfoundation.org>
+Subject: [PATCH 6.12 0421/1376] staging: sm750fb: gate dualview dataflow using g_dualview
+Date: Sat, 12 Sep 2026 08:47:27 +0200
+Message-ID: <20260912065616.919793008@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,51 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Ahmet Sezgin Duran <ahmet@sezginduran.net>
 
-[ Upstream commit 264676418b726baca7be49171e306b6aa05cceb0 ]
+[ Upstream commit d352778979d2eed09e266ed0f3a5e3ccd3983940 ]
 
-padapter->HalData is allocated via vzalloc(), but incorrectly freed
-using kfree() in the rtw_sdio_if1_init() error path. Using kfree() to
-release this vmalloc-backed buffer can lead to memory corruption.
+In sm750fb_setup and sm750fb_set_drv functions, the dualview
+related code is guarded by `sm750_dev->fb_count > 1` condition.
+That value is updated only after each framebuffer is registered,
+while both guards are used before any increment.
 
-Use rtw_hal_data_deinit() to pair the free correctly and free
-HalData with vfree().
+Current flow:
 
-The bug was first flagged by an experimental static analysis tool we
-are developing for kernel memory-management bugs. Manual inspection
-confirms that the issue is still present in current mainline.
+  lynxfb_pci_probe()
+    sm750fb_setup()                 // fb_count is 0
+    for each fb:
+      sm750fb_framebuffer_alloc()
+        lynxfb_set_fbinfo()
+          sm750fb_set_drv()         // fb_count is 0 or 1
+        register_framebuffer()
+        sm750_dev->fb_count++;      // fb_count is incremented
 
-An x86_64 allyesconfig build showed no new warnings. As we do not have
-suitable RTL8723BS SDIO hardware to test with, no runtime testing was
-able to be performed.
+Thus even if `dualview=1` parameter is passed down to the driver,
+fb_count is never > 1 at either check, so dualview dataflows are
+not selected and crtc->vidmem_size is never halved.
 
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Link: https://patch.msgid.link/20260525091836.812565-1-dawei.feng@seu.edu.cn
+Use `g_dualview` global variable instead of fb_count > 1 to correctly
+enable dualview capabilities.
+
+Fixes: a3f92cc94c61 ("staging: sm750fb: replace dual member of sm750_dev with fb_count")
+Signed-off-by: Ahmet Sezgin Duran <ahmet@sezginduran.net>
+Link: https://patch.msgid.link/20260521204425.82627-1-ahmet@sezginduran.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/os_dep/sdio_intf.c | 4 ++--
+ drivers/staging/sm750fb/sm750.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-index d64998be6b2bb..c9a90d5293b02 100644
---- a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-+++ b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-@@ -309,8 +309,8 @@ static struct adapter *rtw_sdio_if1_init(struct dvobj_priv *dvobj, const struct
- 	status = _SUCCESS;
+diff --git a/drivers/staging/sm750fb/sm750.c b/drivers/staging/sm750fb/sm750.c
+index 94a83ec342827..1452edab96cc9 100644
+--- a/drivers/staging/sm750fb/sm750.c
++++ b/drivers/staging/sm750fb/sm750.c
+@@ -599,7 +599,7 @@ static int sm750fb_set_drv(struct lynxfb_par *par)
+ 	crtc = &par->crtc;
  
- free_hal_data:
--	if (status != _SUCCESS && padapter->HalData)
--		kfree(padapter->HalData);
-+	if (status != _SUCCESS)
-+		rtw_hal_data_deinit(padapter);
+ 	crtc->vidmem_size = sm750_dev->vidmem_size;
+-	if (sm750_dev->fb_count > 1)
++	if (g_dualview)
+ 		crtc->vidmem_size >>= 1;
  
- 	if (status != _SUCCESS) {
- 		rtw_wdev_unregister(padapter->rtw_wdev);
+ 	/* setup crtc and output member */
+@@ -966,7 +966,7 @@ static void sm750fb_setup(struct sm750_dev *sm750_dev, char *src)
+ 
+ NO_PARAM:
+ 	if (sm750_dev->revid != SM750LE_REVISION_ID) {
+-		if (sm750_dev->fb_count > 1) {
++		if (g_dualview) {
+ 			if (swap)
+ 				sm750_dev->dataflow = sm750_dual_swap;
+ 			else
 -- 
 2.53.0
 
