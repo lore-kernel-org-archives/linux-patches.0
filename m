@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4543093A6;
-	Sat, 12 Sep 2026 14:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD6433F368;
+	Sat, 12 Sep 2026 14:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223449; cv=none; b=Bn68oHsynn2RkAugq/y7S3OeHfcmcDaGsTt4qfC/qTR/OEb0qq9DCVyAqOBg2FQUxe21ZIv4eqFuQO74qPDg1I4ss/bmlzpcxX7+1HzvgJnBL4f3iFC7ReqYsqjD6MAgARsZCXryTBe58U7S84NdHqPPVMOnnbKBSZoWfY5Vny0=
+	t=1789223454; cv=none; b=SAxJi1T6VbSsCdVbUDkVNMkVB9Q2hj23zyxZy+YiBcBDEaksLuM1ytUpAvwBYVJ1NGXEtXctf53akD37NkO26tNtFclGvKUgb8MHtzOIr3R3oLEYEWCC2lH9Ea32wn5O2/hiHxZTVO3moHHpGNkgrGBayHF5pV1zKSc+WfYiEBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223449; c=relaxed/simple;
-	bh=G7mN6bQFgdMVSQxt5V3YzqjiHZSQkcF7dNK+pVKWhBI=;
+	s=arc-20240116; t=1789223454; c=relaxed/simple;
+	bh=qsTg7n4wsCW4BjDNE9cL0jriwVAehad1kTvK/bV/cAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a7Yr57P216S6fIy/qZWHMMeQE6k5eZQ3P6nljdQuY7SSya+C6+jWlvAu21obh5rnq5ud1/1LdBHlH++aSM3cIN3kPZ1iIO/ajK4J/FEs6Qf41Ll8rb1AAgKm5NVT7om6dpRxbTrRlJ60EbwZGZftimEgm7yDsaZkHmcyk3HI7Ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=psiG9bdy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fgZ6P6vWKHEGBd1bxo6FbSzphV5neTnw1ryRc0yhvxgL+dIT7ZwjDZZrvtWznYCYyuRJ8qbDvZCIhrfjT+yRDfSM9LQyG7hFhHtbo8tguuR84kGt1JAWTeSSEJZPAhLNF4F+UN7eoBEbfFPPpYsOUddw657tC6mNTcjlYFZImuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/0koE9c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="psiG9bdy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593E71F000FF;
-	Sat, 12 Sep 2026 14:30:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/0koE9c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BD51F000FF;
+	Sat, 12 Sep 2026 14:30:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223448;
-	bh=3RnyR80r4YO796CeDpiQn+EG7wwB2FDAP9fji9Eknac=;
+	s=korg; t=1789223453;
+	bh=m1KKxHcVjDvh0OVjgpYyQWm0w5IanPaxOJ/w8skNdKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=psiG9bdyS/YaN8aMQtS3IrRh8Y4J4uXDqkbr9jD9QtwEg7Hyx5oY1/OghO9du3Qq7
-	 KO5zxg3vkLwrJotYhnLR5f/E1Mfnfj05decCtXrQ27+9pnbqRFT2D9ML9vK9In89Qp
-	 wNp5Q5CGHFcNiLU0wWMypqzlBPKftz3X/e6QbLzE=
+	b=S/0koE9cVnxENod4GJz4re+9jmdA4HGhGNWAxfOXs7N0o1pti9FHSy1Oz6xqXu9zp
+	 SgjVbG1XVMwINAEAXFKtcvrB2202/zZpujGwaF+1/Yv4WyUb6Y05c1+LbMrUJ9cjSS
+	 aYvuT/5d0C6LvQ1EBtTAWMuTieTVhpUXec7CaceM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lee <david.lee@trailofbits.com>,
-	Jan Kara <jack@suse.cz>,
+	Yuho Choi <dbgh9129@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0792/1424] UDF symlink pathComponent header OOB read
-Date: Sat, 12 Sep 2026 08:53:44 +0200
-Message-ID: <20260912065625.035186010@linuxfoundation.org>
+Subject: [PATCH 6.6 0793/1424] uio: Fix stale info pointer in failed registration path
+Date: Sat, 12 Sep 2026 08:53:45 +0200
+Message-ID: <20260912065625.056504990@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,39 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lee <david.lee@trailofbits.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit d23eb7380d1594cda31a5dc8487dd2a5c8def8c7 ]
+[ Upstream commit 67b6fc084b034a91c3ec7907a3fed89a2450f30b ]
 
-udf_symlink_filler() can enter udf_pc_to_char() with a partial pathComponent header.
+After device_add(), the UIO device is visible to userspace and /dev/uioX
+can be opened. If a later setup step fails, __uio_register_device()
+unwinds the device but leaves idev->info pointing at the caller-owned
+struct uio_info.
 
-Validate that enough input remains for a complete pathComponent header
-before accessing it. Reject malformed symlink data that would otherwise
-make udf_pc_to_char() perform an out-of-bounds read.
+That is unsafe when an opener races with the failed registration path.
+The open file keeps a reference to the uio_device, while the caller sees
+registration failure and may free its struct uio_info. Later file
+operations can then follow idev->info and dereference freed memory.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Assisted-by: Codex:gpt-5.5
-Link: https://patch.msgid.link/20260717104722.41446-1-david.lee@trailofbits.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Handle post-device_add() failures like unregister: remove UIO attributes
+while the info pointer is still valid, then clear idev->info under
+info_lock and wake existing waiters/async users before removing the
+device and minor. This makes already-open file descriptors observe the
+same "device gone" state as normal uio_unregister_device().
+
+Fixes: a93e7b331568 ("uio: Prevent device destruction while fds are open")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Link: https://patch.msgid.link/20260630192714.1867170-1-dbgh9129@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/symlink.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/uio/uio.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/udf/symlink.c b/fs/udf/symlink.c
-index f7eaf7b145940..ee78403bf7c9d 100644
---- a/fs/udf/symlink.c
-+++ b/fs/udf/symlink.c
-@@ -36,6 +36,8 @@ static int udf_pc_to_char(struct super_block *sb, unsigned char *from,
- 	/* Reserve one byte for terminating \0 */
- 	tolen--;
- 	while (elen < fromlen) {
-+		if (fromlen - elen < sizeof(struct pathComponent))
-+			return -EIO;
- 		pc = (struct pathComponent *)(from + elen);
- 		elen += sizeof(struct pathComponent);
- 		switch (pc->componentType) {
+diff --git a/drivers/uio/uio.c b/drivers/uio/uio.c
+index 2d572f6c8ec83..887ba0082d16f 100644
+--- a/drivers/uio/uio.c
++++ b/drivers/uio/uio.c
+@@ -990,6 +990,11 @@ int __uio_register_device(struct module *owner,
+ err_request_irq:
+ 	uio_dev_del_attributes(idev);
+ err_uio_dev_add_attributes:
++	mutex_lock(&idev->info_lock);
++	idev->info = NULL;
++	mutex_unlock(&idev->info_lock);
++	wake_up_interruptible(&idev->wait);
++	kill_fasync(&idev->async_queue, SIGIO, POLL_HUP);
+ 	device_del(&idev->dev);
+ err_device_create:
+ 	uio_free_minor(idev->minor);
 -- 
 2.53.0
 
