@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2530C32B13B;
-	Sat, 12 Sep 2026 15:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FBF361DA6;
+	Sat, 12 Sep 2026 15:30:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227024; cv=none; b=jSmXA69yKO+uNDLcVvdzGleKKsU1anmoH4XISrOJJA4Avxx8qwOlp44cfptPumUvH4g7MtLRITh+GrPnFSXxcM+gqvCHoOWN9nEP43Gbu13ZIwV6qOksEZV+J5rbaVvWg0O9stvBiLTKArRIgYsWdgKQGy3hU6j4MMvmeTpDFqw=
+	t=1789227029; cv=none; b=TuhBjdUvfVvfowzsKelu+W3okYezsCJkT1tu0E4eVf7oAw9CIv46GdFBYc37bpbhB56DBbba1OJnLaLmiW21p3IKezLQBtynqsM3hQjIDA+uMXhB+E3fV6cM+/07kYQ/yiI15qugZVBdg5b+H1BvEXH7bNYwO3LYumoQgut2sgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227024; c=relaxed/simple;
-	bh=OwQWNG+Ii0PpxwJkH9/RAO6f6rA/8iwsZuWTy9BhTs8=;
+	s=arc-20240116; t=1789227029; c=relaxed/simple;
+	bh=eN5LQWSvnKk9jvpeyHSF2FiQLMow6JsmMqL41xnezdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S07SYySIAebsMlYQ9RomCEBKjcchy8vbnhmI97YaEoN6X68lfhMOmpNq7XZ4KP85G1LtkPw58con+kYK1Ee974mVtWrf0hpR/dJqWmzUTaoDraeGgnNHjcqGnKaem6xhPCRTw3o4rx6JBe+cuPSoGJ6zsdSjQe1oaW6xry8/7M8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IpYGEw0j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dsce/d+KOxBcRhKpE69ceESbe4YWFCV5DtdoEeRwo/9dTSOXM7s8SH/G/Ngtggmd3a+wsTOAbrOGAMPtor0lYt1r+Whc6CHDcCd61jVxq/+gft7KRl5pDnJfvovgb3NNgIylmXfLOy+raj55M553mQBz7TS5L6thb+syI91450E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GdXyxSbu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IpYGEw0j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2A61F000FF;
-	Sat, 12 Sep 2026 15:30:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GdXyxSbu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D381F000FF;
+	Sat, 12 Sep 2026 15:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227023;
-	bh=I8yPdoKas/8RL4r1mX4wPGvOfDKm4oyItODRn74bOBU=;
+	s=korg; t=1789227028;
+	bh=ivM02eSGmgcO8bEz0bOAV/SLLuGNZeydSZTe8w0Ce4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IpYGEw0jgMoefa4/mrgfk6RJzyUOW7+de0wS1vrrigDcC8glTdA1SkmC1zUyQZKzX
-	 oFX11r2zY7SFDg++sfBrUDeFut1Y84iFBqiXskJf5pTesFyLciukytBl1QvKICzbQi
-	 RLurNjuisTIgQbsCNba9KXm/6mCVh1VM5v8iZ1KA=
+	b=GdXyxSbuE5ZjGiVMn5cM9p0zRWtgxyTde3h/FmAMsi/ie+a96Sdq5elju2kDROHJ6
+	 wCOMxLvWcQK6F8Onk4/BU90mW92t8S9k0YHDLAcxVG6mScvf3xQFje9JTXt5YcGVyb
+	 ULusOTz2iSmC5RN+H4yvkHb9XOEG3rErbsBIJHEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfgang Walter <linux@stwm.de>,
-	NeilBrown <neil@brown.name>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.1 0059/1191] NFSD: Prevent lock owner use-after-free during client teardown
-Date: Sat, 12 Sep 2026 08:46:27 +0200
-Message-ID: <20260912065549.477961506@linuxfoundation.org>
+	Matt Turner <mattst88@gmail.com>,
+	Magnus Lindholm <linmag7@gmail.com>
+Subject: [PATCH 6.1 0095/1191] alpha: marvel: Fix irq_set_status_flags to use correct IRQ number
+Date: Sat, 12 Sep 2026 08:47:03 +0200
+Message-ID: <20260912065550.314208802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,73 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Matt Turner <mattst88@gmail.com>
 
-commit 5e2fa29d223a9a1e6a948e40b109d09081d1decd upstream.
+commit 3a3ac1f6c6a67b3803f2643584310f78301e58a8 upstream.
 
-__destroy_client() releases a client's open owners, but a lock owner
-whose only reference is a blocked lock (nbl) stays on
-cl_ownerstr_hashtbl.  client_has_state() does not count a bare owner,
-so DESTROY_CLIENTID can reach __destroy_client() with such owners
-present.
+Pass base + i to irq_set_status_flags() to match the IRQ number
+used in irq_set_chip_and_handler(). Previously, IRQ_LEVEL was set
+on the wrong (low-numbered) IRQ descriptors rather than the IO7
+IRQs at base + i.
 
-__destroy_client() then walks the table, calling remove_blocked_locks()
-on each owner without a reference.  Freeing a blocked lock drops the
-owner reference held via flc_owner.  The per-net laundromat reaps
-blocked locks from nn->blocked_locks_lru independently of client state.
-The two paths share blocked_locks_lock only for the list splice, not
-the owner's lifetime.  The laundromat therefore frees the owner as
-__destroy_client() dereferences it, a NULL dereference in
-remove_blocked_locks().
-
-nfsd4_release_lockowner() holds a reference across the same call;
-__destroy_client() does not.  Hold cl_lock across the walk, taking a
-reference and unhashing each owner, then drop it before
-remove_blocked_locks() and nfs4_put_stateowner(), which take
-blocked_locks_lock and cl_lock.
-
-Reported-by: Wolfgang Walter <linux@stwm.de>
-Closes: https://lore.kernel.org/linux-nfs/6eccafaaaa60651ef091257c3439c46b@stwm.de/
-Fixes: 68ef3bc31664 ("nfsd: remove blocked locks on client teardown")
 Cc: stable@vger.kernel.org
-Reviewed-by: NeilBrown <neil@brown.name>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260709-cel-v4-1-1d519d9be0cb@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Fixes: 08876fe8519c ("alpha: marvel: Convert irq_chip functions")
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20260528230516.1839694-1-mattst88@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ arch/alpha/kernel/sys_marvel.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -2338,14 +2338,24 @@ __destroy_client(struct nfs4_client *clp
- 		release_openowner(oo);
+--- a/arch/alpha/kernel/sys_marvel.c
++++ b/arch/alpha/kernel/sys_marvel.c
+@@ -275,7 +275,7 @@ init_io7_irqs(struct io7 *io7,
+ 	/* Set up the lsi irqs.  */
+ 	for (i = 0; i < 128; ++i) {
+ 		irq_set_chip_and_handler(base + i, lsi_ops, handle_level_irq);
+-		irq_set_status_flags(i, IRQ_LEVEL);
++		irq_set_status_flags(base + i, IRQ_LEVEL);
  	}
- 	for (i = 0; i < OWNER_HASH_SIZE; i++) {
--		struct nfs4_stateowner *so, *tmp;
-+		struct nfs4_stateowner *so;
  
--		list_for_each_entry_safe(so, tmp, &clp->cl_ownerstr_hashtbl[i],
--					 so_strhash) {
-+		spin_lock(&clp->cl_lock);
-+		while (!list_empty(&clp->cl_ownerstr_hashtbl[i])) {
-+			so = list_first_entry(&clp->cl_ownerstr_hashtbl[i],
-+					      struct nfs4_stateowner, so_strhash);
- 			/* Should be no openowners at this point */
- 			WARN_ON_ONCE(so->so_is_open_owner);
-+			nfs4_get_stateowner(so);
-+			unhash_lockowner_locked(lockowner(so));
-+			spin_unlock(&clp->cl_lock);
-+
- 			remove_blocked_locks(lockowner(so));
-+			nfs4_put_stateowner(so);
-+
-+			spin_lock(&clp->cl_lock);
- 		}
-+		spin_unlock(&clp->cl_lock);
+ 	/* Disable the implemented irqs in hardware.  */
+@@ -289,7 +289,7 @@ init_io7_irqs(struct io7 *io7,
+ 	/* Set up the msi irqs.  */
+ 	for (i = 128; i < (128 + 512); ++i) {
+ 		irq_set_chip_and_handler(base + i, msi_ops, handle_level_irq);
+-		irq_set_status_flags(i, IRQ_LEVEL);
++		irq_set_status_flags(base + i, IRQ_LEVEL);
  	}
- 	nfsd4_return_all_client_layouts(clp);
- 	nfsd4_shutdown_copy(clp);
+ 
+ 	for (i = 0; i < 16; ++i)
 
 
