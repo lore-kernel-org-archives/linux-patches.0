@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125BD46D572;
-	Sat, 12 Sep 2026 10:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFBE46D55D;
+	Sat, 12 Sep 2026 10:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210173; cv=none; b=oDRdbEVWZfwg8uMFRQmo5RVbX09E/LTS1DdM7Ij94Hy0MU36WMN9kVZ0HXOqOHp7m8IGSjcsLf2XKrzNB3S1kDMrh4CBIDNnTEWXbeg7k9Kh5EBJfIvYlAfUdbg0+cb61sNP+GzvKFU3dyfyAZEMUHe6RmLGPJ1fkUcpoQ7+STc=
+	t=1789210179; cv=none; b=NHDyHxkm0i/5FMa+nrttviLW7F1/pt7bDiZ7JoQmw7FvbDIZ4/tDyidNao/IQzINQASm7TyFGBp+85fxTs7D3/M2zzdGgC5gdZJG++1NfEVKEUBERqtYfUGqlrW68qZCcs9ImCy4etNa7cpZ4T4JdqmF8S3rHryey1cddjCs07g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210173; c=relaxed/simple;
-	bh=Pr9a/dPVM6D/QzwB0zFGPJd9hNwMJs4oSyJKCY/xubQ=;
+	s=arc-20240116; t=1789210179; c=relaxed/simple;
+	bh=RPJEAVr6TNQm+tuXf62KGAv7fBH1ZzuLeY61Yg8bpLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dntvf/1Xd0HtkkLUWqtPSmPBE5jrUOJX7KZdP3GmNejhTZYOum1wdonLH3xoB/IbpprQMHSNzXWVaUZJkeXBTmDUsGQjhdqYaDWPYLi+MVJDJ6LZnKnDEMGe7Q2HJyXW7okUl5i3kjr6AesG9G1x4Sm8H091kKzGmpyj6Kw+fOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxER5LcL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n/T2TiJB6XHs+2sm1M3jZxl/EEAJYLVthurFXKcq4bdDuNHdaZLsh5vZTVe0vC4iigBIFQy12OtpATZ8Z22g6QShZBhQOkLCzGRa2j54JnBeiwPgvUYAqLI4nUo23LTGvddmqDPnOZBicjjDaw+rhSGc0pbYRPwOLisNCk6yAWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5LkYueS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxER5LcL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093301F000FF;
-	Sat, 12 Sep 2026 10:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5LkYueS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251231F00893;
+	Sat, 12 Sep 2026 10:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210168;
-	bh=AbuX6jv6alDxqcThCoXdO9Aeh+KdBhl+Ajvt7OsWdKQ=;
+	s=korg; t=1789210173;
+	bh=tQUfgD0WBO6fJKno9hNHYgS3Ce5Yn3NxwAG+Mi2nkW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fxER5LcL3SWsl/vTTaGe0nLU8boMKqH1guUAfN/1UpxODONpp1H0Tf/5oGMGXoMak
-	 Q5+RUPDf55m7B1sLt970+rzkvU6/0PfOdCi1oqjhm5o3rRS4CYUz3LbckMRcxPIKij
-	 nswPsXIJG5y+n1pKyuhJX1Jbp7C/PIAb17PEXbGA=
+	b=f5LkYueS/n1t1aGFRPdAsyPG8GbKEOVBy0DPzq5iDFydWki5KgwgaGCahkRnkPQtC
+	 S+cvUh/xrOrqemJCHVod6X0ChUrjxAItePGodIlaZNyC4GAtVQsL8IG6oCZ7uA2wJv
+	 qTdXCxYC5OrmX6Knm5q3LSewPKMv15/j+1ACMbMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mykola Marzhan <mykola@meshstor.io>,
-	Yu Kuai <yukuai@fygo.io>,
+	James Clark <james.clark@linaro.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0964/1518] md: avoid stale clone I/O accounting timestamps
-Date: Sat, 12 Sep 2026 08:52:13 +0200
-Message-ID: <20260912065645.267981449@linuxfoundation.org>
+Subject: [PATCH 6.18 0973/1518] perf: arm_pmuv3: Zero initialize hw_id branch stack field
+Date: Sat, 12 Sep 2026 08:52:22 +0200
+Message-ID: <20260912065645.469193107@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,44 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fygo.io>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 45102fc8330525d35675b1c193242bba101df5ee ]
+[ Upstream commit 7c3b63386c27bed8d59a4b4c283d02860420eb0a ]
 
-md_clone_bio() always allocates the clone from mddev->io_clone_set, even
-when queue I/O stats are disabled. In that case it does not call
-bio_start_io_acct(), but it also left md_io_clone->start_time untouched.
+PERF_SAMPLE_BRANCH_HW_INDEX is supported by BRBE so hw_id is passed to
+userspace, but it's never set by the BRBE driver. Zero initialize it as
+it should be according to the docs:
 
-The clone private data comes from a mempool and can contain data from a
-previous user. md_end_clone_io() checks start_time to decide whether it
-needs to call bio_end_io_acct(), so a stale non-zero value can make the
-completion path end accounting that was never started for this bio.
+   * For the architectures whose raw branch records are
+   * already stored in age order, the hw_idx should be 0.
 
-Set start_time to 0 in the no-stats branch. This keeps the end path tied
-to whether bio_start_io_acct() actually ran.
+It's probably too risky to remove PERF_SAMPLE_BRANCH_HW_INDEX from BRBE
+now in case anyone is setting it and reading the value, but zero
+initializing the whole struct also protects against the same issue with
+new fields that are added in the future.
 
-Fixes: c687297b8845 ("md: also clone new io if io accounting is disabled")
-Tested-by: Mykola Marzhan <mykola@meshstor.io>
-Link: https://patch.msgid.link/20260802195038.164272-8-yukuai@kernel.org
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 58074a0fce66 ("perf: arm_pmuv3: Add support for the Branch Record Buffer Extension (BRBE)")
+Signed-off-by: James Clark <james.clark@linaro.org>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/perf/arm_pmuv3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 2e8e32e15e735..d03d0fdf763db 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -9313,6 +9313,8 @@ static void md_clone_bio(struct mddev *mddev, struct bio **bio)
- 	md_io_clone->mddev = mddev;
- 	if (blk_queue_io_stat(bdev->bd_disk->queue))
- 		md_io_clone->start_time = bio_start_io_acct(*bio);
-+	else
-+		md_io_clone->start_time = 0;
+diff --git a/drivers/perf/arm_pmuv3.c b/drivers/perf/arm_pmuv3.c
+index 69c5cc8f56067..265c10f2c8b07 100644
+--- a/drivers/perf/arm_pmuv3.c
++++ b/drivers/perf/arm_pmuv3.c
+@@ -1351,7 +1351,7 @@ static int branch_records_alloc(struct arm_pmu *armpmu)
+ 		struct pmu_hw_events *events_cpu;
  
- 	if (bio_data_dir(*bio) == WRITE && md_bitmap_enabled(mddev, false)) {
- 		md_io_clone->offset = (*bio)->bi_iter.bi_sector;
+ 		events_cpu = per_cpu_ptr(armpmu->hw_events, cpu);
+-		events_cpu->branch_stack = kmalloc(size, GFP_KERNEL);
++		events_cpu->branch_stack = kzalloc(size, GFP_KERNEL);
+ 		if (!events_cpu->branch_stack)
+ 			return -ENOMEM;
+ 	}
 -- 
 2.53.0
 
