@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4905624CEEA;
-	Sat, 12 Sep 2026 09:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D59124CEEA;
+	Sat, 12 Sep 2026 09:31:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205493; cv=none; b=aLsDkD/yvIteQxWbj1C2PBDz5n4SrwZFm2Rz2ie8OS20Ykvp1RN1Pip1F8lUizOGHCazjTr0qUYAXA13LNDoi8YjqIGWCvHr2OAf7Levuuh16vCyQLkL5x+NJGtYAX+zCy5fAT6DBEKNc+OjDCS9V8Q2/nCJg61JUnuDYha+v54=
+	t=1789205498; cv=none; b=VtJW7r8tnA/vrWsG156wZI+eqEGKgP79Pv4wKkL0FSqm8+etUpd/4PVWRosnmgpgE1vM1QDY6zfukdGWBlTwnB2whq7YCulf1Nm2HZOQSuBKrD0USRVeFAP6eUdbiwYhN40jczJmqcUUKsK6KYeSg7NfzVWfyS5dg+bYpVHIilI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205493; c=relaxed/simple;
-	bh=XDg7l0ExrJrSh/90+Pm53h9rGDu46McW/GozsV+4xVA=;
+	s=arc-20240116; t=1789205498; c=relaxed/simple;
+	bh=IsAVwCT8nZl+ZH67w7BkKU0oPL5EvjK6GMBLvGsOYpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cyozxaIap/bIUEVSYjfWpVwUQys6AOLEgbd9yU0oQI/L07Y7FA3nLvMEbN6So2BnPNT9f30PkOdsnnIJ4crVay8eViYjEcwKXtsqHqQLoZ9dRNuxV5Qoesiu01Iul1/YapI/U27FEL9aDvV9u/gMFtsOInVls6xoeXgMsGMcTh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1sOF26fS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LY7EKnAD//0gosaJDugHVgvZEl2SwU546MU56RVgI8BFRZQ4RyePMfJvvKbY7D2iyHHRE5AfFQPBcTB2GRm+89ZFgBNqMdPIv+gFm942GiulzGmf7TDVgLPsj/2QM9QLelZNKluzLf1Z8JcVRQ+lfSUixmfIqZ85FWk4h16pulk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CqLPcja; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sOF26fS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671721F000FF;
-	Sat, 12 Sep 2026 09:31:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CqLPcja"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A811F000FF;
+	Sat, 12 Sep 2026 09:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205492;
-	bh=jVIVqdQQb8uBz3kAingvOwfxx3+wEociDnuI+fK26M0=;
+	s=korg; t=1789205497;
+	bh=Qeuf2jDxwPLc/wzfsoXpvPvWt6VcJKt+2J/8FUsoeyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1sOF26fSuRuhZv0gk3uZuG6MnwhsQEjFiElAuSKDYHRjLDyZVSeQdsNt4fi1PsT4s
-	 iL+ArTMUKv59QlgMXCz42SurwyyICp5mhDLL0A1ln8pphDiBkXFlT82/TV8sPBpAGw
-	 SseCHUjnmf//wU87aeOgzTtH0Jtw9tpIaTIrjK4E=
+	b=1CqLPcjaAvyb4hZ7lVUBjPIVAiBmlQ+ZZfs+Yci5awUjiEdBOmfAGJF1WJTVpd0TY
+	 Rl+1huzQZ4ndljLgbyQa+7S+vEIyfjcOzuFzpXx54xt94BkzjiWtQJ8FoT/Yo4eNM/
+	 EpDOmpSzmc4tS6DmjKMwmk3j8zYUVIFzGBG+N4P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Farhan Ali <alifm@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Tyrel Datwyler <tyreld@linux.ibm.com>,
+	linuxppc-dev@lists.ozlabs.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0014/1518] nvme: fold nvme_config_discard() into nvme_update_disk_info()
-Date: Sat, 12 Sep 2026 08:36:23 +0200
-Message-ID: <20260912065623.739704952@linuxfoundation.org>
+Subject: [PATCH 6.18 0015/1518] PCI: Introduce PCI_SLOT_PLACEHOLDER constant for slot_nr placeholder value
+Date: Sat, 12 Sep 2026 08:36:24 +0200
+Message-ID: <20260912065623.762409402@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,102 +54,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Caleb Sander Mateos <csander@purestorage.com>
+From: Farhan Ali <alifm@linux.ibm.com>
 
-[ Upstream commit 9110b85244f142ca4bcaea27be408c778d3c48d0 ]
+[ Upstream commit c243e6c470c4695965cc8287767925bc1d9a7867 ]
 
-The choice of what queue limits are set in nvme_update_disk_info() vs.
-nvme_config_discard() seems a bit arbitrary. A subsequent commit will
-compute the discard_granularity limit using struct nvme_id_ns, which is
-only passed to nvme_update_disk_info() currently. So move the logic in
-nvme_config_discard() to nvme_update_disk_info(). Replace several
-instances of ns->ctrl in nvme_update_disk_info() with the ctrl variable
-brought from nvme_config_discard().
+Introduce a constant for placeholder value and update the kerneldoc for
+pci_create_slot() to reference PCI_SLOT_PLACEHOLDER instead of -1
+throughout. No functional change.
 
-Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: 3838e80fcfb3 ("nvme: skip the zoned limits update if the zone info query failed")
+Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Tyrel Datwyler <tyreld@linux.ibm.com>
+Cc: linuxppc-dev@lists.ozlabs.org
+Link: https://patch.msgid.link/20260805165518.794-2-alifm@linux.ibm.com
+
+Stable backport: this tree predates 102c8b26b54e ("PCI: Allow all bus
+devices to use the same slot"). Include its PCI_SLOT_ALL_DEVICES definition,
+slot-number documentation, and core matching/address handling so that
+subsequent commit dcc5bec09e23 ("PCI: Allow per function PCI slots to fix
+slot reset on s390") applies without conflicts. Keep the PCIe hotplug
+callers unchanged; enabling bus-wide slots there is outside this dependency.
+
+Retain the stable tree's kzalloc() and ATTRIBUTE_GROUPS() implementations.
+The placeholder conversion covers both PowerPC hotplug callers and the
+PCI core. All code changes stay within existing functions.
+
+Stable-dep-of: dcc5bec09e23 ("PCI: Allow per function PCI slots to fix slot reset on s390")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/core.c |   43 +++++++++++++++++++------------------------
- 1 file changed, 19 insertions(+), 24 deletions(-)
+ drivers/pci/hotplug/pnv_php.c     |    2 -
+ drivers/pci/hotplug/rpaphp_slot.c |    2 -
+ drivers/pci/slot.c                |   50 ++++++++++++++++++++++++++++----------
+ include/linux/pci.h               |   13 +++++++++
+ 4 files changed, 51 insertions(+), 16 deletions(-)
 
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -1882,26 +1882,6 @@ static bool nvme_init_integrity(struct n
- 	return true;
- }
- 
--static void nvme_config_discard(struct nvme_ns *ns, struct queue_limits *lim)
--{
--	struct nvme_ctrl *ctrl = ns->ctrl;
--
--	if (ctrl->dmrsl && ctrl->dmrsl <= nvme_sect_to_lba(ns->head, UINT_MAX))
--		lim->max_hw_discard_sectors =
--			nvme_lba_to_sect(ns->head, ctrl->dmrsl);
--	else if (ctrl->oncs & NVME_CTRL_ONCS_DSM)
--		lim->max_hw_discard_sectors = UINT_MAX;
--	else
--		lim->max_hw_discard_sectors = 0;
--
--	lim->discard_granularity = lim->logical_block_size;
--
--	if (ctrl->dmrl)
--		lim->max_discard_segments = ctrl->dmrl;
--	else
--		lim->max_discard_segments = NVME_DSM_MAX_RANGES;
--}
--
- static bool nvme_ns_ids_equal(struct nvme_ns_ids *a, struct nvme_ns_ids *b)
- {
- 	return uuid_equal(&a->uuid, &b->uuid) &&
-@@ -2084,6 +2064,7 @@ static bool nvme_update_disk_info(struct
- 		struct queue_limits *lim)
- {
- 	struct nvme_ns_head *head = ns->head;
-+	struct nvme_ctrl *ctrl = ns->ctrl;
- 	u32 bs = 1U << head->lba_shift;
- 	u32 atomic_bs, phys_bs, io_opt = 0;
- 	bool valid = true;
-@@ -2118,11 +2099,26 @@ static bool nvme_update_disk_info(struct
- 	lim->physical_block_size = min(phys_bs, atomic_bs);
- 	lim->io_min = phys_bs;
- 	lim->io_opt = io_opt;
--	if ((ns->ctrl->quirks & NVME_QUIRK_DEALLOCATE_ZEROES) &&
--	    (ns->ctrl->oncs & NVME_CTRL_ONCS_DSM))
-+	if ((ctrl->quirks & NVME_QUIRK_DEALLOCATE_ZEROES) &&
-+	    (ctrl->oncs & NVME_CTRL_ONCS_DSM))
- 		lim->max_write_zeroes_sectors = UINT_MAX;
+--- a/drivers/pci/hotplug/pnv_php.c
++++ b/drivers/pci/hotplug/pnv_php.c
+@@ -813,7 +813,7 @@ static struct pnv_php_slot *pnv_php_allo
+ 	if (dn->child && PCI_DN(dn->child))
+ 		php_slot->slot_no = PCI_SLOT(PCI_DN(dn->child)->devfn);
  	else
--		lim->max_write_zeroes_sectors = ns->ctrl->max_zeroes_sectors;
-+		lim->max_write_zeroes_sectors = ctrl->max_zeroes_sectors;
+-		php_slot->slot_no = -1;   /* Placeholder slot */
++		php_slot->slot_no = PCI_SLOT_PLACEHOLDER;   /* Placeholder slot */
+ 
+ 	kref_init(&php_slot->kref);
+ 	php_slot->state	                = PNV_PHP_STATE_INITIALIZED;
+--- a/drivers/pci/hotplug/rpaphp_slot.c
++++ b/drivers/pci/hotplug/rpaphp_slot.c
+@@ -85,7 +85,7 @@ int rpaphp_register_slot(struct slot *sl
+ 	struct device_node *child;
+ 	u32 my_index;
+ 	int retval;
+-	int slotno = -1;
++	int slotno = PCI_SLOT_PLACEHOLDER;
+ 
+ 	dbg("%s registering slot:path[%pOF] index[%x], name[%s] pdomain[%x] type[%d]\n",
+ 		__func__, slot->dn, slot->index, slot->name,
+--- a/drivers/pci/slot.c
++++ b/drivers/pci/slot.c
+@@ -37,11 +37,20 @@ static const struct sysfs_ops pci_slot_s
+ 
+ static ssize_t address_read_file(struct pci_slot *slot, char *buf)
+ {
+-	if (slot->number == 0xff)
++	if (slot->number == PCI_SLOT_PLACEHOLDER)
+ 		return sysfs_emit(buf, "%04x:%02x\n",
+ 				  pci_domain_nr(slot->bus),
+ 				  slot->bus->number);
+ 
++	/*
++	 * Preserve legacy ABI expectations that hotplug drivers that manage
++	 * multiple devices per slot emit 0 for the device number.
++	 */
++	if (slot->number == PCI_SLOT_ALL_DEVICES)
++		return sysfs_emit(buf, "%04x:%02x:00\n",
++				  pci_domain_nr(slot->bus),
++				  slot->bus->number);
 +
-+	if (ctrl->dmrsl && ctrl->dmrsl <= nvme_sect_to_lba(ns->head, UINT_MAX))
-+		lim->max_hw_discard_sectors =
-+			nvme_lba_to_sect(ns->head, ctrl->dmrsl);
-+	else if (ctrl->oncs & NVME_CTRL_ONCS_DSM)
-+		lim->max_hw_discard_sectors = UINT_MAX;
-+	else
-+		lim->max_hw_discard_sectors = 0;
-+
-+	lim->discard_granularity = lim->logical_block_size;
-+
-+	if (ctrl->dmrl)
-+		lim->max_discard_segments = ctrl->dmrl;
-+	else
-+		lim->max_discard_segments = NVME_DSM_MAX_RANGES;
- 	return valid;
+ 	return sysfs_emit(buf, "%04x:%02x:%02x\n",
+ 			  pci_domain_nr(slot->bus),
+ 			  slot->bus->number,
+@@ -73,7 +82,8 @@ static void pci_slot_release(struct kobj
+ 
+ 	down_read(&pci_bus_sem);
+ 	list_for_each_entry(dev, &slot->bus->devices, bus_list)
+-		if (PCI_SLOT(dev->devfn) == slot->number)
++		if (slot->number == PCI_SLOT_ALL_DEVICES ||
++		    PCI_SLOT(dev->devfn) == slot->number)
+ 			dev->slot = NULL;
+ 	up_read(&pci_bus_sem);
+ 
+@@ -166,7 +176,8 @@ void pci_dev_assign_slot(struct pci_dev
+ 
+ 	mutex_lock(&pci_slot_mutex);
+ 	list_for_each_entry(slot, &dev->bus->slots, list)
+-		if (PCI_SLOT(dev->devfn) == slot->number)
++		if (slot->number == PCI_SLOT_ALL_DEVICES ||
++		    PCI_SLOT(dev->devfn) == slot->number)
+ 			dev->slot = slot;
+ 	mutex_unlock(&pci_slot_mutex);
  }
+@@ -188,7 +199,8 @@ static struct pci_slot *get_slot(struct
+ /**
+  * pci_create_slot - create or increment refcount for physical PCI slot
+  * @parent: struct pci_bus of parent bridge
+- * @slot_nr: PCI_SLOT(pci_dev->devfn) or -1 for placeholder
++ * @slot_nr: PCI_SLOT(pci_dev->devfn), PCI_SLOT_PLACEHOLDER for placeholder, or
++ *	PCI_SLOT_ALL_DEVICES
+  * @name: user visible string presented in /sys/bus/pci/slots/<name>
+  * @hotplug: set if caller is hotplug driver, NULL otherwise
+  *
+@@ -213,15 +225,26 @@ static struct pci_slot *get_slot(struct
+  * In most cases, @pci_bus, @slot_nr will be sufficient to uniquely identify
+  * a slot. There is one notable exception - pSeries (rpaphp), where the
+  * @slot_nr cannot be determined until a device is actually inserted into
+- * the slot. In this scenario, the caller may pass -1 for @slot_nr.
++ * the slot. In this scenario, the caller may pass PCI_SLOT_PLACEHOLDER for @slot_nr.
+  *
+  * The following semantics are imposed when the caller passes @slot_nr ==
+- * -1. First, we no longer check for an existing %struct pci_slot, as there
+- * may be many slots with @slot_nr of -1.  The other change in semantics is
+- * user-visible, which is the 'address' parameter presented in sysfs will
+- * consist solely of a dddd:bb tuple, where dddd is the PCI domain of the
+- * %struct pci_bus and bb is the bus number. In other words, the devfn of
+- * the 'placeholder' slot will not be displayed.
++ * PCI_SLOT_PLACEHOLDER. First, we no longer check for an existing %struct
++ * pci_slot, as there may be many slots with @slot_nr of
++ * PCI_SLOT_PLACEHOLDER. The other change in semantics is user-visible,
++ * which is the 'address' parameter presented in sysfs will consist solely
++ * of a dddd:bb tuple, where dddd is the PCI domain of the %struct pci_bus
++ * and bb is the bus number. In other words, the devfn of the 'placeholder'
++ * slot will not be displayed.
++ *
++ * Bus-wide slots:
++ * For PCIe hotplug, the physical slot encompasses the entire secondary
++ * bus, not just a single device number. If the device supports ARI and ARI
++ * Forwarding is enabled in the upstream bridge, a multi-function device
++ * may include functions that appear to have several different device
++ * numbers, i.e., PCI_SLOT() values.  Pass @slot_nr == PCI_SLOT_ALL_DEVICES
++ * to create a slot that matches all devices on the bus. Unlike placeholder
++ * slots, bus-wide slots go through normal slot lookup and reuse existing
++ * slots if present.
+  */
+ struct pci_slot *pci_create_slot(struct pci_bus *parent, int slot_nr,
+ 				 const char *name,
+@@ -234,7 +257,7 @@ struct pci_slot *pci_create_slot(struct
  
-@@ -2387,7 +2383,6 @@ static int nvme_update_ns_info_block(str
- 	if (!nvme_update_disk_info(ns, id, &lim))
- 		capacity = 0;
+ 	mutex_lock(&pci_slot_mutex);
  
--	nvme_config_discard(ns, &lim);
- 	if (IS_ENABLED(CONFIG_BLK_DEV_ZONED) &&
- 	    ns->head->ids.csi == NVME_CSI_ZNS)
- 		nvme_update_zone_info(ns, &lim, &zi);
+-	if (slot_nr == -1)
++	if (slot_nr == PCI_SLOT_PLACEHOLDER)
+ 		goto placeholder;
+ 
+ 	/*
+@@ -285,7 +308,8 @@ placeholder:
+ 
+ 	down_read(&pci_bus_sem);
+ 	list_for_each_entry(dev, &parent->devices, bus_list)
+-		if (PCI_SLOT(dev->devfn) == slot_nr)
++		if (slot_nr == PCI_SLOT_ALL_DEVICES ||
++		    PCI_SLOT(dev->devfn) == slot_nr)
+ 			dev->slot = slot;
+ 	up_read(&pci_bus_sem);
+ 
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -72,12 +72,23 @@
+ /* return bus from PCI devid = ((u16)bus_number) << 8) | devfn */
+ #define PCI_BUS_NUM(x) (((x) >> 8) & 0xff)
+ 
++/*
++ * PCI_SLOT_ALL_DEVICES indicates a slot that covers all devices on the bus.
++ * Used for PCIe hotplug where the physical slot is the entire secondary bus,
++ * and, if ARI Forwarding is enabled, functions may appear to be on multiple
++ * devices.
++ */
++#define PCI_SLOT_ALL_DEVICES	0xfe
++
++/* Used to identify a slot as a placeholder */
++#define PCI_SLOT_PLACEHOLDER	0xff
++
+ /* pci_slot represents a physical slot */
+ struct pci_slot {
+ 	struct pci_bus		*bus;		/* Bus this slot is on */
+ 	struct list_head	list;		/* Node in list of slots */
+ 	struct hotplug_slot	*hotplug;	/* Hotplug info (move here) */
+-	unsigned char		number;		/* PCI_SLOT(pci_dev->devfn) */
++	unsigned char		number;		/* Device nr, or PCI_SLOT_ALL_DEVICES */
+ 	struct kobject		kobj;
+ };
+ 
 
 
