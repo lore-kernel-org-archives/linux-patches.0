@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE97126982C;
-	Sat, 12 Sep 2026 08:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF89D2C032C;
+	Sat, 12 Sep 2026 08:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201010; cv=none; b=GsIkiGnRcFlHauD2vZKtozl42pnL12kHEBnJBrYt1tLDFerubDLnfpjr+sBdRwqc55gENbCMwNTIIJsKlsvhGJobJD7DiZsoLUXRTkPewZTmfHoNuTLwFOmmmnJiM9nKu83+Qpxj7K9B5ZooHZxay2W/2WmaEttL/GXolyzHOpM=
+	t=1789201016; cv=none; b=SJ9DRERrLbMSpMmxmlRIsIINg06OAdnchpa/u+I3qhxst09YNTTGX5dWKrG/eXfgqPi37CRavY/7z/rwX5dcOYJU8SyTftKvv1jCQieCFzbYfpIsJsX58RnYEszvpZVj2dutVtEjq1FPrtjO+dqiUGXPlkkmwXF2+wzESbQe1F4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201010; c=relaxed/simple;
-	bh=0djJz+9uhmCxAj6VHeR9TiuX6Z86Bc7dFjB6lDKIM58=;
+	s=arc-20240116; t=1789201016; c=relaxed/simple;
+	bh=qeiVnkcW6HNvzVi9jO0tPpl2l7ImoYmj4N814oGrKrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LNPj4xngd+JpD+y99kV7pmwhDI9yMFHF0yuBmBPZD+vAqZbqyn8y/JjuAUgsATxM5OTwQbbRZfv60nfHwakkGvGF4/88gIWrQX59RCLkq/LJGMXwGhxtxFf9uN86syeEd70JWmZL2vcSJZ+qLPmYn8rQxqtJ/MTRbiJkWa/Ipxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJVSsOD/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aHOBrredQO9qarEiTjXGb1v54kkU7dBUOB+jpO9NxyvLfIfuxIPHktTVQ60uhqzm2AlOa7zAr67dLWOJzQWnjYZ+RwIZ5gIF6G4DMEad+X8Sjj5tvDLUS+cIWCfj7alhcyJFtKXOtToWghPyQFDB2TH5HOeqDQ3iHwwsyssyixA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2rBY2Jk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJVSsOD/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A4D21F000FF;
-	Sat, 12 Sep 2026 08:16:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2rBY2Jk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA6C1F000FF;
+	Sat, 12 Sep 2026 08:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201009;
-	bh=4IvXwnabWJr9y2Ac+aSDT1HHNNg2LAxPJ3J3OXSLlco=;
+	s=korg; t=1789201014;
+	bh=ExkIYPxHUVpYpt56H0ZkbVT9Td/P+7f/bXDSlHywOVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yJVSsOD/hvNKz4smgfwAeyEWDu53a6tlVY8r5/C0vVtrlEdPh0TL/ZM46gfkzMm7L
-	 xvKDn6Lvfy3oF7L+yQWAbYmIRD7e1VUl2oGm6HIW+S79QNPFrqDy0eOrBDOpuniwNG
-	 BwVhr2nHuDoNRlWDpSpKJKLiynSUGtkuPUWDE088=
+	b=E2rBY2JkgpX4rXwi2mxo9qYCM3jaceiCdq7KGfKFaNMx8bqrCyLcwg7F3+fYdO/5I
+	 ztLTMINuVaH1bCI1FNwGtdg2XZPdVz6e+J+9rnVrqwmQP0GJ7qARnvs3hFXYUd0chM
+	 FvwpLCw1wlJJHatYgc+SmQMbvCOY2WRsfxDpgKa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Peng <pengcan@kylinos.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Yongxing Mou <yongxing.mou@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0906/1815] ACPI: processor: Unregister cpufreq notifier on init failure
-Date: Sat, 12 Sep 2026 08:44:16 +0200
-Message-ID: <20260912065710.192487462@linuxfoundation.org>
+Subject: [PATCH 7.2 0907/1815] drm/msm/dpu: Fix DMA SSPP REC block offsets on DPU v13
+Date: Sat, 12 Sep 2026 08:44:17 +0200
+Message-ID: <20260912065710.214744179@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,46 +51,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Can Peng <pengcan@kylinos.cn>
+From: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
 
-[ Upstream commit 06f32dd67e6b23a05bef0d8183c5335af91c0c3b ]
+[ Upstream commit 8834f5494ab5e169b1c0fb4cbcb5464fd81d1ed0 ]
 
-acpi_processor_driver_init() registers the cpufreq policy notifier before
-registering the ACPI processor driver and setting up CPU hotplug state.
+On DPU v13, the DMA SSPP REC0 and REC1 blocks are located at
+offsets 0x1000 and 0x3000 from the SSPP common base.
 
-If driver_register() or cpuhp_setup_state() fails, the error path only
-unregisters the ACPI processor driver and the idle driver. The cpufreq
-notifier remains registered even though initialization failed.
+The existing DMA SSPP sub-block descriptor does not initialize
+sspp_rec0_blk and sspp_rec1_blk, causing REC register accesses
+to be performed at offset 0 instead of the corresponding REC
+block. As a result, DMA SSPP pipes are not programmed correctly
+and fail to produce output.
 
-Mirror the module exit path on the init failure path and unregister the
-cpufreq notifier when it has been registered.
+Introduce a DPU v13 specific DMA SSPP descriptor with the correct
+REC block offsets and use it for all DMA SSPPs in the Kaanapali
+catalog.
 
-Fixes: c0e0421a60bf ("ACPI: processor: Reorder acpi_processor_driver_init()")
-Signed-off-by: Can Peng <pengcan@kylinos.cn>
-Link: https://patch.msgid.link/20260729023605.197367-1-pengcan@kylinos.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Fixes: 83fe2cd56b1d ("drm/msm/dpu: Add support for Kaanapali DPU")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/741230/
+Link: https://lore.kernel.org/r/20260720-dpu-v13-dma-sspp-rec-fix-v1-1-10d69b4875e7@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_driver.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h   | 12 ++++++------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c       | 12 ++++++++++++
+ 2 files changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/acpi/processor_driver.c b/drivers/acpi/processor_driver.c
-index cda8fd7200004..cdc2ae1632b21 100644
---- a/drivers/acpi/processor_driver.c
-+++ b/drivers/acpi/processor_driver.c
-@@ -285,6 +285,12 @@ static int __init acpi_processor_driver_init(void)
- unregister_idle_drv:
- 	acpi_processor_unregister_idle_driver();
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h
+index 06da1583fb1eb..85f455a9f29c8 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h
+@@ -86,42 +86,42 @@ static const struct dpu_sspp_cfg kaanapali_sspp[] = {
+ 		.name = "sspp_8", .id = SSPP_DMA0,
+ 		.base = 0x97000, .len = 0x84,
+ 		.features = DMA_SDM845_MASK_SDMA,
+-		.sblk = &dpu_dma_sblk,
++		.sblk = &dpu_dma_sblk_v13,
+ 		.xin_id = 1,
+ 		.type = SSPP_TYPE_DMA,
+ 	}, {
+ 		.name = "sspp_9", .id = SSPP_DMA1,
+ 		.base = 0xa0000, .len = 0x84,
+ 		.features = DMA_SDM845_MASK_SDMA,
+-		.sblk = &dpu_dma_sblk,
++		.sblk = &dpu_dma_sblk_v13,
+ 		.xin_id = 5,
+ 		.type = SSPP_TYPE_DMA,
+ 	}, {
+ 		.name = "sspp_10", .id = SSPP_DMA2,
+ 		.base = 0xa9000, .len = 0x84,
+ 		.features = DMA_SDM845_MASK_SDMA,
+-		.sblk = &dpu_dma_sblk,
++		.sblk = &dpu_dma_sblk_v13,
+ 		.xin_id = 9,
+ 		.type = SSPP_TYPE_DMA,
+ 	}, {
+ 		.name = "sspp_11", .id = SSPP_DMA3,
+ 		.base = 0xb2000, .len = 0x84,
+ 		.features = DMA_SDM845_MASK_SDMA,
+-		.sblk = &dpu_dma_sblk,
++		.sblk = &dpu_dma_sblk_v13,
+ 		.xin_id = 13,
+ 		.type = SSPP_TYPE_DMA,
+ 	}, {
+ 		.name = "sspp_12", .id = SSPP_DMA4,
+ 		.base = 0xbb000, .len = 0x84,
+ 		.features = DMA_CURSOR_SDM845_MASK_SDMA,
+-		.sblk = &dpu_dma_sblk,
++		.sblk = &dpu_dma_sblk_v13,
+ 		.xin_id = 14,
+ 		.type = SSPP_TYPE_DMA,
+ 	}, {
+ 		.name = "sspp_13", .id = SSPP_DMA5,
+ 		.base = 0xc4000, .len = 0x84,
+ 		.features = DMA_CURSOR_SDM845_MASK_SDMA,
+-		.sblk = &dpu_dma_sblk,
++		.sblk = &dpu_dma_sblk_v13,
+ 		.xin_id = 15,
+ 		.type = SSPP_TYPE_DMA,
+ 	},
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 2e10add84fd71..9a993cdfab856 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -303,6 +303,16 @@ static const u32 wb2_formats_rgb_yuv[] = {
+ 	.num_formats = ARRAY_SIZE(plane_formats), \
+ 	}
  
-+	if (acpi_processor_cpufreq_init) {
-+		cpufreq_unregister_notifier(&acpi_processor_notifier_block,
-+					    CPUFREQ_POLICY_NOTIFIER);
-+		acpi_processor_cpufreq_init = false;
++#define _DMA_SBLK_V13() \
++	{ \
++	.sspp_rec0_blk = {.name = "sspp_rec0", \
++		.base = 0x1000, .len = 0x180,}, \
++	.sspp_rec1_blk = {.name = "sspp_rec1", \
++		.base = 0x3000, .len = 0x180,}, \
++	.format_list = plane_formats, \
++	.num_formats = ARRAY_SIZE(plane_formats), \
 +	}
 +
- 	return result;
- }
+ static const struct dpu_rotation_cfg dpu_rot_sc7280_cfg_v2 = {
+ 	.rot_maxheight = 1088,
+ 	.rot_num_formats = ARRAY_SIZE(rotation_v2_formats),
+@@ -353,6 +363,8 @@ static const struct dpu_sspp_sub_blks dpu_rgb_sblk = _RGB_SBLK();
  
+ static const struct dpu_sspp_sub_blks dpu_dma_sblk = _DMA_SBLK();
+ 
++static const struct dpu_sspp_sub_blks dpu_dma_sblk_v13 = _DMA_SBLK_V13();
++
+ /*************************************************************
+  * MIXER sub blocks config
+  *************************************************************/
 -- 
 2.53.0
 
