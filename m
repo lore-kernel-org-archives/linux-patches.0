@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC7B3537FF;
-	Sat, 12 Sep 2026 12:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768E147A87A;
+	Sat, 12 Sep 2026 12:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214493; cv=none; b=kf9ln5/ZbQ7o4bMo4soZvCsPzIR6xPTgH6Ge+MRTSAvnCL4NfMz+rdNe81tyn770dZ6UrZfW9N6K6AQahsOpKtQYICbsEb9Ko+AIN2xPMyzAyjwmGHP6yVyYFR26rTRNJ95u0ZlFSdjnbfyRMHcXzKgPgXhfS/mhI4fqR4Dg/mA=
+	t=1789214497; cv=none; b=NLiDcgUBBfx5gA55t6TjhLT3SXoieJEjZCxKgji7Hoz9tYL9MY1MrWMy6xqPYNgdhlnW7s5EC58cuQ4A9owhzFqvhapuIiVW5ulL2Z6ehUVrJQPK+szGGZcScrLQ/NtVDLffNTV+KYrafQB0nbH+1MrSeJ/ooJJhYVJNDJCDKKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214493; c=relaxed/simple;
-	bh=y4XppHz2EfH7udtGa+6wpTKTG90a4aipvDSW6N2ZGes=;
+	s=arc-20240116; t=1789214497; c=relaxed/simple;
+	bh=At1rkUzhyRxZ1RiV0+MGu7W0KVdjaNug/Fs6YL+cMQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dDehkuj2ItAyfYWQhQ8AW7DvXN60RaRSi1+RchcjdLd0mpRsDYOgwKJC/LDFbrL0UpkJaxVPUkWn5C2GSHEnjJMgADn+EIX9TTMl9kjLPWHS1iIXBv7pwo2gLK2twL9j+BZfB0b+05sXYGv7fC535txHxlxfFlMJSWIig1SmGWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hVLN7ae; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BJIc417N6IBgtGXgABGyMLiEShxjaizl5gBYSbxn46RXXYANyL2RvLcb7Vsq89wh9gjkehZGusmyIrCsLPm0CtDfgyYInekNTq/WNNaBhgCZtB6IMZsh07FJc0798weZNxxxWd8X0XGZDwEx+z4s4cJ1DQcEXjKbCAkUD5XcjOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uSiQiPlt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hVLN7ae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9049C1F000FF;
-	Sat, 12 Sep 2026 12:01:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uSiQiPlt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10411F000FF;
+	Sat, 12 Sep 2026 12:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214491;
-	bh=DCh3cKHR2is/xAdwuGC6mHY8l1dBH2NptetAZggYs48=;
+	s=korg; t=1789214496;
+	bh=iFWHBVafvb0Xm+Oetx2eDSSGksJSoxTkECEOYS+Nhjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0hVLN7aeyYqtEiwwfcMunlHSbENzY5zOsK9buDHVdxXc6CHCrK3H9jTgqgFXN+uzl
-	 /tnzfiJVN09kla4qZsObxvbhmjie9LpLakpBfa7VV3PJ4z2firLysx6apz4NzlhrpJ
-	 F/iR4ToggpRCbz2bdwnm2v2sDF+Z2nWmrQMNs0vk=
+	b=uSiQiPltYI8KAJo9lUAocyhCgpF95tObTZpsq8iaBSH7cQpuuznvEV5P3BPu6z2HM
+	 2l+niAtaX0i/xeIIU9dasQiTc2vAjfsBgiojPcgCQfDSv0A0+Zc0CeishVCB8EpeJ5
+	 22jqj73xS5cEZn1I4mURzDMVouwcYLt2TuFrP9cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Zhenhao Wan <whi4ed0g@gmail.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.12 0284/1376] drm/nouveau/uvmm: fix premature region free on failed OP_UNMAP_SPARSE
-Date: Sat, 12 Sep 2026 08:45:10 +0200
-Message-ID: <20260912065613.876095243@linuxfoundation.org>
+	Brian Masney <bmasney@redhat.com>,
+	Joey Lu <a0987203069@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0331/1376] clk: nuvoton: ma35d1: fix ignored div_u64 return values in PLL freq calculation
+Date: Sat, 12 Sep 2026 08:45:57 +0200
+Message-ID: <20260912065614.924807182@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,61 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenhao Wan <whi4ed0g@gmail.com>
+From: Joey Lu <a0987203069@gmail.com>
 
-commit ccf930812f23b8259ef64fd3394d53b093e4651a upstream.
+[ Upstream commit b3a2223a7805c7e6759a32a5d6ca574ad07e2710 ]
 
-In nouveau_uvmm_bind_job_submit()'s OP_UNMAP_SPARSE arm, op->reg is set
-from nouveau_uvma_region_find(), which only looks the region up and takes
-no reference; a region's sole reference is its membership in
-uvmm->region_mt. Two failure paths leave op->reg set: the -ENOENT check
-when the region is busy, and the drm_gpuvm_sm_unmap_ops_create() failure.
-The sibling nouveau_uvmm_sm_unmap_prepare() failure just below clears
-op->reg; these two do not.
+div_u64() does not modify its argument in place; the return value must
+be assigned.  Both ma35d1_calc_smic_pll_freq() and ma35d1_calc_pll_freq()
+called div_u64() and discarded the result, leaving pll_freq holding the
+undivided product and thus returning a frequency orders of magnitude too
+high.
 
-unwind_continue steps back one op, so the failing op is skipped by the
-unwind loop and its op->reg stays set. nouveau_uvmm_bind_job_cleanup()
-then enters its if (op->reg) branch and calls nouveau_uvma_region_remove()
-and nouveau_uvma_region_put() on it, dropping the tree's sole reference
-and freeing a region this job never created. The comment above the
-cleanup loop documents the broken invariant: op->reg must be NULL on
-submit failure.
+Fixes: 691521a367cf ("clk: nuvoton: Add clock driver for ma35d1 clock controller")
 
-This frees a live region on an unrelated failure, reachable single-job
-when drm_gpuvm_sm_unmap_ops_create() returns -ENOMEM; if another job owns
-the same region, its cleanup then removes and puts the freed region, a
-use-after-free. Clear op->reg on both failure paths.
-
-Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhenhao Wan <whi4ed0g@gmail.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260811-nouveau-uvmm-vmbind-fixes-v2-2-aaee4b395d04@gmail.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Joey Lu <a0987203069@gmail.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_uvmm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/nuvoton/clk-ma35d1-pll.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-@@ -1251,6 +1251,7 @@ nouveau_uvmm_bind_job_submit(struct nouv
- 							   op->va.range);
- 			if (!op->reg || op->reg->dirty) {
- 				ret = -ENOENT;
-+				op->reg = NULL;
- 				goto unwind_continue;
- 			}
+diff --git a/drivers/clk/nuvoton/clk-ma35d1-pll.c b/drivers/clk/nuvoton/clk-ma35d1-pll.c
+index ff3fb8b87c24b..9bb18fc371d17 100644
+--- a/drivers/clk/nuvoton/clk-ma35d1-pll.c
++++ b/drivers/clk/nuvoton/clk-ma35d1-pll.c
+@@ -92,7 +92,7 @@ static unsigned long ma35d1_calc_smic_pll_freq(u32 pll0_ctl0,
+ 	p = FIELD_GET(SPLL0_CTL0_OUTDIV, pll0_ctl0);
+ 	outdiv = 1 << p;
+ 	pll_freq = (u64)parent_rate * n;
+-	div_u64(pll_freq, m * outdiv);
++	pll_freq = div_u64(pll_freq, m * outdiv);
+ 	return pll_freq;
+ }
  
-@@ -1259,6 +1260,7 @@ nouveau_uvmm_bind_job_submit(struct nouv
- 								op->va.range);
- 			if (IS_ERR(op->ops)) {
- 				ret = PTR_ERR(op->ops);
-+				op->reg = NULL;
- 				goto unwind_continue;
- 			}
+@@ -110,7 +110,7 @@ static unsigned long ma35d1_calc_pll_freq(u8 mode, u32 *reg_ctl, unsigned long p
  
+ 	if (mode == PLL_MODE_INT) {
+ 		pll_freq = (u64)parent_rate * n;
+-		div_u64(pll_freq, m * p);
++		pll_freq = div_u64(pll_freq, m * p);
+ 	} else {
+ 		x = FIELD_GET(PLL_CTL1_FRAC, reg_ctl[1]);
+ 		/* 2 decimal places floating to integer (ex. 1.23 to 123) */
+-- 
+2.53.0
+
 
 
