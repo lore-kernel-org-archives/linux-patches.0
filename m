@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16CF32BCF4C;
-	Sat, 12 Sep 2026 18:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2132BCF4C;
+	Sat, 12 Sep 2026 18:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238311; cv=none; b=Y20C1kMBARU95ywB2hUvBKq0xnPbAqtQTVaAWM3ngu5tUwgw3joEf6xLwRpxgd4cqyfwrOoUji+4BOHW0vCOByJzctVCS5b3Lh+46CIUeLSEce5KGzOYK2cTTsynjQ+Mg+6bAq5ZgzIQ3ek11gCZbzXxHV1hwOiRWmmZVa7Uz2o=
+	t=1789238316; cv=none; b=YlEX757Jgwwtu7YCks1Ebc3+NDbzHFa4ZokpgfnAHBz803ol+vODwbqUuwj2n8sRQzFctPXpNvU3usOiBOQhmiQAQY5h3CJbDnfruY6JkyTP2PF1NCfEGID7br4iFYIfhXPR1nS41L8LskA66F6PjW/1wGarQc4vSLVNlcjVmg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238311; c=relaxed/simple;
-	bh=10dA59CnsOcObm/IuiV12mo8zFn62odrfki5XJFxwyM=;
+	s=arc-20240116; t=1789238316; c=relaxed/simple;
+	bh=ycjrSXOXOCVS6ffQwSADpw25IbImGSIACT+Jk3SOJHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qo4B8Pvrwyi0S9TKPQaAJUGH9jG0Hr16+agtZOTcKVDIe3QC4ApsZGC5sB9LbAiEwM9GATIuAisP/j5yk5McHWqgGSYrm4sENUjuRA0cokyLXpwmyc8ny4YmfcSd1JZ7lsLv0kPVVdHHI6UwyKz/hpaHWLsV44XQS/1rDVFACcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZptfMm82; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j/kkm6kYUZGorzEGmlp0XHnu/iJHL8KkJZp8gVwrRi5swaIwfNCNEx4dOCCKsDthHmiNPfwA3El9SaAmgUZ7iC+IetoNYV+HBW4Euor2sAs3onX1mdhHaipKL23dAfZFZ7WW7zS096yN8urG73UYrsK+5ojvxaXn/ZqtM8oTXfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pJjqneM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZptfMm82"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F021F000FF;
-	Sat, 12 Sep 2026 18:38:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pJjqneM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF93B1F000FF;
+	Sat, 12 Sep 2026 18:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238309;
-	bh=OoUiXfS24y2ju3jpLoRwbXh4+P5bMyqf1LElhURKGsk=;
+	s=korg; t=1789238315;
+	bh=JYG8rQ9ADwybTdzdJf7uX1oDsuz/mq415Q86CP2KGy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZptfMm828fgJxw1nmxhOU5vBzpCOq2dkKlMSrGd78CvlOYngvBKWXjv2ZuJg/ZCtP
-	 3nsKxBqvhgb5RJkdpPcKB8A5w/2yVJ/GVR4lbhmVjqVXHHn7hbK+ITfcb58o0rZsGL
-	 LTUczvjHoJ+Nl2P479iRAOKCFavSLcNr01O1coM8=
+	b=0pJjqneMeNmNIou9yG0kDkKGgF3JItQQ1xotRx4HEld33eqC5IGno5FuECzLgjIn3
+	 ECqENRHVnZbHwlhZgQnNPVxYdA5Puzm8oeEswwjAoFNwSMii6wh5s/hkn7bwynDgM0
+	 WyR2pnxmMcBmlnLZ5J8z5raKFyeZr/ZiyPd3Oz0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomasz Figa <tfiga@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 435/935] platform/chrome: sensorhub: Fix memory overread in ring handler
-Date: Sat, 12 Sep 2026 08:57:45 +0200
-Message-ID: <20260912065536.806773228@linuxfoundation.org>
+Subject: [PATCH 5.15 436/935] crypto: qat - clear AES key schedule from stack
+Date: Sat, 12 Sep 2026 08:57:46 +0200
+Message-ID: <20260912065536.830273972@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,64 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit d1ceb2b2324717fa30b44d56ef0c52813e239569 ]
+[ Upstream commit d41a9fcfb7f9ee36e4a4aaf5e7996bca6be1e7a9 ]
 
-`max_response` and `sensor_num` are read from different EC commands:
+qat_alg_xts_reverse_key() expands the forward XTS AES key on the stack.
+That schedule contains key material and can remain in the stack frame.
 
-- `max_response` is from cros_ec_get_proto_info().
-    ec_dev->max_response = info->max_response_packet_size -
-                                    sizeof(struct ec_host_response);
+Clear the temporary crypto_aes_ctx with memzero_explicit() after the copy.
 
-- `sensor_num` is from cros_ec_get_sensor_count().
-    sensor_num = cros_ec_get_sensor_count(ec);
-
-With a malfunctioning EC firmware, it is possible that the `msg->insize`
-(i.e., `fifo_info_length` in the context) could be clamped in
-cros_ec_cmd_xfer() because `msg->insize` is greater than `max_response`.
-
-    int fifo_info_length =
-            sizeof(struct ec_response_motion_sense_fifo_info) +
-            sizeof(u16) * sensorhub->sensor_num;
-
-This means the number of read bytes could be less than expected.  As a
-result, the subsequent memcpy() in cros_ec_sensorhub_ring_handler()
-overreads the `resp->fifo_info` buffer.
-
-Check the return value of cros_ec_cmd_xfer_status() and abort if the
-number of bytes read does not match the expected length.
-
-Fixes: 145d59baff59 ("platform/chrome: cros_ec_sensorhub: Add FIFO support")
-Reviewed-by: Tomasz Figa <tfiga@chromium.org>
-Link: https://lore.kernel.org/r/20260702082745.1014968-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Fixes: 5106dfeaeabe ("crypto: qat - add AES-XTS support for QAT GEN4 devices")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_sensorhub_ring.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/crypto/qat/qat_common/qat_algs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/chrome/cros_ec_sensorhub_ring.c b/drivers/platform/chrome/cros_ec_sensorhub_ring.c
-index 60a466d45a2a0..5bdeb9860a5b3 100644
---- a/drivers/platform/chrome/cros_ec_sensorhub_ring.c
-+++ b/drivers/platform/chrome/cros_ec_sensorhub_ring.c
-@@ -797,8 +797,15 @@ static void cros_ec_sensorhub_ring_handler(struct cros_ec_sensorhub *sensorhub)
- 		sensorhub->msg->outsize = 1;
- 		sensorhub->msg->insize = fifo_info_length;
+diff --git a/drivers/crypto/qat/qat_common/qat_algs.c b/drivers/crypto/qat/qat_common/qat_algs.c
+index f56ee4cc5ae8b..695800cd689d7 100644
+--- a/drivers/crypto/qat/qat_common/qat_algs.c
++++ b/drivers/crypto/qat/qat_common/qat_algs.c
+@@ -481,6 +481,7 @@ static void qat_alg_xts_reverse_key(const u8 *key_forward, unsigned int keylen,
+ 		memcpy(key_reverse + AES_BLOCK_SIZE, key - AES_BLOCK_SIZE,
+ 		       AES_BLOCK_SIZE);
+ 	}
++	memzero_explicit(&aes_expanded, sizeof(aes_expanded));
+ }
  
--		if (cros_ec_cmd_xfer_status(ec->ec_dev, sensorhub->msg) < 0)
-+		ret = cros_ec_cmd_xfer_status(ec->ec_dev, sensorhub->msg);
-+		if (ret < 0)
-+			goto error;
-+		if (ret != fifo_info_length) {
-+			dev_warn_ratelimited(sensorhub->dev,
-+					     "Mismatch read length: size %d - expected %d\n",
-+					     ret, fifo_info_length);
- 			goto error;
-+		}
- 
- 		memcpy(fifo_info, &sensorhub->resp->fifo_info,
- 		       fifo_info_length);
+ static void qat_alg_skcipher_init_dec(struct qat_alg_skcipher_ctx *ctx,
 -- 
 2.53.0
 
