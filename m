@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF2F37FF60;
-	Sat, 12 Sep 2026 09:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C4E37C916;
+	Sat, 12 Sep 2026 09:04:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203871; cv=none; b=DIb+zT73GgYVuXe1sCElEJw2zPPPWC9pI8nxcgDHugMtJAu/Qa3KYERo1PJxwVe8wrjhJFleh9B2wdZK0HCOfUdmOJS72tkgATnJ7MeuLweFQXEqcBi8Nch/Z3R/2/LUMBZBdh/ukgqh/+byYMPda6h+Jkcqxr/IvxHzgpvZ4eY=
+	t=1789203876; cv=none; b=To0ONMntZDvN+9+H1GUzkQOfP2T7+mEOUF02c3CEMRt5+rpyCT/25oBXuUYSAGz6y8mJ3fBRDwEn5yPy7hygyDE3HCIyIRW6m0ol9YWfmN1yPF2K/cBXXeOTSd+MBZ0lOgyTSMsrdo5oJxTMtT17aPeUKxlvxzhOqqfUM4PwHUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203871; c=relaxed/simple;
-	bh=Jr9CyV/X36YgobW4CqCKmIqHCkwyT2TUhwCQZj52ZQE=;
+	s=arc-20240116; t=1789203876; c=relaxed/simple;
+	bh=mfdUGbYGBL42Qo18UmHr7/X3exElRMNkXSlCnFfg0QY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uGwRo25jwJgpq5fbvDO+dJnmRiLrQhrDsaBc8fsvPTlGfpp9aqBL97AaHgIzg+z9OqmbtUZOkVPPMHSPj/Vyy+fW2/vrLHr4Yf4tA18ysn1F3vmuo9/y9c7jbD9mM5Le+Rh9/JGPekyQaySFPCsX8dTzZzEntjZY3S6uYQhIuJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zB7vVa2U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HQ0qZ9pQKoPpDBf3ehQ3xpbtc4PUuVqMitp2Gr/miUjoAep0FksqSMVP4hHjNa9GE6kdyiEfCWwCFPXk3ccHqt9cndJMNkR3DhR2CiIS63QmNqzy1VCnnK03GYrs8rNZOh/heAi4ryBEsZiSNXnIjSGViirX/I0VNne+wjHgQxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XKohWBw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zB7vVa2U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08A61F000FF;
-	Sat, 12 Sep 2026 09:04:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XKohWBw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0094F1F000FF;
+	Sat, 12 Sep 2026 09:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203870;
-	bh=uxNJJrym5aPHbyFRVtxLXyzRQS1TM2Wq1Z8ZzJ1iifo=;
+	s=korg; t=1789203875;
+	bh=Xr83KiWmsyKMwvJdLJz5I/BQKBBN9XIqM9ktC/jY9gE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zB7vVa2U88Yzn7xNv2CK7ZBtcBCCuJqr0lB2Ht2x2Fh9S9XuVFB+7CPxTvSqwWcbl
-	 RmbTW5HfZj9d8lcT6bjJad/6b+19IOJ6hwyS4ZIKtpG8ZqKfQjGzaeCO4Nl1ixUMsX
-	 FnN9g2e36w3kGg12VD596+ExNmdj3r+ZE4Kj7u8A=
+	b=2XKohWBwcIL3LmmUgU8+ZEXUzOwl9IzxFzZoI59W2BJzkIczo7QhBaLXC0+cKQu6/
+	 SteR0QOpl9elS5YcEtZCuD2znjuDMsB62rV7Htm1Ddu3x9hDBOBNN3C2ud7lgnGMu/
+	 /RL99jGslwquX04R92YglYypdjyYl/1UXzJB7Vlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Szymon Wilczek <swilczek.lx@gmail.com>,
+	Marius Cristea <marius.cristea@microchip.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1495/1815] hwmon: (coretemp) Fix core_data leak on CPUs without PTS
-Date: Sat, 12 Sep 2026 08:54:05 +0200
-Message-ID: <20260912065724.097875852@linuxfoundation.org>
+Subject: [PATCH 7.2 1496/1815] hwmon: (emc1403) Drop hysteresis for low limit temperature
+Date: Sat, 12 Sep 2026 08:54:06 +0200
+Message-ID: <20260912065724.120932239@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,58 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Szymon Wilczek <swilczek.lx@gmail.com>
+From: Marius Cristea <marius.cristea@microchip.com>
 
-[ Upstream commit 0cd8450c257faa0cece0e0c43d3b55d1a389acc7 ]
+[ Upstream commit 75f2c0b3690702c90863c2e138cb5520670845ea ]
 
-pdata->core_data is allocated in init_temp_data() when the first core
-temp_data of a package is created, but it is only released from
-destroy_temp_data(), and only in the branch that handles the package
-temp_data.
+Remove the hysteresis for low temperature limit, in hardware
+the hysteresis is applied only to the maxim limit and the
+critical limit temperature.
 
-Package temp_data is created solely when the CPU supports
-X86_FEATURE_PTS. On a CPU without it, coretemp_cpu_online() never calls
-coretemp_add_core() with pkg_flag set, so pdata->pkg_data stays NULL.
-coretemp_cpu_offline() then skips the removal of the package interface,
-destroy_temp_data() is never called for package data, and the array is
-still allocated when coretemp_device_remove() frees the platform data
-that pointed at it.
-
-Release the array in coretemp_device_remove(). destroy_temp_data() sets
-pdata->core_data to NULL when it frees it, so the added kfree() is a
-no-op on CPUs that do have PTS.
-
-Tested on an Intel Core i5-1135G7. The driver was instrumented to log
-every allocation and release of pdata->core_data, and the PTS check in
-coretemp_cpu_online() was patched out to emulate a CPU without package
-thermal support. Without this change the array was allocated and never
-released, and coretemp_device_remove() still saw a non-NULL pointer.
-With it the array is released and the pointer accounting balances. On an
-unmodified build the release still happens via the package temp_data and
-the added kfree() sees NULL, with no slab warnings over repeated module
-load and unload cycles.
-
-Fixes: 1a793caf6f69 ("hwmon: (coretemp) Use dynamic allocated memory for core temp_data")
-Signed-off-by: Szymon Wilczek <swilczek.lx@gmail.com>
-Link: https://lore.kernel.org/r/20260810192344.3733721-1-swilczek.lx@gmail.com
+Fixes: 54392ce4446e3 ("hwmon: (emc1403) Add support for min_hyst attributes")
+Signed-off-by: Marius Cristea <marius.cristea@microchip.com>
+Link: https://lore.kernel.org/r/20260813-emc1403_remove_min_hyst-v1-1-43a0d05d9f49@microchip.com
+[groeck: Updated subject]
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/hwmon/emc1403.rst |  8 ++++----
+ drivers/hwmon/emc1403.c         | 27 +++++++++++----------------
+ 2 files changed, 15 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index 6215ea49faaa9..ab9c8cbf887aa 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -650,6 +650,7 @@ static void coretemp_device_remove(int zoneid)
- 	struct platform_data *pdata = platform_get_drvdata(pdev);
+diff --git a/Documentation/hwmon/emc1403.rst b/Documentation/hwmon/emc1403.rst
+index 77060d5153238..ce258f0fccc60 100644
+--- a/Documentation/hwmon/emc1403.rst
++++ b/Documentation/hwmon/emc1403.rst
+@@ -71,10 +71,10 @@ and EMC14x8 support eight sensors (one internal, seven external).
  
- 	ida_destroy(&pdata->ida);
-+	kfree(pdata->core_data);
- 	kfree(pdata);
- 	platform_device_unregister(pdev);
+ The chips implement three limits for each sensor: low (tempX_min), high
+ (tempX_max) and critical (tempX_crit.) The chips also implement an
+-hysteresis mechanism which applies to all limits. The relative difference
+-is stored in a single register on the chip, which means that the relative
+-difference between the limit and its hysteresis is always the same for
+-all three limits.
++hysteresis mechanism which applies to high and critical limits. The relative
++difference is stored in a single register on the chip, which means that the
++relative difference between the limit and its hysteresis is always the same
++for high and critical limits.
+ 
+ This implementation detail implies the following:
+ 
+diff --git a/drivers/hwmon/emc1403.c b/drivers/hwmon/emc1403.c
+index cd753b38709f2..2f6dadbce68a5 100644
+--- a/drivers/hwmon/emc1403.c
++++ b/drivers/hwmon/emc1403.c
+@@ -305,10 +305,9 @@ static int emc1403_get_hyst(struct thermal_data *data, int channel,
+ 	ret = regmap_read(data->regmap, 0x21, &hyst);
+ 	if (ret < 0)
+ 		return ret;
+-	if (map == temp_min)
+-		*val = limit + hyst * 1000;
+-	else
+-		*val = limit - hyst * 1000;
++
++	*val = limit - hyst * 1000;
++
+ 	return 0;
  }
+ 
+@@ -324,9 +323,6 @@ static int emc1403_temp_read(struct thermal_data *data, u32 attr, int channel, l
+ 	case hwmon_temp_input:
+ 		ret = emc1403_get_temp(data, channel, ema1403_temp_map[attr], val);
+ 		break;
+-	case hwmon_temp_min_hyst:
+-		ret = emc1403_get_hyst(data, channel, temp_min, val);
+-		break;
+ 	case hwmon_temp_max_hyst:
+ 		ret = emc1403_get_hyst(data, channel, temp_max, val);
+ 		break;
+@@ -548,7 +544,6 @@ static umode_t emc1403_temp_is_visible(const void *_data, u32 attr, int channel)
+ 	case hwmon_temp_max_alarm:
+ 	case hwmon_temp_crit_alarm:
+ 	case hwmon_temp_fault:
+-	case hwmon_temp_min_hyst:
+ 	case hwmon_temp_max_hyst:
+ 		return 0444;
+ 	case hwmon_temp_min:
+@@ -591,35 +586,35 @@ static const struct hwmon_channel_info * const emc1403_info[] = {
+ 	HWMON_CHANNEL_INFO(chip, HWMON_C_UPDATE_INTERVAL),
+ 	HWMON_CHANNEL_INFO(temp,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT
+ 			   ),
 -- 
 2.53.0
 
