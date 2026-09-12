@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB1533A71A;
-	Sat, 12 Sep 2026 15:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71003264F4;
+	Sat, 12 Sep 2026 15:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228437; cv=none; b=nCsSiBRRAp1o2s8agBMfkJQpgjV1dUOc8Blmqp61rxAqi4RRxjq/QGqhXJ7NYsI39E0dxntdxtAuB30GFLUiB6uVHSwU43/xRmNkl2MJGscWZ1+zgODXAAM7j+Ywfc2xkzcKVsbq6NuAX3nfbdRa8dj2/aaAvvQwJIqlJAcaVmo=
+	t=1789228444; cv=none; b=uWgxFGMxWmPRVmRT3VK5UkDYyu5rWXs3pkLA9ZSTpndTRIWmpASv0XDDYK/F/INsjXD3JK4L8y41SS701V7f2IgvylnjQjVVvyGiNqz9zuvI5/DnIZNcle02iTjDV3QyRRP7Kmq+vry1PbaRfy89Mrm7bSNuxaTCOuuK0VoMi5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228437; c=relaxed/simple;
-	bh=tGS+6UMSoHUPHtMvumNJQCRAYx52Zsxb9r5JInnRDdE=;
+	s=arc-20240116; t=1789228444; c=relaxed/simple;
+	bh=sSyOoB2afaMi4lknXiUO5XO9QAXlRTfxNMp4xREdCGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ownTZXSu9u8bl6cmvo+fIah3m0MhBzng8VD6stkeVV7gqN1Q58rAGXYexQMa65z+ibiwacx56NmxN+YhqyLI1kRYHuon+Kp0bEf+aLm0VdajcHNALpB9mX67V/QzR+4Y8F5GGZ2WCRtTWN52xJq0MGAW69A6QtmM/u/7Z4iXoGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRI9iD6N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l2/RIzLfCWoNsAmLkT2ufbpj1tQ/MlYA2XcDNS+b41+5WN2l9cSitbrl/dGmaKqXGMDOYiWEBfRfQcN9ieieOc9PnjXOtxWO3DjbJBRFhUexYPrLlbzPIUavhUQb3tLXGFmkJ4do3ZNLqXFGD3tlYiG4FG0ZSeGzNWd85SE0mC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zP55/utg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRI9iD6N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613B61F000FF;
-	Sat, 12 Sep 2026 15:53:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zP55/utg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28D31F000FF;
+	Sat, 12 Sep 2026 15:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228436;
-	bh=WFQ6CmpubVnlaezhjaoay8kfTAEssfrqeWS6NkdIQsU=;
+	s=korg; t=1789228441;
+	bh=M6K5N18ZzB5iGVQKNaqhkN/U3xd6oyehKxTPDbyuyfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lRI9iD6NOVqL2vu87qvb9Kv8yWlrs2P1lAu8KCX9GstDg4jMqrsoz74Z8g8HmY2ON
-	 iJSgvNzcmOAMhlhwNatEa05Y+lfTG4Dim1xuotwtszgOtv5xT+aoDZiu95niYLHyig
-	 cYhiQGksT7HY+/NaCCylEXOm+q9Y9W81vajenuBM=
+	b=zP55/utg/DXaB2egk+70XVVy1nm874JlFO0f8R2jC9LyU7B5tSyTIMegNW4b21X+D
+	 JvMc636bTjng6U9BL3vu8BxPY3NhzCneZ72StId+4IgnjzDQJKUV/y0lnzHa1uQoxK
+	 o5iRrI6auiVNfo868cVYWtZ7R0+VFIvAenShGZLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arash Golgol <arash.golgol@gmail.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 0386/1191] media: vimc: fix pixel format lookup in enum_framesizes
-Date: Sat, 12 Sep 2026 08:51:54 +0200
-Message-ID: <20260912065556.909818632@linuxfoundation.org>
+Subject: [PATCH 6.1 0387/1191] media: zoran: Avoid freeing a registered video_device twice
+Date: Sat, 12 Sep 2026 08:51:55 +0200
+Message-ID: <20260912065556.931645624@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,42 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arash Golgol <arash.golgol@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-commit ad4c65fa30cfb00e2e06adae9a8eb407086eaa66 upstream.
+commit 0735e0b5a96761a9ce277a238e834008ad92a0a5 upstream.
 
-vimc_capture_enum_framesizes() looks up the requested format using
-vimc_pix_map_by_code(), which searches the pix map table by media
-bus code (MEDIA_BUS_FMT_*).
+zoran_init_video_device() installs zoran_vdev_release() as the
+video_device release callback through zoran_template. After
+video_register_device() succeeds, video_unregister_device() drops the
+registered video_device reference and the V4L2 core eventually invokes
+that release callback, which kfree()s the video_device.
 
-However, v4l2_frmsizeenum::pixel_format holds a V4L2 pixel format
-(V4L2_PIX_FMT_*), not a media bus code, so valid pixel formats end
-up being rejected with -EINVAL.
+zoran_exit_video_devices() called video_unregister_device() and then
+kfree(zr->video_dev), so device teardown could free the same
+video_device twice.
 
-Fix this by using vimc_pix_map_by_pixelformat() instead, which
-performs the lookup by pixel format as the ioctl expects.
+Remove the direct kfree() and clear the cached pointer after
+unregistering. The pre-registration failure path keeps its manual free
+because the video_device was not registered there.
 
-Fixes: 09c41a23a2e2 ("media: Revert "media: vimc: propagate pixel format in the stream"")
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: 82e3a496eb56 ("media: staging: media: zoran: move videodev alloc")
 Cc: stable@vger.kernel.org
-Signed-off-by: Arash Golgol <arash.golgol@gmail.com>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vimc/vimc-capture.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/pci/zoran/zoran_card.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/test-drivers/vimc/vimc-capture.c
-+++ b/drivers/media/test-drivers/vimc/vimc-capture.c
-@@ -177,8 +177,8 @@ static int vimc_capture_enum_framesizes(
- 	if (fsize->index)
- 		return -EINVAL;
+--- a/drivers/media/pci/zoran/zoran_card.c
++++ b/drivers/media/pci/zoran/zoran_card.c
+@@ -889,7 +889,7 @@ static int zoran_init_video_device(struc
+ static void zoran_exit_video_devices(struct zoran *zr)
+ {
+ 	video_unregister_device(zr->video_dev);
+-	kfree(zr->video_dev);
++	zr->video_dev = NULL;
+ }
  
--	/* Only accept code in the pix map table */
--	vpix = vimc_pix_map_by_code(fsize->pixel_format);
-+	/* Only accept pixel_format in the pix map table */
-+	vpix = vimc_pix_map_by_pixelformat(fsize->pixel_format);
- 	if (!vpix)
- 		return -EINVAL;
- 
+ static int zoran_init_video_devices(struct zoran *zr)
 
 
