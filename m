@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C8E28B4FA;
-	Sat, 12 Sep 2026 08:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91555344DB5;
+	Sat, 12 Sep 2026 08:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203339; cv=none; b=V0taRBBgYEoDks0fkko33EHbxZuybXrFcg2JgelgTKtpubEIq6ztNT81040ISW+z2DVfDmr6rRVelI6+zMn42u0JDGsDVRb8rzeOc2f6EwHKh9c0MxyUTomzOYy4saE34WSHMxQAORXBEIPm7MafXY+O74P2OvRfq/vbOhXy5Tk=
+	t=1789203344; cv=none; b=Dbw2mXJY2nJuoXwuhzqGuG5KIMXEY21nmcCXxbCxT69q85mNP95pKoCEN7Kt+oAC3n3VYcjvMVTkN/zu1NHTKA202GOveARl0lxT1kS1wR+KcUNJy75ZnBsBeOQKOgGgHinEs+FUqTElZ0strcxzYi09gT7tdHhEzgXIYUMxBv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203339; c=relaxed/simple;
-	bh=Q5ehWY7Bs0FE/K4TlSm0byQ8HVcAYQY1pMY8UHCU6Q8=;
+	s=arc-20240116; t=1789203344; c=relaxed/simple;
+	bh=s7Xc9DWTa9SDKCIrPVKGC4UtsazEEvF6StgUJ59RA4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ev8a4ZH2EDagWFiZ6lc664i5NSKdz8q/zYxjrKUg3wFYzFAIa762/doa4/yCUF+1wdgD+tlWfqvfTweQdLqC6T83b43wZiEtAxjUqtxKT0m8IdcfxrmV6G+7XDat77erl4Rd30vjEMeujLMy/HfkQfpu2zydy4iiOh38XNimUsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=weIjNxVw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PyJZnvCohznSWM9S+KEEOO1ef0KXzuI7Zb/jVCvP+R8wq8LDehuwBV6Okc0TFizYk+/ogx6Nx1WUPwFkDpCnHAvSh945xOEE2xb5MPM4kRqgfHHGp0kNQsmIjrTHIlVZYjWaF1KeEHYI6Xk5IRfcD6hsw9gzADaZne0WeYKDmOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYBVuPdJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="weIjNxVw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03EAA1F000FF;
-	Sat, 12 Sep 2026 08:55:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYBVuPdJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205851F000FF;
+	Sat, 12 Sep 2026 08:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203338;
-	bh=9ZxMCFJDN2gKn+ZzvBWvYaK8mBpK1GwcMRhZX374e+E=;
+	s=korg; t=1789203343;
+	bh=v/FeYuNCPaR78Eu/WxSOmhu/DJwsOw2Sg9HgOeUcZrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=weIjNxVwIPT4oA6mE972B+UfOTjkNQHP3TA6l1vtANCLusiTI7FVavw28eslB8yQ3
-	 FIj40ETAzCRkLS0wGmD7LLT5n/9iX7BcozSRwQHjsCoA/J9G4tk3Tr+VPPmKL5WJ5t
-	 /eviWxnZg5qp35rQGjUT//bc7GYkxLFzfWT0TTY0=
+	b=uYBVuPdJorNNmBGndV667lpL7D/CkSZnk9oKuZ7FFD2OCMZMlv0i4Kjhzv1TtQGrf
+	 /hwH1+CvS3LJUL4zE5C42DGyRN8uG41xRCXbCopWp3NanuZlZC6CWJmY4OmbNgHEL8
+	 MWo5UFs+OEj1NHzkG2qXiHagS6bGKXPBQtsuU+u4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1389/1815] firewire: core: fix memory leak in error path of build_tree()
-Date: Sat, 12 Sep 2026 08:52:19 +0200
-Message-ID: <20260912065721.633180927@linuxfoundation.org>
+Subject: [PATCH 7.2 1372/1815] ASoC: pxa: Use devm_clk_get_optional() for extclk clock
+Date: Sat, 12 Sep 2026 08:52:02 +0200
+Message-ID: <20260912065721.238347041@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,149 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 05bfb1327dc5fb61528bab31cd8f0c1e4bddec23 ]
+[ Upstream commit 6ec64d757af9b75a3c64f9f7dad76bdc1efc06ca ]
 
-In the error path of build_tree(), node instances can remain in the local
-linked list when the function returns.
+The Device Tree binding defines the extclk clock as an optional
+property, but the driver currently uses devm_clk_get() and manually
+handles the absence of the clock.
 
-Whenever an invalid value is detected in the self ID sequence, each
-allocated node instance is either an entry in the linked list or an
-entry in the ports array of its parent node. Therefore, the allocate
-node instances can be safely released by traversing the linked list from
-its head.
+Use devm_clk_get_optional() to match the binding and simplify the
+optional clock handling. This also propagates errors other than the
+absence of the optional clock, including -EPROBE_DEFER.
 
-Release the remaining node instances with for_each_fw_node() before
-returning to the caller.
+This changes the existing behavior for errors other than
+-EPROBE_DEFER. RFC to discuss whether these errors should cause probe
+to fail rather than being treated as an unavailable optional clock.
 
-Fixes: 3038e353cfaf ("firewire: Add core firewire stack.")
-Reported-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Link: https://lore.kernel.org/all/20260727095955.104972-1-nihaal@cse.iitm.ac.in/
-Link: https://lore.kernel.org/r/20260811120928.700577-4-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Fixes: 90eb6b59d311 ("ASoC: pxa-ssp: add support for an external clock in devicetree")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260811100949.61142-1-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/core-topology.c  | 30 +++++++++++++++++++++---------
- drivers/firewire/node-tree-test.c |  4 ----
- 2 files changed, 21 insertions(+), 13 deletions(-)
+ sound/soc/pxa/pxa-ssp.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/firewire/core-topology.c b/drivers/firewire/core-topology.c
-index e032497b25940..ee6b54f89859e 100644
---- a/drivers/firewire/core-topology.c
-+++ b/drivers/firewire/core-topology.c
-@@ -88,6 +88,17 @@ static inline struct fw_node *fw_node(struct list_head *l)
- 	return list_entry(l, struct fw_node, link);
- }
- 
-+typedef void (*fw_node_callback_t)(struct fw_card *card, struct fw_node *node,
-+				   struct fw_node *parent);
-+
-+static void for_each_fw_node(struct fw_card *card, struct fw_node *root,
-+			     fw_node_callback_t callback);
-+
-+static void free_fw_node(struct fw_card *card, struct fw_node *node, struct fw_node *parent)
-+{
-+	kfree(node);
-+}
-+
- /*
-  * This function builds the tree representation of the topology given
-  * by the self IDs from the latest bus reset.  During the construction
-@@ -134,7 +145,7 @@ static struct fw_node *build_tree(struct fw_card *card, const u32 *sid, int self
- 			if (PTR_ERR(self_id_sequence) != -ENODATA) {
- 				fw_err(card, "inconsistent extended self IDs: %ld\n",
- 				       PTR_ERR(self_id_sequence));
--				return NULL;
-+				goto error;
- 			}
- 			break;
- 		}
-@@ -168,18 +179,18 @@ static struct fw_node *build_tree(struct fw_card *card, const u32 *sid, int self
- 		    (enumerator.quadlet_count > 0 && parent_port_count != 1)) {
- 			fw_err(card, "parent port inconsistency for node %d: parent_count=%d\n",
- 			       phy_id, parent_port_count);
--			return NULL;
-+			goto error;
+diff --git a/sound/soc/pxa/pxa-ssp.c b/sound/soc/pxa/pxa-ssp.c
+index f8054c1c59fae..3a0abcb0bfbdf 100644
+--- a/sound/soc/pxa/pxa-ssp.c
++++ b/sound/soc/pxa/pxa-ssp.c
+@@ -769,13 +769,10 @@ static int pxa_ssp_probe(struct snd_soc_dai *dai)
+ 			goto err_priv;
  		}
  
- 		if (phy_id != phy_packet_self_id_get_phy_id(self_id_sequence[0])) {
- 			fw_err(card, "PHY ID mismatch in self ID: %d != %d\n",
- 			       phy_id, phy_packet_self_id_get_phy_id(self_id_sequence[0]));
--			return NULL;
-+			goto error;
- 		}
- 
- 		if (child_port_count > stack_depth) {
- 			fw_err(card, "topology stack underflow\n");
--			return NULL;
-+			goto error;
- 		}
- 
- 		/*
-@@ -197,7 +208,7 @@ static struct fw_node *build_tree(struct fw_card *card, const u32 *sid, int self
- 		node = fw_node_create(self_id_sequence[0], total_port_count, card->color);
- 		if (node == NULL) {
- 			fw_err(card, "out of memory while building topology\n");
--			return NULL;
-+			goto error;
- 		}
- 
- 		if (phy_id == (card->node_id & 0x3f))
-@@ -256,12 +267,13 @@ static struct fw_node *build_tree(struct fw_card *card, const u32 *sid, int self
- 	card->beta_repeaters_present = beta_repeaters_present;
- 
- 	return local_node;
-+error:
-+	++card->color;
-+	list_for_each_entry_safe(node, child, &stack, link)
-+		for_each_fw_node(card, node, free_fw_node);
-+	return NULL;
- }
- 
--typedef void (*fw_node_callback_t)(struct fw_card * card,
--				   struct fw_node * node,
--				   struct fw_node * parent);
+-		priv->extclk = devm_clk_get(dev, "extclk");
++		priv->extclk = devm_clk_get_optional(dev, "extclk");
+ 		if (IS_ERR(priv->extclk)) {
+ 			ret = PTR_ERR(priv->extclk);
+-			if (ret == -EPROBE_DEFER)
+-				goto err_priv;
 -
- static void for_each_fw_node(struct fw_card *card, struct fw_node *root,
- 			     fw_node_callback_t callback)
- {
-diff --git a/drivers/firewire/node-tree-test.c b/drivers/firewire/node-tree-test.c
-index 251c0113639f2..5e6bb58537e94 100644
---- a/drivers/firewire/node-tree-test.c
-+++ b/drivers/firewire/node-tree-test.c
-@@ -521,7 +521,6 @@ static void node_tree_test_invalid_extended_self_id_sequence(struct kunit *test)
- 
- 	card->node_id = LOCAL_BUS | 0x03;
- 
--	// TODO: Memory leak.
- 	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
- 	KUNIT_EXPECT_NULL(test, card->local_node);
- }
-@@ -541,7 +540,6 @@ static void node_tree_test_invalid_phy_id(struct kunit *test)
- 
- 	card->node_id = LOCAL_BUS | 0x03;
- 
--	// TODO: Memory leak.
- 	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
- 	KUNIT_EXPECT_NULL(test, card->local_node);
- }
-@@ -561,7 +559,6 @@ static void node_tree_test_invalid_child_port_count(struct kunit *test)
- 
- 	card->node_id = LOCAL_BUS | 0x03;
- 
--	// TODO: Memory leak.
- 	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
- 	KUNIT_EXPECT_NULL(test, card->local_node);
- }
-@@ -581,7 +578,6 @@ static void node_tree_test_invalid_parent_port_count(struct kunit *test)
- 
- 	card->node_id = LOCAL_BUS | 0x03;
- 
--	// TODO: Memory leak.
- 	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
- 	KUNIT_EXPECT_NULL(test, card->local_node);
- }
+-			priv->extclk = NULL;
++			goto err_priv;
+ 		}
+ 	} else {
+ 		priv->ssp = pxa_ssp_request(dai->id + 1, "SoC audio");
 -- 
 2.53.0
 
