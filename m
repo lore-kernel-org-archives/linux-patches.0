@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888B9416853;
-	Sat, 12 Sep 2026 08:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256FC414A1D;
+	Sat, 12 Sep 2026 08:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202275; cv=none; b=fwsHRXI82bLfP4Xmkhhl79m3NKzu7Wc6zz6Lnwifg6t4XVhEFmGLsORmoiVpz1nmoCLRImqeYHS3xm0OV2VxAe5fYzeR+oPkAFvgUsMEHygerOCdHNQ6m9CN3bOL3VFQvwZrOgT4OupaVNqxP2N2Thq+h2Ne4cURelCsSIiQFgg=
+	t=1789202279; cv=none; b=Q59dbZWNzlvtY9xYGgzS1KtW56Rj1Aqlzax9L/H8Fy+q+vdKGt5GSnN4Ew7TgljkdslotEVdKc9a5PrxDBD2j4yS1WFomrIffqrEKfA5Nfh4WPv8rnXfGyPmOtdGYzDQDdrOicK0iqBQXNvULhWPkAdZNJwRQB/G8UOfromT+J8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202275; c=relaxed/simple;
-	bh=cnUC5UJVCTrxcBWtwOdcqMs93e/FT3cR0t0TQ136p/I=;
+	s=arc-20240116; t=1789202279; c=relaxed/simple;
+	bh=bWiL1cIQcyzGKm/GoH+ZcKdTdvl9+TT/ZFiE+LIkR6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s7BMGxhAmWDqJyPLNPp/IWZimXlfbYwl0V3oC2bN/EN63bULpf6xm95jMJ8Fo9wgC+R9LXX8rKGl5qC0ePadlxjUYnkyGH9gN+SQY3vgkyIbQ3DTnmvvbtW6OaqL16577Ix9vWucCah+CMkRWfMTrbtQ3FaB1LciyK/beBJ2c4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgr67PkD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UDjiY4QamHVjAr0X2QwCVI5GUifuhh85iHSokmpGZLqzf2zEd2+3L2kMNi9Vu155BDdDxmKaEEcq+1ptZTl3mCnW11W119iIMvcM6nEW6ihA8IoFaRu2PI5RTygov5aa0yVBoHOJ5w9DLLwOksbtEXf4UDHFC2efxh8NlyDK24U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wspuYLgc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgr67PkD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89C5C1F00893;
-	Sat, 12 Sep 2026 08:37:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wspuYLgc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2FA61F000FF;
+	Sat, 12 Sep 2026 08:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202273;
-	bh=vsuwEi6vfJunECnyv/E4n+KWD+cCy9iLg4fpRrZeI/4=;
+	s=korg; t=1789202278;
+	bh=3gnROA7jSuQ1RCEXz7HI+weJ7MM/9CcZVuTTXcqz6mM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lgr67PkD6Ng/0iyNGF79e0T+PT0zlF0di4DR0at5+BwhlmV/En2zfGieryeKa78pr
-	 mrMUmpJM7M63d45hHlnORIwkWU5tUySGK6bK6P3POmsJURRrR0KRw2rjI9eEW+KcHp
-	 xCrQMVSUDhs1uE4fOwNVMlSdDHu0BiQOGjdhFs3A=
+	b=wspuYLgcw+iDGssIZ7Kf2jdkdGo3Sw+IHwYw6TMT8jnlTRx+zLoSK2Isn1mwWeqJ3
+	 qtHyEzjH5ocESE5T10NNgnb93tpMp/a9ydm7+fReHeee+sJqaOdbv5qdZ9Il2Lw0vS
+	 1bUumJ5G4WHJW++dbf/7csHqXGXN3DJ0xWwwT1XY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tanushree Shah <tshah@linux.ibm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1169/1815] perf trace-event: Fix buffer overflow in read_string()
-Date: Sat, 12 Sep 2026 08:48:39 +0200
-Message-ID: <20260912065716.458057391@linuxfoundation.org>
+Subject: [PATCH 7.2 1143/1815] IB/isert: post the full-feature receive buffers after session registration
+Date: Sat, 12 Sep 2026 08:48:13 +0200
+Message-ID: <20260912065715.849824731@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,41 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tanushree Shah <tshah@linux.ibm.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-[ Upstream commit 1121a7af1833f8b5723f1e32685b461614353d5d ]
+[ Upstream commit 5247dde9daac7e107853b6fea043f7f47be033f7 ]
 
-read_string() writes into buf[BUFSIZ] one byte at a time without
-checking 'size' against the buffer bound before each write. A
-string longer than BUFSIZ in the input overflows the stack buffer.
+isert_put_login_tx() posts the full-feature receive buffers before
+__transport_register_session() runs, so an initiator that does not wait
+for the final Login Response can still have a SCSI command executed
+against an se_session whose se_tpg is NULL - the same oops as the
+previous patch, at target_submit+0xbe.
 
-Add a bounds check before each write to prevent overflow. On
-overflow the function returns NULL, matching its other error paths.
+Post them from isert_get_rx_pdu(), which the previous patch already uses
+to send that response, and post them before that send: the receive queue
+is filled at the moment the initiator is told it may use it.  Allocating
+there keeps the existing property that a memory allocation failure cannot
+happen once the final Login Response is on the wire.
 
-Fixes: 9215545e99d8 ("perf: Convert perf tracing data into a tracing_data event")
-Signed-off-by: Tanushree Shah <tshah@linux.ibm.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+The receive queue is already empty between the final Login Request and
+isert_post_recvm(); this moves the second point later, from a median of
+92 us to 172 us over 1200 logins.  Only an initiator that sends before it
+has been told to can reach that window, and on IB and RoCE its send is
+retried there until the buffers appear - isert_rdma_accept() asks for
+rnr_retry_count = 7.  iWARP has no RNR flow control, so there the same
+send terminates the connection instead.
+
+Measured over rxe, 400 login cycles per run, with an initiator that does
+not wait: an instrumented build counted no entries to isert_recv_done()
+before the buffers are posted in 10 runs, where that initiator oopsed
+8 of 10 unpatched runs and 5 of 10 with only the previous patch.
+
+Not tested: iWARP, discovery sessions over iSER, and real HCAs.
+
+Fixes: b8d26b3be8b3 ("iser-target: Add iSCSI Extensions for RDMA (iSER) target driver")
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Link: https://patch.msgid.link/20260731041212.1733364-2-yhlee@isslab.korea.ac.kr
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/trace-event-read.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/infiniband/ulp/isert/ib_isert.c | 41 ++++++++++++-------------
+ 1 file changed, 20 insertions(+), 21 deletions(-)
 
-diff --git a/tools/perf/util/trace-event-read.c b/tools/perf/util/trace-event-read.c
-index ecbbb93f01853..afd458cf1387d 100644
---- a/tools/perf/util/trace-event-read.c
-+++ b/tools/perf/util/trace-event-read.c
-@@ -127,6 +127,11 @@ static char *read_string(void)
- 			}
+diff --git a/drivers/infiniband/ulp/isert/ib_isert.c b/drivers/infiniband/ulp/isert/ib_isert.c
+index 37be77a9db41f..df5d8295a7fc1 100644
+--- a/drivers/infiniband/ulp/isert/ib_isert.c
++++ b/drivers/infiniband/ulp/isert/ib_isert.c
+@@ -947,21 +947,7 @@ isert_put_login_tx(struct iscsit_conn *conn, struct iscsi_login *login,
+ 	}
+ 	if (!login->login_failed) {
+ 		if (login->login_complete) {
+-			ret = isert_alloc_rx_descriptors(isert_conn);
+-			if (ret)
+-				return ret;
+-
+-			ret = isert_post_recvm(isert_conn,
+-					       ISERT_QP_MAX_RECV_DTOS);
+-			if (ret)
+-				return ret;
+-
+-			/* Now we are in FULL_FEATURE phase */
+-			mutex_lock(&isert_conn->mutex);
+-			isert_conn->state = ISER_CONN_FULL_FEATURE;
+-			mutex_unlock(&isert_conn->mutex);
+-
+-			/* Sent from isert_get_rx_pdu() after registration. */
++			/* Posted and sent from isert_get_rx_pdu(). */
+ 			isert_conn->login_rsp_pending = true;
+ 			return 0;
  		}
+@@ -2633,13 +2619,26 @@ static void isert_get_rx_pdu(struct iscsit_conn *conn)
+ 	struct isert_conn *isert_conn = conn->context;
+ 	struct completion comp;
  
-+		if (size >= (int)sizeof(buf) - 1) {
-+			pr_debug("string too long (max %zu bytes)", sizeof(buf) - 1);
-+			goto out;
-+		}
++	/* The login timeout timer can fail the login after isert_put_login_tx(). */
++	if (!isert_conn->login_rsp_pending)
++		return;
 +
- 		buf[size++] = c;
++	isert_conn->login_rsp_pending = false;
++
+ 	/* The session is registered by now; see isert_put_login_tx(). */
+-	if (isert_conn->login_rsp_pending) {
+-		isert_conn->login_rsp_pending = false;
+-		if (isert_login_post_send(isert_conn,
+-					  &isert_conn->login_tx_desc))
+-			return;
+-	}
++	if (isert_alloc_rx_descriptors(isert_conn))
++		return;
++
++	if (isert_post_recvm(isert_conn, ISERT_QP_MAX_RECV_DTOS))
++		return;
++
++	/* Now we are in FULL_FEATURE phase */
++	mutex_lock(&isert_conn->mutex);
++	isert_conn->state = ISER_CONN_FULL_FEATURE;
++	mutex_unlock(&isert_conn->mutex);
++
++	if (isert_login_post_send(isert_conn, &isert_conn->login_tx_desc))
++		return;
  
- 		if (!c)
+ 	init_completion(&comp);
+ 
 -- 
 2.53.0
 
