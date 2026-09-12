@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3B836167B;
-	Sat, 12 Sep 2026 17:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95CF3AC0ED;
+	Sat, 12 Sep 2026 17:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232545; cv=none; b=RGwTlDfI/NPUqRsTX3lGC3CB1nWnnhtN6tTK1T8qG1RWrQ0boxunYOG4DZiXL0O7LxZVZFyVZjwpoC77phRgx32n7QHPkLk7+DLRRXtJ8lVvUyf/duF4ieXojq2A0ZIiQiORyeuzf8iT9WF67BjvNc9yH5EY2jZkvcYBMQnGzQM=
+	t=1789232550; cv=none; b=nTyR7irsICmgoJvum3U7CuUFqNTEdAbLvIEopIBU9s9QmW6bYOHtVCQ4G/eLV/lIrCSMh3QhISNGvk65mB2FVYrpTHlTuMKub+61vMfgp3ccF1WfX9lM5y4cK4FW40+tLYVXnd8Q+Q1ZUHejSTL2yNpzyQvtYRZuSl2Tz3e1jF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232545; c=relaxed/simple;
-	bh=ivTw4frcYhtDQHLJZjou14KkBbZPQunwZ4VapNkm7Rk=;
+	s=arc-20240116; t=1789232550; c=relaxed/simple;
+	bh=SbXAKL4F6pd7ZD3bYYe3o0NU07maj3i5UssxMxsqTQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kpZ8z56KxftLiguuRhEp8HOiWQ4kyQXH9wVoHtr/EHKqKFb5kZTHPPYv3yvdp7seF/EMhfpiwC/YZQDAvJxSfGirFnxMX+inWvoGWaeheqwtj/Y6Ry0gV68St2JzUDbsmz87WR12stzDTOojbfJEYeM3WVYYIpcoo7iWLWjdUjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bj2DpgBG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GyiS2xrIj2yjI/2G9y+Ym/nWGHpxegsZ6qDcDQQeWCwrI9V0716yZIIkfyDRWCF9mlIViL1332gwu7yjLti8D59rInERPTP+Rlt5AqLsw8u5LGayZ19VSm8GhuDAJureNXDfNb56Z1TJOusilogdrpb6C6tXb5ZFjBwzt8q+99w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h933jAcc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bj2DpgBG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C25E1F000FF;
-	Sat, 12 Sep 2026 17:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h933jAcc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5911F000FF;
+	Sat, 12 Sep 2026 17:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232544;
-	bh=AywgpOqosEGNKGSJldrBP24nPqVg4OEBgmWq3CZfov4=;
+	s=korg; t=1789232548;
+	bh=zTxEAqEuX89klez98Zz5hzOmAP8ir5DnKilrUSB742I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bj2DpgBGTTHDLvKabYxHqcBANvs9NHdaLRZQdVEX/w4aGQ1m/W1jKI3B+CiBjH524
-	 t62eEqNu/SuNUY1GbWVsDUf85QOg4RQYS9zRkDU2qupgBkq8x79i6tS2FdZ61+NEou
-	 QvUWNeEIgEbwhO0POKQj9hZtAju8NWkS98wHjWAk=
+	b=h933jAcc8y1Ap4NPWPTp89bsFXSbX8A++xxdGYzodKf5cej1JzCI47mFf4wOSjUGZ
+	 sEZCboAz0jQaijrWwnqxLk4/JwFzo32OaqkIJF0p+N1rG1Pb34Z3U2Ex7BstPIFWIq
+	 OiWBMMhShmozlS05YzrVQfcTZajqhojKjfOLaUjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan R Abrahams-Whitehead <ajordanr@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Giuliano Procida <gprocida@google.com>,
-	Yabin Cui <yabinc@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
+	Breno Leitao <leitao@debian.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 006/935] include/linux/list.h: mark list_add and __list_add as __always_inline
-Date: Sat, 12 Sep 2026 08:50:36 +0200
-Message-ID: <20260912065526.987387748@linuxfoundation.org>
+Subject: [PATCH 5.15 007/935] mm/vmscan: report RCU-tasks quiescent states in shrink_lruvec()
+Date: Sat, 12 Sep 2026 08:50:37 +0200
+Message-ID: <20260912065527.009161641@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -57,92 +61,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan R Abrahams-Whitehead <ajordanr@google.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 2780860eddecba9ffe210bb9436eee3cf22bfcdd upstream.
+commit 25f52e81216884a7444bf07a606691feb09a94e3 upstream.
 
-This commit resolves an issue where modpost section verification fails due
-to section mismatches between list_add and its callers.
+I am seeing some rcu_tasks stalls in the Meta fleet during reclaim.
 
-At present, list_add (and its internal __list_add) are called from both
-.text and .init code sections.  Since inlining can vary per call site,
-list_add can be 4 different states:
+  INFO: rcu_tasks detected stalls on tasks:
+	0000000088620d09: .. nvcsw: 6735/6735 holdout: 1 idle_cpu: -1/8
+	task:GlobalCPUThread state:R  running task  pid:2552016 tgid:2524552
+  Call Trace:
+   shrink_lruvec
+   mem_cgroup_iter
+   shrink_node
+   do_try_to_free_pages
+   try_to_free_pages
+   __alloc_frozen_pages_noprof
+   alloc_pages_noprof
+   pte_alloc_one
+   __pte_alloc
+   handle_mm_fault
 
-  list_add in text with arguments to non-.init.data values
-  list_add in init with arguments to static .init.data values
-  list_add in init with arguments to non-.init.data values
-  list_add in text with arguments to static .init.data values
+Nothing promises direct reclaim returns in bounded time, and the scan loop
+in shrink_lruvec() only calls cond_resched(), which is a no-op on
+PREEMPTION kernels.  Involuntary preemption is not a Tasks-RCU quiescent
+state, so the reclaiming task never reports one and becomes a holdout.
 
-It is last instance that ends up causing the section mismatch caused by
-constant propagation of the address of static libs inside the `dir_add` as
-seen below (with the dir_list being defined statically in initramfs.c,
-resting in .init.data).
+Upgrade it to cond_resched_tasks_rcu_qs(), which reports a quiescent state
+even when cond_resched() does nothing.
 
-  WARNING: modpost: vmlinux.o: section mismatch in reference: __list_add
-  (section: .text.unlikely.) -> dir_list (section: .init.data)
+PS: This has been discussed in [1]
 
-Because of these section matching requirements, semantically, __list_add
-and list_add MUST be inlined.  This will then ensure callers inside .init
-will receive a list_add that exists and refers to only .init data, and
-list_add code in .text sections will only refer to non-init data.
-
-This issue manifests predominently in AutoFDO with clang, which is very
-hesitant to inline cold functions such as list_add even when marked
-`inline`.  Marking them as `__always_inline` therefore matches the
-existing semantic constraints imposed by modpost's section mismatch
-checks.
-
-Link: https://lore.kernel.org/20260731-always-inline-list-add-v1-1-d29f54ce5477@google.com
-Link: https://lore.kernel.org/all/CANn89iJVQe=wedLheJmjZjOTJsWHijT0jZs=iRxKssJZbjAxHw@mail.gmail.com/
-Signed-off-by: Jordan R Abrahams-Whitehead <ajordanr@google.com>
-Suggested-by: Nathan Chancellor <nathan@kernel.org>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Tested-by: Nick Desaulniers <ndesaulniers@google.com>
-Reported-by: Giuliano Procida <gprocida@google.com>
-Reported-by: Yabin Cui <yabinc@google.com>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2173
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
+Link: https://lore.kernel.org/20260810-rcu_task_shrink_lruvec-v1-1-4d9f7d5251cb@debian.org
+Link: https://lore.kernel.org/all/amdWVTs0WKOxguxP@gmail.com/ [1]
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/list.h |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ mm/vmscan.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/list.h
-+++ b/include/linux/list.h
-@@ -59,10 +59,13 @@ static inline bool __list_del_entry_vali
-  *
-  * This is only for internal list manipulation where we know
-  * the prev/next entries already!
-+ *
-+ * Must be inlined to ensure it can be safely called
-+ * with initdata arguments.
-  */
--static inline void __list_add(struct list_head *new,
--			      struct list_head *prev,
--			      struct list_head *next)
-+static __always_inline void __list_add(struct list_head *new,
-+				       struct list_head *prev,
-+				       struct list_head *next)
- {
- 	if (!__list_add_valid(new, prev, next))
- 		return;
-@@ -80,8 +83,12 @@ static inline void __list_add(struct lis
-  *
-  * Insert a new entry after the specified head.
-  * This is good for implementing stacks.
-+ *
-+ * Must be inlined to ensure it can be safely called
-+ * with initdata arguments.
-  */
--static inline void list_add(struct list_head *new, struct list_head *head)
-+static __always_inline void list_add(struct list_head *new,
-+				     struct list_head *head)
- {
- 	__list_add(new, head, head->next);
- }
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2771,7 +2771,7 @@ static void shrink_lruvec(struct lruvec
+ 			}
+ 		}
+ 
+-		cond_resched();
++		cond_resched_tasks_rcu_qs();
+ 
+ 		if (nr_reclaimed < nr_to_reclaim || proportional_reclaim)
+ 			continue;
 
 
