@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2F238F93B;
-	Sat, 12 Sep 2026 19:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B6B38F92F;
+	Sat, 12 Sep 2026 19:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243070; cv=none; b=WcnaLPpYmppavEJC9FNC1+ghbeH6hisyfBW3QQy/PvxJFR1RaNMj/msI6zd+dlu6GK7y9fOsvgXVpFnrmNKFNXkl9+UfJ6Cc1Efy7hNSge1ELZsZ90VZPOU0/uG8B4N9MXB/qeNw+JCCLFQiDt4TFb788GpN0vOgCy50iAgPL4s=
+	t=1789243073; cv=none; b=ONexz/+P0bSGNaM+iFpgs6TouuA5ejWpJbC6PPrJsfFMg3zsr1cFkT3+0x7XG8EJAYqhao5KLmhT/XljgNcrmIo+WWef1HGQf6iTq9Km88uS4ZTWNJuA0Pn4x4V++1tH/LU5AGYI0h3380fV+UQ1XbykS5ToUAtZissp7QWvZYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243070; c=relaxed/simple;
-	bh=SvW10bqTRHJoqoUIv8sk21VTRDbVEHZCkK6wbxdEYP0=;
+	s=arc-20240116; t=1789243073; c=relaxed/simple;
+	bh=nwfzByyhlGOan3tlFz6x2pLe53oSZ8zecLOOUj7TRJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D5iMa0bmRGepiRIGPV7ncwuZaxkt8bQ3THP9q/5WHPBC+ZsuEHOfLbmCAqkWNX8Cku9GzPUcSwlyPJ2M8fqyFBCeN6vD2eWzH5UFTgJLgsJRTWPW2nuGGA38CcqTnMf5U0IMj4Pt5or5VvHQW0g8AXnVJaeQzGKJSKqdZ1+O+aM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AaT72SOn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IZPyqjFPiCYD6KzRUQGraj/dB3CF6a/GmhlFCiO+bT2U+vkQk5BO1B1rIH3iaM/nKxzG/ItwaBSStYL0Qw4rHlsAErlQgFWhufZv1QS/vHffoB6tumufYtjM4LWL6rCGHbR2wBSRArU9zjDbVs9nPBlFAraZ7HSSmDgdjQw8Pz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4ZrhoXz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AaT72SOn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D636A1F000FF;
-	Sat, 12 Sep 2026 19:57:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4ZrhoXz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04D61F000FF;
+	Sat, 12 Sep 2026 19:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243069;
-	bh=AH7sk2S/U9FDHpv5bEURRtdDF/YbF/O70mdHRjfQ0gI=;
+	s=korg; t=1789243072;
+	bh=uF0gm+Y5QTaDa6zve8TYDnqDG5O7RUfZK1QlAR6KreA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AaT72SOn9drXZktktL5hdR4I+Jy+MJZREjzGEHYSPFKJeI8SxR733wzZY4SN/CT71
-	 yYXS5I/WS4U1okJ8gmxoR7LcL9AhKWR+MYPn2nYlO/1U2Km1Yzwqa3/hwW3BlzZ12r
-	 BX+14qzff2RhpScpUSyRdg07IPoGOm20tjE+wTEE=
+	b=f4ZrhoXzaxMK3Y2wlpZDrb1rL1paBAIweDb0sfKHxkiUAWtp7Gtx5c2BEblXtqM8g
+	 ZQ8v3nXfsDgMkjaYUVba6hqc+bhemrFiTX9U1BOYRYulRPr5MLLBwFRn0I/8lxy1x6
+	 s31HFi2FR/4DQqE4YFWa562eIZnNi1qaFqoXuxNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Karl Mehltretter <kmehltretter@gmail.com>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 626/798] cpufreq: imx6q: fix devres accumulation across driver rebind
-Date: Sat, 12 Sep 2026 09:04:14 +0200
-Message-ID: <20260912065531.469776805@linuxfoundation.org>
+Subject: [PATCH 5.10 627/798] cpufreq: imx6q: fix out-of-bounds write when probed more than once
+Date: Sat, 12 Sep 2026 09:04:15 +0200
+Message-ID: <20260912065531.493972902@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,24 +53,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 22c23c72c3b21fa3ec3db5070dfc0582794e0ef9 ]
+[ Upstream commit 8c3afcf27fa4582c1ab912503dc8a4ebb8dc0f82 ]
 
-imx6_soc_volt is allocated with devm_kcalloc(cpu_dev, ...), where cpu_dev
-is the CPU device from get_cpu_device(0). That device is never unbound, so
-its devres list is never released, and imx6q_cpufreq_remove() does not free
-the array either. Every probe therefore adds an allocation that stays for
-the lifetime of the system.
+imx6_soc_volt is allocated fresh on every probe, sized to the number of
+ARM OPPs:
 
-Allocate against the platform device instead. Its devres is released when
-the driver is unbound, which is exactly the lifetime the array wants:
-imx6q_set_target() reads it, and nothing may reach that after
-cpufreq_unregister_driver().
+	imx6_soc_volt = devm_kcalloc(cpu_dev, num, sizeof(*imx6_soc_volt),
+				     GFP_KERNEL);
 
-That makes the array actually go away on unbind, so also clear the
-file-scope pointer in remove and on the failed-probe path, rather than
-leave it pointing at memory devres is about to release.
+but it is filled through soc_opp_count, which has static storage and is
+never reset. A second bind after an unbind keeps indexing from where the
+first one stopped, and writes past the end of the new array.
 
-Tested by rebinding the driver on qemu's mcimx6ul-evk.
+Unbinding and rebinding the driver on qemu's mcimx6ul-evk, under KASAN:
+
+  BUG: KASAN: slab-out-of-bounds in imx6q_cpufreq_probe+0x3b0/0xa34
+  Write of size 4 at addr c5e90480 by task binder/73
+   imx6q_cpufreq_probe from platform_probe+0x88/0xe4
+   platform_probe from really_probe+0x108/0x384
+   bind_store from kernfs_fop_write_iter+0x1b4/0x28c
+
+The write lands one u32 past the end of the allocation.
+
+soc_opp_count is only read a few lines below the loop that fills it, so it
+never needed static storage. Make it a local.
 
 Fixes: b4573d1d657a ("cpufreq: imx6q: correct VDDSOC/PU voltage scaling when cpufreq is changed")
 Assisted-by: Claude:claude-opus-5
@@ -78,38 +84,29 @@ Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/imx6q-cpufreq.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/cpufreq/imx6q-cpufreq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/cpufreq/imx6q-cpufreq.c b/drivers/cpufreq/imx6q-cpufreq.c
-index 49cbc43f1fa92..3aa7930f5751d 100644
+index 3aa7930f5751d..822f798484b84 100644
 --- a/drivers/cpufreq/imx6q-cpufreq.c
 +++ b/drivers/cpufreq/imx6q-cpufreq.c
-@@ -418,7 +418,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
- 	}
+@@ -53,7 +53,6 @@ static unsigned int max_freq;
+ static unsigned int transition_latency;
  
- 	/* Make imx6_soc_volt array's size same as arm opp number */
--	imx6_soc_volt = devm_kcalloc(cpu_dev, num, sizeof(*imx6_soc_volt),
-+	imx6_soc_volt = devm_kcalloc(&pdev->dev, num, sizeof(*imx6_soc_volt),
- 				     GFP_KERNEL);
- 	if (imx6_soc_volt == NULL) {
- 		ret = -ENOMEM;
-@@ -503,6 +503,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
- 	return 0;
+ static u32 *imx6_soc_volt;
+-static u32 soc_opp_count;
  
- free_freq_table:
-+	imx6_soc_volt = NULL;
- 	dev_pm_opp_free_cpufreq_table(cpu_dev, &freq_table);
- out_free_opp:
- 	dev_pm_opp_of_remove_table(cpu_dev);
-@@ -524,6 +525,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
- static int imx6q_cpufreq_remove(struct platform_device *pdev)
+ static int imx6q_set_target(struct cpufreq_policy *policy, unsigned int index)
  {
- 	cpufreq_unregister_driver(&imx6q_cpufreq_driver);
-+	imx6_soc_volt = NULL;
- 	dev_pm_opp_free_cpufreq_table(cpu_dev, &freq_table);
- 	dev_pm_opp_of_remove_table(cpu_dev);
- 	regulator_put(arm_reg);
+@@ -346,6 +345,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
+ 	const struct property *prop;
+ 	const __be32 *val;
+ 	u32 nr, i, j;
++	u32 soc_opp_count = 0;
+ 
+ 	cpu_dev = get_cpu_device(0);
+ 	if (!cpu_dev) {
 -- 
 2.53.0
 
