@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F6B38F255;
-	Sat, 12 Sep 2026 19:53:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2A638F620;
+	Sat, 12 Sep 2026 19:53:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242795; cv=none; b=qoHs4eI57GPoV9FlP29taurG4u5z32fotl6mlqBusNpsGSdNdLIUgz9vRFcavdN+o0DENJMOGrDSraovyjk6IJ7C1m9NgDmC7XmaCeGVgZfHLJFNQ+Aiq3/OAkUlNcY+1sG7IQ/CLh3bskzCmX/RgqUyAz2et3+R+I8740Hyrg0=
+	t=1789242797; cv=none; b=Rw3CJ3D+X+fBPSLCRzN0S79uMMo68O/r1v9dIPwz3R8BpkcUvlGa0SXgYYz7MF26irsx6FoYd5jfQrqXmVEZpxGxqWpqND79zsKbsa07OBfk+S2i+iuwS0i3qhCu4LlDeTfCdoTijKyExn32W/c8UITQpHj29CUbxO/9EUz2pjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242795; c=relaxed/simple;
-	bh=D+USIZuSctSECf0RiE1yGDyoJXDfoX7iZIwcQf5nbxI=;
+	s=arc-20240116; t=1789242797; c=relaxed/simple;
+	bh=4QzVYSERdlpCcnJkghzevgU94rApHzQhqdkibZ6luMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ww410/3frRXDsAPvXzOOHuIsmMZYxMi8mLp/lHdc0LcMH1IrLRgNF8fnhwgrNa0GVKU1ShIFbuItHTEfXLkwM7rVI1MOdmyeRGT6vpQ3UDPH3+JHtLJwH+mksCqSe++PdfsI8JsVLjP8dZa9QR1NWhCpu4OMLxucrcYARii1eS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yHO3Ll9j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MnoWzecZ5AdS+8BvSUMn5X4A62GBMOdQO7D/fkBFtxSg1++DVPfdgMOY6cVohJyXYv+HH7MY0Ci+DttS08eh8zxPbxDBb93g433S+t1OX8N0MxZkFwzL9diGWP9lwtv2KyU3PLFwuWPwYOFW46000x5qQIUuAjDgznKbGSMwOI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pZNcCOV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yHO3Ll9j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2A71F00898;
-	Sat, 12 Sep 2026 19:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pZNcCOV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1611B1F000FF;
+	Sat, 12 Sep 2026 19:53:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242793;
-	bh=rylyZt44/vSHD6vsLCr0nxt1AcxDNqa4Gf3/xtqedVM=;
+	s=korg; t=1789242796;
+	bh=jeDbzD81r5WHWyJRyPU7245+tvItB55SYQZH/x7wwKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yHO3Ll9j6JucB+LK9jLkYBGepmq8Hsgfpct8lvpuO1XZ7hiebS+I39TxJDBEC67Q2
-	 ESCDkDba/cikYJRt3+nANWNKdo+Yh1pGDEvP/GkuxJmGjzOnyAJSqOAGaGaaHhnHJs
-	 CPKgzAjESTeuUyqfX3iiFViOWcSC/6HcwibuytcU=
+	b=0pZNcCOVn4ykUgyMyl7caV5e+YLNTHSM8taWu6dcDiozkoNsYH3BvRnbYxnIDTyQY
+	 jyTP97jWL7oRj53Z1rfLmqSXGRJZd2cj6++N9wBOkClptAlvLW0Ckd5VYGA42JfImv
+	 Tq7VOkvJiW118GZSeG4U3Gt6UZbsBak66Wh8yjas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Vladimir Zapolskiy <vz@kernel.org>,
-	Vladimir Zapolskiy <vz@mleia.com>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 514/798] ARM: lpc32xx: only run SoC init on LPC32xx hardware
-Date: Sat, 12 Sep 2026 09:02:22 +0200
-Message-ID: <20260912065528.915628681@linuxfoundation.org>
+Subject: [PATCH 5.10 523/798] remoteproc: Use unbounded workqueue for recovery work
+Date: Sat, 12 Sep 2026 09:02:31 +0200
+Message-ID: <20260912065529.121085939@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,104 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
 
-[ Upstream commit 717ea4000867e6dffee5e1ed92150a9704ae9f68 ]
+[ Upstream commit cab8300b5621a54aa25306ff800c27fa5a4632d7 ]
 
-lpc32xx_check_uid() and lpc32xx_pm_init() are arch_initcalls that poke
-LPC32xx-only registers. Since the multiplatform conversion they also
-run on other ARCH_MULTI_V5 boards where access faults e.g. on versatile:
+There could be a scenario when there is too much load on a core
+(n number of tasks which is affined) or in a case when multiple
+rproc subsystem is going for recovery, they queue their recovery
+work to one core so even though subsystem are independent their
+recovery will be delayed if one of the subsystem recovery work
+is taking more time in completing.
 
-  Unable to handle kernel paging request at virtual address f4004130
-  PC is at lpc32xx_check_uid+0x2c/0x9c
+If we make this queue unbounded, the recovery work could be picked
+on any cpu. This patch is trying to address this.
 
-Drop the arch_initcall() registrations and call both functions directly
-from lpc3250_machine_init(), the machine's .init_machine hook.
-The calls are placed in link order (common.c, pm.c, phy3250.c) to
-keep their previous relative ordering.
-
-Fixes: 75bf1bd7d2f9 ("ARM: lpc32xx: allow multiplatform build")
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Vladimir Zapolskiy <vz@mleia.com>
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/1650367554-15510-1-git-send-email-quic_mojha@quicinc.com
+Stable-dep-of: 74ee3b2f5767 ("remoteproc: Prevent crash handling to race with rproc_del()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-lpc32xx/common.c  | 5 +----
- arch/arm/mach-lpc32xx/common.h  | 2 ++
- arch/arm/mach-lpc32xx/phy3250.c | 2 ++
- arch/arm/mach-lpc32xx/pm.c      | 5 +----
- 4 files changed, 6 insertions(+), 8 deletions(-)
+ drivers/remoteproc/remoteproc_core.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-lpc32xx/common.c b/arch/arm/mach-lpc32xx/common.c
-index 304ea61a07160..35ed3569c5a35 100644
---- a/arch/arm/mach-lpc32xx/common.c
-+++ b/arch/arm/mach-lpc32xx/common.c
-@@ -106,7 +106,7 @@ void __init lpc32xx_map_io(void)
- 	iotable_init(lpc32xx_io_desc, ARRAY_SIZE(lpc32xx_io_desc));
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index e416908745d17..e7918652217ce 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -58,6 +58,7 @@ static int rproc_release_carveout(struct rproc *rproc,
+ 
+ /* Unique indices for remoteproc devices */
+ static DEFINE_IDA(rproc_dev_index);
++static struct workqueue_struct *rproc_recovery_wq;
+ 
+ static const char * const rproc_crash_names[] = {
+ 	[RPROC_MMUFAULT]	= "mmufault",
+@@ -2450,8 +2451,7 @@ void rproc_report_crash(struct rproc *rproc, enum rproc_crash_type type)
+ 	dev_err(&rproc->dev, "crash detected in %s: type %s\n",
+ 		rproc->name, rproc_crash_to_string(type));
+ 
+-	/* Have a worker handle the error; ensure system is not suspended */
+-	queue_work(system_freezable_wq, &rproc->crash_handler);
++	queue_work(rproc_recovery_wq, &rproc->crash_handler);
  }
+ EXPORT_SYMBOL(rproc_report_crash);
  
--static int __init lpc32xx_check_uid(void)
-+void __init lpc32xx_check_uid(void)
+@@ -2496,6 +2496,13 @@ static void __exit rproc_exit_panic(void)
+ 
+ static int __init remoteproc_init(void)
  {
- 	u32 uid[4];
++	rproc_recovery_wq = alloc_workqueue("rproc_recovery_wq",
++						WQ_UNBOUND | WQ_FREEZABLE, 0);
++	if (!rproc_recovery_wq) {
++		pr_err("remoteproc: creation of rproc_recovery_wq failed\n");
++		return -ENOMEM;
++	}
++
+ 	rproc_init_sysfs();
+ 	rproc_init_debugfs();
+ 	rproc_init_cdev();
+@@ -2509,9 +2516,13 @@ static void __exit remoteproc_exit(void)
+ {
+ 	ida_destroy(&rproc_dev_index);
  
-@@ -119,7 +119,4 @@ static int __init lpc32xx_check_uid(void)
- 		system_serial_low = uid[0];
- 		system_serial_high = uid[1];
- 	}
--
--	return 1;
++	if (!rproc_recovery_wq)
++		return;
++
+ 	rproc_exit_panic();
+ 	rproc_exit_debugfs();
+ 	rproc_exit_sysfs();
++	destroy_workqueue(rproc_recovery_wq);
  }
--arch_initcall(lpc32xx_check_uid);
-diff --git a/arch/arm/mach-lpc32xx/common.h b/arch/arm/mach-lpc32xx/common.h
-index 32f0ad2178077..06b20bea324e1 100644
---- a/arch/arm/mach-lpc32xx/common.h
-+++ b/arch/arm/mach-lpc32xx/common.h
-@@ -16,6 +16,8 @@
-  * Other arch specific structures and functions
-  */
- extern void __init lpc32xx_map_io(void);
-+extern void __init lpc32xx_check_uid(void);
-+extern void __init lpc32xx_pm_init(void);
- extern void __init lpc32xx_serial_init(void);
+ module_exit(remoteproc_exit);
  
- /*
-diff --git a/arch/arm/mach-lpc32xx/phy3250.c b/arch/arm/mach-lpc32xx/phy3250.c
-index 66701bf432488..ddc6333ca55da 100644
---- a/arch/arm/mach-lpc32xx/phy3250.c
-+++ b/arch/arm/mach-lpc32xx/phy3250.c
-@@ -71,6 +71,8 @@ static const struct of_dev_auxdata lpc32xx_auxdata_lookup[] __initconst = {
- 
- static void __init lpc3250_machine_init(void)
- {
-+	lpc32xx_check_uid();
-+	lpc32xx_pm_init();
- 	lpc32xx_serial_init();
- 
- 	of_platform_default_populate(NULL, lpc32xx_auxdata_lookup, NULL);
-diff --git a/arch/arm/mach-lpc32xx/pm.c b/arch/arm/mach-lpc32xx/pm.c
-index b27fa1b9f56c1..f8e4e0f0c76b8 100644
---- a/arch/arm/mach-lpc32xx/pm.c
-+++ b/arch/arm/mach-lpc32xx/pm.c
-@@ -122,7 +122,7 @@ static const struct platform_suspend_ops lpc32xx_pm_ops = {
- #define EMC_DYN_MEM_CTRL_OFS 0x20
- #define EMC_SRMMC           (1 << 3)
- #define EMC_CTRL_REG io_p2v(LPC32XX_EMC_BASE + EMC_DYN_MEM_CTRL_OFS)
--static int __init lpc32xx_pm_init(void)
-+void __init lpc32xx_pm_init(void)
- {
- 	/*
- 	 * Setup SDRAM self-refresh clock to automatically disable o
-@@ -131,7 +131,4 @@ static int __init lpc32xx_pm_init(void)
- 	__raw_writel(__raw_readl(EMC_CTRL_REG) | EMC_SRMMC, EMC_CTRL_REG);
- 
- 	suspend_set_ops(&lpc32xx_pm_ops);
--
--	return 0;
- }
--arch_initcall(lpc32xx_pm_init);
 -- 
 2.53.0
 
