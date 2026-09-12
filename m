@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68373446AD;
-	Sat, 12 Sep 2026 12:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A1537E2E7;
+	Sat, 12 Sep 2026 12:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217004; cv=none; b=gYkIAA86vo6WNKTmfAgRxugWkUSLqAg9259jVwqEXRVIPrzM6ngThZPSUlfV/2lSBprqEcMLa+5PcaBArmbAlWG6HoUF7KLhs3NXFpisvr8WjRbtvU091OyS4KgLpiISycvG1CC+lp5c+lA5nuWxeLepE6kmw/tEg7Qx+ZCXhls=
+	t=1789217008; cv=none; b=ri8bPxozu9y/jeWIYebzvKeyzPQGCl6lvjR0gGHyl+d+FA8GNQQv7bD2YLaxO/kAur4Vd8Z3kh890ksqJKC9+8o/xPOzohvo/dy7J9rurJwed5e5hGxhpcRY0iFueDegPTZg8d2rWGlP9zVS4y4Z1I8ZziH1B8A2amIvONz3xNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217004; c=relaxed/simple;
-	bh=Lsoy5NWIjYZlOD2p1ORPmUz7BqGBHDjccBAqs/Csz78=;
+	s=arc-20240116; t=1789217008; c=relaxed/simple;
+	bh=pxWNhGURkuZPfzkPVkRkjo9grgk9slKd9D+OZ7Qy3tU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qRGfukIo6QMDORdW/Mpaoqmg7CPJWYVkf7X6OHmNt9QD8/F5U8FYShOOi4Q0vSPpFDFd2axFYU+OpTm6Jt/n9R6XWIQKy1alzrsD1MLRQ6ELRThl/W2nuP6vhVLqHnJXnRjc9srPphgLPGpDhw5shQg/Hc7XlgO6RXp4MbJgm2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5qJsNu0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FwRSBFjl8qXEaxVcc18Y6jEiV2/Bxd9/yQw8VzSTndJrHoEfl+T6gsDjK2mB6SXxvN8W+l95XqkwTeYvo3qgrvmDAeQlcbRq8H86dxxJ5c0GahFkV5FUnEOPyrP6pt3nrJF02zRspwcV/536LvHRhcQMSy0zU1k/wTMnav4uSXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXKe0ruM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5qJsNu0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA241F000FF;
-	Sat, 12 Sep 2026 12:43:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXKe0ruM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD3961F000FF;
+	Sat, 12 Sep 2026 12:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217002;
-	bh=ALQG7c8DB3Y5WefJsc34+6poce8aJH2XQFO/Ica9VsU=;
+	s=korg; t=1789217007;
+	bh=YKgCIRFS7jruczOAh+yjd+6pYnSjDCaYHGTbxoO6hXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u5qJsNu0uCb9tfPpLNGMFBAwkUz92peM+H8q9hjcjs6eg6Mm38TfEZkty+jJkoze/
-	 V3EEFn5QnGpeYSfCa0ktMalItf9HywXbzQ1RURfrUbZ8hlyDT/p69kCCvxxejp/Uu/
-	 P3PP2ZzQYV5QKKd8m6AG0TGqNKUzceDmT9+7P7ZQ=
+	b=cXKe0ruMyLUkmMH8Tc6ajXePNaeMJQ5c1Cv8AQKIZMIHjzLP6nQqcfP7L8Gw725a2
+	 hUNxUhGWgpcwgVly+0jhgDn3FSddL2QG9WmnfkUC8ETW3QLbGsvq29CMa2Wqwa4YFc
+	 N30HseDmctQ9HyBL3cjZth/hF/WeHLnBMG7B4+18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	"Zhang, Yanmin" <yanmin_zhang@linux.intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0835/1376] perf machine: Free scandir entries in guest kernel map creation
-Date: Sat, 12 Sep 2026 08:54:21 +0200
-Message-ID: <20260912065626.156657268@linuxfoundation.org>
+Subject: [PATCH 6.12 0853/1376] wifi: mac80211: disconnect on CSA to channel 0
+Date: Sat, 12 Sep 2026 08:54:39 +0200
+Message-ID: <20260912065626.570044725@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,59 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit f53bf58dcd11e1cb088d3b91a035fef77062094b ]
+[ Upstream commit cf57f0a674cc3e3cda1a789359cc1238b61b9d7d ]
 
-machines__create_guest_kernel_maps() calls scandir() which allocates
-both the namelist array and each individual dirent entry.  The code
-frees the namelist array but not the individual entries, leaking memory
-proportional to the number of directories under guestmount.
+The refactor for the CSA parsing erroneously equates channel
+zero and no information present, leading it to ignore a CSA
+on an AP that advertises a switch to that (invalid) channel.
+This leads to not disconnecting, which we should. For Intel
+devices, this can lead to a firmware crash.
 
-Free each namelist[i] after it is no longer needed.
+Fix this by using an int type for the channel number as well
+as the opclass, and using a (negative) value that cannot be
+encoded in the element to indicate it's not present.
 
-Fixes: a1645ce12adb ("perf: 'perf kvm' tool for monitoring guest performance from host")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Zhang, Yanmin <yanmin_zhang@linux.intel.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 21c3f8f95554 ("wifi: mac80211: refactor STA CSA parsing flows")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260802111213.3bc833515e40.I255c37c31ca8b0b34e351cf254e16b6071dd8fb3@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/mac80211/spectmgmt.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index 1cef434b3c8dc..a958184d3bb38 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -1210,6 +1210,7 @@ int machines__create_guest_kernel_maps(struct machines *machines)
- 		for (i = 0; i < items; i++) {
- 			if (!isdigit(namelist[i]->d_name[0])) {
- 				/* Filter out . and .. */
-+				free(namelist[i]);
- 				continue;
- 			}
- 			errno = 0;
-@@ -1219,6 +1220,7 @@ int machines__create_guest_kernel_maps(struct machines *machines)
- 			    (errno == ERANGE)) {
- 				pr_debug("invalid directory (%s). Skipping.\n",
- 					 namelist[i]->d_name);
-+				free(namelist[i]);
- 				continue;
- 			}
- 			snprintf(path, sizeof(path), "%s/%s/proc/kallsyms",
-@@ -1226,9 +1228,11 @@ int machines__create_guest_kernel_maps(struct machines *machines)
- 				 namelist[i]->d_name);
- 			if (access(path, R_OK)) {
- 				pr_debug("Can't access file %s\n", path);
-+				free(namelist[i]);
- 				continue;
- 			}
- 			machines__create_kernel_maps(machines, pid);
-+			free(namelist[i]);
+diff --git a/net/mac80211/spectmgmt.c b/net/mac80211/spectmgmt.c
+index 073ff9e0f3970..1bdb241e1fd5e 100644
+--- a/net/mac80211/spectmgmt.c
++++ b/net/mac80211/spectmgmt.c
+@@ -228,7 +228,7 @@ int ieee80211_parse_ch_switch_ie(struct ieee80211_sub_if_data *sdata,
+ {
+ 	enum nl80211_band new_band = current_band;
+ 	int new_freq;
+-	u8 new_chan_no = 0, new_op_class = 0;
++	int new_chan_no = -1, new_op_class = -1;
+ 	struct ieee80211_channel *new_chan;
+ 	struct cfg80211_chan_def new_chandef = {};
+ 	const struct ieee80211_sec_chan_offs_ie *sec_chan_offs;
+@@ -257,7 +257,7 @@ int ieee80211_parse_ch_switch_ie(struct ieee80211_sub_if_data *sdata,
+ 		new_op_class = ext_chansw_elem->new_operating_class;
+ 
+ 		if (!ieee80211_operating_class_to_band(new_op_class, &new_band)) {
+-			new_op_class = 0;
++			new_op_class = -1;
+ 			if (!unprot_action)
+ 				sdata_info(sdata,
+ 					   "cannot understand ECSA IE operating class, %d, ignoring\n",
+@@ -269,14 +269,14 @@ int ieee80211_parse_ch_switch_ie(struct ieee80211_sub_if_data *sdata,
  		}
- 		free(namelist);
+ 	}
+ 
+-	if (!new_op_class && elems->ch_switch_ie) {
++	if (new_op_class < 0 && elems->ch_switch_ie) {
+ 		new_chan_no = elems->ch_switch_ie->new_ch_num;
+ 		csa_ie->count = elems->ch_switch_ie->count;
+ 		csa_ie->mode = elems->ch_switch_ie->mode;
+ 	}
+ 
+ 	/* nothing here we understand */
+-	if (!new_chan_no)
++	if (new_chan_no < 0)
+ 		return 1;
+ 
+ 	/* Mesh Channel Switch Parameters Element */
+@@ -360,7 +360,8 @@ int ieee80211_parse_ch_switch_ie(struct ieee80211_sub_if_data *sdata,
+ 				get_unaligned_le16(bwi->info.optional);
+ 	} else if (!wide_bw_chansw_ie || !wbcs_elem_to_chandef(wide_bw_chansw_ie,
+ 							       &new_chandef)) {
+-		if (!ieee80211_operating_class_to_chandef(new_op_class, new_chan,
++		if (new_op_class < 0 ||
++		    !ieee80211_operating_class_to_chandef(new_op_class, new_chan,
+ 							  &new_chandef))
+ 			new_chandef = csa_ie->chanreq.oper;
  	}
 -- 
 2.53.0
