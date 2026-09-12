@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5751247126B;
-	Sat, 12 Sep 2026 13:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D3447F2E6;
+	Sat, 12 Sep 2026 13:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220511; cv=none; b=ezzAR1J3FAaNMZiuwauEPuF8Q7DZafSW0Im8K+gYEQ0vLcdsxG533dbkzqwJHoFarsBPKemunLyj4XGN3LNY70QX921TWyKXOfvNYB+pFDyTPxN5Lv+0fHiEidk3pzKpD/bLAU24C4J2BpEdq23m7stHlQ8j3sJSiUWLYCVtv7o=
+	t=1789220515; cv=none; b=qMGqCboRKfDKk7f1OkGIa48RIAzBtUse4K2bzzZLaK9UEljKqJZPY2ZDqOABcFfoCnSeEPfqtl2yImhlUKxemJTUnUukIWf/HXJ5E3/LFiiFpDKSBOZN9r5be0/ZyTdURNq75S4naIB97zay1v8CHoW3cYZMp1VHwhK7X29hLIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220511; c=relaxed/simple;
-	bh=54L6+vqXQjLpzi4905l4d6ShfoaoyjZYj1NeuZ2Ut0I=;
+	s=arc-20240116; t=1789220515; c=relaxed/simple;
+	bh=Nc0srGvVsNMjIi4Uyx8MOkoqL+6SYdERC6iW8wSGgNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O1DQqeTRCM7ddp14k9YT/OHJHPGs++I4d5W/F3sQr4X/SMYsADaDOyNBmpgXXp5ps6th4LXQdGxCPye5Nkuk86UBHMRZ7fdCx0LqMcVU9yjL9s4UBllz5qIay/yGkPOaqhV9roPWhIoFVJ692T/quFbTkLAGo8ifakNR4D2NW2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOR+GzoP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=isGr9w7gUeCLpEdEQkUCBl9x+erMIoNsUsfAx4PW90quTLquDq8kDlPJr+gnuNl6Rpf8OrTf/qIoNAqWbj2wvuve+3cKI8OmnzZiYcyrbXbbzF1S7ggO9II2mhsOcg/DpLthasPidVuLaKoU6DL+ZkAdZUVkY6d64rKpRkY3wEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dM8Pu6jF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOR+GzoP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED701F000FF;
-	Sat, 12 Sep 2026 13:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dM8Pu6jF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90F5B1F000FF;
+	Sat, 12 Sep 2026 13:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220509;
-	bh=fs3wHLEA9/WV3eIhgeeOYrirSla9i6HZSBFn2B1uRKs=;
+	s=korg; t=1789220514;
+	bh=fVgPZst93m/ILv+bjj1mU8RTm7ICpuW0vhOwopDsLYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sOR+GzoPATBrWoQDpR7dmKeQ+GTQ5DW3pU6FUVGTHefWbFQdyi8Hk4gMXZdfhJB8F
-	 QwnsCOlrpHvRbDWmMHSlwXcRaHM0Gwp/v4RPMGTRFbKSJmDyCLd1QGumFjT6Sl2+Vt
-	 pshyqz3EvVmjTv5uAQIpi0FFU+tR/vM2WXR6We90=
+	b=dM8Pu6jFnzjuVth/WUncAEmGP2WaTnYyf0FwddcSt+Ckt2z1DkDAP10+xs3WOK9X1
+	 2T/fJCBbC2pt5+zqvj6azdm0KNGkIwJxjtyt483Z9U16XD+uwmMekovr99Sn1XGjoI
+	 6cq2H8LouGFe3b+J/MXhVZuH2ZteEX3s0/DMn8Wg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher Tolang <christophertolang@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 0191/1424] ASoC: amd: yc: Add DMI entry for MSI Thin A15 B7UC
-Date: Sat, 12 Sep 2026 08:43:43 +0200
-Message-ID: <20260912065611.564620711@linuxfoundation.org>
+	Cong Nguyen <congnt264@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.6 0192/1424] hwmon: (max6621) fix negative temperature offset and crit readings
+Date: Sat, 12 Sep 2026 08:43:44 +0200
+Message-ID: <20260912065611.586493592@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,39 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christopher Tolang <christophertolang@gmail.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-commit e2aa5ad3be41accfcdcccc62348f21af7baa3a38 upstream.
+commit acc52bd431e2d8698fae8d82a74ac45d79b62e0a upstream.
 
-This model requires an additional detection quirk to enable the internal
-microphone.
+max6621_read() reads the CONFIG2 offset and the critical alert threshold
+registers into a u32 and scales them without sign extension:
 
-Fixes: fa991481b8b2 ("ASoC: amd: add YC machine driver using dmic")
+	/* offset */ *val = (regval >> MAX6621_REG_TEMP_SHIFT) * 1000L;
+	/* crit   */ *val = regval * 1000L;
+
+Both attributes are writable and their write paths clamp to a negative
+minimum and encode negative values, so a value written as negative is read
+back as a large positive number. For example, writing a -10 degrees C
+offset stores max6621_temp_mc2reg(-10000) = (-10 << 6) = 0xfd80; the read
+then computes 0xfd80 >> 6 = 1014 -> 1014000 instead of -10000.
+
+Cast the register value to s16 before scaling so the read preserves the
+sign the write path encodes. The temperature input path already uses an s8
+intermediate and is left unchanged.
+
+Fixes: 92b64580f14b ("hwmon: (max6621) Add support for Maxim MAX6621 temperature sensor")
 Cc: stable@vger.kernel.org
-Assisted-by: OpenAI Codex
-Signed-off-by: Christopher Tolang <christophertolang@gmail.com>
-Link: https://patch.msgid.link/20260823113221.19744-1-christophertolang@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Link: https://lore.kernel.org/r/ad0baddbd6163cf73545c8e9273258136718585c.1786334038.git.congnt264@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/hwmon/max6621.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -742,6 +742,13 @@ static const struct dmi_system_id yc_acp
- 		.driver_data = &acp6x_card,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Thin A15 B7UC"),
-+		}
-+	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Thin A15 B7VE"),
- 		}
- 	},
+--- a/drivers/hwmon/max6621.c
++++ b/drivers/hwmon/max6621.c
+@@ -239,7 +239,7 @@ max6621_read(struct device *dev, enum hw
+ 			if (ret)
+ 				return ret;
+ 
+-			*val = (regval >> MAX6621_REG_TEMP_SHIFT) *
++			*val = ((s16)regval >> MAX6621_REG_TEMP_SHIFT) *
+ 			       1000L;
+ 
+ 			break;
+@@ -254,7 +254,7 @@ max6621_read(struct device *dev, enum hw
+ 			if (ret)
+ 				return ret;
+ 
+-			*val = regval * 1000L;
++			*val = (s16)regval * 1000L;
+ 
+ 			break;
+ 		case hwmon_temp_crit_alarm:
 
 
