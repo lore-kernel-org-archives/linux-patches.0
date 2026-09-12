@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A716347CA89;
-	Sat, 12 Sep 2026 16:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF11349CF3;
+	Sat, 12 Sep 2026 16:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232169; cv=none; b=ZlS/sB50jmYIrHB2+dLfJ2rRzDYz0r9dRvXAx1IkX64240lsWZqcAXJxoETwN1phsmQAyNbrUhI+wjUy8YbIQIE/DO/hH8KxJ08QIVABOrSD3mrOwxXA6Z1TzJ//3KmhQa7zYX+39J/LacpDpsaITa/Y2ksZveVON2mUtJBjr7U=
+	t=1789232173; cv=none; b=tuoXReOoDuMdoytU6CegntkK1RmubphVsZ7p2Rc3C866KYheBIuXG8l5yqK33G0MopqzHSXtP+6M/QZlOYSG29HvRLTKaFV6wuSPXhcix47LjROrsqsrQ6kCHQJYAqqBt/3D2kq6DDCJQ6+STEJUOH4gHljswAKA5QPrlU7Y87M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232169; c=relaxed/simple;
-	bh=crQEPGif6sNiiwMVCjTR+qOgHT7zinJwp4Ip7JjkTYg=;
+	s=arc-20240116; t=1789232173; c=relaxed/simple;
+	bh=Jdso4LGJlw2TpiRS02fqAK4HdVpnzZOj4630b3quJhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A6UCm4+QbZzswL5yGfbk/dtOyJ2qmniJ8ynkrXUyPxZrDTYrV/Fg5tqxh3SoY1g6WqQQq+dajCrlZc9dyWhfhh1jD3eL7HG2HILuzVQuTXFV3Ff775LhbkBQxlnZzOHN6JCkPPNVqKeZIkUbL5WifC4YQm7sRcu9RgJVYz6M7Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXVgQnCM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NVtIhS5XmNja4M9+GwXPftEpyHvd2946IhFWzpqG6g/p6bhIYWS9DqG1440CgZSnqcwPqhscYElo5cIaj9JAQyCK69F4RuWZcvDcT2ojVndsuNp4qcXiGqSvX9i+mf6eHbJ3b6LlHOgvtF7tsVZLuWhTfXSUDR4JntL9hTDM5L0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyjVXRBO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXVgQnCM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39F21F00893;
-	Sat, 12 Sep 2026 16:56:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyjVXRBO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F45B1F000FF;
+	Sat, 12 Sep 2026 16:56:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232167;
-	bh=GUL4kGm5dPM2bocqEfsGT6975e8NNJcIq4pb3F4tLaw=;
+	s=korg; t=1789232172;
+	bh=Q3QE/wQc0P2E14aCyWaodC6soGo3k07t7WLIsxOkTpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RXVgQnCMsN7yaxAgsX0uoWhYNHj2LxWWFKX1bJSPkdQixuLojQh4LP0d8vntjDZDT
-	 FkGFTSo4vUHW06jgV1L468gSFghWdgEvj0pKzLDLAdpEdtcd1tCGE3cuGFtSJF5rdm
-	 gruFY+cATz3xPSdb2qemD0j8pNeFWPrOGc/3SqIU=
+	b=zyjVXRBOyR0xqnRENhC81Ud0DQbCEi10vq5J5dMojtPzqZTSsnWghnYkpeBQH2iAd
+	 wRX+76+EACLz4EWHixj7tVInYo38uWnTJH8l46hHlbyajNKFNEkLCBUpNVRhhl9HyE
+	 VfipvyYkbZtdODToSVCOyoA8qQ49Y+QtuS1knFXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Hao Chang <ot_chhao.chang@mediatek.com>,
+	Qingliang Li <qingliang.li@mediatek.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1145/1191] s390/con3270: move condev definition
-Date: Sat, 12 Sep 2026 09:04:33 +0200
-Message-ID: <20260912065613.865950650@linuxfoundation.org>
+Subject: [PATCH 6.1 1146/1191] pinctrl: mediatek: eint: Drop base from mtk_eint_chip_write_mask()
+Date: Sat, 12 Sep 2026 09:04:34 +0200
+Message-ID: <20260912065613.887498253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,46 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 9cab4f7d98eee90b762ffbc87055c9499d51a635 ]
+[ Upstream commit 3ca99eed042620d12315e9272ed3ef260ca29877 ]
 
-Fix this for allmodconfig:
+When support for multiple EINT base addresses was added in commit
+3ef9f710efcb ("pinctrl: mediatek: Add EINT support for multiple
+addresses"), mtk_eint_chip_write_mask() was changed to write interrupt
+masks for all base addresses in one call. However the "base" parameter
+was left around and now causes sparse warnings:
 
-drivers/s390/char/con3270.c:43:24: error: 'condev' defined but not used [-Werror=unused-variable]
- static struct tty3270 *condev;
-                        ^~~~~~
+    mtk-eint.c:428:44: warning: incorrect type in argument 2 (different address spaces)
+    mtk-eint.c:428:44:    expected void [noderef] __iomem *base
+    mtk-eint.c:428:44:    got void [noderef] __iomem **base
+    mtk-eint.c:436:44: warning: incorrect type in argument 2 (different address spaces)
+    mtk-eint.c:436:44:    expected void [noderef] __iomem *base
+    mtk-eint.c:436:44:    got void [noderef] __iomem **base
 
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Fixes: c17fe081ac1f ("s390/3270: unify con3270 + tty3270")
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Since the "base" parameter is no longer needed, just drop it.
+
+Fixes: 3ef9f710efcb ("pinctrl: mediatek: Add EINT support for multiple addresses")
+Cc: Hao Chang <ot_chhao.chang@mediatek.com>
+Cc: Qingliang Li <qingliang.li@mediatek.com>
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/char/tty3270.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/pinctrl/mediatek/mtk-eint.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/s390/char/tty3270.c b/drivers/s390/char/tty3270.c
-index eee2030b86b3a..583f2aecbed3c 100644
---- a/drivers/s390/char/tty3270.c
-+++ b/drivers/s390/char/tty3270.c
-@@ -38,7 +38,6 @@
- 
- static struct tty_driver *tty3270_driver;
- static int tty3270_max_index;
--static struct tty3270 *condev;
- static struct raw3270_fn tty3270_fn;
- 
- struct tty3270_cell {
-@@ -1910,6 +1909,9 @@ static void __exit tty3270_exit(void)
+diff --git a/drivers/pinctrl/mediatek/mtk-eint.c b/drivers/pinctrl/mediatek/mtk-eint.c
+index 6787596167b92..85a4f2d3701f5 100644
+--- a/drivers/pinctrl/mediatek/mtk-eint.c
++++ b/drivers/pinctrl/mediatek/mtk-eint.c
+@@ -243,7 +243,7 @@ static int mtk_eint_irq_set_wake(struct irq_data *d, unsigned int on)
  }
  
- #if IS_ENABLED(CONFIG_TN3270_CONSOLE)
-+
-+static struct tty3270 *condev;
-+
- static void
- con3270_write(struct console *co, const char *str, unsigned int count)
+ static void mtk_eint_chip_write_mask(const struct mtk_eint *eint,
+-				     void __iomem *base, unsigned int **buf)
++				     unsigned int **buf)
  {
+ 	int inst, port, port_num;
+ 	void __iomem *reg;
+@@ -422,7 +422,7 @@ static void mtk_eint_irq_handler(struct irq_desc *desc)
+ 
+ int mtk_eint_do_suspend(struct mtk_eint *eint)
+ {
+-	mtk_eint_chip_write_mask(eint, eint->base, eint->wake_mask);
++	mtk_eint_chip_write_mask(eint, eint->wake_mask);
+ 
+ 	return 0;
+ }
+@@ -430,7 +430,7 @@ EXPORT_SYMBOL_GPL(mtk_eint_do_suspend);
+ 
+ int mtk_eint_do_resume(struct mtk_eint *eint)
+ {
+-	mtk_eint_chip_write_mask(eint, eint->base, eint->cur_mask);
++	mtk_eint_chip_write_mask(eint, eint->cur_mask);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
