@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5061432D43C;
-	Sat, 12 Sep 2026 18:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292F632D43C;
+	Sat, 12 Sep 2026 18:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789236952; cv=none; b=sTpOIWPsYN50WayUM/Dpq8vmvLgy7tQWElFs/6QeyOrH48saCFWY2tAxyYDY595vCs7ysNfiicGt/H5nSzEJ+cDcwr8Rus9PXTJ3v35spHMJO9RB3TBTYdCRS4TfCPxnubKxNo9Ag7CnmBzMnRsxpx2e3ci1ucoPfqtELQoER+s=
+	t=1789236957; cv=none; b=tQGMrohi6NencMTJ2lCcC9WYCjUSNbCZ660SFSdNRoffKPzDUprElhYqqfg+nkOinpZA5CQxgWr1wutvrLiRa98qMrX25ItgFRZ/u0s9+6HiLVx3MC0Bo6fND2w/mdSifYv1xTEiC2bqTqxqTRdJEeBXBWVSUg3p3ghY1C7Ihkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789236952; c=relaxed/simple;
-	bh=iYMQ9xNdJbCCGCsnrrOtCkqFnCvUKZN0z+2oFWp3BGI=;
+	s=arc-20240116; t=1789236957; c=relaxed/simple;
+	bh=RZ0ID02bKBGusjei0XbtoBxqqXa5kMlkvgo+D3bQtEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oXo16VSGpfZgEf64FkOWIKFbw00r+UN1KMEbZH8cTFnmVhTGViy/EV9Y5FiZBkRE3jxjstZfD1B+5EqdIeACWusGa4qqd4dqqFk7aj4ZCkThgN6rng9scNt/OZ6k6pQPwwdqmBNk4XbGBDtAne21LY18Qnq3k3HMrAjlfMtpQxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLxRjOCF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qO70bA1ZQDNVK3pkVPFv/su0Vk9MkcQtpBiONYscSP+vBK50Sl6ZfEFb7yKTJ2bnK0Rz+5gNR+ahub/o52ec+o1Ko24BZgSqQotPpp/rncrb805KqTAxRcwyPFaKVBV1xpjGGBkMqOXFWFfWwPP0GfzdYIDSvaPwghplPe+avVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlQuqG8n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLxRjOCF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138261F000FF;
-	Sat, 12 Sep 2026 18:15:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlQuqG8n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2851F000FF;
+	Sat, 12 Sep 2026 18:15:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789236951;
-	bh=lXuNOdvu4l9QV9qqlHIjotjdbUmqyZdj3u5tU4r7rmA=;
+	s=korg; t=1789236955;
+	bh=e4ErykZtRUlMQD7sGKBMCdF+vkyODWE2UZyRx9fm0mA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YLxRjOCFXpHGQSzaVH4tlpUffnIvZC6fkCb3gEpgFyT4mNF1GcQJ6wrmLp7mReb9X
-	 cSnIr36vdAnCG6dhPMcFqWrxXBczytFuIwEwDXSUAcRZB2I9UA0L+khV/qNmvUo3BY
-	 TQ3LTxQ7Ft1+taqcL1Lv3a8fEIejjfCpz8sTq8EU=
+	b=rlQuqG8nfyRwiFeCnAm1vv7Gnk31+2LzLlpm3KbPfCWNvVXXc1uXscwWmtCKtouwU
+	 agdUWEhPCn182CW08ZVnOFyaIAAcUboy5Crq5x5Xoxb5fyPTgFfc/u7yNDw4kYs+Gj
+	 6TDmnhp3BNohCCJtDRszO7DmHQ76NyoFld1ze5qQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
 	Stefan Haberland <sth@linux.ibm.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 159/935] s390/dasd: Guard sysfs discipline callbacks against unallocated private data
-Date: Sat, 12 Sep 2026 08:53:09 +0200
-Message-ID: <20260912065530.467531791@linuxfoundation.org>
+Subject: [PATCH 5.15 160/935] s390/dasd: Propagate partial completion length across ERP recovery
+Date: Sat, 12 Sep 2026 08:53:10 +0200
+Message-ID: <20260912065530.490588419@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -54,155 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Stefan Haberland <sth@linux.ibm.com>
 
-commit 2a1780f9fc2493bd34c418a0be6fc58943afcecf upstream.
+commit 6fb5ba2e7e43173a3761e46f091070a8185efa14 upstream.
 
-Several sysfs show/store handlers call a discipline callback that
-dereferences device->private, either directly or through the
-DASD_DEFINE_ATTR() macro. During dasd_generic_set_online() the discipline
-is assigned before check_device() allocates device->private, so an
-unprivileged read of one of these world-readable attributes in that window
-dereferences a NULL pointer and panics.
+dasd_default_erp_postaction() copies the timing and device state from
+the finished ERP request back to the original request but drops
+proc_bytes. A request that was partially completed, an ESE read of a
+not-yet-allocated track returns fewer bytes than requested, and then
+recovered through the ERP chain loses its partial-completion length.
+__dasd_cleanup_cqr() then sees proc_bytes == 0 and completes the whole
+request instead of requeueing the remainder, silently returning zeroed
+data for the part that was never read.
 
-Guard the dereference inside each callback that actually touches
-device->private.
+Carry proc_bytes over to the original request like the other
+per-request state.
 
-Fixes: c729696bcf8b ("s390/dasd: Recognise data for ESE volumes")
+Fixes: 5e6bdd37c552 ("s390/dasd: fix data corruption for thin provisioned devices")
 Cc: stable@vger.kernel.org
 Reviewed-by: Jan Höppner <hoeppner@linux.ibm.com>
 Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Link: https://patch.msgid.link/20260805111612.1285190-4-sth@linux.ibm.com
+Link: https://patch.msgid.link/20260805111612.1285190-3-sth@linux.ibm.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd_eckd.c |   40 ++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 38 insertions(+), 2 deletions(-)
+ drivers/s390/block/dasd_erp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/s390/block/dasd_eckd.c
-+++ b/drivers/s390/block/dasd_eckd.c
-@@ -1519,6 +1519,8 @@ static void dasd_eckd_reset_path(struct
- 	struct dasd_eckd_private *private = device->private;
- 	unsigned long flags;
+--- a/drivers/s390/block/dasd_erp.c
++++ b/drivers/s390/block/dasd_erp.c
+@@ -127,6 +127,7 @@ struct dasd_ccw_req *dasd_default_erp_po
+ 	int success;
+ 	unsigned long startclk, stopclk;
+ 	struct dasd_device *startdev;
++	unsigned int proc_bytes;
  
-+	if (!private)
-+		return;
- 	if (!private->fcx_max_data)
- 		private->fcx_max_data = get_fcx_max_data(device);
- 	spin_lock_irqsave(get_ccwdev_lock(device->cdev), flags);
-@@ -1674,6 +1676,9 @@ static int dasd_eckd_is_ese(struct dasd_
- {
- 	struct dasd_eckd_private *private = device->private;
+ 	BUG_ON(cqr->refers == NULL || cqr->function == NULL);
  
-+	if (!private)
-+		return 0;
-+
- 	return private->vsq.vol_info.ese;
- }
+@@ -134,6 +135,7 @@ struct dasd_ccw_req *dasd_default_erp_po
+ 	startclk = cqr->startclk;
+ 	stopclk = cqr->stopclk;
+ 	startdev = cqr->startdev;
++	proc_bytes = cqr->proc_bytes;
  
-@@ -1681,6 +1686,9 @@ static int dasd_eckd_ext_pool_id(struct
- {
- 	struct dasd_eckd_private *private = device->private;
- 
-+	if (!private)
-+		return 0;
-+
- 	return private->vsq.extent_pool_id;
- }
- 
-@@ -1694,6 +1702,9 @@ static int dasd_eckd_space_configured(st
- 	struct dasd_eckd_private *private = device->private;
- 	int rc;
- 
-+	if (!private)
-+		return 0;
-+
- 	rc = dasd_eckd_read_vol_info(device);
- 
- 	return rc ? : private->vsq.space_configured;
-@@ -1708,6 +1719,9 @@ static int dasd_eckd_space_allocated(str
- 	struct dasd_eckd_private *private = device->private;
- 	int rc;
- 
-+	if (!private)
-+		return 0;
-+
- 	rc = dasd_eckd_read_vol_info(device);
- 
- 	return rc ? : private->vsq.space_allocated;
-@@ -1717,6 +1731,9 @@ static int dasd_eckd_logical_capacity(st
- {
- 	struct dasd_eckd_private *private = device->private;
- 
-+	if (!private)
-+		return 0;
-+
- 	return private->vsq.logical_capacity;
- }
- 
-@@ -1859,7 +1876,11 @@ static int dasd_eckd_read_ext_pool_info(
- static int dasd_eckd_ext_size(struct dasd_device *device)
- {
- 	struct dasd_eckd_private *private = device->private;
--	struct dasd_ext_pool_sum eps = private->eps;
-+	struct dasd_ext_pool_sum eps;
-+
-+	if (!private)
-+		return 0;
-+	eps = private->eps;
- 
- 	if (!eps.flags.extent_size_valid)
- 		return 0;
-@@ -1875,6 +1896,9 @@ static int dasd_eckd_ext_pool_warn_thrsh
- {
- 	struct dasd_eckd_private *private = device->private;
- 
-+	if (!private)
-+		return 0;
-+
- 	return private->eps.warn_thrshld;
- }
- 
-@@ -1882,6 +1906,9 @@ static int dasd_eckd_ext_pool_cap_at_war
- {
- 	struct dasd_eckd_private *private = device->private;
- 
-+	if (!private)
-+		return 0;
-+
- 	return private->eps.flags.capacity_at_warnlevel;
- }
- 
-@@ -1892,6 +1919,9 @@ static int dasd_eckd_ext_pool_oos(struct
- {
- 	struct dasd_eckd_private *private = device->private;
- 
-+	if (!private)
-+		return 0;
-+
- 	return private->eps.flags.pool_oos;
- }
- 
-@@ -5977,8 +6007,11 @@ static int dasd_eckd_query_host_access(s
- 	struct ccw1 *ccw;
- 	int rc;
- 
-+	if (!private)
-+		return -ENODEV;
-+
- 	/* not available for HYPER PAV alias devices */
--	if (!device->block && private->lcu->pav == HYPER_PAV)
-+	if (!device->block && private->lcu && private->lcu->pav == HYPER_PAV)
- 		return -EOPNOTSUPP;
- 
- 	/* may not be supported by the storage server */
-@@ -6683,6 +6716,9 @@ static int dasd_eckd_hpf_enabled(struct
- {
- 	struct dasd_eckd_private *private = device->private;
- 
-+	if (!private)
-+		return 0;
-+
- 	return private->fcx_max_data ? 1 : 0;
- }
- 
+ 	/* free all ERPs - but NOT the original cqr */
+ 	while (cqr->refers != NULL) {
+@@ -151,6 +153,7 @@ struct dasd_ccw_req *dasd_default_erp_po
+ 	cqr->startclk = startclk;
+ 	cqr->stopclk = stopclk;
+ 	cqr->startdev = startdev;
++	cqr->proc_bytes = proc_bytes;
+ 	if (success)
+ 		cqr->status = DASD_CQR_DONE;
+ 	else {
 
 
