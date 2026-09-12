@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0820126ED46;
-	Sat, 12 Sep 2026 19:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26C6331203;
+	Sat, 12 Sep 2026 19:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242401; cv=none; b=JYoUNzZEgq3O+s55sUn8i27hZVKUsKhW53FeYHE/nqgoRSXEGb1yrbwYr107RysKzEmQ4vi6LEAD3ePTJNrgeZ7OzKe6CyxWQg/qqOsInlV9w/WCt5AKETxFsCxhVSewfPAuFeTE+OQwUUo1ZrAfCSwrPazOptPbKwo6iPhNl7U=
+	t=1789242403; cv=none; b=S9H1udM/4+XBesa4o3JpvwJVOR0DX/ohoIxShGloc/omgVBzTeIlW4Mff3VD8AuYDtL1cGzEdqhsPAQNiDjbBy5/6T6J9ssWHodn2+cjqSuvy0M2GBPgAq9KCjoKvimfur8rIHA+C6kqPF62qpcS1KenmooMrfth1UKma0cDEWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242401; c=relaxed/simple;
-	bh=FgKztgf8FJwK6L51z7l13Cj148isYjrPsrGq7wM42nw=;
+	s=arc-20240116; t=1789242403; c=relaxed/simple;
+	bh=LcHMCNnyDQKPj7Xs3Sg2SwfhGgHqoBU4rsl09pg+8EQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V5laq1O7V0hslOTZ8Xoq6vzPzuAc8d8+36Mv4woLACLbLEgjH0t77mn0MDsiloY+gSYjsTSZI2eA8T19fM687Pf0XzKYGaXcC6hP8Fj5k3OOKg7ZfucYBEGYbLS1NgbsKO++aYQ8ChoPq/omAQz4rKMYM8HWOpnYoe+YB4+a/PU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Yel4P9g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NN8Hq9BPdVRBonjcjn+OX/1KfPBlh/Kn7Nk4pu+JcWAFCz4hJbPf7KSbLgeqLx8B9fP5OCyrC4LnCnYwggLNsNFzN3LQ4YcpuiBRRa7DlratGquXnimMDLW3FIQl04jSRxbOrzbInF6fVfr51MklFTD+ayosavSyZZ+9MxEpXEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eSl686PG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Yel4P9g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7FE1F000FF;
-	Sat, 12 Sep 2026 19:46:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSl686PG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED9691F000FF;
+	Sat, 12 Sep 2026 19:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242399;
-	bh=uQJxKlq+D/yWrgNMQ0IAVgHy4zbVCsK/N81K0QoFV5A=;
+	s=korg; t=1789242402;
+	bh=X51YpRZO4sWZs2Y2x5bGaZGkcUSqYDoTAbhihrNZtHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Yel4P9gJLBv0MwTq84O1ZTGJbB9eoy0g8gCLETtseRUGLrujyW+OaeKw1o4tGR4E
-	 EBREmzXRooeZf6u2IFQWhSEU2Fjfb4CGp4x7tXEqjRYS4J16wUoIVwk60DuD8r1Nuk
-	 1a7TxR/luvzCXV9f6yN0jgbbDnmRWEPh0XzeOk5Q=
+	b=eSl686PGqJXZIoY5/FpixOnGWH3kMRIBTg9I5dMhOuZASdwIQcz8IONtxLcbyePBZ
+	 04OruW3OhiKI68AyUWyPtZXWVTjAUWXRWuRnSiitvOGdpDXwMVMKWaW76DWo01Oe5Q
+	 jEmdveTnffmEqyaFEcNodboptpceetAUsiTNrXUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Yang <yangfeng@kylinos.cn>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Radu Rendec <radu@rendec.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 391/798] selftests/bpf: Fix memory leak in msg_alloc_iov
-Date: Sat, 12 Sep 2026 09:00:19 +0200
-Message-ID: <20260912065526.111008542@linuxfoundation.org>
+Subject: [PATCH 5.10 392/798] irqchip/gic-v3-its: Fix memleak in its_probe_one()
+Date: Sat, 12 Sep 2026 09:00:20 +0200
+Message-ID: <20260912065526.133315745@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,38 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Yang <yangfeng@kylinos.cn>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit 602701718649936eb287bf6c7ecf870ec54c6f71 ]
+[ Upstream commit 1efffab6fe336a5c4fd3c2886f255cd2f998e65f ]
 
-In the msg_alloc_iov function, the iov pointer is only assigned to
-msg->msg_iov after all memory allocations complete successfully.
-Therefore, when a calloc failure triggers the unwind_iov cleanup branch,
-we should use the local variable iov instead of msg->msg_iov.
+Fix collection leak when its_init_domain() failed in its_probe_one().
 
-Fixes: 753fb2ee0934 ("bpf: sockmap, add msg_peek tests to test_sockmap")
-Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20260707081434.539327-1-yangfeng59949@163.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: 4c21f3c26ecc2 ("irqchip: GICv3: ITS: DT probing and initialization")
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Radu Rendec <radu@rendec.net>
+Link: https://patch.msgid.link/20260702033050.1583-2-shikemeng@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_sockmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v3-its.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
-index 906a2e22957d5..8732a44c09021 100644
---- a/tools/testing/selftests/bpf/test_sockmap.c
-+++ b/tools/testing/selftests/bpf/test_sockmap.c
-@@ -514,7 +514,7 @@ static int msg_alloc_iov(struct msghdr *msg,
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index 6b86a29990e3a..04b89f345c77c 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -5099,7 +5099,7 @@ static int __init its_probe_one(struct resource *res,
+ 
+ 	err = its_init_domain(handle, its);
+ 	if (err)
+-		goto out_free_tables;
++		goto out_free_collection;
+ 
+ 	raw_spin_lock(&its_lock);
+ 	list_add(&its->entry, &its_nodes);
+@@ -5107,6 +5107,8 @@ static int __init its_probe_one(struct resource *res,
+ 
  	return 0;
- unwind_iov:
- 	for (i--; i >= 0 ; i--)
--		free(msg->msg_iov[i].iov_base);
-+		free(iov[i].iov_base);
- 	free(iov);
- 	return -ENOMEM;
- }
+ 
++out_free_collection:
++	kfree(its->collections);
+ out_free_tables:
+ 	its_free_tables(its);
+ out_free_cmd:
 -- 
 2.53.0
 
