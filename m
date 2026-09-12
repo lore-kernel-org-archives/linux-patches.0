@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F2B2E7185;
-	Sat, 12 Sep 2026 18:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FA1F4F1;
+	Sat, 12 Sep 2026 18:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238799; cv=none; b=jDpL5g/QOEYIp0M0NLIQ+9dl70MaDBrdZKGhx8jqFBMIiREuCKRj2ikx77vfNpYGQFiGEHkeB2vxrlxZ8gwISheMdhDKJxArGsRS1LvQCV3ZmaFyAbJAmMTvqSR9/XgsfWijQyXDttiYXO/m+arGixjVtJ958f1YJy+m+3V5npE=
+	t=1789238804; cv=none; b=CZia3GujBkssGyr6Qmb9IuJKj3zownUOKOfbUb8NS3VOhQZbr/FefPLm3qOweSD4CGxEw3dwe2WyycYDlPNzAIPj00PB23pbNB4EO2qjatFeW7EOZWjIUZ+pB+LT8Ifual8G7bhET/ZtKLRFg1HI3QmUnhOKZlsN6pyUd+ZfGwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238799; c=relaxed/simple;
-	bh=FrqKFbtFS3PEPAWzgv2pxnU5Q2HL7mpRwrMF2pUL1xw=;
+	s=arc-20240116; t=1789238804; c=relaxed/simple;
+	bh=98bB6iOHlW8jGyzRqIAMwUPkJM7YmwImy90FRTajt6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eSZgML6+M9jMTKpehlVZqugC2qd32yVlfxfs3fuQS1nIHzDhqEgH695R/NSfilhFNPU6FPJdI/IYtLJFoT/gsofH2yXDLr6G/A+SHkkXZQPtqMyz9rXghx6T9k1YmQse2+aFXQF21Z6A0FLJhpjEKMTQyDaxoBNAJXzA5KrV/eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pf+ImQU/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dcV0hwsJxs4CdmWoT0MW2SKw3MY7fizyJyk43iqeatFtr+N72oqkoBdWn9SES/Ta1yI2JXGDpD/WMIhoFnto1U7l5RwZth38KoebXXutk21WRsVotfP/DZGuJuztz9AFrrQcpzVSJFF6hxifmOpd4DBNwhPY7PycSBVAWhjcrns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AhwVDFvD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pf+ImQU/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8C71F000FF;
-	Sat, 12 Sep 2026 18:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AhwVDFvD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D948D1F000FF;
+	Sat, 12 Sep 2026 18:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238798;
-	bh=TqiN7swqsSwc/sFcQCRRQ2nPGRedcCDnQXzzm0x3bm0=;
+	s=korg; t=1789238802;
+	bh=/aHr4UKrRuWR1hsO4BSfWPSqEf8N0CbfxLGkifketh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pf+ImQU/yR1B6SmCqv6HTNucpJmHJcjiX0wHudZ+piWV49wr2NGPW6hOsyDeMn12V
-	 FpJQeQjN+nWDhDeH4ie9/q9rD6e78LHdquLpl19IjXY1sZItjhleoltsIONtkZFXYe
-	 J/yQ1CbdpqRVJeV7ecOrOz0vwt3ulJCwd9V4q9MY=
+	b=AhwVDFvDI4SV61CPi7+d+LPysRq+7fodozG+UpArnLZNZKhdyFuR14Qk2XIWODdrL
+	 6RoSreye72OyK7q2XxYyGIR6MIGSZAR+gBB7DISkjn3lrfFC1Oe0kgY1yH64EiIzhi
+	 yL0tGasfqvIxsHyO209b++FNqhKYW7WceH6tuHdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mikko Perttunen <mperttunen@nvidia.com>,
 	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 533/935] gpu: host1x: Fix offset calculation in trace_write_gather
-Date: Sat, 12 Sep 2026 08:59:23 +0200
-Message-ID: <20260912065539.046173108@linuxfoundation.org>
+Subject: [PATCH 5.15 534/935] gpu: host1x: Avoid stack over-read in debug output helpers
+Date: Sat, 12 Sep 2026 08:59:24 +0200
+Message-ID: <20260912065539.068575644@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,44 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit eb896850964d3dfce291b4fdff9c2d42d85e564b ]
+[ Upstream commit bc17ac285fb708f22a8fa2c0ed32eceb1d37e6d6 ]
 
-When a gather longer than 2*TRACE_MAX_LENGTH (256) words is traced
-through host1x_cdma_push_gather, the reported BO offset drifts from
-the third iteration onward.
+host1x_debug_output() and host1x_debug_cont() used vsnprintf(), which
+returns the length the formatted string would have reached with an
+unbounded buffer. That return value was passed straight to o->fn as
+the number of bytes to emit.
 
-Fix the calculation by properly calculating the value on each loop
-rather than accumulating.
+This could cause a read past end of the output buffer if a call to
+host1x_debug_* produced a string longer than 256 bytes. This only
+affected the debugfs files as the printk debug sink ignores the
+number of bytes. In practice, this is very unlikely to occur.
 
-In reality, gathers tend to be pretty short so this is unlikely to
-ever have been observed.
+Fix by switching to vscnprintf(), which returns the number of bytes
+actually written.
 
-Fixes: b40d02bf96e0 ("gpu: host1x: Use struct host1x_bo pointers in traces")
+Fixes: 6236451d83a7 ("gpu: host1x: Add debug support")
 Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
 Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260609-b4-host1x-small-fixes-a-v1-3-7c1131c0b3ad@nvidia.com
+Link: https://patch.msgid.link/20260609-b4-host1x-small-fixes-a-v1-4-7c1131c0b3ad@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/hw/channel_hw.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/host1x/debug.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/host1x/hw/channel_hw.c b/drivers/gpu/host1x/hw/channel_hw.c
-index 1999780a7203a..7a507685b0f1e 100644
---- a/drivers/gpu/host1x/hw/channel_hw.c
-+++ b/drivers/gpu/host1x/hw/channel_hw.c
-@@ -36,10 +36,9 @@ static void trace_write_gather(struct host1x_cdma *cdma, struct host1x_bo *bo,
- 		for (i = 0; i < words; i += TRACE_MAX_LENGTH) {
- 			u32 num_words = min(words - i, TRACE_MAX_LENGTH);
+diff --git a/drivers/gpu/host1x/debug.c b/drivers/gpu/host1x/debug.c
+index 8a14880c61bbd..d3001229be270 100644
+--- a/drivers/gpu/host1x/debug.c
++++ b/drivers/gpu/host1x/debug.c
+@@ -30,7 +30,7 @@ void host1x_debug_output(struct output *o, const char *fmt, ...)
+ 	int len;
  
--			offset += i * sizeof(u32);
--
- 			trace_host1x_cdma_push_gather(dev_name(dev), bo,
--						      num_words, offset,
-+						      num_words,
-+						      offset + i * sizeof(u32),
- 						      mem);
- 		}
+ 	va_start(args, fmt);
+-	len = vsnprintf(o->buf, sizeof(o->buf), fmt, args);
++	len = vscnprintf(o->buf, sizeof(o->buf), fmt, args);
+ 	va_end(args);
  
+ 	o->fn(o->ctx, o->buf, len, false);
+@@ -42,7 +42,7 @@ void host1x_debug_cont(struct output *o, const char *fmt, ...)
+ 	int len;
+ 
+ 	va_start(args, fmt);
+-	len = vsnprintf(o->buf, sizeof(o->buf), fmt, args);
++	len = vscnprintf(o->buf, sizeof(o->buf), fmt, args);
+ 	va_end(args);
+ 
+ 	o->fn(o->ctx, o->buf, len, true);
 -- 
 2.53.0
 
