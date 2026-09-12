@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28F83CDBB5;
-	Sat, 12 Sep 2026 15:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472903537FF;
+	Sat, 12 Sep 2026 15:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228704; cv=none; b=dp3aqxCHIm7RjxAl9xHondyqyZwGXb7QU75Ko5CIGmhcn6iQQFDDrpXlQBlIb5LCnXujdjJdk6IfOg+H57GH2DHLAQiRIqX8hSezvrbhVNLkvpEPhcDlQYN6MMmNI+EHxZJal/1XJiz2WswEf6JTwfxDfqo+AtLeCxXuVPZT9xk=
+	t=1789228708; cv=none; b=r0lRJM4oSKRk3KqIsyznlfABUdsrUZ3E14uZCi9M/jJb1w/IvOqI/rAiIPjsP4tiv6jkzkyb+EqX6ncBWKB9cSFALn4/q3sBj2RmE5Lp867jvISdMRqs89Tl7GoloZ14aMw4SzbfZWGyKdyZN3cDZ1jyfbs4XTFybpqOB6GC98E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228704; c=relaxed/simple;
-	bh=nWo+vF/OVH3hVX215bRycp13/zPrfLdG+uOuRfNvSss=;
+	s=arc-20240116; t=1789228708; c=relaxed/simple;
+	bh=i+ooehBgIZvZvuTg8Q/1KL3+VxKoLfDaIBXlKnLaoU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HcnRSCsIAZqlTIu186PTsypcGKU5it2oTyHnoh3ZpOPIL95gHFJz9HCc1Zeep4ZcbSFkwu4iQuxqTgR3UVrL0m7bYl76BXlsyeZuna45Z6/SB5jYagdzoAwjgRHkcDOKPBDUIt2GU7m974DiZzOUgZfA5CRugml3mGasP5KSWTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ICS8eMnV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HmwsK8nlCfVAzCDMbNtOYfeTzMMNAn6erIZrlvyvZvosJAUB4MA0g7kJl4CQ15b+OUFpw3q1I7YYPsGvDTeVu6pbn85KhZHyNCjz+ZlZz5smXjMTWIaw21RpxLwEEEnUxSAsn0WkD7668IE2IMCoyHSk5LfkVsM4lnozpjFb0ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pjibkeac; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ICS8eMnV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC681F000FF;
-	Sat, 12 Sep 2026 15:58:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pjibkeac"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4601F000FF;
+	Sat, 12 Sep 2026 15:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228702;
-	bh=60j9bmzqYqtaQEuSmG8OtYgnWtbxGuxVxNhCLOelBH0=;
+	s=korg; t=1789228706;
+	bh=35gLvMqsrDj6SnAZFDmqBdeaxm5u1k3ufR2GgD2U+oQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ICS8eMnVufZQUhPC7fBHf6ZKKI7VxZzSvn2Cb6VEGPPoMEtvuXgv9vU8pg9R2NpOh
-	 0FGrI4oSUvzH5LRMfVOntVheW8bB4kNlYpDQkIXcFsVnxt8aSd7NzzWa1WUu6Jg/yT
-	 FEJivphq/ENkUr5UBiL50KBj38JftG8f8v4479Vs=
+	b=pjibkeacijZM4hPE0ouDTwP3vnpeuLIXgNw/ZHi5xe4LgfPbYNLt7ZgAKyrIkiE55
+	 4sGbcGoSYjmQylrkw/Iy8FPAwlYNwcqNET3DY4IXgnf/h+h7oPwy9bTn/XurN4fXsN
+	 EmZ563U4rbN+XKxyDX3Bft+FDKSFMZ3iLDz7Zj9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0439/1191] mm/damon/sysfs-schemes: kobject_del() scheme dirs
-Date: Sat, 12 Sep 2026 08:52:47 +0200
-Message-ID: <20260912065558.093739859@linuxfoundation.org>
+Subject: [PATCH 6.1 0440/1191] mm/damon/tests/core-kunit: catch test failure in test_merge_regions_of()
+Date: Sat, 12 Sep 2026 08:52:48 +0200
+Message-ID: <20260912065558.115999380@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,52 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: SJ Park <sj@kernel.org>
 
-[ Upstream commit 05fb6ac98c49be870c5f9ccdfdf95f0107e564ae ]
+[ Upstream commit b640708929aa956235866bf7717d89018c661083 ]
 
-On CONFIG_DEBUG_KOBJECT_RELEASE enabled kernel, lack of kobject_del()
-could cause directories creation failures due to the name conflicts.  Fix
-those issues for scheme directories by adding kobject_del() calls.
+KUNIT_EXPECT_EQ() does not abort the execution of test code when the
+expectation is not met.  But damon_test_merge_regions_of() code after its
+initial KUNIT_EXPECT_EQ() call assumes the expectation is met.  It does a
+per-region test with a hard-coded number of regions that is correct only
+if the expectation was met.  As a result, __nth_region_of() could return
+NULL, and the test code can dereference NULL pointers.  Fix the issue by
+catching the expectation failure and skip the per-region tests.
 
-Link: https://lore.kernel.org/20260628220121.97360-4-sj@kernel.org
-Fixes: 7e84b1f8212a ("mm/damon/sysfs: support DAMON-based Operation Schemes")
+The user impact on realistic setups should be negligible, as it is a unit
+test.
+
+The issue was discovered [1] by Sashiko.
+
+Link: https://lore.kernel.org/20260715031002.108504-3-sj@kernel.org
+Link: https://lore.kernel.org/20260710144937.26981-1-sj@kernel.org [1]
+Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
 Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.18.x
+Cc: <stable@vger.kernel.org> # 5.15.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/sysfs.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ mm/damon/core-test.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 4231195785647..9a918f8e4c6bf 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -954,6 +954,7 @@ static void damon_sysfs_schemes_rm_dirs(struct damon_sysfs_schemes *schemes)
- 
- 	for (i = 0; i < schemes->nr; i++) {
- 		damon_sysfs_scheme_rm_dirs(schemes_arr[i]);
-+		kobject_del(&schemes_arr[i]->kobj);
- 		kobject_put(&schemes_arr[i]->kobj);
+diff --git a/mm/damon/core-test.h b/mm/damon/core-test.h
+index 069c9032b98bc..21112ed10392e 100644
+--- a/mm/damon/core-test.h
++++ b/mm/damon/core-test.h
+@@ -257,11 +257,14 @@ static void damon_test_merge_regions_of(struct kunit *test)
+ 	damon_merge_regions_of(t, 9, 9999);
+ 	/* 0-112, 114-130, 130-156, 156-170 */
+ 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 5u);
++	if (damon_nr_regions(t) != 5)
++		goto out;
+ 	for (i = 0; i < 5; i++) {
+ 		r = __nth_region_of(t, i);
+ 		KUNIT_EXPECT_EQ(test, r->ar.start, saddrs[i]);
+ 		KUNIT_EXPECT_EQ(test, r->ar.end, eaddrs[i]);
  	}
- 	schemes->nr = 0;
-@@ -991,13 +992,15 @@ static int damon_sysfs_schemes_add_dirs(struct damon_sysfs_schemes *schemes,
- 			goto out;
- 		err = damon_sysfs_scheme_add_dirs(scheme);
- 		if (err)
--			goto out;
-+			goto del_out;
++out:
+ 	damon_free_target(t);
+ }
  
- 		schemes_arr[i] = scheme;
- 		schemes->nr++;
- 	}
- 	return 0;
- 
-+del_out:
-+	kobject_del(&scheme->kobj);
- out:
- 	damon_sysfs_schemes_rm_dirs(schemes);
- 	kobject_put(&scheme->kobj);
 -- 
 2.53.0
 
