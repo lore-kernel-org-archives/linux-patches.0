@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9714233993;
-	Sat, 12 Sep 2026 14:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB972DB788;
+	Sat, 12 Sep 2026 14:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221740; cv=none; b=LiUkuMdRHJI/bi5ZSuXPJznzreihNR4G6TmdaNVevzd8NX6ssMGhk4JVI2mmkBpakaB9i3XTABhsj1BghHhRWHVRWRhiPzw/yH0/27kRKR8DpfCP4o+LtGUknyJ6AiLf6N3LzsDOzpE69z5QqzL+JUETD581XeRHsrt6mgF9Ha8=
+	t=1789221745; cv=none; b=fRqMQw6ZXFL84EvbkqGgTR+lvvJBuolJO+WHF7gAQwquRcffkHynwWhmas8q45MGN46YF6nGUpCWnnq/oUSX52Bxpf4enLbipa3f0RQzB0MYAVXI4gs97Idk6C0pwUiHG1GD96vN2ECsTvxuHgYyU7sjnmc9ZYsAHjKsvbJ8l9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221740; c=relaxed/simple;
-	bh=Bq/SwdaQBMYmktKuJUYvDtubJIIS1u7+LSLy9sef/RQ=;
+	s=arc-20240116; t=1789221745; c=relaxed/simple;
+	bh=TcMlbnudq6gf7SrSiqJoVqte/RNYdotrZGNqdSBNnj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EHgRpRhonb1Qs8ul9p9bVA3eUHE6hZAqDTWNbKoQscA9OjNdkgaFXDX9jG52i7MVkL9OOOc5xAkJxy8cahZYqkECmyF6WDsunlo3uxoq++ouzh9PkWa5CC11c6EsrQHniRdrwjMyK9Tc0BvBOmaBQ92ribns4nRGIfjx3cbP3jM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDR8TSNh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IwipiBw0aZDEiaq6LD0u9o7ecfE58/2x62QtqmhkUkU33TcKlvokLPkxCYMTxqk1XjLKua7zU2hzI+mF8ZjgtLSwCq0lc4Zo2igE5UTWBGxqmnBu7j3gUsymCqKBI34hHE/Py9ahmpJrYbKgLSWeo2iBOcSrnauhB/S33UhCwJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P56dfzIn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDR8TSNh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A831F000FF;
-	Sat, 12 Sep 2026 14:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P56dfzIn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392391F000FF;
+	Sat, 12 Sep 2026 14:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221739;
-	bh=MKJaGNuUs8sH9M8SbOZK7c+1ajiEoR3TXiIIeCgJsv8=;
+	s=korg; t=1789221744;
+	bh=PSNhz8bf8jG+0EXCe5fYoeVMLEURFZy6c4JIqEdvQho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wDR8TSNh5X37JoVcGSCmUbk38EwPMZ9mcGD5UhRLm2vSqawTosdepFzaZUuQqRW/o
-	 gXrh1lPpx3WfdZ6Cbxu792BXPQ6fxBxhe5uXkzzkgasgfJn3iHNKxnpZwY9RhxGiPM
-	 Z75hte5ZvYxNOfPhf6Nqd+1gmdA6yfA/RJMJwsxM=
+	b=P56dfzInDfvQhMM9tOdP6UQpbebafqUTz7pmmUJRh5ZHjWSQPZJ+UCO6qM6K6Mytp
+	 gmiG/Ly71WEDztCJ3FaNviQF/lfAJp1DsDf/zs8hdne5FGPVftqDu6NZjy32a6zaCC
+	 /LAMLYL5G+ml7eKoOOl9vIkDYogRG/fOxrm9B15g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 6.6 0437/1424] KVM: s390: pv: Fix rc/rrc offset for PVM_DUMP
-Date: Sat, 12 Sep 2026 08:47:49 +0200
-Message-ID: <20260912065617.069945619@linuxfoundation.org>
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 0446/1424] media: cobalt: Avoid freeing ALSA private data twice
+Date: Sat, 12 Sep 2026 08:47:58 +0200
+Message-ID: <20260912065617.273492650@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,34 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-commit 1e3c8e7b3465fb8a49d3623d2d0f449c0b5b48f3 upstream.
+commit 3a7d6b9c4cb5ac18cbd3f1c7f8c7b159c42ba0b1 upstream.
 
-The rc/rrc value is copied to the cmd location of the cmd in the kvm_pv_cmd
-structure. Fix the offset.
+snd_cobalt_card_create() stores cobsc in sc->private_data and installs
+snd_cobalt_card_private_free() as sc->private_free. From that point,
+snd_card_free(sc) releases cobsc through the ALSA card cleanup path.
 
-Fixes: 8aba09588d2a ("KVM: s390: Add CPU dump functionality")
+If cobalt_alsa_init() fails after snd_cobalt_card_create(), the
+err_exit_free path calls snd_card_free(sc) and then kfree(cobsc). That
+second free releases the same object again.
+
+Remove the explicit kfree(cobsc) and leave ownership with the ALSA card.
+
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: 85756a069c55 ("[media] cobalt: add new driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260811153738.206885-4-borntraeger@linux.ibm.com>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/kvm-s390.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/pci/cobalt/cobalt-alsa-main.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/arch/s390/kvm/kvm-s390.c
-+++ b/arch/s390/kvm/kvm-s390.c
-@@ -5728,7 +5728,7 @@ long kvm_arch_vcpu_ioctl(struct file *fi
- 		r = kvm_s390_handle_pv_vcpu_dump(vcpu, &cmd);
- 
- 		/* Always copy over UV rc / rrc data */
--		if (copy_to_user((__u8 __user *)argp, &cmd.rc,
-+		if (copy_to_user(argp + offsetof(struct kvm_pv_cmd, rc), &cmd.rc,
- 				 sizeof(cmd.rc) + sizeof(cmd.rrc)))
- 			r = -EFAULT;
- 		break;
+--- a/drivers/media/pci/cobalt/cobalt-alsa-main.c
++++ b/drivers/media/pci/cobalt/cobalt-alsa-main.c
+@@ -135,7 +135,6 @@ int cobalt_alsa_init(struct cobalt_strea
+ err_exit_free:
+ 	if (sc != NULL)
+ 		snd_card_free(sc);
+-	kfree(cobsc);
+ err_exit:
+ 	return ret;
+ }
 
 
