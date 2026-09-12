@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B53381E98;
-	Sat, 12 Sep 2026 09:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BCCB19D8BC;
+	Sat, 12 Sep 2026 09:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207073; cv=none; b=tXKiqGnYNnCHbnk/kwaysoGTIjHLeA0ni02ac+Ckn1iN1jKH5lw6kZjCuAIRqd+OllNpfOfwX/Zb9qsViYsGL8MKJLPtHrYrSzeABcsv2jci4hc4qbSxAZko6qXt1YbCu3ywU3LrAzSmFFrIfQv/QbjrrC1QIrcXB42InzNEj/c=
+	t=1789207077; cv=none; b=aGJfwRKayKgYk+Ssb54NCdBlR0//oate9YIPkGU2cmLu9Z0Bqi075fGT+J5DPxM/vAPB5pOhPwKHFstL2HLi+yOoQFv6hzbey5scBfN7lJHiFxDVfmwWBOgvPyLjvVn9Uc0vTVdcMLB3UhbGuKXtExZRrU9OU2DlcXAODiOdyYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207073; c=relaxed/simple;
-	bh=wEUenb/u3QGbneJydFAQvM+yF5qcBWI7yHmuZDqCS2c=;
+	s=arc-20240116; t=1789207077; c=relaxed/simple;
+	bh=1eve+qJUOhBfcqjLypuVn1mgHXGM3e5KLiVAB6PBxBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B64Jgksg2XK4rggvNItUlOENJMM6W/6WCgk7X2BqwSqQPBfjvnPcRYAk6XwOi2P0OQE7THWMOmBwrHid99tnW613FcykjFZqspBv/kOwcFESlT+KxWGvCCGmRK5COfe3eenEt+bZVpU591Sz0QJm+rNBPxUEGrx0hnfQ+VH6pT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DFnKak+x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q5fJYRMzqcPcOwt1MiI9JhSCqXPIGdASGBdp+m8XdQ8FmTBsq3dHXF1LosY2ZfLA9+9S4bnOCk+ICBq9wngcbynkMUOrWijGGwrRsZmozu42SR4pZUa7w91aoWMSayAOrK94mcf4qHFqgLxwNnS7QvU+uUsiklT3XKWKRZzqd6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Geyhpwz6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DFnKak+x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6201F00893;
-	Sat, 12 Sep 2026 09:57:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Geyhpwz6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE331F000FF;
+	Sat, 12 Sep 2026 09:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207072;
-	bh=Ty7FSBpCbb+P097fyOUucyh+Xiz4eQc9PekhZUQqskQ=;
+	s=korg; t=1789207076;
+	bh=A8hIULJocadGqmqSyQPESyjcrvaLMZpeyCG7YH+3BOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DFnKak+xCaLdVAcKTrsRFQIyoYv4RlqA8cUTjBx/F1cVG/GfFR44CupAuVgXHouTH
-	 6PSI95XFaWeTMVFhdmcLpCqnhRcYwHokDECmIGMgm4jzDFBww22Huhret6O3lFdzmO
-	 lEp+Nd+kVfQTaUhsDqWmpMjbsDxkWS2wSnbJQxpI=
+	b=Geyhpwz66bCnlhDc1HYplFm8BDQJbiSeUvn6ZcUzbxGGYJ+Iyf2LdpCQRMsBO+yyk
+	 dpkQ7HQT6cj1T4UBGjaTyPl/nxo0OiBzqrW3w8tU6TyXdHj33Xvfcj9pHxQmDetP/k
+	 dXtlkjIzLq203dU98EoxulHAxcpi+rAvRkar5w2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Kang Chang <gary.chang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Mert Seftali <mertsftl@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0338/1518] wifi: rtw89: 8852a: fix RSSI report when average beacon RSSI is not ready
-Date: Sat, 12 Sep 2026 08:41:47 +0200
-Message-ID: <20260912065631.117955129@linuxfoundation.org>
+Subject: [PATCH 6.18 0339/1518] iio: accel: dmard09: Implement IIO_CHAN_INFO_SCALE
+Date: Sat, 12 Sep 2026 08:41:48 +0200
+Message-ID: <20260912065631.142340069@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,36 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chih-Kang Chang <gary.chang@realtek.com>
+From: Mert Seftali <mertsftl@gmail.com>
 
-[ Upstream commit 9bf6bd6ed5accb57544d04ded911a2ef1642d48f ]
+[ Upstream commit aa58ecc73466d0cb8c418de98e2225490bf600e3 ]
 
-8852A uses the average beacon RSSI to smooth the RSSI. However, before
-the average beacon RSSI is available, the RSSI should use the PPDU
-status RSSI of the received packet to avoid reporting the RSSI as -110 dBm.
+Reading the in_accel_scale attribute on the DMARD09 has always returned
+-EINVAL: the channels advertise scale via info_mask_shared_by_type so the
+IIO core exposes the attribute, but dmard09_read_raw() only handles
+IIO_CHAN_INFO_RAW, so a SCALE read falls through to 'default: return
+-EINVAL':
 
-Fixes: f0f3bf4b370c ("wifi: rtw89: 8852a: report average RSSI to avoid unnecessary scanning")
-Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260707091056.42771-13-pkshih@realtek.com
+    $ cat .../iio:deviceX/in_accel_scale
+    cat: in_accel_scale: Invalid argument
+
+leaving userspace with raw counts it cannot convert to m/s^2.
+
+The driver was written from a vendor source [1] without a datasheet, and
+the scale was declared but never implemented. The vendor source carries
+the sensitivity: its conversion is
+
+    acc = raw * GRAVITY_EARTH_1000 / sensitivity   (then / 1000 -> m/s^2)
+
+with sensitivity = 32 and GRAVITY_EARTH_1000 = 9807 ("about
+(9.80665)*1000"), i.e. 32 counts correspond to 1 g.
+
+That sensitivity applies to the value this driver already reports as raw:
+the vendor reduces each 16-bit sample to a signed 9-bit value, and the
+preparation in dmard09_read_raw() yields the same value. It is
+self-consistent: 256 counts / 32 = 8 g full scale, matching the +/-8g
+range.
+
+Implement the scale derived from that sensitivity using standard gravity:
+
+    scale = 9.80665 / 32 = 0.3064578125 m/s^2 per LSB
+
+Link: https://github.com/minstrelsy/mediatek/blob/1f49d8c87b839651bc89afc870277e8e0f2e2d55/custom/common/kernel/accelerometer/dmard09/dmard09.c [1]
+Fixes: a4fa6509dda4 ("iio: accel: add support for the Domintech DMARD09 3-axis accelerometer")
+Signed-off-by: Mert Seftali <mertsftl@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/rtw8852a.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/accel/dmard09.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852a.c b/drivers/net/wireless/realtek/rtw89/rtw8852a.c
-index a8b604adadddf..3defb38223e8b 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8852a.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8852a.c
-@@ -2113,7 +2113,7 @@ static void rtw8852a_query_ppdu(struct rtw89_dev *rtwdev,
- 	u8 raw;
+diff --git a/drivers/iio/accel/dmard09.c b/drivers/iio/accel/dmard09.c
+index d9290e3b9c464..5297ab2ee0bbe 100644
+--- a/drivers/iio/accel/dmard09.c
++++ b/drivers/iio/accel/dmard09.c
+@@ -8,6 +8,7 @@
+ #include <linux/unaligned.h>
+ #include <linux/module.h>
+ #include <linux/i2c.h>
++#include <linux/units.h>
+ #include <linux/iio/iio.h>
  
- 	if (!status->signal) {
--		if (phy_ppdu->to_self)
-+		if (phy_ppdu->to_self && ewma_rssi_read(&bb->bcn_rssi))
- 			raw = ewma_rssi_read(&bb->bcn_rssi);
- 		else
- 			raw = max(rx_power[RF_PATH_A], rx_power[RF_PATH_B]);
+ #define DMARD09_DRV_NAME	"dmard09"
+@@ -79,6 +80,12 @@ static int dmard09_read_raw(struct iio_dev *indio_dev,
+ 		*val = accel;
+ 
+ 		return IIO_VAL_INT;
++	case IIO_CHAN_INFO_SCALE:
++		*val = 0;
++		/* 1 g / 32 LSB, in m/s^2 */
++		*val2 = IIO_G_TO_M_S_2(NANO / 32);
++
++		return IIO_VAL_INT_PLUS_NANO;
+ 	default:
+ 		return -EINVAL;
+ 	}
 -- 
 2.53.0
 
