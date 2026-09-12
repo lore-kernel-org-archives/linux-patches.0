@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B061343893;
-	Sat, 12 Sep 2026 09:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC93364038;
+	Sat, 12 Sep 2026 09:46:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206398; cv=none; b=PiFNHFG/ne2E2epMIKUsssE+9cBFtbVtR7LWXwNONlrwQFPx5hvGKVneFGtoRrqkauvm2Ij7+fnHvmXtrvsLGLthLJGxcbEd/J73bHWGbd8JFH3i1PLMrBB4eiKcIZN8aWlHEGBdBK2aZoqibTIFrA6Ic6cXlHHS3GR6fF4Lvc0=
+	t=1789206403; cv=none; b=AM7FWuy8skvOasiMDyQ9ueZ9dgOUYEz4RGmdsrt0HEJOd1+YxqKj/xwMo3fBSgvXmBtCGifW5kiWz7Sj2RmqhvloTS4+vYfGGf/aDI9h4rR84NMZogmGUsW4JmoYg5b7bMHWv5W1YTDfX5BE2iCx/nr5qCA6cZll1/vrfaNBmW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206398; c=relaxed/simple;
-	bh=UwGTS5s9ZmM83947/9pq2xHKMQ6eRZKPw3/ck1d4kGA=;
+	s=arc-20240116; t=1789206403; c=relaxed/simple;
+	bh=rkb3lRCcVArRj6oUfAwXy0lZosXGfaJIN4nnEoGCvm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fml4wykXH0s4jODJ7arZoZQNp6Zi11Ny1GF3KP11dtK7BcyiPOcDzKG7Sr31UMMLWbwMBXoEQkc6Qtl6TuO+9ihAhnBa+cpldSDcWl6JynadbvOkAfTLfQHaFFcgjLNINjwnxN5pmTUS6bzRYXdxKH4b3thSGyMeZ0Rk4APWDAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVSX3aoK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gjk1gFT7kgqe8QdeJ4iIy5qjp3f7kcEIO0U3mM4QwsALF7qijpz9a+yRfY6mKc9P6Xo7q4fdABBs4m0Nz4mbmKUxGkyZ7fHBiRCXULAy/kX2N/e+AbfFdKI15SWObNNyQqCzMoH1i5IBmkBiVU/Sg61nVPmzz6c407vGL18n6/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIypxUWh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVSX3aoK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA4C1F000FF;
-	Sat, 12 Sep 2026 09:46:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIypxUWh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFA9A1F000FF;
+	Sat, 12 Sep 2026 09:46:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206396;
-	bh=xCeDZEQnzwmEYV+8P9QbOIa4JC9Y81XflzyAvfrxipA=;
+	s=korg; t=1789206401;
+	bh=Q+qs18sVik34JKcXbWTpgIrYDsKH9nbdQZGP3bCMMgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WVSX3aoKAhcbNPlWfTbvqqhZi42KKDpj43+kWUmA6WGOZ/shtPRoDgDs9er1zAodY
-	 uRcdmFYy2LeDE5XmeEgm7L+7eQ7qXDicORRwCpbBSFjy38BaKrPDtvRKCAe2o1II6d
-	 X67iDW7C2Su61jNOPu1JEsPdn+mzQMoCtuCgVvoI=
+	b=JIypxUWh0bL6ClfrO0TiOj0xfEVhjcSv3Mccryh+yvFOsP7aDJQnrnjIupYAaq+Zm
+	 8PSrWqfi6Pv24YqH+svCFTte3krnNKV2o8RX57ujDOD3ySwwSlpiSkzQH0w71j5fS4
+	 ip1S520RpYw0qvn8dSiirAgrB2h+Si0D4wsigUQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Vladimir Zapolskiy <vz@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0200/1518] crypto: qat - clear AES key schedule from stack
-Date: Sat, 12 Sep 2026 08:39:29 +0200
-Message-ID: <20260912065628.012966333@linuxfoundation.org>
+Subject: [PATCH 6.18 0183/1518] dmaengine: hisilicon: Return -ENOMEM on dynamic memory allocation in probe
+Date: Sat, 12 Sep 2026 08:39:12 +0200
+Message-ID: <20260912065627.630756060@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,36 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Vladimir Zapolskiy <vz@kernel.org>
 
-[ Upstream commit d41a9fcfb7f9ee36e4a4aaf5e7996bca6be1e7a9 ]
+[ Upstream commit cbabdd6ce1b313b5877c7fbb2f5e2f7936564d2f ]
 
-qat_alg_xts_reverse_key() expands the forward XTS AES key on the stack.
-That schedule contains key material and can remain in the stack frame.
+Out of memory situation on driver's probe is expected to be reported to
+the driver's framework with a proper -ENOMEM error code.
 
-Clear the temporary crypto_aes_ctx with memzero_explicit() after the copy.
-
-Fixes: 5106dfeaeabe ("crypto: qat - add AES-XTS support for QAT GEN4 devices")
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: e9f08b65250d ("dmaengine: hisilicon: Add Kunpeng DMA engine support")
+Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260630144214.4080302-1-vz@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/qat_algs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/hisi_dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/qat_algs.c b/drivers/crypto/intel/qat/qat_common/qat_algs.c
-index 7f638a62e3ade..91663805d9e60 100644
---- a/drivers/crypto/intel/qat/qat_common/qat_algs.c
-+++ b/drivers/crypto/intel/qat/qat_common/qat_algs.c
-@@ -405,6 +405,7 @@ static void qat_alg_xts_reverse_key(const u8 *key_forward, unsigned int keylen,
- 		memcpy(key_reverse + AES_BLOCK_SIZE, key - AES_BLOCK_SIZE,
- 		       AES_BLOCK_SIZE);
- 	}
-+	memzero_explicit(&aes_expanded, sizeof(aes_expanded));
- }
+diff --git a/drivers/dma/hisi_dma.c b/drivers/dma/hisi_dma.c
+index 25a4134be36b7..ede094e0d0905 100644
+--- a/drivers/dma/hisi_dma.c
++++ b/drivers/dma/hisi_dma.c
+@@ -983,7 +983,7 @@ static int hisi_dma_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	hdma_dev = devm_kzalloc(dev, struct_size(hdma_dev, chan, chan_num),
+ 				GFP_KERNEL);
+ 	if (!hdma_dev)
+-		return -EINVAL;
++		return -ENOMEM;
  
- static void qat_alg_skcipher_init_dec(struct qat_alg_skcipher_ctx *ctx,
+ 	hdma_dev->base = pcim_iomap_table(pdev)[PCI_BAR_2];
+ 	hdma_dev->pdev = pdev;
 -- 
 2.53.0
 
