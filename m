@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC9B1A6815;
-	Sat, 12 Sep 2026 15:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A721929DB64;
+	Sat, 12 Sep 2026 15:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228562; cv=none; b=sobm0er7Gybk1JUaDphWo+mci+IB2yEZLEq7pxmfyWEelt0+IPh8oZ8iTsz8LSIuVtD82Cz+CL57IEiT4ursjF+HlkoNbtSjuGYYJNAjZFeb04jQR6Z97zhBAC4bG0QXwRJULGElw5Xs1ydm98qzcinD7xG7mA/N15d2O0Z5Bjs=
+	t=1789228567; cv=none; b=AP9eNyKLWESbiv+RylAzyH70vROQZL1ujiCMvhWN1uvqwC7hvj0Z9FVMl86uQyudPEV2lUqXaHbwL+FQGhW+aH6578PqJDvCu9r2f8hi3yb2On6x8vSzngwflWvnicT1kS27PtWmOEOVLFnAhTM1ViRLl/LTGTYdmRGRqz1LLe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228562; c=relaxed/simple;
-	bh=hB/f/DLEcs9tYfni4uflJTijZvDCkur7BqiOp230ErI=;
+	s=arc-20240116; t=1789228567; c=relaxed/simple;
+	bh=/5JY3yq1f1t4ELiHR/b7Speu0T1F7HnWRG+WUMxRXic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UJlOQ1GGMBKkdIUbdPYfR3LvIznteT89LQjo6BBHT59a1doKuuFaD27LLI4VqDgrZCy2JtelmUWoKbrIe75C84OZALVGGhVBHL7JlDkl8wNIHnIwWfANGWS8jtrfBtmM8l78/e3LCAb4rhF0lNXhCONarbR/CWaEFOA6toWzTlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtGHDyfd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=buqvAPc3jK7UFSUM9b+ypMMIZsxjsJLbo733PiGM4CBhUNzPNvCkXMFKmPNwquhD1cb8e46bd1dX18afuqVlTbFglqZ/FnRRYMpz9GPabIvH8zhwIvonQZWsq4JX32xOksssgx93xoHOWus2ES/evdyT+TcTDn/8tQ/E11yMaY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sgc7pKcD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtGHDyfd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA3B1F000FF;
-	Sat, 12 Sep 2026 15:55:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgc7pKcD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB0F1F000FF;
+	Sat, 12 Sep 2026 15:56:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228561;
-	bh=vLYXBs3jZ2w0tQ4aTMtwwGjlunFLjKXxjOhVcACaZro=;
+	s=korg; t=1789228566;
+	bh=opasFTkEvKmucia+jzFYi0fSVU/jPiVQN6a4E24ewx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AtGHDyfd9OXWAz3QPlBd9asNhmSRYO4PChX7BevsTxjyudhKWYPWz6d7szL2b/PNd
-	 AiF+qkI6WB4RjV5wSTQSUut22+WyxMQPk3HzaKsWnIDFKDldui4cAA9Ou9YCRL0EFa
-	 uzubdRBirptKO80C6pam+bgq+UfryGANhnmJrgUg=
+	b=sgc7pKcDcDxpNlE/7vybPt38kEnvo3IfkGZLfKsDFPDITHLCP5Ws5x3pTZsv0nSV1
+	 QySYLM12ILzsRmHQMEr+5cWHJwevaQqhVocQAEVAP04Y83XddOnaOJV4L1yoWVP3ye
+	 nLb+8f0aPCgZWw9Zfd0dfuMHtlQJxBc6Eko3TUio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.1 0409/1191] scsi: qla2xxx: Zero-init bsg stack buffers to avoid info leak
-Date: Sat, 12 Sep 2026 08:52:17 +0200
-Message-ID: <20260912065557.426093876@linuxfoundation.org>
+	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.1 0410/1191] f2fs: return symlink writeback errors
+Date: Sat, 12 Sep 2026 08:52:18 +0200
+Message-ID: <20260912065557.448385906@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,83 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-commit b93d3bb3afe1b44489927de1eb4e66e8536a5935 upstream.
+commit a2c73a7a677afdaa8b16d775188f9ef5cfbfd8b2 upstream.
 
-Several bsg handlers stage their request/reply in an uninitialized 256-byte
-on-stack buffer (uint8_t bsg[DMA_POOL_SIZE]) and fill it via
-sg_copy_to_buffer(), which only copies as many bytes as the user-supplied
-request payload. When the request is shorter than the structure, the
-remainder of the buffer is left holding stale stack data.
+F2FS writes long symlink data with page_symlink() and then flushes the
+symlink mapping to reduce the chance of exposing a broken symlink.
 
-qla2x00_read_fru_status() and qla2x00_read_i2c() then copy the full
-structure back to the reply payload with sg_copy_from_buffer(), leaking the
-uninitialized stack bytes to user space. The write/update paths do not copy
-the buffer back, but can feed uninitialized fields to the device.
+That flush result is currently ignored. If the writeback fails, symlink()
+still returns success even though the symlink is not durable and the same
+operation can already surface -EIO through syncfs().
 
-Zero the stack buffer at declaration in all five handlers, mirroring the
-heap kzalloc() approach, so short requests can no longer expose stale
-memory.
+Return the writeback error to userspace and skip the dirsync flush once the
+symlink data flush has failed.
 
-Fixes: 697a4bc69159 ("[SCSI] qla2xxx: Provide method for updating I2C attached VPD.")
-Fixes: 9ebb5d9c69f1 ("[SCSI] qla2xxx: Add I2C BSG interface.")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-30-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: d0cae97cb600 ("f2fs: flush symlink path to avoid broken symlink after POR")
+Cc: stable@kernel.org
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/f2fs/namei.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -1560,7 +1560,7 @@ qla2x00_update_fru_versions(struct bsg_j
- 	scsi_qla_host_t *vha = shost_priv(host);
- 	struct qla_hw_data *ha = vha->hw;
- 	int rval = 0;
--	uint8_t bsg[DMA_POOL_SIZE];
-+	uint8_t bsg[DMA_POOL_SIZE] = {};
- 	struct qla_image_version_list *list = (void *)bsg;
- 	struct qla_image_version *image;
- 	uint32_t count;
-@@ -1620,7 +1620,7 @@ qla2x00_read_fru_status(struct bsg_job *
- 	scsi_qla_host_t *vha = shost_priv(host);
- 	struct qla_hw_data *ha = vha->hw;
- 	int rval = 0;
--	uint8_t bsg[DMA_POOL_SIZE];
-+	uint8_t bsg[DMA_POOL_SIZE] = {};
- 	struct qla_status_reg *sr = (void *)bsg;
- 	dma_addr_t sfp_dma;
- 	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
-@@ -1671,7 +1671,7 @@ qla2x00_write_fru_status(struct bsg_job
- 	scsi_qla_host_t *vha = shost_priv(host);
- 	struct qla_hw_data *ha = vha->hw;
- 	int rval = 0;
--	uint8_t bsg[DMA_POOL_SIZE];
-+	uint8_t bsg[DMA_POOL_SIZE] = {};
- 	struct qla_status_reg *sr = (void *)bsg;
- 	dma_addr_t sfp_dma;
- 	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
-@@ -1718,7 +1718,7 @@ qla2x00_write_i2c(struct bsg_job *bsg_jo
- 	scsi_qla_host_t *vha = shost_priv(host);
- 	struct qla_hw_data *ha = vha->hw;
- 	int rval = 0;
--	uint8_t bsg[DMA_POOL_SIZE];
-+	uint8_t bsg[DMA_POOL_SIZE] = {};
- 	struct qla_i2c_access *i2c = (void *)bsg;
- 	dma_addr_t sfp_dma;
- 	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
-@@ -1770,7 +1770,7 @@ qla2x00_read_i2c(struct bsg_job *bsg_job
- 	scsi_qla_host_t *vha = shost_priv(host);
- 	struct qla_hw_data *ha = vha->hw;
- 	int rval = 0;
--	uint8_t bsg[DMA_POOL_SIZE];
-+	uint8_t bsg[DMA_POOL_SIZE] = {};
- 	struct qla_i2c_access *i2c = (void *)bsg;
- 	dma_addr_t sfp_dma;
- 	uint8_t *sfp = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &sfp_dma);
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -663,15 +663,16 @@ err_out:
+ 	 * performance regression.
+ 	 */
+ 	if (!err) {
+-		filemap_write_and_wait_range(inode->i_mapping, 0,
+-							disk_link.len - 1);
++		err = filemap_write_and_wait_range(inode->i_mapping, 0,
++						   disk_link.len - 1);
+ 
+-		if (IS_DIRSYNC(dir))
++		if (!err && IS_DIRSYNC(dir))
+ 			f2fs_sync_fs(sbi->sb, 1);
+-	} else {
+-		f2fs_unlink(dir, dentry);
+ 	}
+ 
++	if (err)
++		f2fs_unlink(dir, dentry);
++
+ 	f2fs_balance_fs(sbi, true);
+ 	goto out_free_encrypted_link;
+ 
 
 
