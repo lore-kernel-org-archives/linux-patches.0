@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99BF1A9F83;
-	Sat, 12 Sep 2026 11:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C406472F6C;
+	Sat, 12 Sep 2026 11:34:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212873; cv=none; b=cJETzMPWIzi7fkJDQoCVnGjd3EhoW7+SVVKfjhG4wAPF1sBd21BEWBVO4ROczA1Mnk6Aa6aGIfuzJzVS+lrN/1Wvaurq9y7ct7ZeAcOPtZw6kIaFiMUhgvNXeKiYxfgidpzJ7/py2aqdbxJEpD5i5ueqXrUva6sB7tBkpCChE/g=
+	t=1789212878; cv=none; b=YAbIxVHPjpzVER8DCT1eoFOYetwA4pczQZwJUDSsNWr9Olzb/nZMXe+Uk34V1iNFH7FcTFkIaKyehpFjqBRWAdcDgrYYY5nc0sBE2eI+B4MAGaYJ1J3On2JDuQFM3uOo+vBStcG+z1r/qMtE2ylcQrZJ8DKidEvAJ/7cxNlSbBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212873; c=relaxed/simple;
-	bh=z1u/aB+PMQZQ9RMplEWvfmFb7H3McrhUzY6CkkY2jkE=;
+	s=arc-20240116; t=1789212878; c=relaxed/simple;
+	bh=xbaRQFFf8CG+9qYWI5A6iSBl/Krh/wZb9CP56XD4jFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BOILiWzEdkw4vt1x0b6hfoXB2V7SrVqG0nBRcBkEV4n/TP6ja9jj5h4lTRIO64xUDIRmvQgGruQmsjXNRbPRHl3LQr79+7IfH4+gkOQvNLnNbLuXT6RljWQmA+qA/1DReBt9zi7vgizwYV6O9h8yQ1BZeIdj9UlwFCxfFgN3L1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpXHrnp+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RSv0ZA3MD6w5jbdX6rscfuPh9VodJ10Ywv2sTehI6zIiBOkmoevEDPGomPJWhaHouh0ttpVkYtNqKNEiFibgFA2elA/BgeQ+YQb81rvGonhKt7EiB1XZzN8xZdPnHsl43i5WrTbbj0fr1j8CVAvwASSDFCJ7Xqc3o06TEMVBIvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmRnUu6p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpXHrnp+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87851F00893;
-	Sat, 12 Sep 2026 11:34:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmRnUu6p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358D91F00898;
+	Sat, 12 Sep 2026 11:34:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212871;
-	bh=TvpxSXhUA+WRq4EYz1UULrPK3HMDSTUEHBHx3TKADNM=;
+	s=korg; t=1789212876;
+	bh=nLOcsrrepT1h5P/Zh4b3rzJ+VAC/GZXMPWBGAruKSnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GpXHrnp+pJ/xOUUoFlkLv9yqHE2V92DgoKg8Td5LUm03GTyMBQS8gU+UHtWMb742k
-	 rmzwnRaf0gj95425nw2+kTvkzcrvN2ep/2Wk4g/t0m5r5PTE+jit9u5vG53v44jkzW
-	 VPYA4wUkomXAOe30LwjLQSYf5P+l3mgQNY5KHNnc=
+	b=wmRnUu6pD3fGBkI0JPuqllYZ3lrCDdDC2GBeMS7zgnSvEiH9jpudrYXN5969XNVYz
+	 xLyIrkY9ioSDBtHY0cCqHguvhmuzvqxg9slV4gKFslWRYCXjOVQe+m2tGG2/1XDtCw
+	 orLKUupNX2M52MMqhU3iSxyR/8IDrCdC4fK+NNu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.18 1518/1518] wifi: mt76: fix airoha_npu dependency tracking
-Date: Sat, 12 Sep 2026 09:01:27 +0200
-Message-ID: <20260912065657.905984722@linuxfoundation.org>
+	Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 1514/1518] ACPI: processor: Add cpuidle driver check in acpi_processor_register_idle_driver()
+Date: Sat, 12 Sep 2026 09:01:23 +0200
+Message-ID: <20260912065657.815330561@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,74 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>
 
-commit 7cd57ff6c6263519e6e463cbc2e0898828a70c42 upstream.
+[ Upstream commit 66c62e6773c54ce5233eb21c6d48999c3747bd13 ]
 
-There is a new build failure with MT7996E=m MT76_CORE=y and NET_AIROHA_NPU=m:
+Commit 7a8c994cbb2d ("ACPI: processor: idle: Optimize ACPI idle
+driver registration") moved the ACPI idle driver registration to
+acpi_processor_driver_init(), but it didn't check whether a cpuidle
+driver was already registered.
 
-ld.lld: error: undefined symbol: airoha_npu_get
-ld.lld: error: undefined symbol: airoha_npu_put
->>> referenced by npu.c
->>>               drivers/net/wireless/mediatek/mt76/npu.o:(mt76_npu_init) in archive vmlinux.a
+For example, on Intel platforms, if the intel_idle driver is already
+loaded, the code would still evaluate the _CST object in the ACPI
+table and attempt to register the acpi_idle driver. This registration
+would fail with -EBUSY due to the existing check in cpuidle_register_driver.
 
-Fix this by reworking the dependency for the MT7996_NPU to only
-allow enabling that when mt76_core can link against the npu driver.
+Add a check at the beginning of acpi_processor_register_idle_driver()
+to avoid unnecessary _CST evaluate and potential registration failures.
 
-To make sure this gets caught more easily in the future when additional
-mt76 variants need the same dependency, also turn CONFIG_MT76_NPU into
-a tristate symbol that has the same dependency.
-
-Fixes: 7fb554b1b623 ("wifi: mt76: Introduce the NPU generic layer")
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20260612201519.4054683-1-arnd@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7a8c994cbb2d ("ACPI: processor: idle: Optimize ACPI idle driver registration")
+Signed-off-by: Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>
+Link: https://patch.msgid.link/20260608190359.3254-1-TonyWWang-oc@zhaoxin.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/Kconfig  |    4 ++--
- drivers/net/wireless/mediatek/mt76/Makefile |    6 +++++-
- drivers/net/wireless/mediatek/mt76/mt76.h   |    2 +-
- 3 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/acpi/processor_idle.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/net/wireless/mediatek/mt76/Kconfig
-+++ b/drivers/net/wireless/mediatek/mt76/Kconfig
-@@ -38,8 +38,8 @@ config MT792x_USB
- 	select MT76_USB
+diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
+index ce07505a8de69..5c6f736ba3b52 100644
+--- a/drivers/acpi/processor_idle.c
++++ b/drivers/acpi/processor_idle.c
+@@ -1371,6 +1371,15 @@ void acpi_processor_register_idle_driver(void)
+ 	int ret = -ENODEV;
+ 	int cpu;
  
- config MT76_NPU
--	bool
--	depends on MT76_CORE
-+	tristate
-+	depends on NET_AIROHA_NPU=y || MT76_CORE=NET_AIROHA_NPU
++	/*
++	 * If a cpuidle driver is already registered, there is no need to
++	 * evaluate _CST or attempt to register the ACPI idle driver.
++	 */
++	if (cpuidle_get_driver()) {
++		pr_debug("cpuidle driver %pS already registered.\n", cpuidle_get_driver());
++		return;
++	}
++
+ 	acpi_processor_update_max_cstate();
  
- source "drivers/net/wireless/mediatek/mt76/mt76x0/Kconfig"
- source "drivers/net/wireless/mediatek/mt76/mt76x2/Kconfig"
---- a/drivers/net/wireless/mediatek/mt76/Makefile
-+++ b/drivers/net/wireless/mediatek/mt76/Makefile
-@@ -12,7 +12,11 @@ mt76-y := \
- 	mmio.o util.o trace.o dma.o mac80211.o debugfs.o eeprom.o \
- 	tx.o agg-rx.o mcu.o wed.o scan.o channel.o
- 
--mt76-$(CONFIG_MT76_NPU) += npu.o
-+ifdef CONFIG_MT76_NPU
-+# CONFIG_MT76_NPU is tristate to simplify dependency tracking,
-+# but it behaves as a bool symbol here.
-+mt76-y += npu.o
-+endif
- mt76-$(CONFIG_PCI) += pci.o
- mt76-$(CONFIG_NL80211_TESTMODE) += testmode.o
- 
---- a/drivers/net/wireless/mediatek/mt76/mt76.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -1626,7 +1626,7 @@ int mt76_testmode_dump(struct ieee80211_
- int mt76_testmode_set_state(struct mt76_phy *phy, enum mt76_testmode_state state);
- int mt76_testmode_alloc_skb(struct mt76_phy *phy, u32 len);
- 
--#ifdef CONFIG_MT76_NPU
-+#if IS_ENABLED(CONFIG_MT76_NPU)
- void mt76_npu_check_ppe(struct mt76_dev *dev, struct sk_buff *skb,
- 			u32 info);
- int mt76_npu_dma_add_buf(struct mt76_phy *phy, struct mt76_queue *q,
+ 	/*
+-- 
+2.53.0
+
 
 
