@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69DA400DF6;
-	Sat, 12 Sep 2026 08:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD454195DA;
+	Sat, 12 Sep 2026 08:48:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202905; cv=none; b=mh4MJxiiW/BsgUoW/SiVZIDq20Rt0mhWDRzPyMAzzO5Qy8zpcO9yCLOkGmZL+S9C2M2JLNHxk3CKWrNk2OdTSQGdEMKJL8gXqiMBzaNDHReuGMNokJUz5uYzap02HSZtbiS2deEtrSfzDrGL1qS9gsuwbkunAnK7rAE9O5NE9Mc=
+	t=1789202909; cv=none; b=FR4hHcibtrZe7yXhtQy/wZgpKVVYvTgdjxtPZlOsoKQ3rhtWCKddlIR5Og5pQxsJQlIpow716DJgKCLaCP1jRM4qHm0kMN2t+5hRewnETCDzYMCeIUHCBrE2FMofCT2JQQy10LZkFxVsbJeCU5zr+3eK4BWENYcdjHUTZsR4NRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202905; c=relaxed/simple;
-	bh=WWjT9xYaJvcN/zI1O0a4c+XKCRxy2Pde2+y5kU/taRU=;
+	s=arc-20240116; t=1789202909; c=relaxed/simple;
+	bh=5PHmAHztTOhYGIiK7JSDU3bCUfkWzjHyeIN+p8+zkEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hHx4VYNt/UHWYTByJIA4Z/ouRurw7p2i7ghZHw3V9psaB92lRbqUfQe5ETTGOExIHBwDeVVCanVdqFS2hfsFDYODnxkvcKoDIKLWLo3Io3mWZ05TNwxFcx02ovQIE/x5+OtT4UZcDbGN+r3wDeEqM73ATZkolBR50CdP5P3c5fM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+VDWFvT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h6sQcnSMxPL+x/xUddtJbbuim2kA6JYvmhw+jvFvX5yPqgkORRofHG94n3PHl6nTKHdfb7sE0f05PrvqbNZugqqs2sNK178XVmKgZRM9JJjdfy6ef0T2lj+efq5qhurs2/BLlTsYkdypLOzK5lrkKFw6e2F7wAUgQrQkN5js51c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+Rg3emt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+VDWFvT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999011F00893;
-	Sat, 12 Sep 2026 08:48:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+Rg3emt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68381F000FF;
+	Sat, 12 Sep 2026 08:48:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202903;
-	bh=FF7p49A0d+/KCFZEhvQkt5Dpb8pe/cWddRfXgoeH7kg=;
+	s=korg; t=1789202908;
+	bh=edMhGnB7feSSX5cBDK6G/kRHIuAmGpQgcSI9NR1xbKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x+VDWFvTfGMp5LX8LyGNzIjyJr1XUcdQCFjKvxCkQsMy8iK556LeHl4vJAw4l91o/
-	 YHILB4y0uxUr2YAnlBxo4grWnBkSyEAQb+Ah85vhGgcCZ8GGiOj8mKIZKuDadOqy92
-	 qADV/+Q6MZFZqAxf/mKzvEMnsy7Gpz3VQOl6BFOQ=
+	b=s+Rg3emtii8CbR9Ge22giHcrKapHSdh4yTscRX3Gfw9Y2VV79L5yRMVvVl7Sk/Dx7
+	 RbCbEk6I21Q8kIxbG9jbPvcC67t8MyGdL+VK6F4UdnhSwueqjpbd9YCqJ+CQ4F+DR5
+	 9U15iYx4f6XGoKI0uKA7emzIOH6FxwTSbx/gukNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifei Gao <gyf161023@gmail.com>,
-	Bin Du <bin.du@amd.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1299/1815] media: amd: isp4: fix self-deadlock in isp4sd_pwron_and_init() error path
-Date: Sat, 12 Sep 2026 08:50:49 +0200
-Message-ID: <20260912065719.511883945@linuxfoundation.org>
+Subject: [PATCH 7.2 1300/1815] m68k: Fix backtraces for non-running tasks
+Date: Sat, 12 Sep 2026 08:50:50 +0200
+Message-ID: <20260912065719.534945390@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,95 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifei Gao <gyf161023@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit ef46d80a7015269a98c9505b5912a83798799199 ]
+[ Upstream commit 09f71dbeb287e367beea56d9ac8a3d356ef5e02a ]
 
-isp4sd_pwron_and_init() holds ops_mutex via guard(mutex) and, on any
-init failure, jumps to err_deinit and calls isp4sd_pwroff_and_deinit().
-That helper takes the same ops_mutex, re-acquiring a non-recursive mutex
-already held by the current thread, so any init failure deadlocks.
+When no stack pointer is supplied, show_stack() starts at thread.esp0.
+This is the saved userspace register frame, not where a task was switched
+out. For kernel threads it points to the zeroed frame created by
+copy_thread(), so sched_show_task() prints no useful backtrace.
 
-Unwind the error path in stages instead, releasing only what each
-failure point acquired. This also avoids the issues that an
-unconditional teardown would hit at the earlier failures, such as a
-runtime-PM underflow from pm_runtime_resume_and_get() and MMIO access
-while the device is unpowered.
+Use thread.ksp for non-current tasks. It is saved by switch_to() and is
+already used by __get_wchan(). For current, start at the current stack
+frame, as is already done when no task is supplied.
 
-Fixes: 4e5e7a7ddb4a ("media: platform: amd: isp4 subdev and firmware loading handling added")
-Assisted-by: Claude:claude-opus-4-8 smatch
-Signed-off-by: Yifei Gao <gyf161023@gmail.com>
-Reviewed-by: Bin Du <bin.du@amd.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Tested on qemu-system-m68k -M virt using SysRq-t. All task dumps contained
+resolved frames.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://patch.msgid.link/20260723041055.47289-1-kmehltretter@gmail.com
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amd/isp4/isp4_subdev.c | 28 +++++++++++++++----
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ arch/m68k/kernel/traps.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/amd/isp4/isp4_subdev.c b/drivers/media/platform/amd/isp4/isp4_subdev.c
-index 2a8bc12078434..6716ab9c128a0 100644
---- a/drivers/media/platform/amd/isp4/isp4_subdev.c
-+++ b/drivers/media/platform/amd/isp4/isp4_subdev.c
-@@ -687,7 +687,7 @@ int isp4sd_pwron_and_init(struct v4l2_subdev *sd)
- 		if (ret) {
- 			dev_err(dev, "fail to power on isp_subdev ret %d\n",
- 				ret);
--			goto err_deinit;
-+			goto err_module_disable;
- 		}
+diff --git a/arch/m68k/kernel/traps.c b/arch/m68k/kernel/traps.c
+index d2f25e8895e5a..60759ba3cbd45 100644
+--- a/arch/m68k/kernel/traps.c
++++ b/arch/m68k/kernel/traps.c
+@@ -936,8 +936,8 @@ void show_stack(struct task_struct *task, unsigned long *stack,
+ 	int i;
  
- 		/* ISPPG ISP Power Status */
-@@ -697,7 +697,7 @@ int isp4sd_pwron_and_init(struct v4l2_subdev *sd)
- 			dev_err(dev,
- 				"fail to set performance state %u, ret %d\n",
- 				perf_state, ret);
--			goto err_deinit;
-+			goto err_power_off;
- 		}
- 
- 		ispif->status = ISP4IF_STATUS_PWR_ON;
-@@ -709,12 +709,12 @@ int isp4sd_pwron_and_init(struct v4l2_subdev *sd)
- 	ret = isp4if_start(ispif);
- 	if (ret) {
- 		dev_err(dev, "fail to start isp_subdev interface\n");
--		goto err_deinit;
-+		goto err_perf_restore;
+ 	if (!stack) {
+-		if (task)
+-			stack = (unsigned long *)task->thread.esp0;
++		if (task && task != current)
++			stack = (unsigned long *)task->thread.ksp;
+ 		else
+ 			stack = (unsigned long *)&stack;
  	}
- 
- 	if (isp4sd_start_resp_proc_threads(isp_subdev)) {
- 		dev_err(dev, "isp_start_resp_proc_threads fail\n");
--		goto err_deinit;
-+		goto err_stop_interface;
- 	}
- 
- 	dev_dbg(dev, "create resp threads ok\n");
-@@ -724,8 +724,24 @@ int isp4sd_pwron_and_init(struct v4l2_subdev *sd)
- 	isp_subdev->irq_enabled = true;
- 
- 	return 0;
--err_deinit:
--	isp4sd_pwroff_and_deinit(sd);
-+
-+err_stop_interface:
-+	isp4if_stop(ispif);
-+err_perf_restore:
-+	ret = dev_pm_genpd_set_performance_state(dev, ISP4SD_PERFORMANCE_STATE_LOW);
-+	if (ret)
-+		dev_err(dev, "fail to set performance state %u, ret %d\n",
-+			ISP4SD_PERFORMANCE_STATE_LOW, ret);
-+err_power_off:
-+	isp4hw_wreg(isp_subdev->mmio, ISP_SOFT_RESET, 0);
-+	isp4hw_wreg(isp_subdev->mmio, ISP_POWER_STATUS, 0);
-+	ret = pm_runtime_put_sync(dev);
-+	if (ret)
-+		dev_err(dev, "power off isp_subdev fail %d\n", ret);
-+	ispif->status = ISP4IF_STATUS_PWR_OFF;
-+err_module_disable:
-+	isp4sd_module_enable(isp_subdev, false);
-+	msleep(20);
- 	return -EINVAL;
- }
- 
 -- 
 2.53.0
 
