@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE6278C9C;
-	Sat, 12 Sep 2026 14:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2581E2FD67D;
+	Sat, 12 Sep 2026 14:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223753; cv=none; b=Ty7/rzK9xkqL8dKzJC0lOPmzerc/oAxaQ1WGKRYJu3VVRnok/MozsWQ0WpQYPHCfx4ZSe43Xv/T8oP4YqfnktGSC6ld7uDoj/2lF4k7OmLe4rsc2+xGfJIArZarx4ilDuDitcOcSbH7dxnlr8kBBVZUkDzzf+qKU8/LIDqZbMew=
+	t=1789223758; cv=none; b=Kvksas4gycZc/8JHrszEUJBPcOnOF36nkw+LsYCIy0EeB05Lgn3LNVBC7EufVBUGSxjAXYx9TNoQesgWwpsXdg0tmSPU1jjJroQtsNXyqkcki4DEcuqLK3760faCSSSvauslYB8xCglJm2Lxc53EKcTkj1lJb9OZ6RofYgpmlqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223753; c=relaxed/simple;
-	bh=Dbl8urdUZ4qxfxvi1fx9Xlhoi06mVj34GMyCCHoyg5M=;
+	s=arc-20240116; t=1789223758; c=relaxed/simple;
+	bh=BsCIasTsr3NSHnc+M6d6c4Tv10rgU3cf101cBhNAGz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nmZpmpdtLKyM87i9FoRi4ZhU9caBu/PiNnMzzBs4tdZbtJvzoF9ZAPiBTFip9uHyiFThXSiKX02TG/HmvUZ+N9x/k7m39H+4UvhVfmPaa4vNyXkwZ7NC4FBW5SZkX3WEfjT24m5Ficq/a2ykkZ81LquMxuUfIQlv5lSArHwUI54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrE73iN0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QSoIbYtlBUucPpQWE0RfTWmxPI+N78QdVUt0fN6IEPyEHQFyb05vpe7f7rkSvayn/35GvoUF0CMN8uFz8NMQgRkHaXyYfXVlAaXFj9jL9JkfNqiqxsp3kEuOwxjjEm7rH8CCFBuqQZBywfWirnRrIJyUobgWL5FyVonOP9WJHFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uSPvXl3z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrE73iN0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57E81F000FF;
-	Sat, 12 Sep 2026 14:35:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uSPvXl3z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D881F000FF;
+	Sat, 12 Sep 2026 14:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223752;
-	bh=lYVhAjJfzPUr/REZSoZ3o8tSkh/mePki7S+a43CzNPM=;
+	s=korg; t=1789223757;
+	bh=tLGdEcoV2y8KOHBqTzRnztMkY4N9UW0GGF1BuTT539s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TrE73iN0qb7ZqfZbbOQdCSTUn72ey4IrP/HF73ka8f5Ku/nM75vsgRBN0irYzz6DR
-	 ji5gg/NP0U1A/XC8LrkjW/NBos5NlQtdYbqus/P2zEmYziZUGkJKeKLwUgnxhN/ZtN
-	 8cuc42yQCyFc20I4PIvWZ8LWqkuugdxuptDOYsgg=
+	b=uSPvXl3z8v9Oubo+TENvsCUFlqwPSX52Jj8UgNSHtv1q10qwljYP3WwtPk7WhvvVk
+	 6yoRTCiz41yO23wn1/9fTd7Nj1tDCBStpvzIskiiakiZeSUlkXNR9X7EoVtiXBwv2n
+	 Aj+roLGwKnjVTu+tDS1Gc+Yv0OjeyYPDA7sVhbOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Gerald Yang <gerald.yang@canonical.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0816/1424] ASoC: meson: Keep link pointers valid on realloc failure
-Date: Sat, 12 Sep 2026 08:54:08 +0200
-Message-ID: <20260912065625.575944352@linuxfoundation.org>
+Subject: [PATCH 6.6 0852/1424] ext4: clear stale xarray tags on folios skipped during writeback
+Date: Sat, 12 Sep 2026 08:54:44 +0200
+Message-ID: <20260912065626.390318187@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,75 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Gerald Yang <gerald.yang@canonical.com>
 
-[ Upstream commit 2aaa41cf974f83a6fb105422bac4e2f107150774 ]
+[ Upstream commit ec524aae479b4b2078c47492b90ec21200bce434 ]
 
-meson_card_reallocate_links() grows the DAI link and private data
-arrays with two consecutive krealloc() calls and updates the owner
-pointers only after both calls have succeeded.
+In data=journal mode, the writeback thread can hit the
+WARN_ON_ONCE(sb_rdonly(sb)) in ext4_journal_check_start() while the
+superblock is being remounted read-only during reboot:
 
-A successful krealloc() may move the data: it frees the old block and
-returns a new one. When that happens for the link array and the second
-krealloc() then fails, card->dai_link still points to the block that
-krealloc() already freed, and the error path frees the new block too.
-The probe error path then calls meson_card_clean_references(), which
-dereferences card->dai_link and kfree()s it again, resulting in a
-use-after-free and a double free.
+Workqueue: writeback wb_workfn (flush-253:0)
+RIP: 0010:ext4_journal_check_start+0x8b/0xd0
+Call Trace:
+  __ext4_journal_start_sb+0x3c/0x1e0
+  mpage_prepare_extent_to_map+0x4af/0x580
+  ext4_do_writepages+0x3c0/0x1080
+  ext4_writepages+0xc8/0x1a0
+  do_writepages+0xc4/0x180
+  __writeback_single_inode+0x45/0x2f0
+  writeback_sb_inodes+0x26b/0x5d0
+  __writeback_inodes_wb+0x54/0x100
+  wb_writeback+0x1ac/0x320
+  wb_workfn+0x394/0x470
 
-Commit card->dai_link and card->num_links right after the first
-krealloc() succeeds, so the pointer always refers to a valid allocation
-that meson_card_clean_references() can walk and free. krealloc() with
-__GFP_ZERO zero-initializes the added entries, so walking them on the
-error path is safe. With both failure paths reduced to a plain return,
-drop the goto labels and the error message.
+And followed by the warning:
+EXT4-fs warning (device vda1): ext4_evict_inode:195: inode #6263:
+comm (sd-umount): data will be lost
 
-Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://patch.msgid.link/20260717012433.1432285-1-lilinmao@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This issue is not reproduced every time, but frequently.
+The reproduction step is to create a VM with 8 CPUs, 16G memory and
+setup data=journal:
+sudo tune2fs -o journal_data /dev/vda1
+Run fio:
+rm -f fiotest
+fio --name=fiotest --rw=randwrite --bs=4k --runtime=6 --ioengine=libaio
+--iodepth=256 --numjobs=8 --filename=fiotest --filesize=30G
+--group_reporting
+Reboot the VM, and check the console output from:
+virsh console testvm
+
+But there is no dirty inode, folio_clear_dirty_for_io clears PG_dirty
+but leaves tags PAGECACHE_TAG_DIRTY and PAGECACHE_TAG_TOWRITE set which
+are only cleared by __folio_start_writeback.
+In data=journal mode, jbd2 checkpoints the journalled data to its final
+location and clears its own dirty flag without touching folio PG_dirty
+or xarray dirty flags.
+The commit f4a2b42e7891 ("ext4: fix stale xarray tags after writeback")
+fixes when PG_dirty is still set but there is no dirty page.
+Another case is PG_dirty is cleared, but PAGECACHE_TAG_DIRTY and
+PAGECACHE_TAG_TOWRITE is still set. In this case, writeback thread
+checks clean folio and skips it in mpage_prepare_extent_to_map:
+if (!folio_test_dirty(folio) ||
+    ...
+        folio_unlcok(folio);
+	continue
+
+And never reaches ext4_bio_write_folio where the commit f4a2b42e7891
+clears the stale xarray tags. Print debug logs after the filesystem
+is remounted read-only:
+writepages RDONLY nrpages=2048 dirtytag=1 wbtag=0 towrite=1 sync=0
+And all folios are actually clean:
+folio idx=3 dirty=0 wb=0 checked=0 dirtybuf=0 jbddirty=0 mapped=1
+...
+
+We need to clear the xarray stale tags for such clean folios by
+cycling them through writeback in the skip path, the same way
+f4a2b42e7891 does in ext4_bio_write_folio.
+
+Fixes: dff4ac75eeee ("ext4: move keep_towrite handling to ext4_bio_write_page()")
+Signed-off-by: Gerald Yang <gerald.yang@canonical.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260625160127.162272-1-gerald.yang@canonical.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/meson-card-utils.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ fs/ext4/inode.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/meson/meson-card-utils.c b/sound/soc/meson/meson-card-utils.c
-index 1adaf0041a480..cd27c522f9da2 100644
---- a/sound/soc/meson/meson-card-utils.c
-+++ b/sound/soc/meson/meson-card-utils.c
-@@ -50,25 +50,20 @@ int meson_card_reallocate_links(struct snd_soc_card *card,
- 			 num_links * sizeof(*priv->card.dai_link),
- 			 GFP_KERNEL | __GFP_ZERO);
- 	if (!links)
--		goto err_links;
-+		return -ENOMEM;
-+
-+	priv->card.dai_link = links;
-+	priv->card.num_links = num_links;
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 78b520557ab46..dea6d27e50288 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -2471,13 +2471,25 @@ static int mpage_prepare_extent_to_map(struct mpage_da_data *mpd)
+ 			 * page is already under writeback and we are not doing
+ 			 * a data integrity writeback, skip the page
+ 			 */
+-			if (!folio_test_dirty(folio) ||
+-			    (folio_test_writeback(folio) &&
+-			     (mpd->wbc->sync_mode == WB_SYNC_NONE)) ||
++			if ((folio_test_writeback(folio) &&
++			    mpd->wbc->sync_mode == WB_SYNC_NONE) ||
+ 			    unlikely(folio->mapping != mapping)) {
+ 				folio_unlock(folio);
+ 				continue;
+ 			}
++			/*
++			 * If the folio is clean, skip writing it back.
++			 * Cycle the folio through the writeback state
++			 * though, to clear stale xarray tags.
++			 */
++			if (!folio_test_dirty(folio)) {
++				if (!folio_test_writeback(folio)) {
++					__folio_start_writeback(folio, false);
++					folio_end_writeback(folio);
++				}
++				folio_unlock(folio);
++				continue;
++			}
  
- 	ldata = krealloc(priv->link_data,
- 			 num_links * sizeof(*priv->link_data),
- 			 GFP_KERNEL | __GFP_ZERO);
-+	/* meson_card_clean_references() will free the links on this error path */
- 	if (!ldata)
--		goto err_ldata;
-+		return -ENOMEM;
- 
--	priv->card.dai_link = links;
- 	priv->link_data = ldata;
--	priv->card.num_links = num_links;
- 	return 0;
--
--err_ldata:
--	kfree(links);
--err_links:
--	dev_err(priv->card.dev, "failed to allocate links\n");
--	return -ENOMEM;
--
- }
- EXPORT_SYMBOL_GPL(meson_card_reallocate_links);
- 
+ 			folio_wait_writeback(folio);
+ 			BUG_ON(folio_test_writeback(folio));
 -- 
 2.53.0
 
