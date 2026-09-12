@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A607D41D4FE;
-	Sat, 12 Sep 2026 09:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12BA36728D;
+	Sat, 12 Sep 2026 09:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205849; cv=none; b=CeOtzS5juerfoPimYBcZRiFxwu6t0r5FjlSrlCRhEayhtZ2ZcDh1lI4GCxhxIQIQwL4H+jMEvvTu4ZPxBhCv4+mupxHYGfmrcvVNzZ63DYV1V2nMnEnbG1MbSj0lF/4Xkwd9AyrUJ+xv0t0Y8cMjaf8p9pBdSddRE3DJhVSW1IY=
+	t=1789205852; cv=none; b=pKDFfChSyGymdSmeIYB1Tt8M33/4eunTv3fzl37nDipmEiugWdwoSJ64As+zE2rmeFCNvOBrgAdvmHGHwy4of669QIY98o/FC5BJwAicGP9HXshar0wCHiglkAEVwam9E340WeCqMY41RJLGQd/63K12Em0l4+p/nKu9883II8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205849; c=relaxed/simple;
-	bh=XJCPPOwuRqmmGgpHq4XDZ+HCVUlBnWe0VzQ47DZZarY=;
+	s=arc-20240116; t=1789205852; c=relaxed/simple;
+	bh=D4oiNqohvOyppS/OqaWyq2C6pcdabDMCbfE/c8Xnks0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fRoOpBNWONpithQX9SkYeIg0vOnL7OOygmKmCeQ1rOzlLIYtLendKW/m5Mu93HGHyb7uht5QrWWNWLUu6R9t17dH4O7CZvEwvbMILogO45EsRyIiC0I8EwnX0iv5DXqikx0vRYKLGAmqh1+JEYqUwU1kFg3Xbc8CoszwRVnBZnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=enK3dp1g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l/uy6G4zgX5H7L3N9KnVQ7ZahxWpNAHDUg5W8IjAZByqKN/wAMmD+6GViJo1bU6VHtLSqVhEFlwuhnxY9J5iht9PWDOLqS91E+wQNmOS0Sx5XB0/PsQUr6o3QysPvk9E/4Tv2LHqKVBOlBbnWedJq6Aqi3CFWNABN4UvH2jIkqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yyPKSOux; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enK3dp1g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1B21F00893;
-	Sat, 12 Sep 2026 09:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yyPKSOux"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966851F000FF;
+	Sat, 12 Sep 2026 09:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205846;
-	bh=c1jhpw+sEGN7fOvQXZKZkk/uHFu8bAATR1/5qN4RWB8=;
+	s=korg; t=1789205850;
+	bh=8ixmhCM4MxXjELN4X0RklJeoPhmmyZv/3PHnUvBxEpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=enK3dp1g9KOB4u9ZEpu3XkBYmk7AG0NTQlzDdHvIItUiEQJuPwa+HcaXa3T6QISNV
-	 DsWL875/uoGk4+InCIxZTbRf95LEKfdtJSmKwqlcartrU6Bbi8UcQF6xhOMfqucbTB
-	 AwqwQDMQlawTspWvcczBVon+4pAypZ1qqBmZHGns=
+	b=yyPKSOuxooQ2+43xbiJc/dcp8xmxIm/wLlHfwTXoNJU8SH8eiND46C/dEnKAhapjR
+	 D3DvtbEDjyTEZuxuuFCEhmALREZNLtJjEO1tLFA3GMm0549og9ncE9dITVaCxP4d9G
+	 R8Rg/cm/VH6+E33Y5wXn1IjX9OcowUWi90cWYos8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Guoniu Zhou <guoniu.zhou@oss.nxp.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0048/1518] tracing: Make printk_trace global for tracing system
-Date: Sat, 12 Sep 2026 08:36:57 +0200
-Message-ID: <20260912065624.525629748@linuxfoundation.org>
+Subject: [PATCH 6.18 0084/1518] media: dt-bindings: nxp,imx8-isi: Drop fsl,blk-ctrl requirement for i.MX8ULP
+Date: Sat, 12 Sep 2026 08:37:33 +0200
+Message-ID: <20260912065625.359893628@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,50 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Guoniu Zhou <guoniu.zhou@oss.nxp.com>
 
-[ Upstream commit 1c53d781d42541adc5ba76b4f843a3ff382e01fb ]
+[ Upstream commit fc312f830d8df6c082bd6f7250aa5c0ff063eea4 ]
 
-The printk_trace is used to determine which trace_array trace_printk()
-writes to. By making it a global variable among the tracing subsystem it
-will allow the trace_printk functions to be moved out of trace.c and still
-have direct access to that variable.
+The i.MX8ULP variant does not require the fsl,blk-ctrl property. Add
+fsl,imx8ulp-isi to the exception list alongside fsl,imx91-isi.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Link: https://patch.msgid.link/20260208032450.144525891@kernel.org
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: f2951ebd15c3 ("tracing: Take trace_array reference when opening options file")
+Fixes: 288517a3c6c9 ("dt-bindings: media: nxp,imx8-isi: Add i.MX8ULP ISI compatible string")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guoniu Zhou <guoniu.zhou@oss.nxp.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20260424-csi2_imx8ulp-v12-1-da148eabc035@oss.nxp.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ added the missing fsl,blk-ctrl conditional using const instead of enum because this branch lacks i.MX91 support. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    2 +-
- kernel/trace/trace.h |    2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/media/nxp,imx8-isi.yaml |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -537,7 +537,7 @@ static struct trace_array global_trace =
- 	.trace_flags = TRACE_DEFAULT_FLAGS,
- };
+--- a/Documentation/devicetree/bindings/media/nxp,imx8-isi.yaml
++++ b/Documentation/devicetree/bindings/media/nxp,imx8-isi.yaml
+@@ -66,7 +66,6 @@ required:
+   - interrupts
+   - clocks
+   - clock-names
+-  - fsl,blk-ctrl
+   - ports
  
--static struct trace_array *printk_trace = &global_trace;
-+struct trace_array *printk_trace = &global_trace;
+ allOf:
+@@ -109,6 +108,16 @@ allOf:
+             - port@0
+             - port@1
  
- /* List of trace_arrays interested in the top level trace_marker */
- static LIST_HEAD(marker_copies);
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -479,6 +479,8 @@ extern bool trace_clock_in_ns(struct tra
- 
- extern unsigned long trace_adjust_address(struct trace_array *tr, unsigned long addr);
- 
-+extern struct trace_array *printk_trace;
++  - if:
++      properties:
++        compatible:
++          not:
++            contains:
++              const: fsl,imx8ulp-isi
++    then:
++      required:
++        - fsl,blk-ctrl
 +
- /*
-  * The global tracer (top) should be the first trace array added,
-  * but we check the flag anyway.
+ additionalProperties: false
+ 
+ examples:
 
 
