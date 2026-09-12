@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E832931F5;
-	Sat, 12 Sep 2026 14:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7D61DE4EF;
+	Sat, 12 Sep 2026 14:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222407; cv=none; b=MfGuilTBDa0naiHIDoOCPTrOYX/cqhixs23PykCEkmwQg0ejfsDE5OcdspaURomTifM9A6Ygs1soHfElSYpqQ7hPlT+bk9WzMU5lnn6asLB6bYYWC4yl0ECw898sfZ039nLaV6Ct8sovEV6zmhVZZACxjpDhjiMtN1L5Gu+sZDc=
+	t=1789222413; cv=none; b=miwrELVgqPnPRZUuaKFmVps1c8anK5anEuEqBK3MvPSXzorkIy+aRo7Z6uIMEb822gwzNRr02DnR3579jBRaOsXaVwB6en2q2T2i8nkhateYiO7U8k+QZO+rzaU6vkcbtZXg87nShPE7CL3zSF07UI7lHwNUypWD5drC7oD78RI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222407; c=relaxed/simple;
-	bh=mCPNSFcN0SMFIhtmt21wMwd9vvoP3OF4Duf5cYy4gsg=;
+	s=arc-20240116; t=1789222413; c=relaxed/simple;
+	bh=WgcgHHY3Vu8NdWuA/D11xYcxiFjOSZb87hinrg7+iY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nB/Ljj9XF5AlCA4FMMS9tb3oB0Ag1yu9/y+V5wHVi05WzKQZv3QIpJLSvVAxB3uQPq9flK8HE4XNd1gcxEI64KF2VgyJ7QqjUNGx4mKQ5r0htyqyBbK1UBETmyHpTe+1+i1UNa7yWEjMO1E+YxMx7iB09ztHdmLlJISnvnYK1nY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VaqVXo1C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eTEZrqA5h36YvJbo91QfkZDrnrHzvpcpD0uURIe13Ht5EDK0t/dViaQtcAcmT0PNQEsAJwncKSQFePbFY1VgZcL6quZhkGfct/Y4muVF6ggTVvg2hj8O97dM4BWb5Mf1LZHsdgBkA4hozlZxLPbZcxz6PjaKL0TNNPE+2QCawJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MDIeGbf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VaqVXo1C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE8F71F000FF;
-	Sat, 12 Sep 2026 14:13:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MDIeGbf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87DFE1F000FF;
+	Sat, 12 Sep 2026 14:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222406;
-	bh=XujbYX4lHlB3l3jjFTEo6XdEqgUmppB/cjQFF8Lzzi8=;
+	s=korg; t=1789222411;
+	bh=gUkoI9+boVFhdZwJL+od4cKiyxrrZlxtmUJu8NBfHkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VaqVXo1CeuqY1nHywK4EM4/14k1/ua+cBL/6c0i9leeniX+OnktYJpdZaIe49Yrf0
-	 XMobgGwaJxiJFFvh/GGWz4PHWU55Rj1wxXUsiqJEqUrDfzUe70AOIZxltUatvpMRZa
-	 sH3wVMDck+HU/Lid6+qk9zpV79P7bSMwfUBSg4W4=
+	b=0MDIeGbfnhmRfrT7XZc9uhis2YLyOrnnPyTNQ1ZgYKPyfAUKiJIuxxdqJm0bIWPhJ
+	 Ge4EkSko+bcQh/TnIZ76StkxPASDvKd1kNMDQIcT4xZcRivKrR7Rtg6JVyLqhz7miU
+	 gazKcU7cpknhmbUjXi15SZiYhmn/riGUpfGLOldI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
 	Joey Lu <a0987203069@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0578/1424] clk: nuvoton: ma35d1: fix ignored div_u64 return values in PLL freq calculation
-Date: Sat, 12 Sep 2026 08:50:10 +0200
-Message-ID: <20260912065620.241287129@linuxfoundation.org>
+Subject: [PATCH 6.6 0579/1424] clk: nuvoton: ma35d1: fix PLL_CTL1_FRAC bit field width and fractional calc
+Date: Sat, 12 Sep 2026 08:50:11 +0200
+Message-ID: <20260912065620.262297747@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,46 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Joey Lu <a0987203069@gmail.com>
 
-[ Upstream commit b3a2223a7805c7e6759a32a5d6ca574ad07e2710 ]
+[ Upstream commit 26de5aed72d80bd8aec2583134aca3597c64fda9 ]
 
-div_u64() does not modify its argument in place; the return value must
-be assigned.  Both ma35d1_calc_smic_pll_freq() and ma35d1_calc_pll_freq()
-called div_u64() and discarded the result, leaving pll_freq holding the
-undivided product and thus returning a frequency orders of magnitude too
-high.
+PLL_CTL1_FRAC was defined as GENMASK(31, 24), covering only 8 bits.
+The hardware fractional field occupies bits [31:8] (24 bits), so the
+mask must be GENMASK(31, 8).
+
+The previous fractional-mode calculation used FIELD_MAX(PLL_CTL1_FRAC)
+as the denominator to obtain 2 decimal places.  With the corrected 24-bit
+mask the old divisor is wrong; replace the arithmetic with a proper
+24-bit fixed-point rounding to 3 decimal places using the kernel's
+DIV_ROUND_CLOSEST_ULL helper:
+
+  n_frac = n * 1000 + DIV_ROUND_CLOSEST_ULL(x * 1000, 1 << 24)
 
 Fixes: 691521a367cf ("clk: nuvoton: Add clock driver for ma35d1 clock controller")
-
-Reviewed-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Joey Lu <a0987203069@gmail.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/nuvoton/clk-ma35d1-pll.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/nuvoton/clk-ma35d1-pll.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/clk/nuvoton/clk-ma35d1-pll.c b/drivers/clk/nuvoton/clk-ma35d1-pll.c
-index ff3fb8b87c24b..9bb18fc371d17 100644
+index 9bb18fc371d17..64f473fd770bc 100644
 --- a/drivers/clk/nuvoton/clk-ma35d1-pll.c
 +++ b/drivers/clk/nuvoton/clk-ma35d1-pll.c
-@@ -92,7 +92,7 @@ static unsigned long ma35d1_calc_smic_pll_freq(u32 pll0_ctl0,
- 	p = FIELD_GET(SPLL0_CTL0_OUTDIV, pll0_ctl0);
- 	outdiv = 1 << p;
- 	pll_freq = (u64)parent_rate * n;
--	div_u64(pll_freq, m * outdiv);
-+	pll_freq = div_u64(pll_freq, m * outdiv);
- 	return pll_freq;
- }
+@@ -48,7 +48,7 @@
+ #define PLL_CTL1_PD		BIT(0)
+ #define PLL_CTL1_BP		BIT(1)
+ #define PLL_CTL1_OUTDIV		GENMASK(6, 4)
+-#define PLL_CTL1_FRAC		GENMASK(31, 24)
++#define PLL_CTL1_FRAC		GENMASK(31, 8)
+ #define PLL_CTL2_SLOPE		GENMASK(23, 0)
  
-@@ -110,7 +110,7 @@ static unsigned long ma35d1_calc_pll_freq(u8 mode, u32 *reg_ctl, unsigned long p
- 
- 	if (mode == PLL_MODE_INT) {
- 		pll_freq = (u64)parent_rate * n;
--		div_u64(pll_freq, m * p);
-+		pll_freq = div_u64(pll_freq, m * p);
+ #define INDIV_MIN		1
+@@ -113,9 +113,9 @@ static unsigned long ma35d1_calc_pll_freq(u8 mode, u32 *reg_ctl, unsigned long p
+ 		pll_freq = div_u64(pll_freq, m * p);
  	} else {
  		x = FIELD_GET(PLL_CTL1_FRAC, reg_ctl[1]);
- 		/* 2 decimal places floating to integer (ex. 1.23 to 123) */
+-		/* 2 decimal places floating to integer (ex. 1.23 to 123) */
+-		n = n * 100 + ((x * 100) / FIELD_MAX(PLL_CTL1_FRAC));
+-		pll_freq = div_u64(parent_rate * n, 100 * m * p);
++		/* convert 24-bit fraction to 3 decimal digits, rounding to closest */
++		n = n * 1000 + DIV_ROUND_CLOSEST_ULL((u64)x * 1000, 1ULL << 24);
++		pll_freq = div_u64((u64)parent_rate * n, 1000 * m * p);
+ 	}
+ 	return pll_freq;
+ }
 -- 
 2.53.0
 
