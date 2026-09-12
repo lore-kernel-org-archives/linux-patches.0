@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28693AC17;
-	Sat, 12 Sep 2026 15:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA67C3AC17;
+	Sat, 12 Sep 2026 15:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225380; cv=none; b=IFV5v1G7gFnGEHrW5zFn8XCy56bWz9BlF8MAMaDyFCuOPpi1NOxfKqXTthDwn8MYim59wf7h5UoA49SbUl0iD5fSoTdr3pxLbALgDg7YfFwFzAQULMJBPR21UvyB6jv8neK6MO1HE/E9X9YnrF7IhuurHlSBIfAneOEqo/9A3NY=
+	t=1789225386; cv=none; b=SJf+tXQBlnZsDEgg/D/6hs9ojbEoHQErypXAPHXuUWlHrSRUtfoXRiNozKBDaW1N2hoLjXQXkUqJMuPynk6dricjJfKee7ZRozw0p5GQfmZAHrPsmr3NgFDtVrgF0BPMWzXUWvV5cVX1GyRRhhAI2d5A0ceuGk6bCAiwUjZ88co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225380; c=relaxed/simple;
-	bh=rHz1vu1gNsZa94mA/mLnPrIzHmrXKPTQbCYfRAHg3rQ=;
+	s=arc-20240116; t=1789225386; c=relaxed/simple;
+	bh=LpCFR7PIzwa7W55bRxBLnY9Kiq9dSsPqCHZIPTZ/9YE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VDzNJHlFlp2TYCkEPtS4DADsh6AH6sUmW463/6Z6RH7biuyYAh67L+ccFiFreBw2hvGlf1gKlfl/abfX9aazb6WqSMMHoZHRlSeKU03/+r0KIwagjYyA24uDYkoBIQVYJ2XXIujU8g2AYbee+Vy7nKVh2+Ge4lsrID6K6bWvMpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3J++9Eu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lH5Y+e2KPtrgqxW7ai89b2uPSOIONayIE9RapYCeCG/UZSD8yCiU4apNWXE7N/ejoHXGGDIVM7vZbq8DW/yZ4oySwWZhl/n72Qn44oJqO5iUAnNyyzVaJOHvERBlcyT8cjOQPhwitmPAp0rgFVoz/LktQunLf8z6lwZdzPe45dI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTWZFBKQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3J++9Eu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B391F000FF;
-	Sat, 12 Sep 2026 15:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTWZFBKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF1E1F000FF;
+	Sat, 12 Sep 2026 15:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225379;
-	bh=nlqnCghq/mkW4zlL4+tvDknVsWCtqzVxsZxqoRzxVsI=;
+	s=korg; t=1789225384;
+	bh=6vS7XshU8rFb3rnv1RKIZ4Tdn/wkOvxKDp+4ZePYkKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B3J++9EuRmsnuz2YBsxWnR4BG0V0DOlAc9sqJJiI3PEmyqv3Z9NRcTMsQBSEsLKBN
-	 /8aruGC+J78D1oVhRkuBwsELewJs72hLmMlw28A1MZnBRGlbKkKcNtszNYVAL+JeV9
-	 thb1befxE0ayJnnIM0hLqD+8xRw0u+/vVFvw8KBQ=
+	b=QTWZFBKQbAqfea58ubWY03pbyeXt4ZUbf++oCxoZHF4FFOQ3c9wRr8+DwqLOv5Ciw
+	 gBRCMl6VkYLT42C9P1yPz5AiHRMDcqLynxs1F3HDr/tYHS1ZQb9ILhhltgUvNURQNw
+	 1L+Mit5+huX6bWLXjM1c1KyUujRzw3C89M3AzjWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Aohan Mei <henrymei@tencent.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1143/1424] fbdev: tdfxfb: fix PCI enable cleanup with pcim_enable_device()
-Date: Sat, 12 Sep 2026 08:59:35 +0200
-Message-ID: <20260912065632.895243310@linuxfoundation.org>
+Subject: [PATCH 6.6 1134/1424] net/sched: cls_api: fix teardown of an adopted proto on insert-race loss
+Date: Sat, 12 Sep 2026 08:59:26 +0200
+Message-ID: <20260912065632.696980067@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,49 +55,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 95a627143a696f70e17be5ed3b1e733bb6724b46 ]
+[ Upstream commit d4e359b3608a0e184bbe8d61a5c3b50d0831c44a ]
 
-tdfxfb_probe() enables the PCI device with pci_enable_device(), but
-several failure paths after that point return without disabling it. The
-framebuffer_alloc() failure path returns -ENOMEM directly, and the later
-shared out_err path releases the framebuffer and returns -ENXIO without
-balancing the PCI enable state.
+In tc_new_tfilter() the create branch sets tp_created = 1 before calling
+tcf_chain_tp_insert_unique(). When the caller loses the race (another
+request inserted a proto at the same chain/prio first), insert_unique()
+destroys the caller's own tp_new and returns the winner's proto with an
+extra reference. tp_created was never cleared, so the loser's errout
+path treated the winner's live proto as its own and called
+tcf_chain_tp_delete_empty() on it, silently unlinking an active
+classifier that the winning request already advertised via
+RTM_NEWTFILTER.
 
-The successful probe path has the same imbalance because tdfxfb_remove()
-releases the framebuffer, mappings and regions, but never calls
-pci_disable_device().
+Track the outcome of the insert step in a single tri-state variable so
+each errout path reacts correctly:
 
-Use pcim_enable_device() so the PCI device is disabled automatically on
-probe failure and driver detach.
+- TP_NOT_CREATED: no proto created; pursue the old path.
+- TP_CREATED: proto inserted successfully; same code path as before.
+- TP_NOT_OWNED: New - lost the insert race; tp is another request's proto
+  (chain ref already released by tp_new's destroy)
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+Both errout reactions are single expressions derived from the state.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+This fix is motivated by the Sashiko's automated review of Patch
+(net/sched: cls_api: Always acquire rtnl_lock when destroying locked
+classifiers) [1][2]. The review identified the silent-unlink behaviour of
+an adopted proto's teardown when a request loses the
+tcf_chain_tp_insert_unique() race.
+
+[1] https://sashiko.dev/#/patchset/20260801125632.360365-1-jhs%40mojatatu.com
+[2] https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260801125632.360365-1-jhs%40mojatatu.com
+
+Fixes: 8b64678e0af8 ("net: sched: refactor tp insert/delete for concurrent execution")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260801125632.360365-1-jhs%40mojatatu.com
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260801125632.360365-1-jhs%40mojatatu.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Tested-by: Aohan Mei <henrymei@tencent.com>
+Link: https://patch.msgid.link/20260805134049.927864-1-victor@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/tdfxfb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/cls_api.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/video/fbdev/tdfxfb.c b/drivers/video/fbdev/tdfxfb.c
-index 08721da003852..5668991beff39 100644
---- a/drivers/video/fbdev/tdfxfb.c
-+++ b/drivers/video/fbdev/tdfxfb.c
-@@ -1384,7 +1384,7 @@ static int tdfxfb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	if (err)
- 		return err;
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 7f47e937e1b85..ac6d27172c84b 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -2220,6 +2220,12 @@ static bool is_ingress_or_clsact(struct tcf_block *block, struct Qdisc *q)
+ 	return tcf_block_shared(block) || (q && !!(q->flags & TCQ_F_INGRESS));
+ }
  
--	err = pci_enable_device(pdev);
-+	err = pcim_enable_device(pdev);
- 	if (err) {
- 		printk(KERN_ERR "tdfxfb: Can't enable pdev: %d\n", err);
- 		return err;
++enum tcf_tp_insert_state {
++	TP_NOT_CREATED = 0, /* did not create and insert a new tp */
++	TP_CREATED, /* created and inserted a new tp */
++	TP_NOT_OWNED, /* created a proto but failed to insert */
++};
++
+ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
+ 			  struct netlink_ext_ack *extack)
+ {
+@@ -2240,12 +2246,12 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
+ 	unsigned long cl;
+ 	void *fh;
+ 	int err;
+-	int tp_created;
++	enum tcf_tp_insert_state tp_state;
+ 	bool rtnl_held = false;
+ 	u32 flags;
+ 
+ replay:
+-	tp_created = 0;
++	tp_state = TP_NOT_CREATED;
+ 
+ 	err = nlmsg_parse_deprecated(n, sizeof(*t), tca, TCA_MAX,
+ 				     rtm_tca_policy, extack);
+@@ -2368,13 +2374,15 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
+ 			goto errout_tp;
+ 		}
+ 
+-		tp_created = 1;
++		tp_state = TP_CREATED;
+ 		tp = tcf_chain_tp_insert_unique(chain, tp_new, protocol, prio,
+ 						rtnl_held);
+ 		if (IS_ERR(tp)) {
+ 			err = PTR_ERR(tp);
+ 			goto errout_tp;
+ 		}
++		if (tp != tp_new)
++			tp_state = TP_NOT_OWNED;
+ 	} else {
+ 		mutex_unlock(&chain->filter_chain_lock);
+ 	}
+@@ -2428,13 +2436,13 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
+ 	}
+ 
+ errout:
+-	if (err && tp_created)
++	if (err && tp_state == TP_CREATED)
+ 		tcf_chain_tp_delete_empty(chain, tp, rtnl_held, NULL);
+ errout_tp:
+ 	if (chain) {
+ 		if (tp && !IS_ERR(tp))
+ 			tcf_proto_put(tp, rtnl_held, NULL);
+-		if (!tp_created)
++		if (tp_state == TP_NOT_CREATED)
+ 			tcf_chain_put(chain);
+ 	}
+ 	tcf_block_release(q, block, rtnl_held);
 -- 
 2.53.0
 
