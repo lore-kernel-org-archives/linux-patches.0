@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E341C5799;
-	Sat, 12 Sep 2026 18:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA131C5799;
+	Sat, 12 Sep 2026 18:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239452; cv=none; b=YyqEI3t1B11REV64eM5U/mMARN066XT86Pmj/Kj06PGNLNFW4yanmwlgIlFscvDk4XwvTdZZ0MTVf4mYeKG/VhZ0+csJUwmzEEtzXx7FSlGnoCNN8Vv5yTy4bM4MRID7kwkrbEUmOZCWNWxttNLm4g2qhpiaVQtbBkTPSIWyjko=
+	t=1789239457; cv=none; b=Sau+PJ1Rf2eyO9iQKa5rnk3o1weUn997+w8eYccmKsHrERvWwPsYi5xY2Udnw5AsFoTMIsEV5jJU+SLEqSOaPuhKZ9Oo6PtbDYHg1QPXRdudKA9Q8pdswdrr3MqDEbNq/TJId2brRO4sYwkc0m9gPMHTlqOCU+bOTK7ct7fVklY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239452; c=relaxed/simple;
-	bh=Brp1MIGQktlu8+Nt9T3r17T00g+PYEoHc4rbhxpOBQ8=;
+	s=arc-20240116; t=1789239457; c=relaxed/simple;
+	bh=UKqtYz87IzS8yvwDYqqyv2YgGrgS7+/wVaa/LutlTbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nPrXpp0l3dtEZ5AEdhJ8SirEGpQRoFqWCHWFZnGjBGVGIg5YGxBMBSI1IX07f2U7NTjKesohc4cP25BT0cSVbYYnB6ySXajm2TWuQWblRtvmlIVnvFJfJqc0amO9VwusVtw4sbtS09Ppm4zsZNzeLag9qNHj/zgfa+xHwkTjykc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+hIDcs+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B/SQ+dECURyciyT14JrC3hSL0bJiPeTgF4Req/DRN8Y+X9Kw5+G7pEiqtAwC4FhCFXswGno6bteCf+7EB1XhPe31iBH1QcE7X3uiTiAkyNWT6lYgG6SAfZ8wV0GV9KPZE6y+oi6Ob0gotw3v9VPYJu3Mfl32PAzmZr4dpCBWfBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oM6Wa7H4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+hIDcs+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD9C1F000FF;
-	Sat, 12 Sep 2026 18:57:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oM6Wa7H4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5368E1F000FF;
+	Sat, 12 Sep 2026 18:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239451;
-	bh=MStWk7T/U1/zPpPWwegVUFnduP4DLI7yvoZE9PfQDH4=;
+	s=korg; t=1789239456;
+	bh=Med1e/t+fB7OZgZVEUo4eMpEZkAqrAeQ2NaPIRKF0Vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T+hIDcs+NjsBbg++llx0WlN1oWngSuUSdThMzgsZsGU75YlPo0s1EkrJuAj2R752L
-	 yQ395n/JBGArI0JDe+s+jj8I8a5PrN6qrmZ1xxRp6TKoLA+PmiF4CrA30w798T3diy
-	 JMJKOQjY6ydextMXUD5va3FFd3hgJB+jCBPg1G0c=
+	b=oM6Wa7H4zFhPZ13HYPXO34fOTJlewPCPNJZGrJ4TJxFkjxqi6UKsEW2GphK91JXBm
+	 zj/B1m7kkBkSEBS1kWT6Fv5+J+wVUUoqtonPUigHNdV0vW9T8A4dE6eWShQGS0Vl7x
+	 9oJmiFFfWNV4brst0kdpOXpp8jKy0u7HnbiUeHdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Titouan Ameline de Cadeville <titouan.ameline@gmail.com>,
-	Julius Werner <jwerner@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Alex Williamson <alex@shazbot.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 666/935] firmware: google: Add bounds checks in coreboot_table_populate()
-Date: Sat, 12 Sep 2026 09:01:36 +0200
-Message-ID: <20260912065542.116506702@linuxfoundation.org>
+Subject: [PATCH 5.15 631/935] bus: mhi: host: Flush the posted write after writing to MHI_SOC_RESET_REQ_OFFSET
+Date: Sat, 12 Sep 2026 09:01:01 +0200
+Message-ID: <20260912065541.312995928@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,77 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Titouan Ameline de Cadeville <titouan.ameline@gmail.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 7b1a1af4556a4f95ef273e91435fe804cbfcd223 ]
+[ Upstream commit 24f4423cbc89548def2b05ae86de6175086dbf94 ]
 
-coreboot_table_populate() iterates over firmware-provided table entries
-with no validation that the entries stay within the mapped memory
-region.  A corrupt table with a large `entry->size` advances `ptr_entry`
-past the mapped region, causing an out-of-bounds read on the next
-iteration.
+mhi_soc_reset() tries to reset the device by writing to the
+MHI_SOC_RESET_REQ_OFFSET register. But it doesn't do a read-back to ensure
+that the write gets flushed to the device before returning to the caller.
 
-Add a check before dereferencing `ptr_entry` to ensure the entry header
-is readable, and a second check after reading `entry->size` to ensure
-the full entry stays within the mapped region.
+This may lead to the delay (if implemented) on the caller to be
+insufficient, if the posted write doesn't reach the device before the
+delay.
 
-Pass `len` from coreboot_table_probe() into coreboot_table_populate() to
-make the mapped region size available for validation.
+So add a read-back after writing to the MHI_SOC_RESET_REQ_OFFSET register.
 
-Signed-off-by: Titouan Ameline de Cadeville <titouan.ameline@gmail.com>
-Reviewed-by: Julius Werner <jwerner@chromium.org>
-Link: https://lore.kernel.org/r/20260426214739.117131-1-titouan.ameline@gmail.com
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Stable-dep-of: a58a57a1076f ("firmware: coreboot: Validate table bounds")
+Fixes: b5a8d233a588 ("bus: mhi: core: Add device hardware reset support")
+Reported-by: Alex Williamson <alex@shazbot.org>
+Closes: https://lore.kernel.org/linux-pci/20260622160822.09350246@shazbot.org
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260623145134.43976-1-manivannan.sadhasivam@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/google/coreboot_table.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/bus/mhi/host/main.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/firmware/google/coreboot_table.c b/drivers/firmware/google/coreboot_table.c
-index f3694d3478019..95fc2e4d0cccf 100644
---- a/drivers/firmware/google/coreboot_table.c
-+++ b/drivers/firmware/google/coreboot_table.c
-@@ -81,16 +81,20 @@ void coreboot_driver_unregister(struct coreboot_driver *driver)
- }
- EXPORT_SYMBOL(coreboot_driver_unregister);
+diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+index f96a3620e67da..5e59c3c578d18 100644
+--- a/drivers/bus/mhi/host/main.c
++++ b/drivers/bus/mhi/host/main.c
+@@ -167,6 +167,9 @@ EXPORT_SYMBOL_GPL(mhi_get_mhi_state);
  
--static int coreboot_table_populate(struct device *dev, void *ptr)
-+static int coreboot_table_populate(struct device *dev, void *ptr, resource_size_t len)
+ void mhi_soc_reset(struct mhi_controller *mhi_cntrl)
  {
- 	int i, ret;
- 	void *ptr_entry;
- 	struct coreboot_device *device;
- 	struct coreboot_table_entry *entry;
- 	struct coreboot_table_header *header = ptr;
-+	void *ptr_end;
- 
-+	ptr_end = ptr + len;
- 	ptr_entry = ptr + header->header_bytes;
- 	for (i = 0; i < header->table_entries; i++) {
-+		if (ptr_entry + sizeof(*entry) > ptr_end)
-+			return -EINVAL;
- 		entry = ptr_entry;
- 
- 		if (entry->size < sizeof(*entry)) {
-@@ -98,6 +102,9 @@ static int coreboot_table_populate(struct device *dev, void *ptr)
- 			return -EINVAL;
- 		}
- 
-+		if (ptr_entry + entry->size > ptr_end)
-+			return -EINVAL;
++	int __maybe_unused ret;
++	u32 tmp;
 +
- 		device = kzalloc(sizeof(device->dev) + entry->size, GFP_KERNEL);
- 		if (!device)
- 			return -ENOMEM;
-@@ -154,7 +161,7 @@ static int coreboot_table_probe(struct platform_device *pdev)
- 	if (!ptr)
- 		return -ENOMEM;
- 
--	ret = coreboot_table_populate(dev, ptr);
-+	ret = coreboot_table_populate(dev, ptr, len);
- 
- 	memunmap(ptr);
+ 	if (mhi_cntrl->reset) {
+ 		mhi_cntrl->reset(mhi_cntrl);
+ 		return;
+@@ -175,6 +178,9 @@ void mhi_soc_reset(struct mhi_controller *mhi_cntrl)
+ 	/* Generic MHI SoC reset */
+ 	mhi_write_reg(mhi_cntrl, mhi_cntrl->regs, MHI_SOC_RESET_REQ_OFFSET,
+ 		      MHI_SOC_RESET_REQ);
++	/* Flush the posted write to the device (ignore return value) */
++	ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->regs, MHI_SOC_RESET_REQ_OFFSET,
++			   &tmp);
+ }
+ EXPORT_SYMBOL_GPL(mhi_soc_reset);
  
 -- 
 2.53.0
