@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CBF3876C5;
-	Sat, 12 Sep 2026 09:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC19A1A8F7B;
+	Sat, 12 Sep 2026 09:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206220; cv=none; b=M5KQSRfVXjhwj94No2WGK3+ihcTU84K5/Rv1bkIGkWbTqT5zIekvSfeXttoxuCNSDXxqrTDcjQFiKX5eIMP0fwuzTy3Fs8c7QPxhrzp/BOscfWUyiAK3JoHaceT0eUluk1IQue/BTd9V+HE5o9Oy0GluxSx4XUPUNpu2nbS2muo=
+	t=1789206225; cv=none; b=MC00lJ5UoBO1bM0queIPfYIYJ+t6Vo7AIYByPm85xYrpnUqtx/dnj5T2Y9L4OZfIJePifrJNXBeT2WSwEGRaCGRxVhuFBpE03uL6fn6gggWiOFQ8uE6LuiK/Ag9fsY/QT0YSxdX64e+kUlub4HHrpAgI9SsAFrN9ybsMue043Ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206220; c=relaxed/simple;
-	bh=G7cFjMzmvFy+PqLT0Xey1rkWoiAykQ2RUmn3Ts4x7VA=;
+	s=arc-20240116; t=1789206225; c=relaxed/simple;
+	bh=tCou9FeUOjW9hcGA90M4/XP3y5xP0NNY25MQRkcLZhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eD6jM+Bfwtso5qWMhmXEsrHZA9JYMrenvQJzudRRdudYEqziN+km0IYs7pW8izhEQkexBtL/2Cf9qQchOqkS3yDrhYXKOJzCOWP8jfmlegpc31SgWFoZoknDDukA/fBDXb1Dh9934Fu56qQYvGvjwHf1eNjPU/dnQOdKoPkAh8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSjJR27p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fCzgrYWLYr6dTxPvFqC5s1UzwTNg7WXZAt0xVwGGEeNUA7oueWfuunt+YMlR42bxnzgHwj5RYhSzja+3kwkTts8+m9XLXgJcsPHzdRGCHy6fSuCVYLF6wufah3Uv2YkLfbP3Z52LfjXFgzVIqY4Xe6Tykuqf8rc7lpF0w+6DS10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQvydNkc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSjJR27p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 262F91F000FF;
-	Sat, 12 Sep 2026 09:43:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQvydNkc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B5A1F000FF;
+	Sat, 12 Sep 2026 09:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206218;
-	bh=i9fcbXAhsrZlYoUU8B4BExKNYD575yoNwMP6EYlozbc=;
+	s=korg; t=1789206223;
+	bh=rV01lE9MxuuUiqKJYVbMJhw2k9W3MiyRxhR4rAF0vJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HSjJR27poeZmz6eqH40nV5iRp5vEJrmBxjJ9A1TzwNjhrpWNL0dqwjK6Jf5CFIrPD
-	 mCRdhpiNmgFea7vzRZoeqgLr20mmURbXaEpFW811JIBwqMw/gPvz5YbvpIZ9toAHzl
-	 AyL2BfDitO714jJW4khDemtBHqXyh/VaBHi4wGAI=
+	b=dQvydNkca1hoL3ZdvUA5NCRmMov2+My8smQn+KVfn7g27+aF7Zi8qo6ZVPlcgd8PF
+	 y82WOoMJaeVQ5J7tNibbNMSQrV5NwyazDikxjvyGAIy95mugCbSRLOy6UehbdOCRrr
+	 NGfHNuA9V+o3N3lHYom9WcuGHqLZq1RQ4r+wWK00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0162/1518] perf tests: Fix flakiness in trace record and replay test
-Date: Sat, 12 Sep 2026 08:38:51 +0200
-Message-ID: <20260912065627.160235663@linuxfoundation.org>
+Subject: [PATCH 6.18 0163/1518] perf test: Fix perf stat --bpf-counters on hybrid machines
+Date: Sat, 12 Sep 2026 08:38:52 +0200
+Message-ID: <20260912065627.183705500@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,111 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 509a2b9a6e142697dd5f34cdd802e5b86eababa1 ]
+[ Upstream commit d9db9c8db56c3e378aa5c91637664f77ca5a6f72 ]
 
-The `perf trace record and replay` test fails intermittently on slow or
-virtualized hosts because the default recording workload (`sleep 1`)
-occasionally completes without scheduling the target `nanosleep` or
-`clock_nanosleep` system calls inside the recorded sample window,
-resulting in the error: `Failed: cannot find *nanosleep syscall`.
+The test constantly fails on my Intel hybrid machine.  The issue was it
+has two events in the output even if I only gave it one event.
 
-Generalize the `perf_record_with_retry` helper in
-`tests/shell/lib/perf_record.sh` to support a custom record command prefix
-via the `PERF_RECORD_CMD` environment variable (defaulting to "perf
-record").
+  $ perf stat -e instructions -- perf test -w sqrtloop
 
-Update `trace_record_replay.sh` to use this robust retry loop running with
-`PERF_RECORD_CMD="perf trace record"` and a base workload of `sleep`. The
-test will automatically retry with scaled sleep durations (from 0.01s up
-to 2.0s) until the required `nanosleep` event is successfully captured.
+   Performance counter stats for 'perf test -w sqrtloop':
 
-Fixes: 15bcfb96d0dd ("perf test: Add trace record and replay test")
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Ian Rogers <irogers@google.com>
+         910,856,421      cpu_atom/instructions/                (28.05%)
+      14,852,865,997      cpu_core/instructions/                (96.79%)
+
+         1.014313341 seconds time elapsed
+
+         1.004114000 seconds user
+         0.008174000 seconds sys
+
+Let's modify the awk script to add the values for each line and print
+the total.  The variable 'i' has a number of input lines that have valid
+output and variable 'c' has the sum of actual counter values.  That way
+it should work on any platforms.
+
+Reviewed-by: Ian Rogers <irogers@google.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Stable-dep-of: b02027776ac5 ("perf tests: Fix flakiness in BPF counters test on hybrid systems")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/lib/perf_record.sh     |  7 +++-
- tools/perf/tests/shell/trace_record_replay.sh | 38 +++++++++++++++++--
- 2 files changed, 40 insertions(+), 5 deletions(-)
+ tools/perf/tests/shell/stat_bpf_counters.sh | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/tests/shell/lib/perf_record.sh b/tools/perf/tests/shell/lib/perf_record.sh
-index e137fa75370de..2b9e11b66dc7a 100644
---- a/tools/perf/tests/shell/lib/perf_record.sh
-+++ b/tools/perf/tests/shell/lib/perf_record.sh
-@@ -24,9 +24,14 @@ perf_record_with_retry() {
-   local duration
-   local first_run=true
-   local ret=1
-+  local cmd_prefix="perf record"
-+  if [ -n "${PERF_RECORD_CMD}" ]; then
-+    cmd_prefix="${PERF_RECORD_CMD}"
-+  fi
-+
-   for duration in 0.01 0.1 0.3 1.0 2.0; do
-     rm -f "${perfdata}".old
--    perf record "$@" -o "${perfdata}" ${testprog_base} ${duration} > "$logfile" 2>&1
-+    ${cmd_prefix} "$@" -o "${perfdata}" ${testprog_base} ${duration} > "$logfile" 2>&1
-     local record_exit=$?
- 
-     if [ "$first_run" = true ] && [ $record_exit -ne 0 ]; then
-diff --git a/tools/perf/tests/shell/trace_record_replay.sh b/tools/perf/tests/shell/trace_record_replay.sh
-index 88d30a03dcecb..38fcafcdfb91c 100755
---- a/tools/perf/tests/shell/trace_record_replay.sh
-+++ b/tools/perf/tests/shell/trace_record_replay.sh
-@@ -6,16 +6,46 @@
- 
- # shellcheck source=lib/probe.sh
- . "$(dirname $0)"/lib/probe.sh
-+# shellcheck source=lib/perf_record.sh
-+. "$(dirname $0)"/lib/perf_record.sh
- 
- skip_if_no_perf_trace || exit 2
- [ "$(id -u)" = 0 ] || exit 2
- 
- file=$(mktemp /tmp/temporary_file.XXXXX)
-+err=0
- 
--perf trace record -o ${file} sleep 1 || exit 1
--if ! perf trace -i ${file} 2>&1 | grep nanosleep; then
--	echo "Failed: cannot find *nanosleep syscall"
-+cleanup() {
-+	rm -f ${file}
-+	perf_record_cleanup
-+	trap - EXIT INT TERM
-+}
-+
-+trap_cleanup() {
-+	echo "Unexpected signal in ${FUNCNAME[1]}"
-+	cleanup
-+	exit 1
-+}
-+trap trap_cleanup EXIT INT TERM
-+
-+check_nanosleep() {
-+  perf trace -i "${file}" 2>&1 | grep -q nanosleep
-+}
-+
-+PERF_RECORD_CMD="perf trace record" perf_record_with_retry "${file}" "check_nanosleep" "sleep"
-+err=$?
-+
-+if [ $err -ne 0 ]; then
-+	if [ $err -eq 2 ]; then
-+		logfile="${PERF_RECORD_LOGS[${#PERF_RECORD_LOGS[@]}-1]}"
-+		echo "perf trace record failed. Log output:"
-+		cat "$logfile"
-+	else
-+		echo "Failed: cannot find *nanosleep syscall"
-+	fi
-+	cleanup
- 	exit 1
- fi
- 
--rm -f ${file}
-+cleanup
-+exit 0
+diff --git a/tools/perf/tests/shell/stat_bpf_counters.sh b/tools/perf/tests/shell/stat_bpf_counters.sh
+index f43e28a136d3c..35463358b273c 100755
+--- a/tools/perf/tests/shell/stat_bpf_counters.sh
++++ b/tools/perf/tests/shell/stat_bpf_counters.sh
+@@ -41,8 +41,14 @@ check_counts()
+ test_bpf_counters()
+ {
+ 	printf "Testing --bpf-counters "
+-	base_instructions=$(perf stat --no-big-num -e instructions -- $workload 2>&1 | awk '/instructions/ {print $1}')
+-	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions -- $workload  2>&1 | awk '/instructions/ {print $1}')
++	base_instructions=$(perf stat --no-big-num -e instructions -- $workload 2>&1 | \
++				awk -v i=0 -v c=0 '/instructions/ { \
++					if ($1 != "<not") { i++; c += $1 } \
++				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
++	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions -- $workload  2>&1 | \
++				awk -v i=0 -v c=0 '/instructions/ { \
++					if ($1 != "<not") { i++; c += $1 } \
++				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
+ 	check_counts $base_instructions $bpf_instructions
+ 	compare_number $base_instructions $bpf_instructions
+ 	echo "[Success]"
+@@ -52,8 +58,14 @@ test_bpf_modifier()
+ {
+ 	printf "Testing bpf event modifier "
+ 	stat_output=$(perf stat --no-big-num -e instructions/name=base_instructions/,instructions/name=bpf_instructions/b -- $workload 2>&1)
+-	base_instructions=$(echo "$stat_output"| awk '/base_instructions/ {print $1}')
+-	bpf_instructions=$(echo "$stat_output"| awk '/bpf_instructions/ {print $1}')
++	base_instructions=$(echo "$stat_output"| \
++				awk -v i=0 -v c=0 '/base_instructions/ { \
++					if ($1 != "<not") { i++; c += $1 } \
++				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
++	bpf_instructions=$(echo "$stat_output"| \
++				awk -v i=0 -v c=0 '/bpf_instructions/ { \
++					if ($1 != "<not") { i++; c += $1 } \
++				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
+ 	check_counts $base_instructions $bpf_instructions
+ 	compare_number $base_instructions $bpf_instructions
+ 	echo "[Success]"
 -- 
 2.53.0
 
