@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697FF37F337;
-	Sat, 12 Sep 2026 19:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCF437F75B;
+	Sat, 12 Sep 2026 19:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240734; cv=none; b=AnUa2XqqrMcVLuiNXPgTtLV3Uml6fciMWA51mOTg2xOOzx13eW0iv4o1VZAaobY8X+/8hwVziENi8KhGsycA3csCPpMpiqKe68bBUhVadpaEPxaH3TWtIidq/Ijxu33K/iskqmGCSYYYu+K1hu9D+PDnCKvg9gBzt4Bib6lC2Vc=
+	t=1789240739; cv=none; b=QNWCVyzFxBniw5n/FkGtcbbNgh3OG5yAfyql6nfe0LivQzfW339qAx1chxmK3Q9EyEt7oQiF/2DRUOdysWAc5w+n1EyYHC9VrbSNu6J4w716RhJudHit7iQLnYrHp036aN29uUsXTVUc6RLWPd0f+mBupb7yd315vPTLN1vESzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240734; c=relaxed/simple;
-	bh=p6Bb9nNAFzVqxTsZ0JAIBNW9VqE8og34d5bzqWUenbk=;
+	s=arc-20240116; t=1789240739; c=relaxed/simple;
+	bh=P5GAq8qwFCAS0uC756CjgtmhmnGx2Aa3MTZq/DNq5Pw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OVWgQ3d592BI3MUw5fhKBFdfkiDQNWPIZJJ2G5fs2U3hRotl+uPM6tsM4YSgJF8B4qNV4TD1pUT3qgsXmTqR1hwAOOVwbj5n3Enydz37VoRa6DFz/uBTppYuFp1G3fVIdePMib8DNYdVnZ6u/p+ZAv1U2KVWNGlRg1Y6J96U8L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXh6Lreb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oEecnKFOxbGcvgdq+otNcYzRnsOQrdLdk4i/wLd5Zcn2yjI9QENDmxdq2Il+xqt9nXhE2QFrW8e4xrS7y1jZpuQgneOjamvj/sxyFIOsJ38BddFCY5qJg/FOxNlpjuPtPBlnAPdJ31BNz4w4es+CXUWwJ/LJA/+PCBxjpFBMGBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJu2nJRS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXh6Lreb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E5F21F00893;
-	Sat, 12 Sep 2026 19:18:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJu2nJRS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C751F000FF;
+	Sat, 12 Sep 2026 19:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240733;
-	bh=aoY/ku0CK86KLSaTa+EYQk6a1AmHrFEy1Y4gxns0ovo=;
+	s=korg; t=1789240737;
+	bh=9mEFPJJukLE5EEzK5QeRI2HDUDr1siShmsJ8slsuuv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MXh6LrebdxcBSVZXb9avXdlPTy9q8DoPboOdA7RHDFmV+PI6Ihg1QVs8iGPdMpUeC
-	 RrPdxiskee9/H+CjPvudOvPL4nSq08Z1+k3wLiiZ7BK6O20UM8Et2WTKhWZDsK/bBX
-	 c83ljrKXX7D9pxxNtvtqt6uRgi1/SLNQml/BBK4U=
+	b=KJu2nJRShWq47TWoGVdfn5tqC4x8USsGZcOxeK7y+K9POL9QUrIoUag2jHyiqgplm
+	 b9VqkY9IZLd+hYV5Q4jSvQTVY9lLsZq8V7P8LMWHaStEAiJ+fHARco6rkzH/0vm0gT
+	 R6A4BIjJFdujlWHU8CKNO1ivTQRo2NQ7IKAa5Fd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9111d2255a9710e87562@syzkaller.appspotmail.com,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 928/935] RDMA/nldev: Check stat attribute before accessing it
-Date: Sat, 12 Sep 2026 09:05:58 +0200
-Message-ID: <20260912065548.104623761@linuxfoundation.org>
+Subject: [PATCH 5.15 929/935] HID: fix an error code in hid_check_device_match()
+Date: Sat, 12 Sep 2026 09:05:59 +0200
+Message-ID: <20260912065548.129620269@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,74 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit d821f7c13ca03318ad1bdc64ce64afb43080a07a ]
+[ Upstream commit 89e756e3cc8d9c1ebc0f2b2f6912227073d93118 ]
 
-The access to non-existent netlink attribute causes to the following
-kernel panic. Fix it by checking existence before trying to read it.
+The hid_check_device_match() returns true if we find a match and false
+if we don't.  But here it returns -ENODEV which becomes true instead
+of false.
 
-  general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN
-  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-  CPU: 0 PID: 6744 Comm: syz-executor.0 Not tainted 5.15.0-syzkaller #0
-  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-  RIP: 0010:nla_get_u32 include/net/netlink.h:1554 [inline]
-  RIP: 0010:nldev_stat_set_mode_doit drivers/infiniband/core/nldev.c:1909 [inline]
-  RIP: 0010:nldev_stat_set_doit+0x578/0x10d0 drivers/infiniband/core/nldev.c:2040
-  Code: fa 4c 8b a4 24 f8 02 00 00 48 b8 00 00 00 00 00 fc ff df c7 84 24 80 00 00 00 00 00 00 00 49 8d 7c 24 04 48 89
-  fa 48 c1 ea 03 <0f> b6 14 02 48 89 f8 83 e0 07 83 c0 03 38 d0 7c 08 84 d2 0f 85 02
-  RSP: 0018:ffffc90004acf2e8 EFLAGS: 00010247
-  RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffffc90002b94000
-  RDX: 0000000000000000 RSI: ffffffff8684c5ff RDI: 0000000000000004
-  RBP: ffff88807cda4000 R08: 0000000000000000 R09: ffff888023fb8027
-  R10: ffffffff8684c5d7 R11: 0000000000000000 R12: 0000000000000000
-  R13: 0000000000000001 R14: ffff888041024280 R15: ffff888031ade780
-  FS:  00007eff9dddd700(0000) GS:ffff8880b9c00000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000001b2ef24000 CR3: 0000000036902000 CR4: 00000000003506f0
-  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-  Call Trace:
-   <TASK>
-   rdma_nl_rcv_msg+0x36d/0x690 drivers/infiniband/core/netlink.c:195
-   rdma_nl_rcv_skb drivers/infiniband/core/netlink.c:239 [inline]
-   rdma_nl_rcv+0x2ee/0x430 drivers/infiniband/core/netlink.c:259
-   netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
-   netlink_unicast+0x533/0x7d0 net/netlink/af_netlink.c:1345
-   netlink_sendmsg+0x86d/0xda0 net/netlink/af_netlink.c:1916
-   sock_sendmsg_nosec net/socket.c:704 [inline]
-   sock_sendmsg+0xcf/0x120 net/socket.c:724
-   ____sys_sendmsg+0x6e8/0x810 net/socket.c:2409
-   ___sys_sendmsg+0xf3/0x170 net/socket.c:2463
-   __sys_sendmsg+0xe5/0x1b0 net/socket.c:2492
-   do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-   do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
-   entry_SYSCALL_64_after_hwframe+0x44/0xae
-
-Fixes: 822cf785ac6d ("RDMA/nldev: Split nldev_stat_set_mode_doit out of nldev_stat_set_doit")
-Link: https://lore.kernel.org/r/b21967c366f076ff1988862f9c8a1aa0244c599f.1637151999.git.leonro@nvidia.com
-Reported-by: syzbot+9111d2255a9710e87562@syzkaller.appspotmail.com
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 207733f92661 ("HID: split apart hid_device_probe to make logic more apparent")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/nldev.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hid/hid-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
-index 19dce093e4cb6..4f327e6c5c701 100644
---- a/drivers/infiniband/core/nldev.c
-+++ b/drivers/infiniband/core/nldev.c
-@@ -1900,7 +1900,8 @@ static int nldev_stat_set_mode_doit(struct sk_buff *msg,
- 	int ret;
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index 07b4bda8e2c9c..783f55a259cd8 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -2322,7 +2322,7 @@ static bool hid_check_device_match(struct hid_device *hdev,
+ {
+ 	*id = hid_match_device(hdev, hdrv);
+ 	if (!*id)
+-		return -ENODEV;
++		return false;
  
- 	/* Currently only counter for QP is supported */
--	if (nla_get_u32(tb[RDMA_NLDEV_ATTR_STAT_RES]) != RDMA_NLDEV_ATTR_RES_QP)
-+	if (!tb[RDMA_NLDEV_ATTR_STAT_RES] ||
-+	    nla_get_u32(tb[RDMA_NLDEV_ATTR_STAT_RES]) != RDMA_NLDEV_ATTR_RES_QP)
- 		return -EINVAL;
- 
- 	mode = nla_get_u32(tb[RDMA_NLDEV_ATTR_STAT_MODE]);
+ 	if (hdrv->match)
+ 		return hdrv->match(hdev, hid_ignore_special_drivers);
 -- 
 2.53.0
 
