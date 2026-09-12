@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6F93B71DA;
-	Sat, 12 Sep 2026 10:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E152AD37;
+	Sat, 12 Sep 2026 10:36:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209356; cv=none; b=CWVJeSgMYPTsNuskjcUY51DDfCAKzRfQWtqPhFbz7WU7a2wWwhq03YhmM4gPuUuq/45XQHscjuM1dt8isLPrmiHPQckzogE1X7kSrv59hxodZncZrw/1mBlus8Xf7xvgmYGLiit1tg0gWTFaHCyWJICeY7NmOtNlR8QMiNUuuIQ=
+	t=1789209361; cv=none; b=Gw/yssvpO1WiSEwAKikHdhD+xYUPkXm3xq2mKtZb+EEvnRpngRrpLNhf9p43rDHLukmbgddtyfRhyJPMsAta0djUJ954c23WTDmTIGLs1Heupm+dFIQQhWFBwx40svJe7UGM1JLBk4FnLe55sdndbA9RW7Xyf+ZD1ENicM0EaME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209356; c=relaxed/simple;
-	bh=ijGMy5Ng5YG5qSfkF7y8//7s+dOVQHMYe+KHBVdlLN0=;
+	s=arc-20240116; t=1789209361; c=relaxed/simple;
+	bh=kpTTI2bK7gTRu9wm3D2IJuhJMM+KNZNtnqVTEYc9nI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4fvkwwmWnYoe8AZ3uAhbAFyx4cYQTF9HxXWiqLob0wpQYsZ6O8znlQl76RTmTweEwZErs7DtrK2xsLiR6y8KJkMiG47oqRg92ms2NuKQX8AipD5Y1nlJTHvEOLtqgPgxXcCdKbP7fg56gvfrfrJKY0lz4Q0MlUou6S53vb/RF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOpc3T4W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZwZAOgPB2CCEN9HqjiNqGJ8fhjPcsfI/OVn1P9CbQKYMhsnfpqHwWL2O6CZ/pLZ3d+1anQ4TR4xvBCtiNKCyOPK5k1JzcXr15aP7PhdsqmKsvlR3ee3ki72t6NpYEceDiz6bwaIPEEB4J/qvnKV4YZOeovahvtuNper+phYKXg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lz1RkjuG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOpc3T4W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C276E1F000FF;
-	Sat, 12 Sep 2026 10:35:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lz1RkjuG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2061F000FF;
+	Sat, 12 Sep 2026 10:35:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209355;
-	bh=0sJ0r5np1QZuBynlbJOMcomrFdqIjScAWCevVmGj+Y0=;
+	s=korg; t=1789209360;
+	bh=IOR0iPJxi0gOsv1aigKOOzHkNduJQb30Rvz/JZX0Bqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MOpc3T4W+M9F8TS/gGQNqyYGzO8Jp3FPi6b9aiN2vXqTypEG7F8sPj4kVJ/TZHCaL
-	 i4Gmi5otIFS2c3Z9zg17GHZ9lHFJ6khXXe5VHWh/kGIslWH9t+7C6Rs2RIxIFl04Hl
-	 1RWwB03cPZqTZqbXjQHjhdJfF2C/bl5AS0lmWkWk=
+	b=Lz1RkjuGDOo9CRy8+MySN2lkpZDZ23BGg0lT2vqkff24xoAdJyB77Sng5Mq+Au+fK
+	 5suRxLPaieF48JqArXiOjNZ3RTvpjScBepQBvYRuTZYk+gfZwltVvtRHO4pn1bB8IS
+	 yl7Asr/BV+AVfqN+dWTeAssO5gqx8GVDFEPj00yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Linghui Wu <linghui.wu@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0804/1518] wifi: mt76: mt7996: fix out-of-bounds link array access in mt7996_tx()
-Date: Sat, 12 Sep 2026 08:49:33 +0200
-Message-ID: <20260912065641.621127080@linuxfoundation.org>
+Subject: [PATCH 6.18 0805/1518] wifi: ath10k: snoc: use memcpy_fromio() for MSA ramdump
+Date: Sat, 12 Sep 2026 08:49:34 +0200
+Message-ID: <20260912065641.644367163@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,74 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Linghui Wu <linghui.wu@oss.qualcomm.com>
 
-[ Upstream commit 4330a0ef9f75a54fde3548432a9a698f06bab635 ]
+[ Upstream commit 4f25071afe9218aaae1c63fbf75e229aa6405319 ]
 
-When mac80211 leaves the link unspecified, mt7996_tx() substitutes the
-primary link id of the station or vif. That value is
-IEEE80211_LINK_UNSPECIFIED (0xf) until the first link has been added,
-and it is then used unchecked to index vif->link_conf[],
-mvif->mt76.link[] and sta->link[], all of which hold
-IEEE80211_MLD_MAX_NUM_LINKS (15) entries.
+On WCN3990/SNOC the MSA region is mapped with devm_memremap(MEMREMAP_WT).
+On arm64 such a mapping is not Normal-cacheable, so unaligned accesses to
+it are not permitted. ath10k_msa_dump_memory() copies the region with a
+plain memcpy(), whose optimized __pi_memcpy_generic implementation issues
+wide/unaligned loads. This triggers an alignment fault (FSC=0x21) Oops in
+ath10k_snoc_fw_crashed_dump() while collecting the devcoredump:
 
-Clamp the primary link id to the default link before using it, and use
-the clamped value for the link_sta fallback as well.
+  Unable to handle kernel paging request ... FSC=0x21: alignment fault
+  pc : __pi_memcpy_generic
+  lr : ath10k_snoc_fw_crashed_dump [ath10k_snoc]
 
-Fixes: 1609b014aa29 ("wifi: mt76: mt7996: Overwrite unspecified link_id in mt7996_tx()")
-Link: https://patch.msgid.link/20260801145334.1166751-10-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+The Oops both leaves the firmware RAM dump buffer zeroed (no dump is
+captured) and crashes the kernel, which in turn breaks modem SSR
+recovery.
+
+Use memcpy_fromio(), which only performs accesses that are valid for such
+a device-memory mapping. The generic memcpy_fromio() implementation aligns
+the source before issuing word-sized reads and stores the destination with
+put_unaligned(), so it is also safe for the coherent DMA allocation used on
+the non-reserved-memory path. ath11k and ath12k use the same pattern
+when copying target memory into crash dumps, so call it unconditionally
+here too.
+The MEMREMAP_WT pointer is a plain void *, so an explicit __iomem cast is
+needed; use __force to keep sparse happy.
+
+Tested-on: WCN3990 hw1.0 SNOC WLAN.HL.3.3.7.c5-00107-QCAHLSWMTPL-1
+
+Fixes: 3f14b73c3843 ("ath10k: Enable MSA region dump support for WCN3990")
+Signed-off-by: Linghui Wu <linghui.wu@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260727072629.2297208-1-linghui.wu@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7996/main.c  | 20 ++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ drivers/net/wireless/ath/ath10k/snoc.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index a319a99b5056e..c6d7088b15cab 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -1361,20 +1361,26 @@ static void mt7996_tx(struct ieee80211_hw *hw,
- 	struct ieee80211_vif *vif = info->control.vif;
- 	struct mt7996_vif *mvif = vif ? (void *)vif->drv_priv : NULL;
- 	struct mt76_wcid *wcid = &dev->mt76.global_wcid;
-+	u8 deflink_id = IEEE80211_LINK_UNSPECIFIED;
- 	u8 link_id = u32_get_bits(info->control.flags,
- 				  IEEE80211_TX_CTRL_MLO_LINK);
+diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
+index b3f6424c17d36..0785ea2b8270f 100644
+--- a/drivers/net/wireless/ath/ath10k/snoc.c
++++ b/drivers/net/wireless/ath/ath10k/snoc.c
+@@ -5,6 +5,7 @@
  
- 	rcu_read_lock();
+ #include <linux/bits.h>
+ #include <linux/clk.h>
++#include <linux/io.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+@@ -1456,11 +1457,15 @@ static void ath10k_msa_dump_memory(struct ath10k *ar,
+ 	hdr->length = cpu_to_le32(ar->msa.mem_size);
  
-+	if (msta)
-+		deflink_id = msta->deflink_id;
-+	else if (mvif)
-+		deflink_id = mvif->mt76.deflink_id;
-+
-+	/* the primary link is unset until the first link has been added */
-+	if (deflink_id >= IEEE80211_MLD_MAX_NUM_LINKS)
-+		deflink_id = 0;
-+
- 	/* Use primary link_id if the value from mac80211 is set to
- 	 * IEEE80211_LINK_UNSPECIFIED.
- 	 */
--	if (link_id == IEEE80211_LINK_UNSPECIFIED) {
--		if (msta)
--			link_id = msta->deflink_id;
--		else if (mvif)
--			link_id = mvif->mt76.deflink_id;
--	}
-+	if (link_id == IEEE80211_LINK_UNSPECIFIED)
-+		link_id = deflink_id;
+ 	if (current_region->len < ar->msa.mem_size) {
+-		memcpy(buf, ar->msa.vaddr, current_region->len);
++		memcpy_fromio(buf,
++			      (const void __iomem __force *)ar->msa.vaddr,
++			      current_region->len);
+ 		ath10k_warn(ar, "msa dump length is less than msa size %x, %x\n",
+ 			    current_region->len, ar->msa.mem_size);
+ 	} else {
+-		memcpy(buf, ar->msa.vaddr, ar->msa.mem_size);
++		memcpy_fromio(buf,
++			      (const void __iomem __force *)ar->msa.vaddr,
++			      ar->msa.mem_size);
+ 	}
+ }
  
- 	if (vif && ieee80211_vif_is_mld(vif)) {
- 		struct ieee80211_bss_conf *link_conf;
-@@ -1384,7 +1390,7 @@ static void mt7996_tx(struct ieee80211_hw *hw,
- 
- 			link_sta = rcu_dereference(sta->link[link_id]);
- 			if (!link_sta)
--				link_sta = rcu_dereference(sta->link[msta->deflink_id]);
-+				link_sta = rcu_dereference(sta->link[deflink_id]);
- 
- 			if (link_sta) {
- 				memcpy(hdr->addr1, link_sta->addr, ETH_ALEN);
 -- 
 2.53.0
 
