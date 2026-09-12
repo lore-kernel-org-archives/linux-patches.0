@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A306522A7F6;
-	Sat, 12 Sep 2026 15:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98B520ED;
+	Sat, 12 Sep 2026 15:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225527; cv=none; b=IY3Gk0pukQOuCqHzTmoT0j5Y8vPgN8wZP+wmLbotPs1u3JgqxaLMNSL/dphjhWIRDh8mv3awGAGXLjL8KDnczmHhn0o5zE7rgX+nB3IKMkpsHEk0/15FLB/0RLboAibID9spubtdD+jydyHHaBeQb9tlxOkaAb3PyK/la7YMv4Y=
+	t=1789225533; cv=none; b=ay5qc6NNhabZT4gY5QlrD2TEKfR1rL2BAGW93BtlfMeZL1o3zcPLCvXCfF5ibt1klPDPLVul+0paG2bVbwLGMg8CKD2YPdgOlr3GMwDZo4Q0+wOnl0fXJGBmX+0mPB3NELXbSEeW4B0d0UVlRwUdY5LHu0VPICU71zyJdRPYYbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225527; c=relaxed/simple;
-	bh=HOGbgsM7y5No/kRVKTrmpnfaG7larevPi2jRPViQCr4=;
+	s=arc-20240116; t=1789225533; c=relaxed/simple;
+	bh=B8/v1RfgzntKq+OEQF1Ymi8g0HFn86WBXytughN4AXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XmfkACx2CRpTCBoq3c7PrtuXXZH0a9Ifbm18hhgWn4bI9cnu2SsGi7LEDdTzP0Pf/FUPl4nxcUopBb4FjDF5xT8f9sQYWHc2FhWQeQf6hAURtuEGpUG8cKDGCubCXcl0PncnoeVgVxhQDmxHGc3iUlhQTCfcEsJsQomrak3XHvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rz4h9k1a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tfy6aprn4oe1EDTFGQF0MxgDjEYQ9zixsDylBDgUJbJNK4Er133tiaWGVALRdsKSowSeKGA5hQGVX7EJghagokRoXZ/ibkCEOFaKHGekHRBpX8MSeZEqZ70gjJGvAfyISwi8ws7b/9WQ48SK+BX5Cju/LkKeeiSqPxp9ISxzBA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQ+oEK7d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rz4h9k1a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434101F000FF;
-	Sat, 12 Sep 2026 15:05:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQ+oEK7d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B7191F000FF;
+	Sat, 12 Sep 2026 15:05:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225526;
-	bh=eiVrc3wQxtL1oxOqN4ZxGUpcPm5EDVx15bPK5Qk4vjo=;
+	s=korg; t=1789225530;
+	bh=WqiKWKCGbnkEj0PrV3uwNh8amTWDMCKFhfRECXTco1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rz4h9k1aZmcf/c3T3N4eaZFdJBiDLJ8GeJqA+l7PfjZztDSyzjM1p+bvIjxxhW4n3
-	 aMYdeD7QrAK5U4N9CQE34ChYc7YQF1Kr/GHQruktyax60az5WGnK9T0mYY2h8rxEdo
-	 VJWrUN7Dt/YlszaJX9qOqTaJg4HItEpoKtY5laKM=
+	b=uQ+oEK7d/viXvztl66JahkwJ5qIP8D5agGxaewkQ7l+vGVpAfkR66D+SV/DuPbwhM
+	 DsVBvuqksz4TOH9MFsVMmQ8zBinyuKZAryCAS4iRawcgPrmmV+DGD6LCbmpdTrZVjL
+	 jXZmG1q3AODqjtWUn5IXJ29E0xx1mTixBvM6GQWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1215/1424] scsi: ufs: core: Set task state before io_schedule_timeout()
-Date: Sat, 12 Sep 2026 09:00:47 +0200
-Message-ID: <20260912065634.495720357@linuxfoundation.org>
+Subject: [PATCH 6.6 1216/1424] fs/ntfs3: fix integer overflow in MFT cluster validation
+Date: Sat, 12 Sep 2026 09:00:48 +0200
+Message-ID: <20260912065634.518055692@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,39 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-[ Upstream commit 720d8b2f2457f4962ca353dd90395e2660d9a10d ]
+[ Upstream commit c510c63873103a5da6a498fe537bdb5d6f8d03a2 ]
 
-Set the task state to TASK_UNINTERRUPTIBLE before calling
-io_schedule_timeout() in ufshcd_wait_for_pending_cmds().  Without
-setting the task state, io_schedule_timeout() returns immediately
-because the task state remains TASK_RUNNING. This results in a busy loop
-that wastes CPU cycles.
+In ntfs_init_from_boot(), the boot sector's MFT cluster numbers are
+validated against the volume size with:
 
-Fixes: 2000bc309703 ("scsi: ufs: core: Reduce the clock scaling latency")
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/8fe4526ce272811b28e99048b42358dd8f7c48af.1786142946.git.bvanassche@acm.org
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+	if (mlcn  * sct_per_clst >= sectors ||
+	    mlcn2 * sct_per_clst >= sectors)
+		goto out;
+
+mlcn and mlcn2 are u64 fields read directly from the boot sector.
+sct_per_clst is bounded above by 4096 (true_sectors_per_clst() plus
+the is_power_of_2() check below it), but the multiplication is done
+in u64 and wraps when mlcn (or mlcn2) is large enough -- e.g. mlcn
+near 2^62 with sct_per_clst == 4 wraps to 0, which compares below
+any non-zero 'sectors', so the check is bypassed and the malformed
+record is accepted.
+
+The accepted mlcn is then used unchanged in
+
+	sbi->mft.lbo = mlcn << cluster_bits;
+
+In practice the resulting reads fail at the block layer (sb_bread()
+returns NULL via grow_buffers()'s check_mul_overflow() guard), so
+today this manifests as mount failing in odd places rather than as
+something more dangerous, but the validation step is still wrong
+and there is no reason for callers to rely on the block layer to
+catch a value that should never have been accepted in the first
+place.
+
+Use check_mul_overflow() to compute the two sector positions and
+fail the mount if either multiplication wraps; this preserves the
+existing semantics (mlcn * sct_per_clst >= sectors) instead of
+switching to division (mlcn >= sectors / sct_per_clst), which
+would tighten the check at edge cases where 'sectors' is not a
+multiple of sct_per_clst.  The check_*_overflow() style is the
+one ntfs3 already uses for similar on-disk arithmetic in
+fs/ntfs3/run.c.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ntfs3/super.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index a3a8ba38b13b4..368459dd8b3ff 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -1234,6 +1234,7 @@ static int ufshcd_wait_for_doorbell_clr(struct ufs_hba *hba,
- 			break;
- 		}
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index a4cc56df549a6..935115a75ea1e 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -57,6 +57,7 @@
+ #include <linux/minmax.h>
+ #include <linux/module.h>
+ #include <linux/nls.h>
++#include <linux/overflow.h>
+ #include <linux/proc_fs.h>
+ #include <linux/seq_file.h>
+ #include <linux/statfs.h>
+@@ -870,7 +871,7 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
+ 	struct ntfs_sb_info *sbi = sb->s_fs_info;
+ 	int err;
+ 	u32 mb, gb, boot_sector_size, sct_per_clst, record_size;
+-	u64 sectors, clusters, mlcn, mlcn2, dev_size0;
++	u64 sectors, clusters, mlcn, mlcn2, mft_pos, mft2_pos, dev_size0;
+ 	struct NTFS_BOOT *boot;
+ 	struct buffer_head *bh;
+ 	struct MFT_REC *rec;
+@@ -939,7 +940,15 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
+ 	mlcn2 = le64_to_cpu(boot->mft2_clst);
+ 	sectors = le64_to_cpu(boot->sectors_per_volume);
  
-+		__set_current_state(TASK_UNINTERRUPTIBLE);
- 		io_schedule_timeout(msecs_to_jiffies(20));
- 		if (ktime_to_us(ktime_sub(ktime_get(), start)) >
- 		    wait_timeout_us) {
+-	if (mlcn * sct_per_clst >= sectors || mlcn2 * sct_per_clst >= sectors) {
++	/*
++	 * Convert mlcn/mlcn2 to sector positions before comparing with
++	 * 'sectors'.  All three are u64 values that come from the boot
++	 * sector, so use check_mul_overflow() to keep a wraparound from
++	 * silently bypassing the comparison.
++	 */
++	if (check_mul_overflow(mlcn, (u64)sct_per_clst, &mft_pos) ||
++	    check_mul_overflow(mlcn2, (u64)sct_per_clst, &mft2_pos) ||
++	    mft_pos >= sectors || mft2_pos >= sectors) {
+ 		ntfs_err(
+ 			sb,
+ 			"%s: start of MFT 0x%llx (0x%llx) is out of volume 0x%llx.",
 -- 
 2.53.0
 
