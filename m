@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8AE1FBEA6;
-	Sat, 12 Sep 2026 15:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E381133A71A;
+	Sat, 12 Sep 2026 15:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228378; cv=none; b=hCLQTgvsTF1pvbxclqUy/QDFCDW4jenJbPswaV2C+ksC/9t2N6n7oYw5o2WXfdpzkxsJFu4QDj1JOvNq9+v2reh+7jjfK3a2v9EpZAxYGCjCymtbD3hwtZNOxn6a5h9syzMqkAUvarx5uGBSkjdAdIkqIDA/08w5wQLnQHDATgA=
+	t=1789228384; cv=none; b=Lf/ZVvk6HOJ0bkorC2ARHYVRWZqWUGBf+Q3FUDDFo5Elcu/5GAgRaeHnGbBVFssiwSUtmOCwwlcsWrY6PTxVIRG/jl9fvg6Si+TqElvdx9t0hLv8bgkOLVNfopbvH2xPB6zPJrkt7+3Os+9dnZAxRke0ICkmG36l3w3nr1Nbm9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228378; c=relaxed/simple;
-	bh=lVHL6TBxbFECk65q5Ob+u0Wu8hUc1NKL6puiZGc9V4g=;
+	s=arc-20240116; t=1789228384; c=relaxed/simple;
+	bh=+yczg4lo/taLbvvIcrySK6jPPExxn4upDIP7ADxpuhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LPta6Ad2DmjYqta2LN7BPmXOJxD9/1mCpjUMoZKkEw9+PWWBSrRlu+Er7B5m3Jxz3HjHZj436PdwH4W8JW1E0uDCvxewJCKozasbW7/o/QyCD3MwXs7VIQ39jzWzU37clyBCuFP/W7o5dHXc6a0/vKVJa54DmfWzjTupu4nG0tY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4avSsB1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X+M0VmxdccXJVLyd/2oA7un/Kgg6CaqqK4rdV/2Hay8u7lP2RC0dWjUD3nc4OwEIpN4oCUTBfjCcbJLD7r0NnWRybKhZCO586IqJ8sPwPnX6k0wUJifQpCYQ/HI4vSnfUlxLLiii0gIwC6mJWh7edoIOM9DsKQZAxh1Z4OvdKk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QozOkAzh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4avSsB1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B02261F000FF;
-	Sat, 12 Sep 2026 15:52:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QozOkAzh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B9861F000FF;
+	Sat, 12 Sep 2026 15:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228377;
-	bh=BskdHkvIjx6Zpvjye9wCiiLDbClbq6TJ+emPKOnjPzI=;
+	s=korg; t=1789228382;
+	bh=WGpMRq01RobJVRCMRvmA4EYUvHdaxXOSb/hXYH1gTvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A4avSsB1dGKPX9mKC4BIgCqaDGIL6RpLRoF/k9mR2A/wsZFpeLEOetc2P3K2W5g2K
-	 Wye7nmfMh0jSQi2LApnVYJW74+1YdeOtGBw7mNSlfV0TvDOt0iEYYm1OzUdSMCz8KY
-	 7RSk2R/kjBaB6FAm3QusPiir+n1zdSNbZN3N56TI=
+	b=QozOkAzhnXOx7Txy5gYtxbWzc9mkltNn7rsEr1OcCMx/Vn5gshxDV27ZRXbNBH0it
+	 PQzoChT3WpUSsQH4LHodeJ939VTzitZoWpKYbnkReqxx41+rjmeT/cOagvMWAsvaAi
+	 Rs0eRKrSvlSHoMq+AJNx+lzU0q8fGwv+hNMavQVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Stephan Gerhold <stephan@gerhold.net>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 0331/1191] clk: qcom: gcc-mdm9607: Drop incorrect apss_tcu_clk_src
-Date: Sat, 12 Sep 2026 08:50:59 +0200
-Message-ID: <20260912065555.660198210@linuxfoundation.org>
+Subject: [PATCH 6.1 0332/1191] clk: qcom: gcc-mdm9607: Drop incorrect system_noc_bfdcd_clk_src
+Date: Sat, 12 Sep 2026 08:51:00 +0200
+Message-ID: <20260912065555.686002601@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,92 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Stephan Gerhold <stephan@gerhold.net>
 
-commit 38d06956f60675f906dc3f5b70b3b52103b86a7d upstream.
+commit 17784427df923a0573a7ea83f9198456ff1ec1a5 upstream.
 
-This clock does not exist on the specified address on MDM9607.
-Reading/writing the registers always results in 0 or crashes. The math in
-the frequency table is also broken. GPLL2 on MDM9607 runs at 480 MHz, so:
+This clock does not exist on MDM9607. Reading/writing the registers always
+results in 0.
 
- - F(155000000, P_GPLL2, 6, 0, 0), // 480 MHz/6 = 80 MHz, not 155 MHz
- - F(310000000, P_GPLL2, 3, 0, 0), // 480 MHz/3 = 160 MHz, not 310 MHz
+Presumably, this definition was mistakenly copied from gcc-msm8916. On
+MSM8916, this root clock is used for multimedia subsystems (camera,
+display, video). MDM9607 has none of that, so this clock was probably
+omitted in the hardware.
 
-Presumably, this definition was mistakenly copied as-is from gcc-msm8916
-(which uses 930 MHz for GPLL2). There are no branch consumers of this root
-clock inside gcc-mdm9607 (notably, gcc_apss_tcu_clk has bimc_ddr_clk_src as
-parent instead of this clock), so we can just drop it.
-
-It seems like this clock does exist on this SoC on a different address, but
-since there is no user and reference code for it, it is still better to
-drop it.
+There are no users inside gcc-mdm9607, so we can just drop it.
 
 Cc: stable@vger.kernel.org
 Fixes: 48b7253264ea ("clk: qcom: Add MDM9607 GCC driver")
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Link: https://lore.kernel.org/r/20260706-qcom-clk-mdm9607-fixes-v2-6-745565101869@linaro.org
+Link: https://lore.kernel.org/r/20260706-qcom-clk-mdm9607-fixes-v2-7-745565101869@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-mdm9607.c |   35 -----------------------------------
- 1 file changed, 35 deletions(-)
+ drivers/clk/qcom/gcc-mdm9607.c |   13 -------------
+ 1 file changed, 13 deletions(-)
 
 --- a/drivers/clk/qcom/gcc-mdm9607.c
 +++ b/drivers/clk/qcom/gcc-mdm9607.c
-@@ -159,20 +159,6 @@ static const struct clk_parent_data gcc_
- 	{ .hw = &gpll2.clkr.hw },
- };
- 
--static const struct parent_map gcc_xo_gpll0_gpll1_gpll2_map[] = {
--	{ P_XO, 0 },
--	{ P_GPLL0, 1 },
--	{ P_GPLL1, 2 },
--	{ P_GPLL2, 3 },
--};
--
--static const struct clk_parent_data gcc_xo_gpll0_gpll1_gpll2[] = {
--	{ .fw_name = "xo" },
--	{ .hw = &gpll0.clkr.hw },
--	{ .hw = &gpll1_vote.hw },
--	{ .hw = &gpll2.clkr.hw },
--};
--
- static const struct freq_tbl ftbl_apss_ahb_clk[] = {
- 	F(19200000, P_XO, 1, 0, 0),
- 	F(50000000, P_GPLL0, 16, 0, 0),
-@@ -675,26 +661,6 @@ static struct clk_rcg2 sdcc2_apps_clk_sr
+@@ -241,18 +241,6 @@ static struct clk_rcg2 pcnoc_bfdcd_clk_s
  	},
  };
  
--static const struct freq_tbl ftbl_gcc_apss_tcu_clk[] = {
--	F(155000000, P_GPLL2, 6, 0, 0),
--	F(310000000, P_GPLL2, 3, 0, 0),
--	F(400000000, P_GPLL0, 2, 0, 0),
--	{ }
--};
--
--static struct clk_rcg2 apss_tcu_clk_src = {
--	.cmd_rcgr = 0x1207c,
+-static struct clk_rcg2 system_noc_bfdcd_clk_src = {
+-	.cmd_rcgr = 0x26004,
 -	.hid_width = 5,
--	.parent_map = gcc_xo_gpll0_gpll1_gpll2_map,
--	.freq_tbl = ftbl_gcc_apss_tcu_clk,
+-	.parent_map = gcc_xo_gpll0_bimc_map,
 -	.clkr.hw.init = &(struct clk_init_data){
--		.name = "apss_tcu_clk_src",
--		.parent_data = gcc_xo_gpll0_gpll1_gpll2,
--		.num_parents = 4,
+-		.name = "system_noc_bfdcd_clk_src",
+-		.parent_data = gcc_xo_gpll0_bimc,
+-		.num_parents = ARRAY_SIZE(gcc_xo_gpll0_bimc),
 -		.ops = &clk_rcg2_ops,
 -	},
 -};
 -
- static const struct freq_tbl ftbl_gcc_usb_hs_system_clk[] = {
+ static const struct freq_tbl ftbl_gcc_blsp1_qup1_6_i2c_apps_clk[] = {
  	F(19200000, P_XO, 1, 0, 0),
- 	F(57140000, P_GPLL0, 14, 0, 0),
-@@ -1512,7 +1478,6 @@ static struct clk_regmap *gcc_mdm9607_cl
- 	[PDM2_CLK_SRC] = &pdm2_clk_src.clkr,
- 	[SDCC1_APPS_CLK_SRC] = &sdcc1_apps_clk_src.clkr,
- 	[SDCC2_APPS_CLK_SRC] = &sdcc2_apps_clk_src.clkr,
--	[APSS_TCU_CLK_SRC] = &apss_tcu_clk_src.clkr,
- 	[USB_HS_SYSTEM_CLK_SRC] = &usb_hs_system_clk_src.clkr,
- 	[GCC_BLSP1_AHB_CLK] = &gcc_blsp1_ahb_clk.clkr,
- 	[GCC_BLSP1_SLEEP_CLK] = &gcc_blsp1_sleep_clk.clkr,
+ 	F(50000000, P_GPLL0, 16, 0, 0),
+@@ -1451,7 +1439,6 @@ static struct clk_regmap *gcc_mdm9607_cl
+ 	[BIMC_PLL_VOTE] = &bimc_pll_vote,
+ 	[BIMC_DDR_CLK_SRC] = &bimc_ddr_clk_src.clkr,
+ 	[PCNOC_BFDCD_CLK_SRC] = &pcnoc_bfdcd_clk_src.clkr,
+-	[SYSTEM_NOC_BFDCD_CLK_SRC] = &system_noc_bfdcd_clk_src.clkr,
+ 	[APSS_AHB_CLK_SRC] = &apss_ahb_clk_src.clkr,
+ 	[BLSP1_QUP1_I2C_APPS_CLK_SRC] = &blsp1_qup1_i2c_apps_clk_src.clkr,
+ 	[BLSP1_QUP1_SPI_APPS_CLK_SRC] = &blsp1_qup1_spi_apps_clk_src.clkr,
 
 
