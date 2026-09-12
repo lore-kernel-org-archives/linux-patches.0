@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFC9371D1E;
-	Sat, 12 Sep 2026 19:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D986C25B09D;
+	Sat, 12 Sep 2026 19:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242312; cv=none; b=fX51ZjvGDbPISSpi6GTUQkDe2BK1v7pUVMtT31jeS9miOobS91goZNiK7tTQwMnmbJNap43HkNfkjW2LPZNK8cv4m98oaoz/GsIvO45YuOl4hneOjvqQa0wHWXOyrZrmWJWL6t+TDsR0BELJiFFTKZfgdTDFMN+Kn0dSmpeZCqI=
+	t=1789242315; cv=none; b=ml184EjceYoA1IlX+5Hx3AuvBtjc//CRs4RWnPIIy9ytJgiwG9CpJF8IN3Ye61ZGUXNhgmOV6W0Z2/9T9Ycv6NHn+Uf4ECb03JtiFoe/X4Z+CsoKCLCR43RoHiyAhNJcC6sdibhSI6oCjT5G+8CQy8U1Bm9HZBsFga4V+rmVgqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242312; c=relaxed/simple;
-	bh=Bc5wSw+MepKHW2tAXSsVKFNvOQ4URIMjZgtxbj2F1lw=;
+	s=arc-20240116; t=1789242315; c=relaxed/simple;
+	bh=HOd15c+KOvgbIjVW7eVCWeqrUgL/5vOMIupoXOZinHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mb9g7YA6Qz7XA/4y7f/jd6NMgzY8BvYhBADHfG5BEA7F/6Iz3gwmPDuofvPACs4yMBigg15Szc07AvtntG6IBm9LDigZJqSC9NZH4jIewp8Zi+0OqZBS2AmCleE6RaLzTTgS27wNu73swylCN/kl08AdVx0cQVEtLHN2hWfrfCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6Wcao/o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g1WXEo76ntLguPHodIJvGkXG2VOlykDM6Rtw1aYWufEe2hXxKQJiA/vk94sxoWiKPLmvfZvxHfBgCjcffGTkWihuRkzWhRw2kO09U+gbwO2E9y2nFQamyOrAckJEHIyRD8PR4VyyHcOqSErxNzc0GFgRMT49wROELYRzd+sHYCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dkOp/O/r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6Wcao/o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A0261F000FF;
-	Sat, 12 Sep 2026 19:45:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dkOp/O/r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A171F000FF;
+	Sat, 12 Sep 2026 19:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242311;
-	bh=N53+9eB1jZA9F/ZRyMmNikOIbF2jzMVsMERjNrlIH/o=;
+	s=korg; t=1789242313;
+	bh=QM3p6ywNODvMeChL3/EmXXg3V5nwwcPWL/uyQGFMrxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u6Wcao/orxfpRj47lPKPHyg2XcouOwK2LM3yBjmdQipcyFcZhIeFXxN5U+VmJvq0Q
-	 +5FOTq8GO31D/zmPDxOrJaTpyXaB46ghdzL4T3pH9eLxOeztxva2MVnItJK500sZbV
-	 C2leUXr1yQ58HsczTRSjgtCiqgSykbSKVak5vWLQ=
+	b=dkOp/O/riY0nUNVEl/asw6vPjUSGAsyUXjETNcMfPpNXpF6Xv6VnD61c1vc8THIMy
+	 VmBizKnTk8b/1/MHOUPJt/ogJgqTeqVk+aVxNnzIIX+2lnCNFZNriJA8F+O4RXqu9x
+	 tF9+1u38atxjJbtGAZPqMn86sw0fb3Fxio5QT40g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vz@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 360/798] dmaengine: hisilicon: Return -ENOMEM on dynamic memory allocation in probe
-Date: Sat, 12 Sep 2026 08:59:48 +0200
-Message-ID: <20260912065525.411884305@linuxfoundation.org>
+Subject: [PATCH 5.10 334/798] drm/bridge: cdns-mhdp8546: Return an error pointer on allocation failure
+Date: Sat, 12 Sep 2026 08:59:22 +0200
+Message-ID: <20260912065524.817211261@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,36 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vz@kernel.org>
+From: Maxime Ripard <mripard@kernel.org>
 
-[ Upstream commit cbabdd6ce1b313b5877c7fbb2f5e2f7936564d2f ]
+[ Upstream commit 30ac1d403438a6c6039f0af5bb2df3d021f96036 ]
 
-Out of memory situation on driver's probe is expected to be reported to
-the driver's framework with a proper -ENOMEM error code.
+The drm_bridge_funcs.atomic_reset documentation states that the hook
+must return either a valid drm_bridge_state object or an ERR_PTR().
 
-Fixes: e9f08b65250d ("dmaengine: hisilicon: Add Kunpeng DMA engine support")
-Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260630144214.4080302-1-vz@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+The cdns_mhdp_bridge_atomic_reset() callback returns NULL when the
+allocation of its state fails, violating this contract.
+
+Return ERR_PTR(-ENOMEM) instead.
+
+Fixes: fb43aa0acdfd ("drm: bridge: Add support for Cadence MHDP8546 DPI/DP bridge")
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # imx8mp + sn65dsi84 + bridge hotplug
+Link: https://patch.msgid.link/20260619-drm-no-more-bridge-reset-v3-2-ff399263111b@kernel.org
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/hisi_dma.c | 2 +-
+ drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/hisi_dma.c b/drivers/dma/hisi_dma.c
-index 8f16513673100..4c82a94fa7aa4 100644
---- a/drivers/dma/hisi_dma.c
-+++ b/drivers/dma/hisi_dma.c
-@@ -535,7 +535,7 @@ static int hisi_dma_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
+index 5876589d42b7d..f290432c15e3b 100644
+--- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
++++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
+@@ -2076,7 +2076,7 @@ cdns_mhdp_bridge_atomic_reset(struct drm_bridge *bridge)
  
- 	hdma_dev = devm_kzalloc(dev, struct_size(hdma_dev, chan, HISI_DMA_CHAN_NUM), GFP_KERNEL);
- 	if (!hdma_dev)
--		return -EINVAL;
-+		return -ENOMEM;
+ 	cdns_mhdp_state = kzalloc(sizeof(*cdns_mhdp_state), GFP_KERNEL);
+ 	if (!cdns_mhdp_state)
+-		return NULL;
++		return ERR_PTR(-ENOMEM);
  
- 	hdma_dev->base = pcim_iomap_table(pdev)[PCI_BAR_2];
- 	hdma_dev->pdev = pdev;
+ 	 __drm_atomic_helper_bridge_reset(bridge, &cdns_mhdp_state->base);
+ 
 -- 
 2.53.0
 
