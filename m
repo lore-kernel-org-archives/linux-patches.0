@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAEF735AC3E;
-	Sat, 12 Sep 2026 08:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E881337699;
+	Sat, 12 Sep 2026 08:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203080; cv=none; b=M79fe7MvUA3FhI9+mnmWtEsweNJ0IenIxcGGrwp3yiDr22YCEqG1YnZ9K8hUjH+CbDItwHsvFWETQ9l3qxa1r0stkytN3K7KyXeccG7gNOi2OuDfAM4bemXrYJbC576HfjcKenPTMZGhEhxGfjnI1F4OWH83KvQvXEkr6kQZ400=
+	t=1789203084; cv=none; b=G4EdA1bL11AEbZegB2mN4u8wfnVY7wWBgUt2y8CQZ1rlxAnZEpGcxNYNRc4g9BGZXgD3pPJ3XKyTvZO1l3+5MLoyHKijzjn9q3ut+rXxQi4prif6DJH9AOWU6oEIxVlsbo3RETjMioaIAMVRyr+V+6d1LnaPYG9FmLSAQ1ikDr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203080; c=relaxed/simple;
-	bh=P74Kr09vSG4FFrB2WH7181PErkyql8BJ0IaByiMTclw=;
+	s=arc-20240116; t=1789203084; c=relaxed/simple;
+	bh=X/9g9ie73ZezyOiq2N1FWExv8a70iM1jX92NSMFDy4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cSEHB78iLbi3iI6We5mbc/OZzKRwe5KHiBxbDiOojjzu795jx1wM9NWAMvxQ+DKBSEqxJmlJzTlAGisqO2xORLA3oxzzFU/ajkesqWBYji+FDUjyRZLfIknqhoJTF3M0DqrxEQLOEK9L/pk8X8b7LYDd30xmcgPGhEXBSCIq07I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YO9Ulptn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DUvjEwyLank7ydLQft0XbEuGAjxJadAyvHagOS/AmEzmVexNLct5Uuo1ica4z2FhCASQHH3Kk0N74wlYb7C64XnGseazFYT+UPFpIVzV5vS7FX+zku1IWcs92tA4ZxLLfsWwiTBt73THUFrXzFYgduQ+QpQfcS10XPxronE0XHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+sIPfh7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YO9Ulptn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36571F000FF;
-	Sat, 12 Sep 2026 08:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+sIPfh7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D0A1F000FF;
+	Sat, 12 Sep 2026 08:51:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203078;
-	bh=N4O1fFGatgiflH55i3FxwCRwKDtttz8MzaPrrdwllU0=;
+	s=korg; t=1789203083;
+	bh=iQqosGRkuRRMQgEO/tTlPfwfoA+SenB9FiDaA6OeUa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YO9UlptnBdx+/EiOTULlIKi1NwMrwp4KkkK/BX+BJDBLytgToJou7cuLCsKLnQd2W
-	 3vx6HSlu6lND0ta1kpky2iBbtPgzrP40Ee+/2Icb5U8vH5QbuQA20AiN13bQEkx+Ao
-	 NAqe4rcBjwk3k3NHsA+b+inGYkdKsXoOlJYL+w64=
+	b=H+sIPfh7UP1e2l+RIbfvnL0934VRcFf1tkAgo1O5vMkY0TO0OFD2AKTmHnCpgZVKR
+	 M38fE8m87ys0i6x2E1HdAMN3+VzzctDo85iuxHhR7KKm9mrUg08KaTrNVQKCexwKEM
+	 MxePu6yDjrVjAKgOmGXIFfxT7/yjj30hR/0xagro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Vladimir Murzin <vladimir.murzin@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Babanpreet Singh <bbnpreetsingh@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1336/1815] arm64: entry: Avoid unnecessary local_irq_disable() on kernel exit
-Date: Sat, 12 Sep 2026 08:51:26 +0200
-Message-ID: <20260912065720.385829440@linuxfoundation.org>
+Subject: [PATCH 7.2 1337/1815] spi: sprd-adi: Fix probe succeeding without registering the controller
+Date: Sat, 12 Sep 2026 08:51:27 +0200
+Message-ID: <20260912065720.408436703@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,111 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Murzin <vladimir.murzin@arm.com>
+From: Babanpreet Singh <bbnpreetsingh@gmail.com>
 
-[ Upstream commit 39aebe0e89469c2904e60b1e977e0d4dbf33326b ]
+[ Upstream commit f092e1c935015ee0a0fea1a0374f4cab7b71953c ]
 
-Currently, when exiting to kernel mode, we attempt involuntary
-preemption. The preemption logic expects IRQs to be disabled, which is
-why we call local_irq_disable() before attempting preemption.
+With CONFIG_HWSPINLOCK=n the of_hwspin_lock_get_id() stub returns 0
+unconditionally. In sprd_adi_probe() the guard
 
-However, depending on the context, local_irq_disable() may be
-unnecessary:
+	if (ret > 0 || (IS_ENABLED(CONFIG_HWSPINLOCK) && ret == 0))
 
-- __el1_irq(), the non-NMI EL1 IRQ path, already has IRQs disabled, so
-  local_irq_disable() is redundant.
+is false for that 0, so it takes the else branch, where the switch has no
+case for 0 and lands in
 
-- irqentry_exit_to_kernel_mode_preempt() immediately returns when
-  exiting from an NMI-like context, so calling local_irq_disable()
-  beforehand is unnecessary work.
+	default:
+		return dev_err_probe(&pdev->dev, ret, "failed to find hwlock id\n");
 
-Furthermore, it confuses the pNMI state tracking when we are in a
-context with interrupts disabled and the GIC_PRIO_PSR_I_SET bit is set
-in the PMR, leading to a warning when
-CONFIG_ARM64_DEBUG_PRIORITY_MASKING=y:
+dev_err_probe() returns its err argument unchanged, so probe logs
+"failed to find hwlock id" and then returns 0, reporting success.
+sprd_adi_hw_init(), the restart handler and devm_spi_register_controller()
+are all skipped: the device binds but no SPI controller is ever
+registered.
 
-     WARNING: ./arch/arm64/include/asm/irqflags.h:63 at arm64_exit_to_kernel_mode+0xb8/0xc0, CPU#40: retsnoop/31805
-     CPU: 40 UID: 0 PID: 31805 Comm: retsnoop Not tainted 7.2.0-rc6-next-20260805 #7 PREEMPTLAZY
-     pstate: 234013c9 (nzCv DAIF +PAN -UAO +TCO +DIT +SSBS BTYPE=--)
-     pc : arm64_exit_to_kernel_mode (arch/arm64/kernel/entry-common.c:63)
-     lr : el1_abort (arch/arm64/kernel/entry-common.c:323)
-     pmr: 000000f0
-     Call trace:
-      arm64_exit_to_kernel_mode (arch/arm64/kernel/entry-common.c:63) (P)
-      el1_abort (arch/arm64/kernel/entry-common.c:323)
-      el1h_64_sync_handler (arch/arm64/kernel/entry-common.c:449)
-      el1h_64_sync (arch/arm64/kernel/entry.S:589)
-      [...]
+The hardware spinlock is optional for this controller and the -ENOENT arm
+already covers "no hardware spinlock supplied". Treat the stub's 0 the
+same way and continue without a lock; all four users of sadi->hwlock
+already test it for NULL.
 
-Split arm64_exit_to_kernel_mode() into preempt, non-preempt, and
-dispatch parts so that we can avoid this extra work where it is not
-needed and avoid breaking the pNMI tracking logic.
+This is not reachable on production kernels. Kconfig has
 
-Reported-by: Breno Leitao <leitao@debian.org>
-Fixes: ae654112eac0 ("arm64: entry: Use split preemption logic")
-Link: https://lore.kernel.org/all/20260807-arm64_fix-v1-1-d069ccf9d71b@debian.org/
-Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Vladimir Murzin <vladimir.murzin@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+	depends on HWSPINLOCK || (COMPILE_TEST && !HWSPINLOCK)
+
+so the affected configuration exists only under COMPILE_TEST, where no
+real hardware is present.
+
+Found by smatch:
+drivers/spi/spi-sprd-adi.c:560 sprd_adi_probe() warn: passing zero to 'dev_err_probe'
+
+Fixes: f9adf61e983f ("spi: sprd: adi: Change hwlock to be optional")
+Assisted-by: Claude:claude-opus-5
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
+Link: https://patch.msgid.link/20260729053543.7-1-bbnpreetsingh@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/entry-common.c | 30 +++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ drivers/spi/spi-sprd-adi.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm64/kernel/entry-common.c b/arch/arm64/kernel/entry-common.c
-index ceb4eb11232a6..bda824628a20e 100644
---- a/arch/arm64/kernel/entry-common.c
-+++ b/arch/arm64/kernel/entry-common.c
-@@ -52,16 +52,36 @@ static noinstr irqentry_state_t arm64_enter_from_kernel_mode(struct pt_regs *reg
-  * After this function returns it is not safe to call regular kernel code,
-  * instrumentable code, or any code which may trigger an exception.
-  */
--static void noinstr arm64_exit_to_kernel_mode(struct pt_regs *regs,
--					      irqentry_state_t state)
-+static void noinstr __arm64_exit_to_kernel_mode(struct pt_regs *regs,
-+						irqentry_state_t state)
- {
--	local_irq_disable();
--	irqentry_exit_to_kernel_mode_preempt(regs, state);
- 	local_daif_mask();
- 	mte_check_tfsr_exit();
- 	irqentry_exit_to_kernel_mode_after_preempt(regs, state);
- }
- 
-+/*
-+ * We are returning from the context which allows involuntary kernel preemption
-+ */
-+static void noinstr arm64_exit_to_kernel_mode_preempt(struct pt_regs *regs,
-+						      irqentry_state_t state)
-+{
-+	irqentry_exit_to_kernel_mode_preempt(regs, state);
-+	__arm64_exit_to_kernel_mode(regs, state);
-+}
-+
-+static void noinstr arm64_exit_to_kernel_mode(struct pt_regs *regs,
-+					      irqentry_state_t state)
-+{
-+	if (!regs_irqs_disabled(regs)) {
-+		local_irq_disable();
-+		arm64_exit_to_kernel_mode_preempt(regs, state);
-+		return;
-+	}
-+
-+	__arm64_exit_to_kernel_mode(regs, state);
-+}
-+
- static __always_inline void arm64_syscall_enter_from_user_mode(struct pt_regs *regs)
- {
- 	enter_from_user_mode(regs);
-@@ -509,7 +529,7 @@ static __always_inline void __el1_irq(struct pt_regs *regs,
- 	do_interrupt_handler(regs, handler);
- 	irq_exit_rcu();
- 
--	arm64_exit_to_kernel_mode(regs, state);
-+	arm64_exit_to_kernel_mode_preempt(regs, state);
- }
- static void noinstr el1_interrupt(struct pt_regs *regs,
- 				  void (*handler)(struct pt_regs *))
+diff --git a/drivers/spi/spi-sprd-adi.c b/drivers/spi/spi-sprd-adi.c
+index e7d83c16b46c0..a6baaf02b3c86 100644
+--- a/drivers/spi/spi-sprd-adi.c
++++ b/drivers/spi/spi-sprd-adi.c
+@@ -553,6 +553,12 @@ static int sprd_adi_probe(struct platform_device *pdev)
+ 			return -ENXIO;
+ 	} else {
+ 		switch (ret) {
++		case 0:
++			/*
++			 * Only reachable with CONFIG_HWSPINLOCK=n, where the
++			 * of_hwspin_lock_get_id() stub returns 0.
++			 */
++			fallthrough;
+ 		case -ENOENT:
+ 			dev_info(&pdev->dev, "no hardware spinlock supplied\n");
+ 			break;
 -- 
 2.53.0
 
