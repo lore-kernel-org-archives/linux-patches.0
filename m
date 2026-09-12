@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF63B3839B8;
-	Sat, 12 Sep 2026 08:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632DF367B60;
+	Sat, 12 Sep 2026 08:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200810; cv=none; b=bk3Ztezs7xVjfrD04KvtjIM6KzUQvv5f25QLC6gFRLiIKH4LpiHMvKfTp1mBYrjZGFWE72nApJNq0RnExTYeN6ifAvQBKwfPXYNT1N4yOR1ypuWxmyVGDaGUoutXddAwtzr2P4JDDwZ04tm7QBO1cWCxI98wLrX2uCttbEhlFWM=
+	t=1789200813; cv=none; b=MTk7FrjHg67mQHQXovbHBQBNSRFonBbjBhBRwP+TtG+10Iq05sXDNRkD+pmAW0/xEC8mZ/QZhoPwYdXwx6nEXWf6dN1WwXNfEuaTEq+ISeOSKNI8U27ofkau0YBJAJTDx6jQ1S76SHVnYiL6+/wjj507WbcI/nJE/RjaBJ9LgSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200810; c=relaxed/simple;
-	bh=GPPDfMUbKyVq7uELMiSUwQJcY5yZS3fJGVz5CA0OQio=;
+	s=arc-20240116; t=1789200813; c=relaxed/simple;
+	bh=Xf3OXB3QRg001hx3jCvMCoJ+sQSs47ifG7RFReWK4FY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O23ZWS8ULo2QJaulCytmC7HOraMRHacdw6Pc9p0XzllWTW2K9+k83wDtb6IlyFwrg3kaf/DayBQxv7ayPDQPAKw6Oe2pExeeV38/PbEBuH+PcpTQ2ZV0+g0mtY7LdTkFXEmfTh6encgLW6jni4NZgooKLxDMpIIe/S//S/z2c+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wi2YDjIg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PjRWgm2MnzUXOhzBnmU0TeVcXsmHCRebJWS06ewHyfzAW3yo9kvJhESlHKdOuc8zJEwE4AqLyd6mmuQqvk5xeBomM/Cwacw8MlNhUYwzL6wu0L4LGy/9ZnPTss0xF2nUt1xoxLfv6zSSPYiDF0cl22djzO8kSj83mb4Rw/XZHj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CYqp0GS/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wi2YDjIg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905E61F000FF;
-	Sat, 12 Sep 2026 08:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYqp0GS/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E3D1F000FF;
+	Sat, 12 Sep 2026 08:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200807;
-	bh=mCDQRd8z8RpTOEtHGvuKKqtv2gLSKQ1Pf7lxvV63Y+s=;
+	s=korg; t=1789200812;
+	bh=UHEgZaBmpG7NHOQGYq+YMsU2ribgu4FKWptZybMYDsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wi2YDjIgD0zxkGRTnl1TJQU/qv8Hh//AZ1oVwOl/1sMU3fI11qlC2ES8cIO0iLcg5
-	 nsl80aIbb4CNazVjIyhPch0qBACO32KaJ2maW1+/Voxbx5U5WY4AUjGE5jyRSRVle8
-	 htRjvqHMcz1UjaOTYxhDTnq/y/J6/Rbfy/Q9fftM=
+	b=CYqp0GS/XC2duFhNwzzvrAbmeZ5SswlqgjTYKKfBhDwWjVC9EjCUKCTZ038WT10Fb
+	 yp1DpU/Kfd4ZUpmEYwRvTFMXUnycLIqSw0VG+Q3X6/q7OzsjtX48frHuwY8Xi1qst2
+	 /m/hesgoemyonaJWpKQHTZgO+ejEbdz+MtDVv9NU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stella Liu <yu-ching.liu@mediatek.com>,
-	Jeremy Yu <chengwei.yu@mediatek.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0864/1815] wifi: mt76: connac: add NAN connection type
-Date: Sat, 12 Sep 2026 08:43:34 +0200
-Message-ID: <20260912065709.205865531@linuxfoundation.org>
+Subject: [PATCH 7.2 0824/1815] arm64: dts: qcom: eliza: Add fallback compatible for ADSP remoteproc
+Date: Sat, 12 Sep 2026 08:42:54 +0200
+Message-ID: <20260912065708.257575579@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,104 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Wang <sean.wang@mediatek.com>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit b7ab9f780dc8f6cc9ce30333e9f131ed3419c6b3 ]
+[ Upstream commit b589944ecd95fe4a51bc2aab13ce83b298b7bcc8 ]
 
-Introduce a dedicated NAN connection type for connac firmware and use it
-for NAN interface device, BSS and station records.
+The ADSP found on Eliza SoC is actually fully compatible with the ones
+from SM8750 class. So add the SM8550 compatible as fallback, just like
+the rest from the SM8750 class SoCs.
 
-Add the common NAN MCU command and event IDs used by mt7925.
-
-Co-developed-by: Stella Liu <yu-ching.liu@mediatek.com>
-Signed-off-by: Stella Liu <yu-ching.liu@mediatek.com>
-Co-developed-by: Jeremy Yu <chengwei.yu@mediatek.com>
-Signed-off-by: Jeremy Yu <chengwei.yu@mediatek.com>
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Link: https://patch.msgid.link/20260625001834.475094-4-sean.wang@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Stable-dep-of: 217f9e7bb025 ("wifi: mt76: mt792x: fix use-after-free in mt76_rx_poll_complete")
+Fixes: 88ddafb01ec0 ("arm64: dts: qcom: eliza: Describe the ADSP and USB related nodes")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260722-dts-qcom-eliza-fix-adsp-binding-v2-2-e1e98ae15533@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt76_connac_mcu.c   | 14 ++++++++++++++
- .../net/wireless/mediatek/mt76/mt76_connac_mcu.h   |  4 ++++
- 2 files changed, 18 insertions(+)
+ arch/arm64/boot/dts/qcom/eliza.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-index 58b0b15e4fd6f..69a2f5398404d 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-@@ -422,6 +422,10 @@ void mt76_connac_mcu_sta_basic_tlv(struct mt76_dev *dev, struct sk_buff *skb,
- 		basic->conn_type = cpu_to_le32(CONNECTION_IBSS_ADHOC);
- 		basic->aid = cpu_to_le16(link_sta->sta->aid);
- 		break;
-+	case NL80211_IFTYPE_NAN:
-+	case NL80211_IFTYPE_NAN_DATA:
-+		basic->conn_type = cpu_to_le32(CONNECTION_NAN);
-+		break;
- 	default:
- 		WARN_ON(1);
- 		break;
-@@ -1217,6 +1221,11 @@ int mt76_connac_mcu_uni_add_dev(struct mt76_phy *phy,
- 	case NL80211_IFTYPE_ADHOC:
- 		basic_req.basic.conn_type = cpu_to_le32(CONNECTION_IBSS_ADHOC);
- 		break;
-+	case NL80211_IFTYPE_NAN:
-+	case NL80211_IFTYPE_NAN_DATA:
-+		basic_req.basic.conn_type = cpu_to_le32(CONNECTION_NAN);
-+		basic_req.basic.conn_state = !enable;
-+		break;
- 	default:
- 		WARN_ON(1);
- 		break;
-@@ -1627,6 +1636,11 @@ int mt76_connac_mcu_uni_add_bss(struct mt76_phy *phy,
- 	case NL80211_IFTYPE_ADHOC:
- 		basic_req.basic.conn_type = cpu_to_le32(CONNECTION_IBSS_ADHOC);
- 		break;
-+	case NL80211_IFTYPE_NAN:
-+	case NL80211_IFTYPE_NAN_DATA:
-+		basic_req.basic.conn_type = cpu_to_le32(CONNECTION_NAN);
-+		basic_req.basic.active = enable;
-+		break;
- 	default:
- 		WARN_ON(1);
- 		break;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
-index 78f633ad81a07..a9a4a87ae0a76 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
-@@ -876,6 +876,7 @@ enum {
- #define NETWORK_P2P			BIT(17)
- #define NETWORK_IBSS			BIT(18)
- #define NETWORK_WDS			BIT(21)
-+#define NETWORK_NAN			BIT(22)
+diff --git a/arch/arm64/boot/dts/qcom/eliza.dtsi b/arch/arm64/boot/dts/qcom/eliza.dtsi
+index 2e9f5aa092cc2..8fa69be150508 100644
+--- a/arch/arm64/boot/dts/qcom/eliza.dtsi
++++ b/arch/arm64/boot/dts/qcom/eliza.dtsi
+@@ -1967,7 +1967,7 @@ tcsr: clock-controller@1fbf000 {
+ 		};
  
- #define SCAN_FUNC_RANDOM_MAC		BIT(0)
- #define SCAN_FUNC_RNR_SCAN		BIT(3)
-@@ -888,6 +889,7 @@ enum {
- #define CONNECTION_IBSS_ADHOC		(STA_TYPE_ADHOC | NETWORK_IBSS)
- #define CONNECTION_WDS			(STA_TYPE_WDS | NETWORK_WDS)
- #define CONNECTION_INFRA_BC		(STA_TYPE_BC | NETWORK_INFRA)
-+#define CONNECTION_NAN			(NETWORK_NAN)
+ 		remoteproc_adsp: remoteproc@3000000 {
+-			compatible = "qcom,eliza-adsp-pas";
++			compatible = "qcom,eliza-adsp-pas", "qcom,sm8550-adsp-pas";
+ 			reg = <0x0 0x03000000 0x0 0x10000>;
  
- #define CONN_STATE_DISCONNECT		0
- #define CONN_STATE_CONNECT		1
-@@ -1074,6 +1076,7 @@ enum {
- 	MCU_UNI_EVENT_THERMAL = 0x35,
- 	MCU_UNI_EVENT_RSSI_MONITOR = 0x41,
- 	MCU_UNI_EVENT_NIC_CAPAB = 0x43,
-+	MCU_UNI_EVENT_NAN = 0x56,
- 	MCU_UNI_EVENT_WED_RRO = 0x57,
- 	MCU_UNI_EVENT_PER_STA_INFO = 0x6d,
- 	MCU_UNI_EVENT_ALL_STA_INFO = 0x6e,
-@@ -1313,6 +1316,7 @@ enum {
- 	MCU_UNI_CMD_FIXED_RATE_TABLE = 0x40,
- 	MCU_UNI_CMD_RSSI_MONITOR = 0x41,
- 	MCU_UNI_CMD_TESTMODE_CTRL = 0x46,
-+	MCU_UNI_CMD_NAN	= 0x56,
- 	MCU_UNI_CMD_RRO = 0x57,
- 	MCU_UNI_CMD_OFFCH_SCAN_CTRL = 0x58,
- 	MCU_UNI_CMD_PER_STA_INFO = 0x6d,
+ 			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
 -- 
 2.53.0
 
