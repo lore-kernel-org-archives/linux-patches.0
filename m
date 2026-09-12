@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B522C340400;
-	Sat, 12 Sep 2026 14:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EAA23BD03;
+	Sat, 12 Sep 2026 14:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221848; cv=none; b=AzvFQEXVYpX7t042s0SWbk+OtWfbB4AWXOB0j5jhy7YmXeRXdjy+/pFBNSxyfnTz7RYB9EZMP9wpFgYco9fY3BqI9oOt/PB72tilxZdKA8Pbc1GkpvSi7FYIyyXJ81KbQ9dxdqdDPR0o2pT0hb1h5O4Q4uhrveB8NjqsK388lYE=
+	t=1789221852; cv=none; b=bRpoWxZUt62UCRy78xOvpqCrGmCrX+IvW2g4R59ik+51DSri1MOSvyV94Z3iVr2dt02OjaCwOI0JmWux0TK4AZXBvFO6A2cZIF+GTwnUzAvmf8OwE8lFc8D0aARlbAnpE1jZ4lsTeglvfvERfmt3g34O0UukbqvYf6gH0cTRV8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221848; c=relaxed/simple;
-	bh=d2Yt2bQs9vLzbx/u62Zdb0ut54oQabQ4Yo9BpwYn3Dw=;
+	s=arc-20240116; t=1789221852; c=relaxed/simple;
+	bh=8KGkHUnMjOyvpZcOldgz0l0xhaC/cKNNqCMnCWn6vbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TtCWJig4y6JI+nS/J1mvCEn3tfv4cMCV14EoKuaDZwmXN5GUjJpmco8oM0CNjABYEcHw9SB17HuKeCNvp89sjXIa4YeziA5E2wcO6sTCPE4FNh0ysebRlVsuYjE7dTCYKPdIJkwVl3J802f61uIxWWcK4EFq0Fh88e2qFfJZpSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJcGXrnH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DXpoMgUr3oNuSX/96GNdf4OqvmZ3mHxHzinNmaWS0Sd19JBEPWrX3O5fJlpTNhlpc6GjIlpnAV9jfkbr4OK0UcOKEmjFenR/f6bGaGiuG6d/1rg7eOe/VCXqjbrzAE6SD4bPrdwYyi0Ol5nNhTiapNhY2YPGAjDvW9v51NxHBTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyizRxDj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJcGXrnH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB05F1F000FF;
-	Sat, 12 Sep 2026 14:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyizRxDj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF581F000FF;
+	Sat, 12 Sep 2026 14:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221846;
-	bh=K4pLb1OjWhBCiE0r8fyYX3aTlKOVr6RemZuK1ErPGsY=;
+	s=korg; t=1789221851;
+	bh=u17/bJJJhEpJ1f2NwSgR2LZqYSaCV5dMWY7u+OrbA+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nJcGXrnHTfRUOulHSsHjdAwVVnh7vD2MJuqiy3TVRN0p7+74OUr9y/XxQi+yvYnXa
-	 2IkxqYKd2aJLM699Atg0wY/odNq2apUwCdtikeDGIyInW2ceBE1XOhSLYzHe4wDZAy
-	 5a8f1UhG6eGWRL/HLBydeE+JVnB7TVuiixXNz2/I=
+	b=fyizRxDjo5+6k9BeQ/YuHvzb+60bo2YuLkG3R1QCMUOOC+1sPAdDfe5UMm1ZuVA2X
+	 nmziV4obyEnp/04IOrd2c+0IgNvNKL+6MTBoUgwrKOVLidz3ekzoCYZDx6FfBgW8l9
+	 zB1m6AWwsM5Nqna76zlqAafP7Y7cHLrX/PFm2NOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.6 0439/1424] LoongArch: Do not save/restore percpu base register in rethook trampoline
-Date: Sat, 12 Sep 2026 08:47:51 +0200
-Message-ID: <20260912065617.116121908@linuxfoundation.org>
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 0466/1424] media: v4l2-ctrls: Allow unknown HDR10 white point and luminance
+Date: Sat, 12 Sep 2026 08:48:18 +0200
+Message-ID: <20260912065617.723021959@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,70 +50,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Guan <guanwentao@uniontech.com>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-commit c3f2feace5e4f4b01b68b9f947b19adb4155c32e upstream.
+commit 49af0c7cad889f7dabe5cf080b019392066122a3 upstream.
 
-The rethook trampoline saves $r21 ($u0), the percpu base, into its frame
-at entry and restores it at exit. Inbetween rethook_trampoline_handler()
-may schedule via preempt_enable_notrace().
+SMPTE ST 2086 defines the nominal ranges for mastering display
+chromaticity and luminance values. Its Annex A also documents that
+CTA 861-G uses zero maximum and minimum luminance values to signal
+that the corresponding values are unknown, and the xy chromaticity
+coordinate (0, 0) to signal that the white point chromaticity is
+unknown.
 
-If the task migrates to another CPU, the frame's $r21 holds the old
-CPU's percpu base, and restoring it poisons $r21 on the new CPU. Until
-the next user->kernel transition heals $r21, all this_cpu_*() accesses
-(runqueues, RCU per-CPU data, timer tick programming, FPU ownership)
-hit the wrong CPU's percpu area.
+The V4L2 HDR10 mastering display compound control currently rejects
+these values. Consequently, an unknown white point or luminance value
+prevents the entire compound control from being updated, making the
+other valid mastering display metadata unavailable to userspace.
 
-Under kretprobe-heavy preemptible load this can corrupt scheduler and
-timer state: scheduling-while-atomic splats, wrong-CPU RCU warnings,
-WARN_ON_ONCE(rq != this_rq()) in nohz_balance_exit_idle(), and CPUs
-parking in the idle loop with the constant timer never re-armed (hard
-lockup). Reproduces on a Loongson-3A6000 with kretprobes on VFS paths
-plus heavy file churn (OS install / unsquashfs).
+Accept (0, 0) as an unknown white point and zero as an unknown maximum
+or minimum mastering luminance. Continue to reject partially zero white
+point coordinates and non-zero values outside the nominal ranges.
+Display primary validation remains unchanged.
 
-By convention $r21 always holds the current CPU's percpu base in kernel
-mode: SAVE_SOME() at exception entry reloads it only when coming from
-user mode, and RESTORE_SOME() restores it only when returning to user
-mode; the context-switch path never writes it. Therefore the live $r21
-at trampoline exit is already correct, and nothing inbetween can change
-it legitimately (kernel C code cannot write a global register variable).
-The same flaw existed even in the pre-rethook kretprobe trampoline since
-v6.3; it was carried over when rethook replaced it. Drop both the save
-and the restore here. Drop the restore is enough to solve the issue, and
-drop the save is to keep the code tidy and no need to clear it.
+Document the newly accepted unknown values in the V4L2 userspace API.
 
-Cc: stable@vger.kernel.org # v6.3+
-Fixes: 3f5536860086d ("LoongArch: Add kretprobes support")
-Assisted-by: Kimi:Kimi-K3 # debug and root-cause analysis
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 1ad0de78e794 ("media: v4l: Add HDR10 static metadata controls")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/rethook_trampoline.S | 2 --
- 1 file changed, 2 deletions(-)
+ Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst |   12 ++
+ drivers/media/v4l2-core/v4l2-ctrls-core.c                       |   49 ++++++----
+ 2 files changed, 44 insertions(+), 17 deletions(-)
 
-diff --git a/arch/loongarch/kernel/rethook_trampoline.S b/arch/loongarch/kernel/rethook_trampoline.S
-index 2e009fbea53f..160189444684 100644
---- a/arch/loongarch/kernel/rethook_trampoline.S
-+++ b/arch/loongarch/kernel/rethook_trampoline.S
-@@ -24,7 +24,6 @@
- 	cfi_st	t6, PT_R18
- 	cfi_st	t7, PT_R19
- 	cfi_st	t8, PT_R20
--	cfi_st	u0, PT_R21
- 	cfi_st	fp, PT_R22
- 	cfi_st	s0, PT_R23
- 	cfi_st	s1, PT_R24
-@@ -59,7 +58,6 @@
- 	cfi_ld	t6, PT_R18
- 	cfi_ld	t7, PT_R19
- 	cfi_ld	t8, PT_R20
--	cfi_ld	u0, PT_R21
- 	cfi_ld	fp, PT_R22
- 	cfi_ld	s0, PT_R23
- 	cfi_ld	s1, PT_R24
--- 
-2.55.0
-
+--- a/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
++++ b/Documentation/userspace-api/media/v4l/ext-ctrls-colorimetry.rst
+@@ -79,15 +79,25 @@ Colorimetry Control IDs
+       - ``white_point_x``
+       - Specifies the normalized x chromaticity coordinate of the white
+         point of the mastering display in increments of 0.00002.
++        When both ``white_point_x`` and ``white_point_y`` are zero,
++        the white point chromaticity is unknown. If either coordinate is
++        non-zero, both coordinates shall be within their valid ranges.
+     * - __u16
+       - ``white_point_y``
+       - Specifies the normalized y chromaticity coordinate of the white
+         point of the mastering display in increments of 0.00002.
++        When both ``white_point_x`` and ``white_point_y`` are zero,
++        the white point chromaticity is unknown. If either coordinate is
++        non-zero, both coordinates shall be within their valid ranges.
+     * - __u32
+       - ``max_luminance``
+       - Specifies the nominal maximum display luminance of the mastering
+         display in units of 0.0001 cd/m\ :sup:`2`.
++        A value of zero indicates that the nominal maximum display
++        luminance is unknown.
+     * - __u32
+       - ``min_luminance``
+-      - specifies the nominal minimum display luminance of the mastering
++      - Specifies the nominal minimum display luminance of the mastering
+         display in units of 0.0001 cd/m\ :sup:`2`.
++        A value of zero indicates that the nominal minimum display
++        luminance is unknown.
+--- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+@@ -1130,24 +1130,41 @@ static int std_validate_compound(const s
+ 				return -EINVAL;
+ 		}
+ 
+-		if (p_hdr10_mastering->white_point_x <
+-			V4L2_HDR10_MASTERING_WHITE_POINT_X_LOW ||
+-		    p_hdr10_mastering->white_point_x >
+-			V4L2_HDR10_MASTERING_WHITE_POINT_X_HIGH ||
+-		    p_hdr10_mastering->white_point_y <
+-			V4L2_HDR10_MASTERING_WHITE_POINT_Y_LOW ||
+-		    p_hdr10_mastering->white_point_y >
+-			V4L2_HDR10_MASTERING_WHITE_POINT_Y_HIGH)
++		/*
++		 * SMPTE ST 2086 Annex A documents that CTA 861-G uses
++		 * (0, 0) to indicate that the white point chromaticity
++		 * is unknown.
++		 */
++		if (p_hdr10_mastering->white_point_x ||
++		    p_hdr10_mastering->white_point_y) {
++			if (p_hdr10_mastering->white_point_x <
++				V4L2_HDR10_MASTERING_WHITE_POINT_X_LOW ||
++			    p_hdr10_mastering->white_point_x >
++				V4L2_HDR10_MASTERING_WHITE_POINT_X_HIGH ||
++			    p_hdr10_mastering->white_point_y <
++				V4L2_HDR10_MASTERING_WHITE_POINT_Y_LOW ||
++			    p_hdr10_mastering->white_point_y >
++				V4L2_HDR10_MASTERING_WHITE_POINT_Y_HIGH)
++				return -EINVAL;
++		}
++
++		/*
++		 * SMPTE ST 2086 Annex A documents that CTA 861-G uses zero
++		 * maximum and minimum luminance values to indicate that
++		 * the corresponding values are unknown.
++		 */
++		if (p_hdr10_mastering->max_display_mastering_luminance &&
++		    (p_hdr10_mastering->max_display_mastering_luminance <
++				V4L2_HDR10_MASTERING_MAX_LUMA_LOW ||
++		     p_hdr10_mastering->max_display_mastering_luminance >
++				V4L2_HDR10_MASTERING_MAX_LUMA_HIGH))
+ 			return -EINVAL;
+ 
+-		if (p_hdr10_mastering->max_display_mastering_luminance <
+-			V4L2_HDR10_MASTERING_MAX_LUMA_LOW ||
+-		    p_hdr10_mastering->max_display_mastering_luminance >
+-			V4L2_HDR10_MASTERING_MAX_LUMA_HIGH ||
+-		    p_hdr10_mastering->min_display_mastering_luminance <
+-			V4L2_HDR10_MASTERING_MIN_LUMA_LOW ||
+-		    p_hdr10_mastering->min_display_mastering_luminance >
+-			V4L2_HDR10_MASTERING_MIN_LUMA_HIGH)
++		if (p_hdr10_mastering->min_display_mastering_luminance &&
++		    (p_hdr10_mastering->min_display_mastering_luminance <
++				V4L2_HDR10_MASTERING_MIN_LUMA_LOW ||
++		     p_hdr10_mastering->min_display_mastering_luminance >
++				V4L2_HDR10_MASTERING_MIN_LUMA_HIGH))
+ 			return -EINVAL;
+ 
+ 		/* The following restriction comes from ITU-T Rec. H.265 spec */
 
 
