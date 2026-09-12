@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7EA6386562;
-	Sat, 12 Sep 2026 15:09:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D166738DC7F;
+	Sat, 12 Sep 2026 15:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225759; cv=none; b=g2ptMRMKr8k2hQ9f7/fr+0bioAvOdePaLHcEWmg7xeZmuiwXruu1SWh65oDzfsxZlqJ02PKf+drZKyCGV8HDhgHYhJsw+GedO9auLKr3WA+VM1DbwkU9oTSFa7JFpHqeCh1ALjtp5XcF+3FpHpVfbsS25iaieO0r/ufe0fXf6Vc=
+	t=1789225763; cv=none; b=FP8LIZJLGhnM9N4c2qK2/4RTOmse0U4o5IA6fL8ahmSmo9h6oQ2NGpmqawFePhX0dTaIdJBikp/8TEiLwpaQvC7wQOy64QnAy0kdT0b1edcHkCCPi24PzFIIPQIXHPqqI80xhBRJ2EAFQMiGGZO7vLI7n0LlaF2OLI5P9OUSf64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225759; c=relaxed/simple;
-	bh=sIMQ80m8mdNAn4CqUPO4XgHIZ9Hl94FblVo0uOfPl5I=;
+	s=arc-20240116; t=1789225763; c=relaxed/simple;
+	bh=hauq5Lofn9PnLmrlFx9grf4KWfg1NhzNHFjxmzbt7uU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APKraQMQYRqYgfz4+7nBxw7t04uQ1R2Xg8D8u6BTdMs/2B9DHCYsEIaOcS41r3m090xkf9H/lDmc960dpsoHdsovCcB1kQdM8+LnRVceJtDXw84uw8ynssGY+VtgmiHt/IXv723c7LpuvcExkP0v2Ngnm56s7hiHnSBgciC4/3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muOOm8Md; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rEPpbN6awYaPPVasf5IB6ayjT3SvNKXdHBxZjSCt7rYzPkpiPQqcWMn1shemvy269Vb52fvk46h9BcvoQ9q+kP97Nl5stoUC64ljExtB69BTLFF7w0upgDlGHTN2AFSw5vsXk45Q8IgRK9xiUgHF67H0F34mIKQCz/TBHHmHceI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrjTueHV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muOOm8Md"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 371B41F000FF;
-	Sat, 12 Sep 2026 15:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrjTueHV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E671F00893;
+	Sat, 12 Sep 2026 15:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225754;
-	bh=5uioQMeAzP7pwpg9rmTuv/cZROx6XQqV9Tt5cQ2Vipw=;
+	s=korg; t=1789225759;
+	bh=Tssqmk7HRBWNQSIEqEoJuhx67Fp3fmUv4HFKOVfuzT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=muOOm8MdEt5JG32B8tGpICM17vT4B+jI4F5/+WOSvwvgH61VPbNt/2FnOQx7OtnuU
-	 yjGRXtZpWefVWi5Bcs5Fsq6Ap5JzurU4jybR5GvuFFcPqzpWj5MEan045ftl6BkVbU
-	 nxfvQYdKHEgIdAGQdJ/2ZBqXx2kNEs+oBvUCldbQ=
+	b=IrjTueHVb71l4F3Pk5uxruMebTdyzAKOc0JQFd/aT7CYZifJ7lG7k5KBvLpvF6lYD
+	 Ga58qvtUizhpV9puEYwEpChDqNWWNy9WzKvtlFMlA0mekuwfNrTX8gg95MOZO+kmKs
+	 KF3s0wANVsNWlZDv/NA43CsEwGE8oSGUOlWG8JRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Carter Edwards <ethan@ethancedwards.com>,
+	Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1261/1424] clk: ti: use kcalloc() instead of kzalloc()
-Date: Sat, 12 Sep 2026 09:01:33 +0200
-Message-ID: <20260912065635.518814346@linuxfoundation.org>
+Subject: [PATCH 6.6 1262/1424] clk: ti: mux: resolve parent clocks by DT index, not by name
+Date: Sat, 12 Sep 2026 09:01:34 +0200
+Message-ID: <20260912065635.541918405@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,35 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Carter Edwards <ethan@ethancedwards.com>
+From: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
 
-[ Upstream commit de517118c5d3482411fd88141093fa838bc0af77 ]
+[ Upstream commit 667f420c09f1417c9f07798e32432c901915209d ]
 
-Use 2-factor multiplication argument form kcalloc() instead
-of kzalloc().
+Resolve parent clocks by their index into the device tree "clocks"
+property rather than matching names as strings. Name-based matching is
+fragile because a clock's "clock-output-names" value in its provider
+node can differ from the name used to reference it in a consumer node,
+and because names must be globally unique across all clock providers.
 
-Link: https://github.com/KSPP/linux/issues/162
-Signed-off-by: Ethan Carter Edwards <ethan@ethancedwards.com>
-Link: https://lore.kernel.org/r/xfjn4wqrhukvi45dkgkbulamq3242eijn7567vxwaxznh4ebdr@waat7u3l2mhi
+On AM335x, this caused broken clock trees where some clocks failed to
+enable because their parents could not be found.
+
+Replace of_clk_parent_fill() with a clk_parent_data array that sets
+.index to the array position.
+
+Fixes: ec7aa25fa483 ("ARM: dts: Use clock-output-names for am3")
+Signed-off-by: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Stable-dep-of: 667f420c09f1 ("clk: ti: mux: resolve parent clocks by DT index, not by name")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/ti/mux.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/ti/mux.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/clk/ti/mux.c b/drivers/clk/ti/mux.c
-index 1ebafa386be61..eaacd830523a2 100644
+index eaacd830523a2..3733480fccedb 100644
 --- a/drivers/clk/ti/mux.c
 +++ b/drivers/clk/ti/mux.c
-@@ -180,7 +180,7 @@ static void of_mux_clk_setup(struct device_node *node)
+@@ -119,7 +119,7 @@ const struct clk_ops ti_clk_mux_ops = {
+ };
+ 
+ static struct clk *_register_mux(struct device_node *node, const char *name,
+-				 const char * const *parent_names,
++				 const struct clk_parent_data *parent_data,
+ 				 u8 num_parents, unsigned long flags,
+ 				 struct clk_omap_reg *reg, u8 shift, u32 mask,
+ 				 s8 latch, u8 clk_mux_flags, u32 *table)
+@@ -136,7 +136,7 @@ static struct clk *_register_mux(struct device_node *node, const char *name,
+ 	init.name = name;
+ 	init.ops = &ti_clk_mux_ops;
+ 	init.flags = flags;
+-	init.parent_names = parent_names;
++	init.parent_data = parent_data;
+ 	init.num_parents = num_parents;
+ 
+ 	/* struct clk_mux assignments */
+@@ -167,24 +167,26 @@ static void of_mux_clk_setup(struct device_node *node)
+ 	struct clk *clk;
+ 	struct clk_omap_reg reg;
+ 	unsigned int num_parents;
+-	const char **parent_names;
++	struct clk_parent_data *parent_data;
+ 	const char *name;
+ 	u8 clk_mux_flags = 0;
+ 	u32 mask = 0;
+ 	u32 shift = 0;
+ 	s32 latch = -EINVAL;
+ 	u32 flags = CLK_SET_RATE_NO_REPARENT;
++	int i;
+ 
+ 	num_parents = of_clk_get_parent_count(node);
+ 	if (num_parents < 2) {
  		pr_err("mux-clock %pOFn must have parents\n", node);
  		return;
  	}
--	parent_names = kzalloc((sizeof(char *) * num_parents), GFP_KERNEL);
-+	parent_names = kcalloc(num_parents, sizeof(char *), GFP_KERNEL);
- 	if (!parent_names)
+-	parent_names = kcalloc(num_parents, sizeof(char *), GFP_KERNEL);
+-	if (!parent_names)
+-		goto cleanup;
++	parent_data = kcalloc(num_parents, sizeof(*parent_data), GFP_KERNEL);
++	if (!parent_data)
++		return;
+ 
+-	of_clk_parent_fill(node, parent_names, num_parents);
++	for (i = 0; i < num_parents; i++)
++		parent_data[i].index = i;
+ 
+ 	if (ti_clk_get_reg_addr(node, 0, &reg))
  		goto cleanup;
+@@ -207,7 +209,7 @@ static void of_mux_clk_setup(struct device_node *node)
+ 	mask = (1 << fls(mask)) - 1;
+ 
+ 	name = ti_dt_clk_name(node);
+-	clk = _register_mux(node, name, parent_names, num_parents,
++	clk = _register_mux(node, name, parent_data, num_parents,
+ 			    flags, &reg, shift, mask, latch, clk_mux_flags,
+ 			    NULL);
+ 
+@@ -215,7 +217,7 @@ static void of_mux_clk_setup(struct device_node *node)
+ 		of_clk_add_provider(node, of_clk_src_simple_get, clk);
+ 
+ cleanup:
+-	kfree(parent_names);
++	kfree(parent_data);
+ }
+ CLK_OF_DECLARE(mux_clk, "ti,mux-clock", of_mux_clk_setup);
  
 -- 
 2.53.0
