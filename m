@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3048472541;
-	Sat, 12 Sep 2026 11:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34AC37C118;
+	Sat, 12 Sep 2026 11:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211361; cv=none; b=tETkKVz6ENFt2JQhKJvRiM25fPE++nytbSkll5RJjZ5RU+c3bL2SfSlfiDQpDys6vacrua+X7rY+/GiDHB8ih3Bpf9LANoLWYmHgA/R6w/JNywAirBL441oQ1ze9DBgoK5fHUcQ/g9ljKLoy2Bi8IehxDPwVns+nYycAunLT93c=
+	t=1789211366; cv=none; b=O1WF1Hnf3wDjPLnARMNMaQT2nf0udthKudJurEq9evYpJWv4anFVZYEHJ2l5fQFDhf5HItTZsgoycUqbfw3j3KO29nZ0/bqBQoYJakWrm8LKTlwbzrKArhqTRoBzRqgPUyzXVujT/VzwF8IqhV5sdadpA1o72MEmXH3vBcgQK7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211361; c=relaxed/simple;
-	bh=yIO7yWcxBQJofZTjKdQwd3tyaxE6rrhrOPJ3+xFsjz4=;
+	s=arc-20240116; t=1789211366; c=relaxed/simple;
+	bh=m1y608Rkmr8sUlo+GaSV26T1Qu25tUSjreDVKNbkZVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SSRnt+aU+nIEQNuD2phgeTp+XlfXvQ67SYjt9nB4BoQzaDL0NhnBggBuY7TpTP/Ti/IHEbrPxplrte1L/i3kTwffGABaeyC9DuhuYjBd5OmLwtXy/+5RkrWQNkBJeFS5CbtCx1Gt9VYnHHACBobp9V2HuB/3/tGW32MKnYQ9Elg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0Pd8yJT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nvIF9CNLIMzN5O3Hm0e8ZJ0KlAMlgtcsG0n7plwijQq4yLSr1eGOoAauZ7piR8SETPeUPP0o2Di90YcZaByrAZTWp1aqfdd2RriRk6hYgPRRXr4S6YVDka+hnPy8wWguCTi0P/DcRfATvgvdU5JfaCm7uWS1dZ8gCxurIeQuyto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wYqZbrUU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0Pd8yJT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2371F000FF;
-	Sat, 12 Sep 2026 11:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wYqZbrUU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C8EA1F00898;
+	Sat, 12 Sep 2026 11:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211359;
-	bh=I0XNkJ4g7uDoqtwgumCVri9DUWi51hPRBncTTJ3FMCE=;
+	s=korg; t=1789211364;
+	bh=m0TZPi8C8taUNEjgzB9PlQknNOwUWM9RNOZNNDUIQKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M0Pd8yJTsrRt2rK7HArumwx+fi/amfV6RJ9SQmvwyF7Gi0aKluklz/dHMDA9evIaH
-	 SgCVxQb5EI/sowJU5OddIEliYW84KQ0JD5LUqhtPndMrIPcYvPXr3O53o0Wd0otVV3
-	 1VvWbWoS2e8ROgIvPBgaRzro15L7EW5n6rZI9Jdo=
+	b=wYqZbrUU9s+GhWz8a5tc/GaPFDQglVPTUXQOg+1mROLOZhfk6fSII+WfNHvBb54JL
+	 wVgdIeiNBQtJpwITx6O9gaJ9f3fwUgVqU4pajpMlqC8LGnqICKrOyuo48t1tZRLyKA
+	 NDzfeZMdvwwafAYuCMWV0414il1ltH9Uw0zAM4us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zizhi Wo <wozizhi@huawei.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
 	Nilay Shroff <nilay@linux.ibm.com>,
+	Bart Van Assche <bvanassche@acm.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1215/1518] null_blk: free global tag_set on init error path
-Date: Sat, 12 Sep 2026 08:56:24 +0200
-Message-ID: <20260912065650.974783753@linuxfoundation.org>
+Subject: [PATCH 6.18 1216/1518] null_blk: free zones array on device power-off
+Date: Sat, 12 Sep 2026 08:56:25 +0200
+Message-ID: <20260912065651.000647172@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -56,42 +55,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 5a1c5ff3a49ba93a1fd0b70537e7a0164071760d ]
+[ Upstream commit 2a6357a9b935a34f5508618fee8a7fffbf7722a8 ]
 
-If shared_tags is enabled, null_setup_tagset() allocates the global tag_set
-via null_init_global_tag_set(). If device creation later fails, err_dev
-destroys the default devices and calls unregister_blkdev(), but never frees
-the global tag_set. Since module init failed, null_exit() is never invoked,
-so the global tag_set's tags and maps are permanently leaked.
+null_init_zoned_dev() allocates dev->zones when a zoned device is powered
+on, but null_del_dev() never frees it on power-off; dev->zones is only
+freed later in null_free_dev(), when the configfs directory is removed. If
+the device is powered off and then on again, null_init_zoned_dev()
+allocates a new array and overwrites the dev->zones pointer, leaking the
+previous allocation each power cycle.
 
-Free the global tag_set in err_dev, matching null_exit() which does
-if (tag_set.ops) blk_mq_free_tag_set(&tag_set).
+Free dev->zones in null_del_dev() via null_free_zoned_dev() to solve it.
+And calling null_free_zoned_dev() in null_free_dev() is no longer necessary
+because every caller already invokes null_del_dev() first: via
+nullb_group_drop_item() before nullb_device_release(), in the
+null_add_dev() error path of null_create_dev(), and in null_destroy_dev().
+Remove the redundant call.
 
-Fixes: 82f402fefa50 ("null_blk: add support for shared tags")
+And take &lock around zone_cond_store() in the two store wrappers to
+serialize dev->zones check-and-deref against its alloc/free, which already
+run under &lock. The reason there was no problem before is that only
+nullb_device_release() or null_exit() frees the dev->zones, which
+guarantees that subsequent users won't access the configfs interface.
+
+Fixes: ca4b2a011948 ("null_blk: add zone support")
+Assisted-by: Claude-Code:GLM-5.2
 Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Link: https://patch.msgid.link/20260725022509.714271-5-wozizhi@huaweicloud.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260725022509.714271-6-wozizhi@huaweicloud.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/block/null_blk/main.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index 3d7e379b4b687..830cc0ac05e4f 100644
+index 830cc0ac05e4f..a65e52f6b48cb 100644
 --- a/drivers/block/null_blk/main.c
 +++ b/drivers/block/null_blk/main.c
-@@ -2186,6 +2186,8 @@ static int __init null_init(void)
- 		null_destroy_dev(nullb);
- 	}
- 	unregister_blkdev(null_major, "nullb");
-+	if (tag_set.ops)
-+		blk_mq_free_tag_set(&tag_set);
- 	return ret;
- }
+@@ -579,8 +579,13 @@ static ssize_t nullb_device_zone_readonly_store(struct config_item *item,
+ 						const char *page, size_t count)
+ {
+ 	struct nullb_device *dev = to_nullb_device(item);
++	ssize_t ret;
++
++	mutex_lock(&lock);
++	ret = zone_cond_store(dev, page, count, BLK_ZONE_COND_READONLY);
++	mutex_unlock(&lock);
  
+-	return zone_cond_store(dev, page, count, BLK_ZONE_COND_READONLY);
++	return ret;
+ }
+ CONFIGFS_ATTR_WO(nullb_device_, zone_readonly);
+ 
+@@ -588,8 +593,13 @@ static ssize_t nullb_device_zone_offline_store(struct config_item *item,
+ 					       const char *page, size_t count)
+ {
+ 	struct nullb_device *dev = to_nullb_device(item);
++	ssize_t ret;
+ 
+-	return zone_cond_store(dev, page, count, BLK_ZONE_COND_OFFLINE);
++	mutex_lock(&lock);
++	ret = zone_cond_store(dev, page, count, BLK_ZONE_COND_OFFLINE);
++	mutex_unlock(&lock);
++
++	return ret;
+ }
+ CONFIGFS_ATTR_WO(nullb_device_, zone_offline);
+ 
+@@ -836,7 +846,6 @@ static void null_free_dev(struct nullb_device *dev)
+ 	if (!dev)
+ 		return;
+ 
+-	null_free_zoned_dev(dev);
+ 	badblocks_exit(&dev->badblocks);
+ 	kfree(dev);
+ }
+@@ -1777,6 +1786,7 @@ static void null_del_dev(struct nullb *nullb)
+ 	}
+ 
+ 	put_disk(nullb->disk);
++	null_free_zoned_dev(dev);
+ 	if (nullb->tag_set == &nullb->__tag_set)
+ 		blk_mq_free_tag_set(nullb->tag_set);
+ 	kfree(nullb->queues);
 -- 
 2.53.0
 
