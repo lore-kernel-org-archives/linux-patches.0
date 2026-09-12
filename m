@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48122AD37;
-	Sat, 12 Sep 2026 10:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28E62AD37;
+	Sat, 12 Sep 2026 10:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208955; cv=none; b=S5JP0DovLCWzx3vO1QvJczke9VkNKC6A0e+jxft0mYkq1aH7tM2tkzBK+09eT6VRHHj+DjpPSLOVRKtWKnfdXBwftq3H7GxcvHs0I+bO82X1MWmhRfSymhO0QYRTFYQqj9GYkh5I3ABHzaDhJofrWyuN7zqfw+RxEtUt2eJFHa8=
+	t=1789208961; cv=none; b=o8FFg+11Jdz/RrWzeaFCktxa+E6/eYh7jXW/jfzy24ZDUBcs4/DS3YgE3ScPYG+rCb/GegZkXSz7Gt4TnLJW80OMyToGn1vziS5yi7HfVhVGb89H1F70tTIfKewPjgU/ybvtZFuzYSzUoAl6hFly/priKyMdjIcHZJ/oLA6HFdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208955; c=relaxed/simple;
-	bh=A/YPk3qgC13enNbK5kQjNk3UJWhYvsjtKNsh/JINQwo=;
+	s=arc-20240116; t=1789208961; c=relaxed/simple;
+	bh=ygeuBlSQhB/SYBQi74iIB//gO5+ZW97FqO1YWFZa2ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EgoxarrLUo/nu7XgSGGKnDs8+JP9rFB99OtJjNULVETQmBcUQ1nareuRoldP2ajhYQSKxGZcux7q/EIB+S2kUkm0R1YqwsHXdFDaxI9/41Z2KlUhw2lG86oJ/N0ITjekxC0YIrrh0D8iuyEqC0d9rZk93bjy4Ofpb3kNu3lOnVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YwoFUvh7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LZBBfOVXEAch0Hrzr5XL1k+B/CZyBRkBlqjr843RfGcyjAXSH70qBZ0gUzJ6eVL9a+AUYs261Y0XzrSiRGxOdCdn/dsSz3b62qpcW+Rz55UceSEySzOelckdZj/BHsPE78f3311B1KP6l4A+MIr8c90f3YjfrIdLXrUlG4Jk6C0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xonRV55D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YwoFUvh7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D969F1F000FF;
-	Sat, 12 Sep 2026 10:29:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xonRV55D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48A11F000FF;
+	Sat, 12 Sep 2026 10:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208954;
-	bh=+bu9Zwnes1thqaLoOHaQheFp99dIk30Y7ZmHiWgZn/M=;
+	s=korg; t=1789208959;
+	bh=sjon6Wq5Vxl9bJ3Y0XbTHVFwDNwzvV1YUSsITqfmDhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YwoFUvh7wIPcTyUDWkzRudSZ26YXVJt+Q7xWyDvbqi+RCUt8p7wimNNbYLIt/0RJq
-	 9X8c35PUWEtciG+C4j0MERWKaWpEfECx4ktFmfgrtd9lz76h6m/cvNtxRDn0plhqks
-	 +FmVtOpxU4aDJFLMKkwC72i7HQQ7N2USUK3mus5M=
+	b=xonRV55D7QywcO2g6hKlRtzwjuD1Auwt1bnDyzn/DFIpYqP3s5z3vawBmIsQ/1NPv
+	 3no6aqEIS+H9YY8XIds08U/wKVmSy6rKGUbeyRbX+LZlKA3bqVy9Ixn8GM6Lsi2QE9
+	 qnXT8lDpFhvgB1wTw3dBvY9K9ZQk1k1Z3fUlnwRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Vishnu Dasa <vishnu.dasa@broadcom.com>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0722/1518] misc: vmc_vmci: Fix potential memory leak in vmci_event_subscribe()
-Date: Sat, 12 Sep 2026 08:48:11 +0200
-Message-ID: <20260912065639.768320751@linuxfoundation.org>
+Subject: [PATCH 6.18 0723/1518] misc: sgi-gru: remove interrupt-context page-table walks
+Date: Sat, 12 Sep 2026 08:48:12 +0200
+Message-ID: <20260912065639.791155155@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,47 +50,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Muhammad Usama Anjum <usama.anjum@arm.com>
 
-[ Upstream commit 210854a96ef18b09b45a2a59ff14ca06dfe5ad4d ]
+[ Upstream commit 928a8e9f523df845fc496bcb9811013b67aabec5 ]
 
-The memory allocated for struct vmci_subscription (sub) is not freed
-in the error path when have_new_id is false. Fix that by adding a
-kfree() call, and moving the read of sub->id to a point before freeing.
+The GRU TLB miss handler walks a process's page tables without holding
+page-table locks or a reference to the mapped page. It also uses a kernel
+page-table accessor on user page tables and supports only PMD-level large
+mappings on x86-64.
 
-Fixes: 1d990201f9bb ("VMCI: event handling implementation.")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Acked-by: Vishnu Dasa <vishnu.dasa@broadcom.com>
-Link: https://patch.msgid.link/20260722101215.76680-1-nihaal@cse.iitm.ac.in
+Remove the direct walker. Send interrupt faults directly to user polling
+mode so the existing call-OS fallback retries them in process context.
+
+Remove the mmap-lock failure statistic that can no longer be incremented.
+
+Fixes: 142586409c8b ("GRU Driver: page faults & exceptions")
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20260730111316.3672672-2-usama.anjum@arm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/vmw_vmci/vmci_event.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/misc/sgi-gru/grufault.c  | 101 ++++---------------------------
+ drivers/misc/sgi-gru/gruprocfs.c |   1 -
+ drivers/misc/sgi-gru/grutables.h |   1 -
+ 3 files changed, 12 insertions(+), 91 deletions(-)
 
-diff --git a/drivers/misc/vmw_vmci/vmci_event.c b/drivers/misc/vmw_vmci/vmci_event.c
-index 9a41ab65378de..89ab9f05b88c5 100644
---- a/drivers/misc/vmw_vmci/vmci_event.c
-+++ b/drivers/misc/vmw_vmci/vmci_event.c
-@@ -179,16 +179,16 @@ int vmci_event_subscribe(u32 event,
- 		}
- 	}
- 
-+	*new_subscription_id = sub->id;
- 	if (have_new_id) {
- 		list_add_rcu(&sub->node, &subscriber_array[event]);
- 		retval = VMCI_SUCCESS;
- 	} else {
-+		kfree(sub);
- 		retval = VMCI_ERROR_NO_RESOURCES;
- 	}
- 
- 	mutex_unlock(&subscriber_mutex);
--
--	*new_subscription_id = sub->id;
- 	return retval;
+diff --git a/drivers/misc/sgi-gru/grufault.c b/drivers/misc/sgi-gru/grufault.c
+index 3557d78ee47a2..5a87c12f444a3 100644
+--- a/drivers/misc/sgi-gru/grufault.c
++++ b/drivers/misc/sgi-gru/grufault.c
+@@ -166,13 +166,8 @@ static void get_clear_fault_map(struct gru_state *gru,
  }
- EXPORT_SYMBOL_GPL(vmci_event_subscribe);
+ 
+ /*
+- * Atomic (interrupt context) & non-atomic (user context) functions to
+- * convert a vaddr into a physical address. The size of the page
+- * is returned in pageshift.
+- * 	returns:
+- * 		  0 - successful
+- * 		< 0 - error code
+- * 		  1 - (atomic only) try again in non-atomic context
++ * Convert a user virtual address to a physical address in process context.
++ * The size of the page is returned in pageshift.
+  */
+ static int non_atomic_pte_lookup(struct vm_area_struct *vma,
+ 				 unsigned long vaddr, int write,
+@@ -192,87 +187,25 @@ static int non_atomic_pte_lookup(struct vm_area_struct *vma,
+ 	return 0;
+ }
+ 
+-/*
+- * atomic_pte_lookup
+- *
+- * Convert a user virtual address to a physical address
+- * Only supports Intel large pages (2MB only) on x86_64.
+- *	ZZZ - hugepage support is incomplete
+- *
+- * NOTE: mmap_lock is already held on entry to this function. This
+- * guarantees existence of the page tables.
+- */
+-static int atomic_pte_lookup(struct vm_area_struct *vma, unsigned long vaddr,
+-	int write, unsigned long *paddr, int *pageshift)
+-{
+-	pgd_t *pgdp;
+-	p4d_t *p4dp;
+-	pud_t *pudp;
+-	pmd_t *pmdp;
+-	pte_t pte;
+-
+-	pgdp = pgd_offset(vma->vm_mm, vaddr);
+-	if (unlikely(pgd_none(*pgdp)))
+-		goto err;
+-
+-	p4dp = p4d_offset(pgdp, vaddr);
+-	if (unlikely(p4d_none(*p4dp)))
+-		goto err;
+-
+-	pudp = pud_offset(p4dp, vaddr);
+-	if (unlikely(pud_none(*pudp)))
+-		goto err;
+-
+-	pmdp = pmd_offset(pudp, vaddr);
+-	if (unlikely(pmd_none(*pmdp)))
+-		goto err;
+-#ifdef CONFIG_X86_64
+-	if (unlikely(pmd_leaf(*pmdp)))
+-		pte = ptep_get((pte_t *)pmdp);
+-	else
+-#endif
+-		pte = *pte_offset_kernel(pmdp, vaddr);
+-
+-	if (unlikely(!pte_present(pte) ||
+-		     (write && (!pte_write(pte) || !pte_dirty(pte)))))
+-		return 1;
+-
+-	*paddr = pte_pfn(pte) << PAGE_SHIFT;
+-#ifdef CONFIG_HUGETLB_PAGE
+-	*pageshift = is_vm_hugetlb_page(vma) ? HPAGE_SHIFT : PAGE_SHIFT;
+-#else
+-	*pageshift = PAGE_SHIFT;
+-#endif
+-	return 0;
+-
+-err:
+-	return 1;
+-}
+-
+ static int gru_vtop(struct gru_thread_state *gts, unsigned long vaddr,
+ 		    int write, int atomic, unsigned long *gpa, int *pageshift)
+ {
+ 	struct mm_struct *mm = gts->ts_mm;
+ 	struct vm_area_struct *vma;
+ 	unsigned long paddr;
+-	int ret, ps;
++	int ps;
+ 
+ 	vma = find_vma(mm, vaddr);
+ 	if (!vma)
+ 		goto inval;
+ 
+-	/*
+-	 * Atomic lookup is faster & usually works even if called in non-atomic
+-	 * context.
+-	 */
+-	rmb();	/* Must/check ms_range_active before loading PTEs */
+-	ret = atomic_pte_lookup(vma, vaddr, write, &paddr, &ps);
+-	if (ret) {
+-		if (atomic)
+-			goto upm;
+-		if (non_atomic_pte_lookup(vma, vaddr, write, &paddr, &ps))
+-			goto inval;
+-	}
++	if (atomic)
++		goto upm;
++
++	/* Order the caller's ms_range_active check before loading PTEs. */
++	rmb();
++	if (non_atomic_pte_lookup(vma, vaddr, write, &paddr, &ps))
++		goto inval;
+ 	if (is_gru_paddr(paddr))
+ 		goto inval;
+ 	paddr = paddr & ~((1UL << ps) - 1);
+@@ -569,19 +502,9 @@ static irqreturn_t gru_intr(int chiplet, int blade)
+ 			continue;
+ 		}
+ 
+-		/*
+-		 * This is running in interrupt context. Trylock the mmap_lock.
+-		 * If it fails, retry the fault in user context.
+-		 */
++		/* Address translation may sleep, so retry the fault in user context. */
+ 		gts->ustats.fmm_tlbmiss++;
+-		if (!gts->ts_force_cch_reload &&
+-					mmap_read_trylock(gts->ts_mm)) {
+-			gru_try_dropin(gru, gts, tfh, NULL);
+-			mmap_read_unlock(gts->ts_mm);
+-		} else {
+-			tfh_user_polling_mode(tfh);
+-			STAT(intr_mm_lock_failed);
+-		}
++		tfh_user_polling_mode(tfh);
+ 	}
+ 	return IRQ_HANDLED;
+ }
+diff --git a/drivers/misc/sgi-gru/gruprocfs.c b/drivers/misc/sgi-gru/gruprocfs.c
+index 97b8b38ab47df..b8139c27bc7f8 100644
+--- a/drivers/misc/sgi-gru/gruprocfs.c
++++ b/drivers/misc/sgi-gru/gruprocfs.c
+@@ -54,7 +54,6 @@ static int statistics_show(struct seq_file *s, void *p)
+ 	printstat(s, intr_cbr);
+ 	printstat(s, intr_tfh);
+ 	printstat(s, intr_spurious);
+-	printstat(s, intr_mm_lock_failed);
+ 	printstat(s, call_os);
+ 	printstat(s, call_os_wait_queue);
+ 	printstat(s, user_flush_tlb);
+diff --git a/drivers/misc/sgi-gru/grutables.h b/drivers/misc/sgi-gru/grutables.h
+index 640daf1994df7..3348552925c61 100644
+--- a/drivers/misc/sgi-gru/grutables.h
++++ b/drivers/misc/sgi-gru/grutables.h
+@@ -182,7 +182,6 @@ struct gru_stats_s {
+ 	atomic_long_t intr_cbr;
+ 	atomic_long_t intr_tfh;
+ 	atomic_long_t intr_spurious;
+-	atomic_long_t intr_mm_lock_failed;
+ 	atomic_long_t call_os;
+ 	atomic_long_t call_os_wait_queue;
+ 	atomic_long_t user_flush_tlb;
 -- 
 2.53.0
 
