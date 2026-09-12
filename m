@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14AAC30D3F6;
-	Sat, 12 Sep 2026 14:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8BA31A55E;
+	Sat, 12 Sep 2026 14:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224012; cv=none; b=KP2WB+cs/fGJy6DtQ+xKgNa0mj5xF7BWmIl0Xqogh7D1+VTLH8T5m/CwChYprXOBS4yioXJ5LkHoXrajwMvmlkqnh/dIoUxDoNWp8CqPsnMYa9RV1/zAIh1926/iLpq/HMeNpsapTrop4yLy7Hm/aAy7iLjUe7sLBjwsYKYQxLI=
+	t=1789224017; cv=none; b=DgKmH/jxAm3G91DXoXtsh9Ssg82BlTruzYsCQCUgnySlSOq11oZFuGPL8gZfNqaY0OxkQuWBsILDmAHxxkPm9Jefd46Y3Oii0QhxHV5AB72RRjKchqIgyxU/L8Gpld/Wh8S8tJuEcagrbq9sPJetxJeqf2wEbrK86MMsZfSJKXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224012; c=relaxed/simple;
-	bh=/PuradVO2F4ZSEsQNToKN4xGHyToR9yXxHkEh+kLGMs=;
+	s=arc-20240116; t=1789224017; c=relaxed/simple;
+	bh=7IuYY5uDpMysSHaOPkG90xvHFe90CX/LMSpefnddxzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LhLn+aOxfgw2LXa6JRgBCMJ72O1Z9QQ4R7Aaj4PzYofJTd2EZOUJq0R+VyyHBTdPh6Iv/gPmqHxnI/7XpUfEBQ4yFYh0Sv8b/mZopU0fpSljm0v1IfskvsOk9Q/ebx+OffAiRXtxM8OI/kts/EEydTYvi1GrUfe9TdB2BF78k3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bEgAJGny; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uXiWkYW3oQw2Jd+WfuVfevjh6E+C6/FundkVM73gMdyn1IzxY9UPNIEdhaTfE+aEIMgfO4xrrpuu9DwslaoQHIhg4RdG9pYK/ovozyz0+ZG5vhpEmsVLv7kIT5nnR1Y0uYEBpKzRxTejKEn8VMmTcuX78ca+OEcXCdtCp3aRBbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5F7OETL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bEgAJGny"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1924E1F000FF;
-	Sat, 12 Sep 2026 14:40:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5F7OETL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9341F000FF;
+	Sat, 12 Sep 2026 14:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224009;
-	bh=gIKG9/QXof6DHXSjAnShR/PQe2DiXO9Nssmxeqa3eEs=;
+	s=korg; t=1789224015;
+	bh=LevUyLnU0uYgwmXpzDkYZSNHgd1f1qSrBkZD/tV4imk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bEgAJGnygk5VcROkiz7+X5GtBrFK4chF4gGtUFLmZYxTSuIiRhYTjyfM0wqc/YWl2
-	 aSkylt9tmS/4df589MaHWLWQqow+tA8Yll9fJH5lbV7aguh74eE4FFB3ObCnmqv/QL
-	 GqJys9A22OWMrHbW6BNbW87KcAPdulrz/lgGk8xk=
+	b=S5F7OETLi7RMfyuegAW7sxPb5mVFgcfQDRMmFjWpNVDdQYKhnpmj2vPqIoP2D2Jkh
+	 QLxzebAn58BZIkecdh6S7Grlh3xGySTQg5X1oYQHFmwZNMJl/oa1RpZ5LVN6lb4pCM
+	 Ig1ASQjn9ag4DA9q73TQRr49Lx+7/uj6foT55idE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Charkov <alchark@flipper.net>,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0904/1424] clk: rockchip: Fix the fractional part denominator on RK3588/RK3576 PLLs
-Date: Sat, 12 Sep 2026 08:55:36 +0200
-Message-ID: <20260912065627.569365560@linuxfoundation.org>
+Subject: [PATCH 6.6 0863/1424] firmware: arm_scmi: Add multiple protocols registration support
+Date: Sat, 12 Sep 2026 08:54:55 +0200
+Message-ID: <20260912065626.644414099@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,64 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Charkov <alchark@flipper.net>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-[ Upstream commit 52aef653c3d0c24013dfa9eccf692594eacdbe17 ]
+[ Upstream commit 2858f6e5f06440d6b9e9c3f57bc68915344830a9 ]
 
-According to the TRM, the fractional PLL coefficient should be divided by
-65536 rather than 65535 to obtain the output rate.
+Add the capability for a SCMI driver to register to the core SCMI stack
+with multiple SCMI protocols. In such a case the SCMI driver probe
+function will end up being called once for each registered protocol
+which have been also found as implemented on the platform.
 
-Fix the denominator and add a comment with the TRM provided clock formulae
-for future reference.
+This is especially useful in testing scenarios.
 
-See RK3576 TRM Part 1 V1.2 section 2.13.1.4 Setting Guide on P, M, S and K
-or equivalently RK3588 TRM part 1 V1.0 section 2.17.1.4 Setting Guide on P,
-M, S and K.
-
-Fractional PLL rates don't seem to be used by any current mainline
-consumers, so this is purely a correctness fix. It will also be important
-to properly support DisplayPort output going forward, as the video output
-controller derives its pixel clock from system PLLs with no dedicated PHY
-PLL option for DP unlike HDMI, and some display modes are only achievable
-with fractional PLL rates.
-
-Fixes: 8f6594494b1c ("clk: rockchip: add pll type for RK3588")
-Signed-off-by: Alexey Charkov <alchark@flipper.net>
-Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
-Link: https://patch.msgid.link/20260723-rk3588-fracpll-v2-1-3adfb9dda235@flipper.net
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20231221151129.325749-1-cristian.marussi@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Stable-dep-of: 9f7cd6a62aa7 ("firmware: arm_scmi: Unrequest devices if driver registration fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/rockchip/clk-pll.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/firmware/arm_scmi/bus.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/rockchip/clk-pll.c b/drivers/clk/rockchip/clk-pll.c
-index 2d42eb6289267..6c7890c150044 100644
---- a/drivers/clk/rockchip/clk-pll.c
-+++ b/drivers/clk/rockchip/clk-pll.c
-@@ -893,6 +893,13 @@ static void rockchip_rk3588_pll_get_params(struct rockchip_clk_pll *pll,
- 	rate->k = ((pllcon >> RK3588_PLLCON2_K_SHIFT) & RK3588_PLLCON2_K_MASK);
+diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
+index 9ae7f5cbce7fe..3a3c3a3d6581e 100644
+--- a/drivers/firmware/arm_scmi/bus.c
++++ b/drivers/firmware/arm_scmi/bus.c
+@@ -134,6 +134,17 @@ static int scmi_protocol_device_request(const struct scmi_device_id *id_table)
+ 	return ret;
  }
  
-+/*
-+ * 2250 MHz <= Fvco <= 4500 MHz
-+ * For Fvco > 3 GHz: period jitter +-1% frac PLL, +-0.75% int PLL
-+ * For Fvco < 3 GHz: period jitter +-2% frac PLL, +-1.50% int PLL
-+ * Fvco = ((m + k / 65536) * Fin) / p
-+ * Fout = ((m + k / 65536) * Fin) / (p * 2^s)
-+ */
- static unsigned long rockchip_rk3588_pll_recalc_rate(struct clk_hw *hw, unsigned long prate)
- {
- 	struct rockchip_clk_pll *pll = to_rockchip_clk_pll(hw);
-@@ -908,7 +915,7 @@ static unsigned long rockchip_rk3588_pll_recalc_rate(struct clk_hw *hw, unsigned
- 		/* fractional mode */
- 		u64 frac_rate64 = prate * cur.k;
- 
--		postdiv = cur.p * 65535;
-+		postdiv = cur.p * 65536;
- 		do_div(frac_rate64, postdiv);
- 		rate64 += frac_rate64;
++static int scmi_protocol_table_register(const struct scmi_device_id *id_table)
++{
++	int ret = 0;
++	const struct scmi_device_id *entry;
++
++	for (entry = id_table; entry->name && ret == 0; entry++)
++		ret = scmi_protocol_device_request(entry);
++
++	return ret;
++}
++
+ /**
+  * scmi_protocol_device_unrequest  - Helper to unrequest a device
+  *
+@@ -179,6 +190,15 @@ static void scmi_protocol_device_unrequest(const struct scmi_device_id *id_table
  	}
+ }
+ 
++static void
++scmi_protocol_table_unregister(const struct scmi_device_id *id_table)
++{
++	const struct scmi_device_id *entry;
++
++	for (entry = id_table; entry->name; entry++)
++		scmi_protocol_device_unrequest(entry);
++}
++
+ static const struct scmi_device_id *
+ scmi_dev_match_id(struct scmi_device *scmi_dev, struct scmi_driver *scmi_drv)
+ {
+@@ -275,7 +295,7 @@ int scmi_driver_register(struct scmi_driver *driver, struct module *owner,
+ 	if (!driver->probe)
+ 		return -EINVAL;
+ 
+-	retval = scmi_protocol_device_request(driver->id_table);
++	retval = scmi_protocol_table_register(driver->id_table);
+ 	if (retval)
+ 		return retval;
+ 
+@@ -295,7 +315,7 @@ EXPORT_SYMBOL_GPL(scmi_driver_register);
+ void scmi_driver_unregister(struct scmi_driver *driver)
+ {
+ 	driver_unregister(&driver->driver);
+-	scmi_protocol_device_unrequest(driver->id_table);
++	scmi_protocol_table_unregister(driver->id_table);
+ }
+ EXPORT_SYMBOL_GPL(scmi_driver_unregister);
+ 
 -- 
 2.53.0
 
