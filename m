@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4D83446AD;
-	Sat, 12 Sep 2026 12:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5315C3446AD;
+	Sat, 12 Sep 2026 12:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216989; cv=none; b=DxxekH/oG9uJFEb1T3aEjNLvUg6SBcGXqxpZS3vLmAMYPQ9ta6OOJIlzNpuPNDkqKTBzSjnekliyk9ovuCOPE6PJnUnkn2Hxox8uVzJtuC9vxhGyuRj4jS16ShclS2wsJLUUSY+Xwl/lV5QM/cCRH90B8AsayxKuts3cfEE+Obk=
+	t=1789216994; cv=none; b=J6HWrfDVI8av4XPvDohs3nMLSKZ/KyKe6e4vp89ObAOAMzfjf/T/wp0vgcxcGHmrW2zs3gGcbnygC22rGm6Pil8yUh9RDTvmpplU9RX639bC8OWK9NgewaXa/cs1ujx24SJ95rCrB8Zf4RpnU59ic2n0v9T8+KsGvtmREOv72g8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216989; c=relaxed/simple;
-	bh=VdDgKnGJAcP0MN3s8wQliOkx0eet8ii3641g0Zs9O54=;
+	s=arc-20240116; t=1789216994; c=relaxed/simple;
+	bh=a8kJtqAOUtjRB2xY0pZgrbDe3m9MbI6mHZHoYUobbEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dc4bgkUZ4aBjtuRc0rwwOmDY+yhnqeXsMCm/fdNeY8Zdj5ajt0tn9K/+/gFuw8oaIB2QOhq8Q+vzEdB+snSBi4kdtswaQJ3vdmEqdgTRFEf31+tnTmmzDtRkvQivP4H7/yaeGhRKATq1RnrkWX5klimWNrXHQrz+20d4kpDubqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v44HuD68; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k6ZmSUGU+Cce+9Hsg49d0w9IO/5G+ux8spCEoWN9YHgx0H5lp0e3zBRADv9jmjivjkWotKInvi65CdM6thUyoSUhVp8e4eqw4lHsvZFlG7fP1s3VMzhVuHTtZS2+2Iw/AyD2JTyHQxfJzqyG79l3hKj9wuQ/oN6gKphiPXC8ZVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r0a3E8LP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v44HuD68"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029E01F000FF;
-	Sat, 12 Sep 2026 12:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r0a3E8LP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E001F000FF;
+	Sat, 12 Sep 2026 12:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216988;
-	bh=YkFtCOHDmI1LSzydpYIi6JGB/lTia6tPzUrqtWHy+Xw=;
+	s=korg; t=1789216993;
+	bh=lDM+5NJM8HtKFHV29WYXlEPJvoVPUO4aLgQqyiCWrfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v44HuD68gEVqm8baQTLa8H4bXNGGSOdsi3d5qVGeMDD1v0PeUO3mYAsKhyImx3ewA
-	 4kK0bEamaeOoMd4RDD+ujm7P2T7qsOFADhc5R1K1zB9dId6ELisRO4rONLSsjy3V5P
-	 f45vvoTGNuDgIb+m4QJcCY9N5OfZiks2a7n1GVQg=
+	b=r0a3E8LPonR3hrOcF0mjS4JjVWlZSZS5+kaWLbzfbneMKW/GvT21s3023q4u7TfAc
+	 oDFDLpbiH6ovb9o6y8Q9qxK9hy1AmtbwUSxh2voQ2iXVfPztYJemkaK5rG9JAPu+3B
+	 VITqWY02lDMKEtDjpUe+7rjMI1qrYvu/d25EyYoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
+	syzbot+0ec3d1a6cf1fbe79c153@syzkaller.appspotmail.com,
+	Slawomir Stepien <sst@poczta.fm>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0850/1376] wifi: mac80211: send TWT teardown to peer after setup TX failure
-Date: Sat, 12 Sep 2026 08:54:36 +0200
-Message-ID: <20260912065626.500766890@linuxfoundation.org>
+Subject: [PATCH 6.12 0851/1376] wifi: zd1211rw: reject secondary interfaces to prevent conflicts
+Date: Sat, 12 Sep 2026 08:54:37 +0200
+Message-ID: <20260912065626.524418130@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,51 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Slawomir Stepien <sst@poczta.fm>
 
-[ Upstream commit a28fcce6ee74be8a4526e6cfa16dc7786d62a784 ]
+[ Upstream commit 0e4532ec658606f76f62eb277e7a933919d36cbb ]
 
-When an AP's TWT Setup response is not acknowledged,
-ieee80211_s1g_tx_twt_setup_fail() asks the driver to tear down the local
-agreement and sends a TWT teardown action as the peer notification. It
-uses the response SA as the destination, but
-ieee80211_s1g_send_twt_setup() built that response with SA set to the
-AP's address. The teardown is therefore queued with DA, SA and BSSID all
-set to the AP address and never reaches the station.
+The zd1211rw driver is designed for single-function Wi-Fi dongles and
+hardcodes its USB endpoints. When a malformed USB device exposes multiple
+interfaces that match the driver's device ID, the driver blindly binds to
+all of them.
 
-The in-tree driver callbacks update local hardware state and emit no
-action frame. The station receives no notification that mac80211 asked
-the driver to remove the agreement and can keep following the TWT
-schedule, leaving the peers' power-save state desynchronized.
+During probe(), the driver calls usb_reset_device(), which iterates over
+all interfaces and invokes the pre_reset() callback for each bound
+interface. Since multiple interfaces are bound to zd1211rw, pre_reset() is
+called sequentially for each instance, acquiring their respective
+&mac->chip.mutex. Because all instances initialize their mutexes with the
+same lock class, lockdep detects a task acquiring a lock of the same class
+it already holds and flags it as a possible recursive deadlock:
 
-Address the teardown to the response DA, the station to which the failed
-response was sent. This also matches the station lookup the transmit
-status path already performs on the same frame.
+WARNING: possible recursive locking detected
+kworker/0:1/11 is trying to acquire lock:
+ffff88810371dde0 (&chip->mutex){+.+.}-{4:4}, at:
+zd_chip_disable_rxtx+0x20/0x50
+drivers/net/wireless/zydas/zd1211rw/zd_chip.c:1465
 
-Fixes: f5a4c24e689f ("mac80211: introduce individual TWT support in AP mode")
-Assisted-by: Codex:gpt-5.6-sol
-Assisted-by: Kimi:K3
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260729173607.13340-1-enderaoelyther@gmail.com
+but task is already holding lock:
+ffff8881138ddde0 (&chip->mutex){+.+.}-{4:4}, at: pre_reset+0x28c/0x380
+drivers/net/wireless/zydas/zd1211rw/zd_usb.c:1505
+
+Fix this by explicitly rejecting secondary interfaces (bInterfaceNumber !=
+0) during probe(). This ensures that only a single instance of the driver
+binds to the device, eliminating the recursive locking scenario.
+
+Fixes: e85d0918b54f ("[PATCH] ZyDAS ZD1211 USB-WLAN driver")
+Assisted-by: Gemini:gemini-3.5-flash Gemini:gemini-3.1-pro-preview syzbot
+Reported-by: syzbot+0ec3d1a6cf1fbe79c153@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0ec3d1a6cf1fbe79c153
+Link: https://syzkaller.appspot.com/ai_job?id=00724ef7-fd77-4cde-9779-895b8f63c2f6
+Signed-off-by: Slawomir Stepien <sst@poczta.fm>
+Link: https://patch.msgid.link/20260730065231.1644030-1-sst@poczta.fm
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/s1g.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/zydas/zd1211rw/zd_usb.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/mac80211/s1g.c b/net/mac80211/s1g.c
-index 2a23e431cbb5a..657f281adf10a 100644
---- a/net/mac80211/s1g.c
-+++ b/net/mac80211/s1g.c
-@@ -147,7 +147,7 @@ ieee80211_s1g_tx_twt_setup_fail(struct ieee80211_sub_if_data *sdata,
+diff --git a/drivers/net/wireless/zydas/zd1211rw/zd_usb.c b/drivers/net/wireless/zydas/zd1211rw/zd_usb.c
+index 9ae10f65f2af0..8b8abcfbbfc8f 100644
+--- a/drivers/net/wireless/zydas/zd1211rw/zd_usb.c
++++ b/drivers/net/wireless/zydas/zd1211rw/zd_usb.c
+@@ -1352,6 +1352,14 @@ static int probe(struct usb_interface *intf, const struct usb_device_id *id)
+ 	struct zd_usb *usb;
+ 	struct ieee80211_hw *hw = NULL;
  
- 	drv_twt_teardown_request(sdata->local, sdata, &sta->sta, flowid);
++	/*
++	 * ZD1211 devices are single-function. Reject secondary interfaces
++	 * to prevent multiple instances from conflicting on hardcoded endpoints
++	 * and triggering recursive locking warnings.
++	 */
++	if (intf->cur_altsetting->desc.bInterfaceNumber != 0)
++		return -ENODEV;
++
+ 	print_id(udev);
  
--	ieee80211_s1g_send_twt_teardown(sdata, mgmt->sa, sdata->vif.addr,
-+	ieee80211_s1g_send_twt_teardown(sdata, mgmt->da, sdata->vif.addr,
- 					flowid);
- }
- 
+ 	if (id->driver_info & DEVICE_INSTALLER)
 -- 
 2.53.0
 
