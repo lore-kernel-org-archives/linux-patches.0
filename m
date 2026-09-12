@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260AD332610;
-	Sat, 12 Sep 2026 09:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAED733AD88;
+	Sat, 12 Sep 2026 09:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204975; cv=none; b=uEfiutvtv5KmGZgGn90WMvGmy+hMlazo3wC4xFgSnQoWFqcf714SCagfmKava7xbq+QEOVGB4eOyFmXPx2e/50NO40dg76oZfeL5T+AharUQbDuTYMTH+yBN935Q14zkMcxy8eaOaU0adC99AseqLdaAecpwKLnjW6CYOBUw2MQ=
+	t=1789204979; cv=none; b=UVzi/mTfW6jTRH2csdm6V8+QS/ousU5VAk5kV/DGIX1AoXBZqhMqErXFVEQXi5ctaOoSm8IyuMWEm7gqUFeA9tdSSHeIvuDC/+mZvAGoAC61tWCxhxeJV9TzJZ5rFn/ffmXN/rMgLkMzr7pklEH5ggGffgd+4M3N8sQZuV5VVWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204975; c=relaxed/simple;
-	bh=nbG11jQ62qFQV0g+uoqmHs8pltVtBqq1jkWOCI+6daM=;
+	s=arc-20240116; t=1789204979; c=relaxed/simple;
+	bh=Pn2ABxJUGFBDR7i9LGZIAick/7IJ2ni66i4k2SbC88w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cgmw72z8QCU566wujpsmrRCsDoPJqyQGHXbhbdn0LEZ8pA9C64tI6lx6A/xcPiyG/WlesNbqyhiUwBNqAmDb6UEXGRa66BXeKphQEWVBP/NQZ2fP3HMQKujq2ZYULkLQmLUwieJN+qsXh2gv43xBJQWpJkvpb3ePYio9vUHtV/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TF0fxwDk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YQU2pWkI67Uw8K+rffqRAYy0k4Fcp7PaqNHVEdTHXZHhv7TCnx2aLVbuQaGQ7Gc0O3sxXDzo5prKzsjSVV6KcspyRpqAojlRVbIrcbog1/qsWVP6qArRJjmJWHn4ZQiWuLBLrj3lumVW8W/1N36IpGriU4e2du1p5SgHe80yu4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wo1vP1pI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TF0fxwDk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 294DA1F000FF;
-	Sat, 12 Sep 2026 09:22:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wo1vP1pI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1E041F000FF;
+	Sat, 12 Sep 2026 09:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204974;
-	bh=yPEEqYVwsOyAtPnHyyqq4g5wzIzkoNzhxHM8MvHY1Ew=;
+	s=korg; t=1789204978;
+	bh=NF8VGngeAo9ek+QU1JA9BE54ylxdzp+hgkjMAZ7+f7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TF0fxwDkSb8vHE3vDhMoT02nOgYpP9yDacxaU5H51Ciiklve8fGI1ygoD0EoqxDFG
-	 7ub945lCO4xO0MCDVYLI/vA8mCeHl9daMdn6PRWRq59i2qQlZ1i5NqoBoDEbzHK59q
-	 34oEiq4t0K65U2piJG3283SDBfRMvFfDsk7UEB6Y=
+	b=Wo1vP1pIP+UMoPFTze3Jp8/LG1nbCSf5Zz6a011FXvNldv96yIf7NKAWYd3aLn0Y7
+	 mpwvymhCkqi8CZVwvyBcgq2i607m6jVCJIn3gSDk4Np2rSuP0HyczStTZ2Rw+5ahlJ
+	 2bZXZnYfIO1dq7gsi9aTB/sdO8NV7505/AlXPCBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lu <chris.lu@mediatek.com>,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1722/1815] Bluetooth: btmtksdio: Fix out-of-bounds DMA read in the TX path
-Date: Sat, 12 Sep 2026 08:57:52 +0200
-Message-ID: <20260912065729.398782441@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 7.2 1723/1815] Bluetooth: hci_sync: add conditional locking annotations
+Date: Sat, 12 Sep 2026 08:57:53 +0200
+Message-ID: <20260912065729.422842905@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,99 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Lu <chris.lu@mediatek.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit fa0ad2d277c7adead61d1c22411c55cea6990c2a ]
+[ Upstream commit 5b9b68abb5fa548478e20ee38a0ef5c18e9cf4b7 ]
 
-btmtksdio_tx_packet() rounds the transfer size up to the SDIO block size
-of 256 bytes, but hands the host controller the SKB buffer as is:
+Add context analysis annotations to functions doing conditional locking,
+to suppress analysis warnings.
 
-	err = sdio_writesb(bdev->func, MTK_REG_CTDR, skb->data,
-			   round_up(skb->len, MTK_SDIO_BLOCK_SIZE));
-
-Only skb->len bytes hold packet data, so the controller reads up to 255
-bytes of uninitialised memory and sends it to the device over the SDIO
-bus. Depending on how much tailroom slack the SKB allocation happens to
-carry, that read can also extend past the end of the buffer.
-
-Compute the padded length up front, ensure the SKB has tailroom for it,
-and zero-fill the padding with skb_put_zero(). skb->len then covers the
-padding, so sdio_writesb() no longer needs to round up. byte_tx keeps
-counting the header and the payload only, and the error path restores the
-SKB so that the caller can requeue it.
-
-Writing behind skb->tail is only safe because the driver owns the buffer,
-which "Bluetooth: btmtksdio: Take exclusive ownership of the SKB before
-TX" ensures.
-
-Fixes: 9aebfd4a2200 ("Bluetooth: mediatek: add support for MediaTek MT7663S and MT7668S SDIO devices")
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
-Assisted-by: Claude:claude-opus-5
+Fixes: cdc36db204ff ("Bluetooth: hci_sync: Fix advertising data UAFs")
+Tested-by: Nathan Chancellor <nathan@kernel.org> # build
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmtksdio.c | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ net/bluetooth/hci_sync.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
-index 8052e24d503be..94aa60d9cc207 100644
---- a/drivers/bluetooth/btmtksdio.c
-+++ b/drivers/bluetooth/btmtksdio.c
-@@ -272,6 +272,7 @@ static int btmtksdio_tx_packet(struct btmtksdio_dev *bdev,
- 			       struct sk_buff *skb)
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index e6ffeb2c60939..86de842175ab8 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -1287,6 +1287,7 @@ hci_set_ext_adv_params_sync(struct hci_dev *hdev, u8 instance,
+ }
+ 
+ static int hci_set_ext_adv_data_sync(struct hci_dev *hdev, u8 instance)
++	__context_unsafe(/* conditional locking */)
  {
- 	struct mtkbtsdio_hdr *sdio_hdr;
-+	unsigned int len, pad_len;
- 	int err;
+ 	DEFINE_FLEX(struct hci_cp_le_set_ext_adv_data, pdu, data, length,
+ 		    HCI_MAX_EXT_AD_LENGTH);
+@@ -1375,6 +1376,7 @@ int hci_update_adv_data_sync(struct hci_dev *hdev, u8 instance)
+ }
  
- 	/* Make sure that the data buffer is not shared with anyone else and
-@@ -281,6 +282,18 @@ static int btmtksdio_tx_packet(struct btmtksdio_dev *bdev,
- 	if (err < 0)
- 		return err;
+ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
++	__context_unsafe(/* conditional locking */)
+ {
+ 	struct hci_cp_le_set_ext_adv_params cp;
+ 	struct hci_rp_le_set_ext_adv_params rp;
+@@ -1531,6 +1533,7 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
+ }
  
-+	/* The transfer is rounded up to the SDIO block size, so the buffer
-+	 * has to provide tailroom for the padding as well
-+	 */
-+	len = skb->len + sizeof(*sdio_hdr);
-+	pad_len = round_up(len, MTK_SDIO_BLOCK_SIZE) - len;
-+
-+	if (unlikely(skb_tailroom(skb) < pad_len)) {
-+		err = pskb_expand_head(skb, 0, pad_len, GFP_ATOMIC);
-+		if (err < 0)
-+			return err;
-+	}
-+
- 	/* Prepend MediaTek SDIO Specific Header */
- 	skb_push(skb, sizeof(*sdio_hdr));
+ static int hci_set_ext_scan_rsp_data_sync(struct hci_dev *hdev, u8 instance)
++	__context_unsafe(/* conditional locking */)
+ {
+ 	DEFINE_FLEX(struct hci_cp_le_set_ext_scan_rsp_data, pdu, data, length,
+ 		    HCI_MAX_EXT_AD_LENGTH);
+@@ -1584,6 +1587,7 @@ static int hci_set_ext_scan_rsp_data_sync(struct hci_dev *hdev, u8 instance)
+ }
  
-@@ -289,19 +302,22 @@ static int btmtksdio_tx_packet(struct btmtksdio_dev *bdev,
- 	sdio_hdr->reserved = cpu_to_le16(0);
- 	sdio_hdr->bt_type = hci_skb_pkt_type(skb);
+ static int __hci_set_scan_rsp_data_sync(struct hci_dev *hdev, u8 instance)
++	__context_unsafe(/* conditional locking */)
+ {
+ 	struct hci_cp_le_set_scan_rsp_data cp;
+ 	u8 len;
+@@ -1725,6 +1729,7 @@ static int hci_set_per_adv_params_sync(struct hci_dev *hdev, u8 instance,
+ }
  
-+	/* Zero the padding so that no uninitialised memory is sent out */
-+	skb_put_zero(skb, pad_len);
-+
- 	clear_bit(BTMTKSDIO_HW_TX_READY, &bdev->tx_state);
--	err = sdio_writesb(bdev->func, MTK_REG_CTDR, skb->data,
--			   round_up(skb->len, MTK_SDIO_BLOCK_SIZE));
-+	err = sdio_writesb(bdev->func, MTK_REG_CTDR, skb->data, skb->len);
- 	if (err < 0)
--		goto err_skb_pull;
-+		goto err_skb_restore;
- 
--	bdev->hdev->stat.byte_tx += skb->len;
-+	bdev->hdev->stat.byte_tx += len;
- 
- 	kfree_skb(skb);
- 
- 	return 0;
- 
--err_skb_pull:
-+err_skb_restore:
-+	skb_trim(skb, len);
- 	skb_pull(skb, sizeof(*sdio_hdr));
- 
- 	return err;
+ static int hci_set_per_adv_data_sync(struct hci_dev *hdev, u8 instance)
++	__context_unsafe(/* conditional locking */)
+ {
+ 	DEFINE_FLEX(struct hci_cp_le_set_per_adv_data, pdu, data, length,
+ 		    HCI_MAX_PER_AD_LENGTH);
 -- 
 2.53.0
 
