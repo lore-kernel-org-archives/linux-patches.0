@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54532320CD3;
-	Sat, 12 Sep 2026 15:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400BA32E757;
+	Sat, 12 Sep 2026 15:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225910; cv=none; b=fW71Frg72PuEIiZBx7HTQC1nGPoitQIQOHJWnfaOGE07vcZr/QbfQPMs3okYEMntPa2gIKIyyTaL2n8jBM1iTP0M/PtKEPU1rlhl6eGKP0Psb+NLLU7svU/1I+6j5ljNuT6HZRi5LX68C/Iu5gvkJ3YwBSV0OL2piZXihjw2klk=
+	t=1789225915; cv=none; b=C7PDdRJVs5DRhrOoxSueSjItQupvd71+tOCKcUPjs24EGA+uLXGxzhnS2BYc+yvAUfGJi9L16RgP5kjzoK64+w0wIq7OSfH7Nwt2a5GDsPCGj455J20PGc+xNnbmcG3+tAtc9VWYuiUWcUjSsh4l7sCeemDEXRNMHcOZEC9l4jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225910; c=relaxed/simple;
-	bh=e4lk5W3ry9fwOOJWaTagr1Y+JOps8ZqCaiFZFHQx7qk=;
+	s=arc-20240116; t=1789225915; c=relaxed/simple;
+	bh=iWwBQKZHiuAYEur8OhgTP5h908mRws4bA2ZKAirlSgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CYLSRspVvGK9ej7Lz75dEhnhUm3GxbIN17J5n1JImPwW4ozmHzdIJ+n6GtVcNXKimziK55IWG++EYwSbQm7kAIjIaL10kV3Drgx3LJ15Hh0RXal9pia1rAtduiU6rtrLMytOuT6rZEmyFAx2ZWVGgoa7ycg8FkDRRCjpUONMPtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oF/SNeN5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qpZEY9e0WK5XjsBnQUkc13op4IIq6agelTWoW7x+yCquagVU1IsCmctjDsMWSajaszRGoaG59KzKCDX1vnbSlztgQzBvnR59o2XRyqN0G7jFoT+rvI1+fFFppD2ujoCuKw6TTL9oWPBfmZcKH2bjb+c89hogljZmRB+YgEz5pbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKyndPE5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oF/SNeN5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4751F000FF;
-	Sat, 12 Sep 2026 15:11:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKyndPE5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5F81F000FF;
+	Sat, 12 Sep 2026 15:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225909;
-	bh=MYPFyWG9Xq/qquw742vIdTdO3g89LuOV2XQTvci8vrE=;
+	s=korg; t=1789225913;
+	bh=OIwKmfSlxiOWmX5QWvdF7E99X6/0ejidvI0F6griSlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oF/SNeN5KPJQ5DuaS5s6FD3hfgKGhE0ZUa5ZMRUwHwNi8iFmHyEr+myGJfEt0zPJw
-	 e/U9jt2zAaBYPwcQTBMhjXzOgC/IIfJF05EXrzZ+p0Y+VhP3D0JtCtSfGtQ+xVM3MX
-	 hezQ6O9p4k1idhiIwjiCj+33LNSlF13mezKgSj24=
+	b=HKyndPE5Lduoxwuu0gRji8QNEUGBw0RxDw1rVmh53LHwhSny29SLTnIWGYAT15ErN
+	 Zf8iC6wYqibwEIFrAjtc9E/Sp2dpR1Iylc95WpSGoeREsHg58yhlom6qDiR6zO9F9W
+	 h55+qsmciFmOBWghLXI8sIfoNH3jpMbp5ztJMI/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Hidayath Khan <hidayath@linux.ibm.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1294/1424] 8139cp: fix Rx and Tx not being disabled in cp_suspend
-Date: Sat, 12 Sep 2026 09:02:06 +0200
-Message-ID: <20260912065636.247510557@linuxfoundation.org>
+Subject: [PATCH 6.6 1295/1424] net/smc: hash socket only after full initialisation in smc_sk_init()
+Date: Sat, 12 Sep 2026 09:02:07 +0200
+Message-ID: <20260912065636.269887505@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,45 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Mahanta Jambigi <mjambigi@linux.ibm.com>
 
-[ Upstream commit cb7643b78d35392f0f434774d78b4c77b80f677f ]
+[ Upstream commit 8acf691d8017012e1476c30e7381513c1e929c94 ]
 
-On QEMU rtl8139 model, frames that arrive while the interface is
-suspended still end up in the stack after resume. With pm_test=devices,
-which keeps devices suspended for 5s, 200 frames sent to interface
-during that time and 50 frames after resume, eth0 reports 113
-received frames.
+smc_sk_init() calls sk->sk_prot->hash(sk) before several fields are
+fully initialised: clcsock_release_lock, the saved clcsk_* callbacks,
+use_fallback/fallback_rsn, and conn.close_work.  Once hash() returns the
+socket is visible to concurrent hash walkers, which can then observe
+uninitialised state.
 
-cp_suspend() is supposed to stop receiver and the transmitter, but
-the mask is wrong: (~RxOn | ~TxOn) is ~0, nothing is cleared and Cmd
-still reads 0x0d when cp_suspend() returns.
+Move hash(sk) to the end of smc_sk_init() so the socket is published
+only after it is fully constructed.
 
-Use ~(RxOn | TxOn) so both bits are actually cleared.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260817043057.20099-1-kmehltretter@gmail.com
+Fixes: d0e35656d834 ("net/smc: refactoring initialization of smc sock")
+Reviewed-by: Hidayath Khan <hidayath@linux.ibm.com>
+Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Signed-off-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Link: https://patch.msgid.link/20260813074315.554926-1-mjambigi@linux.ibm.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/8139cp.c | 2 +-
+ net/smc/af_smc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/realtek/8139cp.c b/drivers/net/ethernet/realtek/8139cp.c
-index f5786d78ed230..4091762275d6a 100644
---- a/drivers/net/ethernet/realtek/8139cp.c
-+++ b/drivers/net/ethernet/realtek/8139cp.c
-@@ -2066,7 +2066,7 @@ static int __maybe_unused cp_suspend(struct device *device)
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index 65632bf8e3c7a..e5b5490da251e 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -391,13 +391,13 @@ void smc_sk_init(struct net *net, struct sock *sk, int protocol)
+ 	INIT_LIST_HEAD(&smc->accept_q);
+ 	spin_lock_init(&smc->accept_q_lock);
+ 	spin_lock_init(&smc->conn.send_lock);
+-	sk->sk_prot->hash(sk);
+ 	mutex_init(&smc->clcsock_release_lock);
+ 	smc_init_saved_callbacks(smc);
+ 	smc->limit_smc_hs = net->smc.limit_smc_hs;
+ 	smc->use_fallback = false; /* assume rdma capability first */
+ 	smc->fallback_rsn = 0;
+ 	smc_close_init(smc);
++	sk->sk_prot->hash(sk);
+ }
  
- 	/* Disable Rx and Tx */
- 	cpw16 (IntrMask, 0);
--	cpw8  (Cmd, cpr8 (Cmd) & (~RxOn | ~TxOn));
-+	cpw8  (Cmd, cpr8 (Cmd) & ~(RxOn | TxOn));
- 
- 	spin_unlock_irqrestore (&cp->lock, flags);
- 
+ static struct sock *smc_sock_alloc(struct net *net, struct socket *sock,
 -- 
 2.53.0
 
