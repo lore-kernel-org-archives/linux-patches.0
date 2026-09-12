@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40919384CDF;
-	Sat, 12 Sep 2026 14:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA288348C75;
+	Sat, 12 Sep 2026 14:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224873; cv=none; b=Ao49T/DVp0OnnVeqlUEHclDSdoTw1hgkVAoQBGRrSXDN2djnAFI3GEtQLgH6J4nfqdPM1RpyZyUNstqfnLbs7sKl1XpIa8YzwgShm5oomXlgxL4PQy/l1BYnBY6JRKvhgKTJeQbhEilirrrsy0D4I1tfcD0yOClB/YD94j5fcD0=
+	t=1789224878; cv=none; b=O/J5HPeO8WOJKzHzPrvG1hQD2D0C4SP2Etjxqnb9+OVQar0JlKSU8vWTlGejVP3fgVKsV0rxwkgpbrf25wvczdOzr5M+QmK2irXropl1TlrvC2qFoXy1ELt9xdCXZoOE2JLV8D98tVZsNo/7vBF1kAKu/eSS44RK93vJtQDu+OE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224873; c=relaxed/simple;
-	bh=pgPfp6ODyNQv7z8xW38nvfb1G0iN8Pzz7gaOdErgqnM=;
+	s=arc-20240116; t=1789224878; c=relaxed/simple;
+	bh=2dTrhfeillSnNTqPLqt/zCwsHiey9eFMhuVVPpZ/WW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qUUmh8nhmGwDr4qM8qh2xc3L9f1mEiNNlqycSp444JDpp/k8B+ftwJMxjnJXz059jPn859OW3916YF1lHoTtss9g6gHbpkKfwq3IeDhGUqKdCGjM6YR28UI2il+dRfMyltDU21IKIKWr2Tu77Yezo4KocpBv/cDP3XnzIRnONNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBD9MNxZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qLTzPz5kXt0SeK1RFnwUC8YuNcnV06j+1KFM1AJU1O8cCSpTlZELSGwrnioj+pSyzdzMGJ+BHBmDNYYW7aWCh9/4vpmRxa/bYEAMID0YoVx+neS8gKcvukaDwyBcP+SNnYDez6vjWgcefwaZ/E7n4sj8N4JgWPnMR4jFvG/kO2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4MB3pq5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBD9MNxZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9926F1F000FF;
-	Sat, 12 Sep 2026 14:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4MB3pq5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858161F000FF;
+	Sat, 12 Sep 2026 14:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224871;
-	bh=LBQDcdw4DhPwck0zIhTILFZXlq5F2JnWTeQjTnaWztk=;
+	s=korg; t=1789224876;
+	bh=gVWQY+uXTVfc3/zTLIvIwrX16NwKCbN2nGosdzQzrlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hBD9MNxZOD4iRuWp4Q0rTkQJn2I084RXfFWA7zYZsgIuAYw8RVbFWi/rpd7iW7Yob
-	 9+E2YbrF9/u+WCjEHTKGf/kml+nEFkNYtb6igQ90wMjYhN5od7+IXiKN/M1VU38a85
-	 T872WLgHXJGgarNecr6JBmr7QbegO5gEji7izWgk=
+	b=N4MB3pq5VFWRO8ZPAr94+9bvotMet49jxPsvH1cEPzyBf93AayIzDCp9UMznymDWJ
+	 fLgfnEuFLp0jtWipcuSujYmHBkaw/rl37SMIcJLu2SzgaZ0wzbC01KktbqWttl3qZb
+	 saqJ43/pmLo7aWqueW93GiS2haBlQF2Ht8k1by2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	kernel test robot <lkp@intel.com>,
+	Bernard Metzler <bmt@zurich.ibm.com>,
+	Guoqing Jiang <guoqing.jiang@linux.dev>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1081/1424] IB/isert: post the full-feature receive buffers after session registration
-Date: Sat, 12 Sep 2026 08:58:33 +0200
-Message-ID: <20260912065631.513456226@linuxfoundation.org>
+Subject: [PATCH 6.6 1082/1424] RDMA/siw: Introduce siw_free_cm_id
+Date: Sat, 12 Sep 2026 08:58:34 +0200
+Message-ID: <20260912065631.536758722@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,106 +53,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Guoqing Jiang <guoqing.jiang@linux.dev>
 
-[ Upstream commit 5247dde9daac7e107853b6fea043f7f47be033f7 ]
+[ Upstream commit 08456d4db73bbb3fcaa0d63252ea2399c65297a4 ]
 
-isert_put_login_tx() posts the full-feature receive buffers before
-__transport_register_session() runs, so an initiator that does not wait
-for the final Login Response can still have a SCSI command executed
-against an se_session whose se_tpg is NULL - the same oops as the
-previous patch, at target_submit+0xbe.
+Factor out a helper to simplify code.
 
-Post them from isert_get_rx_pdu(), which the previous patch already uses
-to send that response, and post them before that send: the receive queue
-is filled at the moment the initiator is told it may use it.  Allocating
-there keeps the existing property that a memory allocation failure cannot
-happen once the final Login Response is on the wire.
-
-The receive queue is already empty between the final Login Request and
-isert_post_recvm(); this moves the second point later, from a median of
-92 us to 172 us over 1200 logins.  Only an initiator that sends before it
-has been told to can reach that window, and on IB and RoCE its send is
-retried there until the buffers appear - isert_rdma_accept() asks for
-rnr_retry_count = 7.  iWARP has no RNR flow control, so there the same
-send terminates the connection instead.
-
-Measured over rxe, 400 login cycles per run, with an initiator that does
-not wait: an instrumented build counted no entries to isert_recv_done()
-before the buffers are posted in 10 runs, where that initiator oopsed
-8 of 10 unpatched runs and 5 of 10 with only the previous patch.
-
-Not tested: iWARP, discovery sessions over iSER, and real HCAs.
-
-Fixes: b8d26b3be8b3 ("iser-target: Add iSCSI Extensions for RDMA (iSER) target driver")
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20260731041212.1733364-2-yhlee@isslab.korea.ac.kr
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202310091656.JlrmcNXB-lkp@intel.com/
+Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
+Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
+Link: https://lore.kernel.org/r/20231113115726.12762-12-guoqing.jiang@linux.dev
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: a93949718259 ("RDMA/siw: Fix use-after-free in siw_accept()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/isert/ib_isert.c | 41 ++++++++++++-------------
- 1 file changed, 20 insertions(+), 21 deletions(-)
+ drivers/infiniband/sw/siw/siw_cm.c | 30 ++++++++++++++----------------
+ 1 file changed, 14 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/isert/ib_isert.c b/drivers/infiniband/ulp/isert/ib_isert.c
-index f8ebc2b7ebd53..3298928551b8f 100644
---- a/drivers/infiniband/ulp/isert/ib_isert.c
-+++ b/drivers/infiniband/ulp/isert/ib_isert.c
-@@ -952,21 +952,7 @@ isert_put_login_tx(struct iscsit_conn *conn, struct iscsi_login *login,
- 	}
- 	if (!login->login_failed) {
- 		if (login->login_complete) {
--			ret = isert_alloc_rx_descriptors(isert_conn);
--			if (ret)
--				return ret;
--
--			ret = isert_post_recvm(isert_conn,
--					       ISERT_QP_MAX_RECV_DTOS);
--			if (ret)
--				return ret;
--
--			/* Now we are in FULL_FEATURE phase */
--			mutex_lock(&isert_conn->mutex);
--			isert_conn->state = ISER_CONN_FULL_FEATURE;
--			mutex_unlock(&isert_conn->mutex);
--
--			/* Sent from isert_get_rx_pdu() after registration. */
-+			/* Posted and sent from isert_get_rx_pdu(). */
- 			isert_conn->login_rsp_pending = true;
- 			return 0;
+diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
+index 43e776073f49f..6ce8150278dd4 100644
+--- a/drivers/infiniband/sw/siw/siw_cm.c
++++ b/drivers/infiniband/sw/siw/siw_cm.c
+@@ -364,6 +364,15 @@ static int siw_cm_upcall(struct siw_cep *cep, enum iw_cm_event_type reason,
+ 	return id->event_handler(id, &event);
+ }
+ 
++static void siw_free_cm_id(struct siw_cep *cep)
++{
++	if (!cep->cm_id)
++		return;
++
++	cep->cm_id->rem_ref(cep->cm_id);
++	cep->cm_id = NULL;
++}
++
+ /*
+  * siw_qp_cm_drop()
+  *
+@@ -416,8 +425,7 @@ void siw_qp_cm_drop(struct siw_qp *qp, int schedule)
+ 			default:
+ 				break;
+ 			}
+-			cep->cm_id->rem_ref(cep->cm_id);
+-			cep->cm_id = NULL;
++			siw_free_cm_id(cep);
+ 			siw_cep_put(cep);
  		}
-@@ -2638,13 +2624,26 @@ static void isert_get_rx_pdu(struct iscsit_conn *conn)
- 	struct isert_conn *isert_conn = conn->context;
- 	struct completion comp;
+ 		cep->state = SIW_EPSTATE_CLOSED;
+@@ -1175,8 +1183,7 @@ static void siw_cm_work_handler(struct work_struct *w)
+ 			cep->sock = NULL;
+ 		}
+ 		if (cep->cm_id) {
+-			cep->cm_id->rem_ref(cep->cm_id);
+-			cep->cm_id = NULL;
++			siw_free_cm_id(cep);
+ 			siw_cep_put(cep);
+ 		}
+ 	}
+@@ -1709,10 +1716,7 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
  
-+	/* The login timeout timer can fail the login after isert_put_login_tx(). */
-+	if (!isert_conn->login_rsp_pending)
-+		return;
-+
-+	isert_conn->login_rsp_pending = false;
-+
- 	/* The session is registered by now; see isert_put_login_tx(). */
--	if (isert_conn->login_rsp_pending) {
--		isert_conn->login_rsp_pending = false;
--		if (isert_login_post_send(isert_conn,
--					  &isert_conn->login_tx_desc))
--			return;
+ 	cep->state = SIW_EPSTATE_CLOSED;
+ 
+-	if (cep->cm_id) {
+-		cep->cm_id->rem_ref(id);
+-		cep->cm_id = NULL;
 -	}
-+	if (isert_alloc_rx_descriptors(isert_conn))
-+		return;
-+
-+	if (isert_post_recvm(isert_conn, ISERT_QP_MAX_RECV_DTOS))
-+		return;
-+
-+	/* Now we are in FULL_FEATURE phase */
-+	mutex_lock(&isert_conn->mutex);
-+	isert_conn->state = ISER_CONN_FULL_FEATURE;
-+	mutex_unlock(&isert_conn->mutex);
-+
-+	if (isert_login_post_send(isert_conn, &isert_conn->login_tx_desc))
-+		return;
++	siw_free_cm_id(cep);
+ 	if (qp->cep) {
+ 		siw_cep_put(cep);
+ 		qp->cep = NULL;
+@@ -1890,10 +1894,7 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
+ 	if (cep) {
+ 		siw_cep_set_inuse(cep);
  
- 	init_completion(&comp);
+-		if (cep->cm_id) {
+-			cep->cm_id->rem_ref(cep->cm_id);
+-			cep->cm_id = NULL;
+-		}
++		siw_free_cm_id(cep);
+ 		cep->sock = NULL;
+ 		siw_socket_disassoc(s);
+ 		cep->state = SIW_EPSTATE_CLOSED;
+@@ -1923,10 +1924,7 @@ static void siw_drop_listeners(struct iw_cm_id *id)
  
+ 		siw_cep_set_inuse(cep);
+ 
+-		if (cep->cm_id) {
+-			cep->cm_id->rem_ref(cep->cm_id);
+-			cep->cm_id = NULL;
+-		}
++		siw_free_cm_id(cep);
+ 		if (cep->sock) {
+ 			siw_socket_disassoc(cep->sock);
+ 			sock_release(cep->sock);
 -- 
 2.53.0
 
