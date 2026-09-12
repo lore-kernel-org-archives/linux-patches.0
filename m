@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D02832E757;
-	Sat, 12 Sep 2026 15:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D752E32B102;
+	Sat, 12 Sep 2026 15:11:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225871; cv=none; b=u2BCw6qma3e3fEQTu5MM+B7haW6b6N7dZVFbQRoY3JwLJemNjMdIMMydlTCMYOLAkuoMcWtvKvWo5Hl7NYcpj2jwDxeJAmPOFtHTQEwd92qNWdwrIA70I1Ve0jXVNyGB3kW8rRdQATbj1m2dwXyFCzccjV0+DkIZ/pvpoi0XvGs=
+	t=1789225876; cv=none; b=AWWkC0lH1aPdt5F7MhzWToo+xrTKWcU17KtxrYbBkSct8Wgtr37EaTQuW3RQsPJoahEaWg9O1yaGMslToYIHcG5WHP3EIO5tklf4wZRek1vVH228Ej2s4ZjsdUKqXyOkCP8mSMU2fM+rMhcFMjSitcBi/yE4QhRhDu8I+RHCpO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225871; c=relaxed/simple;
-	bh=CK61Se0N631hkUaAWYXSxt52SfVI6sYLqhA8YFVgPcg=;
+	s=arc-20240116; t=1789225876; c=relaxed/simple;
+	bh=Z+VFq5an71L+pBDGmNEHHHDVXlEg03mF1QgS1KFkIII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dhu8C5RaqCoo4ywghS+SAL7rBj+KOsSDz8MG5qleXk3+OlClsDxbY5Z29a1H+s3ZMcyzmKP8mVGCAp1uYyMVZ9s0r4LaS0ZIA3uyPgwpud4baJ9CKPiBSHCFG+BSFBa6fkcFzVMO58XeqO7GraE4LebiKx6jWNWkk/xYoNdre8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ebxp40Qb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eA1gJ5SOHFpLrdD8ZXMoULQ309tvtPP01/nT8Ij0pYDGV82bjO2WJYF0zL+EowxlbkJ6Qm3qgq1l3RrYsYq6Y22acz4Twk4bk/6AvdIHSAQJ0zYrwrejXlOWDbBF/yB3WuztxUrXXm8MIIhyTMDvesjSSEk+JiIx6qQCpqKic/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LYHGjws; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ebxp40Qb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF581F000FF;
-	Sat, 12 Sep 2026 15:11:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LYHGjws"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C3D61F000FF;
+	Sat, 12 Sep 2026 15:11:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225869;
-	bh=RriIXdRqUX83qmz4FD7yDBGy116dFrITN5ibi4m5lxM=;
+	s=korg; t=1789225874;
+	bh=PRjRi1+uP5MxOnuCq0EEvnlgsKyrcu0dYwNN/K4kAbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ebxp40QbVWCZapiXYN9iPhU7BGrSAAtiRDt40FczcOIneehT94theXeKu1uYdzAkX
-	 iPG57z0xHnFc0uApTHHl747fVL2eA93tyvC2PBPwbGjzSzFus8iG+EpCOHO7UvlUCV
-	 2ZqQrzDDeBTDmJb+NPSiCx5F4KEA+BzCQUQ2HiE0=
+	b=1LYHGjwslraxEM7//rnQR1koSnFgzbGr9gk5qikbV4XMBAhajmbLcqte8usb+AgpA
+	 4pNroaffdt531bxzw7JHLL1nKs8x2dceIPhDQoaCYGKmVRq3uZddNPBTFJf5xZV/DK
+	 AJZBtBy+QwWzXmTY6FSXc7Qq/WcZKR5sKOMW2Mz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nikolay Aleksandrov <razor@blackwall.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1287/1424] bridge: add MDB get uAPI attributes
-Date: Sat, 12 Sep 2026 09:01:59 +0200
-Message-ID: <20260912065636.094757334@linuxfoundation.org>
+Subject: [PATCH 6.6 1288/1424] net: Add MDB get device operation
+Date: Sat, 12 Sep 2026 09:02:00 +0200
+Message-ID: <20260912065636.116537396@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -54,25 +54,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 83c1bbeb864f2a197603b91b3e0f748cca64543d ]
+[ Upstream commit 62f47bf9e2c00eea457cad8fa43c24ed0282b37a ]
 
-Add MDB get attributes that correspond to the MDB set attributes used in
-RTM_NEWMDB messages. Specifically, add 'MDBA_GET_ENTRY' which will hold
-a 'struct br_mdb_entry' and 'MDBA_GET_ENTRY_ATTRS' which will hold
-'MDBE_ATTR_*' attributes that are used as indexes (source IP and source
-VNI).
-
-An example request will look as follows:
-
-[ struct nlmsghdr ]
-[ struct br_port_msg ]
-[ MDBA_GET_ENTRY ]
-	struct br_mdb_entry
-[ MDBA_GET_ENTRY_ATTRS ]
-	[ MDBE_ATTR_SOURCE ]
-		struct in_addr / struct in6_addr
-	[ MDBE_ATTR_SRC_VNI ]
-		u32
+Add MDB net device operation that will be invoked by rtnetlink code in
+response to received RTM_GETMDB messages. Subsequent patches will
+implement the operation in the bridge and VXLAN drivers.
 
 Signed-off-by: Ido Schimmel <idosch@nvidia.com>
 Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
@@ -80,38 +66,24 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: bc2dc66a6693 ("vxlan: mdb: Fix use-after-free in vxlan_mdb_flush()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/if_bridge.h | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ include/linux/netdevice.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/uapi/linux/if_bridge.h b/include/uapi/linux/if_bridge.h
-index f95326fce6bba..2e23f99dc0f15 100644
---- a/include/uapi/linux/if_bridge.h
-+++ b/include/uapi/linux/if_bridge.h
-@@ -723,6 +723,24 @@ enum {
- };
- #define MDBA_SET_ENTRY_MAX (__MDBA_SET_ENTRY_MAX - 1)
- 
-+/* [MDBA_GET_ENTRY] = {
-+ *    struct br_mdb_entry
-+ *    [MDBA_GET_ENTRY_ATTRS] = {
-+ *       [MDBE_ATTR_SOURCE]
-+ *          struct in_addr / struct in6_addr
-+ *       [MDBE_ATTR_SRC_VNI]
-+ *          u32
-+ *    }
-+ * }
-+ */
-+enum {
-+	MDBA_GET_ENTRY_UNSPEC,
-+	MDBA_GET_ENTRY,
-+	MDBA_GET_ENTRY_ATTRS,
-+	__MDBA_GET_ENTRY_MAX,
-+};
-+#define MDBA_GET_ENTRY_MAX (__MDBA_GET_ENTRY_MAX - 1)
-+
- /* [MDBA_SET_ENTRY_ATTRS] = {
-  *    [MDBE_ATTR_xxx]
-  *    ...
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index eefbe40295b1c..2b4094ac2e3bc 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -1594,6 +1594,10 @@ struct net_device_ops {
+ 	int			(*ndo_mdb_dump)(struct net_device *dev,
+ 						struct sk_buff *skb,
+ 						struct netlink_callback *cb);
++	int			(*ndo_mdb_get)(struct net_device *dev,
++					       struct nlattr *tb[], u32 portid,
++					       u32 seq,
++					       struct netlink_ext_ack *extack);
+ 	int			(*ndo_bridge_setlink)(struct net_device *dev,
+ 						      struct nlmsghdr *nlh,
+ 						      u16 flags,
 -- 
 2.53.0
 
