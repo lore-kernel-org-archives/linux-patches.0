@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748F336654F;
-	Sat, 12 Sep 2026 07:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E02364049;
+	Sat, 12 Sep 2026 07:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199665; cv=none; b=QX0E1IS7m8SyHjtOYMHYSr3ql8zcXgcp4na1QEfWrGzdpMd+ZP8WSUlHVM9HM829imVVyTkPMNcJSp3sa1leJNq13FQvl/OjjiJ/Fbv2lO34xzRlvCQA2S4nYH3HVohmuQZQKok46lEcOUSqtLQ5OdTKMBbghGR/iyN6t9znUa8=
+	t=1789199670; cv=none; b=hlhyAWpI0MFFImvd9jKmxKh+VYGka1BAdXvdBnRUsv7OL+tu7XixQf9nEKFZ5ZeC9efonOZcAYlv37pU9p0hK2SP5aWKnpqqgVZOt8473GLD6WFYoP0OFfpCcqwwfmOK/u3T/DCjjAPFODRVkgJtxzWnR2RdJf4bRkEyXDfa4TU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199665; c=relaxed/simple;
-	bh=pqUPyS7Wey6R1RXFiU7xv4gXPfRp8gAPq1rwHfdzM4E=;
+	s=arc-20240116; t=1789199670; c=relaxed/simple;
+	bh=TdX/x5tk9O9/FsTXnXvHIQRGXTs8BN1SEYmeKp/iK0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LKIb309NQ4284dB5gwGdw1Kda4NtsUfTW60QHmWy6qF8jJXey5hyCre58KyA8dpXhgcfvlnaQ2VdubzWrZ9rkzESWCfMWo541SXrnF2FYjWicblBw/ewhSMfqH9UxLOfICEet93qqVaJxDAncb8tG+Sojox+x6zlkalUyROAnL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=czViJuCa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D/MT25qjGy+rr/h3kDjZJif/SB6Wlvc5FtLGN64uowcThpljEEp0N6sz9rEmetbDihB6Fs9Rv1G8+1x5IBaptD8+qGDIdaAQdsmjG5gt83+rLzAkBfBYeMRhvrsg82IG90ySMeY+fvWOVYkkMHYCpwLulOkf3tGQJ+00TIBy/W8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VZh+br53; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czViJuCa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791A11F000FF;
-	Sat, 12 Sep 2026 07:54:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VZh+br53"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF011F000FF;
+	Sat, 12 Sep 2026 07:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199664;
-	bh=CAr2GvpLTKsv7jMEazXKyZWs4Y27hAhN7TBPE79KWas=;
+	s=korg; t=1789199668;
+	bh=O8EN/yRLK98GQ79QEhGegzvd3J6oMoX464PMoXENKkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=czViJuCafB1DRi9glqwmiAn7VLfSmYL/dOGM/pJQysGg/oB7oo1QPvrAHg6LK5b+6
-	 Q3GL63hzc5GwraAtSXw2NlpLqm/zxtsNPu+tD41mZtX28sc8VJwZ5LjNcSV2zCHfiu
-	 YQOCYFGjRvIJAzTHkx8LZ+1kCrVCEoV7GdSOSNL4=
+	b=VZh+br535LwVL4x8jxgucLqhvv45E9B7lqMN6aIMw/fzBNwNEcEuP5SzQkOe9uBLO
+	 4F6dHb0UL/t3QAFL5+gTAom8J9XVQ149QG9COHWYY5uEOSNxmmRaqDRyc8KGslPcgM
+	 8hakXIjg17MuxlzvrFHhKyTrgD/iPo9gY8WPAC3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Cheng Xu <chengyou@linux.alibaba.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0630/1815] RDMA/erdma: complete object teardown when the destroy command fails
-Date: Sat, 12 Sep 2026 08:39:40 +0200
-Message-ID: <20260912065703.669684162@linuxfoundation.org>
+Subject: [PATCH 7.2 0595/1815] ext4: drain in-flight DIO before buffered write fallback
+Date: Sat, 12 Sep 2026 08:39:05 +0200
+Message-ID: <20260912065702.852273621@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,85 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit 652befcba956ef357f480525ccbe25c59bc81d4d ]
+[ Upstream commit 15cdefd0c0522f9d5e12d947fa04f4c11649b699 ]
 
-erdma_destroy_qp(), erdma_destroy_cq(), erdma_dereg_mr(), and
-erdma_destroy_ah() returned early when erdma_post_cmd_wait() failed,
-leaking the queue buffers, MTTs, doorbells and the STAG, QPN, CQN and AHN
-identifiers. A command timeout clears ERDMA_CMDQ_STATE_OK_BIT and
-permanently disables the command queue, so no retry can succeed; the RDMA
-core keeps the object after a failed destructor and forced uverbs cleanup
-then nulls the pointers, making the resources unreachable.
+generic/746 started failing intermittently on ext3 (no-extent inodes).
+The test triggers 'Page cache invalidation failure on direct I/O'
+warnings and subsequent fsync returns -EIO. Adding a 50ms delay
+between ext4_buffered_write_iter() and filemap_write_and_wait_range()
+in ext4_dio_write_iter() makes the race almost always reproducible.
 
-Warn on failure but release every software-owned resource and return
-success, since during terminal destruction the hardware command result is
-only diagnostic.
+On no-extent inodes, DIO writes to holes cannot use unwritten extents,
+so ext4_iomap_alloc() leaves m_flags=0 and ext4_map_blocks() returns 0.
+The iomap layer then returns -ENOTBLK, causing fallback to buffered I/O.
 
-Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
-Link: https://patch.msgid.link/20260722-b4-qp-and-cq-memory-are-leaked-if-the-d-v1-1-97e223dc1c96@nvidia.com
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Acked-by: Cheng Xu <chengyou@linux.alibaba.com>
+The fallback path in ext4_dio_write_iter() calls
+ext4_buffered_write_iter() which dirties pages, then does flush and
+invalidate. However, there's an unprotected window between
+ext4_buffered_write_iter() returning (with inode lock released) and
+the subsequent flush+invalidate.
+
+Concurrent async DIO completions from other threads can run
+kiocb_invalidate_post_direct_write() during this window. If pages have
+been re-dirtied, post-invalidation finds dirty pages and triggers the
+warning, setting -EIO in the error sequence.
+
+Consider a file with two 4k extents: [hole][written]. Thread A does
+DIO to the written extent, while thread B does DIO spanning both:
+
+  kworker A (4k DIO, allocated block)    kworker B (8k DIO, fallback)
+  -----------------------------------    ----------------------------
+  inode_lock_shared()                    inode_lock_shared()
+  iomap_dio_rw():                        iomap_dio_rw():
+    kiocb_invalidate_pages -> clean        iomap_begin -> -ENOTBLK
+    submit_bio (async)                     dio->size = 0
+  inode_unlock_shared()                  inode_unlock_shared()
+
+  [bio pending in block layer]           /* fallback: lock released */
+                                         ext4_buffered_write_iter()
+                                           inode_lock(exclusive)
+                                           generic_perform_write()
+                                             -> dirty pages [0, 8k]
+                                           inode_unlock(exclusive)
+
+                                         /* pages dirty, no lock */
+  [bio completes]                        filemap_write_and_wait_range()
+  iomap_dio_complete()                     -> flush dirty pages
+    kiocb_invalidate_post_direct_write() invalidate_mapping_pages()
+      invalidate_inode_pages2_range()
+      -> finds dirty page!
+      -> dio_warn_stale_pagecache()
+      -> errseq_set(-EIO)
+
+This issue can be triggered through normal I/O paths, not just
+intentionally overlapping DIO writes from userspace. For example,
+generic/746 uses a loop device where multiple kworkers issue concurrent
+I/O to the backing file. Additionally, when block_size < folio_size,
+non-overlapping DIO writes that share a large folio can also trigger
+the race.
+
+Add inode_dio_wait() in ext4_buffered_write_iter() before
+ext4_write_checks() to drain all in-flight DIO. This ensures that
+all DIO clears existing pages before submitting IO (via
+kiocb_invalidate_pages()), all BIO waits for all DIO to complete
+(via inode_dio_wait()), and ext4_write_checks() observes the inode
+size after all completed DIO so that ext4_block_zero_eof() does not
+race with in-flight DIO, thus eliminating the race.
+
+Fixes: 378f32bab371 ("ext4: introduce direct I/O write using iomap infrastructure")
+Suggested-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/d1adcf7c-c276-458d-9cac-68a4410f7626@gmail.com
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Link: https://patch.msgid.link/20260629113827.4074335-3-libaokun@linux.alibaba.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_verbs.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ fs/ext4/file.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
-index 74afe6eb18b0b..58bcae0e0fadd 100644
---- a/drivers/infiniband/hw/erdma/erdma_verbs.c
-+++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
-@@ -1304,8 +1304,15 @@ int erdma_dereg_mr(struct ib_mr *ibmr, struct ib_udata *udata)
+diff --git a/fs/ext4/file.c b/fs/ext4/file.c
+index eb1a323962b10..130edf1ac2423 100644
+--- a/fs/ext4/file.c
++++ b/fs/ext4/file.c
+@@ -309,6 +309,13 @@ static ssize_t ext4_buffered_write_iter(struct kiocb *iocb,
+ 		return -EOPNOTSUPP;
  
- 	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
- 				  true);
+ 	inode_lock(inode);
++
 +	/*
-+	 * A timeout disables the command queue, so retry cannot succeed.  Treat
-+	 * terminal command failures as diagnostic; propagating them can make
-+	 * forced uverbs cleanup discard the last software resource pointers.
++	 * Prevent concurrent direct I/O and buffered I/O to the same file
++	 * range. Wait for in-flight DIO to finish before dirtying pages.
 +	 */
- 	if (ret)
--		return ret;
-+		ibdev_warn_ratelimited(&dev->ibdev,
-+				       "failed to deregister MR 0x%x: %d\n",
-+				       ibmr->lkey, ret);
- 
- 	erdma_free_idx(&dev->res_cb[ERDMA_RES_TYPE_STAG_IDX], ibmr->lkey >> 8);
- 
-@@ -1331,7 +1338,9 @@ int erdma_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
- 	err = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
- 				  true);
- 	if (err)
--		return err;
-+		ibdev_warn_ratelimited(&dev->ibdev,
-+				       "failed to destroy CQ %u: %d\n",
-+				       cq->cqn, err);
- 
- 	if (rdma_is_kernel_res(&cq->ibcq.res)) {
- 		dma_free_coherent(&dev->pdev->dev, cq->depth << CQE_SHIFT,
-@@ -1379,7 +1388,9 @@ int erdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
- 	err = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
- 				  true);
- 	if (err)
--		return err;
-+		ibdev_warn_ratelimited(&dev->ibdev,
-+				       "failed to destroy QP %u: %d\n",
-+				       QP_ID(qp), err);
- 
- 	erdma_qp_put(qp);
- 	wait_for_completion(&qp->safe_free);
-@@ -2281,7 +2292,9 @@ int erdma_destroy_ah(struct ib_ah *ibah, u32 flags)
- 	ret = erdma_post_cmd_wait(&dev->cmdq, &req, sizeof(req), NULL, NULL,
- 				  flags & RDMA_DESTROY_AH_SLEEPABLE);
- 	if (ret)
--		return ret;
-+		ibdev_warn_ratelimited(&dev->ibdev,
-+				       "failed to destroy AH %u: %d\n",
-+				       ah->ahn, ret);
- 
- 	erdma_free_idx(&dev->res_cb[ERDMA_RES_TYPE_AH], ah->ahn);
- 
++	inode_dio_wait(inode);
++
+ 	ret = ext4_write_checks(iocb, from);
+ 	if (ret <= 0)
+ 		goto out;
 -- 
 2.53.0
 
