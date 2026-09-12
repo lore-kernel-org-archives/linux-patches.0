@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174F83FD956;
-	Sat, 12 Sep 2026 09:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A3137AA65;
+	Sat, 12 Sep 2026 09:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204096; cv=none; b=HfoNN4CXjmjjdqCjjUkVKdvo4LJswH5P4+54EfDlJInYA12KMpDwSEjswOIDMFTaqgN6nGhuvhVySHtzKUFHsCtv1BWQEqYxY/4gccLWFy4lcmnoWLV+A5QhNFepjT89SyoSvn6m9sa0Hq3XTXaIy1rfr6Fa+xgapWjlvfqcWh4=
+	t=1789204100; cv=none; b=D/7CvS4gGtHds7pOvDfaF8ZJpdu1chAl/HzBHGo5mosNrzVw7WlG6z2rSbYc3e1oOU2csJSThrKtU+DcGIT0PZbKe4y5grwyPxR6cEyOREclA+MDXjEFv9LDKEKAi/1lks4k8xNVUhs8hAldSpRnyyg2dnK/dblHQputejD+MzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204096; c=relaxed/simple;
-	bh=uj1WBrpgr46Djjgltm+V1A8rXF+OuPwQ+ZY5t4wfxtE=;
+	s=arc-20240116; t=1789204100; c=relaxed/simple;
+	bh=SizT2z7M06KtGAAjRz6V/sWq+KCd17cj7MGwoRKfbLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ess71OIpODm0miM2JMT87pAuv1bpuaWn99wz0ah4c1jge73wXyvNYv9xbxdkBETLSASmYmEtwtAwK9ywuWaTU8oeDT2cZoguL0hR6VLBVDQo+5kGDNMuWm2e2iImplkuVLrpfC3mdS187Nycsrl0qNkpgjH095gHmHzmnSX8mDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x95lKghq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E7vjeR4LavMWPrK+XtHO+EODbiPRptz+0sY6BGUkscXRAxCAsh6wydwX52fJHU1lNXAkHlfpxulLAJFc6sG+VlOXS7537mwWzM3g2kuksjA8z5wKCsSOgP02qXYFYmxhxFqU/IQCnNg+TOjqRUb9UYNzX9ebUj1n5HSEUAoK0a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUI3xqfF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x95lKghq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14921F000FF;
-	Sat, 12 Sep 2026 09:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUI3xqfF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E080B1F000FF;
+	Sat, 12 Sep 2026 09:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204093;
-	bh=UNPmolwqHBfZgklqST1F8kYsCmVuZWq68yXkojlO/jA=;
+	s=korg; t=1789204098;
+	bh=1Yd/P7z+PsN2CLLOnycGimZtztrU30Daa7i0PtS2Jq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x95lKghq5llRaCowh8GWGcXvJkjuruB+S/S7Qvk/LpYwvp2+IAFDzpRveKZcRjypt
-	 qYp+QMLVJ/sqjPY2u1vwgsb2vkbFjp0DwPz1cwKC6mYL2D/iJkuOCJ3eymw1btKrdc
-	 af0ag4YICdXoEv6aHbMgiPduDAxAAAOjW4hqL8So=
+	b=NUI3xqfFWHNLIe7FeAW1uDMwe5FbMVeHcCuJdkwJQpKnXC59qD4xtmlCNHaGckh3l
+	 09vroek03ngX47iHXMufsf8jdpYMsT1b260cryStrB8tHiZtTKVAaK1WWEyvTQq0Qk
+	 xvTTxk44XLVQxvdoeBjF8JpPaemJniFVboJveo6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ze Tan <tanze@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1541/1815] ksmbd: add procfs monitoring for active shares
-Date: Sat, 12 Sep 2026 08:54:51 +0200
-Message-ID: <20260912065725.183001372@linuxfoundation.org>
+Subject: [PATCH 7.2 1542/1815] smb/server: warn if ksmbd_proc_create() fails
+Date: Sat, 12 Sep 2026 08:54:52 +0200
+Message-ID: <20260912065725.205336427@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,182 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Ze Tan <tanze@kylinos.cn>
 
-[ Upstream commit 1248f400e0997b6e881454488baaf91f8e1828d5 ]
+[ Upstream commit 9a74739026fb71d1197183a067eef657bb5fba77 ]
 
-There is no kernel-side view of the share configurations currently cached
-by active tree connections.
+Print a warning if the sessions procfs entry cannot be created.
 
-Add a shares proc entry that reports each active share name, type,
-tree-connection count, create masks, and descriptive configuration flags.
-Maintain a per-share tree-connection counter with the existing global
-counter so the value can be read without walking every session.
-
+Signed-off-by: Ze Tan <tanze@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Stable-dep-of: 492b24b5b651 ("smb/server: update session counter under sessions table lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/share_config.c | 57 +++++++++++++++++++++++++++++++
- fs/smb/server/mgmt/share_config.h | 25 ++++++++++++++
- fs/smb/server/mgmt/tree_connect.c |  2 ++
- fs/smb/server/server.c            |  1 +
- 4 files changed, 85 insertions(+)
+ fs/smb/server/connection.c        | 3 ++-
+ fs/smb/server/mgmt/user_session.c | 5 ++++-
+ fs/smb/server/server.c            | 8 ++++++--
+ fs/smb/server/vfs_cache.c         | 6 ++++--
+ 4 files changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/server/mgmt/share_config.c b/fs/smb/server/mgmt/share_config.c
-index b4f56e7338659..53d6f71dd8718 100644
---- a/fs/smb/server/mgmt/share_config.c
-+++ b/fs/smb/server/mgmt/share_config.c
-@@ -28,6 +28,62 @@ struct ksmbd_veto_pattern {
- 	struct list_head	list;
- };
- 
-+#ifdef CONFIG_PROC_FS
-+static const struct ksmbd_const_name ksmbd_share_flag_names[] = {
-+	{KSMBD_SHARE_FLAG_AVAILABLE, "available"},
-+	{KSMBD_SHARE_FLAG_BROWSEABLE, "browseable"},
-+	{KSMBD_SHARE_FLAG_WRITEABLE, "writeable"},
-+	{KSMBD_SHARE_FLAG_READONLY, "read-only"},
-+	{KSMBD_SHARE_FLAG_GUEST_OK, "guest-ok"},
-+	{KSMBD_SHARE_FLAG_GUEST_ONLY, "guest-only"},
-+	{KSMBD_SHARE_FLAG_STORE_DOS_ATTRS, "store-dos-attrs"},
-+	{KSMBD_SHARE_FLAG_OPLOCKS, "oplocks"},
-+	{KSMBD_SHARE_FLAG_PIPE, "pipe"},
-+	{KSMBD_SHARE_FLAG_HIDE_DOT_FILES, "hide-dot-files"},
-+	{KSMBD_SHARE_FLAG_INHERIT_OWNER, "inherit-owner"},
-+	{KSMBD_SHARE_FLAG_STREAMS, "streams"},
-+	{KSMBD_SHARE_FLAG_FOLLOW_SYMLINKS, "follow-symlinks"},
-+	{KSMBD_SHARE_FLAG_ACL_XATTR, "acl-xattr"},
-+	{KSMBD_SHARE_FLAG_UPDATE, "update"},
-+	{KSMBD_SHARE_FLAG_CROSSMNT, "crossmnt"},
-+	{KSMBD_SHARE_FLAG_CONTINUOUS_AVAILABILITY, "continuous-availability"},
-+};
-+
-+static int proc_show_shares(struct seq_file *m, void *v)
-+{
-+	struct ksmbd_share_config *share;
-+	int i;
-+
-+	down_read(&shares_table_lock);
-+	hash_for_each(shares_table, i, share, hlist) {
-+		seq_printf(m, "name:\t%s\n", share->name);
-+		seq_printf(m, "type:\t%s\n",
-+			   test_share_config_flag(share, KSMBD_SHARE_FLAG_PIPE) ?
-+			   "pipe" : "disk");
-+		seq_printf(m, "tree_connects:\t%d\n",
-+			   atomic_read(&share->tree_connections));
-+		seq_printf(m, "file_mask:\t0%07o\n", share->create_mask);
-+		seq_printf(m, "directory_mask:\t0%07o\n", share->directory_mask);
-+		seq_puts(m, "flags:\t");
-+		ksmbd_proc_show_flag_names(m, ksmbd_share_flag_names,
-+					   ARRAY_SIZE(ksmbd_share_flag_names),
-+					   share->flags);
-+		seq_puts(m, "\n\n");
-+	}
-+	up_read(&shares_table_lock);
-+	return 0;
-+}
-+
-+int create_proc_shares(void)
-+{
-+	if (!ksmbd_proc_create("shares", proc_show_shares, NULL))
-+		return -ENOMEM;
-+	return 0;
-+}
-+#else
-+int create_proc_shares(void) { return 0; }
-+#endif
-+
- static unsigned int share_name_hash(const char *name)
- {
- 	return jhash(name, strlen(name), 0);
-@@ -156,6 +212,7 @@ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
- 
- 	share->flags = resp->flags;
- 	atomic_set(&share->refcount, 1);
-+	ksmbd_share_tree_conn_init(share);
- 	INIT_LIST_HEAD(&share->veto_list);
- 	share->name = kstrdup(name, KSMBD_DEFAULT_GFP);
- 	if (!share->name) {
-diff --git a/fs/smb/server/mgmt/share_config.h b/fs/smb/server/mgmt/share_config.h
-index d4ac2dd4de204..d157545fe7d1d 100644
---- a/fs/smb/server/mgmt/share_config.h
-+++ b/fs/smb/server/mgmt/share_config.h
-@@ -24,6 +24,9 @@ struct ksmbd_share_config {
- 	struct path		vfs_path;
- 
- 	atomic_t		refcount;
-+#ifdef CONFIG_PROC_FS
-+	atomic_t		tree_connections;
-+#endif
- 	struct hlist_node	hlist;
- 	unsigned short		create_mask;
- 	unsigned short		directory_mask;
-@@ -60,6 +63,27 @@ static inline int test_share_config_flag(struct ksmbd_share_config *share,
- 	return share->flags & flag;
+diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
+index 49ee4f281a1f2..af73c2ed5d249 100644
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -665,7 +665,8 @@ int ksmbd_conn_transport_init(void)
+ 	}
+ out:
+ 	mutex_unlock(&init_lock);
+-	create_proc_clients();
++	if (create_proc_clients())
++		pr_warn("Unable to create clients procfs entry\n");
+ 	return ret;
  }
  
-+#ifdef CONFIG_PROC_FS
-+static inline void ksmbd_share_tree_conn_init(struct ksmbd_share_config *share)
-+{
-+	atomic_set(&share->tree_connections, 0);
-+}
-+
-+static inline void ksmbd_share_tree_conn_inc(struct ksmbd_share_config *share)
-+{
-+	atomic_inc(&share->tree_connections);
-+}
-+
-+static inline void ksmbd_share_tree_conn_dec(struct ksmbd_share_config *share)
-+{
-+	atomic_dec(&share->tree_connections);
-+}
-+#else
-+static inline void ksmbd_share_tree_conn_init(struct ksmbd_share_config *share) {}
-+static inline void ksmbd_share_tree_conn_inc(struct ksmbd_share_config *share) {}
-+static inline void ksmbd_share_tree_conn_dec(struct ksmbd_share_config *share) {}
-+#endif
-+
- void ksmbd_share_config_del(struct ksmbd_share_config *share);
- void __ksmbd_share_config_put(struct ksmbd_share_config *share);
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index 745db1fa566c5..215f4e66deda0 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -188,6 +188,8 @@ static int create_proc_session(struct ksmbd_session *sess)
+ 	snprintf(name, sizeof(name), "sessions/%llu", sess->id);
+ 	sess->proc_entry = ksmbd_proc_create(name,
+ 					     show_proc_session, sess);
++	if (!sess->proc_entry)
++		return -ENOMEM;
+ 	return 0;
+ }
  
-@@ -74,4 +98,5 @@ struct ksmbd_share_config *ksmbd_share_config_get(struct ksmbd_work *work,
- 						  const char *name);
- bool ksmbd_share_veto_filename(struct ksmbd_share_config *share,
- 			       const char *filename);
-+int create_proc_shares(void);
- #endif /* __SHARE_CONFIG_MANAGEMENT_H__ */
-diff --git a/fs/smb/server/mgmt/tree_connect.c b/fs/smb/server/mgmt/tree_connect.c
-index 3d04feaf8737a..dd1db3554caed 100644
---- a/fs/smb/server/mgmt/tree_connect.c
-+++ b/fs/smb/server/mgmt/tree_connect.c
-@@ -90,6 +90,7 @@ ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name)
- 		goto out_error;
- 	}
- 	ksmbd_counter_inc(KSMBD_COUNTER_TREE_CONNS);
-+	ksmbd_share_tree_conn_inc(sc);
- 	kvfree(resp);
- 	return status;
+@@ -724,7 +726,8 @@ static struct ksmbd_session *__session_create(int protocol)
+ 	hash_add(sessions_table, &sess->hlist, sess->id);
+ 	up_write(&sessions_table_lock);
  
-@@ -118,6 +119,7 @@ static int __ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
- 	ret = ksmbd_ipc_tree_disconnect_request(sess->id, tree_conn->id);
- 	ksmbd_release_tree_conn_id(sess, tree_conn->id);
- 	ksmbd_counter_dec(KSMBD_COUNTER_TREE_CONNS);
-+	ksmbd_share_tree_conn_dec(tree_conn->share_conf);
- 	if (atomic_dec_and_test(&tree_conn->refcount)) {
- 		ksmbd_share_config_put(tree_conn->share_conf);
- 		kfree(tree_conn);
+-	create_proc_session(sess);
++	if (create_proc_session(sess))
++		pr_warn_ratelimited("Unable to create session %llu procfs entry\n", sess->id);
+ 	ksmbd_counter_inc(KSMBD_COUNTER_SESSIONS);
+ 	return sess;
+ 
 diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
-index 46a67642f814e..7d17e2901dabb 100644
+index 7d17e2901dabb..0b080972e9085 100644
 --- a/fs/smb/server/server.c
 +++ b/fs/smb/server/server.c
-@@ -645,6 +645,7 @@ static int __init ksmbd_server_init(void)
+@@ -644,8 +644,12 @@ static int __init ksmbd_server_init(void)
+ 	ret = ksmbd_proc_init();
  	if (ret)
  		goto err_unregister;
- 	create_proc_sessions();
-+	create_proc_shares();
+-	create_proc_sessions();
+-	create_proc_shares();
++
++	if (create_proc_sessions())
++		pr_warn("Unable to create sessions procfs entry\n");
++
++	if (create_proc_shares())
++		pr_warn("Unable to create shares procfs entry\n");
  
  	ksmbd_server_tcp_callbacks_init();
+ 
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index 9e5a3bfaefaf8..293dab9b43be1 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -124,7 +124,8 @@ static int proc_show_files(struct seq_file *m, void *v)
+ 
+ static int create_proc_files(void)
+ {
+-	ksmbd_proc_create("files", proc_show_files, NULL);
++	if (!ksmbd_proc_create("files", proc_show_files, NULL))
++		return -ENOMEM;
+ 	return 0;
+ }
+ #else
+@@ -1678,7 +1679,8 @@ void ksmbd_close_session_fds(struct ksmbd_work *work)
+ 
+ int ksmbd_init_global_file_table(void)
+ {
+-	create_proc_files();
++	if (create_proc_files())
++		pr_warn("Unable to create files procfs entry\n");
+ 	return ksmbd_init_file_table(&global_ft);
+ }
  
 -- 
 2.53.0
