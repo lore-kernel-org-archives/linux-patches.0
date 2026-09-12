@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854CC37B00E;
-	Sat, 12 Sep 2026 13:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09D842586B;
+	Sat, 12 Sep 2026 13:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218890; cv=none; b=X48sSOoz/jqvb1JnKfS4mSFzYBL8pjBT35VqxLICGuF0gC4/F/CFpJ2polxYz2c3m9gbznIj/lkubIYM5xHCE3h/5yzyzWqGCdaDDURLbdd7rs32ogP0Xt45DO/sgKxbrDqCvoyvmgNIBtkezyTAnCtm6GgP+usOgAH2Bnz7BAQ=
+	t=1789218894; cv=none; b=D4bUjSy010K75r2osWdsecQZlIPAHrke/5eml2VNdl39d/fQo1GGOvrLPIdDLKaDsPrunIzrxS7rymG4xxAKXza1R2BJHrIBxQmWsWD8a285SQX10PV+jrxkX6j9SOpTGngdN2wRc3wHrUHaQMczRnUd4e1Lw9ncNrocVKGVUDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218890; c=relaxed/simple;
-	bh=QC7/r+M3I8hZYXJQx+xu1TNJKv1tf1KwCh0b4Jrh0r0=;
+	s=arc-20240116; t=1789218894; c=relaxed/simple;
+	bh=hYT6YjWNCJDYZdS9P+5/B5YFb/zxg+ZdYHeaiSvjruo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oFMrPP/ZpRCyTMFH1pmvWNhD30f9xc9S+13dV1FwcxQQtOguaH/Ef5ZGD4p5eJbiORJnIvbIDvr2m5wqcqguPhzYsLeDYxCuxLiPdhxoIDeI82DNMgfYN5UnikyHkXrtPVGSFhh1m2zrw6dFizQLf+0ccgZ5x389iJGfugAmNDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvD7Zxv/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DRL9xNXUCiQq3GcF1fyZeFIp761ykw1ENkwlUstmLdbjC6PR9mQmua5x2HEnl4Ndj91Xc9R4U4NMSr4nExb9/imMek5rP4Bl/Z0zu8WppK+3+oCGuzK8Y17GdZFSWjcQFoOc0D1xQr126bJde22wyyq6vxHDzP82czLaWSylG7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJ2Zs2rR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvD7Zxv/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4A81F000FF;
-	Sat, 12 Sep 2026 13:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJ2Zs2rR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFA01F000FF;
+	Sat, 12 Sep 2026 13:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218888;
-	bh=NrjHyRqDsr2yxvjWgxtLHebitzVj/eA0eJZB8UTo2gU=;
+	s=korg; t=1789218892;
+	bh=OqpTcbJcA3oocsdzXKFBYBMScSx1zcD9NvQMyqK9N3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RvD7Zxv/eLCAroGrAv3/ndbiN4aG+1PvYxQ7lT6MKKmdn4d2/kf//Z5NV7vDkKzlO
-	 0dM6tjqfp/EDPoUtrXKsQNdwYr1QlLOk7QRfVh+xXExoRSItL4rqQEzpY0Od7bc3zb
-	 WYiKAQgY484naySdG57fvbc2Vsu85iCxaiQD0bak=
+	b=WJ2Zs2rRy+n8aoX/TBdqcL8PUe25Oa68dG0nzJKRYe2MgnmMGtgV6vZX75Nd4pjVv
+	 HXe7afNOwX2xkpk9+CkXBpmmaCV2oKh+qYFl1X+ZqvkMILwpH5ed1rQIxh99c+IHx6
+	 hvhDKdAMfQNN27gifPzE8Xki1lQFMpp/pjpMcaE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Bradley Morgan <include@grrlz.net>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Cyrill Gorcuno <gorcunov@openvz.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1237/1376] rtc: gamecube: check return value of devm_rtc_register_device()
-Date: Sat, 12 Sep 2026 09:01:03 +0200
-Message-ID: <20260912065635.115112693@linuxfoundation.org>
+Subject: [PATCH 6.12 1238/1376] prctl: fix PR_SET_MM_AUXV losing the forced AT_NULL terminator
+Date: Sat, 12 Sep 2026 09:01:04 +0200
+Message-ID: <20260912065635.136493056@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,38 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Bradley Morgan <include@grrlz.net>
 
-[ Upstream commit ca45cfa74370644d371b552bef57938c19e3c80c ]
+[ Upstream commit 5146e0688d86f0654263e4b0e4ff1719b4072f16 ]
 
-gamecube_rtc_probe() ignored the return value of
-devm_rtc_register_device() and always returned success. Propagate the
-error so probe fails when RTC registration fails.
+prctl_set_auxv() copies the user vector into a stack buffer, forces
+AT_NULL on the last two entries there, and then copies only len bytes into
+mm->saved_auxv.  Which is fine until the vector is shorter than the
+buffer, because then the forced terminator sits past the end of the copy
+and never lands in saved_auxv at all.
 
-Fixes: 86559400b3ef ("rtc: gamecube: Add a RTC driver for the GameCube, Wii and Wii U")
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
-Link: https://patch.msgid.link/20260731080458.417532-1-gonglinkai@kylinos.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+The code even says
+
+	/* Make sure the last entry is always AT_NULL */
+
+and it does, just not in the part that gets copied.
+
+So mm->saved_auxv keeps the stale tail from exec.  Reproducing it is easy:
+from a process with CAP_SYS_RESOURCE (just run it as root), call
+prctl(PR_SET_MM, PR_SET_MM_AUXV, ...) with a vector that has a couple of
+entries and no AT_NULL inside len (32 bytes on arm64), and then hexdump
+/proc/self/auxv, or gcore the process and look at the AUXV note with
+readelf -n.  This is arm64, the new vector was just { AT_UID, 0x1111,
+AT_GID, 0x2222 }:
+
+    idx  before (from exec)               after the prctl
+    [0]  AT_SYSINFO_EHDR   0x7ed1d6e000   AT_UID    0x1111    <- new
+    [1]  AT_MINSIGSTKSZ    0x1270         AT_GID    0x2222    <- new
+    [2]  AT_HWCAP          0x119fff       AT_HWCAP  0x119fff  <- stale
+    [3]  AT_PAGESZ         0x1000         AT_PAGESZ 0x1000    <- stale
+    ...  16 more entries                  ...                 <- stale
+    [20] AT_NULL           0x0            AT_NULL   0x0
+
+21 entries before the prctl, still 21 after: the two new ones plus all 19
+left over from exec.
+
+Every consumer walks the vector until AT_NULL, so what they get now is a
+vector that never existed at exec, the head from the prctl glued onto the
+tail of the old binary.  gdb and crash pull the AUXV note out of coredumps
+to find AT_PHDR, AT_ENTRY, AT_SYSINFO_EHDR and friends, and a mixed vector
+points them at the wrong layout.  /proc/<pid>/auxv and PR_GET_AUXV hand
+the same mess out to live processes too.  Nothing crashes, everything just
+quietly reads a frankenstein auxv.
+
+And callers that terminate their own vector hide the whole thing, which is
+likely why nobody noticed since PR_SET_MM_AUXV landed in 2012.  Nothing
+exciting security wise either, I mean it needs CAP_SYS_RESOURCE to begin
+with.
+
+prctl_set_mm_map() right above already copies the whole buffer for exactly
+this reason, so just do the same here.  user_auxv is zero initialized and
+only partially filled from userspace, so the rest is zeros and nothing
+leaks.
+
+Link: https://lore.kernel.org/20260809002901.32591-1-include@grrlz.net
+Fixes: fe8c7f5cbf91 ("c/r: prctl: extend PR_SET_MM to set up more mm_struct entries")
+Signed-off-by: Bradley Morgan <include@grrlz.net>
+Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Cc: Cyrill Gorcuno <gorcunov@openvz.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-gamecube.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ kernel/sys.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-gamecube.c b/drivers/rtc/rtc-gamecube.c
-index 045d5d45ab4b0..889028cecf4a5 100644
---- a/drivers/rtc/rtc-gamecube.c
-+++ b/drivers/rtc/rtc-gamecube.c
-@@ -355,9 +355,7 @@ static int gamecube_rtc_probe(struct platform_device *pdev)
- 	rtc->range_max = U32_MAX;
- 	rtc->ops = &gamecube_rtc_ops;
+diff --git a/kernel/sys.c b/kernel/sys.c
+index 8283e35c9eeb5..6c870636ea73c 100644
+--- a/kernel/sys.c
++++ b/kernel/sys.c
+@@ -2153,7 +2153,7 @@ static int prctl_set_auxv(struct mm_struct *mm, unsigned long addr,
+ 	BUILD_BUG_ON(sizeof(user_auxv) != sizeof(mm->saved_auxv));
  
--	devm_rtc_register_device(rtc);
--
--	return 0;
-+	return devm_rtc_register_device(rtc);
- }
+ 	task_lock(current);
+-	memcpy(mm->saved_auxv, user_auxv, len);
++	memcpy(mm->saved_auxv, user_auxv, sizeof(user_auxv));
+ 	task_unlock(current);
  
- static const struct of_device_id gamecube_rtc_of_match[] = {
+ 	return 0;
 -- 
 2.53.0
 
