@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B933DD51A;
-	Sat, 12 Sep 2026 12:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C362DBF75;
+	Sat, 12 Sep 2026 12:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214627; cv=none; b=EHKp+C3RTnitz7tVYP6bebmiGw20TRppiVRledvN//9MZOr4VPQEjjlPa6ylkw1UjAflhNTuwXrTKHOjrvdjL1MDlcCyF/mOboE9AOd37bK+lUz9bGHlwsZRVkXY11dyvipz0QRVhFzYmwSh3dhDuBKrY3Qj6waftZ3dMaq38H0=
+	t=1789214632; cv=none; b=qzd1XbCzgGSwPbpR2f1NgvUfbFstOsWH65t8uaTSJ6taVwX7DwlpJmkXvPHD10iRDmDci/5tXDcb8mR4xnJ2XeNyyYANWLFFx4vcWvSD2TDF+mx2xI7+GuokjjEB8rZbAdw1BITvtNRYS41U/9f31uv7Z7tnNkgK6/FUuyIGqgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214627; c=relaxed/simple;
-	bh=EtAuicNHm4reWNt61h2l3E99G13x/w7MmZo86Cdo+ZI=;
+	s=arc-20240116; t=1789214632; c=relaxed/simple;
+	bh=G/Xs9a2x0nYlbJ7ua03fhjcRVwZ2rJEz1Ms0R8++XGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LJGYGK99CAbind2/Ry7WBaclxzXZPVMAcMIKTpXe5g4HAgCu9hXlrBBlFx7ri8AnZF+N+Xjvl6+baNtYi70RCct89WzKQZs6BOKOgNiEnpiop3R7xqtNssbtXeEXOEG+uuulysSPs7XB1gPUinmZc7/icUo16EpOUl0TAnLuBAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLXeNP0I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CoshlqjoooLN8N3uMZSk+JpJwi+gZci3Ywf0WbDfzFGushxU0oxzS43JOkPIj7vCfopKQQUrOi3Fiqzeec1nECnezOqMd5Hiahbta9KJMz844DUifF0eSpnoB+C344o7WuRcDg/RYqJUaWNxNZZYhgFEwqSugNq3ozbPC2w3/Ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceZ2Ttce; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLXeNP0I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236281F000FF;
-	Sat, 12 Sep 2026 12:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceZ2Ttce"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F39D1F000FF;
+	Sat, 12 Sep 2026 12:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214626;
-	bh=9ByHD2gmvbvVnfngdRTA+iUEOkj2MKqksJJCmz/3ZnY=;
+	s=korg; t=1789214631;
+	bh=5LhnkvAh89M62aPlB4w/VL1WsMZ0LRjR8GsC3h0dbGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BLXeNP0IMFsKA3lCuFR/ItrqKPybQQEFad/QOvb5yYxnduKKoNubPuoXhPhydZASj
-	 vP/pecIiNkBs05sM+/5aBME/J7WUH1q/YWhg8AQ476qPDPwiBcFa6xAtimo1+B1k/R
-	 wgpR9fEya21MeWHMbQjwBQlIYCr8Dcf0apLN8mEA=
+	b=ceZ2TtceA4UOr5WMkflWItDUInOWk6eliYnJCYNjFpB/+X4Fe4Cx8a6uoj7SjbamN
+	 FAMV0+477yDRNTJ+ZSTU6Ze74/Z8oOYAEjm2g9x0XhJ66g8BtCcEyWJpkiD069uuqJ
+	 T1hI9uk1gF88DAFQBNV5AKOp0LSPErSYLD3VTJaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ian Rogers <irogers@google.com>,
+	German Gomez <german.gomez@arm.com>,
 	James Clark <james.clark@linaro.org>,
 	Adam Young <admiyo@os.amperecomputing.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
 	Anshuman Khandual <anshuman.khandual@arm.com>,
-	German Gomez <german.gomez@arm.com>,
 	Ingo Molnar <mingo@redhat.com>,
 	Jiri Olsa <jolsa@kernel.org>,
 	Mark Rutland <mark.rutland@arm.com>,
@@ -43,9 +43,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Will Deacon <will@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0364/1376] perf test: Add syscall and address tests to brstack test
-Date: Sat, 12 Sep 2026 08:46:30 +0200
-Message-ID: <20260912065615.663244741@linuxfoundation.org>
+Subject: [PATCH 6.12 0365/1376] perf test: Extend branch stack sampling test for Arm64 BRBE
+Date: Sat, 12 Sep 2026 08:46:31 +0200
+Message-ID: <20260912065615.685593516@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -66,20 +66,23 @@ Content-Transfer-Encoding: 8bit
 
 From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 11e59335b0d1c4bc259ee6f0533e04c4b3a9f1dd ]
+[ Upstream commit 9f0fa213790e3633d37e981386da99149573135b ]
 
-Test that SYSCALL type branches are emitted from the expected 'getppid'
-symbol. Test that when only 'k' is used, sources addresses are all in
-the kernel. Test that no kernel addresses leak by checking for them in
-the 'u' test.
+BRBE emits IRQ and ERET branches for branching and returning from
+trapped instructions. Add a test that loops on a trapped instruction
+(MRS - Read special register) for this.
+
+Extend the expected 'any_call' branches to include FAULT_DATA and
+FAULT_INST as these are emitted by BRBE.
 
 Reviewed-by: Ian Rogers <irogers@google.com>
+Co-developed-by: German Gomez <german.gomez@arm.com>
+Signed-off-by: German Gomez <german.gomez@arm.com>
 Signed-off-by: James Clark <james.clark@linaro.org>
 Cc: Adam Young <admiyo@os.amperecomputing.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
 Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: German Gomez <german.gomez@arm.com>
 Cc: Ingo Molnar <mingo@redhat.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
 Cc: Mark Rutland <mark.rutland@arm.com>
@@ -91,92 +94,146 @@ Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Stable-dep-of: 344d3aec164d ("perf tests: Fix flakiness in branch stack sampling tests")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/test_brstack.sh | 61 +++++++++++++++++++++++++-
- 1 file changed, 60 insertions(+), 1 deletion(-)
+ tools/perf/tests/builtin-test.c        |  1 +
+ tools/perf/tests/shell/test_brstack.sh | 26 ++++++++++++++++++++-
+ tools/perf/tests/tests.h               |  1 +
+ tools/perf/tests/workloads/Build       |  2 ++
+ tools/perf/tests/workloads/traploop.c  | 31 ++++++++++++++++++++++++++
+ 5 files changed, 60 insertions(+), 1 deletion(-)
+ create mode 100644 tools/perf/tests/workloads/traploop.c
 
+diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
+index 470a9709427dd..3aa4ab160947d 100644
+--- a/tools/perf/tests/builtin-test.c
++++ b/tools/perf/tests/builtin-test.c
+@@ -153,6 +153,7 @@ static struct test_workload *workloads[] = {
+ 	&workload__brstack,
+ 	&workload__datasym,
+ 	&workload__landlock,
++	&workload__traploop,
+ };
+ 
+ static int num_subtests(const struct test_suite *t)
 diff --git a/tools/perf/tests/shell/test_brstack.sh b/tools/perf/tests/shell/test_brstack.sh
-index 46e5aa9ce8ee7..252d22d39c7b0 100755
+index 252d22d39c7b0..85233d435be63 100755
 --- a/tools/perf/tests/shell/test_brstack.sh
 +++ b/tools/perf/tests/shell/test_brstack.sh
-@@ -64,8 +64,50 @@ test_user_branches() {
- 	do
- 		check_branches "$x"
- 	done
-+
-+	# Dump addresses only this time
-+	perf script -i "$TMPDIR/perf.data" --fields brstack | \
-+		tr ' ' '\n' > "$TMPDIR/perf.script"
-+
-+	# There should be no kernel addresses with the u option, in either
-+	# source or target addresses.
-+	if grep -E -m1 "0x[89a-f][0-9a-f]{15}" $TMPDIR/perf.script; then
-+		echo "ERROR: Kernel address found in user mode"
-+		err=1
-+	fi
- 	# some branch types are still not being tested:
--	# IND COND_CALL COND_RET SYSCALL SYSRET IRQ SERROR NO_TX
-+	# IND COND_CALL COND_RET SYSRET IRQ SERROR NO_TX
+@@ -34,6 +34,10 @@ trap_cleanup() {
+ }
+ trap trap_cleanup EXIT TERM INT
+ 
++is_arm64() {
++	[ "$(uname -m)" = "aarch64" ];
 +}
 +
-+
-+test_kernel_branches() {
-+	echo "Testing that k option only includes kernel source addresses"
-+
-+	if ! perf record --branch-filter any,k -o- -- true > /dev/null; then
-+		echo "skip: not enough privileges"
-+	else
-+		perf record -o $TMPDIR/perf.data --branch-filter any,k -- \
-+			perf bench syscall basic --loop 1000
-+		perf script -i $TMPDIR/perf.data --fields brstack | \
-+			tr ' ' '\n' > $TMPDIR/perf.script
-+
-+		# Example of branch entries:
-+		#       "0xffffffff93bda241/0xffffffff93bda20f/M/-/-/..."
-+		# Source addresses come first and target address can be either
-+		# userspace or kernel even with k option, as long as the source
-+		# is in kernel.
-+
-+		#Look for source addresses with top bit set
-+		if ! grep -E -m1 "^0x[89a-f][0-9a-f]{15}" $TMPDIR/perf.script; then
-+			echo "ERROR: Kernel branches missing"
-+			err=1
-+		fi
-+		# Look for no source addresses without top bit set
-+		if grep -E -m1 "^0x[0-7][0-9a-f]{0,15}" $TMPDIR/perf.script; then
-+			echo "ERROR: User branches found with kernel filter"
-+			err=1
-+		fi
-+	fi
- }
- 
- # first argument <arg0> is the argument passed to "--branch-stack <arg0>,save_type,u"
-@@ -100,9 +142,26 @@ test_filter() {
+ check_branches() {
+ 	if ! tr -s ' ' '\n' < "$TMPDIR/perf.script" | grep -E -m1 -q "$1"; then
+ 		echo "Branches missing $1"
+@@ -76,9 +80,24 @@ test_user_branches() {
+ 		err=1
  	fi
+ 	# some branch types are still not being tested:
+-	# IND COND_CALL COND_RET SYSRET IRQ SERROR NO_TX
++	# IND COND_CALL COND_RET SYSRET SERROR NO_TX
  }
  
-+test_syscall() {
-+	echo "Testing syscalls"
-+	# skip if perf doesn't have enough privileges
-+	if ! perf record --branch-filter any,k -o- -- true > /dev/null; then
-+		echo "skip: not enough privileges"
++test_trap_eret_branches() {
++	echo "Testing trap & eret branches"
++	if ! is_arm64; then
++		echo "skip: not arm64"
 +	else
-+		perf record -o $TMPDIR/perf.data --branch-filter \
-+			any_call,save_type,u,k -c 10000 -- \
-+			perf bench syscall basic --loop 1000
++		perf record -o $TMPDIR/perf.data --branch-filter any,save_type,u,k -- \
++			perf test -w traploop 1000
 +		perf script -i $TMPDIR/perf.data --fields brstacksym | \
 +			tr ' ' '\n' > $TMPDIR/perf.script
 +
-+		check_branches "getppid[^ ]*/SYSCALL/"
++		# BRBINF<n>.TYPE == TRAP are mapped to PERF_BR_IRQ by the BRBE driver
++		check_branches "^trap_bench\+[^ ]+/[^ ]/IRQ/"
++		check_branches "^[^ ]+/trap_bench\+[^ ]+/ERET/"
 +	fi
 +}
- set -e
  
+ test_kernel_branches() {
+ 	echo "Testing that k option only includes kernel source addresses"
+@@ -162,9 +181,14 @@ set -e
  test_user_branches
-+test_syscall
-+test_kernel_branches
+ test_syscall
+ test_kernel_branches
++test_trap_eret_branches
  
  any_call="CALL|IND_CALL|COND_CALL|SYSCALL|IRQ"
  
++if is_arm64; then
++	any_call="$any_call|FAULT_DATA|FAULT_INST"
++fi
++
+ test_filter "any_call" "$any_call"
+ test_filter "call"	"CALL|SYSCALL"
+ test_filter "cond"	"COND"
+diff --git a/tools/perf/tests/tests.h b/tools/perf/tests/tests.h
+index 6ea2be86b7bf8..6d8e46ab82335 100644
+--- a/tools/perf/tests/tests.h
++++ b/tools/perf/tests/tests.h
+@@ -206,6 +206,7 @@ DECLARE_WORKLOAD(sqrtloop);
+ DECLARE_WORKLOAD(brstack);
+ DECLARE_WORKLOAD(datasym);
+ DECLARE_WORKLOAD(landlock);
++DECLARE_WORKLOAD(traploop);
+ 
+ extern const char *dso_to_test;
+ extern const char *test_objdump_path;
+diff --git a/tools/perf/tests/workloads/Build b/tools/perf/tests/workloads/Build
+index 5af17206f04d1..fb1012cc4fc31 100644
+--- a/tools/perf/tests/workloads/Build
++++ b/tools/perf/tests/workloads/Build
+@@ -7,8 +7,10 @@ perf-test-y += sqrtloop.o
+ perf-test-y += brstack.o
+ perf-test-y += datasym.o
+ perf-test-y += landlock.o
++perf-test-y += traploop.o
+ 
+ CFLAGS_sqrtloop.o         = -g -O0 -fno-inline -U_FORTIFY_SOURCE
+ CFLAGS_leafloop.o         = -g -O0 -fno-inline -fno-omit-frame-pointer -U_FORTIFY_SOURCE
+ CFLAGS_brstack.o          = -g -O0 -fno-inline -U_FORTIFY_SOURCE
+ CFLAGS_datasym.o          = -g -O0 -fno-inline -U_FORTIFY_SOURCE
++CFLAGS_traploop.o         = -g -O0 -fno-inline -U_FORTIFY_SOURCE
+diff --git a/tools/perf/tests/workloads/traploop.c b/tools/perf/tests/workloads/traploop.c
+new file mode 100644
+index 0000000000000..68dec399a7350
+--- /dev/null
++++ b/tools/perf/tests/workloads/traploop.c
+@@ -0,0 +1,31 @@
++// SPDX-License-Identifier: GPL-2.0
++#include <stdlib.h>
++#include "../tests.h"
++
++#define BENCH_RUNS 999999
++
++#ifdef __aarch64__
++static void trap_bench(void)
++{
++	unsigned long val;
++
++	asm("mrs %0, ID_AA64ISAR0_EL1" : "=r" (val));   /* TRAP + ERET */
++}
++#else
++static void trap_bench(void) { }
++#endif
++
++static int traploop(int argc, const char **argv)
++{
++	int num_loops = BENCH_RUNS;
++
++	if (argc > 0)
++		num_loops = atoi(argv[0]);
++
++	for (int i = 0; i < num_loops; i++)
++		trap_bench();
++
++	return 0;
++}
++
++DEFINE_WORKLOAD(traploop);
 -- 
 2.53.0
 
