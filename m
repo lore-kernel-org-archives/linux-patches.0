@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C918478E25;
-	Sat, 12 Sep 2026 13:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377BE47ECDE;
+	Sat, 12 Sep 2026 13:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220338; cv=none; b=bQ/vqsSsqKLxGslXlKMOM6faZZQksadFQ2Mo2A2H1wLt9VkkboYkVzCNQCyBtsZ3syGb4ZMyLl8rRh78sgMECGxM41jW1nj63aGrsR/Z6Byn/3rqS+wM3sb+nkC3JPoMpYCmpEnj/xPrdBPnEX6RO5wOl4g/aJ7WUkRolk3mcM8=
+	t=1789220343; cv=none; b=ESr2YXIva+gzJhoFfOioKyAubqsg1hcv6/WXFn1sVK8AB0zbyLydpfdNDz1JaQvKBoXGNUTfKFVWh3CnLgmYbUc9jTGbyvbxkT0CMfiQBmO5LO0ubotVDPuPNke8J7Dq0y6t1YtDa7zamKbjz6OhdwSAZYExpjcOJpkeGcEgijE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220338; c=relaxed/simple;
-	bh=kJCa1tCoa4fwIKaxGyLYmxUIp1GSIKE2ocZLWi7zqQQ=;
+	s=arc-20240116; t=1789220343; c=relaxed/simple;
+	bh=Yt5GAn7PBlf50BhS3wdA8Yd5YAC2PIlPFGEibnriyc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eb0+VMdXb0mg5FhQ2KSe1kZgy17BmB4jGjVVPBv52/BQDZhiAtf1SpEPxPtIaYYC9dS2fE5LCarXRX5GdciS7yMrABaSGMeSFzTFXuoZWPVg5iGktYA3/9WbcVoTeRRkdGK9Ud2IbAsYiaAWRxPhcw6iPWT6hAh6FzG6dZc6SoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NgOG/6yO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a64V01PFRadeSrun1XFqP/jgg8h3A5jVQvION5hVLgons0FR2/sJ2vqMnLaDmCOec3iJSD7zoSN8pTz43yiA4ta1GazgGbgpbM5p7ddQTvUZV3MoLPdJpaYUaAz2D/i53wNOqfJAB/bhjZio7Wm1Yjgk/cxmHSSYba5HhLp45ZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UsmvYwj+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NgOG/6yO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067A41F000FF;
-	Sat, 12 Sep 2026 13:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UsmvYwj+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C9A61F000FF;
+	Sat, 12 Sep 2026 13:39:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220337;
-	bh=si71Y7q35IvgtiiQwvcfAS1YeI3F2EWCttSbi8V3mEg=;
+	s=korg; t=1789220342;
+	bh=ZebIh1AlWiFZuCmG7Y4EWqZxL9KOVbe77bCQd5I/k4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NgOG/6yObdJN2TzT2mrlYqc6UylelCUzf9+ijVQJAimpGQLFQcLy3gQ/1p01L77wT
-	 /wetd49aSWkgrZ4la6Dgn6Bc9tUSO7xvGU5QBjecTQxn+TAv45t9iXGMiiCMsjy/hy
-	 kM8z7zygJdOakKmqA65KrBbKrSoUfaweoHzuL/o8=
+	b=UsmvYwj+A7cDSKEsd8vsck4YMz8NuuXL8Lnpmw0m56FP+43lWL411mrFT3n0WLuTB
+	 WOOEJlHLfhOMVfxduuF07BPMk06zrWLXxAdHsKLQymH289TNIdH4PgNL6nAA6hfp6z
+	 rXynM5HuRLSkj2WXi8HpKXBxP5cC4B0Nha7+4gu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Zwerschke <cito@online.de>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 0119/1424] Bluetooth: btusb: Add ASUS USB-BT600 for Realtek 8761CU
-Date: Sat, 12 Sep 2026 08:42:31 +0200
-Message-ID: <20260912065609.967852849@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.6 0155/1424] SUNRPC: Guard svcauth_gss_release() dispatch on rq_auth_stat
+Date: Sat, 12 Sep 2026 08:43:07 +0200
+Message-ID: <20260912065610.768334938@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,73 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Zwerschke <cito@online.de>
+From: Chris Mason <clm@meta.com>
 
-commit 6f0624b4427e38c3bb63a951c536cf8adaee1238 upstream.
+commit f8870b9b75afb77986bc65940a231d54068ff2b1 upstream.
 
-Add the vendor/product ID (0x0b05, 0x1d70) to the usb_device_id table for
-the Realtek RTL8761CU-based ASUS USB-BT600 adapter. It binds via the
-generic Bluetooth class today, so BTUSB_REALTEK is never set and the
-rtl8761cu firmware is not loaded, leaving the controller non-functional.
-With the entry the driver loads rtl_bt/rtl8761cu_fw.bin (already shipped by
-linux-firmware) and the adapter works (tested: A2DP and ASHA).
+svcauth_gss_release() reads gc_proc and switches on gc_svc before
+consulting rq_auth_stat.  On the SVC_DENIED path after a failed
+svcauth_gss_accept(), those fields may hold stale values from a
+prior request or uninitialized slab residue: svcauth_gss_accept()
+allocates gss_svc_data with non-zeroing kmalloc and clears only
+gsd_databody_offset and rsci per request, not clcred.
 
-Similar to commit bc597f0cc44f
-("Bluetooth: btusb: Add TP-Link UB600 for Realtek 8761BUV").
+Because RPC_GSS_PROC_DATA is zero, a zeroed or stale-zero gc_proc
+passes the existing guard and falls through into the gc_svc switch,
+which can dispatch to svcauth_gss_wrap_integ() or
+svcauth_gss_wrap_priv().  Both wrap helpers call
+svcauth_gss_prepare_to_wrap() before any rsci->mechctx dereference,
+and that helper already returns early when rq_auth_stat is not
+rpc_auth_ok, so the downstream NULL dereference is blocked.  The
+dispatch itself remains structurally wrong: it reads scalars that
+the caller has no contract to have initialized after a failed
+authentication.
 
-Device info from /sys/kernel/debug/usb/devices:
+Mirror the existing rq_auth_stat gate in
+svcauth_gss_prepare_to_wrap() one frame up, so
+svcauth_gss_release() skips the clcred dispatch entirely when
+authentication has not succeeded.  The cleanup tail that releases
+rq_client, rq_gssclient, cr_group_info, and rsci still runs.
 
-T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 23 Spd=12   MxCh= 0
-D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0b05 ProdID=1d70 Rev= 2.00
-S:  Manufacturer=Realtek
-S:  Product=Bluetooth Controller
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Christoph Zwerschke <cito@online.de>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Chris Mason <clm@meta.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260528-tier2-v1-4-d026a1415e0b@oracle.com
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |    2 ++
+ net/sunrpc/auth_gss/svcauth_gss.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -750,6 +750,8 @@ static const struct usb_device_id quirks
- 	/* Additional Realtek 8761CU Bluetooth devices */
- 	{ USB_DEVICE(0x0b05, 0x1bef), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0b05, 0x1d70), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1956,6 +1956,8 @@ svcauth_gss_release(struct svc_rqst *rqs
  
- 	/* Additional Realtek 8821AE Bluetooth devices */
- 	{ USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
+ 	if (!gsd)
+ 		goto out;
++	if (rqstp->rq_auth_stat != rpc_auth_ok)
++		goto out;
+ 	gc = &gsd->clcred;
+ 	if (gc->gc_proc != RPC_GSS_PROC_DATA)
+ 		goto out;
 
 
