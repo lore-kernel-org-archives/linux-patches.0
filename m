@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B89D3A8737;
-	Sat, 12 Sep 2026 08:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A522A1F1534;
+	Sat, 12 Sep 2026 08:23:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201415; cv=none; b=hsoZIL2xUrbBAQaLnwiAgA0x/FnhmOiJajl3gCmRrD7p25taDDe9tIpzQb7tIbFK79h9hswTx3boCc1g24LtM94uJ3i+Ru60rVwd20REn4kItjOuZ6rfXLMXXgsrzA2o/C15D6cj7qbm9tgXbSrZvhdBDoCIbUC6bmsJOjBpSHQ=
+	t=1789201418; cv=none; b=UtPnYM8Ike8D4lmqKtw6PetMIspeM6mH2X3O2KGw/ZKGAXNzAqYIQfMIXeDkQqheBB+17DkqEAPJejzT6fbRyoGVwe3YWYHtbWX3ehDYtLkXbDeLwKKEwprLNGsBxpyVMAfxgemVAwABfoLXbTv2y8/w74yEpAgU4pz8V3jmvl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201415; c=relaxed/simple;
-	bh=LlvhD+OixCwMZ5lnwE3SArDqpCiNu1Q0PgaEwfcHTvg=;
+	s=arc-20240116; t=1789201418; c=relaxed/simple;
+	bh=c0NlePd3Kqe3BC5gxW4Ps679+iJHyHMknv1KJEmDeBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fpur1PUZk853F+u11NEWfAs55uA53UPFQKbWgAQ4asgTJmuqr0OWRsiQqy4vniR2Os8i67GmMRbh+BqMlGwt/KlXVJSgUjETOKfu2o8DOoRgp8G1TZ2xn3k48PCM+/b0A9BMzSXupbzPOUGixSvmAJBMXu8raR7TVgwaxJTTkVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZerrOMf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rGMBvECu0VUb5NUKFHglFpQ8W+zPvGJNToFD3N/3mPOzwWoHKe1NMV+WEzYTKArBlTKc8bj7r23h9u40nBVGwc+O/LMhPUUCOjgIGfj6rB2XamJ0uKNQl2mrEATnQwpSpWvGjqMCHW548/UcMEAEXNOr5PioIlKXNYYMYIIMv94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSNQY0iW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZerrOMf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E051F000FF;
-	Sat, 12 Sep 2026 08:23:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSNQY0iW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA51C1F000FF;
+	Sat, 12 Sep 2026 08:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201412;
-	bh=Nwn9MwmEYrOvfM3Gy+7NrHvYX4HZfUWVn4gOaxckUYk=;
+	s=korg; t=1789201417;
+	bh=+sVXXdKbZz10SGYg/OLUv8e8l8deqDgH3wmTT6xH2jk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XZerrOMff6b8OIklNRqgZcBsskMjw8WvfpOjlfTFtMBX+VpIWHyVlK9zAgprUVyK5
-	 VN9gG+2SvAcY/rzQ0iiW0NJM7pntGb86KXd//7tW8t6ao36qgnrj3uMRqx6+2lWWa9
-	 aHoWyF4V04Jm147HA0bMPE06Bp+R4c0my9d5C1Hc=
+	b=sSNQY0iW2mi1ZZkAluaj2NMjj3wDawP/IF6VEdPHPRswNGeRmFX++nPTJ0lz7O3eq
+	 HnMENn6HH2u4Zu9QGBlhc6yey5R/1sr3IZzbTBjhpxRBRNRvvk+QsEha3ssCtM16ym
+	 0ww2dq/S8H8VYU6KWFLvx19QaZLLZ5drOSimMsnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0990/1815] soc: fsl: qe: properly scan GPIO nodes at startup
-Date: Sat, 12 Sep 2026 08:45:40 +0200
-Message-ID: <20260912065712.235641136@linuxfoundation.org>
+Subject: [PATCH 7.2 0991/1815] soc: fsl: qe: implement get_direction()
+Date: Sat, 12 Sep 2026 08:45:41 +0200
+Message-ID: <20260912065712.259837583@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,55 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 
-[ Upstream commit e2414b289c2b68afab361def612ca3791cd70d12 ]
+[ Upstream commit e460ef309f44b39480209970f1dd462f051d6f30 ]
 
-Before commit 156460811def ("soc: fsl: qe: Change GPIO driver to a
-proper platform driver") qe_add_gpiochips() was walking the device
-tree to find all nodes with compatible "fsl,mpc8323-qe-pario-bank".
+The lack of get_direction() callback in this driver causes GPIOLIB to
+emit a warning. Implement it.
 
-After that commit the discovery is handled by the platform core,
-therefore it is necessary to call of_platform_default_populate() on
-the par_io node.
-
-Fixes: 156460811def ("soc: fsl: qe: Change GPIO driver to a proper platform driver")
-Reviewed-by: Herve Codina <herve.codina@bootlin.com>
-Link: https://lore.kernel.org/r/a1db12ef75bf881dd5fba893a37db0c8517eca1b.1785414349.git.chleroy@kernel.org
+Fixes: e623c4303ed1 ("gpiolib: sanitize the return value of gpio_chip::get_direction()")
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/30b3f278a10b46252783458c81dc438df176f86c.1785405882.git.chleroy@kernel.org
 Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/qe/qe_io.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/soc/fsl/qe/gpio.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/drivers/soc/fsl/qe/qe_io.c b/drivers/soc/fsl/qe/qe_io.c
-index a5e2d0e5ab511..150913fce9818 100644
---- a/drivers/soc/fsl/qe/qe_io.c
-+++ b/drivers/soc/fsl/qe/qe_io.c
-@@ -15,6 +15,7 @@
- #include <linux/errno.h>
- #include <linux/module.h>
- #include <linux/ioport.h>
-+#include <linux/of_platform.h>
- 
- #include <asm/io.h>
- #include <soc/fsl/qe/qe.h>
-@@ -184,3 +185,17 @@ int par_io_of_config(struct device_node *np)
+diff --git a/drivers/soc/fsl/qe/gpio.c b/drivers/soc/fsl/qe/gpio.c
+index 66828f2a35774..6d8f4d549fe29 100644
+--- a/drivers/soc/fsl/qe/gpio.c
++++ b/drivers/soc/fsl/qe/gpio.c
+@@ -135,6 +135,30 @@ static int qe_gpio_dir_out(struct gpio_chip *gc, unsigned int gpio, int val)
  	return 0;
  }
- EXPORT_SYMBOL(par_io_of_config);
-+
-+static int __init par_io_populate(void)
+ 
++static int qe_gpio_get_direction(struct gpio_chip *gc, unsigned int gpio)
 +{
-+	struct device_node *np = of_find_node_by_type(NULL, "par_io");
++	struct qe_gpio_chip *qe_gc = gpiochip_get_data(gc);
++	struct qe_pio_regs __iomem *regs = qe_gc->regs;
++	unsigned long flags;
++	u32 val, mask;
 +
-+	if (!np)
-+		return 0;
++	spin_lock_irqsave(&qe_gc->lock, flags);
 +
-+	of_platform_default_populate(np, NULL, NULL);
-+	of_node_put(np);
++	if (gpio < QE_PIO_PINS / 2)
++		val = ioread32be(&regs->cpdir1);
++	else
++		val = ioread32be(&regs->cpdir2);
 +
-+	return 0;
++	spin_unlock_irqrestore(&qe_gc->lock, flags);
++
++	mask = (u32)QE_PIO_DIR_OUT << (QE_PIO_PINS - 2 - (gpio % (QE_PIO_PINS / 2)) * 2);
++
++	if (val & mask)
++		return GPIO_LINE_DIRECTION_OUT;
++	else
++		return GPIO_LINE_DIRECTION_IN;
 +}
-+arch_initcall(par_io_populate);
++
+ struct qe_pin {
+ 	/*
+ 	 * The qe_gpio_chip name is unfortunate, we should change that to
+@@ -308,6 +332,7 @@ static int qe_gpio_probe(struct platform_device *ofdev)
+ 	gc->ngpio = QE_PIO_PINS;
+ 	gc->direction_input = qe_gpio_dir_in;
+ 	gc->direction_output = qe_gpio_dir_out;
++	gc->get_direction = qe_gpio_get_direction;
+ 	gc->get = qe_gpio_get;
+ 	gc->set = qe_gpio_set;
+ 	gc->set_multiple = qe_gpio_set_multiple;
 -- 
 2.53.0
 
