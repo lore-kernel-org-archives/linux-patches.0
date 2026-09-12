@@ -1,39 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9594189B9;
-	Sat, 12 Sep 2026 09:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1497C3B47D5;
+	Sat, 12 Sep 2026 09:24:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205095; cv=none; b=eBi20jKS35xJGZ5eydUm9WD6jtcCaIimjMuk+9AxlR+WBeGGIZrqbmb6xyuS883zf59acs5Lw3RlKCwa0quec8fEOiAWMJxIRzoz983c7xr24ShiVVnUzVzu/A0JHwbpo5P0m2CkqIwRjvaNZl8dNJd8+92/WGC/uoBSIWGSznM=
+	t=1789205099; cv=none; b=axxvkhGB7Pf/RReYrwnmFE+I7NzHZEQ12c2utg0u3QU9jMdAGoRzTyIYTe4pvzaprZtvy+KpJuzW1hdkCSOZsgh4Drd14YONwA21tw4SkWhP/72DS80Nmw4q5IpfRlO+DSteSSqMwii/9dWAc8xckGQf9NyODtS52ZDlulEsdh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205095; c=relaxed/simple;
-	bh=nA4a2vsnszAUBJ1joag3wTXp577h4gZfjoxyT4+s9OY=;
+	s=arc-20240116; t=1789205099; c=relaxed/simple;
+	bh=6crDRp9QY8FnH6POvV8QAot55lhJL7bKekIkwpNslds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LkJs+pjtl3rOPvo94GT+67Ya49yuLi67mhgywVJ6lHePRMg+RcUb4ozqjpIvRtlWU0rwGvrWqXxFcL/lRnfFS81B1QXEgkTN/NcZ/bAM4YEI/ErgN9pwnEVY1RulxX3rcQXrOudND71YBCBgoOER3gZAT8UIRDuqb2LpyzlOUUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5T9XreK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JgZBx7nEqRTlSA+TWxLPsbjfe7rU3RsW/35DH8zRZY5lBYcm7CvqMpi8O8z0waFYvDC8XYVVg51abSgUgXDA06WcUJLJVGyE7z/XPw90UHa+gMD6YGkIc2RWM1sqsM0NlCrSAdn37fsJX8OgySN9fqg62dfsUjMUEbSNOHbvQCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ub9MN12f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5T9XreK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E896F1F000FF;
-	Sat, 12 Sep 2026 09:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ub9MN12f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A46241F00893;
+	Sat, 12 Sep 2026 09:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205093;
-	bh=jwhlsNs7csLQhLPvPhulQQNxgYjfmrZOt1PiH7esKKc=;
+	s=korg; t=1789205097;
+	bh=TcCVprR5k3itkyLaDmbIOomKPFoaNRdPuxPAWK3RUH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z5T9XreKbRAGJ0hWOKnO7Y0TRPwDhtbzKsIOio1LJXiNL1quFK/Pl+WELgtEkd107
-	 1F5wSCfjemdsmSBHgJXJxoSzN+nOHiUi2ePES58fdHRphN4MZsaVdxuTXVK9OZnMKZ
-	 txY0WHUeSdHIjF8qSlnv/3+75DzT89losAK+g8gA=
+	b=ub9MN12felzGfb11uwIf2UGwVDtJGlVDp4N1HsKkvb/S81MiccdYKj1JbvtQ+RLRM
+	 i5G4A8Qm3q9oTfxIVmPXzVFXgSKNkc119GOQFxeK8KCx76SYxQtQnUDuWhqROdnA0e
+	 mTesmxTlcOIfohv9qb5n7jol0A1KmHi3JNsjYvi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ze Tan <tanze@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Sarthak Sharma <sarthak.sharma@arm.com>,
+	Usama Arif <usama.arif@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1748/1815] smb/client: preserve open info type across compound queries
-Date: Sat, 12 Sep 2026 08:58:18 +0200
-Message-ID: <20260912065730.020797312@linuxfoundation.org>
+Subject: [PATCH 7.2 1749/1815] selftests/mm: skip COW tmpfile cases when fallocate() is unsupported
+Date: Sat, 12 Sep 2026 08:58:19 +0200
+Message-ID: <20260912065730.044887060@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,118 +70,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ze Tan <tanze@kylinos.cn>
+From: Muhammad Usama Anjum <usama.anjum@arm.com>
 
-[ Upstream commit 9437f2113b60a5a8593aa4b41b6f6632f5cabcfd ]
+[ Upstream commit 4004c130c358b1561a55323b0e747f20f5133f7b ]
 
-contains_posix_file_info describes the metadata stored in the
-fi/posix_fi union. GET_REPARSE and QUERY_WSL_EA do not update that
-union, so clearing the flag while processing those responses can make
-POSIX metadata look like FILE_ALL_INFORMATION.
+Patch series "selftests/mm: Handle unsupported and transient test
+conditions", v3.
 
-Set the flag when CREATE or a validated query response actually
-populates the union, and leave it unchanged for auxiliary compound
-operations. This also avoids changing the type when a query fails
-before copying any metadata.
+Several MM selftests report failures when the test environment lacks
+an underlying prerequisite, such as fallocate() support, MADV_REMOVE,
+local page-cache semantics, or swap.
 
-The issue can be reproduced against a Samba server with SMB3 UNIX
-extensions enabled:
+This series converts those unsupported cases to SKIP while preserving
+failures for unexpected errors. It also allows migration tests to retry
+transient move_pages() failures.
 
-  mount -t cifs //<server>/<share> /mnt/cifs \
-        -o vers=3.1.1,posix,reparse=nfs,actimeo=0
-  mkfifo /mnt/cifs/test-fifo
-  umount /mnt/cifs
-  mount -t cifs //<server>/<share> /mnt/cifs \
-        -o vers=3.1.1,posix,reparse=nfs,actimeo=0
-  stat -c '%F %s' /mnt/cifs/test-fifo
+This patch (of 4):
 
-Before this change, stat reports "fifo 1024" although the server-side
-EOF is zero. After this change, it reports "fifo 0".
+The tmpfile-backed COW cases allocate a one-page file with fallocate()
+before exercising private and shared mappings.  When the filesystem
+backing tmpfile() does not implement fallocate(), setup fails with
+EOPNOTSUPP and no COW behavior is exercised.
 
-Fixes: 9df23801c83d ("smb311: failure to open files of length 1040 when mounting with SMB3.1.1 POSIX extensions")
-Signed-off-by: Ze Tan <tanze@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+This occurs when the temporary directory resides on a filesystem with
+limited allocation support, such as NFSv3.  Reporting a failure adds noise
+because the test prerequisite is absent rather than the COW implementation
+being broken.
+
+Report EOPNOTSUPP as a skip.  Continue treating every other fallocate()
+error as a failure so unexpected setup regressions remain visible.
+
+Link: https://lore.kernel.org/20260727095225.372655-1-usama.anjum@arm.com
+Link: https://lore.kernel.org/20260727095225.372655-2-usama.anjum@arm.com
+Fixes: f8664f3c4a08 ("selftests/vm: cow: basic COW tests for non-anonymous pages")
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Tested-by: Sarthak Sharma <sarthak.sharma@arm.com>
+Acked-by: Usama Arif <usama.arif@linux.dev>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2inode.c | 9 +++++----
- fs/smb/client/smb2pdu.c   | 1 +
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ tools/testing/selftests/mm/cow.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
-index 2946391bb992d..457442af1222e 100644
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -576,6 +576,7 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
- 		idata->fi.Attributes = create_rsp->FileAttributes;
- 		idata->fi.AllocationSize = create_rsp->AllocationSize;
- 		idata->fi.EndOfFile = create_rsp->EndofFile;
-+		idata->contains_posix_file_info = false;
- 		if (le32_to_cpu(idata->fi.NumberOfLinks) == 0)
- 			idata->fi.NumberOfLinks = cpu_to_le32(1); /* dummy value */
- 		idata->fi.DeletePending = 0; /* successful open = not delete pending */
-@@ -598,7 +599,6 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
- 		switch (cmds[i]) {
- 		case SMB2_OP_QUERY_INFO:
- 			idata = in_iov[i].iov_base;
--			idata->contains_posix_file_info = false;
- 			if (rc == 0 && cfile && cfile->symlink_target) {
- 				idata->symlink_target = kstrdup(cfile->symlink_target, GFP_KERNEL);
- 				if (!idata->symlink_target)
-@@ -611,6 +611,8 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
- 					le16_to_cpu(qi_rsp->OutputBufferOffset),
- 					le32_to_cpu(qi_rsp->OutputBufferLength),
- 					&rsp_iov[i + 1], sizeof(idata->fi), (char *)&idata->fi);
-+				if (!rc)
-+					idata->contains_posix_file_info = false;
- 			}
- 			SMB2_query_info_free(&rqst[num_rqst++]);
- 			if (rc)
-@@ -622,7 +624,6 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
- 			break;
- 		case SMB2_OP_POSIX_QUERY_INFO:
- 			idata = in_iov[i].iov_base;
--			idata->contains_posix_file_info = true;
- 			if (rc == 0 && cfile && cfile->symlink_target) {
- 				idata->symlink_target = kstrdup(cfile->symlink_target, GFP_KERNEL);
- 				if (!idata->symlink_target)
-@@ -636,6 +637,8 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
- 					le32_to_cpu(qi_rsp->OutputBufferLength),
- 					&rsp_iov[i + 1], sizeof(idata->posix_fi) /* add SIDs */,
- 					(char *)&idata->posix_fi);
-+				if (!rc)
-+					idata->contains_posix_file_info = true;
- 			}
- 			if (rc == 0)
- 				rc = parse_posix_sids(idata, &rsp_iov[i + 1]);
-@@ -707,7 +710,6 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
- 				idata = in_iov[i].iov_base;
- 				idata->reparse.io.iov = *iov;
- 				idata->reparse.io.buftype = resp_buftype[i + 1];
--				idata->contains_posix_file_info = false; /* BB VERIFY */
- 				rbuf = reparse_buf_ptr(iov);
- 				if (IS_ERR(rbuf)) {
- 					rc = PTR_ERR(rbuf);
-@@ -729,7 +731,6 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
- 		case SMB2_OP_QUERY_WSL_EA:
- 			if (!rc) {
- 				idata = in_iov[i].iov_base;
--				idata->contains_posix_file_info = false;
- 				qi_rsp = rsp_iov[i + 1].iov_base;
- 				data[0] = (u8 *)qi_rsp + le16_to_cpu(qi_rsp->OutputBufferOffset);
- 				size[0] = le32_to_cpu(qi_rsp->OutputBufferLength);
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index d207591cc889c..dea05aeb53a18 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -3372,6 +3372,7 @@ SMB2_open(const unsigned int xid, struct cifs_open_parms *oparms, __le16 *path,
- #endif /* CIFS_DEBUG2 */
+diff --git a/tools/testing/selftests/mm/cow.c b/tools/testing/selftests/mm/cow.c
+index 0c627ea89ff7b..c1b8920e29342 100644
+--- a/tools/testing/selftests/mm/cow.c
++++ b/tools/testing/selftests/mm/cow.c
+@@ -1718,8 +1718,13 @@ static void run_with_tmpfile(non_anon_test_fn fn, const char *desc)
  
- 	if (file_info) {
-+		buf->contains_posix_file_info = false;
- 		file_info->CreationTime = rsp->CreationTime;
- 		file_info->LastAccessTime = rsp->LastAccessTime;
- 		file_info->LastWriteTime = rsp->LastWriteTime;
+ 	/* File consists of a single page filled with zeroes. */
+ 	if (fallocate(fd, 0, 0, pagesize)) {
+-		ksft_perror("fallocate() failed");
+-		log_test_result(KSFT_FAIL);
++		if (errno == EOPNOTSUPP) {
++			ksft_print_msg("fallocate() not supported by filesystem\n");
++			log_test_result(KSFT_SKIP);
++		} else {
++			ksft_perror("fallocate() failed");
++			log_test_result(KSFT_FAIL);
++		}
+ 		goto close;
+ 	}
+ 
 -- 
 2.53.0
 
