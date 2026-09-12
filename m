@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8443C346E75;
-	Sat, 12 Sep 2026 07:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7053B3F077C;
+	Sat, 12 Sep 2026 07:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197505; cv=none; b=Ucd6qBmr+okU66BIg0k/+qRThgL5Rj4i6vF7emDLqot/CU4oXlFPNaa+Y0iEqfzmHyS/BJPkm6DR8PzTW98xL+MZbml163kMrd5RiCXTtKfhJGSIoBA68PShSrMvTK063iSh/9qakjpUIDS00ZcgaVPxqiYqxZ0YRnicS+n2prQ=
+	t=1789197510; cv=none; b=uYDV1bIiyCk8TVNjhuf1F42NAmxYuN/hrMJJgvgeiKvfNVZYrkp2pWORXs+ws4DThxH3Ka5kgIoBrchYJ1WUt2J6iJZ2atTJmsVbnK63CGQe5FsojxJdLJlDeRX6jGLkn4vdj81+XyL8XaPh7aYRjy7OiihzEJdkuUEseh2Yl9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197505; c=relaxed/simple;
-	bh=k0eSBXBCr1MjF09lYJmTTq5/abXCSBksjdvJJVPSzdM=;
+	s=arc-20240116; t=1789197510; c=relaxed/simple;
+	bh=SH7ZMMqjGOswP4ocz+4/EhGQWwnuwtMLTnETwi1jZY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G0fmE8Ftn6Nb4c5UtgAQhAD7AByPWs3sQj+hFmtAvvLDYMlkX9PRne7riMjUGwZaCLKP1/OfghlhTLOBR+jCpU7NXY9WGNNytJEHpqvkZf8swhI2TtiKG3zgrGX/QjsKnuTl2DcdZegGyJXEcOUnTH4q8RlVxreItEyc2XBkBHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pw6Z6Afr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TlVCPP06rO4ms4EYORJJv6OhhUaT5WTHNdu5kmUbFvNvAwSdempUG+WlisCX0F86b3gQBtubaE1GhuzaIEt0ACNfXYDeeLjmcWU3+cI6m3ek8hNZA2B9E8Wkln/FW5gbCzMcNVoLzoGOHpGSRwoA9dlBmR2e3Nrsw5iZS7qKXAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xS7j4EA+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pw6Z6Afr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B951F000FF;
-	Sat, 12 Sep 2026 07:18:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xS7j4EA+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC3B1F000FF;
+	Sat, 12 Sep 2026 07:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197504;
-	bh=tlTZPPK0xBVnezLDvXYD3n9/QYtBIqtMNPYetDwpyHs=;
+	s=korg; t=1789197509;
+	bh=hfazDdXwSfz+5qnG6gPF+0QhiOKOOtCZK+1v+6MBbNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pw6Z6Afrc1Z9FL7BKYA55bWe+2AEQWxosuNtzTgLdhO1XPGAgHTq++Tkmk9QQU3mU
-	 UeSzJ7/yXhCMSk91sK4V01XzQzBT+IcpyRcEt8lzvMVh9Eh0YRMznhLrUzCCHxVn9b
-	 /KSsjhxa00r/XGbV2rz37ZUEYd9FlbjEeapwUghc=
+	b=xS7j4EA+eOSujx8U6hXFRn5JAznwSh91hq0FANmfuVJG2oqWniU40CznamjQp4vxr
+	 Nosluzeua50+sGry0RHqY5xSICEnztBmgHUTXbH/OTut1LBa0YePRrOkeUHeN3Qu+v
+	 FerlEQ46Rs2EUTF9XDtjzoiFQ4eRRlWWfi2KhggM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0181/1815] libbpf: Change has_nop_combo to work on top of nop10
-Date: Sat, 12 Sep 2026 08:32:11 +0200
-Message-ID: <20260912065653.254677666@linuxfoundation.org>
+Subject: [PATCH 7.2 0190/1815] crypto: atmel-ecc - reject hardware ECDH without a public key
+Date: Sat, 12 Sep 2026 08:32:20 +0200
+Message-ID: <20260912065653.463071410@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,70 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit ee2862439e5c8763cee84e910706fdc5b97bc879 ]
+[ Upstream commit f240f9b588f4e2de89822adebf560a96b5d263ed ]
 
-We now expect nop combo with 10 bytes nop instead of 5 bytes nop,
-fixing has_nop_combo to reflect that.
+The hardware ECDH path in atmel_ecdh_compute_shared_secret() uses the
+private key stored in the device. However, the public key is cached only
+after atmel_ecdh_set_secret() successfully generated that private key
+for the current tfm.
 
-Fixes: 41a5c7df4466 ("libbpf: Add support to detect nop,nop5 instructions combo for usdt probe")
-Fixes: 554ba38456da ("uprobes/x86: Move optimized uprobe from nop5 to nop10")
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://patch.msgid.link/20260703114917.238144-7-jolsa@kernel.org
+atmel_ecdh_generate_public_key() already rejects requests when no public
+key is cached. Add the same check to atmel_ecdh_compute_shared_secret()
+to prevent the device from using a private key that was not generated
+for the current tfm.
+
+Fixes: 11105693fa05 ("crypto: atmel-ecc - introduce Microchip / Atmel ECC driver")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/usdt.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/crypto/atmel-ecc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/lib/bpf/usdt.c b/tools/lib/bpf/usdt.c
-index 57fb82bb81b58..d2ecd3daab961 100644
---- a/tools/lib/bpf/usdt.c
-+++ b/tools/lib/bpf/usdt.c
-@@ -305,7 +305,7 @@ struct usdt_manager *usdt_manager_new(struct bpf_object *obj)
+diff --git a/drivers/crypto/atmel-ecc.c b/drivers/crypto/atmel-ecc.c
+index 4dc34c5bc0f6c..bd1664ad5c0ea 100644
+--- a/drivers/crypto/atmel-ecc.c
++++ b/drivers/crypto/atmel-ecc.c
+@@ -165,6 +165,9 @@ static int atmel_ecdh_compute_shared_secret(struct kpp_request *req)
+ 		return crypto_kpp_compute_shared_secret(req);
+ 	}
  
- 	/*
- 	 * Detect kernel support for uprobe() syscall, it's presence means we can
--	 * take advantage of faster nop5 uprobe handling.
-+	 * take advantage of faster nop10 uprobe handling.
- 	 * Added in: 56101b69c919 ("uprobes/x86: Add uprobe syscall to speed up uprobe")
- 	 */
- 	man->has_uprobe_syscall = kernel_supports(obj, FEAT_UPROBE_SYSCALL);
-@@ -604,14 +604,14 @@ static int parse_usdt_spec(struct usdt_spec *spec, const struct usdt_note *note,
- #if defined(__x86_64__)
- static bool has_nop_combo(int fd, long off)
- {
--	unsigned char nop_combo[6] = {
--		0x90, 0x0f, 0x1f, 0x44, 0x00, 0x00 /* nop,nop5 */
-+	unsigned char nop_combo[11] = {
-+		0x90, 0x66, 0x2e, 0x0f, 0x1f, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00,
- 	};
--	unsigned char buf[6];
-+	unsigned char buf[11];
- 
--	if (pread(fd, buf, 6, off) != 6)
-+	if (pread(fd, buf, 11, off) != 11)
- 		return false;
--	return memcmp(buf, nop_combo, 6) == 0;
-+	return memcmp(buf, nop_combo, 11) == 0;
- }
- #else
- static bool has_nop_combo(int fd, long off)
-@@ -822,8 +822,8 @@ static int collect_usdt_targets(struct usdt_manager *man, struct elf_fd *elf_fd,
- 		memset(target, 0, sizeof(*target));
- 
- 		/*
--		 * We have uprobe syscall and usdt with nop,nop5 instructions combo,
--		 * so we can place the uprobe directly on nop5 (+1) and get this probe
-+		 * We have uprobe syscall and usdt with nop,nop10 instructions combo,
-+		 * so we can place the uprobe directly on nop10 (+1) and get this probe
- 		 * optimized.
- 		 */
- 		if (man->has_uprobe_syscall && has_nop_combo(elf_fd->fd, usdt_rel_ip)) {
++	if (!ctx->public_key)
++		return -EINVAL;
++
+ 	/* A P-256 public key must contain two 32-byte coordinates */
+ 	if (req->src_len != ATMEL_ECC_PUBKEY_SIZE)
+ 		return -EINVAL;
 -- 
 2.53.0
 
