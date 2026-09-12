@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C86F332610;
-	Sat, 12 Sep 2026 07:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7CB34252D;
+	Sat, 12 Sep 2026 07:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198643; cv=none; b=kKkUawlCwi7m3chhiKuySbUyWtS+OBYJ75l8/o9AnQHvHXsJ4fP6YC/5iNLdCB3RJ285BE64Ns0+1/5mWTiKm9Jyr28Lj1x59K/kK+2bPqk37MwbSES6sim8UVcWN1RqBUGht2QkZP1X6GLA3iPhisDPztqgM2At8M3ZiMkiYJI=
+	t=1789198648; cv=none; b=NW4q89lEqO+AvrCItt6hFtSCs3VwyT6IOjW1F78AKMGltomht2i/uY/KNiglhITKT3+GYRQCYKOFgNWPSYqL50F7pBEM2aGtMnDNNN1BQzXCs9FHdectFDFOMZ7L1yKirGdrADkeJhTfB4R+ZuWl6LSNNy/LouQGoNUn6R4GCTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198643; c=relaxed/simple;
-	bh=w4OMN3k2gDIxY9w+kbNnujenR7MSbe0+Ri+eUuLwffY=;
+	s=arc-20240116; t=1789198648; c=relaxed/simple;
+	bh=fZHKb9Bs0VJTPkkEpvcOx6uMntUXq7Vc0o8nC3xeNuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kdzscXUG2oDZw0gjTxfSfuwkzaqT9gayg4LfmnGfffRDz/6SOR1RN+akayFOn8Iu3U9WGsV/zon/6f6z1PhLqMFv3Ms/B+IRn4JmUhDQhN+RJ32o+EnVQou1hMYlJ4i57GTmMbPYjxpSz7/S3RL55NRftzCliOjPPH+8OY6MJak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FrjjC7VL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SX9eZLCanrGxZge/tPs5S21wKMGb8xcf6U5muPvRowFrfDYkI3v2m7KFXSTIAqKJBVvLrHXqO9TPGZsuc0kvz1ZVAz0lMacuiGk2+1KX0Wyv1WZbJd4pz9pQh67YXDCQ+jU4J5Fgqu7Pr2MB0RjvHbkRdazNhPk3b/j2MbHsiKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2PtVb1z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FrjjC7VL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA981F000FF;
-	Sat, 12 Sep 2026 07:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2PtVb1z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552B71F000FF;
+	Sat, 12 Sep 2026 07:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198642;
-	bh=1tBFm7reVrzskLjlSrso6/3V1pHCbOfChOklZOP2OsQ=;
+	s=korg; t=1789198647;
+	bh=Ur1q22f5CNS7lRxLnZYx8rJcKtT8V6n+ZppfnAlzPsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FrjjC7VL2Xkk8vWEyqYLkRM4xiYfpqnr+gMavO9BnpJp13ag8qk6KC5Bs/4PFlH50
-	 t+hftpIagt6BaC1rCckfv6ITfsP1fCQ03KGMwmTc1aMf5ypfYic0aHtXGu3iQamjaX
-	 YxbmGdXJbWinJBVx36xzD3jC2zuQ/iNjxlH5RXPQ=
+	b=f2PtVb1z7cz4bdsDDEMhPTpnstYqWor3NT4Ea6ndt5op5dZf28KrkZ89GTzcPd9/G
+	 99GOwnZzNEflpPMpFOlkGQogQELs8ADHa8fRc0xB6zMPyxeBgL608DXgaUxixkv4SD
+	 m8YZcKU5ySgSAxaKFTglyBeGr8JfWUp1xSclCSqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0424/1815] cpufreq: spear: Fix an IS_ERR() vs NULL bug in spear1340_set_cpu_rate()
-Date: Sat, 12 Sep 2026 08:36:14 +0200
-Message-ID: <20260912065658.849674451@linuxfoundation.org>
+Subject: [PATCH 7.2 0425/1815] PCI: xgene: Drop unnecessary OF node reference
+Date: Sat, 12 Sep 2026 08:36:15 +0200
+Message-ID: <20260912065658.873323717@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,38 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 6a9e0e0f7592313ace66303cf5eca68e04c10f30 ]
+[ Upstream commit 4869db344e76c9adfb1d9654df442db5371fac71 ]
 
-The clk_get_parent() function doesn't return error pointers, it returns
-NULL on error.  Update the error checking to match.
+xgene_pcie_probe() stores dev->of_node in port->node with
+of_node_get(), but the cached node is only used during probe by
+xgene_pcie_parse_map_dma_ranges(). The driver never releases the extra
+reference, so the node reference is leaked.
 
-Fixes: 420993221175 ("cpufreq: SPEAr: Add CPUFreq driver")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+There is no need for private OF node ownership here. Use the device's
+existing of_node directly in xgene_pcie_parse_map_dma_ranges() and remove
+the cached port->node pointer.
+
+Fixes: 5f6b6ccdbe1c ("PCI: xgene: Add APM X-Gene PCIe driver")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20260630195234.1871951-1-dbgh9129@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/spear-cpufreq.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pci-xgene.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/cpufreq/spear-cpufreq.c b/drivers/cpufreq/spear-cpufreq.c
-index 81a0780b2ebf0..ffe5eda82f0b1 100644
---- a/drivers/cpufreq/spear-cpufreq.c
-+++ b/drivers/cpufreq/spear-cpufreq.c
-@@ -79,9 +79,9 @@ static int spear1340_set_cpu_rate(struct clk *sys_pclk, unsigned long newfreq)
- 	int ret = 0;
+diff --git a/drivers/pci/controller/pci-xgene.c b/drivers/pci/controller/pci-xgene.c
+index b95afa35201d0..83c9a2930eeca 100644
+--- a/drivers/pci/controller/pci-xgene.c
++++ b/drivers/pci/controller/pci-xgene.c
+@@ -58,7 +58,6 @@
+ #define XGENE_PCIE_IP_VER_2		2
  
- 	sys_clk = clk_get_parent(spear_cpufreq.clk);
--	if (IS_ERR(sys_clk)) {
-+	if (!sys_clk) {
- 		pr_err("failed to get cpu's parent (sys) clock\n");
--		return PTR_ERR(sys_clk);
-+		return -EINVAL;
- 	}
+ struct xgene_pcie {
+-	struct device_node	*node;
+ 	struct device		*dev;
+ 	struct clk		*clk;
+ 	void __iomem		*csr_base;
+@@ -526,7 +525,7 @@ static void xgene_pcie_setup_ib_reg(struct xgene_pcie *port,
  
- 	/* Set the rate of the source clock before changing the parent */
+ static int xgene_pcie_parse_map_dma_ranges(struct xgene_pcie *port)
+ {
+-	struct device_node *np = port->node;
++	struct device_node *np = port->dev->of_node;
+ 	struct of_pci_range range;
+ 	struct of_pci_range_parser parser;
+ 	struct device *dev = port->dev;
+@@ -612,7 +611,6 @@ static bool xgene_check_pcie_msi_ready(void)
+ static int xgene_pcie_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+-	struct device_node *dn = dev->of_node;
+ 	struct xgene_pcie *port;
+ 	struct pci_host_bridge *bridge;
+ 	int ret;
+@@ -627,7 +625,6 @@ static int xgene_pcie_probe(struct platform_device *pdev)
+ 
+ 	port = pci_host_bridge_priv(bridge);
+ 
+-	port->node = of_node_get(dn);
+ 	port->dev = dev;
+ 	port->version = XGENE_PCIE_IP_VER_1;
+ 
 -- 
 2.53.0
 
