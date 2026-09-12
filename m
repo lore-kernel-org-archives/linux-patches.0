@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5871D3043CF;
-	Sat, 12 Sep 2026 14:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FBD230C617;
+	Sat, 12 Sep 2026 14:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222610; cv=none; b=IneMru/7YmR3J9Msfy+9jT1v08hYZXjiqMMNSxCqS9g76ptwH6DwUw+I9Dgto6rd/Zs75f7vC4Y+3mkONZt7UoltMrS9qKcPeEGFvnFIG6Ka51JhFR7e0simwxuRFTUvmJElB4JGnPsPE6EuJGBjS60d/+ZXFRO31aYtc37SpYk=
+	t=1789222615; cv=none; b=tOghGllSRrhn9XJkDw9ZrGXMEDFaY6XutC6Ur3ngbQxG6JErN+Qd5U+lXNeRPBn0O4dt7EoiyF5r1v5xFujGkNaCGMUsG7Wt+0S7Ga5sG3a4K1S3/JGfImpoGDJ6e+ojqsHHBDfOapH8zKvuXjSKgXfSmy4dfEvzveCcBLuFiEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222610; c=relaxed/simple;
-	bh=05R8Uza+BgtCeS0CXzdmcoA6QDhxdWUD9RHVxC5NDrE=;
+	s=arc-20240116; t=1789222615; c=relaxed/simple;
+	bh=7mPhxUSExDHfzdGimI8uzaVNBQqLCxfwZk3oUJidKuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fvOlmRyk86CZ0LUWQmZju6T8zBwrahlatlrIwFiMnwZb/ztIiMqbYPb6ICy2FhysYskfNQwxOEBfPX6n+FUfncX0m90bu5M8f885RobsNLAs6iZ4upBgdVvKASgJ4IoVAHBhEZvOqG0VGuMc5UzwOcVuZOnH7JHvJYePdSBWDJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2TZBpbvd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nbFylELt9goViFwHh1FjGmIeaezb0nCMo8JakNRX/j8ekhze0UOgo/YOaOrgWKbcVjWaEMgZdNEGQep0Zmx0ZJWhItiz/2AFkXXFnqJwhFKf7WySPOnw8kCZ2N2E7AFoUGJv3WCtKyzxJASLuKriPJdYsNXz/1v1znNrdsNwkM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzKypBL9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2TZBpbvd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 159111F000FF;
-	Sat, 12 Sep 2026 14:16:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzKypBL9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E7A1F000FF;
+	Sat, 12 Sep 2026 14:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222609;
-	bh=h3pcQvfK4MbryZrXUzI0Fqnxr0Q8whhvWDt7oU0mXE4=;
+	s=korg; t=1789222613;
+	bh=AauSe+6kQHRlYwJCmuPKUsKcLU3p3QvNagQsZUiZ+dA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2TZBpbvduvr6OzAsC8pBulrT0WEh+31I/FofvmS53jDuhea1Pr/4XQIqjz6ujAouF
-	 QNi/6joFxrYRMht+HMnhHZQyr4NeFBrrQpkUMoswBks6kk/hAsks6g2q0gRcOEzMcY
-	 qsY9MCFIlT51OTHg/yTEjKzINYg1bZHn/gc/7ezY=
+	b=rzKypBL9p8R3CC0glbqK5pyS/saRmA+Ny1q8qRUoZaPmZTXuC9tBJDcht2HpPT1a4
+	 n/JmjPScrGP0QvtfDkgLi//F6t5TzMrxaIxEylNNwofPGMwAsKU4YYy5NTRj77sTLj
+	 aHNIAukNfH9a0b4JM7H/Et18QzyroAC4S64gizhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
+	Leon Hwang <leon.hwang@linux.dev>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0620/1424] tools/bpf/bpftool: Reset vmlinux BTF after struct_ops commands
-Date: Sat, 12 Sep 2026 08:50:52 +0200
-Message-ID: <20260912065621.176360198@linuxfoundation.org>
+Subject: [PATCH 6.6 0621/1424] bpf: Copy per-CPU map value padding in copy_map_value_long()
+Date: Sat, 12 Sep 2026 08:50:53 +0200
+Message-ID: <20260912065621.198650716@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,41 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Leon Hwang <leon.hwang@linux.dev>
 
-[ Upstream commit f7f540e19751face50c68bb9ce58460fcb46c293 ]
+[ Upstream commit 7cf9cd98cf6f0df3befc167ca6b54c07014d71de ]
 
-struct_ops frees the global btf_vmlinux object.
+In kernel, per-CPU map elements are stored with
+round_up(map->value_size, 8) bytes. On UAPI lookup paths, it copies the
+rounded size for each CPU into a temporary buffer.
 
-In batch mode, a later struct_ops command can reuse stale state.
+However, copy_map_value_long() passes 'map->value_size' to
+bpf_obj_memcpy(). When the map has special fields, bpf_obj_memcpy() copies
+around those fields with memcpy(), and does not copy the tail padding
+between 'map->value_size' and round_up(map->value_size, 8).
 
-Reset the BTF pointer and cached map info state.
+The temporary UAPI lookup buffers are allocated without __GFP_ZERO. As a
+result, when the per-CPU map's value size is not equal to
+round_up(map->value_size, 8), UAPI LOOKUP_ELEM and its variants can return
+stale heap contents from that padding to user space. The same issue
+applies to bpf_iter for per-CPU maps.
 
-Fixes: 65c93628599d ("bpftool: Add struct_ops support")
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Pass round_up(map->value_size, 8) to bpf_obj_memcpy() from
+copy_map_value_long(), so per-CPU maps both with and without special
+fields copy the entire per-CPU slot. Remove the now redundant round_up()
+from bpf_obj_memcpy()'s long_memcpy path.
+
+Fixes: 448325199f57 ("bpf: Add copy_map_value_long to copy to remote percpu memory")
+Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/9F9017160ABE125F+20260624025055.1574875-3-chenyichong@uniontech.com
+Link: https://lore.kernel.org/bpf/20260624155115.85196-2-leon.hwang@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/struct_ops.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/linux/bpf.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/bpf/bpftool/struct_ops.c b/tools/bpf/bpftool/struct_ops.c
-index d110c6ad8175c..05f08dae661e4 100644
---- a/tools/bpf/bpftool/struct_ops.c
-+++ b/tools/bpf/bpftool/struct_ops.c
-@@ -637,6 +637,10 @@ int do_struct_ops(int argc, char **argv)
- 	err = cmd_select(cmds, argc, argv, do_help);
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 398fa28c388d9..fd20812cbcc33 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -482,7 +482,7 @@ static inline void bpf_obj_memcpy(struct btf_record *rec,
  
- 	btf__free(btf_vmlinux);
-+	btf_vmlinux = NULL;
-+	map_info_type = NULL;
-+	map_info_alloc_len = 0;
-+	map_info_type_id = 0;
+ 	if (IS_ERR_OR_NULL(rec)) {
+ 		if (long_memcpy)
+-			bpf_long_memcpy(dst, src, round_up(size, 8));
++			bpf_long_memcpy(dst, src, size);
+ 		else
+ 			memcpy(dst, src, size);
+ 		return;
+@@ -505,7 +505,7 @@ static inline void copy_map_value(struct bpf_map *map, void *dst, void *src)
  
- 	return err;
+ static inline void copy_map_value_long(struct bpf_map *map, void *dst, void *src)
+ {
+-	bpf_obj_memcpy(map->record, dst, src, map->value_size, true);
++	bpf_obj_memcpy(map->record, dst, src, round_up(map->value_size, 8), true);
  }
+ 
+ static inline void bpf_obj_memzero(struct btf_record *rec, void *dst, u32 size)
 -- 
 2.53.0
 
