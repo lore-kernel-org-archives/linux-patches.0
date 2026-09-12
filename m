@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05DB347DFBF;
-	Sat, 12 Sep 2026 13:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E4547ECFB;
+	Sat, 12 Sep 2026 13:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219848; cv=none; b=HTz9KlnUkk6y0x4YWHj1/VnomRVr+c5yPgTVpLEn9iLfs84Cvsb/Pg+vIwXFgsocKi2jQmmg5LFUlpECgKae/5D1AdTlXODVuhNk70rDLyP0mMsxyb+gl4Audpf29I706oIjKTB4jlTdBoroALY1Ur68qUKI7Ovz4blFqb5t9JM=
+	t=1789219853; cv=none; b=NHP6E3h3SH8rrDMmS32SB8VBnRh/NzFGiVMzlXcqSOR/FfkZ9wPqp22CIinnmFks4b8LUpmPzw3ybBi3Ff8Z856m4+qARFqSh8ILIXLQy5L3w7aGtM3sd9qQ6jchNcaPlzAgydsULQe/dRPsA0evQsrCp13ZdSxOn/7YS0tN+GE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219848; c=relaxed/simple;
-	bh=n76rzQs5PRZGPYbhRnmzF7L8Dmd/pcbUglZnDHLoXbw=;
+	s=arc-20240116; t=1789219853; c=relaxed/simple;
+	bh=I3UrMy643fZh/6pNkhyQ1FfRiFHY0q4rpdGhdgc6F4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKjtCOPYhDDn+oMCGBLk4auDeMfFTJXqn3Rs/ZzlGZPH69bYwZjkFUR/E7oCTip7nqVcwhKNyV7PlIJfdV7q47Ff3PHf0/WMk1Jg9WILVbHeLsupozOzZGRENeIyU3zq7U4T6NAUN+qKjDJNsSLYMdz1XXS43EjUpm0Us1/O3Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JLZPtSHB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L+wteljuVD7WEmCVN4nWMlj+Yth+LustLubj32eKct9f+DuTTtnvLC+b/wJNxxyqF0Y+z1AIuZU9YF8PJDPHPQNIClLaVVXjI+IARpLQaAAPPGPAbLgSN63qOVMeF/xXyxeAX60n9pX69OkF1VKjhIppr8wEAwqerTJb1Uy0Gyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cWYiYhLx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLZPtSHB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA63B1F000FF;
-	Sat, 12 Sep 2026 13:30:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cWYiYhLx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87A61F000FF;
+	Sat, 12 Sep 2026 13:30:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219846;
-	bh=4LxM2c85NrU86cZU2ccIDr49nEOq8Z6+cnR3xSHgK2E=;
+	s=korg; t=1789219852;
+	bh=xjvlg2wJHrZ7p+q8FY7IexB93FAZiqnIGjpTlJio1bA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JLZPtSHB693yxgrLRhJV/l2RDiEC7EV4tAgVwjG1wwM2636lgaeFEHVzW/1fA0+Ot
-	 7IS2H6hq78cd7dorquOlG+Ig+3e2sr3j1zPVZ0DVp4WAbGFSVXkJ/ZRxb+GuD2QbE5
-	 EClGPvlk8ZSO2X4oetqTxNC1yApRIN26/suidLMc=
+	b=cWYiYhLx+UeLRfi5YD0Iaum18RSsYNhXkRJXJ73y2dOzrI74um4VVdULAccxv/YLX
+	 EByBIiU0UDzegGCWZZhYdWY4ohxJ4KfbpyHD4it1fZE2nLoKosXHHMn4ey6QFARbJC
+	 sVU6pRtEvVTu/VS8HDYuyg/zWSmyVPJnlW7pUnEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.6 0056/1424] nfsd: add fh_want_write() for early-verified SETATTR in nfsd_proc_setattr()
-Date: Sat, 12 Sep 2026 08:41:28 +0200
-Message-ID: <20260912065608.556641062@linuxfoundation.org>
+Subject: [PATCH 6.6 0057/1424] nfsd: add filehandle match check to nfsd4_delegreturn()
+Date: Sat, 12 Sep 2026 08:41:29 +0200
+Message-ID: <20260912065608.579809428@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,48 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit 4e475be769aa9f7a2c1ce55a2b8592cfccacddcc upstream.
+commit 04cce9d79f2b1a114f7128e08bf60a473e10f1ec upstream.
 
-The BOTH_TIME_SET branch calls fh_verify() early so setattr_prepare()
-can inspect the dentry. This causes nfsd_setattr() to skip
-fh_want_write(), so notify_change() runs without a mount write
-reference.
+nfsd4_delegreturn() is the only stateful NFSv4 operation that does
+not call nfs4_check_fh() to verify the delegation's file matches
+cstate->current_fh. A client can DELEGRETURN with a mismatched
+filehandle, destroying the correct delegation but waking the wrong
+inode's waiters.
 
-Add the missing fh_want_write() call after the early fh_verify().
+Add the missing nfs4_check_fh() call after the generation check.
 
-Fixes: cc265089ce1b ("nfsd: Disable NFSv2 timestamp workaround for NFSv3+")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260611-nfsd-testing-v2-11-5b90e276f2d9@kernel.org
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-6-5b90e276f2d9@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsproc.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/nfsd/nfs4state.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/nfsd/nfsproc.c
-+++ b/fs/nfsd/nfsproc.c
-@@ -55,6 +55,7 @@ nfsd_proc_setattr(struct svc_rqst *rqstp
- 		.na_iattr	= iap,
- 	};
- 	struct svc_fh *fhp;
-+	int hosterr;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -7184,6 +7184,10 @@ nfsd4_delegreturn(struct svc_rqst *rqstp
+ 	if (status)
+ 		goto put_stateid;
  
- 	dprintk("nfsd: SETATTR  %s, valid=%x, size=%ld\n",
- 		SVCFH_fmt(&argp->fh),
-@@ -90,6 +91,12 @@ nfsd_proc_setattr(struct svc_rqst *rqstp
- 		if (resp->status != nfs_ok)
- 			goto out;
- 
-+		hosterr = fh_want_write(fhp);
-+		if (hosterr) {
-+			resp->status = nfserrno(hosterr);
-+			goto out;
-+		}
++	status = nfs4_check_fh(&cstate->current_fh, &dp->dl_stid);
++	if (status)
++		goto put_stateid;
 +
- 		if (delta < 0)
- 			delta = -delta;
- 		if (delta < MAX_TOUCH_TIME_ERROR &&
+ 	trace_nfsd_deleg_return(stateid);
+ 	wake_up_var(d_inode(cstate->current_fh.fh_dentry));
+ 	destroy_delegation(dp);
 
 
