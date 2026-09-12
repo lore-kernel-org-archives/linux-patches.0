@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AEF3E2ACC;
-	Sat, 12 Sep 2026 07:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6D83E51C5;
+	Sat, 12 Sep 2026 07:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197393; cv=none; b=QXTLUQMRdmf/VEtOfJmyeCdzFFd4JeplnvCV3f1hJuha72Dpkvc51tkhSdohc/yOV+ufF6Mo2+ZmlzNmzBNVZ8/jpnK2QYsSQwAarXX/2kqZl2tvx8QjFeS9wqkyOjyz6KcLdU68kY6RP/rWn6DIqKk4gt3DcssJBnypsBiD3ng=
+	t=1789197398; cv=none; b=VmfXRFNpcwmfwETlOYIx73mnIcCIsb7Fpq4FGiFISOusgl7M7GoBijZgSVHIMwmw0O5kOj7PIom4C5CDVSiM7Y7/14KyeqW9REzNcVitSjthNA7LVujdgUT3BgoEbU3wmRynJMzdx4hZdGbmmqmuSQMjWjN9UBPjMi0PrBcZ/mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197393; c=relaxed/simple;
-	bh=12tTcVlsRfbq5iTNAiOoITIS3iOXO0xMxegXgKLn8k0=;
+	s=arc-20240116; t=1789197398; c=relaxed/simple;
+	bh=m0gUBEE2N+bwHYdLMOoyS07KRRPKOyObbXq34Dytiv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mqGwsYFZGBPE1w/bCUdVQCkug2QQMLTU3aFqJ5s/eBfvDBPwZoOFrU2FEten/z3hGreMGL5ljeIi4ejYAu0R+bNv5qfXFaalJFKkxVgqC4tNFG/w91MbCs8XxQbclBd/SxacSfs48BIownfWBLrDHbzamh0Co7J6Awp6+dsDmXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSMFaGU8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uC/n9qZxDD9q8q3/RpltHyMfQqtQjUetDGeuB6wbnQ5TNNLyouKqZlC77kxy0DanDsJ1NdKvZgITizdDbIAwGHbiL9yEd8R+rdSS+czcXU7BbmWH5mAHPMbzmx5jwkKPAfBQqTqXWsdXXR1LPai5qEdxkXIlr55FxNUwsHqHBq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yl9qi19S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSMFaGU8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF171F000FF;
-	Sat, 12 Sep 2026 07:16:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yl9qi19S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564AF1F000FF;
+	Sat, 12 Sep 2026 07:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197392;
-	bh=RROyw5NF4V48O80qtZVm+bzHGm2ndNnH2zt7Yg43WjU=;
+	s=korg; t=1789197397;
+	bh=Tnu+pUObEH7YOEUovupdq4FV4yXNzRNE/xrCTcN4SFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TSMFaGU8aMyVBqkNQ61ZkICnIFZLDMuMxhQ7kwP6pAk8oAZnwNgTv2vd1asEinHL/
-	 XoA6cngVx7ZU2K4GeuYUodHCbc7HylkD+BQP+usqnhM6y7l1P1KN52SRANOQPmypwv
-	 HnA1+bbMHnsz8B1iyCNFOm/dCZbdOfHG7wlwfVh4=
+	b=Yl9qi19S5lijXShV37dIw1I7PdIP+U820gTCeLc2uON2upzIuxrOFGkr2LOQPVSNi
+	 NhcsU/evGFHtQwMC9eJZJ8fi1xVmsiR+szuqCSuthIAduILpl6Opa73/pkJJIFQdOF
+	 6RbUjPnd9eVXSAI/qnZdutQXsG3De2ABiRwJpetE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanjay Chitroda <sanjayembeddedse@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Guo Ren <guoren@kernel.org>,
+	Hanlin Song <pgeorge8929@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0164/1815] iio: orientation: hid-sensor-rotation: Avoid race between callback setup and device exposure
-Date: Sat, 12 Sep 2026 08:31:54 +0200
-Message-ID: <20260912065652.857400694@linuxfoundation.org>
+Subject: [PATCH 7.2 0165/1815] csky: Fix a4/a5 restoration in syscall trace path
+Date: Sat, 12 Sep 2026 08:31:55 +0200
+Message-ID: <20260912065652.880539245@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,84 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanjay Chitroda <sanjayembeddedse@gmail.com>
+From: Hanlin Song <pgeorge8929@gmail.com>
 
-[ Upstream commit 0e32649a7cf3cd784862f8dc0c68a5134731bfff ]
+[ Upstream commit abb81e5ce7d995baa41556b8125fa59e28ba3be8 ]
 
-The driver currently exposes the IIO device to userspace before
-completing sensor hub callback registration, and similarly removes
-callbacks while the device can still be accessed during teardown.
+The syscall trace path reloads syscall arguments from pt_regs before
+calling the syscall handler. On C-SKY ABIv2, the 5th and 6th syscall
+arguments are prepared as stack arguments before invoking syscallid.
 
-This creates a timing window where userspace may enable the buffer
-before callbacks are available. In such cases:
-- samples can be dropped,
-- buffered reads may observe stale or no data.
+The current code adjusts sp before loading LSAVE_A4 and LSAVE_A5. Since
+those offsets are relative to the original pt_regs base, loading them
+after changing sp fetches the wrong slots. As a result, traced syscalls
+that use the 5th or 6th argument may receive corrupted arguments.
 
-Reorder probe and remove paths to ensure callbacks are active before
-device exposure and are removed after device is no longer accessible.
+This is visible with mmap2(), which takes six arguments. A small
+PTRACE_SYSCALL reproducer opens a file and maps one page with:
 
-This avoids a race window leading to data loss.
+  mmap(NULL, 4096, PROT_READ | PROT_EXEC, MAP_PRIVATE, fd, 0)
 
-Signed-off-by: Sanjay Chitroda <sanjayembeddedse@gmail.com>
-Fixes: fc18dddc0625 ("iio: hid-sensors: Added device rotation support")
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Before the fix, the traced child fails the mmap and exits with 12.
+After the fix, the mapping succeeds and the child exits with 0.
+
+Fix the trace path by loading a4/a5 from pt_regs before changing sp.
+
+Tested on: ck860f, linux-4.19.15, C-SKY abiv2
+
+Fixes: e0bbb53843b5 ("csky: Fixup abiv2 syscall_trace break a4 & a5")
+Suggested-by: Guo Ren <guoren@kernel.org>
+Signed-off-by: Hanlin Song <pgeorge8929@gmail.com>
+Signed-off-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/orientation/hid-sensor-rotation.c | 20 +++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ arch/csky/kernel/entry.S | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iio/orientation/hid-sensor-rotation.c b/drivers/iio/orientation/hid-sensor-rotation.c
-index cc3e66dbb90fc..f761ec70b4c6c 100644
---- a/drivers/iio/orientation/hid-sensor-rotation.c
-+++ b/drivers/iio/orientation/hid-sensor-rotation.c
-@@ -367,12 +367,6 @@ static int hid_dev_rot_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
--	ret = iio_device_register(indio_dev);
--	if (ret) {
--		dev_err(&pdev->dev, "device register failed\n");
--		goto error_remove_trigger;
--	}
--
- 	rot_state->callbacks.send_event = dev_rot_proc_event;
- 	rot_state->callbacks.capture_sample = dev_rot_capture_sample;
- 	rot_state->callbacks.pdev = pdev;
-@@ -380,13 +374,19 @@ static int hid_dev_rot_probe(struct platform_device *pdev)
- 					&rot_state->callbacks);
- 	if (ret) {
- 		dev_err(&pdev->dev, "callback reg failed\n");
--		goto error_iio_unreg;
-+		goto error_remove_trigger;
-+	}
-+
-+	ret = iio_device_register(indio_dev);
-+	if (ret) {
-+		dev_err(&pdev->dev, "device register failed\n");
-+		goto error_remove_callback;
- 	}
- 
- 	return 0;
- 
--error_iio_unreg:
--	iio_device_unregister(indio_dev);
-+error_remove_callback:
-+	sensor_hub_remove_callback(hsdev, hsdev->usage);
- error_remove_trigger:
- 	hid_sensor_remove_trigger(indio_dev, &rot_state->common_attributes);
- 	return ret;
-@@ -399,8 +399,8 @@ static void hid_dev_rot_remove(struct platform_device *pdev)
- 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
- 	struct dev_rot_state *rot_state = iio_priv(indio_dev);
- 
--	sensor_hub_remove_callback(hsdev, hsdev->usage);
- 	iio_device_unregister(indio_dev);
-+	sensor_hub_remove_callback(hsdev, hsdev->usage);
- 	hid_sensor_remove_trigger(indio_dev, &rot_state->common_attributes);
- }
- 
+diff --git a/arch/csky/kernel/entry.S b/arch/csky/kernel/entry.S
+index c68cdcc76d60e..3261f46f22442 100644
+--- a/arch/csky/kernel/entry.S
++++ b/arch/csky/kernel/entry.S
+@@ -93,11 +93,11 @@ csky_syscall_trace:
+ 	ldw	a2, (sp, LSAVE_A2)
+ 	ldw	a3, (sp, LSAVE_A3)
+ #if defined(__CSKYABIV2__)
+-	subi	sp, 8
+ 	ldw	r9, (sp, LSAVE_A4)
++	ldw	r10, (sp, LSAVE_A5)
++	subi	sp, 8
+ 	stw	r9, (sp, 0x0)
+-	ldw	r9, (sp, LSAVE_A5)
+-	stw	r9, (sp, 0x4)
++	stw	r10, (sp, 0x4)
+ 	jsr	syscallid                     /* Do system call */
+ 	addi	sp, 8
+ #else
 -- 
 2.53.0
 
