@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B28390205;
-	Sat, 12 Sep 2026 19:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075F538F93B;
+	Sat, 12 Sep 2026 19:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243045; cv=none; b=m11Ov5rbEJpWWGobIXBUEI41fJ0AyK/TbJaH5rKYgTktrnvGhYfZ2gJiyxzlrEyNukQ0rr8dcOfRFILlr1O6ZC8HIEOQ/mFFpOeaZfMjPWi9vt9940xU7JU65Qv0gyk3/WGgO5LPdz4a87LsBNIJK1Bwa9Bt4m+uJ+xEH3N/7cI=
+	t=1789243048; cv=none; b=Sq+DRCrrPwzyzlyeCIbTO/ah0SupnQxRhuWb4ejQw54Ekz/HnjeHcJkSn/1LM1yNaGDV0a1DinqfwTZeV1N4vmSiFaqQKKdQL9q6zfjWc+MqeA/0xtOe4cL89BS9Dcl04+TtoykPmMULNq6eGX+ygDjdkWTKZ4h33/qQ0Q1ns/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243045; c=relaxed/simple;
-	bh=gJcRy4JmbzZJwbr745AgRAPxgsyhe19kzo7gC9Gs7KQ=;
+	s=arc-20240116; t=1789243048; c=relaxed/simple;
+	bh=PIFxLjX60HZtWasaMEdP/Fu7HhapRNElCmXwEE7e51U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CyBjuVv04a80ZmBmfnakl/P3x3d87eMPNRsC49qxpeNQwr4iYDqyYQDJQTAiZ+b+T9egLKKj8uISYR1tlGVtCBPT+gm1mzRgShuG8uGXduLdInno1K8k9Uzh0EBDihqxDQw0UhKJh7oRGC1LmKqC3kHECqKsTd+VkigAcc7UAfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsniZLGq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pvAHcDJGmwBNM7l5BXVpJLV1J9Tl95eJrgDRDZLtxeDpZES8Rpf9mZNm5SCK84nynpK/m5t3+FDoLHB8HDDzAyl8Jb/fSg1cRGRJVjfP0gZgDtEpeJt1DZd6BSL7W5TGYsj8KvGnz/PcWrhBw0wDN91Cauc8KARFMPed26kOsXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCj1zn4I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsniZLGq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A0D1F000FF;
-	Sat, 12 Sep 2026 19:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCj1zn4I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193C81F000FF;
+	Sat, 12 Sep 2026 19:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243043;
-	bh=BdoBkOQCAdiH/1jjtmpt/R7tm/8U7YqrvtqBN/fOLzQ=;
+	s=korg; t=1789243046;
+	bh=T/UZgm1Pyinn69XcOBx984ZjGzUDqjVLPQv6ZW2T7as=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fsniZLGqZSluOK7Xggd/BTqVTC0K45FV344+hGEIYLs5sx1aa0hxDlItbWhKY+zRw
-	 bE7DHfrwcPJxieklFE+khgyaCEgDW/9q5BoToN01a7fAM/ZLYI8NH++R/njiWnlwPh
-	 cED02vSyAPtUFpj7w4aQpcWrh7VqJ5wAiqkylk0k=
+	b=WCj1zn4IcKf/Q7gM5CTAKjtapS3ixTQq+14UvHWKMXla+KOuU4CuZUOINJoWGYlVm
+	 qbiqyW5ef6MjeFQr1+UV8D9Uy4Aa9QgE4qFaEdFgVsBTC7bApMhm88LWqa3ovxCO8X
+	 H4ZaItt7KHrv3BxQL3kz+V8/kPAa8BGVl+A/DYV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Rob Herring <robh@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 618/798] of: property: use unsigned int return on of_graph_get_endpoint_count()
-Date: Sat, 12 Sep 2026 09:04:06 +0200
-Message-ID: <20260912065531.286687271@linuxfoundation.org>
+Subject: [PATCH 5.10 619/798] bitfield: Add less-checking __FIELD_{GET,PREP}()
+Date: Sat, 12 Sep 2026 09:04:07 +0200
+Message-ID: <20260912065531.309289967@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,64 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 574849054d97cee5be78d6c149d84685647fe774 ]
+[ Upstream commit 2a6c045640c38a407a39cd40c3c4d8dd2fd89aa8 ]
 
-Because of of_graph_get_endpoint_count() doesn't report error,
-just return count of endpoint, the return type should be unsigned.
-Tidyup it.
+The BUILD_BUG_ON_MSG() check against "~0ull" works only with "unsigned
+(long) long" _mask types.  For constant masks, that condition is usually
+met, as GENMASK() yields an UL value.  The few places where the
+constant mask is stored in an intermediate variable were fixed by
+changing the variable type to u64 (see e.g. [1] and [2]).
 
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Link: https://lore.kernel.org/r/87plxbcvzb.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Rob Herring <robh@kernel.org>
+However, for non-constant masks, smaller unsigned types should be valid,
+too, but currently lead to "result of comparison of constant
+18446744073709551615 with expression of type ... is always
+false"-warnings with clang and W=1.
+
+Hence refactor the __BF_FIELD_CHECK() helper, and factor out
+__FIELD_{GET,PREP}().  The later lack the single problematic check, but
+are otherwise identical to FIELD_{GET,PREP}(), and are intended to be
+used in the fully non-const variants later.
+
+[1] commit 5c667d5a5a3ec166 ("clk: sp7021: Adjust width of _m in
+    HWM_FIELD_PREP()")
+[2] commit cfd6fb45cfaf46fa ("crypto: ccree - avoid out-of-range
+    warnings from clang")
+
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://git.kernel.org/torvalds/c/5c667d5a5a3ec166 [1]
+Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
 Stable-dep-of: 62bac3202042 ("drm/sun4i: tcon-top: Keep mixer routes distinct")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/property.c    | 4 ++--
- include/linux/of_graph.h | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ include/linux/bitfield.h | 36 ++++++++++++++++++++++++++++--------
+ 1 file changed, 28 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/of/property.c b/drivers/of/property.c
-index 3cbcc948c5c64..b97673e7c6ee6 100644
---- a/drivers/of/property.c
-+++ b/drivers/of/property.c
-@@ -812,10 +812,10 @@ EXPORT_SYMBOL(of_graph_get_remote_port);
-  *
-  * Return: count of endpoint of this device node
+diff --git a/include/linux/bitfield.h b/include/linux/bitfield.h
+index 6093fa6db2600..359916a958f35 100644
+--- a/include/linux/bitfield.h
++++ b/include/linux/bitfield.h
+@@ -57,7 +57,7 @@
+ 
+ #define __bf_cast_unsigned(type, x)	((__unsigned_scalar_typeof(type))(x))
+ 
+-#define __BF_FIELD_CHECK(_mask, _reg, _val, _pfx)			\
++#define __BF_FIELD_CHECK_MASK(_mask, _val, _pfx)			\
+ 	({								\
+ 		BUILD_BUG_ON_MSG(!__builtin_constant_p(_mask),		\
+ 				 _pfx "mask is not constant");		\
+@@ -65,13 +65,33 @@
+ 		BUILD_BUG_ON_MSG(__builtin_constant_p(_val) ?		\
+ 				 ~((_mask) >> __bf_shf(_mask)) & (_val) : 0, \
+ 				 _pfx "value too large for the field"); \
+-		BUILD_BUG_ON_MSG(__bf_cast_unsigned(_mask, _mask) >	\
+-				 __bf_cast_unsigned(_reg, ~0ull),	\
+-				 _pfx "type of reg too small for mask"); \
+ 		__BUILD_BUG_ON_NOT_POWER_OF_2((_mask) +			\
+ 					      (1ULL << __bf_shf(_mask))); \
+ 	})
+ 
++#define __BF_FIELD_CHECK_REG(mask, reg, pfx)				\
++	BUILD_BUG_ON_MSG(__bf_cast_unsigned(mask, mask) >		\
++			 __bf_cast_unsigned(reg, ~0ull),		\
++			 pfx "type of reg too small for mask")
++
++#define __BF_FIELD_CHECK(mask, reg, val, pfx)				\
++	({								\
++		__BF_FIELD_CHECK_MASK(mask, val, pfx);			\
++		__BF_FIELD_CHECK_REG(mask, reg, pfx);			\
++	})
++
++#define __FIELD_PREP(mask, val, pfx)					\
++	({								\
++		__BF_FIELD_CHECK_MASK(mask, val, pfx);			\
++		((typeof(mask))(val) << __bf_shf(mask)) & (mask);	\
++	})
++
++#define __FIELD_GET(mask, reg, pfx)					\
++	({								\
++		__BF_FIELD_CHECK_MASK(mask, 0U, pfx);			\
++		(typeof(mask))(((reg) & (mask)) >> __bf_shf(mask));	\
++	})
++
+ /**
+  * FIELD_MAX() - produce the maximum value representable by a field
+  * @_mask: shifted mask defining the field's length and position
+@@ -108,8 +128,8 @@
   */
--int of_graph_get_endpoint_count(const struct device_node *np)
-+unsigned int of_graph_get_endpoint_count(const struct device_node *np)
- {
- 	struct device_node *endpoint;
--	int num = 0;
-+	unsigned int num = 0;
+ #define FIELD_PREP(_mask, _val)						\
+ 	({								\
+-		__BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: ");	\
+-		((typeof(_mask))(_val) << __bf_shf(_mask)) & (_mask);	\
++		__BF_FIELD_CHECK_REG(_mask, 0ULL, "FIELD_PREP: ");	\
++		__FIELD_PREP(_mask, _val, "FIELD_PREP: ");		\
+ 	})
  
- 	for_each_endpoint_of_node(np, endpoint)
- 		num++;
-diff --git a/include/linux/of_graph.h b/include/linux/of_graph.h
-index 4d7756087b6b6..a4bea62bfa290 100644
---- a/include/linux/of_graph.h
-+++ b/include/linux/of_graph.h
-@@ -41,7 +41,7 @@ struct of_endpoint {
- bool of_graph_is_present(const struct device_node *node);
- int of_graph_parse_endpoint(const struct device_node *node,
- 				struct of_endpoint *endpoint);
--int of_graph_get_endpoint_count(const struct device_node *np);
-+unsigned int of_graph_get_endpoint_count(const struct device_node *np);
- struct device_node *of_graph_get_port_by_id(struct device_node *node, u32 id);
- struct device_node *of_graph_get_next_endpoint(const struct device_node *parent,
- 					struct device_node *previous);
-@@ -68,7 +68,7 @@ static inline int of_graph_parse_endpoint(const struct device_node *node,
- 	return -ENOSYS;
- }
+ /**
+@@ -122,8 +142,8 @@
+  */
+ #define FIELD_GET(_mask, _reg)						\
+ 	({								\
+-		__BF_FIELD_CHECK(_mask, _reg, 0U, "FIELD_GET: ");	\
+-		(typeof(_mask))(((_reg) & (_mask)) >> __bf_shf(_mask));	\
++		__BF_FIELD_CHECK_REG(_mask, _reg, "FIELD_GET: ");	\
++		__FIELD_GET(_mask, _reg, "FIELD_GET: ");		\
+ 	})
  
--static inline int of_graph_get_endpoint_count(const struct device_node *np)
-+static inline unsigned int of_graph_get_endpoint_count(const struct device_node *np)
- {
- 	return 0;
- }
+ extern void __compiletime_error("value doesn't fit into mask")
 -- 
 2.53.0
 
