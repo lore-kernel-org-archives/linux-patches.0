@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E95303A35;
-	Sat, 12 Sep 2026 16:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8BD2882DE;
+	Sat, 12 Sep 2026 16:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231470; cv=none; b=kvRPpkLJPaLSYgaxy3M38IYDvzv0J1dXxRfQ8GeJb9sZJp2uXkQmzDdiSPJikPbjb0ctyvpZ+gd670JEz0NloICaMfumnOzbLxr+rEv6BucriAXaUo41q0BU1bcEjh5seRDuHW3w4/FY0awHuonmh8jc7kY3qZ34TDWNQ/YhPNU=
+	t=1789231476; cv=none; b=Lgztg4hrNxnRb99sdVpjSCGGiFARu/HdpqHBKoUrV9OtPyMpd8vPyRVHkGITDbgQU3HpmScs4rH49QWc1z4bXVfo9HuDqrRja6UPqY1prUB0O7Ftk+LGiVa1CA1CxDQhKPc285tg0ECQhqpfalhjNHf25TeDgiFeaxvewdKxL6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231470; c=relaxed/simple;
-	bh=/H5ZK20nsav/DZ4ILtg3aBZpC+lLeMtGYKHfu9yWeow=;
+	s=arc-20240116; t=1789231476; c=relaxed/simple;
+	bh=I6ey8tSfzW3Is8CZ0Y7XVMU6GoknV1exRaVyipB/PmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lR943WnszqbsMdTz961LGl8P75qB+1Gifc0MgS2oIYMN/dZjoHKkEgkZ+U+fzcXGazCjzLo/fVywvJfbZ3a22skU8xJGNKlre5u2ZB6nayIYqO/Tfu9akP+S1Kos05PL2wQJNHzF190XGstxN5y4IkVSNXqUpfZcJzOPKQx9mC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G0SXj6SD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O9/9X0Y8UC2WEL7fmLbq5pcky+z52O3W396UnyLv3hZIpJtipq61GNkiG2NtOEiEM4bQmBovynzIBNsgTNBlGoF59coU4kD4EyX+k7NGME/vCuYXbWB88NG8+90PuRYaprOEzK+LHdeNzblyrMz+x0sMWHncRZollAvIuZehkm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9S2C8IE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0SXj6SD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 089C71F000FF;
-	Sat, 12 Sep 2026 16:44:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9S2C8IE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021B11F000FF;
+	Sat, 12 Sep 2026 16:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231469;
-	bh=6GtFFc2CFNGaw/HW/WrGhsmnBNZJkL2z9iJ+7gWOtHw=;
+	s=korg; t=1789231474;
+	bh=lq7h1ZIeYn/4210ffj1Nc21FqGNjqaWWOZ/JtJnKM1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G0SXj6SDm1WEzcqgzkEBpeU74ilzb3/fDN5lgfvAJPUf/3KFZge4XrKDUy0NsGt94
-	 kOAqc4MPjQpRyFZZH2CM/sUubhLlB2ixJPEjN7op2rMi1n+87Sdb31eFK38XY0A3uz
-	 l4oWi/oucb0vivSSPShwIIL+dStKo67pJ++joI3I=
+	b=q9S2C8IEzLBhhkBDkNC469Pdqyb3sDwRerX4+IBvvqrWrcPUGNDUDH9IunSK3fKTx
+	 EmPvE81sRZBIIqaqFL9ULIH/hovx68HXCA0UJ+CfhEPoh535XU9ccWt+QkVMN1gdo9
+	 ClnBFq+kwLIXaUb8c7kKQRLQ21gMUcXS+cPKnhvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1004/1191] bpftool: Fix double close in map dump
-Date: Sat, 12 Sep 2026 09:02:12 +0200
-Message-ID: <20260912065610.746077891@linuxfoundation.org>
+Subject: [PATCH 6.1 0969/1191] RDMA/cxgb4: Free debugfs on registration failure
+Date: Sat, 12 Sep 2026 09:01:37 +0200
+Message-ID: <20260912065609.978651783@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,63 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 259d60f5bfa41056fe01cbf2ba3f6f0331865a16 ]
+[ Upstream commit fe5c16bb6252dea6025b748257ddc3b2665495b0 ]
 
-map_dump() closes the map fd in its error path, and do_dump() then
-closes the same fd again after a successful dump. Closing an already
-closed fd leaves errno set to EBADF, which poisons later errno checks
-such as the batch file read check in do_batch(). Let do_dump() own the
-fd and remove the close from map_dump().
+c4iw_alloc() creates the per-device debugfs tree (dev->debugfs_root via
+setup_debugfs()), but it is removed only in c4iw_remove(), not in
+c4iw_dealloc().  When RDMA device registration fails, the registration
+worker's err_dealloc_ctx path calls c4iw_dealloc() directly, bypassing
+c4iw_remove(), so the debugfs dentries leak and outlive the freed
+c4iw_dev.
 
-The same double-close pattern exists in do_show_subset(): both
-show_map_close_json() and show_map_close_plain() already close the fd,
-so drop the extra close() there as well.
+Move debugfs_remove_recursive() into c4iw_dealloc() so every path that
+frees ctx->dev also removes its debugfs tree.
 
-Also propagate the error when bpf_map_get_info_by_fd() fails on a
-subsequent map in do_dump(): set err = -1 before breaking out of the
-loop, so a later failure is not silently hidden after an earlier
-iteration succeeded.
-
-Fixes: 99f9863a0c45f ("bpftool: Match maps by name")
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260810142224.2907373-2-chenyuan_fl@163.com
+Fixes: 49ea0c036ede ("RDMA/iw_cxgb4: cleanup device debugfs entries on ULD remove")
+Link: https://patch.msgid.link/r/20260806130128.465460-2-fanwu01@zju.edu.cn
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/map.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/infiniband/hw/cxgb4/device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/bpf/bpftool/map.c b/tools/bpf/bpftool/map.c
-index 995675ef4dadf..a77bf45d6f834 100644
---- a/tools/bpf/bpftool/map.c
-+++ b/tools/bpf/bpftool/map.c
-@@ -653,8 +653,6 @@ static int do_show_subset(int argc, char **argv)
- 			show_map_close_json(fds[i], &info);
- 		else
- 			show_map_close_plain(fds[i], &info);
--
--		close(fds[i]);
- 	}
- 	if (json_output && nb_fds > 1)
- 		jsonw_end_array(json_wtr);	/* root array */
-@@ -891,7 +889,6 @@ map_dump(int fd, struct bpf_map_info *info, json_writer_t *wtr,
- exit_free:
- 	free(key);
- 	free(value);
--	close(fd);
- 	free_map_kv_btf(btf);
+diff --git a/drivers/infiniband/hw/cxgb4/device.c b/drivers/infiniband/hw/cxgb4/device.c
+index ac86a77c712e9..d5101cabbd4b6 100644
+--- a/drivers/infiniband/hw/cxgb4/device.c
++++ b/drivers/infiniband/hw/cxgb4/device.c
+@@ -935,6 +935,7 @@ static void c4iw_rdev_close(struct c4iw_rdev *rdev)
  
- 	return err;
-@@ -940,6 +937,7 @@ static int do_dump(int argc, char **argv)
- 	for (i = 0; i < nb_fds; i++) {
- 		if (bpf_obj_get_info_by_fd(fds[i], &info, &len)) {
- 			p_err("can't get map info: %s", strerror(errno));
-+			err = -1;
- 			break;
- 		}
- 		err = map_dump(fds[i], &info, wtr, nb_fds > 1);
+ void c4iw_dealloc(struct uld_ctx *ctx)
+ {
++	debugfs_remove_recursive(ctx->dev->debugfs_root);
+ 	c4iw_rdev_close(&ctx->dev->rdev);
+ 	WARN_ON(!xa_empty(&ctx->dev->cqs));
+ 	WARN_ON(!xa_empty(&ctx->dev->qps));
+@@ -959,7 +960,6 @@ static void c4iw_remove(struct uld_ctx *ctx)
+ 	if (!ctx->dev)
+ 		return;
+ 
+-	debugfs_remove_recursive(ctx->dev->debugfs_root);
+ 	c4iw_unregister_device(ctx->dev);
+ 	c4iw_dealloc(ctx);
+ }
 -- 
 2.53.0
 
