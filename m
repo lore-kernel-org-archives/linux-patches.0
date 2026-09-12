@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8CF38F620;
-	Sat, 12 Sep 2026 19:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9276D38F620;
+	Sat, 12 Sep 2026 19:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242831; cv=none; b=gJkV/tWd6PryEyZXe9O7vCemTklSXW1/RKdgLTajvkgXrBPAPvn4ocFkds0Q+W+i72p/ltBUZw2zKfuk7I1sbzHBlffcpFxjKawyLEEV/4zzJpgMIlNcf+bW6POSWzwp7WRtqhkKHE+nRg1xDNd4wFnlLCQbGnKi1rkpMsTI5eA=
+	t=1789242834; cv=none; b=Wn2QeFrya4tsm/qjGVKtpL9y37so2AsJ7vacL2RFzIw/U5wzncFpv1EgKXVEt6ozDTYcFmmnuuRD4Nb6EdmLU0IgyqEQFBrUpKEU92qQilmY6n5g0MZ2kUS4LcTNb5Bdtz3NfixP1pmcfscWzAEf50zonRCXIUpvcdgypnwN6/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242831; c=relaxed/simple;
-	bh=A17nRqP0BCFxlXzus8UV8TrXBpfXsDsI723mz8eMnwY=;
+	s=arc-20240116; t=1789242834; c=relaxed/simple;
+	bh=lpdQlMUJn0EAPv0NwY43otjk9tozdtfB4UjwJPDKZaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eU8jmMCOfGqf5mk/4iDRfg7elZ9v50gP4FaI/cWGfNdo5uQRxYcmLSDJuKo2YTvyN8yBJEJ8TRIyIprhMkl8yc6+vBywnjw9abDOYDPBgBmgZRWKd9eyHAK7Wi4VGdXXj1ghi5aF+qis3shUHDnPk5Su/iQN0ErNMwh91YpQp6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8yDpx2n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ls0tSNIlAvLzkmB9MQ7mQ36dznhOfoAWJXaj60w90UWeEjbLnEINKeQ1caap37cAdN1wq5NdbrP/93lukA37MyWVaNlSWR5Ps7p3rR78VWDPB4Cg0ptwNKid9A04V2kkWjy10BGIwAQ/gv6Xu/e04eUH/S0dyNXCZAlRYjLxV00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P08A+juP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8yDpx2n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245171F000FF;
-	Sat, 12 Sep 2026 19:53:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P08A+juP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED27A1F000FF;
+	Sat, 12 Sep 2026 19:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242830;
-	bh=95cQPZv7u98GfTzur8syzY7F1oKOrjVBQFsg6VL0fhI=;
+	s=korg; t=1789242833;
+	bh=z0CLCS3MmuWJSAf2nxRa/2GY1sfNYhYGshcjXAx7ZZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O8yDpx2nXMHFlRTJ+J8zZwVsJ/X+Qwqa+4eaoz02UYNOXe0YcDE1QI2e0kWHIZTfE
-	 5tSyyzZtvEoWZjcmmceXBjzWCQUG37fCAKZyszTLfvQsP3kv94qd/5tqeedZhphIhN
-	 3E5KI4Kz6b0B4rOAccoa5iOvZh0QXoB+ZLHkfAbQ=
+	b=P08A+juPpR+4zCoZ6noFU0Rt8tagFJ60gpcWB3Oh8HluZAaTwrrTA8eFLWEJbjzZx
+	 4h8Z8LwEhc0H5lKJ4kZt4rvXc9ZmTDc/YXfPzFG8kWNWYpR2tHwz7QnDR1xTJ6uSKc
+	 8jFTnKSm6ufl8utGia/iJcqSocvtWJruagyhArp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng-Han Wu <hank20010209@gmail.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 542/798] selftests/zram: fix kernel_gte() for POSIX sh
-Date: Sat, 12 Sep 2026 09:02:50 +0200
-Message-ID: <20260912065529.549901085@linuxfoundation.org>
+Subject: [PATCH 5.10 543/798] power: supply: isp1704_charger: cancel work on remove
+Date: Sat, 12 Sep 2026 09:02:51 +0200
+Message-ID: <20260912065529.573608239@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,52 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng-Han Wu <hank20010209@gmail.com>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit 649ba27dfac784427a01f9c95c09ecbcb88900d8 ]
+[ Upstream commit 60c5b8a9ef4dbc5d69bbc1a960fe55826cb3b643 ]
 
-Commit fc4eb486a59d ("selftests/zram: Skip max_comp_streams
-interface on newer kernel") added kernel_gte() to zram_lib.sh.
-The function uses the bash-specific [[ ... ]] conditional, but
-zram selftests source this file while running under /bin/sh.
+The USB notifier and initial VBUS detection can schedule isp->work. The
+remove path unregisters the notifier and power supply, but does not wait
+for queued or running work before tearing down the power supply state.
 
-On systems where /bin/sh is dash, such as Debian, the following
-test fails:
+Cancel the work after unregistering the notifier. Do this before
+unregistering the power supply.
 
-  dash -c '
-  kernel_major=6; kernel_minor=1; major=6; minor=0
-  if [ $kernel_major -gt $major ]; then
-      echo ok
-  elif [[ $kernel_major -eq $major && $kernel_minor -ge $minor ]]; then
-      echo ok
-  fi'
+This issue was found by a static analysis tool.
 
-with:
-
-  dash: 5: [[: not found
-
-Use separate POSIX test expressions joined by && instead.
-
-Fixes: fc4eb486a59d ("selftests/zram: Skip max_comp_streams interface on newer kernel")
-Signed-off-by: Cheng-Han Wu <hank20010209@gmail.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Link: https://patch.msgid.link/20260728123423.781-5-getshell@seu.edu.cn
+Fixes: ec46475f3e31 ("power_supply: Add isp1704 charger detection driver")
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/zram/zram_lib.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/isp1704_charger.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/zram/zram_lib.sh b/tools/testing/selftests/zram/zram_lib.sh
-index 21ec1966de76c..0d44d83888f9d 100755
---- a/tools/testing/selftests/zram/zram_lib.sh
-+++ b/tools/testing/selftests/zram/zram_lib.sh
-@@ -37,7 +37,7 @@ kernel_gte()
+diff --git a/drivers/power/supply/isp1704_charger.c b/drivers/power/supply/isp1704_charger.c
+index b6efc454e4f02..2233dc9cefe08 100644
+--- a/drivers/power/supply/isp1704_charger.c
++++ b/drivers/power/supply/isp1704_charger.c
+@@ -482,6 +482,7 @@ static int isp1704_charger_remove(struct platform_device *pdev)
+ 	struct isp1704_charger *isp = platform_get_drvdata(pdev);
  
- 	if [ $kernel_major -gt $major ]; then
- 		return 0
--	elif [[ $kernel_major -eq $major && $kernel_minor -ge $minor ]]; then
-+	elif [ $kernel_major -eq $major ] && [ $kernel_minor -ge $minor ]; then
- 		return 0
- 	fi
+ 	usb_unregister_notifier(isp->phy, &isp->nb);
++	cancel_work_sync(&isp->work);
+ 	power_supply_unregister(isp->psy);
+ 	isp1704_charger_set_power(isp, 0);
  
 -- 
 2.53.0
