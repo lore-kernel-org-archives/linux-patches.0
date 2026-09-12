@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1649F343893;
-	Sat, 12 Sep 2026 09:53:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94A236921B;
+	Sat, 12 Sep 2026 09:53:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206794; cv=none; b=HRPPFIMJhUk6tBBrvYvgqJzOP02+45wj2nTwU3efJzd3oQadwbcqV6ZYBUcLAr/hk+uSqibybA0TkIU1kQL7OUF2qifXzUEdXvGjTPOMPhTlWEqUeU80Jfhz5M/8s5H0HWLhyfaooAB5luxKTUOa0yA6wJvHsh2bM/xqZoFxlSo=
+	t=1789206799; cv=none; b=uQrxr8njRXLdFZ3CBFvadPk96ZANWsvESJEZCz4PsEK/jEssiGr7R7VeHPPZpNrqbVetFudDZJpV2aAoajFdCjnSQfcTCx3yXTUNZdnMVStfClB2CWpBVP9jHsC84gqZYamTPSOzlaM8cqdQbLaxV3t0Y2SyvbeVZMgSh8BmUOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206794; c=relaxed/simple;
-	bh=uxO7BPduwZIgYlyl4ACKzACb88ouUMRWxBkSvXqS5IE=;
+	s=arc-20240116; t=1789206799; c=relaxed/simple;
+	bh=d+b9nspSW3inN4h/Hj36f/J5cRBHygfKluxTQV9GOn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tUR+Bb8mVx2vDAyYvSy3p3/d+PuGwU6pOJ8p+3AhEs6saWPJ2rocx0RA5NxEMwdE4nPbYXCvsZwHuEIuk57Z7vShD/L6YXeleBqzpgejN2Gbi2UHzTeKXRX0LWZiyN16k9w3J6PI5OIclLo1zahvk5zTu8mt63yDPYaSb7QxwNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6Ld43IP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ByJoijHZo9KpywCbehG0vn72+tEr1fz3b627S3WkCqTiSWqHV7lJs8eC1G+u2vQjwTR/cLXsgsUG35bYkKv8Djmgq0Wleji7rTZ9Fkx5gArfqlZXSZApMXllkrb1HnwpdVTZen7My2PMxd/m/Vy0+VGMD22HBLyvE+vaFRBW37U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oa/4X8Q2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6Ld43IP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3CA1F000FF;
-	Sat, 12 Sep 2026 09:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oa/4X8Q2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFBAE1F000FF;
+	Sat, 12 Sep 2026 09:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206793;
-	bh=igk9MUs4tgciV0fZBurSU9DdoSpDiUAmOliBwZ0owiY=;
+	s=korg; t=1789206797;
+	bh=U4OYB9V+iUZeYdKNJbRORQZ/6LVzyMITi2jju5y0MUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z6Ld43IP4ffoAeMrXfAFYXmEZjhQyzTEt7Gys0y0dGcFetr/0VRJKfxpXRpRITyw1
-	 l04xiRq11je4SVWz7cv1IOKWAaIBdkrFAeyyQ/BuT1Njln8ROqjeuhqq7PD2d9r9uu
-	 04nom2eYVJAlzkt0+3GSP7Cr3mURSlrVfkq1a5Yg=
+	b=Oa/4X8Q2hvrISTyIhuSpAQbFq7M6ttnzGxTLl5QMdOrTqzQReFvJB9ucJfgjfsak4
+	 25RXKnqKjko1mswcE25Py1rMauGq1ssjufhOxS529eBEGVxV48AFAgyOt2I0NEmOyr
+	 pJBgyx2f3i9InGNkywlYiv6ISAZyAMmDg0MmwcOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Malaya Kumar Rout <malayarout91@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0237/1518] selftests/bpf: Fix memory leak in msg_alloc_iov error path
-Date: Sat, 12 Sep 2026 08:40:06 +0200
-Message-ID: <20260912065628.844779977@linuxfoundation.org>
+Subject: [PATCH 6.18 0228/1518] greybus: audio: bound the topology section sizes against the fetched size
+Date: Sat, 12 Sep 2026 08:39:57 +0200
+Message-ID: <20260912065628.646793980@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,41 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Malaya Kumar Rout <malayarout91@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 0bebfaa39deadec21638f6fba553eae12627a26d ]
+[ Upstream commit 33d8c7b794d2a30637c9d3fcb478f1d3222bef1e ]
 
-In msg_alloc_iov(), when calloc() fails for an individual iov_base
-allocation, the error path frees all previously allocated iov_base
-entries but fails to free the iov array itself that was allocated
-with calloc() at the beginning of the function. This results in a
-memory leak of the iov array.
+gb_audio_gb_get_topology() fetches a topology blob of a module-supplied
+size, and gbaudio_tplg_parse_data() then walks it by adding the
+module-supplied size_dais, size_controls and size_widgets fields to
+form the control, widget and route section offsets. Those le32 sizes
+are never checked against the fetched blob, so a module reporting a
+small topology size but large section sizes makes the offsets point
+past the allocation, and parsing reads out of bounds.
 
-Add free(iov) in the unwind_iov error path to ensure proper cleanup
-of all allocated memory.
+Reject a topology whose section sizes do not fit within the fetched
+size before it is parsed.
 
-Fixes: 753fb2ee0934 ("bpf: sockmap, add msg_peek tests to test_sockmap")
-Signed-off-by: Malaya Kumar Rout <malayarout91@gmail.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/20260704122936.102394-1-malayarout91@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: 184992e305f1 ("greybus: audio: Add Greybus Audio Device Class Protocol helper routines")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260616-b4-disp-4352e8b0-v1-1-3e09f62e0ad5@proton.me
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_sockmap.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/greybus/audio_gb.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
-index 76568db7a6642..6879918a8cafb 100644
---- a/tools/testing/selftests/bpf/test_sockmap.c
-+++ b/tools/testing/selftests/bpf/test_sockmap.c
-@@ -515,6 +515,7 @@ static int msg_alloc_iov(struct msghdr *msg,
- unwind_iov:
- 	for (i--; i >= 0 ; i--)
- 		free(msg->msg_iov[i].iov_base);
-+	free(iov);
- 	return -ENOMEM;
- }
+diff --git a/drivers/staging/greybus/audio_gb.c b/drivers/staging/greybus/audio_gb.c
+index 9d8994fdb41a2..144591f1a5128 100644
+--- a/drivers/staging/greybus/audio_gb.c
++++ b/drivers/staging/greybus/audio_gb.c
+@@ -37,6 +37,19 @@ int gb_audio_gb_get_topology(struct gb_connection *connection,
+ 		return ret;
+ 	}
  
++	/*
++	 * The size_* fields are supplied by the module and are used by
++	 * gbaudio_tplg_parse_data() to compute offsets into the blob; make
++	 * sure the sections fit within the fetched topology, so walking it
++	 * cannot read out of bounds.
++	 */
++	if ((u64)le32_to_cpu(topo->size_dais) + le32_to_cpu(topo->size_controls) +
++	    le32_to_cpu(topo->size_widgets) + le32_to_cpu(topo->size_routes) >
++	    size - sizeof(*topo)) {
++		kfree(topo);
++		return -EINVAL;
++	}
++
+ 	*topology = topo;
+ 
+ 	return 0;
 -- 
 2.53.0
 
