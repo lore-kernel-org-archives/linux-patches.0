@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7E4431A5C;
-	Sat, 12 Sep 2026 19:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EF4383C88;
+	Sat, 12 Sep 2026 19:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239860; cv=none; b=sDyr1HIO+PxJneNe+GiLm/GnrXRgK1a02vjl/plgOEF7X9kF5l2meINnIon5bxZvTzPDrkgE214bNNO2v5T5WdGniYwtkqGky5DWAzoEYvh2v7bQDszPL5LH/TrCv/fGLdMFA6wXFzFKS+kJ+c4LgZlJ++aDR5xrx4phkN0yooM=
+	t=1789239864; cv=none; b=MJb9lDky/l08i5iLR6enDEMS2cNuecmQJheXWzJ/2RSORVsshk4kTMi/5jbLO2LcYm81gRAcK8nX7XstH/dhO4xzqwazGhgX/A7R4Xgz6wZiqbWT3vSW5SjZK56mb2bnP2M64fltZTAzwkHYz8il745dXvEs18JGgIjty5zvQFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239860; c=relaxed/simple;
-	bh=l4iJatximBBZj5kS93OSNGeyIPTjfAvWbrYvAuKk2LA=;
+	s=arc-20240116; t=1789239864; c=relaxed/simple;
+	bh=A1UTpieOgRoqPVaRXR6p2OiaX3vJ/OVBfG+ubob1Hm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aZKS6MPALFMqLhoXq66kWeRoSBlJFyJ7jgxgvLqQm9tMAB5v74aMXp+UgQDRRXLw9xxQt+T4Hl7vBshSd5PiEX+z8GS49b9sAYIJwso67cGz9LAWBd+d8OmxzuTjj3HQcgOEMFTZ7wTkHJMQUCn0K5FWxtxRxiOmkySOREBG6kM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUX8Czhw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MNE6NegbE61bbutlAQC35WHvlVyyY26obV1ARx4KMpntT6ZjA2r7pSWhtUQR9ld4SHTbDL3/bPv3mt8GVrlbI0hZLyNvqVptxkUF6yCuGp6XeLsZHuMktoYe9Abhfl6bpC3IjL1J8VdaK4l03cqtYMlB5PiuNeKh7l6oTeP/auM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QaAhWWsQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUX8Czhw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE7F1F000FF;
-	Sat, 12 Sep 2026 19:04:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QaAhWWsQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED9901F000FF;
+	Sat, 12 Sep 2026 19:04:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239858;
-	bh=JzB09jpDyuY0ivTIurZwGqBEmjq5y+BM6XEzrJn5Xvc=;
+	s=korg; t=1789239863;
+	bh=KgkR0LuOV5n+glKYq63KzQGjopZzZ6rC6kgiMCY3KBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hUX8CzhwLEr0T1tGf3yeoVTgUWxepIF7jveQFr5xF0aFzgbzOf+OSuWgXeo5VEdfS
-	 08uB1NhF354fMg+G19fMhNOauGj9FhPbPuwVSA47DVfNNzwIzoSNEIvGjsTvtx3VII
-	 lhXTZLDCQayJxh64oMz8jvRVbw5nVFFzoODXM+ik=
+	b=QaAhWWsQi174OSYCnP5Ggw/OuvyCtASrV9eNqhBuv3hOFp4AuJ74s/pqRbansaZwv
+	 qonyPfzs6Tk5Y/FNLVob/kK6GoM/U4f1VbwB470W7S6fYOkjlC7t1g7q677kK1htc9
+	 hghpPAjrFYC7sMefNYRfV9zx6A3szOug3Tqrn8FU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Tanushree Shah <tshah@linux.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 749/935] Bluetooth: btusb: Fix BD_ADDR byte order in btusb_set_bdaddr_wcn6855()
-Date: Sat, 12 Sep 2026 09:02:59 +0200
-Message-ID: <20260912065544.011314847@linuxfoundation.org>
+Subject: [PATCH 5.15 750/935] perf trace-event: Fix integer truncation in do_read() and skip()
+Date: Sat, 12 Sep 2026 09:03:00 +0200
+Message-ID: <20260912065544.034662611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,64 +51,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Tanushree Shah <tshah@linux.ibm.com>
 
-[ Upstream commit d0b15d812688d3f0f3fe1c4426e12814d0c294dc ]
+[ Upstream commit c108c1391be0826920991d24532fbae8f6373ddc ]
 
-btusb_set_bdaddr_wcn6855() sends the address without swapping byte
-order for VSC 0xFC14, but the command expects the address in reversed
-byte order compared to other HCI commands like HCI_Create_Connection,
-resulting in a wrong BD_ADDR being set.
+The do_read() and skip() functions use 'int' for size parameters,
+truncating 64-bit sizes from callers. This causes two issues:
 
-btmon log on WCN6855 shows VSC 0xFC14 is sent with swapped bytes
-11 22 33 44 55 66, and Read BD ADDR returns the expected address
-11:22:33:44:55:66:
+1. Uninitialized memory dump: do_read() reads fewer bytes than
+   allocated, leaving uninitialized heap memory that gets written
+   to output files.
 
-  < HCI Command: Vendor (0x3f|0x0014) plen 6                  #3 [hci0]
-          11 22 33 44 55 66
-  > HCI Event: Command Complete (0x0e) plen 4                  #4 [hci0]
-        Vendor (0x3f|0x0014) ncmd 1
-          Status: Success (0x00)
-  < HCI Command: Read BD ADDR (0x04|0x0009) plen 0            #11 [hci0]
-  > HCI Event: Command Complete (0x0e) plen 10                #12 [hci0]
-        Read BD ADDR (0x04|0x0009) ncmd 1
-          Status: Success (0x00)
-          Address: 11:22:33:44:55:66 (OUI 11-22-33)
+2. Out-of-bounds read: Parsing functions process the full 64-bit
+   size while only partial data was read into the buffer.
 
-Fix by swapping the input address before issuing the command.
+Change do_read(), __do_read(), and skip() to use size_t for size
+parameters and ssize_t for return values (where applicable), matching
+read()/write() system calls.
+Update callers to use ssize_t for storing return values.
 
-Fixes: b40f58b97386 ("Bluetooth: btusb: Add Qualcomm Bluetooth SoC WCN6855 support")
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 4a31e56599d4 ("perf tools: Get rid of read_or_die() in trace-event-read.c")
+Signed-off-by: Tanushree Shah <tshah@linux.ibm.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ tools/perf/util/trace-event-read.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index f6f8ac1f4fdee..84e783f9f8752 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3259,14 +3259,15 @@ static int btusb_set_bdaddr_ath3012(struct hci_dev *hdev,
- static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
- 				const bdaddr_t *bdaddr)
+diff --git a/tools/perf/util/trace-event-read.c b/tools/perf/util/trace-event-read.c
+index fd44de3cb873b..18ec18ec24ce0 100644
+--- a/tools/perf/util/trace-event-read.c
++++ b/tools/perf/util/trace-event-read.c
+@@ -23,18 +23,18 @@ static int input_fd;
+ static ssize_t trace_data_size;
+ static bool repipe;
+ 
+-static int __do_read(int fd, void *buf, int size)
++static ssize_t __do_read(int fd, void *buf, size_t size)
  {
-+	bdaddr_t bdaddr_swapped;
- 	struct sk_buff *skb;
--	u8 buf[6];
- 	long ret;
+-	int rsize = size;
++	size_t rsize = size;
  
--	memcpy(buf, bdaddr, sizeof(bdaddr_t));
-+	baswap(&bdaddr_swapped, bdaddr);
+ 	while (size) {
+-		int ret = read(fd, buf, size);
++		ssize_t ret = read(fd, buf, size);
  
--	skb = __hci_cmd_sync_ev(hdev, 0xfc14, sizeof(buf), buf,
--				HCI_EV_CMD_COMPLETE, HCI_INIT_TIMEOUT);
-+	skb = __hci_cmd_sync_ev(hdev, 0xfc14, sizeof(bdaddr_swapped),
-+				&bdaddr_swapped, HCI_EV_CMD_COMPLETE,
-+				HCI_INIT_TIMEOUT);
- 	if (IS_ERR(skb)) {
- 		ret = PTR_ERR(skb);
- 		bt_dev_err(hdev, "Change address command failed (%ld)", ret);
+ 		if (ret <= 0)
+ 			return -1;
+ 
+ 		if (repipe) {
+-			int retw = write(STDOUT_FILENO, buf, ret);
++			ssize_t retw = write(STDOUT_FILENO, buf, ret);
+ 
+ 			if (retw <= 0 || retw != ret) {
+ 				pr_debug("repiping input file");
+@@ -49,13 +49,13 @@ static int __do_read(int fd, void *buf, int size)
+ 	return rsize;
+ }
+ 
+-static int do_read(void *data, int size)
++static ssize_t do_read(void *data, size_t size)
+ {
+-	int r;
++	ssize_t r;
+ 
+ 	r = __do_read(input_fd, data, size);
+ 	if (r <= 0) {
+-		pr_debug("reading input file (size expected=%d received=%d)",
++		pr_debug("reading input file (size expected=%zu received=%zd)",
+ 			 size, r);
+ 		return -1;
+ 	}
+@@ -66,10 +66,10 @@ static int do_read(void *data, int size)
+ }
+ 
+ /* If it fails, the next read will report it */
+-static void skip(int size)
++static void skip(size_t size)
+ {
+ 	char buf[BUFSIZ];
+-	int r;
++	size_t r;
+ 
+ 	while (size) {
+ 		r = size > BUFSIZ ? BUFSIZ : size;
+@@ -200,7 +200,7 @@ static int read_header_files(struct tep_handle *pevent)
+ 	unsigned long long size;
+ 	char *header_page;
+ 	char buf[BUFSIZ];
+-	int ret = 0;
++	ssize_t ret = 0;
+ 
+ 	if (do_read(buf, 12) < 0)
+ 		return -1;
+@@ -248,7 +248,7 @@ static int read_header_files(struct tep_handle *pevent)
+ 
+ static int read_ftrace_file(struct tep_handle *pevent, unsigned long long size)
+ {
+-	int ret;
++	ssize_t ret;
+ 	char *buf;
+ 
+ 	buf = malloc(size);
+@@ -274,7 +274,7 @@ static int read_ftrace_file(struct tep_handle *pevent, unsigned long long size)
+ static int read_event_file(struct tep_handle *pevent, char *sys,
+ 			   unsigned long long size)
+ {
+-	int ret;
++	ssize_t ret;
+ 	char *buf;
+ 
+ 	buf = malloc(size);
+@@ -320,7 +320,7 @@ static int read_event_files(struct tep_handle *pevent)
+ 	int systems;
+ 	int count;
+ 	int i,x;
+-	int ret;
++	ssize_t ret;
+ 
+ 	systems = read4(pevent);
+ 
+@@ -348,7 +348,7 @@ static int read_saved_cmdline(struct tep_handle *pevent)
+ {
+ 	unsigned long long size;
+ 	char *buf;
+-	int ret;
++	ssize_t ret;
+ 
+ 	/* it can have 0 size */
+ 	size = read8(pevent);
 -- 
 2.53.0
 
