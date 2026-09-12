@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777563D953B;
-	Sat, 12 Sep 2026 07:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F83346E75;
+	Sat, 12 Sep 2026 07:17:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197447; cv=none; b=gF0qMbc3vARzNzxgXGORfd8nmUON6NYpuZhwCcQs9rkGLd5g29W/Qg607BQnm/N3D2i+q7cMz7ZRfHMNVoOJRa/GF4t1XSTJ2+D/IaLQuWmD32/rXVqpTW6M2kc/OFn6GoKWiFLvVsZSJrBOqkE1CWrkkccreD9uvl6zsi9vKlg=
+	t=1789197452; cv=none; b=pCsIFQNqhD7I4LwDiJOiA5EkKh1kxugWwuWtM19CoLuddfOQCJiFBV5x0PDLQkyv7M5LY3QyKRwCfrujhzi6B2yUeSVf6tzWiONH5s1SNlh8Ym7YpVNbzC1k8aEsKbkb4uo7WEIllF2r/gvXh+1HzjcM3+oO/XWHvkeNmhzO+kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197447; c=relaxed/simple;
-	bh=yK0jnBnN8u5T5FoHdadykU+/g2ml2IfUS3WDqW1Mmhg=;
+	s=arc-20240116; t=1789197452; c=relaxed/simple;
+	bh=y3i+NZlDBC9ZerngejHvI5VdQHSGJynWHLxX8q3LiB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=evDOfWKvaRDfZ5c+ucGa/7wxVhbLjUp3tBQeyse8AfDq2Yd/MDjpfFrH3OkQWcI2/RYxw4Q4QvVMEV8++UNp0m/baOqmneDOYHw+J2i9sOilHt2JrhP2x4quPPwp1KHKjtAyZvkhFeRtHoIz3DDYvH0yaNuaSKwG5hTv5kBpGEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcBydMel; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lj4WEvTQGsZ4anqAXLZFIbKNBZzOzLuup8k3zG1SjhPFWH3Sp/QGxXwasebl1Hc53ki8XzCtfwNZnxLH4dhnoCmebbToNJQHUdD4oxuSUVI1zc7nScHp8vcBzIC4z4XX3DLcg8gHko7rWyZPMUqLXdaabjoR5Ryg779l4YQL3Ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgEmx1gD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcBydMel"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B931F000FF;
-	Sat, 12 Sep 2026 07:17:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgEmx1gD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6682D1F000FF;
+	Sat, 12 Sep 2026 07:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197446;
-	bh=kACzvq4/h1h+/PWBZrjx7JX2Ea+fxQQvrOE6Z3VdyYE=;
+	s=korg; t=1789197451;
+	bh=K3oC6MSdJA37Ogb7vhq9h3rrWV8XvHZ57cpf9rylrhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PcBydMelHRcGWwaWRTzY2zPYM8iEEJRLV92D56ct6zdzMoGIGRkfSOqFsa7M5e5ea
-	 1jLZ0RthWzVVNkaeh3wPE68aNCBVRpxEkGaSI9N0u5SlAIshrXuCSCjuqVX4cwEyum
-	 fBXfO5NN3pO9DIpAnmJ0WUO6KsBrxiDtZZlVSPqI=
+	b=DgEmx1gDYyVGW5pg4+AVOLsTzpTO0XTQYRSQLmcFtbVO3+R3gKph/8aCIy7vU/JXG
+	 QOkDUN9oT7uoY5Iv82oG0EC/ito3S+9pQxWK2F41Y5neVVAefkSU2An6gjV3lTL74C
+	 OqH9o50y6gxn4VqKKIWBGx3Hoy+Ohi3qklIn6qss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Oleg Nesterov <oleg@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0174/1815] uprobes/x86: Do not leak trampoline vma mapping on optimization failure
-Date: Sat, 12 Sep 2026 08:32:04 +0200
-Message-ID: <20260912065653.092859341@linuxfoundation.org>
+Subject: [PATCH 7.2 0175/1815] uprobes/x86: Allow to copy uprobe trampolines on fork
+Date: Sat, 12 Sep 2026 08:32:05 +0200
+Message-ID: <20260912065653.117016910@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,73 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 07c308eb2bcfe4727ba669e1ba6f5b0ba7d2696e ]
+[ Upstream commit d9a48e77f6fe0c11d3cdfcbbcbf4a98ec402e55a ]
 
-In case the optimization fails, we leak new-ly created trampoline
-vma mapping (in case we just created it), let's unmap it.
+When we do fork or clone without CLONE_VM the new process won't
+have uprobe trampoline vma objects and at the same time it will
+have optimized code calling that trampoline and crash.
+
+Fixing this by allowing vma uprobe trampoline objects to be copied
+on fork to the new process.
 
 Fixes: ba2bfc97b462 ("uprobes/x86: Add support to optimize uprobes")
 Signed-off-by: Jiri Olsa <jolsa@kernel.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://patch.msgid.link/20260703114917.238144-4-jolsa@kernel.org
+Link: https://patch.msgid.link/20260703114917.238144-5-jolsa@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/uprobes.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ arch/x86/kernel/uprobes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/x86/kernel/uprobes.c b/arch/x86/kernel/uprobes.c
-index a76203a33a7b0..7f820560e6f83 100644
+index 7f820560e6f83..ba7ca62f96059 100644
 --- a/arch/x86/kernel/uprobes.c
 +++ b/arch/x86/kernel/uprobes.c
-@@ -677,11 +677,14 @@ static unsigned long find_nearest_trampoline(unsigned long vaddr)
- 	return high_tramp;
- }
+@@ -701,7 +701,7 @@ static struct vm_area_struct *get_uprobe_trampoline(struct mm_struct *mm, unsign
  
--static struct vm_area_struct *get_uprobe_trampoline(struct mm_struct *mm, unsigned long vaddr)
-+static struct vm_area_struct *get_uprobe_trampoline(struct mm_struct *mm, unsigned long vaddr,
-+						    bool *new_mapping)
- {
- 	VMA_ITERATOR(vmi, mm, 0);
- 	struct vm_area_struct *vma;
- 
-+	*new_mapping = false;
-+
- 	if (vaddr > TASK_SIZE || vaddr < PAGE_SIZE)
- 		return ERR_PTR(-EINVAL);
- 
-@@ -696,6 +699,7 @@ static struct vm_area_struct *get_uprobe_trampoline(struct mm_struct *mm, unsign
- 	if (IS_ERR_VALUE(vaddr))
- 		return ERR_PTR(vaddr);
- 
-+	*new_mapping = true;
+ 	*new_mapping = true;
  	return _install_special_mapping(mm, vaddr, PAGE_SIZE,
- 				VM_READ|VM_EXEC|VM_MAYEXEC|VM_MAYREAD|VM_DONTCOPY|VM_IO,
+-				VM_READ|VM_EXEC|VM_MAYEXEC|VM_MAYREAD|VM_DONTCOPY|VM_IO,
++				VM_READ|VM_EXEC|VM_MAYEXEC|VM_MAYREAD|VM_IO,
  				&tramp_mapping);
-@@ -1053,6 +1057,7 @@ static int __arch_uprobe_optimize(struct arch_uprobe *auprobe, struct mm_struct
- {
- 	struct pt_regs *regs = task_pt_regs(current);
- 	struct vm_area_struct *vma, *tramp;
-+	bool new_mapping;
- 	int ret;
- 
- 	if (!user_64bit_mode(regs))
-@@ -1060,10 +1065,13 @@ static int __arch_uprobe_optimize(struct arch_uprobe *auprobe, struct mm_struct
- 	vma = find_vma(mm, vaddr);
- 	if (!vma)
- 		return -EINVAL;
--	tramp = get_uprobe_trampoline(mm, vaddr);
-+	tramp = get_uprobe_trampoline(mm, vaddr, &new_mapping);
- 	if (IS_ERR(tramp))
- 		return PTR_ERR(tramp);
--	return WARN_ON_ONCE(swbp_optimize(auprobe, vma, vaddr, tramp->vm_start));
-+	ret = swbp_optimize(auprobe, vma, vaddr, tramp->vm_start);
-+	if (WARN_ON_ONCE(ret) && new_mapping)
-+		WARN_ON_ONCE(do_munmap(mm, tramp->vm_start, PAGE_SIZE, NULL));
-+	return ret;
  }
  
- void arch_uprobe_optimize(struct arch_uprobe *auprobe, unsigned long vaddr)
 -- 
 2.53.0
 
