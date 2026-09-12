@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93E21FBEA6;
-	Sat, 12 Sep 2026 15:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132A0242D65;
+	Sat, 12 Sep 2026 15:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228349; cv=none; b=Jbn4RvKjsLEolnp0vOT1A4mSYINQzHL1Hzax3ZltczLYG66Kxnkhioy/c6aVHCxuAIiWYifyDKhXt9hAZSlBYVGmU911Ql+jSvpKOTN5GyzytzUfUlzekBwVlLWxkwvUqLwDxuiHFIQKWSDGuRwSJ5dJmQqIwlr4fTzV3lV1UB8=
+	t=1789228354; cv=none; b=i/cSobvyynDKI75GmGHLzRy5MkHHk6YNB/ESSly6W5JJr+8p/NLIbEzhZFJmrW8eAS+QJLz0CyHg0xn/QPUejlWooN8+AHC8rpewKWxRsfAfFIxV6GCzooVwYDYAgmPHI6rQdZhvA32jaL3jKhomoCFNul4zbx9S9nADCbHD9mU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228349; c=relaxed/simple;
-	bh=UKNKfT6SZimtilGZjN2I5pudWvmZyG+Onjrfkod7yU8=;
+	s=arc-20240116; t=1789228354; c=relaxed/simple;
+	bh=SxOSt/jlc0lBbcrIcf5qS2YfhdHCkgzP+ATfqrTTvYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kBs/NTehpa/6B1CG2Lie3QGXbbIAYIcc10YwzLMcbSQXYlpSoSH+WK2vc4yxbetQ4luU2dIcUK8WaLrhLmZMoowhADIeMV7ttzl9m4LX2IIoTL1zgP9ErjD/yohsSORPgrMnQAQ+YUIeT5yP0pOgJwl7w3yzA1G1xGhFzliUy2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpRfS/EH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TU9mqe4nqumX53cqfMDaIwd5lvedou25pZacMUKmhgMtU3id0/EWoInjiMMNkjYULLClSgXP6j794CQOIOPv60zL7o37Oh7fmX9YIa6QDmu+I77vvvBJdEsdL3lTOCcvxN25VFvw213SvnzEbsJdgHciOLV/uY+5djs531MUDCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k42u+aQD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpRfS/EH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E198B1F000FF;
-	Sat, 12 Sep 2026 15:52:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k42u+aQD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0D31F000FF;
+	Sat, 12 Sep 2026 15:52:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228347;
-	bh=9eSdaKRe0d2HFREmod7FSk81EvJLn/Jr1WtaFVME5nA=;
+	s=korg; t=1789228353;
+	bh=nlTA5NwRDVjzINLW6vj592TpQHsYZ4ep6CGV09HatA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QpRfS/EHcRvXnwP1ziquJ34W8CvnVhp0Mb8XAb/vxdlpN3YyGtYRTMfEhuNC6Crql
-	 izZl//L0eC/QtIDDwlHhDH5JCLLD7+xNLPbyfNrmcMiV93QBcstDsHFuSiu5gwOyjn
-	 JZCJBCS6ShENwbq0FVmrw9AWDQl33mYalykikmcI=
+	b=k42u+aQDFYT2UEejdIVN9QKngJAMhuuEEyqM5N1OZL6z22NN8aaijH/qN7ePZCm2f
+	 sN0ITgkBxVl1ioyBL5JN7+bkDIEXb6A23GCdRi8X4WoirYaeLOUVUexj0KZaef/L2s
+	 6cDjP5x5QWH9wRbs2hCT0hKDTYI8CWYZm6M2ZQuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 0330/1191] clk: qcom: gcc-msm8939: Fix enable_reg for gcc_blsp1_sleep_clk
-Date: Sat, 12 Sep 2026 08:50:58 +0200
-Message-ID: <20260912065555.637814642@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.1 0366/1191] media: cx231xx: reject geometry changes while the VBI queue is busy
+Date: Sat, 12 Sep 2026 08:51:34 +0200
+Message-ID: <20260912065556.449014895@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,40 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit fc611445b021262b0d4ace6f716a360663816287 upstream.
+commit 627a121c15fe05a541f44d86016294b80bada75d upstream.
 
-MSM8939 is similar to MSM8916, where the GCC_BLSP1_SLEEP_CBCR register is
-read-only and only has the CLK_OFF bit to check if the clock is running.
-This is a shared vote clock, the correct way to enable it is to vote for
-BLSP1_SLEEP_CLK_ENA (BIT(9)) in GCC_APCS_CLOCK_BRANCH_ENA_VOTE (0x45004).
+vidioc_s_fmt_vid_cap() and vidioc_s_std() change the device-wide
+dev->width / dev->norm but only refuse the change when the *video* queue
+(dev->vidq) is busy. The VBI queue (dev->vbiq) shares that same geometry:
+cx231xx_init_vbi_isoc() latches dma_q->lines_per_field from dev->norm,
+the VBI videobuf2 plane is sized from dev->width / dev->norm in
+vbi_queue_setup() and vbi_buf_prepare(), and cx231xx_do_vbi_copy() then
+recomputes the destination offset from the *live* dev->width and the
+latched lines_per_field on every URB completion:
 
+	offset = lines_completed * (dev->width << 1) + ...;
+	if (dma_q->current_field == 2)
+		offset += dev->width * 2 * dma_q->lines_per_field;
+	memcpy(plane + offset, p_buffer, lencopy);
+
+Because the VBI node shares video_ioctl_ops with the video node, an
+application can size a small VBI plane (REQBUFS/QBUF with a small width,
+or with the NTSC standard), then enlarge dev->width (or switch dev->norm
+to PAL) through the video node while the VBI stream is running -- the
+change is allowed because only dev->vidq is checked -- and let the device
+deliver a field-2 VBI payload. cx231xx_do_vbi_copy() now computes the
+offset with the larger geometry and memcpy()s past the end of the smaller
+plane that was already allocated, a heap out-of-bounds write whose offset
+is attacker-chosen and whose contents come from the device. The
+per-field guard in cx231xx_copy_vbi_line() does not help: it bounds the
+copy against the latched lines_per_field, not the plane's real capacity,
+and vb2 does not re-run buf_prepare() for an already prepared buffer.
+
+Refuse the format/standard change when the VBI queue is busy as well, so
+the geometry cannot change underneath an allocated VBI buffer.
+
+Fixes: 7c617138b825 ("media: cx231xx: convert to the vb2 framework")
 Cc: stable@vger.kernel.org
-Fixes: 1664014e4679 ("clk: qcom: gcc-msm8939: Add MSM8939 Generic Clock Controller")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Link: https://lore.kernel.org/r/20260706-qcom-clk-mdm9607-fixes-v2-2-745565101869@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-msm8939.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/media/usb/cx231xx/cx231xx-video.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/clk/qcom/gcc-msm8939.c
-+++ b/drivers/clk/qcom/gcc-msm8939.c
-@@ -1882,9 +1882,10 @@ static struct clk_branch gcc_blsp1_ahb_c
+--- a/drivers/media/usb/cx231xx/cx231xx-video.c
++++ b/drivers/media/usb/cx231xx/cx231xx-video.c
+@@ -899,7 +899,7 @@ static int vidioc_s_fmt_vid_cap(struct f
+ 	if (rc)
+ 		return rc;
  
- static struct clk_branch gcc_blsp1_sleep_clk = {
- 	.halt_reg = 0x01004,
-+	.halt_check = BRANCH_HALT_VOTED,
- 	.clkr = {
--		.enable_reg = 0x01004,
--		.enable_mask = BIT(0),
-+		.enable_reg = 0x45004,
-+		.enable_mask = BIT(9),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gcc_blsp1_sleep_clk",
- 			.ops = &clk_branch2_ops,
+-	if (vb2_is_busy(&dev->vidq)) {
++	if (vb2_is_busy(&dev->vidq) || vb2_is_busy(&dev->vbiq)) {
+ 		dev_err(dev->dev, "%s: queue busy\n", __func__);
+ 		return -EBUSY;
+ 	}
+@@ -934,7 +934,7 @@ static int vidioc_s_std(struct file *fil
+ 	if (dev->norm == norm)
+ 		return 0;
+ 
+-	if (vb2_is_busy(&dev->vidq))
++	if (vb2_is_busy(&dev->vidq) || vb2_is_busy(&dev->vbiq))
+ 		return -EBUSY;
+ 
+ 	dev->norm = norm;
 
 
