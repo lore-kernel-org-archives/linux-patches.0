@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9EF93F929C;
-	Sat, 12 Sep 2026 09:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B2E24CEEA;
+	Sat, 12 Sep 2026 09:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205385; cv=none; b=f4Yo0/B5WPsgRx7bZpygGbEx1VaaN/Mx/z8wd0/zGguK9DH7BxlQXxzRmHus8n/HOHTD+/yxkHtBUoDXch5Jo7QM+V4vMiNtqgc2nrKQ5oHZmoEzp0YzM2Gw0ffmyvF5LiMrceLnr6qJwTtDvp9pJAYpE5BQYnI4gdXnf6PZks0=
+	t=1789205388; cv=none; b=BVix5XYXE2JZ5jXzZH5aPsmtfT7SecIb+Lz93l+vjxkPpXvj731kdkcrK9HGBgsQ6HCLhDnplFl86idiZ9AMyCC5NgQ2qCzyBe3ZYwJXh0Cn53iX8CFsf5n+kMj3KycCLrb+1noNnbFOFLULZoIeTABZBZFlcrq7m75agr3uObc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205385; c=relaxed/simple;
-	bh=/53mTNX/BFGaWf+GDH6OjZ72bLdYJvsKlagK7RU6t0Q=;
+	s=arc-20240116; t=1789205388; c=relaxed/simple;
+	bh=0dFqQIIwkpP51o91OnZOQGDWOEweo+1yBby1N/ApwEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=esBLcGbsiLsrCDWLnbpJjCg+PhJTtRB/2SigA3qoVZGqvhsLqVmnuwu9zI9xCNbRdDIyeflqs52Ue+SiTkSJa/jzr3NOxj4ksmH3RMDdAob74Csz3VQ6tTcWHC2DPGIE5YvAuMllxrgH+QI9ipSzbEtDOf/8V+n0mLsll/Ji+LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbsU+ERE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ke3yROYeZgWoNNstoH7ksv6HukMo+S1rPd388foJ2mDYB48SX/HdJ6cx+v50A9WKs/kM5nbpiBJa1oPDcpvrlLil8XZOT7q1TGjOXZruABynwJB0JZ4fIEFhPF2au4T+13oRI9DYZQ7eOZdaV0rSzq5moThuoa/lVsJqHJ23p3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jy3MA6Wj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbsU+ERE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B4D1F000FF;
-	Sat, 12 Sep 2026 09:29:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jy3MA6Wj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F661F000FF;
+	Sat, 12 Sep 2026 09:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205382;
-	bh=bqJ5zex5B2MK99LMwUOaEm9yynUvELra1eAPV8a/gr8=;
+	s=korg; t=1789205387;
+	bh=kQ+z+rWh016fF2rkmyG2YIT0/8gMGzr9C77doEA0EW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HbsU+EREJ5Kl6DXoamDHmmqiRV7BLoXWUOJm/OYrZI3ZitxhQbmK1/OBbEJAgQ8Gk
-	 VDyDmRTOXMAxXcIiztn2RJTyh0/2JZoJuVny3B23Az0QEVUrbY92JBMaaaQFs4DXpg
-	 k9t+yVQa6+a3cFQojxj6Z0gb28/2BXrFtJHML6ug=
+	b=Jy3MA6Wjrg9RrBjyw+bFB4ATPPNRpGP0+BuS+GHZRDY2dhyJxDSraaOiuTEcTpytj
+	 CFcR8SCm697kck+mr/xElPIgg2PJJWEi/4K3dAxfJmVKybiBhc+9saXMMJGoUgbdLJ
+	 JsiqNov9SdpGUT7fipMJJLqLEOtDPPxrBh0sO1EE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	vega@nebusec.ai,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Eulgyu Kim <eulgyukim@snu.ac.kr>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1806/1815] net/sched: bound qdisc_pkt_len to prevent qdisc soft lockup
-Date: Sat, 12 Sep 2026 08:59:16 +0200
-Message-ID: <20260912065731.434610232@linuxfoundation.org>
+Subject: [PATCH 7.2 1807/1815] slip: remove slip_hangup() to fix use-after-free in slip_receive_buf()
+Date: Sat, 12 Sep 2026 08:59:17 +0200
+Message-ID: <20260912065731.458716394@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,84 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8f735d64382dcf162f4276d6699d03ad2f859c0b ]
+[ Upstream commit 23c53269f2baaedf2d92784290cb9ef6db2a3bce ]
 
-qdisc_get_stab() accepts a user-supplied size table, and
-__qdisc_calculate_pkt_len() amplifies qdisc_pkt_len() through the
-overhead, the size-table data (u16), and size_log (up to
-STAB_SIZE_LOG_MAX). A crafted stab can therefore set qdisc_pkt_len()
-to ~1 GiB for an ordinary skb. Per-flow deficit schedulers such as
-DRR and ETS replenish one quantum per loop iteration; with a tiny
-quantum (1) they spin billions of times under the qdisc lock,
-producing a soft lockup / RCU stall as illustrated by vega@nebusec.ai.
+Jaeyoung Chung and Eulgyu Kim reported a slab-use-after-free read
+in slip_receive_buf() when racing against tty hangup.
 
-Cap the final qdisc_pkt_len() to QDISC_PKT_LEN_MAX so the size-table
-amplification cannot drive deficit schedulers into an unbounded loop.
-A legitimate size table (e.g. qfq's overhead 999999999, which is
-handled by dropping) is still accepted.
+tty_ldisc_hangup() calls ld->ops->hangup() while holding only
+a read lock on tty->ldisc_sem (via tty_ldisc_ref()).
+Because slip_hangup() simply called slip_close(), it ran concurrently
+with reader functions such as slip_receive_buf().
 
-Introduce cap QDISC_PKT_LEN_MAX (1 << 20) = 1 MiB which is well above
-any legitimate single-skb wire length: the largest current skb->len
-is GSO_MAX_SIZE (524280), and an ATM-style size table (53/48 cell tax)
-amplifies that to ~578 KB, both comfortably below 1 MiB. At the same
-time, 1 MiB bounds the deficit refill loop to ~1M iterations per
-packet with quantum=1, which completes in a few milliseconds well
-under the demonstrated softlockup threshold (~10^9 iterations).
+slip_close() unregisters and frees the net device and its private
+struct slip, causing concurrent reader threads in slip_receive_buf()
+to dereference freed memory.
 
-Conditions to recreate the bug:
-- CONFIG_NET_SCHED=y, CONFIG_NET_SCH_DRR=y (or CONFIG_NET_SCH_ETS=y).
-- Attach a DRR (or ETS) root qdisc with a crafted TCA_STAB that
-  amplifies qdisc_pkt_len to ~1 GiB (e.g. size_log=15, data=[32768]).
-- Add a class with a tiny quantum of 1 and send one small packet; the
-  deficit loop spins billions of times under the qdisc lock and trips
-  the softlockup detector (panic with kernel.softlockup_panic=1).
-- Reachable as root or from an unprivileged user in a fresh user+net
-  namespace (unshare -Urn) with namespace-local CAP_NET_ADMIN.
+Line discipline close() is already guaranteed to be called under
+the write lock of tty->ldisc_sem during hangup processing
+(in tty_ldisc_reinit() or tty_ldisc_kill()).
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: vega@nebusec.ai
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260825081403.133992-1-jhs@mojatatu.com
+Remove slip_hangup() so teardown is serialized cleanly by slip_close().
+
+Fixes: 5342b77c4123 ("slip: Clean up create and destroy")
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
+Closes: https://lore.kernel.org/netdev/20260825150655.1450271-1-jjy600901@snu.ac.kr/
+Cc: Qingfang Deng <qingfang.deng@linux.dev>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260826105238.3323436-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/pkt_sched.h | 1 +
- net/sched/sch_api.c     | 7 +++++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/slip/slip.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/include/net/pkt_sched.h b/include/net/pkt_sched.h
-index 18a419cd9d949..90d3e7943b19a 100644
---- a/include/net/pkt_sched.h
-+++ b/include/net/pkt_sched.h
-@@ -12,6 +12,7 @@
+diff --git a/drivers/net/slip/slip.c b/drivers/net/slip/slip.c
+index 85b2438e89235..fdd6f63fb849e 100644
+--- a/drivers/net/slip/slip.c
++++ b/drivers/net/slip/slip.c
+@@ -886,8 +886,6 @@ static int slip_open(struct tty_struct *tty)
+  * Close down a SLIP channel.
+  * This means flushing out any pending queues, and then returning. This
+  * call is serialized against other ldisc functions.
+- *
+- * We also use this method fo a hangup event
+  */
  
- #define DEFAULT_TX_QUEUE_LEN	1000
- #define STAB_SIZE_LOG_MAX	30
-+#define QDISC_PKT_LEN_MAX	(1 << 20)	/* 1 MiB */
- 
- struct qdisc_walker {
- 	int	stop;
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index 65b35528d125f..90503e59e6e3b 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -610,8 +610,11 @@ void __qdisc_calculate_pkt_len(struct sk_buff *skb,
- 
- 	pkt_len <<= stab->szopts.size_log;
- out:
--	if (unlikely(pkt_len < 1))
--		pkt_len = 1;
-+	/* A size table can inflate qdisc_pkt_len() beyond any real packet
-+	 * (via overhead, the data table, or size_log); cap it so deficit
-+	 * schedulers such as DRR/ETS terminate their refill loops.
-+	 */
-+	pkt_len = clamp_t(int, pkt_len, 1, QDISC_PKT_LEN_MAX);
- 	qdisc_skb_cb(skb)->pkt_len = pkt_len;
+ static void slip_close(struct tty_struct *tty)
+@@ -915,11 +913,6 @@ static void slip_close(struct tty_struct *tty)
+ 	unregister_netdev(sl->dev);
+ 	/* sl_uninit() has dropped the slip_devs[] entry by now */
  }
- 
+-
+-static void slip_hangup(struct tty_struct *tty)
+-{
+-	slip_close(tty);
+-}
+  /************************************************************************
+   *			STANDARD SLIP ENCAPSULATION		  	 *
+   ************************************************************************/
+@@ -1280,7 +1273,6 @@ static struct tty_ldisc_ops sl_ldisc = {
+ 	.name 		= "slip",
+ 	.open 		= slip_open,
+ 	.close	 	= slip_close,
+-	.hangup	 	= slip_hangup,
+ 	.ioctl		= slip_ioctl,
+ 	.receive_buf	= slip_receive_buf,
+ 	.write_wakeup	= slip_write_wakeup,
 -- 
 2.53.0
 
