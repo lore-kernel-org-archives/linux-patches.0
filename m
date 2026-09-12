@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E5031F9B1;
-	Sat, 12 Sep 2026 16:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A6C31F9B1;
+	Sat, 12 Sep 2026 16:40:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231255; cv=none; b=Cag6pXiK1OFDJt7TYgOxaNe7pQ7tsoqv+NCH11c4SHjlmtkwTvX5Hx4Q/Lx52NG4TKT+eiAO6J1LClDSrEA7lW7UJCR5XXBkDc1a7ydurpVBfulGG+LPz8HF9RfZpZmeVJm7MitrN8CrafesPPOb8IX5qwJSQRFZKKVkHlLTueo=
+	t=1789231260; cv=none; b=tgnHJC4JFtuWTpPO13+7iyHvEgvLqq4ByTXzsPxI1Uvlk+wUdYOw//rh0hFrBjuUR6wcNRJKpZhYW7ncH7wAeyQm/ol0goSELtZhxnFCPip+6/ZpWop1n0V/JFJi6Z4C9kU9SWB31loZ3afo25DmbwmBqNZuWZ17+On0GO4K+GM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231255; c=relaxed/simple;
-	bh=nyUmZfQspll8xhhO/8F7oulgfS9vZZu8dmIH8F8GIaE=;
+	s=arc-20240116; t=1789231260; c=relaxed/simple;
+	bh=OCqOa6MSkdwq4bRfVxKA1usNwuwThBhg8+0an6HK35Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iQp8DMBymMVbjIxMnwdpnBHGamkSTOXyXk8t0gD6adJkVI2+DhT+XtYIBTIj9x7GHwirJnsSajJhLqW4NNkV5FDoAMpuqT2HSDe6JDRemvMXRPjOy0NUAUOVbEGVCnHLoHZKOFkOQeMQYGe3iVBiBUejh4R1cRDPD7+Ivw9FPlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pyErVi0g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ppYofFZmMG6wwyRLxlPF4lzg7rU631A4pHLWvxVp7iENl7DfbBjuRxd23umGpGl8CSU3o57VJ4KXRXu69w1Ex8QsU+rEwc382KTEOFmJRRtiNOaaI+wcSnNVWU18+DiQRA3iPv3dvByIBXQN+XYab2J9V4Ip5vtjd6SQVplmgyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tBNaSNqq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pyErVi0g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E809B1F000FF;
-	Sat, 12 Sep 2026 16:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBNaSNqq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4E91F000FF;
+	Sat, 12 Sep 2026 16:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231254;
-	bh=oroBuHt6bcnyHfYs2myXhzEEHQ4KqS0VSFi7gXcwj1g=;
+	s=korg; t=1789231259;
+	bh=pyEKpcZZre1MSpTmMi8ACliTmESOcaUjkPlwzhqEmmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pyErVi0gQ1FmXkGSomMSIL9OB9XPhTNt2z24c8wPEDiRzTUueXpUriqKe+w2y6LN0
-	 XhDhPn9/HcoAJP6kOwOzTBfX9fSAZMpTRRWVdAEWzPUVIeggtab97YpaIsFflNh6z3
-	 IBdNRHCj3mKpP8pJxL6OX9KZD8Bfov4GhHHhlI58=
+	b=tBNaSNqqgnAkjRYjKChSbs7U/VlsmuaH4UduLL38Eei8YdYQDh1QbKdD2Xi2cw9rE
+	 bb2mmTieqviUBV5tNVXsvlwg7j5AJwtZHq2ewBKQLQs4uT6AbGvg9x4KIuRBT1fKE1
+	 7Z1zbEQFis/r8lmbz8Kzc/DxsBNlkzwumCaXMq0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Peisach <jpeisach@ubuntu.com>,
-	Janne Grunau <j@jannau.net>,
-	Nick Chan <towinchenmi@gmail.com>,
-	Sven Peter <sven@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0959/1191] nvme-apple: Drop the PRP null check chicken bit
-Date: Sat, 12 Sep 2026 09:01:27 +0200
-Message-ID: <20260912065609.759928720@linuxfoundation.org>
+Subject: [PATCH 6.1 0960/1191] nvmet: fix NULL pointer dereference in nvmet_execute_identify_ns_zns()
+Date: Sat, 12 Sep 2026 09:01:28 +0200
+Message-ID: <20260912065609.781999077@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,61 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Peter <sven@kernel.org>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 8ce883fd068b7ba9ab493cd3ecca3a7ea868c375 ]
+[ Upstream commit f594863967d87b7fcbff6e724d51135fd701a13d ]
 
-Now that we program the DMA direction correctly the NULL check that used
-to make commands fail passes. Another side effect of this bit was that
-non-align buffers on the admin queue were silently allowed and that's
-been fixed now as well and we this don't need this chicken bit anymore.
-More importantly, starting with the firmware installed with macOS 15,
-which is required for M4 but can also be installed on the previous SoCs,
-the controller no longer exposes this control register and any access
-SErrors instead. Just drop the write entirely.
+When a host issues an Identify command with CNS 05h (I/O Command Set
+specific Identify Namespace) and CSI 02h (ZNS) targeting a file-backed
+namespace, nvmet_execute_identify_ns_zns() calls bdev_is_zoned() on
+req->ns->bdev. A file-backed namespace has no block device, so
+req->ns->bdev is NULL and bdev_is_zoned() dereferences it, oopsing.
 
-Fixes: 5bd2927aceba ("nvme-apple: Add initial Apple SoC NVMe driver")
-Tested-by: Joshua Peisach <jpeisach@ubuntu.com>
-Tested-by: Janne Grunau <j@jannau.net>
-Tested-by: Nick Chan <towinchenmi@gmail.com>
-Signed-off-by: Sven Peter <sven@kernel.org>
+The I/O command set is selected by the host-supplied CSI field and the
+command is routed here whenever CONFIG_BLK_DEV_ZONED is enabled,
+independent of the namespace backing type, so any file-backed namespace
+is exposed.
+
+Reject the command with Invalid Field when the namespace is not backed
+by a block device.
+
+Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/apple.c | 14 --------------
- 1 file changed, 14 deletions(-)
+ drivers/nvme/target/zns.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
-index 778cd619aeebd..6fb881f3807c5 100644
---- a/drivers/nvme/host/apple.c
-+++ b/drivers/nvme/host/apple.c
-@@ -47,9 +47,6 @@
- #define APPLE_ANS_BOOT_STATUS	 0x1300
- #define APPLE_ANS_BOOT_STATUS_OK 0xde71ce55
- 
--#define APPLE_ANS_UNKNOWN_CTRL	 0x24008
--#define APPLE_ANS_PRP_NULL_CHECK BIT(11)
--
- #define APPLE_ANS_LINEAR_SQ_CTRL 0x24908
- #define APPLE_ANS_LINEAR_SQ_EN	 BIT(0)
- 
-@@ -1114,17 +1111,6 @@ static void apple_nvme_reset_work(struct work_struct *work)
- 		/* Setup the NVMMU for the maximum admin and IO queue depth */
- 		writel(anv->hw->max_queue_depth - 1,
- 			anv->mmio_nvme + APPLE_NVMMU_NUM_TCBS);
--
--		/*
--		 * This is probably a chicken bit: without it all commands
--		 * where any PRP is set to zero (including those that don't use
--		 * that field) fail and the co-processor complains about
--		 * "completed with err BAD_CMD-" or a "NULL_PRP_PTR_ERR" in the
--		 * syslog
--		 */
--		writel(readl(anv->mmio_nvme + APPLE_ANS_UNKNOWN_CTRL) &
--			~APPLE_ANS_PRP_NULL_CHECK,
--			anv->mmio_nvme + APPLE_ANS_UNKNOWN_CTRL);
+diff --git a/drivers/nvme/target/zns.c b/drivers/nvme/target/zns.c
+index 7bc3fae63dcf7..bb512a88053df 100644
+--- a/drivers/nvme/target/zns.c
++++ b/drivers/nvme/target/zns.c
+@@ -124,7 +124,7 @@ void nvmet_execute_identify_cns_cs_ns(struct nvmet_req *req)
+ 		mutex_unlock(&req->ns->subsys->lock);
  	}
  
- 	/* Setup the admin queue */
+-	if (!bdev_is_zoned(req->ns->bdev)) {
++	if (!req->ns->bdev || !bdev_is_zoned(req->ns->bdev)) {
+ 		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 		req->error_loc = offsetof(struct nvme_identify, nsid);
+ 		goto out;
 -- 
 2.53.0
 
