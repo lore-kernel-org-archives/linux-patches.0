@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF50D3F788A;
-	Sat, 12 Sep 2026 11:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356E22D0C75;
+	Sat, 12 Sep 2026 11:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214257; cv=none; b=Sv867X9doOs0qKOgZ+EHsrYlOLoErUdZVEyfy3IOdrEO1kf4YGhgEx53AsWN37KMZSPATnk9c58uZIlGf2lKuqy/Xe/Kcmzznp+ESEfBM6V1Oky6vHMn3d4iUG935iec5UypaHEsGJ+QFZwKH57uNK4O2ruTd0s6FSJxoaWZnf4=
+	t=1789214262; cv=none; b=pZcFFB4XkigGavZrFgm4AbNGouTsfOJYEonMtOfD+eKMmgxRfFFYHyHRH/brYlZM3ATBuTQa0C6KoPO25HRCyaYdmYsSPfLD9JYM5kQahMr2X1ObAVfoRD75o6IpN0YcvBi+WCxy63fWwbmVq0/RluRD9mvnZuySdfJuHTnCsyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214257; c=relaxed/simple;
-	bh=X3CmMC79RwexvWqx0eyZaUezGDQ4WiQyhVUK6bXlveU=;
+	s=arc-20240116; t=1789214262; c=relaxed/simple;
+	bh=fYqRKuKw7EC8PcF+007/yN8XSPERi3ZWK81ySAuV104=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nJfqznxB12DkI1mifdQo9h23zLXJXO4hlK29nzI1bWCd2H60ZwwBI90IWmqc7FLrk1MWINXJu9iWcNjckD9QN5vfM1oRocuiJgaVabDMBX3QVLA1NpN4wQYR6+jaNIzj0U7RFo+Zh+n5mXdZei+15LULITkYJoXZfKmhajVXtVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHT8YkPv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Clu2ESgXiSqGXvEmFON9nwPa1Uq30bS/ETi4wopcL+kNigIq8cffrrlSbK4BX0WhaSYZr7zzPplD92VUdCpFoppxV3XgxqrOmXyySAwEpkGx5eyePNzazh29BRi2rvHW+lEvbrklDJS++7R6w7o4lKbCnhyg2vWkigX9ljBA20U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zbXjOVZF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHT8YkPv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C1F1F00893;
-	Sat, 12 Sep 2026 11:57:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zbXjOVZF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D481F000FF;
+	Sat, 12 Sep 2026 11:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214255;
-	bh=1CX2hWmBAKJZQqb3Xd4iJ778LWzTaaDuKuL9/eYW/gI=;
+	s=korg; t=1789214261;
+	bh=VhTAFBxWGEqMh9QB2fYkCV9kmIqrOAmtWX73KiOf8ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gHT8YkPv4lkh10CgFM8Bqu3wxhj0ySDAYCAKRDCYYpOfVpavMYMDPv74g/uurikyj
-	 ThRkgyKS0KD74SqkBBdyrYZht4QZMXw3HZhV3bS+M+c5iSmV4Iib2nHvNK6mLSU15W
-	 ggM4Z4sllMDDo1UYF17wY5Fy5xheQa7cjND6iUhs=
+	b=zbXjOVZFJeMcvw/Xf2Gkh2VWrLUHcPkqGE1j/mXHhPQkU5YQEiGYuHNnLpSKNq6TE
+	 Pj5kP1x+iEwIcxafn7BHDQI7skCvJKU1R+Imem2MMuYhn9BZS1T20AmSSu3s78a9Bb
+	 zlMJg6MdxmNqZIYfRe8dU6AqH/EpaTK7JrHt3grs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Steven Price <steven.price@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>
-Subject: [PATCH 6.12 0258/1376] drm/panthor: fix firmware control interface bounds checks
-Date: Sat, 12 Sep 2026 08:44:44 +0200
-Message-ID: <20260912065613.289149724@linuxfoundation.org>
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Johan Hovold <johan@kernel.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Subject: [PATCH 6.12 0259/1376] drm/bridge: dw-hdmi: fix i2c adapter leak on probe failure
+Date: Sat, 12 Sep 2026 08:44:45 +0200
+Message-ID: <20260912065613.311080032@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,85 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 6a47f9fd2d970674ed9dedc52fc7ab76fd015785 upstream.
+commit 09b195a7bb23df56269cd2a95d01ba3a5533af13 upstream.
 
-panthor_init_cs_iface() and panthor_init_csg_iface() validate firmware
-control interface offsets with 32-bit arithmetic and the size of the host
-wrapper structures. The offsets are derived from firmware-provided strides,
-so the arithmetic can wrap before the bounds check, and the host wrapper
-size is not the size of the firmware control interface being mapped.
+Make sure to drop the i2c adapter device and module references before
+returning when detecting a malformed devicetree during probe.
 
-Use 64-bit arithmetic for the computed offsets and validate against the
-actual firmware control interface structure sizes with subtraction-based
-bounds checks. Also validate that the shared section is large enough for
-the global control interface before using it.
-
-Fixes: 2718d91816ee ("drm/panthor: Add the FW logical block")
-Cc: stable@vger.kernel.org
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260720134435.13377-1-osama.abdelkader@gmail.com
-Signed-off-by: Steven Price <steven.price@arm.com>
+Fixes: 80e2f97968b5 ("drm: bridge: dw-hdmi: Switch to regmap for register access")
+Cc: stable@vger.kernel.org	# 4.12
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Link: https://patch.msgid.link/20260717090819.1630965-1-johan@kernel.org
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panthor/panthor_fw.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/bridge/synopsys/dw-hdmi.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/panthor/panthor_fw.c
-+++ b/drivers/gpu/drm/panthor/panthor_fw.c
-@@ -797,14 +797,15 @@ static int panthor_init_cs_iface(struct
- 	struct panthor_fw_csg_iface *csg_iface = panthor_fw_get_csg_iface(ptdev, csg_idx);
- 	struct panthor_fw_cs_iface *cs_iface = &ptdev->fw->iface.streams[csg_idx][cs_idx];
- 	u64 shared_section_sz = panthor_kernel_bo_size(ptdev->fw->shared_section->mem);
--	u32 iface_offset = CSF_GROUP_CONTROL_OFFSET +
--			   (csg_idx * glb_iface->control->group_stride) +
-+	u64 iface_offset = CSF_GROUP_CONTROL_OFFSET +
-+			   ((u64)csg_idx * glb_iface->control->group_stride) +
- 			   CSF_STREAM_CONTROL_OFFSET +
--			   (cs_idx * csg_iface->control->stream_stride);
-+			   ((u64)cs_idx * csg_iface->control->stream_stride);
- 	struct panthor_fw_cs_iface *first_cs_iface =
- 		panthor_fw_get_cs_iface(ptdev, 0, 0);
+--- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
++++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
+@@ -3383,7 +3383,8 @@ struct dw_hdmi *dw_hdmi_probe(struct pla
+ 			break;
+ 		default:
+ 			dev_err(dev, "reg-io-width must be 1 or 4\n");
+-			return ERR_PTR(-EINVAL);
++			ret = -EINVAL;
++			goto err_res;
+ 		}
  
--	if (iface_offset + sizeof(*cs_iface) >= shared_section_sz)
-+	if (iface_offset > shared_section_sz ||
-+	    sizeof(*cs_iface->control) > shared_section_sz - iface_offset)
- 		return -EINVAL;
- 
- 	spin_lock_init(&cs_iface->lock);
-@@ -854,10 +855,12 @@ static int panthor_init_csg_iface(struct
- 	struct panthor_fw_global_iface *glb_iface = panthor_fw_get_glb_iface(ptdev);
- 	struct panthor_fw_csg_iface *csg_iface = &ptdev->fw->iface.groups[csg_idx];
- 	u64 shared_section_sz = panthor_kernel_bo_size(ptdev->fw->shared_section->mem);
--	u32 iface_offset = CSF_GROUP_CONTROL_OFFSET + (csg_idx * glb_iface->control->group_stride);
-+	u64 iface_offset = CSF_GROUP_CONTROL_OFFSET +
-+			   ((u64)csg_idx * glb_iface->control->group_stride);
- 	unsigned int i;
- 
--	if (iface_offset + sizeof(*csg_iface) >= shared_section_sz)
-+	if (iface_offset > shared_section_sz ||
-+	    sizeof(*csg_iface->control) > shared_section_sz - iface_offset)
- 		return -EINVAL;
- 
- 	spin_lock_init(&csg_iface->lock);
-@@ -909,11 +912,15 @@ static u32 panthor_get_instr_features(st
- static int panthor_fw_init_ifaces(struct panthor_device *ptdev)
- {
- 	struct panthor_fw_global_iface *glb_iface = &ptdev->fw->iface.global;
-+	u64 shared_section_sz = panthor_kernel_bo_size(ptdev->fw->shared_section->mem);
- 	unsigned int i;
- 
- 	if (!ptdev->fw->shared_section->mem->kmap)
- 		return -EINVAL;
- 
-+	if (sizeof(*glb_iface->control) > shared_section_sz)
-+		return -EINVAL;
-+
- 	spin_lock_init(&glb_iface->lock);
- 	glb_iface->control = ptdev->fw->shared_section->mem->kmap;
- 
+ 		iores = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 
 
