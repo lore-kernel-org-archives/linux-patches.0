@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBEE4BEE54;
-	Sat, 12 Sep 2026 09:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4794BEE54;
+	Sat, 12 Sep 2026 09:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206095; cv=none; b=GTW/ULc26nOBofjX87exUC6FZ5D6a5KnosIUacSGG5hR2qMy5toGivHEddPrvXC0FuzdGO/avse33iolxU7I+YaLyhW8QSeiuoNX9jBbjSs3EAWY4CuM6GwYfUsTs9igUhC2HOB4NDYhdgD3eBSeAdW7fG0X/Op0D7Fmyevc4Zk=
+	t=1789206100; cv=none; b=E7lhAcbHJnl1+7dwv/EbITGt5xNvpxliYpHDSv7LqG3ozBb/uqYftgekJCO3tTipB75rj+O051IzNGgLdokaLBh6RbOk+2UT4mdmIroKI90sutbn0uMdJXBsSgiUaoR4k3PhQkWmxOzZ5CdZRJguGkprsCzatuT5bWBkkK7KBEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206095; c=relaxed/simple;
-	bh=n2UU/kkmypvfrWCO6JT6WUC/6p9QM9Tbszp+nnsUAzE=;
+	s=arc-20240116; t=1789206100; c=relaxed/simple;
+	bh=TLzenUQdx4hTyjFGarUxraGsx3o5U3CDaPTorgKaUKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ADk6iLaOVTCcqPbhpG1Za/UJNbQWfKiCJrGKvm8CTa9KS0guRX7Lm9O3SGPn4USsk0aX/OAac2ojzDgMXiVL4xpI+Tz63o0eUGt6wAkJ+p6cId6or5pxOBoauTbiL07faPIqwSlKBkXeCTXCwhyeGw+j19guf5m+nGvJVV52ZVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAPUQlGn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IYzfbVWQ3C3YU2naXS1QP/u3fKsQ+fc3NFi4X4db1gk1s5wPbgvxaqzEs186WnXhKDTW0ZlXbbGM9m9bX1VXB8+tsSsNHNHAGRwT6kURIZDzhVOLNX5YsXFRHOQweg+lTUwMDilMWQ3r74MXYQh4kccCqfv8OVHC4hWvUntaK8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGRjRYm1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAPUQlGn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6871F00893;
-	Sat, 12 Sep 2026 09:41:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGRjRYm1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC451F000FF;
+	Sat, 12 Sep 2026 09:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206094;
-	bh=V6uAd1wA18qhtW9s0k3S2wSDDBsjJEr/mYGwBrqm/oI=;
+	s=korg; t=1789206099;
+	bh=pHBkrGPK+GbjhonS/l0rdSo2QjFx1bzBc6cZAOTe+iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wAPUQlGn8rfdmGtb4sVou/nqganApYLKJ/1eTS700BY0gA8NzS4b+7dDrlUmJ3qm5
-	 tKWUVrgVe/AtOvGnyDn4WrfCmEYDh0NUpK9DVcc7KUhEqNjdKCTUhoLdoxi7kJIMbu
-	 buKDA6VU0fDAM0exH9O0vdTGfsmNoQz1SCLvcTeE=
+	b=kGRjRYm1WpMxgQpjwmN6f0IjeyhhImbql9eKvtMe+oFgKi5BfYHqNfmA2FQTjksDY
+	 3nPMW1nmzuaxTZX17sVX1rSp1s/guEiRMxv866AfUWs7E6ut85Bi0KCmwn/gRlwLYh
+	 CFj2SFqbdtSJrEb9T8+QXQCUOlJ21GaBPu3nj/iE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	Min zhang <zhangmin2026@yeah.net>,
+	Weigang He <geoffreyhe2@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0134/1518] clk: hisilicon: reset: Use devm_kzalloc to initialize hisi_reset_controller
-Date: Sat, 12 Sep 2026 08:38:23 +0200
-Message-ID: <20260912065626.523438450@linuxfoundation.org>
+Subject: [PATCH 6.18 0135/1518] ARM: imx: fix device_node refcount leak in imx_src_init()
+Date: Sat, 12 Sep 2026 08:38:24 +0200
+Message-ID: <20260912065626.547863481@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,39 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Min zhang <zhangmin2026@yeah.net>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit a8036f4591542de4b38ec81d3e2ba47bc0b2652b ]
+[ Upstream commit 936407c3563ac745cbbb9953c0cf2472128a22f4 ]
 
-Using devm_kmalloc() does not zero-initialize the allocated structure.
-Uninitialized members in struct hisi_reset_controller may contain garbage
-data, which can cause reset_controller_register() to fail unexpectedly.
+imx_src_init() obtains a device_node reference via
+of_find_compatible_node() matching "fsl,imx51-src" and uses it only to
+call of_iomap(). It never releases that reference: on the success path
+the function returns at the end without of_node_put(np), leaking one
+device_node refcount on every boot of an i.MX5/6 platform.
 
-Replace devm_kmalloc() with devm_kzalloc() to ensure all structure fields
-are properly zero-initialized.
+Release the reference right after of_iomap(). of_iomap() maps the
+node's registers but does not retain a reference to the device_node, so
+the node can be put once the mapping is done. The early return on a NULL
+np needs no put.
 
-Fixes: 97b7129cd2afb ("reset: hisilicon: change the definition of hisi_reset_init")
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Signed-off-by: Min zhang <zhangmin2026@yeah.net>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Found by static analysis tool CodeQL.
+
+Fixes: bd3d924d71a4 ("ARM i.MX5: Add System Reset Controller (SRC) support for i.MX51 and i.MX53")
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/hisilicon/reset.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/mach-imx/src.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/hisilicon/reset.c b/drivers/clk/hisilicon/reset.c
-index 93cee17db8b16..c3b7daac93132 100644
---- a/drivers/clk/hisilicon/reset.c
-+++ b/drivers/clk/hisilicon/reset.c
-@@ -91,7 +91,7 @@ struct hisi_reset_controller *hisi_reset_init(struct platform_device *pdev)
- {
- 	struct hisi_reset_controller *rstc;
+diff --git a/arch/arm/mach-imx/src.c b/arch/arm/mach-imx/src.c
+index 59a8e8cc44693..f28bfb653a88f 100644
+--- a/arch/arm/mach-imx/src.c
++++ b/arch/arm/mach-imx/src.c
+@@ -171,6 +171,7 @@ void __init imx_src_init(void)
+ 	if (!np)
+ 		return;
+ 	src_base = of_iomap(np, 0);
++	of_node_put(np);
+ 	WARN_ON(!src_base);
  
--	rstc = devm_kmalloc(&pdev->dev, sizeof(*rstc), GFP_KERNEL);
-+	rstc = devm_kzalloc(&pdev->dev, sizeof(*rstc), GFP_KERNEL);
- 	if (!rstc)
- 		return NULL;
- 
+ 	/*
 -- 
 2.53.0
 
