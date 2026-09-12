@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A1B242D65;
-	Sat, 12 Sep 2026 11:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001FC37A498;
+	Sat, 12 Sep 2026 11:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212244; cv=none; b=Wwh+YmQt5XESZlxcv6RtZ5zPoLB5wjtd8xZDV6MInJUKYYlDE5zUwoOcG8aU71Rd7LSBaOZziRHFGxFjRgLRKupbo9WTYjVs6CCNmRgsghs3CpClmldpeJF32alSP6hDOlYhy/s51vSH43sXJHw+AQvszGT2Cntttdk+I+WKfyY=
+	t=1789212249; cv=none; b=UG22zRVpHr7ONO7PYy4OXnCVdm7hU0N7RaSyRZnz77MCvjmosKqZzly8wNqm8o9cl0sHnOgy4hxcOl2mgiUaQgRL11+py0FJpaNUpzZb2ioLd38UIz63F9UtVan4O89/FgTNOyPCKbdhFNalP9LxnrQ64GED64CVqSwtjvMQGRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212244; c=relaxed/simple;
-	bh=CPXT/xATHX6Ye49lWCWtQUC9cOAaQxeD/aLzmyHfgW4=;
+	s=arc-20240116; t=1789212249; c=relaxed/simple;
+	bh=BW6BYOEI9aqT89C7M6S589K4QOxOEtQcQt9T1GolXW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j5dEzQMAmd0H5ozLf3sIcJooBVWyq+kwX/gMA5IteA5m2Gxs3FZvM1WBE6PC1G4Csv52VLL+kR/5k8XtIE1y+TgMcO/FiFuzHX89F7yXr1b1xxYmOJCZB3/GuxSdbqAQIHkJQZfG+z6Sdy+x2fUvKgPxHLCSVX8ICCdWtc/0xI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WR8BRX1W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oETMsRDkBluKOTr0vrLcC5wIvaeEfmw8UlqEJU25Whqe9dFHDy6tP5Ce4lSmbaan0fJXe/crEAziuKKkVP6vo/OQ8p2JH8qAt5zj7xPQyvg/voCDnnfNfOFOoWF+Ojw9x+iiza7TFmj3iMDY94m314Fhd0Gyvlxrgzffwi9GsDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2RIuPpM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WR8BRX1W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D94C1F000FF;
-	Sat, 12 Sep 2026 11:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2RIuPpM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04EC1F000FF;
+	Sat, 12 Sep 2026 11:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212243;
-	bh=q1Tw1cGe8y3tfk+wTUWytahMYjxUiH75SQr4Lg/dC08=;
+	s=korg; t=1789212247;
+	bh=KyztPmw4bJMoWKTGvKTyOjqalWiLkU7s1QTF7w7Y9K4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WR8BRX1WNF8nmsckjv6kFtGbCbB5ugePBxGaFQw8yD7vk+9SZxQyVD6qdqz9WtlK+
-	 OQVRYpapU2SpD6Vun2Sj917DjKscrk2ZTvOJ8/Hy/VxOZRguUw1AjxSwLG2toYU/0e
-	 6bDPOykWndy5wRGBLde5t+NSkJ8kDhtVLr6p2JsQ=
+	b=M2RIuPpM1quzrzbni264GfogxXpYDXmlmBVPC28lorl3yCyLOcU3+fvnKgmfDcEtS
+	 MwYkB3Gb1Fm6/oNUgHCxipM92ljXBzaoL+38Dp8xDNn3b0d3id0DVr6AqiyZ885CyB
+	 RSwy3pXtERC4x5i+K3qeM5pRu24AMrblAJyf7Raw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1397/1518] Bluetooth: RFCOMM: Validate MTU in rfcomm_apply_pn() to prevent infinite loop
-Date: Sat, 12 Sep 2026 08:59:26 +0200
-Message-ID: <20260912065655.151279533@linuxfoundation.org>
+Subject: [PATCH 6.18 1398/1518] xsk: align TX metadata layout across ABIs
+Date: Sat, 12 Sep 2026 08:59:27 +0200
+Message-ID: <20260912065655.173457041@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,45 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Stanislav Fomichev <sdf.kernel@gmail.com>
 
-[ Upstream commit 44c98fd082eafd49d55a8a4077ff488175b2fe24 ]
+[ Upstream commit bd7d30bd1d3856d8354b5acef947d68ad1faf886 ]
 
-rfcomm_apply_pn() accepts the MTU value from a remote PN (Parameter
-Negotiation) frame without checking for zero. When the remote peer
-sends an MTU of zero, d->mtu is set to 0. This causes the sendmsg
-path to enter an infinite loop when fragmenting data, as each fragment
-has size == min_t(size_t, len, 0) == 0, so the remaining length never
-decreases. The infinite allocation of zero-length skbs exhausts all
-system memory.
+Add explicit padding before launch_time so xsk_tx_metadata has the same
+layout on 32-bit and 64-bit systems.
 
-Fix by clamping d->mtu to RFCOMM_DEFAULT_MTU when the negotiated
-value is zero, consistent with the initial value assigned in
-rfcomm_dlc_alloc().
+On several architectures (csky, i386, nios2, m65k, openrisc, sh), the old
+native 32-bit layout put launch_time at offset 12 and had a natural size of
+20 bytes. Using sizeof(struct xsk_tx_metadata) as tx_metadata_len was already
+rejected because the length must be a multiple of eight, so the
+straightforward use of the interface was broken on those ABIs. Userspace
+could still register a padded length of 24 bytes, though; mixing the old and
+new layouts then silently reads launch_time from the wrong offset and
+misprograms packet launch times. This intentionally replaces that
+incompatible layout because the affected architectures are unlikely to
+have any notable users. (x86_64 and arm64 have the most users and are _not_
+affected)
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: ca4419f15abd ("xsk: Add launch time hardware offload support to XDP Tx metadata")
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20260819160535.1472459-2-sdf@fomichev.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/uapi/linux/if_xdp.h       | 1 +
+ tools/include/uapi/linux/if_xdp.h | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
-index bdc9a7cd94054..6571b33d553ea 100644
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -1458,6 +1458,10 @@ static int rfcomm_apply_pn(struct rfcomm_dlc *d, int cr, struct rfcomm_pn *pn)
+diff --git a/include/uapi/linux/if_xdp.h b/include/uapi/linux/if_xdp.h
+index 23a0627814687..50d67df78911f 100644
+--- a/include/uapi/linux/if_xdp.h
++++ b/include/uapi/linux/if_xdp.h
+@@ -149,6 +149,7 @@ struct xsk_tx_metadata {
+ 			__u16 csum_start;
+ 			/* Offset from csum_start where checksum should be stored. */
+ 			__u16 csum_offset;
++			__u32 reserved;
  
- 	d->mtu = __le16_to_cpu(pn->mtu);
+ 			/* XDP_TXMD_FLAGS_LAUNCH_TIME */
+ 			/* Launch time in nanosecond against the PTP HW Clock */
+diff --git a/tools/include/uapi/linux/if_xdp.h b/tools/include/uapi/linux/if_xdp.h
+index 23a0627814687..50d67df78911f 100644
+--- a/tools/include/uapi/linux/if_xdp.h
++++ b/tools/include/uapi/linux/if_xdp.h
+@@ -149,6 +149,7 @@ struct xsk_tx_metadata {
+ 			__u16 csum_start;
+ 			/* Offset from csum_start where checksum should be stored. */
+ 			__u16 csum_offset;
++			__u32 reserved;
  
-+	/* MTU 0 causes an infinite loop when fragmenting in sendmsg */
-+	if (!d->mtu)
-+		d->mtu = RFCOMM_DEFAULT_MTU;
-+
- 	if (cr && d->mtu > s->mtu)
- 		d->mtu = s->mtu;
- 
+ 			/* XDP_TXMD_FLAGS_LAUNCH_TIME */
+ 			/* Launch time in nanosecond against the PTP HW Clock */
 -- 
 2.53.0
 
