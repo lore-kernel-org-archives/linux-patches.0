@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3693537E5D1;
-	Sat, 12 Sep 2026 12:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC77F242D65;
+	Sat, 12 Sep 2026 12:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216525; cv=none; b=Na+SBaNU2drQiNn/SMP8P3if0QX5HGrHm2oJYZBSPTZxxOnupY4oTxBfm8NeU3i2D9IGNGEFmVBfHhXzgejUEvankCYesLQw60z9q8e8vgK01YuYePKQ67u9XAZnBKnD5rwvLettMKtxUvj5mKC0YdeBsX/jFGxITBGbCJ7r67U=
+	t=1789216530; cv=none; b=uw6ZiD+kCDHqJHsDTj5FFRxhqKArDigmFpL9J9kqcM9/3mo0pb8B6UP+h4cBoY+h27k+iYLCrZNA/ewixyQuqDcQmB081sZXtFANdHYMs8fZhtjeT+v3Bv/V4s5/PKq+XPfqfPERCUtHZhWTZiy/9NNZykx+mDFPJBd44hFtHg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216525; c=relaxed/simple;
-	bh=fm9ZVI7ZlNlsIK4SdW5WtIm6T8wBhTdcgGEEqrdSVwQ=;
+	s=arc-20240116; t=1789216530; c=relaxed/simple;
+	bh=zNnHFQcpeYQkqPR61WwTDeMoqGaU+A+aoEtZKpKQNGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MS3uHVpqh7JwQERKlM3wqgGP1FLhvDuV0kpNR27iKUudoYtdZ0p6/p9Xb9Uow3f//33eRJv2kX7YZ+ronnK4Hfqcai60JND3H9QtqB5dJ76DCLNbWbc/LNj67gz5l23Iy3o66mqBc+pJN2I2kGhOeDFY4uSuWSRYziR8UZ8w2N8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9nZl4sY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bmP2WvTGyh2T+qgo9ekvu/df+Y/FAguqLA3Edf7ogc0o8Qxf+3kNQK/hlgHl0CUUZQc0e2hSlVnkNZhVTIUQ3Wz7hBxOyFlejwx4jTRKiJQC5bOb60HAEm7KvA0Wg6P6iw1EQMIvF3yPxJPtLE2I966JhupYQqnl+l0S0W0B8QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0S9EzBK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9nZl4sY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E7A1F000FF;
-	Sat, 12 Sep 2026 12:35:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0S9EzBK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 268971F000FF;
+	Sat, 12 Sep 2026 12:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216524;
-	bh=J38oqTVDX6ShFpAfc0ZMfbiXB/sCywi4cTQUGaYiFBc=;
+	s=korg; t=1789216529;
+	bh=QCWL0qthvOO0dj07RLpUWFOpCPZRQ/7xutqgmSbisMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e9nZl4sYYnp52BwBxyAGp8AIttUKSsosNFlt1Layq93jcJEYUuJ5VhdtolOMvYLpf
-	 7Pr8L+mRYTbjWwK+kRNEj173D/8y8vU8C4yyNZoB8SrC7ED+WgWeJ1IQpeC+AyUy5g
-	 pLsNoxJiJhf7FzrnymlmlyoNPGreJuz+PvOv77/g=
+	b=M0S9EzBKn2/JHRobe6Z65E7OtBn+SBZInD5KWsOjgEIgE9hnW26kMEfi9g0l9cK5M
+	 ckamFQd1Nh5EmUZ2AZjTU4PqihpKt2moobyo3GZ/TZ/GEe7YQeLrtyx3l6n4/n7/SD
+	 DUeMJRfHoReOsLmrCwRZQu3H1DJxqBxjXOp1b/iM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0755/1376] arm64: dts: qcom: sdm632-motorola-ocean: Fix LED default trigger property
-Date: Sat, 12 Sep 2026 08:53:01 +0200
-Message-ID: <20260912065624.368448100@linuxfoundation.org>
+Subject: [PATCH 6.12 0756/1376] arm64: dts: qcom: qcs404: Fix DTBS Check errors in usb controller nodes
+Date: Sat, 12 Sep 2026 08:53:02 +0200
+Message-ID: <20260912065624.391063726@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,37 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
 
-[ Upstream commit c82ea31fb783d9ce4080eca1a7bb855f4648fc28 ]
+[ Upstream commit 9812d0a3077489f67afaca84dcc7e01a440ee106 ]
 
-The correct property name is "linux,default-trigger", not
-"default-trigger". Fix it to avoid DT checker warnings and let the OSes
-consume the intended information.
+The following errors pop up when DTBS check is done for qcs404 based
+platforms:
 
-Fixes: 3176c4d6b9be ("arm64: dts: qcom: sdm632: Add device tree for Motorola G7 Power")
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260717-topic-june26_dts_fixes-v2-3-797cd46e5d9f@oss.qualcomm.com
+arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb: usb@79b8800 (qcom,qcs404-
+dwc3): interrupt-names:1: 'qusb2_phy' was expected
+from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+
+arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb: usb@79b8800 (qcom,qcs404-
+dwc3): interrupt-names:2: 'hs_phy_irq' was expected
+from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+
+arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb: usb@7678800 (qcom,qcs404-
+dwc3): interrupt-names:2: 'hs_phy_irq' was expected
+from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+
+arch/arm64/boot/dts/qcom/qcs404-evb-4000.dtb: usb@7678800 (qcom,qcs404-
+dwc3): interrupt-names:1: 'qusb2_phy' was expected
+from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml
+
+Modify ordering of hs_phy and qusb2_phy interrupts to fix the errors.
+
+Fixes: 927173bf8a0e ("arm64: dts: qcom: Add missing interrupts for qcs404/ipq5332")
+Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260723-qcs404_dtbs_fix-v1-1-c9ca0dd69f23@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm632-motorola-ocean.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/qcs404.dtsi | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm632-motorola-ocean.dts b/arch/arm64/boot/dts/qcom/sdm632-motorola-ocean.dts
-index 2f55db0c8ce35..9ea3e5e76bf9e 100644
---- a/arch/arm64/boot/dts/qcom/sdm632-motorola-ocean.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm632-motorola-ocean.dts
-@@ -130,7 +130,7 @@ led-controller@36 {
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index 81a161c0cc5a8..3ba456d73fb2a 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -677,11 +677,11 @@ usb3: usb@7678800 {
+ 			assigned-clock-rates = <19200000>, <200000000>;
  
- 		led: led@1 {
- 			reg = <1>;
--			default-trigger = "backlight";
-+			linux,default-trigger = "backlight";
- 			function = LED_FUNCTION_BACKLIGHT;
- 			led-sources = <0 1 2>;
- 		};
+ 			interrupts = <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 24 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 319 IRQ_TYPE_LEVEL_HIGH>;
++				     <GIC_SPI 319 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 24 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "pwr_event",
+-					  "hs_phy_irq",
+-					  "qusb2_phy";
++					  "qusb2_phy",
++					  "hs_phy_irq";
+ 
+ 			status = "disabled";
+ 
+@@ -714,11 +714,11 @@ usb2: usb@79b8800 {
+ 			assigned-clock-rates = <19200000>, <133333333>;
+ 
+ 			interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 318 IRQ_TYPE_LEVEL_HIGH>;
++				     <GIC_SPI 318 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "pwr_event",
+-					  "hs_phy_irq",
+-					  "qusb2_phy";
++					  "qusb2_phy",
++					  "hs_phy_irq";
+ 
+ 			status = "disabled";
+ 
 -- 
 2.53.0
 
