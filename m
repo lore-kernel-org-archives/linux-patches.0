@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F383361DD0;
-	Sat, 12 Sep 2026 08:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CAB35C6BD;
+	Sat, 12 Sep 2026 08:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200058; cv=none; b=P3okB5XHKGW0SJqwxVwbVRVxbHnrcDbr7vQGOp8Tya9cU3UawiKV/gRIo9kLiwKvylWtIIuce2AermBNbnlt5htHZEDah6k/QEJMRjGRIyOMvk37ao48BHzPou9VssI9udY7Tr7d4IjMknTnSbLU9E07ubYJCilmKQiKXWKIF5Q=
+	t=1789200062; cv=none; b=hculUFRLXw/2vAq3WR3A0e/dO4wi9j6/0U3imEhpKglCNWwplmJaJWXapuW7dxF3lYqzuJm1VsfUIldfkm8z+LOMLPY6amZ8Ds7HiLPpA8ZkfUf077rftpRhHj9BQFAK7RasxYJNKkgxD8kdfe6MOHhrxZDwPDmBRZtDk0yi4vU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200058; c=relaxed/simple;
-	bh=Ffm19O00jjKQWqSzAgTSlgxcaEkyJXiKQQO/kybHPc8=;
+	s=arc-20240116; t=1789200062; c=relaxed/simple;
+	bh=0wqGpXiNQdcvTwJcIs3xqfru/R0gzYxPj0YHtpT8x/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ikr2rMn5O80yUrouG0/IYFcsOS+EmdVla3u4acYGr1N5E4uN9uTu819KLNEVEOEpS07W7tKPy85Ir2hpUrsVAyxH7glEDNYKoMDYCv8chcFlGNgA9NKABS0URu9jgdcU9wMD18Mt4WX7FzMhar4U9t25Gkq8k9UiHmRmJXAv8ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOviQw7T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QEWQ7qLZoSRNo6FhS9gGf5XXtjs6tQT6rAqQxDviV+g64aDwZHcRzOEjh78StGMkuwScX2KwoFvEmOGOhH5Z2PtMLaBYbxurMDrSo6dKvXgxxQBquAyBJast4ftMSjjk5aQW1JdNFdFNqNpfvq/v4iQSOrATNDur0bktwJEqIBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUKeOK5D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOviQw7T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D540B1F000FF;
-	Sat, 12 Sep 2026 08:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUKeOK5D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 745171F000FF;
+	Sat, 12 Sep 2026 08:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200055;
-	bh=nHLszybgTsnVpGWaV3s/mYq0a4AeXKJcf5BJfFC3SHo=;
+	s=korg; t=1789200060;
+	bh=oKd9lKkcxf8S74s0n+XZEgjpZdbocTAp/7vzT2edYmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bOviQw7TTdMBg6N8AslzeJI+68VW6rwATrJxYXWfMSWF6EIk3OQNaC7OwvVvXZQaq
-	 VoYQAkAeGu1GEXxFVqisKurRjFwFz7tYDsRijtSeJS1BFBqc9I85yt68DVc9l0G4pY
-	 vmEN16efj/vLFVRUeBkrgSnsRVrR4RFW1g2np01I=
+	b=AUKeOK5DGQymDIHukmgKejz4enbUsEff+rgxx9nECOksByXiJ3eAL3mSjjojn8KAC
+	 p9RfzvoB+6WNBJXLv8l6juEeNAJr31zAcKA5siUyqpln5dcoCidxjiGGgtbCo/Ylov
+	 Jx9q70wIaFBzJExBKC08bJV9M3a/Ey6gu2AnlchM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0685/1815] spi: oc-tiny: switch to managed controller allocation
-Date: Sat, 12 Sep 2026 08:40:35 +0200
-Message-ID: <20260912065704.970977802@linuxfoundation.org>
+Subject: [PATCH 7.2 0712/1815] wifi: mac80211: fix per-STA profile length in cross-link CSA parsing
+Date: Sat, 12 Sep 2026 08:41:02 +0200
+Message-ID: <20260912065705.610862658@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,110 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit d710f43ce30975d197f73c543bfe47b958d8ba17 ]
+[ Upstream commit 4a0bd262df757b25fc4e2a53c947317c119ced4e ]
 
-The controller is allocated with the non-managed spi_alloc_host() while
-the interrupt is registered with devm_request_irq().  During removal,
-spi_bitbang_stop() only unregisters the controller; the subsequent
-spi_controller_put() then frees the controller together with its
-embedded driver-private devdata, which is the IRQ handler's dev_id.  The
-devm_request_irq() release action (free_irq()), which drains the
-handler, does not run until after .remove() returns.  A late or latched
-interrupt can therefore reach tiny_spi_irq() and dereference
-already-freed memory (e.g. hw->base).
+ieee80211_mgd_check_cross_link_csa() starts parsing elements after the
+fixed per-STA profile header and the STA Info field, but subtracts only
+the STA Info length from the profile length. As a result,
+ieee802_11_parse_elems() is given sizeof(*prof) == 3 bytes beyond the
+current profile's element area, and data following the profile may be
+interpreted as belonging to it.
 
-Switch to devm_spi_alloc_host() so that the devres LIFO order releases
-the controller only after free_irq() has drained the handler, and drop
-the now-redundant spi_controller_put() from .remove().  The probe error
-path is simplified to direct returns.
+Subtract the fixed profile header as well. The preceding
+ieee80211_mle_basic_sta_prof_size_ok() check guarantees that the
+corrected calculation cannot underflow, and
+ieee80211_rx_uhr_link_reconfig_req() uses the same calculation.
 
-This issue was found by an in-house static analysis tool.
+The call site currently states that cross-link CSA parsing has no effect
+because the broader parsing is still incorrect. This patch does not
+address that broader problem; it only makes the per-STA profile parser
+stop at the end of that profile. No production allocation over-read or
+user-visible failure has been demonstrated.
 
-Fixes: ce792580ea2c ("spi: add OpenCores tiny SPI driver")
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260719010014.3163356-1-fanwu01@zju.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 7ef8f6821d16 ("wifi: mac80211: mlme: handle cross-link CSA")
+Assisted-by: Codex:gpt-5.6-sol
+Assisted-by: Kimi:K3
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260728111326.63087-1-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-oc-tiny.c | 24 ++++++++----------------
- 1 file changed, 8 insertions(+), 16 deletions(-)
+ net/mac80211/mlme.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-oc-tiny.c b/drivers/spi/spi-oc-tiny.c
-index 29333b1f82d7a..1cd2a934c0329 100644
---- a/drivers/spi/spi-oc-tiny.c
-+++ b/drivers/spi/spi-oc-tiny.c
-@@ -210,11 +210,11 @@ static int tiny_spi_probe(struct platform_device *pdev)
- 	struct tiny_spi_platform_data *platp = dev_get_platdata(&pdev->dev);
- 	struct tiny_spi *hw;
- 	struct spi_controller *host;
--	int err = -ENODEV;
-+	int err;
- 
--	host = spi_alloc_host(&pdev->dev, sizeof(struct tiny_spi));
-+	host = devm_spi_alloc_host(&pdev->dev, sizeof(struct tiny_spi));
- 	if (!host)
--		return err;
-+		return -ENOMEM;
- 
- 	/* setup the host state. */
- 	host->bus_num = pdev->id;
-@@ -232,10 +232,8 @@ static int tiny_spi_probe(struct platform_device *pdev)
- 
- 	/* find and map our resources */
- 	hw->base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(hw->base)) {
--		err = PTR_ERR(hw->base);
--		goto exit;
--	}
-+	if (IS_ERR(hw->base))
-+		return PTR_ERR(hw->base);
- 	/* irq is optional */
- 	hw->irq = platform_get_irq(pdev, 0);
- 	if (hw->irq >= 0) {
-@@ -243,7 +241,7 @@ static int tiny_spi_probe(struct platform_device *pdev)
- 		err = devm_request_irq(&pdev->dev, hw->irq, tiny_spi_irq, 0,
- 				       pdev->name, hw);
- 		if (err)
--			goto exit;
-+			return err;
- 	}
- 	/* find platform data */
- 	if (platp) {
-@@ -252,29 +250,23 @@ static int tiny_spi_probe(struct platform_device *pdev)
- 	} else {
- 		err = tiny_spi_of_probe(pdev);
- 		if (err)
--			goto exit;
-+			return err;
- 	}
- 
- 	/* register our spi controller */
- 	err = spi_bitbang_start(&hw->bitbang);
- 	if (err)
--		goto exit;
-+		return err;
- 	dev_info(&pdev->dev, "base %p, irq %d\n", hw->base, hw->irq);
- 
- 	return 0;
--
--exit:
--	spi_controller_put(host);
--	return err;
- }
- 
- static void tiny_spi_remove(struct platform_device *pdev)
- {
- 	struct tiny_spi *hw = platform_get_drvdata(pdev);
--	struct spi_controller *host = hw->bitbang.ctlr;
- 
- 	spi_bitbang_stop(&hw->bitbang);
--	spi_controller_put(host);
- }
- 
- #ifdef CONFIG_OF
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index fa773f3b0541a..1b9d272e7f8e1 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -7977,7 +7977,7 @@ ieee80211_mgd_check_cross_link_csa(struct ieee80211_sub_if_data *sdata,
+ 		prof = (void *)sta_profiles[link_id];
+ 		prof_elems = ieee802_11_parse_elems(prof->variable +
+ 						    (prof->sta_info_len - 1),
+-						    len -
++						    len - sizeof(*prof) -
+ 						    (prof->sta_info_len - 1),
+ 						    IEEE80211_FTYPE_MGMT |
+ 						    IEEE80211_STYPE_BEACON,
 -- 
 2.53.0
 
