@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8426E235358;
-	Sat, 12 Sep 2026 07:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB478332610;
+	Sat, 12 Sep 2026 07:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199625; cv=none; b=cSWAowomAVRHb94CCcmxWYrI+QPWFTWgoQ/X86NtgXJFhTtYUjfpHIqIHDMTEjmRG4AC00wx5lb2y7zOBkTwT00dDojmPyTvI2n+BN/Bfs0Jym8/T0QjENgZnzBvCU90tVzW5Zq/jpPsHy76QYUJodsboS/ZGEHPDN1DRHno4A4=
+	t=1789199631; cv=none; b=WmFMPtH+yjaAp9ZQUkzPh8sM9UHEv7ep7sPRy/ns0tCg+dc1DTdPPVV4PcziFOKnT1kC2HwDQPeCdTdwV6e4RFT6gdjP+fPFW75zKbq8C5Faq1+yS7lWdvoI5UR/FkB1r6BMtKfYJfatCMoxRJ7E9uxGUsmLu4gqbhqDOnRU0c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199625; c=relaxed/simple;
-	bh=f2Bb6B6JW5ZwNTdNicED5pSgpKvTQuxO3FgdvSsF8Iw=;
+	s=arc-20240116; t=1789199631; c=relaxed/simple;
+	bh=h9cCyKzbKJkf3F+W9mjoDaKTKRrlZTtlO6IvEdqLI6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=umOssrjGipm/cUNtZma9Nx+Pj81d8o+2rOrGcsM6gTwHko+slHSp6DexaIby4tZH0xOfDs6JcKma4qi5jqw9JQb4WigMdzCsRhszyAJvVF43hOKXi4rx5PiQcHoVwxrkm8Ig2bFm++gNN2/9AcN638Z7Yir3Q1roAxxdD4QONpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+IfjIq7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pGbZZ1iEH3q3XEECWjP8d2EqaJI/H3NX0WnbrykOM812nRk/lWOtRm7kCRqhpHtaEEZZrGXfRh4WeNOpSwjNj8XmSMLzW+O3p3PeoMAIav+8WsWU/Kf0HoFsFWsFUrJPj5J4mBZNloLMc8qc6NYcuy3qpa3Wl1H5E4C7DeoyMVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R1+9ZGna; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+IfjIq7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882C31F000FF;
-	Sat, 12 Sep 2026 07:53:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1+9ZGna"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A6411F000FF;
+	Sat, 12 Sep 2026 07:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199624;
-	bh=A9VCBNKB1s2zzzXLq1YvFbGR6uXrON6M9f1MKuOdGD8=;
+	s=korg; t=1789199629;
+	bh=Qk1uzJ0pPlnU0qPIMCKXGzYpJ0PiLpt6OZbwEZHRp7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U+IfjIq7Ap/wja+hCMA44lfk5ncwxTrs8XdhVr8uwjvodQUGCgRXb35V/RdcBq9w2
-	 8PHP5fZZsQjHPi67KhD3h/y555v6NutHoN4xqiSXGY1hQ2TlHY0K7pXsdZw62NOiIK
-	 IhazXgZuK02UEP/95e3m7lcn9ok+TW1zVvDou8fg=
+	b=R1+9ZGnaGcTe5GaR2CNhjoyLMQQynffuZP7Qxd8HHMkc2exEtqUQWbg5RGsoyelqX
+	 VwBo2FhHmuDCQUjtjH2+j8tKwYykTQSx0n+55S6RtWGq7t8Hd8PIIAvF6mB6FHSrFO
+	 y+Q7kcsg9H8DGu1S2qeyXtXqvVrVAaHrVJf7fMoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erhard Furtner <erhard_f@mailbox.org>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Yury Norov <ynorov@nvidia.com>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Guodong Xu <docular.xu@gmail.com>,
+	Yixun Lan <dlan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0622/1815] bitmap: Properly initialise destination bitmap for scatter & gather test
-Date: Sat, 12 Sep 2026 08:39:32 +0200
-Message-ID: <20260912065703.482749618@linuxfoundation.org>
+Subject: [PATCH 7.2 0623/1815] riscv: dts: spacemit: set console baud rate on K3 Pico-ITX board
+Date: Sat, 12 Sep 2026 08:39:33 +0200
+Message-ID: <20260912065703.505064433@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,53 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+From: Aurelien Jarno <aurelien@aurel32.net>
 
-[ Upstream commit 36f78b0dfa7df4892ba067ccf00d95a4513b4935 ]
+[ Upstream commit 788ed93b3b85baa3b5817655ce621ff1f6c300e9 ]
 
-Erhard reports failure of bitmap tests on powerpc:
+Because the default console's baud rate is not set, defconfig kernels do
+not have any serial output on this platform. Set the baud rate to
+115200, matching what is used by U-Boot etc on this platform.
 
-  test_bitmap: loaded.
-  test_bitmap: [lib/test_bitmap.c:397] bitmaps contents differ: expected "1,3-4,9", got "1,3-4,9,65-71,73-79,81-87,89-95,97-99"
-  test_bitmap: parselist('0-2047:128/256'):    912
-  test_bitmap: scnprintf("%*pbl", '0-32767'):    5977
-  test_bitmap: test_bitmap_read_perf:        1191082
-  test_bitmap: test_bitmap_write_perf:        1270153
-  test_bitmap: failed 1 out of 208655 tests
-
-It happens mainly when CONFIG_INIT_STACK_ALL_PATTERN is set.
-
-Commit 6b5a4b687367 ("bitmap: Add test for out-of-boundary
-modifications for scatter & gather") extended the test to
-out-of-boundary bits, but those bits were left uninitialised.
-
-Properly initialise the entire result bitmap before the test.
-
-[Yury: minor commit message tweaks]
-
-Reported-by: Erhard Furtner <erhard_f@mailbox.org>
-Closes: https://lore.kernel.org/all/ca3547ae-8b79-43a2-a758-23ec980bfd9a@mailbox.org
-Fixes: 6b5a4b687367 ("bitmap: Add test for out-of-boundary modifications for scatter & gather")
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Yury Norov <ynorov@nvidia.com>
+Fixes: 7a6131804986 ("riscv: dts: spacemit: add K3 Pico-ITX board support")
+Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+Reviewed-by: Guodong Xu <docular.xu@gmail.com>
+Reviewed-by: Yixun Lan <dlan@kernel.org>
+Link: https://patch.msgid.link/20260623204431.498700-2-aurelien@aurel32.net
+Signed-off-by: Yixun Lan <dlan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_bitmap.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/test_bitmap.c b/lib/test_bitmap.c
-index 69813c10e6c0b..448c3eb48a4a8 100644
---- a/lib/test_bitmap.c
-+++ b/lib/test_bitmap.c
-@@ -392,6 +392,7 @@ static void __init test_bitmap_sg(void)
+diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+index b89c1521e6649..509cebc0c9568 100644
+--- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
++++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+@@ -18,7 +18,7 @@ aliases {
+ 	};
  
- 	/* Scatter/gather relationship */
- 	bitmap_zero(bmap_tmp, 100);
-+	bitmap_zero(bmap_res, 100);
- 	bitmap_gather(bmap_tmp, bmap_scatter, sg_mask, nbits);
- 	bitmap_scatter(bmap_res, bmap_tmp, sg_mask, nbits);
- 	expect_eq_bitmap(bmap_scatter, bmap_res, 100);
+ 	chosen {
+-		stdout-path = "serial0";
++		stdout-path = "serial0:115200n8";
+ 	};
+ 
+ 	memory@100000000 {
 -- 
 2.53.0
 
