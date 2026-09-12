@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409463A0B36;
-	Sat, 12 Sep 2026 13:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A05347FEC;
+	Sat, 12 Sep 2026 13:24:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219436; cv=none; b=qZttG9qb52bfQURrMEgT//zFUpeCCkq9Zn5VLRtC+5jkHcCEI77JTaAJ07A/T4MogOgyj+q+7fv/OucZozggJuInzAMaRWKHOkbPpgtRwWiTn1qhi6tAVpnbeih4m9KpdZakjRRghA+bL2aNFUvDccN/5eRku9wtdrteonmqbIk=
+	t=1789219441; cv=none; b=kJpi4jHHAYTE79XTTrrWXw54ioMLbMhkOZdgwKdOFyXeOK5wDMjQu9fpA3l+QBPHTQ4tNromqooURj+4tS8dTeaiv1RDKyBYTodOtQ+WiUTcNk919rabROdqlJ8pAEfiLlZ9W9QaBJwnsd5zI9zB7W8hM65DB9oSd3rx8UcB2+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219436; c=relaxed/simple;
-	bh=TWm39K04qLtALEORC2mNCx8b0niSRQL0QxgR5x80Dsw=;
+	s=arc-20240116; t=1789219441; c=relaxed/simple;
+	bh=jMVmmbxjRvmL21G/FqwZz+8J6bJfAq9pP4XP9byNa6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RA24sAgVh6k/bQ2frWesRbfqDjR7cfxML42NIBM6pnj76tSFTaBOkWbI1bYZwuHSn4/3FP4+Hs/MAZdFYghBPII+HqMq2WCG+kj0cj0Ax3poI22wNEI+2qnQN8QBv2ru8uLmYG1yQ64s2zXl5oS3oMMV98T2lAhk3S5amCwWnGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PGtuk1PZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nj9nKeBTQTYAfMQlfz419c4moYCGPUcG2UqhuBXDkujOIdjsZUy12ak+iwwYNGHsZSs/WqqqGi0ZlMJt7PUt5f4F5h3W44uN8hLNIadCXs79pu3rm5C8JfJcmD7hnfD3dsQ7oG7MFFP3Fe5uBLA4PMXVXbBAtLBIqebjguzlKAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rxZQRhMW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PGtuk1PZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 140F21F000FF;
-	Sat, 12 Sep 2026 13:23:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxZQRhMW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3064F1F000FF;
+	Sat, 12 Sep 2026 13:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219435;
-	bh=PR3GJTP/yvobzEnH//168UriX7EKCJFCYO0WQkTCm1Y=;
+	s=korg; t=1789219440;
+	bh=iwcZEp35JnYKDkX4lJx1dXeyDEL+QoTBBTwZXWLc3p0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PGtuk1PZgHr+KTvKiyZFYtxW72JKv2XyocP1s1Y6ciWmOJ+BKc9I8kQ1JkfLbLc8x
-	 PXx+tVHXZssTLmksPF+XLIDzt6LWvVakpw9E4iM+BBKWSH+2HA6Etzo80o+opRAPCH
-	 lCjQOCMmblvgq3MT8uu5gzChxyw2r83erLdtMNq4=
+	b=rxZQRhMWZtj2xc0gT+QdqgchgjpJV0q6cgSzGhBs/nlxvmoky/9HjD7umJ/nVGBbr
+	 ZKIsyEqpyiThAzDo8eTIEokuPtAVbyv+z+jvCPvaXsfsaZZrF096B2aXawWSBBJF/N
+	 6p7vjtPceffc59ScWZi+IIiZIwwYFt+c1MEpxfmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1351/1376] perf test: Dont signal all processes on system when interrupting tests
-Date: Sat, 12 Sep 2026 09:02:57 +0200
-Message-ID: <20260912065637.643140593@linuxfoundation.org>
+Subject: [PATCH 6.12 1352/1376] phy: qcom: qmp-combo: Add missing PLL (VCO) configuration on SM8750
+Date: Sat, 12 Sep 2026 09:02:58 +0200
+Message-ID: <20260912065637.665529539@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,43 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit f54cd8f43f55c0274c5b51509aff39675639c2e1 ]
+[ Upstream commit 304c102cff7382353a28039907a7017bde795db9 ]
 
-This signal handler loops over all tests on ctrl-C, but it's active
-while the test list is being constructed. process.pid is 0, then -1,
-then finally set to the child pid on fork. If the Ctrl-C is received
-during this point a kill(-1, SIGINT) can be sent which affects all
-processes.
+Add missing DP PHY status and VCO clock configuration registers to fix
+configuring the VCO rate on SM8750.  Without proper VCO rate setting, it
+works on after-reset half of rate which is not enough for DP over USB to
+work as seen on logs:
 
-Make sure the child has forked first before forwarding the signal. This
-can be reproduced with ctrl-C immediately after launching perf test
-which terminates the ssh connection.
+  [drm:msm_dp_ctrl_link_train_1_2] *ERROR* max v_level reached
+  [drm:msm_dp_ctrl_link_train_1_2] *ERROR* link training #1 on phy 0 failed. ret=-11
 
-Fixes: 553d5efeb341 ("perf test: Add a signal handler to kill forked child processes")
-Signed-off-by: James Clark <james.clark@linaro.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20241129151948.3199732-1-james.clark@linaro.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: c4364048baf4 ("phy: qcom: qmp-combo: Add new PHY sequences for SM8750")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250616062541.7167-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/builtin-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
-index 17f723f04926b..e35b138f4bd0e 100644
---- a/tools/perf/tests/builtin-test.c
-+++ b/tools/perf/tests/builtin-test.c
-@@ -504,7 +504,7 @@ static int __cmd_test(struct test_suite **suites, int argc, const char *argv[],
- 		for (size_t x = 0; x < num_tests; x++) {
- 			struct child_test *child_test = child_tests[x];
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index 7df2892b88c7a..535dffd3d7b0d 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -249,6 +249,9 @@ static const unsigned int qmp_v8_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_COM_CMN_STATUS]		= QSERDES_V8_COM_CMN_STATUS,
+ 	[QPHY_COM_BIAS_EN_CLKBUFLR_EN]	= QSERDES_V8_COM_BIAS_EN_CLKBUFLR_EN,
  
--			if (!child_test)
-+			if (!child_test || child_test->process.pid <= 0)
- 				continue;
- 
- 			pr_debug3("Killing %d pid %d\n",
++	[QPHY_DP_PHY_STATUS]		= QSERDES_V6_DP_PHY_STATUS,
++	[QPHY_DP_PHY_VCO_DIV]		= QSERDES_V6_DP_PHY_VCO_DIV,
++
+ 	[QPHY_TX_TX_POL_INV]		= QSERDES_V8_TX_TX_POL_INV,
+ 	[QPHY_TX_TX_DRV_LVL]		= QSERDES_V8_TX_TX_DRV_LVL,
+ 	[QPHY_TX_TX_EMP_POST1_LVL]	= QSERDES_V8_TX_TX_EMP_POST1_LVL,
 -- 
 2.53.0
 
