@@ -1,45 +1,47 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BC0343893;
-	Sat, 12 Sep 2026 09:38:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD868416870;
+	Sat, 12 Sep 2026 09:38:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.210.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205936; cv=none; b=Ge9BY6yKxRmoGi9NzVFbhsP0+QuvDP2XLP68upLiOmfMie5mLmgCEzM0xr6fYo+/KaOfCtABPF+S2VEPRcrStwcGO+QP7JHgHCyaMlN1C6EfuMsnVn5B+jW4U4ugxYYHrSd3VTCqI/bEwHh0dQQnsqFCa6vC0gm/O8O8wBLBFK0=
+	t=1789205941; cv=none; b=KTelS7n3lUxyTPUhCzqH+Oj54bJ3yHkWx+TPMmu4/RVXvFP+BXIOU6Z7mcpjP+b4mygdkkkeA6WMFuG/Zvza1qhDu5Cfe5dC7/7q7HxVJu0ayngnFvsNvVw9qsvLAcuMXc/pc98jqI1VW+Gch3Jhg3TorAqtPipYGUZuorBSej8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205936; c=relaxed/simple;
-	bh=Vi90xkVlH9ncRPqtZ+E+CwuyH/tMO1dS69NvEw5kNgo=;
+	s=arc-20240116; t=1789205941; c=relaxed/simple;
+	bh=Rl1DVhs+8H5I+Ay1q9Vaa+SebPnTfN7HFbserVc/Fkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DLiI47iVLAiIl1sNqImhbQV3rZWd1QJd+fAYmi7Dzlummkvc27lx3TaiOjSh4hunx3w6WSCLRS7CX4fDTw97VyJEPV2FKqOfUHF9aiZMusqj12GfBhG9FdRZg/STSoyrHE1UI9Z/bkb4YsoSSH1YknTpA5SSpRqUXg+08f11d8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i0n/o9HX; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i0n/o9HX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2121F000FF;
-	Sat, 12 Sep 2026 09:38:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205935;
-	bh=XFxdqkvGyee3mUqYuhQF2BY35s1wYSSYPHObqdhG9z4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i0n/o9HXyL2x4WGpLDk39itF25irUS3zGbXVO/shuQPYQYfBMqI5XhQ7ZNj4JWawn
-	 nfbB8uGxmdNblVXRgrhpLWUXsjgMFN+dSt8fbTrzet7lwq/9dRmo6oOIZjiSn7fzv1
-	 8mUcldxuy/VFeTlHJRJ3sZaBLzQcO5ManhZo6nPY=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	 MIME-Version; b=gXKSVrjnE8uISRw1pd5FeowFj6BJ9zoeAb50GI4+lkCX5+pEDpV48CAZs4FXNWloG6vA1nnJTzWmwMsBFTU7DVU4Bdw0JsuyuiR6s8KOiyFHsMtNrcBzddfQfoxnkadZXwsED6lbkJ2CDgtakNbdPfQa3mOVzs347DnlpdePHm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.210.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+From: Brett A C Sheffield <bacs@librecast.net>
+To: gregkh@linuxfoundation.org
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0104/1518] drm/bridge: display-connector: dont autoenable HPD IRQ
-Date: Sat, 12 Sep 2026 08:37:53 +0200
-Message-ID: <20260912065625.833547588@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Brett A C Sheffield <bacs@librecast.net>
+Subject: Re: [PATCH 7.2 0000/1815] 7.2.6-rc1 review
+Date: Sat, 12 Sep 2026 09:38:27 +0000
+Message-ID: <20260912093842.23526-1-bacs@librecast.net>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
-References: <20260912065623.398859879@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
+References: <20260912065648.999753832@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,73 +50,12 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+# Librecast Test Results
 
-------------------
+020/020 [ OK ] liblcrq
+010/010 [ OK ] libmld
+120/120 [ OK ] liblibrecast
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CPU/kernel: Linux auntie 7.2.6-rc1-g048ea6124e84 #2 SMP PREEMPT_DYNAMIC Sat Sep 12 09:31:29 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
 
-[ Upstream commit 8e9c475060bff87077cfa3bd42011edcb7fb3b0d ]
-
-If HPD IRQ is enabled in the display_connector's probe, it can be
-triggered too early, before the DRM connector is completely setup. Use
-the enable_hpd / disable_hpd callbacks to control enablement of the HPD
-IRQ.
-
-Fixes: 0c275c30176b ("drm/bridge: Add bridge driver for display connectors")
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260528-dp-connector-hpd-v3-2-d656eb1079b7@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/gpu/drm/bridge/display-connector.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
-
-diff --git a/drivers/gpu/drm/bridge/display-connector.c b/drivers/gpu/drm/bridge/display-connector.c
-index 9a64fefbc903c..8b7b2036010c8 100644
---- a/drivers/gpu/drm/bridge/display-connector.c
-+++ b/drivers/gpu/drm/bridge/display-connector.c
-@@ -94,6 +94,20 @@ display_connector_bridge_detect(struct drm_bridge *bridge, struct drm_connector
- 	return display_connector_detect(bridge);
- }
- 
-+static void display_connector_hpd_enable(struct drm_bridge *bridge)
-+{
-+	struct display_connector *conn = to_display_connector(bridge);
-+
-+	enable_irq(conn->hpd_irq);
-+}
-+
-+static void display_connector_hpd_disable(struct drm_bridge *bridge)
-+{
-+	struct display_connector *conn = to_display_connector(bridge);
-+
-+	disable_irq(conn->hpd_irq);
-+}
-+
- static const struct drm_edid *display_connector_edid_read(struct drm_bridge *bridge,
- 							  struct drm_connector *connector)
- {
-@@ -186,6 +200,8 @@ static const struct drm_bridge_funcs display_connector_bridge_funcs = {
- 	.attach = display_connector_attach,
- 	.destroy = display_connector_destroy,
- 	.detect = display_connector_bridge_detect,
-+	.hpd_enable = display_connector_hpd_enable,
-+	.hpd_disable = display_connector_hpd_disable,
- 	.edid_read = display_connector_edid_read,
- 	.atomic_get_output_bus_fmts = display_connector_get_output_bus_fmts,
- 	.atomic_get_input_bus_fmts = display_connector_get_input_bus_fmts,
-@@ -315,6 +331,7 @@ static int display_connector_probe(struct platform_device *pdev)
- 						NULL, display_connector_hpd_irq,
- 						IRQF_TRIGGER_RISING |
- 						IRQF_TRIGGER_FALLING |
-+						IRQF_NO_AUTOEN |
- 						IRQF_ONESHOT,
- 						"HPD", conn);
- 		if (ret) {
--- 
-2.53.0
-
-
-
+Tested-by: Brett A C Sheffield <bacs@librecast.net>
