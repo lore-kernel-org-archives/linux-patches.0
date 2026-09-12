@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A014BEE3C;
-	Sat, 12 Sep 2026 16:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9894BEE38;
+	Sat, 12 Sep 2026 16:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229739; cv=none; b=k46wv2sQJiF6LKCni/PvexkrT7/hq+6AxuIiCmRPfL3RrSU2aHel4yEAgBdqBp9wjsi6cEoKkG7KGyZNOdq01wUpqG4pKzmM/v0zBoZvNMs/GHGsoyCPz2um7QxTDIr9cW5sxfujxG7A56DJIahbinZhzuBvHexDbxEiS4ZycUs=
+	t=1789229744; cv=none; b=Q0EV6KvCO4ARfRxLBRNharJbPGwn3fXcDyvOV1sWKW5xHNh4FrsrpwS+bPPUNanrT/lVo27zxWNQCAnOzMJCN33el8s9kDFJAinIW6ABVZ3Ndx1UvqUsNDYJGydm6xb68/bkZqr8CDPUqgvkRtBUScL+DFhwvjGl9Jul/zWWsZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229739; c=relaxed/simple;
-	bh=I0e3Hkr65sSbCSF4nKoZ75l+pOsGclzn38FR9DY0vUg=;
+	s=arc-20240116; t=1789229744; c=relaxed/simple;
+	bh=3gZB3yGRuI96IDYVpd2r34Ylc7VUNLK8zyLbp+wFS78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PuM8TuNWIbiP/U2gEAtIDsQavGOuahbNrSWMZornMgaXVDDlnfrIEKfgZMht9IyAEowBJ5jl5acki5vUmIQSdqn75QZPAORaKkpuiE99vtM17cyIszbQ3SUwcQ9ly30xbWT8fL4uokje8j2qHzYqBWj6c+wYOB3zAK+lfRGsqBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c3w3iB/n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rBKXe8sIAR9ocbsZ86k26dOIaybcSEOBUxEY2KEX6LtoyG1Am0Z9u1Wd0Kb8AJbrcKCNPaLoo0ZS10SWvyIi5/0wkAt1T2bU8VwToO6oN6uYy0whTNFzpt3TCLHwkTGFZHAt5s3Nvob/j5wk7jukAb44upVWRV2A+gjrohVQTJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vy6LuPcP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c3w3iB/n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 802061F000FF;
-	Sat, 12 Sep 2026 16:15:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vy6LuPcP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858DD1F000FF;
+	Sat, 12 Sep 2026 16:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229738;
-	bh=Z5sk/CH5J1/B0zPHUK+2GwutBAX3XLqlLGrgd3sR/rM=;
+	s=korg; t=1789229743;
+	bh=SzmzDH+wn9M+8pWTg2bM9za1BJ+InC9j2rprQOy9b0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c3w3iB/neIRDC92eud6hoS6ktS8VwcWc9CsMfFjAGFqIzZN/9qPSKWZxDehsZXq9z
-	 eUFGRsGPu1UQ4D4up6HrwEafeJXoa/zDrb6biofgSOA+rjknhxIUOSOa3NaN8evuEu
-	 DQZT5Tpxg8Yv8OcnGgr6pIlQ/9gnE9rrbUU8IeSk=
+	b=vy6LuPcP5NDgicFnbQOcQJ4ZqiKxa2eYdRWIp8Y0fOfW0sOUu5Kj3vMJEdNlzL4HR
+	 wi+9qqg8lJULG/ewq6KqekJuYhu6awRKmZ55B7vgkIX60zj3FBzw4YOM3zMDdSUeHO
+	 MY7psg+BMCCKCpqopeRu8UFbpqpuYCMqrWsqtzeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0598/1191] hwrng: ks-sa - Fix runtime PM cleanup on registration failure
-Date: Sat, 12 Sep 2026 08:55:26 +0200
-Message-ID: <20260912065601.678599702@linuxfoundation.org>
+Subject: [PATCH 6.1 0645/1191] s390/con3215: Fix white space errors
+Date: Sat, 12 Sep 2026 08:56:13 +0200
+Message-ID: <20260912065602.742074704@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,45 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-[ Upstream commit 1c17b601fafb09c9ec074fd097737d20eafe7d63 ]
+[ Upstream commit 55af33fdec50a9a88f0dc0f8b898db7399e32645 ]
 
-ks_sa_rng_probe() enables runtime PM and resumes the device before
-registering the hwrng. If devm_hwrng_register() fails, probe returns
-without dropping the runtime PM usage count or disabling runtime PM.
+Adjust white space according to coding guidelines.
 
-Unwind the runtime PM state on the registration failure path, matching
-the cleanup done by remove().
-
-Fixes: eb428ee0e3ca ("hwrng: ks-sa - add hw_random driver")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Stable-dep-of: b6b5d64cb161 ("ipack: ipoctal: fix UAF, null-ptr-deref, and use-after-free in cleanup on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/ks-sa-rng.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/s390/char/con3215.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/char/hw_random/ks-sa-rng.c b/drivers/char/hw_random/ks-sa-rng.c
-index 8cd186fa1107f..3e032ef2ccc74 100644
---- a/drivers/char/hw_random/ks-sa-rng.c
-+++ b/drivers/char/hw_random/ks-sa-rng.c
-@@ -247,7 +247,14 @@ static int ks_sa_rng_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
--	return devm_hwrng_register(&pdev->dev, &ks_sa_rng->rng);
-+	ret = devm_hwrng_register(dev, &ks_sa_rng->rng);
-+	if (ret) {
-+		pm_runtime_put_sync(dev);
-+		pm_runtime_disable(dev);
-+		return ret;
-+	}
-+
-+	return 0;
+diff --git a/drivers/s390/char/con3215.c b/drivers/s390/char/con3215.c
+index 4ae07c7e2175f..b66fe5aac5671 100644
+--- a/drivers/s390/char/con3215.c
++++ b/drivers/s390/char/con3215.c
+@@ -159,7 +159,7 @@ static void raw3215_mk_read_req(struct raw3215_info *raw)
+ 	ccw->cmd_code = 0x0A; /* read inquiry */
+ 	ccw->flags = 0x20;    /* ignore incorrect length */
+ 	ccw->count = 160;
+-	ccw->cda = (__u32) __pa(raw->inbuf);
++	ccw->cda = (__u32)__pa(raw->inbuf);
  }
  
- static int ks_sa_rng_remove(struct platform_device *pdev)
+ /*
+@@ -218,8 +218,7 @@ static void raw3215_mk_write_req(struct raw3215_info *raw)
+ 			ccw[-1].flags |= 0x40; /* use command chaining */
+ 		ccw->cmd_code = 0x01; /* write, auto carrier return */
+ 		ccw->flags = 0x20;    /* ignore incorrect length ind.  */
+-		ccw->cda =
+-			(__u32) __pa(raw->buffer + ix);
++		ccw->cda = (__u32)__pa(raw->buffer + ix);
+ 		count = len;
+ 		if (ix + count > RAW3215_BUFFER_SIZE)
+ 			count = RAW3215_BUFFER_SIZE - ix;
+@@ -642,7 +641,7 @@ static void raw3215_free_info(struct raw3215_info *raw)
+ 	kfree(raw);
+ }
+ 
+-static int raw3215_probe (struct ccw_device *cdev)
++static int raw3215_probe(struct ccw_device *cdev)
+ {
+ 	struct raw3215_info *raw;
+ 	int line;
+@@ -675,7 +674,7 @@ static int raw3215_probe (struct ccw_device *cdev)
+ 	return 0;
+ }
+ 
+-static void raw3215_remove (struct ccw_device *cdev)
++static void raw3215_remove(struct ccw_device *cdev)
+ {
+ 	struct raw3215_info *raw;
+ 	unsigned int line;
+@@ -694,7 +693,7 @@ static void raw3215_remove (struct ccw_device *cdev)
+ 	}
+ }
+ 
+-static int raw3215_set_online (struct ccw_device *cdev)
++static int raw3215_set_online(struct ccw_device *cdev)
+ {
+ 	struct raw3215_info *raw;
+ 
+@@ -705,7 +704,7 @@ static int raw3215_set_online (struct ccw_device *cdev)
+ 	return raw3215_startup(raw);
+ }
+ 
+-static int raw3215_set_offline (struct ccw_device *cdev)
++static int raw3215_set_offline(struct ccw_device *cdev)
+ {
+ 	struct raw3215_info *raw;
+ 
+@@ -940,7 +939,7 @@ static unsigned int tty3215_write_room(struct tty_struct *tty)
+ /*
+  * String write routine for 3215 ttys
+  */
+-static int tty3215_write(struct tty_struct * tty,
++static int tty3215_write(struct tty_struct *tty,
+ 			 const unsigned char *buf, int count)
+ {
+ 	struct raw3215_info *raw = tty->driver_data;
+@@ -1000,7 +999,7 @@ static void tty3215_flush_buffer(struct tty_struct *tty)
+ /*
+  * Disable reading from a 3215 tty
+  */
+-static void tty3215_throttle(struct tty_struct * tty)
++static void tty3215_throttle(struct tty_struct *tty)
+ {
+ 	struct raw3215_info *raw = tty->driver_data;
+ 
+@@ -1010,7 +1009,7 @@ static void tty3215_throttle(struct tty_struct * tty)
+ /*
+  * Enable reading from a 3215 tty
+  */
+-static void tty3215_unthrottle(struct tty_struct * tty)
++static void tty3215_unthrottle(struct tty_struct *tty)
+ {
+ 	struct raw3215_info *raw = tty->driver_data;
+ 	unsigned long flags;
 -- 
 2.53.0
 
