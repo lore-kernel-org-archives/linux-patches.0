@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D44B28E0;
-	Sat, 12 Sep 2026 16:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB2828E0;
+	Sat, 12 Sep 2026 16:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230665; cv=none; b=tmttao+E8mufuvgdXn4YwxLQAvIegnFYKzEQPELZW3ERsGUh0906x24plx9WCy6UGeIrtw1U2sjsHAoOgI/ufUPo0T2UMLlpKRf+9udkHXYC3Sdr2LhH3GCc8x3nnMsVwXTaxeMIoIC+1scUYa2TsIMghNsrMUlWswaC261OHr4=
+	t=1789230670; cv=none; b=gWW4RVLeOm/T1cN9t8U8drj7XmKpsBcIk+ePckirg1jyBtLLRRTaCw7udb+cVwxfw5bN2OW3w2owyjOIcDgkUEJHEn6RneYxMG7OPcdVyWl4F+X/44m6lSzb1PA1X3ZwazwlK7vUVfDAbCIqCC2nPGgJXSUjAHce7WLOkWJdAVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230665; c=relaxed/simple;
-	bh=8OfgQan9d43weG9nMiNubmL8fFM4yqhoIZ/K51oY1uw=;
+	s=arc-20240116; t=1789230670; c=relaxed/simple;
+	bh=3D2+fYOc0CuLAdSaxPhp5LmePVMgN9nLMuhEWcQmmh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uaoVFHHL0d9hWWsxFcLh5RJDzs9I9+UPM3EbTstdrftRq6pUNTY2sgw5Tcfan+Pvd1K2K7thKLwPoOLNovl8o19vhj4V4ejPymmlhZAjNZmXSMVTTyt4mr36GRa0hKbUba7Z4HVVR4gDQFyJr8gy6yfxne36EyI+uiq1TheddSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSRoBze3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l7PKOMMggYsJzLdmsmqhGvbLcIyW749w7lHtflhAwDr3fqrkTKcaBJfFdOVkiXrzILmwJTLhH1Etyi4vtqZETTF+FdUk86wPfA4Ubhn1GqSa6yXQ/++ZHxfiRQ2vEv0f3L1PO+TslL4unatymh+8Ay4Oz5f4yXu5WjiqYlkvvik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cssTVqkP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSRoBze3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5611F000FF;
-	Sat, 12 Sep 2026 16:31:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cssTVqkP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2232A1F000FF;
+	Sat, 12 Sep 2026 16:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230664;
-	bh=dgMwMSgIdDrGakTfSjXcH3Q3Qn6D/SmM/cNBKkAbzrU=;
+	s=korg; t=1789230669;
+	bh=Gdk67MhZTm+EfKdgRcSVmhVCEjJxU2dAcSccB5wKikg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FSRoBze3MojEm/Rpd/ghmEP6fz3Upb7AXkzgkTb2IeQ/La+5vAT/D17wPYg4K+cen
-	 YnHSadzqQ+WPqlo/34i3BaIe3fI3kELSbSEVdNJeoj9CKuk5dMJlw6HYoMVYh0ZDnf
-	 Ss0Dn9t4NUCz6RYZk81x4+n+GNfaZ9NPXDD6itMA=
+	b=cssTVqkPABnwvYBM+Iq/BPgk09tenGBz69pEc4uOwXhsoBb/6CTcJFbwRiC3xUuoW
+	 D2+9sg7LQc96ezh/zPQ4fYPHDqDQDK/TMHJAosr+s8BRxtvOJiDH5/tZ1Tn5PaZ/eK
+	 5ykw94GWF6kgbEFqKw7Zz7SFRyRdHCOgKw+3shgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ai Chao <aichao@kylinos.cn>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Jiancheng Huang <jchuang@seu.edu.cn>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0841/1191] HID: i2c-hid: Fix "(null)" output when reading report descriptor fails
-Date: Sat, 12 Sep 2026 08:59:29 +0200
-Message-ID: <20260912065607.147934315@linuxfoundation.org>
+Subject: [PATCH 6.1 0842/1191] HID: lg4ff: validate report length before fixed offsets
+Date: Sat, 12 Sep 2026 08:59:30 +0200
+Message-ID: <20260912065607.170307086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,50 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ai Chao <aichao@kylinos.cn>
+From: Jiancheng Huang <jchuang@seu.edu.cn>
 
-[ Upstream commit 8da0f0951deec9f0728ed2d9c54ded1c344b7542 ]
+[ Upstream commit be00988cce4ed44db1e61231d0ab71a64bab44cd ]
 
-When i2c-hid fails to read the HID report descriptor during device
-initialization, the error message prints as:
+lg4ff_raw_event() rewrites fixed report offsets when combined pedals are
+enabled. It currently assumes that each product report contains every
+source and destination byte used by the rewrite.
 
-  hid (null): reading report descriptor failed
+Return without rewriting a short report before each product-specific
+access. Apply the same bound to the computed offset path.
 
-The HID device name is set in hid_add_device() after calling
-hdev->ll_driver->parse(), so when i2c_hid_parse() fails and calls
-hid_err(), the device name has not been set yet, resulting in "(null)"
-output.
-
-Use dev_err(&client->dev, ...) instead of hid_err(hid, ...) because
-the I2C client device is fully initialized with a proper name, providing
-meaningful error messages for debugging.
-
-Before: hid (null): reading report descriptor failed
-After:  i2c_hid i2c-TPD0001:00: reading report descriptor failed
-
-Fixes: 4a200c3b9a40 ("HID: i2c-hid: introduce HID over i2c specification implementation")
-
-Signed-off-by: Ai Chao <aichao@kylinos.cn>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Fixes: c832f86effbc ("HID: hid-logitech: Add combined pedal support Logitech wheels")
+Signed-off-by: Jiancheng Huang <jchuang@seu.edu.cn>
+Assisted-by: Codex:gpt-5.6-luna
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-lg4ff.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index a198b679c7902..9559c96d44b4d 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -754,7 +754,7 @@ static int i2c_hid_parse(struct hid_device *hid)
- 					    ihid->hdesc.wReportDescRegister,
- 					    rdesc, rsize);
- 		if (ret) {
--			hid_err(hid, "reading report descriptor failed\n");
-+			dev_err(&client->dev, "reading report descriptor failed\n");
- 			goto out;
+diff --git a/drivers/hid/hid-lg4ff.c b/drivers/hid/hid-lg4ff.c
+index e3fcf1353fb3b..71f168eff29b1 100644
+--- a/drivers/hid/hid-lg4ff.c
++++ b/drivers/hid/hid-lg4ff.c
+@@ -336,6 +336,8 @@ int lg4ff_raw_event(struct hid_device *hdev, struct hid_report *report,
+ 	if (entry->wdata.combine) {
+ 		switch (entry->wdata.product_id) {
+ 		case USB_DEVICE_ID_LOGITECH_WHEEL:
++			if (size < 7)
++				return 0;
+ 			rd[5] = rd[3];
+ 			rd[6] = 0x7F;
+ 			return 1;
+@@ -343,10 +345,14 @@ int lg4ff_raw_event(struct hid_device *hdev, struct hid_report *report,
+ 		case USB_DEVICE_ID_LOGITECH_WINGMAN_FFG:
+ 		case USB_DEVICE_ID_LOGITECH_MOMO_WHEEL:
+ 		case USB_DEVICE_ID_LOGITECH_MOMO_WHEEL2:
++			if (size < 6)
++				return 0;
+ 			rd[4] = rd[3];
+ 			rd[5] = 0x7F;
+ 			return 1;
+ 		case USB_DEVICE_ID_LOGITECH_DFP_WHEEL:
++			if (size < 7)
++				return 0;
+ 			rd[5] = rd[4];
+ 			rd[6] = 0x7F;
+ 			return 1;
+@@ -366,6 +372,8 @@ int lg4ff_raw_event(struct hid_device *hdev, struct hid_report *report,
  		}
- 	}
+ 
+ 		/* Compute a combined axis when wheel does not supply it */
++		if (size <= offset + 1)
++			return 0;
+ 		rd[offset] = (0xFF + rd[offset] - rd[offset+1]) >> 1;
+ 		rd[offset+1] = 0x7F;
+ 		return 1;
 -- 
 2.53.0
 
