@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E22A38F649;
-	Sat, 12 Sep 2026 19:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766BD38AC72;
+	Sat, 12 Sep 2026 19:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242618; cv=none; b=rjlT97QkZt3V4vL9FGD6d8qjafO8F1DRU4DDVCS0BadNJCbplFK8XaQ9jm3YeM2C0U8dNM8nb2NVYa052DLP417gGaUc4sthCmYVpo7weuPMCaGH5P0dE3uWKr6yEh68uMbbijPIrCM+gGqPgrGvREGcDEFt7LGWkOOIWOtXN4w=
+	t=1789242621; cv=none; b=N52urdMaLgMqJ6CPtaaVxzEGFTfD2RpeIqEhnLnvDJlDFnxp1+EvcC760ozzq+jPWUFWzQ6pKkwweElwI436USW3p4gNXSX1pL7SPlBsDpMXrYhSwxytnUQtR6nAQLFRE1Kmel+XxgnZuG44z9b7/HoxbGyWMVffeDb+YYfG4TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242618; c=relaxed/simple;
-	bh=RgbqoWNEdpd9V0L1/g60ZrKwbEiA7gPb0sg2w5asjAo=;
+	s=arc-20240116; t=1789242621; c=relaxed/simple;
+	bh=/XEagzvXFKOmE4pG9aSohZf2P9Goz6ZMoBv22gzxjO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P9UJd45Ak82re2BUbQXeAp5PQx6DZYmZdyhKOwIUWOp7OOL411VBWJxnm9wowYzDkz35nk1nPSlhUqlISkVzBayJKnyLYTFwL4DCG8DLxwSSnbrOVhLp0bUY4xJhwhd34aXHiAmVTGma1ZL2/xoswEOWadsaBTHWnXBB/VAzkNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OdHhpvrf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PQbdXWzkpBwr8neQ89NAHlG60+pfwiQru0iA3fydgB9aEj7rXHShxcnw+4UIFCxIo7F7uhtGDoXo1nrrrLpphhCulX0oMt6RpQfmJiNLITG5d2zf3PQUkEItdhH0c/fvPMUw5RMvwjSTMZ0yIuMtlU3kCmQh+y+YIb1L40dGzjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDlh+wiK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OdHhpvrf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8171D1F000FF;
-	Sat, 12 Sep 2026 19:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDlh+wiK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 536FB1F00893;
+	Sat, 12 Sep 2026 19:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242615;
-	bh=zXr8uXAgTBk0OJjhv5ZgHgBQH+/izPKhPef0Vn9+s8A=;
+	s=korg; t=1789242617;
+	bh=MT+vMvbyN4WMNLYtkcNOzmdIyDKwePIEcJvNl3443hU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OdHhpvrf+fjMS4MPbUnwyRxkxrjDGPsMGcxsfbVACrfzAFBUfSttkhuZjmJKQqGN8
-	 LC5hbhlLThGyPizNxwZWAoo4YcHL/aFCowkUcnH8r9chCqCRdrsnLxGq4FiCAtq4Ek
-	 noiClMfMl0VmjW8rosDKMIE2ay2+Gp8XYwZ8ckDI=
+	b=TDlh+wiKkI649UB3O2shi8B2w+P+q0ARRAnw4KT4j4vxwxWD5csD8oxJVYBugUuLM
+	 QqEm6iG0OW3TsTvRV1luXDouxJhp/BVFR3JMEFSgRO+Ggw3JWsL/TtSDAW1EkaNNZz
+	 wOkmwmlERUJ0c1H1rEkARO+TfpYJuIfaeX418Ufo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 464/798] misc: ad525x_dpot: use driver core groups for sysfs files
-Date: Sat, 12 Sep 2026 09:01:32 +0200
-Message-ID: <20260912065527.779395241@linuxfoundation.org>
+Subject: [PATCH 5.10 465/798] ppdev: prevent overflow when setting port timeout
+Date: Sat, 12 Sep 2026 09:01:33 +0200
+Message-ID: <20260912065527.802054703@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,307 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit e3a8557e88eb26278eda60bf64f2ef33ce7de8bf ]
+[ Upstream commit 3c0cf801ea2fa40daa5e7d1e6d32adca5ff75ad9 ]
 
-ad_dpot_probe() creates per-RDAC sysfs files manually and then
-optionally creates the command sysfs group. This leaves probe responsible
-for rolling back partial sysfs state and makes remove responsible for
-matching every file that probe created.
+PPSETTIME64 supplies the timeval fields as s64 values, but
+pp_set_timeout() narrows tv_usec to int and calculates tv_sec * HZ in a
+signed long. Large positive values can therefore be truncated or overflow
+and install an unintended timeout.
 
-Move the device attributes into driver core dev_groups for the I2C and
-SPI drivers and use an is_visible() callback to expose only the
-attributes supported by the probed device. With this shape, the driver
-core creates the sysfs files only after probe succeeds and removes them
-before the remove callback frees the driver data.
+Keep both fields as s64, reject a non-canonical microsecond value, and
+use timespec64_to_jiffies() to cap excessively large timeouts at
+MAX_JIFFY_OFFSET. This is a behavior change because both PPSETTIME
+ioctls could previously accept values with tv_usec >= USEC_PER_SEC.
+The validation follows the precedent set by sock_set_timeout().
 
-Fixes: 4eb174bee6f8 ("ad525x_dpot: new driver for AD525x digital potentiometers")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260623015643.36508-1-pengpeng@iscas.ac.cn
+Fixes: 3b9ab374a1e6 ("ppdev: convert to y2038 safe")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260716013923.19494-1-lilinmao@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/ad525x_dpot-i2c.c |   1 +
- drivers/misc/ad525x_dpot-spi.c |   1 +
- drivers/misc/ad525x_dpot.c     | 177 ++++++++++++++++++++-------------
- drivers/misc/ad525x_dpot.h     |   3 +
- 4 files changed, 112 insertions(+), 70 deletions(-)
+ drivers/char/ppdev.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/misc/ad525x_dpot-i2c.c b/drivers/misc/ad525x_dpot-i2c.c
-index 0ee0c6d808c3b..cd26560cc1f75 100644
---- a/drivers/misc/ad525x_dpot-i2c.c
-+++ b/drivers/misc/ad525x_dpot-i2c.c
-@@ -106,6 +106,7 @@ MODULE_DEVICE_TABLE(i2c, ad_dpot_id);
- static struct i2c_driver ad_dpot_i2c_driver = {
- 	.driver = {
- 		.name	= "ad_dpot",
-+		.dev_groups = ad_dpot_groups,
- 	},
- 	.probe		= ad_dpot_i2c_probe,
- 	.remove		= ad_dpot_i2c_remove,
-diff --git a/drivers/misc/ad525x_dpot-spi.c b/drivers/misc/ad525x_dpot-spi.c
-index a9e75d80ad362..99f42d8626c4e 100644
---- a/drivers/misc/ad525x_dpot-spi.c
-+++ b/drivers/misc/ad525x_dpot-spi.c
-@@ -132,6 +132,7 @@ MODULE_DEVICE_TABLE(spi, ad_dpot_spi_id);
- static struct spi_driver ad_dpot_spi_driver = {
- 	.driver = {
- 		.name	= "ad_dpot",
-+		.dev_groups = ad_dpot_groups,
- 	},
- 	.probe		= ad_dpot_spi_probe,
- 	.remove		= ad_dpot_spi_remove,
-diff --git a/drivers/misc/ad525x_dpot.c b/drivers/misc/ad525x_dpot.c
-index 7e691e8bb37a9..1bace1a55c5fc 100644
---- a/drivers/misc/ad525x_dpot.c
-+++ b/drivers/misc/ad525x_dpot.c
-@@ -628,66 +628,132 @@ static struct attribute *ad525x_attributes_commands[] = {
- 	NULL
- };
- 
--static const struct attribute_group ad525x_group_commands = {
--	.attrs = ad525x_attributes_commands,
-+static struct attribute *ad525x_attributes[] = {
-+	&dev_attr_rdac0.attr,
-+	&dev_attr_rdac1.attr,
-+	&dev_attr_rdac2.attr,
-+	&dev_attr_rdac3.attr,
-+	&dev_attr_rdac4.attr,
-+	&dev_attr_rdac5.attr,
-+	&dev_attr_eeprom0.attr,
-+	&dev_attr_eeprom1.attr,
-+	&dev_attr_eeprom2.attr,
-+	&dev_attr_eeprom3.attr,
-+	&dev_attr_eeprom4.attr,
-+	&dev_attr_eeprom5.attr,
-+	&dev_attr_tolerance0.attr,
-+	&dev_attr_tolerance1.attr,
-+	&dev_attr_tolerance2.attr,
-+	&dev_attr_tolerance3.attr,
-+	&dev_attr_tolerance4.attr,
-+	&dev_attr_tolerance5.attr,
-+	&dev_attr_otp0.attr,
-+	&dev_attr_otp1.attr,
-+	&dev_attr_otp2.attr,
-+	&dev_attr_otp3.attr,
-+	&dev_attr_otp4.attr,
-+	&dev_attr_otp5.attr,
-+	&dev_attr_otp0en.attr,
-+	&dev_attr_otp1en.attr,
-+	&dev_attr_otp2en.attr,
-+	&dev_attr_otp3en.attr,
-+	&dev_attr_otp4en.attr,
-+	&dev_attr_otp5en.attr,
-+	&dev_attr_inc_all.attr,
-+	&dev_attr_dec_all.attr,
-+	&dev_attr_inc_all_6db.attr,
-+	&dev_attr_dec_all_6db.attr,
-+	NULL
- };
- 
--static int ad_dpot_add_files(struct device *dev,
--		unsigned int features, unsigned int rdac)
-+static int ad525x_attr_index(struct attribute *attr,
-+			     const struct attribute * const *attrs)
- {
--	int err = sysfs_create_file(&dev->kobj,
--		dpot_attrib_wipers[rdac]);
--	if (features & F_CMD_EEP)
--		err |= sysfs_create_file(&dev->kobj,
--			dpot_attrib_eeprom[rdac]);
--	if (features & F_CMD_TOL)
--		err |= sysfs_create_file(&dev->kobj,
--			dpot_attrib_tolerance[rdac]);
--	if (features & F_CMD_OTP) {
--		err |= sysfs_create_file(&dev->kobj,
--			dpot_attrib_otp_en[rdac]);
--		err |= sysfs_create_file(&dev->kobj,
--			dpot_attrib_otp[rdac]);
--	}
-+	int i;
- 
--	if (err)
--		dev_err(dev, "failed to register sysfs hooks for RDAC%d\n",
--			rdac);
-+	for (i = 0; attrs[i]; i++)
-+		if (attr == attrs[i])
-+			return i;
- 
--	return err;
-+	return -ENOENT;
+diff --git a/drivers/char/ppdev.c b/drivers/char/ppdev.c
+index a97edbf7455a6..8ab4617592eab 100644
+--- a/drivers/char/ppdev.c
++++ b/drivers/char/ppdev.c
+@@ -340,15 +340,17 @@ static enum ieee1284_phase init_phase(int mode)
+ 	return IEEE1284_PH_FWD_IDLE;
  }
  
--static inline void ad_dpot_remove_files(struct device *dev,
--		unsigned int features, unsigned int rdac)
-+static bool ad525x_is_command_attr(struct attribute *attr)
+-static int pp_set_timeout(struct pardevice *pdev, long tv_sec, int tv_usec)
++static int pp_set_timeout(struct pardevice *pdev, s64 tv_sec, s64 tv_usec)
  {
--	sysfs_remove_file(&dev->kobj,
--		dpot_attrib_wipers[rdac]);
--	if (features & F_CMD_EEP)
--		sysfs_remove_file(&dev->kobj,
--			dpot_attrib_eeprom[rdac]);
--	if (features & F_CMD_TOL)
--		sysfs_remove_file(&dev->kobj,
--			dpot_attrib_tolerance[rdac]);
--	if (features & F_CMD_OTP) {
--		sysfs_remove_file(&dev->kobj,
--			dpot_attrib_otp_en[rdac]);
--		sysfs_remove_file(&dev->kobj,
--			dpot_attrib_otp[rdac]);
-+	int i;
-+
-+	for (i = 0; ad525x_attributes_commands[i]; i++) {
-+		if (attr == ad525x_attributes_commands[i])
-+			return true;
- 	}
-+
-+	return false;
-+}
-+
-+static umode_t ad525x_is_visible(struct kobject *kobj, struct attribute *attr,
-+				 int n)
-+{
-+	struct device *dev = kobj_to_dev(kobj);
-+	struct dpot_data *data = dev_get_drvdata(dev);
-+	int rdac;
-+
-+	if (!data)
-+		return 0;
-+
-+	rdac = ad525x_attr_index(attr, dpot_attrib_wipers);
-+	if (rdac >= 0)
-+		return data->wipers & BIT(rdac) ? attr->mode : 0;
-+
-+	rdac = ad525x_attr_index(attr, dpot_attrib_eeprom);
-+	if (rdac >= 0)
-+		return (data->wipers & BIT(rdac)) && (data->feat & F_CMD_EEP) ?
-+			attr->mode : 0;
-+
-+	rdac = ad525x_attr_index(attr, dpot_attrib_tolerance);
-+	if (rdac >= 0)
-+		return (data->wipers & BIT(rdac)) && (data->feat & F_CMD_TOL) ?
-+			attr->mode : 0;
-+
-+	rdac = ad525x_attr_index(attr, dpot_attrib_otp);
-+	if (rdac >= 0)
-+		return (data->wipers & BIT(rdac)) && (data->feat & F_CMD_OTP) ?
-+			attr->mode : 0;
-+
-+	rdac = ad525x_attr_index(attr, dpot_attrib_otp_en);
-+	if (rdac >= 0)
-+		return (data->wipers & BIT(rdac)) && (data->feat & F_CMD_OTP) ?
-+			attr->mode : 0;
-+
-+	if (ad525x_is_command_attr(attr))
-+		return data->feat & F_CMD_INC ? attr->mode : 0;
-+
-+	return attr->mode;
- }
++	struct timespec64 ts;
+ 	long to_jiffies;
  
-+static const struct attribute_group ad525x_group = {
-+	.attrs = ad525x_attributes,
-+	.is_visible = ad525x_is_visible,
-+};
-+
-+const struct attribute_group *ad_dpot_groups[] = {
-+	&ad525x_group,
-+	NULL
-+};
-+EXPORT_SYMBOL(ad_dpot_groups);
-+
- int ad_dpot_probe(struct device *dev,
- 		struct ad_dpot_bus_data *bdata, unsigned long devid,
- 			    const char *name)
- {
+-	if ((tv_sec < 0) || (tv_usec < 0))
++	if (tv_sec < 0 || tv_usec < 0 || tv_usec >= USEC_PER_SEC)
+ 		return -EINVAL;
  
- 	struct dpot_data *data;
--	int i, err = 0;
-+	int i;
+-	to_jiffies = usecs_to_jiffies(tv_usec);
+-	to_jiffies += tv_sec * HZ;
++	ts.tv_sec = tv_sec;
++	ts.tv_nsec = tv_usec * NSEC_PER_USEC;
++	to_jiffies = timespec64_to_jiffies(&ts);
+ 	if (to_jiffies <= 0)
+ 		return -EINVAL;
  
- 	data = kzalloc(sizeof(struct dpot_data), GFP_KERNEL);
- 	if (!data) {
--		err = -ENOMEM;
--		goto exit;
-+		dev_err(dev, "failed to create client for %s ID 0x%lX\n",
-+			name, devid);
-+		return -ENOMEM;
- 	}
- 
- 	dev_set_drvdata(dev, data);
-@@ -703,51 +769,22 @@ int ad_dpot_probe(struct device *dev,
- 	data->wipers = DPOT_WIPERS(devid);
- 
- 	for (i = DPOT_RDAC0; i < MAX_RDACS; i++)
--		if (data->wipers & (1 << i)) {
--			err = ad_dpot_add_files(dev, data->feat, i);
--			if (err)
--				goto exit_remove_files;
-+		if (data->wipers & BIT(i)) {
- 			/* power-up midscale */
- 			if (data->feat & F_RDACS_WONLY)
- 				data->rdac_cache[i] = data->max_pos / 2;
- 		}
- 
--	if (data->feat & F_CMD_INC)
--		err = sysfs_create_group(&dev->kobj, &ad525x_group_commands);
--
--	if (err) {
--		dev_err(dev, "failed to register sysfs hooks\n");
--		goto exit_free;
--	}
--
- 	dev_info(dev, "%s %d-Position Digital Potentiometer registered\n",
- 		 name, data->max_pos);
- 
- 	return 0;
--
--exit_remove_files:
--	for (i = DPOT_RDAC0; i < MAX_RDACS; i++)
--		if (data->wipers & (1 << i))
--			ad_dpot_remove_files(dev, data->feat, i);
--
--exit_free:
--	kfree(data);
--	dev_set_drvdata(dev, NULL);
--exit:
--	dev_err(dev, "failed to create client for %s ID 0x%lX\n",
--		name, devid);
--	return err;
- }
- EXPORT_SYMBOL(ad_dpot_probe);
- 
- void ad_dpot_remove(struct device *dev)
- {
- 	struct dpot_data *data = dev_get_drvdata(dev);
--	int i;
--
--	for (i = DPOT_RDAC0; i < MAX_RDACS; i++)
--		if (data->wipers & (1 << i))
--			ad_dpot_remove_files(dev, data->feat, i);
- 
- 	kfree(data);
- }
-diff --git a/drivers/misc/ad525x_dpot.h b/drivers/misc/ad525x_dpot.h
-index 72a9d6801937c..2e877c89523b5 100644
---- a/drivers/misc/ad525x_dpot.h
-+++ b/drivers/misc/ad525x_dpot.h
-@@ -10,6 +10,8 @@
- 
- #include <linux/types.h>
- 
-+struct attribute_group;
-+
- #define DPOT_CONF(features, wipers, max_pos, uid) \
- 		(((features) << 18) | (((wipers) & 0xFF) << 10) | \
- 		((max_pos & 0xF) << 6) | (uid & 0x3F))
-@@ -210,5 +212,6 @@ struct ad_dpot_bus_data {
- int ad_dpot_probe(struct device *dev, struct ad_dpot_bus_data *bdata,
- 		  unsigned long devid, const char *name);
- void ad_dpot_remove(struct device *dev);
-+extern const struct attribute_group *ad_dpot_groups[];
- 
- #endif
 -- 
 2.53.0
 
