@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6EF271464;
-	Sat, 12 Sep 2026 08:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9462271464;
+	Sat, 12 Sep 2026 08:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200390; cv=none; b=WE4qLZAhZbmi5Ov/7SYKodj94JP+RFkK2665wSD1CnYPtF63WZDTVVWiwaGUefMwIloAmtW1CUyfM7/5ZBAgn0jOaliJVj4nyeMLT+bJhrEnXpeBietvr9AXTpk0Rj7aIEgA27gVQryUnRqjefQaJHTN/evaGoYKVN0L00QRGwI=
+	t=1789200396; cv=none; b=ODmye1kIyafOmNtZRN0voAGi42osoZFykH7QmMkwyxH73tRnMudkF5AljWIdFiVgJtsq8pkV/9Ao8FI0tQx41TgP9mY0d4rPhaTxXXEgaWVEfNUu8oTiftf2HKuDS1t1ctCNvSNYFyvbHP9MI64lSDwpQ620pvz6iuf7rFy9d3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200390; c=relaxed/simple;
-	bh=xMJBRsQNQjIQuyWvBq1S0AXXxHqbpBCDXjcSkU8/6KQ=;
+	s=arc-20240116; t=1789200396; c=relaxed/simple;
+	bh=51B1tvwpWjjaZNtzjXACuFLt+9s0B6ZMgacPlL1PPAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UeOxvoxHGkuKx0PlhQHTEkelcX6tR90p4nEef9jXhrrUkV8PqYEMjZyg6FTn9onIZ2Py765yD6cjeTpfDugDYKAlwrNI61wpDfNPKyUOzrduabgp7umnp9mO516gvN5nZtMT2oFEOEEjCH2lxFS2dNXURHOnL5H4R3iHfytRgC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AWCByPgG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qpUICkJzTGE633liunzBzQ6wAqUv79MJ5P8vOAfnj1kYQo41bv8q8PNUFW3TA7g/W9q4M9/nGx0/TtuOuxP+Va8Nh03jg0sp5rWyX5TwgchbQkOmTm20eH+1Ubwl80ojAjDfsm8wYa3TxXRo/jVQRXzQ07kR3UKiyx2YUgycLTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/w+q5Vn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AWCByPgG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C33371F000FF;
-	Sat, 12 Sep 2026 08:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/w+q5Vn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62BCB1F000FF;
+	Sat, 12 Sep 2026 08:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200389;
-	bh=WwpGwcik5AGkp1IX4Lh29PDlrehbMCGGZ5IlM9dK83M=;
+	s=korg; t=1789200394;
+	bh=6kXnkfog1vAM8u2fIetQX0Fz/8AgeOvYoV6BhL6tn/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AWCByPgG2dXOt1qrf1Nsl36VynmjgyKGuogz4gcvgxo+LeCjMz9+zupVJ7EmdyEQx
-	 WdO6r20Zxa92qFbVMApwSTrlM8m+a6uxIqPgC+xOR5IC60iFdKGxxGgN7lq9N/gt2j
-	 mIzN/3BoOdFCDdJrwmnNP+/foA/GbiMnbO5DTr0U=
+	b=m/w+q5Vn9nP6HqLWH9K47s57448M0GVFGQzIGXst2zca8LxyOy9EgAGkvQBXTZ4ey
+	 q1tomJUaS1uCt+uI93HyGzm5nmeymWRBtHN4NtWQ3yd8GxLyhf0NOiS3Ylo1CZdnQy
+	 hA6jNNdjgJtxym9EChk+SdmR+yOmg4sDEQOZoMEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8baf9a79a3ffc6271cb6@syzkaller.appspotmail.com,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0727/1815] nilfs2: fix BUG in nilfs_copy_dirty_pages() on dirty state mismatch
-Date: Sat, 12 Sep 2026 08:41:17 +0200
-Message-ID: <20260912065705.967300789@linuxfoundation.org>
+Subject: [PATCH 7.2 0774/1815] wifi: ath11k: fix stride mismatch in mac_phy_caps_parse()
+Date: Sat, 12 Sep 2026 08:42:04 +0200
+Message-ID: <20260912065707.080413965@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,77 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 
-[ Upstream commit 66f4ad3ce158902e5f98afea93189972ed8750c2 ]
+[ Upstream commit 7a246c72132eb943b5844ba79dad597b47429dba ]
 
-Syzbot reported a kernel BUG triggered within nilfs_copy_dirty_pages(),
-which copies dirty DAT file folios/pages to its shadow page cache.  The
-BUG occurs when a retrieved dirty folio/page unexpectedly loses its
-'dirty' status.
+Currently, in ath11k_wmi_tlv_mac_phy_caps_parse(), kcalloc() sizes the
+mac_phy_caps buffer as tot_phy_id * len, where len is clamped to
+min(firmware_len, sizeof(struct wmi_mac_phy_capabilities)). The subsequent
+memcpy() destination advances by sizeof(full struct) per slot via C
+pointer arithmetic, not by the clamped len. When firmware sends short
+TLVs, the second and later slots are written past the end of the
+allocation.
 
-This issue arises because, since the commit referenced below, the 'dirty'
-flag of a folio/page can be cleared asynchronously after the filesystem
-detects metadata corruption and transitions to read-only mode.
+The reader in ath11k_pull_mac_phy_cap_svc_ready_ext() also indexes the
+buffer with full-struct pointer arithmetic, so the allocation must match
+that stride.
 
-Resolve the issue by returning an -EROFS error if the filesystem has
-transitioned to read-only mode.  Also change the behavior to issue a
-kernel warning only once instead of triggering a kernel BUG when this
-unexpected 'dirty' state is detected while the filesystem is not in
-read-only mode.
+Fix by using kzalloc_objs(), which derives the element size from the
+pointer type, making allocation size and pointer stride provably
+consistent regardless of what len the firmware provides.
 
-Reported-by: syzbot+8baf9a79a3ffc6271cb6@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8baf9a79a3ffc6271cb6
-Fixes: 8c26c4e2694a ("nilfs2: fix issue with flush kernel thread after remount in RO mode because of driver's internal error or metadata corruption")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Compile tested only.
+
+Fixes: 5b90fc760db5 ("ath11k: fix wmi service ready ext tlv parsing")
+Assisted-by: Claude:claude-sonnet-4-6
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260728-mac_phy_caps_parse-stride-mismatch-v1-2-27a9c1a3fbd0@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/page.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath11k/wmi.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nilfs2/page.c b/fs/nilfs2/page.c
-index a9d8aa65416fd..1d00bce21c377 100644
---- a/fs/nilfs2/page.c
-+++ b/fs/nilfs2/page.c
-@@ -243,6 +243,7 @@ static void nilfs_copy_folio(struct folio *dst, struct folio *src,
- int nilfs_copy_dirty_pages(struct address_space *dmap,
- 			   struct address_space *smap)
- {
-+	struct inode *smap_inode = smap->host;
- 	struct folio_batch fbatch;
- 	unsigned int i;
- 	pgoff_t index = 0;
-@@ -258,8 +259,19 @@ int nilfs_copy_dirty_pages(struct address_space *dmap,
- 		struct folio *folio = fbatch.folios[i], *dfolio;
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index ec02c0a089b0d..1575b7faac7d1 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -4809,14 +4809,16 @@ static int ath11k_wmi_tlv_mac_phy_caps_parse(struct ath11k_base *soc,
+ 	if (svc_rdy_ext->n_mac_phy_caps >= svc_rdy_ext->tot_phy_id)
+ 		return -ENOBUFS;
  
- 		folio_lock(folio);
--		if (unlikely(!folio_test_dirty(folio)))
--			NILFS_FOLIO_BUG(folio, "inconsistent dirty state");
-+		if (unlikely(!folio_test_dirty(folio))) {
-+			if (WARN_ONCE(!sb_rdonly(smap_inode->i_sb),
-+					"inconsistent dirty state\n"))
-+				goto unlock_folio;
-+
-+			/*
-+			 * If the filesystem has been forced to read-only
-+			 * due to metadata corruption.
-+			 */
-+			folio_unlock(folio);
-+			err = -EROFS;
-+			break;
-+		}
- 
- 		dfolio = filemap_grab_folio(dmap, folio->index);
- 		if (IS_ERR(dfolio)) {
-@@ -277,6 +289,7 @@ int nilfs_copy_dirty_pages(struct address_space *dmap,
- 
- 		folio_unlock(dfolio);
- 		folio_put(dfolio);
-+unlock_folio:
- 		folio_unlock(folio);
+-	len = min_t(u16, len, sizeof(struct wmi_mac_phy_capabilities));
+ 	if (!svc_rdy_ext->n_mac_phy_caps) {
+-		svc_rdy_ext->mac_phy_caps = kcalloc(svc_rdy_ext->tot_phy_id,
+-						    len, GFP_ATOMIC);
++		svc_rdy_ext->mac_phy_caps =
++			kzalloc_objs(*svc_rdy_ext->mac_phy_caps,
++				     svc_rdy_ext->tot_phy_id,
++				     GFP_ATOMIC);
+ 		if (!svc_rdy_ext->mac_phy_caps)
+ 			return -ENOMEM;
  	}
- 	folio_batch_release(&fbatch);
+ 
++	len = min_t(u16, len, sizeof(struct wmi_mac_phy_capabilities));
+ 	memcpy(svc_rdy_ext->mac_phy_caps + svc_rdy_ext->n_mac_phy_caps, ptr, len);
+ 	svc_rdy_ext->n_mac_phy_caps++;
+ 	return 0;
 -- 
 2.53.0
 
