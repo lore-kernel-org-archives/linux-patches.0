@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFCF242D65;
-	Sat, 12 Sep 2026 16:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A45F4F1;
+	Sat, 12 Sep 2026 16:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231945; cv=none; b=FjWWuFKhKrBnusmj5ylrjMXAPGHf+9l3fw71palJTEwiO0P13SZKTC8MqhZqt6NBnXMd/QNLXFTJIMYfSHPvVhK7BenasoKsKOw7+59JMovs2hHNgnK0oas4hV73M1AUYp2gC6N0G68J6Pkcum9IqS3gYJsfJ88Dos+UKzmWy/c=
+	t=1789231950; cv=none; b=LX2jL8oQyIumVszn4vr6sCS9Z0FbAyNAf5hQ+5vSEiweNMIjmQL/JCOCp36dcU2R3BIqQQcBnjPZ5QE5Vt/C5lmKpBD/U64RqLKCgvwVCuKVJuXUHyrHcmCc96EzBMuM8eJeB3mx4NWZGnI7hBfA0ojuZMTlchUFf/qiubvDsv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231945; c=relaxed/simple;
-	bh=YDJGjloFYVw60Y6zpAShEnJwK1jeVaoq3mXg7m40BUM=;
+	s=arc-20240116; t=1789231950; c=relaxed/simple;
+	bh=0mQv9pZ7xq0KBSIgZ/jaX+ujLLnaJu6I+LLsYsTMZ20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FQhPLrhnH5/g+413coMt4lyRyc3xDZShqXBMW+h1lpMzEJhhAbAOHUmWulofcfGjJfKS1u6o0JO/GJUhJ+eVK0RzLhD7823CAxXRlUaGBQs9kM/7Go6h5FbviILmipn2Vss987HfW6Jk31PLtkjowjUkd9BilF3K0NpDj5Irdwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jC7FEf+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JJcvPiq/fbl7sYXheJDl6AeuoetN7l4R2ZJT2nkFwRCEvt38VaSWD//hhFkHFsuwg0CURFT6ekFMW8z7HME7tFHT+SpO6GcwyO1MJl5xPW1DkaMduAWh7ncmbNu1xVCkH0mLW1KCd/6ed+J7AWjZfuF4nOJv/4yt7hBunXpQpTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uH+i8q/0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jC7FEf+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C1C1F000FF;
-	Sat, 12 Sep 2026 16:52:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uH+i8q/0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E55C51F000FF;
+	Sat, 12 Sep 2026 16:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231944;
-	bh=JdogOi/Lip2Z/tkEnn3PVIs7/6pWDI6TPV5MQUatG7g=;
+	s=korg; t=1789231949;
+	bh=tT4sTLldFCCIK6fcc0LI9BOyvCo6qMtTkrRdMY12NuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2jC7FEf+rJPxYaWkHtZggytlr/f8FUibaHrAKn17Qa8s8pRRePxQ8ioTTY0YkOkx8
-	 06SnyUAuWeTDGTqmW8L+lOipVrvZZcmWu2XfTA+PEBvoaaJBNFgKmOt2IttfpVyTfS
-	 4jNwYjvQWirUzyzuL+P36HekpwdWqAD8Av5MujG4=
+	b=uH+i8q/0yZWbAg3EP71BCsCS2mtc94KPXydh1G11j8CdLwYu+WZlgoyBFbxw0HWLB
+	 ISARASS36ZEp1+6UMC87np61LY8676tZWjbFYx9heFi72m3mZ3f5Nl0nUQrEPDhjNJ
+	 ks8HIdy7rri9lAFtMtP0W7BaajWXWO66kJF38vvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nitin Shetty J <nshettyj@marvell.com>,
-	Naveen Mamindlapalli <naveenm@marvell.com>,
+	Allison Henderson <achender@kernel.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1100/1191] octeontx2-af: Fix TL3/TL2 link config ENA clearing
-Date: Sat, 12 Sep 2026 09:03:48 +0200
-Message-ID: <20260912065612.863653989@linuxfoundation.org>
+Subject: [PATCH 6.1 1101/1191] net/rds: use wq_has_sleeper() in rds_cong_map_updated()
+Date: Sat, 12 Sep 2026 09:03:49 +0200
+Message-ID: <20260912065612.885282604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,75 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naveen Mamindlapalli <naveenm@marvell.com>
+From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit 9edf8d4876e8a2471e66f54d36208eaff2858392 ]
+[ Upstream commit d4f484661961636eb90d287050959e613795f73a ]
 
-Clear and restore the ENA bit for each TL3/TL2 link entry during
-SMQ flush instead of repeatedly using the same link index.
+rds_cong_map_updated() runs after a peer's congestion map has been
+rewritten (by rds_tcp_cong_recv() and rds_ib_cong_recv(), or the
+clear-all in the loopback and IB send-completion paths).  It bumps
+rds_cong_generation and then checks waitqueue_active() on
+map->m_waitq and on rds_poll_waitq to decide whether anyone needs
+waking.  atomic_inc() carries no ordering and waitqueue_active() is a
+plain load, so nothing orders the map and generation stores before
+the wait queue reads.  The waiters do the mirror image: rds_cong_wait()
+adds itself to m_waitq and then tests the port bit, and rds_poll()
+registers on rds_poll_waitq and then reads the generation.  That is
+the store-buffering pattern described above waitqueue_active() in
+include/linux/wait.h - the updater can observe an empty wait queue
+while the waiter still observes the port as congested, and no wake-up
+is issued.
 
-Fixes: 019aba04f08c ("octeontx2-af: Modify SMQ flush sequence to drop packets")
-Signed-off-by: Nitin Shetty J <nshettyj@marvell.com>
-Signed-off-by: Naveen Mamindlapalli <naveenm@marvell.com>
+rds_cong_wait() is an interruptible sleep with no timeout, so a
+sender blocked on a congested port stays blocked until the next
+congestion update from that peer arrives or a signal is delivered.
+A poll() waiter misses the map-updated notification the same way.
+
+Use wq_has_sleeper(), which is waitqueue_active() preceded by the
+required full barrier, as rds_tcp_state_change() already does for
+the same pattern.
+
+Fixes: 922cb17a5c81 ("RDS: Congestion-handling code")
+Signed-off-by: Allison Henderson <achender@kernel.org>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260821055445.2517568-1-nshettyj@marvell.com
+Link: https://patch.msgid.link/20260822052647.88318-1-achender@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ net/rds/cong.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 07e534f70b31b..3d4985e2f9db2 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -2240,8 +2240,8 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
- 	int pf = rvu_get_pf(pcifunc);
- 	u8 cgx_id = 0, lmac_id = 0;
- 	u16 tl2_tl3_link_schq;
--	u8 link, link_level;
- 	u64 cfg, bmap = 0;
-+	u8 link_level;
+diff --git a/net/rds/cong.c b/net/rds/cong.c
+index 8b689ebbd5b52..c85af56e42e73 100644
+--- a/net/rds/cong.c
++++ b/net/rds/cong.c
+@@ -256,9 +256,9 @@ void rds_cong_map_updated(struct rds_cong_map *map, uint64_t portmask)
+ 	  map, &map->m_addr);
+ 	rds_stats_inc(s_cong_update_received);
+ 	atomic_inc(&rds_cong_generation);
+-	if (waitqueue_active(&map->m_waitq))
++	if (wq_has_sleeper(&map->m_waitq))
+ 		wake_up(&map->m_waitq);
+-	if (waitqueue_active(&rds_poll_waitq))
++	if (wq_has_sleeper(&rds_poll_waitq))
+ 		wake_up_all(&rds_poll_waitq);
  
- 	/* enable cgx tx if disabled */
- 	if (is_pf_cgxmapped(rvu, pf)) {
-@@ -2266,7 +2266,6 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
- 	link_level = rvu_read64(rvu, blkaddr, NIX_AF_PSE_CHANNEL_LEVEL) & 0x01 ?
- 			NIX_TXSCH_LVL_TL3 : NIX_TXSCH_LVL_TL2;
- 	tl2_tl3_link_schq = smq_flush_ctx->smq_tree_ctx[link_level].schq;
--	link = smq_flush_ctx->smq_tree_ctx[NIX_TXSCH_LVL_TL1].schq;
- 
- 	/* SMQ set enqueue xoff */
- 	cfg = rvu_read64(rvu, blkaddr, NIX_AF_SMQX_CFG(smq));
-@@ -2276,13 +2275,13 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
- 	/* Clear all NIX_AF_TL3_TL2_LINK_CFG[ENA] for the TL3/TL2 queue */
- 	for (i = 0; i < (rvu->hw->cgx_links + rvu->hw->lbk_links); i++) {
- 		cfg = rvu_read64(rvu, blkaddr,
--				 NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link));
-+				 NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, i));
- 		if (!(cfg & BIT_ULL(12)))
- 			continue;
- 		bmap |= BIT_ULL(i);
- 		cfg &= ~BIT_ULL(12);
- 		rvu_write64(rvu, blkaddr,
--			    NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link), cfg);
-+			    NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, i), cfg);
- 	}
- 
- 	/* Do SMQ flush and set enqueue xoff */
-@@ -2303,10 +2302,10 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
- 		if (!(bmap & BIT_ULL(i)))
- 			continue;
- 		cfg = rvu_read64(rvu, blkaddr,
--				 NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link));
-+				 NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, i));
- 		cfg |= BIT_ULL(12);
- 		rvu_write64(rvu, blkaddr,
--			    NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link), cfg);
-+			    NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, i), cfg);
- 	}
- 
- 	/* clear XOFF on TL2s */
+ 	if (portmask && !list_empty(&rds_cong_monitor)) {
 -- 
 2.53.0
 
