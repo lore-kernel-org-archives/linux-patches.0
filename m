@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABA02BDC0E;
-	Sat, 12 Sep 2026 11:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818C22BDC0E;
+	Sat, 12 Sep 2026 11:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212285; cv=none; b=FG6g5W/Sox1EJCXXbR2+VwVC9cXN7241g5kgZgLAfN9tjOFVD1wxzzXNg+4pxpH63kUokBFuDBrsF3UBN+jySj03MLYbb+kS7yBqk/+KqLl62Pr5seoJlYJC/da+0eJ71JIU1diFt/f+b+g2BR/2FWHKCYxG9RYkN0NA1lbCpog=
+	t=1789212289; cv=none; b=ZW9Uc1Of0kGivHAwt4ar2xCxwks47EHizHlLmzpzW8phrxGM4tT0weZK4X/UejRQhfrEx/c3twWlx3MMwFsN1wAA9vXs2lEMOXnD/nIGOIzOkzcunSBZtP5R4LfK+O7Kay97fEweokWesFjAe+fhxQ+vSbrcRdwaiFhi0utr+IU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212285; c=relaxed/simple;
-	bh=YSHbjwEZ0GdWc346ugirOffJn3tyiYKbu5FqDQ3ebeo=;
+	s=arc-20240116; t=1789212289; c=relaxed/simple;
+	bh=S9BdFdixuyoGMesahmEjeWcMydhfbJDNJu8YrsEU88c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=guryBMapDI1VXjHb0JSy2cryGSZaIdEsqN6MWIi9fm2opRx8P6C5VACTaADUpiETU8s4r61IlguCAQReVkikG8Uh7jKpgvy/2ymAxJXo7oihuClQEVId+wfQyeVy9HlQwZ8XWKgG9fre3IqPvlNQQkhbM3/pDXeBLY/yGVhJD1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QxUtDMkT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cP9gFRz676f+/ktNt/WjO20rB5NoTK/aJVJx61eWkAOVqF1ozeM1BhaiGKYER4W2mxEE8iScpmtG0swrnr29j7T7sl6N0F6rLdnhoDyXZPfxnWF10NEDBXmSX0WNrh9o3VO33i2tQsXI/gS3V+0PdE+YfQXYKVlRnHw0ed5WwO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snmtNcib; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QxUtDMkT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51971F000FF;
-	Sat, 12 Sep 2026 11:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snmtNcib"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 066641F000FF;
+	Sat, 12 Sep 2026 11:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212283;
-	bh=94HcpVXMEAt5J5tOf5+X1xAHwxPSTWKB3c+i2q0csFw=;
+	s=korg; t=1789212288;
+	bh=aEbyt3GrYKnUuy5QB0SFd9/64zUJTApp01l++x1Lx6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QxUtDMkT1RE7SmWlbhGSJ5px4pGfmo7V7hus90iZKl/jmcNmCcc10hN3pdDaqY8iD
-	 0lNEGhBALGX2aG5eYa4MyHFtpRQDD4+Qx6jOjjeFdnHDI1FqKc6xtrZegfGZKfGUL0
-	 ySkdmWj07R7vM0hmQEzpd3nXSmvJTnVsLWV/thXg=
+	b=snmtNcibz2MxaGA9Xx2eS+4jkxzEg1eKdNuxvNzxmGVdxzVGdYMeJ9hvPZX/w/Gb2
+	 6XZr1xIX8MzCHh/V7bcS8lUgMGRmNKQRnEqydpKOLybtlTo3HqSDorNW9BmoO1C6rh
+	 VVBp2L+7XrZT5HmRtCXRMqzoASdRyXUqo+Cke9jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Simon Horman <horms@kernel.org>,
+	Rong Zhang <i@rong.moe>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1405/1518] net: enetc: restore RX ring congestion mode after ring reconfiguration
-Date: Sat, 12 Sep 2026 08:59:34 +0200
-Message-ID: <20260912065655.330516306@linuxfoundation.org>
+Subject: [PATCH 6.18 1379/1518] net: page_pool: Remove zone/policy GFP flags when allocating XArray entries
+Date: Sat, 12 Sep 2026 08:59:08 +0200
+Message-ID: <20260912065654.739679428@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -46,271 +46,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Rong Zhang <i@rong.moe>
 
-[ Upstream commit 9e94d8e14ae45e3fda8c0919f745db3ed3715433 ]
+[ Upstream commit 039f248a6cc1f4dec895c001de2c600842022e58 ]
 
-The RX ring congestion mode (CM) is only configured in the phylink
-.mac_link_up() callback enetc_pl_mac_link_up(), which sets the
-ENETC_RBMR_CM bit when tx_pause is enabled. This callback runs only when
-the link status changes.
+Net drivers request GFP flags according to both the current context and
+the device constraints, but the XArray entry itself is by no mean used
+by the device. Passing though device constraints to XArray allocation is
+a bug and will be warned and fixed up by slab, e.g.:
 
-However, enetc_reconfigure() tears down and re-creates the RX BD rings at
-runtime without any link status change, for example when attaching or
-detaching an XDP program, or when enabling/disabling PTP RX hardware
-timestamping. The rings are rebuilt from a cleared RBMR, so the CM bit is
-lost. Since the link status does not change, enetc_pl_mac_link_up() is
-not called again and the CM bit is never restored.
+    Unexpected gfp: 0x4 (GFP_DMA32). Fixing up to gfp: 0x82820 (GFP_ATOMIC|__GFP_NOWARN|__GFP_NOMEMALLOC). Fix your code!
+    CPU: 2 UID: 0 PID: 1071629 Comm: kworker/u80:1 Not tainted 7.2.0-rc7+ #1 PREEMPT(lazy)
+    Hardware name: LENOVO 21Q4/LNVNB161216, BIOS PXCN27WW 10/20/2025
+    Workqueue: mt76 mt792x_pm_wake_work [mt792x_lib]
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x6e/0x90
+     kmalloc_fix_flags+0x4d/0x6a
+     refill_objects+0x10a/0x330
+     __pcs_replace_empty_main+0x292/0x5c0
+     kmem_cache_alloc_lru_noprof+0x4c2/0x680
+     ? __xas_nomem+0x3a/0x120
+     __xas_nomem+0x3a/0x120
+     __xa_alloc+0xd4/0x190
+     page_pool_dma_map+0xef/0x400
+     __page_pool_alloc_netmems_slow+0xed/0x480
+     ? lock_release+0x280/0x490
+     page_pool_alloc_frag_netmem+0xe0/0x3a0
+     page_pool_alloc_frag+0xe/0x20
+     mt76_dma_rx_fill_buf+0x1f6/0x580 [mt76]
+     mt76_dma_rx_reset+0x1cf/0x230 [mt76]
+     mt792x_wpdma_reset+0x183/0x1b0 [mt792x_lib]
+     mt792x_wpdma_reinit_cond+0x5e/0xa0 [mt792x_lib]
+     mt792xe_mcu_drv_pmctrl+0x28/0x60 [mt792x_lib]
+     mt792x_mcu_drv_pmctrl+0x3e/0x90 [mt792x_lib]
+     mt792x_pm_wake_work+0x2d/0x1d0 [mt792x_lib]
+     ? process_one_work+0x20e/0x600
+     process_one_work+0x230/0x600
+     ? process_one_work+0x256/0x600
+     worker_thread+0x1ec/0x3c0
+     ? rescuer_thread+0x610/0x610
+     kthread+0xf2/0x130
+     ? kthread_affine_node+0x140/0x140
+     ret_from_fork+0x2a5/0x380
+     ? kthread_affine_node+0x140/0x140
+     ret_from_fork_asm+0x11/0x20
+     </TASK>
 
-As a result, the ENETC MAC can no longer generate PAUSE frames on ingress
-congestion, and flow control stops working after such a reconfiguration.
+Currently mt76 and stmmac may allocate page pool pages with GFP_DMA32.
 
-Track the desired CM state in a software flag ENETC_RXBDR_CM. Set or clear
-this flag in enetc_pl_mac_link_up() according to tx_pause. When the RX BD
-rings are (re)enabled, enetc_enable_rxbdr() consults this flag and restores
-the ENETC_RBMR_CM bit accordingly, so flow control survives ring
-reconfiguration even when the link status does not change.
+Fix it by removing zone/policy GFP flags when allocating XArray entries.
+This is inspired by commit 96d578088085 ("iommu/dma: Use the gfp
+parameter in __iommu_dma_alloc_noncontiguous()").
 
-RBMR is now written as a whole word from enetc_enable_rxbdr() rather than
-by read-modify-write from several call sites. Serialize the remaining RBMR
-read-modify-write paths, the congestion mode update and the RX VLAN offload
-update, with the new si->gen_lock so they cannot race each other.
-
-Fixes: 5093406c784f ("net: enetc: implement ring reconfiguration procedure for PTP RX timestamping")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260821064140.1315611-2-wei.fang@oss.nxp.com
+Fixes: ee62ce7a1d90 ("page_pool: Track DMA-mapped pages and unmap them when destroying the pool")
+Signed-off-by: Rong Zhang <i@rong.moe>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://patch.msgid.link/20260821-page-pool-xa-drop-dma32-v1-1-6eab295c3478@rong.moe
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.c  | 72 +++++++++++++++----
- drivers/net/ethernet/freescale/enetc/enetc.h  |  9 +++
- .../net/ethernet/freescale/enetc/enetc_pf.c   | 14 +---
- 3 files changed, 68 insertions(+), 27 deletions(-)
+ net/core/page_pool.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
-index 6603ed6962967..dec047c8128d5 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -72,6 +72,33 @@ void enetc_reset_mac_addr_filter(struct enetc_mac_filter *filter)
- }
- EXPORT_SYMBOL_GPL(enetc_reset_mac_addr_filter);
+diff --git a/net/core/page_pool.c b/net/core/page_pool.c
+index d89affe84c783..d1fa5640a9128 100644
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -482,6 +482,13 @@ static int page_pool_register_dma_index(struct page_pool *pool,
+ 	if (unlikely(!PP_DMA_INDEX_BITS))
+ 		goto out;
  
-+void enetc_set_congestion_mode(struct enetc_ndev_priv *priv, bool enable)
-+{
-+	struct enetc_si *si = priv->si;
-+	struct enetc_hw *hw = &si->hw;
-+
-+	spin_lock(&si->gen_lock);
-+
-+	if (enable)
-+		set_bit(ENETC_RXBDR_CM, &priv->flags);
-+	else
-+		clear_bit(ENETC_RXBDR_CM, &priv->flags);
-+
-+	for (int i = 0; i < priv->num_rx_rings; i++) {
-+		u32 old_rbmr = enetc_rxbdr_rd(hw, i, ENETC_RBMR);
-+		u32 rbmr;
-+
-+		rbmr = u32_replace_bits(old_rbmr, enable, ENETC_RBMR_CM);
-+		if (rbmr == old_rbmr)
-+			continue;
-+
-+		enetc_rxbdr_wr(hw, i, ENETC_RBMR, rbmr);
-+	}
-+
-+	spin_unlock(&si->gen_lock);
-+}
-+EXPORT_SYMBOL_GPL(enetc_set_congestion_mode);
-+
- static int enetc_num_stack_tx_queues(struct enetc_ndev_priv *priv)
- {
- 	int num_tx_rings = priv->num_tx_rings;
-@@ -2624,7 +2651,6 @@ static void enetc_setup_rxbdr(struct enetc_hw *hw, struct enetc_bdr *rx_ring,
- 			      bool extended)
- {
- 	int idx = rx_ring->index;
--	u32 rbmr = 0;
- 
- 	enetc_rxbdr_wr(hw, idx, ENETC_RBBAR0,
- 		       lower_32_bits(rx_ring->bd_dma_base));
-@@ -2652,12 +2678,6 @@ static void enetc_setup_rxbdr(struct enetc_hw *hw, struct enetc_bdr *rx_ring,
- 	enetc_rxbdr_wr(hw, idx, ENETC_RBICR0, ENETC_RBICR0_ICEN | 0x1);
- 
- 	rx_ring->ext_en = extended;
--	if (rx_ring->ext_en)
--		rbmr |= ENETC_RBMR_BDS;
--
--	if (rx_ring->ndev->features & NETIF_F_HW_VLAN_CTAG_RX)
--		rbmr |= ENETC_RBMR_VTE;
--
- 	rx_ring->rcir = hw->reg + ENETC_BDR(RX, idx, ENETC_RBCIR);
- 	rx_ring->idr = hw->reg + ENETC_SIRXIDR;
- 
-@@ -2668,8 +2688,6 @@ static void enetc_setup_rxbdr(struct enetc_hw *hw, struct enetc_bdr *rx_ring,
- 	enetc_lock_mdio();
- 	enetc_refill_rx_ring(rx_ring, enetc_bd_unused(rx_ring));
- 	enetc_unlock_mdio();
--
--	enetc_rxbdr_wr(hw, idx, ENETC_RBMR, rbmr);
- }
- 
- static void enetc_setup_bdrs(struct enetc_ndev_priv *priv, bool extended)
-@@ -2696,21 +2714,34 @@ static void enetc_enable_txbdr(struct enetc_hw *hw, struct enetc_bdr *tx_ring)
- 
- static void enetc_enable_rxbdr(struct enetc_hw *hw, struct enetc_bdr *rx_ring)
- {
-+	struct enetc_ndev_priv *priv = netdev_priv(rx_ring->ndev);
- 	int idx = rx_ring->index;
--	u32 rbmr;
-+	u32 rbmr = ENETC_RBMR_EN;
-+
-+	if (rx_ring->ext_en)
-+		rbmr |= ENETC_RBMR_BDS;
-+
-+	if (rx_ring->ndev->features & NETIF_F_HW_VLAN_CTAG_RX)
-+		rbmr |= ENETC_RBMR_VTE;
-+
-+	if (test_bit(ENETC_RXBDR_CM, &priv->flags))
-+		rbmr |= ENETC_RBMR_CM;
- 
--	rbmr = enetc_rxbdr_rd(hw, idx, ENETC_RBMR);
--	rbmr |= ENETC_RBMR_EN;
- 	enetc_rxbdr_wr(hw, idx, ENETC_RBMR, rbmr);
- }
- 
- static void enetc_enable_rx_bdrs(struct enetc_ndev_priv *priv)
- {
--	struct enetc_hw *hw = &priv->si->hw;
-+	struct enetc_si *si = priv->si;
-+	struct enetc_hw *hw = &si->hw;
- 	int i;
- 
-+	spin_lock(&si->gen_lock);
-+
- 	for (i = 0; i < priv->num_rx_rings; i++)
- 		enetc_enable_rxbdr(hw, priv->rx_ring[i]);
-+
-+	spin_unlock(&si->gen_lock);
- }
- 
- static void enetc_enable_tx_bdrs(struct enetc_ndev_priv *priv)
-@@ -2740,11 +2771,16 @@ static void enetc_disable_txbdr(struct enetc_hw *hw, struct enetc_bdr *rx_ring)
- 
- static void enetc_disable_rx_bdrs(struct enetc_ndev_priv *priv)
- {
--	struct enetc_hw *hw = &priv->si->hw;
-+	struct enetc_si *si = priv->si;
-+	struct enetc_hw *hw = &si->hw;
- 	int i;
- 
-+	spin_lock(&si->gen_lock);
-+
- 	for (i = 0; i < priv->num_rx_rings; i++)
- 		enetc_disable_rxbdr(hw, priv->rx_ring[i]);
-+
-+	spin_unlock(&si->gen_lock);
- }
- 
- static void enetc_disable_tx_bdrs(struct enetc_ndev_priv *priv)
-@@ -3336,11 +3372,16 @@ EXPORT_SYMBOL_GPL(enetc_get_stats);
- static void enetc_enable_rxvlan(struct net_device *ndev, bool en)
- {
- 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
--	struct enetc_hw *hw = &priv->si->hw;
-+	struct enetc_si *si = priv->si;
-+	struct enetc_hw *hw = &si->hw;
- 	int i;
- 
-+	spin_lock(&si->gen_lock);
-+
- 	for (i = 0; i < priv->num_rx_rings; i++)
- 		enetc_bdr_enable_rxvlan(hw, i, en);
-+
-+	spin_unlock(&si->gen_lock);
- }
- 
- static void enetc_enable_txvlan(struct net_device *ndev, bool en)
-@@ -3670,6 +3711,7 @@ int enetc_pci_probe(struct pci_dev *pdev, const char *name, int sizeof_priv)
- 
- 	si = PTR_ALIGN(p, ENETC_SI_ALIGN);
- 	si->pad = (char *)si - (char *)p;
-+	spin_lock_init(&si->gen_lock);
- 
- 	pci_set_drvdata(pdev, si);
- 	si->pdev = pdev;
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc.h b/drivers/net/ethernet/freescale/enetc/enetc.h
-index 60c7205ea9ff5..0e2effa947b2d 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc.h
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.h
-@@ -309,6 +309,13 @@ struct enetc_si {
- 
- 	struct net_device *ndev; /* back ref. */
- 
-+	/* General-purpose lock serializing updates that must not race,
-+	 * e.g. read-modify-write of shared hardware registers and of
-+	 * selected priv->flags bits between the phylink link callbacks
-+	 * and the ring (re)configuration path.
++	/*
++	 * Drivers request GFP flags according to both the current context and
++	 * the device constraints, but the XArray entry itself is by no mean
++	 * used by the device, so remove zone/policy flags.
 +	 */
-+	spinlock_t gen_lock;
++	gfp &= ~(__GFP_DMA | __GFP_DMA32 | __GFP_HIGHMEM | __GFP_COMP);
 +
- 	union {
- 		struct enetc_cbdr cbd_ring; /* Only ENETC 1.0 */
- 		struct ntmp_user ntmp_user; /* ENETC 4.1 and later */
-@@ -413,6 +420,7 @@ enum enetc_active_offloads {
- enum enetc_flags_bit {
- 	ENETC_TX_ONESTEP_TSTAMP_IN_PROGRESS = 0,
- 	ENETC_TX_DOWN,
-+	ENETC_RXBDR_CM,
- };
- 
- /* interrupt coalescing modes */
-@@ -509,6 +517,7 @@ int enetc_get_driver_data(struct enetc_si *si);
- void enetc_add_mac_addr_ht_filter(struct enetc_mac_filter *filter,
- 				  const unsigned char *addr);
- void enetc_reset_mac_addr_filter(struct enetc_mac_filter *filter);
-+void enetc_set_congestion_mode(struct enetc_ndev_priv *priv, bool enable);
- 
- int enetc_open(struct net_device *ndev);
- int enetc_close(struct net_device *ndev);
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf.c b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
-index de0fb272c8474..ba630f0982104 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
-@@ -691,8 +691,7 @@ static void enetc_pl_mac_link_up(struct phylink_config *config,
- 	struct enetc_hw *hw = &pf->si->hw;
- 	struct enetc_si *si = pf->si;
- 	struct enetc_ndev_priv *priv;
--	u32 rbmr, cmd_cfg;
--	int idx;
-+	u32 cmd_cfg;
- 
- 	priv = netdev_priv(pf->si->ndev);
- 
-@@ -704,16 +703,7 @@ static void enetc_pl_mac_link_up(struct phylink_config *config,
- 		enetc_force_rgmii_mac(si, speed, duplex);
- 
- 	/* Flow control */
--	for (idx = 0; idx < priv->num_rx_rings; idx++) {
--		rbmr = enetc_rxbdr_rd(hw, idx, ENETC_RBMR);
--
--		if (tx_pause)
--			rbmr |= ENETC_RBMR_CM;
--		else
--			rbmr &= ~ENETC_RBMR_CM;
--
--		enetc_rxbdr_wr(hw, idx, ENETC_RBMR, rbmr);
--	}
-+	enetc_set_congestion_mode(priv, tx_pause);
- 
- 	if (tx_pause) {
- 		/* When the port first enters congestion, send a PAUSE request
+ 	if (in_softirq())
+ 		err = xa_alloc(&pool->dma_mapped, &id, netmem_to_page(netmem),
+ 			       PP_DMA_INDEX_LIMIT, gfp);
 -- 
 2.53.0
 
