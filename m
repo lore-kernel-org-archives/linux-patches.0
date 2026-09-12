@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A3130DEA3;
-	Sat, 12 Sep 2026 14:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9ED344D88;
+	Sat, 12 Sep 2026 14:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222779; cv=none; b=O33oPlM7Cn58oRHQgCQBwb4FJshNcsbuAc9Lc1TIUXCGuaOreSYysiIyAgq5sN/zjuu/5MfZQma5qH0VKXPLYG8FTMeMjlf3R5B1YvoOUg/vIET45iGaTTIfpVnxb2ValZ06ETzNY8Xn5rgGQkNm/viVZuhuFEyN+YA305lfZXg=
+	t=1789222783; cv=none; b=iJCzLcA3UnM7gdUdfaFzHQHKYyXbAJHFO/IyLgmw40nD7DUpAHoCHEBitwAk+LDUYjGy2AHPukba7/pK7sGmJB5PdMn+CFuarTKLAe3IsM08o4DvHHDO3dM/6m73z2ZTFUNQEioOTLL4r7RlMAe63+cc27zypqgD24EOG/ioFlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222779; c=relaxed/simple;
-	bh=fzfBITpUcFtRT/nwS8JYSZue/AEyadJWzgnFjAd+vn0=;
+	s=arc-20240116; t=1789222783; c=relaxed/simple;
+	bh=teaXIuuoLsEU6QDk1U/ItXVq6MBi3IhXfvMmrTyJGLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mzr72y7FH+AumJjQOC/6ZZ35U2+HN1y+ThXzsCsRCVNfR811X0CWQvheU98BUqLnLX3hKkyPMBr5RKhz6FV2rwzrA1fr9qvxZ6Hrj9K7tdp1s7vbYg7UAlmSa2+Hc93j8EzZRNXa3wPoj3S7Cr/oItys+It+upU6djIdy8inGos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jXdGybtZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YGMnjp99JS3NEQvLAqUTmtoRIsbNRID6nNQxjZrI7X9mRTNFgpUW6CTPhM4p3XR7l4emDTXEZVVwdVLtp/4jfkifvMaD7wVbqE/QStYFNJXbW3fRFmbLyl2GJXn+jdd7/FggzZez2fFCJFOhBEVsrttbKsOgRjjJ40XlCOKrFeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZy5Jjr2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jXdGybtZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5AC31F000FF;
-	Sat, 12 Sep 2026 14:19:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZy5Jjr2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A25B41F000FF;
+	Sat, 12 Sep 2026 14:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222777;
-	bh=zyQLFQlJgw1fPwq0HMr2BXdkYBOMd/XnqeomM29Qhro=;
+	s=korg; t=1789222782;
+	bh=mWACg02K8cUlZY1RHAuKQs3KyBzF3C5Vsnbr+ZGGo94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jXdGybtZ1tXECM5wt9kJlfZq35DcqU1KwXT+Quz9houheTkg0GpmWb0Z1doBBaVH0
-	 MZ+yCB215cmDi5w3RGgpHmr0Y6WNY59e0WbAFqrYUBTc/yTkDZ1ArhTJxoYwDxcAEc
-	 e26JM1xiDw94r6NF1S6c6TjxGWQBoa4WvkalLLe0=
+	b=OZy5Jjr28ayQ6ba0uEDZjMEuBREIheTvtNHcniWhA1+u2wbzxxsGPNGlVMLuiBQ8r
+	 twOiX9Hzf/3iY9Ma3M65y0uIxq9kYVTXqqMToZHeHlC2S60pQZGtMEil3P3ZRwLsKN
+	 SDrWhA5qsBory/8oBUtms6ftv8pJ1ErVna9DKrYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0655/1424] wifi: mac80211_hwsim: avoid NULL skb in stop queue drain
-Date: Sat, 12 Sep 2026 08:51:27 +0200
-Message-ID: <20260912065621.961687187@linuxfoundation.org>
+Subject: [PATCH 6.6 0656/1424] staging: greybus: audio: correct sscanf() return value check
+Date: Sat, 12 Sep 2026 08:51:28 +0200
+Message-ID: <20260912065621.984419658@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,55 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Alexander A. Klimov <grandmaster@al2klimov.de>
 
-[ Upstream commit 158438cd6ad69d6dd7d871582c38baf22169fede ]
+[ Upstream commit f883fa1a0a0212f63acb18c50e5f900301f3bb1e ]
 
-mac80211_hwsim_stop() drops any frames left in data->pending. The loop
-currently checks skb_queue_empty() and then dequeues separately.
+manager_sysfs_add_store() passes 6 pointers to sscanf(),
+but required latter to return 7 which always failed the operation.
+I corrected it to 6.
 
-That split is racy with TX status handling, which can remove a pending
-frame under the queue lock. If the last entry is removed after the empty
-check, skb_dequeue() returns NULL and the stop path passes that NULL skb
-to ieee80211_free_txskb().
-
-Use skb_dequeue() as the loop condition instead. The dequeue result is the
-object that stop owns and frees, and a concurrent status completion that
-empties the queue simply makes the loop terminate.
-
-Fixes: bd18de517923 ("mac80211_hwsim: drop pending frames on stop")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/20260706161822.921039-1-zzzccc427@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 49b9137a6002 ("staging: greybus: audio: remove redundant slot field")
+Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
+Link: https://patch.msgid.link/20260521182331.22685-1-grandmaster@al2klimov.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virtual/mac80211_hwsim.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/staging/greybus/audio_manager_sysfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
-index c9bfea77d0eca..bacbb49889848 100644
---- a/drivers/net/wireless/virtual/mac80211_hwsim.c
-+++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
-@@ -2084,6 +2084,7 @@ static int mac80211_hwsim_start(struct ieee80211_hw *hw)
- static void mac80211_hwsim_stop(struct ieee80211_hw *hw)
- {
- 	struct mac80211_hwsim_data *data = hw->priv;
-+	struct sk_buff *skb;
- 	int i;
+diff --git a/drivers/staging/greybus/audio_manager_sysfs.c b/drivers/staging/greybus/audio_manager_sysfs.c
+index fcd518f9540cd..ff323ca8154f3 100644
+--- a/drivers/staging/greybus/audio_manager_sysfs.c
++++ b/drivers/staging/greybus/audio_manager_sysfs.c
+@@ -23,7 +23,7 @@ static ssize_t manager_sysfs_add_store(struct kobject *kobj,
+ 			desc.name, &desc.vid, &desc.pid, &desc.intf_id,
+ 			&desc.ip_devices, &desc.op_devices);
  
- 	data->started = false;
-@@ -2091,8 +2092,8 @@ static void mac80211_hwsim_stop(struct ieee80211_hw *hw)
- 	for (i = 0; i < ARRAY_SIZE(data->link_data); i++)
- 		hrtimer_cancel(&data->link_data[i].beacon_timer);
+-	if (num != 7)
++	if (num != 6)
+ 		return -EINVAL;
  
--	while (!skb_queue_empty(&data->pending))
--		ieee80211_free_txskb(hw, skb_dequeue(&data->pending));
-+	while ((skb = skb_dequeue(&data->pending)))
-+		ieee80211_free_txskb(hw, skb);
- 
- 	wiphy_dbg(hw->wiphy, "%s\n", __func__);
- }
+ 	num = gb_audio_manager_add(&desc);
 -- 
 2.53.0
 
