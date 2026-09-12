@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A11779DA;
-	Sat, 12 Sep 2026 08:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993DA79DA;
+	Sat, 12 Sep 2026 08:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201731; cv=none; b=f5+YRmp0xXc6msdGQU2pY88SHC2o7zci0eSfpBiPxIVvhRzmFpytszfjTTwSw0MYYrNPWirzPxjeQI0lK14TGUhU8enfOsB4z6les0u/3t6uPvPxoY+6EhMHcTB65sOq+cmShUaAbrYMbAo1JBIyopAtTJ7YEKyH5b7Z/oRHnDA=
+	t=1789201736; cv=none; b=AwdTk5T2T6v9499VEedd6EG3/cHmzCSlQ3X++EF58DqEkUNc2z6ufvsqcsvyX8UMvKWST1/CjWFiZvKjGSM5AENF/hqk/hPHM5pt7yTClA07PesNW4JUjlDY61ykjLbMGZwlq2dxA5oLOcWL9Q0Dmo3OAbbfdrUI6F039x7gS4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201731; c=relaxed/simple;
-	bh=KBJBIFaXArkMoTlGF7/eWOg8PXc4AgeNKKcFTZ5GBXk=;
+	s=arc-20240116; t=1789201736; c=relaxed/simple;
+	bh=PJmZ7PD7HH/CIEcUzeKIT06QSy3f0NNHK6sYAFQAUis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WsLLyhEUPNF7Lg7JpMRwH0Fg8TWHcRsQIzBxLk/pWv76ZiLtW2SwWWJf+pyXYfPyr3/Eteem9ZwT/cmbuJNZvlfvas6YGWxH61i2zm7pkLLuoGK/23z9CJqdd+6lLS38GVVoRXAxKIrrSE2fIByYJYFRC8bqjwPEOyyvLx6IKT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Dm9fMOU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pdb2mvF9Z30PNLi3N9PQluOQC3mFNuxY/MGmyDQz0UV2+MeKSlVr3Z0vUIUQ8Rf613NXgYjEbLV58jnwgjJwyEe3LmaNMldEH0NtWakEeiWGYP4EvL2VMLcfuSjk2r+78iEPLIBL8mZeNU214bzVlagYebdP8NThApzYqXnmnB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kz/mGJ5+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Dm9fMOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69ADF1F000FF;
-	Sat, 12 Sep 2026 08:28:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kz/mGJ5+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5474B1F000FF;
+	Sat, 12 Sep 2026 08:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201730;
-	bh=iEEDfDYmUvYu1+jGutPHX/i+MZE5k8UvO/Ox79iKYHM=;
+	s=korg; t=1789201735;
+	bh=NhD69Ca74GhwS8QuuUFdWLS0i8TPRcB3kJgHV2z1674=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Dm9fMOUvZ1QsOaRe75MUEHEt5MPfAIk3BBhUjG7IeqTUouR/6CjdsBrz9aawEayb
-	 bvchiP23CbqqABuZZnFZ+tiAni/aDkJ8QKmwn3V0TNt5z0jS5GB74pk931ZrZxmULd
-	 ZACAWtf5OnPf8W4V/xdjRaKdUpWkm85yyt5zYRFA=
+	b=Kz/mGJ5+AqeQfkdnJcQ/mi4GBC5kwdjE+FjK81sQFWFSGk0sG1QGz9Ss8D2sOSo3U
+	 mOT8r/GT1eUnrHB/NYUv3MAWzpZRQrOOvqvbEAjsV5KsXfZcqBw0VCdeK1VfnJPmvD
+	 hPbnPhE1fdSO1Lc1mTfEZTG/CrlEGGkOlnPJXrdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1049/1815] drm/omap: dsi: Do not copy isr table
-Date: Sat, 12 Sep 2026 08:46:39 +0200
-Message-ID: <20260912065713.642982555@linuxfoundation.org>
+Subject: [PATCH 7.2 1058/1815] remoteproc: fix OOB read via signed offset in rsc_table_for_each_entry()
+Date: Sat, 12 Sep 2026 08:46:48 +0200
+Message-ID: <20260912065713.854202490@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,60 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit 97c03b32b28a9f7f13f768f2b06e1eaafe850e66 ]
+[ Upstream commit bb840ea69347aff7bde5a208e7b5b180669a7656 ]
 
-To be able to unregister stuff from isrs, the corresponding table was
-copied.  Nobody seems to unregister stuff that way, so it does not help.
-But there are stack-allocated objects passed to these isrs giving chances
-of UAF of these objects if irqs are unregistered while they are handled,
-so better do not copy that table.
+table->offset[i] is a u32 from firmware, but was stored into a signed
+int.  A crafted offset like 0xFFFFFFF0 becomes -16, placing hdr 16 bytes
+before the table buffer.  The subsequent avail check was bypassed
+because the negative int was promoted to a large size_t in the
+expression "table_sz - offset - sizeof(*hdr)", yielding a large positive
+avail and letting the out-of-bounds hdr->type read proceed undetected.
 
-Fixes: 4ae2ddddf44cd ("OMAP: DSS2: DSI: Add ISR support")
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20260702-dsi-uaf-v2-1-dbb4aa0f0b8e@kemnade.info
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Store the offset as u32 and validate it with unsigned comparisons before
+any pointer arithmetic.
+
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Fixes: fd2c15ec1dd3 ("remoteproc: resource table overhaul")
+Link: https://lore.kernel.org/r/20260803114331.3277263-6-mukesh.ojha@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/omapdrm/dss/dsi.c | 7 +------
- drivers/gpu/drm/omapdrm/dss/dsi.h | 2 --
- 2 files changed, 1 insertion(+), 8 deletions(-)
+ include/linux/rsc_table.h | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/omapdrm/dss/dsi.c b/drivers/gpu/drm/omapdrm/dss/dsi.c
-index 27fe7bca9e2cf..70cfb779d6ae5 100644
---- a/drivers/gpu/drm/omapdrm/dss/dsi.c
-+++ b/drivers/gpu/drm/omapdrm/dss/dsi.c
-@@ -455,15 +455,10 @@ static irqreturn_t omap_dsi_irq_handler(int irq, void *arg)
- 		timer_delete(&dsi->te_timer);
- #endif
+diff --git a/include/linux/rsc_table.h b/include/linux/rsc_table.h
+index c6d6d553d8f11..4cef11a2e3a2c 100644
+--- a/include/linux/rsc_table.h
++++ b/include/linux/rsc_table.h
+@@ -337,17 +337,22 @@ static inline int rsc_table_for_each_entry(struct resource_table *table,
+ 	int i, ret;
  
--	/* make a copy and unlock, so that isrs can unregister
--	 * themselves */
--	memcpy(&dsi->isr_tables_copy, &dsi->isr_tables,
--		sizeof(dsi->isr_tables));
-+	dsi_handle_isrs(&dsi->isr_tables, irqstatus, vcstatus, ciostatus);
+ 	for (i = 0; i < table->num; i++) {
+-		int offset = table->offset[i];
+-		struct fw_rsc_hdr *hdr = (void *)table + offset;
+-		int avail = table_sz - offset - sizeof(*hdr);
+-		int rsc_offset = offset + sizeof(*hdr);
+-		void *rsc = (void *)hdr + sizeof(*hdr);
++		u32 offset = table->offset[i];
++		struct fw_rsc_hdr *hdr;
++		int avail, rsc_offset;
++		void *rsc;
  
- 	spin_unlock(&dsi->irq_lock);
+-		if (avail < 0) {
++		if (offset < sizeof(*table) || offset >= table_sz ||
++		    table_sz - offset < sizeof(*hdr)) {
+ 			dev_err(dev, "rsc table is truncated\n");
+ 			return -EINVAL;
+ 		}
  
--	dsi_handle_isrs(&dsi->isr_tables_copy, irqstatus, vcstatus, ciostatus);
--
- 	dsi_handle_irq_errors(dsi, irqstatus, vcstatus, ciostatus);
- 
- 	dsi_collect_irq_stats(dsi, irqstatus, vcstatus, ciostatus);
-diff --git a/drivers/gpu/drm/omapdrm/dss/dsi.h b/drivers/gpu/drm/omapdrm/dss/dsi.h
-index 601707c0ecc4e..2b25247ea8935 100644
---- a/drivers/gpu/drm/omapdrm/dss/dsi.h
-+++ b/drivers/gpu/drm/omapdrm/dss/dsi.h
-@@ -379,8 +379,6 @@ struct dsi_data {
- 
- 	spinlock_t irq_lock;
- 	struct dsi_isr_tables isr_tables;
--	/* space for a copy used by the interrupt handler */
--	struct dsi_isr_tables isr_tables_copy;
- 
- 	int update_vc;
- #ifdef DSI_PERF_MEASURE
++		hdr = (void *)table + offset;
++		avail = table_sz - offset - sizeof(*hdr);
++		rsc_offset = offset + sizeof(*hdr);
++		rsc = (void *)hdr + sizeof(*hdr);
++
+ 		ret = cb(hdr->type, rsc, rsc_offset, avail, data);
+ 		if (ret)
+ 			return ret;
 -- 
 2.53.0
 
