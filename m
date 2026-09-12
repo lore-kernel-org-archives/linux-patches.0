@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFFD23BD03;
-	Sat, 12 Sep 2026 12:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A650B23BD03;
+	Sat, 12 Sep 2026 12:13:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215187; cv=none; b=LVPmb72/om5QICfFCLzNdZe7CYicAAceFkh9XqKc2xXzFl9CaKZN6BXd9dxEgkYsg5hH+w+oFiR+qr4zuwOTYo8F5I2zESlNW02+gd5acFLmKxSFO4a7AMb/Z89OPGEsTk7Nbtf1LfsQI8xMWnvy9slr9Dy1Njs334vlDXF489g=
+	t=1789215192; cv=none; b=hSt/7CzW10NuWMJilR7BSVBDuMbr3Y1uoQiFHtUtKbnir0KKG4Y7iXFNWU1TSK+jjWrOkYzOwXAdYVpOubpQmPfecXsxZ/op8skXRuCgXax00TyBkynDB+yVkwAuZbDVJF1tkfN0fPhvv/gnZly53VSC0SlBU4za1V0v/7kCrNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215187; c=relaxed/simple;
-	bh=LkpUmMk+Pq3NGl70zfrNdoyASsCqUcl7T1eWHausTcY=;
+	s=arc-20240116; t=1789215192; c=relaxed/simple;
+	bh=1rg1Z38SyEZCvOxOdFxveRkvHeYx6ThWhuHJzMxkggg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RwgPLVvDUOPGE6Rw+Wc+rgr8IugSUUV3oe4t+tM+9qgkfWg91lMp74YF72D6h1CINUPtsY3vUK3C20zHrQp1cGYEPCHuX450RjpQ3gb/X78EZnDKqcjvRb2/qJ4J3AwCNXJy5LI2tPapegowm/QY75PrRzVO493Bu88uKjx1np0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fOSL8850; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZYo7R88UbG5j3ccmD3LvrRiIk9g1ZwE7XrhSgIGGpveUAJyankVUspsCq882RqoEqQDyqXf3D2rT3PXXr+Nk0TP2hxIQwAxJ5WBjxNDSp2hfTQC/80pxPj4+YRhzI0Zm69SvvtZS4XKbOgj2F9ftbZofNiUjs+dZP9PymgeBiW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CuHbfVET; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fOSL8850"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115F71F000FF;
-	Sat, 12 Sep 2026 12:13:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuHbfVET"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E431F000FF;
+	Sat, 12 Sep 2026 12:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215186;
-	bh=feOU6Lid+HHUcHEO9Z19ne7SdQVg7rNzwIxWvp+xG/o=;
+	s=korg; t=1789215191;
+	bh=iMKtOmKjTfx3wPzGFJAXhaFQgPReXaZp6s8SbG7zhxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fOSL8850TJF7/CHU5FLy+IXvUjbweWZdJT7US1OtVZUvbalDHhDE4QQou+DSFbzMD
-	 0q24z9d9bw5/BxiPYM6GfSXDUKLvWXju+J1R8K5XiWt5iG2whcUYU4040vkk+wUohh
-	 sXNu9bL/YPLwsG2arT9ZYhKz4rJETZo5UJJMLsO8=
+	b=CuHbfVETOuNukvIPFwbWoaQMXvFH3xL6Wzjw7GsqOXgbjk1irKkxxBcPhzz7YBb+N
+	 SBSejcq1cd/x9nZMxptGVwkfSwGtijQ321oO2/QdBFOUzS1EZhgIIDEzdnyyLupTmq
+	 0pbPhHEciGa8AJCaWnIAQIIKOaSqbtZJylD8Dt9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang Luo <luoliang@kylinos.cn>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
+	Yuho Choi <dbgh9129@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0481/1376] selftests/sched_ext: Fix bpf_link leak on early return in prog_run
-Date: Sat, 12 Sep 2026 08:48:27 +0200
-Message-ID: <20260912065618.255058193@linuxfoundation.org>
+Subject: [PATCH 6.12 0482/1376] serial: ma35d1: Fix OF node reference leaks in console init
+Date: Sat, 12 Sep 2026 08:48:28 +0200
+Message-ID: <20260912065618.278496934@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,92 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liang Luo <luoliang@kylinos.cn>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit e655c1f1bd14804f398df7da029c4a7e3f9ccd7f ]
+[ Upstream commit 8dfea56f350b3dc826f35711802ad6ae8fae0748 ]
 
-In prog_run's run(), the bpf_link is attached early but only destroyed
-on the success path. The three SCX_EQ assertions between attach and
-destroy expand to a direct 'return SCX_TEST_FAIL', so if any of them
-triggers, bpf_link__destroy() is never reached and the BPF scheduler
-stays loaded. All subsequent tests then fail to attach because SCX is
-not in the DISABLED state.
+ma35d1serial_console_init_port() stores matching UART device nodes in
+ma35d1serial_uart_nodes[] with an extra of_node_get() so that console
+setup can later read the "reg" property.  However, the stored references
+are never released after console setup has finished using them.
 
-Convert those assertions to explicit checks that jump to a unified
-'out' label which always runs the cleanup, matching the pattern used
-in cyclic_kick_wait.c.
+Drop the stored node reference after ma35d1serial_console_setup() reads
+the "reg" property, and clear the array slot to avoid leaving a stale
+pointer behind.  Also release the iterator reference before breaking out
+of for_each_matching_node(), since the normal iterator advance will not
+run in that path.
 
-Fixes: a5db7817af78 ("sched_ext: Add selftests")
-Signed-off-by: Liang Luo <luoliang@kylinos.cn>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 930cbf92db01 ("tty: serial: Add Nuvoton ma35d1 serial driver support")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Link: https://patch.msgid.link/20260630214043.1887351-1-dbgh9129@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/sched_ext/prog_run.c | 34 +++++++++++++++-----
- 1 file changed, 26 insertions(+), 8 deletions(-)
+ drivers/tty/serial/ma35d1_serial.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/sched_ext/prog_run.c b/tools/testing/selftests/sched_ext/prog_run.c
-index 3cd57ef8daaa5..a75323fe8a2c7 100644
---- a/tools/testing/selftests/sched_ext/prog_run.c
-+++ b/tools/testing/selftests/sched_ext/prog_run.c
-@@ -28,7 +28,8 @@ static enum scx_test_status setup(void **ctx)
- static enum scx_test_status run(void *ctx)
- {
- 	struct prog_run *skel = ctx;
--	struct bpf_link *link;
-+	struct bpf_link *link = NULL;
-+	enum scx_test_status status = SCX_TEST_PASS;
- 	int prog_fd, err = 0;
+diff --git a/drivers/tty/serial/ma35d1_serial.c b/drivers/tty/serial/ma35d1_serial.c
+index 3b4206e815fe9..2c1c8d7480230 100644
+--- a/drivers/tty/serial/ma35d1_serial.c
++++ b/drivers/tty/serial/ma35d1_serial.c
+@@ -608,8 +608,14 @@ static int __init ma35d1serial_console_setup(struct console *co, char *options)
+ 	if (!np || !p)
+ 		return -ENODEV;
  
- 	prog_fd = bpf_program__fd(skel->progs.prog_run_syscall);
-@@ -42,23 +43,40 @@ static enum scx_test_status run(void *ctx)
- 	link = bpf_map__attach_struct_ops(skel->maps.prog_run_ops);
- 	if (!link) {
- 		SCX_ERR("Failed to attach scheduler");
--		close(prog_fd);
--		return SCX_TEST_FAIL;
-+		status = SCX_TEST_FAIL;
-+		goto out;
- 	}
- 
- 	err = bpf_prog_test_run_opts(prog_fd, &topts);
--	SCX_EQ(err, 0);
-+	if (err) {
-+		SCX_ERR("BPF_PROG_RUN failed (%d)", err);
-+		status = SCX_TEST_FAIL;
-+		goto out;
-+	}
- 
- 	/* Assumes uei.kind is written last */
- 	while (skel->data->uei.kind == EXIT_KIND(SCX_EXIT_NONE))
- 		sched_yield();
- 
--	SCX_EQ(skel->data->uei.kind, EXIT_KIND(SCX_EXIT_UNREG_BPF));
--	SCX_EQ(skel->data->uei.exit_code, 0xdeadbeef);
-+	if (skel->data->uei.kind != EXIT_KIND(SCX_EXIT_UNREG_BPF)) {
-+		SCX_ERR("Unexpected exit kind: %llu",
-+			(unsigned long long)skel->data->uei.kind);
-+		status = SCX_TEST_FAIL;
-+		goto out;
-+	}
-+	if (skel->data->uei.exit_code != 0xdeadbeef) {
-+		SCX_ERR("Unexpected exit code: %lld",
-+			(long long)skel->data->uei.exit_code);
-+		status = SCX_TEST_FAIL;
-+		goto out;
+-	if (of_property_read_u32_array(np, "reg", val32, ARRAY_SIZE(val32)) != 0)
++	if (of_property_read_u32_array(np, "reg", val32, ARRAY_SIZE(val32)) != 0) {
++		of_node_put(np);
++		ma35d1serial_uart_nodes[co->index] = NULL;
+ 		return -EINVAL;
 +	}
 +
-+out:
- 	close(prog_fd);
--	bpf_link__destroy(link);
-+	if (link)
-+		bpf_link__destroy(link);
++	of_node_put(np);
++	ma35d1serial_uart_nodes[co->index] = NULL;
  
--	return SCX_TEST_PASS;
-+	return status;
+ 	p->port.iobase = val32[1];
+ 	p->port.membase = ioremap(p->port.iobase, MA35_UART_REG_SIZE);
+@@ -648,8 +654,10 @@ static void ma35d1serial_console_init_port(void)
+ 			of_node_get(np);
+ 			ma35d1serial_uart_nodes[i] = np;
+ 			i++;
+-			if (i == MA35_UART_NR)
++			if (i == MA35_UART_NR) {
++				of_node_put(np);
+ 				break;
++			}
+ 		}
+ 	}
  }
- 
- static void cleanup(void *ctx)
 -- 
 2.53.0
 
