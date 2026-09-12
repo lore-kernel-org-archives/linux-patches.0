@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6472342A178;
-	Sat, 12 Sep 2026 10:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383BC426EBB;
+	Sat, 12 Sep 2026 10:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208232; cv=none; b=eZXS7BB92Y9Y+U8K+EW4Tn8J4UEMmGvJ+Lvs6C58djQ5dokl2FspJHO3kWtWQxd/MapBtOQ6U+Qvss3BfwhWWTlx7ungExHmifEtV4Lqyl+niXAs5oyvXgvs/EkozSlE2AhEfPzuaFrQbcveYUFmoUknyb8F5WInvXH1o0YcUjY=
+	t=1789208237; cv=none; b=RjGB1uzBYFRP7CgQvmng0u1Id8dyedUCIPjMJeqv/jeC9qmqnkvQqg0sFG/Sq5sy8AK9hNwow/Wj0j3Rj5ixL+3aHHv/TT6JiFU7aYzxwtS6Vmb71BBcHtu7T+M64Gi/JkBKIPT2/KlmvlZX9PPN5OuqrIWp70VvbDvKtTpa/nM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208232; c=relaxed/simple;
-	bh=s7sXl043sX0jqoMK31fIh0FkOAwVWBq7x1vQ3je5yWQ=;
+	s=arc-20240116; t=1789208237; c=relaxed/simple;
+	bh=xEHER5bTJwAT2tol152dOLJdVq5ssU+LX9Q0foJtKio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dz5L+lXmXJ+bYY7sp4a6sALnq0+oHORgpLPVw/6n2U9SsTm9LncF2Cp9FTkNt7A+mImPJONmT90BgusUFPdhfc8o68vLjXeEhh82MJdiZIzwafjpWFL6wh5bFVqyVnqtWBWuMrauyMp/FN6JvuD0dfVXBs1Q0yPZvT1P/AAC9Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yj1FbF9H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eC9zqo0Wb4hNe957AK8R1dHOCTn2eVpeZMpz9M+UxB9Ka/NrcLlGSXy1qKBGjHyQOgdFmBkLGjPWqvbcH/zCh2K00Ne+xCc8jKJCoZLTiWUSfecwBFAPX93GK362hgU2T2UthiUYT+QjZ/L2FFbsSegt3LYtQP5ABVDNFCVhFX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YY+aLJyl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yj1FbF9H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7C81F000FF;
-	Sat, 12 Sep 2026 10:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YY+aLJyl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5CF1F00893;
+	Sat, 12 Sep 2026 10:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208221;
-	bh=nqoeBlzk64jRM+E8T4c5ErFwvI1W+KsK8ztyIkHDLZc=;
+	s=korg; t=1789208226;
+	bh=Xgp0Ipj44hbT+pyyc67j6lUDuTX3roZl0kowJBBo9r4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yj1FbF9HST4HkTvXSBZ36Y1j9JG8ZN00s9WdpCH7aB0UVAVYThfAbXnX5bTmQ5mjr
-	 FEcBo72iCzuU+6qnUG+iXuY6FcDCo82bEqgEoinqJH7gkaBg3FAmLfLOG6+W3X8j5e
-	 I1DyBxgQkm3hJEjMRxs9DxJ2U44AcS7NN/whlZ+Q=
+	b=YY+aLJylOk4m9s+w4MxyJaGf+hw1343sentM8FlPwj39Tjdu/v7xbacD10iiT/hhd
+	 Q6ZO3D3RXXZEFI4nRVuaUjMzeh3NSFZOhJC/FU5cjE8siDnbijqpQV5dw2mK64trKC
+	 qwIIJtlJzxqkcHeuXpywq8VKVQ1r5b3MYdmDx5i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Yang <yangfeng@kylinos.cn>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Li Ming <ming.li@zohomail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0574/1518] selftests/bpf: Fix memory leak on subtest_states reallocation
-Date: Sat, 12 Sep 2026 08:45:43 +0200
-Message-ID: <20260912065636.414585551@linuxfoundation.org>
+Subject: [PATCH 6.18 0575/1518] cxl/region: Fix use-after-free in find_pos_and_ways() error path
+Date: Sat, 12 Sep 2026 08:45:44 +0200
+Message-ID: <20260912065636.436730781@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,50 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Yang <yangfeng@kylinos.cn>
+From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit 06efb01c6530e9cfc247178cb96aa8adb3beaf61 ]
+[ Upstream commit 15da704b732332cc1e8f121f624e5e6c05124c5d ]
 
-Fix memory leak in subtest_states reallocation,
-and revert subtest_num if allocation fails.
+The error path releases its reference to a switch decoder before
+logging an error that includes the decoder name. If the released
+reference is the last one, the decoder can be freed before the error
+message accesses its name.
 
-Fixes: 0925225956bb ("bpf/selftests: Add granular subtest output for prog_test")
-Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
-Link: https://lore.kernel.org/bpf/20260723085100.482147-6-yangfeng59949@163.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Drop the reference after the error is reported.
+
+Fixes: d90acdf49e18 ("cxl/region: Add a dev_err() on missing target list entries")
+Reviewed-by: Li Ming <ming.li@zohomail.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/10deb519b543ef693ce23148b509a03fe1c07d0c.1784931354.git.alison.schofield@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_progs.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/cxl/core/region.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_progs.c b/tools/testing/selftests/bpf/test_progs.c
-index 082f05f341e58..eda3fcf72095f 100644
---- a/tools/testing/selftests/bpf/test_progs.c
-+++ b/tools/testing/selftests/bpf/test_progs.c
-@@ -550,18 +550,19 @@ bool test__start_subtest(const char *subtest_name)
- 	struct test_state *state = env.test_state;
- 	struct subtest_state *subtest_state;
- 	size_t sub_state_size = sizeof(*subtest_state);
-+	void *tmp;
- 
- 	if (env.subtest_state)
- 		test__end_subtest();
- 
- 	state->subtest_num++;
--	state->subtest_states =
--		realloc(state->subtest_states,
--			state->subtest_num * sub_state_size);
--	if (!state->subtest_states) {
-+	tmp = realloc(state->subtest_states, state->subtest_num * sub_state_size);
-+	if (!tmp) {
-+		state->subtest_num--;
- 		fprintf(stderr, "Not enough memory to allocate subtest result\n");
- 		return false;
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index a1141471b4586..d518d463b28c4 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -1815,14 +1815,13 @@ static int find_pos_and_ways(struct cxl_port *port, struct range *range,
+ 			break;
+ 		}
  	}
-+	state->subtest_states = tmp;
+-	put_device(dev);
+-
+ 	if (rc)
+ 		dev_err(port->uport_dev,
+ 			"failed to find %s:%s in target list of %s\n",
+ 			dev_name(&port->dev),
+-			dev_name(port->parent_dport->dport_dev),
+-			dev_name(&cxlsd->cxld.dev));
++			dev_name(port->parent_dport->dport_dev), dev_name(dev));
++
++	put_device(dev);
  
- 	subtest_state = &state->subtest_states[state->subtest_num - 1];
- 
+ 	return rc;
+ }
 -- 
 2.53.0
 
