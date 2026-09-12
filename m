@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1C735F602;
-	Sat, 12 Sep 2026 09:04:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9902369224;
+	Sat, 12 Sep 2026 09:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203857; cv=none; b=Vhvq9rQBxD7kJLHs0d+3ulK4/LfsWUTqLQpgIBBbMotYKiOlG+/fXj//MoH9UIZRqbsq+A9YtXzjOwfPzxCsjMU5ELAUZDkUIgui0FyVbnbkaSQ8qbLumJ2HdwznZpJAvVbLbVdtxKV2O1t/Q/9d/Khx+BRttJp0XABj/Iea/t8=
+	t=1789203861; cv=none; b=Zf4WDXHA3kpHrz9NRxW5AUAb1YCPZpmXqkbBwnThup8rLVs74oSIi4v8zp9Vbz7otcyPfQ5RnpFpWM9f8aRkp//bDKIdbiGUvwlywqmcXg9+KOHjtnUN1kfCa74JLdFHhxbTRz11oiTBZSLo+2CgTWQF63I2ANpDSpYeKJoO8UU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203857; c=relaxed/simple;
-	bh=k5Y6Nj/FlOG0und9gH3FmkdjQ/UMvxJ7ADjEtZcPliM=;
+	s=arc-20240116; t=1789203861; c=relaxed/simple;
+	bh=2V1K2qey3ORjijv85UWw6XTdiCkLLQhGZaErl2FJtPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mlMk1sPZ15yGpMPkNqDvZdth/PjLdgq48dSEbSix6FT+wd/2c5z02lIJmoP2ppGAbrg7CjR4wovMuaHan1CguM3PUynYiPAE8GCpwAd7HNqpSYxM9WAk8/CTb43fk+4iamUUrE1MN2ZrXpgltRz0Z0h/lJNtM/MUgDhXF3xEsyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bp/maptq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qSFJJzRiKJT7Bii8FrXHZkounYNGVAavYDMuSV1y0zAUhVrWkhbSo+ndNpYS1Prl3nhPRUJCXMHsDYX4miOYGhRd/7Ms96ZwkuVex/GHSG5SMfkowsV5mq5TlsLBFgK9w/tjDBJyjC+BXK5MJLFQWZr1sJXp2lqlswSi/9jEC7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eObL4oYh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bp/maptq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA271F000FF;
-	Sat, 12 Sep 2026 09:04:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eObL4oYh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405C11F000FF;
+	Sat, 12 Sep 2026 09:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203855;
-	bh=Kpbo4nG0C6zwPnYGgT0eXA1msgawXaAerijdpFaH8Zg=;
+	s=korg; t=1789203860;
+	bh=admYzrpB2RiC6tqDRUWH2DRb6DRRfyyiYlZJ3hDKfho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bp/maptq77V0JMUX+TrYIo3rXK2fHkgUUYQJ2C0ifDbHlZ5InrPX1MZbm3uSW7lCg
-	 B2BYHa8TMjXZ0Dfy3yWLrWDpVLeJKkaAJCp/A8+kulCrVcbWC2qoI4gMczbvihH/b5
-	 2ZzbeatykOtA49Ce2fqd++BD8c8PiAYtJ4LiM4TM=
+	b=eObL4oYhm7fxZzDZtl0GG7WHPk1XAT0np3CA/WFZoLooRSww6Rt92Lt8mCIzvNmsS
+	 7PvS8hQtvKYQ84qrPb5ihpCylxr2jFWru2b0YmgRDN+UVX/IvLkx9qk/4bvmfOSx/3
+	 pzt9VxRP4jgGzjPdtoNT9PlFnXvaA/MJ6+FwWUA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	Jens Axboe <axboe@kernel.dk>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Sarthak Sharma <sarthak.sharma@arm.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1492/1815] block: mtip32xx: synchronize ioctls with device removal
-Date: Sat, 12 Sep 2026 08:54:02 +0200
-Message-ID: <20260912065724.028859730@linuxfoundation.org>
+Subject: [PATCH 7.2 1493/1815] selftests/mm: thuge-gen: fix test_shmget() for PAGE_SIZE check
+Date: Sat, 12 Sep 2026 08:54:03 +0200
+Message-ID: <20260912065724.051391170@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,96 +59,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-[ Upstream commit 68940f841d013192086a0f6d7cfbac2cd079e228 ]
+[ Upstream commit 08745c62350126bc31b09548137be87e2866f628 ]
 
-The ioctl handlers only test REMOVE_PENDING before entering
-mtip_hw_ioctl(). Removal can set that bit immediately afterwards and free
-dd->port in mtip_hw_exit() while an ioctl still dereferences it. An already
-open block device can reach the handlers while del_gendisk() is in
-progress.
+Commit 49a4e7186b08 ("selftests/mm: thuge-gen: add setup of HugeTLB
+pages") changed thuge-gen test to use common functions for reading hugetlb
+attributes from sysfs, but it missed that the original read_free()
+function special cased PAGE_SIZE tests.
 
-Serialize both native and compat ioctls with removal. Set REMOVE_PENDING
-before taking the mutex so new callers fail after an in-flight ioctl has
-drained, and hold the mutex until the port has been torn down.
+For PAGE_SIZE tests, failure to read sysfs was ignored and read_free()
+returned 0.
 
-Fixes: 88523a61558a ("block: Add driver for Micron RealSSD pcie flash cards")
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Link: https://patch.msgid.link/20260806060441.676-1-getshell@seu.edu.cn
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+This allowed test_shmget() to essentially skip the check of how many huge
+pages was consumed when it ran with PAGE_SIZE.
+
+Commit 3199b0c09efa ("selftests/mm: fix read_file() return value check")
+fixed checks for read_file() return value and this exposed the issue in
+test_shmget() that checks the number of free hugetlb pages even for
+PAGE_SIZE test, tries to access
+
+/sys/kernel/mm/hugepages/hugepages-<PAGE_SIZE>/free_hugepages
+
+and obviously fails there.
+
+Gate the checks for free huge pages on size != getpagesize() and
+initialize before and after variables to values matching PAGE_SIZE test.
+
+Link: https://lore.kernel.org/20260812-selftests-thuge-gen-fix-v2-1-9adaa693e73b@kernel.org
+Fixes: 49a4e7186b08 ("selftests/mm: thuge-gen: add setup of HugeTLB pages")
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Sarthak Sharma <sarthak.sharma@arm.com>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/mtip32xx/mtip32xx.c | 7 +++++++
- drivers/block/mtip32xx/mtip32xx.h | 2 ++
- 2 files changed, 9 insertions(+)
+ tools/testing/selftests/mm/thuge-gen.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/block/mtip32xx/mtip32xx.c b/drivers/block/mtip32xx/mtip32xx.c
-index f214a616386c8..113bdb868c469 100644
---- a/drivers/block/mtip32xx/mtip32xx.c
-+++ b/drivers/block/mtip32xx/mtip32xx.c
-@@ -3048,6 +3048,8 @@ static int mtip_block_ioctl(struct block_device *dev,
- 	if (!dd)
- 		return -ENOTTY;
+diff --git a/tools/testing/selftests/mm/thuge-gen.c b/tools/testing/selftests/mm/thuge-gen.c
+index 22b9c2f1c35d2..50d0805b65db9 100644
+--- a/tools/testing/selftests/mm/thuge-gen.c
++++ b/tools/testing/selftests/mm/thuge-gen.c
+@@ -71,12 +71,16 @@ void test_mmap(unsigned long size, unsigned flags)
  
-+	guard(mutex)(&dd->ioctl_mutex);
+ void test_shmget(unsigned long size, unsigned flags)
+ {
+-	int id;
+-	unsigned long before, after;
++	/* values for PAGE_SIZE test */
++	unsigned long before = NUM_PAGES;
++	unsigned long after = 0;
+ 	struct shm_info i;
+ 	char *map;
++	int id;
 +
- 	if (unlikely(test_bit(MTIP_DDF_REMOVE_PENDING_BIT, &dd->dd_flag)))
- 		return -ENOTTY;
++	if (size != getpagesize())
++		before = hugetlb_free_pages(size);
  
-@@ -3086,6 +3088,8 @@ static int mtip_block_compat_ioctl(struct block_device *dev,
- 	if (!dd)
- 		return -ENOTTY;
+-	before = hugetlb_free_pages(size);
+ 	id = shmget(IPC_PRIVATE, size * NUM_PAGES, IPC_CREAT|0600|flags);
+ 	if (id < 0) {
+ 		if (errno == EPERM) {
+@@ -97,10 +101,11 @@ void test_shmget(unsigned long size, unsigned flags)
+ 	shmctl(id, IPC_RMID, NULL);
  
-+	guard(mutex)(&dd->ioctl_mutex);
-+
- 	if (unlikely(test_bit(MTIP_DDF_REMOVE_PENDING_BIT, &dd->dd_flag)))
- 		return -ENOTTY;
+ 	memset(map, 0xff, size*NUM_PAGES);
+-	after = hugetlb_free_pages(size);
++	if (size != getpagesize())
++		after = hugetlb_free_pages(size);
  
-@@ -3721,6 +3725,7 @@ static int mtip_pci_probe(struct pci_dev *pdev,
- 	dd = kzalloc_node(sizeof(struct driver_data), GFP_KERNEL, my_node);
- 	if (!dd)
- 		return -ENOMEM;
-+	mutex_init(&dd->ioctl_mutex);
- 
- 	/* Attach the private data to this PCI device.  */
- 	pci_set_drvdata(pdev, dd);
-@@ -3887,6 +3892,7 @@ static void mtip_pci_remove(struct pci_dev *pdev)
- 	}
- 
- 	set_bit(MTIP_DDF_REMOVE_PENDING_BIT, &dd->dd_flag);
-+	mutex_lock(&dd->ioctl_mutex);
- 
- 	if (test_bit(MTIP_DDF_INIT_DONE_BIT, &dd->dd_flag))
- 		del_gendisk(dd->disk);
-@@ -3915,6 +3921,7 @@ static void mtip_pci_remove(struct pci_dev *pdev)
- 
- 	/* De-initialize the protocol layer. */
- 	mtip_hw_exit(dd);
-+	mutex_unlock(&dd->ioctl_mutex);
- 
- 	if (dd->isr_workq) {
- 		destroy_workqueue(dd->isr_workq);
-diff --git a/drivers/block/mtip32xx/mtip32xx.h b/drivers/block/mtip32xx/mtip32xx.h
-index f7328f19ac5c2..0963c07b58457 100644
---- a/drivers/block/mtip32xx/mtip32xx.h
-+++ b/drivers/block/mtip32xx/mtip32xx.h
-@@ -12,6 +12,7 @@
- #define __MTIP32XX_H__
- 
- #include <linux/spinlock.h>
-+#include <linux/mutex.h>
- #include <linux/rwsem.h>
- #include <linux/ata.h>
- #include <linux/interrupt.h>
-@@ -432,6 +433,7 @@ struct driver_data {
- 	struct request_queue *queue; /* Our request queue. */
- 
- 	struct blk_mq_tag_set tags; /* blk_mq tags */
-+	struct mutex ioctl_mutex;
- 
- 	struct mtip_port *port; /* Pointer to the port data structure. */
- 
+ 	show(size);
+-	ksft_test_result(size == getpagesize() || (before - after) == NUM_PAGES,
++	ksft_test_result((before - after) == NUM_PAGES,
+ 			 "%s: mmap %lu %x\n", __func__, size, flags);
+ 	if (shmdt(map))
+ 		ksft_exit_fail_msg("%s: shmdt: %s\n", __func__, strerror(errno));
 -- 
 2.53.0
 
