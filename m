@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBC6371889;
-	Sat, 12 Sep 2026 10:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A232429803;
+	Sat, 12 Sep 2026 10:43:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209829; cv=none; b=njAxnprNL/rxyxSLDYJsnqaZaIfZLYjWUvtPeQ4SXM55PWCZxrFl9ejK8YvDnQpztzUwLvrDKMi059boTQbmr6OzevDrbpIHjI8ycBwB2L6bEAdEf9g0k8m+JzhzhRrHMymoOkk6HJNOklS5QzD6WasOop8jq+WM2YNrtNxO1+4=
+	t=1789209834; cv=none; b=YpNWBnYldrmvW55nFm8CNzf/zMhRC+VVywhG706TZyN8KzxyjGP0CnADD2yLuC9QnmcN1uHTAEPwUYstT5pr2qL0LOjkKN+wVLZCVv1If6ww13P2YatCU8l7KFaT1fqRBmFhxLkGRbBkLC9+Wq0BTUQQ5sbhpbAUJOb6OpXyc0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209829; c=relaxed/simple;
-	bh=Tdfigm3KlAwReg07s/Vk0k7GgYsF3QyDRO1RQNcjSgU=;
+	s=arc-20240116; t=1789209834; c=relaxed/simple;
+	bh=1DUxndb7521CtbnU1/EeGKWZwtro2RUlbNlgK5kxlc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jJWKU+4wivKkDFXeH+wbzMh3bX9u4EtMEHP5i0Y25dGcf+ArKPuCmI6qAf1ReajrUhKyS4EI65udJx+mJVqHMkAkgFs2Gbhv5zWJB72z09iQqtwDJJC/iRbaKYcmmo6PTJdShUHph9dMIULq3sAAUGlMxYzR7qPUh2QkB8+lfgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMANpCEp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lZLjUoMuDCTYzlQUGIjETrZMe5EzYdFSfRPi4Ja9d9tGRXD2X3ZV6Jkbs8AGUCiqT/63fOUwwSW63VZFjjBWL1gdQbUFMUKL4KRwnxI1hKuUphlqUBGo/k7NmzhchJRw9Ht5rPlGEifPMLw7FTEorPz5rkrg71JEb7xLAOfGSW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dX0+UVZo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMANpCEp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E6B1F000FF;
-	Sat, 12 Sep 2026 10:43:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dX0+UVZo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C8E21F00893;
+	Sat, 12 Sep 2026 10:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209828;
-	bh=fOnbilOdg9ttZ7oOHHDxZGP8vrMfULnJd5cRU5IQack=;
+	s=korg; t=1789209833;
+	bh=nzQAJEQEnTqkLCs0epPox8JhNLHc9sn1SFq7Mz1sgK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mMANpCEpwrI3ZeLHgS+g7hJbCOg2ecK4NNJ8XhOcI+CZXrAcC2LjRw0bhIEYn3MeF
-	 sXxaTcgOi2SZBUPXOsaN78hirzU9Mdx1C8gdYkJlKes9hHKkaXjKske5POGGusgxfv
-	 CtFZiMOQP8EXv203xDDT6bRD8S5QN5SsiAIJN1S4=
+	b=dX0+UVZoxMg/dJmjyle9Q6bqhW5vZ2JKOzyxm9gWeunEZEuddSe8994hEpj12wRst
+	 l0Ah/f28VOPxY0Rk0xT9n+M5roVLe0JTON1KBILBcA/f9J89r5UhWnIozcWl8Jjyng
+	 MS6Xuj3gzEuKR7/gLF/ZFQEHjYldhwR1ZiENrgrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Song Liu <songliubraving@fb.com>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0901/1518] perf bpf: Add PROG_TAGS to required arrays in __bpf_event__print_bpf_prog_info()
-Date: Sat, 12 Sep 2026 08:51:10 +0200
-Message-ID: <20260912065643.835544183@linuxfoundation.org>
+Subject: [PATCH 6.18 0875/1518] drm/omap: dsi: Do not copy isr table
+Date: Sat, 12 Sep 2026 08:50:44 +0200
+Message-ID: <20260912065643.243511321@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,49 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Andreas Kemnade <andreas@kemnade.info>
 
-[ Upstream commit 38ba525335c4399b15c9be0f81de304e94ccb462 ]
+[ Upstream commit 97c03b32b28a9f7f13f768f2b06e1eaafe850e66 ]
 
-synthesize_bpf_prog_name() unconditionally dereferences prog_tags[sub_id]
-(line: u8 (*prog_tags)[BPF_TAG_SIZE] = (void *)(uintptr_t)(info->prog_tags))
-but __bpf_event__print_bpf_prog_info() only requires JITED_KSYMS and
-JITED_FUNC_LENS in its required_arrays bitmask.
+To be able to unregister stuff from isrs, the corresponding table was
+copied.  Nobody seems to unregister stuff that way, so it does not help.
+But there are stack-allocated objects passed to these isrs giving chances
+of UAF of these objects if irqs are unregistered while they are handled,
+so better do not copy that table.
 
-If a crafted perf.data has the PROG_TAGS bit cleared (or the array was
-invalidated by bpil_offs_to_addr() bounds checking), info->prog_tags
-contains either zero or a raw file offset.  Dereferencing it causes a
-NULL pointer dereference or an arbitrary memory read.
-
-Add PERF_BPIL_PROG_TAGS to required_arrays so the function returns early
-when prog_tags was not present or failed validation.
-
-Fixes: f8dfeae009effc0b ("perf bpf: Show more BPF program info in print_bpf_prog_info()")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Song Liu <songliubraving@fb.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 4ae2ddddf44cd ("OMAP: DSS2: DSI: Add ISR support")
+Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://patch.msgid.link/20260702-dsi-uaf-v2-1-dbb4aa0f0b8e@kemnade.info
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf-event.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/omapdrm/dss/dsi.c | 7 +------
+ drivers/gpu/drm/omapdrm/dss/dsi.h | 2 --
+ 2 files changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
-index 2294336f6e60b..195516356f62b 100644
---- a/tools/perf/util/bpf-event.c
-+++ b/tools/perf/util/bpf-event.c
-@@ -969,7 +969,8 @@ void __bpf_event__print_bpf_prog_info(struct perf_bpil *info_linear,
- {
- 	struct bpf_prog_info *info = &info_linear->info;
- 	__u64 required_arrays = (1UL << PERF_BPIL_JITED_KSYMS) |
--				(1UL << PERF_BPIL_JITED_FUNC_LENS);
-+				(1UL << PERF_BPIL_JITED_FUNC_LENS) |
-+				(1UL << PERF_BPIL_PROG_TAGS);
- 	__u32 *prog_lens;
- 	__u64 *prog_addrs;
- 	char name[KSYM_NAME_LEN];
+diff --git a/drivers/gpu/drm/omapdrm/dss/dsi.c b/drivers/gpu/drm/omapdrm/dss/dsi.c
+index b129e5a8d7915..7bfd7eb32eba3 100644
+--- a/drivers/gpu/drm/omapdrm/dss/dsi.c
++++ b/drivers/gpu/drm/omapdrm/dss/dsi.c
+@@ -455,15 +455,10 @@ static irqreturn_t omap_dsi_irq_handler(int irq, void *arg)
+ 		timer_delete(&dsi->te_timer);
+ #endif
+ 
+-	/* make a copy and unlock, so that isrs can unregister
+-	 * themselves */
+-	memcpy(&dsi->isr_tables_copy, &dsi->isr_tables,
+-		sizeof(dsi->isr_tables));
++	dsi_handle_isrs(&dsi->isr_tables, irqstatus, vcstatus, ciostatus);
+ 
+ 	spin_unlock(&dsi->irq_lock);
+ 
+-	dsi_handle_isrs(&dsi->isr_tables_copy, irqstatus, vcstatus, ciostatus);
+-
+ 	dsi_handle_irq_errors(dsi, irqstatus, vcstatus, ciostatus);
+ 
+ 	dsi_collect_irq_stats(dsi, irqstatus, vcstatus, ciostatus);
+diff --git a/drivers/gpu/drm/omapdrm/dss/dsi.h b/drivers/gpu/drm/omapdrm/dss/dsi.h
+index 601707c0ecc4e..2b25247ea8935 100644
+--- a/drivers/gpu/drm/omapdrm/dss/dsi.h
++++ b/drivers/gpu/drm/omapdrm/dss/dsi.h
+@@ -379,8 +379,6 @@ struct dsi_data {
+ 
+ 	spinlock_t irq_lock;
+ 	struct dsi_isr_tables isr_tables;
+-	/* space for a copy used by the interrupt handler */
+-	struct dsi_isr_tables isr_tables_copy;
+ 
+ 	int update_vc;
+ #ifdef DSI_PERF_MEASURE
 -- 
 2.53.0
 
