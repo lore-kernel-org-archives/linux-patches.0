@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E612DECC2;
-	Sat, 12 Sep 2026 07:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C61734252D;
+	Sat, 12 Sep 2026 07:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198808; cv=none; b=PT74RIEt7ew/Yt/Oq/y98o6i04Ux4DLOYFSetrCxLrsBhzy4GbR1YaBFK3UMH4mooGNvtAwCHSCTf84jHaUh/ehFViaOtK+Ob1859nU4A+hj2OsNTk9hDOfr9671ODWlRuJBq42uDfl7bGGZ0I8maScoH/cXOXzWphJLdhVM8ac=
+	t=1789198812; cv=none; b=T9UdYXTWEr3v1TjPOLavUMIAW7Yi89KUPlMo6FjqbyVh+ierFM4S0yfaDhxBZWdbWWDRfXYLth28IYI90LEjNTRqy2JeQfHqefaBFv2+l6MOO7meUOBl2O8wAQu+wlSm3QqQC5nT6WIQKK1iDeOFwymmwCWy1w07O5SfI+nJarw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198808; c=relaxed/simple;
-	bh=TiGX7wNET5Tz6vqh4/ftjVsupPxrkLFv7eHXxAC7V1I=;
+	s=arc-20240116; t=1789198812; c=relaxed/simple;
+	bh=ipbe99iWHbHQTD0UaOS+AY1GNftEp/YR04QgIRB1gUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qmGTck2Tdjy+yQV9jXVRZBK/kSAYXBaP9wKdvQVQIt9kkd2JJV0z70nzUqJbK7kRR8edSb7/xa6PONSYosbdD8/DcRVMBoZBar0bKNB/RMtfZwd9hohHUVIWl0pm/P6pNmxykKu/idxzJgU+RaNtTOwnBCrBUwf3fJUIXdsfvLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PB/PueRZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hc30M/cPxjk5+vpQ7J478sOOHJgf45BEd6Zn7wXMoKS643x2sOSpwLEEM2L+Ouug3BCqKztX4LeHj84D7lHrBXomL5SLG0qJ4ccKThEO2s+x/ASjE4RwOWvWfwOT4WMoAakPS8vqBt3K4OaRJGGI/fKFLjUM5BuCBr1VZx9NpMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYE4FVXI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PB/PueRZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742F31F00893;
-	Sat, 12 Sep 2026 07:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYE4FVXI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157951F000FF;
+	Sat, 12 Sep 2026 07:40:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198806;
-	bh=ZjhiWOhHoEM8bDfQjL2GQOZMO7Q2tmwD4+JATRSW1Mc=;
+	s=korg; t=1789198811;
+	bh=Z2/bhzEeV1z5Tesu8lNYhPp7E81M1TkvHEGJtmhigVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PB/PueRZr6k5sZJQ9F+5cjf36sqSLY4SWxdmPs+LNFpIkdqCpnb/c9CdK82Zy6as+
-	 MKxjdFd3wMtf+knCprCF5ktgMOpC14ALNOuiwMBK1XsT7Y+f/TSri7Hsyo1L/iLIyP
-	 3rYN3wW9Tug3KfDO/N37YN5ct9bay2z34OujJl+Y=
+	b=NYE4FVXI3YmPdbU5skLW4z1g8hGsK8WRRYtZ3yvxYbPghcxsJn3zBDS5NbSKUxgC7
+	 sJcJ+aKh09AJcVAPbmFpHjBcK6fw1PHbBg2e4qWzdmINqAVRXSTt47uyEOk4q846Xv
+	 C4DS0NJ+QQjmlMUfIhFWKo6XKEk6lq4NMohFzVsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang Luo <luoliang@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0413/1815] tools/sched_ext: scx_qmap: Fix stale API name in comment
-Date: Sat, 12 Sep 2026 08:36:03 +0200
-Message-ID: <20260912065658.586562479@linuxfoundation.org>
+Subject: [PATCH 7.2 0414/1815] libnvdimm/labels: Bound the on-media label size before the shift
+Date: Sat, 12 Sep 2026 08:36:04 +0200
+Message-ID: <20260912065658.610625156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,37 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liang Luo <luoliang@kylinos.cn>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 35f9cbbacb671e587c84e992e7b0098c39e895a4 ]
+[ Upstream commit 18f9124248ed7a9da1c31973b629dceef76a9b0c ]
 
-The comment above dispatch_highpri() still references
-scx_bpf_dispatch[_vtime]_from_dsq(), which was renamed to
-scx_bpf_dsq_move[_vtime]() in v6.13 to unload the overloaded
-"dispatch" verb. The code below already uses the new names; only the
-comment was left behind during the rename.
+For a v1.2+ index, __nd_label_validate() computes the label size as
+1 << (7 + nsindex[i]->labelsize), where labelsize is a u8 read from
+the label storage medium.  A value of 25 or more makes the shift count
+reach or exceed the width of int -- undefined behavior -- and 24 already
+shifts into the sign bit.  Only 0 (128-byte) and 1 (256-byte) are valid.
 
-Fixes: 5cbb302880f5 ("sched_ext: Rename scx_bpf_dispatch[_vtime]_from_dsq*() -> scx_bpf_dsq_move[_vtime]*()")
-Signed-off-by: Liang Luo <luoliang@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Reject a labelsize above 1 before the shift.  The result was rejected by
+the following size comparison anyway, so this only removes the undefined
+shift on a crafted or corrupted medium; conforming labels are unaffected.
+
+Fixes: 564e871aa66f ("libnvdimm, label: add v1.2 nvdimm label definitions")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260624-b4-disp-d8279485-v3-2-cdb6cab28b41@proton.me
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/sched_ext/scx_qmap.bpf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvdimm/label.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index 0beac1abc5877..fd5883d01d723 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -495,7 +495,7 @@ static void update_core_sched_head_seq(struct task_struct *p)
-  * moving them to HIGHPRI_DSQ and then consuming them first. This makes minor
-  * difference only when dsp_batch is larger than 1.
-  *
-- * scx_bpf_dispatch[_vtime]_from_dsq() are allowed both from ops.dispatch() and
-+ * scx_bpf_dsq_move[_vtime]() are allowed both from ops.dispatch() and
-  * non-rq-lock holding BPF programs. As demonstration, this function is called
-  * from qmap_dispatch() and monitor_timerfn().
-  */
+diff --git a/drivers/nvdimm/label.c b/drivers/nvdimm/label.c
+index ec12ce72cfe2c..dea2eee86d132 100644
+--- a/drivers/nvdimm/label.c
++++ b/drivers/nvdimm/label.c
+@@ -145,10 +145,21 @@ static int __nd_label_validate(struct nvdimm_drvdata *ndd)
+ 		/* label sizes larger than 128 arrived with v1.2 */
+ 		version = __le16_to_cpu(nsindex[i]->major) * 100
+ 			+ __le16_to_cpu(nsindex[i]->minor);
+-		if (version >= 102)
++		if (version >= 102) {
++			/*
++			 * labelsize feeds the shift below; only 0 (128-byte)
++			 * and 1 (256-byte) are valid -- a larger value would
++			 * overflow or exceed the width of int.
++			 */
++			if (nsindex[i]->labelsize > 1) {
++				dev_dbg(dev, "nsindex%d labelsize: %d invalid\n",
++					i, nsindex[i]->labelsize);
++				continue;
++			}
+ 			labelsize = 1 << (7 + nsindex[i]->labelsize);
+-		else
++		} else {
+ 			labelsize = 128;
++		}
+ 
+ 		if (labelsize != sizeof_namespace_label(ndd)) {
+ 			dev_dbg(dev, "nsindex%d labelsize %d invalid\n",
 -- 
 2.53.0
 
