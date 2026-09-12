@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275FE386C22;
-	Sat, 12 Sep 2026 19:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B5F309EE2;
+	Sat, 12 Sep 2026 19:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242000; cv=none; b=MeeVCYqrNnP7b0Gk1czEEu6E/0BJVd7PEnp/GBNBIpR5pytinzEuAwJjmDTpisifQjDAAF8U7dShs4pko/EFo4KTgibsHMi6nEhRFDaZdeBkEEjA5raExpW3O9Ps27hcJaPGx05aXzLXuf1jynHdQQx8ObeNQARsU9IjKhC+G1s=
+	t=1789242003; cv=none; b=aZuPXtwbQHRhKQqgX/clbnGEIxUWBOH4NCcD2Sl2BIxdnqLCEuD8YHTfs3Hj0FxMyWIJD0BrtrWbszn6rAJlVYMe0KTa5GtMAYUmklPIKT5lZwSyawQZLCQnnQZQrYY2uDdHmfYQPK0oclPe1FG0tdo8Nt4UOp1QSQXbyJNjVl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242000; c=relaxed/simple;
-	bh=+eqOwevTN5gmFhKgimv7aeg3D61T+jbHT30zhwitIko=;
+	s=arc-20240116; t=1789242003; c=relaxed/simple;
+	bh=RtC9o4dZGOfniHGFbvWH7XWbxdSbGf+CxTI6k7Q202w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UJFya3lkwOWpO9gQewHBfy1SYDkY5sigrlWJ6YFEnL9l5qJEWIPSTluTbr+x3BVCW/W0IbP7ROUT5n2F9Uw2qYNiS1eMQSjcbg1SgcVKL/TsYry/Qwxs6s6hSO80OK3FSrXUxNLIqQxzszvLoe7ywR6AlogkhQkr8IqXAhZ4nZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ih/OxUDm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sfY7Fz3ZYxAQ0LZsVo5RVHN4YhUU6TWj7ewoW1RrELVKjXugnk3/cXFaAQN+1f4dOzw6bRLzE+ViwN9g+OVmQRpWb3xSEJ4Qdy0qqFWV65x2SIsl9xO3gT9wrWyGj2q3AFhCv4VbaHosTLY8gTS+KpwUPLys9RVVw5+6emwh8WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MN3NA+uj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ih/OxUDm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED731F000FF;
-	Sat, 12 Sep 2026 19:39:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MN3NA+uj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43981F000FF;
+	Sat, 12 Sep 2026 19:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241997;
-	bh=S1dFDszh8t0x6zyOZ+TzgMnmhxmD8zmpAchPJJ/Oxxo=;
+	s=korg; t=1789242002;
+	bh=EqXY5rcsUwvXeiX9cWOhq7APONXfIP3C49dFaC/cMhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ih/OxUDmkBPUx3JoS/f0RiJ8+XXbOlgad54vA1indSmTemQwkUfuE0OISsfoIXcwQ
-	 impH77DvS4f588lbKTyjIjaVyaiNElypJOEGZL1S3p1/Rt32cMeJMuIuRVyLExgypD
-	 zQkkb+iuj8lDMLE34HuIBBomqecgZ+niPKFRSOfc=
+	b=MN3NA+ujRQUbqIpVrk1nqbm8i2exLB96eRgUBssBkz0nairNcn3H+TQbGhB6+mC1H
+	 N/SkGcWIpAp73N9FvPvK7y/VqdXIIBsyUZKKqL52PMMoFj9n6cAMabNuwUvSGvtM1y
+	 F25w0v+pBlrdfl5KLdyMm3WGRWGE0SeSVOyAJVtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 252/798] ASoC: cs35l34: drain threaded IRQ before runtime suspend
-Date: Sat, 12 Sep 2026 08:58:00 +0200
-Message-ID: <20260912065522.934463403@linuxfoundation.org>
+Subject: [PATCH 5.10 253/798] ASoC: fsl: mpc5200-i2s: Free DMA resources on probe failure
+Date: Sat, 12 Sep 2026 08:58:01 +0200
+Message-ID: <20260912065522.957535764@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,86 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 4105a4c0678b2808fc8046b60321b4f1cc7dae75 upstream.
+commit 3a89ddcf0c3d9a068631e8c24d5c9e81d1e6512a upstream.
 
-cs35l34_runtime_suspend() currently switches the codec into
-regcache_cache_only(true), asserts reset low, and powers the device off
-without first quiescing the threaded IRQ registered by
-devm_request_threaded_irq(). That leaves a window where
-cs35l34_irq_thread() can still run after suspend has removed live
-hardware access.
+mpc5200_audio_dma_create() creates the DMA resources before registering
+the component. If snd_soc_register_component() fails, the function
+returns directly and leaves the DMA resources allocated.
 
-A running system can reach this during runtime PM while the driver still
-has critical fault IRQs unmasked. If the threaded handler runs in that
-window, it reads volatile INT_STATUS_1..4 after cache_only has been
-enabled, ignores the regmap_read() failures, and can still execute the
-PROT_RELEASE_CTL release sequence or the BST fault power-down writes.
+Call mpc5200_audio_dma_destroy() before returning from this error path.
 
-Use disable_irq() before entering cache_only/reset-low/power-off so any
-in-flight threaded handler is drained and no new IRQ thread can run
-while the device is suspended. Re-enable the IRQ only after
-runtime_resume() has restored live register access with regcache_sync().
-Since probe only logs request_threaded_irq() failures and keeps going,
-track whether the IRQ was actually installed before disabling or
-re-enabling it.
-
-Fixes: c1124c09e103 ("ASoC: cs35l34: Initial commit of the cs35l34 CODEC driver.")
+Fixes: f515b67381de ("ASoC: fsl: mpc5200 combine psc_dma platform data")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260611161553.3378721-3-runyu.xiao@seu.edu.cn
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20260622094822.926166-1-haoxiang_li2024@163.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/cs35l34.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ sound/soc/fsl/mpc5200_psc_i2s.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/codecs/cs35l34.c
-+++ b/sound/soc/codecs/cs35l34.c
-@@ -44,6 +44,7 @@ struct  cs35l34_private {
- 	int num_core_supplies;
- 	int mclk_int;
- 	bool tdm_mode;
-+	bool irq_requested;
- 	struct gpio_desc *reset_gpio;	/* Active-low reset GPIO */
- };
- 
-@@ -1050,10 +1051,12 @@ static int cs35l34_i2c_probe(struct i2c_
+--- a/sound/soc/fsl/mpc5200_psc_i2s.c
++++ b/sound/soc/fsl/mpc5200_psc_i2s.c
+@@ -170,6 +170,7 @@ static int psc_i2s_of_probe(struct platf
+ 					psc_i2s_dai, ARRAY_SIZE(psc_i2s_dai));
+ 	if (rc != 0) {
+ 		pr_err("Failed to register DAI\n");
++		mpc5200_audio_dma_destroy(op);
+ 		return rc;
  	}
- 
- 	ret = devm_request_threaded_irq(&i2c_client->dev, i2c_client->irq, NULL,
--			cs35l34_irq_thread, IRQF_ONESHOT | IRQF_TRIGGER_LOW,
--			"cs35l34", cs35l34);
-+				cs35l34_irq_thread, IRQF_ONESHOT | IRQF_TRIGGER_LOW,
-+				"cs35l34", cs35l34);
- 	if (ret != 0)
- 		dev_err(&i2c_client->dev, "Failed to request IRQ: %d\n", ret);
-+	else
-+		cs35l34->irq_requested = true;
- 
- 	cs35l34->reset_gpio = devm_gpiod_get_optional(&i2c_client->dev,
- 				"reset", GPIOD_OUT_LOW);
-@@ -1157,6 +1160,9 @@ static int __maybe_unused cs35l34_runtim
- 		dev_err(dev, "Failed to restore register cache\n");
- 		goto err;
- 	}
-+
-+	if (cs35l34->irq_requested)
-+		enable_irq(to_i2c_client(dev)->irq);
- 	return 0;
- err:
- 	regcache_cache_only(cs35l34->regmap, true);
-@@ -1170,6 +1176,10 @@ static int __maybe_unused cs35l34_runtim
- {
- 	struct cs35l34_private *cs35l34 = dev_get_drvdata(dev);
- 
-+	/* Drain and block the threaded IRQ before cache_only/power-off. */
-+	if (cs35l34->irq_requested)
-+		disable_irq(to_i2c_client(dev)->irq);
-+
- 	regcache_cache_only(cs35l34->regmap, true);
- 	regcache_mark_dirty(cs35l34->regmap);
  
 
 
