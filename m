@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B7237F30B;
-	Sat, 12 Sep 2026 19:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF2936F90D;
+	Sat, 12 Sep 2026 19:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241499; cv=none; b=HsLY4xIEoIl7Qa1OtH5wtjLFZib2X+IsCO5JfQfvLktm+7ZG9KILVPZeqqf1mOvsECy6BV5ZqrQsSZFvyJht2miopT1zpV/TJSN6Cg/OZkLH4pSlMInmhMChdkaMpjOc60yqhHmlrI1N4ik8HlCkGceDdq8q6vNn9J6Tl4N15lI=
+	t=1789241504; cv=none; b=ndVEz9ylD3w0ddElww3tS5t76UwmYanrBSzzKRy4PuGvyRwzwxZEGPcicg3nYtcuV+CUTpsMf50Dhj0/ApveLwSwPIU9DnRznqLs3oWl2hNbUVQgdxJyzwnS7lgbgUqRXwwkAmaDFaQ2SGsvE8DKwaDVozNkHJz2W0U7GgiHoqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241499; c=relaxed/simple;
-	bh=U+Vm5Qi2ZrgE3ffaxA2Aton/drUxdEwSWYJkIF00xPw=;
+	s=arc-20240116; t=1789241504; c=relaxed/simple;
+	bh=fLsLjfDWwv4AypJ3pKTkDScAP3dWZlnwQygsLs9zl4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XkZ/6dBI/DIRmgM1riUjIWPOMhIyloCXNt8cGTxyRDxdh5gdH1Dg+UaXXQrXPRhyMcImcCDTFkT8gMlHOJP5R6UujwKos32+9lpmoeUzcIPyjKYYH5H6ZkfS+oKjIMV0tNrf9jt8FFMIF4qgaPfafWs0s40dgrYY8pji4ptWc3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ghXjFKoU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZOZfcviZ1HGqXhTTx7Ln6d5WVmm9ke2lD2IrhMZhDjNCXxWDc8QKb5iW8yQtZw6saSgg6n4NJZ4uEQDuKdUBoTxzKAHJ6ZSXyA5/fF1mcZSLLYt1KuwRc34QL72cZfFIQznUJbHiJXtEw+zT6f4yAnnKXSz5/iXcrE6O73iN1Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwL146t3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ghXjFKoU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00AB41F000FF;
-	Sat, 12 Sep 2026 19:31:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwL146t3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5DE91F000FF;
+	Sat, 12 Sep 2026 19:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241498;
-	bh=QooRkk1n39PnjzVm6JGimimkDx5K7swLVGolE8YUtIs=;
+	s=korg; t=1789241502;
+	bh=Y7A23NFhldPDnICXBZ0aVgcqdlb8HWVlVoj50ZZbkT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ghXjFKoUjNcdxLf0wLz7eGlZgGRzcOvy3WH1j/jID3zx1YGRfwHqDlFvmThebajOL
-	 BkWQxDAS6GzC0VwZ85wbBLk08XQ0AtXhICdEXqhbMRzJ1SQ4yodabFskuWBO36hl6T
-	 w/K0GIlI9EXJUsLmWNliSODAr600ovkSkOfzNa4Y=
+	b=EwL146t34V5N5KNC4Yy5T2FMI4uvigDQ+W0cgUoj5hyzIbPtb0C6LkymxprEGakDO
+	 5Yq4QFepkNEnwr/xuEZ0Aofq4Zv9kRQC99j7Z0alxrYnzUhvLT7mkVA4lv7iISx8UU
+	 y+qn8LD+8FdGHkUNZ2oZsmsScaAA3skd4qPIGtZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 5.10 146/798] PCI/proc: Use file_ns_capable() when checking config space read access
-Date: Sat, 12 Sep 2026 08:56:14 +0200
-Message-ID: <20260912065520.338919032@linuxfoundation.org>
+	Erin Lo <erin.lo@mediatek.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 5.10 106/798] remoteproc: scp: Fix device reference leak on failed lookup
+Date: Sat, 12 Sep 2026 08:55:34 +0200
+Message-ID: <20260912065519.391211755@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -44,67 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit f82f53e75eff382fc8f56b73279b54f7cf5a5c65 upstream.
+commit 22f9efb3ae07f966a1901d929d16df1388cce65c upstream.
 
-proc_bus_pci_read() decides how much of the config space is readable based
-on capable(CAP_SYS_ADMIN), which checks the credentials of the task calling
-read(), not the credentials of the process that opened the file.
+Make sure to drop the reference taken to the SCP device when attempting
+to look up its driver data before the driver has been bound.
 
-The sysfs equivalent, pci_read_config(), has checked the credentials of the
-opening process since commit de139a339395 ("pci: check caps from sysfs file
-open to read device dependent config space"), so a privileged process can
-open the config space file and pass the file descriptor to an unprivileged
-process (for example, a process running a KVM guest with an assigned
-device), which can then read the entire config space.  The check was
-subsequently routed through the LSM framework in commit 47970b1b2aa6 ("pci:
-use security_capable() when checking capablities during config space read")
-and converted to the dedicated helper in commit ab0fa82b2df9 ("pci-sysfs:
-use proper file capability helper function").
+Note that holding a reference to a device does not prevent its driver
+data from going away.
 
-Thus, the two interfaces check the same capability against different
-credentials.  Checking the credentials of the task calling read() makes the
-outcome depend on who reads rather than who opened, so the restriction is
-bypassed whenever a more privileged process reads through the descriptor.
-Checking the credentials recorded in file->f_cred settles the decision at
-open() time and ties it to the file, where it cannot change with the
-caller.
-
-Use file_ns_capable() to check CAP_SYS_ADMIN against the credentials in
-effect when the file was opened, bringing the procfs interface in line with
-the sysfs behaviour.
-
-As a result, a file descriptor opened by a privileged process and passed to
-an unprivileged one now allows the entire config space to be read through
-procfs, matching sysfs.
-
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260720204145.1500105-1-kwilczynski@kernel.org
+Fixes: 63c13d61eafe ("remoteproc/mediatek: add SCP support for mt8183")
+Cc: stable@vger.kernel.org	# 5.6
+Cc: Erin Lo <erin.lo@mediatek.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20260706065614.389412-1-johan@kernel.org
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/proc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/remoteproc/mtk_scp.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/proc.c
-+++ b/drivers/pci/proc.c
-@@ -38,7 +38,7 @@ static ssize_t proc_bus_pci_read(struct
- 	 * undefined locations (think of Intel PIIX4 as a typical example).
- 	 */
+--- a/drivers/remoteproc/mtk_scp.c
++++ b/drivers/remoteproc/mtk_scp.c
+@@ -36,6 +36,7 @@ struct mtk_scp *scp_get(struct platform_
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *scp_node;
+ 	struct platform_device *scp_pdev;
++	struct mtk_scp *scp;
  
--	if (capable(CAP_SYS_ADMIN))
-+	if (file_ns_capable(file, &init_user_ns, CAP_SYS_ADMIN))
- 		size = dev->cfg_size;
- 	else if (dev->hdr_type == PCI_HEADER_TYPE_CARDBUS)
- 		size = 128;
+ 	scp_node = of_parse_phandle(dev->of_node, "mediatek,scp", 0);
+ 	if (!scp_node) {
+@@ -51,7 +52,13 @@ struct mtk_scp *scp_get(struct platform_
+ 		return NULL;
+ 	}
+ 
+-	return platform_get_drvdata(scp_pdev);
++	scp = platform_get_drvdata(scp_pdev);
++	if (!scp) {
++		put_device(&scp_pdev->dev);
++		return NULL;
++	}
++
++	return scp;
+ }
+ EXPORT_SYMBOL_GPL(scp_get);
+ 
 
 
