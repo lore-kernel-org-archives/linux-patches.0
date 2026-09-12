@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C398271464;
-	Sat, 12 Sep 2026 08:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DF31DC198;
+	Sat, 12 Sep 2026 08:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202134; cv=none; b=SsTuXbJ8udwFPmEd1NXD6p3htfhF1l4cVWTim620E0D2iVDb+I+h2UB0fIKQ/uK2YOroOA/Z8Ria9zRE7KZK1wKsAjyly8obmJ7Jg5zbPfeeUzf6il//a9DjpdiK17pJb6Ecdz5gBSOwet2Z3DyMm6RGMBLqJIyaocnGIf3inss=
+	t=1789202138; cv=none; b=BzBsNcQD11pq+05bGZmh3+jae7CGzVsP+ylCmKbe2VBMGHfmS36phkPwucGyo4qEGRRr8KU2yQwJwNf0MM5+Q5PAAXJiztdnAZHb41fCT6cFOnTzLvyvZh3jWff20DRZo4dPjGXx7aBkrYZQg6L1jgrzfSrNr9NK75vV2rcJXnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202134; c=relaxed/simple;
-	bh=GXlqTflvjGATgYXy6GGskhpgys4ULs8H6Pt2/bZ/Xb8=;
+	s=arc-20240116; t=1789202138; c=relaxed/simple;
+	bh=v1eC9iOhqsuw6ugrdX9Se348Lw8PDoaRaz68/163vrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WRSEIdg/MkH9rnDdqsNZs2gxfVUQ7HaqLPqnmjr4OhdJMDcSqkIEj3t1QgBMYmmVwgzWFMfoA2UBMzhvBhDx1NT/aZ1aOHbXvt4uJ0psxzldFGXibMStIJ/uWwglmaiJQLw8TuE93DgzY8HUtJnMDVKFv3GiELx1PbPO2Oc4Grg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sUGg+pHx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TYXqsKjyb5y670m2C9lvHKUYA5ofwaDpLT70MWwRQwtBY+kq01k763nCsl7Npofz3O9e3EgUVNnBw8+XmG8DCcyWO2FpdXtYL5fj5xFkbZssKFvOLrnaE2W2uZaLfR63rAlm5COAY/Se4k+EmsQL92o95ETz+sK29OZd28YApzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVUiLo0W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sUGg+pHx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D301F000FF;
-	Sat, 12 Sep 2026 08:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVUiLo0W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD49A1F000FF;
+	Sat, 12 Sep 2026 08:35:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202132;
-	bh=KFg9vqH6iWZVRku89CvZ+6K0ESX50+Vvoni+XceNlS8=;
+	s=korg; t=1789202137;
+	bh=AvnZTfL/4JLQTv6g8xJWsOtcDxTAW1ish2w6gxpghQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sUGg+pHxsQpHz7uqkrXDzUqA6lT+x+ZcHqvFihRvaptU7WcUCZ3xhTHS/r2aQhy7P
-	 LiIusNFkWaMFYv8ozC4yTDwXSR2xZ8/dfIGC6XBSHWGY9GOWf8Pvmwqd/coxK99ZCl
-	 yEK1DZL2jH74uZPx32i/FBnjm99N7OrHhw3NmdmQ=
+	b=bVUiLo0WQF7mUd+fW5DbhJVXATiKXF8gmAghLvUxyrV6lzLtI4fGfNhmKdwrPdAx4
+	 zRrmvHk61PC+pvqP4jSTREeyOKHH4Q8BLPHTD4ja4U2oHoXiW81vj3tM/bU8w0UEK0
+	 MZGwBgGKNlTogb+XF5GR9SuTE8nQA/Nh7/Rxtcao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dylan Zueck <dzueck@uci.edu>,
-	Yuan Tan <ytan089@ucr.edu>,
-	Priya Bala Govindasamy <pgovind2@uci.edu>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1138/1815] rust: cpufreq: Fix temporary write in Registration::bios_limit_callback
-Date: Sat, 12 Sep 2026 08:48:08 +0200
-Message-ID: <20260912065715.735876596@linuxfoundation.org>
+Subject: [PATCH 7.2 1139/1815] cpufreq: imx6q: fix devres accumulation across driver rebind
+Date: Sat, 12 Sep 2026 08:48:09 +0200
+Message-ID: <20260912065715.758136588@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,67 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Priya Bala Govindasamy <pgovind2@uci.edu>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 19c76bdd3fc02475c73c8576f6f4a55ff07886f1 ]
+[ Upstream commit 22c23c72c3b21fa3ec3db5070dfc0582794e0ef9 ]
 
-In `Registration::bios_limit_callback`, the expression
-`&mut (unsafe { *limit })` creates a reference to a temporary copy
-of the value pointed to by `limit` on the stack.
-Therefore, writes made by `T::bios_limit` go to this temporary
-instead of the memory location pointed to by `limit`.
+imx6_soc_volt is allocated with devm_kcalloc(cpu_dev, ...), where cpu_dev
+is the CPU device from get_cpu_device(0). That device is never unbound, so
+its devres list is never released, and imx6q_cpufreq_remove() does not free
+the array either. Every probe therefore adds an allocation that stays for
+the lifetime of the system.
 
-Additionally, `limit` may be uninitialized, such as when
-`Registration::bios_limit_callback` is invoked by `show_bios_limit`
-in drivers/cpufreq/cpufreq.c. Therefore creating a reference to
-`limit` is unsound.
+Allocate against the platform device instead. Its devres is released when
+the driver is unbound, which is exactly the lifetime the array wants:
+imx6q_set_target() reads it, and nothing may reach that after
+cpufreq_unregister_driver().
 
-Fix this by changing the signature of `T::bios_limit` to return the limit
-value.
-`Registration::bios_limit_callback` can then update `limit` directly.
+That makes the array actually go away on unbind, so also clear the
+file-scope pointer in remove and on the failed-probe path, rather than
+leave it pointing at memory devres is about to release.
 
-Fixes: c6af9a1191d042839e56abff69e8b0302d117988 ("rust: cpufreq: Extend abstractions for driver registration")
-Reported-by: Dylan Zueck<dzueck@uci.edu>
-Reported-by: Yuan Tan<ytan089@ucr.edu>
-Assisted-by: ChatGPT:gpt-5.4
-Signed-off-by: Priya Bala Govindasamy<pgovind2@uci.edu>
-[ Viresh: Fix rustfmtcheck warning ]
+Tested by rebinding the driver on qemu's mcimx6ul-evk.
+
+Fixes: b4573d1d657a ("cpufreq: imx6q: correct VDDSOC/PU voltage scaling when cpufreq is changed")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/cpufreq.rs | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/cpufreq/imx6q-cpufreq.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/rust/kernel/cpufreq.rs b/rust/kernel/cpufreq.rs
-index f360eb9578f32..1158ef3a85f2f 100644
---- a/rust/kernel/cpufreq.rs
-+++ b/rust/kernel/cpufreq.rs
-@@ -822,7 +822,9 @@ pub trait Driver {
-     }
+diff --git a/drivers/cpufreq/imx6q-cpufreq.c b/drivers/cpufreq/imx6q-cpufreq.c
+index e93697d3edfd9..8110c95059e0e 100644
+--- a/drivers/cpufreq/imx6q-cpufreq.c
++++ b/drivers/cpufreq/imx6q-cpufreq.c
+@@ -400,7 +400,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
+ 	}
  
-     /// Driver's `bios_limit` callback.
--    fn bios_limit(_policy: &mut Policy, _limit: &mut u32) -> Result {
-+    ///
-+    /// Returns HW/BIOS max frequency limitations for the CPU.
-+    fn bios_limit(_policy: &mut Policy) -> Result<u32> {
-         build_error!(VTABLE_DEFAULT_ERROR)
-     }
+ 	/* Make imx6_soc_volt array's size same as arm opp number */
+-	imx6_soc_volt = devm_kcalloc(cpu_dev, num, sizeof(*imx6_soc_volt),
++	imx6_soc_volt = devm_kcalloc(&pdev->dev, num, sizeof(*imx6_soc_volt),
+ 				     GFP_KERNEL);
+ 	if (imx6_soc_volt == NULL) {
+ 		ret = -ENOMEM;
+@@ -485,6 +485,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
+ 	return 0;
  
-@@ -1357,9 +1359,12 @@ impl<T: Driver> Registration<T> {
- 
-         from_result(|| {
-             let mut policy = PolicyCpu::from_cpu(cpu_id)?;
--
-+            let val = T::bios_limit(&mut policy)?;
-             // SAFETY: `limit` is guaranteed by the C code to be valid.
--            T::bios_limit(&mut policy, &mut (unsafe { *limit })).map(|()| 0)
-+            unsafe {
-+                *limit = val;
-+            }
-+            Ok(0)
-         })
-     }
- 
+ free_freq_table:
++	imx6_soc_volt = NULL;
+ 	dev_pm_opp_free_cpufreq_table(cpu_dev, &freq_table);
+ out_free_opp:
+ 	dev_pm_opp_of_remove_table(cpu_dev);
+@@ -506,6 +507,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
+ static void imx6q_cpufreq_remove(struct platform_device *pdev)
+ {
+ 	cpufreq_unregister_driver(&imx6q_cpufreq_driver);
++	imx6_soc_volt = NULL;
+ 	dev_pm_opp_free_cpufreq_table(cpu_dev, &freq_table);
+ 	dev_pm_opp_of_remove_table(cpu_dev);
+ 	regulator_put(arm_reg);
 -- 
 2.53.0
 
