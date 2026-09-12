@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A9C35F602;
-	Sat, 12 Sep 2026 09:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927F3312834;
+	Sat, 12 Sep 2026 09:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204824; cv=none; b=ULfVvhRyiRhwCn9NZ0Ls/GOVDWHjXEkdz2WdJH4i44LnVk5oqh2d8+Shw3usgRx46JD0MfcM3tdWlajCnMSoeFDS8RVDTyvhF08SkESK2YEGBJPGqQufApCPSHa9+B76PevWbWE+JpJk30fdd/0OOcEgG5PoklSgKdjhoIglwTE=
+	t=1789204829; cv=none; b=CYwz17cPKLDMNyy+wAa1+sZWMxc6G8/eqpDx0UvJB8ybZvKTsE/j4pRME3TLNyD6m4DMee0KtjPnTnqOmbTgIP4cxWAnvIF0zf2M7w3rbHmDO/Yo7Jv0DHTZ8ote/LkztFHdOx8czAD2lwugziY0uG4n85uEtdElDkaYSmKyUFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204824; c=relaxed/simple;
-	bh=ODRpphoMeQ3P+XwQL5Q/JDpHPtVXfJNKjnFfetNP4Rs=;
+	s=arc-20240116; t=1789204829; c=relaxed/simple;
+	bh=a7AIceGFZ9yBt9VWE39e5B8dm7R3PZ3MEfb0qqYVZaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j76hg6DbjO0xR9O90AZtiVCGLuGic27eY+Ei+fBTgJqETv4JrNLT3pMz/jP0tbwhe34YpF6TACf95li+Vok/n1YsL2th52a/HuaIacxpF0ooAUr4Q8LdHv+/G2JwxpJgM+LZ74Yj5ZQbl9UdjOSZvPb/L/G5dDg1ycSv+quGKDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zLsLFyHi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nbXl+8EqBFtqR8MZM6S0876pzlMQig1PKvLzYlXTdEsSEiJo96snhX0LFbeP1h/lZOIS1zl+ayNnlgq+mBBOT0UsHKWwlBstJGL0DmZZ0cxQ/x3cFvidbW3YLUjMvEUeXZ1xbBiByOg6mXuW+nENpygN29/Cke8KUSVyHdqoyZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxMhH8D8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zLsLFyHi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0634F1F000FF;
-	Sat, 12 Sep 2026 09:20:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxMhH8D8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23AFB1F000FF;
+	Sat, 12 Sep 2026 09:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204823;
-	bh=heuxQveaFP7NWZFMA8uKKOBQDHnlxc5clYBUnoVyZyQ=;
+	s=korg; t=1789204828;
+	bh=ElONuB6wmalYW3scaQVpenn4+tDaJQ/vamoS7QuV7uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zLsLFyHilDLSTD8mYv6jsnqYXS/w651aprBSNOeDtw2k77aXq1ZphwUFRPgd1Jd0c
-	 fiLJQiMyPw1VuFkM0YsNyCE0zPtWjSVSPUxdY5dKpoMilEy7RTk2lKoAkNx1Sic1BB
-	 1JDMR2IqHliEjkIfgxf2CVUsR0k2FfAVAwqVPOBc=
+	b=qxMhH8D8FG8kM+pBaQ65KdOdT+zTaISVQX0VK377ABsXBYdRxfg9EIk/4x5HbTf/R
+	 dKBzaav7+pOeMCyMV6YOn+KVNseIqwiOD3C8rGtZZNf0JO0gfE7iBSO8yAlHhcEqEv
+	 lZrisBbwGHCXRdfnbzn4JVnwUagYkcacntZyRIZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1690/1815] NFSv4.2: fix LAYOUTSTATS send buffer exhaustion
-Date: Sat, 12 Sep 2026 08:57:20 +0200
-Message-ID: <20260912065728.655944369@linuxfoundation.org>
+Subject: [PATCH 7.2 1650/1815] irqchip/gic-v5: Release IRS iomem region on driver init failure
+Date: Sat, 12 Sep 2026 08:56:40 +0200
+Message-ID: <20260912065727.730868781@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,56 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Lorenzo Pieralisi <lpieralisi@kernel.org>
 
-[ Upstream commit c75ef2137e749f2673f0617cfdaae53b2bb7195a ]
+[ Upstream commit dc2eae1620bdb4562aa43f1c34c8427308ab4436 ]
 
-encode_layoutstats_maxsz budgets XDR_QUADLEN(PNFS_LAYOUTSTATS_MAXSIZE),
-i.e. 256 bytes, for the layoutupdate4 body written by the layout driver.
-The flexfiles record can exceed that.
+In gicv5_irs_of_init(), an IRS is set-up using of_io_request_and_map() to
+request its memory region (corresponding to the configuration frame) and
+map the IRS configuration frame.
 
-ff_layout_encode_ff_layoutupdate() emits, per data server, a netaddr4,
-an nfs_fh4, two ff_io_latency4, an nfstime4 and a bool.  A data server
-whose filehandle is NFS_MAXFHSIZE bytes long already accounts for 132 of
-those bytes, and the two ff_io_latency4 at 64 bytes each, the nfstime4
-and the bool add a further 144, so the body passes 256 bytes before the
-netaddr4 is encoded at all.  encode_layoutstats() additionally writes
-the deviceid4 and the layoutupdate4 lou_type word, neither of which the
-macro accounts for.
+On gicv5_irs_of_init() failure, the driver unmaps the IRS iomem region but
+does not release the requested memory region leaving it allocated in the
+iomem resource tree.
 
-The filehandle and the address are both chosen by the server, through
-LAYOUTGET and GETDEVICEINFO, so it can drive the encoder past the
-end of the send buffer.  xdr_reserve_space() returns NULL once that
-happens, and the two ff_layout_encode_io_latency() calls run with
-dss_info->mirror->lock held, so a NULL return there leaves the lock
-permanently held.
+Fix it by releasing the iomem region on gicv5_irs_of_init() probe failure.
 
-Raise PNFS_LAYOUTSTATS_MAXSIZE to 384 so that the record fits inside the
-reservation.
+Likewise, on both OF and ACPI driver init failure, IRS iomem regions are
+requested but never released in gicv5_irs_remove().
 
-Fixes: 27c430644369 ("pnfs/flexfiles: encode LAYOUTSTATS flexfiles specific data")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Stash a copy of the IRS iomem region in a struct resource in
+struct gicv5_irs_chip_data and use it to release the requested region in
+gicv5_irs_remove() if the driver probe fails.
+
+Fixes: 5cb1b6dab2de ("irqchip/gic-v5: Add GICv5 IRS/SPI support")
+Fixes: 35866efa52fe ("irqchip/gic-v5: Add ACPI IRS probing")
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://sashiko.dev/#/message/20260810104747.E5CE71F000E9%40smtp.kernel.org
+Link: https://patch.msgid.link/20260812-gicv5-7-2-fixes-v1-5-3743e82c69a4@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/nfs_xdr.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v5-irs.c   | 10 ++++++++++
+ include/linux/irqchip/arm-gic-v5.h |  2 ++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/include/linux/nfs_xdr.h b/include/linux/nfs_xdr.h
-index 11c5b31cfc7da..e8144048cd0ec 100644
---- a/include/linux/nfs_xdr.h
-+++ b/include/linux/nfs_xdr.h
-@@ -354,7 +354,7 @@ struct nfs4_layoutreturn {
- 	struct nfs4_xdr_opaque_data ld_private;
- };
+diff --git a/drivers/irqchip/irq-gic-v5-irs.c b/drivers/irqchip/irq-gic-v5-irs.c
+index 9d25ce8bfd8c9..86da9f82a7b0c 100644
+--- a/drivers/irqchip/irq-gic-v5-irs.c
++++ b/drivers/irqchip/irq-gic-v5-irs.c
+@@ -740,6 +740,7 @@ static int __init gicv5_irs_init(struct gicv5_irs_chip_data *irs_data)
+ static int __init gicv5_irs_of_init(struct device_node *node)
+ {
+ 	struct gicv5_irs_chip_data *irs_data;
++	struct resource res;
+ 	void __iomem *irs_base;
+ 	u8 iaffid_bits;
+ 	u32 idr;
+@@ -757,6 +758,11 @@ static int __init gicv5_irs_of_init(struct device_node *node)
+ 		goto out_err;
+ 	}
  
--#define PNFS_LAYOUTSTATS_MAXSIZE 256
-+#define PNFS_LAYOUTSTATS_MAXSIZE 384
++	if (of_address_to_resource(node, ret, &res)) {
++		ret = -EINVAL;
++		goto out_err;
++	}
++
+ 	irs_base = of_io_request_and_map(node, ret, of_node_full_name(node));
+ 	if (IS_ERR(irs_base)) {
+ 		pr_err("%pOF: unable to map GICv5 IRS registers\n", node);
+@@ -765,6 +771,7 @@ static int __init gicv5_irs_of_init(struct device_node *node)
+ 	}
  
- struct nfs42_layoutstat_args;
- struct nfs42_layoutstat_devinfo;
+ 	irs_data->fwnode = of_fwnode_handle(node);
++	irs_data->res = res;
+ 	gicv5_irs_init_bases(irs_data, irs_base, of_property_read_bool(node, "dma-noncoherent"));
+ 
+ 	idr = irs_readl_relaxed(irs_data, GICV5_IRS_IDR1);
+@@ -794,6 +801,7 @@ static int __init gicv5_irs_of_init(struct device_node *node)
+ 	gicv5_irs_clear_affinity(irs_data);
+ 	gicv5_irs_disable(irs_data);
+ 	iounmap(irs_base);
++	release_mem_region(res.start, resource_size(&res));
+ out_err:
+ 	kfree(irs_data);
+ 	return ret;
+@@ -810,6 +818,7 @@ void __init gicv5_irs_remove(void)
+ 		gicv5_irs_clear_affinity(irs_data);
+ 		gicv5_irs_disable(irs_data);
+ 		iounmap(irs_data->irs_base);
++		release_mem_region(irs_data->res.start, resource_size(&irs_data->res));
+ 		list_del(&irs_data->entry);
+ 		kfree(irs_data);
+ 	}
+@@ -958,6 +967,7 @@ static int __init gic_acpi_parse_madt_irs(union acpi_subtable_headers *header,
+ 	}
+ 
+ 	gicv5_irs_init_bases(irs_data, irs_base, irs->flags & ACPI_MADT_IRS_NON_COHERENT);
++	irs_data->res = *r;
+ 
+ 	gicv5_irs_acpi_init_affinity(irs->irs_id, irs_data);
+ 
+diff --git a/include/linux/irqchip/arm-gic-v5.h b/include/linux/irqchip/arm-gic-v5.h
+index f78787e654f4c..2c2fb39f049c3 100644
+--- a/include/linux/irqchip/arm-gic-v5.h
++++ b/include/linux/irqchip/arm-gic-v5.h
+@@ -6,6 +6,7 @@
+ #define __LINUX_IRQCHIP_ARM_GIC_V5_H
+ 
+ #include <linux/iopoll.h>
++#include <linux/ioport.h>
+ 
+ #include <asm/cacheflush.h>
+ #include <asm/smp.h>
+@@ -324,6 +325,7 @@ struct gicv5_irs_chip_data {
+ 	struct list_head	entry;
+ 	struct fwnode_handle	*fwnode;
+ 	void __iomem		*irs_base;
++	struct resource		res;
+ 	u32			flags;
+ 	u32			spi_min;
+ 	u32			spi_range;
 -- 
 2.53.0
 
