@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D72047CC7F;
-	Sat, 12 Sep 2026 13:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692D633F59A;
+	Sat, 12 Sep 2026 13:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220018; cv=none; b=b8mb9nlrqzdcAQESCBBP0DLdchrIajBZpzcQaK6aTw9UKyewBUV+rjS0U2UmT32VHZFCAXoP469M3VtKGu3Cunkvze1XcEpiLwuZ64JVXvWKsXaTRd7aV3neKltVepOCSQrt/i0qyhnfGyRqJhhWL/2EW/caS/YynCjLoYU6Atg=
+	t=1789220023; cv=none; b=iPvByL2hSObG3Jr+JFt48HPDyHipgl6Um+p7Wk8jBhbDJgSvw2fFZ6Ch0YD/BTr/yRymyjMfObCVAGDyfxoOkkalru0A0m+jcYa8TpWxXgqi2fKitTM0uFo3ihhHipLjsnfbAui6Qwmp91/ZNgxkcyrfXWbHHiD5DNTsqWvcv30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220018; c=relaxed/simple;
-	bh=NSK1a6m3RrHEzwCN6E2Os7cGVx04gTCHGSzfJkWK+eM=;
+	s=arc-20240116; t=1789220023; c=relaxed/simple;
+	bh=G/zSH0AP41x3vj6ItpW6WIU/1YKkAH6YbyuruzlLgpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4pSylnCQjqI70/JRmquvJuKUn4V3/WoKaLgdP84WMog+XZ2cvgK8SA0GGhiIivfR4JBdTjIG59f971S0Ct8EfO6L7So6fQpTyej4EApQL/oYDcRWCqoEbm2wE99lqdhtvW0qbAOn89RQDB/FHsVpcNn3PhUwqcZvhNT96nSVMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJy0DJ+X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VucLu+LWpoc3vu2jd9Vl6bad/n8J8TO5jbbmqO4hWMmM2Q+5Mj8Mfd3/yCa9bcWIWc4VecpkHk6r/ymFkCtJVfPboFRBvpfZJvNurugznBQAP4HkWXiaBoFpMVUbF5QYwMgKKrho8CPdvbEP9lWo/3Ewu4D+NL6Rq9x9M2nd294=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U5HbpGJH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJy0DJ+X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377B01F000FF;
-	Sat, 12 Sep 2026 13:33:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U5HbpGJH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 247C11F000FF;
+	Sat, 12 Sep 2026 13:33:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220017;
-	bh=EjeUhZ9ColjuMTWqNmCH/Ds0U6arjA9I+xm6yJyanyA=;
+	s=korg; t=1789220022;
+	bh=7F/3C/5aeksN8A51Kb373mMAD3x+8gR72l4sWYHgtZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JJy0DJ+XtLvyyOK4FwO883vcTyUj1FSrU+uGKG2zAFWlYfrGf/Aw2qdpt30AYYM31
-	 sNoE5Y0w1ThNLNj0o66u0cfK61mzKOQcw0miDocvGvgg+kAI30nsvmGDJwomoTxQyZ
-	 DbO7P9Dn8fqEa9Pb+z/hht3VOglbYi9v7QQAukm4=
+	b=U5HbpGJHq2ouq+8wGc8+GB9bIVB0ZHSIwPIwJem6bsEVYkdDQONaUTg8oPplT0wD6
+	 1CDY1wniMaYxcik00xktfL1JJhAQg7Mvk+PxiuAStTWDV1cQg2CP2ENftPx5XuoXQG
+	 a+OF022zoz8A4A3KK1JwneJSc1l9IaNE3Wasw4oE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Page <sam@bynar.io>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.6 0091/1424] fs/ntfs3: fix info-leak on partial LZNT decompress in ni_read_frame()
-Date: Sat, 12 Sep 2026 08:42:03 +0200
-Message-ID: <20260912065609.343573760@linuxfoundation.org>
+Subject: [PATCH 6.6 0092/1424] fs/ntfs3: bound page_lcns[] index by the log record
+Date: Sat, 12 Sep 2026 08:42:04 +0200
+Message-ID: <20260912065609.366278710@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,60 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Page <sam@bynar.io>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit 35d1ea92c7d946e2ebdbe36cdb2c969c8704bebd upstream.
+commit 6f7b9dbdc1b7520206abce0049bdd143eb536e75 upstream.
 
-ni_read_frame() decompresses an LZNT $DATA frame into the vmapped target
-pages and then trusts decompress_lznt()'s return value:
+The copy_lcns loop and the redo shorten loop index page_lcns[] at j + i,
+where i runs up to the log record's lcns_follow. That count is checked only
+against the record's own length, not the target entry, so check_dp_table()
+(which validates the entry's lcns_follow) does not cover it: the copy_lcns
+entry may even be freshly allocated after that check, and find_dp() bounds j
+but not i. A crafted record thus overflows page_lcns[] of an otherwise valid
+entry.
 
-  unc_size = decompress_lznt(frame_ondisk, ondisk_size, frame_mem,
-                             frame_size);
-  if ((ssize_t)unc_size < 0)        err = unc_size;
-  else if (!unc_size || unc_size > frame_size)  err = -EINVAL;
+Add dp_range_ok() and reject, before each loop, any record whose run does
+not fit the entry. These are the only two page_lcns[] accesses indexed by
+the record rather than the entry, so together with the entry validation
+every access is now bounded.
 
-decompress_lznt() stops as soon as the compressed stream is exhausted
-(e.g. a zero chunk header) and returns the number of bytes it actually
-wrote, which may be far less than frame_size. The bytes between unc_size
-and frame_size are never written. The only memset() that follows zeroes
-the region beyond i_valid; when the frame lies entirely within the file's
-valid size that memset() does not run, so the gap retains whatever was in
-the just-vmapped pages. All pages are then marked uptodate and returned
-to userspace, disclosing uninitialized (recently-freed) kernel page
-memory. A crafted compressed file whose stream decompresses to only a few
-bytes leaks the remainder of every frame on a plain read(2), which is
-enough to recover kernel pointers and defeat KASLR.
-
-Zero the [unc_size, frame_size) tail immediately after a successful LZNT
-decompress so the remainder reads back as zero.
-
-Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
 Cc: stable@vger.kernel.org
-Assisted-by: Bynario AI
-Signed-off-by: Samuel Page <sam@bynar.io>
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+[almaz.alexandrovich@paragon-software.com: original patch contained changes to the problem already handled, applied partly]
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/frecord.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ntfs3/fslog.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -2707,6 +2707,15 @@ int ni_read_frame(struct ntfs_inode *ni,
- 			err = unc_size;
- 		else if (!unc_size || unc_size > frame_size)
- 			err = -EINVAL;
-+		else if (unc_size < frame_size) {
-+			/*
-+			 * Partial decompress: zero the [unc_size, frame_size)
-+			 * tail.  decompress_lznt() leaves it untouched, so
-+			 * without this the freshly vmapped pages would expose
-+			 * uninitialized kernel memory to userspace.
-+			 */
-+			memset(frame_mem + unc_size, 0, frame_size - unc_size);
-+		}
- 	}
- 	if (!err && valid_size < frame_vbo + frame_size) {
- 		size_t ok = valid_size - frame_vbo;
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -648,6 +648,14 @@ static inline void *enum_rstbl(struct RE
+ }
+ 
+ /*
++ * dp_range_ok - true if [j, j + count) fits in a page_lcns[cap] array.
++ */
++static inline bool dp_range_ok(size_t j, u32 count, u32 cap)
++{
++	return j < cap && count <= cap - j;
++}
++
++/*
+  * find_dp - Search for a @vcn in Dirty Page Table.
+  */
+ static inline struct DIR_PAGE_ENTRY *find_dp(struct RESTART_TABLE *dptbl,
+@@ -5095,6 +5103,13 @@ find_dirty_page:
+ 	/* Shorten length by any Lcns which were deleted. */
+ 	saved_len = dlen;
+ 
++	if (!dp_range_ok(le64_to_cpu(lrh->target_vcn) - le64_to_cpu(dp->vcn),
++			 le16_to_cpu(lrh->lcns_follow),
++			 le32_to_cpu(dp->lcns_follow))) {
++		err = -EINVAL;
++		goto out;
++	}
++
+ 	for (i = le16_to_cpu(lrh->lcns_follow); i; i--) {
+ 		size_t j;
+ 		u32 alen, voff;
 
 
