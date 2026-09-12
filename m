@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611D7456DE1;
-	Sat, 12 Sep 2026 11:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000393DD51A;
+	Sat, 12 Sep 2026 11:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211183; cv=none; b=UUmP71fqK68vpQvmbqzIY70Akk2ObReUDxukbj0gQAUvN+hWgx9p7h9lBYj32wVyLEzh0BivUCPx4EU5rlwTnNxkzVV/pmsm/c/XPQEHnHoqN3nO/MRTQjyMZNUaHTdSNTcrnAcq9UzoWpTKqHhe+qa+S+6CnE9i+t9ixgR4YCY=
+	t=1789211188; cv=none; b=K2ofujM0Urbprnlrpnl1+VUodt0mEMUXjs0llPMzfSdZVBxvtr3tXLmVzTx5w8SemOVywvWd0Yjlu+Zv//ZBkI62FWWEyaWT7fDFGsRvnV8KvZ24Wtp4Efa7d4IlMSRP1T7fP5uN/hwMkNwXPmDRuRTUS96K5EFNaMwMvI3ZNWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211183; c=relaxed/simple;
-	bh=RTJQNq23HuFRoqcK8j26/kvXvZCMg6FQ9jy9nIapJqQ=;
+	s=arc-20240116; t=1789211188; c=relaxed/simple;
+	bh=8Z2qIrC5xVZrllCI/XJUOcVdKqarh9Fye3ZxqYczXiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xf9rFtNr/ZtO0qhX1cCWeqLEe3ocMsCMQJ4VDB4Eu2g2EuXlDf2qDbCm7yxPYl+eFVwvFs8MSU/ltgqmEUcBIU2DF+09kw8ll2gFqdfDmgNW+hTnr6ebmqfzN3hE3BZuy8/as3gtHGL4tdyjwG4DWh/O7MkiPeetbapBXqF31HE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtQCJ/Oh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kQtfrMg4S5Pc8LtnsUYIMcxcR46MtI0D8l8d1PkksNvo2FHKlkSc3bhtNmIRWeGLDUMrSNS4ckH2gcAuSjAp6tGavJzkbGNxoR5HfakppjVat4wqEhRZUfWuolQa7QI1wSrHOub3NulDJS/D1r7G9jb0QQp9tVgVI9KGN6wWXzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxVpjCVo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtQCJ/Oh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA881F000FF;
-	Sat, 12 Sep 2026 11:06:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxVpjCVo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF8871F000FF;
+	Sat, 12 Sep 2026 11:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211182;
-	bh=TM4B70Pi22Pf1L8/XWExhpp6qOYZ9p4vhyE6dg7Mu8A=;
+	s=korg; t=1789211186;
+	bh=6DMr8ga6DOmmaa91f5WTTFxSJfr3A3I5RW+vz98lNPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PtQCJ/OhrdSSmH3ES6QXSQuLz+i1+qT3iqMy7InAno/IZYdz8ZgoAK99aJz3RAb5v
-	 J9eX89BHdMX6i3s6n7UmBY4pzmxrGVqMUrxiIZLhLp6CZpjvBfJZm/3VXGC8KiZIYM
-	 pVwpLe/+urVssClVqM7XghFDfxQ2jn1qoWpFIOfg=
+	b=BxVpjCVoMvpnswRgxgyygrf34pRLHlZwcHSwFc6As8HBnQj8vY/exsXM8k8OmIHUX
+	 TZs28b7+AcJkWKJNPqkCoJ4lIXOG5da9YRFclHglnAQ5kY97/A4kXr/lo3JpluGRXG
+	 yVblHGuZp4WrfLp3cJhJAqq6a71kp097PR3YB3Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -37,9 +37,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Heming Zhao <heming.zhao@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1177/1518] ocfs2: validate orphan slot during inode read
-Date: Sat, 12 Sep 2026 08:55:46 +0200
-Message-ID: <20260912065650.101335404@linuxfoundation.org>
+Subject: [PATCH 6.18 1178/1518] ocfs2: validate DIO orphan slot during inode read
+Date: Sat, 12 Sep 2026 08:55:47 +0200
+Message-ID: <20260912065650.124671091@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -60,27 +60,13 @@ Content-Transfer-Encoding: 8bit
 
 From: ZhengYuan Huang <gality369@gmail.com>
 
-[ Upstream commit b2d31acbd3b182755b019183fb46949ba5e39b9f ]
-
-Patch series "ocfs2: validate active orphan slots during inode read".
-
-OCFS2 trusts active ordinary and append-DIO orphan slots read from dinodes.
-A corrupted slot can therefore index osb_orphan_wipes or the slot-local
-system-inode cache outside their allocations before the corruption is
-reported.
-
-Patch 1 validates the ordinary orphan slot used by inode wipe processing.
-Patch 2 validates the append-DIO orphan slot used by DIO completion and
-orphan recovery.  Both checks reject corrupt metadata at the existing inode
-validation boundary.
-
-This patch (of 2):
+[ Upstream commit bb88131c9831075b8dc08cdd375743e5d44c7ca2 ]
 
 [BUG]
-A corrupted dinode with OCFS2_ORPHANED_FL can carry an
-i_orphaned_slot outside the mounted filesystem slot range.
-ocfs2_wipe_inode() uses it to index osb_orphan_wipes before looking
-up the orphan directory, causing an out-of-bounds memory access.
+A corrupted append-DIO dinode (high byte at offset 0xa1
+corrupted from 0 to 1) can carry an i_dio_orphaned_slot
+outside the mounted filesystem slot range and trigger a
+use-after-free error:
 
 BUG: KASAN: slab-use-after-free in ocfs2_get_system_file_inode+0x780/0x820 fs/ocfs2/sysfile.c:102
 Read of size 8 at addr ffff88800b767c00 by task kworker/u8:3/85
@@ -99,17 +85,17 @@ Call Trace:
  ...
 
 [CAUSE]
-ocfs2_validate_inode_block() validates i_suballoc_slot but leaves
-the active ordinary orphan slot unchecked. Downstream consumers
-assume that the value is smaller than osb->max_slots.
+ocfs2_del_inode_from_orphan() uses i_dio_orphaned_slot to index the
+slot-local system inode cache. The dinode validator does not check
+this active slot, so an out-of-range value produces an invalid cache
+entry pointer that is dereferenced as an inode pointer.
 
 [FIX]
-Reject an active i_orphaned_slot outside the slot range during
-dinode validation, before the inode reaches orphan wipe processing.
+Reject an active i_dio_orphaned_slot outside the slot range during
+dinode validation, before DIO orphan recovery can consume it.
 
-Link: https://lore.kernel.org/20260803030007.3993199-1-gality369@gmail.com
-Link: https://lore.kernel.org/20260803030007.3993199-2-gality369@gmail.com
-Fixes: b4df6ed8db0c ("[PATCH] ocfs2: fix orphan recovery deadlock")
+Link: https://lore.kernel.org/20260803030007.3993199-3-gality369@gmail.com
+Fixes: 06ee5c75b575 ("ocfs2: add functions to add and remove inode in orphan dir")
 Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Cc: Mark Fasheh <mark@fasheh.com>
@@ -125,18 +111,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 8 insertions(+)
 
 diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
-index d247d69349e4a..a33de57f31618 100644
+index a33de57f31618..9ec3a7657b5b6 100644
 --- a/fs/ocfs2/inode.c
 +++ b/fs/ocfs2/inode.c
-@@ -1538,6 +1538,14 @@ int ocfs2_validate_inode_block(struct super_block *sb,
+@@ -1546,6 +1546,14 @@ int ocfs2_validate_inode_block(struct super_block *sb,
  		goto bail;
  	}
  
-+	if ((le32_to_cpu(di->i_flags) & OCFS2_ORPHANED_FL) &&
-+	    le16_to_cpu(di->i_orphaned_slot) >= OCFS2_SB(sb)->max_slots) {
-+		rc = ocfs2_error(sb, "Invalid dinode %llu: orphaned slot %u\n",
++	if ((le32_to_cpu(di->i_flags) & OCFS2_DIO_ORPHANED_FL) &&
++	    le16_to_cpu(di->i_dio_orphaned_slot) >= OCFS2_SB(sb)->max_slots) {
++		rc = ocfs2_error(sb, "Invalid dinode %llu: DIO orphaned slot %u\n",
 +				 (unsigned long long)bh->b_blocknr,
-+				 le16_to_cpu(di->i_orphaned_slot));
++				 le16_to_cpu(di->i_dio_orphaned_slot));
 +		goto bail;
 +	}
 +
