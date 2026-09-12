@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C9A2E285C;
-	Sat, 12 Sep 2026 14:05:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB9A2DBF75;
+	Sat, 12 Sep 2026 14:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221939; cv=none; b=YBJU4EH5zVFjwfbrdVo8fFL6tuYmn/1qI2cyk7HI1tD91z8j2v63+YpoIxgqyOn6zrrFQU5v+2gYzqzOdmn89E3+x8VcHKFVtQPAYrklFrFXVtl63znaXeOUDWJd0iOvfh1goH9Kms/pw2ZBj9J+z4pW+oPkGSFLuq7HnzwBxVI=
+	t=1789221944; cv=none; b=ton/7J7xUXFSyng/deGRlDlzXK+JnCtIWIoMTR65o3dktpwO98pKkUcfFf2MJ/Azh83AVGgXn4GefgHB/lvhvfs62ZaE7kJwVQxPTghanjUizCjO485LZsDkfLtJiSYeXZsWtCWBpSX4jRIwNqpW784jN79na8y4KyjD2wdUnkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221939; c=relaxed/simple;
-	bh=cRrN3I3y0pd0I1DYuxWAhVQCtqxLtQRHk072ogKn0g4=;
+	s=arc-20240116; t=1789221944; c=relaxed/simple;
+	bh=Ysf9idulYNhKCqxVu8JG42kShwHI5/5KJ+/M9TSdKbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uAh0tt3i1eqzbYOIVQdvn/ryVnYhBvjkFSNH7zJx4yKr5iuJcjY37JKE9smOdy73Sz5uRhVSwe9VHK5q1Jd5XDrG/163Rpz0YZxEbuZ9m4ww3c9wdZZINwHkCeMc4JLjB2+v2dI5uAmZS3HqbmJLUHs25ddygy4lLPJUXvENKIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfeEwhKu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M5K0scM8K9df7wMV+vI95c06ic+D2Jk/SzACXYXI5Hpz1CQqgdc9aIqQLWKy5gykSHeBoCPO76P+jrLVaUHS2ejJjgOP44BuWeI3kKh/ZBk9dtckfzsUOP9Z7zUUHGOWx+bLhjLtlkSNOKqt2+4hGGsEjgl5Kw4WbWsbd9oEWQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4Y/yyhq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfeEwhKu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A081F000FF;
-	Sat, 12 Sep 2026 14:05:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4Y/yyhq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 123EE1F000FF;
+	Sat, 12 Sep 2026 14:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221938;
-	bh=gIddvwXAObSjJkJ4MvwWPjc9OPTJP3vIJig03GQKWLk=;
+	s=korg; t=1789221943;
+	bh=Wle8U1CMoEJyLfNv4Fw2bmpriF5ZAlaaL5GEnBU9r4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jfeEwhKu5H3fn2GRE/3QZXEtfNdMv9D0o7ujmOdBIMCLzUe1en4euET2I/rcVhEvD
-	 Pb6bJm1DKwa5RWWl9Wtamzv3yRtHW0/qWGm7Ub7RFs2cH4edg3sOUwuoJipvS6aBxD
-	 3URm/ktssQ8CXDBmmuqgW5wRkjCV1HIXuUG8YeBo=
+	b=C4Y/yyhqHOjGONd0cufyifRYg4/tkfpCShDmrIatjKkc2nVWtn1FZtht8afmKl6Eu
+	 2234N+cIkz0eWr1ZAy4WT308FWEORU0fsr2r/tALrc4vUUyaJepcssI+iZSIgJcnaa
+	 T1jec6xMGDLaoRsZF+beKoTGlmYajo3RHkp78LZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Valery Borovsky <vebohr@gmail.com>
-Subject: [PATCH 6.6 0441/1424] media: airspy: use vb2_video_unregister_device() on disconnect to fix NULL deref
-Date: Sat, 12 Sep 2026 08:47:53 +0200
-Message-ID: <20260912065617.161184116@linuxfoundation.org>
+	Jonas Karlman <jonas@kwiboo.se>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 0442/1424] media: cec: core: Fix kmemleak due to missed rc_free_device() call
+Date: Sat, 12 Sep 2026 08:47:54 +0200
+Message-ID: <20260912065617.183581334@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,78 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-commit 2f378dc45e685fc825d2dd08e7864666d6fcc009 upstream.
+commit a24ba0653f7154e671dc8d2bf64682ab2d042792 upstream.
 
-airspy_disconnect() clears s->udev under v4l2_lock, but
-airspy_stop_streaming() unconditionally calls airspy_ctrl_msg() and
-airspy_free_stream_bufs() afterwards. If a streaming user closes the
-device after disconnect, stop_streaming() runs and dereferences the
-NULL s->udev:
+The commit dccc0c3ddf8f ("media: rc: fix race between unregister and
+urb/irq callbacks") removed the implicit call to rc_free_device() from
+rc_unregister_device(). However, the commit missed to remove the NULL
+assignment of adap->rc that is now causing rc_free_device() to never be
+called on an allocated rc device.
 
-  airspy_stop_streaming()
-    airspy_ctrl_msg(s, CMD_RECEIVER_MODE, 0, 0, NULL, 0)
-      usb_sndctrlpipe(s->udev, 0)         /* NULL deref */
-    airspy_free_stream_bufs(s)
-      usb_free_coherent(s->udev, ...)     /* NULL deref */
+kmemleak reports following after e.g. dw-hdmi unbind:
 
-The airspy driver uses vb2_fop_release() in its file_operations, so
-replace video_unregister_device(&s->vdev) with
-vb2_video_unregister_device(&s->vdev) and move it before clearing
-s->udev. vb2_video_unregister_device() releases the vb2 queue, which
-synchronously runs airspy_stop_streaming() if streaming is active, so
-the URBs, coherent DMA stream buffers and the hardware stop control
-message all execute while s->udev is still valid.
+unreferenced object 0xffff00010ac10000 (size 4096):
+  comm "kworker/u16:1", pid 39, jiffies 4294897739
+  hex dump (first 32 bytes):
+    20 23 4b 0a 01 00 ff ff 08 00 c1 0a 01 00 ff ff   #K.............
+    08 00 c1 0a 01 00 ff ff 00 00 00 00 00 00 00 00  ................
+  backtrace (crc e11baccc):
+    kmemleak_alloc+0x38/0x44
+    __kmalloc_cache_noprof+0x4a8/0x5e0
+    rc_allocate_device+0x48/0x2a0
+    cec_allocate_adapter+0x3ac/0x800
+    dw_hdmi_cec_probe+0x264/0x634
+    platform_probe+0xc0/0x188
+    really_probe+0x4a4/0x8e0
+    __driver_probe_device+0x2f8/0x440
+    driver_probe_device+0x60/0x160
+    __device_attach_driver+0x1a0/0x2a0
+    bus_for_each_drv+0x100/0x1a0
+    __device_attach+0x174/0x350
+    device_initial_probe+0x90/0xb0
+    bus_probe_device+0x4c/0x120
+    device_add+0xdec/0x116c
+    platform_device_add+0x354/0x598
 
-vb2_video_unregister_device() locks vdev->queue->lock (vb_queue_lock)
-internally, and stop_streaming() locks v4l2_lock, so the previous outer
-mutex_lock(&s->vb_queue_lock) / mutex_lock(&s->v4l2_lock) pair around
-the unregister sequence would self-deadlock and has been removed. A
-short v4l2_lock critical section around s->udev = NULL remains so any
-ioctl path that still holds the file descriptor sees coherent state.
+Remove the assignment of adap->rc to NULL to let cec_delete_adapter()
+free the allocated rc device after last user of the cec device exits to
+fix the kmemleak.
 
-Issue identified by automated review of the INV-003 series at
-https://sashiko.dev/
-
-Fixes: 634fe5033951 ("[media] airspy: AirSpy SDR driver")
+Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
 Cc: stable@vger.kernel.org
-Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/airspy/airspy.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/media/cec/core/cec-core.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/media/usb/airspy/airspy.c
-+++ b/drivers/media/usb/airspy/airspy.c
-@@ -464,14 +464,21 @@ static void airspy_disconnect(struct usb
+--- a/drivers/media/cec/core/cec-core.c
++++ b/drivers/media/cec/core/cec-core.c
+@@ -399,9 +399,7 @@ void cec_unregister_adapter(struct cec_a
+ 		return;
  
- 	dev_dbg(s->dev, "\n");
- 
--	mutex_lock(&s->vb_queue_lock);
-+	/*
-+	 * vb2_video_unregister_device() releases the vb2 queue, which
-+	 * triggers airspy_stop_streaming() if streaming is active.
-+	 * stop_streaming() dereferences s->udev via airspy_ctrl_msg() and
-+	 * airspy_free_stream_bufs(), so it must run before s->udev is
-+	 * cleared. vb2_video_unregister_device() locks vb_queue_lock
-+	 * internally and stop_streaming() locks v4l2_lock, so neither may
-+	 * be held by the caller.
-+	 */
-+	v4l2_device_disconnect(&s->v4l2_dev);
-+	vb2_video_unregister_device(&s->vdev);
-+
- 	mutex_lock(&s->v4l2_lock);
--	/* No need to keep the urbs around after disconnection */
- 	s->udev = NULL;
--	v4l2_device_disconnect(&s->v4l2_dev);
--	video_unregister_device(&s->vdev);
- 	mutex_unlock(&s->v4l2_lock);
--	mutex_unlock(&s->vb_queue_lock);
- 
- 	v4l2_device_put(&s->v4l2_dev);
- }
+ #ifdef CONFIG_MEDIA_CEC_RC
+-	/* Note: rc_unregister also calls rc_free */
+ 	rc_unregister_device(adap->rc);
+-	adap->rc = NULL;
+ #endif
+ 	debugfs_remove_recursive(adap->cec_dir);
+ #ifdef CONFIG_CEC_NOTIFIER
 
 
