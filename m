@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D1031B10B;
-	Sat, 12 Sep 2026 13:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BBC3264D2;
+	Sat, 12 Sep 2026 13:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220876; cv=none; b=ARWkUzZbi85J3zSfiEDMFtQUi+phtYFD58ylQFv21LwwXG0rcDBAFJUEH9In1XbYr1CSuj4tNQryOxWkkvJj7QQyOgy5k8jHq9UqDNBXuhXmCnq1YgEJ60D57yS2EqU+oypBBSsF8uqzHsyJQ4wpTJHl3NYhe5+PjOxaH6Oft3I=
+	t=1789220882; cv=none; b=EHVGzs6KoqMkmoQLOmC+LVUNJUqKMKEYhWR0ObDBKpvcKRalLx+4dyf2fs13Q46t80c7DJtAGiT2EqOmZBFy89PuT+nIhCgKOick40VXH61sT2GlJCj+X9Y3p6x65uATn2FNmiaZkye0msmxV5JH7HIGKYeYBKfdsg9GX9gmAPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220876; c=relaxed/simple;
-	bh=9l09/o4Bk4gLaUNFOzDIEZ4hXqwo1M60HpaTSU48Xzs=;
+	s=arc-20240116; t=1789220882; c=relaxed/simple;
+	bh=RxbOJ225pMQU9m5mATzZ9dWv2w8TjEnSZxJg07lNazI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oq/hyP7cU3hsyaX/ZB+XTIyQF1bpfR8GKAi4N+UnWpKacWwkhXjXFvnzUTvnnR3gZfsB9jES2iWlPN8HCUTNPBBtog1RgAfoxbdTJvNVFJZYtlBr7lGYWPS/66YomHe5ycC7297TXcYXXsju4TmQrI2mZU8/zv5zk+ng+z61sZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSDn5nWu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ktsZYs1Fx8eG6agvtCgVy+2QlUrn37GwgxZzS+VqsFNGIZS1jiQIOCePpJCxv5CTogMdAh3jvaK2+dBKk1ld+FtRk/wihoU1ntK2Rb4eGR/TMCkgLLSsysaXyB89UrdOelhuMJokYjaurhmNLzrrJbYo1G2/hFAMS43dYDGqcPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWLLOY1m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSDn5nWu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0420D1F000FF;
-	Sat, 12 Sep 2026 13:47:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWLLOY1m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4EB1F000FF;
+	Sat, 12 Sep 2026 13:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220874;
-	bh=68Ur7pETS3ollToVWH30vUjpIZK1ecq8OJ7os71z34Y=;
+	s=korg; t=1789220878;
+	bh=xRQ4jwr5iHEwEse09Z6yfx7gBOaIwkZXfNhx3mkvPbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pSDn5nWudDhZn5vPWoP5ccTVYM3Oik9798F3PRB4Sw9cctor1cPCvGRxwspCMQAjS
-	 LZxmQNJhPfpz9a2lvCxIkDS+uMWEsCYdq/mhDJcFjAICqLd37TAZDtvA7xZKuz8I5C
-	 TkAnr9NUNnOpFA+UsIkeBxUb2KkYl3lnw34iJDes=
+	b=bWLLOY1mKUM9wndfCgJHkivU56Zo37ChZZNSvwZeRvClmuFcrCVSrnzgozSYce37K
+	 xT9Hru1tGt5w9a5rcbyAXFEATi+oqeT0t0fyiZ5YQXGN3jhKUEtQoi22Zx3LaZixtI
+	 B3qTuRHnZyvtuAgwLqGG15gnSkRua8sw4ROQh9uE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Breno Leitao <leitao@debian.org>,
+	Hidayath Khan <hidayath@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0268/1424] net/smc: do not dereference an unset send buffer on the SMC-D teardown path
-Date: Sat, 12 Sep 2026 08:45:00 +0200
-Message-ID: <20260912065613.276599272@linuxfoundation.org>
+Subject: [PATCH 6.6 0269/1424] net/smc: fix socket refcount leak in smc_switch_conns()
+Date: Sat, 12 Sep 2026 08:45:01 +0200
+Message-ID: <20260912065613.298467216@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,66 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Hidayath Khan <hidayath@linux.ibm.com>
 
-commit b395dd319cea422239cb45b998fb38d7e373af87 upstream.
+commit 719296c4aa8213d4ac8002e77d5956d436bc98d0 upstream.
 
-smc_close_stream_wait() calls smc_tx_prepared_sends() from inside its
-sk_wait_event() condition, and sk_wait_event() evaluates that condition
-once with the socket lock released. smcd_buf_detach() clears
-conn->sndbuf_desc from smc_conn_kill() under lock_sock(), so a link group
-terminating while a socket waits there leaves the helper dereferencing
-NULL, faulting out of close(). SIOCOUTQ reads the field by hand, and
-smc_close_cancel_work() drops the lock across two cancel_*_sync() calls.
+smc_switch_conns() takes a reference on the SMC socket before dropping
+lgr->conns_lock, so the connection stays alive while the CDC slot is
+fetched:
 
-Sample the pointer once in the helper, report nothing prepared while it is
-unset, and bound the ioctl the same way. The receive tasklet dereferences
-the field directly in smc_cdc_msg_recv_action(), not through this helper;
-1/2 is what keeps it from running that late.
+        sock_hold(&smc->sk);
+        read_unlock_bh(&lgr->conns_lock);
+        /* pre-fetch buffer outside of send_lock, might sleep */
+        rc = smc_cdc_get_free_slot(conn, to_lnk, &wr_buf, NULL, &pend);
+        if (rc)
+                goto err_out;
 
-Fixes: ae2be35cbed2 ("net/smc: {at|de}tach sndbuf to peer DMB if supported")
+The err_out label only drops the wr_tx link reference, so this early exit
+returns without the matching sock_put(). The second error exit is not
+affected, because sock_put() has already run by then.
+
+A leaked sk_refcnt means the smc_sock is never destroyed. Its send and
+receive buffers stay allocated, and for a user socket the reference held
+on the network namespace is never released, so the netns can no longer be
+torn down.
+
+smc_cdc_get_free_slot() fails when the target link goes down or when the
+connection has been killed while the switch is in progress. Both are
+reachable during the link failover this function implements, so the leak
+is triggered by the same hardware events that make smc_switch_conns() run
+in the first place.
+
+Restructure so there is a single sock_put() covering both outcomes,
+instead of adding a second one to the error path.
+
+Fixes: 95f7f3e7dc6b ("net/smc: improved fix wait on already cleared link")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
-Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-Link: https://patch.msgid.link/20260808-b4-disp-22f119e6-v2-2-61647601a6f3@proton.me
+Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
+Link: https://patch.msgid.link/20260820144729.1019399-1-hidayath@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/af_smc.c |    3 ++-
- net/smc/smc_tx.h |    6 +++++-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ net/smc/smc_core.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -3224,7 +3224,8 @@ static int smc_ioctl(struct socket *sock
- 			return -EINVAL;
- 		}
- 		if (smc->sk.sk_state == SMC_INIT ||
--		    smc->sk.sk_state == SMC_CLOSED)
-+		    smc->sk.sk_state == SMC_CLOSED ||
-+		    !READ_ONCE(smc->conn.sndbuf_desc))
- 			answ = 0;
- 		else
- 			answ = smc->conn.sndbuf_desc->len -
---- a/net/smc/smc_tx.h
-+++ b/net/smc/smc_tx.h
-@@ -20,11 +20,15 @@
- 
- static inline int smc_tx_prepared_sends(struct smc_connection *conn)
- {
-+	struct smc_buf_desc *sndbuf_desc = READ_ONCE(conn->sndbuf_desc);
- 	union smc_host_cursor sent, prep;
- 
-+	if (!sndbuf_desc)
-+		return 0;
-+
- 	smc_curs_copy(&sent, &conn->tx_curs_sent, conn);
- 	smc_curs_copy(&prep, &conn->tx_curs_prep, conn);
--	return smc_curs_diff(conn->sndbuf_desc->len, &sent, &prep);
-+	return smc_curs_diff(sndbuf_desc->len, &sent, &prep);
- }
- 
- void smc_tx_pending(struct smc_connection *conn);
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1086,13 +1086,13 @@ again:
+ 		read_unlock_bh(&lgr->conns_lock);
+ 		/* pre-fetch buffer outside of send_lock, might sleep */
+ 		rc = smc_cdc_get_free_slot(conn, to_lnk, &wr_buf, NULL, &pend);
+-		if (rc)
+-			goto err_out;
+-		/* avoid race with smcr_tx_sndbuf_nonempty() */
+-		spin_lock_bh(&conn->send_lock);
+-		smc_switch_link_and_count(conn, to_lnk);
+-		rc = smc_switch_cursor(smc, pend, wr_buf);
+-		spin_unlock_bh(&conn->send_lock);
++		if (!rc) {
++			/* avoid race with smcr_tx_sndbuf_nonempty() */
++			spin_lock_bh(&conn->send_lock);
++			smc_switch_link_and_count(conn, to_lnk);
++			rc = smc_switch_cursor(smc, pend, wr_buf);
++			spin_unlock_bh(&conn->send_lock);
++		}
+ 		sock_put(&smc->sk);
+ 		if (rc)
+ 			goto err_out;
 
 
