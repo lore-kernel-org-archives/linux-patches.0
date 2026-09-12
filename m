@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D740214A84;
-	Sat, 12 Sep 2026 12:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B9947A87A;
+	Sat, 12 Sep 2026 12:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216369; cv=none; b=F5XGwZKivzXDPOUvptuvbcqEqT474GUi1jAO1BFJ1k0TxTO4r82XQ+/vS5UEaOnMFzRSP4lMzxxZE5UDXZd9d7ezyWRB3N/aST5zoiNg66ZtWa7KanpafTVfHwa/weErql+qLnC8zqW92ZvQku0DNRSy8g56jH1HyvoxEdftGOA=
+	t=1789216374; cv=none; b=I0fPoF8W4B90wB89Upa35CkzMVoYtCvS1DCZWpWYilxkmr/NUkRrnExsynpgk42oc0RiAxIp6YSiXEVk7ZhqB6c0ipZmHuRQZfYUQuqBHSd2ssEMI43Nsj7KyKXwTWG5VSlAvzb5c7fD3Cw9uGPQ6pS+f1Z+zEJBSSXxkYqXFFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216369; c=relaxed/simple;
-	bh=3CC6Sb6POfCsDUblIF8PR1NZBDnqqyC3ZdVaAdaEc18=;
+	s=arc-20240116; t=1789216374; c=relaxed/simple;
+	bh=KYcV1moxWqm/UxJy9BK9YZPgkNHYa6oU3imYZYxVA2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hwREXaULrD5gb+19EJVXR2sJxRA/2QwBY3nl/3GgVHSRnwp2DkMCiHpXGxnjyg1Rkn85AeZMJkcDAbPq3cbaBXmopzvmCmylS6voGbOJBy2mPCVek4gy21oKWq2lvovGJONHdSq3kXb1kPEHkvSueNupX79/8nFpwHLgBAh3nro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJENY5Hx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YfKtGWOHDBsr+ZAIdpDYKqCZ+cQlUA9pYiI0i8fuVA53BCs8AH0zqwdZgk3CESFnMs7zw5ITpdbEgebAczF9sifmNke6YH6shcb/hXWZZ3wcAJ2amgy2iOKbXlzsKR0tEFsdh0GAzvEjKxf52fnITErHYSh43Ic2CxThkDi2NcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ZbroQGA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJENY5Hx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583A51F000FF;
-	Sat, 12 Sep 2026 12:32:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ZbroQGA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451401F000FF;
+	Sat, 12 Sep 2026 12:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216367;
-	bh=KLNw0XFo67MM+iDztd+R6yu+iQNYNWErL8zimtDzS+k=;
+	s=korg; t=1789216372;
+	bh=Sh53rNPZ8uVFNOThMMoTP5PQfihu0T/RB+LB6eVSmqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xJENY5HxY9MK2aGtWXiWibc8qDA1K860+1+9mUTmSaLS0H1d/EJzXhA7wXquTBFYk
-	 uczo+dWlmNNIl2a4UjYiTPct7XfszuaRQ4u9m9ZmQKCa7VIQg9EXNkpDaeJEfgjgxi
-	 oAqRJDwCCIYoyqi9KdMm5wkcSZ+PEAL9P4tNltRI=
+	b=1ZbroQGAwHGPblqA/dRkRY1RMTczr1TeWp1IwAUOc2nIO+q/iE6d2OKa9dCSrTIYu
+	 gagRxVBfhy68PefgfKqL+rlEr059u60NMtlozaDPx7+vDCh6Vzr4DzZ3zAAbjWDNWX
+	 S+BXi7zEYjsV088Ocz7mimubIvzLUi6NMjw+E9Vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike McGowen <mike.mcgowen@microchip.com>,
-	Don Brace <don.brace@microchip.com>,
-	David Strahan <david.strahan@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0722/1376] scsi: smartpqi: Fix AIO retry marker cleared by SCSI core between dispatches.
-Date: Sat, 12 Sep 2026 08:52:28 +0200
-Message-ID: <20260912065623.632051243@linuxfoundation.org>
+Subject: [PATCH 6.12 0723/1376] RDMA/mlx5: Fix stack out-of-bounds read in cc_params debugfs
+Date: Sat, 12 Sep 2026 08:52:29 +0200
+Message-ID: <20260912065623.654295171@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,79 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Strahan <David.Strahan@microchip.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 225548863f0a2350c6f34231ca56710c3dd1a5d5 ]
+[ Upstream commit 03826bc1fa6c90405bf05831f2b501a8368dcd27 ]
 
-On recent Linux kernels the driver can enter a retry loop on the AIO fast
-path when a request is retried, looping until timeout.  A diagnostic path
-that takes a physical drive offline on AIO-bypass failure is also never
-entered on affected kernels.
+get_param() reads a congestion parameter as a u32 but formats it with the
+signed "%d" into an 11-byte stack buffer. A value with bit 31 set, such as
+0x80000000, renders as "-2147483648\n" whose full length is 12. snprintf()
+stores only 11 bytes yet returns 12, so simple_read_from_buffer() treats 12
+bytes as valid and reads one byte past lbuf[].
 
-Register a per-command initialization callback with the SCSI core. Its
-presence causes the core to skip the per-dispatch clear, so the retry
-marker now survives across the requeue and the AIO-to-RAID fallback
-proceeds as intended. The driver takes over the marker's lifetime: it is
-zeroed at tag allocation, preserved across the retry requeue so the error
-path can act on it, and cleared on terminal completion so the tag starts
-clean on its next use.
+Size the buffer for the widest unsigned decimal, format with "%u" to match
+the u32, and use scnprintf() so the length passed to
+simple_read_from_buffer() reflects the bytes actually stored.
 
-Fixes: dce5c4afd035 ("scsi: core: Clear driver private data when retrying request")
-Co-developed-by: Mike McGowen <mike.mcgowen@microchip.com>
-Signed-off-by: Mike McGowen <mike.mcgowen@microchip.com>
-Acked-by: Don Brace <don.brace@microchip.com>
-Signed-off-by: David Strahan <david.strahan@microchip.com>
-Link: https://lore.kernel.org/linux-scsi/20260722220401.6357-1-david.strahan@microchip.com/
-Link: https://patch.msgid.link/20260722220401.6357-2-david.strahan@microchip.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 4a2da0b8c0782 ("IB/mlx5: Add debug control parameters for congestion control")
+Link: https://patch.msgid.link/20260726-get-param-leaks-kernel-stack-memory-v1-1-d61a4d39662d@nvidia.com
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/infiniband/hw/mlx5/cong.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 4d751a2376722..32c92678d5916 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -65,6 +65,12 @@ static struct pqi_cmd_priv *pqi_cmd_priv(struct scsi_cmnd *cmd)
- 	return scsi_cmd_priv(cmd);
+diff --git a/drivers/infiniband/hw/mlx5/cong.c b/drivers/infiniband/hw/mlx5/cong.c
+index a78a067e3ce7f..88ac5fd1038ed 100644
+--- a/drivers/infiniband/hw/mlx5/cong.c
++++ b/drivers/infiniband/hw/mlx5/cong.c
+@@ -399,15 +399,13 @@ static ssize_t get_param(struct file *filp, char __user *buf, size_t count,
+ 	int offset = param->offset;
+ 	u32 var = 0;
+ 	int ret;
+-	char lbuf[11];
++	char lbuf[12];
+ 
+ 	ret = mlx5_ib_get_cc_params(param->dev, param->port_num, offset, &var);
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = snprintf(lbuf, sizeof(lbuf), "%d\n", var);
+-	if (ret < 0)
+-		return ret;
++	ret = scnprintf(lbuf, sizeof(lbuf), "%u\n", var);
+ 
+ 	return simple_read_from_buffer(buf, count, pos, lbuf, ret);
  }
- 
-+static int pqi_init_cmd_priv(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
-+{
-+	memset(pqi_cmd_priv(cmd), 0, sizeof(struct pqi_cmd_priv));
-+	return 0;
-+}
-+
- static void pqi_verify_structures(void);
- static void pqi_take_ctrl_offline(struct pqi_ctrl_info *ctrl_info,
- 	enum pqi_ctrl_shutdown_reason ctrl_shutdown_reason);
-@@ -5928,6 +5934,17 @@ void pqi_prep_for_scsi_done(struct scsi_cmnd *scmd)
- 	struct pqi_scsi_dev *device;
- 	struct completion *wait;
- 
-+	/*
-+	 * Clear the AIO-retry marker on final completion so the tag
-+	 * starts clean on its next dispatch.  On DID_IMM_RETRY leave
-+	 * it intact: pqi_aio_io_complete() sets DID_IMM_RETRY and
-+	 * bumps the marker to steer the requeue onto the RAID path,
-+	 * and pqi_process_raid_io_error() consumes the non-zero
-+	 * marker to offline a misbehaving drive.
-+	 */
-+	if (host_byte(scmd->result) != DID_IMM_RETRY)
-+		pqi_cmd_priv(scmd)->this_residual = 0;
-+
- 	if (!scmd->device) {
- 		set_host_byte(scmd, DID_NO_CONNECT);
- 		return;
-@@ -7582,6 +7599,7 @@ static const struct scsi_host_template pqi_driver_template = {
- 	.sdev_groups = pqi_sdev_groups,
- 	.shost_groups = pqi_shost_groups,
- 	.cmd_size = sizeof(struct pqi_cmd_priv),
-+	.init_cmd_priv = pqi_init_cmd_priv,
- };
- 
- static int pqi_register_scsi(struct pqi_ctrl_info *ctrl_info)
 -- 
 2.53.0
 
