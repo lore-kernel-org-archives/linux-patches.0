@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84E9628E0;
-	Sat, 12 Sep 2026 16:17:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7233D4BEE2C;
+	Sat, 12 Sep 2026 16:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229826; cv=none; b=I/c/DD3IYs4p0gJW0OlQnCDZgASyDF7zMpzIne/cLxbY9HHayKem+kNCZ42jnL2LW298JXcsA9CoJRqnYuvuf6nGZZc7SUijU5YK/90gU/wcC8lFyP+eVtrLIwj4qcvVatj1H0jkKZPa7roiRtet2jrI8JsBDAqucDWxw3T1M9A=
+	t=1789229831; cv=none; b=p59GUJiWOdvMCekOCsLq3yI1ZIkWfwh5chyp5MMuGbrPuAbyuRTpaYgYUQRMCglmFFGGXqWf8pBJsvZ021Q2GSreK65UL2aVmLnLXAAmHLU2itCx5aGuC90AG0FlIxTsGNsn+bzr43K3vgi5fBLAIj1sGX1qzV84EyHQyQ01mgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229826; c=relaxed/simple;
-	bh=RgLFAYETOPyFhZb+NhugpVuoaJK1KCSPv7KJoHy0uqM=;
+	s=arc-20240116; t=1789229831; c=relaxed/simple;
+	bh=wF1AEnmkMJ1TzJoDeSbi6lua7PVDsRa7+Qyg8+p9oIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QwPUrqB3G0qOyEQUb7uSU61HYprA8FSqcXL4sPzZlt+Z/h14g4wpfMTyV/487D5bsjitnmYgxu8VwrlXorSBTgxD7CMswt539/Ufh9s9O9N8e8jaQUZ9wBSCPDxtfP1RHps/yK1h0chK0W3DW/+OBjZZw5wXmhxH+v5p/LFxjx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hj2cdjW4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=io8zttB+fOUwqDt5+Ws0my1nP5mHJneOFcYzT3LD/YD4Bn7CeUgeHMR8gcVaefL+HFHWwid62N9m8MuHLXOkbqYHTMqP739BOq7mTV19yJiq+pPtSBokX6VT13RU3oDJ4TdcrBAejhR4Sq0NV+c4SKvKx1FsH5IKGybw6rDMp78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dr2i+kqT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hj2cdjW4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0361F000FF;
-	Sat, 12 Sep 2026 16:17:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dr2i+kqT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750171F000FF;
+	Sat, 12 Sep 2026 16:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229825;
-	bh=KWt92Y7q957PWTqDQpa5UUxiLvBDnkrC2jy0d3mfHmc=;
+	s=korg; t=1789229830;
+	bh=4ioG2GCDJSWJNVIAitPwbSnMfdaBmtBzoHY362vQG/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hj2cdjW4ECgpZSyAzkNqJVuUH3gyXnx9Q4tg42OzKlHmgxt+3x4HiNJ9CnwmeMmv0
-	 6kRUMi83+Muw+glyTSvGymCkSTm4d0c83IsTd9CZHvTcbi9fKoDQbrMOC7DS26D+k8
-	 sr9nOVTc6ECu/K2Jf5onpdBJ2m9M3c7r46tWUaso=
+	b=dr2i+kqTAy/mlY+gjZG/EQCPgOYz4dS9baSaT+NMUsmTr3f8CPQqa4YCGzkT3TjRN
+	 Z5Qf/yHzIkpG5mfXbQEamhN//pY2H0ohgLKhbkSJUX5t7NQ2gWIrCPbHO3I44g/Tr1
+	 y6vSk/bWLnOwGdN5aSE2Pgi7rgl/QWU5ZIhCMoUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Ibrahim Hashimov <security@auditcode.ai>,
+	TanZheng <tanzheng@kylinos.cn>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0669/1191] RDMA/rxe: Validate num_sge/cur_sge before indexing wqe->dma.sge[]
-Date: Sat, 12 Sep 2026 08:56:37 +0200
-Message-ID: <20260912065603.281411363@linuxfoundation.org>
+Subject: [PATCH 6.1 0670/1191] RDMA/srpt: Fix srpt_alloc_rw_ctxs() unwind counters
+Date: Sat, 12 Sep 2026 08:56:38 +0200
+Message-ID: <20260912065603.304454660@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,66 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: TanZheng <tanzheng@kylinos.cn>
 
-[ Upstream commit 126c757e4cd46f866ddc283143b58eb4d9bf52cd ]
+[ Upstream commit b38f98e176050850f41bb6415f3a71400056623e ]
 
-For a user QP, qp->sq.queue is a ring the application writes directly,
-so rxe_post_send() takes the is_user branch and only schedules send_task
-without validating the WQE. rxe_requester() consumes it in place via
-req_next_wqe() and calls copy_data(), which indexes
-&wqe->dma.sge[cur_sge] with the attacker-controlled num_sge/cur_sge.
-Only the kernel path bounds num_sge (validate_send_wr()); the user WQE
-is never checked, so a local unprivileged user can post a WQE with an
-out-of-range cur_sge or oversized num_sge and force an out-of-bounds
-read of the per-WQE sge array in copy_data() (vmalloc OOB read, local
-DoS).
+When srpt_alloc_rw_ctxs() fails partway through a multi-buffer indirect
+descriptor, the unwind path destroys RDMA contexts but leaves stale
+n_rw_ctx and n_rdma values (and a dangling rw_ctxs pointer). Later
+sq_wr_avail accounting in srpt_queue_response() or srpt_write_pending()
+can then subtract the wrong number of send queue credits.
 
-Bound num_sge to qp->sq.max_sge in rxe_requester() before use, the way
-get_srq_wqe() already guards SRQ entries, and bound cur_sge only when
-the WQE carries payload (dma.resid): copy_data() returns early on a
-zero-length copy before touching dma->sge[], so a zero-payload WQE --
-the only kind a max_sge == 0 QP can post -- stays valid.
+Reset the counters and clear rw_ctxs after freeing the heap
+allocation before returning an error.
 
-Reproduced under KASAN; the vmalloc-out-of-bounds in copy_data() is gone.
-
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Link: https://patch.msgid.link/20260712122149.78142-1-security@auditcode.ai
-Assisted-by: AuditCode-AI:2026.07
+Fixes: b99f8e4d7bcd ("IB/srpt: convert to the generic RDMA READ/WRITE API")
+Signed-off-by: TanZheng <tanzheng@kylinos.cn>
+Link: https://patch.msgid.link/20260715101550.45345-1-kensanya@163.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_req.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/infiniband/ulp/srpt/ib_srpt.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_req.c b/drivers/infiniband/sw/rxe/rxe_req.c
-index 1ef5819e75fff..55accb4a42980 100644
---- a/drivers/infiniband/sw/rxe/rxe_req.c
-+++ b/drivers/infiniband/sw/rxe/rxe_req.c
-@@ -680,6 +680,21 @@ int rxe_requester(void *arg)
- 	if (unlikely(!wqe))
- 		goto exit;
+diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
+index e9ce57a730c02..fd5c4d7f7ed0b 100644
+--- a/drivers/infiniband/ulp/srpt/ib_srpt.c
++++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
+@@ -959,6 +959,7 @@ static int srpt_alloc_rw_ctxs(struct srpt_send_ioctx *ioctx,
+ 	struct srpt_rdma_ch *ch = ioctx->ch;
+ 	struct scatterlist *prev = NULL;
+ 	unsigned prev_nents;
++	u8 n_rdma, n_rw_ctx;
+ 	int ret, i;
  
-+	/*
-+	 * Don't trust user space data: a user QP's WQE comes from an mmap'd
-+	 * ring, so num_sge/cur_sge are attacker-controlled. Bound num_sge like
-+	 * get_srq_wqe(); bound cur_sge only when payload exists (dma.resid),
-+	 * since copy_data() skips dma->sge[] on a zero-length copy (all a
-+	 * max_sge == 0 QP can post).
-+	 */
-+	if (unlikely(wqe->dma.num_sge > qp->sq.max_sge ||
-+		     (wqe->dma.resid &&
-+		      wqe->dma.cur_sge >= qp->sq.max_sge))) {
-+		rxe_dbg_qp(qp, "invalid num_sge/cur_sge in send wqe\n");
-+		wqe->status = IB_WC_LOC_QP_OP_ERR;
-+		goto err;
-+	}
+ 	if (nbufs == 1) {
+@@ -970,6 +971,9 @@ static int srpt_alloc_rw_ctxs(struct srpt_send_ioctx *ioctx,
+ 			return -ENOMEM;
+ 	}
+ 
++	n_rw_ctx = ioctx->n_rw_ctx;
++	n_rdma = ioctx->n_rdma;
 +
- 	if (rxe_wqe_is_fenced(qp, wqe)) {
- 		qp->req.wait_fence = 1;
- 		goto exit;
+ 	for (i = ioctx->n_rw_ctx; i < nbufs; i++, db++) {
+ 		struct srpt_rw_ctx *ctx = &ioctx->rw_ctxs[i];
+ 		u64 remote_addr = be64_to_cpu(db->va);
+@@ -1016,6 +1020,9 @@ static int srpt_alloc_rw_ctxs(struct srpt_send_ioctx *ioctx,
+ 	}
+ 	if (ioctx->rw_ctxs != &ioctx->s_rw_ctx)
+ 		kfree(ioctx->rw_ctxs);
++	ioctx->rw_ctxs = NULL;
++	ioctx->n_rw_ctx = n_rw_ctx;
++	ioctx->n_rdma = n_rdma;
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
