@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E3742885F;
-	Sat, 12 Sep 2026 15:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F850345EA7;
+	Sat, 12 Sep 2026 15:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228266; cv=none; b=s5TW9dMA3j3SaN49WPRB4r3DNb5BFTr+1LkfA5hmmS0pAZPEPOvUR8ucKzpDuNhTY+6QSwA5oGo1alYPI+2VRcyHZYRKiMUZbLH6SyEJg7JAlERxdcMDRs95Pm4f3K/766Sqno4xMGeoGgXVYFmd3VyWWO0a5Lf1pmmcXj6Z/ag=
+	t=1789228270; cv=none; b=UOFl75cO0aGfqbJOd9742SkgtdI7drQa8sg63egN0Hcp9jsAPfjCpN60C63MHXZftGquv9N/6ZoaDGTVupSR1ZOUoRGSUcgUge+2A5jadXkt7W2uWg0+XaJK7+Y5EhGmuRu0wAzl0MYhpkylTAVin4pGvwohpq95l9YqemxC0gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228266; c=relaxed/simple;
-	bh=dw799m2391P6s8b+6lG3BSdmqsi2zCFD/52F1Lk0WZc=;
+	s=arc-20240116; t=1789228270; c=relaxed/simple;
+	bh=Pmef6oYuqi74sXfs/QmkAkEvl/Oj1p+1TQU6omNIazo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uouh9HyHEjNKYebTSwJLi0QgI6r9D0hCf2yIaikopOOOPHLhfclnoAi4shAB42uqrJE4BTWQ+VDOOk9hKwYHTnTq5SMHsDlSzA9NGkX03jbbfg31URuOOiSRce7ZBd4EcZr9R/ZDXPVyPbyng3/HmUE9zwFUvtWXWpJ7qDxu4Hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rhRFcrF+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KwvwiI3EfEMJ9OL/fP8KzTwRqukVtoZLPeYMrDJ0iaOSxxNe07Y3IuGl08Ia24Qy0E5JqT7yHNN6D2Mglpz26ghhgRSyuxepIbAjnifVSopj2TyxT8TJnNN3m65lOJK35sdBzScvG3aMXOsBFjyL5A5vf9XjCLAqSu+yRlwRdf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yUkkPPkd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rhRFcrF+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28211F000FF;
-	Sat, 12 Sep 2026 15:51:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yUkkPPkd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F9D1F00898;
+	Sat, 12 Sep 2026 15:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228265;
-	bh=hldNUlnvYD35jrYtLgLv/s3MzTnGXQOoIhHe4T4DNW0=;
+	s=korg; t=1789228269;
+	bh=ay+1/CDiJQqqkB7Z/jG8EGd4HwsLi361Zr9i/9OrXMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rhRFcrF+cz9IazHKlAXqu3sgmlTezlKRxxwI2zpQv4+FZn7ihVUQvRNlVxcZuRKAT
-	 tkj+HSROfBwcq+mJ4KklWaMpbSiTFneyELI4vsOZ2tlUvk8bth3Z+HdRj/GIVgWXDc
-	 sKSGt5lngK1lL3U+YX8wOE2MkpDfBRQ20BJPJogE=
+	b=yUkkPPkdmAC1a5jPzNbDAbsJdpNm9sEjp9C89WJtk/9qVRbc5P7YQ1wS4klZTKajf
+	 Ss+QQYp/u2MbdCNdAN+z0UYjD7pbR7ryWYSj4rhin9hHLgrkV6MIZRPSw10LyZdv1O
+	 bsWRy/mURFpuXoHFKg7t6x9ydsJMZysRGrwbAaIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sean Christopherson <seanjc@google.com>,
 	Yosry Ahmed <yosry@kernel.org>,
-	Kai Huang <kai.huang@intel.com>,
-	Jim Mattson <jmattson@google.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 0350/1191] KVM: nVMX: Always flush vpid02 on first use
-Date: Sat, 12 Sep 2026 08:51:18 +0200
-Message-ID: <20260912065556.089860297@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>
+Subject: [PATCH 6.1 0351/1191] KVM: nVMX: Service local TLB flushes on failed nested VM-Enter
+Date: Sat, 12 Sep 2026 08:51:19 +0200
+Message-ID: <20260912065556.113104967@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -54,58 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Yosry Ahmed <yosry@kernel.org>
 
-commit f0772389413dce9657c7d6950abf3edbbd511356 upstream.
+commit 05a0b701d1089fb57beeb8982f23c3bbafe0fa8b upstream.
 
-Make sure vpid02 is always flushed on first use by setting last_vpid=0
-when allocating vpid02.  nested_vmx_transition_tlb_flush() will always
-detect a VPID change on first VM-Enter after VMXON, because VPID=0 in
-vmcs12 is not allowed if L1 enables VPID.
+KVM services local TLB flushes on "full" nested VM-Exits (through
+__nested_vmx_vmexit()), but not if a nested VM-Enter fails (e.g. due to
+failed VMCS checks in nested_vmx_enter_non_root_mode()).
 
-This avoids using stale TLB entries from a previous lifetime of the
-VPID, that might have been associated with a different vCPU (or a
-completely different VM).
+However, it is possible that KVM had queued TLB flushes that need to be
+performed, even if the nested VM-Enter was not successful. For example,
+if VPID is disabled for L2 (via nested_vmx_transition_tlb_flush(), or if
+via the MSR load lists, as the SDM says:
 
-Note that last_vpid is already being initialized as 0 when the vCPU is
-created, but it is not reset when vpid02 is freed on VMXOFF. Hence, the
-problem can only occur if L1 does VMXOFF -> VMXON, runs an L2, and KVM
-happens to reuse a VPID that has TLB entries on the physical CPU.
+  If any MSR is being loaded in such a way that would architecturally
+  require a TLB flush, the TLBs are updated so that, after VM entry, the
+  logical processor will not use any translations that were cached before
+  the transition.
 
+The SDM is unclear about when the TLB flush should occur, and whether or
+not a failed VM entry would flush the TLB, so it is safer to always
+do the TLB flush in this case.
+
+More concretely, KVM also updates the last VPID L1 used for L2 in
+nested_vmx_transition_tlb_flush() (i.e. last_vpid), even if the VM entry
+ultimately fails. With the current code, KVM could miss a TLB flush if
+L1 changes L2's VPID, then does a failed VM entry followed by a
+successful one, as the failed VM entry would update last_vpid but not
+actually flush the TLB. Servicing local TLB flushes on failed VM entries
+makes sure that the TLB is always flushed when last_vpid is updated.
+
+Fixes: 5c614b3583e7 ("KVM: nVMX: nested VPID emulation")
 Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org> # Internal review
+Suggested-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Link: https://patch.msgid.link/20260616214652.2157032-2-yosry@kernel.org
+Link: https://patch.msgid.link/20260722230128.1587363-1-yosry@kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/x86/kvm/vmx/nested.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 --- a/arch/x86/kvm/vmx/nested.c
 +++ b/arch/x86/kvm/vmx/nested.c
-@@ -1164,6 +1164,9 @@ static void nested_vmx_transition_tlb_fl
- 	 * is the VPID incorporated into the MMU context.  I.e. KVM must assume
- 	 * that the new vpid12 has never been used and thus represents a new
- 	 * guest ASID that cannot have entries in the TLB.
-+	 *
-+	 * Note, last_vpid is initialized as 0, so the first nested VM-Enter
-+	 * after VMXON will always flush the TLB to avoid using stale entries.
- 	 */
- 	if (is_vmenter && vmcs12->virtual_processor_id != vmx->nested.last_vpid) {
- 		vmx->nested.last_vpid = vmcs12->virtual_processor_id;
-@@ -5162,6 +5165,13 @@ static int enter_vmx_operation(struct kv
- 
- 	vmx->nested.vpid02 = allocate_vpid();
- 
-+	/*
-+	 * Clear last_vpid to ensure that the VPID is flushed on the first
-+	 * nested VM-Enter. Otherwise, stale TLB entries from a previous life of
-+	 * the VPID (e.g. different vCPU or even different VM) could be used.
-+	 */
-+	vmx->nested.last_vpid = 0;
+@@ -3527,6 +3527,14 @@ enum nvmx_vmentry_status nested_vmx_ente
+ vmentry_fail_vmexit_guest_mode:
+ 	if (vmcs12->cpu_based_vm_exec_control & CPU_BASED_USE_TSC_OFFSETTING)
+ 		vcpu->arch.tsc_offset -= vmcs12->tsc_offset;
 +
- 	vmx->nested.vmcs02_initialized = false;
- 	vmx->nested.vmxon = true;
++	/*
++	 * Handle any TLB flush requests that were queued for L2 if KVM made it
++	 * far enough along to switch to L2 context.  Note, loading host state
++	 * will generate any flushes for L1 required by VM-Exit.
++	 */
++	kvm_service_local_tlb_flush_requests(vcpu);
++
+ 	leave_guest_mode(vcpu);
  
+ vmentry_fail_vmexit:
 
 
