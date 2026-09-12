@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 172752D739C;
-	Sat, 12 Sep 2026 15:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905851D7E5C;
+	Sat, 12 Sep 2026 15:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226062; cv=none; b=u3/hrFPaUESphWr2iDpHsYkLNvyVvIlaGkF+38hQ3LcDhl9KO90a+WV+zjMQZH/v8TGFh5e7t1z2uOQoOmWvfPUoYJurZLeqZlJiiTDkA+prquMtXUuyPwp2qvcuI1Ty9Mr1QDiIWH1kYvdB7hS45hJFHJMQDHefeovyGJAlxnI=
+	t=1789226066; cv=none; b=odtuX/iWbeUoVT6M9qYChvFIpQFllit46EaXSiA7x65P3MWBOq6Tkue/wfQWq2T8w8+74td4R6N8nafILkzlzYUpW1i09ndcMLOdRD/8vQEllV3+rpl2Tgjn1do60SbjEgamT4ItUkDlXm+8nFRwx4jbRD+gMjrI/NllfpiI6Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226062; c=relaxed/simple;
-	bh=txoc7fLIbjzwnCXByB1X6aO55iCYeCppXeu2BNEZ6hY=;
+	s=arc-20240116; t=1789226066; c=relaxed/simple;
+	bh=itoJvgweA4Nc9qE0jHVzx0smZqzx/01qaov8iieZpX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fPgohe24gCDSeN6/jlq5VB3OgigcXQae9ti/N1raQTS+sprzNM66w72wKo4OYCRLElDxxWLUzJ39eqiDK/p5gfAZ/gW402CmTinbBYKZ1DjolacjNaIa5xiz6oWQwkl48XqHefmTriAdRF9lFXnJPLkJ/GlBcUhc3rLyiKvSai8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtG5JEnu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CxlAkXcDeCXD9UaUMdS3Z9CAqIHNf9s8c6dMf2AmmYn7B6Cht+d8dOqQDA8vgCpBQU5+MEeR4pKWBQQU/2VRcZ/Jd8Nnf7UqYE90F6EeY0eyj58EXNJW+K9b3i871fgoKNUB3lz6v61FfwNrIXKE/6UaTdfVEZ2adNM/2+JJ6gA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQ6JZTsi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtG5JEnu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9031F000FF;
-	Sat, 12 Sep 2026 15:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQ6JZTsi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672471F000FF;
+	Sat, 12 Sep 2026 15:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226061;
-	bh=GktV+uzvmAOsVWmLeapaCuZAaGb96EQwVmADKTXiSYQ=;
+	s=korg; t=1789226065;
+	bh=KfK2vjLxvc06us/cjr+Ue6GOJMIiKOO1ABDQ+vjT2VE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HtG5JEnuTksQfX7KXADkLfNyqng2wV+VRObYO7fuaJ1hTtU3UIJkrieOMmlTbtkRx
-	 5XGSdVs0L5xxFMXat3XXWL22dtfSXT66NWQ/QINuw8PC2ndjVagy9qYuwK1o0cRxdn
-	 Z64udJzowcuMgpXzIQLwM5R4c9iMW/l454saVVoo=
+	b=oQ6JZTsi6cIovf8rzfyKI5KyWWsjedI97R9U6ttot75SYHzMWXxQMZLoDyMeIvSos
+	 lWBhPPh4CMk32HDRtg7TOCCHWLmlKRvO8ZiSrS6+UXYLkbXt9VoMyfvhJYWgewWXcH
+	 xlJPVezVYHEV7fkz6WSU+sxREcE3ouJD/fJcgCfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1272/1424] net: dsa: mv88e6xxx: Fix PCS link check on CMODE read error
-Date: Sat, 12 Sep 2026 09:01:44 +0200
-Message-ID: <20260912065635.764456032@linuxfoundation.org>
+Subject: [PATCH 6.6 1319/1424] ALSA: control: Use automatic cleanup of kfree()
+Date: Sat, 12 Sep 2026 09:02:31 +0200
+Message-ID: <20260912065636.800668836@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,56 +50,304 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 7b196e27ad58e612ad1c04b347d0c2135045aa14 ]
+[ Upstream commit 1052d988226948493eb9730b3424308972eca5f4 ]
 
-mv88e6352_pcs_link_check() ignores errors returned by
-port_get_cmode(). If the port status register read fails,
-mv88e6352_port_get_cmode() returns without setting cmode. The link check
-then compares an uninitialized value and may incorrectly treat the PCS
-as active.
+There are common patterns where a temporary buffer is allocated and
+freed at the exit, and those can be simplified with the recent cleanup
+mechanism via __free(kfree).
 
-Save the return value and fail the link check after releasing the
-register lock. marvell_c22_pcs_get_state() initializes the reported link
-state to down before calling the check, so a read failure is handled
-safely until a later poll succeeds.
+A caveat is that some allocations are memdup_user() and they return an
+error pointer instead of NULL.  Those need special cares and the value
+has to be cleared with no_free_ptr() at the allocation error path.
 
-This issue was found by a static analysis checker and confirmed by manual
-source review.
+Other than that, the conversions are straightforward.
 
-Fixes: 85764555442f ("net: dsa: mv88e6xxx: convert 88e6352 to phylink_pcs")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/20260813153131.3952970-1-ruoyuw560@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+No functional changes, only code refactoring.
+
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20240222111509.28390-3-tiwai@suse.de
+Stable-dep-of: d736eba9c453 ("ALSA: ice1712: Fix the card leak at probe error with the auto-cleanup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/pcs-6352.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/core/control.c        | 23 +++++--------
+ sound/core/control_compat.c | 69 ++++++++++++++-----------------------
+ 2 files changed, 34 insertions(+), 58 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/pcs-6352.c b/drivers/net/dsa/mv88e6xxx/pcs-6352.c
-index 88f624b654702..f0b42786d5873 100644
---- a/drivers/net/dsa/mv88e6xxx/pcs-6352.c
-+++ b/drivers/net/dsa/mv88e6xxx/pcs-6352.c
-@@ -305,13 +305,16 @@ static bool mv88e6352_pcs_link_check(struct marvell_c22_pcs *mpcs)
- 	struct mv88e6xxx_port *port = mpcs->port;
- 	struct mv88e6xxx_chip *chip = port->chip;
- 	u8 cmode;
-+	int err;
+diff --git a/sound/core/control.c b/sound/core/control.c
+index 3b464260795e9..01e7774a1b37e 100644
+--- a/sound/core/control.c
++++ b/sound/core/control.c
+@@ -932,7 +932,7 @@ EXPORT_SYMBOL(snd_ctl_find_id);
+ static int snd_ctl_card_info(struct snd_card *card, struct snd_ctl_file * ctl,
+ 			     unsigned int cmd, void __user *arg)
+ {
+-	struct snd_ctl_card_info *info;
++	struct snd_ctl_card_info *info __free(kfree) = NULL;
  
- 	/* Port 4 can be in auto-media mode. Check that the port is
- 	 * associated with the mpcs.
+ 	info = kzalloc(sizeof(*info), GFP_KERNEL);
+ 	if (! info)
+@@ -946,11 +946,8 @@ static int snd_ctl_card_info(struct snd_card *card, struct snd_ctl_file * ctl,
+ 	strscpy(info->mixername, card->mixername, sizeof(info->mixername));
+ 	strscpy(info->components, card->components, sizeof(info->components));
+ 	up_read(&snd_ioctl_rwsem);
+-	if (copy_to_user(arg, info, sizeof(struct snd_ctl_card_info))) {
+-		kfree(info);
++	if (copy_to_user(arg, info, sizeof(struct snd_ctl_card_info)))
+ 		return -EFAULT;
+-	}
+-	kfree(info);
+ 	return 0;
+ }
+ 
+@@ -1339,12 +1336,10 @@ static int snd_ctl_elem_read_user(struct snd_card *card,
+ 
+ 	result = snd_ctl_elem_read(card, control);
+ 	if (result < 0)
+-		goto error;
++		return result;
+ 
+ 	if (copy_to_user(_control, control, sizeof(*control)))
+-		result = -EFAULT;
+- error:
+-	kfree(control);
++		return -EFAULT;
+ 	return result;
+ }
+ 
+@@ -1406,23 +1401,21 @@ static int snd_ctl_elem_write(struct snd_card *card, struct snd_ctl_file *file,
+ static int snd_ctl_elem_write_user(struct snd_ctl_file *file,
+ 				   struct snd_ctl_elem_value __user *_control)
+ {
+-	struct snd_ctl_elem_value *control;
++	struct snd_ctl_elem_value *control __free(kfree) = NULL;
+ 	struct snd_card *card;
+ 	int result;
+ 
+ 	control = memdup_user(_control, sizeof(*control));
+ 	if (IS_ERR(control))
+-		return PTR_ERR(control);
++		return PTR_ERR(no_free_ptr(control));
+ 
+ 	card = file->card;
+ 	result = snd_ctl_elem_write(card, file, control);
+ 	if (result < 0)
+-		goto error;
++		return result;
+ 
+ 	if (copy_to_user(_control, control, sizeof(*control)))
+-		result = -EFAULT;
+- error:
+-	kfree(control);
++		return -EFAULT;
+ 	return result;
+ }
+ 
+diff --git a/sound/core/control_compat.c b/sound/core/control_compat.c
+index 0e8b1bfb040e0..f3e9541f1616c 100644
+--- a/sound/core/control_compat.c
++++ b/sound/core/control_compat.c
+@@ -79,61 +79,56 @@ struct snd_ctl_elem_info32 {
+ static int snd_ctl_elem_info_compat(struct snd_ctl_file *ctl,
+ 				    struct snd_ctl_elem_info32 __user *data32)
+ {
+-	struct snd_ctl_elem_info *data;
++	struct snd_ctl_elem_info *data __free(kfree) = NULL;
+ 	int err;
+ 
+ 	data = kzalloc(sizeof(*data), GFP_KERNEL);
+ 	if (! data)
+ 		return -ENOMEM;
+ 
+-	err = -EFAULT;
+ 	/* copy id */
+ 	if (copy_from_user(&data->id, &data32->id, sizeof(data->id)))
+-		goto error;
++		return -EFAULT;
+ 	/* we need to copy the item index.
+ 	 * hope this doesn't break anything..
  	 */
- 	mv88e6xxx_reg_lock(chip);
--	chip->info->ops->port_get_cmode(chip, port->port, &cmode);
-+	err = chip->info->ops->port_get_cmode(chip, port->port, &cmode);
- 	mv88e6xxx_reg_unlock(chip);
-+	if (err)
-+		return false;
+ 	if (get_user(data->value.enumerated.item, &data32->value.enumerated.item))
+-		goto error;
++		return -EFAULT;
  
- 	return cmode == MV88E6XXX_PORT_STS_CMODE_100BASEX ||
- 	       cmode == MV88E6XXX_PORT_STS_CMODE_1000BASEX ||
+ 	err = snd_ctl_elem_info(ctl, data);
+ 	if (err < 0)
+-		goto error;
++		return err;
+ 	/* restore info to 32bit */
+-	err = -EFAULT;
+ 	/* id, type, access, count */
+ 	if (copy_to_user(&data32->id, &data->id, sizeof(data->id)) ||
+ 	    copy_to_user(&data32->type, &data->type, 3 * sizeof(u32)))
+-		goto error;
++		return -EFAULT;
+ 	if (put_user(data->owner, &data32->owner))
+-		goto error;
++		return -EFAULT;
+ 	switch (data->type) {
+ 	case SNDRV_CTL_ELEM_TYPE_BOOLEAN:
+ 	case SNDRV_CTL_ELEM_TYPE_INTEGER:
+ 		if (put_user(data->value.integer.min, &data32->value.integer.min) ||
+ 		    put_user(data->value.integer.max, &data32->value.integer.max) ||
+ 		    put_user(data->value.integer.step, &data32->value.integer.step))
+-			goto error;
++			return -EFAULT;
+ 		break;
+ 	case SNDRV_CTL_ELEM_TYPE_INTEGER64:
+ 		if (copy_to_user(&data32->value.integer64,
+ 				 &data->value.integer64,
+ 				 sizeof(data->value.integer64)))
+-			goto error;
++			return -EFAULT;
+ 		break;
+ 	case SNDRV_CTL_ELEM_TYPE_ENUMERATED:
+ 		if (copy_to_user(&data32->value.enumerated,
+ 				 &data->value.enumerated,
+ 				 sizeof(data->value.enumerated)))
+-			goto error;
++			return -EFAULT;
+ 		break;
+ 	default:
+ 		break;
+ 	}
+-	err = 0;
+- error:
+-	kfree(data);
+-	return err;
++	return 0;
+ }
+ 
+ /* read / write */
+@@ -169,7 +164,7 @@ static int get_ctl_type(struct snd_card *card, struct snd_ctl_elem_id *id,
+ 			int *countp)
+ {
+ 	struct snd_kcontrol *kctl;
+-	struct snd_ctl_elem_info *info;
++	struct snd_ctl_elem_info *info __free(kfree) = NULL;
+ 	int err;
+ 
+ 	down_read(&card->controls_rwsem);
+@@ -193,7 +188,6 @@ static int get_ctl_type(struct snd_card *card, struct snd_ctl_elem_id *id,
+ 		err = info->type;
+ 		*countp = info->count;
+ 	}
+-	kfree(info);
+ 	return err;
+ }
+ 
+@@ -289,7 +283,7 @@ static int copy_ctl_value_to_user(void __user *userdata,
+ static int ctl_elem_read_user(struct snd_card *card,
+ 			      void __user *userdata, void __user *valuep)
+ {
+-	struct snd_ctl_elem_value *data;
++	struct snd_ctl_elem_value *data __free(kfree) = NULL;
+ 	int err, type, count;
+ 
+ 	data = kzalloc(sizeof(*data), GFP_KERNEL);
+@@ -299,21 +293,18 @@ static int ctl_elem_read_user(struct snd_card *card,
+ 	err = copy_ctl_value_from_user(card, data, userdata, valuep,
+ 				       &type, &count);
+ 	if (err < 0)
+-		goto error;
++		return err;
+ 
+ 	err = snd_ctl_elem_read(card, data);
+ 	if (err < 0)
+-		goto error;
+-	err = copy_ctl_value_to_user(userdata, valuep, data, type, count);
+- error:
+-	kfree(data);
+-	return err;
++		return err;
++	return copy_ctl_value_to_user(userdata, valuep, data, type, count);
+ }
+ 
+ static int ctl_elem_write_user(struct snd_ctl_file *file,
+ 			       void __user *userdata, void __user *valuep)
+ {
+-	struct snd_ctl_elem_value *data;
++	struct snd_ctl_elem_value *data __free(kfree) = NULL;
+ 	struct snd_card *card = file->card;
+ 	int err, type, count;
+ 
+@@ -324,15 +315,12 @@ static int ctl_elem_write_user(struct snd_ctl_file *file,
+ 	err = copy_ctl_value_from_user(card, data, userdata, valuep,
+ 				       &type, &count);
+ 	if (err < 0)
+-		goto error;
++		return err;
+ 
+ 	err = snd_ctl_elem_write(card, file, data);
+ 	if (err < 0)
+-		goto error;
+-	err = copy_ctl_value_to_user(userdata, valuep, data, type, count);
+- error:
+-	kfree(data);
+-	return err;
++		return err;
++	return copy_ctl_value_to_user(userdata, valuep, data, type, count);
+ }
+ 
+ static int snd_ctl_elem_read_user_compat(struct snd_card *card,
+@@ -366,49 +354,44 @@ static int snd_ctl_elem_add_compat(struct snd_ctl_file *file,
+ 				   struct snd_ctl_elem_info32 __user *data32,
+ 				   int replace)
+ {
+-	struct snd_ctl_elem_info *data;
+-	int err;
++	struct snd_ctl_elem_info *data __free(kfree) = NULL;
+ 
+ 	data = kzalloc(sizeof(*data), GFP_KERNEL);
+ 	if (! data)
+ 		return -ENOMEM;
+ 
+-	err = -EFAULT;
+ 	/* id, type, access, count */ \
+ 	if (copy_from_user(&data->id, &data32->id, sizeof(data->id)) ||
+ 	    copy_from_user(&data->type, &data32->type, 3 * sizeof(u32)))
+-		goto error;
++		return -EFAULT;
+ 	if (get_user(data->owner, &data32->owner))
+-		goto error;
++		return -EFAULT;
+ 	switch (data->type) {
+ 	case SNDRV_CTL_ELEM_TYPE_BOOLEAN:
+ 	case SNDRV_CTL_ELEM_TYPE_INTEGER:
+ 		if (get_user(data->value.integer.min, &data32->value.integer.min) ||
+ 		    get_user(data->value.integer.max, &data32->value.integer.max) ||
+ 		    get_user(data->value.integer.step, &data32->value.integer.step))
+-			goto error;
++			return -EFAULT;
+ 		break;
+ 	case SNDRV_CTL_ELEM_TYPE_INTEGER64:
+ 		if (copy_from_user(&data->value.integer64,
+ 				   &data32->value.integer64,
+ 				   sizeof(data->value.integer64)))
+-			goto error;
++			return -EFAULT;
+ 		break;
+ 	case SNDRV_CTL_ELEM_TYPE_ENUMERATED:
+ 		if (copy_from_user(&data->value.enumerated,
+ 				   &data32->value.enumerated,
+ 				   sizeof(data->value.enumerated)))
+-			goto error;
++			return -EFAULT;
+ 		data->value.enumerated.names_ptr =
+ 			(uintptr_t)compat_ptr(data->value.enumerated.names_ptr);
+ 		break;
+ 	default:
+ 		break;
+ 	}
+-	err = snd_ctl_elem_add(file, data, replace);
+- error:
+-	kfree(data);
+-	return err;
++	return snd_ctl_elem_add(file, data, replace);
+ }  
+ 
+ enum {
 -- 
 2.53.0
 
