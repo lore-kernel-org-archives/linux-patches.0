@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2B0381E98;
-	Sat, 12 Sep 2026 09:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD0435C6A4;
+	Sat, 12 Sep 2026 09:31:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205474; cv=none; b=HvoAZ/nJ5TmYdWZrKk5beGI7iLFAF0BHX9RZcH20aVr7d48RaoKRKTDpOMs6Bbw0fRhlu3KHE8WV5WF5IuklYath4D0EghOhNBwiScl0tj8XVa8HLWsTTViGf6K4N+laqAG9ARiBtYaH8Ze/tqRyvfQlWU+v5VRzXTxHwaCDZyg=
+	t=1789205479; cv=none; b=P+Kk1KdgWuCmUzSlF6JZRX8tcmGvLTY0vx2ryZTc4WV7tPl1zCA7PLrG7CHPQlZ/3w+ld+TTtVAaXnstAk5WaG9Fq3cdAHD3Ati1cfgMT6K7IfGRayoEgplN9HvNEY/T0/7yvqx+D1Hk8fynkt8MvlxgFCB4vGgKaee+rV5O3N0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205474; c=relaxed/simple;
-	bh=jNbViKLLQubxujcy8Vp2xclCha2VF1+8V/pPjoIP6po=;
+	s=arc-20240116; t=1789205479; c=relaxed/simple;
+	bh=9UbCjOw0LdAfOR7fB+h4GPcCDq2vgrKTcKp0+BqL0T8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QKMe4qIkWx97djHZHkqEr7QP2GSWUdr1tNAMJyvGNDDh48/ICCgtcM1u1ayEhdl8kWPl6LUAv7+8vZRoUEU8J9rp/HecxwmDVqrr0nf1ADUY1mVJV/69jailUlk4x8VFZn5VLsb3kKpGLe5vU5w45jo3lCnjvLQUWerAyTU7/uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSDupi97; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i5doPgkoYa9Ll+Jg9BOnrJkBPMjnQE7qeUf3/Gk7PI3DclQLzp1Sa+GPsWPEdffEgDc1JcKvkujzaBEhGKcX2fokvivnrbmFaQ+xHw1M8M9KngYWRmo88cwqLjtRt0ZbrIRTmM7oSS5nDhTN77DP0IdfxbWOF6NayKJEGKr0DK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Up/TQZY+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSDupi97"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4311F000FF;
-	Sat, 12 Sep 2026 09:31:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Up/TQZY+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471911F000FF;
+	Sat, 12 Sep 2026 09:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205473;
-	bh=9BXU3+PLhrCKipsbCM1rdGZZAJvUWno654NQhUdQDqU=;
+	s=korg; t=1789205478;
+	bh=Gl34D0YTzf4a6BjuFh7Q+lm4daNDUUqo3o6yICbhBgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PSDupi97OuajoaTRNuMKwXYbg/S3uSmw52RN0VDTgtOaQVTkiImke9GkRU7+ZjY+b
-	 +Kl/8AAqrL05zpcSAKhdqPSDgCqbrjZLTUBkwmXR/OPTqGtObuZsrKh/VkspkINlQn
-	 DQ85TI8aTGxWczvhitnLd3NnqOiux3H2fvZhVPXI=
+	b=Up/TQZY+Fqph40c0bX+HUixeBWsUVjbxGyK++nRaKrmfCa1HmKGTepGO4QO7ALnYh
+	 TNrm84iNMWF0ICzYvsvox+J6GfR+uDp7fqXa1Vp7LWTGkKKFeOF5TkpHKvBuTz0CI/
+	 gYAVPhpRUGigrSfXrXCyd5Ajy1VwkVOFLTCopOHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"T.J. Mercier" <tjmercier@google.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Baineng Shou <shoubaineng@gmail.com>,
+	sashiko-bot@kernel.org,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0010/1518] dma-buf: dma-heap: dont publish fd before copy_to_user() succeeds
-Date: Sat, 12 Sep 2026 08:36:19 +0200
-Message-ID: <20260912065623.641638129@linuxfoundation.org>
+Subject: [PATCH 6.18 0011/1518] i3c: master: Fix device_register() error path
+Date: Sat, 12 Sep 2026 08:36:20 +0200
+Message-ID: <20260912065623.666127697@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -47,243 +47,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baineng Shou <shoubaineng@gmail.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 30d0aff2c65a277135cfd8ea28fa1ee75e0ea4e0 ]
+[ Upstream commit 74be657d98a8d684c0475f3cbd450ef2a30ffc73 ]
 
-DMA_HEAP_IOCTL_ALLOC allocates a dma-buf and installs an fd into the
-caller's fd table via dma_buf_fd() -> fd_install() before
-dma_heap_ioctl() copies the result back to userspace.  If the trailing
-copy_to_user() fails, userspace never learns the fd number, but the
-fd (and the underlying dma-buf reference) are already visible to
-other threads in the same process and are leaked for the lifetime of
-the process.
+When device_register() fails in i3c_master_register_new_i3c_devs(),
+put_device() is called to drop the reference taken by
+device_register().  That drops the last reference, so the device's
+release callback i3c_device_release() runs and frees the i3c_device.
 
-The obvious "close it on the failure path" fix is unsafe: once
-fd_install() has run, another thread can already dup() the fd, send
-it via SCM_RIGHTS, or close() it and let its number be reused, so a
-subsequent close_fd() from the ioctl path can operate on an unrelated
-file.  This was pointed out by Christian König on v1 [1].
+Two problems follow from that:
 
-Restructure the allocation path so that fd_install() is the last,
-unfailable step of a successful ioctl:
+i3c_device_release() does WARN_ON(i3cdev->desc), so it warns because
+desc->dev->desc still points back at the descriptor.  Clear it before
+calling put_device().
 
-  1. heap->ops->allocate()      creates the dma_buf.
-  2. get_unused_fd_flags()      reserves an fd number in the caller's
-                                fd table without publishing it, so
-                                no other thread can observe it.
-  3. copy_to_user()             delivers the fd number to userspace;
-                                on failure the fd is returned with
-                                put_unused_fd() and the dma_buf
-                                reference is dropped with
-                                dma_buf_put(), leaving no user-
-                                visible state behind.
-  4. dma_buf_fd_install()       publishes the fd and emits the
-                                trace_dma_buf_fd tracepoint -- from
-                                here on the ioctl cannot fail.
+After put_device() frees the i3c_device, desc->dev is left pointing at
+freed memory, so clear desc->dev as well.  That prevents, for example,
+i3c_master_unregister_i3c_devs() seeing desc->dev as non-NULL and
+dereferencing it.
 
-A new dma_buf_fd_install() helper is introduced in dma-buf.c to wrap
-fd_install() together with the DMA_BUF_TRACE() call, preserving the
-export tracing that dma_buf_fd() provides.  dma_heap_ioctl_allocate()
-is refactored to return the struct dma_buf * directly (returning
-ERR_PTR on failure) so the caller holds the dmabuf reference across
-steps 3 and 4.
-
-The failure at step 3 is easily reachable from userspace: pass a
-struct dma_heap_allocation_data that lives in a page whose protection
-is flipped to PROT_READ between copy_from_user() and copy_to_user()
-(e.g. via mprotect()).  Before this change each such ioctl leaks one
-dmabuf fd; after it, the fd table is unchanged on failure and only
-/dev/dma_heap/<name> remains open.
-
-No UAPI or heap-driver interface change.
-
-[1] https://lore.kernel.org/dri-devel/175e98de-f414-47d7-81c1-c0fe0a8f7f62@amd.com/
-
-Fixes: c02a81fba74f ("dma-buf: Add dma-buf heaps framework")
-Cc: stable@vger.kernel.org
-Reviewed-by: T.J. Mercier <tjmercier@google.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Acked-by: Sumit Semwal <sumit.semwal@linaro.org>
-Signed-off-by: Baineng Shou <shoubaineng@gmail.com>
-Link: https://lore.kernel.org/r/20260817050457.1005285-2-shoubaineng@gmail.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
-
-Stable adaptation for 6.18:
-- Resolve the dma-heap conflict without importing the absent mem_accounting
-  module parameter; retain the existing kzalloc() form.
-- This tree has neither DMA_BUF_TRACE nor trace_dma_buf_fd. Omit the new
-  dma-buf.c function and export, and provide dma_buf_fd_install as a
-  single-evaluation macro around the existing fd_install() in dma-buf.h.
-  This preserves the reserved-fd publication semantics without adding
-  functions or importing the unrelated tracing infrastructure.
-- Retain the heap allocation and usercopy cleanup changes, and expose the
-  interface needed for the target FastRPC fix to apply unchanged.
-
-[ sashal: Reduced backport -- upstream 30d0aff2c65a2 touches 3 file(s), this
-  backport carries 2. Not backported here:
-  drivers/dma-buf/dma-buf.c
-  This note is generated from the file lists only; see the resolution record
-  for the reasoning. ]
-
-Stable-dep-of: a4a1a2bfcb29 ("misc: fastrpc: don't publish fd before copy_to_user() succeeds")
+Reported-by: sashiko-bot@kernel.org
+Link: https://lore.kernel.org/linux-i3c/20260701203053.8F3971F000E9@smtp.kernel.org/
+Fixes: cab63f6488761 ("i3c: Fix potential refcount leak in i3c_master_register_new_i3c_devs")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260702183644.60827-1-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 456f832e5fc2 ("i3c: master: Fix recursive locking during device registration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/dma-heap.c |   80 ++++++++++++++++++++++-----------------------
- include/linux/dma-buf.h    |    5 ++
- 2 files changed, 45 insertions(+), 40 deletions(-)
+ drivers/i3c/master.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/dma-buf/dma-heap.c
-+++ b/drivers/dma-buf/dma-heap.c
-@@ -49,33 +49,6 @@ static dev_t dma_heap_devt;
- static struct class *dma_heap_class;
- static DEFINE_XARRAY_ALLOC(dma_heap_minors);
- 
--static int dma_heap_buffer_alloc(struct dma_heap *heap, size_t len,
--				 u32 fd_flags,
--				 u64 heap_flags)
--{
--	struct dma_buf *dmabuf;
--	int fd;
--
--	/*
--	 * Allocations from all heaps have to begin
--	 * and end on page boundaries.
--	 */
--	len = PAGE_ALIGN(len);
--	if (!len)
--		return -EINVAL;
--
--	dmabuf = heap->ops->allocate(heap, len, fd_flags, heap_flags);
--	if (IS_ERR(dmabuf))
--		return PTR_ERR(dmabuf);
--
--	fd = dma_buf_fd(dmabuf, fd_flags);
--	if (fd < 0) {
--		dma_buf_put(dmabuf);
--		/* just return, as put will call release and that will free */
--	}
--	return fd;
--}
--
- static int dma_heap_open(struct inode *inode, struct file *file)
- {
- 	struct dma_heap *heap;
-@@ -93,30 +66,42 @@ static int dma_heap_open(struct inode *i
- 	return 0;
- }
- 
--static long dma_heap_ioctl_allocate(struct file *file, void *data)
-+static struct dma_buf *dma_heap_ioctl_allocate(struct file *file, void *data)
- {
- 	struct dma_heap_allocation_data *heap_allocation = data;
- 	struct dma_heap *heap = file->private_data;
-+	struct dma_buf *dmabuf;
- 	int fd;
-+	size_t len;
- 
- 	if (heap_allocation->fd)
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
- 
- 	if (heap_allocation->fd_flags & ~DMA_HEAP_VALID_FD_FLAGS)
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
- 
- 	if (heap_allocation->heap_flags & ~DMA_HEAP_VALID_HEAP_FLAGS)
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
-+
-+	len = PAGE_ALIGN(heap_allocation->len);
-+	if (!len)
-+		return ERR_PTR(-EINVAL);
- 
--	fd = dma_heap_buffer_alloc(heap, heap_allocation->len,
--				   heap_allocation->fd_flags,
--				   heap_allocation->heap_flags);
--	if (fd < 0)
--		return fd;
-+	dmabuf = heap->ops->allocate(heap, len, heap_allocation->fd_flags,
-+				     heap_allocation->heap_flags);
-+
-+	if (IS_ERR(dmabuf))
-+		return dmabuf;
-+
-+	fd = get_unused_fd_flags(heap_allocation->fd_flags);
-+	if (fd < 0) {
-+		dma_buf_put(dmabuf);
-+		return ERR_PTR(fd);
-+	}
- 
- 	heap_allocation->fd = fd;
- 
--	return 0;
-+	return dmabuf;
- }
- 
- static unsigned int dma_heap_ioctl_cmds[] = {
-@@ -132,6 +117,8 @@ static long dma_heap_ioctl(struct file *
- 	unsigned int in_size, out_size, drv_size, ksize;
- 	int nr = _IOC_NR(ucmd);
- 	int ret = 0;
-+	int fd;
-+	struct dma_buf *dmabuf;
- 
- 	if (nr >= ARRAY_SIZE(dma_heap_ioctl_cmds))
- 		return -EINVAL;
-@@ -168,15 +155,28 @@ static long dma_heap_ioctl(struct file *
- 
- 	switch (kcmd) {
- 	case DMA_HEAP_IOCTL_ALLOC:
--		ret = dma_heap_ioctl_allocate(file, kdata);
-+		dmabuf = dma_heap_ioctl_allocate(file, kdata);
-+
-+		if (IS_ERR(dmabuf)) {
-+			ret = PTR_ERR(dmabuf);
-+			break;
-+		}
-+
-+		fd = ((struct dma_heap_allocation_data *)kdata)->fd;
-+		if (copy_to_user((void __user *)arg, kdata, out_size) != 0) {
-+			put_unused_fd(fd);
-+			dma_buf_put(dmabuf);
-+			ret = -EFAULT;
-+		} else {
-+			dma_buf_fd_install(dmabuf, fd);
-+		}
-+
- 		break;
- 	default:
- 		ret = -ENOTTY;
- 		goto err;
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -1817,7 +1817,9 @@ i3c_master_register_new_i3c_devs(struct
+ 		if (ret) {
+ 			dev_err(&master->dev,
+ 				"Failed to add I3C device (err = %d)\n", ret);
++			desc->dev->desc = NULL;
+ 			put_device(&desc->dev->dev);
++			desc->dev = NULL;
+ 		}
  	}
- 
--	if (copy_to_user((void __user *)arg, kdata, out_size) != 0)
--		ret = -EFAULT;
- err:
- 	if (kdata != stack_kdata)
- 		kfree(kdata);
---- a/include/linux/dma-buf.h
-+++ b/include/linux/dma-buf.h
-@@ -582,6 +582,11 @@ void dma_buf_unpin(struct dma_buf_attach
- struct dma_buf *dma_buf_export(const struct dma_buf_export_info *exp_info);
- 
- int dma_buf_fd(struct dma_buf *dmabuf, int flags);
-+/*
-+ * This tree has no DMA-BUF fd tracepoint, so publishing a reserved fd only
-+ * requires fd_install(). Call this after all fallible work has succeeded.
-+ */
-+#define dma_buf_fd_install(dmabuf, fd) fd_install((fd), (dmabuf)->file)
- struct dma_buf *dma_buf_get(int fd);
- void dma_buf_put(struct dma_buf *dmabuf);
- 
+ }
 
 
