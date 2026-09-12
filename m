@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA11D3328FC;
-	Sat, 12 Sep 2026 15:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74D83314B7;
+	Sat, 12 Sep 2026 15:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225839; cv=none; b=XiwaXpKlZmskm65wNwug4ziSjov+J6O9cACpBEFUrjkTHxuMx7Y68CrOZpJLAgRaelWV+LqdcomEq9CG/y4YXr8pHqUiqABDcsn6k7SemFbqkyKfuMZM/8rwbLzynlFZ0sbZUPp59lyIi3B3wBI/y5SBp5THppwuuR7ybrpE4/U=
+	t=1789225841; cv=none; b=FlfsSDv/lpmatawfa1UoAiyrT/In71G97YCsq84vFHI9h7lR43+/50R2Sgw5GBNzk0g1jjOL6pquLVRVoaOE02vk1ReOU+M5NNjlhcVpUpygTzDzcCzMyHtOj1RAONGiJPRacDRyaack6i/ZiJHMZJBfg3aXe3pxcLixaBDOfMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225839; c=relaxed/simple;
-	bh=xKOSYZHjBUPk0+qCUR3dBVrPtj+3SfYUSVvQQ+rRxsg=;
+	s=arc-20240116; t=1789225841; c=relaxed/simple;
+	bh=cW3frhVBteOzcIcjKqNZ7XHhQ5fRSJRrfXUJCJzYq40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=przjLlNx8sR6McqgdSzT/hZZn5VcVGnoR8gk5ZXr7tJyb4U5sTHTySI6GhVlxEUpmS7eYvNRe6dIBjZIwGhEJc3h3NcDjl/XNgy/ybxUbOCjSCGaOphJdqoxdRKsJiJeACbd06x3Cl2TcBIgqp0Gg/CX4/ajMhXXfv7T2sKAJSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vl+TCeI5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iyKCh3zEaYY9c27wD6N3QRLZTe3A+pkpwg5giN5Fvx327EDCTBDZOg7VYewkjyYcmHkZonyQPtYN+9uXfkliZAIgl/aA/Re6oTj20hBQ95lsCuna1zkldAfOk8gmz8xXvHtX2hEbNdiG/DbSWcm6Zs12FStlyPCQzF5qcNheMPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TU6qMo6K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vl+TCeI5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4751F000FF;
-	Sat, 12 Sep 2026 15:10:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TU6qMo6K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB761F00893;
+	Sat, 12 Sep 2026 15:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225834;
-	bh=USJCXD3sVeKxi3jk6+Ej6qRYvhPs6uc2VyXpbBGBDWs=;
+	s=korg; t=1789225839;
+	bh=gZ8Cp3VTQTukNqXTnRKm7r5zFjfDmqRvuRV5EgrK5UQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vl+TCeI5mgp23ZVx1xbMyyPBOiH9SYIbJEDRtcN1M8AZx+n0nsmncQ+cOwBpbSjvv
-	 20lPkmjLJ+s+aKDv4IfO3LMmtmtQiFFuG1OLYlUfeJySzgnnydyYueaF6GMwQEv/5Y
-	 vqUGuD2BQtlbM76aOn7llWgXkCstT/sXYvMnatZs=
+	b=TU6qMo6K54AjJS612OSTTtF0T+R9APEKdc0/Fslok52+U5g/Aw41OjBou9iiRjvGs
+	 ElzYByJYFjhu1aFGBvmAPK7MU/KDP6T0Ka9gzo5ZJljR3WycCMTABeZ9zjR7CdW34F
+	 U9ibXCg5VhDbK9UDanzi5T/f73/h9Ue5PUyalndw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1226/1424] perf dso: Guard against cache underflow on short reads in dso_cache__memcpy()
-Date: Sat, 12 Sep 2026 09:00:58 +0200
-Message-ID: <20260912065634.738706229@linuxfoundation.org>
+Subject: [PATCH 6.6 1273/1424] tls: fix RX desync on overlapping skbs
+Date: Sat, 12 Sep 2026 09:01:45 +0200
+Message-ID: <20260912065635.785973009@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -47,74 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
 
-[ Upstream commit 390a9461cd73bdd13acc0f6d763618ae1ff8fa17 ]
+[ Upstream commit 9466ef3ec972bee926731a766f73533dec590065 ]
 
-dso_cache__memcpy() computes cache_offset = offset - cache->offset,
-then cache_size = min(cache->size - cache_offset, size).  The RB tree
-lookup in __dso_cache__find() matches using the full
-DSO__DATA_CACHE_SIZE window, but cache->size reflects the actual pread
-return value from dso_cache__populate().
+The TCP receive queue can hold adjacent skbs whose sequence ranges
+overlap. The tls fast-path reads the record header with skb_copy_bits()
+by byte offset, which assumes skbs do not overlap, so a header split
+across the overlap is misread and the connection aborts
+(-EMSGSIZE/-EINVAL). tls_strp_check_queue_ok() detects such overlaps but
+only ran after the header was parsed, never covering the header itself.
 
-A short pread (e.g. near end-of-file) makes cache->size smaller than
-DSO__DATA_CACHE_SIZE.  If a subsequent access targets an offset past
-cache->offset + cache->size but within the DSO__DATA_CACHE_SIZE
-window, the cache entry is found but cache_offset exceeds cache->size.
-Since both are u64, the subtraction cache->size - cache_offset wraps
-to a large value, min() selects the caller's size, and memcpy reads
-out of bounds.
+Observed with parallel kTLS connections on:
+- ConnectX-7 + IPsec crypto offload + GRO
+- VirtIO (8 queues) + GRO
 
-Return 0 for an offset past the valid cached data.  For a regular
-file a short pread only happens at end-of-file, so 0 is what a direct
-pread() at that offset would return: cached_io() stops its read loop
-as on EOF.  Re-reading from the backing file would not help — a
-second pread at the same offset returns the same short count.
-
-Fixes: 366df72657e0 ("perf dso: Refactor dso_cache__read()")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 84c61fe1a75b ("tls: rx: do not use the standard strparser")
+Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+Link: https://patch.msgid.link/20260813121337.3300688-1-maxbr@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dso.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ net/tls/tls_strp.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
-index 49af48a5deddd..0e71bfffd4aca 100644
---- a/tools/perf/util/dso.c
-+++ b/tools/perf/util/dso.c
-@@ -915,7 +915,20 @@ static ssize_t dso_cache__memcpy(struct dso_cache *cache, u64 offset, u8 *data,
- 				 u64 size, bool out)
- {
- 	u64 cache_offset = offset - cache->offset;
--	u64 cache_size   = min(cache->size - cache_offset, size);
-+	u64 cache_size;
-+
-+	/*
-+	 * The RB tree matches using DSO__DATA_CACHE_SIZE, but a short
-+	 * pread may leave cache->size smaller.  For a regular file a
-+	 * short pread only happens at end-of-file, so an offset past
-+	 * the valid data is EOF: return 0, matching what a direct
-+	 * pread() at that offset would return, and cached_io() then
-+	 * stops its read loop.
-+	 */
-+	if (cache_offset >= cache->size)
-+		return 0;
-+
-+	cache_size = min(cache->size - cache_offset, size);
+diff --git a/net/tls/tls_strp.c b/net/tls/tls_strp.c
+index 7d85feebdfd93..8d35e2912dd3b 100644
+--- a/net/tls/tls_strp.c
++++ b/net/tls/tls_strp.c
+@@ -430,9 +430,10 @@ static int tls_strp_read_copy(struct tls_strparser *strp, bool qshort)
+ 	return 0;
+ }
  
- 	if (out)
- 		memcpy(data, cache->data + cache_offset, cache_size);
+-static bool tls_strp_check_queue_ok(struct tls_strparser *strp)
++static bool tls_strp_check_queue_ok(struct tls_strparser *strp,
++				    unsigned int len)
+ {
+-	unsigned int len = strp->stm.offset + strp->stm.full_len;
++	unsigned int remaining = strp->stm.offset + len;
+ 	struct sk_buff *first, *skb;
+ 	u32 seq;
+ 
+@@ -443,9 +444,9 @@ static bool tls_strp_check_queue_ok(struct tls_strparser *strp)
+ 	/* Make sure there's no duplicate data in the queue,
+ 	 * and the decrypted status matches.
+ 	 */
+-	while (skb->len < len) {
++	while (skb->len < remaining) {
+ 		seq += skb->len;
+-		len -= skb->len;
++		remaining -= skb->len;
+ 		skb = skb->next;
+ 
+ 		if (TCP_SKB_CB(skb)->seq != seq)
+@@ -524,6 +525,11 @@ static int tls_strp_read_sock(struct tls_strparser *strp)
+ 
+ 	tls_strp_load_anchor_with_queue(strp, inq);
+ 	if (!strp->stm.full_len) {
++		if (inq < TLS_HEADER_SIZE)
++			return tls_strp_read_copy(strp, true);
++		if (!tls_strp_check_queue_ok(strp, TLS_HEADER_SIZE))
++			return tls_strp_read_copy(strp, false);
++
+ 		sz = tls_rx_msg_size(strp, strp->anchor);
+ 		if (sz < 0)
+ 			return sz;
+@@ -534,7 +540,7 @@ static int tls_strp_read_sock(struct tls_strparser *strp)
+ 			return tls_strp_read_copy(strp, true);
+ 	}
+ 
+-	if (!tls_strp_check_queue_ok(strp))
++	if (!tls_strp_check_queue_ok(strp, strp->stm.full_len))
+ 		return tls_strp_read_copy(strp, false);
+ 
+ 	WRITE_ONCE(strp->msg_ready, 1);
 -- 
 2.53.0
 
