@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF08F26ED46;
-	Sat, 12 Sep 2026 19:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A900726ED46;
+	Sat, 12 Sep 2026 19:47:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242463; cv=none; b=JZmMPtu5EOT1EZ41y0fL+P8DOujxOUgbwU3cbfr8lYGhMH7lGwd/fekEX28215U4Ojoywm0cmV82Wn7MTMGBWbpzISgsnR4qGJpxWorikhiQtoS4w21qB4GRg1LRJgdXAJKMvyMac4Co8v4wycx+S4VPzmW13QMOfxTBS+X5UIA=
+	t=1789242465; cv=none; b=pMuKXUTHyD3smglH0Zg1luWi/E2YXFKhIdnXZhHJ4KEJXIA/D5YtrW+vlIMC47rca+Yo089SVi7X6vOBN5Kfih62TG4uXs3ogBMZ/B7lkjgXdhVD7FCxnq9GThqq6WA0/oTX8nWVvIaZNWlePkF0NObCckoE9Tq7hN0oKoD72OU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242463; c=relaxed/simple;
-	bh=c0Qx4r0dvu0IYWGF8BWnxPVMipiNtzUWPRNGAPZitcE=;
+	s=arc-20240116; t=1789242465; c=relaxed/simple;
+	bh=qudaCTJpHwdOgWW3e7YuQxhMZxqJR+aK+Ol41t0sx8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b5o5DmqZSqk4GXY/R+C1FjVSk1i2HOvvISNh87EMbL9QmqmmObUJW3JBBec87dvPpEFt7kz6YXCl8H2ulQNa8cOekXqwQVUBuXQ4wP779gX3jUMAxmPjKjeC+IleQYudmZLWUbHvCO6zvvpELKC+iPSpRPdOkeWjNeX+9ec9PMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qa4FqzDJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D3IC81nUNR4vornpeyLu4pwh6QcvqQEWqOriRMTHyD6LmgxMiGhPuRhLcVZZkD352+yvT8ZyU4HSfXeZv1gHzhQLgnUuk04aYih2MTUg4sPvS3fxy9OpdR8aCxVlY81lAuny5q0usVeYAN6HFV489KlyUAasxSogW0yHxkEfqvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mT1prLCY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qa4FqzDJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 382B11F000FF;
-	Sat, 12 Sep 2026 19:47:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mT1prLCY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040731F000FF;
+	Sat, 12 Sep 2026 19:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242461;
-	bh=WM2NAPHfBpivRk9P2qPIU4303c+E0dEYxzG0YzjkaeE=;
+	s=korg; t=1789242464;
+	bh=c0zNXSl2pUGbe16IQ/VonAAjJUkhKAgH/JVyprXlkFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qa4FqzDJsJXyhWB2PP73nBN31fLvxwjc+ajHMvQFtuO+A5vFvVhYKWGppq3l50U5c
-	 Qm6PowKjCHxKp70pSFmP7qWcOHzOefjYTGSTvEeOuLkXUeH3+gkk0EZef5AHwBAq0E
-	 PLVoV5bEW8RCW1zk3sD+hpDWtv0n4DLzCgqAzm/g=
+	b=mT1prLCYTLxWN94ZM2R3uMTcycy6Af4CPJYj2HZmNhJtmpTXcuw72PU/+sw7Ha0S7
+	 4KmmwY0C54PDvTfTEtnQnWdvFUMI6UGezxLUdUPLZEh9kRVwpxjwvv0j1bwyulMBWn
+	 hhzMUxGs1LQS1u9ZoHou6tH2kTuuPRs6hvYPO1Ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 411/798] hwspinlock: propagate errno when registering single lock
-Date: Sat, 12 Sep 2026 09:00:39 +0200
-Message-ID: <20260912065526.572187382@linuxfoundation.org>
+Subject: [PATCH 5.10 412/798] usb: gadget: configfs: fix out-of-bounds read of qw_sign
+Date: Sat, 12 Sep 2026 09:00:40 +0200
+Message-ID: <20260912065526.594891360@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,37 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit e088ffa9a00eaaaf90da74763e774ca160969c26 ]
+[ Upstream commit f63edb54d8f738f9c21e2068c777ae1c097df6b7 ]
 
-hwspin_lock_register_single() always returns 0 despite checking the
-result from radix_tree_insert(). Propagate the errno to make sanity
-checks in callers of this function actually meaningful.
+os_desc_qw_sign_show() passes OS_STRING_QW_SIGN_LEN as the input
+length to utf16s_to_utf8s(), but that argument counts UTF-16 code
+units while OS_STRING_QW_SIGN_LEN (14) is the byte size of qw_sign[].
+The array holds only OS_STRING_QW_SIGN_LEN / 2 (7) code units, so the
+conversion reads up to 7 units (14 bytes) past the end of qw_sign[]
+into the following members of struct gadget_info when the stored
+signature fills the array without a NUL terminator, exposing those
+bytes through the configfs attribute.
 
-Fixes: 300bab9770e2 ("hwspinlock/core: register a bank of hwspinlocks in a single API call")
-Link: https://sashiko.dev/#/patchset/20260319105947.6237-1-wsa%2Brenesas%40sang-engineering.com # review of patch 14
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/20260512084856.30497-2-wsa+renesas@sang-engineering.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+The store path halves the count for its input bound but passes the
+full byte count as the utf8s_to_utf16s() output limit; use the
+destination code-unit count in both directions.
+
+Fixes: 76180d716f91 ("usb: gadget: configfs: make qw_sign attribute symmetric")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260618005043.1581707-1-michael.bommarito@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwspinlock/hwspinlock_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/configfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwspinlock/hwspinlock_core.c b/drivers/hwspinlock/hwspinlock_core.c
-index 425597151dd3e..ed02ba245d460 100644
---- a/drivers/hwspinlock/hwspinlock_core.c
-+++ b/drivers/hwspinlock/hwspinlock_core.c
-@@ -468,7 +468,7 @@ static int hwspin_lock_register_single(struct hwspinlock *hwlock, int id)
+diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
+index 4256b1d09380f..e00762efd6da2 100644
+--- a/drivers/usb/gadget/configfs.c
++++ b/drivers/usb/gadget/configfs.c
+@@ -842,7 +842,7 @@ static ssize_t os_desc_qw_sign_show(struct config_item *item, char *page)
+ 	struct gadget_info *gi = os_desc_item_to_gadget_info(item);
+ 	int res;
  
- out:
- 	mutex_unlock(&hwspinlock_tree_lock);
--	return 0;
-+	return ret;
- }
+-	res = utf16s_to_utf8s((wchar_t *) gi->qw_sign, OS_STRING_QW_SIGN_LEN,
++	res = utf16s_to_utf8s((wchar_t *) gi->qw_sign, OS_STRING_QW_SIGN_LEN / 2,
+ 			      UTF16_LITTLE_ENDIAN, page, PAGE_SIZE - 1);
+ 	page[res++] = '\n';
  
- static struct hwspinlock *hwspin_lock_unregister_single(unsigned int id)
+@@ -864,7 +864,7 @@ static ssize_t os_desc_qw_sign_store(struct config_item *item, const char *page,
+ 	mutex_lock(&gi->lock);
+ 	res = utf8s_to_utf16s(page, l,
+ 			      UTF16_LITTLE_ENDIAN, (wchar_t *) gi->qw_sign,
+-			      OS_STRING_QW_SIGN_LEN);
++			      OS_STRING_QW_SIGN_LEN / 2);
+ 	if (res > 0)
+ 		res = len;
+ 	mutex_unlock(&gi->lock);
 -- 
 2.53.0
 
