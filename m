@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B270837DEBF;
-	Sat, 12 Sep 2026 07:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8732A35AC1E;
+	Sat, 12 Sep 2026 07:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199130; cv=none; b=LUbeCc3VYze59gMZ5g8iWIbUPyEIC1FDzamGCjv32zeKHzcBtBsHwtV7rNoM7OWecokCHBFNZZdsBnU1ISH/Ip386TaJQN9rKX0ev35LK/c75fsGU+vFWJvQIBPCNhRZrQSJWD0GVno0lItUBai3hXr95pQSbPIo1muVRJC3GOo=
+	t=1789199135; cv=none; b=KJZqddloQ31X7fwWGlH4jFPqP0OwZw25NipWmnEGLQ5ZiSxvUjldhfkBGgraxFDYsvuuntJPs80z8QmBMc8UcPqirBaPSotD6DrtOizPrwsqHEGRrizHh7FLw33fSzxR06/TAYOkCV3a9esb8cYTAIgXQh2hgikoeGMk19n62mA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199130; c=relaxed/simple;
-	bh=Z3707+t0X4EzNhBvGf8C4LIHNn8zXCjpqlLmYEYYz10=;
+	s=arc-20240116; t=1789199135; c=relaxed/simple;
+	bh=ihnaQthkfVIWIcYjEiGbRgRKQOKksdPf3dQXgRI5gZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kL1rNhSGpOOD71OG1WKZN3JEHdYHeoLnAM+Wb/0HH/vmsyGVBV+rKclYASyFCOa7MJWbcclyR3lEZKF5qRP/rwHtDaP72c/WAZPmkr3f3SrxGp5O3tf3YiF1hr86Ff87Y/VFI96J3vI4mtsy7WrR3YZrafudeOdicP/r4x0K4aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLCoCc+D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q12OxFwGBvE2PY0gU0t2xN5bQ6j9/JPpSYlDP71WdpiwFr0GWvXIJCsQvncf2BtnF1t1MTKnnycqmtrk1+FdB23E5UU44yjbGoix2YdU5QxJZ3X/NS0rlNURvXrYpWoiZOJOyldgdZ+m6JGOhf5fSlE68+5LA4VKVTs8MVp8g48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+e46h8f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLCoCc+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1BA51F000FF;
-	Sat, 12 Sep 2026 07:45:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+e46h8f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3311F000FF;
+	Sat, 12 Sep 2026 07:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199129;
-	bh=7KKXRtufCVrYLlWix4+zGnx1iFgqIXAv1RXBHFKlVIs=;
+	s=korg; t=1789199134;
+	bh=S3NjKGuRXuRl1Degf4t81YeqSev9+TrB88/mMzppxRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bLCoCc+D8L9vIYXp1pb5cimxa6h6JlVe/5AT1fNqpdK1KTX9mACJvUQOqB6uMNUVr
-	 5HxO/2ivot/HDO+dCSAuAlPP651yZ2kkxv8wysBv4UagqGnCOONLfrLBOb4feEaUPs
-	 6tglbQF4uDH+z4GourBrdke5yYClW6b4SCKcnifs=
+	b=g+e46h8fAXPM6mijzNCrRc+3Rm67+EOTzNxtHFIFWi1tfZOXnYw33+b0k0UtbppML
+	 JqYofXA5SP6yNHIeopQBB28alTtjA184dpjYxjXAAdWQBENTmlkerfQ1YTChTdS3Mx
+	 CrWe2xPKZlNP2q/xEkCQC8K0u71qdqYQDTFMaSb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Alban Bedel <alban.bedel@lht.dlh.de>,
+	Yuho Choi <dbgh9129@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0522/1815] software node: Fix software_node_get_reference_args() with index -1
-Date: Sat, 12 Sep 2026 08:37:52 +0200
-Message-ID: <20260912065701.145759499@linuxfoundation.org>
+Subject: [PATCH 7.2 0523/1815] driver core: soc: Unregister bus on early device registration failure
+Date: Sat, 12 Sep 2026 08:37:53 +0200
+Message-ID: <20260912065701.168228345@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,39 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alban Bedel <alban.bedel@lht.dlh.de>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit ba3dedcf3bd47017307595a7e54924198f018246 ]
+[ Upstream commit 45dfa004893dfeae182ec27eddbd153c6d4ddbf9 ]
 
-The bounds check for the index passed to
-software_node_get_reference_args() was failing when passed UINT_MAX,
-this in turn would lead to an out of bound access in the property
-array. Fix the bound check to also cover the UINT_MAX case.
+soc_bus_register() registers the SoC bus before registering a deferred
+early SoC device. If soc_device_register() fails in that path, the
+function returns the error directly and leaves the bus registered.
 
-Fixes: 31e4e12e0e960 ("software node: Correct a OOB check in software_node_get_reference_args()")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-devicetree/20260611103904.7CB131F00893@smtp.kernel.org/
-Signed-off-by: Alban Bedel <alban.bedel@lht.dlh.de>
-Link: https://patch.msgid.link/20260611164005.2930205-1-alban.bedel@lht.dlh.de
+Store the returned SoC device pointer explicitly so the success and
+error cases are handled separately. On failure, clear soc_bus_registered
+and unregister the bus before returning the error.
+
+Fixes: 6e12db376b60 ("base: soc: Allow early registration of a single SoC device")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Link: https://patch.msgid.link/20260615180746.713540-1-dbgh9129@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/swnode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/soc.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
-index 869228a65cb36..2bc76f01eb77d 100644
---- a/drivers/base/swnode.c
-+++ b/drivers/base/swnode.c
-@@ -537,7 +537,7 @@ software_node_get_reference_args(const struct fwnode_handle *fwnode,
- 	if (prop->is_inline)
- 		return -EINVAL;
+diff --git a/drivers/base/soc.c b/drivers/base/soc.c
+index 65ce72d492303..af7d71393774b 100644
+--- a/drivers/base/soc.c
++++ b/drivers/base/soc.c
+@@ -191,6 +191,7 @@ EXPORT_SYMBOL_GPL(soc_device_unregister);
  
--	if ((index + 1) * sizeof(*ref) > prop->length)
-+	if (index >= prop->length / sizeof(*ref))
- 		return -ENOENT;
+ static int __init soc_bus_register(void)
+ {
++	struct soc_device *soc_dev;
+ 	int ret;
  
- 	ref_array = prop->pointer;
+ 	ret = bus_register(&soc_bus_type);
+@@ -198,10 +199,20 @@ static int __init soc_bus_register(void)
+ 		return ret;
+ 	soc_bus_registered = true;
+ 
+-	if (early_soc_dev_attr)
+-		return PTR_ERR(soc_device_register(early_soc_dev_attr));
++	if (early_soc_dev_attr) {
++		soc_dev = soc_device_register(early_soc_dev_attr);
++		if (IS_ERR(soc_dev)) {
++			ret = PTR_ERR(soc_dev);
++			goto err_unregister_bus;
++		}
++	}
+ 
+ 	return 0;
++
++err_unregister_bus:
++	soc_bus_registered = false;
++	bus_unregister(&soc_bus_type);
++	return ret;
+ }
+ core_initcall(soc_bus_register);
+ 
 -- 
 2.53.0
 
