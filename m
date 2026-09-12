@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049FB3603D5;
-	Sat, 12 Sep 2026 16:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A716347CA89;
+	Sat, 12 Sep 2026 16:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232167; cv=none; b=CBc19XjEZgKj8PIIX/MdH2Gwa+lHswbO7GZ0le46FHUwIfDV9NksIj4IiDDnarDVy/Jzctiq/kUdDOMIFrd1GuOme3sIwI/ikAvwVQ8lseK6+i36An8nqIRuTyk8IfUrdQiAGqaBDzk8zJ6JMITVntVb8o3n/ktnx2Lif/pl9G0=
+	t=1789232169; cv=none; b=ZlS/sB50jmYIrHB2+dLfJ2rRzDYz0r9dRvXAx1IkX64240lsWZqcAXJxoETwN1phsmQAyNbrUhI+wjUy8YbIQIE/DO/hH8KxJ08QIVABOrSD3mrOwxXA6Z1TzJ//3KmhQa7zYX+39J/LacpDpsaITa/Y2ksZveVON2mUtJBjr7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232167; c=relaxed/simple;
-	bh=++z1AILtWOzEb+3xYw0HTes7q/2Y2FOIlGZHuVkVdgE=;
+	s=arc-20240116; t=1789232169; c=relaxed/simple;
+	bh=crQEPGif6sNiiwMVCjTR+qOgHT7zinJwp4Ip7JjkTYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XNG2mY/QuPCDWsi1QMzFnsBo1mjY3ckrD/kIt4FXDrCtkCO2pnwDI59YGkQw+qNGcgmWK5I7XoepbaSijklV+ijL960oG5lkixMFYJaMwSIysZti2QdVJLXvl1+P20dnyezxSDD3EIfl9uDudm446QoR56sgOYhgKIj7b7OiSfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TD7HAPw5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A6UCm4+QbZzswL5yGfbk/dtOyJ2qmniJ8ynkrXUyPxZrDTYrV/Fg5tqxh3SoY1g6WqQQq+dajCrlZc9dyWhfhh1jD3eL7HG2HILuzVQuTXFV3Ff775LhbkBQxlnZzOHN6JCkPPNVqKeZIkUbL5WifC4YQm7sRcu9RgJVYz6M7Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXVgQnCM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TD7HAPw5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40ED91F000FF;
-	Sat, 12 Sep 2026 16:56:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXVgQnCM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39F21F00893;
+	Sat, 12 Sep 2026 16:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232162;
-	bh=e+IcEZwTLadasdJBLn6RTP8mn9/xNYWYYCpQgoIYVt4=;
+	s=korg; t=1789232167;
+	bh=GUL4kGm5dPM2bocqEfsGT6975e8NNJcIq4pb3F4tLaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TD7HAPw51eatTJ7Zl0apbFkcCPZOS0Y5VXNExjEmwqVDlwy72MGrMpxFvdgsB1PYT
-	 R2IO2IvfUL7zHDKBAxl2yiVuOSeaxdtmPopuLZzYtSYJ7TkxBtDjyc6u7nyamLNKNH
-	 q4TIYHcoK/zrDt+ObTILzbK8zM5YG8v4oAib8E88=
+	b=RXVgQnCMsN7yaxAgsX0uoWhYNHj2LxWWFKX1bJSPkdQixuLojQh4LP0d8vntjDZDT
+	 FkGFTSo4vUHW06jgV1L468gSFghWdgEvj0pKzLDLAdpEdtcd1tCGE3cuGFtSJF5rdm
+	 gruFY+cATz3xPSdb2qemD0j8pNeFWPrOGc/3SqIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1144/1191] Bluetooth: coredump: fix building with coredump disabled
-Date: Sat, 12 Sep 2026 09:04:32 +0200
-Message-ID: <20260912065613.844934855@linuxfoundation.org>
+Subject: [PATCH 6.1 1145/1191] s390/con3270: move condev definition
+Date: Sat, 12 Sep 2026 09:04:33 +0200
+Message-ID: <20260912065613.865950650@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,46 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 6910e2eb39254d279bce5bc0f8eb6af45b59357c ]
+[ Upstream commit 9cab4f7d98eee90b762ffbc87055c9499d51a635 ]
 
-The btmtk driver uses an IS_ENABLED() check to conditionally compile
-the coredump support, but this fails to build because the hdev->dump
-member is in an #ifdef:
+Fix this for allmodconfig:
 
-drivers/bluetooth/btmtk.c: In function 'btmtk_process_coredump':
-drivers/bluetooth/btmtk.c:386:30: error: 'struct hci_dev' has no member named 'dump'
-  386 |   schedule_delayed_work(&hdev->dump.dump_timeout,
-      |                              ^~
+drivers/s390/char/con3270.c:43:24: error: 'condev' defined but not used [-Werror=unused-variable]
+ static struct tty3270 *condev;
+                        ^~~~~~
 
-The struct member doesn't really make a huge difference in the total size,
-so just remove the #ifdef around it to avoid adding similar checks
-around each user.
-
-Fixes: 872f8c253cb9e ("Bluetooth: btusb: mediatek: add MediaTek devcoredump support")
-Fixes: 9695ef876fd12 ("Bluetooth: Add support for hci devcoredump")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Fixes: c17fe081ac1f ("s390/3270: unify con3270 + tty3270")
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/s390/char/tty3270.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index c5ed346d049eb..95e3fc06ee20f 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -570,9 +570,7 @@ struct hci_dev {
- 	const char		*fw_info;
- 	struct dentry		*debugfs;
+diff --git a/drivers/s390/char/tty3270.c b/drivers/s390/char/tty3270.c
+index eee2030b86b3a..583f2aecbed3c 100644
+--- a/drivers/s390/char/tty3270.c
++++ b/drivers/s390/char/tty3270.c
+@@ -38,7 +38,6 @@
  
--#ifdef CONFIG_DEV_COREDUMP
- 	struct hci_devcoredump	dump;
--#endif
+ static struct tty_driver *tty3270_driver;
+ static int tty3270_max_index;
+-static struct tty3270 *condev;
+ static struct raw3270_fn tty3270_fn;
  
- 	struct device		dev;
+ struct tty3270_cell {
+@@ -1910,6 +1909,9 @@ static void __exit tty3270_exit(void)
+ }
  
+ #if IS_ENABLED(CONFIG_TN3270_CONSOLE)
++
++static struct tty3270 *condev;
++
+ static void
+ con3270_write(struct console *co, const char *str, unsigned int count)
+ {
 -- 
 2.53.0
 
