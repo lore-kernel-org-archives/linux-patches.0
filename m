@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E056834389C;
-	Sat, 12 Sep 2026 09:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1DA34389C;
+	Sat, 12 Sep 2026 09:16:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204590; cv=none; b=l+SOLOGY1IlFXb+qTDFZ6XBJ+YVw7budRsbJ1wXwy8+c5I4F7iJGY2WRrfDW6QZpFn1TU9An0u30FYI4NeeZA6wYA03K+JHJQZ5NPrmLzvWVmDcamPN6Sj7GMOd6Jp/zNKjdoPE/lvyEp0N3yrenAj6Ls4SysY+B51WbWFdOSzw=
+	t=1789204595; cv=none; b=iylZfYorxXRyCgAw+6zoFRcw0AtnejFUX7smumBmWsSaXoEkkKxqRkzf10xah72XMo+/J/9NsPc/f+U9VKjO/YM5yYVk+vYSnURKGOU57mc9XSjuoYXTpiZd6aMGnGFTvEoe/Y/AyEKcqJz/eJxr+nJFRK1XqSPPS+urK/182Ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204590; c=relaxed/simple;
-	bh=okKP0JEkHWzoB5eVB6R9hQG7fkj6Dn3enNv4tHWnd/E=;
+	s=arc-20240116; t=1789204595; c=relaxed/simple;
+	bh=dl2fOKongEYnDBiEspq2D/19CDgRu5ejWcieYSNAPeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WAMtL2syauc12hSet4yJ/+2rTj+VjWCbXfKUbH4AtAHa7SPFl/PX4cyvX/S/hyeYm9xV6Be47N0C1QVwp4r7bw5olSgwlLJqyAq4Cy/DGG5AFR29FnlMPP0UcUm6AEZvdlAthy2CbT5Efia9L631m+3wNtDG+ZQm8RhU2PFwwWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J0CLz8ES; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aleXt1iDdmQAYOSdKdXS7AK5B/ZPXS1M82TW+WD8cx+LpzE+6/nYgbm0NTQxHGH+NBsCrUH3PdeGpuL6fjPvSUN02JQYL2cduwdZ4UZGYh6JZTRXILa/A7lzJDduPAbTScwAKFU96faiGk2wmIukAe2laTpX420SZmIIofyW0CY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xv2gbKZ8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J0CLz8ES"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4A71F000FF;
-	Sat, 12 Sep 2026 09:16:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xv2gbKZ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21621F000FF;
+	Sat, 12 Sep 2026 09:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204588;
-	bh=SZCD5pEsUjMipIm4pZGR6zoqCZ3fljYXZhqlebTmZlo=;
+	s=korg; t=1789204593;
+	bh=liG+ikgydsKV0zmFUqiYEaDJUYK6YL61p0O7S5kv2Ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J0CLz8ESHG6pOPmCJwtco+ATFKfP0RVKQ8pspMbLMknWVcX8KwjqDBbT1I79R2ySS
-	 9EhnqglMXjqmFecjKCOiQw+uAMzLJqR8PxJwl0XnJqLoVtO/K+H7HNp7W/XAbhWhSM
-	 ykx1uHCXDq94NpO9/jk3HF0g5Kg9OS84ExAuAcF4=
+	b=xv2gbKZ8evx1puvRyZ1Pcl4bYi4/L7FMqme/1My8nGmzeau5MeCiKQT2cOd/+ZcbH
+	 bY2o07RLzd9c02G59wvRVbYDUuEdTDEEJX+nT/NntLvYqdWp6xYWWzQHegc3QiAuEt
+	 HMZlWo+pFmjEEgxwVQcKDhITwRkaNwAp/GbO4gaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Brian Masney <bmasney@redhat.com>,
-	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Michael Pesa <michael.pesa@icloud.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1642/1815] clk: visconti: Make sure clk_init_data is fully initialized
-Date: Sat, 12 Sep 2026 08:56:32 +0200
-Message-ID: <20260912065727.540376349@linuxfoundation.org>
+Subject: [PATCH 7.2 1643/1815] irqchip/ast2700-intc: Disable all interrupt merge banks on probe
+Date: Sat, 12 Sep 2026 08:56:33 +0200
+Message-ID: <20260912065727.564127589@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,50 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Michael Pesa <michael.pesa@icloud.com>
 
-[ Upstream commit 39c0e6c844a14945040cca4ccf6997792ab764c4 ]
+[ Upstream commit 34b7e953d19a39515f8fc6c0820ebf243ea6b026 ]
 
-The clk_init_data structure contains several mutually-exclusive members
-for different methods to specify the possible parents of a clock,
-prompting drivers to initialize only the members they need.  However,
-not initializing all members may cause subtle issues, which are only
-exposed when CONFIG_INIT_STACK_ALL_PATTERN or CONFIG_INIT_STACK_NONE is
-enabled.
+The INTC0 interrupt-merge (INTM) space has 50 sources at 10 per bank, i.e.
+INTC0_INTM_NUM / INTM_IRQS_PER_BANK = 5 banks. This is reflected everywhere
+the banks are indexed: the aspeed_intc0_intm_routes[] table has 5 valid
+entries, and the mask/unmask/eoi paths compute the bank as (hwirq -
+INTM_BASE) / INTM_IRQS_PER_BANK, spanning banks 0-4.
 
-visconti_clk_register_gate() fills in init.parent_data, and assumes that
-init.parent_names is NULL.  However, the latter in uninitialized, and
-thus may cause a crash.
+However, INTC0_INTM_BANK_NUM is hardcoded to 3, so
+aspeed_intc0_disable_intm() only clears IER for banks 0-2 at probe. Banks 3
+and 4 are left in whatever state the firmware configured them , which can
+leave interrupts enabled before a handler is installed.
 
-Make sure all members are fully initialized, to fix such bugs, and to
-avoid future breakage when converting drivers to a different method for
-specifying the parents.
+Derive the bank count from the source count so the probe-time disable
+covers every bank.
 
-Fixes: b4cbe606dc3674b2 ("clk: visconti: Add support common clock driver and reset driver")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 07825e41519a ("irqchip/ast2700-intc: Add AST2700-A2 support")
+Signed-off-by: Michael Pesa <michael.pesa@icloud.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260722050243.298355-1-michael.pesa@icloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/visconti/clkc.c | 2 +-
+ drivers/irqchip/irq-ast2700-intc0.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/visconti/clkc.c b/drivers/clk/visconti/clkc.c
-index d0b193b5d0b35..4018d1298880d 100644
---- a/drivers/clk/visconti/clkc.c
-+++ b/drivers/clk/visconti/clkc.c
-@@ -81,9 +81,9 @@ static struct clk_hw *visconti_clk_register_gate(struct device *dev,
- 						 u8	rs_idx,
- 						 spinlock_t *lock)
- {
-+	struct clk_init_data init = {};
- 	struct visconti_clk_gate *gate;
- 	struct clk_parent_data *pdata;
--	struct clk_init_data init;
- 	struct clk_hw *hw;
- 	int ret;
- 
+diff --git a/drivers/irqchip/irq-ast2700-intc0.c b/drivers/irqchip/irq-ast2700-intc0.c
+index c85b98a19bd41..1e375e9dffae1 100644
+--- a/drivers/irqchip/irq-ast2700-intc0.c
++++ b/drivers/irqchip/irq-ast2700-intc0.c
+@@ -48,9 +48,9 @@
+ #define INTC0_INTMX_IER		0x1b00
+ #define INTC0_INTMX_ISR		0x1b04
+ #define INTC0_INTMX_BANK_SIZE	0x10
+-#define INTC0_INTM_BANK_NUM	3
+ #define INTC0_IRQS_PER_BANK	32
+ #define INTM_IRQS_PER_BANK	10
++#define INTC0_INTM_BANK_NUM	(INTC0_INTM_NUM / INTM_IRQS_PER_BANK)
+ #define INTC0_SEL_BASE			0x200
+ #define INTC0_SEL_BANK_SIZE		0x4
+ #define INTC0_SEL_ROUTE_SIZE	0x100
 -- 
 2.53.0
 
