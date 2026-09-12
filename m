@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EBE299920;
-	Sat, 12 Sep 2026 09:38:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8626208D0;
+	Sat, 12 Sep 2026 09:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205906; cv=none; b=PPO3cUJ49AYhVPZUmH9qx3cuw8VYboZNeHvGjj+LXvKXdLC9Y6BhcOQlU8Ck9zCQfPG+yXZwDoUWrQPeH2c8AfGWGu1PZG9lPieEtWxVLy++D/o3cLztuiDMMAs1OZPZhLEzTZoUDZ75JYDY11pwMTWtgjOBhKTb+AkKzjF37fw=
+	t=1789205910; cv=none; b=EVClQ5qQZBgqLIc9vdY1BroYIO5i9qJcB/trBgWOm729oWGorHzgrmq11nOS+xY84QgFXpD+2CRga9KxHn8Yze4jkcKH1kJ5VUd+Hkbmv9V52ZMSss8u+cWaJ8FdhmIufVJkazd2XPgNZxGg79KaLzbklpLDrlHxFcm681qM1Bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205906; c=relaxed/simple;
-	bh=w6K9yxjxb/8o1rkK3OExk6s612GWww391i+DLrBFiw0=;
+	s=arc-20240116; t=1789205910; c=relaxed/simple;
+	bh=xDbA2P0QD+b5FVfEI8MgbPpB2Y0rkETn2m9cw5IuslM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cdGOzm7IiiML7/ehG6dUdWP5vLAtbEc8xjNw3qjB2uxSn91to3DKTwHGqPKoNweIaY3LIUIinVCrxdvtFUqyVEsqQDT9A0n4UyEccpVnfQUqIHNfLBSi2sF8HR43auIeiGUjKOhIb1ciLtAULBxEig5Nj9atMsXuHZ9CG2flwHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztd035WD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T0aCbVm+MriReFOWB/8t8ZVFALfXrwjBTqJCmWYksv8XUAEPME0pZX9sWrstakkq5vcHSIzNDXH9cqEoh+Jgr/fmjj3yh+hNNeuG+UehsEc2GACPUQ4VW3NSyN+GLg3Bj+/6ywk91DK/SaaSK7nCbsDYn7nS/0ZdlvbOI2LwPOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pX9y1gsZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztd035WD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D181F000FF;
-	Sat, 12 Sep 2026 09:38:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pX9y1gsZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5CE1F000FF;
+	Sat, 12 Sep 2026 09:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205904;
-	bh=ruqhlc/egxzEDzEcPxIzYKJL5wnTec/Nkhy0+/tLR9U=;
+	s=korg; t=1789205909;
+	bh=GXlOsoGF2nB/a3AXfVhYUW+AsWVCHKiAn1UWSGq+fRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ztd035WDjY4++jx6dhj3s50eYfr19fcsx6h2h38cYW7oy8IgAYW0g+oGH8XR7pqxT
-	 qsjKRgDx02pGKA5em57tj9SMWRZaCDMw3Sc/0JucL7JeYzDEGb1HmG4OhalOjDsmYK
-	 3C0UvQhtC7WAzPFG43Pi2wBd2YkyfIVTi7Tp/xLo=
+	b=pX9y1gsZ4XanNF0P2U9Gj511paymF60NnJJ2qjIRJ/8XzIPiFjXBCfcY6JR1soOs3
+	 t90ZVtLPrTesYlPxvp9pAgbTjPJgz0Ix/sBxHblEEszLw91tpePzd8QmntXX0jF4zU
+	 mugaXxfJzkk+XJ4w9IABx/TeQ1G4bR61rGWOOb3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0044/1518] tracing/probes: Fix BTF kflag check for anonymous struct member access
-Date: Sat, 12 Sep 2026 08:36:53 +0200
-Message-ID: <20260912065624.432405851@linuxfoundation.org>
+Subject: [PATCH 6.18 0091/1518] KVM: x86: Check EFER validity on KVM_SET_SREGS*
+Date: Sat, 12 Sep 2026 08:37:40 +0200
+Message-ID: <20260912065625.529912930@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,128 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+From: Yosry Ahmed <yosry@kernel.org>
 
-[ Upstream commit 47e93045a2db80d24f5fef65adecc6b2b32efa23 ]
+[ Upstream commit 184bd464bdb66daa9173670904f24c29c7b7f7d4 ]
 
-btf_find_struct_member() traverses into nested anonymous structures and
-unions to find a struct member. However, get_bitoffset_of_field() in
-trace_probe.c checked btf_type_kflag(type) using the outer parent type
-instead of the actual anonymous structure/union that directly contains
-the found member.
+When handling userspace SREGS writes, check the validity of EFER (i.e.
+allowed bits) before writing the new value of EFER through the
+per-vendor set_efer callbacks. This prevents userspace from writing
+bogus values (e.g. EFER.SVME=1 with nested=0).
 
-If the parent structure and anonymous structure have mismatched kflags
-(e.g., the parent has kflag=0 while the anonymous structure has kflag=1
-because it contains bitfields), the bitfield size encoded in the upper
-8 bits of member->offset is erroneously treated as part of the byte/bit
-offset, corrupting the resolved offset and failing to set last_bitsize.
-Similarly, btf_find_struct_member() pushed anonymous member offsets
-onto anon_stack without masking BTF_MEMBER_BIT_OFFSET() when kflag is set.
+Note: on KVM_SET_MSRS, KVM only checks EFER validity in terms of KVM
+caps, not guest caps, so it is possible to set EFER bits that are
+supported by KVM but not by the guest CPUID. Potentially allowing
+userspace to set msrs before CPUID.
 
-To fix this problem, update btf_find_struct_member() to return actual
-containing structure/union type via member_type, use appropriate
-__btf_member_bit_offset() to get bit offset, and use member_type for
-btf_type_kflag() in get_bitoffset_of_field().
+However, for KVM_SET_SREGS*, check the validity of the set bits against
+both KVM and guest caps. This is consistent with other validity checks
+(e.g. for CR4) that check validity against guest caps, which already
+imposes the need to set CPUID before SREGS.
 
-Link: https://lore.kernel.org/all/178827250904.123716.17452648791331881284.stgit@devnote2/
-
-Fixes: c440adfbe302 ("tracing/probes: Support BTF based data structure field access")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260822095110.0772E1F000E9@smtp.kernel.org/
-Assisted-by: Antigravity:gemini-3.7-flash
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
-[ applied changes to parse_btf_field() because get_bitoffset_of_field() is absent. ]
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Link: https://patch.msgid.link/20260713180153.2728382-2-yosry@kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_btf.c   |   19 +++++++++++--------
- kernel/trace/trace_btf.h   |    3 ++-
- kernel/trace/trace_probe.c |    5 +++--
- 3 files changed, 16 insertions(+), 11 deletions(-)
+ arch/x86/kvm/regs.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace_btf.c
-+++ b/kernel/trace/trace_btf.c
-@@ -61,16 +61,17 @@ struct btf_anon_stack {
+--- a/arch/x86/kvm/regs.c
++++ b/arch/x86/kvm/regs.c
+@@ -476,7 +476,8 @@ static bool kvm_is_valid_sregs(struct kv
+ 	}
  
- /*
-  * Find a member of data structure/union by name and return it.
-- * Return NULL if not found, or -EINVAL if parameter is invalid.
-- * If the member is an member of anonymous union/structure, the offset
-- * of that anonymous union/structure is stored into @anon_offset. Caller
-- * can calculate the correct offset from the root data structure by
-- * adding anon_offset to the member's offset.
-+ * Return NULL if not found, or ERR_PTR(-EINVAL) if parameter is invalid.
-+ * If the member is a member of an anonymous union/structure, the bit offset
-+ * of that anonymous union/structure is stored into @anon_offset.
-+ * If @member_type is non-NULL, the actual containing structure/union type
-+ * of the found member is stored into @member_type.
-  */
- const struct btf_member *btf_find_struct_member(struct btf *btf,
- 						const struct btf_type *type,
- 						const char *member_name,
--						u32 *anon_offset)
-+						u32 *anon_offset,
-+						const struct btf_type **member_type)
- {
- 	struct btf_anon_stack *anon_stack;
- 	const struct btf_member *member;
-@@ -94,14 +95,16 @@ retry:
- 			if (btf_type_skip_modifiers(btf, member->type, &tid) &&
- 			    top < BTF_ANON_STACK_MAX) {
- 				anon_stack[top].tid = tid;
--				anon_stack[top++].offset =
--					cur_offset + member->offset;
-+				anon_stack[top++].offset = cur_offset +
-+					__btf_member_bit_offset(type, member);
- 			}
- 		} else {
- 			name = btf_name_by_offset(btf, member->name_off);
- 			if (name && !strcmp(member_name, name)) {
- 				if (anon_offset)
- 					*anon_offset = cur_offset;
-+				if (member_type)
-+					*member_type = type;
- 				goto out;
- 			}
- 		}
---- a/kernel/trace/trace_btf.h
-+++ b/kernel/trace/trace_btf.h
-@@ -8,4 +8,5 @@ const struct btf_param *btf_get_func_par
- const struct btf_member *btf_find_struct_member(struct btf *btf,
- 						const struct btf_type *type,
- 						const char *member_name,
--						u32 *anon_offset);
-+						u32 *anon_offset,
-+						const struct btf_type **member_type);
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -577,6 +577,7 @@ static int parse_btf_field(char *fieldna
- {
- 	struct fetch_insn *code = *pcode;
- 	const struct btf_member *field;
-+	const struct btf_type *mtype;
- 	u32 bitoffs, anon_offs;
- 	bool is_struct = ctx->struct_btf != NULL;
- 	struct btf *btf = ctx_btf(ctx);
-@@ -611,7 +612,7 @@ static int parse_btf_field(char *fieldna
+ 	return kvm_is_valid_cr4(vcpu, sregs->cr4) &&
+-	       kvm_is_valid_cr0(vcpu, sregs->cr0);
++	       kvm_is_valid_cr0(vcpu, sregs->cr0) &&
++	       kvm_valid_efer(vcpu, sregs->efer);
+ }
  
- 			anon_offs = 0;
- 			field = btf_find_struct_member(btf, type, fieldname,
--						       &anon_offs);
-+						       &anon_offs, &mtype);
- 			if (IS_ERR(field)) {
- 				trace_probe_log_err(ctx->offset, BAD_BTF_TID);
- 				return PTR_ERR(field);
-@@ -624,7 +625,7 @@ static int parse_btf_field(char *fieldna
- 			bitoffs += anon_offs;
- 
- 			/* Accumulate the bit-offsets of the dot-connected fields */
--			if (btf_type_kflag(type)) {
-+			if (btf_type_kflag(mtype)) {
- 				bitoffs += BTF_MEMBER_BIT_OFFSET(field->offset);
- 				ctx->last_bitsize = BTF_MEMBER_BITFIELD_SIZE(field->offset);
- 			} else {
+ static int __set_sregs_common(struct kvm_vcpu *vcpu, struct kvm_sregs *sregs,
 
 
