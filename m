@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B464BEE22;
-	Sat, 12 Sep 2026 13:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577B82E7631;
+	Sat, 12 Sep 2026 13:42:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220549; cv=none; b=Thmq/MMMzlXlCty4yMrRZ5EHHzBzCy6O7FRj13klutDEs2M21SG8bfgvWDDig0b9Qr0iTuyms8rl/Addmg+RiBvzot6+do3nc17cooYg9xRYh4KzMjE6ztfbPxbPmylo8z8jD55OOg/4uxcWNgXRTUjF3guJmkTXoOOUMRne9CE=
+	t=1789220554; cv=none; b=AMiJF9qvnRWrkcUhyD6FgDRxVg4TH+0ILhLBqkbMbdFkKdy5BwTzCpbyJFToyK1rjDNZSdHUZSLthW3YqyVvIMzPa3zCdv1xG3pJM0PyLiS4dqIf10McUSFMvDMgLQjwrigTlb7cJU1NpPIiEW2fYQA/NcEnWozCM1Agj9ZebxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220549; c=relaxed/simple;
-	bh=0sSqiWt4vL7U2KOeEiBCRi7gtrMj7mvkj/HBeGEMHYs=;
+	s=arc-20240116; t=1789220554; c=relaxed/simple;
+	bh=5qChb8oeTgXaL5joYnvvYCQCg+iJUftXu7rxbAty10w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MHduicZcrY4sKtgd6YCUTNKPNRIaFw/rhwOJRmBfzPw8ccxqeN9YRF7pGRJoK7j09lHjbR8VPB6ibrkSDeDaG2V2NdTBp03JYZE+Ky4pW82OwkpKcIVeOHKPqkbqljSae+FA3XdYjUB5hv7a2wGh6V79uPuBfvyCnzSrAnuI8Mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oM/Xwjr3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eeZ3fb4xylyH+zxMMvh1witHYfIMghwL+gHPNC7IkK2Ot2ICkaASIdNb+qBGIkhDrGnemkJ16YT/ozgq+ed8NPGCQAx+Y6iVMuZ/dXhNng4uFWTsLpAMVcnU/2QawXIVMiGkT0w89NJDvFnWjkOnsJQGqTe9vQ9qa79w8G+lf74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgALrYT6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oM/Xwjr3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 438D81F000FF;
-	Sat, 12 Sep 2026 13:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgALrYT6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E6C1F000FF;
+	Sat, 12 Sep 2026 13:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220548;
-	bh=8T+ikJ75rnCowzjVdQ63EXBolNMN/XGz6NtIVsTU7sQ=;
+	s=korg; t=1789220553;
+	bh=QmSuR8Uualfazwy+l50OS3PIZbC0KPBMzewFQ74+BAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oM/Xwjr38iSdVtDMHfAui5nVttderUCGuBOmOa+tl9rDuEXTU7WIPgEdB04nTeGMl
-	 1lX/Ln/Z9ciWxbwFvkn3Vz6N/NEz14MM5bFmAajfGNPIjnxXrwUnVK+tTEhUj4VFL+
-	 dYxhmmVHw7iFlE3bEIQG+llIk2C8fFAZIOZeWC18=
+	b=bgALrYT6jxReemuQK+vLe8ATYnc5BXu24s6ftUKcB2YuhF8fezFwqvGZLd1ICQW/N
+	 dS2+GfRT0r7C0mdmZtGNOLI9EmiPqH8DS0I+/qwyQVswjtlmZVY4rXw/nPNoO033Pt
+	 ZKvENKxDDtlU7OcTYXV95DBiyznfdvuOFIHfzWOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.6 0199/1424] nvme-tcp: fix host memory disclosure on R2T for a read command
-Date: Sat, 12 Sep 2026 08:43:51 +0200
-Message-ID: <20260912065611.748480481@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.6 0164/1424] wifi: ath6kl: clamp assoc request/response lengths before subtracting IE offsets
+Date: Sat, 12 Sep 2026 08:43:16 +0200
+Message-ID: <20260912065610.967317801@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,50 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 6efbc52237facda35d2d874fe1765bb4839275d8 upstream.
+commit 3bbd05723d15dd06f0560bcd94fbf9a91b5f5613 upstream.
 
-nvme_tcp_handle_r2t() does not check the direction of the request the
-R2T refers to. A malicious controller can send an R2T for a READ and
-the host will answer it: nvme_tcp_setup_h2c_data_pdu() builds the
-H2CData header and nvme_tcp_try_send_data() sends the request's data
-buffer. That buffer is the READ destination, so its contents go to the
-controller.
+ath6kl_cfg80211_connect_event() subtracts fixed IE offsets from
+assoc_req_len (-= 4) and assoc_resp_len (-= 6), both u8, with no lower
+bound. The aggregate check recently added to ath6kl_wmi_connect_event_rx()
+bounds the declared lengths from above (their sum must fit the received
+event), but an assoc request/response shorter than its fixed offset still
+underflows here: the u8 wraps to ~250, and cfg80211_connect_result() /
+cfg80211_roamed() then treat that wrapped value as the IE length and copy
+that many bytes out of the small assoc_info buffer to user space via
+nl80211, disclosing adjacent slab memory.
 
-The command then completes normally and nothing is logged.
+Clamp both lengths to their offsets before subtracting.
 
-Against a test controller that answers every READ with an R2T, a 4096
-byte buffered read returned all 4096 bytes, split over two R2Ts. The
-pages contained stale kernel data, including an array of struct page
-pointers.
+Found by 0sec (https://0sec.ai) using automated source analysis; the
+missing lower bound is evident from source. Compile-tested.
 
-Reject an R2T for a request that is not a write.
-
-Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
+Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Assisted-by: 0sec:claude-opus-4-8
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Link: https://patch.msgid.link/20260713213251.21161-1-doruk@0sec.ai
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/tcp.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/ath/ath6kl/cfg80211.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -677,6 +677,13 @@ static int nvme_tcp_handle_r2t(struct nv
- 	}
- 	req = blk_mq_rq_to_pdu(rq);
+--- a/drivers/net/wireless/ath/ath6kl/cfg80211.c
++++ b/drivers/net/wireless/ath/ath6kl/cfg80211.c
+@@ -753,6 +753,11 @@ void ath6kl_cfg80211_connect_event(struc
+ 	u8 *assoc_resp_ie = assoc_info + beacon_ie_len + assoc_req_len +
+ 	    assoc_resp_ie_offset;
  
-+	if (unlikely(rq_data_dir(rq) != WRITE)) {
-+		dev_err(queue->ctrl->ctrl.device,
-+			"req %d unexpected r2t for a non-write command\n",
-+			rq->tag);
-+		return -EPROTO;
-+	}
++	if (assoc_req_len < assoc_req_ie_offset)
++		assoc_req_len = assoc_req_ie_offset;
++	if (assoc_resp_len < assoc_resp_ie_offset)
++		assoc_resp_len = assoc_resp_ie_offset;
 +
- 	if (unlikely(!r2t_length)) {
- 		dev_err(queue->ctrl->ctrl.device,
- 			"req %d r2t len is %u, probably a bug...\n",
+ 	assoc_req_len -= assoc_req_ie_offset;
+ 	assoc_resp_len -= assoc_resp_ie_offset;
+ 
 
 
