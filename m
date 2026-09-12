@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E4C1208D0;
-	Sat, 12 Sep 2026 09:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F6324CEEA;
+	Sat, 12 Sep 2026 09:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204610; cv=none; b=LVoG8xtnYddWpPfUWMqOvvo+h8dbVA5dbYn8YiY85hSwo5IXfp/nXT+iCBfya+D4vd38MNUUfBfn5Ff2CocFpeQJr29yQ2HRkkFpv5bej4Qu9OnCu6Q94bRKrkk0ywsko8N1IYL5DMbbe+jvNLeCxFrCDlq1bjSJTpwXKpkpkv8=
+	t=1789204615; cv=none; b=ZLOxnfepv7YT4fwMaj7AfaK1R7j0Cim7jTVbsiHF4FauMHfdEXomrXFfHdAhNsyHKohAtqRZrod2HEdzt1WrOXKndAXoGAC/612CXnslxDyBpqLrptFZn4bubn/Zgn3dMRBs6Z2yQFfJdEfe0ZU7vYJCQb7f0rWjL1F5np5Vy9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204610; c=relaxed/simple;
-	bh=v1koBjagE2nAaRMqPW9TpjiHvlzS6OBZ079e2KHIecI=;
+	s=arc-20240116; t=1789204615; c=relaxed/simple;
+	bh=sGx2qnupzW/jNLwNxFEw7CNGPw/RXbg6QEDh6307iYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fWQjfXrl0LM2A7SDiNq4zgF9r70RXZE4aVVsjHmXZMSjCfiNYeE3jEvNyf7IGZpPMNf226KtHKaFnA2DOmYGrOmSQV20JygGoTTLJ/B/C9OClZ6j+bIFptViOQBuV1dvnIRCA54aN2dmKTDxOaw0aUxOPGLOybz3eLCNi2wK/as=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qmh13wfC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c9CGxLVExA/sHf+H9MEGVEoiGH0U2e8xMxdoi6SfNatXcGlN1YcBvUAIq6+F7aUqmxGyDwBVly5aPaND4S6H3ZseQ75o03dMLwNZA8zaCOVC7ZX6VsChBb7DlulXDs30W7vlp12ja/n0wDwrMZkHUohkO5/3/Lhnt3LRu3n0K/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AEYBaB5C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qmh13wfC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2E81F000FF;
-	Sat, 12 Sep 2026 09:16:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AEYBaB5C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C4F1F000FF;
+	Sat, 12 Sep 2026 09:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204609;
-	bh=ByP61X5UJ2zpuxgXwPk3XcBuYit7lyn50u4uSm59Fb4=;
+	s=korg; t=1789204613;
+	bh=fDZajIrJdx3+blbypP3f6QOLnU4ENcDGZqQsp0lsJSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qmh13wfC+cF41U3VN+mSYI743wc9PHmET4+QBOEkECW7Qw6cfEY+fXvdxdIpGp3cw
-	 z+2KPGQDQKJpUl6q7eglsOmglZKPpVc3WJeVHfa5eB/EjmWNdhJikEYWw9cQg7eYvl
-	 rXrE2PnXMJ255IFcuArWHuILJmUtxodwPk96alYk=
+	b=AEYBaB5CFkHCPOUdWqdwCN8VHoLdN/2eiRcBp/8HJD2EmSyJKTLz3RP7fnJz0Ehjh
+	 s86n5KXpWNO337Fu9C0kqGwxt69EWfy2FRpYAbQCpx13DmA1pAxubDDe8QAWiCymF6
+	 5GDTnpCWbT/PCfqOw4S8aUlwPXo9CiRtp01mK56k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1605/1815] ntfs: Remove use of __folio_index in handle_bounds_compressed_page()
-Date: Sat, 12 Sep 2026 08:55:55 +0200
-Message-ID: <20260912065726.670570606@linuxfoundation.org>
+Subject: [PATCH 7.2 1606/1815] ntfs: Use zero_user_segment() in handle_bounds_compressed_page()
+Date: Sat, 12 Sep 2026 08:55:56 +0200
+Message-ID: <20260912065726.694766193@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,45 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit a3976da121aef2b9bf0709e0fd257b2a7ae2749c ]
+[ Upstream commit 8a81803f87504ffd735f2a77f1299eadf2cbdf32 ]
 
-Nobody is supposed to use page->__folio_index.  Use page_offset()
-instead, and simplify by working exclusively in loff_t instead of mixing
-up loff_t and pgoff_t.
+This fixes handle_bounds_compressed_page() on highmem memory
+as page_address() does not work on memory which has been kmap_local(),
+only on kmap() memory.
 
-Link: https://lore.kernel.org/all/20260608210618.3437216-3-willy@infradead.org/
 Fixes: 495e90fa3348 ("ntfs: update attrib operations")
 Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Co-developed-by: Hyunchul Lee <hyc.lee@gmail.com>
-Signed-off-by: Hyunchul Lee <hyc.lee@gmail.com>
+Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/compress.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/ntfs/compress.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
 diff --git a/fs/ntfs/compress.c b/fs/ntfs/compress.c
-index c904858dff3d2..8078041b87968 100644
+index 8078041b87968..f03fae63c199d 100644
 --- a/fs/ntfs/compress.c
 +++ b/fs/ntfs/compress.c
-@@ -105,13 +105,15 @@ void free_compression_buffers(void)
- static inline void handle_bounds_compressed_page(struct page *page,
- 		const loff_t i_size, const s64 initialized_size)
- {
--	if ((page->__folio_index >= (initialized_size >> PAGE_SHIFT)) &&
-+	loff_t pos = page_offset(page);
-+
-+	if ((pos + PAGE_SIZE > initialized_size) &&
+@@ -109,16 +109,16 @@ static inline void handle_bounds_compressed_page(struct page *page,
+ 
+ 	if ((pos + PAGE_SIZE > initialized_size) &&
  			(initialized_size < i_size)) {
- 		u8 *kp = page_address(page);
- 		unsigned int kp_ofs;
+-		u8 *kp = page_address(page);
+-		unsigned int kp_ofs;
++		size_t offset;
  
  		ntfs_debug("Zeroing page region outside initialized size.");
--		if (((s64)page->__folio_index << PAGE_SHIFT) >= initialized_size) {
-+		if (pos >= initialized_size) {
- 			clear_page(kp);
- 			return;
- 		}
+-		if (pos >= initialized_size) {
+-			clear_page(kp);
+-			return;
+-		}
+-		kp_ofs = initialized_size & ~PAGE_MASK;
+-		memset(kp + kp_ofs, 0, PAGE_SIZE - kp_ofs);
++		if (pos >= initialized_size)
++			offset = 0;
++		else
++			offset = offset_in_page(initialized_size);
++		zero_user_segment(page, offset, PAGE_SIZE);
++	} else {
++		flush_dcache_page(page);
+ 	}
+ }
+ 
+@@ -223,7 +223,6 @@ static int ntfs_decompress(struct page *dest_pages[], int completed_pages[],
+ 				 */
+ 				handle_bounds_compressed_page(dp, i_size,
+ 						initialized_size);
+-				flush_dcache_page(dp);
+ 				kunmap_local(page_address(dp));
+ 				SetPageUptodate(dp);
+ 				unlock_page(dp);
+@@ -759,7 +758,6 @@ int ntfs_read_compressed_block(struct folio *folio)
+ 				 */
+ 				handle_bounds_compressed_page(page, i_size,
+ 						initialized_size);
+-				flush_dcache_page(page);
+ 				kunmap_local(page_address(page));
+ 				SetPageUptodate(page);
+ 				unlock_page(page);
 -- 
 2.53.0
 
