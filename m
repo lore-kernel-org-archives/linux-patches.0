@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2B3326938;
-	Sat, 12 Sep 2026 14:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE620CA6F;
+	Sat, 12 Sep 2026 14:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223558; cv=none; b=iYx3hkSHfCN46aCRU/CKJ+3Jjmm9RyBqVlni6HG8pyPGBXOCLL5Ku5fxu6l7FaaE6Qjym6mDyfulq4TRSS5JSqDlpENzlcyxjq18HpQU+g/YOU1DuHFi0qA1GpCRP1U59ZEYrOTQZI3B0sZ+0dfXeIJizs73/cMU09spaDgsAto=
+	t=1789223563; cv=none; b=SAxiZUPoMikRw8nDj7O90NhrIh/NebbPB5+TTFY5UQSqMNoUuHpLwDU6hxEPrcSW88YkqscRdx0s89hGeF8zkZRwftsmcewI9B8CChYn90WevfN4seohcC783LCK8LtS1QTjYb34RqLpNo0nEFqPqzYZOiL/hroQ/hRVlEXsHCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223558; c=relaxed/simple;
-	bh=nhZOi5l3bgL4GizFGLw3vnVPEjncbGF6ARGUT9KI7fI=;
+	s=arc-20240116; t=1789223563; c=relaxed/simple;
+	bh=0Z3ejcO0G+BYYgaI1SsMXNTTye2RYOBySIc7NmUqVOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sCS4JjDe1qkVvUXyhUvZPZ6T15I9/z4sA/jawIQ2i5ZoPd7KQftLvke2YmxyjdB8SUc+VNv6H3z88jthMpxcaEt4VirJ0ZXV5yc3i9RpIG0WFupeZrzGKqjmcZwDbFy1mpPbkfTxR9QhpZM8OqciRp461CmWSBwWwizkJdKo6rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QEUOsrcj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X2g2cPFdzn4l94sSuLeXWTIPfTjqSIkKeNtx82I3PZ8o7KW9aV9iwdp6rucNYcaAzRHGf75XgbH/c21k12MpO4y5gY8gbg67BcNvbsr184zSy20C9z63c+afKjr0Is3vGsCko73OdjpZ9FgXyD6s9WIpe5hCiDqsqaMQvQsdyD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yl1x9lnB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEUOsrcj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B057F1F000FF;
-	Sat, 12 Sep 2026 14:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yl1x9lnB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C3051F000FF;
+	Sat, 12 Sep 2026 14:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223557;
-	bh=EOKpNSNT/4sVvEx/QUHR/EckJpskHMNcDtW5oVK39fs=;
+	s=korg; t=1789223562;
+	bh=bpY5pRKzT9GgBy551u6iyTQhpe8Io7XtMBQInUYoN9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QEUOsrcjDcx/D/tXs2xtjPjP8XkMSOp08ghJ+7mFEFRwbhRoKWI52LhQA7vd5Ca0J
-	 od+kyaN09zUN/VQjpfvuikHjwV0CHnU/SPh53JUpMEiSfSZZpgf1U8WNFYhkoOHehu
-	 seLOx22t17aa2jUWi7MzSH6uKzAzuGEb60k4eQ3I=
+	b=yl1x9lnBnl5nxoDU7k+0ex3IoV45pbVyyDl5BVBHO3/DQu/VS7HdmOWDmNTlcdIG/
+	 uPWUSrgAGhbXOKIJTmO7EdRhsD++GL/COlAkHs7gw1aBXhT1LUoiFN3zI+dTOqJAFC
+	 A4dKLAuZBM1Xw7I2+Q3wg/KxZJiAMmwCteBJCgCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Uday Khare <udaykhare77@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0771/1424] cpufreq: schedutil: Fix self-contradictory comment in sugov_iowait_apply()
-Date: Sat, 12 Sep 2026 08:53:23 +0200
-Message-ID: <20260912065624.562492713@linuxfoundation.org>
+Subject: [PATCH 6.6 0772/1424] remoteproc: qcom: Fix glink->node reference leak in qcom_add_glink_subdev
+Date: Sat, 12 Sep 2026 08:53:24 +0200
+Message-ID: <20260912065624.585311183@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,44 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+From: Uday Khare <udaykhare77@gmail.com>
 
-[ Upstream commit db6a017c91b774c15b1b890db45981eacfff540e ]
+[ Upstream commit 44f4911ab8e6f4d69afad5f2571bbd2da421c918 ]
 
-The kerneldoc of sugov_iowait_apply() says the IO boost value is increased
-in sugov_iowait_apply() and, in the same sentence, that it is decreased by
-the same function. That is self-contradictory, and the first part is wrong:
-sugov_iowait_apply() only decreases the boost.
+In qcom_add_glink_subdev(), the device node reference acquired via
+of_get_child_by_name() is stored in glink->node. If the subsequent
+kstrdup_const() allocation for glink->ssr_name fails, the function
+returns early without calling of_node_put() on glink->node, leaking
+the reference count.
 
-The boost is actually increased in sugov_iowait_boost(). Fix the comment to
-name sugov_iowait_boost() as the place where the boost is increased, so it
-matches the code.
+Fix this by adding of_node_put(glink->node) on the error path before
+returning.
 
-No functional change.
-
-Fixes: fd7d5287fd65 ("cpufreq: schedutil: Cleanup and document iowait boost")
-Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/20260703092433.4080165-1-zhongqiu.han@oss.qualcomm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: cd9fc8f1b35b ("remoteproc: qcom: Pass ssr_name to glink subdevice")
+Signed-off-by: Uday Khare <udaykhare77@gmail.com>
+Link: https://lore.kernel.org/r/20260618132054.11010-1-udaykhare77@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/cpufreq_schedutil.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/remoteproc/qcom_common.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
-index 996ceaaa35288..809452968eb44 100644
---- a/kernel/sched/cpufreq_schedutil.c
-+++ b/kernel/sched/cpufreq_schedutil.c
-@@ -317,7 +317,7 @@ static void sugov_iowait_boost(struct sugov_cpu *sg_cpu, u64 time,
-  * A CPU running a task which woken up after an IO operation can have its
-  * utilization boosted to speed up the completion of those IO operations.
-  * The IO boost value is increased each time a task wakes up from IO, in
-- * sugov_iowait_apply(), and it's instead decreased by this function,
-+ * sugov_iowait_boost(), and it's instead decreased by this function,
-  * each time an increase has not been requested (!iowait_boost_pending).
-  *
-  * A CPU which also appears to have been idle for at least one tick has also
+diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
+index e5b1f0e66019f..301cd16723709 100644
+--- a/drivers/remoteproc/qcom_common.c
++++ b/drivers/remoteproc/qcom_common.c
+@@ -240,8 +240,10 @@ void qcom_add_glink_subdev(struct rproc *rproc, struct qcom_rproc_glink *glink,
+ 		return;
+ 
+ 	glink->ssr_name = kstrdup_const(ssr_name, GFP_KERNEL);
+-	if (!glink->ssr_name)
++	if (!glink->ssr_name) {
++		of_node_put(glink->node);
+ 		return;
++	}
+ 
+ 	glink->dev = dev;
+ 	glink->subdev.start = glink_subdev_start;
 -- 
 2.53.0
 
