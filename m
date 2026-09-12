@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFBDC35AC1E;
-	Sat, 12 Sep 2026 08:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1C71F1534;
+	Sat, 12 Sep 2026 08:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201636; cv=none; b=MU0nsMNor1BTd6RvPsi364JhHT7MH0LYLGpvdeLKDxSPZFACc5Gidz6Qf2/rj58/T1VAJ2BbEgaJqE0CnDoTX5kBEk3yendwpP9JNcYn1FXODW1ybVdBgZ8Io+xILU+QxPJVm/RWXBP/QiT3ZYA6kmZRxg5R1imbcOsbYubBFsI=
+	t=1789201641; cv=none; b=d7gSN0OyBjnnnGNvI9kWPjjJC1BikAJrEbD0/om2j0U5KxlxApDZaz+KFLPF1UdGZAnlLMtQ2DdeXrllGUSF1Ee8OLxLZCEKLKXRrp7sW49oSjqcMeEQUk3P/A/dfNEzPuol0BuR5f3orp6CiZZI09EHtXRrIebjoPimmccwu2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201636; c=relaxed/simple;
-	bh=UyHKI9GkOhC9h6MCr0RobFKbNmf+6fLvknVUkG0Y79I=;
+	s=arc-20240116; t=1789201641; c=relaxed/simple;
+	bh=F/b9SEPxSIHBYg/NaK548GaKXiLzQLLlzEPx/8AV1q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EYGoUvm1mCGU0/w0+RtG1p0Ggn8s0IQTwCQIV0BN6bMdbKTH8QJZelbceiGWc4giCY/BDpw4OLz/2ewZbasczJq5ljNTWIlAsG2Aef+PbrmUXv6xc+vhGqXaSn0LvmTlzOF04+wZ/LCv4++7nAYMlHkcqPJpGLetIbVnZdggZ3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRX1suP2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L4oFenMJqSLdKSYKv4ApJWIrL1G7lHnmhnC/YABK9jfCLGamTtwXKwiKyZ67ScWGc1vkte7TlNV+K7HlqMB7w7J4Kgmjm97iAXz5/qmTC43B80YcdUVkPAZ1X4wo/tVd/n4YOH2eRbfxE/pvRX4JuhmtcXgHUTUuVmcyLlSYLSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9nL5cLX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRX1suP2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F3E61F000FF;
-	Sat, 12 Sep 2026 08:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9nL5cLX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789A61F000FF;
+	Sat, 12 Sep 2026 08:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201634;
-	bh=O4jE7rcuTOben9/VJZEFilJk/YBmHic5Ln2BOdahkek=;
+	s=korg; t=1789201639;
+	bh=3VVqiqM6dm7+JPvAQYN9I5Amhi6DPnHnsloVnSkl7Pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wRX1suP2F9ocZhjNGFf9fkn6fJb0Ck4jHJo6ReWGjoKZLuUUYZIGrFc8IqLDGmH+a
-	 JU+G59I1JzPGttjWimMJ+a+i3E2xh7aseDxqMKSx9wNO7qCWOTQFru5VXcgqsp3ypC
-	 TR9QnXasFeG8b7cGJGOIasRf1w988GT109dG3NF4=
+	b=Y9nL5cLXfo2XAExlvdjQClF3BMEunAwBTxyga42Wt8dHDCkAqK9VnuRdtSqwCQvOD
+	 UkOlg5hoHiCs0w/I7DC4wQiNgNlMj4z9yWhephxepa4G1pZfm+JitVFustBu/dtMlM
+	 +kbyLKKkoDboYJ56K5k4QX9nZNTeAYagLzg/khjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Caleb Sander Mateos <csander@purestorage.com>,
+	Yang Xiuwei <yangxiuwei@kylinos.cn>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1035/1815] ublk: check for ublk_unmap_io() returning 0
-Date: Sat, 12 Sep 2026 08:46:25 +0200
-Message-ID: <20260912065713.317568767@linuxfoundation.org>
+Subject: [PATCH 7.2 1036/1815] ublk: validate auto buf reg before taking uring_cmd
+Date: Sat, 12 Sep 2026 08:46:26 +0200
+Message-ID: <20260912065713.340475639@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,45 +52,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Caleb Sander Mateos <csander@purestorage.com>
+From: Yang Xiuwei <yangxiuwei@kylinos.cn>
 
-[ Upstream commit 24fd3706178f1ae5501fd1ff9036e170ed0665ba ]
+[ Upstream commit ca5a01eee34c7cbe0f531a613b0292a3ad1a419b ]
 
-If the userspace ublk server passes an unmapped address as the data
-buffer for a completed ublk read, ublk_unmap_io() will return 0
-indicating no bytes could be copied. Currently, this will result in
-calling blk_update_request() with nr_bytes=0, which doesn't seem
-supported. Fail the I/O with BLK_STS_IOERR in this case instead.
+With UBLK_F_AUTO_BUF_REG, invalid sqe->addr can fail after
+ublk_fill_io_cmd() has set UBLK_IO_FLAG_ACTIVE. The uring_cmd is
+completed while the tag stays active, which can hang teardown.
 
-Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
-Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
-Link: https://patch.msgid.link/20260729171041.45061-3-csander@purestorage.com
+Split validation from buffer apply so the check has no side effects,
+then take the uring_cmd and store the already-validated buffer. Apply
+the same order in FETCH so io->buf is not written before __ublk_fetch()
+state checks.
+
+Fixes: 52460dda3a77 ("ublk: move auto buffer register handling into one dedicated helper")
+Suggested-by: Caleb Sander Mateos <csander@purestorage.com>
+Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/block/ublk_drv.c | 74 +++++++++++++++++++++-------------------
+ 1 file changed, 38 insertions(+), 36 deletions(-)
 
 diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 6d6fffdfa439e..ebd84d36cd486 100644
+index ebd84d36cd486..1fc6449431910 100644
 --- a/drivers/block/ublk_drv.c
 +++ b/drivers/block/ublk_drv.c
-@@ -1590,8 +1590,14 @@ static inline void __ublk_complete_rq(struct request *req, struct ublk_io *io,
- 	 *
- 	 * Re-read simply for this unlikely case.
- 	 */
--	if (unlikely(unmapped_bytes < io->res))
-+	if (unlikely(unmapped_bytes < io->res)) {
-+		if (unlikely(!unmapped_bytes)) {
-+			res = BLK_STS_IOERR;
-+			goto exit;
-+		}
-+
- 		io->res = unmapped_bytes;
+@@ -3093,18 +3093,19 @@ static inline int ublk_check_cmd_op(u32 cmd_op)
+ 	return 0;
+ }
+ 
+-static inline int ublk_set_auto_buf_reg(struct ublk_io *io, struct io_uring_cmd *cmd)
++/* Must run before ublk_fill_io_cmd() / __ublk_fetch(). */
++static inline int ublk_validate_io_buf(const struct ublk_device *ub,
++				       struct io_uring_cmd *cmd,
++				       struct ublk_auto_buf_reg *buf)
+ {
+-	struct ublk_auto_buf_reg buf;
+-
+-	buf = ublk_sqe_addr_to_auto_buf_reg(READ_ONCE(cmd->sqe->addr));
++	if (!ublk_dev_support_auto_buf_reg(ub))
++		return 0;
+ 
+-	if (buf.reserved0 || buf.reserved1)
++	*buf = ublk_sqe_addr_to_auto_buf_reg(READ_ONCE(cmd->sqe->addr));
++	if (buf->reserved0 || buf->reserved1)
+ 		return -EINVAL;
+-
+-	if (buf.flags & ~UBLK_AUTO_BUF_REG_F_MASK)
++	if (buf->flags & ~UBLK_AUTO_BUF_REG_F_MASK)
+ 		return -EINVAL;
+-	io->buf.auto_reg = buf;
+ 	return 0;
+ }
+ 
+@@ -3125,17 +3126,25 @@ static void ublk_clear_auto_buf_reg(struct ublk_io *io,
+ 		 * responsibility for unregistering the buffer, otherwise
+ 		 * this ublk request gets stuck.
+ 		 */
+-		if (io->buf_ctx_handle == io_uring_cmd_ctx_handle(cmd))
++		if (buf_idx &&
++		    io->buf_ctx_handle == io_uring_cmd_ctx_handle(cmd))
+ 			*buf_idx = io->buf.auto_reg.index;
+ 	}
+ }
+ 
+-static int ublk_handle_auto_buf_reg(struct ublk_io *io,
+-				    struct io_uring_cmd *cmd,
+-				    u16 *buf_idx)
++static inline void ublk_apply_io_buf(const struct ublk_device *ub,
++				     struct ublk_io *io,
++				     struct io_uring_cmd *cmd,
++				     unsigned long buf_addr,
++				     const struct ublk_auto_buf_reg *auto_buf,
++				     u16 *buf_idx)
+ {
+-	ublk_clear_auto_buf_reg(io, cmd, buf_idx);
+-	return ublk_set_auto_buf_reg(io, cmd);
++	if (ublk_dev_support_auto_buf_reg(ub)) {
++		ublk_clear_auto_buf_reg(io, cmd, buf_idx);
++		io->buf.auto_reg = *auto_buf;
++	} else {
++		io->buf.addr = buf_addr;
 +	}
+ }
+ 
+ /* Once we return, `io->req` can't be used any more */
+@@ -3152,18 +3161,6 @@ ublk_fill_io_cmd(struct ublk_io *io, struct io_uring_cmd *cmd)
+ 	return req;
+ }
+ 
+-static inline int
+-ublk_config_io_buf(const struct ublk_device *ub, struct ublk_io *io,
+-		   struct io_uring_cmd *cmd, unsigned long buf_addr,
+-		   u16 *buf_idx)
+-{
+-	if (ublk_dev_support_auto_buf_reg(ub))
+-		return ublk_handle_auto_buf_reg(io, cmd, buf_idx);
+-
+-	io->buf.addr = buf_addr;
+-	return 0;
+-}
+-
+ static inline void ublk_prep_cancel(struct io_uring_cmd *cmd,
+ 				    unsigned int issue_flags,
+ 				    struct ublk_queue *ubq, unsigned int tag)
+@@ -3304,6 +3301,7 @@ static int __ublk_fetch(struct io_uring_cmd *cmd, struct ublk_device *ub,
+ static int ublk_fetch(struct io_uring_cmd *cmd, struct ublk_device *ub,
+ 		      struct ublk_io *io, __u64 buf_addr, u16 q_id)
+ {
++	struct ublk_auto_buf_reg auto_buf;
+ 	int ret;
  
  	/*
- 	 * Run bio->bi_end_io() with softirqs disabled. If the final fput
+@@ -3312,11 +3310,13 @@ static int ublk_fetch(struct io_uring_cmd *cmd, struct ublk_device *ub,
+ 	 * FETCH, so it is fine even for IO_URING_F_NONBLOCK.
+ 	 */
+ 	mutex_lock(&ub->mutex);
+-	ret = __ublk_fetch(cmd, ub, io, q_id);
+-	if (!ret)
+-		ret = ublk_config_io_buf(ub, io, cmd, buf_addr, NULL);
++	ret = ublk_validate_io_buf(ub, cmd, &auto_buf);
+ 	if (!ret)
++		ret = __ublk_fetch(cmd, ub, io, q_id);
++	if (!ret) {
++		ublk_apply_io_buf(ub, io, cmd, buf_addr, &auto_buf, NULL);
+ 		ublk_mark_io_ready(ub, q_id, io);
++	}
+ 	mutex_unlock(&ub->mutex);
+ 	return ret;
+ }
+@@ -3459,13 +3459,18 @@ static int ublk_ch_uring_cmd_local(struct io_uring_cmd *cmd,
+ 	case UBLK_IO_REGISTER_IO_BUF:
+ 		return ublk_daemon_register_io_buf(cmd, ub, q_id, tag, io, addr,
+ 						   issue_flags);
+-	case UBLK_IO_COMMIT_AND_FETCH_REQ:
++	case UBLK_IO_COMMIT_AND_FETCH_REQ: {
++		struct ublk_auto_buf_reg auto_buf;
++
+ 		ret = ublk_check_commit_and_fetch(ub, io, addr);
++		if (ret)
++			goto out;
++		ret = ublk_validate_io_buf(ub, cmd, &auto_buf);
+ 		if (ret)
+ 			goto out;
+ 		io->res = result;
+ 		req = ublk_fill_io_cmd(io, cmd);
+-		ret = ublk_config_io_buf(ub, io, cmd, addr, &buf_idx);
++		ublk_apply_io_buf(ub, io, cmd, addr, &auto_buf, &buf_idx);
+ 		if (buf_idx != UBLK_INVALID_BUF_IDX)
+ 			io_buffer_unregister_bvec(cmd, buf_idx, issue_flags);
+ 		compl = ublk_need_complete_req(ub, io);
+@@ -3474,10 +3479,8 @@ static int ublk_ch_uring_cmd_local(struct io_uring_cmd *cmd,
+ 			req->__sector = addr;
+ 		if (compl)
+ 			__ublk_complete_rq(req, io, ublk_dev_need_map_io(ub), NULL);
+-
+-		if (ret)
+-			goto out;
+ 		break;
++	}
+ 	case UBLK_IO_NEED_GET_DATA:
+ 		/*
+ 		 * ublk_get_data() may fail and fallback to requeue, so keep
+@@ -3485,8 +3488,7 @@ static int ublk_ch_uring_cmd_local(struct io_uring_cmd *cmd,
+ 		 * request
+ 		 */
+ 		req = ublk_fill_io_cmd(io, cmd);
+-		ret = ublk_config_io_buf(ub, io, cmd, addr, NULL);
+-		WARN_ON_ONCE(ret);
++		io->buf.addr = addr;
+ 		if (likely(ublk_get_data(ubq, io, req))) {
+ 			__ublk_prep_compl_io_cmd(io, req);
+ 			return UBLK_IO_RES_OK;
 -- 
 2.53.0
 
