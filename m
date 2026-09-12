@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB98F305680;
-	Sat, 12 Sep 2026 16:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1FD38398F;
+	Sat, 12 Sep 2026 16:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229690; cv=none; b=IkmTjo7zxwk/E6FrC/66HgKU0OIXD1S8LFep6HlGvMj81/BybNV8CvAqdcInQnzgEH6AIGzA1dKTd7jLEhsnJC5iPJvtEieTU1CtB0TPwTqmdqCom6MXs3jHfwwjj4qN8UsenyHLYydEsVDbdNfhIZoRyY9LwdE8dksw5SiNRAg=
+	t=1789229695; cv=none; b=IfeZ1mK+TQNpGlIpfpJBmExoxzcHJn5h1tiCIJigwOgUpqBRouZdLugieAWadQV8WqdYtoYbmmhycrEKu+lv5pk7yI2EgJsDPsWFGllEttajyrO6WHFtn/2FqifPeOy8HMVXcYOyvTuhpYXuhcMKppcAiYPmOY8BAXesMqgoOu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229690; c=relaxed/simple;
-	bh=NvrWih7bQgqon0DKcOB/ZCyuKfDU06NexfzoIdFSui0=;
+	s=arc-20240116; t=1789229695; c=relaxed/simple;
+	bh=1zcI+MFOXWLO4DMqXApX6Xp5FsDVNeoSVH1EhKFqJ2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g6M+ztDYXCT/IBFpcKGUAgJjE9zBmgZNp4s6RQ8H3NESUm90jbAgAwDd2vJaPNOL+RMu3TFh8PgKCZ4h/qW/4wdQjPY0PTGd/Tzi9frfBUz0DUErVXYq51QxJxARC0bZvgd+ayGCe133r8i0Lif9Rq377x1998cid+J4Z6exOU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T9g4hLHC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pPxiaKrOJHcCDEDGCfAxWiF4gBGfheh23vd166YEU2b8iuZoz/rGf9uD+nDKEWx/kETLuojscwvDDsubIEh0OeTH6bAWc5J1lWvbD1cLvkxncgaVrfFXdQqjEySr/tIVfpM3w71j4cosY02Jh1M80PovuXljjEGSMcLYJHcG2JM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HP19QnaZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T9g4hLHC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A40E1F000FF;
-	Sat, 12 Sep 2026 16:14:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HP19QnaZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914191F000FF;
+	Sat, 12 Sep 2026 16:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229689;
-	bh=DKjQmICCBugXo3RJj7IC7h4HacPgpV68vxQLYojcAJ8=;
+	s=korg; t=1789229694;
+	bh=HDNWE4xISZkQSXvLL8erNrk+LymiFepusx06pTiy2dM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T9g4hLHC+qCLNYXxVeYItc+agkTQbiCKbWOcc4SUDfbdxSSYttbqAH34usfcyr+Nf
-	 PuHxxSRG9e4/3RbRnO7OvJzDiPtmmvg+N7j5t7ToCMxTHAbOuHn+5yf0dsUXv2HhfZ
-	 2NfCXbGZlTVd3JnWkiIctI3SPJvw7xIhAosI7DEY=
+	b=HP19QnaZLKVXTGZLG9UpzCvzvqFc21nWtGqpMd2X0M0wq51fcYFHZ920NProK+Gv0
+	 i5Y0cDoSWrNS+goBfkAohc6/4Ea2d8SJ0VSp6SLDxXkz/4OWNV5gvUnjy/F0jUgm0H
+	 haUJbFJQrSWNq79VqGX9NASNVbiaLW4GZqCNHkVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>,
 	Samuel Thibault <samuel.thibault@ens-lyon.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0639/1191] accessibility: speakup: Fix incorrect string length computation in report_char_chartab_status()
-Date: Sat, 12 Sep 2026 08:56:07 +0200
-Message-ID: <20260912065602.607110244@linuxfoundation.org>
+Subject: [PATCH 6.1 0640/1191] speakup: keyhelp: guard letter_offsets possible out-of-range indexing
+Date: Sat, 12 Sep 2026 08:56:08 +0200
+Message-ID: <20260912065602.629540091@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -46,52 +45,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
 
-[ Upstream commit bce0e640623372520d9d90c42f33ddbfb576ce69 ]
+[ Upstream commit 6a19ad4d68c95185308cd9e5d169b10a2cf236c8 ]
 
-snprintf() returns the "number of characters which *would* be generated for
-the given input", not the size *really* generated.
+help_init() builds letter_offsets[] by using the first byte of each
+function name as an index via `(start & 31) - 1`. If function_names are
+overridden from sysfs (root) with a name starting outside [a–z], the
+index underflows or exceeds the array, leading to OOB write.
 
-In order to avoid too large values for 'len' (and potential negative
-values for "sizeof(buf) - (len - 1)") use scnprintf() instead of
-snprintf().
+Function names can be overridden with the following commands as root:
+
+    modprobe speakup_soft
+    echo "0 _bad" > /sys/accessibility/speakup/i18n/function_names
+    # then press Insert+2 on /dev/tty
+
+This fix checks the first letter in help_init(), and if it is not in the
+[a–z] range the function returns an error to the caller. Eventually this
+error is propagated to drivers/accessibility/speakup/main.c:2217, which
+causes a bleep sound.
 
 Fixes: c6e3fd22cd53 ("Staging: add speakup to the staging directory")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
 Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Reviewed-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20260531230804.254962-5-samuel.thibault@ens-lyon.org
+Link: https://patch.msgid.link/20260531230804.254962-10-samuel.thibault@ens-lyon.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accessibility/speakup/kobjects.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/accessibility/speakup/keyhelp.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/accessibility/speakup/kobjects.c b/drivers/accessibility/speakup/kobjects.c
-index 41ae24ab5d086..917cdbf671842 100644
---- a/drivers/accessibility/speakup/kobjects.c
-+++ b/drivers/accessibility/speakup/kobjects.c
-@@ -92,9 +92,9 @@ static void report_char_chartab_status(int reset, int received, int used,
- 	if (reset) {
- 		pr_info("%s reset to defaults\n", object_type[do_characters]);
- 	} else if (received) {
--		len = snprintf(buf, sizeof(buf),
--			       " updated %d of %d %s\n",
--			       used, received, object_type[do_characters]);
-+		len = scnprintf(buf, sizeof(buf),
-+				" updated %d of %d %s\n",
-+				used, received, object_type[do_characters]);
- 		if (rejected)
- 			snprintf(buf + (len - 1), sizeof(buf) - (len - 1),
- 				 " with %d reject%s\n",
+diff --git a/drivers/accessibility/speakup/keyhelp.c b/drivers/accessibility/speakup/keyhelp.c
+index 822ceac830683..e632c53d6246e 100644
+--- a/drivers/accessibility/speakup/keyhelp.c
++++ b/drivers/accessibility/speakup/keyhelp.c
+@@ -8,6 +8,7 @@
+  */
+ 
+ #include <linux/keyboard.h>
++#include <linux/ctype.h>
+ #include "spk_priv.h"
+ #include "speakup.h"
+ 
+@@ -111,7 +112,7 @@ static void say_key(int key)
+ 			     spk_msg_get(MSG_KEYNAMES_START + (key - 1)));
+ }
+ 
+-static int help_init(void)
++static void help_init(void)
+ {
+ 	char start = SPACE;
+ 	int i;
+@@ -120,13 +121,19 @@ static int help_init(void)
+ 	state_tbl = spk_our_keys[0] + SHIFT_TBL_SIZE + 2;
+ 	for (i = 0; i < num_funcs; i++) {
+ 		char *cur_funcname = spk_msg_get(MSG_FUNCNAMES_START + i);
++		char first_letter;
+ 
+-		if (start == *cur_funcname)
++		first_letter = tolower(*cur_funcname);
++
++		/* Accept only 'a'..'z' to index letter_offsets[] safely */
++		if (first_letter < 'a' || first_letter > 'z')
++			continue;
++
++		if (start == first_letter)
+ 			continue;
+-		start = *cur_funcname;
++		start = first_letter;
+ 		letter_offsets[(start & 31) - 1] = i;
+ 	}
+-	return 0;
+ }
+ 
+ int spk_handle_help(struct vc_data *vc, u_char type, u_char ch, u_short key)
+@@ -144,7 +151,7 @@ int spk_handle_help(struct vc_data *vc, u_char type, u_char ch, u_short key)
+ 			synth_printf("%s\n", spk_msg_get(MSG_LEAVING_HELP));
+ 			return 1;
+ 		}
+-		ch |= 32; /* lower case */
++		ch = tolower(ch);
+ 		if (ch < 'a' || ch > 'z')
+ 			return -1;
+ 		if (letter_offsets[ch - 'a'] == -1) {
 -- 
 2.53.0
 
