@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EB2332610;
-	Sat, 12 Sep 2026 11:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99BF1A9F83;
+	Sat, 12 Sep 2026 11:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212868; cv=none; b=H+3mr3X2roaCWWwVoRSCy0AOJ6+hY6DC6L4NFx9NfVwV9VFe4z0ktLVrD76hJRuiXv1NRGiJ5vwIurOZznZqSb9UPk6Wl/xc6NpnEqQewWmTjhH7B+8E4oEkPw8Nki0Z/MyNB6wC+/V9yYacKlf34fQp3LIeDtM4bhZlbduVZFo=
+	t=1789212873; cv=none; b=cJETzMPWIzi7fkJDQoCVnGjd3EhoW7+SVVKfjhG4wAPF1sBd21BEWBVO4ROczA1Mnk6Aa6aGIfuzJzVS+lrN/1Wvaurq9y7ct7ZeAcOPtZw6kIaFiMUhgvNXeKiYxfgidpzJ7/py2aqdbxJEpD5i5ueqXrUva6sB7tBkpCChE/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212868; c=relaxed/simple;
-	bh=/YAdlZZTeEyGCeyC1MsXJTPG3I0R00kgASt94/0Pv6k=;
+	s=arc-20240116; t=1789212873; c=relaxed/simple;
+	bh=z1u/aB+PMQZQ9RMplEWvfmFb7H3McrhUzY6CkkY2jkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aUzXqqW9cKR1vTSIEg7vJceT7We1W3RwOFYxMGWOZ0MyZexbsMAJArtkmUcpR6/4SNVCdpAHt6WaC+EcODpbY2TuuenwT6utsWhpzSN5WsGfL9XLEgmmLCGvmqa7lTHLvftWm2JXP7Z6UcEnzQzSewXVgvbc9EV70SNbVq+bAx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sm4hRxr0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BOILiWzEdkw4vt1x0b6hfoXB2V7SrVqG0nBRcBkEV4n/TP6ja9jj5h4lTRIO64xUDIRmvQgGruQmsjXNRbPRHl3LQr79+7IfH4+gkOQvNLnNbLuXT6RljWQmA+qA/1DReBt9zi7vgizwYV6O9h8yQ1BZeIdj9UlwFCxfFgN3L1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpXHrnp+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sm4hRxr0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CF81F000FF;
-	Sat, 12 Sep 2026 11:34:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpXHrnp+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87851F00893;
+	Sat, 12 Sep 2026 11:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212866;
-	bh=MnnTD5CSCCaKQ+OUrAGaRGnTALg/yiJfvg/Y46LIDq4=;
+	s=korg; t=1789212871;
+	bh=TvpxSXhUA+WRq4EYz1UULrPK3HMDSTUEHBHx3TKADNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sm4hRxr0OK7qdCU9nEQFmSnvLWW0Q6f9vl+H/REBNhYZ+7xbp2eldzHg4mMz+3vP6
-	 jyhwx2m6DT2jKELjcUBPaKCe1gSk6lGQfJeQ1xCWyw+TeTZBAm3J9Y1a9jYbZf0Z56
-	 IaFnTOoO6bJ90woTfCtJ+kpxXW5tqNfZvnOhVuZo=
+	b=GpXHrnp+pJ/xOUUoFlkLv9yqHE2V92DgoKg8Td5LUm03GTyMBQS8gU+UHtWMb742k
+	 rmzwnRaf0gj95425nw2+kTvkzcrvN2ep/2Wk4g/t0m5r5PTE+jit9u5vG53v44jkzW
+	 VPYA4wUkomXAOe30LwjLQSYf5P+l3mgQNY5KHNnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Salman Alghamdi <me@cipherat.com>,
-	Luka Gejak <luka.gejak@linux.dev>
-Subject: [PATCH 6.18 1517/1518] staging: rtl8723bs: rtw_mlme: add bounds checks before ie_length subtraction
-Date: Sat, 12 Sep 2026 09:01:26 +0200
-Message-ID: <20260912065657.884302096@linuxfoundation.org>
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.18 1518/1518] wifi: mt76: fix airoha_npu dependency tracking
+Date: Sat, 12 Sep 2026 09:01:27 +0200
+Message-ID: <20260912065657.905984722@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,55 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salman Alghamdi <me@cipherat.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 88e994c57a79f62d5338231d8d37ee8dd98baffe upstream.
+commit 7cd57ff6c6263519e6e463cbc2e0898828a70c42 upstream.
 
-Add guards to ensure ie_length is large enough before subtracting
-fixed IE offsets to prevent unsigned integer underflow.
+There is a new build failure with MT7996E=m MT76_CORE=y and NET_AIROHA_NPU=m:
 
-Fixes: 2038fe84b8bd ("staging: rtl8723bs: fix spacing around operators")
-Fixes: d3fcee1b78a5 ("staging: rtl8723bs: fix camel case in struct wlan_bssid_ex")
-Closes: https://lore.kernel.org/linux-staging/DI2H39EAAFBZ.3KI5NWN02AQ2S@linux.dev/
-Cc: stable <stable@kernel.org>
-Signed-off-by: Salman Alghamdi <me@cipherat.com>
-Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
-Link: https://patch.msgid.link/20260513203455.31792-1-me@cipherat.com
+ld.lld: error: undefined symbol: airoha_npu_get
+ld.lld: error: undefined symbol: airoha_npu_put
+>>> referenced by npu.c
+>>>               drivers/net/wireless/mediatek/mt76/npu.o:(mt76_npu_init) in archive vmlinux.a
+
+Fix this by reworking the dependency for the MT7996_NPU to only
+allow enabling that when mt76_core can link against the npu driver.
+
+To make sure this gets caught more easily in the future when additional
+mt76 variants need the same dependency, also turn CONFIG_MT76_NPU into
+a tristate symbol that has the same dependency.
+
+Fixes: 7fb554b1b623 ("wifi: mt76: Introduce the NPU generic layer")
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260612201519.4054683-1-arnd@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/Kconfig  |    4 ++--
+ drivers/net/wireless/mediatek/mt76/Makefile |    6 +++++-
+ drivers/net/wireless/mediatek/mt76/mt76.h   |    2 +-
+ 3 files changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
-@@ -612,6 +612,8 @@ int rtw_is_desired_network(struct adapte
- 	privacy = pnetwork->network.privacy;
+--- a/drivers/net/wireless/mediatek/mt76/Kconfig
++++ b/drivers/net/wireless/mediatek/mt76/Kconfig
+@@ -38,8 +38,8 @@ config MT792x_USB
+ 	select MT76_USB
  
- 	if (check_fwstate(pmlmepriv, WIFI_UNDER_WPS)) {
-+		if (pnetwork->network.ie_length < _FIXED_IE_LENGTH_)
-+			return false;
- 		if (rtw_get_wps_ie(pnetwork->network.ies+_FIXED_IE_LENGTH_, pnetwork->network.ie_length-_FIXED_IE_LENGTH_, NULL, &wps_ielen))
- 			return true;
- 		else
-@@ -625,11 +627,15 @@ int rtw_is_desired_network(struct adapte
- 			bselected = false;
+ config MT76_NPU
+-	bool
+-	depends on MT76_CORE
++	tristate
++	depends on NET_AIROHA_NPU=y || MT76_CORE=NET_AIROHA_NPU
  
- 		if (psecuritypriv->ndisauthtype == Ndis802_11AuthModeWPA2PSK) {
--			p = rtw_get_ie(pnetwork->network.ies + _BEACON_IE_OFFSET_, WLAN_EID_RSN, &ie_len, (pnetwork->network.ie_length - _BEACON_IE_OFFSET_));
--			if (p && ie_len > 0)
--				bselected = true;
--			else
-+			if (pnetwork->network.ie_length < _BEACON_IE_OFFSET_) {
- 				bselected = false;
-+			} else {
-+				p = rtw_get_ie(pnetwork->network.ies + _BEACON_IE_OFFSET_, WLAN_EID_RSN, &ie_len, (pnetwork->network.ie_length - _BEACON_IE_OFFSET_));
-+				if (p && ie_len > 0)
-+					bselected = true;
-+				else
-+					bselected = false;
-+			}
- 		}
- 	}
+ source "drivers/net/wireless/mediatek/mt76/mt76x0/Kconfig"
+ source "drivers/net/wireless/mediatek/mt76/mt76x2/Kconfig"
+--- a/drivers/net/wireless/mediatek/mt76/Makefile
++++ b/drivers/net/wireless/mediatek/mt76/Makefile
+@@ -12,7 +12,11 @@ mt76-y := \
+ 	mmio.o util.o trace.o dma.o mac80211.o debugfs.o eeprom.o \
+ 	tx.o agg-rx.o mcu.o wed.o scan.o channel.o
  
+-mt76-$(CONFIG_MT76_NPU) += npu.o
++ifdef CONFIG_MT76_NPU
++# CONFIG_MT76_NPU is tristate to simplify dependency tracking,
++# but it behaves as a bool symbol here.
++mt76-y += npu.o
++endif
+ mt76-$(CONFIG_PCI) += pci.o
+ mt76-$(CONFIG_NL80211_TESTMODE) += testmode.o
+ 
+--- a/drivers/net/wireless/mediatek/mt76/mt76.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76.h
+@@ -1626,7 +1626,7 @@ int mt76_testmode_dump(struct ieee80211_
+ int mt76_testmode_set_state(struct mt76_phy *phy, enum mt76_testmode_state state);
+ int mt76_testmode_alloc_skb(struct mt76_phy *phy, u32 len);
+ 
+-#ifdef CONFIG_MT76_NPU
++#if IS_ENABLED(CONFIG_MT76_NPU)
+ void mt76_npu_check_ppe(struct mt76_dev *dev, struct sk_buff *skb,
+ 			u32 info);
+ int mt76_npu_dma_add_buf(struct mt76_phy *phy, struct mt76_queue *q,
 
 
