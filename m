@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A322437C0FC;
-	Sat, 12 Sep 2026 08:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB613644CA;
+	Sat, 12 Sep 2026 08:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201759; cv=none; b=U84efpEIXF8tr9DOv5Nlzw+o+zf9eVWKa4CCf9Fx1h3cZWiEJ7Domex82vdKwxqbkWws1jQ3kabY9zX35nQTigVy8jxX1SLE+1uO6GvVwDj5g/kYea+laEuzBRSoGmYGhGst6TuG407dpjp6re2JSjHsTLx+C4glgbo5OONsfso=
+	t=1789201764; cv=none; b=hZqECn1sWBK6IlPydHfrgheEyLPDCEr/5kla0O1BrwFKeEfPR33y9teO7UkZAHZ4bGcdIUSqmeN0ojUVK7xQblzUkHPjPNl6Xd+7YY+BR+btxAJKCeHX/8vSRTz0PJRoUWrRGMxi2ACq6gHOy/j48uO3FFSXiaMZWZcUysU+y/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201759; c=relaxed/simple;
-	bh=psuHJczluT8U99y7xBIJJzY55gkA0ttGwkwODpG0DJo=;
+	s=arc-20240116; t=1789201764; c=relaxed/simple;
+	bh=86xHZKXrA4g3Z5Xw1Xf0C14kpuXvOl0qI9NC9n8EgOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XAQd6Xr2M/VBaeKkFJRlLL0MoN512ntDbJjdwsjVW7XdN64SVZX3/NXmeolIpa5CV801dcsmRpX8CI9qLg5rPGqKlhe61uaqTq5Vr5c8WyBFjDU6XzCJX9LWYsKh/nbViwqkLQ4/2y98BvLyhUMbEGQcjv4f9XtECa7a2ELGrPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K4ajRbfm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BliP0cgjldTfQyOIlMwNKu4IQuEno0HkwmNACUYTIhbs72aWHSl95ODaSelPNIDsgcaZBRTxrzoWNA4UNGpp/QVPtzW+4bhdeqIXlMRROXI+wnMR1XgJPIMWd7yCjuTEcElfH4JhRC5ty2IQliI282+gEEiIVqa33aAlRMsutfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DChH5195; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K4ajRbfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA1D1F000FF;
-	Sat, 12 Sep 2026 08:29:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DChH5195"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19651F000FF;
+	Sat, 12 Sep 2026 08:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201758;
-	bh=qtV1cN1St+qYCiYrLnDqS9rG2FGuusjptBs2tE7nK9c=;
+	s=korg; t=1789201763;
+	bh=ll2PHv+Zu/ChSplBTGStfnnBnXo/MrCImJYpYmw6vfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K4ajRbfmkjXwnLoCMwiJwyutPSdSn8hAfGrpjlEgZtfHAxH3FzoNO6q68jwtC7kLv
-	 Y+nT+7qAFHz4x2kxnqp9b6j4DBkOPmDarGB+jMbrWRjh4z+70QmKHDWwUe6sEVRTii
-	 DcX5jcgufGXdF2qdBsfZIduDYPnUyUy7bFhzcEhQ=
+	b=DChH5195wUV+Myj06gLX4sMDrch8y3me9t6QUCEFqoPAnSrqQEthSqiogdkyJKSlU
+	 QxGERIvqQCdyxvZN/YgL9U7/QwRGoNRmE2315nVqt5YhAVyTB6Gn2JdnZkr5uBKOIh
+	 pmtKbohbyH/sx3bpeBNr9HzwFBzdk+z27xzqTY08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sayali Patil <sayalip@linux.ibm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Liam Howlett <liam@infradead.org>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Michal Hocko <mhocko@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1063/1815] selftests/mm: fix ternary operator precedence in ksm_tests
-Date: Sat, 12 Sep 2026 08:46:53 +0200
-Message-ID: <20260912065713.974301383@linuxfoundation.org>
+Subject: [PATCH 7.2 1064/1815] arm64: dts: qcom: sc8280xp-blackrock: Fix swapped USB QMP PHY vdda-phy/vdda-pll supplies
+Date: Sat, 12 Sep 2026 08:46:54 +0200
+Message-ID: <20260912065713.997544270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -60,81 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sayali Patil <sayalip@linux.ibm.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 4e1fbffb3333626682a011db7c4b4e9e40ba96d4 ]
+[ Upstream commit ff7155df9a9543af1eb9722563e6dcda33c1a97d ]
 
-The KSM selftest uses conditional expressions to skip accesses to
-merge_across_nodes on systems without NUMA support.  However, the ternary
-operator is combined with logical OR without parentheses:
+The QMP PHY expects the vdda-phy supply to be around 0.88V and the
+vdda-pll supply to be 1.2V. But these two supplies are swapped for the
+USB QMP PHYs on this board, feeding 1.2V to vdda-phy and 0.9V to
+vdda-pll.
 
-a || numa_available() ? 0 : b || c
+Fix it by swapping the two supplies back.
 
-Due to operator precedence rules, this is parsed as:
-
-(a || numa_available()) ? 0 : (b || c)
-
-instead of the intended:
-
-a || (numa_available() ? 0 : b) || c
-
-Add parentheses around the conditional expressions to ensure the
-correct evaluation order.
-
-Link: https://lore.kernel.org/ce859430287ed2642848c933a90eb9a69da361f0.1783446924.git.sayalip@linux.ibm.com
-Fixes: 9aa1af954db0 ("selftests: vm: check numa_available() before operating "merge_across_nodes" in ksm_tests")
-Signed-off-by: Sayali Patil <sayalip@linux.ibm.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Liam Howlett <liam@infradead.org>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 16a7fed11714 ("arm64: dts: qcom: sc8280xp-blackrock: dt definition for WDK2023")
+Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Assisted-by: Claude:opus-4-8
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260803-phy-supply-fix-v1-2-5880630cde3e@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/ksm_tests.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/mm/ksm_tests.c b/tools/testing/selftests/mm/ksm_tests.c
-index 2ebbb544c6711..5fd7792a0d479 100644
---- a/tools/testing/selftests/mm/ksm_tests.c
-+++ b/tools/testing/selftests/mm/ksm_tests.c
-@@ -288,8 +288,8 @@ static bool assert_ksm_pages_count(long dupl_page_count)
- static int ksm_save_def(struct ksm_sysfs *ksm_sysfs)
- {
- 	if (ksm_read_sysfs(KSM_FP("max_page_sharing"), &ksm_sysfs->max_page_sharing) ||
--	    numa_available() ? 0 :
--		ksm_read_sysfs(KSM_FP("merge_across_nodes"), &ksm_sysfs->merge_across_nodes) ||
-+	    (numa_available() ? 0 :
-+		ksm_read_sysfs(KSM_FP("merge_across_nodes"), &ksm_sysfs->merge_across_nodes)) ||
- 	    ksm_read_sysfs(KSM_FP("sleep_millisecs"), &ksm_sysfs->sleep_millisecs) ||
- 	    ksm_read_sysfs(KSM_FP("pages_to_scan"), &ksm_sysfs->pages_to_scan) ||
- 	    ksm_read_sysfs(KSM_FP("run"), &ksm_sysfs->run) ||
-@@ -304,8 +304,8 @@ static int ksm_save_def(struct ksm_sysfs *ksm_sysfs)
- static int ksm_restore(struct ksm_sysfs *ksm_sysfs)
- {
- 	if (ksm_write_sysfs(KSM_FP("max_page_sharing"), ksm_sysfs->max_page_sharing) ||
--	    numa_available() ? 0 :
--		ksm_write_sysfs(KSM_FP("merge_across_nodes"), ksm_sysfs->merge_across_nodes) ||
-+	    (numa_available() ? 0 :
-+		ksm_write_sysfs(KSM_FP("merge_across_nodes"), ksm_sysfs->merge_across_nodes)) ||
- 	    ksm_write_sysfs(KSM_FP("pages_to_scan"), ksm_sysfs->pages_to_scan) ||
- 	    ksm_write_sysfs(KSM_FP("run"), ksm_sysfs->run) ||
- 	    ksm_write_sysfs(KSM_FP("sleep_millisecs"), ksm_sysfs->sleep_millisecs) ||
-@@ -846,8 +846,8 @@ int main(int argc, char *argv[])
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
+index 47282e3ba8664..0cea30e76d5fb 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
+@@ -994,8 +994,8 @@ &usb_0_hsphy {
+ };
  
- 	if (ksm_write_sysfs(KSM_FP("run"), 2) ||
- 	    ksm_write_sysfs(KSM_FP("sleep_millisecs"), 0) ||
--	    numa_available() ? 0 :
--		ksm_write_sysfs(KSM_FP("merge_across_nodes"), 1) ||
-+	    (numa_available() ? 0 :
-+		ksm_write_sysfs(KSM_FP("merge_across_nodes"), 1)) ||
- 	    ksm_write_sysfs(KSM_FP("pages_to_scan"), page_count))
- 		ksft_exit_fail_msg("Cannot set up KSM tunables\n");
+ &usb_0_qmpphy {
+-	vdda-phy-supply = <&vreg_l4d>;
+-	vdda-pll-supply = <&vreg_l9d>;
++	vdda-phy-supply = <&vreg_l9d>;
++	vdda-pll-supply = <&vreg_l4d>;
+ 
+ 	orientation-switch;
+ 
+@@ -1031,8 +1031,8 @@ &usb_1_hsphy {
+ };
+ 
+ &usb_1_qmpphy {
+-	vdda-phy-supply = <&vreg_l3b>;
+-	vdda-pll-supply = <&vreg_l4b>;
++	vdda-phy-supply = <&vreg_l4b>;
++	vdda-pll-supply = <&vreg_l3b>;
+ 
+ 	orientation-switch;
  
 -- 
 2.53.0
