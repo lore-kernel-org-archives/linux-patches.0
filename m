@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C3B47277D;
-	Sat, 12 Sep 2026 13:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1427647A0B6;
+	Sat, 12 Sep 2026 13:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218908; cv=none; b=X2FUVPwGEfG1wS/M5GWJ8dAUOn1AYGxzjFl3IqfgyNteu8Sva3/FnfGg41bVYZKu42savhfvb5ieusXMH1B17HIYULrYAatpE+DxlqmaboyjkCQRDZSwyw3Fiep/IOGN2j4cjV022mGSQIMX44e34Sin175uuCwlYK/VFuzxytA=
+	t=1789218913; cv=none; b=cuv3UaWaqudSUvAe336UKrmX2MrVouwdgQZNEGJd2xmXHYUM/4LtYO9JYOjDHWvnqlxQZJCniz8Qi4eAxi7ZHp9sSg/0xQV0i5vis81rh7ITaQ9lchu7rqSvyQjmzCPIqDGtXbXFdWVPxgySzvEEPmxdGeWbnylTPz6/82hB7Xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218908; c=relaxed/simple;
-	bh=wMMNfxukcWhkv06Xn3QPj7/eqEbtCWO8DlcX78lehh8=;
+	s=arc-20240116; t=1789218913; c=relaxed/simple;
+	bh=L+8373rPWjlKxtOCc43o+9pDxa4G091CVCB4uGvTPqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D9rQfTNV3wPDiJwHdFr40RDkpKGRvpuueA7MQwdZSLgVi4P3HZrqiq+bby+m/BXGuHN5cgsbG+CA4yVLNawMkr5HldTGBpCH6lalaUueDklKEAxHeUAxtaciDFLW/f7Ws26bn4219CBtt977B/IECzSjKkt+2IEMzCAi4y/hF78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSB2rUnL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=To7r23Qkel/JSb1ygKr0901NGbzmfBJcKKs2QV/9PyYngxAkAiZYzYHTwG/HGqsE8/7vwaOtQBDqZFtxweeehAjAQZA2ZM7vbY8QkLAh3Nptl/r/gvnamKSiEXlLTBvyhCACRWsYFDmfUAmneO6/7hi7MKLN6XGFQva9cNBg2mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdpS3rv3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSB2rUnL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0EA71F00893;
-	Sat, 12 Sep 2026 13:15:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdpS3rv3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF7DF1F000FF;
+	Sat, 12 Sep 2026 13:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218906;
-	bh=U0LmpTt6KUHoK8671rjALsoX+KVZ32bYgJcA7nmWOXs=;
+	s=korg; t=1789218912;
+	bh=ydvCRtgJibszyDqNkSQLsUtyxNfBD5FehhxNGhL91YQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YSB2rUnLEjZz6x9xAMARdltLeIIQUwgGZw0wlT0WlxjviEVLlIHE5KPyvZpFqtcVl
-	 TGhVnkYS5vE5ztIcwZmkr6c8dPXin9jYADIxfsrR4BwRbkFfegWbpn2oSE9noeqaBr
-	 3iAPpukAVFOe6mbSTpaQY05gTgmuJqGJ/vApdyFg=
+	b=ZdpS3rv3Uh7rnXyIPIvAi5pfz7VLnrN8VD39ldD1phgqWxf3ugMUoqqb5wRhJFSMQ
+	 0ywZ+P2deqQTfrXgqR3WM/xctcHjw1CuP+BmE1RF8cBBpp36JxIcbO0+sDBmNwXiA9
+	 3xGSi/qxweJiB9mPZT504o7eMriNRVIaJtPfyYxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1205/1376] cuse: wait for pending RCU callbacks on module exit
-Date: Sat, 12 Sep 2026 09:00:31 +0200
-Message-ID: <20260912065634.405880088@linuxfoundation.org>
+Subject: [PATCH 6.12 1241/1376] ALSA: core: Add scoped cleanup helper for card references
+Date: Sat, 12 Sep 2026 09:01:07 +0200
+Message-ID: <20260912065635.203905481@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -45,75 +45,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 4deb3edead0c0e172cc7349e8855d741d3c5e162 ]
+[ Upstream commit c6c6f0aec6fb4cbcc547bb265315fd76f18be731 ]
 
-Since commit 053fc4f755ad ("fuse: fix UAF in rcu pathwalks"),
-fuse_conn_put() frees the fuse_conn through call_rcu() rather than
-synchronously.  For cuse, fc->release is cuse_fc_release(), which
-lives in the cuse module.  If the module is removed before the RCU
-grace period ends, the callback jumps into freed module memory:
+Several ALSA paths acquire temporary card references with snd_card_ref()
+and release them manually with snd_card_unref(). control_led.c already
+defines a local cleanup helper for this pattern, while other core paths
+still open-code the release.
 
-      userspace / module unload      |        RCU softirq
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- close(/dev/cuse)                    |
-  cuse_channel_release()             |
-   fuse_dev_release()                |
-    fuse_conn_put(fch->conn)         |
-     call_rcu(delayed_release) ------+---> callback queued
-                                     |
- rmmod cuse                          |
-  cuse_exit()                        |
-   cuse_channel_destroy()            |
-   ...                               |
-   return                            |
-                                     |
- <module text freed>                 |
-                                     |  rcu_do_batch()
-                                     |   delayed_release()
-                                     |    fc->release()
-                                     |     -> cuse_fc_release()
-                                     |        ^^^ freed text!
+Move the helper to the common ALSA core header and use it in control-layer
+card-reference paths. This makes the ownership rule explicit and avoids
+future missing-unref mistakes when adding early exits.
 
-The freed module text is unmapped by vfree(), so the jump into the
-stale callback triggers a page-fault Oops.  If the virtual address
-is subsequently reused, the callback could execute unrelated code
-(undefined behaviour).
+No functional change is intended.
 
-Fix this by calling rcu_barrier() in cuse_exit() so that any pending
-fuse_conn release callback completes before the module is removed.
-
-Fixes: 053fc4f755ad ("fuse: fix UAF in rcu pathwalks")
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260604-alsa-scoped-cleanups-v1-2-10c43152a728@gmail.com
+Stable-dep-of: d736eba9c453 ("ALSA: ice1712: Fix the card leak at probe error with the auto-cleanup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/cuse.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ include/sound/core.h     |  2 ++
+ sound/core/control.c     |  6 +++---
+ sound/core/control_led.c | 11 ++++-------
+ 3 files changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/fs/fuse/cuse.c b/fs/fuse/cuse.c
-index 22e82dae6c6bb..47c8e17cc0286 100644
---- a/fs/fuse/cuse.c
-+++ b/fs/fuse/cuse.c
-@@ -647,6 +647,11 @@ static void __exit cuse_exit(void)
- {
- 	misc_deregister(&cuse_miscdev);
- 	class_destroy(cuse_class);
-+	/*
-+	 * Wait for pending call_rcu() callbacks that call back into
-+	 * this module via fc->release (cuse_fc_release).
-+	 */
-+	rcu_barrier();
+diff --git a/include/sound/core.h b/include/sound/core.h
+index 1f3f5dccd7364..0fcaa1cda1663 100644
+--- a/include/sound/core.h
++++ b/include/sound/core.h
+@@ -314,6 +314,8 @@ static inline void snd_card_unref(struct snd_card *card)
+ 	put_device(&card->card_dev);
  }
  
- module_init(cuse_init);
++DEFINE_FREE(snd_card_unref, struct snd_card *, if (_T) snd_card_unref(_T))
++
+ #define snd_card_set_dev(card, devptr) ((card)->dev = (devptr))
+ 
+ /* device.c */
+diff --git a/sound/core/control.c b/sound/core/control.c
+index 6ceb5f977fcdd..1e861f83e812f 100644
+--- a/sound/core/control.c
++++ b/sound/core/control.c
+@@ -2219,7 +2219,6 @@ EXPORT_SYMBOL_GPL(snd_ctl_request_layer);
+  */
+ void snd_ctl_register_layer(struct snd_ctl_layer_ops *lops)
+ {
+-	struct snd_card *card;
+ 	int card_number;
+ 
+ 	scoped_guard(rwsem_write, &snd_ctl_layer_rwsem) {
+@@ -2227,11 +2226,12 @@ void snd_ctl_register_layer(struct snd_ctl_layer_ops *lops)
+ 		snd_ctl_layer = lops;
+ 	}
+ 	for (card_number = 0; card_number < SNDRV_CARDS; card_number++) {
+-		card = snd_card_ref(card_number);
++		struct snd_card *card __free(snd_card_unref) =
++			snd_card_ref(card_number);
++
+ 		if (card) {
+ 			scoped_guard(rwsem_read, &card->controls_rwsem)
+ 				lops->lregister(card);
+-			snd_card_unref(card);
+ 		}
+ 	}
+ }
+diff --git a/sound/core/control_led.c b/sound/core/control_led.c
+index e33dfcf863cf1..007aba163236c 100644
+--- a/sound/core/control_led.c
++++ b/sound/core/control_led.c
+@@ -240,8 +240,6 @@ static void snd_ctl_led_notify(struct snd_card *card, unsigned int mask,
+ 	}
+ }
+ 
+-DEFINE_FREE(snd_card_unref, struct snd_card *, if (_T) snd_card_unref(_T))
+-
+ static int snd_ctl_led_set_id(int card_number, struct snd_ctl_elem_id *id,
+ 			      unsigned int group, bool set)
+ {
+@@ -758,18 +756,17 @@ static int __init snd_ctl_led_init(void)
+ static void __exit snd_ctl_led_exit(void)
+ {
+ 	struct snd_ctl_led *led;
+-	struct snd_card *card;
+ 	unsigned int group, card_number;
+ 
+ 	snd_ctl_disconnect_layer(&snd_ctl_led_lops);
+ 	for (card_number = 0; card_number < SNDRV_CARDS; card_number++) {
+ 		if (!snd_ctl_led_card_valid[card_number])
+ 			continue;
+-		card = snd_card_ref(card_number);
+-		if (card) {
++		struct snd_card *card __free(snd_card_unref) =
++			snd_card_ref(card_number);
++
++		if (card)
+ 			snd_ctl_led_sysfs_remove(card);
+-			snd_card_unref(card);
+-		}
+ 	}
+ 	for (group = 0; group < MAX_LED; group++) {
+ 		led = &snd_ctl_leds[group];
 -- 
 2.53.0
 
