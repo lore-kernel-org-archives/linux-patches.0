@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CBF367B60;
-	Sat, 12 Sep 2026 08:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CAD2C032C;
+	Sat, 12 Sep 2026 08:16:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201001; cv=none; b=boMKibYxb8sDE5Hw3J2twYLgw/n8gnsLFJbLcqYGcE4UGKYNRuL/o6w136Pkfh7prQ4u67FRg74OgoNvSXqGSWL+bb/4j6D1Q2vcDJ0RcP2qVNAHWoFcMuyzluZkFyqRNmzSM8L71Zp1i9+jFyknGdKivN099fRPWlSOfYR1IXA=
+	t=1789201005; cv=none; b=Zv6dO1InuvqFVoiz6C6qQy90WPLho5WqJ5bI7BGPkimAV0CvDcLu+jTR3C2V7I+PmoAI68CAQz0cELGv/LrlJAHgTTpNUplxZLLknoa7Ap1WTcfbtiA8b30n2Qz3TgB6ZNVwnYm2LG+EzMwSu/tngIIg9xxzrKdl0dGbzhQxtJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201001; c=relaxed/simple;
-	bh=v3kmYD/0A9ZlsALoC771i6iMc1CxVpizpaBZKmVNACY=;
+	s=arc-20240116; t=1789201005; c=relaxed/simple;
+	bh=5HQ4WKu/9tr/FlAdROo0fM5rMyqKHwewT2GCwAhgvEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A4h+zKVWjP0MvJR33ZV9GGOr1zm4jy9Qlpw3Ur+tYrLjBvXoYbvALjGSeyWn9i3RDDaRGUoLVJuka8HcbJgdmfMSM5HnoNG9WVCTBbWkAjml4QnFw01nfKkL7QAJpc2irXjlnVws82ZHS8oYF1goY90aAyeDKF6OiGud07QbDlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysGAbIVu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oDfEKA71eilKNj5wY90HbmdoRl4vy+Ja0p3MYJ6ZnNmtMrWZ5O1P0YvrcFIHUDh2EB7TFqYqcm50ojyfuLf7rmPl9nYy0R5rBrh1qj93jr0GGY12kzFIF9jBkeZfW0h6qjv30nkBaC3/vUk6IDpnFTcdMrrkteNtH2kfA5efwMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DLKPBTh9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysGAbIVu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D996B1F000FF;
-	Sat, 12 Sep 2026 08:16:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DLKPBTh9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D8591F000FF;
+	Sat, 12 Sep 2026 08:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200999;
-	bh=a6ZmW5yKyPO6MZ7po/ZDCrY7PeZnXu1QW+XwLfPmMx8=;
+	s=korg; t=1789201004;
+	bh=5K0kDAmsYo15PtxFTTA9omHhPuvAsHYgVYus0C4IJi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ysGAbIVuoo8NE+E5Z1ekLV1kLXQ78MhFwaiMoE/yNvuNyU/R9M7k7OZJIcCjQ2wAD
-	 FMMOGVrzBz5aJ+WTlxJ9G5sDBfAnV8CrmxgXe2FJJ9/iW4hmA/hoM/R+kBW2xbtKSQ
-	 loNFGTG9xUdtv2UZI49XUdntcZO1JZ0C/FF9C1kc=
+	b=DLKPBTh9kLPw6Y4XSzA7gKr7hwVCvKybDNGixuZsn81Yttno+El6l7ySbRhmngFFe
+	 WPtxYCNV0uxamR0iWMZbyZFV6Fujuzg8azQ2fbzaGjWsKqjF3lqdDbxkMiM28qak7b
+	 a7vjCn6F6ycp80mG/romX9lxKQPqUh5qjtgrRp1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Wang <sean.wang@mediatek.com>,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0869/1815] wifi: mt76: mt7927: set band index for sniffer mode
-Date: Sat, 12 Sep 2026 08:43:39 +0200
-Message-ID: <20260912065709.323473116@linuxfoundation.org>
+Subject: [PATCH 7.2 0905/1815] wifi: mt76: only consume the WO drop bit on WED v2 devices
+Date: Sat, 12 Sep 2026 08:44:15 +0200
+Message-ID: <20260912065710.169193879@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,67 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Wang <sean.wang@mediatek.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit c410102bbff0803c9dc44056b917aff90abcbaec ]
+[ Upstream commit 1df54335590bb025c3bd706a9ba9c6e73a1d3000 ]
 
-Use the active channel context to select the SNIFFER command band index on
-MT7927, and fall back to the PHY chandef when no channel context is
-available.
+The RX path is handled by the WO MCU only on WED v2 hardware. On WED
+v3 the same buf1 bit does not carry drop information, so evaluating it
+there causes spurious RX drops.
 
-Also pass the same band index to the sniffer channel configuration. This
-keeps monitor setup on the correct band, especially when multiple PHY band
-contexts are present.
-
-Fixes: 35a5dcc71735 ("wifi: mt76: mt7925: add MT7927 PCIe support")
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Tested-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260613225144.2414283-1-sean.wang@kernel.org
+Fixes: e4d2b8bcac11 ("wifi: mt76: drop the incorrect scatter and gather frame")
+Link: https://patch.msgid.link/20260724124813.3961474-14-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/net/wireless/mediatek/mt76/dma.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-index cb265a6fc7adb..ba43826a25ecd 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -2174,6 +2174,8 @@ int mt7925_get_txpwr_info(struct mt792x_dev *dev, u8 band_idx, struct mt7925_txp
- int mt7925_mcu_set_sniffer(struct mt792x_dev *dev, struct ieee80211_vif *vif,
- 			   bool enable)
- {
-+	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
-+	struct ieee80211_chanctx_conf *ctx = mvif->bss_conf.mt76.ctx;
- 	struct {
- 		struct {
- 			u8 band_idx;
-@@ -2196,6 +2198,15 @@ int mt7925_mcu_set_sniffer(struct mt792x_dev *dev, struct ieee80211_vif *vif,
- 		},
- 	};
+diff --git a/drivers/net/wireless/mediatek/mt76/dma.c b/drivers/net/wireless/mediatek/mt76/dma.c
+index 1658c37835cf5..a67880a9281c5 100644
+--- a/drivers/net/wireless/mediatek/mt76/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/dma.c
+@@ -547,8 +547,13 @@ mt76_dma_get_buf(struct mt76_dev *dev, struct mt76_queue *q, int idx,
+ 		t->ptr = NULL;
  
-+	if (is_mt7927(&dev->mt76)) {
-+		struct ieee80211_channel *chan;
-+
-+		chan = ctx ? ctx->def.chan : mvif->phy->mt76->chandef.chan;
-+
-+		if (chan)
-+			req.hdr.band_idx = mt7927_band_idx(chan->band);
-+	}
-+
- 	return mt76_mcu_send_msg(&dev->mt76, MCU_UNI_CMD(SNIFFER), &req, sizeof(req),
- 				 true);
- }
-@@ -2255,6 +2266,9 @@ int mt7925_mcu_config_sniffer(struct mt792x_vif *vif,
- 		},
- 	};
- 
-+	if (is_mt7927(mphy->dev))
-+		req.hdr.band_idx = mt7927_band_idx(chandef->chan->band);
-+
- 	if (chandef->chan->band < ARRAY_SIZE(ch_band))
- 		req.tlv.ch_band = ch_band[chandef->chan->band];
- 	if (chandef->width < ARRAY_SIZE(ch_width))
+ 		mt76_put_rxwi(dev, t);
+-		if (drop)
++#ifdef CONFIG_NET_MEDIATEK_SOC_WED
++		/* the WO MCU owns the RX path only on WED v2, on newer
++		 * versions this buf1 bit carries no drop information
++		 */
++		if (drop && dev->mmio.wed.version == 2)
+ 			*drop |= !!(buf1 & MT_DMA_CTL_WO_DROP);
++#endif
+ 	} else {
+ 		dma_sync_single_for_cpu(dev->dma_dev, e->dma_addr[0],
+ 				SKB_WITH_OVERHEAD(q->buf_size),
 -- 
 2.53.0
 
