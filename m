@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CA137E5D1;
-	Sat, 12 Sep 2026 12:35:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B9547987B;
+	Sat, 12 Sep 2026 12:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216540; cv=none; b=WFgczoaD6m4YjiHjvUoM3yO6/uwcObgK/Y6KPZqUxILSNnJrR+gaFzw9RHfkZEgwZv8eOii9r0fDCg3qI9n1VjVLfZMdiD5xcwhwahg8Xq+ZcVpwgUBicbTUATXYUxZUkJ1vCcKVCN0L9PnFAVnwKsyYeJ2g0W4exhMlZmu07Dg=
+	t=1789216545; cv=none; b=RbB7ntOXl3OZw1vXSyk937uvJXfx1UNcFmYRJp+tePh/Pqd/SlRwAVyGx6ldN4RfIJMVjI3Y6wXLxIzC3AivYVwla73u/ZFizO7/wzZ+TOS0ExrjUZOb2pfDCZ/sNfeyj+cdljqxWNBrWthXbGC2+H1/GXsn0cFF+5VNZ9jP4Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216540; c=relaxed/simple;
-	bh=1T/6ox+G74W3nqMfu0dlBa2LodoCRuaBJOf9XqaorjQ=;
+	s=arc-20240116; t=1789216545; c=relaxed/simple;
+	bh=4HXp6r5Is1zsz8DQ2J++6XOh0FrOaME5rvyi5FHMpbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=auN86ux1tdPlTPgyOG7uUZLFEh0VgPNDGmPd1UnCuUU5hlMJT5G80bSZXL3Slso/Jb6ru7cG+gsfvHmCAn/CVt2dd2HnFYdoSIGJ2kg4Gb+bjSkVPatl/O+Nb/5arevtIgnRJ6twy2gYV2h8NUrMLePLiXgzP2Rpk8r4xnIAV5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVsTjmIO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BFC1aQ169qBddRpT2tXa+vrbZg5fXIMo2iFcTVVFggVephLcSETmQwedpvsrxdaCjYUP3xJOltsJ09Oismw+VVnRlBRZcPjYHCzOnXry3jUMS16RL6ueKZmwZxJnzJ0YgUvTJB9OukbgK37YmU2q8oCCCthPe45U+D3h7THeRVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vr78hEtT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVsTjmIO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5F651F000FF;
-	Sat, 12 Sep 2026 12:35:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vr78hEtT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E581F000FF;
+	Sat, 12 Sep 2026 12:35:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216539;
-	bh=0pdCyiFtrgq8If/LrWGqCrC+Bb+y5MGmYC5Smsg+9L0=;
+	s=korg; t=1789216544;
+	bh=dRCJvzEvNydbHqdjdnJY879lIXOj+DO/8EprmTLqXkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bVsTjmIOv194MABQrpY3jjz5tFuVEGBV9syV/jFF77KHFLpFuwMpR1P66hOYFi0Mk
-	 Ks9dbN6vXpRWR5f2udMeFBArm7IhPZr3MOjAJzUjM/iVV8ksZo3vUv7pGizritC4+Z
-	 iZ6kHMvznT4WaQl4PTeUx57avOrfN89hep3JXnO4=
+	b=Vr78hEtT9DK9PJcTWYIwxy4JNLteurTFWsNH4DMEMr5u9itbTdQ2M6UqYWzmAlDxo
+	 eCEHhnxAogSzARTlDROi0jyy12v2k3fXLwXGuJ8iH1Vgz7t/YLWQFVCUrc0XOJ90sw
+	 x7cl4PLRtNTmhU1fUXUrY5wVxf69Jm3NKThxkw38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bartosz Golaszewski <brgl@kernel.org>,
+	Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>,
+	Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0758/1376] arm64: dts: qcom: sc8280xp-crd: Fix the pin index for misc_3p3_reg_en
-Date: Sat, 12 Sep 2026 08:53:04 +0200
-Message-ID: <20260912065624.433687725@linuxfoundation.org>
+Subject: [PATCH 6.12 0759/1376] firmware: qcom_scm: Add API to get waitqueue IRQ info
+Date: Sat, 12 Sep 2026 08:53:05 +0200
+Message-ID: <20260912065624.455377702@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,44 +54,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
 
-[ Upstream commit 0e05c183f3b97427f00d619132ba5984494f6886 ]
+[ Upstream commit da9e6b1a96b1eef47542ec46b67e3f4f883fed3b ]
 
-The correct pin is GPIO1. Fix it.
+Bootloader and firmware for SM8650 and older chipsets expect node
+name as "qcom_scm", in order to patch the wait queue IRQ information.
+However, DeviceTree uses node name "scm" and this mismatch prevents
+firmware from correctly identifying waitqueue IRQ information. Waitqueue
+IRQ is used for signaling between secure and non-secure worlds.
 
-Fixes: ccd3517faf18 ("arm64: dts: qcom: sc8280xp: Add reference device")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260701-topic-8280crd_fixups-v1-2-3fe92ee9636b@oss.qualcomm.com
+To resolve this, introduce qcom_scm_get_waitq_irq() that'll get the
+hardware IRQ number to be used from firmware instead of relying on data
+provided by devicetree, thereby bypassing the DeviceTree node name
+mismatch.
+
+This hardware IRQ number is converted to a Linux IRQ number using newly
+qcom_scm_fill_irq_fwspec_params(). This Linux IRQ number is then
+supplied to the threaded_irq call.
+
+Reviewed-by: Bartosz Golaszewski <brgl@kernel.org>
+Signed-off-by: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
+Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251217-multi_waitq_scm-v11-1-f21e50e792b8@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 966d23c7e68e ("firmware: qcom: scm: Fix NULL dereference in IRQ handler before __scm is published")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/firmware/qcom/qcom_scm.c | 62 +++++++++++++++++++++++++++++++-
+ drivers/firmware/qcom/qcom_scm.h |  1 +
+ 2 files changed, 62 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-index 6020582b0a59d..36beb71d7d2f4 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-@@ -167,7 +167,7 @@ vreg_misc_3p3: regulator-misc-3p3 {
- 		regulator-min-microvolt = <3300000>;
- 		regulator-max-microvolt = <3300000>;
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 1da16bc79391c..5b2ef39a2e9e9 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -30,11 +30,18 @@
+ #include <linux/sizes.h>
+ #include <linux/types.h>
  
--		gpio = <&pmc8280_1_gpios 2 GPIO_ACTIVE_HIGH>;
-+		gpio = <&pmc8280_1_gpios 1 GPIO_ACTIVE_HIGH>;
- 		enable-active-high;
++#include <dt-bindings/interrupt-controller/arm-gic.h>
++
+ #include "qcom_scm.h"
+ #include "qcom_tzmem.h"
  
- 		pinctrl-names = "default";
-@@ -759,7 +759,7 @@ edp_bl_reg_en: edp-bl-reg-en-state {
- 	};
+ static u32 download_mode;
  
- 	misc_3p3_reg_en: misc-3p3-reg-en-state {
--		pins = "gpio2";
-+		pins = "gpio1";
- 		function = "normal";
- 	};
- };
++#define GIC_SPI_BASE        32
++#define GIC_MAX_SPI       1019  // SPIs in GICv3 spec range from 32..1019
++#define GIC_ESPI_BASE     4096
++#define GIC_MAX_ESPI      5119 // ESPIs in GICv3 spec range from 4096..5119
++
+ struct qcom_scm {
+ 	struct device *dev;
+ 	struct clk *core_clk;
+@@ -1847,6 +1854,56 @@ bool qcom_scm_is_available(void)
+ }
+ EXPORT_SYMBOL_GPL(qcom_scm_is_available);
+ 
++static int qcom_scm_fill_irq_fwspec_params(struct irq_fwspec *fwspec, u32 hwirq)
++{
++	if (hwirq >= GIC_SPI_BASE && hwirq <= GIC_MAX_SPI) {
++		fwspec->param[0] = GIC_SPI;
++		fwspec->param[1] = hwirq - GIC_SPI_BASE;
++	} else if (hwirq >= GIC_ESPI_BASE && hwirq <= GIC_MAX_ESPI) {
++		fwspec->param[0] = GIC_ESPI;
++		fwspec->param[1] = hwirq - GIC_ESPI_BASE;
++	} else {
++		WARN(1, "Unexpected hwirq: %d\n", hwirq);
++		return -ENXIO;
++	}
++
++	fwspec->param[2] = IRQ_TYPE_EDGE_RISING;
++	fwspec->param_count = 3;
++
++	return 0;
++}
++
++static int qcom_scm_get_waitq_irq(struct qcom_scm *scm)
++{
++	struct qcom_scm_desc desc = {
++		.svc = QCOM_SCM_SVC_WAITQ,
++		.cmd = QCOM_SCM_WAITQ_GET_INFO,
++		.owner = ARM_SMCCC_OWNER_SIP
++	};
++	struct device_node *parent_irq_node;
++	struct irq_fwspec fwspec;
++	struct qcom_scm_res res;
++	u32 hwirq;
++	int ret;
++
++	ret = qcom_scm_call_atomic(scm->dev, &desc, &res);
++	if (ret)
++		return ret;
++
++	hwirq = res.result[1] & GENMASK(15, 0);
++	ret = qcom_scm_fill_irq_fwspec_params(&fwspec, hwirq);
++	if (ret)
++		return ret;
++
++	parent_irq_node = of_irq_find_parent(scm->dev->of_node);
++	if (!parent_irq_node)
++		return -ENODEV;
++
++	fwspec.fwnode = of_fwnode_handle(parent_irq_node);
++
++	return irq_create_fwspec_mapping(&fwspec);
++}
++
+ static int qcom_scm_assert_valid_wq_ctx(u32 wq_ctx)
+ {
+ 	/* FW currently only supports a single wq_ctx (zero).
+@@ -2003,7 +2060,10 @@ static int qcom_scm_probe(struct platform_device *pdev)
+ 	/* Paired with smp_load_acquire() in qcom_scm_is_available(). */
+ 	smp_store_release(&__scm, scm);
+ 
+-	irq = platform_get_irq_optional(pdev, 0);
++	irq = qcom_scm_get_waitq_irq(scm);
++	if (irq < 0)
++		irq = platform_get_irq_optional(pdev, 0);
++
+ 	if (irq < 0) {
+ 		if (irq != -ENXIO) {
+ 			ret = irq;
+diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
+index 685b8f59e7a64..ab0f88f5f7773 100644
+--- a/drivers/firmware/qcom/qcom_scm.h
++++ b/drivers/firmware/qcom/qcom_scm.h
+@@ -143,6 +143,7 @@ struct qcom_tzmem_pool *qcom_scm_get_tzmem_pool(void);
+ #define QCOM_SCM_SVC_WAITQ			0x24
+ #define QCOM_SCM_WAITQ_RESUME			0x02
+ #define QCOM_SCM_WAITQ_GET_WQ_CTX		0x03
++#define QCOM_SCM_WAITQ_GET_INFO		0x04
+ 
+ #define QCOM_SCM_SVC_GPU			0x28
+ #define QCOM_SCM_SVC_GPU_INIT_REGS		0x01
 -- 
 2.53.0
 
