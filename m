@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4D9246BCD;
-	Sat, 12 Sep 2026 10:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F3441E6DB;
+	Sat, 12 Sep 2026 10:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207738; cv=none; b=LWit6r0D756fRTmwnGa+EUtzdj84UjslfzzGtXK0NaqAmDqpjkxEFS6IxlnXz6RaLAL2BhaaghynwUCQnmMQdkfQFi8np9aDOslO/TIe1ciO4UxmGzFBlzgBB2UQJrmrHfbx4t0Lgoon6N5b5ZAWyLpms+b293A6p5ylT3OxEtA=
+	t=1789207744; cv=none; b=e8ITUcFhpzagIfwItoYLoGO2rK8j1lQDuQalyDwmHyLr7h6rpytfiPNcXS0nA3n679gmhcttLqax5QJeGfKkZRtnZlvJIWdVmrTUa/fLcm9wwsVNYp9gDmZt5F4NfS/1Get/uOTrl6ATbDZcJxJn9KfAqwX68CvIJzyKLG1701I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207738; c=relaxed/simple;
-	bh=//qj1GKpbwKIF3+EzYjoW1rjjTM4oMbp4x4ltIk5ykA=;
+	s=arc-20240116; t=1789207744; c=relaxed/simple;
+	bh=nucaF91ltIIsqnarmejlY0aFCQf3wNZAb6hNE7n0mMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s4Jaxu3WB34eo4fY3mGqukyZdJCkc/0Z/m3KOHJgLD9MrHdecHGG68SiTBePTh4tZhN0dbGaLUJ5DuxujYXLNrd6bTzeb9FIdCpDN2uYtJJpRAF9a/oy7yiOAs4/K32YD2lgpRdCkrceBCHRs1AFGWkRthghGVpNOkeSoDCCdLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BmkKHgzC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C/W1mEY7C+lQUYm6x5GIMXazYTI2v2WOsT1y6u+l4k4s+jOLP8aOvMLjeUgZFgiIzGboObVFHIvv8oDpxo/3cIDXEChgctJdmEdC4W540QX9xQB706LQWPFfMjA3gXB7Y382z6UDq+ylTa5Qf/666isYyug5Eup9kCQAfoSeoP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rbdt2k4q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BmkKHgzC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DBC71F000FF;
-	Sat, 12 Sep 2026 10:08:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rbdt2k4q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3EF1F000FF;
+	Sat, 12 Sep 2026 10:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207737;
-	bh=IPRO+JGjtUc6mrANyEEr0zowKP7eUhCiTdoE/Aw7Gss=;
+	s=korg; t=1789207742;
+	bh=f1GRqdpv/LM67z3nkciyz2+tzC27uPDH9ak7ZLI/i5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BmkKHgzCBJEqsw028R92f8/SMfCZDEX3UsdkfWcV8wwogmJB+NzoNxMpZ15BjbSU2
-	 xlj4OWKQXxV7zxAVsvbU0RZ+TbeqnZsV00TIrUYJt0SAEnnoP0/j9bstRHLzDtlkd1
-	 0A8j2OpvKSgOHOyVXYvtp5O71l65bwisn/apU3zE=
+	b=Rbdt2k4qBkC4AbxvCljZQR0tRpfLF558ntBkcOSqygMxcLIq3k1AmJgzfmf9TCAcr
+	 8/6+TV84TyDZDdfcjNc/8V9P4tp7o1fTIZihw+xA+KtFyK2Vt5Sj5LD1FOskj5OVYM
+	 rH72j1MgD/oj9A/N7noE9CS/Rvapkkihf4FT5Zqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Koichiro Den <den@valinux.co.jp>,
-	Vinod Koul <vkoul@kernel.org>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0475/1518] dmaengine: dw-edma: Clear stale requests on termination
-Date: Sat, 12 Sep 2026 08:44:04 +0200
-Message-ID: <20260912065634.193035966@linuxfoundation.org>
+Subject: [PATCH 6.18 0476/1518] ASoC: meson: Keep link pointers valid on realloc failure
+Date: Sat, 12 Sep 2026 08:44:05 +0200
+Message-ID: <20260912065634.214776248@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,40 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit c0d9c6275adcca7c0ca5f4270bf88026f9864bd1 ]
+[ Upstream commit 2aaa41cf974f83a6fb105422bac4e2f107150774 ]
 
-terminate_all() can finish immediately when the channel is unconfigured,
-paused, idle, or already stopped in hardware. A pending PAUSE request can
-survive these paths and block issue_pending() even after termination.
+meson_card_reallocate_links() grows the DAI link and private data
+arrays with two consecutive krealloc() calls and updates the owner
+pointers only after both calls have succeeded.
 
-Clear the request whenever termination leaves the channel idle. A running
-channel keeps its STOP request until the interrupt handler consumes it.
+A successful krealloc() may move the data: it frees the old block and
+returns a new one. When that happens for the link array and the second
+krealloc() then fails, card->dai_link still points to the block that
+krealloc() already freed, and the error path frees the new block too.
+The probe error path then calls meson_card_clean_references(), which
+dereferences card->dai_link and kfree()s it again, resulting in a
+use-after-free and a double free.
 
-Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Link: https://patch.msgid.link/20260717180639.2643243-7-den@valinux.co.jp
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Commit card->dai_link and card->num_links right after the first
+krealloc() succeeds, so the pointer always refers to a valid allocation
+that meson_card_clean_references() can walk and free. krealloc() with
+__GFP_ZERO zero-initializes the added entries, so walking them on the
+error path is safe. With both failure paths reduced to a plain return,
+drop the goto labels and the error message.
+
+Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://patch.msgid.link/20260717012433.1432285-1-lilinmao@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/meson/meson-card-utils.c | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index 352c2f475ba03..cb34385d605e3 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -327,6 +327,8 @@ static int dw_edma_device_terminate_all(struct dma_chan *dchan)
- 	} else {
- 		chan->request = EDMA_REQ_STOP;
- 	}
-+	if (chan->status == EDMA_ST_IDLE)
-+		chan->request = EDMA_REQ_NONE;
+diff --git a/sound/soc/meson/meson-card-utils.c b/sound/soc/meson/meson-card-utils.c
+index cdb759b466ad4..8617a4661a339 100644
+--- a/sound/soc/meson/meson-card-utils.c
++++ b/sound/soc/meson/meson-card-utils.c
+@@ -50,25 +50,20 @@ int meson_card_reallocate_links(struct snd_soc_card *card,
+ 			 num_links * sizeof(*priv->card.dai_link),
+ 			 GFP_KERNEL | __GFP_ZERO);
+ 	if (!links)
+-		goto err_links;
++		return -ENOMEM;
++
++	priv->card.dai_link = links;
++	priv->card.num_links = num_links;
  
- 	return err;
+ 	ldata = krealloc(priv->link_data,
+ 			 num_links * sizeof(*priv->link_data),
+ 			 GFP_KERNEL | __GFP_ZERO);
++	/* meson_card_clean_references() will free the links on this error path */
+ 	if (!ldata)
+-		goto err_ldata;
++		return -ENOMEM;
+ 
+-	priv->card.dai_link = links;
+ 	priv->link_data = ldata;
+-	priv->card.num_links = num_links;
+ 	return 0;
+-
+-err_ldata:
+-	kfree(links);
+-err_links:
+-	dev_err(priv->card.dev, "failed to allocate links\n");
+-	return -ENOMEM;
+-
  }
+ EXPORT_SYMBOL_GPL(meson_card_reallocate_links);
+ 
 -- 
 2.53.0
 
