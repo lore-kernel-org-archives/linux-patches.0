@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D5026AC5;
-	Sat, 12 Sep 2026 15:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C249475334;
+	Sat, 12 Sep 2026 15:59:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228789; cv=none; b=JpSXPvdDAGOyDPfRqLHOhSyBv/6PB3Esm8tP4t7f9uR2GxvXh7ihJaO/BrWGEuXJpqwAZN3TSvFkSt1HQ1EHg+SJT/TO7jaJJn0nq3gr2WHLDbBD35gaZTp/zpaRa0ucY9VV1S2wZn+EtZZkhClCyDbQjmXqDNQjC2qNvnG66Xg=
+	t=1789228795; cv=none; b=t03acEqQz4uT/VbSYRGzDMF3NGOugOUV+6Z8L5yh2TcA2JeZ0tbJURLjEg2Zy0yERdX6UIX6sU6f/wPqGLt+gWlIcfdgttGBDZHbCYAyVqGIyMPyvtj+IfQRnDpZk6w3R03bgU8DLXbQycsL5Nw2KurQd1kJpPAQvEBw4obr9nQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228789; c=relaxed/simple;
-	bh=OkCo7zopAy9zL4IJC21A3MEXGzYW5d9FA7RKA+GZ22k=;
+	s=arc-20240116; t=1789228795; c=relaxed/simple;
+	bh=YfOy3OMr7QPjmWwt/YH8mxr26UDrL7a//8yLFUyzafY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QpkgHznrLKc0C5+Kan3uESnL8HG9M4w+OX5ICDqPYM0Bebhk7Ahc8OdNDmWICc9meLameV8Inn5qyC69LYnU2rQz9zJLTpFAAvbryLtETJiPWpHh7CiOCnVpuYvoDMPywb/kmz/9u+rS5kLwX5Nt0bw338Y4fBGvtOqpcXgDtV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SPXgP39r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=segOwWSYQF53yv4EM2CE89IleHV56ZrnjFFE4IewBU2mQLei2LtQgu0BFGXCjQP8+hO07okwdb/yhbbWOHhCZEdliCZYmownOoUlby7R/0dxI9N9x5jbWL7TPvwAGTthT2u8FQWn7ztnITPxBEZ4mmFUQvN85n2Vr1x2qs4vNc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gKWgfSVB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SPXgP39r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE2731F000FF;
-	Sat, 12 Sep 2026 15:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gKWgfSVB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0632D1F00893;
+	Sat, 12 Sep 2026 15:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228783;
-	bh=wpNt1Cj6M7LQUf1z5SEc2/vq7o+PSWjGWqmXClFy/TY=;
+	s=korg; t=1789228788;
+	bh=uLz2umdh+FpCXEhhKtGR6ljE7gfQkICE9RlZEUBPQ6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SPXgP39rBGS8s+p2SxZ/q7jfZhy94d15IG8CMMEb/WdOT0jAXhuYFiUGwuoPalV2Q
-	 uIT2qkbOWL2efDFhb2gS6U85Mbl3LyyDCpAyd0DcOZs7/93qm+jepS4oz2xV1qZFv2
-	 NRwnFAiwvUPjHkfVWJ0KYCCWcjgn4MhXGkW29P08=
+	b=gKWgfSVBh+2zqDBDMQpAGqyDuJ8J50F15S+v4j1kFVdt5L5dalRjY3CLh/RjEzr+h
+	 CQ8DDXvtg9aXGOmJdIxKh40BibVc+ToCjNsY+l/zqW4PEnorKfiyrHc8rWaLLcc4Nr
+	 uZ1Fd5czhJA2ZsEN64wi9nc6KGluWPDLltZAoI/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Sun <2022090917019@std.uestc.edu.cn>,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0455/1191] bpf: Fix same-register dst/src OOB read and pointer leak in sock_ops
-Date: Sat, 12 Sep 2026 08:53:03 +0200
-Message-ID: <20260912065558.456628770@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Yongbang Shi <shiyongbang@huawei.com>,
+	Rongrong Zou <zourongrong@gmail.com>,
+	Sean Paul <seanpaul@chromium.org>,
+	Xinliang Liu <xinliang.liu@linaro.org>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Baihan Li <libaihan@huawei.com>
+Subject: [PATCH 6.1 0420/1191] drm/hibmc: Use drm_atomic_helper_check_plane_state()
+Date: Sat, 12 Sep 2026 08:52:28 +0200
+Message-ID: <20260912065557.674740932@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -57,84 +55,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 10f86a2a5c91fc4c4d001960f1c21abe52545ef6 ]
+commit 715c5db68bdbd4a524b79ebf20fb61e880fffea0 upstream.
 
-When a BPF sock_ops program accesses ctx fields with dst_reg == src_reg,
-the SOCK_OPS_GET_SK() and SOCK_OPS_GET_FIELD() macros fail to zero the
-destination register in the !fullsock / !locked_tcp_sock path.
+Call drm_atomic_helper_check_plane_state() from the primary plane's
+atomic-check helper and replace the custom implementation.
 
-Both macros borrow a temporary register to check is_fullsock /
-is_locked_tcp_sock when dst_reg == src_reg, because dst_reg holds the
-ctx pointer. When the check is false (e.g., TCP_NEW_SYN_RECV state with
-a request_sock), dst_reg should be zeroed but is not, leaving the stale
-ctx pointer:
+All plane's implementations of atomic_check should call the shared
+_check_plane_state() helper first. It adjusts the plane state for
+correct positioning, rotation and scaling of the plane. Do this
+even if the plane's CRTC has been disabled by setting the parameter
+can_update_disabled. The original code returned early in this case,
+but it's safe to so and cleaner to have all plane state initialized.
 
- - SOCK_OPS_GET_SK: dst_reg retains the ctx pointer, passes NULL checks
-   as PTR_TO_SOCKET_OR_NULL, and can be used as a bogus socket pointer,
-   leading to stack-out-of-bounds access in helpers like
-   bpf_skc_to_tcp6_sock().
+As we don't set can_position, drm_atomic_helper_check_plane_state()'s
+visibility check tests if the plane covers all of the CRTC. This is
+a small change from the original code, which tested if the plane is
+exactly the size of the CRTC. With the new test, the plane still has
+to cover all of the CRTC, but can be larger than the CRTC's size. A
+later patch can fully implement this feature in hibmc.
 
- - SOCK_OPS_GET_FIELD: dst_reg retains the ctx pointer which the
-   verifier believes is a SCALAR_VALUE, leaking a kernel pointer.
+If the plane is disabled, the helper clears the visibility flag in the
+plane state. On errors or if the plane is not visible, the atomic-check
+helper can return early. Implement all this in hibmc and drop the custom
+code that does some of it.
 
-Fix both macros by:
- - Changing JMP_A(1) to JMP_A(2) in the fullsock path to skip the
-   added instruction.
- - Adding BPF_MOV64_IMM(si->dst_reg, 0) after the temp register
-   restore in the !fullsock path, placed after the restore because
-   dst_reg == src_reg means we need src_reg intact to read ctx->temp.
+v2:
+- extend the commit description (Yongbang)
 
-Fixes: fd09af010788 ("bpf: sock_ops ctx access may stomp registers in corner case")
-Fixes: 84f44df664e9 ("bpf: sock_ops sk access may stomp registers when dst_reg = src_reg")
-Reported-by: Quan Sun <2022090917019@std.uestc.edu.cn>
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Reported-by: Dongliang Mu <dzm91@hust.edu.cn>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Closes: https://lore.kernel.org/bpf/6fe1243e-149b-4d3b-99c7-fcc9e2f75787@std.uestc.edu.cn/T/#u
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20260407022720.162151-2-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: da52605eea8f ("drm/hisilicon/hibmc: Add support for display engine")
+Reviewed-by: Yongbang Shi <shiyongbang@huawei.com>
+Cc: Rongrong Zou <zourongrong@gmail.com>
+Cc: Sean Paul <seanpaul@chromium.org>
+Cc: Xinliang Liu <xinliang.liu@linaro.org>
+Cc: Dmitry Baryshkov <lumag@kernel.org>
+Cc: Baihan Li <libaihan@huawei.com>
+Cc: Yongbang Shi <shiyongbang@huawei.com>
+Cc: <stable@vger.kernel.org> # v4.10+
+Link: https://patch.msgid.link/20260618123142.92298-2-tzimmermann@suse.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/filter.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c |   50 ++++++++-----------------
+ 1 file changed, 16 insertions(+), 34 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index e2fd25d9e3580..5d9f0b21d49da 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -10344,10 +10344,11 @@ static u32 sock_ops_convert_ctx_access(enum bpf_access_type type,
- 				      si->dst_reg, si->dst_reg,		      \
- 				      offsetof(OBJ, OBJ_FIELD));	      \
- 		if (si->dst_reg == si->src_reg)	{			      \
--			*insn++ = BPF_JMP_A(1);				      \
-+			*insn++ = BPF_JMP_A(2);				      \
- 			*insn++ = BPF_LDX_MEM(BPF_DW, reg, si->src_reg,	      \
- 				      offsetof(struct bpf_sock_ops_kern,      \
- 				      temp));				      \
-+			*insn++ = BPF_MOV64_IMM(si->dst_reg, 0);	      \
- 		}							      \
- 	} while (0)
+--- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
++++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
+@@ -72,46 +72,28 @@ static int hibmc_get_best_clock_idx(cons
+ static int hibmc_plane_atomic_check(struct drm_plane *plane,
+ 				    struct drm_atomic_state *state)
+ {
+-	struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
+-										 plane);
+-	struct drm_framebuffer *fb = new_plane_state->fb;
+-	struct drm_crtc *crtc = new_plane_state->crtc;
+-	struct drm_crtc_state *crtc_state;
+-	u32 src_w = new_plane_state->src_w >> 16;
+-	u32 src_h = new_plane_state->src_h >> 16;
+-
+-	if (!crtc || !fb)
+-		return 0;
+-
+-	crtc_state = drm_atomic_get_crtc_state(state, crtc);
+-	if (IS_ERR(crtc_state))
+-		return PTR_ERR(crtc_state);
+-
+-	if (src_w != new_plane_state->crtc_w || src_h != new_plane_state->crtc_h) {
+-		drm_dbg_atomic(plane->dev, "scale not support\n");
+-		return -EINVAL;
+-	}
+-
+-	if (new_plane_state->crtc_x < 0 || new_plane_state->crtc_y < 0) {
+-		drm_dbg_atomic(plane->dev, "crtc_x/y of drm_plane state is invalid\n");
+-		return -EINVAL;
+-	}
+-
+-	if (!crtc_state->enable)
++	struct drm_plane_state *new_plane_state =
++		drm_atomic_get_new_plane_state(state, plane);
++	struct drm_crtc_state *new_crtc_state = NULL;
++	int ret;
++
++	if (new_plane_state->crtc)
++		new_crtc_state = drm_atomic_get_new_crtc_state(state, new_plane_state->crtc);
++
++	ret = drm_atomic_helper_check_plane_state(new_plane_state, new_crtc_state,
++						  DRM_PLANE_NO_SCALING,
++						  DRM_PLANE_NO_SCALING,
++						  false, true);
++	if (ret)
++		return ret;
++	else if (!new_plane_state->visible)
+ 		return 0;
  
-@@ -10381,10 +10382,11 @@ static u32 sock_ops_convert_ctx_access(enum bpf_access_type type,
- 				      si->dst_reg, si->src_reg,		      \
- 				      offsetof(struct bpf_sock_ops_kern, sk));\
- 		if (si->dst_reg == si->src_reg)	{			      \
--			*insn++ = BPF_JMP_A(1);				      \
-+			*insn++ = BPF_JMP_A(2);				      \
- 			*insn++ = BPF_LDX_MEM(BPF_DW, reg, si->src_reg,	      \
- 				      offsetof(struct bpf_sock_ops_kern,      \
- 				      temp));				      \
-+			*insn++ = BPF_MOV64_IMM(si->dst_reg, 0);	      \
- 		}							      \
- 	} while (0)
+-	if (new_plane_state->crtc_x + new_plane_state->crtc_w >
+-	    crtc_state->adjusted_mode.hdisplay ||
+-	    new_plane_state->crtc_y + new_plane_state->crtc_h >
+-	    crtc_state->adjusted_mode.vdisplay) {
+-		drm_dbg_atomic(plane->dev, "visible portion of plane is invalid\n");
+-		return -EINVAL;
+-	}
+-
+ 	if (new_plane_state->fb->pitches[0] % 128 != 0) {
+ 		drm_dbg_atomic(plane->dev, "wrong stride with 128-byte aligned\n");
+ 		return -EINVAL;
+ 	}
++
+ 	return 0;
+ }
  
--- 
-2.53.0
-
 
 
