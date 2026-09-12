@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC67A349CE2;
-	Sat, 12 Sep 2026 19:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982C526ED46;
+	Sat, 12 Sep 2026 19:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242417; cv=none; b=vGfXhLuH4jRs4wSRbwZuvqozTcygleDrMhzepw+fwcIHwyJKd8u5QHYpwXafQiYU9xfo4leQLbTOfDxrute1p6UrjpHqgXvsVbJMqjdi23F4Lnp1l4Uk3Sdu6QSiilTq9VlynPJSLTEdnv6jXRH18ABlp6m3NnI+HPp8+BQF0Wk=
+	t=1789242420; cv=none; b=fDAPVTVmX5xUzq0x3sablZACcYowijQqyAQK/GVTVBUBmo7Os1uoZ07xwIqonS1Xiw/eGa+tEF/tN5ty5E4BkzmY67m1/yd7bxgQJgQh0QmY03Qo0iD1ODW1zzRVKZBIUWdzeW09VraM+8MD4DcjxX/bOKjO3QGuGUVHPTdfGTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242417; c=relaxed/simple;
-	bh=swT3XKSaeAmTjSd21ilmLyc3AGMxUVxhv9U9mxs+CSY=;
+	s=arc-20240116; t=1789242420; c=relaxed/simple;
+	bh=9v6y3rsqgjhx0+FPOJPVUyJwFk02daTNIebfaHgMPoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qexUvKStFs52vRW2ZiefIj+BCkNeA0Fmo5y8e5+BZFFSf4lQ3c0RP+SUfx+JYt9pbXOa6s0VwAZr/PQhsHGj80DtIZhpvSMDajOS2TTMHPHQhfObeXoVSLCCFPrYcyoinpkoxvPbk/JhbcGyvf8nma9kemm2zMJXj4qcCwWlnjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUOtlm2a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LIhwyF8XYJ+An/ZhAi4fFW5Vkb/53yxg5mlYzchoU0mSzywhQFE88u9Fm52zFGWispbmXXUOrZrIGE5fd4ICuDmc7wqcdxSfbVsk4sjb7s6KbL8J/RFWp94E12v8l7b5ZhDpGL7B8XrRJaP/pPPTFf8BjaiViDh4sn517FWww7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9Dhk4xC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUOtlm2a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 217201F000FF;
-	Sat, 12 Sep 2026 19:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9Dhk4xC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30AB1F000FF;
+	Sat, 12 Sep 2026 19:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242416;
-	bh=2Wvgm8MRSVBgYufOsYRK+5E4E/3PhLDiR7/j1GETVbY=;
+	s=korg; t=1789242419;
+	bh=f7ENx3O96qkPahPgfY6SKaaYt20SHb7aJH17obtS3DE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IUOtlm2aMdqhZBBPoRu63EAKbj4fXBo/eUjJMfM5T6q/44Eq+wF4YZA1H9WHITYDO
-	 RpRi0xVb7zpd/oZbRMnUAKceTH4YPIreagqEpGz8Trcro0KwJJTCFmBcu7ZpFB73QY
-	 qK6rM/hJrajErCv8+0ZRETWEmq+RnsKAeQ9JdRKA=
+	b=u9Dhk4xCZpAgGPDokWOsddnY8BjcUmBfzyLJ8JnBt9NGWUpjWMCoX0AMK/gQ6FvAz
+	 ijOjsxMUfR8xJ+79Qs1R0aXh4cAn85DKOlK6L35JP++FOprgSmwDf5fVv1QtbL2J8V
+	 hdLygOzC9cPMBE9QQyMa3UpejquFs9DqRhL79fl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haowen Tu <tuhaowen@uniontech.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Herman van Hazendonk <github.com@herrie.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 379/798] PM: sleep: Fix off-by-one in wakelocks number limit check
-Date: Sat, 12 Sep 2026 09:00:07 +0200
-Message-ID: <20260912065525.843225381@linuxfoundation.org>
+Subject: [PATCH 5.10 397/798] clk: qcom: gdsc: propagate gdsc_check_status() errors from gdsc_poll_status
+Date: Sat, 12 Sep 2026 09:00:25 +0200
+Message-ID: <20260912065526.247411741@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,41 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haowen Tu <tuhaowen@uniontech.com>
+From: Herman van Hazendonk <github.com@herrie.org>
 
-[ Upstream commit 6058646587dded0ce0ba91bd5a6afbf14fe42055 ]
+[ Upstream commit d69f0c2b8d292b4890c9f0fbe184dfc26c4de86c ]
 
-CONFIG_PM_WAKELOCKS_LIMIT is documented as the maximum number of
-user-space wakeup sources, but the limit check is performed before
-the counter is incremented and only rejects new wakeup sources when the
-current number is greater than the limit. This allows one extra wakeup
-source to be created.
+gdsc_check_status() returns negative errno when the underlying
+regmap_read() fails -- e.g. when a parent regmap dies during system
+suspend, a CSR is removed by an HW debug tool, or the bus controller
+goes into protection. gdsc_poll_status() treats the result as a plain
+boolean ("is the GDSC in the requested state?"), so any negative error
+return is truncated to "true" and the poll exits with success even
+though the rail's real state is unknown:
 
-Reject new wakeup sources once the counter has reached the limit.
+	do {
+		if (gdsc_check_status(sc, status))
+			return 0;
+	} while (ktime_us_delta(ktime_get(), start) < STATUS_POLL_TIMEOUT_US);
 
-Fixes: b86ff9820fd5 ("PM / Sleep: Add user space interface for manipulating wakeup sources, v3")
-Signed-off-by: Haowen Tu <tuhaowen@uniontech.com>
-[ rjw: Subject edits ]
-Link: https://patch.msgid.link/20260624053839.2150567-1-tuhaowen@uniontech.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+	if (gdsc_check_status(sc, status))
+		return 0;
+
+	return -ETIMEDOUT;
+
+This silently misleads gdsc_toggle_logic() (which writes/un-writes
+SW_COLLAPSE on the strength of the poll succeeding) and the gdsc_init()
+sync path (which assumes the readback represents real silicon state).
+
+Latch the return value, propagate negative errno immediately, and only
+treat a strictly-positive value as "reached the target state". Make the
+same change in the post-timeout final check so a regmap that comes back
+after the deadline does not silently degrade to -ETIMEDOUT.
+
+Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+Fixes: 77b1067a19b4 ("clk: qcom: gdsc: Add support for gdscs with gds hw controller")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260602140934.796697-2-github.com@herrie.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/wakelock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/gdsc.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/power/wakelock.c b/kernel/power/wakelock.c
-index 4e941999a53ba..5c2a248cf249a 100644
---- a/kernel/power/wakelock.c
-+++ b/kernel/power/wakelock.c
-@@ -63,7 +63,7 @@ static unsigned int number_of_wakelocks;
- 
- static inline bool wakelocks_limit_exceeded(void)
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index da3797241f319..8dc3f70ef2e43 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -102,14 +102,21 @@ static int gdsc_hwctrl(struct gdsc *sc, bool en)
+ static int gdsc_poll_status(struct gdsc *sc, enum gdsc_status status)
  {
--	return number_of_wakelocks > CONFIG_PM_WAKELOCKS_LIMIT;
-+	return number_of_wakelocks >= CONFIG_PM_WAKELOCKS_LIMIT;
- }
+ 	ktime_t start;
++	int ret;
  
- static inline void increment_wakelocks_number(void)
+ 	start = ktime_get();
+ 	do {
+-		if (gdsc_check_status(sc, status))
++		ret = gdsc_check_status(sc, status);
++		if (ret < 0)
++			return ret;
++		if (ret)
+ 			return 0;
+ 	} while (ktime_us_delta(ktime_get(), start) < TIMEOUT_US);
+ 
+-	if (gdsc_check_status(sc, status))
++	ret = gdsc_check_status(sc, status);
++	if (ret < 0)
++		return ret;
++	if (ret)
+ 		return 0;
+ 
+ 	return -ETIMEDOUT;
 -- 
 2.53.0
 
