@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5933428498;
-	Sat, 12 Sep 2026 10:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B679229DB64;
+	Sat, 12 Sep 2026 10:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209316; cv=none; b=aJ4TiTk+GJoStVHHnRsV5bbJKXzJc2qpOvN560uv+izTiDbTVCPpQpyT6IalkhgX8Bl4v+7dttbKtgUodA9GK8tIbd6qrPhf92BHiD49dKeytHoCwxpLLJIqyGDXLIf7YKPCD1roN767j5mOjion24VI4FVpD8np5CVjUZ6f6Ok=
+	t=1789209322; cv=none; b=Z6JTM9QxHs8WoAtzwhp2kN2VZuyx0Ia1crk2sxOrelytA2WE9XQDxaBRc8U3BzK8fzhgox5ckA1GW3tiu5xzWjqbAJbvFp3xZW2GZ8tgvd6jSxml6ukbRnVwnwdzkjm8F+bmkwUkdyvWRYxOl1o/736SalFRXQZpd/pti+TDCGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209316; c=relaxed/simple;
-	bh=aadZuwOx9+ZJvxbR+2GQfXEWd7oSSV4ZgwK8BN5yDzY=;
+	s=arc-20240116; t=1789209322; c=relaxed/simple;
+	bh=hDEWL0CZhqKk7x9kCAH98h/SWdB4OlYmfiHCBnNQaMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LSGfYAld66oj+pHnwDVhZVA+8MdX4DgHIdyzSALD4TKR8Dvbw3EgyDhJGWh4Az3qqPfRbGgXiMpDznnwdDjyCGyrWgU1nrdyZMIEjgsc3mpdaQNo+LnFv6dK0xqMT/uk6fA6Tswpc1fgxu1KZedCcviSNEgOmajKEd3JFk3PMq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZCl7Ivs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F23/6gO+39Vvl9fOgkqTr5Z6uXThMhO4iFpKfCVRumIONq1RvMme3U9KNdBM7ePY0fZToIOmFMCbEzxQ7dvDtBy25aFRIwodIR/tsL51CXpX2o4O3TN+kkmL/mcVPveNSnttNnj6a1uB8cPvrlJNqK+V3omDWKzCdnJcRUX7+JY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKmKrGAg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZCl7Ivs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861431F000FF;
-	Sat, 12 Sep 2026 10:35:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKmKrGAg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB7981F000FF;
+	Sat, 12 Sep 2026 10:35:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209315;
-	bh=80nAunMBHkqxe/SK+/DnXMjAx8kq4eToXqlW0j8E3K0=;
+	s=korg; t=1789209320;
+	bh=cI6EzMFwjsPGBjzWhZWETK9YvlfqAsOL2kiaZC+p0vw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QZCl7IvsYe5luQeELssCOd8bDgl/wDKM4r81Mupog/IT04yxqWtO8NDCmHkZcqDlD
-	 AKIQtSAsX3FkF4vYHkodz0NAKi9fTBsPRTqZwdyB1FtS9kS9ub8+gnVKRcccd7xkGi
-	 fadvMerzbGYBkkYx/vjTJUibEMnC6aaCoVU9a9AM=
+	b=DKmKrGAgbHq9xtHOa0wA9nIo8OV2I0AKTIYAQ6asNCk2ti2mfMrqf92DLzN56aD2p
+	 1Hw7YlddjiC1ZHZzP/XnJZJAz6inGAzmj2yGHmOaTzbNjtW+dOhBdZjYQ49M4YVMkV
+	 ReGM7c2YYjCgUwVlf5g/bOq2b/vA2evuOxeIXRaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0797/1518] wifi: mt76: mt7996: do not attach hif2 WED when the main WED attach failed
-Date: Sat, 12 Sep 2026 08:49:26 +0200
-Message-ID: <20260912065641.462315717@linuxfoundation.org>
+Subject: [PATCH 6.18 0798/1518] wifi: mt76: mt7915: fix chainmask handling for non-dbdc phys on band 1
+Date: Sat, 12 Sep 2026 08:49:27 +0200
+Message-ID: <20260912065641.485373757@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,37 +52,134 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 7c1924332e986019c6bcddf55c843361cccac73f ]
+[ Upstream commit ea891799eccc9e43ebba0dc157d4b197ad6c1a0e ]
 
-If the WED attach for the primary PCIe function fails, the probe path
-still attached wed_hif2 for the secondary function, leaving the device
-in an inconsistent half-WED configuration that crashes later. The hif2
-call also re-enabled hwrro_mode, which the failed primary attach had
-just turned off.
+On single-adie mt7986 the only phy is bound to band 1, but its chainmask
+is stored unshifted, because dev->chainshift is still zero while the
+eeprom is parsed for the main phy. mt7915_set_antenna() on the other
+hand shifts by chainshift * band_idx, so the representation of the
+chainmask changed as soon as the antenna configuration was touched.
+Until then, mt7915_mcu_set_chan_info() passed rx_path = 0 to the
+firmware, since shifting the unshifted mask down clears all bits.
 
-Skip the hif2 WED setup when the primary WED device is not active.
+Keep the unshifted form for that case and add helpers for the band local
+chainmask, so that only the band 1 phy of a dbdc device uses the shifted
+form.
 
-Fixes: 83eafc9251d6 ("wifi: mt76: mt7996: add wed tx support")
-Link: https://patch.msgid.link/20260727150434.1778520-6-nbd@nbd.name
+Fixes: 3eb50cc90534 ("wifi: mt76: mt7915: rely on band_idx of mt76_phy")
+Link: https://patch.msgid.link/20260727150434.1778520-8-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mmio.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../net/wireless/mediatek/mt76/mt7915/eeprom.c |  2 +-
+ .../net/wireless/mediatek/mt76/mt7915/main.c   |  6 +++---
+ .../net/wireless/mediatek/mt76/mt7915/mcu.c    |  2 +-
+ .../net/wireless/mediatek/mt76/mt7915/mt7915.h | 18 ++++++++++++++++++
+ .../wireless/mediatek/mt76/mt7915/testmode.c   |  5 +----
+ 5 files changed, 24 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-index 4f63dcb19b259..e37b95f5b00b8 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-@@ -490,6 +490,9 @@ int mt7996_mmio_wed_init(struct mt7996_dev *dev, void *pdev_ptr,
- 	if (!wed_enable)
- 		return 0;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
+index 38dfd5de365ca..14c0770229bc5 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
+@@ -257,7 +257,7 @@ void mt7915_eeprom_parse_hw_cap(struct mt7915_dev *dev,
+ 	nss = min_t(u8, min_t(u8, nss_max, nss), path);
  
-+	if (hif2 && !mtk_wed_device_active(&dev->mt76.mmio.wed))
+ 	mphy->chainmask = BIT(path) - 1;
+-	if (band)
++	if (band && dev->dbdc_support)
+ 		mphy->chainmask <<= dev->chainshift;
+ 	mphy->antenna_mask = BIT(nss) - 1;
+ 	dev->chainmask |= mphy->chainmask;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+index 3c1d388b200a0..9d546eb8022ac 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+@@ -1133,7 +1133,7 @@ mt7915_set_antenna(struct ieee80211_hw *hw, int radio_idx, u32 tx_ant, u32 rx_an
+ 	struct mt7915_dev *dev = mt7915_hw_dev(hw);
+ 	struct mt7915_phy *phy = mt7915_hw_phy(hw);
+ 	int max_nss = hweight8(hw->wiphy->available_antennas_tx);
+-	u8 chainshift = dev->chainshift;
++	u8 shift = mt7915_band_chainshift(phy);
+ 	u8 band = phy->mt76->band_idx;
+ 
+ 	if (!tx_ant || tx_ant != rx_ant || ffs(tx_ant) > max_nss)
+@@ -1146,9 +1146,9 @@ mt7915_set_antenna(struct ieee80211_hw *hw, int radio_idx, u32 tx_ant, u32 rx_an
+ 	/* handle a variant of mt7916/mt7981 which has 3T3R but nss2 on 5 GHz band */
+ 	if ((is_mt7916(&dev->mt76) || is_mt7981(&dev->mt76)) &&
+ 	    band && hweight8(tx_ant) == max_nss)
+-		phy->mt76->chainmask = (dev->chainmask >> chainshift) << chainshift;
++		phy->mt76->chainmask = (dev->chainmask >> shift) << shift;
+ 	else
+-		phy->mt76->chainmask = tx_ant << (chainshift * band);
++		phy->mt76->chainmask = tx_ant << shift;
+ 
+ 	mt76_set_stream_caps(phy->mt76, true);
+ 	mt7915_set_stream_vht_txbf_caps(phy);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+index f3abc0de167a3..29b3f0cda1ce7 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+@@ -2804,7 +2804,7 @@ int mt7915_mcu_set_chan_info(struct mt7915_phy *phy, int cmd)
+ 		.center_ch = ieee80211_frequency_to_channel(freq1),
+ 		.bw = mt76_connac_chan_bw(chandef),
+ 		.tx_path_num = hweight16(phy->mt76->chainmask),
+-		.rx_path = phy->mt76->chainmask >> (dev->chainshift * band),
++		.rx_path = mt7915_band_chainmask(phy),
+ 		.band_idx = band,
+ 		.channel_band = ch_band[chandef->chan->band],
+ 	};
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
+index f1194d147dc89..27857347f05f4 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
+@@ -393,6 +393,24 @@ mt7915_ext_phy(struct mt7915_dev *dev)
+ 	return phy->priv;
+ }
+ 
++/* without dbdc, the chainmask is stored unshifted, even if the phy is
++ * bound to band 1
++ */
++static inline u8 mt7915_band_chainshift(struct mt7915_phy *phy)
++{
++	struct mt7915_dev *dev = phy->dev;
++
++	if (!dev->dbdc_support)
 +		return 0;
 +
- 	dev->mt76.hwrro_mode = is_mt7996(&dev->mt76) ? MT76_HWRRO_V3
- 						     : MT76_HWRRO_V3_1;
++	return phy->mt76->band_idx * dev->chainshift;
++}
++
++static inline u16 mt7915_band_chainmask(struct mt7915_phy *phy)
++{
++	return phy->mt76->chainmask >> mt7915_band_chainshift(phy);
++}
++
+ static inline u32 mt7915_check_adie(struct mt7915_dev *dev, bool sku)
+ {
+ 	u32 mask = sku ? MT_CONNINFRA_SKU_MASK : MT_ADIE_TYPE_MASK;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/testmode.c b/drivers/net/wireless/mediatek/mt76/mt7915/testmode.c
+index d534fff5c952b..2a9e5d9ff101c 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/testmode.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/testmode.c
+@@ -694,9 +694,7 @@ mt7915_tm_set_params(struct mt76_phy *mphy, struct nlattr **tb,
+ {
+ 	struct mt76_testmode_data *td = &mphy->test;
+ 	struct mt7915_phy *phy = mphy->priv;
+-	struct mt7915_dev *dev = phy->dev;
+-	u32 chainmask = mphy->chainmask, changed = 0;
+-	bool ext_phy = phy != &dev->phy;
++	u32 chainmask = mt7915_band_chainmask(phy), changed = 0;
+ 	int i;
+ 
+ 	BUILD_BUG_ON(NUM_TM_CHANGED >= 32);
+@@ -705,7 +703,6 @@ mt7915_tm_set_params(struct mt76_phy *mphy, struct nlattr **tb,
+ 	    td->state == MT76_TM_STATE_OFF)
+ 		return 0;
+ 
+-	chainmask = ext_phy ? chainmask >> dev->chainshift : chainmask;
+ 	if (td->tx_antenna_mask > chainmask)
+ 		return -EINVAL;
  
 -- 
 2.53.0
