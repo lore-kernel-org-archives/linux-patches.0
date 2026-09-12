@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB465416124;
-	Sat, 12 Sep 2026 08:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0D9416124;
+	Sat, 12 Sep 2026 08:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202339; cv=none; b=nbAWcOXrQCOsWxxI6UrTmcdWGjOZMqMNbN4fghAwpOHdM5mmX7ky75Ys8pZXVVtdu1A/Yz3+KxD7IYK68g198afLMqRjPKLFKzVhPmuNydiFN2JyUxKJ89wKyt+mDaCILSPXTIEYllPW6yphjEfPP+qL0372SMlW4EXBkrpugn0=
+	t=1789202343; cv=none; b=CAePnq7IlpGejoXgyUWz2i+EsKS4V+YGCleZ/pQpNZtFeXT//0EGE10ztwVSYzKmnNJ+M7/E+qqoTCGxcrOPjWSSEYW38NE4j0LUYAMGoMT8WCxbrzZ4C/35KmAmc09TxFYCzKTFEsfiBAin4lodMyrnAn9OyoWIgZl4gMExxdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202339; c=relaxed/simple;
-	bh=5200VMIsqmIQTqrFLQIwlBjAh43eFUwfUgphYeS/6IA=;
+	s=arc-20240116; t=1789202343; c=relaxed/simple;
+	bh=oh3nUuImY02Rh5SEWn1lSVW0hEytoTbV/zwMSu7IZcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D8VKXuK8m44rlRd7n8WfWG3insYvlaRG7GN0mxrVHB1c9WzOinIEjsZiC6yKHD9mRpDqF4oyVDR0O2XkGIAgzwVtbzdyOL4jcVkc+K7OVFepQFlaPcxF6tFSt9H7RlmUXfamfeuhGBCls4qpX3fSKR+TxXLaNATKNWiubeTHf38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFNWy9Up; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=joklhLj+yYUOgOOgyrIbNpM3mT4UrLVlfkcAIj5dVZLF1IcrL4/n38pT4W6z7TWX0oDpmD7bRtqQ921SP0YDjQMkfwx94S09H+cCiKcT1ItjC7ZdCtc1w+jMgCHnQrhR6QODgi7WuRO47shvH8XpKm7jnm21Camhi7J7gjDU3VI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMAVxMkZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFNWy9Up"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F52F1F000FF;
-	Sat, 12 Sep 2026 08:38:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMAVxMkZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AFDB1F000FF;
+	Sat, 12 Sep 2026 08:39:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202337;
-	bh=HAzZ/e1o/OhMucD3Cf2kz00gLZNURbD03JfJRuPR+4I=;
+	s=korg; t=1789202342;
+	bh=+PoJ4DeeRWVP8jcXe2zxoqhsQWonOhBBImAai3BvUzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SFNWy9Ups2HRn6iyZ1FJ6Ar+pJK0LJB07qr+IiE85pTsYkzlRDraukeOl1t8qL7fS
-	 cmyzkquI3z+ZsN86L3UkYKLea5nWOgiByyBkIl/Ll/0HDcpKiIHfdImw3tJyFtxYl3
-	 fWyEfiAreiaIPMdir0n1O9yxt2z54g4Ns0suvlgI=
+	b=KMAVxMkZn9G78tdGaHFcWaTE6AMn4LOFBRfGbcp1iByeK3fCRCUxfbTVPd9X3yVhm
+	 /wiy6kAckOA81RV1R+knxrmqSJB5ZJrpJHyrf5WpuzH8hDALIoyokdmADiU3cYFtuD
+	 2uDZoyxPRjN6LFAvB972pz0GAMP+bWo45vsuGBc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1180/1815] ext4: teach ext4_meta_trans_blocks() about number of allocated extents
-Date: Sat, 12 Sep 2026 08:48:50 +0200
-Message-ID: <20260912065716.716889250@linuxfoundation.org>
+Subject: [PATCH 7.2 1181/1815] ext4: fix transaction overflow during writeback
+Date: Sat, 12 Sep 2026 08:48:51 +0200
+Message-ID: <20260912065716.741019158@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,125 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 25b2a7e8d420c49fc46f25b6f953603e4dae1dbf ]
+[ Upstream commit 46e8e31771f4f1c5e1cdec37a889a6730e42e9f1 ]
 
-So far ext4_meta_trans_blocks() expects that each extent counted in
-@pextents will be allocated in the transaction we estimate credits for.
-This is correct for the use in ext4_chunk_trans_blocks() and
-ext4_chunk_trans_extent() however the use in atomic write path
-(ext4_convert_unwritten_extents_atomic() and ext4_iomap_alloc() for
-IOMAP_ATOMIC) unnecessarily overestimates the number of necessary
-credits as neither of them allocates any data. Add argument to
-ext4_meta_trans_blocks() for number of extents that are going to be
-allocated in the transaction.
+Commit 95ad8ee45cdb ("ext4: correct the reserved credits for extent
+conversion") was correct to note that we need to reserve enough credits
+for all extents possibly underlying a large folio. However it was too
+eager to reduce the number of reserved credits. Extent conversion may
+not only need to touch several leaf extent blocks, it may also need to
+split extents - for example a single large unwritten extent may need to
+be split into many small written ones in case of sparse folio dirtying.
+This can thus result not only in extent leaf modifications but also in a
+need to allocate new extent tree nodes. As a result the reserved
+transaction credits were not sufficient in some corner cases. Use
+ext4_meta_trans_blocks() for correct upper bound credit estimate.
 
+Fixes: 95ad8ee45cdb ("ext4: correct the reserved credits for extent conversion")
 Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260805153605.166545-4-jack@suse.cz
+Link: https://patch.msgid.link/20260805153605.166545-5-jack@suse.cz
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: 46e8e31771f4 ("ext4: fix transaction overflow during writeback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ext4.h    |  2 +-
- fs/ext4/extents.c |  2 +-
- fs/ext4/inode.c   | 30 +++++++++++++++---------------
- 3 files changed, 17 insertions(+), 17 deletions(-)
+ fs/ext4/inode.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
-index 8bf6272c485dc..ed4241797ae34 100644
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -3186,7 +3186,7 @@ extern int ext4_normal_submit_inode_data_buffers(struct jbd2_inode *jinode);
- extern int ext4_chunk_trans_blocks(struct inode *, int nrblocks);
- extern int ext4_chunk_trans_extent(struct inode *inode, int nrblocks);
- extern int ext4_meta_trans_blocks(struct inode *inode, int lblocks,
--				  int pextents);
-+				  int pextents, int alloc_extents);
- extern int ext4_block_zero_eof(struct inode *inode, loff_t from, loff_t end);
- extern int ext4_zero_partial_blocks(struct inode *inode, loff_t lstart,
- 				    loff_t length, bool *did_zero);
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 91c97af64b317..44ab246a31762 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -4976,7 +4976,7 @@ int ext4_convert_unwritten_extents_atomic(handle_t *handle, struct inode *inode,
- 		 * it can tell if the extent in the cache is a split extent.
- 		 * But for now let's assume pextents as 2 always.
- 		 */
--		credits = ext4_meta_trans_blocks(inode, max_blocks, 2);
-+		credits = ext4_meta_trans_blocks(inode, max_blocks, 2, 0);
- 	}
- 
- 	if (credits) {
 diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 1ce10bbdcfabf..334d018766982 100644
+index 334d018766982..a33629b397b06 100644
 --- a/fs/ext4/inode.c
 +++ b/fs/ext4/inode.c
-@@ -3709,8 +3709,8 @@ static int ext4_iomap_alloc(struct inode *inode, struct ext4_map_blocks *map,
- 			return ret;
- 		if (map->m_len < orig_mlen) {
- 			map->m_len = orig_mlen;
--			dio_credits = ext4_meta_trans_blocks(inode, orig_mlen,
--							     map->m_len);
-+			dio_credits = ext4_meta_trans_blocks(inode, map->m_len,
-+							     map->m_len, 0);
- 		} else {
- 			dio_credits = ext4_chunk_trans_blocks(inode,
- 							      map->m_len);
-@@ -6359,17 +6359,17 @@ static int ext4_index_trans_blocks(struct inode *inode, int lblocks,
- }
+@@ -2867,10 +2867,10 @@ static int ext4_do_writepages(struct mpage_da_data *mpd)
+ 	if (ext4_should_dioread_nolock(inode)) {
+ 		int bpf = ext4_journal_blocks_per_folio(inode);
+ 		/*
+-		 * We may need to convert up to one extent per block in
+-		 * the folio and we may dirty the inode.
++		 * We may need to convert up to one extent per block in the
++		 * folio.
+ 		 */
+-		rsv_blocks = 1 + ext4_ext_index_trans_blocks(inode, bpf);
++		rsv_blocks = ext4_meta_trans_blocks(inode, bpf, bpf, 0);
+ 	}
  
- /*
-- * Account for index blocks, block groups bitmaps and block group
-- * descriptor blocks if modify datablocks and index blocks
-- * worse case, the indexs blocks spread over different block groups
-- *
-- * If datablocks are discontiguous, they are possible to spread over
-- * different block groups too. If they are contiguous, with flexbg,
-- * they could still across block group boundary.
-- *
-- * Also account for superblock, inode, quota and xattr blocks
-+ * Calculate number of credits needed in a transaction to:
-+ *   * Allocate data blocks from @alloc_extents different groups - note that
-+ *     with flexbg a single physical extent can span multiple groups but
-+ *     single mballoc request only returns extent within one group.
-+ *   * Allocate metatadata (extent tree blocks, indirect blocks) to store
-+ *     pointers to @pextents data extents having @lblocks in total.
-+ *   * Modify extent tree / indirect block tree, inode, superblock, quota
-+ *     tracking, xattr blocks
-  */
--int ext4_meta_trans_blocks(struct inode *inode, int lblocks, int pextents)
-+int ext4_meta_trans_blocks(struct inode *inode, int lblocks, int pextents,
-+			   int alloc_extents)
- {
- 	ext4_group_t groups, ngroups = ext4_get_groups_count(inode->i_sb);
- 	int gdpblocks;
-@@ -6386,7 +6386,7 @@ int ext4_meta_trans_blocks(struct inode *inode, int lblocks, int pextents)
- 	 * Now let's see how many group bitmaps and group descriptors need
- 	 * to account
- 	 */
--	groups = idxblocks + pextents;
-+	groups = idxblocks + alloc_extents;
- 	gdpblocks = groups;
- 	if (groups > ngroups)
- 		groups = ngroups;
-@@ -6412,7 +6412,7 @@ int ext4_chunk_trans_extent(struct inode *inode, int nrblocks)
- {
- 	int ret;
- 
--	ret = ext4_meta_trans_blocks(inode, nrblocks, 1);
-+	ret = ext4_meta_trans_blocks(inode, nrblocks, 1, 1);
- 	/* Account for data blocks for journalled mode */
- 	if (ext4_should_journal_data(inode))
- 		ret += nrblocks;
-@@ -6430,7 +6430,7 @@ int ext4_chunk_trans_extent(struct inode *inode, int nrblocks)
-  */
- int ext4_chunk_trans_blocks(struct inode *inode, int nrblocks)
- {
--	return ext4_meta_trans_blocks(inode, nrblocks, 1);
-+	return ext4_meta_trans_blocks(inode, nrblocks, 1, 1);
- }
- 
- /*
+ 	if (wbc->range_start == 0 && wbc->range_end == LLONG_MAX)
 -- 
 2.53.0
 
