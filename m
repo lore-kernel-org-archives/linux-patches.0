@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD0947A872;
-	Sat, 12 Sep 2026 11:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081A047A898;
+	Sat, 12 Sep 2026 11:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214010; cv=none; b=PHbPUPpcS3AcqKvkN6SixHNRsbjDc2kc5XB6e6dtUl+IXqVxLKDAV1d7oyP3rhipT4G6JmcYVL10lFyFOQGrInvRHwxIeUHFUGS66wEh0Aq8HMl31mtXTAsrA381+Cag2IhMj3SnYZ+kIH/GzNrCxIHtuIHyk4yI6EL5/4Hl5zs=
+	t=1789214016; cv=none; b=T/HmPBugm0+4Vyv2vczmZN7Y3nNajmfehkRoZ66cogw+VKn+kXV0W6uwIOWNqSBUXa1uRzLHLzxVleUDJgnXY2O0n0sPPQR3Trv5NZA7ZY3Nh/1Vuz8W+6Vx5y6PlX7LzvfStEtd7C44Q4yuxzO41UOJFRQfZI1H14ygEB57ns0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214010; c=relaxed/simple;
-	bh=N4jLtZnyx0IFy/ceNLHnc1Fd0YFLyXXov9Gb2fBITpQ=;
+	s=arc-20240116; t=1789214016; c=relaxed/simple;
+	bh=R8NO7T0naG9MSLfWp05tNKlH4kc5AGJkCnJ3vbQAo5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qqg9PdDjnO1hsrHFECJn6tTh9eXmQe/VCsWP196fmJRrCUmtkFmx3kxlIDnPg3ytI7NUjwrZb8ScLaijkx1txhX/SvPyhA/Qb2lQBNOQq0joIiJqf63U/oddi5Rjnsa7fzIzdTaOuOR6SkR9UkG3RkuiWNG5ovSsg2VRELgpi/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uEBT402a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=twHlUeCr/LlIfkEpNwTfuU6ZJe+ZXuwubk5W/PEyokAHqBOf0jB9KcjXl+N+kfkG4UuEawvQhr3TdVthGF62wvX5nLhQqFQVm+eoJpg6Gr/PCyIKJkwMyHOD4//Dyn/z/NaTiDbuKuW9SMvvcP9ZB83ZkzqyKo+vdZ73ZQxak90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EhAKAWjG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uEBT402a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C461F00898;
-	Sat, 12 Sep 2026 11:53:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EhAKAWjG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AFDC1F000FF;
+	Sat, 12 Sep 2026 11:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214006;
-	bh=NIzObGf7Srk5hZ0F/WDm4zMfDStTLtLbBXQg9lTxcoU=;
+	s=korg; t=1789214011;
+	bh=N4UycrX2p5/Kjzoyh1Jf+Euag5A5N6wPj12CTyBFNFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uEBT402aNbgebo7IHDiN63ziQWFa0AqMgo3NOSHTt3GtZRFjGT9MRPKVXQSpR9eoh
-	 nyZ87JKq/HAvLdTl0a+Bw0Qoj4CcNAbQZ5tg7ESntDw0OSswwR2btAoYmvJg79xE9D
-	 fNdlOznEhsClF2B1+aPtPPJPvmHi3tLXCMGeTBOc=
+	b=EhAKAWjGly33dGPrSkXOX5E8PmUfJhm6D68LBm81eZMWIaInax+4Rgr4h2Ek/9olt
+	 qo9C0oj7xuDYBRbt5xubbeCawv0nfcCaQY4oN5aKQlOKyfRzf5fG8gZq94UDHR7TNg
+	 gQDhsoxqEG2JPGXMAGj+Gk8RCXVi7ysypyOHcv8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.12 0239/1376] scsi: qla2xxx: Avoid double completion in async IOCB timeout
-Date: Sat, 12 Sep 2026 08:44:25 +0200
-Message-ID: <20260912065612.869554743@linuxfoundation.org>
+Subject: [PATCH 6.12 0240/1376] scsi: qla2xxx: Bound rsp_info_len to avoid OOB sense-data read
+Date: Sat, 12 Sep 2026 08:44:26 +0200
+Message-ID: <20260912065612.890740604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,108 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-commit bb45bc4bd53c95a7bf6f782577b5ede94c0f8aa8 upstream.
+commit ca6d880d6c70cb7946e7b3e05d7285f271b6d99e upstream.
 
-qla2x00_async_iocb_timeout() tries to abort a timed-out async IOCB. When
-qla24xx_async_abort_cmd() fails, both the SRB_LOGIN_CMD path and the
-SRB_CTRL_VP/default path scan outstanding_cmds[] for the SRB and then
-call sp->done(sp, QLA_FUNCTION_TIMEOUT) unconditionally, without checking
-whether the SRB was actually found and removed.
+In qla2x00_status_entry(), the FWI2 status path advances sense_data and
+shrinks par_sense_len by rsp_info_len:
 
-If the response ISR completes the same handle first, it removes the SRB
-under qp_lock_ptr and runs sp->done() -> complete(sp->comp). The
-submitter qla24xx_control_vp() wakes from wait_for_completion(), clears
-sp->comp, drops its reference and returns, reclaiming the on-stack
-completion. The timer reference keeps the SRB alive across the timeout
-handler, but not the submitter's stack. The timeout then issues a second
-sp->done() -> qla_ctrlvp_sp_done(), which evaluates "if (sp->comp)
-complete(sp->comp)"; with the pointer loaded before the submitter's NULL
-store, complete() writes into the freed stack frame, a use-after-free.
+	if (IS_FWI2_CAPABLE(ha)) {
+		sense_data += rsp_info_len;
+		par_sense_len -= rsp_info_len;
+	}
 
-Track whether this path removed the SRB from outstanding_cmds and only
-call sp->done() when it did, so the command is completed exactly once by
-whichever path owns it. This mirrors the sp_found guard already used in
-qla24xx_abort_iocb_timeout().
+rsp_info_len is a 32-bit value taken directly from the target's FCP
+response (sf.rsp_data_len), while par_sense_len is the IOCB data area
+size (28 bytes for 24xx, 60 bytes for 29xx). A hostile or buggy target
+reporting an rsp_info_len larger than par_sense_len makes the unsigned
+subtraction underflow to a huge value and advances sense_data out of
+bounds.
 
-Fixes: f6145e86d21f ("scsi: qla2xxx: Fix race between switch cmd completion and timeout")
+The underflowed par_sense_len then defeats the cap in
+qla2x00_handle_sense():
+
+	if (sense_len > par_sense_len)
+		sense_len = par_sense_len;
+	memcpy(cp->sense_buffer, sense_data, sense_len);
+
+so the memcpy reads up to SCSI_SENSE_BUFFERSIZE bytes from the
+out-of-bounds sense_data pointer, leaking adjacent response-ring/heap
+memory into the command's sense buffer.
+
+Clamp rsp_info_len to par_sense_len before the subtraction so
+par_sense_len can never underflow and sense_data stays within the IOCB
+data area. The fix sits before the comp_status switch, covering both
+qla2x00_handle_sense() call sites.
+
+Fixes: 5544213be7b4 ("[SCSI] qla2xxx: Correct extended sense-data handling.")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-21-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-16-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_init.c |   24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/scsi/qla2xxx/qla_isr.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -228,7 +228,7 @@ qla2x00_async_iocb_timeout(void *data)
- 	srb_t *sp = data;
- 	fc_port_t *fcport = sp->fcport;
- 	struct srb_iocb *lio = &sp->u.iocb_cmd;
--	int rc, h;
-+	int rc, h, found;
- 	unsigned long flags;
- 
- 	if (fcport) {
-@@ -251,6 +251,7 @@ qla2x00_async_iocb_timeout(void *data)
- 			lio->u.logio.data[1] =
- 				lio->u.logio.flags & SRB_LOGIN_RETRIED ?
- 				QLA_LOGIO_LOGIN_RETRIED : 0;
-+			found = 0;
- 			spin_lock_irqsave(sp->qpair->qp_lock_ptr, flags);
- 			for (h = 1; h < sp->qpair->req->num_outstanding_cmds;
- 			    h++) {
-@@ -258,11 +259,19 @@ qla2x00_async_iocb_timeout(void *data)
- 				    sp) {
- 					sp->qpair->req->outstanding_cmds[h] =
- 					    NULL;
-+					found = 1;
- 					break;
- 				}
- 			}
- 			spin_unlock_irqrestore(sp->qpair->qp_lock_ptr, flags);
--			sp->done(sp, QLA_FUNCTION_TIMEOUT);
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -3482,6 +3482,18 @@ qla2x00_status_entry(scsi_qla_host_t *vh
+ 	if (scsi_status & SS_RESPONSE_INFO_LEN_VALID) {
+ 		/* Sense data lies beyond any FCP RESPONSE data. */
+ 		if (IS_FWI2_CAPABLE(ha)) {
 +			/*
-+			 * Only complete the command if this path removed it
-+			 * from outstanding_cmds.  Otherwise the ISR already
-+			 * completed it and a second sp->done() would race the
-+			 * submitter's freeing of the on-stack completion.
++			 * A hostile or buggy target may report an
++			 * rsp_info_len larger than the IOCB data area.
++			 * Clamp it so the par_sense_len subtraction cannot
++			 * underflow and walk sense_data out of bounds.
 +			 */
-+			if (found)
-+				sp->done(sp, QLA_FUNCTION_TIMEOUT);
++			if (rsp_info_len > par_sense_len) {
++				ql_log(ql_log_warn, fcport->vha, 0x3107,
++				       "Truncating bogus rsp_info_len 0x%x to 0x%x.\n",
++				       rsp_info_len, par_sense_len);
++				rsp_info_len = par_sense_len;
++			}
+ 			sense_data += rsp_info_len;
+ 			par_sense_len -= rsp_info_len;
  		}
- 		break;
- 	case SRB_LOGOUT_CMD:
-@@ -275,6 +284,7 @@ qla2x00_async_iocb_timeout(void *data)
- 	default:
- 		rc = qla24xx_async_abort_cmd(sp, false);
- 		if (rc) {
-+			found = 0;
- 			spin_lock_irqsave(sp->qpair->qp_lock_ptr, flags);
- 			for (h = 1; h < sp->qpair->req->num_outstanding_cmds;
- 			    h++) {
-@@ -282,11 +292,19 @@ qla2x00_async_iocb_timeout(void *data)
- 				    sp) {
- 					sp->qpair->req->outstanding_cmds[h] =
- 					    NULL;
-+					found = 1;
- 					break;
- 				}
- 			}
- 			spin_unlock_irqrestore(sp->qpair->qp_lock_ptr, flags);
--			sp->done(sp, QLA_FUNCTION_TIMEOUT);
-+			/*
-+			 * Only complete the command if this path removed it
-+			 * from outstanding_cmds.  Otherwise the ISR already
-+			 * completed it and a second sp->done() would race the
-+			 * submitter's freeing of the on-stack completion.
-+			 */
-+			if (found)
-+				sp->done(sp, QLA_FUNCTION_TIMEOUT);
- 		}
- 		break;
- 	}
 
 
