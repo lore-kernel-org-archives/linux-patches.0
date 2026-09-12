@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF90331E822;
-	Sat, 12 Sep 2026 07:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B099219E7F7;
+	Sat, 12 Sep 2026 07:33:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198434; cv=none; b=Z7HZYBIpwFbfUbv32ZrD5bqWVA4W5tVfP+XtpzXzviyd6lmZGiXDNElaiotf76/rQuvPyVfj8c5HUFApbES/VrVC23tTmTETesLfYyTcANS4Lsq8Y5QTXbFPKqFk78OzqZvBH7Ws31W5ZGv2LAB4HhAfIEe8X+pN67YDjP9nSpA=
+	t=1789198438; cv=none; b=gNvRvZdw7VxKYU20buoAiCdkT0W42bkN7m1V8F1H+ipA4Cr8x29SKa5sP4UxSLSTin0Wkx7hvWeccXOD5gcRDq88e91IqPul9uV+lcpIPc+NKEO9Q0TNrgbwhDdVCoBsd1FIRbodaevi9oKvmEQVNOZKpCznJKUoFo0Zb/WukTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198434; c=relaxed/simple;
-	bh=VkSGdv6UY2Oebw1akt13TfSTFsq1uaHb5KTMpEJjgWs=;
+	s=arc-20240116; t=1789198438; c=relaxed/simple;
+	bh=0luar+du3Ky9R2zd+8eb2en+OcSl1mjaUhykf2+K/x4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aaD1Q4LLeAY2GUCtlPQNf3z1rkpq/fw++wLkTTZ1QqzZrG5lY4KeCpuXPKrjwc6K8Na+wNTHfBRsOaMNVY5RB+vZLVttI23SQnSqenN63luu8khDd5VllKmDzMa1OKZjsRIMScbZt20W00ERobyqBRIBy25A6I37CAF7zmeYzgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DA/D95zJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DLT9wjfNr/AsxJ4OjH6gyLv8WKHrL9ClDwX73j7JN+EnIFd0N125ULeAPL0/vxPI4B0UcBnngRkcaAzJ/5Ka31JoAacNdQGBymq765hDqFM6/VVbVwD0kUcsB4TvIgcL3Pxrr4enEAx3a1gXQpTZM3wHr8TFdS4/7Uno5yuNG0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E+9GGlwH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DA/D95zJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E171C1F000FF;
-	Sat, 12 Sep 2026 07:33:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E+9GGlwH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803CE1F000FF;
+	Sat, 12 Sep 2026 07:33:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198432;
-	bh=m4c3n0cgFd5UD91U+uxW0V0PIaYkf8AYUb/e9BbT1rM=;
+	s=korg; t=1789198437;
+	bh=1iHj1qT5rqjtLWtO5jNoCOmahcyqibbYYql1tYnhhMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DA/D95zJ7caZzxq+800jAcTd0s+S2swhC6Zjr8xelYSu65k4uvKq9MCYAemtN/DEH
-	 YRZs3J+kxhcW5i6yHBtVByo1DNMIJur6xJiYDSr1nOsYHGCqr6RQ90D12bmf9y9Z+X
-	 kv7czGx464aI+NIvEqfo547CwR8Zked67L9AIx9o=
+	b=E+9GGlwHrJI8DL6r4pOFbLIrH5FKyq2BJLj0a6YAFxIrP1c3x5Vq9H7zQNcwF/9+7
+	 RU0gRkjoYfD8qmryw45Ez8C9/qRSggFk4H03lXWwSvpmCVoqBKONdRecp4X/iXV3NQ
+	 lSbkwLl2NXlJMigApPFBJK5VYf79n5dn1aLfJaZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peiyang He <peiyang_he@smail.nju.edu.cn>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Li Ming <ming.li@zohomail.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0380/1815] iommufd: Simplify iommufd_device_remove_vdev()
-Date: Sat, 12 Sep 2026 08:35:30 +0200
-Message-ID: <20260912065657.819255140@linuxfoundation.org>
+Subject: [PATCH 7.2 0381/1815] cxl/test: Rework cxl_type2_mem_init() to use cxl_mock_platform_device_add()
+Date: Sat, 12 Sep 2026 08:35:31 +0200
+Message-ID: <20260912065657.842881162@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,128 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Li Ming <ming.li@zohomail.com>
 
-[ Upstream commit 8062148046e1a6417d44e2ed86c04e66c2f4f2a1 ]
+[ Upstream commit 9515af581da976911aea820175afb05be803ae8c ]
 
-Peiyang reports that this function indirectly includes a fault injection
-point through iommufd_get_object() that was intended to cover the uAPI use
-of object IDs, not in places like this that cannot fail.
+cxl_type2_mem_init() is used to set up mock CXL type2 memory device for
+cxl testing, it introduces a known bug fixed by the following commit:
 
-On deeper inspection this can be written using a dedicated helper to
-obtain a users refcount relying entirely on the xa locking instead of
-going through the whole get/put scheme. The new helper doesn't need the
-fault injection point.
+commit d90f236f8b9e ("cxl/test: Update mock dev array before calling platform_device_add()")
 
-Fixes: 850f14f5b919 ("iommufd: Destroy vdevice on idevice destroy")
-Link: https://patch.msgid.link/r/0-v1-719003d53a5b+38b-iommufd_fault_inj_vdev_jgg@nvidia.com
-Reported-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
-Closes: https://lore.kernel.org/r/870BB9ADBBEDDD1A+37c5bfab-ad32-4fc5-a302-57c81a8432b5@smail.nju.edu.cn
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Mock CXL devices require updating the mock device array prior to
+platform_device_add(), otherwise, the CXL subsystem could fail to
+recognize the newly added mock device. Switch to
+cxl_mock_platform_device_add() helper to resolve this ordering issue.
+
+Besides, this patch also includes two minor changes.
+1. Preserve the original error code returned by
+   cxl_mock_platform_device_add(), rather than unconditionally
+   overriding it with -ENOMEM.
+2. Drop redundant NULL check before platform_device_unregister(), as the
+   function internally handles NULL pointer.
+
+Fixes: 6b2e585142e6 ("cxl/test: Add hierarchy enumeration support for type2 device")
+Signed-off-by: Li Ming <ming.li@zohomail.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260713061531.56322-1-ming.li@zohomail.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/device.c          | 13 +++----------
- drivers/iommu/iommufd/iommufd_private.h |  9 +--------
- drivers/iommu/iommufd/main.c            | 20 ++++++++++++++++++++
- 3 files changed, 24 insertions(+), 18 deletions(-)
+ tools/testing/cxl/test/cxl.c | 17 ++++-------------
+ 1 file changed, 4 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/iommu/iommufd/device.c b/drivers/iommu/iommufd/device.c
-index d488c23fd3538..c5d122f33ba2d 100644
---- a/drivers/iommu/iommufd/device.c
-+++ b/drivers/iommu/iommufd/device.c
-@@ -148,29 +148,22 @@ static void iommufd_device_remove_vdev(struct iommufd_device *idev)
- 	if (!idev->vdev)
- 		goto out_unlock;
+diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
+index 8a4248207fe32..a0d75a0761337 100644
+--- a/tools/testing/cxl/test/cxl.c
++++ b/tools/testing/cxl/test/cxl.c
+@@ -1799,25 +1799,16 @@ static int cxl_type2_mem_init(void)
+ 		pdev->dev.parent = &dport->dev;
+ 		set_dev_node(&pdev->dev, i % 2);
  
--	vdev = iommufd_get_vdevice(idev->ictx, idev->vdev->obj.id);
-+	vdev = idev->vdev;
-+
- 	/*
- 	 * An ongoing vdev destroy ioctl has removed the vdev from the object
- 	 * xarray, but has not finished iommufd_vdevice_destroy() yet as it
- 	 * needs the same mutex. We exit the locking then wait on wait_cnt
- 	 * reference for the vdev destruction.
- 	 */
--	if (IS_ERR(vdev))
--		goto out_unlock;
+-		rc = platform_device_add(pdev);
+-		if (rc) {
+-			rc = -ENOMEM;
+-			platform_device_put(pdev);
++		rc = cxl_mock_platform_device_add(pdev, &cxl_mem[i]);
++		if (rc)
+ 			goto err_mem;
+-		}
+-		cxl_mem[i] = pdev;
+ 	}
+ 
+ 	return 0;
+ 
+ err_mem:
+-	for (i = NR_CXL_TYPE2_ACCEL - 1; i >= 0; i--) {
+-		struct platform_device *pdev = cxl_mem[i];
 -
--	/* Should never happen */
--	if (WARN_ON(vdev != idev->vdev)) {
--		iommufd_put_object(idev->ictx, &vdev->obj);
-+	if (iommufd_try_inc_users(idev->ictx, &vdev->obj))
- 		goto out_unlock;
+-		if (!pdev)
+-			continue;
+-		platform_device_unregister(pdev);
 -	}
- 
- 	/*
- 	 * vdev is still alive. Hold a users refcount to prevent racing with
- 	 * userspace destruction, then use iommufd_object_tombstone_user() to
- 	 * destroy it and leave a tombstone.
- 	 */
--	refcount_inc(&vdev->obj.users);
--	iommufd_put_object(idev->ictx, &vdev->obj);
- 	mutex_unlock(&idev->igroup->lock);
- 	iommufd_object_tombstone_user(idev->ictx, &vdev->obj);
- 	return;
-diff --git a/drivers/iommu/iommufd/iommufd_private.h b/drivers/iommu/iommufd/iommufd_private.h
-index 43fbc5bed8de3..421d0cc7c1bc3 100644
---- a/drivers/iommu/iommufd/iommufd_private.h
-+++ b/drivers/iommu/iommufd/iommufd_private.h
-@@ -182,6 +182,7 @@ static inline bool iommufd_lock_obj(struct iommufd_object *obj)
- 	return true;
++	for (i = NR_CXL_TYPE2_ACCEL - 1; i >= 0; i--)
++		platform_device_unregister(cxl_mem[i]);
+ 	return rc;
  }
  
-+int iommufd_try_inc_users(struct iommufd_ctx *ictx, struct iommufd_object *obj);
- struct iommufd_object *iommufd_get_object(struct iommufd_ctx *ictx, u32 id,
- 					  enum iommufd_object_type type);
- static inline void iommufd_put_object(struct iommufd_ctx *ictx,
-@@ -698,14 +699,6 @@ void iommufd_vdevice_abort(struct iommufd_object *obj);
- int iommufd_hw_queue_alloc_ioctl(struct iommufd_ucmd *ucmd);
- void iommufd_hw_queue_destroy(struct iommufd_object *obj);
- 
--static inline struct iommufd_vdevice *
--iommufd_get_vdevice(struct iommufd_ctx *ictx, u32 id)
--{
--	return container_of(iommufd_get_object(ictx, id,
--					       IOMMUFD_OBJ_VDEVICE),
--			    struct iommufd_vdevice, obj);
--}
--
- #ifdef CONFIG_IOMMUFD_TEST
- int iommufd_test(struct iommufd_ucmd *ucmd);
- void iommufd_selftest_destroy(struct iommufd_object *obj);
-diff --git a/drivers/iommu/iommufd/main.c b/drivers/iommu/iommufd/main.c
-index 8c6d43601afbe..e1097a1db21ad 100644
---- a/drivers/iommu/iommufd/main.c
-+++ b/drivers/iommu/iommufd/main.c
-@@ -180,6 +180,26 @@ struct iommufd_object *iommufd_get_object(struct iommufd_ctx *ictx, u32 id,
- 	return obj;
- }
- 
-+/*
-+ * Increment the users count of an object outside the context of an ioctl that
-+ * has already locked it. The users refcount cannot be increased on an already
-+ * created object unless the object is installed in the xarray, otherwise things
-+ * are racing with a parallel destruction.
-+ */
-+int iommufd_try_inc_users(struct iommufd_ctx *ictx, struct iommufd_object *obj)
-+{
-+	struct iommufd_object *cur;
-+
-+	xa_lock(&ictx->objects);
-+	cur = xa_load(&ictx->objects, obj->id);
-+	if (cur == obj)
-+		refcount_inc(&obj->users);
-+	xa_unlock(&ictx->objects);
-+	if (cur != obj)
-+		return -EBUSY;
-+	return 0;
-+}
-+
- static int iommufd_object_dec_wait(struct iommufd_ctx *ictx,
- 				   struct iommufd_object *to_destroy)
- {
 -- 
 2.53.0
 
