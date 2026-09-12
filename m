@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DEE364049;
-	Sat, 12 Sep 2026 07:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A3F326928;
+	Sat, 12 Sep 2026 07:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198985; cv=none; b=JlBZietcUGFHFcGH931paOTLLKZXk6Z7amBUNfxhHlaZcK3wZd7a+9nWnj1rj0T1MaKIh3VhcbAGX1L0HFyRjlsWdIRPVEsEKyp39OpJcQWcKzQBobDa6TVtBh2FsUOLeaejuSVQBOV2Klz2o+qBP1jYONm3MjnAFQICdzu4+gg=
+	t=1789198990; cv=none; b=TQLhHYtT8CJcY9THowSKqXshxx7NmQ/t4vzpKxNxsVdI0Z4hdpisAufmo+0HYt5Qc8hkk/Bd3uZzwYSK8g/KNiYWLaSN8PIM1Tg96x4bhlFx972wDcM4Rb3OoDfsmRatfLNQbOKDmqG+YfaSJ3q5k/eL3KEPJ4gzO+VLhHXR4Gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198985; c=relaxed/simple;
-	bh=EPj28RLkpT4IjjETBI89ZIBOmtc0IklPbG1woIDOlq8=;
+	s=arc-20240116; t=1789198990; c=relaxed/simple;
+	bh=RorKu2wGeMYwTDCEjIzbN/WFukHUBxwGv/lTszewshM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HoP//2jmx9A/HqlgxLPMsUmC/jbSgw6zjskAEnEBqg5lthO/CBkDjHxxgCTQUOn7IZEFSSLlzMh4R/Dl0AIZ1AfUnOhMLEEY/FDL30J8TLeQ/9n3AEOOyCICwyYuV6MYwZz6aFBB+HSqMAMDSQiDVg9sMfb96VK0dQV5yxc2yz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nl6qzsjn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u5GBCx5OIv+LpQ9Oe/gmn685TM+Pe552sojORVHVLCyTskp+P01QBga0QsGXOmEwvN+L75zHLzgNHdsPnMJMF3x+3dA/mCpP7FmVXByiR5JREfYSvn3W2fDu11TQcCs2nU5XvbtHdIiloMT9zaHzs3Ai6omrf4qHn4u5SZo2ctc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FCcftOXX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nl6qzsjn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684951F000FF;
-	Sat, 12 Sep 2026 07:43:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FCcftOXX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C101F000FF;
+	Sat, 12 Sep 2026 07:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198983;
-	bh=vQi0W1Pxl6EdBj26S8HOPvJERs+1Q4n+IOOwF1td5HQ=;
+	s=korg; t=1789198988;
+	bh=fd1bJr0Ho8tgqLnG6FUygMWZ4ccsQkzrTlHxLXB8ub8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nl6qzsjnIEIkdMqR0bDfkxth7VvWJEVx6h68NwqrFJ5nKY357hjjFicte4UTdTzjv
-	 nd7X6c3tAtkTbUn8wtK6ypyuy66LPNaF34mF+/u9bnCWc3zsfKZqyP0NSjPGqvMnkF
-	 I5ODTd4L5B3s/UDFlTjPHGx0cYFC/PGMfLemRsuc=
+	b=FCcftOXXR/l/IPfD+HTe88bACsd2+EEHCfrmYhVoTs1UMRWso7MHlxwIvnzLAYhM3
+	 DxO2sQ6T7sn7WKuK7yyBbqmrxin+11FU6ab+ifg7e0Nc/hTggZssS1A4jI8nvmAr4H
+	 4EQS/k+9UUshe9ZUTDoX7meIJoD8EnGtVetGIbqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0491/1815] gpib: Move stuck SRQ update under lock
-Date: Sat, 12 Sep 2026 08:37:21 +0200
-Message-ID: <20260912065700.416687895@linuxfoundation.org>
+Subject: [PATCH 7.2 0492/1815] gpib: use static inline instead of extern inline
+Date: Sat, 12 Sep 2026 08:37:22 +0200
+Message-ID: <20260912065700.440106505@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,96 +50,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 7ddb521ab097413fbdff483b53b4a8c73a0e2b40 ]
+[ Upstream commit 6cc667892818fe44bef02193dfb9c3f843ade2b2 ]
 
-Move the stuck SRQ state update into autopoll_all_devices() and keep it
-under big_gpib_mutex. Except for initialization, keep the stuck_srq users
-under this mutex.
+With GNU inline semantics, an 'extern inline' function is only included
+in the build if it can be inlined. When the compiler for some reason
+decides against inlining it, this causes a link failure, as observed in
+one function in the tnt4882_gpib driver:
 
-autopoll_all_devices() is only called by autospoll_thread(), so there is
-no need to return to autospoll_thread() and set this state after dropping
-big_gpib_mutex.
+ld.lld: error: undefined symbol: mite_irq
+>>> referenced by tnt4882_gpib.c:974 (/home/arnd/arm-soc/drivers/gpib/tnt4882/tnt4882_gpib.c:974)
+>>>               drivers/gpib/tnt4882/tnt4882_gpib.o:(ni_pci_attach) in archive vmlinux.a
 
-Without the mutex, a newly opened device can clear stuck_srq and have
-that clear overwritten by the previous autospoll result:
+Change all of the 'extern inline' definitions in gpib to the regular
+'static inline' to avoid this.
 
-  autospoll: serial_poll_all() returns 0 and unlocks big_gpib_mutex
-  open_dev_ioctl: open new device and clear stuck_srq
-                  with big_gpib_mutex held
-  autospoll: set stuck_srq
-
-That leaves the board marked stuck again after the new device is opened.
-autospoll_wait_should_wake_up() then refuses to poll while stuck_srq is
-set, so later SRQ handling can be mistakenly suppressed.
-
-Without the mutex, atomic_set() and set_bit() only make individual
-updates atomic. They do not order the two updates or make stuck_srq and
-status visible as a consistent pair. Taking big_gpib_mutex serializes the
-state transition with the other runtime users.
-
-Keep the existing wakeup behavior unchanged and only move the stuck SRQ
-state update under the mutex.
-
-Fixes: 9dde4559e939 ("staging: gpib: Add GPIB common core driver")
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://patch.msgid.link/20260522073447.4117690-1-hanguidong02@gmail.com
+Fixes: 0cd5b05551e0 ("staging: gpib: Add TNT4882 chip based GPIB driver")
+Fixes: 6c52d5e3cde2 ("staging: gpib: Add common include files for GPIB drivers")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260611131018.3662609-1-arnd@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpib/common/gpib_os.c | 21 +++++++++++----------
- drivers/gpib/common/iblib.c   |  3 ---
- 2 files changed, 11 insertions(+), 13 deletions(-)
+ drivers/gpib/include/amccs5933.h | 10 +++++-----
+ drivers/gpib/tnt4882/mite.h      |  4 ++--
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpib/common/gpib_os.c b/drivers/gpib/common/gpib_os.c
-index 69f6aa73ab9a3..384800e6bf975 100644
---- a/drivers/gpib/common/gpib_os.c
-+++ b/drivers/gpib/common/gpib_os.c
-@@ -289,18 +289,19 @@ int autopoll_all_devices(struct gpib_board *board)
- 	dev_dbg(board->gpib_dev, "autopoll has board lock\n");
+diff --git a/drivers/gpib/include/amccs5933.h b/drivers/gpib/include/amccs5933.h
+index d7f63c7950963..f8a80bdc70dcc 100644
+--- a/drivers/gpib/include/amccs5933.h
++++ b/drivers/gpib/include/amccs5933.h
+@@ -13,7 +13,7 @@ enum {
+ };
  
- 	retval = serial_poll_all(board, serial_timeout);
--	if (retval < 0)	{
--		mutex_unlock(&board->big_gpib_mutex);
--		mutex_unlock(&board->user_mutex);
--		return retval;
-+	if (retval >= 0) {
-+		dev_dbg(board->gpib_dev, "complete\n");
-+		/*
-+		 * need to wake wait queue in case someone is
-+		 * waiting on RQS
-+		 */
-+		wake_up_interruptible(&board->wait);
- 	}
+ // incoming mailbox 0-3  register offsets
+-extern inline int INCOMING_MAILBOX_REG(unsigned int mailbox)
++static inline int INCOMING_MAILBOX_REG(unsigned int mailbox)
+ {
+ 	return (0x10 + 4 * mailbox);
+ };
+@@ -29,25 +29,25 @@ enum {
+ };
  
--	dev_dbg(board->gpib_dev, "complete\n");
--	/*
--	 * need to wake wait queue in case someone is
--	 * waiting on RQS
--	 */
--	wake_up_interruptible(&board->wait);
-+	if (retval <= 0) {
-+		atomic_set(&board->stuck_srq, 1);
-+		set_bit(SRQI_NUM, &board->status);
-+	}
- 	mutex_unlock(&board->big_gpib_mutex);
- 	mutex_unlock(&board->user_mutex);
+ // select byte 0 to 3 of incoming mailbox
+-extern inline int INBOX_BYTE_BITS(unsigned int byte)
++static inline int INBOX_BYTE_BITS(unsigned int byte)
+ {
+ 	return (byte & 0x3) << 8;
+ };
  
-diff --git a/drivers/gpib/common/iblib.c b/drivers/gpib/common/iblib.c
-index b672dd6aad25f..511e1d61c1fb2 100644
---- a/drivers/gpib/common/iblib.c
-+++ b/drivers/gpib/common/iblib.c
-@@ -193,9 +193,6 @@ static int autospoll_thread(void *board_void)
- 		}
- 		if (retval <= 0) {
- 			dev_err(board->gpib_dev, "stuck SRQ\n");
--
--			atomic_set(&board->stuck_srq, 1);	// XXX could be better
--			set_bit(SRQI_NUM, &board->status);
- 		}
- 	}
- 	return retval;
+ // select incoming mailbox 0 to 3
+-extern inline int INBOX_SELECT_BITS(unsigned int mailbox)
++static inline int INBOX_SELECT_BITS(unsigned int mailbox)
+ {
+ 	return (mailbox & 0x3) << 10;
+ };
+ 
+ // select byte 0 to 3 of outgoing mailbox
+-extern inline int OUTBOX_BYTE_BITS(unsigned int byte)
++static inline int OUTBOX_BYTE_BITS(unsigned int byte)
+ {
+ 	return (byte & 0x3);
+ };
+ 
+ // select outgoing mailbox 0 to 3
+-extern inline int OUTBOX_SELECT_BITS(unsigned int mailbox)
++static inline int OUTBOX_SELECT_BITS(unsigned int mailbox)
+ {
+ 	return (mailbox & 0x3) << 2;
+ };
+diff --git a/drivers/gpib/tnt4882/mite.h b/drivers/gpib/tnt4882/mite.h
+index a1fdba9672a03..dd251afa90e34 100644
+--- a/drivers/gpib/tnt4882/mite.h
++++ b/drivers/gpib/tnt4882/mite.h
+@@ -45,12 +45,12 @@ struct mite_struct {
+ 
+ extern struct mite_struct *mite_devices;
+ 
+-extern inline unsigned int mite_irq(struct mite_struct *mite)
++static inline unsigned int mite_irq(struct mite_struct *mite)
+ {
+ 	return mite->pcidev->irq;
+ };
+ 
+-extern inline unsigned int mite_device_id(struct mite_struct *mite)
++static inline unsigned int mite_device_id(struct mite_struct *mite)
+ {
+ 	return mite->pcidev->device;
+ };
 -- 
 2.53.0
 
