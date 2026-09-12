@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA832BDC0E;
-	Sat, 12 Sep 2026 09:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3E33F9F3C;
+	Sat, 12 Sep 2026 09:14:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204479; cv=none; b=OgDEIb2tu+dX5T3xBhgTHgQCThSZKW1EGkqCeDSs6rdwj4jh+kuT/X51SRe6oV1FmxhBgYos5IWXs30tc1VzICpZSXXbKx8yjKgQT4uvLQh9ZhVkoKWF3EZgLq/OWKOu8WVNFFzchogncS3hRLRq3Bbqq9t4rHbgesR2QHHSaYg=
+	t=1789204484; cv=none; b=p6rKt7Wqh3Iea5Fb1RPaV08xTvTtCLhmWLlReBa9cHuLfGAN6EPJLn6Z9MGUix4EhAACYeWJd9xFu94i11Mpkn+/euxGkDQRU1ucpqMy3cnUaSr7P8rTji3K1rlwcWIMU+fyI7lYTb+LPBywQHLEoL4mCf3EH9n2brahBDVMbNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204479; c=relaxed/simple;
-	bh=51Ns/AwUjECa4l9i9TOkwK/5JkiePmJvNQjG/1OMFEw=;
+	s=arc-20240116; t=1789204484; c=relaxed/simple;
+	bh=ymUBJDq0YiCWPncfKyhVndiAzbTr8Kw/dJdREHvBVEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RpBOn9VYaqQVh/bR2easdwzGYdxrSwr76Q7ygP9cKqKuQ1BmTTibFvgAVig7Dcp3bC4zr9WCW4M0YBwcFuypjvDL4PILGH199XiuR2EeKeNuHJVaRDC3AL5tewY0+F1Qtx/rKa/65jNwGx63+FxTeh7Yhnt4U9jLDtyBdV8FguQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEhMXpeS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s1vUmKw9ZOfRh96eCmWKLUSY0zu2EIXN3RWaDsnTMaIak0XYYtH5TQIEBvknlkgdKEMamzFwMwwzoaVLfcqXjGCP6Yk++syeUD29AaCWJUO10rlvSSlRHqmDbRzLXp0rGNg+ZMM8WQzN31knd3tcNKlIhIjIxdZfzrUCwsxGS+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zi2pGbhr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEhMXpeS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38021F000FF;
-	Sat, 12 Sep 2026 09:14:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zi2pGbhr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05911F000FF;
+	Sat, 12 Sep 2026 09:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204477;
-	bh=8icFN5vcUuTwCd5x0j/jOxdlZWoXRa1Yml7Q+vPzwr0=;
+	s=korg; t=1789204482;
+	bh=Ym2VQqSJe1050TQ/SurhSWn8KOGdUCih6Ja8gbdP0vQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fEhMXpeSXcKhlUPNpZbWgbAapQkwOXyex8eWYLDZHgJFyqiydtReg5rOhU/pWIvbA
-	 D25z1x/5WUZvJ/fl+DuaV044ArpBzQqp9Ast1D3uh60jjc06MLXikMT0PqumF0T95U
-	 65KY8VI4870pljITsIN0Kqz2rt+RHGZJVADuKEok=
+	b=Zi2pGbhrZCNx0vWK+G2UUZe1XiJmY76dhlKq2kwA+3rhpGsE3PfeZ4REAbISMkIBQ
+	 zas44ydvi2PVuBC9B6h7IAqkyPkGynVvhK9tjG7jeM8RPJG18NlWavas2yv6GginRs
+	 nShrNvECOUpyoGTQA2X66auKCBLYToBj0Mhtz/Wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1621/1815] virtio: add virtio_device_shutdown() helper
-Date: Sat, 12 Sep 2026 08:56:11 +0200
-Message-ID: <20260912065727.044415307@linuxfoundation.org>
+Subject: [PATCH 7.2 1622/1815] virtio_balloon: factor out virtballoon_quiesce()
+Date: Sat, 12 Sep 2026 08:56:12 +0200
+Message-ID: <20260912065727.067121879@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,102 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Denis V. Lunev <den@openvz.org>
 
-[ Upstream commit 0d8aebe089b4ba887e792884cf041ce9f1040ff4 ]
+[ Upstream commit 29536a923a9412812eb3e378258019b54538a220 ]
 
-The generic virtio bus .shutdown handler, virtio_dev_shutdown(), breaks
-and resets a device once it has established that the driver has no
-.shutdown of its own. A driver that does implement .shutdown, to quiesce
-its own activity first, still needs the same break and reset afterwards
-and would otherwise have to open code it.
-
-Factor the break + synchronize_cbs + reset sequence out of
-virtio_dev_shutdown() into an exported virtio_device_shutdown() helper so
-such drivers can reuse it instead of duplicating the core logic.
+virtballoon_remove() stops all of the balloon's asynchronous work (the
+free page reporting worker, the inflate/deflate and stats workers, the
+OOM notifier and the free page shrinker) before tearing the device
+down. A following change needs the same teardown from a .shutdown
+handler, so move it into a virtballoon_quiesce() helper.
 
 No functional change.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260624140846.2616797-2-den@openvz.org>
+Message-ID: <20260624140846.2616797-3-den@openvz.org>
 Stable-dep-of: 7e17eef04600 ("virtio_balloon: quiesce balloon work before device shutdown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio.c | 41 +++++++++++++++++++++++++++--------------
- include/linux/virtio.h  |  1 +
- 2 files changed, 28 insertions(+), 14 deletions(-)
+ drivers/virtio/virtio_balloon.c | 27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/virtio/virtio.c b/drivers/virtio/virtio.c
-index 299fa83be1d5f..75bb4ffe3b877 100644
---- a/drivers/virtio/virtio.c
-+++ b/drivers/virtio/virtio.c
-@@ -401,6 +401,32 @@ static const struct cpumask *virtio_irq_get_affinity(struct device *_d,
- 	return dev->config->get_vq_affinity(dev, irq_vec);
+diff --git a/drivers/virtio/virtio_balloon.c b/drivers/virtio/virtio_balloon.c
+index 69160da9cd5d9..6daba1257d392 100644
+--- a/drivers/virtio/virtio_balloon.c
++++ b/drivers/virtio/virtio_balloon.c
+@@ -1096,26 +1096,39 @@ static void remove_common(struct virtio_balloon *vb)
+ 	vb->vdev->config->del_vqs(vb->vdev);
  }
  
-+/**
-+ * virtio_device_shutdown - break and reset a device on shutdown
-+ * @dev: the device
-+ *
-+ * Drivers with their own .shutdown method should quiesce their activity and
-+ * then call this to stop the device the way the generic shutdown path does.
+-static void virtballoon_remove(struct virtio_device *vdev)
++/*
++ * Stop all asynchronous balloon work. The device must still be alive so that
++ * in-flight requests can drain via the host before it is reset or freed.
 + */
-+void virtio_device_shutdown(struct virtio_device *dev)
-+{
-+	/*
-+	 * Some devices get wedged if you kick them after they are
-+	 * reset. Mark all vqs as broken to make sure we don't.
-+	 */
-+	virtio_break_device(dev);
-+	/*
-+	 * Guarantee that any callback will see vq->broken as true.
-+	 */
-+	virtio_synchronize_cbs(dev);
-+	/*
-+	 * As IOMMUs are reset on shutdown, this will block device access to memory.
-+	 * Some devices get wedged if this happens, so reset to make sure it does not.
-+	 */
-+	dev->config->reset(dev);
-+}
-+EXPORT_SYMBOL_GPL(virtio_device_shutdown);
-+
- static void virtio_dev_shutdown(struct device *_d)
++static void virtballoon_quiesce(struct virtio_balloon *vb)
  {
- 	struct virtio_device *dev = dev_to_virtio(_d);
-@@ -419,20 +445,7 @@ static void virtio_dev_shutdown(struct device *_d)
- 		return;
- 	}
+-	struct virtio_balloon *vb = vdev->priv;
++	struct virtio_device *vdev = vb->vdev;
  
--	/*
--	 * Some devices get wedged if you kick them after they are
--	 * reset. Mark all vqs as broken to make sure we don't.
--	 */
--	virtio_break_device(dev);
--	/*
--	 * Guarantee that any callback will see vq->broken as true.
--	 */
--	virtio_synchronize_cbs(dev);
--	/*
--	 * As IOMMUs are reset on shutdown, this will block device access to memory.
--	 * Some devices get wedged if this happens, so reset to make sure it does not.
--	 */
--	dev->config->reset(dev);
-+	virtio_device_shutdown(dev);
- }
+-	if (virtio_has_feature(vb->vdev, VIRTIO_BALLOON_F_REPORTING))
++	if (virtio_has_feature(vdev, VIRTIO_BALLOON_F_REPORTING))
+ 		page_reporting_unregister(&vb->pr_dev_info);
+-	if (virtio_has_feature(vb->vdev, VIRTIO_BALLOON_F_DEFLATE_ON_OOM))
++	if (virtio_has_feature(vdev, VIRTIO_BALLOON_F_DEFLATE_ON_OOM))
+ 		unregister_oom_notifier(&vb->oom_nb);
+-	if (virtio_has_feature(vb->vdev, VIRTIO_BALLOON_F_FREE_PAGE_HINT))
++	if (virtio_has_feature(vdev, VIRTIO_BALLOON_F_FREE_PAGE_HINT))
+ 		virtio_balloon_unregister_shrinker(vb);
++
+ 	spin_lock_irq(&vb->stop_update_lock);
+ 	vb->stop_update = true;
+ 	spin_unlock_irq(&vb->stop_update_lock);
+ 	cancel_work_sync(&vb->update_balloon_size_work);
+ 	cancel_work_sync(&vb->update_balloon_stats_work);
  
- static int virtio_dev_num_vf(struct device *dev)
-diff --git a/include/linux/virtio.h b/include/linux/virtio.h
-index 93e573c565635..f923e42cfd011 100644
---- a/include/linux/virtio.h
-+++ b/include/linux/virtio.h
-@@ -213,6 +213,7 @@ int virtio_device_freeze(struct virtio_device *dev);
- int virtio_device_restore(struct virtio_device *dev);
- #endif
- void virtio_reset_device(struct virtio_device *dev);
-+void virtio_device_shutdown(struct virtio_device *dev);
- int virtio_device_reset_prepare(struct virtio_device *dev);
- int virtio_device_reset_done(struct virtio_device *dev);
+-	if (virtio_has_feature(vdev, VIRTIO_BALLOON_F_FREE_PAGE_HINT)) {
++	if (virtio_has_feature(vdev, VIRTIO_BALLOON_F_FREE_PAGE_HINT))
+ 		cancel_work_sync(&vb->report_free_page_work);
++}
++
++static void virtballoon_remove(struct virtio_device *vdev)
++{
++	struct virtio_balloon *vb = vdev->priv;
++
++	virtballoon_quiesce(vb);
++
++	if (virtio_has_feature(vdev, VIRTIO_BALLOON_F_FREE_PAGE_HINT))
+ 		destroy_workqueue(vb->balloon_wq);
+-	}
  
+ 	remove_common(vb);
+ 	mutex_destroy(&vb->balloon_lock);
 -- 
 2.53.0
 
