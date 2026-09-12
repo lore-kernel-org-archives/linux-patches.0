@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58496479895;
-	Sat, 12 Sep 2026 11:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B7D479880;
+	Sat, 12 Sep 2026 11:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213468; cv=none; b=krPOI1PK4FiCH4HE5gqDK+MTDk8q/Dc8udPAESIpYfD6D0EUkM28JwpFKdy+lABFJNzpTiSYKfdjQKuAAbSxezJtFy5ahfuEDBPn0kmoGkqUPeDV+ZTLe6V+yo17Wbptnn55qk4RSkAwiAbJaQOdSuzlqbZDzrK0SkKPfG6pWSo=
+	t=1789213472; cv=none; b=MyHH4Biw0ALnAOurButNiPfxLLQUovvn0EsFQLueyqx3VzmShgSM+6sMgWzkcF2zi4Pfzf+rB9lhbtZReZdR1Lhfa0dXEYksjcuF8fsw83A2GDEzxl80Ub8v7Rmx08yh2tWS8KtTBFN5wEWifShW4BDQk/vLLv6OpEsYSPqq93M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213468; c=relaxed/simple;
-	bh=fIHOJ4r1i39Uxr8Sftfl59HfcKXVc+aGOpL7DN43Eek=;
+	s=arc-20240116; t=1789213472; c=relaxed/simple;
+	bh=rlsy8XDY/3XE0PbL/1Uu/mvP5AenSMQNdlh6kYl958c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OyxVWDz2BT/bgIb/KT3gNAUZwb8GQW3LJsOi5dAZzagupdew3pPNN0OoRs3b+aVN3iS3Nf/XL9ATju6qTRsbkBlTtMZZFqiOEMqrwQP7SOOnwz0mJ/IwkWlt52iJCqOGNp8Vgyq7yoOPVilUF92ESQctA5VKeqnyAG/YMF3AWr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UgBHuwU6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rJqa0mhmdVhSgjB05NBuERz/OSmiWr/nlCJxcxgVe9EuNEP7bk9+PXDLTcBHlrJWfdDvWDhu4PwQOwZ571VBpUL5kNdeS9y1c88BR6xj84dGCE21qHtlo7p/bt0kcZLOvqlHWFg63lbVQdux+6BJeuZsz+Dk78oOkcfD7Kpq5TQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKoPThY5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UgBHuwU6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0106E1F00893;
-	Sat, 12 Sep 2026 11:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKoPThY5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61D11F000FF;
+	Sat, 12 Sep 2026 11:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213464;
-	bh=W14/N8ObY1AbIxGoJI+PxZh7l6q3BxPL1pI5K7FIKNg=;
+	s=korg; t=1789213469;
+	bh=z6KloXesKSL0xqpmQkYcAjpWwFybaug7aIjGknwkXuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UgBHuwU6EINUHtLglY09KlypAD8ZrYWxKfYUmvKm9KYegP0bfkB8Oq4YWrEZmxOLo
-	 lL+aA7oSld42whShmtyfHVJlNB2GV+fe9Xss9tegw37yDHTOJMGxZ+icTLFA+EuH5G
-	 Oimbkbs3X3Sx9VkZmcbwtNhB2LG/ZBoh/f8zm6wc=
+	b=ZKoPThY5ES2NNU5E/SGD72MRAcUFi/d09xd0eWu21dfMlCTjRsjy1EN0Z0CxizKtp
+	 cp0CXnEXg/jfs4sicKKSfZ63WAkmLUAoKon70FJF6NhohPhIIvA1HoQvtd+0NVMJIm
+	 npxaDLOXdlltuH11hLJf35yJS/s0/RfRegJRQ0DE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.12 0126/1376] i2c: mux: demux-pinctrl: fix OF node leak on kstrdup failure
-Date: Sat, 12 Sep 2026 08:42:32 +0200
-Message-ID: <20260912065610.364003040@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 0127/1376] ASoC: cs35l33: drain threaded IRQ before runtime suspend
+Date: Sat, 12 Sep 2026 08:42:33 +0200
+Message-ID: <20260912065610.386947700@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,35 +50,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 62edb8ca0aa44517cc23cfa26cd8a51f15ea92fe upstream.
+commit e074c12c428c633e079154301207a6079a208583 upstream.
 
-of_parse_phandle() takes a reference on the parent node. If a later
-devm_kstrdup() fails, err_rollback only releases nodes for indices
-0..i-1, so the current node is leaked.
+cs35l33_runtime_suspend() currently switches the codec into
+regcache_cache_only(true) and powers it down without first quiescing the
+threaded IRQ registered by devm_request_threaded_irq(). That leaves a
+window where cs35l33_irq_thread() can still run after suspend has closed
+off live register access.
 
-of_node_put() the current parent before rolling back.
+A running system can reach this during runtime PM while the driver still
+has critical fault IRQs unmasked. If the threaded handler runs in that
+window, it reads volatile INT_STATUS_1/2 after cache_only has been
+enabled, ignores the regmap_read() failures, and can still drive the
+AMP_SHORT_RLS, CAL_ERR_RLS, OTE_RLS, and OTW_RLS release paths.
 
-Fixes: 7c0195fa9a9e ("i2c: mux: demux-pinctrl: check the return value of devm_kstrdup()")
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
-Cc: <stable@vger.kernel.org> # v6.6+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260813095617.2246320-1-gonglinkai@kylinos.cn
+Use disable_irq() before entering cache_only/power-off so any in-flight
+threaded handler is drained and no new IRQ thread can run during the
+suspended state. Re-enable the IRQ only after runtime_resume() has
+restored live register access with regcache_sync(). Since probe only
+warns if devm_request_threaded_irq() fails, track whether the IRQ was
+actually installed before disabling or re-enabling it.
+
+Fixes: 3333cb7187b9 ("ASoC: cs35l33: Initial commit of the cs35l33 CODEC driver.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260611161553.3378721-2-runyu.xiao@seu.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/muxes/i2c-demux-pinctrl.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/cs35l33.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/i2c/muxes/i2c-demux-pinctrl.c
-+++ b/drivers/i2c/muxes/i2c-demux-pinctrl.c
-@@ -247,6 +247,7 @@ static int i2c_demux_pinctrl_probe(struc
- 		props[i].value = devm_kstrdup(&pdev->dev, "ok", GFP_KERNEL);
- 		if (!props[i].name || !props[i].value) {
- 			err = -ENOMEM;
-+			of_node_put(adap_np);
- 			goto err_rollback;
- 		}
- 		props[i].length = 3;
+--- a/sound/soc/codecs/cs35l33.c
++++ b/sound/soc/codecs/cs35l33.c
+@@ -40,6 +40,7 @@ struct cs35l33_private {
+ 	struct regmap *regmap;
+ 	struct gpio_desc *reset_gpio;
+ 	bool amp_cal;
++	bool irq_requested;
+ 	int mclk_int;
+ 	struct regulator_bulk_data core_supplies[2];
+ 	int num_core_supplies;
+@@ -881,6 +882,9 @@ static int __maybe_unused cs35l33_runtim
+ 		goto err;
+ 	}
+ 
++	if (cs35l33->irq_requested)
++		enable_irq(to_i2c_client(dev)->irq);
++
+ 	return 0;
+ 
+ err:
+@@ -900,6 +904,10 @@ static int __maybe_unused cs35l33_runtim
+ 	/* redo the calibration in next power up */
+ 	cs35l33->amp_cal = false;
+ 
++	/* Drain and block the threaded IRQ before cache_only/power-off. */
++	if (cs35l33->irq_requested)
++		disable_irq(to_i2c_client(dev)->irq);
++
+ 	regcache_cache_only(cs35l33->regmap, true);
+ 	regcache_mark_dirty(cs35l33->regmap);
+ 	regulator_bulk_disable(cs35l33->num_core_supplies,
+@@ -1156,10 +1164,12 @@ static int cs35l33_i2c_probe(struct i2c_
+ 	}
+ 
+ 	ret = devm_request_threaded_irq(&i2c_client->dev, i2c_client->irq, NULL,
+-			cs35l33_irq_thread, IRQF_ONESHOT | IRQF_TRIGGER_LOW,
+-			"cs35l33", cs35l33);
++				cs35l33_irq_thread, IRQF_ONESHOT | IRQF_TRIGGER_LOW,
++				"cs35l33", cs35l33);
+ 	if (ret != 0)
+ 		dev_warn(&i2c_client->dev, "Failed to request IRQ: %d\n", ret);
++	else
++		cs35l33->irq_requested = true;
+ 
+ 	/* We could issue !RST or skip it based on AMP topology */
+ 	cs35l33->reset_gpio = devm_gpiod_get_optional(&i2c_client->dev,
 
 
