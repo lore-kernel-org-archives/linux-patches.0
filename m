@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36413793CA;
-	Sat, 12 Sep 2026 18:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9951E3A7F47;
+	Sat, 12 Sep 2026 18:55:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239308; cv=none; b=qyuFp/Cd1HaUjvoFbCIwHkzaHIfnVaZbBVbHXzz8bDVu4rnLicK+ClVkj5iRi6v3NhDo4Z7IEuD2+3wW6YV4zBh+NoMQtDZ3Bnvl+3yj8XyeK/LycR1SmVywoaXyJi2feF0p2v8YCavGl+WxQAUsheqbfxm5WgH2LQPBcNECr/c=
+	t=1789239312; cv=none; b=MiJuSpX5/wy2g9L1EncIMKyh7x8Lhux01Pj8a++dq4MHE6CeXkUDkWBVo/j1SrpWq8rM5Ak3jlerWhdDXK63fGD15XrIOrQNiQgjzanXJDavKK0ZTXhkUgskwTJ9E8+QhFE7p+wcg9fUSdsXPmGGcE5ujiXGbj2rqzVw7FPV5M0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239308; c=relaxed/simple;
-	bh=HchZhY53sE7r3nLuKDwr5JcdlrKvkYxNsd2Na+uuwKA=;
+	s=arc-20240116; t=1789239312; c=relaxed/simple;
+	bh=erEc4dNI0eJx5P/Ubp1hYzQAySGh7tPMpArSjVxUpFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r1qUSMtXFE8zg+Qu2hyf4qTahfFjPNUSVtKsKNKnY7zeFASJ31JO5t0dsD5Yq/E4YX72u3mz1fnTdpgBTMZ3PL3+Bcp8BMSjrvuOPoKx+b8qDOfrWAzi4jQ7Xbfp24a8GeSHHBiRke0GEEytNOgeI5YwJ1t4bE9tfZPOGhAYaPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Muyu1ECp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fQJ4BK+a5jQoKA0vrR/mreqyVlNVGYUTJshNqfCvJh1Wj/7EaWcJToob/7uspTtGG39eeIb/egDKge3mQLxjF5c8vPe/mVMcoDUs2AwKfhE3rTUO20b74+hXAH80dWs+fKo4KWC34KGSiUpPD3stQun3sYWIUz6eucBHUAFRQyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwVdJnBz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Muyu1ECp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FD941F000FF;
-	Sat, 12 Sep 2026 18:55:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwVdJnBz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F86B1F000FF;
+	Sat, 12 Sep 2026 18:55:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239306;
-	bh=fW2AZj/GwMhU4EbX571FgQfzW9y7slTVYAYFXVTG1qI=;
+	s=korg; t=1789239311;
+	bh=SplgfeUP4sYvHEM8Iz3InkyOXumX9oqRnotywbbhktQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Muyu1ECpEhbwGi4rTAkJuaRdi+KNM/ZF54cVGwXPxt+8yeNuxygs2QmYpB2qg9xXQ
-	 CtPIFOG1+O86kWvt0dqzMP7H9C0EC/2L+I6fi1Bz47vnmCRihtmTDS6MehRA3HkDVz
-	 JaKMt/eIJ261Sw9HmVxrpz06TNE6o8Nv0vGkzur8=
+	b=LwVdJnBzLKi2Lk4cVuId3VmiZxUC/1kKeILfFCdgZWJQm5pNcUiq4OivQxIHLi1J3
+	 jAM5imIT/dMDAErGSOd9I0ibChzJH5Y6cKtzQ+bswPA0g8ilzgcox2SY5eMV94UsJi
+	 cV7gYGnm3ABFMkttUrPowCO/pswBYhc+0p31Fq+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vz@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Mostafa Saleh <smostafa@google.com>,
+	Petr Tesarik <ptesarik@suse.com>,
+	"Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 639/935] clk: qcom: Return expected ENOMEM error on dynamic allocation failure
-Date: Sat, 12 Sep 2026 09:01:09 +0200
-Message-ID: <20260912065541.497903049@linuxfoundation.org>
+Subject: [PATCH 5.15 640/935] iommu/dma: Check atomic pool allocation result directly
+Date: Sat, 12 Sep 2026 09:01:10 +0200
+Message-ID: <20260912065541.521009602@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,46 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vz@kernel.org>
+From: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 
-[ Upstream commit 22d9257f08913b6eec3e8ece4d13d9c41f14428b ]
+[ Upstream commit af95a0ebc0a0db0762be75f51eadf770bad01aaa ]
 
-If a dynamic memory allocation fails, the returned error code in clock
-controller driver probe functions on a few legacy platforms should be
-set to -ENOMEM instead of -EINVAL.
+The non-blocking, non-coherent allocation path uses dma_alloc_from_pool(),
+which returns the allocated page and fills cpu_addr only on success.
 
-Fixes: ee15faffef11 ("clk: qcom: common: Add API to register board clocks backwards compatibly")
-Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260629162127.3910603-1-vz@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Do not rely on cpu_addr to detect allocation failure in this path. Check
+the returned page directly before using it for the IOMMU mapping.
+
+Fixes: 9420139f516d ("dma-pool: fix coherent pool allocations for IOMMU mappings")
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Mostafa Saleh <smostafa@google.com>
+Reviewed-by: Petr Tesarik <ptesarik@suse.com>
+Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+Link: https://lore.kernel.org/r/20260717180442.110954-4-aneesh.kumar@kernel.org
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/common.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/dma-iommu.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
-index 8aef7749f167d..7a5a5d1e0e205 100644
---- a/drivers/clk/qcom/common.c
-+++ b/drivers/clk/qcom/common.c
-@@ -148,7 +148,7 @@ static int _qcom_cc_register_board_clk(struct device *dev, const char *path,
- 	if (!node) {
- 		fixed = devm_kzalloc(dev, sizeof(*fixed), GFP_KERNEL);
- 		if (!fixed)
--			return -EINVAL;
-+			return -ENOMEM;
+diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+index aa47d955de6ba..dfef5d7f5885a 100644
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -1208,13 +1208,16 @@ static void *iommu_dma_alloc(struct device *dev, size_t size,
+ 	}
  
- 		fixed->fixed_rate = rate;
- 		fixed->hw.init = &init_data;
-@@ -165,7 +165,7 @@ static int _qcom_cc_register_board_clk(struct device *dev, const char *path,
- 	if (add_factor) {
- 		factor = devm_kzalloc(dev, sizeof(*factor), GFP_KERNEL);
- 		if (!factor)
--			return -EINVAL;
-+			return -ENOMEM;
+ 	if (IS_ENABLED(CONFIG_DMA_DIRECT_REMAP) &&
+-	    !gfpflags_allow_blocking(gfp) && !coherent)
++	    !gfpflags_allow_blocking(gfp) && !coherent) {
+ 		page = dma_alloc_from_pool(dev, PAGE_ALIGN(size), &cpu_addr,
+-					       gfp, NULL);
+-	else
++					   gfp, NULL);
++		if (!page)
++			return NULL;
++	} else {
+ 		cpu_addr = iommu_dma_alloc_pages(dev, size, &page, gfp, attrs);
+-	if (!cpu_addr)
+-		return NULL;
++		if (!cpu_addr)
++			return NULL;
++	}
  
- 		factor->mult = factor->div = 1;
- 		factor->hw.init = &init_data;
+ 	*handle = __iommu_dma_map(dev, page_to_phys(page), size, ioprot,
+ 			dev->coherent_dma_mask);
 -- 
 2.53.0
 
