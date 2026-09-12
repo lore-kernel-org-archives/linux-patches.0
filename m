@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0BB370ACC;
-	Sat, 12 Sep 2026 20:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38638395DAA;
+	Sat, 12 Sep 2026 20:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243218; cv=none; b=Uu+SaL4xs+IOmPP3dY7VGxxtuyqIHGvVpIMq+knfgLMziFRZkd9bLdlznN05w5sjtKHOaqu7keuvIMSJblJGKgCNmr/X+LJbuLvaPtJ/BPWW3g5Es8RIG/0gRa3bHNcXPnPEQ6oVgPW5b4JM1xGci+P3oOCUc+haxTLvGN/0fTg=
+	t=1789243221; cv=none; b=LbHmT4d8HxaYygCusOCI1y7IuHFzpacdYfW5Y8ZZLSGDkptkW+SRiiBUG/wScrXwe4XNzYwm5gApmUrHdNF7SyTHf8UJsXS9Lz74gZdnePkDB4xmGm9LZCj0vZBICQKqKcQ0+eNjms+fded6AI5uk6gn3ZoxOtrrq7GJiTP5P3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243218; c=relaxed/simple;
-	bh=g+7igwpUk0ypYfydWap2mizy9ek+oy2W7pDu/MCUsKc=;
+	s=arc-20240116; t=1789243221; c=relaxed/simple;
+	bh=eymZiWpvYmf5QBnYniDqAiLfoSASWH4fK3icQfN/g7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EL98nqmUe5po9BR0wYHdIr9xVtLdVzkYAavH9accv0iix/72/hpqCrOcwgd7XK5fvVbdhRbWx+vLJrjtm9tNj4kO2iO8FdvI2pjTbAtwUVPEbBa+lY351CPl2KlyC9Xq+Z8eF5SbuImGLy0z3eMACE9YWCRaFNzxsHgqs8lSUGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBgj1EYp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fkYX7LD6LXoRyGllBqa9jrvjYidm8ZCP62j3jZtQkQWSuTKmAS0/pqlKmA9XlBUbPMMhst/8qR6mtuVH9N5iK1AvHbDpd+YeNw6SRTgwj0iiaR3YM7yG8u03s1/nRJtqt5aN1JbA0L5F0T2GX91pHMm7XBs8i0gHo0I2Ot1mAEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKLG4T+G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBgj1EYp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8BC71F000FF;
-	Sat, 12 Sep 2026 20:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKLG4T+G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F701F000FF;
+	Sat, 12 Sep 2026 20:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243217;
-	bh=blBdt0Y9ovLO6VbF4IEaUhEncO57OdxpddRM6QgoC48=;
+	s=korg; t=1789243220;
+	bh=BjxUQheKCdc9TE4LWbUwpQc8yOx16B/mc6lWj2b5rOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OBgj1EYphAwm8EwyD2y3pg2SGnvkdIgOjsdFnD20glYsC65gVmxS9EO6usZuumgQS
-	 9BZcoXxb6/qLq8vAOIM9RrjKJagpLdNMHjIzrR2eKbNLIULJARpo0+nfBI20DBkKx6
-	 dRNjqGEakxHp2bwya8J749RlHEIHJ4teex6OEQdw=
+	b=cKLG4T+Gz7tM+C9zRJJYpnC2eOLZGXzMQDv8sx8h9nJ9qVUJg/g0+SzG0dYFS3CO7
+	 3PD/cImTrF8mOPYdY/763mdzxYRCu6KswqGQ5v+++40DewLKktvCsQ9WF7dIvoDgFA
+	 EW2zXByy2fAakxm+w7GrcU7JKTF7zy0WEAV+QDFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	LiangCheng Wang <zaq14760@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 651/798] Bluetooth: MSFT: validate evt_prefix_len against the response length
-Date: Sat, 12 Sep 2026 09:04:39 +0200
-Message-ID: <20260912065532.033016161@linuxfoundation.org>
+Subject: [PATCH 5.10 678/798] ASoC: fsl-asoc-card: defer probe when the CPU DAI device is not ready
+Date: Sat, 12 Sep 2026 09:05:06 +0200
+Message-ID: <20260912065532.641699087@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,71 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: LiangCheng Wang <zaq14760@gmail.com>
 
-[ Upstream commit 0079e1a944634ab2dc1c7cdec1144486d096407e ]
+[ Upstream commit 0286324da660875dc504fd65b3be87e9c8b9a547 ]
 
-read_supported_features() only checks that the response covers the fixed
-part of struct msft_rp_read_supported_features, which is 11 bytes:
+fsl_asoc_card_probe() hard-fails with -EINVAL when the CPU DAI (SAI)
+platform device is not found. Like the codec, the CPU DAI may just be
+probed later than the machine driver; the order is not guaranteed and
+varies across kernel versions, so a permanent -EINVAL leaves the card
+unregistered with no analog playback or capture.
 
-	if (skb->len < sizeof(*rp)) {
-		bt_dev_err(hdev, "MSFT supported features length mismatch");
-		goto failed;
-	}
+Defer probe instead, mirroring commit e396dec46c56 ("ASoC:
+fsl-asoc-card: Defer probe when fail to find codec device").
 
-evt_prefix[] is a flexible array member and rp->evt_prefix_len is an
-unvalidated u8 taken straight out of that response, so
+Tested on i.MX8MP with an ALC5672 on SAI3: the card that failed to
+register on v6.18 now comes up during boot.
 
-	msft->evt_prefix = kmemdup(rp->evt_prefix, rp->evt_prefix_len,
-				   GFP_KERNEL);
-
-copies up to 255 bytes from a reply that may have carried none of them.
-What is copied is data the controller never sent, and it is then used to
-match incoming vendor events in msft_vendor_evt().
-
-This is not an out-of-bounds access. An skb data allocation always has
-at least SKB_DATA_ALIGN(sizeof(struct skb_shared_info)) bytes past the
-payload, which is more than the 255 byte maximum, so the read stays
-inside the allocation and KASAN does not report it. It is still a read
-of bytes the host was never given, with the length fully controlled by
-the controller.
-
-Reject a response that is too short for the prefix it declares.
-
-Verified with an emulated controller over /dev/vhci on a KASAN kernel,
-with vhci made to advertise an MSFT opcode the way btintel, btqca, btmtk
-and btrtl do unconditionally. A reply of exactly 11 bytes declaring
-evt_prefix_len = 255 reaches kmemdup and copies 255 bytes
-("skb->len=11 evt_prefix_len=255", with the copied buffer dumped); since
-the reply ends at the fixed part, all 255 come from past the end of the
-response. No KASAN report is produced, as expected from the allocation
-slack described above. With this patch the response is rejected with
-"MSFT event prefix length mismatch" and msft->evt_prefix is left unset.
-
-Fixes: 145373cb1b1f ("Bluetooth: Add framework for Microsoft vendor extension")
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 708b4351f08c ("ASoC: fsl: Add Freescale Generic ASoC Sound Card with ASRC support")
+Signed-off-by: LiangCheng Wang <zaq14760@gmail.com>
+Link: https://patch.msgid.link/20260805-fsl-asoc-defer-cpu-dai-v1-1-43f7f538e384@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/msft.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/fsl/fsl-asoc-card.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
-index 4b39534a14a18..a6b942b8d64c4 100644
---- a/net/bluetooth/msft.c
-+++ b/net/bluetooth/msft.c
-@@ -54,6 +54,11 @@ static bool read_supported_features(struct hci_dev *hdev,
- 	if (rp->sub_opcode != MSFT_OP_READ_SUPPORTED_FEATURES)
- 		goto failed;
+diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
+index c876f111d8b03..76fb50e688a1e 100644
+--- a/sound/soc/fsl/fsl-asoc-card.c
++++ b/sound/soc/fsl/fsl-asoc-card.c
+@@ -552,8 +552,8 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
  
-+	if (skb->len < sizeof(*rp) + rp->evt_prefix_len) {
-+		bt_dev_err(hdev, "MSFT event prefix length mismatch");
-+		goto failed;
-+	}
-+
- 	if (rp->evt_prefix_len > 0) {
- 		msft->evt_prefix = kmemdup(rp->evt_prefix, rp->evt_prefix_len,
- 					   GFP_KERNEL);
+ 	cpu_pdev = of_find_device_by_node(cpu_np);
+ 	if (!cpu_pdev) {
+-		dev_err(&pdev->dev, "failed to find CPU DAI device\n");
+-		ret = -EINVAL;
++		ret = dev_err_probe(&pdev->dev, -EPROBE_DEFER,
++				    "failed to find CPU DAI device\n");
+ 		goto fail;
+ 	}
+ 
 -- 
 2.53.0
 
