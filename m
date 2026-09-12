@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65AE2419FC9;
-	Sat, 12 Sep 2026 10:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2F9399352;
+	Sat, 12 Sep 2026 10:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209128; cv=none; b=LYl6CC2ffnxGWvThjkDRoXRwxGUbwXbaxlrD8FntSeFTdcEIw1qgchKt3qrMgI5ib87/afYoBiYzxw+/bq38cpfCQ7VUHGVPRoFE3/SzjLjmMhvGEWLxwKO1bt/zdFJ7eGSSpp8gdjTs3/PNA9MYqQV2zAO0w/Fv5yFowb5El9Y=
+	t=1789209134; cv=none; b=nzqXJ/su9lHCM+1FcP692NoqOnAkZyf0/hEFXwop9ZN1J2RF30SleXqvQiRmtOYyvtIzwFyE1pYSgB1Fy3/5R/k4S75EvHWTuoU2uQC8xlmfDCAOIiUqjDwLSPbzwplcc9zkGV6cr4fs4K9D/4q4EgyZB4TJVrrpNzvSaN9d3SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209128; c=relaxed/simple;
-	bh=ufKtw9sTLQYsVVDtwnbyLRNjMXFEpQK75zY1L8tXiSA=;
+	s=arc-20240116; t=1789209134; c=relaxed/simple;
+	bh=Tj6axfNoYZHxT73mV5iQDsDvqgLGGBrHBoK+bP1cHdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tcq3FMTvUoCOi3GrnbZKdQSFYPwElOOlXxQpDhLWAl9z8uL58qx6zOB4cTZeE/U0GzUzvJa9qtWU/443vv/wmCXaruBrYDNtYnuJ686/PNWYPIZykoB+Offr0xigCA9Dg8wOPChI6GvctVNUkV4fjpGNT1EWa9d4QLjw4mdKe9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1m8JftTk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JYB5u9zzs6VoBcI0ZYhalOssd9dud4ScwWHS97p0b1KoXniEf8I9Rqqi27rFJI0I+ysVS2oWye3CxviJ1m0pn27Hkvf3dbXvvqC7k2RQx3ul9cVaOxv3sVM5CXEbv7bNT92r7tBRu8ZcVrTzje25239a2jvgkvg7BKs5i8ju2Vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zkU1AMOU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1m8JftTk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850781F00893;
-	Sat, 12 Sep 2026 10:32:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkU1AMOU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5591A1F000FF;
+	Sat, 12 Sep 2026 10:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209127;
-	bh=iEn/pY6zSh7TQg99BVWd2A6iOd6DAh02p+F483h2btA=;
+	s=korg; t=1789209132;
+	bh=6bg6l+gkMcUZWwhggRl2G0F0zaNa8kY+8/zAOc93LUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1m8JftTkFriJ63Az5Tv1cRnUUIX0G25jkQQq+iJjBYuI66SvKZSJzLM329F5uUo8t
-	 AY49+1TnFTGx9m0UtVZhUOZvtxCb7COnYCR9LDGedL9cT2VMG/AN5j+s+NBcvKOVcH
-	 1JwdPbmATJDX7PFs94knvc1py5u9AzTWa7GZfNLw=
+	b=zkU1AMOUaVQOxLv8kXZ76K1rpx6eZoPuj4ZKVWxzGVGIdzIgTug9kc/MQUzse8axS
+	 3Jl/B/3+MzFCkwTfh6Og2k1iSQX1RoEE9ZV3G08XlPMLqa/kSm7/8/3UZBsFEB42cG
+	 3XLAWM5r2R4q8YKv5xmyxJReh3UmlgK0obdE5+yQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0758/1518] wifi: mt76: mt7996: hold dev->mt76.mutex while disabling tx worker in SER
-Date: Sat, 12 Sep 2026 08:48:47 +0200
-Message-ID: <20260912065640.576091498@linuxfoundation.org>
+Subject: [PATCH 6.18 0759/1518] wifi: mt76: mt7996: reserve space for the CSA-abort countdown TLV
+Date: Sat, 12 Sep 2026 08:48:48 +0200
+Message-ID: <20260912065640.600633925@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,46 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 6190db312b8230813f529f014b26247c6d9800d0 ]
+[ Upstream commit 50c66bab321140c49aa2ed779a3ec9d2f085b458 ]
 
-mt7996_mac_reset_work() parked the tx worker and disabled the RX/TX NAPIs
-before taking dev->mt76.mutex. mt76_worker_disable()/_enable() are plain
-kthread park/unpark, not refcounted, and __mt76_set_channel() toggles the
-same worker and the MT76_RESET bit under the mutex. An L1 SER racing a
-channel switch could therefore have the worker unparked and MT76_RESET
-cleared while the reset path resets the DMA rings, corrupting descriptors
-or tokens. Take the mutex before disabling the worker, as mt7915 does.
+When a CSA countdown is active, mt7996_mcu_beacon_cntdwn() emits two
+bss_bcn_cntdwn_tlv entries (the CSA countdown and the CCA-abort BCC), but
+MT7996_BEACON_UPDATE_SIZE only reserved one. With MBSSID enabled and a
+near-maximum beacon template the extra 8 bytes could push the offload
+command past MT7996_MAX_BSS_OFFLOAD_SIZE and trigger skb_over_panic().
+Reserve room for both countdown TLVs.
 
-Fixes: 27015b6fbcca ("wifi: mt76: mt7996: enable full system reset support")
-Link: https://patch.msgid.link/20260724124813.3961474-5-nbd@nbd.name
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Link: https://patch.msgid.link/20260724124813.3961474-8-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index 11d56fdb7f26b..cafdbd27f1e48 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -2630,6 +2630,8 @@ void mt7996_mac_reset_work(struct work_struct *work)
- 		cancel_delayed_work_sync(&phy->mt76->mac_work);
- 	}
- 
-+	mutex_lock(&dev->mt76.mutex);
-+
- 	mt76_worker_disable(&dev->mt76.tx_worker);
- 	mt76_for_each_q_rx(&dev->mt76, i) {
- 		if (mtk_wed_device_active(&dev->mt76.mmio.wed) &&
-@@ -2640,8 +2642,6 @@ void mt7996_mac_reset_work(struct work_struct *work)
- 	}
- 	napi_disable(&dev->mt76.tx_napi);
- 
--	mutex_lock(&dev->mt76.mutex);
--
- 	mt76_wr(dev, MT_MCU_INT_EVENT, MT_MCU_INT_EVENT_DMA_STOPPED);
- 
- 	if (mt7996_wait_reset_state(dev, MT_MCU_CMD_RESET_DONE)) {
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
+index 7b51d7346bcaa..848c6c5751155 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
+@@ -828,7 +828,7 @@ enum {
+ #define MT7996_BEACON_UPDATE_SIZE	(sizeof(struct bss_req_hdr) +		\
+ 					 sizeof(struct bss_bcn_content_tlv) +	\
+ 					 4 + MT_TXD_SIZE +			\
+-					 sizeof(struct bss_bcn_cntdwn_tlv) +	\
++					 sizeof(struct bss_bcn_cntdwn_tlv) * 2 +	\
+ 					 sizeof(struct bss_bcn_mbss_tlv))
+ #define MT7996_MAX_BSS_OFFLOAD_SIZE	2048
+ #define MT7996_MAX_BEACON_SIZE		(MT7996_MAX_BSS_OFFLOAD_SIZE - \
 -- 
 2.53.0
 
