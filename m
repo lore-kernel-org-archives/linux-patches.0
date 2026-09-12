@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A6847ACE6;
-	Sat, 12 Sep 2026 12:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E109147C10B;
+	Sat, 12 Sep 2026 12:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217932; cv=none; b=hr8NAa7+1qFgTg+WOIV16HeGuQ4akrni4LrK0Zm1JdIJMT1cLz3KAaFpWI1FSxX5mUsGJRpCIHv8PU/sahl34LxUfLwlNw8djFsLZlffLJBrzEcKgjkPansxvs1ANgBra+KLFKhxBkI4V0q6tHoULV25cyYcPYa0aFISFnsuFNE=
+	t=1789217937; cv=none; b=egUPS/cPtRQbZ/ErOLs2RB0bNje5+e5SepnGizQm/NA6Sh+2juDvtSyQ7L8b9wVRZsb3bNLNDgLXT72fqbtK+N4geWbVeE12Gz8Tcnuabifvlp9i00G+KMhtbMPTkYjhD7QPwcDrlRgiV/w3PJwYYeHXeOWKfR7wH0jsz2k6+ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217932; c=relaxed/simple;
-	bh=6SloFQjW8lEoi7QQYDLD8LiU56tuCKmoJSerOc7VBQc=;
+	s=arc-20240116; t=1789217937; c=relaxed/simple;
+	bh=8ubXwPe0OgDeo9Vs6dYCBpCxNYEDgxRq4UMBv70sKQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UpaPBqISKVGOjIIxKr/b0F4zJiDJHSfaPvpMy/7KODC9P4cG4H+Fn4Aj7X1ajyccluAXbJuO41jmlMdoGTyUN1pBcVRpCeDrA2zX81PSYcMTq8X/AkHZJHn8hSJkoY+jfhTQ0q6zR+UjJgUYGIPxEkgyXF1ub3hFqWxDuRgqs68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vcN7qNJa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PrNKHKw/QQHJilcHOAtIrZWyADvAQlSm6+ftAeFToZlKgptLcjjF7CICM29oOe3pNTMlPGqMGUbo4QN9Jc8FNNHKBT7X3EUj2tSLymwgHBdW6UF3pDmdiTBMTHJMby601WhLOS9CfEM+oHW2UQEixGw4vpGDAnBO7QRuW1RGgcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFP5mpeC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcN7qNJa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CAC1F000FF;
-	Sat, 12 Sep 2026 12:58:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFP5mpeC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44411F000FF;
+	Sat, 12 Sep 2026 12:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217930;
-	bh=vG8oyYKOS5Caq+g9wMS9l8Y8JdsCMDadNjcedEkatMA=;
+	s=korg; t=1789217935;
+	bh=kbpEnfxUC6RLH2liOgyqAjNXzMu5AQPDhk6WVHRXNWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vcN7qNJafD/QCzfZIVZ59Syt8ars0L7IfGu/Et1LJJoAcfzVKWQCZLB2eMhwrq3J3
-	 0Wyjf0UC2m8BDehAtUgsLXM07sObHlzctHzfnfNKopEItAwMRZ+ljcXo2VOzco2/bN
-	 yckszqCzcilq0sOslA+WxITML2KAufZHHTKancWY=
+	b=QFP5mpeCtO+sIcxAkiPFMJeb7PRN4D+MK/Y97UWUwEi1r5IERyf1o9csEmCaYzlSC
+	 R20p01vZCXjNCNa+HbmbYCYYeHctZO9XxeGNp8zdqn2aMjf3+b25BiQMBmTL/rhxpU
+	 h4DtxjcQCle7ej8bZtTOXiHuM2qZ6fh+h+FMrN54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faisal Hassan <faisal.hassan@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Elson Roy Serrao <quic_eserrao@quicinc.com>,
+	Wesley Cheng <wesley.cheng@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1041/1376] phy: qcom-qmp-combo: Use regulator_bulk_data with init_load_uA for regulator setup
-Date: Sat, 12 Sep 2026 08:57:47 +0200
-Message-ID: <20260912065630.761584589@linuxfoundation.org>
+Subject: [PATCH 6.12 1042/1376] phy: qualcomm: Update the QMP clamp register for V6
+Date: Sat, 12 Sep 2026 08:57:48 +0200
+Message-ID: <20260912065630.783749428@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,112 +54,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Faisal Hassan <faisal.hassan@oss.qualcomm.com>
+From: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
 
-[ Upstream commit 81d75558406609f311766a37ec4b2c74d7b11ea0 ]
+[ Upstream commit c9543cca9417d83f8ca6a8ce0a5279a3fba7a02b ]
 
-Replace the custom qmp_regulator_data structure with the standard
-regulator_bulk_data and use the init_load_uA field to set regulator
-load during initialization.
+QMP combo phy V6 and above use the clamp register from the PCS always on
+(AON) address space.  Update the driver accordingly.
 
-This change simplifies the regulator setup by removing manual
-allocation and load configuration logic, and leverages
-devm_regulator_bulk_get_const() to automatically apply load settings
-before enabling regulators.
-
-Signed-off-by: Faisal Hassan <faisal.hassan@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://patch.msgid.link/20250922135901.2067-1-faisal.hassan@oss.qualcomm.com
+Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
+Signed-off-by: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://patch.msgid.link/20251209-linux-next-12825-v8-7-42133596bda0@oss.qualcomm.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Stable-dep-of: 8fd2b30d187f ("phy: qcom: qmp-combo: Drop qmp_v4_calibrate_dp_phy")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 49 +++--------------------
- 1 file changed, 6 insertions(+), 43 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 38 ++++++++++++++++---
+ .../phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h    | 12 ++++++
+ .../phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h   | 12 ++++++
+ 3 files changed, 57 insertions(+), 5 deletions(-)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h
 
 diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index f1e2af0142bdc..7f2faab42413c 100644
+index 7f2faab42413c..382510b504c04 100644
 --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
 +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -1633,14 +1633,9 @@ static const struct qmp_phy_init_tbl x1e80100_usb43dp_pcs_usb_tbl[] = {
- };
+@@ -28,7 +28,10 @@
+ #include "phy-qcom-qmp-common.h"
  
- /* list of regulators */
--struct qmp_regulator_data {
--	const char *name;
--	unsigned int enable_load;
--};
--
--static struct qmp_regulator_data qmp_phy_vreg_l[] = {
--	{ .name = "vdda-phy", .enable_load = 21800 },
--	{ .name = "vdda-pll", .enable_load = 36000 },
-+static struct regulator_bulk_data qmp_phy_vreg_l[] = {
-+	{ .supply = "vdda-phy", .init_load_uA = 21800, },
-+	{ .supply = "vdda-pll", .init_load_uA = 36000, },
- };
+ #include "phy-qcom-qmp.h"
++#include "phy-qcom-qmp-pcs-aon-v6.h"
+ #include "phy-qcom-qmp-pcs-misc-v3.h"
++#include "phy-qcom-qmp-pcs-misc-v4.h"
++#include "phy-qcom-qmp-pcs-misc-v5.h"
+ #include "phy-qcom-qmp-pcs-usb-v4.h"
+ #include "phy-qcom-qmp-pcs-usb-v5.h"
+ #include "phy-qcom-qmp-pcs-usb-v6.h"
+@@ -71,6 +74,7 @@ enum qphy_reg_layout {
+ 	QPHY_PCS_AUTONOMOUS_MODE_CTRL,
+ 	QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR,
+ 	QPHY_PCS_POWER_DOWN_CONTROL,
++	QPHY_PCS_CLAMP_ENABLE,
  
- static const u8 qmp_dp_v3_pre_emphasis_hbr3_hbr2[4][4] = {
-@@ -1798,7 +1793,7 @@ struct qmp_phy_cfg {
- 	const char * const *reset_list;
- 	int num_resets;
- 	/* regulators to be requested */
--	const struct qmp_regulator_data *vreg_list;
-+	const struct regulator_bulk_data *vreg_list;
- 	int num_vregs;
+ 	QPHY_COM_RESETSM_CNTRL,
+ 	QPHY_COM_C_READY_STATUS,
+@@ -98,6 +102,8 @@ static const unsigned int qmp_v3_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V3_PCS_AUTONOMOUS_MODE_CTRL,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V3_PCS_LFPS_RXTERM_IRQ_CLEAR,
  
- 	/* array of registers with different offsets */
-@@ -3400,39 +3395,6 @@ static const struct dev_pm_ops qmp_combo_pm_ops = {
- 			   qmp_combo_runtime_resume, NULL)
- };
++	[QPHY_PCS_CLAMP_ENABLE]		= QPHY_V3_PCS_MISC_CLAMP_ENABLE,
++
+ 	[QPHY_COM_RESETSM_CNTRL]	= QSERDES_V3_COM_RESETSM_CNTRL,
+ 	[QPHY_COM_C_READY_STATUS]	= QSERDES_V3_COM_C_READY_STATUS,
+ 	[QPHY_COM_CMN_STATUS]		= QSERDES_V3_COM_CMN_STATUS,
+@@ -123,6 +129,8 @@ static const unsigned int qmp_v45_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V4_PCS_USB3_AUTONOMOUS_MODE_CTRL,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V4_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
  
--static int qmp_combo_vreg_init(struct qmp_combo *qmp)
--{
--	const struct qmp_phy_cfg *cfg = qmp->cfg;
--	struct device *dev = qmp->dev;
--	int num = cfg->num_vregs;
--	int ret, i;
--
--	qmp->vregs = devm_kcalloc(dev, num, sizeof(*qmp->vregs), GFP_KERNEL);
--	if (!qmp->vregs)
--		return -ENOMEM;
--
--	for (i = 0; i < num; i++)
--		qmp->vregs[i].supply = cfg->vreg_list[i].name;
--
--	ret = devm_regulator_bulk_get(dev, num, qmp->vregs);
--	if (ret) {
--		dev_err(dev, "failed at devm_regulator_bulk_get\n");
--		return ret;
--	}
--
--	for (i = 0; i < num; i++) {
--		ret = regulator_set_load(qmp->vregs[i].consumer,
--					cfg->vreg_list[i].enable_load);
--		if (ret) {
--			dev_err(dev, "failed to set load at %s\n",
--				qmp->vregs[i].supply);
--			return ret;
--		}
--	}
--
--	return 0;
--}
--
- static int qmp_combo_reset_init(struct qmp_combo *qmp)
- {
++	[QPHY_PCS_CLAMP_ENABLE]		= QPHY_V4_PCS_MISC_CLAMP_ENABLE,
++
+ 	[QPHY_COM_RESETSM_CNTRL]	= QSERDES_V4_COM_RESETSM_CNTRL,
+ 	[QPHY_COM_C_READY_STATUS]	= QSERDES_V4_COM_C_READY_STATUS,
+ 	[QPHY_COM_CMN_STATUS]		= QSERDES_V4_COM_CMN_STATUS,
+@@ -148,6 +156,8 @@ static const unsigned int qmp_v5_5nm_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V5_PCS_USB3_AUTONOMOUS_MODE_CTRL,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V5_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
+ 
++	[QPHY_PCS_CLAMP_ENABLE]		= QPHY_V5_PCS_MISC_CLAMP_ENABLE,
++
+ 	[QPHY_COM_RESETSM_CNTRL]	= QSERDES_V5_COM_RESETSM_CNTRL,
+ 	[QPHY_COM_C_READY_STATUS]	= QSERDES_V5_COM_C_READY_STATUS,
+ 	[QPHY_COM_CMN_STATUS]		= QSERDES_V5_COM_CMN_STATUS,
+@@ -173,6 +183,8 @@ static const unsigned int qmp_v6_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V6_PCS_USB3_AUTONOMOUS_MODE_CTRL,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V6_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
+ 
++	[QPHY_PCS_CLAMP_ENABLE]		= QPHY_V6_PCS_AON_CLAMP_ENABLE,
++
+ 	[QPHY_COM_RESETSM_CNTRL]	= QSERDES_V6_COM_RESETSM_CNTRL,
+ 	[QPHY_COM_C_READY_STATUS]	= QSERDES_V6_COM_C_READY_STATUS,
+ 	[QPHY_COM_CMN_STATUS]		= QSERDES_V6_COM_CMN_STATUS,
+@@ -198,6 +210,8 @@ static const unsigned int qmp_v6_n4_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V6_PCS_USB3_AUTONOMOUS_MODE_CTRL,
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V6_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
+ 
++	[QPHY_PCS_CLAMP_ENABLE]		= QPHY_V6_PCS_AON_CLAMP_ENABLE,
++
+ 	[QPHY_COM_RESETSM_CNTRL]	= QSERDES_V6_COM_RESETSM_CNTRL,
+ 	[QPHY_COM_C_READY_STATUS]	= QSERDES_V6_COM_C_READY_STATUS,
+ 	[QPHY_COM_CMN_STATUS]		= QSERDES_V6_COM_CMN_STATUS,
+@@ -1740,6 +1754,7 @@ struct qmp_combo_offsets {
+ 	u16 usb3_serdes;
+ 	u16 usb3_pcs_misc;
+ 	u16 usb3_pcs;
++	u16 usb3_pcs_aon;
+ 	u16 usb3_pcs_usb;
+ 	u16 dp_serdes;
+ 	u16 dp_txa;
+@@ -1821,6 +1836,7 @@ struct qmp_combo {
+ 	void __iomem *tx2;
+ 	void __iomem *rx2;
+ 	void __iomem *pcs_misc;
++	void __iomem *pcs_aon;
+ 	void __iomem *pcs_usb;
+ 
+ 	void __iomem *dp_serdes;
+@@ -1941,6 +1957,7 @@ static const struct qmp_combo_offsets qmp_combo_offsets_v8 = {
+ 	.usb3_serdes	= 0x1000,
+ 	.usb3_pcs_misc	= 0x1c00,
+ 	.usb3_pcs	= 0x1e00,
++	.usb3_pcs_aon	= 0x2000,
+ 	.usb3_pcs_usb	= 0x2100,
+ 	.dp_serdes	= 0x3000,
+ 	.dp_txa		= 0x3400,
+@@ -3301,6 +3318,7 @@ static void qmp_combo_enable_autonomous_mode(struct qmp_combo *qmp)
  	const struct qmp_phy_cfg *cfg = qmp->cfg;
-@@ -4000,7 +3962,8 @@ static int qmp_combo_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
+ 	void __iomem *pcs_usb = qmp->pcs_usb ?: qmp->pcs;
+ 	void __iomem *pcs_misc = qmp->pcs_misc;
++	void __iomem *pcs_aon = qmp->pcs_aon;
+ 	u32 intr_mask;
  
--	ret = qmp_combo_vreg_init(qmp);
-+	ret = devm_regulator_bulk_get_const(dev, qmp->cfg->num_vregs,
-+					qmp->cfg->vreg_list, &qmp->vregs);
- 	if (ret)
- 		return ret;
+ 	if (qmp->mode == PHY_MODE_USB_HOST_SS ||
+@@ -3320,9 +3338,14 @@ static void qmp_combo_enable_autonomous_mode(struct qmp_combo *qmp)
+ 	/* Enable required PHY autonomous mode interrupts */
+ 	qphy_setbits(pcs_usb, cfg->regs[QPHY_PCS_AUTONOMOUS_MODE_CTRL], intr_mask);
  
+-	/* Enable i/o clamp_n for autonomous mode */
+-	if (pcs_misc)
+-		qphy_clrbits(pcs_misc, QPHY_V3_PCS_MISC_CLAMP_ENABLE, CLAMP_EN);
++	/*
++	 * Enable i/o clamp_n for autonomous mode
++	 * V6 and later versions use pcs aon clamp register
++	 */
++	if (pcs_aon)
++		qphy_clrbits(pcs_aon, cfg->regs[QPHY_PCS_CLAMP_ENABLE], CLAMP_EN);
++	else if (pcs_misc)
++		qphy_clrbits(pcs_misc, cfg->regs[QPHY_PCS_CLAMP_ENABLE], CLAMP_EN);
+ }
+ 
+ static void qmp_combo_disable_autonomous_mode(struct qmp_combo *qmp)
+@@ -3330,10 +3353,13 @@ static void qmp_combo_disable_autonomous_mode(struct qmp_combo *qmp)
+ 	const struct qmp_phy_cfg *cfg = qmp->cfg;
+ 	void __iomem *pcs_usb = qmp->pcs_usb ?: qmp->pcs;
+ 	void __iomem *pcs_misc = qmp->pcs_misc;
++	void __iomem *pcs_aon = qmp->pcs_aon;
+ 
+ 	/* Disable i/o clamp_n on resume for normal mode */
+-	if (pcs_misc)
+-		qphy_setbits(pcs_misc, QPHY_V3_PCS_MISC_CLAMP_ENABLE, CLAMP_EN);
++	if (pcs_aon)
++		qphy_setbits(pcs_aon, cfg->regs[QPHY_PCS_CLAMP_ENABLE], CLAMP_EN);
++	else if (pcs_misc)
++		qphy_setbits(pcs_misc, cfg->regs[QPHY_PCS_CLAMP_ENABLE], CLAMP_EN);
+ 
+ 	qphy_clrbits(pcs_usb, cfg->regs[QPHY_PCS_AUTONOMOUS_MODE_CTRL],
+ 		     ARCVR_DTCT_EN | ARCVR_DTCT_EVENT_SEL | ALFPS_DTCT_EN);
+@@ -3893,6 +3919,8 @@ static int qmp_combo_parse_dt(struct qmp_combo *qmp)
+ 	qmp->serdes = base + offs->usb3_serdes;
+ 	qmp->pcs_misc = base + offs->usb3_pcs_misc;
+ 	qmp->pcs = base + offs->usb3_pcs;
++	if (offs->usb3_pcs_aon)
++		qmp->pcs_aon = base + offs->usb3_pcs_aon;
+ 	qmp->pcs_usb = base + offs->usb3_pcs_usb;
+ 
+ 	qmp->dp_serdes = base + offs->dp_serdes;
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h
+new file mode 100644
+index 0000000000000..52db31a7cf22e
+--- /dev/null
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h
+@@ -0,0 +1,12 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2025, Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++#ifndef QCOM_PHY_QMP_PCS_AON_V6_H_
++#define QCOM_PHY_QMP_PCS_AON_V6_H_
++
++/* Only for QMP V6 PHY - PCS_AON registers */
++#define QPHY_V6_PCS_AON_CLAMP_ENABLE			0x00
++
++#endif
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h
+new file mode 100644
+index 0000000000000..77d04c6a1644c
+--- /dev/null
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h
+@@ -0,0 +1,12 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++#ifndef QCOM_PHY_QMP_PCS_MISC_V5_H_
++#define QCOM_PHY_QMP_PCS_MISC_V5_H_
++
++/* Only for QMP V5 PHY - PCS_MISC registers */
++#define QPHY_V5_PCS_MISC_CLAMP_ENABLE			0x0c
++
++#endif
 -- 
 2.53.0
 
