@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D6C3A961A;
-	Sat, 12 Sep 2026 07:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8044139E9C8;
+	Sat, 12 Sep 2026 07:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196751; cv=none; b=UBH3qPuKb2U1LBt31NdKB8d6w0xdeUuSRTT1HeB47SLVl3oDzvaU0MmoYu4GGlp29lYtQDs5LepqrpVhTGLjyJtOxyGqOcJ/PEjbbBQg1DYvJJZN1WCbnY82deZVCGPf/rgQcE5ad8QGTueeqn6Tbeyr5xAuWuUhAWLpnI0Fvtk=
+	t=1789196756; cv=none; b=OgPWX1rnX86tXbPe8PQbYzrHlsx0axYsDJcVQ7D2ok6HtAzUS/jn7zM9tX/ohApgV0iiqT5zI7cH2FkG3AkDPvo+acRS2ySYijHHjQcmhrD8uRNKJqRyjxw2DsEAcgoeaUuGr2M+KnyePEQvUccWMQ26nyHTEOZfLsZVTmOHQWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196751; c=relaxed/simple;
-	bh=4FxlG9IwqpLnB6QN3zo9XgcqVogBoEicMk6XXhOkhns=;
+	s=arc-20240116; t=1789196756; c=relaxed/simple;
+	bh=CqjD9Rle32xDUgmmHEfqMj66VjMNkocuWYS7ySWK41w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fya/jpKYm6sAsWewqeCs43sQX0iUUXEqG32R3pZJnptbQS9oGavKBxYxBrpSIkXtXMD+V3GWuAvJqu5P0fp+4/HwzakDDsQkzytjPQR9rr/XEGGrxGJVagMOtuS8qQeuoDOxVkCZNkFPJISE2XE4RqXo5Ya2kPzoLAp3zlCFRYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHJWZ8tj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nydkgKmHdqj1ZkEXYj1avyZfdbFZ+JANpnfdn5u5Uk+TMcewhAd/BOO/e2HwS1sd4g/r165+WxBtaqLoWGaV0ZN3V9XGabwafH1tdXSAjseL6pDFrqYqZ1NBxTKSMNommc+4iZttodrXQ/WYYWzDMMYfkkmG7ZNT7rfOpO1sYsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Agp0jhMY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHJWZ8tj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C854C1F00893;
-	Sat, 12 Sep 2026 07:05:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Agp0jhMY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B4E1F000FF;
+	Sat, 12 Sep 2026 07:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196747;
-	bh=G4a3Zov16AHHKNeukWXC3YtenDw+3DQY/Xk/uGru32g=;
+	s=korg; t=1789196752;
+	bh=UiH7j+eJJSiP8FRBF+YvfroSnM+KmxTk2TDNYqqzCXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aHJWZ8tj7jQyWMkXGwkFUYEu01oGVwHNaf7D74LYOkNYezi4om/MxP+jntrUhDyf4
-	 MNKV9/bYgg6VEIKohjq5xm6tENuZbMetXsxLTa8Gn0Xj3DP+JJHEZXisiuh2R30Xxm
-	 2jvVPbM5fXyvMu7SVlzNbcdJ4PPotTAEjSmg6iQc=
+	b=Agp0jhMYTrbnwrRyIsv+wOGqWx34/ZuJkKnYEwwxWfq0AcvoszA4aQOWZ86C0perG
+	 5oihw8qpsHmyO6EfDYy7WGkutIpEjY7DddZKqT1Z0260Px/iuz8kF8zJWAZbLxkEbG
+	 3FtuVZoDAwcyeSgllqYpqWzk7WIcFRwb4usrGMuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Kai Huang <kai.huang@intel.com>,
-	Binbin Wu <binbin.wu@linux.intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0029/1815] KVM: x86: Extract REGS and SREGS runtime sync code to helpers
-Date: Sat, 12 Sep 2026 08:29:39 +0200
-Message-ID: <20260912065649.692599267@linuxfoundation.org>
+Subject: [PATCH 7.2 0003/1815] batman-adv: bla: avoid CRC corruption due to parallel claim add
+Date: Sat, 12 Sep 2026 08:29:13 +0200
+Message-ID: <20260912065649.089117656@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,74 +51,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 6a8a98aa9c147eb63f5a360f157f207bf46c05ee ]
+commit 08645ab95768b88e2ff85a89211994651710465b upstream.
 
-Extract the REGS and SREGS portions of {store,sync}_regs() into separate
-helpers in anticipation of moving the register specific code out of x86.c
-and into regs.c.
+batadv_bla_add_claim() is used to add claims and modify the backbone of
+claims for CLAIM frames from remote backbones and local packets. When it
+handles a claim, it needs to either
 
-No functional change intended.
+* add the new claim's CRC to the backbone CRC
+* remove the already existing claim's CRC from the old backbone and add it
+  to the new backbone
 
-Cc: Yosry Ahmed <yosry@kernel.org>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
-Message-ID: <20260613000329.732085-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: 184bd464bdb6 ("KVM: x86: Check EFER validity on KVM_SET_SREGS*")
+But when the "new" claim code was running in parallel to the "change
+backbone" code, it can happen that the CRC was invalid because the
+backbone_gw of the claim was changed twice in the "new" claim code path:
+
+* CPU0 creates the claim for gateway A and publishes it in the claim
+  hash. The crc16 of the address has not yet been added to A's crc at
+  this point.
+
+* CPU1 processes a claim frame of gateway B for the same client, finds
+  the just published claim, and performs the ownership change: it
+  switches the pointer to B, removes the crc16 from A's crc - which
+  never contained it - and adds it to B's crc.
+
+* CPU0 continues behind the creation branch, unconditionally switches
+  the pointer back to A without compensating B's crc (its remove_crc
+  is false for the creation path), and finally adds the crc16 to A's
+  crc
+
+The CRC is then wrong for both:
+
+* claim belongs to A: but CRC is not part of backbone A's CRC
+* claim doesn't belong to B: CRC is still part of backbone B's CRC
+
+This wrong CRC is never recomputated from the stored claims. For local
+backbone claims, this can also not recovered using syncs.
+
+To avoid this, split the functionality in clear separate parts:
+
+* new claim which always adds claim CRC to the backbone CRC (but never
+  changes the already set backbone_gw of the claim back)
+
+* update of existing claim which automatically changes the backbone_gw
+  entry and only updates both backbone CRCs when there was an actual change
+
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
+[ Context ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |   17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ net/batman-adv/bridge_loop_avoidance.c | 63 ++++++++++++++++----------
+ 1 file changed, 39 insertions(+), 24 deletions(-)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -12696,7 +12696,7 @@ int kvm_arch_vcpu_ioctl_set_fpu(struct k
- 	return 0;
+diff --git a/net/batman-adv/bridge_loop_avoidance.c b/net/batman-adv/bridge_loop_avoidance.c
+index 7a31bc21bf87f..87d5569538436 100644
+--- a/net/batman-adv/bridge_loop_avoidance.c
++++ b/net/batman-adv/bridge_loop_avoidance.c
+@@ -694,12 +694,14 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
+ 	struct batadv_bla_backbone_gw *old_backbone_gw;
+ 	struct batadv_bla_claim *claim;
+ 	struct batadv_bla_claim search_claim;
+-	bool remove_crc = false;
+ 	int hash_added;
++	u16 claim_crc;
++	bool changed;
+ 
+ 	ether_addr_copy(search_claim.addr, mac);
+ 	search_claim.vid = vid;
+ 	claim = batadv_claim_hash_find(bat_priv, &search_claim);
++	claim_crc = crc16(0, mac, ETH_ALEN);
+ 
+ 	/* create a new claim entry if it does not exist yet. */
+ 	if (!claim) {
+@@ -731,43 +733,56 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
+ 			kfree(claim);
+ 			return;
+ 		}
++
++		spin_lock_bh(&backbone_gw->crc_lock);
++		backbone_gw->crc ^= claim_crc;
++		spin_unlock_bh(&backbone_gw->crc_lock);
++
++		WRITE_ONCE(backbone_gw->lasttime, jiffies);
++
++		batadv_claim_put(claim);
++		return;
++	}
++
++	WRITE_ONCE(claim->lasttime, jiffies);
++
++	/* replace backbone_gw atomically and adjust reference counters */
++	spin_lock_bh(&claim->backbone_lock);
++	if (claim->backbone_gw != backbone_gw) {
++		changed = true;
++
++		old_backbone_gw = claim->backbone_gw;
++		kref_get(&backbone_gw->refcount);
++		claim->backbone_gw = backbone_gw;
+ 	} else {
+-		WRITE_ONCE(claim->lasttime, jiffies);
+-		if (claim->backbone_gw == backbone_gw)
+-			/* no need to register a new backbone */
+-			goto claim_free_ref;
++		old_backbone_gw = NULL;
++		changed = false;
++	}
++	spin_unlock_bh(&claim->backbone_lock);
+ 
++	if (changed) {
+ 		batadv_dbg(BATADV_DBG_BLA, bat_priv,
+ 			   "%s(): changing ownership for %pM, vid %d to gw %pM\n",
+ 			   __func__, mac, batadv_print_vid(vid),
+ 			   backbone_gw->orig);
+ 
+-		remove_crc = true;
+-	}
++		/* add claim address to new backbone_gw */
++		spin_lock_bh(&backbone_gw->crc_lock);
++		backbone_gw->crc ^= claim_crc;
++		spin_unlock_bh(&backbone_gw->crc_lock);
+ 
+-	/* replace backbone_gw atomically and adjust reference counters */
+-	spin_lock_bh(&claim->backbone_lock);
+-	old_backbone_gw = claim->backbone_gw;
+-	kref_get(&backbone_gw->refcount);
+-	claim->backbone_gw = backbone_gw;
+-	spin_unlock_bh(&claim->backbone_lock);
++		WRITE_ONCE(backbone_gw->lasttime, jiffies);
++	}
+ 
+-	if (remove_crc) {
++	if (old_backbone_gw) {
+ 		/* remove claim address from old backbone_gw */
+ 		spin_lock_bh(&old_backbone_gw->crc_lock);
+-		old_backbone_gw->crc ^= crc16(0, claim->addr, ETH_ALEN);
++		old_backbone_gw->crc ^= claim_crc;
+ 		spin_unlock_bh(&old_backbone_gw->crc_lock);
+-	}
+-
+-	batadv_backbone_gw_put(old_backbone_gw);
+ 
+-	/* add claim address to new backbone_gw */
+-	spin_lock_bh(&backbone_gw->crc_lock);
+-	backbone_gw->crc ^= crc16(0, claim->addr, ETH_ALEN);
+-	spin_unlock_bh(&backbone_gw->crc_lock);
+-	WRITE_ONCE(backbone_gw->lasttime, jiffies);
++		batadv_backbone_gw_put(old_backbone_gw);
++	}
+ 
+-claim_free_ref:
+ 	batadv_claim_put(claim);
  }
  
--static void store_regs(struct kvm_vcpu *vcpu)
-+static void kvm_run_sync_regs_to_user(struct kvm_vcpu *vcpu)
- {
- 	BUILD_BUG_ON(sizeof(struct kvm_sync_regs) > SYNC_REGS_SIZE_BYTES);
- 
-@@ -12705,13 +12705,18 @@ static void store_regs(struct kvm_vcpu *
- 
- 	if (vcpu->run->kvm_valid_regs & KVM_SYNC_X86_SREGS)
- 		__get_sregs(vcpu, &vcpu->run->s.regs.sregs);
-+}
-+
-+static void store_regs(struct kvm_vcpu *vcpu)
-+{
-+	kvm_run_sync_regs_to_user(vcpu);
- 
- 	if (vcpu->run->kvm_valid_regs & KVM_SYNC_X86_EVENTS)
- 		kvm_vcpu_ioctl_x86_get_vcpu_events(
- 				vcpu, &vcpu->run->s.regs.events);
- }
- 
--static int sync_regs(struct kvm_vcpu *vcpu)
-+static int kvm_run_sync_regs_from_user(struct kvm_vcpu *vcpu)
- {
- 	if (vcpu->run->kvm_dirty_regs & KVM_SYNC_X86_REGS) {
- 		__set_regs(vcpu, &vcpu->run->s.regs.regs);
-@@ -12727,6 +12732,14 @@ static int sync_regs(struct kvm_vcpu *vc
- 		vcpu->run->kvm_dirty_regs &= ~KVM_SYNC_X86_SREGS;
- 	}
- 
-+	return 0;
-+}
-+
-+static int sync_regs(struct kvm_vcpu *vcpu)
-+{
-+	if (kvm_run_sync_regs_from_user(vcpu))
-+		return -EINVAL;
-+
- 	if (vcpu->run->kvm_dirty_regs & KVM_SYNC_X86_EVENTS) {
- 		struct kvm_vcpu_events events = vcpu->run->s.regs.events;
- 
+-- 
+2.53.0
+
 
 
