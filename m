@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41521DE4EF;
-	Sat, 12 Sep 2026 14:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31E032B125;
+	Sat, 12 Sep 2026 14:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223866; cv=none; b=OCPG3MCcdPMSWjeF3Mh98/BYXqDBp6KaavwFtKBF7rOgxgCOG4S96llfG07XdjRyzt15Qtg7/DFzrgNMCi1zkOPV5O+xc1zRAkutJexRG3ZsMkfRPEb/beEajSbZNOTEZkC8iP7AtiCOydMoL+hIQLpwQpMkk5VmvN5W4NLlT1U=
+	t=1789223877; cv=none; b=QJIrCvRZ0yPBr02CbDiQ9s4SOZHBXehNGotu3SmWIRSfBLkEAJdeATJ529SGJniqeooMLXTsIyo1LQDbMVYH2hr3lf7DzLsfqY4JeyooJobCe6QmDvz3bqnq72hAfbeLrjXLt/l+Uh4QJ79gq2N/m7OqWePvOclfJn4Bgoym8Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223866; c=relaxed/simple;
-	bh=2+XDDi4VQbxfFFUc5gcXmuYbxaPGmh5RZliXH8sXuhE=;
+	s=arc-20240116; t=1789223877; c=relaxed/simple;
+	bh=miUizKVXN3b/TfMPj+sxjbv43cOFPdlH0F3VjIVJNWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aUM5KLmxEfgrxMWDDd39eIUnYS+e01wh7cnv4iHZNKCEBVf3LGZvrTdXOEx9cfaacZDYa1J9EzxflnlrVcVmciLQjXSNX5r8WCmlN0aXkR9VJFACJgU+Mx9ErTg7g7C4b836hCLXy9QSbIf1YwG+yDr05yC/kPvuvVTGHJ7JE5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0vWT7WGQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yh0sphTCxrgnSl57MhcJuzZbDpctOvtEGgXnm8ZA+PmQJ+3ElSYZx9KFR6hAsC5K6t4nBo/1TSfZx3ifYN4HA9Y5rH/WxVcJasyU7KzoA3ZhI24lWn+4g9OJYm+55ObfFCD52bZM3UVr52uEG859yX2dSVHvL5xQJi8ygKHJpTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVBmimiK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0vWT7WGQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 979D81F000FF;
-	Sat, 12 Sep 2026 14:37:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVBmimiK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37EAB1F000FF;
+	Sat, 12 Sep 2026 14:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223864;
-	bh=4KiQYSd1u4JQZkkKZHEg7t0uB694cU9Lp8/mpt/aYFM=;
+	s=korg; t=1789223869;
+	bh=eLrFcin5d5Jt3igHn62ePFSJMxjkb3uC3odxiesGLvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0vWT7WGQKf8Re5rk3FA8Iw8lCFCq+V/WV80Dsk3MQ5xOpSopzmtAuN/uFtsXybyJd
-	 AUCSZ4uNmybnYNGJwIfmUvPxPcMN+R3T3EjcTmohPHvV/GrN6vH0aWYqYiZhkhmCCL
-	 G3dB3TYWOV9XNP0kCe+LG+aNoL8MWsHQ4byl73yg=
+	b=GVBmimiKpmeeVZ6b8kRXjEw5n1x7stG8fw0OMOmCPobjC+GhbqxSwUzOJTvlwoV8s
+	 tR8rPIAMxglMXDcHuShorBCdYIzQ02pzyxIzULeXlRlKyi1o067KbuNbYWGKL/5gM8
+	 f/mlhTaWh1Koo5I3Wld8TDkzFTigwkeAvRxd+CMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Ming <ming.li@zohomail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Guanghui Yang <3497809730@qq.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0877/1424] cxl/region: Fix use-after-free in find_pos_and_ways() error path
-Date: Sat, 12 Sep 2026 08:55:09 +0200
-Message-ID: <20260912065626.962993171@linuxfoundation.org>
+Subject: [PATCH 6.6 0860/1424] ext4: fix buffer_head leak in ext4_init_orphan_info
+Date: Sat, 12 Sep 2026 08:54:52 +0200
+Message-ID: <20260912065626.576240371@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,50 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alison Schofield <alison.schofield@intel.com>
+From: Guanghui Yang <3497809730@qq.com>
 
-[ Upstream commit 15da704b732332cc1e8f121f624e5e6c05124c5d ]
+[ Upstream commit 05704335803b69c1bfa8637b7ada942bf2ee8a41 ]
 
-The error path releases its reference to a switch decoder before
-logging an error that includes the decoder name. If the released
-reference is the last one, the decoder can be freed before the error
-message accesses its name.
+ext4_init_orphan_info() reads orphan file blocks with ext4_bread()
+and stores the returned buffer_head in oi->of_binfo[i].ob_bh.
 
-Drop the reference after the error is reported.
+If ext4_bread() succeeds but the orphan block magic or checksum
+validation fails, the function jumps to out_free. However, the old
+out_free loop starts releasing buffers from i - 1, so the current
+buffer_head at index i is skipped.
 
-Fixes: d90acdf49e18 ("cxl/region: Add a dev_err() on missing target list entries")
-Reviewed-by: Li Ming <ming.li@zohomail.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/10deb519b543ef693ce23148b509a03fe1c07d0c.1784931354.git.alison.schofield@intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+This leaks the buffer_head reference obtained by ext4_bread() on the
+bad magic and bad checksum error paths.
+
+Fix this by tracking the number of successfully read buffer_heads and
+releasing exactly those buffer_heads on the error path.
+
+Fixes: 02f310fcf47f ("ext4: Speedup ext4 orphan inode handling")
+Signed-off-by: Guanghui Yang <3497809730@qq.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/tencent_B38798612A159E21450ECF959016371B0807@qq.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/region.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ fs/ext4/orphan.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index 1728cae1e8409..af4f8bbe63c44 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -1651,14 +1651,13 @@ static int find_pos_and_ways(struct cxl_port *port, struct range *range,
- 			break;
+diff --git a/fs/ext4/orphan.c b/fs/ext4/orphan.c
+index d06e6aef4683d..7a5893dc18114 100644
+--- a/fs/ext4/orphan.c
++++ b/fs/ext4/orphan.c
+@@ -573,6 +573,7 @@ int ext4_init_orphan_info(struct super_block *sb)
+ 	int i, j;
+ 	int ret;
+ 	int free;
++	int loaded = 0;
+ 	__le32 *bdata;
+ 	int inodes_per_ob = ext4_inodes_per_orphan_block(sb);
+ 	struct ext4_orphan_block_tail *ot;
+@@ -616,6 +617,7 @@ int ext4_init_orphan_info(struct super_block *sb)
+ 			ret = -EIO;
+ 			goto out_free;
  		}
- 	}
--	put_device(dev);
--
- 	if (rc)
- 		dev_err(port->uport_dev,
- 			"failed to find %s:%s in target list of %s\n",
- 			dev_name(&port->dev),
--			dev_name(port->parent_dport->dport_dev),
--			dev_name(&cxlsd->cxld.dev));
-+			dev_name(port->parent_dport->dport_dev), dev_name(dev));
-+
-+	put_device(dev);
- 
- 	return rc;
- }
++		loaded++;
+ 		ot = ext4_orphan_block_tail(sb, oi->of_binfo[i].ob_bh);
+ 		if (le32_to_cpu(ot->ob_magic) != EXT4_ORPHAN_BLOCK_MAGIC) {
+ 			ext4_error(sb, "orphan file block %d: bad magic", i);
+@@ -638,8 +640,10 @@ int ext4_init_orphan_info(struct super_block *sb)
+ 	iput(inode);
+ 	return 0;
+ out_free:
+-	for (i--; i >= 0; i--)
+-		brelse(oi->of_binfo[i].ob_bh);
++	while (loaded > 0) {
++		loaded--;
++		brelse(oi->of_binfo[loaded].ob_bh);
++	}
+ 	kvfree(oi->of_binfo);
+ out_put:
+ 	iput(inode);
 -- 
 2.53.0
 
