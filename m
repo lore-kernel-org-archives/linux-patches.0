@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E14D38E8B9;
-	Sat, 12 Sep 2026 19:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67E838AC72;
+	Sat, 12 Sep 2026 19:51:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242673; cv=none; b=bJke0/N1nDujDocw17kBFKVxYM0uZsiNH2S4vzE1FCWI0Edf0BMsXU2NiIAVFbOV+/xWxsEQN9omDsf9TzRC2F6e5rYvbhZIeHdXGfefyRCDMirZtgJex3o9O81Pz9ZJxfPwyVKgpF6VQy8jRuMJioIb9O4OEyfexy5BR/9u7hk=
+	t=1789242675; cv=none; b=qh0OVpv6Qv0SJ5I8OJqolZguQW9l6Az5eDbwng69EH+B5rLhHo0hb3ga7jd6FwbIy6EM22qVIwzQE2PJCN1ehSngqhLpWsOk4nX+i6xDkLl2lM+twRyluAkBnwjRyfVMq9U5/9tmKa7UXD5+Gjj9UhTEC2EkaOq5Ql5CS/mF24Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242673; c=relaxed/simple;
-	bh=EqBjg678/VfURXHyENjkT3MLrIEERnevS+9nMgsA3+8=;
+	s=arc-20240116; t=1789242675; c=relaxed/simple;
+	bh=mPfK9nWXCEhVyNq+T2oblnXeNMRMDzTdlSUTkLPa/eM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DfEzNyhahSLk2OuN2iNhnV89a+6+oScwcbJYC6G6wPjMQLu2JulCrPLlPZWiL8Dm3+Kp2r3h5WLfhyWLkr7GJ5CSy89YsPigLRrN6ikXMKLJeIqbRyMRVyxM2J75QKPrY3Z/tEFJysA9O+Cgf19cFOjhlzYyCF5qCSZUlyeauWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qyq6PsyU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BS0a7OkVvbSj1lXZxJskINAE/HstQ6PL8RSqoLfJEqmzJmuKLKOCEPK8Hs+GvAVCTcrRSp0brJKuabmfxAY4SvdPFskPEoYS188SHLRrnS0WiUNM2YHIdcsZZyJoiDn0o2XprJ+aKF8qUNH5pRehp+GC52yLCvb4QDbPvKYr/Iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SXKYa7/j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qyq6PsyU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0061F000FF;
-	Sat, 12 Sep 2026 19:51:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SXKYa7/j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC141F000FF;
+	Sat, 12 Sep 2026 19:51:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242671;
-	bh=a2xsLR16AdBQNDtXXMbHzIKa+gW/oVorlMIMfl2HibM=;
+	s=korg; t=1789242674;
+	bh=kd1fzU1qayPIJ4B7u1uKaD9EC6iq5iTWMq2xvcAVh54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qyq6PsyUgF1rPVom8nTJKlFVlXnMso1n4N/GbTs8AXP8T+Xxv008tMMq/hywSaseV
-	 ZpEgH9+cv6J/js+k99pl9D8nQxq+RJP7RUlY99K1AAJae+Ozei1gOanhh7YKU+l0Nq
-	 pui+N7ctkOsPZyfAVS1j7NmYTA9Kx+u4Fchv/x50=
+	b=SXKYa7/j8D/6g5hy8aCeuwCCpGVHMmeY7Pf0PgQ2/Jqhfk3TDeHyyvEuCJimShH7N
+	 A3hCMNNNnLlRXt+1zyWvP5Ew94gwLXeVFIPRmNbJm0My9QSX3857u7N0YknH9/GQm0
+	 COBNZi/tam0JsMn+zuHxX+btgEmVuS3C+f3R3diM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 487/798] scsi: target: Remove TARGET_SCF_LOOKUP_LUN_FROM_TAG
-Date: Sat, 12 Sep 2026 09:01:55 +0200
-Message-ID: <20260912065528.304824191@linuxfoundation.org>
+Subject: [PATCH 5.10 470/798] mtd: mtdswap: Avoid freeing registered blktrans device twice
+Date: Sat, 12 Sep 2026 09:01:38 +0200
+Message-ID: <20260912065527.918756930@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,86 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 27b0efd15d5247ada0c2ed9cbc77fd3fb3b1f26d ]
+[ Upstream commit 779aa4c66a96bf43d2d62982ea1a9096a9128d87 ]
 
-TARGET_SCF_LOOKUP_LUN_FROM_TAG is no longer used so remove it.
+In mtdswap_add_mtd(), debugfs setup failure after successful blktrans
+registration can free mbd_dev twice.
 
-Link: https://lore.kernel.org/r/1604257174-4524-5-git-send-email-michael.christie@oracle.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: ef63cc441703 ("RDMA/srpt: Pass the mapped task attribute to target_init_cmd()")
+add_mtd_blktrans_dev() initializes the blktrans device reference and
+publishes the disk. Once that succeeds, del_mtd_blktrans_dev() tears the
+disk down and drops the blktrans reference; when that reference reaches
+zero, blktrans_dev_release() frees the mtd_blktrans_dev.
+
+The debugfs failure path called del_mtd_blktrans_dev(mbd_dev), then fell
+through the common cleanup label and called kfree(mbd_dev) again. Clear
+the local pointer after deregistration so the common cleanup can still
+release the mtdswap state without freeing the blktrans object twice.
+
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: e8e3edb95ce6 ("mtd: create per-device and module-scope debugfs entries")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/target_core_transport.c | 33 --------------------------
- include/target/target_core_base.h      |  1 -
- 2 files changed, 34 deletions(-)
+ drivers/mtd/mtdswap.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/target/target_core_transport.c b/drivers/target/target_core_transport.c
-index ddcfd5c17d96e..2fd2a513c6b96 100644
---- a/drivers/target/target_core_transport.c
-+++ b/drivers/target/target_core_transport.c
-@@ -1771,29 +1771,6 @@ static void target_complete_tmr_failure(struct work_struct *work)
- 	transport_cmd_check_stop_to_fabric(se_cmd);
- }
+diff --git a/drivers/mtd/mtdswap.c b/drivers/mtd/mtdswap.c
+index bd4ac12099624..5819918035682 100644
+--- a/drivers/mtd/mtdswap.c
++++ b/drivers/mtd/mtdswap.c
+@@ -1454,6 +1454,7 @@ static void mtdswap_add_mtd(struct mtd_blktrans_ops *tr, struct mtd_info *mtd)
  
--static bool target_lookup_lun_from_tag(struct se_session *se_sess, u64 tag,
--				       u64 *unpacked_lun)
--{
--	struct se_cmd *se_cmd;
--	unsigned long flags;
--	bool ret = false;
--
--	spin_lock_irqsave(&se_sess->sess_cmd_lock, flags);
--	list_for_each_entry(se_cmd, &se_sess->sess_cmd_list, se_cmd_list) {
--		if (se_cmd->se_cmd_flags & SCF_SCSI_TMR_CDB)
--			continue;
--
--		if (se_cmd->tag == tag) {
--			*unpacked_lun = se_cmd->orig_fe_lun;
--			ret = true;
--			break;
--		}
--	}
--	spin_unlock_irqrestore(&se_sess->sess_cmd_lock, flags);
--
--	return ret;
--}
--
- /**
-  * target_submit_tmr - lookup unpacked lun and submit uninitialized se_cmd
-  *                     for TMR CDBs
-@@ -1841,16 +1818,6 @@ int target_submit_tmr(struct se_cmd *se_cmd, struct se_session *se_sess,
- 		core_tmr_release_req(se_cmd->se_tmr_req);
- 		return ret;
- 	}
--	/*
--	 * If this is ABORT_TASK with no explicit fabric provided LUN,
--	 * go ahead and search active session tags for a match to figure
--	 * out unpacked_lun for the original se_cmd.
--	 */
--	if (tm_type == TMR_ABORT_TASK && (flags & TARGET_SCF_LOOKUP_LUN_FROM_TAG)) {
--		if (!target_lookup_lun_from_tag(se_sess, tag,
--						&se_cmd->orig_fe_lun))
--			goto failure;
--	}
+ debugfs_failed:
+ 	del_mtd_blktrans_dev(mbd_dev);
++	mbd_dev = NULL;
  
- 	ret = transport_lookup_tmr_lun(se_cmd);
- 	if (ret)
-diff --git a/include/target/target_core_base.h b/include/target/target_core_base.h
-index e681c712fcca2..83b685dab2675 100644
---- a/include/target/target_core_base.h
-+++ b/include/target/target_core_base.h
-@@ -195,7 +195,6 @@ enum target_sc_flags_table {
- 	TARGET_SCF_ACK_KREF		= 0x02,
- 	TARGET_SCF_UNKNOWN_SIZE		= 0x04,
- 	TARGET_SCF_USE_CPUID		= 0x08,
--	TARGET_SCF_LOOKUP_LUN_FROM_TAG	= 0x10,
- };
- 
- /* fabric independent task management function values */
+ cleanup:
+ 	mtdswap_cleanup(d);
 -- 
 2.53.0
 
