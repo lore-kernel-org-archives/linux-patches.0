@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F012D0C94;
-	Sat, 12 Sep 2026 19:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34B53148A7;
+	Sat, 12 Sep 2026 19:39:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241978; cv=none; b=FZZyYLbZ69AGHLMziznU/iIcSPttYm63BORXT3osRhiNymnNUCSKUuR7U/9b+MLO2ATM4wmGFVE7PSRuJPlg/EhuKWPWKrxKEKIXultm36Ks0+0SVRd6Xuki3KlFw5Jt6A4QPVoDwPBFsp2+OYKNz1tv/x2GvZbM78rwm2UC+OU=
+	t=1789241983; cv=none; b=TVaUpX7TnWQuFT8mrMHJKzmF/m3kun2ahu8Gf1Ooqk2/qHWsZ3FbjF4lqS9NdX6xyjStIeFqyIZmneHkJYxx5xV6S0C2BmriPmUDO+jkuHDi5bfxYvKKTIV6A4N10Os/x0yfYKf4BCz++aNKjWyg3XJimvle8ovUCEAScIzkZjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241978; c=relaxed/simple;
-	bh=/fLZzSaoXOCjb7RyGHxCzX1MmZY8P8ELoirSY/+wpvE=;
+	s=arc-20240116; t=1789241983; c=relaxed/simple;
+	bh=2Teon5xDXVojFIbD83jJHW+82RS4XhoAvIVkkQzYydo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d1zYc2Zqp0f5NTFjyrBSOUpgllLPxhSYufRQVtecBtSm1nq2CoUt4VwbisRfHczJ6yYsphGHCniIJKf6WT3Unh5qQesmiRz3/iIpf0iJXsmooOIrk4WrE6RrVbwMf6n58/dG/My4TWm+fHCrlt7V2rxe/Likybus8gt29q4pgTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9jhrlqE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G7pKDQJOwkVCQSn5rojQpPtYEsuceJxfO+nnWCQe7mMcsamaiv2zSlUY3HeoiUvbLwGL5O2c5FUQb+N2X3UhbN3waUkd5BmpeTJVRYgpN33QPbsJX0hv+Me41KeL9WKKo23gASXvcaX/XniG5f2lP22q0VjHWPJz1egsZT2EK2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCscdkCI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9jhrlqE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863651F000FF;
-	Sat, 12 Sep 2026 19:39:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCscdkCI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D211F000FF;
+	Sat, 12 Sep 2026 19:39:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241977;
-	bh=JG+YY7hxjJmEcIxvCF0c15n+kNiutYpTy76+uTmz9IM=;
+	s=korg; t=1789241982;
+	bh=z20F0w2Qpyze+tIxtQKzkGFHB1ZbjWVepxJfGAR2dJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l9jhrlqEvBvf4OfE+FTJ7GjC0peFkZu7i4nvfGBeIF4AzglQKMjER/vepaSiAey9f
-	 lbG8Fvph/U/pGNWCUKs2dbbHTU6hqOcmi9chY+/DFiR+mBfu75ype7k1vYYDH7dxvL
-	 kfWmTTpNxEyo4a/C7uMhvn3pjNt1hPXZ03uwHRwY=
+	b=ZCscdkCIgW00xQnv67pXuFke2K8togl6KFWIe1u40o1n8ac5JAeECgdrG486tvy/O
+	 BJ0C5hcaLwL5u14skYJMsiu53JtOAb+ZKkJ4asxuQVYRTBIJH535HBZdsGeBc05+7x
+	 sabZINYgHCeV8hShHdB03Zy8h/oq7iKey9EI//RM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 240/798] parisc: Fix alignment of asm statements in head.S
-Date: Sat, 12 Sep 2026 08:57:48 +0200
-Message-ID: <20260912065522.658758696@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 5.10 249/798] clk: qcom: gcc-msm8939: Fix enable_reg for gcc_blsp1_sleep_clk
+Date: Sat, 12 Sep 2026 08:57:57 +0200
+Message-ID: <20260912065522.866537618@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -49,30 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit 04cf68c9a76e3c6b67ad056a66a14923abf85925 upstream.
+commit fc611445b021262b0d4ace6f716a360663816287 upstream.
 
-All assembler statements need to be 4-byte aligned. Prevent a possible
-misalignment if someone changes the preceeding string and it's length is
-then suddenly not a multiple of 4 any longer.
+MSM8939 is similar to MSM8916, where the GCC_BLSP1_SLEEP_CBCR register is
+read-only and only has the CLK_OFF bit to check if the clock is running.
+This is a shared vote clock, the correct way to enable it is to vote for
+BLSP1_SLEEP_CLK_ENA (BIT(9)) in GCC_APCS_CLOCK_BRANCH_ENA_VOTE (0x45004).
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 1664014e4679 ("clk: qcom: gcc-msm8939: Add MSM8939 Generic Clock Controller")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20260706-qcom-clk-mdm9607-fixes-v2-2-745565101869@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/head.S |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/qcom/gcc-msm8939.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/parisc/kernel/head.S
-+++ b/arch/parisc/kernel/head.S
-@@ -104,6 +104,7 @@ $iodc_panic:
- 	or		%r10,%r10,%r10	/* qemu idle sleep */
- msg1:	.ascii "Can't boot kernel which was built for PA8x00 CPUs on this machine.\r\n"
- msg1_end:
-+	.align 4
+--- a/drivers/clk/qcom/gcc-msm8939.c
++++ b/drivers/clk/qcom/gcc-msm8939.c
+@@ -1862,9 +1862,10 @@ static struct clk_branch gcc_blsp1_ahb_c
  
- $cpu_ok:
- #endif
+ static struct clk_branch gcc_blsp1_sleep_clk = {
+ 	.halt_reg = 0x01004,
++	.halt_check = BRANCH_HALT_VOTED,
+ 	.clkr = {
+-		.enable_reg = 0x01004,
+-		.enable_mask = BIT(0),
++		.enable_reg = 0x45004,
++		.enable_mask = BIT(9),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_blsp1_sleep_clk",
+ 			.ops = &clk_branch2_ops,
 
 
