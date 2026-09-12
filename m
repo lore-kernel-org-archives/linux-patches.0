@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F812BDC0E;
-	Sat, 12 Sep 2026 07:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A339D2EBDE9;
+	Sat, 12 Sep 2026 07:21:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197664; cv=none; b=SlgBnsJ3Mv3xPg6xU57CuTPqIkB2mdAynYTCx7Q19oNuIFS8635D0hgEJuWst0T+ZDZ0LVWFu5raJx1OB6aMRXIDxXW/ZLIgXbP8NrVvv7EOJIXDYQxDQGaHyac+GQ/n7H9K03T6+h4aBTA0VWTXMjsTCy5RlCrexCZBvD4MkzA=
+	t=1789197668; cv=none; b=V7Z5kfaBIfz4WI1zGZUR+lDpdFABnKu2rrDUBgFulwwtA3zwPPfQfQvfeJs6KvZmn2hGHxNk4wSigmifbPBgKCsy4Sog9sVs9f3pFsuCalIrWRib2ArTsu7TNZN87kfWOJ5379JTc4IDXGFPxBCy1nZCxmxaEzlDOG+fwY4ht9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197664; c=relaxed/simple;
-	bh=oGcX/WHtC9+x/Xg9jyrPojCHCsIIo2EPMqy7GiifyDM=;
+	s=arc-20240116; t=1789197668; c=relaxed/simple;
+	bh=2ytG2zelHUMWBCJ3lzZ2FHk7bqtNhJ3wMjkNXxTcu5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sytgUqCeALu93CiIeqzlVsIqudx+geuUFtAmNFrg4JwLO2gfJXbCP+gR/xHfcbux+K2/vmLk7guMwokon7JPd0W+a4NItD7XEPCgJAITQbEtUUv8vkrBnrQVnSUOJWC4WT/kE15+hLTmjzfF3+wKxfwVhsdiGybv7ghy1f4MEbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taifl1x8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dj8JAoFCplqF/JijemDJu/4O0Lrsf5qrQ/tY1KwV/jF45Rmi03yFYQ3gI52feT44P6GhwScPw5tpZnbvn9b5Rb1hxG8sx9vR29A/QfLlt0VsKNJZ0vZmNkSOZdsulARVMrotXZws9iYvnUPDcssld510UoSVKoDkVXuenpXaqqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZRnFvDt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taifl1x8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7059F1F000FF;
-	Sat, 12 Sep 2026 07:21:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZRnFvDt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B3B1F000FF;
+	Sat, 12 Sep 2026 07:21:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197662;
-	bh=+0lONlo++ttuCbb+CdlWEx6ESTlnQZVXebdXoANIxjc=;
+	s=korg; t=1789197667;
+	bh=YjlChZHfxQ4XnK9jXuVR6G+9lhL6RcLt98HGWZTw/G4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=taifl1x8YXZeV2l+HqgRTTEsEQZH684dtyp/LWBCnde0VMWrMJWieGdLaiD0jDQze
-	 eMi88SkRMwKKGo2noTyIFug1NbZ7ECYobVP8V9aQoxFZJYU8TtXpFVQRA7EK+KvgK/
-	 KFl9WZ/sYQL5j0D7nRK5SkmLYF5H3YDpAVbUmhww=
+	b=vZRnFvDtLvBu2TUY0d2pK6x2kf4k5tXfcukX8H3TxzxDcefmZusc8IDI/RA2xvJNA
+	 EMbh3MWEPKHGeLwVPH8lmw07AalmwRQmQht7a+LsC1NaD9a7zjOnJ4NMG2Wsreq9EE
+	 zUOAsI5MpO0bKE1xTKEyXAUYvaRpJuhdZ8saPZq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Anvesh Jain P <anvesh.p@oss.qualcomm.com>,
+	Anthony Ruhier <aruhier@mailbox.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0184/1815] perf test amd ibs: avoid using executable heap
-Date: Sat, 12 Sep 2026 08:32:14 +0200
-Message-ID: <20260912065653.323450743@linuxfoundation.org>
+Subject: [PATCH 7.2 0220/1815] arm64: dts: qcom: glymur-crd: Add Embedded controller node
+Date: Sat, 12 Sep 2026 08:32:50 +0200
+Message-ID: <20260912065654.158050428@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,77 +56,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
 
-[ Upstream commit e34006e7435fdd2c8d15e89d2137a4bf22c16401 ]
+[ Upstream commit 44c655a08c9ee9590e64f8306a66917bbb629970 ]
 
-Making [parts of] the heap executable is dangerous and is blocked by
-SELinux on Fedora/RHEL even for an unconfined user. Replace the malloc()
-+ mprotect() combo with just mmap(), creating a private anonymous rwx
-mapping, which only requires the more commonly allowed "execmem"
-permission under SELinux (things like JIT or regex compilation need it
-as well). mmap() with MAP_ANONYMOUS will give us a zeroed mapping that
-begins on a page boundary, so the result is equivalent to the original
-code even without a memset() or the page-alignment dance.
+Add embedded controller node for Glymur CRDs which adds fan control,
+temperature sensors, access to EC state changes through SCI events
+and suspend entry/exit notifications to the EC.
 
-Verified that the test still passes on a machine with an AMD CPU that
-has the "ibs" CPU flag.
-
-Fixes: 35db59fa8ea2 ("perf test amd ibs: Add sample period unit test")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Reviewed-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Co-developed-by: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
+Signed-off-by: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
+Tested-by: Anthony Ruhier <aruhier@mailbox.org>
+Link: https://lore.kernel.org/r/20260511-add-driver-for-ec-v9-3-e5437c39b7f8@oss.qualcomm.com
+[bjorn: Added i2c alias for &i2c9]
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: f64ef325f1d9 ("arm64: dts: glymur-crd: Add reset GPIO to touchscreen node")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/arch/x86/tests/amd-ibs-period.c | 20 ++++++--------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
+ arch/arm64/boot/dts/qcom/glymur-crd.dtsi | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/tools/perf/arch/x86/tests/amd-ibs-period.c b/tools/perf/arch/x86/tests/amd-ibs-period.c
-index 6a92b3a23ed7a..32713f8fcd5c8 100644
---- a/tools/perf/arch/x86/tests/amd-ibs-period.c
-+++ b/tools/perf/arch/x86/tests/amd-ibs-period.c
-@@ -46,7 +46,6 @@ static int dummy_workload_1(unsigned long count)
- {
- 	int (*func)(void);
- 	int ret = 0;
--	char *p;
- 	char insn1[] = {
- 		0xb8, 0x01, 0x00, 0x00, 0x00, /* mov 1,%eax */
- 		0xc3, /* ret */
-@@ -59,18 +58,11 @@ static int dummy_workload_1(unsigned long count)
- 		0xcc, /* int 3 */
+diff --git a/arch/arm64/boot/dts/qcom/glymur-crd.dtsi b/arch/arm64/boot/dts/qcom/glymur-crd.dtsi
+index e784b538f42e1..f7478b59624e6 100644
+--- a/arch/arm64/boot/dts/qcom/glymur-crd.dtsi
++++ b/arch/arm64/boot/dts/qcom/glymur-crd.dtsi
+@@ -22,6 +22,7 @@ aliases {
+ 		i2c0 = &i2c0;
+ 		i2c1 = &i2c4;
+ 		i2c2 = &i2c5;
++		i2c3 = &i2c9;
+ 		spi0 = &spi18;
  	};
  
--	p = calloc(2, page_size);
--	if (!p) {
--		printf("malloc() failed. %m");
--		return 1;
--	}
--
--	func = (void *)((unsigned long)(p + page_size - 1) & ~(page_size - 1));
--
--	ret = mprotect(func, page_size, PROT_READ | PROT_WRITE | PROT_EXEC);
--	if (ret) {
--		printf("mprotect() failed. %m");
--		goto out;
-+	func = mmap(NULL, page_size, PROT_READ | PROT_WRITE | PROT_EXEC,
-+		    MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+	if (func == MAP_FAILED) {
-+		pr_debug("mmap() failed. %m\n");
-+		return -1;
- 	}
+@@ -444,6 +445,22 @@ vreg_l4h_e0_1p2: ldo4 {
+ 	};
+ };
  
- 	if (count < 100000)
-@@ -93,7 +85,7 @@ static int dummy_workload_1(unsigned long count)
- 	}
++&i2c9 {
++	clock-frequency = <400000>;
++
++	status = "okay";
++
++	embedded-controller@76 {
++		compatible = "qcom,glymur-crd-ec", "qcom,hamoa-crd-ec";
++		reg = <0x76>;
++
++		interrupts-extended = <&tlmm 66 IRQ_TYPE_EDGE_FALLING>;
++
++		pinctrl-0 = <&ec_int_n_default>;
++		pinctrl-names = "default";
++	};
++};
++
+ &pcie3b {
+ 	vddpe-3v3-supply = <&vreg_nvmesec>;
  
- out:
--	free(p);
-+	munmap(func, page_size);
- 	return ret;
- }
+@@ -596,6 +613,12 @@ hall_int_n_default: hall-int-n-state {
+ 		bias-disable;
+ 	};
  
++	ec_int_n_default: ec-int-n-state {
++		pins = "gpio66";
++		function = "gpio";
++		bias-disable;
++	};
++
+ 	pcie4_default: pcie4-default-state {
+ 		clkreq-n-pins {
+ 			pins = "gpio147";
 -- 
 2.53.0
 
