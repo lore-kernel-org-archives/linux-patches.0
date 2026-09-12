@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4F7362120;
-	Sat, 12 Sep 2026 09:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB55F364038;
+	Sat, 12 Sep 2026 09:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206368; cv=none; b=nryyVMyofNllb7UyEmgQnDGXOygUXOmxIawYTmPs3TIlt5sNlao1NrwOuYbbwXDpvL6hhzEstH3RRXKfjFaV5bgQC7iOXOzQfxKkuKACww08t2dnPMPXtjO+BuhSaiv2X4q8SrKO13JQSzcjhbDPDmnaJkHB+X1Uj4emADYOAjE=
+	t=1789206374; cv=none; b=IgJZDyEVOa3AsZuGI+ohaeEWETmGVe6t+6Bluntlk9eAGqbAxR5lzZDTsApp8gucXZrvBwvg1HBhjbrYJKyztb4a+WZvO8xY1Q0EcuWGRuw+oRNynkfZ6CUFQZ2Dulf64zGOYNjSuQj/5IFdJ9nz0WoRF2kLyTnXuQxRA67PwkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206368; c=relaxed/simple;
-	bh=UhQPl7V5kWjvGzYp8X/fBYLZRhSsh1t6g4whO60ZTXI=;
+	s=arc-20240116; t=1789206374; c=relaxed/simple;
+	bh=DQFIDohsLRyy78COcyl8cIWWPxGboo4hI8P0HYcZqZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eQFQp1lalg8r2u9cYjLi5EN16n4c0L1a0khkeloTeRq5RGUnEAAODQjQAnv5JQbFd4+mdOmycavDFD+bc0mBTbRrJ1FlKkpJ6tfTJGo21/OS21tBYeGb9LsCQ/kCw4T2qFXUGw6Jt/CyBsVxiw/HlfJdF4XjnaU3PtHQNlt7WOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q5gbCfhH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XSgokIG6tETz9Cf377nJkEIvQaRKbrh51QUA9m2lMl4hBnn1nMWPVLF9BSxdtTq6u5m5v31Y66aWDvJAbBcp/Z4i/HJ9DTe8DchLAZNy/5EazTvskY6srxcT0Ugg6JhiKxarpA7Uagtb/rohY/tTILI0bCn/kHxFE1WnsbXOe/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1WFlGDX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q5gbCfhH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06BCC1F000FF;
-	Sat, 12 Sep 2026 09:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1WFlGDX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B161F000FF;
+	Sat, 12 Sep 2026 09:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206366;
-	bh=1xb2Y9JRUbaMZUaY3tqG39K0NuDLr5boA2oUm4F9Jew=;
+	s=korg; t=1789206371;
+	bh=Gdh+sG1CEidzarAsus20yMAyGZ59tqts4XeQvjfijHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q5gbCfhHkK/IdxcPMCSymBy9fncUPr0CY09o8LVKPy9T5MWtNftba/rDfOcP247ZV
-	 aJQW4cOA4cJWPs316qQFv7meC3Y5lUqYO5XC82oNmj+22ZrTs97kBTVkY5Fwwa7F49
-	 4RXr3kM9qlIcZmSGOJuEYMLo0tqefNeBRWdmKsGk=
+	b=Z1WFlGDXbbsNCImY+DS+3RwJHAA2I0phOYci091sUFJw/ItFEbPUt6JMgLc/v16nl
+	 imWlKgk8zYXi1ZNbsQhT32HSxz44TWRGA+ltjb3uuq7Yag0lFOO6ukXiKEcdPSGsDV
+	 m5m//LrYYCoThEqBpIPDOjC6PWaMbYHRbmKsjvvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Willy Tarreau <w@1wt.eu>,
+	James Clark <james.clark@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0194/1518] tools/nolibc: mark arg1 operand in __nolibc_syscall0() as write-only
-Date: Sat, 12 Sep 2026 08:39:23 +0200
-Message-ID: <20260912065627.880082135@linuxfoundation.org>
+Subject: [PATCH 6.18 0195/1518] perf cs-etm: Fix thread leaks on trace queue init failure
+Date: Sat, 12 Sep 2026 08:39:24 +0200
+Message-ID: <20260912065627.902684981@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,45 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit a3b2181459a2c74c03ddbad585f884eefc8ff8ff ]
+[ Upstream commit 50cd0d54f1f6dd9b3de7c0ad101bd41d06206ace ]
 
-__nolibc_syscall0() does not set the arg1 variable before passing it to
-the asm block. This uninitialized variable read is undefined behavior.
-Clang can miscompile this.
+cs_etm__init_traceid_queue() allocates the frontend and decode threads,
+if a later allocation fails, the error path does not drop thread
+reference that was already acquired.
 
-Mark the asm operand as write-only to fix this.
+Release both thread pointers with thread__zput() on the error path, so
+does not leak thread references or leave stale pointers behind.
 
-Fixes: 8e1930296f92 ("tools/nolibc: Add support for SPARC")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Acked-by: Willy Tarreau <w@1wt.eu>
-Link: https://patch.msgid.link/20260703-nolibc-sparc-asm-v1-1-c7fe73e2e777@weissschuh.net
+Fixes: 951ccccdc715 ("perf cs-etm: Only track threads instead of PID and TIDs")
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/arch-sparc.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/cs-etm.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/include/nolibc/arch-sparc.h b/tools/include/nolibc/arch-sparc.h
-index ca420d843e254..a9386a4808a75 100644
---- a/tools/include/nolibc/arch-sparc.h
-+++ b/tools/include/nolibc/arch-sparc.h
-@@ -45,7 +45,7 @@
- 									      \
- 	__asm__ volatile (                                                    \
- 		_NOLIBC_SYSCALL                                               \
--		: "+r"(_arg1)                                                 \
-+		: "=r"(_arg1)                                                 \
- 		: "r"(_num)                                                   \
- 		: "memory", "cc"                                              \
- 	);                                                                    \
+diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
+index 520670348311e..66dbead2c03bc 100644
+--- a/tools/perf/util/cs-etm.c
++++ b/tools/perf/util/cs-etm.c
+@@ -645,6 +645,8 @@ static int cs_etm__init_traceid_queue(struct cs_etm_queue *etmq,
+ 					       queue->tid);
+ 	tidq->decode_thread = machine__findnew_thread(&etm->session->machines.host, -1,
+ 					       queue->tid);
++	if (!tidq->frontend_thread || !tidq->decode_thread)
++		goto out;
+ 
+ 	tidq->packet = zalloc(sizeof(struct cs_etm_packet));
+ 	if (!tidq->packet)
+@@ -679,6 +681,8 @@ static int cs_etm__init_traceid_queue(struct cs_etm_queue *etmq,
+ 	zfree(&tidq->prev_packet);
+ 	zfree(&tidq->packet);
+ out:
++	thread__zput(tidq->frontend_thread);
++	thread__zput(tidq->decode_thread);
+ 	return rc;
+ }
+ 
 -- 
 2.53.0
 
