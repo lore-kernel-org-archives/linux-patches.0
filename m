@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3A132B108;
-	Sat, 12 Sep 2026 15:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83BE842C51C;
+	Sat, 12 Sep 2026 15:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226600; cv=none; b=MpMEd8QuLnKU793fJJF0X8eCh3/YYH9N+VW/Q16dkXQVO0dBvXl4RNnWerkAhUgjSYmfAr0qy0tLxjOn74sCBCSreAIweHg4LUr0fLVmeu7QpXmDBCtp+dCujqHPWDfW/WOFXPI8kGzLNzafdYEVuSotq+otV0KKq2VYxDk2Nlc=
+	t=1789226605; cv=none; b=to9uhqzWtbqqU9UTMYwvWX55cQeAWQjIoWandwB/FofNaY9ZVXQinejJSS9eTTQ4JmBfupR77PkmnXTagt3jxL0QYXW4eeGvYcRbH8wNZ0KTT9udnBIB3Co1S/CYn5l6ocWlrGlF6yTSHRpUZqCUksq1J8zebWJpJ2ZNgs83KMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226600; c=relaxed/simple;
-	bh=oojgD22jlCQITEeuMcP3HNAmBFxsRZmP0pTHQ5OSFGw=;
+	s=arc-20240116; t=1789226605; c=relaxed/simple;
+	bh=91CteS0fcH4kdJEonsloiiRAU4T6vgb7Es00bICkswQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YOq+VQUv3zfid3Ewd4bPnSjZ/sde/OtHEG3VqzPvpxmmZCsYP4VxPeOEeoC1nKuK/wwk2oCgtZp8R/8DTVyKYHHgVFWYwXMBsktZUd/NMuslmbMQlrUyqJt4uRcpEZ1sLmZLSRGzanzWxSBT8/+7+pv2uPPjzOIdu2A2oYWOSbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REzlAg/+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Or7USQpcw454t7H93YZNRdTCW/Mzi+mxlqRccNpa8Ijl4g38WVGUvC3K24/9GYF3YHmDfyZAHFOC+qYAanFgm+9iYRER9xJ3izXUsvpxvCzVphI5hQrWNE0jUqPZ28LwTFHMhlixUR1KwOdFAblQjiwaGuP/clFvcJzwtQKiyCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MkPJHrhe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REzlAg/+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A171F000FF;
-	Sat, 12 Sep 2026 15:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MkPJHrhe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876B91F000FF;
+	Sat, 12 Sep 2026 15:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226599;
-	bh=HEYr7mY4293iJpSzvtw2O9yx6/2qRLzG3Kmtn32JeWA=;
+	s=korg; t=1789226604;
+	bh=DyZWAJAQEzZCRPDBkalI/9NfPSS6nhdsBH5qrX77sfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=REzlAg/+1thc8j0A5nZXAgjg9p7d5qcLj3IsqX/K5UG7ojC79CP5SHwi/eBB4buI3
-	 tVlUi2CAMP4A9nIfyvTc+W2TQu/LbZGBKacJhLsUOKV45cWeTF2BkRHyf4pRvELbkG
-	 BVjrXmnPsmTEGGNhLZTdi4oHL26/c8Fb7Fb9fArQ=
+	b=MkPJHrhe8ils7b0fow+dQrVyRT4y+XntNl2JmT1qygJ/bMMi4iYunn4HIRhHWBZ64
+	 fJ1CkufvaEx/JhSHUwW7s6ttclrVCeY2XgygxWBZkygW0f5+kUWSWs3ElC3MAGpovi
+	 OtQUTBnvYWGJfCLWS/qYfToK7FD+9OI5klFBjQfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Matt Turner <mattst88@gmail.com>,
 	Magnus Lindholm <linmag7@gmail.com>
-Subject: [PATCH 6.1 0003/1191] alpha: fix ieee_swcr_to_fpcr setting FPCR_DNOD unconditionally
-Date: Sat, 12 Sep 2026 08:45:31 +0200
-Message-ID: <20260912065548.176153454@linuxfoundation.org>
+Subject: [PATCH 6.1 0004/1191] alpha: dont leak hardware-fabricated FP exception bits to user space
+Date: Sat, 12 Sep 2026 08:45:32 +0200
+Message-ID: <20260912065548.198836191@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,43 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Matt Turner <mattst88@gmail.com>
 
-commit 49672d026cc4773608e1222b69b29fd70f41336b upstream.
+commit bcfe3187412e342b4619efb92c945f073855ebc0 upstream.
 
-ieee_swcr_to_fpcr() converts the software IEEE trap-enable and status
-bits kept in thread_info.ieee_state into the hardware FPCR format.  It
-contained:
+On EV6 and later the hardware records exception status bits in the FPCR
+before delivering a software completion trap, and those bits can be wrong
+for the instruction that trapped.  Converting a double that is exactly
+representable as a subnormal float sets FPCR_UNF even though the result
+is exact, and an underflow trap additionally sets FPCR_INE even when the
+emulated operation turns out to be exact.
 
-	fp |= (~sw & IEEE_TRAP_ENABLE_DNO) << 41;
+alpha_fp_emul() only wrote the FPCR when soft-fp raised an exception, so
+whenever it determined that the instruction was exact the fabricated bits
+stayed in the FPCR and were reported to user space by fetestexcept().
 
-FPCR_DNOD (bit 47) disables denormal operand traps: with it set the
-hardware handles a denormal operand itself, treating it as zero, instead
-of trapping for software completion.  The intent was to set DNOD when the
-user has not asked for SIGFPE on denormal operands, but
-IEEE_TRAP_ENABLE_DNO is clear by default, so ieee_swcr_to_fpcr(0) always
-set DNOD.
+Pass the exception summary register down from do_entArith() so the
+handler can tell which exceptions the hardware attributed to the trapping
+instruction, and always write the FPCR.  Clear the exceptions that the
+trap reported but that soft-fp did not raise.  EXC_SUM reports only the
+underflow or overflow when the hardware also set INE, so treat INE as a
+candidate in that case, and treat a trap with no reported exception as a
+denormal operand trap, for which the hardware can fabricate INE and UNF
+as well.  Bits that software has already confirmed in ieee_state belong
+to this or an earlier instruction and are never cleared.
 
-Instructions built with the software completion suffix therefore never
-trapped on a denormal operand.  The hardware silently substituted zero
-and produced wrong results, affecting every program compiled with -mieee
-and default FPU settings, glibc included.
+The imprecise path passes no summary.  There the trap was taken somewhere
+in the trap shadow, so EXC_SUM is not attribution for the instruction
+being re-executed -- and only EV6, which traps precisely and so never
+takes that path, has fabricated bits to clear.  For the same reason the
+clearing is guarded by implver(), matching swcr_update_status().
 
-Set FPCR_DNOD only when IEEE_MAP_DMZ is requested, which is exactly the
-case where flushing denormal inputs to zero is what the user asked for.
-DNOD then encodes MAP_DMZ, which ieee_fpcr_to_swcr() already recovers
-from FPCR_DNZ, so drop its attempt to recover IEEE_TRAP_ENABLE_DNO from
-DNOD; the DNO trap enable lives solely in ieee_state.
+On an UP1500 (EV68) this takes the glibc math testsuite from 831 failures
+to 28, the remainder being unrelated to exception status.
 
-Both functions are in a uapi header, so the encoding change is visible to
-userspace, but nothing outside the kernel is known to depend on DNOD
-carrying the DNO trap enable, and the kernel is the only writer of the
-FPCR.
+This belongs with the preceding fix to ieee_swcr_to_fpcr(), and should
+not be backported without it -- nor it without this.  That fix stops
+FPCR_DNOD being set unconditionally, so denormal operand traps start
+firing again.  Those traps very often find an exact result, which is
+precisely the case where the old code left the FPCR unwritten and the
+fabricated bits visible.  Applied alone it would make spurious exception
+flags more common, not less.
 
-This must not be backported on its own.  Re-enabling denormal operand
-traps exposes a second bug, fixed in the following patch: those traps
-usually find an exact result, and for an exact result the emulator did
-not write the FPCR back, leaving hardware-fabricated exception bits
-visible to user space.  Taken alone this change would make spurious
-exception flags more common.
+One case cannot be resolved here: an inexact instruction without the
+software completion suffix never traps, so its INE reaches the FPCR
+without being recorded anywhere else.  Such a bit is indistinguishable
+from an INE the hardware fabricated for a trapping instruction, and is
+lost if an underflow or overflow trap with an exact result follows it.
+The FPCR is the only record of those instructions and it carries no
+attribution.
 
 The bug predates the git history, so there is no commit to reference in a
 Fixes tag.
@@ -97,36 +107,171 @@ Cc: stable@vger.kernel.org # 5.15+
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
 Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20260803-alpha-fp-exceptions-v1-1-c99d75608e60@gmail.com
+Link: https://lore.kernel.org/r/20260803-alpha-fp-exceptions-v1-2-c99d75608e60@gmail.com
 Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/include/uapi/asm/fpu.h |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/alpha/kernel/traps.c  |    6 +--
+ arch/alpha/math-emu/math.c |   88 +++++++++++++++++++++++++++++++++++++++------
+ 2 files changed, 80 insertions(+), 14 deletions(-)
 
---- a/arch/alpha/include/uapi/asm/fpu.h
-+++ b/arch/alpha/include/uapi/asm/fpu.h
-@@ -101,7 +101,12 @@ ieee_swcr_to_fpcr(unsigned long sw)
- 		      | IEEE_TRAP_ENABLE_OVF)) << 48;
- 	fp |= (~sw & (IEEE_TRAP_ENABLE_UNF | IEEE_TRAP_ENABLE_INE)) << 57;
- 	fp |= (sw & IEEE_MAP_UMZ ? FPCR_UNDZ | FPCR_UNFD : 0);
--	fp |= (~sw & IEEE_TRAP_ENABLE_DNO) << 41;
+--- a/arch/alpha/kernel/traps.c
++++ b/arch/alpha/kernel/traps.c
+@@ -198,12 +198,12 @@ static long dummy_emul(void) { return 0;
+ long (*alpha_fp_emul_imprecise)(struct pt_regs *regs, unsigned long writemask)
+   = (void *)dummy_emul;
+ EXPORT_SYMBOL_GPL(alpha_fp_emul_imprecise);
+-long (*alpha_fp_emul) (unsigned long pc)
++long (*alpha_fp_emul) (unsigned long pc, unsigned long summary)
+   = (void *)dummy_emul;
+ EXPORT_SYMBOL_GPL(alpha_fp_emul);
+ #else
+ long alpha_fp_emul_imprecise(struct pt_regs *regs, unsigned long writemask);
+-long alpha_fp_emul (unsigned long pc);
++long alpha_fp_emul (unsigned long pc, unsigned long summary);
+ #endif
+ 
+ asmlinkage void
+@@ -217,7 +217,7 @@ do_entArith(unsigned long summary, unsig
+ 		   emulate the instruction.  If the processor supports
+ 		   precise exceptions, we don't have to search.  */
+ 		if (!amask(AMASK_PRECISE_TRAP))
+-			si_code = alpha_fp_emul(regs->pc - 4);
++			si_code = alpha_fp_emul(regs->pc - 4, summary);
+ 		else
+ 			si_code = alpha_fp_emul_imprecise(regs, write_mask);
+ 		if (si_code == 0)
+--- a/arch/alpha/math-emu/math.c
++++ b/arch/alpha/math-emu/math.c
+@@ -57,13 +57,13 @@ MODULE_DESCRIPTION("FP Software completi
+ MODULE_LICENSE("GPL v2");
+ 
+ extern long (*alpha_fp_emul_imprecise)(struct pt_regs *, unsigned long);
+-extern long (*alpha_fp_emul) (unsigned long pc);
++extern long (*alpha_fp_emul) (unsigned long pc, unsigned long summary);
+ 
+ static long (*save_emul_imprecise)(struct pt_regs *, unsigned long);
+-static long (*save_emul) (unsigned long pc);
++static long (*save_emul) (unsigned long pc, unsigned long summary);
+ 
+ long do_alpha_fp_emul_imprecise(struct pt_regs *, unsigned long);
+-long do_alpha_fp_emul(unsigned long);
++long do_alpha_fp_emul(unsigned long, unsigned long);
+ 
+ static int alpha_fp_emul_init_module(void)
+ {
+@@ -91,7 +91,22 @@ module_exit(alpha_fp_emul_cleanup_module
+ 
+ 
+ /*
+- * Emulate the floating point instruction at address PC.  Returns -1 if the
++ * Exception bits of the exception summary register (EXC_SUM).  Bit 0 is the
++ * software completion bit; bits 1 through 5 report the exceptions the
++ * hardware attributed to the trapping instruction, and lie at the same
++ * positions as the corresponding IEEE_TRAP_ENABLE_* bits.
++ */
++#define EXC_SUM_INV	(1UL << 1)
++#define EXC_SUM_DZE	(1UL << 2)
++#define EXC_SUM_OVF	(1UL << 3)
++#define EXC_SUM_UNF	(1UL << 4)
++#define EXC_SUM_INE	(1UL << 5)
++#define EXC_SUM_MASK	(EXC_SUM_INV | EXC_SUM_DZE | EXC_SUM_OVF	\
++			 | EXC_SUM_UNF | EXC_SUM_INE)
++
++/*
++ * Emulate the floating point instruction at address PC.  SUMMARY is the
++ * exception summary register the trap was delivered with.  Returns -1 if the
+  * instruction to be emulated is illegal (such as with the opDEC trap), else
+  * the SI_CODE for a SIGFPE signal, else 0 if everything's ok.
+  *
+@@ -100,7 +115,7 @@ module_exit(alpha_fp_emul_cleanup_module
+  * stick the result of the operation into the appropriate register.
+  */
+ long
+-alpha_fp_emul (unsigned long pc)
++alpha_fp_emul (unsigned long pc, unsigned long summary)
+ {
+ 	FP_DECL_EX;
+ 	FP_DECL_S(SA); FP_DECL_S(SB); FP_DECL_S(SR);
+@@ -305,12 +320,56 @@ done:
+ 		swcr |= (_fex << IEEE_STATUS_TO_EXCSUM_SHIFT);
+ 		current_thread_info()->ieee_state
+ 		  |= (_fex << IEEE_STATUS_TO_EXCSUM_SHIFT);
++	}
+ 
+-		/* Update hardware control register.  */
+-		fpcr &= (~FPCR_MASK | FPCR_DYN_MASK);
+-		fpcr |= ieee_swcr_to_fpcr(swcr);
+-		wrfpcr(fpcr);
 +	/*
-+	 * Disable denormal operand traps only when denormal inputs are to be
-+	 * flushed to zero.  Otherwise they must keep trapping, so that /S
-+	 * instructions reach the kernel emulation handler.
++	 * EV6 records exception status bits in the FPCR before delivering the
++	 * software completion trap, and swcr_update_status() above merged them
++	 * into SWCR.  Some can be wrong for the instruction we just emulated:
++	 * a CVTTS of a value exactly representable as a subnormal sets FPCR_UNF
++	 * even though the result is exact.  Clear the exceptions the trap
++	 * reported but that soft-fp did not raise.
 +	 */
-+	fp |= (sw & IEEE_MAP_DMZ ? FPCR_DNOD : 0);
- 	return fp;
- }
++	if (implver() == IMPLVER_EV6) {
++		unsigned long spurious = summary & EXC_SUM_MASK;
++
++		if (spurious & (EXC_SUM_UNF | EXC_SUM_OVF)) {
++			/*
++			 * EXC_SUM reports only the underflow or overflow,
++			 * but the hardware sets INE alongside it in the FPCR.
++			 */
++			spurious |= EXC_SUM_INE;
++		} else if (!spurious) {
++			/*
++			 * No exception reported, so this was a denormal
++			 * operand trap, for which INE and UNF can be
++			 * fabricated as well.
++			 */
++			spurious = EXC_SUM_INE | EXC_SUM_UNF;
++		}
  
-@@ -116,7 +121,6 @@ ieee_fpcr_to_swcr(unsigned long fp)
- 			     | IEEE_TRAP_ENABLE_OVF);
- 	sw |= (~fp >> 57) & (IEEE_TRAP_ENABLE_UNF | IEEE_TRAP_ENABLE_INE);
- 	sw |= (fp >> 47) & IEEE_MAP_UMZ;
--	sw |= (~fp >> 41) & IEEE_TRAP_ENABLE_DNO;
- 	return sw;
- }
- 
++		/*
++		 * Never clear an exception software has confirmed.  Every
++		 * instruction that genuinely raises one traps for software
++		 * completion and is recorded in ieee_state above, so a bit
++		 * found there -- including one just set from _fex -- belongs
++		 * to this or an earlier instruction and must survive.
++		 */
++		spurious &= ~(current_thread_info()->ieee_state
++			      >> IEEE_STATUS_TO_EXCSUM_SHIFT);
++
++		swcr &= ~(spurious << IEEE_STATUS_TO_EXCSUM_SHIFT);
++	}
++
++	/*
++	 * Update hardware control register.  This has to happen even when
++	 * soft-fp raised nothing, to clear any fabricated bits.
++	 */
++	fpcr &= (~FPCR_MASK | FPCR_DYN_MASK);
++	fpcr |= ieee_swcr_to_fpcr(swcr);
++	wrfpcr(fpcr);
++
++	if (_fex) {
+ 		/* Do we generate a signal?  */
+ 		_fex = _fex & swcr & IEEE_TRAP_ENABLE_MASK;
+ 		si_code = 0;
+@@ -392,9 +451,16 @@ alpha_fp_emul_imprecise (struct pt_regs
+ 			break;
+ 		}
+ 		if (!write_mask) {
+-			/* Re-execute insns in the trap-shadow.  */
++			/*
++			 * Re-execute insns in the trap-shadow.  Pass no
++			 * exception summary: it describes the trap, which
++			 * was taken anywhere in the shadow, and so is not
++			 * attribution for this instruction.  Nothing is
++			 * lost, since only EV6 -- which traps precisely and
++			 * never comes this way -- needs it.
++			 */
+ 			regs->pc = trigger_pc + 4;
+-			si_code = alpha_fp_emul(trigger_pc);
++			si_code = alpha_fp_emul(trigger_pc, 0);
+ 			goto egress;
+ 		}
+ 		trigger_pc -= 4;
 
 
