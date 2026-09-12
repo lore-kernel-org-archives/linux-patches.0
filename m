@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F00A343883;
-	Sat, 12 Sep 2026 14:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6F83328FC;
+	Sat, 12 Sep 2026 14:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223090; cv=none; b=YLkeo6Cqi8puQBTogw7mzNVxEpX+rSdropQ/iiPWpHpTeG2Qtkse/neS0QAGg5n/kTno1YI2fw0RCZNBH74Q2B0M45djvpbxoC95DBZT7us7b8YJ2sp+WqxnCtWmg1C8RtzqOnp/I24EOhUlTA/6Xe9ZY6/bvlT8fWf7aamoTa8=
+	t=1789223093; cv=none; b=h4gTaHFq3ur+zlB9iCYwcdW3FAqhVWP/rweH/FPprzc1fEPMh6K5czz7p+qO8V7Qd8v3SGVwUh1KfHAC0s/QsMfh+7L7GNJvFK1Kdk73O74JMFq5DTNjtm5ncZOVh9uWTqPoXpLryU54TZ94WfWGGzAelYmHVfDROYuGn1mW9c8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223090; c=relaxed/simple;
-	bh=90m65ggrihpSQTUsDESKphXYDxVHpotN8K+oViCkv9w=;
+	s=arc-20240116; t=1789223093; c=relaxed/simple;
+	bh=6xwYepXIgt0xHQrXBxrghecoNGA2rVfJVP/BBu5cr20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pdeNhq9QmnVqVCPf9y5j8y4T67yizHI5WjhzXDAlLQqOvCrf8E1IsBBDl4aGcg9C1SAroZdS8/u9Tc1aQz/ZeaGjc2HUGVHVoUYZOHvz++M5bS+vLu4bOzfV5k3ErZElsQKFjhpwc+wWX98YICR0ohOJWYNyfG6re+yg6LQLoJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxhuM1ZI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AAs4/dp3e9PuK8FbqVpVJ7AxKzVQlWnoAiNZVcc4k/M/xwuxRwdR+403eUIJhZ2OggywbPzBujFKD++fmUB8m+ue5vlcqcdgdMhXln0EnN5o2N1/KAplrHva9laWpNGlrgaky8wdirdowDrJg6ryrL2SMdlNYg4jj6LDcF4FaS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DsjvKqiz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxhuM1ZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E821F000FF;
-	Sat, 12 Sep 2026 14:24:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DsjvKqiz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D20C1F000FF;
+	Sat, 12 Sep 2026 14:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223087;
-	bh=lVP+jQ6YiWrqnwSEz86sBlieYcymjSYCbS5DKGNUHiQ=;
+	s=korg; t=1789223092;
+	bh=tQq2rMnqP+MlvubZmWiDpIfbLCPbOSUosyu5rHer1bQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qxhuM1ZI5s6oUlGSN/EqHm697nShf1KdfLDRxApqafnZ1mvJkCQBEdXNTrQ1dNRh9
-	 hN0gPCmuBO1kqjsXCFR3XoSqgGMYnpqpWC+WU2M7mUjrk4YxGPOMB1XRhbq7FSuzse
-	 Q45FguFW7VreLh6IBMTfq195e/xec7xfR8vBijyA=
+	b=DsjvKqizbiHWNSb6aCqWy/zJzV6S3V6ecxZDmw353FQySZAd44GHcsbXgW5dyM1gN
+	 I5dpAcLCvIBLP+zLjHRbbNf6rbMS/UAXRNf8oKhjZapPCxHtufCSB8AQIZ2ICivUa4
+	 QqBi4DOW9TL/bJFQSFIacV+MDquhgQjLwxTH6naE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Mert Seftali <mertsftl@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0716/1424] bus: qcom-ebi2: use managed resources for clocks and children
-Date: Sat, 12 Sep 2026 08:52:28 +0200
-Message-ID: <20260912065623.329052250@linuxfoundation.org>
+Subject: [PATCH 6.6 0717/1424] iio: accel: dmard09: Implement IIO_CHAN_INFO_SCALE
+Date: Sat, 12 Sep 2026 08:52:29 +0200
+Message-ID: <20260912065623.351505151@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,117 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Mert Seftali <mertsftl@gmail.com>
 
-[ Upstream commit d19a46f7ed8eb54fea61e0eaf7db53ff7babb03c ]
+[ Upstream commit aa58ecc73466d0cb8c418de98e2225490bf600e3 ]
 
-qcom_ebi2_probe() enables the EBI2 clocks manually and populates child
-devices manually. Several later failure paths can then return without
-disabling the clocks or without relying on the driver core to undo child
-population.
+Reading the in_accel_scale attribute on the DMARD09 has always returned
+-EINVAL: the channels advertise scale via info_mask_shared_by_type so the
+IIO core exposes the attribute, but dmard09_read_raw() only handles
+IIO_CHAN_INFO_RAW, so a SCALE read falls through to 'default: return
+-EINVAL':
 
-Use devm_clk_get_enabled() for both clocks and
-devm_of_platform_populate() for children. This lets the driver core
-unwind the resources automatically and removes the hand-written error
-labels.
+    $ cat .../iio:deviceX/in_accel_scale
+    cat: in_accel_scale: Invalid argument
 
-Fixes: 335a12754808 ("bus: qcom: add EBI2 driver")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://lore.kernel.org/r/20260623015415.26975-1-pengpeng@iscas.ac.cn
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+leaving userspace with raw counts it cannot convert to m/s^2.
+
+The driver was written from a vendor source [1] without a datasheet, and
+the scale was declared but never implemented. The vendor source carries
+the sensitivity: its conversion is
+
+    acc = raw * GRAVITY_EARTH_1000 / sensitivity   (then / 1000 -> m/s^2)
+
+with sensitivity = 32 and GRAVITY_EARTH_1000 = 9807 ("about
+(9.80665)*1000"), i.e. 32 counts correspond to 1 g.
+
+That sensitivity applies to the value this driver already reports as raw:
+the vendor reduces each 16-bit sample to a signed 9-bit value, and the
+preparation in dmard09_read_raw() yields the same value. It is
+self-consistent: 256 counts / 32 = 8 g full scale, matching the +/-8g
+range.
+
+Implement the scale derived from that sensitivity using standard gravity:
+
+    scale = 9.80665 / 32 = 0.3064578125 m/s^2 per LSB
+
+Link: https://github.com/minstrelsy/mediatek/blob/1f49d8c87b839651bc89afc870277e8e0f2e2d55/custom/common/kernel/accelerometer/dmard09/dmard09.c [1]
+Fixes: a4fa6509dda4 ("iio: accel: add support for the Domintech DMARD09 3-axis accelerometer")
+Signed-off-by: Mert Seftali <mertsftl@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/qcom-ebi2.c | 50 +++++++++--------------------------------
- 1 file changed, 11 insertions(+), 39 deletions(-)
+ drivers/iio/accel/dmard09.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/bus/qcom-ebi2.c b/drivers/bus/qcom-ebi2.c
-index ab00c75b9e953..8d2eb955dc921 100644
---- a/drivers/bus/qcom-ebi2.c
-+++ b/drivers/bus/qcom-ebi2.c
-@@ -302,41 +302,23 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
- 	u32 val;
- 	int ret;
+diff --git a/drivers/iio/accel/dmard09.c b/drivers/iio/accel/dmard09.c
+index fa98623de579b..92aa0d94341d4 100644
+--- a/drivers/iio/accel/dmard09.c
++++ b/drivers/iio/accel/dmard09.c
+@@ -8,6 +8,7 @@
+ #include <asm/unaligned.h>
+ #include <linux/module.h>
+ #include <linux/i2c.h>
++#include <linux/units.h>
+ #include <linux/iio/iio.h>
  
--	ebi2xclk = devm_clk_get(dev, "ebi2x");
-+	ebi2xclk = devm_clk_get_enabled(dev, "ebi2x");
- 	if (IS_ERR(ebi2xclk))
- 		return PTR_ERR(ebi2xclk);
+ #define DMARD09_DRV_NAME	"dmard09"
+@@ -79,6 +80,12 @@ static int dmard09_read_raw(struct iio_dev *indio_dev,
+ 		*val = accel;
  
--	ret = clk_prepare_enable(ebi2xclk);
--	if (ret) {
--		dev_err(dev, "could not enable EBI2X clk (%d)\n", ret);
--		return ret;
--	}
--
--	ebi2clk = devm_clk_get(dev, "ebi2");
--	if (IS_ERR(ebi2clk)) {
--		ret = PTR_ERR(ebi2clk);
--		goto err_disable_2x_clk;
--	}
--
--	ret = clk_prepare_enable(ebi2clk);
--	if (ret) {
--		dev_err(dev, "could not enable EBI2 clk\n");
--		goto err_disable_2x_clk;
--	}
-+	ebi2clk = devm_clk_get_enabled(dev, "ebi2");
-+	if (IS_ERR(ebi2clk))
-+		return PTR_ERR(ebi2clk);
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	ebi2_base = devm_ioremap_resource(dev, res);
--	if (IS_ERR(ebi2_base)) {
--		ret = PTR_ERR(ebi2_base);
--		goto err_disable_clk;
--	}
-+	if (IS_ERR(ebi2_base))
-+		return PTR_ERR(ebi2_base);
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
- 	ebi2_xmem = devm_ioremap_resource(dev, res);
--	if (IS_ERR(ebi2_xmem)) {
--		ret = PTR_ERR(ebi2_xmem);
--		goto err_disable_clk;
--	}
-+	if (IS_ERR(ebi2_xmem))
-+		return PTR_ERR(ebi2_xmem);
- 
- 	/* Allegedly this turns the power save mode off */
- 	writel(0UL, ebi2_xmem + EBI2_XMEM_CFG);
-@@ -353,7 +335,7 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
- 		/* Figure out the chipselect */
- 		ret = of_property_read_u32(child, "reg", &csindex);
- 		if (ret)
--			goto err_disable_clk;
-+			return ret;
- 
- 		if (csindex > 5) {
- 			dev_err(dev,
-@@ -372,20 +354,10 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
- 		have_children = true;
+ 		return IIO_VAL_INT;
++	case IIO_CHAN_INFO_SCALE:
++		*val = 0;
++		/* 1 g / 32 LSB, in m/s^2 */
++		*val2 = IIO_G_TO_M_S_2(NANO / 32);
++
++		return IIO_VAL_INT_PLUS_NANO;
+ 	default:
+ 		return -EINVAL;
  	}
- 
--	if (have_children) {
--		ret = of_platform_default_populate(np, NULL, dev);
--		if (ret)
--			goto err_disable_clk;
--	}
-+	if (have_children)
-+		return devm_of_platform_populate(dev);
- 
- 	return 0;
--
--err_disable_clk:
--	clk_disable_unprepare(ebi2clk);
--err_disable_2x_clk:
--	clk_disable_unprepare(ebi2xclk);
--
--	return ret;
- }
- 
- static const struct of_device_id qcom_ebi2_of_match[] = {
 -- 
 2.53.0
 
