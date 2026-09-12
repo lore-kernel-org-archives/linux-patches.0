@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD91D3D566E;
-	Sat, 12 Sep 2026 14:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C378B334C3C;
+	Sat, 12 Sep 2026 14:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225036; cv=none; b=Cde2x6HeclkI0q2sbsXj1NO2zKSBjSLb2L/0lzDK/G+8bK4oM48syT+iQHYNjA5kqmJas2r3PoGedrQ0z5YGLQYUT6CdegLzhEOvfIzQPx1Gh6ngu9DPbI1IryEuxcdGtuPtsJxhDIh02aK2AJYAl1VfHiEIXpDBUrcAfXUvx5A=
+	t=1789225043; cv=none; b=G0mq4M+1M8leSeqyBqdAzReunGFvIpdR9vPvY6AaLwNv44bSTKeALWI0fngbDzvPD5wRcT1V938eIosnFUfAYFOdHAwSKpEWlgxKs/ZZWL2zN2acC0n7QphiZUjwY58xCl3rMtLJNkHaZQeMflDuYh73LxdRQoM/OJHId39bjYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225036; c=relaxed/simple;
-	bh=3xVlmv+A8hajO5+QDRfh1Iv9mAxlsQwvffrgCBJBOCI=;
+	s=arc-20240116; t=1789225043; c=relaxed/simple;
+	bh=VjLR1V9EAvrdFDhr8kUm0U7dDuLa2Rfdmyjnd1NK/QQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tlNfz74qYDqdB44JZnM6KI/MjSDRWog4H3/tq+pygtioa0bTGwU4kK2GgirgVujDCqVqT4GxJmTQja7nHgQTNnCygVJcsV9xK2ghPXFiTDTGPXvZwQGXMzaiSzDijJCJ1v0jHNFi/OKZbdHsN+N9kzduGvcl7lPcuQtoi7zqU74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2DzkxKQL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ebcu7GvbnfFzzclrRUGa5zwggMBMX1S22+7YK1fMFQ10WCdF7LubaOhb4h2d/tT7QSKvdikJv3ZEgnMXVjZxzuLlTv9p4Qyg5D8jEdtaQpT+udEONdH9pZUvXKIwURfQ50Y6J0rcbNl3mgxZDUKw5uI0kza1MLgd2FNR3YrMWTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bRO+KRGX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2DzkxKQL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7249E1F00893;
-	Sat, 12 Sep 2026 14:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bRO+KRGX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ABF01F000FF;
+	Sat, 12 Sep 2026 14:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225034;
-	bh=OWIQBgrtD25m68XBsAFwJ8vYIpZ+ZB5kbJ8Uigv7rSI=;
+	s=korg; t=1789225039;
+	bh=bM9tg6MGT1G7aeDpHPjOfovpfmGKtEX6jXnvgshtmPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2DzkxKQLamQmPrlzQBBJUBwp2WjCN068qu0ch7CFZaMRskLWuO0AuRj3XvbPQXMuT
-	 NWlf4QTtuq8r8/HCKOhwnZqC4pa+md4Gll+6IMp0K0qriYo/25BF0YpCik7T0st9Gz
-	 g+k/PaNnuiIXeomcAhHvdBi/dz8FP0nCG0uS1XK8=
+	b=bRO+KRGX4/lwGcD2KUIOkZ96oOyh7x2F2wqd8Wh1GVhFheLk8S0A9AlOTN5QmG19c
+	 M309pr1Cok8i6WFE82IzFfoM6sJ8PV4oI1UbQZeXaoCp311Ce5oJvdv5vFaWDJUMEV
+	 dA3W/EoLn7YvrXHA0+MqPu62qo3FK3J1aixokraY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	Tim Chen <tim.c.chen@linux.intel.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Andrea Righi <arighi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1116/1424] ACPI: video: Release PCI device reference after lookup
-Date: Sat, 12 Sep 2026 08:59:08 +0200
-Message-ID: <20260912065632.294829902@linuxfoundation.org>
+Subject: [PATCH 6.6 1117/1424] sched/fair: Check CPU capacity before comparing group types during load balance
+Date: Sat, 12 Sep 2026 08:59:09 +0200
+Message-ID: <20260912065632.316877095@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -45,48 +50,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
 
-[ Upstream commit 3d7ed9b8ef47b8bcae1fc3e12f7590a217862a89 ]
+[ Upstream commit 50b101f6e586b4417d060a976fd831cd87e86e2b ]
 
-video_detect_portege_r100() uses pci_get_device() only as a boolean
-check for the Trident CyberBlade XP4m32 device. pci_get_device() takes a
-reference on a matching PCI device, but the callback returns without
-releasing it.
+update_sd_pick_busiest() may incorrectly select a fully_busy group as the
+busiest group when its per-CPU capacity exceeds that of the destination
+CPU. This happens because the type of busiest group is initialized to
+group_has_spare and allows the fully_busy group to win the type comparison.
 
-Drop the reference after selecting the vendor backlight quirk so the PCI
-device can be released normally.
+update_sd_pick_busiest() should not choose a candidate scheduling group
+with at most one runnable task if its per-CPU capacity is greater than that
+of the destination CPU. Such a check already exists, but it is done too
+late: after the type comparison, preventing a subsequent fully_busy group
+of equal per-CPU capacity from being correctly selected.
 
-Fixes: 35a341c9b25d ("ACPI: video: Add acpi_backlight=vendor quirk for Toshiba Portégé R100")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260807015734.913361-1-dbgh9129@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Move this check to occur before comparing group types.
+
+Fixes: 0b0695f2b34a ("sched/fair: Rework load_balance()")
+Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Reviewed-by: Tim Chen <tim.c.chen@linux.intel.com>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Tested-by: Christian Loehle <christian.loehle@arm.com>
+Tested-by: Andrea Righi <arighi@nvidia.com>
+Link: https://patch.msgid.link/20260720-rneri-fix-cas-clusters-v6-3-bb500bf4afd4@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/video_detect.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/sched/fair.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
-index 962720aafedab..886b7affd4366 100644
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -135,8 +135,10 @@ static int video_detect_portege_r100(const struct dmi_system_id *d)
- 	struct pci_dev *dev;
- 	/* Search for Trident CyberBlade XP4m32 to confirm Portégé R100 */
- 	dev = pci_get_device(PCI_VENDOR_ID_TRIDENT, 0x2100, NULL);
--	if (dev)
-+	if (dev) {
- 		acpi_backlight_dmi = acpi_backlight_vendor;
-+		pci_dev_put(dev);
-+	}
- 	return 0;
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index a36ee92e3075a..43bc2f03e0c92 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -10056,6 +10056,17 @@ static bool update_sd_pick_busiest(struct lb_env *env,
+ 	     sds->local_stat.group_type != group_has_spare))
+ 		return false;
+ 
++	/*
++	 * Candidate sg has no more than one task per CPU and has higher
++	 * per-CPU capacity. Migrating tasks to less capable CPUs may harm
++	 * throughput. Maximize throughput, power/energy consequences are not
++	 * considered.
++	 */
++	if ((env->sd->flags & SD_ASYM_CPUCAPACITY) &&
++	    (sgs->group_type <= group_fully_busy) &&
++	    (capacity_greater(sg->sgc->min_capacity, capacity_of(env->dst_cpu))))
++		return false;
++
+ 	if (sgs->group_type > busiest->group_type)
+ 		return true;
+ 
+@@ -10163,17 +10174,6 @@ static bool update_sd_pick_busiest(struct lb_env *env,
+ 		break;
+ 	}
+ 
+-	/*
+-	 * Candidate sg has no more than one task per CPU and has higher
+-	 * per-CPU capacity. Migrating tasks to less capable CPUs may harm
+-	 * throughput. Maximize throughput, power/energy consequences are not
+-	 * considered.
+-	 */
+-	if ((env->sd->flags & SD_ASYM_CPUCAPACITY) &&
+-	    (sgs->group_type <= group_fully_busy) &&
+-	    (capacity_greater(sg->sgc->min_capacity, capacity_of(env->dst_cpu))))
+-		return false;
+-
+ 	return true;
  }
  
 -- 
