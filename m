@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C042F8EAE;
-	Sat, 12 Sep 2026 14:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3A6330B14;
+	Sat, 12 Sep 2026 14:01:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221711; cv=none; b=cGJCHUacpwyA91NeUN+uS4DfQC+0SsWsAOVwliHdllALDiJIA3Lf4oIT/r5zIOpSO/xj8y2BREIJY9i2jKQnJ1IdDRBCXxM5o1woeaA6TI+WlwWIBiZ8PsPM5qz99ABphTiXAIklfLD0CdPSisJXUmjesSiNF7iClf+96vteiPc=
+	t=1789221717; cv=none; b=RcJOfjWsKW1y2ysZUihv+Zagj3Qb1SP6tOwPzEOS3kMT3Zo9qvhZPZkXK8qtzIm2PiQt0bEgaDCncduTTEW8oJ92QgRuOuk5OGfVWKZxiIE+dH1yWh/uPauKIUiQoiArzw2PllWqX40a9BSG3tnQahH39oK2sfKkHMGjTk91mu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221711; c=relaxed/simple;
-	bh=hxNRSGML5VJNWms4Zn7eHVtXQIskcv/cr8RduktKGhM=;
+	s=arc-20240116; t=1789221717; c=relaxed/simple;
+	bh=jh2EQuxNsmDGMmpCpZI0gGeDeU6pkqbyFXrgGsvhlaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oy+oEYugT1skExgRUr/6k0Oe0iiUeRPz4qZ0aPdF+FyCJE34EAuc7IuTgpXW31S76EugHP5nHW1HMY9kHeD06NzA13Cnak05/9NN32PbH9LrEoE00+YVFXlkDc1Fj6fePlzb7FXvt5EGH9/V7axT8NYAZ2hqDnU9XxIbeBjQfN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5WTE1Pc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aZvBcr4tvLbOdLmuZo+yRqP8+Qi03F1IrzgRqlwdbO6oEh65Lh25rQyo9yK4hp8aALfbAUvuaVK8cPip0O4yy5Dh6bgDSXandKs/yKonf4CNIdCdD1Rn73eR2mEx4lGQAf5ZZiljAupexqe4q/aWy1XX/j+3azeOgO+qE2LW3XY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CE+4Lr0M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5WTE1Pc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 478F21F000FF;
-	Sat, 12 Sep 2026 14:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CE+4Lr0M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358B11F000FF;
+	Sat, 12 Sep 2026 14:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221709;
-	bh=947FCFGk6/8drO7fWCjYdFT40/sBvExm0hSblDp+stw=;
+	s=korg; t=1789221714;
+	bh=+JECa7oSluCYZfA11Qw1CKa0Be+y5GV/5rl+ngsa/jQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b5WTE1PcZGFInBQ39DgdKcbWA3zJZI3rSg3Q5U7GBBXXN0s0RKoZAfHmVDRoSdY/s
-	 gc3v324z3H+MixRZY6efl+9b/B+5HDQJBVdOhne3cpCGwu/kEoVW7ujnTqTuH39Lp7
-	 7+gg58ntWvYqoXstydcSviJY0lj86IC7FewFMskY=
+	b=CE+4Lr0Mg8xJvyZ/0iNeoDnApV11gV0N4zQ+25srdRuJR6AdBayq4q45/PIMn1AzV
+	 JycLif/xuiuE4rdoeB3TfPBE4ZR5nBsVWx6hqtD2QA5KVQ85OHPVY1QUsDcJy97Bjj
+	 RGDGuSkWo5mZz3bkjN6buSUgA+uGm0G75aaAeSFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
+	Sashiko <sashiko-bot@kernel.org>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.6 0395/1424] batman-adv: fix stale receive device on merged fragments
-Date: Sat, 12 Sep 2026 08:47:07 +0200
-Message-ID: <20260912065616.134538959@linuxfoundation.org>
+Subject: [PATCH 6.6 0396/1424] batman-adv: dat: avoid unaligned fault in IP extraction
+Date: Sat, 12 Sep 2026 08:47:08 +0200
+Message-ID: <20260912065616.155948245@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,47 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit ad46c907d7d9975a285c1e89a4adde652eaa93f5 upstream.
+commit 0121afa52cdb88cfb4d5d7bd126a23a9100121d8 upstream.
 
-Fragment reassembly reuses the skb from the highest-numbered buffered
-fragment as the merged packet. When that fragment was received on a hard
-interface which is deleted before the chain completes, the merged skb can
-re-enter the receive path with a stale skb->dev and skb_iif.
+Independent of the alignment of the ARP packet in the SKB, either the
+batadv_arp_ip_src or the batadv_arp_ip_dst will have an unaligned access
+(on HW without native unaligned read support).
 
-batadv_batman_skb_recv() passes such merged packets through the normal
-receive handlers again. DAT and bridge loop avoidance both derive the ARP
-header length from skb->dev, so they can dereference the freed net_device
-before the packet reaches the local mesh interface.
+Use get_unaligned() to handle this properly on all architectures.
 
-Refresh the receive device metadata from the current receive device before
-running the packet handlers. This keeps internally reinjected merged
-fragments consistent with the normal receive path after hard interface
-teardown.
-
-Fixes: 610bfc6bc99b ("batman-adv: Receive fragmented packets and merge")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 5c3a0e553593 ("batman-adv: Distributed ARP Table - add ARP parsing functions")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/main.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/batman-adv/distributed-arp-table.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/net/batman-adv/main.c
-+++ b/net/batman-adv/main.c
-@@ -457,6 +457,10 @@ int batadv_batman_skb_recv(struct sk_buf
- 	if (!skb)
- 		goto err_put;
- 
-+	/* Merged fragments re-enter here with reused skb metadata. */
-+	skb->dev = dev;
-+	skb->skb_iif = dev->ifindex;
+--- a/net/batman-adv/distributed-arp-table.c
++++ b/net/batman-adv/distributed-arp-table.c
+@@ -250,7 +250,10 @@ static u8 *batadv_arp_hw_src(struct sk_b
+  */
+ static __be32 batadv_arp_ip_src(struct sk_buff *skb, int hdr_size)
+ {
+-	return *(__force __be32 *)(batadv_arp_hw_src(skb, hdr_size) + ETH_ALEN);
++	u8 *src = batadv_arp_hw_src(skb, hdr_size) + ETH_ALEN;
++	__be32 *ip = (__force __be32 *)src;
 +
- 	/* packet should hold at least type and version */
- 	if (unlikely(!pskb_may_pull(skb, 2)))
- 		goto err_free;
++	return get_unaligned(ip);
+ }
+ 
+ /**
+@@ -275,8 +278,9 @@ static u8 *batadv_arp_hw_dst(struct sk_b
+ static __be32 batadv_arp_ip_dst(struct sk_buff *skb, int hdr_size)
+ {
+ 	u8 *dst = batadv_arp_hw_src(skb, hdr_size) + ETH_ALEN * 2 + 4;
++	__be32 *ip = (__force __be32 *)dst;
+ 
+-	return *(__force __be32 *)dst;
++	return get_unaligned(ip);
+ }
+ 
+ /**
 
 
