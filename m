@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13260331EC0;
-	Sat, 12 Sep 2026 14:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62212DC321;
+	Sat, 12 Sep 2026 14:23:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223005; cv=none; b=WyKHWjNl/fFn/hQc+YNOVVptnu+hGLXZx1cAxPPLa3heRBvIwW2S6xkMtWzCtAh327eXAyCGF+bnm6qCNIQdv3nC0ntz9EvqKX3hS/W63SfN7WmUpts89eB90HDtlECz4bFadMDA23ohGLJfKm5xSUwgu7smqGCd1lEuV6kNttE=
+	t=1789223010; cv=none; b=FnDqAAytN1KtCy4vRp8AUrUg2AvO2XF8HhljCFMFUUmf1guWN2JKK2TItDqqJPebUNz1QvXONHDoBb6fe2f3h542H2EqHjmtevRfSEziig6YvcRI1ZYe3Nr1Jrmw0MAkEwiw9szpLZJkSrhBONQarZQbpdJKwXa2oTtRulb16lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223005; c=relaxed/simple;
-	bh=4fPUhAvG3rES00QrTOHHSxg32ivQ4pKAygN7mhelGe4=;
+	s=arc-20240116; t=1789223010; c=relaxed/simple;
+	bh=wrF5p0sXRvDgP1+7mxS53edxEXZXirSk9gy5UHayyv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AzmiO7lkdT8rpbN7i5/iX2hMWLifygH7O7/K5fRwdOaEHt1oU48O+LKSmGeDeYt6t9O3M/HJVSPy41qrhr7FP1sI0VUN67dZsyHXICiXI6ZJUCDd3ejabW3iCgMuxMLmkDQWEEX1FGEc87mUqlU9DK7TrgAAGRFUVwE2Jst5W4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DeAeqdsS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I7bLAXAvCeKoOTVCcqYtZGyl2sr/FQ+UB/HzmwbzEqFdKP1HY/t1kestMCAlMM5vHfWBpH4/7qs7bj9JcuojQwtZbxonW6x5tOZ6xn1VEcLp6gWangG09X1GsWKrLE2vy1KyjJGd38/ZEAq3PHfqHkcwJeMPdtGgBwrjgNolJQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAv1qbjF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DeAeqdsS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBA51F000FF;
-	Sat, 12 Sep 2026 14:23:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAv1qbjF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E661F000FF;
+	Sat, 12 Sep 2026 14:23:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223003;
-	bh=0PmJCP4jsggCoMHtOf/x+hHM2XHVWYTMGgIQ27gxzYU=;
+	s=korg; t=1789223008;
+	bh=VutXDD758evjmFn/nea2U8GSYXK9gySAShs1Gj9caWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DeAeqdsSEcMDVSXft6jpGAq5NGX2WK1hPEvyMX+6QVd2dzVZtI+s8vDn6+dyYLkrX
-	 GZcfz+xXHBTQkSRFnrCJrc1gsxDmxGfkEUToSkqN5YPTxgnOk0yjnUZ7EcoXspLfYy
-	 mKCexRsU3RsggU1jKrOGyGmfxe/zpA9pAzpPPigA=
+	b=AAv1qbjFj/izf61HV9fb0cCJgCLkbhSL0wpenwAPEqyu2oowF11privCqs5bCRFye
+	 AFtZNuZltvyjlzKeC8a8Zs6d8GUBKlWrbkrMNxNm5UbK+K8YYU8rL+esylE+pErtwY
+	 pELDr+xOSkK3zlSKgXSUeC2ox0lJrhbwcVbl+mTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0701/1424] serial: ma35d1: Fix OF node reference leaks in console init
-Date: Sat, 12 Sep 2026 08:52:13 +0200
-Message-ID: <20260912065622.996801693@linuxfoundation.org>
+Subject: [PATCH 6.6 0702/1424] usb: gadget: configfs: fix out-of-bounds read of qw_sign
+Date: Sat, 12 Sep 2026 08:52:14 +0200
+Message-ID: <20260912065623.019004840@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,62 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 8dfea56f350b3dc826f35711802ad6ae8fae0748 ]
+[ Upstream commit f63edb54d8f738f9c21e2068c777ae1c097df6b7 ]
 
-ma35d1serial_console_init_port() stores matching UART device nodes in
-ma35d1serial_uart_nodes[] with an extra of_node_get() so that console
-setup can later read the "reg" property.  However, the stored references
-are never released after console setup has finished using them.
+os_desc_qw_sign_show() passes OS_STRING_QW_SIGN_LEN as the input
+length to utf16s_to_utf8s(), but that argument counts UTF-16 code
+units while OS_STRING_QW_SIGN_LEN (14) is the byte size of qw_sign[].
+The array holds only OS_STRING_QW_SIGN_LEN / 2 (7) code units, so the
+conversion reads up to 7 units (14 bytes) past the end of qw_sign[]
+into the following members of struct gadget_info when the stored
+signature fills the array without a NUL terminator, exposing those
+bytes through the configfs attribute.
 
-Drop the stored node reference after ma35d1serial_console_setup() reads
-the "reg" property, and clear the array slot to avoid leaving a stale
-pointer behind.  Also release the iterator reference before breaking out
-of for_each_matching_node(), since the normal iterator advance will not
-run in that path.
+The store path halves the count for its input bound but passes the
+full byte count as the utf8s_to_utf16s() output limit; use the
+destination code-unit count in both directions.
 
-Fixes: 930cbf92db01 ("tty: serial: Add Nuvoton ma35d1 serial driver support")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260630214043.1887351-1-dbgh9129@gmail.com
+Fixes: 76180d716f91 ("usb: gadget: configfs: make qw_sign attribute symmetric")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260618005043.1581707-1-michael.bommarito@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/ma35d1_serial.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/configfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/ma35d1_serial.c b/drivers/tty/serial/ma35d1_serial.c
-index 99225f1e02ac8..6e5458b085541 100644
---- a/drivers/tty/serial/ma35d1_serial.c
-+++ b/drivers/tty/serial/ma35d1_serial.c
-@@ -608,8 +608,14 @@ static int __init ma35d1serial_console_setup(struct console *co, char *options)
- 	if (!np || !p)
- 		return -ENODEV;
+diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
+index 9e8af571448bf..75392bf7bd34c 100644
+--- a/drivers/usb/gadget/configfs.c
++++ b/drivers/usb/gadget/configfs.c
+@@ -1174,7 +1174,7 @@ static ssize_t os_desc_qw_sign_show(struct config_item *item, char *page)
+ 	struct gadget_info *gi = os_desc_item_to_gadget_info(item);
+ 	int res;
  
--	if (of_property_read_u32_array(np, "reg", val32, ARRAY_SIZE(val32)) != 0)
-+	if (of_property_read_u32_array(np, "reg", val32, ARRAY_SIZE(val32)) != 0) {
-+		of_node_put(np);
-+		ma35d1serial_uart_nodes[co->index] = NULL;
- 		return -EINVAL;
-+	}
-+
-+	of_node_put(np);
-+	ma35d1serial_uart_nodes[co->index] = NULL;
+-	res = utf16s_to_utf8s((wchar_t *) gi->qw_sign, OS_STRING_QW_SIGN_LEN,
++	res = utf16s_to_utf8s((wchar_t *) gi->qw_sign, OS_STRING_QW_SIGN_LEN / 2,
+ 			      UTF16_LITTLE_ENDIAN, page, PAGE_SIZE - 1);
+ 	page[res++] = '\n';
  
- 	p->port.iobase = val32[1];
- 	p->port.membase = ioremap(p->port.iobase, MA35_UART_REG_SIZE);
-@@ -648,8 +654,10 @@ static void ma35d1serial_console_init_port(void)
- 			of_node_get(np);
- 			ma35d1serial_uart_nodes[i] = np;
- 			i++;
--			if (i == MA35_UART_NR)
-+			if (i == MA35_UART_NR) {
-+				of_node_put(np);
- 				break;
-+			}
- 		}
- 	}
- }
+@@ -1196,7 +1196,7 @@ static ssize_t os_desc_qw_sign_store(struct config_item *item, const char *page,
+ 	mutex_lock(&gi->lock);
+ 	res = utf8s_to_utf16s(page, l,
+ 			      UTF16_LITTLE_ENDIAN, (wchar_t *) gi->qw_sign,
+-			      OS_STRING_QW_SIGN_LEN);
++			      OS_STRING_QW_SIGN_LEN / 2);
+ 	if (res > 0)
+ 		res = len;
+ 	mutex_unlock(&gi->lock);
 -- 
 2.53.0
 
