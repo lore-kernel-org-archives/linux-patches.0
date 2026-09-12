@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432773F4DE2;
-	Sat, 12 Sep 2026 09:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7D4381E98;
+	Sat, 12 Sep 2026 09:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205513; cv=none; b=rNm8uEqYex237+XK903ZHGXzG+2+jn9p5/GLEWmLEZiClY/SBLHwg19yXcy3NFzLpo9sMVfJQwIBrzaufHcWJTqWy+Twdl7fCnBAzbmECr3Yq0ZxhVnHD5pTdmiuajR5nRJ5annXOrfvwLi0MmxzRPp2gQKECYLSJpdt6PBlwkg=
+	t=1789205517; cv=none; b=GDcjeDCIww1rf6pdh6i5MW7kolLYeXW240nsilPAufY0Lbn3kyO2btozBc+m+m/ytG8UWT5pp3Okx+aeAZXqJlsZC6L99PTBcrhsNUYMzpSFw1xfPmkaOU9Bh+V2NGMoxmc5yP6qK9ALnw+1PpXk2k2lmRcevVAuzII3D95aZ3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205513; c=relaxed/simple;
-	bh=3JWDh6vVpbgyVdSFZBLUD6zqM98BQwZD7hhqSQ2LnCg=;
+	s=arc-20240116; t=1789205517; c=relaxed/simple;
+	bh=FN073281GV8TwZ28RVhQZPZSlUvu5eOC3AaGueaGrhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pDBJXWe6aGmbM4e53CqQOukvsjgtNxIcuBejYFAoLI4OAfqMKoS+S9FV/Ecy7iXZ+yGJnIe+KvV/ORqEPfyMWeSMeU8XB7vQOiWuJz2ijUv/Ko9HIehy1Q2x6VhzpK15x/GJnd1A1/NGLEy+kKwnNPX2bYWZBcywELHG2DxTQ/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYdTkbGw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WKJjilSvBykrUuIPkEKQBMdBi3juXrsdwLUMaG4oZ5nD2l3Zzx4qP/eEWFFHsD3jP/ji4R76v84CnlopILRo4/QM8fxzUjvetn0tFoXrqYvj3nlqSkqtQLLgP6x46GNFf3z0bxjN10SVy2wZ8nkLJurMdiZxvsBnPuJS/nZUxxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3C5kIm6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYdTkbGw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD55B1F000FF;
-	Sat, 12 Sep 2026 09:31:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3C5kIm6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A471F000FF;
+	Sat, 12 Sep 2026 09:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205511;
-	bh=fwmtbUrrkzsj+VC5u9/4cHUFnyBq8W6EmE7r3HD9SMY=;
+	s=korg; t=1789205516;
+	bh=vnoeX2EnrGjXKMraPnc10fhld935WAc26w1K5CwqlPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LYdTkbGwajyVKLsFnICBsy4ZdgMFBPpO1eEzbUI2CVjFmIHH1+3nDWtgdfrqf04rF
-	 yy1QPgVngBJ80LAXp8DIMjkr4ZQ/4GAoxxfFWLBieTGsfICcE2vqENrGMS7Mpjdb95
-	 ULoM4V8y3rrNLtI9yUQI7+eRF3/JIqB7pLj3iFEQ=
+	b=b3C5kIm6GyC1tp6qyMVZxAwjo1E8e549GEh/TzB9h9GkDXCo+V9sibQxHxyhbESSo
+	 Zey2+ElfQ7d9zM1WTbb0qLviGemdOuclaW6KRt5Y4Les+H6iGIeCdO0xoJmVoC9cwd
+	 nYJmmUiXMOcaeKqStxLhzGemFTfMsDlUT1VDm7S0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Dhruva Gole <d-gole@ti.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0018/1518] platform/x86: ISST: Check for admin capability for write commands
-Date: Sat, 12 Sep 2026 08:36:27 +0200
-Message-ID: <20260912065623.830471111@linuxfoundation.org>
+Subject: [PATCH 6.18 0019/1518] PM: runtime: Wrapper macros for ACQUIRE()/ACQUIRE_ERR()
+Date: Sat, 12 Sep 2026 08:36:28 +0200
+Message-ID: <20260912065623.853576592@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,84 +48,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 69cd1ca440a96c85dcedcddfa5e0af6012f60b8b ]
+[ Upstream commit ef8057b07c72a817537856b98d6e7493b9404eaf ]
 
-In some SST deployments, administrators want to allow reading SST
-capabilities for non-root users. This can be achieved by changing file
-permissions for "/dev/isst_interface", but they still want to prevent
-any changes to the SST configuration by non-root users.
+Add wrapper macros for ACQUIRE()/ACQUIRE_ERR() and runtime PM
+usage counter guards introduced recently: pm_runtime_active_try,
+pm_runtime_active_auto_try, pm_runtime_active_try_enabled, and
+pm_runtime_active_auto_try_enabled.
 
-This capability was available before for non-TPMI SST. Extend the same
-capability for TPMI SST by adding a check for CAP_SYS_ADMIN for all
-write commands.
+The new macros should be more straightforward to use.
 
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20260107060729.1634420-1-srinivas.pandruvada@linux.intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Stable-dep-of: e45d6b847286 ("platform/x86: ISST: Validate max level for set feature")
+For example, they can be used for rewriting a piece of code like below:
+
+        ACQUIRE(pm_runtime_active_try, pm)(dev);
+        if ((ret = ACQUIRE_ERR(pm_runtime_active_try, &pm)))
+                return ret;
+
+in the following way:
+
+        PM_RUNTIME_ACQUIRE(dev, pm);
+        if ((ret = PM_RUNTIME_ACQUIRE_ERR(&pm)))
+                return ret;
+
+If the original code does not care about the specific error code
+returned when attepmting to resume the device:
+
+        ACQUIRE(pm_runtime_active_try, pm)(dev);
+        if (ACQUIRE_ERR(pm_runtime_active_try, &pm))
+                return -ENXIO;
+
+it may be changed like this:
+
+        PM_RUNTIME_ACQUIRE(dev, pm);
+        if (PM_RUNTIME_ACQUIRE_ERR(&pm))
+                return -ENXIO;
+
+Link: https://lore.kernel.org/linux-pm/5068916.31r3eYUQgx@rafael.j.wysocki/
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/3400866.aeNJFYEL58@rafael.j.wysocki
+Stable-dep-of: d378fceaafd7 ("iio: light: apds9306: fix PM reference leak in apds9306_read_data()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ include/linux/pm_runtime.h |   24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
---- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-+++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
-@@ -625,7 +625,7 @@ static long isst_if_core_power_state(voi
- 		return -EINVAL;
+--- a/include/linux/pm_runtime.h
++++ b/include/linux/pm_runtime.h
+@@ -637,6 +637,30 @@ DEFINE_GUARD_COND(pm_runtime_active_auto
+ DEFINE_GUARD_COND(pm_runtime_active_auto, _try_enabled,
+ 		  pm_runtime_resume_and_get(_T), _RET == 0)
  
- 	if (core_power.get_set) {
--		if (power_domain_info->write_blocked)
-+		if (power_domain_info->write_blocked || !capable(CAP_SYS_ADMIN))
- 			return -EPERM;
- 
- 		if (core_power.enable > SST_CP_MAX_ENABLE ||
-@@ -684,7 +684,7 @@ static long isst_if_clos_param(void __us
- 		return -EINVAL;
- 
- 	if (clos_param.get_set) {
--		if (power_domain_info->write_blocked)
-+		if (power_domain_info->write_blocked || !capable(CAP_SYS_ADMIN))
- 			return -EPERM;
- 
- 		if (!in_range(clos_param.min_freq_mhz / SST_MUL_FACTOR_FREQ, 0, SST_MAX_FREQ + 1))
-@@ -795,7 +795,8 @@ static long isst_if_clos_assoc(void __us
- 
- 		power_domain_info = &sst_inst->power_domain_info[part][punit_id];
- 
--		if (assoc_cmds.get_set && power_domain_info->write_blocked)
-+		if (assoc_cmds.get_set && (power_domain_info->write_blocked ||
-+					   !capable(CAP_SYS_ADMIN)))
- 			return -EPERM;
- 
- 		offset = SST_CLOS_ASSOC_0_OFFSET +
-@@ -973,7 +974,7 @@ static int isst_if_set_perf_level(void _
- 	if (!power_domain_info)
- 		return -EINVAL;
- 
--	if (power_domain_info->write_blocked)
-+	if (power_domain_info->write_blocked || !capable(CAP_SYS_ADMIN))
- 		return -EPERM;
- 
- 	if (!(power_domain_info->pp_header.allowed_level_mask & BIT(perf_level.level)))
-@@ -1033,7 +1034,7 @@ static int isst_if_set_perf_feature(void
- 	if (!power_domain_info)
- 		return -EINVAL;
- 
--	if (power_domain_info->write_blocked)
-+	if (power_domain_info->write_blocked || !capable(CAP_SYS_ADMIN))
- 		return -EPERM;
- 
- 	if (perf_feature.feature & ~SST_PP_FEATURE_STATE_VALID_MASK)
++/* ACQUIRE() wrapper macros for the guards defined above. */
++
++#define PM_RUNTIME_ACQUIRE(_dev, _var)			\
++	ACQUIRE(pm_runtime_active_try, _var)(_dev)
++
++#define PM_RUNTIME_ACQUIRE_AUTOSUSPEND(_dev, _var)	\
++	ACQUIRE(pm_runtime_active_auto_try, _var)(_dev)
++
++#define PM_RUNTIME_ACQUIRE_IF_ENABLED(_dev, _var)	\
++	ACQUIRE(pm_runtime_active_try_enabled, _var)(_dev)
++
++#define PM_RUNTIME_ACQUIRE_IF_ENABLED_AUTOSUSPEND(_dev, _var)	\
++	ACQUIRE(pm_runtime_active_auto_try_enabled, _var)(_dev)
++
++/*
++ * ACQUIRE_ERR() wrapper macro for guard pm_runtime_active.
++ *
++ * Always check PM_RUNTIME_ACQUIRE_ERR() after using one of the
++ * PM_RUNTIME_ACQUIRE*() macros defined above (yes, it can be used with
++ * any of them) and if it is nonzero, avoid accessing the given device.
++ */
++#define PM_RUNTIME_ACQUIRE_ERR(_var_ptr)	\
++	ACQUIRE_ERR(pm_runtime_active, _var_ptr)
++
+ /**
+  * pm_runtime_put_sync - Drop device usage counter and run "idle check" if 0.
+  * @dev: Target device.
 
 
