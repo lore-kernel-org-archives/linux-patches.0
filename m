@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7A5478E25;
-	Sat, 12 Sep 2026 11:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A8041F5D5;
+	Sat, 12 Sep 2026 11:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214379; cv=none; b=uPcRmXZD9NEU1ktfZCoXr5b0TvMPOxcUZsclrFPHTnTFqS71r8Hm8JhlODsfo/pXqMaAEsHgsP6gwBnKdprb/4oGDepbsMClXUnrMe+oRAMqx7HYp/r/jyGDdZ7erZ1OEZ5bn3r6zHk8XWLOy0GvgBPWRbvjsPah445i+f7s4so=
+	t=1789214384; cv=none; b=CA3VWrKBSzET8mQ0IaKojzgkb4vNStj1vZ50M+cALd/a45rbZPU+/l3upznXY9Sne7qtt3bEqknlZM40Zh0OSdCl1/szY+KvRHrBPR2+ZAgwwlTWjZMql82iFciinEJxh4UWqrJNBnrqY+pFyL3TFHpSdh3iyxa1lfLwSXjBquI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214379; c=relaxed/simple;
-	bh=KfquFC0JGEtEIIFs7NBP+TF2u4sYngyfQt7Epfb3//8=;
+	s=arc-20240116; t=1789214384; c=relaxed/simple;
+	bh=sNLoEAZQ5kRFUpFCuKcHyatMdkDekTI+Jr7tDQUHXrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fzL1E0MsNUApr1H3phXnhBi7+5PSl64uvMTdxAelgHSA2aMKZ8dNux7euxDRQAdyDVjWaaoi+/+nYF0Y4ZOpHFwLR/g61/oG06Yp8RQBpMhOJHVkRKjKFDS8u83hFzE3nPyQTG+O6V3kmiVuv5SdFix+pjCIIxxK0UoeP4Q8kFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u4JqZg0R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=SQOZZdihODnmPbgttkxIJVrTAEF2eqdDDVProAmBBsrpIYG5iesceRDnq7DJfpNqzNm8MGUypDk4i8mD+psQ8ygBlNLh/FAOBOaUXBwuQD+rCRrrBEfepE2UKXHk7qIO880BPETCFWSJeOkMLZJ9Q/mn5Rmb2zjZglWJ2NpNs3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=onR5QpRZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4JqZg0R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11A11F000FF;
-	Sat, 12 Sep 2026 11:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="onR5QpRZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5301F000FF;
+	Sat, 12 Sep 2026 11:59:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214377;
-	bh=GGIgbzUdStAVF2E/ksf2awJBuvord3CbUDbwgptkuIQ=;
+	s=korg; t=1789214382;
+	bh=DbHg3tymXFG/zdIU6H+fW9IBofoyQNoSZ2/b2htATkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u4JqZg0R8zJdbDxz0Nr4/zlnqwqWMJZD/NyanIMJOaqz7sTy9N8DUtrs0Kfqv2ToO
-	 v3GyKeZUHm9Mvfu+cCI2iyvBlm4susOhBjD3ChI+vD23AD3w9nt9N+OH+Sr9tNxz6X
-	 GjIsSnEBT/7nXZnDQLvSAQJsK2ubDDossL1wmMIQ=
+	b=onR5QpRZ5g2XbP9xguvtfb6fjtthONnHSPop+8iOunOZm3zwcyuDcFmPkSFFZgCZ6
+	 770ZHcCQHArbMrp5ePK46F4WpBJMCISf6ZOEBYM+4du976mVnpUXqfGKOobsKWaP/C
+	 VGjO9eIX9E8dRsfEf3ePdxjFDXPR1QyAhOM0zWLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Arthur Gautier <baloo@superbaloo.net>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.12 0287/1376] xhci: fix lost bounce buffers on TDs spanning several ring segments
-Date: Sat, 12 Sep 2026 08:45:13 +0200
-Message-ID: <20260912065613.943890052@linuxfoundation.org>
+	Konstantin Andreev <andreev@swemel.ru>,
+	Casey Schaufler <casey@schaufler-ca.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0314/1376] smack: fix incorrect task context in smack_msg_queue_msgrcv
+Date: Sat, 12 Sep 2026 08:45:40 +0200
+Message-ID: <20260912065614.549257974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -45,145 +45,197 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arthur Gautier <baloo@superbaloo.net>
+From: Konstantin Andreev <andreev@swemel.ru>
 
-commit ff44dfb03a293bf30e31f98772a1dd316a6071d1 upstream.
+[ Upstream commit fba3d32825f4bbc8e20f0cdc3b14df57965b8fe5 ]
 
-When a TD reaches a link TRB with data that is not aligned to the
-endpoint's wMaxPacketSize, xhci_align_td() stages the unalignable tail
-through the bounce buffer of the ring segment holding that link TRB.
-xhci_unmap_td_bounce_buffer() later unmaps it and, for IN transfers,
-copies the data back into the URB's buffer.
+The smack_msg_queue_msgrcv() function incorrectly checks
+the permissions of the 'current' task instead of the
+'target' task.
 
-The enqueue path records the segment that was bounced in td->bounce_seg,
-under the assumption that a TD never spans more than two ring segments.
-That assumption does not hold: a TD large enough to span three or more
-segments crosses several link TRBs and can be bounced at each of them.
-Only the last one survives in td->bounce_seg, so every earlier bounce
-buffer is neither copied back nor DMA unmapped.
+In the msgsnd() syscall path, if a receiver is already waiting,
+the pipelined_send() optimization is used to push the message
+directly to the receiver task:
 
-The URB still completes with actual_length equal to the requested length
-and no error, so the transfer looks successful while a wMaxPacketSize
-sized hole in the destination buffer silently keeps its previous
-contents. It also leaks a DMA mapping per dropped bounce.
+    ipc/msg.c`pipelined_send():
+    ` smp_store_release(&msr->r_msg, msg)
 
-Any sufficiently large and fragmented bulk transfer can hit this. It was
-found with a USB mass storage device behind xHCI backing a dm-verity
-target with 512 byte hash blocks, where the stale data is detected rather
-than silently consumed. The device enumerates as SuperSpeed, so
-wMaxPacketSize is 1024, while dm-bufio issues one 512 byte bio per hash
-block. verity_prefetch_io() makes the block layer merge hundreds of them
-into a single request of up to 512 scatterlist entries of 512 bytes each.
-At 256 TRBs per ring segment such a TD spans three segments, and every
-segment boundary falls on an odd multiple of 512, i.e. unaligned to
-wMaxPacketSize. dm-bufio then caches a hash block holding stale data and
-dm-verity declares the metadata block corrupted:
+In this case, the 'sender' (current) task performs the check
+on behalf of the 'receiver' task (msr->r_tsk, passed as the
+'target' parameter):
 
-  device-mapper: verity: 8:2: metadata block 10850 is corrupted
+  ipc/msg.c`pipelined_send():
+  ` security_msg_queue_msgrcv(,, target := msr->r_tsk,,)
 
-A reproducer running this under qemu is available at
-https://github.com/baloo/xhci-verity
+However, smack_msg_queue_msgrcv() ignores the 'target' and
+checks 'current':
 
-The bounce state (bounce_buf, bounce_dma, bounce_len, bounce_offs)
-already lives on the ring segment, so there is nothing extra to track.
-Keep recording the last bounced segment in td->bounce_seg and, on
-completion, walk the segments from td->start_seg up to it, unmapping
-every segment that still has a pending bounce.
+  smack_msg_queue_msgrcv(…)
+  ` smk_curacc_msq(isp, MAY_READWRITE); // current task
 
-Stopping at td->bounce_seg rather than td->end_seg matters: a bounce
-implies the TD continues past that segment's link TRB, so bounce_seg is
-always strictly before end_seg, and a later TD may already have started
-in end_seg and been bounced there. Walking that far would copy a foreign
-bounce buffer into this URB and unmap it twice. It also keeps the walk
-correct if a TD ever wraps the whole ring so that end_seg == start_seg.
+'current' MAY satisfy smack_msg_queue_msgrcv r/w requirement,
+but 'target' (the receiver task) might NOT;
+as a result, an unauthorized receiver gets the message,
+violating MAC policy.
 
-[mn: Add ring->num_segs check to prevent unlikely infinite for loop.]
+Test:
+1) create a sysv message queue with label “foo”
+2) echo "bar foo r" >/smack/load2
+3) msgrcv(,,,0,MSG_NOERROR) in "bar"-labeled task.
+    The task is waiting for the messages ...
+4) msgsnd() from a "foo"-labeled task:
+"bar"-labeled task gets the message.
 
-Fixes: f9c589e142d0 ("xhci: TD-fragment, align the unsplittable case with a bounce buffer")
-Cc: stable@vger.kernel.org
-Suggested-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Arthur Gautier <baloo@superbaloo.net>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260831090448.95644-4-mathias.nyman@linux.intel.com
-[Michal: solved context conflict due to xhci_td_cleanup() type]
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch fixes the issue by checking permission on the
+'target' task instead of 'current'.
+
+(2008-02-04, Casey Schaufler)
+Fixes: e114e473771c ("Smack: Simplified Mandatory Access Control Kernel")
+
+Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c |   32 ++++++++++++++++++++++++--------
- 1 file changed, 24 insertions(+), 8 deletions(-)
+ security/smack/smack_lsm.c | 65 +++++++++++++++++++++++++++-----------
+ 1 file changed, 47 insertions(+), 18 deletions(-)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -781,21 +781,18 @@ static void xhci_giveback_urb_in_irq(str
- 	usb_hcd_giveback_urb(hcd, urb, status);
- }
+diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
+index cc1f0014a10f1..c1c7b1409bf4c 100644
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -147,12 +147,13 @@ static int smk_bu_note(char *note, struct smack_known *sskp,
+ #define smk_bu_note(note, sskp, oskp, mode, RC) (RC)
+ #endif
  
--static void xhci_unmap_td_bounce_buffer(struct xhci_hcd *xhci,
--		struct xhci_ring *ring, struct xhci_td *td)
-+static void xhci_unmap_one_bounce_buffer(struct xhci_hcd *xhci,
-+		struct xhci_ring *ring, struct xhci_td *td,
-+		struct xhci_segment *seg)
+-#ifdef CONFIG_SECURITY_SMACK_BRINGUP
+-static int smk_bu_current(char *note, struct smack_known *oskp,
+-			  int mode, int rc)
++static int
++smk_bu_tsk_to_obj(struct task_struct *tsk, const struct task_smack *tsp,
++		  char *note, struct smack_known *oskp, int mode, int rc)
  {
- 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
--	struct xhci_segment *seg = td->bounce_seg;
- 	struct urb *urb = td->urb;
- 	size_t len;
+-	struct task_smack *tsp = smack_cred(current_cred());
++#ifdef CONFIG_SECURITY_SMACK_BRINGUP
+ 	char acc[SMK_NUM_ACCESS_TYPE + 1];
++	char comm[TASK_COMM_LEN];
  
--	if (!ring || !seg || !urb)
--		return;
--
- 	if (usb_urb_dir_out(urb)) {
- 		dma_unmap_single(dev, seg->bounce_dma, ring->bounce_buf_len,
- 				 DMA_TO_DEVICE);
--		return;
-+		goto done;
- 	}
+ 	if (rc <= 0)
+ 		return rc;
+@@ -160,14 +161,22 @@ static int smk_bu_current(char *note, struct smack_known *oskp,
+ 		rc = 0;
  
- 	dma_unmap_single(dev, seg->bounce_dma, ring->bounce_buf_len,
-@@ -811,10 +808,29 @@ static void xhci_unmap_td_bounce_buffer(
- 		memcpy(urb->transfer_buffer + seg->bounce_offs, seg->bounce_buf,
- 		       seg->bounce_len);
- 	}
-+done:
- 	seg->bounce_len = 0;
- 	seg->bounce_offs = 0;
- }
- 
-+static void xhci_unmap_td_bounce_buffer(struct xhci_hcd *xhci,
-+		struct xhci_ring *ring, struct xhci_td *td)
-+{
-+	struct xhci_segment *seg;
-+	int i = 0;
+ 	smk_bu_mode(mode, acc);
 +
-+	if (!td->bounce_seg || !ring || !td->urb)
-+		return;
-+
-+	/* td->bounce_seg is the last one bounced, unmap them all */
-+	for (seg = td->start_seg; i++ < ring->num_segs; seg = seg->next) {
-+		if (seg->bounce_len)
-+			xhci_unmap_one_bounce_buffer(xhci, ring, td, seg);
-+		if (seg == td->bounce_seg)
-+			break;
-+	}
+ 	pr_info("Smack %s: (%s %s %s) %s %s\n", smk_bu_mess[rc],
+-		tsp->smk_task->smk_known, oskp->smk_known,
+-		acc, current->comm, note);
++		smk_of_task(tsp)->smk_known, oskp->smk_known,
++		acc, get_task_comm(comm, tsk), note);
+ 	return 0;
+-}
+ #else
+-#define smk_bu_current(note, oskp, mode, RC) (RC)
++	return rc;
+ #endif
 +}
 +
- static int xhci_td_cleanup(struct xhci_hcd *xhci, struct xhci_td *td,
- 			   struct xhci_ring *ep_ring, int status)
++static int smk_bu_current(char *note, struct smack_known *oskp,
++			  int mode, int rc)
++{
++	return smk_bu_tsk_to_obj(current, smack_cred(current_cred()),
++				 note, oskp, mode, rc);
++}
+ 
+ #ifdef CONFIG_SECURITY_SMACK_BRINGUP
+ static int smk_bu_task(struct task_struct *otp, int mode, int rc)
+@@ -3360,14 +3369,20 @@ static int smack_sem_semop(struct kern_ipc_perm *isp, struct sembuf *sops,
+ }
+ 
+ /**
+- * smk_curacc_msq : helper to check if current has access on msq
+- * @isp : the msq
++ * smk_tskacc_msq : helper to check if tsk has access on msq
++ * @tsk: the task that requests access
++ * @isp : the sysv msg queue permissions
+  * @access : access requested
+  *
+- * return 0 if current has access, error otherwise
++ * return 0 if tsk has access, error otherwise
+  */
+-static int smk_curacc_msq(struct kern_ipc_perm *isp, int access)
++static int
++smk_tskacc_msq(struct task_struct *tsk, struct kern_ipc_perm *isp, int access)
  {
-@@ -3725,7 +3741,7 @@ int xhci_queue_bulk_tx(struct xhci_hcd *
- 						  &trb_buff_len,
- 						  ring->enq_seg)) {
- 					send_addr = ring->enq_seg->bounce_dma;
--					/* assuming TD won't span 2 segs */
-+					/* TD bounced at least, and last on this seg */
- 					td->bounce_seg = ring->enq_seg;
- 				}
- 			}
++	const bool tsk_is_current = (tsk == current);
++	const struct cred * const tsk_cred =
++			(tsk_is_current ? current_cred() : get_task_cred(tsk));
++	struct task_smack * const tsp = smack_cred(tsk_cred);
+ 	struct smack_known *msp = smack_of_ipc(isp);
+ 	struct smk_audit_info ad;
+ 	int rc;
+@@ -3376,11 +3391,25 @@ static int smk_curacc_msq(struct kern_ipc_perm *isp, int access)
+ 	smk_ad_init(&ad, __func__, LSM_AUDIT_DATA_IPC);
+ 	ad.a.u.ipc_id = isp->id;
+ #endif
+-	rc = smk_curacc(msp, access, &ad);
+-	rc = smk_bu_current("msq", msp, access, rc);
++	rc = smk_tskacc(tsp, msp, access, &ad);
++	rc = smk_bu_tsk_to_obj(tsk, tsp, "msq", msp, access, rc);
++	if (!tsk_is_current)
++		put_cred(tsk_cred);
+ 	return rc;
+ }
+ 
++/**
++ * smk_curacc_msq : helper to check if current has access on msq
++ * @isp : the sysv msg queue permissions
++ * @access : access requested
++ *
++ * return 0 if current has access, error otherwise
++ */
++static int smk_curacc_msq(struct kern_ipc_perm *isp, int access)
++{
++	return smk_tskacc_msq(current, isp, access);
++}
++
+ /**
+  * smack_msg_queue_associate - Smack access check for msg_queue
+  * @isp: the object
+@@ -3448,21 +3477,21 @@ static int smack_msg_queue_msgsnd(struct kern_ipc_perm *isp, struct msg_msg *msg
+ }
+ 
+ /**
+- * smack_msg_queue_msgrcv - Smack access check for msg_queue
++ * smack_msg_queue_msgrcv - check it target has r/w access to msg_queue
+  * @isp: the object
+  * @msg: unused
+- * @target: unused
++ * @target: the task that msgrcv() from the queue
+  * @type: unused
+  * @mode: unused
+  *
+- * Returns 0 if current has read and write access, error code otherwise
++ * Returns 0 if target has read and write access, error code otherwise
+  */
+ static int smack_msg_queue_msgrcv(struct kern_ipc_perm *isp,
+ 				  struct msg_msg *msg,
+ 				  struct task_struct *target, long type,
+ 				  int mode)
+ {
+-	return smk_curacc_msq(isp, MAY_READWRITE);
++	return smk_tskacc_msq(target, isp, MAY_READWRITE);
+ }
+ 
+ /**
+-- 
+2.53.0
+
 
 
