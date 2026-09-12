@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2181472074;
-	Sat, 12 Sep 2026 11:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF9635E549;
+	Sat, 12 Sep 2026 11:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211566; cv=none; b=XIAHMEGefrxAHH007yfN7Y29yy9CBQJgDwT2orijKIJ+dtz2Pf7kPzkuVZWn5Z6TKrhTzrci6seOAX6t8XqRXrl+BjeDcPyBYOBYs2zffTQ+xVvmERtKzqDXvjAi1lZ/NjFgE2IWsIuxddmAtiSTWNhwGsw5BnZDO+FYd7WgbC0=
+	t=1789211572; cv=none; b=rWvemYr8eq6mToKOmnMl+8aaKClJRbhdE8lOU51Sj8vKrN8ziqQkbetilNww2XmYCWTIakgCVOEeK1eQjANVoc20l/Tgl1jlNxH+PfD/VdQi52NF0ZCPYGrk2L2VZcFgLwN/PuIQpWgJMXojZMDb/ac0HKBnOlZ2tfAMKr+kiQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211566; c=relaxed/simple;
-	bh=kDAxfHmZ3QzZ0o+EmKnDVXiBvtSxpRPIe1yNiIglArc=;
+	s=arc-20240116; t=1789211572; c=relaxed/simple;
+	bh=FM+AGEA29SFI85xHyIzQqCG1wCkbYvFUkeuFjo/kcCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Op4SeFBNOoUZJfxbPSPaXhW73k8gcoEa+KuU/kBSnUGOHQCO9M1s1h+x6T2PDA6WdTVLc0kuT1uotLMYHE2oYqMGpx3xwcusa6U3rIr53y0mVISB2ba4T25b5GD6aKKwmmJT+4EXL8+5UPnrgKl8GM0tQLBo0yUzI8Lm/ZsVR64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4sNadbA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U1Pf7hao2KuLfStjrHIjdijHk2E5NbgIiifXoMGW1IyGOYClswK1roU/ic9/caobLIwwkDKd4oBB3BWY3Zw8qkf17+DirjhSnKP4G45oqL8dyYyIvzUwP3KuE0H7Qf2sEkcgPGgM0iFMA5/ksWbINJF7KTDJNi57WWiKyV25wtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osCjUT4l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4sNadbA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780501F000FF;
-	Sat, 12 Sep 2026 11:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osCjUT4l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE391F000FF;
+	Sat, 12 Sep 2026 11:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211565;
-	bh=Ork4KRmPUCc1zHJZM1uP20EZ3UF3yPo/f0/e11pEVLs=;
+	s=korg; t=1789211570;
+	bh=ys7vFXuQIscISgnW+ONEp/Rb5xP83xLZYjKyFPb/ZQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M4sNadbA+DYUiTpF3UruEtS5qYIWYgVgp79/6xos3/2Ii4gapgSJ40RPa3JbOn5R7
-	 WRfa/pvUXYKr01Jc4Fc7yDA92zU3ltxxSvkudh55SFGR4cDIP7hiIdmSUYPly35c5m
-	 K+Po5p8b/LaPHgkevdp77dcuswL0DKTEnGqe9sms=
+	b=osCjUT4lh7m86t1PGBaD1TNjc9Q8kQbVLsgHW0wTWy0KRhpOku7LOdtbDcVXkHeEo
+	 t23eGfcyHXF7bUtqLrdhSW6EEfIortouD5T5IctyyXl3li4bzllIiX9RDcRNSpceRr
+	 xkitiTIhA2RW7OG5/uQC52z8uJrfDVNouEBZLmDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sechang Lim <rhkrqnwk98@gmail.com>,
-	Junseo Lim <zirajs7@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1240/1518] bpf: Disallow bpf_{g,s}etsockopt() in cgroup UNIX getname hooks
-Date: Sat, 12 Sep 2026 08:56:49 +0200
-Message-ID: <20260912065651.557254747@linuxfoundation.org>
+Subject: [PATCH 6.18 1258/1518] drm/xe: tests: fix error message in xe_migrate_sanity_test()
+Date: Sat, 12 Sep 2026 08:57:07 +0200
+Message-ID: <20260912065651.970183335@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,58 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junseo Lim <zirajs7@gmail.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 84473a7e1813a2da7b759ab1d098a84998c8d3f5 ]
+[ Upstream commit 3d318fe4e99a627aa3c2980699e2e9f13ad18516 ]
 
-_bpf_setsockopt() and _bpf_getsockopt() call sock_owned_by_me() for
-full sockets, so these helpers expect the socket lock to be held.
+This is supposed to print the error code but there is a copy and
+paste bug so it prints "bo" instead of "err".
 
-BPF_CGROUP_UNIX_GETPEERNAME and BPF_CGROUP_UNIX_GETSOCKNAME run BPF
-programs without acquiring the socket lock. A program attached to
-either hook can therefore trigger the sock_owned_by_me() warning by
-calling bpf_setsockopt() or bpf_getsockopt().
-
-Disallow bpf_setsockopt() and bpf_getsockopt() for CGROUP_UNIX_GETPEERNAME
-and CGROUP_UNIX_GETSOCKNAME.
-
-Fixes: 859051dd165e ("bpf: Implement cgroup sockaddr hooks for unix sockets")
-Reported-by: Sechang Lim <rhkrqnwk98@gmail.com>
-Signed-off-by: Junseo Lim <zirajs7@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://lore.kernel.org/bpf/20260812091654.244752-1-zirajs7@gmail.com
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Link: https://patch.msgid.link/an1tu0z3T-qX1ogn@stanley.mountain
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit 28a4198c52a1468fc1b620a9837557ea1dc1766d)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/gpu/drm/xe/tests/xe_migrate.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 332f4986376f1..48af015981abd 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -8189,10 +8189,8 @@ sock_addr_func_proto(enum bpf_func_id func_id, const struct bpf_prog *prog)
- 		case BPF_CGROUP_UNIX_SENDMSG:
- 		case BPF_CGROUP_INET4_GETPEERNAME:
- 		case BPF_CGROUP_INET6_GETPEERNAME:
--		case BPF_CGROUP_UNIX_GETPEERNAME:
- 		case BPF_CGROUP_INET4_GETSOCKNAME:
- 		case BPF_CGROUP_INET6_GETSOCKNAME:
--		case BPF_CGROUP_UNIX_GETSOCKNAME:
- 			return &bpf_sock_addr_setsockopt_proto;
- 		default:
- 			return NULL;
-@@ -8212,10 +8210,8 @@ sock_addr_func_proto(enum bpf_func_id func_id, const struct bpf_prog *prog)
- 		case BPF_CGROUP_UNIX_SENDMSG:
- 		case BPF_CGROUP_INET4_GETPEERNAME:
- 		case BPF_CGROUP_INET6_GETPEERNAME:
--		case BPF_CGROUP_UNIX_GETPEERNAME:
- 		case BPF_CGROUP_INET4_GETSOCKNAME:
- 		case BPF_CGROUP_INET6_GETSOCKNAME:
--		case BPF_CGROUP_UNIX_GETSOCKNAME:
- 			return &bpf_sock_addr_getsockopt_proto;
- 		default:
- 			return NULL;
+diff --git a/drivers/gpu/drm/xe/tests/xe_migrate.c b/drivers/gpu/drm/xe/tests/xe_migrate.c
+index 5904d658d1f29..e056fac1a86b9 100644
+--- a/drivers/gpu/drm/xe/tests/xe_migrate.c
++++ b/drivers/gpu/drm/xe/tests/xe_migrate.c
+@@ -197,8 +197,7 @@ static void xe_migrate_sanity_test(struct xe_migrate *m, struct kunit *test,
+ 
+ 	err = xe_bo_vmap(bo);
+ 	if (err) {
+-		KUNIT_FAIL(test, "Failed to vmap our pagetables: %li\n",
+-			   PTR_ERR(bo));
++		KUNIT_FAIL(test, "Failed to vmap our pagetables: %d\n", err);
+ 		return;
+ 	}
+ 
 -- 
 2.53.0
 
