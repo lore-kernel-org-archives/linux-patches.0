@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D48331EC0;
-	Sat, 12 Sep 2026 13:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3F432D7C7;
+	Sat, 12 Sep 2026 13:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221586; cv=none; b=lNTyS1epiIbU5WHOKTh4C2V4Rg1dqas2bUINes7t/KvgKyBRQQ9v65EzzoYYZOcztxLlHqIlZUFbA82pe/KDpKNVGJ0zFDKUUKDrFg1Ic306EBokEHYFSV1QGEV6gvkEzlN+PKiG6Z0YMHpgj6vWOEMan2D1Y93EYbxFL5/aBL4=
+	t=1789221591; cv=none; b=QDZ0+a2kaDMSc5LGHrBvhDQ8SHI5go6p40gaKeKqAI5mMLPaeN8W7jRW6x9592lSv39yev3rzOiYvr3oUKAGyzog5hlacu5RPcN6ld4qbPy7ise4Va4rYrhqV0VEJPe28wuOlnxdmNEaF/xlqr/7c5IQJGCt402t46ngMP0/qi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221586; c=relaxed/simple;
-	bh=E33ZB7ePInenfDtHvTRqgNkUbJeeX+tcTNi0h4ui7nw=;
+	s=arc-20240116; t=1789221591; c=relaxed/simple;
+	bh=PGQgjIFOtVnhIV/mxrdd58qU1rUJRmazz43yJYNfCco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=csgTULt94nDtknFthooYfTVnG+sy08sNgVmJ0U7viReU49XnAE99OIwD1FtBBVKb53jwYC5sWLTN4wDxPtl0IJZq9rLXosDwTwDHVxWDGgAtRZdCTvWCIPni3CZ1luH4LOIeOPP8Ra4w9TqJbRNeKbiYluJU1Vnfywd3H2PmPqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RpyaaG3J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z6dmH+UvgNmkwTYnJz/DzTpNeT3I7fmE2B8lzmUTdHOxuWuZSCHRihsD5kDkSFaoio5M9Iiib0DOH9LWhFY38eWaOgoesDTObXyZKd9HIBuDthZtsyYXiYK1MCd8RjRhstdwsYAHmwykChpL08YFP9fPPXHWubnSBE1QhP6Ifog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lRw5pGO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RpyaaG3J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48981F000FF;
-	Sat, 12 Sep 2026 13:59:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lRw5pGO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070591F00893;
+	Sat, 12 Sep 2026 13:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221581;
-	bh=aux3W4fJd/Q1pm1bw2a4KSAlwFw54+n9u5zoTH966xs=;
+	s=korg; t=1789221586;
+	bh=hLy0FKOAkkUuNhY2jUgeDDMFRImLUwZVAWt66PVe6/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RpyaaG3JTH92pkEvLz82LjPjfDd6O7wadlur0zmadAj5MqnvG0yAQKw6a3mc/x/F5
-	 ufxcr8y7ds7wxCtuYjqe7AmNiIt1kfV3MHQHcFr1gYMP2zULFTqr64rARrxoaklnIX
-	 q15xVHNBYf8wYP3EE/XsN8nTzSebpQz0dUqnn+ZE=
+	b=2lRw5pGObApl8Ucu066W+2kopnMubUnKqNb32JmcFY2KnJROTikc5/fUaqUhsejF4
+	 zap0BCQ+oYYiz9HYQjPFRctrUX2USbX5szOIZtVpgq4sX1En6tR5SXgBds4vfYg+Z3
+	 l1m5wcqpZbYU6MzKOgUKTKKl07ugoqg2UL5nX9io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 0412/1424] ASoC: samsung: aries_audio_probe: double of_node_put due to direct assignment without of_node_get
-Date: Sat, 12 Sep 2026 08:47:24 +0200
-Message-ID: <20260912065616.509538102@linuxfoundation.org>
+	Moksh Panicker <mokshpanicker.7@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.6 0413/1424] iio: chemical: atlas-sensor: fix PM reference leak in buffer postenable
+Date: Sat, 12 Sep 2026 08:47:25 +0200
+Message-ID: <20260912065616.531181499@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,38 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Moksh Panicker <mokshpanicker.7@gmail.com>
 
-commit fb5d1b1c5f8a920ee697545fa6dee16825085717 upstream.
+commit bcd3f72e26314edfce7eaf8d7160b3119c7b7fed upstream.
 
-In aries_audio_probe(), aries_dai[0].platforms->of_node is assigned the
-same pointer as aries_dai[0].cpus->of_node (from of_parse_phandle)
-without calling of_node_get(). When the sound card is deregistered, the
-ASoC framework calls of_node_put() on both cpus->of_node and
-platforms->of_node, causing a double put on the same node and a refcount
-underflow.
+atlas_buffer_postenable() acquires a runtime PM reference with
+pm_runtime_resume_and_get() but returns the result of
+atlas_set_interrupt() directly. If atlas_set_interrupt() fails,
+the runtime PM reference is leaked and the device can never
+autosuspend.
 
-Add of_node_get(aries_dai[0].cpus->of_node) before the assignment.
+Add pm_runtime_put_autosuspend() on the error path to balance
+the reference.
 
+Fixes: 0e4f336f50de ("iio: chemical: atlas-sensor: Balance runtime pm + pm_runtime_resume_and_get()")
 Cc: stable@vger.kernel.org
-Fixes: 7a3a7671fa6c ("ASoC: samsung: Add driver for Aries boards")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260627035251.60172-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Moksh Panicker <mokshpanicker.7@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/samsung/aries_wm8994.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/chemical/atlas-sensor.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/sound/soc/samsung/aries_wm8994.c
-+++ b/sound/soc/samsung/aries_wm8994.c
-@@ -659,6 +659,7 @@ static int aries_audio_probe(struct plat
- 		goto out;
- 	}
+--- a/drivers/iio/chemical/atlas-sensor.c
++++ b/drivers/iio/chemical/atlas-sensor.c
+@@ -414,7 +414,11 @@ static int atlas_buffer_postenable(struc
+ 	if (ret)
+ 		return ret;
  
-+	of_node_get(aries_dai[0].cpus->of_node);
- 	aries_dai[0].platforms->of_node = aries_dai[0].cpus->of_node;
+-	return atlas_set_interrupt(data, true);
++	ret = atlas_set_interrupt(data, true);
++	if (ret)
++		pm_runtime_put_autosuspend(&data->client->dev);
++
++	return ret;
+ }
  
- 	/* Set CPU of_node for BT DAI */
+ static int atlas_buffer_predisable(struct iio_dev *indio_dev)
 
 
