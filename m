@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C00534D915;
-	Sat, 12 Sep 2026 09:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D13370D47;
+	Sat, 12 Sep 2026 09:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206110; cv=none; b=HasECWgpctfucownQBS4ghjyJreSMee9Z78Gsyq8XSXiVThcN2mPIOClpwf8fsEyEqHCr58vNop0vMol1XbE6Tmo692KX5j16HyHst+ZqsOB4a0T/mhxooJLpqQYmI4x2Gq9IQDu6YMazVQpnJ7W4DOtI3ZMEOS1Wroa/nwqzVA=
+	t=1789206115; cv=none; b=FPWrV/lvFqPpM0P6gJIJxbtED3rRooXYGh6ayJRAbMGQ6C6dHCe6K3A6XZRuFOckd08weCLq663aROZzThR0MHtoQiEieXv25aJ7Z0/eQNjLvKLt5GNgMhIUukZ848ZsqxjcQ0CsSsMBCkYP0gqgV7SFmGJXAd/62ByPo1cQMh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206110; c=relaxed/simple;
-	bh=0bLmTDTDkllji+Gt0C8oawgECZ8llaAJr6DRbcu6unc=;
+	s=arc-20240116; t=1789206115; c=relaxed/simple;
+	bh=dL/dviPcJIOqHpeRvRSbYg2Kt6i4LFe+A5JTLEvLhpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WmTT/8O3gATlUiQYfa7wxiu0xy6/BIINSxB56gnqRZ7a6W2ASuIQkIkXKD0l2b9t0FEzlfgnE++SEN0MmcO7hI2HU2H5cWgWptxE1Udd+L1oZbnqfAMuqsqVn5Wp95/4rFekAzs9UzcUhiyM03vY8CpaWUngsY9MaU5qslFLzJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sljFjT72; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R/bMeFg6/yCHHv9wnNTKakLvdFOycWHzJXiKamvScow0BuCPgkr+VbxnocOZiTN3+GnoC2EFpsGMKNmKbtg1YcLnKtpBpi6Gy2QzQnFsV8DVdrFHSSh1CBD8gwQVWg0ENUKOeLuK+fluJwjSYbuvvf9ESqa2njVYpnPRdcoilA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBl++6U4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sljFjT72"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA801F000FF;
-	Sat, 12 Sep 2026 09:41:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBl++6U4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3671F000FF;
+	Sat, 12 Sep 2026 09:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206109;
-	bh=hMKxt+wWwjMv4A93zas2JQM06NdmAauhM0l6VmD1lwU=;
+	s=korg; t=1789206114;
+	bh=tOlHhnJFAt5XPvTAOI8TshT2kI3xCDAoMHXjx7msyoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sljFjT72kgM8r2wqVKCl43wwmW9hUZkRzKvMBIlqD25I69Ybst9KHmYqcwdq5MKsC
-	 Sh4ST9y6EQGH7eGbAE5Vw2yw1xKMrYCWcBvqB+UY5KfZliIEZh4rDWulPErMNDOnP1
-	 b5kQ+cVoXPWOPEgR90LRb4pidnZ0l1Cl18ddMTr8=
+	b=sBl++6U4jmh0lHIySEt6zTbbQgYCUpmLz+oB0vFREkaLiVEWcEuHcFQYdt5R/cRP0
+	 Ky5buR9OjT+L5eqpi1vWlyW5cbOZbSiArqPS0ULXyXKmmwqLtJdxgrWd5g8cfiQDcv
+	 EBiGOFGEFPOeLoFkH0AAaqGaLF0R49KRiWo3O4kQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0096/1518] drm/bridge: synopsys: dw-dp: Set pixel mode by platform data
-Date: Sat, 12 Sep 2026 08:37:45 +0200
-Message-ID: <20260912065625.649277171@linuxfoundation.org>
+Subject: [PATCH 6.18 0097/1518] drm/rockchip: dw_dp: Simplify error handling
+Date: Sat, 12 Sep 2026 08:37:46 +0200
+Message-ID: <20260912065625.671622211@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,126 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Yan <andy.yan@rock-chips.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 77ae37018a2705f5abe8cc428e3496651258901d ]
+[ Upstream commit 26cb3e26efa7cc84289966cab871889f6ca93616 ]
 
-In the implementation and integration of the SoC, the DW DisplayPort
-hardware block can be configured to work in single, dual, quad pixel
-mode on differnt platforms, so make the pixel mode set by plat_data
-to support the upcoming rk3576 variant.
+Make the code a bit more compact by getting rid of the superfluous
+assignments around PTR_ERR().
 
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Tested-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+While at it, also drop dev assignment in dw_dp_probe().
+
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/20260206010421.443605-3-andyshrk@163.com
+Link: https://patch.msgid.link/20260310-drm-rk-fixes-v2-4-645ecfb43f49@collabora.com
 Stable-dep-of: cc6d7aca2f37 ("drm/rockchip: dw_dp: Release core resources")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/synopsys/dw-dp.c   |  8 +-------
- drivers/gpu/drm/rockchip/dw_dp-rockchip.c | 19 +++++++++++++++----
- include/drm/bridge/dw_dp.h                |  7 +++++++
- 3 files changed, 23 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/rockchip/dw_dp-rockchip.c | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/synopsys/dw-dp.c b/drivers/gpu/drm/bridge/synopsys/dw-dp.c
-index 70f64eb89998f..901bdec4a76ca 100644
---- a/drivers/gpu/drm/bridge/synopsys/dw-dp.c
-+++ b/drivers/gpu/drm/bridge/synopsys/dw-dp.c
-@@ -352,12 +352,6 @@ enum {
- 	DW_DP_YCBCR420_16BIT,
- };
- 
--enum {
--	DW_DP_MP_SINGLE_PIXEL,
--	DW_DP_MP_DUAL_PIXEL,
--	DW_DP_MP_QUAD_PIXEL,
--};
--
- enum {
- 	DW_DP_SDP_VERTICAL_INTERVAL = BIT(0),
- 	DW_DP_SDP_HORIZONTAL_INTERVAL = BIT(1),
-@@ -1984,7 +1978,7 @@ struct dw_dp *dw_dp_bind(struct device *dev, struct drm_encoder *encoder,
- 		return ERR_CAST(dp);
- 
- 	dp->dev = dev;
--	dp->pixel_mode = DW_DP_MP_QUAD_PIXEL;
-+	dp->pixel_mode = plat_data->pixel_mode;
- 
- 	dp->plat_data.max_link_rate = plat_data->max_link_rate;
- 	bridge = &dp->bridge;
 diff --git a/drivers/gpu/drm/rockchip/dw_dp-rockchip.c b/drivers/gpu/drm/rockchip/dw_dp-rockchip.c
-index 6d57e1c746273..80aa8d11b49cb 100644
+index 80aa8d11b49cb..0e7a2d46dcb0b 100644
 --- a/drivers/gpu/drm/rockchip/dw_dp-rockchip.c
 +++ b/drivers/gpu/drm/rockchip/dw_dp-rockchip.c
-@@ -76,7 +76,7 @@ static const struct drm_encoder_helper_funcs dw_dp_encoder_helper_funcs = {
- static int dw_dp_rockchip_bind(struct device *dev, struct device *master, void *data)
- {
- 	struct platform_device *pdev = to_platform_device(dev);
--	struct dw_dp_plat_data plat_data;
-+	const struct dw_dp_plat_data *plat_data;
- 	struct drm_device *drm_dev = data;
- 	struct rockchip_dw_dp *dp;
- 	struct drm_encoder *encoder;
-@@ -90,7 +90,10 @@ static int dw_dp_rockchip_bind(struct device *dev, struct device *master, void *
- 	dp->dev = dev;
- 	platform_set_drvdata(pdev, dp);
- 
--	plat_data.max_link_rate = 810000;
-+	plat_data = of_device_get_match_data(dev);
-+	if (!plat_data)
-+		return -ENODEV;
-+
- 	encoder = &dp->encoder.encoder;
- 	encoder->possible_crtcs = drm_of_find_possible_crtcs(drm_dev, dev->of_node);
- 	rockchip_drm_encoder_set_crtc_endpoint_id(&dp->encoder, dev->of_node, 0, 0);
-@@ -100,7 +103,7 @@ static int dw_dp_rockchip_bind(struct device *dev, struct device *master, void *
- 		return ret;
+@@ -104,20 +104,15 @@ static int dw_dp_rockchip_bind(struct device *dev, struct device *master, void *
  	drm_encoder_helper_add(encoder, &dw_dp_encoder_helper_funcs);
  
--	dp->base = dw_dp_bind(dev, encoder, &plat_data);
-+	dp->base = dw_dp_bind(dev, encoder, plat_data);
- 	if (IS_ERR(dp->base)) {
- 		ret = PTR_ERR(dp->base);
- 		return ret;
-@@ -133,8 +136,16 @@ static void dw_dp_remove(struct platform_device *pdev)
- 	component_del(&pdev->dev, &dw_dp_rockchip_component_ops);
+ 	dp->base = dw_dp_bind(dev, encoder, plat_data);
+-	if (IS_ERR(dp->base)) {
+-		ret = PTR_ERR(dp->base);
+-		return ret;
+-	}
++	if (IS_ERR(dp->base))
++		return PTR_ERR(dp->base);
+ 
+ 	connector = drm_bridge_connector_init(drm_dev, encoder);
+-	if (IS_ERR(connector)) {
+-		ret = PTR_ERR(connector);
+-		return dev_err_probe(dev, ret, "Failed to init bridge connector");
+-	}
++	if (IS_ERR(connector))
++		return dev_err_probe(dev, PTR_ERR(connector),
++				     "Failed to init bridge connector");
+ 
+-	drm_connector_attach_encoder(connector, encoder);
+-
+-	return 0;
++	return drm_connector_attach_encoder(connector, encoder);
  }
  
-+static const struct dw_dp_plat_data rk3588_dp_plat_data = {
-+	.max_link_rate = 810000,
-+	.pixel_mode = DW_DP_MP_QUAD_PIXEL,
-+};
-+
- static const struct of_device_id dw_dp_of_match[] = {
--	{ .compatible = "rockchip,rk3588-dp", },
-+	{
-+		.compatible = "rockchip,rk3588-dp",
-+		.data = &rk3588_dp_plat_data,
-+	},
- 	{}
- };
- MODULE_DEVICE_TABLE(of, dw_dp_of_match);
-diff --git a/include/drm/bridge/dw_dp.h b/include/drm/bridge/dw_dp.h
-index ab5c0a9b01aeb..22105c3e8e4d6 100644
---- a/include/drm/bridge/dw_dp.h
-+++ b/include/drm/bridge/dw_dp.h
-@@ -11,8 +11,15 @@
- struct drm_encoder;
- struct dw_dp;
+ static const struct component_ops dw_dp_rockchip_component_ops = {
+@@ -126,9 +121,7 @@ static const struct component_ops dw_dp_rockchip_component_ops = {
  
-+enum {
-+	DW_DP_MP_SINGLE_PIXEL,
-+	DW_DP_MP_DUAL_PIXEL,
-+	DW_DP_MP_QUAD_PIXEL,
-+};
-+
- struct dw_dp_plat_data {
- 	u32 max_link_rate;
-+	u8 pixel_mode;
- };
+ static int dw_dp_probe(struct platform_device *pdev)
+ {
+-	struct device *dev = &pdev->dev;
+-
+-	return component_add(dev, &dw_dp_rockchip_component_ops);
++	return component_add(&pdev->dev, &dw_dp_rockchip_component_ops);
+ }
  
- struct dw_dp *dw_dp_bind(struct device *dev, struct drm_encoder *encoder,
+ static void dw_dp_remove(struct platform_device *pdev)
 -- 
 2.53.0
 
