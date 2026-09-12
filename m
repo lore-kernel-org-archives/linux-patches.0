@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1352D33AD88;
-	Sat, 12 Sep 2026 09:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E9533B96B;
+	Sat, 12 Sep 2026 09:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204882; cv=none; b=KJB9UwMyFXsJzOb+DLBYKqB0JGURYOeT/RPrXrSvu7+iLCbVTjuUTpt1obDIBvP2VucyMZ4298Ap2mp6Nd9jz6RHK5F9/48nrTMFmHeH7VVZKeFqE8GflY8tLWJMJWMNXmHpGvrNooLX78nXq8C6rIoVNfKNiL/Q+cqZWzE0cS4=
+	t=1789204887; cv=none; b=CUO+CxQuBA+OEPVDr8raQyS12zqeMhploG6xIP7KGcngHPOU2AVfbzmt/wBS9sfu5hkCgesQ9dg4N6/z2X8DL1+InP67vCFJ+pymwHhsA4mbRhajMJzH5U5HXb5JxjSn5PR+TfV0lzXiOcA1UA0taA1ytSwfTrQQ23XaCmJ1WEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204882; c=relaxed/simple;
-	bh=E9VKBdsvGveRKMJMsFRxmgcUH8GPPByKV1KLXNiivC8=;
+	s=arc-20240116; t=1789204887; c=relaxed/simple;
+	bh=hrAWReIRnd9ypWXpxxCPPTIc2xCFSs/JNUlQ2yq6Fsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PX4ADjHiNKboTTWFnHkh+di+OWa00PICqZpr/fPFDoxxiRSmZkKd/ArxRS23yFe73R7qn90EhUp45wAlbcObq5RrIYc1AKb0RO2/zShqFuMTtQZottMeQDwMs2cXEVedHcRmI6t2jXUflPbT+kwRg+pFOTBkkQjyqRwQVEpkn3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FgYbZWF0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j+aFPZxWO7t+VS5y/ek28nlkGgLDbuHfZh35hCq0ijmg8QMFrA7zA0BNifryvEjUaVOdWpYMIk82qGK7L4dNOQE6zAoLtsRzrjJu5Ed+AOq5LQPJiSTjNp1pFi2iJ2nXifZbgz/awhENuqMVsJewzmhSd9wn2lZjIIuQLn/+hnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1CC0kAj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FgYbZWF0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A529B1F00893;
-	Sat, 12 Sep 2026 09:21:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1CC0kAj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0337D1F000FF;
+	Sat, 12 Sep 2026 09:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204881;
-	bh=prGElH5R+KOEv9NY8qWggqh1STKDM0uUXretdqK/AoU=;
+	s=korg; t=1789204885;
+	bh=SvUPrR5KQayPKyoHlYP4D9ijkaiabUqaPkTXH7Q+68M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FgYbZWF0OBcUWPcKgBiZPiioLoHlRy7uYZjORS1HocBuL4IcqnNON/ClBq0QSiMMI
-	 vaUiT5GdHU3Ut+4krUGCRLCkbLP/oAPO1nYSb2gJ8ohWS0FfQ2yGC9LQjcF0cU7N/I
-	 c5K6jIwBQ9EQzzC/x0Vf6Pjjrq87yAjgshXj0DMI=
+	b=L1CC0kAjMg0ia7EatoZX1OlUHLrEua51kgTSxSh/LzwXkEWOrqv9jBphhHvhkgrNG
+	 yXy2XUl+rs0Vro0QoyIja59K7Upot3LF0Y+puahp6oJiozm8NfG14GlJjmOMS0Q+YY
+	 yEOGsX8ASk5HDEE1TC+BI2lCEbgUjoPUC4zuKsGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giuseppe Piscitelli <ooonea@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Easwar Hariharan <easwar.hariharan@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1705/1815] net/sched: sch_cake: fix autorate reconfiguration throttling
-Date: Sat, 12 Sep 2026 08:57:35 +0200
-Message-ID: <20260912065729.006154285@linuxfoundation.org>
+Subject: [PATCH 7.2 1706/1815] Drivers: hv: vmbus: Skip VMBus module cleanup for non-nested root partition
+Date: Sat, 12 Sep 2026 08:57:36 +0200
+Message-ID: <20260912065729.028498563@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,48 +47,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Giuseppe Piscitelli <ooonea@gmail.com>
+From: Michael Kelley <mhkelley58@gmail.com>
 
-[ Upstream commit 7cbfb180945ce529608e4d4e24a6d483699fab1e ]
+[ Upstream commit cee0d90bceae1dee3bcc70f8d6b2ceb5b87deb42 ]
 
-CAKE's autorate-ingress path intends to limit shaper reconfiguration to
-once per 250 ms, but last_reconfig_time is only checked and never updated.
-Since the field stays zero, every qualifying capacity-estimate window can
-call cake_reconfigure(), causing avoidable rate churn and scheduler work
-under bursty traffic.
+The VMBus module initialization function, hv_acpi_init(), currently
+does nothing when running in the root partition and root is not nested
+in another VM. But the initialization function reports success, so the
+VMBus module is indeed loaded. VMBus functionality is not actually
+needed, but the VMBus module must be loaded so that hv_vmbus_exists()
+can answer correctly. Furthermore, the mshv_root dependency on the
+VMBus module is needed as described in the commit message for
+840b740a35bf ("mshv: Add conditional VMBus dependency").
 
-Store the current timestamp when autorate actually reconfigures the qdisc
-so the guard enforces the intended interval.
+Loading the VMBus module without actually initializing it causes
+failures if the module should later be unloaded. The module unload code
+tries to clean up things that were never initialized, resulting in
+memory faults and a panic.
 
-Fixes: 7298de9cd725 ("sch_cake: Add ingress mode")
-Signed-off-by: Giuseppe Piscitelli <ooonea@gmail.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20260820154503.892214-1-ooonea@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by having VMBus module exit function perform the same
+check for non-nested root partition, and do nothing in such a
+case, just like hv_acpi_init().
+
+In the long run, the code that manages the Hyper-V provided SynIC
+should be refactored to better coordinate the requirements of
+root partition scenarios and normal VM scenarios, and to hopefully
+remove the hv_vmbus_exists() dependnecy between mshv_root and
+VMBus modules. Preventing the current unload failure scenario is
+an expediency until such a refactoring is done.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-hyperv/20260721154943.A09BD1F00A3D@smtp.kernel.org/
+Fixes: 7e279d78664aa ("Drivers: hv: vmbus: skip VMBus initialization if Linux is root")
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Easwar Hariharan <easwar.hariharan@linux.microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_cake.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hv/vmbus_drv.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index f25f60978631a..dc93267029e70 100644
---- a/net/sched/sch_cake.c
-+++ b/net/sched/sch_cake.c
-@@ -1907,6 +1907,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 					ktime_add_ms(q->last_reconfig_time,
- 						     250))) {
- 				q->config->rate_bps = (q->avg_peak_bandwidth * 15) >> 4;
-+				q->last_reconfig_time = now;
- 				cake_reconfigure(sch);
- 			}
- 		}
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index 6824bd7cb3c4f..18ee549d98809 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -2982,6 +2982,13 @@ static int __init hv_acpi_init(void)
+ 		return -ENODEV;
+ 
+ 	if (hv_root_partition() && !hv_nested)
++		/*
++		 * A non-nested root partition does not need VMBus client
++		 * functionality. However, the mshv_root module may have
++		 * a dependency on the VMBus module as described in
++		 * commit 840b740a35bf. Return success so the module
++		 * loads even though no VMBus initialization is done.
++		 */
+ 		return 0;
+ 
+ 	/*
+@@ -3030,6 +3037,14 @@ static void __exit vmbus_exit(void)
+ {
+ 	int cpu;
+ 
++	if (hv_root_partition() && !hv_nested)
++		/*
++		 * If a non-nested root partition loaded the VMBus module,
++		 * hv_acpi_init() did not do any VMBus initialization.
++		 * There's nothing to clean up, so just return.
++		 */
++		return;
++
+ 	unregister_syscore(&hv_synic_syscore);
+ 
+ 	hv_remove_kexec_handler();
 -- 
 2.53.0
 
