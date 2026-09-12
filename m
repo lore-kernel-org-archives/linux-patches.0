@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89090326927;
-	Sat, 12 Sep 2026 14:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6A3326927;
+	Sat, 12 Sep 2026 14:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224238; cv=none; b=umNP7H/TzkIaU7b/Ew85NX/l1A95WIrG1WB6r0UnjzCxbkQymPBsXv/Qs46KfzDyW4whA7LlGMquVqdHq7a9VePd8s30Imyz6fa9kpiqEacUNnr2LUXRWIUqPZfrGyCL6hz6zddecM1NB473KTX816Dy/xI7KJzj/v2d+U78Gm0=
+	t=1789224243; cv=none; b=aoNJ7khgVwuZ7XMU4DQ8V2d/JGmq3RPYiIKMURxisx2r2B+FCUQUXR6gkDRXE3zCNFSVS1jL1BJv3tKTP4MNt10m3LVpjrUWaVwOq8OdEcgcVjJZdiRvjfKUQtQzBn6UaJ5AjJ8Zq/Evj8RffkuVe0cNqpPT0m7jlbHn5P7i6BI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224238; c=relaxed/simple;
-	bh=9R5Dvz9faf2FRx8tR2bogkxbObaZZ9T3WxzSrvDrWMI=;
+	s=arc-20240116; t=1789224243; c=relaxed/simple;
+	bh=4kWMCYGjQnGwxHcN3WUuhfCqpuoEnkisHyZhLr+fX3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cJEDHw7VlwlIzVUvTeHEF+UNlpTNf8Xygf4sXIhhK4YOhC8U5m4BOIZlz2SegNBRnJi4dkVtu+RRMOgCU2Km3PssXzvv9iFKqHSt6IaVRwTZVOF7VkoHibp2FIlejcQ6piFnZ0VT0ZlHb+3XaFPaZ+km55egYMYjX7zoBZk3FXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/Lp473f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Aamp/NV7n4ZHe3GzkV6xH9CVCVap4xs3CTH+GNVEAjGt0vb7QIIrF/yX9TfKobAktLNhyfd8BhkBbSNOj/Ry9gzxukcHzxspr7CDfmi50Bjv5IbqOpCVV14VviXq0WVOfgMzumBDT5VTUgvGCyTWZqE5Uel5wCXMienX0I/nCb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LM5Esbw3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/Lp473f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32E11F000FF;
-	Sat, 12 Sep 2026 14:43:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LM5Esbw3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2FBA1F000FF;
+	Sat, 12 Sep 2026 14:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224237;
-	bh=dQQT4hMGnYLbd5Kq5lgPuuDBgpStg88V5yO+fDqZHoA=;
+	s=korg; t=1789224242;
+	bh=EjoinQBovZPL46dWtXIko1Vo9glSw5TgciQI73+qFKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0/Lp473f/dfXUcANZg+plXNm2xWccEufk/K5B8+X6MkY3+rtZ59EnKlBGduDeflqp
-	 ygXOD84ZI4OuTQ2mGijIIut3j7VRwFryl36xjxjrWwLBHgX0buwEAU5FR+xiCz5pPy
-	 KxgFtYth4K4JPQ9kJTHVGoBu23rerUp3RF080yR8=
+	b=LM5Esbw3mlkz+/EyjHI/r7sDoL55gUpoHHSw7wvfMmccueIQv0dlecLoMyyWfnpET
+	 C3VhOhyrnYpgvofYM9aVQZ/NmxBogwmuXE9molEd2h2IpM5BldhTzyIs/8Q3+jnc0V
+	 gmXlG7c6mOjqT0RwBCIWgdE/8t0RcyItZvx4asWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0910/1424] nilfs2: convert nilfs_btnode_prepare_change_key to use a folio
-Date: Sat, 12 Sep 2026 08:55:42 +0200
-Message-ID: <20260912065627.705690051@linuxfoundation.org>
+Subject: [PATCH 6.6 0911/1424] nilfs2: convert nilfs_btnode_commit_change_key to use a folio
+Date: Sat, 12 Sep 2026 08:55:43 +0200
+Message-ID: <20260912065627.727506067@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -54,73 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 7c5c654c09c3d08ed04fb19ff0798784027eb33a ]
+[ Upstream commit c2a491f3d88a7d94fed070fe48c859dfc5c9d47c ]
 
-Saves three calls to compound_head().
+Saves one call to compound_head().
 
-Link: https://lkml.kernel.org/r/20231114084436.2755-19-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20231114084436.2755-20-konishi.ryusuke@gmail.com
 Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: 66f4ad3ce158 ("nilfs2: fix BUG in nilfs_copy_dirty_pages() on dirty state mismatch")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/btnode.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ fs/nilfs2/btnode.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/fs/nilfs2/btnode.c b/fs/nilfs2/btnode.c
-index 3dda7c39089bb..2d6935dcc69ad 100644
+index 2d6935dcc69ad..26873a02a7481 100644
 --- a/fs/nilfs2/btnode.c
 +++ b/fs/nilfs2/btnode.c
-@@ -199,23 +199,23 @@ int nilfs_btnode_prepare_change_key(struct address_space *btnc,
- 	ctxt->newbh = NULL;
+@@ -252,15 +252,15 @@ void nilfs_btnode_commit_change_key(struct address_space *btnc,
+ {
+ 	struct buffer_head *obh = ctxt->bh, *nbh = ctxt->newbh;
+ 	__u64 oldkey = ctxt->oldkey, newkey = ctxt->newkey;
+-	struct page *opage;
++	struct folio *ofolio;
  
- 	if (inode->i_blkbits == PAGE_SHIFT) {
--		struct page *opage = obh->b_page;
--		lock_page(opage);
-+		struct folio *ofolio = obh->b_folio;
-+		folio_lock(ofolio);
- retry:
- 		/* BUG_ON(oldkey != obh->b_folio->index); */
+ 	if (oldkey == newkey)
+ 		return;
+ 
+ 	if (nbh == NULL) {	/* blocksize == pagesize */
+-		opage = obh->b_page;
 -		if (unlikely(oldkey != opage->index))
 -			NILFS_PAGE_BUG(opage,
++		ofolio = obh->b_folio;
 +		if (unlikely(oldkey != ofolio->index))
 +			NILFS_PAGE_BUG(&ofolio->page,
  				       "invalid oldkey %lld (newkey=%lld)",
  				       (unsigned long long)oldkey,
  				       (unsigned long long)newkey);
- 
- 		xa_lock_irq(&btnc->i_pages);
--		err = __xa_insert(&btnc->i_pages, newkey, opage, GFP_NOFS);
-+		err = __xa_insert(&btnc->i_pages, newkey, ofolio, GFP_NOFS);
+@@ -271,8 +271,8 @@ void nilfs_btnode_commit_change_key(struct address_space *btnc,
+ 		__xa_set_mark(&btnc->i_pages, newkey, PAGECACHE_TAG_DIRTY);
  		xa_unlock_irq(&btnc->i_pages);
- 		/*
--		 * Note: page->index will not change to newkey until
-+		 * Note: folio->index will not change to newkey until
- 		 * nilfs_btnode_commit_change_key() will be called.
--		 * To protect the page in intermediate state, the page lock
-+		 * To protect the folio in intermediate state, the folio lock
- 		 * is held.
- 		 */
- 		if (!err)
-@@ -227,7 +227,7 @@ int nilfs_btnode_prepare_change_key(struct address_space *btnc,
- 		if (!err)
- 			goto retry;
- 		/* fallback to copy mode */
+ 
+-		opage->index = obh->b_blocknr = newkey;
 -		unlock_page(opage);
++		ofolio->index = obh->b_blocknr = newkey;
 +		folio_unlock(ofolio);
- 	}
- 
- 	nbh = nilfs_btnode_create_block(btnc, newkey);
-@@ -239,7 +239,7 @@ int nilfs_btnode_prepare_change_key(struct address_space *btnc,
- 	return 0;
- 
-  failed_unlock:
--	unlock_page(obh->b_page);
-+	folio_unlock(obh->b_folio);
- 	return err;
- }
- 
+ 	} else {
+ 		nilfs_copy_buffer(nbh, obh);
+ 		mark_buffer_dirty(nbh);
 -- 
 2.53.0
 
