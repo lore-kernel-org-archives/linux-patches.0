@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAB8360EF5;
-	Sat, 12 Sep 2026 08:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D1237B407;
+	Sat, 12 Sep 2026 08:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200738; cv=none; b=jKnyJ9yv3ci4mHC59OXNleCGLqVLWJzH8kc2XKbJQzGfU1KPQ0SpS0cYWkVRfKMDEoLJwSg2Qz6N0AfTitPFm9MNPLblu9REThxkoqwD6kQa7w3MIluKTCf1+9bnF9/M76bY2eBvXHaUe1VPhNj2YNiyX5dJlLYuuaWlG/nL7ZA=
+	t=1789200743; cv=none; b=OuCXjZc0sbG48updTDOQp13+NTBZR5c6pHPBBySo/UjdsvAOqmCZJvbRhNvtAZrrXLP18XtTr9LzrSVTgTuFlKUYg6UxFWVQPgQgDRPVgYweTB70X/F5TSf66AQScv6qHGi2jg42vJRs//scsCgKB4HMX0xBGvu0QoowpPCSx2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200738; c=relaxed/simple;
-	bh=dsl7dohyOaKHCAlKuQ+4iddCbC+WWLTVpVseFd5G1BA=;
+	s=arc-20240116; t=1789200743; c=relaxed/simple;
+	bh=vGPJk9aZCv+h2jNOfwv8tpS+lFvDWT/6lZBBT50FAX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uaiA+nwz5n7NgtQZv8IMYwab5gc4qK3mI0XQ+1nyxtSXjQEzTwGFLFqqDChIE49q7KAzDskDndBNYBaEgejO+DhratSopvErduyTpeoMBnjRtB0Hvd8pbo7F3HaioTPvMUlzExu4p1Pw4OjVDmMDmh6flpo7u6moJpH4i2gkca8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2RVF6a5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FrQcUHHNCyCSrvFZsfGvAuIBohS+x73VuwNfA0i8W6AvQ9eQIAC8AXGIEdRuQAbKwcAg5mPbkgMMsxSKjL9G3VygHncQjxoR6EANf/gYg4tS/X3VOP3fv6Juc53vH+u0yxFIPpIbuUD9e069pU41U//ZtrejiKYoSmmEGJtxS0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QzgUXZqG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2RVF6a5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860971F000FF;
-	Sat, 12 Sep 2026 08:12:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QzgUXZqG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCC7F1F000FF;
+	Sat, 12 Sep 2026 08:12:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200737;
-	bh=uZcv0YO9OU1N2BmtIHZiP06c42QZiDFJNsc2Tmm0yEk=;
+	s=korg; t=1789200742;
+	bh=fkfGd8ma/S8r/nzWIFDaw6f7RPPtwoZn7vMgi+OiFok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M2RVF6a5IYLucEsTZR+kd3YcdwzH5qqyeldXG0HomwgNqRMNf0J7GIq4XWwizDqJv
-	 8UOn4RwEzTZAVABSng4J1x/T0wICi1fJ4yTphtCUSuIp+R3I5gvQgiBxFyIVWyModP
-	 jYPiDyVtw+19kJUsR7h71aIGEf8e9/Ppmu/wrSYo=
+	b=QzgUXZqGQqYrvvwohH/PQ9hPxhnEHMlbOpb3yk6UDkoE1u1ho2NLSkFkzeOLasJ+S
+	 Snth25F1z26MYYwSYvAKofpZM/Hu2ZbccoAIyzEWqKLziFryEWeqQxbfm/8G9V/Dg9
+	 IOjtWDYbyIaZrH+kqhjeKTamyo2qml1srHRlkui8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Gary Guo <gary@garyguo.net>,
-	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0851/1815] dma-resv: Fix undefined symbol when CONFIG_DMA_SHARED_BUFFER is disabled
-Date: Sat, 12 Sep 2026 08:43:21 +0200
-Message-ID: <20260912065708.895990960@linuxfoundation.org>
+Subject: [PATCH 7.2 0852/1815] powerpc: implement get_direction() in cpm2
+Date: Sat, 12 Sep 2026 08:43:22 +0200
+Message-ID: <20260912065708.921152026@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -47,62 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+From: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 
-[ Upstream commit be809b60cbb61aab96179f44ac3670242ae72996 ]
+[ Upstream commit ca16219e9babc874349a6ac307d56523871a9137 ]
 
-When building with LLVM=1 for architectures like powerpc where
-CONFIG_DMA_SHARED_BUFFER is not enabled, the build fails with:
+The lack of get_direction() callback in this driver causes GPIOLIB to
+emit a warning. Implement it.
 
-  ld.lld: error: undefined symbol: dma_resv_reset_max_fences
-  >>> referenced by helpers.c
-  >>>               rust/helpers/helpers.o:(rust_helper_dma_resv_unlock)
-
-The issue occurs because:
-1. CONFIG_DEBUG_MUTEXES=y is enabled
-2. CONFIG_DMA_SHARED_BUFFER is not enabled
-3. dma_resv_reset_max_fences() is declared in the header when
-   CONFIG_DEBUG_MUTEXES is set
-4. But the function is only compiled in drivers/dma-buf/dma-resv.c,
-   which is only built when CONFIG_DMA_SHARED_BUFFER is enabled
-5. Rust helpers call dma_resv_unlock() which calls
-   dma_resv_reset_max_fences(), causing an undefined symbol
-
-Fix this by compiling `dma-resv.c` file only when CONFIG_DMA_SHARED_BUFFER
-is enabled.
-
-Fixes: 9b836641d3bf ("rust: helpers: Add bindings/wrappers for dma_resv_lock")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Fixes: e623c4303ed1 ("gpiolib: sanitize the return value of gpio_chip::get_direction()")
+Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260708082454.1254320-3-mkchauras@gmail.com
+Link: https://patch.msgid.link/c6eb70aa0e1ba6e15f947c827006aa79edace05c.1785318836.git.chleroy@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/helpers/helpers.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/sysdev/cpm_common.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/rust/helpers/helpers.c b/rust/helpers/helpers.c
-index 998e31052e660..4b90a1390ad58 100644
---- a/rust/helpers/helpers.c
-+++ b/rust/helpers/helpers.c
-@@ -58,7 +58,9 @@
- #include "cred.c"
- #include "device.c"
- #include "dma.c"
-+#ifdef CONFIG_DMA_SHARED_BUFFER
- #include "dma-resv.c"
-+#endif
- #include "drm.c"
- #include "drm_gpuvm.c"
- #include "err.c"
+diff --git a/arch/powerpc/sysdev/cpm_common.c b/arch/powerpc/sysdev/cpm_common.c
+index 07ea605ab0e62..b5d200e3ad684 100644
+--- a/arch/powerpc/sysdev/cpm_common.c
++++ b/arch/powerpc/sysdev/cpm_common.c
+@@ -181,6 +181,18 @@ static int cpm2_gpio32_dir_in(struct gpio_chip *gc, unsigned int gpio)
+ 	return 0;
+ }
+ 
++static int cpm2_gpio32_get_direction(struct gpio_chip *gc, unsigned int gpio)
++{
++	struct cpm2_gpio32_chip *cpm2_gc = gpiochip_get_data(gc);
++	struct cpm2_ioports __iomem *iop = cpm2_gc->regs;
++	u32 pin_mask = 1 << (31 - gpio);
++
++	if (in_be32(&iop->dir) & pin_mask)
++		return GPIO_LINE_DIRECTION_OUT;
++
++	return GPIO_LINE_DIRECTION_IN;
++}
++
+ int cpm2_gpiochip_add32(struct device *dev)
+ {
+ 	struct device_node *np = dev->of_node;
+@@ -199,6 +211,7 @@ int cpm2_gpiochip_add32(struct device *dev)
+ 	gc->ngpio = 32;
+ 	gc->direction_input = cpm2_gpio32_dir_in;
+ 	gc->direction_output = cpm2_gpio32_dir_out;
++	gc->get_direction = cpm2_gpio32_get_direction;
+ 	gc->get = cpm2_gpio32_get;
+ 	gc->set = cpm2_gpio32_set;
+ 	gc->parent = dev;
 -- 
 2.53.0
 
