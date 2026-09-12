@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C81315D49;
-	Sat, 12 Sep 2026 13:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BA7315D49;
+	Sat, 12 Sep 2026 13:01:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218076; cv=none; b=kpP/19f+lVQmqXrQtcavMftLMukfgPkp9eo3AgrWEOdNX29yr6Qi1oBGyjc2qM1G3g+nA4H6hfWokxAdpO2sVXdP/qXuyoR+1SW1kIGcIyTA5aBCpXdYrKiq6SrA7SbtTQ7kqWkm8b7V/gcxayLEuCI4dLVDuwpSdV6dktkuPCQ=
+	t=1789218081; cv=none; b=H30enyUMLtlTPtLhNqXrGCuBtUb2uLCZxNN5uvvvg57elfIelsf50CjAl5RK4kNK06atlbMNJSQ4y/dfFZcwu238FnKMvzXVyQ9FnZuTRrNnbDq5BnVAKdTE0Y5sljRE7Mxm2or2vDXwaTngFWLGGcYcanwGrJVKciw5HsAEqCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218076; c=relaxed/simple;
-	bh=BNS0hMRk3M1YfLds6RrvSuFOD98IQjss4RFN7TAoa5c=;
+	s=arc-20240116; t=1789218081; c=relaxed/simple;
+	bh=UeiBV7yi2kFNPY25PWTB6V8VxXd03MDellZf8Y4zHjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tBCkB0Gsj9ftEY68NK/aTXW2+j5hNYq52Io5FhF9g5Mh+WBzEspcd8nOb0MmcIM/sKeHOIVpgMiq2B27enqdcqdSDKuON80RXJ45bqyfJq55HqT9Z2Dw+5O61RoiqGIb8zEwxpBT+tOSjjGps/eSYTc7GIgiKPG7v3wHT4kUOq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QRjC2XWG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hdYypi3Ami0U1dnOp0k11rXTYTL08XyFIBUuUplmh8sgAV6cL3auFKovOip+ZDlr+01uaXlDCgPk0IakatFvQ2be4rkcJ/p2r6Zppirk++CyopDPxZesxMPD5jNjhHQ0Eff/fpSJDg2Z3CrFKDYw8DcJbYdSuumsompprnRLm24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAh+iEDd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRjC2XWG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C771F000FF;
-	Sat, 12 Sep 2026 13:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAh+iEDd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECEA21F000FF;
+	Sat, 12 Sep 2026 13:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218074;
-	bh=zOjTOiOW2/qmbXddH7PAYXniSLFRGam7osO6lSVgDX4=;
+	s=korg; t=1789218079;
+	bh=kwycX1lyhHZYI8nhgN48QSJ5Zb0zSyHinxuZEYps0yI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QRjC2XWGoM9CO25gm+N9wKgP7ihSg2lR9/1qS0rekG4Krhs7K54Ecv5t26C/5LPvw
-	 s1R/lnN4aBpu6joj9CruraarcO3Lu+MGPsxcX6jf0BNt0awnVD8s6h7N6aeq/XNujh
-	 Q0T1FFlCSPemy8noJ3Zu31on9VEVOFQXDFQ8MvP4=
+	b=SAh+iEDdSYxXZaqOiE6qqhkTent7vKrcRGKLwOeNx+oJkbNAyi4ixP6capr+x3jTk
+	 u+MyWU2S3HBvanfjOrmWZ6gNfqkO5SezlUGYVSlJW4h0ZyOYki6SDFDHzfYaOPXLQ4
+	 yG1SPbLt+StftdyZyjYWtv1JLW9NHQzUOV5jRw/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Sungwoo Kim <iam@sung-woo.kim>,
+	Dave Tian <daveti@purdue.edu>,
+	Weidong Zhu <weizhu@fiu.edu>,
+	Chao Shi <coshi036@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1017/1376] perf test: Fix skiplist leak in cmd_test
-Date: Sat, 12 Sep 2026 08:57:23 +0200
-Message-ID: <20260912065630.230095495@linuxfoundation.org>
+Subject: [PATCH 6.12 1064/1376] nvme: reject passthrough of driver-managed Set Features
+Date: Sat, 12 Sep 2026 08:58:10 +0200
+Message-ID: <20260912065631.271534481@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,43 +54,236 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Chao Shi <coshi036@gmail.com>
 
-[ Upstream commit 44e82c4d2ff37f073946b594840fd549ab6b9fb8 ]
+[ Upstream commit 1161be71d1ecf7dc785382114c71afed0349531e ]
 
-Fix a memory leak in cmd_test() where skiplist was not freed on
-exit paths.
+Since commit b58da2d270db ("nvme: update keep alive interval when kato
+is modified"), a Set Features (KATO) passthrough command lets userspace
+start keep-alive on any transport. nvme_keep_alive_work() allocates with
+BLK_MQ_REQ_RESERVED, but nvme_alloc_admin_tag_set() reserves admin tags
+only for fabrics, so on other transports the allocation trips
+WARN_ON_ONCE() in blk_mq_get_tag() and fails:
 
-Assisted-by: Antigravity:gemini-3.1-pro
-Fixes: 2ae828786c65 ("perf test: Allow skipping tests")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+  nvme nvme0: keep-alive failed: -11
+
+Several Set Features change controller state the driver manages itself
+and cannot react to when set behind its back. Reject these in
+nvme_admin_cmd_allowed():
+
+  - KATO on non-fabrics (keep-alive is only armed for fabrics; on PCIe
+    it has no reserved tag and harms idle power states)
+  - Host Behavior Support, Host Memory Buffer, Number of Queues, and
+    Autonomous Power State Transition (all driver-managed)
+
+Keep Alive on fabrics is unchanged; I/O commands are unaffected as the
+check is confined to the admin path (ns == NULL).
+
+Link: https://lore.kernel.org/linux-nvme/20260523225629.3964037-1-coshi036@gmail.com/
+
+Fixes: b58da2d270db ("nvme: update keep alive interval when kato is modified")
+
+Found by FuzzNvme.
+
+Acked-by: Sungwoo Kim <iam@sung-woo.kim>
+Acked-by: Dave Tian <daveti@purdue.edu>
+Acked-by: Weidong Zhu <weizhu@fiu.edu>
+Signed-off-by: Chao Shi <coshi036@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/builtin-test.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/nvme/host/ioctl.c | 111 ++++++++++++++++++++++++--------------
+ 1 file changed, 72 insertions(+), 39 deletions(-)
 
-diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
-index 122f82e495ae7..17f723f04926b 100644
---- a/tools/perf/tests/builtin-test.c
-+++ b/tools/perf/tests/builtin-test.c
-@@ -756,9 +756,14 @@ int cmd_test(int argc, const char **argv)
- 	rlimit__bump_memlock();
+diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
+index 635e639650e84..d3564b2eebc9a 100644
+--- a/drivers/nvme/host/ioctl.c
++++ b/drivers/nvme/host/ioctl.c
+@@ -14,45 +14,54 @@ enum {
+ 	NVME_IOCTL_PARTITION	= (1 << 1),
+ };
  
- 	suites = build_suites();
--	if (!suites)
--		return errno ? -errno : -ENOMEM;
-+	if (!suites) {
-+		int err = errno;
+-static bool nvme_cmd_allowed(struct nvme_ns *ns, struct nvme_command *c,
+-		unsigned int flags, bool open_for_write)
++static bool nvme_admin_cmd_allowed(struct nvme_ctrl *ctrl,
++				   struct nvme_command *c)
+ {
+-	u32 effects;
+-
+-	/*
+-	 * Do not allow unprivileged passthrough on partitions, as that allows an
+-	 * escape from the containment of the partition.
+-	 */
+-	if (flags & NVME_IOCTL_PARTITION)
+-		goto admin;
+-
+-	/*
+-	 * Do not allow unprivileged processes to send vendor specific or fabrics
+-	 * commands as we can't be sure about their effects.
+-	 */
+-	if (c->common.opcode >= nvme_cmd_vendor_start ||
+-	    c->common.opcode == nvme_fabrics_command)
+-		goto admin;
+-
+ 	/*
+ 	 * Do not allow unprivileged passthrough of admin commands except
+ 	 * for a subset of identify commands that contain information required
+ 	 * to form proper I/O commands in userspace and do not expose any
+ 	 * potentially sensitive information.
+ 	 */
+-	if (!ns) {
+-		if (c->common.opcode == nvme_admin_identify) {
+-			switch (c->identify.cns) {
+-			case NVME_ID_CNS_NS:
+-			case NVME_ID_CNS_CS_NS:
+-			case NVME_ID_CNS_NS_CS_INDEP:
+-			case NVME_ID_CNS_CS_CTRL:
+-			case NVME_ID_CNS_CTRL:
+-				return true;
+-			}
++	switch (c->common.opcode) {
++	case nvme_admin_identify:
++		switch (c->identify.cns) {
++		case NVME_ID_CNS_NS:
++		case NVME_ID_CNS_CS_NS:
++		case NVME_ID_CNS_NS_CS_INDEP:
++		case NVME_ID_CNS_CS_CTRL:
++		case NVME_ID_CNS_CTRL:
++			return true;
+ 		}
+-		goto admin;
++		break;
++	case nvme_admin_set_features:
++		/*
++		 * Reject Set Features that change controller state the driver
++		 * manages itself; setting them behind the driver's back from
++		 * userspace leaves it unable to react correctly. Keep Alive is
++		 * only armed for fabrics - on other transports it has no
++		 * reserved tag and harms idle power states.
++		 */
++		switch (le32_to_cpu(c->features.fid) & 0xff) {
++		case NVME_FEAT_KATO:
++			if (ctrl->ops->flags & NVME_F_FABRICS)
++				break;
++			fallthrough;
++		case NVME_FEAT_HOST_BEHAVIOR:
++		case NVME_FEAT_HOST_MEM_BUF:
++		case NVME_FEAT_NUM_QUEUES:
++		case NVME_FEAT_AUTO_PST:
++			return false;
++		}
++		break;
+ 	}
++	return capable(CAP_SYS_ADMIN);
++}
 +
-+		intlist__delete(skiplist);
-+		return err ? -err : -ENOMEM;
-+	}
- 	ret = __cmd_test(suites, argc, argv, skiplist);
- 	free(suites);
-+	intlist__delete(skiplist);
- 	return ret;
++static bool nvme_ns_cmd_allowed(struct nvme_ns *ns, struct nvme_command *c,
++				bool open_for_write)
++{
++	u32 effects;
+ 
+ 	/*
+ 	 * Check if the controller provides a Commands Supported and Effects log
+@@ -61,7 +70,7 @@ static bool nvme_cmd_allowed(struct nvme_ns *ns, struct nvme_command *c,
+ 	 */
+ 	effects = nvme_command_effects(ns->ctrl, ns, c->common.opcode);
+ 	if (!(effects & NVME_CMD_EFFECTS_CSUPP))
+-		goto admin;
++		return capable(CAP_SYS_ADMIN);
+ 
+ 	/*
+ 	 * Don't allow passthrough for command that have intrusive (or unknown)
+@@ -70,7 +79,7 @@ static bool nvme_cmd_allowed(struct nvme_ns *ns, struct nvme_command *c,
+ 	if (effects & ~(NVME_CMD_EFFECTS_CSUPP | NVME_CMD_EFFECTS_LBCC |
+ 			NVME_CMD_EFFECTS_UUID_SEL |
+ 			NVME_CMD_EFFECTS_SCOPE_MASK))
+-		goto admin;
++		return capable(CAP_SYS_ADMIN);
+ 
+ 	/*
+ 	 * Only allow I/O commands that transfer data to the controller or that
+@@ -79,11 +88,34 @@ static bool nvme_cmd_allowed(struct nvme_ns *ns, struct nvme_command *c,
+ 	 */
+ 	if ((nvme_is_write(c) || (effects & NVME_CMD_EFFECTS_LBCC)) &&
+ 	    !open_for_write)
+-		goto admin;
++		return capable(CAP_SYS_ADMIN);
+ 
+ 	return true;
+-admin:
+-	return capable(CAP_SYS_ADMIN);
++}
++
++static bool nvme_cmd_allowed(struct nvme_ctrl *ctrl, struct nvme_ns *ns,
++			     struct nvme_command *c, unsigned int flags,
++			     bool open_for_write)
++{
++	/*
++	 * Do not allow unprivileged passthrough on partitions, as that
++	 * allows an escape from the containment of the partition.
++	 */
++	if (flags & NVME_IOCTL_PARTITION)
++		return capable(CAP_SYS_ADMIN);
++
++	/*
++	 * Do not allow unprivileged processes to send vendor specific or
++	 * fabrics commands as we can't be sure about their effects.
++	 */
++	if (c->common.opcode >= nvme_cmd_vendor_start ||
++	    c->common.opcode == nvme_fabrics_command)
++		return capable(CAP_SYS_ADMIN);
++
++	if (!ns)
++		return nvme_admin_cmd_allowed(ctrl, c);
++
++	return nvme_ns_cmd_allowed(ns, c, open_for_write);
  }
+ 
+ /*
+@@ -279,7 +311,7 @@ static int nvme_submit_io(struct nvme_ns *ns, struct nvme_user_io __user *uio,
+ 	c.rw.lbat = cpu_to_le16(io.apptag);
+ 	c.rw.lbatm = cpu_to_le16(io.appmask);
+ 
+-	if (!nvme_cmd_allowed(ns, &c, flags, open_for_write))
++	if (!nvme_cmd_allowed(ns->ctrl, ns, &c, flags, open_for_write))
+ 		return -EACCES;
+ 
+ 	return nvme_submit_user_cmd(ns->queue, &c, io.addr, length, metadata,
+@@ -329,7 +361,7 @@ static int nvme_user_cmd(struct nvme_ctrl *ctrl, struct nvme_ns *ns,
+ 	c.common.cdw14 = cpu_to_le32(cmd.cdw14);
+ 	c.common.cdw15 = cpu_to_le32(cmd.cdw15);
+ 
+-	if (!nvme_cmd_allowed(ns, &c, 0, open_for_write))
++	if (!nvme_cmd_allowed(ctrl, ns, &c, 0, open_for_write))
+ 		return -EACCES;
+ 
+ 	if (cmd.timeout_ms)
+@@ -376,7 +408,7 @@ static int nvme_user_cmd64(struct nvme_ctrl *ctrl, struct nvme_ns *ns,
+ 	c.common.cdw14 = cpu_to_le32(cmd.cdw14);
+ 	c.common.cdw15 = cpu_to_le32(cmd.cdw15);
+ 
+-	if (!nvme_cmd_allowed(ns, &c, flags, open_for_write))
++	if (!nvme_cmd_allowed(ctrl, ns, &c, flags, open_for_write))
+ 		return -EACCES;
+ 
+ 	if (cmd.timeout_ms)
+@@ -462,6 +494,7 @@ static int nvme_uring_cmd_io(struct nvme_ctrl *ctrl, struct nvme_ns *ns,
+ 	struct nvme_uring_cmd_pdu *pdu = nvme_uring_cmd_pdu(ioucmd);
+ 	const struct nvme_uring_cmd *cmd = io_uring_sqe_cmd(ioucmd->sqe);
+ 	struct request_queue *q = ns ? ns->queue : ctrl->admin_q;
++	bool open_for_write = ioucmd->file->f_mode & FMODE_WRITE;
+ 	struct nvme_uring_data d;
+ 	struct nvme_command c;
+ 	struct request *req;
+@@ -490,7 +523,7 @@ static int nvme_uring_cmd_io(struct nvme_ctrl *ctrl, struct nvme_ns *ns,
+ 	c.common.cdw14 = cpu_to_le32(READ_ONCE(cmd->cdw14));
+ 	c.common.cdw15 = cpu_to_le32(READ_ONCE(cmd->cdw15));
+ 
+-	if (!nvme_cmd_allowed(ns, &c, 0, ioucmd->file->f_mode & FMODE_WRITE))
++	if (!nvme_cmd_allowed(ctrl, ns, &c, 0, open_for_write))
+ 		return -EACCES;
+ 
+ 	d.metadata = READ_ONCE(cmd->metadata);
 -- 
 2.53.0
 
