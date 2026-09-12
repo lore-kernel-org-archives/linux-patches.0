@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A9E3ACEFB;
-	Sat, 12 Sep 2026 18:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2AC13793CA;
+	Sat, 12 Sep 2026 18:23:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237410; cv=none; b=P/0th4jLX2BMXjrD8wePU0hGNAv0FKEoEbNBMUBrs/OgJW49k3mzNlG3m/SsowojhR/SR2Bh8rUFRVQSc+m0Zo24Xp+JU4Y0CFF1/9h9TImUmEHEVkEOKtMNW4QMujpk8VxdaRLFMyl0ZDmnIgFWmP4/f3WnYdTrhRC6dahB4/Y=
+	t=1789237414; cv=none; b=R/z7qzqB/eUVP0+c5aIipZcP1x00EVBHGV0+sSvcXmxjtn78TFAPuwb854bJ8aXkThb+D8nITk/itnxnA5nmZf7DU1vlw9whdsUrDmN1WPXBmd0NYRzgfoe2PFt61AC6z0KNDILpnx0zflbeR9UMR0RFoko6ZQ54Hpcaf426Ljs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237410; c=relaxed/simple;
-	bh=F1bG8Fi6FsZXbIHHqqfaPWkYGxQpN0Q+I19E2bdP6vU=;
+	s=arc-20240116; t=1789237414; c=relaxed/simple;
+	bh=2IABv9Of7yUdk6BmDk24hkuTiZqHQYRnK/28Wy5IDMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C+E3YfckbvY4DaUTpzK2ubx07y8EHrCdPzjpFdDtBm7N459uVbjY3BT9piHvCRlhC13xioYEFGCB17BXWKsv8mwy63z961X3VkrGgJb3GzQrR+GO1a85kdhfIoGxmrLXixN1MOO/mgaSsL+njabZMCxmYca6soxFPN3O1WDVbkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9C7h3KN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T65Ser3Pg1uEOEyKAruV9M3VNQBKdYRqamFfj8QJJQ+2N54o/RPuLysGNDeUHug0taQgcHtKPZCthAVLGqVH+tfrSShFUc3fSooPf40+Ps9A7hNlWqBTLIcDVphIU6bB9xor3FsF5oFyqXHOBC56+iLKC2NdN36g8L7k6mPlTHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VA0ggcm2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9C7h3KN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE501F000FF;
-	Sat, 12 Sep 2026 18:23:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VA0ggcm2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B241F000FF;
+	Sat, 12 Sep 2026 18:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237408;
-	bh=SYIf8WBqSYKGUPiM9F3NZu/5ZogyFICV5c72lfUPrpY=;
+	s=korg; t=1789237413;
+	bh=YZzLI5ClrhDWYf520JoZg/Gq++gMWHXFEXFwIENkDZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o9C7h3KNgVmXXay+7Bu1x+KB/v+aEoj+QAjnAudX7m/rgW8wtZb7FzKlopG4LmgD/
-	 vx6iFd+Vxp9a1dvjL4qrDdQh2u6Ttkn31nex5DXW94TxuBT6/al1ngPGhYs5sohJ7U
-	 5qcVIHPsiLw54EnjsCzvVqyiGB3+/CMYQ1VhS4A8=
+	b=VA0ggcm2LmsUhioepwDUgZ3pmCtfGx3T53NR51drnOW4ph6PpjCSvrwWyblgnBif/
+	 +SsByWSVV1QQ/7RhEUxvqMPrPDGBY5w70aNCmwrteMC5KwgIfREFGpQpEvZX5wxQ6C
+	 a0ryS1Xyaq7MtouIhHX0E1fpTSFU2G167DbnZoyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Koichiro Den <den@valinux.co.jp>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 252/935] dmaengine: dw-edma: Complete descriptors before pausing
-Date: Sat, 12 Sep 2026 08:54:42 +0200
-Message-ID: <20260912065532.605684475@linuxfoundation.org>
+	Ilya Maximets <i.maximets@ovn.org>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Jongmin Jang <payload.jang@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 217/935] net: skbuff: dont touch shared zerocopy state in skb_tx_error()
+Date: Sat, 12 Sep 2026 08:54:07 +0200
+Message-ID: <20260912065531.800429464@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,88 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Norbert Szetei <norbert@doyensec.com>
 
-commit c154060016a9db2ac889bfdb0a3c1322f9be8ded upstream.
+[ Upstream commit f66bdb1cc0fcd227a062378f8be0b5873aa5600a ]
 
-If PAUSE is requested while the final burst of a descriptor is in
-flight, the DONE interrupt takes the PAUSE path without checking whether
-the descriptor has been depleted. The depleted descriptor remains on the
-issued list and the channel enters EDMA_ST_PAUSE.
+skb_tx_error() completes the zerocopy uarg and clears
+SKBFL_ALL_ZEROCOPY, and skb_zcopy_downgrade_managed() clears
+SKBFL_MANAGED_FRAG_REFS. Both live in skb_shinfo(), which every clone
+shares, while the caller only owns the reference it is about to drop.
+Through a clone it tells the producer its pages are free and drops
+SKBFL_SHARED_FRAG for an skb that is still in flight.
 
-On resume, dw_edma_start_transfer() can select that depleted descriptor
-again even though no burst remains, leaving the channel in an invalid
-busy state.
+Open vSwitch reaches this with a non-last OVS_ACTION_ATTR_RECIRC:
+clone_execute() sends a skb_clone() into ovs_dp_process_packet() while
+do_execute_actions() keeps forwarding the original, and skb_clone()
+does not privatise the frags here -- skb_orphan_frags() returns early
+on SKBFL_DONT_ORPHAN. A flow miss on the clone then strips the marker
+from the packet still being forwarded, and a later local ESP delivery
+decrypts in place over frags it does not own privately.
 
-Check for descriptor completion before acknowledging PAUSE. If there is
-no work to start on resume, leave the channel idle. Also ignore DONE
-interrupts while the channel is paused so a stale or repeated interrupt
-cannot change its state or start queued work.
+Skip it for a cloned skb. Nothing is lost: skb_release_data() clears
+the zerocopy state once the last reference to the shared data goes.
 
-Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
+Fixes: 25121173f7b1 ("skb: api to report errors for zero copy skbs")
 Cc: stable@vger.kernel.org
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Link: https://patch.msgid.link/20260717180639.2643243-5-den@valinux.co.jp
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Tested-by: Jongmin Jang <payload.jang@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/CFAB292A-674B-4C14-BB2C-BB8830AD5659@doyensec.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ There was no 'if' on 5.x as there is no skb_zcopy_downgrade_managed(). ]
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.c |   20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ net/core/skbuff.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -241,7 +241,8 @@ static int dw_edma_device_resume(struct
- 		err = -EPERM;
- 	} else {
- 		chan->status = EDMA_ST_BUSY;
--		dw_edma_start_transfer(chan);
-+		if (!dw_edma_start_transfer(chan))
-+			chan->status = EDMA_ST_IDLE;
- 	}
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 6281cfed03bb2..83ad581b12fa9 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -889,10 +889,14 @@ EXPORT_SYMBOL(skb_dump);
+  *
+  *	Report xmit error if a device callback is tracking this skb.
+  *	skb must be freed afterwards.
++ *
++ *	Does nothing for a cloned skb: the zerocopy state lives in
++ *	skb_shinfo(), which the clones share.
+  */
+ void skb_tx_error(struct sk_buff *skb)
+ {
+-	skb_zcopy_clear(skb, true);
++	if (skb && !skb_cloned(skb))
++		skb_zcopy_clear(skb, true);
+ }
+ EXPORT_SYMBOL(skb_tx_error);
  
- 	return err;
-@@ -574,10 +575,16 @@ static void dw_edma_done_interrupt(struc
- 	dw_edma_v0_core_clear_done_int(chan);
- 
- 	spin_lock_irqsave(&chan->vc.lock, flags);
-+	if (chan->status == EDMA_ST_PAUSE) {
-+		spin_unlock_irqrestore(&chan->vc.lock, flags);
-+		return;
-+	}
-+
- 	vd = vchan_next_desc(&chan->vc);
- 	if (vd) {
- 		switch (chan->request) {
- 		case EDMA_REQ_NONE:
-+		case EDMA_REQ_PAUSE:
- 			desc = vd2dw_edma_desc(vd);
- 			if (!desc->chunks_alloc) {
- 				dw_hdma_set_callback_result(vd,
-@@ -586,6 +593,12 @@ static void dw_edma_done_interrupt(struc
- 				vchan_cookie_complete(vd);
- 			}
- 
-+			if (chan->request == EDMA_REQ_PAUSE) {
-+				chan->request = EDMA_REQ_NONE;
-+				chan->status = EDMA_ST_PAUSE;
-+				break;
-+			}
-+
- 			/* Continue transferring if there are remaining chunks or issued requests.
- 			 */
- 			chan->status = dw_edma_start_transfer(chan) ? EDMA_ST_BUSY : EDMA_ST_IDLE;
-@@ -598,11 +611,6 @@ static void dw_edma_done_interrupt(struc
- 			chan->status = EDMA_ST_IDLE;
- 			break;
- 
--		case EDMA_REQ_PAUSE:
--			chan->request = EDMA_REQ_NONE;
--			chan->status = EDMA_ST_PAUSE;
--			break;
--
- 		default:
- 			break;
- 		}
+-- 
+2.53.0
+
 
 
