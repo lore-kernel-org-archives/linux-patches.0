@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A41837C916;
-	Sat, 12 Sep 2026 09:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6553AFD15;
+	Sat, 12 Sep 2026 09:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203915; cv=none; b=UL2iDX+UApt7khi4VW4flbXwhDPntYlDygeZ6UwyOgujx/NxAx/j8Q8gNQewKkOxwonNkjuOscng3koFi2F5dMaMrfOT2DdUGqMKlu+F43U0ApixuqoAsMNCHEq7xbP6qZVbZ/2+0BGGqtkSPgywsMdWtNXwvhiRmxG+zzvuAIo=
+	t=1789203920; cv=none; b=WtKROqwTJSPl429ATgs7LfqsIiO/xwfSMdVL0fFi9xDMHAYPlq9MYSictzY1aXMiE1D3kkQD4Wbcg3ubb9FNSkJLnS3KTrYVrX1sBYhEH4TA0KdHu6iKuPJDYhzglUnEukqpY7ehOyjJazZUXGPibzHTEQGRUUWsxndbUelrv7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203915; c=relaxed/simple;
-	bh=ogyBj8yPVz89mgUSn8TKvhmGbBq+eDbcwsLw71ezoJ4=;
+	s=arc-20240116; t=1789203920; c=relaxed/simple;
+	bh=hwcero5NPuU/tBEyvpNjPVZ/mXuc71G6IhnODaN1r+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iE5G7FpAF9NKFL2WdYS851XLg+6+h9WkFGbggOkP9z4gwOO3/AgQ9o8q6tlqdGs8iWknbORxhQu9enfAmKvIrMO0lRUZLj51IxbBpYznTWIwxmgPlRoaDYfcM8dUaBDYZcgE8//yx+PGgZwIJthY4EOExvWu2cmn3VvPAV8jBJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M82g3RS/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DoH780RQq8UmKPLbYtTx27QcFc6gArSgUwYRDHpaDLuPIWE5fc5/cXQcVw2t6qJQ46S17/Fdmb+eXaDer4f3nCOMgVIyese4lyFvmjGaYsjC/+kynD9vKJotutfWex9Aawsj1lwAMI7I7CG6R0F3FFq/4HbfeNM42KecaOOCbYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=juPoGWjx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M82g3RS/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AF01F000FF;
-	Sat, 12 Sep 2026 09:05:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="juPoGWjx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B911F000FF;
+	Sat, 12 Sep 2026 09:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203914;
-	bh=EtigN6JXKfnb1tprmzZzj6N3JjnSVKb5NU4NCIXgraI=;
+	s=korg; t=1789203919;
+	bh=JlJ7SSVUCLtmPhUJjZaQfb8QrL/TAevFdZIDi0MB8MA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M82g3RS/yy3U9575PfYnvB0roJufzCjYMTZ73sSqIW1PVrosP7lrpOiq7xejhsj92
-	 5q3/+CzWK7dXKpTUohG5ZjnZ4liO0p4EEGKxy+35JD87OC9tXHSXKwdC0AOq3hZMiH
-	 x75824cbppBmgIBbNDwwCamtqKuSRfEDrm6QcCPQ=
+	b=juPoGWjxUhSuqXMnXLXutvkuNLVZzoSh5dsRLShiXs25MhjUeCyLla3yF9Y9QcgTW
+	 RkJkSkl0cEJ94EBNx3rYkx/3DA89HpD5MlO5einV/l5F/6CY/mk/+wqITn0H6WmkH3
+	 uScfr8/bogqkpXbL2BMdwUNVx/Kc72NmXmpdAUBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stefan Metzmacher <metze@samba.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1503/1815] smb: smbdirect: avoid recursive listen.lock during cleanup
-Date: Sat, 12 Sep 2026 08:54:13 +0200
-Message-ID: <20260912065724.282612999@linuxfoundation.org>
+Subject: [PATCH 7.2 1504/1815] smb: smbdirect: release pending child sockets outside the handler lock
+Date: Sat, 12 Sep 2026 08:54:14 +0200
+Message-ID: <20260912065724.305136977@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,83 +55,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Yunseong Kim <yunseong.kim@est.tech>
 
-[ Upstream commit 76fa42c004eb95a983bed8fd0e6e0e8428c751a5 ]
+[ Upstream commit db82fbe4bb68e68e4aef00ef5b79f92991d8ef8e ]
 
-__smbdirect_socket_schedule_cleanup() and smbdirect_socket_cleanup_work()
-take sc->listen.lock and walk the listener's pending list, recursing
-into smbdirect_socket_schedule_cleanup() for each child, and every
-child takes its own listen.lock inside that walk.
+smbdirect_socket_destroy() releases the listener's pending/ready child
+sockets while still holding the listener's handler lock, the
+&id_priv->handler_mutex taken via rdma_lock_handler(), not
+sc->listen.lock, and before the listener's own rdma_destroy_id().
+That ordering has one real consequence and one cosmetic one.
 
-This cannot deadlock for real: the nesting is strictly listener into
-child, a child never listens, so the outer and the inner lock are
-always different instances.  lockdep only tracks lock classes, though;
-it sees the same class acquired twice and reports a possible recursive
-locking deadlock.  This change therefore works around a lockdep
-limitation rather than fixing a real hang, but the report is still
-worth avoiding: lockdep disables itself after the first splat and then
-hides real locking bugs for the rest of the run.
+The real one: smbdirect_socket_release() drops the child's last
+reference, which destroys the child's cm_id.  Doing that before the
+listener's rdma_destroy_id() lets _cma_cancel_listens(), running from
+the listener's _destroy_id(), walk an already freed child id_priv,
+which KASAN catches as a slab-use-after-free during listener shutdown:
 
-Only a socket that was a listener owns a populated listen.ready/pending
-list; a child has empty lists and nothing to do in these blocks.  Guard
-both of them with sc->listen.backlog != -1, the "was a listener" marker
-that smbdirect_socket_destroy() already uses: listen.backlog leaves its
-initial -1 exactly once, when smbdirect_socket_listen() succeeds.  The
-alternative !sc->accept.listener test reads as "not a listener" while
-meaning the opposite, and it is also true for an accepted child, whose
-accept.listener has been cleared on hand-over.  With the guard the walk
-only runs for a listener and never nests a child's listen.lock under
-it; a pending child stays on its listener's list for the free path
-(smbdirect_socket_destroy) to reap.
+[ 4758.909130] BUG: KASAN: slab-use-after-free in __mutex_lock+0x1469/0x1560
+[ 4758.911450] Read of size 1 at addr ffff88821c381db4 by task ksmbd.control/1652
+[ 4758.913262] Call Trace:
+[ 4758.913267]  <TASK>
+[ 4758.913299]  __mutex_lock+0x1469/0x1560
+[ 4758.913408]  _cma_cancel_listens+0x312/0x3b0
+[ 4758.913413]  _destroy_id+0x363/0xee0
+[ 4758.913417]  smbdirect_socket_destroy_sync+0x17d5/0x2440
+[ 4758.913443]  smbdirect_socket_release+0x124/0x230
+[ 4758.913451]  ksmbd_rdma_stop_listening+0x9f/0x190
+[ 4758.913457]  ksmbd_conn_transport_destroy+0x65/0x3c0
+[ 4758.913463]  kill_server_store+0x1fb/0x2b0
+[ 4758.913501]  kernfs_fop_write_iter+0x349/0x4d0
+[ 4758.913507]  vfs_write+0x5e7/0xc70
+[ 4758.913528]  ksys_write+0x12a/0x210
+[ 4758.913541]  do_syscall_64+0x135/0x460
+[ 4758.913555]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-[  741.705044] WARNING: possible recursive locking detected
-[  741.705403] 7.1.0-next-20260623+ #75 Not tainted
-[  741.705695] --------------------------------------------
-[  741.706022] ksmbd.control/18502 is trying to acquire lock:
-[  741.706379] ffff888108d612f8 (&sc->listen.lock){....}-{3:3}, at: __smbdirect_socket_schedule_cleanup+0x719/0xd70
-[  741.707008]
-[  741.707008] but task is already holding lock:
-[  741.707396] ffff8881087642f8 (&sc->listen.lock){....}-{3:3}, at: __smbdirect_socket_schedule_cleanup+0x719/0xd70
-[  741.708025]
-[  741.708025] other info that might help us debug this:
-[  741.708448]  Possible unsafe locking scenario:
-[  741.708448]
-[  741.708845]        CPU0
-[  741.709016]        ----
-[  741.709186]   lock(&sc->listen.lock);
-[  741.709453]   lock(&sc->listen.lock);
-[  741.709705]
-[  741.709705]  *** DEADLOCK ***
-[  741.709705]
-[  741.710095]  May be due to missing lock nesting notation
-[  741.710095]
-[  741.710663] 6 locks held by ksmbd.control/18502:
-[  741.710975]  #0: ffff888109e51420 (sb_writers#7){.+.+}-{0:0}, at: vfs_write+0x1e7/0xc70
-[  741.711561]  #1: ffff888126ec3880 (&of->mutex){+.+.}-{4:4}, at: kernfs_fop_write_iter+0x1be/0x4d0
-[  741.712147]  #2: ffff888102af17b0 (kn->active#45){.+.+}-{0:0}, at: kernfs_fop_write_iter+0x205/0x4d0
-[  741.712803]  #3: ffffffff85ad1e00 (ctrl_lock){+.+.}-{4:4}, at: kill_server_store+0x1e0/0x2b0
-[  741.713381]  #4: ffffffff85ad41a0 (init_lock){+.+.}-{4:4}, at: ksmbd_conn_transport_destroy+0x5b/0x3c0
-[  741.713995]  #5: ffff8881087642f8 (&sc->listen.lock){....}-{3:3}, at: __smbdirect_socket_schedule_cleanup+0x719/0xd70
-[  741.714736]
-[  741.714736] stack backtrace:
-[  741.715038] CPU: 4 UID: 0 PID: 18502 Comm: ksmbd.control Not tainted 7.1.0-next-20260623+ #75 PREEMPT(lazy)
-[  741.715043] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-[  741.715046] Call Trace:
-[  741.715049]  <TASK>
-[  741.715052]  dump_stack_lvl+0x77/0xa0
-[  741.715058]  print_deadlock_bug+0x279/0x290
-[  741.715065]  __lock_acquire+0x272a/0x2e30
-[  741.715070]  ? stack_trace_save+0xae/0x100
-[  741.715075]  ? smb_direct_logging_vaprintf+0x1a0/0x230
-[  741.715079]  ? __pfx_smb_direct_logging_vaprintf+0x10/0x10
-[  741.715082]  ? __timer_delete+0x58/0x320
-[  741.715087]  lock_acquire+0xd3/0x270
-[  741.715091]  ? __smbdirect_socket_schedule_cleanup+0x719/0xd70
-[  741.715095]  ? entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[  741.715099]  _raw_spin_lock_irqsave+0x42/0x60
-[  741.715105]  ? __smbdirect_socket_schedule_cleanup+0x719/0xd70
+The cosmetic one: releasing a child recurses into
+smbdirect_socket_destroy(), which takes the child's own
+rdma_lock_handler() lock nested under the listener's.  The listener's
+and the child's cm_id are always different instances, so this cannot
+deadlock for real; the CM core itself nests a new connection id's
+handler_mutex under the listening id's in cma_ib_req_handler().  But
+lockdep only sees one lock class, reports possible recursive locking,
+and then disables itself, hiding real locking bugs for the rest of the
+run:
 
-Note the two addresses above: ffff888108d612f8 is the child's lock,
-ffff8881087642f8 the listener's, always distinct objects.
+[ 2424.579653] WARNING: possible recursive locking detected
+[ 2424.581180] 7.1.0-next-20260623+ #89 Not tainted
+[ 2424.582548] --------------------------------------------
+[ 2424.584500] ksmbd.control/8854 is trying to acquire lock:
+[ 2424.586817] ffff888102303c20 (&id_priv->handler_mutex){+.+.}-{4:4}, at: smbdirect_socket_destroy_sync+0xc39/0x2440
+[ 2424.590590]
+[ 2424.590590] but task is already holding lock:
+[ 2424.591601] ffff888102046c20 (&id_priv->handler_mutex){+.+.}-{4:4}, at: smbdirect_socket_destroy_sync+0xc39/0x2440
+[ 2424.594178]
+[ 2424.594178] other info that might help us debug this:
+[ 2424.596634]  Possible unsafe locking scenario:
+[ 2424.596634]
+[ 2424.598841]        CPU0
+[ 2424.599765]        ----
+[ 2424.600695]   lock(&id_priv->handler_mutex);
+[ 2424.601836]   lock(&id_priv->handler_mutex);
+[ 2424.602590]
+[ 2424.602590]  *** DEADLOCK ***
+[ 2424.602590]
+[ 2424.604512]  May be due to missing lock nesting notation
+
+Splice the pending/ready children onto a local list under the
+listener's listen.lock, while the handler lock is held so a concurrent
+CM CONNECT_REQUEST cannot add more, but defer the actual
+smbdirect_socket_release() calls until after the listener's cm_id has
+been destroyed and its handler lock dropped.  The children are
+independent sockets whose teardown needs neither the listener's
+handler lock nor its cm_id.
 
 Found with ksmbdzzer [2], a KSMBD fuzzer that drives libFuzzer with a
 kcov-dataflow [1] coverage vector: it folds each instrumented
@@ -148,71 +141,93 @@ Reviewed-by: Stefan Metzmacher <metze@samba.org>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/smbdirect/socket.c | 42 +++++++++++++++++++++++++++++----------
- 1 file changed, 32 insertions(+), 10 deletions(-)
+ fs/smb/smbdirect/socket.c | 56 ++++++++++++++++++++++++++++-----------
+ 1 file changed, 41 insertions(+), 15 deletions(-)
 
 diff --git a/fs/smb/smbdirect/socket.c b/fs/smb/smbdirect/socket.c
-index 39cca7219c4df..8dec47a6603cb 100644
+index 8dec47a6603cb..bb02df6158b97 100644
 --- a/fs/smb/smbdirect/socket.c
 +++ b/fs/smb/smbdirect/socket.c
-@@ -305,12 +305,26 @@ void __smbdirect_socket_schedule_cleanup(struct smbdirect_socket *sc,
+@@ -495,6 +495,7 @@ static void smbdirect_socket_destroy(struct smbdirect_socket *sc)
+ 	struct smbdirect_recv_io *recv_io;
+ 	struct smbdirect_recv_io *recv_tmp;
+ 	LIST_HEAD(all_list);
++	LIST_HEAD(pending_list);
+ 	unsigned long flags;
+ 
+ 	smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_INFO,
+@@ -552,24 +553,29 @@ static void smbdirect_socket_destroy(struct smbdirect_socket *sc)
  	 * disconnect all pending and ready sockets
  	 *
- 	 * First we move ready sockets to pending again.
+ 	 * We move ready sockets to pending again.
 +	 *
-+	 * Only a socket that was a listener (listen.backlog != -1) owns a
-+	 * populated listen.ready/pending list.  Guarding on that also keeps
-+	 * lockdep quiet: without it, the listener holds sc->listen.lock while
-+	 * the loop recurses into each child psc, which takes psc->listen.lock.
-+	 * Those are always different instances of the same lock class -- a
-+	 * child never listens, so the nesting is strictly listener -> child
-+	 * and cannot really deadlock -- but lockdep only sees the class and
-+	 * reports "possible recursive locking".  A child has empty listen
-+	 * lists and nothing to do here, so skipping it loses nothing, and a
-+	 * pending child stays on its listener's list for the free path
-+	 * (smbdirect_socket_destroy) to reap.
- 	 */
--	spin_lock_irqsave(&sc->listen.lock, flags);
--	list_splice_init(&sc->listen.ready, &sc->listen.pending);
--	list_for_each_entry_safe(psc, tsc, &sc->listen.pending, accept.list)
--		smbdirect_socket_schedule_cleanup(psc, sc->first_error);
--	spin_unlock_irqrestore(&sc->listen.lock, flags);
-+	if (sc->listen.backlog != -1) { /* was a listener */
-+		spin_lock_irqsave(&sc->listen.lock, flags);
-+		list_splice_init(&sc->listen.ready, &sc->listen.pending);
-+		list_for_each_entry_safe(psc, tsc, &sc->listen.pending, accept.list)
-+			smbdirect_socket_schedule_cleanup(psc, sc->first_error);
-+		spin_unlock_irqrestore(&sc->listen.lock, flags);
-+	}
- 
- 	switch (sc->status) {
- 	case SMBDIRECT_SOCKET_RESOLVE_ADDR_FAILED:
-@@ -405,12 +419,20 @@ static void smbdirect_socket_cleanup_work(struct work_struct *work)
- 	 * disconnect all pending and ready sockets
- 	 *
- 	 * First we move ready sockets to pending again.
++	 * Capture them here -- rdma_lock_handler(sc->rdma.cm_id) is held above,
++	 * so a concurrent CM CONNECT_REQUEST cannot add more; sc->listen.lock
++	 * below only protects the list splice itself -- but DEFER releasing
++	 * them until the listener's cm_id is destroyed:
 +	 *
-+	 * Guarded on listen.backlog != -1 for the same reason as in
-+	 * __smbdirect_socket_schedule_cleanup(): only a listener owns a
-+	 * populated listen list, and skipping the block for a child avoids
-+	 * nesting psc->listen.lock under a listener's listen.lock (different
-+	 * instances of one class -- harmless, but lockdep cannot tell).
++	 * - smbdirect_socket_release() -> smbdirect_socket_destroy() takes the
++	 *   child's own rdma_lock_handler() lock (&id_priv->handler_mutex).
++	 *   The listener's and the child's cm_id are always different
++	 *   instances, so the nesting cannot really deadlock, but lockdep only
++	 *   sees one lock class and reports "possible recursive locking".
++	 *
++	 * - rdma_destroy_id() of a child before the listener's own
++	 *   rdma_destroy_id() below lets _cma_cancel_listens() walk the freed
++	 *   child id_priv (KASAN slab-use-after-free in __mutex_lock()).
++	 *
++	 * The children are independent sockets whose teardown does not need
++	 * the listener's handler lock.
  	 */
--	spin_lock_irqsave(&sc->listen.lock, flags);
--	list_splice_init(&sc->listen.ready, &sc->listen.pending);
--	list_for_each_entry_safe(psc, tsc, &sc->listen.pending, accept.list)
--		smbdirect_socket_schedule_cleanup(psc, sc->first_error);
--	spin_unlock_irqrestore(&sc->listen.lock, flags);
-+	if (sc->listen.backlog != -1) { /* was a listener */
-+		spin_lock_irqsave(&sc->listen.lock, flags);
-+		list_splice_init(&sc->listen.ready, &sc->listen.pending);
-+		list_for_each_entry_safe(psc, tsc, &sc->listen.pending, accept.list)
-+			smbdirect_socket_schedule_cleanup(psc, sc->first_error);
-+		spin_unlock_irqrestore(&sc->listen.lock, flags);
-+	}
+ 	spin_lock_irqsave(&sc->listen.lock, flags);
+-	list_splice_tail_init(&sc->listen.ready, &all_list);
+-	list_splice_tail_init(&sc->listen.pending, &all_list);
++	list_splice_tail_init(&sc->listen.ready, &pending_list);
++	list_splice_tail_init(&sc->listen.pending, &pending_list);
+ 	spin_unlock_irqrestore(&sc->listen.lock, flags);
+-	psockets = list_count_nodes(&all_list);
+-	if (sc->listen.backlog != -1) /* was a listener */
+-		smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_INFO,
+-			"release %zu pending sockets\n", psockets);
+-	list_for_each_entry_safe(psc, tsc, &all_list, accept.list) {
+-		list_del_init(&psc->accept.list);
+-		psc->accept.listener = NULL;
+-		smbdirect_socket_release(psc);
+-	}
+-	if (sc->listen.backlog != -1) /* was a listener */
+-		smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_INFO,
+-			"released %zu pending sockets\n", psockets);
+-	INIT_LIST_HEAD(&all_list);
  
- 	switch (sc->status) {
- 	case SMBDIRECT_SOCKET_NEGOTIATE_NEEDED:
+ 	/* It's not possible for upper layer to get to reassembly */
+ 	if (sc->listen.backlog == -1) /* was not a listener */
+@@ -599,6 +605,26 @@ static void smbdirect_socket_destroy(struct smbdirect_socket *sc)
+ 		sc->rdma.cm_id = NULL;
+ 	}
+ 
++	/*
++	 * The listener's rdma_lock_handler() lock is dropped and its cm_id is
++	 * destroyed, so it is safe to release the child sockets captured
++	 * above: each release recurses into smbdirect_socket_destroy() and
++	 * takes that child's own handler_mutex without nesting it under the
++	 * listener's, and _cma_cancel_listens() can no longer reach them.
++	 */
++	psockets = list_count_nodes(&pending_list);
++	if (sc->listen.backlog != -1) /* was a listener */
++		smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_INFO,
++			"release %zu pending sockets\n", psockets);
++	list_for_each_entry_safe(psc, tsc, &pending_list, accept.list) {
++		list_del_init(&psc->accept.list);
++		psc->accept.listener = NULL;
++		smbdirect_socket_release(psc);
++	}
++	if (sc->listen.backlog != -1) /* was a listener */
++		smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_INFO,
++			"released %zu pending sockets\n", psockets);
++
+ 	if (sc->listen.backlog == -1) /* was not a listener */
+ 		smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_INFO,
+ 			"destroying mem pools\n");
 -- 
 2.53.0
 
