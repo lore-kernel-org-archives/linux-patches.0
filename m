@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BDC3806AF;
-	Sat, 12 Sep 2026 09:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE49374A12;
+	Sat, 12 Sep 2026 09:22:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204951; cv=none; b=gcC2GcUYXj/rlcxeIe4vPmgXJtnEo0Zwpn2mupCOWaQpxBtJXpcsdSWhvRfpKblRhJ22VkqJmOTAreelE25eOnex5RxjLF+C3tFf0bdn8xV4DNloRt1Yfn+n8JE4fdVMDXmhYlfc2137FGgZGZ9Ot7Z2xcd1zg6ZS7AhTDCVrjc=
+	t=1789204956; cv=none; b=B393OeBN2j/w+Bqn0amUXUbNhlmKuV4h6C1UdW0QHaiNnNTjJD0Gg2k3HFjtIHr0h/xVet8OnGeGw+pi8G7NF4vwTUlWUo/Ade9SOPWq1ORvd5TFlKxOsnXKqpCQFkUCvl9he93fGusnp+XSmv20/VBxFwyLP+PdhkAevix6Dok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204951; c=relaxed/simple;
-	bh=hGuCTq5nOw8Ddh/TJszLom2vIblLPHHPweOzzdvYy2g=;
+	s=arc-20240116; t=1789204956; c=relaxed/simple;
+	bh=3lt30+SfAsN9+twTa2G97dgfEMDbd/kjZkLUnrZJlzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AXCSciKMn08XU0WdNWfEAfzz4yqtxbn/IMyTMQhdW6NYIhjS6F/Z5taTeKTRTTnc++TqS1sRq8RNwdEPrps/Y4EzAxel2pur1GFL0mYFNqB+IQo+hM49HdWfeTe4KB3OeXMKyjjInaW+pYapGhptlH6SOkw3jRVT9AOd54LVH20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAiE0nx/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JA9C8osv+XFFhvF1xDJgp3HcnXoG0TtKmP6c6EUMSowxYZUaum/MHx8IxiA18vRFndRnS76Dc2qgp8cAOTqQk5XL/ueCiMSiVAbaCDnjIJHV2HqXMQ3VvT6BiDWWY5nvqwB5ntOKQ4/akdtiQ+EQ8G9tNaRCoquQ7RTtoC6P8p0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HepC/DPo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAiE0nx/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38B21F000FF;
-	Sat, 12 Sep 2026 09:22:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HepC/DPo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7C11F000FF;
+	Sat, 12 Sep 2026 09:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204949;
-	bh=tENylGo5QxLnwp5+jIYWq9Yumhb3UJaI0kdn+J5eUrw=;
+	s=korg; t=1789204954;
+	bh=PTw6vV2bjt1dShlwtv13+YsqmauC+WSpQJrcCwBt7x8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AAiE0nx/PuzPaUPtvT+baRDewARlipJ4rryRVbo9dFxpW1uzh41d4y/z2p+0W9mx3
-	 GWCqw7pAyk0Eb9jWQgabr6zf7ZiUgbVJJ7+Prdq1u7z9YCPEqC0tVfnl7cJsM0Lr6c
-	 oRaiNkwQ8d7YM63PYGoCMEp5KejekWbVlzaoTqNs=
+	b=HepC/DPoPU0bvYApbsoiQnaYixITbFPkbKjUWpeXJPfzsKLMO5pMP9AdHue2hQm0H
+	 ODbRvTUFSUZx/h/+nsTXCXCjZ1id4gTegEW2Qo++fQO6jVMTkjfRROa9/kKFTpKjiw
+	 8AfpG9+2WqFzwBCMjFiXw6Wdjl1F/xDX7hG/r7qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e6382a2f53f5fc7453ac@syzkaller.appspotmail.com,
-	Pauli Virtanen <pav@iki.fi>,
+	Ismail Tarim <ismailtarim7@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1718/1815] Bluetooth: L2CAP: fix race l2cap_sock_cleanup_listen() vs. put_chan
-Date: Sat, 12 Sep 2026 08:57:48 +0200
-Message-ID: <20260912065729.306540488@linuxfoundation.org>
+Subject: [PATCH 7.2 1719/1815] Bluetooth: btmtk: Do not report success when subsys reset fails
+Date: Sat, 12 Sep 2026 08:57:49 +0200
+Message-ID: <20260912065729.329269884@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,120 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Ismail Tarim <ismailtarim7@gmail.com>
 
-[ Upstream commit 66d6ef18548ae6d7dd452b84115fc82c0a73a4ea ]
+[ Upstream commit 59c3ee19ca88210bfc0e22ce59218091cb1a3c48 ]
 
-For L2CAP sockets without owning sk->sk_socket, reading
-l2cap_pi(sk)->chan may race against concurrent l2cap_sock_kill() ->
-l2cap_sock_put_chan().  This excludes simultaneous proto_ops callbacks,
-but access in l2cap_sock_cleanup_listen() has unsafe lockless read.
+btmtk_usb_subsys_reset() validates the subsystem reset by reading the
+chip id back. When that read succeeds at the bus level but yields an id
+of zero, the reset has demonstrably not taken effect: the function logs
+"Can't get device id, subsys reset fail." and then returns the return
+value of btmtk_usb_id_get(), which in that case is zero, i.e. success.
 
- [Task 1]                         [Task 2 (hdev->workqueue)]
- l2cap_sock_release(parent)       l2cap_disconn_cfm
-   l2cap_sock_cleanup_listen        l2cap_conn_del
-     bt_accept_dequeue                l2cap_chan_del
-       lock_sock(sk)                    l2cap_sock_teardown_cb
-       bt_accept_unlink
-         bt_sk(sk)->parent = NULL
-       release_sock(sk) ----------------> lock_sock(sk)
-                                          parent = /* NULL */
-     lock_sock(sk) <--------------------- release_sock(sk)
-                                          sock_set_flag(sk, SOCK_ZAPPED)
-                                      l2cap_sock_close_cb
-                                        l2cap_sock_kill(sk)
-                                          l2cap_sock_put_chan
-     chan = READ l2cap_pi(sk)->chan         l2cap_pi(sk)->chan = NULL
-     l2cap_chan_hold_unless_zero            l2cap_put_chan(chan)
-       kref_get_unless_zero(&chan->ref)
+btusb_mtk_reset() returns that value unchanged, so its caller cannot
+tell a completed reset from a failed one.
 
-Task 1 may observe NULL which causes null-ptr-deref.
+Return -ENODEV when the chip id reads back as zero, leaving the existing
+MT6639 exemption intact.
 
-Fix the race by taking lock_sock() in l2cap_sock_kill() to
-synchronize with l2cap_sock_cleanup_listen().  hold_unless_zero() is not
-needed here, l2cap_pi(sk)->chan owns reference if it is non-NULL.
+Observed on an MT7902 [13d3:3579]. The path can be reached on demand by
+asking the controller for a coredump, since btmtk requests a reset once
+the dump completes:
 
-Clarify code comments vs. locking.
+  # echo 1 > /sys/class/bluetooth/hci0/device/coredump
 
-Fixes: 6fef032af009 ("Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_new_connection_cb()")
-Reported-by: syzbot+e6382a2f53f5fc7453ac@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e6382a2f53f5fc7453ac
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+  Bluetooth: hci0: Mediatek coredump end
+  Bluetooth: hci0: Can't get device id, subsys reset fail.
+  usb 3-10: reset high-speed USB device number 5 using xhci_hcd
+  usb 3-10: device descriptor read/64, error -110
+  usb usb3-port10: attempt power cycle
+  usb usb3-port10: unable to enumerate USB device
+
+The same sequence occurs unprompted when the controller firmware asserts
+on its own.
+
+Note that this corrects the error reporting only; it does not by itself
+make the controller recoverable in the case above.
+
+Fixes: 25b6d7593a3a ("Bluetooth: btmtk: introduce btmtk reset work")
+Signed-off-by: Ismail Tarim <ismailtarim7@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/l2cap.h |  5 +++++
- net/bluetooth/l2cap_sock.c    | 23 +++++++++++++----------
- 2 files changed, 18 insertions(+), 10 deletions(-)
+ drivers/bluetooth/btmtk.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
-index ef6ce1c20a4f0..3d9a32094347c 100644
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -699,7 +699,12 @@ struct l2cap_rx_busy {
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index 66b3467610436..dc702c0a6034d 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -968,8 +968,10 @@ int btmtk_usb_subsys_reset(struct hci_dev *hdev, u32 dev_id)
+ 	}
  
- struct l2cap_pinfo {
- 	struct bt_sock		bt;
-+
-+	/* With owning sk_socket chan may be read without lock, other access
-+	 * should hold lock_sock.
-+	 */
- 	struct l2cap_chan	*chan;
-+
- 	struct list_head	rx_busy;
- };
+ 	err = btmtk_usb_id_get(hdev, 0x70010200, &val);
+-	if (err || (!val && dev_id != 0x6639))
++	if (err || (!val && dev_id != 0x6639)) {
+ 		bt_dev_err(hdev, "Can't get device id, subsys reset fail.");
++		return err ? err : -ENODEV;
++	}
  
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 6de131ac2340c..143654a47989d 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1344,7 +1344,12 @@ static void l2cap_sock_kill(struct sock *sk)
- 
- 	BT_DBG("sk %p state %s", sk, state_to_string(sk->sk_state));
- 
-+	/* Take lock to synchronize against access without owning sk->sk_socket,
-+	 * eg. in l2cap_sock_cleanup_listen(). proto_ops etc. don't need lock.
-+	 */
-+	lock_sock(sk);
- 	l2cap_sock_put_chan(sk);
-+	release_sock(sk);
- 
- 	/* Kill poor orphan */
- 	sock_set_flag(sk, SOCK_DEAD);
-@@ -1547,14 +1552,10 @@ static void l2cap_sock_cleanup_listen(struct sock *parent)
- 	 * establish sk_lock -> conn->lock and invert the established
- 	 * conn->lock -> chan->lock -> sk_lock order (lockdep deadlock).
- 	 *
--	 * Instead, briefly take the child sk lock to fetch and pin its chan.
--	 * l2cap_conn_del() reaches the chan free only via
--	 * l2cap_chan_del() -> l2cap_sock_teardown_cb(), which itself takes
--	 * the child sk lock; holding it across l2cap_chan_hold_unless_zero()
--	 * therefore guarantees the chan cannot be freed while we read and
--	 * pin it (hold_unless_zero() additionally skips a chan already past
--	 * its last reference).  We then drop the sk lock before taking
--	 * chan->lock, so sk and chan locks are never held together.
-+	 * Instead, briefly take the child sk lock to synchronize vs.
-+	 * l2cap_sock_kill that puts l2cap_pi(sk)->chan. We then drop the sk
-+	 * lock before taking chan->lock, so sk and chan locks are never held
-+	 * together.
- 	 *
- 	 * Since we cannot call l2cap_chan_close() without conn->lock,
- 	 * schedule l2cap_chan_timeout to close the channel; it already
-@@ -1564,10 +1565,12 @@ static void l2cap_sock_cleanup_listen(struct sock *parent)
- 		struct l2cap_chan *chan;
- 
- 		lock_sock_nested(sk, L2CAP_NESTING_NORMAL);
--		chan = l2cap_chan_hold_unless_zero(l2cap_pi(sk)->chan);
-+		chan = l2cap_pi(sk)->chan;
-+		if (chan)
-+			l2cap_chan_hold(chan);
- 		release_sock(sk);
- 		if (!chan) {
--			/* l2cap_conn_del() already tearing this child down */
-+			/* Already torn down */
- 			sock_put(sk);
- 			continue;
- 		}
+ 	return err;
+ }
 -- 
 2.53.0
 
