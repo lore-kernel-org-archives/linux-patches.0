@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D7D3932DA;
-	Sat, 12 Sep 2026 18:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3233AF647;
+	Sat, 12 Sep 2026 18:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237680; cv=none; b=ohI/O77tuAMVQsnOMnJ/azr/gnT0f5RYNDoYccGPgUZOKQojMWfa0jjwodMyvTXuy46QNGrF/FAekTXkn7e683yMHpzk7fsqO8Ho00e0UtPihBJxY1HqS/mADljWaob9sGnDw1Io6gbL5i/vqiiQz8mUmfkz3RRMueDYAYeXVww=
+	t=1789237685; cv=none; b=s+xZ622W2mQcufQeABFXPAuipAJjtPGDulWPVwLRjOmx+IVDO6mwfbTF2JdzDy1LAMT25HM8vWbf2vcxTwtMLsb/nQ+1jr7JrAR2FNo9YT6041atAVrSu21VCsY+7teLc9XkvaCjmWC8URNbf6KQIvMT5LhTm/CpThB4CJdQb3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237680; c=relaxed/simple;
-	bh=yHUz+lffLENVb6lsoMAPZblcaP5T2x54/LcYtgni5yQ=;
+	s=arc-20240116; t=1789237685; c=relaxed/simple;
+	bh=pj6YoWFBRT7qhRjo91h8e7+MxDc5fPR7zuw+NxrojuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=huUAYfG1RSLvw7sydriMKZli+xpDwKlx1srlyd2AyUWCqSx/Xmxwwy/Tb/av3iVxXIroIkWe6cYJc1bJm1R8QoW0SVeAVT/HNI7nRbbzhfMpWKfaQx34ExGxkr0AIC9A+/y/aHhKn5leyKjSzY5vr4cm2mXiWcl8W0qcToGV4/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+4SSJQs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ReHp3NJRlLQ47V0gUED3woTF81sK9E46P/eyQeupldiICYUeO6mH1q9x7EDUnzUD0IvgtYc4qerf6iefShRFfSmKckttgud2MKg8KbAOpM2+0xA7qjOUmYi7gF2DWOQ0SwGb+9pQ//hAtFKJeLveY7JJDyfTprFOjrD2Z1IVZwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SfBEVPiQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+4SSJQs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E4B1F000FF;
-	Sat, 12 Sep 2026 18:27:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SfBEVPiQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB7C1F000FF;
+	Sat, 12 Sep 2026 18:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237678;
-	bh=x8CB1swAQwP6NTzrfqpsMl/RSJ0RLfhHIsmpVsIHnkU=;
+	s=korg; t=1789237683;
+	bh=kvFp6DRyshVBJ+TKhfUViBltBsxWIgTPfe2PKM3Ih18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S+4SSJQsD/xanWTeeDmS6AZEUWhVzFiCIkHk5u8q70PhSzq4jXK/Wat4njWZuEAb4
-	 qDDJOSCd29CshCcQVLlWLtAbDnqKs+isO3X6AumzXs/CFPnNA4j+5OKFZnuIT7stAZ
-	 tlS1CTW3r2c3/mvmbtlpcJaZs+7QBe7kYWfZhhwg=
+	b=SfBEVPiQB20t2AfJALCjjkHH6JNQulKkyS2YW7yVp/aOuMSq6Gwtnswl1Ie67nps9
+	 VVqDaynyn/UmTCyGqLGHrFD74ZLW0T1bVR4PdzTZJ39bflnXVFdNzj/2N89PGYrqPX
+	 f+QUbwTzQNknWX9mCQlWXMAeg9m4pecSUlfhOO3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Shivam Kumar <kumar.shivam43666@gmail.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 5.15 264/935] nvme-tcp: check the data direction of a C2HData PDU
-Date: Sat, 12 Sep 2026 08:54:54 +0200
-Message-ID: <20260912065532.880444846@linuxfoundation.org>
+Subject: [PATCH 5.15 265/935] nvmet-tcp: fix out-of-bounds write when receiving an over-long PDU
+Date: Sat, 12 Sep 2026 08:54:55 +0200
+Message-ID: <20260912065532.903713161@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,73 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Shivam Kumar <kumar.shivam43666@gmail.com>
 
-commit f83af377c148f6ad94b41c0e8313f12adf45e1c1 upstream.
+commit 14cc5a7e77731497d5bea70f3bb05df7eda982e4 upstream.
 
-nvme_tcp_handle_c2h_data() finds the request by command id and checks
-that it has a payload, but it does not check that the command asked for
-data to be read.  A controller that answers a write command with C2HData
-therefore reaches nvme_tcp_recv_data(), where _copy_to_iter() hits
-WARN_ON_ONCE(i->data_source) and returns 0.  The receive path turns that
-into -EFAULT and resets the controller.
+nvmet_tcp_try_recv_pdu() reads a PDU header into the fixed 128-byte
+queue->pdu union, then computes the remaining payload length as
 
-No data is copied, so this is not memory corruption.  What a controller
-gets is a kernel warning it can raise at will, which is fatal on a host
-booted with panic_on_warn.
+	queue->left = hdr->hlen - queue->offset + hdgst;
 
-The send path already knows the direction - it consults rq_data_dir()
-when it builds a command - and nvme_tcp_handle_r2t() checks the length
-and the offset of the request it names.  The C2HData path does not check
-the direction at all.
+and reads that many more bytes into &queue->pdu + queue->offset, without
+ever bounding the result against sizeof(queue->pdu).
 
-Reject a C2HData PDU whose command is not a read.  Rejecting it fails
-the command and resets the controller, as the neighbouring check in this
-function does; what goes away is the warning.
+A struct nvme_tcp_icreq_pdu is itself 128 bytes, exactly the size of the
+union. Once a header digest has been negotiated (hdgst = 4), a second
+ICReq passes the hlen == nvmet_tcp_pdu_size() check but yields
+queue->left = 128 - 8 + 4 = 124, so bytes 8..132 are written into the
+128-byte buffer -- 4 bytes past its end, over queue->hdr_digest and
+queue->data_digest. Those bytes are attacker-controlled (an ICReq
+carries no digest), and the duplicate ICReq is only rejected later,
+after the overflow. A remote unauthenticated host can thus corrupt
+kernel memory adjacent to the receive buffer.
 
-  [    6.885580] ------------[ cut here ]------------
-  [    6.886457] WARNING: lib/iov_iter.c:193 at _copy_to_iter+0x289/0x1330, CPU#0: kworker/0:1H/71
-  [    6.888137] CPU: 0 UID: 0 PID: 71 Comm: kworker/0:1H Not tainted 7.2.0-rc5-NVMETCP-gf5098b6bae76 #1 PREEMPT(lazy)
-  [    6.891165] Workqueue: nvme_tcp_wq nvme_tcp_io_work
-  [    6.891875] RIP: 0010:_copy_to_iter+0x289/0x1330
-  [    6.903739] Call Trace:
-  [    6.904085]  <TASK>
-  [    6.909254]  __skb_datagram_iter+0x433/0x820
-  [    6.911026]  skb_copy_datagram_iter+0x37/0x120
-  [    6.911622]  nvme_tcp_recv_skb+0xa07/0x4320
-  [    6.913378]  __tcp_read_sock+0x1ab/0x810
-  [    6.915788]  nvme_tcp_try_recv+0x152/0x1e0
-  [    6.918222]  nvme_tcp_io_work+0x1e4/0x6c0
-  [    6.926906]  </TASK>
-  [    6.927226] ---[ end trace 0000000000000000 ]---
-  [    6.927878] nvme nvme0: queue 1 failed to copy request 0x71 data
-  [    6.928709] nvme nvme0: receive failed:  -14
+Reject any PDU whose declared length would read past the end of
+queue->pdu before the second recv.
 
-Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
+Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/tcp.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/nvme/target/tcp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -592,6 +592,13 @@ static int nvme_tcp_handle_c2h_data(stru
- 		return -ENOENT;
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -1173,6 +1173,8 @@ recv:
+ 		}
+ 
+ 		queue->left = hdr->hlen - queue->offset + hdgst;
++		if (queue->left > sizeof(queue->pdu) - queue->offset)
++			return -EPROTO;
+ 		goto recv;
  	}
  
-+	if (rq_data_dir(rq) != READ) {
-+		dev_err(queue->ctrl->ctrl.device,
-+			"queue %d tag %#x unexpected data for a write\n",
-+			nvme_tcp_queue_id(queue), rq->tag);
-+		return -EIO;
-+	}
-+
- 	req = blk_mq_rq_to_pdu(rq);
- 	if (!blk_rq_payload_bytes(rq) || !req->curr_bio || !req->data_len) {
- 		dev_err(queue->ctrl->ctrl.device,
 
 
