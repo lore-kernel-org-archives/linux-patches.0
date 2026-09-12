@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C659340D9D;
-	Sat, 12 Sep 2026 10:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0326B288B2;
+	Sat, 12 Sep 2026 10:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208926; cv=none; b=vCBCLv++ltF/JYl1NNxYDjcRMPKxo/nkFeijnABUAbwhIwZE6upNT10At8aq5UGdx+FsEz3FZEgT9t86Eocpw0SIJJ1EUUNzomp25WEjfrr0TPgYWspX7g8sEbkA9JlEtvJ3pDLYyao+lFGRJ3VlBZw1cEQfldlpoAaRM+6200w=
+	t=1789208931; cv=none; b=Nfx8BhUk8l2AclX3Abq9FXxgFBcK74OYu5AVNwB+JjTN629x3R4BV8Jld8YmGiWwhChnYS0JU13CN9kqkdcjW0nmG9Qwl8L2Ry+LJbqNcg3wZax5dbkK3lcpL3/Lg3wilUbeSM+6ZGqEyVWvCiVJu3Q1csVYapPjVXHAH4zc0iA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208926; c=relaxed/simple;
-	bh=bzEZ53f+RnRQ4bXlDDvcEl3sliZ2vsnu4JHnjZp/+cc=;
+	s=arc-20240116; t=1789208931; c=relaxed/simple;
+	bh=tVZk4R9oHJ7Lzp4uVSwms0vT6s+KlSm/lF27A/gszXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kWNSSEh4cO5WwxIppMso1fsDYsCKYrle5Zw9MxqWHP3ZgxD3XyTADrGpEeS8VIWP2hhlX6kxMDX/roZTvr0956GJvHlp/YrfMDrBS0nQ+Fsk2/Ra58SdZK8wJeMQrIFO53kM1NIUAY+SNiVHDWIgdonsvN30LIPxnq0H4a8V4BA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUiYu140; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S5iZ48mHv0X5rYaRjq6JFDYOqAtrBRiI8r7DCgZ3L+EjjdFiQZqUxIRRMBFG6RRK+Gj09PJyZ9t7PEtingiO4Xf8Y40pcgCOdbzUDCNGsr0YjRTklBByvl/Q6w32cmJt7wveIsdXvCdWuPX1bAkwpHtAbST+CNWuSaXQXgQF868=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4V6xhu7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUiYu140"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BF11F000FF;
-	Sat, 12 Sep 2026 10:28:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4V6xhu7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C0C1F000FF;
+	Sat, 12 Sep 2026 10:28:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208925;
-	bh=vM9xrfswKCmonfmXCYI9lxKSQpP5MVyE2Y62DKL2N+g=;
+	s=korg; t=1789208929;
+	bh=LFOkS20QrVzUPPlYPSElxHMqIqKPhiM3K5hfk+fNS34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IUiYu140s2hpAlDgPbjKRU5+q5UtLEnSsT+YNdjxODvkg1YMWXxpBmzqxDhfBAjHl
-	 8dOXBigcI7dD6G97bX9srg+N5sQOlnj/u04JvU3JvDMrufn8MWCBR/bF8LFdRCBik7
-	 uClpndXpY+F84lodYDqD3ns7WMG+MorEvyE28Ovk=
+	b=S4V6xhu7Ik44v7zKU1dV1tuFB8VEmP335YocWgA/UY6vi4OCdeLiyiLhuHQpnheiO
+	 jWn+t6fLq8ktu2KH2DtfNQg9481P2BCGS2Qe3cwRQ0EU9XEi1rVrZwV4BQP3RUZ0IW
+	 ze6IIHh/oZNVHnqPhFXa/hnJKZQPaoOa87eEpUzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Wilck <mwilck@suse.com>,
-	Mykola Marzhan <mykola@meshstor.io>,
-	Yu Kuai <yukuai@fygo.io>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0717/1518] md/raid1: create serial pool adding rdev to array with serialize_policy=1
-Date: Sat, 12 Sep 2026 08:48:06 +0200
-Message-ID: <20260912065639.655303614@linuxfoundation.org>
+Subject: [PATCH 6.18 0691/1518] arm64: dts: qcom: sm8650: Fix the PCIe iommu-map entries
+Date: Sat, 12 Sep 2026 08:47:40 +0200
+Message-ID: <20260912065639.070796355@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,55 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Wilck <mwilck@suse.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 140234b2380ffb8ffb0cfc46fee0e822f43adef7 ]
+[ Upstream commit 8ccba7b44609d58db088447a771f6f30cfa8739e ]
 
-The following bug has been observed with kernel 7.1.3 after adding a new
-rdev to an existing RAID1 array with serialize_policy enabled:
+The IOMMU provider apps_smmu uses '#iommu-cells = <2>', but the PCIe
+iommu-map entries specify only one cell for the SID, omitting the SID
+mask. This went unnoticed until the OF core started warning with commit
+ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps"):
 
-  Oops: 0002 [#1]
-  CPU: 0 UID: 0 PID: 19639 Comm: ext4lazyinit Not tainted 7.1.3-1-default
-  RIP: _raw_spin_lock_irqsave+0x27/0x50
-  CR2: 0000000000004960
-  Call Trace:
-   wait_for_serialization+0xb9/0x260 [raid1]
-   raid1_make_request+0x762/0xaff [raid1]
-   md_handle_request+0x1c9/0x2e0 [md_mod]
+  iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
 
-The raid1.c code calls wait_for_serialization() if the MD_SERIALIZE_POLICY
-is set, and wait_for_serialization assumes that rdev->serial is
-initialized. Normally this will be the case for arrays that have
-the serialize_policy sysfs attribute set to 1.
+So fix the entries to match the provider's '#iommu-cells' property.
 
-But when a new rdev is added to an existing array in bind_rdev_to_array(),
-the condition at mddev_create_serial_pool() causes creation of rdev->serial
-to be skipped. Fix it.
-
-Fixes: 69b00b5bb235 ("md: introduce a new struct for IO serialization")
-Signed-off-by: Martin Wilck <mwilck@suse.com>
-Reviewed-by: Mykola Marzhan <mykola@meshstor.io>
-Link: https://patch.msgid.link/20260723112741.1206836-1-mwilck@suse.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260730-iommu-map-fix-v1-11-83405d37ba41@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 89965f96f3bba..7b7e085885183 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -236,7 +236,8 @@ void mddev_create_serial_pool(struct mddev *mddev, struct md_rdev *rdev)
- 	int ret = 0;
- 	unsigned int noio_flags;
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index 6c775ef20cb0a..349ce22c6b686 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -3626,8 +3626,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
  
--	if (rdev && !rdev_need_serial(rdev) &&
-+	if (!test_bit(MD_SERIALIZE_POLICY, &mddev->flags) &&
-+	    rdev && !rdev_need_serial(rdev) &&
- 	    !test_bit(CollisionCheck, &rdev->flags))
- 		return;
+ 			operating-points-v2 = <&pcie0_opp_table>;
  
+-			iommu-map = <0     &apps_smmu 0x1400 0x1>,
+-				    <0x100 &apps_smmu 0x1401 0x1>;
++			iommu-map = <0     &apps_smmu 0x1400 0x0 0x1>,
++				    <0x100 &apps_smmu 0x1401 0x0 0x1>;
+ 
+ 			interrupt-map = <0 0 0 1 &intc 0 0 GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH 0>,
+ 					<0 0 0 2 &intc 0 0 GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH 0>,
+@@ -3806,8 +3806,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+ 
+ 			operating-points-v2 = <&pcie1_opp_table>;
+ 
+-			iommu-map = <0     &apps_smmu 0x1480 0x1>,
+-				    <0x100 &apps_smmu 0x1481 0x1>;
++			iommu-map = <0     &apps_smmu 0x1480 0x0 0x1>,
++				    <0x100 &apps_smmu 0x1481 0x0 0x1>;
+ 
+ 			interrupt-map = <0 0 0 1 &intc 0 0 GIC_SPI 434 IRQ_TYPE_LEVEL_HIGH 0>,
+ 					<0 0 0 2 &intc 0 0 GIC_SPI 435 IRQ_TYPE_LEVEL_HIGH 0>,
 -- 
 2.53.0
 
