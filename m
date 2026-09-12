@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD9747AF6D;
-	Sat, 12 Sep 2026 16:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4CD47AF69;
+	Sat, 12 Sep 2026 16:50:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231817; cv=none; b=c1RGSzJTlvSvro+vrpKTvkuSME1QUPL+rsdgCj/wv4QgaiDv6ATvW+KswwgPahHG6z16s3LyUklE/rnP+cfnvVmoLvcb59SuxCE48XtX20TO+dVq6sc86NoEQV2VggDw9eZahgweoT8XDYJ4ATHrmEdddMVxbPmUif6y4lXQEdo=
+	t=1789231824; cv=none; b=RJbxJOmMN6TVFdqEdzbfB9dfRWVWAawbKvhvespCt95rnbAcu/4i8MRb0AwEBd8r9XtRgpfAXbs/suYfqKF3yXl0AD8RuSVohNlce1N+lvfRiE/AfvvTGh0O6M909lII+UQ926FmJ27VmUl9Y538W4iEB4bfoOd6j1Jji7rbkOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231817; c=relaxed/simple;
-	bh=58EmE5+DspNNQjdqiOdsysjjnRXsgoJrjbynXHNudiw=;
+	s=arc-20240116; t=1789231824; c=relaxed/simple;
+	bh=pyjHaebtFZZ3gqCvot4JWW/KFoq/hpr5U9YQggtQp04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IujNxeF7nXm251S+z53b20WL6xoby/JHzsQif3Jz7pF3gpLDCvq3nTWcI772DBEQXid3QOQayT77royZpCBvXOm81oQ91o2N5y3phZQyd4g13yH6nqZX8uj2TqYAib7fxON5KaInDZcy6A9md4eoNq8KeWNBsfaxr94ELmj4s04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQnKAMfZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZcSs7ish9KeZI5FOQehtqnBspe5qzr0eE7xlwA8cZt38fZJPSKXkxhfsqG5WKDbb5expuK1e/7dP6fq5UzHBviKm7hZ87CZOCkox2Zw1gkuNYuPHSS5cUU4CRi5iX9KbLScMwC9i+Io5fTsR3jDtJVjMcfsgWqAWHNCJOW3Pmp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G0ZWwCwp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQnKAMfZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BEB81F000FF;
-	Sat, 12 Sep 2026 16:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0ZWwCwp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8304E1F000FF;
+	Sat, 12 Sep 2026 16:50:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231815;
-	bh=ULzpPptJTFGZFMwR7bzKqEAiFMdCKCilrabLiGlMrqk=;
+	s=korg; t=1789231820;
+	bh=RNzpC1FKEYrHsW9n/wzeGrpIwh2dbfGRnYcug+ias8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lQnKAMfZBsY5WZuG2jNPiZfNSRP9IRHWV9w6IvvXKHDiLWaWDS+YXFe1a3Bw4iRvT
-	 ANqu5pEeFhGu6t/99jtF/YykmWM+NgOOI5JN/varCw9gybvUbI+KvR6eylmtPRbCt/
-	 pDWZmV/sXX9IVoX1bBaz+EPXrS6k9PONPAVqRxf8=
+	b=G0ZWwCwpN07kPx83c+GeoXj/z4iQm+dB4Rkasz8EiittR5ai9nUJSyEKJfyzHcFc2
+	 bSmk6jApndvWec5NnKGjCXimKEXNmJCKfOA9Bio+NTvJmlVGsMLfLlVn0/fDN2TQ2w
+	 KI1pjh4SCJin4yJMx3fFdCL+kT8fuQZ+ubtDhZR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Brian Masney <bmasney@redhat.com>,
-	Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>,
+	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1076/1191] clk: ti: Make sure clk_init_data is fully initialized
-Date: Sat, 12 Sep 2026 09:03:24 +0200
-Message-ID: <20260912065612.337908174@linuxfoundation.org>
+Subject: [PATCH 6.1 1077/1191] clk: visconti: Make sure clk_init_data is fully initialized
+Date: Sat, 12 Sep 2026 09:03:25 +0200
+Message-ID: <20260912065612.360401716@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -55,7 +55,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 3ae1674975d48fb6d343d03ff7961abd6904af1a ]
+[ Upstream commit 39c0e6c844a14945040cca4ccf6997792ab764c4 ]
 
 The clk_init_data structure contains several mutually-exclusive members
 for different methods to specify the possible parents of a clock,
@@ -64,77 +64,39 @@ not initializing all members may cause subtle issues, which are only
 exposed when CONFIG_INIT_STACK_ALL_PATTERN or CONFIG_INIT_STACK_NONE is
 enabled.
 
-_register_mux() fills in init.parent_data, and assumes that
-init.parent_names is NULL.  However, the latter is uninitialized, and
+visconti_clk_register_gate() fills in init.parent_data, and assumes that
+init.parent_names is NULL.  However, the latter in uninitialized, and
 thus may cause a crash.
 
 Make sure all members are fully initialized, to fix such bugs, and to
 avoid future breakage when converting drivers to a different method for
 specifying the parents.
 
-Fixes: 667f420c09f1417c ("clk: ti: mux: resolve parent clocks by DT index, not by name")
-Closes: https://lore.kernel.org/CAMuHMdU3yVqoyHC4eNF2NuYo8wy+6ODLoYat4R71X99Mxc_=kw@mail.gmail.com
+Fixes: b4cbe606dc3674b2 ("clk: visconti: Add support common clock driver and reset driver")
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
+Reviewed-by: Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/ti/adpll.c   | 4 ++--
- drivers/clk/ti/divider.c | 2 +-
- drivers/clk/ti/mux.c     | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/clk/visconti/clkc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/ti/adpll.c b/drivers/clk/ti/adpll.c
-index f5e7e20492418..34d72f81a4a82 100644
---- a/drivers/clk/ti/adpll.c
-+++ b/drivers/clk/ti/adpll.c
-@@ -481,7 +481,7 @@ static const struct clk_ops ti_adpll_ops = {
+diff --git a/drivers/clk/visconti/clkc.c b/drivers/clk/visconti/clkc.c
+index d0b193b5d0b35..4018d1298880d 100644
+--- a/drivers/clk/visconti/clkc.c
++++ b/drivers/clk/visconti/clkc.c
+@@ -81,9 +81,9 @@ static struct clk_hw *visconti_clk_register_gate(struct device *dev,
+ 						 u8	rs_idx,
+ 						 spinlock_t *lock)
+ {
++	struct clk_init_data init = {};
+ 	struct visconti_clk_gate *gate;
+ 	struct clk_parent_data *pdata;
+-	struct clk_init_data init;
+ 	struct clk_hw *hw;
+ 	int ret;
  
- static int ti_adpll_init_dco(struct ti_adpll_data *d)
- {
--	struct clk_init_data init;
-+	struct clk_init_data init = {};
- 	struct clk *clock;
- 	const char *postfix;
- 	int width, err;
-@@ -574,7 +574,7 @@ static int ti_adpll_init_clkout(struct ti_adpll_data *d,
- 				struct clk *clk1)
- {
- 	struct ti_adpll_clkout_data *co;
--	struct clk_init_data init;
-+	struct clk_init_data init = {};
- 	struct clk_ops *ops;
- 	const char *parent_names[2];
- 	const char *child_name;
-diff --git a/drivers/clk/ti/divider.c b/drivers/clk/ti/divider.c
-index 5d5bb123ba949..262764df54667 100644
---- a/drivers/clk/ti/divider.c
-+++ b/drivers/clk/ti/divider.c
-@@ -309,7 +309,7 @@ static struct clk *_register_divider(struct device_node *node,
- 				     u32 flags,
- 				     struct clk_omap_divider *div)
- {
--	struct clk_init_data init;
-+	struct clk_init_data init = {};
- 	const char *parent_name;
- 	const char *name;
- 
-diff --git a/drivers/clk/ti/mux.c b/drivers/clk/ti/mux.c
-index 3733480fccedb..0c81ef9e56a62 100644
---- a/drivers/clk/ti/mux.c
-+++ b/drivers/clk/ti/mux.c
-@@ -124,9 +124,9 @@ static struct clk *_register_mux(struct device_node *node, const char *name,
- 				 struct clk_omap_reg *reg, u8 shift, u32 mask,
- 				 s8 latch, u8 clk_mux_flags, u32 *table)
- {
-+	struct clk_init_data init = {};
- 	struct clk_omap_mux *mux;
- 	struct clk *clk;
--	struct clk_init_data init;
- 
- 	/* allocate the mux */
- 	mux = kzalloc(sizeof(*mux), GFP_KERNEL);
 -- 
 2.53.0
 
