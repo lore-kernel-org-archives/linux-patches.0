@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784FA23A562;
-	Sat, 12 Sep 2026 16:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D30386562;
+	Sat, 12 Sep 2026 16:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232369; cv=none; b=H6hDrhvDbP1F8Jn35qLMZZ/WCPk8rbtMbZa3moT0a21YznEPirIB1MDcROOHtxVKAdJ/M6PvdGBRYZI4YmrbbOCHUAZ0iGfFgLgFs/AddbF0ANBXGaM7/0TeDhya3dCWWcTeCzCxn86x4xopCttnjiPI6cgF/AoM+w420lwbNwA=
+	t=1789232375; cv=none; b=WbQ46ZuMcPv8WRGeuM5fXp9qHj0ucTa3ZjN9TE7dt1evVtEaO/4HV4ezHqAWbEjY4Ub5pWWskposKQjylP5mNMzRtdCYjreAESxjvEvO50QpkFSlRXUKfS5BzYSMhx3dhT+2s8iqvFP+jDvHBRnr+AwMLS5yhAvOqVelSQLaaF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232369; c=relaxed/simple;
-	bh=Z5nVqP6RKU8hqKwtx51JHToMxT0gGWg/a+G/NyjLFVg=;
+	s=arc-20240116; t=1789232375; c=relaxed/simple;
+	bh=gaNJA628uAIJGFBCC3RUQ972qpYOwKg0ikxC0moiDX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W+UqiGygYudZWxHBmIfTiTbRCvdo+b3rA8XSm+DKcW2Sls30hSrAB5BP5mmZB+sUK08Dx5+jEEUojhfaUwiBY3w84fVF54aopymC28g7xYYclgXqPZ5w+t86XOz7V9NPgOvhHNlvNL2+16obR20PU0CXWqV7NA2IFt61Flx5Ub0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pa0dsFUg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OsuO+Kddcaf7m3Dl0DQxnl254WitMZcQPgimikphGePydmhB63esKrFHtnS/BB168E9Kcw7h0oRen1NJbRY60+rQPey1250N3EVUFaibp6bNoHh9ZO0/gwo8ML0ghCxMme/t588oRTvL+fXnrStMwKHk8KqRcMUXCktjCoWDhf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chk6Imbv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pa0dsFUg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746291F000FF;
-	Sat, 12 Sep 2026 16:59:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chk6Imbv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FEF41F000FF;
+	Sat, 12 Sep 2026 16:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232368;
-	bh=chFOKlY2ypuGlaSVV04zdyrt0Ox4UTLS9q7TWxtyRiM=;
+	s=korg; t=1789232373;
+	bh=5qeVTaXnPa7yfbU4/D2yG54z+qn3K0MDmquZoDp0PWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pa0dsFUgSBn9jf3M9JDo5goHNhKpEsy/OjJL2mHqZvaMB5QJi77z6q6aNxEmypRG4
-	 HebkDkzrGc/jCzufpy7v3LJJnIpi5CUujvlAR78eY4ijTlE/3se+gohhAYVQH10zS0
-	 8iFTaqzdDJtk7ah2ahTM3iyVd0f6JolQre3V92tU=
+	b=chk6ImbvA7irLoJz0Fjv5NfG2fapyQre13EfLwmHfLDpYhND/TRGaldteJ+dSKvD9
+	 02tS+73BOYuzrp2z05nolboDCu7ANAmM/TKu9uaZUTV4OIbH2SFnIAKGWoC5dpcijU
+	 ltBeI/NLG12K5UZMgoRhxxjs/aZuybDbusoXMNDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Kacur <jkacur@redhat.com>,
-	Luis Goncalves <lgoncalv@redhat.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Quentin Monnet <qmo@kernel.org>,
-	Tomas Glozar <tglozar@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 1187/1191] tools/build: Use SYSTEM_BPFTOOL for system bpftool
-Date: Sat, 12 Sep 2026 09:05:15 +0200
-Message-ID: <20260912065614.794558488@linuxfoundation.org>
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1152/1191] clk: qcom: gcc-sm8550: Use floor ops for SDCC RCGs
+Date: Sat, 12 Sep 2026 09:04:40 +0200
+Message-ID: <20260912065614.020870494@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -54,65 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomas Glozar <tglozar@redhat.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-commit 814d051ebed40b27285ab3c5e2454bd01a0f9631 upstream.
+[ Upstream commit 1c06e3956054fb5a0930f07b02726b1774b6c700 ]
 
-The feature test for system bpftool uses BPFTOOL as the variable to set
-its path, defaulting to just "bpftool" if not set by the user.
+In line with commit a27ac3806b0a ("clk: qcom: gcc-sm8450: Use floor ops
+for SDCC RCGs") done to fix issues with overclocked SD cards on SM8450
+powered boards set floor clock operations for SDCC RCGs on SM8550.
 
-This conflicts with selftests and a few other utilities, which expect
-BPFTOOL to be set to the in-tree bpftool path by default. For example,
-bpftool selftests fail to build:
+This change fixes initialization of some SD cards, where the problem
+is manifested by the SDHC driver:
 
-$ make -C tools/testing/selftests/bpf/
-make: Entering directory '/home/tglozar/dev/linux/tools/testing/selftests/bpf'
+    mmc0: Card appears overclocked; req 50000000 Hz, actual 100000000 Hz
+    mmc0: error -110 whilst initialising SD card
 
-make: *** No rule to make target 'bpftool', needed by '/home/tglozar/dev/linux/tools/testing/selftests/bpf/tools/include/vmlinux.h'.  Stop.
-make: Leaving directory '/home/tglozar/dev/linux/tools/testing/selftests/bpf'
-
-Fix the problem by renaming the variable used for system bpftool from
-BPFTOOL to SYSTEM_BPFTOOL, so that the new usage does not conflict with
-the existing one of BPFTOOL.
-
-Cc: John Kacur <jkacur@redhat.com>
-Cc: Luis Goncalves <lgoncalv@redhat.com>
-Link: https://lore.kernel.org/20250326004018.248357-1-tglozar@redhat.com
-Fixes: 8a635c3856dd ("tools/build: Add bpftool-skeletons feature test")
-Closes: https://lore.kernel.org/linux-kernel/5df6968a-2e5f-468e-b457-fc201535dd4c@linux.ibm.com/
-Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Suggested-by: Quentin Monnet <qmo@kernel.org>
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Signed-off-by: Tomas Glozar <tglozar@redhat.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 955f2ea3b9e9 ("clk: qcom: Add GCC driver for SM8550")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251124212012.3660189-2-vladimir.zapolskiy@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/build/feature/Makefile   |    2 +-
- tools/scripts/Makefile.include |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/gcc-sm8550.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/tools/build/feature/Makefile
-+++ b/tools/build/feature/Makefile
-@@ -381,7 +381,7 @@ $(OUTPUT)test-libpfm4.bin:
- 	$(BUILD) -lpfm
+diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
+index 0f8fa570dc854..c27782c2f80f6 100644
+--- a/drivers/clk/qcom/gcc-sm8550.c
++++ b/drivers/clk/qcom/gcc-sm8550.c
+@@ -1024,7 +1024,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
+ 		.parent_data = gcc_parent_data_9,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_9),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_floor_ops,
+ 	},
+ };
  
- $(OUTPUT)test-bpftool-skeletons.bin:
--	$(BPFTOOL) version | grep '^features:.*skeletons' \
-+	$(SYSTEM_BPFTOOL) version | grep '^features:.*skeletons' \
- 		> $(@:.bin=.make.output) 2>&1
- ###############################
+@@ -1047,7 +1047,7 @@ static struct clk_rcg2 gcc_sdcc4_apps_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_floor_ops,
+ 	},
+ };
  
---- a/tools/scripts/Makefile.include
-+++ b/tools/scripts/Makefile.include
-@@ -95,7 +95,7 @@ endif
- CC_NO_CLANG := $(shell $(CC) -dM -E -x c /dev/null | grep -Fq "__clang__"; echo $$?)
- 
- # Some tools require bpftool
--BPFTOOL		?= bpftool
-+SYSTEM_BPFTOOL	?= bpftool
- 
- ifeq ($(CC_NO_CLANG), 1)
- EXTRA_WARNINGS += -Wstrict-aliasing=3
+-- 
+2.53.0
+
 
 
