@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853B3418A39;
-	Sat, 12 Sep 2026 08:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFDF369224;
+	Sat, 12 Sep 2026 08:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203178; cv=none; b=fl8847Vl/MdPorSXaFqv5wu10OpGT9pe6bCzTi44Uo0qUhegC5GWfDy0PX4o+vta4B2GEmArFjKGdIhK4Q3IjYjrF3+5hTIg/h8BOkcV2pCKFhwkyDaBuxykb8JNLZLfEHT3Fx+E1xlX0JAZfOL3z1/0im5RYNjHaf5XzjI8JnA=
+	t=1789203183; cv=none; b=elcdjCCg+dC0Q0lRx0Z83igs/PNebzhnx7Y6It4V1KPwy9Yyo5BqnHTdPiz1ukOpXyOTcClZSfcfqlWhLHxmnFsn1bqiD9e8HQbHxmjNgepnT72xzOQVOFjGYmu+iw21a8jvu3MMryv5LCEHjDZMQbu2dA0btEe3bVOJMZAeFYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203178; c=relaxed/simple;
-	bh=Imz8V5rbekFKJzya1N9r4btjerULMwpNcEXiIwUAx/o=;
+	s=arc-20240116; t=1789203183; c=relaxed/simple;
+	bh=+YjomD+PVnDcO4D7mWXJdVM+M9OTzChpK9kRQdUzmLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P0PFMi6h7x/N+1zkfR5ld0Me4sbXnJLLq8qirxIiortdcz4J01+8oHxQUcY6nagx3FDBPAgFGju9v9+zdcHuT/vrqKcrgE/EFyFdiUwC+w6FC4G/QSYV1lnNc1wfx6lqoOw86v7zPNkE2gU/V/W0Vowrbycuys+sbKvAzMI7UFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZy75pCD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iL1USBFAmYFIkCho9lVZ+bZKdq93m0u29g5DrjUL0ljJ9g/VpJWVPBlax83mFQZnXlMxpBR6Al6ahsOuGfYAenykC3NWoEPBKaeRLhut/UZArLNNwvI9GFWu3fnawXQa9jQXT4X0VtkP5NYHQcxtuqg0amx6zwUO9J379F1weWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEEFSdAR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZy75pCD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 091D11F000FF;
-	Sat, 12 Sep 2026 08:52:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEEFSdAR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE141F000FF;
+	Sat, 12 Sep 2026 08:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203177;
-	bh=tjPcDZejBRZCijpQyHWJxX1pUE5anjngx1J2SX2RTwM=;
+	s=korg; t=1789203182;
+	bh=o7J7A/qvlMLgMoVtC2inCjbETZtNP8EHlkNY6rpXyh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AZy75pCDzMp4hwKMcnfK7jJsShOnQg5D6VIWHHeqxRGSa1ZSxG57ljFJuPV0V7gfI
-	 8vhj3fJ43aBZ12UQtl4xewnJeLw3u3AtEj1vz9CFOldYBjIMkmvbpvJl0tWiPhY8Zc
-	 Vu1uV3pBdKblyDUe2B6TpSnBA7iMMmDeD2cYVib0=
+	b=JEEFSdAR5gnlsu+8+VcA6SYuTOlZvNIgA+FVltOilrpWmjH5Xu6mJvL18uCdR+Ug4
+	 IdTY8N0RBlxHqGRXmzhd8DJDAKWL442Sht1BzYq4TnyffyXoykEljD3g4AGlItXkiy
+	 alXU0nUlNYJo60/q8mO0H/8Wo4JcOFuo9XmK96nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhenghang Xiao <kipreyyy@gmail.com>,
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Simon Horman <horms@kernel.org>,
 	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1354/1815] nfc: nci: fix double completion race in nci_data_exchange_complete
-Date: Sat, 12 Sep 2026 08:51:44 +0200
-Message-ID: <20260912065720.811476612@linuxfoundation.org>
+Subject: [PATCH 7.2 1355/1815] nfc: llcp: bound SNL TLV parsing to the skb and add length checks
+Date: Sat, 12 Sep 2026 08:51:45 +0200
+Message-ID: <20260912065720.837021934@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,54 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenghang Xiao <kipreyyy@gmail.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-[ Upstream commit 8265a626cc14a48e46e6dc8c47667e72b4232ac2 ]
+[ Upstream commit f4c7f37f0ab990952539dc68d931d65c3657600a ]
 
-nci_close_device() and nci_rx_work can both call
-nci_data_exchange_complete() concurrently.  After commit 4527025d440ce8
-("nfc: nci: fix circular locking dependency in nci_close_device") moved
-flush_workqueue(ndev->rx_wq) after mutex_unlock(&ndev->req_lock),
-rx_work is no longer serialized with the explicit completion call in the
-close path.  Both callers read the non-NULL callback pointer and invoke
-rawsock_data_exchange_complete(), which calls sock_put() -- but only one
-sock_hold() was taken, so the second sock_put() underflows the refcount
-and frees the socket while it is still in use.
+nfc_llcp_recv_snl() walked the SNL TLV list using a u16 offset/length
+pair derived from skb->len, without bounding reads to the actual skb
+data. Three problems followed:
 
-Replace the bare clear_bit(NCI_DATA_EXCHANGE) with
-test_and_clear_bit() so that only the first caller proceeds to invoke
-the callback.
+  - For a short frame (skb->len < LLCP_HEADER_SIZE), tlv_len underflowed.
+  - The per-TLV header (type, length) was read without checking that two
+    bytes remained.
+  - A declared TLV length could run past the end of the buffer, and an
+    SDREQ with length == 0 made "service_name_len = length - 1" underflow
+    (size_t), driving an out-of-bounds read in the following strncmp() /
+    nfc_llcp_sock_from_sn(). The SDRES case likewise read tlv[2]/tlv[3]
+    without a length check.
 
-Fixes: 4527025d440c ("nfc: nci: fix circular locking dependency in nci_close_device")
-Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
-Link: https://patch.msgid.link/20260526103121.47957-1-kipreyyy@gmail.com
+A nearby NFC device can reach this without authentication; LLCP link
+activation happens automatically after NFC-DEP.
+
+Walk the TLV list by pointer, bounded by skb_tail_pointer() over the
+linear skb data, and validate each TLV declared length before use. Add
+explicit length checks for SDREQ (>= 1) and SDRES (exactly 2).
+
+Found by 0sec automated security-research tooling (https://0sec.ai).
+
+Fixes: 19cfe5843e86 ("NFC: Initial SNL support")
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260609202543.42282-1-doruk@0sec.ai
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/data.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/nfc/llcp_core.c | 29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
-diff --git a/net/nfc/nci/data.c b/net/nfc/nci/data.c
-index 5f98c73db5afd..4253edea5c8db 100644
---- a/net/nfc/nci/data.c
-+++ b/net/nfc/nci/data.c
-@@ -46,11 +46,11 @@ void nci_data_exchange_complete(struct nci_dev *ndev, struct sk_buff *skb,
- 	timer_delete_sync(&ndev->data_timer);
- 	clear_bit(NCI_DATA_EXCHANGE_TO, &ndev->flags);
+diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
+index 6ae0d64c17b93..cac1b5487064d 100644
+--- a/net/nfc/llcp_core.c
++++ b/net/nfc/llcp_core.c
+@@ -1288,10 +1288,9 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
+ {
+ 	struct nfc_llcp_sock *llcp_sock;
+ 	u8 dsap, ssap, type, length, tid, sap;
+-	const u8 *tlv;
+-	u16 tlv_len, offset;
++	const u8 *tlv, *tlv_end;
+ 	const char *service_name;
+-	size_t service_name_len;
++	int service_name_len;
+ 	struct nfc_llcp_sdp_tlv *sdp;
+ 	HLIST_HEAD(llc_sdres_list);
+ 	size_t sdres_tlvs_len;
+@@ -1307,22 +1306,34 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
+ 		return;
+ 	}
  
--	/* Mark the exchange as done before calling the callback.
--	 * The callback (e.g. rawsock_data_exchange_complete) may
--	 * want to immediately queue another data exchange.
--	 */
--	clear_bit(NCI_DATA_EXCHANGE, &ndev->flags);
-+	/* Claim completion atomically -- both close and rx_work may race here */
-+	if (!test_and_clear_bit(NCI_DATA_EXCHANGE, &ndev->flags)) {
-+		kfree_skb(skb);
-+		return;
-+	}
++	/*
++	 * Walk the SNL TLV list in the linear part of the skb only,
++	 * bounded by skb_tail_pointer(). Each TLV needs a two-byte
++	 * header (type, length) and its declared length must fit before
++	 * the end; this also keeps the walk safe for very short frames.
++	 */
+ 	tlv = &skb->data[LLCP_HEADER_SIZE];
+-	tlv_len = skb->len - LLCP_HEADER_SIZE;
+-	offset = 0;
++	tlv_end = skb_tail_pointer(skb);
+ 	sdres_tlvs_len = 0;
  
- 	if (cb) {
- 		/* forward skb to nfc core */
+-	while (offset < tlv_len) {
++	while (tlv + 2 < tlv_end) {
+ 		type = tlv[0];
+ 		length = tlv[1];
+ 
++		if (tlv + 2 + length > tlv_end)
++			break;
++
+ 		switch (type) {
+ 		case LLCP_TLV_SDREQ:
++			if (length < 1)
++				break;
++
+ 			tid = tlv[2];
+ 			service_name = (char *) &tlv[3];
+ 			service_name_len = length - 1;
+ 
+-			pr_debug("Looking for %.16s\n", service_name);
++			pr_debug("Looking for %.*s\n", service_name_len,
++				 service_name);
+ 
+ 			if (service_name_len == strlen("urn:nfc:sn:sdp") &&
+ 			    !strncmp(service_name, "urn:nfc:sn:sdp",
+@@ -1382,6 +1393,9 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
+ 			break;
+ 
+ 		case LLCP_TLV_SDRES:
++			if (length != 2)
++				break;
++
+ 			mutex_lock(&local->sdreq_lock);
+ 
+ 			pr_debug("LLCP_TLV_SDRES: searching tid %d\n", tlv[2]);
+@@ -1410,7 +1424,6 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
+ 			break;
+ 		}
+ 
+-		offset += length + 2;
+ 		tlv += length + 2;
+ 	}
+ 
 -- 
 2.53.0
 
