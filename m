@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14688274B46;
-	Sat, 12 Sep 2026 18:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9E8274B46;
+	Sat, 12 Sep 2026 18:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237465; cv=none; b=ccp0tH0htjUdyMdq4PtcMFq6EKGrPqKa1mVoS4Wz5NJliLO20n6KZRHbZGE0cwZE1++vgAwjsx+Nn1TPzBp5/vfxhB5FWX+7xepGHMsXJBdTkGOW79KYXNl2kOTGbcTxIY3hZzSLZmtwpJkOWW5Dg3uoFDDFT8tldI/F9SEwS4w=
+	t=1789237471; cv=none; b=aMCfg+lIHK2AScT3+txUvOI0sXV3FsNNHh7F97Mjk+9H4k+FjY5MvjUFIjdI1ZOi93UbyOHUz/jiQ6yl/6fexWK0FbUPfTb5a/zl559+LSrNyAzOGsxvaQJzqY6pXM+pdE5evSFYOdEl3A7Eul316gq/8rWCFRSurVlvssCrjm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237465; c=relaxed/simple;
-	bh=x/skUAwloU/jH+F/QRPXnLMspGuRwFHRVY9cdXVTJ3Q=;
+	s=arc-20240116; t=1789237471; c=relaxed/simple;
+	bh=1dGkK8FtKvndAzgWGLYI5WK1gk8hnkJzr8l1smUnGvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dBuEggne93LEeNGZ/9pnu31w/7roRSLl67xbULhAwhlq+XF28JZfiB8aHPGnyq8OZD18hwZVh43ZWPSSsWWbhMYUsGXTcTXtiG2p/9Cf7q7Veb1fi0YeFHkS4K/d1xlJVLgGfiE1paeOsIkFt0QPhtPbRrGOwtO76UJtrWpWdpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZrowOnG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TXXnwwQ0x6df2YRnKWB+UV9HhE1wKbzAOwY/m6SphHUi4xaAtjD0NfD+oDQaRAbtGnFLC7UzS7IwVF9hqWv8BqmT5C/RjZno1lNmmV2NZ7QhUz/X/Msk9VzreRJ5PQrQTHseuPXuflvTi1dXgI13qwgYJz4BJCd+9uZpG2i4CYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5On9uEr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZrowOnG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682311F000FF;
-	Sat, 12 Sep 2026 18:24:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5On9uEr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57CB91F000FF;
+	Sat, 12 Sep 2026 18:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237463;
-	bh=fqgPLrjanJmaqBnYzFFd8g9LE7FI0eBkzxE1FA3ed6k=;
+	s=korg; t=1789237469;
+	bh=h5FM6UjEc14zz6LDY+pLOn9PhlCtz45SfNh4OspmNq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jZrowOnGCnZJ8duVCGpx1ECRvl5lQCgd9/Gza2WOHTRnBGCW2d3C9bcsBsiLytvjf
-	 IyCCsYXnBNhXuzy66W/7ATrTGqgPVN4Cqwp8yl7BactAMVUdrFgzPvFLueDRQfhboD
-	 ce3Wo9TybAxUXTyTZDV915RJcbvUzoIRi222Gib4=
+	b=J5On9uEr4T1hKdGCh2LHg6IKxKw0Gyv5a5t6KMYZwJGwDQnQLwH/OtcJHuz/Fk5OO
+	 cS5LoM6oStPp95cp0NuYqlDTz16Vs4Qd8HSLIVpR+kU9XJ+X1oUEMm2vBBXG5IV4tv
+	 ZKIvh7Ps4mvT05bEWWgr3rsz8emYviV+et6k0HKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 222/935] entry: Fix seccomp bypass after ptrace with TSYNC
-Date: Sat, 12 Sep 2026 08:54:12 +0200
-Message-ID: <20260912065531.914186842@linuxfoundation.org>
+	Bradley Morgan <include@grrlz.net>,
+	Oleg Deomi <oleg.deomi@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Balbir Singh <bsingharora@gmail.com>
+Subject: [PATCH 5.15 213/935] taskstats: fix cpumask parsing cutting off the last character
+Date: Sat, 12 Sep 2026 08:54:03 +0200
+Message-ID: <20260912065531.710610777@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,57 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Bradley Morgan <include@grrlz.net>
 
-commit 4a3591287fb7f808e209b4974ed337f609a2006b upstream.
+commit 1f58a5335cdd14b3fb5f2a5d3763dee1f5cba1d3 upstream.
 
-Sashiko review pointed out the following issue.
+parse() hands nla_strscpy() len as dstsize, and nla_strscpy() copies at
+most dstsize - 1 bytes.  When the attr payload comes in without a trailing
+NUL, srclen == len >= dstsize and the last character of the cpumask string
+gets cut off.  Register "0-15" and you are silently listening on "0-1",
+exit data for the rest never shows up.
 
-If a thread is stopped in syscall_trace_enter() for ptrace, another
-thread can install a seccomp filter with SECCOMP_FILTER_FLAG_TSYNC
-(e.g., via seccomp_attach_filter()). This will successfully set
-SYSCALL_WORK_SECCOMP on the stopped thread, but syscall_trace_enter()
-evaluates a cached 'work' variable sampled on entry. Consequently,
-the subsequent check for SYSCALL_WORK_SECCOMP misses the newly
-assigned flag, and the filter is silently bypassed.
+The bug only bites when the sender doesn't NUL terminate the payload;
+senders that include the NUL were always fine (srclen gets decremented for
+the trailing NUL, so srclen < dstsize).  Thats probably why this survived
+20 years.  And the policy is NLA_STRING, not NLA_NUL_STRING, so a payload
+without the trailing NUL is legit input here.
 
-This race condition could allow an unprivileged process to execute
-a prohibited system call (e.g., execve) that the newly installed filter
-was intended to block, especially since the tracer might have modified
-the system call number during the ptrace stop.
+Skip the kmalloc/nla_strscpy dance entirely and use nla_strdup(), which
+already allocates srclen + 1 and terminates.  The nla_len() bounds checks
+stay as they were.
 
-Fix this by re-reading the syscall_work flags after ptrace handling,
-so that any new SYSCALL_WORK_SECCOMP flag set by another thread via
-TSYNC during the ptrace stop is observed before the subsequent
-seccomp check.
-
-Fixes: 142781e108b1 ("entry: Provide generic syscall entry functionality")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20260629132914.1135C1F000E9@smtp.kernel.org/
-Link: https://patch.msgid.link/20260713025712.416366-1-ruanjinjie@huawei.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/EC49FE41-7F5F-41E0-A07A-ABEB8ECA514D@grrlz.net
+Fixes: f9fd8914c1ac ("[PATCH] per-task delay accounting taskstats interface: control exit data through cpumasks")
+Signed-off-by: Bradley Morgan <include@grrlz.net>
+Reported-by: Oleg Deomi <oleg.deomi@gmail.com>
+Closes: https://lore.kernel.org/CAByWkfZ6b1=3H9pwkz-dDQOs9cZaF-HYQ6b9Yb0=Hq2r1Vv_Pw@mail.gmail.com
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Balbir Singh <bsingharora@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/entry/common.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/taskstats.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/kernel/entry/common.c b/kernel/entry/common.c
-index d11d4047a0ca8..67ee2f276e7ea 100644
---- a/kernel/entry/common.c
-+++ b/kernel/entry/common.c
-@@ -61,6 +61,9 @@ static long syscall_trace_enter(struct pt_regs *regs, long syscall,
- 		ret = arch_syscall_enter_tracehook(regs);
- 		if (ret || (work & SYSCALL_WORK_SYSCALL_EMU))
- 			return -1L;
-+
-+		/* ptrace might have changed work flags */
-+		work = READ_ONCE(current_thread_info()->syscall_work);
- 	}
- 
- 	/* Do seccomp after ptrace, to catch any tracer changes. */
--- 
-2.53.0
-
+--- a/kernel/taskstats.c
++++ b/kernel/taskstats.c
+@@ -346,10 +346,9 @@ static int parse(struct nlattr *na, stru
+ 		return -E2BIG;
+ 	if (len < 1)
+ 		return -EINVAL;
+-	data = kmalloc(len, GFP_KERNEL);
++	data = nla_strdup(na, GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
+-	nla_strscpy(data, na, len);
+ 	ret = cpulist_parse(data, mask);
+ 	kfree(data);
+ 	return ret;
 
 
