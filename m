@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C142F356744;
-	Sat, 12 Sep 2026 11:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DE0356744;
+	Sat, 12 Sep 2026 11:07:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211225; cv=none; b=JS73Xqetz5+5iovQoRp9TKWxzrTpgiVpD1FgeL8ZBWCLXtSj6xGmBxdLmBoBjQABssOaLFuQSlSNWq1uj4wGsH/a4JEvXwB9AbUWZ+iReaHj0s8+542jKLAso/D6c+zTFugc/x9GwCpZZGrTSc/RRkySqbByuu6gp2iYvK9tYoo=
+	t=1789211230; cv=none; b=POwO4fTuxP4aa60B+AEkscoMT0+0LaTUcZ1nNDeP4QJx4qmR6v+mzvTuApQGttpUx2ZLgOFyhC4Lb0HxswjL9bYpWm6H8k1RjsjYmjCzAHusxWKARXRcX596JWwzzjIgmmdD45qQxUJsdMbA2tcMYe39Ch6kWjj+npxtZYjIDSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211225; c=relaxed/simple;
-	bh=k+Ur3jAbV7zYAqNJNBGts61jIRhrzG/6BaJY4185Aok=;
+	s=arc-20240116; t=1789211230; c=relaxed/simple;
+	bh=SpcAfrgVcMIwFtWsMfl0SBuTiRgO8yj+8yjJtv7ohaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZupEslsnyqjCheXcjGFpZoiNV+WfcrkvbaXc1dGskhVvJq5e9qlQ8FY2Gt6KLvUjgE2VZf7OKvOHUCY4z4gkrRB0KQgZ1oE8JM2JNCCtxxzfrNg6QIbVRxo9QB/5+ZRkvUJUMSkmAFXCrwUNarhFw8BE+9le7jMZTeIxiDDEpaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NghiA4Lf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YK/9mzxmatv8REHJH23NIaIUaqjbQV4pPPAE+sIPGnia7hl1Xh+zPS+nF+lnIoBRsdIvKkQfQoUNmEEmro5qoDlSHxE4lbHm35kWPK1Id/vR7ZSMhxKJP6nrZdxHCZnbHDgV1xSyIqo1Q3ZykOnB6Q3MFaMRdVaOuzuERWuQsII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DoBK5vcd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NghiA4Lf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A3B1F000FF;
-	Sat, 12 Sep 2026 11:07:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DoBK5vcd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785B11F000FF;
+	Sat, 12 Sep 2026 11:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211224;
-	bh=xqqKtyqN2CDv4aQOpFwKa7ilhj/QjChtlzi9/50ajvE=;
+	s=korg; t=1789211229;
+	bh=YxUg5oHE5zs11cHlrBgYN3vVKCTdfKBGW5kTJgdwdCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NghiA4LfnmgYKb5pff+jnmv7tkSvdivCHd33ptbCkz2ROPBTBLjS/4G/ukUTC829p
-	 kkurvPy3d6t64WV/44uJQKpsVTQAwwDFVelWsPY9/LOQ6F7hOVZ40I40wcDY92mujH
-	 hqgLkwZYJt6QwUbNaNj92lr5lFNOzl34ieojX1zg=
+	b=DoBK5vcdAotahBi4QyTUYyewV+knuQHyD29rgwBCfhE7ka/gkgRFWVTJscK2JglAf
+	 8fIRKujvIx1g8ulr5MQlneG5ahLJem1L7fGgFzSrqacN8Qjfue0pxFGWzJzb5R2YUA
+	 7lrpQsGfmR3w3uq1CuHGohAUFbDA1P2kIQxryHFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1186/1518] fs/ntfs3: fix integer overflow in MFT cluster validation
-Date: Sat, 12 Sep 2026 08:55:55 +0200
-Message-ID: <20260912065650.305251370@linuxfoundation.org>
+Subject: [PATCH 6.18 1151/1518] firewire: core: add KUnit tests for failure of tree building
+Date: Sat, 12 Sep 2026 08:55:20 +0200
+Message-ID: <20260912065649.494152940@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,92 +50,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit c510c63873103a5da6a498fe537bdb5d6f8d03a2 ]
+[ Upstream commit f744022705b7eb479a1931ddd95aae4e9a4be221 ]
 
-In ntfs_init_from_boot(), the boot sector's MFT cluster numbers are
-validated against the volume size with:
+Abdun Nihaal has reported a memory leak when tree building fails in the
+middle of self ID sequence enumeration. This is caused by an invalid
+self ID sequence and is not a common occurrence.
 
-	if (mlcn  * sct_per_clst >= sectors ||
-	    mlcn2 * sct_per_clst >= sectors)
-		goto out;
+This commit is intended to assist in fixing the issue by adding KUnit
+tests to show the cases in which the memory leak is triggered. The leak
+occurs internally in the build_tree() function, therefore it cannot be
+detected directly by the tests.
 
-mlcn and mlcn2 are u64 fields read directly from the boot sector.
-sct_per_clst is bounded above by 4096 (true_sectors_per_clst() plus
-the is_power_of_2() check below it), but the multiplication is done
-in u64 and wraps when mlcn (or mlcn2) is large enough -- e.g. mlcn
-near 2^62 with sct_per_clst == 4 wraps to 0, which compares below
-any non-zero 'sectors', so the check is bypassed and the malformed
-record is accepted.
-
-The accepted mlcn is then used unchanged in
-
-	sbi->mft.lbo = mlcn << cluster_bits;
-
-In practice the resulting reads fail at the block layer (sb_bread()
-returns NULL via grow_buffers()'s check_mul_overflow() guard), so
-today this manifests as mount failing in odd places rather than as
-something more dangerous, but the validation step is still wrong
-and there is no reason for callers to rely on the block layer to
-catch a value that should never have been accepted in the first
-place.
-
-Use check_mul_overflow() to compute the two sector positions and
-fail the mount if either multiplication wraps; this preserves the
-existing semantics (mlcn * sct_per_clst >= sectors) instead of
-switching to division (mlcn >= sectors / sct_per_clst), which
-would tighten the check at edge cases where 'sectors' is not a
-multiple of sct_per_clst.  The check_*_overflow() style is the
-one ntfs3 already uses for similar on-disk arithmetic in
-fs/ntfs3/run.c.
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Link: https://lore.kernel.org/r/20260810064119.410324-4-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Stable-dep-of: 05bfb1327dc5 ("firewire: core: fix memory leak in error path of build_tree()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/super.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/firewire/node-tree-test.c | 84 +++++++++++++++++++++++++++++++
+ 1 file changed, 84 insertions(+)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 9a2e3d0efd998..98cfa33571629 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -57,6 +57,7 @@
- #include <linux/minmax.h>
- #include <linux/module.h>
- #include <linux/nls.h>
-+#include <linux/overflow.h>
- #include <linux/proc_fs.h>
- #include <linux/seq_file.h>
- #include <linux/statfs.h>
-@@ -918,7 +919,7 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
- 	struct ntfs_sb_info *sbi = sb->s_fs_info;
- 	int err;
- 	u32 mb, gb, boot_sector_size, sct_per_clst, record_size;
--	u64 sectors, clusters, mlcn, mlcn2, dev_size0;
-+	u64 sectors, clusters, mlcn, mlcn2, mft_pos, mft2_pos, dev_size0;
- 	struct NTFS_BOOT *boot;
- 	struct buffer_head *bh;
- 	struct MFT_REC *rec;
-@@ -987,7 +988,15 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
- 	mlcn2 = le64_to_cpu(boot->mft2_clst);
- 	sectors = le64_to_cpu(boot->sectors_per_volume);
+diff --git a/drivers/firewire/node-tree-test.c b/drivers/firewire/node-tree-test.c
+index 6f404df3d50e0..251c0113639f2 100644
+--- a/drivers/firewire/node-tree-test.c
++++ b/drivers/firewire/node-tree-test.c
+@@ -506,6 +506,86 @@ static void node_tree_test_four_nodes_case3(struct kunit *test)
+ 	KUNIT_EXPECT_EQ(test, data->release_count, 4);
+ }
  
--	if (mlcn * sct_per_clst >= sectors || mlcn2 * sct_per_clst >= sectors) {
-+	/*
-+	 * Convert mlcn/mlcn2 to sector positions before comparing with
-+	 * 'sectors'.  All three are u64 values that come from the boot
-+	 * sector, so use check_mul_overflow() to keep a wraparound from
-+	 * silently bypassing the comparison.
-+	 */
-+	if (check_mul_overflow(mlcn, (u64)sct_per_clst, &mft_pos) ||
-+	    check_mul_overflow(mlcn2, (u64)sct_per_clst, &mft2_pos) ||
-+	    mft_pos >= sectors || mft2_pos >= sectors) {
- 		ntfs_err(
- 			sb,
- 			"%s: start of MFT 0x%llx (0x%llx) is out of volume 0x%llx.",
++static void node_tree_test_invalid_extended_self_id_sequence(struct kunit *test)
++{
++	// Use the same node tree as node_tree_test_four_nodes_case1, except for the invalid
++	// content of self ID packet for the phy 3.
++	static const u32 self_id_sequence[] = {
++		0x80000094,
++		0x81000080,
++		0x820000bc,
++		0x830000d1, // Invalid.
++	};
++	struct private_data *data = test->priv;
++	struct fw_card *card = data->card;
++
++	card->node_id = LOCAL_BUS | 0x03;
++
++	// TODO: Memory leak.
++	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
++	KUNIT_EXPECT_NULL(test, card->local_node);
++}
++
++static void node_tree_test_invalid_phy_id(struct kunit *test)
++{
++	// Use the same node tree as node_tree_test_four_nodes_case1, except for the invalid
++	// phy ID for phy 3.
++	static const u32 self_id_sequence[] = {
++		0x80000094,
++		0x81000080,
++		0x820000bc,
++		0x8f0000d0, // Invalid.
++	};
++	struct private_data *data = test->priv;
++	struct fw_card *card = data->card;
++
++	card->node_id = LOCAL_BUS | 0x03;
++
++	// TODO: Memory leak.
++	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
++	KUNIT_EXPECT_NULL(test, card->local_node);
++}
++
++static void node_tree_test_invalid_child_port_count(struct kunit *test)
++{
++	// Use the same node tree as node_tree_test_four_nodes_case1, except for the invalid
++	// count of child ports for phy 3.
++	static const u32 self_id_sequence[] = {
++		0x80000094,
++		0x81000080,
++		0x820000bc,
++		0x830000fc, // Invalid.
++	};
++	struct private_data *data = test->priv;
++	struct fw_card *card = data->card;
++
++	card->node_id = LOCAL_BUS | 0x03;
++
++	// TODO: Memory leak.
++	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
++	KUNIT_EXPECT_NULL(test, card->local_node);
++}
++
++static void node_tree_test_invalid_parent_port_count(struct kunit *test)
++{
++	// Use the same node tree as node_tree_test_four_nodes_case1, except for the invalid
++	// count of parent ports for phy 3.
++	static const u32 self_id_sequence[] = {
++		0x80000094,
++		0x81000080,
++		0x820000bc,
++		0x830000e8, // Invalid.
++	};
++	struct private_data *data = test->priv;
++	struct fw_card *card = data->card;
++
++	card->node_id = LOCAL_BUS | 0x03;
++
++	// TODO: Memory leak.
++	card->local_node = build_tree(card, self_id_sequence, ARRAY_SIZE(self_id_sequence), 123);
++	KUNIT_EXPECT_NULL(test, card->local_node);
++}
++
+ static struct kunit_case node_tree_test_cases[] = {
+ 	KUNIT_CASE(node_tree_test_two_nodes),
+ 	KUNIT_CASE(node_tree_test_two_nodes_1394a),
+@@ -515,6 +595,10 @@ static struct kunit_case node_tree_test_cases[] = {
+ 	KUNIT_CASE(node_tree_test_four_nodes_case1),
+ 	KUNIT_CASE(node_tree_test_four_nodes_case2),
+ 	KUNIT_CASE(node_tree_test_four_nodes_case3),
++	KUNIT_CASE(node_tree_test_invalid_extended_self_id_sequence),
++	KUNIT_CASE(node_tree_test_invalid_phy_id),
++	KUNIT_CASE(node_tree_test_invalid_child_port_count),
++	KUNIT_CASE(node_tree_test_invalid_parent_port_count),
+ 	{}
+ };
+ 
 -- 
 2.53.0
 
