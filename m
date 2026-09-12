@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27EDC356742;
-	Sat, 12 Sep 2026 09:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336AD356742;
+	Sat, 12 Sep 2026 09:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205244; cv=none; b=NNuhEZj4CxQZdbTigFak3OcKVTwaRfCTXU6q5rLeE0DiivACCiis4vvpsmor9fCIsh6QEsnjUdSbKP55+QVkeVz2ixwHWy0lIL2vfPmnHcs4f7VLRUMQcp9i+Z5WoYEPo71UOsbdNaHZqauQjhS7AJ7qJFLJiTbXKG4LK6dr2j0=
+	t=1789205249; cv=none; b=FNy7QKksFybudCDsCcWlGbBpv0cfAzbPIfaq2W2S6/KKQ84fADPeyHLqrsfzj+gxykF2ZYmlSO1bzB5YnNYn/KH+9OGLYj+/dCd5KjU7r9yn1/Hfj/pWS5PDxmgaHLQ0zBudWryRMAkscEO5vdzfHSZJ0XMJJMstgTECrQRhHnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205244; c=relaxed/simple;
-	bh=2phsZRMNJ1HMhy9HTIuor+g1bf+AgZ0rt12cynQLThw=;
+	s=arc-20240116; t=1789205249; c=relaxed/simple;
+	bh=V5FATuC2js6V62Cf3OrZhUufFGxbS2e/BYbRDYsf0JU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=stI+g6sRU0k8gAY6AEMJqWfHfCYCkT+NUPYjDNpp5ANTWf7KgGU3r8c2eCtMo9qrhrXLUc2HEjXnqaJ2pXWRy6qRvZoVdBFmC4oPmSeOYheFD8iVCPAzOzdsgWjtXhrpHPwFwbKxZSidhL+srtfU8M+ER7j+petOrH2QDTxNwtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhcTdFBj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c/0aytltHZ7lgjTXsjNjCQZaa7PRZV1jAdKZPzDnOlU1itsH3xeKaP0Df66/BD2XQbCkaINdwfvAMEdYGEKgOu1RegC0UY2l/ViQi0xNlaHTnZ532bGDatrJSMgsxPj9w2ry3mbpToXLxWZoC2KVCVwf52BHncrZqzsk69yZpek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOWoJYj6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhcTdFBj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6611F000FF;
-	Sat, 12 Sep 2026 09:27:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOWoJYj6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A5F1F000FF;
+	Sat, 12 Sep 2026 09:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205243;
-	bh=2PXMhcgC7xjHI0ZDQ3Q/ymkZTpOu9haq1LK+Oy8orN8=;
+	s=korg; t=1789205248;
+	bh=haW1D7HKF6cvZowjsac/Hk6AsfKHmpm7V+lY3CJRtn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HhcTdFBjjmnQhIA0Z/GE7ZXvTKD3CH62RH8FRa+qgI3J0rkxUn7I8IkMXTWlqqOKE
-	 wHfFMKUuqBN7R4s3A3YMYFeJTiaWymn+gxZ0CEya1IyB/0IiO9ttALfknjsM1QdryK
-	 bJTQBWkpCKVzhgyHr8IyYQSDiuXzPez1l9SmRfZs=
+	b=sOWoJYj6gNnRy1JbUV5cicPbd8DNw4tkxzLjNe00ya8L1yt7Nu6We+gO6dNEmF0yJ
+	 AiASa+ZuV6N39sJveXTndilEnudTHUo7GnqQKuc+BPUKWua+9MRgu9KMqPUov9F1XW
+	 W3X1RS2PxfqmbIVDmPvULAd/DVQJO1CkQCE02U80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1741/1815] net: enetc: restore RX ring congestion mode for ENETC v4
-Date: Sat, 12 Sep 2026 08:58:11 +0200
-Message-ID: <20260912065729.853486345@linuxfoundation.org>
+Subject: [PATCH 7.2 1777/1815] net: ethernet: sun4i-emac: Fix IRQ error handling
+Date: Sat, 12 Sep 2026 08:58:47 +0200
+Message-ID: <20260912065730.730969197@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,75 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit fa1a8457b8581725ae237efefb2358eddd7e05c9 ]
+[ Upstream commit 991c2be78257cba5bf53cf935fe70f8836964288 ]
 
-ENETC v4 has the same problem as ENETC v1: the RX BD ring congestion
-mode (CM) is only configured in the phylink .mac_link_up() callback, so
-it is cleared when enetc_reconfigure() rebuilds the RX BD rings at
-runtime (for example when enabling or disabling PTP RX hardware
-timestamping) without a link status change, and it is never restored.
-As a result, the MAC can no longer generate PAUSE frames on ingress
-congestion and flow control stops working.
+irq_of_parse_and_map() returns 0 when parsing or mapping an IRQ fails.
+The current code checks for -ENXIO and therefore does not detect the
+failure.
 
-Fix it in the same way as ENETC v1. Track the desired CM state in the
-software flag ENETC_RXBDR_CM. Route enetc4_set_tx_pause() through the
-shared helper enetc_set_congestion_mode(), which sets or clears the flag
-according to tx_pause and updates the ENETC_RBMR_CM bit under si->gen_lock.
-When the RX BD rings are (re)enabled, enetc_enable_rxbdr() consults this
-flag and restores the CM bit accordingly, so flow control survives ring
-reconfiguration even when the link status does not change.
+Check for a zero return value and convert it to -ENXIO.
 
-Fixes: f5b9a1cde0a2 ("net: enetc: add PTP synchronization support for ENETC v4")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260821064140.1315611-3-wei.fang@oss.nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 492205050d77 ("net: Add EMAC ethernet driver found on Allwinner A10 SoC's")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://patch.msgid.link/20260824100901.31675-1-phucduc.bui@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc4_pf.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/allwinner/sun4i-emac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc4_pf.c b/drivers/net/ethernet/freescale/enetc/enetc4_pf.c
-index 056c976663fa0..65d3c24510e87 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc4_pf.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc4_pf.c
-@@ -708,22 +708,14 @@ static void enetc4_set_rx_pause(struct enetc_pf *pf, bool rx_pause)
- 	enetc_port_mac_wr(si, ENETC4_PM_CMD_CFG(0), val);
- }
- 
--static void enetc4_set_tx_pause(struct enetc_pf *pf, int num_rxbdr, bool tx_pause)
-+static void enetc4_set_tx_pause(struct enetc_pf *pf, bool tx_pause)
- {
-+	struct enetc_ndev_priv *priv = netdev_priv(pf->si->ndev);
- 	u32 pause_off_thresh = 0, pause_on_thresh = 0;
- 	u32 init_quanta = 0, refresh_quanta = 0;
- 	struct enetc_hw *hw = &pf->si->hw;
--	u32 rbmr, old_rbmr;
--	int i;
- 
--	for (i = 0; i < num_rxbdr; i++) {
--		old_rbmr = enetc_rxbdr_rd(hw, i, ENETC_RBMR);
--		rbmr = u32_replace_bits(old_rbmr, tx_pause ? 1 : 0, ENETC_RBMR_CM);
--		if (rbmr == old_rbmr)
--			continue;
--
--		enetc_rxbdr_wr(hw, i, ENETC_RBMR, rbmr);
--	}
-+	enetc_set_congestion_mode(priv, tx_pause);
- 
- 	if (tx_pause) {
- 		/* When the port first enters congestion, send a PAUSE request
-@@ -888,7 +880,7 @@ static void enetc4_pl_mac_link_up(struct phylink_config *config,
- 			tx_pause = false;
+diff --git a/drivers/net/ethernet/allwinner/sun4i-emac.c b/drivers/net/ethernet/allwinner/sun4i-emac.c
+index fc7341a5cbb7d..a297874f4a819 100644
+--- a/drivers/net/ethernet/allwinner/sun4i-emac.c
++++ b/drivers/net/ethernet/allwinner/sun4i-emac.c
+@@ -996,9 +996,9 @@ static int emac_probe(struct platform_device *pdev)
+ 	/* fill in parameters for net-dev structure */
+ 	ndev->base_addr = (unsigned long)db->membase;
+ 	ndev->irq = irq_of_parse_and_map(np, 0);
+-	if (ndev->irq == -ENXIO) {
++	if (!ndev->irq) {
+ 		netdev_err(ndev, "No irq resource\n");
+-		ret = ndev->irq;
++		ret = -ENXIO;
+ 		goto out_iounmap;
  	}
  
--	enetc4_set_tx_pause(pf, priv->num_rx_rings, tx_pause);
-+	enetc4_set_tx_pause(pf, tx_pause);
- 	enetc4_set_rx_pause(pf, rx_pause);
- 	enetc4_mac_tx_enable(pf);
- 	enetc4_mac_rx_enable(pf);
 -- 
 2.53.0
 
