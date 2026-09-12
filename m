@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9145384233;
-	Sat, 12 Sep 2026 08:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32702365A0B;
+	Sat, 12 Sep 2026 08:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203454; cv=none; b=nVOOMCZrRNjS1Xc9qH7wdNp7k+yguIyRbk8Y+vGMX+dCIZw5/84rabjLthP39m9BcqzQ6VRvz949gk0+MNNSQGxQJzOus/VIlEfEh/DbOY6yohqJtO8j0yfnf7xpZ8m68zgCsexoVMQuL/5lQwUVHmOZ4UVkSyb8rx5a8twg1yY=
+	t=1789203459; cv=none; b=YNf73sBudbQGghDblfFXnY8aNgvbjp38fGaLQY3UZ1RG3Th9O17omc9hJa//QwbYFwQi0ZSFy2CWQfAHMs/KbnN9osEfDGDlVKLgfdTXWgCwaJTS6GMyJxrBOAtyf7jXVyUBFzQVX2w8q17jI6wNWQjF/BGHcZut3EQtiaismQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203454; c=relaxed/simple;
-	bh=C4OZ6rLLY8VkdPlBxM35b/6ACOx9jpoNUJq3GUqNwg0=;
+	s=arc-20240116; t=1789203459; c=relaxed/simple;
+	bh=yA77G2o7CEOz+DzXCKqyyOLWCJ5V+pMvFXChDpfcLtg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HaYzYiunYuua151wljFtvsnnedksmk+dqHJSRPzdqtDonP6g+m2SPcjtcDIYaO114oiMT+nYO2vNhO3AF59gh2SLweMWseNxw/52i0CH5uW0jGLon2E0mBgh8bWHrClQwc0C+a+Lgr9qoCqWR4daw5UYxx9h/Tw6fXxE6sTFO/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hk1eoFfF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sDZqJAxf7L9+ESLEGUxcD2HeveZ2VrgXEA/iZiqgHgtFaK4HQVZds8klls7A6MJGDvqzwbkJ7/KIM8pKvSxVXSAxTZ+IN7hfL+lDVS5HWPyFxyDoBhYCREtIqyE3CwvsTFENCaQAJ5RiS0dZDDbvbTpc2wsDcoLpCkzGh7MI040=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CcKV0gN5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hk1eoFfF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE311F000FF;
-	Sat, 12 Sep 2026 08:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CcKV0gN5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA05C1F000FF;
+	Sat, 12 Sep 2026 08:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203452;
-	bh=tobCydwUQdJIoZMXzbWqZ+2fZSXZPjd64ugHL0JwL98=;
+	s=korg; t=1789203457;
+	bh=locLGhtXKjVW1dVvf8NkVkCuewCZwojqaj4RnZQN2nM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hk1eoFfFVrj8BJMbHEoc6ctjrLwtfBZhi4osH/QUlmW144tEEk+XMeKmk4VL2mZo5
-	 AQQiizvviiLIERaOnL7xvE0CWlwiT2WYIMefYHU/Y590N5M3EH3tZ6z92JcgVuJaky
-	 4ReG2xuwuGN9LygKZn+/kQEdFwiGdn8RiGm5siPo=
+	b=CcKV0gN5HaiNIABLdOhAUWyiizm20UB/br6f2heDvyYPn9TbSI58GYWJGmdsV8ze1
+	 kEnwbkel9tk9oMmg9aHEWwJW51wWO8eRwjqtZPbTpds36RgLb240Bht6WLQANL3S41
+	 zl1sa5mJ9iCdwsKm7T9C6n8CbxqsNccZeIuGKL0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1374/1815] UBI: Preserve torture flag when rescheduling failed erasures
-Date: Sat, 12 Sep 2026 08:52:04 +0200
-Message-ID: <20260912065721.284054837@linuxfoundation.org>
+Subject: [PATCH 7.2 1410/1815] ASoC: spacemit: advertise only DMA-backed DAI streams
+Date: Sat, 12 Sep 2026 08:52:40 +0200
+Message-ID: <20260912065722.125030940@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,219 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 420477a84f1e52babfe60a43dbdd0988ed956845 ]
+[ Upstream commit 0a91bb72980e4aa5f0c1be33d691e7767d7db9ed ]
 
-In __erase_worker(), when ubi_sync_erase() returns -EINTR, -ENOMEM,
--EAGAIN, or -EBUSY, the physical eraseblock is rescheduled for erasure
-via schedule_erase() with the torture flag hardcoded to 0. This
-unconditionally drops the torture request.
+The static DAI template initializes both playback and capture stream
+capabilities before dma-names is examined. As a result,
+snd_soc_dai_stream_valid() considers both directions valid even when the
+device only provides a single DMA channel.
 
-If the error occurred before torture_peb() completed (e.g., -ENOMEM
-from the ec_hdr allocation in ubi_sync_erase(), errors from
-self_check_not_bad()/nor_erase_prepare() in ubi_io_sync_erase(), or
-torture_peb() failing mid-test because its internal do_sync_erase()/
-ubi_io_read()/ubi_io_write() returned one of the above error codes),
-the torture test was never finished. Such a PEB may reach the free
-pool without being tortured, defeating the purpose of the torture
-test for detecting marginally-bad eraseblocks.
+Move the playback and capture capability initialization into
+spacemit_i2s_init_dai(), where it is performed only for the stream
+directions backed by a corresponding DMA channel. This preserves the
+existing capabilities for devices with both "tx" and "rx" DMA channels,
+while preventing unsupported stream directions from being advertised.
 
-If the error occurred after torture_peb() succeeded (the final
-do_sync_erase() in ubi_io_sync_erase() or ubi_io_write_ec_hdr() in
-ubi_sync_erase() failed), the torture has already been done and need
-not be repeated.
+Initialize rate_min and rate_max together with the other stream
+capabilities to preserve the existing rate constraints.
 
-Pass the torture flag by pointer to ubi_sync_erase() and
-ubi_io_sync_erase(), and clear it to zero once torture_peb() has
-completed successfully. __erase_worker() then forwards the updated
-wl_wrk->torture to schedule_erase(): torture already done is dropped,
-torture not completed is preserved across the reschedule.
-
-Fixes: 784c145444e7 ("UBI: fix error handling in erase worker")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: fce217449075 ("ASoC: spacemit: add i2s support for K1 SoC")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260805064348.44283-1-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/attach.c  |  4 ++--
- drivers/mtd/ubi/fastmap.c |  6 +++---
- drivers/mtd/ubi/io.c      | 11 +++++++----
- drivers/mtd/ubi/ubi.h     |  4 ++--
- drivers/mtd/ubi/wl.c      | 15 +++++++++------
- 5 files changed, 23 insertions(+), 17 deletions(-)
+ sound/soc/spacemit/k1_i2s.c | 20 ++++----------------
+ 1 file changed, 4 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/mtd/ubi/attach.c b/drivers/mtd/ubi/attach.c
-index 0fa115cbf3ad4..0ce7ff7400d37 100644
---- a/drivers/mtd/ubi/attach.c
-+++ b/drivers/mtd/ubi/attach.c
-@@ -771,7 +771,7 @@ void ubi_remove_av(struct ubi_attach_info *ai, struct ubi_ainf_volume *av)
- static int early_erase_peb(struct ubi_device *ubi,
- 			   const struct ubi_attach_info *ai, int pnum, int ec)
- {
--	int err;
-+	int err, torture = 0;
- 	struct ubi_ec_hdr *ec_hdr;
+diff --git a/sound/soc/spacemit/k1_i2s.c b/sound/soc/spacemit/k1_i2s.c
+index 4247d8d3a6370..67c03b8a5e0c4 100644
+--- a/sound/soc/spacemit/k1_i2s.c
++++ b/sound/soc/spacemit/k1_i2s.c
+@@ -347,22 +347,6 @@ static const struct snd_soc_dai_ops spacemit_i2s_dai_ops = {
  
- 	if ((long long)ec >= UBI_MAX_ERASECOUNTER) {
-@@ -790,7 +790,7 @@ static int early_erase_peb(struct ubi_device *ubi,
+ static struct snd_soc_dai_driver spacemit_i2s_dai = {
+ 	.ops = &spacemit_i2s_dai_ops,
+-	.playback = {
+-		.channels_min = 1,
+-		.channels_max = 2,
+-		.rates = SPACEMIT_PCM_RATES,
+-		.rate_min = SNDRV_PCM_RATE_8000,
+-		.rate_max = SNDRV_PCM_RATE_48000,
+-		.formats = SPACEMIT_PCM_FORMATS,
+-	},
+-	.capture = {
+-		.channels_min = 1,
+-		.channels_max = 2,
+-		.rates = SPACEMIT_PCM_RATES,
+-		.rate_min = SNDRV_PCM_RATE_8000,
+-		.rate_max = SNDRV_PCM_RATE_48000,
+-		.formats = SPACEMIT_PCM_FORMATS,
+-	},
+ 	.symmetric_rate = 1,
+ };
  
- 	ec_hdr->ec = cpu_to_be64(ec);
+@@ -392,6 +376,8 @@ static int spacemit_i2s_init_dai(struct spacemit_i2s_dev *i2s,
+ 		dai->playback.channels_min = 1;
+ 		dai->playback.channels_max = 2;
+ 		dai->playback.rates = SPACEMIT_PCM_RATES;
++		dai->playback.rate_min = SNDRV_PCM_RATE_8000;
++		dai->playback.rate_max = SNDRV_PCM_RATE_48000;
+ 		dai->playback.formats = SPACEMIT_PCM_FORMATS;
  
--	err = ubi_io_sync_erase(ubi, pnum, 0);
-+	err = ubi_io_sync_erase(ubi, pnum, &torture);
- 	if (err < 0)
- 		goto out_free;
+ 		i2s->playback_dma_data.addr_width = DMA_SLAVE_BUSWIDTH_2_BYTES;
+@@ -404,6 +390,8 @@ static int spacemit_i2s_init_dai(struct spacemit_i2s_dev *i2s,
+ 		dai->capture.channels_min = 1;
+ 		dai->capture.channels_max = 2;
+ 		dai->capture.rates = SPACEMIT_PCM_RATES;
++		dai->capture.rate_min = SNDRV_PCM_RATE_8000;
++		dai->capture.rate_max = SNDRV_PCM_RATE_48000;
+ 		dai->capture.formats = SPACEMIT_PCM_FORMATS;
  
-diff --git a/drivers/mtd/ubi/fastmap.c b/drivers/mtd/ubi/fastmap.c
-index 3bce1b4d84643..98cc698d9c34d 100644
---- a/drivers/mtd/ubi/fastmap.c
-+++ b/drivers/mtd/ubi/fastmap.c
-@@ -1488,7 +1488,7 @@ static void return_fm_pebs(struct ubi_device *ubi,
-  */
- int ubi_update_fastmap(struct ubi_device *ubi)
- {
--	int ret, i, j;
-+	int ret, i, j, torture = 0;
- 	struct ubi_fastmap_layout *new_fm, *old_fm;
- 	struct ubi_wl_entry *tmp_e;
- 
-@@ -1526,7 +1526,7 @@ int ubi_update_fastmap(struct ubi_device *ubi)
- 
- 		if (!tmp_e) {
- 			if (old_fm && old_fm->e[i]) {
--				ret = ubi_sync_erase(ubi, old_fm->e[i], 0);
-+				ret = ubi_sync_erase(ubi, old_fm->e[i], &torture);
- 				if (ret < 0) {
- 					ubi_err(ubi, "could not erase old fastmap PEB");
- 
-@@ -1578,7 +1578,7 @@ int ubi_update_fastmap(struct ubi_device *ubi)
- 	if (old_fm) {
- 		/* no fresh anchor PEB was found, reuse the old one */
- 		if (!tmp_e) {
--			ret = ubi_sync_erase(ubi, old_fm->e[0], 0);
-+			ret = ubi_sync_erase(ubi, old_fm->e[0], &torture);
- 			if (ret < 0) {
- 				ubi_err(ubi, "could not erase old anchor PEB");
- 
-diff --git a/drivers/mtd/ubi/io.c b/drivers/mtd/ubi/io.c
-index 915eb64cb0011..d70d1313ad4e8 100644
---- a/drivers/mtd/ubi/io.c
-+++ b/drivers/mtd/ubi/io.c
-@@ -519,8 +519,10 @@ static int nor_erase_prepare(struct ubi_device *ubi, int pnum)
- /**
-  * ubi_io_sync_erase - synchronously erase a physical eraseblock.
-  * @ubi: UBI device description object
-- * @pnum: physical eraseblock number to erase
-- * @torture: if this physical eraseblock has to be tortured
-+ * @pnum: the physical eraseblock number to erase
-+ * @torture: if this physical eraseblock has to be tortured; cleared to zero
-+ *           once the torture test has completed successfully so that a retry
-+ *           of the erase does not torture the physical eraseblock again
-  *
-  * This function synchronously erases physical eraseblock @pnum. If @torture
-  * flag is not zero, the physical eraseblock is checked by means of writing
-@@ -532,7 +534,7 @@ static int nor_erase_prepare(struct ubi_device *ubi, int pnum)
-  * codes in case of other errors. Note, %-EIO means that the physical
-  * eraseblock is bad.
-  */
--int ubi_io_sync_erase(struct ubi_device *ubi, int pnum, int torture)
-+int ubi_io_sync_erase(struct ubi_device *ubi, int pnum, int *torture)
- {
- 	int err, ret = 0;
- 
-@@ -560,10 +562,11 @@ int ubi_io_sync_erase(struct ubi_device *ubi, int pnum, int torture)
- 			return err;
- 	}
- 
--	if (torture) {
-+	if (*torture) {
- 		ret = torture_peb(ubi, pnum);
- 		if (ret < 0)
- 			return ret;
-+		*torture = 0;
- 	}
- 
- 	err = do_sync_erase(ubi, pnum);
-diff --git a/drivers/mtd/ubi/ubi.h b/drivers/mtd/ubi/ubi.h
-index af466cd83ae07..80b7628929228 100644
---- a/drivers/mtd/ubi/ubi.h
-+++ b/drivers/mtd/ubi/ubi.h
-@@ -901,7 +901,7 @@ int self_check_eba(struct ubi_device *ubi, struct ubi_attach_info *ai_fastmap,
- 		   struct ubi_attach_info *ai_scan);
- 
- /* wl.c */
--int ubi_sync_erase(struct ubi_device *ubi, struct ubi_wl_entry *e, int torture);
-+int ubi_sync_erase(struct ubi_device *ubi, struct ubi_wl_entry *e, int *torture);
- int ubi_wl_get_peb(struct ubi_device *ubi);
- int ubi_wl_put_peb(struct ubi_device *ubi, int vol_id, int lnum,
- 		   int pnum, int torture);
-@@ -923,7 +923,7 @@ int ubi_io_read(const struct ubi_device *ubi, void *buf, int pnum, int offset,
- 		int len);
- int ubi_io_write(struct ubi_device *ubi, const void *buf, int pnum, int offset,
- 		 int len);
--int ubi_io_sync_erase(struct ubi_device *ubi, int pnum, int torture);
-+int ubi_io_sync_erase(struct ubi_device *ubi, int pnum, int *torture);
- int ubi_io_is_bad(const struct ubi_device *ubi, int pnum);
- int ubi_io_mark_bad(const struct ubi_device *ubi, int pnum);
- int ubi_io_read_ec_hdr(struct ubi_device *ubi, int pnum,
-diff --git a/drivers/mtd/ubi/wl.c b/drivers/mtd/ubi/wl.c
-index e3705db8e5709..edfab98f7064f 100644
---- a/drivers/mtd/ubi/wl.c
-+++ b/drivers/mtd/ubi/wl.c
-@@ -443,12 +443,14 @@ static int prot_queue_del(struct ubi_device *ubi, int pnum)
-  * ubi_sync_erase - synchronously erase a physical eraseblock.
-  * @ubi: UBI device description object
-  * @e: the physical eraseblock to erase
-- * @torture: if the physical eraseblock has to be tortured
-+ * @torture: if the physical eraseblock has to be tortured; cleared to zero
-+ *           once the torture test has completed successfully so that a retry
-+ *           of the erase does not torture the physical eraseblock again
-  *
-  * This function returns zero in case of success and a negative error code in
-  * case of failure.
-  */
--int ubi_sync_erase(struct ubi_device *ubi, struct ubi_wl_entry *e, int torture)
-+int ubi_sync_erase(struct ubi_device *ubi, struct ubi_wl_entry *e, int *torture)
- {
- 	int err;
- 	struct ubi_ec_hdr *ec_hdr;
-@@ -1113,7 +1115,7 @@ static int __erase_worker(struct ubi_device *ubi, struct ubi_work *wl_wrk)
- 	dbg_wl("erase PEB %d EC %d LEB %d:%d",
- 	       pnum, e->ec, wl_wrk->vol_id, wl_wrk->lnum);
- 
--	err = ubi_sync_erase(ubi, e, wl_wrk->torture);
-+	err = ubi_sync_erase(ubi, e, &wl_wrk->torture);
- 	if (!err) {
- 		spin_lock(&ubi->wl_lock);
- 
-@@ -1150,7 +1152,8 @@ static int __erase_worker(struct ubi_device *ubi, struct ubi_work *wl_wrk)
- 		int err1;
- 
- 		/* Re-schedule the LEB for erasure */
--		err1 = schedule_erase(ubi, e, vol_id, lnum, 0, true);
-+		err1 = schedule_erase(ubi, e, vol_id, lnum, wl_wrk->torture,
-+				      true);
- 		if (err1) {
- 			spin_lock(&ubi->wl_lock);
- 			wl_entry_destroy(ubi, e);
-@@ -1757,7 +1760,7 @@ static void shutdown_work(struct ubi_device *ubi)
- static int erase_aeb(struct ubi_device *ubi, struct ubi_ainf_peb *aeb, bool sync)
- {
- 	struct ubi_wl_entry *e;
--	int err;
-+	int err, torture = 0;
- 
- 	e = kmem_cache_alloc(ubi_wl_entry_slab, GFP_KERNEL);
- 	if (!e)
-@@ -1768,7 +1771,7 @@ static int erase_aeb(struct ubi_device *ubi, struct ubi_ainf_peb *aeb, bool sync
- 	ubi->lookuptbl[e->pnum] = e;
- 
- 	if (sync) {
--		err = ubi_sync_erase(ubi, e, false);
-+		err = ubi_sync_erase(ubi, e, &torture);
- 		if (err)
- 			goto out_free;
- 
+ 		i2s->capture_dma_data.addr_width = DMA_SLAVE_BUSWIDTH_2_BYTES;
 -- 
 2.53.0
 
