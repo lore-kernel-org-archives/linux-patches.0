@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26C7416842;
-	Sat, 12 Sep 2026 16:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6B341A92A;
+	Sat, 12 Sep 2026 16:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228949; cv=none; b=BrLZrKtYcV1iEAFrwg5IqS8mUYsjacp+iwIuGgvxJ34WBvTxfFNZDgrZPVEFLFJSr/jNGQBNDtBn/WAw7QM2kkvebExN8UA7n+ikzMUNkQjczxcPY0YMCos1DFfH+6EhOcFfX2hUTueIhqYqrr+sLQYHu7exeKQ65/P/kUOubys=
+	t=1789228954; cv=none; b=EiQC2yRLPq6S3H03BJdYcq+xYN2kTJdK7ymmbWP4MSPrF3Nm5bvglPOyYtM/MpodTohg5jkPrp0q/I9b/c4+iRw+Wl9bUNj6unOfA7V7B1O0xy4GgcTrIaLNqpralhZrZEeQutBL8qzq74odDSmTyivwQkERRuOs81HWXeWIrHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228949; c=relaxed/simple;
-	bh=pwC0kbYPq77sNLbhPp8REr5u2gwSGJ320DP3uyGpcr4=;
+	s=arc-20240116; t=1789228954; c=relaxed/simple;
+	bh=WbknV5QVOFC2Zv9z5cU1Gk9c1ur8jIXy0X5Fis7ySzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g8EKGIM2q7MGmXGDrbAgbIABNJ+/heVuCoRmDpeHHWsmOWJnDyq0e7IGszEc5ir2/8pq//qtIbKmOJQ0MEfDZF03P6DhuoQtjoG0x7IxiQ/LSmrJZtGLCQwUiXTV8W4+8IRBICq1lkz4wItJ2BBHkv6rmv2FikmQe8M8xpUOe/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BpyuiUnq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pmv1LMJIHiLJ+5sV4/MtHVpn/3Uqn67AKq4hdsjUotUV0toKr0wLmWePaULzmPIr8J351JfMvhORrR7JuV/TQ+wXvQExtIjCtzE70sdFfKRN3QFVBy+ZjRcMOiGx9cUkvx7iBxMBHHASolnngQcGzLMiWvYM2AL3yDALIIBZcLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wn+zYuRT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BpyuiUnq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60F91F000FF;
-	Sat, 12 Sep 2026 16:02:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wn+zYuRT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E431F000FF;
+	Sat, 12 Sep 2026 16:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228948;
-	bh=VDyPJwxaSudGhrj7gB1Rj6z7B7SQDjf9BMpPKT1TVNo=;
+	s=korg; t=1789228953;
+	bh=5MGHtjv/QkhdsTDIXNoGIdEoTaLEMaRUU63LRqXtYTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BpyuiUnqsl64je4Iu43+0d61ldIgj+jF5iBwVdWfQGaioCPRMpcJFnEuWsP/soBf8
-	 +UY/eGHy5upjSyDw7VrBfKogMbivQqUld/vkBpi/xhF6g84wjzQtKHzidFp7AnM+tr
-	 vPPdFvgLDLGoBiMbs87ypRccHMPw3zFIwstrtuSU=
+	b=Wn+zYuRTj7H6SraJ0EW2usyVICJnvY92nY43BdAg9wiACaf8HrjpuGU1D41rw/NYU
+	 vbm+nFf2p1dlIVUIzqHFzQeSTVpjC+PbR24qS++WPBhlgmCLm4hBGlBGx1UyMc0whS
+	 auXAEg+CjqwNtR4PQ3o4ndi3PD5OMirX3C8Uf3Rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel McCarthy <daniel@dragonzap.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Sean Young <sean@mess.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0490/1191] pinctrl: bcm2835: Dont remove an unregistered GPIO chip
-Date: Sat, 12 Sep 2026 08:53:38 +0200
-Message-ID: <20260912065559.235984829@linuxfoundation.org>
+Subject: [PATCH 6.1 0491/1191] media: keymaps: Remove obsolete RC_MAP_RC5_TV keymap define
+Date: Sat, 12 Sep 2026 08:53:39 +0200
+Message-ID: <20260912065559.257586623@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,43 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel McCarthy <daniel@dragonzap.com>
+From: Sean Young <sean@mess.org>
 
-[ Upstream commit 32711f77db0641e57fd96fdc013bf1286b9f2514 ]
+[ Upstream commit 5370facb7b4461166a4610d456fefeb92ef50a82 ]
 
-If the devm_pinctrl_register() function fails,
-bcm2835_pinctrl_probe() calls gpiochip_remove()
-before gpiochip_add_data() has registered the GPIO chip.
+Since commit 206241069ecf ("[media] rc/keymaps: Remove the obsolete
+rc-rc5-tv keymap"), the rc-rc5-tv keymap is no longer in the tree.
 
-This means that upon failure the gpio_chip.gpiodev
- is NULL resulting in a null pointer dereference
-inside the gpiochip_remove() function.
-
-Remove the unnecessary function call to gpiochip_remove().
-No GPIO cleanup is required because the GPIO chip
-has not yet been registered. Without this change there
-is potential for a kernel panic upon registration failure
-
-Fixes: 266423e60ea1 ("pinctrl: bcm2835: Change init order for gpio hogs")
-Signed-off-by: Daniel McCarthy <daniel@dragonzap.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: 206241069ecf ("[media] rc/keymaps: Remove the obsolete rc-rc5-tv keymap")
+Signed-off-by: Sean Young <sean@mess.org>
+Acked-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/bcm/pinctrl-bcm2835.c | 1 -
+ include/media/rc-map.h | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/drivers/pinctrl/bcm/pinctrl-bcm2835.c b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
-index fe8da3ccb0b5a..526465e1a8fb0 100644
---- a/drivers/pinctrl/bcm/pinctrl-bcm2835.c
-+++ b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
-@@ -1280,7 +1280,6 @@ static int bcm2835_pinctrl_probe(struct platform_device *pdev)
- 	pc->pctl_desc = *pdata->pctl_desc;
- 	pc->pctl_dev = devm_pinctrl_register(dev, &pc->pctl_desc, pc);
- 	if (IS_ERR(pc->pctl_dev)) {
--		gpiochip_remove(&pc->gpio_chip);
- 		return PTR_ERR(pc->pctl_dev);
- 	}
- 
+diff --git a/include/media/rc-map.h b/include/media/rc-map.h
+index 793b54342dffe..1eb9a93330036 100644
+--- a/include/media/rc-map.h
++++ b/include/media/rc-map.h
+@@ -306,7 +306,6 @@ struct rc_map *rc_map_get(const char *name);
+ #define RC_MAP_PROTEUS_2309              "rc-proteus-2309"
+ #define RC_MAP_PURPLETV                  "rc-purpletv"
+ #define RC_MAP_PV951                     "rc-pv951"
+-#define RC_MAP_RC5_TV                    "rc-rc5-tv"
+ #define RC_MAP_RC6_MCE                   "rc-rc6-mce"
+ #define RC_MAP_REAL_AUDIO_220_32_KEYS    "rc-real-audio-220-32-keys"
+ #define RC_MAP_REDDO                     "rc-reddo"
 -- 
 2.53.0
 
