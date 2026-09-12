@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9523750D6;
-	Sat, 12 Sep 2026 09:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9813750D6;
+	Sat, 12 Sep 2026 09:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205551; cv=none; b=uxw9020RruY5mhh4Djy3+DvSpnyN7jhs21XlVPDA7z8Z9mQiFAxE0Qu/Odn+G/EQUyi5kgbPIpyPyhUTBN4KzHr3OtscY5Ay1bCvdCPDVK6383bUbcuFGNEHXLrAGYB/kSNGHZoNTn36S7yKDchgCw1KUAQkxsIqKWFwbffJWJE=
+	t=1789205555; cv=none; b=pWfPMB2YPRGlnzEIqTtZslNLW6MbFVCcTFqQDLA/olD3iKjSblR89GEPCGlQGiZNnbubQP4OZKvmPzE2YY3cLFTvMTT0tYPRKGweb0rY0c7y7JwNLxDW8m83O0/2ZF/UU6bjrMBEbL9+3I6QWt85M3B2lo/GdO0dRAvEfbyRP20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205551; c=relaxed/simple;
-	bh=UQfEkgjW+wenQ1ExtmXMMCNZebB7YNCRoensvl2z0kE=;
+	s=arc-20240116; t=1789205555; c=relaxed/simple;
+	bh=xpLdpMOM2gXKaJ65YpY2pVU+/ri1NAkmXx1hmRwvPDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rySTClaQF8B7o+IBVJw+ybBaEqWXqF3jistHU8taD6HvDr2ajRCxINfxiu+wsTrYANG7CKOk4MwU3CdK1kRpgAu2g8LC0nK6D9kmvHhzkv7kRqbS9P5CMvPAfQ+a7nXfaWWQvRwewcLFGhzYiKgbG4VBVdG7ron/bQ846Pq2y18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRITeSGw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EuyJo0GGTB7titcXu3rZutbqvZC4FHMxHyLzQfOfQFujOog4/FZvo6EAgpTLsvqyJQItv3MTMrMWfqJQk7hLWE9AIlnwzUdn4KtwoGm6lYsmfiC0ychw9ZBW8v5SJO5L6scjPronJIAtd8Y9uQtTzTpj8YtYM2xCGqjfdKYREXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UsfYHz5n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRITeSGw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA3C1F000FF;
-	Sat, 12 Sep 2026 09:32:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UsfYHz5n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06B71F000FF;
+	Sat, 12 Sep 2026 09:32:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205549;
-	bh=2q6fGHQpJWMkRZJ7JRXg/YD6JZwroNtEx8I9hJMafuU=;
+	s=korg; t=1789205554;
+	bh=aymhtx29RjxwGjY/vi4U1efLhNz8EHrCyEFryCVMuEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eRITeSGw5VaohyfYqKnz9lXKDz/f/qPtiu6YfIuYQ6JRTDVOPGc9Ybx4faZNMbUDG
-	 bdub9MELM/rieiuvtTZKB8uyHSt3fv7QVlFHzUN33ENMtFE5+NPuibIjk7aqUM4RTv
-	 /v8Z0r4rHHnHo+oO+/s2Ay1eXNdT5P/n8HlzU9dk=
+	b=UsfYHz5n7j2k3CpstD6WprGhJLcYkHvhpxHv0qxF25YOkB/n88ialo7uwxk4ihC7N
+	 l57kpakfcfOrSr2t8bqBTh6G8rQawCqfFbdf1FVB8rZTsWuixwK/oXJYqlYmuxzo7A
+	 knli0w0h4eg/LW0OK7eppvM7aXq0+kHVGVgDum1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0025/1518] compiler_types: Move lock checking attributes to compiler-context-analysis.h
-Date: Sat, 12 Sep 2026 08:36:34 +0200
-Message-ID: <20260912065623.991449727@linuxfoundation.org>
+Subject: [PATCH 6.18 0026/1518] i2c: qcom-cci: Do not check return value of cci_init()
+Date: Sat, 12 Sep 2026 08:36:35 +0200
+Message-ID: <20260912065624.014240846@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,106 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit de15fecae44df8254fa597bad7eb3680a8b1c10c ]
+[ Upstream commit 17c5d247e3e4708cac05ff087c8013c0dda383a2 ]
 
-The conditional definition of lock checking macros and attributes is
-about to become more complex. Factor them out into their own header for
-better readability, and to make it obvious which features are supported
-by which mode (currently only Sparse). This is the first step towards
-generalizing towards "context analysis".
+The cci_init() function is not supposed to fail, and it never returns
+a non-zero, so it'd make sense to convert its signature to void.
 
-No functional change intended.
-
-Signed-off-by: Marco Elver <elver@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20251219154418.3592607-2-elver@google.com
-Stable-dep-of: 912edebe8501 ("futex: Provide rt_mutex_.*_schedule() equivalents for futex scheduling")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260515234121.1607425-3-vladimir.zapolskiy@linaro.org
+Stable-dep-of: f98d49864821 ("i2c: qcom-cci: fix autosuspend cleanup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/compiler-context-analysis.h |   32 ++++++++++++++++++++++++++++++
- include/linux/compiler_types.h            |   18 +---------------
- 2 files changed, 34 insertions(+), 16 deletions(-)
- create mode 100644 include/linux/compiler-context-analysis.h
+ drivers/i2c/busses/i2c-qcom-cci.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- /dev/null
-+++ b/include/linux/compiler-context-analysis.h
-@@ -0,0 +1,32 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Macros and attributes for compiler-based static context analysis.
-+ */
-+
-+#ifndef _LINUX_COMPILER_CONTEXT_ANALYSIS_H
-+#define _LINUX_COMPILER_CONTEXT_ANALYSIS_H
-+
-+#ifdef __CHECKER__
-+
-+/* Sparse context/lock checking support. */
-+# define __must_hold(x)		__attribute__((context(x,1,1)))
-+# define __acquires(x)		__attribute__((context(x,0,1)))
-+# define __cond_acquires(x)	__attribute__((context(x,0,-1)))
-+# define __releases(x)		__attribute__((context(x,1,0)))
-+# define __acquire(x)		__context__(x,1)
-+# define __release(x)		__context__(x,-1)
-+# define __cond_lock(x, c)	((c) ? ({ __acquire(x); 1; }) : 0)
-+
-+#else /* !__CHECKER__ */
-+
-+# define __must_hold(x)
-+# define __acquires(x)
-+# define __cond_acquires(x)
-+# define __releases(x)
-+# define __acquire(x)		(void)0
-+# define __release(x)		(void)0
-+# define __cond_lock(x, c)	(c)
-+
-+#endif /* __CHECKER__ */
-+
-+#endif /* _LINUX_COMPILER_CONTEXT_ANALYSIS_H */
---- a/include/linux/compiler_types.h
-+++ b/include/linux/compiler_types.h
-@@ -37,6 +37,8 @@
- # define BTF_TYPE_TAG(value) /* nothing */
- #endif
+--- a/drivers/i2c/busses/i2c-qcom-cci.c
++++ b/drivers/i2c/busses/i2c-qcom-cci.c
+@@ -246,7 +246,7 @@ static int cci_reset(struct cci *cci)
+ 	return 0;
+ }
  
-+#include <linux/compiler-context-analysis.h>
-+
- /* sparse defines __CHECKER__; see Documentation/dev-tools/sparse.rst */
- #ifdef __CHECKER__
- /* address spaces */
-@@ -47,14 +49,6 @@
- # define __rcu		__attribute__((noderef, address_space(__rcu)))
- static inline void __chk_user_ptr(const volatile void __user *ptr) { }
- static inline void __chk_io_ptr(const volatile void __iomem *ptr) { }
--/* context/locking */
--# define __must_hold(x)	__attribute__((context(x,1,1)))
--# define __acquires(x)	__attribute__((context(x,0,1)))
--# define __cond_acquires(x) __attribute__((context(x,0,-1)))
--# define __releases(x)	__attribute__((context(x,1,0)))
--# define __acquire(x)	__context__(x,1)
--# define __release(x)	__context__(x,-1)
--# define __cond_lock(x,c)	((c) ? ({ __acquire(x); 1; }) : 0)
- /* other */
- # define __force	__attribute__((force))
- # define __nocast	__attribute__((nocast))
-@@ -75,14 +69,6 @@ static inline void __chk_io_ptr(const vo
+-static int cci_init(struct cci *cci)
++static void cci_init(struct cci *cci)
+ {
+ 	u32 val = CCI_IRQ_MASK_0_I2C_M0_RD_DONE |
+ 			CCI_IRQ_MASK_0_I2C_M0_Q0_REPORT |
+@@ -287,8 +287,6 @@ static int cci_init(struct cci *cci)
+ 		val = hw->scl_stretch_en << 8 | hw->trdhld << 4 | hw->tsp;
+ 		writel(val, cci->base + CCI_I2C_Mm_MISC_CTL(i));
+ 	}
+-
+-	return 0;
+ }
  
- # define __chk_user_ptr(x)	(void)0
- # define __chk_io_ptr(x)	(void)0
--/* context/locking */
--# define __must_hold(x)
--# define __acquires(x)
--# define __cond_acquires(x)
--# define __releases(x)
--# define __acquire(x)	(void)0
--# define __release(x)	(void)0
--# define __cond_lock(x,c) (c)
- /* other */
- # define __force
- # define __nocast
+ static int cci_run_queue(struct cci *cci, u8 master, u8 queue)
+@@ -598,9 +596,7 @@ static int cci_probe(struct platform_dev
+ 	if (ret < 0)
+ 		goto error;
+ 
+-	ret = cci_init(cci);
+-	if (ret < 0)
+-		goto error;
++	cci_init(cci);
+ 
+ 	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
+ 	pm_runtime_use_autosuspend(dev);
 
 
