@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C90326938;
-	Sat, 12 Sep 2026 14:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52ED3314B7;
+	Sat, 12 Sep 2026 14:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223704; cv=none; b=Cp8nk8et07E5S8XIKi1G0mlsnxuWbjy4vuB8b7XGDyD8tODju2kMTRPcDWx5q78q2TG0ZVVtHZ+IrVXr5nPC+CPG7ieHmFGkZ87/GkP0ELA6b4IFwsqHz4hJdA/4uRH2GMA8jcDpIa/PKFBvtAEnksszA02eT3nHk8ZF4wzY4d0=
+	t=1789223707; cv=none; b=AKAIHMX5b/DKRTFK7etyrhO/iWfe58/U8RuQrZV3pUvzfX5OkuoG45+ighyiokP2mMpKUdmPALXZMUvlYH/g0dO5JDtfHgqPQYlDwOC7wnOxA5suuI7dLXr4Ef3DWb8xu+ToB28SPUdRzWyUiOH61ua8Dj+oMEqAhaxF3SXNEa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223704; c=relaxed/simple;
-	bh=kCjgPG42e+Xr8EcDBrQ+7Dj+YS/Q41XdItD/Lcg905U=;
+	s=arc-20240116; t=1789223707; c=relaxed/simple;
+	bh=rX9tbc5Dd/1u7GiKcLtA57OXLuODuvBEHR+3Wubfy8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XDyQRBzIituM1xWDl/IjQkqB8Jyml45gOa/zKVLosfdTngoeYOqeqKiBfRtRLRtf/Vt8m6XyDGlw1j5I82kHVEq+M4Voeyq59Fjc09aGkFlx3boWw9RcTt1EdF4d1p0+pKGYem5PJO6ZkqHmGM7XZzB8NTWmDq+4HOy4LpVYoNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E95ajnjL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p9UAikLI08iDkRSbSwI36AumMc2I3VXpwhBsj58REuhG8UOfKkaM4S595CfAbGP42VE4YKMJSD1+sWhU6hWoNNIvkEWRKsTdcCkRL7juqfejap0baKfXmlKJBSM0I3CbKyKgQuvw/Twi4PUTGXkCM2ZetG3ULu0EqjB3JAO0gFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNXDlzpm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E95ajnjL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6311F000FF;
-	Sat, 12 Sep 2026 14:35:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNXDlzpm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B8D1F000FF;
+	Sat, 12 Sep 2026 14:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223702;
-	bh=m0SpRLkLbxQRVkG9MT3Lg1qGuovOKIDY/Kog/fRYxw0=;
+	s=korg; t=1789223706;
+	bh=AkyUIF6yyaDPa2YPYSh6AYd7tie/yYuv7pjk6bwOo3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E95ajnjLfhDYHGxcsJFCNx8Rb/o0yFXdiTt7CRd7qNiKOetDueciKj4L+B3q56ylZ
-	 uj760R8S7L7HGGV8e5ztiRcAcP5I+BrdEdxNC4ogDBuHpydMx2qT6I1satbirVQL8F
-	 rKPqU+9DDkmXCQzAUUxj+1fhf2HnPg2J7/XF63Y0=
+	b=fNXDlzpmFtrLu+GlTFN2Lx4se+rk7tBvIFepMC/hfhYaVq3r694EYRwcOzqChhPiI
+	 PZ1mFKsgvAGyg5kztHlRhGr2fbLcKvxQvkMCssORst/UGBQ60uNglLEIiqMM7tc+CZ
+	 OE0Vtmz8aL37itWfPn0R48vmTEZzZjIwSFLh52Ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Edward Srouji <edwards@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0842/1424] RDMA/core: Fix potential use after free in ib_destroy_cq_user()
-Date: Sat, 12 Sep 2026 08:54:34 +0200
-Message-ID: <20260912065626.165565746@linuxfoundation.org>
+Subject: [PATCH 6.6 0843/1424] RDMA/core: Fix potential use after free in ib_destroy_srq_user()
+Date: Sat, 12 Sep 2026 08:54:35 +0200
+Message-ID: <20260912065626.187758076@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -55,20 +55,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 3481bec4dfc4aee24ffea5a547ee95b70b67d9d5 ]
+[ Upstream commit 88244ecc71cc0b3ed200f5ef7ddea6686adfd730 ]
 
-When accessing a CQ via the netlink path the only synchronization
-mechanism for the said CQ is rdma_restrack_get().
+When accessing a SRQ via the netlink path the only synchronization
+mechanism for the said SRQ is rdma_restrack_get().
 Currently, rdma_restrack_del() is invoked at the end of
-ib_destroy_cq_user(), which is too late, since by that point
-vendor-specific resources associated with the CQ might already be
-freed. This can leave a short window where the CQ remains accessible
+ib_destroy_srq_user(), which is too late, since by that point
+vendor-specific resources associated with the SRQ might already be
+freed. This can leave a short window where the SRQ remains accessible
 through restrack, leading to a potential use-after-free.
 
 Fix this by moving the rdma_restrack_begin_del() call to the start of
-ib_destroy_cq_user(), ensuring that the CQ is removed from restrack
+ib_destroy_srq_user(), ensuring that the SRQ is removed from restrack
 before its internal resources are released. This guarantees that no new
-users hold references to a CQ that is in the process of destruction.
+users hold references to a SRQ that is in the process of destruction.
 
 In addition, this change preserves the intended inverted order
 between create and destroy routines: resources are added to
@@ -76,11 +76,11 @@ restrack at the end of successful creation, and hence shall be removed
 from the restrack first thing during the destruction flow, which keeps
 the lifecycle management consistent and predictable.
 
-Fixes: 08f294a1524b ("RDMA/core: Add resource tracking for create and destroy CQs")
+Fixes: 48f8a70e899f ("RDMA/restrack: Add support to get resource tracking for SRQ")
 Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
 Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
 Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/20260713-restrack-uaf-fix-resub-v2-3-bbe8bb270d51@nvidia.com
+Link: https://patch.msgid.link/20260713-restrack-uaf-fix-resub-v2-4-bbe8bb270d51@nvidia.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -88,27 +88,32 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
-index 90cb7904ba11f..1526ac853218a 100644
+index 1526ac853218a..68cff9faf225b 100644
 --- a/drivers/infiniband/core/verbs.c
 +++ b/drivers/infiniband/core/verbs.c
-@@ -2178,11 +2178,15 @@ int ib_destroy_cq_user(struct ib_cq *cq, struct ib_udata *udata)
- 	if (atomic_read(&cq->usecnt))
+@@ -1083,16 +1083,20 @@ int ib_destroy_srq_user(struct ib_srq *srq, struct ib_udata *udata)
+ 	if (atomic_read(&srq->usecnt))
  		return -EBUSY;
  
-+	rdma_restrack_begin_del(&cq->res);
++	rdma_restrack_begin_del(&srq->res);
 +
- 	ret = cq->device->ops.destroy_cq(cq, udata);
+ 	ret = srq->device->ops.destroy_srq(srq, udata);
 -	if (ret)
 +	if (ret) {
-+		rdma_restrack_abort_del(&cq->res);
++		rdma_restrack_abort_del(&srq->res);
  		return ret;
 +	}
  
--	rdma_restrack_del(&cq->res);
-+	rdma_restrack_commit_del(&cq->res);
- 	kfree(cq);
+ 	atomic_dec(&srq->pd->usecnt);
+ 	if (srq->srq_type == IB_SRQT_XRC && srq->ext.xrc.xrcd)
+ 		atomic_dec(&srq->ext.xrc.xrcd->usecnt);
+ 	if (ib_srq_has_cq(srq->srq_type))
+ 		atomic_dec(&srq->ext.cq->usecnt);
+-	rdma_restrack_del(&srq->res);
++	rdma_restrack_commit_del(&srq->res);
+ 	kfree(srq);
+ 
  	return ret;
- }
 -- 
 2.53.0
 
