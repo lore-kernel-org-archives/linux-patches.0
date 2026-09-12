@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 496F735E549;
-	Sat, 12 Sep 2026 11:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CADBCA6F;
+	Sat, 12 Sep 2026 11:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211552; cv=none; b=DubLO+q3LTCU822f9lhh7a4c5VjIc2WC61JaSfbt6r2P38HmWyazkXU+Wr6R8LXFQ4Wb4xK/ddHdv/nAnbQFWJKN5oTytWYUeEYgwIjOLOn9yraYiCvtx0gvLZwigsujcZz0PaUsjWRI0H4bxiZ4rdaT44yKdUqYL9eOn6+BUwk=
+	t=1789211557; cv=none; b=L0R8eu4wqVHoRg1fexHLVfHkig3atIaD2ZpmErRcjHrTdfQ2uGhVmwQ5qY2iprFnwZT8Dio+a1jPkBVxv8YgR2tMUJj0/KpP8E9fxmhPdzCtdBcB/2whVGB482b9TaXLUbnLUVm//L5rbZ+b0k+Sshu1b7MHjsg5NVcdDx1bmHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211552; c=relaxed/simple;
-	bh=zyQrx6sRq8BFyhjdIu++TB8Fadw0sTx5TptvG1iX7q0=;
+	s=arc-20240116; t=1789211557; c=relaxed/simple;
+	bh=hA0kXd1nt/tj9kwi4xzg0eBfJ/y8wBELO0lLjo6sD44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=imNgFGVbh0uh8Nhu/9kkSkc+2tm+CpS+NFHFLUvvd3lB9xS3RyQ5QfIL7+520q1EQQO1QzQ+lxTJOCGd9a5WTyYeAA5SzlUgNlYSYzXXZIDS0wkCCxGkuxymV/SBMCEYtfhyUvKaiHNR101p24YctgaJTe8S4hiwTzNnF9Lz9T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avvYgYbH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bdS3HM1z/9k91vyxFpsC8LPZjXGbTgwzL8bwVhd1Jw5m+XuTzAvcs/ZVGGO4R9w5zo8G1B9JWw5KIUuZGYhf4Ovxx4q3TpMSk6+eCqht5qWFbZ3EqlrxvyzeqzPWcCKuIBdnOZoWfu4t/0eq83SwRMXZ7WIS7K59SZhRub40JgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fA/vL4DM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avvYgYbH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5FAD1F000FF;
-	Sat, 12 Sep 2026 11:12:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fA/vL4DM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4251F000FF;
+	Sat, 12 Sep 2026 11:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211550;
-	bh=L0JKE77iZw9DI0JVRdpXDMEFdvB/t1IvkdZF/1b05sg=;
+	s=korg; t=1789211555;
+	bh=DL5h4j9rxGR+ztuX61ScCVSmMGaxzo/eGztH0XxnHyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=avvYgYbHCtNiwIC6G+FOgZ3jDdxtec55mI28Djq//rT7jsUPzEc5jlE86OxXSuzR/
-	 Rizje5osXRbBK3s6YgT6ugf46Csc7vNGyoYmd+9YEddJc9BK0dWf4mBtzt2wODm/UF
-	 JLIcYjNdANl9TtyP4LKEAi7UZlqj16oTzEoLzQdE=
+	b=fA/vL4DMPqt7ZCQzcDuGMTTEjeF5NuUUxQ2u6v4at9cnSoerKb2knuAMTfB7ZI/Ia
+	 NJlwzhOy7uGmq9lZFiH408CmatNh4x7uv3F5kHgxOw70YCt+buqPWE6TzTnC9metNj
+	 SVinDUpHQayWEdiUeFC31tluanKl5qjubssWDZqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1255/1518] bpf, xdp: move offload check into dev_xdp_install()
-Date: Sat, 12 Sep 2026 08:57:04 +0200
-Message-ID: <20260912065651.901488115@linuxfoundation.org>
+Subject: [PATCH 6.18 1256/1518] octeontx2-af: initialize lmac_bmap in rvu_mcs_set_lmac_bmap()
+Date: Sat, 12 Sep 2026 08:57:05 +0200
+Message-ID: <20260912065651.923821016@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,112 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit ad27ed7d2309419a129078d781504f486b1b469a ]
+[ Upstream commit 4b92a3710d4a1d850ed6421c773e735cdca69b07 ]
 
-bpf_xdp_link_update() calls dev_xdp_install() directly and skips
-dev_xdp_attach(), so the checks in dev_xdp_attach() do not run. A user can
-make an XDP link with a normal program and then swap in an offloaded or
-device-bound program with BPF_LINK_UPDATE, which puts it on the software
-path.
+rvu_mcs_set_lmac_bmap() declares lmac_bmap without initializing it and
+only sets bits for valid lmacs with set_bit(), which ORs into the word
+without clearing it first. Bits for invalid or skipped ports keep
+whatever was on the stack, and the garbage is stored into
+mcs->hw->lmac_bmap.
 
-dev_xdp_install() is the one place all three paths go through:
-"ip link set xdp" and BPF_LINK_CREATE reach it via dev_xdp_attach(), and
-BPF_LINK_UPDATE calls it directly. So move the program checks (offloaded,
-bound to another device, device-bound in generic mode, native vs generic,
-DEVMAP and CPUMAP) there, and keep only the netlink-flag check
-(XDP_FLAGS_UPDATE_IF_NOEXIST) in dev_xdp_attach().
+Initialize lmac_bmap to 0 so only valid lmacs are marked.
 
-Fixes: 026a4c28e1db3 ("bpf, xdp: Implement LINK_UPDATE for BPF XDP link")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Found with Clang's -Wconditional-uninitialized.
+
+Fixes: ca7f49ff8846 ("octeontx2-af: cn10k: Introduce driver for macsec block.")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260812060730.6181-1-kmehltretter@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 59 ++++++++++++++++++++++++++------------------------
- 1 file changed, 31 insertions(+), 28 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index e37c532c92aaa..966617838f403 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -10241,6 +10241,37 @@ static int dev_xdp_install(struct net_device *dev, enum bpf_xdp_mode mode,
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c b/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c
+index a80c8e7c94f28..d6c69ea7f10d7 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/mcs_rvu_if.c
+@@ -856,7 +856,7 @@ int rvu_mbox_handler_mcs_ctrl_pkt_rule_write(struct rvu *rvu,
+ static void rvu_mcs_set_lmac_bmap(struct rvu *rvu)
+ {
+ 	struct mcs *mcs = mcs_get_pdata(0);
+-	unsigned long lmac_bmap;
++	unsigned long lmac_bmap = 0;
+ 	int cgx, lmac, port;
  
- 	netdev_ops_assert_locked(dev);
- 
-+	if (prog) {
-+		enum bpf_xdp_mode other_mode = mode == XDP_MODE_SKB
-+					       ? XDP_MODE_DRV : XDP_MODE_SKB;
-+		bool offload = mode == XDP_MODE_HW;
-+
-+		if (!offload && dev_xdp_prog(dev, other_mode)) {
-+			NL_SET_ERR_MSG(extack, "Native and generic XDP can't be active at the same time");
-+			return -EEXIST;
-+		}
-+		if (!offload && bpf_prog_is_offloaded(prog->aux)) {
-+			NL_SET_ERR_MSG(extack, "Using offloaded program without HW_MODE flag is not supported");
-+			return -EINVAL;
-+		}
-+		if (bpf_prog_is_dev_bound(prog->aux) && !bpf_offload_dev_match(prog, dev)) {
-+			NL_SET_ERR_MSG(extack, "Program bound to different device");
-+			return -EINVAL;
-+		}
-+		if (bpf_prog_is_dev_bound(prog->aux) && mode == XDP_MODE_SKB) {
-+			NL_SET_ERR_MSG(extack, "Can't attach device-bound programs in generic mode");
-+			return -EINVAL;
-+		}
-+		if (prog->expected_attach_type == BPF_XDP_DEVMAP) {
-+			NL_SET_ERR_MSG(extack, "BPF_XDP_DEVMAP programs can not be attached to a device");
-+			return -EINVAL;
-+		}
-+		if (prog->expected_attach_type == BPF_XDP_CPUMAP) {
-+			NL_SET_ERR_MSG(extack, "BPF_XDP_CPUMAP programs can not be attached to a device");
-+			return -EINVAL;
-+		}
-+	}
-+
- 	if (dev->cfg->hds_config == ETHTOOL_TCP_DATA_SPLIT_ENABLED &&
- 	    prog && !prog->aux->xdp_has_frags) {
- 		NL_SET_ERR_MSG(extack, "unable to install XDP to device using tcp-data-split");
-@@ -10380,38 +10411,10 @@ static int dev_xdp_attach(struct net_device *dev, struct netlink_ext_ack *extack
- 		new_prog = link->link.prog;
- 
- 	if (new_prog) {
--		bool offload = mode == XDP_MODE_HW;
--		enum bpf_xdp_mode other_mode = mode == XDP_MODE_SKB
--					       ? XDP_MODE_DRV : XDP_MODE_SKB;
--
- 		if ((flags & XDP_FLAGS_UPDATE_IF_NOEXIST) && cur_prog) {
- 			NL_SET_ERR_MSG(extack, "XDP program already attached");
- 			return -EBUSY;
- 		}
--		if (!offload && dev_xdp_prog(dev, other_mode)) {
--			NL_SET_ERR_MSG(extack, "Native and generic XDP can't be active at the same time");
--			return -EEXIST;
--		}
--		if (!offload && bpf_prog_is_offloaded(new_prog->aux)) {
--			NL_SET_ERR_MSG(extack, "Using offloaded program without HW_MODE flag is not supported");
--			return -EINVAL;
--		}
--		if (bpf_prog_is_dev_bound(new_prog->aux) && !bpf_offload_dev_match(new_prog, dev)) {
--			NL_SET_ERR_MSG(extack, "Program bound to different device");
--			return -EINVAL;
--		}
--		if (bpf_prog_is_dev_bound(new_prog->aux) && mode == XDP_MODE_SKB) {
--			NL_SET_ERR_MSG(extack, "Can't attach device-bound programs in generic mode");
--			return -EINVAL;
--		}
--		if (new_prog->expected_attach_type == BPF_XDP_DEVMAP) {
--			NL_SET_ERR_MSG(extack, "BPF_XDP_DEVMAP programs can not be attached to a device");
--			return -EINVAL;
--		}
--		if (new_prog->expected_attach_type == BPF_XDP_CPUMAP) {
--			NL_SET_ERR_MSG(extack, "BPF_XDP_CPUMAP programs can not be attached to a device");
--			return -EINVAL;
--		}
- 	}
- 
- 	/* don't call drivers if the effective program didn't change */
+ 	for (port = 0; port < mcs->hw->lmac_cnt; port++) {
 -- 
 2.53.0
 
