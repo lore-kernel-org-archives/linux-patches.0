@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A7734752E;
-	Sat, 12 Sep 2026 11:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A0E332610;
+	Sat, 12 Sep 2026 11:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213744; cv=none; b=Be8W10Ilc4+hJE0K4Vb4QyFHgcb1dYDgMpL0Flu4CQCr59q9KoCyX+2VQoSz7nkuMcnQI/a2IywBlxFsn6BNPnJc6CkTTGGHv1uCwozyLtqJmOuYH8fhw+2OIpOJNy5LA9YOfI3TsEhrhHSHq1dwIyb88X58+XdCzaOdiTkoGOw=
+	t=1789213749; cv=none; b=OZqUlPFlSx3I09iZg/jM10AEWsA9PxjfzEwd7VENxLfL4g9RuZV/vBVm+JWfRlIYA8ZUOetLDjyGEfDijSa2jno72gQVyVtxzoNbjXB7o1VtWwlnrQdhw4+rf59Y+SFA+VGf+lwvU+hA1dnhXkpyX6rkD1SdQUQdbaBubymZ3hE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213744; c=relaxed/simple;
-	bh=36Ux6iS02vtc9fuAKO812LQLOqXfs52XG9FVQwKSFAw=;
+	s=arc-20240116; t=1789213749; c=relaxed/simple;
+	bh=FJ9ieRMdIlAS1Is4FXYqA4sDoIoyJQU1naLNEVe1UiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TSq2qG0ilI7yxFzRGKyuRiw1Pn1zcy5RlGvNHReZ3+/WFMDpMQq2/8UVlgKiRWVkc3RMoSz1bNA5eyLb2Jfi8i84pB33Vbp3FPEJiygsUQSYseVVCUdGeGiPHzwSFgXZw+5MZEdL8Qpr6GL+9747wwZkgOgLJZqQoi0yoYgLI0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBiAu9l+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u1m2mmQb5We64mbJ3i5zpFJ5s5kYNbpIG1O0rc37pHmv0ewwg+sMIIO4bo8Qr2QDCtCXaaTjJ63HmtfKVb6D95tK2Yh4czhfSqTDTr29XwnGYm6r5NzFBrGTIN9IM1s5bChJFsMH99qAaCjSza4uSj/AuSDsFSh8fZFG1nLwzEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMTPVGJt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBiAu9l+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AED51F000FF;
-	Sat, 12 Sep 2026 11:49:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMTPVGJt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA6621F000FF;
+	Sat, 12 Sep 2026 11:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213742;
-	bh=Ap+9zF73wsXmqLGK+jIqqIJFF9jiU4rS6LWWpKsD2eM=;
+	s=korg; t=1789213747;
+	bh=Hf3zKfEQGIhYJ5HoPTYqU/jA+BaXUdHVwoY+v3QBSAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SBiAu9l+MG5LelW4jeVsrn5CM+6RZjzME9UIrfNFvvg8BVBFXmAIFFppd8E0r9N2z
-	 ipBJC7BAF6tqijZ7gx4GqS5dOKyITGfB1XC6CTA02PVAqjjt377qu7H8qUwMzPNtN3
-	 gfvZiloaUGjEQhTMt5VjS8sgKIOC8RdHV4i45meg=
+	b=FMTPVGJtcgzQeKO7JyjXVal8Txl1XAWwHnEvVbq7JsH3jxbUXpXD1GKMw9VlScS/X
+	 pQOCwgpdcvhSu2WOGVC3qffeZXjsVulCk5pOUJ2IaeBN7OqAix7ry7HsCOkY0QRxbZ
+	 9/lMUAryKUfs0+znW0k7zfRKA2RFI+QjUA5a2Pjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+051024d603432b4ab395@syzkaller.appspotmail.com,
-	Hillf Danton <hdanton@sina.com>,
-	Biren Pandya <birenpandya@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 0182/1376] media: cec: disable delayed work before freeing an interrupted transmit
-Date: Sat, 12 Sep 2026 08:43:28 +0200
-Message-ID: <20260912065611.607391471@linuxfoundation.org>
+	Linmao Li <lilinmao@kylinos.cn>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.12 0141/1376] iio: chemical: sgp30: Handle IAQ thread creation failure
+Date: Sat, 12 Sep 2026 08:42:47 +0200
+Message-ID: <20260912065610.695559345@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,45 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biren Pandya <birenpandya@gmail.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-commit 0fbd5c2327020858c45b2d1c65775d64cdeca523 upstream.
+commit 1135d6875d2dbda3f6ec718f3421a6ce4378bd63 upstream.
 
-cec_transmit_msg_fh() drops adap->lock to wait for a blocking transmit in
-wait_for_completion_killable(). If that wait is interrupted by a signal,
-cancel_delayed_work_sync() can run before the CEC kthread arms the reply
-timeout via schedule_delayed_work(&data->work) in cec_transmit_done_ts().
-The work is then armed after the cancel, and the data is freed with its
-delayed_work still pending:
+kthread_run() can fail and return an error pointer, but sgp_probe() stores
+it and returns success, so the device is registered without its IAQ thread
+and sgp_remove() later passes the error pointer to kthread_stop(). Return
+the error from probe instead.
 
-  ODEBUG: free active (active state 0) object: ... hint: cec_wait_timeout
-
-Use disable_delayed_work_sync(): it cancels the work and disables it, so
-the later schedule_delayed_work() becomes a no-op and the work cannot be
-re-armed. The data is freed right after, so it need not be re-enabled.
-
-Fixes: 490d84f6d73c ("media: cec: forgot to cancel delayed work")
-Reported-by: syzbot+051024d603432b4ab395@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=051024d603432b4ab395
-Suggested-by: Hillf Danton <hdanton@sina.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Biren Pandya <birenpandya@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: ce514124161a ("iio: chemical: sgp30: Support Sensirion SGP30/SGPC3 sensors")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/cec/core/cec-adap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/chemical/sgp30.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/media/cec/core/cec-adap.c
-+++ b/drivers/media/cec/core/cec-adap.c
-@@ -964,7 +964,7 @@ int cec_transmit_msg_fh(struct cec_adapt
- 	 */
- 	mutex_unlock(&adap->lock);
- 	err = wait_for_completion_killable(&data->c);
--	cancel_delayed_work_sync(&data->work);
-+	disable_delayed_work_sync(&data->work);
- 	mutex_lock(&adap->lock);
+--- a/drivers/iio/chemical/sgp30.c
++++ b/drivers/iio/chemical/sgp30.c
+@@ -548,6 +548,9 @@ static int sgp_probe(struct i2c_client *
  
- 	if (err)
+ 	data->iaq_thread = kthread_run(sgp_iaq_threadfn, data,
+ 				       "%s-iaq", data->client->name);
++	if (IS_ERR(data->iaq_thread))
++		return dev_err_probe(dev, PTR_ERR(data->iaq_thread),
++				     "failed to start IAQ thread\n");
+ 
+ 	return 0;
+ }
 
 
