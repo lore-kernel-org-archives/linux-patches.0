@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083C436E484;
-	Sat, 12 Sep 2026 10:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982F83F20E8;
+	Sat, 12 Sep 2026 10:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207614; cv=none; b=KynJEKQpl5mWXpwgp4PSods/XI7U+LBna9zLao8Iswb7a/Vge0qULrQh38hRafE3uJj2i/HtPdWCsNBv+6BDA3B6fzdMMteyJVIIgK8B74aNTX/K7fSsEnIfz0rFkvrq9ASyIDUFGyvc6ehKgF2oR5qe9DGmDtNbbUSiDG7r4Eo=
+	t=1789207619; cv=none; b=sjm5L0kQP3tG0ybJUnFKmVDcRE+oKMj7CrgeZFQAx+0hRM8SExajnMdzGcUbmcW8/0bcnjZ03zyxWmly8E9wivFH7ZhrPnfbGM26Xn4Ob50CFLzDYmcz+0QKwP4VaDF9fxnNWxxvVbh0AyCUSS94Uc5sRacchpHOiWiE2UG7HzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207614; c=relaxed/simple;
-	bh=0+6M5gRMFxCkx3xS5FIJCplWSbXPh2qd3OPX/AQMT7o=;
+	s=arc-20240116; t=1789207619; c=relaxed/simple;
+	bh=X3Z9qLUi41fekDWX6uMjaUPZw3Ppx7JbVi0UjYoGNOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RjY8KoH0QIB2UNV5wQXnu3Ty6I5GezD8Ml/xFL+tP/0lJwgPOduUNjDxC6d5wHSLZiC1+z39bcPB41ohyCVymK13NTCYGQa2Jfafa+YqjFjZIeP3V+j9PCPw8W1tXcx9zscQPJ+kXiTV75Ct0RsIOX0tvvE7QystE9wXqbqMdho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ma6hd1sY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jxSdH+ITlbNgmE/01oZw1AQLMvU5gMv4qBGT4DEX8adFLzmigvI0xU97WEs8DEqhi2L+Etz2cTdLoVdKzwHVGB++8GfMHubijs5wUHuqP44aRGO6uIEDKyzJuYeyAUw3tpSnaUEyeyl8xO+A4EJtDG+l3QmpFbFWfUNUxNHGa50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYI0UbXw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ma6hd1sY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11AE1F000FF;
-	Sat, 12 Sep 2026 10:06:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYI0UbXw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7E71F000FF;
+	Sat, 12 Sep 2026 10:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207612;
-	bh=N7qd6lDtlvM6HJyINYJE4kqbWTdNRGebqEuAkMTYsps=;
+	s=korg; t=1789207617;
+	bh=JQwEEcchfRcuZtOFCRv0wnt++KDZxzAFGNrVJ10hWfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ma6hd1sYmm2sV28EehZj+sFyoA7bkyUpXMZYVCiIqawQ1EoR4cjHYwjHNh6AIs9/E
-	 4yi/0adLDjV8ZG8XidcAcJOMamD0HW1h229lzq4/H8AJkvwfnVIEgiSqX/gXDgMN67
-	 X18JeeFaaJaWX8GtlP/aqA8BXK+3mDldbMgom/MQ=
+	b=VYI0UbXwxIvBi3kD/2ByPbI8E/Um8x+1JIhuoSMknpWRJsFtTXiiR/JLa4xF1230U
+	 ieA9TRrN6xDHdD8vcHyRRp2rNn/7dUCwKUm5Im4xgZHCkooZxYm5ds32wWANZs+smB
+	 KxsGU6z4j7MTdv0JAy1L4wdbN1DC0TAc/gsKKOzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
-	Dan Carpenter <error27@gmail.com>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0447/1518] staging: rtl8723bs: fix xmit_frame/xmit_buf leaks on mgnt-frame error paths
-Date: Sat, 12 Sep 2026 08:43:36 +0200
-Message-ID: <20260912065633.561614740@linuxfoundation.org>
+Subject: [PATCH 6.18 0448/1518] gpib: Move stuck SRQ update under lock
+Date: Sat, 12 Sep 2026 08:43:37 +0200
+Message-ID: <20260912065633.584618828@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,106 +50,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit 41b8209376dffbd7b0b85c8bc4697d9166ac62ef ]
+[ Upstream commit 7ddb521ab097413fbdff483b53b4a8c73a0e2b40 ]
 
-issue_beacon(), issue_probersp() and issue_asocrsp() obtain a management
-xmit_frame together with its xmit_buf from the driver's fixed-size
-management-TX pools via alloc_mgtxmitframe(). On the normal path the frame
-is handed to dump_mgntframe(), which transfers ownership and eventually
-returns both objects to their pools (the frame and, for beacons, the buf
-in rtl8723bs_mgnt_xmit(); other bufs via the pending-xmitbuf/TX-completion
-path).
+Move the stuck SRQ state update into autopoll_all_devices() and keep it
+under big_gpib_mutex. Except for initialization, keep the stuck_srq users
+under this mutex.
 
-Several error/edge paths return early after a successful
-alloc_mgtxmitframe() but before dump_mgntframe(), so ownership is never
-transferred and neither object is freed:
+autopoll_all_devices() is only called by autospoll_thread(), so there is
+no need to return to autospoll_thread() and set this state after dropping
+big_gpib_mutex.
 
-  - issue_beacon(): beacon larger than 512 bytes
-  - issue_probersp(): cur_network->ie_length > MAX_IE_SZ
-  - issue_probersp(): kzalloc() of the SSID scratch buffer fails
-  - issue_asocrsp(): pkt_type is neither ASSOCRSP nor REASSOCRSP
+Without the mutex, a newly opened device can clear stuck_srq and have
+that clear overwritten by the previous autospoll result:
 
-Because alloc_mgtxmitframe() removes the frame and buf from their free
-lists (list_del_init) without placing them on any pending list, an
-orphaned pair is on no list and referenced by nobody, so it is only
-reclaimed at driver teardown. Repeated hits progressively exhaust the
-management-TX pools until alloc_mgtxmitframe() returns NULL and the
-interface can no longer send beacons or probe/assoc responses.
+  autospoll: serial_poll_all() returns 0 and unlocks big_gpib_mutex
+  open_dev_ioctl: open new device and clear stuck_srq
+                  with big_gpib_mutex held
+  autospoll: set stuck_srq
 
-Free the frame and buffer on these paths, matching the existing correct
-error handling in issue_assocreq().
+That leaves the board marked stuck again after the new device is opened.
+autospoll_wait_should_wake_up() then refuses to poll while stuck_srq is
+set, so later SRQ handling can be mistakenly suppressed.
 
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Link: https://patch.msgid.link/20260715111710.295052-1-congnt264@gmail.com
+Without the mutex, atomic_set() and set_bit() only make individual
+updates atomic. They do not order the two updates or make stuck_srq and
+status visible as a consistent pair. Taking big_gpib_mutex serializes the
+state transition with the other runtime users.
+
+Keep the existing wakeup behavior unchanged and only move the stuck SRQ
+state update under the mutex.
+
+Fixes: 9dde4559e939 ("staging: gpib: Add GPIB common core driver")
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://patch.msgid.link/20260522073447.4117690-1-hanguidong02@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme_ext.c | 22 ++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ drivers/staging/gpib/common/gpib_os.c | 21 +++++++++++----------
+ drivers/staging/gpib/common/iblib.c   |  3 ---
+ 2 files changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-index 8f7b5e2dce2f5..8d33631ab8f0f 100644
---- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-@@ -2248,8 +2248,11 @@ void issue_beacon(struct adapter *padapter, int timeout_ms)
+diff --git a/drivers/staging/gpib/common/gpib_os.c b/drivers/staging/gpib/common/gpib_os.c
+index a2bed6bd757a0..b223bd23a8422 100644
+--- a/drivers/staging/gpib/common/gpib_os.c
++++ b/drivers/staging/gpib/common/gpib_os.c
+@@ -289,18 +289,19 @@ int autopoll_all_devices(struct gpib_board *board)
+ 	dev_dbg(board->gpib_dev, "autopoll has board lock\n");
  
- 	spin_unlock_bh(&pmlmepriv->bcn_update_lock);
+ 	retval = serial_poll_all(board, serial_timeout);
+-	if (retval < 0)	{
+-		mutex_unlock(&board->big_gpib_mutex);
+-		mutex_unlock(&board->user_mutex);
+-		return retval;
++	if (retval >= 0) {
++		dev_dbg(board->gpib_dev, "complete\n");
++		/*
++		 * need to wake wait queue in case someone is
++		 * waiting on RQS
++		 */
++		wake_up_interruptible(&board->wait);
+ 	}
  
--	if ((pattrib->pktlen + TXDESC_SIZE) > 512)
-+	if ((pattrib->pktlen + TXDESC_SIZE) > 512) {
-+		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
-+		rtw_free_xmitframe(pxmitpriv, pmgntframe);
- 		return;
+-	dev_dbg(board->gpib_dev, "complete\n");
+-	/*
+-	 * need to wake wait queue in case someone is
+-	 * waiting on RQS
+-	 */
+-	wake_up_interruptible(&board->wait);
++	if (retval <= 0) {
++		atomic_set(&board->stuck_srq, 1);
++		set_bit(SRQI_NUM, &board->status);
 +	}
+ 	mutex_unlock(&board->big_gpib_mutex);
+ 	mutex_unlock(&board->user_mutex);
  
- 	pattrib->last_txcmdsz = pattrib->pktlen;
- 
-@@ -2311,8 +2314,11 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
- 	pattrib->pktlen = pattrib->hdrlen;
- 	pframe += pattrib->hdrlen;
- 
--	if (cur_network->ie_length > MAX_IE_SZ)
-+	if (cur_network->ie_length > MAX_IE_SZ) {
-+		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
-+		rtw_free_xmitframe(pxmitpriv, pmgntframe);
- 		return;
-+	}
- 
- 	if ((pmlmeinfo->state&0x03) == WIFI_FW_AP_STATE) {
- 		pwps_ie = rtw_get_wps_ie(cur_network->ies+_FIXED_IE_LENGTH_, cur_network->ie_length-_FIXED_IE_LENGTH_, NULL, &wps_ielen);
-@@ -2359,8 +2365,11 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
- 			u8 *ies = pmgntframe->buf_addr+TXDESC_OFFSET+sizeof(struct ieee80211_hdr_3addr);
- 
- 			buf = kzalloc(MAX_IE_SZ, GFP_ATOMIC);
--			if (!buf)
-+			if (!buf) {
-+				rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
-+				rtw_free_xmitframe(pxmitpriv, pmgntframe);
- 				return;
-+			}
- 
- 			ssid_ie = rtw_get_ie(ies+_FIXED_IE_LENGTH_, WLAN_EID_SSID, &ssid_ielen,
- 				(pframe-ies)-_FIXED_IE_LENGTH_);
-@@ -2744,10 +2753,13 @@ void issue_asocrsp(struct adapter *padapter, unsigned short status, struct sta_i
- 
- 	SetSeqNum(pwlanhdr, pmlmeext->mgnt_seq);
- 	pmlmeext->mgnt_seq++;
--	if ((pkt_type == WIFI_ASSOCRSP) || (pkt_type == WIFI_REASSOCRSP))
-+	if ((pkt_type == WIFI_ASSOCRSP) || (pkt_type == WIFI_REASSOCRSP)) {
- 		SetFrameSubType(pwlanhdr, pkt_type);
--	else
-+	} else {
-+		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
-+		rtw_free_xmitframe(pxmitpriv, pmgntframe);
- 		return;
-+	}
- 
- 	pattrib->hdrlen = sizeof(struct ieee80211_hdr_3addr);
- 	pattrib->pktlen += pattrib->hdrlen;
+diff --git a/drivers/staging/gpib/common/iblib.c b/drivers/staging/gpib/common/iblib.c
+index b672dd6aad25f..511e1d61c1fb2 100644
+--- a/drivers/staging/gpib/common/iblib.c
++++ b/drivers/staging/gpib/common/iblib.c
+@@ -193,9 +193,6 @@ static int autospoll_thread(void *board_void)
+ 		}
+ 		if (retval <= 0) {
+ 			dev_err(board->gpib_dev, "stuck SRQ\n");
+-
+-			atomic_set(&board->stuck_srq, 1);	// XXX could be better
+-			set_bit(SRQI_NUM, &board->status);
+ 		}
+ 	}
+ 	return retval;
 -- 
 2.53.0
 
