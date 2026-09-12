@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9E53CF1FF;
-	Sat, 12 Sep 2026 14:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E43738398F;
+	Sat, 12 Sep 2026 14:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225066; cv=none; b=pawAnCbogLKitzpTf6BdtE1qEcmBge2BsSbCSKHyw4DGmAgAf2DOOQTNO2+grZj/ZdJMQyn+5u6BtSKA00+eOnM7v6zW8VJ3b5grqFOOhCnVS0ZMHtNHkal/RVR/61vhVvv0k16eWrH59m39EPTMDYt2BEaHP8lyR1Gf93KjY2s=
+	t=1789225073; cv=none; b=trs8BRP3zVXijcbREXn4uDdPxN29A8YvecPnNcPTQqXflIQgPRsdkOZk5uLikahSncsGN6e5+EvCJ0DAX9Q4AzBRx//0cfT/hIDp7Hu35fulTpAU+AkOF41AyRaWxqZpCYZPLUqRMxQc6GT57q2zUakl6KQtIP3SN4HbEZxblSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225066; c=relaxed/simple;
-	bh=Tha4+7Vi7fm5ueG3v4LGdHZyiBsXIehQo46jnm5r+eI=;
+	s=arc-20240116; t=1789225073; c=relaxed/simple;
+	bh=KCRYyOYMPWy7smNIi0aNhAm6u6/DQB5Q1dXrRUyjDI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j3mxqM4Igq1nCIZkm3nOKsUbfRktN6cdwFRAw8qGBAXjIDKX6wjvCBk3t6Nf5EbkVX4pCxWqZ580/3tjTjZuU0wIhG3FDTpdFV1ja3BAxu3ywtizPHpo2yV7VfNyz1ns+QXWccLBzfdUeLdt7EPy3XxH4XwzKeQl4sk6vdLpg5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c6Kz7PRs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hS3tRSce77ZNKM1yhswxNFQNP7FUCSb4BNnkVj/NUk8tnlSt67qIg0ZjiGP05C6KBt3ngipHHmOZNmcJLHsx/5HVIQ+fPIEGMz65mPoeCKEQZRqM+VCBadZe76cMwbG0he0Gya3EpoQwBnxIGUn+lVkJhf1tQy1zz+i92x5Z2D8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDYNv7FM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6Kz7PRs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12EF1F000FF;
-	Sat, 12 Sep 2026 14:57:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDYNv7FM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7481F000FF;
+	Sat, 12 Sep 2026 14:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225064;
-	bh=UC24p4fifbSomlVMO72IFzwiYEkWXhdAptAnOxqDQ8w=;
+	s=korg; t=1789225069;
+	bh=sEWPhg89Cl75xIG7sMVGCwR1iDw3uXd9VVAojvQXx6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c6Kz7PRsjZEvqOGHDJhDWvXRXHszYdZENF2iJZE6LX7qUx7db46CyiXn6MkK/lyoU
-	 LqfR+lg2de/Ee8nuBqR5NjQg1b80Cs4YDUeamB0VKXhyBou5Es2cqAsEqlDNd4gbiN
-	 XQxzLr8XmIz2r2GSv0hZwg7vqvRKqy/jZ/UQXpNY=
+	b=eDYNv7FMOFmFHj9aZL/wKHC4U+rx8YwJdCwQEAlZiFt8LeY2zxBNW82B3w/hG+BVe
+	 eJ8JCVdvNV+WJlbNV/mHjF0y7fYHL0hKn/DJIIT52xyR+0L/7E9l3H1GlLXMdzf2i3
+	 V0FQBSF5BBAJCARVILd2Feg8PS+2KhI+7jxvk+f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zijun Hu <zijun.hu@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1121/1424] Bluetooth: btusb: Record matched usb_device_id into btusb_data
-Date: Sat, 12 Sep 2026 08:59:13 +0200
-Message-ID: <20260912065632.406513018@linuxfoundation.org>
+Subject: [PATCH 6.6 1122/1424] Bluetooth: btusb: QCA: Fix populating devcoredump fields on unenabled devices
+Date: Sat, 12 Sep 2026 08:59:14 +0200
+Message-ID: <20260912065632.427864467@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,39 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit ff50db7a522e7bd3bd1c4db6da715e4bdb53af97 ]
+[ Upstream commit 33c6a8d01889a84cc773c0c20c8323bce84af27d ]
 
-Add @match_id to btusb_data to record the matched usb_device_id
-which will be used later.
+Devcoredump is not enabled for ATH3012 or QCA_ROME, but they
+unconditionally populate devcoredump fields in btusb_setup_qca().
 
+Fix by populating devcoredump fields only when BTUSB_QCA_WCN6855 is
+set, which marks the first generation of QCA BT SoCs for which
+devcoredump is enabled.
+
+Fixes: 20981ce2d5a5 ("Bluetooth: btusb: Add WCN6855 devcoredump support")
 Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 33c6a8d01889 ("Bluetooth: btusb: QCA: Fix populating devcoredump fields on unenabled devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/bluetooth/btusb.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 6ff4710bb6336..69459a90126df 100644
+index 69459a90126df..1edf8674dd108 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -913,6 +913,7 @@ struct btusb_data {
- 	bool usb_alt6_packet_flow;
- 	int isoc_altsetting;
- 	int suspend_count;
-+	const struct usb_device_id *match_id;
+@@ -3468,8 +3468,10 @@ static int btusb_setup_qca(struct hci_dev *hdev)
+ 	if (err < 0)
+ 		return err;
  
- 	int (*recv_event)(struct hci_dev *hdev, struct sk_buff *skb);
- 	int (*recv_acl)(struct hci_dev *hdev, struct sk_buff *skb);
-@@ -3744,6 +3745,7 @@ static int btusb_probe(struct usb_interface *intf,
- 	if (!data)
- 		return -ENOMEM;
+-	btdata->qca_dump.fw_version = le32_to_cpu(ver.patch_version);
+-	btdata->qca_dump.controller_id = le32_to_cpu(ver.rom_version);
++	if (btdata->match_id->driver_info & BTUSB_QCA_WCN6855) {
++		btdata->qca_dump.fw_version = le32_to_cpu(ver.patch_version);
++		btdata->qca_dump.controller_id = le32_to_cpu(ver.rom_version);
++	}
  
-+	data->match_id = id;
- 	err = usb_find_common_endpoints(intf->cur_altsetting, &data->bulk_rx_ep,
- 					&data->bulk_tx_ep, &data->intr_ep, NULL);
- 	if (err) {
+ 	if (!(status & QCA_SYSCFG_UPDATED)) {
+ 		err = btusb_setup_qca_load_nvm(hdev, &ver, info);
 -- 
 2.53.0
 
