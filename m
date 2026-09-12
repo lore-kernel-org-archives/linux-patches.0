@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DFF356744;
-	Sat, 12 Sep 2026 11:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CEF356744;
+	Sat, 12 Sep 2026 11:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211341; cv=none; b=DV87aLTLWn5muuh2IUgODL01F10Val5l4baWpHg/2iGUxqqMxjT8ie9fD4mkvxFmdREKPTwsOL8Imz4Ktp+tHN/iSiOAgi5ETZkDuRcKlAR8CT5RSGMN7PegdRek5M39doq6WGQcdrt6bSaR34gupHAnqXeACxe6aUME+MYaE9M=
+	t=1789211347; cv=none; b=ktFhK5wQ0QwMaXFtERdeexYbwqzh5F+lxzZtXNUvHK41P/QRh/WldK1PQwrg9IwPnj4d+aJ8hJD83Go9B2LSWFDp5dzYFSdFtnjZBJ8uQnTP1OjYY+GffFtPoOGeGm2jWmIYwXt1X/aYRUaEZzM/9f47U5WILOlRdjH14Ft/KeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211341; c=relaxed/simple;
-	bh=tH/fTQPG9DmkxKVbDJ1LHNrJTynWGvkBz1cIigLFd5c=;
+	s=arc-20240116; t=1789211347; c=relaxed/simple;
+	bh=r5kQIcucTzrj52dOrWdHoK//BJZj2KOxbcSR/vw7mFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PrDiZGPPWg296ZycJhVZZIotGfEnnDsB+knX0MsTF5b7p8yJTSESgcmK9q7+OeiZAaMM1ZlK9ixHuOgQ7gEJZw6sY/IlE4pzn5iqpm8sPM4pdAGsYHzZK56IHHipd7GfObHantFOFePqsGp02nRu9iDHlfX0eniw3tjM5pX8f0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvtyRkUq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q6HH9eeeErBFHdHGHT2K+qxGCSy30G9yGmbbxFFL1ZyhfIF1V8I41vJbKmw+KMP/wYG9niEsVjkGfWpoq/vfXwuJzWfhIaBSLuLKVbQaGutgba8WqrfxU9fTazY6XiDqRJzrQiTGb07ZpZi31kgt9KjLfHzGeM5v7C+Cbr3SDm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6Kt6M0p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvtyRkUq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977E71F000FF;
-	Sat, 12 Sep 2026 11:08:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6Kt6M0p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4471F000FF;
+	Sat, 12 Sep 2026 11:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211340;
-	bh=9TPdraz1+i2CfLn6ORjocxBFUYyTHa0SuCSby1XdBVY=;
+	s=korg; t=1789211345;
+	bh=YF+dSEpmZ4X/SLVIg0d+MniDh0CmwYHtgh/h2vb7eKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AvtyRkUqfAM+Oeg7LIsQY/9V/74mZFcFOKJi14M7IiDB7EAEWPSVgViGGVJbJfzds
-	 RxVAn1ZBdsc91j55QjU070Ct0C6SYs9XKExS9/lXHRcTcH9w2T6hTQw6tDg29j15wh
-	 kslhZCyZ7Gf1+wb9hPV/9B4g+QzvJsaJkmbHh/3E=
+	b=G6Kt6M0pGvHBsW1nDTnMVeRoLEjoc/nnUcVGpsxfixKfZtZLdrJQ0kD/MZ38YQYSb
+	 imV4mfgHVjXACbIoV8v6UsMeGTsqT44pZxHpLClXLFvtaIwgZ5QB6X+aB5QKk/bWXg
+	 XSARV2SEI+NCvIPv7SWAy+u3SlPf2w3efeJ8bawo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Song Liu <song@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1194/1518] selftests/bpf: Use ping_command() for IPv6 pings in lwt_ip_encap
-Date: Sat, 12 Sep 2026 08:56:03 +0200
-Message-ID: <20260912065650.490151621@linuxfoundation.org>
+Subject: [PATCH 6.18 1212/1518] mailbox: riscv-sbi-mpxy: validate RPMI notification lengths
+Date: Sat, 12 Sep 2026 08:56:21 +0200
+Message-ID: <20260912065650.905980921@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,75 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 073574da7a8e6055b1687c256bea070ab4b4ebea ]
+[ Upstream commit 11d5af151bcbe78f5a579e0faecd3be9cea0399a ]
 
-lwt_ip_encap hardcodes the ping6 binary for its IPv6 pings. iputils
-merged ping6 into ping long ago and distros have started dropping the
-compat symlink -- Arch's iputils 20250605 ships only arping, clockdiff,
-ping and tracepath. There, every lwt_ip_encap subtest fails:
+The SBI return value controls how many bytes are copied from shared
+memory into the RPMI notification buffer. It is not validated against
+the negotiated shared-memory size before that copy. The event walker
+also uses a reversed loop condition and can inspect a short event record.
 
-  check_ping_ok:FAIL:ip netns exec ns-lwt-ip-encap-1-0101330 ping6 -c 1 \
-    -W1 -I veth1 fb04::1 > /dev/null unexpected error: 256 (errno 2)
-  #217/1   lwt_ip_encap_ipv4/egress:FAIL
+Validate the complete notification length before copying it, iterate only
+while a full event header remains, and stop when a declared event payload
+extends beyond the copied notification data.
 
-The IPv4 subtests fail too, because check_ping_ok() pings both families.
-SYS() runs the command through system(), so a missing binary is
-indistinguishable from an unreachable peer.
-
-network_helpers.c has had ping_command() for exactly this since commit
-372642ea83ff ("selftests/bpf: Move netcnt test under test_progs"): it
-falls back to "ping -6" when ping6 is not present. lwt_ip_encap.c is the
-last hardcoded ping6 user. Fix that.
-
-Fixes: f5e288943e2c ("selftests/bpf: Move test_lwt_ip_encap to test_progs")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/bpf/20260813213558.3103179-1-andrii@kernel.org
+Fixes: bf3022a4eb11 ("mailbox: Add RISC-V SBI message proxy (MPXY) based mailbox driver")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/mailbox/riscv-sbi-mpxy-mbox.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c b/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c
-index 6606f0ed9a9a9..39e8a3b8b6afb 100644
---- a/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c
-+++ b/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c
-@@ -410,7 +410,8 @@ static int test_gso_fix(const char *ns1, const char *ns3, int family)
- static int check_ping_ok(const char *ns1)
- {
- 	SYS(fail, "ip netns exec %s ping -c 1 -W1 -I veth1 %s > /dev/null", ns1, IP4_ADDR_DST);
--	SYS(fail, "ip netns exec %s ping6 -c 1 -W1 -I veth1 %s > /dev/null", ns1, IP6_ADDR_DST);
-+	SYS(fail, "ip netns exec %s %s -c 1 -W1 -I veth1 %s > /dev/null", ns1,
-+	    ping_command(AF_INET6), IP6_ADDR_DST);
- 	return 0;
- fail:
- 	return -1;
-@@ -424,7 +425,8 @@ static int check_ping_fails(const char *ns1)
- 	if (!ret)
- 		return -1;
+diff --git a/drivers/mailbox/riscv-sbi-mpxy-mbox.c b/drivers/mailbox/riscv-sbi-mpxy-mbox.c
+index 7c9c006b7244a..714f7fb97a2fd 100644
+--- a/drivers/mailbox/riscv-sbi-mpxy-mbox.c
++++ b/drivers/mailbox/riscv-sbi-mpxy-mbox.c
+@@ -314,8 +314,13 @@ static int mpxy_get_notifications(u32 channel_id,
+ 			 channel_id, 0, 0, 0, 0, 0);
+ 	if (sret.error)
+ 		goto err_put_cpu;
++	if (sret.value < 0 || mpxy_shmem_size < sizeof(*notif_data) ||
++	    sret.value > mpxy_shmem_size - sizeof(*notif_data)) {
++		put_cpu();
++		return -EOVERFLOW;
++	}
  
--	ret = SYS_NOFAIL("ip netns exec %s ping6 -c 1 -W1 -I veth1 %s", ns1, IP6_ADDR_DST);
-+	ret = SYS_NOFAIL("ip netns exec %s %s -c 1 -W1 -I veth1 %s", ns1,
-+			 ping_command(AF_INET6), IP6_ADDR_DST);
- 	if (!ret)
- 		return -1;
+-	memcpy(notif_data, mpxy->shmem, sret.value + 16);
++	memcpy(notif_data, mpxy->shmem, sret.value + sizeof(*notif_data));
+ 	*events_data_len = sret.value;
  
-@@ -657,9 +659,10 @@ static void lwt_ip_encap_vxlan(bool ipv4_encap)
- 	skel->bss->fexit_triggered = false;
+ err_put_cpu:
+@@ -480,11 +485,14 @@ static void mpxy_mbox_peek_rpmi_data(struct mbox_chan *chan,
+ 	struct rpmi_mbox_message msg;
+ 	unsigned long pos = 0;
  
- 	if (ipv4_encap)
--		SYS(out, "ip netns exec %s ping  -c 1 -W1 %s", ns1, IP4_ADDR_DST);
-+		SYS(out, "ip netns exec %s ping -c 1 -W1 %s", ns1, IP4_ADDR_DST);
- 	else
--		SYS(out, "ip netns exec %s ping6 -c 1 -W1 %s", ns1, IP6_ADDR_DST);
-+		SYS(out, "ip netns exec %s %s -c 1 -W1 %s", ns1,
-+		    ping_command(AF_INET6), IP6_ADDR_DST);
+-	while (pos < events_data_len && (events_data_len - pos) <= sizeof(*event)) {
++	while (events_data_len - pos >= sizeof(*event)) {
+ 		event = (struct rpmi_notification_event *)(notif->events_data + pos);
  
- 	if (!ASSERT_TRUE(skel->bss->fexit_triggered, "fexit_triggered"))
- 		goto out;
+ 		msg.type = RPMI_MBOX_MSG_TYPE_NOTIFICATION_EVENT;
+ 		msg.notif.event_datalen = le16_to_cpu(event->event_datalen);
++		if (msg.notif.event_datalen >
++		    events_data_len - pos - sizeof(*event))
++			break;
+ 		msg.notif.event_id = event->event_id;
+ 		msg.notif.event_data = event->event_data;
+ 		msg.error = 0;
 -- 
 2.53.0
 
