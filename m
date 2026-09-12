@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FB7400DF6;
-	Sat, 12 Sep 2026 09:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2093F417BD2;
+	Sat, 12 Sep 2026 09:28:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205284; cv=none; b=PBoKCOTnaiUlxDzY8Qiy+VpceZmugydhRNCBQfgn1KaBPZzddSSrbKs1wwbNbvi0V59V3XWNa+nwgy2jQorwql+74NY5LbvKFCzo357XP/9qcwmtg6PLqSZcSVBtIqWmyRn6bG4uWJKnsRLTmadzRuUTrRnuOFhv4AFIru842LE=
+	t=1789205289; cv=none; b=DPh+17c/D8U54pB5GX2qiL+r6TaHSpz63ODFjqh9cPnS7AnCdQ6wj/nDfR+RD9KpyV3WVlh3mvI2oRt/dvCW25BwUCaugf/WHS+LNIUmioqCrwCYRtXAZ0QNILE0Ql7dP1N6Yl+KledEovB02j+a3xESKUdasxwtXB1fF8bvIs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205284; c=relaxed/simple;
-	bh=aeaZl+hunbiPfBo6Z+AKHZ00MDN8WJPc2TaYuw01QDI=;
+	s=arc-20240116; t=1789205289; c=relaxed/simple;
+	bh=4xeOVnHkzV0s2lhKxPVOgY3vLzGNDal3EtNIY/kC3A4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H6WgDo+PRIMu/CC04+peAEgkr/NTA8aAorv6zfGPqSVvsp9Vmg/kNCln34oQ57lkvfs5aFX3WZpawlbCJIRnsJ79j4vdhisQFy5Y7WCIp6tq3tqMC0S6sJ//RLBUDAw+E0e62B170K2Xzia3XbnWcPi9bGqXotuCzKatjGAtVFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ggwj207G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ccyB/hQehTg/iPqHCV7Cnyg0uuJQ/9W1qiAYSGER/QczwQlZstRGNdpbieEe6JbisSMDm+3nItl0WX/3kgTkZp9I0EfCK8HZdLU3k37g4ArRAYuQJ/5lgfNqj5/K9CKG+fFkoYN709IdNnuHWpfwAAwcBPRqfUOb5Wzy91/twEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UO6Rgej2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ggwj207G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9240D1F000FF;
-	Sat, 12 Sep 2026 09:28:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UO6Rgej2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C919B1F000FF;
+	Sat, 12 Sep 2026 09:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205282;
-	bh=tqshm79o2U45wp6mCrN97kWWHc6GgKfu/F1PI4/o4XA=;
+	s=korg; t=1789205287;
+	bh=nxQc71LnBkPNQbY+KT8TE0RF7oBcfbKHGkWiD/m2jKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ggwj207GB2puBoesKEv1S3Jij4jfK5NRfqEGDDGCvIzAtwv4LSwX81DuZeOeyldq5
-	 yUbrKLiikjjQCmlr0dK6vA9XdRrLzQ7E0vqm1VHXcib9dT+/Cm58G7q6ia2fAe1K6W
-	 7LZU9vvKJSdpd1Kgx/h6eqn6u9N6j+CDFBpX1DRI=
+	b=UO6Rgej2t0r9JANPmPxusnasb123jkNlYM81OoYJif11WljGZ0k/qO3hu8VOydDst
+	 UYD7DQU5X2Kd6xnXqmc9igAXnBAytHWUYSAoyJDlx7dTCtITp5anCPvRCwL2A9Kblp
+	 eab9ei4upXBVXg7mCiw8KWoMSPs6kWWaKzBLck6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Henderson <achender@kernel.org>,
-	Simon Horman <horms@kernel.org>,
+	Suman Ghosh <sumang@marvell.com>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1744/1815] net/rds: use wq_has_sleeper() in rds_cong_map_updated()
-Date: Sat, 12 Sep 2026 08:58:14 +0200
-Message-ID: <20260912065729.924302718@linuxfoundation.org>
+Subject: [PATCH 7.2 1745/1815] octeontx2-pf: fix NULL deref of af_xdp_zc_qidx on rep setup
+Date: Sat, 12 Sep 2026 08:58:15 +0200
+Message-ID: <20260912065729.948386977@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,60 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Suman Ghosh <sumang@marvell.com>
 
-[ Upstream commit d4f484661961636eb90d287050959e613795f73a ]
+[ Upstream commit b09a0503c755b6609fad59a84cc7f05b6843a03c ]
 
-rds_cong_map_updated() runs after a peer's congestion map has been
-rewritten (by rds_tcp_cong_recv() and rds_ib_cong_recv(), or the
-clear-all in the loopback and IB send-completion paths).  It bumps
-rds_cong_generation and then checks waitqueue_active() on
-map->m_waitq and on rds_poll_waitq to decide whether anyone needs
-waking.  atomic_inc() carries no ordering and waitqueue_active() is a
-plain load, so nothing orders the map and generation stores before
-the wait queue reads.  The waiters do the mirror image: rds_cong_wait()
-adds itself to m_waitq and then tests the port bit, and rds_poll()
-registers on rds_poll_waitq and then reads the generation.  That is
-the store-buffering pattern described above waitqueue_active() in
-include/linux/wait.h - the updater can observe an empty wait queue
-while the waiter still observes the port as congested, and no wake-up
-is issued.
+af_xdp_zc_qidx tracks receive queues using AF_XDP zero-copy and is
+allocated during PF/VF probe. Representors and other non-AF_XDP paths
+leave the pointer NULL, but several call sites used test_bit() on it
+unconditionally.
 
-rds_cong_wait() is an interruptible sleep with no timeout, so a
-sender blocked on a congested port stays blocked until the next
-congestion update from that peer arrives or a signal is delivered.
-A poll() waiter misses the map-updated notification the same way.
+Switching to devlink eswitch mode creates representors and runs
+otx2_init_hw_resources(), which reaches otx2_pool_aq_init() and oopses
+when dereferencing the NULL bitmap. Add NULL checks before every
+af_xdp_zc_qidx test_bit() use in the RSS, ethtool, XSK, and pool init
+paths.
 
-Use wq_has_sleeper(), which is waitqueue_active() preceded by the
-required full barrier, as rds_tcp_state_change() already does for
-the same pattern.
-
-Fixes: 922cb17a5c81 ("RDS: Congestion-handling code")
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260822052647.88318-1-achender@kernel.org
+Fixes: efabce290151 ("octeontx2-pf: AF_XDP zero copy receive support")
+Signed-off-by: Suman Ghosh <sumang@marvell.com>
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Link: https://patch.msgid.link/20260821105536.2998765-1-rkannoth@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/cong.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c  | 6 ++++--
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c | 3 ++-
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_xsk.c     | 3 ++-
+ 3 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/rds/cong.c b/net/rds/cong.c
-index 3133b91f9e695..f7634ce3ffc10 100644
---- a/net/rds/cong.c
-+++ b/net/rds/cong.c
-@@ -256,9 +256,9 @@ void rds_cong_map_updated(struct rds_cong_map *map, uint64_t portmask)
- 	  map, &map->m_addr);
- 	rds_stats_inc(s_cong_update_received);
- 	atomic_inc(&rds_cong_generation);
--	if (waitqueue_active(&map->m_waitq))
-+	if (wq_has_sleeper(&map->m_waitq))
- 		wake_up(&map->m_waitq);
--	if (waitqueue_active(&rds_poll_waitq))
-+	if (wq_has_sleeper(&rds_poll_waitq))
- 		wake_up_all(&rds_poll_waitq);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
+index 3d253132a17f0..52980c4afb54b 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
+@@ -333,7 +333,8 @@ int otx2_set_rss_table(struct otx2_nic *pfvf, int ctx_id, const u32 *ind_tbl)
+ 	/* Get memory to put this msg */
+ 	for (idx = 0; idx < rss->rss_size; idx++) {
+ 		/* Ignore the queue if AF_XDP zero copy is enabled */
+-		if (test_bit(ind_tbl[idx], pfvf->af_xdp_zc_qidx))
++		if (pfvf->af_xdp_zc_qidx &&
++		    test_bit(ind_tbl[idx], pfvf->af_xdp_zc_qidx))
+ 			continue;
  
- 	if (portmask && !list_empty(&rds_cong_monitor)) {
+ 		aq = otx2_mbox_alloc_msg_nix_aq_enq(mbox);
+@@ -1510,7 +1511,8 @@ int otx2_pool_aq_init(struct otx2_nic *pfvf, u16 pool_id,
+ 	if (type != AURA_NIX_RQ)
+ 		return 0;
+ 
+-	if (!test_bit(pool_id, pfvf->af_xdp_zc_qidx)) {
++	if (!pfvf->af_xdp_zc_qidx ||
++	    !test_bit(pool_id, pfvf->af_xdp_zc_qidx)) {
+ 		pp_params.order = get_order(buf_size);
+ 		pp_params.flags = PP_FLAG_DMA_MAP;
+ 		pp_params.pool_size = min(OTX2_PAGE_POOL_SZ, numptrs);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
+index a0340f3422bf9..9bee1b91eeaa6 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
+@@ -939,7 +939,8 @@ static int otx2_get_rxfh(struct net_device *dev,
+ 
+ 	for (idx = 0; idx < rss->rss_size; idx++) {
+ 		/* Ignore if the rx queue is AF_XDP zero copy enabled */
+-		if (test_bit(rss->ind_tbl[idx], pfvf->af_xdp_zc_qidx))
++		if (pfvf->af_xdp_zc_qidx &&
++		    test_bit(rss->ind_tbl[idx], pfvf->af_xdp_zc_qidx))
+ 			continue;
+ 		indir[idx] = rss->ind_tbl[idx];
+ 	}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_xsk.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_xsk.c
+index 7d67b4cbaf716..0e8a6a6486c4a 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_xsk.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_xsk.c
+@@ -193,7 +193,8 @@ int otx2_xsk_wakeup(struct net_device *dev, u32 queue_id, u32 flags)
+ 
+ void otx2_attach_xsk_buff(struct otx2_nic *pfvf, struct otx2_snd_queue *sq, int qidx)
+ {
+-	if (test_bit(qidx, pfvf->af_xdp_zc_qidx))
++	if (pfvf->af_xdp_zc_qidx &&
++	    test_bit(qidx, pfvf->af_xdp_zc_qidx))
+ 		sq->xsk_pool = xsk_get_pool_from_qid(pfvf->netdev, qidx);
+ }
+ 
 -- 
 2.53.0
 
