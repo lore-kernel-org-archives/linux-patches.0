@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A4D34CFDA;
-	Sat, 12 Sep 2026 12:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A7647B425;
+	Sat, 12 Sep 2026 12:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215322; cv=none; b=qQcR0HX3lRYKct+9hcSn+gfETlFGK5+cSPSfeVUKKESBbdmynYOqX5W7em3X8peRE7vbfoJISMerCf4DHxF8lLyDXGPRtcICv+Wh6R3Dxw12OVOLu8Wz9UkG/UcO55Y1j25VdHIuM3LZLj0uHxXCGbMEU+dcAYh/TFCj1GsCxfI=
+	t=1789215324; cv=none; b=g0fHox5mxQpHeywrddkI2JZnymvdNseGIp2O4CmpFKnfqURf3X8DccVdQZdSpMwwp0pt0s53MEW0DLnLciXqLSplLWfakq5CtLLaE0T8FTkPbu/2fkEAQlBMDTMUE6IS3KSpklhSMfsdsXuvEfvcMtEZJzRuitowZSutdLl2yOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215322; c=relaxed/simple;
-	bh=1P1O5YaY4/qCetILBkkr2FB/6HIxeSTlqIecRB0u/Kg=;
+	s=arc-20240116; t=1789215324; c=relaxed/simple;
+	bh=se8+ICJoPWwQ2H8BB1PP2USD1uB6eTNaKnCOBOunNEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UtkLjyIoxpIhFl5+uztMgT7JW5qJf4XTCV5KexHcLTJycSV53TAhN5xK+QP2f3OzRhF2kbJ92PSpKjmzm2QkQG8zlWLH2WM5fsezyWI0EYPh3Gcu1HR/ADHvEQrRqLaWe0Tg2DoeWcC3lQyd6kIk6AlgEFpFsM/ZdDM9PmZ6GLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ggl7QtH8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sFb7CNHTtc+cxJKHeAo2QLU4GWfsNG51zMg0HAHI0Jvz/smuWbI2WEfyuvISTLn4OUFl2hmqHCInwl1kISr1H/38MEz26KeBjwL+6SSF0de6ESDBAuTPXUH8VPn1YT+vp27Vx4qde3PaijxY5ZMllybkKqlw02W3wYNrnu+UusU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xee5gLsP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ggl7QtH8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D0471F000FF;
-	Sat, 12 Sep 2026 12:15:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xee5gLsP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60A61F00893;
+	Sat, 12 Sep 2026 12:15:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215318;
-	bh=vpy9s+4rGhmBH/WsOp//QnTiRkBlmtVvoVeFNSZkrYc=;
+	s=korg; t=1789215322;
+	bh=RicFJHmDxzujLCq0ZN6TjC8yrkiv2YQ0qkc4f4APAJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ggl7QtH88YVC5QoUSNG45E8kQ5CXrsYKBcWJc+eT/WIf7rHXod0wGZPLKxXB85l4W
-	 jsnDw+LRMC0yqQoYEOJQD77lPELfalNQFseSSMSYO5WKs3nG74cFkg7o0SPcY68vGL
-	 3NSrizFLDuhDiNHNn2OXsQjcqAn4o59Ss0X0U8fI=
+	b=xee5gLsPOHXFT1O04KIkz9XXwv17SayPC0mJh70s2scKtxK6q7qVGQX/FBNvvAuoF
+	 anDsl7a/VZQkz19A3G+HjiTVkF32vqvHWHj/TLffeOjsuJeWr9/Hm7ZpHWPeQNqIHk
+	 pJNgavn+h2ImTCCPkjdKrTB71AklRLS+GM2y3JPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	John Ogness <john.ogness@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0470/1376] printk: Fix possible console use-after-free
-Date: Sat, 12 Sep 2026 08:48:16 +0200
-Message-ID: <20260912065618.008081904@linuxfoundation.org>
+Subject: [PATCH 6.12 0506/1376] hwrng: ks-sa - Fix runtime PM cleanup on registration failure
+Date: Sat, 12 Sep 2026 08:48:52 +0200
+Message-ID: <20260912065618.816610107@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,65 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 36630cafbeede0b64c370edb2f7b4094327ee1e0 ]
+[ Upstream commit 1c17b601fafb09c9ec074fd097737d20eafe7d63 ]
 
-When emitting a record via legacy printing, it is possible that a handover
-to another legacy printing context occurs. When a context has performed a
-handover, the console SRCU read lock is released and the pointer to the
-console struct might now be invalid. Therefore, after calling
-nbcon_legacy_emit_next_record() or console_emit_next_record(), it is
-necessary to check if a handover occurred _before_ further @con usage.
+ks_sa_rng_probe() enables runtime PM and resumes the device before
+registering the hwrng. If devm_hwrng_register() fails, probe returns
+without dropping the runtime PM usage count or disabling runtime PM.
 
-Sashiko pointed out that console_flush_one_record() was not doing this.
+Unwind the runtime PM state on the registration failure path, matching
+the cleanup done by remove().
 
-In console_flush_one_record(), after emitting a record, move the further
-usage of @con after the handover check.
-
-Fixes: c158834b223f ("printk: nbcon: Use nbcon consoles in console_flush_all()")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/lkml/20260630170903.099D61F000E9@smtp.kernel.org
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Link: https://patch.msgid.link/20260703141521.202813-1-john.ogness@linutronix.de
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Fixes: eb428ee0e3ca ("hwrng: ks-sa - add hw_random driver")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/printk/printk.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/char/hw_random/ks-sa-rng.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index 464227c82b08d..37f1d4637d90c 100644
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -3160,10 +3160,8 @@ static bool console_flush_one_record(bool do_cond_resched, u64 *next_seq, bool *
- 		if (flags & CON_NBCON) {
- 			progress = nbcon_legacy_emit_next_record(con, handover, cookie,
- 								 !do_cond_resched);
--			printk_seq = nbcon_seq_read(con);
- 		} else {
- 			progress = console_emit_next_record(con, handover, cookie);
--			printk_seq = con->seq;
- 		}
+diff --git a/drivers/char/hw_random/ks-sa-rng.c b/drivers/char/hw_random/ks-sa-rng.c
+index 3c514b4fbc8ae..64369d4f1644c 100644
+--- a/drivers/char/hw_random/ks-sa-rng.c
++++ b/drivers/char/hw_random/ks-sa-rng.c
+@@ -242,7 +242,14 @@ static int ks_sa_rng_probe(struct platform_device *pdev)
+ 		return dev_err_probe(dev, ret, "Failed to enable SA power-domain\n");
+ 	}
  
- 		/*
-@@ -3173,6 +3171,15 @@ static bool console_flush_one_record(bool do_cond_resched, u64 *next_seq, bool *
- 		if (*handover)
- 			return false;
- 
-+		/*
-+		 * @con can be used here now that it is certain that this
-+		 * context is still holding the SRCU read lock.
-+		 */
-+		if (flags & CON_NBCON)
-+			printk_seq = nbcon_seq_read(con);
-+		else
-+			printk_seq = con->seq;
+-	return devm_hwrng_register(&pdev->dev, &ks_sa_rng->rng);
++	ret = devm_hwrng_register(dev, &ks_sa_rng->rng);
++	if (ret) {
++		pm_runtime_put_sync(dev);
++		pm_runtime_disable(dev);
++		return ret;
++	}
 +
- 		/* Track the next of the highest seq flushed. */
- 		if (printk_seq > *next_seq)
- 			*next_seq = printk_seq;
++	return 0;
+ }
+ 
+ static void ks_sa_rng_remove(struct platform_device *pdev)
 -- 
 2.53.0
 
