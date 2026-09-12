@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E776247A890;
-	Sat, 12 Sep 2026 12:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2717356742;
+	Sat, 12 Sep 2026 12:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215261; cv=none; b=Q+xLEdFu903scW2NTHGzj5fxB89DXNjuTG1zgOUaH8yv322vWoz1Kw/y/xVKPof0X542kMcE/zSKb1d7ZJW/fWcWqD1Nvwfd8mlPUDjg9Fne9kOmfjaVBkrIqaMt0gjrldRtgbneXL/SiVUvaLUvZoqya9R297GRkPS+rGR05Pc=
+	t=1789215266; cv=none; b=r9XqB6bzhyT8kN3cQh2YpGieswUuw8JXH+Oy45IafjN9sapRkH36VDlr7ieNtNM6Zwp7+uFG0dHNaVZKo6V00j27WFIPsr8ahdYtpvzs3XOeSf9D8PF7vFOvcDfz229zBLCle4ja2fI2YDVAIYYfZvcMVhuCeHv4N6N5Et3IWBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215261; c=relaxed/simple;
-	bh=mwJd1GpMAlJDSZJ8IjdkkO3bntIbxG2XTv8VfzFBZZQ=;
+	s=arc-20240116; t=1789215266; c=relaxed/simple;
+	bh=EmoVBmVi/w6Pmhe542GSztHmQ4dioRXNK3XUHbFMf4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VbvGROUaY9XVpRfPqVDslgy6N2OK2122PnluwBVLnihiAwxPxD5naRPmEJw8KXw5McTZowNtzFNMF5lhuEsf1/IqsZpQbYdVsT+5bIzaq3cXlHZwlVUlHBr5FinE2aSVeWMtPZq3zjjh5NjD/jSq/VYWBWuhWsS2xVwywyLICas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z6h3G4xp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cop1tQmlMThV8o65lqQ5zuUzARKHzKP/djAzF+XX0JmkvCip7nUtKGbmGA8C3SPpbgCM5joLp5h4iddTTkc+6wx5nu3lCcwKExFxgIpXOCuH6ZQshCRBDfT71TekgdFYGsWUoOGuM++UK63yQATxTxK2aMQSQZY1mjvvCmdOLDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KoPaJDpF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z6h3G4xp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908021F000FF;
-	Sat, 12 Sep 2026 12:14:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KoPaJDpF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C411F000FF;
+	Sat, 12 Sep 2026 12:14:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215259;
-	bh=2Xf3ZKk8iWOCIU8F0PjLvx2exapmv1S34ND53OyLzaU=;
+	s=korg; t=1789215264;
+	bh=yZ6fD6Fr4fMtRIpGFHYmY0IKDKfR8M+gfNYG+HhB/Mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z6h3G4xpbb6uGuBuZDBpgM1dONLThlLMfEn/MY9aX+m1jgYsl/ktS4Wq6I5yIOhVL
-	 V6k8p8zPhpywRZK5fGVNoaU89I7TCgV/CighlEI9ER4A3nsbRdoC1MwewL/Hc3IObX
-	 E5NFJ/fFiUlgTG52WgbyMumTPtb/OKoXslGGEBVs=
+	b=KoPaJDpF15LVR9SY/47MqprWawJYNX+388C3UnP3aP5iXp3LGM5ngjiv5a9ZK0jQh
+	 WhrDFS1hdX4KMCAsdVCU5lq04xq+oKyJcfXoRwGAKJEWgVYWh06lC9MgJCFNcgDg9P
+	 8L6OxxC8S0zGFLYeZIEVOnw22xy2fvp1kY/q/g1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Andrew Murray <amurray@thegoodpenguin.co.uk>,
+	John Ogness <john.ogness@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0495/1376] drm/panel: samsung-s6d16d0: Power off on prepare failure
-Date: Sat, 12 Sep 2026 08:48:41 +0200
-Message-ID: <20260912065618.571127510@linuxfoundation.org>
+Subject: [PATCH 6.12 0469/1376] printk: Introduce console_flush_one_record
+Date: Sat, 12 Sep 2026 08:48:15 +0200
+Message-ID: <20260912065617.985172247@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,57 +52,221 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Andrew Murray <amurray@thegoodpenguin.co.uk>
 
-[ Upstream commit a9f950adfe2147318d75e7a6eab5e814851802ac ]
+[ Upstream commit 741ea7aa95dd9ac77f861e7d0961d8d231ac8448 ]
 
-If enabling tearing mode or exiting sleep mode fails after the
-regulator is enabled, s6d16d0_prepare() returns without asserting
-reset or disabling the supply. Since the DRM panel core leaves the
-panel unprepared, a later unprepare call skips the driver callback
-and the supply remains enabled.
+console_flush_all prints all remaining records to all usable consoles
+whilst its caller holds console_lock. This can result in large waiting
+times for those waiting for console_lock especially where there is a
+large volume of records or where the console is slow (e.g. serial).
 
-Assert reset and disable the supply before returning the DSI command error.
+Let's extract the parts of this function which print a single record
+into a new function named console_flush_one_record. This can later
+be used for functions that will release and reacquire console_lock
+between records.
 
-Fixes: ac1d6d74884e ("drm/panel: Add driver for Samsung S6D16D0 panel")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260704070648.35249-1-acharyalaxman8848@gmail.com
+This commit should not change existing functionality.
+
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Andrew Murray <amurray@thegoodpenguin.co.uk>
+Reviewed-by: John Ogness <john.ogness@linutronix.de>
+Link: https://patch.msgid.link/20251020-printk_legacy_thread_console_lock-v3-1-00f1f0ac055a@thegoodpenguin.co.uk
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Stable-dep-of: 36630cafbeed ("printk: Fix possible console use-after-free")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-samsung-s6d16d0.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ kernel/printk/printk.c | 158 ++++++++++++++++++++++++++---------------
+ 1 file changed, 99 insertions(+), 59 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-index 79f611963c618..f73b603be0b0b 100644
---- a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-+++ b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-@@ -89,16 +89,22 @@ static int s6d16d0_prepare(struct drm_panel *panel)
- 				       MIPI_DSI_DCS_TEAR_MODE_VBLANK);
- 	if (ret) {
- 		dev_err(s6->dev, "failed to enable vblank TE (%d)\n", ret);
--		return ret;
-+		goto err_power_off;
- 	}
- 	/* Exit sleep mode and power on */
- 	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
- 	if (ret) {
- 		dev_err(s6->dev, "failed to exit sleep mode (%d)\n", ret);
--		return ret;
-+		goto err_power_off;
- 	}
+diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
+index 9434460cff640..464227c82b08d 100644
+--- a/kernel/printk/printk.c
++++ b/kernel/printk/printk.c
+@@ -3104,6 +3104,99 @@ static inline void printk_kthreads_check_locked(void) { }
  
- 	return 0;
+ #endif /* CONFIG_PRINTK */
+ 
 +
-+err_power_off:
-+	gpiod_set_value_cansleep(s6->reset_gpio, 1);
-+	regulator_disable(s6->supply);
++/*
++ * Print out one record for each console.
++ *
++ * @do_cond_resched is set by the caller. It can be true only in schedulable
++ * context.
++ *
++ * @next_seq is set to the sequence number after the last available record.
++ * The value is valid only when there is at least one usable console and all
++ * usable consoles were flushed.
++ *
++ * @handover will be set to true if a printk waiter has taken over the
++ * console_lock, in which case the caller is no longer holding the
++ * console_lock. Otherwise it is set to false.
++ *
++ * @any_usable will be set to true if there are any usable consoles.
++ *
++ * Returns true when there was at least one usable console and a record was
++ * flushed. A returned false indicates there were no records to flush for any
++ * of the consoles. It may also indicate that there were no usable consoles,
++ * the context has been lost or there is a panic suitation. Regardless the
++ * reason, the caller should assume it is not useful to immediately try again.
++ *
++ * Requires the console_lock.
++ */
++static bool console_flush_one_record(bool do_cond_resched, u64 *next_seq, bool *handover,
++				     bool *any_usable)
++{
++	struct console_flush_type ft;
++	bool any_progress = false;
++	struct console *con;
++	int cookie;
 +
-+	return ret;
++	printk_get_console_flush_type(&ft);
++
++	cookie = console_srcu_read_lock();
++	for_each_console_srcu(con) {
++		short flags = console_srcu_read_flags(con);
++		u64 printk_seq;
++		bool progress;
++
++		/*
++		 * console_flush_one_record() is only responsible for
++		 * nbcon consoles when the nbcon consoles cannot print via
++		 * their atomic or threaded flushing.
++		 */
++		if ((flags & CON_NBCON) && (ft.nbcon_atomic || ft.nbcon_offload))
++			continue;
++
++		if (!console_is_usable(con, flags, !do_cond_resched))
++			continue;
++		*any_usable = true;
++
++		if (flags & CON_NBCON) {
++			progress = nbcon_legacy_emit_next_record(con, handover, cookie,
++								 !do_cond_resched);
++			printk_seq = nbcon_seq_read(con);
++		} else {
++			progress = console_emit_next_record(con, handover, cookie);
++			printk_seq = con->seq;
++		}
++
++		/*
++		 * If a handover has occurred, the SRCU read lock
++		 * is already released.
++		 */
++		if (*handover)
++			return false;
++
++		/* Track the next of the highest seq flushed. */
++		if (printk_seq > *next_seq)
++			*next_seq = printk_seq;
++
++		if (!progress)
++			continue;
++		any_progress = true;
++
++		/* Allow panic_cpu to take over the consoles safely. */
++		if (panic_on_other_cpu())
++			goto abandon;
++
++		if (do_cond_resched)
++			cond_resched();
++	}
++	console_srcu_read_unlock(cookie);
++
++	return any_progress;
++
++abandon:
++	console_srcu_read_unlock(cookie);
++	return false;
++}
++
+ /*
+  * Print out all remaining records to all consoles.
+  *
+@@ -3129,77 +3222,24 @@ static inline void printk_kthreads_check_locked(void) { }
+  */
+ static bool console_flush_all(bool do_cond_resched, u64 *next_seq, bool *handover)
+ {
+-	struct console_flush_type ft;
+ 	bool any_usable = false;
+-	struct console *con;
+ 	bool any_progress;
+-	int cookie;
+ 
+ 	*next_seq = 0;
+ 	*handover = false;
+ 
+ 	do {
+-		any_progress = false;
++		any_progress = console_flush_one_record(do_cond_resched, next_seq, handover,
++							&any_usable);
+ 
+-		printk_get_console_flush_type(&ft);
+-
+-		cookie = console_srcu_read_lock();
+-		for_each_console_srcu(con) {
+-			short flags = console_srcu_read_flags(con);
+-			u64 printk_seq;
+-			bool progress;
++		if (*handover)
++			return false;
+ 
+-			/*
+-			 * console_flush_all() is only responsible for nbcon
+-			 * consoles when the nbcon consoles cannot print via
+-			 * their atomic or threaded flushing.
+-			 */
+-			if ((flags & CON_NBCON) && (ft.nbcon_atomic || ft.nbcon_offload))
+-				continue;
+-
+-			if (!console_is_usable(con, flags, !do_cond_resched))
+-				continue;
+-			any_usable = true;
+-
+-			if (flags & CON_NBCON) {
+-				progress = nbcon_legacy_emit_next_record(con, handover, cookie,
+-									 !do_cond_resched);
+-				printk_seq = nbcon_seq_read(con);
+-			} else {
+-				progress = console_emit_next_record(con, handover, cookie);
+-				printk_seq = con->seq;
+-			}
+-
+-			/*
+-			 * If a handover has occurred, the SRCU read lock
+-			 * is already released.
+-			 */
+-			if (*handover)
+-				return false;
+-
+-			/* Track the next of the highest seq flushed. */
+-			if (printk_seq > *next_seq)
+-				*next_seq = printk_seq;
+-
+-			if (!progress)
+-				continue;
+-			any_progress = true;
+-
+-			/* Allow panic_cpu to take over the consoles safely. */
+-			if (panic_on_other_cpu())
+-				goto abandon;
+-
+-			if (do_cond_resched)
+-				cond_resched();
+-		}
+-		console_srcu_read_unlock(cookie);
++		if (panic_on_other_cpu())
++			return false;
+ 	} while (any_progress);
+ 
+ 	return any_usable;
+-
+-abandon:
+-	console_srcu_read_unlock(cookie);
+-	return false;
  }
  
- static int s6d16d0_enable(struct drm_panel *panel)
+ static void __console_flush_and_unlock(void)
 -- 
 2.53.0
 
