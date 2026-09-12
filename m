@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBAC479873;
-	Sat, 12 Sep 2026 12:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C4B41F5D5;
+	Sat, 12 Sep 2026 12:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214430; cv=none; b=NyLnwf1glr++Nz3mkRMQ44zZywrvfHvpvMhzPbpxqMsN/gH+oxjv6T63mlH5v2uhKwCfgRBj+LiSVb0tQY2TDpzabbBAAKlVVsPegJqBOqfsxgxat9PxFyU1G/LNFfbaFrbKZnZ+wXYFrNroQAn+/FkGAdt50Z1qem2TfxaBrRE=
+	t=1789214434; cv=none; b=n4gp6UZqQsgsIfx/astT09Hy3TMIA9+//UV181rN51N0YLlpBUnd4Uux45gktr9hlwdJOawg8FwFE9Y41KLsHroVTZQdc4d50MhhcvdkSPWH+eFgTEMF53DdE7ruIh6teQrrk+NuBvPv/R1SVaucl+siLykIMtToKhsRl4H1X1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214430; c=relaxed/simple;
-	bh=Or8q8Xa5XMdKIaW5uO1AR9Yqrjp+7HGZhJlXAjsBeH0=;
+	s=arc-20240116; t=1789214434; c=relaxed/simple;
+	bh=LQDUzVb8rs6mSmHBNAhS4E6LOX+pKBK18MB12bj0ezA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EfYKPD5qrHC9Q+43TbVTkJ8liHsJyeFKsHzVxaz04YMhDS39XpVSuVE+UmIaTC09O0fae1YdUQBxOWDX7GNWSb0n7ijf95O7hUXN0BOOiU6TtbDnudquJIISe1VL0oYATA9gCBCqcWi4lf5maE2BSGeEMBNqKhpWaQnD//NjQ+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8Fbt4lT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SMhd7I3EhDWogq6X1Uv5thzTS0g0MqSTv40vS8fNgdLpWH6HTeoa0KAGgLNe4XAJzMcNrzffUSgcGphhCT5G5W0NKK20ftt2UlIbhuHNIjaabLJaL8iBtGtpDUSIhwrsPRpIZJsJJAAJF4l9S2OHOMFxS54JZfwimPJtJgFNXA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O5Yls+Md; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8Fbt4lT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D1F1F000FF;
-	Sat, 12 Sep 2026 12:00:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O5Yls+Md"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C1A1F000FF;
+	Sat, 12 Sep 2026 12:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214427;
-	bh=g9zguBnPkkMGy2wRjPmT8EYmMvjW65mveQJ3EVEpvZE=;
+	s=korg; t=1789214432;
+	bh=0eCLyX+vy2fzGulaeNqzbyWfwYYT4cD8nGcjNAUkNT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e8Fbt4lT5QaMP4u54Qz0oqYWvpuBjxNSK1UVRACsqN9i9f6+WD/MWrWb/P+uO1uPK
-	 voNRTdPUsfcIk4oM0At+GMOTSjPC3g0a1EqndS/QYonnzqWsbN/fe1dgLnMNdLm/Xn
-	 YlwsevfaSO+/CCJ1Ok7h73B7wZG3wI78yAYv6zRE=
+	b=O5Yls+MdoDHXxBIW51pDMBpwsGnqnZsVibPVyn7Xma5OfSzupghqWEpnhD+bPnAOm
+	 IP9RPDXI0PVPsWKveQB27Rs4JB0CbuKGw6DBiPgeq3kSrws4VoqOg04fkuMN4iq0ep
+	 ILe36y3NSb0XZtqpR42WCu6cwL7qiJKA4etCeAII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0323/1376] HID: roccat: bound device-supplied profile index
-Date: Sat, 12 Sep 2026 08:45:49 +0200
-Message-ID: <20260912065614.745755146@linuxfoundation.org>
+	Cheryl Babcock <cheryl@renat.io>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.12 0288/1376] ksmbd: zero pipe read compound padding
+Date: Sat, 12 Sep 2026 08:45:14 +0200
+Message-ID: <20260912065613.965956704@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,60 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 43fae42628a8c10fa8981773d7ec9f1a367821a7 ]
+commit 73f860489e3be2245598d1819226304fc5b87291 upstream.
 
-kone_keep_values_up_to_date() and kone_profile_activated() use an
-8-bit, device-supplied profile value as an index into the 5-element
-kone->profiles[] array without a range check. A malicious USB device
-claiming the Roccat Kone id can send a switch-profile event (or a
-startup_profile read at probe) with an out-of-range value and make the
-driver read out of bounds; the result is exposed via the actual_dpi
-sysfs attribute.
+Compound response handling extends the last response iov to an eight-byte
+boundary.
 
-Reject out-of-range indices in both paths.
+smb2_read_pipe() allocates only the payload size, so the alignment padding
+can expose up to seven bytes of uninitialized kernel heap memory.
 
-This was found with static analysis and confirmed with the KUnit test
-added in the following patch (KASAN: slab-out-of-bounds).
+Allocate the aligned size and clear the unused tail before pinning the
+response buffer.
 
-Fixes: 14bf62cde7942 ("HID: add driver for Roccat Kone gaming mouse")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
+Reported-by: Cheryl Babcock <cheryl@renat.io>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-roccat-kone.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-roccat-kone.c b/drivers/hid/hid-roccat-kone.c
-index 3f8f459edcf3c..dd206531fc79f 100644
---- a/drivers/hid/hid-roccat-kone.c
-+++ b/drivers/hid/hid-roccat-kone.c
-@@ -36,6 +36,8 @@ static uint profile_numbers[5] = {0, 1, 2, 3, 4};
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -6739,13 +6739,18 @@ static noinline int smb2_read_pipe(struc
+ 		}
  
- static void kone_profile_activated(struct kone_device *kone, uint new_profile)
- {
-+	if (new_profile < 1 || new_profile > ARRAY_SIZE(kone->profiles))
-+		new_profile = 1;
- 	kone->actual_profile = new_profile;
- 	kone->actual_dpi = kone->profiles[new_profile - 1].startup_dpi;
- }
-@@ -793,8 +795,10 @@ static void kone_keep_values_up_to_date(struct kone_device *kone,
- {
- 	switch (event->event) {
- 	case kone_mouse_event_switch_profile:
--		kone->actual_dpi = kone->profiles[event->value - 1].
--				startup_dpi;
-+		if (event->value >= 1 &&
-+		    event->value <= ARRAY_SIZE(kone->profiles))
-+			kone->actual_dpi =
-+				kone->profiles[event->value - 1].startup_dpi;
- 		fallthrough;
- 	case kone_mouse_event_osd_profile:
- 		kone->actual_profile = event->value;
--- 
-2.53.0
-
+ 		aux_payload_buf =
+-			kvmalloc(rpc_resp->payload_sz, KSMBD_DEFAULT_GFP);
++			kvmalloc(ALIGN(rpc_resp->payload_sz, 8),
++				 KSMBD_DEFAULT_GFP);
+ 		if (!aux_payload_buf) {
+ 			err = -ENOMEM;
+ 			goto out;
+ 		}
+ 
+ 		memcpy(aux_payload_buf, rpc_resp->payload, rpc_resp->payload_sz);
++		if (rpc_resp->payload_sz & 7)
++			memset(aux_payload_buf + rpc_resp->payload_sz, 0,
++			       ALIGN(rpc_resp->payload_sz, 8) -
++			       rpc_resp->payload_sz);
+ 
+ 		nbytes = rpc_resp->payload_sz;
+ 		err = ksmbd_iov_pin_rsp_read(work, (void *)rsp,
 
 
