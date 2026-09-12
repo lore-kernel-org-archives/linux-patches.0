@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409151DE4EF;
-	Sat, 12 Sep 2026 14:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D719D1DE4EF;
+	Sat, 12 Sep 2026 14:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222294; cv=none; b=ADQhc9U7QwhXuo/UcIRMQ3adSBWUat5NUz/XDCTmzLGRmW27RylljRKB5UliWkEkVg1hdBh9pJXjtTR8F22yjnEBMI2kJnudNrFdszCXIQsSnntAvfjga+/PsWaAqj3vn6lRphGFAw3xjq9pzAeAQBLhypkyYJBRLCFhPW3T/YM=
+	t=1789222299; cv=none; b=PZ0AJ/zZxxGOWZbnlGQlu3QjhdL5wZ74/5X6trcrMNqFET/LSDykO+qybQLbZK+9K6KwYKv1V8ut9xXLjZxSX7rGiZ7seqToh9nS3L9g9bJ0x4nRs9deXe1ZkYf+yZCawn/x1ncRHOLY7J4zfYsHJB4fsCUP7wimiUE7ro87cKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222294; c=relaxed/simple;
-	bh=CGbXTmoNNJJmwnOa7wm8ZtrWWX+wjVVGCr4iSeI1SiM=;
+	s=arc-20240116; t=1789222299; c=relaxed/simple;
+	bh=vHjeHx5dlVmNXH93IXE2ykKi0UKSzgd/BpbEKh1eleE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JJvnAACEpZAuej+hQVv6jKeyXhhaT4mPdT92XZiLQbWl7bP7ifjy+YhmKDVGiJd7/i4rBI1yfex571G9vRLshr0xQPQPoaRER4iP9c590K/mWUlR3TTGqrPOD/2jPhGplBGIZhIM2IkG+BpYFKEWyBZxDhg7TXz3pO41UFTKMC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvTAG+ui; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XX/i4wWEq5u+JlPnZlstToER5SsuYJI8XwtFJqYkUCkHLJwekzjvPPSEpLPwDUb2C0Dc8mvwlIaHT/HSDUp6YrXN5PWHlD68qMr2PHQJvL/3Q5wpCTwlOKLTDwDF1fit1RN09xB/B4K0kpxrrt/3/7VVHjT/jHt5zWoKjtP1354=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHXT0sdB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvTAG+ui"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4764E1F000FF;
-	Sat, 12 Sep 2026 14:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHXT0sdB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9C31F000FF;
+	Sat, 12 Sep 2026 14:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222293;
-	bh=GjACgXW2bOUQgAyRVSDnM1KcysL8NuOHCfankuVsJro=;
+	s=korg; t=1789222297;
+	bh=In3RDmwVYpSsVCSNO1bQZrKb//F5Jm9wL4roTVuYeSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rvTAG+uiOemFI7i5BFHT30ZKx90jf9krP1+9YI+MlXJiXZxct9QuBje09pRROOQ7J
-	 fuIU/b4CTUVqz7a5gyapqhufSo9U+ExZtqADJmC1ZvqMcik5HPvHYp0s1GCxSeSQyI
-	 e9MNdF9k9XLY2fxN1WICwbMCVAx/oYv1RnkjJzV0=
+	b=NHXT0sdBaJQnxl4XdpjbaVotuPVfdmyp9AAbaHQ2WmopEOnv7BQpFV5CwzD+PqPsY
+	 WUWlQqQFOI45a8edpcovOPz5yR/+wJq3y/YFpM3ae+GDRAOyxbTIjdmn/AQ6Sopciz
+	 ERU3Iff1SLmq1wH0qZWLqC2QKzIuto55q0zTyCKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ingo Molnar <mingo@elte.hu>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Bjoern Doebel <doebel@amazon.de>,
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0557/1424] perf sched: Fix register_pid() overflow, strcpy, and BUG_ON
-Date: Sat, 12 Sep 2026 08:49:49 +0200
-Message-ID: <20260912065619.778231413@linuxfoundation.org>
+Subject: [PATCH 6.6 0558/1424] clk: meson: align gxbb_32k_clk_sel number of parents with actual count
+Date: Sat, 12 Sep 2026 08:49:50 +0200
+Message-ID: <20260912065619.800071826@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -47,147 +46,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-commit 5949d339f5ec98752d56dcd4e36f619a59d513a5 upstream.
+[ Upstream commit 628b6fee9fca292f12d07f0f1bcf1edefa949d81 ]
 
-register_pid() has several issues when processing untrusted perf.data:
+The following out-of-bounds read has been observed by Christian on a
+GXBB WeTek Hub:
+==================================================================
+BUG: KASAN: global-out-of-bounds in __clk_register+0x1b70/0x2418
+Read of size 8 at addr ffffd66320cf88e0 by task swapper/0/1
 
-1. Integer overflow: (pid + 1) * sizeof(struct task_desc *) can wrap
-   to a small value on 32-bit systems when pid is large (e.g.
-   0x40000000), causing realloc to return a tiny buffer followed by
-   out-of-bounds writes in the initialization loop.
+CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 7.0.0-rc5 #1 PREEMPT
+Hardware name: WeTek Hub (DT)
+Call trace:
+ show_stack+0x14/0x20 (C)
+ dump_stack_lvl+0x74/0x94
+ print_report+0x164/0x4b0
+ kasan_report+0x98/0xd8
+ __asan_report_load8_noabort+0x1c/0x24
+ __clk_register+0x1b70/0x2418
+ devm_clk_hw_register+0x74/0x15c
+ meson_clkc_init+0xd4/0x20c
+ meson_clkc_syscon_probe+0x5c/0x94
+ platform_probe+0xbc/0x17c
+ really_probe+0x184/0x844
+ __driver_probe_device+0x154/0x35c
+ driver_probe_device+0x60/0x188
+ __driver_attach+0x168/0x4a0
+ bus_for_each_dev+0xec/0x180
+ driver_attach+0x38/0x58
+ bus_add_driver+0x238/0x4c0
+ driver_register+0x150/0x388
+ __platform_driver_register+0x54/0x7c
+ gxbb_clkc_driver_init+0x18/0x20
+ do_one_initcall+0xb8/0x340
+ kernel_init_freeable+0x49c/0x52c
+ kernel_init+0x24/0x148
+ ret_from_fork+0x10/0x20
 
-2. Heap buffer overflow: strcpy(task->comm, comm) copies the
-   untrusted comm string into a fixed 20-byte COMM_LEN buffer with
-   no length check.
+The buggy address belongs to the variable:
+ gxbb_32k_clk_parents+0x60/0x400
 
-3. BUG_ON on allocation failure: perf.data is untrusted input, so
-   allocation failures should be handled gracefully rather than
-   killing the process.
+The buggy address belongs to a vmalloc virtual mapping
+The buggy address belongs to the physical page:
 
-4. Realloc of sched->tasks assigned directly back, leaking the old
-   pointer on failure; nr_tasks incremented before the realloc,
-   leaving corrupted state on failure.
+Memory state around the buggy address:
+ ffffd66320cf8780: 00 00 00 00 f9 f9 f9 f9 00 f9 f9 f9 f9 f9 f9 f9
+ ffffd66320cf8800: 00 04 f9 f9 f9 f9 f9 f9 00 04 f9 f9 f9 f9 f9 f9
+>ffffd66320cf8880: 00 00 00 00 00 00 00 00 00 00 00 00 f9 f9 f9 f9
+                                                       ^
+ ffffd66320cf8900: 00 01 f9 f9 f9 f9 f9 f9 00 06 f9 f9 f9 f9 f9 f9
+ ffffd66320cf8980: 00 00 02 f9 f9 f9 f9 f9 00 00 02 f9 f9 f9 f9 f9
+==================================================================
 
-Cap pid at PID_MAX_LIMIT (4194304, matching the kernel's maximum
-on 64-bit), replace strcpy with strlcpy, guard against NULL comm,
-replace BUG_ON with NULL returns using safe realloc patterns, and
-add NULL checks in callers that dereference the result.
+Commit 7915d7d5407c ("clk: amlogic: gxbb: drop non existing 32k clock
+parent") dropped a non-existing clock parent from the gxbb_32k_clk_sel
+mux but didn't adjust the hard-coded num_parents field. Fix the actual
+number of parents of that mux by using ARRAY_SIZE instead (avoiding
+similar problems in future).
 
-Fixes: ec156764d424 ("perf sched: Import schedbench.c")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Ingo Molnar <mingo@elte.hu>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-[doebel: context adjustment for 6.6]
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
+Fixes: 7915d7d5407c ("clk: amlogic: gxbb: drop non existing 32k clock parent")
+Reported-by: Christian Hewitt <christianshewitt@gmail.com>
+Cc: stable@vger.kernel.org
+Tested-by: Christian Hewitt <christianshewitt@gmail.com>
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://patch.msgid.link/20260623201956.1324992-1-martin.blumenstingl@googlemail.com
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 40 ++++++++++++++++++++++++++++----------
- 1 file changed, 30 insertions(+), 10 deletions(-)
+ drivers/clk/meson/gxbb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 16cb7278fabaf..dfdfac2a11ad4 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -51,6 +51,7 @@
- #define COMM_LEN		20
- #define SYM_LEN			129
- #define MAX_PID			1024000
-+#define PID_MAX_LIMIT		4194304 /* kernel limit on 64-bit */
- 
- static const char *cpu_list;
- static DECLARE_BITMAP(cpu_bitmap, MAX_NR_CPUS);
-@@ -448,17 +449,28 @@ static void add_sched_event_sleep(struct perf_sched *sched, struct task_desc *ta
- static struct task_desc *register_pid(struct perf_sched *sched,
- 				      unsigned long pid, const char *comm)
- {
--	struct task_desc *task;
-+	struct task_desc *task, **tasks_p;
- 	static int pid_max;
- 
-+	/* perf.data is untrusted — cap pid to prevent overflow in size calculations */
-+	if (pid >= PID_MAX_LIMIT) {
-+		pr_err("pid %lu exceeds limit %d, skipping\n", pid, PID_MAX_LIMIT);
-+		return NULL;
-+	}
-+
- 	if (sched->pid_to_task == NULL) {
- 		if (sysctl__read_int("kernel/pid_max", &pid_max) < 0)
- 			pid_max = MAX_PID;
--		BUG_ON((sched->pid_to_task = calloc(pid_max, sizeof(struct task_desc *))) == NULL);
-+		sched->pid_to_task = calloc(pid_max, sizeof(struct task_desc *));
-+		if (sched->pid_to_task == NULL)
-+			return NULL;
- 	}
- 	if (pid >= (unsigned long)pid_max) {
--		BUG_ON((sched->pid_to_task = realloc(sched->pid_to_task, (pid + 1) *
--			sizeof(struct task_desc *))) == NULL);
-+		void *p = realloc(sched->pid_to_task, (pid + 1) * sizeof(struct task_desc *));
-+
-+		if (p == NULL)
-+			return NULL;
-+		sched->pid_to_task = p;
- 		while (pid >= (unsigned long)pid_max)
- 			sched->pid_to_task[pid_max++] = NULL;
- 	}
-@@ -469,9 +481,11 @@ static struct task_desc *register_pid(struct perf_sched *sched,
- 		return task;
- 
- 	task = zalloc(sizeof(*task));
-+	if (task == NULL)
-+		return NULL;
- 	task->pid = pid;
--	task->nr = sched->nr_tasks;
--	strcpy(task->comm, comm);
-+	if (comm)
-+		strlcpy(task->comm, comm, sizeof(task->comm));
- 	/*
- 	 * every task starts in sleeping state - this gets ignored
- 	 * if there's no wakeup pointing to this sleep state:
-@@ -479,10 +493,12 @@ static struct task_desc *register_pid(struct perf_sched *sched,
- 	add_sched_event_sleep(sched, task, 0, 0);
- 
- 	sched->pid_to_task[pid] = task;
--	sched->nr_tasks++;
--	sched->tasks = realloc(sched->tasks, sched->nr_tasks * sizeof(struct task_desc *));
--	BUG_ON(!sched->tasks);
--	sched->tasks[task->nr] = task;
-+	tasks_p = realloc(sched->tasks, (sched->nr_tasks + 1) * sizeof(struct task_desc *));
-+	if (!tasks_p)
-+		return NULL;
-+	sched->tasks = tasks_p;
-+	sched->tasks[sched->nr_tasks] = task;
-+	task->nr = sched->nr_tasks++;
- 
- 	if (verbose > 0)
- 		printf("registered task #%ld, PID %ld (%s)\n", sched->nr_tasks, pid, comm);
-@@ -846,6 +862,8 @@ replay_wakeup_event(struct perf_sched *sched,
- 
- 	waker = register_pid(sched, sample->tid, "<unknown>");
- 	wakee = register_pid(sched, pid, comm);
-+	if (waker == NULL || wakee == NULL)
-+		return -1;
- 
- 	add_sched_event_wakeup(sched, waker, sample->time, wakee);
- 	return 0;
-@@ -888,6 +906,8 @@ static int replay_switch_event(struct perf_sched *sched,
- 
- 	prev = register_pid(sched, prev_pid, prev_comm);
- 	next = register_pid(sched, next_pid, next_comm);
-+	if (prev == NULL || next == NULL)
-+		return -1;
- 
- 	sched->cpu_last_switched[cpu] = timestamp;
- 
+diff --git a/drivers/clk/meson/gxbb.c b/drivers/clk/meson/gxbb.c
+index 00eaca92b388a..a6b46ad047949 100644
+--- a/drivers/clk/meson/gxbb.c
++++ b/drivers/clk/meson/gxbb.c
+@@ -1305,7 +1305,7 @@ static struct clk_regmap gxbb_32k_clk_sel = {
+ 		.name = "32k_clk_sel",
+ 		.ops = &clk_regmap_mux_ops,
+ 		.parent_data = gxbb_32k_clk_parent_data,
+-		.num_parents = 4,
++		.num_parents = ARRAY_SIZE(gxbb_32k_clk_parent_data),
+ 		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
 -- 
 2.53.0
 
