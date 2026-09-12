@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34CD3B71DA;
-	Sat, 12 Sep 2026 10:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10F6426EAD;
+	Sat, 12 Sep 2026 10:34:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209288; cv=none; b=bErfQ+JSxNxE+8xRl82hAgM20WVe4TeEqqhrGUtBHD8WIZIC7nSFfJtvk6VhRl/+5ZZQuufYwRQu8futCvGcVHoeKHO2JZqRAtJq9E1tV+zCoAwjZTl/xXU61mtyhOmC5J2jLLpHpVVyfQ/yaHDuxHC+XzD8n//cE3arExFcy2g=
+	t=1789209294; cv=none; b=g9CzJ0XBOAG4R6A4hmpHq5bgZZJAvJoxN0EqjSawKIp05eSwl0TLJFxx7fm4RAw2IcMCI37TQ9Q92a3MI29q4OqIevLLc+kbM69XNXVcARAiv5Q7rI7XQOHSwChmaHyxH61V+Zdftd2er1b/uJIM4AOaxHSAm8xo+DLvkuOEaB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209288; c=relaxed/simple;
-	bh=8p7Tx23z8UQKqpGwtlITK7qVVAp4SO16mL+ao3LhhDc=;
+	s=arc-20240116; t=1789209294; c=relaxed/simple;
+	bh=jNbc9ElY5g9jJQEBlzbbOupvKSeoZs1swm1S3Eelrgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MSAvfZLfSGBRTZ5GvJ4IPGEfBsdG4eqg9o1vwKoBN83m2XAu9lz5l+0c7JvNzTksb5grLgAb9Tl9ijZe1SKGNjyI40KTxRqXU18NmE1lpd+0HE+iWHktIikeMH51ge7C+osNKzVC8pKhp0pAZqvOJwW7AEqK6lTrp6Rp4PpTaPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwOVIqjs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nt/HDROo3JsoBnFJ1H5bP88GPsY1cgIpMpQRMoBRpvVBTC/+OiLm1uShn+nhon78H8IDTpUhIYa38YTmH2UgemEIVIgBwTEJNLMr6m9IgCmKattA7V4p922Qr2YHb8kiPemSyMz25DBS+0A5vzmCBmbP+jSanTZ1IpM7YikZw1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0VEX64zn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwOVIqjs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63EA1F000FF;
-	Sat, 12 Sep 2026 10:34:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0VEX64zn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64571F000FF;
+	Sat, 12 Sep 2026 10:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209285;
-	bh=j2PhkC5S4LK79CbluoCvbjWK6Hyxln6OUOmY3A0AFlM=;
+	s=korg; t=1789209290;
+	bh=CypT7tK5T/sxPC5vsVIprUNCrnkO/Ltf61cTj+dIqQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AwOVIqjsgCxKTfeRza4epl/rAIJqPiNlJ+YjAB6fKA1kkMpYiZ3GeqcUl2/UZOgI8
-	 JaOaKNZqmsdCEQg8QNX9NpX23eOEe/DpXjO3+ogQgnEaKJMnVRWm9AJjk3s4rC9SuP
-	 wGrB5OyR3WT6uuBwXEE2SX7hxeCub//ITqTYqupo=
+	b=0VEX64zn52nx8KC/FnXeETYRBFlYVLTS07a4ZprEETnu2iRD7YU5FbncVDlD9Rfsg
+	 Zchzc8hXzjXrNP9/s3azGg6SA1JdCUNs8T4Qs3EP5z912PEoJOcARpBILXJpAIbpFy
+	 vdpbvMsxIPK559TuzxI+13WlvaNJhYFfOuTft/Vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0791/1518] wifi: mt76: mt7996: free vif links after clearing wcid entries on full reset
-Date: Sat, 12 Sep 2026 08:49:20 +0200
-Message-ID: <20260912065641.327749845@linuxfoundation.org>
+Subject: [PATCH 6.18 0792/1518] wifi: mt76: mt7996: fix MIB TX aggregation counter registers for mt7990
+Date: Sat, 12 Sep 2026 08:49:21 +0200
+Message-ID: <20260912065641.349696687@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,41 +52,132 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 7e4208e9f6a876c2b7d28fdb6b86dff3b05db2f7 ]
+[ Upstream commit d0b750072a29c8ff0504c3bc28c411c402f26716 ]
 
-mt7996_mac_reset_vif_iter() queues non-default vif links for kfree_rcu
-while dev->wcid[] still holds pointers to the wcid embedded in each
-freed link; mt76_reset_device() then dereferences those entries and
-runs mt76_wcid_cleanup() on them. If a grace period elapses in between,
-the cleanup operates on freed memory.
+The MIB_TSCR0-7 counters read by mt7996_mac_update_stats() are
+hardcoded at the mt7996/mt7992 offsets 0x6b0-0x6d0, but mt7990 moved
+them to 0x750-0x770, so TX AMPDU statistics were read from unrelated
+registers on that chip. Move the offsets into the per-chip register
+tables.
 
-Run mt76_reset_device() first, so the wcid entries are cleaned up and
-cleared while the links are still valid.
-
-Fixes: ace5d3b6b49e ("wifi: mt76: mt7996: improve hardware restart reliability")
-Link: https://patch.msgid.link/20260724124813.3961474-25-nbd@nbd.name
+Fixes: f6c87411d15f ("wifi: mt76: mt7996: rework register mapping for mt7990")
+Link: https://patch.msgid.link/20260727150434.1778520-1-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/wireless/mediatek/mt76/mt7996/mmio.c  | 24 +++++++++++++++++++
+ .../net/wireless/mediatek/mt76/mt7996/regs.h  | 24 ++++++++++++-------
+ 2 files changed, 40 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index 35a34fc346eb7..dc1a3e91218ad 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -2539,10 +2539,10 @@ mt7996_mac_full_reset(struct mt7996_dev *dev)
- 		phy->omac_mask = 0;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
+index 80db102ed809c..ed292c617168c 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
+@@ -54,6 +54,14 @@ static const u32 mt7996_offs[] = {
+ 	[MIB_BSCR7]		= 0x9e8,
+ 	[MIB_BSCR17]		= 0xa10,
+ 	[MIB_TRDR1]		= 0xa28,
++	[MIB_TSCR0]		= 0x6b0,
++	[MIB_TSCR1]		= 0x6b4,
++	[MIB_TSCR2]		= 0x6b8,
++	[MIB_TSCR3]		= 0x6bc,
++	[MIB_TSCR4]		= 0x6c0,
++	[MIB_TSCR5]		= 0x6c4,
++	[MIB_TSCR6]		= 0x6c8,
++	[MIB_TSCR7]		= 0x6d0,
+ 	[HIF_REMAP_L1]		= 0x24,
+ 	[HIF_REMAP_BASE_L1]	= 0x130000,
+ 	[HIF_REMAP_L2]		= 0x1b4,
+@@ -91,6 +99,14 @@ static const u32 mt7992_offs[] = {
+ 	[MIB_BSCR7]		= 0xae4,
+ 	[MIB_BSCR17]		= 0xb0c,
+ 	[MIB_TRDR1]		= 0xb24,
++	[MIB_TSCR0]		= 0x6b0,
++	[MIB_TSCR1]		= 0x6b4,
++	[MIB_TSCR2]		= 0x6b8,
++	[MIB_TSCR3]		= 0x6bc,
++	[MIB_TSCR4]		= 0x6c0,
++	[MIB_TSCR5]		= 0x6c4,
++	[MIB_TSCR6]		= 0x6c8,
++	[MIB_TSCR7]		= 0x6d0,
+ 	[HIF_REMAP_L1]		= 0x8,
+ 	[HIF_REMAP_BASE_L1]	= 0x40000,
+ 	[HIF_REMAP_L2]		= 0x1b4,
+@@ -128,6 +144,14 @@ static const u32 mt7990_offs[] = {
+ 	[MIB_BSCR7]		= 0xbd4,
+ 	[MIB_BSCR17]		= 0xbfc,
+ 	[MIB_TRDR1]		= 0xc14,
++	[MIB_TSCR0]		= 0x750,
++	[MIB_TSCR1]		= 0x754,
++	[MIB_TSCR2]		= 0x758,
++	[MIB_TSCR3]		= 0x75c,
++	[MIB_TSCR4]		= 0x760,
++	[MIB_TSCR5]		= 0x764,
++	[MIB_TSCR6]		= 0x768,
++	[MIB_TSCR7]		= 0x770,
+ 	[HIF_REMAP_L1]		= 0x8,
+ 	[HIF_REMAP_BASE_L1]	= 0x40000,
+ 	[HIF_REMAP_L2]		= 0x1b8,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/regs.h b/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
+index 0fa325f87fcd9..a46c790550c62 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
+@@ -64,6 +64,14 @@ enum offs_rev {
+ 	MIB_BSCR7,
+ 	MIB_BSCR17,
+ 	MIB_TRDR1,
++	MIB_TSCR0,
++	MIB_TSCR1,
++	MIB_TSCR2,
++	MIB_TSCR3,
++	MIB_TSCR4,
++	MIB_TSCR5,
++	MIB_TSCR6,
++	MIB_TSCR7,
+ 	HIF_REMAP_L1,
+ 	HIF_REMAP_BASE_L1,
+ 	HIF_REMAP_L2,
+@@ -247,9 +255,9 @@ enum offs_rev {
+ #define MT_MIB_BSCR7(_band)			MT_WF_MIB(_band, __OFFS(MIB_BSCR7))
+ #define MT_MIB_BSCR17(_band)			MT_WF_MIB(_band, __OFFS(MIB_BSCR17))
  
- 	ieee80211_iterate_stations_atomic(hw, mt7996_mac_reset_sta_iter, dev);
-+	mt76_reset_device(&dev->mt76);
- 	ieee80211_iterate_active_interfaces_atomic(hw,
- 						   IEEE80211_IFACE_SKIP_SDATA_NOT_IN_DRIVER,
- 						   mt7996_mac_reset_vif_iter, dev);
--	mt76_reset_device(&dev->mt76);
+-#define MT_MIB_TSCR5(_band)			MT_WF_MIB(_band, 0x6c4)
+-#define MT_MIB_TSCR6(_band)			MT_WF_MIB(_band, 0x6c8)
+-#define MT_MIB_TSCR7(_band)			MT_WF_MIB(_band, 0x6d0)
++#define MT_MIB_TSCR5(_band)			MT_WF_MIB(_band, __OFFS(MIB_TSCR5))
++#define MT_MIB_TSCR6(_band)			MT_WF_MIB(_band, __OFFS(MIB_TSCR6))
++#define MT_MIB_TSCR7(_band)			MT_WF_MIB(_band, __OFFS(MIB_TSCR7))
  
- 	INIT_LIST_HEAD(&dev->sta_rc_list);
- 	INIT_LIST_HEAD(&dev->twt_list);
+ #define MT_MIB_RSCR1(_band)			MT_WF_MIB(_band, __OFFS(MIB_RSCR1))
+ /* rx mpdu counter, full 32 bits */
+@@ -265,14 +273,14 @@ enum offs_rev {
+ #define MT_MIB_RSCR36(_band)			MT_WF_MIB(_band, __OFFS(MIB_RSCR36))
+ 
+ /* tx ampdu cnt, full 32 bits */
+-#define MT_MIB_TSCR0(_band)			MT_WF_MIB(_band, 0x6b0)
+-#define MT_MIB_TSCR2(_band)			MT_WF_MIB(_band, 0x6b8)
++#define MT_MIB_TSCR0(_band)			MT_WF_MIB(_band, __OFFS(MIB_TSCR0))
++#define MT_MIB_TSCR2(_band)			MT_WF_MIB(_band, __OFFS(MIB_TSCR2))
+ 
+ /* counts all mpdus in ampdu, regardless of success */
+-#define MT_MIB_TSCR3(_band)			MT_WF_MIB(_band, 0x6bc)
++#define MT_MIB_TSCR3(_band)			MT_WF_MIB(_band, __OFFS(MIB_TSCR3))
+ 
+ /* counts all successfully tx'd mpdus in ampdu */
+-#define MT_MIB_TSCR4(_band)			MT_WF_MIB(_band, 0x6c0)
++#define MT_MIB_TSCR4(_band)			MT_WF_MIB(_band, __OFFS(MIB_TSCR4))
+ 
+ /* rx ampdu count, 32-bit */
+ #define MT_MIB_RSCR27(_band)			MT_WF_MIB(_band, __OFFS(MIB_RSCR27))
+@@ -296,7 +304,7 @@ enum offs_rev {
+ #define MT_MIB_RVSR1(_band)			MT_WF_MIB(_band, __OFFS(MIB_RVSR1))
+ 
+ /* rx blockack count, 32 bits */
+-#define MT_MIB_TSCR1(_band)			MT_WF_MIB(_band, 0x6b4)
++#define MT_MIB_TSCR1(_band)			MT_WF_MIB(_band, __OFFS(MIB_TSCR1))
+ 
+ #define MT_MIB_BTSCR0(_band)			MT_WF_MIB(_band, 0x5e0)
+ #define MT_MIB_BTSCR5(_band)			MT_WF_MIB(_band, __OFFS(MIB_BTSCR5))
 -- 
 2.53.0
 
