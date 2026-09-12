@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974EA369990;
-	Sat, 12 Sep 2026 08:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9704B37AA97;
+	Sat, 12 Sep 2026 08:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200748; cv=none; b=EP6Oui1gaPXncM3aG/Py/WpmGlygnN27NinVzVl38SkT1ybOA72aQTxyW2Ly5exz7GhOnCBzvVnNcFFPPgRBTMrL5xtTJP1i82yX4NbbBC5SzfWHKoYaBHKR93koVh0s3ekidtJDDrU0R6tUoKt9sKKAv7Eud6jsW230lVr7r9Q=
+	t=1789200755; cv=none; b=G2nJ7VUcNbP8/K+PsbsIK0JJiY8qkzSq/tTge/ow2JKwmspcC+c7q3vsV/5ZiMjLOjSoRYyGltTwzd7CYVeAsoAL8VxY1HYhF3pg1+/p+bl7ESlE7Yo2oM6ALVm++EeNdtTjAkE73QepgNXb5iA1ZZ8itxUEcyOFjnpmMMNKVqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200748; c=relaxed/simple;
-	bh=7CXqY+F7WsV6OOQWwa3WQiK+Fg2WT4j1YfHLettXh88=;
+	s=arc-20240116; t=1789200755; c=relaxed/simple;
+	bh=Wq5i2QvuKOKJWA/oUV7KBXFGMJA83NX3rpK6nSgF89k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uF6feffC0cVL9SNd0k8CEDLa9MSTaBYJ+OyQy6bRXmVs3+kxINNSO0GjRO6orUmJHwCHhifnSak1CvSgCH1JxW6Vkm8njz1PX25wu/0Gdw8bH9tHC8gW8ME68T7bcI6uH+S0aOoN6PBegupegeZIRf+Bfn41VfLQ+iKrMhI5oz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYqsBlYE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j1wTzhJzQkGROgu3XOXqjAXnmLR2EY3vJyY4CTeYEgcIcoKBsR+QrxMamr3f5JXPSA7LG07v4V8R8Hba6PC94oMHlg7DctOas6ciQDrgVZkXXnu1Ng4DsVHybs2g7vxscV7hgJny/KODdDi/JpX4u5gGt5/zi05Vs74ivM3O2hI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPI74A2Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYqsBlYE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED0191F00898;
-	Sat, 12 Sep 2026 08:12:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPI74A2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B931F000FF;
+	Sat, 12 Sep 2026 08:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200747;
-	bh=ZOaYEwgvl1wLAav1EZqz70pf/8YWTb06I4Gz7OkB9n0=;
+	s=korg; t=1789200751;
+	bh=GI1ImOawxI0ksRL2MGDYplKSfHW7czwsg3uB+oeyBdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EYqsBlYEnPt8Lkpoyn/LKKfUkH0l6zI1meViZz7B4OWwiDRWSynj9GyjEPpHRMG5L
-	 gDCsderHYwB4LWx2iZAkpegIikQbTNDMsU3zucpDRsWBF4v2inPKaMVoLbTZQFtz8P
-	 wdbznggnJqy5eO0R+fPQGeYCF80Omd5F7jtWtG9Y=
+	b=gPI74A2Q6ppat4fD+BEUHGqo1I0IGUXRZJ0N2zeInw353l1vAoSoRi132Irl5K5nw
+	 btCdyL/i6s9qexin8y11fB26fcJtveSu2Zjee9FMDpAPEWl1g7h+H2n7qou3C870zt
+	 Lmq/YCWPzKq3Zb8U0XWPUmekC9CmZD85POY3ypz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0853/1815] powerpc/44x: Set GPIO chip parent
-Date: Sat, 12 Sep 2026 08:43:23 +0200
-Message-ID: <20260912065708.945266310@linuxfoundation.org>
+Subject: [PATCH 7.2 0854/1815] powerpc/crash: Fix possible memory leak in update_crash_elfcorehdr()
+Date: Sat, 12 Sep 2026 08:43:24 +0200
+Message-ID: <20260912065708.969226664@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,42 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit b9254d222d0b38cc6f7b73119fad6316f65278be ]
+[ Upstream commit 4cc4b586007fbbf8edba4f1d0849e9a06b0cf6c3 ]
 
-The PPC4xx GPIO driver stopped assigning an explicit parent
-to the gpio_chip when it moved away from of_mm_gpiochip_add_data().
+In get_crash_memory_ranges(), if crash_exclude_mem_range() failed
+after realloc_mem_ranges() has successfully allocated the cmem
+memory, it just returns an error but leaves cmem pointing to
+the allocated memory, nor is it freed in the caller
+update_crash_elfcorehdr(), which cause a memory leak, goto out
+to free the cmem.
 
-Restore that association from the platform device so OF GPIO lookup
-can match phandles to the registered gpiochip.
-
-Tested on: Cisco MX60W. No more probe deferral.
-
-Assisted-by: Codex:GPT-5.5
-Fixes: 1044dbaf2a77 ("powerpc/44x: Change GPIO driver to a proper platform driver")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
+Fixes: 849599b702ef ("powerpc/crash: add crash memory hotplug support")
+Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260517063754.21819-1-rosenp@gmail.com
+Link: https://patch.msgid.link/20260729012948.2797865-2-ruanjinjie@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/44x/gpio.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/kexec/crash.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/platforms/44x/gpio.c b/arch/powerpc/platforms/44x/gpio.c
-index aea0d913b59d0..4413a94cf7a6a 100644
---- a/arch/powerpc/platforms/44x/gpio.c
-+++ b/arch/powerpc/platforms/44x/gpio.c
-@@ -169,6 +169,7 @@ static int ppc4xx_gpio_probe(struct platform_device *ofdev)
+diff --git a/arch/powerpc/kexec/crash.c b/arch/powerpc/kexec/crash.c
+index e6539f213b3d1..a520f851c3a6b 100644
+--- a/arch/powerpc/kexec/crash.c
++++ b/arch/powerpc/kexec/crash.c
+@@ -502,7 +502,7 @@ static void update_crash_elfcorehdr(struct kimage *image, struct memory_notify *
+ 	ret = get_crash_memory_ranges(&cmem);
+ 	if (ret) {
+ 		pr_err("Failed to get crash mem range\n");
+-		return;
++		goto out;
+ 	}
  
- 	gc = &chip->gc;
- 
-+	gc->parent = dev;
- 	gc->base = -1;
- 	gc->ngpio = 32;
- 	gc->direction_input = ppc4xx_gpio_dir_in;
+ 	/*
 -- 
 2.53.0
 
