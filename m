@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4782EBDE9;
-	Sat, 12 Sep 2026 07:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F43137C0E2;
+	Sat, 12 Sep 2026 07:21:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197682; cv=none; b=Yapm5OAetrKiddGEqeQvTnO+mcjr2NzFMs2znQZqnA3yY5rvG5g/B4pUzpOpQOpNoxpdJynjP/otxw9338onszY5z7B7K+dhjfEt2IxILESraNgM5MVa24hcfRQtB/SAurJ7Mzdx5Haef+wFvxVjTJmRFvluBm+aQ5SRTwVxwHA=
+	t=1789197687; cv=none; b=jeVti0u9f5RzOBNRKzRQkmDoKNoTuBPxovMTVn2TfIZgsJxqpvbnh+mwtkAUB31fKfOKwGHQaMZ+MaeIblxCA2VvFw4T8TifQCJhFUtUK5BpV4HS2WNMJAcYcQKO0lf/IqHPcUjGC2ksG6jTNemwz9WyViDmf5VRdJt0O7FblQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197682; c=relaxed/simple;
-	bh=oa+T9kotS9E2qvA5a9ogXyKGO/mof3CFnJTjHwr8MZM=;
+	s=arc-20240116; t=1789197687; c=relaxed/simple;
+	bh=EFVmzhgzOQLCwSpsRpkhX86wltCSl1pkUmDQB+1rNNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o/3aAAtXww1PYMRilmS6MZzAnmDNUK5fdCa70geH9l6BidNxvGl/70wFLAnHtbPA4dsFMIHTWVkpfTDXWdnBaEjGZ7eMzR9UNp4MGtu69FdqwRZ+AiSYPDUmFnLyry0e8tymIZ6HeQ5LiNfHizgJybN50PGXQwIX5IF6vqsLZ0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UtG1KHYO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s4CCShuKik3YG/RcEllMgrFQVZ17qBMPXy+ceuAwRdotKLrh/lEXEYzqewDK0nbKsi/4y+K3N4Bnj+D7Kc7zxc4Kw4KI5yYAunWzMJKtN/hCgOrhrDj39SbtqXUznQFT6KgCBzy1av5OXD7u+BL4FVuffq5FfCmfqBMYyQB/AZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F04VwC1S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UtG1KHYO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D2F21F000FF;
-	Sat, 12 Sep 2026 07:21:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F04VwC1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0456D1F000FF;
+	Sat, 12 Sep 2026 07:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197681;
-	bh=sI6tWEGTSJUBPSxXY3H3kPodhJvmM0HEwN738D5Ucrk=;
+	s=korg; t=1789197686;
+	bh=JkEGSdbyMxUnpA21V68WLHyZ7nNfVbALOHJbVHdsoMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UtG1KHYOMlBACJlU59gaNNAiflh4dCWCoA3ZwVlt9udxq6UGlm5wqYemulqi0pd4p
-	 Hea2PehpP5YWhyfFJmXU3oIj/JrqymqZOXn8o1D5XQr10DSpnPuxCvOn8woJjweECR
-	 GV0shXeXBKTb3hEIr7EWs0gl95f39WY92ICbbtbQ=
+	b=F04VwC1S5XbE9iDbdYRboH1W+CmgNAgVVhFC8vbv/rcnBDvKuRaf2VNqzbzR5W3uN
+	 IX84JY0sgk3laY2af//E6tmOK/H+qKCFPzBXRkCHkXRAtK9QAKTN1GuyzG0jAAcJZ8
+	 f133b+NwmKWZp3OH9NyljrszBZDjklQ0zlNwllOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0223/1815] clk: qcom: gcc-glymur: Move EVA clocks to critical clock list
-Date: Sat, 12 Sep 2026 08:32:53 +0200
-Message-ID: <20260912065654.230391779@linuxfoundation.org>
+Subject: [PATCH 7.2 0224/1815] arm64: dts: qcom: sc8280xp: sort reserved memory regions
+Date: Sat, 12 Sep 2026 08:32:54 +0200
+Message-ID: <20260912065654.253352272@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,96 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taniya Das <taniya.das@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 7399034fd78615ba826b864fca2e4572f13cf8e3 ]
+[ Upstream commit 53275adfb07d416a32004612227265939d0df00d ]
 
-The gcc_eva_ahb_clk and gcc_eva_xo_clk branch clocks should not be
-registered as standalone GCC branch clocks. Drop these clocks from
-the GCC clock list and instead add their CBCR registers to the GCC
-critical clocks list to ensure they remain enabled during early boot.
+Move memory region reserved for the GPU to its proper place in DT.
 
-If these clocks are registered as normal branch clocks, they may be
-gated, which breaks access to the EVA clock controller during clock
-controller probe, thus leave them as critical clocks similar to other
-subsystem AHB and XO clocks.
-
-Fixes: efe504300a17 ("clk: qcom: gcc: Add support for Global Clock Controller")
-Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Fixes: 6e9612ced0c9 ("arm64: dts: qcom: sc8280xp: create common zap-shader node")
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260617-evacc_glymur-v2-1-905108dacaaa@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260515-iris-sc8280xp-v7-2-2e21f6db1897@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-glymur.c | 32 ++------------------------------
- 1 file changed, 2 insertions(+), 30 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-glymur.c b/drivers/clk/qcom/gcc-glymur.c
-index f4ede4a3a1c07..6925c6865089c 100644
---- a/drivers/clk/qcom/gcc-glymur.c
-+++ b/drivers/clk/qcom/gcc-glymur.c
-@@ -3668,21 +3668,6 @@ static struct clk_branch gcc_disp_hf_axi_clk = {
- 	},
- };
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index b0de9e262f299..d7d1279008fa6 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -692,11 +692,6 @@ reserved-region@85b00000 {
+ 			no-map;
+ 		};
  
--static struct clk_branch gcc_eva_ahb_clk = {
--	.halt_reg = 0x9b004,
--	.halt_check = BRANCH_HALT_VOTED,
--	.hwcg_reg = 0x9b004,
--	.hwcg_bit = 1,
--	.clkr = {
--		.enable_reg = 0x9b004,
--		.enable_mask = BIT(0),
--		.hw.init = &(const struct clk_init_data) {
--			.name = "gcc_eva_ahb_clk",
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
+-		pil_gpu_mem: gpu-mem@8bf00000 {
+-			reg = <0 0x8bf00000 0 0x2000>;
+-			no-map;
+-		};
 -
- static struct clk_branch gcc_eva_axi0_clk = {
- 	.halt_reg = 0x9b008,
- 	.halt_check = BRANCH_HALT_SKIP,
-@@ -3713,19 +3698,6 @@ static struct clk_branch gcc_eva_axi0c_clk = {
- 	},
- };
+ 		pil_adsp_mem: adsp-region@86c00000 {
+ 			reg = <0 0x86c00000 0 0x2000000>;
+ 			no-map;
+@@ -712,6 +707,11 @@ pil_nsp0_mem: cdsp0-region@8a100000 {
+ 			no-map;
+ 		};
  
--static struct clk_branch gcc_eva_xo_clk = {
--	.halt_reg = 0x9b024,
--	.halt_check = BRANCH_HALT,
--	.clkr = {
--		.enable_reg = 0x9b024,
--		.enable_mask = BIT(0),
--		.hw.init = &(const struct clk_init_data) {
--			.name = "gcc_eva_xo_clk",
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
- static struct clk_branch gcc_gp1_clk = {
- 	.halt_reg = 0x64000,
- 	.halt_check = BRANCH_HALT,
-@@ -7992,10 +7964,8 @@ static struct clk_regmap *gcc_glymur_clocks[] = {
- 	[GCC_CFG_NOC_USB_ANOC_AHB_CLK] = &gcc_cfg_noc_usb_anoc_ahb_clk.clkr,
- 	[GCC_CFG_NOC_USB_ANOC_SOUTH_AHB_CLK] = &gcc_cfg_noc_usb_anoc_south_ahb_clk.clkr,
- 	[GCC_DISP_HF_AXI_CLK] = &gcc_disp_hf_axi_clk.clkr,
--	[GCC_EVA_AHB_CLK] = &gcc_eva_ahb_clk.clkr,
- 	[GCC_EVA_AXI0_CLK] = &gcc_eva_axi0_clk.clkr,
- 	[GCC_EVA_AXI0C_CLK] = &gcc_eva_axi0c_clk.clkr,
--	[GCC_EVA_XO_CLK] = &gcc_eva_xo_clk.clkr,
- 	[GCC_GP1_CLK] = &gcc_gp1_clk.clkr,
- 	[GCC_GP1_CLK_SRC] = &gcc_gp1_clk_src.clkr,
- 	[GCC_GP2_CLK] = &gcc_gp2_clk.clkr,
-@@ -8544,6 +8514,8 @@ static const u32 gcc_glymur_critical_cbcrs[] = {
- 	0x71004, /* GCC_GPU_CFG_AHB_CLK */
- 	0x32004, /* GCC_VIDEO_AHB_CLK */
- 	0x32058, /* GCC_VIDEO_XO_CLK */
-+	0x9b004, /* GCC_EVA_AHB_CLK */
-+	0x9b024, /* GCC_EVA_XO_CLK */
- };
- 
- static const struct regmap_config gcc_glymur_regmap_config = {
++		pil_gpu_mem: gpu-mem@8bf00000 {
++			reg = <0 0x8bf00000 0 0x2000>;
++			no-map;
++		};
++
+ 		pil_nsp1_mem: cdsp1-region@8c600000 {
+ 			reg = <0 0x8c600000 0 0x1e00000>;
+ 			no-map;
 -- 
 2.53.0
 
