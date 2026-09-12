@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFF5352022;
-	Sat, 12 Sep 2026 15:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A812352022;
+	Sat, 12 Sep 2026 15:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227517; cv=none; b=EYt7fCDJUYn0I0PJH0tIXH90sDuesL+DsBpoVjRmSHd4o7YY3amHD/P+OoM+xzGTtUdhN/KdzFUZ1BQRZn/AyKgFaPBK6GyqdA7xpK/hIth3Ei0Qz5TXCQrc+7PFzzXzt3J1Q4gmPqUF9mLn3WtM52oeVfCtCJFqfLdEU7/7d5Q=
+	t=1789227522; cv=none; b=fFGlzsQ6+yA7Ka8a5U7YOb49uaVE9bP/X2Zre9vnvjz9xgKsgOW7rivSTxxKTLksaUaNkandTI8tFCJg3KBSKchD44l6SZ0IDzAwEsG45uufimwBMFH66RzO4M6ABi/XQH37Ptkw+J63t6gzyEk0K47D0K8xSOuIZ6z78hr+j0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227517; c=relaxed/simple;
-	bh=fd9/pPutkPZ8unq1W2mFaoakm6rhLdFOIvZq172MILY=;
+	s=arc-20240116; t=1789227522; c=relaxed/simple;
+	bh=KCrGzhPheZCXi129tGG2UKEdHB8dILRT+3zVFzy7QrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J7ar0xmVSw817/pjig8/8/BCPytg4guh0EIYrVfRXtHpG3imSO4iAReQR6FzxOlqtj5QPwma5Ea2I31Q5UpCElalTPS6mjthyDoCt7zdl4YStXiw0u3dkmUfEK0SSwCdRTwJLNgfsShejNFKfQgTXpnsq32MQN/gRPgIY2iA9Rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XGDcyJSB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sv+OyitfcjlPCztstHzan7beWpXH3K0ZvkAjvd0dtTeH9XcXuxlJuNhroANIp7trBTNGkbFYg3jtvSmRuXIu2dSKaq05L9aX0HO5JuplcUFIQwbRsuZs7ndbl5OcXowurgGHN/W6BLozXlqxY3KgXV39am71s7zJVkYVAgQUD20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvpFr+uH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XGDcyJSB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514C81F000FF;
-	Sat, 12 Sep 2026 15:38:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvpFr+uH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22CF61F000FF;
+	Sat, 12 Sep 2026 15:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227516;
-	bh=MFjpYB8APpGqz2QRbAFVoe4UaKqs5sf12DJPEzpiQL8=;
+	s=korg; t=1789227520;
+	bh=U/GFXjHRm7Xa+MgDTanep595vnLHB1n7EAfkxV/5tWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XGDcyJSB23EnJKbmARJThNYvnHYXeV5MI1nc20m7BncqUPG/G9S2Z9FED6U9GM1qX
-	 Faa9r6znBNCkZWrh/6ekDAntbBPYvtJ0s26e/6ACJvXJfxi9hr4tc6p2RR1sWEjtnm
-	 sjhnYF1ORSnABXKzanrfTMZVW4gNVTBEixlG2Dko=
+	b=VvpFr+uH5x30kTjtPlfDr+BQ1lYCgR4xF7n6mzYtFbV+QnypWx/dmirL2nRAWjy3g
+	 X00+5r2W3ePL8TfBPrjfebVupqV2wrX4WwjTHB3O9joaSx2FijHR0wIMZCDmVFmSUt
+	 W3AyrMMNprz9CiwCu8r5I2G91i2v8o9Ctjpnk6T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 0155/1191] ocfs2: cluster: fix o2hb_dependent_users leak on pin failure
-Date: Sat, 12 Sep 2026 08:48:03 +0200
-Message-ID: <20260912065551.689568922@linuxfoundation.org>
+	WenTao Liang <vulab@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 0146/1191] regulator: max8998_pmic_dt_parse_pdata: of_node_put on reg_np after ownership transferred to rdata
+Date: Sat, 12 Sep 2026 08:47:54 +0200
+Message-ID: <20260912065551.481722659@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -56,54 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: WenTao Liang <vulab@iscas.ac.cn>
 
-commit 12c2ab42dbe227956c765e2674364bfca5de0533 upstream.
+commit 7c8cc25d8d86f9eb3979255935cfdc7d062ad746 upstream.
 
-In o2hb_region_inc_user(), o2hb_dependent_users is incremented
-unconditionally before calling o2hb_region_pin().  If the pin fails, the
-counter is never decremented and any partially-pinned regions are never
-unpinned, since the caller does not call o2hb_region_dec_user() on error.
+In max8998_pmic_dt_parse_pdata(), of_get_child_by_name() acquires a
+reference on reg_np which is then stored in rdata->reg_node, transferring
+ownership to the regulator data array. The subsequent of_node_put(reg_np)
+at the end of the function releases the last matched regulator node's
+reference, leaving rdata->reg_node as a dangling pointer for the last
+entry.
 
-The leaked counter causes subsequent o2hb_region_inc_user() calls to skip
-pinning entirely (the > 1 check), leaving heartbeat regions unprotected.
+Remove the spurious of_node_put(reg_np) call.
 
-Fix by rolling back on failure: call o2hb_region_unpin(NULL) to release
-any partially-pinned regions and decrement o2hb_dependent_users to restore
-the pre-increment state.
-
-Link: https://lore.kernel.org/20260722124933.430554-4-joseph.qi@linux.alibaba.com
-Fixes: 58a3158a5d17 ("ocfs2/cluster: Pin/unpin o2hb regions")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 156f252857df ("drivers: regulator: add Maxim 8998 driver")
+Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260626160326.54457-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/cluster/heartbeat.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/regulator/max8998.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/fs/ocfs2/cluster/heartbeat.c
-+++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -2434,8 +2434,13 @@ static int o2hb_region_inc_user(const ch
- 		goto unlock;
+--- a/drivers/regulator/max8998.c
++++ b/drivers/regulator/max8998.c
+@@ -611,7 +611,6 @@ static int max8998_pmic_dt_parse_pdata(s
+ 	}
+ 	pdata->num_regulators = rdata - pdata->regulators;
  
- 	if (bitmap_weight(o2hb_quorum_region_bitmap,
--			   O2NM_MAX_REGIONS) <= O2HB_PIN_CUT_OFF)
-+			  O2NM_MAX_REGIONS) <= O2HB_PIN_CUT_OFF) {
- 		ret = o2hb_region_pin(NULL, false);
-+		if (ret) {
-+			o2hb_region_unpin(NULL);
-+			o2hb_dependent_users--;
-+		}
-+	}
+-	of_node_put(reg_np);
+ 	of_node_put(regulators_np);
  
- unlock:
- 	spin_unlock(&o2hb_live_lock);
+ 	ret = max8998_pmic_dt_parse_dvs_gpio(iodev, pdata, pmic_np);
 
 
