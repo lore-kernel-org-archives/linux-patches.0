@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6783C140F;
-	Sat, 12 Sep 2026 07:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC993C1419;
+	Sat, 12 Sep 2026 07:10:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197003; cv=none; b=R6Ie2G+pfsOxrxJpqh5MxYnQzZnub9jOZPxVyVZ7113xd3yUPjvfG5BZ/LTOE3tFcYBMJq3026pjbEA1s+VGkcFN9VKs3h0IgBRVdljFPK4opV24w+aSKLGWMVDSIGkJPLfSmahUEqWfdx3bPCn8ZTmZldfgXEVRbJBX/QPO05E=
+	t=1789197009; cv=none; b=aGz91wwwal+Pc8DQObYbDyyVhqPy3T0mrXOcu2eswgMTrf3q4fIyTI4s3L89UGd0Rcz6z0W8qgGeN0nW8UcUkYLmcTbQK/lMpYPOcaFosgaiQQSmVZErAykelb/mJnZhlLwuiMpNVgD4yP3ZlRPY8gNsW9fQmgqz15uIekfU6Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197003; c=relaxed/simple;
-	bh=5iWBlns3Lmluh/BanVZHAv6DcBX7LvJVn3WS4ZsG99U=;
+	s=arc-20240116; t=1789197009; c=relaxed/simple;
+	bh=GUjc7z/WOSmv6RonwkNSABZ7fMrWkrGnR2lBK5Dw1Xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lipib8AFcnwSxP+1xJ7M/tFQC9QV+54MdK9UO4uccY49MHKZGWIAt5Ej/ar71+YEbj56Jd2JW670o7Zz8QCF5h69PvfBXk8aOXAH5Yqbv2Nh07s7hPrCDY6dtNYOZZZafn/yw3uyj0vbG90wS025dKecBIH6m07Moisrb0Qpxt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xm1g8jbw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mP+jUz7Khngqe4arCYgQej8eAtP1ShnmebfMFC2RNEMurFmLmhwXO86Yyx4qBglwUZRAt4NpnkvNMj53FL8SR+D89ricvD22XkNIovHGZEFEibFHEgfHB7CMXkN2TwoOzgJ0CdzipDOU86tqPmFBoPx/iV8LemUl40Hyfe6BWgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xugTcWic; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xm1g8jbw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90F2C1F000FF;
-	Sat, 12 Sep 2026 07:10:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xugTcWic"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC8F1F000FF;
+	Sat, 12 Sep 2026 07:10:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197002;
-	bh=4f2Z9JQS9GNU/97gd65/vzRDoYToWiirqVV8F3ojawk=;
+	s=korg; t=1789197007;
+	bh=YprcMgSxyKrBQ0Aluy9RBy/pHkgktxbY+FTgkvu+Thc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xm1g8jbwDCNwpFrY+oJ6kEt9LPL8IyXMJx+jc89fqvl+2sIcIiAWQOnvUoN/YBP4y
-	 E7UcOYcBvjJ471IOIU7cr33yt22xoJ7zosWs1f2FETIdzYziziYsO04MXOoEUODvia
-	 7Uz41/1QHWs5+cfjkS19c8gsuYToTF0gMn5UejFk=
+	b=xugTcWic0hRpb597HtEivIV1GOLguFG/QKhLWpFhvUOSBsQXDzLf/QxGqTZDGuqpE
+	 0m83jsnCRFzVYhHAtv/+1VknzB/krpY3XJ0W18FWooXkYZaeYG7gQsSMV6tZTskaL7
+	 xbwE72owlDPPd1rRx0bNglNbXdqrFNq3Xfoa13gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuyang Dong <dongxuyang@eswincomputing.com>,
+	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
 	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0080/1815] clk: eswin: Add CLK_IGNORE_UNUSED to NoC clock
-Date: Sat, 12 Sep 2026 08:30:30 +0200
-Message-ID: <20260912065650.888998218@linuxfoundation.org>
+Subject: [PATCH 7.2 0081/1815] clk: moxart: remove unused variables, fix refcount leak
+Date: Sat, 12 Sep 2026 08:30:31 +0200
+Message-ID: <20260912065650.911196377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,45 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuyang Dong <dongxuyang@eswincomputing.com>
+From: Alexander A. Klimov <grandmaster@al2klimov.de>
 
-[ Upstream commit 22109b7329f9b3bf2fee73087c73ce46e9bf3751 ]
+[ Upstream commit 9f275f2ee9ca60ea4c092bdc0195987945ad8ad8 ]
 
-The gate_noc_nsp_clk provides the essential clock source for NPU,
-DSP, and PCIe subsystems. During kernel init, the clock framework
-attempts to disable unused clocks when clk_ignore_unused kernel
-parameter is not set.
-However, gate_noc_nsp_clk is required to remain enabled for these
-critical subsystems to function properly, causing PCIe boot failures
-when auto-disabled.
+Not only these error checks are redundand,
+those of_clk_get() return values weren't cleaned up via clk_put().
 
-Add CLK_IGNORE_UNUSED flag to gate_noc_nsp_clk to ensure it stays
-enabled even when clk_ignore_unused is not specified in kernel
-command line.
-
-Fixes: cd44f127c1d4 ("clk: eswin: Add eic7700 clock driver")
-Signed-off-by: Xuyang Dong <dongxuyang@eswincomputing.com>
+Fixes: c7bb4fc16ead ("clk: add MOXA ART SoCs clock driver")
+Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
 Reviewed-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/eswin/clk-eic7700.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/clk-moxart.c | 14 --------------
+ 1 file changed, 14 deletions(-)
 
-diff --git a/drivers/clk/eswin/clk-eic7700.c b/drivers/clk/eswin/clk-eic7700.c
-index be81d74192dae..43a47fe16ab14 100644
---- a/drivers/clk/eswin/clk-eic7700.c
-+++ b/drivers/clk/eswin/clk-eic7700.c
-@@ -791,7 +791,8 @@ static struct eswin_clk_info eic7700_clks[] = {
- 			EIC7700_CLK_MUX_CPU_ROOT_3MUX1_GFREE,
- 			CLK_SET_RATE_PARENT, EIC7700_REG_OFFSET_U84, 27, 0),
- 	ESWIN_GATE_TYPE(EIC7700_CLK_GATE_NOC_NSP_CLK, "gate_noc_nsp_clk",
--			EIC7700_CLK_DIV_NOC_NSP_DYNM, CLK_SET_RATE_PARENT,
-+			EIC7700_CLK_DIV_NOC_NSP_DYNM,
-+			CLK_SET_RATE_PARENT | CLK_IGNORE_UNUSED,
- 			EIC7700_REG_OFFSET_NOC, 31, 0),
- 	ESWIN_GATE_TYPE(EIC7700_CLK_GATE_BOOTSPI, "gate_clk_bootspi",
- 			EIC7700_CLK_MUX_BOOTSPI_CLK_2MUX1_GFREE,
+diff --git a/drivers/clk/clk-moxart.c b/drivers/clk/clk-moxart.c
+index 3786a0153ad17..40663ef3ef0ae 100644
+--- a/drivers/clk/clk-moxart.c
++++ b/drivers/clk/clk-moxart.c
+@@ -17,7 +17,6 @@ static void __init moxart_of_pll_clk_init(struct device_node *node)
+ {
+ 	void __iomem *base;
+ 	struct clk_hw *hw;
+-	struct clk *ref_clk;
+ 	unsigned int mul;
+ 	const char *name = node->name;
+ 	const char *parent_name;
+@@ -34,12 +33,6 @@ static void __init moxart_of_pll_clk_init(struct device_node *node)
+ 	mul = readl(base + 0x30) >> 3 & 0x3f;
+ 	iounmap(base);
+ 
+-	ref_clk = of_clk_get(node, 0);
+-	if (IS_ERR(ref_clk)) {
+-		pr_err("%pOF: of_clk_get failed\n", node);
+-		return;
+-	}
+-
+ 	hw = clk_hw_register_fixed_factor(NULL, name, parent_name, 0, mul, 1);
+ 	if (IS_ERR(hw)) {
+ 		pr_err("%pOF: failed to register clock\n", node);
+@@ -56,7 +49,6 @@ static void __init moxart_of_apb_clk_init(struct device_node *node)
+ {
+ 	void __iomem *base;
+ 	struct clk_hw *hw;
+-	struct clk *pll_clk;
+ 	unsigned int div, val;
+ 	unsigned int div_idx[] = { 2, 3, 4, 6, 8};
+ 	const char *name = node->name;
+@@ -78,12 +70,6 @@ static void __init moxart_of_apb_clk_init(struct device_node *node)
+ 		val = 0;
+ 	div = div_idx[val] * 2;
+ 
+-	pll_clk = of_clk_get(node, 0);
+-	if (IS_ERR(pll_clk)) {
+-		pr_err("%pOF: of_clk_get failed\n", node);
+-		return;
+-	}
+-
+ 	hw = clk_hw_register_fixed_factor(NULL, name, parent_name, 0, 1, div);
+ 	if (IS_ERR(hw)) {
+ 		pr_err("%pOF: failed to register clock\n", node);
 -- 
 2.53.0
 
