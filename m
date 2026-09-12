@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7EF383C88;
-	Sat, 12 Sep 2026 19:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE193B3C19;
+	Sat, 12 Sep 2026 19:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240016; cv=none; b=WbIe4QY0xf3Dy0w+LnVWgjz4Xk1v2mPY3zFmII/el5U83r34Rl2KOnqH3GJL3yIC4kQE/2Iyb1WxkOoWLWkeek/XCEoG5++geOCZqIRSHzmyAz/TgFiJptKhbEXM94eTlQX5eCRgeO5J3JYCzcttm1bamqFXhaje0C07I0+PHoY=
+	t=1789240022; cv=none; b=DnGCp53GoS+AmGul/LZVtMegVE7OIOuyIEBcXiq0aUVwlCwDIrp5vHjpQ3FDuweRoKhONorTS9jCIiBT+FZF1sdTgc1juaMZxm1CF8iS+9fUY1bC9Sax89BpTYE1UwYMvadkeLDrckkAmeAFN0HyoJmJ7BNjtZXIfEVcviRJt4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240016; c=relaxed/simple;
-	bh=vFPQd/F48LiFwU+tKvzO1u2vYu14+RSXRyyyJZTL7tc=;
+	s=arc-20240116; t=1789240022; c=relaxed/simple;
+	bh=vOojhBa32kpqCvm5K7q2VpTRyDEIKjYzyMEumcnIdHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p0lADa/CQX6wqt2syThnjFW/LAgCB7SpkkGKysdcDMKqJEJheFIV9HXqB2H2HGj20LM/9KAnfHIjWJnoz7aZUcXz3Ze3kVInBZ33MfOzOjmuD3ZttWyNCUnoS+XrYHe/cF5ODACmkr80lbXoNzMmI0VzfWVcHFhOi1/VWd0eibg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZRxcDx3L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JJsUeoy/uFR0TMsctSeomVSjil2uZPMh64qzt+l21utdWP1OTGPm4/wt88Fus4L8Q8CrNtLxFQLBgyoLJ0S+PctBan0E5ONBnvfUDapoExjRfe+GLW1DU8Tq0iId/ckl242Z2rR2K2G5mLLc/1QMt4lekf/39XWdH1PYiF0TKu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gwOj0fYt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZRxcDx3L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB98B1F000FF;
-	Sat, 12 Sep 2026 19:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gwOj0fYt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278771F000FF;
+	Sat, 12 Sep 2026 19:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240014;
-	bh=mGbEw9+BNzRNAJQdks8cAdexDsq+S4z2x1HSxSpOT6M=;
+	s=korg; t=1789240019;
+	bh=qmQn0Rsq6lowVbM9fGCLrrnbst4V5WgaTWb58Cg/6Ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZRxcDx3LoIv72nzMmW9Pg7ehiNU+8dTojWzqEuZIh9fqsVrdI8bFS8z7SCScQ6iva
-	 E/JgARIefE8UpeQAvufCOOpjAcKI56WoGO3yTIYdCzk3+svJMay63k+3v6k6bVhMZI
-	 3mFjXjB8GW2FJMUKQz9JhXbchStxKu69BOKRHy1Y=
+	b=gwOj0fYt00yuu1CoNpcml2+GSVXh+hxUzB7sBrijcB/rTY7G4q5Ye/z4q9ybVWx7U
+	 sOtH+YRSYt0XGUzCQl5lzFL7Y8wOOsohiqr4uB3Lv6hG5F4/Z6SMdbdMunFmLbIEHp
+	 elFl+WE2mvFn8y7V3J0NVUuOt0OyvH2TjQqm/y4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Danila Chernetsov <listdansp@mail.ru>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 783/935] ASoC: pxa: Use devm_clk_get_optional() for extclk clock
-Date: Sat, 12 Sep 2026 09:03:33 +0200
-Message-ID: <20260912065544.787011514@linuxfoundation.org>
+Subject: [PATCH 5.15 766/935] fbdev: kyro: Validate overlay viewport coordinates
+Date: Sat, 12 Sep 2026 09:03:16 +0200
+Message-ID: <20260912065544.400311474@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,51 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Danila Chernetsov <listdansp@mail.ru>
 
-[ Upstream commit 6ec64d757af9b75a3c64f9f7dad76bdc1efc06ca ]
+[ Upstream commit 7b5c7bc55e13e7f5ac7b1eaf5c6d690389ea5ee3 ]
 
-The Device Tree binding defines the extclk clock as an optional
-property, but the driver currently uses devm_clk_get() and manually
-handles the absence of the clock.
+The overlay viewport end coordinates are computed from the viewport
+origin and dimensions using 32-bit unsigned arithmetic. Large input
+values can cause these calculations to wrap around before the resulting
+coordinates are passed to SetOverlayViewPort().
 
-Use devm_clk_get_optional() to match the binding and simplify the
-optional clock handling. This also propagates errors other than the
-absence of the optional clock, including -EPROBE_DEFER.
+SetOverlayViewPort() packs the viewport coordinates into 16-bit
+register fields. The X coordinates are additionally adjusted by +2
+and +1 before being written. Validate the coordinate calculations
+for 32-bit wraparound and ensure that the adjusted coordinates fit
+within their 16-bit register fields before calling
+SetOverlayViewPort().
 
-This changes the existing behavior for errors other than
--EPROBE_DEFER. RFC to discuss whether these errors should cause probe
-to fail rather than being treated as an unavailable optional clock.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 90eb6b59d311 ("ASoC: pxa-ssp: add support for an external clock in devicetree")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260811100949.61142-1-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/pxa/pxa-ssp.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/video/fbdev/kyro/fbdev.c | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/pxa/pxa-ssp.c b/sound/soc/pxa/pxa-ssp.c
-index d6a2af293f458..69029000b3b3b 100644
---- a/sound/soc/pxa/pxa-ssp.c
-+++ b/sound/soc/pxa/pxa-ssp.c
-@@ -775,13 +775,10 @@ static int pxa_ssp_probe(struct snd_soc_dai *dai)
- 			goto err_priv;
- 		}
+diff --git a/drivers/video/fbdev/kyro/fbdev.c b/drivers/video/fbdev/kyro/fbdev.c
+index 25801e8e3f74a..4979339dbc008 100644
+--- a/drivers/video/fbdev/kyro/fbdev.c
++++ b/drivers/video/fbdev/kyro/fbdev.c
+@@ -368,6 +368,9 @@ static int kyro_dev_overlay_create(u32 ulWidth,
  
--		priv->extclk = devm_clk_get(dev, "extclk");
-+		priv->extclk = devm_clk_get_optional(dev, "extclk");
- 		if (IS_ERR(priv->extclk)) {
- 			ret = PTR_ERR(priv->extclk);
--			if (ret == -EPROBE_DEFER)
--				goto err_priv;
--
--			priv->extclk = NULL;
-+			goto err_priv;
- 		}
- 	} else {
- 		priv->ssp = pxa_ssp_request(dai->id + 1, "SoC audio");
+ static int kyro_dev_overlay_viewport_set(u32 x, u32 y, u32 ulWidth, u32 ulHeight)
+ {
++	u32 right;
++	u32 bottom;
++
+ 	if (deviceInfo.ulOverlayOffset == 0)
+ 		/* probably haven't called CreateOverlay yet */
+ 		return -EINVAL;
+@@ -377,11 +380,30 @@ static int kyro_dev_overlay_viewport_set(u32 x, u32 y, u32 ulWidth, u32 ulHeight
+ 	    (x < 2 && ulWidth + 2 == 0))
+ 		return -EINVAL;
+ 
++	/*
++	 * SetOverlayViewPort() adjusts X coordinates by +2 (left) and +1
++	 * (right) before packing them into 16-bit register fields.
++	 */
++	if (x > U16_MAX - 2 || y > U16_MAX)
++		return -EINVAL;
++
++	right = x + ulWidth;
++	bottom = y + ulHeight;
++
++	if (right < x || bottom < y)
++		return -EINVAL;
++
++	right--;
++	bottom--;
++
++	if (right > U16_MAX - 1 || bottom > U16_MAX)
++		return -EINVAL;
++
+ 	/* Stop Ramdac Output */
+ 	DisableRamdacOutput(deviceInfo.pSTGReg);
+ 
+ 	SetOverlayViewPort(deviceInfo.pSTGReg,
+-			   x, y, x + ulWidth - 1, y + ulHeight - 1);
++			x, y, right, bottom);
+ 
+ 	EnableOverlayPlane(deviceInfo.pSTGReg);
+ 	/* Start Ramdac Output */
 -- 
 2.53.0
 
