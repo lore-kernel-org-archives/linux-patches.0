@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5AB78C9C;
-	Sat, 12 Sep 2026 19:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52DC12D0C94;
+	Sat, 12 Sep 2026 19:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241800; cv=none; b=Jeh+HgiUe9L1NSn9NnZE5rq8pO2qARP9t7rZRlOxF5UauAY8MGLIfqefetKjwQ5hGmkULT5rpFe7i7n/dUlTEC4Eq0ZQ7sj+4mW++YSbuErtigyTDscOL0GQwUItez2PboHoB4VwkAfFghjL2eT8FzcYVtL4YaXeT7LGuMdrQ18=
+	t=1789241804; cv=none; b=cN09I9XRYuLlouUr+0lqyLTk23IcWBD36hf7tKAcD9JFo7/Qljtu7RegWMlX7BFHtPcZ2e7thC1lpq18/Y65yEekbyZ2pdy7ZHR81KUyzZjhBk18/IBsEBfDaZVkFEe88t6sHdpUBuMtioKUvzvpwidv5LncToCJ/9nOTG9dSS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241800; c=relaxed/simple;
-	bh=aRrYgIaxoslZbZ461Zmrr276LsCkEktx7UYryzLA+0Q=;
+	s=arc-20240116; t=1789241804; c=relaxed/simple;
+	bh=6IaD4NXWdfpkBZbjA+1WMHXVzQVHrSF4FX0mF1EUYz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rfkt5WMZ1YHOdnYId3qWNi9h7sHqPsoemYrYlyp8dW+MXMNe/Vbp1AP4Zk3sZcPDTpzLCf9mxrMl8EjtA6D9K1kMd6te48qqTrcPaiH0yDrGB4YgWyozNgyCbZ29u+wruHa85iH4Rx74bRZHfMj3c814w61y9uq7qE/nveEcGEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMdtiFTm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O8HJLWT/n5gHKmyzKSkokYlvFTCIVRDoRRamopLAG8MJXU+kxT16a98sUcK8TrQfYHWo8mH9+Raa8+ebWYsaMLaW6yoO69Rnd6OVux7SmhahVF7vC1uR14KTQHvC3K9T9GocOX3Dj6y9CxNnlMHCzfkNh1CXlxEsomHlfMFYY4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZfAlUX2O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMdtiFTm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CF81F000FF;
-	Sat, 12 Sep 2026 19:36:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZfAlUX2O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 580E41F00893;
+	Sat, 12 Sep 2026 19:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241798;
-	bh=DOE4V/ypjCsAusl4Hs8mzgTmmVSCrSD9Ok4OzKtHQDs=;
+	s=korg; t=1789241803;
+	bh=G3Oyvs3swztPiK4B/DXXPR2Ox1CH2lNgSjY27RrRYI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jMdtiFTmnmHsM9EIK3PTQhAhTZch1oy7avf1PfGV6fidjKps/aJGmZe22Zg36otto
-	 9b4PAFt+bNEpV3CtnfEmqG/jNZrUP6t5xis6qwaUPS3fwCr3BTzWvCMZ2/b96bFV/I
-	 NYHl2mVATWgPO/GkvHQq9pRm+ezzLD6oZtc+v/go=
+	b=ZfAlUX2OsCy+PrI43ZgzMsWpwOgXk603Zq04rWGNt+B1tnJFw8iBNVRye5+t2uaT+
+	 LRBmyjnKCrfxgfESw2ri9dJVwqEgXlRo+cpKegEj99Bds9lVqOKBQkQ3OY0XfUJtpN
+	 RsPVeelX4qNfEBloyH8KOBwsmmhouFIILSGFjWmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Vaganov <p.vaganov@ideco.ru>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
-	Petr Vaganov <petrvaganoff@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Simon Horman <horms@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 211/798] scsi: core: Fill in DMA padding bytes in scsi_alloc_sgtables()
-Date: Sat, 12 Sep 2026 08:57:19 +0200
-Message-ID: <20260912065521.941109331@linuxfoundation.org>
+Subject: [PATCH 5.10 212/798] espintcp: remove encap socket caching to avoid reference leak
+Date: Sat, 12 Sep 2026 08:57:20 +0200
+Message-ID: <20260912065521.965285418@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,93 +52,248 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Vaganov <p.vaganov@ideco.ru>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-commit 626147717bea776b61ed3631d2c26283760c4cc4 upstream.
+[ Upstream commit 028363685bd0b7a19b4a820f82dd905b1dc83999 ]
 
-During fuzz testing, the following issue was discovered:
+The current scheme for caching the encap socket can lead to reference
+leaks when we try to delete the netns.
 
-BUG: KMSAN: uninit-value in __dma_map_sg_attrs+0x217/0x310
- __dma_map_sg_attrs+0x217/0x310
- dma_map_sg_attrs+0x4a/0x70
- ata_qc_issue+0x9f8/0x1420
- __ata_scsi_queuecmd+0x1657/0x1740
- ata_scsi_queuecmd+0x79a/0x920
- scsi_queue_rq+0x4472/0x4f40
- blk_mq_dispatch_rq_list+0x1cca/0x3ee0
- __blk_mq_sched_dispatch_requests+0x458/0x630
- blk_mq_sched_dispatch_requests+0x15b/0x340
- __blk_mq_run_hw_queue+0xe5/0x250
- __blk_mq_delay_run_hw_queue+0x138/0x780
- blk_mq_run_hw_queue+0x4bb/0x7e0
- blk_mq_sched_insert_request+0x2a7/0x4c0
- blk_execute_rq+0x497/0x8a0
- sg_io+0xbe0/0xe20
- scsi_ioctl+0x2b36/0x3c60
- sr_block_ioctl+0x319/0x440
- blkdev_ioctl+0x80f/0xd70
- __se_sys_ioctl+0x219/0x420
- __x64_sys_ioctl+0x93/0xe0
- x64_sys_call+0x1d6c/0x3ad0
- do_syscall_64+0x4c/0xa0
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+The reference chain is: xfrm_state -> enacp_sk -> netns
 
-Uninit was created at:
- __alloc_pages+0x5c0/0xc80
- alloc_pages+0xe0e/0x1050
- blk_rq_map_user_iov+0x2b77/0x6100
- blk_rq_map_user_io+0x2fa/0x4d0
- sg_io+0xad6/0xe20
- scsi_ioctl+0x2b36/0x3c60
- sr_block_ioctl+0x319/0x440
- blkdev_ioctl+0x80f/0xd70
- __se_sys_ioctl+0x219/0x420
- __x64_sys_ioctl+0x93/0xe0
- x64_sys_call+0x1d6c/0x3ad0
- do_syscall_64+0x4c/0xa0
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+Since the encap socket is a userspace socket, it holds a reference on
+the netns. If we delete the espintcp state (through flush or
+individual delete) before removing the netns, the reference on the
+socket is dropped and the netns is correctly deleted. Otherwise, the
+netns may not be reachable anymore (if all processes within the ns
+have terminated), so we cannot delete the xfrm state to drop its
+reference on the socket.
 
-Bytes 14-15 of 16 are uninitialized
-Memory access of size 16 starts at ffff88800cbdb000
+This patch results in a small (~2% in my tests) performance
+regression.
 
-When processing the last unaligned element of the scatterlist, it is
-supplemented with missing bytes in the amount of pad_len.  These bytes
-remain uninitialized, which leads to a problem.
+A GC-type mechanism could be added for the socket cache, to clear
+references if the state hasn't been used "recently", but it's a lot
+more complex than just not caching the socket.
 
-Extend last_sg->length by pad_len first, then use sg_zero_buffer() to
-zero those pad_len bytes.  sg_zero_buffer() uses sg_miter internally,
-which correctly handles sg entries spanning multiple pages and padding
-that crosses a page boundary.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 40b01b9bbdf5 ("block: update bio according to DMA alignment padding")
-Cc: stable@vger.kernel.org
-Signed-off-by: Petr Vaganov <p.vaganov@ideco.ru>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260628185229.37957-1-p.vaganov@ideco.ru
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-Signed-off-by: Petr Vaganov <petrvaganoff@gmail.com>
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_lib.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/net/xfrm.h    |  1 -
+ net/ipv4/esp4.c       | 49 ++++---------------------------------------
+ net/ipv6/esp6.c       | 49 ++++---------------------------------------
+ net/xfrm/xfrm_state.c |  3 ---
+ 4 files changed, 8 insertions(+), 94 deletions(-)
 
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index e69d1c0ea4507..aafb3ae0e8604 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -1050,8 +1050,10 @@ blk_status_t scsi_alloc_sgtables(struct scsi_cmnd *cmd)
- 	if (blk_rq_bytes(rq) & rq->q->dma_pad_mask) {
- 		unsigned int pad_len =
- 			(rq->q->dma_pad_mask & ~blk_rq_bytes(rq)) + 1;
-+		unsigned int data_len = last_sg->length;
+diff --git a/include/net/xfrm.h b/include/net/xfrm.h
+index 695b73b355eed..bde58fa26d576 100644
+--- a/include/net/xfrm.h
++++ b/include/net/xfrm.h
+@@ -206,7 +206,6 @@ struct xfrm_state {
  
- 		last_sg->length += pad_len;
-+		sg_zero_buffer(last_sg, 1, pad_len, data_len);
- 		cmd->extra_len += pad_len;
+ 	/* Data for encapsulator */
+ 	struct xfrm_encap_tmpl	*encap;
+-	struct sock __rcu	*encap_sk;
+ 
+ 	/* Data for care-of address */
+ 	xfrm_address_t	*coaddr;
+diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
+index 496c7d40facf5..4be911588db0c 100644
+--- a/net/ipv4/esp4.c
++++ b/net/ipv4/esp4.c
+@@ -120,46 +120,15 @@ static void esp_ssg_unref(struct xfrm_state *x, void *tmp)
+ }
+ 
+ #ifdef CONFIG_INET_ESPINTCP
+-struct esp_tcp_sk {
+-	struct sock *sk;
+-	struct rcu_head rcu;
+-};
+-
+-static void esp_free_tcp_sk(struct rcu_head *head)
+-{
+-	struct esp_tcp_sk *esk = container_of(head, struct esp_tcp_sk, rcu);
+-
+-	sock_put(esk->sk);
+-	kfree(esk);
+-}
+-
+ static struct sock *esp_find_tcp_sk(struct xfrm_state *x)
+ {
+ 	struct xfrm_encap_tmpl *encap = x->encap;
+-	struct esp_tcp_sk *esk;
+ 	__be16 sport, dport;
+-	struct sock *nsk;
+ 	struct sock *sk;
+ 
+-	sk = rcu_dereference(x->encap_sk);
+-	if (sk && sk->sk_state == TCP_ESTABLISHED)
+-		return sk;
+-
+ 	spin_lock_bh(&x->lock);
+ 	sport = encap->encap_sport;
+ 	dport = encap->encap_dport;
+-	nsk = rcu_dereference_protected(x->encap_sk,
+-					lockdep_is_held(&x->lock));
+-	if (sk && sk == nsk) {
+-		esk = kmalloc(sizeof(*esk), GFP_ATOMIC);
+-		if (!esk) {
+-			spin_unlock_bh(&x->lock);
+-			return ERR_PTR(-ENOMEM);
+-		}
+-		RCU_INIT_POINTER(x->encap_sk, NULL);
+-		esk->sk = sk;
+-		call_rcu(&esk->rcu, esp_free_tcp_sk);
+-	}
+ 	spin_unlock_bh(&x->lock);
+ 
+ 	sk = inet_lookup_established(xs_net(x), &tcp_hashinfo, x->id.daddr.a4,
+@@ -172,20 +141,6 @@ static struct sock *esp_find_tcp_sk(struct xfrm_state *x)
+ 		return ERR_PTR(-EINVAL);
  	}
  
+-	spin_lock_bh(&x->lock);
+-	nsk = rcu_dereference_protected(x->encap_sk,
+-					lockdep_is_held(&x->lock));
+-	if (encap->encap_sport != sport ||
+-	    encap->encap_dport != dport) {
+-		sock_put(sk);
+-		sk = nsk ?: ERR_PTR(-EREMCHG);
+-	} else if (sk == nsk) {
+-		sock_put(sk);
+-	} else {
+-		rcu_assign_pointer(x->encap_sk, sk);
+-	}
+-	spin_unlock_bh(&x->lock);
+-
+ 	return sk;
+ }
+ 
+@@ -208,6 +163,8 @@ static int esp_output_tcp_finish(struct xfrm_state *x, struct sk_buff *skb)
+ 		err = espintcp_push_skb(sk, skb);
+ 	bh_unlock_sock(sk);
+ 
++	sock_put(sk);
++
+ out:
+ 	rcu_read_unlock();
+ 	return err;
+@@ -395,6 +352,8 @@ static struct ip_esp_hdr *esp_output_tcp_encap(struct xfrm_state *x,
+ 	if (IS_ERR(sk))
+ 		return ERR_CAST(sk);
+ 
++	sock_put(sk);
++
+ 	*lenp = htons(len);
+ 	esph = (struct ip_esp_hdr *)(lenp + 1);
+ 
+diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
+index f743d7474bdcc..74c0dbb2b0e95 100644
+--- a/net/ipv6/esp6.c
++++ b/net/ipv6/esp6.c
+@@ -136,46 +136,15 @@ static void esp_ssg_unref(struct xfrm_state *x, void *tmp)
+ }
+ 
+ #ifdef CONFIG_INET6_ESPINTCP
+-struct esp_tcp_sk {
+-	struct sock *sk;
+-	struct rcu_head rcu;
+-};
+-
+-static void esp_free_tcp_sk(struct rcu_head *head)
+-{
+-	struct esp_tcp_sk *esk = container_of(head, struct esp_tcp_sk, rcu);
+-
+-	sock_put(esk->sk);
+-	kfree(esk);
+-}
+-
+ static struct sock *esp6_find_tcp_sk(struct xfrm_state *x)
+ {
+ 	struct xfrm_encap_tmpl *encap = x->encap;
+-	struct esp_tcp_sk *esk;
+ 	__be16 sport, dport;
+-	struct sock *nsk;
+ 	struct sock *sk;
+ 
+-	sk = rcu_dereference(x->encap_sk);
+-	if (sk && sk->sk_state == TCP_ESTABLISHED)
+-		return sk;
+-
+ 	spin_lock_bh(&x->lock);
+ 	sport = encap->encap_sport;
+ 	dport = encap->encap_dport;
+-	nsk = rcu_dereference_protected(x->encap_sk,
+-					lockdep_is_held(&x->lock));
+-	if (sk && sk == nsk) {
+-		esk = kmalloc(sizeof(*esk), GFP_ATOMIC);
+-		if (!esk) {
+-			spin_unlock_bh(&x->lock);
+-			return ERR_PTR(-ENOMEM);
+-		}
+-		RCU_INIT_POINTER(x->encap_sk, NULL);
+-		esk->sk = sk;
+-		call_rcu(&esk->rcu, esp_free_tcp_sk);
+-	}
+ 	spin_unlock_bh(&x->lock);
+ 
+ 	sk = __inet6_lookup_established(xs_net(x), &tcp_hashinfo, &x->id.daddr.in6,
+@@ -188,20 +157,6 @@ static struct sock *esp6_find_tcp_sk(struct xfrm_state *x)
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
+-	spin_lock_bh(&x->lock);
+-	nsk = rcu_dereference_protected(x->encap_sk,
+-					lockdep_is_held(&x->lock));
+-	if (encap->encap_sport != sport ||
+-	    encap->encap_dport != dport) {
+-		sock_put(sk);
+-		sk = nsk ?: ERR_PTR(-EREMCHG);
+-	} else if (sk == nsk) {
+-		sock_put(sk);
+-	} else {
+-		rcu_assign_pointer(x->encap_sk, sk);
+-	}
+-	spin_unlock_bh(&x->lock);
+-
+ 	return sk;
+ }
+ 
+@@ -224,6 +179,8 @@ static int esp_output_tcp_finish(struct xfrm_state *x, struct sk_buff *skb)
+ 		err = espintcp_push_skb(sk, skb);
+ 	bh_unlock_sock(sk);
+ 
++	sock_put(sk);
++
+ out:
+ 	rcu_read_unlock();
+ 	return err;
+@@ -430,6 +387,8 @@ static struct ip_esp_hdr *esp6_output_tcp_encap(struct xfrm_state *x,
+ 	if (IS_ERR(sk))
+ 		return ERR_CAST(sk);
+ 
++	sock_put(sk);
++
+ 	*lenp = htons(len);
+ 	esph = (struct ip_esp_hdr *)(lenp + 1);
+ 
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index c5412f2e3b208..69e3153ecdcd5 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -667,9 +667,6 @@ int __xfrm_state_delete(struct xfrm_state *x)
+ 		net->xfrm.state_num--;
+ 		spin_unlock(&net->xfrm.xfrm_state_lock);
+ 
+-		if (x->encap_sk)
+-			sock_put(rcu_dereference_raw(x->encap_sk));
+-
+ 		xfrm_dev_state_delete(x);
+ 
+ 		xfrm_state_delete_tunnel(x);
 -- 
 2.53.0
 
