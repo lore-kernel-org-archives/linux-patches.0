@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D43037FF60;
-	Sat, 12 Sep 2026 13:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A4B47ACE6;
+	Sat, 12 Sep 2026 13:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218799; cv=none; b=hFOSvtZ3pk5iTLuGUkA4NvTjPH/sb5z+9fBd8CXC+koj5P3EZVcBxi0rvVO1u/nzRlcMULgTgJU3fxjK2+TZeMBsB6ISnLixqGAZNLCxsG3DNNQEU1L/EfE2IfdE8UG2gJJP5nVP7o64eRR/6m2g8lRc9gu3U3FqnSeYOKqic6g=
+	t=1789218804; cv=none; b=Rq+rqK2KnbKkzLVbAaq4TgackVmOcDQv739GMye1XuGDG94ESJcGT4tsWwe1NFy6GVS4sAsmt7J/DOflDixtbMYClQzHCQkIyCYlAkxldZYDHGlG8QU9rabXNduhVMqj6y2RjYw2OEo2OUwKhdtwa03/tntsScRKe7rmHzRF+pE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218799; c=relaxed/simple;
-	bh=o9EfS9sIZuJIa0yOuv/EAc+9POHufhfUSMX3gaThwEc=;
+	s=arc-20240116; t=1789218804; c=relaxed/simple;
+	bh=8sDgJoLjwPt3YWyS5UKDMtOnrCcxy2zFfARDeaCvKT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rUplc2bciNm/DfjKTZlDbINznTtkW2am/k09UaTMz/08hFnDUzMG0B0lWU+abHIcdrmsjtut3OU96kWiURB1RoA3ctPvKEu1ojYCf1dAVD0G7VxxZZiokAj2gT25gUwhmMNqeeNrdt6SaOWZjzsX2jDBjs2LaUFYnqx2n/0bIBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bP1EvOEb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IPn2albWbvrQfzwXw/Wrb738tudGvCEuc6bjTNioQsaO8zSpVL2YJZ7GkCL51uVanfzdKYqfPUtjoitt9mNtrJlxoDG753D8KAdX2z1BXmK1GZeDBqhaeDHzVQcJqrCzU7yyLsH7ZEHcRbaR21acZY9dhZaBZmLnnf0HxHK+yzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QRmWuEao; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bP1EvOEb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0C81F000FF;
-	Sat, 12 Sep 2026 13:13:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRmWuEao"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13731F000FF;
+	Sat, 12 Sep 2026 13:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218798;
-	bh=cYq8srm2jzDRGOVbB+0aUa368tgSyvkM1IIwYzfcEPU=;
+	s=korg; t=1789218802;
+	bh=OnIX7+258wy2cXECck8aTI59vsMCHkmXbbbiZZ3fcYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bP1EvOEb50ERuX5J8ez+H7P7FNPSWlLLISj1suRQNdv4q6gXU2P+BmUpyPbnNX3Zs
-	 eSPQL51m7U8yojrRJFXHMDUmx8BzQvS++RdUwGKrLC96Xo6uwsM1FLkgpPVMw4gOdn
-	 HFg2Wbd6CWERckCdMmr9lPPBKf51F+3DXRBfSkoU=
+	b=QRmWuEaoz8LInFzdZq0RUzyciODdNR/ykIBWUmsnBkAXV7K3X3sBog33LRpUwrakA
+	 9SX2H0UYhp2m43YOiBarGHqSSPMmplwyrZsTSjGmw/j9L7WVC3rtN+wCpSWhiC77tC
+	 2rVeoFvuwD7c0bbru4qZT/ums/bYetbfwBEiGIog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1220/1376] platform/x86: hp-bioscfg: fix password encoding bounds check
-Date: Sat, 12 Sep 2026 09:00:46 +0200
-Message-ID: <20260912065634.740762364@linuxfoundation.org>
+Subject: [PATCH 6.12 1203/1376] tls: fix RX desync on overlapping skbs
+Date: Sat, 12 Sep 2026 09:00:29 +0200
+Message-ID: <20260912065634.360484800@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -45,59 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
 
-[ Upstream commit e213939ed9e6e6badf7aa48c4c8dd9a9cdf00615 ]
+[ Upstream commit 9466ef3ec972bee926731a766f73533dec590065 ]
 
-The password PSWD_ENCODINGS parser reads password_obj[elem + pos_values]
-while copying the supported password encodings from the ACPI package.
+The TCP receive queue can hold adjacent skbs whose sequence ranges
+overlap. The tls fast-path reads the record header with skb_copy_bits()
+by byte offset, which assumes skbs do not overlap, so a header split
+across the overlap is misread and the connection aborts
+(-EMSGSIZE/-EINVAL). tls_strp_check_queue_ok() detects such overlaps but
+only ran after the header was parsed, never covering the header itself.
 
-The outer loop only guarantees that elem is within password_obj_count.
-The encoding count is bounded by MAX_ENCODINGS_SIZE, but that does not
-guarantee that the ACPI package contains enough entries for all
-elem + pos_values accesses.
+Observed with parallel kTLS connections on:
+- ConnectX-7 + IPsec crypto offload + GRO
+- VirtIO (8 queues) + GRO
 
-A malformed package can therefore declare a non-zero encoding count
-without providing enough string objects, causing the parser to read past
-the ACPI package array and pass an out-of-bounds string pointer and
-length to hp_convert_hexstr_to_str().
-
-Add the same computed-index bounds check used by the other offset-based
-package parsing loops before reading password_obj[elem + pos_values].
-
-Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260708090937.740435-1-lgs201920130244@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 84c61fe1a75b ("tls: rx: do not use the standard strparser")
+Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+Link: https://patch.msgid.link/20260813121337.3300688-1-maxbr@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/tls/tls_strp.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-index 1ebc5afc850f9..34740f29f41a5 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-@@ -353,6 +353,11 @@ static int hp_populate_password_elements_from_package(union acpi_object *passwor
- 		case PSWD_ENCODINGS:
- 			size = min_t(u32, password_data->encodings_size, MAX_ENCODINGS_SIZE);
- 			for (pos_values = 0; pos_values < size; pos_values++) {
-+				if (elem + pos_values >= password_obj_count) {
-+					pr_err("Error elem-objects package is too small\n");
-+					return -EINVAL;
-+				}
+diff --git a/net/tls/tls_strp.c b/net/tls/tls_strp.c
+index c72e883176273..c0611c4327769 100644
+--- a/net/tls/tls_strp.c
++++ b/net/tls/tls_strp.c
+@@ -431,9 +431,10 @@ static int tls_strp_read_copy(struct tls_strparser *strp, bool qshort)
+ 	return 0;
+ }
+ 
+-static bool tls_strp_check_queue_ok(struct tls_strparser *strp)
++static bool tls_strp_check_queue_ok(struct tls_strparser *strp,
++				    unsigned int len)
+ {
+-	unsigned int len = strp->stm.offset + strp->stm.full_len;
++	unsigned int remaining = strp->stm.offset + len;
+ 	struct sk_buff *first, *skb;
+ 	u32 seq;
+ 
+@@ -444,9 +445,9 @@ static bool tls_strp_check_queue_ok(struct tls_strparser *strp)
+ 	/* Make sure there's no duplicate data in the queue,
+ 	 * and the decrypted status matches.
+ 	 */
+-	while (skb->len < len) {
++	while (skb->len < remaining) {
+ 		seq += skb->len;
+-		len -= skb->len;
++		remaining -= skb->len;
+ 		skb = skb->next;
+ 
+ 		if (TCP_SKB_CB(skb)->seq != seq)
+@@ -525,6 +526,11 @@ static int tls_strp_read_sock(struct tls_strparser *strp)
+ 
+ 	tls_strp_load_anchor_with_queue(strp, inq);
+ 	if (!strp->stm.full_len) {
++		if (inq < TLS_HEADER_SIZE)
++			return tls_strp_read_copy(strp, true);
++		if (!tls_strp_check_queue_ok(strp, TLS_HEADER_SIZE))
++			return tls_strp_read_copy(strp, false);
 +
- 				ret = hp_convert_hexstr_to_str(password_obj[elem + pos_values].string.pointer,
- 							       password_obj[elem + pos_values].string.length,
- 							       &str_value, &value_len);
+ 		sz = tls_rx_msg_size(strp, strp->anchor);
+ 		if (sz < 0)
+ 			return sz;
+@@ -535,7 +541,7 @@ static int tls_strp_read_sock(struct tls_strparser *strp)
+ 			return tls_strp_read_copy(strp, true);
+ 	}
+ 
+-	if (!tls_strp_check_queue_ok(strp))
++	if (!tls_strp_check_queue_ok(strp, strp->stm.full_len))
+ 		return tls_strp_read_copy(strp, false);
+ 
+ 	WRITE_ONCE(strp->msg_ready, 1);
 -- 
 2.53.0
 
