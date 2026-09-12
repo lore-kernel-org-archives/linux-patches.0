@@ -1,155 +1,117 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488283630AE
-	for <patches@lists.linux.dev>; Sat, 12 Sep 2026 17:22:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421C634A76F
+	for <patches@lists.linux.dev>; Sat, 12 Sep 2026 17:33:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789233753; cv=none; b=dVt/rRIgLjeP0VXwTikXOqM+UkkHjzGiDEqFpqqB21Q5YCXnq+ysKEpP0HnSDC8Nb2ZAvsrlTgMf2cT/hnQa20XzlhJ2S4vbwlyh7VMgD+F8gGi1K+eQCvuCZFPhtWd8bea6Zp3Oc0ASIjtVFrWQ5JeDt10R5Tl7y74tjTXfhE0=
+	t=1789234393; cv=none; b=tzevulHq0ZpX2G0A132Vi2Rsv9CZvqGMpOOK95GHBIzOfwpDRRgJY3tRZY+LQdn1lyLdDxHv7826fiFw6wdkR7ysBLzmAmVUI3SJl6JQqtYBjnEdbQbcgHVdTdVxcoX/zfp5z5Zg0q7pivdx30mNCexs4kMUatxJl5jTr4s9CkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789233753; c=relaxed/simple;
-	bh=GEIa8yeTfBDKfm0+esAvYxmkhSG5yBhHVHX+Q2lvzg8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=JTG3tiFEgQjU8J2uIQW7i8lHEwyPOXc3SHmPMo28RDbOnlfqDinHIFWcLZSu8eOwLADfoNADppyyMzGUsl5OtHyOsS+CasPI2TAayCjJ8cFU+H6dvtOS0aus891UU00GMuw+pDLGW5o/c91xn3Gb1TcLcuQHkk86X0m2I3e1tm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=TSQWnkmc; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1789234393; c=relaxed/simple;
+	bh=EiAEJfMZTtWgNFlG1Kn6MkmrA0T0OKXP3d4n4uNbVVc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CnuZrPd1JHKEKyq4lNR+oLGu9c4Uzb/G+ScTIDIC07TaCtsGsU6zjK8yd7OIr35vGt1xXlCBJWdBF3CwTAGof1qlEU4e0O9wfH+fdMmcO66Y2AWT0A+r5Q/bu4wusfASre2vjs40c+J9e7cxlf7Z4yUQ5yLZ1yRjuS0q2XW/qp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=oS0UptFX; arc=none smtp.client-ip=74.125.225.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="TSQWnkmc"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1789233751;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=WDIk7QPciUhOZoKe2zZLtnCcqNHQ6ULI7Gtb5/oDKCk=;
-	b=TSQWnkmcDNbaD71noB0suq8abhGJORujIh+UXICGA1Def9PZHpySQGyHOYmwQUa7ulj2CM
-	bpSARCgy+0X2R6Grzd8Inf3cureACfscEg/Vk5nbwG/39uIB+nz9iU7XbAyUQ3V7kmB6ja
-	Zrx/aPZi+lFUR+1RFussdXhe2ptzFRY=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-278-1dB9-67-ORWzQ19QEv1iBg-1; Sat, 12 Sep 2026 13:22:29 -0400
-X-MC-Unique: 1dB9-67-ORWzQ19QEv1iBg-1
-X-Mimecast-MFC-AGG-ID: 1dB9-67-ORWzQ19QEv1iBg_1789233748
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-49e65bee41aso10363815e9.0
-        for <patches@lists.linux.dev>; Sat, 12 Sep 2026 10:22:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="oS0UptFX"
+Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49d097b4939so3244535e9.0
+        for <patches@lists.linux.dev>; Sat, 12 Sep 2026 10:33:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20251104; t=1789234390; x=1789839190; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=B870ygeANjcpypjK7/JSP1iclhPyzN0EU3DaKZEWjNI=;
+        b=oS0UptFXkjdcBHSNNj22KjSfZZUW43vYpgGGlVAwIsblcWIXPjPDWFXxCMYOue/+zT
+         OO5J89Fmaw7sTBAupXKlG6HR2O0yNYzMBfUe54pcoGE8RWLZeUYsvAgHfOl65Cy0m67x
+         sB9gjBTAxMbbq+iGg3cGV7kasOMlsFRTJ3xezuetdREQe2r/WXFB3wrm6VBDJrQPvqOU
+         9QK6rdG6Mqo6CbcQ5OXeghjaaCxz0xI9yfn6Ao2srv7GJ+WiV9Xwp9EFXJUQOZbOSnIo
+         ApK6/MJG16PuLxlcPp5sqI4UDapS97R/ktYb3Zao0MtYpdGXPPsR8ZMQcnfr4uAzBAVz
+         D+PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789233748; x=1789838548;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=WDIk7QPciUhOZoKe2zZLtnCcqNHQ6ULI7Gtb5/oDKCk=;
-        b=FUY9hJouM8IuQCAboz24bKvZ4Ot+Rs9YSN73wlHwAdXOgDb96HgZIaI6SsDfjRZznR
-         ev0P1yihclIMgqSXssH8Du0pUi9QAI7jQd4GFcPcnptkRfCpyRgnc4IUYoXMvop7SiT2
-         YUR085Heo2Gzj3lNQkmIW5mAHulOLpJwBzy1mdMLPrb1tpcLrere4x04dNKipWsdlUrh
-         RNL7MZuBvq8YRBaQA6u9H3xl6uSd3RlkvdWI5REAMzJQ2UzRimrKhOgK6GIwKRGgKxLv
-         1Yps0F7uLtBWxR/3dyEqSMq+PEnRZluRF1chcstbn36Ux7CyladvSMtCsCl1WVDxX9XR
-         +W1A==
-X-Forwarded-Encrypted: i=1; AKwUvBwevLUgD8DnPqeK1x0nHl0lr4qMj7FUXJchONxI96L1w4jGdAPov906Ri6Mz7ZEJPJR4VLys7ri@lists.linux.dev
-X-Gm-Message-State: AFuF++nzj9rDIiODvdFBxwRhRuAqL7oYW/Dp4Cnh+ZmIsgsDFjhTyRMv
-	UD5lJUPkZYgZO3YlEn7Bc/VOkiSMZH/TPiHcM+4qh8eFz007lksntcQ+jRYYXsc9KO/HprWqYzG
-	oKH5liQVeLpS4TZPqQdFD8R9Q+rjc7K990lnYbSAS31AU+ohSYCSfLdQNSMc=
-X-Gm-Gg: AYBFou1nBkIW9E30PwqI5q+n1i8sAT5Wge4MLKVuAGsruhYZ/YeD4anM7W824VvkJHS
-	Yr2QgUdMfsP4b315lN8mmpkD/1GbpwcfqagtOOHXRFtKtN3Ab9fGMtgDvwfUTGjm0cl3TfP36RL
-	GpuRdeRWg2cgLF21+6n28vjmX7K8P6DfX1RrY6nwoKi6M0fFeLSQW201kiS8xwIfopO3CKN3BP3
-	Tm5zF8lF7Qw5Gvww7dIlAETCtlRoGiL1xWkO2p9jh1xBNfE+MYN05KMCUZ6TOoTlIbmtIVl1Hxw
-	xBgvR1phT7WdOc4gLkBlW3FHOMpFpqZG4e5SSPWq/kOi4L97gqu6jBNUysdZ2luZ4pg=
-X-Received: by 2002:a05:600c:628f:b0:49e:6836:5386 with SMTP id 5b1f17b1804b1-49e6b2a07c1mr49084655e9.0.1789233748315;
-        Sat, 12 Sep 2026 10:22:28 -0700 (PDT)
-X-Received: by 2002:a05:600c:628f:b0:49e:6836:5386 with SMTP id 5b1f17b1804b1-49e6b2a07c1mr49084445e9.0.1789233747833;
-        Sat, 12 Sep 2026 10:22:27 -0700 (PDT)
-Received: from redhat.com ([147.235.223.59])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49e706d0c1fsm56847975e9.1.2026.09.12.10.22.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Sep 2026 10:22:27 -0700 (PDT)
-Date: Sat, 12 Sep 2026 13:22:24 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 1069/1191] virtio_balloon: disable indirect
- descriptors
-Message-ID: <20260912132127-mutt-send-email-mst@kernel.org>
-References: <20260912065548.086904252@linuxfoundation.org>
- <20260912065612.183814840@linuxfoundation.org>
+        d=1e100.net; s=20251104; t=1789234390; x=1789839190;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=B870ygeANjcpypjK7/JSP1iclhPyzN0EU3DaKZEWjNI=;
+        b=Hl+qAAD2ZWjUQ0TsCxSdgw804ewzczenN+imybgdj6WAX3HwBNL69eD/Oeat7n0CMu
+         XpmogNgL950BESGGT9rKsDHoIeqUKmChKYQfOGFC22RXzjSAKmdREsSWdVuwyKcRiIbM
+         ecEwkwSyHRaTvUsTPwbh4Ht35PtuYFajZsT7OwqzGZyDTVQ2UUHjm8SXL028ILEu6gD2
+         t5pNa41xMn6eJIZxX/iWNspH75iuvm4UQBa9e4bx5xnJvht+Gam1h9OmJ6vNFxRJq4qR
+         pmVvlEQX5yZZ3IBpl/nrC6gRDcMCde6re+WP2HumXTAniP/mQwFCgzhDZLzpvtNbi30C
+         XhJw==
+X-Gm-Message-State: AFuF++mJ/6L8pRdWbfn+8f9rb30K3yM7+WFl0MbyWsYOglMGczE3qF4s
+	uJNTXcJr+E/e1mQ2XvC4Mh6Iy8wqHZNPf4VOlCKW9UJRzaJ5xU1dvcI=
+X-Gm-Gg: AYBFou1HW8htMb3xv0pSsKZnjLzfR+msQWEjsfNsFTyvRCVzLyTLPiTKEm5SK2zciNQ
+	zI8TFAxJXfCWc3EwpbOAryUcxgprJXvTmStpJNjt3ODeSNqqvg/TS8sTGPzIS7ZI0+HaIYDezmm
+	xyQUNVk6OlKSp014aDFboyHuGpysNPut2m8cbK+FSz4RU5EWuofyKzrgveSfqlRVnqKGnhU9szi
+	C97HMXxTLiC+G4EtjWkPeu7i6MEV00Ery2mlD0AuAvqBp3Zs1RQJSXFHqyOWuNV53bYuuUD/EaV
+	XSsNzjR9yQgCLGZlvzZKeP6y6pCsVKf9DZkGq6dSuAgr5UxsbVt/pMjiK3Sz06t2xnfgIhLizTl
+	a7R5FUbSNILxZu8/22yLCsbkIR0zmMpqldJXzIWJehO4brihzdklO6j3NK0gPcD2wyCCRJvMY9I
+	OYoMnq6XVyX+WlBZKRER/FtO/b7quDWu+uF9EdfZ805D4kEvfAJqslN38eJ1D10JCJ2Kg3TPWeg
+	+H35PcRB71Dna2HiZ0CtvkbnIl1dkzwUmShh/3hrz5xChmdTyEA
+X-Received: by 2002:a05:600c:c48f:b0:499:bf0e:95c8 with SMTP id 5b1f17b1804b1-49e619831b6mr112079735e9.1.1789234390460;
+        Sat, 12 Sep 2026 10:33:10 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2ac4da.dip0.t-ipconnect.de. [91.42.196.218])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49d26c1bc5fsm244057125e9.3.2026.09.12.10.33.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 12 Sep 2026 10:33:10 -0700 (PDT)
+Message-ID: <ef6ea817-371a-4038-a73d-274fece32f4b@googlemail.com>
+Date: Sat, 12 Sep 2026 19:33:09 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260912065612.183814840@linuxfoundation.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: qcaEn_QkOXgY1qhG1xMcTK8qV5FPOwp9YMe5nqEfuoQ_1789233748
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.18 0000/1518] 6.18.52-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260912065623.398859879@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Sat, Sep 12, 2026 at 09:03:17AM +0200, Greg Kroah-Hartman wrote:
-> 6.1-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Michael S. Tsirkin <mst@redhat.com>
-> 
-> [ Upstream commit 281eb4732aae5473141b84e106fe906c69b2ff3d ]
-> 
-> The page reporting callback submits an sg list to the reporting
-> virtqueue.  With VIRTIO_RING_F_INDIRECT_DESC negotiated and
-> total_sg > 1 (which it typically is), virtqueue_add reports it to the
-> host by allocating an indirect descriptor via kmalloc(GFP_KERNEL).
-> 
-> This is not pretty: the reporting worker isolates potentially hundreds
-> of MB of free pages from the buddy allocator (reported pages are at
-> least pageblock_order, and the sg can contain up to
-> PAGE_REPORTING_CAPACITY entries of varying orders).  As the result,
-> very theoretically, the kmalloc might trigger OOM when we have in fact a
-> ton of free memory.
-> 
-> Clear VIRTIO_RING_F_INDIRECT_DESC, to avoid using indirect descriptors.
-> 
-> Fixes: b0c504f15471 ("virtio-balloon: add support for providing free page reports to host")
-> Assisted-by: Claude:claude-opus-4-6
-> Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> Message-ID: <73fac8a629fd9aca7bb3265ac243a769c28af25d.1783232420.git.mst@redhat.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+Am 12.09.2026 um 08:36 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.18.52 release.
+> There are 1518 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-this is, as the patch description says, theoretical.
-Doesn't that make it ineligible for stable?
+Builds, boots and seems to works on my 2-socket Ivy Bridge Xeon E5-2697v2 server.
+However, I do see the same strange dmesg warnings that I see in 6.12.110-rc1:
 
-> ---
->  drivers/virtio/virtio_balloon.c | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/drivers/virtio/virtio_balloon.c b/drivers/virtio/virtio_balloon.c
-> index 41fa694d82577..e9abd958f69e3 100644
-> --- a/drivers/virtio/virtio_balloon.c
-> +++ b/drivers/virtio/virtio_balloon.c
-> @@ -7,6 +7,7 @@
->   */
->  
->  #include <linux/virtio.h>
-> +#include <uapi/linux/virtio_ring.h>
->  #include <linux/virtio_balloon.h>
->  #include <linux/swap.h>
->  #include <linux/workqueue.h>
-> @@ -1095,6 +1096,11 @@ static int virtballoon_validate(struct virtio_device *vdev)
->  	else if (!virtio_has_feature(vdev, VIRTIO_BALLOON_F_PAGE_POISON))
->  		__virtio_clear_bit(vdev, VIRTIO_BALLOON_F_REPORTING);
->  
-> +	/*
-> +	 * Disable indirect descriptors to avoid memory allocation in
-> +	 * virtqueue_add during page reporting.
-> +	 */
-> +	__virtio_clear_bit(vdev, VIRTIO_RING_F_INDIRECT_DESC);
->  	__virtio_clear_bit(vdev, VIRTIO_F_ACCESS_PLATFORM);
->  	return 0;
->  }
-> -- 
-> 2.53.0
-> 
-> 
+[    2.397237] Driver 'sr' needs updating - please use bus_type methods
+...
+[   84.031323] Driver 'ses' needs updating - please use bus_type methods
 
+And again, these warning are new in this rc, they did not appear in 6.18.51.
+
+
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+
+
+Beste Grüße,
+Peter Schneider
+
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
