@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5604C2F617C;
-	Sat, 12 Sep 2026 12:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A5E2F531B;
+	Sat, 12 Sep 2026 12:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215592; cv=none; b=eyNLSLIDPOxVhWI89krD8eWP8G+MHYUL39BkI6zsdA+Q2uv5I3fXLske0Q35KzRAWbej0kHAQ7EluODh1VX+aiDVF4XTkEnnz792rBnwecKMqxBTYZIOU4FIygHRt26nanZozDo83tW/0yaD2vYU4e0a4mt51z9550EQUed8TK4=
+	t=1789215597; cv=none; b=iit/dw2Nw8BdNUGqXtikPq7GX88QMwD/pzlMKajAv/+Tao3sU/5StQ4SyiPw3fTZUWQXPpdK15Lgc7Fmb2H3HvHuxrMAZfEQsz2i4+MBkKpRFnyg6kC95woNfkt6MOlhRnSXFd/xeAdmqXAwEX/RkxQfuxhZuX4jVx3zqCksOo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215592; c=relaxed/simple;
-	bh=kX+SFMsBw3DbgmRrvVK7J3A3Ldhhh7u707QezTlKEiQ=;
+	s=arc-20240116; t=1789215597; c=relaxed/simple;
+	bh=YcP5/h3r2oF0sZvoRLXnf99HqDpvYl54a1zI/hhtxPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YoCfyCs0UYhbsz+ahP1SOU46f10JnqS4REu0FCJWvZrdtqcsWBQHEeKMR1ibDrKCq5fnh23fyihbZTnNJH/8rQ2oHLQfM4kVTYEVyQnnxTDzbzfOh1M0NvQgKXSTTYGQkWiAmMRruxA862Dgg6vfQH1LLWH4zWdew3Ecy4GCNbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TyQuJhq5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fTSKMGAtw55ZI8K7scWWZ/oYhPOtkwVI7JqnT+bUjwfYs7whHAsHzeLhaGPoJ5iumeKrVBduvmSspBvHMSVCBSVSm1zaVvsFTPP9tARpnIyXgBqYqIbXhy3A24kBM/H/mwZ/6vwcsObQxGB3pczvtXaBglf+92FrlLMtdUbi2KI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IHQxVPSc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TyQuJhq5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5A6F1F000FF;
-	Sat, 12 Sep 2026 12:19:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IHQxVPSc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF01F1F000FF;
+	Sat, 12 Sep 2026 12:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215591;
-	bh=sgbHL/mGI4pqOFMn9tgdU7Ww7Qmf3aFKVWGyoRf6lQ4=;
+	s=korg; t=1789215596;
+	bh=TiC3sbQ6BwP/1VqFN3SgqC2AJMfmd1KNahv5Irvnsy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TyQuJhq5sfYZJLmzs6Tk3t5yCjHKULArMclcc6ALPvK74rLfSWoKnWA2Awy49bbD9
-	 9GH7CmjOo7pkH7pmCY1qc7qbQA9cxCwtSPhsAYnk8y2mgtx2nM941tcm7qWY0wWxJ8
-	 Bq5ivqa656kSk5LwY58famgIwj/tNPXTky/jNWpM=
+	b=IHQxVPSch9Nx7pNwYOe/l2l6NJtuaswhaJ2XSAxs9p7H9XmPVG5Jv9sTbHf7213U4
+	 UoLQqpBKQnHzXTe/VQFHJye74XFSx4nIDj5xiXr/tPi2jmhn989Zq8g4wj6Ffq74cx
+	 gB/lqJVXrUGlU96Y/MXVH96XKw0lmFPeF2LAdC7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0520/1376] media: v4l2-async: Unregister sub-device if asc_list is empty
-Date: Sat, 12 Sep 2026 08:49:06 +0200
-Message-ID: <20260912065619.126532390@linuxfoundation.org>
+Subject: [PATCH 6.12 0521/1376] rpmsg: glink: remove duplicate code for rpmsg device remove
+Date: Sat, 12 Sep 2026 08:49:07 +0200
+Message-ID: <20260912065619.148127033@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,58 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil+cisco@kernel.org>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit 4e72f13d58c4245c177a9d5f54579345554f354d ]
+[ Upstream commit 112766cdf2e5ea0a0f72b0304d57a6f74c066670 ]
 
-When my em28xx USB device that uses the i2c tvp5150 driver is
-disconnected, it crashes.
+rpmsg device remove code is duplicated in at-least 2-3 places, add a
+helper function to remove this duplicated code.
 
-The cause is that the tvp5150 i2c module uses v4l2_async, but
-the em28xx driver does not since it predates v4l2_async.
-
-In that corner case sd->asc_list is empty, so
-v4l2_async_unregister_subdev() never calls v4l2_device_unregister_subdev().
-
-Modify the code so that, if sd->asc_list is empty,
-v4l2_device_unregister_subdev() is still called.
-
-Fixes: 28a1295795d8 ("media: v4l: async: Allow multiple connections between entities")
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Tested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250822100043.2604794-3-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 5a5a48e788e0 ("rpmsg: glink: fix deadlock in endpoint destroy during driver detach")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-async.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/rpmsg/qcom_glink_native.c | 43 ++++++++++++-------------------
+ 1 file changed, 16 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-async.c b/drivers/media/v4l2-core/v4l2-async.c
-index 70284f50e1f93..5f6685e34d90f 100644
---- a/drivers/media/v4l2-core/v4l2-async.c
-+++ b/drivers/media/v4l2-core/v4l2-async.c
-@@ -897,9 +897,18 @@ void v4l2_async_unregister_subdev(struct v4l2_subdev *sd)
- 	sd->subdev_notifier = NULL;
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index c2d39a3bcea7e..9d4fee6409423 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -1395,11 +1395,23 @@ static int qcom_glink_announce_create(struct rpmsg_device *rpdev)
+ 	return 0;
+ }
  
- 	if (sd->asc_list.next) {
--		list_for_each_entry_safe(asc, asc_tmp, &sd->asc_list,
--					 asc_subdev_entry) {
--			v4l2_async_unbind_subdev_one(asc->notifier, asc);
-+		if (list_empty(&sd->asc_list)) {
-+			/*
-+			 * If the sub-device was registered through other means
-+			 * than v4l2-async, there are no async connections but
-+			 * the sub-device may still well be registered.
-+			 * Unregister it now.
-+			 */
-+			v4l2_device_unregister_subdev(sd);
-+		} else {
-+			list_for_each_entry_safe(asc, asc_tmp, &sd->asc_list,
-+						 asc_subdev_entry)
-+				v4l2_async_unbind_subdev_one(asc->notifier, asc);
- 		}
- 	}
++static void qcom_glink_remove_rpmsg_device(struct qcom_glink *glink, struct glink_channel *channel)
++{
++	struct rpmsg_channel_info chinfo;
++
++	if (channel->rpdev) {
++		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
++		chinfo.src = RPMSG_ADDR_ANY;
++		chinfo.dst = RPMSG_ADDR_ANY;
++		rpmsg_unregister_device(glink->dev, &chinfo);
++	}
++	channel->rpdev = NULL;
++}
++
+ static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
+ {
+ 	struct glink_channel *channel = to_glink_channel(ept);
+ 	struct qcom_glink *glink = channel->glink;
+-	struct rpmsg_channel_info chinfo;
+ 	unsigned long flags;
  
+ 	spin_lock_irqsave(&channel->recv_lock, flags);
+@@ -1407,14 +1419,7 @@ static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
+ 	spin_unlock_irqrestore(&channel->recv_lock, flags);
+ 
+ 	/* Decouple the potential rpdev from the channel */
+-	if (channel->rpdev) {
+-		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
+-		chinfo.src = RPMSG_ADDR_ANY;
+-		chinfo.dst = RPMSG_ADDR_ANY;
+-
+-		rpmsg_unregister_device(glink->dev, &chinfo);
+-	}
+-	channel->rpdev = NULL;
++	qcom_glink_remove_rpmsg_device(glink, channel);
+ 
+ 	qcom_glink_send_close_req(glink, channel);
+ }
+@@ -1704,7 +1709,6 @@ static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
+ 
+ static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
+ {
+-	struct rpmsg_channel_info chinfo;
+ 	struct glink_channel *channel;
+ 	unsigned long flags;
+ 
+@@ -1720,14 +1724,7 @@ static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
+ 	/* cancel pending rx_done work */
+ 	cancel_work_sync(&channel->intent_work);
+ 
+-	if (channel->rpdev) {
+-		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
+-		chinfo.src = RPMSG_ADDR_ANY;
+-		chinfo.dst = RPMSG_ADDR_ANY;
+-
+-		rpmsg_unregister_device(glink->dev, &chinfo);
+-	}
+-	channel->rpdev = NULL;
++	qcom_glink_remove_rpmsg_device(glink, channel);
+ 
+ 	qcom_glink_send_close_ack(glink, channel);
+ 
+@@ -1741,7 +1738,6 @@ static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
+ 
+ static void qcom_glink_rx_close_ack(struct qcom_glink *glink, unsigned int lcid)
+ {
+-	struct rpmsg_channel_info chinfo;
+ 	struct glink_channel *channel;
+ 	unsigned long flags;
+ 
+@@ -1763,14 +1759,7 @@ static void qcom_glink_rx_close_ack(struct qcom_glink *glink, unsigned int lcid)
+ 	spin_unlock_irqrestore(&glink->idr_lock, flags);
+ 
+ 	/* Decouple the potential rpdev from the channel */
+-	if (channel->rpdev) {
+-		strscpy(chinfo.name, channel->name, sizeof(chinfo.name));
+-		chinfo.src = RPMSG_ADDR_ANY;
+-		chinfo.dst = RPMSG_ADDR_ANY;
+-
+-		rpmsg_unregister_device(glink->dev, &chinfo);
+-	}
+-	channel->rpdev = NULL;
++	qcom_glink_remove_rpmsg_device(glink, channel);
+ 
+ 	kref_put(&channel->refcount, qcom_glink_channel_release);
+ }
 -- 
 2.53.0
 
