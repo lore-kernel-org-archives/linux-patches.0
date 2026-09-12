@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDA441B8E4;
-	Sat, 12 Sep 2026 10:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B314429CE6;
+	Sat, 12 Sep 2026 10:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210727; cv=none; b=F4jmwf720d+JvomFVncivPOnYlymOUXo3Lb2HexZwmUq63IFFOe8ZkYl3Sm4HwYMhdgBDJugMhNWitZr1wgq6XnomuPYcAyViBgoegEVootnGLDPHr/v+7slD4B5wE8pj2vtUiqsJvmSLOD4r41NB2zyMxIKhjVJKYGM/zlp5yM=
+	t=1789210732; cv=none; b=lYF7z82bU3lxIN9G4XF0qSpoQiT7hgUMf5fuC8bVqhNZtnjkW0oWfMaA8Np0Pt9k53RayeHqgH+4S5gOFiXaf7OgypaEB/x5mPNxf8C4AuljQpHEvB1PSd/8rodffXqOjDF8BnLqF5shsKZpV6gzxuh1mkuOOoXWpDk569mfvaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210727; c=relaxed/simple;
-	bh=vQH27wI9LHnefBapH+3GentOkIBIZ9JV6ShA76NiHqw=;
+	s=arc-20240116; t=1789210732; c=relaxed/simple;
+	bh=YNgOPLVQR1E8icrwbqFGHdKElL3bAYKBot2BS25adYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYTJvcj8RY4g0TaAHa4t8raWFX06rOqRRO7RnKTaQ56opJXecxv+7aVNg969yKWCYqj74s41gwKHsp3VV+dAlbFpvzOYDpRNl+JmGpvctBJIfHYsHBUn63DxzCkl9CNDbgFHQJ8vR4itXQBpSKvyh6OSkwUr3AmiwtDqxytPYaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwWGrsaI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KfvH4ImiUMOFCJYXmKJrZLcslzoH9WLCRWtNjiK8eAM1ccr+5RXg7Pw06bZ3Q8nA0tYazAT/FGa6JVkycGBOjDH9PX1PseWLbCHUY7OqBa8NGI3K6ItCTgB/Ei4GkJuCc9NbIVcN6BIVZe60S55V16tRTfb30IazCeiRh8+oE54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6tps381; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwWGrsaI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353671F000FF;
-	Sat, 12 Sep 2026 10:58:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6tps381"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203C31F000FF;
+	Sat, 12 Sep 2026 10:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210726;
-	bh=rsmM/TrigBNgd7t2Z7UD5pJMuCYyvsVrAfMDfctGI2o=;
+	s=korg; t=1789210730;
+	bh=mPYoEY4Cmzgd7eo5jaHoe6y+j8CkKXrG8ouDfc+86qQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CwWGrsaI0iKIrDN432fyNsUT8LdsN/R0Zr2HHuiIoOhXxaL+h2Gokrkq409RNaDHM
-	 couR2o6ouYBPXJYAXhqSZOtzyPo8IH/j8YuqfOq5VwrvUGZ0UIV3F1UnDEdYFQBj4C
-	 RTqfoSi8Agvq7mmwIPzb42yZ1qFWX7VEhr5QGMaY=
+	b=J6tps381e24BtIwbfG0qD+HmO2lm3lh+Axxe80XROp69/ZgDtJ60zOfNdDTTBVzbx
+	 UZHokir1axKdn8nr8SZuYjyCICw4zDsMOn/yA09DO+ZrJagy2OsRlD2zdjrvj1AKH5
+	 X2i1GapFE+UwAbKSibufubb3W20TArLJfYkLphhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1058/1518] perf synthetic-events: Fix divide by zero in perf_event__synthesize_threads
-Date: Sat, 12 Sep 2026 08:53:47 +0200
-Message-ID: <20260912065647.385199430@linuxfoundation.org>
+Subject: [PATCH 6.18 1085/1518] nvmet: propagate percpu_ref_init() failure in nvmet_ns_enable()
+Date: Sat, 12 Sep 2026 08:54:14 +0200
+Message-ID: <20260912065647.994741465@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,38 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 16a12a54e9a1151a37aab74914a51b86f7f58d0e ]
+[ Upstream commit 751709592d2626eaa8dc17ef8137796758a3c37f ]
 
-If scandir() finds no matching tasks in /proc, n is 0. If thread_nr is > 1,
-we bypass the single-thread fast path and then clamp thread_nr to n, making
-it 0. This results in a divide by zero when calculating num_per_thread.
+The return value of percpu_ref_init() is discarded. At this point ret is
+0 from the preceding successful steps, so when the allocation inside
+percpu_ref_init() fails the code jumps to the out_pr_exit cleanup chain
+which ends with "return ret", i.e. reports success. The configfs enable
+store then tells userspace the namespace was enabled even though it was
+not and its backing device has already been torn down.
 
-Handle n <= 1 early to use the single-thread fast path and prevent the
-crash.
+Capture the return value so the failure is propagated.
 
-Fixes: 340b47f510bb ("perf top: Implement multithreading for perf_event__synthesize_threads")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 408232680707 ("nvmet: Fix crash when a namespace is disabled")
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/synthetic-events.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/synthetic-events.c b/tools/perf/util/synthetic-events.c
-index f2d09fcaafb76..ef0586cbc103b 100644
---- a/tools/perf/util/synthetic-events.c
-+++ b/tools/perf/util/synthetic-events.c
-@@ -1058,7 +1058,7 @@ int perf_event__synthesize_threads(const struct perf_tool *tool,
- 	else
- 		thread_nr = nr_threads_synthesize;
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 1cb07d279b44e..1f145b88120ba 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -601,7 +601,8 @@ int nvmet_ns_enable(struct nvmet_ns *ns)
+ 			goto out_dev_put;
+ 	}
  
--	if (thread_nr <= 1) {
-+	if (thread_nr <= 1 || n <= 1) {
- 		err = __perf_event__synthesize_threads(tool, process,
- 						       machine,
- 						       needs_mmap, mmap_data,
+-	if (percpu_ref_init(&ns->ref, nvmet_destroy_namespace, 0, GFP_KERNEL))
++	ret = percpu_ref_init(&ns->ref, nvmet_destroy_namespace, 0, GFP_KERNEL);
++	if (ret)
+ 		goto out_pr_exit;
+ 
+ 	nvmet_ns_changed(subsys, ns->nsid);
 -- 
 2.53.0
 
