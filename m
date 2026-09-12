@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9AF230BDB;
-	Sat, 12 Sep 2026 15:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A133AC17;
+	Sat, 12 Sep 2026 15:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225444; cv=none; b=Oy//xMeKVAtDPRvK49Rmqv72iLTsFnwsv4LN+vPJmaqpG9bPenrTpzJyYdpfcSb2iXdntFYak0wJXJ2POgUbYkIL/pi7JTNchOuWAjXQK7XJ1EKRKhI0Qm7iQeD+junPRXlsJtkPyTjfKoxI8ctfmHXd00BHvetLEkm4FdeGRaM=
+	t=1789225449; cv=none; b=qiJaNFbeBF4ewTbg6CMWj+QgE5H7IS9zrFN+EgqAObzicKOL3Ox6po9j8i8+RXti+hXs8xTi4Zc+G+u9FjFkZkQ8brVqSK5I8gU31WxmB/vCRQgDS6XKdc7OoUeSbY8tMwFDaS6e3bV1oadCELpIUfbtlOkf1MlfFT5iN209dtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225444; c=relaxed/simple;
-	bh=bxeG6LfTivQEC3Gxs+imU0VJcODwBWBfKfIvLaaYC+o=;
+	s=arc-20240116; t=1789225449; c=relaxed/simple;
+	bh=RLKexzABgHJZlPQ+YfjOXypy+H3f602JoWXLfIPeEvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ePbrWQr6MtoBFdOVqv2fozvaskYidsx2VQFep/dzxvuFXd/jHccGi8INJylLfEFWD/wvqi3U0r/ZtHW9QwkZot4lVn7nzX+XcDjYhS8kPLEBn8S4PzZUvevfZmRZT+vKH9QBtbN0w7hD4h2x6xCjG6ef75Ez6hiMOw1IiwsCgf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVf2Mfof; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EKs7Xm3PcvH65RnLb/0ucht49pf29jpadvc+9UDmeSHfdgPJLQhWqUQyOSBpaJiCpBwW7wFkhkg8f0CRNMEW/Ifl6VZC409AGP13lxa+a0POC4xTk8LfgyAw6fRrSRgbxCG9Gp8XEsy9gFd8o0RTC+Et8Uk1JdZCKNPF4/85IqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/9nQetI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVf2Mfof"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05EFA1F000FF;
-	Sat, 12 Sep 2026 15:04:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/9nQetI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 233221F000FF;
+	Sat, 12 Sep 2026 15:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225443;
-	bh=y29HNRFpcoThvVA5AolMK0EAMepsnO3XfBRh9qhEsXc=;
+	s=korg; t=1789225448;
+	bh=F+IzhnyHf6OczihYXpe2Oe9l5MEMQ/G/PGJTFoR/G8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tVf2MfofAkxhvwyoB2DOXKkJgS3if+irnF5HoikrXfbptQIeiGwg8DI/ADpUu7IKs
-	 Sj/0HBoTrhaMfuPJmTVUqW832RIA8bWzYyq7qjeTHHlI4Bx5KQXWrIJ1gOsA3UBlg1
-	 brB3PEbASWN4ervbsT+sMRn1jAH/Op0HqVy6L4wY=
+	b=t/9nQetIOK/7imYrLJMREVJ39knEAFy+/fuugTsJrKKH3oO9StuauvKMsRZPgJywt
+	 VluLXXKn8ryXTxu+wns3D9brMbyu/uxaJoQm2SXhZMn+Ps9TAD0ttIeUWjTaoi9QG+
+	 W/JrxNcOG7N0KqIy/UfPixOPv6kiIIhCeHekmmlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Henrik Grimler <henrik.grimler@axis.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1182/1424] ubi: Replace erase_block() with sync_erase()
-Date: Sat, 12 Sep 2026 09:00:14 +0200
-Message-ID: <20260912065633.762503863@linuxfoundation.org>
+Subject: [PATCH 6.6 1200/1424] power: supply: bq27xxx: bq27z561: fix invalid AverageEnergy address
+Date: Sat, 12 Sep 2026 09:00:32 +0200
+Message-ID: <20260912065634.160168767@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,149 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Henrik Grimler <henrik.grimler@axis.com>
 
-[ Upstream commit c19286d70aaa361cdb073a68a1f66232c359e2fd ]
+[ Upstream commit 2da28b059e0ddcd2e1956eeae383246207965573 ]
 
-Since erase_block() has same logic with sync_erase(), just replace it
-with sync_erase(), also rename 'sync_erase()' to 'ubi_sync_erase()'.
+bq27z561 currently uses the AveragePower reg, 0x22, for reading both
+AveragePower and AvailableEnergy. The technical reference manual does
+not mention AvailableEnergy, and it does not make sense to read a
+cumulative, always positive, property like AvailableEnergy from a rate
+property like AveragePower. Set REG_AE as invalid to fix it.
 
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Stable-dep-of: 420477a84f1e ("UBI: Preserve torture flag when rescheduling failed erasures")
+Fixes: 6f24ff97e323 ("power: supply: bq27xxx_battery: Add the BQ27Z561 Battery monitor")
+Signed-off-by: Henrik Grimler <henrik.grimler@axis.com>
+Link: https://patch.msgid.link/20260811-bq27z746-v1-5-3a4fa38205cc@axis.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/fastmap.c | 48 ++-------------------------------------
- drivers/mtd/ubi/ubi.h     |  1 +
- drivers/mtd/ubi/wl.c      |  9 ++++----
- 3 files changed, 7 insertions(+), 51 deletions(-)
+ drivers/power/supply/bq27xxx_battery.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/ubi/fastmap.c b/drivers/mtd/ubi/fastmap.c
-index 6856d9221e26b..432f561a13286 100644
---- a/drivers/mtd/ubi/fastmap.c
-+++ b/drivers/mtd/ubi/fastmap.c
-@@ -1390,50 +1390,6 @@ static int ubi_write_fastmap(struct ubi_device *ubi,
- 	return ret;
- }
- 
--/**
-- * erase_block - Manually erase a PEB.
-- * @ubi: UBI device object
-- * @e: the physical eraseblock to erase
-- *
-- * This function returns zero in case of success and a negative error code in
-- * case of failure.
-- */
--static int erase_block(struct ubi_device *ubi, struct ubi_wl_entry *e)
--{
--	int err;
--	struct ubi_ec_hdr *ec_hdr;
--	long long ec = e->ec;
--
--	ec_hdr = kzalloc(ubi->ec_hdr_alsize, GFP_NOFS);
--	if (!ec_hdr)
--		return -ENOMEM;
--
--	err = ubi_io_sync_erase(ubi, e->pnum, 0);
--	if (err < 0)
--		goto out;
--
--	ec += err;
--	if (ec > UBI_MAX_ERASECOUNTER) {
--		err = -EINVAL;
--		goto out;
--	}
--
--	ec_hdr->ec = cpu_to_be64(ec);
--	err = ubi_io_write_ec_hdr(ubi, e->pnum, ec_hdr);
--	if (err < 0)
--		goto out;
--
--	e->ec = ec;
--	spin_lock(&ubi->wl_lock);
--	if (e->ec > ubi->max_ec)
--		ubi->max_ec = e->ec;
--	spin_unlock(&ubi->wl_lock);
--
--out:
--	kfree(ec_hdr);
--	return err;
--}
--
- /**
-  * invalidate_fastmap - destroys a fastmap.
-  * @ubi: UBI device object
-@@ -1574,7 +1530,7 @@ int ubi_update_fastmap(struct ubi_device *ubi)
- 
- 		if (!tmp_e) {
- 			if (old_fm && old_fm->e[i]) {
--				ret = erase_block(ubi, old_fm->e[i]);
-+				ret = ubi_sync_erase(ubi, old_fm->e[i], 0);
- 				if (ret < 0) {
- 					ubi_err(ubi, "could not erase old fastmap PEB");
- 
-@@ -1626,7 +1582,7 @@ int ubi_update_fastmap(struct ubi_device *ubi)
- 	if (old_fm) {
- 		/* no fresh anchor PEB was found, reuse the old one */
- 		if (!tmp_e) {
--			ret = erase_block(ubi, old_fm->e[0]);
-+			ret = ubi_sync_erase(ubi, old_fm->e[0], 0);
- 			if (ret < 0) {
- 				ubi_err(ubi, "could not erase old anchor PEB");
- 
-diff --git a/drivers/mtd/ubi/ubi.h b/drivers/mtd/ubi/ubi.h
-index c8f1bd4fa1008..2f0c0eacc0133 100644
---- a/drivers/mtd/ubi/ubi.h
-+++ b/drivers/mtd/ubi/ubi.h
-@@ -902,6 +902,7 @@ int self_check_eba(struct ubi_device *ubi, struct ubi_attach_info *ai_fastmap,
- 		   struct ubi_attach_info *ai_scan);
- 
- /* wl.c */
-+int ubi_sync_erase(struct ubi_device *ubi, struct ubi_wl_entry *e, int torture);
- int ubi_wl_get_peb(struct ubi_device *ubi);
- int ubi_wl_put_peb(struct ubi_device *ubi, int vol_id, int lnum,
- 		   int pnum, int torture);
-diff --git a/drivers/mtd/ubi/wl.c b/drivers/mtd/ubi/wl.c
-index 886d44019401a..8350466faaf30 100644
---- a/drivers/mtd/ubi/wl.c
-+++ b/drivers/mtd/ubi/wl.c
-@@ -427,7 +427,7 @@ static int prot_queue_del(struct ubi_device *ubi, int pnum)
- }
- 
- /**
-- * sync_erase - synchronously erase a physical eraseblock.
-+ * ubi_sync_erase - synchronously erase a physical eraseblock.
-  * @ubi: UBI device description object
-  * @e: the physical eraseblock to erase
-  * @torture: if the physical eraseblock has to be tortured
-@@ -435,8 +435,7 @@ static int prot_queue_del(struct ubi_device *ubi, int pnum)
-  * This function returns zero in case of success and a negative error code in
-  * case of failure.
-  */
--static int sync_erase(struct ubi_device *ubi, struct ubi_wl_entry *e,
--		      int torture)
-+int ubi_sync_erase(struct ubi_device *ubi, struct ubi_wl_entry *e, int torture)
- {
- 	int err;
- 	struct ubi_ec_hdr *ec_hdr;
-@@ -1101,7 +1100,7 @@ static int __erase_worker(struct ubi_device *ubi, struct ubi_work *wl_wrk)
- 	dbg_wl("erase PEB %d EC %d LEB %d:%d",
- 	       pnum, e->ec, wl_wrk->vol_id, wl_wrk->lnum);
- 
--	err = sync_erase(ubi, e, wl_wrk->torture);
-+	err = ubi_sync_erase(ubi, e, wl_wrk->torture);
- 	if (!err) {
- 		spin_lock(&ubi->wl_lock);
- 
-@@ -1756,7 +1755,7 @@ static int erase_aeb(struct ubi_device *ubi, struct ubi_ainf_peb *aeb, bool sync
- 	ubi->lookuptbl[e->pnum] = e;
- 
- 	if (sync) {
--		err = sync_erase(ubi, e, false);
-+		err = ubi_sync_erase(ubi, e, false);
- 		if (err)
- 			goto out_free;
- 
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index 07e61697613ab..77c80901910c3 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -489,7 +489,7 @@ static u8
+ 		[BQ27XXX_REG_RC] = 0x10,
+ 		[BQ27XXX_REG_FCC] = 0x12,
+ 		[BQ27XXX_REG_CYCT] = 0x2a,
+-		[BQ27XXX_REG_AE] = 0x22,
++		[BQ27XXX_REG_AE] = INVALID_REG_ADDR,
+ 		[BQ27XXX_REG_SOC] = 0x2c,
+ 		[BQ27XXX_REG_DCAP] = 0x3c,
+ 		[BQ27XXX_REG_AP] = 0x22,
 -- 
 2.53.0
 
