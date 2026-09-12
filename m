@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E928D361977;
-	Sat, 12 Sep 2026 19:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E661A26ED46;
+	Sat, 12 Sep 2026 19:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240798; cv=none; b=H9zKdy9FqrSNwzWB3aVMMssqpuvjAIQsufgSr2ZqDTVTlWl4M36Ief+yaxVA6acLZyYiWwo9r1eWQFfgZ5eHaMaijCXb6DmaducQTVx/A4QiAFZjhvHfkFuI7cylaCJmu8xw8Azs/6bUqOzV7xSwx0lLMxCHksCnFYiAeR6EOS4=
+	t=1789240803; cv=none; b=HpIbBlFqaJXmv96sh3sVbnjfWxrhU2kQ/R4UMTbhJczqcprEyxp9C7KSyHockeFWJ2F0R4YgK1IvBGQ1J5SVunc7MOONZclO4tKiaFHTW+xOyQwb00MSXzYpL9ZgR12epnkWUtR6UGu3KHQfDH4az2T1ywQSvJ7eD9Rb7/EznU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240798; c=relaxed/simple;
-	bh=hFr9J5YvjGiuHa+W2FpKbfzMA3xfpe8me6UCD15p0WE=;
+	s=arc-20240116; t=1789240803; c=relaxed/simple;
+	bh=mTw1Plmsb2KbMq8juf0Fs4ykEoB6ttsmDmwDK/8ZMT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m/REUHJbezXlLawHl4j2usEOYNz7ln7qotp9EXb8J8uIrqCWSfXw74WfFNtggpyJ4D9AjUCALskupSGd/8Xc6rXTJ6h0496DTPEh4WNtvwGeDucTCf7IDoySn/9yrOcIDLVxV3xgKpKXUWr6sjtOxSDMuUQYXpBSa6LN4BN1HOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XXB5BwO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MRs5Yvifhc5NWw3sTVXJ/UZ3yWosrv49yV+P6OdyAeDaI6NyKoJs44PDbDpR+V2Rc8OHpNKMO5kH9aA1W2U4P3N/1wzfwhtlb/9m0bebcXGBx5JOcrm8XU6aSuig5R//nPzUlKAvD/7sjxrhnqj0rBESYPCBeurLUkhfuqa2CaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gh+TwLpX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XXB5BwO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2A11F000FF;
-	Sat, 12 Sep 2026 19:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gh+TwLpX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78BC1F000FF;
+	Sat, 12 Sep 2026 19:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240796;
-	bh=Q/xTsr3ekqXa68SocLGN6ogK15Ev4EasypJXQuUEdpE=;
+	s=korg; t=1789240801;
+	bh=a0tuWZh9r8Ve8g53XuiH/htG8J+xBl+jmrGPG8R2CwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2XXB5BwO8LJWbXy+wXWqQ8ZPBmS/cQf6zGqS/Am/XTSjvSLOXHCt1jPSMGjV2tm/x
-	 mXtLCVq3JvL7Mie4pBBkXoKAEjx2EsBTYdXC78pHbqCmA/a7KpBjV7ME5F5m4Nhvj/
-	 0T4+T6xgEwOvd4orloJEc6ZhYs+w7aBoq+0Skge8=
+	b=gh+TwLpXVd7RRDjty+Nhxp0ZQEGZa/Q3f6qke8EbmtDBv9XNu5/XRVBdU6pr7QzcI
+	 ha4grS9SqUj6OT/tNfGqrhPOGxOoE3GgOxZ+c7ck+twe9XmsmGMlJtj6AWlCtIi3HA
+	 w6KgWIzRai4xjWDF0PN+h3txxrSenFtaM8mv6gRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Engelhardt <ej@inai.de>,
+	Marino Dzalto <marino.dzalto@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 910/935] netfilter: xt_cgroup: Make it independent from net_cls
-Date: Sat, 12 Sep 2026 09:05:40 +0200
-Message-ID: <20260912065547.689098086@linuxfoundation.org>
+Subject: [PATCH 5.15 911/935] netfilter: xt_HL: add pr_fmt and checkentry validation
+Date: Sat, 12 Sep 2026 09:05:41 +0200
+Message-ID: <20260912065547.711353781@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -47,99 +45,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Koutný <mkoutny@suse.com>
+From: Marino Dzalto <marino.dzalto@gmail.com>
 
-[ Upstream commit 3ba0032afea888d0edebf5ece3c6b36417189b63 ]
+[ Upstream commit 24bd5c2679caf8a228d90cafa221da4b47fd6642 ]
 
-The xt_group matching supports the default hierarchy since commit
-c38c4597e4bf3 ("netfilter: implement xt_cgroup cgroup2 path match").
-The cgroup v1 matching (based on clsid) and cgroup v2 matching (based on
-path) are rather independent. Downgrade the Kconfig dependency to
-mere CONFIG_SOCK_GROUP_DATA so that xt_group can be built even without
-CONFIG_NET_CLS_CGROUP for path matching.
-Also add a message for users when they attempt to specify any clsid.
+Add pr_fmt to prefix log messages with the module name for
+easier debugging in dmesg.
 
-Link: https://lists.opensuse.org/archives/list/kernel@lists.opensuse.org/thread/S23NOILB7MUIRHSKPBOQKJHVSK26GP6X/
-Cc: Jan Engelhardt <ej@inai.de>
-Cc: Florian Westphal <fw@strlen.de>
-Signed-off-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Add checkentry functions for IPv4 (ttl_mt_check) and IPv6
+(hl_mt6_check) to validate the match mode at rule registration
+time, rejecting invalid modes with -EINVAL.
+
+The evaluation function returns false in case the mode is
+unknown, so this is a cleanup, not a bug fix.
+
+Signed-off-by: Marino Dzalto <marino.dzalto@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Stable-dep-of: 793d9eda4821 ("netfilter: x_tables: replace pr_{info,err}() by pr_info_ratelimited()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/Kconfig     |  2 +-
- net/netfilter/xt_cgroup.c | 17 +++++++++++++++++
- 2 files changed, 18 insertions(+), 1 deletion(-)
+ net/netfilter/xt_hl.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/net/netfilter/Kconfig b/net/netfilter/Kconfig
-index f02ebe4609650..ddfbd897ee43d 100644
---- a/net/netfilter/Kconfig
-+++ b/net/netfilter/Kconfig
-@@ -1174,7 +1174,7 @@ config NETFILTER_XT_MATCH_CGROUP
- 	tristate '"control group" match support'
- 	depends on NETFILTER_ADVANCED
- 	depends on CGROUPS
--	select CGROUP_NET_CLASSID
-+	select SOCK_CGROUP_DATA
- 	help
- 	Socket/process control group matching allows you to match locally
- 	generated packets based on which net_cls control group processes
-diff --git a/net/netfilter/xt_cgroup.c b/net/netfilter/xt_cgroup.c
-index bfc98719684e2..b182b9e0882b6 100644
---- a/net/netfilter/xt_cgroup.c
-+++ b/net/netfilter/xt_cgroup.c
-@@ -23,6 +23,8 @@ MODULE_DESCRIPTION("Xtables: process control group matching");
- MODULE_ALIAS("ipt_cgroup");
- MODULE_ALIAS("ip6t_cgroup");
+diff --git a/net/netfilter/xt_hl.c b/net/netfilter/xt_hl.c
+index c1a70f8f04417..4a12a757ecbf8 100644
+--- a/net/netfilter/xt_hl.c
++++ b/net/netfilter/xt_hl.c
+@@ -6,6 +6,7 @@
+  * Hop Limit matching module
+  * (C) 2001-2002 Maciej Soltysiak <solt@dns.toxicfilms.tv>
+  */
++#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
-+#define NET_CLS_CLASSID_INVALID_MSG "xt_cgroup: classid invalid without net_cls cgroups\n"
+ #include <linux/ip.h>
+ #include <linux/ipv6.h>
+@@ -22,6 +23,18 @@ MODULE_LICENSE("GPL");
+ MODULE_ALIAS("ipt_ttl");
+ MODULE_ALIAS("ip6t_hl");
+ 
++static int ttl_mt_check(const struct xt_mtchk_param *par)
++{
++	const struct ipt_ttl_info *info = par->matchinfo;
 +
- static int cgroup_mt_check_v0(const struct xt_mtchk_param *par)
- {
- 	struct xt_cgroup_info_v0 *info = par->matchinfo;
-@@ -30,6 +32,11 @@ static int cgroup_mt_check_v0(const struct xt_mtchk_param *par)
- 	if (info->invert & ~1)
- 		return -EINVAL;
- 
-+	if (!IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
-+		pr_info(NET_CLS_CLASSID_INVALID_MSG);
++	if (info->mode > IPT_TTL_GT) {
++		pr_err("Unknown TTL match mode: %d\n", info->mode);
 +		return -EINVAL;
 +	}
 +
- 	return 0;
++	return 0;
++}
++
+ static bool ttl_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ {
+ 	const struct ipt_ttl_info *info = par->matchinfo;
+@@ -41,6 +54,18 @@ static bool ttl_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ 	return false;
  }
  
-@@ -51,6 +58,11 @@ static int cgroup_mt_check_v1(const struct xt_mtchk_param *par)
- 		return -EINVAL;
- 	}
- 
-+	if (info->has_classid && !IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
-+		pr_info(NET_CLS_CLASSID_INVALID_MSG);
++static int hl_mt6_check(const struct xt_mtchk_param *par)
++{
++	const struct ip6t_hl_info *info = par->matchinfo;
++
++	if (info->mode > IP6T_HL_GT) {
++		pr_err("Unknown Hop Limit match mode: %d\n", info->mode);
 +		return -EINVAL;
 +	}
 +
- 	info->priv = NULL;
- 	if (info->has_path) {
- 		if (strnlen(info->path, sizeof(info->path)) >= sizeof(info->path))
-@@ -86,6 +98,11 @@ static int cgroup_mt_check_v2(const struct xt_mtchk_param *par)
- 		return -EINVAL;
- 	}
- 
-+	if (info->has_classid && !IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
-+		pr_info(NET_CLS_CLASSID_INVALID_MSG);
-+		return -EINVAL;
-+	}
++	return 0;
++}
 +
- 	info->priv = NULL;
- 	if (info->has_path) {
- 		if (strnlen(info->path, sizeof(info->path)) >= sizeof(info->path))
+ static bool hl_mt6(const struct sk_buff *skb, struct xt_action_param *par)
+ {
+ 	const struct ip6t_hl_info *info = par->matchinfo;
+@@ -65,6 +90,7 @@ static struct xt_match hl_mt_reg[] __read_mostly = {
+ 		.name       = "ttl",
+ 		.revision   = 0,
+ 		.family     = NFPROTO_IPV4,
++		.checkentry = ttl_mt_check,
+ 		.match      = ttl_mt,
+ 		.matchsize  = sizeof(struct ipt_ttl_info),
+ 		.me         = THIS_MODULE,
+@@ -73,6 +99,7 @@ static struct xt_match hl_mt_reg[] __read_mostly = {
+ 		.name       = "hl",
+ 		.revision   = 0,
+ 		.family     = NFPROTO_IPV6,
++		.checkentry = hl_mt6_check,
+ 		.match      = hl_mt6,
+ 		.matchsize  = sizeof(struct ip6t_hl_info),
+ 		.me         = THIS_MODULE,
 -- 
 2.53.0
 
