@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54F1274B46;
-	Sat, 12 Sep 2026 18:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92115274B46;
+	Sat, 12 Sep 2026 18:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237595; cv=none; b=bnvV1DgJv3sWAqVt8JtJrzopwPdh/ZE+Q/yd84rk0L9xnBsYOro5hl5KVSkx/ezpCwBqC58Ufi81k4CESMU4xlukMdhQkxEDUFyHHuPIY/kxxETnyl9061SBuQGxqeu8ZACJeb7TF6NWSj31kxe2jzKHwX8e539Pq6oCHHvNrq4=
+	t=1789237600; cv=none; b=kGrUb0Zl5N+E6JfEj7Av7K9C8QluZieDEzYktV1eRHP75JqtYpPRBhQb7n+UqirEdOocXy4lN0Cwgc4ViPUeD5sHfjOyrQSJSRAN+6OSVs55tbxs+StUR43ULeoBhgPTT7x002YYkAk3ox8e0JmcfBO9Rs4oJlWrociEP/53syI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237595; c=relaxed/simple;
-	bh=iAJKeA7vJqgnujsZV3tlB8w/6UHy5pEucaA/d3bbS/4=;
+	s=arc-20240116; t=1789237600; c=relaxed/simple;
+	bh=thevz9AKpD5TuPUzS8nc4Tq5EkJxr0qz+YIe+gTKVSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nFNXuhHyGanSobMFJlnjNh4rP9MApYivb/jH6T2rysbVX0cANJ73IiT5Tqa/HCphZF8YRLDCFL8DhIMKm13m9BgjSmAg0Kz2wJmGpfrx+Q8dq4gcouFF+RwCFOyo3wsaJH6i/zBIHlilcoHhjPHk9l+NRhVCftFlK/tkaLMB/l4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PdW6rOUZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YJ2/obCAhLi1G0odzbW5b7Sw9r/L+7x8m72eyySwy9BIh0q1JQdBVqWhPO5PlRbiJF06e+8r1nH19zZp/ddGC5ekY+qi/aIzw+rGLINrXgeR9sX+uLFBuGZ5TdpGhBbEApf+62p6xdyOrFQ9/fLOu3AZewCzNOrPw23RNWNDavQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6JaXlWi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PdW6rOUZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA88F1F000FF;
-	Sat, 12 Sep 2026 18:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6JaXlWi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC6D1F000FF;
+	Sat, 12 Sep 2026 18:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237594;
-	bh=L5RlVYoCYKkq2e/U3gmg7cyEcdX/IZj43mEwQj68rxI=;
+	s=korg; t=1789237599;
+	bh=MoMvwC87/3D95qh9XO8WyyyiZPYYlB4ygnSLY/88yl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PdW6rOUZyL/xTCrhF5kc8Zf7A1XUvJttipWh3W+A4YmaM2npcA8S+kg3GmWBgfaZb
-	 x/z2NggP5J7kKd5HWWW6GP4tej0MaSa1TIMWcmXtGknESSXYPZs0lLVyhQogJPeHv2
-	 ogoonQJUhmHQYrCtXXvfyXrjWRlbhu9QbfUanpWE=
+	b=K6JaXlWiYihEeXZQ0Yh4d+bvd/2N5vM/lWHZpLVJNWJHtWhP+Z9LwA85T2Th0LBAa
+	 U7XRDwghbfWJq3UR7q1FBkrdp77hbIFDlMMZqEQRozRPjr8aKy5kF1k6NEIAULhGeC
+	 l2GkzWI+JK+g8QzzvtezoPVZh05mN9F8mg/AcLqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
+	WenTao Liang <vulab@iscas.ac.cn>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 289/935] AsoC: intel: sst: fix PCI device reference leak on probe failure
-Date: Sat, 12 Sep 2026 08:55:19 +0200
-Message-ID: <20260912065533.441462858@linuxfoundation.org>
+Subject: [PATCH 5.15 290/935] ASoC: samsung: aries_audio_probe: double of_node_put due to direct assignment without of_node_get
+Date: Sat, 12 Sep 2026 08:55:20 +0200
+Message-ID: <20260912065533.464340057@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,44 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: WenTao Liang <vulab@iscas.ac.cn>
 
-commit 016f29997ebd29d6ab59c8162ce0e7f73bd1e517 upstream.
+commit fb5d1b1c5f8a920ee697545fa6dee16825085717 upstream.
 
-intel_sst_probe() takes a reference to the PCI device with pci_dev_get().
-If sst_platform_get_resources() fails afterwards, the probe error path
-cleans up the driver context but does not drop the PCI device reference.
+In aries_audio_probe(), aries_dai[0].platforms->of_node is assigned the
+same pointer as aries_dai[0].cpus->of_node (from of_parse_phandle)
+without calling of_node_get(). When the sound card is deregistered, the
+ASoC framework calls of_node_put() on both cpus->of_node and
+platforms->of_node, causing a double put on the same node and a refcount
+underflow.
 
-Add a pci_dev_put() error path for failures after pci_dev_get().
+Add of_node_get(aries_dai[0].cpus->of_node) before the assignment.
 
-Fixes: f533a035e4da ("ASoC: Intel: mrfld - create separate module for pci part")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20260622091620.897478-1-haoxiang_li2024@163.com
+Fixes: 7a3a7671fa6c ("ASoC: samsung: Add driver for Aries boards")
+Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260627035251.60172-1-vulab@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/atom/sst/sst_pci.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/samsung/aries_wm8994.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/intel/atom/sst/sst_pci.c
-+++ b/sound/soc/intel/atom/sst/sst_pci.c
-@@ -141,13 +141,15 @@ static int intel_sst_probe(struct pci_de
- 	sst_drv_ctx->pci = pci_dev_get(pci);
- 	ret = sst_platform_get_resources(sst_drv_ctx);
- 	if (ret < 0)
--		goto do_free_drv_ctx;
-+		goto do_put_pci;
+--- a/sound/soc/samsung/aries_wm8994.c
++++ b/sound/soc/samsung/aries_wm8994.c
+@@ -650,6 +650,7 @@ static int aries_audio_probe(struct plat
+ 		goto out;
+ 	}
  
- 	pci_set_drvdata(pci, sst_drv_ctx);
- 	sst_configure_runtime_pm(sst_drv_ctx);
++	of_node_get(aries_dai[0].cpus->of_node);
+ 	aries_dai[0].platforms->of_node = aries_dai[0].cpus->of_node;
  
- 	return ret;
- 
-+do_put_pci:
-+	pci_dev_put(sst_drv_ctx->pci);
- do_free_drv_ctx:
- 	sst_context_cleanup(sst_drv_ctx);
- 	dev_err(sst_drv_ctx->dev, "Probe failed with %d\n", ret);
+ 	/* Set CPU of_node for BT DAI */
 
 
