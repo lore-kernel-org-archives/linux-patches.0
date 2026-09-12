@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71A33A5E88;
-	Sat, 12 Sep 2026 20:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016D23A2576;
+	Sat, 12 Sep 2026 20:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243432; cv=none; b=YQkC6BWCo1uZTzQ1AFywa/92ZsiKQNyS56FBWbtyDJYd7xFAnjLSE7zIE3HsrrqYZt0LxVR+hrHMusAA87HXcOi42XiVqAHWyfM7xf9NM4ug84NJCuZCnUo3O0oRLvkHxUOX33YD1cDAdE8UAFI0Wl4UOK00xy1TDLpKZ2BQUT8=
+	t=1789243435; cv=none; b=cc3APVTzOujzaF4h6RpS5oaCYQIhAgGvs7UMZNLDzjUeP2JONaUquZ7HiAs2FCMec7d8/vc+JM0AORDSxMIEwkSO+AvBAwywi+z6d/F+MXSXIxIBLXPk/eNumQKIRqAYJEQ2oy+W6eHrICY8Lx7iAulJkKTT6LmeGArtkAis9Bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243432; c=relaxed/simple;
-	bh=l/NtQW6PhZgk1/6IjCPuQC4nKIbFvHS1tYeiNA/djTM=;
+	s=arc-20240116; t=1789243435; c=relaxed/simple;
+	bh=yuWXbDQouXhAQBMZAh9j9Zf5qgpNeLnyS3kWx2/VnWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wlz0bAaCiQUMWvtwdMT6kmeKSxE7LgpYfz6ctIWX8dwbv2+gOW4KVaJAty6drww2qb9NV8tzNt0efo74sgr1i0F3x80a0H75PPtozYmxjvbSqRj0zZgr91XMLFMXJI2jmTgPvlMx84+dcuSCfV7HUWCEKzsAC0DsNZrW1LUs5jY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NqLHroG2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ieeU2qe2fCl2EXkHKoAusk2Q4snA9d7B6d5odruN5lAfDC63Pny3eGSu/skQhKiQKwJn/foYpgxKpRBvELVmuPF0T/jBopuPLhO42asFstw2+SxtTz86/yiH4YjGNSqPtJMsjVA68lZUi5Idgs80J2JSOkSSM2CHHftJSb2qSnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQJQy9y/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqLHroG2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7103D1F000FF;
-	Sat, 12 Sep 2026 20:03:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQJQy9y/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC361F000FF;
+	Sat, 12 Sep 2026 20:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243430;
-	bh=eUVMc1N1KIovjAQy3YUoMw/Ag+O6mMmhWAVzWp+odgs=;
+	s=korg; t=1789243433;
+	bh=ja1D2aH9bUzUd7gQ4BSFPO5GhpMn+oGr507hzDdut2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NqLHroG2hUn35qSzuxpf2G+L/pD6IePt11X13sYJPBUihXfp7rzDJfGUjEVbGVwHK
-	 l/bc2xxwSduJLHQ40Ve5i5dvv4/Pbpbr7LT3x5Sb3Ue/vhkgQdFAbo2YVnpzY++TEY
-	 FXn5+CgFAgGpvOz0R5Zbb/tg2u4+7lT9/pxlDG8o=
+	b=UQJQy9y/4ybY3IQ1MURF7+0KftolY34yQJAAwCp0MgFJENhSm0zNmg4OdOz/r/XOl
+	 3+H0crNQq07pc2ODddI3j50E3eAsuUjguLRfowu5UfMMYwEeUebp2of7LH1L2hCB8r
+	 l2pY3PwJR44P82/WIA0k26pfbg7p39ZZEu/VnciU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+4638111fe2a12980@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>,
+	Allison Henderson <achender@kernel.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 754/798] net: qualcomm: rmnet: restore skb->dev on deaggregated frames
-Date: Sat, 12 Sep 2026 09:06:22 +0200
-Message-ID: <20260912065534.349172818@linuxfoundation.org>
+Subject: [PATCH 5.10 755/798] net/rds: use wq_has_sleeper() in rds_cong_map_updated()
+Date: Sat, 12 Sep 2026 09:06:23 +0200
+Message-ID: <20260912065534.372275965@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,66 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit a66734a1c5e36525ea07e9f4547fddc51e916de3 ]
+[ Upstream commit d4f484661961636eb90d287050959e613795f73a ]
 
-rmnet_map_deaggregate() allocates each sub-frame with alloc_skb() and
-leaves skb->dev NULL. __rmnet_map_ingress_handler() assigns
-skb->dev = ep->egress_dev only on the data path, but a MAP command frame
-is dispatched to rmnet_map_command() before that, so rmnet_map_send_ack()
-runs netif_tx_lock(skb->dev) on a NULL device. An unprivileged user
-reaches this by unsharing a user+net namespace, creating an rmnet link
-over a tap device with INGRESS_DEAGGREGATION and INGRESS_MAP_COMMANDS,
-and writing an aggregated frame carrying a flow-control command to the
-tap fd.
+rds_cong_map_updated() runs after a peer's congestion map has been
+rewritten (by rds_tcp_cong_recv() and rds_ib_cong_recv(), or the
+clear-all in the loopback and IB send-completion paths).  It bumps
+rds_cong_generation and then checks waitqueue_active() on
+map->m_waitq and on rds_poll_waitq to decide whether anyone needs
+waking.  atomic_inc() carries no ordering and waitqueue_active() is a
+plain load, so nothing orders the map and generation stores before
+the wait queue reads.  The waiters do the mirror image: rds_cong_wait()
+adds itself to m_waitq and then tests the port bit, and rds_poll()
+registers on rds_poll_waitq and then reads the generation.  That is
+the store-buffering pattern described above waitqueue_active() in
+include/linux/wait.h - the updater can observe an empty wait queue
+while the waiter still observes the port as congested, and no wake-up
+is issued.
 
-Restore the assignment dropped by 378e25357ac7, so every skb leaving
-rmnet_map_deaggregate() has a valid device.
+rds_cong_wait() is an interruptible sleep with no timeout, so a
+sender blocked on a congested port stays blocked until the next
+congestion update from that peer arrives or a signal is delivered.
+A poll() waiter misses the map-updated notification the same way.
 
-  BUG: KASAN: null-ptr-deref in _raw_spin_lock (kernel/locking/spinlock.c:158)
-  Write of size 4 at addr 00000000000004b4 by task exploit/144
-  Call Trace:
-   _raw_spin_lock (kernel/locking/spinlock.c:158)
-   netif_tx_lock (net/sched/sch_generic.c:497)
-   rmnet_map_command (drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c:67)
-   rmnet_rx_handler (drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c:125)
-   __netif_receive_skb_core.constprop.0 (net/core/dev.c:6103)
-   ...
-   __netif_receive_skb_one_core (net/core/dev.c:6214)
-   netif_receive_skb (net/core/dev.c:6474)
-   tun_get_user (drivers/net/tun.c:1966)
-   tun_chr_write_iter (drivers/net/tun.c:2012)
-   vfs_write (fs/read_write.c:687)
-   ksys_write (fs/read_write.c:739)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  Kernel panic - not syncing: Fatal exception in interrupt
+Use wq_has_sleeper(), which is waitqueue_active() preceded by the
+required full barrier, as rds_tcp_state_change() already does for
+the same pattern.
 
-Fixes: 378e25357ac7 ("net: qualcomm: rmnet: Remove unnecessary device assignment")
-Reported-by: co+4638111fe2a12980@bugs.sh
-Closes: https://lore.kernel.org/netdev/ijg79FFMfIvKJbivdJEKvTO90Q9dTvyBkJck@bugs.sh/T/#u
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260820195240.1631458-1-xmei5@asu.edu
+Fixes: 922cb17a5c81 ("RDS: Congestion-handling code")
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260822052647.88318-1-achender@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/rds/cong.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
-index a655bb8d5c57b..fcda268cf3fe3 100644
---- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
-+++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
-@@ -354,6 +354,7 @@ struct sk_buff *rmnet_map_deaggregate(struct sk_buff *skb,
- 	if (!skbn)
- 		return NULL;
+diff --git a/net/rds/cong.c b/net/rds/cong.c
+index 8b689ebbd5b52..c85af56e42e73 100644
+--- a/net/rds/cong.c
++++ b/net/rds/cong.c
+@@ -256,9 +256,9 @@ void rds_cong_map_updated(struct rds_cong_map *map, uint64_t portmask)
+ 	  map, &map->m_addr);
+ 	rds_stats_inc(s_cong_update_received);
+ 	atomic_inc(&rds_cong_generation);
+-	if (waitqueue_active(&map->m_waitq))
++	if (wq_has_sleeper(&map->m_waitq))
+ 		wake_up(&map->m_waitq);
+-	if (waitqueue_active(&rds_poll_waitq))
++	if (wq_has_sleeper(&rds_poll_waitq))
+ 		wake_up_all(&rds_poll_waitq);
  
-+	skbn->dev = skb->dev;
- 	skb_reserve(skbn, RMNET_MAP_DEAGGR_HEADROOM);
- 	skb_put(skbn, packet_len);
- 	memcpy(skbn->data, skb->data, packet_len);
+ 	if (portmask && !list_empty(&rds_cong_monitor)) {
 -- 
 2.53.0
 
