@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070C63290B0;
-	Sat, 12 Sep 2026 10:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589F041B8E4;
+	Sat, 12 Sep 2026 10:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210712; cv=none; b=bQUwf9HbjmowJ9ElI3DGImGQKZ/Y2aY56YnNfd/nE+lWCUJ/1EZv0BD0wTv8YfXnU3cFz89Vf8Mw2lRBd/A8EXW4TD1UfZzEavLYoDyloGGcPss4s26Amcr8J5U4xtkDu0vAXBdBbjhofLbcF67/zhzKy2yI6x2NesX7MFW542A=
+	t=1789210717; cv=none; b=rUOlV/en6AVMvgESxr9h5LqJ1uGg0dGHIc2E5kZau/JOItnxLnmDkdUbm81kf/iF8cG34Dk0KVdnu1qmKMv56se7SCxctuug0ez2bVDyLK7TPmNBaeI8pVgXs/CHMp5Jt43i06MgSil2+Szc3VTS/7tFDy0jZDv+F4b1zIfA0Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210712; c=relaxed/simple;
-	bh=BfmYIL2nWUZTB3XeMPgkxCO+qROaUcxlC6BHlQB09n8=;
+	s=arc-20240116; t=1789210717; c=relaxed/simple;
+	bh=jNfpMo8NeLBhj8QkPknCiKQyyQNiQvAnflJd3Gge0P4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WRHcfdaQ6XXTmhzwV9R4BDPkM7XAU5ezKSkBsw4K1OPpXqkmAYWVFmPKYvykUw6GkEH3+WZ/xhqK9UET62x1dfXnkSP0auUBf0EMv5pXOuJI+5zMdBbvv6nbuu+yecNUd8itbqV4OyVD6iLlxeX81Mu10P7bwZPOP4SG6QCjkpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uE7EupCy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q372dfQ5hDZFUhgEc1qgQndEf7m1pp+uf2BvpUYyjlQtkTPy7Nfk7go8IxIq2HZbsbLBlYFwHLZzXLFogYlBJ9egRDdF9ljrsFlqTZbkSip0UkccB6XG3XLQ9bltZiRxpxOx/T9yHvL3PG7cVqZ0jNJmfQBoyKRQ7bFIP1sjDiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bRuJBkk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uE7EupCy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02411F000FF;
-	Sat, 12 Sep 2026 10:58:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bRuJBkk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2D41F000FF;
+	Sat, 12 Sep 2026 10:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210710;
-	bh=sAOvXSNvBoRuxDyKLaNLkLS54/FwUb26MsmdrNLvqcs=;
+	s=korg; t=1789210716;
+	bh=8+phEAgcbLexgQwqh+ncA4W/k+uj5K4IC9bto7Y9EkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uE7EupCyQT/2HE+LHQIiCF7srZoLcnG/FiqYVqUmXg4b57sAq4LfESI+GYbf7Is0l
-	 I6HujzUsDGqYR3V+fg/+dQU3t7eLS7jb1xnMbz6eCIMhKbv/PvqYSYwA6rWgjwZJh0
-	 lIgnYahtz583bq8JgOWBaC8Azzo4T+FGns2kxSJ8=
+	b=1bRuJBkk3Pe35sF6gjA74tpXhRo6mox4IWtfxc2BU0YZNL7h564P5OEFJbQA+mBCz
+	 WkviNzPM23xZmtkEDq8JOkzHrne/dJzmuX3mipWWmK7O/r3pf01BD2qgCM13uYDg3v
+	 qWc2+c/yKGyqfGCcsG7F0UM9D/xO7nAOSXNU9Aas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1082/1518] SUNRPC: check rpc_sockaddr2uaddr() return value in rpcb_register_inet4/6
-Date: Sat, 12 Sep 2026 08:54:11 +0200
-Message-ID: <20260912065647.927488620@linuxfoundation.org>
+Subject: [PATCH 6.18 1083/1518] sunrpc: xprtsock: annotate shared socket callbacks with READ_ONCE/WRITE_ONCE
+Date: Sat, 12 Sep 2026 08:54:12 +0200
+Message-ID: <20260912065647.949925377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,84 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit fd22370226a0d8109045d0831fd5aaadee921693 ]
+[ Upstream commit 33930840b5f0a79f826e7c69dc6cd78f72a67481 ]
 
-rpcb_register_inet4() and rpcb_register_inet6() store the result of
-rpc_sockaddr2uaddr() into map->r_addr without checking it for NULL.
-rpc_sockaddr2uaddr() returns NULL when its final kstrdup() fails, and
-the unchecked NULL is then carried into the synchronous RPCBPROC_SET
-encode path: rpcb_register_call() -> rpc_call_sync() ->
-rpcb_enc_getaddr() -> encode_rpcb_string(), whose first statement is
-strlen(string), dereferencing NULL and oopsing the kernel.
+xprtsock replaces and restores sk->sk_data_ready and
+sk->sk_write_space on live sockets with plain stores, and
+xs_udp_do_set_buffer_size() invokes sk->sk_write_space via a plain
+load. These callback pointers are shared with generic socket and
+protocol paths that may read or invoke them concurrently, so xprtsock
+needs the same READ_ONCE()/WRITE_ONCE() callback visibility contract
+that the validated 4022 family applied elsewhere.
 
-The crash reproduces under failslab on v6.12; with KASAN the NULL
-dereference surfaces as a fault on the shadow of address zero:
+When SUNRPC takes over an AF_LOCAL, UDP, or TCP socket and later
+restores the lower-socket callbacks during teardown, another CPU may
+still hold an earlier callback snapshot. The plain replace/restore
+pattern leaves the same visibility hole as the validated 4022 family,
+so a stale snapshot can still invoke xs_data_ready() or
+xs_udp_write_space() after the live callback fields have already been
+restored to the lower-socket handlers.
 
- Oops: general protection fault, probably for non-canonical address
-       0xdffffc0000000000 [#1] PREEMPT SMP KASAN
- RIP: 0010:strlen (lib/string.c:409)
- Call Trace:
-  encode_rpcb_string (net/sunrpc/rpcb_clnt.c:890)
-  rpcb_enc_getaddr (net/sunrpc/rpcb_clnt.c:910)
-  rpcauth_wrap_req_encode (net/sunrpc/auth.c:745)
-  call_encode (net/sunrpc/clnt.c:1966)
-  __rpc_execute (net/sunrpc/sched.c:952)
-  rpc_run_task (net/sunrpc/clnt.c:1243)
-  rpc_call_sync (net/sunrpc/clnt.c:1272)
-  rpcb_v4_register (net/sunrpc/rpcb_clnt.c:500)
-  svc_generic_rpcbind_set
-  nfsd_rpcbind_set
-  svc_register
-  svc_setup_socket
-  svc_addsock
-  write_ports
-  nfsctl_transaction_write
-  vfs_write
+Use WRITE_ONCE() for the shared sk_data_ready and sk_write_space
+stores in xs_local_finish_connecting(), xs_udp_finish_connecting(),
+xs_tcp_finish_connecting(), and xs_restore_old_callbacks(). Use
+READ_ONCE() for the direct sk_write_space invocation in
+xs_udp_do_set_buffer_size(). This matches the required callback
+visibility contract while leaving adjacent sk_state_change and
+sk_error_report handling unchanged.
 
-The crash is reachable when an in-kernel RPC service (nfsd, lockd,
-nfs-callback) registers with the local rpcbind under enough memory
-pressure for the small GFP_KERNEL kstrdup() in rpc_sockaddr2uaddr() to
-fail. The asynchronous getport path already handles this exact failure
-mode by returning -ENOMEM; only the two register helpers omit the check.
-
-Mirror that handling: bail out with -ENOMEM when rpc_sockaddr2uaddr()
-returns NULL, before the address is fed into the encoder.
-
-Fixes: d77385f23830 ("SUNRPC: Fix rpc_sockaddr2uaddr")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Fixes: a246b0105bbd ("[PATCH] RPC: introduce client-side transport switch")
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/rpcb_clnt.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/sunrpc/xprtsock.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/net/sunrpc/rpcb_clnt.c b/net/sunrpc/rpcb_clnt.c
-index 53bcca365fb1c..2d74c660de666 100644
---- a/net/sunrpc/rpcb_clnt.c
-+++ b/net/sunrpc/rpcb_clnt.c
-@@ -490,6 +490,8 @@ static int rpcb_register_inet4(struct sunrpc_net *sn,
- 	int result;
+diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
+index a4422cbd32544..2946f6b562fbc 100644
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -1202,9 +1202,9 @@ static void xs_save_old_callbacks(struct sock_xprt *transport, struct sock *sk)
  
- 	map->r_addr = rpc_sockaddr2uaddr(sap, GFP_KERNEL);
-+	if (!map->r_addr)
-+		return -ENOMEM;
+ static void xs_restore_old_callbacks(struct sock_xprt *transport, struct sock *sk)
+ {
+-	sk->sk_data_ready = transport->old_data_ready;
++	WRITE_ONCE(sk->sk_data_ready, transport->old_data_ready);
+ 	sk->sk_state_change = transport->old_state_change;
+-	sk->sk_write_space = transport->old_write_space;
++	WRITE_ONCE(sk->sk_write_space, transport->old_write_space);
+ 	sk->sk_error_report = transport->old_error_report;
+ }
  
- 	msg->rpc_proc = &rpcb_procedures4[RPCBPROC_UNSET];
- 	if (port != 0) {
-@@ -516,6 +518,8 @@ static int rpcb_register_inet6(struct sunrpc_net *sn,
- 	int result;
+@@ -1664,6 +1664,7 @@ static void xs_udp_do_set_buffer_size(struct rpc_xprt *xprt)
+ {
+ 	struct sock_xprt *transport = container_of(xprt, struct sock_xprt, xprt);
+ 	struct sock *sk = transport->inet;
++	void (*write_space)(struct sock *sock);
  
- 	map->r_addr = rpc_sockaddr2uaddr(sap, GFP_KERNEL);
-+	if (!map->r_addr)
-+		return -ENOMEM;
+ 	if (transport->rcvsize) {
+ 		sk->sk_userlocks |= SOCK_RCVBUF_LOCK;
+@@ -1672,7 +1673,8 @@ static void xs_udp_do_set_buffer_size(struct rpc_xprt *xprt)
+ 	if (transport->sndsize) {
+ 		sk->sk_userlocks |= SOCK_SNDBUF_LOCK;
+ 		sk->sk_sndbuf = transport->sndsize * xprt->max_reqs * 2;
+-		sk->sk_write_space(sk);
++		write_space = READ_ONCE(sk->sk_write_space);
++		write_space(sk);
+ 	}
+ }
  
- 	msg->rpc_proc = &rpcb_procedures4[RPCBPROC_UNSET];
- 	if (port != 0) {
+@@ -1988,8 +1990,8 @@ static int xs_local_finish_connecting(struct rpc_xprt *xprt,
+ 		xs_save_old_callbacks(transport, sk);
+ 
+ 		sk->sk_user_data = xprt;
+-		sk->sk_data_ready = xs_data_ready;
+-		sk->sk_write_space = xs_udp_write_space;
++		WRITE_ONCE(sk->sk_data_ready, xs_data_ready);
++		WRITE_ONCE(sk->sk_write_space, xs_udp_write_space);
+ 		sk->sk_state_change = xs_local_state_change;
+ 		sk->sk_error_report = xs_error_report;
+ 		sk->sk_use_task_frag = false;
+@@ -2191,8 +2193,8 @@ static void xs_udp_finish_connecting(struct rpc_xprt *xprt, struct socket *sock)
+ 		xs_save_old_callbacks(transport, sk);
+ 
+ 		sk->sk_user_data = xprt;
+-		sk->sk_data_ready = xs_data_ready;
+-		sk->sk_write_space = xs_udp_write_space;
++		WRITE_ONCE(sk->sk_data_ready, xs_data_ready);
++		WRITE_ONCE(sk->sk_write_space, xs_udp_write_space);
+ 		sk->sk_use_task_frag = false;
+ 
+ 		xprt_set_connected(xprt);
+@@ -2378,9 +2380,9 @@ static int xs_tcp_finish_connecting(struct rpc_xprt *xprt, struct socket *sock)
+ 		xs_save_old_callbacks(transport, sk);
+ 
+ 		sk->sk_user_data = xprt;
+-		sk->sk_data_ready = xs_data_ready;
++		WRITE_ONCE(sk->sk_data_ready, xs_data_ready);
+ 		sk->sk_state_change = xs_tcp_state_change;
+-		sk->sk_write_space = xs_tcp_write_space;
++		WRITE_ONCE(sk->sk_write_space, xs_tcp_write_space);
+ 		sk->sk_error_report = xs_error_report;
+ 		sk->sk_use_task_frag = false;
+ 
 -- 
 2.53.0
 
