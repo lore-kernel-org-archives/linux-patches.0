@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01961DB13A;
-	Sat, 12 Sep 2026 14:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D06D1DB13A;
+	Sat, 12 Sep 2026 14:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223786; cv=none; b=ptdn1e8Hqea3+cZUwyKgYZqmzF8ll4SyaRNJzdSDyiheVtEzMm0rsnHLGm2IORT6uHj4SydNypuHaZaeXpCfrxekMdacDIncdptsbHovwZDCAtphEiRe0STL17jLho5Q8wSUbU2t8dQbalU3IB1/hB1zVfhFpUsTZxABfytSR1k=
+	t=1789223791; cv=none; b=EYEz019iWMGatgcI9gdGtkoxvqvR+T3NYRA9ip0iDkwxJ5e/qN1WtxqBRYOLxJCCTG0ATEOk1+jQZU4asGyZPAQqBOd2PeScE9TX8SzGjpiOnTpgnoidB3hkWF0C0YcpL80tJGQN4MFvLe0Sn1KUoPz8yK9L/aBTmIA9Q6XfUDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223786; c=relaxed/simple;
-	bh=n1MmjD5p8tInMFtiYKTU+Fty3eXrTg11R3O9tJ6hKL4=;
+	s=arc-20240116; t=1789223791; c=relaxed/simple;
+	bh=GfcTkDAMRgeNnA/FpzD5hYoU+FsbDmMggG3RgWsHGto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EjHAo8FeD06f9TvYydfstUrSmMkRFqDrS9dvrzq9gaZHBfswGCsZrwvi/RcuwbgZ/2ZZDUko38u9UF8Tm9/oueOqC0Mr2UQusrhielVP67ADrGm10B+ccJ6rNsXwkWMax3zdjZ4d0llYoKBs+SoX6dFuManT6iVfFMKwSlZq7KA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tdg9qU5y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aOvsPuVLXBS6oHksAVIMiadetUPlsuqyKdgDJyhlIUTmgnHGOvU8PQ4pbz+U0M5vGYLDNT4Jm+58WefRflY2zFxumNtrXp+/ldHYLGLpwrMFm0gSfKr+c+mapWUuoGdWdc0AiiiTWTYEZieNfoygnjTeYXlHgxxGg/WqRXzQQMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KaVlttTx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tdg9qU5y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD081F000FF;
-	Sat, 12 Sep 2026 14:36:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KaVlttTx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE021F000FF;
+	Sat, 12 Sep 2026 14:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223785;
-	bh=XeI+86H9N/Yyr7Xh3IU2L/nLECBeI7f6RQT/OBaI7T0=;
+	s=korg; t=1789223790;
+	bh=OMAtg6l7LmaWHjkAhphVS+EEzhlrjOGjDEQ4tlEYT+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tdg9qU5yqBD3+uwc0ZNWGELbqs2++n9Pw1nac+zB3bCPHA8upHOkQ7oZGJVjfLR44
-	 wm/iKzWOTImnYf4ZIoGSzA8q8G+jvTGUf2EbEdm9rOJO58yN5OVRZGjuawKmP4KuHi
-	 9en3gCfa9k1hi8x364DQcfkWqvga5pTZ2XVv/0Lk=
+	b=KaVlttTxCOwppSV+V67YXLffL+6JQqsJCBDPC7erncwKIzxTqxI763A2UoNTiQcwB
+	 P1uihzquNwxIwihYOAlbrmqiosQKHdZZ9+iM5BBotG2Es9MMYdnmIWVHBn63JbHhQH
+	 Ya0bHM8tz4bbMJy+T4+3g2htfFOAa7vJfs0z4lJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Peng <pengcan@kylinos.cn>,
-	Changhuang Liang <changhuang.liang@starfivetech.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Jun Yan <jerrysteve1101@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0817/1424] phy: starfive: Fix runtime PM cleanup in JH7110 DPHY RX probe
-Date: Sat, 12 Sep 2026 08:54:09 +0200
-Message-ID: <20260912065625.598293829@linuxfoundation.org>
+Subject: [PATCH 6.6 0818/1424] arm64: dts: amlogic: meson-axg-s400: enable mipi_pcie_analog_dphy for PCIe
+Date: Sat, 12 Sep 2026 08:54:10 +0200
+Message-ID: <20260912065625.621971348@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,53 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Can Peng <pengcan@kylinos.cn>
+From: Jun Yan <jerrysteve1101@gmail.com>
 
-[ Upstream commit 97bed336f6a25c9d1115ca95e3aa00e05c3bc271 ]
+[ Upstream commit 7f1d0cc86cb70fa550163b6f70fd1d484c03218e ]
 
-stf_dphy_probe() enables runtime PM before registering the PHY provider.
-If devm_of_phy_provider_register() fails, probe returns with runtime PM
-still enabled.
+The PCIe PHY node references mipi_pcie_analog_dphy via its phys property.
+Enable this analog PHY node to make PCIe functionally viable.
 
-The driver also has no remove callback, so runtime PM is left enabled
-on driver unbind after a successful probe.
-
-Use devm_pm_runtime_enable() so runtime PM is disabled automatically
-on later probe failures and on driver unbind.
-
-Fixes: f8aa660841bc ("phy: starfive: Add mipi dphy rx support")
-Signed-off-by: Can Peng <pengcan@kylinos.cn>
-Reviewed-by: Changhuang Liang <changhuang.liang@starfivetech.com>
-Link: https://patch.msgid.link/20260718090054.444513-3-pengcan@kylinos.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 9715b01da6cf ("arm64: dts: meson-axg-s400: enable PCIe M.2 Key E slots")
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://patch.msgid.link/20260624135650.727077-5-jerrysteve1101@gmail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/starfive/phy-jh7110-dphy-rx.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/amlogic/meson-axg-s400.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/phy/starfive/phy-jh7110-dphy-rx.c b/drivers/phy/starfive/phy-jh7110-dphy-rx.c
-index 037a9e0263cda..6dcd6d4b904f1 100644
---- a/drivers/phy/starfive/phy-jh7110-dphy-rx.c
-+++ b/drivers/phy/starfive/phy-jh7110-dphy-rx.c
-@@ -155,6 +155,7 @@ static int stf_dphy_probe(struct platform_device *pdev)
- {
- 	struct phy_provider *phy_provider;
- 	struct stf_dphy *dphy;
-+	int ret;
+diff --git a/arch/arm64/boot/dts/amlogic/meson-axg-s400.dts b/arch/arm64/boot/dts/amlogic/meson-axg-s400.dts
+index df16eead2c803..50efa48e85a9d 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-axg-s400.dts
++++ b/arch/arm64/boot/dts/amlogic/meson-axg-s400.dts
+@@ -433,6 +433,10 @@ gpio_speaker: gpio-controller@1f {
+ 	};
+ };
  
- 	dphy = devm_kzalloc(&pdev->dev, sizeof(*dphy), GFP_KERNEL);
- 	if (!dphy)
-@@ -195,7 +196,9 @@ static int stf_dphy_probe(struct platform_device *pdev)
- 		return PTR_ERR(dphy->phy);
- 	}
- 
--	pm_runtime_enable(&pdev->dev);
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret)
-+		return ret;
- 
- 	phy_set_drvdata(dphy->phy, dphy);
- 	phy_provider = devm_of_phy_provider_register(&pdev->dev,
++&mipi_pcie_analog_dphy {
++	status = "okay";
++};
++
+ &pdm {
+ 	pinctrl-0 = <&pdm_dclk_a14_pins>, <&pdm_din0_pins>,
+ 		    <&pdm_din1_pins>, <&pdm_din2_pins>, <&pdm_din3_pins>;
 -- 
 2.53.0
 
