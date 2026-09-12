@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDE837CD3E;
-	Sat, 12 Sep 2026 19:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD653382CB;
+	Sat, 12 Sep 2026 19:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242272; cv=none; b=mFwvO35gVNT6Op9xPq8t2Zl2HIo1jOKxSGetwm9dTHof+ONhB/tzgFKaKg/d3K5H+9kWDagZ8f/mJy7iiYKCUdrq5yufsaoFyaZVR/vs/yWAuef7inMA+gI4OA+eEyAs3SdBUYCmJQkkJ4W9vT7zyxp4/E3OSuV8zWDv6sKxElM=
+	t=1789242275; cv=none; b=Ug+3Ei0vaspWscXN6iuOw/qqsMVktdk2LJ3hDcVMSz+ATA0NGQbNdt5Sq8LwAxJlCeMOq3+cgpo7/EQtAqwb3MULwhJ3N3IcKtAW3VYBNSfCK/aAWIY1u1/8wkW30gbZso/BuOdp7wIx9Fr0AeMnRVYnx32uuVGuRel+dvJ6kyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242272; c=relaxed/simple;
-	bh=f086I75VVLFzA4hNXtwZXwS7zsqfHqccreWSHE13jUE=;
+	s=arc-20240116; t=1789242275; c=relaxed/simple;
+	bh=eX/shf6KJMyxHvQU9SbrV15ImO0CQas/H1XZro/iX2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J9gJ6pOLojykh82PgP2oPjU7ilg6tL/AsHXSrH6XjL1deQu6BvNw8WYW8Ph6DmUdSoBZmJO9WPKWh+D3RZA1gmYljo8uFKeaquluT7N+W43SzR17gTlUDe2tLOHzUs24y5I7jheaFdkRzYmrlfLTZHoosvIK30nGujqrcfp2xj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xut9ADDT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IZUrxDu0WfxrDxWwVy3f+XnmrHLhDl2NTrWt6JLEeznpxr/Dpc4m9rFuqQlJJ2mVJFHmlsd+lWCrmbMyjeDe3MVwRCuoh4fV/gCdvM/959jVl2QuhsVYs6ueyleXnBkNaqO8PZhbsq9zyPUNnZRrV61nMOxGSLTPctMsc+mrTTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Guggvp5K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xut9ADDT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E661F000FF;
-	Sat, 12 Sep 2026 19:44:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Guggvp5K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9DC01F000FF;
+	Sat, 12 Sep 2026 19:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242271;
-	bh=qzE9ajVyhZ3aAIPa062fzOU/BU8thd9mX8L7ij7t9kM=;
+	s=korg; t=1789242274;
+	bh=RQh49sY30/lb0L2knQuIbmYFwy3gYpXp8DBK1qGZ/qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xut9ADDTS1axQk7HncSJtNStjQ28A6b3J8k/hwBtXLevHOWZrsv7X+fyt5vGA60yW
-	 o9yj655tVOAjfbJM1HHC0GyMoyjPO2kLI7nqYBiTejZKh1LKWic35Oyf9q9a3okHHM
-	 Q2OVZWrH3TYJoRCtxrRFGLF6SVr6bv+px3REwGL0=
+	b=Guggvp5KzZKmQodBwMXJojrRsUfyl3Lxbo0Rbf6iPRxsTALyktQk/1m7u+4TjLm3B
+	 7f3dP7qrTD91OgChXIdu8xqqyeFSjkqN9ZdTc0P6SpUh+QiIPmHGjhoM6yoHbOfM87
+	 W9Gna06dA++67FjzlHKk31cFQUBra7IPPDoazPiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weigang He <geoffreyhe2@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Anson Huang <Anson.Huang@nxp.com>,
+	Dong Aisheng <aisheng.dong@nxp.com>,
+	Abel Vesa <abel.vesa@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 347/798] ARM: imx: fix device_node refcount leak in imx_src_init()
-Date: Sat, 12 Sep 2026 08:59:35 +0200
-Message-ID: <20260912065525.114464423@linuxfoundation.org>
+Subject: [PATCH 5.10 348/798] clk: imx: scu: Add A53 frequency scaling support
+Date: Sat, 12 Sep 2026 08:59:36 +0200
+Message-ID: <20260912065525.136355521@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,43 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Anson Huang <Anson.Huang@nxp.com>
 
-[ Upstream commit 936407c3563ac745cbbb9953c0cf2472128a22f4 ]
+[ Upstream commit cd8bd2f3ca64cac701084a5b3fc21e721bb15278 ]
 
-imx_src_init() obtains a device_node reference via
-of_find_compatible_node() matching "fsl,imx51-src" and uses it only to
-call of_iomap(). It never releases that reference: on the success path
-the function returns at the end without of_node_put(np), leaking one
-device_node refcount on every boot of an i.MX5/6 platform.
+Add i.MX8QM cpufreq support for A53 cluster.
 
-Release the reference right after of_iomap(). of_iomap() maps the
-node's registers but does not retain a reference to the device_node, so
-the node can be put once the mapping is done. The early return on a NULL
-np needs no put.
-
-Found by static analysis tool CodeQL.
-
-Fixes: bd3d924d71a4 ("ARM i.MX5: Add System Reset Controller (SRC) support for i.MX51 and i.MX53")
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Anson Huang <Anson.Huang@nxp.com>
+Signed-off-by: Dong Aisheng <aisheng.dong@nxp.com>
+Reviewed-by: Abel Vesa <abel.vesa@nxp.com>
+Signed-off-by: Abel Vesa <abel.vesa@nxp.com>
+Stable-dep-of: 5f2db1ce2012 ("clk: imx: scu: drop redundant init.ops variable assignment")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-imx/src.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/imx/clk-scu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-imx/src.c b/arch/arm/mach-imx/src.c
-index f52f371292ac3..8501cea165bde 100644
---- a/arch/arm/mach-imx/src.c
-+++ b/arch/arm/mach-imx/src.c
-@@ -115,6 +115,7 @@ void __init imx_src_init(void)
- 	if (!np)
- 		return;
- 	src_base = of_iomap(np, 0);
-+	of_node_put(np);
- 	WARN_ON(!src_base);
+diff --git a/drivers/clk/imx/clk-scu.c b/drivers/clk/imx/clk-scu.c
+index b8b2072742a56..a48abf788ec87 100644
+--- a/drivers/clk/imx/clk-scu.c
++++ b/drivers/clk/imx/clk-scu.c
+@@ -192,7 +192,7 @@ static int clk_scu_atf_set_cpu_rate(struct clk_hw *hw, unsigned long rate,
+ 	struct arm_smccc_res res;
+ 	unsigned long cluster_id;
  
- 	imx_reset_controller.of_node = np;
+-	if (clk->rsrc_id == IMX_SC_R_A35)
++	if (clk->rsrc_id == IMX_SC_R_A35 || clk->rsrc_id == IMX_SC_R_A53)
+ 		cluster_id = 0;
+ 	else
+ 		return -EINVAL;
+@@ -361,7 +361,7 @@ struct clk_hw *__imx_clk_scu(const char *name, const char * const *parents,
+ 
+ 	init.name = name;
+ 	init.ops = &clk_scu_ops;
+-	if (rsrc_id == IMX_SC_R_A35)
++	if (rsrc_id == IMX_SC_R_A35 || rsrc_id == IMX_SC_R_A53)
+ 		init.ops = &clk_scu_cpu_ops;
+ 	else
+ 		init.ops = &clk_scu_ops;
 -- 
 2.53.0
 
