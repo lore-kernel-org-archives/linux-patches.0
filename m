@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B546338D6A2;
-	Sat, 12 Sep 2026 08:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A7883B774D;
+	Sat, 12 Sep 2026 08:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200654; cv=none; b=P4IpDHMbG0hMX7DB2JmjgAYesRpoeeChUMfURe6zGF0xvE64MriMX7oqLQehrBTgbF2c0ZG1lXERHCRhYPJbMBdYPfNlAIJ90/3T+e4TSfFiyBNv4CbmhwosLfXTNo3gnZpTf3wXl65ws3Xou5yA+NljW+ii+Szs9QtyZUiCDp0=
+	t=1789200658; cv=none; b=j21DEljj0Q1f9a4M+NjlftXz0l1JQOk2u08mIcQvLh5t7U/jqHuP/Y1f3cJgN4PKxISil1wM9dh8T7GOAEhd1pc8BQ0vuS/a45bgIrXldC3aZCgaRYkrg81eSM+OvXI1S8paXig2y4b2+pwNVoI9oAusGUXeLPX4Til+n6zXPjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200654; c=relaxed/simple;
-	bh=Z8uYA4t3BHYoV+wUSmeEV66BEVPoPp8ba80Ch6UlK74=;
+	s=arc-20240116; t=1789200658; c=relaxed/simple;
+	bh=LZtqxDxiMT15FdPtaztWDtC2La0DnoP+7lVDHz+XnQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZcJ8zYv2UHXvgA1ID+I6NwO43lgo2mBbuf4r31q9buNFo9927Uk8UGJUGayy9FWDHGLwduvJs/lTcrYxY3ss1Lg55aa3TP4Mp3iTySRZbPteEzIUhFhhUo2U34H5lBWiUKl47VTOFVLzvnAESLvojs5rg26l35k2FuGEuwHBpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WllU7mht; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lKlohnzeTlafl5CfvNenPuT6DzXtnerPYlgI85hjG4Ul1rrWBL8svcjRnmrDCN4Q3Gz2Odi4KXsRSfp58Fk5bhuqJSPxW7i+x9GVfUzgwREq1eIO/fSt6WXGoXxNmREi8P0Fsr06watvQKK+8oAypE6pUIY3HmwrddibLTW2bCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0kBRxtK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WllU7mht"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA0191F000FF;
-	Sat, 12 Sep 2026 08:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0kBRxtK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7791F000FF;
+	Sat, 12 Sep 2026 08:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200652;
-	bh=ZEYWrkK1Xd5g1/W6k1RkUoGEKr+jv3cu+sfqJ/u/gdA=;
+	s=korg; t=1789200657;
+	bh=i83mWGf+xSDg21XrnzhV2Uns1Qhcb8/dZ8eICzz1RxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WllU7mhtHIlDQ488iHqp1U3WeMwcZFfjH9rvJDycWw7p7PAi79YgLYqmmhmdAfp3P
-	 SwwrUTwqgcMEwL/94QyjmBtMC6YrXYtAv5gxCYD9RQlej3Pv5X3PXLpDwqbyg/E9bK
-	 6qpybhNzt6ptyyFFR9Oe3t3MjStsb/SW9y9fQ4I0=
+	b=y0kBRxtKfY8jJgUcPtPivMJEPWYO2dIo/9idj4edtlsfvPExpnzVzlhx5o84QuhAL
+	 OhMsFO1mn/DbC/8q/sURQXUIUsbzBBQGw+wVC0ZAZ7mElo2qMmOw6tllv8QqXceSp4
+	 JQJtXm+hMoZLhgHK4cLJ7TLvV13kcx5WuJvIIvmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Imran Shaik <imran.shaik@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0835/1815] clk: qcom: gpucc-qcm2290: Move to the latest common qcom_cc_probe() model
-Date: Sat, 12 Sep 2026 08:43:05 +0200
-Message-ID: <20260912065708.516451284@linuxfoundation.org>
+Subject: [PATCH 7.2 0836/1815] clk: qcom: gpucc-qcm2290: Keep the critical clocks always-on from probe
+Date: Sat, 12 Sep 2026 08:43:06 +0200
+Message-ID: <20260912065708.539181211@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,131 +55,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Imran Shaik <imran.shaik@oss.qualcomm.com>
 
-[ Upstream commit 1b4599bc20e98d61c274b3449ca392b8e2b07b4a ]
+[ Upstream commit 7274ea68d2b4be491de0ece45fdce709cfde3154 ]
 
-Update the QCM2290 GPUCC driver to use the qcom_cc_probe() model by moving
-the critical clocks handling and PLL configurations from probe to the
-driver_data to align with the latest convention.
+Drop modelling of gpu_cc_ahb_clk and keep it always enabled from probe
+similar to other critical clocks, since marking it as CLK_IS_CRITICAL
+causes the clock framework to invoke clk_pm_runtime_get() during prepare,
+which prevents the associated power domains from collapsing.
 
+Fixes: 8cab033628b1 ("clk: qcom: Add QCM2290 GPU clock controller driver")
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260718-shikra-dispcc-gpucc-v6-9-62703e05ef0f@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260718-shikra-dispcc-gpucc-v6-10-62703e05ef0f@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 7274ea68d2b4 ("clk: qcom: gpucc-qcm2290: Keep the critical clocks always-on from probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gpucc-qcm2290.c | 50 +++++++++++++-------------------
- 1 file changed, 20 insertions(+), 30 deletions(-)
+ drivers/clk/qcom/gpucc-qcm2290.c | 16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
 diff --git a/drivers/clk/qcom/gpucc-qcm2290.c b/drivers/clk/qcom/gpucc-qcm2290.c
-index f14b4620090ef..b19e8910931d8 100644
+index b19e8910931d8..78797b77d7c7b 100644
 --- a/drivers/clk/qcom/gpucc-qcm2290.c
 +++ b/drivers/clk/qcom/gpucc-qcm2290.c
-@@ -2,12 +2,12 @@
- /*
-  * Copyright (c) 2020, The Linux Foundation. All rights reserved.
-  * Copyright (c) 2024, Linaro Limited
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- 
- #include <linux/clk-provider.h>
- #include <linux/module.h>
- #include <linux/platform_device.h>
--#include <linux/pm_runtime.h>
- #include <linux/regmap.h>
- 
- #include <dt-bindings/clock/qcom,qcm2290-gpucc.h>
-@@ -19,6 +19,7 @@
- #include "clk-regmap-divider.h"
- #include "clk-regmap-mux.h"
- #include "clk-regmap-phy-mux.h"
-+#include "common.h"
- #include "gdsc.h"
- #include "reset.h"
- 
-@@ -55,6 +56,7 @@ static const struct alpha_pll_config gpu_cc_pll0_config = {
- 
- static struct clk_alpha_pll gpu_cc_pll0 = {
- 	.offset = 0x0,
-+	.config = &gpu_cc_pll0_config,
- 	.vco_table = huayra_vco,
- 	.num_vco = ARRAY_SIZE(huayra_vco),
- 	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_HUAYRA_2290],
-@@ -346,6 +348,14 @@ static struct gdsc *gpu_cc_qcm2290_gdscs[] = {
- 	[GPU_GX_GDSC] = &gpu_gx_gdsc,
+@@ -148,20 +148,6 @@ static struct clk_rcg2 gpu_cc_gx_gfx3d_clk_src = {
+ 	},
  };
  
-+static struct clk_alpha_pll *gpu_cc_qcm2290_plls[] = {
-+	&gpu_cc_pll0,
-+};
-+
-+static const u32 gpu_cc_qcm2290_critical_cbcrs[] = {
-+	0x1060, /* GPU_CC_GX_CXO_CLK */
-+};
-+
- static const struct regmap_config gpu_cc_qcm2290_regmap_config = {
- 	.reg_bits = 32,
- 	.reg_stride = 4,
-@@ -354,6 +364,12 @@ static const struct regmap_config gpu_cc_qcm2290_regmap_config = {
- 	.fast_io = true,
+-static struct clk_branch gpu_cc_ahb_clk = {
+-	.halt_reg = 0x1078,
+-	.halt_check = BRANCH_HALT_DELAY,
+-	.clkr = {
+-		.enable_reg = 0x1078,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "gpu_cc_ahb_clk",
+-			.flags = CLK_IS_CRITICAL,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+ static struct clk_branch gpu_cc_crc_ahb_clk = {
+ 	.halt_reg = 0x107c,
+ 	.halt_check = BRANCH_HALT_DELAY,
+@@ -324,7 +310,6 @@ static struct gdsc gpu_gx_gdsc = {
  };
  
-+static const struct qcom_cc_driver_data gpu_cc_qcm2290_driver_data = {
-+	.alpha_plls = gpu_cc_qcm2290_plls,
-+	.num_alpha_plls = ARRAY_SIZE(gpu_cc_qcm2290_plls),
-+	.clk_cbcrs = gpu_cc_qcm2290_critical_cbcrs,
-+	.num_clk_cbcrs = ARRAY_SIZE(gpu_cc_qcm2290_critical_cbcrs),
-+};
- 
- static const struct qcom_cc_desc gpu_cc_qcm2290_desc = {
- 	.config = &gpu_cc_qcm2290_regmap_config,
-@@ -363,6 +379,8 @@ static const struct qcom_cc_desc gpu_cc_qcm2290_desc = {
- 	.num_resets = ARRAY_SIZE(gpu_cc_qcm2290_resets),
- 	.gdscs = gpu_cc_qcm2290_gdscs,
- 	.num_gdscs = ARRAY_SIZE(gpu_cc_qcm2290_gdscs),
-+	.use_rpm = true,
-+	.driver_data = &gpu_cc_qcm2290_driver_data,
+ static struct clk_regmap *gpu_cc_qcm2290_clocks[] = {
+-	[GPU_CC_AHB_CLK] = &gpu_cc_ahb_clk.clkr,
+ 	[GPU_CC_CRC_AHB_CLK] = &gpu_cc_crc_ahb_clk.clkr,
+ 	[GPU_CC_CX_GFX3D_CLK] = &gpu_cc_cx_gfx3d_clk.clkr,
+ 	[GPU_CC_CX_GMU_CLK] = &gpu_cc_cx_gmu_clk.clkr,
+@@ -353,6 +338,7 @@ static struct clk_alpha_pll *gpu_cc_qcm2290_plls[] = {
  };
  
- static const struct of_device_id gpu_cc_qcm2290_match_table[] = {
-@@ -373,35 +391,7 @@ MODULE_DEVICE_TABLE(of, gpu_cc_qcm2290_match_table);
+ static const u32 gpu_cc_qcm2290_critical_cbcrs[] = {
++	0x1078, /* GPU_CC_AHB_CLK */
+ 	0x1060, /* GPU_CC_GX_CXO_CLK */
+ };
  
- static int gpu_cc_qcm2290_probe(struct platform_device *pdev)
- {
--	struct regmap *regmap;
--	int ret;
--
--	regmap = qcom_cc_map(pdev, &gpu_cc_qcm2290_desc);
--	if (IS_ERR(regmap))
--		return PTR_ERR(regmap);
--
--	ret = devm_pm_runtime_enable(&pdev->dev);
--	if (ret)
--		return ret;
--
--	ret = pm_runtime_resume_and_get(&pdev->dev);
--	if (ret)
--		return ret;
--
--	clk_huayra_2290_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
--
--	regmap_update_bits(regmap, 0x1060, BIT(0), BIT(0)); /* GPU_CC_GX_CXO_CLK */
--
--	ret = qcom_cc_really_probe(&pdev->dev, &gpu_cc_qcm2290_desc, regmap);
--	if (ret) {
--		dev_err(&pdev->dev, "Failed to register display clock controller\n");
--		goto out_pm_runtime_put;
--	}
--
--out_pm_runtime_put:
--	pm_runtime_put_sync(&pdev->dev);
--
--	return 0;
-+	return qcom_cc_probe(pdev, &gpu_cc_qcm2290_desc);
- }
- 
- static struct platform_driver gpu_cc_qcm2290_driver = {
 -- 
 2.53.0
 
