@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7813451CF;
-	Sat, 12 Sep 2026 14:36:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01961DB13A;
+	Sat, 12 Sep 2026 14:36:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223783; cv=none; b=tHMGUvZq02zLrQwRCpqBcr8z0xsTRKcs6H0uqDUL2HZXAIkxBu028KdiLJT+jeslSp/M5lHRXFVAomwcUfsqFFexJHFmoESQpAeB4yI9dkzhhDLWm0EIbmckdW6eDWQNvkAsPYtVoLD6KDcm9bSyulK55teA7bow1iCSWvyoyJk=
+	t=1789223786; cv=none; b=ptdn1e8Hqea3+cZUwyKgYZqmzF8ll4SyaRNJzdSDyiheVtEzMm0rsnHLGm2IORT6uHj4SydNypuHaZaeXpCfrxekMdacDIncdptsbHovwZDCAtphEiRe0STL17jLho5Q8wSUbU2t8dQbalU3IB1/hB1zVfhFpUsTZxABfytSR1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223783; c=relaxed/simple;
-	bh=kFBy60Yc/VBG2GCyQGw5/yZ6mad+bT+XMFT5erK2yZg=;
+	s=arc-20240116; t=1789223786; c=relaxed/simple;
+	bh=n1MmjD5p8tInMFtiYKTU+Fty3eXrTg11R3O9tJ6hKL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rlHfBHYjdFBHNhA4zX6XgQ1Etn/Ewxi0wPbN1Aw9qyug5ZB9Dy46Knuom2KOcH2aBovsu/evtHsATHVb74dRMt4Q2mMRhGWnPIVjEDekes1T+HjEKyO6D7vkBiLJjYCFW6TV0U6m2SECvdFNNnGgbKTp+tJENoCbAZM6MLZ/H7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MglCnSHq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EjHAo8FeD06f9TvYydfstUrSmMkRFqDrS9dvrzq9gaZHBfswGCsZrwvi/RcuwbgZ/2ZZDUko38u9UF8Tm9/oueOqC0Mr2UQusrhielVP67ADrGm10B+ccJ6rNsXwkWMax3zdjZ4d0llYoKBs+SoX6dFuManT6iVfFMKwSlZq7KA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tdg9qU5y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MglCnSHq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F36851F000FF;
-	Sat, 12 Sep 2026 14:36:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tdg9qU5y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD081F000FF;
+	Sat, 12 Sep 2026 14:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223780;
-	bh=mnvp1SsNkpdzixR64+vAdvODXy4nTmLN+jgTEjQC1zs=;
+	s=korg; t=1789223785;
+	bh=XeI+86H9N/Yyr7Xh3IU2L/nLECBeI7f6RQT/OBaI7T0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MglCnSHqRT8rEnq+1xAQ4bLXuAmUlwO4JMibAd+M8XQEmb1hVJWpWH5injwcdh1ma
-	 2rYLE6sVPbLs6gDr1DXEAtZxRcno0JCHPmioBU2wrlixBB/1hmFpo/ye16UW63Lfig
-	 XEPTt45sYdnE0AkTjIwBLb/dW+yu2IwUHlZd3obo=
+	b=Tdg9qU5yqBD3+uwc0ZNWGELbqs2++n9Pw1nac+zB3bCPHA8upHOkQ7oZGJVjfLR44
+	 wm/iKzWOTImnYf4ZIoGSzA8q8G+jvTGUf2EbEdm9rOJO58yN5OVRZGjuawKmP4KuHi
+	 9en3gCfa9k1hi8x364DQcfkWqvga5pTZ2XVv/0Lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Can Peng <pengcan@kylinos.cn>,
+	Changhuang Liang <changhuang.liang@starfivetech.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0857/1424] wifi: ath12k: Avoid buffer overread in ath12k_wmi_op_rx()
-Date: Sat, 12 Sep 2026 08:54:49 +0200
-Message-ID: <20260912065626.508553955@linuxfoundation.org>
+Subject: [PATCH 6.6 0817/1424] phy: starfive: Fix runtime PM cleanup in JH7110 DPHY RX probe
+Date: Sat, 12 Sep 2026 08:54:09 +0200
+Message-ID: <20260912065625.598293829@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,51 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit 7698656a2f7b045af5a6859766238cefea1b1945 ]
+[ Upstream commit 97bed336f6a25c9d1115ca95e3aa00e05c3bc271 ]
 
-Currently, in ath12k_wmi_op_rx(), the firmware buffer is read without
-first verifying that the buffer has enough data to hold a header. This
-could result in a buffer overread.
+stf_dphy_probe() enables runtime PM before registering the PHY provider.
+If devm_of_phy_provider_register() fails, probe returns with runtime PM
+still enabled.
 
-Update the logic to verify the buffer contains at least enough data to
-hold a wmi_cmd_hdr before reading from the buffer.
+The driver also has no remove callback, so runtime PM is left enabled
+on driver unbind after a successful probe.
 
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
+Use devm_pm_runtime_enable() so runtime PM is disabled automatically
+on later probe failures and on driver unbind.
 
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Assisted-by: Claude:claude-sonnet-4-6
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260716-ath12k_wmi_op_rx-overread-v1-1-327a4b1c2372@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: f8aa660841bc ("phy: starfive: Add mipi dphy rx support")
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Reviewed-by: Changhuang Liang <changhuang.liang@starfivetech.com>
+Link: https://patch.msgid.link/20260718090054.444513-3-pengcan@kylinos.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/phy/starfive/phy-jh7110-dphy-rx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 6b82e1a7f2881..5b5001314d5ec 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -6652,12 +6652,12 @@ static void ath12k_wmi_op_rx(struct ath12k_base *ab, struct sk_buff *skb)
- 	struct wmi_cmd_hdr *cmd_hdr;
- 	enum wmi_tlv_event_id id;
+diff --git a/drivers/phy/starfive/phy-jh7110-dphy-rx.c b/drivers/phy/starfive/phy-jh7110-dphy-rx.c
+index 037a9e0263cda..6dcd6d4b904f1 100644
+--- a/drivers/phy/starfive/phy-jh7110-dphy-rx.c
++++ b/drivers/phy/starfive/phy-jh7110-dphy-rx.c
+@@ -155,6 +155,7 @@ static int stf_dphy_probe(struct platform_device *pdev)
+ {
+ 	struct phy_provider *phy_provider;
+ 	struct stf_dphy *dphy;
++	int ret;
  
--	cmd_hdr = (struct wmi_cmd_hdr *)skb->data;
--	id = le32_get_bits(cmd_hdr->cmd_id, WMI_CMD_HDR_CMD_ID);
--
--	if (!skb_pull(skb, sizeof(struct wmi_cmd_hdr)))
-+	cmd_hdr = skb_pull_data(skb, sizeof(*cmd_hdr));
-+	if (!cmd_hdr)
- 		goto out;
+ 	dphy = devm_kzalloc(&pdev->dev, sizeof(*dphy), GFP_KERNEL);
+ 	if (!dphy)
+@@ -195,7 +196,9 @@ static int stf_dphy_probe(struct platform_device *pdev)
+ 		return PTR_ERR(dphy->phy);
+ 	}
  
-+	id = le32_get_bits(cmd_hdr->cmd_id, WMI_CMD_HDR_CMD_ID);
-+
- 	switch (id) {
- 		/* Process all the WMI events here */
- 	case WMI_SERVICE_READY_EVENTID:
+-	pm_runtime_enable(&pdev->dev);
++	ret = devm_pm_runtime_enable(&pdev->dev);
++	if (ret)
++		return ret;
+ 
+ 	phy_set_drvdata(dphy->phy, dphy);
+ 	phy_provider = devm_of_phy_provider_register(&pdev->dev,
 -- 
 2.53.0
 
