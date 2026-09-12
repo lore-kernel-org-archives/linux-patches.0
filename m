@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE7833AD88;
-	Sat, 12 Sep 2026 09:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1352D33AD88;
+	Sat, 12 Sep 2026 09:21:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204877; cv=none; b=r6xGlKXsNVwOHR2y2Rtnk/yyapjGZXwoPkHB2+eC+LE7uucx/2ZIH3s7YlTm71OUZ50/yLQzWmZlvSTQt8WqQgQ00zzH7/T0+anQJcgpS4vxhCXT3aCDA/U7G3k6cMBNM5T9lEcw9f0FXgfYyeb8mluUiC0UJnRuqWCEexGCZ+s=
+	t=1789204882; cv=none; b=KJB9UwMyFXsJzOb+DLBYKqB0JGURYOeT/RPrXrSvu7+iLCbVTjuUTpt1obDIBvP2VucyMZ4298Ap2mp6Nd9jz6RHK5F9/48nrTMFmHeH7VVZKeFqE8GflY8tLWJMJWMNXmHpGvrNooLX78nXq8C6rIoVNfKNiL/Q+cqZWzE0cS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204877; c=relaxed/simple;
-	bh=PbT2N1u5mmE0+vLzdFdAsZgbVlwb5xAlFJoCy8W1FFY=;
+	s=arc-20240116; t=1789204882; c=relaxed/simple;
+	bh=E9VKBdsvGveRKMJMsFRxmgcUH8GPPByKV1KLXNiivC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uHJnerKD51TqPB4TOXX7Ba+Jw2UVqWO2rgHMstS2GzoknDDgMrBNLKVzyUWLIV+zmuadlukaTWedhTCiCNlt2DxibToDafYJKHIPBT6ax+s2/vwVdVAfFsZHB7BX+0MKmgsjSogbswgRI+Ksxxrsg60YVN2FX5SZoz8RGkkDzCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZ/k93hq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PX4ADjHiNKboTTWFnHkh+di+OWa00PICqZpr/fPFDoxxiRSmZkKd/ArxRS23yFe73R7qn90EhUp45wAlbcObq5RrIYc1AKb0RO2/zShqFuMTtQZottMeQDwMs2cXEVedHcRmI6t2jXUflPbT+kwRg+pFOTBkkQjyqRwQVEpkn3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FgYbZWF0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZ/k93hq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30C01F000FF;
-	Sat, 12 Sep 2026 09:21:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FgYbZWF0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A529B1F00893;
+	Sat, 12 Sep 2026 09:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204875;
-	bh=oDSB5q13QHmejUDePZ4Pps23ANNYjPJHdvDsV0iRkX8=;
+	s=korg; t=1789204881;
+	bh=prGElH5R+KOEv9NY8qWggqh1STKDM0uUXretdqK/AoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QZ/k93hqaGAWXX0qDMgnPo5LJ7b9mDoDt6Udygf1Ws6JYy9J2TBbOhio0+TLoeOil
-	 yVArCszmMXuuULhInZCsOFO3vf3QaXma5PLv17Ie1zQvZVLI2vsLOiascDeU0WKcHN
-	 Z+UB7WQg3psHN5G8jrboqC1iPxjWvfnqbiQJFJTI=
+	b=FgYbZWF0OBcUWPcKgBiZPiioLoHlRy7uYZjORS1HocBuL4IcqnNON/ClBq0QSiMMI
+	 vaUiT5GdHU3Ut+4krUGCRLCkbLP/oAPO1nYSb2gJ8ohWS0FfQ2yGC9LQjcF0cU7N/I
+	 c5K6jIwBQ9EQzzC/x0Vf6Pjjrq87yAjgshXj0DMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
+	Giuseppe Piscitelli <ooonea@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1704/1815] net: hibmcge: fix page_pool DMA direction mismatch
-Date: Sat, 12 Sep 2026 08:57:34 +0200
-Message-ID: <20260912065728.981774081@linuxfoundation.org>
+Subject: [PATCH 7.2 1705/1815] net/sched: sch_cake: fix autorate reconfiguration throttling
+Date: Sat, 12 Sep 2026 08:57:35 +0200
+Message-ID: <20260912065729.006154285@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,51 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Giuseppe Piscitelli <ooonea@gmail.com>
 
-[ Upstream commit 11efd7963dac9b036a7c9a435ab0e621188910e8 ]
+[ Upstream commit 7cbfb180945ce529608e4d4e24a6d483699fab1e ]
 
-The driver memsets the RX buffer page head to zero before
-submitting it to hardware, then calls dma_sync_single_for_device()
-with DMA_TO_DEVICE.  This sync direction does not match the pool
-dma_dir which is DMA_FROM_DEVICE, violating the DMA API contract
-that the sync direction must match the mapping direction.
+CAKE's autorate-ingress path intends to limit shaper reconfiguration to
+once per 250 ms, but last_reconfig_time is only checked and never updated.
+Since the field stays zero, every qualifying capacity-estimate window can
+call cake_reconfigure(), causing avoidable rate churn and scheduler work
+under bursty traffic.
 
-On swiotlb platforms the mismatch can cause incorrect bounce-buffer
-behaviour, and CONFIG_DMA_API_DEBUG emits a warning.
+Store the current timestamp when autorate actually reconfigures the qdisc
+so the guard enforces the intended interval.
 
-Switch the page_pool dma_dir to DMA_BIDIRECTIONAL so that the
-CPU-to-device memset sync becomes legal.
-
-Fixes: c30595917585 ("net: hibmcge: add support for pagepool on rx")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://patch.msgid.link/20260820124346.4097115-1-shaojijie@huawei.com
+Fixes: 7298de9cd725 ("sch_cake: Add ingress mode")
+Signed-off-by: Giuseppe Piscitelli <ooonea@gmail.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/20260820154503.892214-1-ooonea@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hibmcge/hbg_txrx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_cake.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hibmcge/hbg_txrx.c b/drivers/net/ethernet/hisilicon/hibmcge/hbg_txrx.c
-index 0ae3149946769..3e6ae2aa0d4b4 100644
---- a/drivers/net/ethernet/hisilicon/hibmcge/hbg_txrx.c
-+++ b/drivers/net/ethernet/hisilicon/hibmcge/hbg_txrx.c
-@@ -553,7 +553,7 @@ static int hbg_ring_page_pool_init(struct hbg_priv *priv, struct hbg_ring *ring)
- 		.nid = dev_to_node(&priv->pdev->dev),
- 		.dev = &priv->pdev->dev,
- 		.napi = &ring->napi,
--		.dma_dir = DMA_FROM_DEVICE,
-+		.dma_dir = DMA_BIDIRECTIONAL,
- 		.offset = 0,
- 		.max_len = hbg_get_page_size(ring),
- 	};
+diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
+index f25f60978631a..dc93267029e70 100644
+--- a/net/sched/sch_cake.c
++++ b/net/sched/sch_cake.c
+@@ -1907,6 +1907,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 					ktime_add_ms(q->last_reconfig_time,
+ 						     250))) {
+ 				q->config->rate_bps = (q->avg_peak_bandwidth * 15) >> 4;
++				q->last_reconfig_time = now;
+ 				cake_reconfigure(sch);
+ 			}
+ 		}
 -- 
 2.53.0
 
