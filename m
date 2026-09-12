@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD8738AC92;
-	Sat, 12 Sep 2026 10:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356B537267E;
+	Sat, 12 Sep 2026 10:00:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207241; cv=none; b=TrJlUABauQ464mmjq9CDna8QtbBeZEeSM9I/u8fJbNCryAx5fDQyCDmvDac/ZVKwfmC+XHURvO05WNhGTxGSFoGyo/DR3u5VgLvvKYHLunlId3bMX3Kr7wgPqzEwBL36UdCZk4UAfIMwxF1vOR4MJB1WRZ/3rfDpQpR67Jnc/44=
+	t=1789207247; cv=none; b=FHs+i2qBIbMjIEsHMIsOOxJsekz1Pqp9Udy2ZLYaiWIKfEDNxQi7Ou0hWg3xsdTtM7bif20pDDt5sbAIsyeFNpPyMwpZ9BzNPvbkMvlX685kxTqjmmLEHqpXb7AwkEjuTnOT1hItFdxbJq3nsE/uMees9m4hIRDHN0EJsB4uNDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207241; c=relaxed/simple;
-	bh=hYd5GTxS2IBNtMkrVRDbFcAwkUxfjJhsrvloezrVeNU=;
+	s=arc-20240116; t=1789207247; c=relaxed/simple;
+	bh=obqWiLqYDGKMSd3N/KqMPBQt3Jz5OL7PdAc3uzfts/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V43WTC6FBECuzarD5bQixHjfkzqGb5JEwLnQmm6YZU6DxZE/q7JacQTpq2Vr00qmYi5AUJHoeYTmZz6purVD+5jdcZHmVtpp6APm6WekJRagV/0mmVVRv0ECt86c+qVsDz6wruLvv6yHWm+iLcOPuNzOVFlCkVB5RKrHbZ0beuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c17BDawB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lwbkhRnQnHRkPdqByScF0P4QzmUtRicCyNH/PA0wQ0NeDgQ8bWWs/O5MfAeZ1KPMas9qfcJXm0/IKUN+R/xJRyCMvGxRbjZsl5aND4JHOjRj6XyC5pFsxZIz7F+aGgVN+dER7EkEg8tHuelewB36J25D/Fn/ilzKMZS3qnP8sTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjFxqTzp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c17BDawB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178271F000FF;
-	Sat, 12 Sep 2026 10:00:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjFxqTzp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974C91F000FF;
+	Sat, 12 Sep 2026 10:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207240;
-	bh=5bF15fzoEsdUG3wJtEuN87DL3WLBjoMV91qfaIAmfIQ=;
+	s=korg; t=1789207245;
+	bh=uO0zBRRpOj/bhUudfW+WRq1aKUIqcz+DpmywUJEgjXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c17BDawBiDqfVy5OnojwT4fi9bImSwjWi5YrG13C7sJscj2zYBBtTC5tCpdXRB7zE
-	 2oNLjsCn2FycnONDkOsn7Gkj75utdJ7W8Eb89Muo/LdRg21jeuAWOZZrGDPJDMKQc7
-	 r5yU/wap4K+OZ85uGMxMpqlgGd+6n45iwxbbMKXo=
+	b=xjFxqTzp+ABoYw1LYICPibjzJSAQTwILrx2AWHAmhWMZbyz/blt4VrOPrXUKRptDD
+	 r/CN0jRaQlQ8fD5NU/0tZIxI8WyvimyswAKzvAeKbApCV/zWRNTZkGnAXrfwN/VI8O
+	 Pqd7d6vys0KQiFjJAkbfJn2w4XFqA4HBeyggKE0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0329/1518] bus: qcom-ebi2: use managed resources for clocks and children
-Date: Sat, 12 Sep 2026 08:41:38 +0200
-Message-ID: <20260912065630.913699794@linuxfoundation.org>
+Subject: [PATCH 6.18 0320/1518] platform/mellanox: mlxbf-pmc: Check ACPI_COMPANION() against NULL
+Date: Sat, 12 Sep 2026 08:41:29 +0200
+Message-ID: <20260912065630.716628881@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -47,123 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit d19a46f7ed8eb54fea61e0eaf7db53ff7babb03c ]
+[ Upstream commit c38cce70adef874c2a7b5132c14d6c221401deff ]
 
-qcom_ebi2_probe() enables the EBI2 clocks manually and populates child
-devices manually. Several later failure paths can then return without
-disabling the clocks or without relying on the driver core to undo child
-population.
+Every platform driver can be forced to match a device that doesn't match
+its list of device IDs because of device_match_driver_override(), so
+platform drivers that rely on the existence of a device's ACPI companion
+object need to verify its presence.
 
-Use devm_clk_get_enabled() for both clocks and
-devm_of_platform_populate() for children. This lets the driver core
-unwind the resources automatically and removes the hand-written error
-labels.
+mlxbf_pmc_probe() passes the result of ACPI_COMPANION() to
+acpi_device_hid(), which dereferences it, so force-binding the driver to
+a device without an ACPI companion leads to a NULL pointer dereference.
 
-Fixes: 335a12754808 ("bus: qcom: add EBI2 driver")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://lore.kernel.org/r/20260623015415.26975-1-pengpeng@iscas.ac.cn
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Accordingly, add a requisite ACPI_COMPANION() check against NULL to the
+mlxbf-pmc driver and return -ENODEV when the companion is missing.
+
+Fixes: 1a218d312e65 ("platform/mellanox: mlxbf-pmc: Add Mellanox BlueField PMC driver")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Link: https://patch.msgid.link/20260706012056.524096-1-lilinmao@kylinos.cn
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/qcom-ebi2.c | 50 +++++++++--------------------------------
- 1 file changed, 11 insertions(+), 39 deletions(-)
+ drivers/platform/mellanox/mlxbf-pmc.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bus/qcom-ebi2.c b/drivers/bus/qcom-ebi2.c
-index ab00c75b9e953..8d2eb955dc921 100644
---- a/drivers/bus/qcom-ebi2.c
-+++ b/drivers/bus/qcom-ebi2.c
-@@ -302,41 +302,23 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
- 	u32 val;
+diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
+index 5ec1ad4716967..2ad9e2b0493c4 100644
+--- a/drivers/platform/mellanox/mlxbf-pmc.c
++++ b/drivers/platform/mellanox/mlxbf-pmc.c
+@@ -2262,13 +2262,19 @@ static int mlxbf_pmc_map_counters(struct device *dev)
+ 
+ static int mlxbf_pmc_probe(struct platform_device *pdev)
+ {
+-	struct acpi_device *acpi_dev = ACPI_COMPANION(&pdev->dev);
+-	const char *hid = acpi_device_hid(acpi_dev);
+ 	struct device *dev = &pdev->dev;
++	struct acpi_device *acpi_dev;
+ 	struct arm_smccc_res res;
++	const char *hid;
+ 	guid_t guid;
  	int ret;
  
--	ebi2xclk = devm_clk_get(dev, "ebi2x");
-+	ebi2xclk = devm_clk_get_enabled(dev, "ebi2x");
- 	if (IS_ERR(ebi2xclk))
- 		return PTR_ERR(ebi2xclk);
- 
--	ret = clk_prepare_enable(ebi2xclk);
--	if (ret) {
--		dev_err(dev, "could not enable EBI2X clk (%d)\n", ret);
--		return ret;
--	}
--
--	ebi2clk = devm_clk_get(dev, "ebi2");
--	if (IS_ERR(ebi2clk)) {
--		ret = PTR_ERR(ebi2clk);
--		goto err_disable_2x_clk;
--	}
--
--	ret = clk_prepare_enable(ebi2clk);
--	if (ret) {
--		dev_err(dev, "could not enable EBI2 clk\n");
--		goto err_disable_2x_clk;
--	}
-+	ebi2clk = devm_clk_get_enabled(dev, "ebi2");
-+	if (IS_ERR(ebi2clk))
-+		return PTR_ERR(ebi2clk);
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	ebi2_base = devm_ioremap_resource(dev, res);
--	if (IS_ERR(ebi2_base)) {
--		ret = PTR_ERR(ebi2_base);
--		goto err_disable_clk;
--	}
-+	if (IS_ERR(ebi2_base))
-+		return PTR_ERR(ebi2_base);
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
- 	ebi2_xmem = devm_ioremap_resource(dev, res);
--	if (IS_ERR(ebi2_xmem)) {
--		ret = PTR_ERR(ebi2_xmem);
--		goto err_disable_clk;
--	}
-+	if (IS_ERR(ebi2_xmem))
-+		return PTR_ERR(ebi2_xmem);
- 
- 	/* Allegedly this turns the power save mode off */
- 	writel(0UL, ebi2_xmem + EBI2_XMEM_CFG);
-@@ -353,7 +335,7 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
- 		/* Figure out the chipselect */
- 		ret = of_property_read_u32(child, "reg", &csindex);
- 		if (ret)
--			goto err_disable_clk;
-+			return ret;
- 
- 		if (csindex > 5) {
- 			dev_err(dev,
-@@ -372,20 +354,10 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
- 		have_children = true;
- 	}
- 
--	if (have_children) {
--		ret = of_platform_default_populate(np, NULL, dev);
--		if (ret)
--			goto err_disable_clk;
--	}
-+	if (have_children)
-+		return devm_of_platform_populate(dev);
- 
- 	return 0;
--
--err_disable_clk:
--	clk_disable_unprepare(ebi2clk);
--err_disable_2x_clk:
--	clk_disable_unprepare(ebi2xclk);
--
--	return ret;
- }
- 
- static const struct of_device_id qcom_ebi2_of_match[] = {
++	acpi_dev = ACPI_COMPANION(&pdev->dev);
++	if (!acpi_dev)
++		return -ENODEV;
++
++	hid = acpi_device_hid(acpi_dev);
++
+ 	/* Ensure we have the UUID we expect for this service. */
+ 	arm_smccc_smc(MLXBF_PMC_SIP_SVC_UID, 0, 0, 0, 0, 0, 0, 0, &res);
+ 	guid_parse(mlxbf_pmc_svc_uuid_str, &guid);
 -- 
 2.53.0
 
