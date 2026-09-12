@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4350837F8BC;
-	Sat, 12 Sep 2026 09:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D0819D8BC;
+	Sat, 12 Sep 2026 09:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207018; cv=none; b=motYZcdklk20woZYm2z6VcvW26+Bsywt5mxyB3B1Hgk77QGnvGRbbEky+u4yxs8qLV2w+E49NtekdjZ0j6mJHa11vOQtEvSFNmtB3DoiJnBNGtFHzYlvX9mMUHjdI3P/zyzoWNk+olNFnnWDKOUHhoKQ7/wjw0HJWogYwr2mi1Q=
+	t=1789207023; cv=none; b=CVi7qFDSOioM7koLPCZCdBu3PF9Zu66O+IFJcGA6OhGphxEZSkJo2P0IoXozbM5iknMTLhtMMXyBEqe8u2aG047LRcZ0FiX3wCLHq9K2sGO0HZTzwMWW7ftxy/C6p3yUloJvbzm/5xP8oJeVf8aSCVhOHQBOdm7tpDaIwd22W3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207018; c=relaxed/simple;
-	bh=tfD+2ZhSF7DCbQ7xaMKVhkKosZnCX7VR48xHqmlYCaw=;
+	s=arc-20240116; t=1789207023; c=relaxed/simple;
+	bh=fxnv5Um+CJjZrPBC6XMgE2rESd0mB0+Ivl1yMl4QUog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BdE5aBtOB/qh7QkgjOnmQgd8Um6kL83hyQFBOJTFaczPWS2SyKpSYo/fJ4/FKv/F9l7qzADL79QUEg4Bi2UJSZhN1QdFaZtN7D5gQsrr8JOHu/tBqbvE07kfipzzDR0iLrBWgA/h1+2CmI5E448GKe0gn7N6df7A2phXPn4tHkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AienhIAO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RLOsEgV23c+lHPSheetlshqIJzzMuA8frmRdWOyd2asv1ANAlP1/z90olUZUWhHapQi/YOdXdSxZjoaQVn58Hx8SB4W/2i4Wvf4fPNg/B91R0ZL5AMnUKDsY+59Oh6ZBXPWgzHiC0ByNQRPXAuHk5OEDxdrdJtVNClWkv7RgBHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P38KYtHm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AienhIAO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8DD1F000FF;
-	Sat, 12 Sep 2026 09:56:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P38KYtHm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DFD91F000FF;
+	Sat, 12 Sep 2026 09:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207017;
-	bh=k0AQPF2v0BrOWpiA8O3oppqrqvELU4/altA2NWeb9MI=;
+	s=korg; t=1789207022;
+	bh=zaXpu4ZEHWhWG+WiJF6SbPRGl0MMnu0N3Omvqj+JzFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AienhIAOK3kPr8RD2sFeTg7LrJVxTORS3upVUVczXdykpLPXKNYIOZxK1ILyR7u1s
-	 ZIS1qh3KGDN3JBr+PJDNqcUE+HVgj2sSAQzSGBhJf5gKzmanexmgTH5JGnfxR1waQ8
-	 g+ZA/SjB9Voqhg67O0+01k51O47G4OHO41+u9Np4=
+	b=P38KYtHmw7QVhhvcC4FXjPlLvBsGh0dlQ44IsEVxypf0JLRCd0X78sjvbyIXXHyaI
+	 +Bj8dCVvFGE92wPaMZM9e//kxLK9bw3XEA9knDftzuTcmLt3jAVCgY5kHPAJmvz4h2
+	 SuL/Oe7mVUvmwoJgVv48xD6DoxM2WGfaZOm11osI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fu Hao <fuhao@open-hieco.net>,
-	Tingyin Duan <tingyin.duan@gmail.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Tanushree Shah <tshah@linux.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0283/1518] iommu/amd: Add support for Hygon family 18h model 4h IOAPIC
-Date: Sat, 12 Sep 2026 08:40:52 +0200
-Message-ID: <20260912065629.884338121@linuxfoundation.org>
+Subject: [PATCH 6.18 0274/1518] perf dso: Fix kallsyms DSO detection with fallback logic
+Date: Sat, 12 Sep 2026 08:40:43 +0200
+Message-ID: <20260912065629.683105843@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,49 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fu Hao <fuhao@open-hieco.net>
+From: Tanushree Shah <tshah@linux.ibm.com>
 
-[ Upstream commit 5beda8cadb1f072140e58b1edb7604444a42d955 ]
+[ Upstream commit 8c5f60344b07f839267c0c835962e2206143be85 ]
 
-The SB IOAPIC is on the device 0xb from Hygon family 18h model 4h.
+The current kallsyms detection in dso__is_kallsyms() uses the
+dso_binary_type enum which fixes the issue of kallsyms being cached in
+the build-id cache for out-of-tree modules.
 
-Signed-off-by: Fu Hao <fuhao@open-hieco.net>
-Tested-by: Tingyin Duan <tingyin.duan@gmail.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-Stable-dep-of: 04fee302fac7 ("iommu/amd: Fix false positive in SB IOAPIC IVRS validation")
+However, during build-id injection in perf record/inject, dso_binary_type
+has not been explicitly set yet,so dso__binary_type() returns
+DSO_BINARY_TYPE__NOT_FOUND instead of DSO_BINARY_TYPE__KALLSYMS for the
+kernel DSO. The current check then fails to identify it as kallsyms,
+causing build-id symlinks to not be created in ~/.debug/.build-id/ and
+perf archive to fail with "Cannot stat" errors.
+
+Steps to reproduce the issue:
+1. rm -rf ~/.debug/.build-id
+2. perf record sleep 1
+3. perf archive
+
+Fix by falling back to matching long_name against the known kallsyms
+strings explicitly when binary_type is not yet set
+(== DSO_BINARY_TYPE__NOT_FOUND). Use strcmp() for exact matching of
+fixed names and strict validation for guest kallsyms with embedded PID
+to prevent path traversal attacks.
+
+Fixes: ebf0b332732d ("perf dso: fix dso__is_kallsyms() check")
+Signed-off-by: Tanushree Shah <tshah@linux.ibm.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ tools/perf/util/dso.h | 57 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 56 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 20b1cc2159332..bf8b114386884 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -3096,6 +3096,9 @@ static void __init free_iommu_resources(void)
- /* SB IOAPIC is always on this device in AMD systems */
- #define IOAPIC_SB_DEVID		((0x00 << 8) | PCI_DEVFN(0x14, 0))
+diff --git a/tools/perf/util/dso.h b/tools/perf/util/dso.h
+index 54e470dd07305..b374dfabf49cc 100644
+--- a/tools/perf/util/dso.h
++++ b/tools/perf/util/dso.h
+@@ -9,6 +9,7 @@
+ #include <stdbool.h>
+ #include <stdio.h>
+ #include <linux/bitops.h>
++#include <string.h>
+ #include "build-id.h"
+ #include "debuginfo.h"
+ #include "mutex.h"
+@@ -20,6 +21,40 @@ struct perf_env;
  
-+/* SB IOAPIC for Hygon family 18h model 4h is on the device 0xb */
-+#define IOAPIC_SB_DEVID_FAM18H_M4H	((0x00 << 8) | PCI_DEVFN(0xb, 0))
+ #define DSO__NAME_KALLSYMS	"[kernel.kallsyms]"
+ #define DSO__NAME_KCORE		"[kernel.kcore]"
++#define DSO__NAME_GUEST_KALLSYMS		"[guest.kernel.kallsyms]"
++#define DSO__NAME_GUEST_KALLSYMS_PID_PREFIX	"[guest.kernel.kallsyms."
 +
- static bool __init check_ioapic_information(void)
++/*
++ * Validate names of the form "[guest.kernel.kallsyms.<pid>]", where
++ * <pid> is the PID of the guest VM and varies per guest, so it
++ * cannot be matched with strcmp() against a fixed string.
++ *
++ * Every character after the fixed prefix must be a decimal digit,
++ * with ']' immediately terminating the digit run and nothing
++ * following it. This rules out '/', "..", or any other character
++ * being smuggled into the name.
++ */
++static inline bool is_guest_kallsyms_pid_name(const char *name)
++{
++	const size_t prefix_len = sizeof(DSO__NAME_GUEST_KALLSYMS_PID_PREFIX) - 1;
++	size_t digits;
++
++	if (strncmp(name, DSO__NAME_GUEST_KALLSYMS_PID_PREFIX, prefix_len) != 0)
++		return false;
++
++	digits = strspn(name + prefix_len, "0123456789");
++	if (digits == 0)
++		return false;
++
++	/* ']' must terminate the digit run, with nothing trailing it */
++	if (name[prefix_len + digits] != ']')
++		return false;
++
++	if (name[prefix_len + digits + 1] != '\0')
++		return false;
++
++	return true;
++}
+ 
+ /**
+  * enum dso_binary_type - The kind of DSO generally associated with a memory
+@@ -894,8 +929,28 @@ static inline bool dso__is_kcore(const struct dso *dso)
+ static inline bool dso__is_kallsyms(const struct dso *dso)
  {
- 	const char *fw_bug = FW_BUG;
-@@ -3121,7 +3124,12 @@ static bool __init check_ioapic_information(void)
- 			pr_err("%s: IOAPIC[%d] not in IVRS table\n",
- 				fw_bug, id);
- 			ret = false;
--		} else if (devid == IOAPIC_SB_DEVID) {
-+		} else if (devid == IOAPIC_SB_DEVID ||
-+			   (boot_cpu_data.x86_vendor == X86_VENDOR_HYGON &&
-+			    boot_cpu_data.x86 == 0x18 &&
-+			    boot_cpu_data.x86_model >= 0x4 &&
-+			    boot_cpu_data.x86_model <= 0xf &&
-+			    devid == IOAPIC_SB_DEVID_FAM18H_M4H)) {
- 			has_sb_ioapic = true;
- 		}
- 	}
+ 	enum dso_binary_type bt = dso__binary_type(dso);
++	const char *name;
++
++	if (bt == DSO_BINARY_TYPE__KALLSYMS || bt == DSO_BINARY_TYPE__GUEST_KALLSYMS)
++		return true;
++
++	if (bt != DSO_BINARY_TYPE__NOT_FOUND)
++		return false;
++
++	if (!dso__kernel(dso))
++		return false;
++
++	name = dso__long_name(dso);
++	if (!name)
++		return false;
++
++	if (!strcmp(name, DSO__NAME_KALLSYMS))
++		return true;
++
++	if (!strcmp(name, DSO__NAME_GUEST_KALLSYMS))
++		return true;
+ 
+-	return bt == DSO_BINARY_TYPE__KALLSYMS || bt == DSO_BINARY_TYPE__GUEST_KALLSYMS;
++	return is_guest_kallsyms_pid_name(name);
+ }
+ 
+ bool dso__is_object_file(const struct dso *dso);
 -- 
 2.53.0
 
