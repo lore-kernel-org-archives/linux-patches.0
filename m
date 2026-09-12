@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8174F38F620;
-	Sat, 12 Sep 2026 19:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6528B38F649;
+	Sat, 12 Sep 2026 19:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242800; cv=none; b=Zj8wC7rqBnAJYyX0nHK1j/Hf1BVy4iyU3I8jQRsFRAc+boqOYktzkfxnetdGExKdlpu5hVtcRpNDA130CGGTLM/GwTqcWv0r7RhaiBpv56zOfaS4DA/fopZTfGGJ4BGIaUcXRDCmaCXZaPiPDs27rw8xGWvQVPazWhK9i1RYgz0=
+	t=1789242803; cv=none; b=fK458/VuKE7x11YAfuROyP2Go9GVthPSVzOLafsy5WJp+3zyrBQ9d6KLdKCBNDJG59sKqA9FGj3NNref9O2yuI1z2KwTwJ+P2WzQ/sNDbnJ03OaCUKFdWKv3Y9DVlzcKDfMfIJxvrl3eG21cu3k169x6Zktg9Vsvd8GQ6bIngSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242800; c=relaxed/simple;
-	bh=kzjD3NYnQ4KswV32JvblvsIkoi6FbpV/OykyuCDd12o=;
+	s=arc-20240116; t=1789242803; c=relaxed/simple;
+	bh=QkBvvgtKsr1A+7mt/PdrhDFWMjPkyOZjOLGa3OP2K+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+9fwOBTu7WCYNl0RU+qvQcJl3ioMbygwNi66/PkQyWeiIQ3kcVKvmFrqkzCeq1mRtt+yJ4zmc2VeGpXt6Igd7ISdSk0sqNhAmzf+k7y/PEYU4rzXH2BSNsbUE+4URaAh9X6S7vDr2oHH1uHACYXdQwwVWEC13DNEVJ7qmwuE5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awi4g4rw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PWfFZD96lHYkMDHaf2/IECUg1RruEgSjHmUbhu60S1683yawUJiJiE0tlkrRspNapumeXIDwHcC/ojeIYP4EWV4noy54WzMXINy92tHN4jtfAZf/iOrNmLiGUhQJs/d5FHgF7wp5tUngItQYxdE7wXsghDV9LunAgNbUv6iRSGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+NskDe2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awi4g4rw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3411F000FF;
-	Sat, 12 Sep 2026 19:53:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+NskDe2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC9F71F000FF;
+	Sat, 12 Sep 2026 19:53:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242799;
-	bh=ng15pfJUrIwze7lJPAafPb/7/GbR59R2XEtfWgaCwVE=;
+	s=korg; t=1789242802;
+	bh=LorNTqJe+zwnihQ3QkkDw0y2rkOQTFvYd7jgF6I2aRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=awi4g4rwlI7JKAKm4Qm4WITCG2WUUzGktFFpjbDpGC5oQJUxKpxK0pJYhBtSQkD7K
-	 E3L/FYVdBhsdYYbA/Wvk3ZQlN7KeB8or+eQ3/WPwe7omdiJGXtpBkT8AfWWscH+kFT
-	 tskG14QjPxpz4TEUuQrSuY18ZLJt9o22p9qiZIbc=
+	b=l+NskDe27FWKBUION78h8Xv7WTvuZoX4wccPEp0jL6OHqgdBzOQlM3BONyLr90TTw
+	 fQA9/XOA4rFq+UlKf8vxVemuwjLtBNjg7cUNnGt0Vv1yRY0SgipgMROzLbNA9r16lB
+	 ujZeaS1nRQNi3BvCpKCiF9TqOchynl3iPY5jFnlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cae54346a70bbceeff2c@syzkaller.appspotmail.com,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
+	David Lee <david.lee@trailofbits.com>,
 	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
 	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 532/798] nilfs2: fix infinite loop in nilfs_clean_segments()
-Date: Sat, 12 Sep 2026 09:02:40 +0200
-Message-ID: <20260912065529.324368233@linuxfoundation.org>
+Subject: [PATCH 5.10 533/798] nilfs2: prevent out-of-bounds read in super root block parsing
+Date: Sat, 12 Sep 2026 09:02:41 +0200
+Message-ID: <20260912065529.347498501@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,50 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Crofts <joshua.crofts1@gmail.com>
+From: David Lee <david.lee@trailofbits.com>
 
-[ Upstream commit ce5a5ad1a8330a2fcfdd9ec2ab341be739e89a18 ]
+[ Upstream commit 7cb2f76a6a2ba2130b577cb8ac13e1e46c4fc689 ]
 
-syzbot reported a hung task in nilfs_transaction_begin(). This occurs
-because the cleaner ioctl falls into an infinite loop if
-nilfs_segctor_construct() repeatedly returns -EROFS (e.g. the device
-is remounted as read-only after an I/O error).
+super-root inode metadata size is trusted before nilfs_read_inode_common().
 
-Currently in nilfs_clean_segments(), if err is non-zero, it logs the
-error and sleeps but doesn't abort when it encounters a terminal error
-like -EROFS. This causes the thread to loop forever.
+Reject super-root inode sizes whose computed on-disk footprint exceeds the
+filesystem block size. This prevents malformed filesystem images from
+making nilfs_read_inode_common() read past the end of the super-root block.
 
-Fix this by breaking out of the loop if nilfs_segctor_construct()
-returns -EROFS. This matches the behaviour in
-nilfs_segctor_write_out(), which also handles -EROFS.
+[ryusuke: clarify the commit title]
 
-Reported-by: syzbot+cae54346a70bbceeff2c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cae54346a70bbceeff2c
-Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
-Assisted-by: gemini:gemini-3.1-pro
-Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Fixes: 8a9d2191e9f4 ("nilfs2: operations for the_nilfs core object")
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/segment.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/nilfs2/the_nilfs.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
-index a7600e6722ef4..18964331ee3d9 100644
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -2554,6 +2554,10 @@ int nilfs_clean_segments(struct super_block *sb, struct nilfs_argv *argv,
- 			break;
- 
- 		nilfs_warn(sb, "error %d cleaning segments", err);
-+
-+		if (unlikely(err == -EROFS))
-+			goto out_unlock;
-+
- 		set_current_state(TASK_INTERRUPTIBLE);
- 		schedule_timeout(sci->sc_interval);
+diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
+index 09ba8bbaf6cad..77bba00eec5d0 100644
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -450,6 +450,12 @@ static int nilfs_store_disk_layout(struct the_nilfs *nilfs,
+ 			  nilfs->ns_inode_size);
+ 		return -EINVAL;
  	}
++	if (NILFS_SR_BYTES(nilfs->ns_inode_size) > nilfs->ns_blocksize) {
++		nilfs_err(nilfs->ns_sb,
++			  "too large inode size for super root: %d bytes",
++			  nilfs->ns_inode_size);
++		return -EINVAL;
++	}
+ 
+ 	nilfs->ns_first_ino = le32_to_cpu(sbp->s_first_ino);
+ 	if (nilfs->ns_first_ino < NILFS_USER_INO) {
 -- 
 2.53.0
 
