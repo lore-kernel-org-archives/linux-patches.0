@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A4C353A75;
-	Sat, 12 Sep 2026 11:32:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94AA83D7D7F;
+	Sat, 12 Sep 2026 11:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212732; cv=none; b=dvhvtqu+IMxz+lG+JMNXn3qeS3MbDFE/t7PtU1km8kEgMfZwmozJT4c8ptAnsz85PK+r4YKRAc1FH9+v87gGUBlac8lqck2eCeJVtfdWee2ir0IDb8AxeCSxXjEFo+UD4s5UhDkz28Cj4v6C7IwyVVp6Z3c31CsKH7ZdhlCat50=
+	t=1789212736; cv=none; b=i8H39k6DuEVf4sSil4cirFIgzUQVDqajTSwEc1cxJ85tcfU3MGzzYDs8cXO54tL+TlDo0Qdf1xgUMQ5qcUlaev966EcsCYbkNnKhu8KVVsaJKV2BxOx3hdQ8Dopj99CeQ7/dP09ze/vfsyImvMOncACKhhHgsYqeWldB1uwDgR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212732; c=relaxed/simple;
-	bh=wLHro7qXp1TCqT/GR7tRJ2KmyXzQXA10f+25XMrAke0=;
+	s=arc-20240116; t=1789212736; c=relaxed/simple;
+	bh=v7oTwKGGIGxd+Ruz7yxggDDn27CbPL8ybOypq/OgtMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dCU45x1gcwy4SRJqDKwYV9T5lWXwF0uINaREMkfKHhHcV5LAjgAUvoqWPLbf6o87LxyVXch702q3HyVwNBxXDpldOcw1/znMsKARY6eX6+FIIH3F9+kjFTVMNAed9388208JLMwDbUeATr/voIgsMc/if4oUTLvlSvzRvX42H6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LqdosQ45; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ig3JFnTRDCu278FgVVD2BlE4q3sGg6kZ1WIp2E60lougwQS7xttI4LpJod9Wf+I7hN5tmPB+z1W9NX4ywMS407dIzTJlG+LSwP3lc3kmAz+we8Ow2ZjAsttk0l84EAF0SMnAnUQBa774q6tWYZbw4WfK16s5iWnnRtYpOaLnRTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMT3owbP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LqdosQ45"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E0B1F000FF;
-	Sat, 12 Sep 2026 11:32:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMT3owbP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B2E1F000FF;
+	Sat, 12 Sep 2026 11:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212730;
-	bh=L3lbQhGrmp8xJMcz/4ayqizsvO5djO0L+7go/hG6CWE=;
+	s=korg; t=1789212735;
+	bh=1hHtbFj3uwOZ7UTPZMCUWokPzXiwYjgbM8BWxj6Uz2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LqdosQ45W7JFKhBDcyvHnoVYgji+krosfBmDIY7zDnSVUuw5uLTs+kqeCC03nIWhY
-	 snCYIIp0EM64pJB3qAaco690tNBe5BtqXzWTGQb21vS6uDob1Fj7GYAesv6mw3eunG
-	 bvqTQPoomntXGUD+xTfI0XTbuAAjkpcUXsdUNhHY=
+	b=UMT3owbPpI4hMSEr0zImGUinAYfdLAiV+ggSJexsQSykL15EFQ37sS0ayE1MGaMrR
+	 +Ww35wfLSL6eI8keheXch2mw+XGTePOfmfhGhtGV6HROGlwJ4jd7s2b9HVTrZVQw1d
+	 ssmJRyqmvYNU9e8xkP7U1nM512CPWE5h5llLkzzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Wilcox <willy@infradead.org>,
-	Keith Busch <kbusch@kernel.org>,
-	Yu Kuai <yukuai@fnnas.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1496/1518] block: fix merging data-less bios
-Date: Sat, 12 Sep 2026 09:01:05 +0200
-Message-ID: <20260912065657.404386461@linuxfoundation.org>
+Subject: [PATCH 6.18 1470/1518] cpufreq/amd-pstate: Reorder notifier unregistration and floor perf reset
+Date: Sat, 12 Sep 2026 09:00:39 +0200
+Message-ID: <20260912065656.807688599@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,38 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: K Prateek Nayak <kprateek.nayak@amd.com>
 
-[ Upstream commit fd9ecd005252b595fd02ff7fcc4056251027404d ]
+[ Upstream commit f3acf7ff113007557538b278ccb0e4ab7ae513ea ]
 
-The data segment gaps the block layer tracks doesn't apply to bio's that
-don't have data. Skip calculating this to fix a NULL pointer access.
+An active power supply notifier can race with amd_pstate_epp_cpu_exit()
+trying to reset the floor perf and can overwrite the floor perf set in
+MSR_AMD_CPPC_REQ.
 
-Fixes: 2f6b2565d43cdb5 ("block: accumulate memory segment gaps per bio")
-Reported-by: Matthew Wilcox <willy@infradead.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Yu Kuai <yukuai@fnnas.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Unregister the notifier before setting the floor perf to prevent the
+rare race.
+
+Fixes: e30ca6dd5345 ("cpufreq/amd-pstate: Add dynamic energy performance preference")
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Link: https://lore.kernel.org/r/20260508051748.10484-5-kprateek.nayak@amd.com
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-merge.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/cpufreq/amd-pstate.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-merge.c b/block/blk-merge.c
-index c2f47522be856..5d895c7898984 100644
---- a/block/blk-merge.c
-+++ b/block/blk-merge.c
-@@ -748,6 +748,9 @@ u8 bio_seg_gap(struct request_queue *q, struct bio *prev, struct bio *next,
- {
- 	struct bio_vec pb, nb;
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 627d578c7e13a..1e14e974641c3 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -1841,11 +1841,12 @@ static void amd_pstate_epp_cpu_exit(struct cpufreq_policy *policy)
+ 	if (cpudata) {
+ 		union perf_cached perf = READ_ONCE(cpudata->perf);
  
-+	if (!bio_has_data(prev))
-+		return 0;
++		if (cpudata->dynamic_epp)
++			amd_pstate_clear_dynamic_epp(policy);
 +
- 	gaps_bit = min_not_zero(gaps_bit, prev->bi_bvec_gap_bit);
- 	gaps_bit = min_not_zero(gaps_bit, next->bi_bvec_gap_bit);
+ 		/* Reset CPPC_REQ MSR to the BIOS value */
+ 		amd_pstate_update_perf(policy, perf.bios_min_perf, 0U, 0U, 0U, false);
  
+-		if (cpudata->dynamic_epp)
+-			amd_pstate_clear_dynamic_epp(policy);
+ 		kfree(cpudata);
+ 		policy->driver_data = NULL;
+ 	}
 -- 
 2.53.0
 
