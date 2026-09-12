@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F102378C9C;
-	Sat, 12 Sep 2026 19:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E113815E7;
+	Sat, 12 Sep 2026 19:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241186; cv=none; b=FRmuEcyD4rLvcYbn7RLFeTYJdL6gpNEh5atSv+zcaC2wf4RLYD8XcbDE5MMoIaD7+dIlOf6McvZT3xNuQgLi0IRyNfsPqi3G/x7kMXN6WGH9V3RX809te+Nj5dYkxe3uCgMZtHl8W+C0arK9Oy6jCqjLZSM15iIJ/cmvn+LCrE0=
+	t=1789241191; cv=none; b=NP2ScgibeLnqr3eWXoyrRqKcNF4gHAbnBkGgWxXzfnvTPtH5y+Pg6QJO/yyVQE0INNETBp8VzFFfJxlDcUkAAScCQqbLY50KwizLrGInKVgiAcl1qi0G3Hrsm/tL1YqCPqnNCYi6m/gDHAc9Ny4vU1yieYYt1w2jgiEMaJ4ZtWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241186; c=relaxed/simple;
-	bh=zDbxE9Qo7TV4sSgUrYDPcyaWnlH7ILbjjlCEh8W3cDA=;
+	s=arc-20240116; t=1789241191; c=relaxed/simple;
+	bh=cjpvvOKWQUtecvBk0tFbZCjETK8jlzQVOlZpQPowxgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ElzBelyWx/TNIq76u5HITzvAibUQCbtpkAkavmIqQfzBRwzdAZc08OZ/ypU8meMqvmhCPRxjZOjUSma9lBvYkPUk3XVjhoH/+DVVbVpmOyYOufM4UGLv8CV/bdJWWiPN3n7cRTsuMJaEfW3WQBYJEQEnGwx0b3GqmAhVpbqIZCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LfvI+cfB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QJ3TDFDsWmD1EX7Rdq1KJYAiCdlR137Qte1o6D9jR2FVICGLPYjS+QTTq6U5N33khuM1Mhs+cZC464HDdAigum0S8RBjzCW4WzE6kvzkAVXE2OYuXRhlCv9UyGAQWyO9VaLAoGcrjeZNtw6HNONROnIObVgqlm57MaM0W14+Boo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8xcQ+t5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LfvI+cfB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE17E1F000FF;
-	Sat, 12 Sep 2026 19:26:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8xcQ+t5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72F51F000FF;
+	Sat, 12 Sep 2026 19:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241184;
-	bh=MtGRbg9Y82ij5iXtO68SltMqR7uT6FXws74hLP/VCTs=;
+	s=korg; t=1789241190;
+	bh=AsxCSt0b1gHKPfCUYQcsnpRlWvpegZndX4e2wrF7RlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LfvI+cfBJTrLRCwLrlfP4/N83X6YwTKHqfItJZb21gw97Q6fdn5q33oeW5u51FCGf
-	 UkNA+2RUMrqW1Rx0uKyzLq2pK/U6D1YZXR+So5xs8B9KE5iw9hHB0NODMuhGMuYFQo
-	 Er9goEy1StboZBX5lIaISkxg74z0Xx7aqfThHaGA=
+	b=T8xcQ+t57hgQ7NLjY7duuLNeBkmfKJm1d2AdqO/kRxdc0/kYVby74XeYb5tw2HwoC
+	 LT3MDA335IAXCc8hq6dg763K2rOHgRCA74q/hBvpwLVGy3OVQvOTer5SaMTvwpdyuu
+	 yE5xL84reVWDEgpHkNWiiU6lx/+CaIuu1rsfIWr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gongwei Li <ligongwei@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 084/798] Bluetooth: hci_uart: Fix false success return in hci_uart_setup()
-Date: Sat, 12 Sep 2026 08:55:12 +0200
-Message-ID: <20260912065518.885084318@linuxfoundation.org>
+	Yichong Chen <chenyichong@uniontech.com>,
+	Tyler Hicks <code@tyhicks.com>
+Subject: [PATCH 5.10 058/798] ecryptfs: fix tag 11 packet exact-fit size check
+Date: Sat, 12 Sep 2026 08:54:46 +0200
+Message-ID: <20260912065518.292402903@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,48 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gongwei Li <ligongwei@kylinos.cn>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-commit a9355799343e10014f2acfd4b6844d2335ecafea upstream.
+commit 8b2ec0f56f55477f547d332526c9ae2a8fabc0a5 upstream.
 
-When reading the local version information for vendor detection
-fails, the error is only printed and 0 is returned, which masks the
-setup failure from the HCI core.
+parse_tag_11_packet() rejects a packet when the already-consumed tag and
+length bytes plus the packet body exceed the caller supplied maximum
+packet size.  The check currently adds one extra byte, even though
+*packet_size already includes the tag byte before the length is parsed.
 
-Return PTR_ERR(skb) instead.
+Remove the extra byte so a tag 11 packet that exactly fits the available
+buffer is accepted while oversized packets are still rejected.
 
-Fixes: fb2ce8d11f039 ("Bluetooth: hci_uart: Add support for vendor detection flag")
-Fixes: 82f5169bf3d3b ("Bluetooth: hci_uart: add serdev driver support library")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gongwei Li <ligongwei@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 237fead61998 ("[PATCH] ecryptfs: fs/Makefile and fs/Kconfig")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Signed-off-by: Tyler Hicks <code@tyhicks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_ldisc.c  |    2 +-
- drivers/bluetooth/hci_serdev.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/ecryptfs/keystore.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bluetooth/hci_ldisc.c
-+++ b/drivers/bluetooth/hci_ldisc.c
-@@ -445,7 +445,7 @@ static int hci_uart_setup(struct hci_dev
- 	if (IS_ERR(skb)) {
- 		BT_ERR("%s: Reading local version information failed (%ld)",
- 		       hdev->name, PTR_ERR(skb));
--		return 0;
-+		return PTR_ERR(skb);
+--- a/fs/ecryptfs/keystore.c
++++ b/fs/ecryptfs/keystore.c
+@@ -1575,7 +1575,7 @@ parse_tag_11_packet(unsigned char *data,
  	}
- 
- 	if (skb->len != sizeof(*ver)) {
---- a/drivers/bluetooth/hci_serdev.c
-+++ b/drivers/bluetooth/hci_serdev.c
-@@ -221,7 +221,7 @@ static int hci_uart_setup(struct hci_dev
- 	if (IS_ERR(skb)) {
- 		bt_dev_err(hdev, "Reading local version info failed (%ld)",
- 			   PTR_ERR(skb));
--		return 0;
-+		return PTR_ERR(skb);
- 	}
- 
- 	if (skb->len != sizeof(*ver))
+ 	(*packet_size) += length_size;
+ 	(*tag_11_contents_size) = (body_size - 14);
+-	if (unlikely((*packet_size) + body_size + 1 > max_packet_size)) {
++	if (unlikely((*packet_size) + body_size > max_packet_size)) {
+ 		printk(KERN_ERR "Packet size exceeds max\n");
+ 		rc = -EINVAL;
+ 		goto out;
 
 
