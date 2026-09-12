@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88E93B71DA;
-	Sat, 12 Sep 2026 09:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F9B3E40F3;
+	Sat, 12 Sep 2026 09:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206317; cv=none; b=OVEZocxJKe/b0L0T1Jod9Q5Urdj9KZbdgqb+k8NwAKyEMfM9YMrap1ZyyyY9CE76vRPMnfGeP+pZv+SmXJhYG+IfK06KsycQj3LsRFBoHcIAy3xPHAVEz1RUPa3fqHAxxIfdrPrNAEETGNmOzKpJSGsqHb+BWkdtn2JDXx47HjQ=
+	t=1789206323; cv=none; b=a9z/VcVWJEniSyQjCePegHAcU6w/8BwkEdlSvQlPHFm8NKzcMW4e9mduYD0I1DB9HW1Y1f6+HULfS6C38Ku/g2OAyTpBz2wLdbROcHkXfPVEAjDKL8Vin0jiDo2f7GNgiNvKX38dBugJgZWkLsAmRDw+CXta5aQC0IRuwj0dJCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206317; c=relaxed/simple;
-	bh=9lqmgmnL3qh5dlw/+XvUbzr46rVF9246hJ/X/vYTOrA=;
+	s=arc-20240116; t=1789206323; c=relaxed/simple;
+	bh=nuNPzBzd7w0Cq/J7WsukSl+JC5bzAZDNEvixqmP7coM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u7aO4GBVcER1kE1gk3WW0mqztXBww9QaFrbHkMaJWy1G6yBQ5cHPX5qS3mg6QOKmBU2YNn07Tb7Pw0Lzz1lhu90LdHk0e1ywDbEOVS3zcWgFz+V/n2vYIAKo7I3DbzZf2Kfo0GjnYRQMjMjrF+xHr/mGLMcXPaodpeuNkdJZpvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yverGAYP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JDUM3utMan5X5bBIHWl2cLc5ifKjOGF/We1RKHyYKUI0TQmMbCiyTGoGllp+tatHum7nwEdx+noqmbOmUDnGpth2Zv2Aj+gaRYu3bf5gr0JmO+Wt9Z+7n9tLD1WP/QSO46W01teH9gd5rvVnxHxaY5EBl8Vd8hZblUcwLQ4EcDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mya+Rqrl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yverGAYP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837B81F000FF;
-	Sat, 12 Sep 2026 09:45:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mya+Rqrl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8E81F000FF;
+	Sat, 12 Sep 2026 09:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206316;
-	bh=2b1qs8+/yKhOMwWNTyC2HZROmBaThV578vDTHkhbLOU=;
+	s=korg; t=1789206321;
+	bh=VTrUKe+mx607PqB/PxZ78FkadsnyzscqZONfjaIeU0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yverGAYPjzUHxi0HjqnaWf8/SShYNupr/9ln8Ubbqr+2753Jsxr1lNq09P71ixU0w
-	 GyaH6ZhXOUYx8EZ7EaFAUArZ2J4GyXBAdbofcIevu0X+30W9TLZmaJBrFhkHxj4MnH
-	 k2V6GHcuwyuChKhs0tRW5VHcFfrDL9zwF7Z3jmOw=
+	b=mya+RqrlqZakzE009hnL6vMmD8PkhAksXMd3SSoQ4F4ksmBd+b1weUf79L2bVMG6Z
+	 R76mqzTEO7WhYrLciV0R8ZP4rQRsNnDV4wn14q6cYw/3/zfrQ4ZptPj3Minwt3IPqJ
+	 NgcyM9vJtkeahzfWcPTGcd6NYmJ+6pVUAHXl747A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vz@kernel.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Chen Yu <yu.c.chen@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0180/1518] dmaengine: mediatek: mtk-uart-apdma: Return -ENOMEM on memory allocation failure
-Date: Sat, 12 Sep 2026 08:39:09 +0200
-Message-ID: <20260912065627.561412987@linuxfoundation.org>
+Subject: [PATCH 6.18 0141/1518] sched/fair: Fix overflow in update_tg_cfs_runnable()
+Date: Sat, 12 Sep 2026 08:38:30 +0200
+Message-ID: <20260912065626.684306670@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,37 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vz@kernel.org>
+From: Chen, Yu C <yu.c.chen@intel.com>
 
-[ Upstream commit 467265c750edd7ab43803deeafe7d3120a791d32 ]
+[ Upstream commit 4f166adb5cb0525d9e32d45729fd8f28c80acbee ]
 
-If dynamic memory allocation in driver's probe function execution fails, it
-should be reported to the driver's framework with -ENOMEM error code.
+A divide-by-zero crash is observed when running hackbench:
 
-Fixes: 9135408c3ace ("dmaengine: mediatek: Add MediaTek UART APDMA support")
-Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Link: https://patch.msgid.link/20260701200703.117929-1-vz@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+   [14697.488452] CPU: 112 UID: 0 PID: 124791 Comm: hackbench Not tainted 7.1.0-rc2+
+   [14697.492627] RIP: 0010:propagate_entity_load_avg+0x35f/0x3e0
+   [14697.506799]  <TASK>
+   [14697.507411]  __dequeue_task+0x2b4/0xc70
+   [14697.508677]  dequeue_task_fair+0x36/0x370
+   [14697.509047]  dequeue_task+0x101/0x2f0
+   [14697.509426]  __schedule+0x1b1/0x1a00
+   [14697.510868]  anon_pipe_read+0x3da/0x450
+   [14697.511400]  vfs_read+0x361/0x390
+   [14697.512053]  __x64_sys_read+0x19/0x30
+
+The divide-by-zero happens here:
+
+  if (scale_load_down(gcfs_rq->load.weight)) {
+           load_sum = div_u64(gcfs_rq->avg.load_sum,
+                              scale_load_down(gcfs_rq->load.weight));
+  }
+
+gcfs_rq->load.weight is an insane large value and is truncated
+to the lower 32 bits by div_u64, which happen to be 0.
+
+Using AI for investigation, the cause is a u32 overflow in
+update_tg_cfs_runnable(), and flat pickup became a victim when using
+tg_tasks():
+
+   u32 new_sum, divider;
+   ...
+   new_sum = se->avg.runnable_avg * divider; <-- boom
+
+The following sequence shows how this triggers the crash:
+
+   propagate_entity_load_avg()
+     update_tg_cfs_runnable()     # u32 overflow corrupts runnable_sum
+
+   __update_load_avg_cfs_rq()
+     ___update_load_avg()         # computes insane runnable_avg
+   update_tg_load_avg()           # propagates to tg->runnable_avg
+
+   update_cfs_group()
+     calc_concur_shares()
+       tg_tasks()                 # long-to-int truncation, negative nr
+     reweight_entity()            # corrupted se->load.weight
+       update_load_add()          # corrupted cfs_rq->load.weight
+
+   propagate_entity_load_avg()
+     update_tg_cfs_load()
+       div_u64()                  # divide-by-zero
+
+Fix by widening new_sum from u32 to u64 (no need to force tg_tasks()
+to return unsigned long after this fix)
+
+Fixes: 95246d1ec80b ("sched/pelt: Relax the sync of runnable_sum with runnable_avg")
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/a22eea2b-4c4a-4623-9a44-d7b18c0c91c8@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/mediatek/mtk-uart-apdma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/fair.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/mediatek/mtk-uart-apdma.c b/drivers/dma/mediatek/mtk-uart-apdma.c
-index 96c18c815f1df..cdba081637975 100644
---- a/drivers/dma/mediatek/mtk-uart-apdma.c
-+++ b/drivers/dma/mediatek/mtk-uart-apdma.c
-@@ -530,7 +530,7 @@ static int mtk_uart_apdma_probe(struct platform_device *pdev)
- 	for (i = 0; i < mtkd->dma_requests; i++) {
- 		c = devm_kzalloc(mtkd->ddev.dev, sizeof(*c), GFP_KERNEL);
- 		if (!c) {
--			rc = -ENODEV;
-+			rc = -ENOMEM;
- 			goto err_no_dma;
- 		}
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index eb4d5e558b6e1..30ebe2823d238 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -4463,7 +4463,8 @@ static inline void
+ update_tg_cfs_runnable(struct cfs_rq *cfs_rq, struct sched_entity *se, struct cfs_rq *gcfs_rq)
+ {
+ 	long delta_sum, delta_avg = gcfs_rq->avg.runnable_avg - se->avg.runnable_avg;
+-	u32 new_sum, divider;
++	u64 new_sum;
++	u32 divider;
+ 
+ 	/* Nothing to update */
+ 	if (!delta_avg)
+@@ -4477,7 +4478,7 @@ update_tg_cfs_runnable(struct cfs_rq *cfs_rq, struct sched_entity *se, struct cf
+ 
+ 	/* Set new sched_entity's runnable */
+ 	se->avg.runnable_avg = gcfs_rq->avg.runnable_avg;
+-	new_sum = se->avg.runnable_avg * divider;
++	new_sum = (u64)se->avg.runnable_avg * divider;
+ 	delta_sum = (long)new_sum - (long)se->avg.runnable_sum;
+ 	se->avg.runnable_sum = new_sum;
  
 -- 
 2.53.0
