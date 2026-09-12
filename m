@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142E7390615;
-	Sat, 12 Sep 2026 16:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EAC47988C;
+	Sat, 12 Sep 2026 16:31:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230694; cv=none; b=JV9durO8hMuwHDyTy4O+vmjQSiaG7mqKdEk6rX5Kkf/B1/2l59i90hxXUe11xGzZuibOxbefyijmSbTKZFJCB/WkH5sqbDS0Z2ivC24HTxdfKA6w5PiSiGU5Kaj+YgJx9uHgJRIRjuj3ke04ZT6yo2bFSqp8deoCu26ismKAnLg=
+	t=1789230699; cv=none; b=FQWjco34QqYSU0Tj7P6LcJdllkoFOgBUhyxYRVXmvP+0sJs7xjlQZ7HtZDaOdCghvnAAzTPfme6GD8NMCo9FyfF+HEvuIicUwuH58DvqFdR7bMkq+wwlY0hnk88YWcqIe8x2Zp42hTklIr2s3Hl+8g7M/ljYcOnTnCAmQG71o5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230694; c=relaxed/simple;
-	bh=7whRv7JLC14yZNenDz2xEi/buSKCV0w7U3v9xIg+chM=;
+	s=arc-20240116; t=1789230699; c=relaxed/simple;
+	bh=UvFeAxhDZPKPQiaUCq7jkODKUILgD4xjFukAC3LDCvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PQOW13AZh1JyeT3n7qlkSj8hhsfpqYAHk3cvUzZ9O6TxIWJlOhL6T/ITiiJMCEmghmTlnEqABklar3Hj+PVGhpTFUynuOHLXqaZdKpitKy888yNnCfRh8A6/+rcLjHPioHWhz5H/Y4nmRGcchfFn4lzxTxLbH8t3hbauT04Nzis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iK71uAxY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K/tur9DCeQjEt/kBIiT0/zXv16G6p7cMNMdZFXLEcIa5Hz5sms5/aHUWjxwi7aW/gQKJF+hDieyni3wTxqoJSUKenioFjXNEEfTjx2LXd3SBoNSghwAUA6sdIbwkSu/RrAQPxx3xFgv8CMRGuBN8QGwEumwkpy1dVtHBKf8xal0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iEMzK1a6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iK71uAxY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43F11F000FF;
-	Sat, 12 Sep 2026 16:31:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iEMzK1a6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC6E1F000FF;
+	Sat, 12 Sep 2026 16:31:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230693;
-	bh=P6pngMjFMG/P3Fri5nBZ0Ib+bYXU1UJFM4chgM+SXPo=;
+	s=korg; t=1789230697;
+	bh=l9/WnvzkZ87SdLrYWepebVSHhDQttyiMshXivY4JAPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iK71uAxYjv/kgwy5D6K8/h1qjDKPi/3tLaSI+tBoQAlS+IMnKFLsh5Pf4zAYhAArf
-	 y3npKXmjtgEGsWXw1hqe8UXVrg7trYwQ1k+1E2XimTupAjM61JZbHHLxm2Pbh9DAAl
-	 +INTJ3UoA1D3AucDkKix0+LVAjPTca1u2xHZyguM=
+	b=iEMzK1a6Wj8VRLUOwHcDIIBEEDyA7upYDHjUohRY875ebKycUBK6l9arngrZlPDpX
+	 VvhZ6SzX2+fIjfhCecF5WZXW1UXCmt7Hs9aX3AIGU63TnL4qu0t1dzklFy58qPrdVE
+	 sBBb5k6SfO9LO3ogqXR3tvIk+dKOGSzLnSYrlLUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Yuanshen Cao <alex.caoys@gmail.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0829/1191] wifi: mac80211: skip unused probe response countdown offsets
-Date: Sat, 12 Sep 2026 08:59:17 +0200
-Message-ID: <20260912065606.885525669@linuxfoundation.org>
+Subject: [PATCH 6.1 0847/1191] iio: light: tsl2772: fix ALS calibscale readback
+Date: Sat, 12 Sep 2026 08:59:35 +0200
+Message-ID: <20260912065607.281356591@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,49 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Yuanshen Cao <alex.caoys@gmail.com>
 
-[ Upstream commit fd2bf5e718108c00732eb07fd94a5d8830f62a9f ]
+[ Upstream commit ac75550ab5b5d73649bffea245c2075fd9249bd0 ]
 
-mac80211 copies cfg80211's variable-length countdown offset list into a
-zero-initialized fixed-size array, leaving unused entries at zero. The
-beacon branch already skips those zero entries, but the AP probe-response
-branch writes through them unconditionally.
+The read_raw() implementation uses IIO_LIGHT to distinguish between the
+ambient light and proximity channels when handling
+IIO_CHAN_INFO_CALIBSCALE.
 
-When a probe-response template has no countdown offset, the write through
-an unused zero entry overwrites resp->data[0], corrupting the first byte of
-the template. cfg80211 already bounds explicitly supplied non-zero offsets
-in nl80211_parse_counter_offsets(), so this is a zero-sentinel bug, not an
-out-of-bounds write.
+However, the ALS channel is registered as IIO_INTENSITY, while
+write_raw() correctly writes to IIO_INTENSITY. As a result, reading
+in_intensity0_calibscale incorrectly returns the proximity gain instead
+of the ALS gain.
 
-Skip zero probe-response offsets, matching the beacon path.
+This causes the following user-visible behavior:
+- Writing in_intensity0_calibscale appears to have no effect because the
+  readback reports the proximity gain.
+- Writing in_proximity0_calibscale causes both in_proximity0_calibscale
+  and in_intensity0_calibscale to report the same value.
 
-Fixes: af296bdb8da4 ("mac80211: move csa counters from sdata to beacon/presp")
-Link: https://lore.kernel.org/all/20260708195911.84365-6-enderaoelyther@gmail.com/
-Assisted-by: Codex:gpt-5
-Assisted-by: Claude:opus-4.8
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260723011001.76851-1-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fix this by checking for IIO_INTENSITY in read_raw(), matching the
+channel definition and the existing write_raw() implementation.
+
+Fixes: 3c97c08b5735 ("staging: iio: add TAOS tsl2x7x driver")
+Signed-off-by: Yuanshen Cao <alex.caoys@gmail.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iio/light/tsl2772.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 52fcb0c5f8fbe..31f000aa22309 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -4948,7 +4948,8 @@ static void ieee80211_set_beacon_cntdwn(struct ieee80211_sub_if_data *sdata,
- 		if (sdata->vif.type == NL80211_IFTYPE_AP && resp) {
- 			u16 *resp_offsets = resp->cntdwn_counter_offsets;
- 
--			resp->data[resp_offsets[i]] = count;
-+			if (resp_offsets[i])
-+				resp->data[resp_offsets[i]] = count;
+diff --git a/drivers/iio/light/tsl2772.c b/drivers/iio/light/tsl2772.c
+index 13a6c3d078616..ed554927c6c30 100644
+--- a/drivers/iio/light/tsl2772.c
++++ b/drivers/iio/light/tsl2772.c
+@@ -1263,7 +1263,7 @@ static int tsl2772_read_raw(struct iio_dev *indio_dev,
  		}
- 	}
- }
+ 		break;
+ 	case IIO_CHAN_INFO_CALIBSCALE:
+-		if (chan->type == IIO_LIGHT)
++		if (chan->type == IIO_INTENSITY)
+ 			*val = tsl2772_als_gain[chip->settings.als_gain];
+ 		else
+ 			*val = tsl2772_prox_gain[chip->settings.prox_gain];
 -- 
 2.53.0
 
