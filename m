@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F00F38B15B;
-	Sat, 12 Sep 2026 18:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DFB3B1EFE;
+	Sat, 12 Sep 2026 18:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238167; cv=none; b=EyAgUpKD2fHRJXw2B+Lx7/bzVY3BdWXNohU/BLmSvnMGa0jgf7b69LdVQxUwEJWPD/yQrkHvFgYMjN2lpspPtfqMfijLNSGFGBrbcvJjwmBLdwLKe18gIVbuySDVCSqMGScG2QB0yS9gqz0zEOe523J20CfjFpbJPoFGDouSz+U=
+	t=1789238174; cv=none; b=pqOQ/H5AQ/1H9gc0e7pu2eRuu+JKXOP4pzEhxNlUaisiAyr9jJHU7K/Refqtd/tohj0XNj71B1nKL7CnQl7+x5xKWLHi8Tsvx54lgd4PvuCPORXlsSJQQlgt7Knqy4Y6HT+WnMfwqC8gxrl7qDC8PCY+T5HGMIsyYNDhgPn76SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238167; c=relaxed/simple;
-	bh=61kdw5/433FCHUTxUVRE5YUsq2riD3b7w/h89gkUlkA=;
+	s=arc-20240116; t=1789238174; c=relaxed/simple;
+	bh=tHO5ZdIyG8V0Q8xK+iQ7nZHFUkCux+9UzN6VhMuUgAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f8P4gdwkufCj3cb6pGk42dwZ7PBlAQI/trpBxKdW5qjOq/K1dOKgJSpHsaet66vW1Fcl7HkyurkxZFMf8vrp804u5VcNxcYfYXaVXKUcfCNymjMTrwm66jb9XObnoixZW1tYXoJpzQksXe6HTAOUNosm2N4c+uh5czTABSOhq4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKv8LbaD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GP2CppRw1LfxVqzbm+vZTqcdIzPwcgmX7W4hHkfY2qGnAs7iwyJ/avDV+gPEFv8BZph0S62M4Zgr4Kt4LWCSA/MFwNKSNQAZ7gFZckD/WCqy1ws8/PS+NuNmkYVWxlOHWZ+ZEro+rZwqH5W4AkvpkcpE2fnh62GTG9+uvc33E14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vc6u8F8s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKv8LbaD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6501F000FF;
-	Sat, 12 Sep 2026 18:36:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vc6u8F8s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869AC1F00893;
+	Sat, 12 Sep 2026 18:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238163;
-	bh=oDDRa+WCXA0eCAkFU/MqRVksT054nLunmlk0I3YeUBQ=;
+	s=korg; t=1789238168;
+	bh=LikINOHpNLHdhcg4g2gsKgb8yFxkVuSu7flF5lutQ7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xKv8LbaDh7aSHE+Gc3snK0viKKjFMwcdxO4JGGuiAXRj2kI8YHmm6dz9wS5+Qhg9m
-	 hibILZGoFM2GANHAnIPp7yqXZEeXOsfkKx93wFg1hRMpdowZIc7XOdvXRHguWQSPdG
-	 1lmbXj/xFd0OymZ30fG9bzfo3DbDsEjZH7T/vtkM=
+	b=vc6u8F8sT3DEEbltuy1H1mGN8R+nWQ6O/oIN5NWO8mmuJLc6pyUw30mlqoK38kpwW
+	 y4PVuCGiNoLJ2Djggi92+a1fSEfCoA3YZMNsUNYyw1gkJEz1A1PrDc2XYlYCECep3/
+	 lSAOi6DQRxoe4SCH3mIAbVunKvkaQg3MuNSav2x8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Weigang He <geoffreyhe2@gmail.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 407/935] ARM: imx: fix device_node refcount leak in imx_src_init()
-Date: Sat, 12 Sep 2026 08:57:17 +0200
-Message-ID: <20260912065536.158315378@linuxfoundation.org>
+Subject: [PATCH 5.15 408/935] ARM: imx: fix device_node refcount leaks in imx7_src_init()
+Date: Sat, 12 Sep 2026 08:57:18 +0200
+Message-ID: <20260912065536.180619316@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,41 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit 936407c3563ac745cbbb9953c0cf2472128a22f4 ]
+[ Upstream commit 3de939b2ac843d56d88e2ab1e1b1f667cba9e1d4 ]
 
-imx_src_init() obtains a device_node reference via
-of_find_compatible_node() matching "fsl,imx51-src" and uses it only to
-call of_iomap(). It never releases that reference: on the success path
-the function returns at the end without of_node_put(np), leaking one
-device_node refcount on every boot of an i.MX5/6 platform.
+imx7_src_init() obtains two device_node references via
+of_find_compatible_node() - one for "fsl,imx7d-src" and one for
+"fsl,imx7d-gpc" - reusing the same np variable, but never calls
+of_node_put() on either. On every i.MX7D boot up to two device_node
+refcounts are leaked:
 
-Release the reference right after of_iomap(). of_iomap() maps the
-node's registers but does not retain a reference to the device_node, so
-the node can be put once the mapping is done. The early return on a NULL
-np needs no put.
+  - The "fsl,imx7d-src" node is leaked both when of_iomap() fails (the
+    early return after the mapping) and when it succeeds, because np is
+    then overwritten by the second of_find_compatible_node() call
+    without releasing the prior reference.
+  - The "fsl,imx7d-gpc" node is leaked on every path leaving the
+    function after it is acquired.
+
+Release each reference immediately after of_iomap() consumes the node.
+of_iomap() maps the node's registers but does not retain a reference to
+the device_node, so it is safe to put the node once mapped; this also
+drops the first reference before np is reused for the second lookup.
 
 Found by static analysis tool CodeQL.
 
-Fixes: bd3d924d71a4 ("ARM i.MX5: Add System Reset Controller (SRC) support for i.MX51 and i.MX53")
+Fixes: e34645f45805 ("ARM: imx: add smp support for imx7d")
 Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-imx/src.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/mach-imx/src.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/arch/arm/mach-imx/src.c b/arch/arm/mach-imx/src.c
-index 59a8e8cc44693..f28bfb653a88f 100644
+index f28bfb653a88f..c3c80b4c3d53b 100644
 --- a/arch/arm/mach-imx/src.c
 +++ b/arch/arm/mach-imx/src.c
-@@ -171,6 +171,7 @@ void __init imx_src_init(void)
- 	if (!np)
+@@ -196,6 +196,7 @@ void __init imx7_src_init(void)
  		return;
+ 
  	src_base = of_iomap(np, 0);
 +	of_node_put(np);
- 	WARN_ON(!src_base);
+ 	if (!src_base)
+ 		return;
  
- 	/*
+@@ -204,6 +205,7 @@ void __init imx7_src_init(void)
+ 		return;
+ 
+ 	gpc_base = of_iomap(np, 0);
++	of_node_put(np);
+ 	if (!gpc_base)
+ 		return;
+ }
 -- 
 2.53.0
 
