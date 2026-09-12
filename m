@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5F447ACCA;
-	Sat, 12 Sep 2026 12:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A572E06E4;
+	Sat, 12 Sep 2026 12:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215421; cv=none; b=Iwb3mSeHm0xNgIusU9NZNvbO7ifXGLMvZDTj1C3/mlLxkbhNvdVF3GjxtL9yoBfmYTI4JzYyeUH400w4AVv1jR9MxT/Q4w3OE7NkrBqOjQ0C72oNnPWw7Jteiz9o2yZ4p5Hy4RNcV7x0JmNYJTvPpTqg/cjRs/lxn9EsNFv8CwU=
+	t=1789215423; cv=none; b=eryQczhtFV8Dwc0AdaQljm7PqUOCSOhhTykgW/kOygJqdtg6QBXxu8B/hEjbInNPVLuZ6zCxVxsJPaVwnBCNY+nE5b/pHGMqLcXed8/trEWz0kYdrSVKGvqfSiy1f2n2lDllT3vCPae0fIPXrGbfxLwSerRsltUan9cr/xZ9R6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215421; c=relaxed/simple;
-	bh=eqS9bKGlaSAVcPnuJr7bmnB5PiPVau7iIbKjLmb4/uc=;
+	s=arc-20240116; t=1789215423; c=relaxed/simple;
+	bh=n3itx47qIOpIUREjBFAZ3qoF0MAyQ1eSZceiUCNH6gI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Goz9yUpu/ro2DNeQs3jP8mqRXqGhTCiBtGqaHw8oBGW+e0yLteqDXF9Kmp5o7QREtAw4rwDSDubOGQC/9i7TT00UskGcwqwVazclo5j6RI2QgarTRPsXZ3BZhqRBhO/a4LnGuX+hK/8wzGuDSX9DwU0MeOCWGZhSj9fkFdGbZeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snERc6vu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=f3ioYiffnWojL2ib5EISrPhc3vyuX0cItYND1TsGfhQqTw66sFrJttj9M5rQNnthHRVAGdTFqEYxBVEzzdq9eFCj8KRn93wtIe+savYMtzWypMMnTwXRVR6AGxVxC3NpmYttdxxFsSs0o+G8raWXxa5GmyY8bXXAG9F8Ur5zDxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oEi71acb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snERc6vu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38ABF1F000FF;
-	Sat, 12 Sep 2026 12:16:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEi71acb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521AC1F00893;
+	Sat, 12 Sep 2026 12:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215410;
-	bh=y0FsKcbhnDQjirKmSxWx4KwP0R2wWEeOzVipk5ZZPpY=;
+	s=korg; t=1789215419;
+	bh=pHCb3CXfUU69oAT3xDlaL7MgtcGyX9bkf8Fz7tsdEtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=snERc6vuG/0Ffoc7/Y1TyCtLZioVymkfCqCJII5k50ThuPeaVdagbBUNuydVy7Lwd
-	 1SKLL6Na6vTOv5SurSZAxk9SEE6np54kVwLvBcoxS2fhzYhGteo0AhCqU9ip7qjnnr
-	 HAWkh139d10VWwE72IifXfIqwKWXBZWKmytOIHXc=
+	b=oEi71acbpjFiSSI9mlUqhbHuS2j/hQukcznmKOLVWxuReI2abJtCGHdasQxM6Heg7
+	 6rJP4l5lvBoFvJEuOcgrFlQM6us3DJKzYJ4z6tX2oS6CYNoi/nSbiHmrZftEXJ2fKA
+	 6uVFOSsAd22Aq0arzbDOOK6GijnsLKLutkT30n2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+73d8fc29ec7cba8286fa@syzkaller.appspotmail.com,
+	=?UTF-8?q?HE=20WEI=EF=BC=88=E3=82=AE=E3=82=AB=E3=82=AF=EF=BC=89?= <skyexpoc@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0527/1376] fs/ntfs3: Mark inode as bad as soon as error detected in mi_enum_attr()
-Date: Sat, 12 Sep 2026 08:49:13 +0200
-Message-ID: <20260912065619.283238674@linuxfoundation.org>
+Subject: [PATCH 6.12 0529/1376] fs/ntfs3: fix slab-out-of-bounds write in ni_create_attr_list()
+Date: Sat, 12 Sep 2026 08:49:15 +0200
+Message-ID: <20260912065619.328711328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -45,599 +45,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: HE WEI（ギカク） <skyexpoc@gmail.com>
 
-[ Upstream commit 2afd4d267e6dbaec8d3ccd4f5396cb84bc67aa2e ]
+[ Upstream commit 7c4841e2a62794a3bab7c1ff0540580f387e377f ]
 
-Extended the `mi_enum_attr()` function interface with an additional
-parameter, `struct ntfs_inode *ni`, to allow marking the inode
-as bad as soon as an error is detected.
+ni_create_attr_list() allocates a fixed buffer of al_aligned(record_size)
+(== record_size) bytes and then walks every attribute of the primary MFT
+record, writing one ATTR_LIST_ENTRY per attribute and advancing the cursor
+by le_size(name_len), with no check against the end of the buffer; the
+total size is only computed after the loop.
 
-Reported-by: syzbot+73d8fc29ec7cba8286fa@syzkaller.appspotmail.com
+A minimum-size resident attribute occupies SIZEOF_RESIDENT (0x18 = 24)
+bytes on disk, but an unnamed attribute expands to le_size(0) (0x20 = 32)
+bytes in the list.  Because the number of attributes in a record is not
+bounded (mi_enum_attr() accepts arbitrarily many equal-type, nameless
+minimum-size attributes), a crafted record packed with such attributes
+produces a list larger than record_size and overflows the heap buffer.
+
+This is reachable from a crafted, loop-mounted NTFS image: opening the file
+and adding an attribute (e.g. via setxattr) drives ntfs_set_ea() ->
+ni_insert_resident() -> ni_insert_attr() -> ni_ins_attr_ext() ->
+ni_create_attr_list().
+
+  BUG: KASAN: slab-out-of-bounds in ni_create_attr_list+0xc48/0x1058
+  Write of size 4 at addr ffff000008984c00 by task setfattr/345
+   ni_create_attr_list+0xc48/0x1058
+   ni_ins_attr_ext+0x510/0x7c0
+   ni_insert_attr+0x3f8/0x70c
+   ni_insert_resident+0xc8/0x3b0
+   ntfs_set_ea+0x66c/0xd28
+   ntfs_setxattr+0x4d8/0x5b0
+   __arm64_sys_setxattr+0xa4/0x124
+  Allocated by task 345:
+   ni_create_attr_list+0x188/0x1058
+  The buggy address belongs to the cache kmalloc-1k of size 1024
+  (the write lands at object+1024).
+
+Size the buffer from the actual attributes instead of assuming a single
+record_size is always enough.
+
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Reported-by: HE WEI（ギカク） <skyexpoc@gmail.com>
+Signed-off-by: HE WEI（ギカク） <skyexpoc@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Stable-dep-of: 7c4841e2a627 ("fs/ntfs3: fix slab-out-of-bounds write in ni_create_attr_list()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrib.c  | 11 ++++---
- fs/ntfs3/frecord.c | 59 ++++++++++++++++++----------------
- fs/ntfs3/ntfs_fs.h | 21 ++++++------
- fs/ntfs3/record.c  | 79 ++++++++++++++++++++++++----------------------
- 4 files changed, 90 insertions(+), 80 deletions(-)
+ fs/ntfs3/frecord.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
-index 940a8293abe9c..526f86a6fe518 100644
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -789,7 +789,8 @@ int attr_set_size(struct ntfs_inode *ni, enum ATTR_TYPE type,
- 		if (err)
- 			goto out;
- 
--		attr = mi_find_attr(mi, NULL, type, name, name_len, &le->id);
-+		attr = mi_find_attr(ni, mi, NULL, type, name, name_len,
-+				    &le->id);
- 		if (!attr) {
- 			err = -EINVAL;
- 			goto bad_inode;
-@@ -1197,7 +1198,7 @@ int attr_data_get_block(struct ntfs_inode *ni, CLST vcn, CLST clen, CLST *lcn,
- 			goto out;
- 		}
- 
--		attr = mi_find_attr(mi, NULL, ATTR_DATA, NULL, 0, &le->id);
-+		attr = mi_find_attr(ni, mi, NULL, ATTR_DATA, NULL, 0, &le->id);
- 		if (!attr) {
- 			err = -EINVAL;
- 			goto out;
-@@ -1821,7 +1822,7 @@ int attr_allocate_frame(struct ntfs_inode *ni, CLST frame, size_t compr_size,
- 				goto out;
- 			}
- 
--			attr = mi_find_attr(mi, NULL, ATTR_DATA, NULL, 0,
-+			attr = mi_find_attr(ni, mi, NULL, ATTR_DATA, NULL, 0,
- 					    &le->id);
- 			if (!attr) {
- 				err = -EINVAL;
-@@ -2066,8 +2067,8 @@ int attr_collapse_range(struct ntfs_inode *ni, u64 vbo, u64 bytes)
- 				}
- 
- 				/* Look for required attribute. */
--				attr = mi_find_attr(mi, NULL, ATTR_DATA, NULL,
--						    0, &le->id);
-+				attr = mi_find_attr(ni, mi, NULL, ATTR_DATA,
-+						    NULL, 0, &le->id);
- 				if (!attr) {
- 					err = -EINVAL;
- 					goto out;
 diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 65daa4f31d378..b2791327af22f 100644
+index 162a6c038000e..45e8d73d38f8f 100644
 --- a/fs/ntfs3/frecord.c
 +++ b/fs/ntfs3/frecord.c
-@@ -75,7 +75,7 @@ struct ATTR_STD_INFO *ni_std(struct ntfs_inode *ni)
- {
- 	const struct ATTRIB *attr;
+@@ -823,10 +823,23 @@ int ni_create_attr_list(struct ntfs_inode *ni)
+ 	rs = sbi->record_size;
  
--	attr = mi_find_attr(&ni->mi, NULL, ATTR_STD, NULL, 0, NULL);
-+	attr = mi_find_attr(ni, &ni->mi, NULL, ATTR_STD, NULL, 0, NULL);
- 	return attr ? resident_data_ex(attr, sizeof(struct ATTR_STD_INFO)) :
- 		      NULL;
- }
-@@ -89,7 +89,7 @@ struct ATTR_STD_INFO5 *ni_std5(struct ntfs_inode *ni)
- {
- 	const struct ATTRIB *attr;
- 
--	attr = mi_find_attr(&ni->mi, NULL, ATTR_STD, NULL, 0, NULL);
-+	attr = mi_find_attr(ni, &ni->mi, NULL, ATTR_STD, NULL, 0, NULL);
- 
- 	return attr ? resident_data_ex(attr, sizeof(struct ATTR_STD_INFO5)) :
- 		      NULL;
-@@ -203,7 +203,8 @@ struct ATTRIB *ni_find_attr(struct ntfs_inode *ni, struct ATTRIB *attr,
- 			*mi = &ni->mi;
- 
- 		/* Look for required attribute in primary record. */
--		return mi_find_attr(&ni->mi, attr, type, name, name_len, NULL);
-+		return mi_find_attr(ni, &ni->mi, attr, type, name, name_len,
-+				    NULL);
- 	}
- 
- 	/* First look for list entry of required type. */
-@@ -219,7 +220,7 @@ struct ATTRIB *ni_find_attr(struct ntfs_inode *ni, struct ATTRIB *attr,
- 		return NULL;
- 
- 	/* Look for required attribute. */
--	attr = mi_find_attr(m, NULL, type, name, name_len, &le->id);
-+	attr = mi_find_attr(ni, m, NULL, type, name, name_len, &le->id);
- 
- 	if (!attr)
- 		goto out;
-@@ -260,7 +261,7 @@ struct ATTRIB *ni_enum_attr_ex(struct ntfs_inode *ni, struct ATTRIB *attr,
- 		if (mi)
- 			*mi = &ni->mi;
- 		/* Enum attributes in primary record. */
--		return mi_enum_attr(&ni->mi, attr);
-+		return mi_enum_attr(ni, &ni->mi, attr);
- 	}
- 
- 	/* Get next list entry. */
-@@ -276,7 +277,7 @@ struct ATTRIB *ni_enum_attr_ex(struct ntfs_inode *ni, struct ATTRIB *attr,
- 		*mi = mi2;
- 
- 	/* Find attribute in loaded record. */
--	return rec_find_attr_le(mi2, le2);
-+	return rec_find_attr_le(ni, mi2, le2);
- }
- 
- /*
-@@ -294,7 +295,8 @@ struct ATTRIB *ni_load_attr(struct ntfs_inode *ni, enum ATTR_TYPE type,
- 	if (!ni->attr_list.size) {
- 		if (pmi)
- 			*pmi = &ni->mi;
--		return mi_find_attr(&ni->mi, NULL, type, name, name_len, NULL);
-+		return mi_find_attr(ni, &ni->mi, NULL, type, name, name_len,
-+				    NULL);
- 	}
- 
- 	le = al_find_ex(ni, NULL, type, name, name_len, NULL);
-@@ -320,7 +322,7 @@ struct ATTRIB *ni_load_attr(struct ntfs_inode *ni, enum ATTR_TYPE type,
- 	if (pmi)
- 		*pmi = mi;
- 
--	attr = mi_find_attr(mi, NULL, type, name, name_len, &le->id);
-+	attr = mi_find_attr(ni, mi, NULL, type, name, name_len, &le->id);
- 	if (!attr)
- 		return NULL;
- 
-@@ -402,7 +404,8 @@ int ni_remove_attr(struct ntfs_inode *ni, enum ATTR_TYPE type,
- 	int diff;
- 
- 	if (base_only || type == ATTR_LIST || !ni->attr_list.size) {
--		attr = mi_find_attr(&ni->mi, NULL, type, name, name_len, id);
-+		attr = mi_find_attr(ni, &ni->mi, NULL, type, name, name_len,
-+				    id);
- 		if (!attr)
- 			return -ENOENT;
- 
-@@ -441,7 +444,7 @@ int ni_remove_attr(struct ntfs_inode *ni, enum ATTR_TYPE type,
- 
- 		al_remove_le(ni, le);
- 
--		attr = mi_find_attr(mi, NULL, type, name, name_len, id);
-+		attr = mi_find_attr(ni, mi, NULL, type, name, name_len, id);
- 		if (!attr)
- 			return -ENOENT;
- 
-@@ -489,7 +492,7 @@ ni_ins_new_attr(struct ntfs_inode *ni, struct mft_inode *mi,
- 		name = le->name;
- 	}
- 
--	attr = mi_insert_attr(mi, type, name, name_len, asize, name_off);
-+	attr = mi_insert_attr(ni, mi, type, name, name_len, asize, name_off);
- 	if (!attr) {
- 		if (le_added)
- 			al_remove_le(ni, le);
-@@ -677,7 +680,7 @@ static int ni_try_remove_attr_list(struct ntfs_inode *ni)
- 	if (err)
- 		return err;
- 
--	attr_list = mi_find_attr(&ni->mi, NULL, ATTR_LIST, NULL, 0, NULL);
-+	attr_list = mi_find_attr(ni, &ni->mi, NULL, ATTR_LIST, NULL, 0, NULL);
- 	if (!attr_list)
- 		return 0;
- 
-@@ -699,7 +702,7 @@ static int ni_try_remove_attr_list(struct ntfs_inode *ni)
- 		if (!mi)
- 			return 0;
- 
--		attr = mi_find_attr(mi, NULL, le->type, le_name(le),
-+		attr = mi_find_attr(ni, mi, NULL, le->type, le_name(le),
- 				    le->name_len, &le->id);
- 		if (!attr)
- 			return 0;
-@@ -735,7 +738,7 @@ static int ni_try_remove_attr_list(struct ntfs_inode *ni)
- 			goto out;
- 		}
- 
--		attr = mi_find_attr(mi, NULL, le->type, le_name(le),
-+		attr = mi_find_attr(ni, mi, NULL, le->type, le_name(le),
- 				    le->name_len, &le->id);
- 		if (!attr) {
- 			/* Should never happened, 'cause already checked. */
-@@ -744,7 +747,7 @@ static int ni_try_remove_attr_list(struct ntfs_inode *ni)
- 		asize = le32_to_cpu(attr->size);
- 
- 		/* Insert into primary record. */
--		attr_ins = mi_insert_attr(&ni->mi, le->type, le_name(le),
-+		attr_ins = mi_insert_attr(ni, &ni->mi, le->type, le_name(le),
- 					  le->name_len, asize,
- 					  le16_to_cpu(attr->name_off));
- 		if (!attr_ins) {
-@@ -772,7 +775,7 @@ static int ni_try_remove_attr_list(struct ntfs_inode *ni)
- 		if (!mi)
- 			continue;
- 
--		attr = mi_find_attr(mi, NULL, le->type, le_name(le),
-+		attr = mi_find_attr(ni, mi, NULL, le->type, le_name(le),
- 				    le->name_len, &le->id);
- 		if (!attr)
- 			continue;
-@@ -835,7 +838,7 @@ int ni_create_attr_list(struct ntfs_inode *ni)
- 	free_b = 0;
- 	attr = NULL;
- 
--	for (; (attr = mi_enum_attr(&ni->mi, attr)); le = Add2Ptr(le, sz)) {
-+	for (; (attr = mi_enum_attr(ni, &ni->mi, attr)); le = Add2Ptr(le, sz)) {
- 		sz = le_size(attr->name_len);
- 		le->type = attr->type;
- 		le->size = cpu_to_le16(sz);
-@@ -890,7 +893,7 @@ int ni_create_attr_list(struct ntfs_inode *ni)
- 		u32 asize = le32_to_cpu(b->size);
- 		u16 name_off = le16_to_cpu(b->name_off);
- 
--		attr = mi_insert_attr(mi, b->type, Add2Ptr(b, name_off),
-+		attr = mi_insert_attr(ni, mi, b->type, Add2Ptr(b, name_off),
- 				      b->name_len, asize, name_off);
- 		if (!attr)
- 			goto out;
-@@ -913,7 +916,7 @@ int ni_create_attr_list(struct ntfs_inode *ni)
- 			goto out;
- 	}
- 
--	attr = mi_insert_attr(&ni->mi, ATTR_LIST, NULL, 0,
-+	attr = mi_insert_attr(ni, &ni->mi, ATTR_LIST, NULL, 0,
- 			      lsize + SIZEOF_RESIDENT, SIZEOF_RESIDENT);
- 	if (!attr)
- 		goto out;
-@@ -997,13 +1000,13 @@ static int ni_ins_attr_ext(struct ntfs_inode *ni, struct ATTR_LIST_ENTRY *le,
- 		mi = rb_entry(node, struct mft_inode, node);
- 
- 		if (is_mft_data &&
--		    (mi_enum_attr(mi, NULL) ||
-+		    (mi_enum_attr(ni, mi, NULL) ||
- 		     vbo <= ((u64)mi->rno << sbi->record_bits))) {
- 			/* We can't accept this record 'cause MFT's bootstrapping. */
- 			continue;
- 		}
- 		if (is_mft &&
--		    mi_find_attr(mi, NULL, ATTR_DATA, NULL, 0, NULL)) {
-+		    mi_find_attr(ni, mi, NULL, ATTR_DATA, NULL, 0, NULL)) {
- 			/*
- 			 * This child record already has a ATTR_DATA.
- 			 * So it can't accept any other records.
-@@ -1012,7 +1015,7 @@ static int ni_ins_attr_ext(struct ntfs_inode *ni, struct ATTR_LIST_ENTRY *le,
- 		}
- 
- 		if ((type != ATTR_NAME || name_len) &&
--		    mi_find_attr(mi, NULL, type, name, name_len, NULL)) {
-+		    mi_find_attr(ni, mi, NULL, type, name, name_len, NULL)) {
- 			/* Only indexed attributes can share same record. */
- 			continue;
- 		}
-@@ -1161,7 +1164,7 @@ static int ni_insert_attr(struct ntfs_inode *ni, enum ATTR_TYPE type,
- 	/* Estimate the result of moving all possible attributes away. */
- 	attr = NULL;
- 
--	while ((attr = mi_enum_attr(&ni->mi, attr))) {
-+	while ((attr = mi_enum_attr(ni, &ni->mi, attr))) {
- 		if (attr->type == ATTR_STD)
- 			continue;
- 		if (attr->type == ATTR_LIST)
-@@ -1179,7 +1182,7 @@ static int ni_insert_attr(struct ntfs_inode *ni, enum ATTR_TYPE type,
- 	attr = NULL;
- 
- 	for (;;) {
--		attr = mi_enum_attr(&ni->mi, attr);
-+		attr = mi_enum_attr(ni, &ni->mi, attr);
- 		if (!attr) {
- 			/* We should never be here 'cause we have already check this case. */
- 			err = -EINVAL;
-@@ -1263,7 +1266,7 @@ static int ni_expand_mft_list(struct ntfs_inode *ni)
- 	for (node = rb_first(&ni->mi_tree); node; node = rb_next(node)) {
- 		mi = rb_entry(node, struct mft_inode, node);
- 
--		attr = mi_enum_attr(mi, NULL);
-+		attr = mi_enum_attr(ni, mi, NULL);
- 
- 		if (!attr) {
- 			mft_min = mi->rno;
-@@ -1284,7 +1287,7 @@ static int ni_expand_mft_list(struct ntfs_inode *ni)
- 		ni_remove_mi(ni, mi_new);
- 	}
- 
--	attr = mi_find_attr(&ni->mi, NULL, ATTR_DATA, NULL, 0, NULL);
-+	attr = mi_find_attr(ni, &ni->mi, NULL, ATTR_DATA, NULL, 0, NULL);
- 	if (!attr) {
- 		err = -EINVAL;
- 		goto out;
-@@ -1401,7 +1404,7 @@ int ni_expand_list(struct ntfs_inode *ni)
- 			continue;
- 
- 		/* Find attribute in primary record. */
--		attr = rec_find_attr_le(&ni->mi, le);
-+		attr = rec_find_attr_le(ni, &ni->mi, le);
- 		if (!attr) {
- 			err = -EINVAL;
- 			goto out;
-@@ -3430,7 +3433,7 @@ int ni_write_inode(struct inode *inode, int sync, const char *hint)
- 		if (!mi->dirty)
- 			continue;
- 
--		is_empty = !mi_enum_attr(mi, NULL);
-+		is_empty = !mi_enum_attr(ni, mi, NULL);
- 
- 		if (is_empty)
- 			clear_rec_inuse(mi->mrec);
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index 919fb3f36af0e..11be9a6f041cf 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -746,23 +746,24 @@ int mi_get(struct ntfs_sb_info *sbi, CLST rno, struct mft_inode **mi);
- void mi_put(struct mft_inode *mi);
- int mi_init(struct mft_inode *mi, struct ntfs_sb_info *sbi, CLST rno);
- int mi_read(struct mft_inode *mi, bool is_mft);
--struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr);
--// TODO: id?
--struct ATTRIB *mi_find_attr(struct mft_inode *mi, struct ATTRIB *attr,
--			    enum ATTR_TYPE type, const __le16 *name,
--			    u8 name_len, const __le16 *id);
--static inline struct ATTRIB *rec_find_attr_le(struct mft_inode *rec,
-+struct ATTRIB *mi_enum_attr(struct ntfs_inode *ni, struct mft_inode *mi,
-+			    struct ATTRIB *attr);
-+struct ATTRIB *mi_find_attr(struct ntfs_inode *ni, struct mft_inode *mi,
-+			    struct ATTRIB *attr, enum ATTR_TYPE type,
-+			    const __le16 *name, u8 name_len, const __le16 *id);
-+static inline struct ATTRIB *rec_find_attr_le(struct ntfs_inode *ni,
-+					      struct mft_inode *rec,
- 					      struct ATTR_LIST_ENTRY *le)
- {
--	return mi_find_attr(rec, NULL, le->type, le_name(le), le->name_len,
-+	return mi_find_attr(ni, rec, NULL, le->type, le_name(le), le->name_len,
- 			    &le->id);
- }
- int mi_write(struct mft_inode *mi, int wait);
- int mi_format_new(struct mft_inode *mi, struct ntfs_sb_info *sbi, CLST rno,
- 		  __le16 flags, bool is_mft);
--struct ATTRIB *mi_insert_attr(struct mft_inode *mi, enum ATTR_TYPE type,
--			      const __le16 *name, u8 name_len, u32 asize,
--			      u16 name_off);
-+struct ATTRIB *mi_insert_attr(struct ntfs_inode *ni, struct mft_inode *mi,
-+			      enum ATTR_TYPE type, const __le16 *name,
-+			      u8 name_len, u32 asize, u16 name_off);
- 
- bool mi_remove_attr(struct ntfs_inode *ni, struct mft_inode *mi,
- 		    struct ATTRIB *attr);
-diff --git a/fs/ntfs3/record.c b/fs/ntfs3/record.c
-index 61d53d39f3b9f..714c7ecedca83 100644
---- a/fs/ntfs3/record.c
-+++ b/fs/ntfs3/record.c
-@@ -31,7 +31,7 @@ static inline int compare_attr(const struct ATTRIB *left, enum ATTR_TYPE type,
-  *
-  * Return: Unused attribute id that is less than mrec->next_attr_id.
-  */
--static __le16 mi_new_attt_id(struct mft_inode *mi)
-+static __le16 mi_new_attt_id(struct ntfs_inode *ni, struct mft_inode *mi)
- {
- 	u16 free_id, max_id, t16;
- 	struct MFT_REC *rec = mi->mrec;
-@@ -52,7 +52,7 @@ static __le16 mi_new_attt_id(struct mft_inode *mi)
- 	attr = NULL;
- 
- 	for (;;) {
--		attr = mi_enum_attr(mi, attr);
-+		attr = mi_enum_attr(ni, mi, attr);
- 		if (!attr) {
- 			rec->next_attr_id = cpu_to_le16(max_id + 1);
- 			mi->dirty = true;
-@@ -195,7 +195,8 @@ int mi_read(struct mft_inode *mi, bool is_mft)
-  * NOTE: mi->mrec - memory of size sbi->record_size
-  * here we sure that mi->mrec->total == sbi->record_size (see mi_read)
-  */
--struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
-+struct ATTRIB *mi_enum_attr(struct ntfs_inode *ni, struct mft_inode *mi,
-+			    struct ATTRIB *attr)
- {
- 	const struct MFT_REC *rec = mi->mrec;
- 	u32 used = le32_to_cpu(rec->used);
-@@ -209,11 +210,11 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
- 		off = le16_to_cpu(rec->attr_off);
- 
- 		if (used > total)
--			return NULL;
-+			goto out;
- 
- 		if (off >= used || off < MFTRECORD_FIXUP_OFFSET_1 ||
- 		    !IS_ALIGNED(off, 8)) {
--			return NULL;
-+			goto out;
- 		}
- 
- 		/* Skip non-resident records. */
-@@ -243,7 +244,7 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 	/*
+-	 * Skip estimating exact memory requirement.
+-	 * Looks like one record_size is always enough.
++	 * Compute the exact size of the attribute list.  Each attribute in the
++	 * record yields one ATTR_LIST_ENTRY of le_size(name_len) bytes.  The
++	 * minimum on-disk attribute is SIZEOF_RESIDENT (0x18) bytes, but an
++	 * unnamed one expands to le_size(0) (0x20) here, so a record crafted
++	 * with many such attributes needs more than a single record_size; the
++	 * previous fixed kzalloc(record_size) could therefore be overflowed by
++	 * an attacker-controlled record.
  	 */
- 	if (off + 8 > used) {
- 		static_assert(ALIGN(sizeof(enum ATTR_TYPE), 8) == 8);
--		return NULL;
-+		goto out;
- 	}
- 
- 	if (attr->type == ATTR_END) {
-@@ -254,112 +255,116 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
- 	/* 0x100 is last known attribute for now. */
- 	t32 = le32_to_cpu(attr->type);
- 	if (!t32 || (t32 & 0xf) || (t32 > 0x100))
--		return NULL;
-+		goto out;
- 
- 	/* attributes in record must be ordered by type */
- 	if (t32 < prev_type)
--		return NULL;
-+		goto out;
- 
- 	asize = le32_to_cpu(attr->size);
- 
- 	if (!IS_ALIGNED(asize, 8))
--		return NULL;
-+		goto out;
- 
- 	/* Check overflow and boundary. */
- 	if (off + asize < off || off + asize > used)
--		return NULL;
-+		goto out;
- 
- 	/* Can we use the field attr->non_res. */
- 	if (off + 9 > used)
--		return NULL;
-+		goto out;
- 
- 	/* Check size of attribute. */
- 	if (!attr->non_res) {
- 		/* Check resident fields. */
- 		if (asize < SIZEOF_RESIDENT)
--			return NULL;
-+			goto out;
- 
- 		t16 = le16_to_cpu(attr->res.data_off);
- 		if (t16 > asize)
--			return NULL;
-+			goto out;
- 
- 		if (le32_to_cpu(attr->res.data_size) > asize - t16)
--			return NULL;
-+			goto out;
- 
- 		t32 = sizeof(short) * attr->name_len;
- 		if (t32 && le16_to_cpu(attr->name_off) + t32 > t16)
--			return NULL;
-+			goto out;
- 
- 		return attr;
- 	}
- 
- 	/* Check nonresident fields. */
- 	if (attr->non_res != 1)
--		return NULL;
-+		goto out;
- 
- 	/* Can we use memory including attr->nres.valid_size? */
- 	if (asize < SIZEOF_NONRESIDENT)
--		return NULL;
-+		goto out;
- 
- 	t16 = le16_to_cpu(attr->nres.run_off);
- 	if (t16 > asize)
--		return NULL;
-+		goto out;
- 
- 	t32 = sizeof(short) * attr->name_len;
- 	if (t32 && le16_to_cpu(attr->name_off) + t32 > t16)
--		return NULL;
-+		goto out;
- 
- 	/* Check start/end vcn. */
- 	if (le64_to_cpu(attr->nres.svcn) > le64_to_cpu(attr->nres.evcn) + 1)
--		return NULL;
-+		goto out;
- 
- 	data_size = le64_to_cpu(attr->nres.data_size);
- 	if (le64_to_cpu(attr->nres.valid_size) > data_size)
--		return NULL;
-+		goto out;
- 
- 	alloc_size = le64_to_cpu(attr->nres.alloc_size);
- 	if (data_size > alloc_size)
--		return NULL;
-+		goto out;
- 
- 	t32 = mi->sbi->cluster_mask;
- 	if (alloc_size & t32)
--		return NULL;
-+		goto out;
- 
- 	if (!attr->nres.svcn && is_attr_ext(attr)) {
- 		/* First segment of sparse/compressed attribute */
- 		/* Can we use memory including attr->nres.total_size? */
- 		if (asize < SIZEOF_NONRESIDENT_EX)
--			return NULL;
-+			goto out;
- 
- 		tot_size = le64_to_cpu(attr->nres.total_size);
- 		if (tot_size & t32)
--			return NULL;
-+			goto out;
- 
- 		if (tot_size > alloc_size)
--			return NULL;
-+			goto out;
- 	} else {
- 		if (attr->nres.c_unit)
--			return NULL;
-+			goto out;
- 
- 		if (alloc_size > mi->sbi->volume.size)
--			return NULL;
-+			goto out;
- 	}
- 
- 	return attr;
+-	le = kzalloc(al_aligned(rs), GFP_NOFS);
++	lsize = 0;
++	attr = NULL;
++	while ((attr = mi_enum_attr(ni, &ni->mi, attr)))
++		lsize += le_size(attr->name_len);
 +
-+out:
-+	_ntfs_bad_inode(&ni->vfs_inode);
-+	return NULL;
- }
++	if (!lsize)
++		return -EINVAL;
++
++	le = kzalloc(al_aligned(lsize), GFP_NOFS);
+ 	if (!le)
+ 		return -ENOMEM;
  
- /*
-  * mi_find_attr - Find the attribute by type and name and id.
-  */
--struct ATTRIB *mi_find_attr(struct mft_inode *mi, struct ATTRIB *attr,
--			    enum ATTR_TYPE type, const __le16 *name,
--			    u8 name_len, const __le16 *id)
-+struct ATTRIB *mi_find_attr(struct ntfs_inode *ni, struct mft_inode *mi,
-+			    struct ATTRIB *attr, enum ATTR_TYPE type,
-+			    const __le16 *name, u8 name_len, const __le16 *id)
- {
- 	u32 type_in = le32_to_cpu(type);
- 	u32 atype;
- 
- next_attr:
--	attr = mi_enum_attr(mi, attr);
-+	attr = mi_enum_attr(ni, mi, attr);
- 	if (!attr)
- 		return NULL;
- 
-@@ -467,9 +472,9 @@ int mi_format_new(struct mft_inode *mi, struct ntfs_sb_info *sbi, CLST rno,
-  *
-  * Return: Not full constructed attribute or NULL if not possible to create.
-  */
--struct ATTRIB *mi_insert_attr(struct mft_inode *mi, enum ATTR_TYPE type,
--			      const __le16 *name, u8 name_len, u32 asize,
--			      u16 name_off)
-+struct ATTRIB *mi_insert_attr(struct ntfs_inode *ni, struct mft_inode *mi,
-+			      enum ATTR_TYPE type, const __le16 *name,
-+			      u8 name_len, u32 asize, u16 name_off)
- {
- 	size_t tail;
- 	struct ATTRIB *attr;
-@@ -488,7 +493,7 @@ struct ATTRIB *mi_insert_attr(struct mft_inode *mi, enum ATTR_TYPE type,
- 	 * at which we should insert it.
- 	 */
+@@ -836,7 +849,6 @@ int ni_create_attr_list(struct ntfs_inode *ni)
  	attr = NULL;
--	while ((attr = mi_enum_attr(mi, attr))) {
-+	while ((attr = mi_enum_attr(ni, mi, attr))) {
- 		int diff = compare_attr(attr, type, name, name_len, upcase);
+ 	nb = 0;
+ 	free_b = 0;
+-	attr = NULL;
  
- 		if (diff < 0)
-@@ -508,7 +513,7 @@ struct ATTRIB *mi_insert_attr(struct mft_inode *mi, enum ATTR_TYPE type,
- 		tail = used - PtrOffset(rec, attr);
- 	}
- 
--	id = mi_new_attt_id(mi);
-+	id = mi_new_attt_id(ni, mi);
- 
- 	memmove(Add2Ptr(attr, asize), attr, tail);
- 	memset(attr, 0, asize);
+ 	for (; (attr = mi_enum_attr(ni, &ni->mi, attr)); le = Add2Ptr(le, sz)) {
+ 		sz = le_size(attr->name_len);
 -- 
 2.53.0
 
