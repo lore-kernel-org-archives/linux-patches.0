@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F33728030E;
-	Sat, 12 Sep 2026 10:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1A141DEC8;
+	Sat, 12 Sep 2026 10:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207256; cv=none; b=VtKvt0Mwkak4s8590CrgVFzP/dBGSclmQcmjmjMIj90OVOe8XTOg0d7yZUQXcon1M/XQbVpbjjOzGSmlLEJZkfx3knUoW9o89i9y0BPr+MYLEfhCWOPbval0LZzKuDYFkoFbt3PqzPDevJr147NkaWZp5rJUPHn8cyWw+urdXm8=
+	t=1789207261; cv=none; b=t5VkT8cUzXkfqEK0aX5idNUSjUFkbSELBmD6Vj/DKpUijRsZONxdAAS8TMvYokDYQ6K9f5OP0c9yz08lBUnumVFXz0anEG+yGG8wsZJB6jLIkuUjRbBRDMBMD3CkxcooJxaGVyHlxi/GBTLuZ+5e25rEEJGGA484LnL5Q8GoD/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207256; c=relaxed/simple;
-	bh=HOTXIZSHgr51IMT2caRDyOHLJ62RApm3Ec8tMKqkfp0=;
+	s=arc-20240116; t=1789207261; c=relaxed/simple;
+	bh=Awghnu68IPAf6h1Na8pPPNfDCBBZZfNCsL53YIWXEyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NUI5k5sasICjC7c8Rsa5Bf+ytA9ct7dmYJAtB/hhLbeZ3GY2LQ4uXbo+YzHryrVIy+tn7Ez2lvG41AfPWSZdnwloTUkLNNMzuzsrp1cXI5ZcdCkk5Jzcr74KNYvS7dBK2Cn5IVNF2D3dBi1b9sOBnVxYe+fvaLUSYTJUkC7TWLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fzdHzlk7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZgIoTVTbBPdFEN1mSMfnvoSaT7J85/qeOeW5u9P31VPOy5ZFsUxVUbtk9b56imdM66kX2aZSppyor8nkcoMBlx2t/GKMkJNqkzl9amla7TXndn7KSqIbAmyVTTGTyjIPQ/anMttOzjeoOYy+TDoVpTOcLkC12FNBVQ8IrrCDes0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJpES4yL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fzdHzlk7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248731F000FF;
-	Sat, 12 Sep 2026 10:00:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJpES4yL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B90F31F000FF;
+	Sat, 12 Sep 2026 10:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207255;
-	bh=PX90j8J1CuHatWjvJJgy0ggYFWHdsMBopVxPbDFudCg=;
+	s=korg; t=1789207259;
+	bh=XrcjvJLZs8Sg3hbLW1MR9okXLLPUrLl/yi+QYnA7oIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fzdHzlk70hIRBeFpJmFBWw5MTGTNI6zdmj/89fwdZQQs2DQhNM0zexdwYUCLk2ouD
-	 dlOSNViNOstmkmPrY8zCJGC7JbnfN28R3sygMKzSS8N3+FuwWhpM4Vwx1SO3VWLhiS
-	 7uwqgQtpHJGvIE7bY9C9a8OsO6+qU7eTpEc0MgRw=
+	b=mJpES4yL1x+mQiFJsNr3uKkvNamuirT1Oaq/zqtBhZ5rCc0gaWWi+5LQms56b+Eea
+	 DglRvCyIAYvPSwDNn0A5Gg0dFyt2KwA+4JNJf8KLYW12T92YL52dKAzqSNWNi5dIvI
+	 UzM4NIjj1Xq0iJmSsiTDH76sJ4ytvYDLLGvWk0EY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Stevens <stevensd@google.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0376/1518] x86/entry/fred: Encode frame pointer on entry
-Date: Sat, 12 Sep 2026 08:42:25 +0200
-Message-ID: <20260912065631.971396987@linuxfoundation.org>
+Subject: [PATCH 6.18 0377/1518] firmware: arm_scmi: Publish channel state before callbacks
+Date: Sat, 12 Sep 2026 08:42:26 +0200
+Message-ID: <20260912065631.993067304@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,43 +51,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Stevens <stevensd@google.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit dab01c597f6bd40e0efe7da967b8374ca1971b79 ]
+[ Upstream commit 0314900dcdde044af0208fed212035dbfaa55843 ]
 
-Add missing ENCODE_FRAME_POINTER macro invocation into FRED_ENTER macro,
-to prevent the unwinder from encountering a NULL stack frame pointer
-when CONFIG_UNWINDER_FRAME_POINTER is enabled
+Transport setup can enable callbacks before the setup routine returns.
+mailbox_chan_setup() registers the mailbox client with
+mbox_request_channel(), and the mailbox controller startup path can enable
+interrupt delivery before SCMI mailbox channel state has been published.
+Similarly, smc_chan_setup() requests the optional A2P completion IRQ before
+the SMC transport has made its cinfo pointer visible.
 
-Fixes: 14619d912b65 ("x86/fred: FRED entry/exit and dispatch code")
-Signed-off-by: David Stevens <stevensd@google.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: H. Peter Anvin (Intel) <hpa@zytor.com>
-Link: https://patch.msgid.link/20260424191456.2679717-12-stevensd@google.com
+If a pending or spurious callback fires in those windows, the transport RX
+callback can dereference a NULL transport cinfo pointer. Publishing only
+the transport-private pointer is not sufficient either: an early callback
+can enter the SCMI core before scmi_chan_setup() has assigned
+cinfo->handle.
+The core derives scmi_info from cinfo->handle in the RX path, so a NULL
+handle can still fault even when the transport-private cinfo is valid.
+
+Assign cinfo->handle before invoking the transport setup callback. Publish
+the mailbox and SMC transport-private channel state before requesting the
+mailbox channels or IRQ, and clear the early-published pointers again on
+setup failure. Also unwind mailbox setup devres resources on failure so an
+optional RX setup error that is ignored by the core does not leave stale
+transport state behind.
+
+Fixes: 5c8a47a5a91d ("firmware: arm_scmi: Make scmi core independent of the transport type")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-1-3afe499d46e3@kernel.org
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/entry/entry_64_fred.S | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/firmware/arm_scmi/driver.c             |  2 +-
+ drivers/firmware/arm_scmi/transports/mailbox.c | 18 +++++++++++++-----
+ drivers/firmware/arm_scmi/transports/smc.c     | 15 +++++++++------
+ 3 files changed, 23 insertions(+), 12 deletions(-)
 
-diff --git a/arch/x86/entry/entry_64_fred.S b/arch/x86/entry/entry_64_fred.S
-index fafbd3e68cb87..3b40519602077 100644
---- a/arch/x86/entry/entry_64_fred.S
-+++ b/arch/x86/entry/entry_64_fred.S
-@@ -6,6 +6,7 @@
- #include <linux/export.h>
+diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
+index 5caa9191a8d1a..f60dbaf7f3401 100644
+--- a/drivers/firmware/arm_scmi/driver.c
++++ b/drivers/firmware/arm_scmi/driver.c
+@@ -2693,6 +2693,7 @@ static int scmi_chan_setup(struct scmi_info *info, struct device_node *of_node,
  
- #include <asm/asm.h>
-+#include <asm/frame.h>
- #include <asm/fred.h>
- #include <asm/segment.h>
+ 	cinfo->id = prot_id;
+ 	cinfo->dev = &tdev->dev;
++	cinfo->handle = &info->handle;
+ 	ret = info->desc->ops->chan_setup(cinfo, info->dev, tx);
+ 	if (ret) {
+ 		of_node_put(of_node);
+@@ -2725,7 +2726,6 @@ static int scmi_chan_setup(struct scmi_info *info, struct device_node *of_node,
+ 		return ret;
+ 	}
  
-@@ -18,6 +19,7 @@
- 	UNWIND_HINT_END_OF_STACK
- 	ANNOTATE_NOENDBR
- 	PUSH_AND_CLEAR_REGS
-+	ENCODE_FRAME_POINTER
- 	movq	%rsp, %rdi	/* %rdi -> pt_regs */
- .endm
+-	cinfo->handle = &info->handle;
+ 	return 0;
+ }
+ 
+diff --git a/drivers/firmware/arm_scmi/transports/mailbox.c b/drivers/firmware/arm_scmi/transports/mailbox.c
+index ae0f67e6cc45f..b6459fbb81513 100644
+--- a/drivers/firmware/arm_scmi/transports/mailbox.c
++++ b/drivers/firmware/arm_scmi/transports/mailbox.c
+@@ -211,13 +211,18 @@ static int mailbox_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+ 	cl->tx_block = false;
+ 	cl->knows_txdone = tx;
+ 
++	cinfo->transport_info = smbox;
++	smbox->cinfo = cinfo;
++	mutex_init(&smbox->chan_lock);
++
+ 	smbox->chan = mbox_request_channel(cl, tx ? 0 : p2a_chan);
+ 	if (IS_ERR(smbox->chan)) {
+ 		ret = PTR_ERR(smbox->chan);
++		smbox->chan = NULL;
+ 		if (ret != -EPROBE_DEFER)
+ 			dev_err(cdev,
+ 				"failed to request SCMI %s mailbox\n", desc);
+-		return ret;
++		goto err_clear_cinfo;
+ 	}
+ 
+ 	/* Additional unidirectional channel for TX if needed */
+@@ -241,11 +246,14 @@ static int mailbox_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+ 		}
+ 	}
+ 
+-	cinfo->transport_info = smbox;
+-	smbox->cinfo = cinfo;
+-	mutex_init(&smbox->chan_lock);
+-
+ 	return 0;
++
++err_clear_cinfo:
++	cinfo->transport_info = NULL;
++	smbox->cinfo = NULL;
++	devm_iounmap(dev, smbox->shmem);
++	devm_kfree(dev, smbox);
++	return ret;
+ }
+ 
+ static int mailbox_chan_free(int id, void *p, void *data)
+diff --git a/drivers/firmware/arm_scmi/transports/smc.c b/drivers/firmware/arm_scmi/transports/smc.c
+index 21abb571e4f2f..1fce3ccdeb7fc 100644
+--- a/drivers/firmware/arm_scmi/transports/smc.c
++++ b/drivers/firmware/arm_scmi/transports/smc.c
+@@ -172,6 +172,13 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+ 		scmi_info->param_page = SHMEM_PAGE(res.start);
+ 		scmi_info->param_offset = SHMEM_OFFSET(res.start);
+ 	}
++
++	scmi_info->func_id = func_id;
++	scmi_info->cap_id = cap_id;
++	scmi_info->cinfo = cinfo;
++	smc_channel_lock_init(scmi_info);
++	cinfo->transport_info = scmi_info;
++
+ 	/*
+ 	 * If there is an interrupt named "a2p", then the service and
+ 	 * completion of a message is signaled by an interrupt rather than by
+@@ -183,18 +190,14 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+ 				  IRQF_NO_SUSPEND, dev_name(dev), scmi_info);
+ 		if (ret) {
+ 			dev_err(dev, "failed to setup SCMI smc irq\n");
++			cinfo->transport_info = NULL;
++			scmi_info->cinfo = NULL;
+ 			return ret;
+ 		}
+ 	} else {
+ 		cinfo->no_completion_irq = true;
+ 	}
+ 
+-	scmi_info->func_id = func_id;
+-	scmi_info->cap_id = cap_id;
+-	scmi_info->cinfo = cinfo;
+-	smc_channel_lock_init(scmi_info);
+-	cinfo->transport_info = scmi_info;
+-
+ 	return 0;
+ }
  
 -- 
 2.53.0
