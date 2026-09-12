@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E2F369D7C;
-	Sat, 12 Sep 2026 19:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C9A375ADC;
+	Sat, 12 Sep 2026 19:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241470; cv=none; b=LmamdDyQQ3QkttXfeCBrSTOvdhqC3CJTj0ICGYyUXVc3aMvgXCuBRbUDLnPuuEjYbxvo2Gld8zP3C8MKFwp2jj9LdWu0KTwWCYybahsM4Dw5QcIxsZvJ90j0HqX2VngOz7/LNxDaDrHHFT8e9RuK3HYJ+LGGSyKFx64xL/MUsJ0=
+	t=1789241476; cv=none; b=cK2Tz5TxB8syUg+2tVzLQ6WV5knKV1++AAoxBDmgtQRwwJTmKL2busZmt0Jz0GqQ4SM39h1PcnTmyFOEuTNhtBOckwpXjPT54/q/Y9x/awAWWvxDli/I+1JY7hQZWOoIPY2syY7kEohf61E/oMHPd1gEmMTO+GVX07IwZt7jH+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241470; c=relaxed/simple;
-	bh=p8MIG2qfvRRMNP3Nz5Nb2+vaRgaB5cbe+ZwNNoQ4SVE=;
+	s=arc-20240116; t=1789241476; c=relaxed/simple;
+	bh=KSlhbIMtJQnpSMURKLJKONhhyKpPFu3we0pN4n0XbcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AlRWtXoOALK+IVkX5HkVbKx9OOcv7ZsrveCk8dG6JvQ0UAetHMLt4JX6RkeoolI25wbQJBljwnG6HjjBbYMz+MGulMnYKb2zA6YtMhz46SjUA1pq8wcP6vQG6NBYs27UX04K07R/9qLS4dPBsimLMYV0iDutfxNl9sgqcKaoBgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ap2a98mZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GB38COoKmcKXzg8PWMZr73FXzFtfXFUqixjxrNZ9NuffKWYEP4QE+4daulezNpDZuaX5uHthWBGipN40eGF4lgkl+xTxzt6VYVmWHzKap7wZ1ORx9pMViT7v5jybHjE+XZOD4wu827W+qKI1JoAguqcJWhUX1wt2TYn1IqpzI/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1jYsJ+mv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ap2a98mZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DEC51F000FF;
-	Sat, 12 Sep 2026 19:31:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1jYsJ+mv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B46D61F00899;
+	Sat, 12 Sep 2026 19:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241468;
-	bh=NEL3vXnOzMPhL4hxH2yJjVdAgORP8I/5VJvFEBuU8kQ=;
+	s=korg; t=1789241473;
+	bh=N5DNlI/yQGpCxNvQXSF4FgdicIxAELWSEU+tPsTdu10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ap2a98mZYhMresX+8DS+tyfjbySjKwJur8DFAOEndAgNdY/31cniFyfmVINvcqK00
-	 p66KsE5z5dT1eGkXBpE0YhQcFqX/9AxV5Tlizi8FnjnPdncYwVGFw0e+hFbKF3ota8
-	 x3Z6/fxH+ST3tL1hXvGlg7id7zBJsJTUmvPHdz+w=
+	b=1jYsJ+mvdeB/uRJMMEVgxqXyZxN+paa3xGG6Aygubl3IAb0/G5LFbPW47IWwSfDlQ
+	 Tpv3Hc/vvp4xxvOmuaf0mBGekg49Nw8Y6hNs/NAar4XftXXEXI11OgXJK1TWXE2wvD
+	 0W5tDIPbnhSfCAL75DEvBhFl4CVMYYULzRI+K39Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunkai Deng <chunkai.deng@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.10 105/798] rpmsg: glink: smem: order FIFO read after availability check
-Date: Sat, 12 Sep 2026 08:55:33 +0200
-Message-ID: <20260912065519.368354026@linuxfoundation.org>
+	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 141/798] s390/dasd: Propagate partial completion length across ERP recovery
+Date: Sat, 12 Sep 2026 08:56:09 +0200
+Message-ID: <20260912065520.212105102@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -45,54 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chunkai Deng <chunkai.deng@oss.qualcomm.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-commit 786439ad58763e04b91bc2ec5f590e463939f197 upstream.
+commit 6fb5ba2e7e43173a3761e46f091070a8185efa14 upstream.
 
-glink_smem_rx_peek() reads the RX FIFO payload after the caller has
-determined data is available via glink_smem_rx_avail(), which reads the
-remote-updated head index. A control dependency between the head read
-and the subsequent payload read does not order the two loads, so the
-CPU may speculatively read the FIFO before observing the head update
-and consume stale data the remote has not yet published.
+dasd_default_erp_postaction() copies the timing and device state from
+the finished ERP request back to the original request but drops
+proc_bytes. A request that was partially completed, an ESE read of a
+not-yet-allocated track returns fewer bytes than requested, and then
+recovered through the ERP chain loses its partial-completion length.
+__dasd_cleanup_cqr() then sees proc_bytes == 0 and completes the whole
+request instead of requeueing the remainder, silently returning zeroed
+data for the part that was never read.
 
-Add rmb() in glink_smem_rx_peek() before the memcpy_fromio() so the
-availability (head) read is ordered ahead of the FIFO payload read,
-matching the consumer pattern in
-Documentation/core-api/circular-buffers.rst.
+Carry proc_bytes over to the original request like the other
+per-request state.
 
-Fixes: caf989c350e8 ("rpmsg: glink: Introduce glink smem based transport")
+Fixes: 5e6bdd37c552 ("s390/dasd: fix data corruption for thin provisioned devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chunkai Deng <chunkai.deng@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260618-rpmsg-glink-smem-mb-v1-1-68a026453a69@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Jan Höppner <hoeppner@linux.ibm.com>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Link: https://patch.msgid.link/20260805111612.1285190-3-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rpmsg/qcom_glink_smem.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/s390/block/dasd_erp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/rpmsg/qcom_glink_smem.c
-+++ b/drivers/rpmsg/qcom_glink_smem.c
-@@ -88,6 +88,13 @@ static void glink_smem_rx_peak(struct qc
- 	if (tail >= pipe->native.length)
- 		tail -= pipe->native.length;
+--- a/drivers/s390/block/dasd_erp.c
++++ b/drivers/s390/block/dasd_erp.c
+@@ -127,6 +127,7 @@ struct dasd_ccw_req *dasd_default_erp_po
+ 	int success;
+ 	unsigned long startclk, stopclk;
+ 	struct dasd_device *startdev;
++	unsigned int proc_bytes;
  
-+	/*
-+	 * Order the availability (head) read in glink_smem_rx_avail()
-+	 * against the FIFO payload read below, so APPS never consumes
-+	 * stale data the remote has not yet published.
-+	 */
-+	rmb();
-+
- 	len = min_t(size_t, count, pipe->native.length - tail);
- 	if (len)
- 		memcpy_fromio(data, pipe->fifo + tail, len);
+ 	BUG_ON(cqr->refers == NULL || cqr->function == NULL);
+ 
+@@ -134,6 +135,7 @@ struct dasd_ccw_req *dasd_default_erp_po
+ 	startclk = cqr->startclk;
+ 	stopclk = cqr->stopclk;
+ 	startdev = cqr->startdev;
++	proc_bytes = cqr->proc_bytes;
+ 
+ 	/* free all ERPs - but NOT the original cqr */
+ 	while (cqr->refers != NULL) {
+@@ -151,6 +153,7 @@ struct dasd_ccw_req *dasd_default_erp_po
+ 	cqr->startclk = startclk;
+ 	cqr->stopclk = stopclk;
+ 	cqr->startdev = startdev;
++	cqr->proc_bytes = proc_bytes;
+ 	if (success)
+ 		cqr->status = DASD_CQR_DONE;
+ 	else {
 
 
