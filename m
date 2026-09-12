@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4602FFF90;
-	Sat, 12 Sep 2026 18:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89482389472;
+	Sat, 12 Sep 2026 18:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789236991; cv=none; b=WzqzNQZF+RJ16D5VKMqwQEtxAafCjicLWXUAt/lAJz51rTmeCjHB1YbSfRCUWkxy/oPB3+aCv59mQd6fJYmzqVhWWJzpBETS/exyPr5LikwG7xecAjPAsVguMpM/FgzGcZ7rhYtULM6I9uj8tp04PlUuJdmbMPI36JsoJ5B6+ig=
+	t=1789236996; cv=none; b=R/bIrC5nqkPWxLJrma4r8KmdY7ByEWMQ0GEzXB8Ehj1vcg77COt07RHGJWm4gsxC8OYEroH8hyUk2oLLodfpRGvljZGHBl3hOHYeVlkYcA/KbZiWaZjB2OGUHEYypyRXMD7S8eiOpPH/xhEg5oLc0UwSiqpDdUSq769grMhOuR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789236991; c=relaxed/simple;
-	bh=UTo9iEZaOt/qzOBjnPe7fAZ4mzDxSCnG2bYh6MBSYxc=;
+	s=arc-20240116; t=1789236996; c=relaxed/simple;
+	bh=P+r9arV0Sx1OB6NBiNom0nmsslTNuMSwe/3p2+BKUOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CR4dFrKY4ixBOlWji3LD0o/1pGU8o0P0oxZ6uex2PLXTTjQOOthaSHuSDa+SXY2gMwDiMrzJe20m7MN8Vieb6x6u9/D/XTP1F7yLPDBfjP/4MNw6R8rLIlPrv1ZU70p2Z2dkPFQtkGKSRMFjzmE2wF0kojAZ/qT6KdVSOt2UAik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vIRAuhbY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qntpze0psTsDZa6D2X+Q1fcsoSAhwblLNyfVOjs8rlFVaB5EeT/YwiDkNmW8HP1cQcwL/edqTV45A/t6cWcYvIek42b6jDmyaTfCllCWH/wbcf8y5kHnIExulA/1pCvduOE+i9lWjtTRRHQ5oAZnMRjDCzMHESGt7er7K3utnDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=psnXh0Sv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vIRAuhbY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F8531F000FF;
-	Sat, 12 Sep 2026 18:16:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="psnXh0Sv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 096D81F000FF;
+	Sat, 12 Sep 2026 18:16:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789236990;
-	bh=u7ZT3+HR+VOTALRRCStIR9RuzIaoeu5dy3OLh3iy1Kc=;
+	s=korg; t=1789236995;
+	bh=V9c8B0zUoBKu8lgwuZp4Ud4Yuu+9yLtMOG0qZfpbWjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vIRAuhbYUZKt0bVSdtZYbPYxK4QhRRQqCGu2opq2g8WPfSn4iWLQpawJBny4Qsca7
-	 fXPWHB+q2aX/l8dWZHxBN5Atoqod8KBH4bOs3jLFAd4LvhrH6c89uYFDX5QFlxhoVN
-	 s69Ph84LEfwMLZ6rtp+B1ALs4zLLaRkzHmwe/Rlc=
+	b=psnXh0SvQWcK1h2tFSFhHJjABWqCirEBKocMBHi5i/YvdL7xwszN3tlRPgYHGamiP
+	 MnHfZDyF+cEgt6BIE+Uy4UuT1Wmtok2o+HLFlQ95Vga+BiMmf5hTGnu+o7V35AZ0Mk
+	 JcREHntHDNjKrTwQ3mRUkNtuFc07i4q0SvBA2RzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 5.15 166/935] iommu/vt-d: Fix no_iommu to disable platform opt-in
-Date: Sat, 12 Sep 2026 08:53:16 +0200
-Message-ID: <20260912065530.625359809@linuxfoundation.org>
+	Yifei Gao <gyf161023@gmail.com>,
+	Mike Marshall <hubcap@omnibond.com>
+Subject: [PATCH 5.15 126/935] orangefs: fix double-free of trailer_buf on readdir copy failure
+Date: Sat, 12 Sep 2026 08:52:36 +0200
+Message-ID: <20260912065529.714060433@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,64 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Tian <kevin.tian@intel.com>
+From: Yifei Gao <gyf161023@gmail.com>
 
-commit 219cc978d69ce9b538d0d73936c569d4ca5b0a24 upstream.
+commit f574296be7f46eb60beca851240b526df232f480 upstream.
 
-If user explicitly requests to disable iommu (via "iommu=off" or
-"intel_iommu=off"), there is no reason to force enabling it due
-to platform opt-in (for external-facing devices). User should be
-aware of any security implication of doing so.
+On a readdir downcall, orangefs_devreq_write_iter() frees
+op->downcall.trailer_buf with vfree() when copy_from_iter_full() fails,
+but does not clear the pointer before goto Efault. The waiter in
+do_readdir() is then woken with a negative status and frees the same
+pointer again on its r < 0 path, causing a deterministic double-free.
+A client holding /dev/pvfs2-req triggers it by sending a readdir
+downcall whose declared trailer_size exceeds the bytes it supplies.
 
-"intel_iommu=off" implements this policy by setting no_platform_optin
-to skip platform opt-in in platform_optin_force_iommu().
+Clear the pointer after freeing so the readdir-side vfree() becomes a
+no-op.
 
-However, "iommu=off" (no_iommu=1) doesn't set no_platform_optin
-hence is broken in this aspect:
-
-  - detect_intel_iommu() doesn't request ACS if no_iommu=1
-  - platform_optin_force_iommu() forces iommu on if external-facing
-    devices exist and no_platform_optin is not set
-
-This leads to a bad configuration with ACS disabled while DMA
-remapping is enabled.
-
-Instead of setting no_platform_optin (will soon be removed) for
-no_iommu=1, directly check no_iommu in platform_optin_force_iommu().
-
-Fixes: 89a6079df791 ("iommu/vt-d: Force IOMMU on for platform opt in hint")
+Fixes: 382f4581e67f ("orangefs: rewrite readdir to fix several bugs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Yifei Gao <gyf161023@gmail.com>
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/iommu.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/orangefs/devorangefs-req.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -4243,10 +4243,11 @@ static inline bool has_external_pci(void
+--- a/fs/orangefs/devorangefs-req.c
++++ b/fs/orangefs/devorangefs-req.c
+@@ -474,6 +474,7 @@ static ssize_t orangefs_devreq_write_ite
+ 			         op->downcall.trailer_size, iter)) {
+ 		gossip_err("%s: failed to copy trailer.\n", __func__);
+ 		vfree(op->downcall.trailer_buf);
++		op->downcall.trailer_buf = NULL;
+ 		goto Efault;
+ 	}
  
- static int __init platform_optin_force_iommu(void)
- {
--	if (!dmar_platform_optin() || no_platform_optin || !has_external_pci())
-+	if (no_iommu || !dmar_platform_optin() || no_platform_optin ||
-+	    !has_external_pci())
- 		return 0;
- 
--	if (no_iommu || dmar_disabled)
-+	if (dmar_disabled)
- 		pr_info("Intel-IOMMU force enabled due to platform opt in\n");
- 
- 	/*
-@@ -4257,7 +4258,6 @@ static int __init platform_optin_force_i
- 		iommu_set_default_passthrough(false);
- 
- 	dmar_disabled = 0;
--	no_iommu = 0;
- 
- 	return 1;
- }
 
 
