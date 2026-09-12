@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0737A41A554;
-	Sat, 12 Sep 2026 11:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544882EC09B;
+	Sat, 12 Sep 2026 11:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211978; cv=none; b=aRPkh8AdKwVONU7wIZ3o9JgbPIn2IdginFppd2uRGRHJ6iNCnpY6FwBVuJHDkr7rRidh2cN656o7TN+9sXMc5a0XvOtnOM7XYxkKOHWzXd90EZfpKjrreQr1X1XJB22Zz8hB0EIBCtHe/DlsgFhzyCZERs3cGSMA1BlBoOUs1GY=
+	t=1789211983; cv=none; b=paB1YWQ1ORJAt3wuwuakkPbfGAPROLRwcBv3YWR1Cmb7umiOOVLD/lToauIYr3dMhJTrb8qWKi54yOSnm7o1b4f3DKPxo1N3rF+dIrOSsFkBeJ/vtcBMEU1Hs1F13h00WDcRG+qAw1KWqJDIAGHMgwui/3QPuS/9wmxTKNakF6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211978; c=relaxed/simple;
-	bh=4zpFx8V/3p7gmT41cUjTZqLO4YLni8kPj262xjHeZs8=;
+	s=arc-20240116; t=1789211983; c=relaxed/simple;
+	bh=XmbbtWSvWJfFHOu4NGaa9wqnccANw2O6cuIiarjT+ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNDfmXl6B043PCq0gj5zEzIY0KsDvSc8WWg+VKKv9wd16YSwpHAyC4/xpEjMOwRX57IEuCvHr7/tQ/5iZqVJexM9Z+ijbbSn24/liTjCJJJpdEjsgSoMFwRz35V0wz4GlxNBYQe47wX8+mQcGmuVq6ZP6TLxnTpQ/sWMoSZNV0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzTMeBqm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XCl+pSDUaEWxAWPPLqe3lpu/pWrBFFeU/O9RpiFdfJ36i5u7GrJFgk994rf74Lwt7LD5xYU+/Art7AQwf7sXaNdcBgPEP+zWMnfe9YAVbWirvD/4NNSx1OUYr5oXpBkc9saiSyxBHwaGABVOt3wjU+hqrG7t1tur9706PoN7Uzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKNTtBAT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzTMeBqm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8501F000FF;
-	Sat, 12 Sep 2026 11:19:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKNTtBAT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5DB1F000FF;
+	Sat, 12 Sep 2026 11:19:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211976;
-	bh=uuYbAAIRKoDjNCjET1xVaivRgpRLXUBeCtobimHkZng=;
+	s=korg; t=1789211982;
+	bh=mvdl2rNclL4Uk3U4+EUs94g/fIFMOo7A1SJQ9rU45gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WzTMeBqmBY1VZcslqDXYtu1+HpZAPgkMwaUnJwkbYbBidiSKeat389N7XwKdGZ2xq
-	 3mZxCGWyTlIjFXXkUZ1BxA0VNG2rHTyvW3Nmo5WB3+53u4aBqg+bRhzLtDZ1MiSvI6
-	 H7PhtFFTLYYXOZvQYL51oYgnhPWRbdO517b5hFZ4=
+	b=oKNTtBATyDtKM2pInxf0jLbuo2iLVbjdFyGglx0LahCXVsfv95sQzGb+CG84yH5fS
+	 LlMzNDKMNXkh7XOQxgCOXN6Cg7IkQ//EyMuEukKLgy5fXAjoEb1CyVSLKu3ERwIuUR
+	 xyleUvMkficXrpeHwxX28YJ1w97trfbcXHJmAN7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Edward Srouji <edwards@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1343/1518] IB/core: Add query_port_speed verb
-Date: Sat, 12 Sep 2026 08:58:32 +0200
-Message-ID: <20260912065653.910429782@linuxfoundation.org>
+Subject: [PATCH 6.18 1344/1518] RDMA/mlx5: Implement query_port_speed callback
+Date: Sat, 12 Sep 2026 08:58:33 +0200
+Message-ID: <20260912065653.932498397@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -55,13 +55,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Or Har-Toov <ohartoov@nvidia.com>
 
-[ Upstream commit 51a07ce2fefd061edf4ba552a741c85f07b3e6dd ]
+[ Upstream commit aaecff5e13cd98d9a9260bf2ec83ef3a1bda86a6 ]
 
-Add new ibv_query_port_speed() verb to enable applications to query
-the effective bandwidth of a port.
+Implement the query_port_speed callback for mlx5 driver to support
+querying effective port bandwidth.
 
-This verb is particularly useful when the speed is not a multiplication
-of IB speed and width where width is 2^n.
+For LAG configurations, query the aggregated speed from the LAG layer
+or from the modified vport max_tx_speed.
 
 Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
 Reviewed-by: Mark Bloch <mbloch@nvidia.com>
@@ -70,128 +70,165 @@ Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Stable-dep-of: ad0ae7aefa7a ("net/mlx5: E-Switch, preserve max tx speed on vport state modification")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/device.c              |  1 +
- .../infiniband/core/uverbs_std_types_device.c | 42 +++++++++++++++++++
- include/rdma/ib_verbs.h                       |  2 +
- include/uapi/rdma/ib_user_ioctl_cmds.h        |  6 +++
- 4 files changed, 51 insertions(+)
+ drivers/infiniband/hw/mlx5/main.c    | 124 +++++++++++++++++++++++++++
+ drivers/infiniband/hw/mlx5/mlx5_ib.h |   2 +
+ 2 files changed, 126 insertions(+)
 
-diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
-index 404fc1edbe60b..c8b7942739a0a 100644
---- a/drivers/infiniband/core/device.c
-+++ b/drivers/infiniband/core/device.c
-@@ -2848,6 +2848,7 @@ void ib_set_device_ops(struct ib_device *dev, const struct ib_device_ops *ops)
- 	SET_DEVICE_OP(dev_ops, query_gid);
- 	SET_DEVICE_OP(dev_ops, query_pkey);
- 	SET_DEVICE_OP(dev_ops, query_port);
-+	SET_DEVICE_OP(dev_ops, query_port_speed);
- 	SET_DEVICE_OP(dev_ops, query_qp);
- 	SET_DEVICE_OP(dev_ops, query_srq);
- 	SET_DEVICE_OP(dev_ops, query_ucontext);
-diff --git a/drivers/infiniband/core/uverbs_std_types_device.c b/drivers/infiniband/core/uverbs_std_types_device.c
-index c0fd283d9d6c9..a28f9f21bed89 100644
---- a/drivers/infiniband/core/uverbs_std_types_device.c
-+++ b/drivers/infiniband/core/uverbs_std_types_device.c
-@@ -209,6 +209,39 @@ static int UVERBS_HANDLER(UVERBS_METHOD_QUERY_PORT)(
- 					     &resp, sizeof(resp));
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index 433461ab6c75d..a67a2aa2e101c 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -1585,6 +1585,129 @@ static int mlx5_ib_rep_query_pkey(struct ib_device *ibdev, u32 port, u16 index,
+ 	return 0;
  }
  
-+static int UVERBS_HANDLER(UVERBS_METHOD_QUERY_PORT_SPEED)(
-+	struct uverbs_attr_bundle *attrs)
++static int mlx5_ib_query_port_speed_from_port(struct mlx5_ib_dev *dev,
++					      u32 port_num, u64 *speed)
 +{
-+	struct ib_ucontext *ucontext;
-+	struct ib_device *ib_dev;
-+	u32 port_num;
-+	u64 speed;
-+	int ret;
++	struct ib_port_speed_info speed_info;
++	struct ib_port_attr attr = {};
++	int err;
 +
-+	ucontext = ib_uverbs_get_ucontext(attrs);
-+	if (IS_ERR(ucontext))
-+		return PTR_ERR(ucontext);
-+	ib_dev = ucontext->device;
++	err = mlx5_ib_query_port(&dev->ib_dev, port_num, &attr);
++	if (err)
++		return err;
 +
-+	if (!ib_dev->ops.query_port_speed)
-+		return -EOPNOTSUPP;
++	if (attr.state == IB_PORT_DOWN) {
++		*speed = 0;
++		return 0;
++	}
 +
-+	ret = uverbs_get_const(&port_num, attrs,
-+			       UVERBS_ATTR_QUERY_PORT_SPEED_PORT_NUM);
-+	if (ret)
-+		return ret;
++	err = ib_port_attr_to_speed_info(&attr, &speed_info);
++	if (err)
++		return err;
 +
-+	if (!rdma_is_port_valid(ib_dev, port_num))
-+		return -EINVAL;
-+
-+	ret = ib_dev->ops.query_port_speed(ib_dev, port_num, &speed);
-+	if (ret)
-+		return ret;
-+
-+	return uverbs_copy_to(attrs, UVERBS_ATTR_QUERY_PORT_SPEED_RESP,
-+			      &speed, sizeof(speed));
++	*speed = speed_info.rate;
++	return 0;
 +}
 +
- static int UVERBS_HANDLER(UVERBS_METHOD_GET_CONTEXT)(
- 	struct uverbs_attr_bundle *attrs)
++static int mlx5_ib_query_port_speed_from_vport(struct mlx5_core_dev *mdev,
++					       u8 op_mod, u16 vport,
++					       u8 other_vport, u64 *speed,
++					       struct mlx5_ib_dev *dev,
++					       u32 port_num)
++{
++	u32 max_tx_speed;
++	int err;
++
++	err = mlx5_query_vport_max_tx_speed(mdev, op_mod, vport, other_vport,
++					    &max_tx_speed);
++	if (err)
++		return err;
++
++	if (max_tx_speed == 0)
++		/* Value 0 indicates field not supported, fallback */
++		return mlx5_ib_query_port_speed_from_port(dev, port_num,
++							  speed);
++
++	*speed = max_tx_speed;
++	return 0;
++}
++
++static int mlx5_ib_query_port_speed_from_bond(struct mlx5_ib_dev *dev,
++					      u32 port_num, u64 *speed)
++{
++	struct mlx5_core_dev *mdev = dev->mdev;
++	u32 bond_speed;
++	int err;
++
++	err = mlx5_lag_query_bond_speed(mdev, &bond_speed);
++	if (err)
++		return err;
++
++	*speed = bond_speed / MLX5_MAX_TX_SPEED_UNIT;
++
++	return 0;
++}
++
++static int mlx5_ib_query_port_speed_non_rep(struct mlx5_ib_dev *dev,
++					    u32 port_num, u64 *speed)
++{
++	u16 op_mod = MLX5_VPORT_STATE_OP_MOD_VNIC_VPORT;
++
++	if (mlx5_lag_is_roce(dev->mdev))
++		return mlx5_ib_query_port_speed_from_bond(dev, port_num,
++							  speed);
++
++	return mlx5_ib_query_port_speed_from_vport(dev->mdev, op_mod, 0, false,
++						   speed, dev, port_num);
++}
++
++static int mlx5_ib_query_port_speed_rep(struct mlx5_ib_dev *dev, u32 port_num,
++					u64 *speed)
++{
++	struct mlx5_eswitch_rep *rep;
++	struct mlx5_core_dev *mdev;
++	u16 op_mod;
++
++	if (!dev->port[port_num - 1].rep) {
++		mlx5_ib_warn(dev, "Representor doesn't exist for port %u\n",
++			     port_num);
++		return -EINVAL;
++	}
++
++	rep = dev->port[port_num - 1].rep;
++	mdev = mlx5_eswitch_get_core_dev(rep->esw);
++	if (!mdev)
++		return -ENODEV;
++
++	if (rep->vport == MLX5_VPORT_UPLINK) {
++		if (mlx5_lag_is_sriov(mdev))
++			return mlx5_ib_query_port_speed_from_bond(dev,
++								  port_num,
++								  speed);
++
++		return mlx5_ib_query_port_speed_from_port(dev, port_num,
++							  speed);
++	}
++
++	op_mod = MLX5_VPORT_STATE_OP_MOD_ESW_VPORT;
++	return mlx5_ib_query_port_speed_from_vport(dev->mdev, op_mod,
++						   rep->vport, true, speed, dev,
++						   port_num);
++}
++
++int mlx5_ib_query_port_speed(struct ib_device *ibdev, u32 port_num, u64 *speed)
++{
++	struct mlx5_ib_dev *dev = to_mdev(ibdev);
++
++	if (mlx5_ib_port_link_layer(ibdev, port_num) ==
++	    IB_LINK_LAYER_INFINIBAND || mlx5_core_mp_enabled(dev->mdev))
++		return mlx5_ib_query_port_speed_from_port(dev, port_num, speed);
++	else if (!dev->is_rep)
++		return mlx5_ib_query_port_speed_non_rep(dev, port_num, speed);
++	else
++		return mlx5_ib_query_port_speed_rep(dev, port_num, speed);
++}
++
+ static int mlx5_ib_query_gid(struct ib_device *ibdev, u32 port, int index,
+ 			     union ib_gid *gid)
  {
-@@ -469,6 +502,14 @@ DECLARE_UVERBS_NAMED_METHOD(
- 				   active_speed_ex),
- 		UA_MANDATORY));
- 
-+DECLARE_UVERBS_NAMED_METHOD(
-+	UVERBS_METHOD_QUERY_PORT_SPEED,
-+	UVERBS_ATTR_CONST_IN(UVERBS_ATTR_QUERY_PORT_SPEED_PORT_NUM, u32,
-+			     UA_MANDATORY),
-+	UVERBS_ATTR_PTR_OUT(UVERBS_ATTR_QUERY_PORT_SPEED_RESP,
-+			    UVERBS_ATTR_TYPE(u64),
-+			    UA_MANDATORY));
-+
- DECLARE_UVERBS_NAMED_METHOD(
- 	UVERBS_METHOD_QUERY_GID_TABLE,
- 	UVERBS_ATTR_CONST_IN(UVERBS_ATTR_QUERY_GID_TABLE_ENTRY_SIZE, u64,
-@@ -498,6 +539,7 @@ DECLARE_UVERBS_GLOBAL_METHODS(UVERBS_OBJECT_DEVICE,
- 			      &UVERBS_METHOD(UVERBS_METHOD_INVOKE_WRITE),
- 			      &UVERBS_METHOD(UVERBS_METHOD_INFO_HANDLES),
- 			      &UVERBS_METHOD(UVERBS_METHOD_QUERY_PORT),
-+			      &UVERBS_METHOD(UVERBS_METHOD_QUERY_PORT_SPEED),
- 			      &UVERBS_METHOD(UVERBS_METHOD_QUERY_CONTEXT),
- 			      &UVERBS_METHOD(UVERBS_METHOD_QUERY_GID_TABLE),
- 			      &UVERBS_METHOD(UVERBS_METHOD_QUERY_GID_ENTRY));
-diff --git a/include/rdma/ib_verbs.h b/include/rdma/ib_verbs.h
-index 2205c92bdce0a..7f811e80b63ae 100644
---- a/include/rdma/ib_verbs.h
-+++ b/include/rdma/ib_verbs.h
-@@ -2421,6 +2421,8 @@ struct ib_device_ops {
- 						     int comp_vector);
- 	int (*query_port)(struct ib_device *device, u32 port_num,
- 			  struct ib_port_attr *port_attr);
-+	int (*query_port_speed)(struct ib_device *device, u32 port_num,
-+				u64 *speed);
- 	int (*modify_port)(struct ib_device *device, u32 port_num,
- 			   int port_modify_mask,
- 			   struct ib_port_modify *port_modify);
-diff --git a/include/uapi/rdma/ib_user_ioctl_cmds.h b/include/uapi/rdma/ib_user_ioctl_cmds.h
-index de6f5a94f1e33..35da4026f452b 100644
---- a/include/uapi/rdma/ib_user_ioctl_cmds.h
-+++ b/include/uapi/rdma/ib_user_ioctl_cmds.h
-@@ -73,6 +73,7 @@ enum uverbs_methods_device {
- 	UVERBS_METHOD_QUERY_CONTEXT,
- 	UVERBS_METHOD_QUERY_GID_TABLE,
- 	UVERBS_METHOD_QUERY_GID_ENTRY,
-+	UVERBS_METHOD_QUERY_PORT_SPEED,
- };
- 
- enum uverbs_attrs_invoke_write_cmd_attr_ids {
-@@ -86,6 +87,11 @@ enum uverbs_attrs_query_port_cmd_attr_ids {
- 	UVERBS_ATTR_QUERY_PORT_RESP,
- };
- 
-+enum uverbs_attrs_query_port_speed_cmd_attr_ids {
-+	UVERBS_ATTR_QUERY_PORT_SPEED_PORT_NUM,
-+	UVERBS_ATTR_QUERY_PORT_SPEED_RESP,
-+};
-+
- enum uverbs_attrs_get_context_attr_ids {
- 	UVERBS_ATTR_GET_CONTEXT_NUM_COMP_VECTORS,
- 	UVERBS_ATTR_GET_CONTEXT_CORE_SUPPORT,
+@@ -4359,6 +4482,7 @@ static const struct ib_device_ops mlx5_ib_dev_ops = {
+ 	.query_device = mlx5_ib_query_device,
+ 	.query_gid = mlx5_ib_query_gid,
+ 	.query_pkey = mlx5_ib_query_pkey,
++	.query_port_speed = mlx5_ib_query_port_speed,
+ 	.query_qp = mlx5_ib_query_qp,
+ 	.query_srq = mlx5_ib_query_srq,
+ 	.query_ucontext = mlx5_ib_query_ucontext,
+diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+index ba55e6db3bca7..20591530a17b3 100644
+--- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
++++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+@@ -1446,6 +1446,8 @@ int mlx5_query_mad_ifc_port(struct ib_device *ibdev, u32 port,
+ 			    struct ib_port_attr *props);
+ int mlx5_ib_query_port(struct ib_device *ibdev, u32 port,
+ 		       struct ib_port_attr *props);
++int mlx5_ib_query_port_speed(struct ib_device *ibdev, u32 port_num,
++			      u64 *speed);
+ void mlx5_ib_populate_pas(struct ib_umem *umem, size_t page_size, __be64 *pas,
+ 			  u64 access_flags);
+ int mlx5_ib_get_cqe_size(struct ib_cq *ibcq);
 -- 
 2.53.0
 
