@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30325CA6F;
-	Sat, 12 Sep 2026 10:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7905CCA6F;
+	Sat, 12 Sep 2026 10:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208449; cv=none; b=XInLxe1pqPLhGO7wLqPvYZsVFC6tFh6voksmD44G7IMaRHyvrLIpE5s7vXRarovRAf84PuWO4FyvM6+fWYUEbFEAvn3I6M2ioTQvE0ondQSKA52FMMLOUPDYdA1RxU6cLrqZuWe/7ctnMijm0thdvRLYVXUnYOUD1J/xOIhqRhI=
+	t=1789208454; cv=none; b=T6cmJ6HE8e/6ckWFC7mlgLmcbijNm2OFg6dIZ3Z+bQN81REbW6jnJ9F/YrzM9hHNHJUcpcDeTGQP/K3BRhld5JwQwVx5CGf6NOnbLFo5W9H12vLyKdlpwNva2m0i3hzVR3iIogQTHGwWj8Rx7BO639BGXI189ybduZXiECvCwWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208449; c=relaxed/simple;
-	bh=0I3bOxfOj4kHrYlG4CqyXMK0RNqyNnceJXlefMdnzs4=;
+	s=arc-20240116; t=1789208454; c=relaxed/simple;
+	bh=qtaNi6CNuEedL+//BsSOGqxeO8ASapHsToP2fGAO224=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lFRXVGAYA5CWoTcXkr7aNUDnJ9KxnY5vrnT1GKO7/Uvt4Ar8tvKhFdSLbEDBRzmCx9czIZ4zwLS9BU9EowD8p7aEbY3RYLbavY5AeFXk/67KHfUJribqoChFUdS5vM9DdEbFKQgeaVonDkxjLDeWhCc9vO3sJVAhn7C5fEzn6Yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FaI8QOgz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fRmxiTE7260Hhr/CK+jZ3vm9IpyP+xh+K2s0AZXJbrO3f0vldQ2WP2PV+q6WQfZg5yGbnf7rfcJwpQK1In+ZVIHA3zwVBSp9P3p37x2dAE874NPtSgQyfQ288wDq+nWTqkQXgbhDgJ7zWb0Nf2XBmovLrqyJ/8JEED2vji3Ke4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKRMfqYx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FaI8QOgz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020931F000FF;
-	Sat, 12 Sep 2026 10:20:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKRMfqYx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 389D21F000FF;
+	Sat, 12 Sep 2026 10:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208448;
-	bh=3ZHfwWWDDuM0CLHZOnk+CmCjtS3b3PkQK74a7u83H/E=;
+	s=korg; t=1789208453;
+	bh=CR7H38AwmklpFXEO4biSkdNZryHdNAqex8OTYTp2usU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FaI8QOgzWFNqUuaybQiyAPs77I8C75JQZFqbI/JuFqd+hpA1WI7v5RuVr8ngxB3gm
-	 XgkBYosPT+mP19d86Nq3UbSykNu8tYbYwrxi2r/KAD6JSVCyOXL07nOoIuJXZiawKH
-	 mq8G+Jq1sE/v0IgDq5jbc6f1h+ukciu2MQicJbp0=
+	b=fKRMfqYxPxyVBq7uimDgo3rqvatGIq/bWrLJKmXLbJ8I6HS6mL/DlyVTPtb4yLtNJ
+	 y5knsUYpgMJoMQhIu6mi90YzTnl/1VIizpDDmTwswocgUowQDF2fjK7D0bvmaSYnMs
+	 1So0/VL+V6HAwFN7lS0OsKzgBwfcknMV0PTcD6Ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Charkov <alchark@flipper.net>,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Heiko Stuebner <heiko@sntech.de>,
+	syzbot+cae54346a70bbceeff2c@syzkaller.appspotmail.com,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0619/1518] clk: rockchip: Fix the fractional part denominator on RK3588/RK3576 PLLs
-Date: Sat, 12 Sep 2026 08:46:28 +0200
-Message-ID: <20260912065637.431220397@linuxfoundation.org>
+Subject: [PATCH 6.18 0620/1518] nilfs2: fix infinite loop in nilfs_clean_segments()
+Date: Sat, 12 Sep 2026 08:46:29 +0200
+Message-ID: <20260912065637.455029594@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,63 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Charkov <alchark@flipper.net>
+From: Joshua Crofts <joshua.crofts1@gmail.com>
 
-[ Upstream commit 52aef653c3d0c24013dfa9eccf692594eacdbe17 ]
+[ Upstream commit ce5a5ad1a8330a2fcfdd9ec2ab341be739e89a18 ]
 
-According to the TRM, the fractional PLL coefficient should be divided by
-65536 rather than 65535 to obtain the output rate.
+syzbot reported a hung task in nilfs_transaction_begin(). This occurs
+because the cleaner ioctl falls into an infinite loop if
+nilfs_segctor_construct() repeatedly returns -EROFS (e.g. the device
+is remounted as read-only after an I/O error).
 
-Fix the denominator and add a comment with the TRM provided clock formulae
-for future reference.
+Currently in nilfs_clean_segments(), if err is non-zero, it logs the
+error and sleeps but doesn't abort when it encounters a terminal error
+like -EROFS. This causes the thread to loop forever.
 
-See RK3576 TRM Part 1 V1.2 section 2.13.1.4 Setting Guide on P, M, S and K
-or equivalently RK3588 TRM part 1 V1.0 section 2.17.1.4 Setting Guide on P,
-M, S and K.
+Fix this by breaking out of the loop if nilfs_segctor_construct()
+returns -EROFS. This matches the behaviour in
+nilfs_segctor_write_out(), which also handles -EROFS.
 
-Fractional PLL rates don't seem to be used by any current mainline
-consumers, so this is purely a correctness fix. It will also be important
-to properly support DisplayPort output going forward, as the video output
-controller derives its pixel clock from system PLLs with no dedicated PHY
-PLL option for DP unlike HDMI, and some display modes are only achievable
-with fractional PLL rates.
-
-Fixes: 8f6594494b1c ("clk: rockchip: add pll type for RK3588")
-Signed-off-by: Alexey Charkov <alchark@flipper.net>
-Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
-Link: https://patch.msgid.link/20260723-rk3588-fracpll-v2-1-3adfb9dda235@flipper.net
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Reported-by: syzbot+cae54346a70bbceeff2c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cae54346a70bbceeff2c
+Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
+Assisted-by: gemini:gemini-3.1-pro
+Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/rockchip/clk-pll.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/nilfs2/segment.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/clk/rockchip/clk-pll.c b/drivers/clk/rockchip/clk-pll.c
-index 86dba3826a77e..0dada00b375fa 100644
---- a/drivers/clk/rockchip/clk-pll.c
-+++ b/drivers/clk/rockchip/clk-pll.c
-@@ -900,6 +900,13 @@ static void rockchip_rk3588_pll_get_params(struct rockchip_clk_pll *pll,
- 	rate->k = ((pllcon >> RK3588_PLLCON2_K_SHIFT) & RK3588_PLLCON2_K_MASK);
- }
+diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
+index 0bc1f0f02f31d..c20340f4e0dc3 100644
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2561,6 +2561,10 @@ int nilfs_clean_segments(struct super_block *sb, struct nilfs_argv *argv,
+ 			break;
  
-+/*
-+ * 2250 MHz <= Fvco <= 4500 MHz
-+ * For Fvco > 3 GHz: period jitter +-1% frac PLL, +-0.75% int PLL
-+ * For Fvco < 3 GHz: period jitter +-2% frac PLL, +-1.50% int PLL
-+ * Fvco = ((m + k / 65536) * Fin) / p
-+ * Fout = ((m + k / 65536) * Fin) / (p * 2^s)
-+ */
- static unsigned long rockchip_rk3588_pll_recalc_rate(struct clk_hw *hw, unsigned long prate)
- {
- 	struct rockchip_clk_pll *pll = to_rockchip_clk_pll(hw);
-@@ -915,7 +922,7 @@ static unsigned long rockchip_rk3588_pll_recalc_rate(struct clk_hw *hw, unsigned
- 		/* fractional mode */
- 		u64 frac_rate64 = prate * cur.k;
- 
--		postdiv = cur.p * 65535;
-+		postdiv = cur.p * 65536;
- 		do_div(frac_rate64, postdiv);
- 		rate64 += frac_rate64;
+ 		nilfs_warn(sb, "error %d cleaning segments", err);
++
++		if (unlikely(err == -EROFS))
++			goto out_unlock;
++
+ 		set_current_state(TASK_INTERRUPTIBLE);
+ 		schedule_timeout(sci->sc_interval);
  	}
 -- 
 2.53.0
