@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB87A38AC87;
-	Sat, 12 Sep 2026 08:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448C63876A7;
+	Sat, 12 Sep 2026 08:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201803; cv=none; b=J5IJYBhh7pGepxkYgxBnUupGPkdmxbmG8u4D+Wp6hxtU7dpzD6D7dcn3v8WQG7fjWoqQlZxCqER8rWf71HhI4ivNtzDSoTtvW5p1gkVmshFN5TMwEEoAxZRbPgSb3eQYwNFSSycggh17Y4pniQMwjN5T6IWwhKOl87v2uHDe0JY=
+	t=1789201807; cv=none; b=S5zhF+OWhpfPTcGJAmrMPei5HIKhEtRQ+u8bt3gJVD2o6tQgi87nSAgBvjE6S7vVKAMykr/jqC6LkTcXgd3fzLvjtE536LvfeNI/yLxJx+d5zclNQjH7fQiYxvype+9SrhftA/KsLBNsAZJKuBDHdF6m6cnvr9joh+J6Y+enANM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201803; c=relaxed/simple;
-	bh=iKYLKqBFyCANsT1Eykdls/8F+6kgZRkTFlmOhGwOfSE=;
+	s=arc-20240116; t=1789201807; c=relaxed/simple;
+	bh=YXhI6OwORDk4Y5yP6HnOaUWzjvGhHHADGro3dwmdWwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g+LKk3wPHZ+pBGXT2AQW96+4a6xSVab01YmpKi+r2s4CLNSik6hEM/tc/62l8isDKls7oiak7pa343JUfI0CuObHzB3fC1MLXvXoDeZx9kthBY4m6elMlSMgip+wiiaw82jZCKXUhnTIlgjsPstu9X/+qlUkDpURt+hoeA9URa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNtxH5+f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UOjkjnBnmjcA9aBbTpywHacOe66cbPEMfZtKlnM+YYmQnwMtOfgjdGd3/ToNlwIvbxw6Fd6487gVJW6D61JQXw0bMAWu835Ce/QO8+HTK9QuGkXprKZTEPmXWqh1i+ZNm0RhT5g80Z+Bqp6/f55AKG7wgUUu/xtsKZX59TAc5O8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udTYeSFv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNtxH5+f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524461F000FF;
-	Sat, 12 Sep 2026 08:30:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udTYeSFv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DECDB1F000FF;
+	Sat, 12 Sep 2026 08:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201801;
-	bh=L167aoHCs1JTzdioe0MrguQ3xc8BBBAsUfvTcXmcN30=;
+	s=korg; t=1789201805;
+	bh=He81uEsfjeIj/vlvuHGX8Hgpys/vFKuxKzCVF3WAAZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WNtxH5+fhrKk1yGkQyTA2jq47prmhiLd1FaRtLXnShgDmpbfsK3t7t5/qBjBkXFhQ
-	 z7AzM78KfnfIwHUTwSbgYyqLhgS6v/YHPGLoba+re/WY2e12jh/CauK7YSCaYG4KFC
-	 Z3udarPmpuJ1hh2yUuyH08xDEopB3fo3JcyOiKKU=
+	b=udTYeSFv9u4QxrZrTueKs9q42WrQ11iv5pfnClO5mOaJFxWtB0aldSGsgEkRLJBuP
+	 TgAA/fJg4YG/pBy3gLcs2d6dWlDhlHGfiJeyuRhS9QBL86OUnCLb3m5vzTgxwDGRv+
+	 Twy9G+6LHfqT5B+W6RzDiii8STUd3Rjenjd01xF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1071/1815] arm64: dts: qcom: sm8450: Fix swapped USB QMP PHY vdda-phy/vdda-pll supplies
-Date: Sat, 12 Sep 2026 08:47:01 +0200
-Message-ID: <20260912065714.166133546@linuxfoundation.org>
+Subject: [PATCH 7.2 1072/1815] arm64: dts: qcom: sm8550: Fix swapped USB QMP PHY vdda-phy/vdda-pll supplies
+Date: Sat, 12 Sep 2026 08:47:02 +0200
+Message-ID: <20260912065714.188867419@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,72 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 6469731fb66f40ab873bf4c9fd97d295b390e87f ]
+[ Upstream commit f35723d6b6a2f6d6fc3cf2fc3ff556436f76ebd4 ]
 
 The QMP PHY expects the vdda-phy supply to be around 0.88V and the
 vdda-pll supply to be 1.2V. But these two supplies are swapped for the
-USB QMP PHYs on these boards, feeding 1.2V to vdda-phy and 0.91V to
+USB QMP PHYs on these boards, feeding 1.2V to vdda-phy and 0.88V to
 vdda-pll.
 
 Fix it by swapping the two supplies back.
 
-Fixes: 067b2b3616cd ("arm64: dts: qcom: Add SM8450 HDK DTS")
-Fixes: 27a0d0b846d9 ("arm64: dts: qcom: sm8450-qrd: Enable USB nodes")
-Fixes: 1620676b85f1 ("arm64: dts: qcom: sm8450-nagara: Separate out Nagara platform dtsi")
+Fixes: b5e25ded2721 ("arm64: dts: qcom: sm8550: add support for the SM8550-HDK board")
+Fixes: 772e6bc4a0a9 ("arm64: dts: qcom: sm8550-mtp: Add USB PHYs and HC nodes")
+Fixes: d228efe88469 ("arm64: dts: qcom: sm8550-qrd: add QRD8550")
+Fixes: 39c596304e44 ("arm64: dts: qcom: Add SM8550 Xperia 1 V")
 Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Assisted-by: Claude:opus-4-8
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260803-phy-supply-fix-v1-9-5880630cde3e@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260803-phy-supply-fix-v1-10-5880630cde3e@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450-hdk.dts                 | 4 ++--
- arch/arm64/boot/dts/qcom/sm8450-qrd.dts                 | 4 ++--
- arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi | 4 ++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550-hdk.dts                     | 4 ++--
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts                     | 4 ++--
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts                     | 4 ++--
+ arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts | 4 ++--
+ 4 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-index b37998cd9a2c3..4ade28f40cae0 100644
---- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-@@ -1214,8 +1214,8 @@ &usb_1_hsphy {
- &usb_1_qmpphy {
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-hdk.dts b/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
+index ee13e6136a825..25ff5e39dd346 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
+@@ -1374,8 +1374,8 @@ &usb_1_hsphy {
+ };
+ 
+ &usb_dp_qmpphy {
+-	vdda-phy-supply = <&vreg_l3e_1p2>;
+-	vdda-pll-supply = <&vreg_l3f_0p88>;
++	vdda-phy-supply = <&vreg_l3f_0p88>;
++	vdda-pll-supply = <&vreg_l3e_1p2>;
+ 
  	status = "okay";
- 
--	vdda-phy-supply = <&vreg_l6b_1p2>;
--	vdda-pll-supply = <&vreg_l1b_0p91>;
-+	vdda-phy-supply = <&vreg_l1b_0p91>;
-+	vdda-pll-supply = <&vreg_l6b_1p2>;
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+index 5769be83cfbd3..7c634572c6b71 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+@@ -971,8 +971,8 @@ &usb_1_hsphy {
  };
  
- &usb_1_qmpphy_out {
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-qrd.dts b/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
-index 56db5f79f59d2..4993059483e9a 100644
---- a/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
-@@ -527,8 +527,8 @@ &usb_1_hsphy {
- &usb_1_qmpphy {
+ &usb_dp_qmpphy {
+-	vdda-phy-supply = <&vreg_l3e_1p2>;
+-	vdda-pll-supply = <&vreg_l3f_0p91>;
++	vdda-phy-supply = <&vreg_l3f_0p91>;
++	vdda-pll-supply = <&vreg_l3e_1p2>;
+ 
  	status = "okay";
- 
--	vdda-phy-supply = <&vreg_l6b_1p2>;
--	vdda-pll-supply = <&vreg_l1b_0p91>;
-+	vdda-phy-supply = <&vreg_l1b_0p91>;
-+	vdda-pll-supply = <&vreg_l6b_1p2>;
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+index 2fb2e0be5e4c6..ceb5cd3c5bf3e 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+@@ -1274,8 +1274,8 @@ &usb_1_hsphy {
  };
  
- &usb_1_qmpphy_out {
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
-index 6bd315e109925..4fb5627d81264 100644
---- a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
-@@ -793,7 +793,7 @@ &usb_1_hsphy {
+ &usb_dp_qmpphy {
+-	vdda-phy-supply = <&vreg_l3e_1p2>;
+-	vdda-pll-supply = <&vreg_l3f_0p88>;
++	vdda-phy-supply = <&vreg_l3f_0p88>;
++	vdda-pll-supply = <&vreg_l3e_1p2>;
+ 
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts b/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
+index 0e6ed6fce6147..367f6eae5e652 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
+@@ -766,8 +766,8 @@ &usb_1_hsphy {
  };
  
- &usb_1_qmpphy {
--	vdda-phy-supply = <&pm8350_l6>;
--	vdda-pll-supply = <&pm8350_l1>;
-+	vdda-phy-supply = <&pm8350_l1>;
-+	vdda-pll-supply = <&pm8350_l6>;
+ &usb_dp_qmpphy {
+-	vdda-phy-supply = <&pm8550vs_2_l3>;
+-	vdda-pll-supply = <&pm8550ve_l3>;
++	vdda-phy-supply = <&pm8550ve_l3>;
++	vdda-pll-supply = <&pm8550vs_2_l3>;
+ 
  	status = "okay";
  };
 -- 
