@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0CE3DAAC9;
-	Sat, 12 Sep 2026 11:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBC047A0B0;
+	Sat, 12 Sep 2026 11:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213638; cv=none; b=qSK1BLgy/77LhW/SB40LWMqtBjLpDQzxttvfwlpp7b8eSdgvCFGse6Np9DJ1a32JSyGZw62plgdp6cTtaqGaa1XHVw1VTmt/F3QNYqQwXSlkhchKG2O0jY4FBZSOsZVvxr1pP+DyQkWdxycd3X8j2LIt+Q8si4u+HX5QGI89HTQ=
+	t=1789213645; cv=none; b=L+OXJWoQdLwTODXUHHXwfqGdkAVurzmKOUcccVm6aSd7y0C4qja2l5lwAA8iEJmgcckjUZuHOLrh0HlX28TcevIK5jp9CXhT4sgqFeO+VqqcAz/LrfS92ljYFZn+rrxCh244162otAKv+mYGVI+KagMVterg1Vkv29Vjj4+mxak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213638; c=relaxed/simple;
-	bh=DXLzqdh9/GH7F/0Cwines59TSYMs2H41jtPQXxd6Da8=;
+	s=arc-20240116; t=1789213645; c=relaxed/simple;
+	bh=dadzTb7wsFje3Sz9K6ZAJ5ERWuAfv1LyppUl885iZaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=co7nft71wKYE8527bRHLdsgWBGSNoMY27NrIAgeBBNWISYWb52ERjPVgjY36OOhmbnOywLYZKPlDTWc+0C/ygFlapb3HunwPKYqm5lwiX2HZa6K9Vn7FnukoXq6o7ZlnCn2hfRqrWdnRQhq76hsg9gZUf1b+qBLjHnp6WJk6B90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGsJUFCD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tpMzXmHa1eupfK5NhIN3ulZkEiKfsEIL3c++Qk1yNkHufvRie0SStZZAkus0nNnbxKe5KqPu0XFrggmZJG29QI165HN/oOXkAJF2hdsso/zCzPSe25Zk620oj6allm0G6vU6fEpNDpHuC6gyXvyZCbfBKXYki8MUliuDFwzJotk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+qV807g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGsJUFCD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5F91F000FF;
-	Sat, 12 Sep 2026 11:47:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+qV807g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082191F000FF;
+	Sat, 12 Sep 2026 11:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213635;
-	bh=b3iTrYODgyxIcKDytZaT4vhWT7zhK/6e7rClISc5z0E=;
+	s=korg; t=1789213639;
+	bh=71aCTmABezeOc/hlnP26eq8+/w6/ujcTXcAQQBNublA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NGsJUFCD9zk1zRXH6bNp25Mw9Mhns/epMNHGngYTOgjkZlEjwCVtWjH7VQDH+U5ab
-	 cdhB35VZFxwyxcBTdg+PbaQiXS8Ha6B7BpPtFIRTpFdWjNCAQQJuvB9BEYIpdasmVQ
-	 2iamOwF07ct3CVAvhFRL7H5IiTmHRkOEbRKoiPFQ=
+	b=H+qV807g+Y/iZB8pgxC8F4ma68XQ8u+1FHjrz882zSi4XHpJTGq8g3lUYHuPpsW/n
+	 ptMusIbk8eUwKTiBWQgw99+a+uXPSF5KDnmrfp0GtCxcMfXO0V/ZacHNpnXeeCuYiy
+	 hWqXtZgs736awlXfEarhj2XHZ0ugpAg3sGCTIHbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Roth <michael.roth@amd.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 0162/1376] KVM: x86: Serialize writes to disabled_quirks using kvm->lock
-Date: Sat, 12 Sep 2026 08:43:08 +0200
-Message-ID: <20260912065611.161121052@linuxfoundation.org>
+Subject: [PATCH 6.12 0163/1376] KVM: x86: Ensure runtime reads of disabled_quirks are resolved once
+Date: Sat, 12 Sep 2026 08:43:09 +0200
+Message-ID: <20260912065611.184349617@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,45 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit ba76b23ed36ab230fc2577aba24f65851114902f upstream.
+commit ed15cb21999217e549414c128b4a0485debf6278 upstream.
 
-Protect writes to disabled_quirks with kvm->lock to ensure KVM doesn't
-clobber state in the unlikely scenario that userspace disables disparate
-quirks from multiple tasks.  More importantly, this will allow wrapping
-accesses with {READ,WRITE}_ONCE without "needing" to also guard the writer
-with a useless and confusing READ_ONCE (since the RMW wouldn't be atomic
-anyways).
-
-Ideally, KVM would disallow disabling quirks once quirks are "live", but
-that would be a potentially breaking userspace ABI change, and while all
-existing quirks are fully live only after vCPUs have been created, several
-MMU-related quirks, IGNORE_GUEST_PAT and SLOT_ZAP_ALL, are partially live
-at all times.  Because populating MMUs requires a vCPU, the guest-visible
-behavior of IGNORE_GUEST_PAT and SLOT_ZAP_ALL requires a vCPU, but for KVM
-itself, processing the quirk (or not) has functional impact, i.e. for all
-intents and purposes, KVM can't prevent those quirks from being disabled
-after they've been consumed.
+Wrap the sole reader of disabled_quirks with READ_ONCE(), and wrap the
+post-VM-creation write to disabled_quirks with WRITE_ONCE(), to ensure
+checking the status of a quirk doesn't re-read disabled_quirks *if* the
+caller needs such a guarantee.  This will allow splitting the "fast" MMU
+zap into front and back halves, without potentially skipping the back
+half if SLOT_ZAP_ALL were concurrently disabled (which would be "fine" in
+the current code base, but far from ideal).
 
 Cc: stable@vger.kernel.org # 6.12.x
 Reviewed-by: Michael Roth <michael.roth@amd.com>
-Link: https://patch.msgid.link/20260709204948.1988414-6-seanjc@google.com
+Link: https://patch.msgid.link/20260709204948.1988414-7-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kvm/x86.c |    3 ++-
+ arch/x86/kvm/x86.h |    2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
 --- a/arch/x86/kvm/x86.c
 +++ b/arch/x86/kvm/x86.c
-@@ -6552,7 +6552,9 @@ int kvm_vm_ioctl_enable_cap(struct kvm *
- 			break;
+@@ -6553,7 +6553,8 @@ int kvm_vm_ioctl_enable_cap(struct kvm *
  		fallthrough;
  	case KVM_CAP_DISABLE_QUIRKS:
-+		mutex_lock(&kvm->lock);
- 		kvm->arch.disabled_quirks |= cap->args[0] & kvm_caps.supported_quirks;
-+		mutex_unlock(&kvm->lock);
+ 		mutex_lock(&kvm->lock);
+-		kvm->arch.disabled_quirks |= cap->args[0] & kvm_caps.supported_quirks;
++		WRITE_ONCE(kvm->arch.disabled_quirks,
++			   kvm->arch.disabled_quirks | (cap->args[0] & kvm_caps.supported_quirks));
+ 		mutex_unlock(&kvm->lock);
  		r = 0;
  		break;
- 	case KVM_CAP_SPLIT_IRQCHIP: {
+--- a/arch/x86/kvm/x86.h
++++ b/arch/x86/kvm/x86.h
+@@ -357,7 +357,7 @@ static inline void kvm_register_write(st
+ 
+ static inline bool kvm_check_has_quirk(struct kvm *kvm, u64 quirk)
+ {
+-	return !(kvm->arch.disabled_quirks & quirk);
++	return !(READ_ONCE(kvm->arch.disabled_quirks) & quirk);
+ }
+ 
+ void kvm_inject_realmode_interrupt(struct kvm_vcpu *vcpu, int irq, int inc_eip);
 
 
