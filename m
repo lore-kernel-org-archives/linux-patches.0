@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F36392807;
-	Sat, 12 Sep 2026 19:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275543815F8;
+	Sat, 12 Sep 2026 19:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242984; cv=none; b=LM57fpIPIo/np+LR3QkFXP+qpCIK5UZZZCI8YOpDIMeB8IbT5MAA3/K+7uTfh9pTy2aSi3UWF+jWOvfaXjZmKUJ5trdHH0TDTkxYZuQTTlBqqJmBWMIAmJgdsvDexH/B9KYZK2+XbQjnHiyvB0x4a/aEB70DGe6LKlucdED41vg=
+	t=1789242984; cv=none; b=KIdBQfVgyVUSy3q49C1MnIWHsZaY4xEfpE/D1qNcCY417AqYhqxioEsZZNpOuz6b5JH65zQOP/jYIlDreJgOZWF70LkidTw11N0Jwycs5JSXP77IqEf640N0VEn6cSxmFXRa7BIXodzKXVPdm0J6Wy5NToDq1eRUh8F9Yl1u+GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789242984; c=relaxed/simple;
-	bh=x3eCD5WtD3fhhBVvH7hhLVeoy4yL784+OZXJqpJ7THE=;
+	bh=UAqhPJGeRhtExHDQcI4t6BmGm5VoXoHj6T+xWQ0wXu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dY/begPVBwuJQGuHHrSwoAHVL0H9MLTpzt2jOfKadEWLYQqlC72gv8msmiRFWSHwu0ka50g6ZwjayRrHiFYT2sve1XwGHkKHunyCr7spPy7D6jl5x7i3i706ASAm/lxJlRMYBUIgagVvXNm2MbMEJV75u0nBNukv7q445DEBfHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zJQ4ArWG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ac80DSgVKTWrA2z1RUw6pULdjP8+1fHCNw2nFx+47MC6QbkREAxMBvihwle9JWqG85r28RL4kq6Chn25a2VbWKSCAuz7Mrh0CjDRKp4F3fFXI/wpTOoh9tLtl2W6kDiGRka95729sIw9gWgXr4N1SNSI/XS/e8WxFYeiw3degx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmFE0MJa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zJQ4ArWG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69AB11F00893;
-	Sat, 12 Sep 2026 19:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmFE0MJa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF321F000FF;
+	Sat, 12 Sep 2026 19:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242978;
-	bh=SO0hK9T1JGZR4YuXbN4xqLbGB5t9kaOcKIwxgfokaOw=;
+	s=korg; t=1789242981;
+	bh=ZTgWPEXmASBzhtkC8tI/2zMvnh2qZLrQHwVCjQMmp1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zJQ4ArWGSfcVmIE1rSL8Okk7GMTExnC2p4E/YH4xzhoxAZNlK+up7pPeHoS1Iezui
-	 lG0roR/O0qCjeRnMNI0CpV75WV+c9S5ufunefG5YnqXExi9TY9b+UHhlL/5TxmLN5d
-	 YeA2YqLpZXDNLJyIT0RuCgGsffrs5J9D5f4upUsA=
+	b=hmFE0MJaAVcETk0VnBNWCiaH0VuFw5uBM1bqST/mzVxqL9PdOcawDWYCM2XZEC0n0
+	 yxZsgQPf3EuKvySPqwqBDDXNN3aQ4WZyIUjmJaNHVRYZb9E3D9stVnoaHEJinpwDp1
+	 Yzi/8BEYGHnr3QQ7AAj1Afw+e1dnc/gzktVp7xBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <remi@remlab.net>,
-	Joe Damato <joe@dama.to>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Yu Kuai <yukuai@fygo.io>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 593/798] phonet: pep: do not write beyond optlen in getsockopt
-Date: Sat, 12 Sep 2026 09:03:41 +0200
-Message-ID: <20260912065530.717418567@linuxfoundation.org>
+Subject: [PATCH 5.10 594/798] block/blk-stat: drain per-cpu callback stats over possible CPUs
+Date: Sat, 12 Sep 2026 09:03:42 +0200
+Message-ID: <20260912065530.740678991@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -48,51 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Tao Cui <cuitao@kylinos.cn>
 
-[ Upstream commit 77e5eb0e192aec6710c03ca8144582fd2af36ca4 ]
+[ Upstream commit 9d617828cfc4d9a4d385daa2cd61f9db0592c53f ]
 
-pep_getsockopt() clamps the reported length to the caller's buffer with
-min_t(), but then stores the value with put_user(val, (int __user *)
-optval), which always writes sizeof(int) bytes. A getsockopt() call with
-an optlen smaller than sizeof(int) thus reports the clamped length yet
-writes a full int, one to three bytes past the user buffer.
+blk_stat_timer_fn() sums and resets a callback's per-cpu buckets using
+for_each_online_cpu().  A CPU that goes offline with pending samples is
+skipped, so its samples are neither accumulated into the window nor
+cleared; they sit in the bucket until the CPU comes back online, at
+which point the stale values are flushed into whatever window is then
+running.
 
-Write the value with copy_to_user() bounded by len, so at most optlen
-bytes are copied, matching the length reported back to userspace.
+This silently corrupts the latency picture that consumers (notably
+writeback throttling via wbt, and blk-mq latency tracking) base
+decisions on around CPU hotplug: under-counting while the CPU is
+offline, then a burst of stale data on re-online.
 
-Fixes: 02a47617cdce ("Phonet: implement GPRS virtual interface over PEP socket")
-Acked-by: Rémi Denis-Courmont <remi@remlab.net>
-Reviewed-by: Joe Damato <joe@dama.to>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260729-getsockopt_phase4-v4-4-c44576757c17@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 34dbad5d26e2 ("blk-stat: convert to callback-based statistics reporting")
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Reviewed-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/20260720093726.28965-2-cui.tao@linux.dev
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/phonet/pep.c | 2 +-
+ block/blk-stat.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/phonet/pep.c b/net/phonet/pep.c
-index cac9631bd84ac..17f12911dba35 100644
---- a/net/phonet/pep.c
-+++ b/net/phonet/pep.c
-@@ -1093,7 +1093,7 @@ static int pep_getsockopt(struct sock *sk, int level, int optname,
- 	len = min_t(unsigned int, sizeof(int), len);
- 	if (put_user(len, optlen))
- 		return -EFAULT;
--	if (put_user(val, (int __user *) optval))
-+	if (copy_to_user(optval, &val, len))
- 		return -EFAULT;
- 	return 0;
- }
+diff --git a/block/blk-stat.c b/block/blk-stat.c
+index 6e602f9b966e4..7d6258eaaef48 100644
+--- a/block/blk-stat.c
++++ b/block/blk-stat.c
+@@ -86,7 +86,7 @@ static void blk_stat_timer_fn(struct timer_list *t)
+ 	for (bucket = 0; bucket < cb->buckets; bucket++)
+ 		blk_rq_stat_init(&cb->stat[bucket]);
+ 
+-	for_each_online_cpu(cpu) {
++	for_each_possible_cpu(cpu) {
+ 		struct blk_rq_stat *cpu_stat;
+ 
+ 		cpu_stat = per_cpu_ptr(cb->cpu_stat, cpu);
 -- 
 2.53.0
 
