@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D48242D65;
-	Sat, 12 Sep 2026 15:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01753515C1;
+	Sat, 12 Sep 2026 15:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227779; cv=none; b=iUNJ/XrnnwrU1qZw6h7XdMIMhuHcpeB7pvRDqLXI7APBzxKWX21ibmQQAG4saJ0mymlnRYTQoqtqjzz/3ps+kNbFUMWb1Dnh97ozOvK1QZ3UKr31ARjtMtrG9yFrQduLQONsqnhuPCQf+McWtOWoVNw6t15Tn7hgtdgPNtKcIxs=
+	t=1789227784; cv=none; b=Bzoglu4Js2RznX26mUMzLSOweZRwjkn6PRG2c6KklR5xN7EDmIjzMdPHX0SH9sFxC60ft7NMlF3t4KWKQE1CuL9ZFIY3J751tOJxmt5A2QfD482M1RB/LxLBEiti5X/aV8rRr0Famw0a7cpbhT2vMh6aWIR7+fzqquPZXn9XzTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227779; c=relaxed/simple;
-	bh=1lI4qZylz7LwWnMEuCiOnnsSXl5JedoxHogRhSbNH6w=;
+	s=arc-20240116; t=1789227784; c=relaxed/simple;
+	bh=e92It3pu/TAANDjmdkmAm3WDjgf0ILAywUq2/uObEGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rDnF2yXOXsKa+wJ1vtv2ZYLlmRaM1SETmZ7D0NQFckUID45azwAI4it7taXdvAbcYKN75ObU50hzeRZQadbSb7oZCA4iTgZVzJiWA7zbVhJ95vFz7CcPNLniBydp5YbFjCUO4dT/lEPcAUNbpY9ZdU9nUjZ3ZnsnEiEa8vWhjig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+QvEGX0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TaUkzqhthzxtq1riYpZNSx8ir1FZSREEyfIPM8t6SY7JSi7al0Bx1Toddii/i7tIEBzdW6HvxUQnalwG8Q1N439Au1V7Sfb5Tpdn7Wqim6s8iDMMz+GRk7Lrs7HOyzozJ4mGLBnjgEEqb2Gr3d7EgqOARhvcQqsXF/oKAy/REpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vW0aRNz9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+QvEGX0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DAFC1F000FF;
-	Sat, 12 Sep 2026 15:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vW0aRNz9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 404801F000FF;
+	Sat, 12 Sep 2026 15:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227777;
-	bh=+HRnreTLhjZAIz4ifN8li4pK8tJW4e2LxHx3FfyTr1s=;
+	s=korg; t=1789227782;
+	bh=uXz8N0KLczHIo8FwQhOxAXTyZyPK4EqPWKz6IYGZkJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I+QvEGX0ICjHAXK4UCzp1fk1mRCRu/eY2eOorsPElSLsuhlzapIx7tGf4m8MufQ/0
-	 LnGVKHPFfr8mf8k41rfqb0oTzBCeocNDALswVhPOX0OfcOKvfVHOuLHuvhuThdrr3n
-	 SzJBFstNl9XB7cKsEk++6GNa3csi7Z55yIsv5Ij8=
+	b=vW0aRNz9qrCl5UZFJ5bTt97FnDhIZQKJx0P29jsV060jx+2Y/ip4F+/wVAv0rFbwi
+	 GNhOsSmPgBsLzzn3++RjoVtzbYbAnaKrAMMQVNh5QrTG/JP/7YZkvs+GMQaHGsCdgQ
+	 Azg6NKMV8/2v5jczjMx/CvbH9f4dYG1GmWWgxU5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ilya Maximets <i.maximets@ovn.org>,
-	Norbert Szetei <norbert@doyensec.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	Aaron Conole <aconole@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0252/1191] net: skbuff: dont skb_tx_error() the source skb in skb_zerocopy()
-Date: Sat, 12 Sep 2026 08:49:40 +0200
-Message-ID: <20260912065553.878148805@linuxfoundation.org>
+Subject: [PATCH 6.1 0253/1191] net: openvswitch: fix kernel-doc warnings in internal headers
+Date: Sat, 12 Sep 2026 08:49:41 +0200
+Message-ID: <20260912065553.900177129@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,65 +53,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit 8ece906150128d5ec2462aabcc978c568433eca4 ]
+[ Upstream commit 6bb0dcb3d321c14be7ca33b71a149034d6a2cde8 ]
 
-skb_zerocopy() copies frags from @from into @to. On an
-skb_orphan_frags() failure it calls skb_tx_error(@from), a destructive
-operation on the source skb the copy helper does not own. That completes
-@from's zerocopy uarg and clears SKBFL_ALL_ZEROCOPY, including the
-SKBFL_SHARED_FRAG page-ownership marker.
+Some field descriptions were missing, some were not very accurate.
+Not touching the uAPI header or .c files for now.
 
-Both callers already report the failure on their own drop path.
-nfnetlink_queue does it at nla_put_failure, and Open vSwitch does it in
-the flow-miss drop arm of ovs_dp_process_packet(), so nothing is lost by
-dropping it here.
+Formatting of those comments isn't great in general, but at least
+they are not missing anything now.
 
-On Open vSwitch's OVS_ACTION_ATTR_USERSPACE path the skb is not freed on
-this error: do_execute_actions() ignores output_userspace()'s return
-value and, unless the upcall was the last action, keeps forwarding the
-same skb through the flow's remaining actions. The uarg is completed
-while that skb is still in flight, telling the producer its buffers are
-free, and SKBFL_SHARED_FRAG is cleared on an skb the rest of the stack
-still handles. That flag is what makes esp_input() call skb_cow_data()
-instead of decrypting in place, so a later local ESP delivery can
-decrypt over frags the skb does not own privately.
+Before:
+  $ ./scripts/kernel-doc -none -Wall net/openvswitch/*.h 2>&1 | wc -l
+  16
 
-Leave error reporting to the callers.
+After:
+  $ ./scripts/kernel-doc -none -Wall net/openvswitch/*.h 2>&1 | wc -l
+  0
 
-Fixes: 36d5fe6a0007 ("core, nfqueue, openvswitch: Orphan frags in skb_zerocopy and handle errors")
-Cc: stable@vger.kernel.org
-Suggested-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/6E3A780D-FB87-421F-9964-B1D457D7D106@doyensec.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ 7.2 and earlier do not have the put_page() call on the error path ]
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Eelco Chaudron <echaudro@redhat.com>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20250320224431.252489-1-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ struct vport_upcall_stats_percpu doesn't exist in 6.2 and earlier ]
 Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/openvswitch/datapath.h | 20 ++++++++++++++------
+ net/openvswitch/vport.h    |  8 ++++++++
+ 2 files changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 48dff94dd938c..4585f7c2af4cf 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -3356,10 +3356,9 @@ skb_zerocopy(struct sk_buff *to, struct sk_buff *from, int len, int hlen)
+diff --git a/net/openvswitch/datapath.h b/net/openvswitch/datapath.h
+index 88156a677f22c..92dea32da88bd 100644
+--- a/net/openvswitch/datapath.h
++++ b/net/openvswitch/datapath.h
+@@ -29,8 +29,8 @@
+  * datapath.
+  * @n_hit: Number of received packets for which a matching flow was found in
+  * the flow table.
+- * @n_miss: Number of received packets that had no matching flow in the flow
+- * table.  The sum of @n_hit and @n_miss is the number of packets that have
++ * @n_missed: Number of received packets that had no matching flow in the flow
++ * table.  The sum of @n_hit and @n_missed is the number of packets that have
+  * been received by the datapath.
+  * @n_lost: Number of received packets that had no matching flow in the flow
+  * table that could not be sent to userspace (normally due to an overflow in
+@@ -40,6 +40,7 @@
+  *   up per packet.
+  * @n_cache_hit: The number of received packets that had their mask found using
+  * the mask cache.
++ * @syncp: Synchronization point for 64bit counters.
+  */
+ struct dp_stats_percpu {
+ 	u64 n_hit;
+@@ -74,8 +75,10 @@ struct dp_nlsk_pids {
+  * ovs_mutex and RCU.
+  * @stats_percpu: Per-CPU datapath statistics.
+  * @net: Reference to net namespace.
+- * @max_headroom: the maximum headroom of all vports in this datapath; it will
++ * @user_features: Bitmap of enabled %OVS_DP_F_* features.
++ * @max_headroom: The maximum headroom of all vports in this datapath; it will
+  * be used by all the internal vports in this dp.
++ * @meter_tbl: Meter table.
+  * @upcall_portids: RCU protected 'struct dp_nlsk_pids'.
+  *
+  * Context: See the comment on locking at the top of datapath.c for additional
+@@ -125,10 +128,13 @@ struct ovs_skb_cb {
+ #define OVS_CB(skb) ((struct ovs_skb_cb *)(skb)->cb)
  
- 	skb_len_add(to, len + plen);
+ /**
+- * struct dp_upcall - metadata to include with a packet to send to userspace
++ * struct dp_upcall_info - metadata to include with a packet sent to userspace
+  * @cmd: One of %OVS_PACKET_CMD_*.
+  * @userdata: If nonnull, its variable-length value is passed to userspace as
+  * %OVS_PACKET_ATTR_USERDATA.
++ * @actions: If nonnull, its variable-length value is passed to userspace as
++ * %OVS_PACKET_ATTR_ACTIONS.
++ * @actions_len: The length of the @actions.
+  * @portid: Netlink portid to which packet should be sent.  If @portid is 0
+  * then no packet is sent and the packet is accounted in the datapath's @n_lost
+  * counter.
+@@ -149,6 +155,10 @@ struct dp_upcall_info {
+  * struct ovs_net - Per net-namespace data for ovs.
+  * @dps: List of datapaths to enable dumping them all out.
+  * Protected by genl_mutex.
++ * @dp_notify_work: A work notifier to handle port unregistering.
++ * @masks_rebalance: A work to periodically optimize flow table caches.
++ * @ct_limit_info: A hash table of conntrack zone connection limits.
++ * @xt_label: Whether connlables are configured for the network or not.
+  */
+ struct ovs_net {
+ 	struct list_head dps;
+@@ -157,8 +167,6 @@ struct ovs_net {
+ #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
+ 	struct ovs_ct_limit_info *ct_limit_info;
+ #endif
+-
+-	/* Module reference for configuring conntrack. */
+ 	bool xt_label;
+ };
  
--	if (unlikely(skb_orphan_frags(from, GFP_ATOMIC))) {
--		skb_tx_error(from);
-+	if (unlikely(skb_orphan_frags(from, GFP_ATOMIC)))
- 		return -ENOMEM;
--	}
-+
- 	skb_zerocopy_clone(to, from, GFP_ATOMIC);
- 
- 	for (i = 0; i < skb_shinfo(from)->nr_frags; i++) {
+diff --git a/net/openvswitch/vport.h b/net/openvswitch/vport.h
+index 6ff45e8a0868d..ecde971e77b42 100644
+--- a/net/openvswitch/vport.h
++++ b/net/openvswitch/vport.h
+@@ -93,6 +93,8 @@ struct vport {
+  * @desired_ifindex: New vport's ifindex.
+  * @dp: New vport's datapath.
+  * @port_no: New vport's port number.
++ * @upcall_portids: %OVS_VPORT_ATTR_UPCALL_PID attribute from Netlink message,
++ * %NULL if none was supplied.
+  */
+ struct vport_parms {
+ 	const char *name;
+@@ -121,6 +123,8 @@ struct vport_parms {
+  * have any configuration.
+  * @send: Send a packet on the device.
+  * zero for dropped packets or negative for error.
++ * @owner: Module that implements this vport type.
++ * @list: List entry in the global list of vport types.
+  */
+ struct vport_ops {
+ 	enum ovs_vport_type type;
+@@ -148,6 +152,8 @@ void ovs_vport_free(struct vport *);
+  *
+  * @vport: vport to access
+  *
++ * Returns: A void pointer to a private data allocated in the @vport.
++ *
+  * If a nonzero size was passed in priv_size of vport_alloc() a private data
+  * area was allocated on creation.  This allows that area to be accessed and
+  * used for any purpose needed by the vport implementer.
+@@ -162,6 +168,8 @@ static inline void *vport_priv(const struct vport *vport)
+  *
+  * @priv: Start of private data area.
+  *
++ * Returns: A reference to a vport structure that contains @priv.
++ *
+  * It is sometimes useful to translate from a pointer to the private data
+  * area to the vport, such as in the case where the private data pointer is
+  * the result of a hash table lookup.  @priv must point to the start of the
 -- 
 2.53.0
 
