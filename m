@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3365B3A782D;
-	Sat, 12 Sep 2026 20:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD253A7580;
+	Sat, 12 Sep 2026 20:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243414; cv=none; b=T+Y4gXFtnJfUWbo745OQL+RYV3bzxkXJw6KiJiX+SZtc7xokMuQHlVMXPiFTrerLMSlonkT3vcoDNvjFDXr4CfOPFCJqhi9ykBxDgkDC/oDCSDae9f3XT4i7CWq3NRH9BLqsOx66R25qNGaeYhZbf2LohWIsdu9pTiEPGdZwEC8=
+	t=1789243417; cv=none; b=Su52IeDS9JgC8VDOo8M+0WO2tlgbdSXoQNXDVAj4K+oY0Xd/Z27Tt2NEuOM0lufOMKeGyAuE0sGwjTA42rDvH5yWK9vYu5dEbUhDRH00CiEwpxdm25sukEx7KBWWKKdEolhoMKc1Z3EgVc+ihkXJYx5Gdt3L/wQmVC4C1pcIJzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243414; c=relaxed/simple;
-	bh=hKvJtgKxzmR27/7CxoFdOapRcEW6UOTYl8SYXpWNOOs=;
+	s=arc-20240116; t=1789243417; c=relaxed/simple;
+	bh=7xvrvjOrzqP1z9jT2UwUwM2KDi6ZsjjaAFhbZlU2Xus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YDediMC0BHKtjlAv2h6KjAlonY4YvMy1KtaihuHJW2c7YvSFuUhg38/5VHBsgzLr3UGj6R4fgt2vAxdU0HWDhDYANS/ZgCdqhoItcSSKWrC3jQqL7W4F6b/Ab6unwz2Zsuxsm9db0NsVeK2qOfC0yG+SRKXBgbRTeMsAJSqqVaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSu4SVx/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FdxoyYtBl/FybrKL2j1mow0hI0sa+j4Y7LHM062+WaCk0ISULAZfvDkEnosZuc5E2ZpGLioskw5wjfBleUIH7B4PZQ57MByTVIS+UfmVxnSEFfuGPSjl2BFCcQwoTt1AaW82ZJQjZHvMdGA+hnGjiPeGOPWAy+oFY/KGIhOapzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JaegcPt6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSu4SVx/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE341F000FF;
-	Sat, 12 Sep 2026 20:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JaegcPt6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 634971F000FF;
+	Sat, 12 Sep 2026 20:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243413;
-	bh=x3H0Mub9HIuWKSjvorZeuOsHoCdtZf6dY36I5MSBfRA=;
+	s=korg; t=1789243415;
+	bh=lojuNq/xEEmetWN7ecN3HTdUUS1TsYlHDZ7t8AZQsjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SSu4SVx/zlsVhxnSOKU+SwraA6DNBv+gtyejC7wz1rOeyA+XbsMMN96NgBGhjn8jm
-	 9jF5wkU2bJ4VjyDZyB0gmw+GEAw+6lozC9MaXCuRhkgmUOKXkyZmtYC89WOKDWmamW
-	 X89ecaMS6CfUZtGWp7FI7RQYZsJUQKfQumc6IiRY=
+	b=JaegcPt6VyrEI04q0ut15HZrrXo4sY35/PpNausU8uPX8QPHygn/FKI/LcFFGErNX
+	 lRqVpUCPdTy6+oHk//3zCml1XeSNqSE7xVdNyJCY2BttdYggpw8ssG4tMNqDDzTTMt
+	 nGlDgJpJb309Q99BYGr+uPnWpi26UbyDpCGAbYJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Fan Ye <fy15309206903@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Mika Westerberg <westeri@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 694/798] ASoC: xilinx: formatter_pcm: fix stream_data leak on open error
-Date: Sat, 12 Sep 2026 09:05:22 +0200
-Message-ID: <20260912065533.002434306@linuxfoundation.org>
+Subject: [PATCH 5.10 741/798] net: thunderbolt: Count delivered packets in rx_packets and rx_bytes
+Date: Sat, 12 Sep 2026 09:06:09 +0200
+Message-ID: <20260912065534.057648182@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,78 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Fan Ye <fy15309206903@gmail.com>
 
-[ Upstream commit b992511180e126150c6ad3580a6fd568c385f4c6 ]
+[ Upstream commit c5ae83ee02c04487b1be1d143b791ec2caca888e ]
 
-In xlnx_formatter_pcm_open(), stream_data is allocated and
-adata->play_stream or adata->capture_stream is assigned early.  If a
-later step, such as snd_pcm_hw_constraint_step() or
-snd_pcm_hw_constraint_integer(), fails, the function returns the error
-immediately.  ALSA does not call the close callback when open fails, so
-stream_data is leaked and the stream pointer is left dangling, pointing
-to a substream that ALSA frees.  A later interrupt would then call
-snd_pcm_period_elapsed() on the freed substream.
+tbnet_poll() increments rx_packets once per received frame because that is
+the NAPI work unit, and then adds the same number to stats.rx_packets. An
+skb is handed to the stack only when the last frame of a packet arrives,
+so once the MTU exceeds TBNET_MAX_PAYLOAD_SIZE the statistic reports
+frames. tx_packets is bumped once per skb, so the two ends of a link
+disagree: at MTU 65330 the receiver reports 16 times the packets its
+sender sent.
 
-Free stream_data and clear the stream pointer on the error paths.
+rx_bytes has the matching problem: frames of a packet that is later
+dropped mid-assembly are already accounted, so it does not correspond to
+rx_packets as documented. Account for both where the packet is completed,
+and leave the NAPI work counter alone.
 
-Fixes: 6f6c3c36f091 ("ASoC: xlnx: add pcm formatter platform driver")
-Assisted-by: opencode:deepseek-v4-flash-free
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Michal Simek <michal.simek@amd.com>
-Link: https://patch.msgid.link/20260811185140.27149-1-rosenp@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
+Signed-off-by: Fan Ye <fy15309206903@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Mika Westerberg <westeri@kernel.org>
+Link: https://patch.msgid.link/20260815-tbnet-rx-stats-v1-1-8da375c2cd09@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/xilinx/xlnx_formatter_pcm.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/net/thunderbolt.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/xilinx/xlnx_formatter_pcm.c b/sound/soc/xilinx/xlnx_formatter_pcm.c
-index dccc056e0e0a6..74a7c8e5998df 100644
---- a/sound/soc/xilinx/xlnx_formatter_pcm.c
-+++ b/sound/soc/xilinx/xlnx_formatter_pcm.c
-@@ -384,7 +384,7 @@ static int xlnx_formatter_pcm_open(struct snd_soc_component *component,
- 	if (err) {
- 		dev_err(component->dev,
- 			"Unable to set constraint on period bytes\n");
--		return err;
-+		goto error;
+diff --git a/drivers/net/thunderbolt.c b/drivers/net/thunderbolt.c
+index d2457d799759a..6ae7211d72678 100644
+--- a/drivers/net/thunderbolt.c
++++ b/drivers/net/thunderbolt.c
+@@ -818,17 +818,17 @@ static int tbnet_poll(struct napi_struct *napi, int budget)
+ 		last = net->rx_hdr.frame_index == net->rx_hdr.frame_count - 1;
+ 
+ 		rx_packets++;
+-		net->stats.rx_bytes += frame_size;
+ 
+ 		if (last) {
++			/* Before eth_type_trans() pulls the Ethernet header. */
++			net->stats.rx_packets++;
++			net->stats.rx_bytes += skb->len;
+ 			skb->protocol = eth_type_trans(skb, net->dev);
+ 			napi_gro_receive(&net->napi, skb);
+ 			net->skb = NULL;
+ 		}
  	}
  
- 	/* Resize the buffer bytes as divisible by 64 */
-@@ -394,7 +394,7 @@ static int xlnx_formatter_pcm_open(struct snd_soc_component *component,
- 	if (err) {
- 		dev_err(component->dev,
- 			"Unable to set constraint on buffer bytes\n");
--		return err;
-+		goto error;
- 	}
+-	net->stats.rx_packets += rx_packets;
+-
+ 	if (cleaned_count)
+ 		tbnet_alloc_rx_buffers(net, cleaned_count);
  
- 	/* Set periods as integer multiple */
-@@ -403,7 +403,7 @@ static int xlnx_formatter_pcm_open(struct snd_soc_component *component,
- 	if (err < 0) {
- 		dev_err(component->dev,
- 			"Unable to set constraint on periods to be integer\n");
--		return err;
-+		goto error;
- 	}
- 
- 	/* enable DMA IOC irq */
-@@ -412,6 +412,14 @@ static int xlnx_formatter_pcm_open(struct snd_soc_component *component,
- 	writel(val, stream_data->mmio + XLNX_AUD_CTRL);
- 
- 	return 0;
-+
-+error:
-+	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+		adata->play_stream = NULL;
-+	else
-+		adata->capture_stream = NULL;
-+	kfree(stream_data);
-+	return err;
- }
- 
- static int xlnx_formatter_pcm_close(struct snd_soc_component *component,
 -- 
 2.53.0
 
