@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350233AC17;
-	Sat, 12 Sep 2026 15:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8AC2D739C;
+	Sat, 12 Sep 2026 15:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226037; cv=none; b=ka7HBDuhXHk9rapltRy2jN0NKst56Xl6s4HKOdyIJ9zSGwv3AAOmmV6jvfJYwsvLGNnIRFMlXOCjrYPVCX/SUfJxDKDzzaHc+YOgkL0QS2NOs7QVmPsdBHwQVE5CJ75Bgyt+BKFH8tRjPnjt0g8Kp+8LUvSeIuifQMZcSVl0jQs=
+	t=1789226042; cv=none; b=SVLesDIHFw2oPETBBtJPu8qpS7m7r+oIunVh+qoPHqx3w9GvRvUGdLM5yUv/Cjc84SEZrdODdY0sMSjBtUal4lAwcddKvRNGIoZe2Q89ZOczL+/tjoqgaGLmYB70K0I/+pALdmEpmj+I5Nngzl5M3P1F7XBiWlT5rIT3SYOMstc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226037; c=relaxed/simple;
-	bh=7WhJDL7VH6eHcnT43zImLGgQg+OcaJAmSQs6l3RjDtA=;
+	s=arc-20240116; t=1789226042; c=relaxed/simple;
+	bh=yq0I1nY5x65ZApYo7Dzee3JgorDIoZGSvDDpFtSgUC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C+MDhyEo2tZjFO58v0XoWRxgtoLRTQE33ZK5hCvaRsf0tvykZNFTXMQb9mQltG72tXtfCk7ZMzKW8P88Cyoc0Sj8g5ew+A3a9I1rcxcVOII2hG4m/zWqux1pk0Z4NpDOEBFGLZE8I0pxSc62JXOMDvm4GmsjIfK2W6WzkdnO2zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ny0pHGCD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jyO6e7uGWT7J72bYIobmrgjjEjQqWkDZy9SBgedzJe4kMHtlkmGUvZXxqPddd356mlc3BDsMDZkZmVJ+v6dbGSfOcbRZIOMVbBN6CQDOQFoOYx/cPSEt577QiFT/I7Url6nqpCwjFvwUZV734PXjWfTFYavla7qr1py7KnTCix4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/rsa1xW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ny0pHGCD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E498F1F000FF;
-	Sat, 12 Sep 2026 15:13:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/rsa1xW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E8F41F000FF;
+	Sat, 12 Sep 2026 15:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226036;
-	bh=GFdarDIc7PW3NC+WifcfXuFhJ25KUokg33aFpF5qBno=;
+	s=korg; t=1789226041;
+	bh=6DBADpBwHQ1Ok3k+N2FRIs96RayhZILPeCCQLpNuFPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ny0pHGCDtiLbIMSdf1tcgoItiy5WFtHVunHUIbdBbtUA1+WvQhNzsOnLTbq98WYiF
-	 24z3MQFOm5lyUJnTwz1+wOLzHhgtoajS1ya8Cq5vE5PTFkLyj6jKWZ0OGlPqHSe8LE
-	 HZb0GhIzK8qqdcfEA8/n2vqnQRCiVI+ujMza+r8U=
+	b=G/rsa1xWdObnptTYLaJZUSByW3yDeHN3C7qu5spV3UCT5AkrVsPWc3k3jYWKUJj9Z
+	 QKKcKnEBAhB+FqOYAW+vI+mFi+8Z3XDrpe7JZDQnsQ8cqgvNBwzobG2lWRJmXy48qD
+	 tx2I/gBwB5Xz8NxlLuRa6wtUKy8Fzo6Cr001z3to=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1277/1424] fs/ntfs3: validate ef->size covers the records name and value
-Date: Sat, 12 Sep 2026 09:01:49 +0200
-Message-ID: <20260912065635.874164555@linuxfoundation.org>
+Subject: [PATCH 6.6 1278/1424] fuse: convert to new timestamp accessors
+Date: Sat, 12 Sep 2026 09:01:50 +0200
+Message-ID: <20260912065635.895387691@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,88 +51,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit c22f91d82cb9a29d22bdffdce6c803467984ad0c ]
+[ Upstream commit 3c0d5df2d03d797e66f6eef08859930a01d5d6ad ]
 
-When an EA record has a non-zero ef->size, ntfs_read_ea() only checks
-that the record fits in the remaining buffer (ea_size > bytes), not that
-ef->size is large enough to hold the record's own name_len + 1 + elength.
+Convert to using the new inode timestamp accessor functions.
 
-A crafted image can pass validation with, e.g., ef->size = 24 but
-elength = 0xffff. ntfs_get_ea() then trusts elength and copies it out of
-the undersized record, reading past the kmalloc(info->size) allocation
-and leaking heap memory to userspace via getxattr():
-
- BUG: KASAN: slab-out-of-bounds in ntfs_get_ea (fs/ntfs3/xattr.c:302)
- Read of size 65535 at addr ffff888100794550 by task exploit
-  __asan_memcpy (mm/kasan/shadow.c:105)
-  ntfs_get_ea (fs/ntfs3/xattr.c:302)
-  ntfs_getxattr (fs/ntfs3/xattr.c:848)
-  __vfs_getxattr (fs/xattr.c:441)
-  vfs_getxattr (fs/xattr.c:474)
-  do_getxattr (fs/xattr.c:800)
-  path_getxattrat (fs/xattr.c:868)
-  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-
- The buggy address is located 80 bytes inside of
-  allocated 84-byte region in cache kmalloc-96
-
-Compute the size the record needs and require ef->size to cover it.
-
-Fixes: 0e8235d28f3a ("fs/ntfs3: Check fields while reading")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://lore.kernel.org/r/20231004185347.80880-37-jlayton@kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 928f659a3e36 ("fuse: check for NULL root inode in fuse_fill_super_submount")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/xattr.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ fs/fuse/control.c |  2 +-
+ fs/fuse/dir.c     | 10 +++++-----
+ fs/fuse/inode.c   | 29 ++++++++++++++---------------
+ fs/fuse/readdir.c |  6 ++++--
+ 4 files changed, 24 insertions(+), 23 deletions(-)
 
-diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
-index 1eace7c1b5bd2..8b5162df85517 100644
---- a/fs/ntfs3/xattr.c
-+++ b/fs/ntfs3/xattr.c
-@@ -146,26 +146,29 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,
- 	for (off = 0; off < size; off += ea_size) {
- 		const struct EA_FULL *ef = Add2Ptr(ea_p, off);
- 		u32 bytes = size - off;
-+		size_t need;
+diff --git a/fs/fuse/control.c b/fs/fuse/control.c
+index edb2b867118c4..2944f823f7623 100644
+--- a/fs/fuse/control.c
++++ b/fs/fuse/control.c
+@@ -235,7 +235,7 @@ static struct dentry *fuse_ctl_add_dentry(struct dentry *parent,
+ 	inode->i_mode = mode;
+ 	inode->i_uid = fc->user_id;
+ 	inode->i_gid = fc->group_id;
+-	inode->i_atime = inode->i_mtime = inode_set_ctime_current(inode);
++	simple_inode_init_ts(inode);
+ 	/* setting ->i_op to NULL is not allowed */
+ 	if (iop)
+ 		inode->i_op = iop;
+diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
+index 4a7991d53c2b8..82ce279fe3bd5 100644
+--- a/fs/fuse/dir.c
++++ b/fs/fuse/dir.c
+@@ -1819,12 +1819,12 @@ int fuse_flush_times(struct inode *inode, struct fuse_file *ff)
+ 	memset(&outarg, 0, sizeof(outarg));
  
- 		/* Check if we can use field ea->size. */
- 		if (bytes < sizeof(ef->size))
- 			goto out1;
- 
-+		/* Check if we can use fields ef->name_len and ef->elength. */
-+		if (bytes < offsetof(struct EA_FULL, name))
-+			goto out1;
-+
-+		/* Size needed to hold this record's name and value. */
-+		need = struct_size(ef, name,
-+				   1 + ef->name_len + le16_to_cpu(ef->elength));
-+
- 		if (ef->size) {
- 			ea_size = le32_to_cpu(ef->size);
--			if (ea_size > bytes)
-+			/* ef->size must fit the list and cover the record. */
-+			if (ea_size > bytes || ea_size < need)
- 				goto out1;
- 			continue;
- 		}
- 
--		/* Check if we can use fields ef->name_len and ef->elength. */
--		if (bytes < offsetof(struct EA_FULL, name))
--			goto out1;
--
--		ea_size = ALIGN(struct_size(ef, name,
--					    1 + ef->name_len +
--						    le16_to_cpu(ef->elength)),
--				4);
-+		ea_size = ALIGN(need, 4);
- 		if (ea_size > bytes)
- 			goto out1;
+ 	inarg.valid = FATTR_MTIME;
+-	inarg.mtime = inode->i_mtime.tv_sec;
+-	inarg.mtimensec = inode->i_mtime.tv_nsec;
++	inarg.mtime = inode_get_mtime_sec(inode);
++	inarg.mtimensec = inode_get_mtime_nsec(inode);
+ 	if (fm->fc->minor >= 23) {
+ 		inarg.valid |= FATTR_CTIME;
+-		inarg.ctime = inode_get_ctime(inode).tv_sec;
+-		inarg.ctimensec = inode_get_ctime(inode).tv_nsec;
++		inarg.ctime = inode_get_ctime_sec(inode);
++		inarg.ctimensec = inode_get_ctime_nsec(inode);
  	}
+ 	if (ff) {
+ 		inarg.valid |= FATTR_FH;
+@@ -1964,7 +1964,7 @@ int fuse_do_setattr(struct dentry *dentry, struct iattr *attr,
+ 	/* the kernel maintains i_mtime locally */
+ 	if (trust_local_cmtime) {
+ 		if (attr->ia_valid & ATTR_MTIME)
+-			inode->i_mtime = attr->ia_mtime;
++			inode_set_mtime_to_ts(inode, attr->ia_mtime);
+ 		if (attr->ia_valid & ATTR_CTIME)
+ 			inode_set_ctime_to_ts(inode, attr->ia_ctime);
+ 		/* FIXME: clear I_DIRTY_SYNC? */
+diff --git a/fs/fuse/inode.c b/fs/fuse/inode.c
+index 96050028d91b0..ac7603f2352df 100644
+--- a/fs/fuse/inode.c
++++ b/fs/fuse/inode.c
+@@ -220,12 +220,10 @@ void fuse_change_attributes_common(struct inode *inode, struct fuse_attr *attr,
+ 	attr->mtimensec = min_t(u32, attr->mtimensec, NSEC_PER_SEC - 1);
+ 	attr->ctimensec = min_t(u32, attr->ctimensec, NSEC_PER_SEC - 1);
+ 
+-	inode->i_atime.tv_sec   = attr->atime;
+-	inode->i_atime.tv_nsec  = attr->atimensec;
++	inode_set_atime(inode, attr->atime, attr->atimensec);
+ 	/* mtime from server may be stale due to local buffered write */
+ 	if (!(cache_mask & STATX_MTIME)) {
+-		inode->i_mtime.tv_sec   = attr->mtime;
+-		inode->i_mtime.tv_nsec  = attr->mtimensec;
++		inode_set_mtime(inode, attr->mtime, attr->mtimensec);
+ 	}
+ 	if (!(cache_mask & STATX_CTIME)) {
+ 		inode_set_ctime(inode, attr->ctime, attr->ctimensec);
+@@ -308,12 +306,12 @@ void fuse_change_attributes(struct inode *inode, struct fuse_attr *attr,
+ 		attr->size = i_size_read(inode);
+ 
+ 	if (cache_mask & STATX_MTIME) {
+-		attr->mtime = inode->i_mtime.tv_sec;
+-		attr->mtimensec = inode->i_mtime.tv_nsec;
++		attr->mtime = inode_get_mtime_sec(inode);
++		attr->mtimensec = inode_get_mtime_nsec(inode);
+ 	}
+ 	if (cache_mask & STATX_CTIME) {
+-		attr->ctime = inode_get_ctime(inode).tv_sec;
+-		attr->ctimensec = inode_get_ctime(inode).tv_nsec;
++		attr->ctime = inode_get_ctime_sec(inode);
++		attr->ctimensec = inode_get_ctime_nsec(inode);
+ 	}
+ 
+ 	if ((attr_version != 0 && fi->attr_version > attr_version) ||
+@@ -322,7 +320,7 @@ void fuse_change_attributes(struct inode *inode, struct fuse_attr *attr,
+ 		return;
+ 	}
+ 
+-	old_mtime = inode->i_mtime;
++	old_mtime = inode_get_mtime(inode);
+ 	fuse_change_attributes_common(inode, attr, sx, attr_valid, cache_mask);
+ 
+ 	oldsize = inode->i_size;
+@@ -376,8 +374,7 @@ static void fuse_init_inode(struct inode *inode, struct fuse_attr *attr,
+ {
+ 	inode->i_mode = attr->mode & S_IFMT;
+ 	inode->i_size = attr->size;
+-	inode->i_mtime.tv_sec  = attr->mtime;
+-	inode->i_mtime.tv_nsec = attr->mtimensec;
++	inode_set_mtime(inode, attr->mtime, attr->mtimensec);
+ 	inode_set_ctime(inode, attr->ctime, attr->ctimensec);
+ 	if (S_ISREG(inode->i_mode)) {
+ 		fuse_init_common(inode);
+@@ -1498,17 +1495,19 @@ EXPORT_SYMBOL_GPL(fuse_dev_free);
+ static void fuse_fill_attr_from_inode(struct fuse_attr *attr,
+ 				      const struct fuse_inode *fi)
+ {
++	struct timespec64 atime = inode_get_atime(&fi->inode);
++	struct timespec64 mtime = inode_get_mtime(&fi->inode);
+ 	struct timespec64 ctime = inode_get_ctime(&fi->inode);
+ 
+ 	*attr = (struct fuse_attr){
+ 		.ino		= fi->inode.i_ino,
+ 		.size		= fi->inode.i_size,
+ 		.blocks		= fi->inode.i_blocks,
+-		.atime		= fi->inode.i_atime.tv_sec,
+-		.mtime		= fi->inode.i_mtime.tv_sec,
++		.atime		= atime.tv_sec,
++		.mtime		= mtime.tv_sec,
+ 		.ctime		= ctime.tv_sec,
+-		.atimensec	= fi->inode.i_atime.tv_nsec,
+-		.mtimensec	= fi->inode.i_mtime.tv_nsec,
++		.atimensec	= atime.tv_nsec,
++		.mtimensec	= mtime.tv_nsec,
+ 		.ctimensec	= ctime.tv_nsec,
+ 		.mode		= fi->inode.i_mode,
+ 		.nlink		= fi->inode.i_nlink,
+diff --git a/fs/fuse/readdir.c b/fs/fuse/readdir.c
+index eb715a502613f..fca0671322afd 100644
+--- a/fs/fuse/readdir.c
++++ b/fs/fuse/readdir.c
+@@ -480,7 +480,7 @@ static int fuse_readdir_cached(struct file *file, struct dir_context *ctx)
+ 	if (!fi->rdc.cached) {
+ 		/* Starting cache? Set cache mtime. */
+ 		if (!ctx->pos && !fi->rdc.size) {
+-			fi->rdc.mtime = inode->i_mtime;
++			fi->rdc.mtime = inode_get_mtime(inode);
+ 			fi->rdc.iversion = inode_query_iversion(inode);
+ 		}
+ 		spin_unlock(&fi->rdc.lock);
+@@ -492,8 +492,10 @@ static int fuse_readdir_cached(struct file *file, struct dir_context *ctx)
+ 	 * changed, and reset the cache if so.
+ 	 */
+ 	if (!ctx->pos) {
++		struct timespec64 mtime = inode_get_mtime(inode);
++
+ 		if (inode_peek_iversion(inode) != fi->rdc.iversion ||
+-		    !timespec64_equal(&fi->rdc.mtime, &inode->i_mtime)) {
++		    !timespec64_equal(&fi->rdc.mtime, &mtime)) {
+ 			fuse_rdc_reset(inode);
+ 			goto retry_locked;
+ 		}
 -- 
 2.53.0
 
