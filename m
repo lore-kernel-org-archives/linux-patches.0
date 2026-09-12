@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3403C30E0EE;
-	Sat, 12 Sep 2026 19:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D1637F75B;
+	Sat, 12 Sep 2026 19:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240561; cv=none; b=EE/NIAgfsDG/KNSjcHeNFFdEbPErURMEfBYkyGrxR3fbSbN7ktG218Vsn5d+GVNcqm2DTcFLaGza5swbKuXm86YNczfYjqv6efrgSiuGWFdylatZQKUW0JnH+n4WzZSzfR3pjVWFyMFspGKeHT8pkOYZ1iXFUWhJ+0cX9Y43nwk=
+	t=1789240564; cv=none; b=t2jZkYgkHfq/IIMI8nTj7HciFmKURYKRqBzTt2+IaqyjodTUpvNu2D7OZqjZrhoPV8WpFCyLVzK85OYle33lidzKt6wiNkNHX35tJ41UU/kMh40/s3vAPx0IdubCgJtIVw4b0K1w/fQHtusJRlAVy+iqLGfcUBjhJa2vSLFyAdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240561; c=relaxed/simple;
-	bh=MkZLPpTL58EFoKCWrfmzNrQoA/WmbqFTT6LFGfLbkmc=;
+	s=arc-20240116; t=1789240564; c=relaxed/simple;
+	bh=TczqjcIpGB1GEND9dgxusimQDXJ9+Lw9JWgZpinLx6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Upp91PnuJgBqH6Pirmqv7pSRdIIQ3jUk6hA6YrYiCFBwAVu5obSUNGn47/KznQMyueAQVjFH3i96uYrgF20OH81EuHa1jbugsXXIf12AQoxJ5+GMNI7bvmrenxjfcKtdhXw/+h8cqwMEBrfgn0pXKK0+whQVm0nPhtYZ6hjrwe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHvxzPwz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YMchTZXYk0mUsu3i+t0MyF1pcWmJ3CqwNUtKce2/1Srg+pELUJCe9NZmTPSHs8AF9Si8YCBzhTlXMTNN+l6fXke/s+6KZOuOYTfagdZ5uilm6DH9I0ERPOrQixjx1XmxFatbqeKREqsd+xY6PN6RQyIyUno1QHbZeEDeDRBs/d4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EcvLdr58; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHvxzPwz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A235C1F000FF;
-	Sat, 12 Sep 2026 19:15:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EcvLdr58"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA151F000FF;
+	Sat, 12 Sep 2026 19:16:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240557;
-	bh=CCQq0Z+bibRzucIfrttuR+lkZo3eL/SsWqXQVU5yuvk=;
+	s=korg; t=1789240562;
+	bh=yJc92JqxlmQCMigfkGYk95YS0Z7R47gJu++iCK6vXwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HHvxzPwzTRwQJ8PSjVwATeAk9DUCk33JS8bIhuqtLYbDVi3tI4kq9cbOd/Fgjd0VO
-	 h9yzZnFqHGp38rxX1VEP4eDvzuvHMEsmKtpZOHR0rvQtec8MdhWfb1J+9OgMSXe4r2
-	 I75tbqvYXWToTkiw5LI52sQuy04hOXjIN4dtSLyE=
+	b=EcvLdr58pjmsdJ2ooL+ivekGVOYpzQCgJXVjrJxTzpNE9MvZ8bsu9GPwuG4tFr4sJ
+	 q13GBRQUuYujVqUbQHZeSg9gvuX+ggsk10J/v2moJTP3KJ3/RhjCgusc88ToLCarKA
+	 Jw9uyjRHWSwJv3EOoMmjgLbUlsiSDTA/gi251wqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dave Taht <dave.taht@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 892/935] net_sched: sch_fq: change how @inactive is tracked
-Date: Sat, 12 Sep 2026 09:05:22 +0200
-Message-ID: <20260912065547.272004148@linuxfoundation.org>
+Subject: [PATCH 5.15 893/935] net_sched: export pfifo_fast prio2band[]
+Date: Sat, 12 Sep 2026 09:05:23 +0200
+Message-ID: <20260912065547.295233374@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -45,6 +48,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
@@ -53,93 +57,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ee9af4e14d166c34ec78896bb1ba545249445df0 ]
+[ Upstream commit 5579ee462dfe768297563a6083e21df52c3ad856 ]
 
-Currently, when one fq qdisc has no more packets to send, it can still
-have some flows stored in its RR lists (q->new_flows & q->old_flows)
-
-This was a design choice, but what is a bit disturbing is that
-the inactive_flows counter does not include the count of empty flows
-in RR lists.
-
-As next patch needs to know better if there are active flows,
-this change makes inactive_flows exact.
-
-Before the patch, following command on an empty qdisc could have returned:
-
-lpaa17:~# tc -s -d qd sh dev eth1 | grep inactive
-  flows 1322 (inactive 1316 throttled 0)
-  flows 1330 (inactive 1325 throttled 0)
-  flows 1193 (inactive 1190 throttled 0)
-  flows 1208 (inactive 1202 throttled 0)
-
-After the patch, we now have:
-
-lpaa17:~# tc -s -d qd sh dev eth1 | grep inactive
-  flows 1322 (inactive 1322 throttled 0)
-  flows 1330 (inactive 1330 throttled 0)
-  flows 1193 (inactive 1193 throttled 0)
-  flows 1208 (inactive 1208 throttled 0)
+pfifo_fast prio2band[] is renamed to sch_default_prio2band[]
+and exported because we want to share it in FQ.
 
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Acked-by: Dave Taht <dave.taht@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 709f34f7c28d ("net/sched: fq: add overflow bounds to quantum and initial quantum")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ include/net/sch_generic.h | 1 +
+ net/sched/sch_generic.c   | 9 +++++----
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
-index 8114291a95133..7c8e63ec7b964 100644
---- a/net/sched/sch_fq.c
-+++ b/net/sched/sch_fq.c
-@@ -125,7 +125,7 @@ struct fq_sched_data {
- /* Read/Write fields. */
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index 42238e7accb36..16b077576c929 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -609,6 +609,7 @@ static inline void sch_tree_unlock(struct Qdisc *q)
+ extern struct Qdisc noop_qdisc;
+ extern struct Qdisc_ops noop_qdisc_ops;
+ extern struct Qdisc_ops pfifo_fast_ops;
++extern const u8 sch_default_prio2band[TC_PRIO_MAX + 1];
+ extern struct Qdisc_ops mq_qdisc_ops;
+ extern struct Qdisc_ops noqueue_qdisc_ops;
+ extern const struct Qdisc_ops *default_qdisc_ops;
+diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
+index 565970cca295b..fa4dfcb8dc284 100644
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -646,9 +646,10 @@ struct Qdisc_ops noqueue_qdisc_ops __read_mostly = {
+ 	.owner		=	THIS_MODULE,
+ };
  
- 	u32		flows;
--	u32		inactive_flows;
-+	u32		inactive_flows; /* Flows with no packet to send. */
- 	u32		throttled_flows;
+-static const u8 prio2band[TC_PRIO_MAX + 1] = {
+-	1, 2, 2, 2, 1, 2, 0, 0 , 1, 1, 1, 1, 1, 1, 1, 1
++const u8 sch_default_prio2band[TC_PRIO_MAX + 1] = {
++	1, 2, 2, 2, 1, 2, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1
+ };
++EXPORT_SYMBOL(sch_default_prio2band);
  
- 	u64		stat_throttled;
-@@ -402,9 +402,12 @@ static void fq_erase_head(struct Qdisc *sch, struct fq_flow *flow,
- static void fq_dequeue_skb(struct Qdisc *sch, struct fq_flow *flow,
- 			   struct sk_buff *skb)
+ /* 3-band FIFO queue: old style, but should be a bit faster than
+    generic prio+fifo combination.
+@@ -673,7 +674,7 @@ static inline struct skb_array *band2list(struct pfifo_fast_priv *priv,
+ static int pfifo_fast_enqueue(struct sk_buff *skb, struct Qdisc *qdisc,
+ 			      struct sk_buff **to_free)
  {
-+	struct fq_sched_data *q = qdisc_priv(sch);
-+
- 	fq_erase_head(sch, flow, skb);
- 	skb_mark_not_on_list(skb);
--	flow->qlen--;
-+	if (--flow->qlen == 0)
-+		q->inactive_flows++;
- 	qdisc_qstats_backlog_dec(sch, skb);
- 	sch->q.qlen--;
- }
-@@ -484,13 +487,13 @@ static int fq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		return qdisc_drop(skb, sch, to_free);
- 	}
+-	int band = prio2band[skb->priority & TC_PRIO_MAX];
++	int band = sch_default_prio2band[skb->priority & TC_PRIO_MAX];
+ 	struct pfifo_fast_priv *priv = qdisc_priv(qdisc);
+ 	struct skb_array *q = band2list(priv, band);
+ 	unsigned int pkt_len = qdisc_pkt_len(skb);
+@@ -782,7 +783,7 @@ static int pfifo_fast_dump(struct Qdisc *qdisc, struct sk_buff *skb)
+ {
+ 	struct tc_prio_qopt opt = { .bands = PFIFO_FAST_BANDS };
  
--	f->qlen++;
-+	if (f->qlen++ == 0)
-+		q->inactive_flows--;
- 	qdisc_qstats_backlog_inc(sch, skb);
- 	if (fq_flow_is_detached(f)) {
- 		fq_flow_add_tail(&q->new_flows, f);
- 		if (time_after(jiffies, f->age + q->flow_refill_delay))
- 			f->credit = max_t(u32, f->credit, q->quantum);
--		q->inactive_flows--;
- 	}
- 
- 	/* Note: this overwrites f->age */
-@@ -597,7 +600,6 @@ static struct sk_buff *fq_dequeue(struct Qdisc *sch)
- 			fq_flow_add_tail(&q->old_flows, f);
- 		} else {
- 			fq_flow_set_detached(f);
--			q->inactive_flows++;
- 		}
- 		goto begin;
- 	}
+-	memcpy(&opt.priomap, prio2band, TC_PRIO_MAX + 1);
++	memcpy(&opt.priomap, sch_default_prio2band, TC_PRIO_MAX + 1);
+ 	if (nla_put(skb, TCA_OPTIONS, sizeof(opt), &opt))
+ 		goto nla_put_failure;
+ 	return skb->len;
 -- 
 2.53.0
 
