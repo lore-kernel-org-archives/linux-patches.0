@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7901EB5FD;
-	Sat, 12 Sep 2026 07:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24E037CD21;
+	Sat, 12 Sep 2026 07:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197789; cv=none; b=NjWENNQ+CU63xyRoWDcqTF1xmFUl0d2eU92iIlR4dEqU1BBQPRa/+Q44vPznF+N9T1RG45os8fGAxGWhXXmgo5o2KVsvcCNwn/funSFG+5YhO3pzI4r+E6/4HIi7OQDVOyxU3oeHZNYTvrYMD4p4LCKIXaN+09iR1QaMpZebJrk=
+	t=1789197795; cv=none; b=MynXBzXzC9jfx1c0lDMmLAYdZflFrKgV7o9pIrfqmP0DE2cHzBJNDG7F2cdz336G76BlQfDz9xccpbBDVfW5kthvwin0kel3kCDy7291RbdGp0Flew5TVktbMizmdt9kSPPi0JKc03zHhsJU+CBNPDE6QQiRbX285J9CdH0yvno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197789; c=relaxed/simple;
-	bh=2BcwmJrW+DUVdTvmgHZCsMXTC0/copNwgY3OW+2OKS0=;
+	s=arc-20240116; t=1789197795; c=relaxed/simple;
+	bh=Zc0oL74wQGc1KNnA9fsMI6XERmxHlEryLSfrLDiukns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E8ZALedrfzb8gz58/Li7dBGoYllBZzpU8SUVU11YuTrQ6YL3q+IqyYc/sdM12L7MIl5u0BAVaJT+zeoZPo6oLT3PJwe+kMuBnklnigd241sZQRfnSRL5EyuVQeMWD48av/dUAAeZT1KF/fx8JZToKn2oj6NRMadNGeACZBzQnqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wvBzugoX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J98RF2kHMuKfhigiwZprbWLx5ZCnzyX05QroNhZQZFpFNPoVSWdQksPwS1lp332+LU6EIa5joWmH0mo3DVnWznqun5MUjR+zWXURN8YXzX1EUDlv/V9XJRh2KaU1kTLzn75UNjd4xqhxdvsBPYUmQiZWuKiWJ9tMdXJdJgKEkyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z2fRhKb2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wvBzugoX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B691F000FF;
-	Sat, 12 Sep 2026 07:23:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z2fRhKb2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D255F1F000FF;
+	Sat, 12 Sep 2026 07:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197788;
-	bh=xivZ1i16mxA0nzXVPYAKR4nUJEfM+RIAU7aajBHiWTI=;
+	s=korg; t=1789197793;
+	bh=jfVlwTTIGz+7kOEPShSFB4L7dLz7xPwIkDsQOVvlp08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wvBzugoXHeZQPPX1DUtUkgE0iysdTR6txBCFQjjCXEaL4KGahMh/81Mfyh6gzeq4H
-	 WHjrdvCfdVTBqrtfzkuonhvVZ5mzqdOmM1EqYVMEa0FLRDSkBetxOWTsgJ9e9/qZ8v
-	 3C7jt+MCMZrnl/YtHZZee+LLf0c6RPyG7V42rgkw=
+	b=z2fRhKb2+PbrxgRkB3DqcXyOTFlGwjvVnSaFusPgMZ6EUr4sIYg440aKEuIy1+fQJ
+	 YpkT3rMaBrq0IN15vwTBx2/xiW57tRe+cjKUakzRGFqIbAUx2AeporOfMt7IreXSrA
+	 a6QI65NE1d1fx2i2ppipeoGMyCgq3UllgLRMGdT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yuho Choi <dbgh9129@gmail.com>,
 	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0247/1815] clocksource: Unregister subsystem on device registration failure
-Date: Sat, 12 Sep 2026 08:33:17 +0200
-Message-ID: <20260912065654.785114425@linuxfoundation.org>
+Subject: [PATCH 7.2 0248/1815] timekeeping: Unwind aux clock sysfs children on failure
+Date: Sat, 12 Sep 2026 08:33:18 +0200
+Message-ID: <20260912065654.807801028@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,43 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 3dee6537e728bd8137fda6eaf859f26e685943f7 ]
+[ Upstream commit f2eee7e31ccd4bc87d047d8670cc2ec39cf36647 ]
 
-init_clocksource_sysfs() registers the clocksource subsystem before
-registering the clocksource device. If device_register() fails, the
-function returns the error while leaving the subsystem registered.
+tk_aux_sysfs_init() creates one child kobject per auxiliary clock. If a
+later child or sysfs group creation fails, the current error path only
+puts the parent kobjects and leaves earlier children and groups behind.
 
-Unregister the clocksource subsystem on that failure path so the
-successful subsystem registration is unwound before returning.
+Store the child kobjects during init and remove the successfully created
+groups and kobjects on failure.
 
-Fixes: d369a5d8fc70 ("clocksource: convert sysdev_class to a regular subsystem")
+Fixes: 7b5ab04f035f ("timekeeping: Fix resource leak in tk_aux_sysfs_init() error paths")
 Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260702215733.84588-1-dbgh9129@gmail.com
+Link: https://patch.msgid.link/20260703165337.168445-1-dbgh9129@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/clocksource.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/time/timekeeping.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
-index e48c4d379a7ce..5a786b3c778ce 100644
---- a/kernel/time/clocksource.c
-+++ b/kernel/time/clocksource.c
-@@ -1566,8 +1566,12 @@ static int __init init_clocksource_sysfs(void)
+diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
+index 696bb119c56ef..49f81336aae21 100644
+--- a/kernel/time/timekeeping.c
++++ b/kernel/time/timekeeping.c
+@@ -3315,7 +3315,9 @@ static const struct attribute_group aux_clock_enable_attr_group = {
+ static int __init tk_aux_sysfs_init(void)
  {
- 	int error = subsys_system_register(&clocksource_subsys, NULL);
+ 	struct kobject *auxo, *tko = kobject_create_and_add("time", kernel_kobj);
++	struct kobject *clks[MAX_AUX_CLOCKS];
+ 	int ret = -ENOMEM;
++	int i;
  
--	if (!error)
--		error = device_register(&device_clocksource);
-+	if (error)
-+		return error;
-+
-+	error = device_register(&device_clocksource);
-+	if (error)
-+		bus_unregister(&clocksource_subsys);
+ 	if (!tko)
+ 		return ret;
+@@ -3324,21 +3326,28 @@ static int __init tk_aux_sysfs_init(void)
+ 	if (!auxo)
+ 		goto err_clean;
  
- 	return error;
- }
+-	for (int i = 0; i < MAX_AUX_CLOCKS; i++) {
++	for (i = 0; i < MAX_AUX_CLOCKS; i++) {
+ 		char id[2] = { [0] = '0' + i, };
+-		struct kobject *clk = kobject_create_and_add(id, auxo);
++		clks[i] = kobject_create_and_add(id, auxo);
+ 
+-		if (!clk) {
++		if (!clks[i]) {
+ 			ret = -ENOMEM;
+-			goto err_clean;
++			goto err_clks;
+ 		}
+ 
+-		ret = sysfs_create_group(clk, &aux_clock_enable_attr_group);
++		ret = sysfs_create_group(clks[i], &aux_clock_enable_attr_group);
+ 		if (ret)
+-			goto err_clean;
++			goto err_clk;
+ 	}
+ 	return 0;
+ 
++err_clk:
++	kobject_put(clks[i]);
++err_clks:
++	while (--i >= 0) {
++		sysfs_remove_group(clks[i], &aux_clock_enable_attr_group);
++		kobject_put(clks[i]);
++	}
+ err_clean:
+ 	kobject_put(auxo);
+ 	kobject_put(tko);
 -- 
 2.53.0
 
