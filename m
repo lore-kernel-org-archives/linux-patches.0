@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7974B3290B0;
-	Sat, 12 Sep 2026 10:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E991299920;
+	Sat, 12 Sep 2026 10:54:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210473; cv=none; b=YE1j4Uzb56cqIXrJUJZRYg62C3H1AuszG/chVrVz7wHsx1+9nNx81UBixTu+KpWsc2uA4BWxx1+kPxw8mQmMCLOFuCWYbKxyawmVKmh8IBCM5tXVAYTaYsYzaFDW/Vh6oTX/+GRkXCPCil9kjVSbPpCL/f8RTmqxQnyhQEwJNmE=
+	t=1789210478; cv=none; b=sg9QadFrUtiY6Pdrm/xZ6CKMrlWrn9+kCtdn+zEOSTzBhR+2a1raEdeh+DsqXnse0rTfrhtDyVqgpZXojDJbAEjmL3Sgq4zRkD88eYWneSuxLVzSh5UBWyMandnYuQ1mTqwfs3Z8WpbO7ET9GJQ5ybupeaP3uI7JD7zZZAE2buU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210473; c=relaxed/simple;
-	bh=ko2Zg2oXhZe4voM4nwwDkLJMTj+2frOtPSwIs4fcpyo=;
+	s=arc-20240116; t=1789210478; c=relaxed/simple;
+	bh=4YvlwfVCoq9gUOnh5tsfKlzRzIceNk10p60+tT3x0rA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U/X19IfczUq3Scem1IQpTqAVaEuE/3IICUXIh51WiLb4D+z0IdKZsJr14OH79IUx918Go+q7iyNE59yTm+wpWsRubQO+T9dTIba/tO3pIK5sBDlDsJRkQasbRxB32vvHpc0gca9Zlv28aKw5/b1sOlCBkkxNIG3BbLnHd9icX0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLeGBb3p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uV2jyayVgHHRaqXG+hbFCEGyrxRh3mmS/NuAogFzjeAl+jRvHpUjCsMPDAtQGK9WbVHWOlEoyRYOM0EpnyKqgCi5GQDq1PEOfIx0fvBLzWBmO2Zwen9ISMgdC5GaPQYyNy1q/nUwIcWumvocLl2kU7A7IDiY60Gkpjbg1TjYwjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnvFBggv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLeGBb3p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A591F000FF;
-	Sat, 12 Sep 2026 10:54:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnvFBggv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7291F000FF;
+	Sat, 12 Sep 2026 10:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210472;
-	bh=1Xp80JoH1A2oX5YBWIn6IPt/gYwpoTRmtMYM/OeXdrM=;
+	s=korg; t=1789210477;
+	bh=Fx7fffHXUSdBsUgBMNswaY6zpRHESE16qcjrZOhIAnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uLeGBb3pcgcUauhsaYxiP9GQqDGcQXDoJMIS1vqemxAVIQ2sKJ4zD3LTbnCuBMmR6
-	 nIZUtNrP0KNR4t1+i/MCGoV38TAFdzBl/0jNSzw0cQ9rDtsRg5Wl24jFcxlRdhvPCG
-	 hxPoSwx2fkxXoFojg7Ed2Sm7Iyo+1PoavNT+Tw6Y=
+	b=wnvFBggvFatwriEjny5lYAJG3wWV05VCLFggITSTgIu7o5wJtbI8i3z8sCppfh9SQ
+	 j9RwnEZYVxTWKltfTK10uprqgN0JqBtk4nsJJ3T8IPK6E+Tc+HttHZdD49XOB2W7J1
+	 oSxbRQyA3zHPG6DSR6GisnWP6f0yOplAM2wBPB4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Pu Lehui <pulehui@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Amery Hung <ameryhung@gmail.com>,
+	Leon Hwang <leon.hwang@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1033/1518] Bluetooth: MSFT: validate evt_prefix_len against the response length
-Date: Sat, 12 Sep 2026 08:53:22 +0200
-Message-ID: <20260912065646.819329908@linuxfoundation.org>
+Subject: [PATCH 6.18 1034/1518] bpf, cgroup: Fix storage null-ptr-deref after replacing prog
+Date: Sat, 12 Sep 2026 08:53:23 +0200
+Message-ID: <20260912065646.842014046@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,71 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 0079e1a944634ab2dc1c7cdec1144486d096407e ]
+[ Upstream commit 3f562c537e9ecf4bc5e206cfffc2cc047f1b7e94 ]
 
-read_supported_features() only checks that the response covers the fixed
-part of struct msft_rp_read_supported_features, which is 11 bytes:
+Syzkaller reported a storage null-ptr-deref issue after replacing prog.
+This occurs in the following scenario:
+1. prog A, an empty prog, is attached to a cgrp.
+2. prog B uses BPF_MAP_TYPE_PERCPU_CGROUP_STORAGE and calls the
+   bpf_get_local_storage helper.
+3. link_update is called to replace prog A with prog B.
 
-	if (skb->len < sizeof(*rp)) {
-		bt_dev_err(hdev, "MSFT supported features length mismatch");
-		goto failed;
-	}
+The reason is that __cgroup_bpf_replace fails to alloc and assign the
+required cgrp storage for the incoming replacement prog. Consequently,
+the new prog inherits an uninit storage, leading to null-ptr-deref panic
+when kick the new prog.
 
-evt_prefix[] is a flexible array member and rp->evt_prefix_len is an
-unvalidated u8 taken straight out of that response, so
+Fix this by rejecting a link update if new_prog's cgroup storage is
+incompatible with link->prog.
 
-	msft->evt_prefix = kmemdup(rp->evt_prefix, rp->evt_prefix_len,
-				   GFP_KERNEL);
-
-copies up to 255 bytes from a reply that may have carried none of them.
-What is copied is data the controller never sent, and it is then used to
-match incoming vendor events in msft_vendor_evt().
-
-This is not an out-of-bounds access. An skb data allocation always has
-at least SKB_DATA_ALIGN(sizeof(struct skb_shared_info)) bytes past the
-payload, which is more than the 255 byte maximum, so the read stays
-inside the allocation and KASAN does not report it. It is still a read
-of bytes the host was never given, with the length fully controlled by
-the controller.
-
-Reject a response that is too short for the prefix it declares.
-
-Verified with an emulated controller over /dev/vhci on a KASAN kernel,
-with vhci made to advertise an MSFT opcode the way btintel, btqca, btmtk
-and btrtl do unconditionally. A reply of exactly 11 bytes declaring
-evt_prefix_len = 255 reaches kmemdup and copies 255 bytes
-("skb->len=11 evt_prefix_len=255", with the copied buffer dumped); since
-the reply ends at the fixed part, all 255 come from past the end of the
-response. No KASAN report is produced, as expected from the allocation
-slack described above. With this patch the response is rejected with
-"MSFT event prefix length mismatch" and msft->evt_prefix is left unset.
-
-Fixes: 145373cb1b1f ("Bluetooth: Add framework for Microsoft vendor extension")
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 0c991ebc8c69 ("bpf: Implement bpf_prog replacement for an active bpf_cgroup_link")
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Acked-by: Leon Hwang <leon.hwang@linux.dev>
+Link: https://lore.kernel.org/bpf/20260728132336.2857800-1-pulehui@huaweicloud.com [0]
+Link: https://lore.kernel.org/bpf/f87b53c0-8f00-45a6-82db-8242fa9b143f@huaweicloud.com [1]
+Link: https://lore.kernel.org/bpf/20260807104403.1013064-1-pulehui@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/msft.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/bpf/cgroup.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
-index dea81c8e8b201..3220c44a2ed4d 100644
---- a/net/bluetooth/msft.c
-+++ b/net/bluetooth/msft.c
-@@ -165,6 +165,11 @@ static bool read_supported_features(struct hci_dev *hdev,
- 	if (rp->sub_opcode != MSFT_OP_READ_SUPPORTED_FEATURES)
- 		goto failed;
+diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+index e5fa91515c563..0f456765a09ed 100644
+--- a/kernel/bpf/cgroup.c
++++ b/kernel/bpf/cgroup.c
+@@ -1026,6 +1026,20 @@ static void replace_effective_prog(struct cgroup *cgrp,
+ 	}
+ }
  
-+	if (skb->len < sizeof(*rp) + rp->evt_prefix_len) {
-+		bt_dev_err(hdev, "MSFT event prefix length mismatch");
-+		goto failed;
++static bool cgroup_bpf_storages_compatible(struct bpf_prog *old_prog,
++					   struct bpf_prog *new_prog)
++{
++	enum bpf_cgroup_storage_type stype;
++
++	for_each_cgroup_storage_type(stype) {
++		if (old_prog->aux->cgroup_storage[stype] !=
++		    new_prog->aux->cgroup_storage[stype])
++			return false;
 +	}
 +
- 	if (rp->evt_prefix_len > 0) {
- 		msft->evt_prefix = kmemdup(rp->evt_prefix, rp->evt_prefix_len,
- 					   GFP_KERNEL);
++	return true;
++}
++
+ /**
+  * __cgroup_bpf_replace() - Replace link's program and propagate the change
+  *                          to descendants
+@@ -1064,6 +1078,9 @@ static int __cgroup_bpf_replace(struct cgroup *cgrp,
+ 	if (!found)
+ 		return -ENOENT;
+ 
++	if (!cgroup_bpf_storages_compatible(link->link.prog, new_prog))
++		return -EINVAL;
++
+ 	cgrp->bpf.revisions[atype] += 1;
+ 	old_prog = xchg(&link->link.prog, new_prog);
+ 	replace_effective_prog(cgrp, atype, pl);
 -- 
 2.53.0
 
