@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F706414A0C;
-	Sat, 12 Sep 2026 08:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438C2415F17;
+	Sat, 12 Sep 2026 08:36:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202200; cv=none; b=u9sVKoBAlsUV4AVZ6PYu9y9ZjEpl4yMmkPMlAp1y4MFqbvuKAJ9koMfrjDakmRB/Gffy0mWpcZ1nWieY26d8rKd/DTb4V1BanbbDbbp6rCRmpZJqZDUiuts4hTUQZ1CivtfWuz9xfhoUuI7KrWqlmSlFwDvebWxZJBdmuuyna7U=
+	t=1789202206; cv=none; b=mogHM1GV6ANomR4LWesd8Pbl+qnhDeUgxwkg/dQa4JKtUKKd+s176h9lFL4b+84mu0iq5ldyFhJDMglC44kDIuIXQYEInUZQmNRE1iXBWW0yP2b1pwJlkMJJGJsXaB2XsbCa3mA8K8kkpx6GK1+KX6QOLcmdPO4JIZoofn4N9+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202200; c=relaxed/simple;
-	bh=Zc13SMefLcDcNJ9BgoN7LEvImTSQaCncXXwKWIzeTHk=;
+	s=arc-20240116; t=1789202206; c=relaxed/simple;
+	bh=oBLEEjiUxe07MKssFNAErA1MOKpgAgY7Az6AV+rj1qY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RnKtkJlmr5gZJCKEapRNsGCAOwXGRBaYmpBP233JkPu1t9Tc4z4tKRRj/Ff9bXulNu0dywoOeC2Lq3ApeE3z0LJ97nCpX5aDiADWKwhDfO5T8XjeOhPhuNbNW6FK+V0D7qXkjUoJunJlj/aoy+F7fOYbV5vssyrA/jwyewOLHLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUGfZ3c5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PHeR2fIj4BMswsmz4HL8/pvt3THp3LvgUsjFwC+Uoldx7l8AwexSATxklyuRgZrdi2j74pQetpclla42KpTlTvGODb86Omwt7g+u4/5UlLNoYfeVBpQ2P546b/ol+znG5mkY3pOzHH437AyDVMDFKxYL+W68dTmxpxkYRcKDKOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8eOM/OX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUGfZ3c5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79C61F000FF;
-	Sat, 12 Sep 2026 08:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8eOM/OX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4AF21F000FF;
+	Sat, 12 Sep 2026 08:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202197;
-	bh=1Ea05HgFvFItxXlofhUt0W+Iqs5ZLm6QWcVygwnN4GU=;
+	s=korg; t=1789202203;
+	bh=6bw0+JuAILVK5NkmEXZHJ5NMn20Wcvic+s8hzieu1vE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PUGfZ3c5CaLgVPt+gZ1CeJCj1a3oEzSoHZ0bU+VCD/Scg+Zgltofg5JVgyoG9y0Ty
-	 GydYp3NHvGPj9VLrxqeIlb0N9C2FzQQlKwOQS2wM/4bsroY1LZgJUowyVJAMYSht1t
-	 8ve5jkjw6PxMN12C7usoorGV7P4i+qpF1qDnh6vI=
+	b=C8eOM/OXQ3c8YTAQWwLlVvqtVaUAzWFvPEf3dEDGNiIDgWOOrzkRJNgFAFQjSnPUJ
+	 ub3IE3nQQ2Jmqg+HmK0V88Q2PapwC6a/gYOl4VoQO8BtBOjCFsF5oKFOoTQ9mOfqN2
+	 IovFJkGyfo+7z2AusM7j34j0d9YiITXqFU2T2Dyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Lee Jones <lee@kernel.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1154/1815] mfd: iqs62x: Reject zero-length firmware records
-Date: Sat, 12 Sep 2026 08:48:24 +0200
-Message-ID: <20260912065716.104127453@linuxfoundation.org>
+Subject: [PATCH 7.2 1155/1815] drm/gfx12: Program DB_RING_CONTROL
+Date: Sat, 12 Sep 2026 08:48:25 +0200
+Message-ID: <20260912065716.127650461@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,47 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 08ea045e0b82cbcadb7a2efc43a23561489a00f2 ]
+[ Upstream commit 402ebe22b267783f3b05b714df224fad0223b278 ]
 
-struct iqs62x_fw_rec includes the first data byte in its fixed-size header,
-so the parser advances by len - 1 bytes after that header. A zero len makes
-the size_t cursor update move back by one byte, so the next record overlaps
-the current record instead of following a valid declared extent.
+This is needed to allocate occlusion counters across
+both gfx pipes. GFX 12 only has one gfx pipe, so no functional
+change since the default value is 1.
 
-Reject zero-length records and express the remaining-size check without an
-offset addition.
-
-Fixes: 4d9cf7df8d35 ("mfd: Add support for Azoteq IQS620A/621/622/624/625")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://lore.kernel.org/all/20260706091034.75865-1-pengpeng@iscas.ac.cn/
-Link: https://patch.msgid.link/20260720115423.94994-1-pengpeng@iscas.ac.cn
-Signed-off-by: Lee Jones <lee@kernel.org>
+Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 4261cbc7b03f ("drm/amdgpu: read TRUNCATE_COORD_MODE on gfx12")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/iqs62x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/mfd/iqs62x.c b/drivers/mfd/iqs62x.c
-index ee017617d1d1b..412ae7777f729 100644
---- a/drivers/mfd/iqs62x.c
-+++ b/drivers/mfd/iqs62x.c
-@@ -237,7 +237,7 @@ static int iqs62x_firmware_parse(struct iqs62x_core *iqs62x,
- 		fw_rec = (struct iqs62x_fw_rec *)(fw->data + pos);
- 		pos += sizeof(*fw_rec);
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
+index e418390353b1b..6c37e760fdfae 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
+@@ -1822,6 +1822,15 @@ static void gfx_v12_0_constants_init(struct amdgpu_device *adev)
+ 	gfx_v12_0_get_cu_info(adev, &adev->gfx.cu_info);
+ 	gfx_v12_0_get_tcc_info(adev);
+ 	adev->gfx.config.pa_sc_tile_steering_override = 0;
++	/* Program DB_RING_CONTROL for multiple GFX pipes
++	 * Default power up value is 1.
++	 * Possible values:
++	 * 0 - split occlusion counters between gfx pipes
++	 * 1 - all occlusion counters to pipe 0
++	 * 2 - all occlusion counters to pipe 1
++	 */
++	WREG32_FIELD15_PREREG(GC, 0, DB_RING_CONTROL, COUNTER_CONTROL,
++			      (adev->gfx.me.num_pipe_per_me > 1) ? 0 : 1);
  
--		if (pos + fw_rec->len - 1 > fw->size) {
-+		if (!fw_rec->len || fw_rec->len - 1 > fw->size - pos) {
- 			ret = -EINVAL;
- 			break;
- 		}
+ 	/* Set whether texture coordinate truncation is conformant. */
+ 	tmp = RREG32_SOC15(GC, 0, regTA_CNTL2);
 -- 
 2.53.0
 
