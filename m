@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631D6426D03;
-	Sat, 12 Sep 2026 10:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4491D426EBB;
+	Sat, 12 Sep 2026 10:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209396; cv=none; b=ZdZCfGUug7eoTivlQtGYctOt1KEHq3BDH+UMpl9Mo79Q9rlLBDKdu7wj60OLyeFlbF391Kh3qxkxYQDzja91DWWyMpsB6YttTmUKTg3108lN2qHhqYJlUS8yEX1TxuNXOjw3Q2f4NUFInoP0IRsEo4aYoy+fNGc2bccxJPCjhcU=
+	t=1789209401; cv=none; b=QlgVLwEd7mjKnCxw6oZt2GzsVHXU7xRowHoAotxhWYScd4l1ZWFL+JxNJCLlaUZQ2ExsfS9Pfv4eRZVI93mWA2/kIFmrDaub0IUiVB+R3UrZf9z5luRjK6uqGKI7/TyVx3cjibE3zO+ibYEkHp7eiS03R5P3timj0qys776xYYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209396; c=relaxed/simple;
-	bh=qM6uhT0avmo+47YGfzs2ePZE17RyNjYp5Cx826/krZo=;
+	s=arc-20240116; t=1789209401; c=relaxed/simple;
+	bh=S/luEtXvTWzL7z0Zsjq/+IHAx6eXsMv0oFQYYF+8p7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZeVQlCDzeHBKnzPcKO8RbOAu8Oe7TfZCJ+xnm2t4AuqRrtiDpaH5rSg+dFfIsh9Uz+gza48je4ADxtUsHa3a7doQ/1hW83Utm/tH01vnwjrf5LR/VN6S7z8MExgJ9PfEtoyf2GzRhEY1T9uezuF/tUBWQ/gP8D9L8XqobfsiSoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzOBbMXf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KtmdVlLLpxxhx1xU1ZyhDA61sd/mZYrSv/+PcAm3S2Xc8zY+OkAfk9Enq6X50lUvAb8DrxMZsDRRor4BuxlKi17MqewtEsZ8tKHYBaXdHSAKiumJ1w8Sn4IYEFm+eZfHy08AW+41oNJDkO3EXY3W8ci449AAMnGrr4tCW/NgDTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6TEIWh/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzOBbMXf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342651F000FF;
-	Sat, 12 Sep 2026 10:36:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6TEIWh/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087F81F000FF;
+	Sat, 12 Sep 2026 10:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209395;
-	bh=BEDvDljs//wLc1rx/VF3SKnrV3OEZOQyNgRqadAqO8M=;
+	s=korg; t=1789209400;
+	bh=zGnxogFOSEKV31a2WfbE5iXJmYU72eK9ZCZqcuH0EOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qzOBbMXfKJFm9jYPp8k93nTP5LClVmKl8m9+ByNQ1qXc0hoSPJcHAxMwKCc/SrjOE
-	 PH4ShyEbE8m8MBD81TUHZeloOOSdBlyy/AsGyJHA/4NaJ7XRYWMwaOsfmrPxW5Q046
-	 3/xgsKlCqYIftSUgJ0uxvT0e2gMeKzITuma8jXX4=
+	b=e6TEIWh/Wfr2YcN4/JLp67FDNUeN5kKqjBr2E0vZFjeRx/fSY+6D7uKCpSAEvJY7s
+	 awmilLfBOtLhJmzDU6SWpdDvoZHBHNny+IMZa6KpSnH7W2gwQAMd4U0qcaDheBolxm
+	 z0coWcB1b8ZuZ9HHiem/9R4aSf3vBPesbkknTefs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Pranjal Shrivastava <praan@google.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Richard Cheng <icheng@nvidia.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0811/1518] iommu/arm-smmu-v3: Convert to use atomic poll timeout
-Date: Sat, 12 Sep 2026 08:49:40 +0200
-Message-ID: <20260912065641.782841080@linuxfoundation.org>
+Subject: [PATCH 6.18 0812/1518] perf/cxlpmu: Fix 64-bit write to 32-bit HDM filter register
+Date: Sat, 12 Sep 2026 08:49:41 +0200
+Message-ID: <20260912065641.805567151@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,50 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pranjal Shrivastava <praan@google.com>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-[ Upstream commit eced8058c82a3a81ae480a6546e2da32100dddfa ]
+[ Upstream commit ea434e8fd3a539e9c53285b10d3c7e539e228591 ]
 
-The arm_smmu_write_reg_sync() helper is currently implemented using
-readl_relaxed_poll_timeout() (that relies on usleep_range() internally)
-which becomes a critical issue when used in the gerror irq handler.
+The HDM decoder filter configuration register is 32 bits wide, but the
+driver programs it with a 64-bit writeq(). The filter value never
+exceeds 32 bits, so the upper half of the write is always zero and
+lands in the adjacent Filter ID 1 (Channel/Rank/Bank) configuration
+register at offset+4.
 
-If the SMMU hits a gerror and enters Service Failure Mode
-(GERROR_SFM_ERR), the gerror handler calls arm_smmu_device_disable() in
-hard-irq context. This becomes a problem as arm_smmu_device_disable()
-inevitably calls arm_smmu_write_reg_sync() which might attempt to sleep
-inside a hard-irq context.
-
-Fix this by converting the arm_smmu_write_reg_sync to use the
-readl_relaxed_poll_timeout_atomic() polling helper.
-
-(Discovered while running Sashiko locally on another patch series).
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 48ec83bcbcf5 ("iommu/arm-smmu: Add initial driver support for ARM SMMUv3 devices")
-Signed-off-by: Pranjal Shrivastava <praan@google.com>
+Fixes: 5d7107c72796 ("perf: CXL Performance Monitoring Unit driver")
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Richard Cheng <icheng@nvidia.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/perf/cxl_pmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index d645f7edbd107..b677390e95bb9 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -3992,8 +3992,9 @@ static int arm_smmu_write_reg_sync(struct arm_smmu_device *smmu, u32 val,
- 	u32 reg;
+diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
+index 68a54d97d2a8a..39b46550a5109 100644
+--- a/drivers/perf/cxl_pmu.c
++++ b/drivers/perf/cxl_pmu.c
+@@ -635,7 +635,7 @@ static void cxl_pmu_event_start(struct perf_event *event, int flags)
+ 			cfg = cxl_pmu_config2_get_hdm_decoder(event);
+ 		else
+ 			cfg = GENMASK(31, 0); /* No filtering if 0xFFFF_FFFF */
+-		writeq(cfg, base + CXL_PMU_FILTER_CFG_REG(hwc->idx, 0));
++		writel(cfg, base + CXL_PMU_FILTER_CFG_REG(hwc->idx, 0));
+ 	}
  
- 	writel_relaxed(val, smmu->base + reg_off);
--	return readl_relaxed_poll_timeout(smmu->base + ack_off, reg, reg == val,
--					  1, ARM_SMMU_POLL_TIMEOUT_US);
-+	return readl_relaxed_poll_timeout_atomic(smmu->base + ack_off, reg,
-+						reg == val, 1,
-+						ARM_SMMU_POLL_TIMEOUT_US);
- }
- 
- /* GBPA is "special" */
+ 	cfg = readq(base + CXL_PMU_COUNTER_CFG_REG(hwc->idx));
 -- 
 2.53.0
 
