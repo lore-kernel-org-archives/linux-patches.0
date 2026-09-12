@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAC2356742;
-	Sat, 12 Sep 2026 16:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688AA2882DE;
+	Sat, 12 Sep 2026 16:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231084; cv=none; b=UdWrDdF3H1cJXW8kDMRPfUI2CWeJw+ZSCfLv+G9Hr1Xig1bv+NAMpMrAUTp080GH2c2aJirHO2Fk5I59le8TdBZcPO6p+0UfFDfSjCRmrewEDBQi+9ZUewAG7R7n5qeuajYXJPSqZI/EmHT4FP15soQ0zmrbTWg/qurih/GgXbo=
+	t=1789231088; cv=none; b=drANTTUVsa4kzMDFEeyL9KtdcIkPAEvWPfZO/PL39sJj2EpVB2ula91Je4AIVz5127UM9ERZppBH2bjchi0O7LW7EyCNEdwRYYE1IJUER/aQn9ud5TDHNghamB22obDLrv1unDtMMXxR6CBMSZYyFd7LOZRRMj6lHCeESVfNQ+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231084; c=relaxed/simple;
-	bh=X/ank3DNKQdphdJrw0sNh8NCxnxoPGTzvxBa2zVEkEI=;
+	s=arc-20240116; t=1789231088; c=relaxed/simple;
+	bh=fs1KXx5MM+wJMV9v3B4ydsTxohkuIEJF7FxpULd5MEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RlqTnNaVie9HvxPluZmPfLdf1L/Ek9BuBdrGW8mbVzzzcz+cPk1mNOQGmwgg0rIi0vp4rYleyFPCozJxGTr1sOKSDowvne0UaS+uPE806x+HbCndpBosCWTDgjIU8WO8T1N4mucQmDaiCOvqlbkfUFjPAhvNs08kGizrPR1JlpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVnReyvj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VtRfFQsx0ZQZNGQ25Cq7YUjwxaP2yCfUPFgy1/RxQHEGi/1yDPzpkhI7wAkWlAyG77RppiJEmI46B/fNcucU4r5VNUqMFpsODvPMTJ1nvhy8615/Bo+hCeKg3jCBjK5e8FidkRqJMfyuk1MC+g04T/2Am8ynCzCafzPerAex2Xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRDvaGKl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVnReyvj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5134D1F000FF;
-	Sat, 12 Sep 2026 16:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRDvaGKl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE041F000FF;
+	Sat, 12 Sep 2026 16:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231082;
-	bh=LRE3Fo6sfVVb+TOZl22vhW3UE4b3JRxVFHLQ7KHHNi4=;
+	s=korg; t=1789231087;
+	bh=6U9GV06oFyS16PH125Q7apu73IdL4kyCl5U+7xn8dq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kVnReyvj/HTu+CUJdpvs6xI7t0ii2XnkHgKt9QjdjAUQ07MPn3STWi2ryUtH/DNfF
-	 TuQMaMekV7vJXK2szizevutluJQfJ/FvY9jmNCAmyEmphoGGCIvn7Es/kNYbdP6qbK
-	 2FQi0DjW1dxBTk2Dj/+ow4jAsSDKJ3jFb6NEV4l4=
+	b=JRDvaGKlFwEkUkyGU2cjSctN1Gl2F1eGbwprDnoD8+CNrWVcfDKgvMq5o9RJ/9uYx
+	 N7DY4vQXnX/n4+tBi818mTzSA4cOHO2qrO0FakPEor+y8YX/WvzY7WhVyhWKABMQOH
+	 rVLaVYUU5G0ySyiFhNwNqKS/hDnKgsJFVNbCipxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leon@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0873/1191] RDMA/srp: fix heap information leak on a truncated SRP_CRED_REQ
-Date: Sat, 12 Sep 2026 09:00:01 +0200
-Message-ID: <20260912065607.861188034@linuxfoundation.org>
+Subject: [PATCH 6.1 0920/1191] regulator: qcom-rpmh: Fix PMIC5 BOB bypass mode handling
+Date: Sat, 12 Sep 2026 09:00:48 +0200
+Message-ID: <20260912065608.897592435@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,134 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
 
-[ Upstream commit 961ac0f0c5e414abdd6b33fae84b311d9fde0bd0 ]
+[ Upstream commit abd14bebb87e0fa2749371272c8b31d6ee5f0a36 ]
 
-srp_recv_done() passes wc->byte_len to srp_process_rsp(). It passes
-nothing to srp_process_cred_req() and srp_process_aer_req(), which read
-fixed-size fields from the receive buffer without checking that those
-fields were received.
+Currently, when `rpmh_regulator_set_mode_bypass()` helper function
+is called to set bypass mode, it sends PMIC4's BOB bypass mode
+value for even if its a PMIC5 BOB.
 
-The buffer size is max_ti_iu_len, which comes from the login response
-and is not validated. A target that advertises 8 and then sends an
-8-byte SRP_CRED_REQ makes the initiator read req->tag from beyond the
-end of the buffer. req->tag is copied into the SRP_CRED_RSP and sent
-back, so those bytes reach the target. SRP_AER_REQ behaves the same way
-and also reads req->lun.
+To fix this, introduce new hw_data parameter`pmic_bypass_mode`
+to store bypass mode value. Use it to send correct PMIC bypass
+mode value that corresponds to PMIC4/5 BOB regulators from the
+helper function.
 
-The leak is 8 bytes per response. max_ti_iu_len also decides which slab
-cache the buffer comes from. With 8 the buffer is a kmalloc-8 object and
-the read is entirely outside it:
-
-  BUG: KASAN: slab-out-of-bounds in srp_recv_done+0x172b/0x1aa0
-  Read of size 8 at addr ffff888104714da8 by task kworker/u8:3/50
-   which belongs to the cache kmalloc-8 of size 8
-  The buggy address is located 0 bytes to the right of
-   allocated 8-byte region [ffff888104714da0, ffff888104714da8)
-
-Without KASAN the returned bytes are whatever is next in the slab. One
-run returned ".strtab".
-
-rsp->data[3] in srp_process_rsp() has the same problem: only
-resp_data_len is checked before it is read.
-
-Drop a request that is shorter than the structure being parsed, and
-check byte_len before the tsk_mgmt read.
-
-Fixes: bb12588a38e6 ("IB/srp: Implement SRP_CRED_REQ and SRP_AER_REQ")
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20260729093203.1503201-1-yhlee@isslab.korea.ac.kr
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 610f29e5cc0e8d58 ("regulator: qcom-rpmh: Update PMIC modes for PMIC5")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260801-b4-read-rpmh-v5-v6-2-9fcb54928523@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srp/ib_srp.c | 45 +++++++++++++++++++----------
- 1 file changed, 30 insertions(+), 15 deletions(-)
+ drivers/regulator/qcom-rpmh-regulator.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
-index 6492e5f3b1047..d9acbfe24f1ec 100644
---- a/drivers/infiniband/ulp/srp/ib_srp.c
-+++ b/drivers/infiniband/ulp/srp/ib_srp.c
-@@ -1948,7 +1948,8 @@ static void srp_process_rsp(struct srp_rdma_ch *ch, struct srp_rsp *rsp,
- 		ch->req_lim += be32_to_cpu(rsp->req_lim_delta);
- 		if (rsp->tag == ch->tsk_mgmt_tag) {
- 			ch->tsk_mgmt_status = -1;
--			if (be32_to_cpu(rsp->resp_data_len) >= 4)
-+			if (be32_to_cpu(rsp->resp_data_len) >= 4 &&
-+			    byte_len >= sizeof(*rsp) + 4)
- 				ch->tsk_mgmt_status = rsp->data[3];
- 			complete(&ch->tsk_mgmt_done);
- 		} else {
-@@ -2048,13 +2049,20 @@ static int srp_response_common(struct srp_rdma_ch *ch, s32 req_delta,
- }
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index f90bcdeecea58..d05f65fa261bd 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -76,6 +76,7 @@ enum rpmh_regulator_type {
+  * @hpm_min_load_uA:		Minimum load current in microamps that requires
+  *				high power mode (HPM) operation.  This is used
+  *				for LDO hardware type regulators only.
++ * @pmic_bypass_mode:		The PMIC bypass mode value.
+  * @pmic_mode_map:		Array indexed by regulator framework mode
+  *				containing PMIC hardware modes.  Must be large
+  *				enough to index all framework modes supported
+@@ -89,6 +90,7 @@ struct rpmh_vreg_hw_data {
+ 	const struct linear_range	voltage_range;
+ 	int					n_voltages;
+ 	int					hpm_min_load_uA;
++	int					pmic_bypass_mode;
+ 	const int				*pmic_mode_map;
+ 	unsigned int			      (*of_map_mode)(unsigned int mode);
+ };
+@@ -275,7 +277,7 @@ static int rpmh_regulator_vrm_set_mode_bypass(struct rpmh_vreg *vreg,
+ 		return pmic_mode;
  
- static void srp_process_cred_req(struct srp_rdma_ch *ch,
--				 struct srp_cred_req *req)
-+				 struct srp_cred_req *req, u32 byte_len)
- {
--	struct srp_cred_rsp rsp = {
--		.opcode = SRP_CRED_RSP,
--		.tag = req->tag,
--	};
--	s32 delta = be32_to_cpu(req->req_lim_delta);
-+	struct srp_cred_rsp rsp = { .opcode = SRP_CRED_RSP };
-+	s32 delta;
-+
-+	if (byte_len < sizeof(*req)) {
-+		shost_printk(KERN_ERR, ch->target->scsi_host, PFX
-+			     "dropping truncated SRP_CRED_REQ (%u bytes received, %zu expected)\n",
-+			     byte_len, sizeof(*req));
-+		return;
-+	}
-+
-+	rsp.tag = req->tag;
-+	delta = be32_to_cpu(req->req_lim_delta);
+ 	if (bypassed)
+-		cmd.data = PMIC4_BOB_MODE_PASS;
++		cmd.data = vreg->hw_data->pmic_bypass_mode;
+ 	else
+ 		cmd.data = pmic_mode;
  
- 	if (srp_response_common(ch, delta, &rsp, sizeof(rsp)))
- 		shost_printk(KERN_ERR, ch->target->scsi_host, PFX
-@@ -2062,14 +2070,21 @@ static void srp_process_cred_req(struct srp_rdma_ch *ch,
- }
- 
- static void srp_process_aer_req(struct srp_rdma_ch *ch,
--				struct srp_aer_req *req)
-+				struct srp_aer_req *req, u32 byte_len)
- {
- 	struct srp_target_port *target = ch->target;
--	struct srp_aer_rsp rsp = {
--		.opcode = SRP_AER_RSP,
--		.tag = req->tag,
--	};
--	s32 delta = be32_to_cpu(req->req_lim_delta);
-+	struct srp_aer_rsp rsp = { .opcode = SRP_AER_RSP };
-+	s32 delta;
-+
-+	if (byte_len < sizeof(*req)) {
-+		shost_printk(KERN_ERR, target->scsi_host, PFX
-+			     "dropping truncated SRP_AER_REQ (%u bytes received, %zu expected)\n",
-+			     byte_len, sizeof(*req));
-+		return;
-+	}
-+
-+	rsp.tag = req->tag;
-+	delta = be32_to_cpu(req->req_lim_delta);
- 
- 	shost_printk(KERN_ERR, target->scsi_host, PFX
- 		     "ignoring AER for LUN %llu\n", scsilun_to_int(&req->lun));
-@@ -2111,11 +2126,11 @@ static void srp_recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 		break;
- 
- 	case SRP_CRED_REQ:
--		srp_process_cred_req(ch, iu->buf);
-+		srp_process_cred_req(ch, iu->buf, wc->byte_len);
- 		break;
- 
- 	case SRP_AER_REQ:
--		srp_process_aer_req(ch, iu->buf);
-+		srp_process_aer_req(ch, iu->buf, wc->byte_len);
- 		break;
- 
- 	case SRP_T_LOGOUT:
+@@ -664,6 +666,7 @@ static const struct rpmh_vreg_hw_data pmic4_bob = {
+ 	.ops = &rpmh_regulator_vrm_bypass_ops,
+ 	.voltage_range = REGULATOR_LINEAR_RANGE(1824000, 0, 83, 32000),
+ 	.n_voltages = 84,
++	.pmic_bypass_mode = PMIC4_BOB_MODE_PASS,
+ 	.pmic_mode_map = pmic_mode_map_pmic4_bob,
+ 	.of_map_mode = rpmh_regulator_pmic4_bob_of_map_mode,
+ };
+@@ -754,6 +757,7 @@ static const struct rpmh_vreg_hw_data pmic5_bob = {
+ 	.ops = &rpmh_regulator_vrm_bypass_ops,
+ 	.voltage_range = REGULATOR_LINEAR_RANGE(3000000, 0, 31, 32000),
+ 	.n_voltages = 32,
++	.pmic_bypass_mode = PMIC5_BOB_MODE_PASS,
+ 	.pmic_mode_map = pmic_mode_map_pmic5_bob,
+ 	.of_map_mode = rpmh_regulator_pmic4_bob_of_map_mode,
+ };
 -- 
 2.53.0
 
