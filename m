@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4779F37E5F3;
-	Sat, 12 Sep 2026 08:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E5F41BA94;
+	Sat, 12 Sep 2026 08:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202826; cv=none; b=b+KpSkn00JPtsRVbBogfjoJSvp5b/PtdtqcxmjBRx90rZCKBIdMgeKJUy84Q0RCrno7S2j0MFBsBHv6Mp1EVYlRyfc8wWN4fmGord0KMBpC9QFI4ujCr0TgBHnJUmXJnb1noqQob+0VYoxsON5HhWyxGfFbzW7WgwGXFl8ESuDk=
+	t=1789202835; cv=none; b=qgh9GTLJhOaS46SBvUVxwwqvVfF6joOq/WHa3RGvrzWMlhVF1YGFslux0UD03WxyeQSSLW1zFBHTTfT8C6GmHuSjeHbAAFYfpGyvjCUdhY3JCloxhrRrebSWJ6wEGIzC5X4m8utgs8Sm0Q1aFpOx0Ycz0Mtqwl2ieJfPrrZacoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202826; c=relaxed/simple;
-	bh=iPUlacgXAiRrc426zT3D8Hdo9GGlfyAQLPCcr80bqvA=;
+	s=arc-20240116; t=1789202835; c=relaxed/simple;
+	bh=W49Bk/b3/MfphPlZSNPgQhSq3uo2BMA4VcVObxQAjmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WZJBH8JwgVGo6i7KecV8iY/xMYm8M/dl4lhpn2+CGA7I9jf0Uo6DZoVmeMP6HB9I5gD4jyXV+VbDox8PNIVicQvM24foc1CejFCPRCchXY/fao2l588ZGbALya5AgbpDOEylbLj6z/rBbeLfeo8ssgXJIlH5+AvhNXFeLd1fldA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPHEk/xg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sZpc4AkFQ7b/bnpR9Jy6UED0BHOYNXb+N9VPnro3r7OlUqcfyiHEN+M2Vu67JbHJj1ttEzZuaf4h6YjxuTGjb6kvI/h1de6phObsFQ3PmtY/Ch9IMSQUai5Tnghhf5GD24b1l6Ey0Uy7SWXx9gBO75fFKgn8/5WfP3j7KD5Doe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=To7da223; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPHEk/xg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9931F00893;
-	Sat, 12 Sep 2026 08:46:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="To7da223"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920261F0089B;
+	Sat, 12 Sep 2026 08:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202820;
-	bh=lD1H+LFPUiANasgJDz4XZO9q/aiWmluozRla+lvyl7k=;
+	s=korg; t=1789202825;
+	bh=0IQqP/Xh3OIxji6sMVszrnNMB9N6YFpKNzZYsqPj/rY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YPHEk/xgodukixcCUSIiVYR1uExL29CllFMsnTSDlSMhqrUq+ZY34Yl8IawbJn8lb
-	 phnZryaboQr/m7Rdinj1Hp3ddePLQznjockzw8y+t/9hrkaEfMWrrE7IMriVaIXJG1
-	 AOg7gq8I5x3RKNd82BaWYjyqGpYJooGn8TyhUq2g=
+	b=To7da2234EZd+ri5V/VRCdxqHnMNwGnm/E4H4L92nyiNxhIg761NnRgfJdNhv4D5J
+	 XtkGuegp+ZBbd8lJnsjRi/aQ1GV8uFHtmqnLTypOPTf1W8INcNc7nq/m6bLKpWE8Dg
+	 9wau5UWrOBGHzcxg3ImnMBE0VgpJOhbmbkvdt+Qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
 	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1239/1815] pinctrl: airoha: an7583: fix I2C0_SDA_PD register bit order
-Date: Sat, 12 Sep 2026 08:49:49 +0200
-Message-ID: <20260912065718.099863395@linuxfoundation.org>
+Subject: [PATCH 7.2 1240/1815] pinctrl: airoha: an7581: fix mux/conf of pcie_reset pins
+Date: Sat, 12 Sep 2026 08:49:50 +0200
+Message-ID: <20260912065718.123343077@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,33 +53,288 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
 
-[ Upstream commit d560e28bdca824781898023496658404df01be9f ]
+[ Upstream commit 739bc85aed14b739dca5b7aff4241b778af80220 ]
 
-I2C1_SCL_PD and RG_I2C1_SDA_PD bits are swapped, fix it.
+In the an7581 case
+ * gpio47 and pcie_reset0 shares pin 60,
+ * gpio48 and pcie_reset1 shares pin 61,
+ * gpio49 and pcie_reset2 shares pin 62.
+but current driver treat them as pins 61--63. This is wrong.
 
-Fixes: 3ffeb17a9a27 ("pinctrl: airoha: add support for Airoha AN7583 PINs")
+Also current an7581 pinmux implementation have following issues:
+ * current pcie_reset pin function actually sets corresponding
+   pins as gpios.
+ * there is no proper way to set pcie_reset pins as gpios.
+ * there is no way to set pcie_reset pins as pwm.
+
+This patch fixes above issues.
+
+WARNING:
+There is a contradiction in the Airoha documentation. AN7581 programming
+guide claims:
+ - gpio44 and pcie_reset0 shares the same pin
+ - gpio45 and pcie_reset1 shares the same pin
+ - gpio46 and pcie_reset2 shares the same pin
+While AN7581 datasheet claims:
+ - gpio47 and pcie_reset0 shares the same pin
+ - gpio48 and pcie_reset1 shares the same pin
+ - gpio49 and pcie_reset2 shares the same pin
+The datasheet should be considered as a more reliable source.
+Thanks to Benjamin Larsson for clarification.
+
+Fixes: 1c8ace2d0725 ("pinctrl: airoha: Add support for EN7581 SoC")
 Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/airoha/pinctrl-airoha.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/airoha/pinctrl-airoha.c | 122 +++++++++++++++++++-----
+ 1 file changed, 97 insertions(+), 25 deletions(-)
 
 diff --git a/drivers/pinctrl/airoha/pinctrl-airoha.c b/drivers/pinctrl/airoha/pinctrl-airoha.c
-index 817d51141fed1..ffbc7b3c61812 100644
+index ffbc7b3c61812..4be694b8ea778 100644
 --- a/drivers/pinctrl/airoha/pinctrl-airoha.c
 +++ b/drivers/pinctrl/airoha/pinctrl-airoha.c
-@@ -185,8 +185,8 @@
- #define I2C_SDA_PU_MASK				BIT(0)
+@@ -470,9 +470,9 @@ static struct pinctrl_pin_desc en7581_pinctrl_pins[] = {
+ 	PINCTRL_PIN(57, "gpio44"),
+ 	PINCTRL_PIN(58, "gpio45"),
+ 	PINCTRL_PIN(59, "gpio46"),
+-	PINCTRL_PIN(61, "pcie_reset0"),
+-	PINCTRL_PIN(62, "pcie_reset1"),
+-	PINCTRL_PIN(63, "pcie_reset2"),
++	PINCTRL_PIN(60, "pcie_reset0"),
++	PINCTRL_PIN(61, "pcie_reset1"),
++	PINCTRL_PIN(62, "pcie_reset2"),
+ };
  
- #define REG_I2C_SDA_PD				0x0048
--#define AN7583_I2C1_SDA_PD_MASK			BIT(16)
--#define AN7583_I2C1_SCL_PD_MASK			BIT(15)
-+#define AN7583_I2C1_SCL_PD_MASK			BIT(16)
-+#define AN7583_I2C1_SDA_PD_MASK			BIT(15)
- #define SPI_MISO_PD_MASK			BIT(14)
- #define SPI_MOSI_PD_MASK			BIT(13)
- #define SPI_CLK_PD_MASK				BIT(12)
+ static const int en7581_pon_pins[] = { 49, 50, 51, 52, 53, 54 };
+@@ -555,9 +555,12 @@ static const int en7581_gpio43_pins[] = { 56 };
+ static const int en7581_gpio44_pins[] = { 57 };
+ static const int en7581_gpio45_pins[] = { 58 };
+ static const int en7581_gpio46_pins[] = { 59 };
+-static const int en7581_pcie_reset0_pins[] = { 61 };
+-static const int en7581_pcie_reset1_pins[] = { 62 };
+-static const int en7581_pcie_reset2_pins[] = { 63 };
++static const int en7581_gpio47_pins[] = { 60 };
++static const int en7581_gpio48_pins[] = { 61 };
++static const int en7581_gpio49_pins[] = { 62 };
++static const int en7581_pcie_reset0_pins[] = { 60 };
++static const int en7581_pcie_reset1_pins[] = { 61 };
++static const int en7581_pcie_reset2_pins[] = { 62 };
+ 
+ static const struct pingroup en7581_pinctrl_groups[] = {
+ 	PINCTRL_PIN_GROUP("pon", en7581_pon),
+@@ -640,6 +643,9 @@ static const struct pingroup en7581_pinctrl_groups[] = {
+ 	PINCTRL_PIN_GROUP("gpio44", en7581_gpio44),
+ 	PINCTRL_PIN_GROUP("gpio45", en7581_gpio45),
+ 	PINCTRL_PIN_GROUP("gpio46", en7581_gpio46),
++	PINCTRL_PIN_GROUP("gpio47", en7581_gpio47),
++	PINCTRL_PIN_GROUP("gpio48", en7581_gpio48),
++	PINCTRL_PIN_GROUP("gpio49", en7581_gpio49),
+ 	PINCTRL_PIN_GROUP("pcie_reset0", en7581_pcie_reset0),
+ 	PINCTRL_PIN_GROUP("pcie_reset1", en7581_pcie_reset1),
+ 	PINCTRL_PIN_GROUP("pcie_reset2", en7581_pcie_reset2),
+@@ -883,6 +889,7 @@ static const char *const an7583_pcm_spi_groups[] = { "pcm_spi",
+ static const char *const i2s_groups[] = { "i2s" };
+ static const char *const emmc_groups[] = { "emmc" };
+ static const char *const pnand_groups[] = { "pnand" };
++static const char *const gpio_groups[] = { "gpio47", "gpio48", "gpio49" };
+ static const char *const pcie_reset_groups[] = { "pcie_reset0", "pcie_reset1",
+ 						 "pcie_reset2" };
+ static const char *const an7583_pcie_reset_groups[] = { "pcie_reset0", "pcie_reset1" };
+@@ -907,7 +914,8 @@ static const char *const pwm_groups[] = { "gpio0", "gpio1",
+ 					  "gpio40", "gpio41",
+ 					  "gpio42", "gpio43",
+ 					  "gpio44", "gpio45",
+-					  "gpio46" };
++					  "gpio46", "gpio47",
++					  "gpio48", "gpio49" };
+ static const char *const an7583_pwm_groups[] = { "gpio0", "gpio1",
+ 						 "gpio2", "gpio3",
+ 						 "gpio4", "gpio5",
+@@ -1406,6 +1414,45 @@ static const struct airoha_pinctrl_func_group pnand_func_group[] = {
+ 	},
+ };
+ 
++#define AIROHA_PINCTRL_GPIO(gpio, mux_val)			\
++	{							\
++		.name = (gpio),					\
++		.regmap[0] = {					\
++			AIROHA_FUNC_MUX,			\
++			REG_GPIO_PON_MODE,			\
++			(mux_val),				\
++			(mux_val)				\
++		},						\
++		.regmap_size = 1,				\
++	}
++
++#define AIROHA_PINCTRL_GPIO_EXT(gpio, mux_val, smux_val)	\
++	{							\
++		.name = (gpio),					\
++		.regmap[0] = {					\
++			AIROHA_FUNC_PWM_EXT_MUX,		\
++			REG_GPIO_FLASH_MODE_CFG_EXT,		\
++			(mux_val),				\
++			0					\
++		},						\
++		.regmap[1] = {					\
++			AIROHA_FUNC_MUX,			\
++			REG_GPIO_PON_MODE,			\
++			(smux_val),				\
++			(smux_val)				\
++		},						\
++		.regmap_size = 2,				\
++	}
++
++static const struct airoha_pinctrl_func_group gpio_func_group[] = {
++	AIROHA_PINCTRL_GPIO_EXT("gpio47", GPIO47_FLASH_MODE_CFG,
++				GPIO_PCIE_RESET0_MASK),
++	AIROHA_PINCTRL_GPIO_EXT("gpio48", GPIO48_FLASH_MODE_CFG,
++				GPIO_PCIE_RESET1_MASK),
++	AIROHA_PINCTRL_GPIO_EXT("gpio49", GPIO49_FLASH_MODE_CFG,
++				GPIO_PCIE_RESET2_MASK),
++};
++
+ static const struct airoha_pinctrl_func_group pcie_reset_func_group[] = {
+ 	{
+ 		.name = "pcie_reset0",
+@@ -1413,7 +1460,7 @@ static const struct airoha_pinctrl_func_group pcie_reset_func_group[] = {
+ 			AIROHA_FUNC_MUX,
+ 			REG_GPIO_PON_MODE,
+ 			GPIO_PCIE_RESET0_MASK,
+-			GPIO_PCIE_RESET0_MASK
++			0
+ 		},
+ 		.regmap_size = 1,
+ 	}, {
+@@ -1422,7 +1469,7 @@ static const struct airoha_pinctrl_func_group pcie_reset_func_group[] = {
+ 			AIROHA_FUNC_MUX,
+ 			REG_GPIO_PON_MODE,
+ 			GPIO_PCIE_RESET1_MASK,
+-			GPIO_PCIE_RESET1_MASK
++			0
+ 		},
+ 		.regmap_size = 1,
+ 	}, {
+@@ -1431,7 +1478,7 @@ static const struct airoha_pinctrl_func_group pcie_reset_func_group[] = {
+ 			AIROHA_FUNC_MUX,
+ 			REG_GPIO_PON_MODE,
+ 			GPIO_PCIE_RESET2_MASK,
+-			GPIO_PCIE_RESET2_MASK
++			0
+ 		},
+ 		.regmap_size = 1,
+ 	},
+@@ -1484,6 +1531,24 @@ static const struct airoha_pinctrl_func_group an7583_pcie_reset_func_group[] = {
+ 		.regmap_size = 1,			\
+ 	}						\
+ 
++#define AIROHA_PINCTRL_PWM_EXT_SEC(gpio, mux_val, smux_val)	\
++	{							\
++		.name = (gpio),					\
++		.regmap[0] = {					\
++			AIROHA_FUNC_PWM_EXT_MUX,		\
++			REG_GPIO_FLASH_MODE_CFG_EXT,		\
++			(mux_val),				\
++			(mux_val)				\
++		},						\
++		.regmap[1] = {					\
++			AIROHA_FUNC_MUX,			\
++			REG_GPIO_PON_MODE,			\
++			(smux_val),				\
++			(smux_val)				\
++		},						\
++		.regmap_size = 2,				\
++	}
++
+ static const struct airoha_pinctrl_func_group pwm_func_group[] = {
+ 	AIROHA_PINCTRL_PWM("gpio0", GPIO0_FLASH_MODE_CFG),
+ 	AIROHA_PINCTRL_PWM("gpio1", GPIO1_FLASH_MODE_CFG),
+@@ -1528,6 +1593,12 @@ static const struct airoha_pinctrl_func_group pwm_func_group[] = {
+ 	AIROHA_PINCTRL_PWM_EXT("gpio44", GPIO44_FLASH_MODE_CFG),
+ 	AIROHA_PINCTRL_PWM_EXT("gpio45", GPIO45_FLASH_MODE_CFG),
+ 	AIROHA_PINCTRL_PWM_EXT("gpio46", GPIO46_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT_SEC("gpio47", GPIO47_FLASH_MODE_CFG,
++				   GPIO_PCIE_RESET0_MASK),
++	AIROHA_PINCTRL_PWM_EXT_SEC("gpio48", GPIO48_FLASH_MODE_CFG,
++				   GPIO_PCIE_RESET1_MASK),
++	AIROHA_PINCTRL_PWM_EXT_SEC("gpio49", GPIO49_FLASH_MODE_CFG,
++				   GPIO_PCIE_RESET2_MASK),
+ };
+ 
+ static const struct airoha_pinctrl_func_group an7583_pwm_func_group[] = {
+@@ -1804,6 +1875,7 @@ static const struct airoha_pinctrl_func en7581_pinctrl_funcs[] = {
+ 	PINCTRL_FUNC_DESC("i2s", i2s),
+ 	PINCTRL_FUNC_DESC("emmc", emmc),
+ 	PINCTRL_FUNC_DESC("pnand", pnand),
++	PINCTRL_FUNC_DESC("gpio", gpio),
+ 	PINCTRL_FUNC_DESC("pcie_reset", pcie_reset),
+ 	PINCTRL_FUNC_DESC("pwm", pwm),
+ 	PINCTRL_FUNC_DESC("phy1_led0", phy1_led0),
+@@ -1897,9 +1969,9 @@ static const struct airoha_pinctrl_conf en7581_pinctrl_pullup_conf[] = {
+ 	PINCTRL_CONF_DESC(57, REG_GPIO_H_PU, BIT(12)),
+ 	PINCTRL_CONF_DESC(58, REG_GPIO_H_PU, BIT(13)),
+ 	PINCTRL_CONF_DESC(59, REG_GPIO_H_PU, BIT(14)),
+-	PINCTRL_CONF_DESC(61, REG_I2C_SDA_PU, PCIE0_RESET_PU_MASK),
+-	PINCTRL_CONF_DESC(62, REG_I2C_SDA_PU, PCIE1_RESET_PU_MASK),
+-	PINCTRL_CONF_DESC(63, REG_I2C_SDA_PU, PCIE2_RESET_PU_MASK),
++	PINCTRL_CONF_DESC(60, REG_I2C_SDA_PU, PCIE0_RESET_PU_MASK),
++	PINCTRL_CONF_DESC(61, REG_I2C_SDA_PU, PCIE1_RESET_PU_MASK),
++	PINCTRL_CONF_DESC(62, REG_I2C_SDA_PU, PCIE2_RESET_PU_MASK),
+ };
+ 
+ static const struct airoha_pinctrl_conf an7583_pinctrl_pullup_conf[] = {
+@@ -2014,9 +2086,9 @@ static const struct airoha_pinctrl_conf en7581_pinctrl_pulldown_conf[] = {
+ 	PINCTRL_CONF_DESC(57, REG_GPIO_H_PD, BIT(12)),
+ 	PINCTRL_CONF_DESC(58, REG_GPIO_H_PD, BIT(13)),
+ 	PINCTRL_CONF_DESC(59, REG_GPIO_H_PD, BIT(14)),
+-	PINCTRL_CONF_DESC(61, REG_I2C_SDA_PD, PCIE0_RESET_PD_MASK),
+-	PINCTRL_CONF_DESC(62, REG_I2C_SDA_PD, PCIE1_RESET_PD_MASK),
+-	PINCTRL_CONF_DESC(63, REG_I2C_SDA_PD, PCIE2_RESET_PD_MASK),
++	PINCTRL_CONF_DESC(60, REG_I2C_SDA_PD, PCIE0_RESET_PD_MASK),
++	PINCTRL_CONF_DESC(61, REG_I2C_SDA_PD, PCIE1_RESET_PD_MASK),
++	PINCTRL_CONF_DESC(62, REG_I2C_SDA_PD, PCIE2_RESET_PD_MASK),
+ };
+ 
+ static const struct airoha_pinctrl_conf an7583_pinctrl_pulldown_conf[] = {
+@@ -2131,9 +2203,9 @@ static const struct airoha_pinctrl_conf en7581_pinctrl_drive_e2_conf[] = {
+ 	PINCTRL_CONF_DESC(57, REG_GPIO_H_E2, BIT(12)),
+ 	PINCTRL_CONF_DESC(58, REG_GPIO_H_E2, BIT(13)),
+ 	PINCTRL_CONF_DESC(59, REG_GPIO_H_E2, BIT(14)),
+-	PINCTRL_CONF_DESC(61, REG_I2C_SDA_E2, PCIE0_RESET_E2_MASK),
+-	PINCTRL_CONF_DESC(62, REG_I2C_SDA_E2, PCIE1_RESET_E2_MASK),
+-	PINCTRL_CONF_DESC(63, REG_I2C_SDA_E2, PCIE2_RESET_E2_MASK),
++	PINCTRL_CONF_DESC(60, REG_I2C_SDA_E2, PCIE0_RESET_E2_MASK),
++	PINCTRL_CONF_DESC(61, REG_I2C_SDA_E2, PCIE1_RESET_E2_MASK),
++	PINCTRL_CONF_DESC(62, REG_I2C_SDA_E2, PCIE2_RESET_E2_MASK),
+ };
+ 
+ static const struct airoha_pinctrl_conf an7583_pinctrl_drive_e2_conf[] = {
+@@ -2248,9 +2320,9 @@ static const struct airoha_pinctrl_conf en7581_pinctrl_drive_e4_conf[] = {
+ 	PINCTRL_CONF_DESC(57, REG_GPIO_H_E4, BIT(12)),
+ 	PINCTRL_CONF_DESC(58, REG_GPIO_H_E4, BIT(13)),
+ 	PINCTRL_CONF_DESC(59, REG_GPIO_H_E4, BIT(14)),
+-	PINCTRL_CONF_DESC(61, REG_I2C_SDA_E4, PCIE0_RESET_E4_MASK),
+-	PINCTRL_CONF_DESC(62, REG_I2C_SDA_E4, PCIE1_RESET_E4_MASK),
+-	PINCTRL_CONF_DESC(63, REG_I2C_SDA_E4, PCIE2_RESET_E4_MASK),
++	PINCTRL_CONF_DESC(60, REG_I2C_SDA_E4, PCIE0_RESET_E4_MASK),
++	PINCTRL_CONF_DESC(61, REG_I2C_SDA_E4, PCIE1_RESET_E4_MASK),
++	PINCTRL_CONF_DESC(62, REG_I2C_SDA_E4, PCIE2_RESET_E4_MASK),
+ };
+ 
+ static const struct airoha_pinctrl_conf an7583_pinctrl_drive_e4_conf[] = {
+@@ -2310,9 +2382,9 @@ static const struct airoha_pinctrl_conf an7583_pinctrl_drive_e4_conf[] = {
+ };
+ 
+ static const struct airoha_pinctrl_conf en7581_pinctrl_pcie_rst_od_conf[] = {
+-	PINCTRL_CONF_DESC(61, REG_PCIE_RESET_OD, PCIE0_RESET_OD_MASK),
+-	PINCTRL_CONF_DESC(62, REG_PCIE_RESET_OD, PCIE1_RESET_OD_MASK),
+-	PINCTRL_CONF_DESC(63, REG_PCIE_RESET_OD, PCIE2_RESET_OD_MASK),
++	PINCTRL_CONF_DESC(60, REG_PCIE_RESET_OD, PCIE0_RESET_OD_MASK),
++	PINCTRL_CONF_DESC(61, REG_PCIE_RESET_OD, PCIE1_RESET_OD_MASK),
++	PINCTRL_CONF_DESC(62, REG_PCIE_RESET_OD, PCIE2_RESET_OD_MASK),
+ };
+ 
+ static const struct airoha_pinctrl_conf an7583_pinctrl_pcie_rst_od_conf[] = {
 -- 
 2.53.0
 
