@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98C232B126;
-	Sat, 12 Sep 2026 18:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D36332B126;
+	Sat, 12 Sep 2026 18:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239032; cv=none; b=OtHOe9eEQDj/ddAwOOeopmB8mi2B76aBVuQjxXmoDZCRGcdINCLLRX2pNVX0E7tLUYrYfWQ4KMClToMPQFM4XYfrk+cpEn4CxTbh4z7IQuahAdZADD5I8MmxA7vxvujqdwYuLsHb0JgXtpdABoCmh+99eiKxrJkLH8rA9clbIF4=
+	t=1789239037; cv=none; b=RdMzcpdkTyTWzKm2xlX72Sln5qreEEBN99Ktt19inuJ33i2MjsZ3KuImnQ7xubVAFZwdXLvkV2zZr6Hu3mE9W3b2Q9fxXejoEH0GO/4RASIRDCFJtuxAQxz9r+jVnQmX2FSpAyp2cHw3AL8OGxndnf3AqYB7E/inUwKQwc/kBY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239032; c=relaxed/simple;
-	bh=f8TDgla1cUR9a9GX7a4G37pIMBXIOMw96c4evu085R0=;
+	s=arc-20240116; t=1789239037; c=relaxed/simple;
+	bh=QAca1+aLG/qhPB1GkGZE1jtip0b1yE/2NZOxip0zhXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cj07GP7Bg9gpeKPM42phn0Nn9WNgKiOX+nGap7MPt99diO1KVwpDtGbZxKTxD5bl+Pk0JHE4SkIz8lakqhJAnLVNhj7sMM1Nfz9ENoNeMY3lF3nvPaZ1qN4Jf9qo/eCPhvsL/JUtAjD0hMOKROKjxkNfwY4oQWqvC18UEUjN2OU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8eyFT40; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BJmx7NDg0M5QryY89GFPW6R+3M53w8QRXPjgnq9Wslcyzj5ViOpH1Fn29eL4qj4kazlNUnuNq7zUS4isZZgrEzWZuBI0x3aiMa2D3q7B8YDG3uAtcBrxvsQelu5D8Mc1GCJVOTE+IeXHWcF6FYnHPBx0ZGTm6lTyhIelZoEk+ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1HWPGEMG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8eyFT40"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8A71F000FF;
-	Sat, 12 Sep 2026 18:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1HWPGEMG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605321F000FF;
+	Sat, 12 Sep 2026 18:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239031;
-	bh=9V7P67gyoToqeXLXjDVFo0iFZP4W4Xj++752Vu0yBKY=;
+	s=korg; t=1789239036;
+	bh=rtE5yY7mTLCKwxVVWNt8iro1TUroqRqNJBA1MN9zI9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f8eyFT40O1yP73qLKQ91EtS0QV6zR9q9wEW2yLkbU28Mra2EN0fh+st/t9wYy8Y9E
-	 oW6qYsO0wX4X2TP6LTU8kEaBzh52t/4MzL2WT69kLDszTFvigZfbid9XdksGiH0YAS
-	 rk3XKb2IBWXBTI6D3j8Mr9vGk0yMAboPg45VINy4=
+	b=1HWPGEMGW+/Zy8qDo+xdttCeKApdFN4GiXCgl252Xy27otquJYGv5aXTW5gs3AMpk
+	 hwY1/TombKE4VVznL69ps+pou4kPc94gkflgYDEBKsgyEkoWZKOvXKE/x6tKtT9uZu
+	 eD5pCYG5NclbmoDKvotF3vMWX8aIPVwmz36wl97U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 580/935] thermal: int340x_thermal: Consolidate priv->data_vault checks
-Date: Sat, 12 Sep 2026 09:00:10 +0200
-Message-ID: <20260912065540.141307146@linuxfoundation.org>
+Subject: [PATCH 5.15 540/935] tty: hvc: restrict HVC_DCC to ARMv6+ and ARM64
+Date: Sat, 12 Sep 2026 08:59:30 +0200
+Message-ID: <20260912065539.209644695@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,36 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit e9a7c526c29b0ae60c888b335bd6cf6e2ee80154 ]
+[ Upstream commit 782f4dbd1794b4f30dc116a7ca42c5962c409be8 ]
 
-It is sufficient to check priv->data_vault once in the error code path
-of int3400_thermal_probe(), so do that.
+hvc_dcc drives the JTAG DCC via the ARMv6/v7 CP14 debug registers
+(mrc/mcr p14, 0, rX, c0, c1/c5, 0 in asm/dcc.h). That encoding is
+undefined on older ARM cores, and also on ARMv7-M, but HVC_DCC only
+depends on ARM, so it can be enabled on e.g. ARM926 (ARCH_MULTI_V5),
+where hvc_dcc_console_init() runs __dcc_putchar() at boot and takes an
+undefined-instruction trap before the console is up:
 
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: d83dc9ce57a7 ("thermal: intel: int3400: clean up ODVP on probe failures")
+  Internal error: Oops - undefined instruction: 0 [#1] ARM
+  PC is at hvc_dcc_check+0x50/0x8c
+   hvc_dcc_check from hvc_dcc_console_init+0x18/0x48
+   hvc_dcc_console_init from console_init+0x58/0x170
+  Kernel panic - not syncing: Fatal exception
+
+Restrict HVC_DCC to the CPUs where that encoding is valid: the
+CPU_V6 || CPU_V6K || CPU_V7 set that arch/arm/include/debug/icedcc.S
+guards it with, plus ARM64.
+
+Fixes: 16c63f8ea49c ("drivers: char: hvc: add arm JTAG DCC console support")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260717071616.91423-1-kmehltretter@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/intel/int340x_thermal/int3400_thermal.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/tty/hvc/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-index 1c479c72b7d2e..f6fe145ae0a87 100644
---- a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-+++ b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-@@ -557,9 +557,8 @@ static int int3400_thermal_probe(struct platform_device *pdev)
+diff --git a/drivers/tty/hvc/Kconfig b/drivers/tty/hvc/Kconfig
+index 8d60e0ff67b4d..85259a4b6700f 100644
+--- a/drivers/tty/hvc/Kconfig
++++ b/drivers/tty/hvc/Kconfig
+@@ -79,7 +79,7 @@ config HVC_UDBG
  
- free_sysfs:
- 	cleanup_odvp(priv);
--	if (priv->data_vault) {
--		if (!ZERO_OR_NULL_PTR(priv->data_vault))
--			sysfs_remove_group(&pdev->dev.kobj, &data_attribute_group);
-+	if (!ZERO_OR_NULL_PTR(priv->data_vault)) {
-+		sysfs_remove_group(&pdev->dev.kobj, &data_attribute_group);
- 		kfree(priv->data_vault);
- 	}
- free_uuid:
+ config HVC_DCC
+ 	bool "ARM JTAG DCC console"
+-	depends on ARM || ARM64
++	depends on (ARM && (CPU_V6 || CPU_V6K || CPU_V7)) || ARM64
+ 	select HVC_DRIVER
+ 	select SERIAL_CORE_CONSOLE
+ 	help
 -- 
 2.53.0
 
