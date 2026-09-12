@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D1238AC92;
-	Sat, 12 Sep 2026 11:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A339435C6AA;
+	Sat, 12 Sep 2026 11:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214330; cv=none; b=IQ0AXbLpUppSCKACbRD9hpjHoA7GFDXt3Go3le0byIknqAxSvTb0DeqyXHxQDA4gVL3glS+aqArQW0rdhkSfaTeLO5Wpaa0WXe6u9AuX92IVs2gMTLJ3HSMTafTrnbmyXQGeQUJ6UyfXZMN/DrXczcm7F0YRZVA19CfTjJQnRTU=
+	t=1789214334; cv=none; b=uKq1En5m8tONgTFf/+WrAAhiQ9/6F6o96h5v2wiey3XJhGedahW5fnmrT7liwQ2gDgzXiPGybEUie2DVzQ0pPPLKpGoEk3CLTB7TGRhWXvi2tAlFzI/bi1Jqb1WyzPrC0U6WD6zpWV4TWscdhpkZ8cChcpJBYRdaprUdJ95l6F0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214330; c=relaxed/simple;
-	bh=NRc51Baoo/ukspDI4s3XOcB94xm6mWRmspth6pgVjgE=;
+	s=arc-20240116; t=1789214334; c=relaxed/simple;
+	bh=6iIE9Y1oW8QKG/uEIUg9gTU2U4GiDbRam8gdT5wfUHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kogadu8Zv1hRCY6QAJM415xdjcFl/fAff3m3RtkSGIo6vS3eFornKXHJEfOzMbaFmUlLBkOJe7SBMDdtiRF0Oxgsityfm+afVUtna3cqP0eTuiMn5rBg7xDbdlP53OW1aRrVw0iL+uxp6oQFp1fCaR401cwlamRHnzXSCu5hBQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jYHcGoyr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KGcfEuSYE6aq2KWYfcgTPFpP3eqlC3TzmDCKVmZIscTdGkUl5jMN/XM+EYdrDgDXiakkxKM0FPWm41QP5XWX/ldExHRk/gbkVeU8ZVIt3Yn40sVgT6sLXK5FqxANj2chFQYcGz+Ghd00f64g8GCxJmm5NM5XlI95naz/zV6mt6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7Tnd9RU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jYHcGoyr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF9D1F000FF;
-	Sat, 12 Sep 2026 11:58:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7Tnd9RU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79B21F000FF;
+	Sat, 12 Sep 2026 11:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214328;
-	bh=Ex/t1EkuZPc9ddk0WdHCK6cqLlQdWaN9AD8GgL16PFM=;
+	s=korg; t=1789214333;
+	bh=mUW3ygFuL7ihSQiE/43DmSvts7ZN/4KV+mPTNsgAmjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jYHcGoyrLbtEndg0k4XLBjku9mck02SXY8S7J6XxlVNlYmVGC7rEG7U5KCe6Pr2Ss
-	 Ozx6FeWbuOxZUlVgEq55vcjFxDBYpOzQfZLV5N5oGnf9UHCV4sXQe+55uA9ghRWtro
-	 TEOX1POargJ+aZ0PNdlpgZUmI0oUxEFLeqJAPAZI=
+	b=r7Tnd9RU1n8U9xeJ01fw577H2Ng2idHuQ5ta2PHlJNpVPJ6ZJUdXICkQ4RCLyOi27
+	 J6xLeU6POyQRQ/sQSPs5FRNyeY/pDqRhgmtAtu2JkzgTJtVp8O/c5Dtneb4UUKhtAc
+	 LbyPA3jsaY6faJc1JTVGu4OhxRDdfqpObwfKYHj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0304/1376] clk: meson: align gxbb_32k_clk_sel number of parents with actual count
-Date: Sat, 12 Sep 2026 08:45:30 +0200
-Message-ID: <20260912065614.324936439@linuxfoundation.org>
+Subject: [PATCH 6.12 0305/1376] batman-adv: fix TX priority extraction for BATADV_FORW_MCAST
+Date: Sat, 12 Sep 2026 08:45:31 +0200
+Message-ID: <20260912065614.347483332@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,90 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 628b6fee9fca292f12d07f0f1bcf1edefa949d81 ]
+commit 7aedb59b80993c912ab45ce24386a2775150962b upstream.
 
-The following out-of-bounds read has been observed by Christian on a
-GXBB WeTek Hub:
-==================================================================
-BUG: KASAN: global-out-of-bounds in __clk_register+0x1b70/0x2418
-Read of size 8 at addr ffffd66320cf88e0 by task swapper/0/1
+batadv_mcast_forw_mode_by_count() pushs the skb->data for BATADV_FORW_MCAST
+forwarding via batadv_mcast_forw_mcsend(). But the
+batadv_skb_set_priority() expects the ethernet header directly before
+(skb->data + offset). With the moved skb->data, just some random data would
+be accessed to get the priority data.
 
-CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 7.0.0-rc5 #1 PREEMPT
-Hardware name: WeTek Hub (DT)
-Call trace:
- show_stack+0x14/0x20 (C)
- dump_stack_lvl+0x74/0x94
- print_report+0x164/0x4b0
- kasan_report+0x98/0xd8
- __asan_report_load8_noabort+0x1c/0x24
- __clk_register+0x1b70/0x2418
- devm_clk_hw_register+0x74/0x15c
- meson_clkc_init+0xd4/0x20c
- meson_clkc_syscon_probe+0x5c/0x94
- platform_probe+0xbc/0x17c
- really_probe+0x184/0x844
- __driver_probe_device+0x154/0x35c
- driver_probe_device+0x60/0x188
- __driver_attach+0x168/0x4a0
- bus_for_each_dev+0xec/0x180
- driver_attach+0x38/0x58
- bus_add_driver+0x238/0x4c0
- driver_register+0x150/0x388
- __platform_driver_register+0x54/0x7c
- gxbb_clkc_driver_init+0x18/0x20
- do_one_initcall+0xb8/0x340
- kernel_init_freeable+0x49c/0x52c
- kernel_init+0x24/0x148
- ret_from_fork+0x10/0x20
+Move the batadv_skb_set_priority() before the decision about the handling
+multicast packets and potential header modifications.
 
-The buggy address belongs to the variable:
- gxbb_32k_clk_parents+0x60/0x400
-
-The buggy address belongs to a vmalloc virtual mapping
-The buggy address belongs to the physical page:
-
-Memory state around the buggy address:
- ffffd66320cf8780: 00 00 00 00 f9 f9 f9 f9 00 f9 f9 f9 f9 f9 f9 f9
- ffffd66320cf8800: 00 04 f9 f9 f9 f9 f9 f9 00 04 f9 f9 f9 f9 f9 f9
->ffffd66320cf8880: 00 00 00 00 00 00 00 00 00 00 00 00 f9 f9 f9 f9
-                                                       ^
- ffffd66320cf8900: 00 01 f9 f9 f9 f9 f9 f9 00 06 f9 f9 f9 f9 f9 f9
- ffffd66320cf8980: 00 00 02 f9 f9 f9 f9 f9 00 00 02 f9 f9 f9 f9 f9
-==================================================================
-
-Commit 7915d7d5407c ("clk: amlogic: gxbb: drop non existing 32k clock
-parent") dropped a non-existing clock parent from the gxbb_32k_clk_sel
-mux but didn't adjust the hard-coded num_parents field. Fix the actual
-number of parents of that mux by using ARRAY_SIZE instead (avoiding
-similar problems in future).
-
-Fixes: 7915d7d5407c ("clk: amlogic: gxbb: drop non existing 32k clock parent")
-Reported-by: Christian Hewitt <christianshewitt@gmail.com>
 Cc: stable@vger.kernel.org
-Tested-by: Christian Hewitt <christianshewitt@gmail.com>
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://patch.msgid.link/20260623201956.1324992-1-martin.blumenstingl@googlemail.com
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Fixes: 90039133221e ("batman-adv: mcast: implement multicast packet generation")
+[ Context ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/meson/gxbb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/batman-adv/soft-interface.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/meson/gxbb.c b/drivers/clk/meson/gxbb.c
-index 2bfb0ab9c93cc..39a6a31e796fa 100644
---- a/drivers/clk/meson/gxbb.c
-+++ b/drivers/clk/meson/gxbb.c
-@@ -1305,7 +1305,7 @@ static struct clk_regmap gxbb_32k_clk_sel = {
- 		.name = "32k_clk_sel",
- 		.ops = &clk_regmap_mux_ops,
- 		.parent_data = gxbb_32k_clk_parent_data,
--		.num_parents = 4,
-+		.num_parents = ARRAY_SIZE(gxbb_32k_clk_parent_data),
- 		.flags = CLK_SET_RATE_PARENT,
- 	},
- };
+diff --git a/net/batman-adv/soft-interface.c b/net/batman-adv/soft-interface.c
+index aaebe74c1bc0a..47715a612320a 100644
+--- a/net/batman-adv/soft-interface.c
++++ b/net/batman-adv/soft-interface.c
+@@ -271,6 +271,8 @@ static netdev_tx_t batadv_interface_tx(struct sk_buff *skb,
+ 	if (batadv_compare_eth(ethhdr->h_dest, ectp_addr))
+ 		goto dropped;
+ 
++	batadv_skb_set_priority(skb, 0);
++
+ 	gw_mode = atomic_read(&bat_priv->gw.mode);
+ 	if (is_multicast_ether_addr(ethhdr->h_dest)) {
+ 		/* if gw mode is off, broadcast every packet */
+@@ -304,6 +306,9 @@ static netdev_tx_t batadv_interface_tx(struct sk_buff *skb,
+ 
+ send:
+ 		if (do_bcast && !is_broadcast_ether_addr(ethhdr->h_dest)) {
++			/* WARNING batadv_mcast_forw_mode might add more headers
++			 * in front of the skb. and might even reallocate the skb
++			 */
+ 			forw_mode = batadv_mcast_forw_mode(bat_priv, skb, vid,
+ 							   &mcast_is_routable);
+ 			switch (forw_mode) {
+@@ -321,8 +326,6 @@ static netdev_tx_t batadv_interface_tx(struct sk_buff *skb,
+ 		}
+ 	}
+ 
+-	batadv_skb_set_priority(skb, 0);
+-
+ 	/* ethernet packet should be broadcasted */
+ 	if (do_bcast) {
+ 		primary_if = batadv_primary_if_get_selected(bat_priv);
 -- 
 2.53.0
 
