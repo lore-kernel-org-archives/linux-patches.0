@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5803F2E7622;
-	Sat, 12 Sep 2026 14:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69499305680;
+	Sat, 12 Sep 2026 14:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224499; cv=none; b=KGMFStTxJ40gmHnv8WawOEbahlB8IUaOYGkMoBTEJ7xa8QNh1c18JwgnGs3v9SKQ+fYYRtllFtpQsEVkfnKzR1f26hx7fSEagjWUo4UHyetrkBCLPnd2uzcRqgeBomwups91bRKdV50m2cTprdjVr7FNn4JiBY6KWIAxqn9LTIw=
+	t=1789224504; cv=none; b=St8CLsGzfdwhLz5hdDzls1YSsOJtFpZ/D/gKTju6qKxjCKkIKyzvh9eYWU+5vPzevDAONncXe0r7bKq9QaXvCBKh3NC0rB0fZ0Ftwda+5bHjZ7TRQMj2J6Mwha2Y+TP3NRjgnwJgK/rP91yR7fKQuVM9YVsWeBAtd0fK62D6azI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224499; c=relaxed/simple;
-	bh=V5ltBBerVq4JUxjRcu4JkfzGmYbJRInur5Fo0Mpk6tw=;
+	s=arc-20240116; t=1789224504; c=relaxed/simple;
+	bh=DoBU6SY8axtOJVbMiTJsHPD92bBiJZmlzLC/xnk8Jfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gApttqR0aSVIw18BSv1yiR2egV0+g4aKw9RacFQRdggrX2WdtCLHj6+67UM4zqbeFGxJVTHi+yzlKXaHMrKtbpHcG9O4bo28l7+BKHZ2Ex6vhA/gvBR3cAav2Y5w1pALPP9jsirb9eGyFUmJq2caw4CrCsO6DUyszwKcIxhCQwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s84p1g2p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CylH2Q2rE7TjB7sgrz+/30qRZwydztn+pp+6XQY296WANUiljNp98bKHMvpFI31mj324vqao43uThC8GImOXQKmDVuicSF4aeUOqKlEZuZtFtJwfrq3bh2yePrgwpcGWhzBdVYGs6y827WP/uOXD0hTElm9uMtxqz98J7DAIr6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vmam1GqX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s84p1g2p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B7A1F000FF;
-	Sat, 12 Sep 2026 14:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vmam1GqX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14F61F000FF;
+	Sat, 12 Sep 2026 14:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224498;
-	bh=n/j/tfGTYuNeTRvA02Kf5L1CJQ/6ZnlG57FMduV5Hsg=;
+	s=korg; t=1789224503;
+	bh=Je+5yFeApft7jH1r/j3S17pkXqF89D5CTHEAKra8Ygc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s84p1g2pjTt98/Lg49YqmpybFOuO5SP72geXPuXm043jdoMgWYI/CXjGC6Ke/Hmq/
-	 pjwJahXPwJoy1pOAMyRrWF2K9GFfL95o97A1Kd1x3PLeIJ1217Kq9K2NzbNavFv/E4
-	 0Ls3kIVvvG8fc41WNS1fMNYG8JjTCR1F/VbBhiRM=
+	b=Vmam1GqXFi7SxQ6HwsdvkGLo373dNqCqoAMhDRgvvhQovOm2CxWpa3WFuP7Pg0DuP
+	 gpHST2n6ziADG6smESx5F+rO57rVp1+NBl+J/aANfCocgF5Fu3DykWkn1GYeCnbIn8
+	 sSNgcuxGxqUNHWjGfB1Ccje7I0HZ7U8LaLcZJDdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0998/1424] wifi: mt76: mt7915: release hif2 reference on probe IRQ failure
-Date: Sat, 12 Sep 2026 08:57:10 +0200
-Message-ID: <20260912065629.665905253@linuxfoundation.org>
+Subject: [PATCH 6.6 1007/1424] wifi: mac80211: skip unused probe response countdown offsets
+Date: Sat, 12 Sep 2026 08:57:19 +0200
+Message-ID: <20260912065629.863150087@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,51 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 8370aebd26a9dfa2e0de665e3ab504c0e97ee730 ]
+[ Upstream commit fd2bf5e718108c00732eb07fd94a5d8830f62a9f ]
 
-The hif2 reference obtained by mt7915_pci_init_hif2() is only released on
-error paths that key off dev->hif2, which is not assigned until after the
-IRQ setup. If pci_alloc_irq_vectors() or the primary devm_request_irq()
-fails, the reference leaks. Drop it explicitly on those paths via
-mt7915_put_hif2().
+mac80211 copies cfg80211's variable-length countdown offset list into a
+zero-initialized fixed-size array, leaving unused entries at zero. The
+beacon branch already skips those zero entries, but the AP probe-response
+branch writes through them unconditionally.
 
-Fixes: f68d67623dec ("mt76: mt7915: add Wireless Ethernet Dispatch support")
-Link: https://patch.msgid.link/20260727150434.1778520-4-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+When a probe-response template has no countdown offset, the write through
+an unused zero entry overwrites resp->data[0], corrupting the first byte of
+the template. cfg80211 already bounds explicitly supplied non-zero offsets
+in nl80211_parse_counter_offsets(), so this is a zero-sentinel bug, not an
+out-of-bounds write.
+
+Skip zero probe-response offsets, matching the beacon path.
+
+Fixes: af296bdb8da4 ("mac80211: move csa counters from sdata to beacon/presp")
+Link: https://lore.kernel.org/all/20260708195911.84365-6-enderaoelyther@gmail.com/
+Assisted-by: Codex:gpt-5
+Assisted-by: Claude:opus-4.8
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260723011001.76851-1-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/pci.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/mac80211/tx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
-index 5a0c9eeb2c4e2..c24f1b12f064f 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
-@@ -144,16 +144,20 @@ static int mt7915_pci_probe(struct pci_dev *pdev,
- 		hif2 = mt7915_pci_init_hif2(pdev);
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index e3841099bbdaa..5ea7572aae3df 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -5035,7 +5035,8 @@ static void ieee80211_set_beacon_cntdwn(struct ieee80211_sub_if_data *sdata,
+ 		if (sdata->vif.type == NL80211_IFTYPE_AP && resp) {
+ 			u16 *resp_offsets = resp->cntdwn_counter_offsets;
  
- 		ret = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES);
--		if (ret < 0)
-+		if (ret < 0) {
-+			mt7915_put_hif2(hif2);
- 			goto free_device;
-+		}
- 
- 		irq = pdev->irq;
+-			resp->data[resp_offsets[i]] = count;
++			if (resp_offsets[i])
++				resp->data[resp_offsets[i]] = count;
+ 		}
  	}
- 
- 	ret = devm_request_irq(mdev->dev, irq, mt7915_irq_handler,
- 			       IRQF_SHARED, KBUILD_MODNAME, dev);
--	if (ret)
-+	if (ret) {
-+		mt7915_put_hif2(hif2);
- 		goto free_wed_or_irq_vector;
-+	}
- 
- 	/* master switch of PCIe tnterrupt enable */
- 	mt76_wr(dev, MT_PCIE_MAC_INT_ENABLE, 0xff);
+ }
 -- 
 2.53.0
 
