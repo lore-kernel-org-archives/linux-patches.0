@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1DC7403B1E;
-	Sat, 12 Sep 2026 11:46:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3BA3E2ADB;
+	Sat, 12 Sep 2026 11:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213566; cv=none; b=BHQSRp0OiVk27QVxtHMcvKQzy/7o8Y8nOnIRZhA158IlROsqJ/8qE7/Q852Qv6RvaogOxBmUrHZOr3VW7Z+OXNd5a0WwTQ55Q/hRnMaDu6w1apJNtJRmjMaQTonStQc366Kgpye8111FV4Gr19Ac85fbJZiSrB/IegYC1J4bm8A=
+	t=1789213571; cv=none; b=WrNIqeOh/jIW+eHcM1tDrM1yiVnk3noScC4YjNqX3rldAxt/lNGFrklWxALoobyP5YdGNuvPgueApuFIrsggLLEru20I7SYScZNHv96ckpYd6pmMmRKVqhcKdVYVcXuKC1AihJnCIiZtOT5WBdIn2eAQMv4nq5Uu4WCiFACi+sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213566; c=relaxed/simple;
-	bh=VzIvXkRsOXzHes3kC5ct5aJA9R6XRlIkZmuteZccCS0=;
+	s=arc-20240116; t=1789213571; c=relaxed/simple;
+	bh=0z10gy4LrBAiRv90ZEDM2YKod1g8Btdp4XZmOXUsn8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eRJ9mBBv1/5R1A53T2JgofUTU0wZYwVN1vz1eWijWs0/WhYXelfraaxwTA3yrpDP3WLWTj5a1veBhV8ul6ZtbB5AcUY6A6j3OSnafaUi1YoSWkkMjBUjqL6DTSGCZ8JnzELaSMganALO+uy/MYKRASjf+oVJeMneuboWw7CCDXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhG9EJJY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WbJhm9icZQ/7gUtIARabk+UbRZpbAM5hLlO5UV44Q213GNHAvO5niR7ogxreEm2jHN238eR91QGaUoCzO4HoHcT/ruzb3WcXO2PVly3GQoSieoYJxJ+3n/XXEFbteTxd86jbyJLOUb2waucgL1r/HXHFAtui7eKoHrDFNPt+8bM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ugy1+mTS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhG9EJJY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3691F000FF;
-	Sat, 12 Sep 2026 11:46:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ugy1+mTS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B511F000FF;
+	Sat, 12 Sep 2026 11:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213565;
-	bh=JyKDDq7oNc0Qkj0gx1c8SOYEwkOZwsDEng7uA1P9HuM=;
+	s=korg; t=1789213570;
+	bh=lEOg1VIuO/WlCJ0Xb2zlxhBAy+GRKJTE6nOwoADZhVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fhG9EJJYjoIAu+DF8FxRSFDMAiUJsU0ty+NrugzW1+5Wkp8AM9c6355g6BMMa/bhJ
-	 3E16YiD0TlUMXxNTssoy5/HeQAND/JW64pkPYefQvyxDGLBfnsgV2vkj/8FDiGOcQ4
-	 LTXDCNQnqmEs5j2GBpY8rKiNhgMz/5fHdb8fIgYM=
+	b=Ugy1+mTSZufe7mwqfD9joZkpBs7L7wvfD5ZSjlKXiw9GNfOmNiLd6DT4tVal5/XuL
+	 mPSgwvnh2qR9MY054ulaxMfbadGjdFpQSMvGgh2RRlqnGcj3qcvLcX60xm7Ta/pfIA
+	 nyQEuFGovX+WJKhWLH1Q1MpGNjX0rBtVVIuXQImw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
+	Maxwell Doose <m32285159@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Sanjay Chitroda <sanjayembeddedse@gmail.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 0149/1376] iio: srf04: fix pm_runtime handling on probe error path
-Date: Sat, 12 Sep 2026 08:42:55 +0200
-Message-ID: <20260912065610.873141976@linuxfoundation.org>
+Subject: [PATCH 6.12 0150/1376] iio: temperature: hid-sensor-temperature: switch to non-devm iio_device_register()
+Date: Sat, 12 Sep 2026 08:42:56 +0200
+Message-ID: <20260912065610.894339494@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,40 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Sanjay Chitroda <sanjayembeddedse@gmail.com>
 
-commit a40b2e7a17f26e38ab054363c9c7cde149588357 upstream.
+commit 967d066f5334740f656577bc51c381a1bb707b61 upstream.
 
-When pm_runtime_set_active() fails during probe, the driver logs the
-error and unregisters the IIO device, but then falls through and still
-calls pm_runtime_enable() before returning the error.
+Avoid using devm_iio_device_register(), as this driver requires explicit
+error handling and teardown ordering.
 
-Since probe returns an error, srf04_remove() is never called, so
-runtime PM is left enabled without a matching pm_runtime_disable().
-This leaks the enable and triggers an "Unbalanced pm_runtime_enable!"
-warning on a subsequent bind of the device.
+With devm_iio_device_register(), IIO device remains registered until the
+devres cleanup phase. However, driver's remove() callback removes the
+sensor hub callback and trigger support. This can create a race window
+where IIO device is still visible and read_raw() requests are issued.
+These requests might call sensor_hub_input_attr_get_raw_value(), which
+waits up to 5 seconds for a response from the sensor hub callback that
+has already been removed.
 
-Return the error right after unregistering the IIO device so that
-runtime PM is not enabled on the failure path.
+Add an explicit iio_device_unregister() call in the teardown path to
+ensure deterministic cleanup, so that userspace can no longer access the
+device once backend resources begin to be dismantled.
 
-Fixes: 2251157b335b ("iio: srf04: add power management feature")
+Fixes: 59d0f2da3569 ("iio: hid: Add temperature sensor support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Reviewed-by: Maxwell Doose <m32285159@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Sanjay Chitroda <sanjayembeddedse@gmail.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/proximity/srf04.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/temperature/hid-sensor-temperature.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/proximity/srf04.c
-+++ b/drivers/iio/proximity/srf04.c
-@@ -335,6 +335,7 @@ static int srf04_probe(struct platform_d
- 		if (ret) {
- 			dev_err(data->dev, "pm_runtime_set_active: %d\n", ret);
- 			iio_device_unregister(indio_dev);
-+			return ret;
- 		}
+--- a/drivers/iio/temperature/hid-sensor-temperature.c
++++ b/drivers/iio/temperature/hid-sensor-temperature.c
+@@ -243,7 +243,7 @@ static int hid_temperature_probe(struct
+ 	if (ret)
+ 		goto error_remove_trigger;
  
- 		pm_runtime_enable(data->dev);
+-	ret = devm_iio_device_register(indio_dev->dev.parent, indio_dev);
++	ret = iio_device_register(indio_dev);
+ 	if (ret)
+ 		goto error_remove_callback;
+ 
+@@ -263,6 +263,7 @@ static void hid_temperature_remove(struc
+ 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
+ 	struct temperature_state *temp_st = iio_priv(indio_dev);
+ 
++	iio_device_unregister(indio_dev);
+ 	sensor_hub_remove_callback(hsdev, HID_USAGE_SENSOR_TEMPERATURE);
+ 	hid_sensor_remove_trigger(indio_dev, &temp_st->common_attributes);
+ }
 
 
