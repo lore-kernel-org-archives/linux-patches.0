@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B4D242D65;
-	Sat, 12 Sep 2026 11:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F76242D65;
+	Sat, 12 Sep 2026 11:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212338; cv=none; b=CUGggIL3Ss8cCXjF4ppgs5gjxL551OdktJZ/nSYKjkvBY9m4OZqp1tPDKUfTlam0FncnBx6v9WPKeZA6r/Ctp4dumt2aicCiK1dPa3LOCJpA5kMxbqftCKG375vDhXnxrmWvLVrxdhOExQ8SSK/bDkCA2d7RlbCPF0q4E5+BC+8=
+	t=1789212343; cv=none; b=XqDiLupP58rPWB4XGbTbE3e1GJ7kI6O7uc4z31x8NLKTI3hX97/g4q3fWO9944AwtgpYEtcJrRgcnhlKna2bTHRBHQGFSGJtOlTX8TWluwlO+aYP8C1rhDJU5TEa5/wtHm0ZZMa+3zP5Vy2p8ZadG4/XRyv0lkaR/kTNMbd1FRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212338; c=relaxed/simple;
-	bh=QMyHu7qbtqu0cygAnUIaP31bl5FRrpwf9MAT1IHPCSA=;
+	s=arc-20240116; t=1789212343; c=relaxed/simple;
+	bh=nq8QxZvrMbm7dhYNc4DL9QmE/WTehNbZGxi3fjz6+oQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rJiJ18STCO+Z2m/FiuzxtMoL9JhWJj8oZO2K4CPn8zlht6Dn5+3EMphtzSGVnkhYfO5bdxWunAGKXlyPeR/DZXq8rC+OCBp4hQbwOkanc3/dBnsyR1g1ugGp7LwjUc2OODg/1EEnd6ssDozKfuj7rl3dTcHoHWsZuFhMMVqklP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIaaLKLz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K0JDl5Cge1gUaY8J2pq9Ca4u8zwYe9+FbGtn5oITIEAC4vjKhmeV9dsJhKXPtxYPgHSFsCpn63rgIHM6EakJP19ZWCegR5C4daHet0CyDAy+ZQDQQMB/P6iIa8E8JPuY70n6ukPO2CS1Wsp+lHj0eia4qeIefOlwAgpZeRy8wto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOiOueT+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIaaLKLz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2701F000FF;
-	Sat, 12 Sep 2026 11:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOiOueT+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1FB31F000FF;
+	Sat, 12 Sep 2026 11:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212337;
-	bh=3pRxrYb/ljRFoMA2t1OWDLVaklktb+QZ2Ar4ERbC4Bs=;
+	s=korg; t=1789212341;
+	bh=xHs9b4UKt9ejY74KupHD9zdYAnpm39Ve0JNIRFHU0qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZIaaLKLzPqaG1ir8KVbKdNkZTij1c1fch5paFfc5EZ7MkfwjyVCwUsEAQObMkPVde
-	 GEBrs2Z0rg0hnxzuDUfNFBy26dvaGTorpqXKkXV446KRC2Oj2ZEfYMCvT7yAHp8BrQ
-	 6s8R81wOd7Bgc+mBIcc5Qql0QVnv8c1L+6MXwtW8=
+	b=kOiOueT+1M2fEW1S2gNpkODULOwMyD55MKWE/AHqY3qOA5NfVc9q0Tn1Iv9hE9bQI
+	 e9Ns4VMWSKXmcT6LRMkcoZalGxH2H3JT0CMMPSmaqWTLO+v7JU3zXx/8uYlrW27pNl
+	 FzmsLGUmRd/pRSN1J32ZvKLdZKllERiXltsQGVJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1d56f14f95c0480cfdc9@syzkaller.appspotmail.com,
+	Willem de Bruijn <willemb@google.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1415/1518] net/sched: act_skbmod: fix length calculations and avoid invalid header warnings
-Date: Sat, 12 Sep 2026 08:59:44 +0200
-Message-ID: <20260912065655.559720226@linuxfoundation.org>
+Subject: [PATCH 6.18 1380/1518] net_sched: sch_fq: fix pacing delay underflow with pacing offload
+Date: Sat, 12 Sep 2026 08:59:09 +0200
+Message-ID: <20260912065654.761783436@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,80 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 81d0d1e64f30d9989c829c0953cd6e6c68d9c5fb ]
+[ Upstream commit 137b8ae233cabe7fc77cce86f5ba33bf1b369e26 ]
 
-syzbot reported a warning in skb_network_header_len() triggered
-by tcf_skbmod_act():
+When pacing offload is enabled (q->offload_horizon > 0),
+FQ can dequeue packets early (now < f->time_next_packet).
 
-  !skb_transport_header_was_set(skb)
-  WARNING: CPU: 0 PID: 14949 at include/linux/skbuff.h:3243 skb_network_header_len include/linux/skbuff.h:3243 [inline]
-  WARNING: CPU: 0 PID: 14949 at net/sched/act_skbmod.c:55 tcf_skbmod_act+0xfe8/0x1810 net/sched/act_skbmod.c:55
+In this case, the drift calculation (now - f->time_next_packet)
+underflows to a large unsigned value.
 
-There are a few issues in tcf_skbmod_act():
+min(len/2, now - f->time_next_packet) then evaluates to len/2,
+incorrectly halving the pacing delay for the next packet.
 
-1. Calling skb_network_header_len() assumes skb->transport_header is set,
-   which is not guaranteed when tcf_skbmod_act() runs at TC ingress.
-2. Unconditionally calling skb_mac_header_len() at the beginning of
-   tcf_skbmod_act() triggers a warning on L3 devices (e.g. TUN) where the
-   MAC header is unset, evaluating to an underflowed garbage length.
-3. On TC ingress, skb->data points to the network header. Adding the MAC
-   header length to the IP header length causes skb_ensure_writable() to
-   request more bytes than the actual IP packet length, dropping valid
-   short packets (e.g. 28-byte UDP/IPv4 packets).
+Fix this by only applying drift compensation if now > f->time_next_packet.
 
-Fix these by:
-- Using skb_network_offset(skb) + sizeof(struct iphdr/ipv6hdr) for
-  SKBMOD_F_ECN so that the required length is correctly calculated on
-  both ingress (offset == 0) and egress (offset == mac_len).
-- Setting max_edit_len to ETH_HLEN for Ethernet header modifications
-  after validating ARPHRD_ETHER.
+This bug was triggered when flow_max_rate was set on the qdisc
+or for non EDT packets (packets with a zero skb->tstamp).
 
-Fixes: 56af5e749f20 ("net/sched: act_skbmod: Add SKBMOD_F_ECN option support")
-Reported-by: syzbot+1d56f14f95c0480cfdc9@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a8b39c0.dbb3a75c.13dd47.0051.GAE@google.com/T/#u
+Fixes: f26080d47007 ("net_sched: sch_fq: add the ability to offload pacing")
+Reported-by: Willem de Bruijn <willemb@google.com>
+Closes: https://lore.kernel.org/netdev/CANn89iK6O7ujR9zCJzd04MNLQoDi3mA+HWsR-hgQWYzLS3gZfw@mail.gmail.com/
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260823182241.1958695-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260820120706.1995449-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_skbmod.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/sched/sch_fq.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/act_skbmod.c b/net/sched/act_skbmod.c
-index a9e0c1326e2ab..caa3cdfd2d3dd 100644
---- a/net/sched/act_skbmod.c
-+++ b/net/sched/act_skbmod.c
-@@ -38,7 +38,6 @@ TC_INDIRECT_SCOPE int tcf_skbmod_act(struct sk_buff *skb,
- 	if (unlikely(p->action == TC_ACT_SHOT))
- 		goto drop;
- 
--	max_edit_len = skb_mac_header_len(skb);
- 	flags = p->flags;
- 
- 	/* tcf_skbmod_init() guarantees "flags" to be one of the following:
-@@ -51,14 +50,19 @@ TC_INDIRECT_SCOPE int tcf_skbmod_act(struct sk_buff *skb,
- 	if (flags == SKBMOD_F_ECN) {
- 		switch (skb_protocol(skb, true)) {
- 		case cpu_to_be16(ETH_P_IP):
-+			max_edit_len = sizeof(struct iphdr);
-+			break;
- 		case cpu_to_be16(ETH_P_IPV6):
--			max_edit_len += skb_network_header_len(skb);
-+			max_edit_len = sizeof(struct ipv6hdr);
- 			break;
- 		default:
- 			goto out;
- 		}
--	} else if (!skb->dev || skb->dev->type != ARPHRD_ETHER) {
--		goto out;
-+		max_edit_len += skb_network_offset(skb);
-+	} else {
-+		if (!skb->dev || skb->dev->type != ARPHRD_ETHER)
-+			goto out;
-+		max_edit_len = ETH_HLEN;
+diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
+index 5e41930079948..2736d98b978dd 100644
+--- a/net/sched/sch_fq.c
++++ b/net/sched/sch_fq.c
+@@ -771,8 +771,12 @@ static struct sk_buff *fq_dequeue(struct Qdisc *sch)
+ 		 * f->time_next_packet was set when prior packet was sent,
+ 		 * and current time (@now) can be too late by tens of us.
+ 		 */
+-		if (f->time_next_packet)
+-			len -= min(len/2, now - f->time_next_packet);
++		if (f->time_next_packet) {
++			s64 drift = now - f->time_next_packet;
++
++			if (drift > 0)
++				len -= min_t(u64, len / 2, drift);
++		}
+ 		f->time_next_packet = now + len;
  	}
- 
- 	err = skb_ensure_writable(skb, max_edit_len);
+ out:
 -- 
 2.53.0
 
