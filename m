@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D8037C118;
-	Sat, 12 Sep 2026 09:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9EF93F929C;
+	Sat, 12 Sep 2026 09:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205380; cv=none; b=MKSttpv9+2noTkMYFixqYfIjRWecI4ucgsPPFy910tZT35xEtjZlIfrlsePfxqVq/6PZL6pS7XcGAd4PrnSbzPwmhkS17QYdPQEI4SSwUDx+h8ec5fSgmnCgiP2bkj8vtCl8oMXRoGeTMek78W6Ehxr46x8LOb1Wzv6bS5UDRFA=
+	t=1789205385; cv=none; b=f4Yo0/B5WPsgRx7bZpygGbEx1VaaN/Mx/z8wd0/zGguK9DH7BxlQXxzRmHus8n/HOHTD+/yxkHtBUoDXch5Jo7QM+V4vMiNtqgc2nrKQ5oHZmoEzp0YzM2Gw0ffmyvF5LiMrceLnr6qJwTtDvp9pJAYpE5BQYnI4gdXnf6PZks0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205380; c=relaxed/simple;
-	bh=mrfI7UStcx1obEd9GevDuuHWV5opiQmTzz5PZVU655M=;
+	s=arc-20240116; t=1789205385; c=relaxed/simple;
+	bh=/53mTNX/BFGaWf+GDH6OjZ72bLdYJvsKlagK7RU6t0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PHTAw5oiFkUCG95rS4MperpEbieOUVAqHjTicuuEEGJ3Aed+GRu+x2sewGp54XqzxONSVXwf7SUF0icfm/wRHb+c9I/qV58gy35pcRTcOPp8TY8Rzub0xga6QQCNZCX7rDdaxigjLRnTCL8FpqILmidCDwppIx25fTNXAOkdw3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVqbhvDJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=esBLcGbsiLsrCDWLnbpJjCg+PhJTtRB/2SigA3qoVZGqvhsLqVmnuwu9zI9xCNbRdDIyeflqs52Ue+SiTkSJa/jzr3NOxj4ksmH3RMDdAob74Csz3VQ6tTcWHC2DPGIE5YvAuMllxrgH+QI9ipSzbEtDOf/8V+n0mLsll/Ji+LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbsU+ERE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVqbhvDJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34FAE1F000FF;
-	Sat, 12 Sep 2026 09:29:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbsU+ERE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B4D1F000FF;
+	Sat, 12 Sep 2026 09:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205377;
-	bh=r6f2eRw/KVAjRDMzLRzQ/LBDHDssPPK8RbdbtLBidWk=;
+	s=korg; t=1789205382;
+	bh=bqJ5zex5B2MK99LMwUOaEm9yynUvELra1eAPV8a/gr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iVqbhvDJiQp22JjVd1xAT2DUPeQXSCdFIifsfjMNSZ+Ch2YF8egk9drxsdUTQYT7S
-	 gf3ASldozf5R32GireEuoUtJZA69xQre5Oq4eUa9YOiSOjOrvsBIL7L9rWvavyqeqD
-	 QMjKzKEo6vawdNHZ2jVFTVMJmqdQ8akpi4k75mvY=
+	b=HbsU+EREJ5Kl6DXoamDHmmqiRV7BLoXWUOJm/OYrZI3ZitxhQbmK1/OBbEJAgQ8Gk
+	 VDyDmRTOXMAxXcIiztn2RJTyh0/2JZoJuVny3B23Az0QEVUrbY92JBMaaaQFs4DXpg
+	 k9t+yVQa6+a3cFQojxj6Z0gb28/2BXrFtJHML6ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edoardo Pinci <epinci@outlook.com>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1805/1815] net: dsa: mxl862xx: enable assisted learning on CPU port
-Date: Sat, 12 Sep 2026 08:59:15 +0200
-Message-ID: <20260912065731.410634786@linuxfoundation.org>
+Subject: [PATCH 7.2 1806/1815] net/sched: bound qdisc_pkt_len to prevent qdisc soft lockup
+Date: Sat, 12 Sep 2026 08:59:16 +0200
+Message-ID: <20260912065731.434610232@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,55 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edoardo Pinci <epinci@outlook.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 88c71cc0ad9800d8814bd3627b21a0da9028e057 ]
+[ Upstream commit 8f735d64382dcf162f4276d6699d03ad2f859c0b ]
 
-The MxL862xx driver enables FDB isolation but does not enable assisted
-learning on the CPU port. Consequently, MAC addresses learned through a
-physical switch port are not updated in hardware when the corresponding
-station moves to a foreign bridge port, such as a Wi-Fi interface.
+qdisc_get_stab() accepts a user-supplied size table, and
+__qdisc_calculate_pkt_len() amplifies qdisc_pkt_len() through the
+overhead, the size-table data (u16), and size_log (up to
+STAB_SIZE_LOG_MAX). A crafted stab can therefore set qdisc_pkt_len()
+to ~1 GiB for an ordinary skb. Per-flow deficit schedulers such as
+DRR and ETS replenish one quantum per loop iteration; with a tiny
+quantum (1) they spin billions of times under the qdisc lock,
+producing a soft lockup / RCU stall as illustrated by vega@nebusec.ai.
 
-The stale hardware FDB entry continues directing return traffic toward
-the original physical port. Traffic entering that same port is then
-filtered instead of being forwarded to the CPU and software bridge. This
-causes downstream unicast traffic, including DHCP OFFER and ACK packets,
-to disappear after a client roams to a local wireless interface. The
-client eventually considers the connection unusable and disconnects.
+Cap the final qdisc_pkt_len() to QDISC_PKT_LEN_MAX so the size-table
+amplification cannot drive deficit schedulers into an unbounded loop.
+A legitimate size table (e.g. qfq's overhead 999999999, which is
+handled by dropping) is still accepted.
 
-Enable assisted CPU-port learning so DSA installs foreign bridge FDB
-entries on the CPU port. This keeps the hardware FDB synchronized with
-the software bridge and allows return traffic to reach locally attached
-Wi-Fi clients after roaming.
+Introduce cap QDISC_PKT_LEN_MAX (1 << 20) = 1 MiB which is well above
+any legitimate single-skb wire length: the largest current skb->len
+is GSO_MAX_SIZE (524280), and an ATM-style size table (53/48 cell tax)
+amplifies that to ~578 KB, both comfortably below 1 MiB. At the same
+time, 1 MiB bounds the deficit refill loop to ~1M iterations per
+packet with quantum=1, which completes in a few milliseconds well
+under the demonstrated softlockup threshold (~10^9 iterations).
 
-Tested on a BPI R4 PRO with a MxL862xx switch and a BE14000 WiFi interface.
-- Without patch, wired uplink on lan6 port (mxl path)
-  Wifi clients connect but roam away not getting DHCP offers
-- Without patch, wired uplink on wan port (no mxl path)
-  Wifi clients connect and roam successfully
-- With this patch, uplink on lan6 (mxl path)
-  Wifi clients connect and roam successfully
+Conditions to recreate the bug:
+- CONFIG_NET_SCHED=y, CONFIG_NET_SCH_DRR=y (or CONFIG_NET_SCH_ETS=y).
+- Attach a DRR (or ETS) root qdisc with a crafted TCA_STAB that
+  amplifies qdisc_pkt_len to ~1 GiB (e.g. size_log=15, data=[32768]).
+- Add a class with a tiny quantum of 1 and send one small packet; the
+  deficit loop spins billions of times under the qdisc lock and trips
+  the softlockup detector (panic with kernel.softlockup_panic=1).
+- Reachable as root or from an unprivileged user in a fresh user+net
+  namespace (unshare -Urn) with namespace-local CAP_NET_ADMIN.
 
-Fixes: 340bdf984613 ("net: dsa: mxl862xx: implement bridge offloading")
-Signed-off-by: Edoardo Pinci <epinci@outlook.com>
-Link: https://patch.msgid.link/DU0P251MB069949C6DEB4D1D51F31FE87C4A02@DU0P251MB0699.EURP251.PROD.OUTLOOK.COM
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260825081403.133992-1-jhs@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mxl862xx/mxl862xx.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/pkt_sched.h | 1 +
+ net/sched/sch_api.c     | 7 +++++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/mxl862xx/mxl862xx.c b/drivers/net/dsa/mxl862xx/mxl862xx.c
-index 45d237b3a40f1..cfa7e3e269a28 100644
---- a/drivers/net/dsa/mxl862xx/mxl862xx.c
-+++ b/drivers/net/dsa/mxl862xx/mxl862xx.c
-@@ -2111,6 +2111,7 @@ static int mxl862xx_probe(struct mdio_device *mdiodev)
- 	ds->ops = &mxl862xx_switch_ops;
- 	ds->phylink_mac_ops = &mxl862xx_phylink_mac_ops;
- 	ds->num_ports = MXL862XX_MAX_PORTS;
-+	ds->assisted_learning_on_cpu_port = true;
- 	ds->fdb_isolation = true;
- 	ds->max_num_bridges = MXL862XX_MAX_BRIDGES;
+diff --git a/include/net/pkt_sched.h b/include/net/pkt_sched.h
+index 18a419cd9d949..90d3e7943b19a 100644
+--- a/include/net/pkt_sched.h
++++ b/include/net/pkt_sched.h
+@@ -12,6 +12,7 @@
+ 
+ #define DEFAULT_TX_QUEUE_LEN	1000
+ #define STAB_SIZE_LOG_MAX	30
++#define QDISC_PKT_LEN_MAX	(1 << 20)	/* 1 MiB */
+ 
+ struct qdisc_walker {
+ 	int	stop;
+diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
+index 65b35528d125f..90503e59e6e3b 100644
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -610,8 +610,11 @@ void __qdisc_calculate_pkt_len(struct sk_buff *skb,
+ 
+ 	pkt_len <<= stab->szopts.size_log;
+ out:
+-	if (unlikely(pkt_len < 1))
+-		pkt_len = 1;
++	/* A size table can inflate qdisc_pkt_len() beyond any real packet
++	 * (via overhead, the data table, or size_log); cap it so deficit
++	 * schedulers such as DRR/ETS terminate their refill loops.
++	 */
++	pkt_len = clamp_t(int, pkt_len, 1, QDISC_PKT_LEN_MAX);
+ 	qdisc_skb_cb(skb)->pkt_len = pkt_len;
+ }
  
 -- 
 2.53.0
