@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AC835C6B2;
-	Sat, 12 Sep 2026 09:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6990038DC59;
+	Sat, 12 Sep 2026 09:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204540; cv=none; b=jqHW26mFO62id8eCrbmpPPmVf1xsXRnRvto90Y1eC96InWI/g3g0NMOMs41TPshmyPzwnyBRLAzbdMDJ3qso1d+Oox0D95ITLCtCBR5Nys8j4HIEGyA5y/6iiatti2GSGhVDJnGWp5E3w0V36CpgMrS+JQmK9hcUqU+JFA87MC8=
+	t=1789204542; cv=none; b=rKCPvpYIWYmLidN2uV0SEbmNyGvLOaytjykWXWxOZUvJb/iLdmLn0jYBueEk+gLSA7uCorjVweXsFqdZhoaikZIyHTACGsgF0stt5Bgpx0sqKzcN9AtCWMta1DJKyJpKR7p82yZgB0IO92oFyIi2MqU993kjZK7m/HQh0VRhUSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204540; c=relaxed/simple;
-	bh=/zcNrkRcd1G6pZkEyr5uHFcuuBC4IQ+UKXmfS+yG2JY=;
+	s=arc-20240116; t=1789204542; c=relaxed/simple;
+	bh=4SAuDoyb7sITTjyo92wg2UwE/HRlKVvMoEOzmz5RY8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xd4p009gZpbivmsku1j38QSrgSN9i1HmUKP6hg7ckGajV60aNhHIwtNBBZ2BFYhRINtBZrziLTdIaCIrXhC9g71erxoyfHkAThpSAavQQmc9QURcSM1AdP5ls6uOIIUr0OE0imvVWA9lzlzOeg/FNhGBfoIQEDLlzMhbyENs2V8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYTTVBKt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dkhem1VwDICzx1DDuo4lYQX04zsqpYByQnx0AAoYLrza9dwSfgelUJZDM6Mb6DkGOlp9MmIL6kM9Z+VIy3yurdF8SW8u9xY93oT4pNjXDum6qCU6E3GJmT5rt0FqlqXZd9rqs1kaPTq5DPML28tWVQke2i8eJUd0fMKcyoBWU5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wlHV3HYD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYTTVBKt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0488A1F00893;
-	Sat, 12 Sep 2026 09:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wlHV3HYD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60CAD1F00898;
+	Sat, 12 Sep 2026 09:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204536;
-	bh=exiQGV6i9NymqXb3Q7n7b6XrYe0e3Z3gdslktDcelbg=;
+	s=korg; t=1789204540;
+	bh=O+M3hht+ta3+MPY+QIL9NJC2ham3gB4DvmZwqmZowMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lYTTVBKtc0q7xh5xvyZfTqUZIIYDHE7VDChowcZx4P3s4I1JFVbm0O51fkK1TYJu+
-	 Sq9pz9mrSfKIxap3UGXboqB7sUQyX4LyGWbC+Qqg+ELYku24J89zHzyLng563r9Bmd
-	 mPCGFHmTO5pjHkRvtF16H7R76nImi/URaHkJ53aM=
+	b=wlHV3HYDthBOcmTVzjMF4LbPQ7tiw770+55ZYmfk86miqpLU0jSou1V28UckpLWfc
+	 sQfJvHCahl7ANreBdBp9BfJj8ZCQSyK6SGT9IAzkQElpJcClriIMs7o1GoL+bUU2xS
+	 rsC9uzyzz7fclQWKHJEux5A0Mta72V++HKsFc1js=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher Lusk <clusk@northecho.dev>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Huiwen He <hehuiwen@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1632/1815] smb: client: set replay flag on the read send-error retry path
-Date: Sat, 12 Sep 2026 08:56:22 +0200
-Message-ID: <20260912065727.302145513@linuxfoundation.org>
+Subject: [PATCH 7.2 1633/1815] cifs: remove dead size-update blocks in cifs_setattr_unix/nounix
+Date: Sat, 12 Sep 2026 08:56:23 +0200
+Message-ID: <20260912065727.324979496@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,77 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christopher Lusk <clusk@northecho.dev>
+From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit 45f84cf25a0879a4d4e3ec3079982537be57c564 ]
+[ Upstream commit 60be95527bc8d1b33dca25d2a849268cca11d139 ]
 
-smb2_async_readv() and smb2_async_writev() end with the same
-send-error block: if the error is replayable and smb2_should_replay()
-agrees, tell netfs to retry the subrequest. The write path also sets
-wdata->replay. The read path does not set rdata->replay.
+Commit 110fee6b9bb5 ("smb: client: fix missing timestamp updates with
+O_TRUNC") introduced cifs_file_set_size(), which calls netfs_resize_file()
+and cifs_setsize() on success.  cifs_setsize() calls i_size_write(),
+updating i_size to the new value.  The subsequent blocks in both
+cifs_setattr_unix() and cifs_setattr_nounix():
 
-smb2_should_replay() is not a pure predicate. It consumes the retry
-budget and computes the exponential back-off, doubling cur_sleep up to
-CIFS_MAX_SLEEP. That back-off is only applied where the replay flag is
-tested at the top of the reissued request:
+    if ((attrs->ia_valid & ATTR_SIZE) &&
+        attrs->ia_size != i_size_read(inode)) {
+        truncate_setsize(inode, attrs->ia_size);
+        netfs_resize_file(&cifsInode->netfs, attrs->ia_size, true);
+        fscache_resize_cookie(cifs_inode_cookie(inode), attrs->ia_size);
+    }
 
-	if (rdata->replay) {
-		/* Back-off before retry */
-		if (rdata->cur_sleep)
-			msleep(rdata->cur_sleep);
-		smb2_set_replay(server, &rqst);
-	}
+are therefore unreachable on the success path: attrs->ia_size ==
+i_size_read(inode) always holds after cifs_file_set_size() succeeds.
+On the failure path, execution jumps to out/cifs_setattr_exit before
+reaching these blocks.
 
-So on the read path the back-off is recomputed on every send-error
-retry and then discarded, and SMB2_FLAGS_REPLAY_OPERATION is not set
-on the reissued request.
+truncate_setsize() and netfs_resize_file() are redundant with what
+cifs_file_set_size() already did; fscache_resize_cookie() was moved there
+by commit fa724e235cfd ("cifs: add fscache_resize_cookie() to
+cifs_setsize()").  Remove both dead blocks.
 
-netfs does not pace the retry either. netfs_reissue_read() calls
-->issue_read() directly, and fs/netfs/read_retry.c contains no delay
-of its own, so read send-error retries reissue immediately while the
-equivalent write retries back off.
-
-The read response callback already sets rdata->replay under the same
-conditions, so the read path does use the replay mechanism. Only this
-send-error path omits it.
-
-Where the back-off belongs was settled while the commit below was
-under review. David Howells asked whether netfslib should be doing the
-back-off [1], and objected to sleeping inside the response callback
-because that runs in the cifsd thread and would stall the socket [2].
-The sleep was therefore taken out of smb2_should_replay() and moved to
-just before the replay in smb2_async_readv() and smb2_async_writev()
-[3]. Setting the flag here preserves that arrangement: the sleep still
-happens at the top of the reissued request, not in a callback.
-
-Set rdata->replay here, matching smb2_async_writev().
-
-Fixes: 2c1238a7477a ("cifs: make retry logic in read/write path consistent with other paths")
-Link: https://lore.kernel.org/all/1652858.1769038134@warthog.procyon.org.uk/ [1]
-Link: https://lore.kernel.org/all/1653031.1769038583@warthog.procyon.org.uk/ [2]
-Link: https://lore.kernel.org/all/CANT5p=pXP3+CywpmK-on2uTvxO3S=31_B85_UDR7RoK1dQVtMA@mail.gmail.com/ [3]
-Assisted-by: Codex:gpt-5.5
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Christopher Lusk <clusk@northecho.dev>
+Fixes: 110fee6b9bb5 ("smb: client: fix missing timestamp updates with O_TRUNC")
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Reviewed-by: Huiwen He <hehuiwen@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2pdu.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/inode.c | 14 --------------
+ 1 file changed, 14 deletions(-)
 
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index b885060be2004..d207591cc889c 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -4893,6 +4893,7 @@ smb2_async_readv(struct cifs_io_subrequest *rdata)
- 	    smb2_should_replay(tcon,
- 			       &rdata->retries,
- 			       &rdata->cur_sleep)) {
-+		rdata->replay = true;
- 		trace_netfs_sreq(&rdata->subreq, netfs_sreq_trace_io_retry_needed);
- 		__set_bit(NETFS_SREQ_NEED_RETRY, &rdata->subreq.flags);
- 	}
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index aec8ed8881a6c..85ef8fff0e842 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -3310,13 +3310,6 @@ cifs_setattr_unix(struct dentry *direntry, struct iattr *attrs)
+ 	if (rc)
+ 		goto out;
+ 
+-	if ((attrs->ia_valid & ATTR_SIZE) &&
+-	    attrs->ia_size != i_size_read(inode)) {
+-		truncate_setsize(inode, attrs->ia_size);
+-		netfs_resize_file(&cifsInode->netfs, attrs->ia_size, true);
+-		fscache_resize_cookie(cifs_inode_cookie(inode), attrs->ia_size);
+-	}
+-
+ 	setattr_copy(&nop_mnt_idmap, inode, attrs);
+ 	mark_inode_dirty(inode);
+ 
+@@ -3537,13 +3530,6 @@ cifs_setattr_nounix(struct dentry *direntry, struct iattr *attrs)
+ 	if (rc)
+ 		goto cifs_setattr_exit;
+ 
+-	if ((attrs->ia_valid & ATTR_SIZE) &&
+-	    attrs->ia_size != i_size_read(inode)) {
+-		truncate_setsize(inode, attrs->ia_size);
+-		netfs_resize_file(&cifsInode->netfs, attrs->ia_size, true);
+-		fscache_resize_cookie(cifs_inode_cookie(inode), attrs->ia_size);
+-	}
+-
+ 	setattr_copy(&nop_mnt_idmap, inode, attrs);
+ 	mark_inode_dirty(inode);
+ 
 -- 
 2.53.0
 
