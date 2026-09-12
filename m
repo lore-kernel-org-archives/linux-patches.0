@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6B3443C39;
-	Sat, 12 Sep 2026 10:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620CD4519B5;
+	Sat, 12 Sep 2026 10:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209920; cv=none; b=vBkOHbaqpwldVcdNVT02dRKQRQExWlS3sNCt9WnYA9DClXNhwNpGn6Y3g1BHFcoWJ4+UGtR8ILIrUX53HK71hN1QwDV0Nh9kEU1Ku0U+MVbzABgNPunc/P6LfPoIeO1rsDHJUGGoEMEk9cxfHKI+f4kaaHdNACzDWVKi3ECmDtI=
+	t=1789209925; cv=none; b=c5/KEFthGjLTMsbFzVQmnLZ4NFMHPrCiF6aJMm24ZGvzjjOpqy/YUelNTSApfmkae0K1pBXnuRpBMxKNQ0FTkK2ABTUQqRXFJ9PTLXvxwyaeJblOdHBmYPPUeiBFIUCTHRQ8vsEB1Xrxjzusij/pTRcrDl04D/CXeo+AQhGhzic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209920; c=relaxed/simple;
-	bh=Mq97rtwCu2xy6F2+Mo0ww2ZUuReQ92T4+jRfnoqgcok=;
+	s=arc-20240116; t=1789209925; c=relaxed/simple;
+	bh=X5jQwwa6e8akobe89s9aJv9VkT8fDS6Vhy2GOFEH2Ok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NareGu9FLBlxtHiRbA/2oTM+N445FXmfXOHRMrN5yhSN4uy4VN7BqPVPb+M7nXtY2+eni984vSCskuy/e4+JtYxILzc92mP+tJH3ky0pRaAfFUTP8EXd+AWIk9B9TbwI0Kuv2s1zAZiQ/v1wiXphjNbd8wzdR7TpxNijB41riOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfViJqwT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rSUyAqAxFWRkrfIi/cHaXRdT2jMjSPQM3AiQ8IxvNU6aAAYRq0u8jeCJ5Y8Fq8xfoBZzGNe0RCCvL+fCCXBk2Bv7q8dEoGaxh2xAIMlV6rvyf5oqezUQ/Qr9PBNXdELq+VVHk5PI6pJgdFsqEIBDTNlYioiK2XvsONtfa9bC0wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kR/UD/r4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfViJqwT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FEDA1F000FF;
-	Sat, 12 Sep 2026 10:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kR/UD/r4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5261F000FF;
+	Sat, 12 Sep 2026 10:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209919;
-	bh=zw+6D8eSxnh8AuEYGz7omiQs6ogIVZnhRJTEYQAfnBg=;
+	s=korg; t=1789209924;
+	bh=VMI+gXJhfA0tR2T6P5l6HJw9UYHwRVXyG0Bn+6IhWfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WfViJqwTgO+PU93Vg7UCrCl8IJhyBGaReY0on79wEUTNC0OHFpKhqSBBNoYOf6uil
-	 bM3PtGQ1ENtd9VuGBOD/sXFfbdpUrMMa7sTLUBKuLbGrAuKe6WXkhd6VxCFjon1NeF
-	 mjdjmvsoLNZ0q0l8hqIECZ22aRC0PhnEaBagZa78=
+	b=kR/UD/r4FlP9VsmnJadp+5MAHdMyFx29MDslvXEKi5Szz5GsuxWi5BcFU4SX7FwjP
+	 +jeguoPYduxY4CZJHbQa8zXFbsJkhigO50FPQ+ky6nmSaHw/eZIHlg5y0gzXocpQ3b
+	 F5Vc2jjlykLFs7lOZZ8BIIRyWe/rJzMq5/NKkp/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0878/1518] remoteproc: use rsc_table_for_each_entry() in rproc_handle_resources()
-Date: Sat, 12 Sep 2026 08:50:47 +0200
-Message-ID: <20260912065643.311573632@linuxfoundation.org>
+Subject: [PATCH 6.18 0879/1518] remoteproc: fix OOB read via signed offset in rsc_table_for_each_entry()
+Date: Sat, 12 Sep 2026 08:50:48 +0200
+Message-ID: <20260912065643.333475797@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,197 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit 49abb5d6e1ac8169cdfc0c3aa4408e0d90ee5696 ]
+[ Upstream commit bb840ea69347aff7bde5a208e7b5b180669a7656 ]
 
-Replace the open-coded resource table iteration loop in
-rproc_handle_resources() with the rsc_table_for_each_entry() helper.
+table->offset[i] is a u32 from firmware, but was stored into a signed
+int.  A crafted offset like 0xFFFFFFF0 becomes -16, placing hdr 16 bytes
+before the table buffer.  The subsequent avail check was bypassed
+because the negative int was promoted to a large size_t in the
+expression "table_sz - offset - sizeof(*hdr)", yielding a large positive
+avail and letting the out-of-bounds hdr->type read proceed undetected.
 
-The remoteproc-specific dispatch logic (vendor resource handling via
-rproc_handle_rsc(), RSC_LAST bounds check, handler table lookup) is
-moved into a local callback rproc_handle_rsc_entry(), keeping the
-iteration mechanics in one canonical place.
-
-The callback receives the payload offset within the table so that
-handlers which write back into the resource table (e.g.
-rproc_handle_carveout() recording a dynamically allocated address via
-rsc_offset) continue to work correctly.
-
-No functional change.
+Store the offset as u32 and validate it with unsigned comparisons before
+any pointer arithmetic.
 
 Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260506050107.1985033-3-mukesh.ojha@oss.qualcomm.com
-Stable-dep-of: bb840ea69347 ("remoteproc: fix OOB read via signed offset in rsc_table_for_each_entry()")
+Fixes: fd2c15ec1dd3 ("remoteproc: resource table overhaul")
+Link: https://lore.kernel.org/r/20260803114331.3277263-6-mukesh.ojha@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_core.c | 81 +++++++++++++---------------
- include/linux/rsc_table.h            | 53 ++++++++++++++++++
- 2 files changed, 91 insertions(+), 43 deletions(-)
+ include/linux/rsc_table.h | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index 157d5603f2bad..bbc781e41a1b8 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1016,60 +1016,55 @@ static rproc_handle_resource_t rproc_loading_handlers[RSC_LAST] = {
- 	[RSC_VDEV] = rproc_handle_vdev,
- };
- 
--/* handle firmware resource entries before booting the remote processor */
--static int rproc_handle_resources(struct rproc *rproc,
--				  rproc_handle_resource_t handlers[RSC_LAST])
-+struct rproc_rsc_cb_data {
-+	struct rproc *rproc;
-+	rproc_handle_resource_t *handlers;
-+};
-+
-+static int rproc_handle_rsc_entry(u32 type, void *rsc, int offset,
-+				  int avail, void *data)
- {
-+	struct rproc_rsc_cb_data *d = data;
-+	struct rproc *rproc = d->rproc;
- 	struct device *dev = &rproc->dev;
- 	rproc_handle_resource_t handler;
--	int ret = 0, i;
--
--	if (!rproc->table_ptr)
--		return 0;
-+	int ret;
- 
--	for (i = 0; i < rproc->table_ptr->num; i++) {
--		int offset = rproc->table_ptr->offset[i];
--		struct fw_rsc_hdr *hdr = (void *)rproc->table_ptr + offset;
--		int avail = rproc->table_sz - offset - sizeof(*hdr);
--		void *rsc = (void *)hdr + sizeof(*hdr);
-+	dev_dbg(dev, "rsc: type %d\n", type);
- 
--		/* make sure table isn't truncated */
--		if (avail < 0) {
--			dev_err(dev, "rsc table is truncated\n");
--			return -EINVAL;
--		}
--
--		dev_dbg(dev, "rsc: type %d\n", hdr->type);
-+	if (type >= RSC_VENDOR_START && type <= RSC_VENDOR_END) {
-+		ret = rproc_handle_rsc(rproc, type, rsc, offset, avail);
-+		if (ret == RSC_HANDLED)
-+			return 0;
-+		if (ret < 0)
-+			return ret;
-+		dev_warn(dev, "unsupported vendor resource %d\n", type);
-+		return 0;
-+	}
- 
--		if (hdr->type >= RSC_VENDOR_START &&
--		    hdr->type <= RSC_VENDOR_END) {
--			ret = rproc_handle_rsc(rproc, hdr->type, rsc,
--					       offset + sizeof(*hdr), avail);
--			if (ret == RSC_HANDLED)
--				continue;
--			else if (ret < 0)
--				break;
-+	if (type >= RSC_LAST) {
-+		dev_warn(dev, "unsupported resource %d\n", type);
-+		return 0;
-+	}
- 
--			dev_warn(dev, "unsupported vendor resource %d\n",
--				 hdr->type);
--			continue;
--		}
-+	handler = d->handlers[type];
-+	if (!handler)
-+		return 0;
- 
--		if (hdr->type >= RSC_LAST) {
--			dev_warn(dev, "unsupported resource %d\n", hdr->type);
--			continue;
--		}
-+	return handler(rproc, rsc, offset, avail);
-+}
- 
--		handler = handlers[hdr->type];
--		if (!handler)
--			continue;
-+/* handle firmware resource entries before booting the remote processor */
-+static int rproc_handle_resources(struct rproc *rproc,
-+				  rproc_handle_resource_t handlers[RSC_LAST])
-+{
-+	struct rproc_rsc_cb_data d = { .rproc = rproc, .handlers = handlers };
- 
--		ret = handler(rproc, rsc, offset + sizeof(*hdr), avail);
--		if (ret)
--			break;
--	}
-+	if (!rproc->table_ptr)
-+		return 0;
- 
--	return ret;
-+	return rsc_table_for_each_entry(rproc->table_ptr, rproc->table_sz,
-+					&rproc->dev, rproc_handle_rsc_entry, &d);
- }
- 
- static int rproc_prepare_subdevices(struct rproc *rproc)
 diff --git a/include/linux/rsc_table.h b/include/linux/rsc_table.h
-index c32c8b6cd2a77..c6d6d553d8f11 100644
+index c6d6d553d8f11..4cef11a2e3a2c 100644
 --- a/include/linux/rsc_table.h
 +++ b/include/linux/rsc_table.h
-@@ -303,4 +303,57 @@ struct fw_rsc_vdev {
- 	struct fw_rsc_vdev_vring vring[];
- } __packed;
+@@ -337,17 +337,22 @@ static inline int rsc_table_for_each_entry(struct resource_table *table,
+ 	int i, ret;
  
-+/**
-+ * rsc_table_for_each_entry() - iterate over all entries in a resource table
-+ * @table:    pointer to the resource table
-+ * @table_sz: total size of the table buffer in bytes
-+ * @dev:      device used for error logging
-+ * @cb:       callback invoked for each entry:
-+ *              @type   - value from enum fw_resource_type
-+ *              @rsc    - pointer to the entry payload (past struct fw_rsc_hdr)
-+ *              @offset - byte offset of the payload within the table; callers
-+ *                        that write back into the table (e.g. to record a
-+ *                        dynamically allocated address) use this to locate the
-+ *                        entry for later update
-+ *              @avail  - bytes available in the payload
-+ *              @data   - caller-supplied private pointer
-+ *            Return 0 to continue iteration, non-zero to stop.
-+ * @data:     private pointer forwarded to @cb on every call
-+ *
-+ * Iterates over every resource entry in @table, performing the standard
-+ * truncation check, and invokes @cb for each one. Iteration stops on the
-+ * first non-zero return from @cb or on a malformed table.
-+ *
-+ * Returns 0 after a complete iteration, -EINVAL if the table is truncated,
-+ * or the first non-zero value returned by @cb.
-+ */
-+static inline int rsc_table_for_each_entry(struct resource_table *table,
-+					   size_t table_sz,
-+					   struct device *dev,
-+					   int (*cb)(u32 type, void *rsc,
-+						     int offset, int avail,
-+						     void *data),
-+					   void *data) {
-+	int i, ret;
+ 	for (i = 0; i < table->num; i++) {
+-		int offset = table->offset[i];
+-		struct fw_rsc_hdr *hdr = (void *)table + offset;
+-		int avail = table_sz - offset - sizeof(*hdr);
+-		int rsc_offset = offset + sizeof(*hdr);
+-		void *rsc = (void *)hdr + sizeof(*hdr);
++		u32 offset = table->offset[i];
++		struct fw_rsc_hdr *hdr;
++		int avail, rsc_offset;
++		void *rsc;
+ 
+-		if (avail < 0) {
++		if (offset < sizeof(*table) || offset >= table_sz ||
++		    table_sz - offset < sizeof(*hdr)) {
+ 			dev_err(dev, "rsc table is truncated\n");
+ 			return -EINVAL;
+ 		}
+ 
++		hdr = (void *)table + offset;
++		avail = table_sz - offset - sizeof(*hdr);
++		rsc_offset = offset + sizeof(*hdr);
++		rsc = (void *)hdr + sizeof(*hdr);
 +
-+	for (i = 0; i < table->num; i++) {
-+		int offset = table->offset[i];
-+		struct fw_rsc_hdr *hdr = (void *)table + offset;
-+		int avail = table_sz - offset - sizeof(*hdr);
-+		int rsc_offset = offset + sizeof(*hdr);
-+		void *rsc = (void *)hdr + sizeof(*hdr);
-+
-+		if (avail < 0) {
-+			dev_err(dev, "rsc table is truncated\n");
-+			return -EINVAL;
-+		}
-+
-+		ret = cb(hdr->type, rsc, rsc_offset, avail, data);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	return 0;
-+}
-+
- #endif /* RSC_TABLE_H */
+ 		ret = cb(hdr->type, rsc, rsc_offset, avail, data);
+ 		if (ret)
+ 			return ret;
 -- 
 2.53.0
 
