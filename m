@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E186C32E757;
-	Sat, 12 Sep 2026 16:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A393537FF;
+	Sat, 12 Sep 2026 16:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231597; cv=none; b=Yyuu2pK90p5pvJ+ISPDO8QhAJ9fnDjCOUTfOd3bDoDmdYahdsj2qb7VD/gINKUHP6uaGCSPAZuI0T1wpSFE8AlFPHs2yx+mJdPwvRnDxi/FTE+Ot2pcmvC/R5xsrhjwDXRs64B5sjvnnIuRAEzDbUETF2mf7S/tvuL+eD6qVtd0=
+	t=1789231601; cv=none; b=baxOPX1CG5paVgFys2XOWCpwnnoax+/8uG3e/Bxs/tRpdUM4/oPkQRRc6+w+NVDv7o44+shdua1EpM+B+YfmBZM6ouFplzUeOXKBFiwWh7WkmtBE25QTXRJWrxbbhIBBH0fZlF/Ys43PzUe0NY0S2mDGtp1qGJpJkkcJNw35eGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231597; c=relaxed/simple;
-	bh=mTBLRkoCwmKU5x4DocjiyQN3Zg2E9LWJ7w4j+WRxUE0=;
+	s=arc-20240116; t=1789231601; c=relaxed/simple;
+	bh=SxZLAtZ/O6d1DVoXhyRo28FOZdm69v0E+qMxFQiqAu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CPHvQXQUYCnPNfuw7zw/4Xu930QpTzU4Fz9OLvkiaH2LgrNiaVWljmNlIEnJNHxkzOMrpLaiwhAmx1LKWNjTICH5t3fMX2KgFJsu7w7lLJTVVPkC7eIK0vTjmqoPnyQM/64T4laoY3vqNJ0rfhBCWQCNhTiKckfJCyJA5+c2Xy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGL7xTZ/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q6X1s8azLC5XQGHq5CPRj/aAJml+OaBWW7jfNJsn7oztX9DJHIvV0XR2WkLA5Zk0AX8kTh3u9zmo41YOUeH7KE+haIbzx09G3ONAbAWe+SzmcfG09QCV4s4Bh+OazvlUYBcVhS1TTjC3wkwQPhC5ECPdjQCOuQBHmP1eOUMjK0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTAC5G9p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGL7xTZ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8841F1F000FF;
-	Sat, 12 Sep 2026 16:46:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTAC5G9p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C650F1F000FF;
+	Sat, 12 Sep 2026 16:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231595;
-	bh=XBE9X14JSTROBM4YTeU28HSDma1usVg0kJowE/m4K10=;
+	s=korg; t=1789231600;
+	bh=diGPPLt4WQG+ctwWI0ZqVuMoGPCvQyGOa03rpUjax8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yGL7xTZ/9lQXeTuwOJsx3Cy8G0sUBhULt5ggH+hdx0PC/sVCCUbyuTNF1zBVWaqvI
-	 NLGDt5kEBwCctNBDRn4GdVmhAtk5EIjbLnGfIWO159PotTyyDFnS327c+C0MEQ5JYe
-	 u3u/q1dZ38jbc4mB9qV509QxiTXZPU2dOxFTU7fc=
+	b=xTAC5G9p0lOJH8RAr5mgMwaNMXhg+hLatXVcQzcb50NBBYScxkoSSYybB5gq44eql
+	 gywxA/EUqeC/lFxB8CD7ot6M4QOSXxp3j1geLzjXCCdwut/xglr5VT44jxVvVvEckL
+	 c5PUi/2/S+7sY0+Wco6hu8NfmBo50YiqWHQhgp4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Zizhi Wo <wozizhi@huawei.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
+	syzbot+643a6dd130546afdf1fb@syzkaller.appspotmail.com,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1031/1191] null_blk: serialize configfs attribute stores with the lock
-Date: Sat, 12 Sep 2026 09:02:39 +0200
-Message-ID: <20260912065611.340788381@linuxfoundation.org>
+Subject: [PATCH 6.1 1032/1191] null_blk: serialize configfs attribute updates with device setup
+Date: Sat, 12 Sep 2026 09:02:40 +0200
+Message-ID: <20260912065611.362159419@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,84 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 7e7fff51808237703a3a1df6dd5cae1dfd1db86d ]
+[ Upstream commit 4e1f23f9c33c156be7e313b40695af5a3a834739 ]
 
-The NULLB_DEVICE_ATTR _store takes no lock: apply_fn attributes
-(submit_queues, poll_queues) get dev->NAME written again after apply_fn
-returns, outside its lock; APPLY=NULL attributes are entirely lockless.
-configfs only serializes stores per-open-file, so concurrent stores on
-separate fds race.
+The attribute store methods generated with NULLB_DEVICE_ATTR() refuse to
+change the configuration of a live device by testing
+NULLB_DEV_FL_CONFIGURED, but that flag is only set by
+nullb_device_power_store() after null_add_dev() has returned, and the
+store methods take no lock at all. configfs only serializes writes to
+the same open file (buffer->mutex), so a write to any attribute can run
+concurrently with null_add_dev() and change the device configuration
+while it is being used.
 
-For apply_fn attributes, once one store's apply_fn has reconfigured the
-hardware, a second (losing) store can still overwrite dev->NAME
-afterwards. This leaves dev->submit_queues out of sync with the live
-queue count, which is later caught by the WARN_ON_ONCE() in
-null_map_queues().
+null_add_dev() reads the configuration several times, e.g. dev->zoned is
+read once to set up the queue limits and once to initialize the zone
+resources:
 
-For !apply_fn attributes, power_store()'s null_add_dev() validates and
-builds the device under "lock" but only sets CONFIGURED afterwards. A store
-slipping in during this window can change a field mid-setup -- for example,
-zone_nr_conv can be pushed above nr_zones after it has already been
-clamped, leading to an out-of-bounds dev->zones[] access.
+  CPU0: echo 1 > nullb0/power         CPU1: echo 1 > nullb0/zoned
+  nullb_device_power_store()
+    mutex_lock(&lock)
+    null_add_dev()
+      if (dev->zoned) -> false
+        /* no BLK_FEAT_ZONED */       nullb_device_zoned_store()
+                                        test_bit(FL_CONFIGURED) -> 0
+                                        dev->zoned = true
+      blk_mq_alloc_disk()
+        /* queue is not zoned */
+      if (nullb->dev->zoned) -> true
+        null_register_zoned_dev()
+          blk_revalidate_disk_zones()
 
-Take "lock" in the macro around the apply_fn call, the CONFIGURED test and
-the field write, and move it out of nullb_apply_submit_queues()/
-nullb_apply_poll_queues() so both paths are covered once. This serializes
-stores with power_store's setup and with each other.
+blk_revalidate_disk_zones() is then called for a queue that does not
+have BLK_FEAT_ZONED set, which triggers its WARN_ON_ONCE() and fails the
+device setup with -EIO:
 
-Fixes: 45919fbfe1c4 ("null_blk: Enable modifying 'submit_queues' after an instance has been configured")
-Suggested-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Link: https://patch.msgid.link/20260725022509.714271-10-wozizhi@huaweicloud.com
+  WARNING: CPU: 2 PID: 322 at block/blk-zoned.c:2357 blk_revalidate_disk_zones+0x4c/0x560
+
+Clearing dev->zoned in the same window is worse: the queue is created
+with BLK_FEAT_ZONED but the zone resources are never initialized, so
+add_disk() succeeds for a zoned disk that has no zones. And a store that
+lands after the last dev->zoned test leaves dev->zoned set while
+dev->zones is still NULL, which null_process_zoned_cmd() dereferences on
+the first write.
+
+Fix this by taking the global lock, which nullb_device_power_store()
+already holds across null_add_dev() and null_del_dev(), around both the
+NULLB_DEV_FL_CONFIGURED test and the update of the device configuration.
+The submit_queues and poll_queues apply callbacks are now called with
+that lock held, so remove the locking they did themselves.
+
+Since the store methods can run as soon as configfs_register_subsystem()
+returns, that is, before null_init() gets to mutex_init(&lock), also
+initialize the lock statically with DEFINE_MUTEX().
+
+Fixes: 3bf2bd20734e ("nullb: add configfs interface")
+Reported-by: syzbot+643a6dd130546afdf1fb@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-block/6a7d0b3f.ac361c09.22ff0a.004c.GAE@google.com/
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://patch.msgid.link/20260813141456.1625857-2-cassel@kernel.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 17 +++--------------
- 1 file changed, 3 insertions(+), 14 deletions(-)
+ drivers/block/null_blk/main.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index be95f3a15c4ea..1bdf975faec97 100644
+index 1bdf975faec97..237e9a821374c 100644
 --- a/drivers/block/null_blk/main.c
 +++ b/drivers/block/null_blk/main.c
-@@ -331,6 +331,7 @@ nullb_device_##NAME##_store(struct config_item *item, const char *page,	\
- 	ret = nullb_device_##TYPE##_attr_store(&new_value, page, count);\
- 	if (ret < 0)							\
- 		return ret;						\
-+	guard(mutex)(&lock);						\
- 	if (apply_fn)							\
- 		ret = apply_fn(dev, new_value);				\
- 	else if (test_bit(NULLB_DEV_FL_CONFIGURED, &dev->flags)) 	\
-@@ -401,25 +402,13 @@ static int nullb_update_nr_hw_queues(struct nullb_device *dev,
- static int nullb_apply_submit_queues(struct nullb_device *dev,
- 				     unsigned int submit_queues)
- {
--	int ret;
--
--	mutex_lock(&lock);
--	ret = nullb_update_nr_hw_queues(dev, submit_queues, dev->poll_queues);
--	mutex_unlock(&lock);
--
--	return ret;
-+	return nullb_update_nr_hw_queues(dev, submit_queues, dev->poll_queues);
+@@ -311,7 +311,15 @@ static ssize_t nullb_device_bool_attr_store(bool *val, const char *page,
+ 	return count;
  }
  
- static int nullb_apply_poll_queues(struct nullb_device *dev,
- 				   unsigned int poll_queues)
- {
--	int ret;
+-/* The following macro should only be used with TYPE = {uint, ulong, bool}. */
++/*
++ * The following macro should only be used with TYPE = {uint, ulong, bool}.
++ *
++ * The device configuration is modified under the global lock to serialize
++ * attribute changes against null_add_dev() and null_del_dev(): without this,
++ * an attribute could be changed while null_add_dev() is running, that is,
++ * before NULLB_DEV_FL_CONFIGURED is set, which would let null_add_dev()
++ * observe inconsistent values for the device configuration.
++ */
+ #define NULLB_DEVICE_ATTR(NAME, TYPE, APPLY)				\
+ static ssize_t								\
+ nullb_device_##NAME##_show(struct config_item *item, char *page)	\
+@@ -351,6 +359,8 @@ static int nullb_update_nr_hw_queues(struct nullb_device *dev,
+ 	struct blk_mq_tag_set *set;
+ 	int ret, nr_hw_queues;
+ 
++	lockdep_assert_held(&lock);
++
+ 	if (!dev->nullb)
+ 		return 0;
+ 
+@@ -2327,8 +2337,6 @@ static void __exit null_exit(void)
+ 
+ 	if (tag_set.ops)
+ 		blk_mq_free_tag_set(&tag_set);
 -
--	mutex_lock(&lock);
--	ret = nullb_update_nr_hw_queues(dev, dev->submit_queues, poll_queues);
--	mutex_unlock(&lock);
--
--	return ret;
-+	return nullb_update_nr_hw_queues(dev, dev->submit_queues, poll_queues);
+-	mutex_destroy(&lock);
  }
  
- NULLB_DEVICE_ATTR(size, ulong, NULL);
+ module_init(null_init);
 -- 
 2.53.0
 
