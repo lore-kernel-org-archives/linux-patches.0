@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6182B38F92F;
-	Sat, 12 Sep 2026 19:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F6D38F92F;
+	Sat, 12 Sep 2026 19:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242934; cv=none; b=ApP+A5Ie9ZmLJxIkg8DYZxceN1XyvN/PKW4QOPNJvL79z/UNl+kPkHSca3wtklHOEhvmrFAWmhraWoUaH1lfD/B1CkWTKLMzcUXNAx8IX9H3vq5OY3q/Ggygg8SKFH5vdXOD2viyVa2EEiQHs3X5OM02XJSbi9iP6A1N3KWhj8g=
+	t=1789242937; cv=none; b=P9FIV5cd0xZoTEphjz//138qe0JCVMe1ZSforr6AoDKnpiNgVBLz4KurZwUHzfDb1ke82YAbN8lnxzEMDA4ciMVIPnYAZcSGZ1a/PKm4uETNXjaQy30g+C455w31v+A5QYrd2bSJgeUntRTTXgX4YISc+BzthBh9mErwH3iVOdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242934; c=relaxed/simple;
-	bh=juFXH2sCCFwjZSk73fHl7B/7iZX6xIYJXcPclZcecEo=;
+	s=arc-20240116; t=1789242937; c=relaxed/simple;
+	bh=j08B5pTnc/m+sZIVibP4g/u5R+hL+njSZZKk5WANMoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VqmPht4wQSDZSq3SLFCzwgv8qY1sd7d6L84n+mocuKEM+lUCfixA13WMzl6BVCBdwEw3Z4s5+UDWQbUzWwHFvh42p2Lva4L0ShaPaWSBCNZom/71wrq3yeSabGiDZKqDqfmKSjjJ2RCvGS2Z8AVcKOmmdoMXm27HRXaRJGcuR00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLwo46NX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hWcBIIYWv0nqJ9313dSawmaPHHYn1j3NoPUVbQz1VLx8in1TKT0y0NBAElacimqcwfsCMRBmRwtYU8OjO7A5s5FgkgVtFTprwdJQ4LvoerV6ZwTHQxghnfzJHHCyFwYAYGE0SX0x6sMD1+i9evsVJDl2VUF/Jo/kyAv82zssJSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OcRXW/Ud; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLwo46NX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF6B1F000FF;
-	Sat, 12 Sep 2026 19:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OcRXW/Ud"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F7661F000FF;
+	Sat, 12 Sep 2026 19:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242933;
-	bh=mipwrCBFQ7T1FB8kMlY0y+1HAJrFWixTGYkUR9U2WyU=;
+	s=korg; t=1789242936;
+	bh=oEC9H3RtPyQLlNmdLQ1kDE3MEScMw6Sv6Quify9pzOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LLwo46NX32zvpvWgBtBdgDqKlm9X+Q4Mw2tI/QW8Lyxp2kSIQgT2GoQo3k6r/L3ze
-	 oFBB4p/bmum0lvXiz1N//8ri5CZlyFe6udqVifaOffWMQ+vJJ15biGp1JEkpuTwqhe
-	 3zqdFPBDD3ApWdmFjTrlxlssVKWVBKqlXGN1wefM=
+	b=OcRXW/UdlAv363XVN5vVvUrttKtIoc4Cbyx6H/zfl6cXHJZ4BYOPNbwkg7jZI5TXQ
+	 O0VKieRG+C2t+RzdbdcVc3KLuxtAwCYfdNqBfU7Gdv/YKBMZz0bN6SKqqZTXQcM+UT
+	 1btXKfXxRhgWZB1QqyGNEMqzp8lwOndxcKqIE+Z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Karl Mehltretter <kmehltretter@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 578/798] serial: amba-pl011: unprepare console clock on unregister
-Date: Sat, 12 Sep 2026 09:03:26 +0200
-Message-ID: <20260912065530.378296880@linuxfoundation.org>
+Subject: [PATCH 5.10 579/798] tty: clear cdev pointer after cdev_add() failure
+Date: Sat, 12 Sep 2026 09:03:27 +0200
+Message-ID: <20260912065530.401700408@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,60 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 7f93da9d78d433c37836d85de475c5d884ad58ed ]
+[ Upstream commit 6645856f0df3aeecd45519cb611415b4b89c2223 ]
 
-pl011_console_setup() calls clk_prepare() on the UART clock, but the
-console provides no matching teardown, so the clock is never unprepared
-when the console is unregistered -- via the sysfs "console" attribute or
-a driver unbind. Each re-registration prepares the clock again, leaking
-one prepare reference per cycle.
+tty_cdev_add() drops the cdev reference when cdev_add() fails, but
+leaves driver->cdevs[index] pointing to freed memory.
+tty_unregister_device() later passes that stale pointer to cdev_del(),
+causing a use-after-free.
 
-Even where preparing the clock has no hardware effect, the stale
-reference leaves the clock framework's prepare count unbalanced. For
-providers with prepare/unprepare operations or runtime-PM integration,
-it may also retain resources after the console is unregistered.
+Clear the slot after dropping the reference.
 
-Add a console .exit() callback that clk_unprepare()s the clock,
-balancing the clk_prepare() in pl011_console_setup().
-
-Fixes: 4b4851c65d92 ("clk: amba-pl011: convert to clk_prepare()/clk_unprepare()")
+Fixes: c1a752ba2d6b ("tty: don't leak cdev in tty_cdev_add()")
 Assisted-by: Claude:claude-fable-5
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260724213348.77418-2-kmehltretter@gmail.com
+Link: https://patch.msgid.link/20260731181844.11330-5-kmehltretter@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/amba-pl011.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/tty/tty_io.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
-index 500f46bb06c85..5b2c31a3e9920 100644
---- a/drivers/tty/serial/amba-pl011.c
-+++ b/drivers/tty/serial/amba-pl011.c
-@@ -2334,6 +2334,15 @@ static int pl011_console_setup(struct console *co, char *options)
- 	return uart_set_options(&uap->port, co, baud, parity, bits, flow);
+diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
+index 984e3098e6317..f0d36f992616f 100644
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -3144,8 +3144,10 @@ static int tty_cdev_add(struct tty_driver *driver, dev_t dev,
+ 	driver->cdevs[index]->ops = &tty_fops;
+ 	driver->cdevs[index]->owner = driver->owner;
+ 	err = cdev_add(driver->cdevs[index], dev, count);
+-	if (err)
++	if (err) {
+ 		kobject_put(&driver->cdevs[index]->kobj);
++		driver->cdevs[index] = NULL;
++	}
+ 	return err;
  }
  
-+static int pl011_console_exit(struct console *co)
-+{
-+	struct uart_amba_port *uap = amba_ports[co->index];
-+
-+	clk_unprepare(uap->clk);
-+
-+	return 0;
-+}
-+
- /**
-  *	pl011_console_match - non-standard console matching
-  *	@co:	  registering console
-@@ -2400,6 +2409,7 @@ static struct console amba_console = {
- 	.write		= pl011_console_write,
- 	.device		= uart_console_device,
- 	.setup		= pl011_console_setup,
-+	.exit		= pl011_console_exit,
- 	.match		= pl011_console_match,
- 	.flags		= CON_PRINTBUFFER | CON_ANYTIME,
- 	.index		= -1,
 -- 
 2.53.0
 
