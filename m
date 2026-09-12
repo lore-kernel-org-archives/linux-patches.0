@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1B938C415;
-	Sat, 12 Sep 2026 15:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA11D3328FC;
+	Sat, 12 Sep 2026 15:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225836; cv=none; b=EiAZAKNXACOFwNCnSEV7DQelcAnkSXOvpai03IlvCp1ddJd3ZDk7UhtWwy6SToJcFDXaYUQnDPUhzIWx0W0A8Rh5PfkkuAml9zxds/Rg0NOelbjhFl3SkpP64ZY9EFR6yTiPxBrCaHI0eloaaiNC8FOQP7jmNrO9dPS7KMV5HO4=
+	t=1789225839; cv=none; b=XiwaXpKlZmskm65wNwug4ziSjov+J6O9cACpBEFUrjkTHxuMx7Y68CrOZpJLAgRaelWV+LqdcomEq9CG/y4YXr8pHqUiqABDcsn6k7SemFbqkyKfuMZM/8rwbLzynlFZ0sbZUPp59lyIi3B3wBI/y5SBp5THppwuuR7ybrpE4/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225836; c=relaxed/simple;
-	bh=oXuJfc7E8/+yLajLC7dsQVaPqiFpRHbhwVIf4V48+4s=;
+	s=arc-20240116; t=1789225839; c=relaxed/simple;
+	bh=xKOSYZHjBUPk0+qCUR3dBVrPtj+3SfYUSVvQQ+rRxsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EmvvxBo9jwJii3fNDypn5T9LuF441xFjiRBWV0iucOyhsds6pH7Kjx5B1Xbou/K2gkI2tnusHGaEsBo3VLVOSMP4qjjA7TmmS6pN+GlvqThYleviaurQU4dO2x/tnMBY/St9g0UuVaYAIVY9Qz9UuAoqY+HOMMr1sB+pcUiVY9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TB/jQrh3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=przjLlNx8sR6McqgdSzT/hZZn5VcVGnoR8gk5ZXr7tJyb4U5sTHTySI6GhVlxEUpmS7eYvNRe6dIBjZIwGhEJc3h3NcDjl/XNgy/ybxUbOCjSCGaOphJdqoxdRKsJiJeACbd06x3Cl2TcBIgqp0Gg/CX4/ajMhXXfv7T2sKAJSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vl+TCeI5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TB/jQrh3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC961F00893;
-	Sat, 12 Sep 2026 15:10:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vl+TCeI5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4751F000FF;
+	Sat, 12 Sep 2026 15:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225831;
-	bh=kKS5PWYULFaGe+42ExlS1h4OvnyBJTL9AuyEFfDWII0=;
+	s=korg; t=1789225834;
+	bh=USJCXD3sVeKxi3jk6+Ej6qRYvhPs6uc2VyXpbBGBDWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TB/jQrh3g6DWWPf/sol6kDLcZc8gItcyUSu752B+pdi94qsH4hIC/tQFgMI7mxLPL
-	 4I415j8pMWP5D29NUv5MBYCyiJGk2mIMvcVyHObgk+kVhKNglHs256Bktaspe4iSH2
-	 z8k8uIsCYfA2YfY+sKczn8t5sPrXH6AVrkHysSBU=
+	b=Vl+TCeI5mgp23ZVx1xbMyyPBOiH9SYIbJEDRtcN1M8AZx+n0nsmncQ+cOwBpbSjvv
+	 20lPkmjLJ+s+aKDv4IfO3LMmtmtQiFFuG1OLYlUfeJySzgnnydyYueaF6GMwQEv/5Y
+	 vqUGuD2BQtlbM76aOn7llWgXkCstT/sXYvMnatZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zizhi Wo <wozizhi@huawei.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1235/1424] null_blk: free global tag_set on init error path
-Date: Sat, 12 Sep 2026 09:01:07 +0200
-Message-ID: <20260912065634.939197755@linuxfoundation.org>
+Subject: [PATCH 6.6 1226/1424] perf dso: Guard against cache underflow on short reads in dso_cache__memcpy()
+Date: Sat, 12 Sep 2026 09:00:58 +0200
+Message-ID: <20260912065634.738706229@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -48,50 +47,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 5a1c5ff3a49ba93a1fd0b70537e7a0164071760d ]
+[ Upstream commit 390a9461cd73bdd13acc0f6d763618ae1ff8fa17 ]
 
-If shared_tags is enabled, null_setup_tagset() allocates the global tag_set
-via null_init_global_tag_set(). If device creation later fails, err_dev
-destroys the default devices and calls unregister_blkdev(), but never frees
-the global tag_set. Since module init failed, null_exit() is never invoked,
-so the global tag_set's tags and maps are permanently leaked.
+dso_cache__memcpy() computes cache_offset = offset - cache->offset,
+then cache_size = min(cache->size - cache_offset, size).  The RB tree
+lookup in __dso_cache__find() matches using the full
+DSO__DATA_CACHE_SIZE window, but cache->size reflects the actual pread
+return value from dso_cache__populate().
 
-Free the global tag_set in err_dev, matching null_exit() which does
-if (tag_set.ops) blk_mq_free_tag_set(&tag_set).
+A short pread (e.g. near end-of-file) makes cache->size smaller than
+DSO__DATA_CACHE_SIZE.  If a subsequent access targets an offset past
+cache->offset + cache->size but within the DSO__DATA_CACHE_SIZE
+window, the cache entry is found but cache_offset exceeds cache->size.
+Since both are u64, the subtraction cache->size - cache_offset wraps
+to a large value, min() selects the caller's size, and memcpy reads
+out of bounds.
 
-Fixes: 82f402fefa50 ("null_blk: add support for shared tags")
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Link: https://patch.msgid.link/20260725022509.714271-5-wozizhi@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Return 0 for an offset past the valid cached data.  For a regular
+file a short pread only happens at end-of-file, so 0 is what a direct
+pread() at that offset would return: cached_io() stops its read loop
+as on EOF.  Re-reading from the backing file would not help — a
+second pread at the same offset returns the same short count.
+
+Fixes: 366df72657e0 ("perf dso: Refactor dso_cache__read()")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/perf/util/dso.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index bec087daae9cd..80f6f7a7a7583 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -2351,6 +2351,8 @@ static int __init null_init(void)
- 		null_destroy_dev(nullb);
- 	}
- 	unregister_blkdev(null_major, "nullb");
-+	if (tag_set.ops)
-+		blk_mq_free_tag_set(&tag_set);
- 	return ret;
- }
+diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
+index 49af48a5deddd..0e71bfffd4aca 100644
+--- a/tools/perf/util/dso.c
++++ b/tools/perf/util/dso.c
+@@ -915,7 +915,20 @@ static ssize_t dso_cache__memcpy(struct dso_cache *cache, u64 offset, u8 *data,
+ 				 u64 size, bool out)
+ {
+ 	u64 cache_offset = offset - cache->offset;
+-	u64 cache_size   = min(cache->size - cache_offset, size);
++	u64 cache_size;
++
++	/*
++	 * The RB tree matches using DSO__DATA_CACHE_SIZE, but a short
++	 * pread may leave cache->size smaller.  For a regular file a
++	 * short pread only happens at end-of-file, so an offset past
++	 * the valid data is EOF: return 0, matching what a direct
++	 * pread() at that offset would return, and cached_io() then
++	 * stops its read loop.
++	 */
++	if (cache_offset >= cache->size)
++		return 0;
++
++	cache_size = min(cache->size - cache_offset, size);
  
+ 	if (out)
+ 		memcpy(data, cache->data + cache_offset, cache_size);
 -- 
 2.53.0
 
