@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E6037F729;
-	Sat, 12 Sep 2026 07:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39E239448F;
+	Sat, 12 Sep 2026 07:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197146; cv=none; b=Fr/7z6S4vhOEzoXEwQZPy+MtcrwROVNungewmPqpQNoBOenQ8H0ABpQGdUlFJunbuY/odCZSSNc6g65ezOJgP9RtMLqhiQ1GBtMYPdH+7D0m+r4Z0Z9On/iDT/lKBRthNB8nbQtEfkv9rn3ngVL7KZ/dTY7uAM3ETs04TySZkKs=
+	t=1789197151; cv=none; b=d6GmA+XDkXoGElYgDxdzu5zFAIdU2ACzoUhdjTq5o4V773VNHyZPEr1CCqKXEX4Q3Jp1kmyfdFdYxMrXGf7GwHsODa0F6iN3kquFa0SBQaCobdo567WSd+5Uoy6n2xVI+PsJyhnJ55R2IojXWfXUWa+oaB/fLCLcw5Jf06pcx2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197146; c=relaxed/simple;
-	bh=/KaLpVJU2D0kJGijcFDV8K0Wctdw1a0VmX6aefncywg=;
+	s=arc-20240116; t=1789197151; c=relaxed/simple;
+	bh=gep0cnZZGgfAbzSxstnFBSmTxyb9SIpB2hFZYRNz5J0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g+tKLrD+2Au2SBsj3aUrGYxfSP2Dv7MhnnL1jj/ZRzIIMk9EROTj2S2aOrSoZAbkKhIAo8+QtDZVU0HjZN2lZCjyGBc++mE7L0XueXGrQWlMbb7c6a3nrNxqllYHEQ6u5f14O+FWPAhqqAor5mmPp+0k+t90ydKEjdqewlVj7xU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3Dmv9og; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o1WCHX7zB6f8ynrWM226izcVEtX6bBYMN5Z957eg87I4BUw6T5/bUEP6WI5fF2y2tq+YWYcLKfXYWXguWBJaYvFxpOe/I3Dx/yeraky92RR5J+74JVKOfoc/LCjWFUtagV1XcI1QF4bvbFkScxrmAggiUX/rBdqxZARU/ilzRBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xlO5VQI1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3Dmv9og"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FA91F000FF;
-	Sat, 12 Sep 2026 07:12:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xlO5VQI1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62C31F000FF;
+	Sat, 12 Sep 2026 07:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197144;
-	bh=IM98MnMQ5W/7lNrE2welr2HPSr2AHtcLF+2FNLcST/s=;
+	s=korg; t=1789197149;
+	bh=z9xHPoJ1H3GF7hvV1Cvb++YcMJjdi09ITCiX12XTDNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k3Dmv9ogRqn1NME6zFeT0K0/qXdcRUjQJOS01PcVkPxOJYjP+t9zG334sDkwhSO9S
-	 V5EQG/kFqnpm3c3qKEhFKn1kK4ZwIEA5Jq0Qm4EGw6gtti7/hOGgLsufxoqf6Fe+Mk
-	 /DsrvecCVKBqspWfDYRQLz1rqwMELjbw17xtfBBs=
+	b=xlO5VQI13vqQZ8D/cLbs+MifZPVmq2UhH0TUsmP1fTW4465n3fkSB5MGdRbMNErar
+	 49eER2j0YJRONNtXfLbpnZfXXaFKK+P9L8R3M77K0yBmRGDdHcVzPL7P/UzYdoeRVs
+	 V3C4hOfrpT5Tehn8wLRCnOKj+BRtxBcO5rrHRuJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Daniel McCarthy <daniel@dragonzap.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0110/1815] perf/x86/intel: Keep cap_user_rdpmc in sync with RDPMC user-disable state
-Date: Sat, 12 Sep 2026 08:31:00 +0200
-Message-ID: <20260912065651.587230627@linuxfoundation.org>
+Subject: [PATCH 7.2 0111/1815] pinctrl: bcm2835: Dont remove an unregistered GPIO chip
+Date: Sat, 12 Sep 2026 08:31:01 +0200
+Message-ID: <20260912065651.610941727@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,101 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Daniel McCarthy <daniel@dragonzap.com>
 
-[ Upstream commit 3c4ec9b2a5db56b60127bfaf933ecdeea7a1f10a ]
+[ Upstream commit 32711f77db0641e57fd96fdc013bf1286b9f2514 ]
 
-After introducing the RDPMC user disable feature, user-space RDPMC may
-return 0 instead of the actual event count. This creates an inconsistency
-with cap_user_rdpmc, where cap_user_rdpmc is set, but user-space RDPMC
-only returns 0.
+If the devm_pinctrl_register() function fails,
+bcm2835_pinctrl_probe() calls gpiochip_remove()
+before gpiochip_add_data() has registered the GPIO chip.
 
-To accurately represent the user-space RDPMC capability, update
-cap_user_rdpmc (depending on PERF_EVENT_FLAG_USER_READ_CNT) according to
-the RDPMC user disable state. If RDPMC user disable is enabled,
-cap_user_rdpmc is updated to false eventually, allowing user-space
-programs to fall back to the read() syscall to obtain the real event
-count.
+This means that upon failure the gpio_chip.gpiodev
+ is NULL resulting in a null pointer dereference
+inside the gpiochip_remove() function.
 
-Because PERF_EVENT_FLAG_USER_READ_CNT is evaluated in
-x86_pmu_event_init(), move intel_pmu_update_rdpmc_user_disable()
-earlier into intel_pmu_hw_config(). This ensures that the user-disable
-state is updated before updating PERF_EVENT_FLAG_USER_READ_CNT. Note that
-since event->ctx is not yet assigned at this stage, use the
-PERF_ATTACH_TASK flag to detect whether the event is task-attached.
+Remove the unnecessary function call to gpiochip_remove().
+No GPIO cleanup is required because the GPIO chip
+has not yet been registered. Without this change there
+is potential for a kernel panic upon registration failure
 
-While at it, fix the indentation of x86_pmu_has_rdpmc_user_disable()
-to adhere to the kernel coding style.
-
-Fixes: 59af95e028d4 ("perf/x86/intel: Add support for rdpmc user disable feature")
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260616044654.3468742-3-dapeng1.mi@linux.intel.com
+Fixes: 266423e60ea1 ("pinctrl: bcm2835: Change init order for gpio hogs")
+Signed-off-by: Daniel McCarthy <daniel@dragonzap.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/core.c       | 3 ++-
- arch/x86/events/intel/core.c | 6 +++---
- arch/x86/events/perf_event.h | 2 +-
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ drivers/pinctrl/bcm/pinctrl-bcm2835.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
-index d1af33d96d0a3..af0b67ffb43d8 100644
---- a/arch/x86/events/core.c
-+++ b/arch/x86/events/core.c
-@@ -2539,7 +2539,8 @@ static int x86_pmu_event_init(struct perf_event *event)
+diff --git a/drivers/pinctrl/bcm/pinctrl-bcm2835.c b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
+index e7b35019a5a7d..725e880ae086f 100644
+--- a/drivers/pinctrl/bcm/pinctrl-bcm2835.c
++++ b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
+@@ -1350,7 +1350,6 @@ static int bcm2835_pinctrl_probe(struct platform_device *pdev)
+ 	pc->pctl_desc = *pdata->pctl_desc;
+ 	pc->pctl_dev = devm_pinctrl_register(dev, &pc->pctl_desc, pc);
+ 	if (IS_ERR(pc->pctl_dev)) {
+-		gpiochip_remove(&pc->gpio_chip);
+ 		return PTR_ERR(pc->pctl_dev);
  	}
  
- 	if (READ_ONCE(x86_pmu.attr_rdpmc) &&
--	    !(event->hw.flags & PERF_X86_EVENT_LARGE_PEBS))
-+	    !(event->hw.flags & PERF_X86_EVENT_LARGE_PEBS) &&
-+	    !(event->hw.config & ARCH_PERFMON_EVENTSEL_RDPMC_USER_DISABLE))
- 		event->hw.flags |= PERF_EVENT_FLAG_USER_READ_CNT;
- 
- 	return err;
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 465c414f145da..5116b15438a21 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -3533,7 +3533,7 @@ static void intel_pmu_update_rdpmc_user_disable(struct perf_event *event)
- 	 */
- 	if (x86_pmu.attr_rdpmc == X86_USER_RDPMC_ALWAYS_ENABLE ||
- 	    (x86_pmu.attr_rdpmc == X86_USER_RDPMC_CONDITIONAL_ENABLE &&
--	     event->ctx->task))
-+	     (event->attach_state & PERF_ATTACH_TASK)))
- 		event->hw.config &= ~ARCH_PERFMON_EVENTSEL_RDPMC_USER_DISABLE;
- 	else
- 		event->hw.config |= ARCH_PERFMON_EVENTSEL_RDPMC_USER_DISABLE;
-@@ -3547,8 +3547,6 @@ static void intel_pmu_enable_event(struct perf_event *event)
- 	struct hw_perf_event *hwc = &event->hw;
- 	int idx = hwc->idx;
- 
--	intel_pmu_update_rdpmc_user_disable(event);
--
- 	if (unlikely(event->attr.precise_ip))
- 		static_call(x86_pmu_pebs_enable)(event);
- 
-@@ -5147,6 +5145,8 @@ static int intel_pmu_hw_config(struct perf_event *event)
- 		leader->hw.flags |= PERF_X86_EVENT_ACR;
- 	}
- 
-+	intel_pmu_update_rdpmc_user_disable(event);
-+
- 	if ((event->attr.type == PERF_TYPE_HARDWARE) ||
- 	    (event->attr.type == PERF_TYPE_HW_CACHE))
- 		return 0;
-diff --git a/arch/x86/events/perf_event.h b/arch/x86/events/perf_event.h
-index 5902a297daa15..a8afea8d38f0c 100644
---- a/arch/x86/events/perf_event.h
-+++ b/arch/x86/events/perf_event.h
-@@ -1344,7 +1344,7 @@ static inline u64 x86_pmu_get_event_config(struct perf_event *event)
- static inline bool x86_pmu_has_rdpmc_user_disable(struct pmu *pmu)
- {
- 	return !!(hybrid(pmu, config_mask) &
--		 ARCH_PERFMON_EVENTSEL_RDPMC_USER_DISABLE);
-+		  ARCH_PERFMON_EVENTSEL_RDPMC_USER_DISABLE);
- }
- 
- extern struct event_constraint emptyconstraint;
 -- 
 2.53.0
 
