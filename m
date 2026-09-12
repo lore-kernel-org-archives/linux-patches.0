@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6D4343893;
-	Sat, 12 Sep 2026 12:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD9A3AEF51;
+	Sat, 12 Sep 2026 12:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214800; cv=none; b=ClYMxXTROjtbWL+zhOgNXPCsHD9S765be5Flq0uP/OxR1EYzMR8a0wbF0SrWxqkiaoi/JXPbQ1FCyVnj4LYdPNnD+En7lyWZ0Kt9IaOFil91+jtJgMFGKRPJKK4kYYqgM5gtCEpXhQCFdJVEB1IhrOXJY/v+Fy3WRIL/bmKXvBU=
+	t=1789214804; cv=none; b=BqjhViF2OQeA94ZLgc+utAS5Red8jXXY/ySiHJc17zfEs9rLLzOjxBfFdIJ+xlhzijmNtNhTNWAtbWR15tm8nxG+W7C+qtzF9nvnqM+GGtU7h9QQYz+CBeHikT1TgWhDJ+wYi9W/w1GJBt5HP9F6N41Km+Hu9t3Q6V8QFvFm5HM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214800; c=relaxed/simple;
-	bh=lJdAF+mGYaMoU/5xfVTTB4AQUOMEVvnA07DXpWcf6OQ=;
+	s=arc-20240116; t=1789214804; c=relaxed/simple;
+	bh=u4b2f7h2SsMji802vorvHbK25ouB1EwWRDk9lz2VcTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eWpsFKPCsknVtMSlPch5HXHXzkDT+AQMy7rRXS+/Ru073tBeK+fVfe50IwzeOEQa4CdQyeA9QA0Y/pjZ8gUbu+hKuCBESniBpABk+tO3oWL+TwrqaHxAXGaRTyAvO3I7FOuo0jdpdfpvf/Cr7AuZksclF+5SOXuakmC8a2sblgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Adfcip7Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t5or2Qf/vLqWlR5nn1qEr4ZPLGdVnYBclefTGR/GfprC3l6/sqOxZGc11pEntfefxsuVIkHBsfyimZdA0KlEqhEB2HCsV2yxksiljiVxVRWxLDgu2i5T1zH55r1sKiW9Vj6gKxmQthSJA4AsUZR/ZuGX3GyRLDAJ1vGeZXHBWDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oO1xj3sa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Adfcip7Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20171F000FF;
-	Sat, 12 Sep 2026 12:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oO1xj3sa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E32A71F000FF;
+	Sat, 12 Sep 2026 12:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214799;
-	bh=0zfGh1aVIladC2RX/E0PMdM+GHT4LF16nTP8MU5NzYw=;
+	s=korg; t=1789214803;
+	bh=7D04iBd19XWsDX/4D8BHdlDjiilH1bNcxzaV3qPFTNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Adfcip7QQzVzBJx6CiIouyOH60KWYCmb2sY3ob667yqDrKGus0dt0JtbGoYKPymht
-	 uzzGTADxgmgOUFYrQsZVrWgFX1slOBhJthMrZlY2hbrQJGwekll/N8zvbrPWXooqcx
-	 cm19NVXKHeZ6HozcL8zUua0U/O0qaG3doQFGC6DA=
+	b=oO1xj3savib1hpZvbO6NULZThVnnR8iRTyv8R0JzUxJumuHTwbrvMzGuRVNCiS7T5
+	 +Aw2mYwpwJbHsGXzs3kZf6rJHNjDAQMve5c5o6b2Zg5D8nJEhCDUyr46G9tTLlwzcX
+	 Hb3ehxDGBuY0k/QYTSbWYHeBnP6dhHjvVKkYoZsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ahsan Atta <ahsan.atta@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0400/1376] crypto: qat - cancel work on re-enable SR-IOV timeout
-Date: Sat, 12 Sep 2026 08:47:06 +0200
-Message-ID: <20260912065616.457905345@linuxfoundation.org>
+Subject: [PATCH 6.12 0401/1376] crypto: qat - clear AES key schedule from stack
+Date: Sat, 12 Sep 2026 08:47:07 +0200
+Message-ID: <20260912065616.480249083@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,38 +54,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit 455b0f3ac9e254edab9f5a873d337abe5e6e3604 ]
+[ Upstream commit d41a9fcfb7f9ee36e4a4aaf5e7996bca6be1e7a9 ]
 
-The QAT reset worker queues SR-IOV reenable work using a work_struct and
-completion embedded in an on-stack adf_sriov_dev_data. If the completion
-wait times out, the reset worker can return while device_sriov_wq still
-holds or executes the stack-backed work item.
+qat_alg_xts_reverse_key() expands the forward XTS AES key on the stack.
+That schedule contains key material and can remain in the stack frame.
 
-Cancel the work on the device_sriov_wq on timeout before the stack frame
-unwinds.
+Clear the temporary crypto_aes_ctx with memzero_explicit() after the copy.
 
-Fixes: 4469f9b23468 ("crypto: qat - re-enable sriov after pf reset")
+Fixes: 5106dfeaeabe ("crypto: qat - add AES-XTS support for QAT GEN4 devices")
 Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_aer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/crypto/intel/qat/qat_common/qat_algs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_aer.c b/drivers/crypto/intel/qat/qat_common/adf_aer.c
-index bd81458bcf327..403e53347f8e2 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_aer.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_aer.c
-@@ -140,6 +140,8 @@ static void adf_device_reset_worker(struct work_struct *work)
- 	queue_work(device_sriov_wq, &sriov_data.sriov_work);
- 	if (wait_for_completion_timeout(&sriov_data.compl, wait_jiffies))
- 		adf_pf2vf_notify_restarted(accel_dev);
-+	else
-+		cancel_work_sync(&sriov_data.sriov_work);
+diff --git a/drivers/crypto/intel/qat/qat_common/qat_algs.c b/drivers/crypto/intel/qat/qat_common/qat_algs.c
+index d69cc1e5e0239..274bcc83a1fc2 100644
+--- a/drivers/crypto/intel/qat/qat_common/qat_algs.c
++++ b/drivers/crypto/intel/qat/qat_common/qat_algs.c
+@@ -481,6 +481,7 @@ static void qat_alg_xts_reverse_key(const u8 *key_forward, unsigned int keylen,
+ 		memcpy(key_reverse + AES_BLOCK_SIZE, key - AES_BLOCK_SIZE,
+ 		       AES_BLOCK_SIZE);
+ 	}
++	memzero_explicit(&aes_expanded, sizeof(aes_expanded));
+ }
  
- 	adf_dev_restarted_notify(accel_dev);
- 	clear_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
+ static void qat_alg_skcipher_init_dec(struct qat_alg_skcipher_ctx *ctx,
 -- 
 2.53.0
 
