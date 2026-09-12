@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FB33F9F50;
-	Sat, 12 Sep 2026 15:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28F83CDBB5;
+	Sat, 12 Sep 2026 15:58:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228698; cv=none; b=nB6TGSAZmpdCm8+FFWtfT8R18OXrj4d6ueaAgFmHreeGoXD/utyZRMF/maFTWtONKrJiauQDEtFY829vn6jpYK8MC1HGwFOzG2/PmjUonZnbYhrK7KQaW/jNn+Lb5EJYZ5DiKxW/JojWArzISIQyQ92iyUNQ4fW3g9WJwkmrk+I=
+	t=1789228704; cv=none; b=dp3aqxCHIm7RjxAl9xHondyqyZwGXb7QU75Ko5CIGmhcn6iQQFDDrpXlQBlIb5LCnXujdjJdk6IfOg+H57GH2DHLAQiRIqX8hSezvrbhVNLkvpEPhcDlQYN6MMmNI+EHxZJal/1XJiz2WswEf6JTwfxDfqo+AtLeCxXuVPZT9xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228698; c=relaxed/simple;
-	bh=B1S7SZr9Cdwp7N2QLIDI+GP73P9g1g8jlJeJ9lUkX/4=;
+	s=arc-20240116; t=1789228704; c=relaxed/simple;
+	bh=nWo+vF/OVH3hVX215bRycp13/zPrfLdG+uOuRfNvSss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EOi2VfHCYKKn9njkaWUn7JUzyfdE9BDc13CAyyOLfopM0r3tg4NL730/ukzFJdHaNnshqfAtIaIFyp5sbG1xi2rUDHim1qHliAKwIfvEg22TFIj9NLkun0FAI6PD2bC3s6jhYuoz/AiPsB+0Mh4iAAYHufgIqC3OZjSyfgoP3RA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFCX4ogd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HcnRSCsIAZqlTIu186PTsypcGKU5it2oTyHnoh3ZpOPIL95gHFJz9HCc1Zeep4ZcbSFkwu4iQuxqTgR3UVrL0m7bYl76BXlsyeZuna45Z6/SB5jYagdzoAwjgRHkcDOKPBDUIt2GU7m974DiZzOUgZfA5CRugml3mGasP5KSWTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ICS8eMnV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFCX4ogd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D701F00893;
-	Sat, 12 Sep 2026 15:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ICS8eMnV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC681F000FF;
+	Sat, 12 Sep 2026 15:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228697;
-	bh=TALiVRu4BH/p8McwUPqZ1rKzYOyJXaDjs/0y+9yu+z0=;
+	s=korg; t=1789228702;
+	bh=60j9bmzqYqtaQEuSmG8OtYgnWtbxGuxVxNhCLOelBH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GFCX4ogdRA2syGfiBJ04VBUOy/lEv1zjkdkDcN6eCfYGRphALP1jmka0dTqU4jUaT
-	 tPCbFfk97rPyb0SuY3k9ZMpTBdsgOULhkVOnMG3kppm5j0doCpY4yJa8fkFRTPseF5
-	 S0jBLjil2lwtWFDyp4jKLRT6O6bFuIGWRZ2sDxN8=
+	b=ICS8eMnVufZQUhPC7fBHf6ZKKI7VxZzSvn2Cb6VEGPPoMEtvuXgv9vU8pg9R2NpOh
+	 0FGrI4oSUvzH5LRMfVOntVheW8bB4kNlYpDQkIXcFsVnxt8aSd7NzzWa1WUu6Jg/yT
+	 FEJivphq/ENkUr5UBiL50KBj38JftG8f8v4479Vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	SJ Park <sj@kernel.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0438/1191] mm/damon/vaddr-kunit: check region count in three_regions test
-Date: Sat, 12 Sep 2026 08:52:46 +0200
-Message-ID: <20260912065558.071993207@linuxfoundation.org>
+Subject: [PATCH 6.1 0439/1191] mm/damon/sysfs-schemes: kobject_del() scheme dirs
+Date: Sat, 12 Sep 2026 08:52:47 +0200
+Message-ID: <20260912065558.093739859@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -54,58 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: SJ Park <sj@kernel.org>
 
-[ Upstream commit 5fea07e460874c8c7cf00f728efbe22abc62c8d8 ]
+[ Upstream commit 05fb6ac98c49be870c5f9ccdfdf95f0107e564ae ]
 
-damon_do_test_apply_three_regions() iterates regions after
-damon_set_regions() call assuming the function would succeed at setting
-the number of regions the same to the expected one.  It might have failed.
-In this case, __nth_region_of() in the iteration could return NULL and
-NULL dereference can happen in the test.
+On CONFIG_DEBUG_KOBJECT_RELEASE enabled kernel, lack of kobject_del()
+could cause directories creation failures due to the name conflicts.  Fix
+those issues for scheme directories by adding kobject_del() calls.
 
-The consequent user impact (NULL dereference) is quite bad.  The realistic
-user impact would be limited, though.  It would affect only test run
-setups.
-
-Fix it by testing if the number of regions was also changed as expected
-and exit early for the failure.
-
-The issue was discovered [1] by Sashiko.
-
-Link: https://lore.kernel.org/20260718001442.87129-4-sj@kernel.org
-Link: https://lore.kernel.org/20260713144757.39740-1-sj@kernel.org [1]
-Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
+Link: https://lore.kernel.org/20260628220121.97360-4-sj@kernel.org
+Fixes: 7e84b1f8212a ("mm/damon/sysfs: support DAMON-based Operation Schemes")
 Signed-off-by: SJ Park <sj@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: <stable@vger.kernel.org> # 5.15.x
+Cc: <stable@vger.kernel.org> # 5.18.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/vaddr-test.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ mm/damon/sysfs.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/mm/damon/vaddr-test.h b/mm/damon/vaddr-test.h
-index dda3c186ffefe..bed92599e9782 100644
---- a/mm/damon/vaddr-test.h
-+++ b/mm/damon/vaddr-test.h
-@@ -141,12 +141,17 @@ static void damon_do_test_apply_three_regions(struct kunit *test,
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 4231195785647..9a918f8e4c6bf 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -954,6 +954,7 @@ static void damon_sysfs_schemes_rm_dirs(struct damon_sysfs_schemes *schemes)
  
- 	damon_set_regions(t, three_regions, 3);
- 
-+	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), nr_expected / 2);
-+	if (damon_nr_regions(t) != nr_expected / 2)
-+		goto out;
-+
- 	for (i = 0; i < nr_expected / 2; i++) {
- 		r = __nth_region_of(t, i);
- 		KUNIT_EXPECT_EQ(test, r->ar.start, expected[i * 2]);
- 		KUNIT_EXPECT_EQ(test, r->ar.end, expected[i * 2 + 1]);
+ 	for (i = 0; i < schemes->nr; i++) {
+ 		damon_sysfs_scheme_rm_dirs(schemes_arr[i]);
++		kobject_del(&schemes_arr[i]->kobj);
+ 		kobject_put(&schemes_arr[i]->kobj);
  	}
+ 	schemes->nr = 0;
+@@ -991,13 +992,15 @@ static int damon_sysfs_schemes_add_dirs(struct damon_sysfs_schemes *schemes,
+ 			goto out;
+ 		err = damon_sysfs_scheme_add_dirs(scheme);
+ 		if (err)
+-			goto out;
++			goto del_out;
  
-+out:
- 	damon_destroy_target(t);
- }
+ 		schemes_arr[i] = scheme;
+ 		schemes->nr++;
+ 	}
+ 	return 0;
  
++del_out:
++	kobject_del(&scheme->kobj);
+ out:
+ 	damon_sysfs_schemes_rm_dirs(schemes);
+ 	kobject_put(&scheme->kobj);
 -- 
 2.53.0
 
