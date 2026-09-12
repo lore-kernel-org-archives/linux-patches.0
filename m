@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EC91A6813;
-	Sat, 12 Sep 2026 07:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931CA1EB5FD;
+	Sat, 12 Sep 2026 07:20:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197610; cv=none; b=NRv4X0PeEejZ0F9vZmwowTE+oA5JwpU1IV6JJCUxIRdPDFwZluLp7QiOwPz4d/KCTbJH28w26NlYVY+FlybDlaBBvhMQqbfFya1eYMefnqhEa0JBy6CsjbvnjmwOopP03hJTYgQ2MhP9LKv9KRFfc6FD7dL3wj0gfCyKbnVCcPQ=
+	t=1789197614; cv=none; b=WcbFaEZiwEDYkso0uhcq9tcYrh/kLs9viJ5ySMOrgp5QyO5fCjW353qnhCcPfbNTHA8KEveA2mGUlmhg22j6bZW5T4m+LUgGiQH3RkjnqpaScVB6+NpMmNLyS4IuyFNnh+SB0ZYNhMTeszDTmlofeX39GUv/fQJNFSzUUudBDAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197610; c=relaxed/simple;
-	bh=E3KjD4m7zVIQwEJli1d0iOgfaVeMeMFg7oMV6t5Au4E=;
+	s=arc-20240116; t=1789197614; c=relaxed/simple;
+	bh=jQsm0hT25+KzS8Vb9LeKU3/xsos4flXSPCG+8/RvGRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tju+UD5pM5y8fdcXmpBh4fyi69MhbVfENYasiMm1mEPRSGbDY+58R/7oIB6mRq06HiDhhsGYAJC9kHlGbwyZBKdIBroKjZqRC5eMEezVrd3nNcneltNeaBcXYw5G7yZKw2pMP2LiWg3N91RS/24YUkq9HrHg2UVb0s6nJzgO1EU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bm4DkLOu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=baAs6LMMd5TrZOKmsvgzXZf6gNXYhP5MmAIvVmuGAbHXQbuRVT/8O18mbOrqrDsJhlfIcX230fNK2BqfMafOyOzSmCyZ/jooU2rXrbfjkz3iLg4gDoieiWZnSs5zg8+daSy8tErzV30a60KSJINYGn2K1KUUqkfY8I04F9NuQi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUI17lF3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bm4DkLOu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 022411F000FF;
-	Sat, 12 Sep 2026 07:20:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUI17lF3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F4E1F000FF;
+	Sat, 12 Sep 2026 07:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197608;
-	bh=6q1th3idmily77EAGzd7FweD3ecZTE3IR4PRXsTE4zU=;
+	s=korg; t=1789197613;
+	bh=lrDvmuF7azis56tE1I/K64d0MtsEaOz+YYx55JQcJfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bm4DkLOuZY0d/vsWITq5YqmEk0Qqhxnmxqjbb3q7oih0/8XfYtUh8pQuk6A25ldTj
-	 0tDqXqcInOWCz3KhqehcIH08LlI7Oe3yabd3fO3qB9WR1VwrZvbA/dU4vPSBcy4dV0
-	 QOklc3Il7mJyah8Z0ZzR9Gixx8V2g/le86d30Hmc=
+	b=PUI17lF3eR042bzxZHRVJE/sf2wDVtOtGjhii3pT7pcyA6p5kjIZluC6w+1icNQU/
+	 0vA3ERXA5OGkWVfVQWSk2U/RNDZU9z3BnAM2Pe8KFeBY7uKw2SMmd9EYISRMaOOYqL
+	 Kf2SrEute/w1dwVcLe/u1mSjR5vt0gw6+9I8whVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Ridong Chen <ridong.chen@linux.dev>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0183/1815] perf/x86/amd/uncore: Add group validation
-Date: Sat, 12 Sep 2026 08:32:13 +0200
-Message-ID: <20260912065653.301084091@linuxfoundation.org>
+Subject: [PATCH 7.2 0210/1815] cgroup/cpuset: Make nr_deadline_tasks an atomic_t
+Date: Sat, 12 Sep 2026 08:32:40 +0200
+Message-ID: <20260912065653.925997231@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,81 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit edda9051e267b7390c7ce24b1b71434414ad156e ]
+[ Upstream commit 95220e1f18f6321008f021abc7d6f581f64bcb82 ]
 
-The amd_uncore driver currently does not validate event groups and
-allows creation of groups with more events than the number of available
-hardware counters. Because of this, pmu->event_init() succeeds but
-counter assignment fails later in pmu->add() which returns -EBUSY once
-all counters are exhausted.
+The nr_deadline_tasks variable in the cpuset structure was introduced by
+commit 6c24849f5515 ("sched/cpuset: Keep track of SCHED_DEADLINE task
+in cpusets"). It is reported by sashiko [1] that nr_deadline_tasks
+can currently be modified by inc_dl_tasks_cs() under rq->lock and
+by cpuset_attach() under cpuset_mutex. So if both updates happen
+simultaneously, the nr_deadline_tasks variable can be corrupted leading
+to incorrect operations down the road.
 
-Address this by introducing group validation in the pmu->event_init()
-path. Since the uncore PMUs have no per-event constraints and all
-counters of a PMU are interchangeable, validation is reduced to just
-counting the group members that target a PMU and ensuring that they fit
-within the available set of counters.
+Fix that by changing its type to atomic_t so that nr_deadline_tasks
+are always atomically updated. This fix patch is a low hanging fruit.
+It can handle some of the races between a concurrent sched_setscheduler()
+and cpuset_can_attach()/cpuset_attach() calls, but not all of them like
+the other issue raised by sashiko [2]. This will be handled hopefully
+in a future follow up patch.
 
-Fixes: c43ca5091a37 ("perf/x86/amd: Add support for AMD NB and L2I "uncore" counters")
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://patch.msgid.link/750877d66e208603c3047f13eed6399625d43969.1782884387.git.sandipan.das@amd.com
+[1] https://sashiko.dev/#/patchset/20260626181923.133658-1-longman%40redhat.com
+[2] https://sashiko.dev/#/patchset/20260630033344.352702-1-longman%40redhat.com
+
+Fixes: 6c24849f5515 ("sched/cpuset: Keep track of SCHED_DEADLINE task in cpusets")
+Reviewed-by: Ridong Chen <ridong.chen@linux.dev>
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/uncore.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ kernel/cgroup/cpuset-internal.h |  2 +-
+ kernel/cgroup/cpuset.c          | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
-index dbc00b6dd69ee..222dfab9225fe 100644
---- a/arch/x86/events/amd/uncore.c
-+++ b/arch/x86/events/amd/uncore.c
-@@ -265,6 +265,29 @@ static void amd_uncore_del(struct perf_event *event, int flags)
- 	hwc->idx = -1;
+diff --git a/kernel/cgroup/cpuset-internal.h b/kernel/cgroup/cpuset-internal.h
+index f7aaf01f7cd5e..140700e5e236d 100644
+--- a/kernel/cgroup/cpuset-internal.h
++++ b/kernel/cgroup/cpuset-internal.h
+@@ -165,7 +165,7 @@ struct cpuset {
+ 	 * number of SCHED_DEADLINE tasks attached to this cpuset, so that we
+ 	 * know when to rebuild associated root domain bandwidth information.
+ 	 */
+-	int nr_deadline_tasks;
++	atomic_t nr_deadline_tasks;
+ 	int nr_migrate_dl_tasks;
+ 	/* DL bandwidth that needs destination reservation for this attach. */
+ 	u64 sum_migrate_dl_bw;
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index cce1f0e292ade..411533d1b46c8 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -222,14 +222,14 @@ void inc_dl_tasks_cs(struct task_struct *p)
+ {
+ 	struct cpuset *cs = task_cs(p);
+ 
+-	cs->nr_deadline_tasks++;
++	atomic_inc(&cs->nr_deadline_tasks);
  }
  
-+static bool amd_uncore_group_valid(struct perf_event *event)
-+{
-+	struct amd_uncore_pmu *pmu = event_to_amd_uncore_pmu(event);
-+	struct perf_event *leader = event->group_leader;
-+	struct perf_event *sibling;
-+	int counters = 0;
-+
-+	if (leader->pmu == event->pmu)
-+		counters++;
-+
-+	for_each_sibling_event(sibling, leader) {
-+		if (sibling->pmu == event->pmu &&
-+		    sibling->state > PERF_EVENT_STATE_OFF)
-+			counters++;
-+	}
-+
-+	/*
-+	 * When pmu->event_init() is called, the event is yet to be linked to
-+	 * its leader's sibling list, so it is counted separately
-+	 */
-+	return (counters + 1) <= pmu->num_counters;
-+}
-+
- static int amd_uncore_event_init(struct perf_event *event)
+ void dec_dl_tasks_cs(struct task_struct *p)
  {
- 	struct amd_uncore_pmu *pmu;
-@@ -282,6 +305,14 @@ static int amd_uncore_event_init(struct perf_event *event)
- 	if (!ctx)
- 		return -ENODEV;
+ 	struct cpuset *cs = task_cs(p);
  
-+	/*
-+	 * Ensure that all events in a group can be scheduled together so that
-+	 * a failure can be reported at perf_event_open() time rather than
-+	 * silently at pmu->add() time when no free counter is found
-+	 */
-+	if (event->group_leader != event && !amd_uncore_group_valid(event))
-+		return -EINVAL;
-+
- 	/*
- 	 * NB and Last level cache counters (MSRs) are shared across all cores
- 	 * that share the same NB / Last level cache.  On family 16h and below,
+-	cs->nr_deadline_tasks--;
++	atomic_dec(&cs->nr_deadline_tasks);
+ }
+ 
+ static inline bool is_partition_valid(const struct cpuset *cs)
+@@ -918,7 +918,7 @@ static void dl_update_tasks_root_domain(struct cpuset *cs)
+ 	struct css_task_iter it;
+ 	struct task_struct *task;
+ 
+-	if (cs->nr_deadline_tasks == 0)
++	if (atomic_read(&cs->nr_deadline_tasks) == 0)
+ 		return;
+ 
+ 	css_task_iter_start(&cs->css, 0, &it);
+@@ -3216,8 +3216,8 @@ static void cpuset_attach(struct cgroup_taskset *tset)
+ 	cs->old_mems_allowed = cpuset_attach_nodemask_to;
+ 
+ 	if (cs->nr_migrate_dl_tasks) {
+-		cs->nr_deadline_tasks += cs->nr_migrate_dl_tasks;
+-		oldcs->nr_deadline_tasks -= cs->nr_migrate_dl_tasks;
++		atomic_add(cs->nr_migrate_dl_tasks, &cs->nr_deadline_tasks);
++		atomic_sub(cs->nr_migrate_dl_tasks, &oldcs->nr_deadline_tasks);
+ 		reset_migrate_dl_data(cs);
+ 	}
+ 
 -- 
 2.53.0
 
