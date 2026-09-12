@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A93387364;
-	Sat, 12 Sep 2026 14:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C79B230BDB;
+	Sat, 12 Sep 2026 14:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224320; cv=none; b=DUCgkKylDss/C8aTa5EkXn5T+wolmFUkAw1YfuFqrLzZnyGrOmfTq+knfhNpeu674FhhzhNLW70vp2gwAMS6y5mUDEMNhfumcaxHonztcmG96fzHwNpS8M70U2bWk34rFsYyK2yiYxHrGUR/bSqiA2uc0/antK8WstOorJOKZfo=
+	t=1789224325; cv=none; b=DkQq3r+8v9fQRjLquKP+WKOgRe9+D7jrj5n3OE0twu5Gs+8CZs5KsFCjTD3wcOkPrj307mY4Ue3YegrbjYRIBjJArSRwSQATInFiSjcrmeuay8rKHYVMrOYwlq+yTjWT4UkYzZcP0zqHgPxyBz6AyU7zH0R/iZjW+P4I/OmwKok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224320; c=relaxed/simple;
-	bh=LtdBLJdtPgg2AJQ8jd5Ssxqjdcx0f/uJOUHNl0EqEO4=;
+	s=arc-20240116; t=1789224325; c=relaxed/simple;
+	bh=vehlUecLpha69w5rtnsmJB1mSbP4gmVqrQvnZKVvZJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=drXSVpC4s0Uf8jK33nfn3ImE+Q/c4dyZH9viYD6ugwkOe0JljBFc1z53fO5yTQ8KQKk5UkZUZ+v9E7xoIEwU3coj07Y/nFrfmh+zEpb0MOZF+k1B/SGmg1Jz1UHy0TJYidVdBrNseCOZDbjD0u7y1200XrrzljGnSYY8/yurqhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GszT1yx6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DEYDx33xONfmaCKo8db2laPntHWuAnIk3sRTtz310KDEcJVyUEH3QEZZOvwm4SI2fwQcWhiaWExQjf0cPGTT2LHV9cDCK2IEG/FFrXMYfrJi/1m2jaCKLUgNbj/ilA+b5Ta1HDdtrcyIWD2yKhgN7kyTaHvHX4Lidy4hfglpg4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VzyRB9T8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GszT1yx6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE69B1F000FF;
-	Sat, 12 Sep 2026 14:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VzyRB9T8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313DA1F000FF;
+	Sat, 12 Sep 2026 14:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224319;
-	bh=LgaLqD8GdrkX3kC1Y9PVs/GuqG1PJlt12RaSo7ziSDE=;
+	s=korg; t=1789224324;
+	bh=0WbzYxenT1An9cyUef+QdDD0etduVg7i4wTDVTpZjN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GszT1yx6A6pmCawPbY3i/nAGQNU1ILQGZgs9lMj5SBMxM9fsddnLE/m37opS/8Dyb
-	 H9rGZo5qZh3erUVNaE+qMIKcGlypv/2D8o4FKQr8ZyBVKft3IjZVzhQFWXXj6BOKVE
-	 tbIzj9v2w/FhUhRPJmPf/IBYQgTB/kjIyrPbfFwg=
+	b=VzyRB9T841NtHK7r6PwLHugKC4Yc02rhYLuPUsPHYb+sBT/2VlhaJOM/8kYa7Ww5S
+	 57EwAr4ZkMxq7ZgrmiTgi0gS6zzU4CtBDj4E414qbgY9Qe8vC4lIcwptUi0YsClTV8
+	 sYcj3oRuUljjXSrxn4hTOo/d46vXs4C43XKA5jl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0952/1424] arm64: dts: qcom: sm8550: Use GIC-ITS for PCIe0 and PCIe1
-Date: Sat, 12 Sep 2026 08:56:24 +0200
-Message-ID: <20260912065628.636927385@linuxfoundation.org>
+Subject: [PATCH 6.6 0970/1424] wifi: mt76: mt7921: validate CLC firmware records
+Date: Sat, 12 Sep 2026 08:56:42 +0200
+Message-ID: <20260912065629.035699070@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,81 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-[ Upstream commit 114990ce3edfd059648889f978cbdc83447b305b ]
+[ Upstream commit 9417c5818a0146980c2608fda94c908e604eb033 ]
 
-Both PCIe0 and PCIe1 controllers are capable of signalling the MSIs
-received from endpoint devices to the CPU using GIC-ITS MSI controller.
-Add support for it.
+The CLC region is supplied by firmware, but the loader trusts the
+region count and each record length. A malformed image can make the
+region table pointer precede the firmware buffer, make the record loop
+fail to advance, or index phy->clc past its end. Validate the table and
+record bounds before dereferencing or copying.
 
-The GIC-ITS MSI implementation provides an advantage over internal MSI
-implementation using Locality-specific Peripheral Interrupts (LPI) that
-would allow MSIs to be targeted for each CPU core.
-
-Like SM8450, the IDs are swapped, but works fine on PCIe0 and PCIe1.
-
-WiFi PCIe Device on SM8550-QRD using GIC-ITS:
-218:          0          4          0          0          0          0          0          0   ITS-MSI 524288 Edge      bhi
-219:          0          0          5          0          0          0          0          0   ITS-MSI 524289 Edge      mhi
-220:          0          0          0         33          0          0          0          0   ITS-MSI 524290 Edge      mhi
-221:          0          0          0          0          3          0          0          0   ITS-MSI 524291 Edge      ce0
-222:          0          0          0          0          0          1          0          0   ITS-MSI 524292 Edge      ce1
-223:          0          0          0          0          0          0         38          0   ITS-MSI 524293 Edge      ce2
-224:          0          0          0          0          0          0          0         31   ITS-MSI 524294 Edge      ce3
-225:          0          0          0          0          0          0          0          0   ITS-MSI 524295 Edge      ce5
-226:          0          0          0          0          0          0          0          0   ITS-MSI 524296 Edge      DP_EXT_IRQ
-227:          0          0          0          0          0          0          0          0   ITS-MSI 524297 Edge      DP_EXT_IRQ
-228:          0          0          0          0          0          0          0          0   ITS-MSI 524298 Edge      DP_EXT_IRQ
-229:          0          0          0          0          0          0          0          0   ITS-MSI 524299 Edge      DP_EXT_IRQ
-230:          0          0          0          0          0          0          0          0   ITS-MSI 524300 Edge      DP_EXT_IRQ
-231:          0          0          0          0          0          0          0          0   ITS-MSI 524301 Edge      DP_EXT_IRQ
-232:          0          0          0          0          0          0          0          0   ITS-MSI 524302 Edge      DP_EXT_IRQ
-
-NVMe in SM8550-HDK M.2 Slot using GIC-ITS:
-212:          0          0         22          0          0          0          0          0   ITS-MSI 134742016 Edge      nvme0q0
-213:     133098          0          0          0          0          0          0          0   ITS-MSI 134742017 Edge      nvme0q1
-214:          0     139450          0          0          0          0          0          0   ITS-MSI 134742018 Edge      nvme0q2
-215:          0          0     139476          0          0          0          0          0   ITS-MSI 134742019 Edge      nvme0q3
-216:          0          0          0      69767          0          0          0          0   ITS-MSI 134742020 Edge      nvme0q4
-217:          0          0          0          0      80368          0          0          0   ITS-MSI 134742021 Edge      nvme0q5
-218:          0          0          0          0          0      77315          0          0   ITS-MSI 134742022 Edge      nvme0q6
-219:          0          0          0          0          0          0      73022          0   ITS-MSI 134742023 Edge      nvme0q7
-220:          0          0          0          0          0          0          0     329993   ITS-MSI 134742024 Edge      nvme0q8
-
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20240122-topic-sm8550-upstream-pcie-its-v2-1-b3398d86d1f1@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 16d98ee918d6 ("arm64: dts: qcom: sm8550: Fix the PCIe iommu-map entries")
+Fixes: 23bdc5d8cadf ("wifi: mt76: mt7921: introduce Country Location Control support")
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+Link: https://patch.msgid.link/CAMyXUJmh=WfwC4_KHupNxYR5e2Gy5QhBDL5TSG6XEW-XLa+X4Q@mail.gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../net/wireless/mediatek/mt76/mt7921/mcu.c   | 28 ++++++++++++++++---
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 5a79adbe8da12..565752afe43b5 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -1734,6 +1734,9 @@ pcie0: pci@1c00000 {
- 					<&gem_noc MASTER_APPSS_PROC 0 &cnoc_main SLAVE_PCIE_0 0>;
- 			interconnect-names = "pcie-mem", "cpu-pcie";
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+index 80a07e5f3a27e..8308de5017d74 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+@@ -372,7 +372,8 @@ static int mt7921_load_clc(struct mt792x_dev *dev, const char *fw_name)
+ 	struct mt76_dev *mdev = &dev->mt76;
+ 	struct mt792x_phy *phy = &dev->phy;
+ 	const struct firmware *fw;
+-	int ret, i, len, offset = 0;
++	size_t clc_len, fw_data_len, len, offset = 0;
++	int ret, i;
+ 	u8 *clc_base = NULL, hw_encap = 0;
  
-+			/* Entries are reversed due to the unusual ITS DeviceID encoding */
-+			msi-map = <0x0 &gic_its 0x1401 0x1>,
-+				  <0x100 &gic_its 0x1400 0x1>;
- 			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
- 				    <0x100 &apps_smmu 0x1401 0x1>;
+ 	if (mt7921_disable_clc ||
+@@ -397,13 +398,21 @@ static int mt7921_load_clc(struct mt792x_dev *dev, const char *fw_name)
+ 	}
  
-@@ -1830,6 +1833,9 @@ pcie1: pci@1c08000 {
- 					<&gem_noc MASTER_APPSS_PROC 0 &cnoc_main SLAVE_PCIE_1 0>;
- 			interconnect-names = "pcie-mem", "cpu-pcie";
+ 	hdr = (const void *)(fw->data + fw->size - sizeof(*hdr));
++	if (hdr->n_region > (fw->size - sizeof(*hdr)) / sizeof(*region)) {
++		dev_err(mdev->dev, "Invalid firmware region table\n");
++		ret = -EINVAL;
++		goto out;
++	}
++	fw_data_len = fw->size - sizeof(*hdr) -
++		      hdr->n_region * sizeof(*region);
++
+ 	for (i = 0; i < hdr->n_region; i++) {
+ 		region = (const void *)((const u8 *)hdr -
+ 					(hdr->n_region - i) * sizeof(*region));
+ 		len = le32_to_cpu(region->len);
  
-+			/* Entries are reversed due to the unusual ITS DeviceID encoding */
-+			msi-map = <0x0 &gic_its 0x1481 0x1>,
-+				  <0x100 &gic_its 0x1480 0x1>;
- 			iommu-map = <0x0   &apps_smmu 0x1480 0x1>,
- 				    <0x100 &apps_smmu 0x1481 0x1>;
+ 		/* check if we have valid buffer size */
+-		if (offset + len > fw->size) {
++		if (len > fw_data_len - offset) {
+ 			dev_err(mdev->dev, "Invalid firmware region\n");
+ 			ret = -EINVAL;
+ 			goto out;
+@@ -420,8 +429,19 @@ static int mt7921_load_clc(struct mt792x_dev *dev, const char *fw_name)
+ 	if (!clc_base)
+ 		goto out;
  
+-	for (offset = 0; offset < len; offset += le32_to_cpu(clc->len)) {
++	for (offset = 0; offset < len; offset += clc_len) {
++		if (len - offset < sizeof(*clc)) {
++			ret = -EINVAL;
++			goto out;
++		}
++
+ 		clc = (const struct mt7921_clc *)(clc_base + offset);
++		clc_len = le32_to_cpu(clc->len);
++		if (clc_len < sizeof(*clc) || clc_len > len - offset ||
++		    clc->idx >= ARRAY_SIZE(phy->clc)) {
++			ret = -EINVAL;
++			goto out;
++		}
+ 
+ 		/* do not init buf again if chip reset triggered */
+ 		if (phy->clc[clc->idx])
+@@ -433,7 +453,7 @@ static int mt7921_load_clc(struct mt792x_dev *dev, const char *fw_name)
+ 			continue;
+ 
+ 		phy->clc[clc->idx] = devm_kmemdup(mdev->dev, clc,
+-						  le32_to_cpu(clc->len),
++						  clc_len,
+ 						  GFP_KERNEL);
+ 
+ 		if (!phy->clc[clc->idx]) {
 -- 
 2.53.0
 
