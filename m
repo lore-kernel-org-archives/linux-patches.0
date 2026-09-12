@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C9537CD32;
-	Sat, 12 Sep 2026 07:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C1F342146;
+	Sat, 12 Sep 2026 07:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198022; cv=none; b=Vgu9u1gBrlc47QznrJZ2DKCySrezws1PJdowMyh6/5abQlZmQmg8R1JpT1XLTrCLO02BjNIzI77M5uUBdUFEuoipgmf40ba+xMIveHvKWtiU+ubzSLdoiEI1pqFuPiwvoRXGohGMMviGLKukPy3dKz3v23wP6G0qz5RcXOgmK8I=
+	t=1789198028; cv=none; b=EBHrY6c7CEZt3E5BJfFjaNV0EI2bQ0NUAr4Fm9bZxxJC/VMEnrlp5uGeg8GfWos9Aztl1HBXc36YUdNCa3ZKy3ZWVwUDwgCDbvMksRVivB3+ncZuidrymCsDjL6T6M2yyR7jp1gZvdJge/Mmp76JKKc9ijZn55/jgnBPBBgEO0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198022; c=relaxed/simple;
-	bh=+ciOgq2Pi+7AE95Dbh8V2KeHAgYOxZ6ff8hDLRMDthE=;
+	s=arc-20240116; t=1789198028; c=relaxed/simple;
+	bh=ICCSdm1Ny28XWMqdCVlSgtgUjRIkd5W/iboV27TqhOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Koo0axpdYdClaZLVRJ8G1xKdNZTEwcg1iIDXAIrNA6vZAWfmVyiecJI4Ny94BbKc0jg8HN6jHlmD9zs3VgDcV7D9BHQXdTTjh9vtOweezwhgvzjgFI/KIy9ByK9PuaCZR8yWEvXqcwuMiB42ct4vjImBtcwP6esWRpFw7Idhl5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G68+eeJG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Spt4OMFbyf2s70BZt4JYVn+RMIaHj4N16FYvpBty7E4+4pZvoyClImWiOS7d8RR5o29/ZnpcRGwtjDf+w70GqG0zPWF4Nfga6Xc1rIWPKDnIJZQWlkpz3nvwuGMLc+lizJfYDbJBprPQkSSTOjxYp/BhwVdx+qokpRN4bMxzoMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJjY5Jy9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G68+eeJG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA08B1F000FF;
-	Sat, 12 Sep 2026 07:27:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJjY5Jy9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45981F000FF;
+	Sat, 12 Sep 2026 07:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198021;
-	bh=v9suHX4IPaGF+pPevWFvOpWWvoB0SrVY8mbSCoLeNOk=;
+	s=korg; t=1789198026;
+	bh=n11vs0O8Kc7BpTHL6Sf90dd0e/g+ZfPPoUj4CbArAXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G68+eeJGk3krIikdLhF//QQhh6xugd3niCyJFmJp7Yomt8V14001TIRakOUoILjWT
-	 AI6pSK51QVatrt8YlziY5pFt7Bl2OW03HM716gyWewapUdmHIIBiHA9xpd1IyJw08O
-	 LvOvC9xoPo5nwrggg+L3Zl7eq3RO2biR2AB3iKtg=
+	b=HJjY5Jy9Df81pWpOdS1RC4SjDUoIp9IDs7uTlM7urUUsli1tbBqftiCnhZDUUqjdI
+	 zlI+b1qQblCzSthiA2mibuA7J8eE3JEcxD1JAsLGLeJ9HOURfcRme0eW9e+TwPVtd6
+	 aoAwdSl033jE6Hr/FuX1k7RzAu+oX6xjJVWid+cU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Manuel Fombuena <fombuena@outlook.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0295/1815] leds: st1202: Set all pattern PWM slots to full after clearing pattern
-Date: Sat, 12 Sep 2026 08:34:05 +0200
-Message-ID: <20260912065655.878387982@linuxfoundation.org>
+Subject: [PATCH 7.2 0296/1815] leds: st1202: Fix brightness having no effect while pattern mode is active
+Date: Sat, 12 Sep 2026 08:34:06 +0200
+Message-ID: <20260912065655.900583086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,50 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Manuel Fombuena <fombuena@outlook.com>
 
-[ Upstream commit d2ca0e2b6d6430f9c60bb2e0ee0b2b3dc4e5d86a ]
+[ Upstream commit 7cbe470366bdd43c7e8114fb2c4d74fa69093121 ]
 
-pattern_clear() sets all PWM registers for the channel to LED_OFF (0).
-In static mode (PATS=0), the LED output is ILED x Pattern0_PWM / 4095;
-with Pattern0 at zero the LED remains dark regardless of the ILED value.
+Once a hardware pattern is running (PATS=1), writing to the brightness
+sysfs attribute only updates the ILED register. The visible output is
+ILED x Pattern_PWM / 4095, so the change has little effect and the LED
+never returns to steady static operation as the user expects.
 
 The LED1202 has a single global sequencer shared across all channels.
-If another channel starts the sequencer after this one has been cleared,
-the cleared channel runs through all 8 steps at zero duty cycle and
-stays dark regardless of ILED.
+Stopping it in brightness_set() to force static mode would halt running
+patterns on all other active LEDs.
 
-Set all 8 PWM slots to ST1202_PATTERN_PWM_FULL so that ILED alone
-controls the channel brightness in both static and sequencer modes.
+Instead, set all 8 PWM slots for the channel to ST1202_PATTERN_PWM_FULL
+before writing ILED. With every step at full duty cycle, the output is
+ILED x FULL / 4095 = ILED regardless of the sequencer state, without
+disturbing other channels.
 
+This also enables basic LED operation without the pattern trigger: with
+the trigger set to none, the brightness sysfs attribute fully controls
+the LED as a simple on/off device.
+
+Fixes: 259230378c65 ("leds: Add LED1202 I2C driver")
 Signed-off-by: Manuel Fombuena <fombuena@outlook.com>
 Assisted-by: Claude:claude-sonnet-4-6
-Link: https://patch.msgid.link/GV1PR08MB849732C162CFE9E2C525AC16C5F52@GV1PR08MB8497.eurprd08.prod.outlook.com
+Link: https://patch.msgid.link/GV1PR08MB8497570FD162D0D42A9864E3C5F52@GV1PR08MB8497.eurprd08.prod.outlook.com
 Signed-off-by: Lee Jones <lee@kernel.org>
-Stable-dep-of: 7cbe470366bd ("leds: st1202: Fix brightness having no effect while pattern mode is active")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-st1202.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/leds/leds-st1202.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/leds/leds-st1202.c b/drivers/leds/leds-st1202.c
-index ce09cedc869fd..75a40ca445558 100644
+index 75a40ca445558..43512a835df8e 100644
 --- a/drivers/leds/leds-st1202.c
 +++ b/drivers/leds/leds-st1202.c
-@@ -35,6 +35,7 @@
- #define ST1202_MILLIS_PATTERN_DUR_MIN      22
- #define ST1202_PATTERN_DUR                 0x16
- #define ST1202_PATTERN_PWM                 0x1E
-+#define ST1202_PATTERN_PWM_FULL            0x0FFF
- #define ST1202_PATTERN_REP                 0x15
+@@ -136,6 +136,8 @@ static void st1202_brightness_set(struct led_classdev *led_cdev,
  
- struct st1202_led {
-@@ -205,7 +206,7 @@ static int st1202_led_pattern_clear(struct led_classdev *ldev)
- 		return ret;
+ 	guard(mutex)(&chip->lock);
  
- 	for (int patt = 0; patt < ST1202_MAX_PATTERNS; patt++) {
--		ret = st1202_pwm_pattern_write(chip, led->led_num, patt, LED_OFF);
-+		ret = st1202_pwm_pattern_write(chip, led->led_num, patt, ST1202_PATTERN_PWM_FULL);
- 		if (ret != 0)
- 			return ret;
++	for (int patt = 0; patt < ST1202_MAX_PATTERNS; patt++)
++		st1202_pwm_pattern_write(chip, led->led_num, patt, ST1202_PATTERN_PWM_FULL);
+ 	st1202_write_reg(chip, ST1202_ILED_REG0 + led->led_num, value);
+ }
  
 -- 
 2.53.0
