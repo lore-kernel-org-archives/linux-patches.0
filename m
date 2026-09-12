@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0904B3F788A;
-	Sat, 12 Sep 2026 11:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C1B2D0C75;
+	Sat, 12 Sep 2026 11:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213217; cv=none; b=hSvUahqxvfkExpIHIxs1duh/j2mXEJ2p0SNx5r+o/x6E7FNNefTWCLPzocoz+LfYdppvv3P++Mf1MCNwHJvOgsynLaR2xafOugDFpwjWNivGEIbIGzriDamTMN662+lR7IcWyX0nD3wAi7wB8lYXQHPN+y8bJ4l3ciCyfIRocb0=
+	t=1789213222; cv=none; b=Kj8NmTIhrhX/St/So+guYid8LIgXE8dEbdJO17x8mVPc/ykrfcEfb+GTGIoBTMN2Z1BJFg/7QZDe37lfYwNqnDEx6jafihH0XzPID2gwdR+uj2QEkne4nuql9Co4G/TTXf0nZ9LBPzAmRSyz+qMFy75b+PRzNOo6sjlkF5q9q6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213217; c=relaxed/simple;
-	bh=eZOJmGR4ijIgRd+6KNROEU8klMkyAqEfoCFzF+KPOWs=;
+	s=arc-20240116; t=1789213222; c=relaxed/simple;
+	bh=Adty7udHDCoVxm7INkfnR29nd6XBWmFUSHdYCKIZew8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eXjq/nb3emgx9jwDne9uIS5lveQSxemoHhBff6mBaOcC1nhGQf3IFK4KR+BWkarq5sbQv1e1wTGupg21qKUTE1Hmc4u1FuZRrPAmSVDKwan9c8vb678KnqTA7oL9O55lXtxZ2/rE1g0cI2YZTaDNh09GVPWlt/etX2VneAVnZWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKlFF9H5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FUq3L4+rRsVsEyhcuhNwm3IxUGepWNyH87z2V4bzbsadIU3luwU+Caxax0QwVTFN8ADng4SC6/vlxRFG0rbJeCywhQYqnIfACFFPq9BnNk06B3nVbqgIEe6DVyCslSwfi9ZCU/HYhZpuCJbejM4fzJITamYotVAtOY/OTCD4z+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hk/zqTG4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKlFF9H5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F011F000FF;
-	Sat, 12 Sep 2026 11:40:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hk/zqTG4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF2B1F000FF;
+	Sat, 12 Sep 2026 11:40:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213215;
-	bh=h8StEW3gSp8FNlX6/SCr/DwWbB+6ogg9h2L2YA1PzKA=;
+	s=korg; t=1789213220;
+	bh=ACwcb6QBHx/NUkqT8WDdmB3fWqPHld8eO47K6W+ayN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fKlFF9H5/nL3hbGwKgrk9YagPFWZ8jmyDg0leI9PgvdYeiELFt+GadWCxgsUbcwQ/
-	 VmiVjLDTp9jARJy1OpP/yCFtIpaYem7eIApAD8wM4V2vJdu78QHFvUwEHkdLM/G+np
-	 XlzGSG5dvBv5cThdpBjd5LaKpJBRTECxJK6xTVu0=
+	b=Hk/zqTG4xwvLPDxqnPrUAYgmH8W755+LWIRTIBzupBR+vqFgQd7oYg2l6hYBPT89A
+	 fM3+5HafpdjpMr4oHmrrvyU3BSu04793rUFzvlJZdPXRBlLAKf9tj9SBEYnEXUayQ5
+	 G5nWTo4lqN64Zpa2YTMYXQ149HE7x1zQMpyPFoTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.12 0075/1376] perf/x86/intel: Fix kernel address leakages in LBR stack
-Date: Sat, 12 Sep 2026 08:41:41 +0200
-Message-ID: <20260912065609.229522241@linuxfoundation.org>
+	Viktor Malik <vmalik@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>
+Subject: [PATCH 6.12 0076/1376] perf trace: Factor out BPF loop body
+Date: Sat, 12 Sep 2026 08:41:42 +0200
+Message-ID: <20260912065609.253650356@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,82 +50,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Viktor Malik <vmalik@redhat.com>
 
-commit e2b0575900ff72aa82748af96e7bd564ade5157a upstream.
+commit acff3e1a9cc29a6a039b76b81a438c56016bc0e3 upstream.
 
-Before Arch LBR gained CPL filtering support, a user-only branch stack
-could still contain kernel addresses. As a result, kernel branch records
-may be exposed to user space even when PERF_SAMPLE_BRANCH_USER is
-requested.
+The BPF program in augmented_raw_syscalls uses a for loop to iterate all
+syscall arguments. The loop body is quite complex and often poses
+problems for the BPF verifier. As a preparation step for addressing this
+issue, factor out the loop body into a separate function.
 
-For example, on Intel Tiger Lake, the following command can still report
-SYSRET/ERET entries with kernel-space from addresses:
-
-$ ./perf record -e cycles:p -o - --branch-filter any,save_type,u -- \
- 	./perf bench syscall basic --loop 1000 | \
-	./perf script -i - --fields brstack|tr ' ' '\n'| \
-	grep -E '0x[89a-f][0-9a-f]{15}'
-
-    Total time: 0.000 [sec]
-
-      0.219000 usecs/op
-     4,566,210 ops/sec
-[ perf record: Woken up 1 times to write data ]
-[ perf record: Captured and wrote 0.551 MB - ]
-0xffffffff93c001c8/0x7f12a2b1d647/P/-/-/16959/SYSRET/-
-0xffffffff93c001c8/0x7f12a2b1d5c2/P/-/-/17535/SYSRET/-
-0xffffffff93c01928/0x7f12a2861000/P/-/-/6719/ERET/-
-0xffffffff93c01928/0x7f12a297a000/P/-/-/8575/ERET/-
-
-The problem is that intel_pmu_lbr_filter() does not fully validate the
-privilege level of sampled entries. It filters some mismatches based on
-the branch type and the to address, but it does not reject entries whose
-from address violates the requested branch privilege filter.
-
-Fix this by extending software filtering to validate both from and to
-addresses against br_sel. Any LBR entry contains kernel address does not
-match the requested user filter is dropped. This prevents kernel
-addresses from appearing in user-only branch stacks.
-
-Fixes: 47125db27e47 ("perf/x86/intel/lbr: Support Architectural LBR")
-Reported-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Viktor Malik <vmalik@redhat.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260616044654.3468742-5-dapeng1.mi@linux.intel.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/lbr.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c |  128 ++++++++++--------
+ 1 file changed, 73 insertions(+), 55 deletions(-)
 
---- a/arch/x86/events/intel/lbr.c
-+++ b/arch/x86/events/intel/lbr.c
-@@ -1202,7 +1202,7 @@ intel_pmu_lbr_filter(struct cpu_hw_event
+--- a/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
++++ b/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
+@@ -428,15 +428,80 @@ static bool pid_filter__has(struct pids_
+ 	return bpf_map_lookup_elem(pids, &pid) != NULL;
+ }
+ 
++/*
++ * Determine what type of argument and how many bytes to read from user space, using the
++ * value in the beauty_map. This is the relation of parameter type and its corresponding
++ * value in the beauty map, and how many bytes we read eventually:
++ *
++ * string: 1			      -> size of string
++ * struct: size of struct	      -> size of struct
++ * buffer: -1 * (index of paired len) -> value of paired len (maximum: TRACE_AUG_MAX_BUF)
++ */
++static inline int augment_arg(struct syscall_enter_args *args, int i,
++			      unsigned int *beauty_map,
++			      struct augmented_arg *payload_offset)
++{
++	int index, value_size = sizeof(struct augmented_arg) - offsetof(struct augmented_arg, value);
++	s64 aug_size, size;
++	bool augmented;
++	void *arg;
++
++	arg = (void *)args->args[i];
++	augmented = false;
++	size = beauty_map[i];
++	aug_size = size; /* size of the augmented data read from user space */
++
++	if (size == 0 || arg == NULL)
++		return 0;
++
++	if (size == 1) { /* string */
++		aug_size = bpf_probe_read_user_str(payload_offset->value, value_size, arg);
++		/* minimum of 0 to pass the verifier */
++		if (aug_size < 0)
++			aug_size = 0;
++
++		augmented = true;
++	} else if (size > 0 && size <= value_size) { /* struct */
++		if (!bpf_probe_read_user(payload_offset->value, size, arg))
++			augmented = true;
++	} else if ((int)size < 0 && size >= -6) { /* buffer */
++		index = -(size + 1);
++		barrier_var(index); // Prevent clang (noticed with v18) from removing the &= 7 trick.
++		index &= 7;	    // Satisfy the bounds checking with the verifier in some kernels.
++		aug_size = args->args[index] > TRACE_AUG_MAX_BUF ? TRACE_AUG_MAX_BUF : args->args[index];
++
++		if (aug_size > 0) {
++			if (!bpf_probe_read_user(payload_offset->value, aug_size, arg))
++				augmented = true;
++		}
++	}
++
++	/* Augmented data size is limited to sizeof(augmented_arg->unnamed union with value field) */
++	if (aug_size > value_size)
++		aug_size = value_size;
++
++	/* write data to payload */
++	if (augmented) {
++		int written = offsetof(struct augmented_arg, value) + aug_size;
++
++		if (written < 0 || written > sizeof(struct augmented_arg))
++			return -1;
++
++		payload_offset->size = aug_size;
++		return written;
++	}
++
++	return 0;
++}
++
+ static int augment_sys_enter(void *ctx, struct syscall_enter_args *args)
  {
- 	u64 from, to;
- 	int br_sel = cpuc->br_sel;
--	int i, j, type, to_plm;
-+	int i, j, type, from_plm, to_plm;
- 	bool compress = false;
+-	bool augmented, do_output = false;
+-	int zero = 0, index, value_size = sizeof(struct augmented_arg) - offsetof(struct augmented_arg, value);
++	bool do_output = false;
++	int zero = 0, written;
+ 	u64 output = 0; /* has to be u64, otherwise it won't pass the verifier */
+-	s64 aug_size, size;
+ 	unsigned int nr, *beauty_map;
+ 	struct beauty_payload_enter *payload;
+-	void *arg, *payload_offset;
++	void *payload_offset;
  
- 	/* if sampling all branches, then nothing to filter */
-@@ -1234,8 +1234,14 @@ intel_pmu_lbr_filter(struct cpu_hw_event
- 				type |= X86_BR_NO_TX;
- 		}
+ 	/* fall back to do predefined tail call */
+ 	if (args == NULL)
+@@ -456,58 +521,11 @@ static int augment_sys_enter(void *ctx,
+ 	/* copy the sys_enter header, which has the syscall_nr */
+ 	__builtin_memcpy(&payload->args, args, sizeof(struct syscall_enter_args));
  
--		/* if type does not correspond, then discard */
--		if (type == X86_BR_NONE || (br_sel & type) != type) {
-+		from_plm = kernel_ip(from) ? X86_BR_KERNEL : X86_BR_USER;
-+		/*
-+		 * If type does not correspond, then discard.
-+		 * Specifically reject entries whose from address is in
-+		 * kernel space when only X86_BR_USER is requested.
-+		 */
-+		if (type == X86_BR_NONE || (br_sel & type) != type ||
-+		    (!(br_sel & X86_BR_KERNEL) && (from_plm & X86_BR_KERNEL))) {
- 			cpuc->lbr_entries[i].from = 0;
- 			compress = true;
- 		}
+-	/*
+-	 * Determine what type of argument and how many bytes to read from user space, using the
+-	 * value in the beauty_map. This is the relation of parameter type and its corresponding
+-	 * value in the beauty map, and how many bytes we read eventually:
+-	 *
+-	 * string: 1			      -> size of string
+-	 * struct: size of struct	      -> size of struct
+-	 * buffer: -1 * (index of paired len) -> value of paired len (maximum: TRACE_AUG_MAX_BUF)
+-	 */
+ 	for (int i = 0; i < 6; i++) {
+-		arg = (void *)args->args[i];
+-		augmented = false;
+-		size = beauty_map[i];
+-		aug_size = size; /* size of the augmented data read from user space */
+-
+-		if (size == 0 || arg == NULL)
+-			continue;
+-
+-		if (size == 1) { /* string */
+-			aug_size = bpf_probe_read_user_str(((struct augmented_arg *)payload_offset)->value, value_size, arg);
+-			/* minimum of 0 to pass the verifier */
+-			if (aug_size < 0)
+-				aug_size = 0;
+-
+-			augmented = true;
+-		} else if (size > 0 && size <= value_size) { /* struct */
+-			if (!bpf_probe_read_user(((struct augmented_arg *)payload_offset)->value, size, arg))
+-				augmented = true;
+-		} else if ((int)size < 0 && size >= -6) { /* buffer */
+-			index = -(size + 1);
+-			barrier_var(index); // Prevent clang (noticed with v18) from removing the &= 7 trick.
+-			index &= 7;	    // Satisfy the bounds checking with the verifier in some kernels.
+-			aug_size = args->args[index] > TRACE_AUG_MAX_BUF ? TRACE_AUG_MAX_BUF : args->args[index];
+-
+-			if (aug_size > 0) {
+-				if (!bpf_probe_read_user(((struct augmented_arg *)payload_offset)->value, aug_size, arg))
+-					augmented = true;
+-			}
+-		}
+-
+-		/* Augmented data size is limited to sizeof(augmented_arg->unnamed union with value field) */
+-		if (aug_size > value_size)
+-			aug_size = value_size;
+-
+-		/* write data to payload */
+-		if (augmented) {
+-			int written = offsetof(struct augmented_arg, value) + aug_size;
+-
+-			if (written < 0 || written > sizeof(struct augmented_arg))
+-				return 1;
+-
+-			((struct augmented_arg *)payload_offset)->size = aug_size;
++		written = augment_arg(args, i, beauty_map, (struct augmented_arg *)payload_offset);
++		if (written < 0)
++			return 1;
++		if (written > 0) {
+ 			output += written;
+ 			payload_offset += written;
+ 			do_output = true;
 
 
