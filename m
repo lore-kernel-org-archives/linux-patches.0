@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAFE5475F;
-	Sat, 12 Sep 2026 14:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE4C32A3DA;
+	Sat, 12 Sep 2026 14:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224130; cv=none; b=M249ni3NyFxfv1KQqLdkmbjM+DuTXnMVp0rNbrLxyi8M6z83uzfiAvl0kk0G+W5//nrxfnDvA1av6+U1xQeOWYN3O1/KzkjRjwAMt3ADLr5uoXbGuswkr9Ln1V1qfwbyQng4SWaWYPKhrdI4bQ9XtBS/hUCbCSAmo1HdeM4xf/g=
+	t=1789224134; cv=none; b=nIYk4p/Eh1PbNLqDHYcDFhgY7jm/8axCusiX+5FdsjCZ529T5le6JAYmM7piNFS8jUiYtWlJ0/6lI/xPQopEtDIFdvhoSIvMKfv4I26VNg3Ef3ZlaJ+LLSTkmEtQ8p1SrzNsRLyO/HrlBP72325wXrqGE2HJu4ERQhXIQuaFNh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224130; c=relaxed/simple;
-	bh=2CXAOmotUNgl8XPTQllWn8csQFiqAH22milwogYmixE=;
+	s=arc-20240116; t=1789224134; c=relaxed/simple;
+	bh=/rn60qXsrmocrNwwsT+roHVOf/5mLsVvPBs3AldSyk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGXkmEmg4odXEdJNFmHZCxPGb91YzfiDIAQX5k4jp2BC+vS2xNY2saMw4UJ1QJuHHMQLAagDSdQ1iVgQO6/7e4hsaftWzmvwjS85CAQFoIDKLSKTMOQuvdgo8/1vIzUjyJpgTTnpzZUYSwyz5050o7igtwoWKHsDSmQdYk8vtEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6vbR+nZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RR0SssjNvwIDtDPJENDKL31A7JcU0obS+ssHXUO1NhwxYgeFnyB8QCFLySgpI1qEl/oQpu9iEZAFJH10e5vyvb6GJ1mCLMKE/jD2sunqQTDeMJGESrw/Nfte2iqI5y3ZeebBH6eqmzjR1xywYC5ttsN/04nhCiihsCPFBC1sAdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FU0aJLnW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6vbR+nZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA951F000FF;
-	Sat, 12 Sep 2026 14:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FU0aJLnW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E411F0089A;
+	Sat, 12 Sep 2026 14:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224129;
-	bh=BMm81lgafU4bYHHHUovGXIM3m5GaV/9Svzo3LwGXAZY=;
+	s=korg; t=1789224133;
+	bh=jzcZGJ/stRtgvI2ZqfKknUXYODczhHqv51IVRsQMapU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V6vbR+nZ+/ubIpJKvZwx6mtMgAG7HsqjfKCzCxlW0vnfO5owG01JN/ETujTvzeWSv
-	 0LDDLoYaYvQdfT3hIJSANdy18jnyLjTzhZLFrmIq28YZtKX8hHASnkKQXG5ZDYeRza
-	 JtzLcy+5fXvApynW3aZXkXj+sA5Th0+ARkNxGys8=
+	b=FU0aJLnWe/gPm2pvB5FJxlV5QpIwzwFC7MXBYsapKPV2qzY6KmqjqM54EYmv/p0ZY
+	 wo7ifS4TISqjbP8A1tPKZhwbMQdddXB3pRWA874mGtGXusiHiBXKwezlzB3PtBJj/h
+	 b/mqsnwYXJ5GrVrJopPToShW1ZnxNziqhHj3zoWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0930/1424] platform/chrome: cros_ec_debugfs: Unregister panic notifier
-Date: Sat, 12 Sep 2026 08:56:02 +0200
-Message-ID: <20260912065628.149874891@linuxfoundation.org>
+Subject: [PATCH 6.6 0931/1424] wifi: rtlwifi: pci: fix error path in rtl_pci_probe()
+Date: Sat, 12 Sep 2026 08:56:03 +0200
+Message-ID: <20260912065628.172010416@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,43 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit e5954d3031fb55dd31aa59bae477d63c68e941c0 ]
+[ Upstream commit 3c2999d13eeb222ae56631aeb7ca248090f2b210 ]
 
-cros_ec_debugfs_probe() registers notifier_panic with the EC panic
-notifier chain. The remove path tears down debugfs and the console log,
-but leaves the notifier registered. A later panic notification can call
-back into the removed instance and queue work that accesses released
-data.
+In the last error path in rtl_pci_probe(), the cleanup functions are
+skipped due to a wrong goto label. Moreover, the successful call to
+rtl_init_rfkill(), ieee80211_register_hw(), rtl_debug_add_one() have to
+be reverted. Fix this issue by updating the labels and adding the
+relevant cleanup functions to the last error path.
 
-Unregister the panic notifier before tearing down the debugfs and
-console log state.
-
-This issue was found by a static analysis tool.
-
-Fixes: d90fa2c64d59 ("platform/chrome: cros_ec: Poll EC log on EC panic")
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Link: https://lore.kernel.org/r/f3ab74ef8034be63bb45a325f3d54656d658817f.1785320940.git.getshell@seu.edu.cn
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Fixes: 0c8173385e54 ("rtl8192ce: Add new driver")
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260723120118.145383-1-nihaal@cse.iitm.ac.in
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_debugfs.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/realtek/rtlwifi/pci.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_debugfs.c b/drivers/platform/chrome/cros_ec_debugfs.c
-index 0c01ffd72de26..f0289839c029e 100644
---- a/drivers/platform/chrome/cros_ec_debugfs.c
-+++ b/drivers/platform/chrome/cros_ec_debugfs.c
-@@ -540,6 +540,8 @@ static int cros_ec_debugfs_remove(struct platform_device *pd)
- {
- 	struct cros_ec_dev *ec = dev_get_drvdata(pd->dev.parent);
+diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
+index b978d31e47ca9..7bd72cc1f6626 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -2228,13 +2228,17 @@ int rtl_pci_probe(struct pci_dev *pdev,
+ 		rtl_dbg(rtlpriv, COMP_INIT, DBG_DMESG,
+ 			"%s: failed to register IRQ handler\n",
+ 			wiphy_name(hw->wiphy));
+-		goto fail3;
++		goto fail6;
+ 	}
+ 	rtlpci->irq_alloc = 1;
  
-+	blocking_notifier_chain_unregister(&ec->ec_dev->panic_notifier,
-+					   &ec->debug_info->notifier_panic);
- 	debugfs_remove_recursive(ec->debug_info->dir);
- 	cros_ec_cleanup_console_log(ec->debug_info);
+ 	set_bit(RTL_STATUS_INTERFACE_START, &rtlpriv->status);
+ 	return 0;
  
++fail6:
++	rtl_deinit_rfkill(hw);
++	rtl_debug_remove_one(hw);
++	ieee80211_unregister_hw(hw);
+ fail5:
+ 	rtl_pci_deinit(hw);
+ fail4:
 -- 
 2.53.0
 
