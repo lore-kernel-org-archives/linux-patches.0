@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1399A2ECE86;
-	Sat, 12 Sep 2026 16:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93F32ECE86;
+	Sat, 12 Sep 2026 16:05:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229146; cv=none; b=oKJf2SHvf0CqOwqqwH9GgSftIGdI4S8QGGRNwNf1xZZsHtmElG0X4mHUYdwbIT9iRNz1JG/IYIEXRVv+giBJ1kQqIdQSHpd2o7n01HNpl90a6vYszpO5SM2ZcxTNLo45K6JA5ZmiLYhdqBeMoK3Z3SqUa/BNcxVoAs/ZHef64Rk=
+	t=1789229150; cv=none; b=ABcC+jAw64mPnpNxItbhHiHkLcZZpfgm5KM5J1RXpBDwgC1L5d/Q9LTt5NU5Sstse1jCHcpWvCCppPFQig7thi8lxuPRfKnbPStaZthHK2MeBqhUaTXmr2ybaEVq9G5XK8+93W3Y9Qd5D7g5OHk13KIXSz69gYhfMs8d48mCcdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229146; c=relaxed/simple;
-	bh=52ds49nlhrYGrDL3MGy7I81BEwFwEa+UU6puyY89WBw=;
+	s=arc-20240116; t=1789229150; c=relaxed/simple;
+	bh=LCzIPb7l/Vd+CVHXg1z245Da1+rVqKa/mq3CfIIEwQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a0eG2zOMkvCc/6abp3QRa/zZFp4S9cIOzv17r0vx9Twq1tP72CTBODHVYw/qancviyKBADQ4/qdbvhkonao+pIU8R7vfiw9URBlbzYL9pYImI/fIiBWsbjOyOUbVXU3SlWr31uSu8l00U5MviqsQIIvg2rLgLplucmKOoXWWE7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGCXecI2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kMtVP5LHwNlJU6pwEuJiXIqGYA5XDVrSBTvhbtyFSl9xbgkAKEya+Eu0ky7tO3VORceXzFgpbA4vcIz4190CTFZLhKQ6vWGbE5OpaMLu9Wb1r7pNVtZsFl09/3xuUfoNIeojEl+lH8/Wn/BoZHWl7DhF6mzM+ydcE9NJPRP22HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9Xj8aXV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGCXecI2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C01C1F000FF;
-	Sat, 12 Sep 2026 16:05:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9Xj8aXV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10BC1F000FF;
+	Sat, 12 Sep 2026 16:05:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229145;
-	bh=Qh43FewergH0VSEjhGDiD+d9TaM1xmr6dgBF8p4ocZo=;
+	s=korg; t=1789229149;
+	bh=UaNdmymcGkK43vToIxhdFdV4kJO+LYOzzBHaJW290cE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wGCXecI2ZkxxIx1nzlBKyy8EYt1iae6l293cw+myphuBsHkFCXc6uoGbp18u6z4IE
-	 vY2sPbXjPkizzf/tt3RYadJmlVcsxdI7oEzVgpZKgenCivd5BgNocdzvtDAuO9MfTZ
-	 iUtu94vjiK+oy+SMtTEi/sNlEvVCr+XcLCp9JlvI=
+	b=u9Xj8aXVTbjK+JSU0brAROdGqOgz+q3nwwX1/kk/M6xjS1vjQ+tG+pMSbYGKsJrg8
+	 pGhaOIhX/RrY5ILNbIz5sdOVlNqUfMi6Q/dnWLZ4sj162tpnKm8v8CFiCULeL69d0q
+	 j56OIUALSy5ata3nWVNziumdkTE0dpbA6kFt105A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0530/1191] arm64: dts: qcom: sm7225-fairphone-fp4: Fix address in fb node name
-Date: Sat, 12 Sep 2026 08:54:18 +0200
-Message-ID: <20260912065600.151983015@linuxfoundation.org>
+Subject: [PATCH 6.1 0531/1191] bus: qcom-ebi2: Simplify with scoped for each OF child loop
+Date: Sat, 12 Sep 2026 08:54:19 +0200
+Message-ID: <20260912065600.175015166@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,38 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit f6e65005fe55c3d09287851523de06367cbf0bc2 ]
+[ Upstream commit 9c252f3c8f390fae4ca09de36c9262a35ae88ace ]
 
-'reg' is 0xa0000000 so the node name is missing a zero. Add it, so that
-the reg and address in the node name matches.
+Use scoped for-each loop when iterating over device nodes to make code a
+bit simpler.
 
-No functional impact.
-
-Fixes: 4cbea668767d ("arm64: dts: qcom: sm7225: Add device tree for Fairphone 4")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260505-sm6350-misc-v1-3-0b9efc22690c@fairphone.com
+Link: https://lore.kernel.org/r/20260102125030.65186-3-krzysztof.kozlowski@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 64774dea5896 ("bus: qcom-ebi2: Fix clock leak on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bus/qcom-ebi2.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-index be47e34da9906..13b1d484bdeb7 100644
---- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-+++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-@@ -34,7 +34,7 @@ chosen {
+diff --git a/drivers/bus/qcom-ebi2.c b/drivers/bus/qcom-ebi2.c
+index 663c827492223..8375d33674660 100644
+--- a/drivers/bus/qcom-ebi2.c
++++ b/drivers/bus/qcom-ebi2.c
+@@ -292,7 +292,6 @@ static void qcom_ebi2_setup_chipselect(struct device_node *np,
+ static int qcom_ebi2_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *np = pdev->dev.of_node;
+-	struct device_node *child;
+ 	struct device *dev = &pdev->dev;
+ 	struct resource *res;
+ 	void __iomem *ebi2_base;
+@@ -348,15 +347,13 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
+ 	writel(val, ebi2_base);
  
- 		stdout-path = "serial0:115200n8";
+ 	/* Walk over the child nodes and see what chipselects we use */
+-	for_each_available_child_of_node(np, child) {
++	for_each_available_child_of_node_scoped(np, child) {
+ 		u32 csindex;
  
--		framebuffer0: framebuffer@a000000 {
-+		framebuffer0: framebuffer@a0000000 {
- 			compatible = "simple-framebuffer";
- 			reg = <0 0xa0000000 0 (2340 * 1080 * 4)>;
- 			width = <1080>;
+ 		/* Figure out the chipselect */
+ 		ret = of_property_read_u32(child, "reg", &csindex);
+-		if (ret) {
+-			of_node_put(child);
++		if (ret)
+ 			return ret;
+-		}
+ 
+ 		if (csindex > 5) {
+ 			dev_err(dev,
 -- 
 2.53.0
 
