@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1843A453F;
-	Sat, 12 Sep 2026 20:02:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11093A6F0A;
+	Sat, 12 Sep 2026 20:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243370; cv=none; b=ncakQl0YAjLNhRjpInyPWRBV+khJfxCIF7dtBDdLIGljHfMSmJuRO9plO+rYPvMCZRrHkNjBoUVfobF7C398JVu/+iL02rxzkvf1CfGH0urfDB3yspEY2WISm58+1KmsCnH4xzGk+0n1pDOovT4EVaqwyS5LKsYguKNZX0cNLV4=
+	t=1789243372; cv=none; b=N0YeQY/w2VEyBMN3ZV5Ao/Qoa2zPpvBZukup72eoSiqmfs+EKkdU/srjE6I9yGv3h++264oOQ/DxhQ2gvl07I7a+SyvP2Yal5tZmRj5YHBIpDpDTR1AsJab7X473rygLeT3as0tCBawobN329PuvV/68CAprp1niFXlTQysADUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243370; c=relaxed/simple;
-	bh=g4xTh3/ls+27+pCPenBWkmCnD84/7wIIn10PbpD3LCY=;
+	s=arc-20240116; t=1789243372; c=relaxed/simple;
+	bh=nnjzynnueLVNL5SuhPG/uob6mRBZ9Fe+QtZGJQSDPNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OU8qvtYsuEvKzu2wHlTELX0iHWflDRc3eUa67eM2Dd/IW0DY863tdO7y1GuCcN4BiZ0SZUMU54SvrU6O8C/SwPRpAltFjpBfVmuSGdP4B7pLhQdcZKTu/0NMpumJo8udpU3OB2k0K1IobQQOlE2YWiCUJCKyEMpELdEtCRur36o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHOqKMZz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FQ5+J/TPRRQ+cqdNOGw5+TBMJ8mopnT4N2+1mM6eRuq6b/6u/a05VDXPFiisijA7QYEQc+ZXeHzRnXDMIYhxzCqz6fqicOsK9cAPNMhmG4nfKqt7H/DGU96aDcoGeFFXuBlUcfT8OQCyXaDvoQb7Ls2nRI2ffi+vYBcEVlm3ZsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Bj+7YeE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHOqKMZz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D66F1F00898;
-	Sat, 12 Sep 2026 20:02:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Bj+7YeE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23AE1F000FF;
+	Sat, 12 Sep 2026 20:02:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243367;
-	bh=yQi5xBPg0V0UXmDRTxrhQDSGHKI/++a0Erc7lsq0724=;
+	s=korg; t=1789243370;
+	bh=2+qmsoov9nsiVa0Acdd/Ckr+DDOwdmzLf8dTw2/y0gQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FHOqKMZz1uOARTdD9uknkJppZ+wq8kfwHl7JrbnZeUQSVv8rXhsx+S++8CfJ3IJxA
-	 Qf3QTuZq3ifdrb9+IyFUSeDXfuVUYnndNID6FsdtLIzDluHWLEXGMWMHZ+B7VK4+AC
-	 2+QdbUBYXAl1MO7rWatiyqUoZwmz2rv61rHIx2Vc=
+	b=2Bj+7YeEwaYOX/yv/m7o4BFhb+5QWwhEkwt4gAqjg+Igw7gmSlkN38oxpKFnSCWBH
+	 GXgllXmW2lL33mZvTP2vkWKd1XMPOPn83/q3y+sR/hdKligoUliPS4DKSRwNX9YzpY
+	 /ikLjjhJg/pVWK4Fbz2TEpZZ8LrXckc1I1tAz0sI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xu Rao <raoxu@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 730/798] net: bridge: vlan: fix inverted default vlan notification
-Date: Sat, 12 Sep 2026 09:05:58 +0200
-Message-ID: <20260912065533.809316730@linuxfoundation.org>
+Subject: [PATCH 5.10 731/798] ALSA: hda: Fix connection list comparison in proc output
+Date: Sat, 12 Sep 2026 09:05:59 +0200
+Message-ID: <20260912065533.832838465@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,45 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit 21040c7f931502070dcc66bb0f1aeed07dec032b ]
+[ Upstream commit c139e7e44f58a6f8ddc9d850ea9924d34963b5da ]
 
-A notification should be emitted only when the vlan delete was successful
-and not otherwise. The proper check is if br/nbp_vlan_delete returned 0.
+print_conn_list() compares the raw hardware connection list with the
+connection list cached by the HDA driver.  When they differ, it prints an
+additional "In-driver Connection" line so that /proc/asound/card*/codec#*
+shows the topology actually used by the driver.
 
-Fixes: f545923b4a6b ("net: bridge: vlan: notify on vlan add/delete/change flags")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260814141640.64958-1-razor@blackwall.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The comparison currently passes conn_len directly to memcmp().  However,
+conn_len is a number of connection-list entries, while memcmp() expects a
+size in bytes.  Both list and conn are arrays of hda_nid_t, which is u16,
+so only half of the connection data is compared.
+
+For example, for two-entry lists such as:
+
+  hardware: 0x0c 0x0d
+  cached:   0x0c 0x0e
+
+conn_len is 2, and the current comparison checks only the first hda_nid_t.
+The lists are therefore incorrectly treated as identical even though the
+second connection differs.
+
+This can happen legitimately when codec fixups replace a cached connection
+list with snd_hda_override_conn_list().  The codec routing used by the
+driver is not affected, but the proc output can hide the overridden
+driver-visible routing and provide misleading topology information during
+codec debugging.
+
+Convert the entry count to a byte size so that memcmp() covers the
+complete connection list.
+
+Fixes: 8b2c7a5c404d ("ALSA: hda - Add In-driver connection info")
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/7B802A4E225CC808+20260818083808.2735120-1-raoxu@uniontech.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_vlan.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/pci/hda/hda_proc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
-index 759bed457d9f5..f57ec26539e90 100644
---- a/net/bridge/br_vlan.c
-+++ b/net/bridge/br_vlan.c
-@@ -1045,7 +1045,7 @@ int __br_vlan_set_default_pvid(struct net_bridge *br, u16 pvid,
- 		if (err)
- 			goto out;
- 
--		if (br_vlan_delete(br, old_pvid))
-+		if (!br_vlan_delete(br, old_pvid))
- 			br_vlan_notify(br, NULL, old_pvid, 0, RTM_DELVLAN);
- 		br_vlan_notify(br, NULL, pvid, 0, RTM_NEWVLAN);
- 		set_bit(0, changed);
-@@ -1067,7 +1067,7 @@ int __br_vlan_set_default_pvid(struct net_bridge *br, u16 pvid,
- 				   &vlchange, extack);
- 		if (err)
- 			goto err_port;
--		if (nbp_vlan_delete(p, old_pvid))
-+		if (!nbp_vlan_delete(p, old_pvid))
- 			br_vlan_notify(br, p, old_pvid, 0, RTM_DELVLAN);
- 		br_vlan_notify(p->br, p, pvid, 0, RTM_NEWVLAN);
- 		set_bit(p->port_no, changed);
+diff --git a/sound/pci/hda/hda_proc.c b/sound/pci/hda/hda_proc.c
+index 0631f31ef87f7..bacdd4be13398 100644
+--- a/sound/pci/hda/hda_proc.c
++++ b/sound/pci/hda/hda_proc.c
+@@ -624,7 +624,7 @@ static void print_conn_list(struct snd_info_buffer *buffer,
+ 	/* Get Cache connections info */
+ 	cache_len = snd_hda_get_conn_list(codec, nid, &list);
+ 	if (cache_len >= 0 && (cache_len != conn_len ||
+-			      memcmp(list, conn, conn_len) != 0)) {
++			      memcmp(list, conn, conn_len * sizeof(*conn)) != 0)) {
+ 		snd_iprintf(buffer, "  In-driver Connection: %d\n", cache_len);
+ 		if (cache_len > 0) {
+ 			snd_iprintf(buffer, "    ");
 -- 
 2.53.0
 
