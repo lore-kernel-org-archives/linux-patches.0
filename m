@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6183C1D79;
-	Sat, 12 Sep 2026 07:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9053F104F;
+	Sat, 12 Sep 2026 07:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197954; cv=none; b=Ji2aOrFatxiSMvqSS0LCoOegw5/s0hxYZq2C62OJE+Z/nwUIqBFoovKGy/r49rSoenw1GGvHLEo0KqY8vDSPx4yq+xLg9G/5K5oP5fYdfZexz9TSakQo/mZEOkCuMTCJd2l1B9fjmYe6sCULspjyCZL1eQH/SnS0j8pXEm+uIo4=
+	t=1789197959; cv=none; b=LnpYvr+w0bMKbXXk0GISD+YFRuPm9eNX2trPUoWWhshLXhqiQfcxTdYPYoNdHjrG/f30teHxLLaHnylGVMte3hKLEO3A3Uf29jUPdlAbmVbFhA6rTYNw21U9CdFcZmEqkX8OCkuonB+uTyA9ZroRZLIlVxfLvp0R1dajGBtWgLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197954; c=relaxed/simple;
-	bh=2WqR+IzF+0oOe16OorWRs/Ge6Swbo2X9e5BpMRYiZWg=;
+	s=arc-20240116; t=1789197959; c=relaxed/simple;
+	bh=cWTUMim4tLs8IwS7o/y9F43tNNqdPogunmOWnxKzuPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=paC2udpNbKmQCaaFylYsK8ETD5DNEEL+NsRgKI6qWw+gok/HXzZRGw9puQpftiSrjdV/hfdHrz1CMcm1w9/hOIWxGsN+20qIUsGyXmNAIQIfTH3BPdQyJ+biGMFMnX0eSrxd9EUtu4P1yU+44RzGppvavIy4KJsB3BrmnMFzGRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V80sbE2E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o6E2VFMTLzhiqMLbpCvPOc8wGzBBZS0w9UkTAEEf2FSh24YaE0PjrW3wYy0EMY/TrdX+w+MFp5HHILwEazNeVjjBvsJnnE53VW0fM5UnohQYUz1/VTbYOq+ptZbGeU9RCMdxmxdWIX5Lj0OhEweQk67jvFaKmP/1ZOy9X/LrmKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8tyuOiR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V80sbE2E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11E511F000FF;
-	Sat, 12 Sep 2026 07:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8tyuOiR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86391F000FF;
+	Sat, 12 Sep 2026 07:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197953;
-	bh=XiPqkQ33BUC/9dZ78xFixGSryrFZGJWdXyr1THSGVh0=;
+	s=korg; t=1789197957;
+	bh=A8btVY8OQAMUVNoAxK1Auu8esN55+t5TU9sfY0uFWAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V80sbE2EvbEx3kGr0DGimspBpu9yP2KFrGZrzm55tT9KEbkrzQ1rtFvGHh/PlX0VY
-	 3ycN9QYd3n1w9Zv5k16M1pMQoJs4fGRgu/VRRZ1lMllhSrIwQe96GEzG34nPETj3sc
-	 8cLoE8fwtr1u6/uuh+4tur5/TL/bGpfE+Bc2tYqA=
+	b=p8tyuOiRkM53D80lPx9NgbtdWuzi6YWTofMy991JiSvzuJ8PyNtEB9L3UPLhEGz9R
+	 X9zukqUu34bB6lv+1JpTmmrGznQ5tPX3SxPmILFsZwPZYFa26F3cmz99udWTgcJmrn
+	 pMTqXoBexfjULmZFfA7bjDlgbM4Q0YZS7WGjn1I4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	KaFai Wan <kafai.wan@linux.dev>,
+	Leon Hwang <leon.hwang@linux.dev>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0282/1815] bus: mhi: ep: Fix device refcount leak in the error path of MHI device creation
-Date: Sat, 12 Sep 2026 08:33:52 +0200
-Message-ID: <20260912065655.584504887@linuxfoundation.org>
+Subject: [PATCH 7.2 0283/1815] bpf: Introduce jit_required flag and remove bpf_prog_has_kfunc_call()
+Date: Sat, 12 Sep 2026 08:33:53 +0200
+Message-ID: <20260912065655.607156917@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,62 +54,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 6f12862600bb70e599a614d706a095ea5f8f9858 ]
+[ Upstream commit 9a6df65d5c6a9947ddab4e563e329720f44b8747 ]
 
-mhi_ep_create_device() takes one device reference for the UL channel and
-another for the DL channel after allocating the transfer device. These
-references are normally released by mhi_ep_destroy_device() before the
-device itself is removed.
+Introduce a 'jit_required' bitfield flag in struct bpf_prog to track
+whether a BPF program strictly requires the JIT compiler to run. This
+prevents a dangerous runtime fallback to the interpreter for features
+that are only implemented in the JIT compiler.
 
-If dev_set_name() or device_add() fails, the error path currently drops
-only one reference. The remaining channel references keep the device
-from being released and leave the channels associated with a device that
-was never registered.
+Currently, bpf_prog_has_kfunc_call() is used only for kernel function
+calls, replace the kfunc-specific helper with the new 'jit_required'
+flag. This makes it easy to support other JIT-only BPF features, such
+as inlined helpers.
 
-Route both failures through a common unwind path that drops the DL
-channel reference, the UL channel reference, and the initial reference
-from device_initialize().
-
-Fixes: 297c77a0f273 ("bus: mhi: ep: Add support for creating and destroying MHI EP devices")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260603195142.2189386-1-dbgh9129@gmail.com
+Suggested-by: Alexei Starovoitov <ast@kernel.org>
+Suggested-by: KaFai Wan <kafai.wan@linux.dev>
+Suggested-by: Leon Hwang <leon.hwang@linux.dev>
+Acked-by: Leon Hwang <leon.hwang@linux.dev>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Stable-dep-of: f1c27922576e ("bpf: Reject programs with inlined helpers if JIT is not available")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/ep/main.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ include/linux/bpf.h   | 9 ++-------
+ kernel/bpf/core.c     | 7 ++-----
+ kernel/bpf/fixups.c   | 5 ++---
+ kernel/bpf/verifier.c | 7 ++-----
+ 4 files changed, 8 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index b1213786f72c6..21bc2c50170ff 100644
---- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -1340,14 +1340,19 @@ static int mhi_ep_create_device(struct mhi_ep_cntrl *mhi_cntrl, u32 ch_id)
- 	ret = dev_set_name(&mhi_dev->dev, "%s_%s",
- 		     dev_name(&mhi_cntrl->mhi_dev->dev),
- 		     mhi_dev->name);
--	if (ret) {
--		put_device(&mhi_dev->dev);
--		return ret;
--	}
-+	if (ret)
-+		goto err_put_channels;
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index adf53f7edf287..b1271f53905c7 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -1865,8 +1865,9 @@ struct bpf_prog_aux {
  
- 	ret = device_add(&mhi_dev->dev);
- 	if (ret)
--		put_device(&mhi_dev->dev);
-+		goto err_put_channels;
-+
-+	return 0;
-+
-+err_put_channels:
-+	put_device(&mhi_dev->dev); /* DL channel reference */
-+	put_device(&mhi_dev->dev); /* UL channel reference */
-+	put_device(&mhi_dev->dev); /* device_initialize() reference */
- 
- 	return ret;
+ struct bpf_prog {
+ 	u16			pages;		/* Number of allocated pages */
+-	u16			jited:1,	/* Is our filter JIT'ed? */
++	u32			jited:1,	/* Is our filter JIT'ed? */
+ 				jit_requested:1,/* archs need to JIT the prog */
++				jit_required:1,	/* program strictly requires JIT compiler */
+ 				gpl_compatible:1, /* Is filter GPL compatible? */
+ 				cb_access:1,	/* Is control block accessed? */
+ 				dst_needed:1,	/* Do we need dst entry? */
+@@ -3170,7 +3171,6 @@ const struct bpf_func_proto *bpf_base_func_proto(enum bpf_func_id func_id,
+ 						 const struct bpf_prog *prog);
+ void bpf_task_storage_free(struct task_struct *task);
+ void bpf_cgrp_storage_free(struct cgroup *cgroup);
+-bool bpf_prog_has_kfunc_call(const struct bpf_prog *prog);
+ const struct btf_func_model *
+ bpf_jit_find_kfunc_model(const struct bpf_prog *prog,
+ 			 const struct bpf_insn *insn);
+@@ -3509,11 +3509,6 @@ static inline void bpf_task_storage_free(struct task_struct *task)
+ {
  }
+ 
+-static inline bool bpf_prog_has_kfunc_call(const struct bpf_prog *prog)
+-{
+-	return false;
+-}
+-
+ static inline const struct btf_func_model *
+ bpf_jit_find_kfunc_model(const struct bpf_prog *prog,
+ 			 const struct bpf_insn *insn)
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 6e19a030da6f1..883cb7a800b17 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -126,6 +126,7 @@ struct bpf_prog *bpf_prog_alloc_no_stats(unsigned int size, gfp_t gfp_extra_flag
+ 	fp->aux->main_prog_aux = aux;
+ 	fp->aux->prog = fp;
+ 	fp->jit_requested = ebpf_jit_enabled();
++	fp->jit_required = IS_ENABLED(CONFIG_BPF_JIT_ALWAYS_ON);
+ 	fp->blinding_requested = bpf_jit_blinding_enabled(fp);
+ #ifdef CONFIG_CGROUP_BPF
+ 	aux->cgroup_atype = CGROUP_BPF_ATTACH_TYPE_INVALID;
+@@ -2670,15 +2671,11 @@ struct bpf_prog *__bpf_prog_select_runtime(struct bpf_verifier_env *env, struct
+ 	/* In case of BPF to BPF calls, verifier did all the prep
+ 	 * work with regards to JITing, etc.
+ 	 */
+-	bool jit_needed = false;
++	bool jit_needed = fp->jit_required;
+ 
+ 	if (fp->bpf_func)
+ 		goto finalize;
+ 
+-	if (IS_ENABLED(CONFIG_BPF_JIT_ALWAYS_ON) ||
+-	    bpf_prog_has_kfunc_call(fp))
+-		jit_needed = true;
+-
+ 	if (!bpf_prog_select_interpreter(fp))
+ 		jit_needed = true;
+ 
+diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
+index 3cf2cc6e3ab66..a577050651e3e 100644
+--- a/kernel/bpf/fixups.c
++++ b/kernel/bpf/fixups.c
+@@ -1378,7 +1378,6 @@ int bpf_fixup_call_args(struct bpf_verifier_env *env)
+ #ifndef CONFIG_BPF_JIT_ALWAYS_ON
+ 	struct bpf_prog *prog = env->prog;
+ 	struct bpf_insn *insn = prog->insnsi;
+-	bool has_kfunc_call = bpf_prog_has_kfunc_call(prog);
+ 	int depth;
+ #endif
+ 	int i, err = 0;
+@@ -1404,8 +1403,8 @@ int bpf_fixup_call_args(struct bpf_verifier_env *env)
+ 			return err;
+ 	}
+ #ifndef CONFIG_BPF_JIT_ALWAYS_ON
+-	if (has_kfunc_call) {
+-		verbose(env, "calling kernel functions are not allowed in non-JITed programs\n");
++	if (prog->jit_required) {
++		verbose(env, "program requires BPF JIT compiler but it is not available\n");
+ 		return -EINVAL;
+ 	}
+ 	for (i = 0; i < env->subprog_cnt; i++) {
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 1f3df9104552e..283fdf6e2f28f 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -2715,6 +2715,8 @@ int bpf_add_kfunc_call(struct bpf_verifier_env *env, u32 func_id, u16 offset)
+ 		prog_aux->kfunc_tab = tab;
+ 	}
+ 
++	env->prog->jit_required = 1;
++
+ 	/* func_id == 0 is always invalid, but instead of returning an error, be
+ 	 * conservative and wait until the code elimination pass before returning
+ 	 * error, so that invalid calls that get pruned out can be in BPF programs
+@@ -2769,11 +2771,6 @@ int bpf_add_kfunc_call(struct bpf_verifier_env *env, u32 func_id, u16 offset)
+ 	return 0;
+ }
+ 
+-bool bpf_prog_has_kfunc_call(const struct bpf_prog *prog)
+-{
+-	return !!prog->aux->kfunc_tab;
+-}
+-
+ static int add_subprog_and_kfunc(struct bpf_verifier_env *env)
+ {
+ 	struct bpf_subprog_info *subprog = env->subprog_info;
 -- 
 2.53.0
 
