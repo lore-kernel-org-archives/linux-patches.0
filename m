@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B142A331203;
-	Sat, 12 Sep 2026 19:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B191638B15B;
+	Sat, 12 Sep 2026 19:50:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242604; cv=none; b=Fyt74vUsk/AOhUP0W2yL/u4Qzg5lOiKjEvaZrqui1tLvTat/01XL9g+Zphw+9Xord9XuKpA5Ftr9KzrUfJyskiYq5cukRkI4uFUkBjX/acuJUqC5fDFaUQVvNguchjx/uq/uDDxCq5YhlaeYgCUwYt2XU2v17U7goX0NUIEYQCY=
+	t=1789242608; cv=none; b=IRSdg7jijXtjx6XW1LksklSy0PWqARLE5aAEbCn1ykDVur6CTRxKWZ47drpijQHx2tpZd3qJ9RwAaIhk7Abc7DVoqggwJT/By72WhvAreKUn7WMdCHXxZdBeZNi8iEauNw+mMJCJ7An5PeHrbfXvO3/vfsB752hvdiOesMZnMrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242604; c=relaxed/simple;
-	bh=b32mlyr0N/waizg50cY8woDqCo4kp05lfqyNwYSS+zI=;
+	s=arc-20240116; t=1789242608; c=relaxed/simple;
+	bh=CArfXPZUBYTZY0A5tBHo1YNj/uLNBiMsTgLK/Dditm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u5BQQ8BjSV14VnGU+Tl5nOea83LAaTtmcjnqQ/pH5jdQnCdMwRgBH8o5cYQ4tet8VIeDFfW3gGD1gD2tVyAbzZZSspwTTa3MNLTvM69AnGCjxZ9XA8sTtYUhyzljiE6jCmjJ7xbhWeARrt0TMH/ZaNJxDbiHEbMyKl+p4BS+MR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BKHsDhW+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rCi7chFsZInlbTngDnCMWpQsSD5KwKruSWFpFKe8bDJlJ8lGoUSvTKQSUVhCSVTheJ5TOKRF5LAph4driHc47RduYvO77hwi7VITZIjGTEurtCdx86Ovxo9NAPTEA+IFLPeKWBgFUKJvmZj28GugXMtdHTXe115AshFtJRbdG6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rUIZEx1j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BKHsDhW+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17CB21F000FF;
-	Sat, 12 Sep 2026 19:50:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rUIZEx1j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3231F000FF;
+	Sat, 12 Sep 2026 19:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242603;
-	bh=p3HuV/vvhLYKZoKzYmkHX0+R7Tn9DPihit8Vr0TToKk=;
+	s=korg; t=1789242606;
+	bh=c25fzMCGUWHdM0lSrghU6Lu9mzo2AManA3JJwWSsTiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BKHsDhW+12KIk3ErNfU6XNG0uQK/pBvVxLa/i4nZrkdEOoaG7NYs7WZsShzOec5Ex
-	 hfg5jAv0RkFYgDz9KmkviuV9y8f2bDRELdFhe4lBl9vAR04gul8EF0ielwZ5W7SsCI
-	 yhnAHqAX2MiXl00jsM0o+dW5CJUCkMkoNiEo4fmg=
+	b=rUIZEx1jAdK+EhIn5LSXrD3TP6NmerLNOZkCYQwqSmPEEKPQpvBFay2GzBBMX0jd2
+	 dbzLsoQRQWVq7vNYcUtmN6YOiTphiudGi2JOPjB8BWJ1TPI4SWSRHZPZg5rPM6WZi1
+	 qKH135wR8fZ7SLQ0EoHxsJRYVtAts589HcYrOpGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>,
-	Samuel Thibault <samuel.thibault@ens-lyon.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 461/798] speakup: keyhelp: guard letter_offsets possible out-of-range indexing
-Date: Sat, 12 Sep 2026 09:01:29 +0200
-Message-ID: <20260912065527.711510998@linuxfoundation.org>
+Subject: [PATCH 5.10 426/798] xfrm6: fix out-of-bounds write in xfrm6_input_addr() when secpath is full
+Date: Sat, 12 Sep 2026 09:00:54 +0200
+Message-ID: <20260912065526.909738853@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -45,96 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 6a19ad4d68c95185308cd9e5d169b10a2cf236c8 ]
+[ Upstream commit 5d9e3bf34fec9a5d237e4b7cef4a707bc2e091bc ]
 
-help_init() builds letter_offsets[] by using the first byte of each
-function name as an index via `(start & 31) - 1`. If function_names are
-overridden from sysfs (root) with a name starting outside [a–z], the
-index underflows or exceeds the array, leading to OOB write.
+The depth check in xfrm6_input_addr() is off by one:
 
-Function names can be overridden with the following commands as root:
+  if (1 + sp->len == XFRM_MAX_DEPTH)
+          goto drop;
+  ...
+  sp->xvec[sp->len++] = x;
 
-    modprobe speakup_soft
-    echo "0 _bad" > /sys/accessibility/speakup/i18n/function_names
-    # then press Insert+2 on /dev/tty
+xfrm_input() can leave sp->len == XFRM_MAX_DEPTH, and the transport-mode
+receive path re-enters IPv6 input via xfrm_trans_reinject() with that
+secpath preserved. If the inner packet carries a destination-options HAO
+option or a type-2 routing header, xfrm6_input_addr() is called with
+sp->len == XFRM_MAX_DEPTH; the check (1 + 6 == 6) is false, so
+sp->xvec[sp->len++] writes one slot past the 6-element xvec[]. The write
+stays within the sec_path allocation (invisible to KASAN); UBSAN_BOUNDS
+flags it and panics under panic_on_warn.
 
-This fix checks the first letter in help_init(), and if it is not in the
-[a–z] range the function returns an error to the caller. Eventually this
-error is propagated to drivers/accessibility/speakup/main.c:2217, which
-causes a bleep sound.
+Use "sp->len >= XFRM_MAX_DEPTH", matching xfrm_input(). This also
+restores one chain level the old check rejected at sp->len == 5.
 
-Fixes: c6e3fd22cd53 ("Staging: add speakup to the staging directory")
-Signed-off-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
-Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Link: https://patch.msgid.link/20260531230804.254962-10-samuel.thibault@ens-lyon.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  UBSAN: array-index-out-of-bounds in net/ipv6/xfrm6_input.c:309:10
+  index 6 is out of range for type 'xfrm_state *[6]'
+
+Fixes: 9473e1f631de ("[XFRM] MIPv6: Fix to input RO state correctly.")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accessibility/speakup/keyhelp.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ net/ipv6/xfrm6_input.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/accessibility/speakup/keyhelp.c b/drivers/accessibility/speakup/keyhelp.c
-index 822ceac830683..e632c53d6246e 100644
---- a/drivers/accessibility/speakup/keyhelp.c
-+++ b/drivers/accessibility/speakup/keyhelp.c
-@@ -8,6 +8,7 @@
-  */
- 
- #include <linux/keyboard.h>
-+#include <linux/ctype.h>
- #include "spk_priv.h"
- #include "speakup.h"
- 
-@@ -111,7 +112,7 @@ static void say_key(int key)
- 			     spk_msg_get(MSG_KEYNAMES_START + (key - 1)));
- }
- 
--static int help_init(void)
-+static void help_init(void)
- {
- 	char start = SPACE;
- 	int i;
-@@ -120,13 +121,19 @@ static int help_init(void)
- 	state_tbl = spk_our_keys[0] + SHIFT_TBL_SIZE + 2;
- 	for (i = 0; i < num_funcs; i++) {
- 		char *cur_funcname = spk_msg_get(MSG_FUNCNAMES_START + i);
-+		char first_letter;
- 
--		if (start == *cur_funcname)
-+		first_letter = tolower(*cur_funcname);
-+
-+		/* Accept only 'a'..'z' to index letter_offsets[] safely */
-+		if (first_letter < 'a' || first_letter > 'z')
-+			continue;
-+
-+		if (start == first_letter)
- 			continue;
--		start = *cur_funcname;
-+		start = first_letter;
- 		letter_offsets[(start & 31) - 1] = i;
+diff --git a/net/ipv6/xfrm6_input.c b/net/ipv6/xfrm6_input.c
+index 7dbefbb338ca5..9d52dffc10924 100644
+--- a/net/ipv6/xfrm6_input.c
++++ b/net/ipv6/xfrm6_input.c
+@@ -193,7 +193,7 @@ int xfrm6_input_addr(struct sk_buff *skb, xfrm_address_t *daddr,
+ 		goto drop;
  	}
--	return 0;
- }
  
- int spk_handle_help(struct vc_data *vc, u_char type, u_char ch, u_short key)
-@@ -144,7 +151,7 @@ int spk_handle_help(struct vc_data *vc, u_char type, u_char ch, u_short key)
- 			synth_printf("%s\n", spk_msg_get(MSG_LEAVING_HELP));
- 			return 1;
- 		}
--		ch |= 32; /* lower case */
-+		ch = tolower(ch);
- 		if (ch < 'a' || ch > 'z')
- 			return -1;
- 		if (letter_offsets[ch - 'a'] == -1) {
+-	if (1 + sp->len == XFRM_MAX_DEPTH) {
++	if (sp->len >= XFRM_MAX_DEPTH) {
+ 		XFRM_INC_STATS(net, LINUX_MIB_XFRMINBUFFERERROR);
+ 		goto drop;
+ 	}
 -- 
 2.53.0
 
