@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C317934389C;
-	Sat, 12 Sep 2026 09:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A0333993;
+	Sat, 12 Sep 2026 09:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204328; cv=none; b=Im65dVa6vBOqvKTyLmUhzTJy6KFzquepwSpiiv9vnc+n5k1KsXf1CpQNrjmvMJxK8rtkD01AL0qy0uDv54/mZiDkxg0esJNeLlys6pnE6yA4fMDijUcdItXoxeBXANkaPhDicY/PISPIirAyzV5bPnYiKoZljn8q7akbFsU4dK8=
+	t=1789204334; cv=none; b=bwHeGjcWrspUgspDpx2K+iHO4Ygu0thsLPngUOQ+hBQtEBgv38V3zlgH5Yd2NpAbnEPY8E1tdKiNghnOHgayjMDHO0QkyWf41LX9bXXc1foPzxSuj+D/em8ILkjekG1LVK2QMBcnO4kmDLGDAcDmE2YZ2wo6LTadzjrEAL6g7l0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204328; c=relaxed/simple;
-	bh=ZSonDLhNokb/dtwtqGny2abY1lTMqJkPmbZFlBHmCQU=;
+	s=arc-20240116; t=1789204334; c=relaxed/simple;
+	bh=loRRr/tDjYKQlqtEOWZHvVSOwP7UAeOs3p9pIujs5fU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rM3W3lsj17PbLTnyQvC1MBUwTGrl0I8tk+JE+1AKgaIHVQKmRKgqcEOZY99riDKAWoATlIv4uhVCJUhQWGv7wfB4k5l4vSMuQhHHg+szqDp7MfhGF3fEaI5Yv/SA6x4yYhhZcYjpNlc+qXazKTBP8oqPk+Jqs2fW31OTyynxRfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWsyQ2sL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JDk4AObbyNdS2Dalf0VNJSGGYYCVIcoy6gye4cmvgL/RpQDXp4KTngDW+S7jSMSshMI7EEVJZy2wFUPwcfjDU1R1WRZA/4/PT1Q3WPx8sUwStnGr4i3YPXjVbWgzOpy6D66krQdeaEMDRYyDwahn3JtuyWBqjhOldzaJbyCS3yI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8GuR/+o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWsyQ2sL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8BF41F000FF;
-	Sat, 12 Sep 2026 09:12:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8GuR/+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6962C1F000FF;
+	Sat, 12 Sep 2026 09:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204327;
-	bh=OjombzsS/TOZ14uSpDftiVRUGPfXXg15srbTl54T0w8=;
+	s=korg; t=1789204332;
+	bh=3LxXXO4+LgkSBC+Yzq6XQIneApZELEVPcLBrT+y+3Yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IWsyQ2sL6gG/P1N11Fgh8n3reJGpkQNOCcTPTxQ0FDdq9gsXrveRtoGqQmg1TYXeE
-	 pBc3lgTQ2FOp34h16l9tHDIDJvNJ/8zgK6FQvQ1gB4X3WUIf+NB2ehVisb0IT+5ybF
-	 FR1QhgFo2vwh0H2gZOqTRJL7ux8tS5hicQgVeGT8=
+	b=D8GuR/+oRk73rV6TWfN4Uo3ujyzAXvXuau76wr/4K/eN5prw4XSzux2fYJVKQbRF1
+	 /Aedor2ByIjO0x/WT6dDn7v4sqq4x+eT9ktAHbIaEbZZYHn9xqMmIvGaPLlh2+20C6
+	 GGM1MsD6ZXBXtvK00TPE0hscRN7x+p+sr7Eb0md8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1589/1815] net/smc: hash socket only after full initialisation in smc_sk_init()
-Date: Sat, 12 Sep 2026 08:55:39 +0200
-Message-ID: <20260912065726.293775518@linuxfoundation.org>
+Subject: [PATCH 7.2 1590/1815] platform/x86: dell-wmi-sysman: Fix instance ID bounds
+Date: Sat, 12 Sep 2026 08:55:40 +0200
+Message-ID: <20260912065726.317715191@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -47,55 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mahanta Jambigi <mjambigi@linux.ibm.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 8acf691d8017012e1476c30e7381513c1e929c94 ]
+[ Upstream commit 5ab078e3241da0beec2022254b5811a8a52cff84 ]
 
-smc_sk_init() calls sk->sk_prot->hash(sk) before several fields are
-fully initialised: clcsock_release_lock, the saved clcsk_* callbacks,
-use_fallback/fallback_rsn, and conn.close_work.  Once hash() returns the
-socket is visible to concurrent hash walkers, which can then observe
-uninitialised state.
+The get_instance_id() macro walks the per-type attribute array with
+'i <= instances_count'.  Each array is allocated with exactly
+instances_count entries, so the valid range is [0, instances_count)
+and the last iteration reads one element past the end.  On a name miss
+that out-of-bounds attribute_name is handed to strcmp(), which reads on
+until it finds a NUL byte.
 
-Move hash(sk) to the end of smc_sk_init() so the socket is published
-only after it is fully constructed.
+Every kobject in these ksets is built from an entry that was populated,
+so a miss does not look reachable from sysfs today.  The bound is wrong
+either way and the read is out of bounds.
 
-Fixes: d0e35656d834 ("net/smc: refactoring initialization of smc sock")
-Reviewed-by: Hidayath Khan <hidayath@linux.ibm.com>
-Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
-Signed-off-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Link: https://patch.msgid.link/20260813074315.554926-1-mjambigi@linux.ibm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The matching macro in hp-bioscfg carried the same off-by-one and was
+corrected by commit 25150715e0b0 ("platform/x86: hp-bioscfg: Fix kernel
+panic in GET_INSTANCE_ID macro").  That macro takes a kobject pointer
+out of the out-of-bounds element and dereferences it, so it could fault.
+This one reads a char array.
+
+Use '<' to match the allocation.
+
+Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260814132535.4169956-1-sammiee5311@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 2 +-
+ drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index cff910cedbfcc..e9f93b3ab435b 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -409,13 +409,13 @@ void smc_sk_init(struct net *net, struct sock *sk, int protocol)
- 				      "sk_lock-AF_SMC", &smc_key);
- 	spin_lock_init(&smc->accept_q_lock);
- 	spin_lock_init(&smc->conn.send_lock);
--	sk->sk_prot->hash(sk);
- 	mutex_init(&smc->clcsock_release_lock);
- 	smc_init_saved_callbacks(smc);
- 	smc->limit_smc_hs = net->smc.limit_smc_hs;
- 	smc->use_fallback = false; /* assume rdma capability first */
- 	smc->fallback_rsn = 0;
- 	smc_close_init(smc);
-+	sk->sk_prot->hash(sk);
- }
- 
- static struct sock *smc_sock_alloc(struct net *net, struct socket *sock,
+diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h b/drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h
+index 3bddedad5eba2..eb48ced558232 100644
+--- a/drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h
++++ b/drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h
+@@ -107,7 +107,7 @@ enum {
+ static int get_##type##_instance_id(struct kobject *kobj)			\
+ {										\
+ 	int i;									\
+-	for (i = 0; i <= wmi_priv.type##_instances_count; i++) {		\
++	for (i = 0; i < wmi_priv.type##_instances_count; i++) {			\
+ 		if (!(strcmp(kobj->name, wmi_priv.type##_data[i].attribute_name)))\
+ 			return i;						\
+ 	}									\
 -- 
 2.53.0
 
