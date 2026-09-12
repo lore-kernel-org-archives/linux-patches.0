@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC18332610;
-	Sat, 12 Sep 2026 07:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D211C3644CA;
+	Sat, 12 Sep 2026 07:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198939; cv=none; b=jga8xDO5bQZBXsk0eioQAHDKcghUWuOjwyzmkXb0xAskkqmER0BwUDFOqtJdjc8md7D66Sm149ZPoxWdB6iky2arcHlM6x2AfD2r4NvY3f5ZtHROyww5O1mkXgPohVqIwBtXfJk8x7JHhD+mgpSdwq9HAtdqcHQU5ftwN3JyJ2U=
+	t=1789198944; cv=none; b=AOz3pCiqM8/YPcjfeaV3Bv1H1CKl5glvZ4a0gtKxdA2jhbcTyMNT3V1gm+kI+uYS2cDkdJH/VqiH+WYqI+OkUYH4KmYvlD1ilkdzTA81TANTcXYBqvCcc1dXNQa4Yj2MsIPazu4XlGTkiC6enBO4KpkBfDr4h3NiLfDRPM02ems=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198939; c=relaxed/simple;
-	bh=TcM7ot8H4fuELIRom/wz3Q/cYl4quFZHCzA4mulIBQY=;
+	s=arc-20240116; t=1789198944; c=relaxed/simple;
+	bh=V9HQLf7fWG/lkhgqKV5aZYLGAju9af/usprueNIcSpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XG5+4gt9SGGZUuUzx1Ji9aagV6xTh+cqzt6nYqqxLRW3g217R5OKdm9Bsj5vmS607aIL2dZU29FsVrTt5xpAFml/Tp0WLlErBFdh1fpI14CZEN3yjguhRWGHyxVcdLz4IKeGcvo58h0hd5YMHMDdPcJAMnB6mvd5dJUz7sKIb0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQUdrq3v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a8CvTmuNclfFGLXEOtgscNhjuV+9v4gQLfVnWbWCqXIgr57i2GCPMBw9TNNdjI7hEoWXWDB/G97FuBqdzTL5R6tYei1l59PedinMEyglUVFu16r3xzjcNJ1KEbIdjkhlPMh5fKJ8loqsbZvvSI+8lTvernahBO15HdhoDzBgS68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z61qu/IW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQUdrq3v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1121F1F000FF;
-	Sat, 12 Sep 2026 07:42:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z61qu/IW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5401F000FF;
+	Sat, 12 Sep 2026 07:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198938;
-	bh=G9ZGgeyUbzEBJ2KIHxZmJd0S12uLdtdVqXxu6qNj/jk=;
+	s=korg; t=1789198942;
+	bh=h4cktJCLXEXzssIm5KCq72WWs0He109XrWLZEMyzWS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TQUdrq3vZAXEQ72Wqfb0nK5M/kmrYwtQ8qaGINClffnxAyVPKp6ALtezYSFlm2Ewo
-	 rEnKBkPNJhYHXV51LAmWkbZZKBWGolg8SMy6gAxC33jrgkFgkYaAajDssqGQoohHn4
-	 tK8YAQJ65VXMdoagYfhVxbe/xRbEWobliBx35frU=
+	b=z61qu/IW+MMzZEqJ0qBqoEs37BXGRmxZgwVRRQ1Yv17LEA6DgzuMimahv/sCEiY2p
+	 V5LtS5zCg96RZzyk+aeuD/XJo46EEUThDAsX9ZL1Ls9TgdHTEJk8PQhEvf5D1pS05Q
+	 3NXxlmCwqbv9DWjbkSsbkvcDPdouveGQRcVEs65s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Linus Walleij <linusw@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0483/1815] crypto: sl3516 - drop invalid sg_dma_len checks before DMA mapping
-Date: Sat, 12 Sep 2026 08:37:13 +0200
-Message-ID: <20260912065700.230252240@linuxfoundation.org>
+	Namhyung Kim <namhyung@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Swapnil Sapkal <swapnil.sapkal@amd.com>
+Subject: [PATCH 7.2 0457/1815] perf sched: Free subcommand string after perf sched stats
+Date: Sat, 12 Sep 2026 08:36:47 +0200
+Message-ID: <20260912065659.616854999@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,54 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 3ae59a2eba64b3648f069aa52eeaaeefdfe4bb2f ]
+[ Upstream commit e1f522ac439f94d56cf0d9a3c82d1953646d377a ]
 
-sg_dma_len() is only valid after mapping the scatterlist with
-dma_map_sg(). However, sl3516_ce_need_fallback() checks it before the
-source and destination scatterlists are mapped. Thus, a stale DMA length
-that is not a multiple of 16 could incorrectly force a software fallback
-when CONFIG_NEED_SG_DMA_LENGTH=y.
+The first entry of the sched_usage is dynamically allocated in
+parse_options_subcommand() so it should be released at the end.
+Do not return from a subcommand directly.
 
-Remove the invalid checks; the existing scatterlist length checks are
-sufficient.
-
-Fixes: 46c5338db7bd ("crypto: sl3516 - Add sl3516 crypto engine")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Acked-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 064790a3d4a8 ("perf sched stats: Add support for diff subcommand")
+Reviewed-and-tested-by: Swapnil Sapkal <swapnil.sapkal@amd.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/gemini/sl3516-ce-cipher.c | 8 --------
- 1 file changed, 8 deletions(-)
+ tools/perf/builtin-sched.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/crypto/gemini/sl3516-ce-cipher.c b/drivers/crypto/gemini/sl3516-ce-cipher.c
-index 583010b2d0071..02ec4282333b6 100644
---- a/drivers/crypto/gemini/sl3516-ce-cipher.c
-+++ b/drivers/crypto/gemini/sl3516-ce-cipher.c
-@@ -56,10 +56,6 @@ static bool sl3516_ce_need_fallback(struct skcipher_request *areq)
- 			ce->fallback_mod16++;
- 			return true;
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index 11db64ac1c122..ca506cad0534d 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -5255,19 +5255,20 @@ int cmd_sched(int argc, const char **argv)
+ 			if (argc)
+ 				argc = parse_options(argc, argv, stats_options,
+ 						     stats_usage, 0);
+-			return perf_sched__schedstat_record(&sched, argc, argv);
++			ret = perf_sched__schedstat_record(&sched, argc, argv);
+ 		} else if (argv[0] && !strcmp(argv[0], "report")) {
+ 			if (argc)
+ 				argc = parse_options(argc, argv, stats_options,
+ 						     stats_usage, 0);
+-			return perf_sched__schedstat_report(&sched);
++			ret = perf_sched__schedstat_report(&sched);
+ 		} else if (argv[0] && !strcmp(argv[0], "diff")) {
+ 			if (argc)
+ 				argc = parse_options(argc, argv, stats_options,
+ 						     stats_usage, 0);
+-			return perf_sched__schedstat_diff(&sched, argc, argv);
++			ret = perf_sched__schedstat_diff(&sched, argc, argv);
++		} else {
++			ret = perf_sched__schedstat_live(&sched, argc, argv);
  		}
--		if ((sg_dma_len(sg) % 16) != 0) {
--			ce->fallback_mod16++;
--			return true;
--		}
- 		if (!IS_ALIGNED(sg->offset, 16)) {
- 			ce->fallback_align16++;
- 			return true;
-@@ -72,10 +68,6 @@ static bool sl3516_ce_need_fallback(struct skcipher_request *areq)
- 			ce->fallback_mod16++;
- 			return true;
- 		}
--		if ((sg_dma_len(sg) % 16) != 0) {
--			ce->fallback_mod16++;
--			return true;
--		}
- 		if (!IS_ALIGNED(sg->offset, 16)) {
- 			ce->fallback_align16++;
- 			return true;
+-		return perf_sched__schedstat_live(&sched, argc, argv);
+ 	} else {
+ 		usage_with_options(sched_usage, sched_options);
+ 	}
 -- 
 2.53.0
 
