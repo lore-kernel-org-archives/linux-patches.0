@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9137247C107;
-	Sat, 12 Sep 2026 13:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551E538AC9A;
+	Sat, 12 Sep 2026 13:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220360; cv=none; b=p64kMll7ABMOq75TRVkI/tgEJYuiOvu4ny1S1bnLIY7OOfrOI/LNipG50TcDWVbuo5xuoF4wxYmb4TIOqKkp0Wl8Oau7ZbLbBf56Yd+3KNjJ5Y3S2Pc7Ls6h5zUpm9DlmjB3ctw+GT+N6mYtnhn60g+5MHILG0gJYpcWv3n+iYY=
+	t=1789220365; cv=none; b=Ahuu6giKMgIyJMmtqjQPJZy52ctDRUvMvlyiv9ZGWy2vokQW145/2rkT4HoTnMHFlE8dDIQr3OANbsSwf4JED7gVFWmOzMs72nsgJoQ5TWsnMN9nvekGiW0exdCTkk4ebj/Wt6+MfrxlfGCjn+v3do6KXQDFH3cjHFP/BGLayK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220360; c=relaxed/simple;
-	bh=ZJ0V7fQe37W1DZwc+JEsdie26jKT+rk71rgjMuwwwxI=;
+	s=arc-20240116; t=1789220365; c=relaxed/simple;
+	bh=YmGwG8xmnMReG+/If443BV89hwQMtMqNb5O/vBAkJYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GtqXXYvxW0+Q8CG8rDRRKEe4qgbY9xMqPkqKgZLwGQMa4TVUQV4abdSghyyevLWJXK9tIvHXECXP2UQapyH67KiafrS5J+tYN2YLu0BEtcDpO8aXKjWMXoJZUQLemN/BXUMGrzFxG8WfjQ8vVRtPx/NK0FlLxCy0fnrl3gPMIpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CumnFk+Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aGxIIcwFTzsJa1va0JV7mij0ZMGnn0aIbKH1M0y2axP03zoRTIICfoFMlfu+BMzlSBevjK/vwxgvhRXRYeqS0OYsV/i0LKfoumqiCHv3fg0MAYlDAuMvdJw7UDlUwi8T5agkBcyA393bEbd0AnWF8CVI5sSmeCSwKxWBN6Gi7wE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sIBl01dY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CumnFk+Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D534D1F000FF;
-	Sat, 12 Sep 2026 13:39:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sIBl01dY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289141F000FF;
+	Sat, 12 Sep 2026 13:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220359;
-	bh=t6X0ixxbkBPdIp1qe6kn0g3+goWePdkoxaCOxS9lY1o=;
+	s=korg; t=1789220364;
+	bh=Tnpf3EdvPV+5ArFQWhRsAe92hQ1m3nCqOGblqfHcUlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CumnFk+Zk+18zdLETiKLL5X64zVC0Hyl//okqTPdIt+kPuGWmZr67ns9skSP/QzJf
-	 ojW3vKV94YZN+lAbSolZVTBnakzJloDTlnrPjq3ROja4XORUmVm/z3ql3LN+ePYXv7
-	 6d5dF6qyT1Xp27Q+lc6sKDCmMSfFBtP6ZOQq0ms0=
+	b=sIBl01dYuZaZ4DQmNVDjVgQkv48l8nRcILxu0TVPcz/FqJxUxsp5AMQ8eeqnn90i+
+	 e2S9xF4Z0kvV2vzbYl2BS71VxhoDyE+GSfcSeNFEr+wrWwUWxzkJI/I0Ngpa0AKU8x
+	 6vF6eS/PsbiFMlbq3CgjuDNijQ7Xr36RX7y2823o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 0159/1424] SUNRPC: Reject krb5 v2 wrap tokens with oversized ec field
-Date: Sat, 12 Sep 2026 08:43:11 +0200
-Message-ID: <20260912065610.855433444@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 0120/1424] Bluetooth: eir: Fix OOB read in eir_get_service_data()
+Date: Sat, 12 Sep 2026 08:42:32 +0200
+Message-ID: <20260912065609.990001234@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,60 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit ad484748eec0a66eac0f13ab53b3fbedb7333c91 upstream.
+commit 4beb198bc59b242404a47c21990bc84165052c8a upstream.
 
-gss_krb5_unwrap_v2() sets buf->len to a logical
-length, which can be much smaller than head[0].iov_len
-(the allocated receive-page capacity).  It then calls
-xdr_buf_trim() with a trim length derived from the 16-bit
-"extra count" (ec) field in the Kerberos v2 token header.
+eir_get_service_data() walks the advertising data for a Service Data
+field with a matching UUID.  On a mismatch it advances:
 
-The ec field is authenticated by the post-decrypt memcmp()
-against the encrypted header copy, so a randomly-mutated
-value is rejected.  However, any peer holding a valid GSS
-context can legitimately encrypt a token whose ec exceeds
-the plaintext length.  Per RFC 4121, such a token is
-structurally malformed.
+    eir += dlen;
+    eir_len -= dlen;
 
-Although xdr_buf_trim() now clamps the buf->len subtraction
-to avoid unsigned underflow, the buffer is still left in a
-semantically invalid state (zero length, inconsistent iov
-lengths) when ec is oversized.
+eir_get_data() reports dlen as the field's data length, but the field
+spans dlen + 2 bytes once its length and type bytes count, and more
+when non-Service-Data fields were skipped to reach it.  The pointer
+lands correctly on the next field.  eir_len does not, and the shortfall
+compounds across fields until eir_get_data() reads the length and type
+bytes of a "field" past the end of the buffer.
 
-Reject these tokens before calling xdr_buf_trim(), giving
-callers a well-defined GSS_S_DEFECTIVE_TOKEN error and
-keeping the xdr_buf internally consistent.  The wrapped blob
-begins at a nonzero offset -- both callers pass len as
-offset + opaque_len -- so buf->len still counts the offset
-bytes that precede the blob.  Compare the trim length
-against the remaining wrapped segment, buf->len - offset,
-rather than the whole buffer; comparing against buf->len
-alone leaves an offset-wide window in which an oversized ec
-passes the test and xdr_buf_trim() cuts into the bytes ahead
-of the blob.
+For an ISO broadcast sink that buffer is hcon->le_per_adv_data[], filled
+from the periodic advertising reports of a remote broadcaster.  A PA
+payload packed with mismatching Service Data fields walks off the array
+into the rest of struct hci_conn.  A drifted field that matches the BAA
+UUID puts those bytes in iso_pi(sk)->base, where user space reads them
+back with getsockopt(BT_ISO_BASE).
 
-Fixes: cf4c024b9083 ("sunrpc: trim off EC bytes in GSSAPI v2 unwrap")
+Recompute eir_len from the end of the buffer each iteration.
+
+Fixes: 8f9ae5b3ae80 ("Bluetooth: eir: Add helpers for managing service data")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260528-tier2-v1-1-d026a1415e0b@oracle.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/gss_krb5_wrap.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/eir.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/sunrpc/auth_gss/gss_krb5_wrap.c
-+++ b/net/sunrpc/auth_gss/gss_krb5_wrap.c
-@@ -236,6 +236,8 @@ gss_krb5_unwrap_v2(struct krb5_ctx *kctx
- 	buf->len = len - (GSS_KRB5_TOK_HDR_LEN + headskip);
+--- a/net/bluetooth/eir.c
++++ b/net/bluetooth/eir.c
+@@ -366,6 +366,7 @@ u8 eir_create_scan_rsp(struct hci_dev *h
  
- 	/* Trim off the trailing "extra count" and checksum blob */
-+	if (ec + GSS_KRB5_TOK_HDR_LEN + tailskip > buf->len - offset)
-+		return GSS_S_DEFECTIVE_TOKEN;
- 	xdr_buf_trim(buf, ec + GSS_KRB5_TOK_HDR_LEN + tailskip);
+ void *eir_get_service_data(u8 *eir, size_t eir_len, u16 uuid, size_t *len)
+ {
++	const u8 *eir_end = eir + eir_len;
+ 	size_t dlen;
  
- 	*align = XDR_QUADLEN(GSS_KRB5_TOK_HDR_LEN + headskip);
+ 	while ((eir = eir_get_data(eir, eir_len, EIR_SERVICE_DATA, &dlen))) {
+@@ -378,7 +379,7 @@ void *eir_get_service_data(u8 *eir, size
+ 		}
+ 
+ 		eir += dlen;
+-		eir_len -= dlen;
++		eir_len = eir_end - eir;
+ 	}
+ 
+ 	return NULL;
 
 
