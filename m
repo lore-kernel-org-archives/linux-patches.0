@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD47D4399E2;
-	Sat, 12 Sep 2026 11:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB78357CFA;
+	Sat, 12 Sep 2026 11:10:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211404; cv=none; b=WMG/lqClIjW6ZJL/nseT8iExW6n7jKTn5N1fp/6DoN7wghfh3ehQBPa517Q1Eb94kTpRQHz+skr0Guwl3QRs5cBFl2nFRLkhK7dUkvwSld5reJzy69TvU2ctHCMPXw0ht4r6McPySazx5Fenh7H/er6YFqUU2iG77d15KuXg3W0=
+	t=1789211409; cv=none; b=kkMbHSNjGtA9xcuFYifwavkewv2GeA9L915V8L6mLSv0tNZfezyjjnd+Ilgo7AWCFx1QFE38UG9fpaJvHjjr+Y5y3ThQ7NhIBBHnVqcwF0VEAAQ0LkPHY4U9ekL8gc9RCjVwifYOncs3zs+vth01JDnz0/ad5/AZg7zoROF0TW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211404; c=relaxed/simple;
-	bh=O4/267us1IdmB7VWFos83pIDj8Pxmbjsbe1SAQWGrNk=;
+	s=arc-20240116; t=1789211409; c=relaxed/simple;
+	bh=r8insn+kiRYmbUdM9UyxRDL5pNz8x4qsku5PK1lU/b0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Au0djAsjzb7+KHQdux253JQLDipqOqFljXDDCP1wgB9/VvjU2w6+rIr6b0WwsqKMjyDz1k/UYf+wuBMzdJhralgp7AHllph6f8Bui6yDFO9rAxfRw0gH16AC6H7AiKjdublePfmPg5yu2e8OOO4K/zd8G3e1zCBtvJ7Z27k1Brk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkPwsItL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EVXXz9hrU6mFilYbPfr2kKstqAAuXuzu/m3PGlhNS4jGrtysNSC7EiKjEqaOcpqCUkT72p1cT6XQBamJm8XzQu0T+M8zjC5R1N+ny+IfCVgbts7OHMAx0jcx3tK2E5uNh1PZgenZu5P/Reh4CMRAQjvAn96tqX998lSL7G9B6dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mXxhdSEv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkPwsItL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5591F000FF;
-	Sat, 12 Sep 2026 11:10:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mXxhdSEv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D4E1F000FF;
+	Sat, 12 Sep 2026 11:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211403;
-	bh=iCeb/aoXudVXTKs5dBZZLLcEWZXQnBMhr9HLfRAS1uY=;
+	s=korg; t=1789211408;
+	bh=wA1VNzf7aty86p9vYC8ouD59L72tJRhhxUn6mGYWQ+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HkPwsItL7hgvboTLJqpn2gUtzChlG1/Qek6Vg3hb6jqT8BuyK/6chJla7em+q8gqf
-	 bhd3euMuyeXUwJHbciu2H9hmPaRybfBacIsx+E0fZNPCEZcodTqHGklj4XqnS/TRkn
-	 WYcdaS3mLDoKsrqrcbn5lXdnAGO8kQUJgaqWn8zc=
+	b=mXxhdSEvuF9wJd54lwbk0jk/DqgVs4YNCjgjdLz8i3n4vYA2gVTU2gU5daKbX4Lpk
+	 pTqLVJKC/GLfegEJeXqmsKLF+HQBnxCMCsGBIJzSVija3rRsbavbpeaLT+htywtzM7
+	 z/Em0nsvhaKE9uEn2AuLTgXooLK/b3k8jILCwonk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Szymon Wilczek <swilczek.lx@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1223/1518] hwmon: (coretemp) Fix core_data leak on CPUs without PTS
-Date: Sat, 12 Sep 2026 08:56:32 +0200
-Message-ID: <20260912065651.165247643@linuxfoundation.org>
+Subject: [PATCH 6.18 1224/1518] hwmon: (emc1403) Rely on subsystem locking
+Date: Sat, 12 Sep 2026 08:56:33 +0200
+Message-ID: <20260912065651.191521508@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,58 +50,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Szymon Wilczek <swilczek.lx@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 0cd8450c257faa0cece0e0c43d3b55d1a389acc7 ]
+[ Upstream commit 61e9b50ffa2390a2927051d335b2ba04b8f791ce ]
 
-pdata->core_data is allocated in init_temp_data() when the first core
-temp_data of a package is created, but it is only released from
-destroy_temp_data(), and only in the branch that handles the package
-temp_data.
+Attribute access is now serialized in the hardware monitoring core,
+so locking in the driver code is no longer necessary. Drop it.
 
-Package temp_data is created solely when the CPU supports
-X86_FEATURE_PTS. On a CPU without it, coretemp_cpu_online() never calls
-coretemp_add_core() with pkg_flag set, so pdata->pkg_data stays NULL.
-coretemp_cpu_offline() then skips the removal of the package interface,
-destroy_temp_data() is never called for package data, and the array is
-still allocated when coretemp_device_remove() frees the platform data
-that pointed at it.
-
-Release the array in coretemp_device_remove(). destroy_temp_data() sets
-pdata->core_data to NULL when it frees it, so the added kfree() is a
-no-op on CPUs that do have PTS.
-
-Tested on an Intel Core i5-1135G7. The driver was instrumented to log
-every allocation and release of pdata->core_data, and the PTS check in
-coretemp_cpu_online() was patched out to emulate a CPU without package
-thermal support. Without this change the array was allocated and never
-released, and coretemp_device_remove() still saw a non-NULL pointer.
-With it the array is released and the pointer accounting balances. On an
-unmodified build the release still happens via the package temp_data and
-the added kfree() sees NULL, with no slab warnings over repeated module
-load and unload cycles.
-
-Fixes: 1a793caf6f69 ("hwmon: (coretemp) Use dynamic allocated memory for core temp_data")
-Signed-off-by: Szymon Wilczek <swilczek.lx@gmail.com>
-Link: https://lore.kernel.org/r/20260810192344.3733721-1-swilczek.lx@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 75f2c0b36907 ("hwmon: (emc1403) Drop hysteresis for low limit temperature")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/emc1403.c | 46 +++++++++--------------------------------
+ 1 file changed, 10 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index ad79db5a183e0..a84a32ada8bd5 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -650,6 +650,7 @@ static void coretemp_device_remove(int zoneid)
- 	struct platform_data *pdata = platform_get_drvdata(pdev);
+diff --git a/drivers/hwmon/emc1403.c b/drivers/hwmon/emc1403.c
+index eca33220d34a0..ccce948a4306e 100644
+--- a/drivers/hwmon/emc1403.c
++++ b/drivers/hwmon/emc1403.c
+@@ -17,7 +17,6 @@
+ #include <linux/hwmon-sysfs.h>
+ #include <linux/err.h>
+ #include <linux/sysfs.h>
+-#include <linux/mutex.h>
+ #include <linux/regmap.h>
+ #include <linux/util_macros.h>
  
- 	ida_destroy(&pdata->ida);
-+	kfree(pdata->core_data);
- 	kfree(pdata);
- 	platform_device_unregister(pdev);
+@@ -30,7 +29,6 @@ enum emc1403_chip { emc1402, emc1403, emc1404, emc1428 };
+ struct thermal_data {
+ 	enum emc1403_chip chip;
+ 	struct regmap *regmap;
+-	struct mutex mutex;
+ };
+ 
+ static ssize_t power_state_show(struct device *dev, struct device_attribute *attr, char *buf)
+@@ -268,8 +266,8 @@ static s8 emc1403_temp_regs_low[][4] = {
+ 	},
+ };
+ 
+-static int __emc1403_get_temp(struct thermal_data *data, int channel,
+-			      enum emc1403_reg_map map, long *val)
++static int emc1403_get_temp(struct thermal_data *data, int channel,
++			    enum emc1403_reg_map map, long *val)
+ {
+ 	unsigned int regvalh;
+ 	unsigned int regvall = 0;
+@@ -295,38 +293,23 @@ static int __emc1403_get_temp(struct thermal_data *data, int channel,
+ 	return 0;
  }
+ 
+-static int emc1403_get_temp(struct thermal_data *data, int channel,
+-			    enum emc1403_reg_map map, long *val)
+-{
+-	int ret;
+-
+-	mutex_lock(&data->mutex);
+-	ret = __emc1403_get_temp(data, channel, map, val);
+-	mutex_unlock(&data->mutex);
+-
+-	return ret;
+-}
+-
+ static int emc1403_get_hyst(struct thermal_data *data, int channel,
+ 			    enum emc1403_reg_map map, long *val)
+ {
+ 	int hyst, ret;
+ 	long limit;
+ 
+-	mutex_lock(&data->mutex);
+-	ret = __emc1403_get_temp(data, channel, map, &limit);
++	ret = emc1403_get_temp(data, channel, map, &limit);
+ 	if (ret < 0)
+-		goto unlock;
++		return ret;
+ 	ret = regmap_read(data->regmap, 0x21, &hyst);
+ 	if (ret < 0)
+-		goto unlock;
++		return ret;
+ 	if (map == temp_min)
+ 		*val = limit + hyst * 1000;
+ 	else
+ 		*val = limit - hyst * 1000;
+-unlock:
+-	mutex_unlock(&data->mutex);
+-	return ret;
++	return 0;
+ }
+ 
+ static int emc1403_temp_read(struct thermal_data *data, u32 attr, int channel, long *val)
+@@ -451,20 +434,16 @@ static int emc1403_set_hyst(struct thermal_data *data, long val)
+ 	else
+ 		val = clamp_val(val, 0, 255000);
+ 
+-	mutex_lock(&data->mutex);
+-	ret = __emc1403_get_temp(data, 0, temp_crit, &limit);
++	ret = emc1403_get_temp(data, 0, temp_crit, &limit);
+ 	if (ret < 0)
+-		goto unlock;
++		return ret;
+ 
+ 	hyst = limit - val;
+ 	if (data->chip == emc1428)
+ 		hyst = clamp_val(DIV_ROUND_CLOSEST(hyst, 1000), 0, 127);
+ 	else
+ 		hyst = clamp_val(DIV_ROUND_CLOSEST(hyst, 1000), 0, 255);
+-	ret = regmap_write(data->regmap, 0x21, hyst);
+-unlock:
+-	mutex_unlock(&data->mutex);
+-	return ret;
++	return regmap_write(data->regmap, 0x21, hyst);
+ }
+ 
+ static int emc1403_set_temp(struct thermal_data *data, int channel,
+@@ -478,7 +457,6 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
+ 	regh = emc1403_temp_regs[channel][map];
+ 	regl = emc1403_temp_regs_low[channel][map];
+ 
+-	mutex_lock(&data->mutex);
+ 	if (regl >= 0) {
+ 		if (data->chip == emc1428)
+ 			val = clamp_val(val, -128000, 127875);
+@@ -487,7 +465,7 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
+ 		regval = DIV_ROUND_CLOSEST(val, 125);
+ 		ret = regmap_write(data->regmap, regh, (regval >> 3) & 0xff);
+ 		if (ret < 0)
+-			goto unlock;
++			return ret;
+ 		ret = regmap_write(data->regmap, regl, (regval & 0x07) << 5);
+ 	} else {
+ 		if (data->chip == emc1428)
+@@ -497,8 +475,6 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
+ 		regval = DIV_ROUND_CLOSEST(val, 1000);
+ 		ret = regmap_write(data->regmap, regh, regval);
+ 	}
+-unlock:
+-	mutex_unlock(&data->mutex);
+ 	return ret;
+ }
+ 
+@@ -695,8 +671,6 @@ static int emc1403_probe(struct i2c_client *client)
+ 	if (IS_ERR(data->regmap))
+ 		return PTR_ERR(data->regmap);
+ 
+-	mutex_init(&data->mutex);
+-
+ 	hwmon_dev = devm_hwmon_device_register_with_info(&client->dev,
+ 							 client->name, data,
+ 							 &emc1403_chip_info,
 -- 
 2.53.0
 
