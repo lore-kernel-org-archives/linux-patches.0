@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7952594BD;
-	Sat, 12 Sep 2026 10:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7A1CA6F;
+	Sat, 12 Sep 2026 10:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208340; cv=none; b=sSv63ShchmmgMx6bUAJaf4IYKZ50ep+tRsmirG6xaKM3Fgcfp4y0pCfRLwGC8KN3O4zxkQz202NCyvh0u/pIDvfm+I4Zp7CZREQKkQqpDTrKwz8bTY+cSNfEVoMd6Y4psuDnNVwhO1M7hv3ZLfxyeYT6dkAtOoJ3VOC1m2/hNHU=
+	t=1789208344; cv=none; b=cTE4xFf6SQxN78Y74iCt90cDpNtiUiNmXnOKUxDdMfuPEnj0QLFntutq8eAU5Igvg1yu76HTHCzIynVVioCTLNHRDnMFsHh8aq27y++0IMhGGdRpugCZQ6yojr6QwrSa5o1ahSfIz589RsGVpheussDOyp7M4ESGrQ0JVK2GsX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208340; c=relaxed/simple;
-	bh=PjiHgTmSxEgiIQpfHgOaG69Nm6OpbIYN6Jx4Hcvk67g=;
+	s=arc-20240116; t=1789208344; c=relaxed/simple;
+	bh=GAFoZ11nzZIFPinD3S4RKhIhbFB1pu1tU4oOmJE5kuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DYNBtkQ4PrKk/sUz53/7JOnq37WIi/RDGhth+UTUhVw0iIbC+3kBxfUiqE3feVve4LLBQwI6jvupV5YfXn2LKgHIED8TZERxIN5UMzC2Y5bZGTlxgxaWhcE0d9z5ksnz4Vwi463OoQPgVOD5er2xjnpzjFEq15gGkUo5O/eT7Qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDJB6Qm6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JzTFu/ZtXH9E2oZsVdFhaCNAmSsT2PXUvRLWYfXBjZwh3/O0lJxv0buib53izS6abAMmt2piCk/zRm0HKzoYMPEuQnvEgRqNO91/NJkgXvf5dBFvHKjrGbmhig4LEGI7VwzMvfxYO0+GSSZacSty2+x7+BAXitNQuf47FkTdbkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E+wp2Hw9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDJB6Qm6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 084E51F000FF;
-	Sat, 12 Sep 2026 10:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E+wp2Hw9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ECC01F000FF;
+	Sat, 12 Sep 2026 10:19:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208338;
-	bh=D5LDN0MgbG8gdBVuZGYKmAcuPuh02ga1IBFYnMdPV68=;
+	s=korg; t=1789208343;
+	bh=Sx9ejGr6yN0bgOnt4NXDLNrnbg5IKU+m27ui9+dYH0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XDJB6Qm6YbAyMRI7S+4PODSlpPLXuECwJm4sJjym+U5oebVERDr9vVThcu1O+0bV9
-	 4UZJ1mhDJ7mt5ue8itGdmzSRXNoq9z5fatejwkqHOgn6qAnr3+pNNzLumKGlHSqGLx
-	 UlBxTwhsPd1BXu++q07NbUiFy4Xgq8/hUjQxJia0=
+	b=E+wp2Hw9RMohnhNMgKE/ehIjjLR19UirjFvZbBNfmoElcchqp+J6OE3xsymDAtyXP
+	 0AUTTMmJ44L2HMkYw5xw3kGtHGuxTh6PC2gUs2+XChUXc7ifdP8HyHTusWLnq5hMxj
+	 dmZHtPK5AlC8FPcWgyEjJ2jcTE/uDTOE/DWzkcFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0595/1518] remoteproc: Allow shutdown of crashed processors
-Date: Sat, 12 Sep 2026 08:46:04 +0200
-Message-ID: <20260912065636.885670725@linuxfoundation.org>
+Subject: [PATCH 6.18 0596/1518] remoteproc: core: Attach rproc asynchronously in rproc_add() path via schedule_work()
+Date: Sat, 12 Sep 2026 08:46:05 +0200
+Message-ID: <20260912065636.907662395@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,65 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
 
-[ Upstream commit 2482ca875ef5993df8daee563033d70e2523a25f ]
+[ Upstream commit 026a3fada43261e403c6c4d9bda9501547e3f108 ]
 
-rproc_shutdown() rejects a remoteproc in RPROC_CRASHED state, and
-rproc_del() ignores that error. The result of these two decisions is
-that a user cannot stop a remoteproc that with recovery disabled that
-has entered a crash state, and removal of an associated remoteproc
-driver will release resources without first stopping the remoteproc.
+Unlike the remoteproc firmware load path where rproc_add() call
+rproc_auto_boot_callback() asynchronously and ignores the return value of
+rproc_boot(), the attach path calls rproc_boot() synchronously and
+propagates its return value back to rproc_add(). This means a failure
+during rproc_attach() causes rproc_add() to fail and triggers resource
+release, removing the remoteproc from sysfs and making it unavailable for
+recovery or further boot attempts.
 
-Allow rproc_shutdown() to stop crashed processors. Propagate the crash
-state to subdevice teardown, to allow subdevices to dismantle things
-appropriately.
+Align the remoteproc attach path with the firmware load path by
+introducing attach_work and scheduling rproc_boot() asynchronously via
+schedule_work(). This keeps the remoteproc registered and available in
+sysfs even if the initial attach attempt fails, and avoids blocking
+rproc_add() on the attach result.
 
-Assisted-by: OpenCode:GPT-5.5
-Fixes: 5e6a0e05270e ("remoteproc: core: Move state checking to remoteproc_core")
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260723-rproc-rmmod-not-crashing-v1-1-546dfd5de0e6@oss.qualcomm.com
+Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260623-rproc-attach-issue-v3-1-8e24310707ce@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 74ee3b2f5767 ("remoteproc: Prevent crash handling to race with rproc_del()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_core.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/remoteproc/remoteproc_core.c | 20 ++++++++++++--------
+ include/linux/remoteproc.h           |  2 ++
+ 2 files changed, 14 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index 29bbaa349e340..321ec76d20521 100644
+index 321ec76d20521..9a2208a2ffbca 100644
 --- a/drivers/remoteproc/remoteproc_core.c
 +++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1989,6 +1989,7 @@ EXPORT_SYMBOL(rproc_boot);
- int rproc_shutdown(struct rproc *rproc)
+@@ -1678,18 +1678,21 @@ static void rproc_auto_boot_callback(const struct firmware *fw, void *context)
+ 	release_firmware(fw);
+ }
+ 
++static void rproc_attach_work(struct work_struct *work)
++{
++	struct rproc *rproc = container_of(work, struct rproc, attach_work);
++
++	rproc_boot(rproc);
++}
++
+ static int rproc_trigger_auto_boot(struct rproc *rproc)
  {
- 	struct device *dev = &rproc->dev;
-+	bool crashed;
  	int ret;
  
- 	ret = mutex_lock_interruptible(&rproc->lock);
-@@ -1998,16 +1999,18 @@ int rproc_shutdown(struct rproc *rproc)
- 	}
+-	/*
+-	 * Since the remote processor is in a detached state, it has already
+-	 * been booted by another entity.  As such there is no point in waiting
+-	 * for a firmware image to be loaded, we can simply initiate the process
+-	 * of attaching to it immediately.
+-	 */
+-	if (rproc->state == RPROC_DETACHED)
+-		return rproc_boot(rproc);
++	if (rproc->state == RPROC_DETACHED) {
++		schedule_work(&rproc->attach_work);
++		return 0;
++	}
  
- 	if (rproc->state != RPROC_RUNNING &&
--	    rproc->state != RPROC_ATTACHED) {
-+	    rproc->state != RPROC_ATTACHED &&
-+	    rproc->state != RPROC_CRASHED) {
- 		ret = -EINVAL;
- 		goto out;
- 	}
-+	crashed = rproc->state == RPROC_CRASHED;
+ 	/*
+ 	 * We're initiating an asynchronous firmware loading, so we can
+@@ -2520,6 +2523,7 @@ struct rproc *rproc_alloc(struct device *dev, const char *name,
+ 	INIT_LIST_HEAD(&rproc->dump_segments);
  
- 	/* if the remote proc is still needed, bail out */
- 	if (!atomic_dec_and_test(&rproc->power))
- 		goto out;
+ 	INIT_WORK(&rproc->crash_handler, rproc_crash_handler_work);
++	INIT_WORK(&rproc->attach_work, rproc_attach_work);
  
--	ret = rproc_stop(rproc, false);
-+	ret = rproc_stop(rproc, crashed);
- 	if (ret) {
- 		atomic_inc(&rproc->power);
- 		goto out;
+ 	rproc->state = RPROC_OFFLINE;
+ 
+diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
+index b4795698d8c2a..580d324a1e8ff 100644
+--- a/include/linux/remoteproc.h
++++ b/include/linux/remoteproc.h
+@@ -526,6 +526,7 @@ enum rproc_features {
+  * @subdevs: list of subdevices, to following the running state
+  * @notifyids: idr for dynamically assigning rproc-wide unique notify ids
+  * @index: index of this rproc device
++ * @attach_work: workqueue for attaching rproc
+  * @crash_handler: workqueue for handling a crash
+  * @crash_cnt: crash counter
+  * @recovery_disabled: flag that state if recovery was disabled
+@@ -568,6 +569,7 @@ struct rproc {
+ 	struct list_head subdevs;
+ 	struct idr notifyids;
+ 	int index;
++	struct work_struct attach_work;
+ 	struct work_struct crash_handler;
+ 	unsigned int crash_cnt;
+ 	bool recovery_disabled;
 -- 
 2.53.0
 
