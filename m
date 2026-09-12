@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E11F34252D;
-	Sat, 12 Sep 2026 09:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2936C343893;
+	Sat, 12 Sep 2026 09:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206423; cv=none; b=ZoJROPHC8zS8oeGiKsRuI2uaG6M72T8VcrvqK+Qn9Fo6AfKECoTL68/dVy1mLaWYbzALrEPKzOAwvuGes6yju25FDkmtdqPgKo8gzoZdWcGqnrsLcVv9KMMcgExOSyN9kVwXbh2KSAtfsxPjD3BjKH17GE6xjRV4j4ALrXruero=
+	t=1789206428; cv=none; b=Wt5MRBhjtyTLWe5noVAOqZM8VIq52n4cak46K+poJK2MLC8VcmRT5kp6nrV8qVKPR6hdjpo0G3yag2F6k8G1vVn2+M8PICIjUVZjhlWQibpDKQwed3r51T0SDIcVb+bD8ayW3CHIXOhx5bBzXon36H3RXfKslkxcluKYe+GaPjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206423; c=relaxed/simple;
-	bh=3AyKBmm3T1K+c1PIaYZ8Vi1u4pDEco5nlb1O0L1XuNg=;
+	s=arc-20240116; t=1789206428; c=relaxed/simple;
+	bh=F4vu5WGlQSlrRd0GJWBJleFZJb/tl2ji62sxE/7+CVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jnr6wamckojkkMIE+ktkUSpYYCTrwwQEejU0iHLn/gUn/a61P/yjZe94aBYezKypW++9Y6CYEwmIr+pC9QJQW5OYFUhwJio42mEpN21/zOJTNdj00TI2dyC96t7QN3393d97BL//3yTIbPTfDRLL7jqLp/bCtjJyUifNTVVvqis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJdyXxHX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cIXpUG4l/1kOMJWheUng2dDRsJM42WlMGiM8SS9+YG3VEwJX96u5vbXVqf/PGsMPQgYn+D9wigNklfO9SgPUxUF/ODL48oOizcUX+c0UN2K5rW1RWIYFmeM8YrkXoPUsXr9wMI4vdLt1442jgoE3HequhCefmUJ4dsUEYzzBLUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BVVRZpT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJdyXxHX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5941F000FF;
-	Sat, 12 Sep 2026 09:47:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BVVRZpT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9718E1F000FF;
+	Sat, 12 Sep 2026 09:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206422;
-	bh=NBaGNkmCyM3K8X67OoGNiic21bB/dpl5zJyyA0qIf8o=;
+	s=korg; t=1789206426;
+	bh=+i0XefTrooBqxQFqj2Pe5zn6VOKIA9oCHuUhMo32Ll0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJdyXxHXjJgJqyY82FN/tl2Nd8WoXVZGDE6m53WsQPRtkyW+54E88c294Leg3f5vu
-	 9rGhjZW2F++peLna06mDwx+sb5TeB/fMtCDGxGrYadPST42XjutzjI8X9Jy2ABZ0N8
-	 pfb2gTBXrF8dmDaKXXj44fw1zG+raJrP2ApRCh5k=
+	b=1BVVRZpT7TLmPCVB0km71XFnI0WPxxswz7YJ73TmBlaTS/SZaS8Kioi1PI4qCUmO0
+	 LPImMsSYm1Z12O6NsTG7zTDPMIAMUgykwQp3alCnqTkJZIwAJEF44UgKStbE+Fic2k
+	 EwUwceC96dRdxuGnC5RnRMyCiN+ffEsJz8a8wzgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0204/1518] hwrng: xilinx-trng - propagate timeout before any data is read
-Date: Sat, 12 Sep 2026 08:39:33 +0200
-Message-ID: <20260912065628.102632722@linuxfoundation.org>
+Subject: [PATCH 6.18 0205/1518] crypto: rk3288 - fail ahash requests on HASH idle timeout
+Date: Sat, 12 Sep 2026 08:39:34 +0200
+Message-ID: <20260912065628.125392364@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,100 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit ba088974419326daf46c5dc03e2cf6ab6ab701f7 ]
+[ Upstream commit ae150db7826f21e8d19e54fb6243169628809c4d ]
 
-xtrng_readblock32() polls for 16-byte chunks but returns the number of
-bytes read even when the first poll times out. Its caller then treats a
-zero return as a short successful read, and partial reads for full
-32-byte blocks can make the tail copy use a fixed block offset rather
-than the amount already produced.
+rk_hash_run() waits for RK_CRYPTO_HASH_STS to become idle after the
+final DMA transfer, but ignores the poll result. If the hash engine
+never becomes idle, the driver still reads the digest registers and
+finalizes the request with the previous success value.
 
-Return the poll error when no data has been read, preserve partial
-positive returns after some data is available, stop the generator on all
-collection exits, and append tail bytes at the current output count.
+Store the poll result and finalize the request with the timeout error
+before reading the digest registers.
 
-Fixes: 8979744aca80 ("crypto: xilinx - Add TRNG driver for Versal")
+Fixes: 37bc22159c45 ("crypto: rockchip - use read_poll_timeout")
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/xilinx/xilinx-trng.c | 32 +++++++++++++++++++++--------
- 1 file changed, 24 insertions(+), 8 deletions(-)
+ drivers/crypto/rockchip/rk3288_crypto_ahash.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/xilinx/xilinx-trng.c b/drivers/crypto/xilinx/xilinx-trng.c
-index 3b193471cc94c..7f9762ea042bb 100644
---- a/drivers/crypto/xilinx/xilinx-trng.c
-+++ b/drivers/crypto/xilinx/xilinx-trng.c
-@@ -91,8 +91,8 @@ static void xtrng_softreset(struct xilinx_rng *rng)
- 	xtrng_readwrite32(rng->rng_base + TRNG_CTRL_OFFSET, TRNG_CTRL_PRNGSRST_MASK, 0);
- }
+diff --git a/drivers/crypto/rockchip/rk3288_crypto_ahash.c b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
+index b9f5a8b42e661..d3482619aa2f1 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto_ahash.c
++++ b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
+@@ -324,7 +324,12 @@ static int rk_hash_run(struct crypto_engine *engine, void *breq)
+ 	 * efficiency, and make it response quickly when dma
+ 	 * complete.
+ 	 */
+-	readl_poll_timeout(rkc->reg + RK_CRYPTO_HASH_STS, v, v == 0, 10, 1000);
++	err = readl_poll_timeout(rkc->reg + RK_CRYPTO_HASH_STS, v,
++				 v == 0, 10, 1000);
++	if (err) {
++		dev_err(rkc->dev, "HASH idle timeout\n");
++		goto theend;
++	}
  
--/* Return no. of bytes read */
--static size_t xtrng_readblock32(void __iomem *rng_base, __be32 *buf, int blocks32, bool wait)
-+/* Return no. of bytes read or a negative error before any data is read. */
-+static int xtrng_readblock32(void __iomem *rng_base, __be32 *buf, int blocks32, bool wait)
- {
- 	int read = 0, ret;
- 	int timeout = 1;
-@@ -107,8 +107,11 @@ static size_t xtrng_readblock32(void __iomem *rng_base, __be32 *buf, int blocks3
- 		ret = readl_poll_timeout(rng_base + TRNG_STATUS_OFFSET, val,
- 					 (val & TRNG_STATUS_QCNT_MASK) ==
- 					 TRNG_STATUS_QCNT_16_BYTES, !!wait, timeout);
--		if (ret)
-+		if (ret) {
-+			if (!read)
-+				return ret;
- 			break;
-+		}
- 
- 		for (idx = 0; idx < TRNG_READ_4_WORD; idx++) {
- 			*(buf + read) = cpu_to_be32(ioread32(rng_base + TRNG_CORE_OUTPUT_OFFSET));
-@@ -123,27 +126,40 @@ static int xtrng_collect_random_data(struct xilinx_rng *rng, u8 *rand_gen_buf,
- {
- 	u8 randbuf[TRNG_SEC_STRENGTH_BYTES];
- 	int byteleft, blocks, count = 0;
-+	int full_blocks_bytes;
- 	int ret;
- 
- 	byteleft = no_of_random_bytes & (TRNG_SEC_STRENGTH_BYTES - 1);
- 	blocks = no_of_random_bytes >> TRNG_SEC_STRENGTH_SHIFT;
-+	full_blocks_bytes = blocks * TRNG_SEC_STRENGTH_BYTES;
- 	xtrng_readwrite32(rng->rng_base + TRNG_CTRL_OFFSET, TRNG_CTRL_PRNGSTART_MASK,
- 			  TRNG_CTRL_PRNGSTART_MASK);
- 	if (blocks) {
- 		ret = xtrng_readblock32(rng->rng_base, (__be32 *)rand_gen_buf, blocks, wait);
--		if (!ret)
--			return 0;
-+		if (ret <= 0) {
-+			count = ret;
-+			goto out_stop;
-+		}
- 		count += ret;
-+		if (ret < full_blocks_bytes)
-+			goto out_stop;
- 	}
- 
- 	if (byteleft) {
- 		ret = xtrng_readblock32(rng->rng_base, (__be32 *)randbuf, 1, wait);
-+		if (ret < 0) {
-+			if (!count)
-+				count = ret;
-+			goto out_stop;
-+		}
- 		if (!ret)
--			return count;
--		memcpy(rand_gen_buf + (blocks * TRNG_SEC_STRENGTH_BYTES), randbuf, byteleft);
--		count += byteleft;
-+			goto out_stop;
-+		ret = min(ret, no_of_random_bytes - count);
-+		memcpy(rand_gen_buf + count, randbuf, ret);
-+		count += ret;
- 	}
- 
-+out_stop:
- 	xtrng_readwrite32(rng->rng_base + TRNG_CTRL_OFFSET,
- 			  TRNG_CTRL_PRNGMODE_MASK | TRNG_CTRL_PRNGSTART_MASK, 0U);
- 
+ 	for (i = 0; i < crypto_ahash_digestsize(tfm) / 4; i++) {
+ 		v = readl(rkc->reg + RK_CRYPTO_HASH_DOUT_0 + i * 4);
 -- 
 2.53.0
 
