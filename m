@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE82345749;
-	Sat, 12 Sep 2026 14:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2103BEED8;
+	Sat, 12 Sep 2026 14:50:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224634; cv=none; b=u1rWtSTwsfzMkEqfgdoIgtChdz9LVA8EEVSJsp5fN3E2twhM3JEMkjF+yix05mT4Gbk0l/9Xh1CQQtRetiE71oYS9R7MOijhpUPRv+gfP81SAWvw5OUykbE/jAXrtYOwBBmVaqaNn4fuYRceHqQy1wstpq24qa9QCwI5szFpXrA=
+	t=1789224639; cv=none; b=SNWJS/wjUyS6CWOp7nXgrBqrp5UO+m+yC5zkMxYQONo4jGa6e0HLMvC1CQ9y+h5S1CSpKcxFbCBnZs/gjnzavoRSzq2Gvdw6gepoALg+rStewu+tSITLddbyezGqL2WCqwH5iTlL9Y8E27cSGAUMEs+6drzImjn/OJpdBk4yx2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224634; c=relaxed/simple;
-	bh=PsRsCpIcbRMii9aA7i/LLBrvRZU3vOCaWVIzGC0qmIk=;
+	s=arc-20240116; t=1789224639; c=relaxed/simple;
+	bh=tjykAWJtLSbeiANsljySMNGHeMH3nahZPXpaUaN+R1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NyzJEESgnbFVqbcb1AIM5Pj2ryzlSen8zF/+mvuZGv877E4xlGNnzWKnxZo48MVw1SYpD/oYAtw4jiu4ZA64zG89oQV0UxEOVP5KrvlhzwQQNnO973zAp1yTwJnmQlSQk2HJzxh+v2ZWvGvq8DdbpzvFRmzuXZfZvDezjEPLVTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjkEiAp7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gA0Yd7Gvn+X3dh+IErYSO5KzYfO1DvZHqE3DxZNsZARy/RUVy4EEJR10tmg2taHB+2ESXUMke4i4pdl/xj+rcKgIZr1Yz4k1162Ckqr7QHUa+PMEpbTAaCRYfIvjaO/m/c+RrZiXwcjSUxV/u6+UsEb5MB89ZsVuy54vU4j0U4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7uWX7Vm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjkEiAp7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A9911F000FF;
-	Sat, 12 Sep 2026 14:50:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7uWX7Vm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8201F000FF;
+	Sat, 12 Sep 2026 14:50:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224633;
-	bh=1kHAQETmA9pzE27Cu3V732WlhY21FDqdP8XVOpteCQQ=;
+	s=korg; t=1789224638;
+	bh=NlAhoT+LT+T9FirbgopLLLt/ZhujsWDt7/CVyz9TzPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CjkEiAp7yeE0wltsxIEqOSg96q5NX4NbrwTsyTIL/e/Ezd+In3EkFSCJb3ZirNiiY
-	 O23eFgM4PorAyGAawPQNGAjmSXMGNV0y6EmC+V0RagsxiOP6zOC3cq/png3atDXmhq
-	 eqq6DG0OhJUqCMLm5pZ6hLCwTrllWZDmMrZh/6aw=
+	b=z7uWX7VmK3yFDXrqDvtwitTCWdRglRUZnIPTArDf/krd5jizUxhTvvA/4diSXmXCQ
+	 9osZzrlhQ3juLLJ2/l+HcAnvAVVR0lrYnkBExKPC0b8bry5IqOsjXjXnzEdO4Kuxpo
+	 dRKf6z+ZKs6S8leUaphaZ0bacelmkbDkHxPRN9/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <remi@remlab.net>,
-	Joe Damato <joe@dama.to>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zheng Qixing <zhengqixing@huawei.com>,
+	Tang Yizhou <yizhou.tang@shopee.com>,
+	Yu Kuai <yukuai@fygo.io>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1032/1424] phonet: pep: do not write beyond optlen in getsockopt
-Date: Sat, 12 Sep 2026 08:57:44 +0200
-Message-ID: <20260912065630.423070934@linuxfoundation.org>
+Subject: [PATCH 6.6 1033/1424] blk-cgroup: skip dying blkg in blkcg_activate_policy()
+Date: Sat, 12 Sep 2026 08:57:45 +0200
+Message-ID: <20260912065630.445484566@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -48,51 +49,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Zheng Qixing <zhengqixing@huawei.com>
 
-[ Upstream commit 77e5eb0e192aec6710c03ca8144582fd2af36ca4 ]
+[ Upstream commit 5e9220389920f33b6a804d50c548cd0cd1b04634 ]
 
-pep_getsockopt() clamps the reported length to the caller's buffer with
-min_t(), but then stores the value with put_user(val, (int __user *)
-optval), which always writes sizeof(int) bytes. A getsockopt() call with
-an optlen smaller than sizeof(int) thus reports the clamped length yet
-writes a full int, one to three bytes past the user buffer.
+When switching IO schedulers on a block device, blkcg_activate_policy()
+can race with concurrent blkcg deletion, leading to a use-after-free in
+rcu_accelerate_cbs.
 
-Write the value with copy_to_user() bounded by len, so at most optlen
-bytes are copied, matching the length reported back to userspace.
+T1:                               T2:
+                                  blkg_destroy
+                                  kill(&blkg->refcnt) // blkg->refcnt=1->0
+                                  blkg_release // call_rcu(__blkg_release)
+                                  ...
+                                  blkg_free_workfn
+                                  ->pd_free_fn(pd)
+elv_iosched_store
+elevator_switch
+...
+iterate blkg list
+blkg_get(blkg) // blkg->refcnt=0->1
+                                  list_del_init(&blkg->q_node)
+blkg_put(pinned_blkg) // blkg->refcnt=1->0
+blkg_release // call_rcu again
+rcu_accelerate_cbs // uaf
 
-Fixes: 02a47617cdce ("Phonet: implement GPRS virtual interface over PEP socket")
-Acked-by: Rémi Denis-Courmont <remi@remlab.net>
-Reviewed-by: Joe Damato <joe@dama.to>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260729-getsockopt_phase4-v4-4-c44576757c17@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by checking hlist_unhashed(&blkg->blkcg_node) before getting
+a reference to the blkg. This is the same check used in blkg_destroy()
+to detect if a blkg has already been destroyed. If the blkg is already
+unhashed, skip processing it since it's being destroyed.
+
+Fixes: f1c006f1c685 ("blk-cgroup: synchronize pd_free_fn() from blkg_free_workfn() and blkcg_deactivate_policy()")
+Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
+Reviewed-by: Tang Yizhou <yizhou.tang@shopee.com>
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Reviewed-by: Tao Cui <cuitao@kylinos.cn>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Link: https://patch.msgid.link/20260802112525.3933753-4-yukuai@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/phonet/pep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-cgroup.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/phonet/pep.c b/net/phonet/pep.c
-index 9f3f70829cb1a..4f3c3d3129148 100644
---- a/net/phonet/pep.c
-+++ b/net/phonet/pep.c
-@@ -1116,7 +1116,7 @@ static int pep_getsockopt(struct sock *sk, int level, int optname,
- 	len = min_t(unsigned int, sizeof(int), len);
- 	if (put_user(len, optlen))
- 		return -EFAULT;
--	if (put_user(val, (int __user *) optval))
-+	if (copy_to_user(optval, &val, len))
- 		return -EFAULT;
- 	return 0;
- }
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index b8d8b6b58a6c8..b108e934a1427 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -1586,6 +1586,8 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
+ 
+ 		if (blkg->pd[pol->plid])
+ 			continue;
++		if (hlist_unhashed(&blkg->blkcg_node))
++			continue;
+ 
+ 		/* If prealloc matches, use it; otherwise try GFP_NOWAIT */
+ 		if (blkg == pinned_blkg) {
 -- 
 2.53.0
 
