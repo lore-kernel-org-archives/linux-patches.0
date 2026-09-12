@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6B92931EE;
-	Sat, 12 Sep 2026 15:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28FA38757A;
+	Sat, 12 Sep 2026 15:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227712; cv=none; b=nGQV8OYzN4Q2HK+WYUiczrhgrSD8Uzr55E21qP0r77RkqKw1HSFYMCG0wFTdsCduJua9csNSIOTilRYrtfvsbd8gVHjSi2VU9cAeaE7pfhkSfpBxkDUYxczj+d8+02rfwb5oklhabenJFDaiJLe6xNlkf4XM6s8Pe0JT0FknP70=
+	t=1789227717; cv=none; b=IS2O0ag8xdHTf/MpPYY38pSZ+vRso9adPzlNqEriyypX1MaIaiXHkWLWXS8KlSMZRn1XJDc1v0U3MY0tNkkJ6JEfS5xzecvD3zn2dyaLHSz2W93S8bvwfFYmp4rmMRoT3mOC0zPENK024d0fcsXnbGnFCuqX/07O7VRhkZLwQ3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227712; c=relaxed/simple;
-	bh=S8R3TLKCD5heR+THiauqpUPChg7gVbGh7rkhFO0Zq8k=;
+	s=arc-20240116; t=1789227717; c=relaxed/simple;
+	bh=rWj6G2F8UxvCjywU0LapozG4wm5WLcgblSw9B+Ti5Tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jsn2AO3pMI5W7RKW9yIBj3LFjkPxdjRXZ6nbn9pO5dCQvzx8NO4JD37kKdBnoy2SSV9KBupJP9S9icNqHwSRGb0ZuZL+DSZZd8bQrd5tKh0ED8Ysc9FaqWEM4n1yzNozTaSf/RgZ/gfbcCm3lt0y4JwFf/GV8L+Uvrhh96apgGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4SrYR94; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QF/jbVErBXxuRojzaHR63piJ+eqRF8Zjt/uJEIZSA4pOVUpC8/RoVHnKv7EtYi4cNX7GPT2si9SakcDfa1LSmyrm4N68JvJvEB7RBwjN/gUuHW8wbcO83yS6UKRSudcvYPiLEK9eJWzTCdOZE3ebolpYrtAozI22oCYQwdBI0WI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UL0yOysn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4SrYR94"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 300B51F000FF;
-	Sat, 12 Sep 2026 15:41:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UL0yOysn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D028D1F000FF;
+	Sat, 12 Sep 2026 15:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227711;
-	bh=jMnAJfXet6e4A7ahxc65o1eFqaRRWk6S4Ykg3J5dDJA=;
+	s=korg; t=1789227715;
+	bh=CYtB0yss8FB9mN9Pg5/EwBu69vo8r4t1THDJMEHdkQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S4SrYR94qSlrDYAng+WZM9e5x71Ckg/ZAAEy/MiJ+xKKdcKrlOHHP5P+R/HLW/u4r
-	 SMyMXWcyekpPiU60S1e8QI6PwKJhiEAoX+VeFUx7oblQy1IzVZ+Hz7kNk4/ccYgaeC
-	 js9eBhoGrry2rdG9y0d52JiB3zDdtJxtIcehJXNQ=
+	b=UL0yOysngaEX8nRMvUoZH+UoqFCeD+kFMermk7vh3oFOds66haRuqwh4C1829dw6t
+	 w29BReAIssvWdhwZgcvu/aLAzEQNxGxP+iyiGZt4YxrJ2L4RWdkXuUKNXcwuPx8CkQ
+	 nHSB07d0qf/CzN12cK30S6nPS9wHRCAgVyv1BJDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.1 0235/1191] i3c: master: Fix info leak and UAF in device unregister path
-Date: Sat, 12 Sep 2026 08:49:23 +0200
-Message-ID: <20260912065553.488696704@linuxfoundation.org>
+	Ma Ke <make_ruc2021@163.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.1 0196/1191] platform/x86: ishtp_eclite: Fix ACPI device reference leak in probe error path
+Date: Sat, 12 Sep 2026 08:48:44 +0200
+Message-ID: <20260912065552.617114246@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -46,65 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Ma Ke <make_ruc2021@163.com>
 
-commit d2c743efd2d1ee64e94324664808f623dd865872 upstream.
+commit 62b57396c26a1ce54963709928ea0d01fa522eea upstream.
 
-i3c_master_unregister_i3c_devs() clears i3cdev->dev->desc before
-calling device_unregister().  During device_unregister(),
-device_del() emits a KOBJ_REMOVE uevent and unbinds the driver while
-the device descriptor is still expected to be valid.  As a result,
-i3c_device_uevent() and a racing modalias_show() can observe a NULL
-desc and fall back to an uninitialized stack struct i3c_device_info,
-leaking kernel stack contents in the generated modalias.  Driver
-.remove() callbacks may also encounter an unexpected NULL desc during
-unbind.
+ecl_ishtp_cl_probe() acquires a reference to an ACPI device via
+acpi_find_eclite_device() but fails to release it in the error path
+when acpi_opregion_init() fails. This results in a reference count
+leak, preventing proper cleanup of the ACPI device.
 
-Keep desc valid until device_unregister() has completed.  Since
-device_unregister() drops the device reference and may free the device,
-take an extra reference with get_device() before unregistering.  Clear
-desc afterwards and release the extra reference with put_device().
-This preserves the release-time invariant that desc must be NULL while
-avoiding both the information leak and a potential use-after-free from
-writing desc after the device has been released.
+Calling path: acpi_find_eclite_device() ->
+acpi_dev_get_first_match_dev() -> acpi_dev_get_next_match_dev() ->
+bus_find_device() -> get_device().
 
-Reported-by: sashiko-bot@kernel.org
-Link: https://lore.kernel.org/linux-i3c/20260702190003.8BF741F000E9@smtp.kernel.org/
-Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
+Found by code review.
+
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260723075747.34049-1-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 7b6bf51de974 ("platform/x86: Add Intel ishtp eclite driver")
+Link: https://patch.msgid.link/20260624014910.1226446-1-make_ruc2021@163.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/platform/x86/intel/ishtp_eclite.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -2500,11 +2500,12 @@ static void i3c_master_unregister_i3c_de
- 		if (!i3cdev->dev)
- 			continue;
- 
--		i3cdev->dev->desc = NULL;
--		if (device_is_registered(&i3cdev->dev->dev))
-+		if (device_is_registered(&i3cdev->dev->dev)) {
-+			get_device(&i3cdev->dev->dev);
- 			device_unregister(&i3cdev->dev->dev);
--		else
--			put_device(&i3cdev->dev->dev);
-+		}
-+		i3cdev->dev->desc = NULL;
-+		put_device(&i3cdev->dev->dev);
- 		i3cdev->dev = NULL;
+--- a/drivers/platform/x86/intel/ishtp_eclite.c
++++ b/drivers/platform/x86/intel/ishtp_eclite.c
+@@ -600,13 +600,16 @@ static int ecl_ishtp_cl_probe(struct ish
+ 	rv = acpi_opregion_init(opr_dev);
+ 	if (rv) {
+ 		dev_err(cl_data_to_dev(opr_dev), "ACPI opregion init failed\n");
+-		goto err_exit;
++		goto err_put;
  	}
- }
+ 
+ 	/* Reprobe devices depending on ECLite - battery, fan, etc. */
+ 	acpi_dev_clear_dependencies(opr_dev->adev);
+ 
+ 	return 0;
++
++err_put:
++	acpi_dev_put(opr_dev->adev);
+ err_exit:
+ 	ishtp_set_connection_state(ecl_ishtp_cl, ISHTP_CL_DISCONNECTING);
+ 	ishtp_cl_disconnect(ecl_ishtp_cl);
 
 
