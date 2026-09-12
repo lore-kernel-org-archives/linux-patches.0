@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF7E26982C;
-	Sat, 12 Sep 2026 07:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9ABD26982C;
+	Sat, 12 Sep 2026 07:55:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199718; cv=none; b=sZFVQl7DdTDop5snOVpNhwes4/AUmD5GBI4slGesiDbJ3mPxxaMzKfzgazKLTQ/de9M5ohvSs/2W5rnOivIwaRLTYuu5A5a813Ufz9kqNYv301Idb9LyR9OCC5VvtE20rYRuRShDbDyh8nc1lhjy1Eljl/LPft/bBpvyIq+W5NI=
+	t=1789199723; cv=none; b=jG9SCEbmjN97w55GqFgQ4CB1iywdam+8JIhpsuWbAsGSGgItwaE1j5XRo1PLUo2mJd3J+D/YtF6IRpG1xfT2NbVOMKF+ZVy59KVVX/ZbwcnR3SXg0qXLftCyCA0HbaeLbxwzqMQHN5LwpKRICNTUd7071wvUhoEgmyCsV/k8MSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199718; c=relaxed/simple;
-	bh=ATJmubi8EtKiBfJkBQVkwSZj+LSIxuaRzTR003hcsU8=;
+	s=arc-20240116; t=1789199723; c=relaxed/simple;
+	bh=l6tAK3M8Yj7MONheXqFxk3oIYao7A/QENuNhX0WN0Vk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EyQSJAea0ZF+nbVFPRZtqZJ8/H4VgGacNzYfdD7PRdCknatoWpFBbWN3eZYlBPcEOofjjCNu63ZjeLnq8bz6HOwLkarRopCuJ2PROMm7dtVbj3xW1tL26Pvx0fuR/LXaysh6uSMo3kRtyG2exiD9uFMoHE2F84+p5f7EuHz56FU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tl3XlHuK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ebaQKrX2Bu07TGd8x7kk3qic+nsnUWDeM/f7yhecEHpWmgd/DwzrfEkr+ppiZLp/d1pYGe+uZloo12Twrj0v9T10tpW3LAUtDcaThpDWR9FpJ1apqZzwD7zN52/In7O+v9eRhjODrDyJPYPVVBVk1y09DoL9Mk6axKZNW1OIM/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jE+pdv6A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tl3XlHuK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF56B1F000FF;
-	Sat, 12 Sep 2026 07:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jE+pdv6A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE791F000FF;
+	Sat, 12 Sep 2026 07:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199716;
-	bh=nobzyjv6HryMmZGeBnL3Nn2v+KqKKLtHYNbXsJZhr8w=;
+	s=korg; t=1789199721;
+	bh=5hVO8mIbnxjTxWWu3ZmJteMPvuMlQ9uo8wX6jg6u1yE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tl3XlHuKnP8adpIIqO6N5BzcLZTJmpOAkT5tzj3vyw+7PB22KrkhZ2rEOZ6fATZRe
-	 ZcYg0wJS2MnL9XMcUnppq2arMSrwO4TI9qHaE0mBxgwFnHKFpB+HO42OcZTylLKVkw
-	 xYSmzZF6FLFiPaxYeUAzbjNQqucmVJ6VSphqWs+U=
+	b=jE+pdv6AteyS0qQgtnTl+ui1Ym7V0uLH9sUSVXakSzoEFyMNewngCx0vNR1Z51uk6
+	 VBTrvMglfXQsx4OqCG6BJwpUNEmAbRNJfH+qsBqwQJiL4P5edtAo/MwUHVFKDocVOg
+	 21Ox6h05D+P0ExZKNnLyy5fGQMalE+ixhbRG6b6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Naraayana Desikan Kannan <hari.kannan@oss.qualcomm.com>,
-	Karthik M <karthik.m@oss.qualcomm.com>,
-	Manish Dharanenthiran <manish.dharanenthiran@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	kernel test robot <lkp@intel.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0600/1815] wifi: ath12k: advertise ieee_link_id in vdev start MLO params
-Date: Sat, 12 Sep 2026 08:39:10 +0200
-Message-ID: <20260912065702.969490290@linuxfoundation.org>
+Subject: [PATCH 7.2 0591/1815] iommu/arm-smmu-v3: Declare eats_s1chk and eats_trans as host-endian u64
+Date: Sat, 12 Sep 2026 08:39:01 +0200
+Message-ID: <20260912065702.755710934@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,179 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manish Dharanenthiran <manish.dharanenthiran@oss.qualcomm.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit 784f7dabf5d3bce23c69c48a0441ff2b1536f069 ]
+[ Upstream commit 4455286274474e95f223c68c215d32c864404889 ]
 
-Firmware builds the AP MLD partner profile from the hw_link_id passed in
-the vdev start parameters. However, hw_link_id is not always the same as
-the logical per-MLD ieee_link_id, since ieee_link_id is assigned per MLD
-and not per pdev.
+arm_smmu_get_ste_update_safe() declares the eats_s1chk and eats_trans
+locals as __le64, but initializes them from FIELD_PREP(), which returns a
+host-endian value, and passes them through cpu_to_le64() at the use sites.
 
-This matters in mixed MLO and SLO setups. For example:
+Sparse reports the following warnings:
 
-  MLD 1 - 5 GHz + 6 GHz (2-link MLO): ieee_link_id 0 and 1
-  MLD 2 - 6 GHz only    (1-link SLO): ieee_link_id 0
-  MLD 3 - 5 GHz only    (1-link SLO): ieee_link_id 0
+>> drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1122:38: sparse: sparse: cast from restricted __le64
+   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1124:33: sparse: sparse: cast from restricted __le64
 
-The same physical 6 GHz radio can use ieee_link_id 1 for one
-MLD and ieee_link_id 0 for another. Pass the correct ieee_link_id to
-firmware so it can build accurate per-STA profile elements.
+Declare both locals as u64 so the type matches FIELD_PREP() and the
+existing cpu_to_le64() at the use sites performs the host-to-little-endian
+conversion. No functional change.
 
-Add ieee_link_id to wmi_vdev_start_mlo_params for the self link and to
-wmi_partner_link_info for each partner link. Populate these fields in
-ath12k_mac_mlo_get_vdev_args() from the corresponding vdev link_id
-before encoding the WMI command.
-
-Introduce two new flags in ML params to indicate to firmware when
-the new fields are valid:
-
-  ATH12K_WMI_FLAG_MLO_IEEE_LINK_IDX_VALID         BIT(18) for the self link
-  ATH12K_WMI_FLAG_MLO_IEEE_LINK_IDX_VALID_PARTNER BIT(19) for partner links
-
-Firmware parses ieee_link_id only when the matching flag is set.
-
-Also fix the debug message by using correct format specifiers and host-endian
-values instead of __le32 values.
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01243-QCAHKSWPL_SILICONZ-1
-
-Co-developed-by: Hari Naraayana Desikan Kannan <hari.kannan@oss.qualcomm.com>
-Signed-off-by: Hari Naraayana Desikan Kannan <hari.kannan@oss.qualcomm.com>
-Co-developed-by: Karthik M <karthik.m@oss.qualcomm.com>
-Signed-off-by: Karthik M <karthik.m@oss.qualcomm.com>
-Signed-off-by: Manish Dharanenthiran <manish.dharanenthiran@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260623-ieee_link_id-v2-1-8a89d71baf58@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Stable-dep-of: ff651212f2e2 ("wifi: ath12k: fix ML-STA authentication timeout on QCC2072")
+Fixes: 7cad80048595 ("iommu/arm-smmu-v3: Mark EATS_TRANS safe when computing the update sequence")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/all/202606151017.QU0evpH9-lkp@intel.com/
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c |  3 +++
- drivers/net/wireless/ath/ath12k/wmi.c | 32 +++++++++++++++++----------
- drivers/net/wireless/ath/ath12k/wmi.h |  7 ++++++
- 3 files changed, 30 insertions(+), 12 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 5329df86d5d91..2303e0be21332 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -11295,6 +11295,8 @@ ath12k_mac_mlo_get_vdev_args(struct ath12k_link_vif *arvif,
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 5f933d806a147..966d329d27441 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -1240,9 +1240,9 @@ VISIBLE_IF_KUNIT
+ void arm_smmu_get_ste_update_safe(const __le64 *cur, const __le64 *target,
+ 				  __le64 *safe_bits)
+ {
+-	const __le64 eats_s1chk =
++	const u64 eats_s1chk =
+ 		FIELD_PREP(STRTAB_STE_1_EATS, STRTAB_STE_1_EATS_S1CHK);
+-	const __le64 eats_trans =
++	const u64 eats_trans =
+ 		FIELD_PREP(STRTAB_STE_1_EATS, STRTAB_STE_1_EATS_TRANS);
  
- 	ml_arg->assoc_link = arvif->is_sta_assoc_link;
- 
-+	ml_arg->ieee_link_id = arvif->link_id;
-+
- 	partner_info = ml_arg->partner_info;
- 
- 	links = ahvif->links_map;
-@@ -11318,6 +11320,7 @@ ath12k_mac_mlo_get_vdev_args(struct ath12k_link_vif *arvif,
- 
- 		partner_info->vdev_id = arvif_p->vdev_id;
- 		partner_info->hw_link_id = arvif_p->ar->pdev->hw_link_id;
-+		partner_info->ieee_link_id = arvif_p->link_id;
- 		ether_addr_copy(partner_info->addr, link_conf->addr);
- 		ml_arg->num_partner_links++;
- 		partner_info++;
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 6066ca8d9fc4f..06ec236d20960 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -1228,10 +1228,14 @@ int ath12k_wmi_vdev_start(struct ath12k *ar, struct wmi_vdev_start_req_arg *arg,
- 				   le32_encode_bits(arg->ml.mcast_link,
- 						    ATH12K_WMI_FLAG_MLO_MCAST_VDEV) |
- 				   le32_encode_bits(arg->ml.link_add,
--						    ATH12K_WMI_FLAG_MLO_LINK_ADD);
-+						    ATH12K_WMI_FLAG_MLO_LINK_ADD) |
-+				   cpu_to_le32(ATH12K_WMI_FLAG_MLO_IEEE_LINK_IDX_VALID);
- 
--		ath12k_dbg(ar->ab, ATH12K_DBG_WMI, "vdev %d start ml flags 0x%x\n",
--			   arg->vdev_id, ml_params->flags);
-+		ml_params->ieee_link_id = cpu_to_le32(arg->ml.ieee_link_id);
-+
-+		ath12k_dbg(ar->ab, ATH12K_DBG_WMI, "vdev %u start link_id %u ml flags 0x%x\n",
-+			   arg->vdev_id, arg->ml.ieee_link_id,
-+			   le32_to_cpu(ml_params->flags));
- 
- 		ptr += sizeof(*ml_params);
- 
-@@ -1244,19 +1248,23 @@ int ath12k_wmi_vdev_start(struct ath12k *ar, struct wmi_vdev_start_req_arg *arg,
- 		partner_info = ptr;
- 
- 		for (i = 0; i < arg->ml.num_partner_links; i++) {
-+			struct wmi_ml_partner_info *pinfo = &arg->ml.partner_info[i];
-+
- 			partner_info->tlv_header =
- 				ath12k_wmi_tlv_cmd_hdr(WMI_TAG_MLO_PARTNER_LINK_PARAMS,
- 						       sizeof(*partner_info));
--			partner_info->vdev_id =
--				cpu_to_le32(arg->ml.partner_info[i].vdev_id);
--			partner_info->hw_link_id =
--				cpu_to_le32(arg->ml.partner_info[i].hw_link_id);
-+			partner_info->vdev_id = cpu_to_le32(pinfo->vdev_id);
-+			partner_info->hw_link_id = cpu_to_le32(pinfo->hw_link_id);
- 			ether_addr_copy(partner_info->vdev_addr.addr,
--					arg->ml.partner_info[i].addr);
--
--			ath12k_dbg(ar->ab, ATH12K_DBG_WMI, "partner vdev %d hw_link_id %d macaddr%pM\n",
--				   partner_info->vdev_id, partner_info->hw_link_id,
--				   partner_info->vdev_addr.addr);
-+					pinfo->addr);
-+			partner_info->flags =
-+				cpu_to_le32(ATH12K_WMI_FLAG_MLO_IEEE_LINK_IDX_VALID_PARTNER);
-+			partner_info->ieee_link_id = cpu_to_le32(pinfo->ieee_link_id);
-+
-+			ath12k_dbg(ar->ab, ATH12K_DBG_WMI, "partner vdev %u hw_link_id %u macaddr %pM link_id %u ml flags 0x%x\n",
-+				   pinfo->vdev_id, pinfo->hw_link_id,
-+				   pinfo->addr, pinfo->ieee_link_id,
-+				   le32_to_cpu(partner_info->flags));
- 
- 			partner_info++;
- 		}
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.h b/drivers/net/wireless/ath/ath12k/wmi.h
-index c452e3d57a29a..51f3426e1fcd9 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.h
-+++ b/drivers/net/wireless/ath/ath12k/wmi.h
-@@ -2954,10 +2954,13 @@ struct wmi_vdev_create_mlo_params {
- #define ATH12K_WMI_FLAG_MLO_EMLSR_SUPPORT		BIT(6)
- #define ATH12K_WMI_FLAG_MLO_FORCED_INACTIVE		BIT(7)
- #define ATH12K_WMI_FLAG_MLO_LINK_ADD			BIT(8)
-+#define ATH12K_WMI_FLAG_MLO_IEEE_LINK_IDX_VALID		BIT(18)
-+#define ATH12K_WMI_FLAG_MLO_IEEE_LINK_IDX_VALID_PARTNER	BIT(19)
- 
- struct wmi_vdev_start_mlo_params {
- 	__le32 tlv_header;
- 	__le32 flags;
-+	__le32 ieee_link_id;
- } __packed;
- 
- struct wmi_partner_link_info {
-@@ -2965,6 +2968,8 @@ struct wmi_partner_link_info {
- 	__le32 vdev_id;
- 	__le32 hw_link_id;
- 	struct ath12k_wmi_mac_addr_params vdev_addr;
-+	__le32 flags;
-+	__le32 ieee_link_id;
- } __packed;
- 
- struct wmi_vdev_delete_cmd {
-@@ -3120,6 +3125,7 @@ struct wmi_ml_partner_info {
- 	bool primary_umac;
- 	bool logical_link_idx_valid;
- 	u32 logical_link_idx;
-+	u32 ieee_link_id;
- };
- 
- struct wmi_ml_arg {
-@@ -3127,6 +3133,7 @@ struct wmi_ml_arg {
- 	bool assoc_link;
- 	bool mcast_link;
- 	bool link_add;
-+	u32 ieee_link_id;
- 	u8 num_partner_links;
- 	struct wmi_ml_partner_info partner_info[ATH12K_WMI_MLO_MAX_LINKS];
- };
+ 	/*
 -- 
 2.53.0
 
