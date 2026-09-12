@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B23C2E06E4;
-	Sat, 12 Sep 2026 12:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFBC30DEA6;
+	Sat, 12 Sep 2026 12:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216935; cv=none; b=eC2NLfQBLV8MbSMAVr2Eh0Gq8p8t+X9UU84DlS+xKgHJoIe5li9ge71u/SSGqYHWfvPdYVVB21VwzzebZPNw4uA8c9WOQEWinWA4ulge51F1qanzI5EoGQh+qMUF/A8mFO65f5nhHC8zkWZS4msGYINE2EUxjYOgI1kvit+uslg=
+	t=1789216940; cv=none; b=Aud+HIKXulImTV1mpnwpHRAfb5cHqu/ppnJZkOYicNZZXtksfj6a3dsf+Es3A2lsu/KiFSIDUAW26oKabJ56OOd9MhLFxEg5EIh4ngY2FA/8NOUlIJj96gL6k8Gsy4KfXhUv0BkqZoM1R6m/UBOXu8KI15HSJFLYC5oojRy3bLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216935; c=relaxed/simple;
-	bh=1ZAsIvrKQScluJnjiof8nj6a3JIKHol9oH35CWGMQr0=;
+	s=arc-20240116; t=1789216940; c=relaxed/simple;
+	bh=vJb4JEG1qhfGRGgaagzVgGdRXcCEBZolBRM2zCxn8Cc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bV4VWjOmCo+KMEBJ76ONYeKCn1P7k5hJFYf6Hn8Xz82qM+qAWoJp2qbowFPmsCU/SMvhSXRzTxLEZi55J3ceQZ/rdiYnh8pc43KvpkSD2muRSJWSpsxKWqVnbb/PL9Cmg2uu613IFW0OrEF33k0Q1CdHvrwwMhQYfxa9bVr04l4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JTaKwWJp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kuve917hjWZHqpJYAcCa7L2CfxddwKoWoVO2DmLE7RCbdRiWVF7U0taoNvRI2F6oFIi4WL04eTrcvvo5zqH3u3PRX88W+ci5GwCEBPe3YJaYvRUpN4+7a2qhv0P23BCQH09FlFQ2uSx8jPUZLa6OqKKQqPDzw8Jdn0wEnjytX6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTQHMWnL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JTaKwWJp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5D41F000FF;
-	Sat, 12 Sep 2026 12:42:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTQHMWnL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103EA1F000FF;
+	Sat, 12 Sep 2026 12:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216934;
-	bh=3/WmjNMx5J/S8IkuZQwx/jZgVKrhdE0ebkZFqTaczcE=;
+	s=korg; t=1789216939;
+	bh=yqe9afIIS3hx8ri3flR12s4ivXoE+lQavtQpWEBQYjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JTaKwWJp1/JNDz+fdTgjDDzNb1YRpY9o/oTEyrhBhubvw1JGcBaa+ZPSgr0Wsiw9O
-	 Dyw+mzP/8KWdie9C82nBl+a1U21FMBHfurBdrIElIa3aj8Qy1g9nJwkLKbh1psEYoP
-	 mudmyWRO63FrSnu3aH+Qr37vTGzNjPXvKGe9/GHs=
+	b=sTQHMWnLOidOcjLdAqg6k1OYnNf6iM+kjGUfcszOLZr39ce0dsNLrm1Ck+LERQA4r
+	 uMb6VS9mD6qOGBjfFTYuBi0NvHiWtIgKzwYJFC03Xx2tSkotzWQgZv42lUy3uSmOyB
+	 rpbKMzdSOQuarFIO0BAyTEGxZqhXZTTlQMoyuuBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Vishnu Dasa <vishnu.dasa@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0795/1376] powerpc/crash: Fix possible memory leak in update_crash_elfcorehdr()
-Date: Sat, 12 Sep 2026 08:53:41 +0200
-Message-ID: <20260912065625.254862895@linuxfoundation.org>
+Subject: [PATCH 6.12 0796/1376] misc: vmc_vmci: Fix potential memory leak in vmci_event_subscribe()
+Date: Sat, 12 Sep 2026 08:53:42 +0200
+Message-ID: <20260912065625.276630609@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,40 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit 4cc4b586007fbbf8edba4f1d0849e9a06b0cf6c3 ]
+[ Upstream commit 210854a96ef18b09b45a2a59ff14ca06dfe5ad4d ]
 
-In get_crash_memory_ranges(), if crash_exclude_mem_range() failed
-after realloc_mem_ranges() has successfully allocated the cmem
-memory, it just returns an error but leaves cmem pointing to
-the allocated memory, nor is it freed in the caller
-update_crash_elfcorehdr(), which cause a memory leak, goto out
-to free the cmem.
+The memory allocated for struct vmci_subscription (sub) is not freed
+in the error path when have_new_id is false. Fix that by adding a
+kfree() call, and moving the read of sub->id to a point before freeing.
 
-Fixes: 849599b702ef ("powerpc/crash: add crash memory hotplug support")
-Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260729012948.2797865-2-ruanjinjie@huawei.com
+Fixes: 1d990201f9bb ("VMCI: event handling implementation.")
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Acked-by: Vishnu Dasa <vishnu.dasa@broadcom.com>
+Link: https://patch.msgid.link/20260722101215.76680-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kexec/crash.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/vmw_vmci/vmci_event.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/kexec/crash.c b/arch/powerpc/kexec/crash.c
-index e6539f213b3d1..a520f851c3a6b 100644
---- a/arch/powerpc/kexec/crash.c
-+++ b/arch/powerpc/kexec/crash.c
-@@ -502,7 +502,7 @@ static void update_crash_elfcorehdr(struct kimage *image, struct memory_notify *
- 	ret = get_crash_memory_ranges(&cmem);
- 	if (ret) {
- 		pr_err("Failed to get crash mem range\n");
--		return;
-+		goto out;
+diff --git a/drivers/misc/vmw_vmci/vmci_event.c b/drivers/misc/vmw_vmci/vmci_event.c
+index 9a41ab65378de..89ab9f05b88c5 100644
+--- a/drivers/misc/vmw_vmci/vmci_event.c
++++ b/drivers/misc/vmw_vmci/vmci_event.c
+@@ -179,16 +179,16 @@ int vmci_event_subscribe(u32 event,
+ 		}
  	}
  
- 	/*
++	*new_subscription_id = sub->id;
+ 	if (have_new_id) {
+ 		list_add_rcu(&sub->node, &subscriber_array[event]);
+ 		retval = VMCI_SUCCESS;
+ 	} else {
++		kfree(sub);
+ 		retval = VMCI_ERROR_NO_RESOURCES;
+ 	}
+ 
+ 	mutex_unlock(&subscriber_mutex);
+-
+-	*new_subscription_id = sub->id;
+ 	return retval;
+ }
+ EXPORT_SYMBOL_GPL(vmci_event_subscribe);
 -- 
 2.53.0
 
