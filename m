@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8E237F8B1;
-	Sat, 12 Sep 2026 08:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFF53546E1;
+	Sat, 12 Sep 2026 08:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203445; cv=none; b=SkZA9XAzzH/4HUC0TiNM+TBYXnyxYP+T0Nwq8F2TKLnWGXzSX3aMtXElYnmJ3URJ///fIfnseTMF03JCRSY9Im4ExwZRM8ZebRMVnpl/tLy2SVSx14HJwFnAt/mDk6sxRFmdPKUfFgga9IuTXkkAbRsOFCIgyK7THHM6VqqOyf4=
+	t=1789203449; cv=none; b=X84HwFkL/6Bb73TE/f2XeYbRGpQU8P3ADTpMQ8BkxkzO4VJekd1/k94eD2dPrAvFtQE6QBnRSlDQIkXjXttQQTEzXZqewhUR0bmXHTwO7YbaTNLPN9yGiwZNjd0ZqiUrBQG9wdwDnf4QsjEtDymFSPdwvk7Dwuq3FFsYyD3nMng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203445; c=relaxed/simple;
-	bh=y5PE3cpJdNs8u66yRodFxRRgXWYZV5So2qsd03CdKPM=;
+	s=arc-20240116; t=1789203449; c=relaxed/simple;
+	bh=heUNtnNb/6zCR1m6tlpgXz9ww3t8xP1Li1Fia+SasSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o3smDxqh0S4heAHTtPGCDb1OJCMqJJiNC9R3vQVfIMqyFRuskJixRGdNiuEPMk2A7xJAwK68GU8tRkIkR3UJXCVxbS+jEXy+E616/db8wZjCuIKhfL6M6UnyZyFSAZsNF92Pb19vHkenmYeH7rwxhSx+s+j8RQAaMe6I9iaBixM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEfuioZx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jJpvfjcTi4sM47lv5gogYPCUhGF46CBNR5pX9U9gn0YsfVALAgkv0Iobm8yOctsVduenNVZFrQQX/ZX4FZ+9PDZpdBuCux+uz6iFMvM4dh2WF+rVSOsvDMW3HvCY7/O1w1/F8+69RMYq9HUaH8gRX5ho56ZFTL6UFL67OHeKB0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pq1YSeAS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEfuioZx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB6F21F00893;
-	Sat, 12 Sep 2026 08:57:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pq1YSeAS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8BC61F000FF;
+	Sat, 12 Sep 2026 08:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203442;
-	bh=l19ULQDX5cCiYZYZbnyFI8rTOq1exP0LBLoHWtXCScg=;
+	s=korg; t=1789203447;
+	bh=TH7UNjE3Q+bV0MNYwE7NmaomGyCr7pbgL6dJ6yMv7Yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cEfuioZxgDvE+o62hwqT91sz+yV6/gt/X0H/OEoAE1FgUh6/X9zlA2LMZLKyn6vO8
-	 JTC5qDvz2E6bDpIOOA0nnPO0bGuh9lyLtD8T53NzTfGPtBNkgvoXOrS+IQ5Sn/6PVm
-	 Y2FBjNihnEFTAvzqGKWLI8AozumfYGZDNjKpfaas=
+	b=pq1YSeAShv6rti9/1MEYDlQnmw6b+DH6eEaS1r6ud9SPjprKWhsjkbz5KX49T/bqa
+	 tDaRJiybLy5089Rq9qJZ016c+4zwm8XWUf4YmKsVIaiJZXWumauptBoQ24mZn9Odpl
+	 78JZNqI6ZuD/BCIVbg07QUdQklD1smCIzFdHS7MA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Aaron Lewis <aaronlewis@google.com>,
-	Alex Williamson <alex@shazbot.org>,
-	David Matlack <dmatlack@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Vineet Gupta <vineet.gupta@linux.dev>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1408/1815] selftests: harness: Mark test fixture objects __maybe_unused
-Date: Sat, 12 Sep 2026 08:52:38 +0200
-Message-ID: <20260912065722.076799476@linuxfoundation.org>
+Subject: [PATCH 7.2 1409/1815] selftests/bpf: vmtest.sh: Preserve command quoting when running in the VM
+Date: Sat, 12 Sep 2026 08:52:39 +0200
+Message-ID: <20260912065722.100902274@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,50 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Matlack <dmatlack@google.com>
+From: Vineet Gupta <vineet.gupta@linux.dev>
 
-[ Upstream commit 37ffa24c9d07edcd414d34283e02af3f3866cf12 ]
+[ Upstream commit 3a59f11e0f989bdd637c87151992605a6559a7cb ]
 
-Mark _##fixture_name##_##test_name##_object __maybe_unused since it may
-not ever be read. This pointer is only read in XFAIL_ADD(), which tests
-are not required to use.
+vmtest.sh captures the trailing command with command="$@", which flattens
+the arguments into a single space-separated string, and then pastes it
+into the generated guest init script:
 
-clang made a change to -Wunused-but-set-variable (split out into its own
-subwarning, -Wunused-but-set-global) that causes this warning to be
-emitted for various selftests and can be upgraded to an error in
-selftest that set -Werror.
+        cd /root/bpf
+        echo ${command}
+        stdbuf -oL -eL ${command}
 
-VFIO selftests have been broken since commit ff556bd98348 ("vfio:
-selftests: Add -Wall and -Werror to the Makefile"), and the net
-selftests builds have been noisy due to -Wall.
+That here-doc is unquoted, so the host expands ${command} and the
+flattened text lands in the script verbatim. The guest bash then parses
+those lines as shell source, re-splitting the text on whitespace and
+glob-expanding it against /root/bpf. As a result any command with a glob
+or an argument containing spaces is corrupted before it reaches the test
+binary. For example:
 
-Fixes: 24cf65a62266 ("selftests/harness: Share _metadata between forked processes")
-Reported-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reported-by: Aaron Lewis <aaronlewis@google.com>
-Reviewed-by: Alex Williamson <alex@shazbot.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: David Matlack <dmatlack@google.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20260706183154.2660394-1-dmatlack@google.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+        vmtest.sh -- ./test_progs -a 'verifier_*'
+
+has 'verifier_*' expanded in the guest into the matching object/skeleton
+files (verifier_align.bpf.o verifier_align.skel.h ...), so test_progs is
+handed a list of filenames instead of the intended name filter and runs no
+matching tests.
+
+Quote each argument with printf '%q ' so the command is reproduced
+verbatim inside the VM: the escaped text goes through exactly one round
+of quote removal when the guest parses the init script, yielding the
+original argv with globs and special characters intact. The common case
+(e.g. -t <name>) is unaffected.
+
+Only do this when there is a command to quote. printf '%q ' with no
+arguments still applies the format once and emits '', which the -s
+(debug shell) path would take for a real command and try to run.
+
+Note this makes the trailing command strictly an argv rather than a shell
+snippet: passing it pre-quoted as one word, e.g.
+
+        vmtest.sh -- "./test_progs -t foo"
+
+no longer works, and neither does embedding guest-side shell syntax such
+as ';' or a redirection. 'sh -c ...' still works.
+
+The RV64 recipe in README.rst does depend on the old double parse: it
+wraps the denylist in \" so the literal quotes reach the guest, whose
+second parse of the init script removes them. Under %q those quotes now
+survive into argv, and parse_test_list() strtok_r()s on ',' turns them
+into junk filters:
+
+        -d ",exceptions,"  ->  ["] [exceptions] ["]
+
+That is harmless for DENYLIST.riscv64 only because its first line is a
+comment, so the leading field is empty. A denylist starting with a real
+entry would silently lose it - ["*arena*] never matches - so drop the
+backslashes and let the host consume the quotes instead.
+
+Fixes: c9709f52386d ("bpf: Helper script for running BPF presubmit tests")
+Signed-off-by: Vineet Gupta <vineet.gupta@linux.dev>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20260807204434.1036279-5-vineet.gupta@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kselftest_harness.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/README.rst |  4 ++--
+ tools/testing/selftests/bpf/vmtest.sh  | 13 +++++++++++--
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/kselftest_harness.h b/tools/testing/selftests/kselftest_harness.h
-index 261e4df94d9d5..29a19bc870846 100644
---- a/tools/testing/selftests/kselftest_harness.h
-+++ b/tools/testing/selftests/kselftest_harness.h
-@@ -467,7 +467,7 @@ static inline void __kselftest_memset_safe(void *s, int c, size_t n)
- 				!__atomic_test_and_set(_metadata->no_teardown, __ATOMIC_RELAXED)) \
- 			fixture_name##_teardown(_metadata, self, variant); \
- 	} \
--	static struct __test_metadata *_##fixture_name##_##test_name##_object; \
-+	static struct __test_metadata *_##fixture_name##_##test_name##_object __maybe_unused; \
- 	static void __attribute__((constructor(KSELFTEST_PRIO_TEST))) \
- 			_register_##fixture_name##_##test_name(void) \
- 	{ \
+diff --git a/tools/testing/selftests/bpf/README.rst b/tools/testing/selftests/bpf/README.rst
+index 37164322a1023..07c834433b388 100644
+--- a/tools/testing/selftests/bpf/README.rst
++++ b/tools/testing/selftests/bpf/README.rst
+@@ -107,12 +107,12 @@ Docker container and local rootfs image. The overall steps are as follows:
+     tools/testing/selftests/bpf/vmtest.sh \
+     -l <path of local rootfs image> -- \
+     ./test_progs -d \
+-        \"$(cat tools/testing/selftests/bpf/DENYLIST.riscv64 \
++        "$(cat tools/testing/selftests/bpf/DENYLIST.riscv64 \
+             | cut -d'#' -f1 \
+             | sed -e 's/^[[:space:]]*//' \
+                   -e 's/[[:space:]]*$//' \
+             | tr -s '\n' ',' \
+-        )\"
++        )"
+ 
+ Link: https://github.com/pulehui/riscv-bpf-vmtest.git [0]
+ Link: https://github.com/libbpf/ci/blob/main/rootfs/mkrootfs_debian.sh [1]
+diff --git a/tools/testing/selftests/bpf/vmtest.sh b/tools/testing/selftests/bpf/vmtest.sh
+index 9ca8022853933..6a3d026d76bd6 100755
+--- a/tools/testing/selftests/bpf/vmtest.sh
++++ b/tools/testing/selftests/bpf/vmtest.sh
+@@ -428,8 +428,17 @@ main()
+ 
+ 	if [[ $# -eq 0  && "${debug_shell}" == "no" ]]; then
+ 		echo "No command specified, will run ${DEFAULT_COMMAND} in the vm"
+-	else
+-		command="$@"
++	elif [[ $# -gt 0 ]]; then
++		# Quote each argument so the command survives into the guest: the
++		# host expands ${command} into the generated init script, which
++		# the guest bash then parses as shell source. Without the %q
++		# escapes an argument with a space or a glob (e.g. -a 'verifier_*')
++		# is re-split and expanded against /root/bpf there.
++		#
++		# Skip this when there is no command: printf '%q ' would still
++		# apply the format once and emit '', which is not the empty
++		# command that -s (debug shell) expects.
++		command=$(printf '%q ' "$@")
+ 	fi
+ 
+ 	local kconfig_file="${OUTPUT_DIR}/latest.config"
 -- 
 2.53.0
 
