@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F525332610;
-	Sat, 12 Sep 2026 11:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5C946EF8D;
+	Sat, 12 Sep 2026 11:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213779; cv=none; b=oXL6FhICAPM72+Kzx6W/B8tXdKibHRKiWjYik8FIKLPtXkasDRYMLBrsHwi4P5Ua19+LRR4qgkKh44KH555N86ubpmQmv2RELZyU5WU5GMSjnZ3TPfSLiblLPQYbYJAEw01fPqoL2wF5U+14SjPljOmYK0xOZniyTwHemuDYSPs=
+	t=1789213784; cv=none; b=X5R8AidsBraBFLYC/mIMKyuHgpi3FjOC7YAIqXMNxMo54PPSN64H5GYw4p8dCqfx0cVDWxhWbZpmiclj8507P640TWioTzdJbVzmKbuUZ39oGx6+I/NWIo+3xuvsCieAUYQ2BZ7WXAovO2pnLxBXjH1Z8ppBBiZDMs4WiBshW0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213779; c=relaxed/simple;
-	bh=IKeFaQKqDftiVN0iaIFZf5exhGWtocyXyUEKjElwvGI=;
+	s=arc-20240116; t=1789213784; c=relaxed/simple;
+	bh=oLg0B0C53rNvFD1sE75hmPtf+6xaFdf9LArrp8crUKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nC0V90brDVUa353tzv35Z1VmSQOtjCmdIPWI1KokNPkmf0a+sgsrh/sVhghD0aPkzZI6Lc4rhi5QaULjEuNWsgirUmtD1UlKPXV56rRftJ2LJg6ghckQL62eIJGNmFTkVtQP9WoQJAoCfdlecYEZZV87ncaMGJeet+K745unIys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wZ2KJL3J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OC0g4vZNe9RpGnEZbWGCFLECdGu5hLm6mh71U37w5TR8CEOG6JTsHAMnrKuSlYX1HOfpnjUeoZz0sk418kP0b3cwUwMSNfWqQoN4e5UXwRgs5krZmsovCn4WP8RmHsiTmW+J6SiwkILuO+D+8kLuiw4D/4DrDNy4yiS1EypTsDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTcD0464; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZ2KJL3J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58491F000FF;
-	Sat, 12 Sep 2026 11:49:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTcD0464"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C951F000FF;
+	Sat, 12 Sep 2026 11:49:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213777;
-	bh=Oux2LC7dYZpdjUj5P5WvhARCvwkfTQdzkzAmj1nHG4s=;
+	s=korg; t=1789213782;
+	bh=9vLXok4tNMgv2Lh/hdO9gsAUMhpHTtp6qEKwD89brfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wZ2KJL3JZ3al83Hd/7NItAX1+1eOtW4DhxVviWIw/ZEt85DcBjVkNTkc8eK6k8I5z
-	 9Qrweu8fygKY3hHYCRCZdE/j6ttOEo9TJOGtRbi1zQ2a8azR2jD567ywyzcbG//moP
-	 Eu5kk7vBHkcXyjwHo74ldYsZYM5lkfFMezToOy/o=
+	b=iTcD0464j+JSTpGgHS7gebqHIB7/F82FSOBmuG1Rr6DBvbKkQ2P/ioM8fwNwLFoGG
+	 bxFEaj/Z6tSFN81V3NkOPRPF1GMUseUDbJsDMQxZjvEoOTr6o5WXKJ31wDqnaJIMmI
+	 c7cytafDTIclbtLOkiKxA7Wcei9xXX88lu8kFups=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Ding <yi.s.ding@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 0184/1376] media: cec: meson: ao-cec-g12a: name the CEC core regmap to avoid debugfs clash
-Date: Sat, 12 Sep 2026 08:43:30 +0200
-Message-ID: <20260912065611.651795481@linuxfoundation.org>
+	Martin Hecht <mhecht73@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 6.12 0193/1376] media: i2c: alvium: Fix: Correct name of register in alvium_set_ctrl_auto_exposure
+Date: Sat, 12 Sep 2026 08:43:39 +0200
+Message-ID: <20260912065611.852603873@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,48 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Ding <yi.s.ding@gmail.com>
+From: Martin Hecht <mhecht73@gmail.com>
 
-commit 172c5a7d81deb922ddedd1bc920751c7fed6c43c upstream.
+commit 58ca8a0bff9e78841a39863474b96e59ef60da19 upstream.
 
-The driver registers two regmaps on the same platform device: an MMIO
-regmap for the AO CEC registers, and an indirect regmap (using
-reg_read()/reg_write() callbacks) for the CEC controller core registers.
-Neither regmap_config sets a .name, so both default their debugfs
-directory to the device name and collide:
+Write value for auto-exposure into correct register REG_BCRM_EXPOSURE_AUTO_RW
+instead of wrong register REG_BCRM_WHITE_BALANCE_AUTO_RW.
 
-  debugfs: 'ff800280.cec' already exists in 'regmap'
-
-Because of the clash the second regmap's debugfs directory fails to
-register, so its registers can no longer be inspected via debugfs.
-
-Give the indirect CEC core regmap a distinct name. The two debugfs
-directories then become "<dev>.cec" and "<dev>.cec-core". This only
-affects debugfs naming; register access is unchanged.
-
-Tested on an ODROID-N2 (Amlogic S922X): the warning is gone and both
-/sys/kernel/debug/regmap/ff800280.cec and ff800280.cec-core are present.
-
-Fixes: b7778c46683c ("media: platform: meson: Add Amlogic Meson G12A AO CEC Controller driver")
+Fixes: 0a7af872915e ("media: i2c: Add support for alvium camera")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Yi Ding <yi.s.ding@gmail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Martin Hecht <mhecht73@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/cec/platform/meson/ao-cec-g12a.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/i2c/alvium-csi2.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/cec/platform/meson/ao-cec-g12a.c
-+++ b/drivers/media/cec/platform/meson/ao-cec-g12a.c
-@@ -405,6 +405,7 @@ static int meson_ao_cec_g12a_write(void
- }
+--- a/drivers/media/i2c/alvium-csi2.c
++++ b/drivers/media/i2c/alvium-csi2.c
+@@ -1291,7 +1291,7 @@ static int alvium_set_ctrl_auto_exposure
+ 	struct device *dev = &alvium->i2c_client->dev;
+ 	int ret;
  
- static const struct regmap_config meson_ao_cec_g12a_cec_regmap_conf = {
-+	.name = "core",
- 	.reg_bits = 8,
- 	.val_bits = 8,
- 	.reg_read = meson_ao_cec_g12a_read,
+-	ret = alvium_write_hshake(alvium, REG_BCRM_WHITE_BALANCE_AUTO_RW,
++	ret = alvium_write_hshake(alvium, REG_BCRM_EXPOSURE_AUTO_RW,
+ 				  on ? 0x02 : 0x00);
+ 	if (ret) {
+ 		dev_err(dev, "Fail to set autoexposure reg\n");
 
 
