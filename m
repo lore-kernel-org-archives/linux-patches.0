@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461691A9F83;
-	Sat, 12 Sep 2026 11:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED761A9F83;
+	Sat, 12 Sep 2026 11:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212697; cv=none; b=PUy4gFOjlo7tNp60+A4+pGL4ZgnNGHrIdDF/rhtjccQ1uxpqgQzcG/CXOZltP6AQuTHB2XZOdf8/3AtGst9gMkOtH7YNmQ5AG67VWTJ/+FiVFj6j75M647qv/mLHY/q4uSZ02y8VcyK+Siw2YzTi/XvPjBJc7mEwTfDqlk8uZn0=
+	t=1789212702; cv=none; b=dL5ycBMRrEyub9h+xmNHIXqL6iFlqZx1kJf+Ub8SbVCR1dp384hkmXeKPgkaLPyQWt7m/NbSWYWYEvVK0jk2J9IXkHakl//rQUcNN6bBTPNx/UHvw0GMq3DSj+c793asP62/0wUXkh+1Mb3JP3xXQfjKtYv2EV1ODS8BiKl/MjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212697; c=relaxed/simple;
-	bh=YqNbC/pPclQN4GC387E1iqm0AcL0cvDIymIBkXOTpkY=;
+	s=arc-20240116; t=1789212702; c=relaxed/simple;
+	bh=1ZblBJcaq6a4meg5sci6rFUEUkYHsSmj6Mx0aiR+M5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YKMrXOkhFUDJrpELtBfQH6/8c2qXAOTeUVSkVs4v500+Q31Uit0iJS3UT/OeitBbkPMi1y7rj2SNjGaIko6LPY2r3u7k1+Voyn2tD+pmiXd7dTTXvwpo+T3ZxDvv9r2efV2xCa7te8RI56oF/aorgVYtRgYctc6svPyef2qj2mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fc24Q9MU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gCIqUZ8SvtXhCsLTFJ3gKHX3rLlam9nWXvobIsZ20yXOHsnPZwMc4ElvmvmWNHTfQzMEd09eXplvUCIKmtIAOa2lv3FX1gVKMWldkriSl+mKgB3Ek4cDfmfgbPzQH4pe2OjpyNOo1loGgxsMagX4+oiUlu/16GTRHJov40FWmvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbuobX6q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fc24Q9MU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620DC1F000FF;
-	Sat, 12 Sep 2026 11:31:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbuobX6q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4BA1F000FF;
+	Sat, 12 Sep 2026 11:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212696;
-	bh=Ct1XP7fM28ZHZldLsRM9xOSjssWeo8cHliSVem/coCU=;
+	s=korg; t=1789212701;
+	bh=/Lxg7F8Axc9ySblPcHzWagmnWUUzVWPDMcBhGUqbyhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fc24Q9MUReMweBZWTX1jS37NN1emBCJQoUvI0ye6ujCXKUzngNHZ2LWFZK+ldd48H
-	 zCvI1QFOWbkv5noeD/Vu94z3aJkQuWZ11y7tshfDR5msWPo5UW0pXl2/LEfp08n/pw
-	 Hv6liuprCs+yho/Iu3QvhhWXbt0tm83p18gQVNCs=
+	b=AbuobX6qS6jSUVVXN148busgicbefQhL4gGrpVPYpnIxtfbiTsfoZpBjYUKVnTg1T
+	 NsudJ7ntdJLQDRxRtxmCUrmkNDHkldayc9xoE4vKZmAIndgz2GtmDk9Eozp2krF+su
+	 anPMnOCxFbHGJl9uY7A8Bn/YT8+CH4f5RCewRwCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1489/1518] pinctrl: airoha: an7583: add missed gpio32 pin group
-Date: Sat, 12 Sep 2026 09:00:58 +0200
-Message-ID: <20260912065657.246695048@linuxfoundation.org>
+Subject: [PATCH 6.18 1490/1518] pinctrl: airoha: Fix AIROHA_PINCTRL_CONFS_DRIVE_E2 in an7583_pinctrl_match_data
+Date: Sat, 12 Sep 2026 09:00:59 +0200
+Message-ID: <20260912065657.268335681@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,41 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 81cc2285cea84e3ed8688d353e1250cf8899c80a ]
+[ Upstream commit 0341d1b1ebf10bcbb9f35e174e83dbb21068387d ]
 
-gpio32 pin group is missed for an7583 SoC. This patch add it.
+Clang warns (or errors with CONFIG_WERROR=y / W=e):
 
+  pinctrl/mediatek/pinctrl-airoha.c:2064:41: error: variable 'an7583_pinctrl_drive_e2_conf' is not needed and will not be emitted [-Werror,-Wunneeded-internal-declaration]
+   2064 | static const struct airoha_pinctrl_conf an7583_pinctrl_drive_e2_conf[] = {
+        |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Due to a typo, an7583_pinctrl_drive_e2_conf is only used within
+ARRAY_SIZE() (hence no instance of -Wunused-variable), which is
+evaluated at compile time, so it will not be needed in the final object
+file.
+
+Fix the .confs assignment for AIROHA_PINCTRL_CONFS_DRIVE_E2 in
+an7583_pinctrl_match_data to clear up the warning.
+
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2142
 Fixes: 3ffeb17a9a27 ("pinctrl: airoha: add support for Airoha AN7583 PINs")
-Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Christian Marangi <ansuelsmth@gmail.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-airoha.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pinctrl/mediatek/pinctrl-airoha.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/pinctrl/mediatek/pinctrl-airoha.c b/drivers/pinctrl/mediatek/pinctrl-airoha.c
-index 99fee1b490d86..5d8b6e828673b 100644
+index 5d8b6e828673b..ba5647f6328eb 100644
 --- a/drivers/pinctrl/mediatek/pinctrl-airoha.c
 +++ b/drivers/pinctrl/mediatek/pinctrl-airoha.c
-@@ -777,6 +777,7 @@ static const int an7583_gpio28_pins[] = { 30 };
- static const int an7583_gpio29_pins[] = { 31 };
- static const int an7583_gpio30_pins[] = { 32 };
- static const int an7583_gpio31_pins[] = { 33 };
-+static const int an7583_gpio32_pins[] = { 34 };
- static const int an7583_gpio33_pins[] = { 35 };
- static const int an7583_gpio34_pins[] = { 36 };
- static const int an7583_gpio35_pins[] = { 37 };
-@@ -859,6 +860,7 @@ static const struct pingroup an7583_pinctrl_groups[] = {
- 	PINCTRL_PIN_GROUP("gpio29", an7583_gpio29),
- 	PINCTRL_PIN_GROUP("gpio30", an7583_gpio30),
- 	PINCTRL_PIN_GROUP("gpio31", an7583_gpio31),
-+	PINCTRL_PIN_GROUP("gpio32", an7583_gpio32),
- 	PINCTRL_PIN_GROUP("gpio33", an7583_gpio33),
- 	PINCTRL_PIN_GROUP("gpio34", an7583_gpio34),
- 	PINCTRL_PIN_GROUP("gpio35", an7583_gpio35),
+@@ -3259,7 +3259,7 @@ static const struct airoha_pinctrl_match_data an7583_pinctrl_match_data = {
+ 			.num_confs = ARRAY_SIZE(an7583_pinctrl_pulldown_conf),
+ 		},
+ 		[AIROHA_PINCTRL_CONFS_DRIVE_E2] = {
+-			.confs = en7581_pinctrl_drive_e2_conf,
++			.confs = an7583_pinctrl_drive_e2_conf,
+ 			.num_confs = ARRAY_SIZE(an7583_pinctrl_drive_e2_conf),
+ 		},
+ 		[AIROHA_PINCTRL_CONFS_DRIVE_E4] = {
 -- 
 2.53.0
 
