@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23244BEE54;
-	Sat, 12 Sep 2026 09:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3794BEE54;
+	Sat, 12 Sep 2026 09:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205862; cv=none; b=qVjGX2IJzkCsCMpJuEJXGn5iTr/Sv8LyYSS7rQIIUN+Do4JmtlYuhROerc8Syhm6QoRI4BFzIiDNCC2FKxSak/dFmzHDmVepQpYrTkl5JA4mNQIYBCML06oNqdhZMEZPrpvU2lvOIIiGQMwrb4qiTH0fkC2j8XXEFC6D/6jCpSk=
+	t=1789205866; cv=none; b=GJ0ID3Ihs7AHxobb2M+zh/r7I+j6JcX9gqvwaQOK8+FTtQHKQjXshsbIl12saxoc/xr0/JNvpwB1EcqX/H3QOSopGmwIc/bXr1FjbDocHDp/tpfaS/x8wlJMbC0x6Sx+ZfbnWA+hIqz/QN/0KhqrbGb5LiYoKnqW9rt7JGZpW/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205862; c=relaxed/simple;
-	bh=wFHm52lR3cjaIztp9HvyotyK3DMZG3a/k0Dq/M38ECM=;
+	s=arc-20240116; t=1789205866; c=relaxed/simple;
+	bh=4hMLStrp4RpIEnoMvfJfZC5dQBwegO/taFHBo2WQf8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s1jJf8Nt5jhGea1DW6Bm0eru0xx1eHnFoiaQ8GKnayfLOtsSai/ct6HIe+HUtFQlpog59u6pAsPuObi06Z8/9DBbfeHziOWj611edfXABJisIBtn7xsthcaxRhoSwKdoyR12wltAsvcZiRscRyjqjuF0DpjbZF/av5qi9AnsqH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uy/7VyOf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BdN0CJxeaqNUQF8GzeMcxs/XfOROnVyZhabpOEyUWbrKrI03ueDmxCRDZEjpNC4vHoAENAB8ZHemA3p4CVdZ5Xh7kqS5JteQXTnt0YKXDCybd4tSl2MmAqLiCZ6X/uyaAbf16+HeyEhXkaNw5al1nkUSmgT1ZK9j3XVlrMWtLmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vc1vWPje; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uy/7VyOf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C561F000FF;
-	Sat, 12 Sep 2026 09:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vc1vWPje"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B201F000FF;
+	Sat, 12 Sep 2026 09:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205860;
-	bh=xlMlU+IxkC7IbQ7hBerhr3EPTl/mbMPnUyfpwTI22IM=;
+	s=korg; t=1789205865;
+	bh=p91GwitByasPQbovATXArd4Srrom9R3jPMi/K/EhvbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uy/7VyOfzberURn0+GsnVt7yrczqrNgNH+e+KGn+B01h2tK3XIeJsxCeRW5GzyTyJ
-	 u/xgnwUbzLg3RTLNS9xDyfDiyvsF20/kmGzZ3RsQp0lxeOKYDdxG/454FnzcVKon6r
-	 NcTTojCTOKD+DWwe5nTHyf7XESV1JPyGsTHB1rhQ=
+	b=vc1vWPjenRUwr/2JzxB1AIq4GFMKDlg2jY5/0xFK0bZmeCFONqb/N/lRufFBV4kCD
+	 0CBgRGJzd2FfW+G1rdAzdkEGg9yzpCq6wyfntahL1BTsSAjdBLySR79DPjpUD9LWRA
+	 sSzS6Bgb/DVV0AFAaeRUMAcbdPj19fZzKkOMLQWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0086/1518] KVM: x86: Disallow EFER.LME and EFER.LMA if long mode is not supported
-Date: Sat, 12 Sep 2026 08:37:35 +0200
-Message-ID: <20260912065625.407653815@linuxfoundation.org>
+Subject: [PATCH 6.18 0087/1518] KVM: s390: Zero initialize data structures for inject_pfault_token
+Date: Sat, 12 Sep 2026 08:37:36 +0200
+Message-ID: <20260912065625.431655891@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,59 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-[ Upstream commit e62392bf39ebfdf60d1d082799397fe1cbf8dfc5 ]
+[ Upstream commit 4e2c7f7cbc27418f9a290399b986c1b85ff93b90 ]
 
-Remove EFER.LME and EFER.LMA from EFER reserved bits only if long mode
-is actually supported. KVM does check long-mode support before allowing
-the bits for guest writes and userspace writes through KVM_SET_SREGS*
-(in __kvm_valid_efer()), but userspace writes through KVM_SET_MSRS only
-check reserved bits.
+__kvm_inject_pfault_token() only sets .type and .u.ext.ext_params2 of
+the on-stack struct kvm_s390_irq but the full ext substructure is copied
+into the cpu local variable on inject. ext_params and pad contain stale
+stack values.
 
-In practice, this doesn't really matter. The true motiviation is getting
-rid of the #ifdeffery when initializing efer_reserved_bits.
+Interrupt delivery only uses ext_params2, so nothing leaks to the guest,
+but a host user can use the migration ioctls to get to the data.
 
+Fix by zero-initializing the irq struct.
+Do the same for the inti data structure.
+
+Fixes: 383d0b050106 ("KVM: s390: handle pending local interrupts via bitmap")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260713181020.2735367-3-yosry@kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ relocated hunks to x86.c and its kvm_x86_vendor_init() because msrs.c and kvm_setup_efer_caps() are absent. ]
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-ID: <20260805110455.7200-3-borntraeger@linux.ibm.com>
+[ Adjusted context for missing inti_mem and ret declarations in __kvm_inject_pfault_token(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |   13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ arch/s390/kvm/kvm-s390.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -106,16 +106,8 @@ EXPORT_SYMBOL_FOR_KVM_INTERNAL(kvm_host)
- #define emul_to_vcpu(ctxt) \
- 	((struct kvm_vcpu *)(ctxt)->vcpu)
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -4705,8 +4705,8 @@ int kvm_s390_try_set_tod_clock(struct kv
+ static void __kvm_inject_pfault_token(struct kvm_vcpu *vcpu, bool start_token,
+ 				      unsigned long token)
+ {
+-	struct kvm_s390_interrupt inti;
+-	struct kvm_s390_irq irq;
++	struct kvm_s390_interrupt inti = {};
++	struct kvm_s390_irq irq = {};
  
--/* EFER defaults:
-- * - enable syscall per default because its emulated by KVM
-- * - enable LME and LMA per default on 64 bit KVM
-- */
--#ifdef CONFIG_X86_64
--static
--u64 __read_mostly efer_reserved_bits = ~((u64)(EFER_SCE | EFER_LME | EFER_LMA));
--#else
-+/* Enable syscall by default because its emulated by KVM */
- static u64 __read_mostly efer_reserved_bits = ~((u64)EFER_SCE);
--#endif
- 
- #define KVM_EXIT_HYPERCALL_VALID_MASK (1 << KVM_HC_MAP_GPA_RANGE)
- 
-@@ -10157,6 +10149,9 @@ int kvm_x86_vendor_init(struct kvm_x86_i
- 	if (r != 0)
- 		goto out_mmu_exit;
- 
-+	if (kvm_cpu_cap_has(X86_FEATURE_LM))
-+		kvm_enable_efer_bits(EFER_LME | EFER_LMA);
-+
- 	enable_device_posted_irqs &= enable_apicv &&
- 				     irq_remapping_cap(IRQ_POSTING_CAP);
- 
+ 	if (start_token) {
+ 		irq.u.ext.ext_params2 = token;
 
 
