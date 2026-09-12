@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2847242D65;
-	Sat, 12 Sep 2026 16:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21D12AD3C;
+	Sat, 12 Sep 2026 16:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232016; cv=none; b=ufyueYmoOOJ+i7fSKfkBUbOrjrnEBIBGGgi3z1qSZPVZaN0PUzEZUmlD5DVlq+M9vNjrftcJJ84oZXW5FSQ+wlIJrdVOrNn2UIqHESmRUoUonM8L3TvaXHZ/ey/b0ytwG6D+/vc6tY9TMg8jWs2OeHhR7T8+8xwFGQOqIvrhTDA=
+	t=1789232021; cv=none; b=Y6TsxdsPge7hmUMlGVJdtpxUZJDjFN1Gyjw+2G5ZT6mEeiCXwJXfRl2VxA6r5UuUSS6EryU0Pt2KVCeb9Bu4AGLQqYd2erGvoPciR6Gt4bg/zMynzmpUZrn/x4JBkgG91pQO+xPeee/5G1f+UCoEYvvOdK37SNh6qicCCxkmgN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232016; c=relaxed/simple;
-	bh=mbLlmkRcmHJc1la3eMAkF3dR90np0Hxt7xZ0eiWF3xE=;
+	s=arc-20240116; t=1789232021; c=relaxed/simple;
+	bh=cFW1Y4iB7dYEg0ZTEbOJaRlq/VI+nC46HuKf+h2SdDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eCz4kvW59xzVGxYPzkp+y9xxHwhUEfR18ZSreBhTBewLsfwb30nbl5vFQolzmWlZyQ1hK/R6TGLDiXi9DbiMuTLBKPv41boqWIdOHqMVzdzwc6XI+IT/LNz7EdYY7FhHvFXwZ9A4orqRcioK5faQyLzLwB2may2sBFb79dJvQ+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LW3uywWU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iYuPtNXvCy7rOarNsjdCaTc3tNiGQehtq3y3nYVkPliCuN+9KVb3HmNnHC98p6b0WNJprHxsE3Zs+PRvgMAt1guNdXkIbLBLYqiMQyLuRLsQQvdOa4+yVJdWjwSsqrjpMgSHnY4og42Jb87H8sz8FAYfpGGoU2LLsJQlXNy8P/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lF8Jp6gD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LW3uywWU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA0CF1F00898;
-	Sat, 12 Sep 2026 16:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lF8Jp6gD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26BD1F000FF;
+	Sat, 12 Sep 2026 16:53:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232013;
-	bh=dxkr+boYlyTjyMTbkvo0Ng6hU0LxROEY7BIOgZ5NP8A=;
+	s=korg; t=1789232019;
+	bh=IvTdi66/mibiNUgukaMdhPHdw6XPchrXXKOhIm6m3d0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LW3uywWU1kPplWtqAMy8vNigj0Wuwyy9T68+naBpS6Q47YTa0VTVN/uz6WA/se24h
-	 I6Uj7cNdxB4gGf9UrpioK3dcCfqX2mVq5tLDeUdTh4kUy26tlgSZLdOJ73JtoDO824
-	 Zn83IlbzAIy/S25AxXhZTTwmD/4wHxqsbhjGymWs=
+	b=lF8Jp6gDwGfLiuwRtPZlPcT/xOPHLb51Zp9eziTz05KlU40jxL+zPkbl2pIsAU77O
+	 CGqBEINKS37jyn1VVhLzMXTWwb0rpEVyofVwwYLJy5GwjWMAyxD8UVqwSmvUcU8OxU
+	 MPjjJqoYT83NjY8vToFN412bxxnK9lV4gBVrpPj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Andre Przywara <andre.przywara@arm.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1117/1191] net: ethernet: sun4i-emac: Fix IRQ error handling
-Date: Sat, 12 Sep 2026 09:04:05 +0200
-Message-ID: <20260912065613.241193204@linuxfoundation.org>
+Subject: [PATCH 6.1 1118/1191] net: stmmac: selftests: Pass the IP proto mask in the TC selftest
+Date: Sat, 12 Sep 2026 09:04:06 +0200
+Message-ID: <20260912065613.263438323@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,41 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit 991c2be78257cba5bf53cf935fe70f8836964288 ]
+[ Upstream commit 9a56a27e6002e29a6707dc4238d469ec84c3a68e ]
 
-irq_of_parse_and_map() returns 0 when parsing or mapping an IRQ fails.
-The current code checks for -ENXIO and therefore does not detect the
-failure.
+The stmmac TC filtering rules have recently gained sanity checks to make
+sure the passed keys and their respective masks are aligned with the HW
+filtering abilities.
 
-Check for a zero return value and convert it to -ENXIO.
+The stmmac selftests failed to pass the mask in the match data for L4
+filtering tests, and are now failing consistently with -EINVAL :
 
-Fixes: 492205050d77 ("net: Add EMAC ethernet driver found on Allwinner A10 SoC's")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-Link: https://patch.msgid.link/20260824100901.31675-1-phucduc.bui@gmail.com
+$ ethtool -t eth1
+[...]
+23. L4 DA TCP Filtering          -22
+24. L4 SA TCP Filtering          -22
+25. L4 DA UDP Filtering          -22
+26. L4 SA UDP Filtering          -22
+
+Let's pass the ip_proto mask in the l4 filtering tests match data. Found
+on imx8mp, which now have passing L4 tests :
+
+$ ethtool -t eth1
+[...]
+23. L4 DA TCP Filtering          0
+24. L4 SA TCP Filtering          0
+25. L4 DA UDP Filtering          0
+26. L4 SA UDP Filtering          0
+
+While at it, initialize the masks and keys to avoid re-using whatever
+was on the stack.
+
+Fixes: 5536d7c84363 ("net: stmmac: fix l3l4 filter rejecting unsupported offload requests")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260825211748.360935-1-maxime.chevallier@bootlin.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/allwinner/sun4i-emac.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/allwinner/sun4i-emac.c b/drivers/net/ethernet/allwinner/sun4i-emac.c
-index a94c62956eedb..9a6948cde2403 100644
---- a/drivers/net/ethernet/allwinner/sun4i-emac.c
-+++ b/drivers/net/ethernet/allwinner/sun4i-emac.c
-@@ -996,9 +996,9 @@ static int emac_probe(struct platform_device *pdev)
- 	/* fill in parameters for net-dev structure */
- 	ndev->base_addr = (unsigned long)db->membase;
- 	ndev->irq = irq_of_parse_and_map(np, 0);
--	if (ndev->irq == -ENXIO) {
-+	if (!ndev->irq) {
- 		netdev_err(ndev, "No irq resource\n");
--		ret = ndev->irq;
-+		ret = -ENXIO;
- 		goto out_iounmap;
- 	}
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+index 687f43cd466c6..abad2dac40cfa 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+@@ -1452,11 +1452,11 @@ static int __stmmac_test_l4filt(struct stmmac_priv *priv, u32 dst, u32 src,
+ 	struct {
+ 		struct flow_dissector_key_basic bkey;
+ 		struct flow_dissector_key_ports key;
+-	} __aligned(BITS_PER_LONG / 8) keys;
++	} __aligned(BITS_PER_LONG / 8) keys = { };
+ 	struct {
+ 		struct flow_dissector_key_basic bmask;
+ 		struct flow_dissector_key_ports mask;
+-	} __aligned(BITS_PER_LONG / 8) masks;
++	} __aligned(BITS_PER_LONG / 8) masks = { };
+ 	unsigned long dummy_cookie = 0xdeadbeef;
+ 	struct stmmac_packet_attrs attr = { };
+ 	struct flow_dissector *dissector;
+@@ -1509,6 +1509,8 @@ static int __stmmac_test_l4filt(struct stmmac_priv *priv, u32 dst, u32 src,
+ 	keys.bkey.ip_proto = udp ? IPPROTO_UDP : IPPROTO_TCP;
+ 	keys.key.src = htons(src);
+ 	keys.key.dst = htons(dst);
++	/* Match the full IP proto field */
++	masks.bmask.ip_proto = 0xff;
+ 	masks.mask.src = src_mask;
+ 	masks.mask.dst = dst_mask;
  
 -- 
 2.53.0
