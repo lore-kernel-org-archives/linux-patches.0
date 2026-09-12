@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2783542F8;
-	Sat, 12 Sep 2026 09:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C5627EC7C;
+	Sat, 12 Sep 2026 09:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205994; cv=none; b=ELxqGSuvnoAK06YsoabSdxsScWMeydAKhZFm+boXcxH0A06vPIT09oX77Fvi63qJ81RMwtEIdn/glD11vM7f26urKBcpFgXzBfIMNrJR7IowXc3SgMXZIDiUbscgJiECA7mthalLgvfwlZEIqAltyYwfU3MyORgoMgv6jxnIrSM=
+	t=1789205999; cv=none; b=eyYtpv7Wb3dUcmHMuXq167NOONFg/rW3LFW3+MhZPDsuYUGd0MJCYwyk2GzqA/jXFe93F04j//OnVXC1Y5FGCmt8sMU+///cEQAl6PdTB62URQyZMI/yKWuS3T80/UebanidheycomT2KOIdMI6YYXuMnebdRyGMNXhEJvkvi6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205994; c=relaxed/simple;
-	bh=29TURQ90gEO3LxLbBdf1QwiVQt5CEXCpMbWNt9pztHY=;
+	s=arc-20240116; t=1789205999; c=relaxed/simple;
+	bh=iXJVBIhTRQrsKsQIjjMwNs3ycCiS0ex6L67sXC4o6BI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=skFbjG/X62sUsqlTjiUGEvLQhTCA2qRjCNMtIIJDCBuI8HamUCbIar7ac0LPooF7D3rUSh67KoMMAF+xQZi/13/MFpI6HOhqzJ9vwjXE0gvlal2KvZZjrc8wbvAUvLAIRaZr/IwSHKDD5vJBifz0r6QXIfl+Ztqi86eUP+4zN58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NhI32Xeo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JwqupifaCEta5JvtTydSx+GOjcOs7/fee7RX2LwF5FylDtVcJ1K1fA2Mx1JvvcrEDeJaUkfhj1n3Rm0J7sDhxRHjwVFwpl33mR4YKpQVbTDGCpNemhBez8qHZElzLaYDkGHAsNt1YizDIRjozGLL1VJRAg1vQirAcZJmvoKDAtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XXRcO1M+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NhI32Xeo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C811F000FF;
-	Sat, 12 Sep 2026 09:39:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XXRcO1M+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D3751F000FF;
+	Sat, 12 Sep 2026 09:39:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205993;
-	bh=h5FT0E2bl4pEaMuSNijI/xk6vL+Q03vkfMvj9vLL7/E=;
+	s=korg; t=1789205998;
+	bh=XZHahrvyM0yl44Mh4a/qxVTbdaHiIkVN/dp6MbYMc5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NhI32XeoRpy9CzgjUcqgosk+C8E6WjrHNDIT+9Wv+kih6LGy9wrmtYx5hMKp81OPM
-	 8Po8Df2s0q2uAknW9duUI2GQzsGEkAoa83SxJnH0jDaSh1jLeuSpA1Q+YlybaGfZlN
-	 Vut78HfFYATtK06VY6cn4i70SSbKcE3PoIwjlXXs=
+	b=XXRcO1M+sNV4JmDoIVEkK7FkoJZJoK0TMaYJbjaAMRY5P+oHzAFsR9/tCo+krCh4J
+	 7TV8c41hVHJPki/vJWipOoBjazvP1PCBXUjIG6EEVIK++Sut4/ENsUJT4soMJ2Tin9
+	 cqAX8iZehvr1Vc0b/7DbWtw3JLKW+ewQZg0jKtJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wanwu Li <liwanwu@kylinos.cn>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jens Remus <jremus@linux.ibm.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0115/1518] sched_ext/scx_flatcg: Fix cvtime_delta race and add hweight scaling to bypass charging
-Date: Sat, 12 Sep 2026 08:38:04 +0200
-Message-ID: <20260912065626.088998143@linuxfoundation.org>
+Subject: [PATCH 6.18 0116/1518] x86/cfi: Use symmetric SYM_START and SYM_END in __CFI_TYPE()
+Date: Sat, 12 Sep 2026 08:38:05 +0200
+Message-ID: <20260912065626.111623363@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,81 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wanwu Li <liwanwu@kylinos.cn>
+From: Jens Remus <jremus@linux.ibm.com>
 
-[ Upstream commit a5cc43414b38decd50bdd447e558358a6fbd5864 ]
+[ Upstream commit 0cfdf974f133e0ff17ed80e7895adbe7889d9522 ]
 
-1. cgrp_cap_budget() used __sync_fetch_and_sub(&cgc->cvtime_delta,
-   cgc->cvtime_delta) to atomically read and clear cvtime_delta. However,
-   this is not a true atomic read-clear operation: the second argument
-   (cgc->cvtime_delta) is evaluated as a normal read before the atomic
-   fetch_and_sub executes. If a concurrent __sync_fetch_and_add() happens
-   between the read and the sub, the added value gets included in the
-   returned delta AND remains in cvtime_delta, causing double charging.
+Commit
 
-   Example:
-   CPU 0 runs cgrp_cap_budget(), CPU 1 runs fcg_stopping().
-   Assume cvtime_delta = 100 initially.
+  ccace936eec7 ("x86: Add types to indirectly called assembly functions")
 
-     T1  CPU 0: sub_val = cvtime_delta = 100                 cvtime_delta = 100
-     T2  CPU 1: __sync_fetch_and_add(&cvtime_delta, 10)      cvtime_delta = 110
-     T3  CPU 0: __sync_fetch_and_sub(&cvtime_delta, sub_val) cvtime_delta = 10
-                                                                returns old=110
+introduced a x86-specific implementation of __CFI_TYPE() using an asymmetric
+combination of SYM_START() and SYM_FUNC_END() to add a symbol to the KCFI type
+identifier that precedes a function.
 
-   delta = 110 (includes the 10 from CPU 1), but cvtime_delta = 10
-   (the 10 also remains). The 10 is charged twice: once in delta
-   (applied to cgv_node->cvtime) and once in the residual cvtime_delta
-   (fetched again next time).
+This asymmetric combination is an issue if SYM_FUNC_END() ever gets extended
+in a way that requires it to be used symmetrically with SYM_FUNC_START*().
+For instance to emit DWARF CFI directives that denote the start/end of
+a function. [1]
 
-   Fix by using __sync_fetch_and_and(&cgc->cvtime_delta, 0).
-   Disassembly comparison:
-   (1) delta = __sync_fetch_and_sub(&cgc->cvtime_delta, cgc->cvtime_delta);
-   228: (79) r7 = *(u64 *)(r9 +40)
-   229: (87) r7 = -r7
-   230: (db) r7 = atomic64_fetch_add((u64 *)(r9 +40), r7) //r9 may be changed
+Use SYM_END() with SYM_T_FUNC instead.  No functional change, as the generic
+implementation of SYM_FUNC_END(name) expands into SYM_END(name, SYM_T_FUNC).
 
-   (2) delta = __sync_fetch_and_and(&cgc->cvtime_delta, 0);
-   228: (b7) r8 = 0
-   229: (db) r8 = atomic64_xchg((u64 *)(r9 +40), r8)
-
-2. The bypass charging path in fcg_stopping() charges raw execution time
-   to cvtime_delta without scaling by the inverse of the cgroup hweight.
-   Since cvtime_delta is eventually applied to cgv_node->cvtime which is
-   in vtime space (weight-scaled), the bypass path should also scale by
-   FCG_HWEIGHT_ONE / hweight to match the units used by the dispatch path.
-
-Fixes: a4103eacc2ab ("sched_ext: Add a cgroup scheduler which uses flattened hierarchy")
-Signed-off-by: Wanwu Li <liwanwu@kylinos.cn>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: ccace936eec7 ("x86: Add types to indirectly called assembly functions")
+Closes: https://sashiko.dev/#/patchset/20260522110427.2816637-1-jremus@linux.ibm.com?part=3 [1]
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Jens Remus <jremus@linux.ibm.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260611155716.830563-1-jremus@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/sched_ext/scx_flatcg.bpf.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/linkage.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
-index 2c720e3ecad59..eab9dafc8cb31 100644
---- a/tools/sched_ext/scx_flatcg.bpf.c
-+++ b/tools/sched_ext/scx_flatcg.bpf.c
-@@ -256,7 +256,7 @@ static void cgrp_cap_budget(struct cgv_node *cgv_node, struct fcg_cgrp_ctx *cgc)
- 	 * and thus can't be updated and repositioned. Instead, we collect the
- 	 * vtime deltas separately and apply it asynchronously here.
- 	 */
--	delta = __sync_fetch_and_sub(&cgc->cvtime_delta, cgc->cvtime_delta);
-+	delta = __sync_fetch_and_and(&cgc->cvtime_delta, 0);
- 	cvtime = cgv_node->cvtime + delta;
+diff --git a/arch/x86/include/asm/linkage.h b/arch/x86/include/asm/linkage.h
+index a7294656ad908..c9769a7b6e66c 100644
+--- a/arch/x86/include/asm/linkage.h
++++ b/arch/x86/include/asm/linkage.h
+@@ -103,7 +103,7 @@
+ 	.byte 0xb8 ASM_NL					\
+ 	.long __kcfi_typeid_##name ASM_NL			\
+ 	CFI_POST_PADDING					\
+-	SYM_FUNC_END(__cfi_##name)
++	SYM_END(__cfi_##name, SYM_T_FUNC)
  
- 	/*
-@@ -568,7 +568,8 @@ void BPF_STRUCT_OPS(fcg_stopping, struct task_struct *p, bool runnable)
- 	cgc = find_cgrp_ctx(cgrp);
- 	if (cgc) {
- 		__sync_fetch_and_add(&cgc->cvtime_delta,
--				     p->se.sum_exec_runtime - taskc->bypassed_at);
-+				     (p->se.sum_exec_runtime - taskc->bypassed_at) *
-+				     FCG_HWEIGHT_ONE / (cgc->hweight ?: 1));
- 		taskc->bypassed_at = 0;
- 	}
- 	bpf_cgroup_release(cgrp);
+ /* UML needs to be able to override memcpy() and friends for KASAN. */
+ #ifdef CONFIG_UML
 -- 
 2.53.0
 
