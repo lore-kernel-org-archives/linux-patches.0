@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3BE4BEE36;
-	Sat, 12 Sep 2026 15:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9499303A35;
+	Sat, 12 Sep 2026 15:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226131; cv=none; b=HisL76u2oWxapYA/Vkp52AE8I5oRoJPzc/sM7OWayQm63SYQ/ohYM23vxfnKL/+R38G6HrOtrBP82rl0k3Fa1jSAcC4L7t1YI4kKX7FcsZBRabCGzj0RtqxeCM6sMbTfiY8ZfUHQ2BzrR0ta+CsM9FDQ03KvUH0EQUACzkD+g18=
+	t=1789226135; cv=none; b=M6oXfryb4Q9N044kX/OfrHWYRwODe0DFC15x8mqMHtU7rq+lyo6KhfNZRDgIvp5bqDqDr5ZvZfbzY5oUlG9JaQUJBev7GVV+9JKDG/byKTS6CZxQ55EIYHGI07ko2oCxfcYszjrwXqkY9stwlJVw+ZdGJXC64ruPM70E4fRinsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226131; c=relaxed/simple;
-	bh=a1dlVFxDpGA5WV7wHTXMWCs7Gcr6KgXM/JnkM6uNy+Q=;
+	s=arc-20240116; t=1789226135; c=relaxed/simple;
+	bh=SVExNHeji/F5BrSUMp+Vu9GWVtiiDdgxV/FLxw1SwLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P1KbpOF1N3w2nmwS+SVFke233KElTpWtCS6JwLFPqFrKR857kTZV+NfC2ZqfHu4araOrJnjiCVqfPQYrUltiA9NLrnioB3F9w+35JPoxPKyACH/yIrhER+m5SKADKvSDdZbc9jm1voA09+3rv/IEYm1Ol0NrRrrwjdcDqDxtjnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nc95v6tu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X2VmnXeecfuNEOwt3dKZo1g3WopDhOb48owrtyeMGWxGzvsxjA9BBAfhvzt1c5AmchOeVNhHNgXbC1cUHjllBDNZC5GG+9g/zcOB60V4iwRU6zEBV9jI7CVm1RJLLlfpjS9O88G2LR4/c8baheECJg/Gx7iCp8f2XaZw6LAu9HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjtE591h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nc95v6tu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F391F000FF;
-	Sat, 12 Sep 2026 15:15:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjtE591h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F481F000FF;
+	Sat, 12 Sep 2026 15:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226129;
-	bh=Qe/9HJYacUFg3YE6E6rqp7keXFi4kluswL8It0i3Ywg=;
+	s=korg; t=1789226134;
+	bh=Lih+Bbh5Rz9lxB4ne4ZaOc5EJOMF3HTLRhyq5PapaRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nc95v6tuO8+/LbbDRwuU15uK2B7uv32CTVCpWoxhNSArkW1wPWUU9iVDWcPImyEJ+
-	 4OhXWJnC3wo8Wmc8uXT6wh5+d0uERpcWB7uQGDClUFSrRdKEd0YdIV3miIdKPhtJFk
-	 /ZJbRTAd5yvxJNdq1UL0uTgLwGKorzmms1evGSTQ=
+	b=KjtE591hwHB745xvgSHoHt8YK0XxNX6dUqd953pdhCNyYi5vyfcbg2WodkkBfpaeL
+	 uXYeod8kSqEL6cva6cw/NB0PbAFUiS23o3HO/CnjgyVfK5AxADPfmgyBrlnpiCegVv
+	 ASA7VlD9ZGoCWPSrpK4ImkW7vjUDuniVpak0xlHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmo Chou <chou.cosmo@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Dan Carpenter <error27@gmail.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1339/1424] rtc: pcf85363: Add error checking to regmap calls in probe()
-Date: Sat, 12 Sep 2026 09:02:51 +0200
-Message-ID: <20260912065637.243875878@linuxfoundation.org>
+Subject: [PATCH 6.6 1340/1424] scsi: qla2xxx: Fix an loop timeout test
+Date: Sat, 12 Sep 2026 09:02:52 +0200
+Message-ID: <20260912065637.266396832@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,62 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmo Chou <chou.cosmo@gmail.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 78acddfde75177a27000f076e3e828743e38877e ]
+[ Upstream commit 11e48f5201fd86ffa038809dd9c41144d43ee2e4 ]
 
-The probe() function ignores errors returned by regmap operations.
-If an I2C transport error occurs (e.g., -ENXIO), the driver continues
-probing and may register a non-functional RTC device.
+This loop timeout with "retries" set to -1, not 0.  Fix the test for
+failure.
 
-Propagate errors from all unchecked regmap calls in probe() using
-dev_err_probe().
-
-Fixes: fd9a6a13949a ("rtc: pcf85363: add support for the quartz-load-femtofarads property")
-Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
-Link: https://lore.kernel.org/linux-rtc/20260716125142.1801599-1-chou.cosmo@gmail.com/
-Link: https://patch.msgid.link/20260717193705.2003175-1-chou.cosmo@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 7ec0effd30bb ("[SCSI] qla2xxx: Add support for ISP8044.")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Link: https://patch.msgid.link/an1twcxTYSFkkUTA@stanley.mountain
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf85363.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/scsi/qla2xxx/qla_nx2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-pcf85363.c b/drivers/rtc/rtc-pcf85363.c
-index 540042b9eec8f..ccc7834e57599 100644
---- a/drivers/rtc/rtc-pcf85363.c
-+++ b/drivers/rtc/rtc-pcf85363.c
-@@ -426,8 +426,8 @@ static int pcf85363_probe(struct i2c_client *client)
- 
- 	err = pcf85363_load_capacitance(pcf85363, client->dev.of_node);
- 	if (err < 0)
--		dev_warn(&client->dev, "failed to set xtal load capacitance: %d",
--			 err);
-+		return dev_err_probe(&client->dev, err,
-+				     "failed to set xtal load capacitance\n");
- 
- 	pcf85363->rtc->ops = &rtc_ops;
- 	pcf85363->rtc->range_min = RTC_TIMESTAMP_BEGIN_2000;
-@@ -436,9 +436,16 @@ static int pcf85363_probe(struct i2c_client *client)
- 	wakeup_source = device_property_read_bool(&client->dev,
- 						  "wakeup-source");
- 	if (client->irq > 0 || wakeup_source) {
--		regmap_write(pcf85363->regmap, CTRL_FLAGS, 0);
--		regmap_update_bits(pcf85363->regmap, CTRL_PIN_IO,
--				   PIN_IO_INTAPM, PIN_IO_INTA_OUT);
-+		err = regmap_write(pcf85363->regmap, CTRL_FLAGS, 0);
-+		if (err)
-+			return dev_err_probe(&client->dev, err,
-+					     "failed to clear flags\n");
-+
-+		err = regmap_update_bits(pcf85363->regmap, CTRL_PIN_IO,
-+					 PIN_IO_INTAPM, PIN_IO_INTA_OUT);
-+		if (err)
-+			return dev_err_probe(&client->dev, err,
-+					     "failed to set interrupt pin mode\n");
+diff --git a/drivers/scsi/qla2xxx/qla_nx2.c b/drivers/scsi/qla2xxx/qla_nx2.c
+index 41ff6fbdb9333..04d7ab6ad037a 100644
+--- a/drivers/scsi/qla2xxx/qla_nx2.c
++++ b/drivers/scsi/qla2xxx/qla_nx2.c
+@@ -3507,7 +3507,7 @@ qla8044_poll_flash_status_reg(struct scsi_qla_host *vha)
+ 		msleep(QLA8044_FLASH_STATUS_REG_POLL_DELAY);
  	}
  
- 	if (client->irq > 0) {
+-	if (!retries)
++	if (retries == -1)
+ 		ret_val = QLA_FUNCTION_FAILED;
+ 
+ 	return ret_val;
 -- 
 2.53.0
 
