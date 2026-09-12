@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9E7346AE3;
-	Sat, 12 Sep 2026 07:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3956C4D5A1;
+	Sat, 12 Sep 2026 07:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198772; cv=none; b=CugpXUNO/qU75P6vMnyv+yVw5Ppz/u/Jl0lZE8KZqD3BZgwljqVWE0G7n+kmnbK1mHrFAQ8v0Ox8mzBELpP7Q6vKEBSZby+NPi94xvMiFh6+QPmUhdUldu+y3y2YjSPBg7cMZwOQLSca58n9omB38FWzSyP48QDxAT3wSfWEZ58=
+	t=1789198778; cv=none; b=pAXc+6o1MHtB5vFbfmjYYw9vMQqGvZa+DBGOuKnwzkjKd+abYbH9abKnn9aGDFbTS0H19GnP7Lbtt0/POTnrZ0UqgqRLClGL3jR/I79a0357Q9606rdj78U23ov8xklaqdZVlpaiFLxPnWDoM8i7/LP6O+uaoi2ziE0bJsqEKks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198772; c=relaxed/simple;
-	bh=4f1Is+YCtH3Am1xQGneImEWBMTkRR0SOnZcNZeLs5Pw=;
+	s=arc-20240116; t=1789198778; c=relaxed/simple;
+	bh=ZS9HzFpGgVFtHHd/bJyDqUl5lyrq/8dY/TwziYYpqgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DfcEfqZqUBgDANfT+HZyqSV5h3Q++IOHxlS6I3OLwn84X6nQBB0szn6u7SS2N546+e6yAcThpA+Q3rqz8dcaYiR/YO4lSt9TpcsbE/yz1tZEZXtuFpRmC88GHdq3G0nw9tfjbFG9nTOViNwR7vU3OiwOVOFqAc1zDQjaCUy606E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/7BmP5o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IkKz0JVbKVZmOj4XgNTuNx68E6LkbBwVWHGzNrbBCugI7sn0VIW8rWTF+EvY2Ak/NEOIETaVpSfEclki4ezX7HOJ+qqYtmMMVNaxHKTFWzrWus3AuqZfFNmRNel/1UBu06RH2J6mEIeXVdHSLSUkn4X+kYuGIBFttbozD6RNqSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQ4lS9+d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/7BmP5o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719401F000FF;
-	Sat, 12 Sep 2026 07:39:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQ4lS9+d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A431F00893;
+	Sat, 12 Sep 2026 07:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198771;
-	bh=t0aLcuEUAxDX0SPo5MnC0IusRHb8AgOz7HO6jJahOgw=;
+	s=korg; t=1789198776;
+	bh=EM+mvE8A2ult0HYzKfx0nF4G8yC2ER8qWBza7EfM18Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a/7BmP5o0WRittgtIU31ratYYkmf7wFO21EVzSOQmIGpFhnETbZ9WU9Bk0r8Rsd3s
-	 Yru7LlPRUCi0pXM4ZUR9/sUXLhLYbxeNGME1+e653vxjSZ7lx3zsHVqnONPHmD4Oj3
-	 OjdwAwPKMjQmZJhNJqhZiEE3dPobYPFizqpGbKEI=
+	b=EQ4lS9+dioUgzlQplX36ps/jMrd0gNyewlmFYuNNQrIo9gulYKyj11ymsGrnYJKgc
+	 f64+/EU946dQbxMVah3cS1WYm6/+piSMyDorGrT49el5WROVr3DX4SVhQKuFJlTuIE
+	 9uHFVPPq1oldudAjl1MOS5aEusOtzbh6kgU4kIG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0412/1815] regulator: adp5055: Fix error code in adp5055_of_parse_cb()
-Date: Sat, 12 Sep 2026 08:36:02 +0200
-Message-ID: <20260912065658.563442116@linuxfoundation.org>
+Subject: [PATCH 7.2 0448/1815] arm64: dts: qcom: eliza: Enable first QUPv3 wrapper by default
+Date: Sat, 12 Sep 2026 08:36:38 +0200
+Message-ID: <20260912065659.410747005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,35 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit 153bc959ce0f91b4446fb6fb805b8c1d2ca20c75 ]
+[ Upstream commit e78c2cf207c1ebf4558b709308199ee21de478ac ]
 
-This code accidentally returned the wrong variable instead of a negative
-error code.  Return -EINVAL.
+Since each serial engine will be enabled as needed in each board dts,
+there is no point of disabling the first QUPv3 wrapper in SoC dtsi.
 
-Fixes: 147b2a96f24e ("regulator: adp5055: Add driver for adp5055")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Link: https://patch.msgid.link/alFJVBbiFNxhqa_1@stanley.mountain
-Signed-off-by: Mark Brown <broonie@kernel.org>
+So enable it by default. This is also now in line with the other SoCs, and
+also with the second QUPv3 wrapper.
+
+Fixes: 844807e1f89d ("arm64: dts: qcom: eliza: Add QUPv3, GPI DMA, SDHCI and LLCC nodes")
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260709-dts-qcom-eliza-enable-qupv3-1st-v1-1-e9a6904d0dea@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/adp5055-regulator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/eliza.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/regulator/adp5055-regulator.c b/drivers/regulator/adp5055-regulator.c
-index 9ebd52b392357..7eaa7d9dc08cc 100644
---- a/drivers/regulator/adp5055-regulator.c
-+++ b/drivers/regulator/adp5055-regulator.c
-@@ -224,7 +224,7 @@ static int adp5055_of_parse_cb(struct device_node *np,
- 		adp5055->dvs_limit_upper[id] = pval;
+diff --git a/arch/arm64/boot/dts/qcom/eliza.dtsi b/arch/arm64/boot/dts/qcom/eliza.dtsi
+index 72b786fec195f..2e9f5aa092cc2 100644
+--- a/arch/arm64/boot/dts/qcom/eliza.dtsi
++++ b/arch/arm64/boot/dts/qcom/eliza.dtsi
+@@ -1232,8 +1232,6 @@ qupv3_1: geniqup@ac0000 {
+ 			#size-cells = <2>;
+ 			ranges;
  
- 	if (adp5055->dvs_limit_upper[id] > 192000 || adp5055->dvs_limit_upper[id] < 12000)
--		return dev_err_probe(config->dev, adp5055->dvs_limit_upper[id],
-+		return dev_err_probe(config->dev, -EINVAL,
- 			"Out of range - dvs-limit-upper-microvolt value.");
- 
- 	ret = of_property_read_u32(np, "adi,dvs-limit-lower-microvolt", &pval);
+-			status = "disabled";
+-
+ 			i2c0: i2c@a80000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x0 0x00a80000 0x0 0x4000>;
 -- 
 2.53.0
 
