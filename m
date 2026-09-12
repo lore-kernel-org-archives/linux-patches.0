@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D8832B125;
-	Sat, 12 Sep 2026 14:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9E53CF1FF;
+	Sat, 12 Sep 2026 14:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225061; cv=none; b=CRkz4qFOnAOwayF07IQzv7IrUvVvYTnFzTFGq8JMT4Cr4qp2sJTb/hhQX2ghCWreKab1miTnZelz6ksFwfhfvJnCGEgP+NDtRP+nyK8fhqQf+JUkacZoVsSWjBccBOHrq3gTlH8n0wa8+8QO9LXJvgpAEKu87RYjAE2LCLnurqs=
+	t=1789225066; cv=none; b=pawAnCbogLKitzpTf6BdtE1qEcmBge2BsSbCSKHyw4DGmAgAf2DOOQTNO2+grZj/ZdJMQyn+5u6BtSKA00+eOnM7v6zW8VJ3b5grqFOOhCnVS0ZMHtNHkal/RVR/61vhVvv0k16eWrH59m39EPTMDYt2BEaHP8lyR1Gf93KjY2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225061; c=relaxed/simple;
-	bh=NwClaWKXOOFUkmJdF6K7VlcmY5WY3rUSVNKC0Mz6OB4=;
+	s=arc-20240116; t=1789225066; c=relaxed/simple;
+	bh=Tha4+7Vi7fm5ueG3v4LGdHZyiBsXIehQo46jnm5r+eI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CmejEdyA6cj+SfRnhOV1cskujlH04ggjlJ+XwrlkpMLB94M2y6csDPnbfx5G1rpxbGWLYhouv3HPIu9/qce+dQ9mUT5k0kBq7YfkvGJIEjSS1zp3Qi7sqnXlRLPCNjclhXSKARfe1/bXfQc5TTkUzStzs0LV8OfeA2Zh5HT+DlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDntJZJX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j3mxqM4Igq1nCIZkm3nOKsUbfRktN6cdwFRAw8qGBAXjIDKX6wjvCBk3t6Nf5EbkVX4pCxWqZ580/3tjTjZuU0wIhG3FDTpdFV1ja3BAxu3ywtizPHpo2yV7VfNyz1ns+QXWccLBzfdUeLdt7EPy3XxH4XwzKeQl4sk6vdLpg5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c6Kz7PRs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDntJZJX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB451F00893;
-	Sat, 12 Sep 2026 14:57:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6Kz7PRs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12EF1F000FF;
+	Sat, 12 Sep 2026 14:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225059;
-	bh=GDiBwG8SM/a3s9vfmdSZncWooXr4mYm9PfYY2V/G6lY=;
+	s=korg; t=1789225064;
+	bh=UC24p4fifbSomlVMO72IFzwiYEkWXhdAptAnOxqDQ8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uDntJZJX0hME5TDjqrt8TgtfV+MoryihpBmcaLYYDr4+k72TXOXILQgxQ83C0ggTP
-	 aQrNdLnWliiDeAKvbRdVqj5O+6eJ+XAQnRSk7EufqocnIsXIHx0tEcOdeaPeVa5eZ6
-	 XbnmE+cwNrYatX0wbj1FkSlZ8fgP0sXwAMI64N8U=
+	b=c6Kz7PRsjZEvqOGHDJhDWvXRXHszYdZENF2iJZE6LX7qUx7db46CyiXn6MkK/lyoU
+	 LqfR+lg2de/Ee8nuBqR5NjQg1b80Cs4YDUeamB0VKXhyBou5Es2cqAsEqlDNd4gbiN
+	 XQxzLr8XmIz2r2GSv0hZwg7vqvRKqy/jZ/UQXpNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
+	Zijun Hu <zijun.hu@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1120/1424] Bluetooth: btusb: refactor endpoint lookup
-Date: Sat, 12 Sep 2026 08:59:12 +0200
-Message-ID: <20260912065632.384673006@linuxfoundation.org>
+Subject: [PATCH 6.6 1121/1424] Bluetooth: btusb: Record matched usb_device_id into btusb_data
+Date: Sat, 12 Sep 2026 08:59:13 +0200
+Message-ID: <20260912065632.406513018@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,105 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit 5c31aaa05624b54dc18c9e313bcee5a88c025593 ]
+[ Upstream commit ff50db7a522e7bd3bd1c4db6da715e4bdb53af97 ]
 
-Use the common USB helper for looking up bulk and interrupt endpoints
-instead of open coding.
+Add @match_id to btusb_data to record the matched usb_device_id
+which will be used later.
 
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Stable-dep-of: 33c6a8d01889 ("Bluetooth: btusb: QCA: Fix populating devcoredump fields on unenabled devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 51 ++++++---------------------------------
- 1 file changed, 8 insertions(+), 43 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index d920981277133..6ff4710bb6336 100644
+index 6ff4710bb6336..69459a90126df 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -3495,31 +3495,14 @@ static inline int __set_diag_interface(struct hci_dev *hdev)
- {
- 	struct btusb_data *data = hci_get_drvdata(hdev);
- 	struct usb_interface *intf = data->diag;
--	int i;
-+	int ret;
+@@ -913,6 +913,7 @@ struct btusb_data {
+ 	bool usb_alt6_packet_flow;
+ 	int isoc_altsetting;
+ 	int suspend_count;
++	const struct usb_device_id *match_id;
  
- 	if (!data->diag)
- 		return -ENODEV;
- 
--	data->diag_tx_ep = NULL;
--	data->diag_rx_ep = NULL;
--
--	for (i = 0; i < intf->cur_altsetting->desc.bNumEndpoints; i++) {
--		struct usb_endpoint_descriptor *ep_desc;
--
--		ep_desc = &intf->cur_altsetting->endpoint[i].desc;
--
--		if (!data->diag_tx_ep && usb_endpoint_is_bulk_out(ep_desc)) {
--			data->diag_tx_ep = ep_desc;
--			continue;
--		}
--
--		if (!data->diag_rx_ep && usb_endpoint_is_bulk_in(ep_desc)) {
--			data->diag_rx_ep = ep_desc;
--			continue;
--		}
--	}
--
--	if (!data->diag_tx_ep || !data->diag_rx_ep) {
-+	ret = usb_find_common_endpoints(intf->cur_altsetting, &data->diag_rx_ep,
-+					&data->diag_tx_ep, NULL, NULL);
-+	if (ret) {
- 		bt_dev_err(hdev, "invalid diagnostic descriptors");
- 		return -ENODEV;
- 	}
-@@ -3720,12 +3703,11 @@ static const struct file_operations force_poll_sync_fops = {
- static int btusb_probe(struct usb_interface *intf,
- 		       const struct usb_device_id *id)
- {
--	struct usb_endpoint_descriptor *ep_desc;
- 	struct gpio_desc *reset_gpio;
- 	struct btusb_data *data;
- 	struct hci_dev *hdev;
- 	unsigned ifnum_base;
--	int i, err, priv_size;
-+	int err, priv_size;
- 
- 	BT_DBG("intf %p id %p", intf, id);
- 
-@@ -3762,26 +3744,9 @@ static int btusb_probe(struct usb_interface *intf,
+ 	int (*recv_event)(struct hci_dev *hdev, struct sk_buff *skb);
+ 	int (*recv_acl)(struct hci_dev *hdev, struct sk_buff *skb);
+@@ -3744,6 +3745,7 @@ static int btusb_probe(struct usb_interface *intf,
  	if (!data)
  		return -ENOMEM;
  
--	for (i = 0; i < intf->cur_altsetting->desc.bNumEndpoints; i++) {
--		ep_desc = &intf->cur_altsetting->endpoint[i].desc;
--
--		if (!data->intr_ep && usb_endpoint_is_int_in(ep_desc)) {
--			data->intr_ep = ep_desc;
--			continue;
--		}
--
--		if (!data->bulk_tx_ep && usb_endpoint_is_bulk_out(ep_desc)) {
--			data->bulk_tx_ep = ep_desc;
--			continue;
--		}
--
--		if (!data->bulk_rx_ep && usb_endpoint_is_bulk_in(ep_desc)) {
--			data->bulk_rx_ep = ep_desc;
--			continue;
--		}
--	}
--
--	if (!data->intr_ep || !data->bulk_tx_ep || !data->bulk_rx_ep) {
-+	err = usb_find_common_endpoints(intf->cur_altsetting, &data->bulk_rx_ep,
-+					&data->bulk_tx_ep, &data->intr_ep, NULL);
-+	if (err) {
- 		kfree(data);
- 		return -ENODEV;
- 	}
++	data->match_id = id;
+ 	err = usb_find_common_endpoints(intf->cur_altsetting, &data->bulk_rx_ep,
+ 					&data->bulk_tx_ep, &data->intr_ep, NULL);
+ 	if (err) {
 -- 
 2.53.0
 
