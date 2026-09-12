@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8043451C8;
-	Sat, 12 Sep 2026 19:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F33345EB5;
+	Sat, 12 Sep 2026 19:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242656; cv=none; b=uudpigjqUeVSMsrGYOMcTMsHfdHBUIWf74PuNOLCr9k1yvxKm5wp5KFGKA5zDdWB6MCWeJUeOBuDRjA8lep4bN6qr4JE4R7VTVw+IWYeFl/Z38VRz6OUzHUp2jyypL2yIcIQhUAq2Tlz0tV853Vu3r6xtjIVxPmbtxzYBOI2i3s=
+	t=1789242659; cv=none; b=RWX7BvC+uhKhp/yq9LL64U3B/gmkHpGYlus9/7lkUKGTJR8UMVfQ58YaCngDbl4tUUftO1ufbzJWf0INy8MqnF1jJp0jkTREF9uCex5ESB4Z7nCSy65ZlU/03ANHtViwln1ArPVWk2WziK+DivaPGOu3HCeqiDsZFxptV3R2+aY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242656; c=relaxed/simple;
-	bh=1Ht1LWZ9EWNqukbUd5AMgM9J4n/Qe0oywHQKyPTlhXY=;
+	s=arc-20240116; t=1789242659; c=relaxed/simple;
+	bh=Iu9uRs7y3rFBJI4UtKRBgu7x3SwjpxkE/eDeDAT1DE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ICKYEOHw/OLsDHqNzCs8gAF/PqnZsdsXCVCGGEnyNX79giksY3UDWH+kWjsvWsnJe6EHj30WVjfEejNgw7R4CKuEq6RSpQ/3jze5PHZuPDVEzgNaUl3z7J9uRHzPipFjv4IqTp17GgSwp2EHwVP7BQaKOvWrHVjEnVdkrvjJEGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gn4Y/HKW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jFmHWM2ryJtfmfvG1NrApiyI0sQ2BM/i47iPaYpqF1gb4gQRbUQKQefozymlYfK0wa/ys0VS8L60ewFXG2QciJG8e+i7E6AgMrMMbgdTuMyd5WbCVp4cJNjBWanaIcbXxJNAqockEmqILUda/B0cjF7iBM+2vlNab6IW4ftinF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NW87zgOx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gn4Y/HKW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 266811F000FF;
-	Sat, 12 Sep 2026 19:50:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NW87zgOx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F2E1F000FF;
+	Sat, 12 Sep 2026 19:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242654;
-	bh=hZMPoANQlV2HG71aeeDlDM7mGMKVazjz/PowDQI3T84=;
+	s=korg; t=1789242657;
+	bh=CJ9QMnMnvyuh62z0jrzfruOO+CMEAwLfBh1Si5wXX+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gn4Y/HKWGJR2BjApPNsTQ1+gbhU+GNAE5eP9dxNEiOBp4hRWE1sRWJ6HJlNqoKM1o
-	 DZhVcR1hDrTWyKt79f679WkOQX5Qz8Nddcc7vElPhq+KmGApnI2KRTDaiwgTTqrPJs
-	 h7oTY9bFBGHO1VqDBi5NhajXvHORTIqJMKJkvYlM=
+	b=NW87zgOxy89RdEMxCQ/DhTtK9YhJQm+6uoz2lhTs4e82j3mFmF0oPSNKSwmWR0Y7M
+	 WYLARcGZNT8hhEB4bRnaM0khsCx7ao0JtfNM9t3u/rbOKdguAIoYXMJ/zn3u6HM8WH
+	 rUYUbHfKLXpiYHBtRDqzGL4wO6WbB5UkBTtKc2yI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TanZheng <tanzheng@kylinos.cn>,
-	Leon Romanovsky <leon@kernel.org>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 481/798] RDMA/srpt: Fix srpt_alloc_rw_ctxs() unwind counters
-Date: Sat, 12 Sep 2026 09:01:49 +0200
-Message-ID: <20260912065528.166902854@linuxfoundation.org>
+Subject: [PATCH 5.10 482/798] irqchip/gic-v3-its: Prevent leak in its_vpe_irq_domain_alloc()
+Date: Sat, 12 Sep 2026 09:01:50 +0200
+Message-ID: <20260912065528.189416206@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,60 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: TanZheng <tanzheng@kylinos.cn>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit b38f98e176050850f41bb6415f3a71400056623e ]
+[ Upstream commit 325ff3e78c64cd619d52b99f7c8b09a3f31e1495 ]
 
-When srpt_alloc_rw_ctxs() fails partway through a multi-buffer indirect
-descriptor, the unwind path destroys RDMA contexts but leaves stale
-n_rw_ctx and n_rdma values (and a dangling rw_ctxs pointer). Later
-sq_wr_avail accounting in srpt_queue_response() or srpt_write_pending()
-can then subtract the wrong number of send queue credits.
+When its_irq_gic_domain_alloc() fails, the following
+its_vpe_irq_domain_free() fails to invoke its_vep_teardown() for the
+corresponding interrupt, which leaks the resource.
 
-Reset the counters and clear rw_ctxs after freeing the heap
-allocation before returning an error.
+Invoke its_vpe_teardown() in the error handling path to avoid the leak.
 
-Fixes: b99f8e4d7bcd ("IB/srpt: convert to the generic RDMA READ/WRITE API")
-Signed-off-by: TanZheng <tanzheng@kylinos.cn>
-Link: https://patch.msgid.link/20260715101550.45345-1-kensanya@163.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+[ tglx: Massaged change log ]
+
+Fixes: 7d75bbb4bc1ad ("irqchip/gic-v3-its: Add VPE irq domain allocation/teardown")
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20260721063241.52549-2-shikemeng@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srpt/ib_srpt.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/irqchip/irq-gic-v3-its.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
-index 5fce4cdb88eb4..d2cf5b9590fac 100644
---- a/drivers/infiniband/ulp/srpt/ib_srpt.c
-+++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
-@@ -900,6 +900,7 @@ static int srpt_alloc_rw_ctxs(struct srpt_send_ioctx *ioctx,
- 	struct srpt_rdma_ch *ch = ioctx->ch;
- 	struct scatterlist *prev = NULL;
- 	unsigned prev_nents;
-+	u8 n_rdma, n_rw_ctx;
- 	int ret, i;
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index 04b89f345c77c..b828737487bf0 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -4444,6 +4444,13 @@ static int its_vpe_init(struct its_vpe *vpe)
  
- 	if (nbufs == 1) {
-@@ -911,6 +912,9 @@ static int srpt_alloc_rw_ctxs(struct srpt_send_ioctx *ioctx,
- 			return -ENOMEM;
- 	}
- 
-+	n_rw_ctx = ioctx->n_rw_ctx;
-+	n_rdma = ioctx->n_rdma;
+ static void its_vpe_teardown(struct its_vpe *vpe)
+ {
++	/*
++	 * If vpt_page is NULL, then its_vpe_init() has failed, and
++	 * there is nothing to do as no resource has been allocated.
++	 */
++	if (vpe->vpt_page == NULL)
++		return;
 +
- 	for (i = ioctx->n_rw_ctx; i < nbufs; i++, db++) {
- 		struct srpt_rw_ctx *ctx = &ioctx->rw_ctxs[i];
- 		u64 remote_addr = be64_to_cpu(db->va);
-@@ -957,6 +961,9 @@ static int srpt_alloc_rw_ctxs(struct srpt_send_ioctx *ioctx,
+ 	its_vpe_db_proxy_unmap(vpe);
+ 	its_vpe_id_free(vpe->vpe_id);
+ 	its_free_pending_table(vpe->vpt_page);
+@@ -4522,8 +4529,10 @@ static int its_vpe_irq_domain_alloc(struct irq_domain *domain, unsigned int virq
+ 		set_bit(i, bitmap);
  	}
- 	if (ioctx->rw_ctxs != &ioctx->s_rw_ctx)
- 		kfree(ioctx->rw_ctxs);
-+	ioctx->rw_ctxs = NULL;
-+	ioctx->n_rw_ctx = n_rw_ctx;
-+	ioctx->n_rdma = n_rdma;
- 	return ret;
- }
  
+-	if (err)
++	if (err) {
++		its_vpe_teardown(vm->vpes[i]);
+ 		its_vpe_irq_domain_free(domain, virq, i);
++	}
+ 
+ 	return err;
+ }
 -- 
 2.53.0
 
