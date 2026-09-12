@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6DE4BEE32;
-	Sat, 12 Sep 2026 11:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0895D4BEE32;
+	Sat, 12 Sep 2026 11:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212166; cv=none; b=G24Wms2xr84A/hnFlrlPT0hetsfEE0euRGom0v2PueP3Is3vA2azf/M1R61xhBNzt4g7A3pEQJPBUsdJKs0cUnP34Tetm4hGJCrrc+amOTGIFa3jQYthNWqksEwQKbAu2Y6aogH9zL8TKcHnnnFwngMI7Pu9tYrQu59JO5zuVlk=
+	t=1789212171; cv=none; b=h8M3heMHiRUQBkEwJ282DjPO5DzKdhFn3elxgMnkXw3pO8uj24FZn4zSk3MxgXGrYBinGz3aVGFdldhadqLMg0lKx6RAA+VCo1Cr0ugxojvoQOCnIxNc5UeCvjkClgG9FRwtb7/iCvRw2IxWEbDwklJ3dxSOuSdJsn3n3Iyc2yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212166; c=relaxed/simple;
-	bh=eGf5oeidoJQp1OGgpHP/KEKdqqCkhXeDMyur/sCGFrc=;
+	s=arc-20240116; t=1789212171; c=relaxed/simple;
+	bh=4YBFGcVZmSO8V/J5MgDmzZfHY1qz0eFs5FsmQfLSspg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eSRISm7PvhgHlsuvFnbAlGyJMW7rOjw+7Z4vw0+bdYjLoIwQZ3FdPpSMr6TKMEGwNvKNVUBbn1giTcHrd8aJj5Iq9z4k3ppiH2+4/PrxxHhFzcVUX+ggDl+7MFaBgMy+E/iImy1KAxEVLTCb9p/tc9GbGsia623YuE2ESKedRc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cq9QW8IU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R+9q0x1ubhwOGe68eukshvY3ZAb49bUZJyx/88LhjFqsC1K/TYhc1dWHE/UHCiIfE4s2rFD3OXDYl8UVLyhsRLZ5+so2ZQZKAn/vIBCNFBaBYTVu/+fQc3hh0KNuJsZwN+M9M8sjLxIUAUhYT/qkwPwVOicMMscwnKOXmTp0Nmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hy28GaNw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cq9QW8IU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DAD1F000FF;
-	Sat, 12 Sep 2026 11:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hy28GaNw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA10E1F000FF;
+	Sat, 12 Sep 2026 11:22:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212165;
-	bh=98HW0GP5eypp0yclzJn92qlk1h9xabkZPRup9s9j9uk=;
+	s=korg; t=1789212169;
+	bh=ttrltf2Q/5D6tOtb6G67G5bBbg3wEWz8ltdb0RZJMa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cq9QW8IUqeY7iTKI0UVs33ylkNq9gID5MwXImUYzyB9m8IqBYTPFEU0m7SukpdNeD
-	 vl+dXBKiWJuy478OBxjB98VrdoK2BTsll4nSeb0XmNn3EDDJXKpiq6oYAdU7Oc+BKe
-	 PlaWqoSI+gbmfh6a26Is5ppc5kV9AMAR43Xb990g=
+	b=hy28GaNwg/62MB9aEpHEYBkvx3XWFf4qY9hSOMVLfl4t5Mau0hSPcRRjBkMOmkCTA
+	 QPzMsBGHWkRRmBFcUyNgSepBEVHAWWhduTXHzvzXg1Yo9U0tEuIAA2b5HIhjC10MUJ
+	 1No6+Hmiih749q8VcFPD2XR2YhxqFUR9WBYxigr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Or Har-Toov <ohartoov@nvidia.com>,
-	Maher Sanalla <msanalla@nvidia.com>,
 	Mark Bloch <mbloch@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Shay Drori <shayd@nvidia.com>,
+	Or Har-Toov <ohartoov@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1338/1518] net/mlx5: Propagate LAG effective max_tx_speed to vports
-Date: Sat, 12 Sep 2026 08:58:27 +0200
-Message-ID: <20260912065653.795422799@linuxfoundation.org>
+Subject: [PATCH 6.18 1339/1518] net/mlx5: E-Switch, use state lock for vport state changes
+Date: Sat, 12 Sep 2026 08:58:28 +0200
+Message-ID: <20260912065653.817212445@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,393 +55,205 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Or Har-Toov <ohartoov@nvidia.com>
+From: Mark Bloch <mbloch@nvidia.com>
 
-[ Upstream commit 50f1d188c580222d7a73e96a338a5dc82360ccc0 ]
+[ Upstream commit ff0f9b7aa1c756e24a8023eaf684e93774c64194 ]
 
-Currently, vports report only their parent's uplink speed, which in LAG
-setups does not reflect the true aggregated bandwidth. This makes it
-hard for upper-layer software to optimize load balancing decisions
-based on accurate bandwidth information.
+Protect vport admin state modifications and vport iteration with the
+eswitch state_lock mutex to ensure proper serialization of concurrent
+vport state changes.
 
-Fix the issue by calculating the possible maximum speed of a LAG as
-the sum of speeds of all active uplinks that are part of the LAG.
-Propagate this effective max speed to vports associated with the LAG
-whenever a relevant event occurs, such as physical port link state
-changes or LAG creation/modification.
+Currently, calls to mlx5_modify_vport_admin_state() and loops iterating
+over eswitch vports can race with each other, potentially leading to
+inconsistent vport state. Fix this by acquiring esw->state_lock
 
-With this change, upper-layer components receive accurate bandwidth
-information corresponding to the active members of the LAG and can
-make better load balancing decisions.
-
-Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
-Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: ff0f9b7aa1c7 ("net/mlx5: E-Switch, use state lock for vport state changes")
+Fixes: 7d0314b11cdd ("net/mlx5e: Modify uplink state on interface up/down")
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Reviewed-by: Shay Drori <shayd@nvidia.com>
+Reviewed-by: Or Har-Toov <ohartoov@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260816065015.3280733-2-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/lag/lag.c | 158 ++++++++++++++++++
- .../net/ethernet/mellanox/mlx5/core/lag/lag.h |   9 +
- .../ethernet/mellanox/mlx5/core/mlx5_core.h   |   1 +
- .../net/ethernet/mellanox/mlx5/core/port.c    |  24 +++
- .../net/ethernet/mellanox/mlx5/core/vport.c   |  45 +++++
- include/linux/mlx5/vport.h                    |   4 +
- 6 files changed, 241 insertions(+)
+ .../net/ethernet/mellanox/mlx5/core/en_rep.c  | 20 ++++++++++++++-----
+ .../mellanox/mlx5/core/esw/adj_vport.c        |  2 ++
+ .../mellanox/mlx5/core/eswitch_offloads.c     |  4 ++++
+ .../net/ethernet/mellanox/mlx5/core/lag/lag.c |  2 ++
+ .../net/ethernet/mellanox/mlx5/core/vport.c   |  8 ++++++++
+ 5 files changed, 31 insertions(+), 5 deletions(-)
 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+index 8b65441246244..b716f7cfe8af8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+@@ -687,11 +687,13 @@ static int mlx5e_rep_open(struct net_device *dev)
+ 	if (err)
+ 		goto unlock;
+ 
++	mutex_lock(&rep->esw->state_lock);
+ 	if (!mlx5_modify_vport_admin_state(priv->mdev,
+ 					   MLX5_VPORT_STATE_OP_MOD_ESW_VPORT,
+ 					   rep->vport, 1,
+ 					   MLX5_VPORT_ADMIN_STATE_UP))
+ 		netif_carrier_on(dev);
++	mutex_unlock(&rep->esw->state_lock);
+ 
+ unlock:
+ 	mutex_unlock(&priv->state_lock);
+@@ -706,10 +708,12 @@ static int mlx5e_rep_close(struct net_device *dev)
+ 	int ret;
+ 
+ 	mutex_lock(&priv->state_lock);
++	mutex_lock(&rep->esw->state_lock);
+ 	mlx5_modify_vport_admin_state(priv->mdev,
+ 				      MLX5_VPORT_STATE_OP_MOD_ESW_VPORT,
+ 				      rep->vport, 1,
+ 				      MLX5_VPORT_ADMIN_STATE_DOWN);
++	mutex_unlock(&rep->esw->state_lock);
+ 	ret = mlx5e_close_locked(dev);
+ 	mutex_unlock(&priv->state_lock);
+ 	return ret;
+@@ -781,22 +785,25 @@ static int mlx5e_rep_change_carrier(struct net_device *dev, bool new_carrier)
+ 	struct mlx5e_priv *priv = netdev_priv(dev);
+ 	struct mlx5e_rep_priv *rpriv = priv->ppriv;
+ 	struct mlx5_eswitch_rep *rep = rpriv->rep;
+-	int err;
++	int err = 0;
+ 
++	mutex_lock(&rep->esw->state_lock);
+ 	if (new_carrier) {
+ 		err = mlx5_modify_vport_admin_state(priv->mdev, MLX5_VPORT_STATE_OP_MOD_ESW_VPORT,
+ 						    rep->vport, 1, MLX5_VPORT_ADMIN_STATE_UP);
+ 		if (err)
+-			return err;
++			goto unlock;
+ 		netif_carrier_on(dev);
+ 	} else {
+ 		err = mlx5_modify_vport_admin_state(priv->mdev, MLX5_VPORT_STATE_OP_MOD_ESW_VPORT,
+ 						    rep->vport, 1, MLX5_VPORT_ADMIN_STATE_DOWN);
+ 		if (err)
+-			return err;
++			goto unlock;
+ 		netif_carrier_off(dev);
+ 	}
+-	return 0;
++unlock:
++	mutex_unlock(&rep->esw->state_lock);
++	return err;
+ }
+ 
+ static const struct net_device_ops mlx5e_netdev_ops_rep = {
+@@ -1335,9 +1342,12 @@ static void mlx5e_uplink_rep_enable(struct mlx5e_priv *priv)
+ 
+ 	mlx5e_rep_tc_enable(priv);
+ 
+-	if (MLX5_CAP_GEN(mdev, uplink_follow))
++	if (MLX5_CAP_GEN(mdev, uplink_follow)) {
++		mutex_lock(&mdev->priv.eswitch->state_lock);
+ 		mlx5_modify_vport_admin_state(mdev, MLX5_VPORT_STATE_OP_MOD_UPLINK,
+ 					      0, 0, MLX5_VPORT_ADMIN_STATE_AUTO);
++		mutex_unlock(&mdev->priv.eswitch->state_lock);
++	}
+ 	mlx5_lag_add_netdev(mdev, netdev);
+ 	priv->events_nb.notifier_call = uplink_rep_async_event;
+ 	mlx5_notifier_register(mdev, &priv->events_nb);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/adj_vport.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/adj_vport.c
+index 250af09b5af23..bdd07c1c68242 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/adj_vport.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/adj_vport.c
+@@ -9,6 +9,8 @@ int mlx5_esw_adj_vport_modify(struct mlx5_core_dev *dev, u16 vport,
+ {
+ 	u32 in[MLX5_ST_SZ_DW(modify_vport_state_in)] = {};
+ 
++	lockdep_assert_held(&dev->priv.eswitch->state_lock);
++
+ 	MLX5_SET(modify_vport_state_in, in, opcode,
+ 		 MLX5_CMD_OP_MODIFY_VPORT_STATE);
+ 	MLX5_SET(modify_vport_state_in, in, op_mod,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index 88959abd42086..d5fc07bab1902 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -2446,6 +2446,7 @@ static void mlx5_esw_fdb_active(struct mlx5_eswitch *esw)
+ 	mlx5_esw_fdb_drop_destroy(esw);
+ 	mlx5_mpfs_enable(esw->dev);
+ 
++	mutex_lock(&esw->state_lock);
+ 	mlx5_esw_for_each_vf_vport(esw, i, vport, U16_MAX) {
+ 		if (!vport->adjacent)
+ 			continue;
+@@ -2453,6 +2454,7 @@ static void mlx5_esw_fdb_active(struct mlx5_eswitch *esw)
+ 			  vport->vport);
+ 		mlx5_esw_adj_vport_modify(esw->dev, vport->vport, true);
+ 	}
++	mutex_unlock(&esw->state_lock);
+ 
+ 	esw->offloads_inactive = false;
+ 	esw_warn(esw->dev, "MPFS/FDB active\n");
+@@ -2466,6 +2468,7 @@ static void mlx5_esw_fdb_inactive(struct mlx5_eswitch *esw)
+ 	mlx5_mpfs_disable(esw->dev);
+ 	mlx5_esw_fdb_drop_create(esw);
+ 
++	mutex_lock(&esw->state_lock);
+ 	mlx5_esw_for_each_vf_vport(esw, i, vport, U16_MAX) {
+ 		if (!vport->adjacent)
+ 			continue;
+@@ -2474,6 +2477,7 @@ static void mlx5_esw_fdb_inactive(struct mlx5_eswitch *esw)
+ 
+ 		mlx5_esw_adj_vport_modify(esw->dev, vport->vport, false);
+ 	}
++	mutex_unlock(&esw->state_lock);
+ 
+ 	esw->offloads_inactive = true;
+ 	esw_warn(esw->dev, "MPFS/FDB inactive\n");
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-index 2d6019a32669c..4264d42d97da3 100644
+index 4264d42d97da3..4f0b202fc5bd9 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-@@ -996,6 +996,126 @@ static bool mlx5_lag_should_disable_lag(struct mlx5_lag *ldev, bool do_bond)
- 	       ldev->mode != MLX5_LAG_MODE_MPESW;
- }
+@@ -1048,6 +1048,7 @@ static void mlx5_lag_modify_device_vports_speed(struct mlx5_core_dev *mdev,
+ 	if (!MLX5_CAP_ESW(mdev, esw_vport_state_max_tx_speed))
+ 		return;
  
-+#ifdef CONFIG_MLX5_ESWITCH
-+static int
-+mlx5_lag_sum_devices_speed(struct mlx5_lag *ldev, u32 *sum_speed,
-+			   int (*get_speed)(struct mlx5_core_dev *, u32 *))
-+{
-+	struct mlx5_core_dev *pf_mdev;
-+	int pf_idx;
-+	u32 speed;
-+	int ret;
-+
-+	*sum_speed = 0;
-+	mlx5_ldev_for_each(pf_idx, 0, ldev) {
-+		pf_mdev = ldev->pf[pf_idx].dev;
-+		if (!pf_mdev)
-+			continue;
-+
-+		ret = get_speed(pf_mdev, &speed);
-+		if (ret) {
-+			mlx5_core_dbg(pf_mdev,
-+				      "Failed to get device speed using %ps. Device %s speed is not available (err=%d)\n",
-+				      get_speed, dev_name(pf_mdev->device),
-+				      ret);
-+			return ret;
-+		}
-+
-+		*sum_speed += speed;
-+	}
-+
-+	return 0;
-+}
-+
-+static int mlx5_lag_sum_devices_max_speed(struct mlx5_lag *ldev, u32 *max_speed)
-+{
-+	return mlx5_lag_sum_devices_speed(ldev, max_speed,
-+					  mlx5_port_max_linkspeed);
-+}
-+
-+static void mlx5_lag_modify_device_vports_speed(struct mlx5_core_dev *mdev,
-+						u32 speed)
-+{
-+	u16 op_mod = MLX5_VPORT_STATE_OP_MOD_ESW_VPORT;
-+	struct mlx5_eswitch *esw = mdev->priv.eswitch;
-+	struct mlx5_vport *vport;
-+	unsigned long i;
-+	int ret;
-+
-+	if (!esw)
-+		return;
-+
-+	if (!MLX5_CAP_ESW(mdev, esw_vport_state_max_tx_speed))
-+		return;
-+
-+	mlx5_esw_for_each_vport(esw, i, vport) {
-+		if (!vport)
-+			continue;
-+
-+		if (vport->vport == MLX5_VPORT_UPLINK)
-+			continue;
-+
-+		ret = mlx5_modify_vport_max_tx_speed(mdev, op_mod,
-+						     vport->vport, true, speed);
-+		if (ret)
-+			mlx5_core_dbg(mdev,
-+				      "Failed to set vport %d speed %d, err=%d\n",
-+				      vport->vport, speed, ret);
-+	}
-+}
-+
-+void mlx5_lag_set_vports_agg_speed(struct mlx5_lag *ldev)
-+{
-+	struct mlx5_core_dev *mdev;
-+	u32 speed;
-+	int pf_idx;
-+
-+	speed = ldev->tracker.bond_speed_mbps;
-+
-+	if (speed == SPEED_UNKNOWN)
-+		return;
-+
-+	/* If speed is not set, use the sum of max speeds of all PFs */
-+	if (!speed && mlx5_lag_sum_devices_max_speed(ldev, &speed))
-+		return;
-+
-+	speed = speed / MLX5_MAX_TX_SPEED_UNIT;
-+
-+	mlx5_ldev_for_each(pf_idx, 0, ldev) {
-+		mdev = ldev->pf[pf_idx].dev;
-+		if (!mdev)
-+			continue;
-+
-+		mlx5_lag_modify_device_vports_speed(mdev, speed);
-+	}
-+}
-+
-+void mlx5_lag_reset_vports_speed(struct mlx5_lag *ldev)
-+{
-+	struct mlx5_core_dev *mdev;
-+	u32 speed;
-+	int pf_idx;
-+	int ret;
-+
-+	mlx5_ldev_for_each(pf_idx, 0, ldev) {
-+		mdev = ldev->pf[pf_idx].dev;
-+		if (!mdev)
-+			continue;
-+
-+		ret = mlx5_port_oper_linkspeed(mdev, &speed);
-+		if (ret) {
-+			mlx5_core_dbg(mdev,
-+				      "Failed to reset vports speed for device %s. Oper speed is not available (err=%d)\n",
-+				      dev_name(mdev->device), ret);
-+			continue;
-+		}
-+
-+		speed = speed / MLX5_MAX_TX_SPEED_UNIT;
-+		mlx5_lag_modify_device_vports_speed(mdev, speed);
-+	}
-+}
-+#endif
-+
- static void mlx5_do_bond(struct mlx5_lag *ldev)
- {
- 	int idx = mlx5_lag_get_dev_index_by_seq(ldev, MLX5_LAG_P1);
-@@ -1083,9 +1203,12 @@ static void mlx5_do_bond(struct mlx5_lag *ldev)
- 						     ndev);
- 			dev_put(ndev);
- 		}
-+		mlx5_lag_set_vports_agg_speed(ldev);
- 	} else if (mlx5_lag_should_modify_lag(ldev, do_bond)) {
- 		mlx5_modify_lag(ldev, &tracker);
-+		mlx5_lag_set_vports_agg_speed(ldev);
- 	} else if (mlx5_lag_should_disable_lag(ldev, do_bond)) {
-+		mlx5_lag_reset_vports_speed(ldev);
- 		mlx5_disable_lag(ldev);
++	mutex_lock(&esw->state_lock);
+ 	mlx5_esw_for_each_vport(esw, i, vport) {
+ 		if (!vport)
+ 			continue;
+@@ -1062,6 +1063,7 @@ static void mlx5_lag_modify_device_vports_speed(struct mlx5_core_dev *mdev,
+ 				      "Failed to set vport %d speed %d, err=%d\n",
+ 				      vport->vport, speed, ret);
  	}
- }
-@@ -1286,6 +1409,38 @@ static int mlx5_handle_changeinfodata_event(struct mlx5_lag *ldev,
- 	return 1;
++	mutex_unlock(&esw->state_lock);
  }
  
-+static void mlx5_lag_update_tracker_speed(struct lag_tracker *tracker,
-+					  struct net_device *ndev)
-+{
-+	struct ethtool_link_ksettings lksettings;
-+	struct net_device *bond_dev;
-+	int err;
-+
-+	if (netif_is_lag_master(ndev))
-+		bond_dev = ndev;
-+	else
-+		bond_dev = netdev_master_upper_dev_get(ndev);
-+
-+	if (!bond_dev) {
-+		tracker->bond_speed_mbps = SPEED_UNKNOWN;
-+		return;
-+	}
-+
-+	err = __ethtool_get_link_ksettings(bond_dev, &lksettings);
-+	if (err) {
-+		netdev_dbg(bond_dev,
-+			   "Failed to get speed for bond dev %s, err=%d\n",
-+			   bond_dev->name, err);
-+		tracker->bond_speed_mbps = SPEED_UNKNOWN;
-+		return;
-+	}
-+
-+	if (lksettings.base.speed == SPEED_UNKNOWN)
-+		tracker->bond_speed_mbps = 0;
-+	else
-+		tracker->bond_speed_mbps = lksettings.base.speed;
-+}
-+
- /* this handler is always registered to netdev events */
- static int mlx5_lag_netdev_event(struct notifier_block *this,
- 				 unsigned long event, void *ptr)
-@@ -1317,6 +1472,9 @@ static int mlx5_lag_netdev_event(struct notifier_block *this,
- 		break;
- 	}
- 
-+	if (changed)
-+		mlx5_lag_update_tracker_speed(&tracker, ndev);
-+
- 	ldev->tracker = tracker;
- 
- 	if (changed)
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.h b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.h
-index 4918eee2b3da5..8de5640a01617 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.h
-@@ -48,6 +48,7 @@ struct lag_tracker {
- 	unsigned int is_bonded:1;
- 	unsigned int has_inactive:1;
- 	enum netdev_lag_hash hash_type;
-+	u32 bond_speed_mbps;
- };
- 
- /* LAG data of a ConnectX card.
-@@ -116,6 +117,14 @@ int mlx5_deactivate_lag(struct mlx5_lag *ldev);
- void mlx5_lag_add_devices(struct mlx5_lag *ldev);
- struct mlx5_devcom_comp_dev *mlx5_lag_get_devcom_comp(struct mlx5_lag *ldev);
- 
-+#ifdef CONFIG_MLX5_ESWITCH
-+void mlx5_lag_set_vports_agg_speed(struct mlx5_lag *ldev);
-+void mlx5_lag_reset_vports_speed(struct mlx5_lag *ldev);
-+#else
-+static inline void mlx5_lag_set_vports_agg_speed(struct mlx5_lag *ldev) {}
-+static inline void mlx5_lag_reset_vports_speed(struct mlx5_lag *ldev) {}
-+#endif
-+
- static inline bool mlx5_lag_is_supported(struct mlx5_core_dev *dev)
- {
- 	if (!MLX5_CAP_GEN(dev, vport_group_manager) ||
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
-index e08903d002a10..f9195f0345df2 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
-@@ -382,6 +382,7 @@ const struct mlx5_link_info *mlx5_port_ptys2info(struct mlx5_core_dev *mdev,
- u32 mlx5_port_info2linkmodes(struct mlx5_core_dev *mdev,
- 			     struct mlx5_link_info *info,
- 			     bool force_legacy);
-+int mlx5_port_oper_linkspeed(struct mlx5_core_dev *mdev, u32 *speed);
- int mlx5_port_max_linkspeed(struct mlx5_core_dev *mdev, u32 *speed);
- 
- #define MLX5_PPS_CAP(mdev) (MLX5_CAP_GEN((mdev), pps) &&		\
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/port.c b/drivers/net/ethernet/mellanox/mlx5/core/port.c
-index 23796fb353e4d..296a011df02fb 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/port.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/port.c
-@@ -1202,6 +1202,30 @@ u32 mlx5_port_info2linkmodes(struct mlx5_core_dev *mdev,
- 	return link_modes;
- }
- 
-+int mlx5_port_oper_linkspeed(struct mlx5_core_dev *mdev, u32 *speed)
-+{
-+	const struct mlx5_link_info *table;
-+	struct mlx5_port_eth_proto eproto;
-+	u32 oper_speed = 0;
-+	u32 max_size;
-+	bool ext;
-+	int err;
-+	int i;
-+
-+	ext = mlx5_ptys_ext_supported(mdev);
-+	err = mlx5_port_query_eth_proto(mdev, 1, ext, &eproto);
-+	if (err)
-+		return err;
-+
-+	mlx5e_port_get_link_mode_info_arr(mdev, &table, &max_size, false);
-+	for (i = 0; i < max_size; ++i)
-+		if (eproto.oper & MLX5E_PROT_MASK(i))
-+			oper_speed = max(oper_speed, table[i].speed);
-+
-+	*speed = oper_speed;
-+	return 0;
-+}
-+
- int mlx5_port_max_linkspeed(struct mlx5_core_dev *mdev, u32 *speed)
- {
- 	const struct mlx5_link_info *table;
+ void mlx5_lag_set_vports_agg_speed(struct mlx5_lag *ldev)
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/vport.c b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-index a44214c660b03..9a388341c5a38 100644
+index 9a388341c5a38..a4162cdc0b838 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/vport.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/vport.c
-@@ -62,6 +62,28 @@ u8 mlx5_query_vport_state(struct mlx5_core_dev *mdev, u8 opmod, u16 vport)
- 	return MLX5_GET(query_vport_state_out, out, state);
- }
- 
-+static int mlx5_query_vport_admin_state(struct mlx5_core_dev *mdev, u8 opmod,
-+					u16 vport, u8 other_vport,
-+					u8 *admin_state)
-+{
-+	u32 out[MLX5_ST_SZ_DW(query_vport_state_out)] = {};
-+	u32 in[MLX5_ST_SZ_DW(query_vport_state_in)] = {};
-+	int err;
-+
-+	MLX5_SET(query_vport_state_in, in, opcode,
-+		 MLX5_CMD_OP_QUERY_VPORT_STATE);
-+	MLX5_SET(query_vport_state_in, in, op_mod, opmod);
-+	MLX5_SET(query_vport_state_in, in, vport_number, vport);
-+	MLX5_SET(query_vport_state_in, in, other_vport, other_vport);
-+
-+	err = mlx5_cmd_exec_inout(mdev, query_vport_state, in, out);
-+	if (err)
-+		return err;
-+
-+	*admin_state = MLX5_GET(query_vport_state_out, out, admin_state);
-+	return 0;
-+}
-+
- int mlx5_modify_vport_admin_state(struct mlx5_core_dev *mdev, u8 opmod,
- 				  u16 vport, u8 other_vport, u8 state)
+@@ -89,6 +89,10 @@ int mlx5_modify_vport_admin_state(struct mlx5_core_dev *mdev, u8 opmod,
  {
-@@ -77,6 +99,29 @@ int mlx5_modify_vport_admin_state(struct mlx5_core_dev *mdev, u8 opmod,
- 	return mlx5_cmd_exec_in(mdev, modify_vport_state, in);
- }
+ 	u32 in[MLX5_ST_SZ_DW(modify_vport_state_in)] = {};
  
-+int mlx5_modify_vport_max_tx_speed(struct mlx5_core_dev *mdev, u8 opmod,
-+				   u16 vport, u8 other_vport, u16 max_tx_speed)
-+{
-+	u32 in[MLX5_ST_SZ_DW(modify_vport_state_in)] = {};
-+	u8 admin_state;
-+	int err;
++#ifdef CONFIG_MLX5_ESWITCH
++	lockdep_assert_held(&mdev->priv.eswitch->state_lock);
++#endif
 +
-+	err = mlx5_query_vport_admin_state(mdev, opmod, vport, other_vport,
-+					   &admin_state);
-+	if (err)
-+		return err;
-+
-+	MLX5_SET(modify_vport_state_in, in, opcode,
-+		 MLX5_CMD_OP_MODIFY_VPORT_STATE);
-+	MLX5_SET(modify_vport_state_in, in, op_mod, opmod);
-+	MLX5_SET(modify_vport_state_in, in, vport_number, vport);
-+	MLX5_SET(modify_vport_state_in, in, other_vport, other_vport);
-+	MLX5_SET(modify_vport_state_in, in, admin_state, admin_state);
-+	MLX5_SET(modify_vport_state_in, in, max_tx_speed, max_tx_speed);
-+
-+	return mlx5_cmd_exec_in(mdev, modify_vport_state, in);
-+}
-+
- static int mlx5_query_nic_vport_context(struct mlx5_core_dev *mdev, u16 vport,
- 					u32 *out)
- {
-diff --git a/include/linux/mlx5/vport.h b/include/linux/mlx5/vport.h
-index b98aaa471ac22..8a55fee483127 100644
---- a/include/linux/mlx5/vport.h
-+++ b/include/linux/mlx5/vport.h
-@@ -41,6 +41,8 @@
- 	 (MLX5_CAP_GEN(mdev, port_type) == MLX5_CAP_PORT_TYPE_ETH) &&	\
- 	 mlx5_core_is_pf(mdev))
+ 	MLX5_SET(modify_vport_state_in, in, opcode,
+ 		 MLX5_CMD_OP_MODIFY_VPORT_STATE);
+ 	MLX5_SET(modify_vport_state_in, in, op_mod, opmod);
+@@ -106,6 +110,10 @@ int mlx5_modify_vport_max_tx_speed(struct mlx5_core_dev *mdev, u8 opmod,
+ 	u8 admin_state;
+ 	int err;
  
-+#define MLX5_MAX_TX_SPEED_UNIT 100
++#ifdef CONFIG_MLX5_ESWITCH
++	lockdep_assert_held(&mdev->priv.eswitch->state_lock);
++#endif
 +
- enum {
- 	MLX5_CAP_INLINE_MODE_L2,
- 	MLX5_CAP_INLINE_MODE_VPORT_CONTEXT,
-@@ -58,6 +60,8 @@ enum {
- u8 mlx5_query_vport_state(struct mlx5_core_dev *mdev, u8 opmod, u16 vport);
- int mlx5_modify_vport_admin_state(struct mlx5_core_dev *mdev, u8 opmod,
- 				  u16 vport, u8 other_vport, u8 state);
-+int mlx5_modify_vport_max_tx_speed(struct mlx5_core_dev *mdev, u8 opmod,
-+				   u16 vport, u8 other_vport, u16 max_tx_speed);
- int mlx5_query_nic_vport_mac_address(struct mlx5_core_dev *mdev,
- 				     u16 vport, bool other, u8 *addr);
- int mlx5_query_mac_address(struct mlx5_core_dev *mdev, u8 *addr);
+ 	err = mlx5_query_vport_admin_state(mdev, opmod, vport, other_vport,
+ 					   &admin_state);
+ 	if (err)
 -- 
 2.53.0
 
