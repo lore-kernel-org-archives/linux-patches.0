@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0513337E2E7;
-	Sat, 12 Sep 2026 12:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1EDD3BE643;
+	Sat, 12 Sep 2026 12:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216073; cv=none; b=tVYx2YkBFU7/KuvbWOnh1tBwl8kJ9Ehcv4+QoSPviDvLcHUzCTs3XuYouNy3OPqYyijqmLlCrbpsJTk+6Z4x0sH3CpqgsM8ookX0QYHzLdrwT1QdcYecTfBEBYzarefyx/X0u5zrj59MGcGemWUUsJrpndEM0oV6Njdg3ZTSIQU=
+	t=1789216077; cv=none; b=YORvl+xvKf+icJGiuPmlQUkYdXRoOYS4jJoM8PVzGknbV1gmts8n99YdqnhwGcxKNxBD3yFgkEvtiAOHAvPelodPAq/LDgmOCliaTEotQK18sD6V0FFzCY7+Nl2JLlL2f8Hk9L2FW0z+L0Da4+xWie0XJoAilZ2UCiWwFY9LAbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216073; c=relaxed/simple;
-	bh=+qP/UmUZ8KcG88KVs9RXR6m/RMCvYWDqiei5uqY9Poo=;
+	s=arc-20240116; t=1789216077; c=relaxed/simple;
+	bh=9LO9uCKA7nf87tpyzTCvZtTtex6qIrQBiKNzm00bGUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M+4lp9PRCSISEZTZWQxr2OsRBVEfdsy2a50VClVAV+BZFHnvhP+TYZl9bONfl4NXfu8lIz21l4AojrdOtB4nKUC0tcemUOih+FApOx6SqHDFx9JLsDyEMslZZdoozv6laV8tQDLxSikxFkaPiqNesagOoVqEnzysvLe5fPzvNrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xNzgBF2T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ovytnb0aQ2sOlrQ6dTA9F/IapwFHe12XNJDTHKKnKidr3F09InqkiuynuvmLCnUqTjXfWf/12RKbYXCTguNErtYufSaF+5gM2tvddOfQ2Rd/FNi3goG/qsDMR3V77vO9YoS6MyKY51fPPgUlclFAeZjCmUC0WWrt+wN02LmEyz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i+whpgLQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xNzgBF2T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7F21F000FF;
-	Sat, 12 Sep 2026 12:27:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+whpgLQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1221F000FF;
+	Sat, 12 Sep 2026 12:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216071;
-	bh=xxPTG83G3UAfJzFXM+YpXlNBnwnfnndTC3W4cAEkWPQ=;
+	s=korg; t=1789216076;
+	bh=2zv60EwE45d/Pyvlvl/ZLbS7uy+F83bfIvoFIbyX3/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xNzgBF2Tugb1A1IIVnLKKykQvtUV093novjZ5c+t+6u9ye8NtJ4G5d9ViJTx8C9mV
-	 r0eRAYC/qqClktOGI39cNw0mg8kxvscLrc9lrnqOmwBFOMBP7VLV08Qnz/l/XYicnT
-	 WJFXAd3OR7pB6eNx6BTweHReD9XX9P7eByYVnrdI=
+	b=i+whpgLQ9CO4KuFRPjy0HVNtIIF3OZxbeBFL2mxcDc8m2CinSKnhQYUOqfFUr4YPF
+	 bWy8/gYaUY3CqjcKywfR79Uex52hZb5aipkyeIVYkSDiO3mBH9834TI+G1u9ls/yZl
+	 LOJ4jSH6iB6mV7R8zPe1as8mu5TXqkd7qjhsib4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
+	Suyash Mahar <smahar@meta.com>,
 	Leo Yan <leo.yan@arm.com>,
+	James Clark <james.clark@linaro.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0663/1376] perf cs-etm: Flush thread stacks after decoder reset
-Date: Sat, 12 Sep 2026 08:51:29 +0200
-Message-ID: <20260912065622.318493811@linuxfoundation.org>
+Subject: [PATCH 6.12 0664/1376] perf cs-etm: Avoid truncating AUX buffer sizes to int
+Date: Sat, 12 Sep 2026 08:51:30 +0200
+Message-ID: <20260912065622.340362867@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,90 +55,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit ea5075e3776846d4941dddf1549426ebd3feb81f ]
+[ Upstream commit ec99be8a31db999a4f866be74ea7db61dbb19f24 ]
 
-Perf resets the CoreSight decoder when moving to a new AUX trace buffer,
-this causes trace discontinunity globally.
+cs_etm__get_trace() returns an int, but it used to return etmq->buf_len
+on success. That value comes from auxtrace_buffer::size, which is a
+size_t. For a large AUX trace block, returning the byte count through an
+int can overflow and make a valid buffer look like a negative error.
 
-For callchain synthesis, keeping thread-stack state after decoder reset
-can leave stale call/return history attached to threads that are decoded
-later, producing incorrect synthesized callchains.
+The callers do not need the actual byte count from cs_etm__get_trace().
+The buffer length is already stored in the etmq->buf_len. The callers
+only need to distinguish three states:
 
-Flush all host thread stacks after a decoder reset. When virtualization
-is present, flush the guest thread stacks as well.
+  < 0: error
+  = 0: no more AUX buffers
+  > 0: data is available
 
-Reviewed-by: James Clark <james.clark@linaro.org>
+Make cs_etm__get_trace() return 0 for all non-error cases and use
+etmq->buf_len to indicate whether a new buffer was found. Then make
+cs_etm__get_data_block() return 1 whenever data is available, instead of
+returning the buffer length.
+
+Also refactor cs_etm__get_data_block() to make its return value
+semantics clearer.
+
+Reported-by: Suyash Mahar <smahar@meta.com>
+Fixes: 8224531cf5a1 ("perf cs-etm: Modularize auxtrace_buffer fetch function")
 Signed-off-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Stable-dep-of: ec99be8a31db ("perf cs-etm: Avoid truncating AUX buffer sizes to int")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 45 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+ tools/perf/util/cs-etm.c | 46 +++++++++++++++++++++++-----------------
+ 1 file changed, 26 insertions(+), 20 deletions(-)
 
 diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index 29f0211324970..5b0dc7ef3a964 100644
+index 5b0dc7ef3a964..a6344ff19f746 100644
 --- a/tools/perf/util/cs-etm.c
 +++ b/tools/perf/util/cs-etm.c
-@@ -2039,6 +2039,45 @@ static int cs_etm__end_block(struct cs_etm_queue *etmq,
- 
- 	return 0;
- }
-+
-+static int cs_etm__flush_stack_cb(struct thread *thread,
-+				  void *data __maybe_unused)
-+{
-+	thread_stack__flush(thread);
+@@ -1484,8 +1484,7 @@ cs_etm__get_trace(struct cs_etm_queue *etmq)
+ 	etmq->buf_used = 0;
+ 	etmq->buf_len = aux_buffer->size;
+ 	etmq->buf = aux_buffer->data;
+-
+-	return etmq->buf_len;
 +	return 0;
-+}
-+
-+static void cs_etm__flush_machine_stack(struct cs_etm_queue *etmq, pid_t pid)
-+{
-+	struct machine *machine;
-+
-+	machine = machines__find(&etmq->etm->session->machines, pid);
-+	if (machine)
-+		machine__for_each_thread(machine, cs_etm__flush_stack_cb, NULL);
-+}
-+
-+static void cs_etm__flush_all_stack(struct cs_etm_queue *etmq)
-+{
-+	enum cs_etm_pid_fmt pid_fmt = cs_etm__get_pid_fmt(etmq);
-+
-+	if (!etmq->etm->synth_opts.last_branch)
-+		return;
-+
-+	switch (pid_fmt) {
-+	case CS_ETM_PIDFMT_CTXTID2:
-+		/* Clear the guest stack if virtualization is supported */
-+		cs_etm__flush_machine_stack(etmq, DEFAULT_GUEST_KERNEL_ID);
-+		fallthrough;
-+	case CS_ETM_PIDFMT_CTXTID:
-+		cs_etm__flush_machine_stack(etmq, HOST_KERNEL_ID);
-+		break;
-+	case CS_ETM_PIDFMT_NONE:
-+	default:
-+		break;
-+
-+	}
-+}
-+
- /*
-  * cs_etm__get_data_block: Fetch a block from the auxtrace_buffer queue
-  *			   if need be.
-@@ -2061,6 +2100,12 @@ static int cs_etm__get_data_block(struct cs_etm_queue *etmq)
- 		ret = cs_etm_decoder__reset(etmq->decoder);
- 		if (ret)
- 			return ret;
-+
-+		/*
-+		 * Since the decoder is reset, this causes a global trace
-+		 * discontinuity. Flush all thread stacks.
-+		 */
-+		cs_etm__flush_all_stack(etmq);
- 	}
+ }
  
- 	return etmq->buf_len;
+ /*
+@@ -2089,26 +2088,33 @@ static int cs_etm__get_data_block(struct cs_etm_queue *etmq)
+ {
+ 	int ret;
+ 
+-	if (!etmq->buf_len) {
+-		ret = cs_etm__get_trace(etmq);
+-		if (ret <= 0)
+-			return ret;
+-		/*
+-		 * We cannot assume consecutive blocks in the data file
+-		 * are contiguous, reset the decoder to force re-sync.
+-		 */
+-		ret = cs_etm_decoder__reset(etmq->decoder);
+-		if (ret)
+-			return ret;
++	/* The current block is not finished */
++	if (etmq->buf_len)
++		return 1;
+ 
+-		/*
+-		 * Since the decoder is reset, this causes a global trace
+-		 * discontinuity. Flush all thread stacks.
+-		 */
+-		cs_etm__flush_all_stack(etmq);
+-	}
++	ret = cs_etm__get_trace(etmq);
++	if (ret < 0)
++		return ret;
++
++	/* No more buffer to read */
++	if (!etmq->buf_len)
++		return 0;
++
++	/*
++	 * We cannot assume consecutive blocks in the data file
++	 * are contiguous, reset the decoder to force re-sync.
++	 */
++	ret = cs_etm_decoder__reset(etmq->decoder);
++	if (ret)
++		return ret;
++
++	/*
++	 * Since the decoder is reset, this causes a global trace
++	 * discontinuity. Flush all thread stacks.
++	 */
++	cs_etm__flush_all_stack(etmq);
+ 
+-	return etmq->buf_len;
++	return 1;
+ }
+ 
+ static bool cs_etm__is_svc_instr(struct cs_etm_queue *etmq,
 -- 
 2.53.0
 
