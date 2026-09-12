@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8570377ABA;
-	Sat, 12 Sep 2026 19:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E46E385D68;
+	Sat, 12 Sep 2026 19:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242148; cv=none; b=LpJKq3Uvj/60XBuMOrlGrMw0/F0joJ9WL7bppnWYXl+wTBQ8LLN5jAE3fn1CJi6NgJW901zSpgBZ7PiRt6EkpAiisAoa4IX3vVrfg+qt6Jhj2yPIXJhxCiqSyb1RQLseOh+F52epGj2gkAjtcbZlgEfK7po7/fZgZP/iDNbd5so=
+	t=1789242152; cv=none; b=TxosWq5+Cq72nap+7WzILXRZdE9veOwinan5bPHRHACCF4KCh6760e+dT6sOSZvEComWthWpi8Aiei+/2bzI8wJwVFlDkXBBseEYkdEOOwu0kgf4cYBuVcM2NalBmlXnrC1Q2jsamXLI62Tw63OQXI+PuAcqFOkIZ0Gmp9aBsXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242148; c=relaxed/simple;
-	bh=yrG3o8Gv8rn805iHw0KsZDSoW4b6Y7hV5UKodg8fj4A=;
+	s=arc-20240116; t=1789242152; c=relaxed/simple;
+	bh=GtsQdNp6nLXe5IvVhnR77UmtjoqpYlZNm9IawHE28lE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aqoKjQYHuQfaUzBo4qDcpA0AxU6qoun6o8Vay0mu7+bb46XE3G3FpjwyEtLbV+QYRiP4yDpIi+mlPmDFeTGCDIknlXpWZcnsYtYps98gDyCg3HewgcF1lVhQ4voSB7DcHQD6GiiQvkBtgpPqbOj3NQFgiH1C/bgGc4S/qTG4++Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yXxpU1L7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XCjkz1F3YEf1kCydTmycLww4RO8KjkX66/iybbKpUwg3vQiAfVepmSwHjRGy8pnjWKVHZLAKziGBjpPw8GkMDKoF/sdf87iVNYtTU0kGlP276J0qnLpj4vFi2ETeZBud0cW3fflCxjyBX8vnX9xbCGFEofP+Z7r2oY2CE6KvInM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nKaqxCUr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXxpU1L7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BF91F000FF;
-	Sat, 12 Sep 2026 19:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKaqxCUr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7421F000FF;
+	Sat, 12 Sep 2026 19:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242146;
-	bh=EvQ0dxMAtB8ZQ0mBD6s2NtBeprA2FcX7ZYAgCXwqEZY=;
+	s=korg; t=1789242149;
+	bh=pygjglk0cziB6Q3+2irddnLvy19PqwODTMq2aITLt/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yXxpU1L7eWPYpa7pLSwaELK/INmHtkoi2/dJABHGis+RD9kGodWH69teHcq/2yDj2
-	 IyK7TjI30tdsuTG3VLghjfry6JL3on/xvASqoPDPQjtR/D8iJa1c+5e4zV1I+IzfEO
-	 7GLi+bW3nvSgJxIYnnYM1i4t94FbTx+w6rlUab/A=
+	b=nKaqxCUrlW050TIE2CmddBLCUvRrygRSvijz6FeBQCpTwQ6h9pA/y0pMhtiEt81aF
+	 dNxlWW1PeXy/wzkpKgBH0vBk+QSLZmboW7JoMmrsAhnB9xxBStwoUV3KW3ChzfTcGC
+	 sgCc3NMB/OWAxHH5AZtbgau7PHnnhq9MrzuSej3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 5.10 303/798] scsi: qla2xxx: Dont query firmware state while chip is down
-Date: Sat, 12 Sep 2026 08:58:51 +0200
-Message-ID: <20260912065524.106501189@linuxfoundation.org>
+Subject: [PATCH 5.10 304/798] scsi: qla2xxx: Avoid double completion in async IOCB timeout
+Date: Sat, 12 Sep 2026 08:58:52 +0200
+Message-ID: <20260912065524.128999779@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,44 +53,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-commit e0cebe20dcffbed9c078fe30e2d18cd5046d9eff upstream.
+commit bb45bc4bd53c95a7bf6f782577b5ede94c0f8aa8 upstream.
 
-qla2x00_fw_state_show() initializes rval to QLA_FUNCTION_FAILED and jumps
-to the out: label when the chip is down or EEH is busy. The out: block
-then re-issued qla2x00_get_firmware_state() because rval != QLA_SUCCESS,
-defeating the chip-down/EEH-busy guards and issuing a mailbox command
-(outside optrom_mutex) during ISP reset or PCI error recovery, which can
-hang the adapter. It also turned a normal in-lock mailbox failure into a
-second unsynchronized mailbox attempt.
+qla2x00_async_iocb_timeout() tries to abort a timed-out async IOCB. When
+qla24xx_async_abort_cmd() fails, both the SRB_LOGIN_CMD path and the
+SRB_CTRL_VP/default path scan outstanding_cmds[] for the SRB and then
+call sp->done(sp, QLA_FUNCTION_TIMEOUT) unconditionally, without checking
+whether the SRB was actually found and removed.
 
-Make the out: fallback only mark the firmware state as unknown. The
-mailbox is now issued at most once, inside optrom_mutex, and only when
-the chip is up and not EEH-busy.
+If the response ISR completes the same handle first, it removes the SRB
+under qp_lock_ptr and runs sp->done() -> complete(sp->comp). The
+submitter qla24xx_control_vp() wakes from wait_for_completion(), clears
+sp->comp, drops its reference and returns, reclaiming the on-stack
+completion. The timer reference keeps the SRB alive across the timeout
+handler, but not the submitter's stack. The timeout then issues a second
+sp->done() -> qla_ctrlvp_sp_done(), which evaluates "if (sp->comp)
+complete(sp->comp)"; with the pointer loaded before the submitter's NULL
+store, complete() writes into the freed stack frame, a use-after-free.
 
-Fixes: b6faaaf796d7 ("scsi: qla2xxx: Serialize mailbox request")
+Track whether this path removed the SRB from outstanding_cmds and only
+call sp->done() when it did, so the command is completed exactly once by
+whichever path owns it. This mirrors the sp_found guard already used in
+qla24xx_abort_iocb_timeout().
+
+Fixes: f6145e86d21f ("scsi: qla2xxx: Fix race between switch cmd completion and timeout")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-8-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-21-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_attr.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/scsi/qla2xxx/qla_init.c |   24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_attr.c
-+++ b/drivers/scsi/qla2xxx/qla_attr.c
-@@ -1663,10 +1663,8 @@ qla2x00_fw_state_show(struct device *dev
- 	rval = qla2x00_get_firmware_state(vha, state);
- 	mutex_unlock(&vha->hw->optrom_mutex);
- out:
--	if (rval != QLA_SUCCESS) {
-+	if (rval != QLA_SUCCESS)
- 		memset(state, -1, sizeof(state));
--		rval = qla2x00_get_firmware_state(vha, state);
--	}
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -206,7 +206,7 @@ qla2x00_async_iocb_timeout(void *data)
+ 	srb_t *sp = data;
+ 	fc_port_t *fcport = sp->fcport;
+ 	struct srb_iocb *lio = &sp->u.iocb_cmd;
+-	int rc, h;
++	int rc, h, found;
+ 	unsigned long flags;
  
- 	return scnprintf(buf, PAGE_SIZE, "0x%x 0x%x 0x%x 0x%x 0x%x 0x%x\n",
- 	    state[0], state[1], state[2], state[3], state[4], state[5]);
+ 	if (fcport) {
+@@ -229,6 +229,7 @@ qla2x00_async_iocb_timeout(void *data)
+ 			lio->u.logio.data[1] =
+ 				lio->u.logio.flags & SRB_LOGIN_RETRIED ?
+ 				QLA_LOGIO_LOGIN_RETRIED : 0;
++			found = 0;
+ 			spin_lock_irqsave(sp->qpair->qp_lock_ptr, flags);
+ 			for (h = 1; h < sp->qpair->req->num_outstanding_cmds;
+ 			    h++) {
+@@ -236,11 +237,19 @@ qla2x00_async_iocb_timeout(void *data)
+ 				    sp) {
+ 					sp->qpair->req->outstanding_cmds[h] =
+ 					    NULL;
++					found = 1;
+ 					break;
+ 				}
+ 			}
+ 			spin_unlock_irqrestore(sp->qpair->qp_lock_ptr, flags);
+-			sp->done(sp, QLA_FUNCTION_TIMEOUT);
++			/*
++			 * Only complete the command if this path removed it
++			 * from outstanding_cmds.  Otherwise the ISR already
++			 * completed it and a second sp->done() would race the
++			 * submitter's freeing of the on-stack completion.
++			 */
++			if (found)
++				sp->done(sp, QLA_FUNCTION_TIMEOUT);
+ 		}
+ 		break;
+ 	case SRB_LOGOUT_CMD:
+@@ -253,6 +262,7 @@ qla2x00_async_iocb_timeout(void *data)
+ 	default:
+ 		rc = qla24xx_async_abort_cmd(sp, false);
+ 		if (rc) {
++			found = 0;
+ 			spin_lock_irqsave(sp->qpair->qp_lock_ptr, flags);
+ 			for (h = 1; h < sp->qpair->req->num_outstanding_cmds;
+ 			    h++) {
+@@ -260,11 +270,19 @@ qla2x00_async_iocb_timeout(void *data)
+ 				    sp) {
+ 					sp->qpair->req->outstanding_cmds[h] =
+ 					    NULL;
++					found = 1;
+ 					break;
+ 				}
+ 			}
+ 			spin_unlock_irqrestore(sp->qpair->qp_lock_ptr, flags);
+-			sp->done(sp, QLA_FUNCTION_TIMEOUT);
++			/*
++			 * Only complete the command if this path removed it
++			 * from outstanding_cmds.  Otherwise the ISR already
++			 * completed it and a second sp->done() would race the
++			 * submitter's freeing of the on-stack completion.
++			 */
++			if (found)
++				sp->done(sp, QLA_FUNCTION_TIMEOUT);
+ 		}
+ 		break;
+ 	}
 
 
