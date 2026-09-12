@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82424299920;
-	Sat, 12 Sep 2026 08:13:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE1F37E304;
+	Sat, 12 Sep 2026 08:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200836; cv=none; b=Iyr4F/574hjAXtr/+5DRB8CAhYadgQuPjDvp6+ArCblPPINDTJpSYqHk2BtNoLKQB9XHbYTcIvWqrhPoGn9GXz0h/VZGowBt2yqaWAxPdamKVFF6+XqLkkaCIitNTAZW1GGR8QiBekKBMxnQQSiAYDOhUvaBOtl1ln/YIxfPDaM=
+	t=1789200841; cv=none; b=TugMAzLLsONWcvPoOHFsc1dZVkWW1suJNK5u94fisaet/aRmmUDY+xi+Ncih9ydbY8Cg2MeWye1oZPgrU+HzYDeSNJDKNvhBBYahGpXmd2RMxA/m4sGP+7dU8Elt5fPRh4DaZFgYrnMUKDpR4qRCZQkj8S2Tfm+CNtKzY15TmRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200836; c=relaxed/simple;
-	bh=uXuZnjT03ETVBZaE83VLBJ8ZrPhA8as6L2asUz22vtc=;
+	s=arc-20240116; t=1789200841; c=relaxed/simple;
+	bh=ZWN0xheg4BWYMMzGP/V4mL3/39EljUJxUpBMRx3BTQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bLHSRYhmlNlJy4UQa7g5/uG7k8hRkq+zY3QCMydySUCWIqpGInSIESiRh89oyvyiJO5r55xFgFheX+hV4jODrtvK1RC7yswTDVp857HxU6GdrCUs/hD6pONtVxCxLFlK7FfDTCsiNyn0b5pMMIeNnenyYYDpb+5QTVlShZBQUKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6lMuwzv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AEEZv96ZzgIwVQJ1OKoNAMlVkCs7rpxJXbgjLdu0F25pPyQAE/emwgIdMHz+kHKs5lQVhLqRljIhjYhYi8d+DU7GnI5inyw3Go2qlzkcksoJKxMiJttDKEtimv9UY+0P7eZ74p21+aN4sheubdAUMtaxYdwlFG1817e88dumdn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2C3XFBuD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6lMuwzv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228BD1F000FF;
-	Sat, 12 Sep 2026 08:13:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2C3XFBuD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 279FC1F000FF;
+	Sat, 12 Sep 2026 08:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200835;
-	bh=s4HAhVbJA9UOBanzC438hohM1jkccbG/AHlRXnCragc=;
+	s=korg; t=1789200840;
+	bh=eYz1x58i02Pa/jEOE7YHPGFS8fEjS3lbNZAjJ1MGg2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F6lMuwzvqRkCP4Unkf071IYnzixAvsldxkf7XZBaixHUfyoJsQc5u4a2YOxg40Qjr
-	 LklEwRBUpYRxlPmVlw80hGHRtXKgwdJryFNixnT1G7AjC//utsLQNttXeaAfWpp2Zs
-	 yiWzQmYvDXa7VrPzKrO2BM8bOIzrizvUPxs851BA=
+	b=2C3XFBuDpRWcDUV6U44AUBqW+WBZU7hNCMaarrMq9XJiP+DJ64Vwtd9P1ndM02Ar1
+	 OWuR+M9z/6BLeeMN0oVJuuawuC7na6kBpmQ4srXvGHQ2WqRl6WoZsyzMgm8VyvLoh4
+	 KpKuAXiu737mdtUVfNFjToXOONA7zNqGlNKzyVQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Stella Liu <yu-ching.liu@mediatek.com>,
+	Jeremy Yu <chengwei.yu@mediatek.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0819/1815] power: supply: sc2731_charger: cancel work on remove
-Date: Sat, 12 Sep 2026 08:42:49 +0200
-Message-ID: <20260912065708.139276917@linuxfoundation.org>
+Subject: [PATCH 7.2 0866/1815] wifi: mt76: add init_wiphy callback
+Date: Sat, 12 Sep 2026 08:43:36 +0200
+Message-ID: <20260912065709.253320810@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,49 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit dfc859bb8d332c525872f1a44028137724fa1998 ]
+[ Upstream commit 4ee3d2a5f2cd5b6d0ba0d997913c1b763ef4d5c5 ]
 
-The USB notifier and initial charger detection can schedule info->work.
-The remove path unregisters the notifier, but does not cancel queued or
-running work before the devm-allocated driver data is released.
+Add an optional callback for drivers to finalize wiphy state after mt76
+has initialized the supported bands and before registration.
 
-Set the platform drvdata used by remove, then cancel the work after
-unregistering the notifier.
-
-This issue was found by a static analysis tool.
-
-Fixes: 8ac1091ed18b ("power: supply: sc2731_charger: Add one work to charge/discharge")
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Link: https://patch.msgid.link/5d48b827687168cb1b1bfe85f17945566b42829d.1785321763.git.getshell@seu.edu.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Co-developed-by: Stella Liu <yu-ching.liu@mediatek.com>
+Signed-off-by: Stella Liu <yu-ching.liu@mediatek.com>
+Co-developed-by: Jeremy Yu <chengwei.yu@mediatek.com>
+Signed-off-by: Jeremy Yu <chengwei.yu@mediatek.com>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/20260625001834.475094-7-sean.wang@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: 217f9e7bb025 ("wifi: mt76: mt792x: fix use-after-free in mt76_rx_poll_complete")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/sc2731_charger.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mac80211.c | 7 +++++++
+ drivers/net/wireless/mediatek/mt76/mt76.h     | 3 +++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/drivers/power/supply/sc2731_charger.c b/drivers/power/supply/sc2731_charger.c
-index 58b86fd787713..2b25e44da7978 100644
---- a/drivers/power/supply/sc2731_charger.c
-+++ b/drivers/power/supply/sc2731_charger.c
-@@ -466,6 +466,7 @@ static int sc2731_charger_probe(struct platform_device *pdev)
- 	mutex_init(&info->lock);
- 	info->dev = &pdev->dev;
- 	INIT_WORK(&info->work, sc2731_charger_work);
-+	platform_set_drvdata(pdev, info);
+diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
+index 13c4e8abe2819..c4cbf7195b805 100644
+--- a/drivers/net/wireless/mediatek/mt76/mac80211.c
++++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
+@@ -681,6 +681,7 @@ mt76_alloc_device(struct device *pdev, unsigned int size,
+ 	dev = hw->priv;
+ 	dev->hw = hw;
+ 	dev->dev = pdev;
++	dev->init_wiphy = NULL;
+ 	dev->drv = drv_ops;
+ 	dev->dma_dev = pdev;
  
- 	info->regmap = dev_get_regmap(pdev->dev.parent, NULL);
- 	if (!info->regmap) {
-@@ -516,6 +517,7 @@ static void sc2731_charger_remove(struct platform_device *pdev)
- 	struct sc2731_charger_info *info = platform_get_drvdata(pdev);
+@@ -779,6 +780,12 @@ int mt76_register_device(struct mt76_dev *dev, bool vht,
+ 	mt76_check_sband(&dev->phy, &phy->sband_5g, NL80211_BAND_5GHZ);
+ 	mt76_check_sband(&dev->phy, &phy->sband_6g, NL80211_BAND_6GHZ);
  
- 	usb_unregister_notifier(info->usb_phy, &info->usb_notify);
-+	cancel_work_sync(&info->work);
- }
++	if (dev->init_wiphy) {
++		ret = dev->init_wiphy(dev);
++		if (ret)
++			return ret;
++	}
++
+ 	if (IS_ENABLED(CONFIG_MT76_LEDS)) {
+ 		ret = mt76_led_init(phy);
+ 		if (ret)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
+index 0ecc5b0bff870..640061276d762 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76.h
+@@ -941,6 +941,9 @@ struct mt76_dev {
+ 	const struct mt76_bus_ops *bus;
+ 	const struct mt76_driver_ops *drv;
+ 	const struct mt76_mcu_ops *mcu_ops;
++
++	/* Optional callback to finalize wiphy state before registration. */
++	int (*init_wiphy)(struct mt76_dev *dev);
+ 	struct device *dev;
+ 	struct device *dma_dev;
  
- static const struct of_device_id sc2731_charger_of_match[] = {
 -- 
 2.53.0
 
