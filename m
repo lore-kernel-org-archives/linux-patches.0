@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CFE37E2E7;
-	Sat, 12 Sep 2026 12:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68373446AD;
+	Sat, 12 Sep 2026 12:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216999; cv=none; b=hUUvFRlVOQLliCASVNqkEitonACt+RtlDNtsmbUkUYVjLMo4lFw9I92LNTH+khv7OYrMBBX5WroORjBjRzqWLjmkp0AT4+zWGFR0GxuNJOId7+1mLC/5nXidzwArmZVXlOvy2wf/q0Sa3PhjNG/OM30thTDYhNx7qpFX7ke3uyo=
+	t=1789217004; cv=none; b=gYkIAA86vo6WNKTmfAgRxugWkUSLqAg9259jVwqEXRVIPrzM6ngThZPSUlfV/2lSBprqEcMLa+5PcaBArmbAlWG6HoUF7KLhs3NXFpisvr8WjRbtvU091OyS4KgLpiISycvG1CC+lp5c+lA5nuWxeLepE6kmw/tEg7Qx+ZCXhls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216999; c=relaxed/simple;
-	bh=G410qfIt8LnUEYg7w9ciV0pNEXE3wRDWHRL1J/gZQZQ=;
+	s=arc-20240116; t=1789217004; c=relaxed/simple;
+	bh=Lsoy5NWIjYZlOD2p1ORPmUz7BqGBHDjccBAqs/Csz78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Swx9CDuDqNKfnInj9Q34fh1uk2Z2vr+QLTIZiWjZgn1ks2qk9eai/q0h6/JkpYmzNC4JmOPLKg6vjf/SaxvJDQt5XYCOVYMiguHgB4SMmqux9zkld9JIGajWxC57TTwYYtV3dbzhRfr6T2J5kQX1G237hM/RtXTEYZjHgSLKjzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+8sL7n1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qRGfukIo6QMDORdW/Mpaoqmg7CPJWYVkf7X6OHmNt9QD8/F5U8FYShOOi4Q0vSPpFDFd2axFYU+OpTm6Jt/n9R6XWIQKy1alzrsD1MLRQ6ELRThl/W2nuP6vhVLqHnJXnRjc9srPphgLPGpDhw5shQg/Hc7XlgO6RXp4MbJgm2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5qJsNu0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+8sL7n1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B489C1F000FF;
-	Sat, 12 Sep 2026 12:43:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5qJsNu0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA241F000FF;
+	Sat, 12 Sep 2026 12:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216997;
-	bh=HT0RzxMuvk9wz1iP2CnQREaOjgXGiRyxY/jcG8hm4JU=;
+	s=korg; t=1789217002;
+	bh=ALQG7c8DB3Y5WefJsc34+6poce8aJH2XQFO/Ica9VsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M+8sL7n1VGlnajiXtyLwqFw3IhjAe6UfzwoAcfRbsX5ogBSJLcwPg/ZfrJuBombn1
-	 YLlb/YL1FyV+BWJqaGaF7qb23msqCXEUHAOAavf3TO7OsOc8CWnZ6ggnYKvTP1XMFU
-	 0hwkNkRujah5rCVSFdO7jfj7zc4gpegmayvysQ34=
+	b=u5qJsNu0uCb9tfPpLNGMFBAwkUz92peM+H8q9hjcjs6eg6Mm38TfEZkty+jJkoze/
+	 V3EEFn5QnGpeYSfCa0ktMalItf9HywXbzQ1RURfrUbZ8hlyDT/p69kCCvxxejp/Uu/
+	 P3PP2ZzQYV5QKKd8m6AG0TGqNKUzceDmT9+7P7ZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	"Zhang, Yanmin" <yanmin_zhang@linux.intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0852/1376] wifi: mac80211: skip unused probe response countdown offsets
-Date: Sat, 12 Sep 2026 08:54:38 +0200
-Message-ID: <20260912065626.546763400@linuxfoundation.org>
+Subject: [PATCH 6.12 0835/1376] perf machine: Free scandir entries in guest kernel map creation
+Date: Sat, 12 Sep 2026 08:54:21 +0200
+Message-ID: <20260912065626.156657268@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,49 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit fd2bf5e718108c00732eb07fd94a5d8830f62a9f ]
+[ Upstream commit f53bf58dcd11e1cb088d3b91a035fef77062094b ]
 
-mac80211 copies cfg80211's variable-length countdown offset list into a
-zero-initialized fixed-size array, leaving unused entries at zero. The
-beacon branch already skips those zero entries, but the AP probe-response
-branch writes through them unconditionally.
+machines__create_guest_kernel_maps() calls scandir() which allocates
+both the namelist array and each individual dirent entry.  The code
+frees the namelist array but not the individual entries, leaking memory
+proportional to the number of directories under guestmount.
 
-When a probe-response template has no countdown offset, the write through
-an unused zero entry overwrites resp->data[0], corrupting the first byte of
-the template. cfg80211 already bounds explicitly supplied non-zero offsets
-in nl80211_parse_counter_offsets(), so this is a zero-sentinel bug, not an
-out-of-bounds write.
+Free each namelist[i] after it is no longer needed.
 
-Skip zero probe-response offsets, matching the beacon path.
-
-Fixes: af296bdb8da4 ("mac80211: move csa counters from sdata to beacon/presp")
-Link: https://lore.kernel.org/all/20260708195911.84365-6-enderaoelyther@gmail.com/
-Assisted-by: Codex:gpt-5
-Assisted-by: Claude:opus-4.8
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260723011001.76851-1-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: a1645ce12adb ("perf: 'perf kvm' tool for monitoring guest performance from host")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Zhang, Yanmin <yanmin_zhang@linux.intel.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/perf/util/machine.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 7e23916c9189b..8fc30a773c583 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -5051,7 +5051,8 @@ static void ieee80211_set_beacon_cntdwn(struct ieee80211_sub_if_data *sdata,
- 		if (sdata->vif.type == NL80211_IFTYPE_AP && resp) {
- 			u16 *resp_offsets = resp->cntdwn_counter_offsets;
- 
--			resp->data[resp_offsets[i]] = count;
-+			if (resp_offsets[i])
-+				resp->data[resp_offsets[i]] = count;
+diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
+index 1cef434b3c8dc..a958184d3bb38 100644
+--- a/tools/perf/util/machine.c
++++ b/tools/perf/util/machine.c
+@@ -1210,6 +1210,7 @@ int machines__create_guest_kernel_maps(struct machines *machines)
+ 		for (i = 0; i < items; i++) {
+ 			if (!isdigit(namelist[i]->d_name[0])) {
+ 				/* Filter out . and .. */
++				free(namelist[i]);
+ 				continue;
+ 			}
+ 			errno = 0;
+@@ -1219,6 +1220,7 @@ int machines__create_guest_kernel_maps(struct machines *machines)
+ 			    (errno == ERANGE)) {
+ 				pr_debug("invalid directory (%s). Skipping.\n",
+ 					 namelist[i]->d_name);
++				free(namelist[i]);
+ 				continue;
+ 			}
+ 			snprintf(path, sizeof(path), "%s/%s/proc/kallsyms",
+@@ -1226,9 +1228,11 @@ int machines__create_guest_kernel_maps(struct machines *machines)
+ 				 namelist[i]->d_name);
+ 			if (access(path, R_OK)) {
+ 				pr_debug("Can't access file %s\n", path);
++				free(namelist[i]);
+ 				continue;
+ 			}
+ 			machines__create_kernel_maps(machines, pid);
++			free(namelist[i]);
  		}
+ 		free(namelist);
  	}
- }
 -- 
 2.53.0
 
