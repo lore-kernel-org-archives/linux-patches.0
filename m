@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2439642E42C;
-	Sat, 12 Sep 2026 10:41:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354E342D746;
+	Sat, 12 Sep 2026 10:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209695; cv=none; b=uLzGmKMHtq/zIQj6jzzadWZ4WUcBAhuPMO37I5Hv6pHE7WZT6vLU7BJ54rU2Sk3Xhc6o5X15vHlfMHWxaV9pKfI24YMeH/RIV/I82exMG+5MKxKtPV4Sx8IUjrQSXYyAf74iXR3WVFvZcMtP6CBOeX1m96zwl2850VmRvQ4yTfc=
+	t=1789209700; cv=none; b=cTsu2GCobjmmNiU0pHyw5Tshe6b7sqdGxdpI663sG/Gi9A7wPw/Z7MQVysGqD5/ED0EJromfgn3Gthi0JbMC3Ep3JVCe/6wIajqmNIq+qgU3GgJbdWDWEQYGJZsuyBzDV2/r9KgFoIpX9QHVKNYKsumB+MvUqQE2/jRfiRpid6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209695; c=relaxed/simple;
-	bh=G259piOpSOu1tmkWT/HCXlAnp4cwkYAYOkWnV05e6IU=;
+	s=arc-20240116; t=1789209700; c=relaxed/simple;
+	bh=oqsSOF3cHuA1VIfghjaHqMgAXJ0VtVqQFsQWp30OjM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JzO2XkqxphuLo3GZme7Ogs0VO5xrqNWzbwvcqGbe9ORSOmVi32ww+pZir6PseWHpHSvJ4kzerI/lXsiQoWJER/z++oREFCuZz0C6FqEPpAyr9Q0YgqjJMBK5jucX77k2N8U65Z2nGPQQfDwTsSRrh4YIejVE7z1BuLqi1NAjONY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L8boHSVL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EdHhPTfDJy/5YxlAc7OiAf8YTgHWwU5i6sEiVV9dnE2CNzMlFkkrrY35Van2AgJVfyyqQaRiorwNZroNbCBguceiaF0ga596egGaaRPi+DmhD3OcN2d1l+PsMMr8vrHHnn27Fk1M1XEEY3zDH/TgKUE8GX9CR+TtthZeIXTNaes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fDRPtF/w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L8boHSVL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D618E1F000FF;
-	Sat, 12 Sep 2026 10:41:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDRPtF/w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFBD11F00893;
+	Sat, 12 Sep 2026 10:41:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209691;
-	bh=Il5uGD8N2QpIKW7bgVmLv8gvxl43VJE4cSEaZ2DJ79w=;
+	s=korg; t=1789209696;
+	bh=BnNg6Fd7GYviSXu7NDMbNXk2NhxDTZCxO9PtyDwPJpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L8boHSVLeo4GyYXMTPt220Vr0bR+2bz8vP9o1oh9AsXTH+OXy4vnwMknzcl6sLSSY
-	 LRrY0vRwPiznCPK6PZuJ6bnqP+P2lYblkJNs/c348HgLq8LmyUM6dswQQG6Rbdm1vN
-	 arwb7PahDdbob3bTbXyzwuV9xbPoIhlAKKk5VIUY=
+	b=fDRPtF/wj7BQOFhoG6+crjAFbeLoVG8dvr0kUDWhlTnM+9E0DATvs8gB8oQ6bPEhS
+	 4DNHQkUO3rh11cyu9iAImGIXYfyGbzVtZw+Rx2X3/MLuDnsXcuKjegFesUkyxTuIWi
+	 7oehSXAoPbxCkYGfP6JRW866wi9FX8QGG3BQzgSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Calvin Owens <calvin@wbinvd.org>,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Hari Bathini <hbathini@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0871/1518] pps-gpio: remove dead capture_clear code
-Date: Sat, 12 Sep 2026 08:50:40 +0200
-Message-ID: <20260912065643.152855768@linuxfoundation.org>
+Subject: [PATCH 6.18 0831/1518] powerpc/irq: Fix missing r2 clobber in PCREL inline assembly
+Date: Sat, 12 Sep 2026 08:50:00 +0200
+Message-ID: <20260912065642.238950612@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,117 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Calvin Owens <calvin@wbinvd.org>
+From: Saket Kumar Bhaskar <skb99@linux.ibm.com>
 
-[ Upstream commit b899e0279f90c3ce4099d68b989dd27861cc5c4f ]
+[ Upstream commit 00be69070d91d2be978e752bb117a0a4db0e1281 ]
 
-The capture_clear field is never set, and all code conditional on it being
-set has been unreachable since the platform data logic was removed from
-pps-gpio in ee89646619ba ("pps: clients: gpio: Get rid of legacy platform
-data").
+In CONFIG_PPC_KERNEL_PCREL mode, r2 is no longer reserved for the TOC
+pointer and is available as a caller-saved register [0].
 
-I think the only logical thing to do here is to remove it all, since no
-in-tree code ever actually used it in the first place, and it has been
-completely dead code for over five years (since v5.13).
+Both call_do_irq() and call_do_softirq() use inline assembly to call
+functions with stack switching, but fail to list r2 in their clobber
+lists. This causes the compiler to assume r2 is preserved across these
+calls, leading to register corruption when the called functions
+(__do_irq and __do_softirq) clobber r2.
 
-Sashiko asked some questions about the gpiod_get_value() call which caused
-me to look deeper and figure this out, but it did not actually notice
-capture_clear is never set.
+As a result of this kernel crash during interrupt handling is seen and
+the kernel fails to boot:
 
-Link: https://lore.kernel.org/f70196bafcf75d9782dd36ed784e42345b6e8a1b.1783355507.git.calvin@wbinvd.org
-Fixes: ee89646619ba ("pps: clients: gpio: Get rid of legacy platform data")
-Signed-off-by: Calvin Owens <calvin@wbinvd.org>
-Closes: https://sashiko.dev/#/patchset/cover.1779733602.git.calvin%40wbinvd.org?part=1
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+BUG: Unable to handle kernel data access on write at 0xc000000404697638
+Faulting instruction address: 0xc0000000000181ec
+Oops: Kernel access of bad area, sig: 11 [#1]
+NIP [c0000000000181ec] __do_IRQ+0x6c/0xc0
+
+With older GCC, the compiler would conservatively allocate
+callee-saved registers (like r31) for values spanning function calls,
+accidentally avoiding the bug:
+
+<__do_IRQ>:
+00 00 00 60 	nop
+a6 02 08 7c 	mflr    r0
+f8 ff e1 fb 	std     r31,-8(r1)
+f0 ff c1 fb 	std     r30,-16(r1)
+2d 03 10 06 	pla     r31,53297316
+
+...
+
+3d e8 ff 4b 	bl      c0000000000165ac <__do_irq>
+00 00 21 e8 	ld      r1,0(r1)
+28 00 4d e9 	ld      r10,40(r13)
+40 00 21 38 	addi    r1,r1,64
+2a f9 aa 7f 	stdx    r29,r10,r31
+
+With newer GCC 14, the compiler uses r2 for such values, exposing the
+missing clobber specification:
+
+<__do_IRQ>:
+00 00 00 60     nop
+a6 02 08 7c     mflr    r0
+f0 ff c1 fb     std     r30,-16(r1)
+f8 ff e1 fb     std     r31,-8(r1)
+29 02 10 06     pla     r2,36252592     # c0000000022aadc0 <__irq_regs>
+
+...
+
+85 dc ff 4b 	bl      c000000000015ee0 <__do_irq>
+00 00 21 e8 	ld      r1,0(r1)
+28 00 2d e9 	ld      r9,40(r13)
+30 00 21 38 	addi    r1,r1,48
+2a 11 c9 7f 	stdx    r30,r9,r2
+
+Fix this by adding r2 to the clobber list for both call_do_irq() and
+call_do_softirq() when CONFIG_PPC_KERNEL_PCREL is enabled.
+
+[0]: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg313226.html
+
+Fixes: 7e3a68be42e1 ("powerpc/64: vmlinux support building with PCREL addresing")
+Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/10fc2cda485cd22e209a31d786bed1984bdf3982.1785732393.git.skb99@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/clients/pps-gpio.c | 37 ++++------------------------------
- 1 file changed, 4 insertions(+), 33 deletions(-)
+ arch/powerpc/kernel/irq.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pps/clients/pps-gpio.c b/drivers/pps/clients/pps-gpio.c
-index ed111621ee5f9..1eba112afeb80 100644
---- a/drivers/pps/clients/pps-gpio.c
-+++ b/drivers/pps/clients/pps-gpio.c
-@@ -32,7 +32,6 @@ struct pps_gpio_device_data {
- 	struct gpio_desc *echo_pin;
- 	struct timer_list echo_timer;	/* timer to reset echo active state */
- 	bool assert_falling_edge;
--	bool capture_clear;
- 	unsigned int echo_active_ms;	/* PPS echo active duration */
- 	unsigned long echo_timeout;	/* timer timeout value in jiffies */
- 	struct pps_event_time ts;	/* timestamp captured in hardirq */
-@@ -62,19 +61,8 @@ static irqreturn_t pps_gpio_irq_hardirq(int irq, void *data)
- static irqreturn_t pps_gpio_irq_thread(int irq, void *data)
- {
- 	struct pps_gpio_device_data *info = data;
--	int rising_edge;
--
--	rising_edge = info->capture_clear ?
--		      gpiod_get_value(info->gpio_pin) : !info->assert_falling_edge;
--	if ((rising_edge && !info->assert_falling_edge) ||
--			(!rising_edge && info->assert_falling_edge))
--		pps_event(info->pps, &info->ts, PPS_CAPTUREASSERT, data);
--	else if (info->capture_clear &&
--			((rising_edge && info->assert_falling_edge) ||
--			(!rising_edge && !info->assert_falling_edge)))
--		pps_event(info->pps, &info->ts, PPS_CAPTURECLEAR, data);
--	else
--		dev_warn_ratelimited(&info->pps->dev, "IRQ did not trigger any PPS event\n");
-+
-+	pps_event(info->pps, &info->ts, PPS_CAPTUREASSERT, data);
- 
- 	return IRQ_HANDLED;
+diff --git a/arch/powerpc/kernel/irq.c b/arch/powerpc/kernel/irq.c
+index a0e8b998c9b52..cb010830c1c4d 100644
+--- a/arch/powerpc/kernel/irq.c
++++ b/arch/powerpc/kernel/irq.c
+@@ -217,8 +217,12 @@ static __always_inline void call_do_softirq(const void *sp)
+ 		   [sp] "b" (sp), [offset] "i" (THREAD_SIZE - STACK_FRAME_MIN_SIZE),
+ 		   [callee] "i" (__do_softirq)
+ 		 : // Clobbers
+-		   "lr", "xer", "ctr", "memory", "cr0", "cr1", "cr5", "cr6",
+-		   "cr7", "r0", "r3", "r4", "r5", "r6", "r7", "r8", "r9", "r10",
++		   "lr", "xer", "ctr", "memory", "cr0", "cr1", "cr5", "cr6", "cr7", "r0",
++		  /* r2 may be clobbered by the callee when using PCREL mode in the ELFv2 ABI. */
++#ifdef CONFIG_PPC_KERNEL_PCREL
++		   "r2",
++#endif
++		   "r3", "r4", "r5", "r6", "r7", "r8", "r9", "r10",
+ 		   "r11", "r12"
+ 	);
  }
-@@ -90,11 +78,6 @@ static void pps_gpio_echo(struct pps_device *pps, int event, void *data)
- 		if (pps->params.mode & PPS_ECHOASSERT)
- 			gpiod_set_value(info->echo_pin, 1);
- 		break;
--
--	case PPS_CAPTURECLEAR:
--		if (pps->params.mode & PPS_ECHOCLEAR)
--			gpiod_set_value(info->echo_pin, 1);
--		break;
- 	}
- 
- 	/* fire the timer */
-@@ -156,15 +139,8 @@ static int pps_gpio_setup(struct device *dev)
- static unsigned long
- get_irqf_trigger_flags(const struct pps_gpio_device_data *data)
- {
--	unsigned long flags = data->assert_falling_edge ?
--		IRQF_TRIGGER_FALLING : IRQF_TRIGGER_RISING;
--
--	if (data->capture_clear) {
--		flags |= ((flags & IRQF_TRIGGER_RISING) ?
--				IRQF_TRIGGER_FALLING : IRQF_TRIGGER_RISING);
--	}
--
--	return flags;
-+	return data->assert_falling_edge ? IRQF_TRIGGER_FALLING :
-+					   IRQF_TRIGGER_RISING;
+@@ -275,8 +279,12 @@ static __always_inline void call_do_irq(struct pt_regs *regs, void *sp)
+ 		   [sp] "b" (sp), [offset] "i" (THREAD_SIZE - STACK_FRAME_MIN_SIZE),
+ 		   [callee] "i" (__do_irq)
+ 		 : // Clobbers
+-		   "lr", "xer", "ctr", "memory", "cr0", "cr1", "cr5", "cr6",
+-		   "cr7", "r0", "r4", "r5", "r6", "r7", "r8", "r9", "r10",
++		   "lr", "xer", "ctr", "memory", "cr0", "cr1", "cr5", "cr6", "cr7", "r0",
++		  /* r2 may be clobbered by the callee when using PCREL mode in the ELFv2 ABI. */
++#ifdef CONFIG_PPC_KERNEL_PCREL
++		   "r2",
++#endif
++		   "r4", "r5", "r6", "r7", "r8", "r9", "r10",
+ 		   "r11", "r12"
+ 	);
  }
- 
- static int pps_gpio_probe(struct platform_device *pdev)
-@@ -197,9 +173,6 @@ static int pps_gpio_probe(struct platform_device *pdev)
- 	/* initialize PPS specific parts of the bookkeeping data structure. */
- 	data->info.mode = PPS_CAPTUREASSERT | PPS_OFFSETASSERT |
- 		PPS_ECHOASSERT | PPS_CANWAIT | PPS_TSFMT_TSPEC;
--	if (data->capture_clear)
--		data->info.mode |= PPS_CAPTURECLEAR | PPS_OFFSETCLEAR |
--			PPS_ECHOCLEAR;
- 	data->info.owner = THIS_MODULE;
- 	snprintf(data->info.name, PPS_MAX_NAME_LEN - 1, "%s.%d",
- 		 pdev->name, pdev->id);
-@@ -211,8 +184,6 @@ static int pps_gpio_probe(struct platform_device *pdev)
- 
- 	/* register PPS source */
- 	pps_default_params = PPS_CAPTUREASSERT | PPS_OFFSETASSERT;
--	if (data->capture_clear)
--		pps_default_params |= PPS_CAPTURECLEAR | PPS_OFFSETCLEAR;
- 	data->pps = pps_register_source(&data->info, pps_default_params);
- 	if (IS_ERR(data->pps)) {
- 		dev_err(dev, "failed to register IRQ %d as PPS source\n",
 -- 
 2.53.0
 
