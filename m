@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5DD2ECD1D;
-	Sat, 12 Sep 2026 14:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71D03D566E;
+	Sat, 12 Sep 2026 14:58:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225078; cv=none; b=WnL/QL0plWR1DDtWfCT5dvYG4V4q8vdGiAxUJpHBMl18D5OGVQDHzBZgtF83aU0CSUtdvGV4hkDrRPf4U/PAtjS1kU/nFalVFlTHgCqgsCOe558H8urS2tG5TxZYnYEeQxcDoDwBLvttfAw0T3fm+z8WFjL4kP3hwJdXkkPwvs8=
+	t=1789225082; cv=none; b=gBYnsOJlj0DhgtX4WYC9fSJbkS+abJm9YpEa5IgGqMd4/VY+Fk8CZVgwxW3YKM6iOfpXQMjLYdTHUrcMDDJeqFiD3Rhig5N95B2LfvBJO6rPuxrcU3MkDZUd0gLegLOa9G1bZpYGrDyaHsj/YkdGDjoUc5eVGsn3T5YkmZ0sYrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225078; c=relaxed/simple;
-	bh=s68RxLTag4uOW9A4YWh5C1TAuwJbWiQp6O+Eyr+4wUs=;
+	s=arc-20240116; t=1789225082; c=relaxed/simple;
+	bh=zs4N/ewyUhY5C2EbQS3Q+s3iCRSapp9XalvbujLhMeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HLIBLOjPSfQc+qdNd0zYiA0+vhij/qnC18PbeHT06eKTwDLwSDl+wIzz0q2Uy2spnGCtld9X9SgrZ23R75asfHAqI+6t0f0KwA698DkbO1WBBK1T4esLIJXGwxUQzX0jflyyzJwKMv0XEIa52BmN+ODpui7IBNovLjHBwrtXaG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQ0/wK9W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FflefyBTpiaMKJhH+l0GNwBpHd+bfVSBFk1CgmCBK3gCSqy94oKAbQ9VXCMeJ2FMKt6q5cIJBrpL/2vFicUHs5Ep0Lo7+1I6hpTvV89ydCejqOJp9EraAfdqlptBfd9zi6MiuIBKX+FoXc32HjdIFcTt10Uj7fR55VskDGs6AuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgvbT4q8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQ0/wK9W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011A71F000FF;
-	Sat, 12 Sep 2026 14:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgvbT4q8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2E41F000FF;
+	Sat, 12 Sep 2026 14:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225074;
-	bh=y/Q0q/liU6bXqLNIf2/6wBd9fop3Xx5I3fJgx7wCu+k=;
+	s=korg; t=1789225080;
+	bh=WTiaY8aRlw87StRFaXb0PbuF8oE7eavPf7UxNiHifP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IQ0/wK9Wwyifk1yfGf8fx+ncP1iICt9WBSzlPXsgEflgycNHP4HJES8Up2zEk+PDx
-	 3Aeno8GO6jDrxDu2HoyDoit1WGIjkZNxFT/jtLY5vpmQZj6TyhZVq+sjraYgPWveww
-	 5BaZeHKMDmfS7sh7+hOxb6BhmBCqUfzPn9Dj7Vx8=
+	b=wgvbT4q8FT2OrVRCt9FQTn1JFyo+0FExuMtoFYI55bKg1IafIceVEO48I5tDLTLqB
+	 K+EZapu2uffbv2dGTcU3ReueDalkawPFCfFtbnzt8z8VXKCcbxkeDtKtYQYgrV66s+
+	 FDj7pZzN5biCqu2d44OhaCys7nWkau3jR6sW3CX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tanushree Shah <tshah@linux.ibm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Yang Xiuwei <yangxiuwei@kylinos.cn>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1123/1424] perf trace-event: Fix integer truncation in do_read() and skip()
-Date: Sat, 12 Sep 2026 08:59:15 +0200
-Message-ID: <20260912065632.449570828@linuxfoundation.org>
+Subject: [PATCH 6.6 1124/1424] scsi: sd: Fix sd_done() sense handling condition
+Date: Sat, 12 Sep 2026 08:59:16 +0200
+Message-ID: <20260912065632.471484150@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,135 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tanushree Shah <tshah@linux.ibm.com>
+From: Yang Xiuwei <yangxiuwei@kylinos.cn>
 
-[ Upstream commit c108c1391be0826920991d24532fbae8f6373ddc ]
+[ Upstream commit a640d4546b11be5709a82bdc63d7dafd8ddc6c9e ]
 
-The do_read() and skip() functions use 'int' for size parameters,
-truncating 64-bit sizes from callers. This causes two issues:
+Only enter the sense_key switch when the command returned CHECK
+CONDITION with valid, non-deferred sense. The old condition let deferred
+or invalid sense fall through and mis-handle the I/O.
 
-1. Uninitialized memory dump: do_read() reads fewer bytes than
-   allocated, leaving uninitialized heap memory that gets written
-   to output files.
-
-2. Out-of-bounds read: Parsing functions process the full 64-bit
-   size while only partial data was read into the buffer.
-
-Change do_read(), __do_read(), and skip() to use size_t for size
-parameters and ssize_t for return values (where applicable), matching
-read()/write() system calls.
-Update callers to use ssize_t for storing return values.
-
-Fixes: 4a31e56599d4 ("perf tools: Get rid of read_or_die() in trace-event-read.c")
-Signed-off-by: Tanushree Shah <tshah@linux.ibm.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 03aba2f79594 ("[SCSI] sd/scsi_lib simplify sd_rw_intr and scsi_io_completion")
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260707030333.22245-4-yangxiuwei@kylinos.cn
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/trace-event-read.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ drivers/scsi/sd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/trace-event-read.c b/tools/perf/util/trace-event-read.c
-index 72379cb8f5fd3..b0d3957c48e6c 100644
---- a/tools/perf/util/trace-event-read.c
-+++ b/tools/perf/util/trace-event-read.c
-@@ -25,18 +25,18 @@ static int input_fd;
- static ssize_t trace_data_size;
- static bool repipe;
- 
--static int __do_read(int fd, void *buf, int size)
-+static ssize_t __do_read(int fd, void *buf, size_t size)
- {
--	int rsize = size;
-+	size_t rsize = size;
- 
- 	while (size) {
--		int ret = read(fd, buf, size);
-+		ssize_t ret = read(fd, buf, size);
- 
- 		if (ret <= 0)
- 			return -1;
- 
- 		if (repipe) {
--			int retw = write(STDOUT_FILENO, buf, ret);
-+			ssize_t retw = write(STDOUT_FILENO, buf, ret);
- 
- 			if (retw <= 0 || retw != ret) {
- 				pr_debug("repiping input file");
-@@ -51,13 +51,13 @@ static int __do_read(int fd, void *buf, int size)
- 	return rsize;
- }
- 
--static int do_read(void *data, int size)
-+static ssize_t do_read(void *data, size_t size)
- {
--	int r;
-+	ssize_t r;
- 
- 	r = __do_read(input_fd, data, size);
- 	if (r <= 0) {
--		pr_debug("reading input file (size expected=%d received=%d)",
-+		pr_debug("reading input file (size expected=%zu received=%zd)",
- 			 size, r);
- 		return -1;
+diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+index 8cb10cb78b1d8..a6c8d786125ef 100644
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -2167,8 +2167,8 @@ static int sd_done(struct scsi_cmnd *SCpnt)
  	}
-@@ -68,10 +68,10 @@ static int do_read(void *data, int size)
- }
+ 	sdkp->medium_access_timed_out = 0;
  
- /* If it fails, the next read will report it */
--static void skip(int size)
-+static void skip(size_t size)
- {
- 	char buf[BUFSIZ];
--	int r;
-+	size_t r;
+-	if (!scsi_status_is_check_condition(result) &&
+-	    (!sense_valid || sense_deferred))
++	if (!scsi_status_is_check_condition(result) ||
++	    !sense_valid || sense_deferred)
+ 		goto out;
  
- 	while (size) {
- 		r = size > BUFSIZ ? BUFSIZ : size;
-@@ -202,7 +202,7 @@ static int read_header_files(struct tep_handle *pevent)
- 	unsigned long long size;
- 	char *header_page;
- 	char buf[BUFSIZ];
--	int ret = 0;
-+	ssize_t ret = 0;
- 
- 	if (do_read(buf, 12) < 0)
- 		return -1;
-@@ -250,7 +250,7 @@ static int read_header_files(struct tep_handle *pevent)
- 
- static int read_ftrace_file(struct tep_handle *pevent, unsigned long long size)
- {
--	int ret;
-+	ssize_t ret;
- 	char *buf;
- 
- 	buf = malloc(size);
-@@ -276,7 +276,7 @@ static int read_ftrace_file(struct tep_handle *pevent, unsigned long long size)
- static int read_event_file(struct tep_handle *pevent, char *sys,
- 			   unsigned long long size)
- {
--	int ret;
-+	ssize_t ret;
- 	char *buf;
- 
- 	buf = malloc(size);
-@@ -322,7 +322,7 @@ static int read_event_files(struct tep_handle *pevent)
- 	int systems;
- 	int count;
- 	int i,x;
--	int ret;
-+	ssize_t ret;
- 
- 	systems = read4(pevent);
- 
-@@ -350,7 +350,7 @@ static int read_saved_cmdline(struct tep_handle *pevent)
- {
- 	unsigned long long size;
- 	char *buf;
--	int ret;
-+	ssize_t ret;
- 
- 	/* it can have 0 size */
- 	size = read8(pevent);
+ 	switch (sshdr.sense_key) {
 -- 
 2.53.0
 
