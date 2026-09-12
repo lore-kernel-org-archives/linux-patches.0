@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6876A3F104F;
-	Sat, 12 Sep 2026 07:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C7919D8BC;
+	Sat, 12 Sep 2026 07:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197419; cv=none; b=BGL0K6jS55n5ggHOHE98cRAwX/AYjLuGp4y+EJ6zF6iJpi6gl0Jd0YEqO2aHD5QgEIF25BuziWZdZ3c/LcIqGtzJKPOWcXvHJz+AYeDTrBjZQbjGGreqxQ2cST9PDV6oXqgWxkDrg5g+Wf9ME7J/6nwrQ85o5nAcClFm66B/tb8=
+	t=1789197423; cv=none; b=jY9iREy81oYjsAGHcozaXH1aPN9OD+rg3upzcbUKyIsdUIdUo4tbv1SjsUSIuTkooNoX0t0TjAR4pzHGB2+fMsm5xiepxJUprShYXqDZpFwgymdg7jT+8xC7YSCgCeIKKjbjX1d1qBz3WylFWqA/WuAGOl8N8cSuYMLPNVNKoGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197419; c=relaxed/simple;
-	bh=bxVjQKKH7Th8c9dSQWxKE/hGOK7xtTiqj7XUTKpIo/c=;
+	s=arc-20240116; t=1789197423; c=relaxed/simple;
+	bh=9L21W7Z7n6DHF3uZbX5fNfAoghGCyue6Q/tWPRZ9SwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q0C/Jjo/hJkEjTvhujSeomAtuLGeGwoksSYzfYYh3qSVSZYEcc5F7PNo5WViikL0DvBYyYm/guWDoNDys316p9E6/XjMTwCXQ6LGbOhaMbk1PNVzjc4hsGj8H+ZDTcP8rcUGTiH8Ks2kR3/RX6hzLjnlHCugQrIw6zrlk/vUDMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVYErSG3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O9artT5mWduCpYKPvZ6df2pUUY8kzuKN1hggc2Whz24FWbJkCcfV9xtd7MyyWwImqw6Axfjb9lVpxNr0A1JR1xWRdG+jET48W7mesGuQ0QdIGPYu06BrfaIThfUpuJKP4LaT8X3xpxBFcO6CxJ3DaVYnXPcLwyo+IuQ6D5Iwt04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZpDzuP51; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVYErSG3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4941F000FF;
-	Sat, 12 Sep 2026 07:16:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZpDzuP51"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE8A1F000FF;
+	Sat, 12 Sep 2026 07:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197417;
-	bh=biozp/8lrC+AnLqQqy9vc4wGGH5WG5WQbM9vpOLz+0w=;
+	s=korg; t=1789197422;
+	bh=tjs2ZZlU0B1HwQwBZZBLuzD/fW7elwZh8gLUNgwkjeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WVYErSG3Znk24u2ZPfDtVyms2cGC49b0NzgtgsDaoqV0vWseKJ14rglsmvwH2lniN
-	 NYvcBNQFPLrCM6mdUGBGodmZp3D7cuExdVWsfZU7l2zVdknU+GdF6q0Go/Cplcd+W1
-	 zFDABDIzr5CgDe5o9QyzK2XvLVtDUQ9ZYOrKCv3w=
+	b=ZpDzuP51rm9zkw93ClwOy1GM4V9fAGDVizi8knyn21IwwThK452wGYhMmgx0oCJE/
+	 6firpveESHMXg54hYpavJPveAcTmCGz+jfsVBDIue0G01FykrQh6Fx057NdUU06cVI
+	 Y5P7NmjKLdp+QFHm3WXADfoZtvZQa8asR64CKuEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomasz Figa <tfiga@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Zong-Zhe Yang <kevin_yang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0169/1815] platform/chrome: sensorhub: Fix memory overread in ring handler
-Date: Sat, 12 Sep 2026 08:31:59 +0200
-Message-ID: <20260912065652.973680447@linuxfoundation.org>
+Subject: [PATCH 7.2 0170/1815] wifi: rtw89: fw: fix link ID filling for LPS MLO common info
+Date: Sat, 12 Sep 2026 08:32:00 +0200
+Message-ID: <20260912065652.997616875@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,64 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Zong-Zhe Yang <kevin_yang@realtek.com>
 
-[ Upstream commit d1ceb2b2324717fa30b44d56ef0c52813e239569 ]
+[ Upstream commit c1eabaaa088ddbb1b937cd339adfa4c18e93c93d ]
 
-`max_response` and `sensor_num` are read from different EC commands:
+The link ID field in H2C command of LPS MLO common info is incorrectly
+filled with the PHY index. Fix it with the target link ID.
 
-- `max_response` is from cros_ec_get_proto_info().
-    ec_dev->max_response = info->max_response_packet_size -
-                                    sizeof(struct ec_host_response);
-
-- `sensor_num` is from cros_ec_get_sensor_count().
-    sensor_num = cros_ec_get_sensor_count(ec);
-
-With a malfunctioning EC firmware, it is possible that the `msg->insize`
-(i.e., `fifo_info_length` in the context) could be clamped in
-cros_ec_cmd_xfer() because `msg->insize` is greater than `max_response`.
-
-    int fifo_info_length =
-            sizeof(struct ec_response_motion_sense_fifo_info) +
-            sizeof(u16) * sensorhub->sensor_num;
-
-This means the number of read bytes could be less than expected.  As a
-result, the subsequent memcpy() in cros_ec_sensorhub_ring_handler()
-overreads the `resp->fifo_info` buffer.
-
-Check the return value of cros_ec_cmd_xfer_status() and abort if the
-number of bytes read does not match the expected length.
-
-Fixes: 145d59baff59 ("platform/chrome: cros_ec_sensorhub: Add FIFO support")
-Reviewed-by: Tomasz Figa <tfiga@chromium.org>
-Link: https://lore.kernel.org/r/20260702082745.1014968-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Fixes: 20380a039ddd ("wifi: rtw89: phy: add H2C command to send detail RX gain and link parameters for PS mode")
+Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260625061545.44808-8-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_sensorhub_ring.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/fw.c | 4 ++--
+ drivers/net/wireless/realtek/rtw89/fw.h | 2 ++
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_sensorhub_ring.c b/drivers/platform/chrome/cros_ec_sensorhub_ring.c
-index e613dce244302..d92b602137207 100644
---- a/drivers/platform/chrome/cros_ec_sensorhub_ring.c
-+++ b/drivers/platform/chrome/cros_ec_sensorhub_ring.c
-@@ -836,8 +836,15 @@ static void cros_ec_sensorhub_ring_handler(struct cros_ec_sensorhub *sensorhub)
- 		sensorhub->msg->outsize = 1;
- 		sensorhub->msg->insize = fifo_info_length;
+diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
+index c91e7ec8b9722..2824cee964cb2 100644
+--- a/drivers/net/wireless/realtek/rtw89/fw.c
++++ b/drivers/net/wireless/realtek/rtw89/fw.c
+@@ -3439,7 +3439,7 @@ int rtw89_fw_h2c_lps_ml_cmn_info_v1(struct rtw89_dev *rtwdev,
+ 	h2c->rfe_type = efuse->rfe_type;
+ 	h2c->rssi_main = U8_MAX;
  
--		if (cros_ec_cmd_xfer_status(ec->ec_dev, sensorhub->msg) < 0)
-+		ret = cros_ec_cmd_xfer_status(ec->ec_dev, sensorhub->msg);
-+		if (ret < 0)
-+			goto error;
-+		if (ret != fifo_info_length) {
-+			dev_warn_ratelimited(sensorhub->dev,
-+					     "Mismatch read length: size %d - expected %d\n",
-+					     ret, fifo_info_length);
- 			goto error;
-+		}
+-	memset(h2c->link_id, 0xfe, RTW89_BB_PS_LINK_BUF_MAX);
++	memset(h2c->link_id, RTW89_BB_PS_LINK_ID_SKIP, RTW89_BB_PS_LINK_BUF_MAX);
  
- 		memcpy(fifo_info, &sensorhub->resp->fifo_info,
- 		       fifo_info_length);
+ 	rtw89_vif_for_each_link(rtwvif, rtwvif_link, link_id) {
+ 		u8 phy_idx = rtwvif_link->phy_idx;
+@@ -3447,7 +3447,7 @@ int rtw89_fw_h2c_lps_ml_cmn_info_v1(struct rtw89_dev *rtwdev,
+ 		bb = rtw89_get_bb_ctx(rtwdev, phy_idx);
+ 		chan = rtw89_chan_get(rtwdev, rtwvif_link->chanctx_idx);
+ 
+-		h2c->link_id[phy_idx] = phy_idx;
++		h2c->link_id[phy_idx] = link_id;
+ 		h2c->central_ch[phy_idx] = chan->channel;
+ 		h2c->pri_ch[phy_idx] = chan->primary_channel;
+ 		h2c->band[phy_idx] = chan->band_type;
+diff --git a/drivers/net/wireless/realtek/rtw89/fw.h b/drivers/net/wireless/realtek/rtw89/fw.h
+index 20721d5209aa3..5873301fc4729 100644
+--- a/drivers/net/wireless/realtek/rtw89/fw.h
++++ b/drivers/net/wireless/realtek/rtw89/fw.h
+@@ -2053,6 +2053,8 @@ enum rtw89_bb_link_rx_gain_table_type {
+ 	RTW89_BB_PS_LINK_RX_GAIN_TAB_MAX,
+ };
+ 
++#define RTW89_BB_PS_LINK_ID_SKIP 0xfe
++
+ enum rtw89_bb_ps_link_buf_id {
+ 	RTW89_BB_PS_LINK_BUF_0 = 0x00,
+ 	RTW89_BB_PS_LINK_BUF_1 = 0x01,
 -- 
 2.53.0
 
