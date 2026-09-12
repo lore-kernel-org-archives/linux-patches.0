@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8A1386C12;
-	Sat, 12 Sep 2026 19:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6275137EFE2;
+	Sat, 12 Sep 2026 19:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241763; cv=none; b=L2oTxlGp4Oin9oP6irqfKPcW6GUrBRZYv71zYKNBOwyXefOiEvaCB8JAn/Fa78lYI+fifin/MBauINHrnQJ7doY/Nc6HvQK3T94CX+cehf4cxBc48U7zO0X6gs9MlkBBDHSoMpIKcWBVbKbI8a+Yd/Oq5CjGXIw0Wg6yOwSjx34=
+	t=1789241772; cv=none; b=VMTxJty58WGGbMI2hlJRFvqs7+FHd6wuN97UC+q1cRA1ClNH+AKb8c93teZw8YFMncVRzXmjkLyHG/ofWeD2T/Yb2Ve9qvOd6kuDmqJo4/p0wNxIaCI8U3muIwXaevrW9jS3xHKdvVtCNXtiWQfaHDRBXjruuH3fC8JC8pqthro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241763; c=relaxed/simple;
-	bh=SjPwF5imKQq3Q0kFkEBUjW0C/Sk+FSHfb3KAdqYmsHk=;
+	s=arc-20240116; t=1789241772; c=relaxed/simple;
+	bh=5Z3mq7z4LktZJdBqm4a11pr0QirgYcfavg2asYJ5CLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UGzdpE383gYqcKysWit2Sw/+GsfrreMfmZ1f5DDWZOBo2P4GuooPEaJtdthYPqix67NU74Y9jRgZy/WsctefNFIjXN1R8fXLJT5uPvm4ar77wa5N01Zv0cg70m7OO8yebyQztg0x+CBdp5hWqCspiJlg2BdcgkKtojWfz1ej9ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJHC1R2R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VF6d/DNTTQDfdlXBDAyWyH+DCTJ05WDDWBLSqrqoT0YaN19V8qpdSNHeCK0HT5tukd+uPgQKRUfo14MTvk7tzVfj3+/vmxjRELo5zGiuAmSeOQAkEdnnrrB6gdWP040iq8H2WZ/EoCENnz6FXwN4hZ/9bvUFcpck3YSiw6fZI9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPwejQCQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJHC1R2R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0EEE1F000FF;
-	Sat, 12 Sep 2026 19:35:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPwejQCQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A171F000FF;
+	Sat, 12 Sep 2026 19:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241760;
-	bh=+JZoCnOJkb426NLkeeSIMg3/iMw7eqGf7aojQ3FiAWI=;
+	s=korg; t=1789241765;
+	bh=c6i5u+xdaLF0tA47bA/epuuXyJJuvYZDtqP9NOKqOwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eJHC1R2R83LzZf0ifZ3csl3n23gFuZMFAvZQwGdYXp9kXgPZrudM0L7ZEkAfLQs48
-	 TLZ343ePYfXhNATd26WxgGgpnBWVrdis4XoucNjqYNcmq3USG/t6zdI/4kbvTpR4I3
-	 6X3bNmRedF44/WjFRY44BYIBwwYYGyU1QzXSe7U4=
+	b=gPwejQCQEJ9HKo6gxeHct059mUJaXHuRh4KB5GucC+mCLD+GG+QNYSiym2UzKy8ob
+	 EmsTl+YbZ0jAbj/q/JG+lb4Qda75+UtEK9fCTaGi/Di/1JFer79eJnnJ41zDZEtz3u
+	 VRx6OAXODkaPTqzCCYesIStj8b2TQEnnG7Jeiinc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+937b5bbb6a815b3e5d0b@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Alexander Martyniuk <alexevgmart@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 203/798] tcp: fix potential race in tcp_v6_syn_recv_sock()
-Date: Sat, 12 Sep 2026 08:57:11 +0200
-Message-ID: <20260912065521.740138775@linuxfoundation.org>
+Subject: [PATCH 5.10 204/798] selinux: avoid implicit conversions in services code
+Date: Sat, 12 Sep 2026 08:57:12 +0200
+Message-ID: <20260912065521.765821503@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -48,379 +46,180 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Christian Göttsche <cgzones@googlemail.com>
 
-[ Upstream commit 858d2a4f67ff69e645a43487ef7ea7f28f06deae ]
+commit c50e125d057152bc68dfd5669b73611343653eb7 upstream.
 
-Code in tcp_v6_syn_recv_sock() after the call to tcp_v4_syn_recv_sock()
-is done too late.
+Use u32 as the output parameter type in security_get_classes() and
+security_get_permissions(), based on the type of the symtab nprim
+member.
 
-After tcp_v4_syn_recv_sock(), the child socket is already visible
-from TCP ehash table and other cpus might use it.
+Declare the read-only class string parameter of
+security_get_permissions() const.
 
-Since newinet->pinet6 is still pointing to the listener ipv6_pinfo
-bad things can happen as syzbot found.
+Avoid several implicit conversions by using the identical type for the
+destination.
 
-Move the problematic code in tcp_v6_mapped_child_init()
-and call this new helper from tcp_v4_syn_recv_sock() before
-the ehash insertion.
+Use the type identical to the source for local variables.
 
-This allows the removal of one tcp_sync_mss(), since
-tcp_v4_syn_recv_sock() will call it with the correct
-context.
-
-[florian:
- - net/ipv6/tcp_ipv6.c:
-   - Set `newnp->ipv6_fl_list = NULL` instead of `newinet->ipv6_fl_list = NULL`,
-     as `ipv6_fl_list` is in `struct ipv6_pinfo`.
-   - Guarded `af_specific` assignment with `#ifdef CONFIG_TCP_MD5SIG` instead
-     of checking `CONFIG_TCP_AO`.
-   - Used `if (tcp_inet6_sk(sk)->repflow)` instead of `inet6_test_bit(REPFLOW, sk)`.
- - net/smc/af_smc.c:
-   - Dropped changes to net/smc/af_smc.c because SMC did not implement
-     `smc_tcp_syn_recv_sock()` in 5.10.y (added in 5.14 via commit e94a869818ab).
- - net/dccp/:
-   - Updated `syn_recv_sock` implementations and call sites for DCCP, which was
-     removed in upstream kernels prior to this commit.]
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+937b5bbb6a815b3e5d0b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/69949275.050a0220.2eeac1.0145.GAE@google.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260217161205.2079883-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Assisted-by: Cursor:gemini-3.7-flash
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
+[PM: cleanup extra whitespace in subject]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet_connection_sock.h |  4 +-
- include/net/tcp.h                  |  4 +-
- net/dccp/dccp.h                    |  4 +-
- net/dccp/ipv4.c                    |  4 +-
- net/dccp/ipv6.c                    |  7 ++-
- net/dccp/minisocks.c               |  2 +-
- net/ipv4/syncookies.c              |  2 +-
- net/ipv4/tcp_fastopen.c            |  2 +-
- net/ipv4/tcp_ipv4.c                |  8 ++-
- net/ipv4/tcp_minisocks.c           |  2 +-
- net/ipv6/tcp_ipv6.c                | 98 +++++++++++++-----------------
- net/mptcp/subflow.c                |  6 +-
- 12 files changed, 74 insertions(+), 69 deletions(-)
+ security/selinux/include/security.h |  4 ++--
+ security/selinux/selinuxfs.c        |  7 ++++---
+ security/selinux/ss/services.c      | 23 ++++++++++++-----------
+ 3 files changed, 18 insertions(+), 16 deletions(-)
 
-diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
-index cfb66f5a50766..ba99da8eedb75 100644
---- a/include/net/inet_connection_sock.h
-+++ b/include/net/inet_connection_sock.h
-@@ -41,7 +41,9 @@ struct inet_connection_sock_af_ops {
- 				      struct request_sock *req,
- 				      struct dst_entry *dst,
- 				      struct request_sock *req_unhash,
--				      bool *own_req);
-+				      bool *own_req,
-+				      void (*opt_child_init)(struct sock *newsk,
-+							     const struct sock *sk));
- 	u16	    net_header_len;
- 	u16	    net_frag_header_len;
- 	u16	    sockaddr_len;
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 4c87936a33d6d..5488e66ee69ab 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -438,7 +438,9 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
- 				  struct request_sock *req,
- 				  struct dst_entry *dst,
- 				  struct request_sock *req_unhash,
--				  bool *own_req);
-+				  bool *own_req,
-+				  void (*opt_child_init)(struct sock *newsk,
-+							 const struct sock *sk));
- int tcp_v4_do_rcv(struct sock *sk, struct sk_buff *skb);
- int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len);
- int tcp_connect(struct sock *sk);
-diff --git a/net/dccp/dccp.h b/net/dccp/dccp.h
-index 0218eb169891c..f9744455113f4 100644
---- a/net/dccp/dccp.h
-+++ b/net/dccp/dccp.h
-@@ -272,7 +272,9 @@ struct sock *dccp_v4_request_recv_sock(const struct sock *sk, struct sk_buff *sk
- 				       struct request_sock *req,
- 				       struct dst_entry *dst,
- 				       struct request_sock *req_unhash,
--				       bool *own_req);
-+				       bool *own_req,
-+				       void (*opt_child_init)(struct sock *newsk,
-+							      const struct sock *sk));
- struct sock *dccp_check_req(struct sock *sk, struct sk_buff *skb,
- 			    struct request_sock *req);
+diff --git a/security/selinux/include/security.h b/security/selinux/include/security.h
+index 1521460a97d4e..293a9f52d4896 100644
+--- a/security/selinux/include/security.h
++++ b/security/selinux/include/security.h
+@@ -374,9 +374,9 @@ int security_net_peersid_resolve(struct selinux_state *state,
+ 				 u32 *peer_sid);
  
-diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
-index 2c7c1bdd39e14..7fa905cf19bd0 100644
---- a/net/dccp/ipv4.c
-+++ b/net/dccp/ipv4.c
-@@ -397,7 +397,9 @@ struct sock *dccp_v4_request_recv_sock(const struct sock *sk,
- 				       struct request_sock *req,
- 				       struct dst_entry *dst,
- 				       struct request_sock *req_unhash,
--				       bool *own_req)
-+				       bool *own_req,
-+				       void (*opt_child_init)(struct sock *newsk,
-+							      const struct sock *sk))
+ int security_get_classes(struct selinux_policy *policy,
+-			 char ***classes, int *nclasses);
++			 char ***classes, u32 *nclasses);
+ int security_get_permissions(struct selinux_policy *policy,
+-			     char *class, char ***perms, int *nperms);
++			     char *class, char ***perms, u32 *nperms);
+ int security_get_reject_unknown(struct selinux_state *state);
+ int security_get_allow_unknown(struct selinux_state *state);
+ 
+diff --git a/security/selinux/selinuxfs.c b/security/selinux/selinuxfs.c
+index 7415f49a3d81e..6fe9d0cea418e 100644
+--- a/security/selinux/selinuxfs.c
++++ b/security/selinux/selinuxfs.c
+@@ -1867,7 +1867,8 @@ static int sel_make_perm_files(struct selinux_policy *newpolicy,
+ 			char *objclass, int classvalue,
+ 			struct dentry *dir)
  {
- 	struct inet_request_sock *ireq;
- 	struct inet_sock *newinet;
-diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
-index aa311ab960b68..7255794491247 100644
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -403,7 +403,9 @@ static struct sock *dccp_v6_request_recv_sock(const struct sock *sk,
- 					      struct request_sock *req,
- 					      struct dst_entry *dst,
- 					      struct request_sock *req_unhash,
--					      bool *own_req)
-+					      bool *own_req,
-+					      void (*opt_child_init)(struct sock *newsk,
-+								     const struct sock *sk))
+-	int i, rc, nperms;
++	u32 i, nperms;
++	int rc;
+ 	char **perms;
+ 
+ 	rc = security_get_permissions(newpolicy, objclass, &perms, &nperms);
+@@ -1940,8 +1941,8 @@ static int sel_make_classes(struct selinux_policy *newpolicy,
+ 			    struct dentry *class_dir,
+ 			    unsigned long *last_class_ino)
  {
- 	struct inet_request_sock *ireq = inet_rsk(req);
- 	struct ipv6_pinfo *newnp;
-@@ -418,7 +420,8 @@ static struct sock *dccp_v6_request_recv_sock(const struct sock *sk,
- 		 *	v6 mapped
- 		 */
- 		newsk = dccp_v4_request_recv_sock(sk, skb, req, dst,
--						  req_unhash, own_req);
-+						  req_unhash, own_req,
-+						  opt_child_init);
- 		if (newsk == NULL)
- 			return NULL;
+-
+-	int rc, nclasses, i;
++	u32 i, nclasses;
++	int rc;
+ 	char **classes;
  
-diff --git a/net/dccp/minisocks.c b/net/dccp/minisocks.c
-index 91e7a22026971..6ea298259b030 100644
---- a/net/dccp/minisocks.c
-+++ b/net/dccp/minisocks.c
-@@ -192,7 +192,7 @@ struct sock *dccp_check_req(struct sock *sk, struct sk_buff *skb,
- 		 goto drop;
+ 	rc = security_get_classes(newpolicy, &classes, &nclasses);
+diff --git a/security/selinux/ss/services.c b/security/selinux/ss/services.c
+index 4008aa566f020..446df456b0f16 100644
+--- a/security/selinux/ss/services.c
++++ b/security/selinux/ss/services.c
+@@ -870,7 +870,7 @@ int security_bounded_transition(struct selinux_state *state,
+ 	struct sidtab *sidtab;
+ 	struct sidtab_entry *old_entry, *new_entry;
+ 	struct type_datum *type;
+-	int index;
++	u32 index;
+ 	int rc;
  
- 	child = inet_csk(sk)->icsk_af_ops->syn_recv_sock(sk, skb, req, NULL,
--							 req, &own_req);
-+							 req, &own_req, NULL);
- 	if (child) {
- 		child = inet_csk_complete_hashdance(sk, child, req, own_req);
- 		goto out;
-diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
-index cc860f2dcf658..29fb93cb32286 100644
---- a/net/ipv4/syncookies.c
-+++ b/net/ipv4/syncookies.c
-@@ -201,7 +201,7 @@ struct sock *tcp_get_cookie_sock(struct sock *sk, struct sk_buff *skb,
- 	bool own_req;
+ 	if (!selinux_initialized(state))
+@@ -1535,7 +1535,7 @@ static int security_context_to_sid_core(struct selinux_state *state,
+ 		return -ENOMEM;
  
- 	child = icsk->icsk_af_ops->syn_recv_sock(sk, skb, req, dst,
--						 NULL, &own_req);
-+						 NULL, &own_req, NULL);
- 	if (child) {
- 		refcount_set(&req->rsk_refcnt, 1);
- 		tcp_sk(child)->tsoffset = tsoff;
-diff --git a/net/ipv4/tcp_fastopen.c b/net/ipv4/tcp_fastopen.c
-index 92d63cf3e50b9..edaa6dabfc3c6 100644
---- a/net/ipv4/tcp_fastopen.c
-+++ b/net/ipv4/tcp_fastopen.c
-@@ -262,7 +262,7 @@ static struct sock *tcp_fastopen_create_child(struct sock *sk,
- 	bool own_req;
+ 	if (!selinux_initialized(state)) {
+-		int i;
++		u32 i;
  
- 	child = inet_csk(sk)->icsk_af_ops->syn_recv_sock(sk, skb, req, NULL,
--							 NULL, &own_req);
-+							 NULL, &own_req, NULL);
- 	if (!child)
- 		return NULL;
- 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 855cca214a021..f1e10db3d6253 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -1535,7 +1535,9 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
- 				  struct request_sock *req,
- 				  struct dst_entry *dst,
- 				  struct request_sock *req_unhash,
--				  bool *own_req)
-+				  bool *own_req,
-+				  void (*opt_child_init)(struct sock *newsk,
-+							 const struct sock *sk))
+ 		for (i = 1; i < SECINITSID_NUM; i++) {
+ 			const char *s = initial_sid_to_string[i];
+@@ -2869,7 +2869,6 @@ static inline int __security_genfs_sid(struct selinux_policy *policy,
  {
- 	struct inet_request_sock *ireq;
- 	bool found_dup_sk = false;
-@@ -1591,6 +1593,10 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
- 	}
- 	sk_setup_caps(newsk, dst);
+ 	struct policydb *policydb = &policy->policydb;
+ 	struct sidtab *sidtab = policy->sidtab;
+-	int len;
+ 	u16 sclass;
+ 	struct genfs *genfs;
+ 	struct ocontext *c;
+@@ -2891,7 +2890,7 @@ static inline int __security_genfs_sid(struct selinux_policy *policy,
+ 		return -ENOENT;
  
-+#if IS_ENABLED(CONFIG_IPV6)
-+	if (opt_child_init)
-+		opt_child_init(newsk, sk);
-+#endif
- 	tcp_ca_openreq_child(newsk, dst);
+ 	for (c = genfs->head; c; c = c->next) {
+-		len = strlen(c->u.name);
++		size_t len = strlen(c->u.name);
+ 		if ((!c->v.sclass || sclass == c->v.sclass) &&
+ 		    (strncmp(c->u.name, path, len) == 0))
+ 			break;
+@@ -3382,7 +3381,7 @@ static int get_classes_callback(void *k, void *d, void *args)
+ {
+ 	struct class_datum *datum = d;
+ 	char *name = k, **classes = args;
+-	int value = datum->value - 1;
++	u32 value = datum->value - 1;
  
- 	tcp_sync_mss(newsk, dst_mtu(dst));
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index 866055e1b8014..876104fe47bf6 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -770,7 +770,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 	 * socket is created, wait for troubles.
- 	 */
- 	child = inet_csk(sk)->icsk_af_ops->syn_recv_sock(sk, skb, req, NULL,
--							 req, &own_req);
-+							 req, &own_req, NULL);
- 	if (!child)
- 		goto listen_overflow;
- 
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 523aa2efdc499..12118d5d98a19 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1217,11 +1217,48 @@ static void tcp_v6_restore_cb(struct sk_buff *skb)
- 		sizeof(struct inet6_skb_parm));
+ 	classes[value] = kstrdup(name, GFP_ATOMIC);
+ 	if (!classes[value])
+@@ -3392,7 +3391,7 @@ static int get_classes_callback(void *k, void *d, void *args)
  }
  
-+/* Called from tcp_v4_syn_recv_sock() for v6_mapped children. */
-+static void tcp_v6_mapped_child_init(struct sock *newsk, const struct sock *sk)
-+{
-+	struct inet_sock *newinet = inet_sk(newsk);
-+	struct ipv6_pinfo *newnp;
-+
-+	newinet->pinet6 = newnp = tcp_inet6_sk(newsk);
-+
-+	memcpy(newnp, tcp_inet6_sk(sk), sizeof(struct ipv6_pinfo));
-+
-+	newnp->saddr = newsk->sk_v6_rcv_saddr;
-+
-+	inet_csk(newsk)->icsk_af_ops = &ipv6_mapped;
-+	if (sk_is_mptcp(newsk))
-+		mptcpv6_handle_mapped(newsk, true);
-+	newsk->sk_backlog_rcv = tcp_v4_do_rcv;
-+#ifdef CONFIG_TCP_MD5SIG
-+	tcp_sk(newsk)->af_specific = &tcp_sock_ipv6_mapped_specific;
-+#endif
-+
-+	newnp->ipv6_mc_list = NULL;
-+	newnp->ipv6_ac_list = NULL;
-+	newnp->ipv6_fl_list = NULL;
-+	newnp->pktoptions  = NULL;
-+	newnp->opt	   = NULL;
-+
-+	/* tcp_v4_syn_recv_sock() has initialized newinet->mc_{index,ttl} */
-+	newnp->mcast_oif   = newinet->mc_index;
-+	newnp->mcast_hops  = newinet->mc_ttl;
-+
-+	newnp->rcv_flowinfo = 0;
-+	if (tcp_inet6_sk(sk)->repflow)
-+		newnp->flow_label = 0;
-+}
-+
- static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
- 					 struct request_sock *req,
- 					 struct dst_entry *dst,
- 					 struct request_sock *req_unhash,
--					 bool *own_req)
-+					 bool *own_req,
-+					 void (*opt_child_init)(struct sock *newsk,
-+								const struct sock *sk))
+ int security_get_classes(struct selinux_policy *policy,
+-			 char ***classes, int *nclasses)
++			 char ***classes, u32 *nclasses)
  {
- 	struct inet_request_sock *ireq;
- 	struct ipv6_pinfo *newnp;
-@@ -1237,61 +1274,10 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
- #endif
- 	struct flowi6 fl6;
- 
--	if (skb->protocol == htons(ETH_P_IP)) {
--		/*
--		 *	v6 mapped
--		 */
--
--		newsk = tcp_v4_syn_recv_sock(sk, skb, req, dst,
--					     req_unhash, own_req);
--
--		if (!newsk)
--			return NULL;
--
--		inet_sk(newsk)->pinet6 = tcp_inet6_sk(newsk);
--
--		newinet = inet_sk(newsk);
--		newnp = tcp_inet6_sk(newsk);
--		newtp = tcp_sk(newsk);
--
--		memcpy(newnp, np, sizeof(struct ipv6_pinfo));
--
--		newnp->saddr = newsk->sk_v6_rcv_saddr;
--
--		inet_csk(newsk)->icsk_af_ops = &ipv6_mapped;
--		if (sk_is_mptcp(newsk))
--			mptcpv6_handle_mapped(newsk, true);
--		newsk->sk_backlog_rcv = tcp_v4_do_rcv;
--#ifdef CONFIG_TCP_MD5SIG
--		newtp->af_specific = &tcp_sock_ipv6_mapped_specific;
--#endif
--
--		newnp->ipv6_mc_list = NULL;
--		newnp->ipv6_ac_list = NULL;
--		newnp->ipv6_fl_list = NULL;
--		newnp->pktoptions  = NULL;
--		newnp->opt	   = NULL;
--		newnp->mcast_oif   = inet_iif(skb);
--		newnp->mcast_hops  = ip_hdr(skb)->ttl;
--		newnp->rcv_flowinfo = 0;
--		if (np->repflow)
--			newnp->flow_label = 0;
--
--		/*
--		 * No need to charge this sock to the relevant IPv6 refcnt debug socks count
--		 * here, tcp_create_openreq_child now does this for us, see the comment in
--		 * that function for the gory details. -acme
--		 */
--
--		/* It is tricky place. Until this moment IPv4 tcp
--		   worked with IPv6 icsk.icsk_af_ops.
--		   Sync it now.
--		 */
--		tcp_sync_mss(newsk, inet_csk(newsk)->icsk_pmtu_cookie);
--
--		return newsk;
--	}
--
-+	if (skb->protocol == htons(ETH_P_IP))
-+		return tcp_v4_syn_recv_sock(sk, skb, req, dst,
-+					    req_unhash, own_req,
-+					    tcp_v6_mapped_child_init);
- 	ireq = inet_rsk(req);
- 
- 	if (sk_acceptq_is_full(sk))
-diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index b13cd310882d3..c9cf0fdbfbdca 100644
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -532,7 +532,9 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
- 					  struct request_sock *req,
- 					  struct dst_entry *dst,
- 					  struct request_sock *req_unhash,
--					  bool *own_req)
-+					  bool *own_req,
-+					  void (*opt_child_init)(struct sock *newsk,
-+								 const struct sock *sk))
+ 	struct policydb *policydb;
+ 	int rc;
+@@ -3408,7 +3407,8 @@ int security_get_classes(struct selinux_policy *policy,
+ 	rc = hashtab_map(&policydb->p_classes.table, get_classes_callback,
+ 			 *classes);
+ 	if (rc) {
+-		int i;
++		u32 i;
++
+ 		for (i = 0; i < *nclasses; i++)
+ 			kfree((*classes)[i]);
+ 		kfree(*classes);
+@@ -3422,7 +3422,7 @@ static int get_permissions_callback(void *k, void *d, void *args)
  {
- 	struct mptcp_subflow_context *listener = mptcp_subflow_ctx(sk);
- 	struct mptcp_subflow_request_sock *subflow_req;
-@@ -582,7 +584,7 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
+ 	struct perm_datum *datum = d;
+ 	char *name = k, **perms = args;
+-	int value = datum->value - 1;
++	u32 value = datum->value - 1;
  
- create_child:
- 	child = listener->icsk_af_ops->syn_recv_sock(sk, skb, req, dst,
--						     req_unhash, own_req);
-+						     req_unhash, own_req, opt_child_init);
+ 	perms[value] = kstrdup(name, GFP_ATOMIC);
+ 	if (!perms[value])
+@@ -3432,10 +3432,11 @@ static int get_permissions_callback(void *k, void *d, void *args)
+ }
  
- 	if (child && *own_req) {
- 		struct mptcp_subflow_context *ctx = mptcp_subflow_ctx(child);
+ int security_get_permissions(struct selinux_policy *policy,
+-			     char *class, char ***perms, int *nperms)
++			     char *class, char ***perms, u32 *nperms)
+ {
+ 	struct policydb *policydb;
+-	int rc, i;
++	u32 i;
++	int rc;
+ 	struct class_datum *match;
+ 
+ 	policydb = &policy->policydb;
+@@ -3654,7 +3655,7 @@ int selinux_audit_rule_init(u32 field, u32 op, char *rulestr, void **vrule,
+ /* Check to see if the rule contains any selinux fields */
+ int selinux_audit_rule_known(struct audit_krule *rule)
+ {
+-	int i;
++	u32 i;
+ 
+ 	for (i = 0; i < rule->field_count; i++) {
+ 		struct audit_field *f = &rule->fields[i];
 -- 
 2.53.0
 
