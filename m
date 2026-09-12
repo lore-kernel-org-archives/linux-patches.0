@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6851F1534;
-	Sat, 12 Sep 2026 08:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB59E1F1534;
+	Sat, 12 Sep 2026 08:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201568; cv=none; b=n6Gakrm+AEfGVLB/MH1gMb63sH3Ec+LUOxipT7Fg8TCRbLXWwZYK5QtjtX0/s1uS8HZqXT9+hNkjnEQXVJnNCWzrsam9w6lSdJskPBJ0gmV05BjYz/9Y74kr6i5V/YijxsGjumlnDx24lQgzR4vs/VJeOOmC02B44OzKBkGufwU=
+	t=1789201572; cv=none; b=FXYPeegksirp9h2zZ/Ajbbiu+mrSXtdzblaev4Gazzu+5rccheJ3eyt5/09qeZPJHozbQ1SwPUAHzb9ts1m7SLSJSNTP70sdhShpzG4QFIMCJN90uyJs55UHVcFD4eOVXHbuibEwhr0BnsngGJjF6ZOsonruz6LpHKxYpPpZvEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201568; c=relaxed/simple;
-	bh=KGxBo9CEAsirEZIxeVPbG5z23W128bBYsoxBrH9TyKo=;
+	s=arc-20240116; t=1789201572; c=relaxed/simple;
+	bh=9ocvAwYW2o30k42i7p2efedb32rngKGZtoj0FBf1mjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oxL9t9EpqTrYqQAggpep80WjqHqP0XodvjyeHZGi1H0TQc81GzWs3S6N2FUGEtUVEdOJyBkS0/Wpiy9PXQoB4ooShGQb91v+OvupcstiBBqyb3R63dMjSFsb9G0mST71wD57iFVOSrp/or/uZmkm3V/FG89L6diRkeHL8bvpZzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMCRmHOm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FGPMKGHqB5uMnks9xRInFgw9wNlaoIYl0eofCo86Y1cA/EoiREQZLYm59zl7ww5VMH1kWNAXUlU6RC6P/dYz25GE7Eb/Y9fKImFw0dMKYhosFK1S60KZGDLFGtMpshy41AzRh87DQExABkzEQ28R8OxmsiCizbIUwj6SKeSSs0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zTwPfRFG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMCRmHOm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64741F000FF;
-	Sat, 12 Sep 2026 08:26:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zTwPfRFG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930091F000FF;
+	Sat, 12 Sep 2026 08:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201567;
-	bh=19fA/b1Y6pC5+C5h/MKxy4tKd+643oc2Gi+SG6LGerg=;
+	s=korg; t=1789201571;
+	bh=QCN+ECSZ6vXkXzUHH3te0FaVJyzzEvgrKkfk0Ffjgvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XMCRmHOmDi9FsINdBIWZ9WbRRh3nCvzih8rjoo2rV2L2Y8wlxLFZah2M5GYWJKbaj
-	 OJt4/CPVRa7HwcrjhaW1Q1/Hp7s9pY+d5V3569jFTRw7KWBJTJcz1wHdFmMKALqSeM
-	 nMYuNM7H1GeLuJlw0GlsF+OSTerOYwXt/5cTmfyA=
+	b=zTwPfRFGT15ZUW+4JSz9vEYTWcwKf7KPECCGJMsh2cYt2gAc3j7Ct7ULNNk1xSxTK
+	 ZY7wIa0tSK5ZiDiC2q8thRmAN5gqZob3lzXW6C3SSXtl2FYIYDSTdSWZmP2bPHPhdD
+	 G/sOaA46Um2q79BBWVlBcEeo3xPW1tgVutZqX+nU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Benato <denis.benato@linux.dev>,
-	Jiri Kosina <jkosina@suse.com>,
+	Yuanshen Cao <alex.caoys@gmail.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1005/1815] HID: asus: fix a off-by-one in mcu_parse_version_string() validation
-Date: Sat, 12 Sep 2026 08:45:55 +0200
-Message-ID: <20260912065712.599524439@linuxfoundation.org>
+Subject: [PATCH 7.2 1023/1815] iio: light: tsl2772: fix ALS calibscale readback
+Date: Sat, 12 Sep 2026 08:46:13 +0200
+Message-ID: <20260912065713.033197485@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,37 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Benato <denis.benato@linux.dev>
+From: Yuanshen Cao <alex.caoys@gmail.com>
 
-[ Upstream commit 2a767bd3e0b7277718a9a604cbe53e42830f025d ]
+[ Upstream commit ac75550ab5b5d73649bffea245c2075fd9249bd0 ]
 
-In mcu_parse_version_string() a size validation for response is stricter
-that it needs to be: relax the check by one byte.
+The read_raw() implementation uses IIO_LIGHT to distinguish between the
+ambient light and proximity channels when handling
+IIO_CHAN_INFO_CALIBSCALE.
 
-The device always answer with a greater byte count so this does
-not introduce visible changes.
+However, the ALS channel is registered as IIO_INTENSITY, while
+write_raw() correctly writes to IIO_INTENSITY. As a result, reading
+in_intensity0_calibscale incorrectly returns the proximity gain instead
+of the ALS gain.
 
-Fixes: ("hid-asus: check ROG Ally MCU version and warn")
-Signed-off-by: Denis Benato <denis.benato@linux.dev>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+This causes the following user-visible behavior:
+- Writing in_intensity0_calibscale appears to have no effect because the
+  readback reports the proximity gain.
+- Writing in_proximity0_calibscale causes both in_proximity0_calibscale
+  and in_intensity0_calibscale to report the same value.
+
+Fix this by checking for IIO_INTENSITY in read_raw(), matching the
+channel definition and the existing write_raw() implementation.
+
+Fixes: 3c97c08b5735 ("staging: iio: add TAOS tsl2x7x driver")
+Signed-off-by: Yuanshen Cao <alex.caoys@gmail.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-asus.c | 2 +-
+ drivers/iio/light/tsl2772.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
-index 00c5bbfd706f3..c22c1021ecc38 100644
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -841,7 +841,7 @@ static int mcu_parse_version_string(const u8 *response, size_t response_size)
- 			dots++;
- 	}
- 
--	if (dots != 2 || p >= end || (p + 3) >= end)
-+	if (dots != 2 || end - p < 3)
- 		return -EINVAL;
- 
- 	memcpy(buf, p, 3);
+diff --git a/drivers/iio/light/tsl2772.c b/drivers/iio/light/tsl2772.c
+index 244f44379c369..2287585711c69 100644
+--- a/drivers/iio/light/tsl2772.c
++++ b/drivers/iio/light/tsl2772.c
+@@ -1274,7 +1274,7 @@ static int tsl2772_read_raw(struct iio_dev *indio_dev,
+ 		}
+ 		break;
+ 	case IIO_CHAN_INFO_CALIBSCALE:
+-		if (chan->type == IIO_LIGHT)
++		if (chan->type == IIO_INTENSITY)
+ 			*val = tsl2772_als_gain[chip->settings.als_gain];
+ 		else
+ 			*val = tsl2772_prox_gain[chip->settings.prox_gain];
 -- 
 2.53.0
 
