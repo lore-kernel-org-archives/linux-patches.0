@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400F42594BD;
-	Sat, 12 Sep 2026 14:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D0E30D3F6;
+	Sat, 12 Sep 2026 14:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222648; cv=none; b=qOx2JNpjxrrAH4cyoo9z9SbfdQibHQbeAGBGcJXqzZqfEAQYmdmNEFRhXwB6tb5ahJBpaCrp7PyoRFwbVoyQogY9arPrpcinlJ0ewIFTauOTyt/xSMQgFGBlhzd6iYQAZsULDAWr9GBfNUaDYhKKMw6gDZH9UrydPWoj0E1u7Sc=
+	t=1789222655; cv=none; b=fF7XWTeR59d1lUG+EA55SlKCnJ1D14ZwDvFEVQh3l/3eezEehZ68DIp6I/EmTfwnO5z1r886QqBAKfNDqFFoa0j+EfqfYvIiTESHNdd+nhei6Qi2MDx3N1Oiqd6OY4Ft74mjQeJg+5lotk66PEwuTJRRoeNwlglv1mDLDzFRowk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222648; c=relaxed/simple;
-	bh=G/NAFNufVDFB31RA0zFyRtN2iLXzv+RWdkVmjzfzVAg=;
+	s=arc-20240116; t=1789222655; c=relaxed/simple;
+	bh=wbrp/GN60YwfPibPHRdhCvr9mcOSPyTAHJX4a4/SJJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pcawByyPBdqMysnKZpOElPlX9bb9olpj0iP4ytw6eDqV+PRuHtTFtBzDyIq0anN6PIgEYnQV5TnuAHDeJllrx45bRFEV/dZV8iEfTruy57a64Y+Cqwk/xkC2V8IRPC3U2FXSH50hVq5g6nqdzrpUCqTzpUmCRyyjJtuGVhhje4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aIilqRT7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GRZVCGGt3B7UjB2JknegfybQc1VD49klg1474/CyyOwKM0IL0Ec8Plz3bDsh7walTeYuZYv5zbCtebftNoEVWHB+c0etm8vtBWgWnDjIqxGa/td3Eor65dkKf5EKpjKsyQN1n2JIKuTOLuof66gmQimyuRVnAO3wSV9epcCOfRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bi1eCN0Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIilqRT7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78981F000FF;
-	Sat, 12 Sep 2026 14:17:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bi1eCN0Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641121F000FF;
+	Sat, 12 Sep 2026 14:17:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222647;
-	bh=a90A5NP0kieuF/1e7qHAc855x8f2tWxWE5Eft0PvK5Q=;
+	s=korg; t=1789222652;
+	bh=UvgPCCYCiL0X4PvuVkbG1YjT/yWPQKDBXY5oBUmeN/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aIilqRT74+q2VtsbVPQwWqAT3H9blpxKPQYJjz2NU52A/NUAUq99kHQFarCjeC36t
-	 DxxS/W2nGJIGATecWiOXb2STV4Erpnb/KrLgbehePvuQmiuIRdY5tEhSKmUuWwSorD
-	 xn6ApRPMd+m9jQ+1ph6iaV8lmzHsHPQefjsy0ZLQ=
+	b=bi1eCN0YZN+Io5cpIDtJG6dqv8cnlcEHXmvupiDIRjrXyWuo0ha44F8UAoGBpNf+l
+	 D+H9FMTJTfMaWB3bkcwlSSQTvl5walorE4XR+4cVEWGoWVh5o4gX0EzPXXNZnL/ZVQ
+	 qtkKCDmYalGkTjHXiZ5qs6+P3H59daz91dmFrt6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@kernel.org>,
-	Hanlin Song <pgeorge8929@gmail.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0627/1424] csky: Fix a4/a5 restoration in syscall trace path
-Date: Sat, 12 Sep 2026 08:50:59 +0200
-Message-ID: <20260912065621.331308065@linuxfoundation.org>
+Subject: [PATCH 6.6 0587/1424] clk: imx: scu: drop redundant init.ops variable assignment
+Date: Sat, 12 Sep 2026 08:50:19 +0200
+Message-ID: <20260912065620.437593726@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,59 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hanlin Song <pgeorge8929@gmail.com>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit abb81e5ce7d995baa41556b8125fa59e28ba3be8 ]
+[ Upstream commit 5f2db1ce201216e81333ecc2ab51494410b2fe0d ]
 
-The syscall trace path reloads syscall arguments from pt_regs before
-calling the syscall handler. On C-SKY ABIv2, the 5th and 6th syscall
-arguments are prepared as stack arguments before invoking syscallid.
+The init.ops is assigned a default value, however right below it is an
+if, else if, and else where all of them also assign a value to init.ops.
+Drop the redundant init.ops assignment at the top.
 
-The current code adjusts sp before loading LSAVE_A4 and LSAVE_A5. Since
-those offsets are relative to the original pt_regs base, loading them
-after changing sp fetches the wrong slots. As a result, traced syscalls
-that use the 5th or 6th argument may receive corrupted arguments.
-
-This is visible with mmap2(), which takes six arguments. A small
-PTRACE_SYSCALL reproducer opens a file and maps one page with:
-
-  mmap(NULL, 4096, PROT_READ | PROT_EXEC, MAP_PRIVATE, fd, 0)
-
-Before the fix, the traced child fails the mmap and exits with 12.
-After the fix, the mapping succeeds and the child exits with 0.
-
-Fix the trace path by loading a4/a5 from pt_regs before changing sp.
-
-Tested on: ck860f, linux-4.19.15, C-SKY abiv2
-
-Fixes: e0bbb53843b5 ("csky: Fixup abiv2 syscall_trace break a4 & a5")
-Suggested-by: Guo Ren <guoren@kernel.org>
-Signed-off-by: Hanlin Song <pgeorge8929@gmail.com>
-Signed-off-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
+Fixes: 3b9ea606cda53 ("clk: imx: scu: add cpu frequency scaling support")
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/csky/kernel/entry.S | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/clk/imx/clk-scu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/csky/kernel/entry.S b/arch/csky/kernel/entry.S
-index c68cdcc76d60e..3261f46f22442 100644
---- a/arch/csky/kernel/entry.S
-+++ b/arch/csky/kernel/entry.S
-@@ -93,11 +93,11 @@ csky_syscall_trace:
- 	ldw	a2, (sp, LSAVE_A2)
- 	ldw	a3, (sp, LSAVE_A3)
- #if defined(__CSKYABIV2__)
--	subi	sp, 8
- 	ldw	r9, (sp, LSAVE_A4)
-+	ldw	r10, (sp, LSAVE_A5)
-+	subi	sp, 8
- 	stw	r9, (sp, 0x0)
--	ldw	r9, (sp, LSAVE_A5)
--	stw	r9, (sp, 0x4)
-+	stw	r10, (sp, 0x4)
- 	jsr	syscallid                     /* Do system call */
- 	addi	sp, 8
- #else
+diff --git a/drivers/clk/imx/clk-scu.c b/drivers/clk/imx/clk-scu.c
+index 3a68576cdae76..0156cd38b6fbd 100644
+--- a/drivers/clk/imx/clk-scu.c
++++ b/drivers/clk/imx/clk-scu.c
+@@ -481,7 +481,6 @@ struct clk_hw *__imx_clk_scu(struct device *dev, const char *name,
+ 	clk->clk_type = clk_type;
+ 
+ 	init.name = name;
+-	init.ops = &clk_scu_ops;
+ 	if (rsrc_id == IMX_SC_R_A35 || rsrc_id == IMX_SC_R_A53 || rsrc_id == IMX_SC_R_A72)
+ 		init.ops = &clk_scu_cpu_ops;
+ 	else if (rsrc_id == IMX_SC_R_PI_0_PLL)
 -- 
 2.53.0
 
