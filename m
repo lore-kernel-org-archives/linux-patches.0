@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB21B3176EE;
-	Sat, 12 Sep 2026 19:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACD53176EE;
+	Sat, 12 Sep 2026 19:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242173; cv=none; b=OxxU5uxTO8JlZo+dGz9irkG0ClPr8mnZ0NmTBc4qQMORm9YSvJvs2NB2rocZhvCAOkWfIkfyFVCK7gYQnETjeoCavtMYO/iYHRy0JH57hYtj3CLZAcgcPEvgDx8Xqs2VKIvocVzB/eN7it0mgyOXwIDVGjrrK8hUCA5b/djPFeY=
+	t=1789242176; cv=none; b=tw2AXLvwNHA9mVitG1bzBeBdgHa9OUYSHBR0Frj61WTbDbra1TyVyaIsAquvtl/EYvfJFxJYjXr8MVqer3qjLGSIJA0lD1ftft1Bsuxza70zuPNT+rwavAUiRnaIgFZ2wq/R9kL0kQaqOl5Eh+zUteUFjb5LWRpHSZg2fzQuhvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242173; c=relaxed/simple;
-	bh=YGN9M4+jE3E2YU6oQSquGL6boUEoE+TPKbywVW0GA80=;
+	s=arc-20240116; t=1789242176; c=relaxed/simple;
+	bh=CZyuk5hulnRuK8cH8APoUF3nIKdsWBuslOtv0unl7B8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lbshChA66l0DKHanmCUYkjkK1Cl3tlU6QkDJIb+vXuXbp4/9mRc/mmsdI0aKT8mfyh/rpM2S6VgwyU5V4vfPEagfzoQNpPqa/VobqP4s9WcdriCkN4hnC7W2rHes+QPepzv+/jMZyeuinwHROReeALtklb63OSMVomylCFITB70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHHWqYJW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YLZMxqDMnhsjGCF/wolKV3QdgyjXRp1sx4ArNTFiJqx2+aB7XBp2udfCfSR4hLeF6/x56Of8W1k/eO2PMFTyHYx1isyYQ8lMw3zPVFX9zjax9m1v1BztxlOg4Dg9zLMUptelITa09yOVllMs6nrP0mXr/Cu+6+Hq0bdo16ZZDYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZD2Pr6br; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHHWqYJW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD6951F000FF;
-	Sat, 12 Sep 2026 19:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZD2Pr6br"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA7381F000FF;
+	Sat, 12 Sep 2026 19:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242172;
-	bh=7yJOX+WKKjShKr+DzYipPzy4Hz1D1s9hY706eUTCcKc=;
+	s=korg; t=1789242175;
+	bh=RnrH+vGTW8O/OM31GHL4/TxpNIQE1Zl3pgOmV9breUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hHHWqYJWgb6Sb+SH4yHymhFRCv6UjMCi5wkeMYt++5vh9cT35PLzUxb36RHerrkAO
-	 6CLKzCUZBe6IBjeoCAt/xbY34p8OVvL/mbWuDI5S7dGiAokcEYucoH/Fhkx7Br/8Og
-	 Ke/q2Cpmzmq+LiF9j9bbDlxp7smNVA/CvBIfyQYw=
+	b=ZD2Pr6brgJYewRBtsdBrE62PftOEBe7H7J+K/gACLHoYODe3CV/8VB+HEzZFUIPo/
+	 2Fsn2OBf/hOib53wst/oT28QPejvCvFQuTxuQVL+L7PggPWMdB0mEJtbLATC9dB+/+
+	 BXr7kku1eWqEg9Fzz5KxyvjA1C+vn6IjocOeGv4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao-Qun Huang <alvinhuang0603@gmail.com>,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 5.10 311/798] f2fs: reject overlapping move range after len expansion
-Date: Sat, 12 Sep 2026 08:58:59 +0200
-Message-ID: <20260912065524.284792383@linuxfoundation.org>
+Subject: [PATCH 5.10 312/798] f2fs: fix i_size when pinned fallocate partially fails
+Date: Sat, 12 Sep 2026 08:59:00 +0200
+Message-ID: <20260912065524.309368700@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,57 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao-Qun Huang <alvinhuang0603@gmail.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-commit 28c1ef094e7c86977d9bf570dc0362fc54e36437 upstream.
+commit 0f448bb3767ef6119f5cdeabcae3f10d6e75aed6 upstream.
 
-F2FS_IOC_MOVE_RANGE treats a zero length as a request to move data
-from pos_in to EOF. However, the same-file overlap check runs before
-that expansion, so a request with len == 0 bypasses the overlap
-rejection added for same-file moves.
+From: Zhan Xusheng <zhanxusheng@xiaomi.com>
 
-For example, with a four-block file, moving from block 0 to block 1
-with len == 0 is accepted by the old check because pos_in + len is
-still pos_in at that point. The code then expands len to cover the
-rest of the file and calls __exchange_data_block() on overlapping
-source and destination ranges in the same inode, which is the
-data-corruption case the overlap check was meant to reject.
+Commit 4275b59673eb ("f2fs: fix to round down start offset of fallocate
+for pin file") moved the allocation loop's start down to a section
+boundary, but the error path still converts @expanded against @pg_start,
+which holds the unrounded start.
 
-Move the overlap check after the source range has been validated and
-len == 0 has been expanded, so it sees the effective length. This is a
-no-op for non-zero len (the value is unchanged there) and keeps the
-existing early return for identical positions.
+@pg_start exists for that conversion: commit 88f2cfc5fa90 ("f2fs: fix to
+update last i_size if fallocate partially succeeds") added it as an
+immutable base because map.m_lblk moves every round.  Each round now maps
+exactly sec_blks blocks starting from rounddown(pg_start, sec_blks), so
+pg_start + expanded overshoots the last allocated block by
+pg_start % sec_blks, and a partial failure leaves i_size covering a tail
+that was never allocated.  Nothing corrects that afterwards either, since
+file_dont_truncate() has already cleared FADVISE_TRUNC_BIT.
 
-Fixes: d95fd91c1ac1 ("f2fs: exclude special cases for f2fs_move_file_range")
+It needs a start offset that is not section aligned plus a fallocate that
+hits ENOSPC partway, so the error path runs with expanded > 0.  On an
+80 MiB image with 2 MiB sections:
+
+  truncate -s 80M img
+  mkfs.f2fs -s 1 -f img
+  mount -o loop img /mnt
+  touch /mnt/pinned
+  f2fs_io pinfile set /mnt/pinned
+  # 2093056 = block 511, so pg_start % sec_blks = 511
+  f2fs_io fallocate 0 2093056 536870912 /mnt/pinned
+  stat -c %s /mnt/pinned
+  filefrag -v /mnt/pinned
+
+The last extent ends at block 10737 either way.  Before, i_size is
+46075904, block 11249, so 511 blocks of it were never allocated, and
+filefrag does not mark the last extent eof.  After, i_size is 43982848,
+block 10738, and eof is back.  A kernel from before that commit also
+shows no overshoot.
+
+Keep @pg_start pointing at where allocation actually begins.
+
+Fixes: 4275b59673eb ("f2fs: fix to round down start offset of fallocate for pin file")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Hao-Qun Huang <alvinhuang0603@gmail.com>
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/f2fs/file.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 --- a/fs/f2fs/file.c
 +++ b/fs/f2fs/file.c
-@@ -2870,8 +2870,6 @@ static int f2fs_move_file_range(struct f
- 	if (src == dst) {
- 		if (pos_in == pos_out)
- 			return 0;
--		if (pos_out > pos_in && pos_out < pos_in + len)
--			return -EINVAL;
- 	}
+@@ -1685,8 +1685,9 @@ static int expand_inode_data(struct inod
+ 		block_t sec_len;
  
- 	inode_lock(src);
-@@ -2892,6 +2890,8 @@ static int f2fs_move_file_range(struct f
- 		goto out_unlock;
- 	if (len == 0)
- 		olen = len = src->i_size - pos_in;
-+	if (src == dst && pos_out > pos_in && pos_out < pos_in + len)
-+		goto out_unlock;
- 	if (pos_in + len == src->i_size)
- 		len = ALIGN(src->i_size, F2FS_BLKSIZE) - pos_in;
- 	if (len == 0) {
+ 		if (map.m_lblk % sec_blks) {
+-			map.m_lblk = rounddown(map.m_lblk, sec_blks);
+-			map.m_len = pg_end - map.m_lblk;
++			pg_start = rounddown(map.m_lblk, sec_blks);
++			map.m_lblk = pg_start;
++			map.m_len = pg_end - pg_start;
+ 			if (off_end)
+ 				map.m_len++;
+ 		}
 
 
