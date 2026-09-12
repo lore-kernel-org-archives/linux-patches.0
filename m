@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A9E3148A7;
-	Sat, 12 Sep 2026 07:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6983C1D5B;
+	Sat, 12 Sep 2026 07:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197341; cv=none; b=FEc3kd3T+GHO/A/vJQ+tfwoCDvTc9WcoFQszqTzbt9nBLhZ7mMV9U11dpawCHOPAtMpInxw9u5BU0UCYEvrJOcn7DSB6t+YqTzC8/0azWEw+/G+gxzXJGRhQrhDNN0ZpsEHZnD8L2pupAfZ0IG5N/nWjeLOp1hC5I2Y64+f/Zg8=
+	t=1789197346; cv=none; b=XwhzRJBoob7OUC/TQVIFcmYJq4FT/EuOoncOgwEvYzpiOwK1BSDYJcKslMQwR+EW7B0Tb+t/TeI7NpY/i3hnyUNwGl3rJxzHSnjvtTTffJzHug/P6hjvdgQe8SAZi1Fj7TwU4gAF/E/h1hTIiTKkPHqD18b91CEUa0/JJX8+4R4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197341; c=relaxed/simple;
-	bh=FTDP0rmRETf/fYXVx8v6izYCNeQ1MGaqyK949d5NKsw=;
+	s=arc-20240116; t=1789197346; c=relaxed/simple;
+	bh=QP/IHIN5QFE2NMrOQDaK6OKq92iS5MEztL2CLqK3sRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=phKyJzn0HT00d9DKCroiu7nq2kz9QTnsuWKUP4LdC/jTW+g5IPf/ZWHBvSfZ3F5uT5XEIlUdW7TDTMZUVASDElndSwyTQ3Q4trwIpuufi+g8DmsNEZMUlrDp/k8lAxfOqbqeQqyu7n8ed/b+9c7SO0A1F1LQQiiQVdCgvycpR2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kN7rBYby; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZKoWC9BXbQTuhXn2n49/+7MvfsNDU0VOnMNNAyS6F78CkN0JDYVFHN1TfnqiYIIH9DtCwlyF1HJ81z0w1m+modwUoTrSYRe/cOgAsnS2QQXQQ8UuXHQGfPoErQOhzE/IKDkuul0Uo2uDTYkL0WGMEq/SZaLW3kcj1oLTEoTPrhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ttz+vpH9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kN7rBYby"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C3F1F000FF;
-	Sat, 12 Sep 2026 07:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ttz+vpH9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F34D1F000FF;
+	Sat, 12 Sep 2026 07:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197340;
-	bh=mb0Ric2r3veI6MVIihmUv90JPl+19tTSFTG01Wkanxg=;
+	s=korg; t=1789197345;
+	bh=YpvDvViSyyiooOWVWOtxXAqc4vdu5wkrkyp/HYUelH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kN7rBYby655/vxuY3zuxoh4Z47uwwH/ubz9qkhRB/pCFqGKmsnnWMgUduiPTfuviM
-	 E8OT6wgKvIj1C+LPh0IEwmuJwt3JVJrquW22k0CMM2ro1L2uhLw3reiRj2l4akL1gj
-	 cvcYLLqZu5lhXj2kfMuWV8uXSeBydLhbq+IrxlXE=
+	b=Ttz+vpH9Dvl0ntbBG3HcCGs4oc16W2YKytiak0T4zdU0DrqLvkVI5F3IEDMhSDSMh
+	 moiJEF/ItFNaXVA7xpuDTY4cePMofvgKdzjlbV+xrJCga3nyiryhWt1D90KzoBQTFN
+	 4PGYSJGgzfjAWXgn781SMXO0aCJF0n97ssYyHgMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sechang Lim <rhkrqnwk98@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Gregory Price <gourry@gourry.net>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0154/1815] bpf,lsm: Drop bpf_prog_free from sleepable_lsm_hooks
-Date: Sat, 12 Sep 2026 08:31:44 +0200
-Message-ID: <20260912065652.627452166@linuxfoundation.org>
+Subject: [PATCH 7.2 0155/1815] mm/mm_init: handle alloc_percpu failure in free_area_init_core_hotplug
+Date: Sat, 12 Sep 2026 08:31:45 +0200
+Message-ID: <20260912065652.650276736@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,55 +53,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sechang Lim <rhkrqnwk98@gmail.com>
+From: Gregory Price <gourry@gourry.net>
 
-[ Upstream commit 2ce3f548cfc6a1fe4c53479cf8a21931cdfd51d8 ]
+[ Upstream commit 2ebce860bdd7ae5e13002811bc9bbbf33fcfc221 ]
 
-__bpf_prog_put_rcu() is the call_rcu() callback for non-sleepable programs.
-security_bpf_prog_free() called from there fires bpf_prog_free in softirq;
-if a sleepable LSM prog is attached to that hook, might_fault() BUGs:
+We miss a failed allocation check for pgdat->per_cpu_nodestats, which
+results in a NULL deref when we offset into the per-cpu area.
 
-  BUG: sleeping function called from invalid context
-  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 5038
-  preempt_count: 101, expected: 0
-  Call Trace:
-   <IRQ>
-   __bpf_prog_enter_sleepable+0x1cd/0x320 kernel/bpf/trampoline.c:1255
-   bpf_trampoline_6442549705+0x53/0xd7
-   security_bpf_prog_free+0xde/0x130 security/security.c:5465
-   __bpf_prog_put_rcu+0xab/0xd0 kernel/bpf/syscall.c:2365
-   rcu_do_batch kernel/rcu/tree.c:2617 [inline]
-   handle_softirqs+0x236/0x800 kernel/softirq.c:622
-   </IRQ>
+Propagate -ENOMEM up the stack and leave per_cpu_nodestats pointing
+at boot_nodestats so a later online can retry the allocation.
 
-The call_rcu/call_rcu_tasks_trace split reflects the freed program's
-sleepability, not that of any attached observer.
+hotadd_init_pgdat() returns NULL on failure, which __try_online_node()
+already maps to -ENOMEM.
 
-security_bpf_prog_free() also frees prog->aux->security, which has to stay
-after the grace period, so drop bpf_prog_free from sleepable_lsm_hooks
-rather than move the call. Non-sleepable observers still run there.
+On failure nothing needs to be unwound:
+  - the node is never marked online
+  - per_cpu_nodestats is left pointing at boot_nodestats
+  - __add_memory_resource() cleans up pending memblock resources
+  - later online attempts retry the per_cpu_nodestats allocation
 
-Fixes: 1b67772e4e3f ("bpf,lsm: Refactor bpf_prog_alloc/bpf_prog_free LSM hooks")
-Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260701080757.1394144-1-rhkrqnwk98@gmail.com
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260627202243.758289-1-gourry%40gourry.net
+Fixes: 75ef71840539 ("mm, vmstat: add infrastructure for per-node vmstats")
+Signed-off-by: Gregory Price <gourry@gourry.net>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Link: https://patch.msgid.link/20260701221613.2818148-1-gourry@gourry.net
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_lsm.c | 1 -
- 1 file changed, 1 deletion(-)
+ include/linux/memory_hotplug.h |  2 +-
+ mm/memory_hotplug.c            |  3 ++-
+ mm/mm_init.c                   | 14 +++++++++++---
+ 3 files changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
-index 1433809bb166a..3983b4ce73c81 100644
---- a/kernel/bpf/bpf_lsm.c
-+++ b/kernel/bpf/bpf_lsm.c
-@@ -295,7 +295,6 @@ BTF_ID(func, bpf_lsm_bpf_map_create)
- BTF_ID(func, bpf_lsm_bpf_map_free)
- BTF_ID(func, bpf_lsm_bpf_prog)
- BTF_ID(func, bpf_lsm_bpf_prog_load)
--BTF_ID(func, bpf_lsm_bpf_prog_free)
- BTF_ID(func, bpf_lsm_bpf_token_create)
- BTF_ID(func, bpf_lsm_bpf_token_free)
- BTF_ID(func, bpf_lsm_bpf_token_cmd)
+diff --git a/include/linux/memory_hotplug.h b/include/linux/memory_hotplug.h
+index 7c9d66729c609..06c58cb057791 100644
+--- a/include/linux/memory_hotplug.h
++++ b/include/linux/memory_hotplug.h
+@@ -289,7 +289,7 @@ static inline void __remove_memory(u64 start, u64 size) {}
+ /* Default online_type (MMOP_*) when new memory blocks are added. */
+ extern enum mmop mhp_get_default_online_type(void);
+ extern void mhp_set_default_online_type(enum mmop online_type);
+-extern void __ref free_area_init_core_hotplug(struct pglist_data *pgdat);
++int __ref free_area_init_core_hotplug(struct pglist_data *pgdat);
+ extern int __add_memory(int nid, u64 start, u64 size, mhp_t mhp_flags);
+ extern int add_memory(int nid, u64 start, u64 size, mhp_t mhp_flags);
+ extern int add_memory_resource(int nid, struct resource *resource,
+diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
+index 7ac19fab22632..8b137328dcf01 100644
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1263,7 +1263,8 @@ static pg_data_t *hotadd_init_pgdat(int nid)
+ 	pgdat = NODE_DATA(nid);
+ 
+ 	/* init node's zones as empty zones, we don't have any present pages.*/
+-	free_area_init_core_hotplug(pgdat);
++	if (free_area_init_core_hotplug(pgdat))
++		return NULL;
+ 
+ 	/*
+ 	 * The node we allocated has no zone fallback lists. For avoiding
+diff --git a/mm/mm_init.c b/mm/mm_init.c
+index d52eea4e63479..d50a54dbb1064 100644
+--- a/mm/mm_init.c
++++ b/mm/mm_init.c
+@@ -1535,7 +1535,7 @@ void __init set_pageblock_order(void)
+  * NOTE: this function is only called during memory hotplug
+  */
+ #ifdef CONFIG_MEMORY_HOTPLUG
+-void __ref free_area_init_core_hotplug(struct pglist_data *pgdat)
++int __ref free_area_init_core_hotplug(struct pglist_data *pgdat)
+ {
+ 	int nid = pgdat->node_id;
+ 	enum zone_type z;
+@@ -1543,8 +1543,14 @@ void __ref free_area_init_core_hotplug(struct pglist_data *pgdat)
+ 
+ 	pgdat_init_internals(pgdat);
+ 
+-	if (pgdat->per_cpu_nodestats == &boot_nodestats)
+-		pgdat->per_cpu_nodestats = alloc_percpu(struct per_cpu_nodestat);
++	if (pgdat->per_cpu_nodestats == &boot_nodestats) {
++		struct per_cpu_nodestat __percpu *p;
++
++		p = alloc_percpu(struct per_cpu_nodestat);
++		if (!p)
++			return -ENOMEM;
++		pgdat->per_cpu_nodestats = p;
++	}
+ 
+ 	/*
+ 	 * Reset the nr_zones, order and highest_zoneidx before reuse.
+@@ -1582,6 +1588,8 @@ void __ref free_area_init_core_hotplug(struct pglist_data *pgdat)
+ 		zone->present_pages = 0;
+ 		zone_init_internals(zone, z, nid, 0);
+ 	}
++
++	return 0;
+ }
+ #endif
+ 
 -- 
 2.53.0
 
