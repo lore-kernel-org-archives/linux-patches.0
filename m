@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F86247280;
-	Sat, 12 Sep 2026 11:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0290F2EC09B;
+	Sat, 12 Sep 2026 11:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212579; cv=none; b=tAduY+wBjrteDxHMxG03UgAcmuJikwgJky5ohG2nCKHScGD5J+mXdX4Thr+E4E0xXOQctLcOxXcgUJh6z2h9rWBJ5+iCSQMlY80ramb0gxc2nb+YKcmwTzk9xcpMOkK7k8h/rjjUIyz0Ro9pDiOKPgU4EarEjXqGZNN87CvtLtE=
+	t=1789212584; cv=none; b=SliLoeOWbaWRyL/LGYJ7MyNqAKobNzT0es4iShgffznjwhQA9KZhDXf7LJNvLDvCKmnv8KcRJECHlX5S819ijyju52UYVmCnTferzt0Nv9cbCw+ilcUbTqp99/W8Zx1lEOJvuWKfz8Hd7cPScsrUDr32uDAzEugdKxpHYtg8z4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212579; c=relaxed/simple;
-	bh=1J1WkpfY2IPoQuKID1wjNEWTsoAZXulIJQZS0ZnQT1w=;
+	s=arc-20240116; t=1789212584; c=relaxed/simple;
+	bh=OhSq3WrbfZJwQ/19LwnXIo6mHc000a7KG6OvPA0/Auw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShVgCiUoMqEySUerxNh1M8say6dkoG6kuWJowfBrot9H/f2mbNZTRaokN8c1rwSKn7SQqiwMKdqmKIaKuKKb7ws/xzRezNFUa7R7dbMgeoDZ2XZi3t/0ROjkrJHLSPoiL8FmlAu0hW8/CnHcuPUgxbHQzogHr840r9BTcTILYpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFEZFqwA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vfl5VJwiYWRxZVt11sT8AZBCrg42T4b7DAZKGUebSFCrpHYfAoQWzzndgtUt9XKnBpz86VXhRdHe0UB3Ktjn6JJxiqdPM4tGpZsIzh8xI9bi9sYbtt0W6Rp4GpoNNW7juSeIjyHuHWIOY9+b5po8KZOvH1HdCaeDNR7aPV5rfsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2qaO1ezb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFEZFqwA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651631F000FF;
-	Sat, 12 Sep 2026 11:29:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qaO1ezb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BCFB1F000FF;
+	Sat, 12 Sep 2026 11:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212577;
-	bh=vwlHwfpn/jrqK4Vw70UW2jpQ768IBdrSn/T32eqv0SY=;
+	s=korg; t=1789212582;
+	bh=VTjZGMdGAEiS+TN5pBRmIcJijckCL8SYtEmwbR0/pJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QFEZFqwAjW+yPsq58VOh2BykQeEuZEhO3tHMQdN+3qI07cgmRC1u5ZOdYcaWOfHKt
-	 I3PeDgKF5/UCgUCneB5dgGR5XpwhXI6dE2m8SC9L0scvd/ohim3F+OJy1OBJjTo6MF
-	 R0lI0XY9GLkNYtDOTLrsGTkf1rnuee5Rl4X6Gy6M=
+	b=2qaO1ezb+DfVd0XA6z1oZx03MI+DKcW7B7D6LiwgzeKMNyOSJeQBz0Nn+OrHNpBwe
+	 R6R3m98e/7UfpwiJsN1QCch+B/K+xOg/CxAROPCFhL18KAKZsNigvAN27dMwWpNnfW
+	 hpEA6CO3pZeB2wbXDg2BSl7oDeEz8lDwZOhGARmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Miquel Raynal (DAVE)" <miquel.raynal@bootlin.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	kernel test robot <lkp@intel.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1463/1518] mtd: rawnand: pl353: Fix debug prints
-Date: Sat, 12 Sep 2026 09:00:32 +0200
-Message-ID: <20260912065656.650348633@linuxfoundation.org>
+Subject: [PATCH 6.18 1464/1518] tracing: Move d_max_latency out of CONFIG_FSNOTIFY protection
+Date: Sat, 12 Sep 2026 09:00:33 +0200
+Message-ID: <20260912065656.672282736@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,53 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal (DAVE) <miquel.raynal@bootlin.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 2b7baaddf1bc3e39206a0354449fdc349945b86b ]
+[ Upstream commit b4bade506b18eb2e5e34ac84f915d7ee6156d4e2 ]
 
-They are partially incorrect since "software" engine does not mean
-hamming, the "none" cae is also falling into this print, and on-die
-means there is some kind of hardware support; we prefer to use the
-wording on-host vs. on-die.
+The tracing_max_latency shouldn't be limited if CONFIG_FSNOTIFY is defined
+or not and it was moved out of that protection to be always available with
+CONFIG_TRACER_MAX_TRACE. All was moved out except the dentry descriptor
+for it (d_max_latency) and it failed to build on some configs.
 
-Fix all those prints.
+Move that out of the CONFIG_FSNOTIFY protection too.
 
-Fixes: 1e06dbfdfb85 ("mtd: rawnand: pl353: Add message about ECC mode")
-Signed-off-by: Miquel Raynal (DAVE) <miquel.raynal@bootlin.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://patch.msgid.link/20260209194631.788bfc85@fedora
+Fixes: ba73713da50e ("tracing: Clean up use of trace_create_maxlat_file()")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202602092133.fTdojd95-lkp@intel.com/
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/pl35x-nand-controller.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ kernel/trace/trace.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/raw/pl35x-nand-controller.c b/drivers/mtd/nand/raw/pl35x-nand-controller.c
-index 7d43506b1654d..12b9e0936c8f1 100644
---- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
-+++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
-@@ -972,17 +972,19 @@ static int pl35x_nand_attach_chip(struct nand_chip *chip)
- 
- 	switch (chip->ecc.engine_type) {
- 	case NAND_ECC_ENGINE_TYPE_ON_DIE:
--		dev_dbg(nfc->dev, "Using on-die ECC\n");
-+		dev_dbg(nfc->dev, "Using on-die hardware ECC\n");
- 		/* Keep these legacy BBT descriptors for ON_DIE situations */
- 		chip->bbt_td = &bbt_main_descr;
- 		chip->bbt_md = &bbt_mirror_descr;
- 		fallthrough;
- 	case NAND_ECC_ENGINE_TYPE_NONE:
-+		dev_dbg(nfc->dev, "Using no ECC engine\n");
-+		break;
- 	case NAND_ECC_ENGINE_TYPE_SOFT:
--		dev_dbg(nfc->dev, "Using software ECC (Hamming 1-bit/512B)\n");
-+		dev_dbg(nfc->dev, "Using software ECC\n");
- 		break;
- 	case NAND_ECC_ENGINE_TYPE_ON_HOST:
--		dev_dbg(nfc->dev, "Using hardware ECC\n");
-+		dev_dbg(nfc->dev, "Using on-host hardware ECC\n");
- 		ret = pl35x_nand_init_hw_ecc_controller(nfc, chip);
- 		if (ret)
- 			return ret;
+diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
+index 89e4d619e64b9..729b1921f9554 100644
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -346,8 +346,8 @@ struct trace_array {
+ 	spinlock_t		snapshot_trigger_lock;
+ 	unsigned int		snapshot;
+ 	unsigned long		max_latency;
+-#ifdef CONFIG_FSNOTIFY
+ 	struct dentry		*d_max_latency;
++#ifdef CONFIG_FSNOTIFY
+ 	struct work_struct	fsnotify_work;
+ 	struct irq_work		fsnotify_irqwork;
+ #endif
 -- 
 2.53.0
 
