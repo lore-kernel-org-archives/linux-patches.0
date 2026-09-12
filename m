@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30791344DBD;
-	Sat, 12 Sep 2026 17:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A8E33993;
+	Sat, 12 Sep 2026 17:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232853; cv=none; b=Qgu/vfcSF4wgTEQAEaLkaOFrwBJp7QYyNr2kd+0bRpEOVn6CkuJgEcTaIodjj/rhfbgEDqKnMCu6glSeLU7Ns7SOyKdVq74HUp7asB16pbczTLxGNK0TfG7RaizFckN13Rsfu0c0Ek+6rrwrpI/ohQQQ4yR+hhXYbqITp6rUCOg=
+	t=1789232858; cv=none; b=P8vAW3D8AHUB1XT0U07tWK+pP+uuGFG0Naj5K+Syzs7hOp5b71foYaXM8nwro4mFzpkgoMf7C6TloJKlJqbp7fbKs5Yox4c7BlKF8f7aulql74/sJ9BtRrzDP6PLxBtAazi00agm1eWI4nqISz9xPzEeFNvWUTWSpYRcEeK/3Cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232853; c=relaxed/simple;
-	bh=YtpNgKC7F7yi5WYvFNgL9IqkBza5WGBgOFpdB4kkxW4=;
+	s=arc-20240116; t=1789232858; c=relaxed/simple;
+	bh=XKA5cUa+bvlb9V9MnVYdOBIrCOr6tjI2kIlEkNT//C4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qCXNoNZlHfMZX/dFQxLYaHL2cf2DN3X+P54a5jwel/ONoMqrPS4RSZNqkIpZi6WxiaOvtQlMhNIC0aqi9qDzSIPhC4c+RBcgzO0x2XdWYQFU1vZBLnFA46isSx0j8SmdyVpdNq2recfSkxEwOYffxOBwdK3mz5neUh88Eyj+U/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JA9xO5QY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nhsqvG+3H8nk/VOzGv7IO3GwqirziQX2KbW/iyHrUFe/gb0hYkEEAUAEqBmpmGqvyih9dCMxK1mnLG4tm+MtvnVP7NvHw27jGguPyPSJIDY0nk0FzvuJg/HU1xcm3nKj6c7UTIpAV7xFxMAWRGLMd4Ga4Yt7zPq7VZxTsO01w8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzU0t939; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JA9xO5QY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 501771F000FF;
-	Sat, 12 Sep 2026 17:07:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzU0t939"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27B21F000FF;
+	Sat, 12 Sep 2026 17:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232852;
-	bh=LOXxPZ7P/3L1zO1mh4uQIbEE/pJiEtY1e/JpE/klckk=;
+	s=korg; t=1789232856;
+	bh=iXJRK050U4cwrxnFhqNkk5YiRMb+PYrYNEqQNd6y3Ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JA9xO5QY4NMYAZaEC6M65BJs+g/NdpHK0BYQHq2Cy/DWNvi8x8sCOZHz8arQMiTZM
-	 XLj5LKVCQulXU3nTM1IqGbd3PVOYt8P0UTRbo3sq0IwnThFqnrsHCrpUDnVKKxQYOY
-	 eKoZYR9a13WlLawAgCb705xEoMf1I0afeHW9lMM4=
+	b=XzU0t939orb/NIQAn1Bk6SHqNbIM1lRvD7Ox/jGMgjpWwhkPtu3vGFFkwHpvhRwCG
+	 hUhCZYgEBCFxxGBnWdtm2PpVOLhmG+vVl5Z4RibIqeeIKcRD/t/9PgodL/P/inG0J5
+	 C2152x+Ipd9JZEm6D+MMPunXpLs5TRRQ7/a68JIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Valentin Kindschi <valentin.kindschi@fiveco.ch>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 095/935] Bluetooth: RFCOMM: serialize security confirmation handling
-Date: Sat, 12 Sep 2026 08:52:05 +0200
-Message-ID: <20260912065529.001936209@linuxfoundation.org>
+Subject: [PATCH 5.15 096/935] Bluetooth: hci_event: clear HCI_LE_ADV only on a created connection
+Date: Sat, 12 Sep 2026 08:52:06 +0200
+Message-ID: <20260912065529.025522281@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,87 +50,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Valentin Kindschi <valentin.kindschi@fiveco.ch>
 
-commit 759c185d0bbdb131357408f50b8735e04ed3caff upstream.
+commit 941929abe5feaed672b9a52e330e547d333240c6 upstream.
 
-rfcomm_security_cfm() looks up a session on session_list and then walks
-its DLC list without holding rfcomm_mutex. Since RFCOMM session teardown
-uses rfcomm_mutex, krfcommd can close and free the same session and DLCs
-concurrently:
+le_conn_complete_evt() clears HCI_LE_ADV before looking at the event
+status, on the premise stated in its comment that all controllers stop
+advertising when a connection is created.
 
-  hci_rx_work                    krfcommd
-  -----------                    ---------
-  rfcomm_session_get()
-                                 rfcomm_lock()
-                                 rfcomm_session_close()
-                                   rfcomm_dlc_unlink()
-                                   rfcomm_session_del()
-                                     kfree(s)
-                                 rfcomm_unlock()
-  walk s->dlcs
+That premise only holds when a connection was actually created. On a
+non-zero status none was, and the controller is still advertising: after
+the host issues LE Create Connection Cancel the event arrives with
+Unknown Connection Identifier (0x02), and a connection timeout behaves
+the same way. Clearing the flag there leaves the host believing
+advertising is off while the controller has it on.
 
-The callback can then read a freed session list head and touch freed DLCs
-while updating their flags or timers.
+It is also wrong for extended advertising, where several sets can be
+advertising at once. hci_cc_le_set_ext_adv_enable() is careful about
+this - on disabling one set it walks hdev->adv_instances and only clears
+HCI_LE_ADV once no instance is still enabled. The unconditional clear
+here discards that bookkeeping, so one set connecting drops the flag
+while the others keep advertising.
 
-Serialize the session lookup and DLC traversal in rfcomm_security_cfm()
-with rfcomm_mutex. This matches the existing RFCOMM session lifetime
-rules and prevents concurrent rfcomm_session_del() / rfcomm_dlc_unlink()
-from tearing the objects down while the callback is using them.
+The direction of the error matters. A flag left set is self-correcting:
+hci_disable_advertising_sync() sends LE Set Advertising Enable(0) and
+the command complete puts the state back. A flag left clear is not,
+because that same function returns early without sending anything while
+the flag is clear:
 
-KASAN reported:
+  - LE Set Advertising Parameters is then sent to a controller that is
+    still advertising, and is correctly rejected with Command Disallowed
+    (0x0c);
+  - hci_enable_advertising_sync() returns at that point, before the
+    LE Set Advertising Enable that would set HCI_LE_ADV again.
 
-  BUG: KASAN: slab-use-after-free in rfcomm_security_cfm+0x41c/0x440
-  Read of size 8 at addr ffff888111fb3960 by task kworker/u17:1/89
-  Workqueue: hci0 hci_rx_work
-  Call Trace:
-   rfcomm_security_cfm+0x41c/0x440
-   hci_encrypt_cfm+0x139/0x590
-   hci_encrypt_change_evt+0x37b/0xc40
-   hci_event_packet+0x71b/0xb20
-   hci_rx_work+0x293/0x730
-  Allocated by task 69:
-   rfcomm_session_add+0x9e/0x2f0
-   rfcomm_run+0x44b/0x41e0
-  Freed by task 69:
-   kfree+0x131/0x3c0
-   rfcomm_session_del+0x188/0x220
-   rfcomm_run+0x1985/0x41e0
+On a controller without LE Extended Advertising that is reachable from
+here: hci_schedule_adv_instance_sync() re-arms adv_instance_expire every
+HCI_DEFAULT_ADV_DURATION (2 s) and its "already advertising" shortcut
+tests HCI_LE_ADV, which can no longer become true, so the parameter
+write is retried for as long as advertising is configured:
 
-Fixes: 08c30aca9e698faddebd34f81e1196295f9dc063 ("Bluetooth: Remove RFCOMM session refcnt")
+  Bluetooth: hci0: Opcode 0x2006 failed: -16
+
+Only clear the flag when a connection was established.
+
+Note this is not on its own sufficient to stop that retry loop - the
+redundant enable queued by hci_le_conn_failed() clears HCI_LE_ADV itself
+and recreates the same mismatch, which patch 1 addresses. This patch
+fixes the event handler reporting a state the controller is not in.
+
+Verified on the affected device (BCM43455, legacy advertising only) with
+this patch and patch 1 applied. A 221 s btmon capture with an out-of-range
+peer at -90 dBm contains two outgoing connection attempts that the host
+cancelled, each producing exactly the event this patch changes:
+
+  < LE Set Advertising Parameters  0x2006   Success
+  < LE Set Advertising Enable      0x200a   Success
+  < LE Create Connection Cancel    0x200e   Success
+  > LE Connection Complete   Unknown Connection Identifier (0x02), central
+
+Nothing follows either one; the next command is an unrelated scan restart
+70 ms later. Over the whole capture: 7 LE Set Advertising Parameters sent,
+all Success; 10 LE Set Advertising Enable, all Success; no Command
+Disallowed of any opcode, and no 2 s cadence anywhere. Two central
+connections to other peers completed normally afterwards, with feature
+exchange and a connection parameter update, so advertising was still live
+across the cancelled attempts.
+
+The extended advertising case above is a code argument, not a measurement:
+this controller has no LE Extended Advertising, so that path is not
+exercised by the capture.
+
+Fixes: fbd96c151cdc ("Bluetooth: Fix clearing HCI_LE_ADV for LE connections")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Assisted-by: Claude:claude-opus-5 btmon
+Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/core.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_event.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -2203,9 +2203,13 @@ static void rfcomm_security_cfm(struct h
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -5330,10 +5330,11 @@ static void le_conn_complete_evt(struct
  
- 	BT_DBG("conn %p status 0x%02x encrypt 0x%02x", conn, status, encrypt);
+ 	hci_dev_lock(hdev);
  
-+	rfcomm_lock();
-+
- 	s = rfcomm_session_get(&conn->hdev->bdaddr, &conn->dst);
--	if (!s)
-+	if (!s) {
-+		rfcomm_unlock();
- 		return;
-+	}
+-	/* All controllers implicitly stop advertising in the event of a
+-	 * connection, so ensure that the state bit is cleared.
++	/* Advertising stops when a connection is created. On a failed
++	 * connection it keeps running, so leave the state bit alone.
+ 	 */
+-	hci_dev_clear_flag(hdev, HCI_LE_ADV);
++	if (!status)
++		hci_dev_clear_flag(hdev, HCI_LE_ADV);
  
- 	list_for_each_entry_safe(d, n, &s->dlcs, list) {
- 		if (test_and_clear_bit(RFCOMM_SEC_PENDING, &d->flags)) {
-@@ -2237,6 +2241,8 @@ static void rfcomm_security_cfm(struct h
- 			set_bit(RFCOMM_AUTH_REJECT, &d->flags);
- 	}
- 
-+	rfcomm_unlock();
-+
- 	rfcomm_schedule();
- }
- 
+ 	conn = hci_lookup_le_connect(hdev);
+ 	if (!conn) {
 
 
