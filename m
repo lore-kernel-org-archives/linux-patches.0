@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7EF2EC09B;
-	Sat, 12 Sep 2026 11:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F492EC09B;
+	Sat, 12 Sep 2026 11:22:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212148; cv=none; b=lC2imBy1IHR/K4s8grTNu+jARfDqvWXbWcx6KNAbiV0Yq4LHCR/dz3crwGjyePAfLuSlPr89OD5x08IGsW1toFsoOfdHsReO7iPJjMepHzqaxrwM8DR7GiXDdeTFr7afJaFMsgBwJCnwrBsMUZ1RkEX1HuGwUuWBJujy6wpJTJs=
+	t=1789212152; cv=none; b=RE0atiHEVxjhMpHTvmhmudMPzK8XpAQnitihpcBmlzWfrJef0ugXBQOZUTxqMfxCoOc4ekwzgvcTz2VEQobxN/RrtugyxrGFimX71ZC9jp2W+QyzCy8lploK0p9Z9TwsycmdEwxpqgokhN9nNxkCBjl1/bQWP/LvXC8BrBcLIPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212148; c=relaxed/simple;
-	bh=6p7Oah65BpdC/3YXTQ3LI2Na4gZ782hJzcNeX5fZHWM=;
+	s=arc-20240116; t=1789212152; c=relaxed/simple;
+	bh=iNOW7O6IzQwbR54PjNePM+7IApbAfklrbvde1W5xuRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aTt1AyvrCPFcV5wh683Ep6IE1NZRTlRyvoeZ9SbBeS7/9oRNc/qbD86RdSByjE7mUq0LcRDAlWgbygN8Sr/goyUZUYeBwLhCMmgKBqYwfqnjfq2klVOa2llDH/FJUFHoYjOTjbjO+41hOfbt5PgMA1dgMqEcIvnNnuhRXq6vyMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HfhUqA/O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kj5a157Ofc25oxuGBVw13XkWBkUAyIh1rGKKxhiseb0PjR2u7aaeaEdyXoCRQBKiBeLB3k4LEnXoUj7C13PJwNFeVXsrtF2VdA6cKboivHx6Jmb7z+haTs1iy7iMQreMFiCUjEbAGpFRDSj5LEtX7UsLEizE/dNbgQINgJRWV7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dS/0Mpks; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HfhUqA/O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63EEB1F000FF;
-	Sat, 12 Sep 2026 11:22:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dS/0Mpks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE9A1F000FF;
+	Sat, 12 Sep 2026 11:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212146;
-	bh=9TUMA2LTXltJL5h89e89MhSbBmjQovc540acqXFJkK0=;
+	s=korg; t=1789212151;
+	bh=/5Kod0QhE4NUrcA13FAmqpB2eX9A98RXuM3nh3mkokk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HfhUqA/OLFfvu/mVgvHvqzgPbYFx2q7wQdIJrcuAFgwacs85CtaMNdzJUlOCENttG
-	 /VTC3jBUxKBztxmsYrYH4uvIUK+zhXC+RKz/nbVq2YBJ1NM/TfV59KMtDv+AfX+ng8
-	 68fwJWydAfPDBpFBhQ46uiBCXWvWCUWVR76gCRQQ=
+	b=dS/0Mpks4mB2frBZWOWf7QwBIDyeBQr9uRcMALenmbYvxyVJxkeelpAfbEFLhhiL4
+	 CVobueKdxE67CdIX7KWiroyDYVgF6DW8n7cJwS8C92JdMH8/e84Ky1do3rhGojZjGT
+	 S2kdQj1DxYS9Wp2pP/z10XB1hHecXg0JAMEyAiMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Adithya Jayachandran <ajayachandra@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1375/1518] net: wangxun: schedule hardware stats update in watchdog
-Date: Sat, 12 Sep 2026 08:59:04 +0200
-Message-ID: <20260912065654.647607490@linuxfoundation.org>
+Subject: [PATCH 6.18 1335/1518] net/mlx5: MPFS, add support for dynamic enable/disable
+Date: Sat, 12 Sep 2026 08:58:24 +0200
+Message-ID: <20260912065653.729576954@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,169 +53,245 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Saeed Mahameed <saeedm@nvidia.com>
 
-[ Upstream commit dc33e52b8ce6f2d42dce18da12dc47d6c21f2e8b ]
+[ Upstream commit 9902b6381d76ccd2e08e2703390e8c8a3bcda482 ]
 
-Hardware statistics should be updated periodically in the watchdog to
-prevent 32-bit registers from overflowing. This is also required for the
-upcoming pause frame accounting logic, which relies on regular statistics
-sampling.
+MPFS (Multi PF Switch) is enabled by default in Multi-Host environments,
+the driver keeps a list of desired unicast mac addresses of all vports
+(vfs/Sfs) and applied to HW via L2_table FW command.
 
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Link: https://patch.msgid.link/20260407025616.33652-8-jiawenwu@trustnetic.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 7bf29145d7a9 ("net: txgbe: fix MISC interrupt unmasking in non-MSI-X mode and device shutdown")
+Add API to dynamically apply the list of MACs to HW when needed for next
+patches, to utilize this new API in devlink eswitch active/in-active uAPI.
+
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Adithya Jayachandran <ajayachandra@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://patch.msgid.link/20251108070404.1551708-3-saeed@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: ff0f9b7aa1c7 ("net/mlx5: E-Switch, use state lock for vport state changes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_hw.c    |  9 +++++
- drivers/net/ethernet/wangxun/libwx/wx_type.h  |  1 +
- drivers/net/ethernet/wangxun/ngbe/ngbe_main.c | 36 ++++++++++++++++++-
- .../net/ethernet/wangxun/txgbe/txgbe_main.c   |  1 +
- 4 files changed, 46 insertions(+), 1 deletion(-)
+ .../ethernet/mellanox/mlx5/core/lib/mpfs.c    | 116 +++++++++++++++---
+ .../ethernet/mellanox/mlx5/core/lib/mpfs.h    |   9 ++
+ 2 files changed, 108 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/ethernet/wangxun/libwx/wx_hw.c b/drivers/net/ethernet/wangxun/libwx/wx_hw.c
-index a696d30673346..e28bf4b6737ed 100644
---- a/drivers/net/ethernet/wangxun/libwx/wx_hw.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_hw.c
-@@ -2508,6 +2508,7 @@ int wx_sw_init(struct wx *wx)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/mpfs.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/mpfs.c
+index 4450091e181a1..99fb7a53add08 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/mpfs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/mpfs.c
+@@ -65,13 +65,14 @@ static int del_l2table_entry_cmd(struct mlx5_core_dev *dev, u32 index)
+ /* UC L2 table hash node */
+ struct l2table_node {
+ 	struct l2addr_node node;
+-	u32                index; /* index in HW l2 table */
++	int                index; /* index in HW l2 table */
+ 	int                ref_count;
+ };
+ 
+ struct mlx5_mpfs {
+ 	struct hlist_head    hash[MLX5_L2_ADDR_HASH_SIZE];
+ 	struct mutex         lock; /* Synchronize l2 table access */
++	bool                 enabled;
+ 	u32                  size;
+ 	unsigned long        *bitmap;
+ };
+@@ -114,6 +115,8 @@ int mlx5_mpfs_init(struct mlx5_core_dev *dev)
  		return -ENOMEM;
  	}
  
-+	spin_lock_init(&wx->hw_stats_lock);
- 	mutex_init(&wx->reset_lock);
- 	bitmap_zero(wx->state, WX_STATE_NBITS);
- 	bitmap_zero(wx->flags, WX_PF_FLAGS_NBITS);
-@@ -2840,6 +2841,12 @@ void wx_update_stats(struct wx *wx)
- 	u64 restart_queue = 0, tx_busy = 0;
- 	u32 i;
- 
-+	if (!netif_running(wx->netdev) ||
-+	    test_bit(WX_STATE_RESETTING, wx->state))
-+		return;
++	mpfs->enabled = true;
 +
-+	spin_lock(&wx->hw_stats_lock);
-+
- 	/* gather some stats to the wx struct that are per queue */
- 	for (i = 0; i < wx->num_rx_queues; i++) {
- 		struct wx_ring *rx_ring = wx->rx_ring[i];
-@@ -2908,6 +2915,8 @@ void wx_update_stats(struct wx *wx)
- 	for (i = wx->num_vfs * wx->num_rx_queues_per_pool;
- 	     i < wx->mac.max_rx_queues; i++)
- 		hwstats->qmprc += rd32(wx, WX_PX_MPRC(i));
-+
-+	spin_unlock(&wx->hw_stats_lock);
- }
- EXPORT_SYMBOL(wx_update_stats);
- 
-diff --git a/drivers/net/ethernet/wangxun/libwx/wx_type.h b/drivers/net/ethernet/wangxun/libwx/wx_type.h
-index 0e46f29a0a75d..158a20b96960e 100644
---- a/drivers/net/ethernet/wangxun/libwx/wx_type.h
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_type.h
-@@ -1348,6 +1348,7 @@ struct wx {
- 	bool default_up;
- 
- 	struct wx_hw_stats stats;
-+	spinlock_t hw_stats_lock; /* spinlock for accessing to hw stats */
- 	u64 tx_busy;
- 	u64 non_eop_descs;
- 	u64 restart_queue;
-diff --git a/drivers/net/ethernet/wangxun/ngbe/ngbe_main.c b/drivers/net/ethernet/wangxun/ngbe/ngbe_main.c
-index e80962d40f7ed..55f52a0483554 100644
---- a/drivers/net/ethernet/wangxun/ngbe/ngbe_main.c
-+++ b/drivers/net/ethernet/wangxun/ngbe/ngbe_main.c
-@@ -138,6 +138,26 @@ static int ngbe_sw_init(struct wx *wx)
+ 	dev->priv.mpfs = mpfs;
  	return 0;
  }
+@@ -135,7 +138,7 @@ int mlx5_mpfs_add_mac(struct mlx5_core_dev *dev, u8 *mac)
+ 	struct mlx5_mpfs *mpfs = dev->priv.mpfs;
+ 	struct l2table_node *l2addr;
+ 	int err = 0;
+-	u32 index;
++	int index;
  
-+/**
-+ * ngbe_service_task - manages and runs subtasks
-+ * @work: pointer to work_struct containing our data
-+ **/
-+static void ngbe_service_task(struct work_struct *work)
-+{
-+	struct wx *wx = container_of(work, struct wx, service_task);
-+
-+	wx_update_stats(wx);
-+
-+	wx_service_event_complete(wx);
-+}
-+
-+static void ngbe_init_service(struct wx *wx)
-+{
-+	timer_setup(&wx->service_timer, wx_service_timer, 0);
-+	INIT_WORK(&wx->service_task, ngbe_service_task);
-+	clear_bit(WX_STATE_SERVICE_SCHED, wx->state);
-+}
-+
- /**
-  * ngbe_irq_enable - Enable default interrupt generation settings
-  * @wx: board private structure
-@@ -370,6 +390,10 @@ static void ngbe_disable_device(struct wx *wx)
- 	wx_napi_disable_all(wx);
- 	netif_tx_stop_all_queues(netdev);
- 	netif_tx_disable(netdev);
-+
-+	timer_delete_sync(&wx->service_timer);
-+	cancel_work_sync(&wx->service_task);
-+
- 	if (wx->gpio_ctrl)
- 		ngbe_sfp_modules_txrx_powerctl(wx, false);
- 	wx_irq_disable(wx);
-@@ -409,6 +433,7 @@ void ngbe_up(struct wx *wx)
- 	wx_napi_enable_all(wx);
- 	/* enable transmits */
- 	netif_tx_start_all_queues(wx->netdev);
-+	mod_timer(&wx->service_timer, jiffies);
+ 	if (!mpfs)
+ 		return 0;
+@@ -148,30 +151,34 @@ int mlx5_mpfs_add_mac(struct mlx5_core_dev *dev, u8 *mac)
+ 		goto out;
+ 	}
  
- 	/* clear any pending interrupts, may auto mask */
- 	rd32(wx, WX_PX_IC(0));
-@@ -772,9 +797,11 @@ static int ngbe_probe(struct pci_dev *pdev,
- 	eth_hw_addr_set(netdev, wx->mac.perm_addr);
- 	wx_mac_set_default_filter(wx, wx->mac.perm_addr);
+-	err = alloc_l2table_index(mpfs, &index);
+-	if (err)
+-		goto out;
+-
+ 	l2addr = l2addr_hash_add(mpfs->hash, mac, struct l2table_node, GFP_KERNEL);
+ 	if (!l2addr) {
+ 		err = -ENOMEM;
+-		goto hash_add_err;
++		goto out;
+ 	}
  
-+	ngbe_init_service(wx);
+-	err = set_l2table_entry_cmd(dev, index, mac);
+-	if (err)
+-		goto set_table_entry_err;
++	index = -1;
 +
- 	err = wx_init_interrupt_scheme(wx);
- 	if (err)
--		goto err_free_mac_table;
-+		goto err_cancel_service;
++	if (mpfs->enabled) {
++		err = alloc_l2table_index(mpfs, &index);
++		if (err)
++			goto hash_del;
++		err = set_l2table_entry_cmd(dev, index, mac);
++		if (err)
++			goto free_l2table_index;
++		mlx5_core_dbg(dev, "MPFS entry %pM, set @index (%d)\n",
++			      l2addr->node.addr, l2addr->index);
++	}
  
- 	/* phy Interface Configuration */
- 	err = ngbe_mdio_init(wx);
-@@ -794,6 +821,9 @@ static int ngbe_probe(struct pci_dev *pdev,
- 	wx_control_hw(wx, false);
- err_clear_interrupt_scheme:
- 	wx_clear_interrupt_scheme(wx);
-+err_cancel_service:
-+	timer_delete_sync(&wx->service_timer);
-+	cancel_work_sync(&wx->service_task);
- err_free_mac_table:
- 	kfree(wx->rss_key);
- 	kfree(wx->mac_table);
-@@ -822,6 +852,10 @@ static void ngbe_remove(struct pci_dev *pdev)
- 	netdev = wx->netdev;
- 	wx_disable_sriov(wx);
- 	unregister_netdev(netdev);
-+
-+	timer_shutdown_sync(&wx->service_timer);
-+	cancel_work_sync(&wx->service_task);
-+
- 	phylink_destroy(wx->phylink);
- 	pci_release_selected_regions(pdev,
- 				     pci_select_bars(pdev, IORESOURCE_MEM));
-diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c b/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c
-index 55c2b53e92b68..8362878e4b058 100644
---- a/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c
-+++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c
-@@ -130,6 +130,7 @@ static void txgbe_service_task(struct work_struct *work)
+ 	l2addr->index = index;
+ 	l2addr->ref_count = 1;
  
- 	txgbe_module_detection_subtask(wx);
- 	txgbe_link_config_subtask(wx);
-+	wx_update_stats(wx);
+ 	mlx5_core_dbg(dev, "MPFS mac added %pM, index (%d)\n", mac, index);
+ 	goto out;
+-
+-set_table_entry_err:
+-	l2addr_hash_del(l2addr);
+-hash_add_err:
++free_l2table_index:
+ 	free_l2table_index(mpfs, index);
++hash_del:
++	l2addr_hash_del(l2addr);
+ out:
+ 	mutex_unlock(&mpfs->lock);
+ 	return err;
+@@ -183,7 +190,7 @@ int mlx5_mpfs_del_mac(struct mlx5_core_dev *dev, u8 *mac)
+ 	struct mlx5_mpfs *mpfs = dev->priv.mpfs;
+ 	struct l2table_node *l2addr;
+ 	int err = 0;
+-	u32 index;
++	int index;
  
- 	wx_service_event_complete(wx);
+ 	if (!mpfs)
+ 		return 0;
+@@ -200,12 +207,87 @@ int mlx5_mpfs_del_mac(struct mlx5_core_dev *dev, u8 *mac)
+ 		goto unlock;
+ 
+ 	index = l2addr->index;
+-	del_l2table_entry_cmd(dev, index);
++	if (index >= 0) {
++		del_l2table_entry_cmd(dev, index);
++		free_l2table_index(mpfs, index);
++		mlx5_core_dbg(dev, "MPFS entry %pM, deleted @index (%d)\n",
++			      mac, index);
++	}
+ 	l2addr_hash_del(l2addr);
+-	free_l2table_index(mpfs, index);
+ 	mlx5_core_dbg(dev, "MPFS mac deleted %pM, index (%d)\n", mac, index);
+ unlock:
+ 	mutex_unlock(&mpfs->lock);
+ 	return err;
  }
+ EXPORT_SYMBOL(mlx5_mpfs_del_mac);
++
++int mlx5_mpfs_enable(struct mlx5_core_dev *dev)
++{
++	struct mlx5_mpfs *mpfs = dev->priv.mpfs;
++	struct l2table_node *l2addr;
++	struct hlist_node *n;
++	int err = 0, i;
++
++	if (!mpfs)
++		return -ENODEV;
++
++	mutex_lock(&mpfs->lock);
++	if (mpfs->enabled)
++		goto out;
++	mpfs->enabled = true;
++	mlx5_core_dbg(dev, "MPFS enabling mpfs\n");
++
++	mlx5_mpfs_foreach(l2addr, n, mpfs, i) {
++		u32 index;
++
++		err = alloc_l2table_index(mpfs, &index);
++		if (err) {
++			mlx5_core_err(dev, "Failed to allocated MPFS index for %pM, err(%d)\n",
++				      l2addr->node.addr, err);
++			goto out;
++		}
++
++		err = set_l2table_entry_cmd(dev, index, l2addr->node.addr);
++		if (err) {
++			mlx5_core_err(dev, "Failed to set MPFS l2table entry for %pM index=%d, err(%d)\n",
++				      l2addr->node.addr, index, err);
++			free_l2table_index(mpfs, index);
++			goto out;
++		}
++
++		l2addr->index = index;
++		mlx5_core_dbg(dev, "MPFS entry %pM, set @index (%d)\n",
++			      l2addr->node.addr, l2addr->index);
++	}
++out:
++	mutex_unlock(&mpfs->lock);
++	return err;
++}
++
++void mlx5_mpfs_disable(struct mlx5_core_dev *dev)
++{
++	struct mlx5_mpfs *mpfs = dev->priv.mpfs;
++	struct l2table_node *l2addr;
++	struct hlist_node *n;
++	int i;
++
++	if (!mpfs)
++		return;
++
++	mutex_lock(&mpfs->lock);
++	if (!mpfs->enabled)
++		goto unlock;
++	mlx5_mpfs_foreach(l2addr, n, mpfs, i) {
++		if (l2addr->index < 0)
++			continue;
++		del_l2table_entry_cmd(dev, l2addr->index);
++		free_l2table_index(mpfs, l2addr->index);
++		mlx5_core_dbg(dev, "MPFS entry %pM, deleted @index (%d)\n",
++			      l2addr->node.addr, l2addr->index);
++		l2addr->index = -1;
++	}
++	mpfs->enabled = false;
++	mlx5_core_dbg(dev, "MPFS disabled\n");
++unlock:
++	mutex_unlock(&mpfs->lock);
++}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/mpfs.h b/drivers/net/ethernet/mellanox/mlx5/core/lib/mpfs.h
+index 4a293542a7aa1..9c63838ce1f32 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/mpfs.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/mpfs.h
+@@ -45,6 +45,10 @@ struct l2addr_node {
+ 	u8                addr[ETH_ALEN];
+ };
+ 
++#define mlx5_mpfs_foreach(hs, tmp, mpfs, i) \
++	for (i = 0; i < MLX5_L2_ADDR_HASH_SIZE; i++) \
++		hlist_for_each_entry_safe(hs, tmp, &(mpfs)->hash[i], node.hlist)
++
+ #define for_each_l2hash_node(hn, tmp, hash, i) \
+ 	for (i = 0; i < MLX5_L2_ADDR_HASH_SIZE; i++) \
+ 		hlist_for_each_entry_safe(hn, tmp, &(hash)[i], hlist)
+@@ -82,11 +86,16 @@ struct l2addr_node {
+ })
+ 
+ #ifdef CONFIG_MLX5_MPFS
++struct mlx5_core_dev;
+ int  mlx5_mpfs_init(struct mlx5_core_dev *dev);
+ void mlx5_mpfs_cleanup(struct mlx5_core_dev *dev);
++int mlx5_mpfs_enable(struct mlx5_core_dev *dev);
++void mlx5_mpfs_disable(struct mlx5_core_dev *dev);
+ #else /* #ifndef CONFIG_MLX5_MPFS */
+ static inline int  mlx5_mpfs_init(struct mlx5_core_dev *dev) { return 0; }
+ static inline void mlx5_mpfs_cleanup(struct mlx5_core_dev *dev) {}
++static inline int mlx5_mpfs_enable(struct mlx5_core_dev *dev) { return 0; }
++static inline void mlx5_mpfs_disable(struct mlx5_core_dev *dev) {}
+ #endif
+ 
+ #endif
 -- 
 2.53.0
 
