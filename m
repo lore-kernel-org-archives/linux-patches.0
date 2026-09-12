@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9611E34CFAB;
-	Sat, 12 Sep 2026 07:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3A4235358;
+	Sat, 12 Sep 2026 07:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199581; cv=none; b=OQkpOwO0i2qjW7XpHZOblpgXLjUOMPBRdJgH9x1FXZnNZDsXoIsyldcc/fWsoBfzSbDSa3Bqc3auI8mVKD401gRAJtmYqZaWQM1n2OQ3jzz8VL++0EWKy+ob40CpnQQrZ6h/RlYpF2hE0zSDurEMAGoSB/QIP2B2sDT/m+zQYkw=
+	t=1789199586; cv=none; b=Aw53Z0RVffAne98dDw3Yherzn34Rs2b9KaqxDCMqiRBw4yjts3UiOiFchKI8caeIczo/9Ao4TWt/KSekT1GgGF5Umu3TV2tN5KN4k/eubwxV8I5IEfxuXlKje52cntHAQsVpQOkXeXYs0f6VXSPuhOEFfFliL2mrbjz3jTdCADc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199581; c=relaxed/simple;
-	bh=mxcMkrkSAjQotx1f6s+ArsrBYY5K2qGOu2gIEPuKxXI=;
+	s=arc-20240116; t=1789199586; c=relaxed/simple;
+	bh=3NaIuh4nuX6KG0cZIww+4dFPGfR0x9D2gRV+RMQ/E3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SCu6uE/bmCpI979GNXi7932HSG8OsJsEMnpaxtXOB6SdtiWP2XSw2K8W8a//f3LpxG1ciwXwIkKr4sFgcWukhBxAU0nm6/qoJe2BFZqHaGax8ri1h1bvg4jp7rRlFUrNwNpMZkoJfmxO62pklewTmiYKRzemyoaNwBdP39e93tQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dt6f+8cm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FleLtlrzUV/pqjmMrl5pLxs68S0jo4NwDcPiIb7e9caIYqSamOvcaKiCjh8KFinLFz9BjfITKHDZpDcRmFhRH+4SuX8be1agvLQWadH7pMDqQAg/1LnMQW2QiEOdTGFPbCNg7IBKEC4kV0Fsuo+5tym0a9BFGHSgbfp62HNJJMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5Dzh3+p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dt6f+8cm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996891F000FF;
-	Sat, 12 Sep 2026 07:52:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5Dzh3+p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 843721F000FF;
+	Sat, 12 Sep 2026 07:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199580;
-	bh=9WjBENt2iCwC0iyA7b0I6SwqBAbQ9a7e95zlLcnceNg=;
+	s=korg; t=1789199585;
+	bh=XhvDmaESpG2+0CchXh8tZTYt4qqNSTQ8J8Yg1aXafyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dt6f+8cmWjstjPxdCpV7sATOWJFd4U7NEu/FHeAsxdtmJV/J+eEtYQo5nTHQkbZBm
-	 OUdRnfcmme7oYQbGkhFkCIeEbMv2xhAmxZB0/smSCuWvKHQAyVTyO+zE8ABDkaLxCT
-	 xuiTRFFknDhL1F9u7v+LVAnVyMg9R3rxZFv4TH4k=
+	b=x5Dzh3+pAQ/8b9Kpvx5r3BznNAstBX+zJeU5Ny8aDmQ7fQ7UfnufPQ8W2u2jRzL9T
+	 95AMn7itDodhq59SvV0wFIFs1JXuKSAxTC+C0IrD760GsQjSR/j0zrskjocd1b1ARS
+	 cqc1/jInXrlF1trdXcmzOyHw2QNH8eDQCaRMvmMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0614/1815] ext4: skip tail block zeroing for inline data files
-Date: Sat, 12 Sep 2026 08:39:24 +0200
-Message-ID: <20260912065703.296009917@linuxfoundation.org>
+Subject: [PATCH 7.2 0615/1815] ARM: dts: allwinner: a10: Fix PMU interrupt
+Date: Sat, 12 Sep 2026 08:39:25 +0200
+Message-ID: <20260912065703.319915268@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,49 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Andre Przywara <andre.przywara@arm.com>
 
-[ Upstream commit 2fff82f081401a61a47e8171f6392d2b0cde5a30 ]
+[ Upstream commit eb7051f756460d7b951e94d9656e31ebb631ba28 ]
 
-ext4_block_zero_eof() is called from ext4_write_checks() on every
-append write beyond EOF. For inline data files, ext4_get_block()
-returns -ERANGE when ext4_load_tail_bh() looks up the tail block.
-However, this error is currently ignored because the return value
-of ext4_get_block() in ext4_load_tail_bh() is discarded.
+The Performance Monitoring Unit of the Cortex-A8 cores in the Allwinner
+A10 SoC is connected to interrupt line 66, not 3. This is shown in the
+manual (where interrupt 3 is assigned to UART2, also in our .dtsi), but
+has also been confirmed by triggering an PMU overflow interrupt and
+inspecting the IRQ controller status registers (from U-Boot).
+Please note that "perf stat" does not use interrupts, this might explain
+why this evaded the initial testing.
 
-Before we fix ext4_load_tail_bh() to properly propagate the error,
-skip the zeroing for inline data inodes to avoid unnecessary
-failures or confusion.
-
-Fixes: 3f60efd65412d ("ext4: zero post-EOF partial block before appending write")
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260714080044.4038124-3-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 7e345d25c796 ("ARM: dts: sun4i-a10: Add PMU node")
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://patch.msgid.link/20260720215128.5761-1-andre.przywara@arm.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm/boot/dts/allwinner/sun4i-a10.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index c4eb8171a6444..1ce10bbdcfabf 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4234,6 +4234,14 @@ int ext4_block_zero_eof(struct inode *inode, loff_t from, loff_t end)
- 	offset = from & (blocksize - 1);
- 	if (!offset || from >= end)
- 		return 0;
-+	/*
-+	 * Inline data has no tail block to zero out.  Note that a race with
-+	 * ext4_page_mkwrite() converting inline data to an extent without
-+	 * holding i_rwsem is safe, as that path zeroes the full block before
-+	 * copying in the inline data.
-+	 */
-+	if (ext4_has_inline_data(inode))
-+		return 0;
- 	/* If we are processing an encrypted inode during orphan list handling */
- 	if (IS_ENCRYPTED(inode) && !fscrypt_has_encryption_key(inode))
- 		return 0;
+diff --git a/arch/arm/boot/dts/allwinner/sun4i-a10.dtsi b/arch/arm/boot/dts/allwinner/sun4i-a10.dtsi
+index 51a6464aab9a3..cabf619c2e217 100644
+--- a/arch/arm/boot/dts/allwinner/sun4i-a10.dtsi
++++ b/arch/arm/boot/dts/allwinner/sun4i-a10.dtsi
+@@ -185,7 +185,7 @@ de: display-engine {
+ 
+ 	pmu {
+ 		compatible = "arm,cortex-a8-pmu";
+-		interrupts = <3>;
++		interrupts = <66>;
+ 	};
+ 
+ 	reserved-memory {
 -- 
 2.53.0
 
