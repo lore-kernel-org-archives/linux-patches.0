@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01A64195DA;
-	Sat, 12 Sep 2026 09:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CFC837FF60;
+	Sat, 12 Sep 2026 09:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203896; cv=none; b=WBy5Fd3CfsF/3FfHtp62G/TaJm5gTXkOutb0vlpN881OcCCbVDh6u3COhP4YukXwKqywQw3Thd/loTyXs7LDUHn9kLn93V8GCb76g9jx8ApdZXHIh/z/Uw0oDY9D8pFwFo/Y1Ykd8fXnum5r6c9zKaAaah8/dmCeEhAZYSFEWFA=
+	t=1789203900; cv=none; b=Zr865z2UwpDDskf3KXHtoH3Oatd66pKIb1o7qSTMQGKwDtL4Np2IH7e01Sh6UFRplfkG48Kd10D3CAoBaveagbl5rKvVREWbSJCxfdIvqwKy8iRHB7sTsFJzxKs1RKIL3LgLh9rQ4fH1vwIvcgfW6tyAcS1+Mx+Pd6A64QLfRQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203896; c=relaxed/simple;
-	bh=ghRRNCNBAiZo7wZo+RykdFmgRRm9xsSUYxhbkOqMkns=;
+	s=arc-20240116; t=1789203900; c=relaxed/simple;
+	bh=Zon58yxZl8nM9LlUuoMjxSdvZzbZzbtaqMR3eFbqyuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ymed71kXTWhUiRcc3ZKnsrUgQArAHy12trD8GKsYT8rHT62WFrGi0IpQfdaI9lsXujJoWmvdRv6OBEBOywJiooXcP4DVugkuNswON37XEY6JirpvWsQ1kanmpKSnXo6wYybtz5Lz3P28X+Z828gxoJtInDXbXC6eDC4CQXiUQ0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qek4O89V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AP5ALnXcneZgTdlJg/v8hLBcSunIivX0v3HwQDtsBXGG2WrRQ7K/41hjGeEBdkNGdtYvQfWuhCXuGHLC6Eq9yKcHxCXQFC8fF5QE/Chj5u3fcPoZyg+4Hu2TbTerxgFgWfGPnJtIZ7PIpqa/LGgJJYKmk7Jro+g+Etl0b4+OsGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKqBL9rN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qek4O89V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF6D1F000FF;
-	Sat, 12 Sep 2026 09:04:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKqBL9rN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB56D1F000FF;
+	Sat, 12 Sep 2026 09:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203894;
-	bh=YtWLM+P+6M/G8q1M5NxpV+0nvj9eBmiafKkvqHgma3w=;
+	s=korg; t=1789203899;
+	bh=xuv7PKpDMLDSIazPt3NZahidaX68L7nDEW6DL5tOsb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qek4O89VovpBtWgS07LS61dfgNr5uQvG0etpiY+TkbETxmIHw+jazWYQ+d4hqKdyy
-	 UvrkWFsRMNytilB7EIp4VXTO14se47tJDn417ds5TdbxfySfoYbbN8wjsr6k5w2Amo
-	 tqaug3RA5HGOQGMTwQNfMl8yKtdK2cITXUwxWNLw=
+	b=DKqBL9rNENS07tK6cojU8TRi8aoyF0Xg9ETEU0P+n0eUO9nWUCXjBqe98O4TPzVM2
+	 G1A/4wOOYuL0tGw1HCfGA3y8ffrdLed8a0gG36dJJRdgi9p9DbOYLql90aUng/9nXM
+	 bpbx0dfTuCsw/+6dzsyU9MPazgjMc96ITvNIdt74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunseong Kim <yunseong.kim@est.tech>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Michal Blaszczyk <michalblk@google.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1500/1815] ksmbd: fix slab-out-of-bounds read in ksmbd_alloc_user()
-Date: Sat, 12 Sep 2026 08:54:10 +0200
-Message-ID: <20260912065724.212784177@linuxfoundation.org>
+Subject: [PATCH 7.2 1465/1815] selftests/sched_ext: Fix flaky ddsp failure tests on busy systems
+Date: Sat, 12 Sep 2026 08:53:35 +0200
+Message-ID: <20260912065723.401735612@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,162 +45,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yunseong Kim <yunseong.kim@est.tech>
+From: Michal Blaszczyk <michalblk@google.com>
 
-[ Upstream commit 7405d0ba294306721843bc551611775e6edef516 ]
+[ Upstream commit e72979d3264a87a6a2dfb44fe0f5723a17d2ef84 ]
 
-ksmbd_alloc_user() copies resp->hash_sz bytes out of the mountd IPC
-login response with
+The ddsp_vtimelocal_fail and ddsp_bogus_dsq_fail tests skip calling
+scx_bpf_dsq_insert_vtime() if scx_bpf_pick_idle_cpu() fails to find an idle
+CPU (returns a negative error code). On loaded systems, this results in the
+tests skipping the very assertions they are meant to verify.
 
-	user->passkey_sz = resp->hash_sz;
-	user->passkey = kmalloc(resp->hash_sz, KSMBD_DEFAULT_GFP);
-	if (user->passkey)
-		memcpy(user->passkey, resp->hash, resp->hash_sz);
+Eliminate this flakiness by falling back to prev_cpu if no idle CPU is
+found, ensuring the illegal dispatch operations are unconditionally
+attempted and tested.
 
-resp->hash_sz is a __u16 supplied by the response, but resp->hash[] is
-only KSMBD_REQ_MAX_HASH_SZ bytes.  A malformed or malicious login
-response can set hash_sz well beyond that (up to 65535), so the memcpy()
-reads past the end of the response object.  ipc_validate_msg() does not
-bound hash_sz, so reject any response whose hash_sz exceeds the on-stack
-hash[] buffer before allocating and copying.
-
-[ 2030.238706] BUG: KASAN: slab-out-of-bounds in ksmbd_alloc_user+0x278/0x680
-[ 2030.240549] Read of size 65535 at addr ffff888121bb6680 by task kworker/4:1/18611
-[ 2030.242296]
-[ 2030.242710] CPU: 4 UID: 0 PID: 18611 Comm: kworker/4:1 Not tainted 7.1.0-next-20260623-virtme #96 PREEMPT(lazy)
-[ 2030.242732] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-[ 2030.242743] Workqueue: ksmbd-io handle_ksmbd_work
-[ 2030.242763] Call Trace:
-[ 2030.242769]  <TASK>
-[ 2030.242776]  dump_stack_lvl+0xa2/0xd0
-[ 2030.242794]  print_address_description+0x77/0x200
-[ 2030.242815]  ? ksmbd_alloc_user+0x278/0x680
-[ 2030.242831]  print_report+0x58/0x70
-[ 2030.242848]  kasan_report+0x117/0x150
-[ 2030.242869]  ? ksmbd_alloc_user+0x278/0x680
-[ 2030.242888]  kasan_check_range+0x3c7/0x3f0
-[ 2030.242908]  ? ksmbd_alloc_user+0x278/0x680
-[ 2030.242925]  __asan_memcpy+0x29/0x70
-[ 2030.242942]  ksmbd_alloc_user+0x278/0x680
-[ 2030.242960]  ksmbd_login_user+0xc3/0x120
-[ 2030.242978]  ntlm_authenticate+0x5e6/0x1b00
-[ 2030.243017]  ? __pfx_ntlm_authenticate+0x10/0x10
-[ 2030.243035]  ? ksmbd_session_lookup+0x188/0x1d0
-[ 2030.243054]  ? __pfx_ksmbd_session_lookup+0x10/0x10
-[ 2030.243090]  ? __sanitizer_cov_trace_switch+0x7b/0x140
-[ 2030.243108]  smb2_sess_setup+0x1e4a/0x27b0
-[ 2030.243126]  ? copy_from_kernel_nofault+0x199/0x300
-[ 2030.243156]  ? __pfx_smb2_sess_setup+0x10/0x10
-[ 2030.243173]  ? get_smb2_cmd_val+0xe3/0x1c0
-[ 2030.243208]  handle_ksmbd_work+0x954/0x1280
-[ 2030.243230]  ? __pfx_handle_ksmbd_work+0x10/0x10
-[ 2030.243249]  ? process_scheduled_works+0xa07/0x1490
-[ 2030.243270]  ? process_scheduled_works+0xa07/0x1490
-[ 2030.243291]  process_scheduled_works+0xa70/0x1490
-[ 2030.243320]  ? __pfx_process_scheduled_works+0x10/0x10
-[ 2030.243340]  ? do_raw_spin_lock+0x130/0x300
-[ 2030.243358]  ? lock_is_held_type+0x7b/0x110
-[ 2030.243388]  worker_thread+0x932/0xe20
-[ 2030.243415]  kthread+0x38a/0x470
-[ 2030.243431]  ? __pfx_worker_thread+0x10/0x10
-[ 2030.243451]  ? __pfx_kthread+0x10/0x10
-[ 2030.243467]  ret_from_fork+0x484/0x910
-[ 2030.243485]  ? __pfx_ret_from_fork+0x10/0x10
-[ 2030.243501]  ? __switch_to+0xc77/0x12c0
-[ 2030.243523]  ? __pfx_kthread+0x10/0x10
-[ 2030.243540]  ret_from_fork_asm+0x1a/0x30
-[ 2030.243564]  </TASK>
-[ 2030.243570]
-[ 2030.290164] Allocated by task 19279:
-[ 2030.290911]  kasan_save_track+0x3e/0x80
-[ 2030.292179]  __kasan_kmalloc+0x72/0x90
-[ 2030.293217]  __kvmalloc_node_noprof+0x3ff/0x6b0
-[ 2030.294467]  handle_generic_event+0x59b/0x750
-[ 2030.295345]  genl_family_rcv_msg_doit+0x238/0x340
-[ 2030.296553]  genl_rcv_msg+0x606/0x7b0
-[ 2030.297129]  netlink_rcv_skb+0x22b/0x4a0
-[ 2030.298500]  genl_rcv+0x2d/0x40
-[ 2030.299273]  netlink_unicast+0x7ba/0x930
-[ 2030.300019]  netlink_sendmsg+0x8c3/0xb00
-[ 2030.301073]  __sock_sendmsg+0xec/0x140
-[ 2030.301579]  __sys_sendto+0x357/0x470
-[ 2030.302255]  __x64_sys_sendto+0xe3/0x100
-[ 2030.303425]  do_syscall_64+0x135/0x460
-[ 2030.304763]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[ 2030.305594]
-[ 2030.305819] The buggy address belongs to the object at ffff888121bb6640
-[ 2030.305819]  which belongs to the cache kmalloc-192 of size 192
-[ 2030.309595] The buggy address is located 64 bytes inside of
-[ 2030.309595]  allocated 166-byte region [ffff888121bb6640, ffff888121bb66e6)
-[ 2030.312484]
-[ 2030.312719] The buggy address belongs to the physical page:
-[ 2030.314315] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x121bb6
-[ 2030.316481] head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-[ 2030.318248] flags: 0x100000000000040(head|node=0|zone=2)
-[ 2030.319662] page_type: f5(slab)
-[ 2030.320242] raw: 0100000000000040 ffff8881000424c0 ffffea00047c1510 ffff888100040468
-[ 2030.321911] raw: 0000000000000000 0000000000150015 00000000f5000000 0000000000000000
-[ 2030.324413] head: 0100000000000040 ffff8881000424c0 ffffea00047c1510 ffff888100040468
-[ 2030.326150] head: 0000000000000000 0000000000150015 00000000f5000000 0000000000000000
-[ 2030.327960] head: 0100000000000001 ffffffffffffff81 00000000ffffffff 00000000ffffffff
-[ 2030.329615] head: ffff888121bb7ab0 0000000000000000 00000000ffffffff 0000000000000000
-[ 2030.331861] page dumped because: kasan: bad access detected
-[ 2030.332946]
-[ 2030.333502] Memory state around the buggy address:
-[ 2030.334698]  ffff888121bb6580: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[ 2030.336475]  ffff888121bb6600: fc fc fc fc fc fc fc fc 00 00 00 00 00 00 00 00
-[ 2030.338143] >ffff888121bb6680: 00 00 00 00 00 00 00 00 00 00 00 00 06 fc fc fc
-[ 2030.339116]                                                        ^
-[ 2030.341315]  ffff888121bb6700: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[ 2030.342801]  ffff888121bb6780: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
-[ 2030.344643] ==================================================================
-
-Found with ksmbdzzer [2], a KSMBD fuzzer that drives libFuzzer with a
-kcov-dataflow [1] coverage vector: it folds each instrumented
-comparison/argument's runtime operand value together with its PC (the
-default arm mixes them as pc⊕val) so that a new operand value at a known
-site counts as new coverage.
-
-[1] https://lwn.net/Articles/1077606/
-[2] https://github.com/yskzalloc/kcov-dataflow
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Signed-off-by: Yunseong Kim <yunseong.kim@est.tech>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: a5db7817af78 ("sched_ext: Add selftests")
+Signed-off-by: Michal Blaszczyk <michalblk@google.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/user_config.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ .../sched_ext/ddsp_bogus_dsq_fail.bpf.c       | 20 +++++++++----------
+ .../sched_ext/ddsp_vtimelocal_fail.bpf.c      | 13 ++++++------
+ 2 files changed, 15 insertions(+), 18 deletions(-)
 
-diff --git a/fs/smb/server/mgmt/user_config.c b/fs/smb/server/mgmt/user_config.c
-index 03184a3303b9f..0be08cf1896c4 100644
---- a/fs/smb/server/mgmt/user_config.c
-+++ b/fs/smb/server/mgmt/user_config.c
-@@ -37,6 +37,17 @@ struct ksmbd_user *ksmbd_alloc_user(struct ksmbd_login_response *resp,
+diff --git a/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c b/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
+index 6f4c3f5a1c5d9..7ef9de7b27ebf 100644
+--- a/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
++++ b/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
+@@ -14,18 +14,16 @@ s32 BPF_STRUCT_OPS(ddsp_bogus_dsq_fail_select_cpu, struct task_struct *p,
+ 		   s32 prev_cpu, u64 wake_flags)
  {
- 	struct ksmbd_user *user;
+ 	s32 cpu = scx_bpf_pick_idle_cpu(p->cpus_ptr, 0);
++	if (cpu < 0)
++		cpu = prev_cpu;
  
+-	if (cpu >= 0) {
+-		/*
+-		 * If we dispatch to a bogus DSQ that will fall back to the
+-		 * builtin global DSQ, we fail gracefully.
+-		 */
+-		scx_bpf_dsq_insert_vtime(p, 0xcafef00d, SCX_SLICE_DFL,
+-				       p->scx.dsq_vtime, 0);
+-		return cpu;
+-	}
+-
+-	return prev_cpu;
 +	/*
-+	 * resp->hash_sz is a __u16 taken from the mountd IPC login response but
-+	 * resp->hash[] is only KSMBD_REQ_MAX_HASH_SZ bytes.  A malformed or
-+	 * malicious response can set hash_sz far beyond that (up to 65535),
-+	 * making the memcpy() below read past the response object
-+	 * (slab-out-of-bounds in ksmbd_alloc_user()).  Reject any oversized
-+	 * hash rather than trust the length.
++	 * If we dispatch to a bogus DSQ that will fall back to the
++	 * builtin global DSQ, we fail gracefully.
 +	 */
-+	if (resp->hash_sz > sizeof(resp->hash))
-+		return NULL;
-+
- 	user = kmalloc_obj(struct ksmbd_user, KSMBD_DEFAULT_GFP);
- 	if (!user)
- 		return NULL;
++	scx_bpf_dsq_insert_vtime(p, 0xcafef00d, SCX_SLICE_DFL,
++				 p->scx.dsq_vtime, 0);
++	return cpu;
+ }
+ 
+ void BPF_STRUCT_OPS(ddsp_bogus_dsq_fail_exit, struct scx_exit_info *ei)
+diff --git a/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c b/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
+index e4a55027778fd..82dca4cdc0a6c 100644
+--- a/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
++++ b/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
+@@ -14,15 +14,14 @@ s32 BPF_STRUCT_OPS(ddsp_vtimelocal_fail_select_cpu, struct task_struct *p,
+ 		   s32 prev_cpu, u64 wake_flags)
+ {
+ 	s32 cpu = scx_bpf_pick_idle_cpu(p->cpus_ptr, 0);
++	if (cpu < 0)
++		cpu = prev_cpu;
+ 
+-	if (cpu >= 0) {
+-		/* Shouldn't be allowed to vtime dispatch to a builtin DSQ. */
+-		scx_bpf_dsq_insert_vtime(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL,
+-					 p->scx.dsq_vtime, 0);
+-		return cpu;
+-	}
++	/* Shouldn't be allowed to vtime dispatch to a builtin DSQ. */
++	scx_bpf_dsq_insert_vtime(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL,
++				 p->scx.dsq_vtime, 0);
+ 
+-	return prev_cpu;
++	return cpu;
+ }
+ 
+ void BPF_STRUCT_OPS(ddsp_vtimelocal_fail_exit, struct scx_exit_info *ei)
 -- 
 2.53.0
 
