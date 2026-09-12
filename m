@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1317547CA96;
-	Sat, 12 Sep 2026 16:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2958E47CC92;
+	Sat, 12 Sep 2026 16:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231538; cv=none; b=iq0NM2jbjZqLLLI8Z6uabYXTjBPsz1ywh4IHj/kE4quBLHQssMcmsQD/0AMc5jxyzFO1IHjWiDehzOG14JEa49TT7XMSLI8wkR4Zmbc8K7e4NhPMkI0nQK5Jry9y+d3GwDtTlJO/HdttwcyFVUi4RVmjwIWz9JY5j713p7PHkh0=
+	t=1789231543; cv=none; b=U07wIVGv2JALiX4ZSnw8wHZIiWQzsiIBZ1hpD9gqb/MAmoJGXxcSw29QJcM+ChJ0TDpcCFg0+HiVDJCd63BnKJhNZ9lD1B3W7o6ywlYaWQlagLo6LVkFFnoIsIx2SSZs1aI7iU7oJlDT61OD/sCoZZeIOmKtZMMUD+Sr7kATDW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231538; c=relaxed/simple;
-	bh=7XJLmqhB/b4NATRpllqp1MbrNQlkintVGMCkPfURQEw=;
+	s=arc-20240116; t=1789231543; c=relaxed/simple;
+	bh=iSEw+mqdxDWSyKBVSV0CKjWnJkruxKym8YzVIhHk6A8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PyyzJz9zUUknHXTCKD0cinKLFaDwIdbcRPH4w//TfeTXbwsQKFLn95uoV6JZQYXxV+ySfBxxT7Z6Caw/f3qgudb+fmWBcwLxDWW+r5DufxXPsyrC5+pfH10OsLqVG7jHtybaxyVO/fnI9peEVpERFQ1u7VTk1CDetlpjQoOSarc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AT0kPZZ4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EXuNW9/diBdJAKG/Ne5Z54fq/6jrqDWR6rIGzY8FChLIwukdpLEtEpDrRnMgZ/XMWCPjyyKW/+JEvtizcyF1xlcJKLFkjoPJcfao9R2friomEBQh0FDlicgAaD/8Os5q63BJMdX8KpG236PHY2EMm2aoT9cFvkvgZyfxZU0RfYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RGxFAXbj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AT0kPZZ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AA21F000FF;
-	Sat, 12 Sep 2026 16:45:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RGxFAXbj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEFEF1F00893;
+	Sat, 12 Sep 2026 16:45:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231533;
-	bh=6pzuKeuQDr6/yORdJ5yx/qQpMK8kc6Y1UHstGqSZl7M=;
+	s=korg; t=1789231538;
+	bh=04+iM5bOiY1NUucOHDlOcpiovNOPBDIEDGJJMtfMcmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AT0kPZZ4jsKJ6948zOh3BE78qe8PvQkcUQhdHIn1jHXqFZUt9GOmSVigKJGw79jkY
-	 OQWesESlAe4UNlEo5u2EHXDLVPg7JNd7UtbdCns5ha7/g/dlUu8/FQXa85n9BZo7by
-	 WE3HNXqxTDdf9z45lwqbqKVOsLwE2iINo+LcyytM=
+	b=RGxFAXbj7hxTUbiPoCe2LIFNACSt5X+VvR3PdTl/gNvqebyVS6QkTBhgBsbrRUWkp
+	 qjelgkJdyRDwW36M8YJAaEai0TSubQsYXMPeJnW31yrsOfaijWevQpZqKkTud+lyEC
+	 ox8PkDnLxGJabbp9TyETkD/e/5nM98To68xtv1gk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	David Heidelberg <david@ixit.cz>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0965/1191] nfc: pn533: hold a reference to the request skb during send_frame
-Date: Sat, 12 Sep 2026 09:01:33 +0200
-Message-ID: <20260912065609.892557435@linuxfoundation.org>
+Subject: [PATCH 6.1 1012/1191] ACPI: scan: fix bus ID cleanup on device_add() failures
+Date: Sat, 12 Sep 2026 09:02:20 +0200
+Message-ID: <20260912065610.923677868@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,91 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yinhao Hu <dddddd@hust.edu.cn>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit 47792358a624ea066455ef86b744159928cd7716 ]
+[ Upstream commit a414485ebc2aa50907d0ce97cde2b1a353696897 ]
 
-__pn533_send_async() publishes the command and then calls
-dev->phy_ops->send_frame(). Once dev->cmd is set, an incoming frame
-can be matched to this command: the I2C threaded IRQ runs
-pn533_recv_frame(), which queues cmd_complete_work, and
-pn533_send_async_complete() frees cmd->req with consume_skb().
+When device_add() fails after acpi_device_set_name() has allocated an
+instance ID and a new acpi_device_bus_id has been linked into
+acpi_bus_id_list, the rollback path only removes wakeup_list and
+detaches the ACPI handle data.
 
-On the I2C transport, pn533_i2c_send_frame() still dereferences the same
-skb after i2c_master_send() returns, so a completion that races the
-send can free the skb while the transport is still using it.
+That leaves the bus-ID bookkeeping behind and keeps the allocated
+instance number consumed.
 
-The request skb is owned by the command object and may be freed by
-command completion at any time after dev->cmd is published, so the
-transport send path must not assume it stays alive. Hold a temporary
-reference to the request skb across the send_frame() call so the
-transport always sees a live skb even if completion races the send.
-Add a pn533_send_cmd_frame() helper and use it from all three send
-paths.
+Move the bus-ID cleanup and wakeup-list removal into a single helper.
 
-Fixes: 9815c7cf22da ("NFC: pn533: Separate physical layer from the core implementation")
-Signed-off-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260626073434.3977525-1-dddddd@hust.edu.cn
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Use it from both the normal device teardown path and the device_add()
+rollback path. The wakeup list node is initialized before registration,
+so it can be deleted without checking whether the device is wakeup-
+capable like in the original teardown path.
+
+Fixes: d783156ea384 ("ACPI / scan: Define non-empty device removal handler")
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+[ rjw: Rename acpi_device_del_list() to acpi_device_cleanup() ]
+[ rjw: Subject and changelog edits ]
+Link: https://patch.msgid.link/20260808085943.526-1-getshell@seu.edu.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/pn533/pn533.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/acpi/scan.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nfc/pn533/pn533.c b/drivers/nfc/pn533/pn533.c
-index f82eda9c73d14..5b944c164acc9 100644
---- a/drivers/nfc/pn533/pn533.c
-+++ b/drivers/nfc/pn533/pn533.c
-@@ -434,6 +434,18 @@ static int pn533_send_async_complete(struct pn533 *dev)
- 	return rc;
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index 4aaf8c974f79b..12c3a5984bf18 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -455,12 +455,10 @@ static void acpi_device_release(struct device *dev)
+ 	kfree(acpi_dev);
  }
  
-+static int pn533_send_cmd_frame(struct pn533 *dev, struct pn533_cmd *cmd)
-+{
-+	struct sk_buff *req = cmd->req;
-+	int rc;
-+
-+	skb_get(req);
-+	dev->cmd = cmd;
-+	rc = dev->phy_ops->send_frame(dev, req);
-+	dev_kfree_skb(req);
-+	return rc;
+-static void acpi_device_del(struct acpi_device *device)
++static void acpi_device_cleanup(struct acpi_device *device)
+ {
+ 	struct acpi_device_bus_id *acpi_device_bus_id;
+ 
+-	mutex_lock(&acpi_device_lock);
+-
+ 	list_for_each_entry(acpi_device_bus_id, &acpi_bus_id_list, node)
+ 		if (!strcmp(acpi_device_bus_id->bus_id,
+ 			    acpi_device_hid(device))) {
+@@ -475,6 +473,13 @@ static void acpi_device_del(struct acpi_device *device)
+ 		}
+ 
+ 	list_del(&device->wakeup_list);
 +}
 +
- static int __pn533_send_async(struct pn533 *dev, u8 cmd_code,
- 			      struct sk_buff *req,
- 			      pn533_send_async_complete_t complete_cb,
-@@ -458,8 +470,7 @@ static int __pn533_send_async(struct pn533 *dev, u8 cmd_code,
- 	mutex_lock(&dev->cmd_lock);
++static void acpi_device_del(struct acpi_device *device)
++{
++	mutex_lock(&acpi_device_lock);
++
++	acpi_device_cleanup(device);
  
- 	if (!dev->cmd_pending) {
--		dev->cmd = cmd;
--		rc = dev->phy_ops->send_frame(dev, req);
-+		rc = pn533_send_cmd_frame(dev, cmd);
- 		if (rc) {
- 			dev->cmd = NULL;
- 			goto error;
-@@ -529,8 +540,7 @@ static int pn533_send_cmd_direct_async(struct pn533 *dev, u8 cmd_code,
+ 	mutex_unlock(&acpi_device_lock);
  
- 	pn533_build_cmd_frame(dev, cmd_code, req);
+@@ -740,7 +745,7 @@ int acpi_device_add(struct acpi_device *device)
+ err:
+ 	mutex_lock(&acpi_device_lock);
  
--	dev->cmd = cmd;
--	rc = dev->phy_ops->send_frame(dev, req);
-+	rc = pn533_send_cmd_frame(dev, cmd);
- 	if (rc < 0) {
- 		dev->cmd = NULL;
- 		kfree(cmd);
-@@ -569,8 +579,7 @@ static void pn533_wq_cmd(struct work_struct *work)
+-	list_del(&device->wakeup_list);
++	acpi_device_cleanup(device);
  
- 	mutex_unlock(&dev->cmd_lock);
- 
--	dev->cmd = cmd;
--	rc = dev->phy_ops->send_frame(dev, cmd->req);
-+	rc = pn533_send_cmd_frame(dev, cmd);
- 	if (rc < 0) {
- 		dev->cmd = NULL;
- 		dev_kfree_skb(cmd->req);
+ err_unlock:
+ 	mutex_unlock(&acpi_device_lock);
 -- 
 2.53.0
 
