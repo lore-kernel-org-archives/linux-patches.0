@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF0A37C0E2;
-	Sat, 12 Sep 2026 07:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D961EB5FD;
+	Sat, 12 Sep 2026 07:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197721; cv=none; b=QR1dErKy7++SUf4WQm1+/Yp23XlEh1PMZpLuBkoLIIqku36yCfTF/kR6IiyofPN+sOlR/1PGpMIyTJPzXTVvPDhnzeAmvoY546qyb5zUgzZxIA1Ai7NRAQa3vT0PiBrxGie/sUbl6NGJ/G2uaFA3UzmpTHANCXmRwMOcK6ipS4o=
+	t=1789197726; cv=none; b=lNyAvBfWp6Z9aoxXFGBXN1ebFHEHV/lcOBenCSzOwsqxuMclz7TVgpnHLeJE3axG/8QNFc37KRiH5nbzghylr5ypYL4ferMpkLS+Nj9Qg63hruzQJzwb0aXGmTuVRGmgGcs7WKWwIHhMC6Wmefz6BjS5ycdkuVkEfnhFcRPHsWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197721; c=relaxed/simple;
-	bh=LUarm1Nr7npSJZMHznl4PZn3YqzW96h5NgCdffa5+tA=;
+	s=arc-20240116; t=1789197726; c=relaxed/simple;
+	bh=JmZmdyDPWRGMS//uflBPDvCyuMH98dfNlMZvkLFg8Cc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ks7teEcaH2hZNQ3DDsF9lJOiAROkOX29d16h1QpikMAqQrCyhDRTN6QjhRQZsTPVvewwJwg07galmXuDwYJsC3FHBo+xcwuDmt+dJbgr5J/6MVWW3a4mD4XzrnhG77cU5HScGLYny/vS5b9sqLnEiKP2jPfTjjLofZFMD/wJu5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1JIsM9mY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pVCC0/Rc1oGE8Kbqjr21NIfFaSHcs7gZFPQId/5bnY0XqWwYuuZZC1W7NDSxrjj753Zp8pdEVrdXjXw9jakSYWzEbeCxWtGLwMOM4lETb+yOkydwd34ug5DDrUiQ7PQzlG0ODu6P+r0yop6Mql4lOSP3ocvp5RGRtwXwYhm4/j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kw1HHzo4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1JIsM9mY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93FE41F000FF;
-	Sat, 12 Sep 2026 07:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kw1HHzo4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9642D1F000FF;
+	Sat, 12 Sep 2026 07:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197719;
-	bh=Vq+dDX65bygIZhDxX0MrSDhE0r5qmuDk3qMWFZ7VR7o=;
+	s=korg; t=1789197724;
+	bh=f01tca4Jyp0koZ16D0mI1szExudOOmBrOJ9eSPRXqPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1JIsM9mYbhEnNR6cfuISvlsdaAXmsidsnToPSxFJyUcSiuKT6EEAbSJgSp9LML+ek
-	 MPPmG+3CTJgw6Je9UHzjHuo/+tpEmJjH3Jdq1cFeA8itkjMTJb33I5Q8eDjNHFwhWR
-	 HEpn7mzIg14dfnMk+SNlmQBLXAk2g8uHG/1S1C+M=
+	b=kw1HHzo43Wdk1j4ZJgJJ4c0yFHeQwJFKUYsex9PIdFanZEsl/sLHrB0Qgat6XWmMM
+	 IJ6GUReMfQ0Ye8CxcpFZWQq7qcbdO/naqVh9z8940V3+2butGadDUBH5rtn0HERNyQ
+	 xQkvRylPqkNpC81WpvPMqE8t79JkjZHV4Zm0Anb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Dan Carpenter <error27@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0226/1815] PCI: qcom: Skip PERST# GPIOs provided by downstream PCIe devices
-Date: Sat, 12 Sep 2026 08:32:56 +0200
-Message-ID: <20260912065654.298260059@linuxfoundation.org>
+Subject: [PATCH 7.2 0235/1815] staging: rtl8723bs: fix mismatched free of HalData in rtw_sdio_if1_init()
+Date: Sat, 12 Sep 2026 08:33:05 +0200
+Message-ID: <20260912065654.509329558@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,94 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-[ Upstream commit 3edb3a038d423480efeb204dbc6ddc9a292f8ecb ]
+[ Upstream commit 264676418b726baca7be49171e306b6aa05cceb0 ]
 
-Currently, the pcie-qcom driver recursively parses the PERST# GPIO from all
-child nodes defined in DT and acquires them. But this creates issues with
-PERST# GPIO provided by one of the child devices like the PCIe switch port.
-In this case, the RC driver cannot acquire the PERST# GPIO since it will be
-provided by the child PCIe device which was not yet enumerated during RC
-driver probe.
+padapter->HalData is allocated via vzalloc(), but incorrectly freed
+using kfree() in the rtw_sdio_if1_init() error path. Using kfree() to
+release this vmalloc-backed buffer can lead to memory corruption.
 
-Fix this by checking if the GPIO provider is a child of the RC's DT node
-(i.e., sits behind this PCIe controller). If so, skip it, as PERST#
-should be controlled by the respective PCIe client driver implementation.
-GPIOs provided by external GPIO controllers (e.g., TLMM in Qcom SoCs)
-continue to be handled normally.
+Use rtw_hal_data_deinit() to pair the free correctly and free
+HalData with vfree().
 
-Fixes: 2fd60a2edb83 ("PCI: qcom: Parse PERST# from all PCIe bridge nodes")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260616-pci-qcom-perst-fix-v1-1-27600d6ae357@oss.qualcomm.com
+The bug was first flagged by an experimental static analysis tool we
+are developing for kernel memory-management bugs. Manual inspection
+confirms that the issue is still present in current mainline.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have
+suitable RTL8723BS SDIO hardware to test with, no runtime testing was
+able to be performed.
+
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Link: https://patch.msgid.link/20260525091836.812565-1-dawei.feng@seu.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 37 ++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ drivers/staging/rtl8723bs/os_dep/sdio_intf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index d8eb52857f69c..d62cf302de2b8 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1820,6 +1820,23 @@ static const struct pci_ecam_ops pci_qcom_ecam_ops = {
- 	}
- };
+diff --git a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
+index c43a0391a5ca7..ee4a9c66aceed 100644
+--- a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
++++ b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
+@@ -285,8 +285,8 @@ static struct adapter *rtw_sdio_if1_init(struct dvobj_priv *dvobj, const struct
+ 	status = _SUCCESS;
  
-+/* Check if @node is a child of @dev in DT */
-+static bool qcom_pcie_is_child_node(struct device *dev,
-+				    struct device_node *node)
-+{
-+	struct device_node *parent;
-+
-+	for (parent = of_get_parent(node); parent;
-+	     parent = of_get_next_parent(parent)) {
-+		if (parent == dev->of_node) {
-+			of_node_put(parent);
-+			return true;
-+		}
-+	}
-+
-+	return false;
-+}
-+
- /* Parse PERST# from all nodes in depth first manner starting from @np */
- static int qcom_pcie_parse_perst(struct qcom_pcie *pcie,
- 				 struct qcom_pcie_port *port,
-@@ -1827,6 +1844,7 @@ static int qcom_pcie_parse_perst(struct qcom_pcie *pcie,
- {
- 	struct device *dev = pcie->pci->dev;
- 	struct qcom_pcie_perst *perst;
-+	struct device_node *gpio_np;
- 	struct gpio_desc *reset;
- 	int ret;
+ free_hal_data:
+-	if (status != _SUCCESS && padapter->HalData)
+-		kfree(padapter->HalData);
++	if (status != _SUCCESS)
++		rtw_hal_data_deinit(padapter);
  
-@@ -1840,6 +1858,25 @@ static int qcom_pcie_parse_perst(struct qcom_pcie *pcie,
- 	if (!of_find_property(np, "reset-gpios", NULL))
- 		goto parse_child_node;
- 
-+	/*
-+	 * Skip GPIOs provided by a PCIe device which is a child of the Root
-+	 * Complex (e.g., a PCIe switch with GPIO controller capability). Such
-+	 * controllers won't be available at RC probe time and their PERST#
-+	 * should be controlled by the respective PCI client driver
-+	 * implementation.
-+	 */
-+	gpio_np = of_parse_phandle(np, "reset-gpios", 0);
-+	if (!gpio_np) {
-+		dev_err(dev, "Failed to parse GPIO provider\n");
-+		return -EINVAL;
-+	}
-+
-+	if (qcom_pcie_is_child_node(dev, gpio_np)) {
-+		of_node_put(gpio_np);
-+		goto parse_child_node;
-+	}
-+	of_node_put(gpio_np);
-+
- 	reset = devm_fwnode_gpiod_get(dev, of_fwnode_handle(np), "reset",
- 				      GPIOD_OUT_HIGH, "PERST#");
- 	if (IS_ERR(reset)) {
+ 	if (status != _SUCCESS) {
+ 		rtw_wdev_unregister(padapter->rtw_wdev);
 -- 
 2.53.0
 
