@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D991624D5;
-	Sat, 12 Sep 2026 14:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CB0274B46;
+	Sat, 12 Sep 2026 14:53:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224799; cv=none; b=uxKnOQlnhd0fGL9RVb89U44CVo2aqXHLqxsJp/ZYiLKM+OR9Xjykj1NSKhX/tWSJgIH7aj6dn1akbOqC51620LAN+9EXhZ5CKcR06NHKjftOM//S5MdW0sQC3ZY2x59N/VxYYip+DYUQgj0jc9EPfICy2VpZWo7+CcL9QiudT8M=
+	t=1789224804; cv=none; b=WGlItmlc9g0yK2pA7AVs5B8Pplihc76znffZpmMV82t9j12NFYPE/ZmE4NXpj+Z4DzJqMVWWn7STOKqmcuY+W4fURdVj+eFv6HzoXtzphbwo8tPqx4JLA+qb3woh4qNDBLn8qOXsDxTAEaCsekSaTDbht+Juk7We0EBdZ7lKOsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224799; c=relaxed/simple;
-	bh=btdZqQIMa1W+TRNFiU0Z9axkqIutaBFlkXQ/4zc8Mn8=;
+	s=arc-20240116; t=1789224804; c=relaxed/simple;
+	bh=OhfmicWEMQsYD1GlE26xlY6WLflS3tP8/L0LWVDoDQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IsDylcKwu0cNrMr31Zd6HBbhouOFpbUntzrfDON48WG2rXGwgPr75j9WBi9Xsh+WOYY9fTGIf9lphT8aTXd+nRTuZ8mjs5nS0/BXwk3ow+mH5R5tFnOr+IeUcoJMs8a+1BojkI2Qe7L4la6Iu4B1JkEJyzCxNWb4Sa2aRI/Bmis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTulS60J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NGN0ZDFfbqDBmfy3+S82XCMuguhPYbjSpfLaYegyUVA5Qvc1ZyBhYQx54iiMiUXVEL1NXV2andhvOo9jRGXGRJG9p3+VuUv2bWCG9tUx7kNniGTBgqcNOG1kMRecSTxMZdZffeLh2DM5gUUyiwFOFPSMHC6EpCeZiWZDIhu9ZYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAs8Bjtj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTulS60J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC53B1F000FF;
-	Sat, 12 Sep 2026 14:53:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAs8Bjtj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF041F000FF;
+	Sat, 12 Sep 2026 14:53:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224798;
-	bh=53tx0bdAu3bWoGpIHf72YIqhlzgRu58aMddmeVSMP0g=;
+	s=korg; t=1789224803;
+	bh=M2Cauxj7i5kL65tbfziPLiLWa8k0cvjgH7A3zXs60I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tTulS60JYV/MrMLcXvHGQMAvc4xL2PJ3YOVDEK6XhDV2d0EUloLqoOAxvaySUOJtO
-	 RnaxH2N8pwfOwEEuD3tXz9pW/ml89B/3DNm+UfkhoogYR+bLhlv5jiBBCiUwsSmRAk
-	 ATdKJHX8YdujbqlUeFkFISguHwyfdBMQBZHIjUTY=
+	b=CAs8BjtjnMwat8HOaYMCa1QpMEUg/qa+/udncy+4bp/lr8nAEnFzqiPLEyLsWPiAD
+	 xt719DQJlutX/tll96TKqyzHKGTy2QiyeYXejHecatJA1M1mcKxg3PIr5CL7lwd/Pd
+	 aW5jZlVog3vMNKDwtMN2/ARUxQpEDkmZDSu13unM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1067/1424] drm/sun4i: vi scaler: Fix coefficient selection
-Date: Sat, 12 Sep 2026 08:58:19 +0200
-Message-ID: <20260912065631.199678338@linuxfoundation.org>
+Subject: [PATCH 6.6 1068/1424] of: property: add missing kerneldoc for of_graph_get_endpoint_count()
+Date: Sat, 12 Sep 2026 08:58:20 +0200
+Message-ID: <20260912065631.220813412@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,63 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 5c31990b21f0b535732deb2b658b78b07464f56c ]
+[ Upstream commit 4c3b386c46065c0d26ae5503e73d6634f24e2d36 ]
 
-Currently, vertical coefficients are selected based on horizontal
-scaling, which is wrong. Additionally, chroma coefficients should be
-selected based on format subsampling.
+of_graph_get_endpoint_count() doesn't have kerneldoc. Add it.
 
-Fix all that.
-
-Fixes: b862a648de3b ("drm/sun4i: Add support for HW scaling to DE2")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
-Link: https://patch.msgid.link/263a4a41442a3c8b072b170256b72658f1b90802.1785772659.git.jernej.skrabec@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Link: https://lore.kernel.org/r/87r0hrcvzk.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Rob Herring <robh@kernel.org>
+Stable-dep-of: 62bac3202042 ("drm/sun4i: tcon-top: Keep mixer routes distinct")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun8i_vi_scaler.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/of/property.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c b/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c
-index 7ba75011adf9f..328b84df2ee5e 100644
---- a/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c
-+++ b/drivers/gpu/drm/sun4i/sun8i_vi_scaler.c
-@@ -891,20 +891,26 @@ static void sun8i_vi_scaler_set_coeff(struct regmap *map, u32 base,
- 			     lan3coefftab32_left[offset + i]);
- 		regmap_write(map, SUN8I_SCALER_VSU_YHCOEFF1(base, i),
- 			     lan3coefftab32_right[offset + i]);
-+	}
-+	offset = sun8i_vi_scaler_coef_index(vstep) *
-+			SUN8I_VI_SCALER_COEFF_COUNT;
-+	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++)
-+		regmap_write(map, SUN8I_SCALER_VSU_YVCOEFF(base, i),
-+			     lan2coefftab32[offset + i]);
-+
-+	offset = sun8i_vi_scaler_coef_index(hstep / format->hsub) *
-+			SUN8I_VI_SCALER_COEFF_COUNT;
-+	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++) {
- 		regmap_write(map, SUN8I_SCALER_VSU_CHCOEFF0(base, i),
- 			     ch_left[offset + i]);
- 		regmap_write(map, SUN8I_SCALER_VSU_CHCOEFF1(base, i),
- 			     ch_right[offset + i]);
- 	}
--
--	offset = sun8i_vi_scaler_coef_index(hstep) *
-+	offset = sun8i_vi_scaler_coef_index(vstep / format->vsub) *
- 			SUN8I_VI_SCALER_COEFF_COUNT;
--	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++) {
--		regmap_write(map, SUN8I_SCALER_VSU_YVCOEFF(base, i),
--			     lan2coefftab32[offset + i]);
-+	for (i = 0; i < SUN8I_VI_SCALER_COEFF_COUNT; i++)
- 		regmap_write(map, SUN8I_SCALER_VSU_CVCOEFF(base, i),
- 			     cy[offset + i]);
--	}
+diff --git a/drivers/of/property.c b/drivers/of/property.c
+index b3f0285e401ca..aaaab76ad4179 100644
+--- a/drivers/of/property.c
++++ b/drivers/of/property.c
+@@ -813,6 +813,12 @@ struct device_node *of_graph_get_remote_port(const struct device_node *node)
  }
+ EXPORT_SYMBOL(of_graph_get_remote_port);
  
- void sun8i_vi_scaler_enable(struct sun8i_mixer *mixer, int layer, bool enable)
++/**
++ * of_graph_get_endpoint_count() - get the number of endpoints in a device node
++ * @np: parent device node containing ports and endpoints
++ *
++ * Return: count of endpoint of this device node
++ */
+ int of_graph_get_endpoint_count(const struct device_node *np)
+ {
+ 	struct device_node *endpoint;
 -- 
 2.53.0
 
