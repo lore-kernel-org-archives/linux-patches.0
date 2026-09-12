@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17541FC110;
-	Sat, 12 Sep 2026 10:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9A81FC110;
+	Sat, 12 Sep 2026 10:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209664; cv=none; b=AG9y2VFvyCacIoRzacgerERjHTCymwRg8xaM7RbC+4aO7rnktOkpPEoFcNEwZE6gQ94oChQ5p7GL68RMLRpPMendUoz3fZLbO4o0nyttIFRJT1vbZfN+cuu/kXv15YH+ieDjbqKAXbmdcqb3cXv5436DgwJETCHiKoXLLt1ZAEc=
+	t=1789209669; cv=none; b=VIKjMmjK5hf4JFRXPCKM4Ht97qUmCYA+CoSjsfo9L6YPSTnXZj0s2PeKYq4XTqwWoiFjL+OOQE1oOl2zfivmT1sd2lme4b6dm9AjfdlAriGlwK3fMnOMtA2xsozdjhJRM6nbzjh3LZcVasadLQdKEgOb0IuBPVvZ7Cjd3riBvyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209664; c=relaxed/simple;
-	bh=OOJ2VcrFivHie2ycSEqJ8tFMeMDPpyCgvBhAA8x1hME=;
+	s=arc-20240116; t=1789209669; c=relaxed/simple;
+	bh=4goAMExOFtS9lP1bSppFgfkH5jwuqeDszi/GvzWox44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ckBBtT9FtelX6NFL08c1UpL8tb8xrSt8AKV+qeSa3mmS60IRU9HqH3DG9p9C2Gb93XaUeWJMorUM8z7yM9lt6QNHUelWUMx91zn4MFNpBZqStZxSGB2HLVaksQk85Mzu+dRw9WYFmREZD/JzGsk/17dBcY0qqlT8jsr8LrBAv64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mXO11E3l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a90VZbadUCGZrLPAVGBXV5zFA5C9n+dN3F3FMHCoYD37DG9g+PdMZDGKFHLZCVJPR60QwxPj5t11UXxFyQC5t1/Ny/RAXVZ1IjuIRYsDMQPMGC7RjS2x4mUTE9RidBfD3tFpXrqclesVUU6z5wQEfDmVX31ZDhhtMftw1tPi75I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MMgi38s3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mXO11E3l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A861F000FF;
-	Sat, 12 Sep 2026 10:41:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMgi38s3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30021F000FF;
+	Sat, 12 Sep 2026 10:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209663;
-	bh=P7NbRw5rObm+ZI6afXf5grvHogpRWhtI34CEX9Ik+r4=;
+	s=korg; t=1789209668;
+	bh=H/pIHYIT+VCgKI069L/NTVAOLx6lKaLV3n7QqyCOYik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mXO11E3lexPfhlklJinZb6gMQZ8oysAHb35KHTqVT2KdRZs430RcNhK7/ZxU3qJzR
-	 ZYFcwFn0WdLY0nMwPbsatJbd1hKisttgciaIB4ARKIYSaruwsfFseVqz5qHiPupGtK
-	 aFkbPMIVw1ho8k3aWax4JIjUlw5wt1J8bxGD2scc=
+	b=MMgi38s31ARtuB2GL9CKZGOkM81G9/cnd4m5bvOF0Gn01sUJRE1DiF7EzLU6a2sRt
+	 6MOjzJeoLfhqH8tbPuUF0Jqt1VLpNrguxJgGNYhm7bfqbY4vdGJDq3IVzVy+3Q2J/1
+	 pyLBnaAAgKBudxvky7qo1ImQOYxCJ1xaZOe99fQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gou Hao <gouhao@uniontech.com>,
-	jiazhenyuan <jiazhenyuan@uniontech.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0830/1518] powerpc/smp: add NULL guard for cause_ipi in smp_muxed_ipi_message_pass
-Date: Sat, 12 Sep 2026 08:49:59 +0200
-Message-ID: <20260912065642.215752393@linuxfoundation.org>
+Subject: [PATCH 6.18 0866/1518] ublk: check for ublk_unmap_io() returning 0
+Date: Sat, 12 Sep 2026 08:50:35 +0200
+Message-ID: <20260912065643.040688596@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,47 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gou Hao <gouhao@uniontech.com>
+From: Caleb Sander Mateos <csander@purestorage.com>
 
-[ Upstream commit 5aabc192702defb8950e7c81b05c3f4ca8ee43ec ]
+[ Upstream commit 24fd3706178f1ae5501fd1ff9036e170ed0665ba ]
 
-smp_muxed_ipi_message_pass() calls smp_ops->cause_ipi() without
-checking whether it has been set.
+If the userspace ublk server passes an unmapped address as the data
+buffer for a completed ublk read, ublk_unmap_io() will return 0
+indicating no bytes could be copied. Currently, this will result in
+calling blk_update_request() with nr_bytes=0, which doesn't seem
+supported. Fail the I/O with BLK_STS_IOERR in this case instead.
 
-On platforms using muxed IPI (e.g. powernv/pseries), smp_ops->cause_ipi
-is initialized to NULL in the static smp_ops and only assigned during
-the platform smp_probe() handler.  If the IPI subsystem fails to
-initialize -- for example when xive_init_ipis() fails and
-xive_smp_probe() returns an error -- the probe handler returns early
-and cause_ipi is never set.  Any subsequent IPI send (e.g.
-arch_smp_send_reschedule()) would dereference the NULL pointer.
-
-Add a NULL check to avoid the crash in that situation.
-
-Fixes: 23d72bfd8f9f ("powerpc: Consolidate ipi message mux and demux")
-Signed-off-by: Gou Hao <gouhao@uniontech.com>
-Reviewed-by: jiazhenyuan <jiazhenyuan@uniontech.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260727104215.184786-6-gouhao@uniontech.com
+Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
+Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
+Link: https://patch.msgid.link/20260729171041.45061-3-csander@purestorage.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/smp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/block/ublk_drv.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/smp.c b/arch/powerpc/kernel/smp.c
-index 0cd9c0c21af3e..b5518fba3b92e 100644
---- a/arch/powerpc/kernel/smp.c
-+++ b/arch/powerpc/kernel/smp.c
-@@ -289,6 +289,9 @@ void smp_muxed_ipi_set_message(int cpu, int msg)
- 
- void smp_muxed_ipi_message_pass(int cpu, int msg)
- {
-+	if (!smp_ops->cause_ipi)
-+		return;
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 755add69fb8a8..d71407fc1f4c8 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -1196,8 +1196,14 @@ static inline void __ublk_complete_rq(struct request *req, struct ublk_io *io,
+ 	 *
+ 	 * Re-read simply for this unlikely case.
+ 	 */
+-	if (unlikely(unmapped_bytes < io->res))
++	if (unlikely(unmapped_bytes < io->res)) {
++		if (unlikely(!unmapped_bytes)) {
++			res = BLK_STS_IOERR;
++			goto exit;
++		}
 +
- 	smp_muxed_ipi_set_message(cpu, msg);
+ 		io->res = unmapped_bytes;
++	}
  
  	/*
+ 	 * Run bio->bi_end_io() with softirqs disabled. If the final fput
 -- 
 2.53.0
 
