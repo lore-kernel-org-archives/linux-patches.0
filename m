@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21D12AD3C;
-	Sat, 12 Sep 2026 16:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE401DA62E;
+	Sat, 12 Sep 2026 16:53:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232021; cv=none; b=Y6TsxdsPge7hmUMlGVJdtpxUZJDjFN1Gyjw+2G5ZT6mEeiCXwJXfRl2VxA6r5UuUSS6EryU0Pt2KVCeb9Bu4AGLQqYd2erGvoPciR6Gt4bg/zMynzmpUZrn/x4JBkgG91pQO+xPeee/5G1f+UCoEYvvOdK37SNh6qicCCxkmgN0=
+	t=1789232025; cv=none; b=EbA1oamjETo6/tuaCES0QzQmdinBj4Y6v1ureT/Kq/4tckZf9tOgg2cr7ST1STIDHZPsgLt859a+QgyFXsM16BjoJibihAq7JiHoWFpR42i2LxGGpJ/yD43o0M8+/XuthPcWpZ6w1k8yAixLSeXShsoclICSJucwHakHUW+LjW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232021; c=relaxed/simple;
-	bh=cFW1Y4iB7dYEg0ZTEbOJaRlq/VI+nC46HuKf+h2SdDQ=;
+	s=arc-20240116; t=1789232025; c=relaxed/simple;
+	bh=li1T7mneo5w0+Wvc7MKJXVFdNcKfqEXOK1U4DJYSYAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iYuPtNXvCy7rOarNsjdCaTc3tNiGQehtq3y3nYVkPliCuN+9KVb3HmNnHC98p6b0WNJprHxsE3Zs+PRvgMAt1guNdXkIbLBLYqiMQyLuRLsQQvdOa4+yVJdWjwSsqrjpMgSHnY4og42Jb87H8sz8FAYfpGGoU2LLsJQlXNy8P/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lF8Jp6gD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tEcueTxh6gQw4UrJiE3CkvTEvEsyBwYxOY1vmD+d4vMEO7U6gkUkeWewwNNa64uKg1fg+beqCKGHuTyrDWjYEb3R3Kr4BjgifaQ+QMLOQKyrZoy8hTMue9pmKoUR7Aw448JCKIISm7av/hitlA8Hk8vOXJ/o2IOAqPikKKkPpug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJPkwJla; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lF8Jp6gD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26BD1F000FF;
-	Sat, 12 Sep 2026 16:53:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJPkwJla"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBC31F000FF;
+	Sat, 12 Sep 2026 16:53:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232019;
-	bh=IvTdi66/mibiNUgukaMdhPHdw6XPchrXXKOhIm6m3d0=;
+	s=korg; t=1789232024;
+	bh=z3WcwKBl6aaRVfNtJNRcRmA9pT70oDusa8l6V8KX6lU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lF8Jp6gDwGfLiuwRtPZlPcT/xOPHLb51Zp9eziTz05KlU40jxL+zPkbl2pIsAU77O
-	 CGqBEINKS37jyn1VVhLzMXTWwb0rpEVyofVwwYLJy5GwjWMAyxD8UVqwSmvUcU8OxU
-	 MPjjJqoYT83NjY8vToFN412bxxnK9lV4gBVrpPj8=
+	b=AJPkwJlaLSLHsHTB47kI9LXAU/VO0FbmVXEs6W4Ii9LKZRtScQwxIyOCiDSocW9lb
+	 /mNVlkhUvADcm6nbWCmgHlZdlI0NYShbLQmPgQxvOplz9Sr/AN3kBy5Sbtwz9AMSXy
+	 fc3rbmm5Hslcz8s1v6eWVZuq6zD4b/BF1h3xjEzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Alice Mikityanska <alice@isovalent.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1118/1191] net: stmmac: selftests: Pass the IP proto mask in the TC selftest
-Date: Sat, 12 Sep 2026 09:04:06 +0200
-Message-ID: <20260912065613.263438323@linuxfoundation.org>
+Subject: [PATCH 6.1 1119/1191] virtio-net: Ensure that TCP packets dont overflow gso_segs
+Date: Sat, 12 Sep 2026 09:04:07 +0200
+Message-ID: <20260912065613.285652517@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,73 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Alice Mikityanska <alice@isovalent.com>
 
-[ Upstream commit 9a56a27e6002e29a6707dc4238d469ec84c3a68e ]
+[ Upstream commit c27c449d455aafd9018a3cbab150f1c42c87923f ]
 
-The stmmac TC filtering rules have recently gained sanity checks to make
-sure the passed keys and their respective masks are aligned with the HW
-filtering abilities.
+The user can specify any gso_size in a packet crafted with an AF_PACKET
+PACKET_VNET_HDR socket, even smaller than TCP_MIN_GSO_SIZE = 8. At the
+same time, GSO_MAX_SIZE = 8 * GSO_MAX_SEGS = 8 * 65535. When the user
+crafts a packet with gso_size < 8, there is a risk for partial GSO to
+overflow the 16-bit gso_segs field when dividing the SKB length by
+gso_size.
 
-The stmmac selftests failed to pass the mask in the match data for L4
-filtering tests, and are now failing consistently with -EINVAL :
+Adjust gso_size of TCP packets to be at least TCP_MIN_GSO_SIZE = 8. Keep
+gso_size of UDP GSO packets, as gso_size=1 is valid and explicitly
+tested at tools/testing/selftests/net/tun.c:649.
 
-$ ethtool -t eth1
-[...]
-23. L4 DA TCP Filtering          -22
-24. L4 SA TCP Filtering          -22
-25. L4 DA UDP Filtering          -22
-26. L4 SA UDP Filtering          -22
-
-Let's pass the ip_proto mask in the l4 filtering tests match data. Found
-on imx8mp, which now have passing L4 tests :
-
-$ ethtool -t eth1
-[...]
-23. L4 DA TCP Filtering          0
-24. L4 SA TCP Filtering          0
-25. L4 DA UDP Filtering          0
-26. L4 SA UDP Filtering          0
-
-While at it, initialize the masks and keys to avoid re-using whatever
-was on the stack.
-
-Fixes: 5536d7c84363 ("net: stmmac: fix l3l4 filter rejecting unsupported offload requests")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260825211748.360935-1-maxime.chevallier@bootlin.com
+Fixes: 7c6d2ecbda83 ("net: be more gentle about silly gso requests coming from user")
+Signed-off-by: Alice Mikityanska <alice@isovalent.com>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260822120117.1163423-2-alice.kernel@fastmail.im
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/linux/virtio_net.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index 687f43cd466c6..abad2dac40cfa 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -1452,11 +1452,11 @@ static int __stmmac_test_l4filt(struct stmmac_priv *priv, u32 dst, u32 src,
- 	struct {
- 		struct flow_dissector_key_basic bkey;
- 		struct flow_dissector_key_ports key;
--	} __aligned(BITS_PER_LONG / 8) keys;
-+	} __aligned(BITS_PER_LONG / 8) keys = { };
- 	struct {
- 		struct flow_dissector_key_basic bmask;
- 		struct flow_dissector_key_ports mask;
--	} __aligned(BITS_PER_LONG / 8) masks;
-+	} __aligned(BITS_PER_LONG / 8) masks = { };
- 	unsigned long dummy_cookie = 0xdeadbeef;
- 	struct stmmac_packet_attrs attr = { };
- 	struct flow_dissector *dissector;
-@@ -1509,6 +1509,8 @@ static int __stmmac_test_l4filt(struct stmmac_priv *priv, u32 dst, u32 src,
- 	keys.bkey.ip_proto = udp ? IPPROTO_UDP : IPPROTO_TCP;
- 	keys.key.src = htons(src);
- 	keys.key.dst = htons(dst);
-+	/* Match the full IP proto field */
-+	masks.bmask.ip_proto = 0xff;
- 	masks.mask.src = src_mask;
- 	masks.mask.dst = dst_mask;
+diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
+index 62613d4d84b71..5b3ddaa4c8815 100644
+--- a/include/linux/virtio_net.h
++++ b/include/linux/virtio_net.h
+@@ -4,6 +4,7 @@
+ 
+ #include <linux/if_vlan.h>
+ #include <linux/udp.h>
++#include <net/tcp.h>
+ #include <uapi/linux/tcp.h>
+ #include <uapi/linux/virtio_net.h>
+ 
+@@ -164,6 +165,9 @@ static inline int virtio_net_hdr_to_skb(struct sk_buff *skb,
+ 			if (skb->ip_summed == CHECKSUM_PARTIAL &&
+ 			    skb->csum_offset != offsetof(struct tcphdr, check))
+ 				return -EINVAL;
++
++			BUILD_BUG_ON(TCP_MIN_GSO_SIZE * GSO_MAX_SEGS < GSO_MAX_SIZE);
++			gso_size = max(gso_size, TCP_MIN_GSO_SIZE);
+ 			break;
+ 		}
  
 -- 
 2.53.0
