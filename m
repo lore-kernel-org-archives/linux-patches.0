@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202001FBEA6;
-	Sat, 12 Sep 2026 19:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED602345EB5;
+	Sat, 12 Sep 2026 19:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242704; cv=none; b=UIpo2luk/jllVKs7bFsMsqQQf7x0pBUvo4Jo72cn1Otqig5O5lhdj6HU2b/frlUeK/O8wkPXCG3mRaOuHRoq72/8T/HhiF6pgdGzMCasmXdFrBhZGdLNED5jMvucqD7/iHtVaCZ/Dywcii+L+A5ZyC2Hvj2BxSuh7xx8jJ2Gwks=
+	t=1789242707; cv=none; b=Rr/TxS1w73xU5SnGSe9mbWYvDOBW/gCtGfR+Mb6xaNfbkL4gOFDaHBnqtvi5bpYAemJIBexbujpIFpgC9HyH1bUxyo8fJHgvmB8vBE82pKVuOhauaXrmo4oikRCi0Nm/XnksW3r1NlxMeU5vbepOfvmqijHQYquBKSaOAJLO5dA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242704; c=relaxed/simple;
-	bh=TlJiUyBFzxWzYmzc6v4+v7KorZhCUk0N95CjI3J4BVY=;
+	s=arc-20240116; t=1789242707; c=relaxed/simple;
+	bh=+92EmTUerPaG6uCpJJ+wERz8JkaEq+AnteEkAs3RQ9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Lu4XlPsR8i78mcqFafNMl2CFoHmQzkhTGzAMOuek1lRlHjJLJatLxiiYr+pGbgqpgCgqgU3CVYkpp/ydOiSGki54W1kSL368h0acm38ew3XXWxNdDELC38G5KK/cmsYBuNTt/nIfDtnsKTzaMYMTb6nuS5gickdyvSwwyT46xJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDU5WCFB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kG7h6H+Rt4TUeHQ9WCCnT51XhOiLKdGjL0I/yOgHWAO45AT9ysTkYaXdmF7AKzdTikg8yANtIpBLy8rGsJAdUWDc764rYDIMWA2nY3tSOyBW0z9RY+ovF0KQLTZCDZhAp0B6SdPGRnnBeQnkwGBAP7TKIuFm03ITXGfijOZqpko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uf0bGdeN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDU5WCFB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C73B1F000FF;
-	Sat, 12 Sep 2026 19:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uf0bGdeN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532C61F000FF;
+	Sat, 12 Sep 2026 19:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242703;
-	bh=/H/HKfzYZpIYLj/pKSeHIJZlKXUxHX3KzADCYUmiw20=;
+	s=korg; t=1789242705;
+	bh=xC6OIB0v+iKmr6ElHteV2w3g2ujVB4Cbn9QxaezAi3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eDU5WCFB7SwMWj1uYyI2M6q9YMU601ZtazoZGp8QwdHEYuuEpUwjcqiG35j/mWimE
-	 /pScPbmkl1oRvzal/OOz6fwTicYYEUx3gBzIT4cqUhTaCoWNxsqRtR4dt/wN16NbER
-	 e664AKDheonn6P+nd2BhNtxR6sN0CjCTb0PKb0j8=
+	b=uf0bGdeNYbu/00r0quyJxaxGqW5UZx5tXN9DukApwt3hl+LOfyGHyuTP4vECYAP2J
+	 B1PYyIqSrS1LvCE8ukgLd+a+KiHn0o/MMui28yEN7P7xSfIEgKzVZG1WRAUr/sqFCl
+	 1q1MPZKvBB//Zo7Y1nmQBb6QSoF6zoSi4dCVhiW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Will Deacon <will@kernel.org>,
+	zhouminqiang <zhouminqiang2@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 497/798] iommu/qcom: Fix inverted fault report check in qcom_iommu_fault()
-Date: Sat, 12 Sep 2026 09:02:05 +0200
-Message-ID: <20260912065528.527821779@linuxfoundation.org>
+Subject: [PATCH 5.10 471/798] mtd: part: reject MTDPART_OFS_RETAIN in mtd_add_partition()
+Date: Sat, 12 Sep 2026 09:01:39 +0200
+Message-ID: <20260912065527.941495941@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -46,47 +46,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: zhouminqiang <zhouminqiang2@huawei.com>
 
-[ Upstream commit 1f33b8208a1978b0c0d6ad60a47fe4bb7a235e58 ]
+[ Upstream commit b759d5bb6265419344ee9729fd0dc07ad85719d8 ]
 
-report_iommu_fault() returns 0 when a fault handler successfully handles
-the fault, and -ENOSYS when no handler is installed. The condition
-'!report_iommu_fault()' evaluates to true (printing "Unhandled context
-fault") precisely when the fault *was* handled, and stays silent when no
-handler is present — the opposite of what is intended.
+mtd_add_partition() does not reject the special offset value
+MTDPART_OFS_RETAIN (-3), which leads to a WARN_ON in
+add_mtd_device() when called through the BLKPG ioctl on NAND
+devices. The RETAIN value depends on cur_offset being the end of
+the previous partition, but in the dynamic partition path
+cur_offset equals the offset argument itself, causing undefined
+behavior.
 
-Remove the '!' so the driver logs unhandled faults correctly.
+Commit 5daa7b21496a ("mtd: prepare partition add and del functions
+for ioctl requests") introduced mtd_add_partition() and correctly
+rejected MTDPART_OFS_APPEND (-1) and MTDPART_OFS_NXTBLK (-2),
+since those special offsets rely on cur_offset tracking the
+previous partition's end. However, commit 1a31368bf92e ("mtd: add a flags
+for partitions which should just leave smth. after them")
+later added MTDPART_OFS_RETAIN (-3) for the static
+partition table path without updating mtd_add_partition() to
+also reject this value.
 
-Fixes: 049541e178d5 ("iommu: qcom: wire up fault handler")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+With offset=-3 passed via BLKPG, the RETAIN size calculation in
+allocate_partition() underflows (parent_size - 0xFFFFFFFFFFFFFFFD
+= parent_size + 3). If the underflow result does not appear to
+leave enough space, allocate_partition() jumps to out_register via
+goto, skipping erasesize initialization. This results in
+erasesize=0, which triggers:
+
+WARN_ON((!mtd->erasesize || !master->_erase) &&
+		!(mtd->flags & MTD_NO_ERASE))
+
+in add_mtd_device(). If the underflow result appears to leave
+enough space, a bogus partition size is calculated, but the
+"out of reach" sanity check catches the invalid offset and
+creates a disabled empty partition (offset=0, size=0) instead
+of returning an error.
+
+Fix this by adding MTDPART_OFS_RETAIN to the rejection list in
+mtd_add_partition(), consistent with the existing handling of
+APPEND and NXTBLK.
+
+Fixes: 1a31368bf92e ("mtd: add a flags for partitions which should just leave smth. after them")
+
+Signed-off-by: zhouminqiang <zhouminqiang2@huawei.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/mtdpart.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index 4154a85fcf07d..f59b53805dd03 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -220,7 +220,7 @@ static irqreturn_t qcom_iommu_fault(int irq, void *dev)
- 	fsynr = iommu_readl(ctx, ARM_SMMU_CB_FSYNR0);
- 	iova = iommu_readq(ctx, ARM_SMMU_CB_FAR);
+diff --git a/drivers/mtd/mtdpart.c b/drivers/mtd/mtdpart.c
+index 5725818fa199f..c428fa2b91fcd 100644
+--- a/drivers/mtd/mtdpart.c
++++ b/drivers/mtd/mtdpart.c
+@@ -248,7 +248,8 @@ int mtd_add_partition(struct mtd_info *parent, const char *name,
  
--	if (!report_iommu_fault(ctx->domain, ctx->dev, iova, 0)) {
-+	if (report_iommu_fault(ctx->domain, ctx->dev, iova, 0)) {
- 		dev_err_ratelimited(ctx->dev,
- 				    "Unhandled context fault: fsr=0x%x, "
- 				    "iova=0x%016llx, fsynr=0x%x, cb=%d\n",
+ 	/* the direct offset is expected */
+ 	if (offset == MTDPART_OFS_APPEND ||
+-	    offset == MTDPART_OFS_NXTBLK)
++	    offset == MTDPART_OFS_NXTBLK ||
++	    offset == MTDPART_OFS_RETAIN)
+ 		return -EINVAL;
+ 
+ 	if (length == MTDPART_SIZ_FULL)
 -- 
 2.53.0
 
