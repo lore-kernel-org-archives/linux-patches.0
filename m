@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F81F420868;
-	Sat, 12 Sep 2026 08:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE5C41DEEC;
+	Sat, 12 Sep 2026 08:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202415; cv=none; b=ruistJdoT2ewaM0Adyh7QeW8d8mwdzZ9w3KdM29G3YpVNaXdIiej1V6gXqySgUO9IW0uJI8AFV380u+03/+tYrPaL9nT3zFMagtWMKmELGwaGj+1m66zsTU0UFkFz3/ET7XbE7SPZ4UYE2mWwP2PSPP7wUT4qme0EzasuWiRoAg=
+	t=1789202420; cv=none; b=YxZojehjFGWP95l4ufvwSj8OUI45wlytcF7myrOjFyogFH/rczF9/1V1AsqoJoyM2bmsJbl82GOalNgdR7jI7ju9p8QmqginIUBD4ciL3d5OmFsTeJPdXgBElH8DOmV5U9C+ypwQlrJTKSvEI97Bim2nKFAD8aL7TtmW+4/ApU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202415; c=relaxed/simple;
-	bh=/PZNHszKtO3RkIgf8COm/syukhRAVZrHGuuauSUknP4=;
+	s=arc-20240116; t=1789202420; c=relaxed/simple;
+	bh=5gFb2mzMplhy5rQsZHD7a1AmRUx7ml4ATXpni1WzvVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GxGSfy7wPQK2TuI8tIVkhLOuH2031MISmdllfarFojSzeyNDu0iflYbnKOxOz8Em1MMHWoG4+LolGfLGFXbIzm7kkhELG2cHHB34za3/+5V5/mri4sSkQqG5e16xeswyKpq75xSFlqOITJVtcg9WuHpaZxI2xVHRFtx68SuS3N0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r0bJC4H0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AkVIwzuHwAlPv38GWNWagQxk6UHtF/svUTLQoR44yIclyCgKS06PONWlbUXQWDLjy495xdnOIprt+HAiOfuk4K2Xeb8U6X/LoTcfMpgUhmpG2cZocPA07pI8ZeTSQlZjrmA2kALGtCuZ/CBktd8aa6uyuod65nqjw0I36vZc1So=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ce7SVNts; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r0bJC4H0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4321F000FF;
-	Sat, 12 Sep 2026 08:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ce7SVNts"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92881F000FF;
+	Sat, 12 Sep 2026 08:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202413;
-	bh=SQ4bxCjXLLm7mFAssinzQEt3Rq1MUxRGg4AEJUX8wYo=;
+	s=korg; t=1789202419;
+	bh=bKQvg3nNWWloePIMK73P3WRaA0Pp3MlbjgxCEsn4BL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r0bJC4H0jpPVCiDdxLGbL/SIney3l+c5t6NQRf5WNE9n1R5/hcB7b8mmwRIx9DPv7
-	 2YbegnVb13iPJW9NHeA11P281ujWt+NLDHwivRUj+SQXQmTV1UuvccGoSS/+kI1Fxb
-	 UjuG4q1wcUu8wcaQptyM3C70NBm42qYG2+8yAbVQ=
+	b=Ce7SVNtswjJBAJUAk5k3wpB6zCBFFHJKFnaY+/EFFGKyxAUjg8E4ZooJZeTQ52A1G
+	 VhO/Y3XTMzM1ogfUmW47zeXhO6t+jB4nlN+8TrVzURBMOE4VbwzA984YbvC1JEXXoW
+	 6F/bIsschJ6Bz7HfI8E7ekK9VJDZYjBEXgZV4NcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ben Horgan <ben.horgan@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1199/1815] arm_mpam: Fix a NULL pointer dereference on unbinding after an error interrupt
-Date: Sat, 12 Sep 2026 08:49:09 +0200
-Message-ID: <20260912065717.158207287@linuxfoundation.org>
+Subject: [PATCH 7.2 1200/1815] arm_mpam: Disable driver unbind to avoid UAF
+Date: Sat, 12 Sep 2026 08:49:10 +0200
+Message-ID: <20260912065717.180979508@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,35 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Ben Horgan <ben.horgan@arm.com>
 
-[ Upstream commit fc996c39689bb15aa80e5366809434f7258fb703 ]
+[ Upstream commit bb1a0f582d519c0461b0940116e2b52c5ba31459 ]
 
-If a user unbinds an MSC after mpam_disable() has been run in response
-to an error interrupt then a dereference of a NULL pointer occurs as
-mpam_disable() sets the drvdata to NULL. Add an early return to the driver
-remove callback to avoid this.
+When a user unbinds an MSC and that MSC is the only MSC left for a
+component then the corresponding mpam_component will be freed. If the user
+then goes on to read the schemata file in the resctrl filesystem then the
+mpam_component will be accessed from resctrl_arch_get_config() leading to a
+use after free.
+
+As the MPAM driver is not a module the unbind sysfs interface is the only
+way to trigger the remove. Instead of dealing with the complexity of
+allowing some unused MSC to unbind just remove the unbind sysfs interface.
 
 Fixes: f04046f2577a ("arm_mpam: Add probe/remove for mpam msc driver and kbuild boiler plate")
 Signed-off-by: Ben Horgan <ben.horgan@arm.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/resctrl/mpam_devices.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/resctrl/mpam_devices.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/resctrl/mpam_devices.c b/drivers/resctrl/mpam_devices.c
-index b68f5599e8dbe..59ea62b845c1e 100644
+index 59ea62b845c1e..dd422c56fbb14 100644
 --- a/drivers/resctrl/mpam_devices.c
 +++ b/drivers/resctrl/mpam_devices.c
-@@ -2023,6 +2023,9 @@ static void mpam_msc_drv_remove(struct platform_device *pdev)
- {
- 	struct mpam_msc *msc = platform_get_drvdata(pdev);
- 
-+	if (!msc)
-+		return;
-+
- 	mutex_lock(&mpam_list_lock);
- 	mpam_msc_destroy(msc);
- 	mutex_unlock(&mpam_list_lock);
+@@ -2139,6 +2139,7 @@ static int mpam_msc_drv_probe(struct platform_device *pdev)
+ static struct platform_driver mpam_msc_driver = {
+ 	.driver = {
+ 		.name = "mpam_msc",
++		.suppress_bind_attrs = true,
+ 	},
+ 	.probe = mpam_msc_drv_probe,
+ 	.remove = mpam_msc_drv_remove,
 -- 
 2.53.0
 
