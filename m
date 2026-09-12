@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE113750C9;
-	Sat, 12 Sep 2026 15:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52602368D47;
+	Sat, 12 Sep 2026 15:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228639; cv=none; b=Q9ktwW1MStRnmhNazzPLDMxgIIw1O/382izZLUYZ6hY+xPZCleWkO2QZtMEoytgyr10Lu7AOyu/Tqm35IncXJtkFvxqLU6PsDltOYb0ksAyuKrUNxC71cAXybtU5EHzvx1NbJFF7pMEaZVgbkX494fwKkjjNY16HC5/Ke016lx4=
+	t=1789228644; cv=none; b=Ne8QMYyl9ghOijoP2lhmqbrGAGhvf0a2DtiwB1aYm7ku16adesPoUnsyKZ+Yugz8hpvhOkTar3+WhfroDq9eCfLSXYS2eUZ2bWsaYBFFzBF6woDe2P5VTamAcCP+iLwrI75zGulrDSLRgLwe0ubOXI2BvrcCl2TSB2SXnQuBH2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228639; c=relaxed/simple;
-	bh=SOC4d/2D1kha4YV13F3EWUmdAQNgkOc8yersi5wp/HA=;
+	s=arc-20240116; t=1789228644; c=relaxed/simple;
+	bh=YgNM21H0IctumxZVd7pR79a8UD80tPZ9UsS1/h0yNNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bNmTX3mXqDpQNZ6fxOtW+G73ScHXW5xYRRKPd0trwQ3hxnkpHRIImnnQL9La1nYdHFGD+zVu/KBDmLpzizrrUwg0CdVeCcHXJltCaJ2fA7j2rPh0eux14GoX2ezbaLgEw65D5I8rs6RyTL6MeT2rgLCjW6cxEAsovvAN9fzm8f0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpTOfI0k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MRZpEJ828LvzjaDQJLAnRCQ5OCv5gJ8yRuHG4bh/HNUH4+vf4Ch9K2I+3doyly9YY0x9SelBnohxuxeHMGRlaDbYyzHOFtsMv7Yjdei2wRLfFt0eOrx5oHM7aEWcLMU3H7UG0dq/YTAdidt4MddqrbpGNh2lg/u/h0FilflZVJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDOlMqtQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpTOfI0k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39BC91F000FF;
-	Sat, 12 Sep 2026 15:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDOlMqtQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2416B1F000FF;
+	Sat, 12 Sep 2026 15:57:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228638;
-	bh=bL/RTI6IwCpwE4gg3dc6jDsEBXIhDa2wK/lora1OLbw=;
+	s=korg; t=1789228643;
+	bh=TsaclXw8YuCfHnXjMBu2r8yFjSDj+09TN++ebHjqo2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wpTOfI0kivSKIW0RNnT2A0Bf+UrVd7u0Iyni6ApCxvC3uuBORcM+MZiYVPYqibWV3
-	 QGeRkJjCqEdXRzLAcscpnNWhBuVVrDzZ3as9AySZBASjgThMxHScTLLzmzljFTUgWj
-	 fSegz6KsUZnW8qdMVarobIADABH0SV7lIYQ5jawQ=
+	b=oDOlMqtQo9usF1P3X/AEhhY2bXm/ZWzE1GXd9LgjYA8PyNXYqr7bCtPbUd4J305PV
+	 vCXk5OCoreZPBNbYKfibDhQB2ka08lPNPIj/FQ2z/ulbY5idDvZPX+3VmIdElptwpO
+	 XXNZ+203mqFFHkHeD1gMd8ynmwvu6WH6SJJT6wGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 0427/1191] drm/amdgpu: check thunderbolt before switcheroo registration
-Date: Sat, 12 Sep 2026 08:52:35 +0200
-Message-ID: <20260912065557.827664020@linuxfoundation.org>
+Subject: [PATCH 6.1 0428/1191] drm/amdgpu: fix autosuspend cleanup during removal
+Date: Sat, 12 Sep 2026 08:52:36 +0200
+Message-ID: <20260912065557.850020917@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,63 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 8587d48d694da5aca580f92461658ec14470592b upstream.
+commit ef5fcf2a6c320676bf8be2dadac93d9023b468b7 upstream.
 
-Introduce a helper to consolidate the vga_switcheroo registration condition
-used by the init and fini paths.
+amdgpu_pci_probe() calls pm_runtime_use_autosuspend(), but
+amdgpu_pci_remove() does not call the matching
+pm_runtime_dont_use_autosuspend().
 
-Keep the explicit pci_is_thunderbolt_attached() check, as dev_is_removable()
-does not provide equivalent coverage for Thunderbolt-attached GPUs.
-This ensures such devices remain excluded from switcheroo registration while
-preserving the existing PX and Apple gmux handling.
+If the autosuspend delay is set to a negative value while autosuspend
+is enabled, the runtime PM core increments usage_count to prevent
+runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
+during teardown, this reference is not dropped and usage_count remains
+unbalanced.
 
+The documentation for pm_runtime_use_autosuspend() also notes that it
+is important to undo it with pm_runtime_dont_use_autosuspend() at
+driver exit time, unless runtime PM was initially enabled with
+devm_pm_runtime_enable().
+
+Add the missing pm_runtime_dont_use_autosuspend() call to the remove
+path.
+
+This issue was found by manual code inspection.
+
+Fixes: d38ceaf99ed0 ("drm/amdgpu: add core driver (v4)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/20260808120934.2813010-1-lgs201920130244@gmail.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3628,6 +3628,14 @@ static const struct attribute *amdgpu_de
- 	NULL
- };
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -2251,6 +2251,7 @@ amdgpu_pci_remove(struct pci_dev *pdev)
+ 	if (adev->pm.rpm_mode != AMDGPU_RUNPM_NONE) {
+ 		pm_runtime_get_sync(dev->dev);
+ 		pm_runtime_forbid(dev->dev);
++		pm_runtime_dont_use_autosuspend(dev->dev);
+ 	}
  
-+static bool
-+amdgpu_device_should_register_switcheroo(struct amdgpu_device *adev, bool px)
-+{
-+	return !pci_is_thunderbolt_attached(adev->pdev) &&
-+	       (px || (!dev_is_removable(&adev->pdev->dev) &&
-+		       apple_gmux_detect(NULL, NULL)));
-+}
-+
- /**
-  * amdgpu_device_init - initialize the driver
-  *
-@@ -4040,8 +4048,7 @@ fence_driver_init:
- 
- 	px = amdgpu_device_supports_px(ddev);
- 
--	if (px || (!dev_is_removable(&adev->pdev->dev) &&
--				apple_gmux_detect(NULL, NULL)))
-+	if (amdgpu_device_should_register_switcheroo(adev, px))
- 		vga_switcheroo_register_client(adev->pdev,
- 					       &amdgpu_switcheroo_ops, px);
- 
-@@ -4196,8 +4203,7 @@ void amdgpu_device_fini_sw(struct amdgpu
- 
- 	px = amdgpu_device_supports_px(adev_to_drm(adev));
- 
--	if (px || (!dev_is_removable(&adev->pdev->dev) &&
--				apple_gmux_detect(NULL, NULL)))
-+	if (amdgpu_device_should_register_switcheroo(adev, px))
- 		vga_switcheroo_unregister_client(adev->pdev);
- 
- 	if (px)
+ 	if (adev->ip_versions[MP1_HWIP][0] == IP_VERSION(13, 0, 2) &&
 
 
