@@ -1,57 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8B3366045;
-	Sat, 12 Sep 2026 15:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1AA230BDB;
+	Sat, 12 Sep 2026 15:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226230; cv=none; b=DQXvbCMpoA3tDdigt7rqUoAWpL7ZlrzzOyzWQjy5powPR7tx9ltrzIyxYKkdaJQ5DCV6RB9DpYAow3gXfYZBK2D1JTTV7nz7Z2YxCk+QqjUC4U2KOUdzss3lzbTlgem4Am9vSSVYCYY+ItK1HFIkSkY1DDyIynHL4JTxTP0367A=
+	t=1789226236; cv=none; b=pvPwLcV9hc6isglm+wzvBDzF9Agm03WfUkJ2xZddZyTXG/ZS2z9Cm1tYsnnx0wRQqymcfho0fMAYaOThSfCkeiQKfunko/ZB6xLUW2R3u94LRiyoIIj9HljlTZlq+/E0IFuq4M1sePBFKOsb+AYvVAVecwUPrVsE135dJt0jTBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226230; c=relaxed/simple;
-	bh=3Ar7I5o+pswh0+P0vMpG3wtaigmsKlfo32HKCFR8h9Q=;
+	s=arc-20240116; t=1789226236; c=relaxed/simple;
+	bh=H9yhTxPOdW/Yr+Hcp9tFdPZcDY8kKVuTpdf3Vx1+WF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0mSxvP9NkI90gSRBX8aCUEka3FFLHKvSOWHg07sRQonyiGgUEfHeuZVJ998wBTbANoLyvy/zRSzxGFfEr4SBo8db3UNtRPrF4i/xeHeHEONiZTGdmxNvrH7/B8mCXI3EyZFSLxIkaw8BmBAB7qe70fm9ODrjvKziDpL59t6a24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yvFLPHch; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q7l+uDBvoxzZE6oPzQNOVlrJvIL0v7CVRcSk39T2g3o5phbE40XtafV20nSth4y+yT8Ls+tPeHLCIxrRbcv1+jmaecI4Cikp9WMghzNFSd/N0eR6KH1foJQFGWKMtHBvw+e2yLf2bJKe//tE29spWXctPIxjfb0nMiwQeb3JtYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQkb07Ww; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvFLPHch"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9601F000FF;
-	Sat, 12 Sep 2026 15:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQkb07Ww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7099F1F000FF;
+	Sat, 12 Sep 2026 15:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226228;
-	bh=VVTMjYIS1VWGhYxcECrB5Bt8J+mFog/FJdSryWA/EVI=;
+	s=korg; t=1789226233;
+	bh=vqn9A1dWqOHACJ2HiDazcu21uZYOfeRCrxUyVL+esTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yvFLPHchyUFgxlJG7ibhIXXzEciOwIHMRCF4ZRn33mMewaKgxF8kjHsxqQgfDW58M
-	 eFgxqzQh1QNAutB7UFjSDI75ybv0n8zo28X+cY91qBJ4TILlzmJQyAYcqC1jKxVdEN
-	 idAu1rUlWHoShrMY8V6RP4LUklsod4323Bi9tnq4=
+	b=IQkb07WwyNQBm8mQ7wKe9kbV2+sCYcie8aDO6i7utxmaUXF4mwygfUu6mOR2qJyo2
+	 PkVgmCKeTXluUL+thIn3h0dSc4c8ySXq2cgVTLyL2SXaYW6X/MOjSBzMWyHEUn3YCX
+	 hgfgvSTKEN0ncuee9IQnIWbf+XN4c4DeHzi4pIuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Sarthak Sharma <sarthak.sharma@arm.com>,
-	Usama Arif <usama.arif@linux.dev>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Nico Pache <npache@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
+	"Liam R. Howlett (Oracle)" <liam@infradead.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Breno Leitao <leitao@debian.org>,
+	Chris Mason <clm@meta.com>,
+	Chuck Lever <cel@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Joe Perches <joe@perches.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Rik van Riel <riel@surriel.com>,
+	Waiman Long <longman@redhat.com>,
+	Will Deacon <will@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1358/1424] selftests/mm: skip COW tmpfile cases when fallocate() is unsupported
-Date: Sat, 12 Sep 2026 09:03:10 +0200
-Message-ID: <20260912065637.675157195@linuxfoundation.org>
+Subject: [PATCH 6.6 1359/1424] maple_tree: fix argument name in header
+Date: Sat, 12 Sep 2026 09:03:11 +0200
+Message-ID: <20260912065637.698028344@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -70,84 +62,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@arm.com>
+From: Liam R. Howlett (Oracle) <liam@infradead.org>
 
-[ Upstream commit 4004c130c358b1561a55323b0e747f20f5133f7b ]
+[ Upstream commit 00f67814a14e614b749ebe54076ef1e3e6454f2b ]
 
-Patch series "selftests/mm: Handle unsupported and transient test
-conditions", v3.
+The mas_prev_range() function takes a min and not a max.
 
-Several MM selftests report failures when the test environment lacks
-an underlying prerequisite, such as fallocate() support, MADV_REMOVE,
-local page-cache semantics, or swap.
-
-This series converts those unsupported cases to SKIP while preserving
-failures for unexpected errors. It also allows migration tests to retry
-transient move_pages() failures.
-
-This patch (of 4):
-
-The tmpfile-backed COW cases allocate a one-page file with fallocate()
-before exercising private and shared mappings.  When the filesystem
-backing tmpfile() does not implement fallocate(), setup fails with
-EOPNOTSUPP and no COW behavior is exercised.
-
-This occurs when the temporary directory resides on a filesystem with
-limited allocation support, such as NFSv3.  Reporting a failure adds noise
-because the test prerequisite is absent rather than the COW implementation
-being broken.
-
-Report EOPNOTSUPP as a skip.  Continue treating every other fallocate()
-error as a failure so unexpected setup regressions remain visible.
-
-Link: https://lore.kernel.org/20260727095225.372655-1-usama.anjum@arm.com
-Link: https://lore.kernel.org/20260727095225.372655-2-usama.anjum@arm.com
-Fixes: f8664f3c4a08 ("selftests/vm: cow: basic COW tests for non-anonymous pages")
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Tested-by: Sarthak Sharma <sarthak.sharma@arm.com>
-Acked-by: Usama Arif <usama.arif@linux.dev>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
+Link: https://lore.kernel.org/20260821192627.4085470-18-liam@infradead.org
+Fixes: 6b9e93e01020 ("maple_tree: add mas_prev_range() and mas_find_range_rev interface")
+Signed-off-by: Liam R. Howlett (Oracle) <liam@infradead.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Cc: Breno Leitao <leitao@debian.org>
+Cc: Chris Mason <clm@meta.com>
+Cc: Chuck Lever <cel@kernel.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Joe Perches <joe@perches.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Waiman Long <longman@redhat.com>
+Cc: Will Deacon <will@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/cow.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ include/linux/maple_tree.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/mm/cow.c b/tools/testing/selftests/mm/cow.c
-index 6da407f1728de..0b7660c5f08f7 100644
---- a/tools/testing/selftests/mm/cow.c
-+++ b/tools/testing/selftests/mm/cow.c
-@@ -1670,8 +1670,13 @@ static void run_with_tmpfile(non_anon_test_fn fn, const char *desc)
+diff --git a/include/linux/maple_tree.h b/include/linux/maple_tree.h
+index d01e850b570fd..1ca191a7e53ca 100644
+--- a/include/linux/maple_tree.h
++++ b/include/linux/maple_tree.h
+@@ -478,7 +478,7 @@ void mas_destroy(struct ma_state *mas);
+ int mas_expected_entries(struct ma_state *mas, unsigned long nr_entries);
  
- 	/* File consists of a single page filled with zeroes. */
- 	if (fallocate(fd, 0, 0, pagesize)) {
--		ksft_perror("fallocate() failed");
--		log_test_result(KSFT_FAIL);
-+		if (errno == EOPNOTSUPP) {
-+			ksft_print_msg("fallocate() not supported by filesystem\n");
-+			log_test_result(KSFT_SKIP);
-+		} else {
-+			ksft_perror("fallocate() failed");
-+			log_test_result(KSFT_FAIL);
-+		}
- 		goto close;
- 	}
+ void *mas_prev(struct ma_state *mas, unsigned long min);
+-void *mas_prev_range(struct ma_state *mas, unsigned long max);
++void *mas_prev_range(struct ma_state *mas, unsigned long min);
+ void *mas_next(struct ma_state *mas, unsigned long max);
+ void *mas_next_range(struct ma_state *mas, unsigned long max);
  
 -- 
 2.53.0
