@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C05C34252D;
-	Sat, 12 Sep 2026 13:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30896455626;
+	Sat, 12 Sep 2026 13:12:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218748; cv=none; b=cILEeI1KnaW/wwYfZ1ziEkBrWttm+TbzF9zY9uMlUf0Oe3qWXb0QxMFzv64vQhaslvjZHrXWWiFQlWYYWRHT03juyDBGJGEEfrV4bor2wLwhxFxR9Ch1s+Iyp47MYTOUMuhBZSYHpEX7OA/SQ+lyL3JBpyf77QqQ4+/l+DvPbKE=
+	t=1789218752; cv=none; b=LtT4MDbgwOEAqQZd6EeSoojlQsVLweSqTLe74FbqphML6vptW9WC6a+Ib33o82lM2kkl6QuF7lLfwkPEp9BBKlMiQkri/NE7KTzml9wghtYYbdn9NrrO1cBnPWfLoHwju/kogsz4WwYqqNvoRBbViSrVFnJiBJUma+eUiFxA7zI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218748; c=relaxed/simple;
-	bh=YGXidmTU7Z0CSGEkZfLdf+WduB5Z2aXov3TF3xQcU0g=;
+	s=arc-20240116; t=1789218752; c=relaxed/simple;
+	bh=IobsdcotOHJGmsom1qsUY+S2nwm9iNu6MjHPEAEFRuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDo2RXDqG1TQoFqMy0J07hV0Sm4QfI+vb4eRpIVaz4LLDRHvtQeGcrDrV21RsOkjj0k32QL4V9gCqRrH76SwaDkFUjwJvdqxbL8tnEhgFlP++K4rcNPJ9Pd/zOlMb2FFlykIcdu4XgBA40BkmNiIm3FPCo///u7GuL/Hj8tQ+Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AQmfksj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lja9HW3zJT3q3ubman2c4EguLoUMzV6WgJbH+H+X6EiN/WkqcuQMEcDgSwZXfd718S4dtS4Gej2Qvt56/WZ3h+eO5lNMMfH+glcJgxMdKXb+K6EsBSQLHet/iChBZjdv3UnfWaZMb+64VZeTMDhQujdOAVGy5XagFONDA66V0k0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=exqUxSBf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AQmfksj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E747F1F000FF;
-	Sat, 12 Sep 2026 13:12:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exqUxSBf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 407D01F000FF;
+	Sat, 12 Sep 2026 13:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218747;
-	bh=CEX/4qxUspFoHtbCyMT5N+N8YRtM0RwAtwfb6jBEgZU=;
+	s=korg; t=1789218750;
+	bh=wKRXGXjrvru44t7idoYt0qRlZVOreAS0dKYxJC3U40I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2AQmfksjSsi1NPCzbRDFV7RCZrKdw98MialawaIDrVkVShWjnmiRjoXQXX+z5mefK
-	 ShQPfQAUcg9Hhmp2sL1/YlwV23JJyv7OcJ9FwFrAA29t/Pga7r7XJZUCUxKr8ugFpI
-	 PLjQU/8pknVDHoKdTkqAhqbyMQmL8D7SbL5wi1Bs=
+	b=exqUxSBfq+KZm7QFhjubdQy+yVrVP2rdZ9MtvJMREeWpcod0lEKdhsUs7sWwC7DWr
+	 Z0P4NkZSDyjHBVTgOevvwu7iLs1gzZqIvPapD8lH8KHn8oKEYQ354dG51L/iKaZGXh
+	 fuDDSR6AbWBtJa52kFGZPGXbA2zv4Ne9Al13PwIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Zizhi Wo <wozizhi@huawei.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1155/1376] null_blk: serialize configfs attribute stores with the lock
-Date: Sat, 12 Sep 2026 08:59:41 +0200
-Message-ID: <20260912065633.296897750@linuxfoundation.org>
+Subject: [PATCH 6.12 1202/1376] net: dsa: mv88e6xxx: Fix PCS link check on CMODE read error
+Date: Sat, 12 Sep 2026 09:00:28 +0200
+Message-ID: <20260912065634.337702785@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,84 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 7e7fff51808237703a3a1df6dd5cae1dfd1db86d ]
+[ Upstream commit 7b196e27ad58e612ad1c04b347d0c2135045aa14 ]
 
-The NULLB_DEVICE_ATTR _store takes no lock: apply_fn attributes
-(submit_queues, poll_queues) get dev->NAME written again after apply_fn
-returns, outside its lock; APPLY=NULL attributes are entirely lockless.
-configfs only serializes stores per-open-file, so concurrent stores on
-separate fds race.
+mv88e6352_pcs_link_check() ignores errors returned by
+port_get_cmode(). If the port status register read fails,
+mv88e6352_port_get_cmode() returns without setting cmode. The link check
+then compares an uninitialized value and may incorrectly treat the PCS
+as active.
 
-For apply_fn attributes, once one store's apply_fn has reconfigured the
-hardware, a second (losing) store can still overwrite dev->NAME
-afterwards. This leaves dev->submit_queues out of sync with the live
-queue count, which is later caught by the WARN_ON_ONCE() in
-null_map_queues().
+Save the return value and fail the link check after releasing the
+register lock. marvell_c22_pcs_get_state() initializes the reported link
+state to down before calling the check, so a read failure is handled
+safely until a later poll succeeds.
 
-For !apply_fn attributes, power_store()'s null_add_dev() validates and
-builds the device under "lock" but only sets CONFIGURED afterwards. A store
-slipping in during this window can change a field mid-setup -- for example,
-zone_nr_conv can be pushed above nr_zones after it has already been
-clamped, leading to an out-of-bounds dev->zones[] access.
+This issue was found by a static analysis checker and confirmed by manual
+source review.
 
-Take "lock" in the macro around the apply_fn call, the CONFIGURED test and
-the field write, and move it out of nullb_apply_submit_queues()/
-nullb_apply_poll_queues() so both paths are covered once. This serializes
-stores with power_store's setup and with each other.
-
-Fixes: 45919fbfe1c4 ("null_blk: Enable modifying 'submit_queues' after an instance has been configured")
-Suggested-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Link: https://patch.msgid.link/20260725022509.714271-10-wozizhi@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 85764555442f ("net: dsa: mv88e6xxx: convert 88e6352 to phylink_pcs")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://patch.msgid.link/20260813153131.3952970-1-ruoyuw560@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 17 +++--------------
- 1 file changed, 3 insertions(+), 14 deletions(-)
+ drivers/net/dsa/mv88e6xxx/pcs-6352.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index d641607ace964..671bd6729fa7b 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -356,6 +356,7 @@ nullb_device_##NAME##_store(struct config_item *item, const char *page,	\
- 	ret = nullb_device_##TYPE##_attr_store(&new_value, page, count);\
- 	if (ret < 0)							\
- 		return ret;						\
-+	guard(mutex)(&lock);						\
- 	if (apply_fn)							\
- 		ret = apply_fn(dev, new_value);				\
- 	else if (test_bit(NULLB_DEV_FL_CONFIGURED, &dev->flags)) 	\
-@@ -426,25 +427,13 @@ static int nullb_update_nr_hw_queues(struct nullb_device *dev,
- static int nullb_apply_submit_queues(struct nullb_device *dev,
- 				     unsigned int submit_queues)
- {
--	int ret;
--
--	mutex_lock(&lock);
--	ret = nullb_update_nr_hw_queues(dev, submit_queues, dev->poll_queues);
--	mutex_unlock(&lock);
--
--	return ret;
-+	return nullb_update_nr_hw_queues(dev, submit_queues, dev->poll_queues);
- }
+diff --git a/drivers/net/dsa/mv88e6xxx/pcs-6352.c b/drivers/net/dsa/mv88e6xxx/pcs-6352.c
+index 88f624b654702..f0b42786d5873 100644
+--- a/drivers/net/dsa/mv88e6xxx/pcs-6352.c
++++ b/drivers/net/dsa/mv88e6xxx/pcs-6352.c
+@@ -305,13 +305,16 @@ static bool mv88e6352_pcs_link_check(struct marvell_c22_pcs *mpcs)
+ 	struct mv88e6xxx_port *port = mpcs->port;
+ 	struct mv88e6xxx_chip *chip = port->chip;
+ 	u8 cmode;
++	int err;
  
- static int nullb_apply_poll_queues(struct nullb_device *dev,
- 				   unsigned int poll_queues)
- {
--	int ret;
--
--	mutex_lock(&lock);
--	ret = nullb_update_nr_hw_queues(dev, dev->submit_queues, poll_queues);
--	mutex_unlock(&lock);
--
--	return ret;
-+	return nullb_update_nr_hw_queues(dev, dev->submit_queues, poll_queues);
- }
+ 	/* Port 4 can be in auto-media mode. Check that the port is
+ 	 * associated with the mpcs.
+ 	 */
+ 	mv88e6xxx_reg_lock(chip);
+-	chip->info->ops->port_get_cmode(chip, port->port, &cmode);
++	err = chip->info->ops->port_get_cmode(chip, port->port, &cmode);
+ 	mv88e6xxx_reg_unlock(chip);
++	if (err)
++		return false;
  
- NULLB_DEVICE_ATTR(size, ulong, NULL);
+ 	return cmode == MV88E6XXX_PORT_STS_CMODE_100BASEX ||
+ 	       cmode == MV88E6XXX_PORT_STS_CMODE_1000BASEX ||
 -- 
 2.53.0
 
