@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE620CA6F;
-	Sat, 12 Sep 2026 14:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02B79463;
+	Sat, 12 Sep 2026 14:32:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223563; cv=none; b=SAxiZUPoMikRw8nDj7O90NhrIh/NebbPB5+TTFY5UQSqMNoUuHpLwDU6hxEPrcSW88YkqscRdx0s89hGeF8zkZRwftsmcewI9B8CChYn90WevfN4seohcC783LCK8LtS1QTjYb34RqLpNo0nEFqPqzYZOiL/hroQ/hRVlEXsHCY=
+	t=1789223569; cv=none; b=rSvCD/ruB2ehL8/IDrWriAdZNOtidgKQNtWpYHycJjVVwgh9LrFe9wmALCHPWNk098FgyOyP7L5vzbmKV6rqr+HcgfbrD7b2rdgvZzdS/vNwYIex3BPA8d6NzTGRxInEgPbZZUB+w9R0dBKX+uDSeaojJUsJJ6qaTf/32R8FPyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223563; c=relaxed/simple;
-	bh=0Z3ejcO0G+BYYgaI1SsMXNTTye2RYOBySIc7NmUqVOk=;
+	s=arc-20240116; t=1789223569; c=relaxed/simple;
+	bh=+Q8qiKOnAbCnbCZsg/j2g41gxokD5ljcHODSSuCPZWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X2g2cPFdzn4l94sSuLeXWTIPfTjqSIkKeNtx82I3PZ8o7KW9aV9iwdp6rucNYcaAzRHGf75XgbH/c21k12MpO4y5gY8gbg67BcNvbsr184zSy20C9z63c+afKjr0Is3vGsCko73OdjpZ9FgXyD6s9WIpe5hCiDqsqaMQvQsdyD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yl1x9lnB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S3wQhekQxEXlMHkM2Q4xXILU1sBacwSPs1tu3Inho73J2+ATdAIF0uoxaxPCb00QCesQmK3IJMHo9lg0fsdHwxJRGSHwRHuo1sNwNqy06ZfvUDZeeoloW50zmjZUhm8g2gui9fjjorlTl090Fh84ZE8CbneSnKH937GJUd+J/ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Am4wmdog; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yl1x9lnB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C3051F000FF;
-	Sat, 12 Sep 2026 14:32:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Am4wmdog"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF451F000FF;
+	Sat, 12 Sep 2026 14:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223562;
-	bh=bpY5pRKzT9GgBy551u6iyTQhpe8Io7XtMBQInUYoN9M=;
+	s=korg; t=1789223567;
+	bh=ZSP8zMsmvTTswNBeU6DtmZYMJHLcdja29s2a+GZpKeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yl1x9lnBnl5nxoDU7k+0ex3IoV45pbVyyDl5BVBHO3/DQu/VS7HdmOWDmNTlcdIG/
-	 uPWUSrgAGhbXOKIJTmO7EdRhsD++GL/COlAkHs7gw1aBXhT1LUoiFN3zI+dTOqJAFC
-	 A4dKLAuZBM1Xw7I2+Q3wg/KxZJiAMmwCteBJCgCw=
+	b=Am4wmdogWztAVpYT2vnboVtcCRwkSdiHifkjKH1VWSD2kbE6yEjtQkUnE0jg02ZAt
+	 KuSmkt1xXkC/S1T0Mhb0O2MICxs66OHsbJwTuyEFm1q03SpJ28/dl5IpEvPu1LV1jb
+	 23MafbGLCclDS/0i5BMI4H2nHsN7DUODtamgWNtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Khare <udaykhare77@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Kaixuan Li <kaixuan.li@ntu.edu.sg>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0772/1424] remoteproc: qcom: Fix glink->node reference leak in qcom_add_glink_subdev
-Date: Sat, 12 Sep 2026 08:53:24 +0200
-Message-ID: <20260912065624.585311183@linuxfoundation.org>
+Subject: [PATCH 6.6 0773/1424] drm/bridge: tc358767: clamp the reported AUX read size to the request
+Date: Sat, 12 Sep 2026 08:53:25 +0200
+Message-ID: <20260912065624.609794010@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,44 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uday Khare <udaykhare77@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit 44f4911ab8e6f4d69afad5f2571bbd2da421c918 ]
+[ Upstream commit ec6444a00c49e6c2b5e9a507272a28126677f9ee ]
 
-In qcom_add_glink_subdev(), the device node reference acquired via
-of_get_child_by_name() is stored in glink->node. If the subsequent
-kstrdup_const() allocation for glink->ssr_name fails, the function
-returns early without calling of_node_put() on glink->node, leaking
-the reference count.
+tc_aux_transfer() clamps an AUX read to the payload limit:
 
-Fix this by adding of_node_put(glink->node) on the error path before
-returning.
+	size_t size = min_t(size_t, DP_AUX_MAX_PAYLOAD_BYTES - 1, msg->size);
 
-Fixes: cd9fc8f1b35b ("remoteproc: qcom: Pass ssr_name to glink subdevice")
-Signed-off-by: Uday Khare <udaykhare77@gmail.com>
-Link: https://lore.kernel.org/r/20260618132054.11010-1-udaykhare77@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+After the transfer it replaces size with the byte count the controller
+reports in AUX_BYTES:
+
+	if (size)
+		size = FIELD_GET(AUX_BYTES, auxstatus);
+
+AUX_BYTES is GENMASK(15, 8), so it can be up to 255. Nothing clamps it
+back to the request. tc_aux_read_data() reads that many bytes into the
+16-byte auxrdata stack buffer, then copies them into the caller buffer. A
+reported count of 255 makes the read run to 256 bytes and overruns both.
+
+The controller should never report more than it was asked to transfer, so
+this is defense in depth rather than a live hole. The reported count is
+only lightly trusted, and the check is cheap. Clamp it back to the request,
+the same way ti-sn65dsi86 does in commit aca58eac52b8 ("drm/bridge:
+ti-sn65dsi86: Never store more than msg->size bytes in AUX xfer").
+
+Fixes: 12dfe7c4d9c5 ("drm/bridge: tc358767: Use reported AUX transfer size")
+Co-developed-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+Signed-off-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260701064440.1541418-1-maoyixie.tju@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_common.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/tc358767.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-index e5b1f0e66019f..301cd16723709 100644
---- a/drivers/remoteproc/qcom_common.c
-+++ b/drivers/remoteproc/qcom_common.c
-@@ -240,8 +240,10 @@ void qcom_add_glink_subdev(struct rproc *rproc, struct qcom_rproc_glink *glink,
- 		return;
+diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
+index 6a3f29390313b..b503b5e35a6cf 100644
+--- a/drivers/gpu/drm/bridge/tc358767.c
++++ b/drivers/gpu/drm/bridge/tc358767.c
+@@ -441,7 +441,7 @@ static ssize_t tc_aux_transfer(struct drm_dp_aux *aux,
+ 	 * address-only transfer
+ 	 */
+ 	if (size)
+-		size = FIELD_GET(AUX_BYTES, auxstatus);
++		size = min_t(size_t, size, FIELD_GET(AUX_BYTES, auxstatus));
+ 	msg->reply = FIELD_GET(AUX_STATUS, auxstatus);
  
- 	glink->ssr_name = kstrdup_const(ssr_name, GFP_KERNEL);
--	if (!glink->ssr_name)
-+	if (!glink->ssr_name) {
-+		of_node_put(glink->node);
- 		return;
-+	}
- 
- 	glink->dev = dev;
- 	glink->subdev.start = glink_subdev_start;
+ 	switch (request) {
 -- 
 2.53.0
 
