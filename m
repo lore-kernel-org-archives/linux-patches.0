@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA503537FF;
-	Sat, 12 Sep 2026 12:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC7B3537FF;
+	Sat, 12 Sep 2026 12:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214488; cv=none; b=TangV/em/JXhVCz80jq4k1W88HNVq+eNOZ8AfC8X1MGV4DbaMeL3FllLQEc4j5R7p+2fZJW2Lv0pkSaJZ2jElqt1lc4nK3p2+syp377UDBLIPLUaiNKicMyQqPC1cEsVzm7POM1Z1e9mZshuVM/fFOpE5mmJFdDG/C/t0Izb4LI=
+	t=1789214493; cv=none; b=kf9ln5/ZbQ7o4bMo4soZvCsPzIR6xPTgH6Ge+MRTSAvnCL4NfMz+rdNe81tyn770dZ6UrZfW9N6K6AQahsOpKtQYICbsEb9Ko+AIN2xPMyzAyjwmGHP6yVyYFR26rTRNJ95u0ZlFSdjnbfyRMHcXzKgPgXhfS/mhI4fqR4Dg/mA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214488; c=relaxed/simple;
-	bh=TMNi2XjxkB+t1KJ81u7Ip0VMiSAbbsKRWIAIpCqOSiw=;
+	s=arc-20240116; t=1789214493; c=relaxed/simple;
+	bh=y4XppHz2EfH7udtGa+6wpTKTG90a4aipvDSW6N2ZGes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EePFQZqut9ntdVBpWTaLKx/20YfHr6tLIOU5YQFF6XjXB7b3yAfRAzgr8YX2CBTau8GgKeE0vLS8xL4dpsEwRN2wyw9ZqcjATg+0nMR1rUNGylm60RpIwFeZDeOwTRRNt6x75Og+iJyIWtnkCD2pY6AFLRNNoWrW0FK9M6mH06g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+4Ib/PP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dDehkuj2ItAyfYWQhQ8AW7DvXN60RaRSi1+RchcjdLd0mpRsDYOgwKJC/LDFbrL0UpkJaxVPUkWn5C2GSHEnjJMgADn+EIX9TTMl9kjLPWHS1iIXBv7pwo2gLK2twL9j+BZfB0b+05sXYGv7fC535txHxlxfFlMJSWIig1SmGWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hVLN7ae; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+4Ib/PP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F116C1F000FF;
-	Sat, 12 Sep 2026 12:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hVLN7ae"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9049C1F000FF;
+	Sat, 12 Sep 2026 12:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214486;
-	bh=P95OyW6SygCr1Qnq/kqbU8A4nE40aFbn36w5oJI5N1k=;
+	s=korg; t=1789214491;
+	bh=DCh3cKHR2is/xAdwuGC6mHY8l1dBH2NptetAZggYs48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f+4Ib/PPKzLAEhC46sycXW4X2Q63oZXJovQvLnmsVBm9T53eT/EaTiTx4Ufj1jd5E
-	 yvfc40sfu4s1d2lI39hwy1OMatTEAwrhzLgyK6g3jwANXNGa6kAohxOAnY0A3fuut1
-	 vvpc4lwOjr38kJBW5Kbs8Jjtte3EWXpi9Fqtf3kM=
+	b=0hVLN7aeyYqtEiwwfcMunlHSbENzY5zOsK9buDHVdxXc6CHCrK3H9jTgqgFXN+uzl
+	 /tnzfiJVN09kla4qZsObxvbhmjie9LpLakpBfa7VV3PJ4z2firLysx6apz4NzlhrpJ
+	 F/iR4ToggpRCbz2bdwnm2v2sDF+Z2nWmrQMNs0vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0293/1376] mm/damon/paddr: drop last same folio access check reuse optimization
-Date: Sat, 12 Sep 2026 08:45:19 +0200
-Message-ID: <20260912065614.078565548@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Zhenhao Wan <whi4ed0g@gmail.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.12 0284/1376] drm/nouveau/uvmm: fix premature region free on failed OP_UNMAP_SPARSE
+Date: Sat, 12 Sep 2026 08:45:10 +0200
+Message-ID: <20260912065613.876095243@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,82 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Zhenhao Wan <whi4ed0g@gmail.com>
 
-[ Upstream commit f23f0aa62b2f32c2b12f95959fc4603ef81678b2 ]
+commit ccf930812f23b8259ef64fd3394d53b093e4651a upstream.
 
-It can race when multiple kdamonds are being used.  The problem from the
-race is doubtful, but the gain from the optimization is also doubtful.
-Simply drop the optimization in favor of code simplicity.
+In nouveau_uvmm_bind_job_submit()'s OP_UNMAP_SPARSE arm, op->reg is set
+from nouveau_uvma_region_find(), which only looks the region up and takes
+no reference; a region's sole reference is its membership in
+uvmm->region_mt. Two failure paths leave op->reg set: the -ENOENT check
+when the region is busy, and the drm_gpuvm_sm_unmap_ops_create() failure.
+The sibling nouveau_uvmm_sm_unmap_prepare() failure just below clears
+op->reg; these two do not.
 
-The user impact is doubtfully trivial.  After all, this kind of
-interference can happen only by intentional user setup.  Even if it
-happens, it will be rare, and the consequence is degradation of the
-best-effort monitoring results.  No critical consequences like kernel
-panic or memory corruption happen.
+unwind_continue steps back one op, so the failing op is skipped by the
+unwind loop and its op->reg stays set. nouveau_uvmm_bind_job_cleanup()
+then enters its if (op->reg) branch and calls nouveau_uvma_region_remove()
+and nouveau_uvma_region_put() on it, dropping the tree's sole reference
+and freeing a region this job never created. The comment above the
+cleanup loop documents the broken invariant: op->reg must be NULL on
+submit failure.
 
-The race was discovered [1] by Sashiko.
+This frees a live region on an unrelated failure, reachable single-job
+when drm_gpuvm_sm_unmap_ops_create() returns -ENOMEM; if another job owns
+the same region, its cleanup then removes and puts the freed region, a
+use-after-free. Clear op->reg on both failure paths.
 
-Link: https://lore.kernel.org/20260715031002.108504-5-sj@kernel.org
-Link: https://lore.kernel.org/20260621204050.10993-1-sj@kernel.org [1]
-Fixes: a28397beb55b ("mm/damon: implement primitives for physical address space monitoring")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.16.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhenhao Wan <whi4ed0g@gmail.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260811-nouveau-uvmm-vmbind-fixes-v2-2-aaee4b395d04@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/paddr.c | 20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_uvmm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index d4a4d51750f5f..a6b1de97b1e8a 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -148,7 +148,7 @@ static bool damon_folio_young(struct folio *folio)
- 	return accessed;
- }
+--- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
+@@ -1251,6 +1251,7 @@ nouveau_uvmm_bind_job_submit(struct nouv
+ 							   op->va.range);
+ 			if (!op->reg || op->reg->dirty) {
+ 				ret = -ENOENT;
++				op->reg = NULL;
+ 				goto unwind_continue;
+ 			}
  
--static bool damon_pa_young(unsigned long paddr, unsigned long *folio_sz)
-+static bool damon_pa_young(unsigned long paddr)
- {
- 	struct folio *folio = damon_get_folio(PHYS_PFN(paddr));
- 	bool accessed;
-@@ -157,7 +157,6 @@ static bool damon_pa_young(unsigned long paddr, unsigned long *folio_sz)
- 		return false;
+@@ -1259,6 +1260,7 @@ nouveau_uvmm_bind_job_submit(struct nouv
+ 								op->va.range);
+ 			if (IS_ERR(op->ops)) {
+ 				ret = PTR_ERR(op->ops);
++				op->reg = NULL;
+ 				goto unwind_continue;
+ 			}
  
- 	accessed = damon_folio_young(folio);
--	*folio_sz = folio_size(folio);
- 	folio_put(folio);
- 	return accessed;
- }
-@@ -165,21 +164,10 @@ static bool damon_pa_young(unsigned long paddr, unsigned long *folio_sz)
- static void __damon_pa_check_access(struct damon_region *r,
- 		struct damon_attrs *attrs)
- {
--	static unsigned long last_addr;
--	static unsigned long last_folio_sz = PAGE_SIZE;
--	static bool last_accessed;
--
--	/* If the region is in the last checked page, reuse the result */
--	if (ALIGN_DOWN(last_addr, last_folio_sz) ==
--				ALIGN_DOWN(r->sampling_addr, last_folio_sz)) {
--		damon_update_region_access_rate(r, last_accessed, attrs);
--		return;
--	}
--
--	last_accessed = damon_pa_young(r->sampling_addr, &last_folio_sz);
--	damon_update_region_access_rate(r, last_accessed, attrs);
-+	bool accessed;
- 
--	last_addr = r->sampling_addr;
-+	accessed = damon_pa_young(r->sampling_addr);
-+	damon_update_region_access_rate(r, accessed, attrs);
- }
- 
- static unsigned int damon_pa_check_accesses(struct damon_ctx *ctx)
--- 
-2.53.0
-
 
 
