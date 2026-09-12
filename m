@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B020455639;
-	Sat, 12 Sep 2026 13:40:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE4047124F;
+	Sat, 12 Sep 2026 13:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220457; cv=none; b=DbitYUI/PRumrAfTxs4tkQCvWy1Og+Z55NzcCSCDNqIhhGuikzb+NqISZ/yH/cKFutPY+hZ9GufX++csrGrWik4SdOuNiF4LErLC8Ctz/QlfylJhefEPgnD13gAxQ+iHqXkyTDgFF/2Rtf4sATGrC43utLvbQf2c+EdMqLyhDCc=
+	t=1789220462; cv=none; b=YFhMorWxZcFgOnSTg6YabJhMHfjt4DqXjQJPbcCPRytcdBYX6S6vAM2VmoYvZUbQGtftw2eVn8N7LPSS2NAHaTQjsh0CEA1PWxo0Oubu20i7Odx+IP7Mrt6uuA3J8sIgS4sq+h9ejkGLTOdoGZp7/UCF1bu9DJrY7t86XKdC4Qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220457; c=relaxed/simple;
-	bh=nzy4iYhUVkAHuIb1F1g4qKDbLFMwylR+dSHZBiqqIuo=;
+	s=arc-20240116; t=1789220462; c=relaxed/simple;
+	bh=WI5xyZqGPpOzK+irN9kZo8F1nf2j9dKNZSN9XLgJXYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Snaqg/Oxjtxzwn4g4Z4TxEJVwluCPKEhYXNNXIUH1zMJjzRRcuLyVMNN8+fKZXDG745z3ybLIOlBNvf//3xcWfxx+nFg4NLDbtTHfRWdoJqiEtR8HoNsP2VWjTrl0/P7JN8nJjXsm7lTf9SDlEMTR/mrxQ8KYn7ljemBOfe3Y6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mvicgd4+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pnp4eCPtxnyjMtHpQzIMYEv8aCP08bNjeR4ZehbjLa2TTMUGKHmQjFScUsEKjCbcXJ7kJJxh2NnclxaCfE3sxCp1PygrHLipOwdaCMeITpGNXd9kilBzeoF2rpZXDGle2pPgx/2pV4rduMOptkrApMaTZnVA2xlthOhRtAQ9w4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSPMmwCw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mvicgd4+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350A61F000FF;
-	Sat, 12 Sep 2026 13:40:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSPMmwCw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078C21F000FF;
+	Sat, 12 Sep 2026 13:40:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220456;
-	bh=cRf296K1TIFixjHwYPeZqQI092BKeK6Lyce2hxntWgk=;
+	s=korg; t=1789220461;
+	bh=vNQjFqmbgo7PTeEjS9ao8b3qk4XB3bWK8wgAohY6/O8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mvicgd4+1P365DAquW23K/rGGCW+JWa5rNHjwNfxRh+xuSLxZLcJKcpH2dhHEZ4AP
-	 pYNZLvRlA7mGKLzwNT6cR7SbESVPyaW/BPRX2hwEQXTTE0Y3FvYybHxqi8iBnoSkko
-	 IiIg+JCJ/rAxVUn9g0dmEICe89E5etEmeNx55D64=
+	b=qSPMmwCwqds/2dw19XUpwt6f/yLQs+WKcXsOK3bgredSSdtelzh4ukORNajx64mWt
+	 ZAahzS4k5SFWS0aHXKknBo7Rvquq6xBnhxeAqKAruvxH0awaUvjSit1Nd1fBAs66Nc
+	 +PixCHqwLtojjkQFuIXSOM1qAec+cvbMLqPZ9Vww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
+	Ibrahim Hashimov <security@auditcode.ai>,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
@@ -36,9 +36,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jun Piao <piaojun@huawei.com>,
 	Heming Zhao <heming.zhao@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 0181/1424] ocfs2: validate lengths in dlm_mig_lockres_handler
-Date: Sat, 12 Sep 2026 08:43:33 +0200
-Message-ID: <20260912065611.344076244@linuxfoundation.org>
+Subject: [PATCH 6.6 0182/1424] ocfs2: validate rl_used against rl_count in refcount block validator
+Date: Sat, 12 Sep 2026 08:43:34 +0200
+Message-ID: <20260912065611.366041224@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -57,31 +57,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-commit b54e03d9b3697d25f4a0063cf717d459c5e3ad94 upstream.
+commit 4ca62df6bc0708947b48da3f6a712ecb8e73929c upstream.
 
-A node receiving a DLM_MIG_LOCKRES message trusts several fields of the
-peer-supplied dlm_migratable_lockres without validation.  num_locks and
-lockname_len are bounded only on the sending side, and the message is
-never checked to actually carry num_locks migratable_lock entries.  As a
-result dlm_process_recovery_data() walks mres->ml[0..num_locks) past the
-kmalloc(data_len) copy of the message (an out-of-bounds read that ends in
-a BUG_ON panic), and dlm_init_lockres() copies lockname_len bytes into the
-fixed 32-byte o2dlm_lockname slab object (a heap out-of-bounds write).
-Both are reachable by any node in the domain.
+ocfs2_find_refcount_rec_in_rl() walks the on-disk refcount record array
+with:
 
-Validate these fields right after dlm_grab(), before anything uses them --
-including the not-joined error path, which already prints mres->lockname
-with the unbounded lockname_len as a %.*s precision.  Reject the message
-unless lockname_len <= DLM_LOCKID_NAME_MAX, num_locks <=
-DLM_MAX_MIGRATABLE_LOCKS (the bound the sender already asserts), and the
-payload is large enough to hold the claimed locks.  Conforming recovery
-and migration messages are unaffected.
+	for (; i < le16_to_cpu(rb->rf_records.rl_used); i++) {
+		rec = &rb->rf_records.rl_recs[i];
+		...
 
-Link: https://lore.kernel.org/20260629-b4-disp-94fb6521-v1-2-6953bcc0421f@proton.me
-Fixes: 6714d8e86bf4 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+rl_recs[] lives in a single metadata block (4096 bytes on the common
+configuration), so its real capacity is fixed by
+ocfs2_refcount_recs_per_rb(sb) (247 records for a 4K block with the
+16-byte ocfs2_refcount_rec).  rl_used and rl_count are both read directly
+off disk by ocfs2_validate_refcount_block() and are never checked against
+that capacity, nor against each other, before any refcount/reflink/CoW
+operation walks the array.
+
+A crafted (or corrupted) refcount block with rl_used == 0xffff makes the
+loop above walk far past the end of the block, dereferencing rl_recs[i]
+for i up to 65534.  The resulting index is then handed to the sibling
+ocfs2_insert_refcount_rec(), whose insert-shift does:
+
+	if (index < le16_to_cpu(rf_list->rl_used))
+		memmove(&rf_list->rl_recs[index + 1],
+			&rf_list->rl_recs[index],
+			(le16_to_cpu(rf_list->rl_used) - index) *
+			 sizeof(struct ocfs2_refcount_rec));
+
+i.e.  a memmove() of up to (0xffff - index) * 16 bytes (~1 MiB) from an
+offset already past the block.  This is reachable from an ordinary reflink
+(FICLONE) against a crafted/corrupted ocfs2 image: attaching an extent
+whose cpos sorts past every real record in the leaf forces the lookup to
+run off the end instead of returning early on a match.  The attacker model
+is local: CAP_SYS_ADMIN mounting a crafted or corrupted ocfs2 image, or a
+raw write to the block device backing an already-mounted ocfs2 filesystem.
+
+ocfs2_validate_refcount_block() already validates the block's ECC,
+signature, rf_blkno and rf_fs_generation, but never rl_count/rl_used
+against the block's actual on-disk capacity.  This is the same class of
+gap that ocfs2_validate_extent_block() (fs/ocfs2/alloc.c) already closes
+for the sibling extent-list header, which checks both the record capacity
+and the "used" bound before any code walks h_list.l_recs[]:
+
+	if (le16_to_cpu(eb->h_list.l_count) != ocfs2_extent_recs_per_eb(sb)) {
+		rc = ocfs2_error(...);
+		goto bail;
+	}
+
+	if (le16_to_cpu(eb->h_list.l_next_free_rec) >
+	    le16_to_cpu(eb->h_list.l_count)) {
+		rc = ocfs2_error(...);
+		goto bail;
+	}
+
+Add the equivalent pair of checks to ocfs2_validate_refcount_block():
+reject a refcount block whose rl_count does not match the fixed per-block
+capacity returned by ocfs2_refcount_recs_per_rb(), and reject rl_used >
+rl_count.  Both checks are skipped when OCFS2_REFCOUNT_TREE_FL is set,
+because in that case the same union bytes hold an ocfs2_extent_list
+(rf_list), not the refcount record list (rf_records) -- that layout is
+already validated separately by ocfs2_validate_extent_block() when the
+referenced extent block is read.  This mirrors the existing
+"!(rb->rf_flags & OCFS2_REFCOUNT_TREE_FL)" guard used elsewhere in this
+file (e.g.  ocfs2_get_refcount_rec()) to decide whether rf_records or
+rf_list is the live member of the union.
+
+With this in place, a forged rl_used/rl_count is caught at block
+validation time (ocfs2_error()), consistent with every other corruption
+check in this function, instead of driving an out-of-bounds read in
+ocfs2_find_refcount_rec_in_rl() and a subsequent out-of-bounds memmove()
+in ocfs2_insert_refcount_rec().
+
+Verified against a crafted image on a v6.19 KASAN (KASAN_GENERIC) build:
+replaying the same reflink (FICLONE) reliably hit a KASAN report in
+__ocfs2_increase_refcount()/ocfs2_insert_refcount_rec() before this patch,
+and triggers no report once ocfs2_validate_refcount_block() rejects the
+forged rl_used/rl_count.
+
+Link: https://lore.kernel.org/20260709132609.44233-1-security@auditcode.ai
+Fixes: f2c870e3b12e ("ocfs2: Add ocfs2_read_refcount_block.")
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
@@ -89,30 +147,49 @@ Cc: Junxiao Bi <junxiao.bi@oracle.com>
 Cc: Changwei Ge <gechangwei@live.cn>
 Cc: Jun Piao <piaojun@huawei.com>
 Cc: Heming Zhao <heming.zhao@suse.com>
+Assisted-by: AuditCode-AI:2026.07
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/dlm/dlmrecovery.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ocfs2/refcounttree.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
---- a/fs/ocfs2/dlm/dlmrecovery.c
-+++ b/fs/ocfs2/dlm/dlmrecovery.c
-@@ -1359,6 +1359,15 @@ int dlm_mig_lockres_handler(struct o2net
- 	if (!dlm_grab(dlm))
- 		return -EINVAL;
- 
-+	if (mres->lockname_len > DLM_LOCKID_NAME_MAX ||
-+	    mres->num_locks > DLM_MAX_MIGRATABLE_LOCKS ||
-+	    be16_to_cpu(msg->data_len) < struct_size(mres, ml, mres->num_locks)) {
-+		mlog(ML_ERROR, "%s: invalid lockres migration message from %u\n",
-+		     dlm->name, mres->master);
-+		dlm_put(dlm);
-+		return -EINVAL;
-+	}
+--- a/fs/ocfs2/refcounttree.c
++++ b/fs/ocfs2/refcounttree.c
+@@ -116,6 +116,33 @@ static int ocfs2_validate_refcount_block
+ 				 le32_to_cpu(rb->rf_fs_generation));
+ 		goto out;
+ 	}
 +
- 	if (!dlm_joined(dlm)) {
- 		mlog(ML_ERROR, "Domain %s not joined! "
- 			  "lockres %.*s, master %u\n",
++	/*
++	 * rf_records (rl_count/rl_used/rl_recs[]) is only meaningful when
++	 * this block is not an interior tree block (OCFS2_REFCOUNT_TREE_FL);
++	 * in that case the same union bytes hold an extent list (rf_list)
++	 * instead, which is validated by ocfs2_validate_extent_block().
++	 */
++	if (!(le32_to_cpu(rb->rf_flags) & OCFS2_REFCOUNT_TREE_FL)) {
++		if (le16_to_cpu(rb->rf_records.rl_count) !=
++		    ocfs2_refcount_recs_per_rb(sb)) {
++			rc = ocfs2_error(sb,
++					 "Refcount block #%llu has an invalid rl_count of %u\n",
++					 (unsigned long long)bh->b_blocknr,
++					 le16_to_cpu(rb->rf_records.rl_count));
++			goto out;
++		}
++
++		if (le16_to_cpu(rb->rf_records.rl_used) >
++		    le16_to_cpu(rb->rf_records.rl_count)) {
++			rc = ocfs2_error(sb,
++					 "Refcount block #%llu has an invalid rl_used of %u (rl_count %u)\n",
++					 (unsigned long long)bh->b_blocknr,
++					 le16_to_cpu(rb->rf_records.rl_used),
++					 le16_to_cpu(rb->rf_records.rl_count));
++			goto out;
++		}
++	}
+ out:
+ 	return rc;
+ }
 
 
