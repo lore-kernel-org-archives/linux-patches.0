@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208DB36921B;
-	Sat, 12 Sep 2026 09:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1103F4078E8;
+	Sat, 12 Sep 2026 09:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207009; cv=none; b=OttYFLLy8aZlsTizpEdBrXgbcosUxsW1S1wuwRBlDDlTweENgK3no96vcasbsA3JqdHD+/qpSmsd7VfUTeZihmlt2Adga/eOQwuS5n/7yTldvQoLohqrrdzGCOa8Hkr7E+uKYZDILx13EIAb93SlWKKPGdZpDWJ1aQhTWPcfjRo=
+	t=1789207015; cv=none; b=UUP9QZKTHGDGN9qFwD+rxCMZokbottnRD4LM/4ZLisC0hYwKjDRqPp57wIESrqcinrGBcy23bqGIL/ELo+33yfy56Ln5Mpa+TMJOlmtlWBOwH4WCfWJ0bJfYGnC7Bt507ut2R4nFbZf7ZGU6rTU3u8EDpBlHtxmDNo8U8CJkk+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207009; c=relaxed/simple;
-	bh=19Q6Nd9qvkCFm2g7f2XKkOVgnbrPCMxZeW2MYG+1UkA=;
+	s=arc-20240116; t=1789207015; c=relaxed/simple;
+	bh=azRvoqV+Ba5Av49pMHsjDEg6pxpCmIJc+hebZEXBZzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EVfTZPcoofkMxYuTcWqI4HCKnOhlshiNSmp8zeir0UBfSc2cwcgopLUUfrcVcK8V/u8gJv081BLIktMHcSDi0GrJHu1IzX88/ME18xJNRYFS+OIeXkdTWESnorNgRDJo5eCV24hCcdMHD+k2JHVlGQVyYiTf6FRtSoU0v+7/gtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjDcLfAS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QzOruc28HrddBIFbTINrusjhu0INt0A7P3Kpi26/2xuKfj6BH711L1VxwR5Fdqz17p85fNU1xQPY1eiNjuguyKUiz/zNonHPWFmMv1nXLH1cW2R1bBWhS4dk9MmXjYzmtshOQD07FPiMSnUGAq48nFj1fp/0ZYgPJKAvAUdgjXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bro0i7l9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjDcLfAS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C4D1F000FF;
-	Sat, 12 Sep 2026 09:56:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bro0i7l9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E9A1F000FF;
+	Sat, 12 Sep 2026 09:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207008;
-	bh=mkNAbT0nukJ2t7G1lOTiCczSu+RlqT8dD5Oe2JkIYAI=;
+	s=korg; t=1789207012;
+	bh=e3VYoiDO9scwIl5/PkFOvft9Nb98maoknfXN2qXmxuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PjDcLfASgkarZ5XBF13rUATOuyv8AwCKK/3lP+Mi5G2tKJdkgqFzwikFGW2c64Uxc
-	 uyR+0tgNYm0LnOTEh4WtNOWfb2+glZ8rOhNwLo6AuOSSW2hLP4fy6z25MB8KpuJM4z
-	 tosKslhvzGzk9Kul9TnzV22vb4VztbfGrinG9yrU=
+	b=bro0i7l90IXoFjw1MzWPpowVgh9x2QRbxFV+3YtP4LswrTsiV5VVaHvxhY4Zz6oCO
+	 7Pek0ykO4EFEXFl/YvMhd0ZBHOnU2tx3WlVfuiUOpAXHYcJcLpvmrSA9Ki9yEfC1mg
+	 ef7EzcCXo+V+gT+IeUoQ/yyu8+pUzHmR2BjY6Cus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vz@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Wei Wang <wei.w.wang@hotmail.com>,
+	Yongwei Xu <xuyongwei@open-hieco.net>,
+	Vasant Hegde <vasant.hegde@amd.com>,
 	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0281/1518] iommu/msm: Return -ENOMEM on memory allocation failure in probe
-Date: Sat, 12 Sep 2026 08:40:50 +0200
-Message-ID: <20260912065629.838828452@linuxfoundation.org>
+Subject: [PATCH 6.18 0282/1518] iommu/amd: Prevent SB IOAPIC from overriding IVRS validation errors
+Date: Sat, 12 Sep 2026 08:40:51 +0200
+Message-ID: <20260912065629.861480312@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,36 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vz@kernel.org>
+From: Wei Wang <wei.w.wang@hotmail.com>
 
-[ Upstream commit b0d50c9016c4c2959dfa61bf9549cf98f9aa19cd ]
+[ Upstream commit 854056480f9217568e3ab5edd81a9347a173ea79 ]
 
-If dynamic memory allocation in driver's probe function execution fails,
-it should be reported to the driver's framework with -ENOMEM error code.
+The check_ioapic_information() function validates IOAPICs against the
+IVRS table to safely disable Interrupt Remapping (IR) if the BIOS provides
+a broken topology.
 
-Fixes: 109bd48ea2e1 ("iommu/msm: Add DT adaptation")
-Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Currently, the validation loop contains a bug: If an unmapped secondary
+IOAPIC is encountered, 'ret' is set to false. But if the Southbridge (SB)
+IOAPIC is enumerated after it in the MADT, the loop overwrites 'ret' to
+true.
+
+This bypasses the validation failure and leaves IR enabled. When devices
+attached to the unmapped secondary IOAPIC fire interrupts, the IOMMU drops
+them due to the missing Requestor ID, leading to localized device hangs.
+
+Fix this by initializing 'ret' to true and only toggling it to false
+upon encountering a validation error, ensuring failures are never erased.
+
+Fixes: c2ff5cf5294b ("iommu/amd: Work around wrong IOAPIC device-id in IVRS table")
+Signed-off-by: Wei Wang <wei.w.wang@hotmail.com>
+Tested-by: Yongwei Xu <xuyongwei@open-hieco.net>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/msm_iommu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/amd/init.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
-index d5e2fc9b01116..1dfa6f69c28f2 100644
---- a/drivers/iommu/msm_iommu.c
-+++ b/drivers/iommu/msm_iommu.c
-@@ -719,7 +719,7 @@ static int msm_iommu_probe(struct platform_device *pdev)
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 69170146d4421..20b1cc2159332 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -3103,7 +3103,7 @@ static bool __init check_ioapic_information(void)
+ 	int idx;
  
- 	iommu = devm_kzalloc(&pdev->dev, sizeof(*iommu), GFP_KERNEL);
- 	if (!iommu)
--		return -ENODEV;
-+		return -ENOMEM;
+ 	has_sb_ioapic = false;
+-	ret           = false;
++	ret           = true;
  
- 	iommu->dev = &pdev->dev;
- 	INIT_LIST_HEAD(&iommu->ctx_list);
+ 	/*
+ 	 * If we have map overrides on the kernel command line the
+@@ -3123,7 +3123,6 @@ static bool __init check_ioapic_information(void)
+ 			ret = false;
+ 		} else if (devid == IOAPIC_SB_DEVID) {
+ 			has_sb_ioapic = true;
+-			ret           = true;
+ 		}
+ 	}
+ 
+@@ -3137,6 +3136,7 @@ static bool __init check_ioapic_information(void)
+ 		 * device id for the IOAPIC in the system.
+ 		 */
+ 		pr_err("%s: No southbridge IOAPIC found\n", fw_bug);
++		ret = false;
+ 	}
+ 
+ 	if (!ret)
 -- 
 2.53.0
 
