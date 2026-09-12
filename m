@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D6D1BD9C9;
-	Sat, 12 Sep 2026 08:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4504E35AC3E;
+	Sat, 12 Sep 2026 08:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203060; cv=none; b=P84p/lg8KsdbAwnC2hqr06I5zyHbFrbcxenly4wVnGrnMHP20P4zWF4Y3bXEIpzYmsX0X2MUhJn4rwucPca1o6u/KSBnlqKqCRmUHhlRlo5R93RciuDM5KKiTCrg8ijfDjn0DMHLuY327epoIxMp740XNLlonsEanWjz82aB/hM=
+	t=1789203065; cv=none; b=CqGe722BjstLcw05SPIHaRdII8DeDPCoACiK0KzZJ5dqo1lgmi0Hcr6yWsx1MbmBlpPllhGblTzv04ZzbJomk0R7tZjG0mU4s6A9DpbYf2PNaiuKRvt2KAq6nANImbgkCR+Fr+GxO7ob56ASmMOYJ6rhXQLusJ6kapcotzseFz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203060; c=relaxed/simple;
-	bh=FoifMI3tyiatorkzWbMcUayUCuDyDSHw6aaSRkF+VsY=;
+	s=arc-20240116; t=1789203065; c=relaxed/simple;
+	bh=JEIB6l3jO6azL5ucCf4kDecVwDamsJ8PE/Xsaz7M5lY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8GNUHbdAZ/zH8j7t+2BH7tmzsrkjoHJdoMj7PkJhWAYaBshXs9u+YQjWAtHtUjk7ZU2tLRTRRWtw+sfMtfBpvi5vAALe1RIwZTO+Y/8GpWH8lZVSoqfyg7xDw9bd2yFNsXksUoKPSodyeALPTm8YgCq4pcn7K0NkVAuBPnJ0aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evjLY3sm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m42HXsBaEDyGzVL6QlkVnhXjTXQbxB2r+LCjuZ+Mf8VPvHTwd7J8Q4Q/9PYdOiws1JFxD0M5BmAsYcMmxVegTKdq4UwAQKgx9SdYGqMo1gE10yT5IFwBzjzmOZDsQwp1qt8adqfUyZkfwUHKOqJZgAQrz30wed39EIhyMWQDxek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15470U7G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evjLY3sm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B951F000FF;
-	Sat, 12 Sep 2026 08:50:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15470U7G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F1E1F000FF;
+	Sat, 12 Sep 2026 08:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203059;
-	bh=n92LpWzWw3lChQ4hvH1se+B/gadhQi9MShViyy55P04=;
+	s=korg; t=1789203064;
+	bh=XVunW4ldwjX9vqqvBrnJ9IVz+8/dHPgnTlaAojyQsYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=evjLY3smOmy+xsmAvsFklNX/v9Kx6SoZ7tZ/wJGQG0LPx3cAnN8/YOELqkM0f4Rc5
-	 FlR/RZtxyyyrwsv3O4L8bQAMowFGnb2/TZBQMXskLtW+yAPrkAYE+oyJP9PhqKJmL9
-	 +iBGcadyCwjWCrTMDDQl+yQJe3ku1mehiIxif0j0=
+	b=15470U7GTue34zSX805RTbQgSu9zoYzb42uuf+7jKLZDGacfv5rhYcrCAfG2zPm/4
+	 84WUgBdJD0Q/BRbfk1lNfwLbF2xM+Aen8YR3HZhjgdgXC3ynK256hx9VtSlTLRy1im
+	 /fKKqJL9Oaj/70q97yNXVxIxFD61ZpuesMzyUkkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1278/1815] perf python: Check counts_values size in set_values
-Date: Sat, 12 Sep 2026 08:50:28 +0200
-Message-ID: <20260912065719.018968233@linuxfoundation.org>
+Subject: [PATCH 7.2 1325/1815] amt: Dont support cross-netns setup.
+Date: Sat, 12 Sep 2026 08:51:15 +0200
+Message-ID: <20260912065720.129306105@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,96 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 612aca22a978d43f6e6765272676a17afdba8572 ]
+[ Upstream commit e99ecc3046ea5f5c6b5e1f8b4ef854c6c6998e06 ]
 
-The set_values function incorrectly assumed the list contained exactly
-5 elements. Add a check to prevent out-of-bounds access.
+When a lower device is unregistered, amt_device_event() tries
+to unregister its upper AMT device, but it has two problems.
 
-Fixes: 877108e42b1b ("perf tools: Initial python binding")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+  1. amt_lookup_upper_dev() looks up an upper device in the
+      lower device's netns only
+
+  2. amt_device_event() unregisters a single upper device only
+
+If AMT device is created on a lower device in another netns,
+removing the lower device triggers the splat below and gets
+stuck until all upper devices are removed. [0]
+
+The cross-netns setup seems unintentional considering 1. and
+the following points:
+
+  * amt_link_setup() sets dev->netns_immutable to true
+  * skb_scrub_packet() is not called in the fast path
+  * iproute2 binary fails to find cross-netns lower device via
+    link-netns:
+      # ip -n ns1 link add amt0 link-netns ns2 type amt dev veth1
+      Cannot find device "veth1"
+
+Instead of supporting it properly and preparing for per-netns
+netdev unreg, let's forbid cross-netns setup.
+
+Note that the problem 2. needs a separate fix.
+
+[0]:
+WARNING: net/core/dev.c:12518 at unregister_netdevice_many_notify+0x1cce/0x2250, CPU#48: ip/2031
+Modules linked in:
+CPU: 48 UID: 0 PID: 2031 Comm: ip Not tainted 7.2.0-rc5+ #27 PREEMPT(full)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+RIP: 0010:unregister_netdevice_many_notify (net/core/dev.c:12518)
+Code: 89 ef e8 d5 52 ae fe e9 d0 f4 ff ff 48 8d 3d f9 3b 9c 02 48 c7 c6 c0 0b 63 84 ba ab 1f 00 00 67 48 0f b9 3a e9 65 ff ff ff 90 <0f> 0b 90 eb 81 48 8d 3d f6 3b 9c 02 48 c7 c6 c0 0b 63 84 ba e2 1f
+RSP: 0018:ffffc90004abf160 EFLAGS: 00010212
+RAX: ffff888104d38260 RBX: ffff88800b0911b8 RCX: dffffc0000000000
+RDX: 0000000000000000 RSI: 0000000000000008 RDI: ffffffff85b9f880
+RBP: ffffc90004abf2d0 R08: ffffffff85b9f887 R09: 1ffffffff0b73f10
+R10: dffffc0000000000 R11: fffffbfff0b73f11 R12: ffff88800b091d08
+R13: ffff88800b091178 R14: dffffc0000000000 R15: ffff88800b091000
+FS:  00007f555b86c600(0000) GS:ffff8881942a0000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000562107d489c0 CR3: 0000000109a40002 CR4: 0000000000372ef0
+Call Trace:
+ <TASK>
+ rtnl_dellink (net/core/rtnetlink.c:3632 net/core/rtnetlink.c:3674)
+ rtnetlink_rcv_msg (net/core/rtnetlink.c:7112)
+ netlink_rcv_skb (net/netlink/af_netlink.c:2556)
+ netlink_unicast (net/netlink/af_netlink.c:1319)
+ netlink_sendmsg (net/netlink/af_netlink.c:1900)
+ ____sys_sendmsg (net/socket.c:775)
+ __sys_sendmsg (net/socket.c:2738)
+ do_syscall_64 (arch/x86/entry/syscall_64.c:63)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+...
+unregister_netdevice: waiting for veth0 to become free. Usage count = 7
+ref_tracker: netdev@ffff88800d7496d8 has 3/3 users at
+     __netdev_adjacent_dev_insert (./include/linux/netdevice.h:4525 ./include/linux/netdevice.h:4554 net/core/dev.c:8791)
+     __netdev_upper_dev_link (net/core/dev.c:8879 net/core/dev.c:8963)
+     netdev_upper_dev_link (net/core/dev.c:9009)
+     amt_newlink (drivers/net/amt.c:3321)
+
+Fixes: b9022b53adad ("amt: add control plane of amt interface")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Taehee Yoo <ap420073@gmail.com>
+Link: https://patch.msgid.link/20260807020326.2519445-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/python.c | 38 ++++++++++++++++++++++++++++++--------
- 1 file changed, 30 insertions(+), 8 deletions(-)
+ drivers/net/amt.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
-index 43359fd2a891e..5aec515bd70b3 100644
---- a/tools/perf/util/python.c
-+++ b/tools/perf/util/python.c
-@@ -875,11 +875,11 @@ static void pyrf_counts_values__delete(struct pyrf_counts_values *pcounts_values
- 	  0, help }
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index 182a41d59a75d..7645ce3a29ad9 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -3221,6 +3221,9 @@ static int amt_newlink(struct net_device *dev,
+ 	struct nlattr **tb = params->tb;
+ 	int err = -EINVAL;
  
- static PyMemberDef pyrf_counts_values_members[] = {
--	counts_values_member_def(val, T_ULONG, "Value of event"),
--	counts_values_member_def(ena, T_ULONG, "Time for which enabled"),
--	counts_values_member_def(run, T_ULONG, "Time for which running"),
--	counts_values_member_def(id, T_ULONG, "Unique ID for an event"),
--	counts_values_member_def(lost, T_ULONG, "Num of lost samples"),
-+	counts_values_member_def(val, T_ULONGLONG, "Value of event"),
-+	counts_values_member_def(ena, T_ULONGLONG, "Time for which enabled"),
-+	counts_values_member_def(run, T_ULONGLONG, "Time for which running"),
-+	counts_values_member_def(id, T_ULONGLONG, "Unique ID for an event"),
-+	counts_values_member_def(lost, T_ULONGLONG, "Num of lost samples"),
- 	{ .name = NULL, },
- };
- 
-@@ -889,8 +889,15 @@ static PyObject *pyrf_counts_values_get_values(struct pyrf_counts_values *self,
- 
- 	if (!vals)
- 		return NULL;
--	for (int i = 0; i < 5; i++)
--		PyList_SetItem(vals, i, PyLong_FromLong(self->values.values[i]));
-+	for (int i = 0; i < 5; i++) {
-+		PyObject *val = PyLong_FromUnsignedLongLong(self->values.values[i]);
++	if (!net_eq(link_net, dev_net(dev)))
++		return err;
 +
-+		if (!val) {
-+			Py_DECREF(vals);
-+			return NULL;
-+		}
-+		PyList_SetItem(vals, i, val);
-+	}
+ 	amt->net = link_net;
+ 	amt->mode = nla_get_u32(data[IFLA_AMT_MODE]);
  
- 	return vals;
- }
-@@ -901,19 +908,34 @@ static int pyrf_counts_values_set_values(struct pyrf_counts_values *self, PyObje
- 	Py_ssize_t size;
- 	PyObject *item = NULL;
- 
-+	if (list == NULL) {
-+		PyErr_SetString(PyExc_TypeError, "cannot delete attribute");
-+		return -1;
-+	}
-+
- 	if (!PyList_Check(list)) {
- 		PyErr_SetString(PyExc_TypeError, "Value assigned must be a list");
- 		return -1;
- 	}
- 
- 	size = PyList_Size(list);
-+	if (size != 5) {
-+		PyErr_SetString(PyExc_ValueError, "List must have exactly 5 entries");
-+		return -1;
-+	}
-+
- 	for (Py_ssize_t i = 0; i < size; i++) {
-+		unsigned long long val;
-+
- 		item = PyList_GetItem(list, i);
- 		if (!PyLong_Check(item)) {
- 			PyErr_SetString(PyExc_TypeError, "List members should be numbers");
- 			return -1;
- 		}
--		self->values.values[i] = PyLong_AsLong(item);
-+		val = PyLong_AsUnsignedLongLong(item);
-+		if (val == (unsigned long long)-1 && PyErr_Occurred())
-+			return -1;
-+		self->values.values[i] = val;
- 	}
- 
- 	return 0;
 -- 
 2.53.0
 
