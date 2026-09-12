@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1214C35F61E;
-	Sat, 12 Sep 2026 07:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5283806C6;
+	Sat, 12 Sep 2026 07:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197255; cv=none; b=AwPSJwXVPCx9AwBNKnK4gVLqGlCyO2C5FGOvkVjV82ey2H7wcId34OxmIB6CCprLAvdw8Ale09H4Cbt51J+A2Y2pq2+dx0BEJjaQ9j/cuwgwSKL+0Y1TZmn88KEHtz76C61v9lGlVgdCdEsmA7w0UlJh3S92/VuH2fquJWNZ/oE=
+	t=1789197259; cv=none; b=T/0KgzTz4WZQ6+tOMIqLEVWaEaURUwKcMOkf/tcOxF2YquPd7yi6vUTDbIBDiOLb0E1ZfVrDqjS0NzfP5NwnTRnjgXBWlaVzsexR9BUKkgmcdm0zoIBT1+6T9mrs5dieuz5N8aZieu9DIGSd6oJtwGjonvk4Abtu5qGhK1I5qyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197255; c=relaxed/simple;
-	bh=7BQWWunRdctB5lANbbHrQZLpmkB433HiBa9P7V0MXpE=;
+	s=arc-20240116; t=1789197259; c=relaxed/simple;
+	bh=E3NPcbw3IWHlWHf+BJTs9Q2bksx1UX+FbmW1cYPDCcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UiTM8UDkFzb3zw67kLmGQK6nSJCiWhDWIZZlhW0IlWC0lepP/L9tOZtGEyXiT9Jq0RVv2HelKKsmbRZ+3oF2KesPVVp+itdBxljUa4NHaFIjnIhWe2Spva3Md+JkTwd2h4PUqSY6LQPaWxZkUWwhu44S2Bdg4l8E4BnVE/4VE3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7F+1JCp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PcM8S0MLlXmQl1xzzpJQV4XvfeY01UBRopAPjnlY/DtIzKoUICkJZIMS3GJhl8Fr7jY9S88+IHhGyk0Y/WeX0AySZKpOk0woY1uyblWobKJsqx0R6nEmGjhESxgaKy39VZrEQCabmH9136NMorWj7j6e45xplMLH8asko3RQvQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dENJmJwU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7F+1JCp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 413051F00893;
-	Sat, 12 Sep 2026 07:14:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dENJmJwU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D7A1F000FF;
+	Sat, 12 Sep 2026 07:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197253;
-	bh=GPvyyqliA0aDRilpClgRtUtroP0hNygsK5WP3dJ1MEY=;
+	s=korg; t=1789197257;
+	bh=gTheaOAY8PVcEmGRC+9kJvOkLUOMvKH6LIDeIuzYJH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F7F+1JCpQK+V3asdfmAlRbqAXDWqprg8F3wr3ay2WxVKPsLsQPKVu/GTtS7VPbZS5
-	 jlfPX25KvxnjWjigoPn6ZE4hQ9Q9kYA/zxUYzM/2nDVBMFMld+99wOQYeON/zDRhP8
-	 Qv/5tcORd80SN/5jS9hk42QbnhMXcEXaeTw9uz/Y=
+	b=dENJmJwUbcmT4otkDbbJLmw1b8Dkb9cEtGF/fSSycyWvHKv3T7GG9O6qWV/n9LM1x
+	 BQxhrwnpJItYnmYhgzuEInI/YEWvB+Nx123ycTd5BhyKrkR/oWwr9J2HPza7RPxypa
+	 xOJGisuZS3U3q6PYYjHPE7Xv/F2xKUWC0Re5Xsw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0132/1815] perf test: Truncate test description to fit terminal width
-Date: Sat, 12 Sep 2026 08:31:22 +0200
-Message-ID: <20260912065652.118264006@linuxfoundation.org>
+Subject: [PATCH 7.2 0133/1815] perf tests: Skip metrics validation if system-wide recording lacks permission
+Date: Sat, 12 Sep 2026 08:31:23 +0200
+Message-ID: <20260912065652.140809517@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,318 +53,184 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 32e6312f7e397bf0b731b43a6504966398af0788 ]
+[ Upstream commit 8953bfd8820b6525032023fda3a420098c1823ae ]
 
-The parallel test harness uses the carriage return delete escape sequence
-`PERF_COLOR_DELETE_LINE` ("\033[A\33[2K\r") to erase and update the
-"Running (X active)" progress lines.
+The metrics value validation test requires system-wide recording (`-a`),
+which can fail on systems without root permissions or where paranoid
+levels restrict tracing. Add a check to skip the test if `-a` is not
+supported.
 
-However, if a test description is longer than the terminal width, the line
-wraps around. When this happens, the cursor up escape sequence `\033[A`
-only moves the cursor to the last wrapped row, leaving the top half of the
-description printed on the previous line. This leads to name duplication
-and output corruption spilling over multiple rows on consoles narrower
-than the maximum description length (e.g., 101 columns wide).
+Also fix false negatives during validation by updating parse error string
+patterns and resolving issues in metric list generation.
 
-Fix this by dynamically querying the terminal width using
-`get_term_dimensions` and truncating the printed test descriptions using
-the `%-*.*s` printf format. We reserve 35 characters for prefix, status,
-and spacing metrics to guarantee the progress line never wraps.
-
-Fixes: 0e036dcad4e6 ("perf test: Display number of active running tests")
+Fixes: 3ad7092f5145 ("perf test: Add metric value validation test")
 Assisted-by: Antigravity:gemini-3.1-pro
 Signed-off-by: Ian Rogers <irogers@google.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/builtin-test.c | 163 +++++++++++++++++---------------
- 1 file changed, 89 insertions(+), 74 deletions(-)
+ .../tests/shell/lib/perf_metric_validation.py | 11 ++-
+ tools/perf/tests/shell/stat_all_metrics.sh    | 75 ++++++++++++-------
+ tools/perf/tests/shell/stat_metrics_values.sh |  7 ++
+ 3 files changed, 60 insertions(+), 33 deletions(-)
 
-diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
-index 7e75f590f225e..8b8f63f706d93 100644
---- a/tools/perf/tests/builtin-test.c
-+++ b/tools/perf/tests/builtin-test.c
-@@ -10,37 +10,40 @@
- #ifdef HAVE_BACKTRACE_SUPPORT
- #include <execinfo.h>
- #endif
--#include <poll.h>
--#include <unistd.h>
- #include <setjmp.h>
--#include <string.h>
- #include <stdlib.h>
--#include <sys/types.h>
-+#include <string.h>
-+
- #include <dirent.h>
--#include <sys/wait.h>
-+#include "util/term.h"
-+#include <linux/kernel.h>
-+#include <linux/string.h>
-+#include <linux/zalloc.h>
-+#include <poll.h>
-+#include <sys/ioctl.h>
- #include <sys/stat.h>
- #include <sys/time.h>
--#include <sys/ioctl.h>
--#include "util/term.h"
-+#include <sys/types.h>
-+#include <sys/wait.h>
-+#include <unistd.h>
-+
-+#include <subcmd/exec-cmd.h>
-+#include <subcmd/parse-options.h>
-+#include <subcmd/run-command.h>
-+
- #include "builtin.h"
-+#include "color.h"
- #include "config.h"
-+#include "debug.h"
- #include "hist.h"
- #include "intlist.h"
--#include "tests.h"
--#include "debug.h"
--#include "color.h"
--#include <subcmd/parse-options.h>
--#include <subcmd/run-command.h>
- #include "string2.h"
- #include "symbol.h"
-+#include "tests-scripts.h"
-+#include "tests.h"
- #include "util/rlimit.h"
- #include "util/strbuf.h"
--#include <linux/kernel.h>
--#include <linux/string.h>
--#include <subcmd/exec-cmd.h>
--#include <linux/zalloc.h>
--
--#include "tests-scripts.h"
-+#include "util/term.h"
+diff --git a/tools/perf/tests/shell/lib/perf_metric_validation.py b/tools/perf/tests/shell/lib/perf_metric_validation.py
+index dea8ef1977bf6..3d52f94f22b91 100644
+--- a/tools/perf/tests/shell/lib/perf_metric_validation.py
++++ b/tools/perf/tests/shell/lib/perf_metric_validation.py
+@@ -383,10 +383,13 @@ class Validator:
+         wl = workload.split()
+         command.extend(wl)
+         print(" ".join(command))
+-        cmd = subprocess.run(command, stderr=subprocess.PIPE, encoding='utf-8')
+-        data = [x+'}' for x in cmd.stderr.split('}\n') if x]
+-        if data[0][0] != '{':
+-            data[0] = data[0][data[0].find('{'):]
++        cmd = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding='utf-8')
++        lines = cmd.stderr.splitlines() + cmd.stdout.splitlines()
++        data = []
++        for line in lines:
++            line = line.strip()
++            if line.startswith('{') and line.endswith('}'):
++                data.append(line)
+         return data
  
- static const char *junit_filename;
- static struct strbuf junit_xml_buf = STRBUF_INIT;
-@@ -415,73 +418,73 @@ static char *xml_escape(const char *str)
- 	return res ? res : strdup("");
- }
+     def collect_perf(self, workload: str):
+diff --git a/tools/perf/tests/shell/stat_all_metrics.sh b/tools/perf/tests/shell/stat_all_metrics.sh
+index b582d23f28c9e..feeb34c6fa6df 100755
+--- a/tools/perf/tests/shell/stat_all_metrics.sh
++++ b/tools/perf/tests/shell/stat_all_metrics.sh
+@@ -12,38 +12,65 @@ system_wide_flag="-a"
+ if ParanoidAndNotRoot 0
+ then
+   system_wide_flag=""
+-  test_prog="perf test -w noploop"
++  test_prog="perf test -w noploop 0.01"
+ fi
  
--static const char *format_test_description(const char *desc, int max_desc_width,
--					  char *buf, size_t buf_sz)
-+static int get_term_width(void)
- {
--	int len = strlen(desc);
-+	struct winsize ws;
-+	int cols = 80;
-+	int term_width;
- 
- 	/*
--	 * Clamp to buf_sz to prevent GCC format-truncation warnings
--	 * when terminal width is very large.
-+	 * If output is redirected to a file or piped, we don't need to wrap
-+	 * or truncate at all. Use a massive virtually infinite terminal width
-+	 * so descriptions are printed in full.
- 	 */
--	if (max_desc_width >= (int)buf_sz)
--		max_desc_width = buf_sz - 1;
-+	if (!isatty(fileno(debug_file())))
-+		return 10000;
- 
--	if (len > max_desc_width) {
--		snprintf(buf, buf_sz, "%.*s...", max_desc_width - 3, desc);
--		return buf;
--	}
--	return desc;
-+	get_term_dimensions(&ws);
-+	if (ws.ws_col > 0)
-+		cols = ws.ws_col;
++check_metric() {
++  local output="$1"
++  local status="$2"
++  local metric="$3"
 +
-+	/*
-+	 * Limit description width to fit on a single line. We subtract 35
-+	 * columns of headroom to allocate space for:
-+	 * - The suite index prefix: e.g. " 10.100:" (8 characters) plus 1 space separator.
-+	 * - The trailing colon (1 character) and space before status (1 character).
-+	 * - The longest status results: e.g. "Skip (some metrics failed)" (26 characters)
-+	 *   or "Running (XX active)" (20 characters).
-+	 *
-+	 * A minimum description width of 10 is enforced to ensure names are
-+	 * legible even on very narrow consoles.
-+	 */
-+	term_width = cols - 35;
-+	if (term_width < 10)
-+		term_width = 10;
++  if [[ $status -ne 0 || ! "$output" =~ ${metric:0:50} ]]; then
++    return 1
++  fi
 +
-+	return term_width;
++  if [[ "$output" =~ "<not counted>" || "$output" =~ "<not supported>" ]]; then
++    return 1
++  fi
++
++  return 0
 +}
 +
-+static int get_max_desc_width(int width)
-+{
-+	int term_width = get_term_width();
+ skip=0
+ err=3
+ for m in $(perf list --raw-dump metrics); do
+   echo "Testing $m"
+   result=$(perf stat -M "$m" $system_wide_flag -- $test_prog 2>&1)
+   result_err=$?
+-  if [[ $result_err -eq 0 && "$result" =~ ${m:0:50} ]]
+-  then
+-    # No error result and metric shown.
 +
-+	return width > term_width ? term_width : width;
- }
- 
- static int print_test_result(struct test_suite *t, int curr_suite, int curr_test_case,
- 			     int result, int width, int running,
- 			     const char *err_output, double elapsed)
- {
--	char desc_buf[256];
--	const char *desc = test_description(t, curr_test_case);
--	struct winsize ws;
--	int max_desc_area_width;
--	int target_desc_area_width;
--	int desc_padding;
--
--	get_term_dimensions(&ws);
--	/*
--	 * Total terminal columns minus space for status e.g. " Running (12 active)"
--	 * which is 20 chars, plus a margin of 3 chars = 23 chars.
--	 */
--	max_desc_area_width = ws.ws_col - 23;
--	if (max_desc_area_width < 40)
--		max_desc_area_width = 40;
--
--	/* Standard test has prefix "%3d: " which is 5 chars */
--	target_desc_area_width = width + 5;
--	if (target_desc_area_width > max_desc_area_width)
--		target_desc_area_width = max_desc_area_width;
-+	int pad_width = get_max_desc_width(width);
-+	int term_width = get_term_width();
- 
- 	if (test_suite__num_test_cases(t) > 1) {
- 		char prefix[32];
- 		int len = snprintf(prefix, sizeof(prefix), "%3d.%1d:",
- 				   curr_suite + 1, curr_test_case + 1);
-+		int pad = len >= 4 ? pad_width + 4 - len : pad_width;
-+		int trunc = len >= 4 ? term_width + 4 - len : term_width;
- 
--		desc_padding = target_desc_area_width - (len + 1);
--		if (desc_padding < 20)
--			desc_padding = 20;
--
--		desc = format_test_description(desc, desc_padding, desc_buf, sizeof(desc_buf));
--		pr_info("%s %-*s:", prefix, desc_padding, desc);
-+		pr_info("%s %-*.*s:", prefix, pad, trunc,
-+			test_description(t, curr_test_case));
- 	} else {
--		desc_padding = target_desc_area_width - 5;
--		if (desc_padding < 20)
--			desc_padding = 20;
--
--		desc = format_test_description(desc, desc_padding, desc_buf, sizeof(desc_buf));
--		pr_info("%3d: %-*s:", curr_suite + 1, desc_padding, desc);
-+		pr_info("%3d: %-*.*s:", curr_suite + 1, pad_width, term_width,
-+			test_description(t, curr_test_case));
- 	}
- 
- 	switch (result) {
- 	case TEST_RUNNING:
--		color_fprintf(stderr, PERF_COLOR_YELLOW, " Running (%d active)\n", running);
-+		color_fprintf(debug_file(), PERF_COLOR_YELLOW, " Running (%d active)\n", running);
- 		break;
- 	case TEST_OK:
- 		if (test_suite__num_test_cases(t) > 1)
-@@ -495,9 +498,9 @@ static int print_test_result(struct test_suite *t, int curr_suite, int curr_test
- 
- 		summary_tests_skipped++;
- 		if (reason)
--			color_fprintf(stderr, PERF_COLOR_YELLOW, " Skip (%s)\n", reason);
-+			color_fprintf(debug_file(), PERF_COLOR_YELLOW, " Skip (%s)\n", reason);
- 		else
--			color_fprintf(stderr, PERF_COLOR_YELLOW, " Skip\n");
-+			color_fprintf(debug_file(), PERF_COLOR_YELLOW, " Skip\n");
- 	}
- 		break;
- 	case TEST_FAIL:
-@@ -511,7 +514,7 @@ static int print_test_result(struct test_suite *t, int curr_suite, int curr_test
- 			strbuf_addf_safe(&summary_failed_tests_buf, "  %3d: %s\n",
- 				    curr_suite + 1,
- 				    test_description(t, curr_test_case));
--		color_fprintf(stderr, PERF_COLOR_RED, " FAILED!\n");
-+		color_fprintf(debug_file(), PERF_COLOR_RED, " FAILED!\n");
- 		break;
- 	}
- 
-@@ -747,6 +750,7 @@ static void finish_test(struct child_test **child_tests, int running_test, int c
- 	int ret;
- 	struct timespec end_time;
- 	double elapsed;
-+	width = get_max_desc_width(width);
- 
- 	if (child_test == NULL) {
- 		/* Test wasn't started. */
-@@ -761,7 +765,8 @@ static void finish_test(struct child_test **child_tests, int running_test, int c
- 	 * sub test names.
- 	 */
- 	if (test_suite__num_test_cases(t) > 1 && curr_test_case == 0)
--		pr_info("%3d: %s:\n", curr_suite + 1, test_description(t, -1));
-+		pr_info("%3d: %-*.*s:\n", curr_suite + 1, width, width,
-+			test_description(t, -1));
- 
- 	/*
- 	 * Busy loop reading from the child's stdout/stderr that are set to be
-@@ -969,6 +974,8 @@ static int finish_tests_parallel(struct child_test **child_tests, size_t num_tes
- 	int last_suite_printed = -1;
- 	sigset_t set, oldset;
- 
-+	width = get_max_desc_width(width);
++  if check_metric "$result" $result_err "$m"; then
+     if [[ "$err" -ne 1 ]]
+     then
+       err=0
+     fi
+     continue
+   fi
+-  if [[ "$result" =~ "Cannot resolve IDs for" || "$result" =~ "No supported events found" ]]
 +
- 	sigemptyset(&set);
- 	sigaddset(&set, SIGINT);
- 	sigaddset(&set, SIGTERM);
-@@ -1037,8 +1044,11 @@ static int finish_tests_parallel(struct child_test **child_tests, size_t num_tes
- 			if (next_child) {
- 				if (test_suite__num_test_cases(next_child->test) > 1 &&
- 				    last_suite_printed != next_child->suite_num) {
--					pr_info("%3d: %s:\n", next_child->suite_num + 1,
--						test_description(next_child->test, -1));
-+					pr_info("%3d: %-*.*s:\n",
-+						next_child->suite_num + 1,
-+						width, width,
-+						test_description(
-+							next_child->test, -1));
- 					last_suite_printed = next_child->suite_num;
- 				}
- 				print_test_result(next_child->test, next_child->suite_num,
-@@ -1101,7 +1111,8 @@ static int finish_tests_parallel(struct child_test **child_tests, size_t num_tes
- 
- 			if (test_suite__num_test_cases(child->test) > 1 &&
- 			    last_suite_printed != child->suite_num) {
--				pr_info("%3d: %s:\n", child->suite_num + 1,
-+				pr_info("%3d: %-*.*s:\n", child->suite_num + 1,
-+					width, width,
- 					test_description(child->test, -1));
- 				last_suite_printed = child->suite_num;
- 			}
-@@ -1225,12 +1236,12 @@ static void print_tests_summary(void)
- 	pr_info("Passed subtests   : %u\n", summary_subtests_passed);
- 	pr_info("Skipped tests     : %u\n", summary_tests_skipped);
- 	if (summary_tests_failed > 0) {
--		color_fprintf(stderr, PERF_COLOR_RED, "Failed tests      : %u\n",
-+		color_fprintf(debug_file(), PERF_COLOR_RED, "Failed tests      : %u\n",
- 			      summary_tests_failed);
- 		pr_info("List of failed tests:\n");
- 		pr_info("%s", summary_failed_tests_buf.buf);
- 	} else {
--		color_fprintf(stderr, PERF_COLOR_GREEN, "Failed tests      : 0\n");
-+		color_fprintf(debug_file(), PERF_COLOR_GREEN, "Failed tests      : 0\n");
- 	}
- 
- 	if (junit_filename) {
-@@ -1348,9 +1359,13 @@ static int __cmd_test(struct test_suite **suites, int argc, const char *argv[],
- 
- 			if (intlist__find(skiplist, curr_suite + 1)) {
- 				if (pass == 1) {
--					pr_info("%3d: %-*s:", curr_suite + 1, width,
-+					int pad_width = get_max_desc_width(width);
-+					int term_width = get_term_width();
++  if [[ "$result" =~ "Access to performance monitoring and observability operations is limited" || \
++        "$result" =~ "in per-thread mode, enable system wide" || \
++        "$result" =~ "<not supported>" || \
++        "$result" =~ "Cannot resolve IDs for" || \
++        "$result" =~ "No supported events found" || \
++        "$result" =~ "FP_ARITH" || \
++        "$result" =~ "AMX" || \
++        "$result" =~ "PMM" ]]
+   then
+-    if [[ $(perf list --raw-dump $m) == "Default"* ]]
+-    then
+-      echo "[Ignored $m] failed but as a Default metric this can be expected"
+-      echo $result
++    true
++  else
++    result=$(perf stat -M "$m" $system_wide_flag -- perf test -w noploop 0.1 2>&1)
++    result_err=$?
 +
-+					pr_info("%3d: %-*.*s:", curr_suite + 1,
-+						pad_width, term_width,
- 						test_description(*t, -1));
--					color_fprintf(stderr, PERF_COLOR_YELLOW,
-+					color_fprintf(debug_file(), PERF_COLOR_YELLOW,
- 						      " Skip (user override)\n");
- 					summary_tests_skipped++;
- 					if (junit_filename) {
++    if check_metric "$result" $result_err "$m"; then
++      if [[ "$err" -ne 1 ]]
++      then
++        err=0
++      fi
+       continue
+     fi
+-    echo "[Failed $m] Metric contains missing events"
+-    echo $result
+-    err=1 # Fail
+-    continue
+-  elif [[ "$result" =~ \
+-        "Access to performance monitoring and observability operations is limited" ]]
++  fi
++
++  # If retry also failed, determine if we skip, ignore, or fail
++  if [[ "$result" =~ "Access to performance monitoring and observability operations is limited" ]]
+   then
+     echo "[Skipped $m] Permission failure"
+     echo $result
+@@ -61,7 +88,9 @@ for m in $(perf list --raw-dump metrics); do
+       skip=1
+     fi
+     continue
+-  elif [[ "$result" =~ "<not supported>" ]]
++  elif [[ "$result" =~ "<not supported>" || \
++          "$result" =~ "Cannot resolve IDs for" || \
++          "$result" =~ "No supported events found" ]]
+   then
+     if [[ $(perf list --raw-dump $m) == "Default"* ]]
+     then
+@@ -105,19 +134,7 @@ for m in $(perf list --raw-dump metrics); do
+     continue
+   fi
+ 
+-  # Failed, possibly the workload was too small so retry with something longer.
+-  result=$(perf stat -M "$m" $system_wide_flag -- perf bench internals synthesize 2>&1)
+-  result_err=$?
+-  if [[ $result_err -eq 0 && "$result" =~ ${m:0:50} ]]
+-  then
+-    # No error result and metric shown.
+-    if [[ "$err" -ne 1 ]]
+-    then
+-      err=0
+-    fi
+-    continue
+-  fi
+-  echo "[Failed $m] has non-zero error '$result_err' or not printed in:"
++  echo "[Failed $m] has non-zero error '$result_err' or not printed/counted in:"
+   echo "$result"
+   err=1
+ done
+diff --git a/tools/perf/tests/shell/stat_metrics_values.sh b/tools/perf/tests/shell/stat_metrics_values.sh
+index 30566f0b54279..76f1e99d1273f 100755
+--- a/tools/perf/tests/shell/stat_metrics_values.sh
++++ b/tools/perf/tests/shell/stat_metrics_values.sh
+@@ -8,6 +8,13 @@ shelldir=$(dirname "$0")
+ 
+ grep -q GenuineIntel /proc/cpuinfo || { echo Skipping non-Intel; exit 2; }
+ 
++# Skip if no permission to record system-wide events
++if ! perf stat -a -e instructions sleep 0.01 >/dev/null 2>&1; then
++  echo "Skipping: no permission to record system-wide events (-a)"
++  exit 2
++fi
++
++
+ pythonvalidator=$(dirname $0)/lib/perf_metric_validation.py
+ rulefile=$(dirname $0)/lib/perf_metric_validation_rules.json
+ tmpdir=$(mktemp -d /tmp/__perf_test.program.XXXXX)
 -- 
 2.53.0
 
