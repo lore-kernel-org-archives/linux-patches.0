@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D8B78C9C;
-	Sat, 12 Sep 2026 14:37:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38BA78C9C;
+	Sat, 12 Sep 2026 14:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223826; cv=none; b=Yac/r3Rq7JjmCe2mUEITDDdeO6xAtb8s24YzYY9fYkm19dZMrGZxF+RFT04QX8ZQMTGjTpA1BMVxDqftRtWH8jKCxYkzj2lT7LaYhVxBWg67VLq+22OsheDRfSi8dZvRS0C2/DpdpqF0W+fXRxKcxYj49PgwDAOUjSlUBh9ZXto=
+	t=1789223831; cv=none; b=EyRPg/9fsdnyMBa9zzGEkcfXfPHb0RLtW7jRqFS60EXixE+XvQKH/N7S7/M0b72oVXlVsZhy+6hw3JjoErjHvOIhy7Wy11CjV6FzXKyR5lEpwQ2uHpyHJZX5iZ0OqVCpEBImfjs5xKerj81XpBD5AcchTBPVHlMBMNPVtVW+U1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223826; c=relaxed/simple;
-	bh=/6T0kpJ9DRctu63ST4pQpEZu4tJVORWB4gu0dUwULoY=;
+	s=arc-20240116; t=1789223831; c=relaxed/simple;
+	bh=ZWDul57Gqf7n4I/EQSYe2Ual3IsXeIciPGOMyK/Mya0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VqDlOhIPEE0AYMHJxLq4CpCyY+lIVaHztaw+xuBQEe4ZPl+qh0ZPLiK4GyfPdOUSiHL0Hi+QC9G2y9hJ6BNgEAcmnEmoJIKxMj5mtRPYqOMMIBhaiLQC1G+pMFR50D/f8tJbSb6E95Q9mtusaNkZ3rmolGsiPK7e8jssNZD/saY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDY5T6bw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b0uMO/QjP+lfT1vni+wMxAC84HbXwJLTW+mnllJkyzEYJrzhANftVMdegkHwQAf0SrI3eZIFqSsAJOxNc06OkvP5JJ1VKWrcFv3wPV/lKpwK5fPVK2BRYe3qcoz9vW84wzORBFfKYCcqoLedsKQd9vKQDw3wrStf0o3v734vPI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S70umv0L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDY5T6bw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B161F000FF;
-	Sat, 12 Sep 2026 14:37:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S70umv0L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3601B1F000FF;
+	Sat, 12 Sep 2026 14:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223825;
-	bh=vXNdpGpsZkQmUmVszUUjA8Q4SljXgi65WwxCUw3qSdU=;
+	s=korg; t=1789223830;
+	bh=wCkVz0jxVJgZEXTT5W0ajNoKUi0UVm+Bhyzuvu0rgMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TDY5T6bweHjwzsoxOn8HxEthLv4MKk0Cb+O9xtDNcvxyTnmWj1p3zLE6CZy3o5xsn
-	 nnVEPy/n5ndh7u03bFNv0tRAKgInXOfV6qfNzLQMzTPDxVMMFbkXbc6RDBLb1UWik5
-	 XXCY8dSSzMuIdZjmXcIEfCY4UQsu/bAWOqn0MAEc=
+	b=S70umv0LdphO88l1XEUCX3bCHvkFBXeGysfksIh0MuiqQqvUkIZo0jfzyWSVdovub
+	 IkxW7Kngj00njXz7RYBkiGOUPiDQjygmFTYyv2+/5mtP845LPHiqOdkoiDhAVrZyFA
+	 BfbTuVjHtXHbPYRcoF4ZVDUa/svbdOiwU6r2N+mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmo Chou <chou.cosmo@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Lee Jones <lee@kernel.org>,
+	Can Peng <pengcan@kylinos.cn>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0869/1424] leds: pca9532: Fix phantom device registration on missing hardware
-Date: Sat, 12 Sep 2026 08:55:01 +0200
-Message-ID: <20260912065626.781421345@linuxfoundation.org>
+Subject: [PATCH 6.6 0870/1424] drm/tve200: add OF module alias for autoloading
+Date: Sat, 12 Sep 2026 08:55:02 +0200
+Message-ID: <20260912065626.804249900@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,58 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmo Chou <chou.cosmo@gmail.com>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit 8d6b6c05b8e33d11e3fb3203309385e1a9cceecd ]
+[ Upstream commit b6c3585f2058e0fbfa8cb403458f5cc6cf5c5e06 ]
 
-The initial PWM and PSC register writes in pca9532_configure() do not
-check the return values of i2c_smbus_write_byte_data(). If the I2C
-device is physically absent from the bus, the write fails with -ENXIO.
-However, the driver ignores this error and allows probe() to complete
-successfully.
+The TVE200 DRM driver can be built as a module and uses tve200_of_match
+as its OF match table, but the table is not exported for module alias
+generation.
 
-This results in the registration of phantom LED class devices and
-gpiochips backed by non-existent hardware. Subsequent GPIO reads from
-these phantom chips return bogus values (due to -ENXIO being truncated
-to an unsigned char in pca9532_gpio_get_value()), silently corrupting
-hardware state tracking in userspace.
+Add the MODULE_DEVICE_TABLE(of, ...) entry so modpost can generate OF
+module aliases for OF based module autoloading.
 
-Propagate the I2C write failures back to probe() so the driver core
-can gracefully abort binding and release devres-managed resources.
-
-Fixes: e14fa82439d3 ("leds: Add pca9532 led driver")
-Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260715080747.1638097-1-chou.cosmo@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 179c02fe90a4 ("drm/tve200: Add new driver for TVE200")
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260715024130.186416-1-pengcan@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pca9532.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/tve200/tve200_drv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
-index b15389d818eb7..9f8a7511ec3fd 100644
---- a/drivers/leds/leds-pca9532.c
-+++ b/drivers/leds/leds-pca9532.c
-@@ -353,10 +353,14 @@ static int pca9532_configure(struct i2c_client *client,
- 	for (i = 0; i < 2; i++)	{
- 		data->pwm[i] = pdata->pwm[i];
- 		data->psc[i] = pdata->psc[i];
--		i2c_smbus_write_byte_data(client, PCA9532_REG_PWM(maxleds, i),
--			data->pwm[i]);
--		i2c_smbus_write_byte_data(client, PCA9532_REG_PSC(maxleds, i),
--			data->psc[i]);
-+		err = i2c_smbus_write_byte_data(client, PCA9532_REG_PWM(maxleds, i),
-+						data->pwm[i]);
-+		if (err < 0)
-+			return err;
-+		err = i2c_smbus_write_byte_data(client, PCA9532_REG_PSC(maxleds, i),
-+						data->psc[i]);
-+		if (err < 0)
-+			return err;
- 	}
+diff --git a/drivers/gpu/drm/tve200/tve200_drv.c b/drivers/gpu/drm/tve200/tve200_drv.c
+index acce210e25547..0f55ead3ddbbb 100644
+--- a/drivers/gpu/drm/tve200/tve200_drv.c
++++ b/drivers/gpu/drm/tve200/tve200_drv.c
+@@ -261,6 +261,7 @@ static const struct of_device_id tve200_of_match[] = {
+ 	},
+ 	{},
+ };
++MODULE_DEVICE_TABLE(of, tve200_of_match);
  
- 	for (i = 0; i < data->chip_info->num_leds; i++) {
+ static struct platform_driver tve200_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
