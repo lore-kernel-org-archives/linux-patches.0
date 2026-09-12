@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9235037FF60;
-	Sat, 12 Sep 2026 11:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA14373BF2;
+	Sat, 12 Sep 2026 11:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214280; cv=none; b=SrEgQ6vfCrUb/PrkNJNP/CCEthzGTMW24I5lVWHaWm1R3EmTmsmCduTuM5Y9fEmNlmFRdmJDDheaz44YLMYf53DOxvs7V8x820NfT4CgxwcDPg/xvClLn9MFA3cTfSy2H08/+OKopV+CisRM4q8izDVBaOq/iuKsM7p2wS2AaVY=
+	t=1789214285; cv=none; b=kZO7JjTVdrMvQY2TTcZOmbPwes43CZ5swuA77wZHuaqxy4k3U7GTHyktPt1nZ4u/vimU8xRFPFkbRXFmPVHJ5t7GizJ4Xmnh2XPQBBe4ckoWhv+5FmZ0/bkEo2Sk/FlAQJt3OJmArklfR2nSvWQZzVzCFZmFCe3LJvV25Uk2oG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214280; c=relaxed/simple;
-	bh=eB1y6vOzqBh/hFdNWQO+J214Gk3cUi7ava8xCoG2I2w=;
+	s=arc-20240116; t=1789214285; c=relaxed/simple;
+	bh=8uMxIn8bwMnp4akmy7dW+vGwMifYHnldi7ZIXfJW2Vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c00biGhfLnaXzAyQ19ZeTP4nyQ66/O254frZUPfv7SGIdDj7DZzc3TFbX+kn8OpBcwzHCsGf2n0jsgp7PL/kFNJt9+GaBPqxhc2846tjSA3jKt3AFxT6qVB+7ebLbQFxvvqza5VGyuH45gOdg0vVzHcVMJ3dGn4/4vNRzVmGhyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USFib5Zf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SE7OuPODWhRNgMd+ZdUOCAoaAbtyV3M+NHGjQrCLwq9eDmLcC6XI53uGfx4okcIBwo16GFcWYeSZw5fId8MSbteQVfStr2p6s6Qk1kOUkoxWzaOFoSK/ANQZT3ITXFugGkjJU8FgdCGWbaF49thrEZFxJS48gSc3KT6m94uvDeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMrVvQBs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USFib5Zf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339851F000FF;
-	Sat, 12 Sep 2026 11:57:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMrVvQBs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3766E1F000FF;
+	Sat, 12 Sep 2026 11:58:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214279;
-	bh=LypsNP6khqs12KF24mXg3Jv3o2vV9RUSck7/2aebPrc=;
+	s=korg; t=1789214284;
+	bh=BYUY6XMYeAPAmd6YdmOHISBaGy/VFfvvEucL25oOQqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=USFib5ZfISvnmweeP6c18AU05nThrum8UuFezWT2R56rFaIJEz1djyLRwNgEhp83v
-	 38St3sE5nzo0/s5J9kZEZG+cB6UkuNzpXMNb2vqqKUbzmuK5bx08v5IMvRSc7j2DVh
-	 T+441YFAbgF8oaLphRzzcexE926vNVomc4IrH3sA=
+	b=dMrVvQBsLE8Ft0hc3DCWG8WriPQMWqYww4AmKAWh+zmhguyoIPZaOZ1A1otFMYlcu
+	 v10dwlrCiuQb8rctmhVVsNW/Ew2aOCiKGvvbbRd1GlO3cn8zDRjT1Hf22j2nrQ1xww
+	 POP8A/VGVUw6r3Z87k/5TK2ykWdbabBsPAZSaGm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	SJ Park <sj@kernel.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0295/1376] mm/damon/core-kunit: handle region split failure in filter_out()
-Date: Sat, 12 Sep 2026 08:45:21 +0200
-Message-ID: <20260912065614.124055738@linuxfoundation.org>
+Subject: [PATCH 6.12 0296/1376] mm/damon/tests/core-kunit: catch test failure in test_merge_regions_of()
+Date: Sat, 12 Sep 2026 08:45:22 +0200
+Message-ID: <20260912065614.146028510@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,64 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: SJ Park <sj@kernel.org>
 
-[ Upstream commit 3423fe70395210e2f0cd795270292f6a27cd57b5 ]
+[ Upstream commit b640708929aa956235866bf7717d89018c661083 ]
 
-damos_test_filter_out() test checks if damos_filter_match() of an address
-filter splits the region as expected under a given condition.  But, the
-test continued regardless of the split successes.  As a result, the later
-part of the test could dereference invalid pointers that returned from
-damon_next_region().  Further, it could corrupt memory from
-damon_destroy_region().
+KUNIT_EXPECT_EQ() does not abort the execution of test code when the
+expectation is not met.  But damon_test_merge_regions_of() code after its
+initial KUNIT_EXPECT_EQ() call assumes the expectation is met.  It does a
+per-region test with a hard-coded number of regions that is correct only
+if the expectation was met.  As a result, __nth_region_of() could return
+NULL, and the test code can dereference NULL pointers.  Fix the issue by
+catching the expectation failure and skip the per-region tests.
 
-The consequent user impact (memory corruption) is quite bad.  The
-realistic user impact would be limited, though.  It would affect only test
-run setups.
-
-Fix it by exiting early for the number of regions test failure.
+The user impact on realistic setups should be negligible, as it is a unit
+test.
 
 The issue was discovered [1] by Sashiko.
 
-Link: https://lore.kernel.org/20260718001442.87129-5-sj@kernel.org
-Link: https://lore.kernel.org/20260714142352.100478-1-sj@kernel.org [1]
-Fixes: 26713c890875 ("mm/damon/core-test: add a unit test for __damos_filter_out()")
+Link: https://lore.kernel.org/20260715031002.108504-3-sj@kernel.org
+Link: https://lore.kernel.org/20260710144937.26981-1-sj@kernel.org [1]
+Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
 Signed-off-by: SJ Park <sj@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: <stable@vger.kernel.org> # 6.6.x
+Cc: <stable@vger.kernel.org> # 5.15.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/tests/core-kunit.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ mm/damon/tests/core-kunit.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 998c7585dada2..04abee653ca27 100644
+index 04abee653ca27..1039d2f793b9b 100644
 --- a/mm/damon/tests/core-kunit.h
 +++ b/mm/damon/tests/core-kunit.h
-@@ -557,6 +557,8 @@ static void damos_test_filter_out(struct kunit *test)
- 	KUNIT_EXPECT_EQ(test, r->ar.start, DAMON_MIN_REGION * 1);
- 	KUNIT_EXPECT_EQ(test, r->ar.end, DAMON_MIN_REGION * 2);
- 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
-+	if (damon_nr_regions(t) != 2)
+@@ -269,11 +269,14 @@ static void damon_test_merge_regions_of(struct kunit *test)
+ 	damon_merge_regions_of(t, 9, 9999);
+ 	/* 0-112, 114-130, 130-156, 156-170 */
+ 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 5u);
++	if (damon_nr_regions(t) != 5)
 +		goto out;
- 	r2 = damon_next_region(r);
- 	KUNIT_EXPECT_EQ(test, r2->ar.start, DAMON_MIN_REGION * 2);
- 	KUNIT_EXPECT_EQ(test, r2->ar.end, DAMON_MIN_REGION * 4);
-@@ -570,11 +572,14 @@ static void damos_test_filter_out(struct kunit *test)
- 	KUNIT_EXPECT_EQ(test, r->ar.start, DAMON_MIN_REGION * 2);
- 	KUNIT_EXPECT_EQ(test, r->ar.end, DAMON_MIN_REGION * 6);
- 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
-+	if (damon_nr_regions(t) != 2)
-+		goto out;
- 	r2 = damon_next_region(r);
- 	KUNIT_EXPECT_EQ(test, r2->ar.start, DAMON_MIN_REGION * 6);
- 	KUNIT_EXPECT_EQ(test, r2->ar.end, DAMON_MIN_REGION * 8);
- 	damon_destroy_region(r2, t);
- 
+ 	for (i = 0; i < 5; i++) {
+ 		r = __nth_region_of(t, i);
+ 		KUNIT_EXPECT_EQ(test, r->ar.start, saddrs[i]);
+ 		KUNIT_EXPECT_EQ(test, r->ar.end, eaddrs[i]);
+ 	}
 +out:
  	damon_free_target(t);
- 	damos_free_filter(f);
  }
+ 
 -- 
 2.53.0
 
